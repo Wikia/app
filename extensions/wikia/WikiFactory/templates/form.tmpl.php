@@ -26,17 +26,16 @@
 	text-align: center;
 	padding: 0.2em 0.4em 0.2em 0.4em;
 	width: 100%;
+	border: 1px solid gray;
 	border-bottom: none;
 }
 #wiki-factory ul.tabs li.active {
 	font-weight: bold;
-	border: 1px solid gray;
 	padding-bottom: 4px;
 	background-color: #ffffff;
 	font-size: 110%;
 }
 #wiki-factory ul.tabs li.inactive {
-	border: 1px solid gray;
 	background-color: #f7f7f7;
 	font-size: 90%;
 }
@@ -74,8 +73,8 @@
     z-index: 9000;
 }
 
-#wf-variable-form .perror {color: #fe0000; font-weight: bold; }
-#wf-variable-form .success {color: darkgreen; font-weight: bold; }
+.wf-variable-form .perror {color: #fe0000; font-weight: bold; }
+.wf-variable-form .success {color: darkgreen; font-weight: bold; }
 .wf-variable-form textarea { width: 90%; height: 8em; }
 .wf-variable-form input.input-string { width: 90%; }
 
@@ -495,7 +494,7 @@ $(function() {
 </script>
 <div id="wiki-factory">
 	<h2>
-		Wiki info: <?php echo $wiki->city_title ?>
+		Wiki info: <span class="wiki-sitename"><?php echo $wiki->city_title ?></span> <sup><small><a href="<?php echo $wikiFactoryUrl . '/' . $wiki->city_id; ?>/variables/wgSitename">edit</a></small></sup>
 	</h2>
 	<div id="wk-busy-div" style="display: none;">
 		<img src="http://images.wikia.com/common/progress_bar.gif" width="100" height="9" alt="Wait..." border="0" />'
@@ -533,7 +532,7 @@ $(function() {
 			<?php  #hide tags in upper area when on tags tab, so people dont get confused by non-updating data
 				if( $tab !== "domains" ): ?><li>
 				Wiki domain: <strong><a href="<?php echo $wiki->city_url ?>"><?php echo $wiki->city_url ?></a></strong>
-				<sup><a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/domains">edit</a></sup>
+				<sup><a href="<?php echo "{$wikiFactoryUrl}/{$wiki->city_id}"; ?>/domains">edit</a></sup>
 			</li><?php endif; ?>
 			<li>
 				Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
@@ -541,18 +540,20 @@ $(function() {
 			<li>
 				Founder name: <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
 					<? if($wiki->city_founding_user): ?>
-					<sup><a href="/index.php?title=Special:WikiFactory/Metrics&founder=<?php echo urlencode($user_name); ?>">more by user</a></sup><? endif; ?>
+					<sup><a href="<?php echo $wikiFactoryUrl; ?>/Metrics?founder=<?php echo urlencode($user_name); ?>">more by user</a></sup><? endif; ?>
 			</li>
 			<li>
 				Founder email: <?php if( empty( $wiki->city_founding_email) ) :
-				?><i>empty</i><? else: ?>
-				<strong><? echo $wiki->city_founding_email; ?></strong>
-				<sup><a href="/index.php?title=Special:WikiFactory/Metrics&email=<?php echo urlencode($wiki->city_founding_email); ?>">more by email</a></sup><? endif; ?>
+					print "<i>empty</i>";
+				else:
+					print "<strong>" . $wiki->city_founding_email . "</strong>";
+					print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?email=". urlencode($wiki->city_founding_email) . "\">more by email</a></sup>";
+				endif; ?>
 			</li>
 			<?php  #hide tags in upper area when on tags tab, so people dont get confused by non-updating data
 				if( $tab !== "tags" ): ?><li>
 				Tags: <?php if( is_array( $tags ) ): echo "<strong>"; foreach( $tags as $id => $tag ): echo "{$tag} "; endforeach; echo "</strong>"; endif; ?>
-				<sup><a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/tags">edit</a></sup>
+				<sup><a href="<?php echo "{$wikiFactoryUrl}/{$wiki->city_id}"; ?>/tags">edit</a></sup>
 			</li><?php endif; ?>
 			<?php if ($statuses[$wiki->city_public] == 'disabled') : ?><li>
 				<div>Disabled reason: <?=wfMsg('closed-reason')?> (<?=$wiki->city_additional?>)</div>
@@ -561,24 +562,26 @@ $(function() {
 		<br/>
 		<ul>
 			<li>
-				<button class="wikia-button" href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></button>
+				<button class="wikia-button" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></button>
 			</li>
 			<li>
-				<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory"><?php echo wfMsg( "wikifactory-label-return" ); ?></a>
+				<a href="<?php echo $wikiFactoryUrl; ?>"><?php echo wfMsg( "wikifactory-label-return" ); ?></a>
 			</li>
 		</ul>
 	</div>
 	<div id="wiki-factory-panel">
+		<?php
+			$subVariables = in_array($tab, array("variables", "ezsharedupload", "eznamespace") );
+			$subTags = in_array($tab, array('tags', 'masstags', 'findtags') );
+		?>
 		<ul class="tabs" id="wiki-factory-tabs">
-			<li <?php $subVariables = in_array($tab, array("variables", "ezsharedupload", "eznamespace") );
-					  echo ( $subVariables ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $subVariables ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "variables", ( ($subVariables)?'variables':$tab ), $wiki->city_id ); ?>
 			</li>
 			<li <?php echo ( $tab === "domains" ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "domains", $tab, $wiki->city_id ); ?>
 			</li>
-			<li <?php $subTags = in_array($tab, array('tags', 'masstags', 'findtags') );
-					  echo ( $subTags ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $subTags ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "tags", ( ($subTags)?'tags':$tab ), $wiki->city_id ); ?>
 			</li>
 			<li <?php echo ( $tab === "hubs" ) ? 'class="active"' : 'class="inactive"' ?> >
@@ -604,7 +607,7 @@ $(function() {
 			<?php /* hiding this for now
 			<li <?php echo ( $tab === "eznamespace" ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "eznamespace", $tab, $wiki->city_id ); ?>
-			</li> */?>
+			</li> */ ?>
 		</ul>
 <?php
 	}

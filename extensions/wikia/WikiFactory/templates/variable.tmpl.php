@@ -34,7 +34,7 @@
 		&nbsp;<a href="http://contractor.wikia-inc.com/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at contractor.wikia'>Wikia</a></small>
 	</li>
 	<li>
-		<a href="<?php echo "{$GLOBALS[ "wgScript" ]}?title=Special:WikiFactory/{$variable->cv_city_id}/variables/{$variable->cv_name}"; ?>">permalink</a>
+		<a href="<?php echo "{$wikiFactoryUrl}/{$variable->cv_city_id}/variables/{$variable->cv_name}"; ?>">permalink</a>
 	</li>
 </ul>
 <h2>
