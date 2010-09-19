@@ -494,6 +494,7 @@ class WikiFactoryPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		$msg  = false;
+		$wfTags = new WikiFactoryTags( $this->mWiki->city_id );
 
 		if( $tag_id ) {
 			$tagName = $request->getText( "wpTagName" );
@@ -504,12 +505,11 @@ class WikiFactoryPage extends SpecialPage {
 			$stag = $request->getText( "wpTag", false );
 
 			if( $stag ) {
-				$Tags = new WikiFactoryTags( $this->mWiki->city_id );
-				$before = $Tags->getTags( true ); // from master
-				$after  = $Tags->addTagsByName( $stag );
+				$before = $wfTags->getTags( true ); // from master
+				$after  = $wfTags->addTagsByName( $stag );
 				$diff   = array_diff( $after, $before );
 
-				$msg = "Added new tags:" . implode( ", ", $diff );
+				$msg = "Added new tags: " . implode( ", ", $diff );
 			}
 			else {
 				$msg = "Nothing to add";
@@ -532,7 +532,6 @@ class WikiFactoryPage extends SpecialPage {
 	 * @note yes, i know this is HORRIBLY ineffecient, but I was going for RAD, not clean.
 	 */
 	private function doMassTag() {
-		#return Wikia::errorbox( "code not written" );
 
 		wfProfileIn( __METHOD__ );
 
@@ -557,7 +556,7 @@ class WikiFactoryPage extends SpecialPage {
 			$added++;
 			$oTag = new WikiFactoryTags( $wkid );
 			$oTag->addTagsByName( $this->mMassTag );
-			$oTag->clearCache();
+			#$oTag->clearCache();
 		}
 
 		$oTQ = new WikiFactoryTagsQuery(''); // no tag, because we're just using it to uncache
@@ -567,7 +566,6 @@ class WikiFactoryPage extends SpecialPage {
 		$msg .= " (maybe)";
 		wfProfileOut( __METHOD__ );
 
-		return Wikia::errorbox( $msg );
 		return Wikia::successbox( $msg );
 	}
 	
