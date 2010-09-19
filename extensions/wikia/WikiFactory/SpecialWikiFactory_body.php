@@ -263,11 +263,12 @@ class WikiFactoryPage extends SpecialPage {
 						$this->mSearchTag = $wgRequest->getVal('wpSearchTag');
 						$info = $this->doSearchTags( $this->mSearchTag );
 					}
-					if( $wgRequest->getVal('remove_tag') != null &&
-						$wgRequest->getVal('remove_tag_id') != null ) {
+
 						$this->mRemoveTag = $wgRequest->getVal('remove_tag');
 						$this->mRemoveTags = $wgRequest->getIntArray('remove_tag_id');
-						$info = $this->doMultiRemoveTags( $this->mRemoveTag, $this->mRemoveTags );
+					if( $this->mRemoveTag != null &&
+						$this->mRemoveTags != null ) {
+						$info = $this->doMultiRemoveTags();
 					}
 					break;
 				case "masstags":
@@ -490,6 +491,7 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return mixed	info when change, null when not changed
 	 */
 	private function doUpdateTags( &$request, $tag_id = false ) {
+		#global $wgOut;
 
 		wfProfileIn( __METHOD__ );
 
@@ -498,8 +500,10 @@ class WikiFactoryPage extends SpecialPage {
 
 		if( $tag_id ) {
 			$tagName = $request->getText( "wpTagName" );
-			$this->mTags->removeTagsById( array( $tag_id ) );
+			$newTags = $this->mTags->removeTagsById( array( $tag_id ) );
+			#$wgOut->addHTML('<pre>' . print_r($newTags,1) . "</pre>" );
 			$msg = "Tag {$tagName} removed";
+
 		}
 		else {
 			$stag = $request->getText( "wpTag", false );
@@ -508,6 +512,11 @@ class WikiFactoryPage extends SpecialPage {
 				$before = $wfTags->getTags( true ); // from master
 				$after  = $wfTags->addTagsByName( $stag );
 				$diff   = array_diff( $after, $before );
+				#$wgOut->addHTML('<pre>' );
+				#$wgOut->addHTML( print_r($before,1) ."\n" );
+				#$wgOut->addHTML( print_r($after,1) ."\n");
+				#$wgOut->addHTML( print_r($diff,1) ."\n");
+				#$wgOut->addHTML( "</pre>");
 
 				$msg = "Added new tags: " . implode( ", ", $diff );
 			}
@@ -582,6 +591,8 @@ class WikiFactoryPage extends SpecialPage {
 		else {
 			$tagsQuery = new WikiFactoryTagsQuery( $searchTag );
 			$this->mTagWikiIds = $tagsQuery->doQuery();
+				#print "(filled mTagWikiIds with a WikiFactoryTagsQuery from inside doSearchTags ".gmdate('r').")";
+
 			if( count( $this->mTagWikiIds ) == 0 ) {
 				$result = Wikia::errorbox( "No wikis with \"" . $searchTag . "\" tag assigned" );
 			}
@@ -598,37 +609,58 @@ class WikiFactoryPage extends SpecialPage {
 	 *
 	 * @access private
 	 * @author uberfuzzy@wikia-inc.com
+	 *
+	 * @return text message (use Wikia::*box functions)
 	 */
-	private function doMultiRemoveTags( $removeTag, $fromIds ) {
-			return Wikia::errorbox( "multiremove not finished" );
+	private function doMultiRemoveTags( ) {
 
-		if( empty( $removeTag ) ) {
+		/* working data is stored in object prior to call
+			$this->mRemoveTag; has the tag to remove
+			$this->mRemoveTags; has int array of wiki id to remove from
+		*/
+		
+		/* in theory, these should never trigger, but BSTS */
+		if( empty( $this->mRemoveTag ) ) {
 			return Wikia::errorbox( "no tag to remove?" );
 		}
-		if( empty( $fromIds ) ) {
+		if( empty( $this->mRemoveTags ) ) {
 			return Wikia::errorbox( "no items to remove?" );
 		}
 
-		$tagId = WikiFactoryTags::idFromName( $removeTag );
+		/* turn the tag string into the tag id */
+		$tagID = WikiFactoryTags::idFromName( $this->mRemoveTag );
 		if( $tagID === false ) {
-			return Wikia::errorbox( "tag [{$removeTag}] doesnt exist" );
+			return Wikia::errorbox( "tag [{$this->mRemoveTag}] doesnt exist" );
 		}
 
-		$tagsQuery = new WikiFactoryTagsQuery( $removeTag );
-		$system = $tagsQuery->doQuery();
+		/* to get list of all wikis with this tag, and later, use this to cache clear */
+		$tagsQuery = new WikiFactoryTagsQuery( $this->mRemoveTag );
 
-		if( count( $system ) == 0 ) {
-			return Wikia::errorbox( "No wikis with \"" . $removeTag . "\" tag assigned" );
+			$fails = array();
+		foreach($this->mRemoveTags as $wkid)
+		{
+			$oTag = new WikiFactoryTags( $wkid );
+			$ret = $oTag->removeTagsById( array($tagID) );
+			if($ret === false) {
+				$fails[] = $wkid;
+			}
 		}
 
-		$intersect = array_intersect($system, $fromIds);
+		/* force dump of the tag_map in memcache */
+		$tagsQuery->clearCache();
+
+		/* since we /hopefully/ removed some tags from wikis,
+			force the search results for this pageload to be empty. */
+		$this->mTagWikiIds = array();
+		#print "(forcing mTagWikiIds to null at ".gmdate('r').")";
 		
-		return "we were asked to remove stuff from {$removeTag}<br/>".
-		"and system says [" . count($system) . "] items have this tag<br/>".
-		"and we were asked to remove [". count($fromIds)."]<br/>".
-		"there are [". count($fromIds)."] intersecting.<br/>".
-		print_r($intersect,1);
-
+		if( empty($fails) ) {
+			return Wikia::successbox( "ok!" );
+		}else{
+			return Wikia::errorbox( "ok, but failed at ".count($fails)." wikis".
+									" (" . implode(", ", $fails ) . ")" );
+		}
+		
 	}
 
 	/**

@@ -7,7 +7,7 @@ function deletechecked() {
 }
 
 $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
-	$('#wftagsearchinput').autocomplete({
+	$('.wftagautocomplete').autocomplete({
 		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
 		minChars:3,
 		deferRequestBy: 0
@@ -26,7 +26,7 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		</td>
 		<td class="mw-input">
 			&nbsp;
-			<input type="text" name="wpSearchTag" id="wftagsearchinput" value="<?php echo $searchTag; ?>" />
+			<input type="text" name="wpSearchTag" id="wftagsearchinput" class="wftagautocomplete" value="<?php echo $searchTag; ?>" />
 			<input type="submit" id="wpSearchTagSubmit" value="Search" />
 		</td>
 	</tr>
@@ -34,16 +34,23 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 </fieldset>
 </form>
 <?php
-# if( !empty($_POST) ) { print "POST="; print_r($_POST); print "<br/>\n"; }
+#if( !empty($_POST) ) { print "<pre>POST dump\n"; print_r($_POST); print "</pre>\n"; }
 
 if( !empty($info) ) { print_r($info); }
 ?>
-<form action="<?php echo $title->getFullUrl() ?>" method="post"><?
-?><input type="hidden" name="remove_tag" value="<?php echo $searchTag; ?>" /><?
-?><input type="hidden" name="wpSearchTag" value="<?php echo $searchTag; ?>" />
-<?php if( count( $searchTagWikiIds ) > 0 ): ?>
+<form action="<?php echo $title->getFullUrl() ?>" method="post">
+<input type="hidden" name="wpSearchTag" value="<?php echo $searchTag; ?>" /><?php
+?><input type="hidden" name="remove_tag" value="<?php echo $searchTag; ?>" />
+<?php
+if( !empty($searchTagWikiIds) && is_array($searchTagWikiIds) ):
+	$searchTagWikiIdsCount = count( $searchTagWikiIds );
+else:
+	$searchTagWikiIdsCount = 0;
+endif;
+
+if( $searchTagWikiIdsCount > 0 ) : ?>
 <fieldset>
-	<legend>Tagged wikis (<?php echo count( $searchTagWikiIds ); ?>)</legend>
+	<legend>Tagged wikis (<?php echo $searchTagWikiIdsCount; ?>)</legend>
 		<tr>
 			<td class="mw-input">
 				<?php foreach( $searchTagWikiIds as $wikiId ): ?>
