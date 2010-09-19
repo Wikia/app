@@ -365,7 +365,9 @@ EOT;
 		// RT #65988: must clone iframe, set src then append to parentNode. Setting src on original iframe creates unnecessary entry in browser history
                 $out = '<script type="text/javascript">' .
                         $function_name . ' = function() { ' .
-			'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " .
+			'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " .
+			'if (typeof od_iframeOld == "undefined" ) { return; } ' .
+			"var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " .
 			'ad_iframe.src="'.addslashes($this->getUrl($slotname, $slot)) .
 			"\"; parent_node.removeChild(ad_iframeOld); parent_node.appendChild(ad_iframe); }</script>";
 
