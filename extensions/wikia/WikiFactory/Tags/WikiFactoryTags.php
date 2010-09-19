@@ -102,7 +102,7 @@ class WikiFactoryTags {
 		}
 
 		if( $usedb ) {
-			$dbr = WikiFactory::db( DB_SLAVE );
+			$dbr = WikiFactory::db( ($skipcache)?(DB_MASTER):(DB_SLAVE) );
 			$sth = $dbr->select(
 				array( "city_tag", "city_tag_map" ),
 				array( "tag_id", "name" ),
