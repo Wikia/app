@@ -50,7 +50,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 	private function getVoteArticle () {
 		global $wgTopVoted, $wgDBname;
 
-        $topvoted = $page = $uservote = null;
+        $topvoted = $page = $uservote = $timestamps = null;
 
         #--- initial parameters (dbname, limit, offset ...)
 		extract($this->getInitialParams());
@@ -114,9 +114,15 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 								"votesavg"		=> $this->getAvgPageVoteFromDB($db, $page),
 								"votescount" => $this->getTotalPageVoteCountFromDB($db, $page)
 							);
+
 							if (isset($row->uservote)) {
 								$data[$page]["uservote"] = $row->uservote;
 							}
+
+							if ( !empty($timestamps) ) {
+								$data[$page]['timestamps'] = $this->getTimestampsFromDB($db, $page);
+							}
+
 							ApiResult::setContent( $data[$page], $oTitle->getText() );
 						}
 					}
@@ -733,6 +739,35 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		return (empty($row->votecount)) ? 0 : $row->votecount;
 	}
 
+	private function getTimestampsFromDB( $db, $page ) {
+		global $wgDBname;
+		$clonedInstance = clone $this;
+		$clonedInstance->resetQueryParams();
+		$clonedInstance->initQueryParams();
+
+		if (!$db) {
+			$db =& $this->getDB();
+			$db->selectDB( ( !defined( WIKIA_API_QUERY_DBNAME ) ) ? WIKIA_API_QUERY_DBNAME : $wgDBname );
+		}
+
+		$clonedInstance->addTables( "page_vote" );
+		$clonedInstance->addFields( array( "UNIX_TIMESTAMP(time) AS time_stamp" ) );
+		$clonedInstance->addWhere( "article_id > 0");
+
+		$clonedInstance->addWhere( "article_id = $page" );
+
+		$res = $clonedInstance->select( __METHOD__ );
+		$values = array();
+		
+		while ( $row = $db->fetchObject( $res ) ) {
+			$values[] = $row->time_stamp;
+		}
+		
+		$db->freeResult($res);
+		
+		return $values;
+	}
+
 	/*
 	 *
 	 * Description's functions
@@ -789,6 +824,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			'page'		=> 'Identifier of page',
 			'topvoted' 	=> 'It can be one of values: \'1\' - if user want to take the more rated article or \'0\' otherwise',
 			'uservote' 	=> 'It can be one of values: \'1\' - if user want to take vote of article for selected user or \'0\' otherwise. User have to be logged to use this option.',
+			'timestamps'    => 'It can be one of values: \'1\' - returns a list of vote timestamps for the selected article or \'0\' otherwise, page parameter must be supplied.',
 		);
 	}
 
@@ -834,6 +870,9 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			"uservote" => array (
 								ApiBase :: PARAM_TYPE => 'integer'
 							),
+			"timestamps" => array(
+
+			),					ApiBase :: PARAM_TYPE => 'integer'
 		);
 	}
 
