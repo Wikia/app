@@ -196,6 +196,7 @@ my @tests = qw(
 	/l/lyricwiki/images/thumb/7/74/Acid_Drinkers_-_Are_You_a_Rebel?.jpg/120px-Acid_Drinkers_-_Are_You_a_Rebel?.jpg
 	/r/runescape/images/thumb/4/41/Wardrobe.gif/180px-Wardrobe.gif
 	/d/desencyclopedie/images/thumb/5/51/Uri.svg/120px-Uri.svg.png
+	/m/muppet/images/thumb/0/0f/Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg/55px-Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg
 );
 use warnings;
 my @done = ();
@@ -542,7 +543,7 @@ while( $request->Accept() >= 0 || $test ) {
 						#
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						if( $width < $origw ) {
-							$image = $image->scale( xpixels => $width, ypixels => $height );
+							$image = $image->scale( xpixels => $width, ypixels => $height, qtype => 'mixing' );
 						}
 						if( $cropped ) {
 							#
