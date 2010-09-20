@@ -22,9 +22,6 @@ $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
 // i18n
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 
-// hooks
-$wgHooks['MyTools::getCustomTools'][] = 'ThemeDesignerHelper::addToMyTools';
-
 // rights & permisions
 $wgAvailableRights[] = 'themedesigner';
 $wgGroupPermissions['*']['themedesigner'] = false;

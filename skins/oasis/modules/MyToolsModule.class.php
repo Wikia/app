@@ -27,8 +27,6 @@ class MyToolsModule extends Module {
 		$out = array();
 		$tools = json_decode($wgUser->getOption('myTools'), true);
 
-		wfRunHooks('MyTools::getCustomTools', array(&$tools));
-
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
 				$page = SpecialPage::getPageByAlias($tool);
@@ -76,6 +74,16 @@ class MyToolsModule extends Module {
 			$out[] = array(
 				'text' => wfMsg('blockip'),
 				'href' => self::$skinTemplateObj->data['nav_urls']['blockip']['href']
+			);
+		}
+
+		// theme designer
+		if($wgUser->isAllowed('themedesigner')) {
+			$page = SpecialPage::getPageByAlias('ThemeDesigner');
+
+			$out[] = array(
+				'text' => $page->getDescription(),
+				'href' => $page->getTitle()->getLocalUrl(),
 			);
 		}
 

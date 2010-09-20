@@ -4,7 +4,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
-	'themedesigner' => 'Theme Designer',
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Background',
 	'themedesigner-page' => 'Page',
