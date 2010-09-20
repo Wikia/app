@@ -7,6 +7,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 
 		// users
 		$this->assertRegExp('/width="32"/', AvatarService::render($userName, 32));
+		$this->assertRegExp('/\/16px-/', AvatarService::render($userName, 16));
 		$this->assertRegExp('/User:WikiaBot/', AvatarService::renderLink($userName));
 		$this->assertRegExp('/^<img src="http:\/\/images/', AvatarService::renderAvatar($userName));
 		$this->assertRegExp('/^http:\/\/images/', AvatarService::getAvatarUrl($userName));
