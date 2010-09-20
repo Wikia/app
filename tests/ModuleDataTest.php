@@ -631,4 +631,12 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($moduleData['userName']);
 	}
 
+	function testFeedbackModule() {
+		global $wgUser;
+		$moduleData = Module::get('Feedback')->getData();
+
+		$this->assertEquals($wgUser->getName(), $moduleData['userData']['u_disp']);
+		$this->assertEquals(64, strlen($moduleData['userData']['u_code']));
+	}
+
 }
