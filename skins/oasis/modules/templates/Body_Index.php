@@ -73,7 +73,7 @@
 	}
 ?>
 
-	<?= wfRenderModule('Footer') ?>
+	<?= empty($wgSuppressFooter) ? wfRenderModule('Footer') : '' ?>
 
 </section><!--WikiaPage-->
 
@@ -82,5 +82,9 @@
 		echo wfRenderModule('Feedback');
 	}
 ?>
-<?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1')) ?>
-<?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2')) ?>
+<?php
+	if (empty($wgSuppressAds)) {
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+	}
+?>
