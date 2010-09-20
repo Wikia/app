@@ -1,27 +1,26 @@
 <?php
-// initialize skin only once
-
-global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
-
-$wgForceSkin = 'oasis';
-$wgTitle = Title::newMainPage();
-$wgUser = User::newFromId(0);
-
-wfSuppressWarnings();
-ob_start();
-
-$wgOut->setCategoryLinks(array('foo' => 1, 'bar' => 2));
-
-$skin = $wgUser->getSkin();
-$skin->outputPage(new OutputPage());
-
-wfClearOutputBuffers();
-wfRestoreWarnings();
 
 class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
 
-	// TODO: use it when we will update phpunit to v3.4+
-	public static function setUpBeforeClass() {}
+	// initialize skin only once
+	public static function setUpBeforeClass() {
+		global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
+
+		$wgForceSkin = 'oasis';
+		$wgTitle = Title::newMainPage();
+		$wgUser = User::newFromId(0); // anon
+
+		wfSuppressWarnings();
+		ob_start();
+
+		$wgOut->setCategoryLinks(array('foo' => 1, 'bar' => 2));
+
+		$skin = $wgUser->getSkin();
+		$skin->outputPage(new OutputPage());
+
+		wfClearOutputBuffers();
+		wfRestoreWarnings();
+	}
 
 	function testAccountNavigationModule() {
 		global $wgUser;
