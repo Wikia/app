@@ -203,6 +203,7 @@ class WikiaAssets {
 		foreach($styles as $style => $options) {
 			if(strpos($style, ':Common.css') > 0
 				|| strpos($style, ':Monaco.css') > 0
+				|| strpos($style, ':Wikia.css') > 0
 				|| strpos($style, 'title=User:') > 0
 				|| strpos($style, 'title=-')) {
 				unset($styles[$style]);
