@@ -91,9 +91,13 @@
 				width: 220px;
 				-moz-box-shadow: 0 0 10px mix($color-text, $color-page, 50);
 				a {
+					background-image: url(/../extensions/wikia/LandingPage/images/arrow.png); /* $wgCdnStylePath */
+					background-position: 0 50%;
+					background-repeat: no-repeat;
 					color: #a6d046; /* probably should be blue */
 					font-size: 20px;
 					font-weight: normal;
+					padding-left: 20px;
 				}
 				&.item-1 {
 					float: left;
