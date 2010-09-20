@@ -23,6 +23,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 		// anons
 		$this->assertRegExp('/Special:Contributions\//', AvatarService::getUrl($anonName));
 		$this->assertRegExp('/^<img src="/', AvatarService::renderAvatar($anonName));
+		$this->assertRegExp('/\/20px-/', AvatarService::renderAvatar($anonName, 20));
 		$this->assertRegExp('/Special:Contributions/', AvatarService::renderLink($anonName));
 	}
 
