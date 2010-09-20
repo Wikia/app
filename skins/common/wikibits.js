@@ -1060,7 +1060,7 @@ function getLabelFor (obj_id) {
 	return false;
 }
 
-if (skin != 'monaco' && skin != 'awesome' /* LeanMonaco */) {
+if (skin != 'monaco' && skin != 'awesome' /* LeanMonaco */ && skin != 'oasis') {
 	//see RT#46116
 	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
 		addOnloadHook(function() { for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();} });
