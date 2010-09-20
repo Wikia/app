@@ -639,4 +639,43 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(64, strlen($moduleData['userData']['u_code']));
 	}
 
+	function testBlogListingModule() {
+		global $wgUser, $wgTitle;
+		$userName = $wgUser->getName();
+
+		// extend posts data coming from Blogs ext
+		$posts = array(
+			array(
+				'comments' => 1,
+				'namespace' => 500,
+				'page' => 1,
+				'text' => 'foo',
+				'timestamp' => wfTimestamp(TS_MW),
+				'title' => 'My blog post',
+				'username' => $userName,
+			)
+		);
+
+		BlogListingModule::getResults($posts);
+
+		$this->assertEquals(AvatarService::renderAvatar($userName, 48), $posts[0]['avatar']);
+		$this->assertEquals(AvatarService::getUrl($userName), $posts[0]['userpage']);
+		$this->assertType('int', $posts[0]['likes']);
+		$this->assertType('string', $posts[0]['date']);
+
+		// render blog listing for Oasis
+		$html = 'foo';
+		$aOptions = array(
+			'class' => 'bar',
+			'title' => 'Blog posts box',
+			'type' => 'box',
+		);
+
+		BlogListingModule::renderBlogListing($html, $posts, $aOptions);
+
+		$this->assertRegExp('/^foo<section class="WikiaBlogListingBox bar"/', $html);
+		$this->assertRegExp('/User_blog:My_blog_post/', $html);
+		$this->assertRegExp('/User:WikiaBot">WikiaBot<\/a>/', $html);
+	}
+
 }
