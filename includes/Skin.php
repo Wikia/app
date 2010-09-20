@@ -627,7 +627,8 @@ END;
 			if( empty($this->themename) || $this->themename == 'custom' ) {
 				$skinname = $this->getSkinName();
 				if($skinname == 'oasis') {
-					$out->addStyle( self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI ) );
+					// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
+					//$out->addStyle( self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI ) );
 				} else {
 					$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 					$out->addStyle( self::makeNSUrl( $skinname . '.css', $query, NS_MEDIAWIKI ) );
