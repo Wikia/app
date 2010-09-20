@@ -1,27 +1,26 @@
 <?php
-// initialize skin only once
-
-global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
-
-$wgForceSkin = 'oasis';
-$wgTitle = Title::newMainPage();
-$wgUser = User::newFromName('WikiaBot');
-
-wfSuppressWarnings();
-ob_start();
-
-$wgOut->setCategoryLinks(array('foo' => 1, 'bar' => 2));
-
-$skin = $wgUser->getSkin();
-$skin->outputPage(new OutputPage());
-
-wfClearOutputBuffers();
-wfRestoreWarnings();
 
 class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
-	// TODO: use it when we will update phpunit to v3.4+
-	public static function setUpBeforeClass() {}
+	// initialize skin only once
+	public static function setUpBeforeClass() {
+		global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
+
+		$wgForceSkin = 'oasis';
+		$wgTitle = Title::newMainPage();
+		$wgUser = User::newFromName('WikiaBot');
+
+		wfSuppressWarnings();
+		ob_start();
+
+		$wgOut->setCategoryLinks(array('foo' => 1, 'bar' => 2));
+
+		$skin = $wgUser->getSkin();
+		$skin->outputPage(new OutputPage());
+
+		wfClearOutputBuffers();
+		wfRestoreWarnings();
+	}
 
 	function testLatestActivityModule() {
 		global $wgSitename;
@@ -626,7 +625,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('WikiaBotBlogger', $moduleData['userName']);
 
 		// blog listing
-		$moduleData = Module::get('UserPagesHeader', 'BlogListing')->getData(); var_dump($moduleData);
+		$moduleData = Module::get('UserPagesHeader', 'BlogListing')->getData();
 
 		$this->assertRegExp('/Special:CreateBlogPage/', $moduleData['actionButton']['href']);
 		$this->assertNull($moduleData['userName']);
