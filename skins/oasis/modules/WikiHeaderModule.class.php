@@ -14,6 +14,8 @@ class WikiHeaderModule extends Module {
 	var $wordmarkSize;
 	var $wordmarkStyle;
 	var $wordmarkFont;
+	
+	var $wgSingleH1;
 
 	private function parseMonacoSidebarToOasisNavigation($text) {
 		$lines = explode("\n", $text);
@@ -45,7 +47,7 @@ class WikiHeaderModule extends Module {
 
 	public function executeIndex() {
 
-		global $wgOut, $wgCityId, $wgUser;
+		global $wgOut, $wgCityId, $wgUser, $wgSingleH1;
 		// Moved to StaticChute.
 		//$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
 

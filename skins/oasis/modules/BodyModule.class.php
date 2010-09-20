@@ -24,6 +24,8 @@ class BodyModule extends Module {
 
 	var $isMainPage;
 
+	var $wgSingleH1;
+
 	private static $onEditPage;
 
 	/**
@@ -214,7 +216,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgSingleH1;
 
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 

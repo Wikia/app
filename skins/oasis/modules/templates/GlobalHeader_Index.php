@@ -1,6 +1,8 @@
 <header id="WikiaHeader" class="WikiaHeader">
 	<nav>
+		<? if (!$wgSingleH1) { ?>
 		<h1>Wikia Navigation</h1>
+		<? } ?>
 		<ul>
 			<li class="WikiaLogo">
 				<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wgBlankImgUrl ?>" height="26" width="91" alt="Wikia"></a>

@@ -4,12 +4,14 @@ class LatestActivityModule extends Module {
 	var $total;
 	var $changeList;
 
+	var $wgSingleH1;
+	
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
 		$maxElements = 3;
 
-		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc;
+		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgSingleH1;
 		$this->total = $wgLang->formatNum(SiteStats::articles());
 
 		wfLoadExtensionMessages('MyHome');

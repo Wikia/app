@@ -1,6 +1,10 @@
 <?php if( !$skipRendering ) { ?>
 	<nav class="RelatedPagesModule">
+		<? if ($wgSingleH1) { ?>
+		<div class="headline-div"><?= wfMsg('wikiarelatedpages-heading') ?></div>
+		<? } else { ?>
 		<h1><?= wfMsg('wikiarelatedpages-heading') ?></h1>
+		<? } ?>
 		<ul>
 		<?php foreach($pages as $page) { ?>
 			<li>

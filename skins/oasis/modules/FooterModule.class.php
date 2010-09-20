@@ -11,8 +11,10 @@ class FooterModule extends Module {
 	var $showToolbar;
 	var $showNotifications;
 
+	var $wgSingleH1;
+
 	public function executeIndex() {
-		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
+		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgSingleH1;
 
 		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
 		$this->showToolbar = empty($wgSuppressToolbar);

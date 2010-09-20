@@ -4,8 +4,10 @@ class CorporateFooterModule extends Module {
 	var $footer_links;
 	var $copyright;
 
+	var $wgSingleH1;
+
 	public function executeIndex() {
-		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
+		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc, $wgSingleH1;
 		$mKey = wfMemcKey('mOasisFooterLinks');
 		$this->footer_links = $wgMemc->get($mKey);
 		if (empty($this->footer_links)) {
