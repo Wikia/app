@@ -7,7 +7,6 @@ $messages['en'] = array(
 	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''.
 
 We have a brand new look that's soon going live across all of Wikia. In the	meantime, explore some of our beta wikis and read up on what this look will mean for you.",
-	'landingpage-welcome-text' => "Here is everything you need to know to '''get started'''.",
 	'landingpage-examples' => 'Check out some examples',
 	'landingpage-buttons-about-wikia' => 'About Wikia',
 	'landingpage-buttons-learn-more' => 'Learn more',

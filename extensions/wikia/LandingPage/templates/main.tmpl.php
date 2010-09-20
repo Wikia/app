@@ -3,7 +3,6 @@
 		<section class="LandingPageWelcome">
 			<h1><?= wfMsg('landingpage') ?></h1>
 			<?= wfMsgExt('landingpage-secondary-line', array('parse')) ?>
-			<?= wfMsgExt('landingpage-welcome-text', array('parse')) ?>
 		</section>
 
 		<section class="LandingPageScreenshots">
