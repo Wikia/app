@@ -581,17 +581,17 @@ class StaticChute {
 	}
 
 	public function getChuteUrlPath() {
-		global $wgExtensionsPath, $wgForceStaticChutePath;
-		$extensionsPath = $wgExtensionsPath;
+		global $wgScriptPath, $wgForceStaticChutePath;
+		$scriptPath = $wgScriptPath;
 
 		// Because of some varnish strangeness (that isn't worth debugging since we're about to change StaticChute), allow
 		// devboxes to override the path with a path directly to the box's hostname.
-		// eg: $wgForceStaticChutePath = "http://dev-sean.wikia-prod/extensions";
+		// eg: $wgForceStaticChutePath = "http://dev-sean.wikia-prod";
 		if(!empty($wgForceStaticChutePath)){
-			$extensionsPath = $wgForceStaticChutePath;
+			$scriptPath = $wgForceStaticChutePath;
 		}
 
-		return !empty($this->path) ? $this->path : $extensionsPath;
+		return !empty($this->path) ? $this->path : $scriptPath;
 	}
 
 	public function useLocalChuteUrl() {
@@ -604,7 +604,7 @@ class StaticChute {
 			 * do not use wgScriptPath, problem with dofus/memory-alpha
 			 * rt#18410
 			 */
-			$this->setChuteUrlPath($wgServer . '/extensions');
+			$this->setChuteUrlPath($wgServer);
 		}
 	}
 
@@ -613,27 +613,20 @@ class StaticChute {
 		$this->theme = $theme;
 	}
 
-	public function getChuteUrlForPackage($package, $type = null){
+	public function getChuteUrlForPackage($packages, $type = null){
 		if ($type === null){
 			$type = $this->fileType;
 		}
-		$files = $this->getFileList(array('packages'=>$package));
+		$files = $this->getFileList(array('packages'=>$packages));
 
 		if (empty($files)){
-			trigger_error("Invalid package for " . __METHOD__, E_USER_WARNING);
+			trigger_error("Invalid package(s) for " . __METHOD__, E_USER_WARNING);
 			return false;
 		}
 
 		$checksum = $this->getChecksum($files);
 
-		$params = array('type'=> $type, 'packages'=> $package, 'checksum'=> $checksum);
-
-		// macbre: RT #18765
-		if (!empty($this->theme)) {
-			$params['usetheme'] = $this->theme;
-		}
-
-		return $this->getChuteUrlPath() . '/wikia/StaticChute/?' . http_build_query($params);
+		return $this->getChuteUrlPath() . "/static/$type/$packages/$checksum.$type";
 	}
 
 	private function getWidgetsAssets() {
