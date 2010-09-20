@@ -1,4 +1,6 @@
+<? if (!$wgSingleH1) { ?>
 <h1>Wikia</h1>
+<? } ?>
 <div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle">Skip to Content</a>
 <a class="skiplink wikinav" rel="nofollow" href="#WikiHeader">Skip to Wiki Navigation</a>

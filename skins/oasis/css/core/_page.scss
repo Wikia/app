@@ -141,7 +141,7 @@
 		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 		border-top: 5px solid #000;
 		color: $color-header-text;
-		h1 {
+		h1, .headline-div {
 			font-size: 14px;
 			font-weight: normal;
 			margin: 0;

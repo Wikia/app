@@ -1,6 +1,10 @@
 <section class="WikiaSpotlightsModule">
 	<header>
+		<? if ($wgSingleH1) { ?>
+		<div class="headline-div">Wikia Spotlights</div>
+		<? } else { ?>
 		<h1>Wikia Spotlights</h1>
+		<? } ?>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 	</header>

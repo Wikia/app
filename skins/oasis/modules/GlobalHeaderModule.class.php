@@ -9,9 +9,11 @@ class GlobalHeaderModule extends Module {
 	var $centralUrl;
 	var $createWikiUrl;
 	var $menuNodes;
-
+	
+	var $wgSingleH1;
+	
 	public function executeIndex() {
-		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgCdnStylePath, $wgMemc;
+		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgCdnStylePath, $wgMemc, $wgSingleH1;
 		
 		$this->wgCdnStylePath = $wgCdnStylePath;
 

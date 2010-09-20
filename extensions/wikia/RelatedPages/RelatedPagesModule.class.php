@@ -5,8 +5,10 @@ class RelatedPagesModule extends Module {
 	public $pages = null;
 	public $skipRendering = false;
 
+	var $wgSingleH1;
+
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc;
+		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgSingleH1;
 
 		$relatedPages = RelatedPages::getInstance();
 

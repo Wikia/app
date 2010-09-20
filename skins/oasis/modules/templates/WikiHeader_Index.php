@@ -1,9 +1,17 @@
 <header id="WikiHeader" class="WikiHeader">
+	<? if ($wgSingleH1) { ?>
+	<div class="headline-div wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?> <?= $wordmarkFont ?>" <?= $wordmarkStyle ?>>
+		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>"><?= htmlspecialchars($wordmarkText) ?></a>
+	</div>
+	<? } else { ?>
 	<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?> <?= $wordmarkFont ?>" <?= $wordmarkStyle ?>>
 		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>"><?= htmlspecialchars($wordmarkText) ?></a>
 	</h1>
+	<? } ?>
 	<nav>
+		<? if (!$wgSingleH1) { ?>
 		<h1><?= htmlspecialchars($wordmarkText) ?> Navigation</h1>
+		<? } ?>
 		<ul>
 
 <?php

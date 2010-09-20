@@ -39,7 +39,11 @@
 	</div>
 <?php } ?>
 
+	<? if ($wgSingleH1) { ?>
+	<div class="headline-div">Around Wikia's Network</div>	
+	<? } else { ?>
 	<h1>Around Wikia's Network</h1>
+	<? } ?>
 	<?= wfRenderModule('RandomWiki') ?>
 	<ul>
 		<li class="WikiaSpotlight item-1">
