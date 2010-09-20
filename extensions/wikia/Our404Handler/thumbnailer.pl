@@ -3,7 +3,7 @@
 package main;
 
 #
-# Imager version
+# Graphics::Magick version
 #
 # @todo -- thumbnails for movies are broken, move to ffmpegthumbnailer 2.0.4
 #
@@ -19,7 +19,7 @@ use feature ":5.10";
 use URI;
 use FCGI;
 use FCGI::ProcManager;
-use Imager;
+use Graphics::Magick;
 use Image::LibRSVG;
 use File::LibMagic;
 use File::Basename;
@@ -513,10 +513,13 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					# for other else use Graphics::Magick
 					#
-					my $image = Imager->new;
-					$image->read( data => $content, type => $imgtype );
+					my $image = new Graphics::Magick;
+					$image->BlobToImage( $content );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-
+					#
+					# use only first frame in animated gifs
+					#
+					$image = $image->[ 0 ] if $image->[ 0 ]->Get('magick') eq 'GIF';
 					my $cropped = 0;
 					if( is_int( $x1 ) && is_int( $x2 ) && is_int( $y1 ) && is_int( $y2 ) ) {
 						#
@@ -525,55 +528,50 @@ while( $request->Accept() >= 0 || $test ) {
 						my $w = $x2 - $x1;
 						my $h = $y2 - $y1;
 						if( $w > 0 && $h > 0 ) {
-							$image = $image->crop( left => $x1, top => $y1, right => $x2, bottom => $y2  );
+							my $geometry = sprintf( "%dx%d+%d+%d", $w, $h, $x1, $y1 );
+							$image->Crop( $geometry );
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say STDERR "Cropping into $x1 $x2 x $y1 $y2, time: $t_elapsed" if $debug > 2;
+							say STDERR "Cropping into $geometry, time: $t_elapsed" if $debug > 2;
 							$cropped = 1;
 						}
 					}
 
-					my $origw  = $image->getwidth();
-					my $origh  = $image->getheight();
+					my $origw  = $image->Get( 'width' );
+					my $origh  = $image->Get( 'height' );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					say STDERR "Original size $origw x $origh, time: $t_elapsed" if $debug > 2;
 					if( $origw && $origh ) {
-						#
-						# not bigger than original
-						#
 						my $height = scaleHeight( $origw, $origh, $width, $test );
-						if( $width < $origw ) {
-							$image = $image->scale( xpixels => $width, ypixels => $height );
-						}
+						my $geometry = sprintf( "%dx%d!>", $width, $height );
+						$image->Resize( "geometry" => $geometry, "blur" => 0.9 );
 						if( $cropped ) {
 							#
 							# for cropped images thumbnail which is smaller
 							# than requested we add white border and put
 							# thumbnail into it
 							#
-							my $crop_width = $image->getwidth();
-							my $crop_height = $image->getheight();
+							my $crop_width = $image->Get( "width" );
+							my $crop_height = $image->Get( "height" );
 							say STDERR "Size after cropping: $crop_width x $crop_height, requested size: $width x $height" if $debug > 2;
 							if( $crop_width < $width ) {
-								say STDERR "crop smaller than requested width: $crop_width < $width" if $debug > 2;
 								#
 								# create base image with white background
-								# count where to place (gravity => center from IM)
 								#
-								my $background = Imager->new( xsize => $width, ysize => $height );
-								$background = $background->box( filled => 1, color => "white" );
+								my $magick = $image->Get( "magick" );
+								my $crop = Graphics::Magick->new( size => sprintf("%dx%d", $width, $height ) );
 								say STDERR "Crop size $width x $height" if $debug > 2;
-								my $offsetx = $width/2 - $crop_width/2;
-								my $offsety = $height/2 - $crop_height/2;
-								$background->paste( src => $image, left => $offsetx, top => $offsety );
-								$image = $background;
+								$crop->ReadImage( "xc:white" );
+								$crop->Set( magick => $magick );
+								$crop->Composite( image => $image, gravity => "Center" );
+								$image = $crop;
 							}
 						}
+						$image->Set( quality => 90 );
 
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						say STDERR "Resizing into $thumbnail, time: $t_elapsed" if $debug;
 
-						my $output = undef;
-						$image->write( data => \$output, type => $imgtype );
+						my $output = $image->ImageToBlob();
 						use bytes;
 						my $output_length = length( $output );
 						if( $output_length ) {
