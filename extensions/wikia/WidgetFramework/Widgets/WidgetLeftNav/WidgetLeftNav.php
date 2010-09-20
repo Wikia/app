@@ -36,7 +36,7 @@ function WidgetLeftNav($id, $params) {
 	$ret['nowrap'] = true;
 
 	# get ad code	
-	$ret['body'] = "<div style='margin-bottom: 10px'>" . AdEngine::getInstance()->getPlaceHolderIframe( 'LEFT_NAV_205x400' ) . "</div>";
+	$ret['body'] = "<div style='margin-bottom: 10px'>" . /*AdEngine::getInstance()->getAd( 'LEFT_NAV_205x400' )*/ AdEngine::getInstance()->getPlaceholderIframe( 'LEFT_NAV_205x400' ) . "</div>";
 
 	wfProfileOut( __METHOD__ );
 

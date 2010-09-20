@@ -21,12 +21,40 @@ function wfAdEngineSetupJSVars($vars) {
  * Before the page is rendered this gives us a chance to cram some Javascript in.
  */
 function adEngineAdditionalScripts( &$out, &$sk ){
-	global $wgEnableAdsLazyLoad;
-	if (!$wgEnableAdsLazyLoad) return true;
-
+	global $IP;
+	global $wgEnableAdsLazyLoad, $wgEnableOpenXSPC;
 	global $wgExtensionsPath,$wgStyleVersion;
 
-	//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");	// moved to StaticChute.php
+	if ($wgEnableAdsLazyLoad) {
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");	// moved to StaticChute.php
+		//@todo move to StaticChute
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.js?$wgStyleVersion'></script>\n");
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.string.js?$wgStyleVersion'></script>\n");
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.array.js?$wgStyleVersion'></script>\n");
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.error.js?$wgStyleVersion'></script>\n");
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.dom.js?$wgStyleVersion'></script>\n");
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.domwrite.js?$wgStyleVersion'></script>\n");
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.object.js?$wgStyleVersion'></script>\n");
+		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.load.js?$wgStyleVersion'></script>\n");
+	}
+	if ($wgEnableOpenXSPC) {
+		// class autoloader probably hasn't run yet
+		if (!class_exists('AdProviderOpenX', false)) {
+			require "$IP/extensions/wikia/AdEngine/AdProviderOpenX.php";
+		}
+		$urlScript = AdProviderOpenX::getOpenXSPCUrlScript();
+		$urlScript = str_replace("\n", ' ', $urlScript);
+		$script = <<<EOT
+<script type='text/javascript'>/*<![CDATA[*/
+	document.write('<scr'+'ipt type="text/javascript">');
+	document.write('$urlScript');
+	document.write('</scr'+'ipt>');
+	document.write('<scr'+'ipt type="text/javascript">$.getScript(openxspc_base_url);</scr'+'ipt>');
+
+/*]]>*/</script>
+EOT;
+		$out->addScript($script);	// @todo move to StaticChute.php
+	}
 	return true;
 } // end adEngineAdditionalScripts()
 
@@ -62,8 +90,9 @@ class AdEngine {
 
 	const cacheKeyVersion = "2.03a";
 	const cacheTimeout = 1800;
-        const lazyLoadAdClass = 'LazyLoadAd';
-        const fillIframeFunctionPrefix = 'fillIframe_';
+	const lazyLoadAdClass = 'LazyLoadAd';
+	const fillIframeFunctionPrefix = 'fillIframe_';
+	const fillElemFunctionPrefix = 'fillElem_';
 
 	// TODO: pull these from wikicities.provider
 	private $providers = array(
@@ -467,15 +496,15 @@ class AdEngine {
 		} else {
 			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum;
 		}
-
-                $slotiframe_class = '';
-                if ($wgEnableAdsLazyLoad) {
-                    if (!empty($wgAdslotsLazyLoad[$slotname])) {
-			if (!empty($AdProvider->enable_lazyload)) {
-                        	$slotiframe_class = self::lazyLoadAdClass;
+		
+		$slotiframe_class = '';
+		if (!empty($wgEnableAdsLazyLoad)) {
+			if (!empty($wgAdslotsLazyLoad[$slotname])) {
+				if (!empty($AdProvider->enable_lazyload)) {
+					$slotiframe_class = self::lazyLoadAdClass;
+				}
 			}
-                    }
-                }
+		}
 
 		return '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">' .
 			'<div id="' . htmlspecialchars($slotdiv) . '">' .

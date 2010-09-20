@@ -2526,13 +2526,13 @@ EOF;
 		<table>
 		<tr>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_LEFT'); ?>
+				<?php /*echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT');*/echo AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_LEFT'); ?>
 			</td>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_MIDDLE'); ?>
+				<?php /*echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT');*/echo AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_MIDDLE'); ?>
 			</td>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_RIGHT'); ?>
+				<?php /*echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT');*/echo AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_RIGHT'); ?>
 			</td>
 		</tr>
 		</table>

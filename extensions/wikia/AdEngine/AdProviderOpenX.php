@@ -49,6 +49,8 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 
         private $slotsToCall = array();
 
+		const WIKIA_AFFILIATE_ID = 2;
+
         public function addSlotToCall($slotname){
                 $this->slotsToCall[]=$slotname;
         }
@@ -58,6 +60,8 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
         public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot, $params = null) {
+		global $wgEnableOpenXSPC, $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+
 		$zoneId = $this->getZoneId($slotname);
 
 		if(empty($zoneId)){
@@ -65,18 +69,59 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 			return $nullAd->getAd($slotname, $slot);
 		}
 
-		$adUrlScript = $this->getAdUrlScript($slotname, $params);
-		$adUrlScript = str_replace("\n", " ", $adUrlScript);
-		$adtag = <<<EOT
+		$fillElemFunctionPrefix = AdEngine::fillElemFunctionPrefix;
+
+		if ($wgEnableOpenXSPC) {
+			$adtag = <<<EOT
+<!-- AdProviderOpenX slot: $slotname zoneid: $zoneId  -->
+<script type='text/javascript'>/*<![CDATA[*/
+	document.write('<scr'+'ipt type="text/javascript">');
+	document.write('OA_show($zoneId);');
+	document.write('</scr'+'ipt>');
+/*]]>*/</script>
+EOT;
+			//@todo use lazy loading
+		}
+		else {
+			$adtag = '';
+
+			if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
+				$adtag .= '<div class="'.AdEngine::lazyLoadAdClass.'" id="'.$slotname.'"></div>';
+			}
+
+			$adUrlScript = $this->getAdUrlScript($slotname, $params);
+			$adUrlScript = str_replace("\n", " ", $adUrlScript);
+			$adtag .= <<<EOT
 <!-- AdProviderOpenX slot: $slotname zoneid: $zoneId  -->
 <script type='text/javascript'>/*<![CDATA[*/
 	document.write('<scr'+'ipt type="text/javascript">');
 	document.write('$adUrlScript');
 	document.write('</scr'+'ipt>');
-	document.write('<scr'+'ipt type="text/javascript" src="'+base_url_{$slotname}+'"></scr'+'ipt>');
-
+EOT;
+			if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
+				$fill_elem_script = <<<EOT
+	{$fillElemFunctionPrefix}{$slotname} = function () {
+		bezen.domwrite.capture();
+		var parent = document.getElementById("{$slotname}"); 
+		bezen.load.script(parent, base_url_{$slotname}, function(){
+			bezen.domwrite.render(parent);
+		});
+		/* bezen.domwrite.restore(); */
+	};
+EOT;
+				$fill_elem_script = str_replace("\n", ' ', $fill_elem_script);
+				$adtag .= <<<EOT
+	document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
 /*]]>*/</script>
 EOT;
+			}
+			else {
+				$adtag .= <<<EOT
+	document.write('<scr'+'ipt type="text/javascript" src="'+base_url_{$slotname}+'"></scr'+'ipt>');
+/*]]>*/</script>
+EOT;
+			}
+		}
 
 		return $adtag;
 
@@ -92,17 +137,9 @@ EOT;
 
 	protected function getAdUrlScript($slotname, $params=null, $is_iframe=false) {
 		$zoneId = $this->getZoneId($slotname);
-		$cat=AdEngine::getCachedCategory();
 
 		if(empty($zoneId)){
 			return;
-		}
-
-		$additional_params = "";
-		if (!empty($params) && is_array($params)) {
-			foreach ($params as $key => $val) {
-				$additional_params .= "&" . urlencode($key) . "=" . urlencode($val);
-			}
 		}
 
 		if ($is_iframe) {
@@ -112,31 +149,76 @@ EOT;
 			$base_url = '/__spotlights/ajs.php';
 		}
 
+		$url_script = self::getUrlScript($base_url, $slotname, $zoneId, '', $params);
 		$adUrlScript = <<<EOT
-	var base_url_{$slotname} = "$base_url";
-	base_url_{$slotname} += "?loc=" + escape(window.location);
-	if(typeof document.referrer != "undefined") base_url_{$slotname} += "&referer=" + escape(document.referrer);
-	if(typeof document.context != "undefined") base_url_{$slotname} += "&context=" + escape(document.context);
-	if(typeof document.mmm_fo != "undefined") base_url_{$slotname} += "&mmm_fo=1";
-	base_url_{$slotname} += "&zoneid=$zoneId";
-	base_url_{$slotname} += "&target=_top";
-	base_url_{$slotname} += "&cb=" + AdsCB;
-	if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url_{$slotname} += "&exclude=" + document.MAX_used;
-	base_url_{$slotname} += "&hub={$cat['short']}";
-	base_url_{$slotname} += "&skin_name=" + skin;
-	base_url_{$slotname} += "&cont_lang=" + wgContentLanguage;
-	base_url_{$slotname} += "&user_lang=" + wgUserLanguage;
-	base_url_{$slotname} += "&dbname=" + wgDB;
-	base_url_{$slotname} += "&slotname={$slotname}";
-	base_url_{$slotname} += "&tags=" + wgWikiFactoryTagNames.join(",");
-	base_url_{$slotname} += "{$additional_params}";
-	base_url_{$slotname} += "&block=1";
+	{$url_script}
+	var base_url_{$slotname} = base_url;
 EOT;
 
 		return $adUrlScript;
 	}
 
-        protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
+	public static function getOpenXSPCUrlScript() {
+		$base_url = '/__spotlights/spcjs.php';
+
+		$url_script = self::getUrlScript($base_url, '', '', self::WIKIA_AFFILIATE_ID);
+		$openxspc_url_script = <<<EOT
+	{$url_script}
+	var openxspc_base_url = base_url;
+EOT;
+
+		return $openxspc_url_script;
+	}
+
+	protected static function getUrlScript($base_url, $slotname='', $zone_id='', $affiliate_id='', $params=null) {
+		$cat=AdEngine::getCachedCategory();
+
+		$additional_params = "";
+		if (!empty($params) && is_array($params)) {
+			foreach ($params as $key => $val) {
+				$additional_params .= "&" . urlencode($key) . "=" . urlencode($val);
+			}
+		}
+
+		$adUrlScript = <<<EOT
+	var base_url = "$base_url";
+	base_url += "?loc=" + escape(window.location);
+	if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);
+	if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);
+	if(typeof document.mmm_fo != "undefined") base_url += "&mmm_fo=1";
+	base_url += "&target=_top";
+	base_url += "&cb=" + AdsCB;
+	if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;
+	base_url += "&hub={$cat['short']}";
+	base_url += "&skin_name=" + skin;
+	base_url += "&cont_lang=" + wgContentLanguage;
+	base_url += "&user_lang=" + wgUserLanguage;
+	base_url += "&dbname=" + wgDB;
+	base_url += "&tags=" + wgWikiFactoryTagNames.join(",");
+	base_url += "{$additional_params}";
+	base_url += "&block=1";
+EOT;
+
+		if (!empty($slotname)) {
+			$adUrlScript .= <<<EOT
+	base_url += "&slotname={$slotname}";
+EOT;
+		}
+		if (!empty($zone_id)) {
+			$adUrlScript .= <<<EOT
+	base_url += "&zoneid=$zone_id";
+EOT;
+		}
+		if (!empty($affiliate_id)) {
+			$adUrlScript .= <<<EOT
+	base_url += "&id=$affiliate_id";
+EOT;
+		}
+		
+		return $adUrlScript;
+	}
+
+	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
 		$this->useIframe = true;
 
 		$adUrlScript = $this->getAdUrlScript($slotname, null, true);
