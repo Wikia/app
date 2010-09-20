@@ -462,7 +462,7 @@ function showCSpanel() {
 
 			// Dynamically load & apply the CSS.
 			if (window.skin == 'oasis') {
-				var cssPath = wfGetSassUrl(wgExtensionsPath+'/wikia/CategorySelect/oasis.scss');
+				var cssPath = wfGetSassUrl('/extensions/wikia/CategorySelect/oasis.scss');
 			}
 			else {
 				var cssPath = wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.scss?'+wgStyleVersion;
