@@ -73,7 +73,8 @@ if(count($data) < $MIN_NUM_PARAMS){
 
 			file_put_contents($fileName, $content, LOCK_EX);
 
-			// Print the whole content of the file.
+			// Print the whole content of the file (with correct headers).
+			header('HTTP/1.0 200 OK');
 			print $content;
 		}
 	}
