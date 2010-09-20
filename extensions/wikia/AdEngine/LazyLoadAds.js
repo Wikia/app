@@ -22,20 +22,27 @@ var LazyLoadAds = {
 		if (LazyLoadAds.lazyLoadAdTops==null) {
 			LazyLoadAds.lazyLoadAdTops = {};
 			$(".LazyLoadAd").each(function() {
-				var iframeId = $(this).attr("id");
-				LazyLoadAds.lazyLoadAdTops[iframeId] = $(this).offset().top;
+				var elemId = $(this).attr("id");
+				LazyLoadAds.lazyLoadAdTops[elemId] = $(this).offset().top;
 			});
 		}
 
-		$.each(LazyLoadAds.lazyLoadAdTops, function(iframeId, topVal) {
-			if (!$("#"+iframeId).attr("src")) {
+		$.each(LazyLoadAds.lazyLoadAdTops, function(elemId, topVal) {
+			if (!$("#"+elemId).hasClass('AdLazyLoaded')) { 
 				if (topVal > 0 && topVal < (fold + LazyLoadAds.settings.threshhold)) {
-                                	//remove trailing "_iframe"
-                                	var iframeLastIndex = iframeId.lastIndexOf("_iframe", iframeId.length-7);
-                                	if (iframeLastIndex == iframeId.length-7) {
-                                    		iframeId = iframeId.substr(0, iframeLastIndex);
-                                	}
-                                	window["fillIframe_" + iframeId]();
+					adslot = elemId;
+					if (document.getElementById(elemId).nodeName.toLowerCase() == 'iframe') {
+						//remove trailing "_iframe"
+						var iframeLastIndex = elemId.lastIndexOf("_iframe", elemId.length-7);
+						if (iframeLastIndex == elemId.length-7) {
+							adslot = elemId.substr(0, iframeLastIndex);
+						}
+						window["fillIframe_" + adslot]();
+					}
+					else {
+						window["fillElem_" + adslot]();
+					}
+					$("#"+elemId).addClass('AdLazyLoaded');
 				}
 			}
 		});
