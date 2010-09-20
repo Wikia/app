@@ -9,6 +9,8 @@ class BodyModule extends Module {
 	var $wgNoExternals;
 	var $wgSuppressWikiHeader;
 	var $wgSuppressPageHeader;
+	var $wgSuppressFooter;
+	var $wgSuppressFeedback;
 
 	// skin vars
 	var $content;

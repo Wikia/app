@@ -127,10 +127,16 @@
 	.wikia-button,
 	.wikia-menu-button {
 		vertical-align: text-bottom;
-		&[data-id=edit] .icon,
-		a[data-id=edit] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat; /* $wgCdnStylePath */
-			vertical-align: text-bottom;
+		&[data-id=edit],
+		a[data-id=edit]{
+			left: -2px;
+			margin-right: 2px;
+			padding-right: 8px;
+			position: relative; 
+			.icon {
+				background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat; /* $wgCdnStylePath */
+				vertical-align: text-bottom;
+			}
 		}
 		a[data-id=add] .icon {
 			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
