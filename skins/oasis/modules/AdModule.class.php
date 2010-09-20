@@ -18,10 +18,13 @@ class AdModule extends Module {
 		if(ArticleAdLogic::isMainPage()) {
 			// main page
 			self::$config['HOME_TOP_LEADERBOARD'] = true;
-			self::$config['PREFOOTER_LEFT_BOXAD'] = true;
-			self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 			self::$config['INVISIBLE_1'] = true;
 			self::$config['INVISIBLE_2 '] = true;
+			if(ArticleAdLogic::isLongArticle(self::getSkinTemplateObj()->data['bodytext'])) {
+				// long page
+				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
+				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
+			}
 			if(!empty($wgEnableAdInvisibleHomeTop)) {
 				self::$config['HOME_INVISIBLE_TOP'] = true;
 			}
@@ -33,14 +36,14 @@ class AdModule extends Module {
 				// content page
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
-				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
-				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				self::$config['INVISIBLE_1'] = true;
 				self::$config['INVISIBLE_2 '] = true;
 				if(ArticleAdLogic::isLongArticle(self::getSkinTemplateObj()->data['bodytext'])) {
 					// long content page
 					self::$config['LEFT_SKYSCRAPER_2'] = true;
 					self::$config['LEFT_SKYSCRAPER_3'] = true;
+					self::$config['PREFOOTER_LEFT_BOXAD'] = true;
+					self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				}
 				if(!empty($wgEnableAdInvisibleTop)) {
 					self::$config['INVISIBLE_TOP'] = true;
@@ -56,8 +59,11 @@ class AdModule extends Module {
 				// category page
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['LEFT_SKYSCRAPER_2'] = true;
-				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
-				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
+				if(ArticleAdLogic::isLongArticle(self::getSkinTemplateObj()->data['bodytext'])) {
+					// long page
+					self::$config['PREFOOTER_LEFT_BOXAD'] = true;
+					self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
+				}
 			}
 		}
 	}
