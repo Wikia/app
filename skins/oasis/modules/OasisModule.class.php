@@ -67,6 +67,9 @@ class OasisModule extends Module {
 					"\"><!-- site js --></script>");
 		}
 
+		// Since modules add headscripts late in the execution and certain MediaWiki overrides need to be AFTER those files, we add them here.
+		$wgOut->addStyle( Skin::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI ) );
+
 		// We re-process the wgOut scripts and links here so modules can add to the arrays inside their execute method
 		$this->headscripts = $wgOut->getScript();
 		$this->csslinks = $wgOut->buildCssLinks();
