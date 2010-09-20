@@ -1,6 +1,12 @@
 <?php
 class ServiceTest extends PHPUnit_Framework_TestCase {
 
+	// initialize memcache
+	public static function setUpBeforeClass() {
+		global $wgMemc;
+		$wgMemc = wfGetCache(CACHE_MEMCACHED);
+	}
+
 	function testAvatarService() {
 		$anonName = '10.10.10.10';
 		$userName = 'WikiaBot';
