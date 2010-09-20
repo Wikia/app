@@ -5,15 +5,10 @@
 // Oasis Page Modules //
 @import "../core/color";
 
-// any styling for searchresult block can go here
-.mw-searchresult {
-    // .mw-searchresults
-	ul {
-
-	}
-
-	li {
-
+.mw-search-results {
+	font-size: 13px;
+	.searchresult {
+		line-height: 1.8em;
 	}
 }
 
@@ -37,15 +32,12 @@
 
 // turn off hr tags at top of search results
 .WikiaArticle {
-
 	hr {
 		border-width: 0;
 	}
-
 	em {
 		font-weight: bold;
 	}
-
 	ul {
 		margin-left: 0px;
 	}
@@ -55,19 +47,17 @@
 	hr {
 		border-width: 1px;
     }
-
 	fieldset {
 		border: 1px solid $color-links;
+		line-height: 1.5em;
 		margin: 1em 0 1em 0;
 		padding: 0 1em 1em;
-		line-height: 1.5em;
 	}
 	legend {
 		padding: .5em;
 	}
-
 	label {
-		font-size: 15px;
 		display: inline;
+		font-size: 15px;
     }
 }
