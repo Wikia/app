@@ -1,9 +1,11 @@
 <?php
 class ServiceTest extends PHPUnit_Framework_TestCase {
 
-	// initialize memcache
+	// reinitialize memcache
 	public static function setUpBeforeClass() {
-		global $wgMemc;
+		global $wgMemc, $wgCaches;
+
+		unset($wgCaches[CACHE_MEMCACHED]);
 		$wgMemc = wfGetCache(CACHE_MEMCACHED);
 	}
 
