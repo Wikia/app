@@ -62,7 +62,6 @@ function SiteWideMessagesInit() {
 		$wgHooks['EditPage::showEditForm:initial'][] = 'SiteWideMessagesArticleEditor';
 		$wgHooks['AbortDiffCache'][] = 'SiteWideMessagesAbortDiffCache';
 		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
-		$wgHooks['SkinNotificationsBeforeExecute'][] = 'SiteWideMessagesUndismissedNotifications';
 	}
 }
 
@@ -153,7 +152,7 @@ function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 
 	if(!is_array($messages) && $messages != 'deleted') {
 		$messages = array();
-		
+
 		// For Oasis we want to set the filter_seen argument to false since we want the messages
 		// to stay visible until they actually dismiss them
 		$messagesID = SiteWideMessages::getAllUserMessagesId($user);
@@ -241,16 +240,6 @@ function SiteWideMessagesPublicStatusChange($city_public, $city_id) {
 	if ($city_public == 0 || $city_public == 2) {
 		SiteWideMessages::deleteMessagesOnWiki($city_id);
 	}
-	return true;
-}
-
-function SiteWideMessagesUndismissedNotifications(&$skin) {
-	global $wgUser;
-
-	// Add site wide notifications that haven't been dismissed
-	$msg = SiteWideMessages::getAllUserMessages($wgUser, false, false);
-	$skin->addSiteWideNotification($msg);
-	
 	return true;
 }
 
