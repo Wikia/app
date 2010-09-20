@@ -23,7 +23,7 @@
 		</div>
 	<? elseif( $relatedTitle instanceof Title ) :?>
 		<div class="ListRelatedArticle">
-			<a href="<?= $relatedTitle->getLocalURL() ;?>" title="<?= $relatedTitle->getText() ;?>"><?= $relatedTitle->getText() ;?></a>
+			<?= wfMsgForContent( 'toplists-list-related-to' ) ;?><a href="<?= $relatedTitle->getLocalURL() ;?>" title="<?= $relatedTitle->getText() ;?>"><?= $relatedTitle->getText() ;?></a>
 		</div>
 	<? endif ;?>
 
@@ -39,6 +39,7 @@
 				</div>
 				<div class="ItemContent">
 					<?= $item->getParsedContent() ;?>
+					<strong><?= print_r( is_array($item->getVotesTimestamps()) ? $item->getVotesTimestamps() : 'aaaa' ); ?></strong>
 					<span class="author"><?= wfMsgExt( 'toplists-list-created-by', array( 'parse', 'content' ), array( $item->getEditor()->getName() ) ) ;?></span>
 				</div>
 				<div class="ItemVotes"><?= wfMsgExt( 'toplists-list-votes-num', array( 'parsemag', 'content' ), array( $item->getVotesCount() ) ) ;?></div>

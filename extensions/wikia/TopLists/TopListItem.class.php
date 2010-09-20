@@ -8,8 +8,9 @@
 class TopListItem extends TopListBase {
 
 	protected $mVotesCount = null;
+	protected $mVotesTimestamps = null;
 	protected $mNewContent = null;
-	protected $mVotesCountCacheTTL = 6; // in hours
+	protected $mVotesCacheTTL = 6; // in hours
 	private $mList = null;
 
 	/**
@@ -68,6 +69,8 @@ class TopListItem extends TopListBase {
 			$oApi->execute();
 
 			$this->mVotesCount = null;
+			$this->mVotesTimestamps = null;
+			
 			$aResult = $oApi->GetResultData();
 
 			$success = !empty( $aResult );
@@ -75,6 +78,7 @@ class TopListItem extends TopListBase {
 			if( $success ) {
 				// increment votes counter cache
 				$this->_increaseCachedVotesCount();
+				$this->_addCachedVotesTimestamp();
 
 				// invalidate cache
 				$this->getList()->invalidateCache();
@@ -102,6 +106,7 @@ class TopListItem extends TopListBase {
 
 			$cacheKey = $this->_getVotesCountCacheKey();
 			$cachedValue = $wgMemc->get( $cacheKey );
+
 			if( !empty( $cachedValue ) ) {
 				$this->mVotesCount = $cachedValue;
 
@@ -109,23 +114,69 @@ class TopListItem extends TopListBase {
 				return $cachedValue;
 			}
 
-			$pageId = $this->getArticle()->getId();
-
-			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 0 ));
-			$oApi = new ApiMain($oFauxRequest);
-			$oApi->execute();
-			$aResult = $oApi->GetResultData();
-
-			if( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
-				$this->mVotesCount = $aResult['query']['wkvoteart'][$pageId]['votescount'];
-			} else {
-				$this->mVotesCount = 0;
-			}
-			$wgMemc->set( $cacheKey, intval( $this->mVotesCount ), ( $this->mVotesCountCacheTTL * 3600 ) );
+			$this->_queryVotesApi();
+			$wgMemc->set( $cacheKey, intval( $this->mVotesCount ), ( $this->mVotesCacheTTL * 3600 ) );
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $this->mVotesCount;
+	}
+
+	/**
+	 * Gets an array of timestamps, one per vote casted on the item
+	 *
+	 * @author Federico "Lox" Lucignano
+	 * @param bool $forceUpdate force update flag
+	 * @return Array an array of integer timestamps
+	 */
+	public function getVotesTimestamps( $forceUpdate = false ) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		if( ( $this->mVotesTimestamps == null ) || $forceUpdate ) {
+
+			$cacheKey = $this->_getVotesTimestampsCacheKey();
+			$cachedValue = $wgMemc->get( $cacheKey );
+			
+			if( !empty( $cachedValue ) ) {
+				$this->mVotesTimestamps = $cachedValue;
+
+				wfProfileOut( __METHOD__ );
+				return $cachedValue;
+			}
+
+			$this->_queryVotesApi();
+			$wgMemc->set( $cacheKey, $this->mVotesTimestamps, ( $this->mVotesCacheTTL * 3600 ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $this->mVotesTimestamps;
+	}
+
+	/**
+	 * Fetches useful information about article votes for this item
+	 *
+	 * @author Federico "Lox" Lucignano
+	 */
+	private function _queryVotesApi() {
+		$pageId = $this->getArticle()->getId();
+		
+		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 0, "wktimestamps" => 1 ));
+		$oApi = new ApiMain($oFauxRequest);
+		$oApi->execute();
+		$aResult = $oApi->GetResultData();
+
+		if( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
+			$this->mVotesCount = $aResult['query']['wkvoteart'][$pageId]['votescount'];
+		} else {
+			$this->mVotesCount = 0;
+		}
+
+		if( !empty( $aResult['query']['wkvoteart'][$pageId]['timestamps'] ) ) {
+			$this->mVotesTimestamps = $aResult['query']['wkvoteart'][$pageId]['timestamps'];
+		} else {
+			$this->mVotesTimestamps = array();
+		}
 	}
 
 	/**
@@ -139,9 +190,30 @@ class TopListItem extends TopListBase {
 		$this->mVotesCount = null;
 		$wgMemc->incr( $this->_getVotesCountCacheKey() );
 	}
+
+
+	/**
+	 * adds a timestamp to the collection of votes' timestamps
+	 *
+	 * @author ADi
+	 */
+	private function _addCachedVotesTimestamp() {
+		global $wgMemc;
+
+		$cacheKey = $this->_getVotesTimestampsCacheKey();
+
+		$this->mVotesTimestamps = $wgMemc->get( $cacheKey );
+		$this->mVotesTimestamps[] = time();
+
+		$wgMemc->set( $cacheKey, $this->mVotesTimestamps, ( $this->mVotesCacheTTL * 3600 ) );
+	}
 	
 	private function _getVotesCountCacheKey() {
 		return wfMemcKey( $this->getTitle()->getDBkey(), 'votesCount' );
+	}
+
+	private function _getVotesTimestampsCacheKey() {
+		return wfMemcKey( $this->getTitle()->getDBkey(), 'timestamps' );
 	}
 
 	/**

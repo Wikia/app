@@ -294,8 +294,7 @@ class TopListHelper {
 		if( !empty( $titleText ) ) {
 			$item = TopListItem::newFromText( $titleText );
 
-			if( $item instanceof TopListItem ) {
-
+			if( $item instanceof TopListItem && $item->getList()->exists() && $item->getList()->userCanVote()) {
 				$result['result'] = $item->vote();
 				$result['listBody'] = TopListParser::parse( $item->getList() );
 			}
