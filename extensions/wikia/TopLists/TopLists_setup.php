@@ -92,6 +92,7 @@ global $wgAjaxExportList;
 $wgAjaxExportList[] = 'TopListHelper::renderImageBrowser';
 $wgAjaxExportList[] = 'TopListHelper::uploadImage';
 $wgAjaxExportList[] = 'TopListHelper::voteItem';
+$wgAjaxExportList[] = 'TopListHelper::checkListStatus';
 
 //hooks
 global $wgHooks;

@@ -18,12 +18,27 @@ var TopList = {
 			},
 			function(response) {
 				if( response.result == true ) {
-					console.log(response.listBody);
 					$('#toplists-list-body').html(response.listBody);
 				}
 			}
 		);
+		return false;
+	},
 
+	checkList: function( title ) {
+		$.getJSON(wgScript,
+				{
+					'action':'ajax',
+					'rs':'TopListHelper::checkListStatus',
+					'title':title
+				},
+				function(response) {
+					if( response.result == true ) {
+						console.log(response);
+						//$('#toplists-list-body').html(response.listBody);
+					}
+				}
+		);
 		return false;
 	},
 

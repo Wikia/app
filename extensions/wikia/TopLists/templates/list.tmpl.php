@@ -46,3 +46,6 @@
 		<? endforeach; ?>
 	</ul>
 </div>
+<script type="text/javascript">/*<![CDATA[*/
+	wgAfterContentAndJS.push( function() { TopList.checkList('<?= $list->getTitle()->getText(); ?>') } );
+/*]]>*/</script>

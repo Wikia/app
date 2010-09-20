@@ -307,5 +307,32 @@ class TopListHelper {
 
 		return $response;
 	}
+
+	/**
+	 * check status of the list (vote/edit permissions)
+	 */
+	public static function checkListStatus() {
+		global $wgRequest;
+
+		$result = array( 'canVote' => false, 'canEdit' => false );
+
+		$titleText = $wgRequest->getVal( 'title' );
+
+		if( !empty( $titleText ) ) {
+			$list = TopList::newFromText( $titleText );
+
+			if( $item instanceof TopList ) {
+
+				$result['canVote'] = $list->userCanVote();
+				$result['canEdit'] = false; // TODO: implement
+			}
+		}
+
+		$json = Wikia::json_encode( $result );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		return $response;
+	}
 }
-?>
+
