@@ -15,8 +15,6 @@ class WikiHeaderModule extends Module {
 	var $wordmarkStyle;
 	var $wordmarkFont;
 
-	var $canEdit;
-
 	private function parseMonacoSidebarToOasisNavigation($text) {
 		$lines = explode("\n", $text);
 		$skip = true;
@@ -70,8 +68,7 @@ class WikiHeaderModule extends Module {
 
 		$oasis_navigation_title = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI);
 
-		$this->canEdit = $wgUser->isAllowed('editinterface');
-		if($this->canEdit) {
+		if($wgUser->isAllowed('editinterface')) {
 			$this->editURL['href'] = $oasis_navigation_title->getFullURL();
 			$this->editURL['text'] = wfMsg('monaco-edit-this-menu');
 		}
