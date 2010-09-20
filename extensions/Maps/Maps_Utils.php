@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**  
  * A class that holds static helper functions for common functionality that is map-spesific.
