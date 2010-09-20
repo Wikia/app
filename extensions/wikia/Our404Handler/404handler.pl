@@ -574,7 +574,7 @@ while( $request->Accept() >= 0 || $test ) {
 						say STDERR "Resizing into $thumbnail, time: $t_elapsed" if $debug;
 
 						my $output = undef;
-						$image->write( data => \$output, type => $imgtype );
+						$image->write( data => \$output, type => $imgtype, jpegquality => 90 );
 						use bytes;
 						my $output_length = length( $output );
 						if( $output_length ) {
