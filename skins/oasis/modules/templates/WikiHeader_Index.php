@@ -28,7 +28,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 			}
 ?>
 <?php
-			if($canEdit) {
+			if($editURL) {
 ?>
 					<li class="edit-menu last">
 						<a href="<?= $editURL['href'] ?>"><?= $editURL['text'] ?></a>
