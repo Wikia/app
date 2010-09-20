@@ -644,12 +644,15 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$userName = $wgUser->getName();
 
 		// extend posts data coming from Blogs ext
+		wfLoadExtensionMessages('Blogs');
+		$cutSign = wfMsg('blug-cut-sign');
+
 		$posts = array(
 			array(
 				'comments' => 1,
 				'namespace' => 500,
 				'page' => 1,
-				'text' => 'foo',
+				'text' => "text{$cutSign}",
 				'timestamp' => wfTimestamp(TS_MW),
 				'title' => 'My blog post',
 				'username' => $userName,
@@ -660,6 +663,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(AvatarService::renderAvatar($userName, 48), $posts[0]['avatar']);
 		$this->assertEquals(AvatarService::getUrl($userName), $posts[0]['userpage']);
+		$this->assertTrue($posts[0]['readmore']);
 		$this->assertType('int', $posts[0]['likes']);
 		$this->assertType('string', $posts[0]['date']);
 
