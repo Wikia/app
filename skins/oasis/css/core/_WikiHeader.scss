@@ -10,11 +10,13 @@
 		&.graphic {
 			height: 65px;
 			a {
-				display: none;
+				display: block;
+				height: 65px;
+				text-indent: -1000px;
 			}
 		}
 	}
-	h1:before, 
+	h1:before,
 	.shadow-mask {
 		bottom: 0;
 		height: 8px;
@@ -74,7 +76,7 @@
 		padding: 5px;
 		top: -9999px;
 		li {
-			*float: none;		
+			*float: none;
 			*width: auto;
 			padding: 0;
 			a {
