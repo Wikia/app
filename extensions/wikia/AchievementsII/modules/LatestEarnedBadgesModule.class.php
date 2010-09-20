@@ -5,14 +5,14 @@ class LatestEarnedBadgesModule extends Module {
 	var $recents;
 
 	public function executeIndex() {
-		global $wgUser, $wgOut, $wgExtensionsPath;
+		global $wgOut;
 		$maxBadgesToDisplay = 6;  // Could make this a global if we want
 
 		wfProfileIn(__METHOD__);
 
 		// include oasis.css override
-		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-			$wgOut->addStyle(wfGetSassUrl("$wgExtensionsPath/wikia/AchievementsII/css/oasis.scss"));
+		if (Wikia::isOasis()) {
+			$wgOut->addStyle(wfGetSassUrl('/extensions/wikia/AchievementsII/css/oasis.scss'));
 		}
 
 		// This code was taken from SpecialLeaderboard so it can be used by both the module and the old Monaco .tmpl

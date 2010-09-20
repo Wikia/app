@@ -7,7 +7,7 @@ class SpecialEditTopList extends SpecialPage {
 
 	private function _redirectToCreateSP( $listName = null ){
 		global $wgOut;
-		
+
 		$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
 		$url = $specialPageTitle->getFullUrl();
 
@@ -37,7 +37,7 @@ class SpecialEditTopList extends SpecialPage {
 
 		// include resources (css and js)
 		//$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/TopLists/css/editor.css?{$wgStyleVersion}\n" );
-		$wgOut->addStyle( wfGetSassUrl( "$wgExtensionsPath/wikia/TopLists/css/editor.scss" ) );
+		$wgOut->addStyle( wfGetSassUrl( '/extensions/wikia/TopLists/css/editor.scss' ) );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/editor.js?{$wgStyleVersion}\"></script>\n" );
 
 		//hide specialpage subtitle in Oasis
