@@ -133,12 +133,12 @@ class ThemeDesignerModule extends Module {
 						$this->backgroundImageAlign = "left";
 					}
 
-					//save temp file				
+					//save temp file
 					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
 					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
 					$this->backgroundImageUrl = $file->getUrl();
 					$this->backgroundImageName = $file->getName();
-	
+
 					//get cropped URL
 					$is = new imageServing(null, 120, array("w"=>"120", "h"=>"100"));
 					$this->backgroundImageThumb = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height)."-".$file->name));
@@ -146,7 +146,7 @@ class ThemeDesignerModule extends Module {
 				}
 
 			}
-				
+
 		}
 
 		// if background image url is not set then it means there was some problem
