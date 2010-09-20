@@ -121,13 +121,22 @@ class WikiaAssets {
 			header('Cache-Control: max-age=2592000, public');
 
 			$references = array();
+			
+			// configure based on skin
+			if(Wikia::isOasis()){
+				$packageName = "oasis_anon_article_js";
+				$skinName = "oasis";
+			} else {
+				$packageName = "monaco_anon_article_js";
+				$skinName = "monaco";
+			}
 
 			// static chute
 			global $wgServer;
 			$wgRequest->setVal('allinone', true);
 			$staticChute = new StaticChute('js');
 			$staticChute->useLocalChuteUrl();
-			preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_anon_article_js'), $matches, PREG_SET_ORDER);
+			preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage($packageName), $matches, PREG_SET_ORDER);
 			foreach($matches as $script) {
 				$references[] = str_replace($wgServer.'/', '/', $script[1]);
 			}
@@ -141,7 +150,7 @@ class WikiaAssets {
 			}
 
 			// -
-			$references[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=monaco");
+			$references[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=$skinName");
 
 			$out = '';
 			foreach($references as $reference) {
