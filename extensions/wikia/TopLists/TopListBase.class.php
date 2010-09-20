@@ -35,18 +35,22 @@ abstract class TopListBase {
 	 */
 	protected function _loadData( $forceReload = false, $overrideCall = true ) {
 		if ( ( !$this->mDataLoaded || $forceReload ) ) {
-			$this->mCreationTimestamp = $this->mTitle->getEarliestRevTime();
+			if ( $this->exists() ) {
+				$this->mCreationTimestamp = $this->mTitle->getEarliestRevTime();
 
-			$revData = $this->mTitle->getFirstRevision();
+				$revData = $this->mTitle->getFirstRevision();
 
-			if( !empty( $revData ) ) {
-				$userId = $revData->getUser();
+				if( !empty( $revData ) ) {
+					$userId = $revData->getUser();
 
-				if( !empty( $userId ) ) {
-					$this->mAuthor = User::newFromId( $userId );
+					if( !empty( $userId ) ) {
+						$this->mAuthor = User::newFromId( $userId );
+					}
 				}
-			}
 
+				$this->mEditor = User::newFromId( $this->getArticle()->getUser() );
+			}
+			
 			if( !$overrideCall ) {
 				$this->mDataLoaded = true;
 			}
@@ -167,6 +171,20 @@ abstract class TopListBase {
 	public function getAuthor( $forceReload = false ) {
 		$this->_loadData( $forceReload );
 		return $this->mAuthor;
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Gets the user that has made the last edit in the article
+	 *
+	 * @param boolean $forceReload true to force data reload, defaults to false
+	 *
+	 * @return User a user object for the last editor of the article, null if the article doesn't exist
+	 */
+	public function getEditor( $forceReload = false ) {
+		$this->_loadData( $forceReload );
+		return $this->mEditor;
 	}
 
 	/**

@@ -74,7 +74,7 @@ class TopListItem extends TopListBase {
 
 			if( $success ) {
 				// increment votes counter cache
-				$this->incrCachedVotesCount();
+				$this->_increaseCachedVotesCount();
 
 				// invalidate cache
 				$this->getList()->invalidateCache();
@@ -100,7 +100,7 @@ class TopListItem extends TopListBase {
 
 		if( ( $this->mVotesCount == null ) || $forceUpdate ) {
 
-			$cacheKey = $this->getVotesCountCacheKey();
+			$cacheKey = $this->_getVotesCountCacheKey();
 			$cachedValue = $wgMemc->get( $cacheKey );
 			if( !empty( $cachedValue ) ) {
 				$this->mVotesCount = $cachedValue;
@@ -133,29 +133,15 @@ class TopListItem extends TopListBase {
 	 *
 	 * @author ADi
 	 */
-	private function incrCachedVotesCount() {
+	private function _increaseCachedVotesCount() {
 		global $wgMemc;
 
 		$this->mVotesCount = null;
-		$wgMemc->incr( $this->getVotesCountCacheKey() );
+		$wgMemc->incr( $this->_getVotesCountCacheKey() );
 	}
-
-	private function getVotesCountCacheKey() {
-		return wfMemcKey( $this->getTitleText(), 'votesCount' );
-	}
-
-	/**
-	 * Get the user name of item creator
-	 *
-	 * @author Adrian 'ADi' Wieczorek
-	 * @return string
-	 */
-	public function getCreatorUserName() {
-		return $this->mTitle->getFirstRevision()->getUserText();
-	}
-
-	public function getTitleText() {
-		return $this->getTitle()->getText();
+	
+	private function _getVotesCountCacheKey() {
+		return wfMemcKey( $this->getTitle()->getDBkey(), 'votesCount' );
 	}
 
 	/**

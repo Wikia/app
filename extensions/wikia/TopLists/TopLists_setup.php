@@ -84,7 +84,7 @@ $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}/../WikiaPhotoGallery/W
 
 $wgAutoloadClasses[ 'SpecialCreateTopList' ] = "{$dir}/specials/SpecialCreateTopList.class.php";
 $wgAutoloadClasses[ 'SpecialEditTopList' ] = "{$dir}/specials/SpecialEditTopList.class.php";
-//$wgAutoloadClasses[ 'SpecialTopList' ] = "{$dir}/specials/SpecialTopLists.class.php";
+//$wgAutoloadClasses[ 'SpecialTopLists' ] = "{$dir}/specials/SpecialTopLists.class.php";
 
 //ajax exports
 global $wgAjaxExportList;

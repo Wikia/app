@@ -321,7 +321,7 @@ class TopListHelper {
 		if( !empty( $titleText ) ) {
 			$list = TopList::newFromText( $titleText );
 
-			if( $item instanceof TopList ) {
+			if( $list instanceof TopList ) {
 
 				$result['canVote'] = $list->userCanVote();
 				$result['canEdit'] = false; // TODO: implement
