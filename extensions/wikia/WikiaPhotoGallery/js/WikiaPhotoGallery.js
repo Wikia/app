@@ -417,8 +417,8 @@ var WikiaPhotoGallery = {
 								dimensions.height = '225';
 							}
 							else {
-								dimensions.width = '200';
-								dimensions.height = '200';
+								dimensions.width = '190';
+								dimensions.height = '190';
 							}
 
 							node.attr(dimensions);
@@ -1438,7 +1438,7 @@ var WikiaPhotoGallery = {
 			min: 50,
 			max: 310,
 			ratio: 2,
-			"default": 200
+			"default": 190
 		};
 
 		this.setupSlider($('#WikiaPhotoGallerySliderGallery'), 'widths', values, function(slider, value) {
@@ -2549,7 +2549,7 @@ var WikiaPhotoGallery = {
 		for (param in data.params) {
 			//ignore default values
 			if (
-				(param == 'widths' && data.params[param] == '200') ||
+				(param == 'widths' && data.params[param] == '190') ||
 				(param == 'position' && data.params[param] == 'left')
 			) {
 				continue;
