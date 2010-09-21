@@ -117,7 +117,7 @@ class FBConnectHooks {
 				<script>
 					(function(){var e=document.createElement("script");e.type="' .
 					$wgJsMimeType . '";e.src="' . $fbScript .
-					'";e.async=true;document.getElementById("fb-root").appendChild(e)})();
+					'";document.getElementById("fb-root").appendChild(e)})();
 				</script>' . "\n"
 			);
 		}
