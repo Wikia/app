@@ -67,8 +67,8 @@ class AchNotificationService {
 			}
 		}
 
-		return $badge;
 		wfProfileOut(__METHOD__);
+		return $badge;
 	}
 
 	public function getNotifcationHTML($userObj) {
@@ -88,9 +88,9 @@ class AchNotificationService {
 			));
 
 			$out = $template->render('NotificationBox');
-			
+
 			wfRunHooks('AchievementsNotification', array($userObj, $badge, &$out));
-						
+
 		} else {
 			$out = '';
 		}
