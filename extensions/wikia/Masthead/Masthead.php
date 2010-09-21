@@ -259,7 +259,7 @@ class Masthead {
 					/**
 					 * uploaded file, we are adding common/avatars path
 					 */
-					$url = $wgBlogAvatarPath . $thumb . $url;
+					$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
 				}
 				else {
 					/**
@@ -270,9 +270,10 @@ class Masthead {
 				}
 			}
 			else {
-				$defaults = $this->getDefaultAvatars( ltrim( $thumb,  "/" ) . "/" );
+				$defaults = $this->getDefaultAvatars( trim( $thumb,  "/" ) . "/" );
 				$url = array_shift( $defaults );
 			}
+
 			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
 	}
@@ -291,7 +292,7 @@ class Masthead {
 	 * @return string -- url to Avatar
 	 */
 	public function getThumbnail( $width ) {
-		$url = $this->getUrl( "/thumb" );
+		$url = $this->getUrl( '/thumb/' );
 
 		/**
 		 * returned url is virtual base for thumbnail, so
