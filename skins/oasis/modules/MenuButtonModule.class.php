@@ -123,7 +123,7 @@ class MenuButtonModule extends Module {
 	}
 	
 	public function createLoginURL() {
-		global $wgUser;
+		global $wgUser, $wgTitle;
 		
 		/** create login URL **/
 		$skin = $wgUser->getSkin();
@@ -132,10 +132,11 @@ class MenuButtonModule extends Module {
 			$returnto .= "&returntoquery={$skin->thisquery}";
 		}
 		
-		$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
+		//$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
+		$signUpHref = $returnto;
 		$signUpHref .= "&type=login";
-		$this->loginTitle =  Title::newFromText("&nbsp;Login to Edit");
-		return $signUpHref;	
+		//$this->loginTitle = Skin::makeSpecialUrl('Signup'); // the linker just expects a page-name here.
+		return $signUpHref;
 	}
 
 }

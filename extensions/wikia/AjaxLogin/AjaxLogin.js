@@ -408,10 +408,12 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				setPlaceHolder: function(id) {
 					AjaxLogin.placeholderID = id;
 				},
-				doReload: function(){
-					params = "";
+				doReload: function(params){
+					params = (params?params:"");
+console.log('AJAXLOGIN PARAMS: ' + params);
 					if( AjaxLogin.placeholderID !== null){
-						params = "placeholder=" + AjaxLogin.placeholderID;
+						params += (params==''?'':'&');
+						params += "placeholder=" + AjaxLogin.placeholderID;
 					} else {
 						// Result was still being cached with .reload(true).  Need to use explicit cachebuster.
 						//window.location.reload(true);
@@ -420,16 +422,20 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 						if(location.indexOf("?") > 0){
 							delim = "&";
 						}
-						window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
+						if(params != ''){
+							params += "&";
+						}
+						window.location.href = location.split("#")[0] + delim + params + "cb=" + Math.floor(Math.random()*10000);
 						return;
 					}
 
 					var reload_loc = '';
-				       	if( window.location.href.indexOf("#") > 0 ) {
+			       	if( window.location.href.indexOf("#") > 0 ) {
 						reload_loc = window.location.href.substring( 0, window.location.href.indexOf("#") );
 					} else {
 						reload_loc = window.location.href;
 					}
+console.log('AJAXLOGIN FINAL PARAMS: ' + params);
 					if( "" != params ) {
 						if (window.location.href.indexOf("?") > 0) {
 							window.location.href = reload_loc + ("&" + params);
