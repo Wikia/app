@@ -35,7 +35,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 			return $this->pagetime($eventDetails[0]);
                   case 'noads':
 		        return $this->noads();
-   		  
+		case 'female':
+		    return $this->female();
+
                   default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
@@ -77,6 +79,17 @@ urchinTracker();
 _uff=0;
 _uacct="UA-288915-46";
 urchinTracker();
+}
+</script>';
+	}
+
+	private function female() {
+		return '<script type="text/javascript">
+if(document.cookie.match(/id%22%3A%222463/)) {
+_uff=0;
+_uacct="UA-288915-47";
+urchinTracker();
+}
 }
 </script>';
 	}
