@@ -47,7 +47,7 @@ class WikiHeaderModule extends Module {
 
 	public function executeIndex() {
 
-		global $wgOut, $wgCityId, $wgUser, $wgSingleH1;
+		global $wgOut, $wgCityId, $wgUser, $wgMemc;
 		// Moved to StaticChute.
 		//$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
 
@@ -98,9 +98,13 @@ class WikiHeaderModule extends Module {
 				}
 			}
 		}
-
-		$lines = explode("\n", wfMsg('Wiki-navigation'));
-		$this->menuNodes = $service->parseLines($lines, array(4, 7));
+		$mKey = wfMemcKey('mOasisWikiHeaderNodes', $oasis_navigation_title->getLatestRevID());
+		$this->menuNodes = $wgMemc->get($mKey);
+		if (empty($this->menuNodes)) {
+			$lines = explode("\n", wfMsg('Wiki-navigation'));
+			$this->menuNodes = $service->parseLines($lines, array(4, 7));
+			$wgMemc->set($mKey, $this->menuNodes);
+		}
 	}
 
 }
