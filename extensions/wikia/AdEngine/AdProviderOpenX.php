@@ -187,7 +187,7 @@ EOT;
 	if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);
 	if(typeof document.mmm_fo != "undefined") base_url += "&mmm_fo=1";
 	base_url += "&target=_top";
-	base_url += "&cb=" + AdsCB;
+	if(typeof AdsCB != "undefined") { base_url += "&cb=" + AdsCB; } else { base_url += "&cb=" + Math.floor(Math.random()*99999999); }
 	if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;
 	base_url += "&hub={$cat['short']}";
 	base_url += "&skin_name=" + skin;
