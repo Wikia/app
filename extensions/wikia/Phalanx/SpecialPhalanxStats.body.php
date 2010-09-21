@@ -113,10 +113,10 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 class PhalanxStatsPager extends ReverseChronologicalPager {
 	public function __construct( $id ) {
-		global $wgExternalSharedDB;
+		global $wgExternalDatawareDB;
 
 		parent::__construct();
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
 		$this->mBlockId = (int) $id;
 
