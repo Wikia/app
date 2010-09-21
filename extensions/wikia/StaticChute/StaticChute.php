@@ -107,8 +107,6 @@ class StaticChute {
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/Geo/geo.js',
-			'../extensions/wikia/QuantcastSegments/qcs.js',
 		);
 	}
 
@@ -300,10 +298,10 @@ class StaticChute {
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
-			'../extensions/wikia/AdEngine/AdEngine.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
 
@@ -335,10 +333,10 @@ class StaticChute {
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
-			'../extensions/wikia/AdEngine/AdEngine.js',
 		);
 		$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
 
@@ -366,9 +364,6 @@ class StaticChute {
 			'common/mwsuggest.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
-			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/Geo/geo.js',
-			'../extensions/wikia/QuantcastSegments/qcs.js',
 		);
 
 		$this->config['corporate_specialpage_js'] = array(
@@ -385,9 +380,6 @@ class StaticChute {
 			'common/mwsuggest.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
-			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/Geo/geo.js',
-			'../extensions/wikia/QuantcastSegments/qcs.js',
 		);
 		//CSS
 		$this->config['corporate_page_css'] = array(
