@@ -1,5 +1,5 @@
 <section class="<?= $blogListingClass ?>" style="display: none">
-	<h3><?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'oasis-add-blog-listing', 'osprite icon-add') ?>
+	<h3><?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'osprite icon-add') ?>
 		<?= $title ?>
 		<span class="reload"><?= View::link($wgTitle, "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?></span>
 	</h3>
