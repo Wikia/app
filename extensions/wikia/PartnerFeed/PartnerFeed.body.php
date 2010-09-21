@@ -5,18 +5,21 @@
  * @subpackage SpecialPage
  * @author Jakub Kurcek
  *
- * Returns WidgetBox formatted RSS / Atom Feeds
+ * Returns formated RSS / Atom Feeds
  */
 
-class WidgetBoxRSS extends SpecialPage {
+class PartnerFeed extends SpecialPage {
 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
 	var $err;
 
 	function  __construct() {
-		parent::__construct( "WidgetBoxRSS" , '' /*restriction*/);
-		wfLoadExtensionMessages("WidgetBoxRSS");
+		parent::__construct( "PartnerFeed" , '' /*restriction*/);
+		wfLoadExtensionMessages("PartnerFeed");
+	}
+	private function shortenString($sString, $length){
+		return substr($sString,0,$length);
 	}
 
 	function execute() {
@@ -35,11 +38,15 @@ class WidgetBoxRSS extends SpecialPage {
 
 		$feed = $wgRequest->getText( "feed", false );
 		$feedType = $wgRequest->getText ( "type", false );
-
 		if (	$feed
 			&& $feedType
 			&& in_array( $feed, array( "rss", "atom" ) )
 		) {
+			// Varnish cache controll. Cache max for 12h.
+
+			header( "Cache-Control: s-maxage=".( 60*60*12 ) );
+			header( "X-Pass-Cache-Control: max-age=".( 60*60*12 ) );
+			
 			switch( $feedType ){
 				case 'AchivementsLeaderboard':
 					$this->FeedAchivementsLeaderboard( $feed );
@@ -56,6 +63,9 @@ class WidgetBoxRSS extends SpecialPage {
 				case 'RecentBlogPosts':
 					$this->FeedRecentBlogPosts ( $feed );
 				break;
+				case 'RecentBlogComments':
+					$this->FeedRecentBlogComments ( $feed );
+				break;
 				default :
 					$this->showFeed( $feed );
 				break;
@@ -64,9 +74,66 @@ class WidgetBoxRSS extends SpecialPage {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$wgOut->addHTML( $oTmpl->execute( "main-page" ) );
 		}
-		return;
-		
+
+		return false;
 	}
+
+/**
+ * @author Jakub Kurcek
+ * @param format string 'rss' or 'atom'
+ *
+ */
+	
+	private function FeedRecentBlogComments ( $format ){
+
+		global $wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath, $wgRequest;
+
+		// local settings
+		$maxNumberOfBlogComments = 10;
+		$userAvatarSize = 30;
+
+		$sBlogPost = $wgRequest->getText ( "blogpost", false );
+		$oTitle = Title::newFromText( $sBlogPost , 500);
+		if ( $oTitle->getArticleID() > 0 ){
+
+			$articleCommentList = ArticleCommentList::newFromTitle($oTitle);
+			$articleCommentList->newFromTitle( $oTitle );
+			$aCommentPages = $articleCommentList->getCommentPages();
+
+			$counter = $maxNumberOfBlogComments;
+			$feedArray = array();
+			foreach ($aCommentPages as $commentPage){
+
+				if ( ( $maxNumberOfBlogComments-- ) == 0){
+					break;
+				}
+
+				$tmpArticleComment = $commentPage['level1']->getData();
+
+				$feedArray[] = array(
+					'title' => '',
+					'description' => $tmpArticleComment['text'],
+					'url' => $oTitle->getFullURL(),
+					'date' => $commentPage['level1']->mFirstRevision->getTimestamp(),
+					'author' => $tmpArticleComment['author']->getName(),
+					'otherTags' => array(
+						'image' => AvatarService::getAvatarUrl( $commentPage['level1']->mUser->getName(), $userAvatarSize )
+					)
+				);
+			}
+
+			$this->showFeed( $format , wfMsg( 'feed-title-blogcomments', $oTitle->getFullText() ),  $feedArray);
+
+		} else {
+
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"blogPostName"		=> $sBlogPost
+			));
+			$wgOut->addHTML( $oTmpl->execute( "error-page-blog-comments" ) );
+		}
+	}
+
 /**
  * @author Jakub Kurcek
  * @param format string 'rss' or 'atom'
@@ -78,6 +145,8 @@ class WidgetBoxRSS extends SpecialPage {
 
 		// local settings
 		$maxNumberOfBlogPosts = 10;
+		$postCharacterLimit = 293;
+		$userAvatarSize = 48;
 
 		// If blog listing does not exit treats parameter as empty;
 		$sListing = $wgRequest->getVal( 'listing' );
@@ -108,17 +177,18 @@ class WidgetBoxRSS extends SpecialPage {
 
 		$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, true );
 		$feedArray = array();
+
 		foreach( $result as $val ){
 			$aValue = explode('/' , $val['title']);
 
 			$feedArray[] = array(
 				'title' =>  str_replace( '&nbsp;', ' ', strip_tags( $aValue[1] ) ),
-				'description' => str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ),
+				'description' => substr( str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ), 0, $postCharacterLimit ),
 				'url' => $wgServer.$val['userpage'],
 				'date' => $val['date'],
 				'author' => $val['username'],
 				'otherTags' => array(
-					'image' => preg_replace('/<img.*src="(.*?)".*\/?>/', '$1', $val['avatar']),
+					'image' => AvatarService::getAvatarUrl($val['username'], $userAvatarSize)
 				)
 			);
 		}
@@ -133,12 +203,12 @@ class WidgetBoxRSS extends SpecialPage {
 
 		global $wgUser, $wgOut, $wgExtensionsPath, $wgServer;
 		wfLoadExtensionMessages( 'AchievementsII' );
-
 		// local settings
 		$howOld = 30;
 		$maxBadgesToDisplay = 6;
-		$badgeImageSize = 40;
-		
+		$badgeImageSize = 56;
+		$userNameLength = 22;
+		$badgeNameLength = 29;
 		$rankingService = new AchRankingService();
 
 		// ignore welcome badges
@@ -150,14 +220,13 @@ class WidgetBoxRSS extends SpecialPage {
 		$count = 1;
 
 		$feedArray = array();
-		
 		// getRecentAwardedBadges can sometimes return more than $max items
 		foreach ( $awardedBadges as $badgeData ) {
 			$recents[] = $badgeData;
 			$descriptionText = wfMsg('achievements-recent-info',
 				$badgeData['user']->getUserPage()->getLocalURL(),
-				$badgeData['user']->getName(),
-				$badgeData['badge']->getName(),
+				substr($badgeData['user']->getName(), 0, $userNameLength),
+				substr($badgeData['badge']->getName(), 0, $badgeNameLength),
 				$badgeData['badge']->getGiveFor(),
 				wfTimeFormatAgo($badgeData['date'])
 			);
@@ -178,7 +247,6 @@ class WidgetBoxRSS extends SpecialPage {
 				break;
 			}
 		}
-
 		$this->showFeed( $format , wfMsg('feed-title-recent-badges'),  $feedArray);
 
 	}
@@ -193,10 +261,10 @@ class WidgetBoxRSS extends SpecialPage {
 
 		// local settings
 		$maxImagesNumber = 20;
-		$defaultWidth = 150;
-		$defaultHeight = 75;
+		$defaultWidth = 124;
+		$defaultHeight = 72;
 
-		$imageServing = new imageServing( array(), $defaultWidth,array("w" => 2, "h" => 1) );
+		$imageServing = new imageServing( array(), $defaultWidth, array("w" => $defaultWidth, "h" => $defaultHeight) );
 		$dbw = wfGetDB( DB_SLAVE );
 
 		$res = $dbw->select( 'image',
@@ -229,7 +297,7 @@ class WidgetBoxRSS extends SpecialPage {
 			$image = wfFindFile( $tmpTitle );
 
 			if ( !$image ) continue;
-
+			
 			$testImage = wfReplaceImageServer(
 				$image->getThumbUrl(
 					$imageServing->getCut($row->img_width, $row->img_height)."-".$image->getName()
@@ -248,7 +316,7 @@ class WidgetBoxRSS extends SpecialPage {
 			);
 		}
 
-		$this->showFeed( $format , wfMsg('feed-title-recent-images'),  $feedArray);
+		$this->showFeed( $format , wfMsg( 'feed-title-recent-images' ),  $feedArray);
 	}
 
 /**
@@ -271,7 +339,7 @@ class WidgetBoxRSS extends SpecialPage {
 		}
 		$hubId = AutoHubsPagesHelper::getHubIdFromTitle( $oTitle );
 		$feedArray = $this->PrepareHotContentFeed( $hubId );
-		$this->showFeed( $format, 'Achivements leaderboard - '. $oTitle->getText(),  $feedArray );
+		$this->showFeed( $format, wfMsg( 'feed-title-hot-content', $oTitle->getText() ), $feedArray );
 	}
 	
 /**
@@ -287,7 +355,8 @@ class WidgetBoxRSS extends SpecialPage {
 
 		// local settings
 		$lang = "en";
-		$thumbSize = 75;
+		$thumbSize = 288;
+		$thumbHeight = 124;
 		$resultsNumber = 10;
 		$isDevBox = false; // switch to false after tests
 		$stopCache = false;  // switch to false after tests
@@ -303,9 +372,9 @@ class WidgetBoxRSS extends SpecialPage {
 
 				if ( $isDevBox ){ // fake DevBox data
 					$fakePageId = array( 119949, 119950, 32, 49, 83, 54 );
-					$httpResult = Http::get( 'http://muppets.jakub.wikia-dev.com/api.php?action=imagecrop&imgId='.$fakePageId[rand(0,5)].'&imgSize='.$thumbSize.'&format=json&timestamp='.rand( 0,time() ) );
+					$httpResult = Http::get( 'http://muppets.jakub.wikia-dev.com/api.php?action=imagecrop&imgId='.$fakePageId[rand(0,5)].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json&timestamp='.rand( 0,time() ) );
 				}else{
-					$httpResult = Http::get( $val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize=75&format=json' );
+					$httpResult = Http::get( $val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json' );
 				}
 				$httpResultArr = json_decode( $httpResult );
 				$feedArray[] = array(
@@ -482,9 +551,9 @@ class WidgetBoxRSS extends SpecialPage {
 	private static function getFeedClass ( $format ){
 		
 		if ( $format == 'atom' ){
-			return 'WidgetBoxAtomFeed';
+			return 'PartnerAtomFeed';
 		} else {
-			return 'WidgetBoxRSSFeed';
+			return 'PartnerRSSFeed';
 		}
 	}
 }

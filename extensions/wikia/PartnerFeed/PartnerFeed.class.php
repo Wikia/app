@@ -39,7 +39,7 @@ class ExtendedFeedItem extends FeedItem {
 
 }
 
-class WidgetBoxRSSFeed extends RSSFeed {
+class PartnerRSSFeed extends RSSFeed {
 
 	function outItem( $item ) {
 
@@ -54,7 +54,7 @@ class WidgetBoxRSSFeed extends RSSFeed {
 	}
 }
 
-class WidgetBoxAtomFeed extends AtomFeed {
+class PartnerAtomFeed extends AtomFeed {
 
 	function outItem( $item ) {
 		

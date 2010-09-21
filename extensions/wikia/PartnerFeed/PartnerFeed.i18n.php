@@ -20,8 +20,10 @@ $messages = array(
 		'feed-title-recent-badges'	=> 'Recent Badges',
 		'feed-title-recent-images'	=> 'Recent Images',
 		'feed-title-leaderboard'	=> 'Achivements leaderboard',
-		'feed-main-title'		=> 'Wikia WidgetBox Feed',
+		'feed-main-title'		=> 'Wikia Partner Feed',
 		'all-blog-posts'		=> 'all categories',
 		'blog-posts-from-listening'	=> 'from listening: $1',
+		'feed-title-hot-content'	=> 'Hot Content - $1',
+		'feed-title-blogcomments'	=> 'Comments to $1'
 	)
 );

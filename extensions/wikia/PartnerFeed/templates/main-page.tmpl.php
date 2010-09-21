@@ -26,6 +26,11 @@
 			Hub / verticals "Hot Content" as ranked by # of editors
 		</a>
 	</li>
+	<li>
+		<a href="?feed=rss&type=RecentBlogComments&blogpost=user/post">
+			Recent comments related to specified blog post.
+		</a>
+	</li>
 </ul>
 
 <!-- END OF MAIN-PAGE -->
