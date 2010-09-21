@@ -22,9 +22,17 @@ class WikiaApiCroppedImage extends ApiBase {
 		extract( $this->extractRequestParams() );
 		
 		wfProfileIn(__METHOD__);
-		$test = new imageServing( array( $Id ), $Size);
-		foreach ( $test->getImages( 1 ) as $key => $value ){
-			$imageUrl = $value[0]['url'];
+		$imageServing = new imageServing( array( $Id ), $Size, array("w" => $Size, "h" => $Height));
+		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
+			$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
+			$image = wfFindFile( $tmpTitle );
+			$imageInfo = getimagesize( $image->getPath() );
+			$imageUrl = wfReplaceImageServer(
+				$image->getThumbUrl(
+					$imageServing->getCut( $imageInfo[0], $imageInfo[1] )."-".$image->getName()
+				)
+			);
+
 		}
 		$result = $this->getResult();
 		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
@@ -38,6 +46,10 @@ class WikiaApiCroppedImage extends ApiBase {
 				ApiBase :: PARAM_MIN => 0,
 			),
 			'Size' => array(
+				ApiBase :: PARAM_TYPE => "integer",
+				ApiBase :: PARAM_MIN => 0,
+			),
+			'Height' => array(
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 0,
 			)
@@ -54,6 +66,7 @@ class WikiaApiCroppedImage extends ApiBase {
 		(
 			'Id'	=> 'article Id (integer)',
 			'Size'	=> 'size of cropped image (integer)',
+			'Height' => 'image Height used for right cropped image proportions (integer)'
 		);
 	}
 
