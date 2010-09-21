@@ -140,6 +140,11 @@ class SpecialEditTopList extends SpecialPage {
 				}
 			}
 
+			//filter input
+			foreach ( $itemsNames as $index => $item ) {
+				$itemsNames[ $index ] = trim( $item );
+			}
+
 			//collect existing items and related updates, filter out the removed ones (processed separately)
 			$counter = 0;
 			foreach ( $listItems as $index => $item ) {

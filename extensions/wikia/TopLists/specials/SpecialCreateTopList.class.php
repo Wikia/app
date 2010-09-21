@@ -6,6 +6,11 @@ class SpecialCreateTopList extends SpecialPage {
 	}
 
 	function execute( $par ) {
+		function purgeInput( $elem ) {
+			$val = trim( $elem );
+			return ( !empty( $val ) );
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
@@ -39,7 +44,11 @@ class SpecialCreateTopList extends SpecialPage {
 			$listName = $wgRequest->getText( 'list_name' );
 			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
-			$itemsNames = array_filter( $wgRequest->getArray( 'items_names', array() ) );
+			$itemsNames = array_filter(
+				$wgRequest->getArray( 'items_names', array() ),
+				'purgeInput'
+			);
+			
 			$listItems = array();
 
 			$list = TopList::newFromText( $listName );
@@ -113,8 +122,9 @@ class SpecialCreateTopList extends SpecialPage {
 					foreach ( $itemsNames as $index => $itemName ) {
 						$lcName = strtolower( $itemName );
 						$index++;//index 0 refers to the empty template item in the form
-
-						if ( in_array( $lcName, $alreadyProcessed) ) {
+						if ( strpos( $itemName, '/' ) !== false ) {
+							$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-backslash-not-allowed' ) );
+						} elseif ( in_array( $lcName, $alreadyProcessed) ) {
 							$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-duplicated-entry' ) );
 						} else {
 							$alreadyProcessed[] = $lcName;

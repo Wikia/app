@@ -6,12 +6,17 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/forms";
 @import "mixins.scss";
 
 $item-height: 60px;
 $item-width: 415px;
 
-#toplists-list-body {	
+#toplists-list-body {
+	.ListRelatedArticle {
+		margin-bottom: 22px;
+	}
+
 	ul {
 		list-style-type: none;
 		padding: 0;
@@ -25,11 +30,21 @@ $item-width: 415px;
 			padding: 8px;
 			margin-bottom: 25px;
 			position: relative;
-			overflow: hidden;
+
+			div.No1 {
+				background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 10px 0 transparent;/* $wgCdnStylePath */
+				font-size: 14px;
+				height: 65px;
+				line-height: 30px;
+				padding-top: 13px;
+				position: absolute;
+				top: -20px;
+			}
 
 			.ItemNumber {
 				text-align: center;
-				
+				position: absolute;
+
 				span {
 					display: block;
 				}
@@ -55,13 +70,18 @@ $item-width: 415px;
 						top: -5px;
 						left: -3px;
 					}
+
+					&.VoteButton {
+						visibility: hidden;
+					}
 				}
 			}
 
 			.ItemContent {
 				font-size: 17px;
-				width: 345px;
+				width: 288px;
 				padding-left: 87px;
+				overflow: hidden;
 
 				p {
 					margin: 0;
@@ -70,6 +90,27 @@ $item-width: 415px;
 				.author {
 					display: block;
 					font-size: 10px;
+				}
+
+				.HotItem {
+					background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 0 -86px transparent;/* $wgCdnStylePath */
+					position: absolute;
+					width: 72px;
+					height: 23px;
+					bottom: -2px;
+					right: -7px;
+
+					span {
+						color: $color-error;
+						display: block;
+						font-size: 12px;
+						line-height: 14px;
+						text-align: right;
+						position: absolute;
+						right: 18px;
+						top: -7px;
+						width: 150px;
+					}
 				}
 			}
 
@@ -80,7 +121,19 @@ $item-width: 415px;
 				padding: 10px;
 				line-height: 11px;
 				text-align: right;
-				background-color: $color-module-shadow;
+			}
+
+			.NewItemForm {
+				@include error;
+				padding-left: 72px;
+				
+				input[type="text"] {
+					@include input-field;
+				}
+
+				button {
+					margin-top: 10px;
+				}
 			}
 		}
 	}
