@@ -1,4 +1,4 @@
-<?php
+se<?php
 class AchievementsModule extends Module {
 
 	var $wgBlankImgUrl;
@@ -14,7 +14,7 @@ class AchievementsModule extends Module {
 	var $ownerCounters = array();
 	var $challengesBadges = array();
 	var $max_badges = 6; // sets how many badges are visible from the begining, more badges create 'more'-link
-	var $max_challenges = 6;  // limit how many badges are in the "more badges you can earn" list.
+	var $max_challenges = 'all';  // limit how many badges are in the "more badges you can earn" list. either a number or 'all'
 
 	public function executeIndex() {
 		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
@@ -49,7 +49,12 @@ class AchievementsModule extends Module {
 			$this->challengesBadges = $userProfileService->mChallengesBadges;
 
 			// Let's prune the challengesBadges list to the correct length before passing it to the template
-			while (count($this->challengesBadges) > $this->max_challenges) array_pop($this->challengesBadges);
+			if ($this->max_challenges == "all") {
+				$this->challengesBadges = $this->challengesBadges;
+			}
+			else {
+				while (count($this->challengesBadges) > $this->max_challenges) array_pop($this->challengesBadges);
+			}
 		}
 
 		// UI elements
