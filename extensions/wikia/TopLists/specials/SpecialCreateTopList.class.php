@@ -233,7 +233,7 @@ class SpecialCreateTopList extends SpecialPage {
 		) );
 
 		// render template
-		$wgOut->addHTML( $template->render( 'form' ) );
+		$wgOut->addHTML( $template->render( 'editor' ) );
 
 		wfProfileOut( __METHOD__ );
 	}
