@@ -75,16 +75,17 @@ class SkinUncyclopedia extends SkinMonoBook {
 <table id="spotlight_container">
 <tr>
 <td>
-<div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT') . '</div>
+<div>' . AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_LEFT') . '</div>
 </td>
 <td>
-<div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE') . '</div>
+<div>' . AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_MIDDLE') . '</div>
 </td>
 <td>
 <div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT') . '</div>
 </td>
 </tr>
-</table>';
+</table>' . 
+AdEngine::getInstance()->getDelayedIframeLoadingCode();
 
 		$tpl->set('ads_columngoogle', $spotlights );
 		return true;
