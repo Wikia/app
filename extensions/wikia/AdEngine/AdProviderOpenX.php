@@ -228,7 +228,9 @@ EOT;
                 $out = '<script type="text/javascript">' .
 			$adUrlScript .
                         $function_name . ' = function() { ' .
-			'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " .
+			'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " .
+			'if (typeof ad_iframeOld == "undefined") { return; } ' .
+			"var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " .
 			"ad_iframe.src=base_url_".addslashes($slotname) .
 			"; parent_node.removeChild(ad_iframeOld); parent_node.appendChild(ad_iframe); " .
 			"if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
