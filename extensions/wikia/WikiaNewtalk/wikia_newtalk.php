@@ -185,6 +185,7 @@ function wfDismissWikiaNewtalks() {
 
 	// this request should be posted
 	if ($wgRequest->wasPosted()) {
+		// shared messages
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->delete(
 			'shared_newtalks',
@@ -193,8 +194,12 @@ function wfDismissWikiaNewtalks() {
 			),
 			__METHOD__
 		);
+		$dbw->commit();
 
-		// commit, because it's an AJAX request
+		// local messages
+		$wgUser->setNewtalk(false);
+
+		$dbw = wfGetDB(DB_MASTER);
 		$dbw->commit();
 
 		$key = 'wikia:shared_newtalk:'.$wgUser->getID().':'.str_replace( ' ', '_', $wgUser->getName() );
