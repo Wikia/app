@@ -50,9 +50,9 @@
 					$number1Found = true;
 				}
 				?>
-				<div class="ItemNumber<?= ( $isNumber1 ) ? ' No1' : null ;?>">
+				<div class="ItemNumber<?= ( $isNumber1 ) ? ' No1' : ' NotVotable' ;?>">
 					<span>#<?= $index ;?></span>
-					<button class="VoteButton" id="<?= $item->getTitle()->getText() ;?>">
+					<button class="VoteButton" id="<?= $item->getTitle()->getSubpageText() ;?>">
 						<img src="<?= wfBlankImgUrl() ;?>" class="chevron"/>
 						<?= wfMsgForContent( 'toplists-list-vote-up' ) ;?>
 					</button>
@@ -67,7 +67,7 @@
 						<? if ( !empty( $timeStamps ) ) :?>
 							<?
 							$latest = max( $timeStamps );
-							$lookBackAt = $latest - ( 60 * 60 * 24 * 7 );
+							$lookBackAt = $latest - TOPLISTS_HOT_MIN_TIMESPAN;
 							$oldest = $latest;
 							$count = 0;
 							

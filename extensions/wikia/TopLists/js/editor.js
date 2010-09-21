@@ -13,6 +13,7 @@ var TopListsEditor = {
 	_mAutocompleteField: null,
 	_mSelectedPictureField: null,
 	_mPictureFrame: null,
+	_mAutocompleteFieldChanged: false,
 	
 	_init: function(){
 		TopListsEditor._mListContainer = $('#toplist-editor .ItemsList');
@@ -28,7 +29,11 @@ var TopListsEditor = {
 				deferRequestBy: 1000,
 				maxHeight: 1000,
 				selectedClass: 'selected',
-				width: '270px'
+				width: '270px',
+				onSelect: function(v, d){
+					TopListsEditor._mAutocompleteFieldChanged = true;
+					TopListsEditor.autoSelectImage(v);
+				}
 			})
 		});
 
@@ -49,6 +54,8 @@ var TopListsEditor = {
 		});
 
 		//events handlers
+		TopListsEditor._mAutocompleteField.bind('blur', function(){ TopListsEditor.autoSelectImage($(this).val()); });
+		TopListsEditor._mAutocompleteField.bind('change', function(){ TopListsEditor._mAutocompleteFieldChanged = true; });
 		$('#toplist-editor .ImageBrowser a.wikia-chiclet-button').click(TopListsEditor.showImageBrowser);
 		TopListsEditor._mListContainer.find('li .ItemRemove a').click(TopListsEditor.removeItem);
 		$('#toplist-add-item').click(TopListsEditor.addItem);
@@ -58,6 +65,13 @@ var TopListsEditor = {
 		TopListsEditor._mListContainer.find('li:not(.ItemTemplate) .ItemNumber').each(function(index, elm){
 			$(elm).html('#' + (index + 1));
 		});
+	},
+
+	autoSelectImage: function(imageText){
+		if(typeof imageText != 'undefined' && imageText != '' && TopListsEditor._mAutocompleteFieldChanged){
+			TopListsEditor._mAutocompleteFieldChanged = false;
+			TopListsImageBrowser.getImageData(imageText);
+		}
 	},
 
 	addItem: function(){
@@ -128,6 +142,7 @@ var TopListsEditor = {
 
 var TopListsImageBrowser = {
 	_mDialog: null,
+	_mContext:null,
 	_mOnSelectCallback: null,
 	_uploadForm: null,
 	_uploadInProgress: false,
@@ -179,8 +194,7 @@ var TopListsImageBrowser = {
 
 	_onImageUpload: function(){
 		TopListsImageBrowser._uploadInProgress = true;
-		TopListsImageBrowser._uploadForm.find('.BlockInput').show();
-		$('html').css('cursor', 'wait');
+		TopListsImageBrowser.blockInput();
 		
 		$.AIM.submit(
 			this,
@@ -192,8 +206,7 @@ var TopListsImageBrowser = {
 
 	_onImageUploadComplete: function(response){
 		TopListsImageBrowser._uploadInProgress = false;
-		TopListsImageBrowser._uploadForm.find('.BlockInput').hide();
-		$('html').css('cursor', 'auto');
+		TopListsImageBrowser.unblockInput();
 
 		if(response.success === true){
 			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(response);
@@ -201,6 +214,15 @@ var TopListsImageBrowser = {
 		} else if (response.error === true || response.conflict === true){
 			TopListsImageBrowser._uploadForm.find('p.error').html(response.message);
 		}
+	},
+
+	unblockInput: function(){
+		$('#toplists-loading-screen').remove();
+	},
+
+	blockInput: function(){
+		TopListsImageBrowser.unblockInput();
+		TopListsImageBrowser._mContext.prepend('<div id="toplists-loading-screen"></div>');
 	},
 	
 	show: function(relatedArticle, selectedPicture, onSelectCallback){
@@ -215,5 +237,22 @@ var TopListsImageBrowser = {
 		);
 		
 		TopListsImageBrowser._mOnSelectCallback = onSelectCallback;
+	},
+
+	getImageData: function(title){
+		$.getJSON(wgScript,
+			{
+				'action': 'ajax',
+				'rs': 'TopListHelper::getImageData',
+				'title': title
+			},
+			function(response) {
+				if(response.result === true){
+					TopListsEditor.setPicture(response);
+				}
+
+				return false;
+			}
+		);
 	}
 }

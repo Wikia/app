@@ -197,6 +197,22 @@ class TopListHelper {
 	}
 
 	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Callback for the BeforePageDisplay hook
+	 */
+	public static function onBeforePageDisplay( &$out, &$skin) {
+		global $wgTitle, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+
+		if( $wgTitle->getNamespace() == NS_TOPLIST ) {
+			$out->addStyle( wfGetSassUrl( '/extensions/wikia/TopLists/css/list.scss' ) );
+			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
+		}
+		
+		return true;
+	}
+
+	/**
 	 * formats a timespan in a seconds/minutes/hours/days/weeks count string
 	 *
 	 * @author Federico "Lox" Lucignano
@@ -362,6 +378,42 @@ class TopListHelper {
 		}
 	}
 
+	static public function getImageData() {
+		global $wgRequest;
+
+		$ret = array( 'result' => false );
+		$titleText = $wgRequest->getText( 'title' );
+
+		if( !empty( $titleText ) ) {
+			$title = Title::newFromText( $titleText );
+
+			if( !empty( $title ) && $title->exists() ) {
+				$articleId = $title->getArticleId();
+
+				$source = new imageServing(
+					array( $articleId ),
+					120,
+					array(
+						"w" => 3,
+						"h" => 2
+					)
+				);
+
+				$result = $source->getImages( 1 );
+
+				if( !empty( $result[ $articleId ][ 0 ] ) ) {
+					$ret = array_merge( array( 'result' => true ) ,$result[ $articleId ][ 0 ] );
+				}
+			}
+		}
+			
+		$json = Wikia::json_encode( $ret );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		return $response;
+	}
+
 	/**
 	 * Add a vote for the item
 	 *
@@ -371,6 +423,7 @@ class TopListHelper {
 	public static function voteItem() {
 		global $wgRequest;
 
+		wfLoadExtensionMessages( 'TopLists' );
 		$result = array( 'result' => false );
 
 		$titleText = $wgRequest->getVal( 'title' );
@@ -379,8 +432,10 @@ class TopListHelper {
 			$item = TopListItem::newFromText( $titleText );
 
 			if( $item instanceof TopListItem && $item->getList()->exists() && $item->getList()->userCanVote()) {
-				$result['result'] = $item->vote();
-				$result['listBody'] = TopListParser::parse( $item->getList() );
+				$result[ 'result' ] = $item->vote();
+				$result[ 'votedId' ] = $item->getTitle()->getSubpageText();
+				$result[ 'message' ] = wfMsg( 'toplists-list-item-voted' );
+				$result[ 'listBody' ] = TopListParser::parse( $item->getList() );
 			}
 		}
 

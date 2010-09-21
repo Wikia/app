@@ -38,6 +38,7 @@ class SpecialCreateTopList extends SpecialPage {
 		$relatedArticleName = null;
 		$selectedPictureName = null;
 		$selectedImage = null;
+		$imageTitle = null;
 		$items = null;
 
 		if( $wgRequest->wasPosted() ) {
@@ -54,6 +55,31 @@ class SpecialCreateTopList extends SpecialPage {
 			$list = TopList::newFromText( $listName );
 			$listUrl = null;
 
+			if( !empty( $selectedPictureName ) ) {
+				//check image
+				$imageTitle = Title::newFromText( $selectedPictureName, NS_FILE );
+
+				if ( empty( $imageTitle ) ) {
+					$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
+				} else {
+					$text = $imageTitle->getText();
+					$source = new imageServing(
+						null,
+						120,
+						array(
+							"w" => 3,
+							"h" => 2
+						)
+					);
+
+					$result = $source->getThumbnails( array( $imageTitle->getText() ) );
+					
+					if( !empty( $result[ $text ] ) ) {
+						$selectedImage = $result[ $text ];
+					}
+				}
+			}
+			
 			if ( !( $list ) ) {
 				$errors[ 'list_name' ] = array( wfMsg( 'toplists-error-invalid-title' ) );
 			} else {
@@ -77,33 +103,12 @@ class SpecialCreateTopList extends SpecialPage {
 					}
 				}
 
-				if ( !empty( $selectedPictureName ) ) {
-					$title = Title::newFromText( $selectedPictureName, NS_FILE );
+				if ( !empty( $selectedImage ) ) {
+					$setResult = $list->setPicture( $imageTitle );
 
-					if ( empty( $title ) ) {
-						$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
-					} else {
-						$setResult = $list->setPicture( $title );
-
-						if ( $setResult !== true ) {
-							foreach ( $setResult as $errorTuple ) {
-								$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
-							}
-						} else {
-							$source = new imageServing(
-								null,
-								120,
-								array(
-									"w" => 3,
-									"h" => 2
-								)
-							);
-
-							$result = $source->getThumbnails( array( $title->getText() ) );
-
-							if( !empty( $result[ $selectedPictureName ] ) ) {
-								$selectedImage = $result[ $selectedPictureName ];
-							}
+					if ( $setResult !== true ) {
+						foreach ( $setResult as $errorTuple ) {
+							$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 						}
 					}
 				}

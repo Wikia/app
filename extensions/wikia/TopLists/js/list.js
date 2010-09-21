@@ -12,17 +12,32 @@ var TopList = {
 		TopList.checkList();
 	},
 
+	unblockInput: function(){
+		$('#toplists-loading-screen').remove();
+	},
+
+	blockInput: function(){
+		TopList.unblockInput();
+		TopList._mWrapper.prepend('<div id="toplists-loading-screen"></div>');
+	},
+
 	voteItem: function(e) {
+		TopList.blockInput();
+		
 		$.getJSON(wgScript,
 			{
 				'action': 'ajax',
 				'rs': 'TopListHelper::voteItem',
-				'title': this.id
+				'title': $('#top-list-title').val() + '/' + this.id
 			},
 			function(response) {
 				if(response.result === true){
+					TopList.unblockInput();
 					TopList._mWrapper.replaceWith(response.listBody);
 					TopList._mWrapper = $('#toplists-list-body');
+					TopList._mWrapper.find('#' + response.votedId).closest('li').find('.ItemNumber').
+						append('<div class="Voted"><span></span>' + response.message + '</div>');
+					
 				}
 			}
 		);
@@ -31,7 +46,8 @@ var TopList = {
 
 	addItem: function(ev) {
 		ev.preventDefault();
-		
+		TopList.blockInput();
+
 		$.getJSON(wgScript,
 			{
 				'action': 'ajax',
@@ -40,6 +56,7 @@ var TopList = {
 				'text': $('#toplist-new-item-name').val()
 			},
 			function(response) {
+				TopList.unblockInput();
 				var errorDisplay = TopList._mWrapper.find('.NewItemForm .error');
 				errorDisplay.html('');
 				
@@ -50,6 +67,8 @@ var TopList = {
 					$('#toplist-new-item-name').addClass('error');
 					errorDisplay.html(response.errors.join('<br/>'));
 				}
+
+				
 			}
 		);
 		
@@ -67,6 +86,7 @@ var TopList = {
 					if(response.result === true){
 						if(response.canVote === true){
 							TopList._mWrapper.find('.VoteButton').css('visibility', 'visible');
+							TopList._mWrapper.find('li .ItemNumber').removeClass('NotVotable');
 						}
 					}
 				}

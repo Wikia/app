@@ -71,7 +71,8 @@ $messages['en'] = array(
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vote|votes}} in $2',
 	'toplists-list-add-item-label' => 'Add item',
 	'toplists-list-add-item-name-label' => 'Keep the list going...',
-
+	'toplists-list-item-voted' => 'Voted',
+	
 	//createpage dialog
 	'toplists-createpage-dialog-label' => 'Top list',
 
