@@ -1091,16 +1091,18 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
 	) {
 		//load the i18n file for the extension's namespaces
 		$namespaces = false;
-		require( $wgExtensionNamespacesFiles[ $extensionName ] );
+		require_once( $wgExtensionNamespacesFiles[ $extensionName ] );
 
 		//english is the required default, skip processing if not defined
 		if( !empty( $namespaces[ 'en' ] ) && is_array( $namespaces[ 'en' ] ) ) {
 			foreach ( $nsList as $ns ) {
 				if( !empty( $namespaces[ 'en' ][ $ns ] ) ) {
-					//define the namespace name for the current language
-					$wgExtraNamespaces[ $ns ] = $namespaces[ $wgLanguageCode ][ $ns ];
+					$langCode = ( !empty( $namespaces[ $wgLanguageCode ][ $ns ] ) ) ? $wgLanguageCode : 'en';
 
-					if( $wgLanguageCode != 'en' ) {
+					//define the namespace name for the current language
+					$wgExtraNamespaces[ $ns ] = $namespaces[ $langCode ][ $ns ];
+
+					if( $langCode != 'en' ) {
 						//make en ns alias point to localized ones for current language
 						$wgNamespaceAliases[ $namespaces[ 'en' ][ $ns ] ] = $ns;
 					}
