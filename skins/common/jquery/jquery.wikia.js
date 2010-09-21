@@ -216,6 +216,7 @@ $.loadYUI = function(callback) {
 				loadYUICallBackFIFO[i]();
 			}
 			loadYUICallBackFIFO = null;
+			isYUIloading = false;
 		};
 		$().log('rq start', 'YUI');
 

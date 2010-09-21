@@ -9,7 +9,8 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionFunctions[] = 'wfEditEnhancementsInit';
 $wgAutoloadClasses['EditEnhancements'] = dirname(__FILE__) . '/EditEnhancements.class.php';
 
-function wfEditEnhancementsInit($forceInit = false) {
+
+function wfEditEnhancementsInit($forceInit = true) {
 	global $wgRequest;
 
 	$action = $wgRequest->getVal('action', null);

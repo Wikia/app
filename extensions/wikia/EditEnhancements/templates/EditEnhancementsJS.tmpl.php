@@ -1,5 +1,5 @@
-<script type="text/javascript">
-
+<?php /** <script type="text/javascript">
+/*
 EditEnhancements = function() {
 	this.calculate = function() {
 		
@@ -108,6 +108,6 @@ $(window).bind({
 	'load': EditEnhancementsLoad,
 	'resize': EditEnhancements
 });
+*/
 
-
-</script>
+</script> **/?> 

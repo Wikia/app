@@ -299,3 +299,28 @@
 		}
 	}
 }
+
+
+// /* Webkit hack for Safari and Chrome */
+// /* fixes the +5 pixel position of the elements underneath the editor */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ 
+	#edit_enhancements_toolbar {
+		position: relative;
+		top: -5px;
+	}
+
+	#csMainContainer {
+		position: relative;
+		margin-top: -5px;
+	}
+
+}
+
+
+// /** Footer-toolbar should never float on EditPage **/
+#WikiaFooter {
+	.float {
+			position: inherit;
+	}
+}

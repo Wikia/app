@@ -1517,6 +1517,7 @@ class EditPage {
 
 		$wgOut->addHTML( <<<END
 <form id="editform" name="editform" method="post" action="$action" enctype="multipart/form-data">
+<a name="EditPage"></a>
 END
 );
 

@@ -1,5 +1,5 @@
 <div id="WikiaPageHeader" class="WikiaPageHeader">
-	<a name="EditPage"></a>
+
 	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 <?php
@@ -16,4 +16,6 @@
 		echo wfRenderModule('Search');
 	}
 ?>
+
+
 </div>
