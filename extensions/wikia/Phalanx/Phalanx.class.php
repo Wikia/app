@@ -9,6 +9,7 @@ class Phalanx {
 	const TYPE_ANSWERS_QUESTION_TITLE = 16;
 	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
+	const SCRIBE_KEY = 'log_phalanx';
 
 	public static $typeNames = array(
 		1 => 'content',
@@ -174,7 +175,7 @@ class Phalanx {
 	 * @todo use a message queue for this
 	 */
 	static public function addStats( $blockerId, $type ) {
-		global $wgExternalSharedDB, $wgUser, $wgCityId;
+		global $wgUser, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 
@@ -188,18 +189,34 @@ class Phalanx {
 		if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
 			return;
 		}
-
-		$fields = array(
-			'ps_blocker_id' => $blockerId,
-			'ps_blocker_type' => $type,
-			'ps_timestamp' => wfTimestampNow(),
-			'ps_blocked_user' => $wgUser->getName(),
-			'ps_wiki_id' => $wgCityId,
-		);
-
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
-		$dbw->insert( 'phalanx_stats', $fields );
+		
+		if ( class_exists('WScribeClient') ) {
+			try {
+				$fields = array(
+					'blockId'			=> $blockerId,
+					'blockType'			=> $type,
+					'blockTs' 			=> wfTimestampNow(),
+					'blockUser' 		=> $wgUser->getName(),
+					'city_id' 			=> $wgCityId,
+				);	
+				$data = Wikia::json_encode( $fields );
+				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
+			}
+			catch( TException $e ) {
+				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+			}
+		} else {
+			global $wgExternalDatawareDB;
+			$fields = array(
+				'ps_blocker_id' => $blockerId,
+				'ps_blocker_type' => $type,
+				'ps_timestamp' => wfTimestampNow(),
+				'ps_blocked_user' => $wgUser->getName(),
+				'ps_wiki_id' => $wgCityId,
+			);			
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+			$dbw->insert( 'phalanx_stats', $fields );
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
