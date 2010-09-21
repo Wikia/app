@@ -7,6 +7,9 @@
 	width: 600px;
 	z-index: 99;
 }
+#spotlight-slider #spotlight-slider-0 .description{
+  display: block;
+}
 #spotlight-slider .description h2 {
 	border: 0;
 	display: block;
