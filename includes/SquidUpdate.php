@@ -98,6 +98,10 @@ class SquidUpdate {
 			return SquidUpdate::StompPurge( $urlArr );
 		}
 
+		if( $wgPurgeSquidViaScribe ) {
+			return SquidUpdate::ScribePurge( $urlArr );
+		}
+
 		if ( $wgHTCPMulticastAddress && $wgHTCPPort ) {
 			return SquidUpdate::HTCPPurge( $urlArr );
 		}
@@ -298,6 +302,32 @@ class SquidUpdate {
 			Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
 		}
 		wfProfileOut( $fname );
+	}
+
+	static function ScribePurge( $urlArr ) {
+		wfProfileIn( __METHOD__ );
+		$key = 'varnish_purges';
+		
+		try {
+			foreach ( $urlArr as $url ) {
+				if ( !is_string( $url ) ) {
+					throw new MWException( 'Bad purge URL' );
+				}
+				$url = SquidUpdate::expand( $url );
+
+				wfDebug( "Purging URL $url via Scribe\n" );
+				$data = Wikia::json_encode( array('url' => $url,
+												  'time' => time(),
+											 	 )
+										  );
+				WScribeClient::singleton($key)->send($data);
+			}
+		}
+		catch( TException $e ) {
+			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+		}
+		
+		wfProfileOut( __METHOD__ );
 	}
 
 	function debug( $text ) {
