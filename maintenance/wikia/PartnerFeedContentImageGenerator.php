@@ -1,13 +1,13 @@
 <?php
 /**
- * This script creates WidgetBox Hot Content cache for all accepted hubs.
+ * This script creates Partner Feed Hot Content cache for all accepted hubs.
  *
  * @package MediaWiki
  * @subpackage Maintanance
  *
  * @author: Jakub Kurcek <jakub@wikia-inc.com>
  *
- * @usage: SERVER_ID=177 php WidgetBoxHotContentImageGenerator.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+ * @usage: SERVER_ID=177 php PartnerFeedContentImageGenerator.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
  */
 
 ini_set( "include_path", dirname(__FILE__)."/../" );
@@ -16,15 +16,15 @@ require_once( 'commandLine.inc' );
 
 echo( "Starting cache... \n\n" );
 
-$WidgetBoxFeedGenerator = new WidgetBoxRSS;
+$PartnerFeedGenerator = new PartnerFeed;
 
-foreach ( $WidgetBoxFeedGenerator->allowedHubs() as $key => $val ){
+foreach ( $PartnerFeedGenerator->allowedHubs() as $key => $val ){
 
 	try {
 		if ( !is_array($val) ){
 			$oTitle = Title::newFromText( $key, 150 );
 			$hubId = AutoHubsPagesHelper::getHubIdFromTitle( $oTitle );
-			$WidgetBoxFeedGenerator->ReloadHotContentFeed( $hubId );
+			$PartnerFeedGenerator->ReloadHotContentFeed( $hubId );
 			echo " {$key} | {$hubId} | {$oTitle->getText()} - ok \n";
 		}
 		
