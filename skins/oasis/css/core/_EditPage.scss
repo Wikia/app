@@ -320,6 +320,7 @@
 
 // /** Footer-toolbar should never float on EditPage **/
 #WikiaFooter {
+	display: none; // /** removing footer from all edit pages **/
 	.float {
 			position: inherit;
 	}
