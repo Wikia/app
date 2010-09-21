@@ -33,10 +33,11 @@ define( 'TOPLISTS_HOT_MIN_COUNT', 10 );
 $dir = dirname( __FILE__ );
 
 //namespaces
-global $wgNamespacesWithSubpages, $wgExtensionNamespacesFiles;
+global $wgNamespacesWithSubpages, $wgExtensionNamespacesFiles, $wgSuppressNamespacePrefix;
 
 define( 'NS_TOPLIST', 700 );
 
+$wgSuppressNamespacePrefix[] = NS_TOPLIST;
 $wgNamespacesWithSubpages[ NS_TOPLIST ] = true;
 
 $wgExtensionNamespacesFiles[ 'TopLists' ] = "{$dir}/TopLists.namespaces.php";
