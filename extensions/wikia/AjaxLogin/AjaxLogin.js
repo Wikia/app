@@ -410,7 +410,6 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				},
 				doReload: function(params){
 					params = (params?params:"");
-console.log('AJAXLOGIN PARAMS: ' + params);
 					if( AjaxLogin.placeholderID !== null){
 						params += (params==''?'':'&');
 						params += "placeholder=" + AjaxLogin.placeholderID;
@@ -435,7 +434,6 @@ console.log('AJAXLOGIN PARAMS: ' + params);
 					} else {
 						reload_loc = window.location.href;
 					}
-console.log('AJAXLOGIN FINAL PARAMS: ' + params);
 					if( "" != params ) {
 						if (window.location.href.indexOf("?") > 0) {
 							window.location.href = reload_loc + ("&" + params);

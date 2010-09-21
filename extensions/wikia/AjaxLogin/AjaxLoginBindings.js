@@ -166,9 +166,7 @@ $(function() {
 
 			showComboAjaxForPlaceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
-console.log('AJAXLOGIN MESSAGE: ' + message);
 					if(message == 'protected'){
-console.log('AJAXLOGIN IS IN THE RIGHT PLACE');
 						AjaxLogin.doReload('action=edit');
 					} else {
 						var target = $(e.target);
