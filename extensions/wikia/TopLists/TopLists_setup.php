@@ -29,6 +29,7 @@ define( 'TOPLISTS_SAVE_AUTODETECT', 0 );
 define( 'TOPLISTS_SAVE_CREATE', 1 );
 define( 'TOPLISTS_SAVE_UPDATE', 2 );
 define( 'TOPLISTS_HOT_MIN_COUNT', 10 );
+define( 'TOPLISTS_HOT_MIN_TIMESPAN', 60 * 60 * 24);
 
 $dir = dirname( __FILE__ );
 
@@ -36,12 +37,14 @@ $dir = dirname( __FILE__ );
 global $wgNamespacesWithSubpages, $wgExtensionNamespacesFiles, $wgSuppressNamespacePrefix, $wgArticleCommentsNamespaces;
 
 define( 'NS_TOPLIST', 700 );
+define( 'NS_TOPLIST_TALK', 701 );
 
 $wgNamespacesWithSubpages[ NS_TOPLIST ] = true;
+$wgNamespacesWithSubpages[ NS_TOPLIST_TALK ] = true;
 
 $wgExtensionNamespacesFiles[ 'TopLists' ] = "{$dir}/TopLists.namespaces.php";
 
-wfLoadExtensionNamespaces( 'TopLists', array( NS_TOPLIST ) );
+wfLoadExtensionNamespaces( 'TopLists', array( NS_TOPLIST, NS_TOPLIST_TALK ) );
 
 $wgSuppressNamespacePrefix[] = NS_TOPLIST;
 $wgArticleCommentsNamespaces[] = NS_TOPLIST;
@@ -102,6 +105,7 @@ $wgAjaxExportList[] = 'TopListHelper::uploadImage';
 $wgAjaxExportList[] = 'TopListHelper::voteItem';
 $wgAjaxExportList[] = 'TopListHelper::checkListStatus';
 $wgAjaxExportList[] = 'TopListHelper::addItem';
+$wgAjaxExportList[] = 'TopListHelper::getImageData';
 
 //hooks
 global $wgHooks;
@@ -111,6 +115,7 @@ $wgHooks[ 'AlternateEdit' ][] = 'TopListHelper::onAlternateEdit';
 $wgHooks[ 'CreatePage::FetchOptions' ][] = 'TopListHelper::onCreatePageFetchOptions';
 $wgHooks[ 'ComposeCommonSubjectMail' ][] = 'TopListHelper::onComposeCommonSubjectMail';
 $wgHooks[ 'ComposeCommonBodyMail' ][] = 'TopListHelper::onComposeCommonBodyMail';
+$wgHooks[ 'BeforePageDisplay' ][] = 'TopListHelper::onBeforePageDisplay';
 
 //parser functions, tags and attributes
 define( 'TOPLIST_TAG', 'toplist' );

@@ -29,6 +29,10 @@ $item-number-margin-right: 10px;
 $icon-remove-background: url(/skins/oasis/images/sprite.png) no-repeat -1128px -14px;
 $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30px;
 
+#toplists-loading-screen {
+	@include blockInput;
+}
+
 #toplist-editor {
 	@include error;
 	width: 465px;
@@ -231,6 +235,8 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 }
 
 #image-browser-dialog {
+	position: relative;
+	
 	.selected {
 		@include centered($image-frame-height);
 		display: block;
