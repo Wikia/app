@@ -51,7 +51,6 @@
 
 #wiki-factory .active {
 	font-weight: bold;
-	padding: 12px 25px 0;
 }
 <?php
 //end oasis tab styling
