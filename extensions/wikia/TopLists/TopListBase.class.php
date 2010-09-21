@@ -14,6 +14,27 @@ abstract class TopListBase {
 	protected $mEditor = null;
 
 	/**
+	 * factory method, create either Item or List object from title
+	 *
+	 * @author ADi
+	 * @param Title $title
+	 * @return TopListBase
+	 */
+	public static function newFromTitle( Title $title ) {
+		$object = null;
+
+		if ( $title->getNamespace() == NS_TOPLIST ) {
+			if( !$title->isSubpage() ) {
+				$object = TopList::newFromTitle( $title );
+			}
+			else {
+				$object = TopListItem::newFromTitle( $title );
+			}
+		}
+		return $object;
+	}
+
+	/**
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Checks the current state of the items and returns the appropriate mode for the save function

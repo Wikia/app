@@ -12,7 +12,7 @@ $messages['en'] = array(
 	//rights
 	'right-toplists-create-edit-list' => 'Create and edit Top lists articles',
 	'right-toplists-create-item' => 'Create and add items to a Top lists article',
-	
+
 	//special pages
 	'createtoplist' => 'Create a new list',
 	'edittoplist' => 'Edit list',
@@ -71,9 +71,13 @@ $messages['en'] = array(
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vote|votes}} in $2',
 	'toplists-list-add-item-label' => 'Add item',
 	'toplists-list-add-item-name-label' => 'Keep the list going...',
-	
+
 	//createpage dialog
 	'toplists-createpage-dialog-label' => 'Top list',
+
+	//watchlist emails
+	'toplists-email-subject' => 'Top list has been changed',
+	'toplists-email-body' => "Top list page $1 that you're watching has been changed.\n\n $2",
 
 	//time
 	'toplists-seconds' => '$1 {{PLURAL:$1|second|seconds}}',
