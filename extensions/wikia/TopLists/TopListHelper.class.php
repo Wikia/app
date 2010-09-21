@@ -137,6 +137,30 @@ class TopListHelper {
 	}
 
 	/**
+	 * formats a timespan in a seconds/minutes/hours/days/weeks count string
+	 *
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * @param int $seconds
+	 * @return string
+	 */
+	public static function formatTimeSpan( $seconds ) {
+		wfLoadExtensionMessages( 'TopLists' );
+
+		if ( $seconds < 60 ) {
+			return wfMsgExt( 'toplists-seconds', array( 'parsemag', 'content' ), round( $seconds ) );
+		} elseif ( $seconds < 3600 ) {
+			return wfMsgExt( 'toplists-minutes', array( 'parsemag', 'content' ), round( $seconds / 60 ) );
+		} elseif ( $seconds < ( 3600 * 24 ) ) {
+			return wfMsgExt( 'toplists-hours', array( 'parsemag', 'content' ), round( $seconds / 3600 ) );
+		} elseif ( $seconds < ( 3600 * 24 * 7 ) ) {
+			return wfMsgExt( 'toplists-days', array( 'parsemag', 'content' ), round( $seconds / ( 3600 * 24 ) ) );
+		} else {
+			return wfMsgExt( 'toplists-weeks', array( 'parsemag', 'content' ), round( $seconds / ( 3600 * 24  * 7 ) ) );
+		}
+	}
+
+	/**
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * List editor utility function
@@ -313,7 +337,11 @@ class TopListHelper {
 	public static function checkListStatus() {
 		global $wgRequest;
 
-		$result = array( 'canVote' => false, 'canEdit' => false );
+		$result = array(
+			'result' => true,
+			'canVote' => false,
+			/*'canEdit' => false*/
+		);
 
 		$titleText = $wgRequest->getVal( 'title' );
 
@@ -321,12 +349,87 @@ class TopListHelper {
 			$list = TopList::newFromText( $titleText );
 
 			if( $list instanceof TopList ) {
-
 				$result['canVote'] = $list->userCanVote();
-				$result['canEdit'] = false; // TODO: implement
+				//$result['canEdit'] = false; // TODO: implement, dropped for the moment
 			}
 		}
 
+		$json = Wikia::json_encode( $result );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		return $response;
+	}
+
+	public static function addItem() {
+		global $wgRequest, $wgUser, $wgScript;
+		wfLoadExtensionMessages( 'TopLists' );
+
+		$result = array( 'result' => false );
+		$errors = array();
+
+		$listText = $wgRequest->getVal( 'list' );
+		$itemText = trim( $wgRequest->getVal( 'text' ) );
+
+		if( !empty( $listText ) && !empty( $itemText ) ) {
+
+			$list = TopList::newFromText( $listText );
+			
+			if( $wgUser->isAllowed( 'toplists-create-item' ) ) {
+				if( !empty( $list ) && $list->exists() ) {
+					//check for duplicated
+					foreach( $list->getItems() as $item ) {
+						if( strtolower( $item->getArticle()->getContent() ) == strtolower( $itemText ) ) {
+							$errors[] = wfMsg( 'toplists-error-duplicated-entry' );
+							break;
+						}
+					}
+
+					if( empty( $errors ) ) {
+						$newItem = $list->createItem();
+						$newItem->setNewContent( $itemText );
+
+						$saveResult = $newItem->save( TOPLISTS_SAVE_CREATE );
+
+						if ( $saveResult !== true ) {
+							foreach ( $saveResult as $errorTuple ) {
+								$errors[] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+							}
+						} else {
+							//invalidate caches and trigger save event for the list article
+							$newItem->getTitle()->invalidateCache();
+							$list->save( TOPLISTS_SAVE_UPDATE );
+							$list->invalidateCache();
+
+							$result['result'] = true;
+							$result['listBody'] = TopListParser::parse( TopList::newFromText( $listText ) );
+						}
+					}
+				} else {
+					$errors[] = wfMsg( 'toplists-error-add-item-list-not-exists', $listText );
+				}
+			} else {
+				if( $wgUser->isAnon() ) {
+					$loginURL = SpecialPage::getTitleFor( 'Signup' )->getLocalURL() . '?returnto=' . $list->getTitle()->getPrefixedDBkey();
+					$errors[] = wfMsg(
+						'toplists-error-add-item-anon',
+						array(
+							 "{$loginURL}&type=login",
+							"{$loginURL}&type=signup"
+						)
+					);
+				} else {
+					$errors[] = wfMsg( 'toplists-error-add-item-permission' );
+				}
+			}
+		} else {
+			$errors[] = wfMsg( 'toplists-error-empty-item-name' );
+		}
+
+		if( !empty( $errors ) ) {
+			$result[ 'errors' ] = $errors;
+		}
+		
 		$json = Wikia::json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );

@@ -11,7 +11,8 @@ $messages['en'] = array(
 
 	//rights
 	'right-toplists-create-edit-list' => 'Create and edit Top lists articles',
-
+	'right-toplists-create-item' => 'Create and add items to a Top lists article',
+	
 	//special pages
 	'createtoplist' => 'Create a new list',
 	'edittoplist' => 'Edit list',
@@ -28,6 +29,10 @@ $messages['en'] = array(
 	'toplists-error-empty-item-name' => 'The name of an existing item can\'t be empty',
 	'toplists-item-cannot-delete' => 'Deletion of this item failed',
 	'toplists-error-image-already-exists' => 'An image with the same name already exists',
+	'toplists-error-add-item-anon' => 'Anonimous users are not allowed to add items to lists, please <a class="ajaxLogin" id="login" href="$1">Log in</a> or <a class="ajaxLogin" id="signup" href="$2">register a new account</a>.',
+	'toplists-error-add-item-permission' => 'Permission error, your account has not been granted the right to create new items.',
+	'toplists-error-add-item-list-not-exists' => 'The "$1" list does not exists.',
+	'toplists-error-backslash-not-allowed' => 'The "/" character is not allowed in the title of a Top list.',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
@@ -63,10 +68,19 @@ $messages['en'] = array(
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>vote|$1<br/>votes}}',
 	'toplists-list-created-by' => 'by [[User:$1|$1]]',
 	'toplists-list-vote-up' => 'Vote Up',
-
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vote|votes}} in $2',
+	'toplists-list-add-item-label' => 'Add item',
+	'toplists-list-add-item-name-label' => 'Keep the list going...',
+	
 	//createpage dialog
-	'toplists-createpage-dialog-label' => 'Top list'
+	'toplists-createpage-dialog-label' => 'Top list',
 
+	//time
+	'toplists-seconds' => '$1 {{PLURAL:$1|second|seconds}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minute|minutes}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|hour|hours}}',
+	'toplists-days' => '$1 {{PLURAL:$1|day|days}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|week|weeks}}'
 );
 
 $messages['qqq'] = array(

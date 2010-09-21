@@ -25,11 +25,12 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //constants/variables
-define('TOPLISTS_SAVE_AUTODETECT', 0);
-define('TOPLISTS_SAVE_CREATE', 1);
-define('TOPLISTS_SAVE_UPDATE', 2);
+define( 'TOPLISTS_SAVE_AUTODETECT', 0 );
+define( 'TOPLISTS_SAVE_CREATE', 1 );
+define( 'TOPLISTS_SAVE_UPDATE', 2 );
+define( 'TOPLISTS_HOT_MIN_COUNT', 10 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 //namespaces
 global $wgNamespacesWithSubpages, $wgExtensionNamespacesFiles;
@@ -55,6 +56,10 @@ $wgAvailableRights[] = 'toplists-create-edit-list';
 $wgGroupPermissions[ '*' ][ 'toplists-create-edit-list' ] = false;
 $wgGroupPermissions[ 'user' ][ 'toplists-create-edit-list' ] = true;
 $wgGroupPermissions[ 'bot' ][ 'toplists-create-edit-list' ] = true;
+
+$wgGroupPermissions[ '*' ][ 'toplists-create-item' ] = false;
+$wgGroupPermissions[ 'user' ][ 'toplists-create-item' ] = true;
+$wgGroupPermissions[ 'bot' ][ 'toplists-create-item' ] = true;
 
 //special pages
 global $wgSpecialPages;
@@ -93,6 +98,7 @@ $wgAjaxExportList[] = 'TopListHelper::renderImageBrowser';
 $wgAjaxExportList[] = 'TopListHelper::uploadImage';
 $wgAjaxExportList[] = 'TopListHelper::voteItem';
 $wgAjaxExportList[] = 'TopListHelper::checkListStatus';
+$wgAjaxExportList[] = 'TopListHelper::addItem';
 
 //hooks
 global $wgHooks;
