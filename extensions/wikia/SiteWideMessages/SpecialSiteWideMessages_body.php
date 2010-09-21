@@ -604,7 +604,7 @@ class SiteWideMessages extends SpecialPage {
 			// Exclude 'seen' messages based on $filter_seen
 			$status[] = MSG_STATUS_DISMISSED;
 			if ($filter_seen) $status[] = MSG_STATUS_SEEN;
-			
+
 			//step 2 of 3: remove dismissed and seen messages
 			$dbResult = $DB->Query (
 				  'SELECT msg_id AS id'
@@ -624,11 +624,11 @@ class SiteWideMessages extends SpecialPage {
 				$DB->FreeResult($dbResult);
 			}
 		}
-		
+
 		unset($status);
 		$status[] = MSG_STATUS_UNSEEN;
 		if (! $filter_seen) $status[] = MSG_STATUS_SEEN;
-		
+
 		//step 3 of 3: add unseen messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_lang as lang'
@@ -666,9 +666,13 @@ class SiteWideMessages extends SpecialPage {
 		return $IDs;
 	}
 
+	// TODO: add cache
 	static function getAllUserMessages($user, $dismissLink = true, $formatted = true) {
 		global $wgMemc, $wgCityId, $wgLanguageCode;
 		global $wgExternalSharedDB;
+
+		wfProfileIn(__METHOD__);
+
 		$localCityId = isset($wgCityId) ? $wgCityId : 0;
 
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
@@ -817,10 +821,13 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		if ($formatted) {
-			return implode("\n", $messages);
+			$result = implode("\n", $messages);
 		} else {
-			return $unformatted;
+			$result = $unformatted;
 		}
+
+		wfProfileOut(__METHOD__);
+		return $result;
 	}
 
 	/*
@@ -836,7 +843,7 @@ class SiteWideMessages extends SpecialPage {
 
 		# if no language options were specified, just let it through
 		if ( $langs == null ) {
-			return true;			
+			return true;
 		}
 
 		$langs = explode( ',', $langs );
