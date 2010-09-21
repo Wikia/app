@@ -88,11 +88,11 @@ EOT;
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $wpage;
 		$url .= $this->getKeywordsKV();
+		$url .= self::getQuantcastSegmentKV();
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
 		$url .= "sz=" . $slot['size'] . ';';
 		$url .= $this->getTileKV($slotname);
-		$url .= self::getQuantcastSegmentKV();
 		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
