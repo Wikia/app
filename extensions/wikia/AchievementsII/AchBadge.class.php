@@ -105,6 +105,8 @@ class AchBadge {
 
 		if($width <= 40) {
 			$subdir = '40';
+		} else if($width <= 56) {
+			$subdir = '56';
 		} else if($width <= 82) {
 			$subdir = '82';
 		} else if($width <= 90) {
