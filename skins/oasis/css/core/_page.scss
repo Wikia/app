@@ -134,7 +134,8 @@
 	}
 }
 
-.WikiaSpotlightsModule {
+#WikiaSpotlightsModule {
+	display: none;
 	@include rail-module;
 	padding: 8px;
 	header {

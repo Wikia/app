@@ -3,6 +3,11 @@ $(function() {
 });
 
 var LazyLoadAds = {
+
+	log: function(msg) {
+		$().log(msg, 'LazyLoadAds');
+	},
+
 	settings : {
 		threshhold : 200
 	},
@@ -10,41 +15,58 @@ var LazyLoadAds = {
 	lazyLoadAdTops : null,
 
 	init : function() {
+
+		LazyLoadAds.log("init");
+
 		$(function() {
+
+			LazyLoadAds.log("real init");
+
 			LazyLoadAds.update();
 			$(window).scroll(LazyLoadAds.update);
 		});
 	},
 
-	update : function() {
-		var fold = $(window).height() + $(window).scrollTop();
+	calculateSlotsOffsets: function() {
 
-		if (LazyLoadAds.lazyLoadAdTops==null) {
-			LazyLoadAds.lazyLoadAdTops = {};
-			$(".LazyLoadAd").each(function() {
-				var elemId = $(this).attr("id");
-				LazyLoadAds.lazyLoadAdTops[elemId] = $(this).offset().top;
-			});
+		LazyLoadAds.log("calculateSlotsOffsets");
+
+		LazyLoadAds.lazyLoadAdTops = {};
+
+		$(".LazyLoadAd").each(function() {
+			LazyLoadAds.lazyLoadAdTops[$(this).attr("id")] = $(this).offset().top;
+		});
+	},
+
+	update : function() {
+
+		LazyLoadAds.log("update");
+
+		if(LazyLoadAds.lazyLoadAdTops == null) {
+			LazyLoadAds.calculateSlotsOffsets();
 		}
 
+		var fold = $(window).height() + $(window).scrollTop();
+
 		$.each(LazyLoadAds.lazyLoadAdTops, function(elemId, topVal) {
-			if (!$("#"+elemId).hasClass('AdLazyLoaded')) { 
-				if (topVal > 0 && topVal < (fold + LazyLoadAds.settings.threshhold)) {
-					adslot = elemId;
-					if (document.getElementById(elemId).nodeName.toLowerCase() == 'iframe') {
-						//remove trailing "_iframe"
-						var iframeLastIndex = elemId.lastIndexOf("_iframe", elemId.length-7);
-						if (iframeLastIndex == elemId.length-7) {
-							adslot = elemId.substr(0, iframeLastIndex);
-						}
-						window["fillIframe_" + adslot]();
-					}
-					else {
+
+			if(!$("#"+elemId).hasClass('AdLazyLoaded')) {
+				if(topVal > 0 && topVal < (fold + LazyLoadAds.settings.threshhold)) {
+
+					LazyLoadAds.log("About to fill: " + elemId);
+
+					var adslot = elemId;
+
+					if($('#'+elemId).get(0).nodeName == 'IFRAME') {
+						window["fillIframe_" + adslot.replace("_iframe", "")]();
+					} else {
 						window["fillElem_" + adslot]();
 					}
+
 					$("#"+elemId).addClass('AdLazyLoaded');
 				}
 			}
+
 		});
 	}
 };

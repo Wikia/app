@@ -291,6 +291,8 @@ class StaticChute {
 			"oasis/js/LatestPhotos.js",
 			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
 			"oasis/js/WikiaNotifications.js",
+			"oasis/js/Spotlights.js",
+
 
 			'common/ajax.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
@@ -324,6 +326,7 @@ class StaticChute {
 			"oasis/js/LatestPhotos.js",
 			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
 			"oasis/js/WikiaNotifications.js",
+			"oasis/js/Spotlights.js",
 
 			'common/ajax.js',
 			'common/ajaxwatch.js',
