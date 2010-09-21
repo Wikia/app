@@ -49,8 +49,8 @@ class View {
 	 * View::normalPageLink('Somewhere', 'button-createpage', 'wikia-button');
 	 * View::normalPageLink('Somewhere', 'oasis-button-random-page', 'wikia-button secondary', 'icon_button_random.png') ?>
 	 *
- 	 * @param pageName String - the name of the page to link to
-	 * @param msg String - the name of a message to use as the link text
+ 	 * @param title Title - the Title of the page to link to
+	 * @param message String - the name of a message to use as the link text
 	 * @param class String - [optional] the name of a css class for button styling or array of HTML attributes for button
 	 * @param img String - [optional] the name of an image to pre-pend to the text (for secondary buttons)
 	 * @param alt String - [optional] the name of a message to be used as link tooltip

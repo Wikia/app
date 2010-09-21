@@ -161,16 +161,22 @@ $(function() {
 			// message handeling
 			var message = true; // base 'login requiref for this action'
 			if ($(e.target).is(".loginToEditProtectedPage")) {
-				var message = 'protected';
+				message = 'protected';
 			}
 
 			showComboAjaxForPlaceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
-					var target = $(e.target);
-					if( target.is('a') ){
-						window.location.href = target.attr('href');
+console.log('AJAXLOGIN MESSAGE: ' + message);
+					if(message == 'protected'){
+console.log('AJAXLOGIN IS IN THE RIGHT PLACE');
+						AjaxLogin.doReload('action=edit');
 					} else {
-						window.location.href = target.parent().attr('href');
+						var target = $(e.target);
+						if( target.is('a') ){
+							window.location.href = target.attr('href');
+						} else {
+							window.location.href = target.parent().attr('href');
+						}
 					}
 				}
 			}, false, message); // show the 'login required for this action' message.
