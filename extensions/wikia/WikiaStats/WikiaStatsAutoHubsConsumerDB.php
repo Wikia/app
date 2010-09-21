@@ -321,7 +321,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		);
 		
 		$oRow = $this->dbs->selectRow(
-				array( 'page_views_summary_tags' ),
+				array( '`specials`.`page_views_summary_tags`' ),
 				array( 'count(0) as cnt' ),
 				array(),
 				__METHOD__
