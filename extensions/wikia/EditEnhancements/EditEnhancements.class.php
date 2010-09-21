@@ -9,6 +9,7 @@ class EditEnhancements {
 	private $undo;
 	private $tmpl;
 
+
 	function __construct($action) {
 		global $wgHooks, $wgRequest;
 
@@ -38,7 +39,16 @@ class EditEnhancements {
 	}
 
 	public function editPageJS($skin, &$html) {
-		$html .= $this->tmpl->render('EditEnhancementsJS');
+		// moved into /js/editEnhancements.js
+		if ($skin->skinname = 'oasis') {
+			global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+
+			$wgOut->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/EditEnhancements/js/editEnhancements.js?$wgStyleVersion'></script>\n");	
+			
+		}
+		else {
+			$html .= $this->tmpl->render('EditEnhancementsJS');
+		}
 		return true;
 	}
 

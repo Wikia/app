@@ -234,7 +234,7 @@ class UserPagesHeaderModule extends Module {
 				wfLoadExtensionMessages('Blogs');
 
 				$this->actionButton = array(
-					'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
+					'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl() ."#EditPage",
 					'text' => wfMsg('blog-create-post-label'),
 				);
 
@@ -317,13 +317,11 @@ class UserPagesHeaderModule extends Module {
 		wfProfileIn(__METHOD__);
 
 		wfLoadExtensionMessages('Blogs');
-
 		// "Create blog post" button
 		$this->actionButton = array(
-			'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
+			'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl() ."#EditPage",
 			'text' => wfMsg('blog-create-post-label'),
 		);
-
 		$this->title = wfMsg('create-blog-post-category');
 
 		wfProfileOut(__METHOD__);
