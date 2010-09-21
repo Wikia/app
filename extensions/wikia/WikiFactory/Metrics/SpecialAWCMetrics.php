@@ -694,7 +694,7 @@ class WikiMetrics {
 		if ( empty($cities) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $dbs->select( 
-				"city_page_views", 
+				"page_views", 
 				array( 'pv_city_id', 'sum(pv_views) as cnt' ),
 				$where,
 				__METHOD__,
