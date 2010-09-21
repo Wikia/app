@@ -249,6 +249,8 @@ class TopList extends TopListBase {
 				$contentText .= ' ' . TOPLIST_ATTRIBUTE_PICTURE . '="' . htmlspecialchars( $this->mPicture->getText() ) . '"';
 			}
 
+			$contentText .= ' ' . TOPLIST_ATTRIBUTE_LASTUPDATE . '="' . wfTimestampNow() . '"';
+
 			$summaryMsg = null;
 			$editMode = null;
 

@@ -108,13 +108,15 @@ global $wgHooks;
 
 $wgHooks[ 'ArticleFromTitle' ][] = 'TopListHelper::onArticleFromTitle';
 $wgHooks[ 'AlternateEdit' ][] = 'TopListHelper::onAlternateEdit';
-//$wgHooks['UnwatchArticleComplete'][] = 'TopListHelper::onUnwatchArticleComplete';
 $wgHooks[ 'CreatePage::FetchOptions' ][] = 'TopListHelper::onCreatePageFetchOptions';
+$wgHooks[ 'ComposeCommonSubjectMail' ][] = 'TopListHelper::onComposeCommonSubjectMail';
+$wgHooks[ 'ComposeCommonBodyMail' ][] = 'TopListHelper::onComposeCommonBodyMail';
 
 //parser functions, tags and attributes
 define( 'TOPLIST_TAG', 'toplist' );
 define( 'TOPLIST_ATTRIBUTE_RELATED', 'related');
 define( 'TOPLIST_ATTRIBUTE_PICTURE', 'picture');
+define( 'TOPLIST_ATTRIBUTE_LASTUPDATE', 'lastupdate');
 
 $wgHooks['ParserFirstCallInit'][] = "TopListParser::onParserFirstCallInit";
 

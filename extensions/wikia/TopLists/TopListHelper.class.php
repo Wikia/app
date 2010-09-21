@@ -52,6 +52,14 @@ class TopListHelper {
 		return true;
 	}
 
+
+	/**
+	 * callback for UnwatchArticleComplete hook
+	 *
+	 * @author ADi
+	 * @param $oUser
+	 * @param $oArticle
+	 */
 	/*
 	static public function onUnwatchArticleComplete( &$oUser, &$oArticle ) {
 		wfProfileIn( __METHOD__ );
@@ -77,32 +85,21 @@ class TopListHelper {
 			return true;
 		}
 
-		$list = array();
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			'watchlist',
-			'*',
-			array(
-				'wl_user' => $oUser->getId(),
-				'wl_namespace' => NS_BLOG_ARTICLE_TALK,
-				"wl_title LIKE '" . $dbr->escapeLike( $oTitle->getDBkey() ) . "/%'",
-			),
-			__METHOD__
-		);
-		if( $res->numRows() > 0 ) {
-			while( $row = $res->fetchObject() ) {
-				$oCommentTitle = Title::makeTitleSafe( $row->wl_namespace, $row->wl_title );
-				if ( $oCommentTitle instanceof Title )
-					$list[] = $oCommentTitle;
+		if( $oTitle->getNamespace() == NS_TOPLIST ) {
+			$topList = TopListBase::newFromTitle( $oTitle );
+			if( $topList instanceof TopListItem ) {
+				// item page, do nothing
 			}
-			$dbr->freeResult( $res );
-		}
-
-		if ( !empty($list) ) {
-			foreach ( $list as $oCommentTitle ) {
-				$oWItem = WatchedItem::fromUserTitle( $oUser, $oCommentTitle );
-				$oWItem->removeWatch();
+			elseif ( $topList instanceof TopList ) {
+				// list page, unwatch every item page
+				foreach( $topList->getItems() as $item ) {
+					if( $item->getTitle()->userIsWatching() ) {
+						$watchedItem = WatchedItem::fromUserTitle( $oUser, $item->getTitle() );
+						$watchedItem->removeWatch();
+					}
+				}
 			}
+			//invalidate user cache
 			$oUser->invalidateCache();
 		}
 
@@ -112,15 +109,78 @@ class TopListHelper {
 	*/
 
 	/**
+	 * callback for WatchArticleComplete hook
+	 *
+	 * @author ADi
+	 * @param $oUser
+	 * @param $oArticle
+	 */
+	/*
+	static public function onWatchArticleComplete( &$oUser, &$oArticle ) {
+		wfProfileIn( __METHOD__ );
+
+		if( $oTitle->getNamespace() == NS_TOPLIST ) {
+			$topList = TopListBase::newFromTitle( $oTitle );
+			if( $topList instanceof TopListItem ) {
+				// item page, watch the list page as well
+				$listTitle = $topList->getList()->getTitle();
+				if( !$listTitle->userIsWatching() ) {
+					$watchedItem = WatchedItem::fromUserTitle( $oUser, $listTitle );
+					$watchedItem->addWatch();
+				}
+			}
+			elseif ( $topList instanceof TopList ) {
+				// list page, watch every item page
+				foreach( $topList->getItems() as $item ) {
+					if( $item->getTitle()->userIsWatching() ) {
+						$watchedItem = WatchedItem::fromUserTitle( $oUser, $item->getTitle() );
+						$watchedItem->addWatch();
+					}
+				}
+			}
+			//invalidate user cache
+			$oUser->invalidateCache();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	*/
+
+	static public function onComposeCommonSubjectMail( $title, &$keys, &$subject, $editor ) {
+		wfProfileIn( __METHOD__ );
+
+		if( ( $title instanceof Title )  && ( $title->getNamespace() == NS_TOPLIST ) ) {
+			wfLoadExtensionMessages( 'TopLists' );
+			$subject = wfMsg( 'toplists-email-subject' );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	static public function onComposeCommonBodyMail( $title, &$keys, &$body, $editor ) {
+		wfProfileIn( __METHOD__ );
+
+		if( ( $title instanceof Title )  && ( $title->getNamespace() == NS_TOPLIST ) ) {
+			wfLoadExtensionMessages( 'TopLists' );
+			$body = wfMsg( 'toplists-email-body', array( $title->getFullUrl(), $keys['$PAGESUMMARY'] ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Callback for the CreatePage::FetchOptions hook
 	 */
 	static public function onCreatePageFetchOptions( &$options ) {
 		global $wgCdnStylePath, $wgExtensionsPath, $wgScript;
-		
+
 		wfLoadExtensionMessages( 'TopLists' );
-		
+
 		$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
 		$url = $specialPageTitle->getFullUrl();
 
@@ -374,7 +434,7 @@ class TopListHelper {
 		if( !empty( $listText ) && !empty( $itemText ) ) {
 
 			$list = TopList::newFromText( $listText );
-			
+
 			if( $wgUser->isAllowed( 'toplists-create-item' ) ) {
 				if( !empty( $list ) && $list->exists() ) {
 					//check for duplicated
@@ -429,7 +489,7 @@ class TopListHelper {
 		if( !empty( $errors ) ) {
 			$result[ 'errors' ] = $errors;
 		}
-		
+
 		$json = Wikia::json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
