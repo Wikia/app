@@ -69,7 +69,7 @@ Note: works only on Answers-type wiks',
 
 	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing due to vandalism or other disruption by you or by someone who shares your IP address.
 If you believe this is in error, please [[Special:Contact|contact Wikia]].',
-	'phalanx-user-block-reason-exact' => 'This username is prevented from editing due to vandalism or other disruption.
+	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing due to vandalism or other disruption.
 If you believe this is in error, please [[Special:Contact|contact Wikia]].',
 	'phalanx-user-block-reason-similar' => 'This username is prevented from editing due to vandalism or other disruption by a user with a similar name.
 Please create an alternate user name or [[Special:Contact|contact Wikia]] about the problem.',
