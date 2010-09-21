@@ -1,4 +1,4 @@
-<section class="WikiaSpotlightsModule">
+<section id="WikiaSpotlightsModule">
 	<header>
 		<? if ($wgSingleH1) { ?>
 		<div class="headline-div">Wikia Spotlights</div>
