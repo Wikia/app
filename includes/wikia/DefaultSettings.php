@@ -601,3 +601,9 @@ $wgExcludedWantedFiles = array (0 => 'Placeholder', 1 => 'Welcome-user-page');
  * list of namespace localization files for extensions
  */
 $wgExtensionNamespacesFiles = array();
+
+/**
+ * @name $wgSuppressNamespacePrefix
+ * list of namespace that won't display a prefix in the article title shown in Oasis page header
+ */
+$wgSuppressNamespacePrefix = array();

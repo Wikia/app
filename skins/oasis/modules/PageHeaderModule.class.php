@@ -157,7 +157,7 @@ class PageHeaderModule extends Module {
 	public function executeIndex($params) {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgContLang, $wgLang, $wgSupressPageTitle, $wgSupressPageSubtitle;
+		global $wgTitle, $wgContLang, $wgLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix;
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
@@ -210,7 +210,7 @@ class PageHeaderModule extends Module {
 			$namespaces[] = NS_VIDEO;
 		}
 
-		if (in_array($ns, $namespaces)) {
+		if ( in_array($ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
 			$this->title = $wgTitle->getText();
 		}
 
