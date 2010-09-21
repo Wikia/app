@@ -90,7 +90,6 @@ _uff=0;
 _uacct="UA-288915-47";
 urchinTracker();
 }
-}
 </script>';
 	}
 
