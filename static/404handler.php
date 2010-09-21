@@ -68,7 +68,7 @@ if(count($data) < $MIN_NUM_PARAMS){
 		} else {
 			// Store the result in the correct static-file that the browser was looking for when it came here.
 			$destDir = $dir . "/". $params['type'] . "/" . $params['packages'];
-			@mkdir($destDir, 0755, true); // assume the directory doesn't exist and make it (recursive).
+			@mkdir($destDir, 0775, true); // assume the directory doesn't exist and make it (recursive).
 			$fileName = $destDir . "/" . $params['checksum'] . "." . $params['type'];
 
 			file_put_contents($fileName, $content, LOCK_EX);
