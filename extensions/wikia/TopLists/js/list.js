@@ -39,8 +39,9 @@ var TopList = {
 					TopList.unblockInput();
 					TopList._mWrapper.replaceWith(response.listBody);
 					TopList._mWrapper = $('#toplists-list-body');
-					TopList._mWrapper.find('#' + response.votedId).closest('li').find('.ItemNumber').
-						append('<div class="Voted"><span></span>' + response.message + '</div>');
+					TopList._mWrapper.find('#' + response.votedId).closest('li').find('.ItemNumber')
+					.removeClass('NotVotable')
+					.append('<div class="Voted"><span></span>' + response.message + '</div>');
 					
 				}
 			}
