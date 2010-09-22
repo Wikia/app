@@ -607,3 +607,9 @@ $wgExtensionNamespacesFiles = array();
  * list of namespace that won't display a prefix in the article title shown in Oasis page header
  */
 $wgSuppressNamespacePrefix = array();
+
+/**
+ * @name $wgMaxCommentsToDelete
+ * number of comment to be removed in one request
+ */
+$wgMaxCommentsToDelete = 100;
