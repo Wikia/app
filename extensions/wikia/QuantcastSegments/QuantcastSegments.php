@@ -29,7 +29,10 @@ class QuantcastSegments {
 		global $wgCollectQuantcastSegments, $wgIntegrateQuantcastSegments;
 		wfProfileIn( __METHOD__ );
 
-		$vars['wgCollectQuantcastSegments'] = $wgCollectQuantcastSegments;
+		global $wgRequest, $wgNoExternals;
+		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
+
+		$vars['wgCollectQuantcastSegments'] = $wgCollectQuantcastSegments && !$wgNoExternals;
 		$vars['wgIntegrateQuantcastSegments'] = $wgIntegrateQuantcastSegments;
 
 		wfProfileOut( __METHOD__ );
