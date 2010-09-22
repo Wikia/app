@@ -1193,7 +1193,7 @@ class ArticleCommentList {
 			$this->mCommentsAll = $wgMemc->get( wfMemcKey( 'articlecomment', 'comm', $this->getTitle()->getArticleId() ) );
 		}
 
-		if ( !is_array( $this->mCommentsAll ) ) {
+		if ( empty( $this->mCommentsAll ) ) {
 			$pages = array();
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 			$namespace = $this->getTitle()->getNamespace();
@@ -1241,6 +1241,41 @@ class ArticleCommentList {
 
 		wfProfileOut( __METHOD__ );
 		return $this->mComments;
+	}
+
+	/**
+	 * getAllCommentPages -- get all comment pages to the article
+	 *
+	 * @access public
+	 *
+	 * @return array
+	 */
+	public function getAllCommentPages( ) {
+		wfProfileIn( __METHOD__ );
+
+		$pages = array();
+		$dbr = wfGetDB( DB_MASTER );
+		$namespace = $this->getTitle()->getNamespace();
+
+		$res = $dbr->select(
+			array( 'page' ),
+			array( 'page_id', 'page_title' ),
+			array(
+				'page_namespace' => MWNamespace::getTalk($namespace),
+				"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . '/' . ARTICLECOMMENT_PREFIX . "%'"
+			),
+			__METHOD__
+		);
+
+		$pages = array();
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$pages[$row->page_id] = ArticleComment::newFromId( $row->page_id );
+		}
+
+		$dbr->freeResult( $res );
+
+		wfProfileOut( __METHOD__ );
+		return $pages;
 	}
 
 	//TODO: review
@@ -1529,22 +1564,10 @@ class ArticleCommentList {
 		wfProfileIn( __METHOD__ );
 
 		$title = $article->getTitle();
-		if (MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title)) {
-			$parts = ArticleComment::explode($title->getText());
 
-			//deleting comment - check if 1st level and delete connected 2nd level
-			if (count($parts['partsOriginal']) == 1) {
-				$oTitle = Title::newFromText($parts['title'], $title->getNamespace());
-				$listing = ArticleCommentList::newFromTitle($oTitle);
-				$aComments = $listing->getCommentPages(true, false);
-
-				if ($listing->getCountAll() && isset($aComments[$article->getID()]['level2'])) {
-					self::$mArticlesToDelete = $aComments[$article->getID()]['level2'];
-				}
-			} elseif (count($parts['partsOriginal']) == 2) {
-				//skip checking in articleDeleteComplete()
-				self::$mArticlesToDelete = array();
-			}
+		if ( empty( self::$mArticlesToDelete ) ) {
+			$listing = ArticleCommentList::newFromTitle($title);
+			self::$mArticlesToDelete = $listing->getAllCommentPages();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -1565,16 +1588,18 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function articleDeleteComplete( &$article, &$user, $reason, $id ) {
-		global $wgOut, $wgRC2UDPEnabled;
+		global $wgOut, $wgRC2UDPEnabled, $wgMaxCommentsToDelete, $wgCityId, $wgUser, $wgEnableMultiDeleteExt;
 		wfProfileIn( __METHOD__ );
 
 		$title = $article->getTitle();
 
 		if (!MWNamespace::isTalk($title->getNamespace()) || !ArticleComment::isTitleComment($title)) {
-			wfProfileOut( __METHOD__ );
-			return true;
+			if ( empty( self::$mArticlesToDelete ) ) {
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
 		}
-
+		
 		//watch out for recursion
 		if (self::$mDeletionInProgress) {
 			wfProfileOut( __METHOD__ );
@@ -1593,45 +1618,48 @@ class ArticleCommentList {
 
 		//we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
 		if (is_array(self::$mArticlesToDelete)) {
-			$irc_backup = $wgRC2UDPEnabled;	//backup
-			$wgRC2UDPEnabled = false; //turn off
-			foreach (self::$mArticlesToDelete as $page_id => $oComment) {
-				$oCommentTitle = $oComment->getTitle();
-				if ( $oCommentTitle instanceof Title ) {
-					$oArticle = new Article($oCommentTitle);
-					$oArticle->doDelete($deleteReason);
-				}
-			}
-			$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
-		//regular article - delete connected comments
-		} else {
-			$listing = ArticleCommentList::newFromTitle($title);
-
-			$aComments = $listing->getCommentPages(true, false);
-			if ($listing->getCountAll()) {
+			if ( empty($wgEnableMultiDeleteExt) || ( isset($wgMaxCommentsToDelete) && ( count(self::$mArticlesToDelete) <= $wgMaxCommentsToDelete ) ) ) {
 				$irc_backup = $wgRC2UDPEnabled;	//backup
 				$wgRC2UDPEnabled = false; //turn off
-				foreach ($aComments as $page_id => $aCommentArr) {
-					$oCommentTitle = $aCommentArr['level1']->getTitle();
+				foreach (self::$mArticlesToDelete as $page_id => $oComment) {
+					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oArticle = new Article($oCommentTitle);
 						$oArticle->doDelete($deleteReason);
 					}
-					if (isset($aCommentArr['level2'])) {
-						foreach ($aCommentArr['level2'] as $page_id => $oComment) {
-							$oCommentTitle = $oComment->getTitle();
-							if ( $oCommentTitle instanceof Title ) {
-								$oArticle = new Article($oCommentTitle);
-								$oArticle->doDelete($deleteReason);
-							}
+				}
+				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
+				$listing = ArticleCommentList::newFromTitle($parentTitle);
+				$listing->purge();
+			} else {
+				if ( $wgEnableMultiDeleteExt ) {
+					$taskParams= array(
+						'mode' 		=> 'you',
+						'wikis'		=> '',
+						'range'		=> 'one',
+						'reason' 	=> 'delete page',
+						'lang'		=> '',
+						'cat'		=> '',
+						'selwikia'	=> $wgCityId,
+						'edittoken' => $wgUser->editToken(),
+						'user'		=> $wgUser->getName(),
+						'admin'		=> $wgUser->getName()
+					);
+						
+					foreach (self::$mArticlesToDelete as $page_id => $oComment) {
+						$oCommentTitle = $oComment->getTitle();
+						if ( $oCommentTitle instanceof Title ) {
+							$data = $taskParams;
+							$data['page'] = $oCommentTitle->getFullText();
+							$thisTask = new MultiDeleteTask( $data );
+							$submit_id = $thisTask->submitForm();
+							Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );				
 						}
 					}
 				}
-				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 			}
-			$listing->purge();
-		}
-
+		} 
+		
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
