@@ -98,7 +98,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 				$data = array();
 				// check data from cache ...
-				$cached = null; //$this->getDataFromCache($lcache_key);
+				$cached = $this->getDataFromCache($lcache_key);
 				if (empty($cached)) {
 					#--- database instance - DB_SLAVE
 					$db =& $this->getDB();
