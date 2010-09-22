@@ -15,12 +15,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 global $wgExtensionCredits;
 
 $wgExtensionCredits['other'][] = array(
-	"name" => "TopLists",
-	"description" => "Top Lists",
+	"name" => "Top 10 lists",
+	"description" => "Top 10 lists",
 	"descriptionmsg" => "toplists-desc",
 	"url" => "http://help.wikia.com/wiki/Help:Top_lists",
 	"author" => array(
-		'Federico "Lox" Lucignano <federico@wikia-inc.com>'
+		'Federico "Lox" Lucignano <federico@wikia-inc.com>',
+		'Adrian Wieczorek <adi@wikia-inc.com>'
 	)
 );
 
