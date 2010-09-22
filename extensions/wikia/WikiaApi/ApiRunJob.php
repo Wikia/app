@@ -67,6 +67,7 @@ class ApiRunJob extends ApiBase {
 			}
 		}
 
+		$result = array();
 		foreach( range( 0, $this->maxJobs ) as $counter ) {
 			$job = Job::pop();
 			if( $job ) {
@@ -77,7 +78,7 @@ class ApiRunJob extends ApiBase {
 
 		$result[ "left" ]  = $this->checkQueue();
 
-		$this->getResult()->setIndexedTagName( $result, 'job' );
+#		$this->getResult()->setIndexedTagName( $result, 'job' );
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
 
 		$result = array();
@@ -154,7 +155,7 @@ class ApiRunJob extends ApiBase {
 
 	protected function getExamples() {
 		return array(
-			'api.php?action=runjob&max=50'
+			'api.php?action=runjob&max=5'
 		);
 	}
 
