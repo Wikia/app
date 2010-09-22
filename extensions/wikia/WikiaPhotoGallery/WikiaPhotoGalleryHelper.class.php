@@ -322,7 +322,7 @@ class WikiaPhotoGalleryHelper {
 		$parserOptions = new ParserOptions();
 
 		// render thumbnail and parse caption for each image (default "box" is 200x200)
-		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 190;
+		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 185;
 		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
 		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
 		$ratio = self::getRatioFromOption($orientation);
