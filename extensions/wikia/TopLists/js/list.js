@@ -1,15 +1,19 @@
 
 $(function() {
-	TopList.init();
+	TopList._init();
 });
 
 var TopList = {
 	_mWrapper: null,
 	
-	init: function() {
+	_init: function() {
 		TopList._mWrapper = $('#toplists-list-body');
 		TopList.attachEvents();
 		TopList.checkList();
+	},
+
+	track: function(token){
+		$.tracker.byStr('TopLists/list-view/' + token);
 	},
 
 	unblockInput: function(){
@@ -41,6 +45,7 @@ var TopList = {
 				}
 			}
 		);
+		TopList.track('vote-item');
 		return false;
 	},
 
@@ -71,7 +76,8 @@ var TopList = {
 				
 			}
 		);
-		
+
+		TopList.track('item-add');
 		return false;
 	},
 
