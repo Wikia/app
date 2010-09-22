@@ -16,7 +16,7 @@ $wgWikiaLocalSettingsPath  = __FILE__;
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
 $wgDevelEnvironment = true;
-$wgWikicitiesReadOnly = true;
+$wgWikicitiesReadOnly = false;
 
 require_once("$IP/extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php");
 
