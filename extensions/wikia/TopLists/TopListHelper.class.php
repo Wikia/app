@@ -213,6 +213,32 @@ class TopListHelper {
 		return true;
 	}
 
+	public static function onArticleDeleteComplete( &$article, &$user, $reason, $id ) {
+		$title = $article->getTitle();
+
+		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
+			$list = TopList::newFromTitle( $title );
+			$list ->removeItems();
+		}
+
+		return true;
+	}
+
+	public static function onArticleRevisionUndeleted( &$title, $revision, $oldPageId ) {
+		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
+			$list = TopList::newFromTitle( $title );
+			$list ->restoreItems();
+		}
+		return true;
+	}
+
+	public static function onTitleMoveComplete( &$title, &$nt, &$user, $pageId, $redirId ) {
+		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
+			$title->moveSubpages( $nt, false );
+		}
+		return true;
+	}
+
 	/**
 	 * formats a timespan in a seconds/minutes/hours/days/weeks count string
 	 *
