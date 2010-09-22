@@ -14,24 +14,26 @@ WikiaFooterApp = {
 
 		//Variables
 		var footer = $("#WikiaFooter");
-		var sharebar = footer.children(".toolbar");
-		var windowObj = $(window);
-
-		//float the share bar
-		sharebar.addClass("float");
-
-		//scroll detection
-		windowObj.scroll(function() {
-			var scroll = windowObj.scrollTop() + windowObj.height();
-			var line = footer.offset().top + sharebar.outerHeight();
-
-			//Scrolled past line? Lock that footer!
-			if (scroll > line && sharebar.hasClass("float")) {
-				sharebar.removeClass("float");
-			} else if (scroll < line && !sharebar.hasClass("float")) {
-				sharebar.addClass("float");
-			}
-		});
+		if(footer) {
+			var sharebar = footer.children(".toolbar");
+			var windowObj = $(window);
+	
+			//float the share bar
+			sharebar.addClass("float");
+	
+			//scroll detection
+			windowObj.scroll(function() {
+				var scroll = windowObj.scrollTop() + windowObj.height();
+				var line = footer.offset().top + sharebar.outerHeight();
+	
+				//Scrolled past line? Lock that footer!
+				if (scroll > line && sharebar.hasClass("float")) {
+					sharebar.removeClass("float");
+				} else if (scroll < line && !sharebar.hasClass("float")) {
+					sharebar.addClass("float");
+				}
+			});
+		}
 
 	},
 
