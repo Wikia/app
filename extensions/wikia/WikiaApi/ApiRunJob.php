@@ -78,7 +78,6 @@ class ApiRunJob extends ApiBase {
 
 		$result[ "left" ]  = $this->checkQueue();
 
-#		$this->getResult()->setIndexedTagName( $result, 'job' );
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
 
 		$result = array();
