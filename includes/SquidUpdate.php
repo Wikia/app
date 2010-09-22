@@ -83,7 +83,7 @@ class SquidUpdate {
 
 	static function purge( $urlArr ) {
 		global $wgSquidServers, $wgHTCPMulticastAddress, $wgHTCPPort;
-		global $wgPurgeSquidViaStomp;
+		global $wgPurgeSquidViaStomp, $wgPurgeSquidViaScribe;
 
 		/*if ( (@$wgSquidServers[0]) == 'echo' ) {
 			echo implode("<br />\n", $urlArr) . "<br />\n";
@@ -95,11 +95,15 @@ class SquidUpdate {
 		}
 
 		if( $wgPurgeSquidViaStomp ) {
-			return SquidUpdate::StompPurge( $urlArr );
+			SquidUpdate::StompPurge( $urlArr );
 		}
 
 		if( $wgPurgeSquidViaScribe ) {
-			return SquidUpdate::ScribePurge( $urlArr );
+			SquidUpdate::ScribePurge( $urlArr );
+		}
+
+		if ($wgPurgeSquidViaStomp || $wgPurgeSquidViaScribe) {
+			return true;
 		}
 
 		if ( $wgHTCPMulticastAddress && $wgHTCPPort ) {
