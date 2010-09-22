@@ -1,9 +1,19 @@
 <!-- s:<?php echo __FILE__ ?> -->
 <style type="text/css">
 /*<![CDATA[*/
-#cityselect {z-index:9000} /* for IE z-index of absolute divs inside relative divs issue */
-#citydomain {z-index:0;} **//* abs for ie quirks */
+<?php
+	if (Wikia::isOasis()) {
+		$css = wfGetSassUrl('extensions/wikia/WikiFactory/css/oasis.scss');
+		echo "@import url('{$css}');\n\n";
+	}
 
+	// TODO: move these CSS rules to oasis.scss
+?>
+#cityselect {z-index:9000} /* for IE z-index of absolute divs inside relative divs issue */
+#citydomain {z-index:0;} /* abs for ie quirks */
+
+#WikiFactoryDomainSelector {position: relative; z-index: 10}
+#citydomain {width: 350px}
 
 .wk-form-row { list-style-type: none; display: inline; margin:0; }
 .wk-form-row li { display: inline; }
@@ -38,7 +48,7 @@ table.TablePager { border: 1px solid gray;}
 </ul>
 <!-- e:short info -->
 <br />
-<form method="post" action="<?php echo $title->getLocalUrl( 'action=select' ) ?>">
+<form id="WikiFactoryDomainSelector" method="post" action="<?php echo $title->getLocalUrl( 'action=select' ) ?>">
 <div class="wk-form-row">
  <ul>
  <li><label>Domain name</label></li>
@@ -49,11 +59,18 @@ table.TablePager { border: 1px solid gray;}
 </form>
 <script type="text/javascript">
 /*<![CDATA[*/
-	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+	$.loadJQueryAutocomplete(function() {
 		$('#citydomain').autocomplete({
-			serviceUrl: wgServer+wgScript+'?action=ajax&rs=axWFactoryDomainQuery',
-			minChars:3,
-			deferRequestBy: 0
+			serviceUrl: wgServer + wgScript + '?action=ajax&rs=axWFactoryDomainQuery',
+			onSelect: function(v, d) {
+				// redirect to Special:WikiFactory/<city id>
+				window.location.href = wgArticlePath.replace(/\$1/, wgPageName + '/' + d);
+			},
+			appendTo: '#WikiFactoryDomainSelector',
+			deferRequestBy: 0,
+			maxHeight: 300,
+			minChars: 3,
+			width: 350
 		});
 	});
 /*]]>*/
