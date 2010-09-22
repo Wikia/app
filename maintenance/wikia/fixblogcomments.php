@@ -16,17 +16,18 @@ $dry = isset($options['dry']) ? $options['dry'] : "";
 $method = 'fixBlogComments';
 
 function fixAllBlogComments( $dry ) {
-	global $method, $wgExternalDatawareDB, $wgCityId;
+	global $method, $wgExternalDatawareDB, $wgCityId, $wgDBname;
 
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_SLAVE );
 	$res = $dbw->select(
-		array( 'page' ),
-		array( 'page_id, page_title, page_namespace'),
+		array( 'recentchanges' ),
+		array( 'rc_id, rc_title as page_title, rc_namespace as page_namespace'),
 		array(
-			'page_namespace' => NS_BLOG_ARTICLE_TALK
+			'rc_namespace' => NS_BLOG_ARTICLE_TALK,
+			"( rc_title not rlike '.+[0-9]+$' or rc_title not like '%@comment%' )",
+			'rc_timestamp between \'20100915000000\` and \'20100917000000\''
 		),
-		$method,
-		array( 'ORDER BY' => 'page_id')
+		$method
 	);
 
 	$pages = array();
@@ -35,7 +36,7 @@ function fixAllBlogComments( $dry ) {
 	}
 	$dbw->freeResult( $res );
 
-	print sprintf("Found %0d pages \n", count($pages));
+	print sprintf("Found %s: %0d pages \n", $wgDBname, count($pages));
 
 	if( !empty($pages) ) {
 		foreach ( $pages as $row ) {
@@ -73,6 +74,23 @@ function fixAllBlogComments( $dry ) {
 					);
 				}
 
+				if( $dry ) {
+					printf(
+						"update recentchanges set rc_title = '%s' where rc_id = %d and rc_namespace = %d\n",
+						$newTitle,
+						$row['rc_id'],
+						NS_BLOG_ARTICLE_TALK
+					);
+				}
+				else {
+					$dbw->update(
+						'recentchanges',
+						array( 'rc_title' => $newTitle ),
+						array( 'rc_id' => $row['rc_id'], 'rc_namespace' => NS_BLOG_ARTICLE_TALK ),
+						$method
+					);
+				}
+				
 				# update watchlist
 				if ( $dry ) {
 					 print "update watchlist set wl_title = '$newTitle' where wl_title = '{$row['page_title']}' and wl_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
@@ -102,6 +120,23 @@ function fixAllBlogComments( $dry ) {
 						$method
 					);
 				}
+				
+				if( $dry ) {
+					printf(
+						"update recentchanges set rc_title = '%s' where rc_id = %d and rc_namespace = %d\n",
+						$newTitle,
+						$row['rc_id'],
+						NS_BLOG_ARTICLE_TALK
+					);
+				}
+				else {
+					$dbw->update(
+						'recentchanges',
+						array( 'rc_title' => $newTitle ),
+						array( 'rc_id' => $row['rc_id'], 'rc_namespace' => NS_BLOG_ARTICLE_TALK ),
+						$method
+					);
+				}				
 			}
 		}
 	}
