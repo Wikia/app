@@ -163,16 +163,18 @@ var ThemeDesigner = {
 
 	showPicker: function(event, type) {
 		$().log("running showPicker");
+		ThemeDesigner.hidePicker();
 		event.stopPropagation();
 		var swatch = $(event.currentTarget);
+		var swatchName = event.currentTarget.className;
 
 		// check the type (color or image)
 		if(type == "color") {
 
 			//add swatches from array
 			var swatchNodes = "";
-			for (var i=0; i<ThemeDesigner.swatches.all.length; i++) {
-				swatchNodes += '<li style="background-color: #' + ThemeDesigner.swatches.all[i] + ';"></li>';
+			for (var i=0; i<ThemeDesigner.swatches[swatchName].length; i++) {
+				swatchNodes += '<li style="background-color: #' + ThemeDesigner.swatches[swatchName][i] + ';"></li>';
 			}
 			$("#ThemeDesignerPicker").children(".color").find(".swatches").append(swatchNodes);
 
@@ -223,13 +225,21 @@ var ThemeDesigner = {
 		
 			// click handling
 			$("#ThemeDesignerPicker").children(".image").find(".swatches").find("li").click(function() {
-				ThemeDesigner.set("background-align", "center");
 				
+				//set correct alignment
+				if ($(this).attr("class") == "user") {
+					ThemeDesigner.set("background-align", ThemeDesigner.settings["user-background-align"]);
+				} else {
+					ThemeDesigner.set("background-align", "center");
+				}
+
+				//set correct image				
 				if ($(this).attr("class") == "no-image") {
 					ThemeDesigner.set("background-image", "");
 				} else {
 					ThemeDesigner.set("background-image", $(this).children("img").attr("data-image"));
 				}
+				
 				ThemeDesigner.hidePicker();
 			})
 		}
@@ -273,6 +283,16 @@ var ThemeDesigner = {
 			return;
 		}
 
+		if (setting == "background-tiled") {
+			if (newValue == "true") {
+				//all tiled images are centered
+				ThemeDesigner.set("background-align", "center");
+			} else if (ThemeDesigner.settings["background-align"] == "center" && ThemeDesigner.settings["background-image"].indexOf("images/themes") < 0 && ThemeDesigner.settings["user-background-align"] == "left") {
+				//align is currently center, background image is user-specified, and user background image should be aligned left
+				ThemeDesigner.set("background-align", "left");
+			}
+		}
+
 		var reloadCSS = false;
 		var updateSkinPreview = false;
 
@@ -280,7 +300,7 @@ var ThemeDesigner = {
 			$.extend(ThemeDesigner.settings, ThemeDesigner.themes[newValue]);
 			reloadCSS = true;
 		}
-
+		
 		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled") {
 			reloadCSS = true;
 		}
@@ -349,10 +369,10 @@ var ThemeDesigner = {
 								
 				ThemeDesigner.set("user-background-image", response.backgroundImageUrl);
 				ThemeDesigner.set("user-background-image-thumb", response.backgroundImageThumb);				
+				ThemeDesigner.set("user-background-align", response.backgroundImageAlign);
 				
 				ThemeDesigner.set("theme", "custom");
 				ThemeDesigner.set("background-align", response.backgroundImageAlign);
-				//ThemeDesigner.set("background-image-thumb", response.backgroundImageThumb);				
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
 			}
@@ -561,55 +581,115 @@ var ThemeDesigner = {
 	},
 	
 	swatches: {
-		all: Array(
-			"611e03",
-			"7b3b0a",
-			"337800",
-			"54845e",
-			"6699ff",
-			"2b3855",
-			"5f5964",
+		"color-body": Array(
+			"f9ebc3",
+			"ede5dd",
+			"f7e1d3",
+			"dfdbc3",
+			"fbe300",
+			"ffbf99",
+			"ffbf99",
+			"fdc355",
+			"cdbd89",
+			"d5a593",
+			"a37719",
+			"836d35",
+			"776b41",
+			"f14700",
+			"dd3509",
+			"a34111",
+			"7b3b09",
 			"4f4341",
-			"721410",
-			"843008",
-			"809f00",
-			"988f34",
-			"6c93b1",
-			"806f9f",
-			"575961",
-			"723c3b",
-			"f31d00",
-			"a34112",
-			"fce300",
-			"786c42",
-			"a5b5c6",
-			"6f027c",
-			"4f4341",
+			"474545",
+			"611d03",
+			"891100",
+			"71130f",
+			"ebfffb",
+			"ebf1f5",
 			"f5ebf5",
-			"dd360a",
-			"a47719",
-			"f1ca2f",
-			"846d35",
-			"d4e6f7",
+			"e7f3d1",
+			"bde9fd",
 			"dfbddd",
-			"8a9c92",
+			"c3d167",
+			"a5b5c5",
+			"6599ff",
+			"6b93b1",
+			"978f33",
+			"53835d",
+			"7f6f9f",
+			"d335f7",
+			"337700",
+			"006baf",
+			"2b53b5",
+			"2d2b17",
+			"003715",
+			"012d59",
+			"6f017b",
+			"790145",
+			"ffffff",
+			"f1f1f1",
 			"ebebeb",
+			"000000"
+		),
+		"color-buttons": Array(
+			"fec356",
+			"6699ff",
+			"6c93b1",
+			"a47719",
+			"846d35",
+			"786c42",
 			"f14800",
-			"cebe8a",
+			"337800",
+			"006cb0",
+			"dd360a",
+			"a34112",
+			"474646",
+			"7b3b0a",
+			"4f4341",
+			"0038d8",
+			"2d2c18",
+			"611e03",
+			"003816",
+			"891100",
+			"012e59",
+			"721410",
+			"6f027c",
+			"7a0146"
+		),
+		"color-links": Array(
+			"fce300",
 			"fec356",
 			"c4d167",
-			"dde9ef",
-			"ffbf99",
-			"2d2c18",
-			"fcfffc",
-			"ce8663",
-			"d6a694",
-			"f9ecc3",
-			"e7f4d2",
+			"6699ff",
+			"6c93b1",
+			"a47719",
+			"54845e",
+			"337800",
+			"006cb0",
+			"0148c2",
+			"6f027c",
+			"ffffff"
+		),
+		"color-page": Array(
 			"ebf2f5",
+			"e7f4d2",
+			"f5ebf5",
+			"f9ecc3",
+			"eee5de",
 			"f7e1d4",
-			"000000",
-			"ffffff"			
+			"d4e6f7",
+			"dfdbc3",
+			"dfbddd",
+			"cebe8a",
+			"a5b5c6",
+			"474646",
+			"2d2c18",
+			"611e03",
+			"012e59",
+			"ffffff",
+			"f2f2f2",
+			"ebebeb",
+			"000000"
 		)
 	}
 
