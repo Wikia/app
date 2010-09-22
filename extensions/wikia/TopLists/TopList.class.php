@@ -229,6 +229,9 @@ class TopList extends TopListBase {
 		return $this->mItems;
 	}
 
+	/**
+	 * @author ADi
+	 */
 	public function removeItems() {
 		foreach( $this->mTitle->getSubpages() as $subpageTitle ) {
 			$item = TopListItem::newFromTitle( $subpageTitle );
@@ -236,15 +239,11 @@ class TopList extends TopListBase {
 		}
 	}
 
-	public function removeItems() {
-		foreach( $this->mTitle->getSubpages() as $subpageTitle ) {
-			$item = TopListItem::newFromTitle( $subpageTitle );
-			$item ->remove();
-		}
-	}
-
+	/**
+	 * @author ADi
+	 */
 	public function restoreItems() {
-
+		//TODO: ADI IMPLEMENT
 	}
 
 	/**

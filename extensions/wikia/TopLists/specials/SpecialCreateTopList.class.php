@@ -2,7 +2,7 @@
 class SpecialCreateTopList extends SpecialPage {
 	function __construct() {
 		wfLoadExtensionMessages( 'TopLists' );
-		parent::__construct( 'CreateTopList', 'toplists-create-edit-list', true /* listed */ );
+		parent::__construct( 'CreateTopList', 'toplists-create-edit-list', false /* not listed */ );
 	}
 
 	function execute( $par ) {
@@ -15,7 +15,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
 
-		if( !$this->userCanExecute( $wgUser ) ) {
+		if( !$this->userCanExecute( $wgUser ) || !Wikia::isOasis() ) {
 			$this->displayRestrictionError();
 			return;
 		}

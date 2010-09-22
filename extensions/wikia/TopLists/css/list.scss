@@ -46,7 +46,7 @@ $item-width: 415px;
 				padding-top: 13px;
 				position: absolute;
 				top: -20px;
-				color: #545454; /*$color-module-shadow;*/
+				color: #000000;
 			}
 
 			.NotVotable{
@@ -56,7 +56,7 @@ $item-width: 415px;
 			.ItemNumber {
 				text-align: center;
 				position: absolute;
-				color: #848484; /*$color-module-highlight;*/
+				color: #999999; /*$color-module-highlight;*/
 
 				span {
 					display: block;
