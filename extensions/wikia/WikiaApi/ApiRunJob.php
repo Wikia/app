@@ -120,7 +120,7 @@ class ApiRunJob extends ApiBase {
 	 * @access public
 	 */
 	public function mustBePosted() {
-		return false; // should be true; later
+		return true;
 	}
 
 	/**
