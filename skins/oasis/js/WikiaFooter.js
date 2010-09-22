@@ -1,8 +1,8 @@
 $(function() {
-	WikiaFooter.init();
+	WikiaFooterApp.init();
 });
 
-WikiaFooter = {
+WikiaFooterApp = {
 
 	settings: {
 		delay: 350
@@ -10,7 +10,7 @@ WikiaFooter = {
 
 	init: function() {
 
-		WikiaFooter.myToolsSetup();
+		WikiaFooterApp.myToolsSetup();
 
 		//Variables
 		var footer = $("#WikiaFooter");
@@ -50,7 +50,7 @@ WikiaFooter = {
 		}, function() {
 			timer = setTimeout(function() {
 				$("#my-tools-menu").hide();
-			}, WikiaFooter.settings.delay);
+			}, WikiaFooterApp.settings.delay);
 		});
 
 	}

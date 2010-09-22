@@ -1,8 +1,8 @@
 $(function() {
-	WikiaSearch.init();
+	WikiaSearchApp.init();
 });
 
-WikiaSearch = {
+WikiaSearchApp = {
 	searchForm: false,
 	searchField: false,
 	adBoxAfter: false,
@@ -12,28 +12,25 @@ WikiaSearch = {
 	},
 
 	init : function() {
-		WikiaSearch.searchForm = $('#WikiaSearch');
-		WikiaSearch.searchField = WikiaSearch.searchForm.children('input[placeholder]');
+		WikiaSearchApp.searchForm = $('#WikiaSearch');
+		WikiaSearchApp.searchField = WikiaSearchApp.searchForm.children('input[placeholder]');
 
 		// load autosuggest code on first focus
-		WikiaSearch.searchField.one('focus',WikiaSearch.initSuggest);
+		WikiaSearchApp.searchField.one('focus', WikiaSearchApp.initSuggest);
 
 		// track form submittion
-		WikiaSearch.searchForm.submit(function(ev) {
-			WikiaSearch.track('submit');
+		WikiaSearchApp.searchForm.submit(function(ev) {
+			WikiaSearchApp.track('submit');
 		});
-
-		// get boxad following search box
-		//WikiaSearch.adBoxAfter = WikiaSearch.searchForm.next('.wikia-ad');
 	},
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	initSuggest: function () {
 		$.loadJQueryAutocomplete(function() {
-			WikiaSearch.searchField.autocomplete({
+			WikiaSearchApp.searchField.autocomplete({
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 				onSelect: function(v, d) {
-					WikiaSearch.track('suggest');
+					WikiaSearchApp.track('suggest');
 					window.location.href = wgArticlePath.replace(/\$1/, v.replace(/ /g, '_'));
 				},
 				appendTo: '#WikiaSearch',
@@ -44,13 +41,15 @@ WikiaSearch = {
 			});
 
 			// hide TOP_BOXAD ad when suggestions are shown
-			WikiaSearch.searchField.
+			/*
+			WikiaSearchApp.searchField.
 				bind('suggestShow', function() {
 					//WikiaSearch.adBoxAfter.css('visibility', 'hidden');
 				}).
 				bind('suggestHide', function() {
 					//WikiaSearch.adBoxAfter.css('visibility', 'visible');
 				});
+			*/
 		});
 	}
 };
