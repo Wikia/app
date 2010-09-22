@@ -399,9 +399,11 @@ class TopListItem extends TopListBase {
 						'params' => null
 				);
 			}
-		} else {
-			$this->mStatus = TOPLISTS_ITEM_REMOVED;
-			/*
+			else {
+				$this->mStatus = TOPLISTS_ITEM_REMOVED;
+			}
+		}
+		else {
 			$errors [] = array(
 				'msg' => 'toplists-error-article-not-exists',
 				'params' => array(
@@ -409,7 +411,6 @@ class TopListItem extends TopListBase {
 					$this->mTitle->getEditURL()
 				)
 			);
-			*/
 		}
 
 		return ( empty( $errors ) ) ? true : $errors;
