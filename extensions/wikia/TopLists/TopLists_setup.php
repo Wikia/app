@@ -30,6 +30,9 @@ define( 'TOPLISTS_SAVE_CREATE', 1 );
 define( 'TOPLISTS_SAVE_UPDATE', 2 );
 define( 'TOPLISTS_HOT_MIN_COUNT', 10 );
 define( 'TOPLISTS_HOT_MIN_TIMESPAN', 60 * 60 * 24);
+define( 'TOPLISTS_ITEM_REMOVED', 'removed');
+define( 'TOPLISTS_ITEM_CREATED', 'created');
+define( 'TOPLISTS_ITEM_UPDATED', 'updated');
 
 $dir = dirname( __FILE__ );
 

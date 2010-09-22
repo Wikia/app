@@ -210,19 +210,8 @@ class SpecialEditTopList extends SpecialPage {
 				}
 			}
 
-			//if no errors proceed with saving, list comes first
-			if ( empty( $errors ) ) {
-				if ( $relatedArticleChanged || $selectedPictureChanged) {
-					$saveResult = $list->save();
-
-					if ( $saveResult !== true ) {
-						foreach ( $saveResult as $errorTuple ) {
-							$errors[  'list_name'  ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
-						}
-					}
-				}
-
-				//list saved with no errors or no save required, proceed with items
+				//with no errors or no save required, proceed with items
+				$itemTouched = 0;
 				if ( empty( $errors ) ) {
 					foreach ( $items as $index => $item ) {
 						if ( $item[ 'changed' ] && !empty( $item[ 'object' ] ) ) {
@@ -234,6 +223,7 @@ class SpecialEditTopList extends SpecialPage {
 								}
 							} else {
 								$item[ 'object' ]->getTitle()->invalidateCache();
+								$itemTouched++;
 							}
 						}
 					}
@@ -257,6 +247,21 @@ class SpecialEditTopList extends SpecialPage {
 							foreach ( $removeResult as $errorTuple ) {
 								$errors[ 'item_' . $counter ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 							}
+						}
+						else {
+							$itemTouched++;
+						}
+					}
+				}
+
+			//if no errors proceed with saving, list comes first
+			if ( empty( $errors ) || $itemTouched ) {
+				if ( $relatedArticleChanged || $selectedPictureChanged || $itemTouched ) {
+					$saveResult = $list->save();
+
+					if ( $saveResult !== true ) {
+						foreach ( $saveResult as $errorTuple ) {
+							$errors[  'list_name'  ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
 						}
 					}
 				}

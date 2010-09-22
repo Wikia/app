@@ -11,6 +11,7 @@ class TopListItem extends TopListBase {
 	protected $mVotesTimestamps = null;
 	protected $mNewContent = null;
 	protected $mVotesCacheTTL = 6; // in hours
+	protected $mStatus = null;
 	private $mList = null;
 
 	/**
@@ -70,7 +71,7 @@ class TopListItem extends TopListBase {
 
 			$this->mVotesCount = null;
 			$this->mVotesTimestamps = null;
-			
+
 			$aResult = $oApi->GetResultData();
 
 			$success = !empty( $aResult );
@@ -137,7 +138,7 @@ class TopListItem extends TopListBase {
 
 			$cacheKey = $this->_getVotesTimestampsCacheKey();
 			$cachedValue = $wgMemc->get( $cacheKey );
-			
+
 			if( !empty( $cachedValue ) ) {
 				$this->mVotesTimestamps = $cachedValue;
 
@@ -160,7 +161,7 @@ class TopListItem extends TopListBase {
 	 */
 	private function _queryVotesApi() {
 		$pageId = $this->getArticle()->getId();
-		
+
 		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 0, "wktimestamps" => 1 ));
 		$oApi = new ApiMain($oFauxRequest);
 		$oApi->execute();
@@ -207,7 +208,7 @@ class TopListItem extends TopListBase {
 
 		$wgMemc->set( $cacheKey, $this->mVotesTimestamps, ( $this->mVotesCacheTTL * 3600 ) );
 	}
-	
+
 	private function _getVotesCountCacheKey() {
 		return wfMemcKey( $this->getTitle()->getDBkey(), 'votesCount' );
 	}
@@ -269,7 +270,7 @@ class TopListItem extends TopListBase {
 	 */
 	public function getParsedContent() {
 		global $wgParser;
-		
+
 		if( $this->exists() ) {
 			$parserOptions = new ParserOptions();
 			return $wgParser->parse($this->getArticle()->getContent(), $this->getTitle(), $parserOptions)->getText();
@@ -347,9 +348,11 @@ class TopListItem extends TopListBase {
 
 			if ( $mode == TOPLISTS_SAVE_CREATE ) {
 				$summaryMsg = 'toplists-item-creation-summary';
+				$this->mStatus = TOPLISTS_ITEM_CREATED;
 				$editMode = EDIT_NEW;
 			} else {
 				$summaryMsg = 'toplists-item-update-summary';
+				$this->mStatus = TOPLISTS_ITEM_UPDATED;
 				$editMode = EDIT_UPDATE;
 			}
 
@@ -359,6 +362,7 @@ class TopListItem extends TopListBase {
 			$status = $article->doEdit( $this->mNewContent , wfMsgForContent( $summaryMsg ), $editMode );
 
 			if ( !$status->isOK() ) {
+				$this->mStatus = null;
 				foreach ( $status->getErrorsArray() as $msg ) {
 					$errors[] = array(
 						'msg' => $msg,
@@ -396,6 +400,8 @@ class TopListItem extends TopListBase {
 				);
 			}
 		} else {
+			$this->mStatus = TOPLISTS_ITEM_REMOVED;
+			/*
 			$errors [] = array(
 				'msg' => 'toplists-error-article-not-exists',
 				'params' => array(
@@ -403,8 +409,13 @@ class TopListItem extends TopListBase {
 					$this->mTitle->getEditURL()
 				)
 			);
+			*/
 		}
 
 		return ( empty( $errors ) ) ? true : $errors;
+	}
+
+	public function getStatus() {
+		return $this->mStatus;
 	}
 }
