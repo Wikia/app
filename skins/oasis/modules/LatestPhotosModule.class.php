@@ -24,9 +24,9 @@ class LatestPhotosModule extends Module {
 		// Pull the list of images from memcache first
 		global $wgDevelEnvironment;
 		if(!empty($wgDevelEnvironment)){
-			$mKey = wfMemcKey('mOasisLatestPhotos', $_SERVER['SERVER_NAME']);
+			$mKey = wfMemcKey('mOasisLatestPhotosA', $_SERVER['SERVER_NAME']);
 		} else {
-			$mKey = wfMemcKey('mOasisLatestPhotos');
+			$mKey = wfMemcKey('mOasisLatestPhotosA');
 		}
 		$this->thumbUrls = $wgMemc->get($mKey);
 		if (empty($this->thumbUrls)) {
@@ -164,7 +164,7 @@ class LatestPhotosModule extends Module {
 
     public static function onImageUpload(&$image) {
 		global $wgMemc;
-		$wgMemc->delete(wfMemcKey('mOasisLatestPhotos'));
+		$wgMemc->delete(wfMemcKey('mOasisLatestPhotosA'));
 		return true;
     }
 }
