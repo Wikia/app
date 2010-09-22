@@ -1,4 +1,4 @@
-se<?php
+<?php
 class AchievementsModule extends Module {
 
 	var $wgBlankImgUrl;
