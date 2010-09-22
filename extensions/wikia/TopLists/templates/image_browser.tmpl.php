@@ -18,7 +18,7 @@ global $wgScriptPath;
 	<ul class="SuggestedPictures">
 		<? foreach( $images as $img ) :?>
 			<li>
-				<a href="#" title="<?= $img[ 'name' ] ;?>">
+				<a title="<?= $img[ 'name' ] ;?>">
 					<img src="<?= $img[ 'url' ] ;?>" alt="<?= $img[ 'name' ] ;?>" />
 				</a>
 			</li>
