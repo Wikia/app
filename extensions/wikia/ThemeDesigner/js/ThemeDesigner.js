@@ -417,7 +417,9 @@ var ThemeDesigner = {
 		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=SaveSettings&outputType=data',
 			{'settings': ThemeDesigner.settings},
 			function(data) {
-				document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
+				if(returnTo) {
+					document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
+				}
 			},
 			'json');
 	},
