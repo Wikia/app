@@ -1,0 +1,16 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/menus";
+
+#WikiFactoryDomainSelector {
+	.autocomplete {
+		@include menu-regular;
+		margin-top: 2px;
+		overflow: hidden;
+		position: relative;
+		top: 3px;
+		width: 270px;
+		.selected {
+			background: $color-menu-highlight;
+		}
+	}
+}
