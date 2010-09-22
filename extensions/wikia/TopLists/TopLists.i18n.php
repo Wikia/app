@@ -48,9 +48,9 @@ $messages['en'] = array(
 	'toplists-create-button' => 'Create list',
 	'toplists-update-button' => 'Save list',
 	'toplists-cancel-button' => 'Cancel',
-	'toplists-items-removed' => '{{PLURAL:$1|1 item|$1 items}} removed',
-	'toplists-items-created' => '{{PLURAL:$1|1 item|$1 items}} created',
-	'toplists-items-updated' => '{{PLURAL:$1|1 item|$1 items}} updated',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|item|items}} removed',
+	'toplists-items-created' => '$1 {{PLURAL:$1|item|items}} created',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|item|items}} updated',
 	'toplists-items-nochange' => 'No items changed',
 
 	//image browser/selector
