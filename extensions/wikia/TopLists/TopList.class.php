@@ -310,18 +310,18 @@ class TopList extends TopListBase {
 		}
 
 		if( $itemsCreated ) {
-			$statusMsg = wfMsgForContent( 'toplists-items-created', array( $itemsCreated ) );
+			$statusMsg = wfMsgExt( 'toplists-items-created', array( 'parsemag', 'content' ), array( $itemsCreated ) );
 		}
 
 		if( $itemsRemoved ) {
-			$statusMsg .= ( !empty( $statusMsg ) ? ' ' : '' ) . wfMsgForContent( 'toplists-items-removed', array( $itemsRemoved ) );
+			$statusMsg .= ( !empty( $statusMsg ) ? ', ' : '' ) . wfMsgExt( 'toplists-items-removed', array( 'parsemag', 'content' ), array( $itemsRemoved ) );
 		}
 
 		if( $itemsUpdated ) {
-			$statusMsg .= ( !empty( $statusMsg ) ? ' ' : '' ) . wfMsgForContent( 'toplists-items-updated', array( $itemsUpdated ) );
+			$statusMsg .= ( !empty( $statusMsg ) ? ', ' : '' ) . wfMsgExt( 'toplists-items-updated', array( 'parsemag', 'content' ), array( $itemsUpdated ) );
 		}
 
-		return !empty( $statusMsg ) ? $statusMsg : wfMsgForContent( 'toplists-items-nochange');
+		return !empty( $statusMsg ) ? $statusMsg : wfMsgForContent( 'toplists-items-nochange' );
 	}
 
 	/**
@@ -331,7 +331,7 @@ class TopList extends TopListBase {
 	 */
 	public function invalidateCache() {
 		$this->getTitle()->invalidateCache();
-		SquidUpdate::purge( array( $this->mTitle->getFullUrl() ) );
+		$this->mTitle->purgeSquid();
 		$this->mDataLoaded = false;
 		$this->mItems = array();
 	}
