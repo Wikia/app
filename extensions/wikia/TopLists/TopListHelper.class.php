@@ -164,7 +164,8 @@ class TopListHelper {
 
 		if( ( $title instanceof Title )  && ( $title->getNamespace() == NS_TOPLIST ) ) {
 			wfLoadExtensionMessages( 'TopLists' );
-			$body = wfMsg( 'toplists-email-body', array( $title->getFullUrl(), $keys['$PAGESUMMARY'] ) );
+			$summary = strtr( TOPLISTS_STATUS_SEPARATOR, "\n", $keys['$PAGESUMMERY'] );
+			$body = wfMsg( 'toplists-email-body', array( $title->getFullUrl(), $summary ) );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -208,7 +209,7 @@ class TopListHelper {
 			$out->addStyle( wfGetSassUrl( '/extensions/wikia/TopLists/css/list.scss' ) );
 			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
 		}
-		
+
 		return true;
 	}
 
@@ -406,7 +407,7 @@ class TopListHelper {
 				}
 			}
 		}
-			
+
 		$json = Wikia::json_encode( $ret );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );

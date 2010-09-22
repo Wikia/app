@@ -33,6 +33,7 @@ define( 'TOPLISTS_HOT_MIN_TIMESPAN', 60 * 60 * 24);
 define( 'TOPLISTS_ITEM_REMOVED', 'removed');
 define( 'TOPLISTS_ITEM_CREATED', 'created');
 define( 'TOPLISTS_ITEM_UPDATED', 'updated');
+define( 'TOPLISTS_STATUS_SEPARATOR', ', ' );
 
 $dir = dirname( __FILE__ );
 
