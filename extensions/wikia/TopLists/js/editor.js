@@ -8,7 +8,6 @@ $(function() {
 });
 
 var TopListsEditor = {
-	length: 0,
 	_mListContainer: null,
 	_mAutocompleteField: null,
 	_mSelectedPictureField: null,
@@ -17,7 +16,6 @@ var TopListsEditor = {
 	
 	_init: function(){
 		TopListsEditor._mListContainer = $('#toplist-editor .ItemsList');
-		TopListsEditor.length = TopListsEditor._mListContainer.find('li:not(.ItemTemplate)').length;
 		TopListsEditor._mAutocompleteField = $('#toplist-editor input[name="related_article_name"]');
 		TopListsEditor._mSelectedPictureField = $('#toplist-editor input[name="selected_picture_name"]');
 		TopListsEditor._mPictureFrame =  $('#toplist-editor .ImageBrowser .frame');
@@ -83,22 +81,23 @@ var TopListsEditor = {
 
 	addItem: function(){
 		TopListsEditor.track('item-add');
-		TopListsEditor.length++;
 		
 		var item = TopListsEditor._mListContainer
 			.find('li:first')
-			.clone(true)
+			.clone()
 			.removeClass('ItemTemplate')
 			.appendTo(TopListsEditor._mListContainer)
 			.show();
 
-			item
-				.find('.ItemNumber')
-				.text('#' + TopListsEditor.length);
+		item
+			.find('.ItemRemove a')
+			.click(TopListsEditor.removeItem);
 
-			item
-				.find('input[type=text]:disabled')
-				.removeAttr('disabled');
+		item
+			.find('input[type=text]:disabled')
+			.removeAttr('disabled');
+
+		TopListsEditor._fixLabels();
 	},
 
 	removeItem: function(){
@@ -115,8 +114,6 @@ var TopListsEditor = {
 		}
 		
 		item.remove();
-		
-		TopListsEditor.length--;
 		TopListsEditor._fixLabels();
 	},
 
