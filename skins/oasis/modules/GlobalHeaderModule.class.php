@@ -26,7 +26,7 @@ class GlobalHeaderModule extends Module {
 
 		$this->createWikiUrl = "http://www.wikia.com/Special:CreateWiki{$userlang}";
 
-		$mKey = wfMemcKey('mOasisGlobalHeaderNodes');
+		$mKey = wfMemcKey('mOasisGlobalHeaderNodes', $userlang);
 		$this->menuNodes = $wgMemc->get($mKey);
 		if (empty($this->menuNodes)) {
 			// global menu
