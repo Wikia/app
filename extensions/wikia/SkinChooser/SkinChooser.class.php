@@ -424,6 +424,10 @@ class SkinChooser {
 			}
 		} else {
 			$userSkin = self::getUserOption('skin');
+			if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' )) {
+				$userSkin = 'monaco';
+			}
+
 			$userTheme = self::getUserOption('theme');
 			if(empty($userSkin)) {
 				if(!empty($wgAdminSkin)) {
@@ -465,10 +469,6 @@ class SkinChooser {
 		//fix for RT#20005 - Marooned
 		global $wgEnableAnswers;
 		if ($userSkin == 'answers' && empty($wgEnableAnswers)) {
-			$userSkin = 'monaco';
-		}
-
-		if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' )) {
 			$userSkin = 'monaco';
 		}
 
