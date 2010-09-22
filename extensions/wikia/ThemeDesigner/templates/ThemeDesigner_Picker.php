@@ -12,31 +12,31 @@
 		<h1>Pick an Image</h1>
 		<ul class="swatches">
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/oasis_swatch.jpg" data-image="/skins/oasis/images/themes/oasis.png">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/oasis_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/oasis.png">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/sapphire_swatch.jpg" data-image="/skins/oasis/images/themes/sapphire.png">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/sapphire_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/sapphire.png">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/sky_swatch.jpg" data-image="/skins/oasis/images/themes/sky.png">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/sky_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/sky.png">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/moonlight_swatch.jpg" data-image="/skins/oasis/images/themes/moonlight.jpg">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/moonlight_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/moonlight.jpg">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/opulence_swatch.jpg" data-image="/skins/oasis/images/themes/opulence.png">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/opulence_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/opulence.png">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/carbon_swatch.jpg" data-image="/skins/oasis/images/themes/carbon.png">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/carbon_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/carbon.png">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/beach_swatch.jpg" data-image="/skins/oasis/images/themes/beach.png">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/beach_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/beach.png">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/dragstrip_swatch.jpg" data-image="/skins/oasis/images/themes/dragstrip.jpg">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/dragstrip_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/dragstrip.jpg">
 			</li>
 			<li>
-				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/aliencrate_swatch.jpg" data-image="/skins/oasis/images/themes/aliencrate.jpg">
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/aliencrate_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/aliencrate.jpg">
 			</li>
 			<li class="no-image">
 				Don't use a background
