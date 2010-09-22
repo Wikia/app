@@ -256,17 +256,17 @@ class TopList extends TopListBase {
 			$editMode = null;
 
 			if ( $mode == TOPLISTS_SAVE_CREATE ) {
-				$summaryMsg = 'toplists-list-creation-summary';
+				//$summaryMsg = 'toplists-list-creation-summary';
 				$editMode = EDIT_NEW;
 			} else {
-				$summaryMsg = 'toplists-list-update-summary';
+				//$summaryMsg = 'toplists-list-update-summary';
 				$editMode = EDIT_UPDATE;
 			}
 
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
-			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", wfMsgForContent( $summaryMsg, array( $this->_getItemsSummaryStatusMsg() ) ), $editMode );
+			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", $this->_getItemsSummaryStatusMsg(), $editMode );
 
 			if ( !$status->isOK() ) {
 				foreach ( $status->getErrorsArray() as $msg ) {
