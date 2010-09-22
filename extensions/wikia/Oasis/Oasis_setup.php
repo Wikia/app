@@ -45,13 +45,16 @@ function wfOasisSetup() {
 
 // Mapping of themename to an array of key/value pairs to send to SASS.
 // Sean says: Since SASS is used to generate the CSS files, this config is all that's needed for the themes.
+
+global $wgCdnStylePath;
+
 $wgOasisThemes = array(
 	'oasis' => array(
 		"color-body" => "#BACDD8",
 		"color-page" => "#FFFFFF",
 		"color-buttons" => "#006CB0",
 		"color-links" => "#006CB0",
-		"background-image" => "/skins/oasis/images/themes/oasis.png",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/oasis.png",
 		"background-align" => "center",
 		"background-tiled" => "true"
 	),
@@ -60,7 +63,7 @@ $wgOasisThemes = array(
 		"color-page" => "#FFFFFF",
 		"color-buttons" => "#0038D8",
 		"color-links" => "#0148C2",
-		"background-image" => "/skins/oasis/images/themes/sapphire.png",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/sapphire.png",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
@@ -78,7 +81,7 @@ $wgOasisThemes = array(
 		"color-page" => "#DEF4FE",
 		"color-buttons" => "#F9CE3A",
 		"color-links" => "#285BAF",
-		"background-image" => "/skins/oasis/images/themes/sky.png",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/sky.png",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
@@ -87,7 +90,7 @@ $wgOasisThemes = array(
 		"color-page" => "#CCD9F9",
 		"color-buttons" => "#6F027C",
 		"color-links" => "#6F027C",
-		"background-image" => "/skins/oasis/images/themes/moonlight.jpg",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/moonlight.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
@@ -96,7 +99,7 @@ $wgOasisThemes = array(
 		"color-page" => "#36001F",
 		"color-buttons" => "#DE1C4E",
 		"color-links" => "#F97EC4",
-		"background-image" => "/skins/oasis/images/themes/opulence.png",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/opulence.png",
 		"background-align" => "center",
 		"background-tiled" => "true"
 	),
@@ -114,7 +117,7 @@ $wgOasisThemes = array(
 		"color-page" => "#474646",
 		"color-buttons" => "#012E59",
 		"color-links" => "#70B8FF",
-		"background-image" => "/skins/oasis/images/themes/carbon.png",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/carbon.png",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
@@ -123,7 +126,7 @@ $wgOasisThemes = array(
 		"color-page" => "#FFFFFF",
 		"color-buttons" => "#C2D04D",
 		"color-links" => "#FE7801",
-		"background-image" => "/skins/oasis/images/themes/beach.png",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/beach.png",
 		"background-align" => "center",
 		"background-tiled" => "true"
 	),
@@ -132,7 +135,7 @@ $wgOasisThemes = array(
 		"color-page" => "#0C0C0C",
 		"color-buttons" => "#30A900",
 		"color-links" => "#FFF000",
-		"background-image" => "/skins/oasis/images/themes/dragstrip.jpg",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/dragstrip.jpg",
 		"background-align" => "center",
 		"background-tiled" => "true"
 	),
@@ -141,7 +144,7 @@ $wgOasisThemes = array(
 		"color-page" => "#C6C5C0",
 		"color-buttons" => "#653F03",
 		"color-links" => "#02899D",
-		"background-image" => "/skins/oasis/images/themes/aliencrate.jpg",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/aliencrate.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),

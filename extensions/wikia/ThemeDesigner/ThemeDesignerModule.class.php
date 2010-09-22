@@ -10,6 +10,7 @@ class ThemeDesignerModule extends Module {
 	var $wgOut;
 	var $wgScriptPath;
 	var $wgOasisThemes;
+	var $wgCdnStylePath;
 
 	var $dir;
 	var $mimetype;
