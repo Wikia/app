@@ -1618,7 +1618,14 @@ class ArticleCommentList {
 
 		//we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
 		if (is_array(self::$mArticlesToDelete)) {
-			if ( empty($wgEnableMultiDeleteExt) || ( isset($wgMaxCommentsToDelete) && ( count(self::$mArticlesToDelete) <= $wgMaxCommentsToDelete ) ) ) {
+			$mDelete = 'live';
+			if ( isset($wgMaxCommentsToDelete) && ( count(self::$mArticlesToDelete) > $wgMaxCommentsToDelete ) ) {
+				if ( !empty($wgEnableMultiDeleteExt) ) {
+					$mDelete = 'task';
+				} 
+			} 
+			
+			if ( $mDelete == 'live' ) {
 				$irc_backup = $wgRC2UDPEnabled;	//backup
 				$wgRC2UDPEnabled = false; //turn off
 				foreach (self::$mArticlesToDelete as $page_id => $oComment) {
@@ -1632,29 +1639,27 @@ class ArticleCommentList {
 				$listing = ArticleCommentList::newFromTitle($parentTitle);
 				$listing->purge();
 			} else {
-				if ( $wgEnableMultiDeleteExt ) {
-					$taskParams= array(
-						'mode' 		=> 'you',
-						'wikis'		=> '',
-						'range'		=> 'one',
-						'reason' 	=> 'delete page',
-						'lang'		=> '',
-						'cat'		=> '',
-						'selwikia'	=> $wgCityId,
-						'edittoken' => $wgUser->editToken(),
-						'user'		=> $wgUser->getName(),
-						'admin'		=> $wgUser->getName()
-					);
-						
-					foreach (self::$mArticlesToDelete as $page_id => $oComment) {
-						$oCommentTitle = $oComment->getTitle();
-						if ( $oCommentTitle instanceof Title ) {
-							$data = $taskParams;
-							$data['page'] = $oCommentTitle->getFullText();
-							$thisTask = new MultiDeleteTask( $data );
-							$submit_id = $thisTask->submitForm();
-							Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );				
-						}
+				$taskParams= array(
+					'mode' 		=> 'you',
+					'wikis'		=> '',
+					'range'		=> 'one',
+					'reason' 	=> 'delete page',
+					'lang'		=> '',
+					'cat'		=> '',
+					'selwikia'	=> $wgCityId,
+					'edittoken' => $wgUser->editToken(),
+					'user'		=> $wgUser->getName(),
+					'admin'		=> $wgUser->getName()
+				);
+					
+				foreach (self::$mArticlesToDelete as $page_id => $oComment) {
+					$oCommentTitle = $oComment->getTitle();
+					if ( $oCommentTitle instanceof Title ) {
+						$data = $taskParams;
+						$data['page'] = $oCommentTitle->getFullText();
+						$thisTask = new MultiDeleteTask( $data );
+						$submit_id = $thisTask->submitForm();
+						Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );				
 					}
 				}
 			}
