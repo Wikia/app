@@ -178,6 +178,7 @@ class TopList extends TopListBase {
 			$item = TopListItem::newFromText( $this->mTitle->getText() . '/' . uniqid( self::ITEM_TITLE_PREFIX ) );
 
 			if( !empty( $item ) ) {
+				$this->mItems[] = $item;
 				return $item;
 			}
 		}
@@ -265,7 +266,7 @@ class TopList extends TopListBase {
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
-			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", wfMsgForContent( $summaryMsg ), $editMode );
+			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", wfMsgForContent( $summaryMsg, array( $this->_getItemsSummaryStatusMsg() ) ), $editMode );
 
 			if ( !$status->isOK() ) {
 				foreach ( $status->getErrorsArray() as $msg ) {
@@ -281,6 +282,46 @@ class TopList extends TopListBase {
 		}
 
 		return ( empty( $errors ) ) ? true : $errors;
+	}
+
+	/**
+	 * build summary message based on item's statuses
+	 *
+	 * @author ADi
+	 * @return string
+	 */
+	private function _getItemsSummaryStatusMsg() {
+		$statusMsg = '';
+		$itemsRemoved = 0;
+		$itemsCreated = 0;
+		$itemsUpdated = 0;
+		foreach( $this->getItems() as $item ) {
+			switch( $item->getStatus() ) {
+				case TOPLISTS_ITEM_CREATED:
+					$itemsCreated++;
+					break;
+				case TOPLISTS_ITEM_UPDATED:
+					$itemsUpdated++;
+					break;
+				case TOPLISTS_ITEM_REMOVED:
+					$itemsRemoved++;
+					break;
+			}
+		}
+
+		if( $itemsCreated ) {
+			$statusMsg = wfMsgForContent( 'toplists-items-created', array( $itemsCreated ) );
+		}
+
+		if( $itemsRemoved ) {
+			$statusMsg .= ( !empty( $statusMsg ) ? ' ' : '' ) . wfMsgForContent( 'toplists-items-removed', array( $itemsRemoved ) );
+		}
+
+		if( $itemsUpdated ) {
+			$statusMsg .= ( !empty( $statusMsg ) ? ' ' : '' ) . wfMsgForContent( 'toplists-items-updated', array( $itemsUpdated ) );
+		}
+
+		return !empty( $statusMsg ) ? $statusMsg : wfMsgForContent( 'toplists-items-nochange');
 	}
 
 	/**

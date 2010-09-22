@@ -48,6 +48,10 @@ $messages['en'] = array(
 	'toplists-create-button' => 'Create list',
 	'toplists-update-button' => 'Save list',
 	'toplists-cancel-button' => 'Cancel',
+	'toplists-items-removed' => '{{PLURAL:$1|1 item|$1 items}} removed',
+	'toplists-items-created' => '{{PLURAL:$1|1 item|$1 items}} created',
+	'toplists-items-updated' => '{{PLURAL:$1|1 item|$1 items}} updated',
+	'toplists-items-nochange' => 'No items changed',
 
 	//image browser/selector
 	'toplits-image-browser-no-picture-selected' => 'No picture selected',
@@ -57,8 +61,8 @@ $messages['en'] = array(
 	'toplists-image-browser-upload-label' => 'Upload your own',
 
 	//article edit summaries
-	'toplists-list-creation-summary' => 'Creating a list',
-	'toplists-list-update-summary' => 'Updating a list',
+	'toplists-list-creation-summary' => 'Creating a list, $1',
+	'toplists-list-update-summary' => 'Updating a list, $1',
 	'toplists-item-creation-summary' => 'Creating a list item',
 	'toplists-item-update-summary' => 'Updating a list item',
 	'toplists-item-remove-summary' => 'Item removed from list',
@@ -72,7 +76,7 @@ $messages['en'] = array(
 	'toplists-list-add-item-label' => 'Add item',
 	'toplists-list-add-item-name-label' => 'Keep the list going...',
 	'toplists-list-item-voted' => 'Voted',
-	
+
 	//createpage dialog
 	'toplists-createpage-dialog-label' => 'Top list',
 
