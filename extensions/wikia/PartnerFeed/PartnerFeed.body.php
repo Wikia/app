@@ -90,7 +90,7 @@ class PartnerFeed extends SpecialPage {
 
 		// local settings
 		$maxNumberOfBlogComments = 10;
-		$userAvatarSize = 30;
+		$userAvatarSize = 48;
 
 		$sBlogPost = $wgRequest->getText ( "blogpost", false );
 		$oTitle = Title::newFromText( $sBlogPost , 500);
@@ -107,7 +107,6 @@ class PartnerFeed extends SpecialPage {
 				if ( ( $maxNumberOfBlogComments-- ) == 0){
 					break;
 				}
-
 				$tmpArticleComment = $commentPage['level1']->getData();
 
 				$feedArray[] = array(
@@ -239,7 +238,7 @@ class PartnerFeed extends SpecialPage {
 				'date' => $badgeData['date'],
 				'author' => '',
 				'otherTags' => array(
-				    'image' => $wgServer.$badgeData['badge']->getPictureUrl($badgeImageSize),
+				    'image' => $badgeData['badge']->getPictureUrl($badgeImageSize),
 				)
 			);
 
