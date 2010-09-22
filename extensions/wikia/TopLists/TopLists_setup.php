@@ -121,6 +121,9 @@ $wgHooks[ 'CreatePage::FetchOptions' ][] = 'TopListHelper::onCreatePageFetchOpti
 $wgHooks[ 'ComposeCommonSubjectMail' ][] = 'TopListHelper::onComposeCommonSubjectMail';
 $wgHooks[ 'ComposeCommonBodyMail' ][] = 'TopListHelper::onComposeCommonBodyMail';
 $wgHooks[ 'BeforePageDisplay' ][] = 'TopListHelper::onBeforePageDisplay';
+$wgHooks[ 'ArticleDeleteComplete' ][] = 'TopListHelper::onArticleDeleteComplete';
+//$wgHooks[ 'ArticleRevisionUndeleted' ][] = 'TopListHelper::onArticleRevisionUndeleted';
+$wgHooks[ 'TitleMoveComplete'][] = 'TopListHelper::onTitleMoveComplete';
 
 //parser functions, tags and attributes
 define( 'TOPLIST_TAG', 'toplist' );

@@ -229,6 +229,24 @@ class TopList extends TopListBase {
 		return $this->mItems;
 	}
 
+	public function removeItems() {
+		foreach( $this->mTitle->getSubpages() as $subpageTitle ) {
+			$item = TopListItem::newFromTitle( $subpageTitle );
+			$item ->remove();
+		}
+	}
+
+	public function removeItems() {
+		foreach( $this->mTitle->getSubpages() as $subpageTitle ) {
+			$item = TopListItem::newFromTitle( $subpageTitle );
+			$item ->remove();
+		}
+	}
+
+	public function restoreItems() {
+
+	}
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
@@ -267,6 +285,10 @@ class TopList extends TopListBase {
 			$article = $this->getArticle();
 
 			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", $this->_getItemsSummaryStatusMsg(), $editMode );
+
+			if( $editMode == EDIT_NEW ) {
+				$article->doWatch();
+			}
 
 			if ( !$status->isOK() ) {
 				foreach ( $status->getErrorsArray() as $msg ) {
