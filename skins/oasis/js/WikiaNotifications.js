@@ -1,8 +1,8 @@
 $(function() {
-	WikiaNotifications.init();
+	WikiaNotificationsApp.init();
 });
 
-WikiaNotifications = {
+WikiaNotificationsApp = {
 
 	purgeCurrentPage: function() {
 			$.post(wgScript, {action: 'purge', title: wgPageName});
@@ -22,7 +22,7 @@ WikiaNotifications = {
 			switch (notificationType) {
 				// dismiss talk page message notification
 				case 1:
-					$.post(wgScript, {action: 'ajax', rs: 'wfDismissWikiaNewtalks'}, WikiaNotifications.purgeCurrentPage);
+					$.post(wgScript, {action: 'ajax', rs: 'wfDismissWikiaNewtalks'}, WikiaNotificationsApp.purgeCurrentPage);
 
 					// remove wrapping <li>
 					notification.parent().remove();
@@ -30,7 +30,7 @@ WikiaNotifications = {
 
 				// dismiss community message notification
 				case 2:
-					$.post(wgScript, {action: 'ajax', rs: 'CommunityMessagesAjax', method: 'dismissMessage'}, WikiaNotifications.purgeCurrentPage);
+					$.post(wgScript, {action: 'ajax', rs: 'CommunityMessagesAjax', method: 'dismissMessage'}, WikiaNotificationsApp.purgeCurrentPage);
 
 					// remove wrapping <li>
 					notification.parent().remove();
@@ -41,7 +41,7 @@ WikiaNotifications = {
 					var messageId = parseInt(notification.attr('id').substr(4));
 					var nextNotification = notification.next();
 
-					$.post(wgScript, {title: 'Special:SiteWideMessages', action: 'dismiss', mID: messageId}, WikiaNotifications.purgeCurrentPage);
+					$.post(wgScript, {title: 'Special:SiteWideMessages', action: 'dismiss', mID: messageId}, WikiaNotificationsApp.purgeCurrentPage);
 
 					// remove <div>
 					notification.remove();
@@ -60,7 +60,7 @@ WikiaNotifications = {
 			var notification = $(this).children();
 			var notificationType = notification.attr('data-type');
 
-			$.tracker.byStr('notifications/' + WikiaNotifications.getTypeById(notificationType) + '/view');
+			$.tracker.byStr('notifications/' + WikiaNotificationsApp.getTypeById(notificationType) + '/view');
 		});
 
 		// track clicks on links inside notifications
@@ -72,7 +72,7 @@ WikiaNotifications = {
 				var notificationType = parseInt(notification.attr('data-type'));
 
 				var eventName = node.hasClass('close') ? 'dismiss' : 'link';
-				$.tracker.byStr('notifications/' + WikiaNotifications.getTypeById(notificationType) + '/' + eventName);
+				$.tracker.byStr('notifications/' + WikiaNotificationsApp.getTypeById(notificationType) + '/' + eventName);
 			}
 		});
 	},
