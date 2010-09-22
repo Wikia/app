@@ -72,7 +72,12 @@ class ApiRunJob extends ApiBase {
 			$job = Job::pop();
 			if( $job ) {
 				$status = $job->run();
-				$result[ "job" ][] = array( "type" => $job->toString(), "status" => $job->error );
+				$result[ "job" ][] = array(
+					"id" => $job->id,
+					"type" => $job->command,
+					"status" => $job->toString(),
+					"error" => $job->error
+				);
 			}
 		}
 
