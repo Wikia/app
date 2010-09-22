@@ -181,6 +181,11 @@
 		font-size: 10px;
 		line-height: 18px;
 	}
+	.stafflogo {
+		img {
+			vertical-align:text-bottom;
+		}
+	}
 	/** @todo wait for spec from Tim **/
 	/*.article-comm-text {
 		padding-right: 57px;
