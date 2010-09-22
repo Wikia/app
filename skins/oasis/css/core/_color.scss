@@ -16,8 +16,13 @@ $color-text: #4E4E4E;
 }
 
 // GlobalHeader
-$color-header: darken($color-body, 50%);
-$color-header-alt: darken($color-header, 50%);
+//light colors (default)
+$color-header: saturate(mix($color-body, #000, 40%), 20%);
+@if lightness($color-body) < 50 {
+	$color-header: saturate(mix($color-body, #000, 80%), 20%);
+}
+
+$color-header-alt: mix($color-header, #000, 25%);
 $color-header-text: white;
 @if lightness($color-header) > 75 {
 	$color-header-text: black;
