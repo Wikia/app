@@ -7,15 +7,15 @@ $messages = array();
 
 $messages['en'] = array(
 	//info
-	'toplists-desc' => 'Top lists',
+	'toplists-desc' => 'Top 10 lists',
 
 	//rights
-	'right-toplists-create-edit-list' => 'Create and edit Top lists articles',
-	'right-toplists-create-item' => 'Create and add items to a Top lists article',
+	'right-toplists-create-edit-list' => 'Create and edit Top 10 list articles',
+	'right-toplists-create-item' => 'Create and add items to a Top 10 list article',
 
 	//special pages
-	'createtoplist' => 'Create a new list',
-	'edittoplist' => 'Edit list',
+	'createtoplist' => 'Create a new Top 10 list',
+	'edittoplist' => 'Edit Top 10 list',
 
 	//errors
 	'toplists-error-invalid-title' => 'The supplied text is not valid',
@@ -31,8 +31,8 @@ $messages['en'] = array(
 	'toplists-error-image-already-exists' => 'An image with the same name already exists',
 	'toplists-error-add-item-anon' => 'Anonimous users are not allowed to add items to lists, please <a class="ajaxLogin" id="login" href="$1">Log in</a> or <a class="ajaxLogin" id="signup" href="$2">register a new account</a>.',
 	'toplists-error-add-item-permission' => 'Permission error, your account has not been granted the right to create new items.',
-	'toplists-error-add-item-list-not-exists' => 'The "$1" list does not exists.',
-	'toplists-error-backslash-not-allowed' => 'The "/" character is not allowed in the title of a Top list.',
+	'toplists-error-add-item-list-not-exists' => 'The "$1" Top 10 list does not exists.',
+	'toplists-error-backslash-not-allowed' => 'The "/" character is not allowed in the title of a Top 10 list.',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
@@ -78,11 +78,11 @@ $messages['en'] = array(
 	'toplists-list-item-voted' => 'Voted',
 
 	//createpage dialog
-	'toplists-createpage-dialog-label' => 'Top list',
+	'toplists-createpage-dialog-label' => 'Top 10 list',
 
 	//watchlist emails
-	'toplists-email-subject' => 'Top list has been changed',
-	'toplists-email-body' => "Top list page $1 that you're watching has been changed.\n\n $2",
+	'toplists-email-subject' => 'A Top 10 list has been changed',
+	'toplists-email-body' => "The Top 10 list page $1 that you're watching has been changed.\n\n $2",
 
 	//time
 	'toplists-seconds' => '$1 {{PLURAL:$1|second|seconds}}',
