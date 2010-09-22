@@ -516,7 +516,7 @@ var ThemeDesigner = {
 
 			$().log('applySettings, reloadCSS');
 
-			var sass = "/__sass/skins/oasis/css/oasis.scss/33333/";
+			var sass = "/__sass/skins/oasis/css/oasis.scss/3337777333333/";
 			sass += "color-body=" + escape(ThemeDesigner.settings["color-body"]);
 			sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
 			sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
@@ -600,7 +600,7 @@ var ThemeDesigner = {
 			"a34111",
 			"7b3b09",
 			"4f4341",
-			"474545",
+			"454545",
 			"611d03",
 			"891100",
 			"71130f",
