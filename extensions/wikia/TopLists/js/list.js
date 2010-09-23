@@ -4,7 +4,7 @@ $(function() {
 });
 
 var TopList = {
-	_canVote: false;
+	_canVote: false,
 	_mWrapper: null,
 	
 	_init: function() {
