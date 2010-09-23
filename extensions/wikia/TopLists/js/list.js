@@ -4,6 +4,7 @@ $(function() {
 });
 
 var TopList = {
+	_canVote: false;
 	_mWrapper: null,
 	
 	_init: function() {
@@ -70,6 +71,7 @@ var TopList = {
 				if(response.result === true) {
 					TopList._mWrapper.replaceWith(response.listBody);
 					TopList._mWrapper = $('#toplists-list-body');
+					TopList.enableVotes();
 				} else {
 					$('#toplist-new-item-name').addClass('error');
 					errorDisplay.html(response.errors.join('<br/>'));
@@ -93,13 +95,20 @@ var TopList = {
 				function(response) {
 					if(response.result === true){
 						if(response.canVote === true){
-							TopList._mWrapper.find('.VoteButton').css('visibility', 'visible');
-							TopList._mWrapper.find('li .ItemNumber').removeClass('NotVotable');
+							TopList.canVote = true;
+							TopList.enableVotes();
 						}
 					}
 				}
 		);
 		return false;
+	},
+	
+	enableVotes: function() {
+		if( TopList.canVote ) {
+			TopList._mWrapper.find('.VoteButton').css('visibility', 'visible');
+			TopList._mWrapper.find('li .ItemNumber').removeClass('NotVotable');
+		}
 	},
 
 	attachEvents: function() {
