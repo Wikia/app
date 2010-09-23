@@ -178,8 +178,10 @@
 			display: none;
 		}
 	}
-	#wikiPreview .mainpage{
-		margin-right:0px;
+	&.mainpage{
+		#wikiPreview {
+			margin-right:0px;
+		}
 	}
 }
 #cke_toolbar {
