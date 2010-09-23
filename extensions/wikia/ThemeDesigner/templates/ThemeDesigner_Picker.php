@@ -1,15 +1,15 @@
 <aside class="ThemeDesignerPicker" id="ThemeDesignerPicker">
 	<div class="color">
-		<h1>Pick a Color</h1>
+		<h1><?= wfMsg('themedesigner-pick-a-color') ?></h1>
 		<ul class="swatches"></ul>
-		<h1>Enter Your Own</h1>
+		<h1><?= wfMsg('themedesigner-enter-your-own') ?></h1>
 		<form id="ColorNameForm" class="ColorNameForm">
-			<input type="text" placeholder="Color name or Hex code" id="color-name" class="color-name">
-			<input type="submit" value="Ok">
+			<input type="text" placeholder="<?= wfMsg('themedesigner-color-name-or-hex-code') ?>" id="color-name" class="color-name">
+			<input type="submit" value="<?= wfMsg('themedesigner-button-ok') ?>">
 		</form>
 	</div>
 	<div class="image">
-		<h1>Pick an Image</h1>
+		<h1><?= wfMsg('themedesigner-pick-an-image') ?></h1>
 		<ul class="swatches">
 			<li>
 				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/oasis_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/oasis.png">
@@ -39,15 +39,15 @@
 				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/aliencrate_swatch.jpg" data-image="<?= $wgCdnStylePath ?>/skins/oasis/images/themes/aliencrate.jpg">
 			</li>
 			<li class="no-image">
-				Don't use a background
+				<?= wfMsg('themedesigner-dont-use-a-background') ?>
 			</li>
 		</ul>
-		<h1>Upload Your Own</h1>
+		<h1><?= wfMsg('themedesigner-upload-your-own') ?></h1>
 
 		<form id="BackgroundImageForm" class="BackgroundImageForm" onsubmit="return AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=BackgroundImageUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="backgroundImageUploadFile" name="wpUploadFile" type="file">
-			<input type="submit" value="Upload" onclick="return ThemeDesigner.backgroundImageUpload(event);">
-			jpg, gif or png. 100k limit
+			<input type="submit" value="<?= wfMsg('themedesigner-button-upload') ?>" onclick="return ThemeDesigner.backgroundImageUpload(event);">
+			<?= wfMsg('themedesigner-rules-background') ?>
 		</form>
 
 	</div>

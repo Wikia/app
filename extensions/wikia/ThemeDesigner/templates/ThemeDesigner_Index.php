@@ -35,13 +35,13 @@
 		<nav id="Navigation" class="Navigation">
 			<ul>
 				<li>
-					<a href="#" rel="ThemeTab">Theme</a>
+					<a href="#" rel="ThemeTab"><?= wfMsg('themedesigner-tab-theme') ?></a>
 				</li>
 				<li>
-					<a href="#" rel="CustomizeTab">Customize</a>
+					<a href="#" rel="CustomizeTab"><?= wfMsg('themedesigner-tab-customize') ?></a>
 				</li>
 				<li>
-					<a href="#" rel="WordmarkTab">Wordmark</a>
+					<a href="#" rel="WordmarkTab"><?= wfMsg('themedesigner-tab-wordmark') ?></a>
 				</li>
 			</ul>
 		</nav>
@@ -50,13 +50,13 @@
 		<?= wfRenderModule('ThemeDesigner', 'WordmarkTab') ?>
 		<div id="Toolbar" class="Toolbar">
 			<div class="inner">
-				<span class="mode">Preview Mode...</span>
+				<span class="mode"><?= wfMsg('themedesigner-preview-mode') ?></span>
 <?php
 	if(count($themeHistory) > 0) {
 ?>
 				<div class="history">
 					<div class="revisions"><?= count($themeHistory) ?></div>
-					Previous Versions
+					<?= wfMsg('themedesigner-previous-versions') ?>
 					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 					<ul>
 					<?php
@@ -74,8 +74,8 @@
 <?php
 	} //end if
 ?>
-				<button class="save">Save, I'm Done</button>
-				<button class="cancel secondary">Cancel</button>
+				<button class="save"><?= wfMsg('themedesigner-button-save-im-done') ?></button>
+				<button class="cancel secondary"><?= wfMsg('themedesigner-button-cancel') ?></button>
 			</div>
 		</div>
 	</div>
