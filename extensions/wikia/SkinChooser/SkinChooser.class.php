@@ -503,7 +503,7 @@ class SkinChooser {
 			$user->mSkin->themename = $userTheme;
 
 			# force default theme on monaco and oasis when there is no admin setting
-			if(($normalizedSkinName == 'monaco' || $normalizedSkinName == 'oasis') && (empty($wgAdminSkin) || $isOasisPublicBeta) ) {
+			if(($normalizedSkinName == 'monaco' || $normalizedSkinName == 'oasis') && (empty($wgAdminSkin) && $isOasisPublicBeta) ) {
 				$user->mSkin->themename = $wgDefaultTheme;
 			}
 
