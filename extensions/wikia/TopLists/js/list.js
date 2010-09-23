@@ -59,7 +59,8 @@ var TopList = {
 				'action': 'ajax',
 				'rs': 'TopListHelper::addItem',
 				'list': $('#top-list-title').val(),
-				'text': $('#toplist-new-item-name').val()
+				'text': $('#toplist-new-item-name').val(),
+				'cb' : Math.random()
 			},
 			function(response) {
 				TopList.unblockInput();
