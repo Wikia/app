@@ -10,36 +10,36 @@ $messages['en'] = array(
 	'toplists-desc' => 'Top 10 lists',
 
 	//rights
-	'right-toplists-create-edit-list' => 'Create and edit Top 10 list articles',
-	'right-toplists-create-item' => 'Create and add items to a Top 10 list article',
+	'right-toplists-create-edit-list' => 'Create and edit Top 10 list pages',
+	'right-toplists-create-item' => 'Create and add items to a Top 10 list page',
 
 	//special pages
 	'createtoplist' => 'Create a new Top 10 list',
 	'edittoplist' => 'Edit Top 10 list',
 
 	//errors
-	'toplists-error-invalid-title' => 'The supplied text is not valid',
-	'toplists-error-invalid-picture' => 'The selected picture is not valid',
-	'toplists-error-title-exists' => 'This article already exists, you can go to <a href="$2" target="_blank">$1</a> or supply a different name',
-	'toplists-error-title-spam' => 'The supplied text contains some words recognized as spam',
-	'toplists-error-article-blocked' => 'You are not allowed to create an article with this name, sorry',
-	'toplists-error-article-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">create it</a>?',
-	'toplists-error-picture-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">upload it</a>?',
-	'toplists-error-duplicated-entry' => 'You can\'t use the same name more than once',
-	'toplists-error-empty-item-name' => 'The name of an existing item can\'t be empty',
+	'toplists-error-invalid-title' => 'The supplied text is not valid.',
+	'toplists-error-invalid-picture' => 'The selected picture is not valid.',
+	'toplists-error-title-exists' => 'This page already exists. You can go to <a href="$2" target="_blank">$1</a> or supply a different name.',
+	'toplists-error-title-spam' => 'The supplied text contains some words recognized as spam.',
+	'toplists-error-article-blocked' => 'You are not allowed to create a page with this name. Sorry.',
+	'toplists-error-article-not-exists' => '"$1" does not exist. Do you want to <a href="$2" target="_blank">create it</a>?',
+	'toplists-error-picture-not-exists' => '"$1" does not exist. Do you want to <a href="$2" target="_blank">upload it</a>?',
+	'toplists-error-duplicated-entry' => 'You can\'t use the same name more than once.',
+	'toplists-error-empty-item-name' => 'The name of an existing item can\'t be empty.',
 	'toplists-item-cannot-delete' => 'Deletion of this item failed',
-	'toplists-error-image-already-exists' => 'An image with the same name already exists',
-	'toplists-error-add-item-anon' => 'Anonimous users are not allowed to add items to lists, please <a class="ajaxLogin" id="login" href="$1">Log in</a> or <a class="ajaxLogin" id="signup" href="$2">register a new account</a>.',
-	'toplists-error-add-item-permission' => 'Permission error, your account has not been granted the right to create new items.',
-	'toplists-error-add-item-list-not-exists' => 'The "$1" Top 10 list does not exists.',
+	'toplists-error-image-already-exists' => 'An image with the same name already exists.',
+	'toplists-error-add-item-anon' => 'Anonymous users are not allowed to add items to lists. Please <a class="ajaxLogin" id="login" href="$1">Log in</a> or <a class="ajaxLogin" id="signup" href="$2">register a new account</a>.',
+	'toplists-error-add-item-permission' => 'Permission error: Your account has not been granted the right to create new items.',
+	'toplists-error-add-item-list-not-exists' => 'The "$1" Top 10 list does not exist.',
 	'toplists-error-backslash-not-allowed' => 'The "/" character is not allowed in the title of a Top 10 list.',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
 	'toplists-editor-title-placeholder' => 'Enter a name for the list',
-	'toplists-editor-related-article-label' => 'Related article',
+	'toplists-editor-related-article-label' => 'Related page',
 	'toplists-editor-related-article-optional-label' => 'optional',
-	'toplists-editor-related-article-placeholder' => 'Enter an existing article page name',
+	'toplists-editor-related-article-placeholder' => 'Enter an existing page name',
 	'toplists-editor-image-browser-tooltip' => 'Add a picture',
 	'toplists-editor-remove-item-tooltip' => 'Remove item',
 	'toplists-editor-drag-item-tooltip' => 'Drag to change order',
@@ -93,5 +93,5 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'toplits-image-browser-selected-picture' => '$1 is the title of the image article'
+	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.'
 );
