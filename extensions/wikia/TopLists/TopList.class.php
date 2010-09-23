@@ -196,10 +196,23 @@ class TopList extends TopListBase {
 	 * @return Array an array of TopListItem instances
 	 */
 	public function getItems( $forceReload = false ) {
+			global $wgMemc;
 		//not using _loadData since it invokes the parser
 		if( $this->exists() && ( empty( $this->mItems ) || $forceReload ) ) {
 			$this->mItems = array();
-			$subPages = $this->mTitle->getSubpages();
+
+			$cacheKey = $this->_getNeedRefreshCacheKey();
+			$needRefresh = $wgMemc->get( $cacheKey );
+
+			if( $needRefresh ) {
+				$db = DB_MASTER;
+				$wgMemc->delete( $cacheKey );
+			}
+			else {
+				$db = DB_SLAVE;
+			}
+
+			$subPages = $this->mTitle->getSubpages( -1, $db );
 
 			if( !empty ($subPages)  && $subPages->count() ) {
 				$items = array();
@@ -313,6 +326,7 @@ class TopList extends TopListBase {
 	 * overrides TopListBase::save
 	 */
 	public function save( $mode = TOPLISTS_SAVE_AUTODETECT ) {
+		global $wgMemc;
 		$errors = array();
 		$mode = $this->_detectProcessingMode( $mode );
 		$checkResult = $this->checkForProcessing( $mode );
@@ -356,6 +370,14 @@ class TopList extends TopListBase {
 						'msg' => $msg,
 						'params' => null
 					);
+				}
+			}
+			else {
+				$wgMemc->set( $this->_getNeedRefreshCacheKey(), true );
+
+				//reset vote counters for each items, to avoid caching issues
+				foreach( $this->getItems() as $item ) {
+					$item->resetVotesCount();
 				}
 			}
 
@@ -435,4 +457,9 @@ class TopList extends TopListBase {
 	public function setUserVoted() {
 		$this->mUserCanVote = false;
 	}
+
+	private function _getNeedRefreshCacheKey() {
+		return wfMemcKey( $this->getTitle()->getDBkey(), 'updated' );
+	}
+
 }

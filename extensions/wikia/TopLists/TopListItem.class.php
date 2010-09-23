@@ -192,6 +192,17 @@ class TopListItem extends TopListBase {
 		$wgMemc->incr( $this->_getVotesCountCacheKey() );
 	}
 
+	/**
+	 * resets vote counter
+	 *
+	 * @author ADi
+	 */
+	public function resetVotesCount() {
+		global $wgMemc;
+
+		$this->mVotesCount = null;
+		$wgMemc->delete( $this->_getVotesCountCacheKey() );
+	}
 
 	/**
 	 * adds a timestamp to the collection of votes' timestamps

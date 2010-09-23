@@ -1640,14 +1640,15 @@ class Title {
 	/**
 	 * Get all subpages of this page.
 	 * @param $limit Maximum number of subpages to fetch; -1 for no limit
+	 * @param $db index of the connection to get (** Wikia change **)
 	 * @return mixed TitleArray, or empty array if this page's namespace
 	 *  doesn't allow subpages
 	 */
-	public function getSubpages( $limit = -1 ) {
+	public function getSubpages( $limit = -1, $db = DB_SLAVE ) {
 		if( !MWNamespace::hasSubpages( $this->getNamespace() ) )
 			return array();
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( $db );
 		$conds['page_namespace'] = $this->getNamespace();
 		$conds[] = 'page_title LIKE ' . $dbr->addQuotes(
 				$dbr->escapeLike( $this->getDBkey() ) . '/%' );
