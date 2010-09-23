@@ -484,7 +484,7 @@ class TopListHelper {
 		$result = array(
 			'result' => true,
 			'canVote' => false,
-			'ts' => date('Y:m:d H:i:s')
+			/*'ts' => date('Y:m:d H:i:s')*/
 			/*'canEdit' => false*/
 		);
 
