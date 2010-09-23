@@ -240,10 +240,71 @@ class TopList extends TopListBase {
 	}
 
 	/**
+	 * get removed list itmes from archive (copy&paste from ArticleComments..;)
+	 *
+	 * @author ADi
+	 * @return array
+	 */
+	private function _getRemovedItems() {
+		wfProfileIn( __METHOD__ );
+
+		$pages = array();
+
+		if ($this->mTitle instanceof Title) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( 'archive' ),
+				array( 'ar_page_id', 'ar_title' ),
+				array(
+					'ar_namespace' => $this->mTitle->getNamespace(),
+					"ar_title LIKE '" . $dbr->escapeLike($this->mTitle->getDBkey()) . "/" . self::ITEM_TITLE_PREFIX . "%'"
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'ar_page_id ASC' )
+			);
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				$pages[ $row->ar_page_id ] = array(
+					'title' => $row->ar_title,
+					'nspace' => $this->mTitle->getNamespace()
+				);
+			}
+			$dbr->freeResult( $res );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $pages;
+	}
+
+	/**
 	 * @author ADi
 	 */
 	public function restoreItems() {
-		//TODO: ADI IMPLEMENT
+		global $wgRC2UDPEnabled;
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->mTitle instanceof Title ) {
+			$itemsToRecover = $this->_getRemovedItems();
+			if ( count( $itemsToRecover ) > 0 ) {
+				wfLoadExtensionMessages( 'TopLists' );
+				$ircBackup = $wgRC2UDPEnabled; //backup
+				$wgRC2UDPEnabled = false; //turn off
+				foreach ($itemsToRecover as $pageId => $pageData) {
+					$itemTitle = Title::makeTitleSafe( $pageData['nspace'], $pageData['title'] );
+					if ($itemTitle instanceof Title) {
+						$archive = new PageArchive( $itemTitle );
+						$result = $archive->undelete( '', wfMsg( 'toplists-item-restored', $this->mTitle->getArticleId() ) );
+
+						if ( !is_array($result) ) {
+							Wikia::log( __METHOD__, 'error', "cannot restore list item: {$pageData['title']} (id: {$pageId})" );
+						}
+					}
+				}
+				$wgRC2UDPEnabled = $ircBackup; //restore to whatever it was
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
 	}
 
 	/**
