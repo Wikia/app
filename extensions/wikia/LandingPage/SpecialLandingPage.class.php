@@ -29,7 +29,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 				'image' => 'muppet-wiki.jpg',
 			),
 			array(
-				'name' => 'Healty Recipes',
+				'name' => 'Healthy Recipes',
 				'url' => 'http://healthyrecipes.wikia.com',
 				'image' => 'healthy-recipes.jpg',
 			),
