@@ -178,10 +178,11 @@ class PartnerFeed extends SpecialPage {
 		$feedArray = array();
 
 		foreach( $result as $val ){
-			$aValue = explode('/' , $val['title']);
+			$oTitle = Title::newFromID($val['page']);
 
+			$aValue = explode('/' , $oTitle->getText());
 			$feedArray[] = array(
-				'title' =>  str_replace( '&nbsp;', ' ', strip_tags( $aValue[1] ) ),
+				'title' => $aValue[1],
 				'description' => substr( str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ), 0, $postCharacterLimit ),
 				'url' => $wgServer.$val['userpage'],
 				'date' => $val['date'],
@@ -191,7 +192,7 @@ class PartnerFeed extends SpecialPage {
 				)
 			);
 		}
-		$this->showFeed( $format , wfMsg('feed-title-blogposts').' - '.$subTitleName,  $feedArray);
+		$this->showFeed( $format , wfMsg('feed-title-blogposts').' - '.$subTitleName, $feedArray);
 	}
 
 /**
@@ -350,7 +351,7 @@ class PartnerFeed extends SpecialPage {
  */
 	private function PrepareHotContentFeed ( $hubId, $forceRefresh = false ){
 
-		global $wgMemc;
+		global $wgMemc, $wgHTTPProxy, $wgHTTPTimeout;
 
 		// local settings
 		$lang = "en";
@@ -369,15 +370,14 @@ class PartnerFeed extends SpecialPage {
 			$feedArray = array();
 			foreach( $out['value'] as $key => $val ){
 
-				if ( $isDevBox ){ // fake DevBox data
-					$fakePageId = array( 119949, 119950, 32, 49, 83, 54 );
-					$httpResult = Http::get( 'http://muppets.jakub.wikia-dev.com/api.php?action=imagecrop&imgId='.$fakePageId[rand(0,5)].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json&timestamp='.rand( 0,time() ) );
+				if ( $isDevBox ){
+					$httpResult = Http::get( $val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json' , 30, array(CURLOPT_PROXY => $wgHTTPProxy) );
 				}else{
-					$httpResult = Http::get( $val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json' );
+					$httpResult = Http::get( $val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json' , 30 );
 				}
 				$httpResultArr = json_decode( $httpResult );
 				$feedArray[] = array(
-					'title' =>  $val['page_name'],
+					'title' => $val['page_name'],
 					'description' => $val['all_count'],
 					'url' => $val['page_url'],
 					'date' => time(),
@@ -426,7 +426,7 @@ class PartnerFeed extends SpecialPage {
 		global $wgMemc;
 		$memcData = $this->getFromCache( $hubId );
 		if ( $memcData == null ){
-			$wgMemc->set( $this->getKey( $hubId ), $content );
+			$wgMemc->set( $this->getKey( $hubId ), $content, 60*60*12);
 			return false;
 		}
 		return true;
@@ -467,7 +467,8 @@ class PartnerFeed extends SpecialPage {
 
 		// local settings
 		$maxEntries = 20;
-		$howOld = 30;
+		$howOld = 3;
+		$userAvatarSize = 48;
 		
 		$rankingService = new AchRankingService();
 		$ranking = $rankingService->getUsersRanking(20, true);
@@ -486,7 +487,7 @@ class PartnerFeed extends SpecialPage {
 				$blackList = array(BADGE_WELCOME);
 			}
 
-			$awardedBadges = $rankingService->getRecentAwardedBadges($level, $limit, 3, $blackList);
+			$awardedBadges = $rankingService->getRecentAwardedBadges($level, $limit, $howOld, $blackList);
 
 			if ( $total = count ( $awardedBadges ) ) {
 				$recents[$level] = $awardedBadges;
@@ -505,7 +506,7 @@ class PartnerFeed extends SpecialPage {
 				'author' => 'Wikia',
 				'',
 				'otherTags' => array(
-					'image' => $rankedUser->getAvatarUrl(),
+					'image' =>AvatarService::getAvatarUrl( $rankedUser->getName(), $userAvatarSize ),
 					'score' => $wgLang->formatNum( $rankedUser->getScore() )
 				)
 			);			
