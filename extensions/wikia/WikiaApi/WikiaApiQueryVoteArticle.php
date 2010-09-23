@@ -98,7 +98,8 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 				$data = array();
 				// check data from cache ...
-				$cached = $this->getDataFromCache($lcache_key);
+				// cache tmp turned off because purging isn't working properly
+				$cached = null; //$this->getDataFromCache($lcache_key);
 				if (empty($cached)) {
 					#--- database instance - DB_SLAVE
 					$db =& $this->getDB();
@@ -758,13 +759,13 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 		$res = $clonedInstance->select( __METHOD__ );
 		$values = array();
-		
+
 		while ( $row = $db->fetchObject( $res ) ) {
 			$values[] = $row->time_stamp;
 		}
-		
+
 		$db->freeResult($res);
-		
+
 		return $values;
 	}
 
