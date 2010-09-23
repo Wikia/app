@@ -49,8 +49,11 @@ CKEDITOR.themes.add( 'wikia', (function()
 				extraContentColumnHtml = '';
 
 			if (window.skin == 'oasis' && !window.wgIsMainpage) {
-				contentColumns = 2;
-				extraContentColumnHtml = '<td id="cke_contents_' + name + '_sidebar"></td>';
+				// Only do this if there is no right-rail.  If there is a right rail (eg: we're in preview mode) then we don't want to indent the editor even more.
+				if($('#WikiaRail').length > 0){
+					contentColumns = 2;
+					extraContentColumnHtml = '<td id="cke_contents_' + name + '_sidebar"></td>';
+				}
 			}
 
 			var container = CKEDITOR.dom.element.createFromHtml( [
