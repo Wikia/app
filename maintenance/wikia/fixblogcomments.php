@@ -15,6 +15,8 @@ $dry = isset($options['dry']) ? $options['dry'] : "";
 
 $method = 'fixBlogComments';
 
+echo "dry = $dry \n";
+
 function fixAllBlogComments( $dry ) {
 	global $method, $wgExternalDatawareDB, $wgCityId, $wgDBname;
 
@@ -25,7 +27,7 @@ function fixAllBlogComments( $dry ) {
 		array(
 			'rc_namespace' => NS_BLOG_ARTICLE_TALK,
 			"( rc_title not rlike '.+[0-9]+$' or rc_title not like '%@comment%' )",
-			'rc_timestamp between \'20100915000000\` and \'20100917000000\''
+			'rc_timestamp between \'20100915000000\' and \'20100917000000\''
 		),
 		$method
 	);
