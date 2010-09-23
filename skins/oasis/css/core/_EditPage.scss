@@ -172,10 +172,14 @@
 	// preview mode
 	#wikiPreview {
 		@include clearfix;
+		margin-right: 300px;
 		h2:first-child,
 		.previewnote {
 			display: none;
 		}
+	}
+	#wikiPreview .mainpage{
+		margin-right:0px;
 	}
 }
 #cke_toolbar {
