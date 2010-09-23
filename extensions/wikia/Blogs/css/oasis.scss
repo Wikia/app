@@ -64,6 +64,9 @@
 	h3 {
 		display: none;
     }
+	li {
+		border-bottom: 1px solid $color-page-border;
+	}
 	.WikiaBlogListingPost {
 		padding-bottom: 0px;
 		position: relative;
