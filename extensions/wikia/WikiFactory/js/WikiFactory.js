@@ -12,7 +12,7 @@ $Factory.randid = function(){var a=""; for(var i=0; i<10; i++){var d=Math.floor(
 
 $Factory.VariableCallback = {
     success: function( oResponse ) {
-        var aData = YAHOO.Tools.JSONParse(oResponse.responseText);
+        var aData = $.parseJSON(oResponse.responseText);
         var div = $Dom.get( aData["div-name"] );
         div.innerHTML = aData["div-body"];
         //--- now add listeners and events
@@ -34,7 +34,7 @@ $Factory.VariableCallback = {
 
 $Factory.FilterCallback = {
     success: function( oResponse ) {
-        var aData = YAHOO.Tools.JSONParse( oResponse.responseText );
+        var aData = $.parseJSON( oResponse.responseText );
         $Dom.get( "wk-variable-select" ).innerHTML = aData["selector"];
         $Dom.get( "wk-variable-select" ).disabled = false;
         $Factory.Busy(0);
@@ -49,7 +49,7 @@ $Factory.FilterCallback = {
 
 $Factory.ReplaceCallback = {
     success: function( oResponse ) {
-        var Data = YAHOO.Tools.JSONParse(oResponse.responseText);
+        var Data = $.parseJSON(oResponse.responseText);
         $Dom.get( Data["div-name"] ).innerHTML = Data["div-body"];
 
         $Factory.Busy(0);
@@ -75,7 +75,7 @@ $Factory.Busy = function (state) {
 
 $Factory.Domain.Callback = {
     success: function( oResponse ) {
-        var oReturn = YAHOO.Tools.JSONParse(oResponse.responseText);
+        var oReturn = $.parseJSON(oResponse.responseText);
         var aDomains = oReturn["domains"];
         var sInfo = oReturn["info"];
 
@@ -302,7 +302,7 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 	else {
 		$Connect.asyncRequest( 'POST', wgScript+"?action=ajax&rs=axWFactoryTagCheck&tagName="+tagName, {
 			success: function( oResponse ) {
-				var data = YAHOO.Tools.JSONParse(oResponse.responseText);
+				var data = $.parseJSON(oResponse.responseText);
 				if( data.wikiCount == 0 ) {
 					$Dom.get( 'wf-tag-parse' ).innerHTML = "<span style=\"color: red; font-weight: bold;\">tag doesn't exists</span>";
 				}
