@@ -102,7 +102,7 @@ function fixAllBlogComments( $dry ) {
 				$newTitle = sprintf('%s/%s', $parts['title'], implode("/", $parts['parsed']) );
 
 				if ( $dry ) {
-					 print "update page set page_title = '$newTitle' where page_title = '{$row['page_title']}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+					 print "update `$wgDBname`.`page` set page_title = '$newTitle' where page_title = '{$row['page_title']}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
 				} else {
 					$dbw->update(
 						'page',
@@ -113,7 +113,7 @@ function fixAllBlogComments( $dry ) {
 				}
 				# update job
 				if ( $dry ) {
-					 print "update job set job_title = '$newTitle' where job_title = '{$row['page_title']}' and job_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+					 print "update `$wgDBname`.`job` set job_title = '$newTitle' where job_title = '{$row['page_title']}' and job_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
 				} else {
 					$dbw->update(
 						'job',
@@ -125,7 +125,7 @@ function fixAllBlogComments( $dry ) {
 
 				if( $dry ) {
 					printf(
-						"update recentchanges set rc_title = '%s' where rc_id = %d and rc_namespace = %d\n",
+						"update `$wgDBname`.`recentchanges` set rc_title = '%s' where rc_id = %d and rc_namespace = %d\n",
 						$newTitle,
 						$row['rc_id'],
 						NS_BLOG_ARTICLE_TALK
@@ -142,7 +142,7 @@ function fixAllBlogComments( $dry ) {
 				
 				# update watchlist
 				if ( $dry ) {
-					 print "update watchlist set wl_title = '$newTitle' where wl_title = '{$row['page_title']}' and wl_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+					 print "update `$wgDBname`.`watchlist` set wl_title = '$newTitle' where wl_title = '{$row['page_title']}' and wl_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
 				} else {
 					$dbw->update(
 						'watchlist',
@@ -170,24 +170,7 @@ function fixAllBlogComments( $dry ) {
 							$method
 						);
 					}
-				}
-				
-				if( $dry ) {
-					printf(
-						"update recentchanges set rc_title = '%s' where rc_id = %d and rc_namespace = %d\n",
-						$newTitle,
-						$row['rc_id'],
-						NS_BLOG_ARTICLE_TALK
-					);
-				}
-				else {
-					$dbw->update(
-						'recentchanges',
-						array( 'rc_title' => $newTitle ),
-						array( 'rc_id' => $row['rc_id'], 'rc_namespace' => NS_BLOG_ARTICLE_TALK ),
-						$method
-					);
-				}				
+				}		
 			}
 		}
 	}
