@@ -115,11 +115,12 @@ function print_pre($param, $return = 0)
  * @return String -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
-	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion, $wgDevBoxImageServerOverride;
+	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion, $wgDevBoxImageServerOverride, $wgDBname;
 
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
 	if (!empty($wgDevBoxImageServerOverride)) {
+		$url = str_replace("devbox", $wgDBname, $url);   // this will pull images from override wiki instead of devbox
 		return str_replace('http://images.wikia.com/', "http://$wgDevBoxImageServerOverride/", $url);
 	}
 
