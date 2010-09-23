@@ -93,7 +93,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		);
 
 		$row = $dbr->selectRow( 
-			"user", 
+			"`user`", 
 			array( "user_registration" ), 
 			$condition,
 			__METHOD__ 
@@ -147,7 +147,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		$db = $this->getSharedDB();
 
 		$limit = $this->params['limit'];
-		$this->addTables('user', 'u1');
+		$this->addTables('`user`', 'u1');
 
 		if ( !is_null( $this->params['group'] ) ) {
 			$users = $this->getUsersForGroup();
@@ -181,8 +181,8 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		
 		if ( $this->fld_blockinfo ) {
 			$this->addTables('ipblocks');
-			$this->addTables('user', 'u2');
-			$u2 = sprintf("%s %s", 'user', 'u2');//$this->getAliasedName('user', 'u2');
+			$this->addTables('`user`', 'u2');
+			$u2 = sprintf("%s %s", '`user`', 'u2');//$this->getAliasedName('user', 'u2');
 			$this->addJoinConds(
 				array(
 					'ipblocks' => array('LEFT JOIN', 'ipb_user=u1.user_id'),
