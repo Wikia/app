@@ -9,7 +9,7 @@
 			<li>
 				<h2><?= wfMsg('themedesigner-graphic') ?></h2>
 				<img src="<?= $wgStylePath ?>/common/blank.gif" class="background-image" id="swatch-image-background">
-				<input type="checkbox" id="tile-background"> <label for="tile-background">tile background</label>
+				<input type="checkbox" id="tile-background"> <label for="tile-background"><?= wfMsg('themedesigner-tile-background') ?></label>
 			</li>
 		</ul>
 	</fieldset>

@@ -16,6 +16,31 @@ $messages['en'] = array(
 	'themedesigner-small' => 'Small',
 	'themedesigner-medium' => 'Medium',
 	'themedesigner-large' => 'Large',
+	'themedesigner-tile-background' => 'tile background',
+	'themedesigner-tab-theme' => 'Theme',
+	'themedesigner-tab-customize' => 'Customize',
+	'themedesigner-tab-wordmark' => 'Wordmark',
+	'themedesigner-preview-mode' => 'Preview Mode...',
+	'themedesigner-previous-versions' => 'Previous Versions',
+	'themedesigner-button-save-im-done' => 'Save, I\'m Done',
+	'themedesigner-button-cancel' => 'Cancel',
+	'themedesigner-pick-a-color' => 'Pick a Color',
+	'themedesigner-enter-your-own' => 'Enter Your Own',
+	'themedesigner-color-name-or-hex-code' => 'Color name or Hex code',
+	'themedesigner-button-ok' => 'Ok',
+	'themedesigner-pick-an-image' => 'Pick an Image',
+	'themedesigner-dont-use-a-background' => 'Don\'t use a background',
+	'themedesigner-upload-your-own' => 'Upload Your Own',
+	'themedesigner-button-upload' => 'Upload',
+	'themedesigner-rules-background' => 'jpg, gif or png. 100k limit',
+	'themedesigner-default' => 'Default',
+	'themedesigner-button-edit' => 'Edit',
+	'themedesigner-font' => 'font',
+	'themedesigner-size' => 'size',
+	'themedesigner-button-save' => 'Save',
+	'themedesigner-upload-a-graphic' => 'upload a graphic',
+	'themedesigner-rules-wordmark' => '250x65 pixels (only .png files)',
+	'themedesigner-dont-use-a-graphic' => 'Don\'t use a graphic',
 );
 
 /** Message documentation (Message documentation)
@@ -246,7 +271,7 @@ $messages['nl'] = array(
 	'themedesigner-large' => 'Groot',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
