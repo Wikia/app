@@ -43,7 +43,7 @@ var TopList = {
 					TopList._mWrapper.find('#' + response.votedId).closest('li').find('.ItemNumber')
 					.removeClass('NotVotable')
 					.append('<div class="Voted"><span></span>' + response.message + '</div>');
-					
+					TopList.canVote = false;
 				}
 			}
 		);
