@@ -16,15 +16,15 @@ $messages['en'] = array(
 	'hub-featured' => 'Top $1 Wikis',
 	'hub-header' => '$1 Wikis',
 	'hub-hotspot-info' => 'These are the hottest pages this week, ranked by most editors.',
-	'hub-featured-articles' => 'articles',
-	'hub-featured-pageviews' => 'monthly pageviews',
 	'hub-blog-comments' => '$1 Comments',
 	'hub-blog-continue' => 'Continue reading',
 	'hub-blog-showarticle' => 'Show Article',
-	'hub-topusers-editpoints' => 'edit points', 
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">edit points</span>',
 	'hub-hotspot-from' => 'from',
 	'hub-hide-feed' => 'Hide feed',
 	'hub-show-feed' => 'Show Feed',
-	'hub-contributors-info' => 'These are the top users this week, ranked by most edits.'
+	'hub-contributors-info' => 'These are the top users this week, ranked by most edits.',
+        'hub-editors' => '<strong>$1</strong><span>editors</span>',
 );
 
+//

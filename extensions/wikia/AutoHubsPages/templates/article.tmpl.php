@@ -57,26 +57,6 @@
 	
 			}
 		?>
-
-		<div id="top-wiki-info" style="display:none;">			
-			<div class="shrinkwrap">
-				<div id="stuff-it">&nbsp;</div>
-				<div class="clearfix">
-					<img src="<?php echo $data['topWikisOne']['logo']; ?>" />
-	
-					<div id="top-wiki-meta-box">
-						<h2><?php echo $data['topWikisOne']['city_title']; ?></h2>
-						<div id="center-me">
-							<ul id="top-wiki-meta" class="clearfix">
-								<li><span><?php echo number_format( $data['topWikisOne']['pages'] ); ?></span> <?php echo wfMsg('hub-featured-articles') ?></li>
-								<li><span><?php echo number_format( $data['topWikisOne']['count'] ); ?> </span>  <?php echo wfMsg('hub-featured-pageviews') ?></li>
-							</ul>
-						</div>
-					</div>																										
-				</div>
-			
-			</div>
-		</div>
 	
 		<div id="top-wikis-lists-box" class="clearfix">
 			<ul id="top-wikis-list-1">
@@ -199,8 +179,7 @@
 			<li class="<?php echo $dspl_type ?> <?php echo $value['hide'] ? 'hide-blog':''; ?>">
 				<div class="page-activity-badge">
 					<div class="page-activity-level-<?php echo $value['level']; ?>">
-						<strong><?php echo $value['all_count']; ?></strong>
-						<span>editors</span>
+						<?php echo wfMsg('hub-editors', $value['all_count']); ?>
 					</div>
 				</div>
 				<span class="page-activity-sources">
@@ -251,7 +230,7 @@
 	
 			}
 		?>
-		
+		      
 		<p><?php echo wfMsg('hub-contributors-info') ?></p>
 	
 		<ul>
@@ -259,7 +238,7 @@
 			<li>
 				<?php echo $value['avatar'] ?>
 				<span class="topuser-info h2"><a href="<?php echo $value['userpage'] ?>"><?php echo $value['username'];	?></a></span>
-				<span class="userEditPoints clearfix"><nobr><span class="userPoints"><?php echo $value['all_count'];	?></span><span class="txt"><?php echo wfMsg('hub-topusers-editpoints') ?></span></nobr></span>
+				<span class="userEditPoints clearfix"><nobr  class="txt"><?php echo wfMsg('hub-topusers-editpoints', $value['all_count']) ?></nobr></span>
 			</li>
 			<?php endforeach; ?>
 		</ul>

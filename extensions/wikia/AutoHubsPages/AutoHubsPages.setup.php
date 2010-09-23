@@ -58,4 +58,46 @@ function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 	}
 
 	return true;
+
+
 }
+
+$wgHubsPages['en'] = array(
+	            'handheld_games' => 'handheld',
+	            'pc_games' => 'pc',
+	            'xbox_360_games' => 'xbox360',
+	            'ps3_games' => 'ps3',
+	            'mobile_games' => 'mobile',
+	            'movie' => 'movie',
+	            'tv' => 'tv',
+	            'entertainment' => 'entertainment',
+	            'music' => 'music',
+	            'animation' => 'anime',
+	            'anime' => 'anime',
+	            'music' => 'music',
+	            'sci-fi' => 'sci_fi',
+	            'horror' => 'horror',
+	            'gaming' => 'gaming',
+	            'lifestyle' => 'lifestyle',
+	            'wii_games' => 'wii',
+	            'pl' => array( 'name' => 'pl','langcode' => 'pl' )
+	);
+
+	$wgHubsPages['de'] = array(
+	            'music' => 'music',
+	            'travel' => 'travel',
+	            'sports' => 'sports',
+	            'green' => 'green',
+	            'technology' => 'technology',
+	            'lifestyle' => 'lifestyle',
+	            'politics' => 'politics',
+	            'entertainment' => 'entertainment',
+	            'education' => 'education',
+	            'finance' => 'finance',
+	            'science' => 'science',
+	            'creative' => 'creative',
+	            'auto' => 'auto',
+	            'toys' => 'toys',
+	            'humor' => 'humor',
+	            'wikianswers' => 'wikianswers'
+	);
