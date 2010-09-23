@@ -66,6 +66,7 @@ $messages['en'] = array(
 	'toplists-item-creation-summary' => 'Creating a list item',
 	'toplists-item-update-summary' => 'Updating a list item',
 	'toplists-item-remove-summary' => 'Item removed from list',
+	'toplists-item-restored' => 'Item restored',
 
 	//list view
 	'toplists-list-related-to' => 'Related to:',

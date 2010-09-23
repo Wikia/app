@@ -122,7 +122,7 @@ $wgHooks[ 'ComposeCommonSubjectMail' ][] = 'TopListHelper::onComposeCommonSubjec
 $wgHooks[ 'ComposeCommonBodyMail' ][] = 'TopListHelper::onComposeCommonBodyMail';
 $wgHooks[ 'BeforePageDisplay' ][] = 'TopListHelper::onBeforePageDisplay';
 $wgHooks[ 'ArticleDeleteComplete' ][] = 'TopListHelper::onArticleDeleteComplete';
-//$wgHooks[ 'ArticleRevisionUndeleted' ][] = 'TopListHelper::onArticleRevisionUndeleted';
+$wgHooks[ 'ArticleRevisionUndeleted' ][] = 'TopListHelper::onArticleRevisionUndeleted';
 $wgHooks[ 'TitleMoveComplete'][] = 'TopListHelper::onTitleMoveComplete';
 
 //parser functions, tags and attributes
