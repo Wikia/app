@@ -115,7 +115,10 @@ class TopListParser {
 		global $wgParser;
 		$parserOptions = new ParserOptions();
 		self::$mList = $list;
-
-		return $wgParser->parse($list->getArticle()->getContent(), $list->getTitle(), $parserOptions)->getText();
+		
+		$parsedText = $wgParser->parse($list->getArticle()->getContent(), $list->getTitle(), $parserOptions)->getText();
+		$list->invalidateCache();
+		
+		return $parsedText;
 	}
 }
