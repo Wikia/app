@@ -1,5 +1,4 @@
 <div id="WikiaPageHeader" class="WikiaPageHeader">
-
 	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 <?php
@@ -10,12 +9,5 @@
 ?>
 	<p><?= $subtitle ?></p>
 
-<?php
-	// render search box
-	if ($showSearchBox) {
-		echo wfRenderModule('Search');
-	}
-?>
-
-
+	<?= wfRenderModule('Search') ?>
 </div>
