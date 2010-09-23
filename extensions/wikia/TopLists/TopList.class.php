@@ -447,6 +447,7 @@ class TopList extends TopListBase {
 	public function invalidateCache() {
 		$this->getTitle()->invalidateCache();
 		$this->mTitle->purgeSquid();
+		$this->getArticle()->doPurge();
 		$this->mDataLoaded = false;
 		$this->mItems = array();
 	}
