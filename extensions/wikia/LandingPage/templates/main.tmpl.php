@@ -31,15 +31,15 @@
 		<ul>
 			<li class="item-1">
 				<?= wfMsg('landingpage-buttons-about-wikia') ?><br />
-				<a href="http://www.community.wikia.com/wiki/About_Wikia"><?= wfMsg('landingpage-buttons-learn-more') ?></a>
+				<a href="<?= wfMsg('landingpage-buttons-about-wikia-link') ?>"><?= wfMsg('landingpage-buttons-learn-more') ?></a>
 			</li>
 			<li class="item-2">
 				<?= wfMsg('landingpage-buttons-new-look') ?><br />
-				<a href="http://www.community.wikia.com/wiki/The_new_look"><?= wfMsg('landingpage-buttons-faqs') ?></a>
+				<a href="<?= wfMsg('landingpage-buttons-new-look-link') ?>"><?= wfMsg('landingpage-buttons-faqs') ?></a>
 			</li>
 			<li class="item-3">
 				<?= wfMsg('landingpage-buttons-about-make-the-move') ?><br />
-				<a href="http://www.community.wikia.com/wiki/Transition_guide"><?= wfMsg('landingpage-buttons-transition-guide') ?></a>
+				<a href="<?= wfMsg('landingpage-buttons-about-make-the-move-link') ?>"><?= wfMsg('landingpage-buttons-transition-guide') ?></a>
 			</li>
 		</ul>
 	</section>
