@@ -91,7 +91,8 @@ var TopList = {
 				{
 					'action': 'ajax',
 					'rs': 'TopListHelper::checkListStatus',
-					'title': $('#top-list-title').val()
+					'title': $('#top-list-title').val(),
+					'cb' : Math.random()
 				},
 				function(response) {
 					if(response.result === true){

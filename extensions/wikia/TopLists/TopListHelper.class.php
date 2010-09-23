@@ -195,7 +195,7 @@ class TopListHelper {
 				'submitUrl' => "{$url}/$1"
 			);
 		}
-		
+
 		return true;
 	}
 
@@ -484,6 +484,7 @@ class TopListHelper {
 		$result = array(
 			'result' => true,
 			'canVote' => false,
+			'ts' => date('Y:m:d H:i:s')
 			/*'canEdit' => false*/
 		);
 
