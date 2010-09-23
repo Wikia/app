@@ -1575,7 +1575,9 @@ class OutputPage {
 
 	protected function addDefaultMeta() {
 		global $wgVersion, $wgRequest;
-		$this->addMeta( 'http:Content-Style-Type', 'text/css' ); //bug 15835
+		/* Wikia change - this does nothing in HTML 4 and is invalid in HTML 5 */
+		//$this->addMeta( 'http:Content-Style-Type', 'text/css' ); //bug 15835
+		/* End Wikia change */
 		$this->addMeta( 'generator', "MediaWiki $wgVersion" );
 
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";
