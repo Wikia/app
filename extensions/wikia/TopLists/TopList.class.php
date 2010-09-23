@@ -41,10 +41,15 @@ class TopList extends TopListBase {
 	 * @return mixed a TopList instance, false in case $title is not in the NS_TOPLIST namespace
 	 */
 	static public function newFromTitle( Title $title ) {
+		global $wgMemc;
+		
 		if ( $title->getNamespace() == NS_TOPLIST && !$title->isSubpage() ) {
 			$list = new self();
 			$list->mTitle = $title;
-
+			
+			//needed to let getItems fetch fresh data when instantiating more tha once with the same title object
+			$wgMemc->set( $list->_getNeedRefreshCacheKey(), true );
+			
 			return $list;
 		}
 
@@ -233,8 +238,10 @@ class TopList extends TopListBase {
 						$itemVotes[$item->getArticle()->getId()] = $item->getVotesCount();
 					}
 				}
+				
 				$itemVotes = array_reverse( $itemVotes, true);
 				arsort( $itemVotes, SORT_NUMERIC );
+				
 				foreach( $itemVotes as $id => $value ) {
 					$this->mItems[] = $items[$id];
 				}
@@ -375,12 +382,12 @@ class TopList extends TopListBase {
 				}
 			}
 			else {
-				$wgMemc->set( $this->_getNeedRefreshCacheKey(), true );
-
 				//reset vote counters for each items, to avoid caching issues
 				foreach( $this->getItems() as $item ) {
 					$item->resetVotesCount();
 				}
+				
+				$wgMemc->set( $this->_getNeedRefreshCacheKey(), true );
 			}
 
 		} else {

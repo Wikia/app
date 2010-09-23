@@ -546,7 +546,7 @@ class TopListHelper {
 							$list->invalidateCache();
 
 							$result['result'] = true;
-							$result['listBody'] = TopListParser::parse( TopList::newFromText( $listText ) );
+							$result['listBody'] = TopListParser::parse( $list );
 						}
 					}
 				} else {

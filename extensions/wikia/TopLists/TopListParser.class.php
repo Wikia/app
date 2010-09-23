@@ -8,6 +8,7 @@
 class TopListParser {
 	static private $mAttributes = array();
 	static private $mOutput = null;
+	static private $mList = null;
 
 	/**
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
@@ -31,62 +32,66 @@ class TopListParser {
 
 		wfLoadExtensionMessages( 'TopLists' );
 
-		if( empty( self::$mOutput ) ) {
-			$relatedTitle = null;
-			$relatedImage = null;
-			$relatedUrl = null;
+		$relatedTitle = null;
+		$relatedImage = null;
+		$relatedUrl = null;
 
-			if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
-				self::$mAttributes[ TOPLIST_ATTRIBUTE_RELATED ] = $args[ TOPLIST_ATTRIBUTE_RELATED ];
-				$relatedTitle = Title::newFromText( $args[ TOPLIST_ATTRIBUTE_RELATED ] );
-				$relatedUrl = $relatedTitle->getLocalUrl();
-			}
+		if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
+			self::$mAttributes[ TOPLIST_ATTRIBUTE_RELATED ] = $args[ TOPLIST_ATTRIBUTE_RELATED ];
+			$relatedTitle = Title::newFromText( $args[ TOPLIST_ATTRIBUTE_RELATED ] );
+			$relatedUrl = $relatedTitle->getLocalUrl();
+		}
 
-			if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
-				self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
+		if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
+			self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
 
-				if( !empty( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
-					$source = new imageServing(
-						null,
-						200
-					);
+			if( !empty( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
+				$source = new imageServing(
+					null,
+					200
+				);
 
-					$result = $source->getThumbnails( array( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) );
+				$result = $source->getThumbnails( array( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) );
 
-					if( !empty( $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ] ) ) {
-						$relatedImage = $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ];
+				if( !empty( $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ] ) ) {
+					$relatedImage = $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ];
 
-						if( empty( $relatedUrl ) ) {
-							$title = Title::newFromText( $relatedImage[ 'name' ], NS_FILE );
-							$relatedUrl = $title->getLocalURL();
-						}
+					if( empty( $relatedUrl ) ) {
+						$title = Title::newFromText( $relatedImage[ 'name' ], NS_FILE );
+						$relatedUrl = $title->getLocalURL();
 					}
 				}
 			}
-
-			$list = TopList::newFromTitle( $parser->mTitle );
-
-			if ( !empty( $list ) ) {
-				$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-				$template->set_vars(
-					array(
-						'list' => $list,
-						'attribs' => self::$mAttributes,
-						'relatedTitle' => $relatedTitle,
-						'relatedImage' => $relatedImage,
-						'relatedUrl' => $relatedUrl
-					)
-				);
-
-				self::$mOutput = $template->execute( 'list' );
-
-				// remove whitespaces to avoid extra <p> tags
-				self::$mOutput = preg_replace("#[\n\t]+#", '', self::$mOutput);
-			}
-			else {
-				self::$mOutput = '';
-			}
 		}
+		
+		if( !empty( self::$mList ) ) {
+			$list = self::$mList;
+			self::$mList = null;
+		} else {
+			$list = TopList::newFromTitle( $parser->mTitle );
+		}
+		
+		if ( !empty( $list ) ) {
+			$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$template->set_vars(
+				array(
+					'list' => $list,
+					'attribs' => self::$mAttributes,
+					'relatedTitle' => $relatedTitle,
+					'relatedImage' => $relatedImage,
+					'relatedUrl' => $relatedUrl
+				)
+			);
+
+			self::$mOutput = $template->execute( 'list' );
+
+			// remove whitespaces to avoid extra <p> tags
+			self::$mOutput = preg_replace("#[\n\t]+#", '', self::$mOutput);
+		}
+		else {
+			self::$mOutput = '';
+		}
+		
 		return self::$mOutput;
 	}
 
@@ -109,6 +114,7 @@ class TopListParser {
 	static public function parse( TopList $list ) {
 		global $wgParser;
 		$parserOptions = new ParserOptions();
+		self::$mList = $list;
 
 		return $wgParser->parse($list->getArticle()->getContent(), $list->getTitle(), $parserOptions)->getText();
 	}
