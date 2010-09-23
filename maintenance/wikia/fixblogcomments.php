@@ -57,7 +57,7 @@ function __get_page_id($title) {
 }
 
 function fixAllBlogComments( $dry ) {
-	global $method, $wgExternalDatawareDB, $wgCityId, $wgDBname;
+	global $method, $wgExternalDatawareDB, $wgCityId, $wgDBname, $wgDBcluster;
 
 	$dbw = wfGetDB( DB_SLAVE );
 	$res = $dbw->select(
@@ -102,7 +102,7 @@ function fixAllBlogComments( $dry ) {
 				$newTitle = sprintf('%s/%s', $parts['title'], implode("/", $parts['parsed']) );
 
 				if ( $dry ) {
-					 print "update `$wgDBname`.`page` set page_title = '$newTitle' where page_title = '{$row['page_title']}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+					 error_log("update `$wgDBname`.`page` set page_title = '$newTitle' where page_title = '{$row['page_title']}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."'; \n", 3, "/tmp/blog_". $wgDBcluster.".log");
 				} else {
 					$dbw->update(
 						'page',
@@ -113,7 +113,7 @@ function fixAllBlogComments( $dry ) {
 				}
 				# update job
 				if ( $dry ) {
-					 print "update `$wgDBname`.`job` set job_title = '$newTitle' where job_title = '{$row['page_title']}' and job_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+					 error_log("update `$wgDBname`.`job` set job_title = '$newTitle' where job_title = '{$row['page_title']}' and job_namespace = '".NS_BLOG_ARTICLE_TALK."'; \n", 3, "/tmp/blog_".$wgDBcluster.".log");
 				} else {
 					$dbw->update(
 						'job',
@@ -124,12 +124,12 @@ function fixAllBlogComments( $dry ) {
 				}
 
 				if( $dry ) {
-					printf(
-						"update `$wgDBname`.`recentchanges` set rc_title = '%s' where rc_id = %d and rc_namespace = %d\n",
+					error_log( printf(
+						"update `$wgDBname`.`recentchanges` set rc_title = '%s' where rc_id = %d and rc_namespace = %d; \n",
 						$newTitle,
 						$row['rc_id'],
 						NS_BLOG_ARTICLE_TALK
-					);
+					), 3, "/tmp/blog_".$wgDBcluster.".log");
 				}
 				else {
 					$dbw->update(
@@ -142,7 +142,7 @@ function fixAllBlogComments( $dry ) {
 				
 				# update watchlist
 				if ( $dry ) {
-					 print "update `$wgDBname`.`watchlist` set wl_title = '$newTitle' where wl_title = '{$row['page_title']}' and wl_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+					 error_log ("update `$wgDBname`.`watchlist` set wl_title = '$newTitle' where wl_title = '{$row['page_title']}' and wl_namespace = '".NS_BLOG_ARTICLE_TALK."'; \n", 3, "/tmp/blog_".$wgDBcluster.".log");
 				} else {
 					$dbw->update(
 						'watchlist',
@@ -155,11 +155,11 @@ function fixAllBlogComments( $dry ) {
 				# update dataware
 				if ( $row['page_id'] > 0 ) {
 					if ( $dry ) {
-						 printf( "update pages set page_title = '%s' where page_id = %d and page_wikia_id = %d\n",
+						 error_log ( printf( "update pages set page_title = '%s' where page_id = %d and page_wikia_id = %d;\n",
 							$newTitle,
 							$row['page_id'],
 							$wgCityId
-						);
+						), 3, "/tmp/blog_dataware.log" );
 					}
 					else {
 						$dbext = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
