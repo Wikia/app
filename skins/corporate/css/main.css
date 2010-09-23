@@ -790,20 +790,22 @@ footer {
 	#wikia-global-hot-spots .page-activity-badge div {
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
+                padding-left: 6px;
+                padding-right: 6px;
 	}
 	#wikia-global-hot-spots strong {
-		display: block;
-		float: left;
 		font-size: 20px;
 		font-weight: normal;
 		line-height: 30px;
-		width: 50px;
+                padding-left: 4px;
+                padding-right: 4px;
+                vertical-align: middle;
 	}
 	#wikia-global-hot-spots .page-activity-badge span {
 		line-height: 28px;
-		margin-left: 10px;
-		margin-right: 15px;
-		padding-right: 24px;
+                padding-left: 4px;
+                padding-right: 4px;
+                vertical-align: middle;
 	}
 	#wikia-global-hot-spots .page-activity-badge span,
 	#wikia-global-hot-spots .page-activity-sources span,
@@ -1273,18 +1275,6 @@ ul#hub-blog-articles li .blog-jump-icon {
 #MainArticle #hub-side-box #wikia-global-hot-spots .wikia-page-link { 
   font-weight: normal;
 }
-
-#MainArticle #hub-side-box #wikia-global-hot-spots strong {
-  width: 30px;
-  padding-left: 8px;  
-}
-
-#MainArticle #hub-side-box #wikia-global-hot-spots .page-activity-badge span {
-  padding-right: 0px;
-  margin-left: 8px;
-  margin-right: 8px
-}
-
 #hub-top-contributors ul {
   padding: 0;
 }
@@ -1327,12 +1317,25 @@ ul#hub-blog-articles li .blog-jump-icon {
 
 #hub-top-contributors ul li .userEditPoints span.txt {
   font-size: 10px;
+  border-color:#AAAAAA -moz-use-text-color #AAAAAA #AAAAAA;
+  border-style:solid none solid solid;
+  border-width: 1px 0px 1px 1px;
+  background-color: #e0e0e0;
+  background: -moz-linear-gradient(top, #fbfbfb 20%, #e0e0e0 70%);
+  background: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fbfbfb), to(#e0e0e0));
+  line-height:17px;
+  padding:1px 5px 2px;
+  display: inline-block;
+}
+
+#hub-top-contributors ul li .userEditPoints span.userPoints + span.txt {
+  font-size: 10px;
   border-color:#AAAAAA #AAAAAA #AAAAAA -moz-use-text-color;
   border-style:solid solid solid none;
   border-width: 1px 1px 1px 0;
   background-color: #e0e0e0;
   background: -moz-linear-gradient(top, #fbfbfb 20%, #e0e0e0 70%);
- Êbackground: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fbfbfb), to(#e0e0e0));
+  background: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fbfbfb), to(#e0e0e0));
   line-height:17px;
   padding:1px 5px 2px;
   display: inline-block;
@@ -1344,7 +1347,7 @@ ul#hub-blog-articles li .blog-jump-icon {
   -moz-background-origin:padding;
   background-color: #f6dd5d;
   background: -moz-linear-gradient(top, #fcf297 20%, #f6dd5d 70%);
- Êbackground: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fcf297), to(#f6dd5d));
+  background: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fcf297), to(#f6dd5d));
   border: 1px solid #0A0A0A;
   font-weight:bold;
   font-size: 10px;
