@@ -1,4 +1,5 @@
 == Changes since 201009.3 ==
+* rt#68125: Oasis: Add delete to Blog Post Edit dropdown (macbre)
 * rt#68048: Domain name list not styled in Oasis (macbre)
 * rt#67691: Cross Domain XML for RSS Feeds (Nef)
 * rt#67696: outbound, double url encoding bug (uberfuzzy)
