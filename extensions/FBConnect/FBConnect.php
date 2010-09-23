@@ -99,7 +99,9 @@ define( 'APCOND_FB_ISOFFICER', 'fb*o' );
 define( 'APCOND_FB_ISADMIN',   'fb*a' );
 
 // Create a new group for Facebook users
-$wgGroupPermissions['fb-user'] = $wgGroupPermissions['user'];
+//$wgGroupPermissions['fb-user'] = $wgGroupPermissions['user'];
+//rt#68127 (dont give basic permissions to other groups, opens security holes)
+$wgGroupPermissions['fb-user'] = array('facebook-user');
 
 // If we are configured to pull group info from Facebook, then create the group permissions
 if ($fbUserRightsFromGroup) {
