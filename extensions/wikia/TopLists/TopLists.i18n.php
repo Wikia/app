@@ -27,7 +27,7 @@ $messages['en'] = array(
 	'toplists-error-picture-not-exists' => '"$1" does not exist. Do you want to <a href="$2" target="_blank">upload it</a>?',
 	'toplists-error-duplicated-entry' => 'You can\'t use the same name more than once.',
 	'toplists-error-empty-item-name' => 'The name of an existing item can\'t be empty.',
-	'toplists-item-cannot-delete' => 'Deletion of this item failed',
+	'toplists-item-cannot-delete' => 'Deletion of this item failed.',
 	'toplists-error-image-already-exists' => 'An image with the same name already exists.',
 	'toplists-error-add-item-anon' => 'Anonymous users are not allowed to add items to lists. Please <a class="ajaxLogin" id="login" href="$1">Log in</a> or <a class="ajaxLogin" id="signup" href="$2">register a new account</a>.',
 	'toplists-error-add-item-permission' => 'Permission error: Your account has not been granted the right to create new items.',
