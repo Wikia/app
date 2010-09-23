@@ -300,7 +300,7 @@ class UserPagesHeaderModule extends Module {
 		}
 
 		// dropdown actions
-		$actions = array('move', 'protect', 'unprotect');
+		$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
 		foreach($actions as $action) {
 			if (isset($this->content_actions[$action])) {
 				$this->actionMenu['dropdown'][$action] = $this->content_actions[$action];
