@@ -204,6 +204,14 @@ class BodyModule extends Module {
 		if (in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage()) {
 			$railModuleList = array();
 
+			// Special-case: we want the right rail on the preview page unless this is the main page.
+			if(BodyModule::isEditPage() && (!ArticleAdLogic::isMainPage())){
+				global $wgRequest;
+				if($wgRequest->getVal('action') == 'submit'){
+					$railModuleList = array(1500 => array('Search', 'Index', null));
+				}
+			}
+
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
