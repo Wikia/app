@@ -198,11 +198,13 @@ class TopList extends TopListBase {
 	public function getItems( $forceReload = false ) {
 			global $wgMemc;
 		//not using _loadData since it invokes the parser
-		if( $this->exists() && ( empty( $this->mItems ) || $forceReload ) ) {
-			$this->mItems = array();
 
 			$cacheKey = $this->_getNeedRefreshCacheKey();
 			$needRefresh = $wgMemc->get( $cacheKey );
+
+		if( $this->exists() && ( empty( $this->mItems ) || $forceReload || $needRefresh ) ) {
+			$this->mItems = array();
+
 
 			if( $needRefresh ) {
 				$db = DB_MASTER;
