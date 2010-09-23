@@ -56,7 +56,7 @@ function __get_page_id($title, $ns) {
 	return $page_id;
 }
 
-function fixAllBlogComments( $dry ) {
+function fixAllBlogComments( $dry, $debug = 0 ) {
 	global $method, $wgExternalDatawareDB, $wgCityId, $wgDBname, $wgDBcluster;
 	
 	$cluster = ( is_null($wgDBcluster) ) ? 'c1' : $wgDBcluster;
@@ -196,7 +196,7 @@ else {
 	#WikiFactory::setVarByName( "wgDisableBlogComments", $wgCityId, true ) ;
 	#WikiFactory::clearCache( $wgCityId );
 
-	fixAllBlogComments( $dry );
+	fixAllBlogComments( $dry, $debug );
 
 	#WikiFactory::removeVarByName( "wgDisableBlogComments", $wgCityId );
 	#WikiFactory::setVarByName( "wgUseNewBlogComments", $wgCityId, true ) ;
