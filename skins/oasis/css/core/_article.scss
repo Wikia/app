@@ -318,8 +318,7 @@
 	}
 	.forumlist .forum_title a.forum_new {
 	   font-weight: bold;
-	   /* TODO: FIXME: I'm pretty sure this image doesn't exist at this URL.  Perhaps an outdated URL? */
-	   background: url(/images/4/4e/Forum_new.gif) center left no-repeat; /* $wgCdnStylePath */
+	   background: url(/skins/common/images/Forum_new.gif) center left no-repeat; /* $wgCdnStylePath */
 	   padding-left: 20px;
 	}
 	.forumlist .forum_title a.forum_new:visited {
