@@ -22,11 +22,19 @@ var ThemeDesignerPreview = {
 	},
 
 	loadSASS: function(url) {
-		$("#clickmask").animate({"opacity": .65}, "fast");
-		$(".ThemeDesignerPreviewSASS").addClass("remove");
-		$('<style class="ThemeDesignerPreviewSASS">').appendTo("head").load(url, function() {
-			$(".ThemeDesignerPreviewSASS.remove").remove();
-			$("#clickmask").animate({"opacity": 0}, "fast");
+		//fade out
+		$("#clickmask").animate({"opacity": .65}, "fast", function() {
+			//mark old stylesheet(s) for removal
+			$(".ThemeDesignerPreviewSASS").addClass("remove");
+			//ajax request for new stylesheet
+			$.get(url, function(data) {
+				//add new stylesheet to head
+				$('<style class="ThemeDesignerPreviewSASS">' + data + '</style>').appendTo("head");
+				//remove marked stylesheets
+				$(".ThemeDesignerPreviewSASS.remove").remove();
+				//fade in
+				$("#clickmask").animate({"opacity": 0}, "fast");
+			});
 		});
 	}
 };
