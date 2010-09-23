@@ -126,12 +126,12 @@ function fixAllBlogComments( $dry, $debug = 0 ) {
 				}
 
 				if( $dry ) {
-					error_log( printf(
+					error_log( sprintf(
 						"update `$wgDBname`.`recentchanges` set rc_title = '%s' where rc_id = %d and rc_namespace = %d; \n",
 						$newTitle,
 						$row['rc_id'],
 						NS_BLOG_ARTICLE_TALK
-					), 3, "/tmp/blog_".$cluster.".log");
+					), 3, "/tmp/blog_".$cluster.".log" );
 				}
 				else {
 					$dbw->update(
@@ -157,7 +157,7 @@ function fixAllBlogComments( $dry, $debug = 0 ) {
 				# update dataware
 				if ( $row['page_id'] > 0 ) {
 					if ( $dry ) {
-						 error_log ( printf( "update pages set page_title = '%s' where page_id = %d and page_wikia_id = %d;\n",
+						 error_log ( sprintf( "update pages set page_title = '%s' where page_id = %d and page_wikia_id = %d;\n",
 							$newTitle,
 							$row['page_id'],
 							$wgCityId
