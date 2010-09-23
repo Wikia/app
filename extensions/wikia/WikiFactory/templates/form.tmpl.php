@@ -443,7 +443,7 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 	 	  	url: ajaxpath,
 	 	  	data: "action=ajax&rs=axWFactoryTagCheck&tagName="+tagName,
 			success: function( oResponse ) {
-				var data = YAHOO.Tools.JSONParse(oResponse.responseText);
+				var data = oResponse;
 				if( data.wikiCount == 0 ) {
 					$( '#wf-tag-parse' ).get("<span style=\"color: red; font-weight: bold;\">tag doesn't exists</span>");
 				}
