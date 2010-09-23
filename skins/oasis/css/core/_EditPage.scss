@@ -172,7 +172,8 @@
 	// preview mode
 	#wikiPreview {
 		@include clearfix;
-		margin-right: 320px;
+		// The extra 20px below is because the real rail has 10px to each side of it.
+		margin-right: $width-rail + 20px;
 		h2:first-child,
 		.previewnote {
 			display: none;
