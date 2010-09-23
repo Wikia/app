@@ -71,6 +71,7 @@ var TopList = {
 				if(response.result === true) {
 					TopList._mWrapper.replaceWith(response.listBody);
 					TopList._mWrapper = $('#toplists-list-body');
+					TopList.attachEvents();
 					TopList.enableVotes();
 				} else {
 					$('#toplist-new-item-name').addClass('error');
