@@ -20,9 +20,9 @@ class SpecialAdminAds extends SpecialPage {
 			parent::__construct( 'AdminAds');
 			return;
 		}else{
-			//restrict to only those with edit interface rights
+			//restrict to only staff
 			$this->ispaypal = 0;
-			parent::__construct( 'AdminAds', 'editinterface'  );
+			parent::__construct( 'AdminAds', 'staff'  );
 		}
 	}
 	
