@@ -88,6 +88,32 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Callback for the FBConnect::BeforePushEvent hook
+	 */
+	public static function onBeforePushEvent( $faceBookId, &$message, &$params, &$class ) {
+		if(
+			!empty( $params[ '$ARTICLE_OBJ' ] ) &&
+			$params[ '$ARTICLE_OBJ' ]->getTitle()->getNamespace() == NS_TOPLIST &&
+			$params[ '$ARTICLE_OBJ' ]->getTitle()->isSubpage()
+		) {
+			wfLoadExtensionMessages( 'TopLists' );
+			$message = 'toplists-msg-fb-OnRateArticle';
+			$parentTitleText = substr( $params[ '$ARTICLENAME' ], 0, strrpos( $params[ '$ARTICLENAME' ], '/' ) );
+			$parentTitle = Title::newFromText( $parentTitleText );
+
+			$params[ '$ARTICLE_OBJ' ] = Article::newFromTitle( $parentTitle );
+			
+			$params[ '$ARTICLE_URL' ] = $parentTitle->getFullURL("ref=fbfeed&fbtype=ratearticle");
+			$params[ '$ARTICLENAME' ] = $parentTitle->getText();
+
+			wfDebugLog('FACEBOOK::TOPLIST::VOTE ' . var_export($params, true) );
+		}
+
+		return true;
+	}
 
 	/**
 	 * callback for UnwatchArticleComplete hook
