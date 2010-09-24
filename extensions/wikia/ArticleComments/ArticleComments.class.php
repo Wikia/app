@@ -507,6 +507,7 @@ class ArticleComment {
 			$comment = array(
 				'articleId' => $articleId,
 				'author' => $this->mUser,
+				'username' => $this->mUser->getName(),
 				'avatar' => $this->getAvatarImg($this->mUser),
 				'buttons' => $buttons,
 				'replyButton' => $replyButton,
@@ -1599,7 +1600,7 @@ class ArticleCommentList {
 				return true;
 			}
 		}
-		
+
 		//watch out for recursion
 		if (self::$mDeletionInProgress) {
 			wfProfileOut( __METHOD__ );
@@ -1622,9 +1623,9 @@ class ArticleCommentList {
 			if ( isset($wgMaxCommentsToDelete) && ( count(self::$mArticlesToDelete) > $wgMaxCommentsToDelete ) ) {
 				if ( !empty($wgEnableMultiDeleteExt) ) {
 					$mDelete = 'task';
-				} 
-			} 
-			
+				}
+			}
+
 			if ( $mDelete == 'live' ) {
 				$irc_backup = $wgRC2UDPEnabled;	//backup
 				$wgRC2UDPEnabled = false; //turn off
@@ -1651,7 +1652,7 @@ class ArticleCommentList {
 					'user'		=> $wgUser->getName(),
 					'admin'		=> $wgUser->getName()
 				);
-					
+
 				foreach (self::$mArticlesToDelete as $page_id => $oComment) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
@@ -1659,12 +1660,12 @@ class ArticleCommentList {
 						$data['page'] = $oCommentTitle->getFullText();
 						$thisTask = new MultiDeleteTask( $data );
 						$submit_id = $thisTask->submitForm();
-						Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );				
+						Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );
 					}
 				}
 			}
-		} 
-		
+		}
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
