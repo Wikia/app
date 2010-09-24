@@ -98,7 +98,7 @@
 		right: 36px;
 		top: 40px;
 	}
-	>ul {
+	section >ul {
 		@include clearfix;
 		@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
 		border-bottom: 1px solid $color-page-border;
