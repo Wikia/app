@@ -52,13 +52,13 @@
 
 		<ul class="LandingPageLinks">
 			<li>
-				<a href="http://www.facebook.com/wikia"><img src="<?= $imagesPath ?>icon-facebook.png" alt="" width="61" height=^61"></a>
+				<a href="<?= wfMsg('landingpage-facebook-link') ?>"><img src="<?= $imagesPath ?>icon-facebook.png" alt="" width="61" height=^61"></a>
 			</li>
 			<li>
-				<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog"><img src="<?= $imagesPath ?>icon-wikia-blog.png" alt="" width="61" height=^61"></a>
+				<a href="<?= wfMsg('landingpage-wikia-blog-link') ?>"><img src="<?= $imagesPath ?>icon-wikia-blog.png" alt="" width="61" height=^61"></a>
 			</li>
 			<li>
-				<a href="http://www.twitter.com/wikia"><img src="<?= $imagesPath ?>icon-twitter.png" alt="" width="61" height=^61"></a>
+				<a href="<?= wfMsg('landingpage-twitter-link') ?>"><img src="<?= $imagesPath ?>icon-twitter.png" alt="" width="61" height=^61"></a>
 			</li>
 		</ul>
 	</section>
