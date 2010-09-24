@@ -11,62 +11,51 @@ $color-hot_5: #006699;
 
 .HotSpotsModule {
 	@include rail-module;
-	
 	p {
 		margin-bottom: 5px;
 	}
-	
 	h1 {
 		margin-bottom: 15px;
 	}
-	
 	li {
+		@include clearfix;
 		border-bottom: solid 1px $color-page-border;
 		&:last-child {
 			border-bottom: none;
 			margin-bottom: 0px;
 		}
-		
-		
-		@include clearfix;
 		margin: {
 			bottom: 6px;
 		}
-		
 		div div { /* the rounded-highlighted area */
 			@include border-radius(5px);
-			
 			color: White;
 			float: left;
 			text-align: center;
 			margin: {
+				bottom: 7px;
 				right: 10px;
 				top: 5px;
-				bottom: 7px;
 			}
 			padding: {
-				top: 0px;
 				bottom: 3px;
 				left: 15px;
 				right: 15px;
+				top: 0px;
 			}
 		}
-		
 		big {
-			font-size: 22px !important;
 			display: inline-block;
+			font-size: 22px !important;
 			margin-right: 5px;
 		}
-		
 		span {
 			display: block;
 			padding: {
-			 top: 3px;
-			 bottom: 7px;
+				bottom: 7px;
+				top: 3px;
 			}
-
 		}
-		
 		.hot-spot-severity-1 {
 			background-color: $color-hot_1;
 		}
@@ -83,9 +72,7 @@ $color-hot_5: #006699;
 			background-color: $color-hot_5;
 		}
 	}
-	
 }
-
 
 .CommunityCornerModule {
 	@include rail-module;
@@ -95,18 +82,11 @@ $color-hot_5: #006699;
 		clear:both;
 	}
 	p {
-		margin-bottom: 7px;
-	 }
-	
+		line-height: 1.8em;
+		margin: 0.4em 0 0 0.5em;
+	}
 	ul {
 		list-style-type: disc;
-		margin: {
-			left: 20px;
-		}
-		
-		li {
-			margin-bottom: 5px;
-			
-		}
+		margin: 0.4em 0 0.5em 2.5em;
 	}
 }
