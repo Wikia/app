@@ -1,4 +1,5 @@
 == Changes since 201009.3 ==
+* rt#68213: Oasis: Hot Spots module to be centered (macbre)
 * rt#68199: Oasis: Community corner line spacing fix (macbre)
 * rt#68197: Oasis: on history page add a topic button overs comment bubble icon (macbre)
 * rt#68090: Oasis: photo gallery - add more space around buttons (macbre)
