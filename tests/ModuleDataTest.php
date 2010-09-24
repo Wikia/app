@@ -678,4 +678,59 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/User:WikiaBot">WikiaBot<\/a>/', $html);
 	}
 
+	function testCommunityCornerModule() {
+		global $wgUser;
+		$wgUser = User::newFromName('WikiaSysop');
+		$moduleData = Module::get('CommunityCorner')->getData();
+
+		$this->assertFalse($moduleData['isAdmin']);
+		$wgUser = User::newFromName('WikiaStaff');
+		$moduleData = Module::get('CommunityCorner')->getData();
+		$this->assertTrue($moduleData['isAdmin']);
+	}
+
+	function testFooterModule() {
+		global $wgSuppressToolbar, $wgShowMyToolsOnly;
+
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertTrue($moduleData['showMyTools']);
+		$this->assertTrue($moduleData['showToolbar']);
+
+		$wgSuppressToolbar = true;
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertFalse($moduleData['showToolbar']);
+
+	}
+
+	// These are hards one to test, since the old ArticleCommentsCode is not modular
+	function testArticleCommentsModule() {
+		global $wgTitle, $wgDevelEnvironment;
+		$wgDevelEnvironment = false;  // Suppress memkey logic that uses SERVER_NAME
+
+		$wgTitle = Title::newFromText("Foo");
+		$moduleData = Module::get('ArticleComments')->getData();
+		$this->assertEquals("Title", get_class($moduleData['wgTitle']));
+		$this->assertEquals("Foo", $moduleData['wgTitle']->getText());
+
+	}
+	function testPopularBlogPostsModule() {
+		$moduleData = Module::get('PopularBlogPosts')->getData();
+		$this->assertRegExp('/No posts found/', $moduleData['body']);
+	}
+
+	function testLatestPhotosModule() {
+		global $wgDevelEnvironment;
+		$wgDevelEnvironment = false;  // Suppress memkey logic that uses SERVER_NAME
+
+		$moduleData = Module::get('LatestPhotos')->getData();
+		$this->assertType('array', $moduleData['thumbUrls']);
+
+		$thumbUrls = $moduleData['thumbUrls'];
+		$this->assertEquals(11, count($thumbUrls));
+
+		foreach ($thumbUrls as $item) {
+			$this->assertRegExp('/File:/', $item['image_filename']);
+		}
+	}
+
 }
