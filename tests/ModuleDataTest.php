@@ -26,10 +26,10 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		global $wgSitename;
 
 		$moduleData = Module::get('LatestActivity')->getData();
-
+		$this->assertType ('array', $moduleData['changeList']);
 		$this->assertEquals(
 			3,
-			count($moduleData)
+			count($moduleData['changeList'])
 		);
 	}
 
@@ -60,26 +60,20 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		global $wgTitle;
 		$wgTitle = Title::newFromText('FooBar');
 
-		$moduleData = Module::get('Body')->getData();
-
-		// search module lives at index 1500
-		$this->assertType("array",
-			$moduleData['railModuleList'][1500]
-		);
+		$moduleData = Module::get('Rail', 'Index', array("railModuleList" => array(100 => "foo")))->getData();
+		// railmodule just prints whatever it is given
+		$this->assertEquals($moduleData['railModuleList'][100], "foo");
 
 	}
 
 	function testAdModule() {
 		global $wgTitle;
-		$this->markTestSkipped();
-		$wgTitle = Title::newMainPage();
-
-		$moduleData = Module::get('Ad', 'Index', array ('slot' => 'TOP_BOXAD'))->getData();
-
-		// boxad is 300 wide
-		$this->assertEquals(
-			'300',
-			$moduleData['imgWidth']
+		$wgTitle = Title::newFromText('Foo');
+//		$moduleData = Module::get('Ad', 'Config', null)->getData();
+		$moduleData = Module::get('Ad', 'Index', array ('slotname' => 'INVISIBLE_1'))->getData();
+		$this->assertNotEquals(
+			null,
+			$moduleData['ad']
 		);
 	}
 
@@ -364,14 +358,16 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testAchievementsModule() {
-		global $wgTitle;
+		global $wgTitle, $wgEnableAchievementsExt;
+		if (!$wgEnableAchievementsExt) $this->markTestSkipped();
+
 		$wgTitle = Title::newFromText('User:WikiaBot');
 
 		$moduleData = Module::get('Achievements')->getData();
 
 		$this->assertEquals ($moduleData['ownerName'], 'WikiaBot');
 		$this->assertEquals ($moduleData['viewer_is_owner'], true);
-		$this->assertEquals ($moduleData['max_challenges'], count($moduleData['challengesBadges']));
+		$this->assertEquals ($moduleData['max_challenges'], 'all');
 		$this->assertType ('array', $moduleData['challengesBadges'][0]);
 		$this->assertType ('object', $moduleData['challengesBadges'][0]['badge']);
 
@@ -566,7 +562,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
 
 		$this->assertRegExp('/History/', $moduleData['title']);
-		$this->assertTrue($moduleData['showSearchBox']);
+		$this->assertTrue($moduleData['displaytitle']);
 		$this->assertType('int', $moduleData['comments']);
 
 		$wgRequest->setVal('action', '');
