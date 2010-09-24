@@ -8,7 +8,7 @@ class CorporateFooterModule extends Module {
 
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc, $wgSingleH1;
-		$mKey = wfMemcKey('mOasisFooterLinks');
+		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode());
 		$this->footer_links = $wgMemc->get($mKey);
 		if (empty($this->footer_links)) {
 			$this->footer_links = $this->getWikiaFooterLinks();
