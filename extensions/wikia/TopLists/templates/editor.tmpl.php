@@ -23,7 +23,7 @@
 
 		<? if ( !empty( $errors[ 'selected_picture_name' ] ) ) :?>
 			<? foreach( $errors[ 'selected_picture_name' ] as $errorMessage ) :?>
-				<p class="error"><?= $errorMessage ;?></p>
+				<p class="error"><?= htmlspecialchars( $errorMessage ) ;?></p>
 			<? endforeach ;?>
 		<? endif ;?>
 	</div>
@@ -35,7 +35,7 @@
 				value="<?= $listName ;?>"<?= ( !empty( $errors[ 'list_name' ] ) ) ? ' class="error"' : null ;?> />
 			<? if ( !empty( $errors[ 'list_name' ] ) ) :?>
 				<? foreach( $errors[ 'list_name' ] as $errorMessage ) :?>
-					<p class="error"><?= $errorMessage ;?></p>
+					<p class="error"><?= htmlspecialchars( $errorMessage ) ;?></p>
 				<? endforeach ;?>
 			<? endif ;?>
 		<? else :?>
@@ -56,7 +56,7 @@
 
 		<? if ( !empty( $errors[ 'related_article_name' ] ) ) :?>
 			<? foreach( $errors[ 'related_article_name' ] as $errorMessage ) :?>
-				<p class="error"><?= $errorMessage ;?></p>
+				<p class="error"><?= htmlspecialchars( $errorMessage ) ;?></p>
 			<? endforeach ;?>
 		<? endif ;?>
 	</div>
@@ -97,7 +97,7 @@
 
 				<? if ( !empty( $errors[ "item_{$position}" ] ) ) :?>
 					<? foreach( $errors[ "item_{$position}" ] as $errorMessage ) :?>
-						<p class="error"><?=$errorMessage ;?></p>
+						<p class="error"><?= htmlspecialchars( $errorMessage ) ;?></p>
 					<? endforeach ;?>
 				<? endif ;?>
 			</li>
