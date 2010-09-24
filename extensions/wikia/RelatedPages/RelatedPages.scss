@@ -3,8 +3,8 @@
 
 .RelatedPagesModule {
 	@include rail-module;
-
-	float: left;
+	@include clearfix;
+	sfloat: left;
 	margin: {
 		top: 10px;
 		bottom: 10px;
