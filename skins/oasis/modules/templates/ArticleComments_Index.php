@@ -14,9 +14,17 @@
 
 		<div class="session">
 			<?php
-				echo AvatarService::renderAvatar($avatar->getUserName(), 50);
+				// Fail gracefully (use default avatar) for NY code.
+				if(get_class($avatar) == "wAvatar"){
+					$avatarUserName = "";
+					$isLoggedIn = true;
+				} else {
+					$avatarUserName = $avatar->getUserName();
+					$isLoggedIn = $avatar->mUser->isLoggedIn();
+				}
+				echo AvatarService::renderAvatar($avatarUserName, 50);
 
-				if ($avatar->mUser->isLoggedIn()) {
+				if ($isLoggedIn) {
 				// FIXME: wfMsg this
 					// echo "You are Logged in as " . $avatar->mUser->getName(); /** out for now until designer tells gives updates on specs **/
 				} else {
