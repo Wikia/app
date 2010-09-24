@@ -123,7 +123,7 @@ class BodyModule extends Module {
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
-		
+
 		if($namespace == NS_SPECIAL) {
 			if ($wgTitle->isSpecial('Search')) {
 				$railModuleList = array();
@@ -206,7 +206,7 @@ class BodyModule extends Module {
 			return array();
 		}
 		// For now, no modules on Custom namespaces.  Could add a flag to control this.
-		if (is_array($wgExtraNamespacesLocal) && in_array($subjectNamespace, $wgExtraNamespacesLocal)) {
+		if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal)) {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
