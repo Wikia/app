@@ -53,7 +53,7 @@ class ApiRunJob extends ApiBase {
 
 
 		ini_set( "memory_limit", -1 );
-		ini_set( "max_execution_time", 0 );
+		ini_set( "max_execution_time", 600 );
 
 		$params = $this->extractRequestParams();
 		if( !$wgUser->isAllowed( "wikifactory" ) ) { // change to 'runjob' later
@@ -69,7 +69,7 @@ class ApiRunJob extends ApiBase {
 
 		$result = array();
 		foreach( range( 0, $this->maxJobs ) as $counter ) {
-			$job = Job::pop();
+			$job = ( $type ) ? Job::pop_type( $type ) : Job::pop();
 			if( $job ) {
 				$status = $job->run();
 				$result[ "job" ][] = array(
@@ -141,6 +141,9 @@ class ApiRunJob extends ApiBase {
 		return array (
 			'max' => array(
 				ApiBase :: PARAM_TYPE => "integer"
+			),
+			'type' => array(
+				ApiBase :: PARAM_TYPE => "string"
 			)
 		);
 	}
@@ -148,6 +151,7 @@ class ApiRunJob extends ApiBase {
 	public function getParamDescription() {
 		return array (
 			'max' => 'Max jobs done in request, not more than 100, default 1',
+			'type' => 'Type of job, for example refreshLinks2'
 		);
 	}
 
@@ -159,7 +163,9 @@ class ApiRunJob extends ApiBase {
 
 	protected function getExamples() {
 		return array(
-			'api.php?action=runjob&max=5'
+			'api.php?action=runjob',
+			'api.php?action=runjob&max=5',
+			'api.php?action=runjob&max=5&type=refreshLinks2',
 		);
 	}
 
