@@ -60,7 +60,7 @@ class ApiRunJob extends ApiBase {
 			$this->dieUsageMsg( array( 'cantrunjobs' ) );
 		}
 
-		if( isset($params[ "max" ] ) ) {
+		if( isset( $params[ "max" ] ) ) {
 			$max = $params[ "max" ];
 			if( is_numeric( $max ) && $max > 0 && $max <= 100 )  {
 				$this->maxJobs = $max;
@@ -69,7 +69,7 @@ class ApiRunJob extends ApiBase {
 
 		$result = array();
 		foreach( range( 0, $this->maxJobs ) as $counter ) {
-			$job = ( $type ) ? Job::pop_type( $type ) : Job::pop();
+			$job = ( $params[ "type" ] ) ? Job::pop_type( $params[ "type" ] ) : Job::pop();
 			if( $job ) {
 				$status = $job->run();
 				$result[ "job" ][] = array(
