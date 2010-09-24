@@ -23,9 +23,14 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 
 	function execute() {
 
-		global $wgOut, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
-
+		global $wgOut, $wgUser, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
+		
+		 if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+			$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/SignUp.scss"));	
+		}
+		else {
+			$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
+		}
 		if (!array_key_exists('message', $this->data)) {
 			$this->data['message'] = "";
 		}
@@ -105,7 +110,9 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 		<tr class="wpAjaxLoginLine">
 			<td class="wpAjaxLoginInput">
 				<label for='uselang'><?php $this->msg('yourlanguage') ?></label><span>&nbsp;</span>
-	<select style="height:22px;" name="uselang" id="uselang" tabindex="5" >
+				<span class="select-container">
+					<select style="height:22px;" name="uselang" id="uselang" tabindex="5" >
+				</span>
 <?php
 	global $wgLanguageCode;
 
@@ -167,37 +174,39 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 			<td class="wpAjaxLoginInput wpAjaxLoginData" id="wpBirthDateTD">
 				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label>
 				<span><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-				<select name="wpBirthYear" id="wpBirthYear" tabindex="6">
-					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
-					<?php
-					$setYear = $this->data['birthyear'];
-					$maxYear = date('Y');
-					for($year=$maxYear; $year>=1900; $year--) {
-						$selected = $setYear == $year ? ' selected="selected"' : '';
-						echo "\t\t\t\t\t<option value=\"$year\"$selected>$year</option>";
-					}
-					?>
-				</select>
-				<select name="wpBirthMonth" id="wpBirthMonth" tabindex="7">
-					<option value="-1"><?php $this->msg('userlogin-choose-month') ?></option>
-					<?php
-					$setMonth = $this->data['birthmonth'];
-					for($month=1; $month<=12; $month++) {
-						$selected = $setMonth == $month ? ' selected="selected"' : '';
-						echo "\t\t\t\t\t<option value=\"$month\"$selected>$month</option>";
-					}
-					?>
-				</select>
-				<select name="wpBirthDay" id="wpBirthDay" tabindex="8">
-					<option value="-1"><?php $this->msg('userlogin-choose-day') ?></option>
-					<?php
-					$setDay = $this->data['birthday'];
-					for($day=1; $day<=31; $day++) {
-						$selected = $setDay == $day ? ' selected="selected"' : '';
-						echo "\t\t\t\t\t<option value=\"$day\"$selected>$day</option>";
-					}
-					?>
-				</select>
+				<span class="select-container">
+					<select name="wpBirthYear" id="wpBirthYear" tabindex="6">
+						<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
+						<?php
+						$setYear = $this->data['birthyear'];
+						$maxYear = date('Y');
+						for($year=$maxYear; $year>=1900; $year--) {
+							$selected = $setYear == $year ? ' selected="selected"' : '';
+							echo "\t\t\t\t\t<option value=\"$year\"$selected>$year</option>";
+						}
+						?>
+					</select>
+					<select name="wpBirthMonth" id="wpBirthMonth" tabindex="7">
+						<option value="-1"><?php $this->msg('userlogin-choose-month') ?></option>
+						<?php
+						$setMonth = $this->data['birthmonth'];
+						for($month=1; $month<=12; $month++) {
+							$selected = $setMonth == $month ? ' selected="selected"' : '';
+							echo "\t\t\t\t\t<option value=\"$month\"$selected>$month</option>";
+						}
+						?>
+					</select>
+					<select name="wpBirthDay" id="wpBirthDay" tabindex="8">
+						<option value="-1"><?php $this->msg('userlogin-choose-day') ?></option>
+						<?php
+						$setDay = $this->data['birthday'];
+						for($day=1; $day<=31; $day++) {
+							$selected = $setDay == $day ? ' selected="selected"' : '';
+							echo "\t\t\t\t\t<option value=\"$day\"$selected>$day</option>";
+						}
+						?>
+					</select>
+				</span>
 			</td>
 		<?php } ?>
 		</tr>
