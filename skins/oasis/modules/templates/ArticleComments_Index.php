@@ -8,7 +8,7 @@
 
 	<div id="article-comments">
 	<?php
-	if ( $canEdit && !$isBlocked ) {
+	if ( $canEdit && !$isBlocked && $commentingAllowed ) {
 	?>
 		<div id="article-comm-info">&nbsp;</div>
 
@@ -39,13 +39,16 @@
 	?>
 		<p><?= wfMsg('article-comments-comment-cannot-add') ?></p>
 		<p><?= $reason ?></p>
-	<?php } else { ?>
+	<?php } else if (!$canEdit) { ?>
 		<br/>
 		<p><?= wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?> </p>
 	<?php
+		} else if (!$commentingAllowed) { ?>
+		<br/>
+		<p><?= wfMsg('article-comments-comment-cannot-add'); ?> </p>
+	<?php
 		}
 	}
-
 
 	if ($countComments) {
 		echo '<div class="article-comments-pagination upper-pagination"><div>' . $pagination . '</div></div>';

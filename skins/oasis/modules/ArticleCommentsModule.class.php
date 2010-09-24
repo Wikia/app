@@ -15,6 +15,7 @@ class ArticleCommentsModule extends Module {
 	var $pagination;
 	var $countComments;
 	var $countCommentsNested;
+	var $commentingAllowed;
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
@@ -43,6 +44,7 @@ class ArticleCommentsModule extends Module {
 			$this->pagination = $data['pagination'];
 			$this->countComments = $data['countComments'];
 			$this->countCommentsNested = $data['countCommentsNested'];
+			$this->commentingAllowed = $data['commentingAllowed'];
 
 			//echo "<pre>" . print_r($this->avatar, true) . "</pre>";
 
