@@ -1072,6 +1072,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-create-page' => 'Create a new page on this wiki',
 'oasis-section-edit' => 'Edit $1 Section',
 'oasis-popular-blogs-title' => 'Popular Blog <br/>  Posts',
+'oasis-around-wikias-network' => 'Around Wikia\'s Network',
 'themedesigner' => 'Theme Designer',
 
 # Related to ImageSEO RT#55755
