@@ -80,7 +80,7 @@ class PageStatsService extends Service {
 
 			// invalidate cache with number of comments / talk page revisions
 			if ($title->isTalkPage()) {
-				if (self::isArticleCommentsEnabled($title->getSubjectPage())) {
+				if (self::isArticleCommentsEnabled() && ArticleComment::isTitleComment($title)) {
 					// get subject page for this article comment
 					$parts = ArticleComment::explode($title->getText());
 					$title = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
@@ -110,13 +110,15 @@ class PageStatsService extends Service {
 	public function regenerateCommentsCount() {
 		global $wgMemc;
 		$wgMemc->delete($this->getKey('comments6'));
+
+		wfDebug(__METHOD__ . ": page #{$this->pageId}\n");
 	}
 
 	/**
-	 * Checks whether ArticleComments extension is enabled for given title
+	 * Checks whether ArticleComments extension is enabled
 	 */
-	private static function isArticleCommentsEnabled($title) {
-		return class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheckTitle($title);
+	private static function isArticleCommentsEnabled() {
+		return class_exists('ArticleCommentInit');
 	}
 
 	/**
@@ -239,7 +241,7 @@ class PageStatsService extends Service {
 			wfProfileIn(__METHOD__ . '::miss');
 
 			// new comments extension
-			if (self::isArticleCommentsEnabled($title)) {
+			if (self::isArticleCommentsEnabled() && ArticleCommentInit::ArticleCommentCheckTitle($title)) {
 				// get number of article comments
 				$commentList = ArticleCommentList::newFromTitle($title);
 
@@ -411,7 +413,6 @@ class PageStatsService extends Service {
 	 */
 	public function getFirstRevisionTimestamp() {
 		wfProfileIn(__METHOD__);
-
 		global $wgMemc;
 
 		// try to get cached data
@@ -425,6 +426,7 @@ class PageStatsService extends Service {
 			$timestamp = $dbr->selectField('revision', 'rev_timestamp', array('rev_page' => $this->pageId), __METHOD__, array('ORDER BY' => 'rev_timestamp'));
 
 			$timestamp = wfTimestamp(TS_MW, $timestamp);
+			$wgMemc->set($key, $timestamp, self::CACHE_TTL);
 
 			wfProfileOut(__METHOD__ . '::miss');
 		}
