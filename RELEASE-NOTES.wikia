@@ -1,4 +1,5 @@
 == Changes since 201009.3 ==
+* rt#68197: Oasis: on history page add a topic button overs comment bubble icon (macbre)
 * rt#68090: Oasis: photo gallery - add more space around buttons (macbre)
 * new PartnerFeed special page implementation (Jakub)
 * rt#68129: Oasis: Add Search box to edit page (macbre)
