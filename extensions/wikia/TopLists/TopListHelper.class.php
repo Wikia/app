@@ -52,6 +52,42 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Callback for the UserGetRights hook
+	 */
+	public static function onUserGetRights( $user, &$rights ) {
+		global $wgTitle;
+
+		if( $user->isAnon() && $wgTitle instanceof Title && $wgTitle->getNamespace() == NS_TOPLIST ) {
+			$key = array_search( 'edit', $rights );
+
+			if ( $key !== false ) {
+				unset( $rights[ $key ] );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Callback for the getUserPermissionsErrors hook
+	 */
+	public static function onGetUserPermissionsErrors( &$title, &$user, $action, &$result ) {
+		if( $user->isAnon() && $title instanceof Title && $title->getNamespace() == NS_TOPLIST ) {
+			if ( $action == 'edit' ) {
+				$result = false;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 
 	/**
 	 * callback for UnwatchArticleComplete hook
