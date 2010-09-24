@@ -8,7 +8,7 @@
  * Returns formated RSS / Atom Feeds
  */
 
-class PartnerFeed extends SpecialPage {
+class PartnerFeed extends UnlistedSpecialPage {
 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
