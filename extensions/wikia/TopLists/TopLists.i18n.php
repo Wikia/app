@@ -90,7 +90,12 @@ $messages['en'] = array(
 	'toplists-minutes' => '$1 {{PLURAL:$1|minute|minutes}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|hour|hours}}',
 	'toplists-days' => '$1 {{PLURAL:$1|day|days}}',
-	'toplists-weeks' => '$1 {{PLURAL:$1|week|weeks}}'
+	'toplists-weeks' => '$1 {{PLURAL:$1|week|weeks}}',
+
+	//FB connect article vote message
+	'toplists-msg-fb-OnRateArticle-link' => '$ARTICLENAME',
+	'toplists-msg-fb-OnRateArticle-short' =>  'has voted on a Top 10 list on $WIKINAME!',
+	'toplists-msg-fb-OnRateArticle' => '$TEXT'
 );
 
 $messages['qqq'] = array(
