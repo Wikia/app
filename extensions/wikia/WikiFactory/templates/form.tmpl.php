@@ -29,7 +29,7 @@
 	border: 1px solid gray;
 	border-bottom: none;
 }
-#wiki-factory ul.tabs li.active {
+#wiki-factory ul.tabs li.selected {
 	font-weight: bold;
 	padding-bottom: 4px;
 	background-color: #ffffff;
@@ -49,7 +49,7 @@
 	list-style: none;
 }
 
-#wiki-factory .active {
+#wiki-factory .selected {
 	font-weight: bold;
 }
 <?php
@@ -574,22 +574,22 @@ $(function() {
 			$subTags = in_array($tab, array('tags', 'masstags', 'findtags') );
 		?>
 		<ul class="tabs" id="wiki-factory-tabs">
-			<li <?php echo ( $subVariables ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $subVariables ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "variables", ( ($subVariables)?'variables':$tab ), $wiki->city_id ); ?>
 			</li>
-			<li <?php echo ( $tab === "domains" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "domains" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "domains", $tab, $wiki->city_id ); ?>
 			</li>
-			<li <?php echo ( $subTags ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $subTags ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "tags", ( ($subTags)?'tags':$tab ), $wiki->city_id ); ?>
 			</li>
-			<li <?php echo ( $tab === "hubs" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "hubs" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "hubs", $tab, $wiki->city_id ); ?>
 			</li>
-			<li <?php echo ( $tab === "clog" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "clog" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "clog", $tab, $wiki->city_id ); ?>
 			</li>
-			<li <?php echo ( $tab === "close" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "close" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
 			</li>
 		</ul>
@@ -597,14 +597,14 @@ $(function() {
 	if( $subVariables ) {
 ?>
 		<ul class="tabs second-row" id="wiki-factory-tabs-second">
-			<li <?php echo ( $tab === "variables" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "variables" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "variables", $tab, $wiki->city_id, 'variables2' ); ?>
 			</li>
-			<li <?php echo ( $tab === "ezsharedupload" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "ezsharedupload" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "ezsharedupload", $tab, $wiki->city_id ); ?>
 			</li>
 			<?php /* hiding this for now
-			<li <?php echo ( $tab === "eznamespace" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "eznamespace" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "eznamespace", $tab, $wiki->city_id ); ?>
 			</li> */ ?>
 		</ul>
@@ -613,13 +613,13 @@ $(function() {
 	if( $subTags ) {
 ?>
 		<ul class="tabs second-row" id="wiki-factory-tabs-second">
-			<li <?php echo ( $tab === "tags" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "tags" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "tags", $tab, $wiki->city_id, 'tags2' ); ?>
 			</li>
-			<li <?php echo ( $tab === "masstags" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "masstags" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "masstags", $tab, $wiki->city_id ); ?>
 			</li>
-			<li <?php echo ( $tab === "findtags" ) ? 'class="active"' : 'class="inactive"' ?> >
+			<li <?php echo ( $tab === "findtags" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "findtags", $tab, $wiki->city_id ); ?>
 			</li>
 		</ul>
