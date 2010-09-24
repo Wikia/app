@@ -19,42 +19,30 @@ $color-hot_5: #006699;
 	}
 	li {
 		@include clearfix;
-		border-bottom: solid 1px $color-page-border;
-		&:last-child {
-			border-bottom: none;
-			margin-bottom: 0px;
-		}
-		margin: {
-			bottom: 6px;
+		border-top: solid 1px $color-page-border;
+		&:first-child {
+			border-top: none;
 		}
 		div div { /* the rounded-highlighted area */
 			@include border-radius(5px);
-			color: White;
+			color: white;
 			float: left;
 			text-align: center;
-			margin: {
-				bottom: 7px;
-				right: 10px;
-				top: 5px;
-			}
-			padding: {
-				bottom: 3px;
-				left: 15px;
-				right: 15px;
-				top: 0px;
-			}
+			margin:  10px 10px 10px 0;
+			padding: 3px 15px;
+		}
+		big, small {
+			display: inline-block;
+			line-height: 25px;
+			vertical-align: middle;
 		}
 		big {
-			display: inline-block;
-			font-size: 22px !important;
+			font-size: 22px;
 			margin-right: 5px;
 		}
 		span {
 			display: block;
-			padding: {
-				bottom: 7px;
-				top: 3px;
-			}
+			padding: 9px 0;
 		}
 		.hot-spot-severity-1 {
 			background-color: $color-hot_1;
