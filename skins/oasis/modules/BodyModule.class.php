@@ -121,6 +121,8 @@ class BodyModule extends Module {
 
 		$railModuleList = array();
 
+		$spotlightsParams = array('mode'=>'RAIL', 'adslots'=>array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule');
+
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 
@@ -146,7 +148,7 @@ class BodyModule extends Module {
 					1500 => array('Search', 'Index', null),
 					1300 => array('LatestActivity', 'Index', null),
 					1250 => array('LatestPhotos', 'Index', null),
-					1150 => array('Spotlights', 'Index', null),
+					1150 => array('Spotlights', 'Index', $spotlightsParams),
 				);
 			}
 			else {
@@ -172,7 +174,7 @@ class BodyModule extends Module {
 			// add any content page related rail modules here
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
 			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
-			$railModuleList[1150] = array('Spotlights', 'Index', null);
+			$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 		}
 
 		// User page namespaces
@@ -190,7 +192,7 @@ class BodyModule extends Module {
 
 		if (self::isBlogPost() || self::isBlogListing()) {
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
-			$railModuleList[1150] = array('Spotlights', 'Index', null);
+			$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 		}
 
 		// Display comments on content and blog pages

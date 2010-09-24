@@ -40,7 +40,7 @@ var LazyLoadAds = {
 
 	update : function() {
 
-		LazyLoadAds.log("update");
+		//LazyLoadAds.log("update");
 
 		if(LazyLoadAds.lazyLoadAdTops == null) {
 			LazyLoadAds.calculateSlotsOffsets();

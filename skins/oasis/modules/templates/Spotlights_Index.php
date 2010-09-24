@@ -1,22 +1,22 @@
-<section id="WikiaSpotlightsModule">
+<section<? if (!empty($sectionId)) { ?> id="<?= $sectionId ?>"<? } ?>>
 	<header>
 		<? if ($wgSingleH1) { ?>
-		<div class="headline-div">Wikia Spotlights</div>
+		<div class="headline-div"><?= wfMsg($titleMsg) ?></div>
 		<? } else { ?>
-		<h1>Wikia Spotlights</h1>
+		<h1><?= wfMsg($titleMsg) ?></h1>
 		<? } ?>
+		<? if ($mode=='RAIL') { ?>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+		<? } elseif ($mode=='FOOTER') { ?>
+		<?= wfRenderModule('RandomWiki') ?>
+		<? } ?>
 	</header>
 	<ul>
-		<li class="WikiaSpotlight item-1">
-			<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_RAIL_1') ?>
+		<? for ($i=0; $i<$n_adslots; $i++) { ?>
+		<li class="WikiaSpotlight item-<?= $i+1 ?>">
+			<?= AdEngine::getInstance()->getPlaceHolderIframe($adslots[$i]) ?>
 		</li>
-		<li class="WikiaSpotlight item-2">
-			<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_RAIL_2') ?>
-		</li>
-		<li class="WikiaSpotlight item-3">
-			<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_RAIL_3') ?>
-		</li>
+		<? } ?>
 	</ul>
 </section>
