@@ -15,9 +15,9 @@ if (!defined('MEDIAWIKI')) die();
 abstract class CreatePageEditor {
 	var $mTemplate ;
 
-        function CreatePageEditor ($template) {
-        	$this->mTemplate = $template ;
-        }
+	function CreatePageEditor ($template) {
+		$this->mTemplate = $template ;
+	}
 
 	abstract public function GenerateForm () ;
 	abstract public function GlueArticle () ;
@@ -53,7 +53,7 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		} else {
 			$me = CreateMultiPage::multiEditParse (10,10,'?', $content, $optional_sections ) ;
 		}
-                $wgOut->addHTML ("<div id=\"cp-restricted\">") ;
+		$wgOut->addHTML ("<div id=\"cp-restricted\">") ;
 		$wgOut->addHTML ("
 				<div id=\"createpageoverlay\">
 				<div class=\"hd\"></div>
@@ -66,8 +66,13 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		// check for already submitted values - for a preview, for example
 		('' != $wgRequest->getVal ('wpSummary')) ? $summaryval = $wgRequest->getVal ('wpSummary') : $summaryval = '' ;		
 		if ($this->mInitial) {
-                        $watchthischeck = 'checked="checked"' ;
-                        if( $wgUser->getOption( 'minordefault' ) ) {
+			if( $wgUser->getOption( 'watchcreations' ) ) {
+				$watchthischeck = 'checked="checked"' ;
+			} else {
+				$watchthischeck = '' ;
+			}
+
+			if( $wgUser->getOption( 'minordefault' ) ) {
 				$minoreditcheck = 'checked="checked"' ;
 			} else {
 				$minoreditcheck = '' ;
@@ -77,13 +82,13 @@ class CreatePageMultiEditor extends CreatePageEditor {
 			($wgRequest->getCheck ('wpMinoredit')) ? $minoreditcheck = 'checked="checked"' : $minoreditcheck = '' ;			
 		}
 	
-                global $wgRightsText;
-                $copywarn = "<div id=\"editpage-copywarn\">\n" .
-                        wfMsg( $wgRightsText ? 'copyrightwarning' : 'copyrightwarning2',
-                                '[[' . wfMsgForContent( 'copyrightpage' ) . ']]',
-                                $wgRightsText ) . "\n</div>";
+		global $wgRightsText;
+		$copywarn = "<div id=\"editpage-copywarn\">\n" .
+				wfMsg( $wgRightsText ? 'copyrightwarning' : 'copyrightwarning2',
+				'[[' . wfMsgForContent( 'copyrightpage' ) . ']]',
+				$wgRightsText ) . "\n</div>";
 		$wgOut->addWikiText ($copywarn) ;	
-                $editsummary="<span id='wpSummaryLabel'>" . wfMsg ('summary') ."<label for='wpSummary'>:</label></span>\n<input type='text' value=\"" . $summaryval  . "\" name='wpSummary' id='wpSummary' maxlength='200' size='60' /><br />";	
+		$editsummary="<span id='wpSummaryLabel'>" . wfMsg ('summary') ."<label for='wpSummary'>:</label></span>\n<input type='text' value=\"" . $summaryval  . "\" name='wpSummary' id='wpSummary' maxlength='200' size='60' /><br />";	
 
 		$checkboxhtml = '<input id="wpMinoredit" type="checkbox" accesskey="i" value="1" name="wpMinoredit" ' . $minoreditcheck . '/>' . '<label accesskey="i" title="' . wfMsg ('tooltip-minoredit') . ' [alt-shift-i]" for="wpMinoredit">' . wfMsg ('minoredit') . '</label>' ;
 		$checkboxhtml .= '<input id="wpWatchthis" type="checkbox" accesskey="w" value="1" name="wpWatchthis" ' . $watchthischeck . '/>' . '<label accesskey="w" title="' . wfMsg ('tooltip-watch') . ' [alt-shift-w]" for="wpWatchthis">' . wfMsg ('watchthis') . '</label>' ;
@@ -100,8 +105,8 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		// stuff for red links - bottom edittools, to be more precise
 		if ($this->mRedLinked && ($this->mTemplate == 'Blank') ) {
 			$wgOut->addHtml( '<div id="createpage_editTools" class="mw-editTools">' );
-	                $wgOut->addWikiText( wfMsgForContent( 'edittools' ) );
-	                $wgOut->addHtml( '</div>' );
+			$wgOut->addWikiText( wfMsgForContent( 'edittools' ) );
+			$wgOut->addHtml( '</div>' );
 		}
 				
 		$wgOut->addHTML ("</form></div>") ;
@@ -119,7 +124,7 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		} 
 
 		// parse the textarea
-        	$categories_array = preg_split ("/\|/", $categories, -1) ;
+		$categories_array = preg_split ("/\|/", $categories, -1) ;
 		foreach ($categories_array as $category) {
 			if (!empty ($category)) {
 				$text .= "\n[[" . $ns_cat . ":" . $category . "]]" ;
@@ -170,7 +175,7 @@ class CreatePageMultiEditor extends CreatePageEditor {
 
 	function GlueArticle ($preview = false, $render_option = true) {		
 		global $wgRequest, $wgOut ;
-        	$text = '' ;
+		$text = '' ;
 		$infoboxes = array();
 		$categories = array();
 		$optionals = array();
@@ -187,7 +192,7 @@ class CreatePageMultiEditor extends CreatePageEditor {
 			} else if (strpos ($key, "wpTextboxes") !== false) {
 				// check if this was optional				
 				if( !in_array( $key, $optionals ) ) {
-	                        	$text .= "\n" . $value ;
+					$text .= "\n" . $value ;
 				}
 			} else if (strpos ($key, "wpInfoboxPar") !==  false ) {
 				$infoboxes[] = $value ; 				
@@ -297,7 +302,7 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		}
 
 		if (is_array ($all_images)) {
-                	// glue in images, replacing all image tags with content
+			// glue in images, replacing all image tags with content
 			foreach ($all_images as $myimage) {
 				$repl_count = 1 ;
 				if ($myimage != "<!---imageupload--->") {
