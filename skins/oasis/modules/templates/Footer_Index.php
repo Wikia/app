@@ -40,9 +40,9 @@
 <?php } ?>
 
 	<? if ($wgSingleH1) { ?>
-	<div class="headline-div">Around Wikia's Network</div>	
+	<div class="headline-div"><?= wfMsg('oasis-around-wikias-network') ?></div>	
 	<? } else { ?>
-	<h1>Around Wikia's Network</h1>
+	<h1><?= wfMsg('oasis-around-wikias-network') ?></h1>
 	<? } ?>
 	<?= wfRenderModule('RandomWiki') ?>
 	<ul>
