@@ -36,6 +36,8 @@ $wgExtensionMessagesFiles['CategoryGalleries'] = $dir . '/CategoryGalleries.i18n
 $wgHooks['CategoryPageView'][] = 'CategoryGalleriesHelper::onCategoryPageView';
 $wgHooks['CategoryViewer::addPage'][] = 'CategoryGalleriesHelper::onCategoryViewerAddPage';
 $wgHooks['CategoryPage::getCategoryTop'][] = 'CategoryGalleriesHelper::onCategoryPageGetCategoryTop';
+$wgHooks['CategoryService::invalidateTopArticles'][] = 'CategoryGalleriesHelper::onCategoryServiceInvalidateTopArticles';
+$wgHooks['ArticlePurge'][] = 'CategoryGalleriesHelper::onArticlePurge';
 
 // Add parser magic words
 define('CATGALLERY_ENABLED', 'CATGALLERY_ENABLED');

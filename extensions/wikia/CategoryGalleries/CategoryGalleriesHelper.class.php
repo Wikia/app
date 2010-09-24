@@ -51,6 +51,9 @@
 			return true;
 		}
 
+		/**
+		 * Hook entry for removing the magic words from displayed text
+		 */
 		static public function onInternalParseBeforeLinks(&$parser, &$text, &$strip_state) {
 			global $wgRTEParserEnabled;
 			if (empty($wgRTEParserEnabled)) {
@@ -111,6 +114,35 @@
 					}
 				}
 			}
+			return true;
+		}
+
+		/**
+		 * Hook entry for Category Service to invalidate the cache
+		 * Removes entries from memcached
+		 */
+		static public function onCategoryServiceInvalidateTopArticles( $title, $ns ) {
+			if ($ns == NS_MAIN) {
+				$categoryPage = MediaWiki::articleFromTitle($title);
+				$gallery = new CategoryGallery($categoryPage);
+				$gallery->invalidate();
+			}
+
+			return true;
+		}
+
+		/**
+		 * Hook entry when article is purged (purge the gallery cache if purging the category page
+		 */
+		static public function onArticlePurge( Article $article ) {
+			$title = $article->getTitle();
+			$ns = $title->getNamespace();
+
+			if ($ns == NS_CATEGORY) {
+				// Invalidate category service and (by hooks) category gallery cache
+				CategoryService::invalidateTopArticles($title, NS_MAIN);
+			}
+
 			return true;
 		}
 

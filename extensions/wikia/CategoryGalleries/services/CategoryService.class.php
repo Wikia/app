@@ -64,10 +64,15 @@
 		 * @param $pageIds array|int Array of article ids (or single integer to check one article)
 		 * @return array|int
 		 */
-		static protected function fetchPageViewsStats( $pageIds ) {
+		static protected function getPageViews( $pageIds ) {
 			global $wgStatsDB, $wgCityId, $wgDevelEnvironment;;
 
+			if (is_array($pageIds) || empty($pageIds)) {
+				return array();
+			}
+
 			if (empty($wgDevelEnvironment)) {
+				// production version
 				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
 				$res = $dbr->select(
 					array( 'specials.page_views_summary_articles' ),
@@ -82,7 +87,7 @@
 					)
 				);
 			} else {
-				// DevBox fallback because due to lack of functional stats db
+				// devbox version
 				$dbr = wfGetDB( DB_SLAVE );
 				$res = $dbr->select(
 					array( 'page_visited' ),
@@ -122,7 +127,57 @@
 			global $wgDevelEnvironment;
 
 			$articles = array();
-			if (!empty($wgDevelEnvironment)) {
+			if (empty($wgDevelEnvironment)) {
+				// production version
+				$dbr = wfGetDB( DB_SLAVE );
+				$res = $dbr->select(
+					array( 'page', 'categorylinks' ),
+					array( 'page_id', 'page_title', 'page_namespace'  ),
+					array(
+						'cl_to' => $this->dbkey,
+						'page_namespace' => $namespace,
+					),
+					__METHOD__,
+					array(),
+					array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
+				);
+
+				$pages = array();
+				while ($row = $res->fetchObject($res)) {
+					$pages[intval($row->page_id)] = $row;
+				}
+				$pageIds = array_keys($pages);
+
+				$pageViews = self::getPageViews($pageIds);
+				$articles = array();
+				$entries = 0;
+				foreach ($pageViews as $pageId => $views) {
+					if ($entries >= $count)
+						break;
+					$page = $pages[$pageId];
+					$articles[$pageId] = array(
+						'page_id' => $pageId,
+						'page_title' => $page->page_title,
+						'page_namespace' => $page->page_namespace,
+						'views' => $views,
+					);
+					$entries++;
+					unset($pages[$pageId]);
+				}
+				foreach ($pages as $page) {
+					if ($entries >= $count)
+						break;
+					$page->page_id = intval($page->page_id);
+					$articles[$page->page_id] = array(
+						'page_id' => $page->page_id,
+						'page_title' => $page->page_title,
+						'page_namespace' => $page->page_namespace,
+						'views' => 0,
+					);
+					$entries++;
+				}
+			} else {
+				// devbox version
 				$dbr = wfGetDB( DB_SLAVE, 'category' );
 				$res = $dbr->select(
 					array( 'page', 'categorylinks', 'page_visited' ),
@@ -147,38 +202,6 @@
 						'page_title' => $row->page_title,
 						'page_namespace' => $row->page_namespace,
 						'views' => $row->count,
-					);
-				}
-
-			} else {
-				$dbr = wfGetDB( DB_SLAVE );
-				$res = $dbr->select(
-					array( 'page', 'categorylinks' ),
-					array( 'page_id', 'page_title', 'page_namespace'  ),
-					array(
-						'cl_to' => $this->dbkey,
-						'page_namespace' => $namespace,
-					),
-					__METHOD__,
-					array(),
-					array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
-				);
-
-				$pages = array();
-				while ($row = $res->fetchObject($res)) {
-					$pages[intval($row->page_id)] = $row;
-				}
-				$pageIds = array_keys($pages);
-
-				$pageViews = self::fetchPageViewsStats($pageIds);
-				$articles = array();
-				foreach ($pageViews as $pageId => $views) {
-					$page = $pages[$pageId];
-					$articles[$pageId] = array(
-						'page_id' => $pageId,
-						'page_title' => $page->page_title,
-						'page_namespace' => $page->page_namespace,
-						'views' => $views,
 					);
 				}
 			}
@@ -239,7 +262,7 @@
 			$title = $article->getTitle();
 			$ns = $title->getNamespace();
 
-			$views = self::fetchPageViewsStats($id);
+			$views = self::getPageViews($id);
 
 			foreach ($added as $one) {
 				$catTitle = Title::newFromText($one,NS_CATEGORY);
@@ -248,9 +271,11 @@
 				$key = self::getTopArticlesKey($catDBkey, $ns);
 				$data = $wgMemc->get($key);
 				if (is_array($data)) {
-					if ($data['count'] < count($data['articles']) || $data['minimum'] < $views) {
-						$wgMemc->delete($key);
+					if ($data['count'] > count($data['articles']) || $data['minimum'] < $views) {
+						self::invalidateTopArticles($catTitle,$ns);
 					}
+				} else {
+					self::invalidateTopArticles($catTitle,$ns);
 				}
 			}
 
@@ -262,8 +287,10 @@
 				$data = $wgMemc->get($key);
 				if (is_array($data)) {
 					if (array_key_exists($id,$data['articles'])) {
-						$wgMemc->delete($key);
+						self::invalidateTopArticles($catTitle,$ns);
 					}
+				} else {
+					self::invalidateTopArticles($catTitle,$ns);
 				}
 			}
 
@@ -282,7 +309,7 @@
 			$id = $pageid;
 			$ns = $title->getNamespace();
 
-			$views = self::fetchPageViewsStats($id);
+			$views = self::getPageViews($id);
 
 			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->select( 'categorylinks', array( 'cl_to' ),
@@ -300,12 +327,28 @@
 				$data = $wgMemc->get($key);
 				if (is_array($data)) {
 					if (array_key_exists($pageid,$data['articles']) || array_key_exists($redirid,$data['articles'])) {
-						$wgMemc->delete($key);
+						self::invalidateTopArticles($catTitle,$ns);
 					}
+				} else {
+					self::invalidateTopArticles($catTitle,$ns);
 				}
 			}
 
 			return true;
+		}
+
+		/**
+		 * Invalidates top articles cache for given category and namespace
+		 * @param $catTitle Title Category title object
+		 * @param $ns int Namespace index of invalidated top articles data
+		 */
+		static public function invalidateTopArticles( $catTitle, $ns ) {
+			global $wgMemc;
+
+			$catDBkey = $catTitle->getDBKey();
+			$key = self::getTopArticlesKey($catDBkey, $ns);
+			$wgMemc->delete($key);
+			wfRunHooks('CategoryService::invalidateTopArticles',array($catTitle,$ns));
 		}
 
 	}

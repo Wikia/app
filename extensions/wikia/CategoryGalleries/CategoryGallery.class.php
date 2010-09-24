@@ -124,6 +124,13 @@
 		}
 
 		/**
+		 * Builds and returns the memcached key
+		 */
+		protected function getMemcKey() {
+			return wfMemcKey('category-gallery',$this->categoryPage->mTitle->getDBkey(),$this->configHash);
+		}
+
+		/**
 		 * Returns list of top articles (most viewed) in the category
 		 * @return array
 		 */
@@ -239,7 +246,7 @@
 		protected function getData() {
 			global $wgMemc;
 
-			$cacheKey = wfMemcKey('category-gallery',$this->categoryPage->mTitle->getDBkey(),$this->configHash);
+			$cacheKey = $this->getMemcKey();
 			$this->data = $wgMemc->get($cacheKey);
 			if (!is_array($this->data)) {
 				$articles = $this->getArticles();
@@ -269,6 +276,16 @@
 			}
 
 			return $r;
+		}
+
+		/**
+		 * Invalidates the cache for the current category and configuration
+		 */
+		public function invalidate() {
+			global $wgMemc;
+
+			$cacheKey = $this->getMemcKey();
+			$wgMemc->delete($cacheKey);
 		}
 
 	}
