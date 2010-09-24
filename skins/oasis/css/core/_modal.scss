@@ -18,9 +18,15 @@
 		right: 15px;
 		top: 15px;
 	}
-	.modalToolbar,
 	.neutral {
 		background: transparent;
+	}
+	.modalToolbar {
+		background: transparent;
+		margin-top: 1em;
+		a {
+			margin: 0 5px;
+		}
 	}
 	.modal-tabs {
 		border-bottom: none;
