@@ -370,13 +370,10 @@ class SkinChooser {
 		if( $wgRequest->getVal('useskin') == 'oasis' ) {
 			$wgRequest->setVal('useskin', 'monaco');
 		}
-		
-		// TODO: If we keep this longer, give the two groups a shared permission other than 'devcookie' and use that.
+
 		// RT#68169 - only allow useskin=wikia for beta & staff.
 		global $wgUser;
-		$effectiveGroups = $wgUser->getEffectiveGroups();
-		$isStaffOrBeta = (in_array('beta', $effectiveGroups) || in_array('staff', $effectiveGroups));
-		if(( $wgRequest->getVal('useskin') == 'wikia' ) && $isStaffOrBeta) {
+		if(( $wgRequest->getVal('useskin') == 'wikia' ) && $wgUser->isAllowed( 'useskinwikia' )) {
 			$wgRequest->setVal('useskin', 'oasis');
 		}
 		if(!empty($wgForceSkin)) {
