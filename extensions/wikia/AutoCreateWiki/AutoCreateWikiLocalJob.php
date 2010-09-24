@@ -299,9 +299,9 @@ class AutoCreateWikiLocalJob extends Job {
 		 * clear skin cache for rt#63874
 		 * @todo establish what $code is exactly in this case
 		 */
-        $parserMemc->delete( wfMemcKey( 'sidebar',  $wgContLanguageCode ) );
+		$parserMemc->delete( wfMemcKey( 'sidebar',  $wgContLanguageCode ) );
 
-        $parserMemc->delete( wfMemcKey( 'quartzsidebar' ) );
+		$parserMemc->delete( wfMemcKey( 'quartzsidebar' ) );
 		$parserMemc->delete( wfMemcKey( 'navlinks' ) );
 		$parserMemc->delete( wfMemcKey( 'MonacoData' ) );
 		$parserMemc->delete( wfMemcKey( 'MonacoDataOld' ) );
