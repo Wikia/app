@@ -69,7 +69,7 @@ class ApiRunJob extends ApiBase {
 
 		$result = array();
 		foreach( range( 0, $this->maxJobs ) as $counter ) {
-			$job = ( $params[ "type" ] ) ? Job::pop_type( $params[ "type" ] ) : Job::pop();
+			$job = ( isset( $params[ "type" ] ) ) ? Job::pop_type( $params[ "type" ] ) : Job::pop();
 			if( $job ) {
 				$status = $job->run();
 				$result[ "job" ][] = array(
