@@ -18,4 +18,7 @@ We have a brand new look that's soon going live across all of Wikia. In the	mean
 	'landingpage-buttons-about-make-the-move-link' => 'http://www.community.wikia.com/wiki/Transition_guide',
 	'landingpage-buttons-transition-guide' => 'Transition guide',
 	'landingpage-quote' => '...the new look is sleek, stylish, functional, and overall performs very well." - Wikia user with over 2500 edits',
+	'landingpage-facebook-link' => 'http://www.facebook.com/wikia',
+	'landingpage-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
+	'landingpage-twitter-link' => 'http://www.twitter.com/wikia',
 );
