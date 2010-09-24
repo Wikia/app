@@ -236,7 +236,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $wgUser;
+		global $wgSitename, $wgUser, $parserMemc, $wgContLanguageCode;
 
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
@@ -294,6 +294,17 @@ class AutoCreateWikiLocalJob extends Job {
 				}
 			}
 		}
+
+		/**
+		 * clear skin cache for rt#63874
+		 * @todo establish what $code is exactly in this case
+		 */
+        $parserMemc->delete( wfMemcKey( 'sidebar',  $wgContLanguageCode ) );
+
+        $parserMemc->delete( wfMemcKey( 'quartzsidebar' ) );
+		$parserMemc->delete( wfMemcKey( 'navlinks' ) );
+		$parserMemc->delete( wfMemcKey( 'MonacoData' ) );
+		$parserMemc->delete( wfMemcKey( 'MonacoDataOld' ) );
 	}
 
 	/**
@@ -537,20 +548,20 @@ class AutoCreateWikiLocalJob extends Job {
 						$this->wikiaName
 					)
 				);
-				
+
 				$oUserBoard = new UserBoard();
 				$m = $oUserBoard->sendBoardMessage(
 					$oUser->getId(),
 					$oUser->getName(),
-					$this->mFounder->getId(), 
-					$this->mFounder->getName(), 
+					$this->mFounder->getId(),
+					$this->mFounder->getName(),
 					$message
 				);
 			}
 		}
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/**
 	 * send pages from starters to scribe
 	 *
@@ -563,8 +574,8 @@ class AutoCreateWikiLocalJob extends Job {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$pages = array();
-		$oRes = $dbr->select( 
-			array( 'revision' ), 
+		$oRes = $dbr->select(
+			array( 'revision' ),
 			array( 'rev_page as page_id, rev_id, rev_user' ),
 			array( 'rev_page > 0' ),
 			__METHOD__,
@@ -586,7 +597,7 @@ class AutoCreateWikiLocalJob extends Job {
 			# call function
 			$archive = 0;
 			$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
-			
+
 			$pages[$oRow->page_id] = $oRow->rev_id;
 			$loop++;
 		}
@@ -594,5 +605,5 @@ class AutoCreateWikiLocalJob extends Job {
 		Wikia::log( __METHOD__, "info", "send starter revisions to scribe: {$loop} rows" );
 
 		wfProfileOut( __METHOD__ );
-	}	
+	}
 }
