@@ -39,6 +39,7 @@ class ApiRunJob extends ApiBase {
 	 * @access public
 	 */
 	public function __construct( $main, $action ) {
+		self::$messageMap[ "cantrunjobs" ] = array( "code" => "cantrunjobs", 'info' => "You don't have permission to run jobs" );
 		parent :: __construct( $main, $action );
 	}
 
@@ -57,7 +58,7 @@ class ApiRunJob extends ApiBase {
 
 		$params = $this->extractRequestParams();
 		if( !$wgUser->isAllowed( "wikifactory" ) ) { // change to 'runjob' later
-			$this->dieUsageMsg( array( 'cantrunjobs' ) );
+			$this->dieUsageMsg( array( "cantrunjobs" ) );
 		}
 
 		if( isset( $params[ "max" ] ) ) {
