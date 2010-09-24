@@ -117,7 +117,7 @@ class BodyModule extends Module {
 
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal;
 
 		$railModuleList = array();
 
@@ -202,10 +202,13 @@ class BodyModule extends Module {
 
 		// we don't want any modules on these namespaces including talk namespaces (even ad modules) and on edit pages and main pages
 		if (in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage()) {
-			$railModuleList = array();
-
 			wfProfileOut(__METHOD__);
-			return $railModuleList;
+			return array();
+		}
+		// For now, no modules on Custom namespaces.  Could add a flag to control this.
+		if (is_array($wgExtraNamespacesLocal) && in_array($subjectNamespace, $wgExtraNamespacesLocal)) {
+			wfProfileOut(__METHOD__);
+			return array();
 		}
 
 		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
