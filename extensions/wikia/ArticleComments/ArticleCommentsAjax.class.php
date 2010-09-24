@@ -170,9 +170,13 @@ class ArticleCommentsAjax {
 		$page = $wgRequest->getVal( 'page', 1 );
 		$showall = $wgRequest->getText( 'showall', false );
 
+		$result = array(
+			'error' => 1
+		);
+
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
-			return array( 'error' => 1 );
+			return $result;
 		}
 
 		$commentingAllowed = true;
@@ -196,7 +200,6 @@ class ArticleCommentsAjax {
 			}
 		}
 
-		$result = array();
 		if ( $response !== false ) {
 			$status = $response[0];
 			$article = $response[1];
