@@ -106,7 +106,8 @@ function axWFactoryGetVariable() {
 		"accesslevels"  => WikiFactory::$levels,
 		"related"       => $related,
 		"related_pages" => $r_pages,
-		"preWFValues" => $wgPreWikiFactoryValues,
+		"preWFValues"   => $wgPreWikiFactoryValues,
+		'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl()
 	));
 
 	return Wikia::json_encode( array(
