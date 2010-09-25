@@ -1,4 +1,5 @@
 == Changes since 201009.3 ==
+* rt#68331: Oasis: don't show Special:Widgets on Oasis (uberfuzzy)
 * rt#68217: Oasis: blog comments counter not being updated (macbre)
 * rt#68213: Oasis: Hot Spots module to be centered (macbre)
 * rt#68199: Oasis: Community corner line spacing fix (macbre)

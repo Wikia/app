@@ -66,6 +66,7 @@ class WidgetsSpecialPage extends SpecialPage
 	
 		if ( !in_array( $skinname, array('SkinQuartz', 'SkinMonaco')) ) {  
 			$wgOut->addHTML( '<div id="widgets-info" class="plainlinks">' . wfMsgExt('widgets-specialpage-info', 'parse') . '</div>' );
+			return;
 		}
 
 		$wgOut->addWikiMsg('widgets-specialpage-try-dashboard');
