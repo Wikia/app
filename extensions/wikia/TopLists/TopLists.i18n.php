@@ -72,7 +72,7 @@ $messages['en'] = array(
 	'toplists-list-related-to' => 'Related to:',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>vote|$1<br/>votes}}',
 	'toplists-list-created-by' => 'by [[User:$1|$1]]',
-	'toplists-list-vote-up' => 'Vote Up',
+	'toplists-list-vote-up' => 'Vote up',
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vote|votes}} in $2',
 	'toplists-list-add-item-label' => 'Add item',
 	'toplists-list-add-item-name-label' => 'Keep the list going...',
@@ -94,7 +94,7 @@ $messages['en'] = array(
 
 	//FB connect article vote message
 	'toplists-msg-fb-OnRateArticle-link' => '$ARTICLENAME',
-	'toplists-msg-fb-OnRateArticle-short' =>  'has voted on a Top 10 list on $WIKINAME!',
+	'toplists-msg-fb-OnRateArticle-short' =>  'has voted on a Top 10 list on $WIKINAME!', // @todo FIXME: If possible add username as a variable here.
 	'toplists-msg-fb-OnRateArticle' => '$TEXT'
 );
 
