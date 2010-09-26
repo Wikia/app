@@ -129,7 +129,9 @@
 					<p><?php echo $value['description']; ?></p>
 				</div>
 				<p class="blog-jump">
-					<a href="<?php echo $value['page_url'] ?>#blog-comments-ul"><img src="<?= wfBlankImgUrl() ?>" class="sprite talk" /> <span><?php echo wfMsg( 'hub-blog-comments', $value['all_count']) ?></span></a></p>
+					<a href="<?php echo $value['page_url'] ?>#blog-comments-ul"><img src="<?= wfBlankImgUrl() ?>" class="sprite talk" /> <span><?php
+						global $wgLang;
+						echo wfMsgExt( 'hub-blog-comments', 'parsemag', $wgLang->formatNum( $value['all_count']) ) ?></span></a></p>
 					<?php if( $data['is_menager']): ?>
 						<?php if ($value['hide'] ): ?>
 							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=delete" ><?php echo wfMsg('hub-show-feed'); ?></a>
@@ -179,7 +181,9 @@
 			<li class="<?php echo $dspl_type ?> <?php echo $value['hide'] ? 'hide-blog':''; ?>">
 				<div class="page-activity-badge">
 					<div class="page-activity-level-<?php echo $value['level']; ?>">
-						<?php echo wfMsg('hub-editors', $value['all_count']); ?>
+						<?php
+							global $wgLang;
+							echo wfMsgExt('hub-editors', 'parsemag', $wgLang->formatNum( $value['all_count'] ) ); ?>
 					</div>
 				</div>
 				<span class="page-activity-sources">
@@ -238,7 +242,9 @@
 			<li>
 				<?php echo $value['avatar'] ?>
 				<span class="topuser-info h2"><a href="<?php echo $value['userpage'] ?>"><?php echo $value['username'];	?></a></span>
-				<span class="userEditPoints clearfix"><nobr  class="txt"><?php echo wfMsg('hub-topusers-editpoints', $value['all_count']) ?></nobr></span>
+				<span class="userEditPoints clearfix"><nobr  class="txt"><?php
+					global $wgLang;
+					echo wfMsgExt('hub-topusers-editpoints', 'parsemag', $wgLang->formatNum( $value['all_count'] ) ) ?></nobr></span>
 			</li>
 			<?php endforeach; ?>
 		</ul>
