@@ -1623,7 +1623,7 @@ class WikiFactory {
 	 */
 	static public function getTiedVariables( $cv_name ) {
 		$tied = array(
-			"wgExtraNamespacesLocal|wgContentNamespaces|wgNamespacesWithSubpagesLocal|wgNamespacesToBeSearchedDefault"
+			#"wgExtraNamespacesLocal|wgContentNamespaces|wgNamespacesWithSubpagesLocal|wgNamespacesToBeSearchedDefault"
 		);
 		foreach( $tied as $group ) {
 			$pattern = "/\b{$cv_name}\b/";
