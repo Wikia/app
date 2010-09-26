@@ -538,12 +538,14 @@ function axWFactorySaveVariable() {
 				$error++;
 				$return = Wikia::errormsg( "Variable not saved because of problems with database. Try again." );
 			} else {
+				/* the one "set" that used this is now disabled, so disabling the call until needed again
 				$tied = WikiFactory::getTiedVariables( $cv_name );
 				if( $tied ) {
 					$return .= Wikia::successmsg(
 						" This variable is tied with others. Check: ". implode(", ", $tied )
 					);
 				}
+				*/
 				if ( !empty( $tag_name ) ) {
 					// apply changes to all wikis with given tag
 					$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
