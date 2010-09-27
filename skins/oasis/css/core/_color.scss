@@ -66,7 +66,7 @@ $color-article-thumb-border: darken(lighten($color-page, 100%), 15%);
 }
 
 // Headline border
-$color-headline-border: $color-module-shadow;
+$color-headline-border: $color-page-border;
 
 // User pages tabs
 $color-tab-background: $color-page-border;
@@ -88,3 +88,13 @@ $color-notification-details-text: $color-button-text;
 
 //Error handling
 $color-error: #FF3333;
+
+//Diff and History pages
+$color-pagehistory: darken($color-page, 5%);
+@if lightness($color-page) < 50 {
+	$color-pagehistory: lighten($color-page, 15%);
+}
+$color-diff-context: darken($color-page, 5%);
+@if lightness($color-page) < 50 {
+	$color-diff-context: lighten($color-page, 15%);
+}

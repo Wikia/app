@@ -248,7 +248,7 @@ td.os-suggest-result-hl {
     margin-right: 0.2em;
 }
 #pagehistory span.minor { font-weight: bold; }
-#pagehistory li { border: 1px solid white; }
+#pagehistory li { margin: 1px; }
 #pagehistory li.selected {
     background-color: #f9f9f9;
     border: 1px dashed #aaa;
