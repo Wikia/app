@@ -20,6 +20,7 @@
 		var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
 		var wgServer = <?= Xml::encodeJSVar($wgServer) ?>;
 		var wgScript = <?= Xml::encodeJSVar($wgScript) ?>;
+		var wgStyleVersion = <?= Xml::encodeJSVar($wgStyleVersion) ?>;
 	</script>
 
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js"></script>

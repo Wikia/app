@@ -3,6 +3,7 @@ $color-body: get_command_line_param("color-body", #BACDD8);					// default: ligh
 $color-page: get_command_line_param("color-page", #FFF);						// default: white
 $color-buttons: get_command_line_param("color-buttons", #006CB0);		// default: blue
 $color-links: get_command_line_param("color-links", #006CB0);				// default: blue
+$color-header: get_command_line_param("color-header", #3A5766);			// default: blue
 $background-image: get_command_line_param("background-image", "http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png"); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
 $background-align: get_command_line_param("background-align", center);
 $background-tiled: get_command_line_param("background-tiled", true);
@@ -16,12 +17,6 @@ $color-text: #4E4E4E;
 }
 
 // GlobalHeader
-//light colors (default)
-$color-header: saturate(mix($color-body, #000, 40%), 20%);
-@if lightness($color-body) < 50 {
-	$color-header: saturate(mix($color-body, #000, 80%), 20%);
-}
-
 $color-header-alt: mix($color-header, #000, 25%);
 $color-header-text: white;
 @if lightness($color-header) > 75 {
