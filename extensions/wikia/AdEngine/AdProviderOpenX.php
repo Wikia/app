@@ -14,6 +14,8 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		return self::$instance;
 	}
 
+	protected static $adSlotInLazyLoadGroup = array();
+
 	// TODO, get these out of code and configurable
 	private $zoneIds = array(
 		'FOOTER_SPOTLIGHT_LEFT' => 3,
@@ -69,7 +71,9 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 			return $nullAd->getAd($slotname, $slot);
 		}
 
-		$fillElemFunctionPrefix = AdEngine::fillElemFunctionPrefix;
+		if (!empty(self::$adSlotInLazyLoadGroup[$slotname])) {
+			return $this->getAdPlaceholder($slotname, false);
+		}
 
 		if ($wgEnableOpenXSPC) {
 			$adtag = <<<EOT
@@ -86,30 +90,16 @@ EOT;
 			$adtag = '';
 
 			if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
-				$adtag .= '<div class="'.AdEngine::lazyLoadAdClass.'" id="'.$slotname.'"></div>';
+				$adtag .= $this->getAdPlaceholder($slotname, true);
 			}
 
-			$adUrlScript = $this->getAdUrlScript($slotname, $params);
-			$adUrlScript = str_replace("\n", " ", $adUrlScript);
 			$adtag .= <<<EOT
-<!-- AdProviderOpenX slot: $slotname zoneid: $zoneId  -->
 <script type='text/javascript'>/*<![CDATA[*/
-	document.write('<scr'+'ipt type="text/javascript">');
-	document.write('$adUrlScript');
-	document.write('</scr'+'ipt>');
 EOT;
+			$adtag .= $this->getAdUrlScripts(array($slotname), array($zoneId), $params);
 			if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
-				$fill_elem_script = <<<EOT
-	{$fillElemFunctionPrefix}{$slotname} = function () {
-		bezen.domwrite.capture();
-		var parent = document.getElementById("{$slotname}"); 
-		bezen.load.script(parent, base_url_{$slotname}, function(){
-			bezen.domwrite.render(parent);
-		});
-		/* bezen.domwrite.restore(); */
-	};
-EOT;
-				$fill_elem_script = str_replace("\n", ' ', $fill_elem_script);
+				$functionName = AdEngine::fillElemFunctionPrefix . $slotname;
+				$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, array($slotname));
 				$adtag .= <<<EOT
 	document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
 /*]]>*/</script>
@@ -125,6 +115,124 @@ EOT;
 
 		return $adtag;
 
+	}
+
+	public function getAdPlaceholder($slotname, $useLazyLoadAdClass=true) {
+		$html = '<div ';
+		if ($useLazyLoadAdClass) {
+			$html .= 'class="'.AdEngine::lazyLoadAdClass.'" ';
+		}
+		$html .= 'id="'.$slotname.'"></div>';
+		return $html;
+	}
+
+	/**
+	 * call to this method must precede calls to getAd()
+	 */
+	public function getLazyLoadableAdGroup($adGroupName, Array $slotnames, $params=null) {
+		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+
+		if (empty($wgEnableAdsLazyLoad) || empty($this->enable_lazyload)) {
+			return '';
+		}
+
+		$n_slotnames = sizeof($slotnames);
+		if (!$n_slotnames) {
+			return '';
+		}
+
+		$zoneIds = array();
+		foreach ($slotnames as $slotname) {
+			$zoneId = $this->getZoneId($slotname);
+			if(empty($zoneId)){
+				return '';
+			}
+			elseif (empty($wgAdslotsLazyLoad[$slotname])) {
+				return '';
+			}
+			else {
+				$zoneIds[] = $zoneId;
+			}
+		}
+
+		$adtag = <<<EOT
+<script type='text/javascript'>/*<![CDATA[*/
+EOT;
+		// urls of scripts for slots
+		$adtag .= $this->getAdUrlScripts($slotnames, $zoneIds, $params);
+		// fillElem function definitions
+		$functionName = AdEngine::fillElemFunctionPrefix . $adGroupName;
+		$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, $slotnames);
+		$adtag .= <<<EOT
+	document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
+/*]]>*/</script>
+EOT;
+
+		// leave marker that these slots are in a lazy load group. 
+		// getAd() will use these markers
+		foreach ($slotnames as $slotname) {
+			self::$adSlotInLazyLoadGroup[$slotname] = true;
+		}
+
+		return $adtag;
+	}
+	
+	private function getAdUrlScripts($slotnames, $zoneIds, $params) {
+		$n_slotnames = sizeof($slotnames);
+		$adtag = <<<EOT
+	document.write('<scr'+'ipt type="text/javascript">');
+EOT;
+		for ($i=0; $i<$n_slotnames; $i++) {
+			$slotname =& $slotnames[$i];
+			$adUrlScript = $this->getAdUrlScript($slotname, $params);
+			$adUrlScript = str_replace("\n", " ", $adUrlScript);
+			$adtag .= <<<EOT
+<!-- AdProviderOpenX slot: $slotname zoneid: {$zoneIds[$i]}  -->
+	document.write('$adUrlScript');
+EOT;
+		}
+
+		$adtag .= <<<EOT
+	document.write('</scr'+'ipt>');
+EOT;
+
+		return $adtag;
+	}
+
+	private function getFillElemFunctionDefinition($functionName, Array $slotnames) {
+		$fill_elem_script = <<<EOT
+	{$functionName} = function () {
+		bezen.domwrite.capture();
+EOT;
+		$fill_elem_script .= $this->getBezenLoadScriptDefinition($slotnames);
+		$fill_elem_script .= <<<EOT
+	};
+EOT;
+		$fill_elem_script = str_replace("\n", ' ', $fill_elem_script);
+
+		return $fill_elem_script;
+	}
+
+	private function getBezenLoadScriptDefinition(Array $slotnames) {
+		$script = '';
+
+		if (!is_array($slotnames) || !sizeof($slotnames)) {
+			return $script; 
+		}
+
+		$slotname = array_shift($slotnames);
+
+		$script .= <<<EOT
+		var parent_{$slotname} = document.getElementById("{$slotname}"); 
+		bezen.load.script(parent_{$slotname}, base_url_{$slotname}, function(){
+			bezen.domwrite.render(parent_{$slotname}, function (){
+EOT;
+		$script .= $this->getBezenLoadScriptDefinition($slotnames);
+		$script .= <<<EOT
+			});
+		});
+EOT;
+		return $script;
 	}
 
 	public function getZoneId($slotname){
@@ -196,7 +304,6 @@ EOT;
 	base_url += "&dbname=" + wgDB;
 	base_url += "&tags=" + wgWikiFactoryTagNames.join(",");
 	base_url += "{$additional_params}";
-	base_url += "&block=1";
 EOT;
 
 		if (!empty($slotname)) {
@@ -214,6 +321,10 @@ EOT;
 	base_url += "&id=$affiliate_id";
 EOT;
 		}
+		
+		$adUrlScript .= <<<EOT
+	base_url += "&block=1";
+EOT;
 		
 		return $adUrlScript;
 	}

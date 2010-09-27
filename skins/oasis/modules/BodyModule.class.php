@@ -121,11 +121,11 @@ class BodyModule extends Module {
 
 		$railModuleList = array();
 
-		$spotlightsParams = array('mode'=>'RAIL', 'adslots'=>array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule');
+		$spotlightsParams = array('mode'=>'RAIL', 'adslots'=>array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule', 'adGroupName'=>'SPOTLIGHT_RAIL');
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
-
+		
 		if($namespace == NS_SPECIAL) {
 			if ($wgTitle->isSpecial('Search')) {
 				$railModuleList = array();
