@@ -427,7 +427,7 @@ class SkinChooser {
 			}
 		} else {
 			$userSkin = self::getUserOption('skin');
-			if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' )) {
+			if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'useskinwikia' )) {
 				$userSkin = 'monaco';
 			}
 
