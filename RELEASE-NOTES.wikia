@@ -1,5 +1,5 @@
 == Changes since 201009.5 ==
-*
+* rt#68421: Oasis: contentSub is missing (macbre)
 
 == Changes since 201009.4 ==
 * rt#68331: Oasis: don't show Special:Widgets on Oasis (uberfuzzy)
