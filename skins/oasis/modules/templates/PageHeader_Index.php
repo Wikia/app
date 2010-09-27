@@ -14,7 +14,7 @@
 		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
 	}
 
-	// render subtitle
+	// render page type line
 	if ($subtitle != '') {
 ?>
 	<h2><?= $subtitle ?></h2>
@@ -47,3 +47,10 @@
 	}
 ?>
 </header>
+<?php
+	if ($contentsub != '') {
+?>
+<div id="contentSub"><?= $contentsub ?></div>
+<?php
+	}
+?>

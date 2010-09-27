@@ -12,6 +12,7 @@ class PageHeaderModule extends Module {
 	var $content_actions;
 	var $displaytitle;
 	var $title;
+	var $contentsub;
 
 	var $action;
 	var $actionName;
@@ -290,7 +291,11 @@ class PageHeaderModule extends Module {
 				break;
 
 			case NS_SPECIAL:
+				// show contentSub links on special pages (RT #68421)
+				$this->contentsub = $this->subtitle;
+
 				$this->subtitle = wfMsg('oasis-page-header-subtitle-special');
+
 				// special case for wiki activity page
 				if ($wgTitle->isSpecial('WikiActivity')) {
 					$this->subtitle = View::specialPageLink('RecentChanges', 'oasis-page-header-subtitle-special-wikiactivity');
