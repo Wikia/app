@@ -592,6 +592,15 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('', $moduleData['title']);
 		$this->assertEquals('', $moduleData['subtitle']);
 
+		// ThemeDesigner (preview page)
+		$wgTitle = Title::newFromText('ThemeDesignerPreview', NS_SPECIAL);
+
+		$moduleData = Module::get('PageHeader')->getData();
+
+		$this->assertType('array', $moduleData['revisions']);
+		$this->assertType('array', $moduleData['categories']);
+		$this->assertType('int', $moduleData['comments']);
+
 		// edit page
 		$wgRequest->setVal('action', 'edit');
 		$wgTitle = Title::newFromText('Foo', NS_TALK);
