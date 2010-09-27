@@ -2,6 +2,8 @@
 
 class NavigationService {
 
+	const version = '0.01';
+
 	private $biggestCategories;
 
 	private $lastExtraIndex = 1000;
@@ -23,7 +25,7 @@ class NavigationService {
 		$useCache = $wgLang->getCode() == $wgContLang->getCode();
 
 		if($useCache) {
-			$cacheKey = wfMemcKey($messageName);
+			$cacheKey = wfMemcKey($messageName, self::version);
 			$nodes = $wgMemc->get($cacheKey);
 		}
 
