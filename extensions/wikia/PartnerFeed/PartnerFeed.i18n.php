@@ -13,7 +13,7 @@ $messages = array();
  * @return array
  */
 $messages['en'] = array(
-	'partnerfeed'               => 'Partner feed'
+	'partnerfeed'               => 'Partner feed',
 	'error-no-article'          => 'Error: No "article" param passed',
 	'feed-title-blogposts'      => 'Recent blog posts',
 	'feed-title-recent-badges'  => 'Recent badges',
