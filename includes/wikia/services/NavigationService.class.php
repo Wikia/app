@@ -17,7 +17,7 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseMessage($messageName, $maxChildrenAtLevel = array()) {
+	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration) {
 		wfProfileIn( __METHOD__ );
 
 		global $wgLang, $wgContLang, $wgMemc;
@@ -34,7 +34,7 @@ class NavigationService {
 			$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
 
 			if($useCache) {
-				$wgMemc->set($cacheKey, $nodes);
+				$wgMemc->set($cacheKey, $nodes, $duration);
 			}
 		}
 
