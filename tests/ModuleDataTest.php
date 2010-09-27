@@ -792,6 +792,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 	function testPopularBlogPostsModule() {
 		$moduleData = Module::get('PopularBlogPosts')->getData();
+		print_r($moduleData['Body']);
 		$this->assertRegExp('/No posts found/', $moduleData['body']);
 	}
 
