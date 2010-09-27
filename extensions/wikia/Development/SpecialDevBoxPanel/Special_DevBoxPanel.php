@@ -52,7 +52,12 @@ $wgExtensionCredits['specialpage'][] = array(
 define('DEVBOX_DEFAULT_WIKI_DOMAIN', 'devbox.wikia.com');
 
 function wfSetupDevBoxPanel() {
-	global $IP, $wgMessageCache;
+	global $IP, $wgMessageCache, $wgCommandLineMode;
+
+	// macbre: don't run code below when running in command line mode (memcache starts to act strange)
+	if (!empty($wgCommandLineMode)) {
+		return true;
+	}
 
 	require_once($IP . '/includes/SpecialPage.php');
 	SpecialPage::addPage(new SpecialPage('DevBoxPanel', 'devboxpanel', true, 'wfDevBoxPanel', false));
@@ -249,24 +254,24 @@ function getHtmlForSvnTool() {
 		$group = posix_getgrgid(posix_getegid());
 		$errors[] = "Incorrect file ownership.  To fix, run:<br><code>sudo chgrp -R ".$group['name']." $base_path</code>";
 	}
-	
+
 	$perms = fileperms($base_path);
 	if (!($perms & 0x0010)) {
 		$errors[] = "Incorrect file permissions. To fix, run:<br><code>sudo chmod -R g+w $base_path</code>";
 	}
-	
+
 	$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$data = shell_exec("svn info ".dirname(dirname(dirname(dirname(dirname( __FILE__ ))))));
-	
+
 	foreach (split("\n", $data) as $line) {
 		if (empty($line)) continue;
 		list($k, $v) = split(": ", $line);
 		$info{$k} = $v;
 	}
-	
+
 	$data = shell_exec("svn list https://svn.wikia-code.com/wikia/branches/");
 	$branches = array_map(create_function('$v', 'return rtrim($v, "/");'), split("\n", $data));
-	
+
 	$tmpl->set_vars(array(
 						"svnUrl"     => $info{'URL'},
 						"svnUpdated" => $info{'Last Changed Date'},
