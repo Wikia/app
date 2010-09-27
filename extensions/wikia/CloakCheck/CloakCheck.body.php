@@ -67,7 +67,7 @@ class CloakCheck extends SpecialPage {
 		$wgOut->addHTML("<form action=\"". $this->mTitle->getFullURL() ."\" method='post'>\n");
 		
 		if( $this->isStaff ) {
-			$wgOut->addHTML( wfMsg('cloakcheck-form-username') . ": <input name='username' value=\"". htmlspecialchars($this->mTarget) ."\" />\n");
+			$wgOut->addHTML( wfMsg('cloakcheck-form-username') . " <input name='username' value=\"". htmlspecialchars($this->mTarget) ."\" />\n");
 			$wgOut->addHTML("<input type='submit' value='". wfMsg('cloakcheck-form-check') ."' />\n");
 		} else {
 			$wgOut->addHTML("<input type='submit' value='". wfMsg('cloakcheck-form-check-self') ."' />\n");
