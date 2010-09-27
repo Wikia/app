@@ -32,7 +32,7 @@ CreatePage.openDialog = function(e, titleText) {
 		$().getModal(
 			wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog',
 			'#CreatePageDialog', {
-					width: 400,
+					width: CreatePageDialogWidth,
 					callback: function() {
 						CreatePageEnabled = false;
 						CreatePage.track( 'open' );

@@ -15,11 +15,11 @@
 				</div>
 				<ul id="CreatePageDialogChoices">
 					<? foreach( $options as $name => $params ) :?>
-						<li id="CreatePageDialog<?= ucfirst( $name ) ;?>Container" class="chooser">
+						<li id="CreatePageDialog<?= ucfirst( $name ) ;?>Container" class="chooser" <?= ( $params[ 'width' ] ) ?  "style=\"width: {$params[ 'width' ]}\"" : null ;?>">
 							<div>
 								<input type="radio" name="wpCreatePageChoices" id="CreatePageDialog<?= ucfirst( $name ) ;?>" value="<?= $name ;?>" />
 								<label for="CreatePageDialog<?= ucfirst( $name ) ;?>">
-									<?= $params[ 'label' ] ;?>
+									<?= wfMsg( $params[ 'label' ] ) ;?>
 									<img src="<?= $params[ 'icon' ] ;?>" />
 								</label>
 							</div>
