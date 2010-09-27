@@ -1,4 +1,4 @@
-<? if ($wgShowAds) { ?>
+<? if (!$wgNoExternals) { ?>
 <section<? if (!empty($sectionId)) { ?> id="<?= $sectionId ?>"<? } ?>>
 	<header>
 		<? if ($wgSingleH1) { ?>
