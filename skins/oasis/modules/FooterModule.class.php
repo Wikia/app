@@ -65,40 +65,12 @@ class FooterModule extends Module {
 			$this->showFollow = true;
 			$this->showMyTools = true;
 
-		} else if($namespace == NS_USER) {
-
-			// user page
-
-			$this->showLike = true;
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		} else if(false) {
-
-			// main page
-
-			$this->showLike = true;
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
 		} else if($namespace == NS_USER_TALK) {
 
 			// user talk page
 
 			$this->showFollow = true;
 			$this->showMyTools = true;
-
-		} else if($namespace == NS_CATEGORY) {
-
-			// category page
-
-			$this->showLike = true;
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
 
 		} else if(defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) {
 
@@ -134,18 +106,14 @@ class FooterModule extends Module {
 			$this->showFollow = true;
 			$this->showMyTools = true;
 
-		} else if($namespace == NS_MEDIAWIKI) {
-
-			// mediawiki pages
-
-			$this->showLike = true;
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
+		//} else if($namespace == NS_MEDIAWIKI || $namespace == NS_CATEGORY || $namespace == NS_MAIN || $namespace == NS_USER) {
 		} else {
 
 			// default
+			// main page
+			// user pages
+			// category pages
+			// mediawiki pages
 
 			$this->showLike = true;
 			$this->showShare = true;
