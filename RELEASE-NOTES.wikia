@@ -13,6 +13,7 @@
 * rt#68129: Oasis: Add Search box to edit page (macbre)
 * rt#68125: Oasis: Add delete to Blog Post Edit dropdown (macbre)
 * rt#68048: Domain name list not styled in Oasis (macbre)
+* new Top 10 List extension available (federico, adi)
 
 == Changes since 201009.3 ==
 * rt#67691: Cross Domain XML for RSS Feeds (Nef)
