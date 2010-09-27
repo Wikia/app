@@ -26,7 +26,7 @@ $messages['en'] = array(
 	'feed-title-blogcomments'   => 'Comments to $1',
 );
 
-$messages['en'] = array(
+$messages['qqq'] = array(
 	'blog-posts-from-listing' => 'Parameters:
 * $1 is a link to a listing with the listing page title as link description.',
 	'feed-title-hot-content'    => 'Parameters:
