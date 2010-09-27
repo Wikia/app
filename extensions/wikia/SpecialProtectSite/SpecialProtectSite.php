@@ -57,7 +57,12 @@ if( empty( $wgProtectsiteDefaultTimeout ) ) {
  */
 function wfSetupProtectsite() {
 	/* Globals */
-	global $wgUser, $wgGroupPermissions, $wgVersion, $wgMemc, $wgProtectsiteExempt;
+	global $wgUser, $wgGroupPermissions, $wgVersion, $wgMemc, $wgProtectsiteExempt, $wgCommandLineMode;
+
+	// macbre: don't run code below when running in command line mode (memcache starts to act strange)
+	if (!empty($wgCommandLineMode)) {
+		return;
+	}
 
 	/* Initialize Object */
 	$persist_data = new MediaWikiBagOStuff();
@@ -98,7 +103,7 @@ function wfSetupProtectsite() {
 		$wgGroupPermissions['user']['upload'] = !($prot['upload'] == 1);
 		$wgGroupPermissions['user']['reupload'] = !($prot['upload'] == 1);
 		$wgGroupPermissions['user']['reupload-shared'] = !($prot['upload'] == 1);
-		
+
 		// are there any groups that should not get affected by Protectsite's lockdown?
 		if( !empty($wgProtectsiteExempt) && is_array($wgProtectsiteExempt) ) {
 			//there are, so loop over them, and force these rights to be true
