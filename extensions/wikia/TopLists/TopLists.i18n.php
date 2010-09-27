@@ -83,7 +83,7 @@ $messages['en'] = array(
 
 	//watchlist emails
 	'toplists-email-subject' => 'A Top 10 list has been changed',
-	'toplists-email-body' => "The Top 10 list page $1 that you're watching has been changed.\n\n $2",
+	'toplists-email-body' => "Hello from Wikia!\n\nThe list <a href=\"$1\">$2</a> on Wikia has been changed.\n\n $3\n\nHead to Wikia to checkout the changes! $1\n\n- Wikia\n\nYou can <a href=\"$4\">unsubscribe</a> from changes to the list.",
 
 	//time
 	'toplists-seconds' => '$1 {{PLURAL:$1|second|seconds}}',

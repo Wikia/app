@@ -105,7 +105,7 @@ class TopListHelper {
 			$parentTitle = Title::newFromText( $parentTitleText, NS_TOPLIST );
 
 			$params[ '$ARTICLE_OBJ' ] = new Article( $parentTitle );
-			
+
 			$params[ '$ARTICLE_URL' ] = $parentTitle->getFullURL("ref=fbfeed&fbtype=ratearticle");
 			$params[ '$ARTICLENAME' ] = $parentTitle->getText();
 
@@ -226,8 +226,8 @@ class TopListHelper {
 
 		if( ( $title instanceof Title )  && ( $title->getNamespace() == NS_TOPLIST ) ) {
 			wfLoadExtensionMessages( 'TopLists' );
-			$summary = strtr( TOPLISTS_STATUS_SEPARATOR, "\n", $keys['$PAGESUMMERY'] );
-			$body = wfMsg( 'toplists-email-body', array( $title->getFullUrl(), $summary ) );
+			$summary = strtr( TOPLISTS_STATUS_SEPARATOR, "\n", $keys['$PAGESUMMARY'] );
+			$body = wfMsg( 'toplists-email-body', array( $title->getFullUrl(), $title->getText(), $summary, $title->getFullUrl( 'action=unwatch' ) ) );
 		}
 
 		wfProfileOut( __METHOD__ );
