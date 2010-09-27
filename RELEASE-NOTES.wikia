@@ -1,4 +1,5 @@
 == Changes since 201009.5 ==
+* rt#68286: Oasis: Theme designer not showing full theme (macbre)
 * rt#68421: Oasis: contentSub is missing (macbre)
 
 == Changes since 201009.4 ==
