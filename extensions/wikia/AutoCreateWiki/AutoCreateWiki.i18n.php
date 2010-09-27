@@ -1818,15 +1818,20 @@ $2さんの会話ページ <$5> に、利用にあたっての情報などを追
 $3
 コミュニティ・チーム
 <http://www.wikia.com/wiki/User:$4>',
-	'autocreatewiki-welcometalk' => '$1さん、$4の申請ありがとうございます。
+	'autocreatewiki-welcometalk' => "== ようこそ！ ==
+<div style=\"font-size:120%; line-height:1.2em;\">こんにちは、\$1さん。'''\$4'''がウィキアのコミュニティーの一部になったこと、とても嬉しく思います！
 
-ウィキを開始するというのはとても大変ですが、もし、何か困ったことがあったら、是非とも[[w:Community Team|ウィキアのコミュニティチーム]]までどうぞ。利用者向けガイドもいくつかこのウィキにありますので、是非とも御覧ください。サイトデザインやコンテンツの作り方に迷ったら、[[w:c:ja:プロジェクトポータル|ウィキアの他のプロジェクト]]をチェックして見てください。ウィキア全体がその良い参考例になるはずです。
-* まずは、良いウィキを作るために[[w:c:ja:Help:ウィキの開始|ウィキを開始するにあたってのアドバイス]]を御覧ください。
-* また、それらをまとめた[[w:c:ja:Help:良いウィキを作るコツ|ウィキを作るコツ]]も御覧になってください。
-* ウィキ自体が初めてなら、[[w:c:ja:Help:FAQ|FAQ]]もあります。
-ウィキア自体のヘルプを[[w:c:ja:Help:トップページ|日本語でまとめています]]ので、詳細な情報はこちらを御覧ください。相談ごとは、[[Special:Contact|連絡用ページ]]からどうぞ。IRCチャンネルの #wikia-ja で、他の利用者とコンタクトすることもできます。是非とも御利用ください。
+既に、自身のお気に入りの話題に関して、ウェブサイト全体をいっぱいにするだけの情報や画像、動画をお持ちでしょう。しかし現在、空白のページが目の前にあります・・・。不安ですね？ここに、始めるための、いくつかの方法があります。
 
-それでは、今後とも、よろしくお願いします。--[[User:$2|$3]] <staff />',
+* '''話題に関する紹介'''を、フロントページに追加してください。ここは、読者に対して、話題が何についてであるかを説明する機会となっています。望むだけ書いてください！この説明は、サイト上のすべての重要なページからリンクさせることができます。
+
+* '''新しいページを開始''' -- 開始には、単純な1-2行で、十分です。空白のページから目を背けないように！ウィキは、やりたいように追加や変更をするものです。ページをよりおもしろいものにするために、画像や動画を追加することもできます。
+
+そして、これらをどんどん続けて言ってください！人々は、読んだり見たりするものがたくさんウィキを訪問し好きになります。ですから、内容を追加し続けていれば、読者あるいは編集者を惹きつけることができるでしょう。やるべきことはたくさんありますが、心配しないでください -- 今日は初日で、これから十分な時間があります。どのウィキも同じ方法ではじまったのです -- 一度に少しずつ、最初は少ないページではじまり、そのウィキは巨大で忙しいサイトになったのです。
+
+もし質問がありましたら、[[Special:Contact|連絡フォーム]]から電子メールをお使いください。では、楽しんでください！
+
+-- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => '新しいウィキ',
 	'newwikisstart' => '次の文字列から始まるウィキを表示:',
 	'autocreatewiki-reminder-body' => '$1 さん、
@@ -2043,7 +2048,7 @@ $messages['nl'] = array(
 	'autocreatewiki-remember' => 'Aanmeldgegevens onthouden',
 	'autocreatewiki-create-account' => 'Registreren',
 	'autocreatewiki-done' => 'volbracht',
-	'autocreatewiki-error' => 'error',
+	'autocreatewiki-error' => 'fout',
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,nl,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Hebt u al een Wikia-gebruiker?',
 	'autocreatewiki-success-title-default' => 'U wiki is aangemaakt!',
@@ -2832,7 +2837,7 @@ $messages['pt-br'] = array(
 	'autocreatewiki-info-category-answers' => 'Isto ajudará os visitantes a encontrar o seu site de Respostas.',
 	'autocreatewiki-info-language' => 'Esse irá ser o idioma padrão para os visitantes da sua wiki.',
 	'autocreatewiki-info-email-address' => 'Seu e-mail nunca é mostrado para ninguém no Wikia.',
-	'autocreatewiki-info-realname' => 'Se você optar por preencher este valor, ele vai ser usado para lhe dar uma atribuição pelo seu trabalho.',
+	'autocreatewiki-info-realname' => 'Se você optar por preenchê-lo, este será utilizado para dar-lhe crédito pelo seu trabalho.',
 	'autocreatewiki-info-birthdate' => 'O Wikia exige que todos os usuários providam suas verdadeiras datas de nascimento como uma medida de segurança e para preservar a integridade do site, mantendo a conformidade com os regulamentos federais.',
 	'autocreatewiki-info-blurry-word' => 'Para ajudar a proteger o site contra a criação automática de contas, por favor digite a palavra borrada que você vê dentro deste campo.',
 	'autocreatewiki-info-terms-agree' => 'Ao criar uma wiki e uma conta de usuário, você está concordando com os <a href="http://www.wikia.com/wiki/Terms_of_use">Termos de Uso do Wikia</a>',

@@ -353,7 +353,7 @@ Mar plij kemmit danvez an diverradenn.',
 	'pr_view_all' => 'Diskouez an holl danevelloù',
 	'pr_view_staff' => 'Diskouez an danevelloù evit pere ez eus ezhomm sikour ar staff',
 	'pr_raports_from_this_wikia' => 'Gwelet danevelloù ar Wikia-mañ hepken',
-	'pr_reports_from' => 'An danevelloù abaoe: $1',
+	'pr_reports_from' => 'An danevelloù abaoe : $1 nemetken',
 	'pr_no_reports' => "N'eus danevell ebet o klotañ gant ho tezverkoù",
 	'pr_sysops_notice' => 'Ma fell deoc\'h kemmañ statud danevell ar gudenn adalek ho wiki, kit <a href="$1">amañ</a>...',
 	'pr_table_problem_id' => 'ID ar gudenn',
@@ -820,12 +820,20 @@ $messages['ha'] = array(
 
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
+ * @author Misibacsi
  */
 $messages['hu'] = array(
+	'problemreports' => 'Problémajelentések',
 	'reportproblem' => 'Probléma jelentése',
 	'prlogtext' => 'Problémajelentések',
+	'prlogheader' => 'A jelentett problémák listája és a változások azok állapotában',
 	'pr_what_problem' => 'Tárgy',
+	'pr_what_problem_spam' => 'ez egy spam link',
+	'pr_what_problem_vandalised' => 'ezt az oldalt megrongálták',
+	'pr_what_problem_incorrect_content' => 'ez a tartalom nem megfelelő',
+	'pr_what_problem_software_bug' => 'van egy hiba a wiki szoftverben',
 	'pr_what_problem_other' => 'egyéb',
+	'pr_what_problem_select' => 'Kérjük, válassza ki a probléma típusát',
 	'pr_what_problem_unselect' => 'összes',
 	'pr_what_problem_spam_short' => 'spam',
 	'pr_what_problem_vandalised_short' => 'vandalizmus',
@@ -836,8 +844,16 @@ $messages['hu'] = array(
 	'pr_describe_problem' => 'Üzenet',
 	'pr_what_page' => 'A lap címe',
 	'pr_email_visible_only_to_staff' => 'csak személyzet láthatja',
+	'pr_thank_you' => 'Köszönjük, hogy jelentette a problémát! 
+
+[[Special:ProblemReports/$1|Itt követhető a kijavítása]].',
+	'pr_thank_you_error' => 'Hiba történt a hibajelentés küldése közben, kérjük, próbálja meg később ...',
+	'pr_empty_summary' => 'Kérjük, adja meg a probléma rövid leírását',
+	'pr_empty_email' => 'Kérjük, adja meg az e-mail címét',
+	'pr_mailer_notice' => 'A beírt email cím meg fog jelenni a "Küldő" címeként, így a címzett válaszolni tud.',
 	'pr_mailer_subject' => 'Problémabejelentése ideje:',
 	'pr_mailer_to_default' => 'Wikia felhasználó',
+	'pr_total_number' => 'Az összes hibajelentés száma',
 	'pr_view_all' => 'Összes bejelentés megjelenítése',
 	'pr_table_problem_id' => 'Probléma azonosító',
 	'pr_table_wiki_name' => 'Wiki neve',
@@ -849,7 +865,11 @@ $messages['hu'] = array(
 	'pr_table_comments' => 'Megjegyzések',
 	'pr_table_status' => 'Állapot',
 	'pr_table_actions' => 'Műveletek',
+	'pr_status_0' => 'függőben',
+	'pr_status_1' => 'megoldva',
+	'pr_status_2' => 'lezárva',
 	'pr_status_10' => 'jelentés eltávolítása',
+	'pr_remove_ask' => 'Hibajelentés végleges törlése?',
 	'pr_status_wait' => 'várj…',
 	'pr_msg_exchead' => 'Az üzenet túl hosszú',
 );
@@ -1932,7 +1952,7 @@ Pakibago ang nilalaman ng buod',
 	'pr_view_all' => 'Ipakita ang lahat ng mga ulat',
 	'pr_view_staff' => 'Ipakita ang mga ulat na nangangailangan ng tulong ng tauhan',
 	'pr_raports_from_this_wikia' => 'Tingnan ang mga ulat na nagmula lamang sa Wikiang ito',
-	'pr_reports_from' => 'Mga ulat na mula lamang sa: $1',
+	'pr_reports_from' => 'Nag-uulat lamang magmula sa: $1',
 	'pr_no_reports' => 'Walang mga ulat na tumutugma sa iyong pamantayan',
 	'pr_sysops_notice' => 'Maaari mong <a href="$1">baguhin ang katayuan ng mga ulat ng problema</a> mula sa iyong wiki...',
 	'pr_table_problem_id' => 'ID ng suliranin',
@@ -1973,10 +1993,16 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'problemreports' => 'Список повідомлень про проблеми',
 	'reportproblem' => 'Повідомити про проблему',
+	'prlogtext' => 'Повідомлення про проблеми',
+	'prlog_reportedentry' => 'повідомив про проблему сторінки $1 ($2)',
+	'prlog_changedentry' => 'позначив проблему $1 як "$2"',
+	'prlog_typeentry' => 'змінив тип проблеми $1 на "$2"',
+	'prlog_removedentry' => 'вилучив проблему $1',
 	'pr_what_problem' => 'Тема',
 	'pr_what_problem_software_bug' => 'помилка у програмному забезпеченні вікі',
 	'pr_what_problem_select' => 'Будь ласка, виберіть тип проблеми',
@@ -1989,12 +2015,16 @@ $messages['uk'] = array(
 	'pr_what_page' => 'Назва сторінки',
 	'pr_empty_summary' => 'Будь ласка, надайте короткий опис проблеми',
 	'pr_empty_email' => 'Будь ласка, вкажіть вашу адресу електронної пошти',
+	'pr_table_problem_id' => 'ID (ідентифікатор) проблеми',
 	'pr_table_wiki_name' => 'Назва вікі',
 	'pr_table_problem_type' => 'Тип проблеми',
 	'pr_table_page_link' => 'Сторінка',
 	'pr_table_description' => 'Опис',
+	'pr_table_comments' => 'Коментарі',
 	'pr_table_status' => 'Статус',
 	'pr_table_actions' => 'Дії',
+	'pr_status_0' => 'в очікуванні',
+	'pr_status_10' => 'вилучити повідомлення',
 	'pr_msg_exceeded' => 'Максимальна кількість символів у полі «Повідомлення» — 512. Будь ласка, перепишіть своє повідомлення.',
 	'pr_msg_exchead' => 'Повідомлення занадто довге',
 );

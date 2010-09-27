@@ -202,3 +202,10 @@ $messages['sl'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Posebna stran]] za preverjanje stanja strežnika',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'healthcheck-desc' => 'Isang [[Special:HealthCheck|natatanging pahina]] para sa pagsusuri ng katayuan ng panghain',
+);
+

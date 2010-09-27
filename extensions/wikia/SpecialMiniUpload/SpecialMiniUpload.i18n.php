@@ -72,6 +72,22 @@ $messages['br'] = array(
 	'rightalign-tooltip' => 'Steudañ a-zehoù',
 );
 
+/** Welsh (Cymraeg)
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'widgetdashboard' => 'Dashfwrdd Teclyn',
+	'mu_size_your_image' => "Rhowch faint i'ch delwedd",
+	'almosttheretext' => 'Defnyddiwch y llithrydd i ddewis faint y mân-lun, rhoi pennawd, a chlicio ar Mewnosod',
+	'insertfullsize' => 'Mewnosod delwedd maint llawn wreiddiol',
+	'insertthumbnail' => 'Mewnosod mân-lun',
+	'thumbnailsize' => 'Maint mân-lun:',
+	'captionoptional' => 'Pennawd (dewisol):',
+	'insertimage' => 'Mewnosod Delwedd',
+	'leftalign-tooltip' => "Alinio i'r chwith",
+	'rightalign-tooltip' => "Alinio i'r dde",
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

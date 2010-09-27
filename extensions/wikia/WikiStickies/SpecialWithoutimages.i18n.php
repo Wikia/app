@@ -162,6 +162,13 @@ $messages['hsb'] = array(
 	'withoutimages' => 'Strony bjez wobrazow',
 );
 
+/** Hungarian (Magyar)
+ * @author Misibacsi
+ */
+$messages['hu'] = array(
+	'withoutimages' => 'Kép nélküli oldal',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -360,6 +367,21 @@ $messages['sq'] = array(
 $messages['sr-ec'] = array(
 	'withoutimages-desc' => 'Додаје [[Special:Withoutimages|посебну страницу]] за приказивање страница без слика',
 	'withoutimages' => 'Странице без слика',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'withoutimages' => 'బొమ్మలు లేని పుటలు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'withoutimages-desc' => 'Nagdaragdag ng isang [[Special:Withoutimages|natatanging pahina]] upang ipakita ang mga pahinang walang mga larawan',
+	'withoutimages' => 'Mga pahinang walang mga larawan',
 );
 
 /** Ukrainian (Українська)

@@ -363,9 +363,11 @@ $messages['es'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nike
  */
 $messages['fi'] = array(
 	'daemonloader' => 'Taustaprosessilataaja',
+	'daemonloader-desc' => 'Suorittaa [[Special:DaemonLoader|taustapalveluita]], jotka luovat raportteja.',
 	'daemonloader_pagetitle' => 'Taustaprosessilataaja',
 	'daemonloader_createtask' => 'Luo tehtävä',
 	'daemonloader_listtask' => 'Luettelo tehtävistä',
@@ -1203,6 +1205,7 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'daemonloader' => 'Tagapagkarga ng daemon',
+	'daemonloader-desc' => 'Nagpapatakbo ng [[Special:DaemonLoader|mga daemon na panglikuran]] upang makalikha ng mga ulat',
 	'daemonloader_pagetitle' => 'Tagapagkarga ng daemon',
 	'daemonloader_createtask' => 'Likhain ang gawain',
 	'daemonloader_listtask' => 'Talaan ng mga gawain',

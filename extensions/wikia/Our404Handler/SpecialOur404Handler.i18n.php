@@ -76,6 +76,14 @@ N'eo ket bet kavet ar pennad '''$1'''.
  */
 $messages['cs'] = array(
 	'our404handler' => 'Chyba 404: Stránka nenalezena!',
+	'our404handler-oops' => 'Tohle nejsou ty stránky, které hledáte. Pokračujte, prosím.',
+	'message404' => "'''Je nám to opravdu líto, ale stránka, kterou žádáte, z nějakého důvodu neexistuje.'''
+
+Článek '''$1''' nebyl nalezen.
+
+* Můžete zkusit článek [[$2]].
+* Můžete zkusit použít vyhledávací pole v levé části stránky.
+* Pokud chcete jít na hlavní stránku, klikněte na následující odkaz: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** German (Deutsch)

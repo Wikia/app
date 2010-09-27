@@ -515,6 +515,29 @@ $4 is any of:
 * $1 is the so manieth edit that was made to the wiki',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'achievementsii-desc' => 'Сыстэма дасягненьняў для вікі-карыстальнікаў',
+	'achievements-upload-error' => 'Прабачце!
+Гэтая выява — няслушная.
+Упэўніцеся, што гэта файл фармату JPG ці PNG.
+Калі ўсё роўна няслушная, гэта, верагодна, азначае, што выява занадта вялікая.
+Калі ласка, паспрабуйце выкарыстаць іншую!',
+	'achievements-no-stub-category' => 'Калі ласка, не стварайце трэкі для шаблёнаў.',
+	'achievements-platinum' => 'Плаціна',
+	'achievements-gold' => 'Золата',
+	'achievements-silver' => 'Срэбра',
+	'achievements-bronze' => 'Бронза',
+	'achievements-track-name-edit' => 'Рэдагаваць трэк',
+	'achievements-track-name-picture' => 'Выява трэку',
+	'achievements-track-name-category' => 'Катэгорыя трэку',
+	'achievements-track-name-blogpost' => 'Паведамленьне ў блёге трэку',
+	'achievements-track-name-blogcomment' => 'Камэнтар у блёге трэку',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
@@ -2276,13 +2299,44 @@ $messages['ig'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'achievementsii-desc' => 'ウィキ利用者向けの達成度バッジシステム',
+	'achievements-upload-error' => 'この画像は利用できません。
+指定できるのは、.jpg もしくは .png のファイルです。
+これらを指定してもまだ画像が利用できないときは、画像が大きすぎます。
+他の画像を試してください。',
+	'achievements-upload-not-allowed' => '管理者は、[[Special:AchievementsCustomize|達成度のカスタマイズページ]]で達成度バッジの名称と画像を変更できます。',
+	'achievements-non-existing-category' => '指定されたカテゴリは存在しません',
+	'achievements-edit-plus-category-track-exists' => '指定されたカテゴリには<a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="トラックに移動">すでに関連付けられたトラックがあります</a>。',
+	'achievements-no-stub-category' => 'スタブカテゴリに対してトラックを作成しないでください。',
+	'achievements-platinum' => 'プラチナ',
+	'achievements-gold' => 'ゴールド',
+	'achievements-silver' => 'シルバー',
+	'achievements-bronze' => 'ブロンズ',
+	'achievements-you-must' => 'このバッジを入手するには$1必要があります',
 	'leaderboard-button' => '達成度ランキング',
 	'achievements-masthead-points' => '$1 <small>ポイント</small>',
+	'achievements-track-name-edit' => '編集トラック',
+	'achievements-track-name-picture' => '画像トラック',
+	'achievements-track-name-category' => 'カテゴリトラック',
+	'achievements-track-name-blogpost' => 'ブログ投稿トラック',
+	'achievements-track-name-blogcomment' => 'ブログコメントトラック',
+	'achievements-track-name-love' => 'ウィキラブトラック',
+	'achievements-notification-subtitle' => '$2 "$1" バッジが贈られました',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|さらに入手可能なバッジを見る]]</big></strong>',
+	'achievements-points' => '$1 ポイント',
+	'achievements-points-with-break' => '$1<br />ポイント',
 	'achievements-earned' => 'これまでに $1 人がこのバッジを入手しました。',
 	'achievements-profile-title' => '$1 が入手したバッジ（$2 個）',
+	'achievements-profile-title-no' => '$1 が入手したバッジ',
 	'achievements-profile-title-challenges' => '入手可能なバッジ',
-	'achievements-profile-customize' => 'バッジのカスタマイズ',
+	'achievements-profile-customize' => 'バッジのカスタマイズ >',
 	'achievements-ranked' => 'このウィキ上での順位 - #$1',
+	'achievements-no-badges' => '下のリストで入手可能なバッジをチェックしてみましょう。',
+	'achievements-viewall' => '全て見る',
+	'achievements-viewless' => '閉じる',
+	'achievements-profile-title-oasis' => '達成度<br />ポイント',
+	'achievements-ranked-oasis' => '$1 のこのウィキ上での順位 - [[Special:Leaderboard|#$2]]',
+	'achievements-viewall-oasis' => '全て見る',
 	'leaderboard-intro' => "'''&ldquo;達成度とは？&rdquo;'''
 このウィキに参加すると、特別なバッジを入手できます。それぞれのバッジには、ブロンズバッジが10ポイント、シルバーバッジが50ポイント、ゴールドバッジが100ポイント、といったようにポイントが設定されており、バッジを入手すると、そのバッジに設定されたポイントが総合ポイントに加算されます。
 
@@ -2295,6 +2349,15 @@ $messages['ja'] = array(
 	'achievements-leaderboard-rank-label' => '順位',
 	'achievements-leaderboard-member-label' => 'メンバー',
 	'achievements-leaderboard-points-label' => 'ポイント',
+	'achievements-send' => '画像を保存',
+	'achievements-save' => '変更を保存',
+	'achievements-reverted' => 'バッジをデフォルトに戻しました',
+	'achievements-customize' => '画像のカスタマイズ',
+	'achievements-enable-track' => '有効',
+	'achievements-revert' => 'デフォルトに戻す',
+	'achievements-special-saved' => '変更が保存されました',
+	'achievements-special' => '特別バッジ',
+	'achievements-secret' => 'シークレットバッジ',
 	'achievementscustomize' => 'バッジのカスタマイズ',
 	'achievements-about-title' => 'このページについて',
 	'achievements-about-content' => 'このウィキの管理者は、達成度バッジの名称と画像をカスタマイズできます。
@@ -2308,11 +2371,79 @@ $messages['ja'] = array(
 
 各ウィキで扱っている話題に合わせて、バッジに新しい名称を設定できます。
 バッジの名称を変更したときは、"{{int:achievements-save}}" をクリックして変更を保存してください。',
-	'achievements-badge-to-get-love' => '$1日間継続してこのウィキに投稿する',
+	'achievements-edit-plus-category-track-name' => '"$1" 編集トラック',
+	'achievements-create-edit-plus-category-title' => '編集トラックの新規作成',
+	'achievements-create-edit-plus-category' => 'トラックを作成',
+	'platinum' => 'プラチナ',
+	'achievements-community-platinum-awarded-for' => '何に対して授与するか:',
+	'achievements-community-platinum-how-to-earn' => '入手方法:',
+	'achievements-community-platinum-awarded-for-example' => '例: "―への貢献に対して"',
+	'achievements-community-platinum-how-to-earn-example' => '例: "―を編集する"',
+	'achievements-community-platinum-badge-image' => 'バッジ画像:',
+	'achievements-community-platinum-awarded-to' => '受賞者の設定:',
+	'achievements-community-platinum-current-badges' => '現在のプラチナバッジ',
+	'achievements-community-platinum-create-badge' => 'バッジを作成',
+	'achievements-community-platinum-enabled' => '有効',
+	'achievements-community-platinum-show-recents' => '最近授与されたバッジの一覧に表示',
+	'achievements-community-platinum-edit' => '編集',
+	'achievements-community-platinum-save' => '保存',
+	'achievements-badge-to-get-edit' => '$1 回編集する',
+	'achievements-badge-to-get-edit-plus-category' => '"$2" カテゴリのページで $1 回編集する',
+	'achievements-badge-to-get-picture' => '$1 枚の画像をページに追加する',
+	'achievements-badge-to-get-category' => '$1 件のページをカテゴリに追加する',
+	'achievements-badge-to-get-blogpost' => 'ブログ記事を $1 件投稿する',
+	'achievements-badge-to-get-blogcomment' => '$1 件のブログ記事にコメントを投稿する',
+	'achievements-badge-to-get-love' => '$1 日間連続でこのウィキに投稿する',
+	'achievements-badge-to-get-welcome' => 'このウィキに参加する',
+	'achievements-badge-to-get-introduction' => '自分の利用者ページを作成する',
+	'achievements-badge-to-get-sayhi' => '他の利用者の会話ページにメッセージを残す',
+	'achievements-badge-to-get-creator' => 'このウィキの作成者になる',
+	'achievements-badge-to-get-caffeinated' => '$1 回の編集を1日で行う',
+	'achievements-badge-to-get-luckyedit' => '幸運をつかむ',
+	'achievements-badge-to-get-community-platinum-details' => 'このバッジは、期間限定で入手可能な特別プラチナバッジです。',
+	'achievements-badge-hover-desc-edit' => '編集回数 $1 回を達成したことに対して',
+	'achievements-badge-hover-desc-edit-plus-category' => '"$2" カテゴリのページで編集回数 $1 回を達成したことに対して',
+	'achievements-badge-hover-desc-picture' => '$1 枚の画像をページに追加したことに対して',
+	'achievements-badge-hover-desc-category' => '$1 件のページをカテゴリに追加したことに対して',
+	'achievements-badge-hover-desc-blogpost' => '$1 件のブログ記事を投稿したことに対して',
+	'achievements-badge-hover-desc-blogcomment' => '$1 件のブログ記事にコメントを投稿したことに対して',
+	'achievements-badge-hover-desc-love' => '$1 日間連続でこのウィキに投稿したことに対して',
 	'achievements-badge-hover-desc-welcome' => 'このウィキへの参加に対して',
 	'achievements-badge-hover-desc-introduction' => '自分の利用者ページの作成に対して',
+	'achievements-badge-hover-desc-sayhi' => '他の利用者の会話ページにメッセージを残したことに対して',
+	'achievements-badge-hover-desc-creator' => 'このウィキの作成に対して',
+	'achievements-badge-hover-desc-pounce' => 'ページの作成から1時間以内に 100 件のページを編集したことに対して',
+	'achievements-badge-hover-desc-caffeinated' => '1日で 100 回の編集を行ったことに対して',
+	'achievements-badge-hover-desc-luckyedit' => 'このウィキで $1 番目の編集を行った幸運に対して',
+	'achievements-badge-hover-desc-community-platinum' => 'このバッジは、期間限定で入手可能な特別プラチナバッジです。',
+	'achievements-badge-your-desc-edit' => '編集回数 $1 回を達成したことに対して',
+	'achievements-badge-your-desc-edit-plus-category' => '"$2" カテゴリのページで編集回数 $1 回を達成したことに対して',
+	'achievements-badge-your-desc-picture' => '$1 枚の画像をページに追加したことに対して',
+	'achievements-badge-your-desc-category' => '$1 件のページをカテゴリに追加したことに対して',
+	'achievements-badge-your-desc-blogpost' => '$1 件のブログ記事を投稿したことに対して',
+	'achievements-badge-your-desc-blogcomment' => '$1 件のブログ記事にコメントを投稿したことに対して',
+	'achievements-badge-your-desc-love' => '$1 日間連続でこのウィキに投稿したことに対して',
+	'achievements-badge-your-desc-welcome' => 'このウィキへの参加に対して',
 	'achievements-badge-your-desc-introduction' => '自分の利用者ページの作成に対して',
+	'achievements-badge-your-desc-sayhi' => '他の利用者の会話ページにメッセージを残したことに対して',
+	'achievements-badge-your-desc-creator' => 'このウィキの作成に対して',
+	'achievements-badge-your-desc-pounce' => 'ページの作成から1時間以内に 100 件のページを編集したことに対して',
+	'achievements-badge-your-desc-caffeinated' => '1日で 100 回の編集を行ったことに対して',
+	'achievements-badge-your-desc-luckyedit' => 'このウィキで $1 番目の編集を行った幸運に対して',
 	'achievements-badge-desc-edit' => '編集回数 $1 回を達成したことに対して',
+	'achievements-badge-desc-edit-plus-category' => '"$2" カテゴリのページで編集回数 $1 回を達成したことに対して',
+	'achievements-badge-desc-picture' => '$1 枚の画像をページに追加したことに対して',
+	'achievements-badge-desc-category' => '$1 件のページをカテゴリに追加したことに対して',
+	'achievements-badge-desc-blogpost' => '$1 件のブログ記事を投稿したことに対して',
+	'achievements-badge-desc-blogcomment' => '$1 件のブログ記事にコメントを投稿したことに対して',
+	'achievements-badge-desc-love' => '$1 日間連続でこのウィキに投稿したことに対して',
+	'achievements-badge-desc-welcome' => 'このウィキへの参加に対して',
+	'achievements-badge-desc-introduction' => '自分の利用者ページの作成に対して',
+	'achievements-badge-desc-sayhi' => '他の利用者の会話ページにメッセージを残したことに対して',
+	'achievements-badge-desc-creator' => 'このウィキの作成に対して',
+	'achievements-badge-desc-pounce' => 'ページの作成から1時間以内に 100 件のページを編集したことに対して',
+	'achievements-badge-desc-caffeinated' => '1日で 100 回の編集を行ったことに対して',
+	'achievements-badge-desc-luckyedit' => 'このウィキで $1 番目の編集を行った幸運に対して',
 );
 
 /** Korean (한국어)
@@ -3456,77 +3587,77 @@ Ch\'a mostra sò sostegn a le pàgina $1!',
 A peul gionté na fòto da tò ordinator, o da n\'àutra pàgina ëd la wiki.',
 	'achievements-badge-to-get-category-details' => 'Le categorìe a son dle tichëtte che a giuto ij letor a trové dle pàgine ch\'a së smijo.
 Ch\'a sgnaca ël boton "{{int:categoryselect-addcategory-button}}" an cò dla pàgina për listé cola pàgina ant na categorìa.',
-	'achievements-badge-to-get-blogpost-details' => 'Scriv toe opinion e custion!
-Sgnaca su "{{int:blogs-recent-url-text}}" ant la bara lateral, e peui ël colegament an sla snista për "{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-blogcomment-details' => 'Gionta i toi doi cent!
-Les tùit ij mëssagi recent dël blog, e scriv ij tò pensé ant la box dij coment.',
+	'achievements-badge-to-get-blogpost-details' => 'Ch\'a scriva soe opinion e chestion!
+Ch\'a sgnaca su "{{int:blogs-recent-url-text}}" ant la bara lateral, e peui an sl\'anliura a snista për "{{int:create-blog-post-title}}".',
+	'achievements-badge-to-get-blogcomment-details' => "Ch'a gionta ij sò doi sòld!
+Ch'a un mëssagi recent ëd lë scartari, e ch'a scriva lòn ch'a pensa ant la casela dij coment.",
 	'achievements-badge-to-get-love-details' => "Ël conteur a part da zero s'it perde un di, parèj sigurte ëd torné a la wiki minca di!",
-	'achievements-badge-to-get-welcome-details' => 'Sgnaca ël boton "{{int:autocreatewiki-create-account}}" an sima an sla drita për unite a la comunità.
-It peule ancaminé a vagné ij tò distintiv!',
-	'achievements-badge-to-get-introduction-details' => 'Toa pàgina utent a l\'é veuida?
-Sgnaca su tò nòm utent a la sima dlë scherm për vëdde.
-Sgnaca "{{int:edit}}" për gionté quaich anformassion dzora ëd ti!',
-	'achievements-badge-to-get-sayhi-details' => 'It peule lassé dij mëssagi a j\'àutri utent an sgnacand "{{int:tooltip-ca-addsection}}" ans la soa pàgina utent.
-Ciama agiut, ringrassje për sò travaj, o salutje mach!',
-	'achievements-badge-to-get-creator-details' => "Sto distintiv a l'é dàit a la përson-a che a l'ha fondà la wiki.
-Sgnaca ël boton \"{{int:createwiki}}\" a la sima për ancaminé un sit a propòsit ëd lòn ch'at pias ëd pi!",
-	'achievements-badge-to-get-pounce-details' => "It deuve esse lest për vagné sto distintiv.
-Sgnaca ël boton  për vëdde le pàgine neuve che j'utent a creo!",
+	'achievements-badge-to-get-welcome-details' => 'Ch\'a sgnaca ël boton "{{int:autocreatewiki-create-account}}" an àut a drita për gionz-se a la comunità.
+A peul ancaminé a vagné ij sò distintiv!',
+	'achievements-badge-to-get-introduction-details' => "Soa pàgina utent a l'é veuida?
+Ch'a sgnaca su sò stranòm an cò dlë scren për vëdde.
+Ch'a sgnaca \"{{int:edit}}\" për gionté chèiche anformassion ëd chiel!",
+	'achievements-badge-to-get-sayhi-details' => "A peul lassé dij mëssagi a j'àutri utent an sgnacand \"{{int:tooltip-ca-addsection}}\" an soa pàgina ëd ciaciarade.
+Ch'a ciama agiut, ch'a-j aringrassie për sò travaj, o ch'a-j disa bele mach cerea!",
+	'achievements-badge-to-get-creator-details' => "Cost distintiv a l'é dàit a la përson-a che a l'ha fondà la wiki.
+Ch'a sgnaca ël boton \"{{int:createwiki}}\" an àut për ancaminé un sit a propòsit ëd lòn ch'a-j pias ëd pi!",
+	'achievements-badge-to-get-pounce-details' => "A dev esse lest për vagné cost distintiv-sì.
+Ch'a sgnaca ël boton «{{int:activityfeed}}» për vëdde le pàgine neuve che j'utent a creo!",
 	'achievements-badge-to-get-caffeinated-details' => 'A-i va un di complet për vagné sto distintiv.
 Continua a modifiché!',
-	'achievements-badge-to-get-luckyedit-details' => 'It deuve esse fortunà për vagné sto distitiv.
-Continua a modifiché!',
-	'achievements-badge-to-get-community-platinum-details' => "Sossì a l'é un distintiv special ëd Plàtin che a l'é mach disponìbil për un temp limità!",
-	'achievements-badge-hover-desc-edit' => 'për fé $1 {{PLURAL:$1|modìfica|modìfiche}}<br />
-su {{PLURAL:$1|na pàgina|pàgine}}!',
-	'achievements-badge-hover-desc-edit-plus-category' => 'për fé $1 {{PLURAL:$1|modìfica|modìfiche}}<br />
-su {{PLURAL:$1|na pàgina ëd $2|pàgine ëd $2}}!',
-	'achievements-badge-hover-desc-picture' => 'për gionté $1 {{PLURAL:$1|figura|figure}}<br />
-su {{PLURAL:$1|na pàgina|pàgine}}!',
-	'achievements-badge-hover-desc-category' => 'për gionté $1 {{PLURAL:$1|pàgina|pàgine}}<br />
-a {{PLURAL:$1|na categorìa|categorìe}}!',
-	'achievements-badge-hover-desc-blogpost' => 'për scrive $1 {{PLURAL:$1|mëssagi ëd blog|mëssagi ëd blog}}!',
-	'achievements-badge-hover-desc-blogcomment' => 'për scrive un coment<br />
-su $1 diferent {{PLURAL:$1|mëssagi ëd blog|mëssagi ëd blog}}!',
-	'achievements-badge-hover-desc-love' => 'për contribuì a la wiki minca di për {{PLURAL:$1|un di|$1 di}}!',
-	'achievements-badge-hover-desc-welcome' => 'për unite a la wiki!',
-	'achievements-badge-hover-desc-introduction' => 'për gionté a<br />
-toa pàgina utent!',
-	'achievements-badge-hover-desc-sayhi' => 'për lassé un mëssagi<br />
+	'achievements-badge-to-get-luckyedit-details' => "A dev avèj dël cavicc për vagné sto distitiv.
+Ch'a continua a modifiché!",
+	'achievements-badge-to-get-community-platinum-details' => "Cost-sì a l'é un distintiv special ëd Plàtin che a l'é mach disponìbil për un temp limità!",
+	'achievements-badge-hover-desc-edit' => 'për avèj fàit $1 {{PLURAL:$1|modìfica|modìfiche}}<br />
+su {{PLURAL:$1|na pàgina|dle pàgine}}!',
+	'achievements-badge-hover-desc-edit-plus-category' => 'për avèj fàit $1 {{PLURAL:$1|modìfica|modìfiche}}<br />
+su {{PLURAL:$1|na pàgina ëd $2|dle pàgine ëd $2}}!',
+	'achievements-badge-hover-desc-picture' => 'për avèj giontà $1 {{PLURAL:$1|figura|figure}}<br />
+su {{PLURAL:$1|na pàgina|dle pàgine}}!',
+	'achievements-badge-hover-desc-category' => 'për avèj giontà $1 {{PLURAL:$1|pàgina|pàgine}}<br />
+a {{PLURAL:$1|na categorìa|dle categorìe}}!',
+	'achievements-badge-hover-desc-blogpost' => 'për avèj scrivù $1 {{PLURAL:$1|artìcol dë scartari|artìcoj dë scartari}}!',
+	'achievements-badge-hover-desc-blogcomment' => 'për avèj scrivù un coment<br />
+su $1 diferent {{PLURAL:$1|artìcol dë scartari|artìcoj dë scartari}}!',
+	'achievements-badge-hover-desc-love' => 'për avèj contribuì a la wiki tuti ij di për {{PLURAL:$1|un di|$1 di}}!',
+	'achievements-badge-hover-desc-welcome' => 'për esse gionzusse a la wiki!',
+	'achievements-badge-hover-desc-introduction' => 'për avèj anrichì<br />
+soa pàgina utent!',
+	'achievements-badge-hover-desc-sayhi' => 'për avèj lassà un mëssagi<br />
 an sla pàgina ëd discussion ëd quaidun!',
-	'achievements-badge-hover-desc-creator' => 'për creé la wiki!',
-	'achievements-badge-hover-desc-pounce' => "Për fé modìfiche su 100 pàgine ant n'ora da la creassion dla pàgina!",
-	'achievements-badge-hover-desc-caffeinated' => 'për fé 100 modìfiche su pàgine ant un sol di!',
-	'achievements-badge-hover-desc-luckyedit' => 'për fé la $1a Modìfica Fortunà an sla wiki!',
+	'achievements-badge-hover-desc-creator' => 'për avèj creà la wiki!',
+	'achievements-badge-hover-desc-pounce' => "për avèj fàit ëd modìfiche su 100 pàgine ant n'ora da la creassion dla pàgina!",
+	'achievements-badge-hover-desc-caffeinated' => 'për avèj fàit 100 modìfiche a dle pàgine ant un di sol!',
+	'achievements-badge-hover-desc-luckyedit' => 'për avèj fàit la Modìfica Fortunà nùmer $1 an sla wiki!',
 	'achievements-badge-hover-desc-community-platinum' => "Sossì a l'é un distintiv special ëd Plàtin che a l'é mach disponìbil për un temp limità!",
-	'achievements-badge-your-desc-edit' => 'për fé {{PLURAL:$1|toa prima modìfica|$1 modìfiche}} su {{PLURAL:$1|na pàgina|pàgine}}!',
-	'achievements-badge-your-desc-edit-plus-category' => 'për fé {{PLURAL:$1|toa prima modìfica|$1 modìfiche}} su {{PLURAL:$1|na pàgina ëd $2|pàgine ëd $2}}!',
-	'achievements-badge-your-desc-picture' => 'për gionté {{PLURAL:$1|toa prima figura|$1 figure}} su {{PLURAL:$1|na pàgina|pàgine}}!',
-	'achievements-badge-your-desc-category' => 'për gionté {{PLURAL:$1|toa prima pàgina|$1 pàgine}} su {{PLURAL:$1|na categorìa|categorìe}}!',
-	'achievements-badge-your-desc-blogpost' => 'për scrive {{PLURAL:$1|tò prim mëssagi ëd blog|$1 mëssagi ëd blog}}!',
-	'achievements-badge-your-desc-blogcomment' => 'për scrive un coment su {{PLURAL:$1|un mëssagi ëd blog|$1 diferent mëssagi ëd blog}}!',
-	'achievements-badge-your-desc-love' => 'për contribuì a la wiki minca di për {{PLURAL:$1|un di|$1 di}}!',
-	'achievements-badge-your-desc-welcome' => 'për unite a la wiki!',
-	'achievements-badge-your-desc-introduction' => 'për gionté a toa pàgina utent!',
-	'achievements-badge-your-desc-sayhi' => 'për lassé un mëssagi an sla pàgina ëd discussion ëd quaidun!',
-	'achievements-badge-your-desc-creator' => 'për creé la wiki!',
-	'achievements-badge-your-desc-pounce' => "Për fé modìfiche su 100 pàgine ant n'ora da la creassion dla pàgina!",
-	'achievements-badge-your-desc-caffeinated' => 'për fé 100 modìfiche su pàgine ant un sol di!',
-	'achievements-badge-your-desc-luckyedit' => 'për fé la $1a modìfica Fortunà an sla wiki!',
-	'achievements-badge-desc-edit' => 'për fé $1 {{PLURAL:$1|modìfica|modìfiche}} su {{PLURAL:$1|na pàgina|pàgine}}!',
-	'achievements-badge-desc-edit-plus-category' => 'për fé $1 {{PLURAL:$1|modìfica|modìfiche}} su {{PLURAL:$1|na pàgina ëd $2|pàgine ëd $2}}!',
-	'achievements-badge-desc-picture' => 'për gionté $1 {{PLURAL:$1|figura|figure}} su {{PLURAL:$1|na pàgina|pàgine}}!',
-	'achievements-badge-desc-category' => 'për gionté $1 {{PLURAL:$1|pàgina|pàgine}} a {{PLURAL:$1|na categorìa|categorìe}}!',
-	'achievements-badge-desc-blogpost' => 'për scrive $1 {{PLURAL:$1|mëssagi ëd blog|mëssagi ëd blog}}!',
-	'achievements-badge-desc-blogcomment' => 'për scrive un coment su {{PLURAL:$1|un mëssagi ëd blog|$1 diferent mëssagi ëd blog}}!',
-	'achievements-badge-desc-love' => 'për contribuì a la wiki minca di për {{PLURAL:$1|un di|$1 di}}!',
-	'achievements-badge-desc-welcome' => 'për unite a la wiki!',
-	'achievements-badge-desc-introduction' => 'për gionté a toa pàgina utent!',
-	'achievements-badge-desc-sayhi' => 'për lassé un mëssagi an sla pàgina ëd discussion ëd quaidun!',
-	'achievements-badge-desc-creator' => 'për creé la wiki!',
-	'achievements-badge-desc-pounce' => "Për fé modìfiche su 100 pàgine ant n'ora da la creassion dla pàgina!",
-	'achievements-badge-desc-caffeinated' => 'për fé 100 modìfiche su pàgine ant un sol di!',
-	'achievements-badge-desc-luckyedit' => 'për fé la $1a modìfica Fortunà an sla wiki!',
+	'achievements-badge-your-desc-edit' => 'për avèj fàit {{PLURAL:$1|soa prima modìfica|$1 modìfiche}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'për avèj fàit {{PLURAL:$1|soa prima modìfica|$1 modìfiche}} su {{PLURAL:$1|na pàgina ëd $2|dle pàgine ëd $2}}!',
+	'achievements-badge-your-desc-picture' => 'për avèj giontà {{PLURAL:$1|soa prima figura|$1 figure}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
+	'achievements-badge-your-desc-category' => 'për avèj giontà {{PLURAL:$1|soa prima pàgina|$1 pàgine}} a {{PLURAL:$1|na categorìa|dle categorìe}}!',
+	'achievements-badge-your-desc-blogpost' => 'për avèj scrivù {{PLURAL:$1|sò prim artìcol dë scartari|$1 artìcoj dë scartari}}!',
+	'achievements-badge-your-desc-blogcomment' => "për avèj scrivù un coment a {{PLURAL:$1|n'artìcol dë scartari|$1 artìcoj dë scartari diferent}}!",
+	'achievements-badge-your-desc-love' => 'për avèj contribuì a la wiki tuti ij di për {{PLURAL:$1|un di|$1 di}}!',
+	'achievements-badge-your-desc-welcome' => 'për ess-se unisse la wiki!',
+	'achievements-badge-your-desc-introduction' => 'për avèj anrichì soa pàgina utent!',
+	'achievements-badge-your-desc-sayhi' => 'për avèj lassà un mëssagi an sla pàgina ëd discussion ëd quaidun!',
+	'achievements-badge-your-desc-creator' => 'për avèj creà la wiki!',
+	'achievements-badge-your-desc-pounce' => "Për avèj fàit ëd modìfiche su 100 pàgine ant n'ora da soa creassion!",
+	'achievements-badge-your-desc-caffeinated' => 'për avèj fàit 100 modìfiche su dle pàgine ant un di sol!',
+	'achievements-badge-your-desc-luckyedit' => 'për avèj fàit la modìfica Fortunà nùmer $1 an sla wiki!',
+	'achievements-badge-desc-edit' => 'për avèj fàit $1 {{PLURAL:$1|modìfica|modìfiche}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
+	'achievements-badge-desc-edit-plus-category' => 'për avèj fàit $1 {{PLURAL:$1|modìfica|modìfiche}} su {{PLURAL:$1|na pàgina ëd $2|dle pàgine ëd $2}}!',
+	'achievements-badge-desc-picture' => 'për avèj giontà $1 {{PLURAL:$1|figura|figure}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
+	'achievements-badge-desc-category' => 'për avèj giontà $1 {{PLURAL:$1|pàgina|pàgine}} a {{PLURAL:$1|na categorìa|dle categorìe}}!',
+	'achievements-badge-desc-blogpost' => 'për avèj scrivù $1 {{PLURAL:$1|artìcol dë scartari|artìcoj dë scartari}}!',
+	'achievements-badge-desc-blogcomment' => "për avèj scrivù un coment su {{PLURAL:$1|n'artìcol dë scartari|$1 artìcoj dë scartari diferent}}!",
+	'achievements-badge-desc-love' => 'për avèj contribuì a la wiki minca di për {{PLURAL:$1|un di|$1 di}}!',
+	'achievements-badge-desc-welcome' => 'për ess-se giontasse a la wiki!',
+	'achievements-badge-desc-introduction' => 'për avèj anrichì soa pàgina utent!',
+	'achievements-badge-desc-sayhi' => 'për avèj lassà un mëssagi an sla pàgina ëd discussion ëd quaidun!',
+	'achievements-badge-desc-creator' => 'për avèj creà la wiki!',
+	'achievements-badge-desc-pounce' => "Për avèj fàit dle modìfiche su 100 pàgine ant n'ora da soa creassion!",
+	'achievements-badge-desc-caffeinated' => 'për avèj fàit 100 modìfiche su dle pàgine ant un di sol!',
+	'achievements-badge-desc-luckyedit' => 'për avèj fàit la modìfica Fortunà nùmer $1 an sla wiki!',
 );
 
 /** Pashto (پښتو)
@@ -3538,6 +3669,7 @@ $messages['ps'] = array(
 	'achievements-bronze' => 'ژېړ',
 	'achievements-viewall' => 'ټول کتل',
 	'achievements-viewless' => 'تړل',
+	'achievements-viewall-oasis' => 'ټول کتل',
 	'achievements-leaderboard-member-label' => 'غړی',
 	'achievements-send' => 'انځور خوندي کول',
 	'achievements-save' => 'بدلونونه خوندي کول',
@@ -3546,7 +3678,9 @@ $messages['ps'] = array(
 	'achievements-community-platinum-edit' => 'سمول',
 	'achievements-community-platinum-save' => 'خوندي کول',
 	'achievements-badge-name-edit-3' => 'د ويکي ملګری',
+	'achievements-badge-name-picture-6' => 'سکښتګر',
 	'achievements-badge-name-blogcomment-1' => 'او يو بل څه',
+	'achievements-badge-name-love-5' => 'يو ويکي ژوند',
 	'achievements-badge-name-welcome' => 'ويکي ته ښه راغلاست',
 	'achievements-badge-name-introduction' => 'پېژندنه',
 );
@@ -3569,6 +3703,7 @@ Tente outra imagem, por favor!',
 	'achievements-gold' => 'Ouro',
 	'achievements-silver' => 'Prata',
 	'achievements-bronze' => 'Bronze',
+	'achievements-you-must' => 'Para receber esta medalha tem de $1.',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|ponto|pontos}}</small>',
 	'achievements-points' => '$1 {{PLURAL:$1|ponto|pontos}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|ponto|pontos}}',
@@ -3600,7 +3735,11 @@ Tente outra imagem, por favor!',
 	'achievements-badge-name-love-4' => 'Viciado',
 	'achievements-badge-name-welcome' => 'Bem-vindo(a) à Wiki',
 	'achievements-badge-name-introduction' => 'Introdução',
+	'achievements-badge-to-get-edit' => 'fazer $1 {{PLURAL:$1|edição|edições}} {{PLURAL:$1|numa página|de páginas}}',
 	'achievements-badge-to-get-edit-plus-category' => 'fazer {{PLURAL:$1|uma edição de uma página|$1 edições de páginas}} $2',
+	'achievements-badge-to-get-category' => 'categorizar $1 {{PLURAL:$1|página|páginas}}',
+	'achievements-badge-to-get-blogpost' => 'publicar $1 {{PLURAL:$1|mensagem|mensagens}} de blogue',
+	'achievements-badge-to-get-blogcomment' => 'comentar {{PLURAL:$1|uma publicação num blogue|$1 publicações em blogues}}',
 	'achievements-badge-to-get-introduction' => 'adicionar à sua página de utilizador',
 	'achievements-badge-to-get-sayhi' => 'deixar uma mensagem na página de discussão de alguém',
 	'achievements-badge-to-get-creator' => 'ser o criador desta wiki',

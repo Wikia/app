@@ -935,6 +935,17 @@ $messages['ps'] = array(
 	'createpage_invalid_title_error' => 'ناسم سرليک',
 	'createpage-dialog-title' => 'يوه نوې ليکنه ليکل',
 	'createpage-dialog-blank' => 'تش مخ',
+	'createpage-error-empty-title' => 'لطفاً خپل مخ ته يو سرليک وليکۍ.',
+	'newpagelayout' => '[[دوتنه:Placeholder|ښي|300px]]
+د خپل د مخ لومړی پاراګراف دلته وليکۍ.
+
+==د برخې سرليک==
+
+د خپل د مخ لومړۍ برخه دلته وليکۍ.
+
+==د برخې سرليک==
+
+د خپل د مخ دويمه برخه دلته وليکۍ.',
 );
 
 /** Portuguese (Português)
@@ -1133,6 +1144,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'createpage-desc' => 'Nagpapahintulot upang makalikha ng isang bagong pahina na gumagamit ng patnugot na WYSIWYG ng Wikia',
 	'createpage-sp-title' => 'Lumikha ng isang bagong artikulo',
 	'createpage_title' => 'Lumikha ng isang bagong artikulo',
 	'createpage_title_caption' => 'Pamagat:',

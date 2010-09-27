@@ -594,6 +594,7 @@ $messages['ps'] = array(
 	'wikiavideo-added' => 'ورګډه شوې ويډيو $1',
 	'wikiavideo-back' => 'پر شا کېدل',
 	'wikiavideo-create' => 'ويډيو ورګډول',
+	'wikiavideo-replace' => 'ويډيو ځايناستول',
 	'wikiavideo-category' => 'ويډيوګانې',
 	'wikiavideo-links' => 'تړنې',
 	'wikiavideo-pixel' => 'پېکسل',

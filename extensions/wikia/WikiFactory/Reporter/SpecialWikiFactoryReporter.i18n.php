@@ -334,6 +334,13 @@ $messages['ru'] = array(
 	'wikifactoryreporter' => 'Репортёр WikiFactory',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'wikifactoryreporter' => 'Poročevalec WikiFactory',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Charmed94
  */

@@ -143,3 +143,11 @@ $messages['ru'] = array(
 	'slidertag-featured-wikis' => 'Избранные вики',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'slidertag-desc' => 'Nagbibigay ng isang pangkalahatang paraan para sa tagagamit upang makapagddagag ng tampok na mga pampadulas',
+	'slidertag-featured-wikis' => 'Tampok na mga wiki',
+);
+

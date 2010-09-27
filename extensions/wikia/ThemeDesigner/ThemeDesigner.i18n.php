@@ -79,7 +79,6 @@ $messages['af'] = array(
  */
 $messages['be-tarask'] = array(
 	'themedesigner-desc' => 'Дазваляе адміністратарам ствараць тэмы для вікі',
-	'themedesigner' => 'Канструктар тэмаў',
 	'themedesigner-title' => 'Канструктар тэмаў для Wikia',
 	'themedesigner-background' => 'Фон',
 	'themedesigner-page' => 'Старонка',
@@ -92,6 +91,7 @@ $messages['be-tarask'] = array(
 	'themedesigner-small' => 'Маленькі',
 	'themedesigner-medium' => 'Сярэдні',
 	'themedesigner-large' => 'Вялікі',
+	'themedesigner-tab-theme' => 'Афармленьне',
 );
 
 /** Breton (Brezhoneg)
@@ -112,7 +112,6 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'themedesigner-desc' => 'Omogućava wiki administratorima dizajniranje teme za wiki',
-	'themedesigner' => 'Dizajner tema',
 	'themedesigner-title' => 'Dizajner Wikia tema',
 	'themedesigner-background' => 'Pozadina',
 	'themedesigner-page' => 'Stranica',
@@ -133,7 +132,6 @@ $messages['bs'] = array(
  */
 $messages['de'] = array(
 	'themedesigner-desc' => 'Erlaubt Wiki-Administratoren die Erstellung eines Themes für ein Wiki',
-	'themedesigner' => 'Theme Designer',
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Hintergrund',
 	'themedesigner-page' => 'Seite',
@@ -155,7 +153,6 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'themedesigner-desc' => 'Permitir a los administradores del wiki poder diseñar un tema propio para el wiki',
-	'themedesigner' => 'Diseñador',
 	'themedesigner-title' => 'Diseñador del tema visual de Wikia',
 	'themedesigner-background' => 'Fondo',
 	'themedesigner-page' => 'Página',
@@ -173,19 +170,19 @@ $messages['es'] = array(
 /** French (Français)
  * @author Iluvalar
  * @author Sherbrooke
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'themedesigner-desc' => 'Permet aux administrateurs du wiki de concevoir un thème pour un wiki',
-	'themedesigner' => 'Concepteur de thème',
-	'themedesigner-title' => 'Concepteur de thème pour Wikia',
+	'themedesigner-title' => 'Concepteur de thème Wikia',
 	'themedesigner-background' => 'Arrière-plan',
 	'themedesigner-page' => 'Page',
 	'themedesigner-color' => 'couleur',
 	'themedesigner-graphic' => 'graphique',
 	'themedesigner-buttons' => 'boutons',
 	'themedesigner-links' => 'liens',
-	'themedesigner-text-wordmark' => 'Symbole textuel',
-	'themedesigner-graphic-wordmark' => 'Symbole graphique',
+	'themedesigner-text-wordmark' => 'Logo textuel',
+	'themedesigner-graphic-wordmark' => 'Logo graphique',
 	'themedesigner-small' => 'Petit',
 	'themedesigner-medium' => 'Moyen',
 	'themedesigner-large' => 'Grand',
@@ -196,7 +193,6 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'themedesigner-desc' => 'Permite aos administradores deseñar o tema visual do wiki',
-	'themedesigner' => 'Deseñador de temas visuais',
 	'themedesigner-title' => 'Deseñador de temas visuais de Wikia',
 	'themedesigner-background' => 'Fondo',
 	'themedesigner-page' => 'Páxina',
@@ -216,7 +212,6 @@ $messages['gl'] = array(
  */
 $messages['ia'] = array(
 	'themedesigner-desc' => 'Permitte que administratores wiki designa un apparentia pro un wiki',
-	'themedesigner' => 'Designator de apparentias',
 	'themedesigner-title' => 'Designator de apparentias de Wikia',
 	'themedesigner-background' => 'Fundo',
 	'themedesigner-page' => 'Pagina',
@@ -229,6 +224,31 @@ $messages['ia'] = array(
 	'themedesigner-small' => 'Micre',
 	'themedesigner-medium' => 'Medie',
 	'themedesigner-large' => 'Grande',
+	'themedesigner-tile-background' => 'fundo in tegulas',
+	'themedesigner-tab-theme' => 'Thema',
+	'themedesigner-tab-customize' => 'Personalisar',
+	'themedesigner-tab-wordmark' => 'Marca de parola',
+	'themedesigner-preview-mode' => 'Modo de previsualisation...',
+	'themedesigner-previous-versions' => 'Previe versiones',
+	'themedesigner-button-save-im-done' => 'Salveguardar, io ha finite',
+	'themedesigner-button-cancel' => 'Cancellar',
+	'themedesigner-pick-a-color' => 'Selige un color',
+	'themedesigner-enter-your-own' => 'Entra un proprie',
+	'themedesigner-color-name-or-hex-code' => 'Nomine de color o codice hexadecimal',
+	'themedesigner-button-ok' => 'OK',
+	'themedesigner-pick-an-image' => 'Selige un imagine',
+	'themedesigner-dont-use-a-background' => 'Non usar un fundo',
+	'themedesigner-upload-your-own' => 'Incargar un proprie',
+	'themedesigner-button-upload' => 'Incargar',
+	'themedesigner-rules-background' => 'JPG, GIF o PNG. Limite de 100 kilobytes.',
+	'themedesigner-default' => 'Predefinition',
+	'themedesigner-button-edit' => 'Modificar',
+	'themedesigner-font' => 'typo de litteras',
+	'themedesigner-size' => 'dimension',
+	'themedesigner-button-save' => 'Salveguardar',
+	'themedesigner-upload-a-graphic' => 'incargar un graphico',
+	'themedesigner-rules-wordmark' => '250x65 pixels (files .png solmente)',
+	'themedesigner-dont-use-a-graphic' => 'Non usar un graphico',
 );
 
 /** Macedonian (Македонски)
@@ -236,7 +256,6 @@ $messages['ia'] = array(
  */
 $messages['mk'] = array(
 	'themedesigner-desc' => 'Им овозможува на вики-администраторите ликовно да го уредат изгледот на викито',
-	'themedesigner' => 'Ликовен уредник',
 	'themedesigner-title' => 'Ликовен уредник на Викија',
 	'themedesigner-background' => 'Позадина',
 	'themedesigner-page' => 'Страница',
@@ -249,14 +268,39 @@ $messages['mk'] = array(
 	'themedesigner-small' => 'Мал',
 	'themedesigner-medium' => 'Среден',
 	'themedesigner-large' => 'Голем',
+	'themedesigner-tile-background' => 'позадина на поле',
+	'themedesigner-tab-theme' => 'Изглед',
+	'themedesigner-tab-customize' => 'Прилагоди',
+	'themedesigner-tab-wordmark' => 'Жиг',
+	'themedesigner-preview-mode' => 'Прегледен режим...',
+	'themedesigner-previous-versions' => 'Претходни верзии',
+	'themedesigner-button-save-im-done' => 'Зачувај, завршив',
+	'themedesigner-button-cancel' => 'Откажи',
+	'themedesigner-pick-a-color' => 'Одберете боја',
+	'themedesigner-enter-your-own' => 'Внесете своја',
+	'themedesigner-color-name-or-hex-code' => 'Име на бојата или хекс-код',
+	'themedesigner-button-ok' => 'Ок',
+	'themedesigner-pick-an-image' => 'Одберете слика',
+	'themedesigner-dont-use-a-background' => 'Не користи позадина',
+	'themedesigner-upload-your-own' => 'Подигнете своја',
+	'themedesigner-button-upload' => 'Подигни',
+	'themedesigner-rules-background' => 'jpg, gif или png. Ограничено на 100 килобајти',
+	'themedesigner-default' => 'По основно',
+	'themedesigner-button-edit' => 'Уреди',
+	'themedesigner-font' => 'фонт',
+	'themedesigner-size' => 'големина',
+	'themedesigner-button-save' => 'Зачувај',
+	'themedesigner-upload-a-graphic' => 'подигни графика',
+	'themedesigner-rules-wordmark' => '250x65 пиксели (само .png податотеки)',
+	'themedesigner-dont-use-a-graphic' => 'Не користи графика',
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'themedesigner-desc' => 'Staat wikibeheerders toe een thema voor een wiki te ontwerpen',
-	'themedesigner' => 'Thema ontwerpen',
 	'themedesigner-title' => 'Wikia Themaontwerper',
 	'themedesigner-background' => 'Achtergrond',
 	'themedesigner-page' => 'Pagina',
@@ -269,14 +313,38 @@ $messages['nl'] = array(
 	'themedesigner-small' => 'Klein',
 	'themedesigner-medium' => 'Gemiddeld',
 	'themedesigner-large' => 'Groot',
+	'themedesigner-tile-background' => 'naast elkaar',
+	'themedesigner-tab-theme' => 'Vormgeving',
+	'themedesigner-tab-customize' => 'Aanpassen',
+	'themedesigner-tab-wordmark' => 'Woordmerk',
+	'themedesigner-preview-mode' => 'Voorvertoningsmodus...',
+	'themedesigner-previous-versions' => 'Eerdere versies',
+	'themedesigner-button-save-im-done' => 'Opslaan, ik ben klaar',
+	'themedesigner-button-cancel' => 'Annuleren',
+	'themedesigner-pick-a-color' => 'Kies een kleur',
+	'themedesigner-enter-your-own' => 'Eigen ingeven',
+	'themedesigner-color-name-or-hex-code' => 'Kleurnaam of hexadecimale code',
+	'themedesigner-button-ok' => 'OK',
+	'themedesigner-pick-an-image' => 'Kies een afbeelding',
+	'themedesigner-dont-use-a-background' => 'Geen achtergrond gebruiken',
+	'themedesigner-upload-your-own' => 'Eigen uploaden',
+	'themedesigner-button-upload' => 'Uploaden',
+	'themedesigner-rules-background' => 'JPG, GIF of PNG. Maximaal 100 kilobyte.',
+	'themedesigner-default' => 'Standaard',
+	'themedesigner-button-edit' => 'Bewerken',
+	'themedesigner-font' => 'lettertype',
+	'themedesigner-size' => 'grootte',
+	'themedesigner-button-save' => 'Opslaan',
+	'themedesigner-upload-a-graphic' => 'afbeelding uploaden',
+	'themedesigner-rules-wordmark' => '250 x 65 pixels (alleen PNG-bestanden)',
+	'themedesigner-dont-use-a-graphic' => 'Geen afbeelding gebruiken',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
 	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
-	'themedesigner' => 'Temautformer',
 	'themedesigner-title' => 'Wikia-temautfordring',
 	'themedesigner-background' => 'Bakgrunn',
 	'themedesigner-page' => 'Side',
@@ -297,7 +365,6 @@ $messages['no'] = array(
  */
 $messages['pms'] = array(
 	'themedesigner-desc' => "A përmët a j'aministrator ëd la wiki ëd disegné un tema për na wiki",
-	'themedesigner' => 'Dissegnator ëd tema',
 	'themedesigner-title' => 'Dissegnator ëd Tema ëd Wikia',
 	'themedesigner-background' => 'Sfond',
 	'themedesigner-page' => 'Pàgina',
@@ -312,13 +379,26 @@ $messages['pms'] = array(
 	'themedesigner-large' => 'Gròss',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'themedesigner-page' => 'مخ',
+	'themedesigner-color' => 'رنګ',
+	'themedesigner-graphic' => 'ګرافيک',
+	'themedesigner-buttons' => 'تڼۍ',
+	'themedesigner-links' => 'تړنې',
+	'themedesigner-small' => 'وړوکی',
+	'themedesigner-medium' => 'منځوی',
+	'themedesigner-large' => 'لوی',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
 	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
-	'themedesigner' => 'Compositor de Temas Visuais',
 	'themedesigner-title' => 'Compositor de Temas Visuais da Wikia',
 	'themedesigner-background' => 'Fundo',
 	'themedesigner-page' => 'Página',
@@ -338,7 +418,6 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
-	'themedesigner' => 'Compositor de Temas Visuais',
 	'themedesigner-title' => 'Compositor de Temas Visuais da Wikia',
 	'themedesigner-background' => 'Fundo',
 	'themedesigner-page' => 'Página',
@@ -358,7 +437,6 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'themedesigner-desc' => 'Позволяет администраторам разрабатывать темы для Wiki',
-	'themedesigner' => 'Конструктор тем',
 	'themedesigner-title' => 'Конструктор тем Wikia',
 	'themedesigner-background' => 'Фон',
 	'themedesigner-page' => 'Страница',
@@ -371,6 +449,25 @@ $messages['ru'] = array(
 	'themedesigner-small' => 'Маленький',
 	'themedesigner-medium' => 'Средний',
 	'themedesigner-large' => 'Большой',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'themedesigner-desc' => 'Nagpapahintulog sa mga tagapangasiwa ng wiki na makapagdisenyo ng isang tema para sa isang wiki',
+	'themedesigner-title' => 'Tagapagdisenyo ng Tema ng Wikia',
+	'themedesigner-background' => 'Panlikuran',
+	'themedesigner-page' => 'Pahina',
+	'themedesigner-color' => 'kulay',
+	'themedesigner-graphic' => 'malarawan',
+	'themedesigner-buttons' => 'mga pindutan',
+	'themedesigner-links' => 'mga kawing',
+	'themedesigner-text-wordmark' => 'Markang salita ng teksto',
+	'themedesigner-graphic-wordmark' => 'Malarawang marka ng salita',
+	'themedesigner-small' => 'Maliit',
+	'themedesigner-medium' => 'Gitnang sukat',
+	'themedesigner-large' => 'Malaki',
 );
 
 /** Ukrainian (Українська)

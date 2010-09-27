@@ -1080,6 +1080,7 @@ Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pah
 
 Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa dito, maaaring naisin mong
 dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3",
+	'staffsig-text' => ' $1<staff /> <small>([[w:forums|poro ng tulong]] | [[w:sblog|blog]])</small>',
 );
 
 /** Ukrainian (Українська)

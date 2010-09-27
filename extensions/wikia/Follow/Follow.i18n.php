@@ -1782,6 +1782,68 @@ $messages['te'] = array(
 	'wikiafollowedpages-userpage-hide' => 'దాచు',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'follow-desc' => 'Mga pagpapainam para sa katungkulang-gawain ng talaan ng binabantayan',
+	'wikiafollowedpages-special-heading-category' => 'Mga kategorya ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Mga artikulo ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Mga blog at mga pagpapaskil ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Mga sinulid ng poro ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Mga pahina ng proyekto ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Mga pahina ng tagagamit ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Mga pahina ng mga suleras ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Mga pahina ng MediaWiki ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Mga larawan at mga bidyo ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 pahina)',
+	'wikiafollowedpages-special-empty' => 'Ang talaang ito ng sinusundan mga pahina ng tagagamit ay walang laman.
+Idagdag ang mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watch}}" na nasa itaas ng isang pahina.',
+	'wikiafollowedpages-special-anon' => 'Paki [[Special:Signup|lumagda]] upang makalikha o tanawin ang iyong talaan ng sinusundang mga pahina.',
+	'oasis-wikiafollowedpages-special-seeall' => 'Tingnan lahat >',
+	'wikiafollowedpages-special-seeall' => 'Tingnan lahat >',
+	'wikiafollowedpages-special-showall' => 'Ipakitang lahat >',
+	'wikiafollowedpages-special-showmore' => 'Magpakita pa',
+	'wikiafollowedpages-special-title' => 'Sinusundang mga pahina',
+	'wikiafollowedpages-special-delete-tooltip' => 'Tanggalin ang pahinang ito',
+	'wikiafollowedpages-special-hidden' => 'Ang tagagamit na ito ay pumili na itago ang {{GENDER:$1|kanyang|kanyang|kanilang}} talaan ng sinusundang mga pahina mula sa pagtanaw ng madla.',
+	'wikiafollowedpages-special-hidden-unhide' => 'Huwag itago ang talaang ito.',
+	'wikiafollowedpages-special-blog-by' => 'ni $1',
+	'wikiafollowedpages-masthead' => 'Sinusundang mga pahina',
+	'wikiafollowedpages-following' => 'Sinusundan ang',
+	'wikiafollowedpages-special-title-userbar' => 'Sinusundang mga pahina',
+	'tog-enotiffollowedpages' => 'Padalhan ako ng e-liham kapag ang isang pahinang sinusundan ko ay nabago',
+	'tog-enotiffollowedminoredits' => 'Padalhan ako ng e-liham para sa maliliit na mga pagbabago sa mga pahinang sinusundan ko',
+	'wikiafollowedpages-prefs-advanced' => 'Mas masulong na mga pagpipilian',
+	'wikiafollowedpages-prefs-watchlist' => 'Talaan ng binabantayan lamang',
+	'tog-hidefollowedpages' => 'Gawing pribado ang aking mga talaan ng sinusundang mga pahina',
+	'follow-categoryadd-summary' => 'Idinagdag ang pahina sa kategorya',
+	'follow-bloglisting-summary' => 'Ipinaskil ang blog sa pahina ng blog',
+	'wikiafollowedpages-userpage-heading' => 'Mga pahinang sinusundan ko',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Itago ang iyong mga talaan ng sinusundang mga pahina mula sa mata ng madla',
+	'wikiafollowedpages-userpage-more' => 'Mas marami pa',
+	'wikiafollowedpages-userpage-hide' => 'itago',
+	'wikiafollowedpages-userpage-empty' => 'Walang laman ang talaan ng sinusundang mga pahina ng tagagamit na ito.
+Idagdag ang mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watch}}" na nasa itaas ng isang pahina.',
+	'enotif_subject_categoryadd' => 'Ang pahinang $PAGETITLE ng {{SITENAME}} ay naidagdag na ni $PAGEEDITOR sa $CATEGORYNAME',
+	'enotif_body_categoryadd' => 'Mahal na $ WATCHINGUSERNAME, 
+
+Isang pahina ang idinagdag sa isang kategoryang sinusundan mo sa {{SITENAME}}. 
+
+Tingnan ang "$PAGETITLE_URL" para sa bagong pahina. 
+
+Mangyaring dalawin at madalas na mamatnugot ... 
+
+{{SITENAME}}
+
+ ___________________________________________ 
+ * Tingnan ang aming tampok na mga wiki! http://www.wikia.com 
+
+ * Nais mo bang tabanan kung anong mga e-liham ang matatanggap mo? 
+ Pumunta sa: {{fullurl:{{ns: special}}:Preferences}}.',
+	'enotif_subject_blogpost' => 'Ang pahinang $PAGETITLE ng {{SITENAME}} ay naipaskil na ni $PAGEEDITOR sa $BLOGLISTINGNAME',
+);
+
 /** Ukrainian (Українська)
  * @author Ast
  * @author Тест

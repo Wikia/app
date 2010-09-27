@@ -1870,7 +1870,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-comments-anonymous' => 'Anonieme gebruiker',
 	'blog-comment-delete' => 'verwijderen',
 	'blog-comment-hide' => 'verbergen',
-	'blog-comment-unhide' => 'zichtbaar maken',
+	'blog-comment-unhide' => 'weergeven',
 	'blog-comment-history' => 'geschiedenis',
 	'blog-comment-edit' => 'bewerken',
 	'blog-comment-error' => 'De opmerking kon niet opgeslagen worden',
@@ -2886,7 +2886,7 @@ $messages['tl'] = array(
 	'blog-emptyparam' => 'Hindi maaaring walang laman ang pangalan ng parametro',
 	'blog-defaulttitle' => 'Mga blog',
 	'blog-continuereading' => 'Ipagpatuloy ang pagbasa ng &raquo;',
-	'blog-readfullpost' => 'Basahin ang buong paskil',
+	'blog-readfullpost' => 'Magbasa ng marami pa',
 	'blog-olderposts' => 'Mas lumang mga pagpapaskil',
 	'blog-newerposts' => 'Mas bagong mga pagpapaskil',
 	'blog-nbrcomments' => '{{PLURAL:$1|Isang puna|$1 mga puna}}',
@@ -2939,6 +2939,7 @@ $messages['tl'] = array(
 	'blogs-recent-url-text' => 'Kamakailang mga paskil na pamblog',
 	'blog-desc' => 'Mga artikulong pamblog',
 	'blog-movepage-badtitle' => 'Hindi tanggap na pamagat ng paskil na pamblog.',
+	'blog-comment-sending' => 'Ipinapadala...',
 );
 
 /** Ukrainian (Українська)

@@ -326,6 +326,7 @@ $messages['qqq'] = array(
 	'wikiastats_username' => '{{Identical|User}}',
 	'wikiastats_usernames' => '{{Identical|User}}',
 	'wikiastats_size' => '{{Identical|Size}}',
+	'wikiastats_redirects' => '{{Identical|Redirect}}',
 	'wikiastats_register' => 'Abbreviation for "Registered users"',
 	'wikiastats_unregister' => 'Abbreviation for "Unregistered users" (anonymous)',
 	'wikiastats_more_txt' => '{{Identical|More}}',
@@ -2209,11 +2210,14 @@ $messages['he'] = array(
 /** Hungarian (Magyar)
  * @author Enbéká
  * @author Glanthor Reviol
+ * @author Misibacsi
  */
 $messages['hu'] = array(
 	'wikiastats' => 'Wikia statisztika',
 	'wikiastats_wikia' => 'Wikia',
 	'wikiastats_pagetitle' => 'Wikia statisztika',
+	'wikiastats_info' => 'Válassz ki egy wikit a listáról, és nyomd meg:  "((int: wikiastats_showstats_btn))"',
+	'wikiastats_xls_generate_info' => 'Legfeljebb $1 választható a listáról',
 	'wikiastats_comparision' => 'Összehasonlítások',
 	'wikiastats_showstats_btn' => 'Statisztika megjelenítése',
 	'wikiastats_wikia_information' => 'Wikia információk',
@@ -2225,6 +2229,8 @@ $messages['hu'] = array(
 	'wikiastats_daterange_to' => 'Címzett:',
 	'wikiastats_nostats_found' => 'Nem találhatók statisztikák a kiválasztott Wikiához',
 	'wikiaststs_invalid_date' => 'Érvénytelen dátumtartomány',
+	'wikiastats_anon_wikians_count' => '$1 névtelen szerkesztő található',
+	'wikiastats_article_one_link' => 'Olyan szócikkek, amikben legalább egy belső hivatkozás van',
 	'wikiastats_active_day' => 'nap',
 	'wikiastats_active_month' => 'hónap',
 	'wikiastats_active_year' => 'év',
@@ -4341,15 +4347,27 @@ $messages['pdc'] = array(
 /** Polish (Polski)
  * @author Deejay1
  * @author Marcin Łukasz Kiejzik
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'wikiastats' => 'Statystyki Wikii',
 	'wikiastats_wikia' => 'Wikia',
 	'wikiastats_pagetitle' => 'Statystyki Wikii',
+	'wikiastats_info' => 'Wybierz wiki z listy i naciśnij „{{int:wikiastats_showstats_btn}}”',
+	'wikiastats_mainstats_info' => 'Wybierz wiki z listy i naciśnij „{{int:wikiastats_xls_generate}}”',
+	'wikiastats_xls_generate_info' => 'Możesz wybrać maksymalnie $1 wiki z listy',
 	'wikiastats_comparision' => 'Porównania',
+	'wikiastats_showstats_btn' => 'Pokaż statystyki',
+	'wikiastats_wikia_information' => 'Informacje na temat Wikii',
 	'wikiastast_refresh_data' => 'Odśwież dane',
+	'wikiastats_showcharts' => 'Wykresy',
+	'wikiastats_export_xls' => 'Eksport do XLS',
+	'wikiastats_panel_close_btn' => 'Zamknij',
 	'wikiastats_daterange_from' => 'Od:',
 	'wikiastats_daterange_to' => 'Do:',
+	'wikiastats_nostats_found' => 'Brak statystyk dla wybranej Wikii',
+	'wikiaststs_invalid_date' => 'Nieprawidłowy zakres dat',
+	'wikiastats_distrib_article' => 'Rozkład aktywności autorów',
 	'wikiastats_active_day' => 'dzień',
 	'wikiastats_active_month' => 'miesiąc',
 	'wikiastats_active_year' => 'rok',
@@ -5492,8 +5510,8 @@ $messages['tl'] = array(
 	'wikiastats' => 'Estadistika ng Wikia',
 	'wikiastats_wikia' => 'Wikia',
 	'wikiastats_pagetitle' => 'Estadistika ng Wikia',
-	'wikiastats_info' => 'Pumili ng isang wiki mula sa talaan at pindutin ang "Ipakita ang estadistika"',
-	'wikiastats_mainstats_info' => 'Pumili ng isang wiki mula sa talaan at pindutin ang "Likhain"',
+	'wikiastats_info' => 'Pumili ng isang wiki mula sa talaan at pindutin ang "{{int:wikiastats_showstats_btn}}"',
+	'wikiastats_mainstats_info' => 'Pumili ng isang wiki mula sa talaan at pindutin ang "{{int:wikiastats_xls_generate}}"',
 	'wikiastats_xls_generate_info' => 'Maaari kang pumili ng $1 mga Wiki mula sa talaan',
 	'wikiastats_comparision' => 'Mga paghahambing',
 	'wikiastats_showstats_btn' => 'Ipakita ang estadistika',
@@ -5516,7 +5534,7 @@ $messages['tl'] = array(
 	'wikiastats_article_size_subtitle' => 'Pumili ng isa o marami pang mga sukat ng artikulong ipapakita ang pindutin ang pindutan upang tingnan ang estadistika',
 	'wikiastats_recently_active_wikians' => '$1 kamakailang masiglang nakatalang {{PLURAL:$1|patnugot|mga patnugot, pinagsunud-sunod ayon sa bilang ng mga ambag}}',
 	'wikiastats_recently_absent_wikians' => '$1 kamakailang lumiban na nakatalang {{PLURAL:$1|patnugot|mga patnugot, pinagsunud-sunod ayon sa bilang ng mga ambag}}',
-	'wikiastats_active_wikians_subtitle' => 'tanging mga pagbabago sa nilalaman ng mga puwang na pampangalan ang binilang, bukod sa patayong hanay na "Iba pa"',
+	'wikiastats_active_wikians_subtitle' => 'tanging mga pagbabago sa nilalaman ng mga puwang na pampangalan ang binilang, bukod sa patayong hanay na "{{int:wikiastats_other}}"',
 	'wikiastats_anon_wikians_subtitle' => 'tanging mga pagbabago sa nilalaman ng mga puwang na pampangalan lang ang binilang',
 	'wikiastats_active_wikians_subtitle_info' => 'Δ = pagbabago sa ranggo sa loob ng 30 mga araw',
 	'wikiastats_pageviews_subtext' => 'mga pagtingin sa pahina sa buwang ito (K = x 1000, M = K x 1000, G = M x 1000, T = G x 1000)',
@@ -5656,7 +5674,7 @@ $messages['tl'] = array(
 	'wikiastats_trend_all_wikia_text' => 'Lahat ng mga wiki',
 	'wikiastats_always_selected' => '(laging napipili)',
 	'wikiastats_creation_wikia_text' => 'Kasaysayan ng paglikha / Mga nagawa',
-	'wikiastats_creation_panel_header' => 'Nalikha na ang estadistika ng "kasaysayan ng paglikha"',
+	'wikiastats_creation_panel_header' => 'Nalikha na ang estadistika ng "{{int:wikiastats_creation_wikia_filename}}"',
 	'wikiastats_creation_legend' => 'Karaniwang pataas sa bawat buwan:',
 	'wikiastats_select_statistics' => 'Piliin ang estadistika',
 	'wikiastats_select_wikia_statistics' => 'Piliin ang estadistika para sa $1 na Wikia',

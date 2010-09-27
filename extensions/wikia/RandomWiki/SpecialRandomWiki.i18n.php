@@ -205,6 +205,14 @@ $messages['te'] = array(
 	'randomwiki' => 'యాదృచ్చిక వికీ',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'randomwiki-desc' => 'Nagpapahintulot sa mga tagagamit na magalugat ang alin mang wiki',
+	'randomwiki' => 'Alinmang Wiki',
+);
+
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
  * @author Ильнар
  */

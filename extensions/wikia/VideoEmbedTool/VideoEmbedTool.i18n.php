@@ -105,6 +105,13 @@ $messages['qqq'] = array(
 	'vet-right' => '{{Identical|Right}}',
 );
 
+/** Abkhazian (Аҧсуа)
+ * @author Temuri rajavi
+ */
+$messages['ab'] = array(
+	'vet-caption' => 'Анапынҵамҭа',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */

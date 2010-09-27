@@ -263,9 +263,31 @@ Wikia
 
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
+ * @author Misibacsi
  */
 $messages['hu'] = array(
+	'globalwatchlist-desc' => 'Hetente összefoglaló emailt küld az összes wiki figyelőlapján történt változásokról.',
+	'tog-watchlistdigest' => 'Heti összefoglaló figyelőlista küldése nekem emailben.',
+	'tog-watchlistdigestclear' => 'A heti összefoglaló figyelőlista minden oldalát megtekintettnek jelöli',
 	'globalwatchlist-see-more' => 'Kérlek nézd meg a helyi figyelőlistáidat további változtatásokért',
+	'globalwatchlist-digest-email-subject' => 'Heti összefoglaló',
+	'globalwatchlist-digest-email-body' => 'Kedves $1!
+
+Ezek az oldalak a Wikia figyelőlistádon, amik változtak, mióta utoljára megnézted őket. 
+
+$2
+
+Ezek a blog-oldalak a Wikia figyelőlistádon, amik változtak, mióta utoljára megnézted őket. 
+
+$3
+
+Kérjük látogasd meg őket és szerkessz gyakran...
+
+Wikia
+
+* A figyelőlista beállításainak módosításához látogasd meg ezt az oldalt: http://www.wikia.com/wiki/Special:Preferences
+* Az összes lap megtekintettnek jelöléséhez lásd a "Figyelőlista" opciót a "Beállítások" lapodon',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|megjegyzés|megjegyzés}})',
 	'globalwatchlist-no-page-found' => 'Nincs találat.',
 	'globalwatchlist-no-blog-page-found' => 'Nincs blog-találat.',
 );
@@ -617,6 +639,7 @@ $3
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'globalwatchlist-desc' => 'Nagpapadala ng lingguhang buod ng mga e-liham na may mga pahinang binabantayan sa lahat ng mga wiki',
 	'tog-watchlistdigest' => 'Padalhan ako ng e-liham ng isang Lingguhang Katipunan ng Mga Binabantayan',
 	'tog-watchlistdigestclear' => 'Markahan ang lahat ng mga pahina mula sa aking Lingguhang Katipunan ng Mga Binabantayan bilang nadalaw na',
 	'globalwatchlist-see-more' => 'Pakisuri ang iyong katutubong mga talaan ng mga binabantayan para sa marami pang mga pagbabago',

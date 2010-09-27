@@ -357,3 +357,24 @@ $messages['te'] = array(
 	'recipes-more' => 'మరిన్ని',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'recipestweaks-desc' => 'Mga pagkurot sa disenyo at tungkulin para sa Wiki ng mga Resipi',
+	'savedpages' => 'Nasagip na mga pahina',
+	'recipes-add-new-recipe' => 'Magdagdag ng isang resipi',
+	'recipes-browse' => 'Galugarin ang Wiki ng mga Resipi',
+	'recipes-contributed-by' => 'Inambag ni $1 $2',
+	'recipes-contributed-by-anon' => 'Isang tagagamit ng Wiki ng mga Resipi',
+	'recipes-mainpage-title' => 'Maligayang Pagdating sa Wiki ng mga Resipi',
+	'recipes-more' => 'Marami pa',
+	'recipes-my-saved-pages' => 'Nasagip kong mga pahina',
+	'recipes-my-saved-pages-empty' => 'Wala pang nasasagip na mga pahina',
+	'recipes-rating' => 'Ang kaantasan ng resiping ito:',
+	'recipes-search-label' => 'Maghanap ng isang resipi',
+	'recipes-savedpages-empty' => 'Wala ka pang mga bagay sa loob ng kalipunan ng nasagip mong mga pahina.',
+	'recipes-savedpages-by' => 'ni $1',
+	'recipes-history' => 'Tingnan ang mga pagbabago sa pahinang ito',
+);
+
