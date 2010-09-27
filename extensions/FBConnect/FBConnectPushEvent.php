@@ -218,28 +218,38 @@ class FBConnectPushEvent {
 		
 		self::$eventCounter++ ;
 		
-		$fb = new FBConnectAPI();
-		
-		$image = $params['$EVENTIMG'];
-		if( strpos( $params['$EVENTIMG'], 'http://' ) === false ) {
-			$image = $wgServer.'/index.php?action=ajax&rs=FBConnectPushEvent::showImage&time='.time().'&fb_id='.$wgUser->getId()."&event=".$class.'&img='.$params['$EVENTIMG'];
+		if( wfRunHooks( 'FBConnect::BeforePushEvent', array( $id, &$message, &$params, &$class ) ) ) {
+			wfDebug( "FACEBOOK_CONNECT::PUSHEVENT fb_id: {$id}, msg: {$message}, params: " . var_export($params, true) . ", class: {$class}" );
+
+			$fb = new FBConnectAPI();
+
+			$image = $params['$EVENTIMG'];
+			if( strpos( $params['$EVENTIMG'], 'http://' ) === false ) {
+				$image = $wgServer.'/index.php?action=ajax&rs=FBConnectPushEvent::showImage&time='.time().'&fb_id='.$wgUser->getId()."&event=".$class.'&img='.$params['$EVENTIMG'];
+			}
+
+			$href = $params['$ARTICLE_URL'];
+			$description = wfMsg( $message ) ;
+			$link = wfMsg( $message.'-link' ) ;
+			$short = wfMsg( $message.'-short' ) ;
+
+			$params['$FB_NAME'] = "";
+			foreach ($params as $key => $value) {
+				if( $value instanceof Article ) {
+					continue;
+				}
+
+				$description = str_replace($key, $value, $description);
+				$link = str_replace($key, $value, $link);
+				$short = str_replace($key, $value, $short);
+			}
+
+			$status = $fb->publishStream( $href, $description, $short, $link, $image);
+			self::addEventStat($status, $class);
+			return $status;
 		}
-		
-		$href = $params['$ARTICLE_URL'];		
-		$description = wfMsg( $message ) ;
-		$link = wfMsg( $message.'-link' ) ;
-		$short = wfMsg( $message.'-short' ) ;
-		
-		$params['$FB_NAME'] = "";
-		foreach ($params as $key => $value) {
-		 	$description = str_replace($key, $value, $description);
-		 	$link = str_replace($key, $value, $link);
-		 	$short = str_replace($key, $value, $short);
-		}
-		
-		$status = $fb->publishStream( $href, $description, $short, $link, $image);
-		self::addEventStat($status, $class);
-		return $status;
+
+		return false;
 	} 
 	
 	/**
