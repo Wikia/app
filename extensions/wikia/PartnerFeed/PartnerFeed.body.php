@@ -8,7 +8,7 @@
  * Returns formated RSS / Atom Feeds
  */
 
-class PartnerFeed extends UnlistedSpecialPage {
+class PartnerFeed extends SpecialPage {
 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
@@ -83,7 +83,6 @@ class PartnerFeed extends UnlistedSpecialPage {
  * @param format string 'rss' or 'atom'
  *
  */
-	
 	private function FeedRecentBlogComments ( $format ){
 
 		global $wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath, $wgRequest;
@@ -351,31 +350,28 @@ class PartnerFeed extends UnlistedSpecialPage {
  */
 	private function PrepareHotContentFeed ( $hubId, $forceRefresh = false ){
 
-		global $wgMemc, $wgHTTPProxy, $wgHTTPTimeout;
+		global $wgMemc, $wgHTTPTimeout;
 
 		// local settings
 		$lang = "en";
 		$thumbSize = 288;
 		$thumbHeight = 124;
 		$resultsNumber = 10;
-		$isDevBox = false; // switch to false after tests
-		$stopCache = false;  // switch to false after tests
+		$stopCache = false; // switch to false after tests
 
 		if ( $forceRefresh ) $this->clearCache( $hubId );
 		$memcFeedArray = $this->getFromCache( $hubId );
-		if ( $memcFeedArray == null  || $stopCache ){
+		if ( $memcFeedArray == null  || !empty($stopCache) ){
 		
 			$datafeeds = new WikiaStatsAutoHubsConsumerDB( DB_SLAVE );
 			$out = $datafeeds->getTopArticles($hubId, $lang, $resultsNumber);
 			$feedArray = array();
 			foreach( $out['value'] as $key => $val ){
 
-				if ( $isDevBox ){
-					$httpResult = Http::get( $val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json' , 30, array(CURLOPT_PROXY => $wgHTTPProxy) );
-				}else{
-					$httpResult = Http::get( $val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json' , 30 );
-				}
-				$httpResultArr = json_decode( $httpResult );
+				$httpResultArr = $this->getDataFromApi(
+					$val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json'
+				);
+
 				$feedArray[] = array(
 					'title' => $val['page_name'],
 					'description' => $val['all_count'],
@@ -383,7 +379,7 @@ class PartnerFeed extends UnlistedSpecialPage {
 					'date' => time(),
 					'author' => 'Wikia',
 					'otherTags' => array(
-						'image' => ( isset($httpResultArr->image->imagecrop ) ) ? $httpResultArr->image->imagecrop : ''
+						'image' => $httpResultArr
 					)
 				);
 			}
@@ -393,7 +389,38 @@ class PartnerFeed extends UnlistedSpecialPage {
 			$feedArray = $memcFeedArray;
 		}
 		return $feedArray;
-		
+	}
+
+/**
+ * @author Jakub Kurcek
+ * @param url string url to data source
+ */
+	private function getDataFromApi( $url ){
+
+		global $wgIsDevBoxEnvironment, $wgHTTPProxy;
+
+		$retry = 0;
+
+		// #rt:68146 retries to prevent empty results caused by error 503
+
+		while( $retry <= 3 ) {
+
+			if ( !empty( $wgIsDevBoxEnvironment ) ){
+				$httpResult = Http::get( $url, 15, array(CURLOPT_PROXY => $wgHTTPProxy) );
+			}else{
+				$httpResult = Http::get( $url, 15 );
+			}
+			$httpResultArr = json_decode( $httpResult );
+
+			// in case of proper data ( even empty ) 
+			if ( isset( $httpResultArr->image->imagecrop ) ){
+				return $httpResultArr->image->imagecrop;
+			};
+			$retry++;
+		}
+		// in case of error returns empty string
+		return '';
+
 	}
 /**
  * @author Jakub Kurcek
@@ -401,7 +428,6 @@ class PartnerFeed extends UnlistedSpecialPage {
  *
  * Public controller for forced caching of specified hub results. Used for maintance script.
  */
-
 	public function ReloadHotContentFeed ( $hubId ){
 
 		$this->PrepareHotContentFeed( (integer) $hubId , true);
@@ -415,7 +441,6 @@ class PartnerFeed extends UnlistedSpecialPage {
  *
  * Caching functions.
  */
-
 	private function getKey( $hubId ) {
 		
 		return wfSharedMemcKey( 'widgetbox_hub_hotcontent', $hubId );
@@ -471,23 +496,22 @@ class PartnerFeed extends UnlistedSpecialPage {
 		$userAvatarSize = 48;
 		
 		$rankingService = new AchRankingService();
-		$ranking = $rankingService->getUsersRanking(20, true);
+		$ranking = $rankingService->getUsersRanking( 20, true );
 
-		// recent
-		$levels = array(BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE);
+		$levels = array( BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE );
 		$recents = array();
 		
-		foreach($levels as $level) {
+		foreach( $levels as $level ) {
 			$limit = 3;
 			$blackList = null;
-			if($level == BADGE_LEVEL_BRONZE) {
-				if($maxEntries <= 0) break;
+			if( $level == BADGE_LEVEL_BRONZE ) {
+				if( $maxEntries <= 0 ) break;
 
 				$limit = $maxEntries;
-				$blackList = array(BADGE_WELCOME);
+				$blackList = array( BADGE_WELCOME );
 			}
 
-			$awardedBadges = $rankingService->getRecentAwardedBadges($level, $limit, $howOld, $blackList);
+			$awardedBadges = $rankingService->getRecentAwardedBadges( $level, $limit, $howOld, $blackList );
 
 			if ( $total = count ( $awardedBadges ) ) {
 				$recents[$level] = $awardedBadges;
@@ -495,7 +519,7 @@ class PartnerFeed extends UnlistedSpecialPage {
 			}
 		}
 		$feedArray = array();
-		foreach($ranking as $rank => $rankedUser){
+		foreach( $ranking as $rank => $rankedUser ){
 			++$rank;
 			$name = htmlspecialchars( $rankedUser->getName() );
 			$feedArray[] = array(
