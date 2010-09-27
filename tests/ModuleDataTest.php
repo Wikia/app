@@ -474,6 +474,8 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 	function testHotSpotsModule() {
 		$moduleData = Module::get('HotSpots', 'Index')->getData();
+		// No edits means no hot spots to test
+		if (!isset($moduleData['data']['results'])) {  $this->markTestSkipped(); }
 
 		$this->assertType('array', $moduleData['data']['results']);
 		$this->assertEquals(count($moduleData['data']['results']), 5);
@@ -735,7 +737,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testFooterModule() {
-		global $wgSuppressToolbar, $wgShowMyToolsOnly;
+		global $wgSuppressToolbar, $wgShowMyToolsOnly, $wgTitle;
 
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertTrue($moduleData['showMyTools']);
@@ -744,14 +746,44 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgSuppressToolbar = true;
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertFalse($moduleData['showToolbar']);
+		$wgSuppressToolbar = false;
 
+		$wgShowMyToolsOnly = true;
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertTrue($moduleData['showToolbar']);
+		$wgShowMyToolsOnly = false;
+		
+		$wgTitle = Title::newFromText('Foo', NS_TALK);
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertNull($moduleData['showLike']);
+
+		$wgTitle = Title::NewFromText('SpecialPages', NS_SPECIAL);
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertNull($moduleData['showFollow']);
+
+		$wgTitle = Title::NewFromText('Foo', NS_TEMPLATE);
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertNull($moduleData['showLike']);
+
+		$wgTitle = Title::newFromText('User:WikiaBot');
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertTrue($moduleData['showShare']);
+
+		$wgTitle = Title::newMainPage();
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertTrue($moduleData['showShare']);
+		
 	}
 
 	// These are hards one to test, since the old ArticleCommentsCode is not modular
 	function testArticleCommentsModule() {
-		global $wgTitle, $wgDevelEnvironment;
+		global $wgTitle, $wgDevelEnvironment, $wgEnableArticleCommentsExt;
 		$wgDevelEnvironment = false;  // Suppress memkey logic that uses SERVER_NAME
-
+		// Force enable article comments ext?
+		if ($wgEnableArticleCommentsExt == false) {
+			$wgEnableArticleCommentsExt = true;
+			include("../extensions/wikia/ArticleComments/ArticleComments_setup.php");
+		}
 		$wgTitle = Title::newFromText("Foo");
 		$moduleData = Module::get('ArticleComments')->getData();
 		$this->assertEquals("Title", get_class($moduleData['wgTitle']));
