@@ -779,11 +779,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	function testArticleCommentsModule() {
 		global $wgTitle, $wgDevelEnvironment, $wgEnableArticleCommentsExt;
 		$wgDevelEnvironment = false;  // Suppress memkey logic that uses SERVER_NAME
-		// Force enable article comments ext?
-		if ($wgEnableArticleCommentsExt == false) {
-			$wgEnableArticleCommentsExt = true;
-			include("../extensions/wikia/ArticleComments/ArticleComments_setup.php");
-		}
+		
 		$wgTitle = Title::newFromText("Foo");
 		$moduleData = Module::get('ArticleComments')->getData();
 		$this->assertEquals("Title", get_class($moduleData['wgTitle']));
@@ -792,8 +788,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 	function testPopularBlogPostsModule() {
 		$moduleData = Module::get('PopularBlogPosts')->getData();
-		print_r($moduleData);
-		$this->assertRegExp('/Wikia Blog Listing Post/', $moduleData['body']);
+		$this->assertRegExp('/No posts found/', $moduleData['body']);
 	}
 
 	function testLatestPhotosModule() {
