@@ -33,7 +33,7 @@ function wfOasisSetup() {
 
 	// notifications
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsModule::addMessageNotification';
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsModule::addSiteWideMessageNotification';
+	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsModule::addSiteWideMessageNotification';
 	$wgHooks['AchievementsNotification'][] = 'NotificationsModule::addBadgeNotification';
 	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsModule::addEditSimilarNotification';
 	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsModule::addCommunityMessagesNotification';
