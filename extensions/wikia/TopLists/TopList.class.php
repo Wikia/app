@@ -243,8 +243,13 @@ class TopList extends TopListBase {
 				arsort( $itemVotes, SORT_NUMERIC );
 
 				foreach( $itemVotes as $id => $value ) {
-					$this->mItems[] = $items[$id];
+					if( !empty( $value ) ) {
+						$this->mItems[] = $items[$id];
+						unset( $items[$id] );
+					}
 				}
+
+				$this->mItems = array_merge( $this->mItems, array_values( $items ) );
 			}
 		}
 
