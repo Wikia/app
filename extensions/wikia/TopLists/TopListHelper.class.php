@@ -102,14 +102,14 @@ class TopListHelper {
 			wfLoadExtensionMessages( 'TopLists' );
 			$message = 'toplists-msg-fb-OnRateArticle';
 			$parentTitleText = substr( $params[ '$ARTICLENAME' ], 0, strrpos( $params[ '$ARTICLENAME' ], '/' ) );
-			$parentTitle = Title::newFromText( $parentTitleText );
+			$parentTitle = Title::newFromText( $parentTitleText, NS_TOPLIST );
 
-			$params[ '$ARTICLE_OBJ' ] = Article::newFromTitle( $parentTitle );
+			$params[ '$ARTICLE_OBJ' ] = new Article( $parentTitle );
 			
 			$params[ '$ARTICLE_URL' ] = $parentTitle->getFullURL("ref=fbfeed&fbtype=ratearticle");
 			$params[ '$ARTICLENAME' ] = $parentTitle->getText();
 
-			wfDebugLog('FACEBOOK::TOPLIST::VOTE ' . var_export($params, true) );
+			wfDebug("TOPLIST::FACEBOOK_CONNECT::VOTE_ITEM fb_id: {$faceBookId}, msg: {$message}, params: " . var_export($params, true) . ", class: {$class}" );
 		}
 
 		return true;
