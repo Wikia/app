@@ -104,7 +104,7 @@ $messages = array_merge( $messages , array(
 'monaco-carbon' => 'Carbon',
 'monaco-custom' => 'Custom',
 'monaco-edit-this-menu' => 'Edit this menu',
-'monaco-articles-on' => '<span class="article_count dark_text_1">$1</span> pages on this wiki<br />',
+'monaco-articles-on' => '<span class="article_count dark_text_1">$1</span> {{PLURAL:$1|page|pages}} on this wiki<br />',
 'monaco-welcome-back' => 'Welcome back, <b>$1</b><br />',
 'monaco-widgets' => 'Widgets',
 'monaco-latest' => 'Latest Activity',
