@@ -27,7 +27,7 @@ function adEngineAdditionalScripts( &$out, &$sk ){
 
 	if ($wgEnableAdsLazyLoad) {
 		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");	// moved to StaticChute.php
-		//@todo move to StaticChute
+		// bezen files moved to StaticChute
 		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.js?$wgStyleVersion'></script>\n");
 		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.string.js?$wgStyleVersion'></script>\n");
 		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.array.js?$wgStyleVersion'></script>\n");
@@ -350,6 +350,23 @@ class AdEngine {
 	public function getAd($slotname, $params = null) {
 		$AdProvider = $this->getAdProvider($slotname);
 		return $AdProvider->getAd($slotname, empty($this->slots[$slotname]) ? array() : $this->slots[$slotname], $params);
+	}
+
+	/**
+	 * assumes all eleemnts in $slotnames are the same ad provider
+	 */
+	public function getLazyLoadableAdGroup($adGroupName, Array $slotnames, $params=null) {
+		if (!sizeof($slotnames)) {
+			return '';
+		}
+
+		$AdProvider = $this->getAdProvider($slotnames[0]);
+		if (method_exists($AdProvider, 'getLazyLoadableAdGroup')) {
+			return $AdProvider->getLazyLoadableAdGroup($adGroupName, $slotnames, $params);
+		}
+		else {
+			return '';
+		}
 	}
 
 	// Logic for hiding/displaying ads should be here, not in the skin.

@@ -132,6 +132,10 @@ HoverMenu.prototype.showNav = function(parent) {
 					window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i]();
 					window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i] = null;
 				}
+				else if(typeof window["fillElem_SPOTLIGHT_GLOBALNAV_"+i] == "function") {
+					window["fillElem_SPOTLIGHT_GLOBALNAV_"+i]();
+					window["fillElem_SPOTLIGHT_GLOBALNAV_"+i] = null;
+				}
 
 				break;
 
