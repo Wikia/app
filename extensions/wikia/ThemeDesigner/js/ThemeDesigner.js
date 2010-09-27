@@ -205,11 +205,12 @@ var ThemeDesigner = {
 
 				var color = $("#color-name").val()
 
-				// if numbers only, add hash.
-				if(ThemeDesigner.isNumeric(color) && (color.length == 3 || color.length == 6)) {
+				// add hash if needed
+				var expression = /^[0-9a-f]{3,6}/i;
+				if (expression.test(color)) {
 					color = "#" + color;
 				}
-
+				
 				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatch.attr("class"), color);
 				ThemeDesigner.set("theme", "custom");
@@ -576,10 +577,6 @@ var ThemeDesigner = {
 		}
 	},
 
-	isNumeric: function(input) {
-		return (input - 0) == input && input.length > 0;
-	},
-	
 	swatches: {
 		"color-body": Array(
 			"f9ebc3",
