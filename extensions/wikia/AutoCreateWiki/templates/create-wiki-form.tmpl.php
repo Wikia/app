@@ -19,8 +19,8 @@ var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=v
 formViewAction += ( createType ) ? '&type=' + createType : '';
 var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var defaultDomain = "<?php echo $defaultDomain ?>";
-var definedDomains = YAHOO.Tools.JSONParse('<?php echo Wikia::json_encode($mDomains); ?>');
-var definedSitename = YAHOO.Tools.JSONParse('<?php echo Wikia::json_encode($mSitenames); ?>');
+var definedDomains = jQuery.parseJSON('<?php echo Wikia::json_encode($mDomains); ?>');
+var definedSitename = jQuery.parseJSON('<?php echo Wikia::json_encode($mSitenames); ?>');
 /*]]>*/
 </script>
 <?php
@@ -295,32 +295,27 @@ endif
 <script type="text/javascript">
 /*<![CDATA[*/
 $(function () { 
-	$.loadYUI( function() {
-		YC = YAHOO.util.Connect;
-		YD = YAHOO.util.Dom;
-		YE = YAHOO.util.Event;
-		<?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
-		<?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
-		<?php 		if ( !empty($value) ) : ?>
-		if ( YD.get('<?=$field?>') ) {
-			YD.addClass('<?=$field?>', 'error');
-			if ( YD.get('<?=$field?>-error') ) {
-				YD.setStyle('<?=$field?>-error', 'display', 'block');
-				YD.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
-			}
-			if ( YD.get('<?=$field?>-label') ) YD.addClass('<?=$field?>-label', 'error');
-		<?
-			if ($field == 'wiki-blurry-word') {
-		?>
-				if ( YD.get('wpCaptchaWord') ) YD.addClass('wpCaptchaWord', 'error');
-		<?
-			}
-		?>
+	<?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
+	<?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
+	<?php 		if ( !empty($value) ) : ?>
+	if ( $('#<?=$field?>') ) {
+		$('#<?=$field?>').addClass('error');
+		if ( $('#<?=$field?>-error') ) {
+			$('#<?=$field?>-error').css('display', 'block');
+			$('#<?=$field?>-error').html("<?=str_replace("\n", "<br />", $value)?>");
 		}
-		<?php		endif ?>
-		<?php 	endforeach ?>
-		<?php endif ?>
-	});
+		if ( $('#<?=$field?>-label') ) $('#<?=$field?>-label').addClass('error');
+	<?
+		if ($field == 'wiki-blurry-word') {
+	?>
+			if ( $('#wpCaptchaWord') ) $('#wpCaptchaWord').addClass('error');
+	<?
+		}
+	?>
+	}
+	<?php		endif ?>
+	<?php 	endforeach ?>
+	<?php endif ?>
 });
 /*]]>*/
 </script>
@@ -328,34 +323,32 @@ $(function () {
 <script type="text/javascript">
 /*<![CDATA[*/
 $(function () {
-	$.loadYUI( function() {
-		if (YD.get('userloginRound')) {
-			// TODO: FBConnect: Make sure this still works now that the YUI version of AjaxLogin has been removed.  This login/signup part of CreateWiki probably just needs to be rewritten completely to re-use other code.
-			//					What were all these variables being set up for?
-			/*
-			__showLoginPanel = function(e) {
-				var ifr = YD.get('awc-process-login');
-				var titleUrl = '<?=$mTitle->getLocalURL()."/Caching".(( $mLanguage != 'en' ) ? '?uselang=' . $mLanguage : '')?>';
-				var wikiName = YD.get('wiki-name');
-				var wikiDomain = YD.get('wiki-domain');
-				var wikiCategory = YD.get('wiki-category');
-				var wikiLanguage = YD.get('wiki-language');
-				titleUrl += "?wiki-name=" + wikiName.value;
-				titleUrl += "&wiki-domain=" + wikiDomain.value;
-				titleUrl += "&wiki-category=" + wikiCategory.value;
-				titleUrl += "&wiki-language=" + wikiLanguage.value;
-				ifr.src = titleUrl;
+	if ($('#userloginRound')) {
+		// TODO: FBConnect: Make sure this still works now that the YUI version of AjaxLogin has been removed.  This login/signup part of CreateWiki probably just needs to be rewritten completely to re-use other code.
+		//					What were all these variables being set up for?
+		/*
+		__showLoginPanel = function(e) {
+			var ifr = YD.get('awc-process-login');
+			var titleUrl = '<?=$mTitle->getLocalURL()."/Caching".(( $mLanguage != 'en' ) ? '?uselang=' . $mLanguage : '')?>';
+			var wikiName = YD.get('wiki-name');
+			var wikiDomain = YD.get('wiki-domain');
+			var wikiCategory = YD.get('wiki-category');
+			var wikiLanguage = YD.get('wiki-language');
+			titleUrl += "?wiki-name=" + wikiName.value;
+			titleUrl += "&wiki-domain=" + wikiDomain.value;
+			titleUrl += "&wiki-category=" + wikiCategory.value;
+			titleUrl += "&wiki-language=" + wikiLanguage.value;
+			ifr.src = titleUrl;
 
-				openLogin(e); // THIS WASN'T IN THE YUI VERSION, THE ABOVE AND BELOW WERE
+			openLogin(e); // THIS WASN'T IN THE YUI VERSION, THE ABOVE AND BELOW WERE
 
-				return false;
-			}
-			*/
-
-			YE.addListener('AWClogin', 'click', openLogin);
-			YE.addListener('login', 'click', openLogin);
+			return false;
 		}
-	});
+		*/
+
+		$('#AWClogin').click(openLogin);
+		$('#login').click(openLogin);
+	}
 });
 /*]]>*/
 </script>

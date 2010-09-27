@@ -1,0 +1,214 @@
+$color-borders: #CECECE;
+
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/core/color";
+
+@import "../../ThemeDesigner/css/ThemeTab";
+
+#WikiaPage {
+	@include clearfix;
+}
+
+#WikiaMainContent {
+	padding-bottom: 100px;
+}
+
+#WikiBuilder {
+	padding-bottom: 70px;
+
+	>h1 {
+		border-bottom: 1px solid $color-headline-border;
+	}
+	
+	.steps {
+		@include clearfix;
+		border: 1px solid $color-page-border;
+		list-style: none;
+		margin: 30px auto 0;
+		padding: 8px 15px;
+		width: 500px;
+		li {
+			@include opacity(50);
+			float: left;
+			margin-left: 25px;
+			position: relative;
+			width: 150px;
+			span {
+				float: left;
+			}
+			.step-name {
+				font-size: 22px;
+			}
+			.step-label {
+				font-size: 9px;
+				left: 5px;
+				line-height: 9px;
+				position: relative;
+				text-transform: uppercase;
+				top: 1px;
+			}
+			&:first-child {
+				margin-left: 0;
+			}
+			&.current-step {
+				@include opacity(99);
+			}
+			.chevron {
+				border: 5px solid transparent;
+				border-top: 9px transparent; 
+				border-bottom: 9px solid $color-buttons;
+				bottom: -13px;
+				position: absolute;
+				right: 95px;
+			}
+		}
+	}
+	
+	.dialog {
+		@include box-shadow(0, 5px, 40px, mix($color-page, #666));
+		@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+		background-color: #fff;
+		margin: 0 auto;
+		padding: 25px 35px;
+		position: relative;
+		top: 80px;
+		width: 840px;
+		z-index: 1;
+		h2 {
+			font-size: 21px;
+			margin-top: 0;
+			border-bottom: 0;
+		}
+		input[type=button],
+		input[type=submit] 
+		{
+ 			font-size: 11px;
+			height: 17px;
+			line-height: 7px;
+			padding: 0 20px;
+ 		}
+ 		nav {
+ 			text-align: right;
+ 		}
+ 		p {
+ 			font-size: 15px;
+ 			margin: 0;
+ 		}
+		.step1 {
+		 	form {
+		 		@include clearfix;
+		 		border-right: $color-page-border solid 1px;
+		 		padding-right: 50px;
+		 		text-align: right;
+		 		width: 377px;
+		 	}
+		 	.sample {
+		 		float: right;
+		 		h3 {
+		 			font-size: 14px;
+		 			margin-top: 0;
+		 		}
+		 	}
+		 	p {
+		 		margin-bottom: 1em;
+		 	}
+		}
+		.step2 {
+			.ThemeTab {
+				height: 150px;
+				position: relative;
+				.slider {
+					top: 0;
+					ul {
+						list-style: none;
+						margin: 0;
+						li {
+							padding-bottom: 0;
+							padding-top: 0;
+						}
+					}
+				}
+				.chevron {
+					top: 67px;
+				}
+			}
+			nav {
+				padding-right: 60px;
+			}
+			p {
+				margin-bottom: 7px;
+			}
+			h3 {
+				margin-top: 20px;
+			}
+		}
+		.step3 {
+			form {
+				@include clearfix;
+				border-right: 1px solid $color-page-border;
+				margin-top: 10px;
+				padding-right: 30px;
+				width: 285px;
+				label {
+					display: block;
+					font-size: 14px;
+					font-weight: bold;
+				}
+				input[type=text] {
+					display: block;
+					font-size: 16px;
+					margin: 10px 0;
+					width: 280px;
+				}
+			}
+			.examples {
+				float: right;
+				font-size: 14px;
+				list-style: none;
+				margin: 10px 0;
+				padding-left: 20px;
+				width: 240px;
+				li {
+					margin-bottom: 20px;
+					&:first-child {
+						font-weight: bold;
+						margin-bottom: 15px;
+						white-space: nowrap;
+					}
+				}
+			}
+		}
+	}
+	
+	.collage1,
+	.collage2 {
+		@include opacity(20);
+		left: 100px;
+		position: absolute;
+		z-index: 0;
+	}
+	
+	.collage1 {
+		top: 125px;
+	}
+	
+	.collage2 {
+		bottom: -40px;
+	}
+}
+
+#Description {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	height: 220px;
+	line-height: 20px;
+	padding: 10px;
+	width: 375px;
+}
+
+.ajaxwait {
+	display: none;
+}
