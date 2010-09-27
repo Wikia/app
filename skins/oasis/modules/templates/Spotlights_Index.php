@@ -1,3 +1,4 @@
+<? if ($wgShowAds) { ?>
 <section<? if (!empty($sectionId)) { ?> id="<?= $sectionId ?>"<? } ?>>
 	<header>
 		<? if ($wgSingleH1) { ?>
@@ -21,3 +22,4 @@
 		<? } ?>
 	</ul>
 </section>
+<? } ?>
