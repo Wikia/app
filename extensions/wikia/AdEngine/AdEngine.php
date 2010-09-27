@@ -194,12 +194,6 @@ class AdEngine {
 	}
 
 	public function loadConfig() {
-		global $wgShowAds;
-		if( empty( $wgShowAds ) ) {
-			$this->slots = array();
-			return true;
-		}
-
 		global $wgMemc, $wgCityId, $wgUser, $wgRequest, $wgExternalSharedDB, $wgDBname;
 
 		$skin_name = null;
@@ -270,6 +264,16 @@ class AdEngine {
 					$this->slots[$slotname]['provider_values'] = $dart_key_values;
 			 	}
 			 }
+			}
+		}
+
+		global $wgShowAds;
+		if( empty( $wgShowAds ) ) {
+			// clear out all slots except OpenX slots. RT #68545
+			foreach ($this->slots as $slotname=>$slot) {
+				if ($slot['provider_id'] != 2) {
+					unset($this->slots[$slotname]);
+				}
 			}
 		}
 
