@@ -1,4 +1,7 @@
-== Changes since 201009.3 ==
+== Changes since 201009.5 ==
+*
+
+== Changes since 201009.4 ==
 * rt#68331: Oasis: don't show Special:Widgets on Oasis (uberfuzzy)
 * rt#68217: Oasis: blog comments counter not being updated (macbre)
 * rt#68213: Oasis: Hot Spots module to be centered (macbre)
@@ -9,6 +12,8 @@
 * rt#68129: Oasis: Add Search box to edit page (macbre)
 * rt#68125: Oasis: Add delete to Blog Post Edit dropdown (macbre)
 * rt#68048: Domain name list not styled in Oasis (macbre)
+
+== Changes since 201009.3 ==
 * rt#67691: Cross Domain XML for RSS Feeds (Nef)
 * rt#67696: outbound, double url encoding bug (uberfuzzy)
 * rt#67438: hub stats broken (eloy)
