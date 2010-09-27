@@ -769,6 +769,14 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertTrue($moduleData['showShare']);
 
+		$wgTitle = Title::newFromText('Blog:WikiaBot');
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertTrue($moduleData['showShare']);
+
+		$wgTitle = Title::newFromText('Foo', NS_BLOG_LISTING);
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertNull($moduleData['showLike']);
+
 		$wgTitle = Title::newMainPage();
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertTrue($moduleData['showShare']);
@@ -779,7 +787,8 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	function testArticleCommentsModule() {
 		global $wgTitle, $wgDevelEnvironment, $wgEnableArticleCommentsExt;
 		$wgDevelEnvironment = false;  // Suppress memkey logic that uses SERVER_NAME
-		
+		if (!$wgEnableArticleCommentsExt) $this->markTestSkipped();
+
 		$wgTitle = Title::newFromText("Foo");
 		$moduleData = Module::get('ArticleComments')->getData();
 		$this->assertEquals("Title", get_class($moduleData['wgTitle']));
@@ -788,7 +797,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 	function testPopularBlogPostsModule() {
 		$moduleData = Module::get('PopularBlogPosts')->getData();
-		$this->assertRegExp('/No posts found/', $moduleData['body']);
+		$this->assertNotRegExp('/No posts found/', $moduleData['body']);
 	}
 
 	function testLatestPhotosModule() {
@@ -799,7 +808,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertType('array', $moduleData['thumbUrls']);
 
 		$thumbUrls = $moduleData['thumbUrls'];
-		$this->assertEquals(11, count($thumbUrls));
+		$this->assertTrue(count($thumbUrls) > 1);
 
 		foreach ($thumbUrls as $item) {
 			$this->assertRegExp('/File:/', $item['image_filename']);
