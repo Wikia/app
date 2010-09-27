@@ -248,25 +248,35 @@ class imageServing{
 	 *
 	 * @param $width \int
 	 * @param $height \int
+	 * @param $align \string "center", "origin"
 	 *
 	 *
 	 * @return \string prefix for thumb image
 	 */
 
-	public function getCut( $width, $height ) {
+	public function getCut( $width, $height, $align = "center" ) {
 		$pHeight = round(($width)*($this->proportion['h']/$this->proportion['w']));
 
 		if($pHeight >= $height) {
 			$pWidth =  round($height*($this->proportion['w']/$this->proportion['h']));
 			$top = 0;
-			$left = round($width/2 - $pWidth/2) + 1;
+			if ($align == "center") {
+				$left = round($width/2 - $pWidth/2) + 1;
+			} else if ($align == "origin") {
+				$left = 0;
+			}
 			$right = $left + $pWidth + 1;
 			$bottom = $height;
 		} else {
-			$deltaYpx = round($height*$this->deltaY);
 
-			$bottom = $pHeight + $deltaYpx;
-			$top = $deltaYpx;
+			if ($align == "center") {
+				$deltaYpx = round($height*$this->deltaY);
+				$bottom = $pHeight + $deltaYpx;
+				$top = $deltaYpx;
+			} else if ($align == "origin") {
+				$bottom = $pHeight;
+				$top = 0;
+			}
 
 			if( $bottom > $height ) {
 				$bottom = $pHeight;
