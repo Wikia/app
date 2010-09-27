@@ -9,6 +9,20 @@ var QuantcastSegments = {
 
 QuantcastSegments.setQcseg = function (qcResult) {
 	WET.byStr("QCSeg/resp");
+	// remove dummy data
+	if ('segments' in qcResult) {
+		var editedSegments = [];
+		for (var i=0; i<qcResult.segments.length; i++) {
+			if (qcResult.segments[i].id != 'D' && qcResult.segments[i].id != 'T') {
+				var editedSegment = new Object();
+				editedSegment.id = qcResult.segments[i].id;
+				editedSegments.push(editedSegment);
+			}
+		}
+		editedObj = new Object();
+		editedObj.segments = editedSegments;
+		qcResult = editedObj;
+	}
 	$.cookies.set(QuantcastSegments.segCookieName, JSON.stringify(qcResult), { hoursToLive: 24*QuantcastSegments.segCookieExpires, path: wgCookiePath, domain: wgCookieDomain})
 	if (typeof(window.wgNow) == 'object') {
 		var now = window.wgNow;
