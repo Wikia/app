@@ -574,7 +574,7 @@ class ArticleComment {
 		return $title;
 	}
 
-	public function isTitleComment($title) {
+	public static function isTitleComment($title) {
 		if (!($title instanceof Title)) {
 			return false;
 		}
