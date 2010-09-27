@@ -250,9 +250,9 @@ class TopListHelper {
 
 			$options[ 'toplist' ] = array(
 				'namespace' => NS_TOPLIST,
-				'label' => wfMsg( 'toplists-createpage-dialog-label' ),
-				//'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png"
-				'icon' => "{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png",
+				'label' => 'toplists-createpage-dialog-label',
+				'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png",
+				//'icon' => "{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png",//devbox
 				'trackingId' => 'toplist',
 				'submitUrl' => "{$url}/$1"
 			);
