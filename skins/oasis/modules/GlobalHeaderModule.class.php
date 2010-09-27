@@ -26,34 +26,13 @@ class GlobalHeaderModule extends Module {
 		// global navigation menu
 		$category = WikiFactory::getCategory($wgCityId);
 
-		$messageName = 'shared-Globalnavigation-'.$category->cat_id;
-
-		if($category === false || wfEmptyMsg($messageName, $text = wfMsg($messageName))) {
+		if($category && !wfEmptyMsg('shared-Globalnavigation-'.$category->cat_id, $text = wfMsg('shared-Globalnavigation-'.$category->cat_id))) {
+			$messageName = 'shared-Globalnavigation-'.$category->cat_id;
+		} else {
 			$messageName = 'shared-Globalnavigation';
 		}
 
 		$service = new NavigationService();
 		$this->menuNodes = $service->parseMessage($messageName, array(3, 4, 5), 60*60*3 /* 3 hours */);
-
-
-
-/*
-
-
-		$mKey = wfMemcKey('mOasisGlobalHeaderNodes', $userlang);
-		$this->menuNodes = $wgMemc->get($mKey);
-		if (empty($this->menuNodes)) {
-			// global menu
-			$cat = WikiFactory::getCategory($wgCityId);
-			if($cat === false || wfEmptyMsg('shared-Globalnavigation-'.$cat->cat_id, $text = wfMsg('shared-Globalnavigation-'.$cat->cat_id))) {
-				$text = wfMsg('shared-Globalnavigation');
-			}
-			$service = new NavigationService();
-			$this->menuNodes = $service->parseLines(explode("\n", $text), array(3, 4, 5));
-			$wgMemc->set($mKey, $this->menuNodes, 86400);
-			// TODO: is there an event we can hook for invalidation?
-		}
-*/
-
 	}
 }
