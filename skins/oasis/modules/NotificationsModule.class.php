@@ -327,20 +327,10 @@ class NotificationsModule extends Module {
 	/**
 	 * Handle notifications from the SiteWide messaging tool
 	 */
-	public static function addSiteWideMessageNotification(&$skin, &$tpl) {
-		global $wgOut, $wgUser;
+	public static function addSiteWideMessageNotification($msgs) {
 		wfProfileIn(__METHOD__);
 
 		if (Wikia::isOasis()) {
-			// Add site wide notifications that haven't been dismissed
-			$msgs = SiteWideMessages::getAllUserMessages($wgUser, false, false);
-
-			wfProfileIn(__METHOD__ . '::parse');
-			foreach ($msgs as $msgId => &$data) {
-				$data['text'] = $wgOut->parse($data['text']);
-			}
-			wfProfileOut(__METHOD__ . '::parse');
-
 			self::addNotification($msgs, null, self::NOTIFICATION_SITEWIDE);
 		}
 

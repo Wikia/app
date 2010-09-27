@@ -62,6 +62,9 @@ function SiteWideMessagesInit() {
 		$wgHooks['EditPage::showEditForm:initial'][] = 'SiteWideMessagesArticleEditor';
 		$wgHooks['AbortDiffCache'][] = 'SiteWideMessagesAbortDiffCache';
 		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
+
+		// macbre: notifications for Oasis
+		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
 	}
 }
 
@@ -230,6 +233,34 @@ function SiteWideMessagesArticleEditor($editPage) {
 function SiteWideMessagesAjaxDismiss($msgId) {
 	$result = SiteWideMessages::dismissMessage($msgId);
 	return is_bool($result) ? ($result ? '1' : '0') : $result;
+}
+
+/**
+ * Show notication (in Oasis)
+ *
+ * @author macbre
+ */
+function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
+	global $wgOut, $wgUser;
+	wfProfileIn(__METHOD__);
+
+	if (Wikia::isOasis()) {
+		// Add site wide notifications that haven't been dismissed
+		$msgs = SiteWideMessages::getAllUserMessages($wgUser, false, false);
+
+		if (!empty($msgs)) {
+			wfProfileIn(__METHOD__ . '::parse');
+			foreach ($msgs as $msgId => &$data) {
+				$data['text'] = $wgOut->parse($data['text']);
+			}
+			wfProfileOut(__METHOD__ . '::parse');
+
+			wfRunHooks('SiteWideMessagesNotification', array($msgs));
+		}
+	}
+
+	wfProfileOut(__METHOD__);
+	return true;
 }
 
 /**
