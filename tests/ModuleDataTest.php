@@ -516,7 +516,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testPageHeaderModule() {
-		global $wgTitle, $wgSupressPageTitle, $wgRequest;
+		global $wgTitle, $wgSupressPageTitle, $wgSuppressToolbar, $wgRequest;
 
 		// main page
 		$wgTitle = Title::newMainPage();
@@ -537,6 +537,23 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertRegExp('/Talk:/', $moduleData['title']);
 		$this->assertRegExp('/Foo" title="Foo"/', $moduleData['subtitle']);
+
+		// category page
+		$wgTitle = Title::newFromText('Stubs', NS_CATEGORY);
+
+		$moduleData = Module::get('PageHeader')->getData();
+
+		$this->assertEquals('Stubs', $moduleData['title']);
+		$this->assertEquals('Category page', $moduleData['subtitle']);
+		$this->assertFalse($moduleData['categories']);
+		$this->assertFalse($moduleData['revisions']);
+
+		// WikiActivity special page
+		$wgTitle = Title::newFromText('WikiActivity', NS_SPECIAL);
+
+		$moduleData = Module::get('PageHeader')->getData();
+
+		$this->assertRegExp('/href="(.*)Special:RecentChanges"/', $moduleData['subtitle']);
 
 		// forum page
 		$wgTitle = Title::newFromText('Foo', NS_FORUM);
@@ -567,13 +584,32 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$wgRequest->setVal('action', '');
 
+		// CreatePage
+		$wgTitle = Title::newFromText('CreatePage', NS_SPECIAL);
+
+		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
+
+		$this->assertEquals('', $moduleData['title']);
+		$this->assertEquals('', $moduleData['subtitle']);
+
 		// edit page
+		$wgRequest->setVal('action', 'edit');
 		$wgTitle = Title::newFromText('Foo', NS_TALK);
 
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
 
 		$this->assertRegExp('/Editing:/', $moduleData['title']);
 		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
+
+		// edit page (section edit)
+		$wgRequest->setVal('section', 3);
+
+		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
+		$this->assertTrue($wgSuppressToolbar);
+		$this->assertRegExp('/(section)/', $moduleData['title']);
+
+		$wgRequest->setVal('section', null);
+		$wgRequest->setVal('action', '');
 
 		// edit box header
 		$moduleData = Module::get('PageHeader', 'EditBox')->getData();
