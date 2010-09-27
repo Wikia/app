@@ -93,7 +93,7 @@ class ThemeSettings {
 
 			$is = new imageServing(null, 120, array("w"=>"120", "h"=>"100"));
 			$settings['user-background-image'] = $file->getURL();
-			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height)."-".$file->name));
+			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height, "origin")."-".$file->name));
 
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {

@@ -142,7 +142,7 @@ class ThemeDesignerModule extends Module {
 
 					//get cropped URL
 					$is = new imageServing(null, 120, array("w"=>"120", "h"=>"100"));
-					$this->backgroundImageThumb = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height)."-".$file->name));
+					$this->backgroundImageThumb = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height, "origin")."-".$file->name));
 
 				}
 
