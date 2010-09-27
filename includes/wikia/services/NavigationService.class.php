@@ -2,6 +2,44 @@
 
 class NavigationService {
 
+	private $biggestCategories;
+
+	private $lastExtraIndex = 1000;
+
+	private $extraWordsMap = array(	'voted' => 'GetTopVotedArticles',
+									'popular' => 'GetMostPopularArticles',
+									'visited' => 'GetMostVisitedArticles',
+									'newlychanged' => 'GetNewlyChangedArticles',
+									'topusers' => 'GetTopFiveUsers');
+
+	/**
+	 * @author: Inez Korczyński
+	 */
+	public function parseMessage($messageName, $maxChildrenAtLevel = array()) {
+		wfProfileIn( __METHOD__ );
+
+		global $wgLang, $wgContLang, $wgMemc;
+
+		$useCache = $wgLang->getCode() == $wgContLang->getCode();
+
+		if($useCache) {
+			$cacheKey = wfMemcKey($messageName);
+			$nodes = $wgMemc->get($cacheKey);
+		}
+
+		if(empty($nodes)) {
+			$lines = explode("\n", wfMsg($messageName));
+			$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
+
+			if($useCache) {
+				$wgMemc->set($cacheKey, $nodes);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $nodes;
+	}
+
 	/**
 	 * @author: Inez Korczyński
 	 */
@@ -125,14 +163,6 @@ class NavigationService {
 		);
 	}
 
-	private $lastExtraIndex = 1000;
-
-	private $extraWordsMap = array(	'voted' => 'GetTopVotedArticles',
-									'popular' => 'GetMostPopularArticles',
-									'visited' => 'GetMostVisitedArticles',
-									'newlychanged' => 'GetNewlyChangedArticles',
-									'topusers' => 'GetTopFiveUsers');
-
 	/**
 	 * @author: Inez Korczyński
 	 */
@@ -192,8 +222,9 @@ class NavigationService {
 		}
 	}
 
-	private $biggestCategories;
-
+	/**
+	 * @author: Inez Korczyński
+	 */
 	private function getBiggestCategory($index) {
 		global $wgMemc, $wgBiggestCategoriesBlacklist;
 		$limit = max($index, 15);

@@ -14,7 +14,7 @@ class WikiHeaderModule extends Module {
 	var $wordmarkSize;
 	var $wordmarkStyle;
 	var $wordmarkFont;
-	
+
 	var $wgSingleH1;
 
 	private function parseMonacoSidebarToOasisNavigation($text) {
@@ -98,6 +98,10 @@ class WikiHeaderModule extends Module {
 				}
 			}
 		}
+
+		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7));
+
+		/*
 		$mKey = wfMemcKey('mOasisWikiHeaderNodes', $oasis_navigation_title->getLatestRevID());
 		$this->menuNodes = $wgMemc->get($mKey);
 		if (empty($this->menuNodes)) {
@@ -105,6 +109,7 @@ class WikiHeaderModule extends Module {
 			$this->menuNodes = $service->parseLines($lines, array(4, 7));
 			$wgMemc->set($mKey, $this->menuNodes);
 		}
+		*/
 	}
 
 }
