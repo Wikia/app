@@ -100,16 +100,6 @@ class WikiHeaderModule extends Module {
 		}
 
 		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7));
-
-		/*
-		$mKey = wfMemcKey('mOasisWikiHeaderNodes', $oasis_navigation_title->getLatestRevID());
-		$this->menuNodes = $wgMemc->get($mKey);
-		if (empty($this->menuNodes)) {
-			$lines = explode("\n", wfMsg('Wiki-navigation'));
-			$this->menuNodes = $service->parseLines($lines, array(4, 7));
-			$wgMemc->set($mKey, $this->menuNodes);
-		}
-		*/
 	}
 
 }
