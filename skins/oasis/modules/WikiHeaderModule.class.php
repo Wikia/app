@@ -17,6 +17,9 @@ class WikiHeaderModule extends Module {
 
 	var $wgSingleH1;
 
+	/**
+	 * @author: Inez Korczyński
+	 */
 	private function parseMonacoSidebarToOasisNavigation($text) {
 		$lines = explode("\n", $text);
 		$skip = true;
@@ -48,8 +51,6 @@ class WikiHeaderModule extends Module {
 	public function executeIndex() {
 
 		global $wgOut, $wgCityId, $wgUser, $wgMemc;
-		// Moved to StaticChute.
-		//$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
 
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
@@ -66,6 +67,8 @@ class WikiHeaderModule extends Module {
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
+
+		// this is partly a temporary code which has to be changed - ask Inez - begin
 		$service = new NavigationService();
 
 		$oasis_navigation_title = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI);
@@ -100,6 +103,8 @@ class WikiHeaderModule extends Module {
 		}
 
 		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7));
+		// this is partly a temporary code which has to be changed - ask Inez - end
+
 	}
 
 }
