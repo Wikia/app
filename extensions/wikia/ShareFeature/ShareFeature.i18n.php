@@ -315,6 +315,7 @@ $messages['sv'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'sharefeature-desc' => 'Nagpapahintulot sa mga tagagamit na kumawing sa mga pahina mula sa tanyag na mga sityo',
 	'sf-link' => 'Ipamahagi ang artikulong ito',
 	'sf-link-popup' => 'Ipamahagi ang artikulong ito',
 	'sf-link-tooltip' => 'Ipamahagi sa mga kaibigan mo ang artikulong ito',

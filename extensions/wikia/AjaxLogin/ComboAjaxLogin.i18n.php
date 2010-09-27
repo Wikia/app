@@ -77,12 +77,14 @@ Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author The Evil IP address
  */
 $messages['de'] = array(
 	'comboajaxlogin-desc' => 'Dynamische Box, die es Benutzern ermöglicht, sich anzumelden, Passwörter zu merken und Benutzer zu registrieren',
 	'comboajaxlogin-createlog' => 'Anmelden oder Benutzerkonto erstellen',
 	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführen musst du dich zuerst anmelden oder ein Benutzerkonto erstellen',
+	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Konto anlegen.',
 	'comboajaxlogin-connectmarketing' => '<h1>Verbinde deine Benutzerkonten</h1>
 <ul>
 <li>Behalte deinen momentanen Benutzernamen, Geschichte, Bearbeitungen … nichts ändert sich außer der Art und Weise, wie du dich einloggst</li>
@@ -112,11 +114,12 @@ $messages['es'] = array(
 	'comboajaxlogin-desc' => 'Cuadro dinámico que permite a los usuarios iniciar sesión,recordar contraseñas y registrar usuarios',
 	'comboajaxlogin-createlog' => 'iniciar sesión o crear una cuenta',
 	'comboajaxlogin-actionmsg' => 'Para realizar esta acción primero necesitas iniciar sesión o crear una cuenta',
-	'comboajaxlogin-connectmarketing' => '<h1>Conecta tus cuentas</h1>
+	'comboajaxlogin-actionmsg-protected' => 'Para poder editar una página protegida primero necesitas iniciar sesión o crear una cuenta.',
+	'comboajaxlogin-connectmarketing' => '<h1>Enlaza tus cuentas</h1>
 <ul>
-<li>Mantén tu nombre de usuario actual, historial, ediciones... Nada cambia excepto como inicias sesión</li>
-<li>Comparte tu actividad en Wikia con tus amigos en Facebook</li>
-<li>Control completo de qué es publicado</li>
+<li>Conserva tus datos actuales: nombre de usuario, historial, ediciones, etc. Nada cambia salvo la forma de iniciar sesión</li>
+<li>Comparte con tus amigos en Facebook la actividad que realices en Wikia</li>
+<li>Controla completamente qué cosas publicas</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Enlaza tus cuentas</h1>
 <ul>
@@ -134,6 +137,7 @@ Por favor intenta de nuevo o [[Special:Contact|reporta esto]].',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author IAlex
  * @author Peter17
  */
@@ -141,6 +145,7 @@ $messages['fr'] = array(
 	'comboajaxlogin-desc' => "Boîte de dynamique qui permettent aux utilisateurs de se connecter, se rappeler de leur mot de passe et d'enregistrer des utilisateurs",
 	'comboajaxlogin-createlog' => 'Se connecter ou créer un compte',
 	'comboajaxlogin-actionmsg' => "Vous devez d'abord vous connecter ou créer un compte avant d'effectuer cette action",
+	'comboajaxlogin-actionmsg-protected' => 'Pour modifier cette page protégée, vous devez d’abord vous connecter ou créer un compte.',
 	'comboajaxlogin-connectmarketing' => "<h1>Connectez vos comptes</h1>
 <ul>
 <li>Garde votre nom d'utilisateur courant, l'historique, les modifications... Rien ne change sauf la façon dont vous vous connectez</li>
@@ -169,6 +174,7 @@ $messages['gl'] = array(
 	'comboajaxlogin-desc' => 'Caixa dinámica que permite aos usuarios acceder ao sistema, lembrar o contrasinal e rexistrar novas contas',
 	'comboajaxlogin-createlog' => 'Iniciar a sesión ou crear unha conta',
 	'comboajaxlogin-actionmsg' => 'Para realizar esta acción ten que primeiro acceder ao sistema ou crear unha conta',
+	'comboajaxlogin-actionmsg-protected' => 'Para editar esta páxina protexida ten que primeiro acceder ao sistema ou crear unha conta.',
 	'comboajaxlogin-connectmarketing' => '<h1>Conecte as súas contas</h1>
 <ul>
 <li>Manteña o seu nome de usuario actual, o historial, as edicións... Non cambia nada, agás o xeito de acceder ao sistema</li>
@@ -197,6 +203,7 @@ $messages['ia'] = array(
 	'comboajaxlogin-desc' => 'Quadro dynamic que permitte al usatores de aperir session, rememorar le contrasigno e crear un conto',
 	'comboajaxlogin-createlog' => 'Aperir session o crear conto',
 	'comboajaxlogin-actionmsg' => 'Pro exequer iste action tu debe primo aperir un session o crear un conto',
+	'comboajaxlogin-actionmsg-protected' => 'Pro modificar iste pagina protegite, tu debe primo aperir un session o crear un conto.',
 	'comboajaxlogin-connectmarketing' => '<h1>Connecter tu contos</h1>
 <ul>
 <li>Mantene tu actual nomine de usator, historia, modificationes... Nihil cambia excepte como aperir un session</li>
@@ -236,6 +243,7 @@ $messages['ja'] = array(
 	'comboajaxlogin-desc' => 'ログインと利用者登録が行えるダイナミックボックス',
 	'comboajaxlogin-createlog' => 'ログインもしくはアカウントの作成',
 	'comboajaxlogin-actionmsg' => 'この操作を行うには、ログインするかアカウントを作成する必要があります。',
+	'comboajaxlogin-actionmsg-protected' => '保護されたページを編集するには、ログインするかアカウントを作成する必要があります。',
 	'comboajaxlogin-connectmarketing' => '<h1>アカウントを接続する</h1>
 <ul>
 <li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>
@@ -275,6 +283,7 @@ $messages['mk'] = array(
 	'comboajaxlogin-desc' => 'Динамичка кутија што им овозможува на корисниците да се најавуваат, ги потсетува на лозинката и регистрира корисници',
 	'comboajaxlogin-createlog' => 'Најавете се или создајте сметка',
 	'comboajaxlogin-actionmsg' => 'За да го извршите ова дејство прво треба да сте најавени или да создадете сметка',
+	'comboajaxlogin-actionmsg-protected' => 'За да ја уредите оваа заштитена страница најпрвин ќе треба да се најавите или да создадете сметка.',
 	'comboajaxlogin-connectmarketing' => '<h1>Поврзете си ги сметките</h1>
 <ul>
 <li>Задржете си го тековното корисничко име, историјата, уредувањата... Ништо не се менува, освен тоа како се најавувате</li>
@@ -332,6 +341,7 @@ $messages['no'] = array(
 	'comboajaxlogin-desc' => 'Dynamisk boks som lar brukere logge inn, få påminnelse om passord og registrere brukere',
 	'comboajaxlogin-createlog' => 'Logg inn eller opprett en konto',
 	'comboajaxlogin-actionmsg' => 'For å utføre denne handlingen må du først logge inn eller opprette en konto',
+	'comboajaxlogin-actionmsg-protected' => 'For å redigere denne beskyttede siden, må du først logge inn eller opprette en konto.',
 	'comboajaxlogin-connectmarketing' => '<h1>Koble sammen kontoene dine</h1>
 <ul>
 <li>Behold ditt nåværende brukernavn, din historie, dine redigeringer... Ingenting endres bortsett fra hvordan du logger inn</li>
@@ -367,6 +377,7 @@ $messages['pms'] = array(
 	'comboajaxlogin-desc' => "Fnestra dinàmica che a përmët a j'utent d'intré, d'arcòrdé soa ciav e ëd registré dj'utent",
 	'comboajaxlogin-createlog' => 'Intra o crea un cont',
 	'comboajaxlogin-actionmsg' => "Për fé st'assion-si a dev prima intré ant ël sistema o creé un cont",
+	'comboajaxlogin-actionmsg-protected' => 'Për modifiché sta pàgina, it deuve prima intré o creé un cont.',
 	'comboajaxlogin-connectmarketing' => "<h1>Ch'a colega ij sò cont</h1>
 <ul>
 <li>A manten sò nòm utent corent, stòria, modìfiche... a cangia gnente, gavà la fasson d'intré ant ël sistema</li>
@@ -405,6 +416,7 @@ $messages['pt'] = array(
 	'comboajaxlogin-desc' => 'Caixa dinâmica que permite a autenticação e registo de utilizadores e relembrar a palavra-chave',
 	'comboajaxlogin-createlog' => 'Entrar ou criar uma conta',
 	'comboajaxlogin-actionmsg' => 'Para realizar esta operação, antes tem de autenticar-se ou registar uma conta',
+	'comboajaxlogin-actionmsg-protected' => 'Para editar esta página protegida, precisa de autenticar-se ou criar uma conta.',
 	'comboajaxlogin-connectmarketing' => '<h1>Ligue as suas contas</h1>
 <ul>
 <li>Mantenha o seu nome de utilizador, historial e edições... Nada muda, excepto a forma como se autentica</li>
@@ -433,6 +445,7 @@ $messages['pt-br'] = array(
 	'comboajaxlogin-desc' => 'Caixa dinâmica que permite a autenticação e registo de usuários e relembrar a senha',
 	'comboajaxlogin-createlog' => 'Entrar ou criar uma conta',
 	'comboajaxlogin-actionmsg' => 'Para realizar esta operação, você deve antes autenticar-se ou registrar uma conta',
+	'comboajaxlogin-actionmsg-protected' => 'Para editar esta página protegido, você precisa antes autenticar-se ou criar uma conta.',
 	'comboajaxlogin-connectmarketing' => '<h1>Ligue as suas contas</h1>
 <ul>
 <li>Mantenha o seu nome de usuário, histórico e edições... Nada muda, exceto a forma como se autentica</li>
@@ -463,6 +476,7 @@ $messages['ru'] = array(
 	'comboajaxlogin-desc' => 'Динамические окна, которые позволяют пользователям представляться, напоминать пароль и регистрироваться',
 	'comboajaxlogin-createlog' => 'Представиться системе или создать новую учётную запись',
 	'comboajaxlogin-actionmsg' => 'Для выполнения этой операции необходимо сначала войти в систему или создать аккаунт',
+	'comboajaxlogin-actionmsg-protected' => 'Чтобы изменить эту защищенную страницу, нужно сначала представиться системе или создать учётную запись.',
 	'comboajaxlogin-connectmarketing' => '<h1>Соедините свои учётные записи</h1>
 <ul>
 <li>Сохраните своё имя пользователя, историю, правки… Ничего не изменится кроме того, как представляться системе</li>
@@ -482,6 +496,35 @@ $messages['ru'] = array(
 После завершения вы сможете легко представляться системе с помощью любой из кнопок Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Произошла ошибка при построении этой формы.
 Пожалуйста, попробуйте снова или [[Special:Contact|сообщите об этом]].',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'comboajaxlogin-desc' => 'Magilang kahon na nagpapahintulot ng mga tagagamit na lumagda, ipaalala ang hudyat at magtala ng mga tagagamit',
+	'comboajaxlogin-createlog' => 'Lumagda o lumikha ng isang akawnt',
+	'comboajaxlogin-actionmsg' => 'Upang maisagawa ang galaw na ito dapat kang lumagda muna o lumikha ng isang akawnt',
+	'comboajaxlogin-actionmsg-protected' => 'Upang maisagawa ang galaw na ito kailangan mo munang lumagda o lumikha ng isang akawnt.',
+	'comboajaxlogin-connectmarketing' => '<h1>Iugnay ang iyong mga akawnt</h1>
+<ul>
+<li>Panatilihin ang iyong pangkasalukuyang pangalan ng tagagamit, kasaysayan, mga pamamatnugot... walang mababago maliban sa kung paano lumalagda</li>
+<li>Ipamahagi ang iyong mga ginagawa sa Wikia sa iyong mga kaibigang nasa Facebook</li>
+<li>Buong pagtaban sa kung ano ang nailathala</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Iugnay ang iyong akawnt sa Wikia sa Facebook</h1>
+<ul>
+<li>Panatilihin ang iyong pangkasalukuyang pangalan ng tagagamit, kasaysayan, mga pamamatnugot... walang mababago maliban sa kung paano lumalagda</li>
+<li>Ipamahagi ang iyong mga ginagawa sa Wikia sa iyong mga kaibigang nasa Facebook</li>
+<li>Buong pagtaban sa kung ano ang nailathala</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '↓ &laquo; Bumalik',
+	'comboajaxlogin-connectmarketing-forward' => '↓ Magsimula &raquo;',
+	'comboajaxlogin-connectdirections' => 'Ipasok ang iyong pangalan ng tagagamit sa Wikia at hudyat dito - masalamangka naming iuugnay ang iyong mga akawnt na pang-Wikia at pang-Facebook sa likuran.
+
+Kapag natapos ka na, maginhawa kang makakalagda na ginagamit ang anumang pindutan ng Ugnay sa Facebook.',
+	'comboajaxlogin-post-not-understood' => 'May kamalian sa paraan ng pagkakayari ng pormularyong ito.
+Pakisubukan uli o [[Special:Contact|iulat ito]].',
 );
 
 /** Ukrainian (Українська)

@@ -904,8 +904,11 @@ $messages['my'] = array(
 	'titleedit' => 'ပြင်​ဆင်​ရန်​',
 );
 
-/** Erzya (Эрзянь) */
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
 $messages['myv'] = array(
+	'titleedit-desc' => 'Полады коняксонь витнема-петнема повнэ лопанть верьксэнтень',
 	'titleedit' => 'Витнеме-петнеме',
 );
 

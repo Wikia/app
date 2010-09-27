@@ -257,3 +257,17 @@ $messages['te'] = array(
 	'forum_inthenews' => 'వార్తల్లో',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'commentsforum-desc' => 'Katungkulang parang poro para sa mga puna',
+	'forum_by_user_category' => '$1 ni tagagamit',
+	'forum_about_title' => 'Tungkol sa poro',
+	'forum_about_text' => 'Ito ang poro.',
+	'forum_comments_of_day' => 'Nangungunang mga puna',
+	'forum_new_articles' => 'Baong mga pagpapaskil sa poro',
+	'forum_by' => 'Ipinaskil ni $1',
+	'forum_inthenews' => 'Nasa balita',
+);
+

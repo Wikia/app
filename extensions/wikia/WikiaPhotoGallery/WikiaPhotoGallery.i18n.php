@@ -408,6 +408,7 @@ $messages['be-tarask'] = array(
 	'wikiaPhotoGallery-upload-error-readonly' => 'Вы ня можаце зараз загружаць выявы, таму што {{SITENAME}} знаходзіцца ў стане «толькі для чытаньня».',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Файл з такой назвай ужо існуе!
 Што Вы жадаеце зрабіць?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'У загружаным файле адсутнічае пашырэньне.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Перайменаваць Вашае фота',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Выкарыстоўваць існуючае фота',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Замяніць існуючае фота Вашым',
@@ -730,6 +731,7 @@ Bitte benenne die Datei um und versuche es erneut.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Du kannst derzeit keine Bilder hochladen, weil das Wiki im Nur-Lese-Zustand ist.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Eine Datei mit diesem Namen existiert bereits!
 Was möchtest du tun?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Der hochgeladenen Datei fehlt eine Dateinamenserweiterung.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Dein Foto umbenennen',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Das vorhandene Foto verwenden',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Das vorhandene Foto mit deinem überschreiben',
@@ -1153,6 +1155,7 @@ Kuvaile tämä kuva.",
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author IAlex
  * @author Jean-Frédéric
  * @author Peter17
@@ -1191,6 +1194,7 @@ Veuillez renommer le fichier et essayez à nouveau.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Vous ne pouvez pas importer des images actuellement, le wiki est en mode de lecture seule.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Un fichier avec ce nom existe déjà !
 Que voulez-vous faire ?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Le fichier téléversé n’a pas d’extension de fichier.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Renommer votre photo',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Utiliser la photo existante',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Remplacer la photo existante par la votre.',
@@ -1349,6 +1353,7 @@ Déalle un novo nome ao ficheiro e inténteo de novo.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Non pode cargar imaxes nestes intres, debido a que o wiki se atopa en estado de só lectura.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Xa existe un ficheiro con ese nome!
 Que quere facer?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Ao ficheiro cargado fáltalle a extensión.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Darlle un novo nome á súa foto',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Usar a foto existente',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Sobrescribir a foto existente coa súa',
@@ -1549,6 +1554,7 @@ Per favor renomina le file e tenta lo de novo.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Tu non pote incargar imagines in iste momento, proque le wiki es in stato de lectura sol.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Un file con iste nomine ja existe!
 Que vole tu facer?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Il manca un extension al nomine del file incargate.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Renominar tu photo',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Usar le photo existente',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Reimplaciar le photo existente per le tue',
@@ -1821,6 +1827,7 @@ Descrivi questa foto.",
 
 /** Japanese (日本語)
  * @author Tommy6
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'wikiaphotogallery-desc' => 'ページ内でギャラリーとスライドショーを管理するためのインタフェースを提供する',
@@ -1854,6 +1861,7 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-upload-error-filetype missing' => 'ファイルに拡張子がありません。',
 	'wikiaPhotoGallery-upload-error-readonly' => '現在このウィキは読み取り専用状態のため、画像をアップロードできません。',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'この名称のファイルが既に存在します。この問題への対処を選択してください。',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'アップロードされたファイルは、ファイル拡張子がありません。',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => '画像名を変更',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => '既にある画像を使用',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => '既にある画像に上書き',
@@ -2189,6 +2197,7 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-upload-error-readonly' => 'Моментално не можете да подигате слики бидејќи викито е достапно само за читање.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Веќе постои податотека со тој назив!
 Што би сакале да правите?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Подигнатата податотека нема наставка.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Преименувајте ја сликата',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Користи ја постоечката слика',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Замени ја постоечката слика со моја',
@@ -2511,6 +2520,7 @@ Vennligst omnavn filen og prøv igjen.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Du kan for øyeblikket ikke laste opp bilder, ettersom wikien er i skrivebeskyttet modus.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'En fil med dette navnet finnes allerede!
 Hva vil du gjøre?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Den opplastede filen mangler en filtype.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Omnavn bildet ditt',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Bruk det eksisterende bildet',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Overskrive det eksisterende bildet med ditt',
@@ -2676,6 +2686,7 @@ Zmień nazwę pliku i spróbuj ponownie.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'W tej chwili nie można przesyłać grafik ponieważ wiki jest w trybie tylko do odczytu.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Plik o takiej nazwie już istnieje! 
 Co chcesz zrobić?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'W nazwie przesłanego pliku brak jest rozszerzenia.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Zmień nazwę mojego zdjęcia',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Wykorzystaj istniejące zdjęcie',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Nadpisz istniejące zdjęcie moim',
@@ -2834,6 +2845,7 @@ Për piasì che a-j cangia 'd nòm e peui che a torna a carielo.",
 	'wikiaPhotoGallery-upload-error-readonly' => "It peule pa al moment carié dle figure, la wiki a l'é an stat mach ëd letura",
 	'wikiaPhotoGallery-upload-error-conflict-intro' => "N'archivi con ës nòm a esist già!
 Lòn ch'a veul fé?",
+	'wikiaPhotoGallery-upload-error-filetype-missing' => "Ël file carià a l'é mancant ëd n'estension ëd file.",
 	'wikiaPhotoGallery-upload-error-conflict-rename' => "Deje n'àutr nòm a soa fòto",
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Dovré la fòto esistenta',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Coaté la fòto esistenta con la soa',
@@ -3009,6 +3021,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'wikiaphotogallery-desc' => 'Fornece uma interface para gerir galerias e apresentações de slides, nas páginas',
@@ -3045,6 +3058,7 @@ Altere o nome do ficheiro e tente novamente.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Neste momento não pode importar imagens, porque a wiki está em modo exclusivo de leitura.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Já existe um ficheiro com esse nome!
 O que pretende fazer?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Falta a extensão ao ficheiro carregado.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Alterar o nome da sua fotografia',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Usar a fotografia existente',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Substituir a fotografia existente pela sua',
@@ -3220,6 +3234,7 @@ $messages['ru'] = array(
 	'wikiaPhotoGallery-upload-error-readonly' => 'Вы не можете сейчас загружать изображения, так как в вики находится в состоянии «только для чтения».',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Файл с таким именем уже существует!
 Что вы хотите сделать?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'У загружаемого файла отсутствует расширение файла.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Переименовать вашу фотографию',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Использовать существующую фотографию',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Заменять существующую фотографию вашей версией',

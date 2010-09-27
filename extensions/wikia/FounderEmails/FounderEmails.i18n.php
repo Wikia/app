@@ -399,6 +399,15 @@ Es sieht so aus als ob jemand dein Wiki verändert hat! Warum besuchst du nicht 
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 Es sieht so aus als ob jemand dein Wiki verändert hat! Warum <a href="$MYHOMEURL">besuchst</a> du es nicht mal um zu sehen was sich verändert hat?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
+	'founderemails-lot-happening-subject' => 'Eine Menge passiert auf deiner Seite heute!',
+	'founderemails-lot-happening-body' => 'Hey $FOUNDERNAME,
+
+Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um zu sehen was alles so los war.
+
+-- Das Wikia Team',
+	'founderemails-lot-happening-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
+Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um zu sehen was alles so los war.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -518,6 +527,7 @@ Es sieht so aus als ob jemand Ihr Wiki verändert hat! Warum <a href="$MYHOMEURL
 );
 
 /** Spanish (Español)
+ * @author Absay
  * @author Bola
  * @author Crazymadlover
  */
@@ -585,30 +595,30 @@ Ha pasado un tiempo desde que abriste un wiki en Wikia - ¡Esperamos que vaya ge
 ¡Parece que alguien ha editado en tu wiki! ¿Por qué no <a href="$MYHOMEURL">echas un vistazo</a> para ver qué ha cambiado?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
 	'founderemails-answers-email-user-registered-subject' => 'Alguien registró una cuenta en tu wiki QA!',
-	'founderemails-answers-email-user-registered-body' => 'Hey $FOUNDERNAME,
+	'founderemails-answers-email-user-registered-body' => 'Ey $FOUNDERNAME,
 
-Parece que $USERNAME se ha registrado en tu wiki! Por qué no vas a su página de discusión $USERTALKPAGEURL y le dices hola?
+¡Parece que $USERNAME se ha registrado en tu wiki! ¿Por qué no vas a su página de discusión $USERTALKPAGEURL para saludarle?
 
 -- El equipo Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
-Parece que $USERNAME se ha registrado en tu wiki! Por qué no vas a su <a href="$USERTALKPAGEURL">página de discusión</a> y le dices hola?<br /><br />
+	'founderemails-answers-email-user-registered-body-HTML' => 'Ey $FOUNDERNAME,<br /><br />
+¡Parece que $USERNAME se ha registrado en tu wiki! ¿Por qué no vas a su <a href="$USERTALKPAGEURL">página de discusión</a> para saludarle?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El equipo Wikia</div>',
-	'founderemails-answers-email-0-days-passed-subject' => 'Bienvenido a Wikia QA!',
-	'founderemails-answers-email-0-days-passed-body' => 'Felicitaciones por crear $WIKINAME - Ahora eres parte de la comunidad Wikia!
+	'founderemails-answers-email-0-days-passed-subject' => '¡Bienvenido a Wikia QA!',
+	'founderemails-answers-email-0-days-passed-body' => '¡Felicitaciones por crear $WIKINAME, ahora eres parte de la comunidad Wikia!
 
 -- El Equipo Wikia',
-	'founderemails-answers-email-0-days-passed-body-HTML' => 'Felicitaciones por crear <strong>$WIKINAME</strong> - Ahora eres parte de la comunidad Wikia!<br /><br />
+	'founderemails-answers-email-0-days-passed-body-HTML' => '¡Felicitaciones por crear <strong>$WIKINAME</strong>, ahora eres parte de la comunidad Wikia!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El Equipo Wikia</div>',
 	'founderemails-answers-email-3-days-passed-subject' => 'Comprobando',
-	'founderemails-answers-email-3-days-passed-body' => 'Hey $FOUNDERNAME,
+	'founderemails-answers-email-3-days-passed-body' => 'Ey $FOUNDERNAME,
 
-Ahora que estás pocos días en tu wiki, Pensamos que tal vez desees comprobar algunas cosas que puedes hacer.
+Ahora que estás pocos días en tu wiki, pensamos que tal vez desees comprobar algunas cosas que puedes hacer.
 
 -- El Equipo Wikia',
-	'founderemails-answers-email-3-days-passed-body-HTML' => 'Hey $FOUNDERNAME<br /><br />
-Ahora que estás unos pocos días en tu wiki, Pensamos que tal vez desees comprobar algunas cosas que puedes hacer.<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- El Equipo Wikia</div>',
-	'founderemails-answers-email-10-days-passed-subject' => 'Cómo van las cosas con tu wiki?',
+	'founderemails-answers-email-3-days-passed-body-HTML' => 'Ey $FOUNDERNAME<br /><br />
+Ahora que has estado unos días en tu wiki, pensamos que es posible que quieras comprobar unas cuantas cosas que podrías hacer.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+	'founderemails-answers-email-10-days-passed-subject' => '¿Cómo van las cosas en tu wiki?',
 	'founderemails-answers-email-10-days-passed-body' => 'Hey $FOUNDERNAME,
 
 Ha sido poco desde que empezaste tu wiki en Wikia - esperqamos que te vaya genial! Queríamos compartir unas cuantas cosas más para ayudarte a hacerte sentir en tu wiki más como en casa.
@@ -644,6 +654,7 @@ Parece que alguien ha editado tu wiki! Por qué no verificas $MYHOMEURL para ver
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 Parece que alguien ha editado tu wiki! Por qué no <a href="$MYHOMEURL">verificas</a> para ver que cambió?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El Equipo Wikia</div>',
+	'founderemails-lot-happening-subject' => '¡Han ocurrido muchas cosas hoy en tu sitio!',
 );
 
 /** French (Français)
@@ -773,6 +784,15 @@ On dirait que quelqu’un a modifié votre wiki ! Pourquoi ne pas aller voir sur
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Salut $FOUNDERNAME,<br /><br />
 On dirait que quelqu’un a modifié votre wiki ! Pourquoi ne pas <a href="$MYHOMEURL">aller voir ce qui a changé</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L’équipe Wikia</div>',
+	'founderemails-lot-happening-subject' => "Il se passe beaucoup de choses sur votre site aujourd'hui !",
+	'founderemails-lot-happening-body' => "Bonjour \$FOUNDERNAME,
+
+Il y a beaucoup de choses qui se passent sur votre wiki, aujourd'hui ! Rendez-vous sur \$MYHOMEURL pour voir ce qu'il en est.
+
+-- L'équipe Wikia",
+	'founderemails-lot-happening-body-HTML' => 'Bonjour $FOUNDERNAME,<br /><br />
+Il y a beaucoup de choses qui se passent sur votre wiki, aujourd\'hui ! Rendez-vous sur $MYHOMEURL pour voir ce qu\'il en est.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'équipe Wikia</div>',
 );
 
 /** Galician (Galego)
@@ -900,6 +920,15 @@ Semella que alguén fixo unha edición no seu wiki! Por que non comproba $MYHOME
 -- O equipo de Wikia',
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Boas, $FOUNDERNAME:<br /><br />
 Semella que alguén fixo unha edición no seu wiki! Por que non <a href="$MYHOMEURL">comproba</a> o que fixo?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- O equipo de Wikia</div>',
+	'founderemails-lot-happening-subject' => 'Hoxe pasaron moitas cousas no seu sitio!',
+	'founderemails-lot-happening-body' => 'Boas, $FOUNDERNAME:
+
+Hoxe aconteceron moitas cousas no seu wiki! Pase por $MYHOMEURL para botarlle un ollo ao que ocorreu.
+
+-- O equipo de Wikia',
+	'founderemails-lot-happening-body-HTML' => 'Boas, $FOUNDERNAME:<br /><br />
+Hoxe aconteceron moitas cousas no seu wiki! Pase por $MYHOMEURL para botarlle un ollo ao que ocorreu.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- O equipo de Wikia</div>',
 );
 
@@ -1054,6 +1083,15 @@ Il pare que alcuno ha modificate tu wiki! Proque non visitar $MYHOMEURL pro vide
 -- Le equipa de Wikia',
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Salute $FOUNDERNAME,<br /><br />
 Il pare que alcuno ha modificate tu wiki! Proque non visitar $MYHOMEURL pro vider lo que ha cambiate?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
+	'founderemails-lot-happening-subject' => 'Il eveni multo in tu sito hodie!',
+	'founderemails-lot-happening-body' => 'Salute $FOUNDERNAME,
+
+Il eveni multo in tu wiki hodie! Visita $MYHOMEURL pro vider lo que ha occurrite.
+
+-- Le equipa de Wiki',
+	'founderemails-lot-happening-body-HTML' => 'Salute $FOUNDERNAME,<br /><br />
+Il eveni multo in tu wiki hodie! Visita $MYHOMEURL pro vider lo que ha occurrite.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
 );
 
@@ -1219,6 +1257,15 @@ IПомина извесно време откако го започнавте �
 -- Екипата на Викија',
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Здраво $FOUNDERNAME,<br /><br />
 Некој ви го уредил викито! Зошто не <a href="$MYHOMEURL">појдете таму</a> да видите што е изменето?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+	'founderemails-lot-happening-subject' => 'Денес има многу случувања на вашето мрежно место!',
+	'founderemails-lot-happening-body' => 'Здраво $FOUNDERNAME,
+
+Денес има многу случувања на вашето вики! Наминете на $MYHOMEURL за да видите што има.
+
+-- Екипата на Викија',
+	'founderemails-lot-happening-body-HTML' => 'Здраво $FOUNDERNAME,<br /><br />
+Денес има многу случувања на вашето Вики! Наминете на $MYHOMEURL за да видите што има.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
 );
 
@@ -1498,6 +1545,15 @@ Det ser ut til at noen har endret wikien din! Hvorfor sjekker du ikke ut $MYHOME
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hei $FOUNDERNAME,<br /><br />
 Det ser ut til at noen har endret wikien din! Hvorfor <a href="$MYHOMEURL">sjekker du det ikke ut</a> for å se hva som er endret?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia Teamet</div>',
+	'founderemails-lot-happening-subject' => 'En masse skjer på siden din i dag!',
+	'founderemails-lot-happening-body' => 'Hei $FOUNDERNAME,
+
+Det er en masse som skjer på wikien din i dag! Stikk innom $MYHOMEURL for å se hva som står på.
+
+-- Wikia-teamet',
+	'founderemails-lot-happening-body-HTML' => 'Hei $FOUNDERNAME,<br /><br />
+Det er en masse som skjer på wikien din i dag! Stikk innom $MYHOMEURL for å se hva som står på.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1627,6 +1683,15 @@ A smija che quaidun a l'abia modificà soa wiki! Përchè a controla nen \$MYHOM
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
 A smija che quaidun a l\'abia modificà soa wiki! Përchè <a href="$MYHOMEURL">a controla nen</a> për vëdde lòn ch\'a l\'é cangià?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-lot-happening-subject' => "Un mucc ëd ròba a l'é capitaje su tò sit ancheuj!",
+	'founderemails-lot-happening-body' => 'cerea $FOUNDERNAME,
+
+A-i é un mucc ëd ròba capità su toa wiki ancheuj! Sàuta da $MYHOMEURL për vëdde lòn ch\'a sta capitand.
+
+-- L\'Echip Wikia',
+	'founderemails-lot-happening-body-HTML' => 'cerea $FOUNDERNAME,<br /><br />
+A-i é un mucc ëd ròba capità su toa wiki ancheuj! Sàuta da $MYHOMEURL për vëdde lòn ch\'a sta capitand.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
 );
 
 /** Pashto (پښتو)
@@ -1638,6 +1703,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores acerca das mudanças na sua wiki',
@@ -1762,6 +1828,15 @@ Parece que alguém editou a sua wiki! Que tal visitá-la $MYHOMEURL e ver o que 
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Olá $FOUNDERNAME,<br /><br />
 Parece que alguém editou a sua wiki! Que tal <a href="$MYHOMEURL">visitá-la</a> e ver o que foi alterado?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
+	'founderemails-lot-happening-subject' => 'Passa-se muita coisa no seu site hoje!',
+	'founderemails-lot-happening-body' => 'Olá, $ FOUNDERNAME, 
+
+Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o que se tem passado.
+
+-- A Equipa Wikia',
+	'founderemails-lot-happening-body-HTML' => 'Olá, $ FOUNDERNAME,<br /><br />
+Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o que se tem passado.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- A Equipa Wikia</div>',
 );
 
 /** Russian (Русский)
@@ -1897,6 +1972,15 @@ $messages['ru'] = array(
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Привет, $FOUNDERNAME.<br /><br />
 Похоже, что кто-то внёс изменения в вашу! Почему бы вам не посмотреть что было изменено ($MYHOMEURL)?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Викиа</div>',
+	'founderemails-lot-happening-subject' => 'Сегодня на вашем сайте произошло много событий!',
+	'founderemails-lot-happening-body' => 'Привет, $FOUNDERNAME.
+
+Сегодня на вашем сайте произошло много событий! Взгляните на $MYHOMEURL , чтобы посмотреть что происходит.
+
+-- Команда Викиа',
+	'founderemails-lot-happening-body-HTML' => 'Привет, $FOUNDERNAME.<br /><br />
+Сегодня на вашем сайте произошло много событий! Взгляните на $MYHOMEURL , чтобы посмотреть что происходит.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Команда Викиа</div>',
 );
 
 /** Telugu (తెలుగు)
@@ -1947,7 +2031,7 @@ Matagal-tagal na rin magmula noong magsimula ka ng isang wiki sa Wikia - umaasa 
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Binago ng nakatalang tagagamit ang wiki mo sa unang pagkakataon!',
 	'founderemails-answers-email-0-days-passed-subject' => 'Maligayang pagdating sa Wikia ng QA!',
 	'founderemails-answers-email-3-days-passed-subject' => 'Sinusuri sa',
-	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Binago ng nakatalang tagagamit ang wiki mo sa unang pagkakataon!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Binago ng nakapagpatalang tagagamit ang sityo mo sa unang pagkakataon!',
 	'founderemails-answers-email-page-edited-anon-subject' => 'May nagbago ng iyong wiki ng QA!',
 );
 

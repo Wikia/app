@@ -665,6 +665,15 @@ $messages['sr-ec'] = array(
 	'cathub-tags' => 'Ознаке',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'cathub-answer-heading' => 'జవాబు',
+	'cathub-button-answer' => 'జవాబివ్వండి',
+	'cathub-edit-success' => 'మీ జవాబు భద్రమయ్యింది',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

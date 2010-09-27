@@ -92,7 +92,7 @@ $messages['be-tarask'] = array(
  */
 $messages['br'] = array(
 	'wikistickies' => 'WikiStickies',
-	'wikistickies-withoutimages-hd' => "Ha galloud a reoc'h ouzhpennañ ur skeudenn evit unan eus ar bajennoù-mañ?",
+	'wikistickies-withoutimages-hd' => 'Ha galloud a rit ouzhpennañ ur skeudenn evit unan eus ar bajennoù-mañ ?',
 	'wikistickies-newpages-st' => '<span class="fake_newpages">Ha gellout a rafec\'h ouzhpennañ titouroù d\'ar bajenn-se diwar-benn</span> $1?',
 	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Ha gellout a rafec\'h kregiñ ur bajenn diwar-benn</span> $1?',
 	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Ha gellout a rafec\'h ouzhpennañ ur skeudenn d\'ar bajenn diwar-benn</span> $1?',
@@ -635,8 +635,41 @@ $messages['te'] = array(
 	'wikistickies' => 'వికీస్టికీస్',
 	'wikistickies-save-changes' => 'మార్పులను భద్రపరచు',
 	'wikistickies-more' => 'మరిన్ని చూడండి',
+	'wikistickies-admins-hd' => 'నిర్వాహకులు మాత్రమే',
+	'wikistickies-logo-hd' => 'ఒక చిహ్నాన్ని ఎక్కించండి',
 	'wikistickies-next' => 'తర్వాతి →',
 	'wikistickies-hide' => 'దాచు',
+	'wikistickies-see-more' => 'సహాయం కావాల్సిన మరిన్ని పుటలను చూడండి',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikistickies' => 'WikiStickies',
+	'wikistickies-desc' => 'Ang malaki, madikit na Mga Madirikit ng Wiki na bibihag sa iyong mata!',
+	'wikistickies-newpages-hd' => 'Makapagdaragdag ka ba ng kabatiran sa isa sa mga bagong pahinang ito?',
+	'wikistickies-withoutimages-hd' => 'Makapagdaragdag ka ba ng isang larawan sa isa sa mga pahinang ito?',
+	'wikistickies-wantedpages-hd' => 'Makapagsisimula ka ba ng isa sa mga pahinang kailangan namin?',
+	'wikistickies-newpages-st' => '<span class="fake_newpages">Makapagdaragdag ka ba ng kabatiran sa pahinang tungkol sa</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Masisimulan mo ba ang isang pahinang tungkol sa</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Makapagdaragdag ka ng isang larawan sa pahinang tungkol sa</span> $1?',
+	'wikistickies-newpages-st-short' => '<span>Makapagdaragdag ka ba ng kabatiran sa</span> $1?',
+	'wikistickies-wantedpages-st-short' => '<span>Makapagsisimula ka ba ng isang pahinang tungkol sa</span> $1?',
+	'wikistickies-withoutimages-st-short' => '<span>Makapagdaragdag ka ba ng isang larawan sa</span> $1?',
+	'wikistickies-save-changes' => 'Sagipin ang mga pagbabago',
+	'wikistickies-more' => 'tumingin ng marami pa',
+	'wikistickies-admins-hd' => 'Mga tagapangasiwa lamang',
+	'wikistickies-admins-msg' => 'Hindi ito ang iyong pangkaraniwang WikiStickies.
+Ito ay mga bagay na maaaring gawin lamang ng mga tagapangasiwa ng wiki upang maimpluwensiyahan kung paano makikita ng lahat ang wiki.',
+	'wikistickies-logo-hd' => 'Ikargang paitaas ang isang logo',
+	'wikistickies-theme-hd' => 'Pumili ng isang tema',
+	'wikistickies-custom-hd' => 'Lumikha ng sarili mong WikiStickies',
+	'wikistickies-custom-msg' => 'Mababago mo ang [[MediaWiki:CommunityStickies|pahina ng CommunityStickies]] upang makapagdagdag gn isang bagong tala ng WikiStickies!
+Magdagdag ng mga bagay-bagay sa talaan, at lilitaw sila sa Tahanan Ko at sa pahinang ito.',
+	'wikistickies-next' => 'Susunod →',
+	'wikistickies-hide' => 'ikubli',
+	'wikistickies-see-more' => 'Tumingin ng mas marami pang mga pahinang kailangan ng tulong',
 );
 
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))

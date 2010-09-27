@@ -421,6 +421,7 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
+ * @author Misibacsi
  */
 $messages['hu'] = array(
 	'editaccount' => 'Felhasználói fiók szerkesztése',
@@ -429,6 +430,8 @@ $messages['hu'] = array(
 	'editaccount-frame-usage' => 'Megjegyzés',
 	'editaccount-label-select' => 'Felhasználói fiók kiválasztása',
 	'editaccount-submit-account' => 'Felhasználói fiók kezelése',
+	'editaccount-frame-account' => 'Felhasználói adatok szerkesztése: $1 fiókja',
+	'editaccount-frame-close' => 'Felhasználói fiók tiltása: $1 részére',
 	'editaccount-label-email' => 'Új e-mail cím beállítása',
 	'editaccount-label-pass' => 'Új jelszó beállítása',
 	'editaccount-label-realname' => 'Új valódi név beállítása',
@@ -439,7 +442,14 @@ $messages['hu'] = array(
 	'editaccount-status' => 'Állapotüzenet',
 	'editaccount-success-email' => 'A(z) $1 felhasználói fiók email címe sikeresen megváltoztatva erre: $2.',
 	'editaccount-success-email-blank' => 'A(z) $1 felhasználói fiók email címe sikeresen eltávolítva.',
+	'editaccount-success-pass' => 'Sikeresen megváltozott a jelszó  $1  számára',
+	'editaccount-success-realname' => 'Sikeresen megváltozott a valódi név  $1  számára',
 	'editaccount-success-close' => '„$1” felhasználói fiók sikeresen letiltva.',
+	'editaccount-error-email' => 'Az e-mail nem változott meg. Próbálja újra, vagy lépjen kapcsolatba a műszaki csoporttal.',
+	'editaccount-error-pass' => 'A jelszó nem változott meg. Próbálja újra, vagy lépjen kapcsolatba a műszaki csoporttal.',
+	'editaccount-error-realname' => 'A valódi név nem változott meg. Próbálja újra, vagy lépjen kapcsolatba a műszaki csoporttal.',
+	'editaccount-error-close' => 'Hiba történt a fiók szerkesztése közben. Próbálja újra, vagy lépjen kapcsolatba a műszaki csoporttal.',
+	'editaccount-invalid-email' => '"$1" nem érvényes e-mail cím!',
 	'editaccount-nouser' => 'A(z) „$1” felhasználói fiók nem létezik!',
 	'editaccount-log' => 'Felhasználói fiókok naplója',
 	'editaccount-log-entry-email' => '„$2” e-mail címe megváltoztatva',
@@ -1004,6 +1014,7 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'editaccount' => 'Baguhin ang Akawnt',
+	'editaccount-desc' => 'Nagpapahintulot sa mga kasaping tauhan na pamahalaan ang kabatiran ng akawnt ng tagagamit',
 	'editaccount-title' => 'Natatangi:BaguhinangAkawnt',
 	'editaccount-frame-manage' => 'Baguhin ang isang akawnt',
 	'editaccount-frame-usage' => 'Tala',

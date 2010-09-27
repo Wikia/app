@@ -341,6 +341,28 @@ $messages['pt'] = array(
 	'sponsorpage-save' => 'Gravar',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'sponsorpage-desc' => 'Permite que os usuários adquiram o patrocínio de páginas',
+	'sponsor-header' => '<h2>Links de Patrocinadores Externos</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Patrocine esta página</a></li>',
+	'sponsor-preview-prompt' => 'O aspecto do seu patrocínio será este - clique "editar" para voltar atrás e fazer alterações, ou "salvar" para salvar e ir para o PayPal.',
+	'sponsor-preview-errors' => 'Existem erros nos dados fornecidos:',
+	'sponsor-form-url' => 'URL do site patrocinador (o seu site na internet):',
+	'sponsor-form-linktext' => 'Texto que pretende que seja apresentado no link:',
+	'sponsor-form-additionaltext' => 'Texto para ser apresentado abaixo do link:',
+	'sponsor-form-page' => 'Página a patrocinar:',
+	'sponsor-form-price' => 'Montante do patrocínio:',
+	'sponsor-form-email' => 'Endereço de e-mail:',
+	'sponsor-form-thanks' => 'Obrigado por seu patrocínio!',
+	'sponsor-price-45yr' => '$45 por ano',
+	'sponsor-price-5mo' => '$5 por mês',
+	'sponsorpage-edit' => 'Editar',
+	'sponsorpage-save' => 'Salvar',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  * @author Ytsukeng Fyvaprol
@@ -380,5 +402,27 @@ $messages['te'] = array(
 	'sponsor-price-45yr' => 'సంవత్సరానికి $45',
 	'sponsor-price-5mo' => 'నెలకి $5',
 	'sponsorpage-save' => 'భద్రపరచు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'sponsorpage-desc' => 'Nagpapahintulot sa mga tagagamit na bumili ng mga pagtataguyod para sa mga pahina',
+	'sponsor-header' => '<h2>Panlabas na mga Kawing ng Tagapagtaguyod</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Itaguyod ang pahinang ito</a></li>',
+	'sponsor-preview-prompt' => 'Narito ang kung paano ang magiging anyo ng iyong pagtataguyod - pindutin ang "Baguhin" upang bumalik at gumawa ng mga pagbabago, o "Sagipin" upang masagip ito at pumunta sa PayPal.',
+	'sponsor-preview-errors' => 'May mga kamalian sa iyong pagpapasa:',
+	'sponsor-form-url' => 'URL ng nagtataguyod na websayt (websayt mo): 1',
+	'sponsor-form-linktext' => 'Tekstong nais mong ipakita sa kawing:',
+	'sponsor-form-additionaltext' => 'Tekstong ipapakita sa ilalim ng iyong kawing:',
+	'sponsor-form-page' => 'Itataguyod na pahina:',
+	'sponsor-form-price' => 'Halaga ng pagtataguyod:',
+	'sponsor-form-email' => 'Tirahan mo ng e-liham:',
+	'sponsor-form-thanks' => 'Salamat sa iyong Pagtataguyod!',
+	'sponsor-price-45yr' => '$45 bawat taon',
+	'sponsor-price-5mo' => '$5 bawat buwan',
+	'sponsorpage-edit' => 'Baguhin',
+	'sponsorpage-save' => 'Sagipin',
 );
 

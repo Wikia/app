@@ -584,6 +584,7 @@ $messages['tl'] = array(
 	'wva-title' => 'Mabilisang Idagdag ang Bidyo Mula sa URL',
 	'wva-notlogged' => 'Kailangan mong lumagda o magpatala upang makapagsingit ng mga bidyo.',
 	'wva-notallowed' => 'Hindi ka makapagsisingit ng mga bidyo sa wiking ito.',
+	'wva-protected' => 'Ang bidyo ay nakaprutekta.',
 );
 
 /** Ukrainian (Українська)

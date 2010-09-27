@@ -444,6 +444,7 @@ $messages['cs'] = array(
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
+ * @author Xxglennxx
  */
 $messages['cy'] = array(
 	'wmu-upload' => 'Uwchlwytho',
@@ -506,6 +507,7 @@ $messages['cy'] = array(
 	'wmu-gallery' => 'Oriel',
 	'wmu-columns' => '$1 {{PLURAL:$1|colofn|golofn|golofn|colofn|cholofn|o golofnau}}',
 	'wmu-column' => 'Colofnau',
+	'wmu-added-from-plc' => 'Uwchlwythwyd y ffeil drwy le-ddaliwr delwedd',
 	'wmu-uploaddisabled' => 'Heb alluogi uwchlwytho ffeiliau ar y wici hwn',
 	'wmu-gallery-success' => 'Rydych wedi ychwanegu llun at oriel newydd. Cliciwch isod i ychwanegu rhagor o luniau neu i osod yr oriel.',
 	'wmu-gallery-btn1' => 'Ychwanegu Delwedd Arall',

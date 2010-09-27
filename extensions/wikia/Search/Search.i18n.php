@@ -10,6 +10,17 @@ $messages['en'] = array(
 	'wikiasearch-image-results' => 'Image Results for "$1"'
 );
 
+/** Jamaican Creole English (Jamaican Creole English)
+ * @author Yocahuna
+ */
+$messages['jam'] = array(
+	'wikiasearch-titles-only' => 'Saach onggl ina piej taikl',
+	'wikiasearch-system-error-msg' => 'Juu tu sistim era, yu saach kudn kompliit',
+	'wikiasearch-search-this-wiki' => 'Saach Wikia Central onli',
+	'wikiasearch-search-wikia' => 'Saach Wikia',
+	'wikiasearch-image-results' => 'Imij Rizolt fi "$1"',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -147,12 +158,14 @@ $messages['hsb'] = array(
 
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
+ * @author Misibacsi
  */
 $messages['hu'] = array(
 	'wikiasearch-titles-only' => 'Keresés csak a lapcímekben',
 	'wikiasearch-system-error-msg' => 'A keresés nem teljesíthető rendszerhiba miatt',
 	'wikiasearch-search-this-wiki' => 'Keresés csak a Wikia Centralon',
 	'wikiasearch-search-wikia' => 'Keresés a Wikián',
+	'wikiasearch-image-results' => 'Képkeresés eredményei: "$1"',
 );
 
 /** Armenian (Հայերեն)
@@ -316,6 +329,7 @@ $messages['ps'] = array(
 	'wikiasearch-system-error-msg' => 'د غونډال د ستونزو له امله، ستاسې پلټنه نه شي بشپړه کېدای.',
 	'wikiasearch-search-this-wiki' => 'يوازې مرکزي ويکي يا پلټل',
 	'wikiasearch-search-wikia' => 'ويکيا پلټل',
+	'wikiasearch-image-results' => 'د "$1" لپاره د انځور پايلې',
 );
 
 /** Portuguese (Português)
@@ -391,6 +405,7 @@ $messages['tl'] = array(
 	'wikiasearch-system-error-msg' => 'Dahila sa isang kamalian ng sistema, hindi makukumpleto ang paghahanap mo',
 	'wikiasearch-search-this-wiki' => 'Maghanap lamang sa Wikia Central',
 	'wikiasearch-search-wikia' => 'Maghanap sa Wikia',
+	'wikiasearch-image-results' => 'Mga Kinalabasang Larawan para sa "$1"',
 );
 
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))

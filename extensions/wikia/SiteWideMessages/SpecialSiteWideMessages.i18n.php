@@ -275,6 +275,7 @@ $messages['be-tarask'] = array(
 	'swm-error-no-such-wiki' => 'Не існуе такой вікі!',
 	'swm-error-no-such-user' => 'Пазначаны ўдзельнік не існуе.',
 	'swm-error-empty-message' => 'Увядзіце зьмест паведамленьня.',
+	'swm-error-long-message' => 'Паведамленьне ня можа быць даўжэй 500 сымбаляў.',
 	'swm-error-empty-group' => 'Увядзіце назву групы.',
 	'swm-lang-other' => 'усе астатнія мовы',
 );
@@ -430,6 +431,7 @@ $messages['de'] = array(
 	'swm-error-no-such-wiki' => 'Es gibt kein solches Wiki!',
 	'swm-error-no-such-user' => 'Das angegebene Benutzerkonto ist nicht vorhanden.',
 	'swm-error-empty-message' => 'Gib den Inhalt der Nachricht ein.',
+	'swm-error-long-message' => 'Nachrichten sind auf 500 Zeichen beschränkt.',
 	'swm-error-empty-group' => 'Gib den Namen der Gruppe ein.',
 	'swm-lang-other' => 'alle verbleibenden Sprachen',
 );
@@ -598,6 +600,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author IAlex
  */
 $messages['fr'] = array(
@@ -661,6 +664,7 @@ $messages['fr'] = array(
 	'swm-error-no-such-wiki' => "Ce wiki n'existe pas !",
 	'swm-error-no-such-user' => "L'utilisateur spécifié n'existe pas.",
 	'swm-error-empty-message' => 'Entrez le contenu du message.',
+	'swm-error-long-message' => 'Les messages sont limités à 500 caractères.',
 	'swm-error-empty-group' => 'Entrez le nom du groupe.',
 	'swm-lang-other' => 'toutes les langues restantes',
 );
@@ -729,6 +733,7 @@ $messages['gl'] = array(
 	'swm-error-no-such-wiki' => 'Non existe tal wiki!',
 	'swm-error-no-such-user' => 'O usuario especificado non existe.',
 	'swm-error-empty-message' => 'Escriba o contido da mensaxe.',
+	'swm-error-long-message' => 'As mensaxes están limitadas a 500 caracteres.',
 	'swm-error-empty-group' => 'Escriba o nome do grupo.',
 	'swm-lang-other' => 'todas as linguas restantes',
 );
@@ -841,6 +846,7 @@ $messages['ia'] = array(
 	'swm-error-no-such-wiki' => 'Iste wiki non existe!',
 	'swm-error-no-such-user' => 'Le usator specificate non existe.',
 	'swm-error-empty-message' => 'Entra le contento del message.',
+	'swm-error-long-message' => 'Le messages es limitate a 500 characteres.',
 	'swm-error-empty-group' => 'Entra le nomine del gruppo.',
 	'swm-lang-other' => 'tote le linguas restante',
 );
@@ -1066,6 +1072,7 @@ $messages['mk'] = array(
 	'swm-error-no-such-wiki' => 'Нема такво вики!',
 	'swm-error-no-such-user' => 'Назначениот корисник не постои.',
 	'swm-error-empty-message' => 'Внесете содржина на пораката.',
+	'swm-error-long-message' => 'Пораките се ограничени на 500 знаци.',
 	'swm-error-empty-group' => 'Внесете го името на групата.',
 	'swm-lang-other' => 'сите преостанати јазици',
 );
@@ -1206,6 +1213,7 @@ $messages['no'] = array(
 	'swm-error-no-such-wiki' => 'Det finnes ingen slik wiki.',
 	'swm-error-no-such-user' => 'Angitt bruker finnes ikke.',
 	'swm-error-empty-message' => 'Skriv inn innholdet i meldingen.',
+	'swm-error-long-message' => 'Meldinger er begrenset til 500 tegn.',
 	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
 	'swm-lang-other' => 'alle gjenværende språk',
 );
@@ -1289,6 +1297,7 @@ $messages['pms'] = array(
 	'swm-error-no-such-wiki' => 'Na wiki parèj a-i é pa!',
 	'swm-error-no-such-user' => "L'utent spessificà a esist pa.",
 	'swm-error-empty-message' => "Ch'a anserissa ël contnù dël mëssagi.",
+	'swm-error-long-message' => 'Ij mëssagi a son limità a 500 caràter.',
 	'swm-error-empty-group' => "Ch'a anserissa ël nòm ëd la partìa.",
 	'swm-lang-other' => "tute j'àutre lenghe",
 );
@@ -1327,6 +1336,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'sitewidemessages' => 'Mensagens globais',
@@ -1389,6 +1399,7 @@ $messages['pt'] = array(
 	'swm-error-no-such-wiki' => 'Essa wiki não existe!',
 	'swm-error-no-such-user' => 'O utilizador especificado não existe.',
 	'swm-error-empty-message' => 'Introduza o conteúdo da mensagem.',
+	'swm-error-long-message' => 'As mensagens estão limitadas a 500 caracteres.',
 	'swm-error-empty-group' => 'Introduza o nome do grupo.',
 	'swm-lang-other' => 'todas as línguas restantes',
 );
@@ -1496,6 +1507,7 @@ $messages['ru'] = array(
 	'swm-error-no-such-wiki' => 'Не существует такой вики!',
 	'swm-error-no-such-user' => 'Указанного участника не существует.',
 	'swm-error-empty-message' => 'Введите содержание сообщения.',
+	'swm-error-long-message' => 'Сообщения ограничены 500 символами.',
 	'swm-error-empty-group' => 'Введите название группы.',
 	'swm-lang-other' => 'все остальные языки',
 );
@@ -1659,6 +1671,7 @@ $messages['tl'] = array(
 	'swm-error-no-such-wiki' => 'Walang ganyang wiki!',
 	'swm-error-no-such-user' => 'Hindi umiiral ang tinukoy na tagagamit!',
 	'swm-error-empty-message' => 'Ipasok ang nilalaman ng mensahe.',
+	'swm-error-long-message' => 'Ang mga mensahe ay may hangganang 500 mga panitik.',
 	'swm-error-empty-group' => 'Ipasok ang pangalan ng pangkat.',
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
 );

@@ -125,6 +125,7 @@ $messages['ja'] = array(
  */
 $messages['ksh'] = array(
 	'sharedhelp-desc' => 'Nimmb Sigge us däm <i lang="en">[[w:c:Help|Help Wikia]]</i> un deiht se en et {{ns:help}}-Appachtemang en heh däm Wikis erin.',
+	'sharedhelp-autotalkcreate-summary' => 'Klaafsigg automattesch aanjelaat',
 );
 
 /** Macedonian (Македонски)
@@ -192,6 +193,14 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'sharedhelp-desc' => 'Берутся страницы из [[w:c:Help|Help Wikia]] и вставляются в пространство имён {{ns:help}} данной вики',
 	'sharedhelp-autotalkcreate-summary' => 'Страница обсуждения создана автоматически',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'sharedhelp-desc' => 'Kumukuha ng mga pahina mula sa [[w:c:Help|Tulungan ang Wikia]] at isinisingit ang mga ito sa loob ng puwang ng pangalang {{ns:help}} sa wiking ito',
+	'sharedhelp-autotalkcreate-summary' => 'Kusang nilikha ang pahina ng usapan',
 );
 
 /** Ukrainian (Українська)

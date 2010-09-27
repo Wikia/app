@@ -22,6 +22,13 @@ $messages['en'] = array(
 	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
 
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -221,6 +228,16 @@ $messages['ia'] = array(
 	'rte-first-run-notice' => 'Nos ha facite qualque meliorationes al editor. Pro saper plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lege le annuncio].',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'rte-desc' => 'MediaWiki に CKeditor を組み込む',
+	'rte-no-js-fallback' => 'JavaScript をオフにした状態ではリッチテキストエディタを利用できません。ブラウザの設定で JavaScript を有効にするか[[Special:Preferences|個人設定]]で旧式のメディアウィキエディタに切り替えてください。',
+	'rte-edgecase-info-title' => 'ソースモードである必要があります',
+	'rte-edgecase-info' => '記事に含まれるコードが複雑なため、リッチテキストモードによる編集は無効にされています。',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -366,9 +383,26 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
+	'rte-desc' => 'Integração do CKeditor no MediaWiki',
+	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desativado. Ative-o nas opções do navegador, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
+	'rte-edgecase-info-title' => 'É necessário o modo de código fonte',
+	'rte-edgecase-info' => 'A edição de texto enriquecido foi desativada porque a página contém código complexo.',
+	'rte-edgecase-comment' => 'comentários HTML',
+	'rte-edgecase-triplecurls' => 'parâmetros de predefinições',
+	'rte-edgecase-nowysiwyg' => 'o comando "sem WYSIWYG"',
+	'rte-edgecase-complex-description' => 'uma URL externa ou uma predefinição na descrição de um link',
+	'rte-edgecase-template-with-link' => 'uma predefinição com um link como parâmetro',
+	'rte-edgecase-syntax' => 'sintaxe não permitida',
+	'rte-edgecase-image-with-link' => 'imagem com um link na descrição',
+	'rte-edgecase-redirect' => 'redirecionamento',
+	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
+	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
 	'enablerichtexteditor' => 'Ativar Editor de Texto Rico',
+	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
+	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 );
 
 /** Russian (Русский)
@@ -405,6 +439,29 @@ $messages['sr-ec'] = array(
 	'rte-edgecase-comment' => 'HTML коментари',
 	'rte-edgecase-redirect' => 'преусмери',
 	'rte-edgecase-unclosed-tags' => 'незатворене HTML ознаке',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'rte-desc' => 'Integrasyon ng CKeditor para sa MediaWiki',
+	'rte-no-js-fallback' => 'Ang mayamang patnugot ng teksto ay hindi gumagana kapag nakapatay ang JavaScript.  Paki paganahin ito sa iyong mga pilian ng pantingin-tingin, o dalawin ang iyong mga [[Special:Preferences|mga nais]] upang bumalik sa lumang patnugot ng MediaWiki',
+	'rte-edgecase-info-title' => 'Kailangan ang paraan ng pinagkunan',
+	'rte-edgecase-info' => 'Hindi pinapaganan ang pamamatnugot ng mayamang teksto dahil naglalaman ang pahina ng mga kodigong masalimuot.',
+	'rte-edgecase-comment' => 'Mga punang HTML',
+	'rte-edgecase-triplecurls' => 'mga parametro ng suleras',
+	'rte-edgecase-nowysiwyg' => 'ang utos na "walang WYSIWYG"',
+	'rte-edgecase-complex-description' => 'ang panlabas na URL o suleras sa loob ng isang paglalarawan ng kawing',
+	'rte-edgecase-template-with-link' => 'isang suleras na may kawing bilang isang parametro',
+	'rte-edgecase-syntax' => 'hindi pinapayagang palaugnayan',
+	'rte-edgecase-image-with-link' => 'larawang may isang kawing sa loob ng paglalarawan',
+	'rte-edgecase-redirect' => 'pamalit ng kapupuntahan',
+	'rte-edgecase-templateintable' => 'isang tablang may pantawag ng suleras sa kahulugan',
+	'rte-edgecase-unclosed-tags' => 'hindi naisarang tatak ng HTML',
+	'enablerichtexteditor' => 'Paganahin ang Patnugot ng Mayamang Teksto',
+	'rte-enablerichtexteditormessage' => 'Pinagana na ang Patnugot ng Mayamang Teksto!',
+	'rte-first-run-notice' => 'Mayroon kaming ilang mga pagpapainam sa patnugot. Upang makaalam ng mas marami, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news basahin ang pahayag].',
 );
 
 /** Turkish (Türkçe)

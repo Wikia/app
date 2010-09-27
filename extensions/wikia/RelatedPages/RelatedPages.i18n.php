@@ -87,6 +87,14 @@ $messages['ia'] = array(
 	'wikiarelatedpages-heading' => 'Leger plus',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'wikiarelatedpages-desc' => 'Brängk en Leß verwandte Sigge en et Wiki.',
+	'wikiarelatedpages-heading' => 'Mieh lässe',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -136,6 +144,14 @@ $messages['pms'] = array(
 	'wikiarelatedpages-heading' => "Les anco'",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiarelatedpages-desc' => 'د اړونده مخونو يو لړليک په مخونو کې ورګډوي',
+	'wikiarelatedpages-heading' => 'نور لوستل',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -159,5 +175,13 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'wikiarelatedpages-desc' => 'Добавляет на страницы список связанных страниц',
 	'wikiarelatedpages-heading' => 'Читать подробнее',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiarelatedpages-desc' => 'Nagdaragdag sa mga pahina ng isang talaan sa kaugnay na mga pahina',
+	'wikiarelatedpages-heading' => 'Magbasa pa ng iba',
 );
 

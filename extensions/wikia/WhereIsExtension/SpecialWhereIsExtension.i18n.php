@@ -529,5 +529,9 @@ $messages['tl'] = array(
 	'whereisextension-filter' => 'Pansala',
 	'whereisextension-all-groups' => 'Lahat ng mga pangkat',
 	'whereisextension-name-contains' => 'naglalaman ang pangalang nababago ng',
+	'whereisextension-search-like-value' => 'Wangis:',
+	'whereisextension-search-type' => 'Uri:',
+	'whereisextension-search-type-bool' => 'Booleano',
+	'whereisextension-search-type-full' => 'Wangis',
 );
 

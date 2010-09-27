@@ -609,12 +609,21 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'user-badge-invalid-color' => 'Foi introduzido um valor hexadecimal não permitido',
 	'user-badge-show-color' => 'Mostrar detalhes de cor',
 	'user-badge-hide-color' => 'Esconder detalhes de cor',
+	'user-badge-selected-color' => 'Cor selecionada {rgb}',
+	'user-badge-web-color' => 'Cor mais aproximada, apropriada para uso na internet: {rgb}. Clique para selecionar!',
 	'user-badge-dialog-title' => 'Por favor, escolha uma cor',
+	'user-badge-data-color' => 'Cor dos dados:',
+	'user-badge-edits-txt' => 'Edições',
+	'user-bagde-copypaste-ext-code' => 'Copiar e colar (sites externos)',
+	'user-bagde-copypaste-int-code' => 'Copiar e colar (esta Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Copiar e colar (outra Wikia)',
 	'user-badge-save-info' => 'Se você deseja salvar as alterações, desça até o fim da página e pressione o botão "Salvar"',
 );
 
@@ -713,7 +722,7 @@ $messages['tl'] = array(
 	'user-bagde-copypaste-ext-code' => 'Kopyahin at idikat (mga sityong panlabas)',
 	'user-bagde-copypaste-int-code' => 'Kopyahin at idikit (ang Wikiang ito)',
 	'user-bagde-copypaste-int-other-code' => 'Kopyahin at idikit (ibang Wikia)',
-	'user-badge-save-info' => 'Kung nais mong sagipin ang mga pagbabago, umikid papunta sa wakas ng pahina at pindutin ang pindutang "Sagipin"',
+	'user-badge-save-info' => 'Kung nais mong sagipin ang mga pagbabago, gumulong papunta sa wakas ng pahina at pindutin ang pindutang "{{int:saveprefs}}"',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

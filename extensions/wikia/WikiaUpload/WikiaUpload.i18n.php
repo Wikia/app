@@ -78,6 +78,13 @@ $messages['cs'] = array(
 	'wikiaupload' => 'Wikia načtení',
 );
 
+/** Welsh (Cymraeg)
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'wikiaupload' => 'Uwchlwytho Wikia',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -345,6 +352,13 @@ $messages['ru'] = array(
  */
 $messages['si'] = array(
 	'wikiaupload' => 'Wikia උඩුගත',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'wikiaupload' => 'Nalaganje Wikia',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

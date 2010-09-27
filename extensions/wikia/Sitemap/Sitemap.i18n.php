@@ -202,6 +202,13 @@ $messages['ru'] = array(
 	'sitemap-desc' => 'Создание файлов Sitemap для вики на лету',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'sitemap-desc' => 'Gumawa ng mga Sityo ng mapa para sa wiki sa ibabaw ng salimbayan',
+);
+
 /** Ukrainian (Українська)
  * @author Alex Khimich
  */

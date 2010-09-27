@@ -635,6 +635,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'specialprotectsite-desc' => 'Nagpapahintulot sa isang tagapangasiwa ng sityo upang [[Special:ProtectSite|pansamantalang harangin ang sari-saring mga pagbabago sa sityo]]',
 	'protectsite' => 'Prutektahan ang sayt',
 	'protectsite-text-protect' => '<!-- Magagamit na mga tagubilin/Mga puna/Patakaran -->',
 	'protectsite-text-unprotect' => '<!-- Mga tagubilin/Mga puna kapag nakasanggalang -->',

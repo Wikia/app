@@ -200,3 +200,11 @@ $messages['sl'] = array(
 	'tog-watchlistsubpages' => 'Sledi podstranem',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikia-watchsubpages-desc' => 'Kusang pagsunod para sa kabahaging mga pahina',
+	'tog-watchlistsubpages' => 'Sundan ang kabahaging mga pahina',
+);
+

@@ -151,6 +151,13 @@ $messages['pms'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Ij Mëssagi ëd Comunità a son ëstàit agiornà]].',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|ټولنيز پيغامونه اوسمهاله شوي]].',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -181,5 +188,13 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'communitymessages-desc' => 'Расширение-помощник для сообщений сообщества',
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Сообщения сообщества были обновлены]].',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'communitymessages-desc' => 'Dugtong na pantulong para sa mga Mensahe ng Pamayanan',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Naisapanahon na ang mga Mensahe ng Pamayanan]].',
 );
 

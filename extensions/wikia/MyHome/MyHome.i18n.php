@@ -104,10 +104,14 @@ For example, you could:
  */
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
+	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
+	'myhome-feed-new-page-details' => '{{Identical|New page}}',
+	'myhome-feed-summary-details' => '{{Identical|Summary}}',
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-new-article-comment-details' => '{{Identical|Comment}}',
+	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -280,8 +284,26 @@ $messages['be-tarask'] = array(
 	'myhome-feed-delete' => 'выдалена',
 	'myhome-feed-image' => 'дададзеная выява',
 	'myhome-feed-video' => 'дададзенае відэа',
+	'myhome-feed-categorization' => 'катэгарызацыя',
+	'myhome-feed-created-by' => 'створана $1',
+	'myhome-feed-added-by' => 'дададзена $1',
+	'myhome-feed-edited-by' => 'рэдагавана $1',
+	'myhome-feed-posted-by' => 'разьмешчаны $1',
+	'myhome-feed-comment-by' => 'камэнтар $1',
+	'myhome-feed-deleted-by' => 'выдалены $1',
+	'myhome-feed-moved-by' => 'перанесены $1',
+	'myhome-feed-article-comment-created-by' => 'новы камэнтар $1',
+	'myhome-feed-article-comment-edited-by' => 'камэнтар рэдагаваны $1',
+	'myhome-feed-by' => 'ад $1',
+	'myhome-feed-diff-alt' => 'паказаць мне зьмены на гэтай старонцы',
+	'myhome-feed-new-page-details' => 'Новая старонка',
+	'myhome-feed-summary-details' => 'Апісаньне',
+	'myhome-feed-section-edit-details' => 'Рэдагаваная сэкцыя',
+	'myhome-feed-new-blog-post-details' => 'Новы блёг',
 	'myhome-feed-new-blog-comment-details' => 'Камэнтар',
 	'myhome-feed-new-article-comment-details' => 'Камэнтар',
+	'myhome-feed-move-details' => 'Перайменавана',
+	'myhome-feed-redirect-details' => 'Перанакіраваньне',
 	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
 );
 
@@ -985,10 +1007,13 @@ $messages['he'] = array(
 
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
+ * @author Misibacsi
  */
 $messages['hu'] = array(
+	'wikiactivity' => 'Wiki tevékenység',
 	'myhome-watchlist-feed' => 'Figyelőlista',
 	'myhome-user-contributions-feed' => 'Közreműködések',
+	'myhome-hot-spots-newest' => 'Új oldalak a wikin',
 	'myhome-feed-newpage' => 'új lap',
 	'myhome-feed-edit' => 'szerkesztés',
 	'myhome-feed-move' => 'lap átnevezve',
@@ -999,6 +1024,7 @@ $messages['hu'] = array(
 	'myhome-feed-moved-by' => '$1 áthelyezte',
 	'myhome-feed-new-page-details' => 'Új lap',
 	'myhome-feed-summary-details' => 'Összefoglaló',
+	'myhome-feed-section-edit-details' => 'Szakasz szerkesztése',
 	'myhome-feed-new-blog-post-details' => 'Új blog',
 	'myhome-feed-new-blog-comment-details' => 'Megjegyzés',
 	'myhome-feed-new-article-comment-details' => 'Megjegyzés',
@@ -1008,6 +1034,8 @@ $messages['hu'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Közösségi sarok',
 	'myhome-community-corner-edit' => 'üzenet szerkesztése',
+	'myhome-default-view-checkbox' => 'Legyen $1 a saját alapértelmezett nézet',
+	'myhome-default-view-success' => 'Rendben, most már ez az alapértelmezés',
 );
 
 /** Interlingua (Interlingua)
@@ -1411,6 +1439,16 @@ $messages['mk'] = array(
 	'activityfeed' => 'Лента на активности',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Zamwan
+ */
+$messages['ms'] = array(
+	'wikiactivity' => 'Aktiviti Wiki',
+	'myhome-user-contributions-feed' => 'Sumbangan',
+	'myhome-feed-edit' => 'sunting',
+	'myhome-feed-delete' => 'dihapuskan',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -1425,7 +1463,7 @@ Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!
 	'myhome-watchlist-feed-empty' => 'U kunt pagina\'s toevoegen aan uw volglijst door op de verwijzing "{{int:watch}}" te klikken in de balk bovenaan de pagina.
 U kunt uw volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar u bij betrokken bent te bekijken.',
 	'myhome-user-contributions-feed' => 'Bijdragen',
-	'myhome-hot-spots-feed' => "Feed populaire pagina's",
+	'myhome-hot-spots-feed' => "Populaire pagina's",
 	'myhome-hot-spots-feed-empty' => "Werk nu mee aan deze wiki.
 Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
 	'myhome-hot-spots-newest' => "Nieuwe pagina's op de Wiki",
@@ -2251,13 +2289,14 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'myhome' => 'Tahanan Ko',
+	'wikiactivity' => 'Mga Galaw sa Wiki',
 	'myhome-activity-more' => 'tumingin ng mas maraming pang kamakailang paggalaw',
 	'myhome-activity-feed' => 'Pakain ng paggalaw',
 	'myhome-activity-feed-empty' => "Naghihintay ang wiking ito na makilahok ka.
 Pindutin ang '''[[Special:CreatePage|Bagong pahina]]''' upang magsimulang magsulat!",
 	'myhome-watchlist-feed' => 'Bantayan Ko',
-	'myhome-watchlist-feed-empty' => 'Makapagdaragdag ka ng mga pahina sa bantayan mo sa pamamagitan ng pagpindot sa kawing na "Bantayan" na nasa loob ng baretang nasa itaas ng pahina.
-Magagamit mo ang talaan ng binabantayan upang masubaybayan ang pinakabagong mga pagbabago sa mga pahinang inaalagaan mo.',
+	'myhome-watchlist-feed-empty' => 'Makapagdaragdag ka ng mga pahina sa bantayan mo sa pamamagitan ng pagpindot sa kawing na "{{int:watch}}" na nasa loob ng baretang nasa itaas ng pahina.
+Magagamit mo ang talaan ng binabantayan upang masubaybayan ang pinakabagong mga pagbabago sa mga pahinang pinangangalagaan mo.',
 	'myhome-user-contributions-feed' => 'Mga ambag',
 	'myhome-hot-spots-feed' => 'Maiinit na mga Dako',
 	'myhome-hot-spots-feed-empty' => "Naghihintay ang wiking ito sa iyong pakikilahok.
@@ -2273,6 +2312,7 @@ Pindutin ang '''[[Special:CreatePage|Bagong pahina]]''' upang magsimulang magsul
 	'myhome-feed-delete' => 'binura',
 	'myhome-feed-image' => 'nagdagdag ng larawan',
 	'myhome-feed-video' => 'nagdagdag ng bidyo',
+	'myhome-feed-categorization' => 'pagkakauri-uri',
 	'myhome-feed-created-by' => 'nilikha ni $1',
 	'myhome-feed-added-by' => 'idinagdag ni $1',
 	'myhome-feed-edited-by' => 'binago ni $1',
@@ -2305,6 +2345,7 @@ Subukan ito!',
 Kung nais mong makita ang Tahanan Ko, mangyaring dumalaw sa '''[[Special:Preferences|mga Nais mo]]''' upang mabago ang iyong pabalat.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Sulok ng Pamayanan',
+	'oasis-myhome-community-corner-edit' => 'baguhin ang mensahe &gt;',
 	'myhome-community-corner-edit' => 'baguhin ang mensahe',
 	'community-corner' => "'''Maligayang Pagdating sa Tahanan Ko!'''
 
