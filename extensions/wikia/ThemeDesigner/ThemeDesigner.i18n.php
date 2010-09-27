@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'themedesigner-graphic' => 'graphic',
 	'themedesigner-buttons' => 'buttons',
 	'themedesigner-links' => 'links',
+	'themedesigner-header' => 'header',
 	'themedesigner-text-wordmark' => 'Text wordmark',
 	'themedesigner-graphic-wordmark' => 'Graphic wordmark',
 	'themedesigner-small' => 'Small',
@@ -340,7 +341,7 @@ $messages['nl'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Geen afbeelding gebruiken',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(

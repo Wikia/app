@@ -25,6 +25,10 @@
 				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-links" id="swatch-color-links">
 			</li>
 			<li>
+				<h2><?= wfMsg('themedesigner-header') ?></h2>
+				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-header" id="swatch-color-header">
+			</li>		
+			<li>
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
 				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-page" id="swatch-color-page">
 			</li>

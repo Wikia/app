@@ -302,7 +302,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 		
-		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled") {
+		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled" || setting == "color-header") {
 			reloadCSS = true;
 		}
 
@@ -465,6 +465,7 @@ var ThemeDesigner = {
 		$("#swatch-color-buttons").css("background-color", ThemeDesigner.settings["color-buttons"]);
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
+		$("#swatch-color-header").css("background-color", ThemeDesigner.settings["color-header"]);
 		
 		if (ThemeDesigner.settings["background-image"] == "") {
 			//no background image
@@ -517,11 +518,12 @@ var ThemeDesigner = {
 
 			$().log('applySettings, reloadCSS');
 
-			var sass = "/__sass/skins/oasis/css/oasis.scss/3337777333333/";
+			var sass = "/__sass/skins/oasis/css/oasis.scss/" + wgStyleVersion + "/";
 			sass += "color-body=" + escape(ThemeDesigner.settings["color-body"]);
 			sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
 			sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
 			sass += "&color-links=" + escape(ThemeDesigner.settings["color-links"]);
+			sass += "&color-header=" + escape(ThemeDesigner.settings["color-header"]);
 			sass += "&background-image=" + encodeURIComponent(ThemeDesigner.settings["background-image"]);
 			sass += "&background-align=" + escape(ThemeDesigner.settings["background-align"]);
 			sass += "&background-tiled=" + escape(ThemeDesigner.settings["background-tiled"]);
@@ -687,6 +689,21 @@ var ThemeDesigner = {
 			"f2f2f2",
 			"ebebeb",
 			"000000"
+		),
+		"color-header": Array(
+			"775E1B",
+			"B72600",
+			"8F3000",
+			"692E00",
+			"6D0D00",
+			"754B75",
+			"396477",
+			"888018",
+			"285F00",
+			"103BA2",
+			"580062",
+			"600037",
+			"808080"
 		)
 	}
 
