@@ -8,7 +8,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$wgForceSkin = 'oasis';
 		$wgTitle = Title::newMainPage();
-		$wgUser = User::newFromName('WikiaBot');
+		$wgUser = User::newFromName('WikiaStaff');
 
 		wfSuppressWarnings();
 		ob_start();
@@ -361,11 +361,11 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		global $wgTitle, $wgEnableAchievementsExt;
 		if (!$wgEnableAchievementsExt) $this->markTestSkipped();
 
-		$wgTitle = Title::newFromText('User:WikiaBot');
+		$wgTitle = Title::newFromText('User:WikiaStaff');
 
 		$moduleData = Module::get('Achievements')->getData();
 
-		$this->assertEquals ($moduleData['ownerName'], 'WikiaBot');
+		$this->assertEquals ($moduleData['ownerName'], 'WikiaStaff');
 		$this->assertEquals ($moduleData['viewer_is_owner'], true);
 		$this->assertEquals ($moduleData['max_challenges'], 'all');
 		$this->assertType ('array', $moduleData['challengesBadges'][0]);
@@ -720,7 +720,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertRegExp('/^foo<section class="WikiaBlogListingBox bar"/', $html);
 		$this->assertRegExp('/User_blog:My_blog_post/', $html);
-		$this->assertRegExp('/User:WikiaBot">WikiaBot<\/a>/', $html);
+		$this->assertRegExp('/User:WikiaStaff">WikiaStaff<\/a>/', $html);
 	}
 
 	function testCommunityCornerModule() {
