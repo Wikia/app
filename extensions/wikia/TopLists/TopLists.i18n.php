@@ -70,7 +70,7 @@ $messages['en'] = array(
 
 	//list view
 	'toplists-list-related-to' => 'Related to:',
-	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>vote|$1<br/>votes}}',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />vote|$1<br />votes}}',
 	'toplists-list-created-by' => 'by [[User:$1|$1]]',
 	'toplists-list-vote-up' => 'Vote up',
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vote|votes}} in $2',
