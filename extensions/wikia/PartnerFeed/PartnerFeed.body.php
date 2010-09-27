@@ -157,7 +157,7 @@ class PartnerFeed extends SpecialPage {
 		$oBlogListing->setFormData('tagContent', '');
 		if ( !empty( $sListing ) ){
 			$oBlogListing->parseTag( urldecode( $sListing ) );
-			$subTitleName = wfMsg('blog-posts-from-listening', $sListing);
+			$subTitleName = wfMsg('blog-posts-from-listing', $sListing);
 		} else {
 			$oBlogListing->setFormData('listingCategories', '');
 			$subTitleName = wfMsg('all-blog-posts');

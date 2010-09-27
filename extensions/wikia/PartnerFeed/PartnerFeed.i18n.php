@@ -21,7 +21,16 @@ $messages['en'] = array(
 	'feed-title-leaderboard'    => 'Achievements leaderboard',
 	'feed-main-title'           => 'Wikia partner feed',
 	'all-blog-posts'            => 'all categories',
-	'blog-posts-from-listening' => 'from listening: $1',
+	'blog-posts-from-listing' => 'from listing: $1',
 	'feed-title-hot-content'    => 'Hot content - $1',
 	'feed-title-blogcomments'   => 'Comments to $1',
+);
+
+$messages['en'] = array(
+	'blog-posts-from-listing' => 'Parameters:
+* $1 is a link to a listing with the listing page title as link description.',
+	'feed-title-hot-content'    => 'Parameters:
+* $1 is a hub title.',
+	'feed-title-blogcomments'   => 'Parameters:
+* $1 is a blog post title.',
 );
