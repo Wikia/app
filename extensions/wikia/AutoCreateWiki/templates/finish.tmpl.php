@@ -19,8 +19,13 @@ else {
 <br />
 <div style="font-style: normal;" id="nwb_link">
         <div style="text-align: center;">
-                <a href="<?php echo "{$domain}wiki/Special:NewWikiBuilder{$nwbType}" ?>" class="wikia-button" onclick="WET.byStr('nwb/getstarted')"><?=wfMsg('autocreatewiki-success-get-started')?></a>
+                
         </div>
 </div>
+
+<script>
+var domain = "<?= $domain ?>";
+window.location.href = domain + 'wiki/Special:WikiBuilder'
+</script>
 
 <!-- e:<?= __FILE__ ?> -->
