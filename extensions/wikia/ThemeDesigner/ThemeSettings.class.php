@@ -8,8 +8,8 @@ class ThemeSettings {
 
 	const HistoryItemsLimit = 10;
 
-	const WordmarkImageName = 'Oasis-wordmark.png';
-	const BackgroundImageName = 'Oasis-background';
+	const WordmarkImageName = 'Wiki-wordmark.png';
+	const BackgroundImageName = 'Wiki-background';
 
 	private $defaultSettings;
 
