@@ -57,7 +57,7 @@ class ApiRunJob extends ApiBase {
 		ini_set( "max_execution_time", 600 );
 
 		$params = $this->extractRequestParams();
-		if( !$wgUser->isAllowed( "wikifactory" ) ) { // change to 'runjob' later
+		if( !$wgUser->isAllowed( "staff" ) ) { // change to 'runjob' later
 			$this->dieUsageMsg( array( "cantrunjobs" ) );
 		}
 
