@@ -133,7 +133,7 @@ class ArticleCommentInit {
 	}
 
 	static public function ArticleCommentAddJS(&$out, &$sk) {
-		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgEnableWikiaCommentsExt;
+		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 
 		if (self::ArticleCommentCheck()) {
