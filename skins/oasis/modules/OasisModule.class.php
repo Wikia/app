@@ -107,12 +107,12 @@ class OasisModule extends Module {
 		
 		// Quant serve moved *after* the ads because it depends on Athena/Provider values.
 		// macbre: RT #25697 - hide Quantcast Tags on edit pages
-		$trackingPixels = "";
+		$this->trackingPixels = "";
 		if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
-			$trackingPixels .= '<!-- QuantServe and comscore hidden on edit page -->';
+			$this->trackingPixels .= '<!-- QuantServe and comscore hidden on edit page -->';
 		} else {
-			$trackingPixels .= AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
-			$trackingPixels .= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->trackingPixels .= AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->trackingPixels .= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		// decide where JS should be placed (only add JS at the top for special and edit pages)
