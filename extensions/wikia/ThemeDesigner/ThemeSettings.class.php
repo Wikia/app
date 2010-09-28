@@ -130,9 +130,11 @@ class ThemeSettings {
 
 		if(count($history) > 1 && isset($oldFile)) {
 			for($i = 0; $i < count($history) - 1; $i++) {
-				if($history[$i]['settings']['wordmark-image-name'] == self::WordmarkImageName) {
-					$history[$i]['settings']['wordmark-image-name'] = $oldFile['name'];
-					$history[$i]['settings']['wordmark-image-url'] = $oldFile['url'];
+				if (isset($history[$i]['settings']['wordmark-image-name'])) {
+					if($history[$i]['settings']['wordmark-image-name'] == self::WordmarkImageName) {
+						$history[$i]['settings']['wordmark-image-name'] = $oldFile['name'];
+						$history[$i]['settings']['wordmark-image-url'] = $oldFile['url'];
+					}
 				}
 			}
 		}
