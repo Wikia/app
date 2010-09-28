@@ -107,7 +107,7 @@ select {
 				?>
 				<li class="wikiList">
 					<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?php print $wikiID; ?>" value="<?php print $wikiID; ?>" />&nbsp;
-					<a href="<?php print htmlspecialchars($wikiInfo['u']) ?>" <?php echo ( !$wikiInfo['p'] ? "style=\"color: red;\"" : "" ); ?>><?php print $wikiInfo['t'] ?></a><?php print $editURL ?>
+					<?php print $editURL ?> <a href="<?php print htmlspecialchars($wikiInfo['u']) ?>" <?php echo ( !$wikiInfo['p'] ? "style=\"color: red;\"" : "" ); ?>><?php print $wikiInfo['t'] ?></a> (<?php print htmlspecialchars($wikiInfo['u']); ?>)
 				</li>
 				<?php
 			}
