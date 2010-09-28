@@ -21,10 +21,3 @@ $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
 
 // i18n
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
-
-// rights & permisions
-$wgAvailableRights[] = 'themedesigner';
-$wgGroupPermissions['*']['themedesigner'] = false;
-//$wgGroupPermissions['helper']['themedesigner'] = true;
-$wgGroupPermissions['staff']['themedesigner'] = true;
-//$wgGroupPermissions['sysop']['themedesigner'] = true;
