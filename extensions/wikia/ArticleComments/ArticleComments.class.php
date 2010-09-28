@@ -20,7 +20,7 @@
  */
 
 class ArticleCommentInit {
-	private static $enable = null;
+	public static $enable = null;
 
 	static public function ArticleCommentCheck() {
 		global $wgTitle, $wgRequest, $wgUser;
