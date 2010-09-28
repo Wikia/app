@@ -14,7 +14,7 @@ $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
 $wgDBdevboxServer1 = 'dev-db-a1';
 $wgDBdevboxServer2 = 'dev-db-b1';
-$databaseDirectory = "database_A";
+$databaseDirectories = array ("database_A", "database_B", "database_C");
 
 $USAGE =
 	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [-f [dbname] | -i [filename] | -?]\n" .
@@ -29,66 +29,69 @@ if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
 // Grind through s3 for a bit and figure out what the most recent dump is
 
 if(array_key_exists( 'c', $opts )) {
-	$databaseDirectory = "database_".trim($opts['c']);
+	$databaseDirectories = array("database_".trim($opts['c']));
 };
 
 if (array_key_exists( 'f', $opts )) {
 	$dbname = $opts['f'];
 	echo "Fetching $dbname...\n";
 	// first check to make sure s3cmd is available
-	
-	$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
-	if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
-		// some kind of error, print and die
-		exit($response);
-	}
-	// otherwise, find out if we got some directories that look like database dumps
-	$dir_list = explode("\n", $response);
-	echo "Found " . count($dir_list) . " backup directories...\n";
 
-	$date_list = array();
-	foreach ($dir_list as $dir) {
-		if ($dir == "") continue;
-		//print_r("dir = $dir \n");
-		preg_match('/.*fulldump_(\d+)\.(\d+)\.(\d+).*/', $dir, $matches);
-		if (count($matches) != 4) {
-			exit ("this does not look like a database directory: $dir\n");
+	foreach ($databaseDirectories as $databaseDirectory) {
+
+		$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
+		if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
+			// some kind of error, print and die
+			exit($response);
 		}
-		list($unused, $day, $month, $year) = $matches;
-		$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
-		$date_list[$year][$day_of_year] = "fulldump_$day.$month.$year";
-	}
-	foreach ($date_list as &$arr) {
-		krsort($arr);
-	}
-	//print_r($date_list);
+		// otherwise, find out if we got some directories that look like database dumps
+		$dir_list = explode("\n", $response);
+		echo "Found " . count($dir_list) . " backup directories in $databaseDirectory...\n";
 
-	// now we have a sorted list of directories by most recent date.  how many dumps are in there?
-	echo "THIS STEP CAN TAKE A WHILE...\n";
-	foreach ($date_list as $year => $day_of_year) {
-		foreach ($day_of_year as $dirname) {
-			echo "Searching $dirname...\n";
-			$filename = null;
-			$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."*");
-//			print_r($response);
-			$file_list = explode("\n", $response);
-			echo "Found " . count($file_list) . " items...\n";
-			foreach ($file_list as $file) {
-				$regs = array();
-				$file = preg_split('/\s+/' ,$file);
-				$file = $file[3];
-				if(strpos($file, $dbname.".sql.gz") > 0 || strpos($file, $dbname."_") > 0 ) {
-					$filename = $dbname.".sql.gz";	        
-					echo "Found a match: $file\n";
-			               	echo "Saving to local filesystem:".$filename."\n";
-					shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
-					$filename = $dbname.".sql.gz";	
-					break;
-				}
+		$date_list = array();
+		foreach ($dir_list as $dir) {
+			if ($dir == "") continue;
+			//print_r("dir = $dir \n");
+			preg_match('/.*fulldump_(\d+)\.(\d+)\.(\d+).*/', $dir, $matches);
+			if (count($matches) != 4) {
+				exit ("this does not look like a database directory: $dir\n");
 			}
-			// check to see if we found something after scanning the whole directory, because we might have multipart files
-			if ($filename != null) exit();
-			echo "Database file not found...\n";
+			list($unused, $day, $month, $year) = $matches;
+			$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
+			$date_list[$year][$day_of_year] = "fulldump_$day.$month.$year";
+		}
+		foreach ($date_list as &$arr) {
+			krsort($arr);
+		}
+		//print_r($date_list);
+
+		// now we have a sorted list of directories by most recent date.  how many dumps are in there?
+		echo "THIS STEP CAN TAKE A WHILE...\n";
+		foreach ($date_list as $year => $day_of_year) {
+			foreach ($day_of_year as $dirname) {
+				echo "Searching $dirname...\n";
+				$filename = null;
+				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."*");
+	//			print_r($response);
+				$file_list = explode("\n", $response);
+				echo "Found " . count($file_list) . " items...\n";
+				foreach ($file_list as $file) {
+					$regs = array();
+					$file = preg_split('/\s+/' ,$file);
+					$file = $file[3];
+					if(strpos($file, $dbname.".sql.gz") > 0 || strpos($file, $dbname."_") > 0 ) {
+						$filename = $dbname.".sql.gz";
+						echo "Found a match: $file\n";
+								echo "Saving to local filesystem:".$filename."\n";
+						shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
+						$filename = $dbname.".sql.gz";
+						break;
+					}
+				}
+				// check to see if we found something after scanning the whole directory, because we might have multipart files
+				if ($filename != null) exit();
+				echo "Database file not found...\n";
+			}
 		}
 	}
 }
@@ -138,6 +141,3 @@ if (array_key_exists( 'i', $opts )) {
 	}
 
 }
-
-
-
