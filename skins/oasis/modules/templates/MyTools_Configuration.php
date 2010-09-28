@@ -4,7 +4,16 @@
 
 	<h1><?= wfMsg('oasis-edit-my-tools-title') ?></h1>
 
-	<form>
+	<script>
+	/** disables the enter key for this specific form **/
+$(".my-tools-form").keypress(function(e) {
+	if (e.which == 13) {
+		return false;
+	}
+});
+	</script>
+
+	<form class="my-tools-form">
 		<fieldset>
 			<label><?= wfMsg('oasis-edit-my-tools-addtool') ?></label>
 			<input type="text" class="search" autocomplete="off">
