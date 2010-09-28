@@ -50,6 +50,7 @@
 ?>
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 <?= $analytics ?>
+<?= $trackingPixels ?>
 <?php
 	// Load Javacript right before the closing body tag.
 	if($jsAtBottom){
