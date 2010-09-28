@@ -227,12 +227,13 @@
 	top: 0;
 }
 
-/* hide image links (pop-out / link) on skins different then Monaco */
+/* hide image links (pop-out / link) on skins different then Monaco and Oasis */
 .wikia-slideshow-images .wikia-slideshow-image {
 	display: none;
 }
 
-/* show on Monaco */
+/* show on Monaco and Oasis */
+body.skin-oasis .wikia-slideshow-images .wikia-slideshow-image,
 body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
 	cursor: pointer;
 	display: block;
