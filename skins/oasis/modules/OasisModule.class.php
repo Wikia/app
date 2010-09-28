@@ -30,6 +30,7 @@ class OasisModule extends Module {
 	var $body;
 	var $globalVariablesScript;
 	var $analytics;
+	var $trackingPixels;
 	var $printableCss;
 	var $jsAtBottom;
 
@@ -103,6 +104,17 @@ class OasisModule extends Module {
 
 		// track page load time
 		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
+		
+		// Quant serve moved *after* the ads because it depends on Athena/Provider values.
+		// macbre: RT #25697 - hide Quantcast Tags on edit pages
+		$trackingPixels = "";
+		if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
+			$trackingPixels .= '<!-- QuantServe and comscore hidden on edit page -->';
+		} else {
+			$trackingPixels .= AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+			$trackingPixels .= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+			$trackingPixels .= AnalyticsEngine::track('Exelate', AnalyticsEngine::EVENT_PAGEVIEW);
+		}
 
 		// decide where JS should be placed (only add JS at the top for special and edit pages)
 		if ($wgTitle->getNamespace() == NS_SPECIAL || BodyModule::isEditPage()) {
