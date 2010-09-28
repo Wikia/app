@@ -3,6 +3,7 @@
 * rt#68568: Oasis: Search suggestion dropdown is too slow (macbre)
 * rt#68286: Oasis: Theme designer not showing full theme (macbre)
 * rt#68421: Oasis: contentSub is missing (macbre)
+* rt#68659: Oasis: Add quancast & comscore beacons into Oasis (sean)
 
 == Changes since 201009.4 ==
 * rt#68331: Oasis: don't show Special:Widgets on Oasis (uberfuzzy)
