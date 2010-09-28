@@ -184,7 +184,7 @@ class BodyModule extends Module {
 				if(!$page_owner->getOption('hidefollowedpages')) {
 					$railModuleList[1200] = array('FollowedPages', 'Index', null);
 				}
-				if($wgEnableAchievementsExt && !$page_owner->getOption('hidepersonalachievements')) {
+				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
 					$railModuleList[1350] = array('Achievements', 'Index', null);
 				}
 			}

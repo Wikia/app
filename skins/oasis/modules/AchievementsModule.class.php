@@ -32,18 +32,16 @@ class AchievementsModule extends Module {
 		$userProfileService->getHTML();   // have to call this because it creates our data as a side effect
 
 		$this->ownerName = $userProfileService->mUserOwner->getName();
-			
-		if ($userProfileService->mUserOwner && !($userProfileService->mUserOwner->getOption('hidepersonalachievements'))) {
-			$this->ownerBadges = $userProfileService->mOwnerBadgesSimple;
-			$this->ownerCounters = $userProfileService->mOwnerCounters;
+		$this->ownerBadges = $userProfileService->mOwnerBadgesSimple;
+		$this->ownerCounters = $userProfileService->mOwnerCounters;
 
-			$this->ownerRank = $rankingService->getUserRank($userProfileService->mUserOwner->getId());
-			$this->ownerScore = $rankingService->getUserScore($userProfileService->mUserOwner->getId());
+		$this->ownerRank = $rankingService->getUserRank($userProfileService->mUserOwner->getId());
+		$this->ownerScore = $rankingService->getUserScore($userProfileService->mUserOwner->getId());
 
-			if (count($this->ownerBadges) >= 4) {
-				$this->max_challenges = 4;
-			}
+		if (count($this->ownerBadges) >= 4) {
+			$this->max_challenges = 4;
 		}
+
 		if($userProfileService->mUserViewer && $userProfileService->mUserViewer->isLoggedIn() && $userProfileService->mUserViewer->getId() == $userProfileService->mUserOwner->getId()) {
 			$this->viewer_is_owner = true;
 			$this->challengesBadges = $userProfileService->mChallengesBadges;
