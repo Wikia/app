@@ -57,7 +57,7 @@ var initTracker = function() {
 				$.tracker.byStr(fakeUrl + 'facebookconnect');
 			}
 			// user name with avatar
-			else {
+			else if (node.hasParent('li')) {
 				$.tracker.byStr(fakeUrl + 'usermenu/username');
 			}
 		}
