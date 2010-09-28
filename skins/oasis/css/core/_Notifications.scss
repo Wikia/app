@@ -48,21 +48,21 @@
 			margin: 4px 4px 0;
 			max-width: 175px;
 			overflow: hidden;
-			padding: 10px 15px;
+			padding: 10px 20px;
 			position: relative;
 			a {
 				color: $color-notification-links;
 				text-decoration: underline;
 			}
 			.close {
-				background: transparent url(/skins/oasis/images/sprite.png) no-repeat -1149px -54px; /* $wgCdnStylePath */
+				background: transparent url(/skins/oasis/images/sprite.png) no-repeat -1100px -36px; /* $wgCdnStylePath */
 				border: solid 1px #fff;
 				cursor: pointer;
-				height: 5px;
+				height: 7px;
 				position: absolute;
 				right: 3px;
 				top: 3px;
-				width: 5px;
+				width: 7px;
 			}
 		}
 		// IE7 fixes - start
