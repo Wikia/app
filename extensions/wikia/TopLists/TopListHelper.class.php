@@ -240,7 +240,7 @@ class TopListHelper {
 	 * Callback for the CreatePage::FetchOptions hook
 	 */
 	static public function onCreatePageFetchOptions( &$options ) {
-		global $wgCdnStylePath, $wgExtensionsPath, $wgScript, $wgShowTopListsInCreatePage;
+		global $wgCdnStylePath, $wgScript, $wgShowTopListsInCreatePage;
 
 		if( !empty( $wgShowTopListsInCreatePage ) ) {
 			wfLoadExtensionMessages( 'TopLists' );
@@ -251,8 +251,7 @@ class TopListHelper {
 			$options[ 'toplist' ] = array(
 				'namespace' => NS_TOPLIST,
 				'label' => 'toplists-createpage-dialog-label',
-				'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png",
-				//'icon' => "{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png",//devbox
+				'icon' => "{$wgCdnStylePath}/extensions/wikia/TopLists/images/thumbnail_toplist.png",
 				'trackingId' => 'toplist',
 				'submitUrl' => "{$url}/$1"
 			);
