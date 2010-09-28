@@ -205,6 +205,10 @@ var ThemeDesigner = {
 
 				var color = $("#color-name").val()
 
+				if (color == "" || color == $("#color-name").attr("placeholder")) {
+					return;
+				}
+
 				// add hash if needed
 				var expression = /^[0-9a-f]{3,6}/i;
 				if (expression.test(color)) {
