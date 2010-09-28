@@ -784,7 +784,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgTitle = Title::newMainPage();
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertTrue($moduleData['showShare']);
-		
+
 	}
 
 	// These are hards one to test, since the old ArticleCommentsCode is not modular
@@ -794,9 +794,11 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		if (!$wgEnableArticleCommentsExt) $this->markTestSkipped();
 
 		$wgTitle = Title::newFromText("Foo");
+		ArticleCommentInit::$enable = true;
 		$moduleData = Module::get('ArticleComments')->getData();
 		$this->assertEquals("Title", get_class($moduleData['wgTitle']));
 		$this->assertEquals("Foo", $moduleData['wgTitle']->getText());
+		$this->assertEquals(count($moduleData['commentListRaw']), $moduleData['countComments']);
 
 	}
 	function testPopularBlogPostsModule() {
