@@ -3,6 +3,18 @@ $G = function(id) {return document.getElementById(id)};
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
 
+// replace stock function for getting rid of response-speed related issues
+jQuery.getScript = function(url, callback) {
+	jQuery.ajax({
+			async: false,
+			type: "GET",
+			url: url,
+			data: null,
+			success: callback,
+			dataType: 'script'
+		})
+}
+
 jQuery.fn.log = function (msg, group) {
 	if (typeof console != 'undefined') {
 		if (group) {
@@ -257,7 +269,7 @@ $.loadJQueryAutocomplete = function(callback) {
 
 		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion, function() {
 			$().log('loaded', 'jQuery Autocomplete');
-
+			$().log( $.fn.autocomplete);
 			if(typeof callback === 'function') callback();
 		});
 	}
