@@ -92,6 +92,8 @@ $wgEnableUserChangesHistoryExt = false;
 
 $wgExtensionsPath = "{$wgScriptPath}/extensions";
 $wgAllInOne = false;
+$wgEnableFixRecoveredUsersExt = false;
+
 ##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
