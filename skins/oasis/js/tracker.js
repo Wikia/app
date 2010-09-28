@@ -443,7 +443,7 @@ var initTracker = function() {
 		}
 		// section edit
 		else if (node.hasClass('editsection')) {
-			$.tracker.byStr(fakeUrl + 'sectionedit');
+			$.tracker.byStr('action/sectionedit');
 		}
 		// TOC
 		else if (node.hasParent('#toc')) {
