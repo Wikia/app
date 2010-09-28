@@ -165,7 +165,6 @@ function wfCreatePageAjaxGetDialog() {
 	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-	print_pre( $wgCreatePageOptions );
 	$options = $wgCreatePageOptions;
 
 	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
