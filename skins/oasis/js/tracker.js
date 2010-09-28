@@ -467,27 +467,33 @@ var initTracker = function() {
 		}
 		// image / video placeholder
 		else if (node.hasParent('.wikiaPlaceholder')) {
+			fakeUrl = 'action/';
+
 			// yes, we need to do matching of ID here
 			var placeholderId = node.parent().parent().attr('id');
 
 			if (placeholderId.indexOf('WikiaImagePlaceholder') > -1) {
 				// image placeholder
-				$.tracker.byStr(fakeUrl + 'addphoto');
+				$.tracker.byStr(fakeUrl + 'addphoto/placeholder');
 			}
 			else {
 				if (node.hasParent('table.gallery')) {
 					// add video to gallery
-					$.tracker.byStr(fakeUrl + 'addtovideogallery');
+					$.tracker.byStr(fakeUrl + 'addvideo/gallery');
 				}
 				else {
 					// video placeholder
-					$.tracker.byStr(fakeUrl + 'addvideo');
+					$.tracker.byStr(fakeUrl + 'addvideo/placeholder');
 				}
 			}
 		}
 		// "Add a photo to this gallery"
 		else if (node.hasClass('wikia-photogallery-add')) {
-			$.tracker.byStr(fakeUrl + 'addtophotogallery');
+			$.tracker.byStr('action/addphoto/gallery');
+		}
+		// "Add a photo" to slideshow
+		else if (node.hasClass('wikia-slideshow-addimage')) {
+			$.tracker.byStr('action/addphoto/slideshow');
 		}
 		// track clicks on the result of the links
 		else {
