@@ -1,0 +1,57 @@
+@import "../mixins/rail-module";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+@import "../core/color";
+
+#AjaxLoginBox {
+
+	#AjaxLoginButtons {
+		ul {
+			list-style: none;
+			margin-left: 15px;
+		}
+	}
+	
+	input[type=text],  input[type=password] {
+		clear: both;
+		display: block;
+	}
+	
+	.select-container {
+			clear: both;
+			display: block;
+	}
+	
+	.captcha {
+		position: absolute;
+		div {
+			width: 135px;
+			float: none !important; // /** overwriting inline-css from Monaco **/
+		
+		}
+		
+		img {
+			position: absolute;
+			left: 136px;
+			top: 0px;
+			&.sprite {
+				position: inherit;
+				left: 0px;
+				top: 0px;
+			}
+		}
+		
+		input {
+			display: block;
+			clear: both;
+		}
+		br {
+			display: none; // /** getting rid of the space **/
+		}
+	}
+	
+	.modalToolbar {
+		padding-left: 19px;
+	}
+}
