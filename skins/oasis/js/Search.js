@@ -5,7 +5,6 @@ $(function() {
 WikiaSearchApp = {
 	searchForm: false,
 	searchField: false,
-	adBoxAfter: false,
 
 	track: function(url) {
 		$.tracker.byStr('module/search/' + url);
@@ -34,22 +33,11 @@ WikiaSearchApp = {
 					window.location.href = wgArticlePath.replace(/\$1/, v.replace(/ /g, '_'));
 				},
 				appendTo: '#WikiaSearch',
-				deferRequestBy: 1000,
+				deferRequestBy: 250,
 				maxHeight: 1000,
 				selectedClass: 'selected',
 				width: '270px'
 			});
-
-			// hide TOP_BOXAD ad when suggestions are shown
-			/*
-			WikiaSearchApp.searchField.
-				bind('suggestShow', function() {
-					//WikiaSearch.adBoxAfter.css('visibility', 'hidden');
-				}).
-				bind('suggestHide', function() {
-					//WikiaSearch.adBoxAfter.css('visibility', 'visible');
-				});
-			*/
 		});
 	}
 };
