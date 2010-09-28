@@ -161,12 +161,18 @@ jQuery.tracker = function() {
 		$.tracker.byStr('editpage/toolbar/' + id);
 	});
 
-	// tracking for article content links (done by Nef)
+	// tracking for article content links (done by Nef / updated by Macbre)
 	if (wgIsArticle && wgArticleId > 0) {
-		var content = (window.skin == 'oasis') ? $('#WikiaArticle') : $('#bodyContent');
+		var isOasis = (window.skin == 'oasis');
+		var content = isOasis ? $('#WikiaArticle') : $('#bodyContent');
 
 		// catch all clicks inside article content, but track clicks on links only
 		content.click(function(e) {
+			var track = function(fakeUrl) {
+				var root = isOasis ? 'contentpage/contentlink/' : 'articleActions/contentLink/';
+				$.tracker.byStr(root + fakeUrl);
+			}
+
 			var link = $(e.target);
 
 			if (link.is('img')) {
@@ -178,7 +184,10 @@ jQuery.tracker = function() {
 				return;
 			}
 
-			$.tracker.byStr("articleAction/contentLink-all");
+			// RT #68550
+			if (!isOasis) {
+				$.tracker.byStr("articleAction/contentLink-all");
+			}
 
 			var _href = link.attr("href") || "";
 
@@ -189,72 +198,72 @@ jQuery.tracker = function() {
 				/* catlinks */
 				/* nonexistent (red) categories will be traced below as regular red links */
 				if (link.parents("div").is("div#catlinks")) {
-					$.tracker.byStr("articleAction/contentLink/ignore/categories");
+					track("ignore/categories");
 					return;
 				}
 
 				/* smw factbox */
 				if (link.parents("div").is("div.smwfact")) {
-					$.tracker.byStr("articleAction/contentLink/ignore/smwfactbox");
+					track("ignore/smwfactbox");
 					return;
 				}
 
-				$.tracker.byStr("articleAction/contentLink/blueInternal");
+				track("blueInternal");
 				return;
 			}
 
 			/* href="#" or href="javascript:..." */
 			if (_href == "#" || _href.match(/^javascript:/)) {
-				$.tracker.byStr("articleAction/contentLink/ignore/javascript");
+				track("ignore/javascript");
 				return;
 			}
 			/* href="#anchor" */
 			if (_href.match(/^#/)) {
-				$.tracker.byStr("articleAction/contentLink/ignore/anchor");
+				track("ignore/anchor");
 				return;
 			}
 
 			/* section edit link (already tracked as editSection) */
 			if (_href.match(/\/index\.php\?title=.*\&action=edit\&section=/)) {
-				$.tracker.byStr("articleAction/contentLink/ignore/editSection");
+				track("ignore/editSection");
 				return;
 			}
 			/* regular red link */
 			/* including categories */
 			if (_href.match(/\/index\.php\?title=.*&action=edit&redlink=/) /* && link.hasClass("new") */ ) {
-				$.tracker.byStr("articleAction/contentLink/red");
+				track("red");
 				return;
 			}
 			/* other edit link (eg. template "e" shortcut) */
 			if (_href.match(/\/index\.php\?title=.*\&action=edit/) /* && link.hasClass("new") */ ) {
-				$.tracker.byStr("articleAction/contentLink/ignore/edit");
+				track("ignore/edit");
 				return;
 			}
 
 			/* image */
 			if (link.hasClass("image")) {
-				$.tracker.byStr("articleAction/contentLink/image");
+				track("image");
 				return;
 			}
 			/* bottom right of thumbnails... is this reliable? */
 			if (link.hasClass("internal")) {
-				$.tracker.byStr("articleAction/contentLink/imageIcon");
+				track("imageIcon");
 				return;
 			}
 
 			/* external */
 			if (link.hasClass("external") || link.hasClass("extiw") /* && _href.match(/^https?:\/\//) */ ) {
-				$.tracker.byStr("articleAction/contentLink/blueExternal");
+				track("blueExternal");
 				return;
 			}
 
 			/* picture attribution */
 			if (link.parent().hasClass('picture-attribution')) {
-				$.tracker.byStr("articleAction/contentLink/photoAttribution");
+				track("photoAttribution");
 				return;
 			}
 
-			$.tracker.byStr("articleAction/contentLink/unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
+			track("unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
 		});
 	}
 
