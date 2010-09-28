@@ -6,13 +6,13 @@ $.ajaxSetup({cache: true});
 // replace stock function for getting rid of response-speed related issues
 jQuery.getScript = function(url, callback) {
 	jQuery.ajax({
-			async: false,
-			type: "GET",
-			url: url,
-			data: null,
-			success: callback,
-			dataType: 'script'
-		})
+		async: false,
+		type: "GET",
+		url: url,
+		data: null,
+		success: callback,
+		dataType: 'script'
+	});
 }
 
 jQuery.fn.log = function (msg, group) {
@@ -269,7 +269,7 @@ $.loadJQueryAutocomplete = function(callback) {
 
 		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion, function() {
 			$().log('loaded', 'jQuery Autocomplete');
-			
+
 			if(typeof callback === 'function') callback();
 		});
 	}
