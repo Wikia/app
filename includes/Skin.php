@@ -661,7 +661,13 @@ END;
 				wfProfileIn(__METHOD__ . '::checkForEmptyUserCSS');
 
 				// macbre: check for empty User:foo/skins.css
-				$userCSS = $this->userpage . '/' . $this->getSkinName() .'.css';
+				$skinname = $this->getSkinName();
+				if($skinname == 'oasis') {
+					// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
+					$userCSS = $this->userpage . '/wikia.css';
+				} else {
+					$userCSS = $this->userpage . '/' . $skinname .'.css';
+				}
 
 				$userCSStitle = Title::newFromText($userCSS);
 				if ($userCSStitle->exists()) {
