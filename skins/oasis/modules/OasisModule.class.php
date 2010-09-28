@@ -113,7 +113,6 @@ class OasisModule extends Module {
 		} else {
 			$trackingPixels .= AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$trackingPixels .= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-			$trackingPixels .= AnalyticsEngine::track('Exelate', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		// decide where JS should be placed (only add JS at the top for special and edit pages)
