@@ -663,7 +663,6 @@ END;
 				// macbre: check for empty User:foo/skins.css
 				$skinname = $this->getSkinName();
 				if($skinname == 'oasis') {
-					// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
 					$userCSS = $this->userpage . '/wikia.css';
 				} else {
 					$userCSS = $this->userpage . '/' . $skinname .'.css';
