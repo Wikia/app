@@ -180,7 +180,7 @@ class SkinCorporateBase extends SkinTemplate {
 			$signUpHref = Skin::makeSpecialUrl( 'Signup', $returnto );
 			$data['login'] = array(
 				'text' => wfMsg('login'),
-				'href' => $signUpHref
+				'href' => $signUpHref . "&type=login"
 				);
 
 			$data['register'] = array(
