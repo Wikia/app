@@ -773,6 +773,10 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertTrue($moduleData['showShare']);
 
+		$wgTitle = Title::newFromText('Foo', NS_BLOG_ARTICLE);
+		$moduleData = Module::get('Footer')->getData();
+		$this->assertTrue($moduleData['showShare']);
+
 		$wgTitle = Title::newFromText('Foo', NS_BLOG_LISTING);
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertNull($moduleData['showLike']);
@@ -797,7 +801,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 	function testPopularBlogPostsModule() {
 		$moduleData = Module::get('PopularBlogPosts')->getData();
-		$this->assertNotRegExp('/No posts found/', $moduleData['body']);
+		$this->assertType('string', $moduleData['body']);
 	}
 
 	function testLatestPhotosModule() {
