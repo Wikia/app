@@ -47,7 +47,7 @@ class NeueWebsiteJob extends Job {
 	}
 
 	private function makeThumbnail( $domain ) {
-		global $wgUploadDirectory;
+		global $wgUploadDirectory, $wgHTTPProxy;
 
 		wfProfileIn( __METHOD__ );
 
@@ -60,7 +60,11 @@ class NeueWebsiteJob extends Job {
 		wfMkdirParents( $basePath );
 
 		// create a PDF
-		$cmd = Wikia::binWkhtmltopdf() . " --page-size Letter -B 0 -T 0 -L 0 -R 0 \"http://{$domain}\" {$pdfPath}";
+		$cmd = Wikia::binWkhtmltopdf();
+		if ( !empty( $wgHTTPProxy ) ) {
+			$cmd .= " --proxy  $wgHTTPProxy";
+		}
+		$cmd .= " --page-size Letter -B 0 -T 0 -L 0 -R 0 \"http://{$domain}\" {$pdfPath}";
 
 		wfShellExec( $cmd, $result );
 		if ( $result !== 0 ) {
