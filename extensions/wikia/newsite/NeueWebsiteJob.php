@@ -69,7 +69,7 @@ class NeueWebsiteJob extends Job {
 		}
 
 		// create a PNG from the PDF
-		$cmd = "/usr/local/bin/gs -sDEVICE=png16m -dFirstPage=1 -dLastPage=1 -dNOPAUSE -dBATCH -dSAFER -sOutputFile={$imagePath} -r35 {$pdfPath}";	
+		$cmd = "/usr/local/bin/gs -sDEVICE=png16m -dFirstPage=1 -dLastPage=1 -dNOPAUSE -dBATCH -dSAFER -sOutputFile={$imagePath} -r35 {$pdfPath}";
 
 		wfShellExec( $cmd, $result );
 		if ( $result !== 0 ) {
@@ -110,24 +110,19 @@ class NeueWebsiteJob extends Job {
 	 * @todo replace ereg with preg_match
 	 */
 	private function makeRelated( $domain, $key ) {
-		global $exDomainList;
+		global $exDomainList, $wgHTTPProxy;
 
-		/**
-		 * curl doesn't work, google is blocking somehow it
-		 */
-		//$go = Http::get(
-		//	"http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N",
-		//	"default",
-		//	array( CURLOPT_USERAGENT => '' )
-		//);
-		$fp = @fopen( "http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N", "r");
+		$go = Http::get( "http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N" );
+
+/**
+		$fp = @fopen( "http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N", "r", false, );
 		$go = @fread($fp, 10240);
 		$go = $go.fread($fp, 10240);
 		$go = $go.fread($fp, 10240);
 		$go = $go.fread($fp, 10240);
 		$go = $go.fread($fp, 10240);
 		fclose($fp);
-
+**/
 		if( !strstr( $go, "keine mit Ihrer Suchanfrage" ) ) {
 			$matches = array();
 			$newmatches = array();
