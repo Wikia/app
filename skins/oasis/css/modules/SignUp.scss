@@ -5,7 +5,9 @@
 @import "../core/color";
 
 #AjaxLoginBox {
-
+	h1 {
+		display: none;
+	}
 	#AjaxLoginButtons {
 		ul {
 			list-style: none;
