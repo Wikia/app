@@ -119,8 +119,8 @@ var initTracker = function() {
 
 		// tracking of /action part
 
-		// edit button dropdown
-		else if (node.hasParent('.wikia-menu-button')) {
+		// edit button / dropdown
+		else if (node.hasParent('.wikia-menu-button') || node.hasClass('wikia-button')) {
 			var fakeUrl = 'action/';
 			$.tracker.byStr(fakeUrl + node.attr('data-id'));
 		}
