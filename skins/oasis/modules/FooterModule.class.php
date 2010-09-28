@@ -58,15 +58,9 @@ class FooterModule extends Module {
 			$this->showFollow = true;
 			$this->showMyTools = true;
 
-		} else if($wgTitle->isTalkPage()) {
+		} else if($wgTitle->isTalkPage() || $namespace == NS_USER_TALK) {
 
 			// article talk page
-
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		} else if($namespace == NS_USER_TALK) {
-
 			// user talk page
 
 			$this->showFollow = true;
