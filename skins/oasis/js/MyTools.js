@@ -15,10 +15,16 @@ var MyTools = {
 	},
 
 	configureDialog: function(event) {
-
 		$("#MyToolsConfiguration").find('form').submit(function(event) {
 			event.preventDefault();
 			return false;
+		});
+		
+		/** disables the enter key for this specific form **/
+		$(".my-tools-form").keypress(function(e) {
+			if (e.which == 13) {
+				return false;
+			}
 		});
 
 		//save mytools
