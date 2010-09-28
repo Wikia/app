@@ -269,7 +269,7 @@ $.loadJQueryAutocomplete = function(callback) {
 
 		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion, function() {
 			$().log('loaded', 'jQuery Autocomplete');
-			$().log( $.fn.autocomplete);
+			
 			if(typeof callback === 'function') callback();
 		});
 	}
