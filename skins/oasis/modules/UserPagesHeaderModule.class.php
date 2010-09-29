@@ -191,10 +191,8 @@ class UserPagesHeaderModule extends Module {
 		// user stats (edit points, account creation date)
 		$this->stats = $this->getStats($this->userName);
 
-		// "user" likes
-		if (isset($this->stats['likes'])) {
-			$this->likes = $this->stats['likes'];
-		}
+		// no "user" likes
+		$this->likes = false;
 
 		$this->actionMenu = array(
 			'action' => array(),
@@ -298,7 +296,7 @@ class UserPagesHeaderModule extends Module {
 
 			$this->editTimestamp = $wgLang->date($service->getFirstRevisionTimestamp());
 			$this->comments = $service->getCommentsCount();
-			$this->likes = $service->getLikesCount();
+			$this->likes = true;
 		}
 
 		// edit button / dropdown

@@ -1,9 +1,49 @@
 .commentslikes {
-	.wikia-chiclet-button {
-		margin: 0 2px;
-		top: 5px;
-		img {
-			
+	li {
+		border-left: solid 1px $color-page-border;
+		border-bottom: none !important;
+		float: left;
+		line-height: 20px;
+		padding: 0 10px;
+	}
+	li:first-child {
+		border-left: none;
+	}
+	.commentsbubble {
+		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
+		@include border-radius(2px);
+		border: solid 1px $color-page-border;
+		display: inline;
+		margin: 0 3px;
+		padding: 2px 6px;
+		position: relative;
+
+		// "comments-like" styling
+		$left: 5px;
+		$top: 20px;
+		$size: 5px;
+
+		&:before {
+			border-color: $color-page-border $color-page-border transparent transparent;
+			border-style: solid;
+			border-width: $size;
+			content: " ";
+			height: 0px;
+			position: absolute;
+			top: $top;
+			left: $left;
+			width: 0px;
+		}
+		&:after {
+			border-color: $color-module-shadow $color-module-shadow transparent transparent;
+			border-style: solid;
+			border-width: $size - 1px;
+			content: " ";
+			height: 0px;
+			position: absolute;
+			top: $top;
+			left: $left + 1px;
+			width: 0px;
 		}
 	}
 }

@@ -179,8 +179,8 @@ class PageHeaderModule extends Module {
 			// comments
 			$this->comments = $service->getCommentsCount();
 
-			// likes
-			$this->likes = $service->getLikesCount();
+			// show likes
+			$this->likes = true;
 
 			// get two popular categories this article is in
 			$categories = $service->getMostLinkedCategories();
@@ -329,9 +329,6 @@ class PageHeaderModule extends Module {
 				$this->subtitle = wfMsg('oasis-page-header-subtitle-forum');
 				break;
 		}
-
-		// don't render likes right now
-		$this->likes = false;
 
 		// if page is rendered using one column layout, show search box as a part of page header
 		$this->showSearchBox = isset($params['showSearchBox']) ? $params['showSearchBox'] : false ;
