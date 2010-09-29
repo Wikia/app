@@ -141,8 +141,16 @@ var initTracker = function() {
 		}
 
 		// create blog post button + edit button + edit dropdown items + comments
-		if (node.attr('data-id')) {
-			$.tracker.byStr(fakeUrl + node.attr('data-id'));
+		var id = node.attr('data-id');
+		if (id) {
+			switch(id) {
+				case 'createblogpost':
+					$.tracker.byStr('action/createblogpost/bloglistingheader');
+					break;
+
+				default:
+					$.tracker.byStr(fakeUrl + id);
+			}
 		}
 	});
 
@@ -372,7 +380,7 @@ var initTracker = function() {
 		}
 	});
 
-	// Popular Blog Posts module
+	// Popular Blog Posts module / <bloglist> parser hook
 	$('.WikiaBlogListingBox').click(function(ev) {
 		var fakeUrl = 'module/latestblogposts/';
 		var node = $(ev.target);
@@ -383,7 +391,14 @@ var initTracker = function() {
 
 		// Create blog post
 		if (node.hasClass('wikia-button')) {
-			$.tracker.byStr(fakeUrl + 'createblogpost');
+			// only for <bloglist> (within content)
+			if (node.hasParent('#WikiaArticle')) {
+				$.tracker.byStr('action/createblogpost/bloglistingtag');
+			}
+			// right rail module
+			else {
+				$.tracker.byStr(fakeUrl + 'createblogpost');
+			}
 		}
 		// items
 		else if (node.hasParent('li')) {
