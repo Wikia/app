@@ -80,14 +80,14 @@ function wfCreatePageInit() {
 			'format'=>array(
 				'namespace' => NS_MAIN,
 				'label' => 'createpage-dialog-format',
-				'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_format.png",
+				'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
 				'trackingId' => 'standardlayout',
 				'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
 			),
 			'blank'=> array(
 				'namespace' => NS_MAIN,
 				'label' => 'createpage-dialog-blank',
-				'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_blank.png",
+				'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_blank.png",
 				'trackingId' => 'blankpage',
 				'submitUrl' => "{$wgScript}?title=$1&action=edit"
 			)
