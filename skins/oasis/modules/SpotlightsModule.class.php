@@ -12,6 +12,18 @@ class SpotlightsModule extends Module {
 	var $adGroupName;
 	var $useLazyLoadAdClass;
 
+/**
+ * This method displays spotlights.  Since they appear in two places, it has a required parameter.
+ *
+ * @param Array params All params are contained in this array.
+ * @param String mode  Must be either 'rail' or 'footer'
+ *
+ * This param is used to choose the title message, currently one of:
+ * 'oasis-spotlights-rail-title' => 'Wikia Spotlights',
+ * 'oasis-spotlights-footer-title' => "Around Wikia's Network",
+ *
+ */
+
 	public function executeIndex($params) {
 		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
