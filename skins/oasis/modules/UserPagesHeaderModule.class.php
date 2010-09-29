@@ -50,11 +50,18 @@ class UserPagesHeaderModule extends Module {
 		}
 		else if ($wgTitle->getNamespace() == NS_SPECIAL) {
 			if ($wgTitle->isSpecial( 'Following' ) || $wgTitle->isSpecial( 'Contributions' )) {
-				// get user this special page referrs to
-				$parts = explode('/', $wgRequest->getText('title', false));
+				$target = $wgRequest->getText('target');
+				if ($target != '') {
+					// /wiki/Special:Contributions?target=FooBar (RT #68323)
+					$parts = array($target);
+				}
+				else {
+					// get user this special page referrs to
+					$parts = explode('/', $wgRequest->getText('title', false));
 
-				// remove special page name
-				array_shift($parts);
+					// remove special page name
+					array_shift($parts);
+				}
 			}
 		}
 
