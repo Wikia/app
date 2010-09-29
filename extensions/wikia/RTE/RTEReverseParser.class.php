@@ -1281,11 +1281,11 @@ class RTEReverseParser {
 				$textContent = rtrim(self::addSpaces($node, $textContent), "\n");
 
 				// add space before + and - (RT #53351)
-				if (in_array($textContent{0}, array('-', '+'))) {
+				if (isset($textContent{0}) && in_array($textContent{0}, array('-', '+'))) {
 					$textContent = " {$textContent}";
 				}
 				// encode pipe (RT #53351)
-				else if ($textContent{0} == '|') {
+				else if (isset($textContent{0}) && $textContent{0} == '|') {
 					$textContent = RTEParser::markEntities('&#124;') . substr($textContent, 1);
 				}
 
@@ -1343,7 +1343,12 @@ class RTEReverseParser {
 					case 'strike':
 						// if next element is text node, don't add line break (refs RT #34043)
 						// if next element is <br />, don't add line break (refs RT #38257)
-						if ( !self::nextSiblingIsTextNode($node) && !self::nextSiblingIs($node, 'br') ) {
+						// if next element is <sup> or <sub>, don't add line break (ref RT #67354)
+						if (	!self::nextSiblingIsTextNode($node) &&
+							!self::nextSiblingIs($node, 'br') &&
+							!self::nextSiblingIs($node, 'sub')  &&
+							!self::nextSiblingIs($node, 'sup') ) {
+
 							$out = "{$out}\n";
 						}
 						break;
