@@ -6,9 +6,9 @@
 	right: 0;
 	li {
 		border: 0;
-		height: 35px;
+		height: 32px;
 		margin-top: -20px;
-		padding: 20px 0 0;
+		padding: 10px 0 0;
 		position: relative;
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
@@ -48,7 +48,7 @@
 		display: block;
 		top: -9999px;
 		&.show {
-			top: 56px;
+			top: 41px;
 		}
 		li {
 			float: none;

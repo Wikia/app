@@ -47,7 +47,7 @@
 		border-top: 1px solid mix($color-header-text, $color-header, 20%);
 		border-bottom: 1px solid mix(#000, $color-header, 80%);
 		font-size: 20px;
-		height: 55px;
+		height: 40px;
 		>ul>li:last-child {
 			padding: 0;
 		}
@@ -56,7 +56,7 @@
 		border-left: 1px solid mix($color-header-text, $color-header, 20%);
 		float: left;
 		height: 20px;
-		margin-top: 20px;
+		margin-top: 11px;
 		padding: 0 15px;
 		&:first-child {
 			border: 0;
@@ -64,18 +64,19 @@
 	}
 	.wikia-button {
 		border: 1px solid mix($color-buttons, $color-page, 35%);
-		font-size: 14px;
-		height: 20px;
-		line-height: 21px;
+		font-size: 12px;
+		height: 17px;
+		line-height: 18px;
 		padding: 1px 12px 0px;
 		position: relative;
-		top: -5px;
+		top: -2px;
 	}
 	.chevron {
 		border-top-color: mix($color-header-text, $color-header);
 		border-width: 4px;
 	}
 	.WikiaLogo {
+		padding-left: 30px;
 		a {
 			position: relative;
 			top: -6px;
@@ -104,12 +105,15 @@
 	//top: -2px;
 	li {
 		border: 0;
-		height: 37px;
-		margin-top: -22px;
-		padding: 20px 0 0;
+		height: 31px;
+		margin-top: -11px;
+		padding: 10px 0 0;
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
 		}
+	}
+	>li >a {
+		font-size: 15px;
 	}
 	a {
 		border-right: 1px solid mix($color-header-text, $color-header, 20%);
@@ -137,7 +141,7 @@
 		width: $width-outside - 20px;
 		z-index: 1;
 		&.show {
-			top: 56px;
+			top: 41px;
 		}
 		li {
 			display: inline;
