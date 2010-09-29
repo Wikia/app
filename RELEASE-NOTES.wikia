@@ -1,4 +1,5 @@
 == Changes since 201009.5 ==
+* rt#68550: Oasis: Updates to Oasis click tracking (macbre)
 * rt#68642: Disable collision logic for TOP_RIGHT_BOXAD (Nef)
 * rt#68651: Oasis: Disable "Edit pages on double click" functionality (macbre)
 * rt#68203: Oasis: increase size of dismiss button on notifications (macbre)
