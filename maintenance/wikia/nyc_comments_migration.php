@@ -1,5 +1,12 @@
 <?php
 
+/**
+ alter table Comments ADD COLUMN Comment_page_title varchar(255);
+ alter table Comments ADD COLUMN Comment_page_namespace varchar(255);
+
+ update Comments join page on Comment_page_ID = page_id set Comment_page_title = page_title, Comment_page_namespace = page_namespace;
+ */
+
 require( '/usr/wikia/source/trunk/maintenance/commandLine.inc' );
 
 $dbr = wfGetDB( DB_SLAVE );
