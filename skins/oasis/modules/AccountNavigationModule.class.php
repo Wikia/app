@@ -109,7 +109,7 @@ class AccountNavigationModule extends Module {
 		else {
 			// render user avatar and link to his user page
 			$this->profileLink = AvatarService::getUrl($this->username);
-			$this->profileAvatar = AvatarService::renderAvatar($this->username, 16);
+			$this->profileAvatar = AvatarService::renderAvatar($this->username, 20);
 
 			// dropdown items
 			$dropdownItems = array('mytalk', 'following', 'watchlist', 'preferences');
