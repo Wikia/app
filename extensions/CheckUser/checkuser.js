@@ -9,7 +9,7 @@
 function updateCIDRresult() {
 	var form = document.getElementById( 'mw-checkuser-cidrform' );
 	if( !form ) return; // no JS form
-	form.style.display = 'inline'; // unhide form (JS active)
+	form.style.display = 'block'; // unhide form (JS active)
 	var iplist = document.getElementById( 'mw-checkuser-iplist' );
 	if( !iplist ) return; // no JS form
 	var text = iplist.value;
