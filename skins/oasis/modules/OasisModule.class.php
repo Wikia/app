@@ -39,7 +39,6 @@ class OasisModule extends Module {
 	var $displaytitle;
 	var $mimetype;
 	var $charset;
-	var $body_ondblclick;
 	var $dir;
 	var $lang;
 	var $pageclass;
@@ -104,7 +103,7 @@ class OasisModule extends Module {
 
 		// track page load time
 		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-		
+
 		// Quant serve moved *after* the ads because it depends on Athena/Provider values.
 		// macbre: RT #25697 - hide Quantcast Tags on edit pages
 		$this->trackingPixels = "";
