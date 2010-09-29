@@ -48,11 +48,11 @@ function CategorySelectInit($forceInit = false) {
 	if($wgRequest->getVal('usecatsel','') == "no") {
 		return true;
 	}
-	
+
 	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
 	}
-	
+
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
 	$undo = $wgRequest->getVal('undo');
@@ -457,12 +457,13 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 wgAfterContentAndJS.push(function() {
 	$(".catlinks-allhidden").css("display", "block");
 	$('#csAddCategorySwitch').children('a').click(function() {
-		WET.byStr('articleAction/addCategory');
-
 		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories');
 
-		$.loadYUI( function() {
-			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function(){showCSpanel();});
+		$.loadYUI(function() {
+			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function() {
+				csTrack('addCategory');
+				showCSpanel();
+			});
 		});
 
 		$('#catlinks').addClass('csLoading');
@@ -525,8 +526,8 @@ function CategorySelectGenerateHTMLforView() {
 			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
 		</div>
 		<div id="csButtonsContainer" class="color1">
-			<input type="button" id="csSave" onclick="WET.byStr(\'articleAction/saveCategory\');csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
-			<input type="button" id="csCancel" onclick="WET.byStr(\'articleAction/cancelCategory\');csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" ' . (Wikia::isOasis() ? 'class="secondary" ' : '') . '/>
+			<input type="button" id="csSave" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
+			<input type="button" id="csCancel" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" ' . (Wikia::isOasis() ? 'class="secondary" ' : '') . '/>
 		</div>
 	</div>
 	';

@@ -5,6 +5,18 @@ var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
 var csDraggingEvent = false;
 
+// macbre: generic tracking for CategorySelect (refs RT #68550)
+function csTrack(fakeUrl) {
+	if (window.skin == 'oasis') {
+		// enterCategory -> enter
+		fakeUrl = fakeUrl.replace(/^(.*)Cat(.*)$/g, '$1');
+		$.tracker.byStr('action/category/' + fakeUrl);
+	}
+	else {
+		$.tracker.byStr('articleAction/' + fakeUrl);
+	}
+}
+
 // TODO: PORT AWAY FROM YUI
 function initCatSelect() {
 	if ( (typeof(initCatSelect.isint) != "undefined") && (initCatSelect.isint) ) {
@@ -75,7 +87,7 @@ function modifyCategory(e) {
 		id: 'sortDialog',
 		width: 500,
 		callbackBefore: function() {
-			WET.byStr('articleAction/sortSave');
+			csTrack('sortSave');
 			//fill up initial values
 			$('#csInfoboxCategory').val(category);
 			$('#csInfoboxSortKey').val(sortkey);
@@ -205,13 +217,13 @@ function addCategory(category, params, index) {
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small ' + (params['sortkey'] == '' ? 'sort' : 'sorted');
-	elementImg.onclick = function(e) {if (csDraggingEvent) return; WET.byStr('articleAction/sortCategory'); modifyCategory(this); return false;};
+	elementImg.onclick = function(e) {if (csDraggingEvent) return; csTrack('sortCategory'); modifyCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small close';
-	elementImg.onclick = function(e) {if (csDraggingEvent) return; WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
+	elementImg.onclick = function(e) {if (csDraggingEvent) return; csTrack('deleteCategory'); deleteCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
 	$('#csItemsContainer').get(0).insertBefore(elementA, $('#csCategoryInput').get(0));
@@ -279,7 +291,7 @@ function initializeDragAndDrop() {
 
 function toggleCodeView() {
 	if ($('#csWikitextContainer').css('display') != 'block') {	//switch to code view
-		WET.byStr('editpage/codeviewCategory');
+		$.tracker.byStr('editpage/codeviewCategory');
 
 		$('#csWikitext').attr('value', generateWikitextForCategories());
 		$('#csItemsContainer').hide();
@@ -290,7 +302,7 @@ function toggleCodeView() {
 		$('#wpCategorySelectWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
 		$('#wpCategorySelectSourceType').attr('value', 'wiki');	//inform PHP what source it should use
 	} else {	//switch to visual code
-		WET.byStr('editpage/visualviewCategory');
+		$.tracker.byStr('editpage/visualviewCategory');
 
 		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: $('#csWikitext').attr('value') + ' '}, function(result){
 			if (result.error !== undefined) {
@@ -349,7 +361,7 @@ function moveElement(movedId, prevSibId) {
 
 function inputKeyPress(e) {
 	if(e.keyCode == 13) {
-		WET.byStr('articleAction/enterCategory');
+		csTrack('enterCategory');
 
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
@@ -359,13 +371,13 @@ function inputKeyPress(e) {
 		}
 		//hide input and show button when [enter] pressed with empty input
 		if (category == '') {
-			WET.byStr('articleAction/enterCategoryEmpty');
+			csTrack('enterCategoryEmpty');
 
 			inputBlur();
 		}
 	}
 	if(e.keyCode == 27) {
-		WET.byStr('articleAction/escapeCategory');
+		csTrack('escapeCategory');
 
 		inputBlur();
 	}
@@ -479,6 +491,8 @@ function showCSpanel() {
 }
 
 function csSave() {
+	csTrack('saveCategory');
+
 	if ($('#csCategoryInput').attr('value') != '') {
 		addCategory($('#csCategoryInput').attr('value'));
 	}
@@ -512,6 +526,8 @@ function csSave() {
 }
 
 function csCancel() {
+	csTrack('cancelCategory');
+
 	var csMainContainer = $('#csMainContainer').get(0);
 	csMainContainer.parentNode.removeChild(csMainContainer);
 	$('#csAddCategorySwitch').show();
