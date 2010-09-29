@@ -66,7 +66,7 @@ class UserPagesHeaderModule extends Module {
 		}
 
 		if (isset($parts[0]) && $parts[0] != '') {
-			$userName = $parts[0];
+			$userName = str_replace('_', ' ', urldecode($parts[0]) );
 		}
 		else {
 			// fallback value
