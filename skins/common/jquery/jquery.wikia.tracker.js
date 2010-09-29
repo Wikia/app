@@ -263,7 +263,9 @@ jQuery.tracker = function() {
 				return;
 			}
 
-			track("unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
+			if (!isOasis) {
+				track("unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
+			}
 		});
 	}
 
