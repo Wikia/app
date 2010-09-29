@@ -124,7 +124,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		if ( !empty($errors) ) {
-			$wgOut->addHTML("<div class='errorbox' style='float:none;'>" . $errors . "</div><br/>\n");
+			$wgOut->addHTML( Wikia::errorbox($errors) ) );
 		}
 
 		/********************************************************/
@@ -203,7 +203,7 @@ class ContactForm extends SpecialPage {
 		$encProblemDesc = htmlspecialchars( $this->mProblemDesc );
 
 		if ( !empty($this->err) ) {
-			$wgOut->addHTML("<div class='errorbox' style='float:none;'>" . $this->err . "</div>\n");
+			$wgOut->addHTML( Wikia::errorbox( $this->err ) );
 		}
 
 		// add intro text
