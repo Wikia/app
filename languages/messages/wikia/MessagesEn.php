@@ -1017,6 +1017,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-latest-photos-more-dotdotdot' => 'more...',
 'oasis-global-nav-create-wiki' => 'Start a wiki',
 'oasis-page-header-no-comments-tooltip' => 'Be the first to discuss this page',
+'oasis-page-header-comments' => '{{PLURAL:$1|Comment|Comments}}',
 'oasis-page-header-edited-by' => 'Edited $1 by $2',
 'oasis-page-header-edited' => 'Edited $1',
 'oasis-page-header-read-more' => 'Read more: $1',
