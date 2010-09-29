@@ -2557,7 +2557,7 @@ EOF;
 
 				if (!empty($wgAdsForceLeaderboards)){
 					$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
-					if (!empty($wgEnableTandemAds) && ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+					if (!empty($wgEnableTandemAds) /* rt#68642 && ArticleAdLogic::isBoxAdArticle($this->data['bodytext']) */ ) {
 						$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
 					}
 				} else {
