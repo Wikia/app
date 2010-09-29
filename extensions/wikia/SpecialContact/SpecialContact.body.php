@@ -58,7 +58,7 @@ class ContactForm extends SpecialPage {
 
 			#if there were any ->err s, they will be displayed in ContactForm
 		}
-		
+
 		$this->mainContactForm();
 	}
 	/**
@@ -78,13 +78,13 @@ class ContactForm extends SpecialPage {
 		$m_shared .= " ". (( !empty($this->mName) ) ? $this->mWhichWiki . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mName)) : $this->mWhichWiki) . "\n";
 		$m_shared .= ( ( !empty($this->mProblem) ) ? "contacted Wikia about {$this->mProblem}.\n" : '' ). "";
 
-		
+
 		//start wikia debug info, sent only to the internal email, not cc'd
 		$info = array();
 		$info[] = '' . $this->mBrowser;
 		$info[] = "\n" . 'IP:' . wfGetIP();
 		$info[] = 'wkID: ' . $wgCityId;
-		
+
 		global $wgAdminSkin, $wgDefaultSkin, $wgDefaultTheme;
 		$nominalSkin = ( !empty($wgAdminSkin) )?( $wgAdminSkin ):( ( !empty($wgDefaultTheme) )?("{$wgDefaultSkin}-{$wgDefaultTheme}"):($wgDefaultSkin) );
 		$info[] = 'Skin: ' . $nominalSkin;
@@ -95,14 +95,14 @@ class ContactForm extends SpecialPage {
 		}
 		$info = implode("; ", $info) . "\n";
 		//end wikia debug data
-		
+
 		$m = $m_shared . $info . "\n{$this->mProblemDesc}\n";
-		
+
 		if($this->mCCme) {
 			$mcc = wfMsg('contactccheader') . "\n\n";
 			$mcc .= $m_shared . "\n{$this->mProblemDesc}\n";
 		}
-		
+
 		$mail_user = new MailAddress($this->mEmail);
 		$mail_community = new MailAddress("community@wikia.com");
 
@@ -124,7 +124,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		if ( !empty($errors) ) {
-			$wgOut->addHTML( Wikia::errorbox($errors) ) );
+			$wgOut->addHTML( Wikia::errorbox($errors) );
 		}
 
 		/********************************************************/
@@ -225,7 +225,7 @@ class ContactForm extends SpecialPage {
 					) . "</td>
 				</tr>\n" );
 
-		
+
 		$wgOut->addHTML( "
 				<tr>
 					<td align='right'>". wfMsg( 'contactusername' ) .":</td>
@@ -269,7 +269,7 @@ class ContactForm extends SpecialPage {
 						"<textarea tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>".
 					"</td>
 				</tr>" );
-				
+
 		$wgOut->addHTML( "
 				<tr>
 					<td></td>
@@ -321,7 +321,7 @@ class ContactForm extends SpecialPage {
 
 				document.getElementById('wpBrowser').value = info;
 			/*]]>*/</script>\n");
-			
+
 		return;
 	}
 
