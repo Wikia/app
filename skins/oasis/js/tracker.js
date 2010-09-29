@@ -102,6 +102,10 @@ var initTracker = function() {
 		if (node.hasParent('.commentslikes')) {
 			$.tracker.byStr(fakeUrl + 'comments');
 		}
+		// create page (on main pages)
+		else if (node.hasClass('createpage')) {
+			$.tracker.byStr('action/createapage/mainpage');
+		}
 		// "Read more" categories
 		else if (node.hasParent('.categories')) {
 			$.tracker.byStr(fakeUrl + 'readmore');
@@ -123,11 +127,6 @@ var initTracker = function() {
 		else if (node.hasParent('.wikia-menu-button') || node.hasClass('wikia-button')) {
 			var fakeUrl = 'action/';
 			$.tracker.byStr(fakeUrl + node.attr('data-id'));
-		}
-		// create a page (on main page)
-		else if (node.parent().hasClass('tally')) {
-			var fakeUrl = 'action/';
-			$.tracker.byStr(fakeUrl + 'createapage');
 		}
 	});
 
@@ -222,6 +221,9 @@ var initTracker = function() {
 		// Create a Page
 		if (node.hasClass('wikia-button')) {
 			$.tracker.byStr(fakeUrl + 'createpage');
+
+			// duplicated because of RT #68550
+			$.tracker.byStr('action/createapage/module');
 		}
 		// See more
 		else if (node.hasClass('more')) {
