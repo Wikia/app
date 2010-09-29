@@ -219,8 +219,6 @@ class FBConnectPushEvent {
 		self::$eventCounter++ ;
 		
 		if( wfRunHooks( 'FBConnect::BeforePushEvent', array( $id, &$message, &$params, &$class ) ) ) {
-			wfDebug( "FACEBOOK_CONNECT::PUSHEVENT fb_id: {$id}, msg: {$message}, params: " . var_export($params, true) . ", class: {$class}" );
-
 			$fb = new FBConnectAPI();
 
 			$image = $params['$EVENTIMG'];

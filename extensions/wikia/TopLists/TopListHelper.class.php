@@ -108,8 +108,6 @@ class TopListHelper {
 
 			$params[ '$ARTICLE_URL' ] = $parentTitle->getFullURL("ref=fbfeed&fbtype=ratearticle");
 			$params[ '$ARTICLENAME' ] = $parentTitle->getText();
-
-			wfDebug("TOPLIST::FACEBOOK_CONNECT::VOTE_ITEM fb_id: {$faceBookId}, msg: {$message}, params: " . var_export($params, true) . ", class: {$class}" );
 		}
 
 		return true;
