@@ -1,25 +1,28 @@
 <?php
-	if (is_numeric($comments) || is_numeric($likes)) {
+	if (is_numeric($comments) || $showLike) {
 ?>
-<div class="commentslikes">
+<ul class="commentslikes">
 <?php
 		// render comments button
 		if (is_numeric($comments)) {
 ?>
-	<a href="<?= htmlspecialchars($commentsLink) ?>" class="wikia-chiclet-button" data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><img class="osprite icon-article-like" src="<?= $wgBlankImgUrl ?>" height="10" width="10"></a> <?= $comments ?>
+	<li>
+		<span class="commentsbubble"><?= $formattedComments ?></span>
+		<a href="<?= htmlspecialchars($commentsLink) ?>"data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><?= wfMsgExt('oasis-page-header-comments', array('parsemag'), $comments) ?></a>
+	</li>
 <?php
 		}
 
-		// render likes button
-		/**
-		if (is_numeric($likes)) {
+		// render FB likes button
+		if ($showLike) {
 ?>
-	<img src="<?= $wgStylePath ?>/oasis/images/icon_article_like.png"> <?= $likes ?>
+	<li>
+		<fb:like layout="button_count" width="50" show_faces="false" ref="<?= $likeRef ?>" href="<?= htmlspecialchars($likeHref) ?>"></fb:like>
+	</li>
 <?php
 		}
-		**/
 ?>
-</div>
+</ul>
 <?php
 	}
 ?>

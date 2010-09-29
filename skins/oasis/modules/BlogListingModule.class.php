@@ -27,7 +27,7 @@ class BlogListingModule extends Module {
 		foreach($results as &$result) {
 			$service = new PageStatsService($result['page']);
 
-			$result['likes'] = $service->getLikesCount();
+			$result['likes'] = false;
 			$result['avatar'] = AvatarService::renderAvatar($result['username'], 48);
 			$result['userpage'] = AvatarService::getUrl($result['username']);
 			$result['date'] = $wgLang->date(wfTimestamp(TS_MW, $result['timestamp']));

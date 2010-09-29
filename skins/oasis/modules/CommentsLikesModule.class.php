@@ -12,10 +12,14 @@ class CommentsLikesModule extends Module {
 	private $contextTitle;
 
 	var $comments;
+	var $formattedComments;
 	var $commentsAccesskey;
 	var $commentsLink;
 	var $commentsTooltip;
-	var $likes;
+
+	var $showLike;
+	var $likeHref;
+	var $likeRef;
 
 	/**
 	 * Get URL of the page comments button should be linking to
@@ -61,7 +65,7 @@ class CommentsLikesModule extends Module {
 
 	public function executeIndex($data) {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgLang;
+		global $wgTitle, $wgLang, $wgContentNamespaces;
 
 		// set the page for which we're showing comments / likes
 		// used for proper linking on blog posts listings
@@ -74,7 +78,8 @@ class CommentsLikesModule extends Module {
 		}
 
 		if (isset($data['comments']) && is_numeric($data['comments'])) {
-			$this->comments = $wgLang->formatNum($data['comments']);
+			$this->comments = $data['comments'];
+			$this->formattedComments = $this->comments;
 
 			$this->commentsLink = $this->getCommentsLink();
 			$this->commentsTooltip = $this->getCommentsTooltip();
@@ -82,8 +87,31 @@ class CommentsLikesModule extends Module {
 			$this->commentsAccesskey = ' accesskey="t"';
 		}
 
-		if (isset($data['likes']) && is_numeric($data['likes'])) {
-			$this->likes = $data['likes'];
+		// Facebook's "Like"
+		// @see http://developers.facebook.com/docs/reference/plugins/like
+		if (!empty($data['likes'])) {
+			$this->showLike = true;
+
+			// canonical URL
+			$this->likeHref = $this->contextTitle->getFullUrl();
+
+			// check namespaces
+			$ns = $this->contextTitle->getNamespace();
+			if (in_array($ns, $wgContentNamespaces)) {
+				$this->likeRef = 'content_page';
+			}
+			else if (defined('NS_BLOG_ARTICLE') && $ns == NS_BLOG_ARTICLE) {
+				$this->likeRef = 'blog_page';
+			}
+			else if ($ns == NS_CATEGORY) {
+				$this->likeRef = 'category_page';
+			}
+			else if (defined('NS_TOPLIST') && $ns == NS_TOPLIST) {
+				$this->likeRef = 'list_page';
+			}
+			else {
+				$this->showLike = false;
+			}
 		}
 
 		wfProfileOut(__METHOD__);
