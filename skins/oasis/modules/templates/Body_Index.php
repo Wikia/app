@@ -50,7 +50,7 @@
 			<?= $bodytext ?>
 		</div>
 
-		<?php // tmp turned off wfRenderModule('RelatedPages'); ?>
+		<?= wfRenderModule('RelatedPages'); ?>
 
 		<?= wfRenderModule('ArticleCategories') ?>
 
