@@ -183,7 +183,13 @@ var ArticleComments = {
 					$('#article-comments-pagination').show().html('<div>' + json.pagination + '</div>');
 				}
 				//update counter
-				$('#article-comments-counter').html(json.counter);
+				if ( window.skin == 'oasis' ){
+					$('#article-comments-counter-header').html(json.counter.header);
+					$('#article-comments-counter-recent').html(json.counter.recent);
+					$('#WikiaUserPagesHeader').find('.commentsbubble').html(json.counter.plain);
+				}else{
+					$('#article-comments-counter').html(json.counter);
+				}
 				//readd events
 				ArticleComments.addHover();
 				//force to show 'edit' links for owners
