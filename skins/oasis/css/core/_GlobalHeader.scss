@@ -19,7 +19,7 @@
 
 .WikiaHeader {
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
-	border-top: 5px solid #000;
+	border-top: 3px solid #000;
 	color: $color-header-text;
 	left: 50%;
 	margin-left: -$width-outside/2 - 5;
@@ -27,7 +27,7 @@
 	top: 31px;
 	width: $width-outside + 10px;
 	z-index: 1000;
-	a {
+	a, a:visited, a:active {
 		color: $color-header-text;
 	}
 	h1 {
@@ -47,7 +47,7 @@
 		border-top: 1px solid mix($color-header-text, $color-header, 20%);
 		border-bottom: 1px solid mix(#000, $color-header, 80%);
 		font-size: 20px;
-		height: 40px;
+		height: 44px;
 		>ul>li:last-child {
 			padding: 0;
 		}
@@ -55,7 +55,7 @@
 	li {
 		border-left: 1px solid mix($color-header-text, $color-header, 20%);
 		float: left;
-		height: 20px;
+		height: 22px;
 		margin-top: 11px;
 		padding: 0 15px;
 		&:first-child {
@@ -64,26 +64,28 @@
 	}
 	.wikia-button {
 		border: 1px solid mix($color-buttons, $color-page, 35%);
+		float: left;
 		font-size: 12px;
 		height: 17px;
 		line-height: 18px;
 		padding: 1px 12px 0px;
 		position: relative;
-		top: -2px;
+		top: 1px;
 	}
 	.chevron {
 		border-top-color: mix($color-header-text, $color-header);
 		border-width: 4px;
+		vertical-align: baseline;
 	}
 	.WikiaLogo {
 		padding-left: 30px;
 		a {
 			position: relative;
-			top: -6px;
+			top: -2px;
 		}
 		img {
 			background: url(/skins/oasis/images/sprite.png) -1000px 0 no-repeat; /* $wgCdnStylePath */
-			height: 26px;
+			height: 23px;
 			width: 91px;
 		}
 	}
@@ -101,25 +103,24 @@
 
 .GlobalNavigation {
 	//top level navigation list
-	//position: relative;
-	//top: -2px;
 	li {
 		border: 0;
-		height: 31px;
+		height: 34px;
 		margin-top: -11px;
-		padding: 10px 0 0;
+		padding: 11px 0 0;
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
 		}
 	}
 	>li >a {
-		font-size: 15px;
+		float: left;
+		font-size: 16px;
 	}
 	a {
 		border-right: 1px solid mix($color-header-text, $color-header, 20%);
 		display: inline-block;
-		height: 20px;
-		line-height: 20px;
+		height: 22px;
+		line-height: 24px;
 		padding: 0 15px;
 		&:hover {
 			text-decoration: none;
@@ -141,7 +142,7 @@
 		width: $width-outside - 20px;
 		z-index: 1;
 		&.show {
-			top: 41px;
+			top: 44px;
 		}
 		li {
 			display: inline;
