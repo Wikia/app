@@ -39,13 +39,14 @@
 	position: absolute;
 	li {
 		display: table-cell;
+		padding: 4px 4px 0;
 		vertical-align: bottom;
 		div {
 			@include border-radius(4px);
 			@include box-shadow(0, 0, 5px, mix($color-page, #000));
 			@include linear-gradient($color-notification-background, top, $color-notification-highlight, 35%, $color-notification-background, 65%);
 			color: $color-notification-text;
-			margin: 4px 4px 0;
+			margin: 0;
 			max-width: 175px;
 			overflow: hidden;
 			padding: 10px 20px;
