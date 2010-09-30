@@ -65,7 +65,7 @@
 					?>
 						<li>
 							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
-							<?= $themeHistoryItem['timeago'] ?> by <?= $themeHistoryItem['author'] ?>
+							<?= wfMsg( 'themedesigner-history-item', $themeHistoryItem['timeago'], $themeHistoryItem['author'] ) ?>
 						</li>
 					<?php
 					}
