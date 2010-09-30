@@ -83,8 +83,10 @@
 	}
 ?>
 <?php
+	/* tmp turned off
 	if (empty($wgSuppressAds)) {
 		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
 		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 	}
+	*/
 ?>
