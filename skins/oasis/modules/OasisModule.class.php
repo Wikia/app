@@ -46,7 +46,7 @@ class OasisModule extends Module {
 	var $bottomscripts;
 
 	public function executeIndex() {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId;
 
 		$this->body = wfRenderModule('Body');
 
@@ -100,6 +100,9 @@ class OasisModule extends Module {
 
 		// load Google Analytics code
 		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+
+		// onewiki GA
+		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 
 		// track page load time
 		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
