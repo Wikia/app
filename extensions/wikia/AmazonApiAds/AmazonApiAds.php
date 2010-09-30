@@ -32,9 +32,14 @@ define('AWS_ACCESS_KEY_ID', $wgAmazonAccessKeyId);
 define('AWS_SECRET_ACCESS_KEY', $wgAmazonSecretAccessKey);
 define('AssocTag','wikia-20');
 
+global $wgRequest;
+$title = $wgRequest->getVal('title', 'Cake');
+$title = str_replace(":", " ", $title);
+$title = str_replace("_", " ", $title);
+
 print "<pre>\n";
 $searchIndex = "DigitalMusic";
-$keywords = "Cake";
+$keywords = $title;
 $itemPage = 1;
 ItemSearch($searchIndex, $keywords, $itemPage);
 
@@ -130,7 +135,7 @@ function ItemLookup($asin){
 	$response = Http::get($request);
 
 	$parsed_xml = simplexml_load_string($response);
-
+	
 	if($parsed_xml->Items->Request->IsValid){
 		$current = $parsed_xml->Items->Item;
 		
@@ -157,6 +162,9 @@ function ItemLookup($asin){
 			//	print("&nbsp;&nbsp;&nbsp; <a href=$CartAdd>Add to Cart</a>");
 				print("<tr><td colspan=2>&nbsp;</td> </tr> ");
 			//}
+	} else {
+// TODO: OMG REMOVE!
+exit;
 	}
 	
 	//print_r($parsed_xml);
