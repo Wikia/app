@@ -11,7 +11,8 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 		global $wgUser;
 
 		// check rights
-		if ( !$wgUser->isAllowed( 'themedesigner' ) ) {
+		// @FIXME when we're out of beta editinterface needs to be removed and themedesgner set to true for sysops
+		if ( !$wgUser->isAllowed( 'themedesigner' ) || !$wgUser->isAllowed( 'editinterface' ) ) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
 			return;
