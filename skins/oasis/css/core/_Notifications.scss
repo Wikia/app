@@ -9,10 +9,12 @@
 		background-color: red;
 		color: white;
 		p {
-			background-image: none;
 			a {
 				color: white;
 			}
+		}
+		.accept-icon {
+			display: none;
 		}
 	}
 	p {
