@@ -37,7 +37,7 @@
 #spotlight-slider .nav {
 	padding: 16px 5px 0;
 	position: absolute;
-	top: 244px;
+	top: 239px !important;/*previous value 244px*/
 	z-index: 100;
 }
 #spotlight-slider .nav img {
