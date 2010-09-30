@@ -438,6 +438,8 @@ class GlobalWatchlistBot {
 
 			foreach ( $this->mUsers as $iUserId => $aUserData ) {
 
+				$this->printDebug( "Sending digest emails to user: " . $iUserId );
+				
 				$oResource = $dbr->select(
 					array ( "global_watchlist" ),
 					array ( "gwa_id", "gwa_user_id", "gwa_city_id", "gwa_namespace", "gwa_title", "gwa_rev_id", "gwa_timestamp" ),
@@ -450,7 +452,6 @@ class GlobalWatchlistBot {
 						"LIMIT" => $wgGlobalWatchlistMaxDigestedArticlesPerWiki + 1,
 					)
 				);
-				$this->printDebug( "Sending digest emails to user: " . $iUserId );
 
 				$bTooManyPages = false;
 				if ( $dbr->numRows( $oResource ) > $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) {
@@ -520,9 +521,13 @@ class GlobalWatchlistBot {
 		$blogTitle = $oResultRow->gwa_title;
 
 		if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
-			list( $user, $page_title, $comment ) = BlogComment::explode( $oResultRow->gwa_title );
-			$blogTitle = $user . "/" . $page_title;
+			$parts = ArticleComment::explode( $oResultRow->gwa_title );
+			$blogTitle = $parts['title'];
 		}
+		
+		if ( empty( $blogTitle ) ) {
+			return false;
+		}		
 
 		if ( empty( $aWikiDigest[ 'blogs' ][ $blogTitle ] ) ) {
 			$wikiDB = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
