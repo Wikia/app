@@ -1,4 +1,9 @@
 == Changes since 201009.5 ==
+* rt#67429: Slider css/js bugs/fixes (federico)
+* rt#68845: Dropdown & dragging items in the list isn't working on Firefox on Twilight in production (federico)
+* rt#68843: Some icons not showing in Create list screen in Twilight in live (federico)
+* rt#68844: No push events happening to Facebook on Twilight in production (federico)
+* rt#68784: Oasis: Ads covering Toolbar (federico)
 * rt#68781: Theme designer: Font selector doesn't work (macbre)
 * rt#68336	Oasis: <small> tag in blog comments defeated by CSS (macbre)
 * rt#68817: Oasis: Diff pages don't match the spec (macbre)
