@@ -1,15 +1,10 @@
 .WikiaPageHeader {
 	clear: both;
 	margin: 0 10px 10px 10px;
-	padding-right: 80px;
 	position: relative;
 	&.separator {
 		border-bottom: 1px solid $color-page-border;
-		padding: 0 80px 15px 0;
-		.commentslikes {
-			bottom: auto;
-			top: 3px;
-		}
+		padding: 0 0 15px 0;
 	}
 	&.editbox {
 		padding: 20px 90px 0 0;
@@ -26,10 +21,8 @@
 		}
 	}
 	.commentslikes {
-		bottom: 30px;
-		position: absolute;
-		right: 0;
-		top: 0;
+		float: right;
+		padding: 6px 0;
 	}
 	h1 {
 		display: inline;
@@ -145,9 +138,8 @@
 		}
 	}
 	.mainpage-tally {
-		position: absolute;
-		right: 370px;
-		top: 8px;
+		float: right;
+		padding: 6px 0;
 		span {
 			float: left;
 		}
@@ -164,12 +156,8 @@
 	}
 }
 .oasis-one-column .WikiaPageHeader {
-	padding-right: 390px;
+	padding-right: 310px;
 	position: relative;
-	.commentslikes {
-		right: 330px;
-		top: 3px;
-	}
 	.WikiaSearch {
 		position: absolute;
 		right: 0;
