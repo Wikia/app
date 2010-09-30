@@ -14,11 +14,12 @@
 	float: right;
 	margin-bottom: 10px;
 	position: relative;
-	z-index: 1;
+	z-index: 1 !important;
 }
 
 #TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
+	z-index: 1 !important;
 }
 
 //Mainpage styling
