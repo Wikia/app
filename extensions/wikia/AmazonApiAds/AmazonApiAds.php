@@ -9,6 +9,7 @@
  * DONE: Get the product API to run a Hello World example.
  * DONE: var_dump results for an artist.
  * TODO: Get it to run inside of the MediaWiki stack.
+ * TODO: Clean the hacked-together example code into something readable and usable.
  * TODO: Get it to run as an ad on a page.
  * TODO: Make it work for a couple different page types (artist, song, album).
  * TODO: Make it look good.
