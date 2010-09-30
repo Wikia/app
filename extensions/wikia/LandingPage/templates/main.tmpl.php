@@ -3,8 +3,8 @@
 		<section class="LandingPageWelcome">
 			<h1><?= wfMsg('landingpage') ?></h1>
 			<h2><?= wfMsgExt('landingpage-secondary-line', array('parse')) ?></h2>
-			<?= wfMsgExt('landingpage-secondary-2', array('parse')) ?>
-			<?= wfMsgExt('landingpage-secondary-3', array('parse')) ?>
+			<h3><?= wfMsgExt('landingpage-secondary-2', array('parse')) ?></h3>
+			<h3><?= wfMsgExt('landingpage-secondary-3', array('parse')) ?></h3>
 			
 			
 			

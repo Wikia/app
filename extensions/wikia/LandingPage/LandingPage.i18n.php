@@ -4,7 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'landingpage' => 'Welcome to Wikia',
-	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love''",
+	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''",
 	'landingpage-secondary-2' => "We’ve just gone live with a brand new look! Read more about us, or view some examples to the right.",
 	'landingpage-secondary-3' => 'Or just dive right in and start exploring the new Wikia by clicking on the button below.',
 
