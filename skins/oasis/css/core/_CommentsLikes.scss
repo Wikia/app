@@ -16,14 +16,16 @@
 		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
 		@include border-radius(2px);
 		border: solid 1px $color-page-border;
-		display: inline;
+		display: inline-block;
+		line-height: 13px;
 		margin: 0 3px;
 		padding: 2px 6px;
 		position: relative;
+		*top: 3px; // IE7 fix
 
 		// "comments-like" styling
 		$left: 5px;
-		$top: 20px;
+		$top: 17px;
 		$size: 5px;
 
 		&:before {
