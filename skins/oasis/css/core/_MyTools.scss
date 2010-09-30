@@ -21,21 +21,21 @@
 			margin-top: 0;
 		}
 	}
-	
+
 	input[type=text] {
 		@include linear-gradient(false, top, rgba(#000, .05), 0, rgba(#000, 0), 40%);
 		border: 1px solid $color-page-border;
 		height: 19px;
 		width: 315px;
 	}
-	
+
 	ul {
 		border: 1px solid $color-page-border;
 		margin-bottom: 10px;
 		height: 200px;
 		overflow: auto;
 	}
-	
+
 	li {
 		padding: 5px 25px;
 		position: relative;
@@ -47,7 +47,7 @@
 			top: .3em;
 		}
 	}
-	
+
 	.drag {
 		background: url(/skins/oasis/images/sprite.png) -1144px -32px no-repeat; /* $wgCdnStylePath */
 		cursor: move;
@@ -62,7 +62,7 @@
 		right: 2px;
 		width: 16px;
 	}
-	
+
 	.help-text {
 		float: left;
 		width: 40%;
@@ -71,8 +71,9 @@
 			font-weight: bold;
 		}
 		p {
+			line-height: 1.8em;
 			margin: 1em 0;
-		}		
+		}
 	}
 	.autocomplete {
 		@include menu-regular;
