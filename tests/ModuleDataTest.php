@@ -343,22 +343,26 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		global $wgTitle;
 		$wgTitle = Title::newMainPage();
 
-		$moduleData = Module::get('CommentsLikes', 'Index', array ('comments' => 123))->getData();
+		$moduleData = Module::get('CommentsLikes', 'Index', array ('comments' => 123, 'likes' => true))->getData();
 
-		$this->assertRegExp('/^123$/', $moduleData['comments']);
+		$this->assertEquals(123, $moduleData['comments']);
+		$this->assertEquals('123', $moduleData['formattedComments']);
+		$this->assertFalse($moduleData['commentsEnabled']);
 		$this->assertRegExp('/'.preg_quote($wgTitle->getDBkey()).'/', $moduleData['commentsLink']);
 		$this->assertRegExp('/^$/', $moduleData['commentsTooltip']);
-		$this->assertEquals(null, $moduleData['likes']);
+		$this->assertTrue($moduleData['showLike']);
+		$this->assertEquals($wgTitle->getFullUrl(), $moduleData['likeHref']);
+		$this->assertEquals('content_page', $moduleData['likeRef']);
 
 		// not-existing page
 		$title = Title::newFromText('NotExistingPage');
 
-		$moduleData = Module::get('CommentsLikes', 'Index', array ('comments' => 0, 'likes' => 20, 'title' => $title))->getData();
+		$moduleData = Module::get('CommentsLikes', 'Index', array ('comments' => 0, 'title' => $title))->getData();
 
-		$this->assertEquals('0', $moduleData['comments']);
+		$this->assertEquals(0, $moduleData['comments']);
 		$this->assertRegExp('/Talk:NotExistingPage/', $moduleData['commentsLink']);
 		$this->assertTrue($moduleData['commentsTooltip'] != '');
-		$this->assertEquals(20, $moduleData['likes']);
+		$this->assertTrue(empty($moduleData['showLike']));
 	}
 
 	function testAchievementsModule() {
@@ -714,7 +718,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(AvatarService::renderAvatar($userName, 48), $posts[0]['avatar']);
 		$this->assertEquals(AvatarService::getUrl($userName), $posts[0]['userpage']);
 		$this->assertTrue($posts[0]['readmore']);
-		$this->assertType('int', $posts[0]['likes']);
+		$this->assertFalse($posts[0]['likes']);
 		$this->assertType('string', $posts[0]['date']);
 
 		// render blog listing for Oasis
