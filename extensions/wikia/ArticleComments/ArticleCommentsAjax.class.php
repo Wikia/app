@@ -215,12 +215,18 @@ class ArticleCommentsAjax {
 
 			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
 
-			$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
-
+			// RT#68254
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments));
+				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
+				$count = $wgLang->formatNum($listing->getCountAllNested());
+				$counter = array(
+				    'plain' =>		$count,
+				    'header' =>		wfMsg('oasis-comments-header', $count),
+				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $count)
+				);
 			} else {
 				$commentsHTML = ArticleCommentList::formatList($comments);
+				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
 			}
 
 			$result = array('text' => $commentsHTML, 'pagination' => $pagination, 'counter' => $counter);
