@@ -29,6 +29,9 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 				$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
 				$langCode = $founderEmails->getWikiFounder( $wikiId )->getOption( 'language' );
+				// force loading messages for given languege, to make maintenance script works properly
+				wfLoadExtensionMessages( 'FounderEmails', $langCode );
+
 				$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
 				$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
 				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
