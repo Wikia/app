@@ -22,11 +22,19 @@ $wgAvailableRights[] = 'listusers';
 #$wgGroupPermissions['staff']['listusers'] = true;
 #$wgGroupPermissions['sysop']['listusers'] = true;
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialListusers_body.php', 'Listusers', 'Listusers' );
 $wgSpecialPageGroups['Listusers'] = 'users';
 
-global $wgAjaxExportList;
-$wgAjaxExportList[] = "Listusers::axShowUsers";
+#--- helper file
+require_once( dirname(__FILE__) . '/SpecialListusers_helper.php' );
 
-$wgHooks['SpecialPage_initList'][] = 'Listusers::Activeusers';
-$wgHooks['UserRights'][] = "Listusers::updateUserRights";
+#--- hooks file
+require_once( dirname(__FILE__) . '/SpecialListusers_ajax.php' );
+global $wgAjaxExportList;
+$wgAjaxExportList[] = "ListusersAjax::axShowUsers";
+
+#--- hooks file
+require_once( dirname(__FILE__) . '/SpecialListusers_hooks.php' );
+$wgHooks['SpecialPage_initList'][]	= 'ListusersHooks::Activeusers';
+$wgHooks['UserRights'][] 			= 'ListusersHooks::updateUserRights';
+
+extAddSpecialPage( dirname(__FILE__) . '/SpecialListusers_body.php', 'Listusers', 'Listusers' );
