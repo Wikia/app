@@ -14,6 +14,7 @@ var PageHeader = {
 		PageHeader.history
 			.one("mouseover", PageHeader.loadAvatars)
 			.hover(PageHeader.historyMouseover, PageHeader.historyMouseout);
+		$("abbr.timeago").timeago();
 	},
 
 	historyMouseover: function(event) {

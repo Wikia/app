@@ -109,25 +109,32 @@ class PageHeaderModule extends Module {
 	 */
 	private function getRecentRevisions() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle;
+		global $wgTitle, $wgMemc;
 
 		// use service to get data
 		$service = new PageStatsService($wgTitle->getArticleId());
 
 		// get info about current revision and list of authors of recent five edits
-		$revisions = $service->getRecentRevisions();
+		// This key is refreshed by the onArticleSaveComplete() hook
+		$mKey = wfMemcKey('mOasisRecentRevisions', $wgTitle->getArticleId());
+		$revisions = $wgMemc->get($mKey);
 
-		// format timestamps, render avatars and user links
-		if (is_array($revisions)) {
-			foreach($revisions as &$revision) {
-				if (isset($revision['user'])) {
-					$revision['avatarUrl'] = AvatarService::getAvatarUrl($revision['user']);
-					$revision['link'] = AvatarService::renderLink($revision['user']);
+		if (empty($revisions)) {
+			$revisions = $service->getRecentRevisions();
+
+			// format timestamps, render avatars and user links
+			if (is_array($revisions)) {
+				foreach($revisions as &$revision) {
+					if (isset($revision['user'])) {
+						$revision['avatarUrl'] = AvatarService::getAvatarUrl($revision['user']);
+						$revision['link'] = AvatarService::renderLink($revision['user']);
+					}
+				// This is handled by the jquery timeago() plugin now
+				// $revision['timestamp'] = self::formatTimestamp($revision['timestamp']);
 				}
-				$revision['timestamp'] = self::formatTimestamp($revision['timestamp']);
 			}
+			$wgMemc->set($mKey, $revisions);
 		}
-
 		wfProfileOut(__METHOD__);
 		return $revisions;
 	}
@@ -491,6 +498,13 @@ class PageHeaderModule extends Module {
 		}
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		global $wgMemc;
+		$wgMemc->delete(wfMemcKey('mOasisRecentRevisions', $article->getTitle()->getArticleId()));
 		return true;
 	}
 }
