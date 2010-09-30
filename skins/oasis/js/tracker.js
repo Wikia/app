@@ -517,4 +517,9 @@ var initTracker = function() {
 			$.tracker.byStr(fakeUrl + 'contentlink');
 		}
 	});
+
+	// track clicks on Facebook's "Like" buttons
+	FB.Event.subscribe('edge.create', function(resp) {
+		$.tracker.byStr('pageheader/like');
+	});
 }
