@@ -42,6 +42,7 @@ $messages['en'] = array(
 	'themedesigner-upload-a-graphic' => 'upload a graphic',
 	'themedesigner-rules-wordmark' => '250x65 pixels (only .png files)',
 	'themedesigner-dont-use-a-graphic' => 'Don\'t use a graphic',
+	'themedesigner-history-item' => '$1 by $2',
 );
 
 /** Message documentation (Message documentation)
