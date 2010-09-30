@@ -4,13 +4,24 @@ $messages = array();
 
 $messages['en'] = array(
 	'landingpage' => 'Welcome to Wikia',
-	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''.
+	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love''",
+	'landingpage-secondary-2' => "We’ve just gone live with a brand new look! Read more about us, or view some examples to the right.",
+	'landingpage-secondary-3' => 'Or just dive right in and start exploring the new Wikia by clicking on the button below.',
 
-We have a brand new look that's soon going live across all of Wikia. In the	meantime, explore some of our beta wikis and read up on what this look will mean for you.",
 	'landingpage-examples' => 'Check out some examples',
 	'landingpage-buttons-about-wikia' => 'About Wikia',
 	'landingpage-buttons-about-wikia-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
+	
+	'landingpage-buttons-update-me' => 'Cool! Update me!',	
+	'landingpage-buttons-want-to-see' => 'I want to see the new look. Show me how.',	
+	'landingpage-buttons-want-to-see-link' => 'http://www.wikia.com',									// ##### CHANGE! #####
+				
+	'landingpage-buttons-new-user' => 'I\'m a new user',
+	'landingpage-buttons-new-user-more' => 'Start Here',				
+	'landingpage-buttons-new-user-link' => 'http://###',		
+
 	'landingpage-buttons-learn-more' => 'Learn more',
+	
 	'landingpage-buttons-new-look' => 'The new look',
 	'landingpage-buttons-new-look-link' => 'http://www.community.wikia.com/wiki/The_new_look',
 	'landingpage-buttons-faqs' => 'FAQs',
@@ -18,6 +29,8 @@ We have a brand new look that's soon going live across all of Wikia. In the	mean
 	'landingpage-buttons-about-make-the-move-link' => 'http://www.community.wikia.com/wiki/Transition_guide',
 	'landingpage-buttons-transition-guide' => 'Transition guide',
 	'landingpage-quote' => '...the new look is sleek, stylish, functional, and overall performs very well." - Wikia user with over 2500 edits',
+	'landingpage-quote-2' => 'I heart the hell out fo the new toolbar. Finally, a  place where the damn thing makes sense.',	
+	'landingpage-quote-3' => 'I am so glad Wikia figured out that wikis don\'t have to look like engineering papers from 1998.',		
 	'landingpage-facebook-link' => 'http://www.facebook.com/wikia',
 	'landingpage-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 	'landingpage-twitter-link' => 'http://www.twitter.com/wikia',
