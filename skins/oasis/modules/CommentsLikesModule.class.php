@@ -14,12 +14,20 @@ class CommentsLikesModule extends Module {
 	var $comments;
 	var $formattedComments;
 	var $commentsAccesskey;
+	var $commentsEnabled;
 	var $commentsLink;
 	var $commentsTooltip;
 
 	var $showLike;
 	var $likeHref;
 	var $likeRef;
+
+	/**
+	 * Are article comments enabled for context title?
+	 */
+	private function checkArticleComments() {
+		return class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckTitle($this->contextTitle);
+	}
 
 	/**
 	 * Get URL of the page comments button should be linking to
@@ -30,7 +38,7 @@ class CommentsLikesModule extends Module {
 
 		$isHistory = $wgRequest->getVal('action') == 'history';
 
-		if (class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckTitle($wgTitle)) {
+		if ($this->checkArticleComments()) {
 			// link to article comments section
 			if ($this->contextTitle != $wgTitle || $isHistory) {
 				$commentsLink = $this->contextTitle->getLocalUrl() . '#WikiaArticleComments';
@@ -77,16 +85,6 @@ class CommentsLikesModule extends Module {
 			$this->contextTitle = &$wgTitle;
 		}
 
-		if (isset($data['comments']) && is_numeric($data['comments'])) {
-			$this->comments = $data['comments'];
-			$this->formattedComments = $this->comments;
-
-			$this->commentsLink = $this->getCommentsLink();
-			$this->commentsTooltip = $this->getCommentsTooltip();
-
-			$this->commentsAccesskey = ' accesskey="t"';
-		}
-
 		// Facebook's "Like"
 		// @see http://developers.facebook.com/docs/reference/plugins/like
 		if (!empty($data['likes'])) {
@@ -112,6 +110,35 @@ class CommentsLikesModule extends Module {
 			else {
 				$this->showLike = false;
 			}
+		}
+
+		// comments / talks
+		if (isset($data['comments']) && is_numeric($data['comments'])) {
+			$this->comments = $data['comments'];
+
+			if (!empty($this->showLike)) {
+				// format number of comments (1200 -> 1k, 9999 -> 9k, 1.300.000 -> 1M)
+				$this->formattedComments = $this->comments;
+
+				if ($this->comments > 999999) {
+					$this->formattedComments = wfMsg('oasis-page-header-comments-m', floor($this->comments / 1000000));
+				}
+				else if ($this->comments > 999) {
+					$this->formattedComments = wfMsg('oasis-page-header-comments-k', floor($this->comments / 1000));
+				}
+			}
+			else {
+				// use old-style formatting of comments number
+				$this->formattedComments = $wgLang->formatNum($this->comments);
+			}
+
+			$this->commentsLink = $this->getCommentsLink();
+			$this->commentsTooltip = $this->getCommentsTooltip();
+
+			// get source of comments number (comments / talk page revisions)
+			$this->commentsEnabled = $this->checkArticleComments();
+
+			$this->commentsAccesskey = ' accesskey="t"';
 		}
 
 		wfProfileOut(__METHOD__);
