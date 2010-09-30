@@ -44,7 +44,7 @@ class BodyModule extends Module {
 	public static function isEditPage() {
 		global $wgRequest;
 		return !empty(self::$onEditPage) ||
-			$wgRequest->getInt('diff') /* diff pages */ ||
+			$wgRequest->getVal('diff') /* diff pages */ ||
 			in_array($wgRequest->getVal('action', 'view'), array('edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */));
 	}
 
