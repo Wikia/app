@@ -1,4 +1,6 @@
 == Changes since 201009.5 ==
+* rt#68781: Theme designer: Font selector doesn't work (macbre)
+* rt#68336	Oasis: <small> tag in blog comments defeated by CSS (macbre)
 * rt#68817: Oasis: Diff pages don't match the spec (macbre)
 * rt#68828: Oasis: Preview notification shouldn't have a green check (macbre)
 * rt#68813:	My Tools text line spacing should be the same as regular text (macbre)
