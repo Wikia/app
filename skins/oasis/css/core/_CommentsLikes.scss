@@ -9,6 +9,9 @@
 	li:first-child {
 		border-left: none;
 	}
+	.likes {
+		padding-right: 0;
+	}
 	.commentsbubble {
 		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
 		@include border-radius(2px);
@@ -45,5 +48,10 @@
 			left: $left + 1px;
 			width: 0px;
 		}
+	}
+	// old-style comments
+	.wikia-chiclet-button {
+		vertical-align: middle;
+		margin: 0 3px;
 	}
 }
