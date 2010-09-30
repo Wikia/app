@@ -56,4 +56,9 @@
 		vertical-align: middle;
 		margin: 0 3px;
 	}
+	 // IE7
+	.comments {
+		*position: relative;
+		*top: -2px;
+	}
 }
