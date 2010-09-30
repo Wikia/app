@@ -22,7 +22,8 @@
 	}
 	.commentslikes {
 		float: right;
-		padding: 6px 0;
+		padding: 6px 0 6px 10px;
+		margin-right: -10px;
 	}
 	h1 {
 		display: inline;
@@ -156,7 +157,7 @@
 	}
 }
 .oasis-one-column .WikiaPageHeader {
-	padding-right: 310px;
+	padding-right: 320px;
 	position: relative;
 	.WikiaSearch {
 		position: absolute;
