@@ -1,10 +1,10 @@
 <section id="WikiaArticleComments" class="WikiaArticleComments noprint">
 
 	<ul class="controls">
-		<li><?= wfMsg('oasis-comments-showing-most-recent', $countCommentsNested) ?></li>
+		<li id="article-comments-counter-recent"><?= wfMsg('oasis-comments-showing-most-recent', $countCommentsNested) ?></li>
 		<li><a href="<?= $wgTitle->getFullURL("showall=1") ?>"><?= wfMsg('oasis-comments-show-all') ?></a></li>
 	</ul>
-	<h1><?= wfMsgExt('oasis-comments-header', array('parsemag'), $countCommentsNested) ?></h1>
+	<h1 id="article-comments-counter-header"><?= wfMsgExt('oasis-comments-header', array('parsemag'), $countCommentsNested) ?></h1>
 
 	<div id="article-comments">
 	<?php
