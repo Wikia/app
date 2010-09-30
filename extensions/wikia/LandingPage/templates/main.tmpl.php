@@ -2,8 +2,23 @@
 	<section class="LandingPageRow">
 		<section class="LandingPageWelcome">
 			<h1><?= wfMsg('landingpage') ?></h1>
-			<?= wfMsgExt('landingpage-secondary-line', array('parse')) ?>
+			<h2><?= wfMsgExt('landingpage-secondary-line', array('parse')) ?></h2>
+			<?= wfMsgExt('landingpage-secondary-2', array('parse')) ?>
+			<?= wfMsgExt('landingpage-secondary-3', array('parse')) ?>
+			
+			
+			
+			<section class="LandingPageButtonUpdate">
+				<button>
+					<?= wfMsg('landingpage-buttons-update-me') ?>
+				</button>
+				
+				<h3><a href="<?= wfMsg('landingpage-buttons-want-to-see-link') ?>"><?= wfMsg('landingpage-buttons-want-to-see') ?></a></h3>
+			</section>
+			
+			
 		</section>
+
 
 		<section class="LandingPageScreenshots">
 			<h1>
@@ -30,8 +45,8 @@
 	<section class="LandingPageRow LandingPageButtons">
 		<ul>
 			<li class="item-1">
-				<?= wfMsg('landingpage-buttons-about-wikia') ?><br />
-				<a href="<?= wfMsg('landingpage-buttons-about-wikia-link') ?>"><?= wfMsg('landingpage-buttons-learn-more') ?></a>
+				<?= wfMsg('landingpage-buttons-new-user') ?><br />
+				<a href="<?= wfMsg('landingpage-buttons-new-user-link') ?>"><?= wfMsg('landingpage-buttons-new-user-more') ?></a>
 			</li>
 			<li class="item-2">
 				<?= wfMsg('landingpage-buttons-new-look') ?><br />

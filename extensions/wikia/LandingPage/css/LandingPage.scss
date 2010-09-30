@@ -1,7 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/rail-module";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-
+@import "../../../../skins/oasis/css/mixins/border-radius";
 .WikiaArticle {
 	padding: 0;
 }
@@ -23,10 +23,51 @@
 			font-weight: bold;
 			margin: 0 0 0.5em 0;
 		}
+		
+		h2 {
+			border-bottom: none;
+			margin-top: 0px;
+			p {
+				font-size: 23px;
+				line-height: 1.3;
+			}
+		}
+		
 		p {
 			font-size: 17px;
 			margin: 0.4em 0;
 		}
+		
+		.LandingPageButtonUpdate {
+			text-align: center;
+			width: 396px;
+			button {
+				@include border-radius(10px);
+				color: #ffffff;
+				height: 40px;
+				font-size: 19px;
+				margin: {
+					bottom: 10px;
+					left: auto;
+					right: auto;
+					top: 18px;
+				}
+				padding: {
+					left: 12px;
+					right: 12px;
+				}
+			}
+			
+			h3 {
+				margin: {
+					left: auto;
+					right: auto;
+				}
+			}
+		
+		}
+
+		
 	}
 
 	.LandingPageScreenshots {
