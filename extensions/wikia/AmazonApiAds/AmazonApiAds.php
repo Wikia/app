@@ -8,8 +8,9 @@
  *
  * DONE: Get the product API to run a Hello World example.
  * DONE: var_dump results for an artist.
- * TODO: Get it to run inside of the MediaWiki stack.
-	* TODO: Use MW's Http->get instead of curl.
+ * DONE: Get it to run inside of the MediaWiki stack.
+ * DONE: Use MW's Http->get instead of curl.
+ * TODO: Make the number of results more easily configurable.
  * TODO: Clean the hacked-together example code into something readable and usable.
  * TODO: Get it to run as an ad on a page.
  * TODO: Make it work for a couple different page types (artist, song, album).
@@ -111,18 +112,8 @@ function ItemSearch($SearchIndex, $Keywords, $ItemPage){
 	);
 	$request = aws_signed_request($params, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
-// TODO: REMOVE IF THE Http::get works.
-/*	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
-	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
-	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
-	$session = curl_init($request);
-	curl_setopt($session, CURLOPT_HEADER, false);
-	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-	$response = curl_exec($session);
-	curl_close($session); 
-*/
 	$response = Http::get($request);
-	
+
 	//$response = file_get_contents($request);
 	$parsed_xml = simplexml_load_string($response);
 	printSearchResults($parsed_xml, $SearchIndex, $ItemPage);
@@ -136,20 +127,10 @@ function ItemLookup($asin){
 	);
 	$request = aws_signed_request($params, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
-// TODO: REMOVE IF THE Http::get works.
-/*	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
-	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
-	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
-	$session = curl_init($request);
-	curl_setopt($session, CURLOPT_HEADER, false);
-	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-	$response = curl_exec($session);
-	curl_close($session); 
-*/
 	$response = Http::get($request);
-	
+
 	$parsed_xml = simplexml_load_string($response);
-	
+
 	if($parsed_xml->Items->Request->IsValid){
 		$current = $parsed_xml->Items->Item;
 		
@@ -198,20 +179,6 @@ function printSearchResults($parsed_xml, $SearchIndex, $ItemPage=1){
 	}else{
 		print("<center>No matches found.</center>");
 	}
-/*	print("<tr><td align='left'>");
-	//allow for paging through results
-	if($ItemPage > 1 && $totalPages > 1){ //check to see if there are previous pages
-		$Keywords = urlencode($_GET['Keywords']);
-		$dispItemPage = $ItemPage-1;
-		$prevPage = "SimpleStore.php?Action=Search&SearchIndex=$SearchIndex&Keywords=$Keywords&ItemPage=$dispItemPage&CartId=$CartId&HMAC=$HMAC";
-		print("<a href=$prevPage>Previous Page</a></td><td align='right'>");
-	}
-	if($ItemPage < $totalPages){ //check to see if there are more pages
-		$Keywords = urlencode($_GET['Keywords']);
-		$ItemPage = $_GET['ItemPage']+1;
-		$nextPage = "SimpleStore.php?Action=Search&SearchIndex=$SearchIndex&Keywords=$Keywords&ItemPage=$ItemPage&CartId=$CartId&HMAC=$HMAC";
-		print("<a href=$nextPage>Next Page</a></td></tr>");
-	}
-*/
+
 	print "</table>\n";
 }
