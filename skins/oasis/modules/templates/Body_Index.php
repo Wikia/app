@@ -8,8 +8,8 @@
 </div>
 <?= $afterBodyHtml ?>
 
-<?= // tmp turned off wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
-<?= // tmp turned off wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
+<? // tmp turned off wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
+<? // tmp turned off wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
 <?= wfRenderModule('GlobalHeader') ?>
 
 <section id="WikiaPage" class="WikiaPage">
@@ -50,7 +50,7 @@
 			<?= $bodytext ?>
 		</div>
 
-		<?= // tmp turned off wfRenderModule('RelatedPages'); ?>
+		<? // tmp turned off wfRenderModule('RelatedPages'); ?>
 
 		<?= wfRenderModule('ArticleCategories') ?>
 
