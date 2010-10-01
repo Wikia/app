@@ -129,6 +129,7 @@ $wgAutoloadClasses['CommunityCornerModule'] = $IP.'/skins/oasis/modules/Communit
 $wgAutoloadClasses['PopularBlogPostsModule'] = $IP.'/skins/oasis/modules/PopularBlogPostsModule.class.php';
 $wgAutoloadClasses['FeedbackModule'] = $IP.'/skins/oasis/modules/FeedbackModule.class.php';
 $wgAutoloadClasses['RandomWikiModule'] = $IP.'/skins/oasis/modules/RandomWikiModule.class.php';
+$wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiModule.class.php';
 
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
 

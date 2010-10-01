@@ -78,10 +78,22 @@
 	}
 }
 
-.WikiaActivityModule {
+.WikiaPagesOnWikiModule {
 	@include rail-module;
+	padding-top: 9px;
 	h1 {
 		display: none;
+	}
+	.osprite.icon-add {
+		position: relative;
+		top: 1px;
+	}
+}
+
+.WikiaActivityModule {
+	@include rail-module;
+	.activity-heading {
+		margin-bottom: 0;
 	}
 	ul {
 		list-style: none;
@@ -96,7 +108,7 @@
 			border: 0;
 		}
 		em {
-			font-size: 16px;
+			font-size: 12px;
 		}
 	}
 	.avatar {
@@ -113,10 +125,6 @@
 	}
 	a {
 		font-weight: normal;
-	}
-	.osprite.icon-add {
-		position: relative;
-		top: 1px;
 	}
 }
 

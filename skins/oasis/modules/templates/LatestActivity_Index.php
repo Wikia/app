@@ -1,19 +1,17 @@
 <section class="WikiaActivityModule">
 	<? if (!$wgSingleH1) { ?>
-	<h1><?= wfMsg('oasis-activity-header') ?></h1>
+		<h1 class="activity-heading"><?= wfMsg('oasis-activity-header') ?></h1>
+	<? } else { ?>
+		<div class="headline-div activity-heading"><?= wfMsg('oasis-activity-header') ?></div>
 	<? } ?>
-	<?= View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button createpage', 'blank.gif', 'oasis-create-page', 'osprite icon-add'); ?>
-	<details class="tally">
-		<em><?= $total ?></em> <?= wfMsg('oasis-total-articles-mainpage') ?>
-	</details>
 	<ul>
 <?php
 	foreach ($changeList as $item) {
 ?>
 		<li>
-			<img src="<?= $item['avatar_url'] ?>" class="avatar" height="20" width="20">
-			<em><?= $item['page_href'] ?></em>
-			<details><?= $item['time_ago'] ?> <?= wfMsg('myhome-feed-by', $item['user_href']) ?></details>
+			<img src="<?= $wgBlankImgUrl ?>" class="avatar osprite <?= $item['changeicon'] ?>" height="20" width="20">
+			<em><?= $item['page_href'] ?> <?= $item['changetype'] ?> <?= wfMsg('myhome-feed-by', $item['user_href']) ?></em>
+			<details><?= $item['time_ago'] ?></details>
 		</li>
 <?php
 	}
