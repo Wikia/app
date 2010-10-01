@@ -5,6 +5,8 @@
 	 */
 	class CategoryGallery {
 
+		const CACHE_TTL = 21600;
+
 		const DEFAULT_WIDTH = 130;
 		const DEFAULT_HEIGHT = 115;
 
@@ -252,7 +254,7 @@
 				$articles = $this->getArticles();
 				$images = $this->findImages($articles);
 				$this->data = $this->merge($articles,$images);
-				$wgMemc->set($cacheKey,$this->data,60*60*6);
+				$wgMemc->set($cacheKey,$this->data,self::CACHE_TTL);
 			}
 			return $this->data;
 		}

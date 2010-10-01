@@ -68,7 +68,7 @@
 			global $wgStatsDB, $wgCityId, $wgDevelEnvironment;;
 
 			if ( empty($pageIds) ) {
-				return array();
+				return is_array($pageIds) ? array() : 0;
 			}
 
 			if (empty($wgDevelEnvironment)) {
@@ -86,7 +86,7 @@
 						'ORDER BY' => 'pv_views DESC',
 					)
 				);
-				
+
 				if ( $dbr->numRows( $res ) == 0 ) {
 					$lastMonth = strftime( "%Y%m%d", time() - 30 * 24 * 60 * 60 );
 					$res = $dbr->select(
@@ -102,7 +102,7 @@
 							'GROUP BY' => 'pv_page_id',
 							'ORDER BY' => 'sum(pv_views) DESC'
 						)
-					);					
+					);
 				}
 			} else {
 				// devbox version
