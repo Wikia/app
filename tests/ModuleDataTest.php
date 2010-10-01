@@ -38,13 +38,18 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testSearchModule() {
-		global $wgSitename;
+		global $wgSitename, $wgSearchDefaultFulltext;
 
 		$moduleData = Module::get('Search')->getData();
 
 		$this->assertEquals(
 			wfMsg('Tooltip-search', $wgSitename),
 			$moduleData['placeholder']
+		);
+
+		$this->assertEquals(
+			!empty($wgSearchDefaultFulltext) ? 1 : 0,
+			$moduleData['fulltext']
 		);
 	}
 
@@ -71,14 +76,23 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testAdModule() {
-		global $wgTitle;
-		$wgTitle = Title::newFromText('Foo');
-//		$moduleData = Module::get('Ad', 'Config', null)->getData();
-		$moduleData = Module::get('Ad', 'Index', array ('slotname' => 'INVISIBLE_1'))->getData();
-		$this->assertNotEquals(
-			null,
-			$moduleData['ad']
-		);
+		global $wgTitle, $wgEnableAdInvisibleHomeTop, $wgEnableFAST_HOME2;
+
+		// Main page
+		$wgTitle = Title::newMainPage();
+		$moduleData = Module::get('Ad', 'Config', null)->getData();
+
+		$this->assertContains('HOME_TOP_LEADERBOARD', $moduleData['conf']);
+		$this->assertContains('INVISIBLE_1', $moduleData['conf']);
+		$this->assertContains('INVISIBLE_2', $moduleData['conf']);
+
+		if(!empty($wgEnableAdInvisibleHomeTop)) {
+			$this->assertContains('HOME_INVISIBLE_TOP', $moduleData['conf']);
+		}
+
+		if($wgEnableFAST_HOME2) {
+			$this->assertContains('HOME_TOP_RIGHT_BOXAD', $moduleData['conf']);
+		}
 	}
 
 	// TODO: maybe move to separate test class
