@@ -29,13 +29,11 @@
 	}
 	.editsection {
 		float: none;
-		height: 15px;
-		margin: 0 10px;
-		width: 15px;
+		font-size: 13px;
+		margin-left: 10px;
+		vertical-align: baseline;
 		img {
-			background: url(/skins/oasis/images/sprite.png) no-repeat -1096px -48px; /* $wgCdnStylePath */
-			left: 0;
-			top: 0;
+			vertical-align: text-bottom;
 		}
 	}
 	h1, h4, h5, h6 {

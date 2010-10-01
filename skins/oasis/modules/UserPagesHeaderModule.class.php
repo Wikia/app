@@ -220,7 +220,7 @@ class UserPagesHeaderModule extends Module {
 					'text' => wfMsg('add_comment'),
 				);
 
-				$this->actionImage = MenuButtonModule::ADD_ICON;
+				$this->actionImage = MenuButtonModule::MESSAGE_ICON;
 				$this->actionName = 'leavemessage';
 
 				// different handling for "My talk page"
@@ -243,6 +243,7 @@ class UserPagesHeaderModule extends Module {
 					'text' => wfMsg('blog-create-post-label'),
 				);
 
+				$this->actionImage = MenuButtonModule::BLOG_ICON;
 				$this->actionName = 'createblogpost';
 			}
 		}

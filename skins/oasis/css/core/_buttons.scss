@@ -42,7 +42,10 @@ button {
 		}
 	}
 	img {
-		vertical-align: baseline;
+		vertical-align: text-bottom;
+		&.chevron {
+			vertical-align: middle;
+		}
 	}
 	&.secondary {
 		@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);

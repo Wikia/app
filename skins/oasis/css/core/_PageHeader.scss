@@ -22,7 +22,7 @@
 	}
 	.commentslikes {
 		float: right;
-		padding: 6px 0 6px 10px;
+		padding: 6px 0;
 		margin: 0px -10px 4px 0;
 	}
 	h1 {
@@ -118,9 +118,6 @@
 	img {
 		vertical-align: middle;
 	}
-	.chevron {
-		border-top-color: $color-links;
-	}
 	.wikia-button,
 	.wikia-menu-button {
 		vertical-align: text-bottom;
@@ -131,12 +128,12 @@
 			padding-right: 8px;
 			position: relative;
 			.icon {
-				background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat; /* $wgCdnStylePath */
+				background: url(/skins/oasis/images/sprite.png) -1000px -16px no-repeat; /* $wgCdnStylePath */
 				vertical-align: text-bottom;
 			}
 		}
 		a[data-id=add] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/oasis/images/sprite.png) -1024px 0 no-repeat; /* $wgCdnStylePath */
 		}
 	}
 	.mainpage-tally {
@@ -145,15 +142,18 @@
 		span {
 			float: left;
 		}
-		.wikia-chiclet-button {
-			float: left;
-			margin: 0 0 0 10px;
-			img {
-				background: url(/skins/oasis/images/sprite.png) no-repeat -1096px -16px transparent; /* $wgCdnStylePath */
-				height: 10px;
-				margin: 3px 0 0 3px;
-				width: 10px;
-			}
+	}
+	.mainpage-add-page {
+		border-right: 1px solid $color-page-border;
+		float: right;
+		line-height: 20px;
+		margin-top: 6px;
+		padding: 0 10px;
+		img {
+			background: url(/skins/oasis/images/sprite.png) -1024px 0 no-repeat; /* $wgCdnStylePath */			
+			height: 16px;
+			margin-right: 3px;
+			width: 22px;
 		}
 	}
 }

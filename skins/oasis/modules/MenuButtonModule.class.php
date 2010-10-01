@@ -10,6 +10,8 @@ class MenuButtonModule extends Module {
 	const ADD_ICON = 1;
 	const EDIT_ICON = 2;
 	const LOCK_ICON = 3;
+	const BLOG_ICON = 4;
+	const MESSAGE_ICON = 5;
 
 	var $wgStylePath;
 	var $wgBlankImgUrl;
@@ -61,10 +63,23 @@ class MenuButtonModule extends Module {
 					$this->class = 'view-source';
 					break;
 
+				case self::BLOG_ICON:
+					$img_class = 'osprite icon-blog';
+					$height = 16;
+					$width = 22;
+					break;
+
+				case self::MESSAGE_ICON:
+					$img_class = 'osprite icon-message';
+					$height = 16;
+					$width = 22;
+					break;
+
 				case self::EDIT_ICON:
 				default:
-					$height = 15;
-					$width = 15;
+					$img_class = 'osprite icon-edit';
+					$height = 16;
+					$width = 22;
 					break;
 			}
 

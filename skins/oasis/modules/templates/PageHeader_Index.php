@@ -1,22 +1,29 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader<?= (empty($revisions) && empty($categories)) ? ' separator' : '' ?>">
 	<? if ($isMainPage) { ?>
 		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
+		<div class="mainpage-add-page">
+			<?= View::specialPageLink('CreatePage', 'oasis-add-page', null, 'blank.gif'); ?>
+		</div>
 		<div class="tally mainpage-tally">
 			<em><?= $total ?></em>
 			<span><?= wfMsg('oasis-total-articles-mainpage') ?></span>
-			<?= View::specialPageLink('CreatePage', null, 'wikia-chiclet-button createpage', 'blank.gif', 'oasis-create-page'); ?>
+			<? /* View::specialPageLink('CreatePage', null, 'wikia-chiclet-button createpage', 'blank.gif', 'oasis-create-page'); */ ?>
 		</div>
 	<? } ?>
+
+	<?
+	// comments & like button
+	if (empty($isMainPage)) {
+		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
+	}
+	?>
+
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
+
 <?php
 	// edit button with actions dropdown
 	if (!empty($action)) {
 		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
-	}
-
-	// comments & like button
-	if (empty($isMainPage)) {
-		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
 	}
 
 	// render page type line

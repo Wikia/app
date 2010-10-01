@@ -16,6 +16,11 @@
 @import "mixins/forms";
 @import "mixins/wordmark";
 
+// Oasis Features //
+@import "core/buttons";
+@import "core/ads";
+@import "core/typography";
+
 // Oasis Core //
 @import "core/osprite";
 @import "core/color";
@@ -36,11 +41,6 @@
 @import "core/Notifications";
 @import "core/Preferences";
 @import "core/tabs";
-
-// Oasis Features //
-@import "core/buttons";
-@import "core/ads";
-@import "core/typography";
 
 // Ubiquitous modules that should be combined here to save space. Preceded by comments so we can see what was packaged. //
 @import "modules/LatestPhotos";

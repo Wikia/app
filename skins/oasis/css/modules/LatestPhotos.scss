@@ -61,10 +61,9 @@
 	}
 	
 	.wikia-button {
-		@include clearfix;
-		a {
-			font-size: 12px;
-		}
+		img {
+			margin-right: 5px;
+		}		
 	}
 	
 	// /** Chevrons left and right **/
