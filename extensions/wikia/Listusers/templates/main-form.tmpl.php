@@ -36,7 +36,7 @@ $(document).ready(function() {
 		},
 		"sCookiePrefix" : "<?=$title?>-wikia",
 		"aLengthMenu": [[10, 25, 50], [10, 25, 50]],
-		"sDom": '<"toolbar"><"top"flip>rt<"bottom"p><"clear">',
+		"sDom": '<"dttoolbar"><"top"flip>rt<"bottom"p><"clear">',
 		"aoColumns": [
 			{ "sName": "username" },
 			{ "sName": "groups" },
@@ -122,7 +122,7 @@ $(document).ready(function() {
 	toolbar += '</select></span>';
 	toolbar += '<span class="lu_filter"><input type="button" value="<?=wfMsg('listusersdetails')?>" id="lu-showusers"></span></div>';
 	
-	$("div.toolbar").html( toolbar );
+	$("div.dttoolbar").html( toolbar );
 	$('#lu-showusers').click( function() { oTable.fnDraw(); } );
 } );
 
