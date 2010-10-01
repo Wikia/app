@@ -28,6 +28,8 @@ class BodyModule extends Module {
 
 	var $wgSingleH1;
 
+	var $showTestAds;	// wlee: for Oasis ad development
+
 	private static $onEditPage;
 
 	/**
@@ -278,5 +280,9 @@ class BodyModule extends Module {
 		if ($wgEnableBlog) {
 			$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
 		}
+
+		// wlee: Oasis ad development
+		global $wgRequest;
+		$this->showTestAds = $wgRequest->getVal( 'showtestads' );
 	}
 }
