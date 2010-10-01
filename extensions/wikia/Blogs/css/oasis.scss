@@ -9,7 +9,7 @@
 	padding-left: 0;
 	padding-right: 90px;
 	.commentslikes {
-		bottom: 75px;
+		bottom: 10px;
 		position: absolute;
 		right: 0;
 	}
@@ -114,7 +114,7 @@
 		margin-top: -1px;
 	}
 	.commentslikes {
-		position: absolute;	
+		position: absolute;
 		right: 0px;
 		bottom: 11px;
 
@@ -149,13 +149,13 @@
 		@extend h1;
 		margin-left: 0px;
 	}
-	
+
 	.reload {
 		display: inline-block;
 		position: relative;
 		top: -2px;
 	}
-	
+
 	details {
 		img { // /** the avatar **/
 			width: 25px;
@@ -183,8 +183,8 @@
 		.read-more {
 			a {
 				font-size: 11px;
-		
+
 			}
 		}
-	}	
+	}
 }
