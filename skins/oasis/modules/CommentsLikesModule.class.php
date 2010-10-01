@@ -21,6 +21,7 @@ class CommentsLikesModule extends Module {
 	var $showLike;
 	var $likeHref;
 	var $likeRef;
+	var $likeTheme;
 
 	/**
 	 * Are article comments enabled for context title?
@@ -110,6 +111,9 @@ class CommentsLikesModule extends Module {
 			else {
 				$this->showLike = false;
 			}
+
+			// check lightness of skin theme
+			$this->likeTheme = SassUtil::isThemeDark() ? 'dark' : 'light';
 		}
 
 		// comments / talks
