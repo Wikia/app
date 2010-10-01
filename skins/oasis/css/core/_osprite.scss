@@ -4,10 +4,15 @@
 	background-repeat: no-repeat;
 
 	&.icon-add {
-		background-position: -1096px -16px;
-		height: 10px;
-		margin-right: 5px;
-		width: 10px;
+		background-position: -1024px 0;
+		height: 16px;
+		width: 22px;
+	}
+	
+	&.icon-add-photo {
+		background-position: -1096px 0;
+		height: 16px;
+		width: 26px;	
 	}
 
 	&.icon-article-like {
@@ -16,33 +21,45 @@
 
 	&.icon-remove {
 		background-position: -1128px -14px;
-		width: 13px;
 		height: 20px;
+		width: 13px;
 	}
 
 	&.icon-drag {
 		background-position: -1147px -30px;
-		width: 13px;
 		height: 20px;
+		width: 13px;
 	}
 
 	&.icon-edit {
-		background-position: -1098px -51px;
-		width: 10px;
-		height: 10px;
+		background-position: -1000px -16px;
+		height: 16px;
+		width: 16px;
+	}
+
+	&.icon-blog {
+		background-position: -1000px 0;
+		height: 16px;
+		width: 22px;
+	}
+
+	&.icon-message {
+		background-position: -1058px -16px;
+		height: 16px;
+		width: 22px;
 	}
 
 	&.shadow {
-		background-position:  0 -2px;
-		width: 1000px;
-		height: 8px;
 		@include opacity(75);
+		background-position:  0 -2px;
+		height: 8px;
+		width: 1000px;
 	}
 
 	&.shadow-short {
-		background-position: 0px -16px;
-		width: 600px;
-		height: 8px;
 		@include opacity(75);
+		background-position: 0px -16px;
+		height: 8px;
+		width: 600px;
 	}
 }

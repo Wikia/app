@@ -57,7 +57,7 @@ class ContentDisplayModule extends Module {
 		// TODO: use DoEditSectionLink hook (?)
 		$this->bodytext = preg_replace(
 			'#<span class="editsection">\[<a([^>]+)>[^>]+</a>\]</span>(.*)</h#',
-			'$2<a class="editsection wikia-chiclet-button"$1><img alt="'.wfMsg('oasis-section-edit').'" src="' . $wgBlankImgUrl . '" /></a></h',
+			'$2<span class="editsection"><a $1><img alt="'.wfMsg('oasis-section-edit-alt').'" src="' . $wgBlankImgUrl . '" class="osprite icon-edit"></a> <a $1>'.wfMsg('oasis-section-edit').'</a></span></h',
 			$this->bodytext);
 
 		#print_pre(htmlspecialchars($this->bodytext));

@@ -4,30 +4,33 @@
 	position: relative;
 	z-index: 2;
 	
-	.wikia-chiclet-button {
-		float: left;
-		height: 27px;
+	input[type="text"] {
+		@include input-field;
+		width: 292px;
+	}
+
+	button {
+		@include border-radius(0);
+		border-width: 0 0 0 1px;
+		height: 25px;
 		line-height: 1px;
-		width: 27px;
+		position: absolute;
+		right: 1px;
+		top: 1px;
 		img {
-			background: url(/skins/oasis/images/sprite.png) -1096px 0 no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/oasis/images/sprite.png) -1036px -16px no-repeat; /* $wgCdnStylePath */
 		}
 	}
 
 	input[type="submit"] {
 		display: none;
 	}
-
-	input[type="text"] {
-		@include input-field;
-		float: left;
-	}
 	
 	.autocomplete {
 		@include menu-regular;
 		margin-top: 2px;
 		position: relative;
-		width: 270px;
+		width: 296px;
 		z-index: 10;
 		div {
 			font-size: 14px;

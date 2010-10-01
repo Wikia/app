@@ -54,7 +54,7 @@
 	if (!empty($actionButton)) {
 		echo wfRenderModule('MenuButton', 'Index', array(
 			'action' => $actionButton,
-			'image' => MenuButtonModule::EDIT_ICON,
+			'image' => $actionImage,
 			'name' => $actionName,
 		));
 	}
