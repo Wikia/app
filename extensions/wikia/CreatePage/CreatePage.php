@@ -37,9 +37,6 @@ $wgSpecialPageGroups['CreatePage'] = 'pagetools';
  */
 $wgExtensionFunctions[] = 'wfCreatePageInit';
 
-$wgCreatePageOptions = array();
-$wgCreatePageDialogWidth = CREATEPAGE_MIN_DIALOG_WIDTH;
-
 // initialize create page extension
 function wfCreatePageInit() {
 	global $wgUser,
@@ -53,8 +50,7 @@ function wfCreatePageInit() {
 		$wgCdnStylePath,
 		$wgScript,
 		$wgCreatePageOptions,
-		$wgWikiaCreatePageUseFormatOnly,
-		$wgCreatePageDialogWidth;
+		$wgWikiaCreatePageUseFormatOnly;
 
 	// load messages from file
 	wfLoadExtensionMessages( 'CreatePage' );
@@ -74,46 +70,6 @@ function wfCreatePageInit() {
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
-
-	if ( empty( $wgWikiaCreatePageUseFormatOnly ) ) {
-		$wgCreatePageOptions = array(
-			'format'=>array(
-				'namespace' => NS_MAIN,
-				'label' => 'createpage-dialog-format',
-				'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
-				'trackingId' => 'standardlayout',
-				'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
-			),
-			'blank'=> array(
-				'namespace' => NS_MAIN,
-				'label' => 'createpage-dialog-blank',
-				'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_blank.png",
-				'trackingId' => 'blankpage',
-				'submitUrl' => "{$wgScript}?title=$1&action=edit"
-			)
-		);
-		
-		wfRunHooks( 'CreatePage::FetchOptions', array( &$wgCreatePageOptions ) );
-
-		$optionsCount = count( $wgCreatePageOptions );
-		$detectedWidth = ( $optionsCount * CREATEPAGE_ITEM_WIDTH );
-
-		if ( $detectedWidth > CREATEPAGE_MAX_DIALOG_WIDTH ) {
-			$detectedWidth = CREATEPAGE_MAX_DIALOG_WIDTH;
-		}
-
-		$selectedWidth = ( $detectedWidth > $wgCreatePageDialogWidth ) ? $detectedWidth : $wgCreatePageDialogWidth;
-
-		$maxItemsPerRow = floor( $selectedWidth / CREATEPAGE_ITEM_WIDTH );
-		$divider = ( $maxItemsPerRow > $optionsCount ) ? $optionsCount : $maxItemsPerRow;
-		$itemWidthPercentage =  round( 100 / $divider );
-		
-		foreach( $wgCreatePageOptions as $key => $params ) {
-			$wgCreatePageOptions[ $key ][ 'width' ] = "{$itemWidthPercentage}%";
-		}
-
-		$wgCreatePageDialogWidth = ( $detectedWidth > $wgCreatePageDialogWidth ) ? ( $detectedWidth + ( CREATEPAGE_DIALOG_SIDE_PADDING * 2 ) ) : $wgCreatePageDialogWidth;
-	}
 }
 
 function wfCreatePageSetupVars( $vars ) {
@@ -121,8 +77,7 @@ function wfCreatePageSetupVars( $vars ) {
 		$wgWikiaDisableDynamicLinkCreatePagePopup,
 		$wgContentNamespaces,
 		$wgContLang,
-		$wgUser,
-		$wgCreatePageDialogWidth;
+		$wgUser;
 
 	$contentNamespaces = array();
 
@@ -133,9 +88,6 @@ function wfCreatePageSetupVars( $vars ) {
 	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
 	$vars['WikiaDisableDynamicLinkCreatePagePopup'] = !empty( $wgWikiaDisableDynamicLinkCreatePagePopup ) ? true : false;
 	$vars['ContentNamespacesText'] = $contentNamespaces;
-	$vars[ 'CreatePageDialogWidth' ] = $wgCreatePageDialogWidth;
-
-
 
 	return true;
 }
@@ -162,25 +114,67 @@ function wfCreatePageToggleUserPreference( $toggles, $default_array = false ) {
 }
 
 function wfCreatePageAjaxGetDialog() {
-	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions;
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgCdnStylePath, $wgScript;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-	$options = $wgCreatePageOptions;
+	$options = array();
+
+	$options['format'] = array(
+		'namespace' => NS_MAIN,
+		'label' => 'createpage-dialog-format',
+		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
+		'trackingId' => 'standardlayout',
+		'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
+	);
+
+	$options['blank'] = array(
+		'namespace' => NS_MAIN,
+		'label' => 'createpage-dialog-blank',
+		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_blank.png",
+		'trackingId' => 'blankpage',
+		'submitUrl' => "{$wgScript}?title=$1&action=edit"
+	);
+
+	wfRunHooks( 'CreatePage::FetchOptions', array( &$options ) );
+
+	$optionsCount = count( $options );
+	$detectedWidth = ( $optionsCount * CREATEPAGE_ITEM_WIDTH );
+
+	if ( $detectedWidth > CREATEPAGE_MAX_DIALOG_WIDTH ) {
+		$detectedWidth = CREATEPAGE_MAX_DIALOG_WIDTH;
+	}
+
+	$wgCreatePageDialogWidth = CREATEPAGE_MIN_DIALOG_WIDTH;
+
+	$selectedWidth = ( $detectedWidth > $wgCreatePageDialogWidth ) ? $detectedWidth : $wgCreatePageDialogWidth;
+
+	$maxItemsPerRow = floor( $selectedWidth / CREATEPAGE_ITEM_WIDTH );
+	$divider = ( $maxItemsPerRow > $optionsCount ) ? $optionsCount : $maxItemsPerRow;
+	$itemWidthPercentage =  round( 100 / $divider );
+
+	foreach( $options as $key => $params ) {
+		$options[ $key ][ 'width' ] = "{$itemWidthPercentage}%";
+	}
+
+	$wgCreatePageDialogWidth = ( $detectedWidth > $wgCreatePageDialogWidth ) ? ( $detectedWidth + ( CREATEPAGE_DIALOG_SIDE_PADDING * 2 ) ) : $wgCreatePageDialogWidth;
 
 	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
-			'defaultPageLayout' => $defaultLayout,
 			'options' => $options
 		)
 	);
 
-	$body = $template->execute( 'dialog' );
-	$response = new AjaxResponse( $body );
+	$body['html'] = $template->execute( 'dialog' );
+	$body['width'] = $wgCreatePageDialogWidth;
+	$body['defaultOption'] = $defaultLayout;
+	$body['title'] = wfMsg( 'createpage-dialog-title' );
+	
+	$response = new AjaxResponse( json_encode( $body ) );
 	$response->setCacheDuration( 0 ); // no caching
 
-	$response->setContentType( 'text/plain; charset=utf-8' );
+	$response->setContentType( 'application/json; charset=utf-8' );
 
 	return $response;
 }

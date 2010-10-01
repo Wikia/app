@@ -29,10 +29,19 @@ CreatePage.openDialog = function(e, titleText) {
 	e.preventDefault();
 	if( false == CreatePageEnabled ) {
 		CreatePageEnabled = true;
-		$().getModal(
-			wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog',
-			'#CreatePageDialog', {
-					width: CreatePageDialogWidth,
+		$.getJSON(wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog', null, function() {
+
+		});
+
+		jQuery.ajax({
+			async: false,
+			type: "GET",
+			url: wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog',
+			data: null,
+			success: function(data) {
+				$.showModal(data.title, data.html, {
+					width: data.width,
+					id: 'CreatePageDialog',
 					callback: function() {
 						CreatePageEnabled = false;
 						CreatePage.track( 'open' );
@@ -40,7 +49,7 @@ CreatePage.openDialog = function(e, titleText) {
 						for(var name in CreatePage.options){
 							var idToken = name.charAt(0).toUpperCase() + name.substring(1);
 							var elm = $( '#CreatePageDialog' + idToken + 'Container' );
-							
+
 							elm.data('optionName', name);
 							elm.click( function() {CreatePage.setPageLayout($(this).data('optionName'));});
 						}
@@ -49,13 +58,18 @@ CreatePage.openDialog = function(e, titleText) {
 							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
 						}
 
+						CreatePage.setPageLayout( data.defaultOption );
+
 						$('#wpCreatePageDialogTitle').focus();
 					},
-				onClose: function() {
-					CreatePage.track( 'close' );
-				}
-			}
-		);
+					onClose: function() {
+						CreatePage.track( 'close' );
+					}
+				})
+			},
+			dataType: 'json'
+		});
+
 	}
 };
 
