@@ -1,6 +1,6 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader<?= (empty($revisions) && empty($categories)) ? ' separator' : '' ?>">
-	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 	<? if ($isMainPage) { ?>
+		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 		<div class="tally mainpage-tally">
 			<em><?= $total ?></em>
 			<span><?= wfMsg('oasis-total-articles-mainpage') ?></span>
@@ -12,6 +12,11 @@
 	// edit button with actions dropdown
 	if (!empty($action)) {
 		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
+	}
+
+	// comments & like button
+	if (empty($isMainPage)) {
+		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
 	}
 
 	// render page type line
