@@ -37,7 +37,6 @@ class CommunityMessages {
 		$communityMessagesTimestamp = $wgMemc->get(wfMemcKey('CommunityMessagesTimestamp'));
 
 		if (!$communityMessagesTimestamp) {
-//TODO: rename 'community-corner' to 'community-messages' here AND in /extensions/wikia/MyHome/templates/communityCorner.tmpl.php
 			$msgTitle = Title::newFromText('community-corner', NS_MEDIAWIKI);
 			if ($msgTitle) {
 				$msgRev = Revision::newFromTitle($msgTitle);
@@ -101,7 +100,7 @@ class CommunityMessages {
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;
 		$title = $article->getTitle();
-//TODO: rename 'community-corner' to 'community-messages' here AND in /extensions/wikia/MyHome/templates/communityCorner.tmpl.php
+
 		if ($title->getNamespace() == NS_MEDIAWIKI && strtolower($title->getText()) == 'community-corner') {
 			$revision = Revision::newFromTitle($title);
 			if ($revision) {
@@ -141,7 +140,7 @@ class CommunityMessages {
 
 		$communityMessagesTimestamp = $wgMemc->get(wfMemcKey('CommunityMessagesTimestamp'));
 		if (!$communityMessagesTimestamp) {
-			//do not waste time on getting timestamp from 'community-messages' - `now` will be enough
+			//do not waste time on getting timestamp from 'community-corner' - `now` will be enough
 			$communityMessagesTimestamp = time();
 		}
 
