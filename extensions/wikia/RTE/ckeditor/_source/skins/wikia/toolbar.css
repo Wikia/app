@@ -373,6 +373,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	min-height: 2px;
 }
 
+#cke_toolbar .tagline div {
+	width: 48px;
+}
+
 #cke_toolbar.more .tagline {
 	height: 20px;
 	text-transform: lowercase;
