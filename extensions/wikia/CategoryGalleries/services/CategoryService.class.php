@@ -67,7 +67,7 @@
 		static protected function getPageViews( $pageIds ) {
 			global $wgStatsDB, $wgCityId, $wgDevelEnvironment;;
 
-			if (is_array($pageIds) || empty($pageIds)) {
+			if ( empty($pageIds) ) {
 				return array();
 			}
 
@@ -86,6 +86,24 @@
 						'ORDER BY' => 'pv_views DESC',
 					)
 				);
+				
+				if ( $this->numRows( $res ) == 0 ) {
+					$lastMonth = strftime( "%Y%m%d", time() - 30 * 24 * 60 * 60 );
+					$res = $dbr->select(
+						array( 'page_views_articles' ),
+						array( 'pv_page_id', 'sum(pv_views) as pv_views' ),
+						array(
+							'pv_city_id' => $wgCityId,
+							'pv_page_id' => $pageIds,
+							'pv_use_date > ' . $lastMonth
+						),
+						__METHOD__,
+						array(
+							'GROUP BY' => 'pv_page_id',
+							'ORDER BY' => 'sum(pv_views) DESC'
+						)
+					);					
+				}
 			} else {
 				// devbox version
 				$dbr = wfGetDB( DB_SLAVE );
