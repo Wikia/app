@@ -284,7 +284,7 @@ CKEDITOR.plugins.add('rte-toolbar',
 				cell.find(".tagline").html(hidden + ' ' + RTE.messages.more);
 				cell.addClass('more');
 			} else {
-				cell.find(".tagline").html("");
+				cell.find(".tagline").html('<div> </div>');
 				cell.removeClass('more');
 			}
 		});
