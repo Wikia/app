@@ -87,7 +87,7 @@
 					)
 				);
 				
-				if ( $this->numRows( $res ) == 0 ) {
+				if ( $dbr->numRows( $res ) == 0 ) {
 					$lastMonth = strftime( "%Y%m%d", time() - 30 * 24 * 60 * 60 );
 					$res = $dbr->select(
 						array( 'page_views_articles' ),
