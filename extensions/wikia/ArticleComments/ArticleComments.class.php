@@ -1416,7 +1416,7 @@ class ArticleCommentList {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars( $this->getData() );
 
-		$text = $template->execute( 'comment-main' );
+		$text = $template->render( 'comment-main' );
 
 		return $text;
 	}
