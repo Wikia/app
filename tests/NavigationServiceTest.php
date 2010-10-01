@@ -110,6 +110,50 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	function testParseMessage1() {
+
+		global $wgMemc;
+
+		$messageName = 'test'.rand();
+
+		// prepate test data
+		$testData = array($messageName => true);
+
+		// create cache key for test data
+		$cacheKey = wfMemcKey($messageName, NavigationService::version);
+
+		// set test data in cache
+		$wgMemc->set($cacheKey, $testData, 1);
+
+		$service = new NavigationService();
+		$this->assertEquals($testData, $service->parseMessage($messageName, array(), 1));
+
+	}
+
+	function testParseMessage2() {
+
+		global $wgMessageCache;
+
+		$messageName = 'test'.rand();
+
+		$wgMessageCache->addMessage($messageName, "*whatever");
+
+		$service = new NavigationService();
+
+		$this->assertEquals(array(
+			0 => array(
+				'children' => array(1)
+			),
+			1 => array (
+				'original' => 'whatever',
+				'text' => 'whatever',
+				'href' => Title::newFromText('whatever')->fixSpecialName()->getLocalURL(),
+				'depth' => 1,
+				'parentIndex' => 0
+			)
+		), $service->parseMessage($messageName, array(), 1));
+	}
+
 	function testParseOneLine() {
 
 		$service = new NavigationService();
@@ -158,6 +202,33 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => 'http://www.google.com',
 				'text' => 'Google',
 				'href' => 'http://www.google.com',
+			)
+		);
+
+		$cases[] = array(
+			'line' => "*#|Google",
+			'out' => array(
+				'original' => '#',
+				'text' => 'Google',
+				'href' => '#',
+			)
+		);
+
+		$cases[] = array(
+			'line' => "*|Google",
+			'out' => array(
+				'original' => '',
+				'text' => 'Google',
+				'href' => '#',
+			)
+		);
+
+		$cases[] = array(
+			'line' => "*\xef\xbf\xbd|\xef\xbf\xbd",
+			'out' => array(
+				'original' => "\xef\xbf\xbd",
+				'text' => "\xef\xbf\xbd",
+				'href' => '#',
 			)
 		);
 
