@@ -157,6 +157,17 @@
 		small {
 			font-size: .78em;
 		}
+		
+		.article-comm-text {
+			overflow: hidden;
+			width: 553px;	
+		}
+	}
+	.sub-comments {
+		.article-comm-text { 
+			overflow: hidden;
+			width: 468px;
+		}
 	}
 	blockquote:before {
 		border-color: transparent $color-page-border $color-page-border transparent;
