@@ -1,10 +1,10 @@
 <?php
 class LatestActivityModule extends Module {
 
-	var $total;
 	var $changeList;
 
 	var $wgSingleH1;
+	var $wgBlankImgUrl;
 	
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
@@ -12,7 +12,6 @@ class LatestActivityModule extends Module {
 		$maxElements = 3;
 
 		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgSingleH1;
-		$this->total = $wgLang->formatNum(SiteStats::articles());
 
 		wfLoadExtensionMessages('MyHome');
 
@@ -49,12 +48,29 @@ class LatestActivityModule extends Module {
 				$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
 				$item['user_href'] = $change['user'];
 				$item['page_title'] = $change['title'];
+				$item['changetype'] = $change['type'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
 				if ( is_object($title) ) {
 					$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl()), $item['page_title']);
 				}
+				switch ($change['type']) {
+					case 'new':
+						$item['changetype'] = wfMsg("oasis-latest-activity-new");
+						$item['changeicon'] = 'icon-add';
+						break;
+					case 'edit':
+						$item['changetype'] = wfMsg("oasis-latest-activity-edit");
+						$item['changeicon'] = 'icon-article-edit';
+						break;
+					case 'delete':
+						$item['changetype'] = wfMsg("oasis-latest-activity-delete");
+						$item['changeicon'] = 'icon-delete';
+						break;
+					default:
+						$item['changetype'] = '';
+						break;
+				}
 				$this->changeList[] = $item;
-
 			}
 			$wgMemc->set($mKeyTimes, $this->changeList, 60);
 		}

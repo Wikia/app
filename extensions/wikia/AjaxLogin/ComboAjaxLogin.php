@@ -203,10 +203,8 @@ function createUserLogin(){
 	}
 
 	# temporary.  remove after oasis public beta
-	if(isset($wgDefaultSkin) && $wgDefaultSkin == 'oasis') {
-		$wgUser->setOption("skin", "oasis");
-		$wgUser->saveSettings();
-	}
+	#$wgUser->setOption("skin", "oasis");
+	#$wgUser->saveSettings();
 	# end temp
 
 	$response->addText(json_encode(array('status' => "OK")));

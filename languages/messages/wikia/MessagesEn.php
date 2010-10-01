@@ -1081,6 +1081,10 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-spotlights-rail-title' => 'Wikia Community Spotlights',
 'oasis-spotlights-footer-title' => "Around Wikia's Network",
 'themedesigner' => 'Theme Designer',
+'oasis-pages-on-wiki-header' => 'Pages On $1',
+'oasis-latest-activity-new' => 'created',
+'oasis-latest-activity-edit' => 'edited',
+'oasis-latest-activity-delete' => 'deleted',
 
 # Related to ImageSEO RT#55755
 'imageseo-featured-on' => 'Featured on:',
