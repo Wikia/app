@@ -104,7 +104,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		$mail_user = new MailAddress($this->mEmail);
-		$mail_community = new MailAddress("community@wikia.com");
+		$mail_community = new MailAddress("community@wikia-inc.com");
 
 		$errors = '';
 
