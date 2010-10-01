@@ -38,6 +38,3 @@
 		</div>
 	</form>
 </div>
-<script type="text/javascript">/*<![CDATA[*/
-	CreatePage.setPageLayout( '<?php echo $defaultPageLayout; ?>' );
-/*]]>*/</script>
