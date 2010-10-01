@@ -846,4 +846,20 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	function testWikiHeaderModule() {
+		$moduleData = Module::get('WikiHeader')->getData();
+
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
+
+		$this->assertEquals($settings["wordmark-text"], $moduleData['wordmarkText']);
+		$this->assertEquals($settings["wordmark-type"], $moduleData['wordmarkType']);
+		$this->assertEquals($settings["wordmark-font-size"], $moduleData['wordmarkSize']);
+		$this->assertEquals($settings["wordmark-font"], $moduleData['wordmarkFont']);
+
+		$this->assertArrayHasKey('editURL', $moduleData);
+
+
+	}
+
 }
