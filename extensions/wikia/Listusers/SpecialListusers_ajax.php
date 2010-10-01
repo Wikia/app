@@ -36,12 +36,10 @@ class ListusersAjax {
 		$loop		= $wgRequest->getVal('loop');
 		$order		= $wgRequest->getVal('order');
 		$numOrder	= $wgRequest->getVal('numOrder');
-		$page 		= ( $offset > 0 ) ? intval($limit/$offset) : 0;
 
 		if ( !isset($edits) ) {
 			$edits = Listusers::DEF_EDITS;
 		}
-		error_log ( "edits = " . print_r($edits, true) );
 		
 		$result = array(
 			'sEcho' => intval($loop), 
@@ -62,7 +60,7 @@ class ListusersAjax {
 				$data->setUserName ( $username );
 				$data->setEdits ( $edits );
 				$data->setLimit ( $limit );
-				$data->setOffset( $page );
+				$data->setOffset( $offset );
 				$orders = explode("|", $order);
 				$data->setOrder( $orders );
 				$records = $data->loadData();
