@@ -116,7 +116,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		#to user, from us (but only if the first one didnt error, dont want to echo the user on an email we didnt get)
-		if( empty($errors) && $this->mCCme && $wgUser->getEmailAuthenticationTimestamp() != null ) {
+		if( empty($errors) && $this->mCCme && $wgUser->isEmailConfirmed() ) {
 			$error = UserMailer::send( $mail_user, $mail_community, wfMsg('contactmailsubcc'), $mcc, $mail_user, null, 'SpecialContactCC' );
 			if (WikiError::isError($error)) {
 				$errors .= "\n" . $error->getMessage();
@@ -280,7 +280,7 @@ class ContactForm extends SpecialPage {
 
 		if( !$wgUser->isAnon() && $wgUser->getEmail() != '') {
 			//is user, has email, but is verified?
-			if( $wgUser->getEmailAuthenticationTimestamp() != null ) {
+			if( $wgUser->isEmailConfirmed() ) {
 				//yes!
 				$wgOut->addHtml("
 				<tr>
