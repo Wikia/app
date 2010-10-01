@@ -195,7 +195,7 @@ function AddEditingTips($o) {
 							margin-bottom: 20px;
 						}
 
-						#mw-summary, #toolbar, #editform textarea, #editingTipsToggleDiv  {
+						#editform > #wpSummaryLabel, #toolbar, #editform textarea, #editingTipsToggleDiv  {
 							margin-left: 257px;
 						}
 					</style>
