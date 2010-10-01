@@ -184,7 +184,7 @@ class ListusersData {
 					array(
 						'ORDER BY'	=> $orderby, 
 						'LIMIT'		=> $this->mLimit, 
-						'OFFSET'	=> intval($this->mOffset) * $this->mLimit
+						'OFFSET'	=> intval($this->mOffset)
 					),
 					array(
 						'user_login_history_summary as ul1' => array(
