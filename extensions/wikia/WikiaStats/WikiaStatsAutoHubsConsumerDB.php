@@ -21,116 +21,119 @@ class WikiaStatsAutoHubsConsumerDB {
 		$this->dbs = wfGetDB( $db, array(), $wgStatsDB);
 	}
 
+	private function makeInsert($table, $data, $options = array(), $onUpdate = '') {
+		wfProfileIn( __METHOD__ );	
+		if ( !is_array($data) ) {
+			return null;
+		}	
+		$keys = array_keys( $data[0] );
+
+		$sql = 'INSERT %s INTO %s (%s) VALUES %s %s';
+
+		$first = true;
+		$records = "";
+		foreach ( $data as $row ) {
+			if ( $first ) {
+				$first = false;
+			} else {
+				$records .= ',';
+			}
+			$records .= '(' . $this->dbs->makeList( $row ) . ')';
+		}
+		wfProfileOut( __METHOD__ );
+		return sprintf($sql, implode(' ', $options), $table, implode(',', $keys), $records, $onUpdate);
+	}
+
 	 /**
-	 * instert stats for users and article per tag
+	 * instert stats for blogs per tag
 	 *
 	 * @param String $type
-	 * @author Tomasz Odrobny
+	 * @author Tomasz Odrobny, Piotr Molski
 	 * @access private
 	 *
 	 */
-
-	public function insertBlogComment($city_id, $page_id, $tag_id, $page_name, $page_url, $wikiname, $wikiurl, $lang) {
+	 public function insertBlogComment($data) {
 		wfProfileIn( __METHOD__ );
-
-		$date = date ("Y-m-d");
-
-  		$this->dbs->begin();
-
-		$inster_array = array(
-  					'tb_city_id' => (int) $city_id,
-					'tb_page_id' => (int) $page_id,
-					'tb_tag_id' => (int) $tag_id,
-					'tb_date' => "'$date'",
-					'tb_city_lang' => "'$lang'",
-					'tb_page_name' => $this->dbs->addQuotes($page_name),
-					'tb_page_url' => $this->dbs->addQuotes($page_url),
-					'tb_wikiname' => $this->dbs->addQuotes($wikiname),
-					'tb_wikiurl' => $this->dbs->addQuotes($wikiurl),
-					'tb_count' => 1
-		);
-
-		$sql = "insert into tags_top_blogs  ( " . implode(",",array_keys ($inster_array)) . ")
-									values  ( " . implode(",",$inster_array) . ")
-					ON DUPLICATE KEY UPDATE `tb_count` = `tb_count` + 1 ;";
-
-		$this->dbs->query($sql);
-		$this->deleteOld();
-		$this->dbs->commit();
-
-		$this->rebuildMemc($tag_id,$lang,"blog");
+		
+		if ( empty($data) ) {
+			return true;
+		}
+			  		
+  		foreach ( $data as $lang => $tags ) {
+			if ( !empty($tags) ) {
+				foreach ( $tags as $tag_id => $records ) {
+					$sql = $this->makeInsert("tags_top_blogs", $records, array('ignore'), "ON DUPLICATE KEY UPDATE tb_count = tb_count + 1");
+					if ( $sql ) {
+						$this->dbs->query($sql, __METHOD__);
+					}
+					$this->rebuildMemc($tag_id,$lang,"blog");
+				}
+			}
+		}
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * instert stats for users and article per tag
+	 }
+	 
+	 /**
+	 * instert stats for article per tag
 	 *
 	 * @param String $type
-	 * @author Tomasz Odrobny
+	 * @author Tomasz Odrobny, Piotr Molski
 	 * @access private
 	 *
 	 */
-
-	public function insertArticleEdit($city_id, $page_id, $user_id, $tag_id, $page_name, $page_url, $wikiname, $wikiurl, $groups, $username, $lang) {
-		global $wgMemc;
+	 public function insertArticleEdit($data) {
 		wfProfileIn( __METHOD__ );
-		$date = date ("Y-m-d");
-
-		$mcKey = wfSharedMemcKey( "auto_hubs", "unique_control", $city_id, $page_id, $user_id, $tag_id, $date );
-		$out = $wgMemc->get($mcKey,null);
-
-		if ($out == 1) {
-			return ;
+		
+		if ( empty($data) ) {
+			return true;
 		}
-		$wgMemc->set($mcKey,1,24*60*60);
-
-  		$this->dbs->begin();
-
-		$inster_array = array(
-					'tu_user_id' => (int) $user_id,
-					'tu_tag_id' => (int) $tag_id,
-					'tu_date' => "'$date'",
-					'tu_groups' => $this->dbs->addQuotes( $groups ),
-					'tu_username' => $this->dbs->addQuotes( $username ),
-					'tu_city_lang' => "'$lang'",
-					'tu_count' => 1,
-		);
-
-		$sql = "insert into tags_top_users  ( " . implode(",",array_keys ($inster_array)) . ")
-									values  ( " . implode(",",$inster_array) . ")
-					ON DUPLICATE KEY UPDATE `tu_count` = `tu_count` + 1 ;";
-
-		if( ((int) $user_id) != 0 ) {
-			$this->dbs->query($sql);
+			  		
+  		foreach ( $data as $lang => $tags ) {
+			if ( !empty($tags) ) {
+				foreach ( $tags as $tag_id => $records ) {
+					$sql = $this->makeInsert("tags_top_articles", $records, array('ignore'), "ON DUPLICATE KEY UPDATE ta_count = ta_count + 1");
+					if ( $sql ) {
+						$this->dbs->query($sql, __METHOD__);
+					}
+					$this->rebuildMemc($tag_id,$lang,"article");
+				}
+			}
 		}
-
-		$inster_array = array(
-  					'ta_city_id' => (int) $city_id,
-					'ta_page_id' => (int) $page_id,
-					'ta_tag_id' => (int) $tag_id,
-					'ta_date' => "'$date'",
-					'ta_city_lang' => "'$lang'",
-					'ta_page_name' => $this->dbs->addQuotes($page_name),
-					'ta_page_url' => $this->dbs->addQuotes($page_url),
-					'ta_wikiname' => $this->dbs->addQuotes($wikiname),
-					'ta_wikiurl' => $this->dbs->addQuotes($wikiurl),
-					'ta_count' => 1
-		);
-
-		$sql = "insert into tags_top_articles  ( " . implode(",",array_keys ($inster_array)) . ")
-									values  ( " . implode(",",$inster_array) . ")
-					ON DUPLICATE KEY UPDATE `ta_count` = `ta_count` + 1 ;";
-
-		$this->dbs->query($sql);
-		$this->deleteOld();
-		$this->dbs->commit();
-
-		$this->rebuildMemc($tag_id,$lang,"user");
-		$this->rebuildMemc($tag_id,$lang,"article");
 
 		wfProfileOut( __METHOD__ );
-	}
+	 }	 
+	 
+	 /**
+	 * instert stats for users per tag
+	 *
+	 * @param String $type
+	 * @author Tomasz Odrobny, Piotr Molski
+	 * @access private
+	 *
+	 */
+	 public function insertUserEdit($data) {
+		wfProfileIn( __METHOD__ );
+		
+		if ( empty($data) ) {
+			return true;
+		}
+			  		
+  		foreach ( $data as $lang => $tags ) {
+			if ( !empty($tags) ) {
+				foreach ( $tags as $tag_id => $records ) {			
+					$sql = $this->makeInsert("tags_top_users", $records, array('ignore'), "ON DUPLICATE KEY UPDATE tu_count = tu_count + 1");
+					if ( $sql ) {
+						$this->dbs->query($sql, __METHOD__);
+					}
+					$this->rebuildMemc($tag_id,$lang,"article");
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+	 }	 	 
+
 
 	/**
 	 * delete old row from stats tables
@@ -140,7 +143,6 @@ class WikiaStatsAutoHubsConsumerDB {
 	 * @access private
 	 *
 	 */
-
 	public function deleteOld() {
 		wfProfileIn( __METHOD__ );
 
@@ -314,37 +316,31 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$tag_id = (int) $tag_id;
+		$limit = 40;
 		$lang_id = WikiFactory::LangCodeToId($lang);
 		$conditions = array(
 			"tag_id" 	=> $tag_id,
 			"city_lang" => $lang_id
 		);
 
-		$oRow = $this->dbs->selectRow(
+		$res = $this->dbs->select(
 				array( 'specials.page_views_summary_tags' ),
-				array( 'count(0) as cnt' ),
-				array(),
-				__METHOD__
+				array( 'tag_id as tag_id,
+						city_id as city_id,
+						pv_views as count ' ),
+				$conditions,
+				__METHOD__,
+				array(
+					'ORDER BY' 	=> 'count DESC',
+					'LIMIT'		=> $limit
+				)
 		);
-
-		if ( is_object($oRow) && !empty($oRow->cnt) ) {
-			$res = $this->dbs->select(
-					array( 'specials.page_views_summary_tags' ),
-					array( 'tag_id as tag_id,
-							city_id as city_id,
-							pv_views as count ' ),
-					$conditions,
-					__METHOD__,
-					array(
-						'ORDER BY' 	=> 'count DESC',
-						'LIMIT'		=> 40
-					)
-			);
-		} else {
+		
+		if ( $this->dbs->numRow( $res ) == 0 ) {
 			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
 			$conditions[] = "use_date > $date";
 			$res = $this->dbs->select(
-					array( '`stats`.`page_views_tags`' ),
+					array( ' stats.page_views_tags use key(tag_lang) ' ),
 					array( 'tag_id as tag_id,
 							city_id as city_id,
 							sum(pv_views) as count ' ),
@@ -352,8 +348,8 @@ class WikiaStatsAutoHubsConsumerDB {
 					__METHOD__,
 					array(
 						'GROUP BY' 	=> ' tag_id,city_id ',
-						'ORDER BY' 	=> 'count DESC',
-						'LIMIT'		=> 40
+						'ORDER BY' 	=> ' count DESC ',
+						'LIMIT'		=> $limit
 					)
 			);
 		}

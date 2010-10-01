@@ -29,7 +29,7 @@ class WikiaStatsAutoHubsConsumer {
 	 * connect to statsdb and processing events table
 	 */
 	public function receiveFromEvents() {
-		global $wgStatsDB, $wgCityId;
+		global $wgStatsDB, $wgCityId, $wgMemc;
 		wfProfileIn( __METHOD__ );
 		
 		try {	
@@ -63,7 +63,11 @@ class WikiaStatsAutoHubsConsumer {
 		
 				if ( !empty($result) ) {
 					$producerDB = new WikiaStatsAutoHubsConsumerDB();
-					
+					$data = array(
+						'blogs' 	=> array(),
+						'articles' 	=> array(),
+						'user'		=> array()
+					);
 					foreach ( $result as $city_id => $rows) {
 						$start = time();
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processing: ' . count($rows) . ' rows' );
@@ -73,6 +77,7 @@ class WikiaStatsAutoHubsConsumer {
 								# wikia
 								$oWikia = WikiFactory::getWikiByID($city_id);
 								if ( !is_object($oWikia) ) {
+									Wikia::log ( __METHOD__, "Wikia not found: " . $city_id );
 									continue;
 								}
 								# server
@@ -81,30 +86,48 @@ class WikiaStatsAutoHubsConsumer {
 								$lang = $oWikia->city_lang;
 								# sitename
 								$sitename = $oWikia->city_title;
+								# initial table
+								if ( !isset($data['blogs'][$lang]) ) {
+									$data['blogs'][$lang] = array();
+								}
+								if ( !isset($data['articles'][$lang]) ) {
+									$data['articles'][$lang] = array();
+								}
+								if ( !isset($data['user'][$lang]) ) {
+									$data['user'][$lang] = array();
+								}										
 								
 								# global title 
 								$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id );
 								if ( !is_object($oGTitle) ) {
+									Wikia::log ( __METHOD__, "GlobalTitle not found: " . $oRow->page_id . ", ". $city_id);
 									continue;
 								}
 								
 								# tags
 								$oWFTags = new WikiFactoryTags($city_id);
-								$tags = $oWFTags->getAllTags();			
+								$tags = $oWFTags->getAllTags();
+								$tags = ( isset($tags['byid']) ) ? $tags['byid'] : $tags;
 								if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
 									foreach( $tags as $id => $val ) {
-										$producerDB->insertBlogComment( 
-											$city_id, 
-											$oRow->page_id, 
-											$id, 
-											$oGTitle->mUrlform, 
-											$oGTitle->getFullURL(), 
-											$sitename, 
-											$server, 
-											$lang 
+										if ( !isset($data['blogs'][$lang][$id]) ) {
+											$data['blogs'][$lang][$id] = array();
+										}
+										# prepare insert data
+										$data['blogs'][$lang][$id][] = array(
+											'tb_city_id'	=> $city_id, 
+											'tb_page_id'	=> $oRow->page_id, 
+											'tb_tag_id'		=> $id, 
+											'tb_date'		=> date("Y-m-d"),
+											'tb_city_lang'	=> $lang,
+											'tb_page_name'	=> addslashes($oGTitle->mUrlform),
+											'tb_page_url'	=> addslashes($oGTitle->getFullURL()),
+											'tb_wikiname' 	=> addslahses($sitename),
+											'tb_wikiurl'	=> addslashes($server),
+											'tb_count'		=> 1										
 										);
 									}
-								} else {
+								} else {																	
 									$oUser = User::newFromId( $oRow->user_id );
 									if ( !is_object($oUser) ) {
 										continue;
@@ -113,19 +136,42 @@ class WikiaStatsAutoHubsConsumer {
 									$user_groups = implode(";", $groups);		
 				
 									foreach( $tags as $id => $val ) {
-										$producerDB->insertArticleEdit( 
-											$city_id, 
-											$oRow->pageId, 
-											$oRow->user_id, 
-											$id, 
-											$oGTitle->mUrlform, 
-											$oGTitle->getFullURL(), 
-											$sitename,
-											$server, 
-											$user_groups, 
-											$oUser->getName(), 
-											$lang
-										);
+										$date = date("Y-m-d");
+										$mcKey = wfSharedMemcKey( "auto_hubs", "unique_control", $city_id, $oRow->page_id, $oRow->user_id, $id, $date );
+										$out = $wgMemc->get($mcKey,null);
+										if ($out == 1) { continue ; }
+										$wgMemc->set($mcKey, 1, 24*60*60);
+																				
+										if ( !isset($data['user'][$lang][$id]) ) {
+											$data['user'][$lang][$id] = array();
+										}
+										if ( !isset($data['articles'][$lang][$id]) ) {
+											$data['articles'][$lang][$id] = array();
+										}										
+										#
+										# prepare insert data
+										$data['articles'][$lang][$id][] = array(									
+											'ta_city_id'	=> $city_id, 
+											'ta_page_id' 	=> $oRow->page_id, 
+											'ta_tag_id' 	=> $id, 
+											'ta_date'		=> $date,
+											'ta_city_lang' 	=> $lang,
+											'ta_page_name'	=> addslashes($oGTitle->mUrlform),
+											'ta_page_url'	=> addslashes($oGTitle->getFullURL()),
+											'ta_wikiname'	=> $sitename,
+											'ta_wikiurl'	=> $server,
+											'ta_count'		=> 1
+										);	
+										
+										$data['user'][$lang][$id][] = array(									
+											'tu_user_id'	=> $oRow->user_id, 
+											'tu_tag_id'		=> $id, 
+											'tu_date'		=> $date,
+											'tu_groups'		=> $user_groups,
+											'tu_username'	=> addslashes($oUser->getName()), 
+											'tu_city_lang'	=> $lang,
+											'tu_count'		=> 1										
+										);		
 									}
 								}
 							}
@@ -134,6 +180,13 @@ class WikiaStatsAutoHubsConsumer {
 						$time = Wikia::timeDuration($end - $start);
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processed in: ' . $time );
 					}
+					
+					// insert data to database
+					$producerDB->insertBlogComment($data['blogs']);
+					$producerDB->insertArticleEdit($data['articles']);
+					$producerDB->insertUserEdit($data['user']);	
+					// clear old data 
+					$producerDB->deleteOld();			
 				} else {
 					Wikia::log ( __METHOD__, "No data found in events table. Last timestamp: " . $this->mDate );
 				}
