@@ -9,13 +9,13 @@ class LatestActivityModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		$maxElements = 3;
+		$maxElements = 4;
 
 		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgSingleH1;
 
 		wfLoadExtensionMessages('MyHome');
 
-		$mKey = wfMemcKey('mOasisLatestActivity');
+		$mKey = wfMemcKey('mOasisLatestActivitsy');
 		$feedData = $wgMemc->get($mKey);
 		if (empty($feedData)) {
 

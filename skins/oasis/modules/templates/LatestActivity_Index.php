@@ -10,7 +10,7 @@
 ?>
 		<li>
 			<img src="<?= $wgBlankImgUrl ?>" class="avatar osprite <?= $item['changeicon'] ?>" height="20" width="20">
-			<em><?= $item['page_href'] ?> <?= $item['changetype'] ?> <?= wfMsg('myhome-feed-by', $item['user_href']) ?></em>
+			<em><?= $item['user_href'] ?> <?= $item['changetype'] ?> <?= $item['page_href'] ?></em>
 			<details><?= $item['time_ago'] ?></details>
 		</li>
 <?php

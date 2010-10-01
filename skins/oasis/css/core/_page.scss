@@ -92,7 +92,9 @@
 
 .WikiaActivityModule {
 	@include rail-module;
+	padding-top: 8px;
 	.activity-heading {
+		margin-top: 0;
 		margin-bottom: 0;
 	}
 	ul {
@@ -100,7 +102,6 @@
 		margin: 10px 0;
 	}
 	li {
-		border-top: 1px solid $color-page-border;
 		font-size: 12px;
 		padding: 6px 3px 6px 30px;
 		position: relative;
@@ -118,6 +119,7 @@
 	}
 	details {
 		font-size: 11px;
+		margin-top: 2px;
 		a {
 			color: $color-links;
 			font-size: 11px;
@@ -125,6 +127,9 @@
 	}
 	a {
 		font-weight: normal;
+	}
+	.more {
+		font-weight: bold;
 	}
 }
 
