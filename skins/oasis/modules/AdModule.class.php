@@ -3,6 +3,7 @@
 class AdModule extends Module {
 
 	private static $config;
+	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2'  );
 
 	private function configure() {
 		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2;
@@ -82,7 +83,12 @@ class AdModule extends Module {
 		$this->slotname = $params['slotname'];
 
 		if(isset(self::$config[$this->slotname])) {
-			$this->ad = AdEngine::getInstance()->getPlaceHolderIframe($this->slotname);
+			if (in_array($this->slotname, self::$slotsUseGetAd)) {
+				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
+			}
+			else {
+				$this->ad = AdEngine::getInstance()->getPlaceHolderIframe($this->slotname);
+			}
 		}
 
 	}
