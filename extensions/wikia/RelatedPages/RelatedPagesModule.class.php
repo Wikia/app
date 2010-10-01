@@ -16,17 +16,7 @@ class RelatedPagesModule extends Module {
 		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/RelatedPages/RelatedPages.scss"));
 
 		// check for mainpage
-		$isMain = ( ( $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() ) && ( $wgTitle->getArticleId() != 0 ) );
-		if( !$isMain ) {
-			if( !empty($wgArticle->mRedirectedFrom) ) {
-				$main = wfMsgForContent( 'mainpage' );
-				if( $main == $wgArticle->mRedirectedFrom->getPrefixedText() ) {
-					$isMain = true;
-				}
-			}
-		}
-
-		if( $isMain ) {
+		if( Wikia::isMainPage() ) {
 			$this->skipRendering = true;
 		}
 
