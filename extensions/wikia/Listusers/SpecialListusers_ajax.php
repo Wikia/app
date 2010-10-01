@@ -86,7 +86,7 @@ class ListusersAjax {
 						$last_logged = ( isset($data['last_login']) ) ? $data['last_login'] : "-";
 						
 						$last_edited  = "-";
-						if ( $data['last_edit_ts'] ) {
+						if ( $data['last_edit_ts'] && $data['last_edit_page'] ) {
 							$last_edited  = Xml::openElement('div');
 							$last_edited .= Xml::tags( 'span', 
 								array( 'style' => 'font-size:90%;' ), 
