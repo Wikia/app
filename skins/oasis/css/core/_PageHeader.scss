@@ -23,7 +23,7 @@
 	.commentslikes {
 		float: right;
 		padding: 6px 0 6px 10px;
-		margin-right: -10px;
+		margin: 0px -10px 4px 0;
 	}
 	h1 {
 		display: inline;
@@ -57,6 +57,7 @@
 		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
 
 		border-top: 1px solid $color-page-border;
+		clear: both;
 		font-size: 12px;
 		height: 25px;
 		line-height: 25px;
