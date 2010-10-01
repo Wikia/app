@@ -114,6 +114,9 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 
 		global $wgMemc;
 
+		$wgMemc->set("testkey", "testval", 10);
+		$this->assertEquals("testval", $wgMemc->get("testkey"));
+
 		$messageName = 'test'.rand();
 
 		// prepate test data
@@ -123,7 +126,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 		$cacheKey = wfMemcKey($messageName, NavigationService::version);
 
 		// set test data in cache
-		$wgMemc->set($cacheKey, $testData, 1);
+		$wgMemc->set($cacheKey, $testData, 10);
 
 		$service = new NavigationService();
 		$this->assertEquals($testData, $service->parseMessage($messageName, array(), 1));
