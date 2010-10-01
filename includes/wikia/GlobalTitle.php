@@ -54,18 +54,16 @@ class GlobalTitle {
 	 */
 	public static function newFromId( $id, $city_id, $dbname = "" ) {
 		$title = null;
-		if ( $dbname ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
-			$row = $dbr->selectRow( 'page', 
-				array( 'page_namespace', 'page_title' ),
-				array( 'page_id' => $id ), 
-				__METHOD__ 
-			);
-			if ( $row !== false ) {
-				$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $city_id );
-			} else {
-				$title = NULL;
-			}
+		$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
+		$row = $dbr->selectRow( 'page', 
+			array( 'page_namespace', 'page_title' ),
+			array( 'page_id' => $id ), 
+			__METHOD__ 
+		);
+		if ( $row !== false ) {
+			$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $city_id );
+		} else {
+			$title = NULL;
 		}
 
 		return $title;
