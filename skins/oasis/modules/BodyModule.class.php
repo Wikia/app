@@ -146,7 +146,7 @@ class BodyModule extends Module {
 			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
-					1350 => array('PagesOnWiki', 'Index', null),
+					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('LatestActivity', 'Index', null),
 					1250 => array('LatestPhotos', 'Index', null),
 					1150 => array('Spotlights', 'Index', $spotlightsParams),
@@ -173,7 +173,7 @@ class BodyModule extends Module {
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
-			$railModuleList[1350] = array('PagesOnWiki', 'Index', null);
+			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
 			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
 			$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
