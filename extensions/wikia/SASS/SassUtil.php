@@ -37,10 +37,16 @@ class SassUtil{
 	 */
 	private static function getOasisSettings() {
 		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang;
-
 		wfProfileIn(__METHOD__);
+
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
-		$oasisSettings = array();
+		static $oasisSettings = array();
+
+		if (!empty($oasisSettings)) {
+			wfProfileOut(__METHOD__);
+			return $oasisSettings;
+		}
+
 		$skin = $wgUser->getSkin();
 
 		// try to load settings from ThemeDesigner
@@ -77,8 +83,18 @@ class SassUtil{
 			$oasisSettings['rtl'] = 'true';
 		}
 
+		wfDebug(__METHOD__ . ': ' . Wikia::json_encode($oasisSettings) . "\n");
+
 		wfProfileOut(__METHOD__);
 		return $oasisSettings;
+	}
+
+	/**
+	 * Get default theme settings
+	 */
+	private static function getDefaultOasisSettings() {
+		global $wgOasisThemes;
+		return $wgOasisThemes[DEFAULT_OASIS_THEME];
 	}
 
 	/**
@@ -88,22 +104,93 @@ class SassUtil{
 	public static function getSassParams(){
 		wfProfileIn( __METHOD__ );
 
-		static $sassParams = null;
-
-		if (is_null($sassParams)) {
-			$oasisSettings = self::getOasisSettings();
-
-			// Get the SASS parameters (in the same format that sassServer::getSassParamsFromUrl() returns - "=" separating key/value and " " separating pairs).
-			if(is_array($oasisSettings)){
-				$sassParams = http_build_query($oasisSettings);
-			}
-
-			wfDebug(__METHOD__ . ": {$sassParams}\n");
-		}
+		$sassParams = http_build_query(self::getOasisSettings());
 
 		wfProfileOut( __METHOD__ );
 		return $sassParams;
 	} // end getSassParams()
+
+	/**
+	 * Calculates whether currently used theme is light or dark
+	 */
+	public static function isThemeDark() {
+		wfProfileIn(__METHOD__);
+
+		$oasisSettings = self::getOasisSettings();
+		if (empty($oasisSettings)) {
+			$oasisSettings = self::getDefaultOasisSettings();
+		}
+
+		$backgroundColor = $oasisSettings['color-page'];
+
+		// convert RGB to HSL
+		list($hue, $saturation, $lightness) = self::rgb2hsl($backgroundColor);
+
+		$isDark = ($lightness < 0.5);
+
+		wfDebug(__METHOD__ . ': ' . ($isDark ? 'yes' : 'no') . "\n");
+
+		wfProfileOut(__METHOD__);
+		return $isDark;
+	}
+	/**
+	 * Convert RGB colors array into HSL array
+	 *
+	 * @see http://blog.archive.jpsykes.com/211/rgb2hsl/index.html
+	 *
+	 * @param string RGB color in hex format (#474646)
+	 * @return array HSL set
+	 */
+	private static function rgb2hsl($rgbhex){
+		wfProfileIn(__METHOD__);
+
+		// convert HEX color to rgb values
+		// #474646 -> 71, 70, 70
+		$rgb = str_split(substr($rgbhex, 1), 2);
+		$rgb = array_map('hexdec', $rgb);
+
+		$clrR = ($rgb[0] / 255);
+		$clrG = ($rgb[1] / 255);
+		$clrB = ($rgb[2] / 255);
+
+		$clrMin = min($clrR, $clrG, $clrB);
+		$clrMax = max($clrR, $clrG, $clrB);
+		$deltaMax = $clrMax - $clrMin;
+
+		$L = ($clrMax + $clrMin) / 2;
+
+		if (0 == $deltaMax){
+			$H = 0;
+			$S = 0;
+		}
+		else{
+			if (0.5 > $L){
+				$S = $deltaMax / ($clrMax + $clrMin);
+			}
+			else{
+				$S = $deltaMax / (2 - $clrMax - $clrMin);
+			}
+			$deltaR = ((($clrMax - $clrR) / 6) + ($deltaMax / 2)) / $deltaMax;
+			$deltaG = ((($clrMax - $clrG) / 6) + ($deltaMax / 2)) / $deltaMax;
+			$deltaB = ((($clrMax - $clrB) / 6) + ($deltaMax / 2)) / $deltaMax;
+			if ($clrR == $clrMax){
+				$H = $deltaB - $deltaG;
+			}
+			else if ($clrG == $clrMax){
+				$H = (1 / 3) + $deltaR - $deltaB;
+			}
+			else if ($clrB == $clrMax){
+				$H = (2 / 3) + $deltaG - $deltaR;
+			}
+			if (0 > $H) $H += 1;
+			if (1 < $H) $H -= 1;
+		}
+
+		//wfDebug(__METHOD__ . ": {$rgbhex} -> {$H}, {$S}, {$L}\n");
+
+		wfProfileOut(__METHOD__);
+		return array($H, $S, $L);
+	}
 
 	/**
 	 * Adds a global JS variable containing the hash which acts as a signature for
