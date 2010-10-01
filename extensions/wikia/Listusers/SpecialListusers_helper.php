@@ -248,16 +248,18 @@ class ListusersData {
 					};
 
 					$data['data'][$oRow->user_id] = array(
-						'user_id' 		=> $oRow->user_id,
-						'user_name' 	=> $oUser->getName(),
-						'user_link'		=> $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
-						'groups_nbr' 	=> $oRow->cnt_groups,
-						'groups' 		=> $group,
-						'rev_cnt' 		=> $oRow->edits,
-						'blcked'		=> $oRow->user_is_blocked,
-						'links'			=> "(" . implode( ") &#183; (", $links ) . ")",
-						'last_login'	=> ( !empty($oRow->ts) ) ? $wgLang->timeanddate( $oRow->ts, true ) : "",
-						'last_edit_ts'	=> ( !empty($oRow->ts_edit) ) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : ""
+						'user_id' 			=> $oRow->user_id,
+						'user_name' 		=> $oUser->getName(),
+						'user_link'			=> $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
+						'groups_nbr' 		=> $oRow->cnt_groups,
+						'groups' 			=> $group,
+						'rev_cnt' 			=> $oRow->edits,
+						'blcked'			=> $oRow->user_is_blocked,
+						'links'				=> "(" . implode( ") &#183; (", $links ) . ")",
+						'last_edit_page' 	=> null,
+						'last_edit_diff'	=> null,
+						'last_login'		=> ( !empty($oRow->ts) ) ? $wgLang->timeanddate( $oRow->ts, true ) : "",
+						'last_edit_ts'		=> ( !empty($oRow->ts_edit) ) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : ""
 					);
 						
 					if ( !empty($oRow->max_rev) ) { 
