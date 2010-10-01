@@ -31,20 +31,14 @@ class SassUtil{
 	} // end getSecurityHash()
 
 	/**
-	 * Returns an associative array of the parameters to pass to SASS.  These are based on the theme
-	 * for the wiki and potentially user-specific overrides.
+	 * Gets theme settings from following places:
+	 *  - theme designer ($wgOasisThemeSettings)
+	 *  - theme chosen using usetheme URL param
 	 */
-	public static function getSassParams(){
-		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgContLang, $wgOasisThemeSettings;
-		wfProfileIn( __METHOD__ );
+	private static function getOasisSettings() {
+		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang;
 
-		static $sassParams = null;
-
-		if (!is_null($sassParams)) {
-			wfProfileOut( __METHOD__ );
-			return $sassParams;
-		}
-
+		wfProfileIn(__METHOD__);
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
 		$oasisSettings = array();
 		$skin = $wgUser->getSkin();
@@ -79,19 +73,33 @@ class SassUtil{
 			}
 		}
 
-		// Get the SASS parameters (in the same format that sassServer::getSassParamsFromUrl() returns - "=" separating key/value and " " separating pairs).
-		$sassParams = "";
 		if($wgContLang && $wgContLang->isRTL()){
-			$sassParams .= "rtl=true";
-		}
-		if(is_array($oasisSettings)){
-			foreach($oasisSettings as $key=>$value){
-				$sassParams .= ($sassParams == ""?"":" ");
-				$sassParams .= "$key=".urlencode($value);
-			}
+			$oasisSettings['rtl'] = 'true';
 		}
 
-		wfDebug(__METHOD__ . ": {$sassParams}\n");
+		wfProfileOut(__METHOD__);
+		return $oasisSettings;
+	}
+
+	/**
+	 * Returns an associative array of the parameters to pass to SASS.  These are based on the theme
+	 * for the wiki and potentially user-specific overrides.
+	 */
+	public static function getSassParams(){
+		wfProfileIn( __METHOD__ );
+
+		static $sassParams = null;
+
+		if (is_null($sassParams)) {
+			$oasisSettings = self::getOasisSettings();
+
+			// Get the SASS parameters (in the same format that sassServer::getSassParamsFromUrl() returns - "=" separating key/value and " " separating pairs).
+			if(is_array($oasisSettings)){
+				$sassParams = http_build_query($oasisSettings);
+			}
+
+			wfDebug(__METHOD__ . ": {$sassParams}\n");
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $sassParams;
