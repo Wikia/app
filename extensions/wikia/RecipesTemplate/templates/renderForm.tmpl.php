@@ -208,7 +208,9 @@
 
 					$name = isset($field['value']['name']) ? $field['value']['name'] : '';
 					$thumb = isset($field['value']['thumb']) ? $field['value']['thumb'] : '';
+					$skip = isset($field['skip']) ? '<script type="text/javascript">WMU_setSkip()</script>' : '';
 ?>
+        <?= $skip ?>
 				<div class="recipes-template-upload">
 					<input type="text" id="<?= $id ?>" name="<?= $id ?>" value="<?= $name ?>" readonly="readonly" />
 					<a class="wikia-button" href="#"><?= wfMsg('recipes-template-browse') ?></a>
