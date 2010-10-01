@@ -261,7 +261,7 @@
 	// /** categories **/
 	#mw-pages {
 		h3 {
-			font-weight: bold;	
+			font-weight: bold;
 		}
 		ul {
 			margin-left: 16px;
@@ -281,5 +281,22 @@
 		color: #000;
 	}
 
+	/*
+		Table pager (e.g. Special:Imagelist)
+		- remove underlines from the navigation link
+		- collapse borders
+		- set the borders to outsets (similar to Special:Allmessages)
+		- remove line wrapping for all td and th, set background color
+		- restore line wrapping for the last two table cells (description and size)
+	*/
+	.TablePager_nav a { text-decoration: none; }
+	.TablePager { border-collapse: collapse; }
+	.TablePager, .TablePager td, .TablePager th {
+		border: 1px solid #aaaaaa;
+			padding: 0 0.15em 0 0.15em;
+	}
+	.TablePager th { background-color: #eeeeff; color: #000 }
+	.TablePager td { background-color: #ffffff; color: #000 }
+	.TablePager tr:hover td { background-color: #eeeeff }
 }
 
