@@ -75,8 +75,34 @@
 			}
 		
 		}
+		.LandingPageSwitchBack {
+			@extend .LandingPageButtonUpdate;	
+		}
 
 		
+	}
+
+	
+	.LandingPageExamples {
+		margin-top: 10px;
+		ul {
+			margin: 0;
+			list-style: none;
+			text-align: center;
+			li {
+				display: inline-block;
+				line-height: 2.5em;
+				margin: 1px 2px;
+			}
+			a {
+				font-size: 12px;
+				font-weight: normal;
+			}
+			img {
+				border: solid 1px mix($color-text, $color-page, 20);
+				display: block;
+			}
+		}
 	}
 
 	.LandingPageScreenshots {

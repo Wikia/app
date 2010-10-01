@@ -12,9 +12,7 @@ $messages['en'] = array(
 	'landingpage-buttons-about-wikia' => 'About Wikia',
 	'landingpage-buttons-about-wikia-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
 	
-	'landingpage-buttons-update-me' => 'Cool! Update me!',	
-	'landingpage-buttons-want-to-see' => 'I want to see the new look. Show me how.',	
-	'landingpage-buttons-want-to-see-link' => 'http://www.wikia.com',									// ##### CHANGE! #####
+	'landingpage-buttons-update-me' => 'Switch me to the new look!',	
 				
 	'landingpage-buttons-new-user' => 'I\'m a new user',
 	'landingpage-buttons-new-user-more' => 'Start Here',				
@@ -34,6 +32,12 @@ $messages['en'] = array(
 	'landingpage-facebook-link' => 'http://www.facebook.com/wikia',
 	'landingpage-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 	'landingpage-twitter-link' => 'http://www.twitter.com/wikia',
+	
+	'landingpage-change' => 'You \'ve successfully changed your skind to the new Wikia look.',
+	'landingpage-change-notification' => 'Your preferences have been saved. Stay on this page to find out more, head over to your favorite wiki or explore one of our featured wikis.',
+	'landingpage-change-back-text' => 'I want to see the old look, show me how.',
+		'landingpage-change-back-link' => ' http://www.community.wikia.com/wiki/Monaco_instructions',
+	'landingpage-dive-in'=> 'Dive right in an check out the new Wikia'
 );
 
 /** Breton (Brezhoneg)

@@ -2,18 +2,32 @@
 
 class SpecialLandingPage extends UnlistedSpecialPage {
 
+
+	var $button_url;
+	
 	function __construct() {
 		wfLoadExtensionMessages('LandingPage');
 		parent::__construct('LandingPage');
 	}
 
 	function execute($par) {
-		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl;
+		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgStyleVersion, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
+
+		// forces the skin to oasis
+		if ($wgRequest->getVal("oasis_upgrade")) {;	
+			$wgUser->setOption("skin", "oasis");
+			$wgUser->saveSettings();
+			
+			NotificationsModule::addConfirmation(wfMsg('landingpage-change-notification'), array(), 1);
+		}
+		
+		$this->button_url = $wgTitle->getLocalURL(array("oasis_upgrade"=> "true"));
 		$this->setHeaders();
 		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/LandingPage/css/LandingPage.scss'));
-
+		
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LandingPage/js/LandingPage.js?{$wgStyleVersion}\" ></script>\n");
 		// hide wiki and page header
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
@@ -57,6 +71,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			'imagesPath' => $wgExtensionsPath . '/wikia/LandingPage/images/',
 			'wgBlankImgUrl' => $wgBlankImgUrl,
 			'wikis' => $wikis,
+			'button_url' => $this->button_url,
+			'current_skin' => $wgUser->mOptions["skin"]
 		));
 
 		$wgOut->addHTML($template->render('main'));
