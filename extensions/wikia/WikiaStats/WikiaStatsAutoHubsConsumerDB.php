@@ -336,7 +336,7 @@ class WikiaStatsAutoHubsConsumerDB {
 				)
 		);
 		
-		if ( $this->dbs->numRow( $res ) == 0 ) {
+		if ( $this->dbs->numRows( $res ) == 0 ) {
 			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
 			$conditions[] = "use_date > $date";
 			$res = $this->dbs->select(
