@@ -205,6 +205,7 @@ var ThemeDesigner = {
 
 				var color = $("#color-name").val()
 
+				// was anything submitted?
 				if (color == "" || color == $("#color-name").attr("placeholder")) {
 					return;
 				}
@@ -214,6 +215,18 @@ var ThemeDesigner = {
 				if (expression.test(color)) {
 					color = "#" + color;
 				}
+				
+				// test color
+				$('<div id="ColorTester"></div>').appendTo(document.body);
+				try {
+					$("#ColorTester").css("background-color", color);
+				} catch(error) { 
+				
+				}
+				if ($("#ColorTester").css("background-color") == "transparent" || $("#ColorTester").css("background-color") == "rgba(0, 0, 0, 0)") {
+					return;
+				}
+				$("#ColorTester").remove();
 				
 				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatch.attr("class"), color);
