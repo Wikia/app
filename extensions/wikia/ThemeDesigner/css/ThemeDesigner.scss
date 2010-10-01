@@ -184,6 +184,11 @@ h1 {
 	width: 100%;
 }
 
+#ColorTester {
+	background-color: transparent;
+	display: none;
+}
+
 @import "../../../../extensions/wikia/ThemeDesigner/css/ThemeTab";
 @import "../../../../extensions/wikia/ThemeDesigner/css/CustomizeTab";
 @import "../../../../extensions/wikia/ThemeDesigner/css/WordmarkTab";
