@@ -3,22 +3,50 @@
 		<section class="LandingPageWelcome">
 			<h1><?= wfMsg('landingpage') ?></h1>
 			<h2><?= wfMsgExt('landingpage-secondary-line', array('parse')) ?></h2>
-			<h3><?= wfMsgExt('landingpage-secondary-2', array('parse')) ?></h3>
-			<h3><?= wfMsgExt('landingpage-secondary-3', array('parse')) ?></h3>
+			
+			<?php if ($current_skin == "oasis") { ?>
+				<h3><?= wfMsgExt('landingpage-dive-in', array('parse')) ?></h3>
+			<?php }
+			else { ?>
+				<h3><?= wfMsgExt('landingpage-secondary-2', array('parse')) ?></h3>
+				<h3><?= wfMsgExt('landingpage-secondary-3', array('parse')) ?></h3>
+			
+			<?php
+			}
+			?>
 			
 			
-			
+			<?php if ($current_skin != "oasis") { ?>
 			<section class="LandingPageButtonUpdate">
-				<button>
-					<?= wfMsg('landingpage-buttons-update-me') ?>
-				</button>
-				
-				<h3><a href="<?= wfMsg('landingpage-buttons-want-to-see-link') ?>"><?= wfMsg('landingpage-buttons-want-to-see') ?></a></h3>
+				<a href="<?= $button_url ?>">
+					<button id="landing-update">
+						<?= wfMsg('landingpage-buttons-update-me') ?>
+					</button>
+				</a>
 			</section>
-			
-			
-		</section>
+	<?php }	?>
 
+	<?php if ($current_skin == "oasis") {	?>
+			<section class="LandingPageExamples">	
+					<ul>
+			<?php foreach($wikis as $wiki) { ?>
+						<li>
+							<a href="<?= $wiki['url'] ?>">
+								<img src="<?= $imagesPath . $wiki['image'] ?>" alt="" width="124" height="84">
+								<?= $wiki['name'] ?>
+							</a>
+						</li>
+				<?php
+			}
+		?>
+					</ul>
+			</section>
+			<?php }	?>
+			<section class="LandingPageSwitchBack">
+				<h3><a href="<?= wfMsg('landingpage-change-back-link') ?>"><?= wfMsg('landingpage-change-back-text') ?></a></h3>
+			
+			</section>
+		</section>
 
 		<section class="LandingPageScreenshots">
 			<h1>
@@ -78,3 +106,4 @@
 		</ul>
 	</section>
 </section>
+

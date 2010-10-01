@@ -12,6 +12,12 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SpecialLandingPage'] = $dir.'SpecialLandingPage.class.php';
 $wgSpecialPages['LandingPage'] = 'SpecialLandingPage';
 
+// for the change
+$wgAutoloadClasses['SpecialLandingPageChange'] = $dir.'SpecialLandingPageChange.class.php';
+$wgSpecialPages['LandingPageChange'] = 'SpecialLandingPageChange';
+
 // i18n
 $wgExtensionMessagesFiles['LandingPage'] = $dir . 'LandingPage.i18n.php';
+$wgExtensionMessagesFiles['LandingPageChange'] = $dir . 'LandingPage.i18n.php';
+
 
