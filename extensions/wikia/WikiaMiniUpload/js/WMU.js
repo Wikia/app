@@ -125,7 +125,7 @@ function WMU_moveBackButton(selector) {
 		backButton.removeAttr('id').remove();
 
 		// keep reference to <a> tag
-		backButton = backButton.children('a').addClass('wikia-button yui-back');
+		backButton = backButton.children('a').addClass('wikia-button yui-back secondary');
 		window.WMUbackButton = backButton;
 	}
 
