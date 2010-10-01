@@ -858,8 +858,21 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($settings["wordmark-font"], $moduleData['wordmarkFont']);
 
 		$this->assertArrayHasKey('editURL', $moduleData);
+	}
 
+	function testMyToolsModule() {
+		$moduleData = Module::get('MyTools', 'Index')->getData();
+		$this->assertEquals(array(), $moduleData['customTools']);
+		$this->assertArrayHasKey(0, $moduleData['defaultTools']);
+		$this->assertArrayHasKey(1, $moduleData['defaultTools']);
 
+		$moduleData = Module::get('MyTools', 'Configuration')->getData();
+		$this->assertEquals(array(), $moduleData['userCustomTools']);
+
+		global $wgRequest;
+		$wgRequest->setVal('query', 'All');
+		$moduleData = Module::get('MyTools', 'Suggestions')->getData();
+		$this->assertEquals(array('AllPages', 'PrefixIndex', 'AllMessages'), $moduleData['data']);
 	}
 
 }
