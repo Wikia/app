@@ -30,11 +30,6 @@ class SpecialSponsor extends SpecialPage {
 		$this->priceAry['5mo']['price'] = 5;
 		$this->priceAry['5mo']['months']=1;
 		$this->priceAry['5mo']['text'] = "sponsor-price-5mo";
-		
-		// $45 per year
-		$this->priceAry['45yr']['price']=45;
-		$this->priceAry['45yr']['months']=12;
-		$this->priceAry['45yr']['text']="sponsor-price-45yr";
 	}
 	
 	public function execute( $par ) {
