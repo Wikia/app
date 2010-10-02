@@ -1,4 +1,5 @@
 == Changes since 201009.5 ==
+* rt#69155: Photos on This Wiki module: link should say See more (TOR) 
 * rt#69127: run staffsig image through cdn (uberfuzzy)
 * rt#69110: fix email confirmation checks in SpecialContact (uberfuzzy)
 * rt#67429: Slider css/js bugs/fixes (federico)

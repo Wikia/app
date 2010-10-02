@@ -1,4 +1,4 @@
-@import "../core/layout";
+eimport "../core/layout";
 @import "clearfix";
 @import "gradient";
 
@@ -28,6 +28,7 @@
 	.more {
 		float: right;
 		font-size: 10px;
+		font-weight: bold;
 	}
 	a {
 		font: {

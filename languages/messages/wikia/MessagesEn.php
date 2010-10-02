@@ -1008,7 +1008,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-activity-header' => 'Recent Wiki Activity',
 'oasis-total-articles-mainpage' => 'pages on<br>this wiki',
 'oasis-latest-photos-header' => 'photos on<br> this wiki',
-'oasis-latest-photos-more' => 'See All &gt;',
+'oasis-latest-photos-more' => 'See more &gt;',
 'oasis-latest-photos-inner-message' => 'See All Photos',
 'oasis-latest-photos-single' => '+',
 'oasis-latest-photos-empty' => 'Anyone can help to make this Wiki look amazing<br/><span>Click here to add a photo.</span>',
