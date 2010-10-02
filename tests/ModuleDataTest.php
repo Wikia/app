@@ -32,7 +32,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('LatestActivity')->getData();
 		$this->assertType ('array', $moduleData['changeList']);
 		$this->assertEquals(
-			3,
+			4,
 			count($moduleData['changeList'])
 		);
 	}

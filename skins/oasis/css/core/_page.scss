@@ -85,16 +85,18 @@
 		display: none;
 	}
 	.osprite.icon-add {
+		margin: 0 5px;
 		position: relative;
 		top: 1px;
+	}
+	a {
+		padding-right: 5px;
 	}
 }
 
 .WikiaActivityModule {
 	@include rail-module;
-	padding-top: 8px;
 	.activity-heading {
-		margin-top: 0;
 		margin-bottom: 0;
 	}
 	ul {
@@ -110,6 +112,7 @@
 		}
 		em {
 			font-size: 12px;
+			line-height: 15px;
 		}
 	}
 	.avatar {
