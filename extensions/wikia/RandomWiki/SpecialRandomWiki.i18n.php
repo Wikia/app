@@ -32,10 +32,11 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwendal
  */
 $messages['br'] = array(
-	'randomwiki-desc' => "A ro ar gwir d'an implijer da zizoleiñ ur wiki dre zegouezh",
+	'randomwiki-desc' => "Talvezout a ra d'an implijerien da zizoleiñ ur wiki dre zegouezh",
 	'randomwiki' => 'Wiki dre zegouezh',
 );
 

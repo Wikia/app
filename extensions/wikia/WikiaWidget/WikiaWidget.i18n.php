@@ -212,6 +212,13 @@ $messages['mk'] = array(
 	'wikiawidget' => 'Посреднички елементи на Викија',
 );
 
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'wikiawidget' => 'विकीया विजेटहरु',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

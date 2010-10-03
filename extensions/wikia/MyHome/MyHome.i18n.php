@@ -308,11 +308,13 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'myhome' => 'Va zi',
+	'wikiactivity' => 'Oberiantiz ar wiki',
 	'myhome-activity-more' => 'Gwelet an oberoù neveshañ',
 	'myhome-activity-feed' => 'Gwazh obererezh',
 	'myhome-activity-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
@@ -2270,6 +2272,29 @@ Om du är grundaren eller en administratör på denna wiki kan du ändra detta b
 /** Swahili (Kiswahili) */
 $messages['sw'] = array(
 	'myhome-feed-summary-details' => 'Muhtasari',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'myhome' => 'எனது இல்லம்',
+	'wikiactivity' => 'விக்கி செயல்பாடு',
+	'myhome-activity-more' => 'மேலதிக அண்மைய செயல்பாட்டைப் பார்க்கவும்',
+	'myhome-watchlist-feed' => 'கவனிப்புப் பட்டியல்',
+	'myhome-feed-deleted-by' => '$1 அவர்களால் அழிக்கப்பட்டது',
+	'myhome-feed-moved-by' => '$1  அவர்களால் நகர்த்தப்பட்டது',
+	'myhome-feed-article-comment-created-by' => '$1  அவர்களின் புதிய விமர்சனம்',
+	'myhome-feed-article-comment-edited-by' => '$1  அவர்களின் புதிய தொகுக்கப்பட்ட விமர்சனம்',
+	'myhome-feed-diff-alt' => 'இப்பக்கத்தின் மாற்றங்களைக் காண்பி',
+	'myhome-feed-new-page-details' => 'புதிய பக்கம்',
+	'myhome-feed-summary-details' => 'சுருக்கம்',
+	'myhome-feed-new-blog-post-details' => 'புதிய வலைப்பதிவு',
+	'myhome-feed-new-blog-comment-details' => 'கருத்து',
+	'myhome-feed-new-article-comment-details' => 'கருத்து',
+	'myhome-feed-move-details' => 'பெயர் மாற்றப்பட்டது',
+	'myhome-feed-redirect-details' => 'திருப்பிவிடு',
+	'myhome-hot-spots-number-of-editors' => 'தொகுப்பாளர்கள்',
 );
 
 /** Telugu (తెలుగు)

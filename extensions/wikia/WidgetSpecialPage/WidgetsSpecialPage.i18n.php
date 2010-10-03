@@ -20,12 +20,13 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
-	'widgets-specialpage-info' => "Ar wigetoù a ya gwelloc'h en-dro gant ur fichadur arnevez, da skouer [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => "Gwelloc'h ez a ar bitrakoù en-dro gant ar gwiskadur [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
-Kemmit [[Special:Preferences#prefsection-1|ho tibaboù]] mar plij, evit implijout ar benveg-mañ.",
+Kemmit [[Special:Preferences#prefsection-1|ho penndibaboù]] evit implijout ar benveg-mañ.",
 	'widgets-specialpage-try-dashboard' => "Ar bajenn-mañ zo enni roll an holl widgetoù a c'haller kaout. Evit gwelet ar widgetoù zo o vont en-dro, kit war [[Special:WidgetDashboard]].",
 );
 
@@ -39,9 +40,11 @@ Abyste mohli používat tento nástroj, změňte si, prosím, své [[Special:Pre
 	'widgets-specialpage-try-dashboard' => 'Tato stránka obsahuje seznam všech dostupných udělátek. Chcete-li vidět svá udělátka pracovat, přejděte na [[Special:WidgetDashboard]].',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author The Evil IP address
+ */
 $messages['de'] = array(
-	'widgets-specialpage-info' => 'Widgets sind dafür ausgelegt um im Standard-Skin (Monaco) benutzt zu werden.
+	'widgets-specialpage-info' => 'Widgets funktionieren mit dem [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco-Skin].
 
 Bitte passe [[Special:Preferences#prefsection-1|deine Einstellungen]] an, um dieses Tool zu benutzen.',
 	'widgets-specialpage-try-dashboard' => 'Diese Seite enthält eine Liste aller verfügbaren Widgets. Deine aktiven Widgets kannst du dir unter [[Special:WidgetDashboard]] anschauen.',
@@ -57,9 +60,11 @@ Bitte passen Sie [[Special:Preferences#prefsection-1|Ihre Einstellungen]] an, um
 	'widgets-specialpage-try-dashboard' => 'Diese Seite enthält eine Liste aller verfügbaren Widgets. Ihre aktiven Widgets können Sie sich unter [[Special:WidgetDashboard]] anschauen.',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
-	'widgets-specialpage-info' => 'Los Widgets trabajan mejor con alguna de las nuevas pieles, por ejemplo [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Los widgets funcionan con el tema [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
 Por favor, cambia [[Special:Preferences#prefsection-1|tus preferencias]] para usar esta herramienta.',
 	'widgets-specialpage-try-dashboard' => 'Esta página cuenta con una lista con todos los widgets disponibles. Para ver tus widgets en funcionamiento ve a [[Special:WidgetDashboard]].',
@@ -81,11 +86,12 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Peter17
  */
 $messages['fr'] = array(
-	'widgets-specialpage-info' => 'Les widgets fonctionnent mieux avec un habillage moderne, comme [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Les widgets fonctionnent mieux avec l’habillage [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
-Modifiez [[Special:Preferences#prefsection-1| vos préférences]] pour utiliser cet outil.',
+Veuillez modifier [[Special:Preferences#prefsection-1| vos préférences]] pour utiliser cet outil.',
 	'widgets-specialpage-try-dashboard' => 'Cette page liste tous les widgets disponibles. Pour voir les widgets en action allez sur [[Special:WidgetDashboard]].',
 );
 
@@ -176,9 +182,9 @@ Wijzig alstublieft uw [[Special:Preferences#prefsection-1|voorkeuren]] om dit hu
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'widgets-specialpage-info' => 'Skjermelementer fungerer best med noen av de nye utseendene, for eksempel [{{SERVER}}/index.php?title=Spesial:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Skjermelementer fungerer med utseendet [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
-Endre [[Special:Preferences#prefsection-1|innstillingene dine]] for å bruke dette verktøyet.',
+Vennligst endre [[Special:Preferences#prefsection-1|innstillingene dine]] for å bruke dette verktøyet.',
 	'widgets-specialpage-try-dashboard' => 'Denne siden inneholder en liste over alle tilgjengelige skjermelementer. For å se dem i bruk, gå til [[Special:WidgetDashboard]].',
 );
 
@@ -186,9 +192,9 @@ Endre [[Special:Preferences#prefsection-1|innstillingene dine]] for å bruke det
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'widgets-specialpage-info' => 'Los widgets foncionan melhor amb un abilhatge modèrne, coma [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Mónegue].
+	'widgets-specialpage-info' => "Los widgets foncionan melhor amb un l'abilhatge [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Mónegue].
 
-Modificatz [[Special:Preferences#prefsection-1| vòstras preferéncias]] per utilizar aqueste esplech.',
+Modificatz [[Special:Preferences#prefsection-1| vòstras preferéncias]] per utilizar aquesta aisina.",
 	'widgets-specialpage-try-dashboard' => 'Aquesta pagina fa la lista de totes los widgets disponibles. Per veire los widgets en accion anatz sus [[Special:WidgetDashboard]].',
 );
 
@@ -196,9 +202,9 @@ Modificatz [[Special:Preferences#prefsection-1| vòstras preferéncias]] per uti
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'widgets-specialpage-info' => 'Widżety najlepiej funkcjonują z jedną z nowych skórek np [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monako].
+	'widgets-specialpage-info' => 'Widżety współdziałają ze skórką [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monako].
 
-Zmień swoje [[Special:Preferences#prefsection-1|preferencje]], jeśli chcesz korzystać z tego narzędzia.',
+Wybierz ją w swoich [[Special:Preferences#prefsection-1|preferencje]], jeśli chcesz korzystać z tego narzędzia.',
 	'widgets-specialpage-try-dashboard' => 'Ta strona zawiera listę wszystkich dostępnych widżetów. Włączone widżety można zobaczyć na stronie [[Special:WidgetDashboard]].',
 );
 
@@ -225,11 +231,12 @@ Altere as [[Special:Preferences#prefsection-1|suas preferências]] para usar est
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
-	'widgets-specialpage-info' => 'Widgets funcionam melhor com um dos novos estilos, ex. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Os widgets funcionam com o tema [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
-Por favor altere as [[Special:Preferences#prefsection-1|suas preferências]] para usar esta ferramenta.',
+Altere as [[Special:Preferences#prefsection-1|suas preferências]] para usar este tema, por favor.',
 	'widgets-specialpage-try-dashboard' => 'Esta página contém a lista de todos os widgets disponíveis. Para ver seus widgets funcionando vá para [[Special:WidgetDashboard]].',
 );
 
@@ -245,9 +252,10 @@ Pe piacere cange [[Special:Preferences#prefsection-1|le preferenze tune]] pe aus
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'widgets-specialpage-info' => 'Виджеты лучше всего работают с новыми темами оформления, например, [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Виджеты работают с темой оформления,  [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
 Пожалуйста, измените [[Special:Preferences#prefsection-1|свои настройки]] для использования этого инструмента.',
 	'widgets-specialpage-try-dashboard' => 'Эта страница содержит список всех доступных виджетов. Чтобы увидеть ваши виджеты в действии, перейдите на [[Special:WidgetDashboard]].',
@@ -267,7 +275,7 @@ $messages['sr-ec'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
-	'widgets-specialpage-info' => 'Pinakamainam ang pag-andar ng mga wikdyet kung may isa sa bagong mga pabalat, halimbawa na ang [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Gumagana ang mga Widyet na may pabalat na [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monako].
 
 Pakibago ang [[Special:Preferences#prefsection-1|mga nais mo]] upang magamit ang kasangkapang ito.',
 	'widgets-specialpage-try-dashboard' => 'Naglalaman ang pahinang ito ng isang talaan ng lahat ng magagamit na mga widyet.  Upang makita ang iyong mga widyet habang umaandar, pumunta sa [[Special:WidgetDashboard]].',

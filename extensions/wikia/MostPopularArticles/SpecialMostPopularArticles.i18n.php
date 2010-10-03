@@ -169,6 +169,13 @@ $messages['kn'] = array(
 	'mostpopulararticles' => 'ಅತ್ಯಂತ ಜನಪ್ರಿಯ ಲೇಖನಗಳು (ದತ್ತಸಂಚಯದಿಂದ)',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'mostpopulararticles' => 'De et öffß afjeroofe Atikele.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

@@ -2250,6 +2250,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'createblogpage' => 'بلاګ جوړول',
+	'create-blog-post-category' => 'د بلاګ پوستونه',
 	'create-blog-form-post-text' => 'د بلاګ متن',
 	'create-blog-invalid-title-error' => 'ناسم سرليک',
 	'create-blog-categories-textinput' => 'يوه نوې وېشنيزه ورګډول',

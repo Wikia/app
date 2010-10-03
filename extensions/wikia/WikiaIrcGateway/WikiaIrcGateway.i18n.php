@@ -233,6 +233,14 @@ $messages['mk'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'ircgate-username' => 'प्रयोगकर्ता-नाम:',
+	'ircgate-channel' => 'च्यानल',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

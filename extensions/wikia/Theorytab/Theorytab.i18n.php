@@ -188,6 +188,14 @@ $messages['mk'] = array(
 	'theorytab-parent-title' => 'Матична статија',
 );
 
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'theorytab-title' => 'सिद्धान्त',
+	'theorytab-parent-title' => 'मूल लेख',
+);
+
 /** Dutch (Nederlands) */
 $messages['nl'] = array(
 	'theorytab-title' => 'Theorieen',

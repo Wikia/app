@@ -139,6 +139,13 @@ $messages['mk'] = array(
 	'sitemap-desc' => 'Создавање нa преглед на содржината на викито по брза постапка',
 );
 
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'sitemap-desc' => 'विकीको लागि तुरून्तै साइटनक्सा तयार गर्नुहोस',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

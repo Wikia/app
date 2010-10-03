@@ -436,10 +436,16 @@ $messages['sr-ec'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author Karthi.dr
  * @author Surya Prakash.S.A.
  */
 $messages['ta'] = array(
 	'tog-disableeditingtips' => 'தொகுத்தல் உதவிகளைக் காட்ட வேண்டாம்!',
+	'tog-widescreeneditingtips' => 'அகண்ட திரை தொகுத்தலைப் பயன்படுத்தவும்',
+	'editingtips_enter_widescreen' => 'அகண்ட திரைக்குள் நுழையவும்',
+	'editingtips_exit_widescreen' => 'அகண்ட திரையை விட்டு வெளியேறவும்',
+	'editingtips_hide' => 'தொகுத்தல் ஆலோசனைகளை மறை',
+	'editingtips_show' => 'தொகுத்தல் ஆலோசனைகளைக் காண்பி',
 );
 
 /** Telugu (తెలుగు)

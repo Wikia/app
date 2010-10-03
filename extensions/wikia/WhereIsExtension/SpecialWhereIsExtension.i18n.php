@@ -91,6 +91,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -104,6 +105,7 @@ $messages['br'] = array(
 	'whereisextension-name-contains' => 'Anv an argemmenn zo ennañ',
 	'whereisextension-search-like-value' => 'Evel :',
 	'whereisextension-search-type' => 'Seurt :',
+	'whereisextension-search-type-bool' => 'Boulean',
 	'whereisextension-search-type-full' => 'Evel',
 );
 

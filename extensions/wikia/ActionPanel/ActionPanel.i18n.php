@@ -432,6 +432,15 @@ $messages['sv'] = array(
 	'action_panel_categorize_success' => 'Dina kategorier har lagts till',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'action_panel_edit_title' => 'விடை',
+	'action_panel_categorize' => 'பகுக்கவும்',
+	'action_panel_categorize_help' => 'ஒரு வரிக்கு ஒரு பகுப்பு',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

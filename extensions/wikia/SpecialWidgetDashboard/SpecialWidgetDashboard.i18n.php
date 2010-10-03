@@ -131,7 +131,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'widgetdashboard-wrong-skin' => '<p>Lo tablèu de bòrd dels widgets fonciona melhor amb un abilhatge recent, coma <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Cambiatz vòstras <a href="./Special:Preferences">preferéncias</a> per utilizar aqueste esplech.</p>',
+	'widgetdashboard-wrong-skin' => '<p>Lo tablèu de bòrd dels widgets fonciona melhor amb un abilhatge recent, coma <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Cambiatz vòstras <a href="./Special:Preferences">preferéncias</a> per utilizar aquesta aisina.</p>',
 	'widgetdashboard-description' => 'Aquesta pagina servís de plaça per testar vòstres widgets al trabalh. Per veire la lista dels widgets disponibles anatz sus [[Special:Widgets]].',
 );
 

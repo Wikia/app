@@ -77,6 +77,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -90,6 +91,7 @@ $messages['br'] = array(
 	'wva-title' => 'Ouzhpennañ buan ur video adalek e URL',
 	'wva-notlogged' => "Ezhomm ho peus da vezañ kevreañ pe enrollet evit ensoc'hañ videoioù.",
 	'wva-notallowed' => "Ne c'hallit ket ensoc'hañ videoioù war ar wiki-mañ",
+	'wva-protected' => 'Gwarezet eo ar video-mañ',
 );
 
 /** Catalan (Català)

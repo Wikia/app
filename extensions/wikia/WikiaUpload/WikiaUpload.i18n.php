@@ -262,6 +262,13 @@ $messages['mk'] = array(
 	'wikiaupload' => 'Викија - Подигање',
 );
 
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'wikiaupload' => 'विकीया अपलोड',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

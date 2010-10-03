@@ -526,16 +526,36 @@ $messages['be-tarask'] = array(
 Упэўніцеся, што гэта файл фармату JPG ці PNG.
 Калі ўсё роўна няслушная, гэта, верагодна, азначае, што выява занадта вялікая.
 Калі ласка, паспрабуйце выкарыстаць іншую!',
-	'achievements-no-stub-category' => 'Калі ласка, не стварайце трэкі для шаблёнаў.',
+	'achievements-upload-not-allowed' => 'Адміністратары могуць зьмяняць назвы і выявы ўзнагародаў наведаўшы старонку [[Special:AchievementsCustomize|кіраваньня дасягненьнямі]].',
+	'achievements-non-existing-category' => 'Пазначаная катэгорыя не існуе.',
+	'achievements-edit-plus-category-track-exists' => 'Пазначаная катэгорыя ўжо <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Перайсьці да трэку">прызначаны трэк</a>.',
+	'achievements-no-stub-category' => 'Калі ласка, не стварайце трэкі для накідаў.',
 	'achievements-platinum' => 'Плаціна',
 	'achievements-gold' => 'Золата',
 	'achievements-silver' => 'Срэбра',
 	'achievements-bronze' => 'Бронза',
+	'achievements-you-must' => 'Вам неабходна $1, каб атрымаць гэтую ўзнагароду.',
+	'leaderboard-button' => 'Лідэры па ўзнагародам',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|ачко|ачкі|ачкоў}}</small>',
 	'achievements-track-name-edit' => 'Рэдагаваць трэк',
 	'achievements-track-name-picture' => 'Выява трэку',
 	'achievements-track-name-category' => 'Катэгорыя трэку',
 	'achievements-track-name-blogpost' => 'Паведамленьне ў блёге трэку',
 	'achievements-track-name-blogcomment' => 'Камэнтар у блёге трэку',
+	'achievements-track-name-love' => 'Трэк Wiki Love',
+	'achievements-notification-title' => 'Так трымаць, $1!',
+	'achievements-notification-subtitle' => 'Вы атрымалі ўзнагароду «$1» $2',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Паглядзіце, якія яшчэ ўзнагароды Вы можаце атрымаць]]!</big></strong>',
+	'achievements-points' => '$1 {{PLURAL:$1|ачко|ачкі|ачкоў}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|ачко|ачкі|ачкоў}}',
+	'achievements-earned' => 'Гэтая ўзнагарода для атрыманая $1 {{PLURAL:$1|удзельнікам|удзельнікамі|удзельнікамі}}.',
+	'achievements-profile-title' => '$1 {{GENDER:$2|атрымаў|атрымала}} $2 {{PLURAL:$2|узнагароду|узнагароды|узнагародаў}}',
+	'achievements-profile-title-no' => 'Узнагароды $1',
+	'achievements-profile-title-challenges' => 'Вы можаце атрымаць болей узнагародаў!',
+	'achievements-profile-customize' => 'Зьмяніць ўзнагароды >',
+	'achievements-ranked' => 'Узровень № $1 у {{GRAMMAR:месны|{{SITENAME}}}}',
+	'achievements-no-badges' => 'Праглядзіце сьпіс пададзены ніжэй, каб убачыць узнагароды, якія Вы можаце атрымаць у {{GRAMMAR:месны|{{SITENAME}}}}!',
+	'achievements-viewall' => 'Паказаць усё',
 );
 
 /** Breton (Brezhoneg)
@@ -580,10 +600,12 @@ Mar plij klaskit gant unan all !",
 	'achievements-no-badges' => "Taolit ur sell d'ar roll amañ a-is evit gwelet ar badjoù a c'hellit gounid war ar wiki-mañ !",
 	'achievements-viewall' => 'Gwelet pep tra',
 	'achievements-viewless' => 'Serriñ',
+	'achievements-ranked-oasis' => '$1 a zo gant [[Special:Leaderboard|ar renk #$2]] war ar wiki-mañ',
 	'achievements-viewall-oasis' => 'Gwelet pep tra',
 	'leaderboard' => 'Taolenn an tournamantoù',
 	'achievements-recent-earned-badges' => 'Badjoù gounezet nevez zo',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />gounezet gant <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'en deus gounezet ar badj <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
 	'achievements-leaderboard-rank-label' => 'renk',
 	'achievements-leaderboard-member-label' => 'ezel',
 	'achievements-leaderboard-points-label' => 'poentoù',
@@ -709,6 +731,7 @@ Klikit war ar bouton "{{int:activityfeed}}" evit gwelet ar pajennoù nevez hag a
 Kendalc'hit da gemmañ !",
 	'achievements-badge-to-get-luckyedit-details' => "Chañs a rankit kaout evit gounid ar badj-mañ.
 Kendalc'hit da gemmañ !",
+	'achievements-badge-to-get-community-platinum-details' => 'Ur badj dibar e platin eo hemañ, ha ne vez outañ nemet e-pad ur prantad termenet !',
 	'achievements-badge-hover-desc-edit' => "evit bezañ degaset $1 {{PLURAL:$1|c'hemm|kemm}}<br />
 war {{PLURAL:$1|ur bajenn|pajennoù}} !",
 	'achievements-badge-hover-desc-edit-plus-category' => "evit bezañ degaset $1 {{PLURAL:$1|c'hemm|kemm}}<br />
@@ -731,6 +754,7 @@ war pajenn kaozeal unan bennak all !',
 	'achievements-badge-your-desc-edit-plus-category' => 'evit bezañ degaset {{PLURAL:$1|ho kemm gentañ|$1 kemm}} war {{PLURAL:$1|ur bajenn|$2 pajenn}}!',
 	'achievements-badge-your-desc-picture' => 'Evit bezañ degaset ho {{PLURAL:$1|skeudenn gentañ|$1 skeudenn}} war {{PLURAL:$1|ur bajenn|pajennoù}} !',
 	'achievements-badge-your-desc-category' => "evit bezañ ouzhpennet {{PLURAL:$1|ho pajenn gentañ|$1 pajenn}} {{PLURAL:$1|d'ur rummad|da rummadoù}} !",
+	'achievements-badge-your-desc-love' => 'evit bezañ graet degasadennoù bemdez war ar wiki e-pad {{PLURAL:$1|un devezh|$1 devezh}} !',
 	'achievements-badge-your-desc-welcome' => 'evit bezañ deuet war ar wiki !',
 	'achievements-badge-your-desc-introduction' => 'evit bezañ ouzhpennet titouroù war ho pajenn implijer !',
 	'achievements-badge-your-desc-sayhi' => 'evit bezañ laosket ur gemennadenn war pajenn kaozeal unan bennak all !',
@@ -3793,6 +3817,7 @@ $messages['roa-tara'] = array(
 /** Russian (Русский)
  * @author DCamer
  * @author Eleferen
+ * @author EugeneZelenko
  * @author JenVan
  * @author Lockal
  * @author Strizh
@@ -3826,7 +3851,7 @@ $messages['ru'] = array(
 	'achievements-notification-link' => '<big><strong>[[Special:MyPage|Посмотрите, какие ещё значки вы можете заработать]]!</strong></big>',
 	'achievements-points' => '$1 {{PLURAL:$1|очко|очков}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|очко|очков}}',
-	'achievements-earned' => 'Этот значок был заработан {{PLURAL:$1|1 участником|$1 участниками}}.',
+	'achievements-earned' => 'Этот значок был заработан $1 {{PLURAL:$1|участником|участниками|участниками}}.',
 	'achievements-profile-title' => 'Участник $1 заработал $2 {{PLURAL:$2|значок|значков}}',
 	'achievements-profile-title-no' => 'Значки участника $1',
 	'achievements-profile-title-challenges' => 'Можно заработать дополнительные значки!',
@@ -3990,6 +4015,23 @@ Tafadhali jaribu nyingine!',
 	'achievements-viewless' => 'Funga',
 	'achievements-community-platinum-edit' => 'hariri',
 	'achievements-community-platinum-save' => 'hifadhi',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'achievements-gold' => 'தங்கம்',
+	'achievements-silver' => 'வெள்ளி',
+	'achievements-bronze' => 'வெண்கலம்',
+	'achievements-viewall' => 'எல்லாவற்றையும் பார்க்கவும்',
+	'achievements-viewless' => 'மூடுக',
+	'achievements-viewall-oasis' => 'எல்லாவற்றையும் பார்க்கவும்',
+	'achievements-leaderboard-member-label' => 'உறுப்பினர்',
+	'achievements-enable-track' => 'பயன்பாட்டில் உள்ளது',
+	'achievements-community-platinum-enabled' => 'பயன்பாட்டில் உள்ளது',
+	'achievements-community-platinum-edit' => 'தொகு',
+	'achievements-community-platinum-save' => 'சேமி',
 );
 
 /** Telugu (తెలుగు)
