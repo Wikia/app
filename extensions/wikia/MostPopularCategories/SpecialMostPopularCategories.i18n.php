@@ -167,6 +167,13 @@ $messages['kn'] = array(
 	'mostpopularcategories' => 'ಅತ್ಯಂತ ಜನಪ್ರಿಯ ವರ್ಗಗಳು',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'mostpopularcategories' => 'De et öffß afjeroofe Saachjroppe.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

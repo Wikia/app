@@ -259,6 +259,7 @@ $messages['br'] = array(
 	'wikiafollowedpages-prefs-watchlist' => 'Roll evezhiañ hepken',
 	'tog-hidefollowedpages' => 'Lakaat va roll evezhiañ da vezañ prevez',
 	'follow-categoryadd-summary' => "Pajenn bet ouzhpennet d'ar rummad",
+	'follow-bloglisting-summary' => 'Blog postet war pajennoù ar blogoù',
 	'wikiafollowedpages-userpage-heading' => 'Pajennoù heuliet ganin',
 	'wikiafollowedpages-userpage-hide-tooltip' => 'Kuzhat ho rollad evezhiañ ouzh sell an dud',
 	'wikiafollowedpages-userpage-more' => "Muioc'h",
@@ -266,6 +267,7 @@ $messages['br'] = array(
 	'wikiafollowedpages-userpage-empty' => 'Goullo eo roll evezhiañ an implijer-mañ.
 Ouzhpennit pajennoù d\'ar roll-se en ur klikañ war "{{int:watch}}" e talbenn ar bajenn.',
 	'enotif_subject_categoryadd' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet ouzhpennet da $CATEGORYNAME gant $PAGEEDITOR',
+	'enotif_subject_blogpost' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet postet war $BLOGLISTINGNAME gant $PAGEEDITOR',
 );
 
 /** German (Deutsch)
@@ -1304,7 +1306,7 @@ Legg til sider i listen ved å trykke «Følg» øverst på siden.',
 	'wikiafollowedpages-userpage-hide' => 'skjul',
 	'wikiafollowedpages-userpage-empty' => 'Denne brukerens liste over fulgte sider er tom.
 Legg til sider i listen ved å trykke «Følg» øverst på siden.',
-	'enotif_subject_categoryadd' => '{{SITENAME}}-siden $PAGETITLE har blitt lagt til $CATEGORYNAME av $PAGEEDITOR',
+	'enotif_subject_categoryadd' => '{{SITENAME}}-siden $PAGETITLE har blitt lagt til $CATEGORY av $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Kjære $WATCHINGUSERNAME,
 
 En side har blitt lagt til i en kategori du følger på {{SITENAME}}.
@@ -1841,7 +1843,54 @@ Mangyaring dalawin at madalas na mamatnugot ...
 
  * Nais mo bang tabanan kung anong mga e-liham ang matatanggap mo? 
  Pumunta sa: {{fullurl:{{ns: special}}:Preferences}}.',
+	'enotif_body_categoryadd-html' => '<p>	
+Mahal na $WATCHINGUSERNAME,
+<br /><br />
+Isang pahina ang nadagdag sa isang kategoryang tinutugaygayan mo sa {{SITENAME}}.
+<br /><br />
+Tingnan ang <a href="$PAGETITLE_URL">$PAGETITLE</a> para sa bagong pahina.
+<br /><br />
+Mangyaring dumalawa at madalas na mamatnugot...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Suriin ang aming tampok na mga wiki!</a></li>
+<li>Nais mo bang tabanan ang mga e-liham na natatanggap mo? Pumunta sa <a href="{{fullurl:{{ns:special}}:Preferences}}">Mga nais ng tagagamit</a></li>
+</ul>
+</p>',
 	'enotif_subject_blogpost' => 'Ang pahinang $PAGETITLE ng {{SITENAME}} ay naipaskil na ni $PAGEEDITOR sa $BLOGLISTINGNAME',
+	'enotif_body_blogpost' => 'Minamahal na $WATCHINGUSERNAME,
+
+Nagkaroon ng isang pamamatnugot sa pahina ng talaan ng blog na iyong tinutugaygayan sa {{SITENAME}}.
+
+Tingnan ang "$PAGETITLE_URL" para sa baong pagpapaskil.
+
+Mangyaring gawing madalas ang pagdalaw at pamamatnugot...
+
+{{SITENAME}}
+
+___________________________________________
+* Suriin ang aming tampok na mga wiki! http://www.wikia.com
+
+* Nais mong tabanan ang kung anong mga e-liham ang tatanggapin mo?
+Magpunta sa: {{fullurl:{{ns:special}}:Preferences}}.',
+	'enotif_body_blogpost-HTML' => '<p>
+Minamahal na $WATCHINGUSERNAME,
+<br /><br />
+Nagkaroon ng isang pamamatnugot sa isang pahina ng talaan ng blog na iyong sinusundan sa {{SITENAME}}.
+<br /><br />
+Tingnan ang <a href="$PAGETITLE_URL">$PAGETITLE</a> para sa bagong pagpapaskil.
+<br /><br />
+Mangyaring bumisita at mamatnugot ng madalas...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Suriin ang aming tampok na mga wiki!</a></li>
+<li>Gusto mong tabanan kung aling mga e-liham ang tatanggapin mo? Pumunta sa <a href="{{fullurl:{{ns:special}}:Preferences}}">Mga nais</a></li>
+</ul>
+</p>',
 );
 
 /** Ukrainian (Українська)

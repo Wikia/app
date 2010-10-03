@@ -87,12 +87,13 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwendal
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wikistickies' => 'WikiStickies',
-	'wikistickies-withoutimages-hd' => 'Ha galloud a rit ouzhpennañ ur skeudenn evit unan eus ar bajennoù-mañ ?',
+	'wikistickies-withoutimages-hd' => "Ha gallout a rit ouzhpennañ ur skeudenn d'unan eus ar pajennoù-mañ ?",
 	'wikistickies-newpages-st' => '<span class="fake_newpages">Ha gellout a rafec\'h ouzhpennañ titouroù d\'ar bajenn-se diwar-benn</span> $1?',
 	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Ha gellout a rafec\'h kregiñ ur bajenn diwar-benn</span> $1?',
 	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Ha gellout a rafec\'h ouzhpennañ ur skeudenn d\'ar bajenn diwar-benn</span> $1?',

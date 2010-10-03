@@ -109,6 +109,7 @@ $messages['ar'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -135,8 +136,8 @@ $messages['br'] = array(
 	'cathub-button-improve-answer' => 'Gwelaat ar respont',
 	'cathub-button-rephrase' => 'adfrazenniñ',
 	'cathub-edit-success' => 'Enrollet eo bet ho respont',
-	'cathub-prev' => '&larr; A-raok',
-	'cathub-next' => 'Da-heul &rarr;',
+	'cathub-prev' => '&larr; Kent',
+	'cathub-next' => "War-lerc'h &rarr;",
 	'cathub-tags' => 'Balizennoù',
 );
 

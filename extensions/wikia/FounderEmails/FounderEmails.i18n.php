@@ -270,6 +270,7 @@ Evit doare eo bet kemmet ho wiki gant an implijer enrollet $USERNAME ! Perak ned
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Ac\'hanta $FOUNDERNAME,<br /><br />
 Seblantout a ra en defe unan bennak kemmet ho wiki ! Perak ne yafec\'h ket <a href="$MYHOMEURL">da welet petra \'zo bet kemmet</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
+	'founderemails-lot-happening-subject' => "Un toullad traoù a c'hoarvez war ho lec'hienn hiziv !",
 );
 
 /** German (Deutsch)
@@ -2029,9 +2030,15 @@ Matagal-tagal na rin magmula noong magsimula ka ng isang wiki sa Wikia - umaasa 
 
 -- Ang Pangkat ng Wikia',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Binago ng nakatalang tagagamit ang wiki mo sa unang pagkakataon!',
+	'founderemails-email-page-edited-reg-user-subject' => 'Binago ng nagpatalang tagagamit ang wiki mo!',
+	'founderemails-email-page-edited-anon-subject' => 'May taong nagbago ng wiki mo!',
+	'founderemails-answers-email-user-registered-subject' => 'May isang taong nagpatala ng isang akawnt sa iyong wiki ng QA!',
 	'founderemails-answers-email-0-days-passed-subject' => 'Maligayang pagdating sa Wikia ng QA!',
 	'founderemails-answers-email-3-days-passed-subject' => 'Sinusuri sa',
+	'founderemails-answers-email-10-days-passed-subject' => 'Kumusta ang mga bagay-bagay sa iyong wiki?',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Binago ng nakapagpatalang tagagamit ang sityo mo sa unang pagkakataon!',
-	'founderemails-answers-email-page-edited-anon-subject' => 'May nagbago ng iyong wiki ng QA!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Binago ng nagpatalang tagagamit ang iyong sityo!',
+	'founderemails-answers-email-page-edited-anon-subject' => 'May tao na nagbago ng iyong sityo!',
+	'founderemails-lot-happening-subject' => 'Maraming nagaganap sa sityo mo ngayong araw na ito!',
 );
 

@@ -61,9 +61,16 @@ $messages['br'] = array(
 	'comboajaxlogin-desc' => "Boest dinamek a dalvez d'an implijerien d'en em gevreañ, da gaout soñj eus o ger-tremen ha da enrollañ implijerien",
 	'comboajaxlogin-createlog' => 'Krouiñ ur gont pe kevreañ',
 	'comboajaxlogin-actionmsg' => 'Evit ober kement-mañ e rankit bezañ kevreet pe krouiñ ur gont a-raok',
+	'comboajaxlogin-actionmsg-protected' => 'Evit ober kement-mañ e rankit bezañ kevreet pe krouiñ ur gont a-raok.',
 	'comboajaxlogin-connectmarketing' => "<h1>Kevreit ho kontoù</h1>
 <ul>
 <li>Derc'hel a ra hoc'h anv implijer red, istor ar c'hemmoù... ne cheñch netra nemet evit an doare d'en em gevreañ</li>
+<li>Rannit hoc'h obererezh war Wikia gant ho mignoned war Facebook</li>
+<li>Kontroll klok war ar pezh a vez embannet</li>
+</ul>",
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Kevreit ho kont wikia da Facebook</h1>
+<ul>
+<li>Dalc'hit hoc'h anv implijer red, istor ar c'hemmoù... ne cheñch netra nemet an doare da gevreañ</li>
 <li>Rannit hoc'h obererezh war Wikia gant ho mignoned war Facebook</li>
 <li>Kontroll klok war ar pezh a vez embannet</li>
 </ul>",
@@ -243,7 +250,7 @@ $messages['ja'] = array(
 	'comboajaxlogin-desc' => 'ログインと利用者登録が行えるダイナミックボックス',
 	'comboajaxlogin-createlog' => 'ログインもしくはアカウントの作成',
 	'comboajaxlogin-actionmsg' => 'この操作を行うには、ログインするかアカウントを作成する必要があります。',
-	'comboajaxlogin-actionmsg-protected' => '保護されたページを編集するには、ログインするかアカウントを作成する必要があります。',
+	'comboajaxlogin-actionmsg-protected' => 'この操作を行うには、ログインするかアカウントを作成する必要があります。',
 	'comboajaxlogin-connectmarketing' => '<h1>アカウントを接続する</h1>
 <ul>
 <li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>

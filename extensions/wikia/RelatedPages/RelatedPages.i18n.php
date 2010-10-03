@@ -34,6 +34,7 @@ $messages['be-tarask'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wikiarelatedpages-desc' => 'Ouzhpennañ ur roll pajennoù liammet gant pajennoù all',
 	'wikiarelatedpages-heading' => "Lenn muioc'h",
 );
 

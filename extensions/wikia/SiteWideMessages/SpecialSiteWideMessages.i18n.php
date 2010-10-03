@@ -345,6 +345,7 @@ $messages['br'] = array(
 	'swm-error-no-such-wiki' => "N'eus ket a wiki evel-se",
 	'swm-error-no-such-user' => "N'eus ket eus an implijer merket",
 	'swm-error-empty-message' => "Ebarzhiñ endalc'h ar gemennadenn-mañ.",
+	'swm-error-long-message' => "Ar c'hemennadennoù a zo bevennet da 500 arouez",
 	'swm-error-empty-group' => 'Ebarzhiñ anv ar strollad-se.',
 	'swm-lang-other' => 'an holl yezhoù a chom',
 );
@@ -458,6 +459,7 @@ $messages['ee'] = array(
  * @author Crazymadlover
  * @author McDutchie
  * @author Peter17
+ * @author Translationista
  */
 $messages['es'] = array(
 	'sitewidemessages' => 'Mensajes de amplia difusión',
@@ -520,6 +522,7 @@ $messages['es'] = array(
 	'swm-error-no-such-wiki' => 'No existe tal wiki!',
 	'swm-error-no-such-user' => '¡El usuario especificado no existe!',
 	'swm-error-empty-message' => 'Introduce el contenido del mensaje.',
+	'swm-error-long-message' => 'Los mensajes están limitados a 500 caracteres.',
 	'swm-error-empty-group' => 'Introduce el nombre del grupo.',
 	'swm-lang-other' => 'Todos los idiomas restantes',
 );

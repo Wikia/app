@@ -385,6 +385,18 @@ $messages['sv'] = array(
 	'mostvisitedpageslatest' => 'under de senaste $1 minuterna',
 );
 
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'mostvisitedpages' => 'அதிகம் பார்க்கப்பட்ட பக்கங்கள்',
+	'mostvisitedpagessearchtext' => 'கட்டுரையின் பெயர்',
+	'mostvisitedpagessearchbtn' => 'தேடுக',
+	'mostvisitedpageslatest' => 'கடைசி ஒரு $1 நிமிடங்களில்',
+	'mostvisitedpageslatestlink' => 'அண்மையில் பார்க்கப்பட்ட பக்கங்களைக் காணவும்',
+	'mostvisitedpagesalllink' => 'அதிகம் பார்க்கப்பட்ட பக்கங்களைக் காணவும்',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

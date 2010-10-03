@@ -571,6 +571,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'user-badge-create' => 'نښان جوړول:',
+	'user-badge-edits-txt' => 'سمونونه',
 );
 
 /** Portuguese (Português)

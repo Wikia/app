@@ -46,6 +46,90 @@ $messages['qqq'] = array(
 * $1 is the number of editors.',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'unhide' => 'Diskouez',
+	'hub-blog-header' => 'Kemennadennoù pennañ $1',
+	'hub-hotspot-header' => 'Pajennoù ar muiañ oberiant',
+	'hub-topusers-header' => 'Implijerien pennañ eus $1',
+	'hub-featured' => 'Wikioù pennañ eus $1',
+	'hub-header' => 'Wikioù $1',
+	'hub-blog-comments' => '{{PLURAL:$1|un evezhiadenn|$1 evezhiadenn}}',
+	'hub-blog-continue' => "Kenderc'hel da lenn",
+	'hub-blog-showarticle' => 'Gwelet ar bajenn',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|poent|poent}} kemmañ</span>',
+	'hub-hotspot-from' => 'eus',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|oberour|oberour}}</span>',
+);
+
+/** Spanish (Español)
+ * @author Absay
+ */
+$messages['es'] = array(
+	'unhide' => 'Mostrar',
+	'hub-blog-header' => 'Mensajes más populares de $1',
+	'hub-hotspot-header' => 'Páginas con mayor actividad',
+	'hub-topusers-header' => 'Lista $1 de usuarios con más ediciones',
+	'hub-featured' => 'Wikis más populares de $1',
+	'hub-header' => 'Wikis de $1',
+	'hub-hotspot-info' => 'Estas son las páginas más populares de la semana, ordenadas por el número de editores.',
+	'hub-blog-comments' => '{{PLURAL:$1|un comentario|$1 comentarios}}',
+	'hub-blog-continue' => 'Seguir leyendo',
+	'hub-blog-showarticle' => 'Mostrar página',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|punto|puntos}} de edición</span>',
+	'hub-hotspot-from' => 'de',
+	'hub-hide-feed' => 'Ocultar feed',
+	'hub-show-feed' => 'Mostrar feed',
+	'hub-contributors-info' => 'Estos son los usuarios más activos de esta semana, ordenados por su número de ediciones.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'unhide' => 'Afficher',
+	'hub-blog-header' => 'Principaux messages de $1',
+	'hub-hotspot-header' => 'Pages les plus actives',
+	'hub-topusers-header' => 'Principaux utilisateurs de $1',
+	'hub-featured' => 'Principaux wikis de $1',
+	'hub-header' => 'Wikis de $1',
+	'hub-hotspot-info' => 'Ces pages sont les plus actives cette semaine, triées par nombre d’auteurs.',
+	'hub-blog-comments' => '{{PLURAL:$1|un commentaire|$1 commentaires}}',
+	'hub-blog-continue' => 'Continuer la lecture',
+	'hub-blog-showarticle' => 'Afficher la page',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|point|points}} de modification</span>',
+	'hub-hotspot-from' => 'de',
+	'hub-hide-feed' => 'Masquer le flux',
+	'hub-show-feed' => 'Afficher le flux',
+	'hub-contributors-info' => 'Ces utilisateurs sont les plus actifs cette semaine, classés par nombre de modifications.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|auteur|auteurs}}</span>',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'unhide' => 'Mostrar',
+	'hub-blog-header' => 'Mensaxes máis populares de $1',
+	'hub-hotspot-header' => 'Páxinas máis populares',
+	'hub-topusers-header' => 'Os usuarios máis populares de $1',
+	'hub-featured' => 'Os wikis máis populares de $1',
+	'hub-header' => 'Wikis de $1',
+	'hub-hotspot-info' => 'Estas son as páxinas máis populares desta semana, clasificadas polo número de editores.',
+	'hub-blog-comments' => '{{PLURAL:$1|un comentario|$1 comentarios}}',
+	'hub-blog-continue' => 'Continuar lendo',
+	'hub-blog-showarticle' => 'Mostrar a páxina',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|punto|puntos}} de edición</span>',
+	'hub-hotspot-from' => 'de',
+	'hub-hide-feed' => 'Agochar a fonte de novas',
+	'hub-show-feed' => 'Mostrar a fonte de novas',
+	'hub-contributors-info' => 'Estes son os usuarios máis populares desta semana, clasificados polo número de edicións.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -113,6 +197,55 @@ $messages['nl'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redacteur|redacteuren}}</span>',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'unhide' => 'Vis',
+	'hub-blog-header' => 'Topp $1 poster',
+	'hub-hotspot-header' => 'Hot Spots',
+	'hub-topusers-header' => 'Topp $1 brukere',
+	'hub-featured' => 'Topp $1 wikier',
+	'hub-header' => '$ wikier',
+	'hub-hotspot-info' => 'Dette er de heteste sidene denne uken, rangert etter flest redaktører.',
+	'hub-blog-comments' => ' {{PLURAL:$1|én kommentar|$1 kommentarer}}',
+	'hub-blog-continue' => 'Fortsett å lese',
+	'hub-blog-showarticle' => 'Vis side',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">redigerings{{PLURAL:$1|poeng|poeng}}</span>',
+	'hub-hotspot-from' => 'fra',
+	'hub-hide-feed' => 'Skjul feed',
+	'hub-show-feed' => 'Vis feed',
+	'hub-contributors-info' => 'Dette er ukens toppbrukere, rangert etter flest redigeringer.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redaktør|redaktører}}</span>',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'unhide' => 'Mostré',
+	'hub-blog-header' => 'Prim $1 Mëssagi',
+	'hub-hotspot-header' => 'Ròba Càuda',
+	'hub-topusers-header' => 'Prim $1 Utent',
+	'hub-featured' => 'Prime $1 wiki',
+	'hub-header' => '$1 Wiki',
+	'hub-hotspot-info' => 'Coste a son le pàgine pi càude sta sman-a, valutà da tanti editor.',
+	'hub-blog-comments' => '{{PLURAL:$1|un coment|$1 coment}}',
+	'hub-blog-continue' => 'Continua a lese',
+	'hub-blog-showarticle' => 'Smon-e la pàgina',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt"> {{PLURAL:$1|pont|pont}} ëd modìfica</span>',
+	'hub-hotspot-from' => 'da',
+	'hub-hide-feed' => 'Stërma feed',
+	'hub-show-feed' => 'Smon Feed',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'hub-blog-showarticle' => 'مخ ښکاره کول',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -133,5 +266,12 @@ $messages['pt'] = array(
 	'hub-show-feed' => 'Mostrar feed',
 	'hub-contributors-info' => 'Estes são os melhores editores da semana, ordenados pelo número de edições.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
+);
+
+/** Russian (Русский)
+ * @author Eleferen
+ */
+$messages['ru'] = array(
+	'unhide' => 'Показать',
 );
 

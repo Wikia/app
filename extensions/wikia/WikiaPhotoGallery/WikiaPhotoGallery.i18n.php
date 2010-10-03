@@ -548,7 +548,7 @@ $messages['bjn'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'wikiaphotogallery-desc' => 'Reiñ a ra un etrefas evit merañ ar skeudennaouegoù er pajennoù',
+	'wikiaphotogallery-desc' => "Reiñ a ra un etrefas evit merañ ar skeudennaouegoù hag ar c'hinnigoù luc'hvannoù er pajennoù",
 	'wikiaPhotoGallery-back' => 'Distreiñ',
 	'wikiaPhotoGallery-finish' => 'Echuiñ',
 	'wikiaPhotoGallery-add-gallery' => "Ensoc'hañ ur skeudennaoueg pe ur c'hinnig luc'hvannoù",
@@ -656,13 +656,23 @@ A-hend-all e c'hallit klikañ war \"\$2\" evit gwelet ar bajenn evel m'emañ bre
 	'wikiaPhotoGallery-quit-intro' => "Ha c'hoant hoc'h eus kuitaat embanner ar skeudennaoueg da vat ?",
 	'wikiaPhotoGallery-quit-savequit' => 'Enrollañ ha kuitaat',
 	'wikiaPhotoGallery-quit-quitonly' => "Ober van eus ar c'hemmoù ha kuitaat",
+	'wikiaPhotoGallery-slideshow-view-popout-tooltip' => "Diorroiñ ar c'hinnig luc'hvannoù",
 	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Ouzhpennañ ar skeudenn',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Skeudenn da-heul',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Skeudennoù a-raok',
+	'wikiaPhotoGallery-slideshow-view-title' => "Kinnig luc'hvannoù",
 	'wikiaPhotoGallery-slideshow-view-number' => '$1 diwar $2',
+	'wikiaPhotoGallery-slideshow-view-startslideshow' => "Kregiñ gant ar c'hinnig luc'hvannoù",
+	'wikiaPhotoGallery-slideshow-view-stopslideshow' => "Paouez gant ar c'hinnig luc'hvannoù",
 	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'Gwelet munudoù ar skeudenn',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Mont da $1',
+	'wikiaPhotoGallery-choice-title' => "Ouzhpennañ ur c'hinnig luc'hvannoù pe ur skeudennaoueg",
+	'wikiaPhotoGallery-choice-intro' => "Ha c'hoant ho peus ober ur c'hinnig luc'hvannoù pe ur skeudennaoueg ?",
+	'wikiaPhotoGallery-choice-slideshow' => "Krouiñ ur c'hinnig luc'hvannoù",
 	'wikiaPhotoGallery-choice-gallery' => 'Krouiñ ur skeudennaoueg',
+	'wikiaPhotoGallery-slideshowpreview-title' => "Saver kinnigoù luc'hvannoù",
+	'wikiaPhotoGallery-slideshowpreview-optionstitle' => "Dibarzhioù ar c'hinnig luc'hvannoù",
+	'wikiaPhotoGallery-slideshowpreview-size' => "Ledander ar c'hinnig luc'hvannoù :",
 	'wikiaPhotoGallery-slideshowpreview-size-smaller' => 'bihanañ',
 	'wikiaPhotoGallery-slideshowpreview-size-larger' => 'brasañ',
 	'wikiaPhotoGallery-slideshowpreview-crop' => "Implijit ar c'hrennañ naouek evit lemel an esaouennoù gwenn",
@@ -927,6 +937,7 @@ $messages['el'] = array(
  * @author Crazymadlover
  * @author Diego Grez
  * @author Drini
+ * @author Translationista
  */
 $messages['es'] = array(
 	'wikiaphotogallery-desc' => 'Proporciona una interfaz para la gestión de galerías y presentaciones de diapositivas en las páginas',
@@ -963,6 +974,7 @@ Por favor, renombra el archivo e inténtalo de nuevo.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Actualmente no puedes subir imágenes, ya que el wiki está en estado de solo lectura.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => '¡Ya existe un archivo con este nombre!
 ¿Qué te gustaría hacer?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'El archivo cargado no tiene extensión de archivo.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Renombrar tu imagen',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Usar la imagen existente',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Sobrescribir la imagen existente con la tuya',

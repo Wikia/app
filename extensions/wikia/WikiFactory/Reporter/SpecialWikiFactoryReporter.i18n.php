@@ -250,6 +250,13 @@ $messages['mk'] = array(
 	'wikifactoryreporter' => 'WikiFactory пријавувач',
 );
 
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'wikifactoryreporter' => 'विकीफ्याक्ट्रि रिपोर्टर',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

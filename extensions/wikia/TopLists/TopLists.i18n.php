@@ -115,6 +115,17 @@ $messages['qqq'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'toplists-desc' => 'Roll Top 10',
+	'right-toplists-create-edit-list' => 'Krouiñ pe kemmañ pajennoù eus ar roll Top 10',
+	'right-toplists-create-item' => "Krouiñ pe ouzhpennañ elfennoù d'ur bajenn eus roll an Top 10",
+	'createtoplist' => 'Krouiñ ur roll Top 10 nevez',
+	'edittoplist' => 'Kemmañ ur roll Top 10',
+	'toplists-error-invalid-title' => "N'eo ket reizh an destenn pourchaset",
+	'toplists-error-invalid-picture' => "N'eo ket reizh ar skeudenn diuzet.",
+	'toplists-error-title-exists' => 'N\'eus ket eus ar bajenn-se. Gellout a rit mont da <a href="$2" target="_blank">$1</a> pe reiñ un anv disheñvel.',
+	'toplists-error-title-spam' => 'En destenn pourchaset ez eus un nebeut gerioù anavezet evel strobus.',
+	'toplists-editor-title-label' => 'Anv ar roll',
+	'toplists-editor-title-placeholder' => 'Roit un anv evit ar roll',
 	'toplists-editor-related-article-optional-label' => 'diret',
 	'toplists-editor-image-browser-tooltip' => 'Ouzhpennañ ur skeudenn',
 	'toplists-editor-remove-item-tooltip' => 'Tennañ an objed',
@@ -127,6 +138,7 @@ $messages['br'] = array(
 	'toplists-items-created' => '$1 {{PLURAL:$1|objed|objed}} krouet',
 	'toplists-items-updated' => '$1 {{PLURAL:$1|objed|objed}} hizivaet',
 	'toplits-image-browser-no-picture-selected' => "N'eus skeudenn diuzet ebet",
+	'toplits-image-browser-clear-picture' => 'Diverkañ ar skeudenn',
 	'toplists-image-browser-upload-btn' => 'Dibab',
 	'toplists-image-browser-upload-label' => 'Enporzhiañ ho hini',
 	'toplists-list-creation-summary' => 'O krouiñ ur roll, $1',
@@ -138,6 +150,17 @@ $messages['br'] = array(
 	'toplists-list-vote-up' => 'Votiñ a-du',
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vot|vot}} e $2',
 	'toplists-list-add-item-label' => 'Ouzhpennañ un elfenn',
+	'toplists-email-body' => 'Demat a-berzh Wikia !
+
+Kemmet eo bet ar roll <a href="$1">$2</a> war Wikia.
+
+ $3
+
+Emgav war Wikia evit gwiriekaat ar c\'hemmoù ! $1
+
+- Wikia
+
+Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|eilenn|eilenn}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|munut|munut}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|eur|eur}}',
@@ -159,6 +182,7 @@ $messages['es'] = array(
 );
 
 /** French (Français)
+ * @author Peter17
  * @author Verdy p
  */
 $messages['fr'] = array(
@@ -209,6 +233,7 @@ $messages['fr'] = array(
 	'toplists-item-creation-summary' => 'Création d’un élément de liste',
 	'toplists-item-update-summary' => 'Mise à jour d’un élément de liste',
 	'toplists-item-remove-summary' => 'Élément retiré de la liste',
+	'toplists-item-restored' => 'Élément restauré',
 	'toplists-list-related-to' => 'Relatif à :',
 	'toplists-list-votes-num' => '{{PLURAL:$1|un<br />vote|$1<br />votes}}',
 	'toplists-list-created-by' => 'par [[User:$1|$1]]',
@@ -219,14 +244,23 @@ $messages['fr'] = array(
 	'toplists-list-item-voted' => 'Voté',
 	'toplists-createpage-dialog-label' => 'Liste Top 10',
 	'toplists-email-subject' => 'Une liste Top 10 a été modifiée',
-	'toplists-email-body' => 'La page de liste Top 10 $1 que vous regardez a été modifiée. 
+	'toplists-email-body' => 'Bonjour de Wikia !
 
- $2',
+La liste <a href="$1">$2</a> sur Wikia a été modifiée.
+
+ $3
+
+Rendez-vous sur Wikia pour vérifier les modifications ! $1
+
+- Wikia
+
+Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.',
 	'toplists-seconds' => '$1 seconde{{PLURAL:$1||s}}',
 	'toplists-minutes' => '$1 minute{{PLURAL:$1||s}}',
 	'toplists-hours' => '$1 heure{{PLURAL:$1||s}}',
 	'toplists-days' => '$1 jour{{PLURAL:$1||s}}',
 	'toplists-weeks' => '$1 semaine{{PLURAL:$1||s}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'a voté sur une liste du Top 10 sur $WIKINAME !',
 );
 
 /** Interlingua (Interlingua)
@@ -291,9 +325,17 @@ $messages['ia'] = array(
 	'toplists-list-item-voted' => 'Votate',
 	'toplists-createpage-dialog-label' => 'Lista Top 10',
 	'toplists-email-subject' => 'Un lista Top 10 ha essite cambiate',
-	'toplists-email-body' => 'Le pagina de lista Top 10 "$1" que tu observa ha essite cambiate.
+	'toplists-email-body' => 'Salute de Wikia!
 
-$2',
+Le lista <a href="$1">$2</a> in Wikia ha cambiate.
+
+ $3
+
+Veni a Wikia pro examinar le cambios! $1
+
+- Wikia
+
+Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|secunda|secundas}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|minuta|minutas}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|hora|horas}}',
@@ -364,9 +406,17 @@ $messages['mk'] = array(
 	'toplists-list-item-voted' => 'Гласано',
 	'toplists-createpage-dialog-label' => 'Список на 10 најкотирани',
 	'toplists-email-subject' => 'Списокот на 10 најкотирани е изменет',
-	'toplists-email-body' => 'На списокот на 10 најкотирани, страницата $1 која ја набљудувате е изменета.
+	'toplists-email-body' => 'Здраво од Викија!
 
- $2',
+Списокот <a href="$1">$2</a> на Викија е променет.
+
+ $3
+
+Појдете на Викија за да видите што се изменило! $1
+
+- Викија
+
+Можете да се <a href="$4">отпишете</a> од ваквите известувања за промени на списокот.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунди}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|минута|минути}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|час|часа}}',
@@ -437,9 +487,17 @@ $messages['nl'] = array(
 	'toplists-list-item-voted' => 'Gestemd',
 	'toplists-createpage-dialog-label' => 'Top 10 lijst',
 	'toplists-email-subject' => 'Er is een Top 10 lijst gewijzigd',
-	'toplists-email-body' => 'De Top 10 lijst op de pagina $1 die u volgt is gewijzigd.
+	'toplists-email-body' => 'De hartelijke groeten van Wikia!
 
-$2',
+De lijst <a href="$1">$2</a> op Wikia is gewijzigd.
+
+ $3
+
+Ga naar Wikia om de wijzigingen te bekijken! $1
+
+- Wikia
+
+U kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|seconde|seconden}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|minuut|minuten}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|uur|uren}}',
@@ -500,6 +558,7 @@ $messages['no'] = array(
 	'toplists-item-creation-summary' => 'Oppretter et listeelement',
 	'toplists-item-update-summary' => 'Oppdaterer et listeelement',
 	'toplists-item-remove-summary' => 'Element fjernet fra listen',
+	'toplists-item-restored' => 'Element gjennopprettet',
 	'toplists-list-related-to' => 'Relatert til:',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>stemme|$1<br/>stemmer}}',
 	'toplists-list-created-by' => 'av [[User:$1|$1]]',
@@ -510,14 +569,23 @@ $messages['no'] = array(
 	'toplists-list-item-voted' => 'Stemt',
 	'toplists-createpage-dialog-label' => 'Topp-10-liste',
 	'toplists-email-subject' => 'En topp-10-liste har blitt endret',
-	'toplists-email-body' => 'Topp-10-listesiden $1 som du overvåker har blitt endret.
+	'toplists-email-body' => 'Wikia sier hei!
 
-$2',
+Listen <a href="$1">$2</a> på Wikia har blitt endret.
+
+ $3
+
+Gå til Wikia for å sjekke endringene. $1
+
+- Wikia
+
+Du kan <a href="$4">slette abbonementet</a> på endringer i listen.',
 	'toplists-seconds' => '{{PLURAL:$1|ett sekund|$1 sekund}}',
 	'toplists-minutes' => '{{PLURAL:$1|ett minutt|$1 minutt}}',
 	'toplists-hours' => '{{PLURAL:$1|én time|$1 timer}}',
 	'toplists-days' => '{{PLURAL:$1|én dag|$1 dager}}',
 	'toplists-weeks' => '{{PLURAL:$1|én uke|$1 uker}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'har stemt på en Topp 10-liste på $WIKINAME!',
 );
 
 /** Piedmontese (Piemontèis)
@@ -555,7 +623,20 @@ $messages['ps'] = array(
  * @author Eleferen
  */
 $messages['ru'] = array(
+	'toplists-error-invalid-picture' => 'Выбранное изображение является недопустимым.',
+	'toplists-error-empty-item-name' => 'Имя существующего элемента не может быть пустым.',
+	'toplists-editor-title-placeholder' => 'Введите имя списка',
+	'toplists-editor-image-browser-tooltip' => 'Добавить изображение',
+	'toplists-editor-remove-item-tooltip' => 'Удалить пункт',
+	'toplists-editor-add-item-label' => 'Добавить новый пункт',
+	'toplists-editor-add-item-tooltip' => 'Добавить новый элемент в список',
 	'toplists-create-button' => 'Создать список',
 	'toplists-update-button' => 'Сохранить список',
+	'toplists-cancel-button' => 'Отмена',
+	'toplits-image-browser-no-picture-selected' => 'Не выбрано изображение',
+	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунды|секунд}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|минута|минуты|минут}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|час|часа|часов}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|неделя|недели|недель}}',
 );
 

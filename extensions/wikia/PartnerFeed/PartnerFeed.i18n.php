@@ -43,13 +43,16 @@ $messages['br'] = array(
 	'feed-title-recent-badges' => 'Badjoù diwezhañ',
 	'feed-title-recent-images' => 'Skeudennoù diwezhañ',
 	'all-blog-posts' => 'an holl rummadoù',
+	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
 );
 
 /** French (Français)
+ * @author Peter17
  * @author Verdy p
  */
 $messages['fr'] = array(
+	'partnerfeed' => 'Partenaire de flux',
 	'error-no-article' => 'Erreur : paramètre « article » non passé',
 	'feed-title-blogposts' => 'Derniers messages de blogue',
 	'feed-title-recent-badges' => 'Badges récents',
@@ -57,6 +60,7 @@ $messages['fr'] = array(
 	'feed-title-leaderboard' => 'Tableau de bord des réalisations',
 	'feed-main-title' => 'Flux de partenaire Wikia',
 	'all-blog-posts' => 'toutes les catégories',
+	'blog-posts-from-listing' => 'depuis la liste : $1',
 	'feed-title-hot-content' => 'Contenu à l’actualité — $1',
 	'feed-title-blogcomments' => 'Commentaires à $1',
 );
@@ -65,6 +69,7 @@ $messages['fr'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'partnerfeed' => 'Syndication de partner',
 	'error-no-article' => 'Error: nulle parametro "article" passate',
 	'feed-title-blogposts' => 'Recente articulos de blog',
 	'feed-title-recent-badges' => 'Insignias recente',
@@ -72,6 +77,7 @@ $messages['ia'] = array(
 	'feed-title-leaderboard' => 'Classamento de successos',
 	'feed-main-title' => 'Syndication de partners de Wikia',
 	'all-blog-posts' => 'tote le categorias',
+	'blog-posts-from-listing' => 'del lista: $1',
 	'feed-title-hot-content' => 'Contento popular - $1',
 	'feed-title-blogcomments' => 'Commentos a $1',
 );
@@ -80,6 +86,7 @@ $messages['ia'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'partnerfeed' => 'Партнерски канал',
 	'error-no-article' => 'Грешка: Не е добиен параметар „статија“',
 	'feed-title-blogposts' => 'Скорешни блог-записи',
 	'feed-title-recent-badges' => 'Скорешни значки',
@@ -87,6 +94,7 @@ $messages['mk'] = array(
 	'feed-title-leaderboard' => 'Предводници',
 	'feed-main-title' => 'Партнерски канал',
 	'all-blog-posts' => 'сите категории',
+	'blog-posts-from-listing' => 'од списокот: $1',
 	'feed-title-hot-content' => 'Актуелна содржина - $1',
 	'feed-title-blogcomments' => 'Коментари на $1',
 );
@@ -112,6 +120,7 @@ $messages['nl'] = array(
  * @author Audun
  */
 $messages['no'] = array(
+	'partnerfeed' => 'Partner-feed',
 	'error-no-article' => 'Feil: Ikke noe «artikkel»-parameter sendt',
 	'feed-title-blogposts' => 'Siste blogginnlegg',
 	'feed-title-recent-badges' => 'Siste utmerkelser',
@@ -119,6 +128,7 @@ $messages['no'] = array(
 	'feed-title-leaderboard' => 'Toppliste over utmerkelser',
 	'feed-main-title' => 'Wikia-partner-feed',
 	'all-blog-posts' => 'alle kategorier',
+	'blog-posts-from-listing' => 'fra opplisting: $1',
 	'feed-title-hot-content' => 'Hot innhold - $1',
 	'feed-title-blogcomments' => 'Kommentarer til $1',
 );
@@ -127,6 +137,7 @@ $messages['no'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'partnerfeed' => 'Feed dij cambrada',
 	'error-no-article' => 'Eror: Pa gnun paràmetr "artìcol" passà',
 	'feed-title-blogposts' => 'Mëssagi dë Scartari recent',
 	'feed-title-recent-badges' => 'Distintiv recent',
@@ -134,8 +145,26 @@ $messages['pms'] = array(
 	'feed-title-leaderboard' => 'Tàula dij sucess',
 	'feed-main-title' => 'Feed dij partner ëd Wikia',
 	'all-blog-posts' => 'tute le categorìe',
+	'blog-posts-from-listing' => 'da listé: $1',
 	'feed-title-hot-content' => 'Contnù càud - $1',
 	'feed-title-blogcomments' => 'Coment a $1',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'partnerfeed' => 'Feed de um parceiro',
+	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
+	'feed-title-blogposts' => 'Entradas recentes em blogues',
+	'feed-title-recent-badges' => 'Distintivos recentes',
+	'feed-title-recent-images' => 'Imagens recentes',
+	'feed-title-leaderboard' => 'Liderança de medalhas',
+	'feed-main-title' => 'Feed de um parceiro da Wikia',
+	'all-blog-posts' => 'todas as categorias',
+	'blog-posts-from-listing' => 'da listagem: $1',
+	'feed-title-hot-content' => 'Conteúdo popular - $1',
+	'feed-title-blogcomments' => 'Comentários em $1',
 );
 
 /** Russian (Русский)
@@ -151,6 +180,7 @@ $messages['ru'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'partnerfeed' => 'Pakain ng katambal',
 	'error-no-article' => 'Kamalian: Walang pumasang mga parametro ng "artikulo"',
 	'feed-title-blogposts' => 'Kamakailang mga pagpapaskil ng blog',
 	'feed-title-recent-badges' => 'Kamakailang mga tsapa',
@@ -158,6 +188,7 @@ $messages['tl'] = array(
 	'feed-title-leaderboard' => 'Pinunong pisara ng mga nakamit',
 	'feed-main-title' => 'Pakain ng katambal ng Wikia',
 	'all-blog-posts' => 'lahat ng mga kategorya',
+	'blog-posts-from-listing' => 'mula sa pagkakalista: $1',
 	'feed-title-hot-content' => 'Mainit na nilalaman - $1',
 	'feed-title-blogcomments' => 'Mga puna sa $1',
 );

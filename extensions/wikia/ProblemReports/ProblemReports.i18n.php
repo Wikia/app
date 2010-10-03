@@ -819,6 +819,7 @@ $messages['ha'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  * @author Misibacsi
  */
@@ -847,13 +848,13 @@ $messages['hu'] = array(
 	'pr_thank_you' => 'Köszönjük, hogy jelentette a problémát! 
 
 [[Special:ProblemReports/$1|Itt követhető a kijavítása]].',
-	'pr_thank_you_error' => 'Hiba történt a hibajelentés küldése közben, kérjük, próbálja meg később ...',
-	'pr_empty_summary' => 'Kérjük, adja meg a probléma rövid leírását',
-	'pr_empty_email' => 'Kérjük, adja meg az e-mail címét',
-	'pr_mailer_notice' => 'A beírt email cím meg fog jelenni a "Küldő" címeként, így a címzett válaszolni tud.',
+	'pr_thank_you_error' => 'Hiba történt a hibajelentés küldése közben, próbálkozz később...',
+	'pr_empty_summary' => 'Add meg a probléma rövid leírását',
+	'pr_empty_email' => 'Add meg az e-mail címedet',
+	'pr_mailer_notice' => 'A beállításaidnál megadott email cím lesz a levél küldője, így a címzett tud válaszolni.',
 	'pr_mailer_subject' => 'Problémabejelentése ideje:',
 	'pr_mailer_to_default' => 'Wikia felhasználó',
-	'pr_total_number' => 'Az összes hibajelentés száma',
+	'pr_total_number' => 'Hibajelentések száma összesen',
 	'pr_view_all' => 'Összes bejelentés megjelenítése',
 	'pr_table_problem_id' => 'Probléma azonosító',
 	'pr_table_wiki_name' => 'Wiki neve',
@@ -866,7 +867,7 @@ $messages['hu'] = array(
 	'pr_table_status' => 'Állapot',
 	'pr_table_actions' => 'Műveletek',
 	'pr_status_0' => 'függőben',
-	'pr_status_1' => 'megoldva',
+	'pr_status_1' => 'javítva',
 	'pr_status_2' => 'lezárva',
 	'pr_status_10' => 'jelentés eltávolítása',
 	'pr_remove_ask' => 'Hibajelentés végleges törlése?',

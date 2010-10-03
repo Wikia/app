@@ -51,11 +51,12 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwendal
  * @author Y-M D
  */
 $messages['br'] = array(
-	'withoutimages-desc' => 'Ouzhpenn a ra ur [[Special:Withoutimages|bajenn ispisial]] a-benn diskwel ar bajennoù hep skeudenn',
+	'withoutimages-desc' => 'Ouzhpennañ a ra ur [[Special:Withoutimages|bajenn dibar]] evit diskwel ar pajennoù hep skeudenn',
 	'withoutimages' => 'Pajenn hep skeudenn',
 );
 
@@ -246,6 +247,14 @@ $messages['ms'] = array(
  */
 $messages['mt'] = array(
 	'withoutimages' => 'Paġni mingħajr stampi',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'withoutimages-desc' => 'चित्र नभएका पृष्ठहरु देखाउन [[Special:Withoutimages|विषेश पृष्ठ]] थप्छ ।',
+	'withoutimages' => 'चित्र नभएका पृष्ठहरु',
 );
 
 /** Dutch (Nederlands)

@@ -2040,7 +2040,7 @@ $messages['nl'] = array(
 	'autocreatewiki-chooseone' => 'Kies er een',
 	'autocreatewiki-required' => '$1 = vereist',
 	'autocreatewiki-web-address' => 'Webadres:',
-	'autocreatewiki-category-select' => 'Kies er een',
+	'autocreatewiki-category-select' => 'Maak een keuze',
 	'autocreatewiki-language-top' => 'Top $1 talen',
 	'autocreatewiki-language-all' => 'Alle talen',
 	'autocreatewiki-birthdate' => 'Geboortedatum:',
@@ -2647,6 +2647,7 @@ $messages['ps'] = array(
 	'autocreatewiki-category-other' => 'بل',
 	'autocreatewiki-set-username' => 'لومړی مو کارن نوم وټاکۍ.',
 	'autocreatewiki-invalid-birthday' => 'ناسمه زېږون نېټه',
+	'autocreatewiki-log-title' => 'ستاسې ويکي د جوړېدو په حال کې دی',
 	'autocreatewiki-congratulation' => 'مبارک مو شه!',
 	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
 	'autocreatewiki-welcomesubject' => '$1 جوړ شو!',
@@ -3224,6 +3225,14 @@ $messages['sw'] = array(
 	'autocreatewiki-error' => 'hitilafu',
 	'autocreatewiki-category-label' => 'Jamii:',
 	'autocreatewiki-category-other' => 'Nyingine',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'autocreatewiki-done' => 'செய்துமுடிக்கப்பட்டது',
+	'autocreatewiki-error' => 'தவறு',
 );
 
 /** Telugu (తెలుగు)

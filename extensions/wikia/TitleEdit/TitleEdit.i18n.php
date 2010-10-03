@@ -899,8 +899,11 @@ $messages['mwl'] = array(
 	'titleedit' => 'Eiditar',
 );
 
-/** Burmese (မြန်မာဘာသာ) */
+/** Burmese (မြန်မာဘာသာ)
+ * @author Lionslayer
+ */
 $messages['my'] = array(
+	'titleedit-desc' => 'ပြင်ဆင်ရန် ခလုတ်ကို စာမျက်နှာထိပ်သို့ ပေါင်းထည့်ရန်',
 	'titleedit' => 'ပြင်​ဆင်​ရန်​',
 );
 
@@ -942,8 +945,11 @@ $messages['nds'] = array(
 	'titleedit' => 'Ännern',
 );
 
-/** Nepali (नेपाली) */
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
 $messages['ne'] = array(
+	'titleedit-desc' => 'पृष्ठहरुको टुप्पामा शीर्षक परिवर्तन बटन थप्छ',
 	'titleedit' => 'परिवर्तन',
 );
 
