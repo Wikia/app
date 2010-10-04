@@ -1,30 +1,36 @@
 <?php
 
 /**
- * Adds <staff /> parser hook rendering as staff signature
+ * Adds <staff /> and <helper/> parser hooks rendering as @wikia signatures
  *
- * @author Emil Podlaszewski
+ * @author Emil Podlaszewski, C. Uberfuzzy Stafford
  */
 
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'wfSigSetup';
 
 function wfSigSetup(&$parser) {
-	$parser->setHook( 'staff', 'wfMakeSignature' );
-	$parser->setHook( 'helper', 'wfMakeHSignature' );
+	$parser->setHook( 'staff', 'wfMakeStaffSignature' );
+	$parser->setHook( 'helper', 'wfMakeHelperSignature' );
 	return true;
 }
 
-function wfMakeSignature( $contents, $attributes, $parser ) {
-	global $wgStylePath;
-	$url = 'http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png';
-	$url = wfReplaceImageServer($url);
-	return '<a href="http://community.wikia.com/wiki/Project:Staff" title="This user is a member of Wikia staff" class="staffSigLink"><img src="'.$wgStylePath.'/common/dot.gif" style="background-image: url(\''.$url.'\')" alt="@Wikia" class="staffSig" width="53" height="12" /></a>';
+function wfMakeStaffSignature( $contents, $attributes, $parser ) {
+	$title = GlobalTitle::newFromText('Staff', 4 /*project*/, 177);
+	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a member of Wikia Staff" );
 }
 
-function wfMakeHSignature( $contents, $attributes, $parser ) {
+function wfMakeHelperSignature( $contents, $attributes, $parser ) {
+	$title = GlobalTitle::newFromText('Helper_Group', 12 /*help*/, 177);
+	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a Wikia Helper" );
+}
+
+function wfMakeSignatureCommon($href, $title, $iurl=null) {
 	global $wgStylePath;
-	$url = 'http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png';
-	$url = wfReplaceImageServer($url);
-	return '<a href="http://community.wikia.com/wiki/Help:Helper_Group" title="This user is a Wikia Helper" class="staffSigLink"><img src="'.$wgStylePath.'/common/dot.gif" style="background-image: url(\''.$url.'\')" alt="@Wikia" class="staffSig" width="53" height="12" /></a>';
+
+	if( empty($iurl) ) {
+		$iurl = wfReplaceImageServer('http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png');
+	}
+
+	return '<a href="'. $href .'" title="'. $title . ' class="staffSigLink"><img src="'.$wgStylePath.'/common/dot.gif" style="background-image: url(\''. $iurl .'\')" alt="@Wikia" class="staffSig" width="53" height="12" /></a>';
 }
