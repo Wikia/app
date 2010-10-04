@@ -19,12 +19,13 @@
  * DONE: Clean the hacked-together example code into something readable and usable.
  * DONE: Handle the case where the API finds no results (some decent default-ad for Amazon - a play-example-MP3s widget).
  * DONE: Make the symlink in clinks.pl.
+ *
  * TODO: Make it look good.
  * TODO: Get it to run as an ad on a page.
  * TODO: Add memcaching of... the Amazon results? (there will be N+1 amazon requests for N items - perhaps cache the entire output?  not 'correct' way to use memcached but it could work).
  * TODO: Make it use skin-colors in Oasis? Might require loading a big CSS file though. oh... maybe not actually.. just a scss file for this widget.
  * TODO: Can we embed a play button? (if we can't use Amazons, there is still some API that MusicHackday uses a lot for 30 second previews).
- * TODO: If we use scroll-bars, add a "more" link below the bottom.
+ * TODO: If we use scroll-bars, add a "more" link below the bottom (which links to a search for the artist on Amazon in DigitalMusic category).
  */
 
 
@@ -250,8 +251,9 @@ function ItemLookup($asin, $index=0){
 					$imgSrc = $current->SmallImage->URL;
 					break;
 			}
-			// TODO: Add alt-tags.
-			print "<td width='".$LW_AMZN_THUMB_SIZE."px'><img src='".$imgSrc."' width='".$LW_AMZN_THUMB_SIZE."px' height='".$LW_AMZN_THUMB_SIZE."px'/></td>";
+			$alt = $current->ItemAttributes->Title;
+			$alt = str_replace("'", '"', $alt);
+			print "<td width='".$LW_AMZN_THUMB_SIZE."px'><img src='".$imgSrc."' width='".$LW_AMZN_THUMB_SIZE."px' height='".$LW_AMZN_THUMB_SIZE."px' alt='$alt'/></td>";
 
 			print "<td><b>".$current->ItemAttributes->Title."</b>";
 			if(isset($current->ItemAttributes->Director)){
