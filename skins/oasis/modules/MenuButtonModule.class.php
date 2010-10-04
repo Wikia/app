@@ -52,7 +52,7 @@ class MenuButtonModule extends Module {
 		if (isset($data['image'])) {
 			switch($data['image']) {
 				case self::ADD_ICON:
-					$img_class = 'osprite icon-add';
+					$img_class = 'sprite icon-add';
 					$height = 10;
 					$width = 10;
 					break;
@@ -64,20 +64,20 @@ class MenuButtonModule extends Module {
 					break;
 
 				case self::BLOG_ICON:
-					$img_class = 'osprite icon-blog';
+					$img_class = 'sprite blog';
 					$height = 16;
 					$width = 22;
 					break;
 
 				case self::MESSAGE_ICON:
-					$img_class = 'osprite icon-message';
+					$img_class = 'sprite message';
 					$height = 16;
 					$width = 22;
 					break;
 
 				case self::EDIT_ICON:
 				default:
-					$img_class = 'osprite icon-edit';
+					$img_class = 'sprite edit-pencil';
 					$height = 16;
 					$width = 22;
 					break;
