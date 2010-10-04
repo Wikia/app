@@ -91,6 +91,7 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Reason',
 	'phalanx-stats-row' => "at $4, filter type '''$1''' blocked '''$2''' on $3",
+	'phalanx-stats-row-per-wiki' => "user '''$2''' was blocked on '''$4''' by filter ID '''$3''' ($5) (type: '''$1''')",
 
 	'phalanx-rule-log-name' => 'Phalanx rules log',
 	'phalanx-rule-log-header' => 'This is a log of changes to phalanx rules.',
@@ -99,4 +100,8 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 	'phalanx-rule-log-delete' => 'Phalanx rule deleted: $1',
 	'phalanx-rule-log-details' => 'Filter: "$1", type: "$2", reason: "$3"',
 	
+	'phalanx-stats-table-wiki-id' => 'Wiki ID',
+	'phalanx-stats-table-wiki-name' => 'Wiki Name',
+	'phalanx-stats-table-wiki-url' => 'Wiki Url',
+	'phalanx-stats-table-wiki-last-edited' => 'Last edited',
 );

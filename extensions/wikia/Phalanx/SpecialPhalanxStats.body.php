@@ -31,6 +31,24 @@ class PhalanxStats extends UnlistedSpecialPage {
 			return true;
 		}
 
+		// show block id or blocks for Wikia
+		if ( strpos( $par, 'wiki' ) !== false ) {
+			list ( , $par ) = explode( "/", $par );
+			$show = 'blockWiki';
+		} else {
+			$show = 'blockId';
+		}
+		
+		if ( $show == 'blockId' ) {
+			$this->block_stats($par);
+		} else {
+			$this->block_wikia($par);
+		}
+	}
+	
+	private function block_stats($par) {
+		global $wgOut, $wgLang, $wgUser, $wgRequest;
+		
 		#we have a valid id, change title to use it
 		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') . ' #' . $par);
 
@@ -109,6 +127,57 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 		$wgOut->addHTML( $html );
 	}
+	
+	private function block_wikia($par) {
+		global $wgOut, $wgLang, $wgUser, $wgRequest;
+		
+		$oWiki = WikiFactory::getWikiById( $par );
+		if ( !is_object($oWiki) ) {
+			return false;
+		}
+		$url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
+				
+		#we have a valid id, change title to use it
+		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') . ': ' . $url );
+
+		// process block data for display
+		$block['wiki_id'] = $oWiki->city_id;
+		$block['sitename'] = $oWiki->city_sitename;
+		$block['url'] = $url;
+		$block['last_timestamp'] = $wgLang->timeanddate( $oWiki->city_last_timestamp );
+
+		$html = '';
+		
+		//TODO: add i18n
+		$headers = array(
+			wfMsg('phalanx-stats-table-wiki-id'),
+			wfMsg('phalanx-stats-table-wiki-name'),
+			wfMsg('phalanx-stats-table-wiki-url'),
+			wfMsg('phalanx-stats-table-wiki-last-edited'),
+		);
+
+		$tableAttribs = array(
+			'border' => 1,
+			'cellpadding' => 4,
+			'cellspacing' => 0,
+			'style' => "font-family:monospace;",
+		);
+
+		#use magic to build it
+		$table = Xml::buildTable( array( $block ), $tableAttribs, $headers );
+		$html .=  $table . "<br />\n";
+
+		$wgOut->addHTML( $html );
+
+		$pager = new PhalanxWikiStatsPager( $par );
+
+		$html = '';
+		$html .= $pager->getNavigationBar();
+		$html .= $pager->getBody();
+		$html .= $pager->getNavigationBar();
+
+		$wgOut->addHTML( $html );
+	}	
 }
 
 class PhalanxStatsPager extends ReverseChronologicalPager {
@@ -174,6 +243,82 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 
 		$html = '<li>';
 		$html .= wfMsgExt( 'phalanx-stats-row', array('parseinline'), $type, $username, $url, $timestamp );
+		$html .= '</li>';
+
+		return $html;
+	}
+}
+
+class PhalanxWikiStatsPager extends ReverseChronologicalPager {
+	public function __construct( $id ) {
+		global $wgExternalDatawareDB, $wgUser;
+
+		parent::__construct();
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+
+		$this->mWikiId = (int) $id;
+		$this->mTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
+		$this->mTitleStats = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
+		$this->mSkin = $wgUser->getSkin();
+	}
+
+	function getQueryInfo() {
+		$query['tables'] = 'phalanx_stats';
+		$query['fields'] = '*';
+		$query['conds'] = array(
+			'ps_wiki_id' => $this->mWikiId,
+		);
+
+		return $query;
+	}
+
+	function getPagingQueries() {
+		$queries = parent::getPagingQueries();
+
+		foreach ( $queries as $type => $query ) {
+			if ( $query === false ) {
+				continue;
+			}
+			$query['wikiId'] = $this->mWikiId;
+			$queries[$type] = $query;
+		}
+
+		return $queries;
+	}
+
+	function getIndexField() {
+		return 'ps_timestamp';
+	}
+
+	function getStartBody() {
+		return '<ul id="phalanx-block-wiki-' . $this->mWikiId . '-stats">';
+	}
+
+	function getEndBody() {
+		return '</ul>';
+	}
+
+	function formatRow( $row ) {
+		global $wgLang;
+
+		wfLoadExtensionMessages( 'Phalanx' );
+
+		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
+		
+		$username = $row->ps_blocked_user;
+
+		$timestamp = $wgLang->timeanddate( $row->ps_timestamp );
+
+		$blockId = (int) $row->ps_blocker_id;
+
+		# block
+		$phalanxUrl = $this->mSkin->makeLinkObj( $this->mTitle, $blockId, 'id=' . $blockId );
+		
+		# stats
+		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, wfMsg('phalanx-link-stats'), 'blockId=' . $blockId );
+
+		$html = '<li>';
+		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl );  
 		$html .= '</li>';
 
 		return $html;
