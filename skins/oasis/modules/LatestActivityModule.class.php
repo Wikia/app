@@ -15,7 +15,7 @@ class LatestActivityModule extends Module {
 
 		wfLoadExtensionMessages('MyHome');
 
-		$mKey = wfMemcKey('mOasisLatestActivitsy');
+		$mKey = wfMemcKey('mOasisLatestActivity');
 		$feedData = $wgMemc->get($mKey);
 		if (empty($feedData)) {
 
