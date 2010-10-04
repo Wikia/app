@@ -1061,6 +1061,12 @@ class Wikia {
 	static public function notifyUserOnRightsChange ( &$user, $addgroup, $removegroup ) {
 		global $wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges;
 
+			# rt#66961: rights change email sent to !emailconfirmed users
+		if( !$user->isEmailConfirmed() ) {
+			#if your not confirmed, no email for you, so dont bother adding to On* lists
+			return false; #i said no, so stop here
+		}
+
 		// Using wgUsersNotifiedOnAllChanges is a hack to get the UserMailer to notify these users.  The use
 		// of wgUsersNotifiedOfRightsChanges is to prevent the same user from being notified multiple times if
 		// multiple actions occur on the same page.
