@@ -29,7 +29,15 @@ var WikiaPhotoGalleryView = {
 
 	// track events
 	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('articleAction/photogallery' + fakeUrl);
+		$.tracker.byStr('articleAction/photogallery' + fakeUrl);
+
+		// extra tracking for Oasis (RT #68550)
+		if (window.skin == 'oasis') {
+			var part = fakeUrl.split('/').pop();
+			if (part == 'next' || part == 'previous' || part == 'popout') {
+				$.tracker.byStr('contentpage/slideshow/' + part);
+			}
+		}
 	},
 
 	init: function() {
@@ -38,6 +46,7 @@ var WikiaPhotoGalleryView = {
 			this.initGalleries();
 		}
 
+		this.lazyLoadGalleryImages();
 		this.initSlideshows();
 	},
 
@@ -146,6 +155,8 @@ var WikiaPhotoGalleryView = {
 				var nodeId = node.attr('id');
 				var index = nodeId ? parseInt(nodeId.split('-').pop()) : 0;
 
+				var isFromFeed = node.parent().hasClass('wikia-slideshow-from-feed');
+
 				// tracking
 				var fakeUrl = '/slideshow/basic';
 
@@ -155,7 +166,7 @@ var WikiaPhotoGalleryView = {
 				}
 				else {
 					// slideshow image clicked
-					if (node.attr('href')) {
+					if (node.attr('href') && !isFromFeed) {
 						// linked image
 						fakeUrl += '/imageClick/link';
 					}
@@ -167,13 +178,18 @@ var WikiaPhotoGalleryView = {
 				self.track(fakeUrl);
 
 				// linked image - leave here
-				if (node.attr('href')) {
+				if (node.attr('href') && !isFromFeed) {
 					return;
+				}
+
+				if (isFromFeed) {
+					//every image in feed slideshow has href - ctrl+click will lead to that page but by default - display popup
+					ev.preventDefault();
 				}
 
 				// load popout
 				self.loadEditorJS(function() {
-					WikiaPhotoGallery.showSlideshowPopOut(id, hash, index, self.isViewPage());
+					WikiaPhotoGallery.showSlideshowPopOut(id, hash, index, self.isViewPage(), isFromFeed);
 				});
 			};
 
@@ -239,6 +255,134 @@ var WikiaPhotoGalleryView = {
 			// show slideshow toolbar
 			slideshow.find('.wikia-slideshow-toolbar').show();
 		});
+	},
+
+	lazyLoadCache: {},
+
+	loadAndResizeImage: function(image, thumbWidth, thumbHeight, callback, crop) {
+		var self = this;
+		var onload = function(img) {
+			img.onload = null;	//animated gifs on IE fire this for each loop
+
+			// fit images inside wrapper
+			var imageWidth = img.width;
+			var imageHeight = img.height;
+
+			// resize image
+			if (crop) {
+				var widthResize = imageWidth / thumbWidth;
+				var heightResize = imageHeight / thumbHeight;
+				var resizeRatio = Math.min(widthResize, heightResize);
+
+				imageHeight = Math.min(imageHeight, parseInt(imageHeight / resizeRatio));
+				imageWidth = Math.min(imageWidth, parseInt(imageWidth / resizeRatio));
+			}
+			else {
+				if (imageWidth > thumbWidth) {
+					imageHeight /= (imageWidth / thumbWidth);
+					imageWidth = thumbWidth;
+				}
+				if (imageHeight > thumbHeight) {
+					imageWidth /= (imageHeight / thumbHeight);
+					imageHeight = thumbHeight;
+				}
+			}
+
+			imageHeight = parseInt(imageHeight);
+			imageWidth = parseInt(imageWidth);
+
+			// CSS magic for correct placement of images
+			image.
+				css({
+					height: imageHeight,
+					width: imageWidth
+				}).
+				attr('src', image.attr('data-src')).
+				removeAttr('data-src');
+
+			self.log('loaded: ' + image.attr('src') + ' (' + imageWidth  + 'x' + imageHeight + ')' + (crop ? ' + crop' : ''));
+
+			if (typeof callback == 'function') {
+				callback(image);
+			};
+		};
+
+		// use local cache to speed up things
+		var key = image.attr('data-src');
+
+		if (typeof self.lazyLoadCache[key] != 'undefined') {
+			// get dimensions from cache
+			var img = {
+				'width': self.lazyLoadCache[key].width,
+				'height': self.lazyLoadCache[key].height,
+			};
+			self.log('loaded: using cache');
+			onload(img);
+		}
+		else {
+			// lazy load an image
+			var img = new Image();
+			img.onload = function() {
+				self.lazyLoadCache[key] = {
+					'width': img.width,
+					'height': img.height
+				};
+
+				onload(img);
+			};
+			img.src = image.attr('data-src');
+		}
+	},
+
+	lazyLoadGalleryImages: function() {
+		var self = this;
+
+		this.log('lazy loading images...');
+		$('.gallery-image-wrapper').find('img[data-src]').each(
+			function() {
+				var image = $(this);
+
+				var thumb = image.closest('.gallery-image-wrapper');
+				var thumbWidth = thumb.innerWidth();
+				var thumbHeight = thumb.innerHeight();
+
+				var crop = !!image.closest('.wikia-gallery').attr('data-crop');
+
+				// lazy load current image and make it fit box with dimensions provided
+				self.loadAndResizeImage(image, thumbWidth, thumbHeight, function(image) {
+					var imageHeight = image.height();
+					var imageWidth = image.width();
+
+					if (crop) {
+						var wrapperHeight = Math.min(image.height(), thumbHeight);
+						var wrapperWidth = Math.min(image.width(), thumbWidth);
+					}
+					else {
+						var wrapperHeight = imageHeight;
+						var wrapperWidth = imageWidth;
+					}
+
+					// position image wrapper
+					var wrapperOffsetLeft = (thumbWidth - wrapperWidth) >> 1;
+					var wrapperOffsetTop = (thumbHeight - wrapperHeight) >> 1;
+
+					thumb.css({
+						height: wrapperHeight,
+						left: wrapperOffsetLeft,
+						margin: 0,
+						position: 'relative',
+						'top': wrapperOffsetTop,
+						width: wrapperWidth
+					});
+
+					// position an image (center it within thumb node)
+					image.css({
+						'margin-left': Math.min(0, (thumbWidth - parseInt(imageWidth)) >> 1),
+						'margin-top': Math.min(0, (thumbHeight - parseInt(imageHeight)) >> 1)
+					});
+				}, crop);
+			}
+		);
 	}
 };
 

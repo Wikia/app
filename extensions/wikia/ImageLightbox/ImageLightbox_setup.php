@@ -2,7 +2,7 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Lightbox',
 	'version' => '1.14',
-	'description' => 'Add lightbox preview for gallery images',
+	'description' => 'Add lightbox preview for images within article',
 	'author' => 'Maciej Brencz',
 );
 

@@ -38,7 +38,7 @@ class WikiaPhotoGalleryHelper {
 		$ig->parseParams($params);
 
 		// calculate "unique" hash of each gallery
-		$ig->calculateHash();
+		$ig->calculateHash($params);
 
 		wfProfileOut(__METHOD__);
 
@@ -156,12 +156,12 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Parse given link and return link tag attributes
 	 */
-	static public function parseLink(&$parser, $imageTitle, $link) {
+	static public function parseLink(&$parser, $url, $text, $link) {
 		// fallback: link to image page + lightbox
 		$linkAttribs = array(
 			'class' => 'image lightbox',
-			'href' => $imageTitle->getLocalUrl(),
-			'title' => $imageTitle->getText(),
+			'href' => $url,
+			'title' => $text,
 		);
 
 		// detect internal / external links (|links= param)
@@ -213,7 +213,7 @@ class WikiaPhotoGalleryHelper {
 			$heightResize = (!empty($maxHeight)) ? $img->getHeight() / $maxHeight : 1;
 
 			$resizeRatio = min($widthResize, $heightResize);
-			
+
 			//avoid division by zero
 			if(!$resizeRatio) $resizeRatio = 1;
 
@@ -480,7 +480,7 @@ class WikiaPhotoGalleryHelper {
 		));
 
 		$html = $template->render('galleryPreview');
-		
+
 		wfProfileOut(__METHOD__);
 		return $html;
 	}
@@ -548,10 +548,10 @@ class WikiaPhotoGalleryHelper {
 				else {
 					$image[ 'pageTitle' ] = $imageTitle->getText();
 				}
-				
+
 				//need to use parse() - see RT#44270
 				$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
-				
+
 				// remove <p> tags from parser caption
 				if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
 					$image['caption'] = $m[1];
@@ -570,6 +570,125 @@ class WikiaPhotoGalleryHelper {
 			'height' => $maxHeight,
 			'slideshow' => $slideshow,
 			'width' => $maxWidth,
+		));
+		$html = $template->render('slideshowPreview');
+
+		wfProfileOut(__METHOD__);
+		return $html;
+	}
+
+	/**
+	 * Render gallery preview for feed
+	 *
+	 * @author Marooned
+	 */
+	static public function renderFeedGalleryPreview($gallery) {
+		global $wgTitle, $wgParser, $wgCdnStylePath, $wgExtensionsPath;
+		wfProfileIn(__METHOD__);
+
+		$data = WikiaPhotoGalleryRSS::parseFeed($gallery['params']['rssfeed']);
+
+		//use images from feed
+		$gallery['images'] = $data['images'];
+
+		// render thumbnail and parse caption for each image (default "box" is 200x200)
+		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 200;
+		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
+		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
+		$ratio = self::getRatioFromOption($orientation);
+		$crop = true;
+
+		// calculate height based on gallery width
+		$height = round($thumbSize / $ratio);
+
+		foreach ($gallery['images'] as $index => &$image) {
+			$image['placeholder'] = false;
+
+			$image['height'] = $height;
+			$image['width'] = $thumbSize;
+
+			$image['thumbnail'] = false;
+			$image['image'] = $image['src'];
+
+			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $image['link'], $match);
+			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $image['caption'], $image['link'], $match[1]);
+		}
+
+		//compensate image wrapper width depending on the border size
+		switch ($borderSize) {
+			case 'large':
+				$thumbSize += 10; //5px * 2
+				$height += 10;
+				break;
+			case 'medium':
+				$thumbSize += 4; //2px * 2
+				$height += 4;
+				break;
+			case 'small':
+				$thumbSize += 2; //1px * 2
+				$height += 2;
+				break;
+		}
+
+		// render gallery HTML preview
+		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+		$template->set_vars(array(
+			'borderColor' => (!empty($gallery['params']['bordercolor'])) ? $gallery['params']['bordercolor'] : 'accent',
+			'borderSize' => $borderSize,
+			'captionsAlign' => (!empty($gallery['params']['captionalign'])) ? $gallery['params']['captionalign'] : 'left',
+			'captionsColor' => (!empty($gallery['params']['captiontextcolor'])) ? $gallery['params']['captiontextcolor'] : null,
+			'captionsPosition' => (!empty($gallery['params']['captionposition'])) ? $gallery['params']['captionposition'] : 'below',
+			'captionsSize' => (!empty($gallery['params']['captionsize'])) ? $gallery['params']['captionsize'] : 'medium',
+			'fromFeed' => true,
+			'gallery' => $gallery,
+			'maxHeight' => $height,
+			'perRow' => (!empty($gallery['params']['columns'])) ? intval($gallery['params']['columns']): 'dynamic',
+			'position' => (!empty($gallery['params']['position'])) ? $gallery['params']['position'] : 'left',
+			'spacing' => (!empty($gallery['params']['spacing'])) ? $gallery['params']['spacing'] : 'medium',
+			'width' => $thumbSize
+		));
+
+		$html = $template->render('galleryPreview');
+
+		wfProfileOut(__METHOD__);
+		return $html;
+	}
+
+	/**
+	 * Render slideshow preview
+	 *
+	 * @author Marooned
+	 */
+	static public function renderFeedSlideshowPreview($slideshow) {
+		global $wgTitle, $wgParser;
+		wfProfileIn(__METHOD__);
+
+		$data = WikiaPhotoGalleryRSS::parseFeed($slideshow['params']['rssfeed']);
+
+		//use images from feed
+		$slideshow['images'] = $data['images'];
+
+		// handle "crop" attribute
+		$crop = isset($slideshow['params']['crop']) ? ($slideshow['params']['crop'] == 'true') : false;
+
+		// render thumbnail
+		$maxWidth = isset($slideshow['params']['widths']) ? $slideshow['params']['widths'] : 300;
+		$maxHeight = round($maxWidth * 3/4);
+
+		// render slideshow images
+		foreach ($slideshow['images'] as &$image) {
+			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $image['link'], $match);
+			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $image['caption'], $image['link'], $match[1]);
+			$image['image'] = $image['src'];
+		}
+
+		// render gallery HTML preview
+		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+		$template->set_vars(array(
+			'fromFeed' => true,
+			'height' => $maxHeight,
+			'slideshow' => $slideshow,
+			'width' => $maxWidth
 		));
 		$html = $template->render('slideshowPreview');
 
@@ -668,7 +787,7 @@ class WikiaPhotoGalleryHelper {
 
 			// image with link
 			if ($image['link'] != '') {
-				$linkAttribs = self::parseLink($wgParser, $imageTitle, $image['link']);
+				$linkAttribs = self::parseLink($wgParser, $imageTitle->getLocalUrl(), $imageTitle->getText(), $image['link']);
 				$image['url'] = $linkAttribs['href'];
 			}
 		}
@@ -695,6 +814,73 @@ class WikiaPhotoGalleryHelper {
 		wfProfileOut(__METHOD__);
 		return array(
 			'carousel' => $carousel,
+			'html' => $html,
+			'title' => $title,
+			'width' => $width,
+		);
+	}
+
+	/**
+	 * Render slideshow popout - for feed version
+	 *
+	 * @author Marooned
+	 */
+	static public function renderFeedSlideshowPopOut($slideshow, $maxWidth = false, $maxHeight = false) {
+		global $wgTitle, $wgParser;
+		wfProfileIn(__METHOD__);
+
+		// images for carousel (for external images this will generated based on scaled slideshow images)
+		$carousel = array();
+
+		// let's use images actually shown for end user
+		$slideshow['images'] = $slideshow['imagesShown'];
+
+		// take maxWidth and maxHeight into consideration
+		$width = round($maxHeight * 4/3);
+
+		// minimum width (don't wrap carousel - 580px)
+		$width = min(max($width, 600), $maxWidth);
+
+		// keep 4:3 ratio
+		$height = round($width * 3/4);
+
+		// limit the height ignoring the ratio
+		$height = min($height, $maxHeight);
+
+		// render thumbnail, "big" image and parse caption for each image
+		foreach($slideshow['externalImages'] as &$image) {
+			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $image['link'], $match);
+			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $image['caption'], $image['link'], $match[1]);
+
+			// image to be used for slideshow area
+			$image['image'] = $image['src'];
+			$carousel[] = $image['src'];
+
+			// link to image page (details)
+			$image['imagePage'] = $image['link'];
+		}
+
+		wfLoadExtensionMessages('WikiaPhotoGallery');
+
+		// slideshow "overall caption"
+		$title = wfMsg('wikiaPhotoGallery-lightbox-caption', $slideshow['feedTitle']);
+
+		$slideshow['images'] = $slideshow['externalImages'];
+
+		// render slideshow pop out dialog
+		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+		$template->set_vars(array(
+			'fromFeed' => true,
+			'height' => $height,
+			'slideshow' => $slideshow,
+			'width' => $width
+		));
+		$html = $template->render('slideshowPopOut');
+
+		wfProfileOut(__METHOD__);
+		return array(
+			'carousel' => $carousel,
+			'fromFeed' => true,
 			'html' => $html,
 			'title' => $title,
 			'width' => $width,
@@ -941,9 +1127,12 @@ class WikiaPhotoGalleryHelper {
 		$articleWikitext = $rev->getText();
 		$gallery = '';
 
-		preg_match_all('%<gallery[^>]*>(.*?)</gallery>%s', $articleWikitext, $matches, PREG_PATTERN_ORDER);
+		//TODO: use Sanitizer::decodeTagAttributes()
+		preg_match_all('%<gallery([^>]*)>(.*?)</gallery>%s', $articleWikitext, $matches, PREG_PATTERN_ORDER);
 		for ($i = 0; $i < count($matches[0]); $i++) {
-			if (md5($matches[1][$i]) == $hash) {
+			$attribs = Sanitizer::decodeTagAttributes($matches[1][$i]);
+			//count hash from attribs and content
+			if (md5($matches[2][$i] . implode('', $attribs)) == $hash) {
 				$gallery = $matches[0][$i];
 				break;
 			}

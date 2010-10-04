@@ -34,6 +34,7 @@ $wgAutoloadClasses['WikiaPhotoGallery'] = "$dir/WikiaPhotoGallery.class.php";
 $wgAutoloadClasses['WikiaPhotoGalleryAjax'] = "$dir/WikiaPhotoGalleryAjax.class.php";
 $wgAutoloadClasses['WikiaPhotoGalleryHelper'] = "$dir/WikiaPhotoGalleryHelper.class.php";
 $wgAutoloadClasses['WikiaPhotoGalleryUpload'] = "$dir/WikiaPhotoGalleryUpload.class.php";
+$wgAutoloadClasses['WikiaPhotoGalleryRSS'] = "$dir/WikiaPhotoGalleryRSS.class.php";
 
 $wgAutoloadClasses['FakeLocalFile'] = "$dir/FakeLocalFile.class.php";
 

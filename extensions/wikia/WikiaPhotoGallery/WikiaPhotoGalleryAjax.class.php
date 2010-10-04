@@ -167,7 +167,11 @@ class WikiaPhotoGalleryAjax {
 		// decode JSON-encoded gallery data
 		$gallery = Wikia::json_decode($wgRequest->getVal('gallery'), true);
 
-		$html = WikiaPhotoGalleryHelper::renderGalleryPreview($gallery);
+		if (empty($gallery['params']['rssfeed'])) {
+			$html = WikiaPhotoGalleryHelper::renderGalleryPreview($gallery);
+		} else {
+			$html = WikiaPhotoGalleryHelper::renderFeedGalleryPreview($gallery);
+		}
 
 		wfProfileOut(__METHOD__);
 		return array(
@@ -183,9 +187,13 @@ class WikiaPhotoGalleryAjax {
 		wfProfileIn(__METHOD__);
 
 		// decode JSON-encoded slideshow data
-		$slideshow = Wikia::json_decode($wgRequest->getVal('gallery'), true);
+		$gallery = Wikia::json_decode($wgRequest->getVal('gallery'), true);
 
-		$html = WikiaPhotoGalleryHelper::renderSlideshowPreview($slideshow);
+		if (empty($gallery['params']['rssfeed'])) {
+			$html = WikiaPhotoGalleryHelper::renderSlideshowPreview($gallery);
+		} else {
+			$html = WikiaPhotoGalleryHelper::renderFeedSlideshowPreview($gallery);
+		}
 
 		wfProfileOut(__METHOD__);
 		return array(
@@ -209,10 +217,15 @@ class WikiaPhotoGalleryAjax {
 
 		$slideshow = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash, $revisionId, WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW);
 
-		if(isset($slideshow['info']) && $slideshow['info'] == 'ok')
-			$ret = WikiaPhotoGalleryHelper::renderSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
-		else
+		if (isset($slideshow['info']) && $slideshow['info'] == 'ok') {
+			if (empty($slideshow['gallery']['params']->rssfeed)) {
+				$ret = WikiaPhotoGalleryHelper::renderSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
+			} else {
+				$ret = WikiaPhotoGalleryHelper::renderFeedSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
+			}
+		} else {
 			$ret = $slideshow;
+		}
 
 		wfProfileOut(__METHOD__);
 		return $ret;

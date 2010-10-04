@@ -330,6 +330,10 @@
 		</p>
 
 		<div id="WikiaPhotoGalleryEditorPreview" class="preview"></div>
+
+		<p id="WikiaPhotoGalleryEditorCheckboxes">
+			<?= WikiaPhotoGalleryHelper::renderOptionCheckbox('WikiaPhotoGalleryFeedInUse', 'wikiaPhotoGallery-preview-feed-label') ?><input id="WikiaPhotoGalleryFeedUrl" type="text" maxlength="255" size="60" />
+		</p>
 	</div>
 </div>
 
@@ -363,13 +367,14 @@
 		<h1><?= wfMsg('wikiaPhotoGallery-slideshowpreview-photostitle') ?></h1>
 		<p>
 			<button id="WikiaPhotoGallerySlideshowAddImage" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-addphoto') ?></button>
-			<span style="padding-left: 100px">
-				<input id="WikiaPhotoGallerySlideshowRecentUploads" type="checkbox" />
-				<label for="WikiaPhotoGallerySlideshowRecentUploads"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-recentuploads') ?></label>
-			</span>
 		</p>
 
 		<div id="WikiaPhotoGallerySlideshowEditorPreview" class="preview"></div>
+
+		<p id="WikiaPhotoGallerySlideshowEditorCheckboxes">
+			<?= WikiaPhotoGalleryHelper::renderOptionCheckbox('WikiaPhotoGallerySlideshowRecentUploads', 'wikiaPhotoGallery-slideshowpreview-recentuploads') ?><br/>
+			<?= WikiaPhotoGalleryHelper::renderOptionCheckbox('WikiaPhotoGallerySlideshowFeedInUse', 'wikiaPhotoGallery-preview-feed-label') ?><input id="WikiaPhotoGallerySlideshowFeedUrl" type="text" maxlength="255" size="40" />
+		</p>
 	</div>
 </div>
 
