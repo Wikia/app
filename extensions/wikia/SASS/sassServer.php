@@ -6,7 +6,7 @@
  * The script is responsible for verifying the cryptographic signature,
  * for preventing deadlock from similar requests, for piping colors from the
  * query-string into the .scss files, and for using memcache to speed up responses.
- * 
+ *
  * NOTE: While SASS can output to standard out, that only happens if now output file
  * is specified.  Since we are using additional command line params, those params end up
  * being used as the output filename if we don't provide one, so for now we are stuck with
@@ -42,7 +42,7 @@ $CHECK_SECURITY_HASH = false;
 $OUTPUT_STYLE = "compact";
 
 $IP = getenv( 'MW_INSTALL_PATH' );
-if ( $IP === false ) { 
+if ( $IP === false ) {
 	$IP = dirname( __FILE__ ) .'/../../..';
 }
 ///// CONFIGURATION /////
@@ -58,7 +58,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	$requestedStyleVersion = getFromUrlAndUnset("styleVersion", $wgStyleVersion); // Get style version to use for keys (don't just use wgStyleVersion).
 	$hashFromUrl = getFromUrlAndUnset("hash");
 	$nameOfFile = getFileAlphanumeric($inputFile); // Build a reasonable name for the tmp file.
-	
+
 	$idString = ""; // will be filled with a filename-safe string unique to this set of sass parameters.
 	$sassParamsForHashChecking = "";
 	$sassParams = getSassParamsFromUrl($idString, $sassParamsForHashChecking); // Build a string of parameters to pass into sass.
@@ -144,7 +144,8 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 	wfProfileIn( __METHOD__ );
 
 	// Pass the values from the query-string into the sass script (results will go in a tmp file).
-	$commandLine = "$FULL_SASS_PATH $IP/$inputFile $tmpFile --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams 2>&1";
+	$commandLine = escapeshellcmd("$FULL_SASS_PATH $IP/$inputFile $tmpFile --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams 2>&1");
+
 	$sassResult = `$commandLine`;
 	if($sassResult != ""){
 		// On the first failure, check if this is because /tmp/sass doesn't exist anymore (it will go away on reboot, etc.).
@@ -167,9 +168,9 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 	}
 
 	$cssContent = readThenDeleteFile($tmpFile, $errorStr);
-	
+
 	///// ADDITIONAL POST-SASS PROCESSING BELOW /////
-	
+
 	// Do some post-processing so that @imports of .css files are included right in the content (SASS will pull-in .scss files, but leaves .css @imports alone).
 	// NOTE: This expects all .css references from inside of .scss files to be relative to the root of the project rather than to the .scss file whence they're being imported.
 	$matches = array();
@@ -180,9 +181,9 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 		foreach($matches as $match){
 			$lineMatched = $match[0];
 			$fileName = trim($match[1]);
-			
+
 			$fileContents = file_get_contents($IP . $fileName);
-			
+
 			// Check for nested imports and generate a warning if they are found (.css shouldn't be using @imports).
 			if((0 < preg_match($importRegexOne, $fileContents)) || (0 < preg_match($importRegexTwo, $fileContents))){
 				$errorStr .= "Bad for performance: @import detected from inside of a .css file (this results in an extra HTTP request). The import is inside the file: \"$fileName\".";
@@ -192,7 +193,7 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 			$cssContent = str_replace($lineMatched, $fileContents, $cssContent);
 		}
 	}
-	
+
 	// Apply wgStylePath substitutions like in StaticChute.
 	require "$IP/extensions/wikia/StaticChute/wfReplaceCdnStylePathInCss.php";
 	$cssContent = wfReplaceCdnStylePathInCss($cssContent);
@@ -207,23 +208,23 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 		$cwd = '';
 		$env = array();
 		$process = proc_open("./cssjanus.py", $descriptorspec, $pipes, NULL, $env);
-		if (is_resource($process)) {	
+		if (is_resource($process)) {
 		    fwrite($pipes[0], $cssContent);
 		    fclose($pipes[0]);
-	
+
 		    $cssContent = stream_get_contents($pipes[1]);
 		    fclose($pipes[1]);
 		    fclose($pipes[2]);
-		    
+
 		    // proc_close in order to avoid a deadlock
-		    proc_close($process);	
+		    proc_close($process);
 		}
 	}
 
 	wfProfileOut( __METHOD__ );
 	return $cssContent;
 } // end runSass()
-	
+
 
 /**
  * Convenience-wrapper around getting the contents of tmpFile with graceful error handling.
@@ -255,7 +256,7 @@ function outputHeadersAndCss($cssContent, $errorStr=""){
 	// TODO: Should we detect the error-case where 'tmpFile' doesn't exist?  What this would imply to me was that there was a race-condition and another
 	// process was creating the file slightly before this one, and it managed to delete the file before we got to read it.  In this case, the result would be in memcached either now or
 	// in a few miliseconds.
-	
+
 
 	// Since this emits a header, it needs to be done before printing content.
 	$timeToGenerate = "/* ".wfReportTime()." */";
@@ -282,7 +283,7 @@ function getFromUrlAndUnset($paramName, $default=""){
 	$retVal = $default;
 	if(isset($_GET[$paramName])){
 		$retVal = $_GET[$paramName];
-		
+
 		// Unset so that it isn't used as a sass-param.
 		unset($_GET[$paramName]);
 	}
