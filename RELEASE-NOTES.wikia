@@ -1,5 +1,5 @@
 == Changes since 201010.1 ==
-*
+* rt#66961: User rights notifications sent non-emailconfirmed users (uberfuzzy)
 
 == Changes since 201009.5 ==
 * rt#69155: Photos on This Wiki module: link should say See more (TOR) 
