@@ -78,11 +78,6 @@
 </section><!--WikiaPage-->
 
 <?php
-	if (empty($wgNoExternals)) {
-		echo wfRenderModule('Feedback');
-	}
-?>
-<?php
 	/* tmp turned off
 	if (empty($wgSuppressAds)) {
 		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
