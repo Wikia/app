@@ -2,6 +2,7 @@
 * rt#66961: User rights notifications sent non-emailconfirmed users (uberfuzzy)
 
 == Changes since 201009.5 ==
+* rt#69650: Oasis: Remove voting checkbox on Special:CreateBlogPost (TOR)
 * rt#69155: Photos on This Wiki module: link should say See more (TOR) 
 * rt#69127: run staffsig image through cdn (uberfuzzy)
 * rt#69110: fix email confirmation checks in SpecialContact (uberfuzzy)
