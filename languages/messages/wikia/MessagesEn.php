@@ -1020,7 +1020,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-page-header-comments' => '{{PLURAL:$1|Comment|Comments}}',
 'oasis-page-header-comments-k' => '$1k',
 'oasis-page-header-comments-m' => '$1M',
-'oasis-page-header-talk' => '{{PLURAL:$1|Talk|Talks}}',
+'oasis-page-header-talk' => 'Talk',
 'oasis-page-header-edited-by' => 'Edited $1 by $2',
 'oasis-page-header-edited' => 'Edited $1',
 'oasis-page-header-read-more' => 'Read more: $1',

@@ -522,4 +522,8 @@ var initTracker = function() {
 	FB.Event.subscribe('edge.create', function(resp) {
 		$.tracker.byStr('pageheader/like');
 	});
+
+	FB.Event.subscribe('comments.add', function(resp) {
+		$.tracker.byStr('pageheader/post');
+	});
 }
