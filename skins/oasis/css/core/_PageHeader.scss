@@ -2,6 +2,7 @@
 	clear: both;
 	margin: 0 10px 10px 10px;
 	position: relative;
+	z-index: 2;
 	&.separator {
 		border-bottom: 1px solid $color-page-border;
 		padding: 0 0 15px 0;
@@ -65,6 +66,7 @@
 		position: relative;
 		text-align: right;
 		width: 670px;
+		z-index: 1;
 	}
 	.history {
 		font-size: 10px;
@@ -121,6 +123,7 @@
 	.wikia-button,
 	.wikia-menu-button {
 		vertical-align: text-bottom;
+		z-index: 2;
 		&[data-id=edit],
 		a[data-id=edit]{
 			left: -2px;
