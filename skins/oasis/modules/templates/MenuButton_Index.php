@@ -4,7 +4,7 @@
 			// render [icon] + [link] ("View source")
 			if (!empty($iconBefore)) {
 ?>
-			<span><?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'osprite icon-edit', $loginURL); ?></span>
+			<span><?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit', $loginURL); ?></span>
 <?php
 			}
 			// render simple edit button

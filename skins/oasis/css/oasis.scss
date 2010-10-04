@@ -1,7 +1,7 @@
 // merge Oasis CSS with CSS files from MW core
 @import "/skins/common/shared.css";
 @import "/skins/wikia/shared.css";
-@import "/skins/common/sprite.css";
+// @import "/skins/common/sprite.css";
 
 @import "core/layout";
 
@@ -22,7 +22,7 @@
 @import "core/typography";
 
 // Oasis Core //
-@import "core/osprite";
+@import "core/sprite";
 @import "core/color";
 @import "core/reset";
 @import "core/modal";

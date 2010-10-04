@@ -1,6 +1,6 @@
 <?php
 	// show both comments and FB likes (new design)
-	if (is_numeric($comments) && $showLike) {
+	if (isset($comments) && $showLike) {
 ?>
 <ul class="commentslikes">
 	<li class="comments">
@@ -14,10 +14,10 @@
 <?php
 	}
 	// show just comments (old design)
-	else if (is_numeric($comments)) {
+	else if (isset($comments)) {
 ?>
 	<div class="commentslikes">
-		<a href="<?= htmlspecialchars($commentsLink) ?>" class="wikia-chiclet-button" data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><img class="osprite icon-article-like" src="<?= $wgBlankImgUrl ?>" height="10" width="10"></a> <?= $formattedComments ?>
+		<a href="<?= htmlspecialchars($commentsLink) ?>" data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><span class="commentsbubble"><?= $formattedComments ?></span></a>
 	</div>
 <?php
 	}

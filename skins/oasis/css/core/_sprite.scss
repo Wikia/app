@@ -1,9 +1,65 @@
-.osprite {
+.sprite {
 	background-color: transparent;
 	background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
 	background-repeat: no-repeat;
 
-	&.icon-add {
+	//Activity Feed
+	&.edit {
+		background-position: -1016px -16px;
+		height: 20px;
+		width: 19px;
+	}
+	&.talk {
+		background-position: -1080px -16px;
+		height: 20px;
+		width: 16px;
+	}
+	&.categorization {
+		background-position: -1072px 0;
+		height: 16px;
+		width: 22px;
+	}
+	&.move {
+		background-position: -1048px 0;
+		height: 16px;
+		width: 22px;
+	}
+	&.new {
+		background-position: -1024px 0;
+		height: 16px;
+		width: 22px;
+	}
+	&.photo {
+		background-position: -1096px 0;
+		height: 16px;
+		width: 26px;
+	}
+	&.video {
+		background-position: -1128px 0;
+		height: 16px;
+		width: 21px;
+	}
+
+
+	&.edit-pencil {
+		background-position: -1000px -16px;
+		height: 16px;
+		width: 16px;
+	}
+	&.blog {
+		background-position: -1000px 0;
+		height: 16px;
+		width: 22px;		
+	}
+	&.message {
+		background-position: -1058px -16px;
+		height: 16px;
+		width: 22px;
+	}
+
+
+/*
+	&.add {
 		background-position: -1024px 0;
 		height: 16px;
 		width: 22px;
@@ -19,41 +75,36 @@
 		background-position: -1128px -32px;
 	}
 
-	&.icon-remove {
+	&.remove {
 		background-position: -1128px -14px;
 		height: 20px;
 		width: 13px;
 	}
 
-	&.icon-drag {
+	&.drag {
 		background-position: -1147px -30px;
 		height: 20px;
 		width: 13px;
 	}
 
-	&.icon-edit {
+	&.edit-pencil {
 		background-position: -1000px -16px;
 		height: 16px;
 		width: 16px;
 	}
 	
-	&.icon-article-edit {
-		background-position: -1016px -16px;
-		height: 20px;
-		width: 20px;
-	}
-
-	&.icon-blog {
+	&.blog {
 		background-position: -1000px 0;
 		height: 16px;
 		width: 22px;
 	}
 
-	&.icon-message {
+	&.message {
 		background-position: -1058px -16px;
 		height: 16px;
 		width: 22px;
 	}
+*/
 
 	&.shadow {
 		@include opacity(75);
