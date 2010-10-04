@@ -761,7 +761,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		) );
 
 		// New Wiki Builder isn't supported by all languages yet
-		$NewWikiBuilderLanguages = array('en', 'de', 'es', 'nl');
+		$NewWikiBuilderLanguages = array('en');
 		if( in_array($this->mWikiData[ "language" ], $NewWikiBuilderLanguages ) ){
 			$sFinishText = $oTmpl->render("finish");
 		} else {
