@@ -4,6 +4,7 @@
 .RelatedPagesModule {
 	@include rail-module;
 	@include clearfix;
+	clear: both;
 	sfloat: left;
 	margin: {
 		top: 10px;

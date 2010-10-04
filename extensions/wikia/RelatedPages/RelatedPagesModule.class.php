@@ -50,6 +50,10 @@ class RelatedPagesModule extends Module {
 				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
 				$wgMemc->set($mKey, $this->pages);
 			}
+
+			// add collision detection code
+			global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RelatedPages/js/RelatedPages.js?{$wgStyleVersion}\"></script>\n");
 		}
 		else {
 			$this->pages = array();
