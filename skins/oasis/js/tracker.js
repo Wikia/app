@@ -237,12 +237,13 @@ var initTracker = function() {
 		else if (node.hasClass('more')) {
 			$.tracker.byStr(fakeUrl + 'more');
 		}
+		// user page links
+		else if (node.hasParent('details')) {
+			$.tracker.byStr(fakeUrl + 'username');
+		}
 		// items
 		else if (node.hasParent('li')) {
-			var item = node.closest('li');
-			var index = parseInt(item.index()) + 1;
-
-			$.tracker.byStr(fakeUrl + index);
+			$.tracker.byStr(fakeUrl + 'article');
 		}
 	});
 
