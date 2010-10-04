@@ -1127,7 +1127,6 @@ class WikiaPhotoGalleryHelper {
 		$articleWikitext = $rev->getText();
 		$gallery = '';
 
-		//TODO: use Sanitizer::decodeTagAttributes()
 		preg_match_all('%<gallery([^>]*)>(.*?)</gallery>%s', $articleWikitext, $matches, PREG_PATTERN_ORDER);
 		for ($i = 0; $i < count($matches[0]); $i++) {
 			$attribs = Sanitizer::decodeTagAttributes($matches[1][$i]);
