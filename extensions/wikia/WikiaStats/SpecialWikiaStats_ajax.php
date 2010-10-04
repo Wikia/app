@@ -602,7 +602,7 @@ function axWStatisticsSearchWikis($search_text) {
 	}
 }
 
-function axWStatisticsPageViews($city_id)
+function axWStatisticsPageViews($city_id = 0)
 {
     global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
