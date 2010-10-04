@@ -717,6 +717,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log($cmd);
 		$output = wfShellExec( $cmd );
 		$this->log( $output );
+		
+		/**
+		 * RT:68926 set default skin to oasis 
+		 */
+		if($this->mType != 'answers' && $this->mWikiData[ "language" ] == 'en') {
+			WikiFactory::setVarByName("wgDefaultSkin", $this->mWikiId, 'oasis');
+		}
 
 		/**
 		 * show congratulation message
@@ -979,7 +986,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addHtml( $oTmpl->render("create-wiki-form") );
-
+		
 		wfProfileOut( __METHOD__ );
 		return;
 	}
