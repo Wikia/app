@@ -28,6 +28,8 @@ class BodyModule extends Module {
 
 	var $wgSingleH1;
 
+	var $showTestAds;
+
 	private static $onEditPage;
 
 	/**
@@ -125,7 +127,7 @@ class BodyModule extends Module {
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
-		
+
 		if($namespace == NS_SPECIAL) {
 			if ($wgTitle->isSpecial('Search')) {
 				$railModuleList = array();
@@ -167,7 +169,7 @@ class BodyModule extends Module {
 			);
 
 		}
-		
+
 		// Content, category and forum namespaces
 		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM)) ||
 			in_array($subjectNamespace, $wgContentNamespaces) ||
