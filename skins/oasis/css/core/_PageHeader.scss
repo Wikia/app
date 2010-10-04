@@ -116,7 +116,7 @@
 		margin: 1px 4px 2px 2px;
 	}
 	img {
-		vertical-align: middle;
+		vertical-align: text-bottom;
 	}
 	.wikia-button,
 	.wikia-menu-button {
@@ -139,6 +139,7 @@
 	.mainpage-tally {
 		float: right;
 		padding: 6px 0;
+		margin-right: 10px;
 		span {
 			float: left;
 		}
@@ -152,7 +153,6 @@
 		img {
 			background: url(/skins/oasis/images/sprite.png) -1024px 0 no-repeat; /* $wgCdnStylePath */			
 			height: 16px;
-			margin-right: 3px;
 			width: 22px;
 		}
 	}

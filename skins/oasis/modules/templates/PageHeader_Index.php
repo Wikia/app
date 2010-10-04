@@ -2,7 +2,8 @@
 	<? if ($isMainPage) { ?>
 		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 		<div class="mainpage-add-page">
-			<?= View::specialPageLink('CreatePage', 'oasis-add-page', null, 'blank.gif'); ?>
+			<?= View::specialPageLink('CreatePage', null, null, 'blank.gif'); ?>
+			<?= View::specialPageLink('CreatePage', 'oasis-add-page'); ?>
 		</div>
 		<div class="tally mainpage-tally">
 			<em><?= $total ?></em>

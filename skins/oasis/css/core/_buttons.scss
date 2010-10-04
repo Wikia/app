@@ -18,7 +18,7 @@ button {
 	display: inline-block;
 	font-size: 12px;
 	height: 19px;
-	line-height: 19px;
+	line-height: 20px;
 	margin: 0;
 	padding: 0 7px;
 	text-decoration: none;
@@ -128,7 +128,7 @@ This list-based button is used in the page header for edit/history/delete action
 			}
 		}
 	}
-	.icon {
+	.icon, img {
 		vertical-align: text-bottom;
 	}
 	.chevron {
