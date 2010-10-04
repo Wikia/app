@@ -47,37 +47,17 @@ class SassUtil{
 			return $oasisSettings;
 		}
 
-		$skin = $wgUser->getSkin();
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
 
-		// try to load settings from ThemeDesigner
-		if (!empty($wgOasisThemeSettings)) {
-			$keys = array_keys($wgOasisThemes[DEFAULT_OASIS_THEME]);
-
-			// get color settings
-			foreach($keys as $key) {
-				if(isset($wgOasisThemeSettings[$key])){
-					$oasisSettings[$key] = $wgOasisThemeSettings[$key];
-				} else {
-					$oasisSettings[$key] = $wgOasisThemes[DEFAULT_OASIS_THEME][$key];
-				}
-			}
-		}
-		else if(isset($skin->themename)) {
-			if($skin->themename == 'custom'){
-				// If this is a custom theme, we need to load it from a different spot if it's an admin custom theme than a user custom theme.
-				$overwriteUserSkin = (bool)$wgUser->getOption("skinoverwrite"); // allow Admin's theme to overwrite user skin.
-				if($overwriteUserSkin && !empty($wgAdminSkin)){
-					global $wgOasisSettings;
-					$oasisSettings = unserialize($wgOasisSettings);
-				} else {
-					// NOTE: THIS MIGHT NOT BE USED AT ALL (depending on how Product specs the theme chooser).
-					// ...users might not be allowed to make their own custom skins... currently only Admins do that (for sites... not for themselves).
-					$oasisSettings = unserialize($wgUser->getOption('oasis_settings'));
-				}
-			} else if(isset($wgOasisThemes[$skin->themename])){
-				$oasisSettings = $wgOasisThemes[$skin->themename];
-			}
-		}
+		$oasisSettings["color-body"] = $settings["color-body"];
+		$oasisSettings["color-page"] = $settings["color-page"];
+		$oasisSettings["color-buttons"] = $settings["color-buttons"];
+		$oasisSettings["color-links"] = $settings["color-links"];
+		$oasisSettings["color-header"] = $settings["color-header"];
+		$oasisSettings["background-image"] = $settings["background-image"];
+		$oasisSettings["background-align"] = $settings["background-align"];
+		$oasisSettings["background-tiled"] = $settings["background-tiled"];
 
 		if($wgContLang && $wgContLang->isRTL()){
 			$oasisSettings['rtl'] = 'true';
