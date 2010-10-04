@@ -71,13 +71,15 @@ function wfGlobalWatchlistPrefsCustomHtml( $prefsForm ) {
 function wfGlobalWatchlistPrefsEmailToggle( $prefsForm, $toggleHtml ) {
 	global $wgUser;
 
-	// only for staff members at the moment
+	#if user not emailconfirmed, disable this (like the others)
+	$disable = $wgUser->getEmailAuthenticationTimestamp() ? false : true;
+
 	wfLoadExtensionMessages( 'GlobalWatchlist' );
 
 	$tname = 'watchlistdigest';
 	$prefsForm->mUsedToggles[$tname] = true;
 
-	$toggleHtml .= $prefsForm->getToggle( $tname ) . '<br />';
+	$toggleHtml .= $prefsForm->getToggle( $tname, false, $disable ) . '<br />';
 
 	return true;
 }
