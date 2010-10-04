@@ -2,7 +2,7 @@
 	<? if (!$wgSingleH1) { ?>
 	<h1>Latest Photos</h1>
 	<? } ?>
-	<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button', 'blank.gif', 'oasis-add-photo', 'osprite icon-add-photo'); ?>
+	<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button', 'blank.gif', 'oasis-add-photo', 'sprite photo'); ?>
 	<details class="tally counter">
 		<em><?= $total ?></em><?= wfMsg('oasis-latest-photos-header') ?>
 	</details>
