@@ -39,6 +39,7 @@
 }
 #AjaxLoginSlider .ajax-login-slider-panel {
 	float: left;
+	line-height: 1.8em;
 	min-height: 150px;
 	padding: 10px;
 	width: 330px;
@@ -130,7 +131,7 @@
 }
 .wpAjaxLoginInput label
 {
-	display: block; 
+	display: block;
 	font-weight: bold;
 	font-family:arial,sans-serif;
 	font-size:10pt;
@@ -166,7 +167,7 @@
 	padding:4px 4px 4px 4px;
 	border-style: solid;
 	border-width: 1px;
-	border-color: #AAAAAA; 
+	border-color: #AAAAAA;
 	margin-left:6px;
 }
 
@@ -185,7 +186,7 @@
 {
 	border-top-style: solid;
 	border-top-color: #AAAAAA;
- 	border-width: 1px; 
+ 	border-width: 1px;
 }
 
 .wpAjaxLoginLine td
