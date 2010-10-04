@@ -52,9 +52,9 @@ class MenuButtonModule extends Module {
 		if (isset($data['image'])) {
 			switch($data['image']) {
 				case self::ADD_ICON:
-					$img_class = 'sprite icon-add';
-					$height = 10;
-					$width = 10;
+					$img_class = 'sprite message';
+					$height = 16;
+					$width = 21;
 					break;
 
 				case self::LOCK_ICON:

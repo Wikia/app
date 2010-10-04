@@ -105,42 +105,43 @@
 
 .WikiaBlogListingBox {
 	@include rail-module;
-	width: 282px;
-	line-height: 16px;
 	display: block !important;
+	line-height: 16px;
+	width: 282px;
 
 	.wikia-button {	 // /** adding padding to make the button look wider **/
-		padding: 0px 5px;
 		margin-top: -1px;
+		padding: 0px 5px;
 	}
 	.commentslikes {
+		bottom: 11px;
 		position: absolute;
 		right: 0px;
-		bottom: 11px;
-
+		a {
+			font-weight: normal;	
+		}
 	}
 	ul {
-		margin: 0px;
-		margin-top: 15px;
+		margin: 15px 0 0;
 		li {
+			@include clearfix;
+			border-top: solid 1px $color-page-border;
+			list-style: none;
 			position: relative;
 			&:first-child {
 				border: none;
 			}
-			@include clearfix;
-			border-top: solid 1px $color-page-border;
-			list-style: none;
 		}
 	}
 	img {
 		vertical-align: middle
 	}
 	h1 {
-		padding-bottom: 0px;
 		margin: {
 			left: 28px;
 			bottom: 0px;
 		}
+		padding-bottom: 0px;
 		a {
 			font-size: 12px;
 		}
@@ -158,13 +159,13 @@
 
 	details {
 		img { // /** the avatar **/
-			width: 25px;
-			height: 25px;
 			float: left;
+			height: 25px;
 			margin: {
 				right: 1px;
 				top: -15px;
 			}
+			width: 25px;
 		}
 		span { // /** the date **/
 			font-size: 10px;
@@ -183,7 +184,6 @@
 		.read-more {
 			a {
 				font-size: 11px;
-
 			}
 		}
 	}
