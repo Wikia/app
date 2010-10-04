@@ -20,7 +20,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 /**
  * Use revision number
  */
-$wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = '27384';
+$wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = '27385';
 
 /**
  * @name wgAkamaiGlobalVersion
@@ -128,7 +128,6 @@ $wgAutoloadClasses['LatestEarnedBadgesModule'] = $IP.'/extensions/wikia/Achievem
 $wgAutoloadClasses['HotSpotsModule'] = $IP.'/skins/oasis/modules/HotSpotsModule.class.php';
 $wgAutoloadClasses['CommunityCornerModule'] = $IP.'/skins/oasis/modules/CommunityCornerModule.class.php';
 $wgAutoloadClasses['PopularBlogPostsModule'] = $IP.'/skins/oasis/modules/PopularBlogPostsModule.class.php';
-$wgAutoloadClasses['FeedbackModule'] = $IP.'/skins/oasis/modules/FeedbackModule.class.php';
 $wgAutoloadClasses['RandomWikiModule'] = $IP.'/skins/oasis/modules/RandomWikiModule.class.php';
 $wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiModule.class.php';
 
