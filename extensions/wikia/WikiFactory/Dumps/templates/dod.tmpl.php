@@ -26,7 +26,7 @@
 			&nbsp;<a href="<?php echo $full[ "url" ] ?>"><?php echo $full[ "timestamp" ] ?></a>
 		</td>
 	</tr>
-	<?php if( ! $isAnon && $available ): ?>
+	<?php if( ! $isAnon ): ?>
 	<tr>
 		<td  style="border-right: 0">
 			<?php $this->msg( 'dump-database-request' ) ?>
@@ -36,7 +36,11 @@
 		</td>
 		<td style="border-left: 0">
 			<form>
+				<?php if ( $available ) { ?>
 				<input type="submit" value="<?php $this->msg( 'dump-database-request-submit' ) ?>" />
+				<?php } else { ?>
+				<input type="submit" value="<?php $this->msg( 'dump-database-request-already-submitted' ) ?>" disabled="disabled" />
+				<?php } ?>
 			</form>
 		</td>
 	</tr>

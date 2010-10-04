@@ -17,6 +17,7 @@ $messages['en'] = array(
 	'dump-database-request' => 'Request an update',
 	'dump-database-request-info' => '(Dumps are usually generated weekly)',
 	'dump-database-request-submit' => 'Send request',
+	'dump-database-request-already-submitted' => 'Dump has been requested recently (less than 7 days ago)',
 	'dump-database-request-requested' => 'Request for database dump sent',
 	'dump-database-info-more' => 'Please <a href="http://community.wikia.com/wiki/Help:Database_download">see</a> for more info'
 );
