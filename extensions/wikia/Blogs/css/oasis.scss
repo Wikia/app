@@ -176,6 +176,7 @@
 	}
 	blockquote {
 		@include clearfix;
+		overflow: hidden;
 		clear: both;
 		padding: {
 			top: 7px;
