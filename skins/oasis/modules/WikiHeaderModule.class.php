@@ -68,42 +68,13 @@ class WikiHeaderModule extends Module {
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		// this is partly a temporary code which has to be changed - ask Inez - begin
-		$service = new NavigationService();
-
-		$oasis_navigation_title = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI);
-
 		if($wgUser->isAllowed('editinterface')) {
-			$this->editURL['href'] = $oasis_navigation_title->getFullURL();
+			$this->editURL['href'] = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL();
 			$this->editURL['text'] = wfMsg('monaco-edit-this-menu');
 		}
 
-		if(!$oasis_navigation_title->exists()) {
-			// There is no local version of Oasis-navigation
-
-			$monaco_sidebar_title = Title::newFromText('Monaco-sidebar', NS_MEDIAWIKI);
-			if($monaco_sidebar_title->exists()) {
-				// There is a local version of Monaco-sidebar
-
-				if(!wfEmptyMsg('Monaco-sidebar', wfMsgForContent('Monaco-sidebar'))) {
-					$monaco_sidebar_text = wfMsgForContent('Monaco-sidebar');
-					$oasis_navigation_text = $this->parseMonacoSidebarToOasisNavigation($monaco_sidebar_text);
-
-					if(trim($oasis_navigation_text) != "") {
-						global $wgIP;
-						$userWikia = User::newFromName('Wikia');
-						$origIP = $wgIP;
-						$wgIP = '127.0.0.1';
-						$oasis_navigation_article = new Article($oasis_navigation_title);
-						$oasis_navigation_article->doEdit($oasis_navigation_text, '', ($userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0) | EDIT_SUPPRESS_RC, false, $userWikia);
-						$wgIP = $origIP;
-					}
-				}
-			}
-		}
-
+		$service = new NavigationService();
 		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7), 60*60*3 /* 3 hours */);
-		// this is partly a temporary code which has to be changed - ask Inez - end
 
 	}
 
