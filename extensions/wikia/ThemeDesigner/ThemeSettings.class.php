@@ -14,13 +14,31 @@ class ThemeSettings {
 	private $defaultSettings;
 
 	function __construct() {
-		global $wgOasisThemes, $wgSitename;
+		global $wgOasisThemes, $wgSitename, $wgAdminSkin;
 
-		$defaultThemeName = 'sapphire';
+		$themeName = 'oasis';
+
+		$adminSkin = explode('-', $wgAdminSkin);
+
+		if(count($adminSkin) == 2) {
+			$transition = array(
+				'sky' => 'oasis',
+				'sapphire' => 'oasis',
+				'spring' => 'jade',
+				'forest' => 'jade',
+				'obsession' => 'carbon',
+				//'moonlight ' => 'Blue Steel',
+				//'beach' => 'Creamsicle',
+			);
+
+			if(isset($transition[$adminSkin[1]])) {
+				$themeName = $transition[$adminSkin[1]];
+			}
+		}
 
 		// colors
-		$this->defaultSettings = $wgOasisThemes[$defaultThemeName];
-		$this->defaultSettings['theme'] = $defaultThemeName;
+		$this->defaultSettings = $wgOasisThemes[$themeName];
+		$this->defaultSettings['theme'] = $themeName;
 
 		// wordmark
 		$this->defaultSettings['wordmark-text'] = $wgSitename;
