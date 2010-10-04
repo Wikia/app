@@ -17,13 +17,13 @@
  * DONE: Use MW's Http->get instead of curl.
  * DONE: Make the number of results more easily configurable.
  * DONE: Clean the hacked-together example code into something readable and usable.
+ * DONE: Handle the case where the API finds no results (some decent default-ad for Amazon - a play-example-MP3s widget).
+ * DONE: Make the symlink in clinks.pl.
  * TODO: Make it look good.
- * TODO: Handle the case where the API finds no results (some decent default-ad for Amazon - perhaps just one of their widgets).
  * TODO: Get it to run as an ad on a page.
  * TODO: Add memcaching of... the Amazon results? (there will be N+1 amazon requests for N items - perhaps cache the entire output?  not 'correct' way to use memcached but it could work).
- * TODO: Make the symlink in clinks.pl.
  * TODO: Make it use skin-colors in Oasis? Might require loading a big CSS file though. oh... maybe not actually.. just a scss file for this widget.
- * TODO: Can we embed a play button?
+ * TODO: Can we embed a play button? (if we can't use Amazons, there is still some API that MusicHackday uses a lot for 30 second previews).
  * TODO: If we use scroll-bars, add a "more" link below the bottom.
  */
 
@@ -36,15 +36,30 @@ if ( $IP === false ) {
 require( $IP . '/includes/WebStart.php' );
 
 global $wgAmazonAccessKeyId,$wgAmazonSecretAccessKey;
+global $wgRequest;
 define('AWS_ACCESS_KEY_ID', $wgAmazonAccessKeyId);
 define('AWS_SECRET_ACCESS_KEY', $wgAmazonSecretAccessKey);
 define('AssocTag','wikia-20');
 define('LW_AD_WIDTH', '300px');
 define('LW_AD_HEIGHT', '250px');
-define('NUM_ITEMS_TO_SHOW', 4);
-define('LW_AD_NUMCOLS', 1);
+define('LW_AMZN_DEFAULT_AD_CODE', '<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab" id="Player_8c2e7ea2-3558-455b-af96-a94d8144cfe4"  WIDTH="250px" HEIGHT="250px"> <PARAM NAME="movie" VALUE="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fwikia-20%2F8014%2F8c2e7ea2-3558-455b-af96-a94d8144cfe4&Operation=GetDisplayTemplate"><PARAM NAME="quality" VALUE="high"><PARAM NAME="bgcolor" VALUE="#FFFFFF"><PARAM NAME="allowscriptaccess" VALUE="always"><embed src="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fwikia-20%2F8014%2F8c2e7ea2-3558-455b-af96-a94d8144cfe4&Operation=GetDisplayTemplate" id="Player_8c2e7ea2-3558-455b-af96-a94d8144cfe4" quality="high" bgcolor="#ffffff" name="Player_8c2e7ea2-3558-455b-af96-a94d8144cfe4" allowscriptaccess="always"  type="application/x-shockwave-flash" align="middle" height="250px" width="250px"></embed></OBJECT> <NOSCRIPT><A HREF="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fwikia-20%2F8014%2F8c2e7ea2-3558-455b-af96-a94d8144cfe4&Operation=NoScript">Amazon.com Widgets</A></NOSCRIPT>');
+$LW_AMZN_ITEMS_TO_SHOW = 4;
+$LW_AMZN_NUMCOLS = 1;
+$LW_AMZN_THUMB_SIZE = 75;
+$LW_AMZN_OVERFLOW = 'auto';
 
-global $wgRequest;
+// Configure settings based on 'layout'.
+$layout = $wgRequest->getVal('layout');
+switch($layout){
+	case '2col':
+		$LW_AMZN_ITEMS_TO_SHOW = 4;
+		$LW_AMZN_NUMCOLS = 2;
+		$LW_AMZN_THUMB_SIZE = 40;
+		$LW_AMZN_OVERFLOW = 'hidden';
+	default:
+	break;
+}
+
 $title = $wgRequest->getVal('title', 'Cake');
 displayAdForTitle($title);
 
@@ -55,6 +70,8 @@ displayAdForTitle($title);
  * for DigitalMusic on Amazon, related to that title.
  */
 function displayAdForTitle($title){
+	global $LW_AMZN_OVERFLOW;
+
 	$title = str_replace(":", " ", $title);
 	$title = str_replace("_", " ", $title);
 	?><!doctype html>
@@ -70,16 +87,19 @@ function displayAdForTitle($title){
 				height:<?php print LW_AD_HEIGHT; ?>;
 				background-color:#fff;
 				vertical-align:middle;
-				overflow:auto;
+				overflow:<?php print $LW_AMZN_OVERFLOW; ?>;
 			}
 			table{width:100%;height:100%;border-spacing:0px;}
 			td{font-size:.75em;padding:0px;vertical-align:top;}
 			tr{padding-bottom;10px;}
+			#fallback{
+				width:100%;
+				text-align:center;
+			}
 		</style>
 	</head>
 	<body>
 		<div id='article'>
-			<div style='text-align:center;width:100%'>Amazon</div>
 		<?php
 			$searchIndex = "DigitalMusic";
 			$keywords = $title;
@@ -166,38 +186,44 @@ function ItemSearch($SearchIndex, $Keywords, $ItemPage=1){
 
 
 function printSearchResults($parsed_xml, $SearchIndex, $ItemPage=1){
-	$numOfItems = $parsed_xml->Items->TotalResults;
-	$totalPages = $parsed_xml->Items->TotalPages;
-
-	$CartId = "";//$_GET['CartId'];
-	$HMAC = "";//urlencode($_GET['HMAC']);
+	global $LW_AMZN_ITEMS_TO_SHOW, $LW_AMZN_NUMCOLS;
+	if(isset($parsed_xml->Items)){
+		$numOfItems = $parsed_xml->Items->TotalResults;
+		$totalPages = $parsed_xml->Items->TotalPages;
+	} else {
+		$numOfItems = 0;
+		$totalPages = 0;
+	}
 	if($numOfItems>0){
-		print("<table>");
+		print "\t\t\t<div style='text-align:center;width:100%'>Amazon</div>\n";
+		print "\t\t\t<table>";
 		$index = 0;
 		foreach($parsed_xml->Items->Item as $current){
-			if($index % LW_AD_NUMCOLS == 0){
-				print "<tr>\n";
+			if($index % $LW_AMZN_NUMCOLS == 0){
+				print "\t\t\t\n<tr>";
 			}
-		
-			if($index < NUM_ITEMS_TO_SHOW){
+
+			if($index < $LW_AMZN_ITEMS_TO_SHOW){
 				ItemLookup($current->ASIN);
 			}
 
-			if($index % LW_AD_NUMCOLS == (LW_AD_NUMCOLS-1)){
+			if($index % $LW_AMZN_NUMCOLS == ($LW_AMZN_NUMCOLS-1)){
 				print "</tr>\n";
 			}
 
 			$index++;
 		}
-		print "</table>\n";
+		print "\t\t\t</table>\n";
 	}else{
-		// TODO: HANDLE THIS CASE BETTER... SOME KIND OF DEFAULT
-		print("<center>No matches found.</center>");
+		// No results were found, just display a default widget.
+		print "<div id='fallback'>\n";
+		print LW_AMZN_DEFAULT_AD_CODE;
+		print "</div>\n";
 	}
-
 }
 
 function ItemLookup($asin, $index=0){
+	global $LW_AMZN_THUMB_SIZE;
 
 	$params = array(
 		"Operation" => "ItemLookup",
@@ -214,10 +240,18 @@ function ItemLookup($asin, $index=0){
 		$current = $parsed_xml->Items->Item;
 		
 		//if(isset($current->Offers->Offer->OfferListing->OfferListingId)){ //only show items for which there is an offer
+			switch($LW_AMZN_THUMB_SIZE){
+				case 30:
+					$imgSrc = $current->ImageSets->ImageSet->SwatchImage->URL;
+					break;
+				case 40:
+				case 75:
+				default:
+					$imgSrc = $current->SmallImage->URL;
+					break;
+			}
 			// TODO: Add alt-tags.
-			//print "<td width='30px'><img src='".$current->ImageSets->ImageSet->SwatchImage->URL."' width='30px' height='30px'/></td>"; // 30x30
-			//print "<td width='40px'><img src='".$current->SmallImage->URL."' width='40px' height='40px'/></td>"; // 40x40
-			print "<td width='75px'><img src='".$current->SmallImage->URL."' width='75px' height='75px'/></td>"; // 75x75
+			print "<td width='".$LW_AMZN_THUMB_SIZE."px'><img src='".$imgSrc."' width='".$LW_AMZN_THUMB_SIZE."px' height='".$LW_AMZN_THUMB_SIZE."px'/></td>";
 
 			print "<td><b>".$current->ItemAttributes->Title."</b>";
 			if(isset($current->ItemAttributes->Director)){
