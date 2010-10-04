@@ -518,12 +518,16 @@ var initTracker = function() {
 		}
 	});
 
-	// track clicks on Facebook's "Like" buttons
-	FB.Event.subscribe('edge.create', function(resp) {
-		$.tracker.byStr('pageheader/like');
-	});
 
-	FB.Event.subscribe('comments.add', function(resp) {
-		$.tracker.byStr('pageheader/post');
-	});
+	// track clicks on Facebook's "Like" buttons
+	try {
+		FB.Event.subscribe('edge.create', function(resp) {
+			$.tracker.byStr('pageheader/like');
+		});
+	
+		FB.Event.subscribe('comments.add', function(resp) {
+			$.tracker.byStr('pageheader/post');
+		});
+	} catch(e) {
+	}
 }
