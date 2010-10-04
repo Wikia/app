@@ -11,10 +11,12 @@
 <?php
 	foreach($slideshow['images'] as $image) {
 ?>
-		<li <? if ( !empty( $image[ 'big' ] ) ): ?>style="background-image: url('<?= $image['big'] ?>')"<? endif; ?> caption="<?= htmlspecialchars($image['caption']) ?>">
-			<? if( empty( $image[ 'big' ] ) ): ?>
+		<li<?php if ( !empty( $image[ 'big' ] ) ) { ?> style="background-image: url('<?= $image['big'] ?>')"<? } ?> caption="<?= htmlspecialchars($image['caption']) ?>">
+			<?php if (!empty($image['image'])) { ?>
+				<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" />
+			<?php } else if ( empty( $image[ 'big' ] ) ) { ?>
 				<a class="image broken-image new" style="line-height: <?= $height; ?>px"><?= $image[ 'pageTitle' ]; ?></a>
-			<? endif; ?>
+			<?php } ?>
 <?php
 		if (isset($image['url'])) {
 			$linkText = ($image['linktext'] != '') ? $image['linktext'] : $image['link'];

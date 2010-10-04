@@ -144,6 +144,7 @@
 	float: left;
 	height: 68px;
 	margin: 15px 10px;
+	overflow: hidden;
 	width: 91px;
 }
 

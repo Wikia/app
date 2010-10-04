@@ -33,6 +33,29 @@ var ImageLightbox = {
 			});
 	},
 
+	// get caption node for given target node
+	getCaption: function(target) {
+		var caption = false;
+
+		if (target.hasClass('slideshow')) {
+			// <gallery type="slideshow"> lightboxes
+			caption = target.prev('label').html();
+		}
+		else if (target.hasClass('lightbox')) {
+			// <gallery> lightboxes
+			caption = target.closest('.thumb').next('.lightbox-caption').html();
+		}
+		else if (target.hasClass('image')) {
+			// image thumbs
+			var captionNode = target.next('.thumbcaption').clone();
+			captionNode.children('.magnify').remove();
+
+			caption = captionNode.html();
+		}
+
+		return caption;
+	},
+
 	// handle clicks on article content and handle clicks on links only
 	onClick: function(ev) {
 		var target = $(ev.target);
@@ -62,6 +85,21 @@ var ImageLightbox = {
 			return;
 		}
 
+		// handle lightboxes for external images
+		if (target.hasClass('link-external')) {
+			var caption = this.getCaption(target);
+
+			var image = target.children('img');
+			var html = '<div id="lightbox-image" style="text-align: center"><img src="' + image.attr('src') + '" alt="" /></div>' +
+				'<div id="lightbox-caption-content"></div>';
+
+			this.showLightbox(target.closest('.wikia-gallery').attr('data-feed-title'), html, caption);
+
+			// don't follow the link
+			ev.preventDefault();
+			return;
+		}
+
 		// get name of an image
 		var imageName = false;
 
@@ -82,36 +120,19 @@ var ImageLightbox = {
 		//imageName = "File:acat.jpg";
 		if (imageName != false) {
 			// RT #44281
-	
 			imageName = decodeURIComponent(imageName);
 
 			// find caption node and use it in lightbox popup
-			var caption = false;
+			var caption = this.getCaption(target);
+			this.fetchLightbox(imageName, caption);
 
-			if (target.hasClass('slideshow')) {
-				// <gallery type="slideshow"> lightboxes
-				caption = target.prev('label').html();
-			}
-			else if (target.hasClass('lightbox')) {
-				// <gallery> lightboxes
-				caption = target.closest('.thumb').next('.lightbox-caption').html();
-			}
-			else if (target.hasClass('image')) {
-				// image thumbs
-				var captionNode = target.next('.thumbcaption').clone();
-				captionNode.children('.magnify').remove();
-
-				caption = captionNode.html();
-			}
-			this.show(imageName, caption);
-	
 			// don't follow href
 			ev.preventDefault();
 		}
 	},
 
-	// show lightbox
-	show: function(imageName, caption) {
+	// fetch data and show lightbox
+	fetchLightbox: function(imageName, caption) {
 		var self = this;
 		this.log(imageName);
 
@@ -122,9 +143,6 @@ var ImageLightbox = {
 		}
 
 		this.lock = true;
-
-		// fix caption when not provided
-		caption = caption || '';
 
 		// tracking
 		this.track('/init');
@@ -145,28 +163,41 @@ var ImageLightbox = {
 			'title': imageName
 		}, function(res) {
 			if (res && res.html) {
-				// open modal
-				$.showModal(res.title, res.html, {
-					'id': 'lightbox',
-					'width': res.width,
+				self.showLightbox(res.title, res.html, caption, res.width);
+			}
+		});
+	},
 
-					// track when popup is closed
-					'onClose': function() {
-						self.track('/close');
-					},
+	// create modal popup
+	showLightbox: function(title, content, caption, width) {
+		var self = this;
 
-					// setup tracking
-					'callback': function() {
-						$('#lightbox-link').click(function() {
-							self.track('/details');
-						});
+		// fix caption when not provided
+		caption = caption || '';
 
-						$('#lightbox-caption-content').html(caption);
+		$.showModal(title, content, {
+			'id': 'lightbox',
+			'width': width ? width : 'auto',
 
-						// remove lock
-						delete self.lock;
-					}
+			// track when popup is closed
+			'onClose': function() {
+				self.track('/close');
+			},
+
+			// setup tracking
+			'callback': function() {
+				$('#lightbox-link').click(function() {
+					self.track('/details');
 				});
+
+				$('#lightbox-caption-content').html(caption);
+
+				// reposition lightbox
+				var width =$('#lightbox').width();
+				$('#lightbox').resizeModal(width);
+
+				// remove lock
+				delete self.lock;
 			}
 		});
 	}
