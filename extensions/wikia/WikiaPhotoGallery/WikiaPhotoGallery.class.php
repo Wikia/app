@@ -114,8 +114,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			'position' => array('left', 'center', 'right'),
 			'spacing' => array('medium', 'large', 'small'),
 			'buckets' => false,
-			'rowdivider' => false
-			'hideoverflow' => false,
+			'rowdivider' => false,
+			'hideoverflow' => false
 		);
 	}
 
