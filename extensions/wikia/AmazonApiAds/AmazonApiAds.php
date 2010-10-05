@@ -19,12 +19,13 @@
  * DONE: Clean the hacked-together example code into something readable and usable.
  * DONE: Handle the case where the API finds no results (some decent default-ad for Amazon - a play-example-MP3s widget).
  * DONE: Make the symlink in clinks.pl.
+ * DONE: Add memcaching of the Amazon results.
+ * DONE: Make the thumbnails and song titles a link to the product and the artist-name a link to a search for the Artist in Amazon's MP3 Downloads category.
  *
  * TODO: Make it look good.
  * TODO: Get it to run as an ad on a page.
- * TODO: Add memcaching of... the Amazon results? (there will be N+1 amazon requests for N items - perhaps cache the entire output?  not 'correct' way to use memcached but it could work).
  * TODO: Make it use skin-colors in Oasis? Might require loading a big CSS file though. oh... maybe not actually.. just a scss file for this widget.
- * TODO: Can we embed a play button? (if we can't use Amazons, there is still some API that MusicHackday uses a lot for 30 second previews).
+ * TODO: Can we embed a play button? (if we can't use Amazons, is it worth licensing from developer.7digital.net to play 30 second previews?).
  * TODO: If we use scroll-bars, add a "more" link below the bottom (which links to a search for the artist on Amazon in DigitalMusic category).
  */
 
@@ -44,19 +45,22 @@ define('AssocTag','wikia-20');
 define('LW_AD_WIDTH', '300px');
 define('LW_AD_HEIGHT', '250px');
 define('LW_AMZN_DEFAULT_AD_CODE', '<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab" id="Player_8c2e7ea2-3558-455b-af96-a94d8144cfe4"  WIDTH="250px" HEIGHT="250px"> <PARAM NAME="movie" VALUE="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fwikia-20%2F8014%2F8c2e7ea2-3558-455b-af96-a94d8144cfe4&Operation=GetDisplayTemplate"><PARAM NAME="quality" VALUE="high"><PARAM NAME="bgcolor" VALUE="#FFFFFF"><PARAM NAME="allowscriptaccess" VALUE="always"><embed src="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fwikia-20%2F8014%2F8c2e7ea2-3558-455b-af96-a94d8144cfe4&Operation=GetDisplayTemplate" id="Player_8c2e7ea2-3558-455b-af96-a94d8144cfe4" quality="high" bgcolor="#ffffff" name="Player_8c2e7ea2-3558-455b-af96-a94d8144cfe4" allowscriptaccess="always"  type="application/x-shockwave-flash" align="middle" height="250px" width="250px"></embed></OBJECT> <NOSCRIPT><A HREF="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fwikia-20%2F8014%2F8c2e7ea2-3558-455b-af96-a94d8144cfe4&Operation=NoScript">Amazon.com Widgets</A></NOSCRIPT>');
+define('SECONDS_IN_A_DAY', 86400); // memcache cache-duration for Amazon queries.
+define('WIKIA_AMZN_AFFIL_ID', 'wikia-20');
+define('WIKIA_AMZN_SEARCH_TOKEN', '%%SEARCH_TERM%%');
+define('WIKIA_AMZN_SEARCH_LINK', 'http://www.amazon.com/gp/search?ie=UTF8&keywords='.WIKIA_AMZN_SEARCH_TOKEN.'&tag='.WIKIA_AMZN_AFFIL_ID.'&index=digital-music&linkCode=ur2&camp=1789&creative=932');
 $LW_AMZN_ITEMS_TO_SHOW = 4;
 $LW_AMZN_NUMCOLS = 1;
 $LW_AMZN_THUMB_SIZE = 75;
-$LW_AMZN_OVERFLOW = 'auto';
 
 // Configure settings based on 'layout'.
-$layout = $wgRequest->getVal('layout');
-switch($layout){
+global $LW_AMZN_LAYOUT;
+$LW_AMZN_LAYOUT = $wgRequest->getVal('layout');
+switch($LW_AMZN_LAYOUT){
 	case '2col':
 		$LW_AMZN_ITEMS_TO_SHOW = 4;
 		$LW_AMZN_NUMCOLS = 2;
 		$LW_AMZN_THUMB_SIZE = 40;
-		$LW_AMZN_OVERFLOW = 'hidden';
 	default:
 	break;
 }
@@ -83,20 +87,7 @@ function displayAdForTitle($title){
 		<style type='text/css'>
 			html,body{margin:0px;padding:0px;background-color:#ddd;font-family:Helvetica;}
 			img{border:0px;}
-			#article{
-				width:<?php print LW_AD_WIDTH; ?>;
-				height:<?php print LW_AD_HEIGHT; ?>;
-				background-color:#fff;
-				vertical-align:middle;
-				overflow:<?php print $LW_AMZN_OVERFLOW; ?>;
-			}
-			table{width:100%;height:100%;border-spacing:0px;}
-			td{font-size:.75em;padding:0px;vertical-align:top;}
-			tr{padding-bottom;10px;}
-			#fallback{
-				width:100%;
-				text-align:center;
-			}
+			<?php printCssByLayout(); ?>
 		</style>
 	</head>
 	<body>
@@ -110,6 +101,53 @@ function displayAdForTitle($title){
 	</body>
 </html><?php
 } // end displayAdForTitle()
+
+/**
+ * The layouts will have significantly different css, so they are extracted here to keep that from
+ * cluttering up the main template.
+ */
+function printCssByLayout(){
+	global $LW_AMZN_LAYOUT;
+	
+	if($LW_AMZN_LAYOUT == "2col"){
+		?>
+			#article{
+				width:<?php print LW_AD_WIDTH; ?>;
+				height:<?php print LW_AD_HEIGHT; ?>;
+				background-color:#fff;
+				vertical-align:middle;
+				overflow:hidden;
+			}
+			table{width:100%;height:100%;border-spacing:0px;}
+			td{font-size:.75em;padding:0px;vertical-align:top;}
+			tr{padding-bottom;10px;}
+			#fallback{
+				width:100%;
+				text-align:center;
+			}
+		<?php
+	} else {
+		// One column, scrolling.
+		?>
+			#article{
+				width:<?php print LW_AD_WIDTH; ?>;
+				height:<?php print LW_AD_HEIGHT; ?>;
+				background-color:#fff;
+				vertical-align:middle;
+				overflow:auto;
+			}
+			table{width:100%;height:100%;border-spacing:0px;}
+			td{font-size:.75em;padding:0px;vertical-align:top;}
+			tr{padding-bottom;10px;}
+			#fallback{
+				width:100%;
+				text-align:center;
+			}
+		<?php
+	}
+	
+	
+} // end printCssByLayout()
  
 /**
  * Returns a URL for making a GET request to Amazon with the given parameters and
@@ -165,27 +203,40 @@ function aws_signed_request($params, $public_key, $private_key, $region="com"){
 } // end aws_signed_request()
 
 
-function ItemSearch($SearchIndex, $Keywords, $ItemPage=1){
+function ItemSearch($searchIndex, $keywords, $itemPage=1){
+	global $wgMemc;
 
-// TODO: REMOVE - This was the old method before signing requests.
-//	$request="http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=ItemSearch&ResponseGroup=Medium,Offers";
-//	$request.="&SearchIndex=$SearchIndex&Keywords=$Keywords&ItemPage=$ItemPage";
+	$memKey = wfMemcKey('LW_AMZN_ITEM_SEARCH', str_replace(" ", "_", $keywords), $searchIndex, $itemPage);
+	$response = $wgMemc->get($memKey);
+	if(empty($response)){
+		// TODO: REMOVE - This was the old method before signing requests.
+		//	$request="http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=ItemSearch&ResponseGroup=Medium,Offers";
+		//	$request.="&SearchIndex=$searchIndex&Keywords=$keywords&ItemPage=$itemPage";
 
-	// NOTE: Instead of "Keywords", can also do "Artist" if desired. For now just leaving it as-is since we're already searching in DigitalMusic.
-	$params = array(
-		"Operation" => "ItemSearch",
-		"SearchIndex" => $SearchIndex,
-		"Keywords" => $Keywords,
-		"ItemPage" => $ItemPage,
-	);
-	$request = aws_signed_request($params, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
-	$response = Http::get($request);
+		// NOTE: Instead of "Keywords", can also do "Artist" if desired. For now just leaving it as-is since we're already searching in DigitalMusic.
+		$params = array(
+			"Operation" => "ItemSearch",
+			"SearchIndex" => $searchIndex,
+			"Keywords" => $keywords,
+			"ItemPage" => $itemPage,
+		);
+
+		$request = aws_signed_request($params, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+		$response = Http::get($request);
+
+		$wgMemc->set($memKey, $response, SECONDS_IN_A_DAY);
+	}
 	$parsed_xml = simplexml_load_string($response);
 	
-	printSearchResults($parsed_xml, $SearchIndex, $ItemPage);
+	printSearchResults($parsed_xml, $searchIndex, $itemPage);
 } // end ItemSearch()
 
-
+/**
+ * Given the parsed_xml of an Amazon ItemSearch API request, prints
+ * out the results for the ad.  Since the results require more detailed
+ * info than is in the search results, an ItemLookup request will be made
+ * for each item that is displayed.
+ */
 function printSearchResults($parsed_xml, $SearchIndex, $ItemPage=1){
 	global $LW_AMZN_ITEMS_TO_SHOW, $LW_AMZN_NUMCOLS;
 	if(isset($parsed_xml->Items)){
@@ -196,22 +247,21 @@ function printSearchResults($parsed_xml, $SearchIndex, $ItemPage=1){
 		$totalPages = 0;
 	}
 	if($numOfItems>0){
-		print "\t\t\t<div style='text-align:center;width:100%'>Amazon</div>\n";
-		print "\t\t\t<table>";
+		print "\t<div style='text-align:center;width:100%'>Amazon</div>\n";
+		print "\t\t\t<table>\n";
 		$index = 0;
 		foreach($parsed_xml->Items->Item as $current){
-			if($index % $LW_AMZN_NUMCOLS == 0){
-				print "\t\t\t\n<tr>";
-			}
-
 			if($index < $LW_AMZN_ITEMS_TO_SHOW){
+				if($index % $LW_AMZN_NUMCOLS == 0){
+					print "\t\t\t\t<tr>\n";
+				}
+
 				ItemLookup($current->ASIN);
-			}
 
-			if($index % $LW_AMZN_NUMCOLS == ($LW_AMZN_NUMCOLS-1)){
-				print "</tr>\n";
+				if($index % $LW_AMZN_NUMCOLS == ($LW_AMZN_NUMCOLS-1)){
+					print "\t\t\t\t</tr>\n";
+				}
 			}
-
 			$index++;
 		}
 		print "\t\t\t</table>\n";
@@ -221,25 +271,41 @@ function printSearchResults($parsed_xml, $SearchIndex, $ItemPage=1){
 		print LW_AMZN_DEFAULT_AD_CODE;
 		print "</div>\n";
 	}
-}
+} // end printSearchResults()
 
+/**
+ * Given the ASIN (a unique amazon product identifier), looks up and displays detailed info for that
+ * item.
+ */
 function ItemLookup($asin, $index=0){
-	global $LW_AMZN_THUMB_SIZE;
+	global $LW_AMZN_THUMB_SIZE, $LW_AMZN_NUMCOLS, $wgMemc;
 
-	$params = array(
-		"Operation" => "ItemLookup",
-		"ItemId" => $asin,
-		"ResponseGroup" => "Medium,Offers"
-	);
-	$request = aws_signed_request($params, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+	$memKey = wfMemcKey('AMZN_ITEM_LOOKUP', $asin);
+	$response = $wgMemc->get($memKey);
+	if(empty($response)){
+		$params = array(
+			"Operation" => "ItemLookup",
+			"ItemId" => $asin,
+			"ResponseGroup" => "Medium,Offers"
+		);
+		$request = aws_signed_request($params, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
-	$response = Http::get($request);
+		$response = Http::get($request);
+		$wgMemc->set($memKey, $response, SECONDS_IN_A_DAY);
+	}
 
 	$parsed_xml = simplexml_load_string($response);
 	
+	$DATA_COL_WIDTH = (LW_AD_WIDTH - ($LW_AMZN_THUMB_SIZE * $LW_AMZN_NUMCOLS)) / $LW_AMZN_NUMCOLS;
+
 	if(isset($parsed_xml->Items) && $parsed_xml->Items->Request->IsValid){
 		$current = $parsed_xml->Items->Item;
-		
+
+		$detailPageUrl = urldecode($current->DetailPageURL);
+
+		// Are we supposed to do this, or just leave "ws" (presumably "web service") as the tag?
+		$detailPageUrl = str_replace("tag=ws", "tag=".WIKIA_AMZN_AFFIL_ID, $detailPageUrl);
+
 		//if(isset($current->Offers->Offer->OfferListing->OfferListingId)){ //only show items for which there is an offer
 			switch($LW_AMZN_THUMB_SIZE){
 				case 30:
@@ -253,19 +319,21 @@ function ItemLookup($asin, $index=0){
 			}
 			$alt = $current->ItemAttributes->Title;
 			$alt = str_replace("'", '"', $alt);
-			print "<td width='".$LW_AMZN_THUMB_SIZE."px'><img src='".$imgSrc."' width='".$LW_AMZN_THUMB_SIZE."px' height='".$LW_AMZN_THUMB_SIZE."px' alt='$alt'/></td>";
+			print "\t\t\t\t\t<td width='".$LW_AMZN_THUMB_SIZE."px'><a href='$detailPageUrl'><img src='".$imgSrc."' width='".$LW_AMZN_THUMB_SIZE."px' height='".$LW_AMZN_THUMB_SIZE."px' alt='$alt'/></a></td>\n";
 
-			print "<td><b>".$current->ItemAttributes->Title."</b>";
-			if(isset($current->ItemAttributes->Director)){
-				print "<br>Director: ".$current->ItemAttributes->Director;
-			} elseif(isset($current->ItemAttributes->Author)) {
-				print "<br>Author: ".$current->ItemAttributes->Author;
-			} elseif(isset($current->ItemAttributes->Artist)) {
-				print "<br>by ".$current->ItemAttributes->Artist;
+			print "\t\t\t\t\t<td width='".$DATA_COL_WIDTH."px'><b><a href='$detailPageUrl'>".$current->ItemAttributes->Title."</a></b>";
+			$artist = "";
+			if(isset($current->ItemAttributes->Artist)) {
+				$artist = $current->ItemAttributes->Artist;
 			} elseif(isset($current->ItemAttributes->Creator)){
-				print "<br>by ".$current->ItemAttributes->Creator;
+				$artist = $current->ItemAttributes->Creator;
 			}
-			print "<br/>".$current->OfferSummary->LowestNewPrice->FormattedPrice."<br/>\n";
+			if($artist != ""){
+				$searchLink = str_replace(WIKIA_AMZN_SEARCH_TOKEN, $artist, WIKIA_AMZN_SEARCH_LINK);
+				print "<br/>by <a href='$searchLink'>$artist</a>";
+			}
+		
+			print "<br/>".$current->OfferSummary->LowestNewPrice->FormattedPrice."<br/>";
 			print "</td>\n";
 		//}
 	}
