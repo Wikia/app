@@ -726,21 +726,20 @@ class UserBadges {
 	}
 	
 	public static function getEditCount($uid) {
-		global $wgContLang;
-		global $wgCityId;
+		global $wgContLang, $wgCityId, $wgStatsDB;
 		wfProfileIn(__METHOD__);
 		
 		$editCount = 0;
 		if (class_exists("Editcount")) {
 			$editCount = $wgContLang->formatNum( Editcount::getTotal( Editcount::editsByNs( $uid ) ) );
 		} else {
-			$dbs = wfGetDB(DB_SLAVE, array(), 'dbstats');
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$res = $dbs->select(
-				array( 'city_local_users' ),
+				array( '`specials`.`events_local_users`' ),
 				array( 'count(*) as cnt' ),
 				array(
-					'lu_wikia_id' => $wgCityId,
-					'lu_user_id' => $uid
+					'wiki_id' => $wgCityId,
+					'user_id' => $uid
 				),
 				$fname
 			);
