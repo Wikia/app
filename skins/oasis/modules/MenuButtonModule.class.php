@@ -18,6 +18,7 @@ class MenuButtonModule extends Module {
 
 	var $action;
 	var $actionName;
+	var $actionAccessKey;
 	var $class;
 	var $dropdown;
 	var $icon;
@@ -46,6 +47,8 @@ class MenuButtonModule extends Module {
 		else {
 			$this->actionName = 'edit';
 		}
+
+		$this->actionAccessKey = MenuButtonModule::accessKey($this->actionName);
 
 		// prompt for login to edit?
 		$this->promptLogin = ( !$wgTitle->userCanEdit() && $wgUser->isAnon() );
@@ -111,24 +114,7 @@ class MenuButtonModule extends Module {
 
 			// add accesskeys for dropdown items
 			foreach($this->dropdown as $key => &$item) {
-				switch($key) {
-					case 'move':
-						$accesskey = 'm';
-						break;
-
-					case 'protect':
-					case 'unprotect':
-						$accesskey = '=';
-						break;
-
-					case 'delete':
-					case 'undelete':
-						$accesskey = 'd';
-						break;
-
-					default:
-						$accesskey = false;
-				}
+				$accesskey = MenuButtonModule::accessKey($key);
 
 				if ($accesskey != false) {
 					$item['accesskey'] = $accesskey;
@@ -158,6 +144,35 @@ class MenuButtonModule extends Module {
 		$signUpHref .= "&type=login";
 		//$this->loginTitle = Skin::makeSpecialUrl('Signup'); // the linker just expects a page-name here.
 		return $signUpHref;
+	}
+	
+	private static function accessKey($key) {
+		$accesskey = false;
+		switch($key) {
+			case 'addtopic':
+				$accesskey = 'a';
+				break;
+			case 'edit':
+				$accesskey = 'e';
+				break;
+			case 'move':
+				$accesskey = 'm';
+				break;
+
+			case 'protect':
+			case 'unprotect':
+				$accesskey = '=';
+				break;
+
+			case 'delete':
+			case 'undelete':
+				$accesskey = 'd';
+				break;
+
+			default:
+				$accesskey = false;
+		}
+		return $accesskey;
 	}
 
 }
