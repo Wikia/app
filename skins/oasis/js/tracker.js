@@ -217,6 +217,23 @@ var initTracker = function() {
 		}
 	});
 
+	// Page count module
+	$('.WikiaPagesOnWikiModule').click(function(ev) {
+		var node = $(ev.target);
+		if(!node.is('a')) {
+			return;
+		}
+		var fakeUrl = 'module/pagecount/';
+		
+		// Create a Page
+		if (node.hasClass('wikia-button')) {
+			$.tracker.byStr(fakeUrl + 'createpage');
+
+			// duplicated because of RT #68550
+			$.tracker.byStr('action/createapage/module');
+		}
+	});
+
 	// Latest Activity module
 	$('.WikiaActivityModule').click(function(ev) {
 		var fakeUrl = 'module/latestactivity/';
@@ -224,14 +241,6 @@ var initTracker = function() {
 
 		if (!node.is('a')) {
 			return;
-		}
-
-		// Create a Page
-		if (node.hasClass('wikia-button')) {
-			$.tracker.byStr(fakeUrl + 'createpage');
-
-			// duplicated because of RT #68550
-			$.tracker.byStr('action/createapage/module');
 		}
 		// See more
 		else if (node.hasClass('more')) {
