@@ -37,6 +37,4 @@ $wgHooks['ArticlePurge'][] = 'Advertisement::onArticlePurge';
  
 //Sponsor page 
 $wgAutoloadClasses['SpecialSponsor'] = $dir . 'SpecialSponsor_body.php'; 
-//$wgExtensionMessagesFiles['SpecialSponsor'] = $dir . 'MyExtension.i18n.php';
-//$wgExtensionAliasesFiles['SpecialSponsor'] = $dir . 'MyExtension.alias.php';
-$wgSpecialPages['Sponsor'] = 'SpecialSponsor'; 
+//$wgSpecialPages['Sponsor'] = 'SpecialSponsor'; 
