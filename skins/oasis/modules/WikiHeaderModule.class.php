@@ -3,6 +3,7 @@
 class WikiHeaderModule extends Module {
 
 	var $wgBlankImgUrl;
+	var $wgEnableCorporatePageExt;
 
 	var $mainPageURL;
 	var $wgSitename;

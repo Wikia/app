@@ -57,7 +57,12 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		</ul>
 	</nav>
 	<div class="buttons">
-		<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif') ?><?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('accesskey' => 'g', 'class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif') ?>
+<?php if ($wgEnableCorporatePageExt) { 
+		echo wfRenderModule('RandomWiki');
+} else { ?>
+		<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif') ?>
+		<?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('accesskey' => 'g', 'class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif') ?>
+<?php } ?>
 	</div>
 	<div style="position: absolute; top: -1000px">
 		<?= View::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>

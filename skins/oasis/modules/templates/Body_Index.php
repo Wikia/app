@@ -47,13 +47,22 @@
 		?>
 		<div id="WikiaArticle" class="WikiaArticle">
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD')) ?>
+
+			<?php
+			if ($wgEnableCorporatePageExt) {
+				echo wfRenderModule('CorporateSite', 'Slider');
+			} ?>
+
 			<?= $bodytext ?>
 		</div>
 
 		<?= wfRenderModule('RelatedPages'); ?>
 
-		<?= wfRenderModule('ArticleCategories') ?>
-
+		<?php
+		if (empty($wgSuppressArticleCategories)) {
+			echo wfRenderModule('ArticleCategories');
+		}
+		?>
 		<div id="WikiaArticleBottomAd" class="noprint">
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
@@ -74,6 +83,8 @@
 ?>
 
 	<?= empty($wgSuppressFooter) ? wfRenderModule('Footer') : '' ?>
+	
+	<?= wfRenderModule('CorporateFooter') ?>
 
 </section><!--WikiaPage-->
 

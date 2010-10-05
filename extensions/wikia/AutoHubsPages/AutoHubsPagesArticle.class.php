@@ -84,7 +84,11 @@ class AutoHubsPagesArticle extends Article {
 			"data" => $data
 		));
 		$wgOut->setHTMLTitle( wfMsg('hub-header', $data['title']) ); // does not add a h1, this is done later
-		$wgOut->addHTML( $oTmpl->render("article") );
+		if (Wikia::isOasis()) {
+			$wgOut->addHTML(wfRenderModule('CorporateSite', 'TopHubWikis'));
+		} else {
+			$wgOut->addHTML( $oTmpl->render("article") );
+		}
 	}
 
 	/**

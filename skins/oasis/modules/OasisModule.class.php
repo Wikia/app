@@ -61,7 +61,7 @@ class OasisModule extends Module {
 
 		// add skin theme name
 		$skin = $wgUser->getSkin();
-		if($skin->themename != '') {
+		if(!empty($skin->themename)) {
 			$this->bodyClasses[] = "oasis-{$skin->themename}";
 		}
 
