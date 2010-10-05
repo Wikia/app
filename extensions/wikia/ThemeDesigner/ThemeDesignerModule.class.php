@@ -12,6 +12,7 @@ class ThemeDesignerModule extends Module {
 	var $wgOasisThemes;
 	var $wgCdnStylePath;
 	var $wgStyleVersion;
+	var $wgUser;
 
 	var $dir;
 	var $mimetype;
@@ -20,6 +21,8 @@ class ThemeDesignerModule extends Module {
 	var $themeSettings;
 	var $themeHistory;
 	var $returnTo;
+	var $analytics;
+	var $globalVariablesScript;
 
 	public function executeIndex() {
 		wfProfileIn( __METHOD__ );
@@ -50,6 +53,11 @@ class ThemeDesignerModule extends Module {
 		} else {
 			$this->returnTo = $this->wgScript;
 		}
+
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
+
+		// load Google Analytics code
+		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 
 		wfProfileOut( __METHOD__ );
 	}

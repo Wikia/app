@@ -13,18 +13,18 @@
 
 	<link rel="stylesheet" href="<?= wfGetSassUrl('/extensions/wikia/ThemeDesigner/css/ThemeDesigner.scss') ?>">
 
+	<?= $globalVariablesScript ?>
+
 	<script>
 		var returnTo = <?= Xml::encodeJSVar($returnTo) ?>;
 		var themeHistory = <?= Wikia::json_encode($themeHistory) ?>;
 		var themeSettings = <?= Wikia::json_encode($themeSettings) ?>;
 		var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
-		var wgServer = <?= Xml::encodeJSVar($wgServer) ?>;
-		var wgScript = <?= Xml::encodeJSVar($wgScript) ?>;
-		var wgStyleVersion = <?= Xml::encodeJSVar($wgStyleVersion) ?>;
 	</script>
 
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.tracker.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/aim.js"></script>
@@ -84,6 +84,8 @@
 	<?= wfRenderModule('ThemeDesigner', 'Picker') ?>
 
 	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= $wgServer ?>/wiki/Special:ThemeDesignerPreview"></iframe>
+
+<?= $analytics ?>
 
 </body>
 </html>
