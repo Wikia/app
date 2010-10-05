@@ -57,6 +57,17 @@
 		width: 22px;
 	}
 
+	&.remove {
+		background-position: -1128px -16px;
+		height: 16px;
+		width: 13px;
+	}
+
+	&.drag {
+		background-position: -1147px -32px;
+		height: 17px;
+		width: 13px;
+	}
 
 /*
 	&.add {
@@ -73,18 +84,6 @@
 
 	&.icon-article-like {
 		background-position: -1128px -32px;
-	}
-
-	&.remove {
-		background-position: -1128px -14px;
-		height: 20px;
-		width: 13px;
-	}
-
-	&.drag {
-		background-position: -1147px -30px;
-		height: 20px;
-		width: 13px;
 	}
 
 	&.edit-pencil {
@@ -105,18 +104,4 @@
 		width: 22px;
 	}
 */
-
-	&.shadow {
-		@include opacity(75);
-		background-position:  0 -2px;
-		height: 8px;
-		width: 1000px;
-	}
-
-	&.shadow-short {
-		@include opacity(75);
-		background-position: 0px -16px;
-		height: 8px;
-		width: 600px;
-	}
 }
