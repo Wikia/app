@@ -103,7 +103,6 @@ $wgAutoloadClasses['BodyModule'] = $IP.'/skins/oasis/modules/BodyModule.class.ph
 $wgAutoloadClasses['ContentDisplayModule'] = $IP.'/skins/oasis/modules/ContentDisplayModule.class.php';
 $wgAutoloadClasses['GlobalHeaderModule'] = $IP.'/skins/oasis/modules/GlobalHeaderModule.class.php';
 $wgAutoloadClasses['CorporateFooterModule'] = $IP.'/skins/oasis/modules/CorporateFooterModule.class.php';
-$wgAutoloadClasses['CorporateSiteModule'] = $IP.'/extensions/wikia/CorporatePage/modules/CorporateSiteModule.class.php';
 $wgAutoloadClasses['WikiHeaderModule'] = $IP.'/skins/oasis/modules/WikiHeaderModule.class.php';
 $wgAutoloadClasses['SearchModule'] = $IP.'/skins/oasis/modules/SearchModule.class.php';
 $wgAutoloadClasses['PageHeaderModule'] = $IP.'/skins/oasis/modules/PageHeaderModule.class.php';

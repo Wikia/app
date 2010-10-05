@@ -14,6 +14,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['CorporatePageHelper']  = $dir . 'CorporatePageHelper.class.php';
+$wgAutoloadClasses['CorporateSiteModule'] = $dir . 'modules/CorporateSiteModule.class.php';
+
 $wgExtensionMessagesFiles['CorporatePage'] = $dir . 'CorporatePage.i18n.php'; 
 $wgHooks['MakeGlobalVariablesScript'][] = 'CorporatePageHelper::jsVars';
 $wgHooks['ArticleFromTitle'][] = 'CorporatePageHelper::ArticleFromTitle';
