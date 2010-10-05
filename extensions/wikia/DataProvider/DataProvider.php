@@ -456,9 +456,9 @@ class DataProvider
 	 */
 	final public static function /* array */ GetTopFiveUsers($limit = 7) {
 		wfProfileIn( __METHOD__ );
-		global $wgExternalDatawareDB, $wgMemc, $wgCityId;
+		global $wgStatsDB, $wgMemc, $wgCityId;
 
-		if( empty( $wgExternalDatawareDB ) ) {
+		if( empty( $wgStatsDB ) ) {
 			$result = array();
 		}
 		else {
@@ -469,8 +469,8 @@ class DataProvider
 				$dbr = wfGetDB( DB_SLAVE );
 				$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__ );
 
-				$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-				$query = "SELECT lu_user_id AS rev_user, lu_rev_cnt AS cnt FROM city_local_users USE INDEX (lu_wikia_rev_cnt) WHERE lu_wikia_id = '" . $wgCityId . "' " . ( !empty($row->user_list) ? "AND lu_user_id NOT IN (" . $row->user_list . ",'0','929702')" : "" ) . " ORDER BY lu_rev_cnt DESC";
+				$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . $wgCityId . "' " . ( !empty($row->user_list) ? "AND user_id NOT IN (" . $row->user_list . ",'0','929702')" : "" ) . " ORDER BY edits DESC";
 
 				$res = $dbs->query( $dbs->limitResult($query, $limit * 4, 0) );
 
