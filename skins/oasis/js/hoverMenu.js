@@ -118,13 +118,13 @@ HoverMenu.prototype.showNav = function(parent) {
 	var nav = $(parent).children('ul');
 
 	if (nav.exists()) {
-		nav.addClass("show");;
+		nav.addClass("show");
 		//this.ads.css("visibility", "hidden");
 
 		// tracking
 		switch(this.selector) {
 			case '#GlobalNavigation':
-				$.tracker.byStr('wikiheader/wikinav/open');
+				$.tracker.byStr('globalheader/globalnav/open');
 
 				// spotlights displaying
 				var i = $(parent).index() + 1;
