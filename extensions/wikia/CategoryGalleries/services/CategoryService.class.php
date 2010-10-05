@@ -91,7 +91,7 @@
 					$lastMonth = strftime( "%Y%m%d", time() - 30 * 24 * 60 * 60 );
 					$res = $dbr->select(
 						array( 'page_views_articles' ),
-						array( 'pv_page_id', 'sum(pv_views) as pv_views' ),
+						array( 'pv_page_id as page_id', 'sum(pv_views) as pv_views' ),
 						array(
 							'pv_city_id' => $wgCityId,
 							'pv_page_id' => $pageIds,
@@ -172,6 +172,8 @@
 				foreach ($pageViews as $pageId => $views) {
 					if ($entries >= $count)
 						break;
+					if (empty($pages[$pageId]))
+						continue;
 					$page = $pages[$pageId];
 					$articles[$pageId] = array(
 						'page_id' => $pageId,
