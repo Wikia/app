@@ -89,6 +89,8 @@ var ThemeDesigner = {
 			} else {
 				$("#ThemeTab .next, #ThemeTab .previous").removeClass("disabled");
 			}
+
+			ThemeDesigner.track('theme/arrow');
 		});
 
 		// click handler for themes thumbnails
@@ -98,6 +100,8 @@ var ThemeDesigner = {
 			$(this).addClass("selected");
 
 			ThemeDesigner.set("theme", $(this).attr("data-theme"));
+
+			ThemeDesigner.track('theme/click');
 		});
 
 		// select current theme
@@ -117,6 +121,8 @@ var ThemeDesigner = {
 			} else {
 				ThemeDesigner.set("background-tiled", "false");
 			}
+
+			ThemeDesigner.track('customize/background-image/tile');
 		});
 	},
 
@@ -163,7 +169,11 @@ var ThemeDesigner = {
 	},
 
 	toolBarInit: function() {
-		$("#Toolbar .history").click(function() { $(this).find("ul").css("display", "block"); });
+		// TODO: optimize jQuery selectors
+		$("#Toolbar .history").click(function() {
+			$(this).find("ul").css("display", "block");
+			ThemeDesigner.track('previous/click');
+		});
 		$("#Toolbar .history ul").mouseleave(function() { $(this).css("display", "none"); });
 		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
 	},
@@ -174,6 +184,8 @@ var ThemeDesigner = {
 		event.stopPropagation();
 		var swatch = $(event.currentTarget);
 		var swatchName = event.currentTarget.className;
+
+		ThemeDesigner.track('customize/' + swatchName + '/click');
 
 		// check the type (color or image)
 		if(type == "color") {
@@ -204,6 +216,8 @@ var ThemeDesigner = {
 				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatch.attr("class"), ThemeDesigner.rgb2hex($(this).css("background-color")));
 				ThemeDesigner.set("theme", "custom");
+
+				ThemeDesigner.track('customize/' + swatchName + '/color');
 			});
 
 			//handle custom colors
@@ -238,6 +252,8 @@ var ThemeDesigner = {
 				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatch.attr("class"), color);
 				ThemeDesigner.set("theme", "custom");
+
+				ThemeDesigner.track('customize/' + swatchName + '/ok');
 			});
 
 		} else if (type == "image") {
@@ -266,6 +282,8 @@ var ThemeDesigner = {
 				}
 
 				ThemeDesigner.hidePicker();
+
+				ThemeDesigner.track('customize/' + swatchName + '/choose');
 			})
 		}
 
@@ -401,6 +419,8 @@ var ThemeDesigner = {
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
 			}
+
+			ThemeDesigner.track('customize/background-image/upload');
 		}
 	},
 
@@ -420,8 +440,11 @@ var ThemeDesigner = {
 
 	revertToPreviousTheme: function(event) {
 		event.preventDefault();
+		event.stopPropagation(); // don't fire "previous/click" tracking event
 		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()]['settings'];
 		ThemeDesigner.applySettings(true, true);
+
+		ThemeDesigner.track('previous/choose');
 	},
 
 	cancelClick: function(event) {
@@ -466,6 +489,10 @@ var ThemeDesigner = {
 		if (command == "WordmarkTab") {
 			ThemeDesigner.wordmarkShield();
 		}
+
+		// tracking
+		var tabName = command.replace(/Tab$/, '').toLowerCase();
+		ThemeDesigner.track(tabName + '/tab');
 	},
 
 	resizeIframe: function() {
