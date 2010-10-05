@@ -6,11 +6,15 @@ class AdModule extends Module {
 	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2'  );
 
 	private function configure() {
-		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2;
+		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt;
 
 		self::$config = array();
 
 		if(!$wgOut->isArticle()) {
+			return;
+		}
+		// No ads on corporate home page
+		if($wgEnableCorporatePageExt) {
 			return;
 		}
 

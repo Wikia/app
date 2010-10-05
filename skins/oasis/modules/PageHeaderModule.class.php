@@ -32,7 +32,6 @@ class PageHeaderModule extends Module {
 	 */
 	private function prepareActionButton() {
 		global $wgTitle;
-		wfProfileIn(__METHOD__);
 
 		$namespace = $wgTitle->getNamespace();
 
@@ -71,15 +70,12 @@ class PageHeaderModule extends Module {
 			$this->actionImage = MenuButtonModule::LOCK_ICON;
 			$this->actionName = 'source';
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Get content actions for dropdown
 	 */
 	private function getDropdownActions() {
-		wfProfileIn(__METHOD__);
 
 		// var_dump($this->content_actions);
 		$ret = array();
@@ -100,7 +96,6 @@ class PageHeaderModule extends Module {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -108,7 +103,6 @@ class PageHeaderModule extends Module {
 	 * Get recent revisions of current article and format them
 	 */
 	private function getRecentRevisions() {
-		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgMemc;
 
 		// use service to get data
@@ -135,12 +129,11 @@ class PageHeaderModule extends Module {
 			}
 			$wgMemc->set($mKey, $revisions);
 		}
-		wfProfileOut(__METHOD__);
+
 		return $revisions;
 	}
 
 	public static function formatTimestamp($stamp) {
-		wfProfileIn(__METHOD__);
 
 		$diff = time() - strtotime($stamp);
 
@@ -151,8 +144,6 @@ class PageHeaderModule extends Module {
 		else {
 			$ret = '';
 		}
-
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -163,8 +154,6 @@ class PageHeaderModule extends Module {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		wfProfileIn(__METHOD__);
-
 		global $wgTitle, $wgContLang, $wgLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix;
 
 		// page namespace
@@ -340,7 +329,6 @@ class PageHeaderModule extends Module {
 		// if page is rendered using one column layout, show search box as a part of page header
 		$this->showSearchBox = isset($params['showSearchBox']) ? $params['showSearchBox'] : false ;
 
-		// This is a reminder that this feature should probably work. --O
 		if (!empty($wgSupressPageTitle)) {
 			$this->title = '';
 			$this->subtitle = '';
@@ -349,15 +337,12 @@ class PageHeaderModule extends Module {
 		if (!empty($wgSupressPageSubtitle)) {
 			$this->subtitle = '';
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Render header for edit page
 	 */
 	public function executeEditPage() {
-		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgRequest, $wgSuppressToolbar, $wgShowMyToolsOnly;
 
 		// special handling for special pages (CreateBlogPost, CreatePage)
@@ -435,15 +420,12 @@ class PageHeaderModule extends Module {
 			// comments
 			$this->comments = $service->getCommentsCount();
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Render edit box header when doing preview / showing changes
 	 */
 	public function executeEditBox() {
-		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgRequest;
 
 		// detect section edit
@@ -462,8 +444,21 @@ class PageHeaderModule extends Module {
 
 		// back to article link
 		$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
+	}
 
-		wfProfileOut(__METHOD__);
+	public function executeCorporate() {
+		global $wgTitle;
+		
+		if (ArticleAdLogic::isMainPage()) {
+			$this->title = '';
+			$this->subtitle = '';
+		}
+		else if (BodyModule::isHubPage()) {
+			$this->title = wfMsg('hub-header', $wgTitle);
+		} else {
+			// action button (edit / view soruce) and dropdown for it
+			$this->prepareActionButton();
+		}
 	}
 
 	/**

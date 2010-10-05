@@ -11,11 +11,15 @@ class BodyModule extends Module {
 	var $wgSuppressPageHeader;
 	var $wgSuppressFooter;
 	var $wgSuppressFeedback;
+	var $wgSuppressArticleCategories;
+	var $wgEnableCorporatePageExt;
 
 	// skin vars
 	var $content;
 
+	// Module vars
 	var $afterBodyHtml;
+
 	var $headerModuleName;
 	var $headerModuleAction;
 	var $headerModuleParams;
@@ -66,6 +70,10 @@ class BodyModule extends Module {
 		return defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING;
 	}
 
+	public static function isHubPage() {
+		global $wgArticle;
+		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
+	}
 	/**
 	 * Decide whether to show user pages header on current page
 	 */
@@ -119,7 +127,7 @@ class BodyModule extends Module {
 
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt;
 
 		$railModuleList = array();
 
@@ -206,6 +214,27 @@ class BodyModule extends Module {
 			$this->displayComments = false;
 		}
 
+		// Corporate Skin
+		if ($wgEnableCorporatePageExt) {
+			$railModuleList = array (
+				1500 => array('Search', 'Index', null),
+			);
+			if (ArticleAdLogic::isMainPage()) {
+//				$railModuleList[1480] = array('CorporateSite', 'FollowUs', null);
+				$railModuleList[1470] = array('CorporateSite', 'FacebookLike', null);
+				$railModuleList = array();
+			}
+			else if (self::isHubPage()) {
+				$railModuleList[1490] = array('CorporateSite', 'HotSpots', null);
+				$railModuleList[1480] = array('CorporateSite', 'PopularHubPosts', null);
+				$railModuleList[1470] = array('CorporateSite', 'TopHubUsers', null);
+			} else {  // content pages
+//				$railModuleList[1480] = array('CorporateSite', 'FollowUs', null);
+//				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
+			}
+			if ($wgTitle->isSpecial('Search')) $railModuleList = array();
+			return $railModuleList;
+		}
 		// we don't want any modules on these namespaces including talk namespaces (even ad modules) and on edit pages and main pages
 		if (in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage()) {
 			wfProfileOut(__METHOD__);
@@ -227,7 +256,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgSingleH1;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgSingleH1, $wgEnableCorporatePageExt;
 
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
@@ -257,6 +286,19 @@ class BodyModule extends Module {
 			$this->headerModuleName = 'PageHeader';
 			if (self::isEditPage()) {
 				$this->headerModuleAction = 'EditPage';
+			}
+			if ($wgEnableCorporatePageExt) {
+				$wgOut->addStyle(wfGetSassUrl("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
+				$wgOut->addScript('<script src="/extensions/wikia/CorporatePage/js/CorporateSlider.js"></script>');
+
+//				$this->wgSuppressFooter	= true;
+				$this->wgSuppressArticleCategories = true;
+				$this->displayComments = false;
+				if (ArticleAdLogic::isMainPage()) {
+					$this->wgSuppressPageHeader = true;
+				} else {
+					$this->headerModuleAction = 'Corporate';
+				}
 			}
 		}
 
