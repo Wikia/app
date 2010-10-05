@@ -846,6 +846,13 @@ class BlogTemplateClass {
 				/* truncate text */
 				$cutSign = wfMsg( "blug-cut-sign" );
 				$sResult = self::__truncateText($sBlogText, null, $cutSign );
+				/* RT #69661: make sure truncated HTML is valid */
+				if (function_exists('tidy_repair_string')) {
+					$sResult = tidy_repair_string($sResult, array(), 'utf8');
+					$idxStart = strpos($sResult, '<body>') + 6;
+					$idxEnd = strrpos($sResult, '</body>');
+					$sResult = substr($sResult, $idxStart, $idxEnd -$idxStart);
+				}
 			} else {
 				/* parse revision text */
 				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
