@@ -455,10 +455,7 @@ class PageHeaderModule extends Module {
 		}
 		else if (BodyModule::isHubPage()) {
 			$this->title = wfMsg('hub-header', $wgTitle);
-		} else {
-			// action button (edit / view soruce) and dropdown for it
-			$this->prepareActionButton();
-		}
+		} 
 	}
 
 	/**
