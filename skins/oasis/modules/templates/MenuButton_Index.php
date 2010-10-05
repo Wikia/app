@@ -4,7 +4,7 @@
 			// user is not logged in
 			if (!empty( $promptLogin )) {
 ?>
-			<span><?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit-pencil', $loginURL); ?></span>
+			<?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit-pencil', $loginURL); ?>
 <?php
 			}
 			// render simple edit button
@@ -22,11 +22,11 @@
 <?php
 			if ( !empty( $promptLogin ) ) {
 ?>
-			<span><?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit', $loginURL) ?></span>
+			<?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit', $loginURL) ?>
 <?php
 			} else {
 ?>
-			<span><a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a></span>
+			<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
 <?php 
 			} 
 ?>
