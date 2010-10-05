@@ -29,6 +29,8 @@ class MenuButtonModule extends Module {
 	var $wgUser;
 
 	public function executeIndex($data) {
+		global $wgTitle, $wgUser;
+
 		wfProfileIn(__METHOD__);
 	
 		$this->loginURL = $this->createLoginURL();
@@ -44,6 +46,9 @@ class MenuButtonModule extends Module {
 		else {
 			$this->actionName = 'edit';
 		}
+
+		// prompt for login to edit?
+		$this->promptLogin = ( !$wgTitle->userCanEdit() && $wgUser->isAnon() );
 
 		// default CSS class
 		$this->class = 'wikia-button';
@@ -98,6 +103,7 @@ class MenuButtonModule extends Module {
 			else {
 				$this->icon = $image;
 			}
+
 		}
 
 		if (!empty($data['dropdown'])) {

@@ -1,8 +1,8 @@
 <?php
 	if (is_array($action) && !empty($action)) {
 		if (empty($dropdown)) {
-			// render [icon] + [link] ("View source")
-			if (!empty($iconBefore)) {
+			// user is not logged in
+			if (!empty( $promptLogin )) {
 ?>
 			<span><?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit-pencil', $loginURL); ?></span>
 <?php
@@ -10,7 +10,7 @@
 			// render simple edit button
 			else {
 ?>
-<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
+			<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
 <?php
 			}
 		}
@@ -19,7 +19,17 @@
 ?>
 <ul class="<?= $class ?>">
 	<li>
-		<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
+<?php
+			if ( !empty( $promptLogin ) ) {
+?>
+			<span><?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit', $loginURL) ?></span>
+<?php
+			} else {
+?>
+			<span><a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a></span>
+<?php 
+			} 
+?>
 		<img src="<?= $wgBlankImgUrl ?>" class="chevron">
 		<ul>
 <?php
