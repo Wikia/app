@@ -425,11 +425,15 @@ var ThemeDesigner = {
 	},
 
 	cancelClick: function(event) {
+		ThemeDesigner.track('cancel');
+
 		event.preventDefault();
 		document.location = returnTo;
 	},
 
 	saveClick: function(event) {
+		ThemeDesigner.track('save');
+
 		event.preventDefault();
 		$(event.target).attr('disabled', true);
 		ThemeDesigner.save();

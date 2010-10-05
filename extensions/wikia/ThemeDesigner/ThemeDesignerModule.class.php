@@ -12,7 +12,6 @@ class ThemeDesignerModule extends Module {
 	var $wgOasisThemes;
 	var $wgCdnStylePath;
 	var $wgStyleVersion;
-	var $wgUser;
 
 	var $dir;
 	var $mimetype;
