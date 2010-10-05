@@ -19,22 +19,22 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 
 	private function getUsersForGroup() {
-		global $wgMemc, $wgExternalDatawareDB;
+		global $wgMemc, $wgStatsDB;
 		wfProfileIn( __METHOD__ );
 
 		$memkey = sprintf("%s-%s-%d", __METHOD__, $this->params['group'], $this->mCityId);
 		$data = $wgMemc->get( $memkey );
 		if ( empty($data) ) {
-			$db = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$where = array(
-				'lu_wikia_id' => intval($this->mCityId),
-				" lu_allgroups like '%".$db->escapeLike($this->params['group'])."%' "
+				'wiki_id' => intval($this->mCityId),
+				" all_groups like '%".$db->escapeLike($this->params['group'])."%' "
 			);
 
 			$this->profileDBIn();
 			$oRes = $db->select( 
-				'city_local_users', 
-				array('lu_user_id as user_id, lu_allgroups as ug_groups'),	 
+				'`specials`.`events_local_users`', 
+				array('user_id, all_groups as ug_groups'),	 
 				$where,
 				__METHOD__
 			);
@@ -113,8 +113,8 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 	
 	protected function getExtDB() {
-		global $wgExternalDatawareDB;
-		$this->mDB = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+		global $wgStatsDB;
+		$this->mDB = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		return $this->mDB;
 	}	
 
@@ -286,8 +286,8 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		}
 		
 		# table
-		$this->addTables('city_local_users');	
-		$this->addWhere( 'lu_closed = 0' );
+		$this->addTables('specials.events_local_users');	
+		$this->addWhere( 'user_is_closed = 0' );
 		
 		# limit
 		$limit = $params['limit'];
@@ -300,21 +300,21 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		$fld_registration 	= isset($prop['registration']);
 
 		if ( !is_null($params['from']) )
-			$this->addWhere( 'lu_user_name >= ' . $db->addQuotes($this->keyToTitle($params['from'])) );
+			$this->addWhere( 'user_name >= ' . $db->addQuotes($this->keyToTitle($params['from'])) );
 
 		if ( !is_null($params['prefix']) )
-			$this->addWhere( 'lu_user_name LIKE "' . $db->escapeLike($this->keyToTitle( $params['prefix'])) . '%"' );
+			$this->addWhere( 'user_name LIKE "' . $db->escapeLike($this->keyToTitle( $params['prefix'])) . '%"' );
 
 		if ( !is_null($params['group']) ) {
-			$this->addWhere( 'lu_wikia_id = ' . intval($wgCityId) );			
-			$this->addWhere( 'lu_allgroups LIKE "%' . $db->escapeLike($this->keyToTitle( $params['prefix'])) . '%"' );
+			$this->addWhere( 'wiki_id = ' . intval($wgCityId) );			
+			$this->addWhere( 'all_groups LIKE "%' . $db->escapeLike($this->keyToTitle( $params['prefix'])) . '%"' );
 		}
 
 		if ( $params['witheditsonly'] )
-			$this->addWhere( 'lu_rev_cnt > 0' );
+			$this->addWhere( 'edits > 0' );
 
-		$this->addFields('lu_user_id as user_id, lu_user_name as user_name, lu_numgroups, lu_rev_cnt as user_editcount, lu_allgroups, lu_blocked');
-		$this->addOption('ORDER BY', 'lu_user_name');
+		$this->addFields('user_id, user_name, cnt_groups, edits as user_editcount, all_groups, user_is_blocked');
+		$this->addOption('ORDER BY', 'user_name');
 
 		$res = $this->select(__METHOD__);
 
@@ -352,7 +352,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 				# is blocked
 				if ($this->fld_blockinfo) {
 					$blocker_name = $block_reason = '';
-					if ( $row->lu_blocked ) {
+					if ( $row->user_is_blocked ) {
 						$oBlock = Block::newFromDB( 0, $row->user_id );
 						if ( is_object($oBlock) ) {
 							$blocker_name = $oBlock->getByName();
@@ -368,14 +368,14 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 				}
 				if ($this->fld_registration) {		
 					$user_registration = $this->getUserRegistration($row->user_id);
-					$lastUserData['registration'] = wfTimestamp(TS_ISO_8601, $row->user_registration);
+					$lastUserData['registration'] = wfTimestamp(TS_ISO_8601, $user_registration);
 				}
 			}
 
 			// Add user's group info
-			if ( $this->fld_groups && $row->lu_numgroups > 0 ) {
+			if ( $this->fld_groups && $row->cnt_groups > 0 ) {
 				$use_group = array();
-				$groups = explode(";", $row->lu_allgroups);
+				$groups = explode(";", $row->all_groups);
 				if ( !empty($groups) ) {
 					foreach ( $groups as $group ) {
 						if ( !in_array( $group, $use_group ) ) {
