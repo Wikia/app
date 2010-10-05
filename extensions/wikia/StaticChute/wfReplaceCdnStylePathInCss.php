@@ -24,6 +24,20 @@ function wfReplaceCdnStylePathInCss($css, $cdnStylePath=''){
 	}
 
 	if(strpos($css, "wgCdnStylePath") !== false){ // faster to skip the regex in most cases
+
+		// Because of fonts in CSS, we have to allow for lines with multiple url()s in them.
+		// This will rewrite all but the last URL on the line (the last regex will fix the final URL and remove the special comment).
+		$wasChanged = true;
+		while($wasChanged){
+			$changedCss = preg_replace("/([\(][\"']?)(\/[^\n]*?)([, ]url[^\n]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$cdnStylePath.'\\2\\3\\4', $css);
+			if($changedCss != $css){
+				$wasChanged = true;
+				$css = $changedCss;
+			} else {
+				$wasChanged = false;
+			}
+		}
+
 		$css = preg_replace("/([\(][\"']?)(\/[^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$cdnStylePath.'\\2', $css);
 	}
 	return $css;
