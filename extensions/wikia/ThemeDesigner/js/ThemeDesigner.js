@@ -128,30 +128,46 @@ var ThemeDesigner = {
 
 	wordmarkTabInit: function() {
 		// handle font family and font size menu change
-		$("#wordmark-font").change(function() { ThemeDesigner.set("wordmark-font", $(this).val()); });
-		$("#wordmark-size").change(function() { ThemeDesigner.set("wordmark-font-size", $(this).val()); });
+		$("#wordmark-font").change(function() {
+			ThemeDesigner.set("wordmark-font", $(this).val());
+
+			ThemeDesigner.track('wordmark/font');
+		});
+		$("#wordmark-size").change(function() {
+			ThemeDesigner.set("wordmark-font-size", $(this).val());
+
+			ThemeDesigner.track('wordmark/size');
+		});
 
 		// handle wordmark editing
 		$("#wordmark-edit-button").click(function(event) {
 			event.preventDefault();
 			$("#wordmark, #wordmark-edit").toggle();
+
+			ThemeDesigner.track('wordmark/edit');
 		});
 
 		$("#wordmark-edit").find("button").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
 			$("#wordmark, #wordmark-edit").toggle();
+
+			ThemeDesigner.track('wordmark/save');
 		});
 
 		//graphic wordmark clicking
 		$("#WordmarkTab").find(".graphic").find(".preview").find(".wordmark").click(function() {
 			ThemeDesigner.set("wordmark-type", "graphic");
+
+			ThemeDesigner.track('wordmark/choose');
 		});
 
 		//grapic wordmark button
 		$("#WordmarkTab").find(".graphic").find(".preview").find("a").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-type", "text");
+
+			ThemeDesigner.track('wordmark/nowordmark');
 		});
 	},
 
@@ -375,6 +391,8 @@ var ThemeDesigner = {
 				ThemeDesigner.set("wordmark-image-url", response.wordmarkImageUrl);
 				ThemeDesigner.set("wordmark-type", "graphic");
 			}
+
+			ThemeDesigner.track('wordmark/upload');
 		}
 	},
 
