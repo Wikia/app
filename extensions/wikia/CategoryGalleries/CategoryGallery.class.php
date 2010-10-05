@@ -165,6 +165,11 @@
 			global $wgTitle, $wgParser;
 
 			$article = Article::newFromID( $articleId );
+
+			if (empty($article)) {
+				return '';
+			}
+
 			$content = $article->getContent();
 
 			// Perl magic will happen! Beware! Perl 5.10 required!
