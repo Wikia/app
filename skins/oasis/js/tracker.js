@@ -460,7 +460,7 @@ var initTracker = function() {
 			$.tracker.byStr(fakeUrl + 'redlink');
 		}
 		// section edit
-		else if (node.hasClass('editsection')) {
+		else if (node.parent().hasClass('editsection')) {
 			$.tracker.byStr('action/sectionedit');
 		}
 		// TOC
@@ -525,7 +525,7 @@ var initTracker = function() {
 		FB.Event.subscribe('edge.create', function(resp) {
 			$.tracker.byStr('pageheader/like');
 		});
-	
+
 		FB.Event.subscribe('comments.add', function(resp) {
 			$.tracker.byStr('pageheader/post');
 		});
