@@ -1,1 +1,0 @@
-<fb:like-box name="Wikia" width="290" header="false"></fb:like-box>

@@ -125,9 +125,13 @@ function spotlightSlider_setup() {
 	//random integer, 0-3
 	var random = 0; //Math.floor(Math.random() * 4);
 
+	var size = 620 + "px";
+	if (wgIsMainpage == true) {
+		size = 943 +"px";
+	}
 	//move spotlights
 	$(".spotlight-slider").each(function() {
-		$(this).css("left", parseInt($(this).css("left")) - (620 * random));
+		$(this).css("left", parseInt($(this).css("left")) - (size * random));
 	});
 
 	//select nav
@@ -188,8 +192,11 @@ return true;
 	  return true;
   }
 
-  var imgTag_pt1 = '<img width="620" height="250" src="';
-  var imgTag_pt2 = '" class="spotlight-slider">';
+  var imgTag_pt1 = '<img src="';
+  var imgTag_pt2 = '" class="spotlight-slider small">';
+  if (wgIsMainpage) {
+      imgTag_pt2 = '" class="spotlight-slider big">';
+  }
 
   $('li#spotlight-slider-1 > a').html(imgTag_pt1 + feature_image_1 + imgTag_pt2);
   $('li#spotlight-slider-2 > a').html(imgTag_pt1 + feature_image_2 + imgTag_pt2);

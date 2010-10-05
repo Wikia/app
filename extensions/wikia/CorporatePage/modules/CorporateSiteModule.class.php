@@ -9,6 +9,7 @@ class CorporateSiteModule extends Module {
 	var $wgUser;
 
 	var $slider;
+	var $slider_class;
 	var $data;
 
 	var $is_menager;  // fix this typo
@@ -148,10 +149,12 @@ class CorporateSiteModule extends Module {
 		global $wgOut, $wgTitle, $wgStylePath;
 
 		if (BodyModule::isHubPage()) {
+			$this->slider_class = "small";
 			$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
 			$this->slider = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
 		}
 		if (ArticleAdLogic::isMainPage()) {
+			$this->slider_class = "big";
 			$this->slider = CorporatePageHelper::parseMsgImg('corporatepage-slider',true);
 		}
 	}

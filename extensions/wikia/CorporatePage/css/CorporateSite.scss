@@ -61,55 +61,71 @@
 	#homepage-feature-sidebar .create-wiki-container {
 		background-position: 30px -122px;
 	}
-	#spotlight-slider .description {
-		bottom: 40px;
-		color: #FFF;
-		display: none;
-		padding: 10px;
-		position: absolute;
-		width: 600px;
-		z-index: 99;
-	}
-	#spotlight-slider .description h2 {
-		display: block;
-		font-size: 24px;
-		font-weight: normal;
-		line-height: normal;
-		text-shadow: 0 1px 1px #000;
-	}
-	#spotlight-slider .description p {
-		font-size: 16px;
-		line-height: normal;
-		margin: 0 0 .3em;
-		text-shadow: 0 1px 1px #000;
-	}
+
 	#spotlight-slider {
-		background: url(http://images.wikia.com/common/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;
-		position: relative;
-		height: 290px;
-		width: 620px;
-		overflow: hidden;
+		margin-bottom: 200px;
+		.description {
+			bottom: 40px;
+			color: #FFF;
+			display: none;
+			padding: 10px;
+			position: absolute;
+			width: 600px;
+			z-index: 99;
+		}
+		.description h2 {
+			display: block;
+			font-size: 24px;
+			font-weight: normal;
+			line-height: normal;
+			text-shadow: 0 1px 1px #000;
+		}
+		.description p {
+			font-size: 16px;
+			line-height: normal;
+			margin: 0 0 .3em;
+			text-shadow: 0 1px 1px #000;
+		}
+		.spotlight-slider {
+
+			background: url(http://images.wikia.com/common/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;
+			position: absolute;
+			top: 0;
+			overflow: hidden;
+
+			&.small {
+				height: 290px;
+				width: 620px;
+			}
+			&.big {
+				height: 380px;
+				width: 943px;
+			}
+		}
+		.nav .small {
+			padding: 16px 5px 0;
+			position: absolute;
+			top: 244px;
+			z-index: 100;
+		}
+		.nav .big {
+			padding: 16px 5px 0;
+			position: absolute;
+			top: 334px;
+			z-index: 100;
+		}
+		.nav img {
+			cursor: pointer;
+			opacity: .5;
+		}
+		.selected {
+			background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
+		}
+		.selected img {
+			opacity: 1;
+		}
 	}
-	#spotlight-slider .nav {
-		padding: 16px 5px 0;
-		position: absolute;
-		top: 244px;
-		z-index: 100;
-	}
-	#spotlight-slider .nav img {
-		cursor: pointer;
-		opacity: .5;
-	}
-	#spotlight-slider .selected {
-		background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
-	}
-	#spotlight-slider .selected img {
-		opacity: 1;
-	}
-	#spotlight-slider .spotlight-slider {
-		position: absolute;
-		top: 0;
-	}
+
 	#spotlight-slider-0 .spotlight-slider {
 		left: 0;
 	}
@@ -117,24 +133,38 @@
 		left: 160px;
 	}
 	#spotlight-slider-1 .spotlight-slider {
-		left: 620px;
+		&.big {
+			left: 943px;
+		}
+		&.small {
+			left: 620px;
+		}
 	}
 	#spotlight-slider-1 .nav {
 		left: 240px;
 	}
 	#spotlight-slider-2 .spotlight-slider {
+		&.big {
+			left: 1886px;
+		}
+		&.small {
 		left: 1240px;
+		}
 	}
 	#spotlight-slider-2 .nav {
 		left: 320px;
 	}
 	#spotlight-slider-3 .spotlight-slider {
-		left: 1860px;
+		&.big {
+			left: 2829px;
+		}
+		&.small {
+			left: 1860px;
+		}
 	}
 	#spotlight-slider-3 .nav {
 		left: 400px;
 	}
-
 	/* @end */
 
 
@@ -688,10 +718,16 @@ ul#hub-blog-articles li .blog-jump-icon {
  outline:none\9;
 }
 
+/* Turn off a bunch of HTML elements for the main page */
+
 .WikiaBlogListingBox .wikia-button {
 	display: none;
 }
 .WikiaBlogListingBox .more {
+	display: none;
+}
+
+.editsection {
 	display: none;
 }
 
