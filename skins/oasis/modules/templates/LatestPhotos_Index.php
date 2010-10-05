@@ -41,7 +41,7 @@ else {
 			<?= $url["date"] ?><br/>
 
 			<?php
-		if (count($url["links"] >= 1)) {?>
+		if (count($url["links"]) >= 1) {?>
 			<?= wfMsg('oasis-latest-photos-posted-in'); ?>
 			<?= implode(',&nbsp;', $url["links"] ); ?>
 		<?php
