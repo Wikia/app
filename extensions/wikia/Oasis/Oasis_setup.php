@@ -76,19 +76,9 @@ $wgOasisThemes = array(
 		"color-buttons" => "#6F027C",
 		"color-links" => "#6F027C",
 		"color-header" => "#2A1124",
-		"background-image" => "",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/babygirl.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
-	),
-	'opulence' => array(
-		"color-body" => "#AD3479",
-		"color-page" => "#FFFFFF",
-		"color-buttons" => "#DE1C4E",
-		"color-links" => "#810484",
-		"color-header" => "#610038",
-		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/opulence.png",
-		"background-align" => "center",
-		"background-tiled" => "true"
 	),
 	'carbon' => array(
 		"color-body" => "#1A1A1A",
@@ -106,27 +96,37 @@ $wgOasisThemes = array(
 		"color-buttons" => "#1F5D04",
 		"color-links" => "#1F5D04",
 		"color-header" => "#04180C",
-		"background-image" => "",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/rockgarden.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
-	'bluesteel' => array(
-		"color-body" => "#DA3073",
+	'opulence' => array(
+		"color-body" => "#AD3479",
 		"color-page" => "#FFFFFF",
-		"color-buttons" => "#DA3073",
-		"color-links" => "#DA3073",
-		"color-header" => "#DA3073",
-		"background-image" => "",
+		"color-buttons" => "#DE1C4E",
+		"color-links" => "#810484",
+		"color-header" => "#610038",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/opulence.png",
+		"background-align" => "center",
+		"background-tiled" => "true"
+	),
+	'bluesteel' => array(
+		"color-body" => "#303641",
+		"color-page" => "#FFFFFF",
+		"color-buttons" => "#0A3073",
+		"color-links" => "#0A3073",
+		"color-header" => "#0A3073",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/bluesteel.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
 	'creamsicle' => array(
-		"color-body" => "#A1774F",
+		"color-body" => "#F8E9AE",
 		"color-page" => "#FBE7B5",
 		"color-buttons" => "#FE7E03",
 		"color-links" => "#AF4200",
 		"color-header" => "#A1774F",
-		"background-image" => "",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/creamsicle.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
@@ -136,7 +136,7 @@ $wgOasisThemes = array(
 		"color-buttons" => "#092F71",
 		"color-links" => "#FFD500",
 		"color-header" => "#000000",
-		"background-image" => "",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/plated.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
@@ -146,7 +146,7 @@ $wgOasisThemes = array(
 		"color-buttons" => "#1A52AC",
 		"color-links" => "#D6AD0B",
 		"color-header" => "#181010",
-		"background-image" => "",
+		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/police.jpg",
 		"background-align" => "center",
 		"background-tiled" => "false"
 	),
