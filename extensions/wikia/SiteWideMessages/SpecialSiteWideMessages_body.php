@@ -244,7 +244,7 @@ class SiteWideMessages extends SpecialPage {
 
 	//DB functions
 	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang) {
-		global $wgExternalSharedDB, $wgExternalDatawareDB;
+		global $wgExternalSharedDB, $wgStatsDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
 		$mWikiId = null;
@@ -411,18 +411,18 @@ class SiteWideMessages extends SpecialPage {
 							switch ($mSendModeUsers) {
 								case 'ALL':
 								case 'ACTIVE':
-									$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+									$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
 									$dbResult = $dbr->select(
-										array('city_local_users'),
-										array('lu_user_id'),
-										array('lu_wikia_id' => $mWikiId),
+										array('`specials`.`events_local_users`'),
+										array('user_id'),
+										array('wiki_id' => $mWikiId),
 										__METHOD__
 									);
 
 									$activeUsers = array();
 									while ($oMsg = $dbr->FetchObject($dbResult)) {
-										$activeUsers[] = $oMsg->lu_user_id;
+										$activeUsers[] = $oMsg->user_id;
 									}
 									if ($dbResult !== false) {
 										$dbr->FreeResult($dbResult);
