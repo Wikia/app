@@ -49,8 +49,8 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 	}
 
 	protected function getDB() {
-		global $wgExternalDatawareDB;
-		return wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+		global $wgStatsDB;
+		return wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 	}
 
 	#---
@@ -77,11 +77,11 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 
 			$cid = (empty($wgCityId)) ? WikiFactory::DBtoID($wgDBname) : $wgCityId;
 
-			$this->addTables( array( "`city_local_users`" ) );
-			$this->addFields( array('lu_user_id', 'lu_user_name', 'lu_rev_cnt'));
-			$this->addWhere ( "lu_user_id > 0 and lu_blocked = 0 and lu_closed = 0" );
+			$this->addTables( array( "`specials`.`events_local_users`" ) );
+			$this->addFields( array('user_id', 'user_name', 'edits'));
+			$this->addWhere ( "user_id > 0 and user_is_blocked = 0 and user_is_closed = 0" );
 			if ( !empty($cid) ) {
-				$this->addWhere ( "lu_wikia_id = {$cid}" );
+				$this->addWhere ( "wiki_id = {$cid}" );
 			}
 
 			#--- user
@@ -90,7 +90,7 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'U', $user);
-				$this->addWhere ( "lu_user_id = '" . intval($user) . "'" );
+				$this->addWhere ( "user_id = '" . intval($user) . "'" );
 			}
 
 			#---
@@ -119,7 +119,7 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 			}
 
 			#--- order by
-			$this->addOption( "ORDER BY", "lu_rev_cnt DESC" );
+			$this->addOption( "ORDER BY", "edits DESC" );
 
 			$data = array();
 			// check data from cache ...
@@ -127,12 +127,12 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 			if (!is_array($cached)) {
 				$res = $this->select(__METHOD__);
 				while ($row = $db->fetchObject($res)) {
-					$data[$row->lu_user_id] = array(
-						"user_id"		=> $row->lu_user_id,
-						"cnt"			=> $row->lu_rev_cnt,
-						"user_name"		=> $row->lu_user_name
+					$data[$row->user_id] = array(
+						"user_id"		=> $row->user_id,
+						"cnt"			=> $row->edits,
+						"user_name"		=> $row->user_name
 					);
-					ApiResult :: setContent( $data[$row->lu_user_id], $row->lu_user_name);
+					ApiResult :: setContent( $data[$row->user_id], $row->user_name);
 				}
 				$db->freeResult($res);
 				$this->saveCacheData($lcache_key, $data, $ctime);
