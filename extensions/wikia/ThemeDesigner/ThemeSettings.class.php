@@ -27,8 +27,8 @@ class ThemeSettings {
 				'spring' => 'jade',
 				'forest' => 'jade',
 				'obsession' => 'carbon',
-				//'moonlight ' => 'Blue Steel',
-				//'beach' => 'Creamsicle',
+				'moonlight' => 'bluesteel',
+				'beach' => 'creamsicle',
 			);
 
 			if(isset($transition[$adminSkin[1]])) {
