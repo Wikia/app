@@ -39,9 +39,19 @@ function wfOasisSetup() {
 	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsModule::addEditSimilarNotification';
 	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsModule::addCommunityMessagesNotification';
 
+	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
+
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals');
+}
+
+function Oasis_UploadVerification($destName, $tempPath, &$error) {
+	$destName = strtolower($destName);
+	if($destName == 'wiki-wordmark.png' || $destName == 'wiki-background') {
+		return false;
+	}
+	return true;
 }
 
 // Mapping of themename to an array of key/value pairs to send to SASS.
