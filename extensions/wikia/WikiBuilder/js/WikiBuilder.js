@@ -33,23 +33,30 @@ var WikiBuilder = {
 
 	init: function() {
 		Mediawiki.pullArticleContent(Mediawiki.followRedirect(wgMainpage), WikiBuilder.pullWikiDescriptionCallback, {"rvsection": 1});
+		var tracking_prepend = "wikibuilder/step";
 		$(".dialog .step1 input.save").click(function(e){
 			e.preventDefault();
 			WikiBuilder.saveDescription();
+			$.tracker.byStr(tracking_prepend + "1/save");
 		});
 		$(".dialog .step1 input.skip").click(function(e){
 			WikiBuilder.transition(1, 2);
+			$.tracker.byStr(tracking_prepend + "1/skip");
 		});
 		$(".dialog .step2 input.save").click(function(e){
 			WikiBuilder.saveTheme();
+			$.tracker.byStr(tracking_prepend + "2/save");
 		});
 		$(".dialog .step2 input.skip").click(function(e){
 			WikiBuilder.transition(2, 3);
+			$.tracker.byStr(tracking_prepend + "2/skip");
 		});
 		$(".dialog .step3 input.save").click(function(e){
 			WikiBuilder.savePages();
+			$.tracker.byStr(tracking_prepend + "3/save");
 		});
 		$(".dialog .step3 input.skip").click(function(e){
+			$.tracker.byStr(tracking_prepend + "3/skip");
 			window.location.href = redirect;
 		});
 		
