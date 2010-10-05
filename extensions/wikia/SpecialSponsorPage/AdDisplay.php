@@ -63,9 +63,6 @@ class AdDisplay {
 				$adtext .= $ad->OutPutWikiText();
 			}
 		}
-		if(!is_array($ads) || count($ads) < $wgSponsorAdsLimit ){
-			$adtext .= self::ShowSponsorMessage();
-		}
 		$adtext .= '</ul>';
 
 
