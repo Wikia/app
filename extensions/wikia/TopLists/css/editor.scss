@@ -15,7 +15,7 @@
 //variables
 $input-height: 40px;
 $input-width: 282px;
-$big-square-button-side: 27px;
+$big-square-button-side: 32px;
 
 $image-frame-width: 120px;
 $image-frame-height: ($image-frame-width * 2) / 3;
@@ -39,7 +39,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 	margin: 0;
 	padding: 0;
 
-	.osprite {
+	.sprite {
 		vertical-align: middle;
 		position: static;
 	}
@@ -211,10 +211,6 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 			&.wikia-chiclet-button {
 				@include centered($big-square-button-side);
 				width: $big-square-button-side;
-
-				img.icon-add {
-					margin:0;
-				}
 			}
 		}
 		
@@ -252,19 +248,14 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 		background-color: $color-module-shadow;
 	}
 
-	img.shadow-short{
-		background-position: -151px -20px;
-		width:290px;
-		margin: 5px 0 5px 0;
-		display:block;
-	}
-
 	ul {
 		@include clearfix;
 		display: block;
-		padding: 0;
-		margin: 0 0 10px 0;
-		
+		padding: 10px 0 10px 0;
+		margin: 0;
+		border-top: 1px solid $color-page-border;
+		border-bottom: 1px solid $color-page-border;
+
 		li {
 			float: left;
 			margin: 3px;

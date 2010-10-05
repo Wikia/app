@@ -13,8 +13,6 @@ global $wgScriptPath;
 		</div>
 	<? endif ;?>
 
-	<img class="osprite shadow-short" src="<?= wfBlankImgUrl() ;?>">
-
 	<ul class="SuggestedPictures">
 		<? foreach( $images as $img ) :?>
 			<li>

@@ -16,7 +16,7 @@
 		</div>
 
 		<a class="wikia-chiclet-button" title="<?= wfMsg( 'toplists-editor-image-browser-tooltip' ); ?>" rel="nofollow">
-			<img class="osprite icon-edit" alt="<?= wfMsg( 'toplists-editor-image-browser-tooltip' ); ?>" src="<?= wfBlankImgUrl() ;?>">
+			<img class="sprite photo" alt="<?= wfMsg( 'toplists-editor-image-browser-tooltip' ); ?>" src="<?= wfBlankImgUrl() ;?>">
 		</a>
 
 		<input type="hidden" name="selected_picture_name" value="<?= ( !empty( $selectedImage ) ) ? $selectedImage[ 'name' ] : null ;?>" />
@@ -79,7 +79,7 @@
 
 				<div class="ItemRemove">
 					<a title="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>" rel="nofollow">
-						<img class="osprite icon-remove"
+						<img class="sprite remove"
 						     alt="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>"
 						     src="<?= wfBlankImgUrl() ;?>" />
 					</a>
@@ -88,7 +88,7 @@
 				<? if ( $isDraggable ) :?>
 					<div class="ItemDrag">
 						<a title="<?= wfMsg( 'toplists-editor-drag-item-tooltip' ) ;?>" rel="nofollow">
-							<img class="osprite icon-drag"
+							<img class="sprite drag"
 							     alt="<?= wfMsg( 'toplists-editor-drag-item-tooltip' ) ;?>"
 							     src="<?= wfBlankImgUrl() ;?>" />
 						</a>
@@ -106,7 +106,7 @@
 
 	<div class="AddControls">
 		<a id="toplist-add-item" class="wikia-chiclet-button" title="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" rel="nofollow">
-			<img class="osprite icon-add" alt="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" src="<?= wfBlankImgUrl() ;?>">
+			<img class="sprite new" alt="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" src="<?= wfBlankImgUrl() ;?>">
 		</a>
 		<label><?= wfMsg( 'toplists-editor-add-item-label' ) ;?></label>
 	</div>
