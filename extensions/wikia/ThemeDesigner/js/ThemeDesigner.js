@@ -4,6 +4,10 @@ $(function() {
 
 var ThemeDesigner = {
 
+	track: function(url) {
+		$.tracker.byStr('themedesigner/' + url);
+	},
+
 	init: function() {
 
 		// theme settings
@@ -45,6 +49,9 @@ var ThemeDesigner = {
 		ThemeDesigner.toolBarInit();
 
 		ThemeDesigner.applySettings(false, false);
+
+		// track page view
+		ThemeDesigner.track('open');
 	},
 
 	themeTabInit: function() {
@@ -215,35 +222,35 @@ var ThemeDesigner = {
 				if (expression.test(color)) {
 					color = "#" + color;
 				}
-				
+
 				// test color
 				$('<div id="ColorTester"></div>').appendTo(document.body);
 				try {
 					$("#ColorTester").css("background-color", color);
-				} catch(error) { 
-				
+				} catch(error) {
+
 				}
 				if ($("#ColorTester").css("background-color") == "transparent" || $("#ColorTester").css("background-color") == "rgba(0, 0, 0, 0)") {
 					return;
 				}
 				$("#ColorTester").remove();
-				
+
 				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatch.attr("class"), color);
 				ThemeDesigner.set("theme", "custom");
 			});
 
 		} else if (type == "image") {
-		
+
 			var swatches = $("#ThemeDesignerPicker").children(".image").find(".swatches");
 			// add admin background
 			if (ThemeDesigner.settings["user-background-image"]) {
 				$('<li class="user"><img src="' + ThemeDesigner.settings["user-background-image-thumb"] + '" data-image="' + ThemeDesigner.settings["user-background-image"] + '"></li>').insertBefore(swatches.find(".no-image"));
 			}
-		
+
 			// click handling
 			$("#ThemeDesignerPicker").children(".image").find(".swatches").find("li").click(function() {
-				
+
 				//set correct alignment
 				if ($(this).attr("class") == "user") {
 					ThemeDesigner.set("background-align", ThemeDesigner.settings["user-background-align"]);
@@ -251,13 +258,13 @@ var ThemeDesigner = {
 					ThemeDesigner.set("background-align", "center");
 				}
 
-				//set correct image				
+				//set correct image
 				if ($(this).attr("class") == "no-image") {
 					ThemeDesigner.set("background-image", "");
 				} else {
 					ThemeDesigner.set("background-image", $(this).children("img").attr("data-image"));
 				}
-				
+
 				ThemeDesigner.hidePicker();
 			})
 		}
@@ -318,7 +325,7 @@ var ThemeDesigner = {
 			$.extend(ThemeDesigner.settings, ThemeDesigner.themes[newValue]);
 			reloadCSS = true;
 		}
-		
+
 		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled" || setting == "color-header") {
 			reloadCSS = true;
 		}
@@ -384,11 +391,11 @@ var ThemeDesigner = {
 			} else {
 				$("#backgroundImageUploadFile").val("");
 				ThemeDesigner.hidePicker();
-								
+
 				ThemeDesigner.set("user-background-image", response.backgroundImageUrl);
-				ThemeDesigner.set("user-background-image-thumb", response.backgroundImageThumb);				
+				ThemeDesigner.set("user-background-image-thumb", response.backgroundImageThumb);
 				ThemeDesigner.set("user-background-align", response.backgroundImageAlign);
-				
+
 				ThemeDesigner.set("theme", "custom");
 				ThemeDesigner.set("background-align", response.backgroundImageAlign);
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
@@ -483,7 +490,7 @@ var ThemeDesigner = {
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
 		$("#swatch-color-header").css("background-color", ThemeDesigner.settings["color-header"]);
-		
+
 		if (ThemeDesigner.settings["background-image"] == "") {
 			//no background image
 			$("#swatch-image-background").attr("src", "/skins/common/blank.gif");
@@ -496,7 +503,7 @@ var ThemeDesigner = {
 			//admin background image
 			$("#swatch-image-background").attr("src", ThemeDesigner.settings["user-background-image-thumb"]);
 		}
-		
+
 		if (ThemeDesigner.settings["background-tiled"] == "true") {
 			$("#tile-background").attr("checked", true);
 		} else {
@@ -571,7 +578,7 @@ var ThemeDesigner = {
 					})
 					.find("a").hide()
 			}
-			
+
 		}
 	},
 
