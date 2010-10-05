@@ -10,7 +10,6 @@ class BodyModule extends Module {
 	var $wgSuppressWikiHeader;
 	var $wgSuppressPageHeader;
 	var $wgSuppressFooter;
-	var $wgSuppressFeedback;
 	var $wgSuppressArticleCategories;
 	var $wgEnableCorporatePageExt;
 

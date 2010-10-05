@@ -137,9 +137,6 @@ $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/Theme
 // TODO:move this inclusion to CommonExtensions?
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
-// feeback feature
-$wgKampyleSecretKey = 'aXQEf9fgLu2Y80+7kwpjbUJr';
-
 /**
  * API classes
  */
