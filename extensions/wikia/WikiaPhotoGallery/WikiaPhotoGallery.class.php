@@ -792,7 +792,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				array(
 					'class' => $image['classes'],
 					'href' => $image['link'],
-					'title' => $image['linkTitle'].' ('.$sk->formatSize($image['bytes']).')'
+					'title' => $image['linkTitle'].isset($image['bytes']?' ('.$sk->formatSize($image['bytes']).')':"")
 				)
 			);
 			$html .= Xml::openElement(
