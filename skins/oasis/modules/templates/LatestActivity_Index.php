@@ -6,7 +6,8 @@
 	<? } ?>
 	<ul>
 <?php
-	foreach ($changeList as $item) {
+	if(!empty($changeList)){
+		foreach ($changeList as $item) {
 ?>
 		<li>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
@@ -14,6 +15,7 @@
 			<details><?= $item['time_ago'] ?></details>
 		</li>
 <?php
+		}
 	}
 ?>
 	</ul>
