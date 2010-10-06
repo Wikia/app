@@ -185,7 +185,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$tag_id = (int) $tag_id;
 		$conditions = array( "tb_tag_id = $tag_id and tb_city_lang = '$lang'" );
 		// CorporatePage extension needs to get a list of staff blogs, and only has a list of page_ids
-		if (is_array($page_ids)) {
+		if (is_array($page_ids) && !empty($page_ids)) {
 			$conditions = array(" tb_page_id in (" . implode(",", $page_ids) . ")");
 		}
 		$res = $this->dbs->select(
