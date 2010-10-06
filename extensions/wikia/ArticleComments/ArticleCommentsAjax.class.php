@@ -217,6 +217,9 @@ class ArticleCommentsAjax {
 
 			// RT#68254
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+				// RT#69919
+				$data = $listing->getData();
+				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $data['commentListRaw']));
 				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
 				$count = $wgLang->formatNum($listing->getCountAllNested());
 				$counter = array(
