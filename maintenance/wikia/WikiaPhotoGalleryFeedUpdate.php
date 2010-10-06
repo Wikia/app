@@ -9,7 +9,8 @@
  *
  */
 
-require_once('../commandLine.inc');
+ini_set( "include_path", dirname(__FILE__)."/../" );
+require( "commandLine.inc" );
 
 if (isset($options['help'])) {
 	die( "Usage: php WikiaPhotoGalleryFeedUpdate.php [--quiet]
