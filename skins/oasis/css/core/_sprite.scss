@@ -75,39 +75,37 @@
 		width: 16px;
 	}
 
-/*
-	&.add {
-		background-position: -1024px 0;
-		height: 16px;
-		width: 22px;
-	}
-	
-	&.icon-add-photo {
-		background-position: -1096px 0;
-		height: 16px;
-		width: 26px;	
-	}
-
-	&.icon-article-like {
-		background-position: -1128px -32px;
-	}
-
-	&.edit-pencil {
-		background-position: -1000px -16px;
+	&.ok {
+		background-position: -1096px -48px;
 		height: 16px;
 		width: 16px;
 	}
 	
-	&.blog {
-		background-position: -1000px 0;
-		height: 16px;
-		width: 22px;
+	//Notifications
+	&.close-notification {
+		background-position: -1001px -33px;
+		height: 8px;
+		width: 8px;		
 	}
-
-	&.message {
-		background-position: -1058px -16px;
-		height: 16px;
-		width: 22px;
-	}
-*/
 }
+
+//Category Select
+.sprite-small {
+	background-color: transparent;
+	background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
+	background-repeat: no-repeat;
+	height: 12px;
+	width: 12px;
+	&.close {
+		background-position: -1146px -50px;
+	}
+	&.sorted {
+		background-position: -1160px -16px;
+	}
+	&.sort {
+		background-position: -1160px -32px;
+	}
+	&.add {
+		background-position: -1160px -48px;
+	}
+}	

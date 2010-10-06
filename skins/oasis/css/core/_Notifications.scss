@@ -23,14 +23,8 @@
 			color: $color-confirmation-text;
 			text-decoration: underline;
 		}
-		.accept-icon {
-			background:url(/skins/oasis/images/sprite.png) no-repeat scroll -1144px 0 transparent; /* $wgCdnStylePath */
-			height:16px;
-			left:-4px;
-			position:relative;
-			top:-1px;
-			vertical-align:text-top;
-			width:16px;
+		.sprite.ok {
+			vertical-align: text-bottom;
 		}
 	}
 }
@@ -57,15 +51,12 @@
 				color: $color-notification-links;
 				text-decoration: underline;
 			}
-			.close {
-				background: transparent url(/skins/oasis/images/sprite.png) no-repeat -1100px -36px; /* $wgCdnStylePath */
-				border: solid 1px #fff;
+			.close-notification {
+				border: 1px solid #FFF;
 				cursor: pointer;
-				height: 7px;
 				position: absolute;
 				right: 3px;
 				top: 3px;
-				width: 7px;
 			}
 		}
 		// IE7 fixes - start
