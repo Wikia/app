@@ -802,7 +802,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
 						$imgStyle,
 					'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
-					'title' => $image['linkTitle'].' ('.$sk->formatSize($image['bytes']).')'
+					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$sk->formatSize($image['bytes']).')':"")
 				)
 			);
 			$html .= Xml::closeElement('a');
