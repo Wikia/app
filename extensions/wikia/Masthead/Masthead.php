@@ -603,8 +603,6 @@ class Masthead {
 			// This seems to be the most appropriate error message to describe that the image type is invalid.
 			// Available error codes; http://php.net/manual/en/features.file-upload.errors.php
 			$errorNo = UPLOAD_ERR_EXTENSION;
-
-			// TODO: i18n this error message.
 			$errorMsg = wfMsg('blog-avatar-error-type', $aImgInfo['mime'], implode(',', $aAllowMime));
 
 //				Wikia::log( __METHOD__, 'mime', $errorMsg);
