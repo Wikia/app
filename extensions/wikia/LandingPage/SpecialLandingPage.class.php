@@ -1,8 +1,14 @@
 <?php
 
+function comboAjaxExtraParam(&$vars) {
+	global $wgTitle;
+	
+	$url = $wgTitle->getLocalURL(array("oasis_upgrade"=> "true"));
+	$vars['wpAjaxLoginExtraParam'] = wfUrlencode( wfArrayToCGI(array("&oasis_upgrade" => "true")));
+	return true;
+}
+
 class SpecialLandingPage extends UnlistedSpecialPage {
-
-
 	var $button_url;
 	var $loggedIn;
 	var $logInClass;
@@ -12,7 +18,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		parent::__construct('LandingPage');
 	}
 
-	function execute($par) {
+	function execute($par ) {
 		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgStyleVersion, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
@@ -40,12 +46,11 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			$this->loggedIn = true;
 		}
 		else {
-			$this->logInClass = ' class="ajaxLogin"';
+			$this->logInClass = ' class="ajaxLoginRequest"';
 			$this->loggedIn = false;
 
 		}
 	
-		
 		// only shown "My Tools" on floating toolbar
 		$wgShowMyToolsOnly = true;
 
@@ -79,8 +84,6 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 
 		);
 
-
-		
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
