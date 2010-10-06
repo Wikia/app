@@ -398,6 +398,11 @@ CKEDITOR.plugins.add('rte-media',
 
 		var video = media.filter('img.video');
 		self.setupVideo(video);
+
+		// RT #69635
+		if (RTE.config.disableDragDrop) {
+			RTE.tools.disableDragDrop(media);
+		}
 	},
 
 	// image specific setup
@@ -466,6 +471,11 @@ CKEDITOR.plugins.add('rte-media',
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			RTE.tools.callFunction(window.VET_show,$(this), {isPlaceholder: true});
 		});
+
+		// RT #69635
+		if (RTE.config.disableDragDrop) {
+			RTE.tools.disableDragDrop(placeholder);
+		}
 	},
 
 	// get type name for tracking code
@@ -543,16 +553,16 @@ RTE.mediaEditor = {
 		RTE.tools.parseRTE(wikitext, function(html) {
 			//RT#52431 - proper context
 			var newMedia = $(html, RTE.instance.document.$).children('img');
-			
+
 			//fix for IE7, the above line of code is returning an empty element
 			//since $(html) strips the enclosing <p> tag out for some reason
 			if(!newMedia.exists()){
 				newMedia = $(html, RTE.instance.document.$);
 			}
-			
+
 			// set meta-data
 			newMedia.setData(data);
-			
+
 			// insert new media (don't reinitialize all placeholders)
 			RTE.tools.insertElement(newMedia, true);
 

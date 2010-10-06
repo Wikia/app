@@ -354,6 +354,11 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 			self.setupPlaceholder(target);
 		});
+
+		// RT #69635
+		if (RTE.config.disableDragDrop) {
+			RTE.tools.disableDragDrop(placeholder);
+		}
 	},
 
 	// get type name for tracking code
