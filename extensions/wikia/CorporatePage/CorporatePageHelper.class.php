@@ -155,7 +155,9 @@ class CorporatePageHelper{
 		if ( is_array( $out ) ){
 			return $out;
 		}
-        	wfProfileIn( __METHOD__ );        
+
+		wfProfileIn( __METHOD__ );
+
 		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
 		$out = array();
@@ -187,7 +189,8 @@ class CorporatePageHelper{
 			}
 		}
 		$wgTTCache->set( $mcKey, $out, 60*60*12);
-        	wfProfileOut( __METHOD__ );         
+
+		wfProfileOut( __METHOD__ );         
 		return $out;
 	}
 

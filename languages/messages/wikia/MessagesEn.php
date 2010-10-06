@@ -1082,9 +1082,9 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-spotlights-footer-title' => "Around Wikia's Network",
 'themedesigner' => 'Theme Designer',
 'oasis-pages-on-wiki-header' => 'Pages On $1',
-'oasis-latest-activity-new' => 'created',
-'oasis-latest-activity-edit' => 'edited',
-'oasis-latest-activity-delete' => 'deleted',
+'oasis-latest-activity-new' => '$1 created $2',
+'oasis-latest-activity-edit' => '$1 edited $2',
+'oasis-latest-activity-delete' => '$1 deleted $2',
 
 'oasis-interlang-show-all' => '... see all >',
 'oasis-interlang-languages' => 'Languages:',
