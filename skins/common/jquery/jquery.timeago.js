@@ -32,16 +32,16 @@
         suffixFromNow: "from now",
         ago: null, // DEPRECATED, use suffixAgo
         fromNow: null, // DEPRECATED, use suffixFromNow
-        seconds: "A minute",
-        minute: "A minute",
+        seconds: "a minute",
+        minute: "a minute",
         minutes: "%d minutes",
-        hour: "An hour",
+        hour: "an hour",
         hours: "%d hours",
-        day: "A day",
+        day: "a day",
         days: "%d days",
-        month: "A month",
+        month: "a month",
         months: "%d months",
-        year: "A year",
+        year: "a year",
         years: "%d years"
       }
     },
