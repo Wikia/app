@@ -417,7 +417,10 @@ class SkinChooser {
 		wfProfileIn(__METHOD__.'::GetSkinLogic');
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
-			if(!empty($wgAdminSkin) && !$isOasisPublicBeta) {
+			if($wgDefaultSkin == 'oasis') {
+				$userSkin = $wgDefaultSkin;
+				$userTheme = null;
+			} else if(!empty($wgAdminSkin) && !$isOasisPublicBeta) {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
