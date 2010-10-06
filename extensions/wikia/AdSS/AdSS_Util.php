@@ -22,7 +22,7 @@ class AdSS_Util {
 	//FIXME temporary hack
 	static function flushCache() {
 		global $wgMemc, $wgScriptPath;
-		$memcKey = 'adss:siteads';
+		$memcKey = wfMemcKey( 'adss', 'siteads' );
 		$wgMemc->delete( $memcKey );
 
 		$url = $wgScriptPath . '?action=ajax&rs=AdSS_Publisher::getSiteAdsAjax';

@@ -22,14 +22,20 @@ $wgExtensionAliasesFiles['AdSS'] = $dir . 'AdSS.alias.php';
 $wgAdSS_templatesDir = $dir . 'templates';
 
 $wgAutoloadClasses['AdSS_Controller'] = $dir . 'AdSS_Controller.php';
-$wgAutoloadClasses['AdSS_Publisher'] = $dir . 'AdSS_Publisher.php';
-$wgAutoloadClasses['AdSS_Util'] = $dir . 'AdSS_Util.php';
+$wgAutoloadClasses['AdSS_AdminController'] = $dir . 'admin/AdSS_AdminController.php';
+$wgAutoloadClasses['AdSS_AdminPager'] = $dir . 'admin/AdSS_AdminPager.php';
 $wgAutoloadClasses['AdSS_Ad'] = $dir . 'model/AdSS_Ad.php';
 $wgAutoloadClasses['AdSS_AdForm'] = $dir . 'forms/AdSS_AdForm.php';
+$wgAutoloadClasses['AdSS_Publisher'] = $dir . 'AdSS_Publisher.php';
+$wgAutoloadClasses['AdSS_Util'] = $dir . 'AdSS_Util.php';
 $wgAutoloadClasses['PaymentProcessor'] = $dir . 'paypal/PaymentProcessor.php';
 $wgAutoloadClasses['PayflowAPI'] = $dir . 'paypal/PayflowAPI.php';
 
 $wgSpecialPages['AdSS'] = 'AdSS_Controller';
+
+$wgAvailableRights[] = 'adss-admin';
+$wgGroupPermissions['*']['adss-admin'] = false;
+$wgGroupPermissions['staff']['adss-admin'] = true;
 
 $wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';

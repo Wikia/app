@@ -338,5 +338,6 @@ $messages['tl'] = array(
 	'adss-form-thanks' => 'Salamat sa iyong Pagtataguyod!',
 	'adss-button-edit' => 'Baguhin',
 	'adss-button-save-pay' => 'Sagipin',
+	'right-adss-admin' => 'Administrator of AdSS',
 );
 

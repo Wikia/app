@@ -10,6 +10,7 @@ require_once( "commandLine.inc" );
 
 $dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 echo "Checking for ads that have expired or are expiring within next 25 hours\n";
+//FIXME refactor getData piece to another class
 $res = $dbw->select(
 		array( 'ads', 'pp_tokens', 'pp_agreements' ),
 		'*',

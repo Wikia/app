@@ -6,7 +6,7 @@ CREATE TABLE ads (
   ad_wiki_id int unsigned NOT NULL,
   ad_page_id int unsigned NOT NULL,
   ad_status tinyint unsigned NOT NULL,
-  ad_created timestamp NOT NULL,
+  ad_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ad_closed timestamp NULL DEFAULT NULL,
   ad_expires timestamp NULL DEFAULT NULL,
   ad_user_email varchar(255) NOT NULL
@@ -17,7 +17,7 @@ CREATE TABLE ads (
 CREATE TABLE pp_tokens (
   ppt_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   ppt_ad_id int unsigned NOT NULL,
-  ppt_requested timestamp NOT NULL,
+  ppt_requested timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ppt_result smallint signed,
   ppt_respmsg varchar(255) DEFAULT NULL,
   ppt_correlationid char(13) DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE UNIQUE INDEX ppt_token ON pp_tokens (ppt_token);
 CREATE TABLE pp_details (
   ppd_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   ppd_token char(20) NOT NULL,
-  ppd_requested timestamp NOT NULL,
+  ppd_requested timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ppd_result smallint signed DEFAULT NULL,
   ppd_respmsg varchar(255) DEFAULT NULL,
   ppd_correlationid char(13) DEFAULT NULL,
@@ -70,7 +70,7 @@ CREATE UNIQUE INDEX ppd_token ON pp_details (ppd_token);
 CREATE TABLE pp_agreements (
   ppa_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   ppa_token char(20) NOT NULL,
-  ppa_requested timestamp NOT NULL,
+  ppa_requested timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ppa_result smallint signed DEFAULT NULL,
   ppa_respmsg varchar(255) DEFAULT NULL,
   ppa_correlationid char(13) DEFAULT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE pp_payments (
   ppp_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   ppp_baid char(19) NOT NULL,
   ppp_amount decimal(5,2) NOT NULL,
-  ppp_requested timestamp NOT NULL,
+  ppp_requested timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ppp_result smallint signed DEFAULT NULL,
   ppp_respmsg varchar(255) DEFAULT NULL,
   ppp_correlationid char(13) DEFAULT NULL,

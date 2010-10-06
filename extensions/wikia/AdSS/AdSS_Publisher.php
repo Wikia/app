@@ -27,7 +27,7 @@ class AdSS_Publisher {
 
 		$ads = array();
 
-		$memcKey = "adss:siteads";
+		$memcKey = wfMemcKey( "adss", "siteads" );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
