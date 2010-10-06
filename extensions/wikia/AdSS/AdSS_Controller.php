@@ -12,6 +12,8 @@ class AdSS_Controller extends SpecialPage {
 		$this->setHeaders();
 		$wgOut->setPageTitle( wfMsg( 'adss-sponsor-links' ) );
 
+		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/AdSS/css/adform.scss'));
+
 		$adForm = new AdSS_AdForm();
 		if ( $wgRequest->wasPosted() && $adForm->matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
 			$submitType = $wgRequest->getText( 'wpSubmit' );
