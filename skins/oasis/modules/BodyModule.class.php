@@ -218,8 +218,8 @@ class BodyModule extends Module {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 			);
-			if (ArticleAdLogic::isMainPage()) {
-				$railModuleList[1470] = array('CorporateSite', 'FacebookLike', null);
+			// No rail on main page or edit page for corporate skin
+			if ( ArticleAdLogic::isMainPage() || BodyModule::isEditPage() ) {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
