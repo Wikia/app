@@ -121,7 +121,7 @@ var WikiActivity = {
 
 		var node = $(ev.target);
 
-		var feedContent = $('#myhome-activityfeed');
+		var feedContent = $('#myhome-main >ul').last();
 		var fetchSince = node.attr('data-since');
 
 		WikiActivity.log('fetching feed since ' + fetchSince, 'WikiActivity');
