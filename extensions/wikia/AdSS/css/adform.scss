@@ -1,0 +1,54 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/rail-module";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+
+.SponsoredLinkForm {
+	.box {
+		float: left;
+		padding: 8px;
+		width: 460px;
+
+		&.item-2 {
+			float: right;
+		}
+	}
+
+	fieldset {
+		@include clearfix;
+		border: none;
+		padding: 0;
+
+		legend {
+			padding: 0;
+		}
+
+
+		section.box {
+			@include rail-module;
+			height: 160px;
+
+			.wikia-button {
+				bottom: 5px;
+				left: 50%;
+				margin-left: -50px;
+				padding: 0 20px;
+				position: absolute;
+			}
+		}
+
+		label {
+			display: block;
+			margin-top: 0.5em;
+		}
+
+		input[type="text"], textarea {
+			width: 375px;
+		}
+
+		.wikia-button {
+			display: block;
+			margin: 0.5em 0;
+		}
+	}
+}
