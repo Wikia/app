@@ -466,7 +466,7 @@ class ArticleComment {
 
 			$text = $wgOut->parse( $this->mLastRevision->getText() );
 			$sig = ( $this->mUser->isAnon() )
-				? Xml::span( wfMsg('article-comments-anonymous'), false, array( 'title' => $this->mFirstRevision->getUserText() ) )
+				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
 			$articleId = $this->mTitle->getArticleId();
 

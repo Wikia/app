@@ -1072,7 +1072,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-comments-added-by' => '$1 by $2',
 'oasis-random-wiki' => 'Random Wiki',
 'oasis-add-photo' => 'Add a Photo',
-'oasis-anon-user' => 'A Wikia user',
+'oasis-anon-user' => 'A Wikia contributor',
 'oasis-create-page' => 'Create a new page on this wiki',
 'oasis-add-page' => 'Add Page',
 'oasis-section-edit' => 'Edit',
