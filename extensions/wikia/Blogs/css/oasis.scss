@@ -67,13 +67,6 @@
 	li {
 		border-bottom: 1px solid $color-page-border;
 	}
-	.WikiaBlogListingPost {
-		padding-bottom: 0px;
-		position: relative;
-	}
-	.WikiaBlogListingPost:last-child {
-		border: none;
-	}
 	.commentslikes {
 		position: absolute;
 		right: 10px;
@@ -96,6 +89,21 @@
 		margin: 0 20px;
 	}
 }
+
+.WikiaBlogListingPost {
+	padding-bottom: 0px;
+	position: relative;
+	.commentslikes {
+		a:hover {
+			text-decoration: none;
+		}
+	}
+	&:last-child {
+		border: none;
+	}
+}
+
+
 
 // /** styling for Oasis blog listing box and rail module **/
 
