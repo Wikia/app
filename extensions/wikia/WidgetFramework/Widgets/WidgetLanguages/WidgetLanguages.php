@@ -7,8 +7,6 @@ if(!defined('MEDIAWIKI')) {
 	die(1);
 }
 
-
-
 global $wgWidgets;
 $wgWidgets['WidgetLanguages'] = array(
 	'callback' => 'WidgetLanguages',
@@ -24,9 +22,7 @@ function WidgetLanguages($id, $params) {
 	global $wgUser;
 	$skin = $wgUser->getSkin();
 
-	printout($skin->language_urls); exit;
 	$list = array();
-
 
 	// only display the widget if there are interlanguage links
 	if(!empty($skin->language_urls) && is_array($skin->language_urls)) {
