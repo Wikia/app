@@ -9,7 +9,7 @@
 	foreach ($changeList as $item) {
 ?>
 		<li>
-			<img src="<?= $wgBlankImgUrl ?>" class="avatar osprite <?= $item['changeicon'] ?>" height="20" width="20">
+			<img src="<?= $wgBlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
 			<em><?= $item['user_href'] ?> <?= $item['changetype'] ?> <?= $item['page_href'] ?></em>
 			<details><?= $item['time_ago'] ?></details>
 		</li>

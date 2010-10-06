@@ -56,15 +56,15 @@ class LatestActivityModule extends Module {
 				switch ($change['type']) {
 					case 'new':
 						$item['changetype'] = wfMsg("oasis-latest-activity-new");
-						$item['changeicon'] = 'icon-add';
+						$item['changeicon'] = 'new';
 						break;
 					case 'edit':
 						$item['changetype'] = wfMsg("oasis-latest-activity-edit");
-						$item['changeicon'] = 'icon-article-edit';
+						$item['changeicon'] = 'edit';
 						break;
 					case 'delete':
 						$item['changetype'] = wfMsg("oasis-latest-activity-delete");
-						$item['changeicon'] = 'icon-delete';
+						$item['changeicon'] = 'delete';
 						break;
 					default:
 						$item['changetype'] = '';
