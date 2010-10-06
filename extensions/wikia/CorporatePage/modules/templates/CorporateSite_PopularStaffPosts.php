@@ -1,1 +1,1 @@
-<?= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => 'Popular Staff Blogs')); ?>
+<?= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => wfMsg('corporatepage-staff-blog-header'))); ?>
