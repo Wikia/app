@@ -331,7 +331,7 @@ class SkinChooser {
 	public static function getSkin($user) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
-		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgCityId, $wgLanguageCode, $wgMemc;
+		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest;
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
 		wfProfileIn(__METHOD__);
@@ -417,18 +417,7 @@ class SkinChooser {
 		wfProfileIn(__METHOD__.'::GetSkinLogic');
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
-			# rt 68918: life category check code for Oasis C(Oct 6, 2010) launch: remove this when oasis is global later
-			$mKey = wfMemcKey('mOasisHubCategory', $wgLanguageCode);
-			$hubcat = $wgMemc->get($mKey);
-			if(empty($hubcat)) {
-				$hubcat = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);
-				$wgMemc->set($mKey, empty($hubcat) ? 'fake' : $hubcat, 86400);
-			}
-			$isLifestyle = !empty($hubcat) && $hubcat == 'life' && $wgLanguageCode == 'en';
-			if($isLifestyle) {
-				$userSkin = 'oasis';
-				$userTheme = null;
-			} else if(!empty($wgAdminSkin) && !$isOasisPublicBeta) {
+			if(!empty($wgAdminSkin) && !$isOasisPublicBeta) {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
@@ -438,6 +427,10 @@ class SkinChooser {
 			}
 		} else {
 			$userSkin = self::getUserOption('skin');
+			if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'useskinwikia' )) {
+				$userSkin = 'monaco';
+			}
+
 			$userTheme = self::getUserOption('theme');
 			if(empty($userSkin)) {
 				if(!empty($wgAdminSkin)) {
