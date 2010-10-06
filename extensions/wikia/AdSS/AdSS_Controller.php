@@ -12,7 +12,11 @@ class AdSS_Controller extends SpecialPage {
 		$this->setHeaders();
 		$wgOut->setPageTitle( wfMsg( 'adss-sponsor-links' ) );
 
-		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/AdSS/css/adform.scss'));
+		if( $subpage == 'admin' ) {
+			$adminController = new AdSS_AdminController();
+			$adminController->execute( $subpage );
+			return;
+		}
 
 		$adForm = new AdSS_AdForm();
 		if ( $wgRequest->wasPosted() && $adForm->matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
@@ -48,6 +52,7 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'ad', $adForm );
 
 		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
 	}
 
 	function preview( $adForm ) {
@@ -83,6 +88,7 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'ad', $adForm );
 
 		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
 	}
 
 	function save( $adForm ) {
@@ -115,11 +121,6 @@ class AdSS_Controller extends SpecialPage {
 		global $wgAdSS_templatesDir, $wgOut;
 
 		$pp = new PaymentProcessor();
-		$baid = $pp->createBillingAgreement( $token );
-		if( $baid === false ) {
-			$wgOut->addHTML( wfMsgHtml( 'adss-paypal-error' ) );
-			return;
-		}
 
 		$adId = $pp->getAdId( $token );
 		if( !$adId ) {
@@ -133,6 +134,15 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
+		$baid = $pp->createBillingAgreement( $token );
+		if( $baid === false ) {
+			$wgOut->addHTML( wfMsgHtml( 'adss-paypal-error' ) );
+			return;
+		}
+
+		$wgOut->addHTML( wfMsgHtml( 'adss-form-thanks' ) );
+
+		/*
 		$priceConf = AdSS_Util::getPriceConf( Title::newFromID( $ad->pageId ) );
 
 		if( $pp->collectPayment( $baid, $priceConf['price'] ) ) {
@@ -145,6 +155,7 @@ class AdSS_Controller extends SpecialPage {
 		} else {
 			$wgOut->addHTML( wfMsgHtml( 'adss-paypal-error' ) );
 		}
+		*/
 	}
 
 }
