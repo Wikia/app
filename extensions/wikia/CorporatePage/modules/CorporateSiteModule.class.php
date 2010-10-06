@@ -195,8 +195,13 @@ class CorporateSiteModule extends Module {
 			$this->slider = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
 		}
 		if (ArticleAdLogic::isMainPage()) {
+			
+			$this->isMainPage = true;
 			$this->slider_class = "big";
 			$this->slider = CorporatePageHelper::parseMsgImg('corporatepage-slider',true);
+		}
+		else {
+			$this->isMainPage = false;	
 		}
 	}
 }

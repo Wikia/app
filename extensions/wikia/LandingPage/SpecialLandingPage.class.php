@@ -4,6 +4,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 
 
 	var $button_url;
+	var $logged_in;
+	var $logInClass;
 	
 	function __construct() {
 		wfLoadExtensionMessages('LandingPage');
@@ -31,7 +33,16 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		// hide wiki and page header
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
-
+		
+		
+		if ($wgUser->isLoggedIn() === true) {
+			$this->logInClass = '';
+		}
+		else {
+			$this->logInClass = ' class="ajaxLogin"';
+		}
+	
+		
 		// only shown "My Tools" on floating toolbar
 		$wgShowMyToolsOnly = true;
 
@@ -72,7 +83,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			'wgBlankImgUrl' => $wgBlankImgUrl,
 			'wikis' => $wikis,
 			'button_url' => $this->button_url,
-			'current_skin' => $wgUser->mOptions["skin"]
+			'current_skin' => $wgUser->mOptions["skin"],
+			'logInClass' => $this->logInClass
 		));
 
 		$wgOut->addHTML($template->render('main'));

@@ -1,6 +1,9 @@
-<?php if (!empty($slider)) { ?>
+<?php if (!empty($slider)) {
+	$class_hub = ($isMainPage == true) ? "": ' hub';	
+?>
+
 <section id="HomepageFeature">
-	<section id="spotlight-slider" class="<?php echo $slider_class; ?>">
+	<section id="spotlight-slider" class="<?php echo $slider_class; echo $class_hub; ?>">
 	<ul>
 		<?php
 			$wiki_featured_images = array();
@@ -27,8 +30,13 @@
 	</section>
 </section>
 
+
+
+<?php 
+	if ($isMainPage == true) {?>
+
 <section class="HomepageLink">
-	<p>Stay in the know</p>
+	<p class="stay-connected">Stay in the know</p>
 	<ul>
 		<li class="facebook"><a href="<?= wfMsg('corporatepage-facebook-link') ?>"></a></li>
 		<li class="blog"><a href="<?= wfMsg('corporatepage-wikia-blog-link') ?>"></a></li>
@@ -36,5 +44,11 @@
 	</ul>
 </section>
 
-
+<div class="HomeContent">
+	<h2>Get Started Today</h2>
+	
+	<p>Create a wiki about your favorite topic and begin collaborating with people who love what you love.</p>
+	 <span><a href="http://www.wikia.com/Special:CreateWiki" class="wikia-button" style="font-size: 23px; padding: 20px 20px 20px 20px;">Start a wiki now</a></span>
+</div>
+<?php	} ?>
 <?php } ?>

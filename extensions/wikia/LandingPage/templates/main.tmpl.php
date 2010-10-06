@@ -18,7 +18,7 @@
 			
 			<?php if ($current_skin != "oasis") { ?>
 			<section class="LandingPageButtonUpdate">
-				<a href="<?= $button_url ?>">
+				<a href="<?= $button_url ?>" <?= $logInClass ?> >
 					<button id="landing-update">
 						<?= wfMsg('landingpage-buttons-update-me') ?>
 					</button>

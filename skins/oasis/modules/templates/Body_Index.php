@@ -61,8 +61,9 @@
 		<?php
 		if (empty($wgSuppressArticleCategories)) {
 			echo wfRenderModule('ArticleCategories');
-		}
-		?>
+		} ?>
+		<?= wfRenderModule('ArticleInterlang') ?>
+
 		<div id="WikiaArticleBottomAd" class="noprint">
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>

@@ -7,6 +7,7 @@
 
 	/* @group -Feature-box specifics. */
 	#HomepageFeature {
+		margin-left: 17px;
 		border-bottom: 1px solid #FFF;
 	}
 	#homepage-feature-box {
@@ -83,7 +84,7 @@
 			padding: 10px;
 			position: absolute;
 			left: 7px;
-			top: 231px;
+			top: 265px;
 			width: 600px;
 			z-index: 99;
 		}
@@ -95,13 +96,18 @@
 			text-shadow: 0 1px 1px #000;
 			border-bottom: none;
 			margin-bottom: 3px;
+			border: none;
 		}
+		
+
+		
 		.description p {
 			font-size: 16px;
 			line-height: normal;
 			margin: 0 0 .3em;
 			text-shadow: 0 1px 1px #000;
 			font-weight: bold;
+			border: none;
 		}
 		.spotlight-slider {
 
@@ -138,6 +144,19 @@
 			opacity: .5;
 		}
 		
+	}
+	
+	.hub {
+		height: 327px !important;
+		.description {
+			top: 174px !important;
+		}
+		
+		.nav {
+			
+				top: 279px !important;
+
+		}
 	}
 
 	#spotlight-slider-0 .spotlight-slider {
@@ -181,7 +200,6 @@
 	}
 	
 	.nav {
-		height: 100px;
 		padding:16px 5px 0;		
 		position: absolute;
 		top: 369px;
@@ -191,16 +209,23 @@
 		background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
 
 		padding:16px 5px 0;
-		.selected img {
-			opacity: 1;
+		img {
+			opacity: 1 !important;
 		}
 	}
 	
 	// /** social links **/
 	.HomepageLink {
+		.stay-connected {
+			border: none;
+			margin: none;
+			margin-top: 9px;
+			font-size: 18px;
+		}	
+		
 		float: right;
 		position: relative;
-		right: 14px;
+		right: 17px;
 		top: -43px;
 		
 		p {
@@ -238,37 +263,46 @@
 					height: 30px;
 					display: block;
 				}
-			}
-				
+			}	
 		}
 	}
 	
-	.WikiaArticle {
-
+	.HomeContent {
 		border-bottom: solid 1px $color-page-border;
-		
-		
+		border-top: solid 1px $color-page-border;	
+
 		margin: {
 			left: 10px;
 			right: 10px;
+			top: 27px;
+			bottom: 30px;
+		}
+		padding-bottom: 22px;
+		padding-left: 29px;
 			
-			top: 10px;
-			bottom: 10px;
+		a, a:visited, a:active {
+			color: $color-header-text;
 		}
 
-		h2 {
-			border: none;
-			border-top: solid 1px $color-page-border;
-			margin-top: 50px;
-			padding-top: 17px;
-			font-size: 23px;
-
-			
-		}
 		p {
-			font-size: 18px;	
+			font-size: 18px;
+			width: 520px;	
 		}
 		
+		h2 {
+			border: none;
+			padding-top: 9px;
+			font-size: 23px;			
+		}
+		
+
+		// /** the button **/
+		span {
+			float: right;
+			position: relative;
+			top: -71px;
+			margin-right: 80px;
+		}
 	}
 		
 	/* @end */
@@ -308,7 +342,7 @@
 		color: #FFF;
 		height: 26px;
 		margin-bottom: 10px;
-		margin-right: 10px;
+		margin-right: 4px;
 		text-align: right;
 	}
 	#wikia-global-hot-spots .hot-spots-hilite {
@@ -339,9 +373,16 @@
 	#wikia-global-hot-spots .wikia-wiki-link {
 		font-size: 12px;
 	}
+	
+	#wikia-global-hot-spots li:first-child {
+		.page-activity-sources {
+			margin-top: 29px;
+		}
+		
+	}
 	#wikia-global-hot-spots .page-activity-sources {
 		display: block;
-		margin-left: 100px;
+		margin-left: 93px;
 	}
 	#wikia-global-hot-spots .page-activity-sources img {
 		position: relative;
@@ -717,7 +758,7 @@ ul#hub-blog-articles li .blog-jump-icon {
 }
 
 #hub-side-box #wikia-global-hot-spots .page-activity-badge {
-  margin-right: 10px;
+  margin-right: 4px;
 }
 
 #hub-side-box #wikia-global-hot-spots .page-activity-sources {
