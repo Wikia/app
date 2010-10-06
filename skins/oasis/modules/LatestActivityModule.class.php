@@ -38,7 +38,7 @@ class LatestActivityModule extends Module {
 
 		// Time strings are slow to calculate, but we still want them to update frequently (60 seconds)
 		$mKeyTimes = wfMemcKey('mOasisLatestActivity_times');
-		$this->changeList = $wgMemc->get($mKeyTimes);
+		$this->changeList = $wgMemc->get($mKeyTimes, array());
 
 		if(empty($this->changeList) && !empty($feedData) && is_array($feedData['results'])) {
 			foreach ( $feedData['results'] as $change ) {
