@@ -23,6 +23,7 @@ Please remember, avatars are global - removing a user's avatar removes it across
 	'blog-avatar-error-nofile' => 'Please pick up file from disk',
 	'blog-avatar-error-size' => 'Uploaded file is too big, allowed size is up to $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Unable to save file',
+	'blog-avatar-error-type', 'Invalid mime type. Provided: $1 - Allowed: $2',
 	'blog-avatar-changed-log' => "Added or changed avatar",
 	'blog-avatar-removed-log' => "Removed $1's avatars",
 	'blog-avatar-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press the "{{int:saveprefs}}" button',

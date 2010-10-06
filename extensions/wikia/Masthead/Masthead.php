@@ -589,8 +589,9 @@ class Masthead {
 	 *
 	 * @param String $sTmpFile -- the full path to the temporary image file (will be deleted after processing).
 	 * @param $errorNo -- optional initial error-code state.
+	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 */
-	private function postProcessImageInternal($sTmpFile, $errorNo = UPLOAD_ERR_OK){
+	private function postProcessImageInternal($sTmpFile, $errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
 		wfProfileIn(__METHOD__);
 		$aImgInfo = getimagesize($sTmpFile);
 
@@ -599,7 +600,14 @@ class Masthead {
 		 */
 		$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
 		if (!in_array($aImgInfo['mime'], $aAllowMime)) {
-//				Wikia::log( __METHOD__, 'mime', 'Imvalid mime type, allowed: ' . implode(',', $aAllowMime) );
+			// This seems to be the most appropriate error message to describe that the image type is invalid.
+			// Available error codes; http://php.net/manual/en/features.file-upload.errors.php
+			$errorNo = UPLOAD_ERR_EXTENSION;
+
+			// TODO: i18n this error message.
+			$errorMsg = wfMsg('blog-avatar-error-type', $aImgInfo['mime'], implode(',', $aAllowMime));
+
+//				Wikia::log( __METHOD__, 'mime', $errorMsg);
 			wfProfileOut(__METHOD__);
 			return $errorNo;
 		}
@@ -773,7 +781,8 @@ class Masthead {
 			/* check is set default avatar for user */
 			if ( empty($sUrl) ) {
 				/* upload user avatar */
-				$errorNo = $oAvatarObj->uploadFile( $wgRequest );
+				$errorMsg = "";
+				$errorNo = $oAvatarObj->uploadFile( $wgRequest, $errorMsg );
 				if ( $errorNo != UPLOAD_ERR_OK ) {
 					switch( $errorNo ) {
 						case UPLOAD_ERR_NO_FILE:
@@ -783,8 +792,13 @@ class Masthead {
 						case UPLOAD_ERR_CANT_WRITE:
 							$sMsg .= wfMsg( 'blog-avatar-error-cantwrite');
 							break;
+
 						case UPLOAD_ERR_FORM_SIZE:
 							$sMsg .= wfMsg( 'blog-avatar-error-size', (int)(AVATAR_MAX_SIZE/1024) );
+							break;
+
+						case UPLOAD_ERR_EXTENSION:
+							$sMsg .= $errorMsg;
 							break;
 
 						default:
