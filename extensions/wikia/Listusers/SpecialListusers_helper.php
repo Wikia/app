@@ -413,6 +413,7 @@ class ListusersData {
 			return true;
 		}
 		
+		global $wgCityId;
 		$dbr = wfGetDB(DB_SLAVE, array(), $this->mDBh);
 		$where = array( 
 			"user_id" 	=> $user->getID(),
