@@ -308,7 +308,7 @@ class AjaxLoginForm extends LoginForm {
 		if( !($returntoquery == '') ){
 			$returntoquery = "&returntoquery=" . wfUrlencode( $returntoquery );
 		}
-
+		
 		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login&action=submitlogin".$returnto.$returntoquery );
 		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto.$returntoquery );
 
