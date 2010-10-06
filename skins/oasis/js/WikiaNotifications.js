@@ -12,7 +12,7 @@ WikiaNotificationsApp = {
 		var notifications = $('#WikiaNotifications');
 
 		// handle clicks on dismiss icons
-		notifications.find('.close').click(function(ev) {
+		notifications.find('.close-notification').click(function(ev) {
 			// find notification to be removed
 			var notification = $(this).parent();
 
@@ -71,7 +71,7 @@ WikiaNotificationsApp = {
 				var notification = node.closest('div');
 				var notificationType = parseInt(notification.attr('data-type'));
 
-				var eventName = node.hasClass('close') ? 'dismiss' : 'link';
+				var eventName = node.hasClass('close-notification') ? 'dismiss' : 'link';
 				$.tracker.byStr('notifications/' + WikiaNotificationsApp.getTypeById(notificationType) + '/' + eventName);
 			}
 		});

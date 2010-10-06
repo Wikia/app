@@ -62,4 +62,10 @@
 			border-right: 0;
 		}
 	}
+	>li>a {
+		color: $color-header-text;
+		&:visited, &:active {
+			color: $color-header-text;
+		}
+	}
 }

@@ -12,7 +12,7 @@
 				case NotificationsModule::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE:
 ?>
 		<div data-type="<?= $notification['type'] ?>" class="WikiaBadgeNotification">
-			<a class="close"></a>
+			<a class="sprite close-notification"></a>
 			<img class="badge" src="<?= $notification['data']['picture'] ?>" width="90" height="90" alt="<?= $notification['data']['name'] ?>">
 			<p>
 				<big><?= $notification['data']['points'] ?></big>
@@ -29,7 +29,7 @@
 				case NotificationsModule::NOTIFICATION_COMMUNITY_MESSAGE:
 ?>
 		<div data-type="<?= $notification['type'] ?>">
-			<a class="close"></a>
+			<a class="sprite close-notification"></a>
 			<?= $notification['message'] ?>
 		</div>
 <?php
@@ -40,7 +40,7 @@
 					foreach ($notification['message'] as $msgId => $data) {
 ?>
 		<div data-type="<?= $notification['type'] ?>" id="msg_<?= $msgId ?>" style="display: <?= $first ? 'block' : 'none' ?>">
-			<a class="close"></a><?= $data['text'] ?>
+			<a class="sprite close-notification"></a><?= $data['text'] ?>
 		</div>
 <?php
 						$first = 0;

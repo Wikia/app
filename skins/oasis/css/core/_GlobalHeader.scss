@@ -27,9 +27,6 @@
 	top: 31px;
 	width: $width-outside + 10px;
 	z-index: 1000;
-	a, a:visited, a:active {
-		color: $color-header-text;
-	}
 	h1 {
 		display: none;
 	}
@@ -113,8 +110,12 @@
 		}
 	}
 	>li >a {
+		color: $color-header-text;
 		float: left;
 		font-size: 16px;
+		&:visited, &:active {
+			color: $color-header-text;		
+		}
 	}
 	a {
 		border-right: 1px solid mix($color-header-text, $color-header, 20%);
