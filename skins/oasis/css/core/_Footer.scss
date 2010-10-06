@@ -12,7 +12,7 @@
 		position: absolute;
 		top: 0;
 		width: $width-outside + 10px;
-		z-index: 2000 !important;
+		z-index: 900;
 		&:after {
 			background: url(/skins/oasis/images/sprite.png) no-repeat; /* $wgCdnStylePath */
 			content: " ";
