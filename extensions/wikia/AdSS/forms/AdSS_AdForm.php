@@ -10,7 +10,7 @@ class AdSS_AdForm {
 				'wpUrl'   => '',
 				'wpText'  => '',
 				'wpDesc'  => '',
-				'wpType'  => 'site',
+				'wpType'  => '',
 				'wpPage'  => '',
 				'wpEmail' => '',
 				);
@@ -40,7 +40,9 @@ class AdSS_AdForm {
 			}
 		}
 
-		if( $this->fields['wpType'] == 'page' ) {
+		if( $this->fields['wpType'] == '' ) {
+			$this->errors['wpType'] = wfMsgHtml( 'adss-form-pick-plan-errormsg' );
+		} elseif( $this->fields['wpType'] == 'page' ) {
 		       	if( empty( $this->fields['wpPage'] ) ) {
 				$this->errors['wpPage'] = wfMsgHtml( 'adss-form-field-empty-errormsg' );
 			} else {
@@ -70,7 +72,7 @@ class AdSS_AdForm {
 		if( isset( $this->errors[$field] ) ) {
 			echo '<div class="error">' . $this->errors[$field] . '</div>';
 		} else {
-			echo '';
+			echo '<div class="error"></div>';
 		}
 	}
 
@@ -107,17 +109,18 @@ class AdSS_AdForm {
 	}
 
 	static function formatPriceAjax( $wpType, $wpPage ) {
-		if( $wpType == 'site' ) {
-			$wpPage = '';
+		global $wgSquidMaxage;
+		if( $wpType == 'page' ) {
+			$priceConf = AdSS_Util::getPagePricing( Title::newFromText( $wpPage ) );
+		} else {
+			$priceConf = AdSS_Util::getSitePricing();
 		}
-
 		wfLoadExtensionMessages( 'AdSS' );
-
-		$priceConf = AdSS_Util::getPriceConf( Title::newFromText( $wpPage ) );
 		$priceStr = self::formatPrice( $priceConf );
 
 		$response = new AjaxResponse( Wikia::json_encode( $priceStr ) );
 		$response->setContentType( 'application/json; charset=utf-8' );
+		$response->setCacheDuration( $wgSquidMaxage );
 
 		return $response;
 	}

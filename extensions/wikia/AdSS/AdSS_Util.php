@@ -2,7 +2,12 @@
 
 class AdSS_Util {
 
-	static function getPriceConf( $title=null ) {
+	static function getSitePricing() {
+		global $wgAdSS_pricingConf;
+		return $wgAdSS_pricingConf['site'];
+	}
+
+	static function getPagePricing( $title=null ) {
 		global $wgAdSS_pricingConf;
 
 		if( $title ) {
@@ -11,12 +16,9 @@ class AdSS_Util {
 			} elseif( isset( $wgAdSS_pricingConf['page']['#mainpage#'] )
 					&& $title->equals( Title::newMainPage() ) ) {
 				return $wgAdSS_pricingConf['page']['#mainpage#'];
-			} else {
-				return $wgAdSS_pricingConf['page']['#default#'];
-			}
-		} else {
-			return $wgAdSS_pricingConf['site'];
+			} 
 		}
+		return $wgAdSS_pricingConf['page']['#default#'];
 	}
 
 	//FIXME temporary hack

@@ -54,7 +54,9 @@ class AdSS_Ad {
 		$this->desc = $f->get( 'wpDesc' );
 		if( $f->get( 'wpType' ) == 'page' ) {
 			$title = Title::newFromText( $f->get( 'wpPage' ) );
-			$this->pageId = $title->getArticleId();
+			if( $title ) {
+				$this->pageId = $title->getArticleId();
+			}
 		}
 		$this->email = $f->get( 'wpEmail' );
 	}

@@ -33,8 +33,10 @@ foreach( $res as $row ) {
 		if( !$title || !$title->exists() ) {
 			continue;
 		}
+		$priceConf = AdSS_Util::getPagePricing( $title );
+	} else {
+		$priceConf = AdSS_Util::getSitePricing();
 	}
-	$priceConf = AdSS_Util::getPriceConf( $title );
 
 	$pp = new PaymentProcessor();
 	$respArr = array();
