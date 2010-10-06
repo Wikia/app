@@ -42,7 +42,7 @@ class ListusersHooks {
 	static public function updateUserRights( &$user, $addgroup, $removegroup ) {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );		
-		$data = new ListusersData($this->mCityId, 0);
+		$data = new ListusersData($wgCityId, 0);
 		if ( is_object($data) ) {
 			$data->updateUserGroups( $user, $addgroup, $removegroup );
 		}
