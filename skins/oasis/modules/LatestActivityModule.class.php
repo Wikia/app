@@ -55,19 +55,19 @@ class LatestActivityModule extends Module {
 				}
 				switch ($change['type']) {
 					case 'new':
-						$item['changetype'] = wfMsg("oasis-latest-activity-new");
+						$item['changemessage'] = wfMsg("oasis-latest-activity-new", $item['user_href'], $item['page_href']);
 						$item['changeicon'] = 'new';
 						break;
 					case 'edit':
-						$item['changetype'] = wfMsg("oasis-latest-activity-edit");
+						$item['changemessage'] = wfMsg("oasis-latest-activity-edit", $item['user_href'], $item['page_href']);
 						$item['changeicon'] = 'edit';
 						break;
 					case 'delete':
-						$item['changetype'] = wfMsg("oasis-latest-activity-delete");
+						$item['changemessage'] = wfMsg("oasis-latest-activity-delete", $item['user_href'], $item['page_href']);
 						$item['changeicon'] = 'delete';
 						break;
 					default:
-						$item['changetype'] = '';
+						$item['changemessage'] = '';
 						break;
 				}
 				$this->changeList[] = $item;
