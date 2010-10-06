@@ -1573,6 +1573,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		switch( $this->mType ) {
+			case "default":
+				$WFSettingsVars[ "wgDefaultSkin" ] = 'oasis';
+				break;
 			case "answers":
 				$WFSettingsVars[ "wgRateLimits" ] = array (
 					'move' => array (
