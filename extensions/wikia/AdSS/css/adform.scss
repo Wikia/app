@@ -52,3 +52,16 @@
 		}
 	}
 }
+
+// monaco fixes
+.wikiaSkinMonaco .SponsoredLinkForm {
+	.box {
+		width: 380px;
+	}
+
+	fieldset {
+		section.box {
+			height: 190px;
+		}
+	}
+}
