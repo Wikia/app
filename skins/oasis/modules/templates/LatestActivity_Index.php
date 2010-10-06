@@ -11,7 +11,7 @@
 ?>
 		<li>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
-			<em><?= $item['user_href'] ?> <?= $item['changetype'] ?> <?= $item['page_href'] ?></em>
+			<em><?= $item['changemessage'] ?></em>
 			<details><?= $item['time_ago'] ?></details>
 		</li>
 <?php
