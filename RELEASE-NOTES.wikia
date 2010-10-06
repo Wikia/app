@@ -1,4 +1,5 @@
 == Changes since 201010.1 ==
+* rt#69933: Oasis: History dropdown says "Edited A day ago" (TOR)
 * rt#66961: User rights notifications sent non-emailconfirmed users (uberfuzzy)
 
 == Changes since 201009.5 ==
