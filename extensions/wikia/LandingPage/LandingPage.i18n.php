@@ -4,7 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'landingpage' => 'Welcome to Wikia',
-	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''",
+	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''.",
 	'landingpage-secondary-2' => "We’ve just gone live with a brand new look! Read more about us, or view some examples to the right.",
 	'landingpage-secondary-3' => 'Or just dive right in and start exploring the new Wikia by clicking on the button below.',
 
@@ -37,7 +37,7 @@ $messages['en'] = array(
 	'landingpage-change-notification' => 'Your preferences have been saved. Stay on this page to find out more, head over to your favorite wiki or explore one of our featured wikis.',
 	'landingpage-change-back-text' => 'I want to see the old look, show me how.',
 	'landingpage-change-back-link' => 'http://www.community.wikia.com/wiki/Monaco_instructions',
-	'landingpage-dive-in'=> 'Dive right in an check out the new Wikia'
+	'landingpage-dive-in'=> 'Dive right in an check out the new Wikia.'
 );
 
 /** Breton (Brezhoneg)

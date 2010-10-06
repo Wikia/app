@@ -1086,6 +1086,9 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-latest-activity-edit' => 'edited',
 'oasis-latest-activity-delete' => 'deleted',
 
+'oasis-interlang-show-all' => '... see all >',
+'oasis-interlang-languages' => 'Languages:',
+
 # Related to ImageSEO RT#55755
 'imageseo-featured-on' => 'Featured on:',
 'imageseo-featured-more' => 'more&hellip;',
