@@ -21,18 +21,6 @@ class CorporateSiteModule extends Module {
 	var $hidetopeditors;
 
 // These are just templates
-	public function executeCreateWiki() {
-
-	}
-
-	public function executeFollowUs() {
-
-	}
-
-	public function executeFacebookLike() {
-
-	}
-
 
 // FIXME: refactor the common functionality out of these
 	public function executeTopHubWikis() {
@@ -99,12 +87,12 @@ class CorporateSiteModule extends Module {
 		$posts = array();
 		foreach ($temp['value'] as $value) {
 			$post = array();
-			$post['title'] = $value['title'];
+			$post['title'] = $value['title'];        // FIXME: this is wrong for the corp site
 			$post['namespace'] = $value['namespace'];
 			$post['timestamp'] = $value['timestamp'];
 			$post['date'] = $value['date'];
 			$post['avatar'] = AvatarService::renderAvatar($value['author'], 48);
-			$post['userpage'] = $value['real_pagename'];  // FIXME
+			$post['userpage'] = $value['page_url'];
 			$post['username'] = $value['author'];
 			$post['readmore'] = null;
 			$post['text'] = $value['description'];
@@ -129,10 +117,9 @@ class CorporateSiteModule extends Module {
 		$wikiurl = "http://community.wikia.com";
 		$html_out = Http::get( $wikiurl."/api.php?action=query&list=categorymembers&cmtitle=Category:Staff_blogs&cmnamespace=500&cmsort=timestamp&cmdir=desc&format=json" );
 		$data = json_decode($html_out, true);
-		$results = array();
+		$page_ids = array();
 		if (isset($data['query']) && isset($data['query']['categorymembers'])) {
-			$results = $data['query']['categorymembers'];
-			foreach ($results as $r) {
+			foreach ($data['query']['categorymembers'] as $r) {
 				$page_ids[] = $r['pageid'];
 			}
 		}
@@ -188,6 +175,7 @@ class CorporateSiteModule extends Module {
 	
 	public function executeSlider() {
 		global $wgOut, $wgTitle, $wgStylePath;
+		wfLoadExtensionMessages( 'CorporatePage' );
 
 		if (BodyModule::isHubPage()) {
 			$this->slider_class = "small";
