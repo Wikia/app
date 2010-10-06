@@ -219,7 +219,7 @@ class BodyModule extends Module {
 				1500 => array('Search', 'Index', null),
 			);
 			// No rail on main page or edit page for corporate skin
-			if ( ArticleAdLogic::isMainPage() || BodyModule::isEditPage() ) {
+			if ( in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
@@ -230,6 +230,7 @@ class BodyModule extends Module {
 				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
 			}
 			if ($wgTitle->isSpecial('Search')) $railModuleList = array();
+			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
 		// we don't want any modules on these namespaces including talk namespaces (even ad modules) and on edit pages and main pages
