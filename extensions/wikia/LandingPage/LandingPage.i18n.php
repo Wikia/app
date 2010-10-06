@@ -16,7 +16,7 @@ $messages['en'] = array(
 
 	'landingpage-buttons-new-user' => 'I\'m a new user',
 	'landingpage-buttons-new-user-more' => 'Start Here',
-	'landingpage-buttons-new-user-link' => 'http://###',
+	'landingpage-buttons-new-user-link' => 'http://http://www.community.wikia.com/wiki/About_Wikia',
 
 	'landingpage-buttons-learn-more' => 'Learn more',
 
