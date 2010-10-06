@@ -25,7 +25,7 @@ $(function() {
 });
 
 $(window).load(function() {
-	setTimeout(sliderImages_load, 300);
+	//setTimeout(sliderImages_load, 300);
 	spotlightSlider_setup(blockArticle);
 });
 
@@ -121,14 +121,14 @@ function autoHubToggle(e) {
 function spotlightSlider_setup() {
 	//timer for automatic spotlight slideshow
 	var spotlightSlider_timer;
-
 	//random integer, 0-3
 	var random = 0; //Math.floor(Math.random() * 4);
 
-	var size = 620 + "px";
+	var size = 620;
 	if (wgIsMainpage == true) {
-		size = 943 +"px";
+		size = 943;
 	}
+	
 	//move spotlights
 	$(".spotlight-slider").each(function() {
 		$(this).css("left", parseInt($(this).css("left")) - (size * random));
@@ -147,6 +147,7 @@ function spotlightSlider_setup() {
 			spotlightSlider_scroll($(this));
 		}
 	});
+
 	spotlightSlider_timer = setInterval(spotlightSlider_slideshow, 7000);
 }
 
@@ -166,6 +167,7 @@ function spotlightSlider_scroll(nav) {
 	//hide description
 	$("#spotlight-slider .description").clearQueue().hide();
 	//scroll
+		
 	$("#spotlight-slider .spotlight-slider").animate({
 		left: "-=" + scroll_by
 	}, function() {

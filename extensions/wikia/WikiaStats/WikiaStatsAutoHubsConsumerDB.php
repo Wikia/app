@@ -169,7 +169,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 *
 	 */
 
-	public function getTopBlogs($tag_id, $lang, $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false) {
+	public function getTopBlogs($tag_id, $lang, $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false, $page_ids = null) {
 		global $wgMemc, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
@@ -184,6 +184,10 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 		$tag_id = (int) $tag_id;
 		$conditions = array( "tb_tag_id = $tag_id and tb_city_lang = '$lang'" );
+		// CorporatePage extension needs to get a list of staff blogs, and only has a list of page_ids
+		if (is_array($page_ids)) {
+			$conditions = array(" tb_page_id in (" . implode(",", $page_ids) . ")");
+		}
 		$res = $this->dbs->select(
 				array( 'tags_top_blogs' ),
 				array( 'tb_city_id as city_id,

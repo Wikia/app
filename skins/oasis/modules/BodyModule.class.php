@@ -219,7 +219,6 @@ class BodyModule extends Module {
 				1500 => array('Search', 'Index', null),
 			);
 			if (ArticleAdLogic::isMainPage()) {
-//				$railModuleList[1480] = array('CorporateSite', 'FollowUs', null);
 				$railModuleList[1470] = array('CorporateSite', 'FacebookLike', null);
 				$railModuleList = array();
 			}
@@ -228,8 +227,7 @@ class BodyModule extends Module {
 				$railModuleList[1480] = array('CorporateSite', 'PopularHubPosts', null);
 				$railModuleList[1470] = array('CorporateSite', 'TopHubUsers', null);
 			} else {  // content pages
-//				$railModuleList[1480] = array('CorporateSite', 'FollowUs', null);
-//				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
+				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
 			}
 			if ($wgTitle->isSpecial('Search')) $railModuleList = array();
 			return $railModuleList;

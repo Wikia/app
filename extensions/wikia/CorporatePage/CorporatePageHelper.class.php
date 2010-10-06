@@ -152,6 +152,7 @@ class CorporatePageHelper{
 		global $wgTTCache;
 		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
 		$out = $wgTTCache->get( $mcKey, -1 );
+		$out = null;
 		if ( is_array( $out ) ){
 			return $out;
 		}

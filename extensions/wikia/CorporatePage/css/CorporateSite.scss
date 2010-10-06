@@ -63,13 +63,27 @@
 	}
 
 	#spotlight-slider {
-		margin-bottom: 200px;
+		overflow: hidden;
+		position: relative;
+
+		&.small {
+			height: 290px;
+			width: 620px;
+		}
+		&.big {
+			height: 423px;
+			width: 943px;
+			// margin-bottom: 100px;
+		}
+
 		.description {
 			bottom: 40px;
 			color: #FFF;
 			display: none;
 			padding: 10px;
 			position: absolute;
+			left: 7px;
+			top: 231px;
 			width: 600px;
 			z-index: 99;
 		}
@@ -79,12 +93,15 @@
 			font-weight: normal;
 			line-height: normal;
 			text-shadow: 0 1px 1px #000;
+			border-bottom: none;
+			margin-bottom: 3px;
 		}
 		.description p {
 			font-size: 16px;
 			line-height: normal;
 			margin: 0 0 .3em;
 			text-shadow: 0 1px 1px #000;
+			font-weight: bold;
 		}
 		.spotlight-slider {
 
@@ -102,35 +119,32 @@
 				width: 943px;
 			}
 		}
-		.nav .small {
-			padding: 16px 5px 0;
-			position: absolute;
-			top: 244px;
-			z-index: 100;
-		}
-		.nav .big {
-			padding: 16px 5px 0;
-			position: absolute;
-			top: 334px;
-			z-index: 100;
+		p .nav {
+			&.small {
+				padding: 16px 5px 0;
+				position: absolute;
+				top: 244px;
+				z-index: 100;
+			}
+			&.big {
+				padding: 16px 5px 0;
+				position: absolute;
+				top: 384px;
+				z-index: 100;
+			}
 		}
 		.nav img {
 			cursor: pointer;
 			opacity: .5;
 		}
-		.selected {
-			background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
-		}
-		.selected img {
-			opacity: 1;
-		}
+		
 	}
 
 	#spotlight-slider-0 .spotlight-slider {
 		left: 0;
 	}
 	#spotlight-slider-0 .nav {
-		left: 160px;
+		left: 0px;
 	}
 	#spotlight-slider-1 .spotlight-slider {
 		&.big {
@@ -141,7 +155,7 @@
 		}
 	}
 	#spotlight-slider-1 .nav {
-		left: 240px;
+		left: 60px;
 	}
 	#spotlight-slider-2 .spotlight-slider {
 		&.big {
@@ -152,7 +166,7 @@
 		}
 	}
 	#spotlight-slider-2 .nav {
-		left: 320px;
+		left: 120px;
 	}
 	#spotlight-slider-3 .spotlight-slider {
 		&.big {
@@ -163,8 +177,100 @@
 		}
 	}
 	#spotlight-slider-3 .nav {
-		left: 400px;
+		left: 180px;
 	}
+	
+	.nav {
+		height: 100px;
+		padding:16px 5px 0;		
+		position: absolute;
+		top: 369px;
+	}
+	
+	.selected {
+		background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
+
+		padding:16px 5px 0;
+		.selected img {
+			opacity: 1;
+		}
+	}
+	
+	// /** social links **/
+	.HomepageLink {
+		float: right;
+		position: relative;
+		right: 14px;
+		top: -43px;
+		
+		p {
+			float: left;
+			margin-right: 10px;
+		}
+		
+		ul {
+			list-style: none;
+			float: right;
+			margin: 0px;
+			margin-top: 3px;
+			
+			li {
+				/** CHANGE!!! **/
+				background: url(http://owen.wikia-dev.com/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat;
+				float: left;
+				margin-right: 2px;
+				display: inline-block;
+				
+				&.facebook {
+					background-position: -2px -249px;
+				}
+				
+				&.blog {
+					background-position: -36px -249px;
+				}
+				
+				&.twitter {
+					background-position: -73px -249px;
+				}
+				
+				a {
+					width: 30px;
+					height: 30px;
+					display: block;
+				}
+			}
+				
+		}
+	}
+	
+	.WikiaArticle {
+
+		border-bottom: solid 1px $color-page-border;
+		
+		
+		margin: {
+			left: 10px;
+			right: 10px;
+			
+			top: 10px;
+			bottom: 10px;
+		}
+
+		h2 {
+			border: none;
+			border-top: solid 1px $color-page-border;
+			margin-top: 50px;
+			padding-top: 17px;
+			font-size: 23px;
+
+			
+		}
+		p {
+			font-size: 18px;	
+		}
+		
+	}
+		
 	/* @end */
 
 
