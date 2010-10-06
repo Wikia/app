@@ -118,10 +118,51 @@ class CorporateSiteModule extends Module {
 	}
 
 	public function executePopularStaffPosts () {
-		global $wgUser, $wgTitle, $wgParser, $wgEnableBlog;
+		global $wgUser, $wgTitle, $wgStylePath, $wgEnableBlog, $wgContLanguageCode;
 
-		// http://community.wikia.com/api.php?action=query&list=categorymembers&cmtitle=Category:Staff_blogs&cmnamespace=500&cmsort=timestamp&cmdir=desc
-		// FIXME: implement this
+		$isManager = $wgUser->isAllowed( 'corporatepagemanager' );
+		$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
+//		$lang = AutoHubsPagesHelper::getLangForHub($wgTitle);
+//		$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
+//		$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
+
+		$wikiurl = "http://community.wikia.com";
+		$html_out = Http::get( $wikiurl."/api.php?action=query&list=categorymembers&cmtitle=Category:Staff_blogs&cmnamespace=500&cmsort=timestamp&cmdir=desc&format=json" );
+		$data = json_decode($html_out, true);
+		$results = array();
+		if (isset($data['query']) && isset($data['query']['categorymembers'])) {
+			$results = $data['query']['categorymembers'];
+			foreach ($results as $r) {
+				$page_ids[] = $r['pageid'];
+			}
+		}
+		if ($isManager) {
+			$temp = $datafeeds->getTopBlogs("staff", $wgContLanguageCode, 8, 4, true, true, $page_ids);
+		} else {
+			$temp = $datafeeds->getTopBlogs("staff", $wgContLanguageCode, 4, 4, false, false, $page_ids);
+		}
+
+		foreach ($temp['value'] as $value) {
+			// get additional data for the blog
+			$post = array();
+			$post['title'] = $value['title'];
+			$post['namespace'] = $value['namespace'];
+			$post['timestamp'] = $value['timestamp'] ;
+			$post['date'] = $value['date'];
+			$post['avatar'] = AvatarService::renderAvatar($value['author'], 48);
+			$post['userpage'] = $value['real_pagename'];  // FIXME
+			$post['username'] = $value['author'];
+			$post['readmore'] = null;
+			$post['text'] = $value['description'];
+			$post['comments'] = $value['all_count'];
+			$post['likes'] = null;
+			$posts[] = $post;
+		}
+		$this->posts = $posts;
+		$this->data['title'] = 'Popular Staff Blogs';
+		$this->wgStylePath = $wgStylePath;
+		$this->wgTitle = $wgTitle;
+
 	}
 
 	public function executeHotSpots () {
