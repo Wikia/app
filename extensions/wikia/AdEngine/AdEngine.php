@@ -384,6 +384,7 @@ class AdEngine {
 		 * Note that the second parameter for AdProviderNull constructor
 		 * is a boolean for whether or not to log it as an error
 		 */
+		 echo $slotname . "\n";
 
 		// First handle error conditions
 		if (!empty($wgNoExternals)){
