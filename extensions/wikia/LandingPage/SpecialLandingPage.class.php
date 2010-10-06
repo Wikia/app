@@ -4,7 +4,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 
 
 	var $button_url;
-	var $logged_in;
+	var $loggedIn;
 	var $logInClass;
 	
 	function __construct() {
@@ -37,9 +37,12 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		
 		if ($wgUser->isLoggedIn() === true) {
 			$this->logInClass = '';
+			$this->loggedIn = true;
 		}
 		else {
 			$this->logInClass = ' class="ajaxLogin"';
+			$this->loggedIn = false;
+
 		}
 	
 		
@@ -76,6 +79,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 
 		);
 
+
+		
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
@@ -84,7 +89,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			'wikis' => $wikis,
 			'button_url' => $this->button_url,
 			'current_skin' => $wgUser->mOptions["skin"],
-			'logInClass' => $this->logInClass
+			'logInClass' => $this->logInClass,
+			'loggedIn' => $this->loggedIn
 		));
 
 		$wgOut->addHTML($template->render('main'));

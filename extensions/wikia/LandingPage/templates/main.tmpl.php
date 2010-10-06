@@ -4,7 +4,7 @@
 			<h1><?= wfMsg('landingpage') ?></h1>
 			<h2><?= wfMsgExt('landingpage-secondary-line', array('parse')) ?></h2>
 			
-			<?php if ($current_skin == "oasis") { ?>
+			<?php if ($loggedIn == true && $current_skin == "oasis") { ?>
 				<h3><?= wfMsgExt('landingpage-dive-in', array('parse')) ?></h3>
 			<?php }
 			else { ?>
@@ -16,7 +16,7 @@
 			?>
 			
 			
-			<?php if ($current_skin != "oasis") { ?>
+<?php	if ($loggedIn == false || ( $loggedIn == true && $current_skin != "oasis")) { ?>
 			<section class="LandingPageButtonUpdate">
 				<a href="<?= $button_url ?>" <?= $logInClass ?> >
 					<button id="landing-update">
@@ -24,9 +24,9 @@
 					</button>
 				</a>
 			</section>
-	<?php }	?>
+	<?php } ?>
 
-	<?php if ($current_skin == "oasis") {	?>
+<?php if ($loggedIn == true && $current_skin == "oasis") {	?>
 			<section class="LandingPageExamples">	
 					<ul>
 			<?php foreach($wikis as $wiki) { ?>
@@ -36,12 +36,12 @@
 								<?= $wiki['name'] ?>
 							</a>
 						</li>
-				<?php
-			}
+			<?php
+		}
 		?>
 					</ul>
 			</section>
-			<?php }	?>
+	<?php } ?>
 			<section class="LandingPageSwitchBack">
 				<h3><a href="<?= wfMsg('landingpage-change-back-link') ?>"><?= wfMsg('landingpage-change-back-text') ?></a></h3>
 			
