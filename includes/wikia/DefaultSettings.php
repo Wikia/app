@@ -311,6 +311,7 @@ $wgSkipSkins = array(
 		'quartz',
 		'monaco_old',
 		'wikiaphone',
+		'smartphone',
 		'efmonaco',
 		'answers',
 );
