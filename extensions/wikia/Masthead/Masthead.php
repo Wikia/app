@@ -535,10 +535,11 @@ class Masthead {
 	 *
 	 * @param Request $request -- WebRequest instance
 	 * @param String $input    -- name of file input in form
+	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 *
 	 * @return Integer -- error code of operation
 	 */
-	public function uploadFile($request, $input = AVATAR_UPLOAD_FIELD) {
+	public function uploadFile($request, $input = AVATAR_UPLOAD_FIELD, &$errorMsg='') {
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
 
@@ -572,7 +573,7 @@ class Masthead {
 //		Wikia::log( __METHOD__, 'path', "Path to uploaded file is {$sTmp}" );
 
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
-			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
+			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo, $errorMsg);
 		}
 		else {
 //			Wikia::log( __METHOD__, 'move', sprintf('Cannot move uploaded file from %s to %s', $sTmp, $sTmpFile ));
@@ -780,7 +781,7 @@ class Masthead {
 			if ( empty($sUrl) ) {
 				/* upload user avatar */
 				$errorMsg = "";
-				$errorNo = $oAvatarObj->uploadFile( $wgRequest, $errorMsg );
+				$errorNo = $oAvatarObj->uploadFile( $wgRequest, AVATAR_UPLOAD_FIELD, $errorMsg );
 				if ( $errorNo != UPLOAD_ERR_OK ) {
 					switch( $errorNo ) {
 						case UPLOAD_ERR_NO_FILE:
