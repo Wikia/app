@@ -20,7 +20,7 @@ Type the exact username in the box provided, and press \"{{int:blog-avatar-getus
 Please remember, avatars are global - removing a user's avatar removes it across all Wikia.",
 	'blog-avatar-getuser' => 'Search',
 	'blog-avatar-remove-confirm' => 'Are you sure you want to remove avatar?',
-	'blog-avatar-error-nofile' => 'Please pick up file from disk',
+	'blog-avatar-error-nofile' => 'Please pick a file from your computer',
 	'blog-avatar-error-size' => 'Uploaded file is too big, allowed size is up to $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Unable to save file',
 	'blog-avatar-error-type', 'Invalid mime type. Provided: $1 - Allowed: $2',
