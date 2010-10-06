@@ -100,6 +100,13 @@ window.RTE.tools = {
 		return placeholder;
 	},
 
+	// RT #69635: prevent drag&drop for provided elements
+	disableDragDrop: function(nodes) {
+		nodes.bind('mousedown', function(ev) {
+			ev.preventDefault();
+		});
+	},
+
 	// get height of editor's iframe
 	getEditorHeight: function() {
 		return $('#cke_contents_wpTextbox1').height();

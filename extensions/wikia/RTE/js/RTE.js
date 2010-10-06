@@ -10,6 +10,7 @@ window.RTE = {
 		'customConfig': '',
 		'dialog_backgroundCoverColor': '#000',
 		'dialog_backgroundCoverOpacity': (window.skin == 'oasis' ? 0.8 : 0.5),
+		'disableDragDrop': false,
 		'disableObjectResizing': true,
 		'entities': false,
 		'format_tags': 'p;h2;h3;h4;h5;pre',
@@ -116,6 +117,13 @@ window.RTE = {
 
 		// set startup mode
 		RTE.config.startupMode = mode;
+
+		// RT #69635: disable media drag&drop on Chrome & Firefox 3.6.9+
+		RTE.config.disableDragDrop = $().isChrome() || (CKEDITOR.env.gecko && CKEDITOR.env.version > 10900);
+
+		if (RTE.config.disableDragDrop) {
+			RTE.log('media drag&drop disabled');
+		}
 
 		// register and load RTE plugins
 		RTE.loadPlugins();
