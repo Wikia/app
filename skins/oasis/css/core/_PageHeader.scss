@@ -108,6 +108,10 @@
 		.view-all {
 			text-align: right;
 		}
+		.chevron {
+			border-top-color: $color-text;
+			vertical-align: middle;
+		}
 	}
 	.categories {
 		margin-right: 10px;
