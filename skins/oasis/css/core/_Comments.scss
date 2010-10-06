@@ -141,6 +141,7 @@
 		}
 		ul, ol {
 			margin: 0.4em 0 0.5em 2.5em;
+			line-height: 1.8em;
 		}
 		ol {
 			list-style: decimal;
@@ -157,14 +158,14 @@
 		small {
 			font-size: .78em;
 		}
-		
+
 		.article-comm-text {
 			overflow: hidden;
-			width: 553px;	
+			width: 553px;
 		}
 	}
 	.sub-comments {
-		.article-comm-text { 
+		.article-comm-text {
 			overflow: hidden;
 			width: 468px;
 		}
