@@ -861,7 +861,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// add button for Oasis
 			$html .= Xml::openElement('a', array('class' => 'wikia-photogallery-add wikia-button noprint', 'style' => 'display: none'));
-			$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'add-icon', 'width' => 15, 'height' => 15));
+			$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite photo', 'width' => 26, 'height' => 16));
 			$html .= wfMsgForContent('wikiaPhotoGallery-viewmode-addphoto');
 			$html .= Xml::closeElement('a');
 		}
