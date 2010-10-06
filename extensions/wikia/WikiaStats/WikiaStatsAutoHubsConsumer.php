@@ -122,7 +122,7 @@ class WikiaStatsAutoHubsConsumer {
 											'tb_city_lang'	=> $lang,
 											'tb_page_name'	=> addslashes($oGTitle->mUrlform),
 											'tb_page_url'	=> addslashes($oGTitle->getFullURL()),
-											'tb_wikiname' 	=> addslahses($sitename),
+											'tb_wikiname' 	=> addslashes($sitename),
 											'tb_wikiurl'	=> addslashes($server),
 											'tb_count'		=> 1										
 										);
