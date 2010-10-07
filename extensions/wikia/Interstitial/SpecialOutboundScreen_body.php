@@ -47,7 +47,7 @@ class Outbound extends UnlistedSpecialPage {
 
 			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS$
 			if ($skin->getSkinName() == '') {
-				$skin->skinname = substr($skinName, 4);
+				$skin->skinname = strtolower(substr($skinName, 4));
 			}
 
 			$adSlots = array(
