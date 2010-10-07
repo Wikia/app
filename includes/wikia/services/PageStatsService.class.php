@@ -131,7 +131,7 @@ class PageStatsService extends Service {
 
 		$blacklist = array_merge(
 			$wgBiggestCategoriesBlacklist,
-			explode( "\n", wfMsgForContent( 'oasis-article-readmore-filter' ) )
+			explode( "\n", wfMsgForContent( 'categoryblacklist' ) )
 		);
 
 		// perfrom case insensitive check
