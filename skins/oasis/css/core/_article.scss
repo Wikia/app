@@ -299,32 +299,45 @@
 	.TablePager tr:hover td { background-color: #eeeeff }
 }
 
+// RT #70017: wikitable class for skinning normal tables
+table.wikitable {
+	background: darken($color-page, 2%);
+	border-collapse: collapse;
+	border: 1px $color-page-border solid;
+	margin: 1em 1em 1em 0;
+
+	th, td {
+		border: 1px darken($color-page, 35%) solid;
+		padding: 0.2em;
+	}
+	th {
+		background: darken($color-page, 5%);
+		text-align: center;
+	}
+	caption {
+		font-weight: bold;
+	}
+}
 
 // /** Interlang Links **/
-
 .WikiaArticleInterlang {
 	margin: 10px;
 	padding: 10px;
 	clear: both;
-	
+
 	h3 {
 		float: left;
 		margin-right: 5px;
 	}
-	
+
 	ul {
 		li {
 			border-left: 1px solid $color-page-border;
 			float: left;
 			line-height: 15px;
-			padding: {
-				left: 5px;
-				
-			}
-			padding-right: 5px;
 			margin-bottom: 6px;
-
-
+			padding-left: 5px;
+			padding-right: 5px;
 
 			&:first-child {
 				border: none;
@@ -340,7 +353,5 @@
 				display: none;
 			}
 		}
-
 	}
-
 }
