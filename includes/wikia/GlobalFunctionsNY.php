@@ -4,11 +4,20 @@ $wgExtensionFunctions[] = 'wfCommonReadLang';
 $wgHooks['BeforePageDisplay'][] = 'wfSocialToolsLoadJs';
 
 function wfSocialToolsLoadJs() {
+	wfProfileIn(__METHOD__);
 	global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgUseOneJsToRule;
+
 	if (!empty($wgUseOneJsToRule)) {
-		$wgOut->addScript('<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/utilities/utilities.js"></script>');
+		// macbre: RT #69793
+		$StaticChute = new StaticChute('js');
+		$StaticChute->useLocalChuteUrl();
+		$yuiPackageURL = $StaticChute->getChuteUrlForPackage('yui');
+
+		$wgOut->addScript('<script type="text/javascript" src="' . $yuiPackageURL . '"></script>');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/onejstorule.js?' . $wgStyleVersion . '"></script>');
 	}
+
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
