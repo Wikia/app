@@ -207,7 +207,8 @@ var initTracker = function() {
 					$.tracker.byStr(fakeUrl + 'edit');
 				}
 				else {
-					$.tracker.byStr(fakeUrl + 'link');
+					// RT #69819
+					$.tracker.byStr(fakeUrl + node.attr('data-name'));
 				}
 			}
 			// "My Tools" link
@@ -224,7 +225,7 @@ var initTracker = function() {
 			return;
 		}
 		var fakeUrl = 'module/pagecount/';
-		
+
 		// Create a Page
 		if (node.hasClass('wikia-button')) {
 			$.tracker.byStr(fakeUrl + 'createpage');

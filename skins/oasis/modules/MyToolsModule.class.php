@@ -34,7 +34,8 @@ class MyToolsModule extends Module {
 					$out[] = array(
 						'text' => $page->getDescription(),
 						'href' => $page->getTitle()->getLocalUrl(),
-						'usercan' => $page->userCanExecute($wgUser)
+						'usercan' => $page->userCanExecute($wgUser),
+						'name' => strtolower($tool),
 					);
 				}
 			}
@@ -55,7 +56,8 @@ class MyToolsModule extends Module {
 			if(isset(self::$skinTemplateObj->data['content_actions']['history'])) {
 				$out[] = array(
 					'text' => self::$skinTemplateObj->data['content_actions']['history']['text'],
-					'href' => self::$skinTemplateObj->data['content_actions']['history']['href']
+					'href' => self::$skinTemplateObj->data['content_actions']['history']['href'],
+					'name' => 'history',
 				);
 			}
 
@@ -65,7 +67,8 @@ class MyToolsModule extends Module {
 		if(isset(self::$skinTemplateObj->data['nav_urls']['whatlinkshere'])) {
 			$out[] = array(
 				'text' => SpecialPage::getPageByAlias('whatlinkshere')->getDescription(),
-				'href' => self::$skinTemplateObj->data['nav_urls']['whatlinkshere']['href']
+				'href' => self::$skinTemplateObj->data['nav_urls']['whatlinkshere']['href'],
+				'name' => 'whatlinkshere',
 			);
 		}
 
@@ -73,7 +76,8 @@ class MyToolsModule extends Module {
 		if(!empty(self::$skinTemplateObj->data['nav_urls']['blockip'])) {
 			$out[] = array(
 				'text' => wfMsg('blockip'),
-				'href' => self::$skinTemplateObj->data['nav_urls']['blockip']['href']
+				'href' => self::$skinTemplateObj->data['nav_urls']['blockip']['href'],
+				'name' => 'blockip',
 			);
 		}
 
@@ -84,6 +88,7 @@ class MyToolsModule extends Module {
 			$out[] = array(
 				'text' => $page->getDescription(),
 				'href' => $page->getTitle()->getLocalUrl(),
+				'name' => 'themedesigner',
 			);
 		}
 

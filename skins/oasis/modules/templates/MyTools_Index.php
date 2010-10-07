@@ -4,7 +4,7 @@
 foreach($customTools as $tool) {
 	if($tool['usercan']) {
 ?>
-		<li class="custom"><a href="<?= $tool['href'] ?>"><?= $tool['text'] ?></a></li>
+		<li class="custom"><a href="<?= $tool['href'] ?>" data-name="<?= $tool['name'] ?>"><?= $tool['text'] ?></a></li>
 <?php
 	} else {
 ?>
@@ -16,7 +16,7 @@ foreach($customTools as $tool) {
 
 <?php foreach($defaultTools as $tool) { ?>
 	<li class="default">
-		<a href="<?= $tool['href'] ?>"><?= $tool['text'] ?></a>
+		<a href="<?= $tool['href'] ?>" data-name="<?= $tool['name'] ?>"><?= $tool['text'] ?></a>
 	</li>
 <?php } ?>
 
