@@ -4,6 +4,6 @@
 	</div>
 	<div id="lightbox-caption" class="neutral clearfix" style="padding: 8px">
 		<a id="lightbox-link" href="<?= htmlspecialchars($href) ?>" title="<?= wfMsg('lightbox_details_tooltip') ?>" style="float: right"><img class="sprite details" width="16" height="16" src="<?= $wgBlankImgUrl ?>" alt="" /></a>
-		<div id="lightbox-caption-content" style="margin-right: 25px; text-align: left"></div>
+		<div id="lightbox-caption-content" style="line-height: 18px; margin-right: 25px; text-align: left"></div>
 	</div>
 </div>
