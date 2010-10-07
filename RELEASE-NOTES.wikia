@@ -1,4 +1,5 @@
 == Changes since 201010.1 ==
+* rt#69159: RTE: load Oasis CSS for edited content (macbre)
 * rt#68809: Oasis: Create Category Blacklist (TOR)
 * rt#70017: Oasis: .wikitable classes are missing from oasis (macbre)
 * rt#69819: Oasis click-tracking: Track My Tools clicks (macbre)
