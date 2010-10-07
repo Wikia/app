@@ -6,7 +6,7 @@
 	if (!empty($actionButton)) {
 		echo wfRenderModule('MenuButton', 'Index', array(
 			'action' => $actionButton,
-			'image' => MenuButtonModule::ADD_ICON,
+			'image' => MenuButtonModule::BLOG_ICON,
 			'name' => 'createblogpost',
 		));
 	}
