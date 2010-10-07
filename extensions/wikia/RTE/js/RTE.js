@@ -4,6 +4,7 @@ window.RTE = {
 	config: {
 		'alignableElements':  ['p', 'div', 'td' ,'th'],
 		'baseFloatZIndex': 1000,
+		'bodyClass': 'WikiaArticle',
 		'bodyId': 'bodyContent',
 		'coreStyles_bold': {element: 'b', overrides: 'strong'},
 		'coreStyles_italic': {element: 'i', overrides: 'em'},
@@ -183,15 +184,22 @@ window.RTE = {
 
 	// load extra CSS files
 	loadCss: function() {
-		var css = [
-			window.stylepath + '/monobook/main.css',
-			CKEDITOR.basePath + '../css/RTEcontent.css',
-			window.RTEMWCommonCss
-		];
+		var css = [];
+
+		if (window.skin == 'oasis') {
+			// RT #69159
+			css.push(wfGetSassUrl('/extensions/wikia/RTE/css/oasis.scss'));
+		}
+		else {
+			css.push(window.stylepath + '/monobook/main.css');
+			css.push(CKEDITOR.basePath + '../css/RTEcontent.css');
+			// load MediaWiki:Common.css
+			css.push(window.RTEMWCommonCss);
+		}
 
 		// Bartek - for RT #43217
 		if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
-			css.push( wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css' );
+			css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
 		}
 
 		for (var n=0; n<css.length; n++) {
