@@ -1,21 +1,21 @@
 <?php
 
-function comboAjaxExtraParam(&$vars) {
-	global $wgTitle;
-	
-	$url = $wgTitle->getLocalURL(array("oasis_upgrade"=> "true"));
-	$vars['wpAjaxLoginExtraParam'] = wfUrlencode( wfArrayToCGI(array("&oasis_upgrade" => "true")));
-	return true;
-}
-
 class SpecialLandingPage extends UnlistedSpecialPage {
 	var $button_url;
 	var $loggedIn;
 	var $logInClass;
-	
+
 	function __construct() {
 		wfLoadExtensionMessages('LandingPage');
 		parent::__construct('LandingPage');
+	}
+
+	static function comboAjaxExtraParam(&$vars) {
+		global $wgTitle;
+
+		$url = $wgTitle->getLocalURL(array("oasis_upgrade"=> "true")); // ?
+		$vars['wpAjaxLoginExtraParam'] = wfUrlencode( wfArrayToCGI(array("&oasis_upgrade" => "true")));
+		return true;
 	}
 
 	function execute($par ) {
@@ -24,23 +24,23 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 
 
 		// forces the skin to oasis
-		if ($wgRequest->getVal("oasis_upgrade")) {;	
+		if ($wgRequest->getVal("oasis_upgrade")) {;
 			$wgUser->setOption("skin", "oasis");
 			$wgUser->saveSettings();
-			
+
 			NotificationsModule::addConfirmation(wfMsg('landingpage-change-notification'), array(), 1);
 		}
-		
+
 		$this->button_url = $wgTitle->getLocalURL(array("oasis_upgrade"=> "true"));
 		$this->setHeaders();
 		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/LandingPage/css/LandingPage.scss'));
-		
+
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LandingPage/js/LandingPage.js?{$wgStyleVersion}\" ></script>\n");
 		// hide wiki and page header
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
-		
-		
+
+
 		if ($wgUser->isLoggedIn() === true) {
 			$this->logInClass = '';
 			$this->loggedIn = true;
@@ -50,7 +50,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			$this->loggedIn = false;
 
 		}
-	
+
 		// only shown "My Tools" on floating toolbar
 		$wgShowMyToolsOnly = true;
 
