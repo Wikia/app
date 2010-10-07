@@ -22,13 +22,7 @@ class LatestPhotosModule extends Module {
 		$this->total = $wgLang->formatNum(SiteStats::images());
 
 		// Pull the list of images from memcache first
-		global $wgDevelEnvironment;
-		if(!empty($wgDevelEnvironment)){
-			$mKey = wfMemcKey('mOasisLatestPhotosA', $_SERVER['SERVER_NAME']);
-		} else {
-			$mKey = wfMemcKey('mOasisLatestPhotosA');
-		}
-		$this->thumbUrls = $wgMemc->get($mKey);
+		$this->thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
 		if (empty($this->thumbUrls)) {
 
 			// api service
@@ -65,7 +59,7 @@ class LatestPhotosModule extends Module {
 			}
 
 			$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
-			$wgMemc->set($mKey, $this->thumbUrls);
+			$wgMemc->set(LatestPhotosModule::memcacheKey(), $this->thumbUrls);
 		}
 
 		if (count($this->thumbUrls) < 3) {
@@ -162,9 +156,25 @@ class LatestPhotosModule extends Module {
 		return $links;
 	}
 
+	private static function memcacheKey() {
+		global $wgDevelEnvironment;
+		$mKey = wfMemcKey('mOasisLatestPhotos');
+		if(!empty($wgDevelEnvironment)){
+			$mKey = wfMemcKey('mOasisLatestPhotos', $_SERVER['SERVER_NAME']);
+		}
+		return $mKey;
+	}
+
     public static function onImageUpload(&$image) {
 		global $wgMemc;
-		$wgMemc->delete(wfMemcKey('mOasisLatestPhotosA'));
+		$wgMemc->delete(LatestPhotosModule::memcacheKey());
 		return true;
     }
+
+    public static function onImageDelete(&$file, $oldimage, $article, $user, $reason) {
+		global $wgMemc;
+		$wgMemc->delete(LatestPhotosModule::memcacheKey());
+		return true;
+    }
+
 }
