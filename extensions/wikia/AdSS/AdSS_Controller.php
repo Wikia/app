@@ -26,6 +26,8 @@ class AdSS_Controller extends SpecialPage {
 		} elseif( ( $subpage == 'paypal/return' ) && ( $wgRequest->getSessionData( 'ecToken' ) == $wgRequest->getText( 'token' ) ) ) {
 			unset( $_SESSION['ecToken'] );
 			$this->processPayPalReturn( $wgRequest->getText( "token" ) );
+		} elseif( $subpage == 'paypal/cancel' ) {
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		} else {
 			$this->displayForm( $adForm );
 		}
@@ -69,7 +71,7 @@ class AdSS_Controller extends SpecialPage {
 			$wgOut->redirect( $wgPayPalUrl . $token );
 		} else {
 			// show error
-			$wgOut->addHTML( wfMsgHtml( 'adss-paypal-error' ) );
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		}
 	}
 
@@ -80,23 +82,23 @@ class AdSS_Controller extends SpecialPage {
 
 		$adId = $pp->getAdId( $token );
 		if( !$adId ) {
-			$wgOut->addHTML( wfMsgHtml( 'adss-error' ) );
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
 			return;
 		}
 
 		$ad = AdSS_Ad::newFromId( $adId );
 		if( $adId != $ad->id ) {
-			$wgOut->addHTML( wfMsgHtml( 'adss-error' ) );
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
 			return;
 		}
 
 		$baid = $pp->createBillingAgreement( $token );
 		if( $baid === false ) {
-			$wgOut->addHTML( wfMsgHtml( 'adss-paypal-error' ) );
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 			return;
 		}
 
-		$wgOut->addHTML( wfMsgHtml( 'adss-form-thanks' ) );
+		$wgOut->addHTML( wfMsgWikiHtml( 'adss-form-thanks' ) );
 	}
 
 }
