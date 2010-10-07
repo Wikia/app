@@ -1,4 +1,5 @@
 == Changes since 201010.1 ==
+* rt#70017: Oasis: .wikitable classes are missing from oasis (macbre)
 * rt#69819: Oasis click-tracking: Track My Tools clicks (macbre)
 * rt#69622: Photo gallery RSS: image boxes should be blank until image appears (macbre)
 * rt#69793: RTE does not show on wikis with NY Social Code enabled (macbre)
