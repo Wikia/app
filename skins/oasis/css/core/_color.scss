@@ -11,7 +11,7 @@ $background-tiled: get_command_line_param("background-tiled", true);
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
 
 // Text color
-$color-text: #4E4E4E;
+$color-text: #3a3a3a;
 @if lightness($color-page) < 50 {
 	$color-text: #B0B0B0;
 }
