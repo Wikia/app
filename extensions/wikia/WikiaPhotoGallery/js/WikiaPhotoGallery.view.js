@@ -314,7 +314,7 @@ var WikiaPhotoGalleryView = {
 			// get dimensions from cache
 			var img = {
 				'width': self.lazyLoadCache[key].width,
-				'height': self.lazyLoadCache[key].height,
+				'height': self.lazyLoadCache[key].height
 			};
 			self.log('loaded: using cache');
 			onload(img);
