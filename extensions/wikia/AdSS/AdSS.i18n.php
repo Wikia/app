@@ -35,7 +35,9 @@ $messages['en'] = array(
 	'adss-form-page-plan-header' => 'Buy a link on an individual page',
 	'adss-form-page-plan-description' => 'Target specific pages to match your Campaign',
 	'adss-form-page-plan-price' => '1 link costs $1',
-	'adss-form-thanks' => "Thank you for your Sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).",
+	'adss-form-thanks' => "Thank you for your Sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
+	 
+	 Go and [[Special:AdSS|buy]] another ad!",
 	'adss-button-preview' => 'Preview',
 	'adss-button-edit' => 'Edit',
 	'adss-button-save-pay' => 'Save & pay',
@@ -43,8 +45,12 @@ $messages['en'] = array(
 	'adss-button-select' => 'Select',
 	'adss-preview-header' => 'Preview',
 	'adss-preview-prompt' => 'Here is what your sponsorship will look like - click "{{int:adss-button-edit}}" to go back and make changes, or "{{int:adss-button-save-pay}}" to save it and go to PayPal.',
-	'adss-paypal-error' => "Couldn't create PayPal payment this time. Please try again later.",
-	'adss-error' => "An error ocurred. Please try again later.",
+	'adss-paypal-error' => "Couldn't create PayPal payment this time. Please try again later.
+	
+	Return to [[Special:AdSS]].",
+	'adss-error' => "An error ocurred. Please try again later.
+	
+	Return to [[Special:AdSS]].",
 	'adss-per-site' => 'All pages',
 	'adss-per-page' => 'One page only',
 );
