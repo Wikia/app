@@ -1,0 +1,127 @@
+@import "../../../../skins/oasis/css/oasis";
+
+body {
+	background: $color-page;
+	color: $color-text;
+}
+
+// RTEcontent.css
+/**
+ * images
+ */
+img.alignCenter {
+	display: block;
+	margin: 0 auto;
+}
+
+img.alignRight {
+	display: block;
+	margin: 0 0 0 auto;
+}
+
+img.image,
+img.media-placeholder,
+img.video {
+	cursor: move !important;
+}
+
+/* thumbs */
+img.thumb,
+img.frame {
+	background: $color-article-thumb-background;
+	border: 1px solid $color-article-thumb-border;
+	padding: 3px;
+}
+
+img.thumb,
+img.frame {
+	clear: right;
+	display: inline;
+	float: right;
+	margin: 6px 0 10px 18px;
+}
+
+img.alignLeft {
+	clear: left;
+	display: inline;
+	float: left;
+	margin: 6px 18px 10px 0;
+}
+
+img.alignNone {
+	display: block;
+	float: none;
+	margin: 6px 18px 10px 0;
+}
+
+
+/* border */
+img.border {
+	border: 1px solid $color-article-thumb-border;
+}
+/* caption indicator */
+img.withCaption {
+	background-image: url('/extensions/wikia/RTE/images/imageCaption.png');/* $wgCdnStylePath */
+	background-repeat: no-repeat;
+	padding-bottom: 25px;
+}
+
+/**
+ *  placeholders
+ */
+img.placeholder {
+	background-image: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png);/* $wgCdnStylePath */
+	background-position: 0 -1294px;
+	height: 16px !important;
+	margin: 0 3px 3px 3px;
+	width: 16px !important;
+}
+
+img.placeholder-comment {
+	background-position: 0 -1280px;
+}
+
+/* Add Image / Add Video */
+img.media-placeholder {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	border: 1px solid $color-article-thumb-border;
+	clear: both;
+	margin: 2px;
+}
+
+img.image-placeholder {
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholder.png);/* $wgCdnStylePath */
+}
+
+img.video-placeholder {
+	background-image: url(/extensions/wikia/RTE/images/videoPlaceholder.png);/* $wgCdnStylePath */
+}
+
+/* Language customization */
+.lang-en img.image-placeholder {
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholderEn.png);/* $wgCdnStylePath */
+}
+
+/* Wikia Image Gallery placeholders */
+img.image-gallery {
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/gallery-placeholder.png);/* $wgCdnStylePath */
+	display: block;
+}
+
+img.image-slideshow {
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-placeholder.png);/* $wgCdnStylePath */
+}
+
+img.image-slideshow.alignLeft {
+	float: left;
+	margin-right: 18px;
+}
+
+img.image-slideshow.alignCenter {
+	margin: 0 auto;
+}
+
+img.image-slideshow.alignRight {
+	float: right;
+}
