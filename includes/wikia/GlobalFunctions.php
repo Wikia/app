@@ -121,7 +121,6 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
 	if (!empty($wgDevBoxImageServerOverride)) {
 		$url = str_replace("devbox", $wgDBname, $url);   // this will pull images from override wiki instead of devbox
-		return str_replace('http://images.wikia.com/', "http://$wgDevBoxImageServerOverride/", $url);
 	}
 
 	if(substr(strtolower($url), -4) != '.ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
@@ -153,13 +152,21 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 				$timestamp += $wgAkamaiGlobalVersion + $wgAkamaiLocalVersion;
 			}
 
-			// macbre: don't add CB value on dev machines
 			// NOTE: This should be the only use of the cache-buster which does not use $wgCdnStylePath.
-			$cb = (empty($wgDevelEnvironment) && $timestamp!='') ? "__cb{$timestamp}/" : '';
+			$cb = ($timestamp!='') ? "__cb{$timestamp}/" : '';
 
-			return str_replace('http://images.wikia.com/', sprintf("http://images%s.wikia.nocookie.net/%s",$serverNo, $cb), $url);
+			if (!empty($wgDevBoxImageServerOverride)) {
+				// Dev boxes
+				$url = str_replace('http://images.wikia.com/', sprintf("http://$wgDevBoxImageServerOverride/%s", $cb), $url);
+			} else {
+				// Production
+				$url = str_replace('http://images.wikia.com/', sprintf("http://images%s.wikia.nocookie.net/%s",$serverNo, $cb), $url);
+			}
 		}
+	} else if (!empty($wgDevBoxImageServerOverride)) {
+		$url = str_replace('http://images.wikia.com/', "http://$wgDevBoxImageServerOverride/", $url);
 	}
+
 	return $url;
 }
 
