@@ -336,27 +336,29 @@ class WikiaPhotoGalleryHelper {
 		$widths = array();
 
 		// loop throught the images and get height of the tallest one
-		foreach ($gallery['images'] as $index => $image) {
-			$imageTitlesCache[$index] = Title::newFromText($image['name'], NS_FILE);
-			$fileObjectsCache[$index] = wfFindFile($imageTitlesCache[$index]);
+		if(!empty($gallery['images'])){
+			foreach ($gallery['images'] as $index => $image) {
+				$imageTitlesCache[$index] = Title::newFromText($image['name'], NS_FILE);
+				$fileObjectsCache[$index] = wfFindFile($imageTitlesCache[$index]);
 
-			if(!$fileObjectsCache[$index]) continue;
+				if(!$fileObjectsCache[$index]) continue;
 
-			// get thumbnail limited only by given width
-			if ($fileObjectsCache[$index]->width > $thumbSize) {
-				$imageHeight = round( $fileObjectsCache[$index]->height * ($thumbSize / $fileObjectsCache[$index]->width) );
-				$imageWidth = $thumbSize;
-			}
-			else {
-				$imageHeight = $fileObjectsCache[$index]->height;
-				$imageWidth = $fileObjectsCache[$index]->width;
-			}
+				// get thumbnail limited only by given width
+				if ($fileObjectsCache[$index]->width > $thumbSize) {
+					$imageHeight = round( $fileObjectsCache[$index]->height * ($thumbSize / $fileObjectsCache[$index]->width) );
+					$imageWidth = $thumbSize;
+				}
+				else {
+					$imageHeight = $fileObjectsCache[$index]->height;
+					$imageWidth = $fileObjectsCache[$index]->width;
+				}
 
-			$heights[$index] = $imageHeight;
-			$widths[$index] = $imageWidth;
+				$heights[$index] = $imageHeight;
+				$widths[$index] = $imageWidth;
 
-			if ( $imageHeight >  $maxHeight ) {
-				$maxHeight = $imageHeight;
+				if ( $imageHeight >  $maxHeight ) {
+					$maxHeight = $imageHeight;
+				}
 			}
 		}
 
@@ -375,54 +377,58 @@ class WikiaPhotoGalleryHelper {
 			$height = min($height, $thumbSize);
 
 			// recalculate dimensions (RT #59355)
-			foreach($gallery['images'] as $index => $image) {
-				if(!empty($heights[$index]) && !empty($widths[$index])) {
-					//fix #59355, min() added to let borders wrap images with smaller width
-					//fix #63886, round ( $tmpFloat ) != floor ( $tmpFloat ) added to check if thumbnail will be generated from proper width
-					$tmpFloat = ( $widths[$index] * $height / $heights[$index] );
-					$widths[$index] = min( $widths[$index], floor( $tmpFloat ));
-					$heights[$index] = min( $height, $heights[$index]);
-					if ( round ( $tmpFloat ) != floor ( $tmpFloat ) ){
-						$heights[$index] --;
+			if(!empty($gallery['images'])){
+				foreach($gallery['images'] as $index => $image) {
+					if(!empty($heights[$index]) && !empty($widths[$index])) {
+						//fix #59355, min() added to let borders wrap images with smaller width
+						//fix #63886, round ( $tmpFloat ) != floor ( $tmpFloat ) added to check if thumbnail will be generated from proper width
+						$tmpFloat = ( $widths[$index] * $height / $heights[$index] );
+						$widths[$index] = min( $widths[$index], floor( $tmpFloat ));
+						$heights[$index] = min( $height, $heights[$index]);
+						if ( round ( $tmpFloat ) != floor ( $tmpFloat ) ){
+							$heights[$index] --;
+						}
+					} else {
+						$widths[$index] = $thumbSize;
+						$heights[$index] = $height;
 					}
-				} else {
-					$widths[$index] = $thumbSize;
-					$heights[$index] = $height;
 				}
 			}
 		}
 
-		foreach($gallery['images'] as $index => &$image) {
-			$image['placeholder'] = false;
+		if(!empty($gallery['images'])){
+			foreach($gallery['images'] as $index => &$image) {
+				$image['placeholder'] = false;
 
-			$imageTitle = (!empty($imageTitlesCache[$index])) ? $imageTitlesCache[$index] : Title::newFromText($image['name'], NS_FILE);
-			$fileObject = (!empty($fileObjectsCache[$index])) ? $fileObjectsCache[$index] : wfFindFile($imageTitle);
+				$imageTitle = (!empty($imageTitlesCache[$index])) ? $imageTitlesCache[$index] : Title::newFromText($image['name'], NS_FILE);
+				$fileObject = (!empty($fileObjectsCache[$index])) ? $fileObjectsCache[$index] : wfFindFile($imageTitle);
 
-			$image['height'] = $height;
-			$image['width'] = $thumbSize;
+				$image['height'] = $height;
+				$image['width'] = $thumbSize;
 
-			if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
-				$image['titleText'] = $imageTitle->getText();
-				$image['thumbnail'] = false;
-				continue;
+				if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
+					$image['titleText'] = $imageTitle->getText();
+					$image['thumbnail'] = false;
+					continue;
+				}
+
+				$thumbParams = self::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
+				$image['thumbnail'] = self::getThumbnailUrl($imageTitle, $thumbParams['width'], $thumbParams['height']);
+
+				$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
+				$imgHeightCompensation = ($height - $image['height']) / 2;
+				if($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
+
+				$image['width'] = min($widths[$index], $thumbSize);
+				//Fix #59914, shared.css has auto-alignment rules
+				/*$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
+				if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;*/
+
+
+				//need to use parse() - see RT#44270
+				//need to remove wapping p coming from caption editor to match view
+				$image['caption'] = str_replace(array('<p>', '</p>'), array(null, '<br />'), $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText());
 			}
-
-			$thumbParams = self::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
-			$image['thumbnail'] = self::getThumbnailUrl($imageTitle, $thumbParams['width'], $thumbParams['height']);
-
-			$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
-			$imgHeightCompensation = ($height - $image['height']) / 2;
-			if($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
-
-			$image['width'] = min($widths[$index], $thumbSize);
-			//Fix #59914, shared.css has auto-alignment rules
-			/*$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
-			if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;*/
-
-
-			//need to use parse() - see RT#44270
-			//need to remove wapping p coming from caption editor to match view
-			$image['caption'] = str_replace(array('<p>', '</p>'), array(null, '<br />'), $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText());
 		}
 
 		// filter out skipped images
