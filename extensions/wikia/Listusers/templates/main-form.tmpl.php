@@ -44,7 +44,7 @@ $(document).ready(function() {
 			{ "sName": "loggedin" },
 			{ "sName": "dtedit" }
 		],
-		"bProcessing": false,
+		"bProcessing": true,
 		"bServerSide": true,
 		"bFilter" : false,
 		"sPaginationType": "full_numbers",
