@@ -1089,6 +1089,8 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-interlang-show-all' => '... see all >',
 'oasis-interlang-languages' => 'Languages:',
 
+'oasis-article-readmore-filter' => '* fuck',
+
 # Related to ImageSEO RT#55755
 'imageseo-featured-on' => 'Featured on:',
 'imageseo-featured-more' => 'more&hellip;',
