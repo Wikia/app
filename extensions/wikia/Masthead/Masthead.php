@@ -252,8 +252,8 @@ class Masthead {
 			$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
 			if( $url ) {
 				/**
-				 * if default avatar we glue with messaging.wikia.com
 				 * if uploaded avatar we glue with common avatar path
+				 * if default avatar we glue with messaging.wikia.com
 				 */
 				if( strpos( $url, '/' ) !== false ) {
 					/**
@@ -806,6 +806,15 @@ class Masthead {
 					$result = false;
 				} else {
 					$sUrl = $oAvatarObj->getLocalPath();
+
+					// Purge the avatar URL (currently won't purge thumbnails of it.. not sure what size would be appropriate).
+					global $wgUseSquid;
+					if ( $wgUseSquid ) {
+						$urlToPurge = $oAvatarObj->getUrl();
+						$urlToPurge = preg_replace("/images[0-9]+\.wikia\.nocookie\.net/i", "images.wikia.com", $urlToPurge); // all purges go to images.wikia.com
+						$urls = array($urlToPurge);
+						SquidUpdate::purge($urls);
+					}
 				}
 //				Wikia::log( __METHOD__, 'url', $sUrl );
 			}
