@@ -10,14 +10,14 @@
 			<section class="box item-1">
 				<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
 				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-description' ); ?>
-				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', $adForm->formatPrice( $sitePricing ) ); ?>
+				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', AdSS_Util::formatPrice( $sitePricing ) ); ?>
 				<input class="wikia-button" type="button" id="wpSelectSite" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
 			</section>
 
 			<section class="box item-2">
 				<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
 				<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description' ); ?>
-				<?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', $adForm->formatPrice( $pagePricing ) ); ?>
+				<?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing ) ); ?>
 				<input class="wikia-button" type="button" id="wpSelectPage" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
 			</section>
 		</fieldset>
@@ -65,22 +65,22 @@
 <script type="text/javascript">/*<![CDATA[*/
 $(function() {
 	if( $("#wpType").val() == "page" ) {
-		$("section.item-1").css({opacity:0.5});
+		$("section.item-1").css({opacity:0.4});
 	}
 	if( $("#wpType").val() == "site" ) {
-		$("section.item-2").css({opacity:0.5});
+		$("section.item-2").css({opacity:0.4});
 		$("#wpPage").parent().hide();
 	}
 } );
 $("#wpSelectSite").click( function() {
 	$("#wpType").val("site");
 	$("section.item-1").animate({opacity:1});
-	$("section.item-2").animate({opacity:0.5});
+	$("section.item-2").animate({opacity:0.4});
 	$("#wpPage").parent().hide("slow");
 } );
 $("#wpSelectPage").click( function() {
 	$("#wpType").val("page");
-	$("section.item-1").animate({opacity:0.5});
+	$("section.item-1").animate({opacity:0.4});
 	$("section.item-2").animate({opacity:1});
 	$("#wpPage").parent().show("slow");
 } );

@@ -8,9 +8,9 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 require_once( "commandLine.inc" );
 
-$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 echo "Checking for ads that have expired or are expiring within next 25 hours\n";
-//FIXME refactor getData piece to another class
+//FIXME refactor this piece into another data class
+$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 $res = $dbw->select(
 		array( 'ads', 'pp_tokens', 'pp_agreements' ),
 		'*',

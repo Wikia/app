@@ -1,7 +1,7 @@
 $(function() {
 	var sponsormsg = $("div.sponsormsg > ul");
-	if(typeof(wgAdSS_siteAds) !== 'undefined') {
-		$.each( wgAdSS_siteAds, function(i,v) {
+	if(typeof(wgAdSS_pageAds) !== 'undefined') {
+		$.each( wgAdSS_pageAds, function(i,v) {
 			sponsormsg.append(v);
 		});
 	}

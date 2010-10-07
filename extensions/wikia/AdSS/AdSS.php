@@ -42,7 +42,9 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariables
 //$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
 
 $wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
-$wgAjaxExportList[] = 'AdSS_AdForm::formatPriceAjax';
+$wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
+$wgAjaxExportList[] = 'AdSS_AdminController::acceptAdAjax';
+$wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
 
 $wgAdSS_DBname = 'adss';
 

@@ -19,7 +19,7 @@ class AdSS_Controller extends SpecialPage {
 		}
 
 		$adForm = new AdSS_AdForm();
-		if ( $wgRequest->wasPosted() && $adForm->matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
+		if ( $wgRequest->wasPosted() && AdSS_Util::matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
 			$submitType = $wgRequest->getText( 'wpSubmit' );
 			$adForm->loadFromRequest( $wgRequest );
 			$this->save( $adForm );
@@ -37,7 +37,7 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
 		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
-		$tmpl->set( 'token', $adForm->getToken() );
+		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$tmpl->set( 'sitePricing', AdSS_Util::getSitePricing() );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
 		$tmpl->set( 'adForm', $adForm );

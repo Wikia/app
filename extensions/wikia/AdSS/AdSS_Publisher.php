@@ -25,11 +25,10 @@ class AdSS_Publisher {
 	static function getSiteAds() {
 		global $wgAdSS_DBname, $wgCityId, $wgMemc;
 
-		$ads = array();
-
 		$memcKey = wfMemcKey( "adss", "siteads" );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
+			$ads = array();
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
 						'ad_wiki_id' => $wgCityId,
@@ -105,9 +104,9 @@ class AdSS_Publisher {
 			$selfAd->text = wfMsg( 'adss-ad-default-text' );
 			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
 
-			$vars['wgAdSS_siteAds'] = array();
+			$vars['wgAdSS_pageAds'] = array();
 			foreach( $ads as $ad ) {
-				$vars['wgAdSS_siteAds'][] = $ad->render();
+				$vars['wgAdSS_pageAds'][] = $ad->render();
 			}
 			$vars['wgAdSS_selfAd'] = $selfAd->render();
 		}
