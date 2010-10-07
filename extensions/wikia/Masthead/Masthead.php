@@ -248,34 +248,50 @@ class Masthead {
 		if (!empty($this->avatarUrl)) {
 			return $this->avatarUrl;
 		} else {
-			global $wgBlogAvatarPath;
-			$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
-			if( $url ) {
-				/**
-				 * if uploaded avatar we glue with common avatar path
-				 * if default avatar we glue with messaging.wikia.com
-				 */
-				if( strpos( $url, '/' ) !== false ) {
-					/**
-					 * uploaded file, we are adding common/avatars path
-					 */
-					$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
-				}
-				else {
-					/**
-					 * default avatar, path from messaging.wikia.com
-					 */
-					$hash = FileRepo::getHashPathForLevel( $url, 2 );
-					$url = $this->mDefaultPath . $thumb . $hash . $url;
-				}
-			}
-			else {
-				$defaults = $this->getDefaultAvatars( trim( $thumb,  "/" ) . "/" );
-				$url = array_shift( $defaults );
-			}
-
+			$url = $this->getPurgeUrl($thumb); // get the basic URL
 			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
+	}
+
+	/**
+	 * getPurgeUrl -- the basic URL (without image server rewriting, cachebuster,
+	 * etc.) of the avatar.  This can be sent to squid to purge it.
+	 *
+	 * @access public
+	 *
+	 * @param $thumb String  -- if defined will be added as part of base path
+	 *      default empty string ""
+	 *
+	 * @return String
+	 */
+	public function getPurgeUrl( $thumb = "" ) {
+		global $wgBlogAvatarPath;
+		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+		if( $url ) {
+			/**
+			 * if default avatar we glue with messaging.wikia.com
+			 * if uploaded avatar we glue with common avatar path
+			 */
+			if( strpos( $url, '/' ) !== false ) {
+				/**
+				 * uploaded file, we are adding common/avatars path
+				 */
+				$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
+			}
+			else {
+				/**
+				 * default avatar, path from messaging.wikia.com
+				 */
+				$hash = FileRepo::getHashPathForLevel( $url, 2 );
+				$url = $this->mDefaultPath . $thumb . $hash . $url;
+			}
+		}
+		else {
+			$defaults = $this->getDefaultAvatars( trim( $thumb,  "/" ) . "/" );
+			$url = array_shift( $defaults );
+		}
+
+		return $url;
 	}
 
 	/**
@@ -810,9 +826,7 @@ class Masthead {
 					// Purge the avatar URL (currently won't purge thumbnails of it.. not sure what size would be appropriate).
 					global $wgUseSquid;
 					if ( $wgUseSquid ) {
-						$urlToPurge = $oAvatarObj->getUrl();
-						$urlToPurge = preg_replace("/images[0-9]+\.wikia\.nocookie\.net/i", "images.wikia.com", $urlToPurge); // all purges go to images.wikia.com
-						$urls = array($urlToPurge);
+						$urls = array($oAvatarObj->getPurgeUrl());
 						SquidUpdate::purge($urls);
 					}
 				}
