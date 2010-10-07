@@ -129,11 +129,16 @@ class PageStatsService extends Service {
 
 		global $wgBiggestCategoriesBlacklist;
 
+		$blacklist = array_merge(
+			$wgBiggestCategoriesBlacklist,
+			explode( "\n", wfMsgForContent( 'oasis-article-readmore-filter' ) )
+		);
+
 		// perfrom case insensitive check
 		$category = strtolower($category);
 
-		foreach($wgBiggestCategoriesBlacklist as $word) {
-			$word = strtolower($word);
+		foreach($blacklist as $word) {
+			$word = trim( strtolower($word), '* ' );
 			if (strpos($category, $word) !== false) {
 				wfProfileOut(__METHOD__);
 				return true;
