@@ -1,6 +1,8 @@
 <?php
-	// render create forms toggle
-	include(dirname(__FILE__) . '/toggleForms.tmpl.php');
+	if( !in_array($type, $skipToggles) ) {
+		// render create forms toggle
+		include(dirname(__FILE__) . '/toggleForms.tmpl.php');
+	}
 
 	// preview area
 	if (!empty($preview)) {
@@ -20,6 +22,13 @@
 	}
 ?>
 <form action="<?= htmlspecialchars($formAction) ?>" method="post">
+<?php
+	if ( !empty( $values['returnto'] ) ) {
+?>
+	<input type="hidden" name="returnto" value="<?= $values['returnto'] ?>" />
+<?php
+	}
+?>
 <?php
 	if ( !empty( $type ) ) {
 ?>
@@ -126,10 +135,16 @@
 			switch($field['type']) {
 				// simple input
 				case 'input':
-					$value = isset($field['value']) ? htmlspecialchars($field['value']) : '';
+					$value = isset($field['value']) ? htmlspecialchars($field['value']) : ( isset($values[$id]) ? htmlspecialchars($values[$id]) : '' );
+					$readOnly = ( isset($field['readOnly']) && ( $field['readOnly'] == true ) ) ? true : false;
 ?>
 				<div class="<?= empty($field['noToolbar']) ? 'recipes-template-textarea-wrapper' : 'recipes-template-simple-input' ?>">
-					<input type="text" id="<?= $id ?>" name="<?= $id ?>" value="<?= $value ?>" />
+					<?php if( $readOnly && !empty($value) ): ?>
+						<?=$value; ?>
+						<input type="hidden" id="<?= $id ?>" name="<?= $id ?>" value="<?= $value ?>" />
+					<?php else: ?>
+						<input type="text" id="<?= $id ?>" name="<?= $id ?>" value="<?= $value ?>" />
+					<?php endif; ?>
 				</div>
 <?php
 					break;

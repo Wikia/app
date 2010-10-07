@@ -24,6 +24,9 @@ abstract class RecipesTemplate extends SpecialPage {
 	// create forms toggles
 	private $mToggles = array();
 
+	// optional url to return after successfull form submission
+	private $returnToUrl = null;
+
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		wfLoadExtensionMessages('RecipesTemplate');
 
@@ -146,6 +149,7 @@ abstract class RecipesTemplate extends SpecialPage {
 			$editPage->edittime = $article->getTimestamp();
 			$editPage->textbox1 = $content;
 			$editPage->summary = $summary;
+			$editPage->recreate = true;
 
 			$result = null;
 			$bot = $wgUser->isAllowed('bot');
@@ -198,6 +202,7 @@ abstract class RecipesTemplate extends SpecialPage {
 		}
 
 		$this->mValidated = true;
+		$this->returnToUrl = $wgRequest->getVal( 'returnto', null );
 
 		// are we doing submit or preview?
 		$this->mAction = $wgRequest->getVal('wpPreview') ? 'preview' : 'submit';
@@ -409,7 +414,12 @@ abstract class RecipesTemplate extends SpecialPage {
 			// redirect to created recipe / ingredient page
 			self::log(__METHOD__, 'article created - redirecting...');
 
-			$wgOut->redirect($ret->getFullURL());
+			if( !empty($this->returnToUrl) ) {
+				$wgOut->redirect($this->returnToUrl);
+			}
+			else {
+				$wgOut->redirect($ret->getFullURL());
+			}
 		}
 		else {
 			// show error message
@@ -423,7 +433,7 @@ abstract class RecipesTemplate extends SpecialPage {
 	 * Return HTML of current recipes form
 	 */
 	protected function renderForm() {
-		global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgTitle, $wgUser;
+		global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		// load dependencies (CSS and JS)
@@ -438,11 +448,15 @@ abstract class RecipesTemplate extends SpecialPage {
 		$userGroups = $wgUser->getEffectiveGroups();
 		$isAdmin = in_array('admin', $userGroups) || in_array('staff', $userGroups);
 
+		// get array of types for which we don't need toggles
+		$skipToggles = explode( '|', wfMsg('recipes-template-skip-toggle-types') );
+
 		// render recipes form
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
                 $tpl->set_vars(array(
 			'errorMessage' => $this->mErrorMessage,
 			'fields' => $this->mFields,
+			'values' => $wgRequest->getValues(),
 			'formAction' => $wgTitle->getLocalUrl(),
 			'formType' => $formType,
 			'isAdmin' => $isAdmin,
@@ -455,6 +469,7 @@ abstract class RecipesTemplate extends SpecialPage {
 			'preview' => $this->mPreview,
 			'toggles' => $this->mToggles,
 			'type' => $this->mType,
+			'skipToggles' => $skipToggles
 		));
 		$html = $tpl->render('renderForm');
 
