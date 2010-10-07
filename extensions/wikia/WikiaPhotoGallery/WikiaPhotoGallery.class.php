@@ -759,13 +759,12 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::openElement(
 					'p',
 					array(
-						
 						'style' => "margin:0px; height:{$image['height']}px;".
 							($useBuckets ? '' : " width:{$image['width']}px;").
 							"overflow: hidden; display: block"
 					)
 				);
-					
+
 				# margin calculation for image positioning
 
 				if ( $thumbParams['height'] > $image['height'] ){
@@ -798,7 +797,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			$html .= Xml::openElement(
 				'img',
 				array(
-					
 					'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
 						$imgStyle,
 					'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
@@ -1271,6 +1269,7 @@ JS;
 				'class' => 'gallery-image-wrapper'.
 					((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
 				'style' => 'position: relative;'.
+					'visibility: hidden;'. // RT #69622
 					($useBuckets ? " width: {$itemWrapperWidth}px; border-style: none;"
 								 : " height:{$image['height']}px; width:{$image['width']}px;").
 					((!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null).

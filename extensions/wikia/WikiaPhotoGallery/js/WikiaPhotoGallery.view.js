@@ -372,7 +372,8 @@ var WikiaPhotoGalleryView = {
 						margin: 0,
 						position: 'relative',
 						'top': wrapperOffsetTop,
-						width: wrapperWidth
+						width: wrapperWidth,
+						visibility: 'visible'
 					});
 
 					// position an image (center it within thumb node)
