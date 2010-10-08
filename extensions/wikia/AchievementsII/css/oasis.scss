@@ -52,57 +52,48 @@
 		}
 	}
 	.profile-hover { // /** the popup when mouse stays over badge **/
-	    border: solid 1px $color-page-border;
+		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		@include border-radius(3px);
 		background-color: White;
-		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
-
 		display: none; /* for testing porpuse */
-		position: absolute;
 		left: -400px;
 		margin-bottom: 100px;
-
-		width: 270px;
 		padding: 5px 10px;
+		position: absolute;
+		width: 270px;
+	    border: solid 1px $color-page-border;
+		z-index: 1;
 
 		h3 {
+			font-size: 13px !important;
 			font-weight: bold;
 			margin-bottom: 3px;
-		}
-		h3 {
 			padding-top: 10px !important;
-			font-size: 13px !important;
 		}
 		p, h3 {
 			font-size: 11px;
 			text-align: left !important;
 		}
-
 		.profile-hover-text {
+			float: right;
 			width: 170px;
 			p {
 				font-size: 13px;
 			}
-			float: right;
-
 		}
-
 		img {
 			margin-top: 8px;
 		}
 	}
-
 }
 
 /* rail in the right side */
 .WikiaLatestEarnedBadgesModule {
-
 	@include rail-module;
 	.clearfix { /** @todo questionable **/
 		@include clearfix;
 	}
 }
-
 
 .AchievementsModule {
 	/*background: #00F;*/
