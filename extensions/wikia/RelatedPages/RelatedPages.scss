@@ -18,11 +18,15 @@
 	li {
 		float: left;
 		line-height: 1.4em;
-		padding-right: 10px;
+		padding-left: 25px;
 		position: relative;
+		&:first-child {
+			padding-left: 0;
+		}
 	}
 	.articleSnippet {
 		height: 100px;
+		overflow: hidden;
 		width: 190px;
 		// quotes
 		&:before {
@@ -44,7 +48,7 @@
 	}
 	.more {
 		display: block;
-		margin: 0 5px;
+		margin: 5px 0;
 	}
 }
 
