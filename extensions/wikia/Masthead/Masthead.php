@@ -305,10 +305,19 @@ class Masthead {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak (eloy)
 	 *
+	 * @param width - the width of the thumbnail (height will be same propotion to width as in unscaled image)
+	 * @param inPurgeFormat - boolean - if true, then the returned URL will be in the format used for purging
+	 *                                  which means it will use images.wikia.com instead of a CDN hostname.
+	 * 
+	 *
 	 * @return string -- url to Avatar
 	 */
-	public function getThumbnail( $width ) {
-		$url = $this->getUrl( '/thumb/' );
+	public function getThumbnail( $width, $inPurgeFormat = false ) {
+		if($inPurgeFormat){
+			$url = $this->getPurgeUrl( '/thumb/' );
+		} else {
+			$url = $this->getUrl( '/thumb/' );
+		}
 
 		/**
 		 * returned url is virtual base for thumbnail, so
@@ -318,6 +327,20 @@ class Masthead {
 		 */
 		$file = array_pop( explode( "/", $url ) );
 		return sprintf( "%s/%dpx-%s", $url, $width, $file );
+	}
+
+	/**
+	 * Get the URL in a generic form (ie: images.wikia.com) to be used
+	 * for purging thumbnails.
+	 *
+	 * @access public
+	 * @author Sean Colombo
+	 *
+	 * @param width - the width of the thumbnail (height will be same propotion to width as in unscaled image)
+	 * @return string -- url to Avatar on the purgable hostname.
+	 */
+	public function getThumbnailPurgeUrl( $width ) {
+		return $this->getThumbnail( $width, true );
 	}
 
 	/**
@@ -823,10 +846,15 @@ class Masthead {
 				} else {
 					$sUrl = $oAvatarObj->getLocalPath();
 
-					// Purge the avatar URL (currently won't purge thumbnails of it.. not sure what size would be appropriate).
+					// Purge the avatar URL and the proportions commonly used in Oasis.
 					global $wgUseSquid;
 					if ( $wgUseSquid ) {
-						$urls = array($oAvatarObj->getPurgeUrl());
+						// FIXME: is there a way to know what sizes will be used w/o hardcoding them here?
+						$urls = array(
+							$oAvatarObj->getPurgeUrl(),
+							$oAvatarObj->getThumbnailPurgeUrl(20),
+							$oAvatarObj->getThumbnailPurgeUrl(100)
+						);
 						SquidUpdate::purge($urls);
 					}
 				}
