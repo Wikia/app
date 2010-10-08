@@ -152,7 +152,8 @@ var ImageLightbox = {
 		var maxHeight = $.getViewportHeight();
 
 		if (window.skin == 'oasis') {
-			maxHeight -= 75;
+			// RT #69824
+			maxHeight -= 150;
 			maxWidth = 850;
 		}
 
