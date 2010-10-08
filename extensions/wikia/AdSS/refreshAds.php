@@ -48,12 +48,11 @@ foreach( $res as $row ) {
 				&& ( $ad->expires < time() ) ) {
 			$ad->close();
 			echo "closed!\n";
+
+			AdSS_Util::flushCache( $ad->pageId );
 		} else {
 			echo "failed...\n";
 		}
 	}
 }
 $dbw->freeResult( $res );
-
-//FIXME make purge a bit smarter
-AdSS_Util::flushCache();

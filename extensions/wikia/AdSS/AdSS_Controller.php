@@ -29,6 +29,13 @@ class AdSS_Controller extends SpecialPage {
 		} elseif( $subpage == 'paypal/cancel' ) {
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		} else {
+			$page = $wgRequest->getText( 'page' );
+			if( !empty( $page ) ) {
+				$title = Title::newFromText( $page );
+				if( $title && $title->exists() ) {
+					$adForm->set( 'wpPage', $page );
+				}
+			}
 			$this->displayForm( $adForm );
 		}
 	}

@@ -28,6 +28,7 @@ class AdSS_Publisher {
 		$memcKey = wfMemcKey( "adss", "siteads" );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
+			$minExpire = 0;
 			$ads = array();
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
@@ -37,48 +38,62 @@ class AdSS_Publisher {
 						'ad_expires > NOW()'
 						), __METHOD__ );
 			foreach( $res as $row ) {
-				$ads[] = AdSS_Ad::newFromRow( $row );
+				$ad = AdSS_Ad::newFromRow( $row );
+				if( $minExpire == 0  || $minExpire > $ad->expires ) {
+					$minExpire = $ad->expires;
+				}
+				$ads[] = $ad;
 			}
 			$dbr->freeResult( $res );
 
-			//TODO maybe provide an expire time?
-			$wgMemc->set( $memcKey, $ads );
+			$wgMemc->set( $memcKey, $ads, $minExpire - time() );
 		}
 
 		return $ads;
 	}
 
 	static function getPageAds( $title ) {
-		global $wgAdSS_DBname, $wgCityId;
+		global $wgMemc, $wgAdSS_DBname, $wgCityId;
 
-		$ads = array();
-		//TODO re-introduce later
-		return $ads;
-
-		//FIXME add memcached
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
-		$res = $dbr->select( 'ads', '*', array(
-					'ad_wiki_id' => $wgCityId,
-					'ad_page_id' => $title->getArticleID(),
-					'ad_closed' => null,
-					'ad_expires > NOW()'
-					), __METHOD__ );
-		foreach( $res as $row ) {
-			$ads[] = AdSS_Ad::newFromRow( $row );
+		if( !self::canShowAds( $title ) ) {
+			return array();
 		}
-		$dbr->freeResult( $res );
+
+		$memcKey = wfMemcKey( "adss", "pageads", $title->getArticleID() );
+		$ads = $wgMemc->get( $memcKey );
+		if( $ads === null || $ads === false ) {
+			$minExpire = 0;
+			$ads = array();
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+			$res = $dbr->select( 'ads', '*', array(
+						'ad_wiki_id' => $wgCityId,
+						'ad_page_id' => $title->getArticleID(),
+						'ad_closed' => null,
+						'ad_expires > NOW()'
+						), __METHOD__ );
+			foreach( $res as $row ) {
+				$ad = AdSS_Ad::newFromRow( $row );
+				if( $minExpire == 0  || $minExpire > $ad->expires ) {
+					$minExpire = $ad->expires;
+				}
+				$ads[] = $ad;
+			}
+			$dbr->freeResult( $res );
+
+			$wgMemc->set( $memcKey, $ads, $minExpire - time() );
+		}
 
 		return $ads;
 	}
 
 	static function onOutputPageBeforeHTML( &$out, &$text ) {
 		global $wgTitle;
-		if( self::canShowAds() && $wgTitle->exists() ) {
+		if( self::canShowAds( $wgTitle ) ) {
 			wfLoadExtensionMessages( 'AdSS' );
 			$ads = self::getPageAds( $wgTitle );
 			
 			$selfAd = new AdSS_Ad();
-			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL() );
+			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL( 'page='.$wgTitle->getText() ) );
 			$selfAd->text = wfMsg( 'adss-ad-default-text' );
 			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
 
@@ -95,12 +110,12 @@ class AdSS_Publisher {
 
 	static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgTitle;
-		if( self::canShowAds() && $wgTitle->exists() ) {
+		if( self::canShowAds( $wgTitle ) ) {
 			wfLoadExtensionMessages( 'AdSS' );
 			$ads = self::getPageAds( $wgTitle );
 			
 			$selfAd = new AdSS_Ad();
-			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL() );
+			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL( 'page='.$wgTitle->getText() ) );
 			$selfAd->text = wfMsg( 'adss-ad-default-text' );
 			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
 
@@ -114,19 +129,43 @@ class AdSS_Publisher {
 	}
 
 	static function onAjaxAddScript( &$out ) {
-		global $wgExtensionsPath;
-		if( self::canShowAds() ) {
+		global $wgExtensionsPath, $wgTitle;
+		if( self::canShowAds( $wgTitle ) ) {
 			$out->addScriptFile( $wgExtensionsPath."/wikia/AdSS/adss.js" );
 		}
 		return true;
 	}
 
-	static function canShowAds() {
-		global $wgUser, $wgTitle;
+	static function canShowAds( $title ) {
+		global $wgUser;
 		return  !$wgUser->isLoggedIn() &&
-			isset( $wgTitle ) && is_object( $wgTitle ) &&
-			$wgTitle->getNamespace() == NS_MAIN &&
-			!$wgTitle->equals( Title::newMainPage() );
+			isset( $title ) && is_object( $title ) &&
+			$title->exists() &&
+			$title->getNamespace() == NS_MAIN &&
+			!$title->equals( Title::newMainPage() );
+	}
+
+	static function onOutputPageCheckLastModified( &$modifiedTimes ) {
+		global $wgTitle;
+
+		if( self::canShowAds( $wgTitle ) ) {
+			$now = time();
+			$ads = self::getPageAds( $wgTitle->getArticleID() );
+			foreach( $ads as $ad ) {
+				if( $ad->expires < $now ) {
+					$modifiedTimes['adss'] = wfTimestamp( TS_MW, $now );	
+				}
+			}
+		}
+		return true;
+	}
+
+	static function onArticlePurge( &$article ) {
+		global $wgMemc;
+		if( self::canShowAds( $article->mTitle ) ) {
+			$wgMemc->delete( wfMemcKey( 'adss', 'pageads', $article->mTitle->getArticleID() ) );
+		}
+		return true;
 	}
 
 }
