@@ -163,7 +163,7 @@ var AjaxLogin = {
 	doReload: function() {
 		// Result was still being cached with .reload(true).  Need to use explicit cachebuster.
 		//window.location.reload(true);
-		var location = window.location.href;
+		var location = window.location.href;	
 		var delim = "?";
 		if(location.indexOf("?") > 0){
 			delim = "&";
@@ -424,7 +424,14 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 						if(params != ''){
 							params += "&";
 						}
-						window.location.href = location.split("#")[0] + delim + params + "cb=" + Math.floor(Math.random()*10000);
+
+						if(typeof wpAjaxLoginParam != 'undefined') {
+								wpAjaxLoginParam = wpAjaxLoginParam.replace("?", "&");
+						}
+						else{
+							wpAjaxLoginParam = "";
+						}
+						window.location.href = location.split("#")[0] + delim + params + "cb=" + Math.floor(Math.random()*10000) + wpAjaxLoginParam;
 						return;
 					}
 
