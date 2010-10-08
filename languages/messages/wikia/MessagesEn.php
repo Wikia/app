@@ -1089,8 +1089,15 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-interlang-show-all' => '... see all >',
 'oasis-interlang-languages' => 'Languages:',
 
-# RT#68809
+# user-facing (editable) Oasis messages
+# names adjusted to be easy-er for the user to remember
 'categoryblacklist' => '* fuck',
+'wiki-navigation' => '*#visited#|TopContent
+*#category1#
+*#category2#
+*portal-url|Community
+**blogs-recent-url|blogs-recent-url-text
+**forum-url|Forum',
 
 # Related to ImageSEO RT#55755
 'imageseo-featured-on' => 'Featured on:',
