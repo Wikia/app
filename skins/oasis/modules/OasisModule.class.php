@@ -79,7 +79,18 @@ class OasisModule extends Module {
 
 		// We re-process the wgOut scripts and links here so modules can add to the arrays inside their execute method
 		$this->headscripts = $wgOut->getScript();
+
+		// Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run
+		// later than normal extensions and therefore add themselves later than the wiki/user specific CSS is
+		// normally added.
+		global $wgOasisLastCssScripts;
+		if(!empty($wgOasisLastCssScripts)){
+			foreach($wgOasisLastCssScripts as $cssScript){
+				$wgOut->addStyle( $cssScript );
+			}
+		}
 		$this->csslinks = $wgOut->buildCssLinks();
+
 		$this->clearDefaultMeta($wgOut->mMetatags);
 		$this->headlinks = $wgOut->getHeadLinks();
 
