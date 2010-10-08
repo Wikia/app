@@ -628,7 +628,9 @@ END;
 				$skinname = $this->getSkinName();
 				if($skinname == 'oasis') {
 					// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
-					$out->addStyle( self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI ) );
+					global $wgOasisLastCssScripts;
+					$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
+					$wgOasisLastCssScripts[] = self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI );
 				} else {
 					$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 					$out->addStyle( self::makeNSUrl( $skinname . '.css', $query, NS_MEDIAWIKI ) );
@@ -647,7 +649,16 @@ END;
 		if( ( $us = $wgRequest->getVal( 'useskin', '' ) ) !== '' ) {
 			$siteargs['useskin'] = $us;
 		}
-		$out->addStyle( self::makeUrl( '-', wfArrayToCGI( $siteargs ) ) );
+		// Wikia change - start (Sean)
+		$skinname = $this->getSkinName();
+		if($skinname == 'oasis'){
+			global $wgOasisLastCssScripts;
+			$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
+			$wgOasisLastCssScripts[] = self::makeUrl( '-', wfArrayToCGI( $siteargs ) );
+		} else {
+			$out->addStyle( self::makeUrl( '-', wfArrayToCGI( $siteargs ) ) );
+		}
+		// Wikia change - end (Sean)
 
 		// Per-user custom style pages
 		if( $wgAllowUserCss && $wgUser->isLoggedIn() ) {
