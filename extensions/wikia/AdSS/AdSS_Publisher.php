@@ -129,9 +129,9 @@ class AdSS_Publisher {
 	}
 
 	static function onAjaxAddScript( &$out ) {
-		global $wgExtensionsPath, $wgTitle;
+		global $wgStyleVersion, $wgJsMimeType, $wgExtensionsPath, $wgTitle;
 		if( self::canShowAds( $wgTitle ) ) {
-			$out->addScriptFile( $wgExtensionsPath."/wikia/AdSS/adss.js" );
+			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AdSS/adss.js?{$wgStyleVersion}\"></script>\n" );
 		}
 		return true;
 	}
