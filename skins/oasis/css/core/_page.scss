@@ -74,6 +74,12 @@
 		line-height: 26px;
 		margin-right: 5px;
 	}
+	span {
+		float: left;
+		&.fixedwidth {
+			width: 60px;
+		}
+	}
 }
 
 .WikiaPagesOnWikiModule {
@@ -89,6 +95,9 @@
 	}
 	a {
 		padding-right: 5px;
+	}
+	.wikia-button {
+		margin-bottom: 0.5em;
 	}
 }
 
