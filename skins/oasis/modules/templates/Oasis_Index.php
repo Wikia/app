@@ -68,8 +68,9 @@
 	}
 	print '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
-	// SWC: Get bottomscripts working.
+	print "<!-- BottomScripts -->\n";
 	print $bottomscripts;
+	print "<!-- end Bottomscripts -->\n";
 ?>
 <?= wfReportTime()."\n" ?>
 </body>
