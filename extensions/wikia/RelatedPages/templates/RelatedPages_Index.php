@@ -1,23 +1,15 @@
 <?php if( !$skipRendering ) { ?>
 	<nav class="RelatedPagesModule">
-		<? if ($wgSingleH1) { ?>
-		<div class="headline-div"><?= wfMsg('wikiarelatedpages-heading') ?></div>
-		<? } else { ?>
-		<h1><?= wfMsg('wikiarelatedpages-heading') ?></h1>
-		<? } ?>
+		<h2><?= wfMsg('wikiarelatedpages-heading') ?></h2>
 		<ul>
 		<?php foreach($pages as $page) { ?>
 			<li>
-				<div class="content">
 				<?php if( isset( $page['imgUrl'] ) ) { ?>
-					<img src="<?= $page['imgUrl']; ?>" width="200" height="100">
+				<img src="<?= $page['imgUrl']; ?>" width="200" height="100">
 				<?php } else { ?>
-					<div class="articleSnippet"><p><?= $page['text']; ?></p></div>
+				<div class="articleSnippet"><p><?= $page['text']; ?></p></div>
 				<?php } ?>
-				</div>
-				<p>
-					<a href="<?= $page['url']; ?>"><?= $page['wrappedTitle'] ?></a>
-				</p>
+				<a href="<?= $page['url']; ?>" class="more"><?= $page['wrappedTitle'] ?></a>
 			</li>
 		<?php } ?>
 		</ul>
