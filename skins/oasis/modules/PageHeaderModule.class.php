@@ -206,9 +206,13 @@ class PageHeaderModule extends Module {
 		if (defined('NS_VIDEO')) {
 			$namespaces[] = NS_VIDEO;
 		}
-
 		if ( in_array($ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
 			$this->title = $wgTitle->getText();
+		}
+
+		// show contentSub links (RT #68421 and RT #70442)
+		if (in_array($ns, array(NS_MEDIAWIKI, NS_TEMPLATE, NS_SPECIAL, NS_CATEGORY, NS_FORUM))) {
+			$this->contentsub = $this->subtitle;
 		}
 
 		// talk pages
@@ -253,9 +257,9 @@ class PageHeaderModule extends Module {
 
 		// category pages
 		if ($ns == NS_CATEGORY) {
-				// hide revisions / categories bar
-				$this->categories = false;
-				$this->revisions = false;
+			// hide revisions / categories bar
+			$this->categories = false;
+			$this->revisions = false;
 		}
 
 		// forum namespace
@@ -287,9 +291,6 @@ class PageHeaderModule extends Module {
 				break;
 
 			case NS_SPECIAL:
-				// show contentSub links on special pages (RT #68421)
-				$this->contentsub = $this->subtitle;
-
 				$this->subtitle = wfMsg('oasis-page-header-subtitle-special');
 
 				// special case for wiki activity page
@@ -448,14 +449,14 @@ class PageHeaderModule extends Module {
 
 	public function executeCorporate() {
 		global $wgTitle;
-		
+
 		if (ArticleAdLogic::isMainPage()) {
 			$this->title = '';
 			$this->subtitle = '';
 		}
 		else if (BodyModule::isHubPage()) {
 			$this->title = wfMsg('hub-header', $wgTitle);
-		} 
+		}
 	}
 
 	/**
