@@ -12,6 +12,11 @@
  * If we do switch to that method, however, we'll have to make sure to set the correct headers from inside this 404
  * handler.  Right now, we only set headers on certain errors but generally rely on StaticChute to set most of the headers.
  *
+ * The format expected is:
+ * /static/[type]/[packages]/[checksum].[type]
+ * Example:
+ * /static/js/oasis_loggedin_js/abf89dac064128285033a8fc80bfc638.js
+ *
  * @author Sean Colombo
  */
 

@@ -37,7 +37,7 @@ function wfSlider( $input, $args, $parser ) {
 
 	if ( $data ) {
 		wfLoadExtensionMessages( 'SliderTag' );
-    $html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
+		$html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
     
 		$html .= '<div id="spotlight-slider"><ul>';
 
