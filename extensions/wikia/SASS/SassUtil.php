@@ -50,7 +50,7 @@ class SassUtil{
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
-		$oasisSettings["color-body"] = $settings["color-body"].' ';
+		$oasisSettings["color-body"] = $settings["color-body"];
 		$oasisSettings["color-page"] = $settings["color-page"];
 		$oasisSettings["color-buttons"] = $settings["color-buttons"];
 		$oasisSettings["color-links"] = $settings["color-links"];
