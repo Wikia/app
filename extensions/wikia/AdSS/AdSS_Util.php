@@ -46,13 +46,18 @@ class AdSS_Util {
 		return $response;
 	}
 
-	//FIXME temporary hack
-	static function flushCache() {
+	static function flushCache( $pageId=0 ) {
 		global $wgMemc, $wgScriptPath;
-		$memcKey = wfMemcKey( 'adss', 'siteads' );
+		if( $pageId > 0 ) {
+			$title = Title::newFromID( $pageId );
+			$title->invalidateCache();
+			$memcKey = wfMemcKey( 'adss', 'pageads', $pageId );
+			$url =$title->getFullURL();
+		} else {
+			$memcKey = wfMemcKey( 'adss', 'siteads' );
+			$url = $wgScriptPath . '?action=ajax&rs=AdSS_Publisher::getSiteAdsAjax';
+		}
 		$wgMemc->delete( $memcKey );
-
-		$url = $wgScriptPath . '?action=ajax&rs=AdSS_Publisher::getSiteAdsAjax';
 		SquidUpdate::purge( array( $url ) );
 	}
 
@@ -76,6 +81,12 @@ class AdSS_Util {
 	static function generateToken() {
 		$token = dechex( mt_rand() ) . dechex( mt_rand() );
 		$_SESSION['wsAdSSToken'] =  md5( $token );
+	}
+
+	static function commitAjaxChanges() {
+		$factory = wfGetLBFactory();
+		$factory->commitMasterChanges();
+		$factory->shutdown();
 	}
 
 }

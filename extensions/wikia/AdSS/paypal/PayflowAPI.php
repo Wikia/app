@@ -73,6 +73,24 @@ class PayflowAPI {
 		return $this->query( $headers, $nvpReqArr, $opts );
 	}
 
+	function cancelCustomerBillingAgreement( $baid ) {
+		$headers = array();
+		$this->setHeaders( $headers );
+		$nvpReqArr = array();
+		$this->setNvpReqArr( $nvpReqArr );
+		$opts = array();
+		$this->setOptions( $opts );
+
+		// not required
+		//$headers[] = "X-VPS-Request-ID: X$req_id";
+
+		$nvpReqArr["ACTION"]    = "U";
+		$nvpReqArr["BAID"]      = $baid;
+		$nvpReqArr["BA_STATUS"] = "cancel";
+
+		return $this->query( $headers, $nvpReqArr, $opts );
+	}
+
 	function doExpressCheckoutPayment( $req_id, $baid, $amount ) {
 		$headers = array();
 		$this->setHeaders( $headers );

@@ -40,6 +40,8 @@ $wgGroupPermissions['staff']['adss-admin'] = true;
 $wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';
 //$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
+$wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
+$wgHooks['ArticlePurge'][] = 'AdSS_Publisher::onArticlePurge';
 
 $wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
 $wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';

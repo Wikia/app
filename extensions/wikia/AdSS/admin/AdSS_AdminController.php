@@ -3,7 +3,7 @@
 class AdSS_AdminController {
 
 	function execute( $subpage ) {
-		global $wgOut, $wgAdSS_templatesDir, $wgAdSS_DBname, $wgUser;
+		global $wgOut, $wgAdSS_templatesDir, $wgUser;
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
 			$wgOut->permissionRequired( 'adss-admin' );
@@ -71,8 +71,6 @@ class AdSS_AdminController {
 						$respArr = array();
 						if( $pp->collectPayment( $row->ppa_baid, $priceConf['price'], $respArr ) ) {
 							$ad->refresh( $priceConf );
-							//FIXME make purge a bit smarter
-							AdSS_Util::flushCache();
 
 							$r = array(
 									'result'  => 'success',
@@ -87,7 +85,8 @@ class AdSS_AdminController {
 								$r = array( 'result' => 'error', 'respmsg' => "paypal error:\n$respArr[RESPMSG]" );
 							}
 						}
-						$dbw->commit();
+						AdSS_Util::flushCache( $ad->pageId );
+						AdSS_Util::commitAjaxChanges();
 					}
 				}
 			}
@@ -98,7 +97,7 @@ class AdSS_AdminController {
 	}
 
 	static function closeAdAjax( $id, $token ) {
-		global $wgUser, $wgAdSS_DBname;
+		global $wgUser;
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
@@ -109,10 +108,9 @@ class AdSS_AdminController {
 			$ad = AdSS_Ad::newFromId( $id );
 			if( $id == $ad->id ) {
 				$ad->close();
-				$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
-				$dbw->commit();
-				//FIXME make purge a bit smarter
-				AdSS_Util::flushCache();
+
+				AdSS_Util::flushCache( $ad->pageId );
+				AdSS_Util::commitAjaxChanges();
 				$r = array(
 						'result' => 'success',
 						'id'     => $id,
