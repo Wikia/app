@@ -12,6 +12,8 @@ RelatedPages = {
 		this.log('init');
 
 		var content = $('#WikiaArticle');
+		var contentWidth = content.width();
+
 		var module = $('.RelatedPagesModule');
 
 		// move the module after (at least) 3rd <h2> section
@@ -20,22 +22,27 @@ RelatedPages = {
 		// get 2nd level headings
 		var sections = content.find('.mw-headline').parent().filter('h2');
 
-		// remove headings with floating element next to it (starting from fourth)
-		var filteredSections = sections.slice(addAfter).filter(function() {
-			var heading = $(this);
-			return heading.width() > 650;
-		});
-
 		this.log('found ' + sections.length + ' section(s)');
 
+		// find section without collision
+		var sectionMatch = false;
+
+		sections.slice(addAfter).each(function() {
+			var node = $(this);
+			if (node.width() > contentWidth - 10) {
+				sectionMatch = node;
+				// stop each loop
+				return false;
+			}
+		});
+
 		// section found - move Related Pages module before it
-		if (filteredSections.exists()) {
-			var section = filteredSections.first();
-			var sectionId = sections.index(section) + 1;
+		if (sectionMatch) {
+			var sectionId = sections.index(sectionMatch) + 1;
 
-			this.log('moving before #' + sectionId + ' section (' + section.children().first().html() + ')');
+			this.log('moving before #' + sectionId + ' section (' + sectionMatch.children().first().text() + ')');
 
-			module.insertBefore(section);
+			module.insertBefore(sectionMatch);
 		}
 		// sections found, but none without collision
 		else if (sections.length > addAfter) {
