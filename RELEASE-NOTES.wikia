@@ -1,4 +1,5 @@
 == Changes since 201010.1 ==
+* rt#64039: poll_vote table missing on new wikis (eloy)
 * rt#70423: Oasis: cant click on magnify because image (TOR)
 * rt#70462: Transfer Wiki-navigation to code (TOR)
 * rt#70034: Change the color of the Oasis Theme Body Text Color (macbre)
