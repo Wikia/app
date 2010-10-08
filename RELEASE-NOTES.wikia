@@ -1,4 +1,5 @@
 == Changes since 201010.1 ==
+* rt#70444: Oasis: No horizontal scroll bar (macbre)
 * rt#70442: Oasis: Category pages need a (redirected from) message (macbre)
 * rt#70400: Oasis: History dropdown -- don't list a time longer than 2 weeks ago (macbre)
 * rt#64039: poll_vote table missing on new wikis (eloy)
