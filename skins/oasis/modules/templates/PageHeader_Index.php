@@ -6,8 +6,7 @@
 			<?= View::specialPageLink('CreatePage', 'oasis-add-page'); ?>
 		</div>
 		<div class="tally mainpage-tally">
-			<em><?= $total ?></em>
-			<span><?= wfMsg('oasis-total-articles-mainpage') ?></span>
+			<?= wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), $total ) ?>
 			<? /* View::specialPageLink('CreatePage', null, 'wikia-chiclet-button createpage', 'blank.gif', 'oasis-create-page'); */ ?>
 		</div>
 	<? } ?>
