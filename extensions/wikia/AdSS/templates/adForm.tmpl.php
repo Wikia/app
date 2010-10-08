@@ -65,23 +65,23 @@
 <script type="text/javascript">/*<![CDATA[*/
 $(function() {
 	if( $("#wpType").val() == "page" ) {
-		$("section.item-1").css({opacity:0.4});
+		$("section.item-1").css({opacity:0.2, height:"110px"});
 	}
 	if( $("#wpType").val() == "site" ) {
-		$("section.item-2").css({opacity:0.4});
+		$("section.item-2").css({opacity:0.2, height:"110px"});
 		$("#wpPage").parent().hide();
 	}
 } );
 $("#wpSelectSite").click( function() {
 	$("#wpType").val("site");
-	$("section.item-1").animate({opacity:1});
-	$("section.item-2").animate({opacity:0.4});
+	$("section.item-1").animate({opacity:1, height:"160px"});
+	$("section.item-2").animate({opacity:0.2, height:"110px"});
 	$("#wpPage").parent().hide("slow");
 } );
 $("#wpSelectPage").click( function() {
 	$("#wpType").val("page");
-	$("section.item-1").animate({opacity:0.4});
-	$("section.item-2").animate({opacity:1});
+	$("section.item-1").animate({opacity:0.2, height:"110px"});
+	$("section.item-2").animate({opacity:1, height:"160px"});
 	$("#wpPage").parent().show("slow");
 } );
 $("#wpUrl").keyup( function() {
