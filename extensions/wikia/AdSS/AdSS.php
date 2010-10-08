@@ -32,6 +32,7 @@ $wgAutoloadClasses['PaymentProcessor'] = $dir . 'paypal/PaymentProcessor.php';
 $wgAutoloadClasses['PayflowAPI'] = $dir . 'paypal/PayflowAPI.php';
 
 $wgSpecialPages['AdSS'] = 'AdSS_Controller';
+$wgSpecialPages['Sponsor'] = 'AdSS_Controller';
 
 $wgAvailableRights[] = 'adss-admin';
 $wgGroupPermissions['*']['adss-admin'] = false;
