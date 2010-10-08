@@ -55,13 +55,13 @@
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		@include border-radius(3px);
 		background-color: White;
+		border: solid 1px $color-page-border;
 		display: none; /* for testing porpuse */
 		left: -400px;
 		margin-bottom: 100px;
 		padding: 5px 10px;
 		position: absolute;
 		width: 270px;
-	    border: solid 1px $color-page-border;
 		z-index: 1;
 
 		h3 {
