@@ -4,7 +4,7 @@
 	<? } ?>
 	<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button', 'blank.gif', 'oasis-add-photo', 'sprite photo'); ?>
 	<details class="tally counter">
-		<em><?= $total ?></em><?= wfMsg('oasis-latest-photos-header') ?>
+		<?= wfMsgExt('oasis-latest-photos-header', array( 'parsemag' ), $total ) ?>
 	</details>
 
 <?php

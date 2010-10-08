@@ -154,7 +154,7 @@ class PageHeaderModule extends Module {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		global $wgTitle, $wgContLang, $wgLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix;
+		global $wgTitle, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix;
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
@@ -197,7 +197,7 @@ class PageHeaderModule extends Module {
 				$this->isMainPage = true;
 
 				// number of pages on this wiki
-				$this->total = $wgLang->formatNum(SiteStats::articles());
+				$this->total = SiteStats::articles();
 			}
 		}
 

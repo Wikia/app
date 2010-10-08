@@ -8,9 +8,8 @@ class PagesOnWikiModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		
-		global $wgLang;
-		$this->total = $wgLang->formatNum(SiteStats::articles());
-		
+		$this->total = SiteStats::articles();
+
 		wfProfileOut(__METHOD__);
 	}
 

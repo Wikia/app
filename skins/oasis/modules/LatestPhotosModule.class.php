@@ -10,7 +10,7 @@ class LatestPhotosModule extends Module {
 	var $wgSingleH1;
 
 	public function executeIndex() {
-		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgLang, $wgMemc, $wgSingleH1;
+		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgMemc, $wgSingleH1;
 
 		// Moved to oasis.scss (to be less requests)
 		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));
@@ -19,7 +19,7 @@ class LatestPhotosModule extends Module {
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestPhotos.js"></script>');
 
 		// get the count of images on this wiki
-		$this->total = $wgLang->formatNum(SiteStats::images());
+		$this->total = SiteStats::images();
 
 		// Pull the list of images from memcache first
 		$this->thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
