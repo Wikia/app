@@ -50,7 +50,7 @@ class SassUtil{
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
-		$oasisSettings["color-body"] = $settings["color-body"];
+		$oasisSettings["color-body"] = $settings["color-body"].' ';
 		$oasisSettings["color-page"] = $settings["color-page"];
 		$oasisSettings["color-buttons"] = $settings["color-buttons"];
 		$oasisSettings["color-links"] = $settings["color-links"];
@@ -61,6 +61,13 @@ class SassUtil{
 
 		if($wgContLang && $wgContLang->isRTL()){
 			$oasisSettings['rtl'] = 'true';
+		}
+		
+		// RT:70673
+		foreach ($oasisSettings as $key => $val) {
+			if(!empty($val)) {
+				$oasisSettings[$key] = trim($val);
+			}
 		}
 
 		wfDebug(__METHOD__ . ': ' . Wikia::json_encode($oasisSettings) . "\n");
