@@ -47,11 +47,6 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 	if ( typeof showComboAjaxForPlaceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
 		showComboAjaxForPlaceHolder.statusAjaxLogin = false;
 	}
-	
-	// adding extra query strings to the form
-	if (typeof wpAjaxLoginExtraParam == 'undefined') {
-		wpAjaxLoginExtraParam = '';
-	}
 
 	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin)
 		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
@@ -86,7 +81,7 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 	// scroll top
 	window.scrollTo(0,0);
 
-	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + "&returnto=" + wgPageName + "&returntoquery=" + wgPageQuery + wpAjaxLoginExtraParam +'&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
+	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + "&returnto=" + wgPageName + "&returntoquery=" + wgPageQuery +'&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
 			callback: function() {
 				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
 						//$("#loadmask").remove();
@@ -139,9 +134,14 @@ $(function(){
 
 //Attach DOM-Ready handlers
 $(function() {
+
 	$('.ajaxLogin').click(openLogin);
-	$('.ajaxLoginRequest').click(openLogin);
 	$('.ajaxRegister').click(openRegister);
+	
+	if ($('.ajaxLoginRequest').exists()) { // ref function in links
+		$('.ajaxLoginRequest').click(openLogin);
+		wpAjaxLoginParam = $('.ajaxLoginRequest').attr('ref');	
+	}
 
 	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
 		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");

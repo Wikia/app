@@ -8,7 +8,7 @@
 				<h3><?= wfMsgExt('landingpage-dive-in', array('parse')) ?></h3>
 			<?php }
 			else { ?>
-				<h3><?= wfMsgExt('landingpage-secondary-2', array('parse')) ?></h3>
+				<!--<h3><?= wfMsgExt('landingpage-secondary-2', array('parse')) ?></h3>-->
 				<h3><?= wfMsgExt('landingpage-secondary-3', array('parse')) ?></h3>
 			
 			<?php
@@ -18,8 +18,7 @@
 			
 <?php	if ($loggedIn == false || ( $loggedIn == true && $current_skin != "oasis")) { ?>
 			<section class="LandingPageButtonUpdate">
-				<a href="<?= $button_url ?>" <?= $logInClass ?>>
-				
+				<a href="<?= $button_url ?>" <?= $logInClass ?> ref="?new-wikia=true">
 					<button id="landing-update">
 						<?= wfMsg('landingpage-buttons-update-me') ?>
 					</button>
@@ -50,7 +49,10 @@
 		</section>
 
 		<section class="LandingPageScreenshots">
-			<h1>
+		
+			<iframe class="video" width="450" height="263" frameborder="0" src="http://player.vimeo.com/video/15645799"></iframe>
+			
+			<!--<h1>This 
 				<?= wfMsg('landingpage-examples') ?>
 				<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
 			</h1>
@@ -67,23 +69,24 @@
 <?php
 				}
 ?>
-			</ul>
+			</ul>-->
+			
 		</section>
 	</section>
 
 	<section class="LandingPageRow LandingPageButtons">
 		<ul>
 			<li class="item-1">
-				<?= wfMsg('landingpage-buttons-new-user') ?><br />
-				<a href="<?= wfMsg('landingpage-buttons-new-user-link') ?>"><?= wfMsg('landingpage-buttons-new-user-more') ?></a>
-			</li>
-			<li class="item-2">
-				<?= wfMsg('landingpage-buttons-new-look') ?><br />
+			<?= wfMsg('landingpage-buttons-new-look') ?><br />
 				<a href="<?= wfMsg('landingpage-buttons-new-look-link') ?>"><?= wfMsg('landingpage-buttons-faqs') ?></a>
 			</li>
-			<li class="item-3">
+			<li class="item-2">
 				<?= wfMsg('landingpage-buttons-about-make-the-move') ?><br />
 				<a href="<?= wfMsg('landingpage-buttons-about-make-the-move-link') ?>"><?= wfMsg('landingpage-buttons-transition-guide') ?></a>
+			</li>
+			<li class="item-3">
+				<?= wfMsg('landingpage-buttons-new-user') ?><br />
+				<a href="<?= wfMsg('landingpage-buttons-new-user-link') ?>"><?= wfMsg('landingpage-buttons-new-user-more') ?></a>
 			</li>
 		</ul>
 	</section>
