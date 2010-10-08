@@ -558,6 +558,17 @@ class AutoCreateWikiPage extends SpecialPage {
 		);
 
 		/**
+		 * better safe then sorry
+		 */
+		if( is_readable( "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql" ) &&
+			is_readable( "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql" )
+		) {
+			$sqlfiles[] = "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql";
+			$sqlfiles[] = "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql";
+		}
+
+
+		/**
 		 * additional tables per type
 		 */
 		switch( $this->mType ) {
@@ -717,9 +728,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log($cmd);
 		$output = wfShellExec( $cmd );
 		$this->log( $output );
-		
+
 		/**
-		 * RT:68926 set default skin to oasis 
+		 * RT:68926 set default skin to oasis
 		 */
 		if($this->mType != 'answers' && $this->mWikiData[ "language" ] == 'en') {
 			WikiFactory::setVarByName("wgDefaultSkin", $this->mWikiId, 'oasis');
@@ -869,7 +880,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "founder-name"  ] = $this->mFounder->getName();
 		$this->mWikiData[ "founder-email" ] = $this->mFounder->getEmail();
 		$this->mWikiData[ "founder"       ] = $this->mFounder->getId();
-		
+
 		$this->mWikiData[ "type"          ] = $this->mType;
 
 		wfProfileOut( __METHOD__ );
@@ -986,7 +997,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addHtml( $oTmpl->render("create-wiki-form") );
-		
+
 		wfProfileOut( __METHOD__ );
 		return;
 	}
