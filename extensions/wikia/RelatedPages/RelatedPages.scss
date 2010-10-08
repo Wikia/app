@@ -18,10 +18,11 @@
 	li {
 		float: left;
 		line-height: 1.4em;
-		padding-left: 25px;
+		margin-left: 25px;
+		padding: 0;
 		position: relative;
 		&:first-child {
-			padding-left: 0;
+			margin-left: 0;
 		}
 	}
 	.articleSnippet {
