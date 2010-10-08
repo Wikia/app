@@ -112,14 +112,22 @@
   }
 
   function prepareData(element) {
-    element = $(element);
-    if (!element.data("timeago")) {
-      element.data("timeago", { datetime: $t.datetime(element) });
-//      don't put old, cached, incorrect time in title
-//      var text = $.trim(element.text());
-//      if (text.length > 0) element.attr("title", text);
-    }
-    return element.data("timeago");
+	  element = $(element);
+	  if (!element.data("timeago")) {
+		  var datetime = $t.datetime(element);
+		  //      don't put old, cached, incorrect time in title
+		  //      var text = $.trim(element.text());
+		  //      if (text.length > 0) element.attr("title", text);
+
+		  // RT#70400: don't render dates older then "maxdiff"
+		  var maxdiff = parseInt(element.data('maxdiff'));
+		  if ((maxdiff > 0) && (distance(datetime) > maxdiff)) {
+				datetime = 'null';
+		  }
+
+		  element.data("timeago", { datetime: datetime });
+	  }
+	  return element.data("timeago");
   }
 
   function inWords(date) {
