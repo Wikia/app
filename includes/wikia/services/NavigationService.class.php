@@ -14,26 +14,34 @@ class NavigationService {
 									'newlychanged' => 'GetNewlyChangedArticles',
 									'topusers' => 'GetTopFiveUsers');
 
+	private $forContent = false;
+
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration) {
+	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration, $forContent = false ) {
 		wfProfileIn( __METHOD__ );
 
 		global $wgLang, $wgContLang, $wgMemc;
 
+		$this->forContent = $forContent;
+
 		$useCache = $wgLang->getCode() == $wgContLang->getCode();
 
-		if($useCache) {
+		if($useCache || $this->forContent ) {
 			$cacheKey = wfMemcKey($messageName, self::version);
 			$nodes = $wgMemc->get($cacheKey);
 		}
 
 		if(empty($nodes)) {
-			$lines = explode("\n", wfMsg($messageName));
+			if ( $this->forContent ) {
+				$lines = explode("\n", wfMsgForContent($messageName));
+			} else {
+				$lines = explode("\n", wfMsg($messageName));
+			}
 			$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
 
-			if($useCache) {
+			if($useCache || $this->forContent ) {
 				$wgMemc->set($cacheKey, $nodes, $duration);
 			}
 		}
@@ -45,7 +53,7 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseLines($lines, $maxChildrenAtLevel = array()) {
+	private function parseLines($lines, $maxChildrenAtLevel = array()) {
 		wfProfileIn( __METHOD__ );
 
 		$nodes = array();
@@ -116,7 +124,7 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseOneLine($line) {
+	private function parseOneLine($line) {
 		wfProfileIn( __METHOD__ );
 
 		// trim spaces and asterisks from line and then split it to maximum two chunks
@@ -132,7 +140,9 @@ class NavigationService {
 			$link = $desc = trim($lineArr[0]);
 		}
 
-		if(wfEmptyMsg($desc, $text = wfMsg($desc))) {
+		$text = $this->forContent ? wfMsgForContent( $desc ) : wfMsg( $desc );
+
+		if(wfEmptyMsg( $desc, $text )) {
 			$text = $desc;
 		}
 
