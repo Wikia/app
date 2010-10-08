@@ -12,7 +12,7 @@ class StaticChute {
 
 	// TODO: FIXME: This is not great having this here AND in wgCdnStylePath in CommonSettings, etc., but since StaticChute
 	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
-	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb27572/common"; // NOTE: ALSO CHANGE VALUE IN /wikia-conf/CommonSettings.php!
+	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb27932/common"; // NOTE: ALSO CHANGE VALUE IN /wikia-conf/CommonSettings.php!
 
 	// RT #23935 - one value to purge'em all
 	const cacheBuster = '201007.5';
