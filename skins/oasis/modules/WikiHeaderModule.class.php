@@ -75,7 +75,7 @@ class WikiHeaderModule extends Module {
 		}
 
 		$service = new NavigationService();
-		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7), 60*60*3 /* 3 hours */);
+		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7), 60*60*3 /* 3 hours */, true);
 
 	}
 
