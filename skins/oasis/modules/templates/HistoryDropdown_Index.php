@@ -9,11 +9,11 @@
 
 	if (isset($revisions['current']['link'])) {
 		// edit with contributor
-		echo wfMsg('oasis-page-header-edited-by', "<abbr class='timeago' title='".$revisions['current']['timestamp']."'> </abbr>", $revisions['current']['link']);
+		echo wfMsg('oasis-page-header-edited-by', "<time class='timeago' pubdate datetime='".$revisions['current']['timestamp']."'> </time>", $revisions['current']['link']);
 	}
 	else {
 		// edit without contributor (if it's bot or blocked user)
-		echo '<span class="no-avatar">' . wfMsg('oasis-page-header-edited', "<abbr class='timeago' title='".$revisions['current']['timestamp']."'> </abbr>") . '</span>';
+		echo '<span class="no-avatar">' . wfMsg('oasis-page-header-edited', "<time class='timeago' pubdate datetime='".$revisions['current']['timestamp']."'> </time>") . '</span>';
 	}
 ?>
 				<img src="<?= $wgBlankImgUrl ?>" class="chevron" height="0" width="0">
@@ -24,7 +24,7 @@
 
 	foreach($revisions as $entry) {
 ?>
-			<li><img src="<?= $wgBlankImgUrl ?>" data-realUrl="<?= $entry['avatarUrl'] ?>" width="20" height="20" class="avatar"> <?= wfMsg('oasis-page-header-edited-by', "<abbr class='timeago' title='".$entry['timestamp']."'> </abbr>", $entry['link']) ?></li>
+			<li><img src="<?= $wgBlankImgUrl ?>" data-realUrl="<?= $entry['avatarUrl'] ?>" width="20" height="20" class="avatar"> <?= wfMsg('oasis-page-header-edited-by', "<time class='timeago' datetime='".$entry['timestamp']."'> </time>", $entry['link']) ?></li>
 <?php
 	}
 ?>

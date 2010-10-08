@@ -16,7 +16,7 @@ var PageHeader = {
 			.hover(PageHeader.historyMouseover, PageHeader.historyMouseout);
 
 		// RT #70400: show .. ago only for edits made 2 weeks ago or later
-		$("abbr.timeago").
+		$("time.timeago").
 			data('maxdiff', 14 * 86400 * 1000).
 			timeago();
 	},
