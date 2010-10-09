@@ -220,7 +220,7 @@
 			border: none;
 			margin: none;
 			margin-top: 9px;
-			font-size: 18px;
+			font-size: 12px;
 		}	
 		
 		float: right;
@@ -859,6 +859,12 @@ ul#hub-blog-articles li .blog-jump-icon {
 
 .clear-fix {
   clear:both;
+}
+
+.buttons .WikiaSearch {
+	position: absolute;
+	bottom: -10px;
+	right: 90px;
 }
 
 #wikia-search-submit {
