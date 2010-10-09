@@ -15,7 +15,7 @@
 	<tr>
 		<td><?php echo $variable->cv_id ?></td>
 		<td><?php echo $variable->cv_variable_type ?></td>
-		<td><abbr title="<?php echo $accesslevels[ $variable->cv_access_level ] ?>"><?php echo $variable->cv_access_level ?></abbr></td>
+		<td><abbr title="<?php echo $variable->cv_access_level ] ?>"><?php echo $accesslevels[ $variable->cv_access_level ?></abbr></td>
 		<td><abbr title="<?php echo $variable->cv_variable_group; ?>"><?php echo $groups[$variable->cv_variable_group]; ?></abbr></td>
 		<td><?php echo ($variable->cv_is_unique == 1 ? "yes":"no"); ?></td>
 	</tr>
