@@ -118,6 +118,11 @@ class OasisModule extends Module {
 		// track page load time
 		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
 
+		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
+		if (43339 == $wgCityId){
+			$this->analytics .= AnalyticsEngine::track("GA_Urchin", "lyrics");
+		}
+
 		// Quant serve moved *after* the ads because it depends on Athena/Provider values.
 		// macbre: RT #25697 - hide Quantcast Tags on edit pages
 		$this->trackingPixels = "";
