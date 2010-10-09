@@ -49,7 +49,6 @@ Current value:
 <?php if( !isset( $variable->cv_value ) || is_null( $variable->cv_value ) ): ?>
     <strong>Value is not set</strong>
 <?php else: ?>
-	<input type="button" class="wikia-button red" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
     <pre><?php echo var_export( unserialize( $variable->cv_value ) ) ?></pre>
 <?php endif ?>
 </div>
@@ -110,11 +109,12 @@ New value:
 	 <textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo var_export( unserialize( $variable->cv_value ), 1) ?></textarea><br />
 
 <?php endif ?>
-	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
-	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
 	<br/>By tag: <input type="text" name="tagName" id="tagName" value="" size="30" /> (Apply this value to wikis with this tag)
 	<br/>Reason: <input type="text" id="wk-reason" name="reason" value="" size="30" /> (optional, reason text or ticket number)
 	<br/><input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="$Factory.Variable.tagCheck();" />
+	&nbsp;<input type="button" class="wikia-button red" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
+	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
+	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
 </form>
 <?php else: ?>
 <em>read only</em>
