@@ -137,7 +137,7 @@ $Factory.ReplaceCallback = {
     failure: function( oResponse ) {
         $Factory.Busy(0);
     },
-    timeout: 50000
+    timeout: 30
 };
 
 $Factory.Busy = function (state) {
@@ -159,7 +159,7 @@ $Factory.Domain.CRUD = function(mode, domain, addparams) {
     	url: ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=" + mode + params,
     	success: $Factory.Domain.Callback.success,
     	error: $Factory.Domain.Callback.failure,
-    	timeout: 20000
+    	timeout: 30
     });	
 }
 
@@ -299,7 +299,7 @@ $Factory.Variable.selectChange = function ( e, data, type ) {
     	url: ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=" + type + values,
     	success: $Factory.VariableCallback.success,
     	error: $Factory.VariableCallback.failure,
-    	timeout: 50000
+    	timeout: 30
     });
 }
 
@@ -336,7 +336,7 @@ $Factory.Variable.submitChangeVariable = function ( e, data ) {
     	url: ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactorySubmitChangeVariable" + values,
     	success: $Factory.VariableCallback.success,
     	error: $Factory.VariableCallback.failure,
-    	timeout: 50000
+    	timeout: 30
     });
 	return false;
 };
@@ -369,7 +369,7 @@ $Factory.Variable.filter = function ( e ) {
     		 $Factory.Busy(0);
              $("#wk-variable-select").attr("disabled", false);
     	},
-    	timeout: 50000
+    	timeout: 30
     });
 };
 
@@ -383,7 +383,7 @@ $Factory.Variable.clear = function ( e ) {
     	url: ajaxpath+"?action=ajax&rs=axWFactoryClearCache" + params,
     	success: $Factory.ReplaceCallback.success,
     	error:  $Factory.ReplaceCallback.failure,
-    	timeout: 50000
+    	timeout: 30
     });
     return false;
 };
@@ -405,7 +405,7 @@ $Factory.Variable.post = function (form, mode) {
 		data: "action=ajax&rs=" + mode + "&" + params,
 		success: $Factory.ReplaceCallback.success,
 		error:  $Factory.ReplaceCallback.failure,
-		timeout: 50000
+		timeout: 30
    });
 }
 
@@ -459,7 +459,7 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 					}
 				}
 			},
-	  	 	timeout: 50000
+	  	 	timeout: 30
 	   });
 	}
 };
