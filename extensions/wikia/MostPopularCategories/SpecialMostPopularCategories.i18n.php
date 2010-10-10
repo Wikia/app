@@ -33,6 +33,13 @@ $messages['arn'] = array(
 	'mostpopularcategories' => 'Zoy ayvgelu xokiñ',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'mostpopularcategories' => 'Ən çox müraciət edilən kateqoriyalar',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */

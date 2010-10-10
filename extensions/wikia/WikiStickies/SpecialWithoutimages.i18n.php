@@ -33,6 +33,14 @@ $messages['ar'] = array(
 	'withoutimages' => 'صفحات من دون صور',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'withoutimages-desc' => 'Şəkilsiz səhifələr qeyd olunan [[Special:Withoutimages|xüsusi səhifəni]] əlavə edir',
+	'withoutimages' => 'Şəkilsiz səhifələr',
+);
+
 /** Bashkir (Башҡорт)
  * @author Assele
  */

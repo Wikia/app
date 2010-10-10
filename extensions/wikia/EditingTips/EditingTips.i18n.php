@@ -438,6 +438,7 @@ $messages['sr-ec'] = array(
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  * @author Surya Prakash.S.A.
+ * @author TRYPPN
  */
 $messages['ta'] = array(
 	'tog-disableeditingtips' => 'தொகுத்தல் உதவிகளைக் காட்ட வேண்டாம்!',
@@ -446,6 +447,7 @@ $messages['ta'] = array(
 	'editingtips_exit_widescreen' => 'அகண்ட திரையை விட்டு வெளியேறவும்',
 	'editingtips_hide' => 'தொகுத்தல் ஆலோசனைகளை மறை',
 	'editingtips_show' => 'தொகுத்தல் ஆலோசனைகளைக் காண்பி',
+	'editingTips' => 'தங்களது சிறுகுறிப்பினை சேர்க்கவும் [[MediaWiki:EditingTips|இங்கே]]',
 );
 
 /** Telugu (తెలుగు)

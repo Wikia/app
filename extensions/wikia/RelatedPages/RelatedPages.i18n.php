@@ -88,6 +88,14 @@ $messages['ia'] = array(
 	'wikiarelatedpages-heading' => 'Leger plus',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Farras
+ */
+$messages['id'] = array(
+	'wikiarelatedpages-desc' => 'Menambahkan daftar dengan halaman terkait ke halaman',
+	'wikiarelatedpages-heading' => 'Baca lebih lanjut',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

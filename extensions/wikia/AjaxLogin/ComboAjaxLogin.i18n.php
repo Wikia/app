@@ -384,7 +384,7 @@ $messages['pms'] = array(
 	'comboajaxlogin-desc' => "Fnestra dinàmica che a përmët a j'utent d'intré, d'arcòrdé soa ciav e ëd registré dj'utent",
 	'comboajaxlogin-createlog' => 'Intra o crea un cont',
 	'comboajaxlogin-actionmsg' => "Për fé st'assion-si a dev prima intré ant ël sistema o creé un cont",
-	'comboajaxlogin-actionmsg-protected' => 'Për modifiché sta pàgina, it deuve prima intré o creé un cont.',
+	'comboajaxlogin-actionmsg-protected' => "Për fé st'assion-sì a dev prima intré ant ël sistema o creé un cont.",
 	'comboajaxlogin-connectmarketing' => "<h1>Ch'a colega ij sò cont</h1>
 <ul>
 <li>A manten sò nòm utent corent, stòria, modìfiche... a cangia gnente, gavà la fasson d'intré ant ël sistema</li>

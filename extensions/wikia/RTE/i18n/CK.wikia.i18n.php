@@ -818,6 +818,13 @@ $messages['ja'] = array(
 	'rte-ck-videoPlaceholder-tooltip' => 'これは動画のプレースホルダです',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'rte-ck-templateDropDown-label' => 'ಟೆಂಪ್ಲೇಟು',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

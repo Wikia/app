@@ -32,6 +32,13 @@ $messages['arn'] = array(
 	'wikifactoryreporter' => 'WikiFactory kimelzugun',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'wikifactoryreporter' => 'Məruzəçi WikiFactory',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */

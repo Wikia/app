@@ -26,6 +26,13 @@ $messages['ar'] = array(
 	'mostpopulararticles' => 'أكثر المقالات شهرة (من قاعدة البيانات)',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'mostpopulararticles' => 'Ən çox oxunan məqalələr (verilənlər bazasından)',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */

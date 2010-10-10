@@ -1119,10 +1119,12 @@ Si tu es le fundator o un administrator de iste wiki, tu pote cambiar iste messa
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Farras
  * @author Irwangatot
  */
 $messages['id'] = array(
 	'myhome' => 'Rumah saya',
+	'wikiactivity' => 'Aktivitas Wiki',
 	'myhome-activity-more' => 'Lihat aktivitas terbaru',
 	'myhome-activity-feed' => 'Asupan kegiatan',
 	'myhome-activity-feed-empty' => "Wiki ini menunggu anda untuk ikut terlibat.
@@ -1178,6 +1180,7 @@ Cobalah!',
 Jika Anda ingin melihat Rumah Saya, gunakan '''[[Special:Preferences|Preferensi Anda]]''' untuk mengubah tampilan kulit Anda.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Pojok komunitas',
+	'oasis-myhome-community-corner-edit' => 'sunting pesan &gt;',
 	'myhome-community-corner-edit' => 'sunting pesan',
 	'community-corner' => "'''Selamat Datang di Rumah Saya!'''
 
@@ -1561,7 +1564,7 @@ Klikk på '''[[Special:CreatePage|Ny side]]''' for å begynne å skrive.",
 	'tog-myhomedisableredirect' => 'Deaktiver omdirigeringen min til Mitt hjem',
 	'myhome-feed-newpage' => 'ny side',
 	'myhome-feed-edit' => 'redigert',
-	'myhome-feed-move' => 'side fjernet',
+	'myhome-feed-move' => 'side flyttet',
 	'myhome-feed-talkpage' => 'diskusjonsside',
 	'myhome-feed-blogcomment' => 'bloggkommentar',
 	'myhome-feed-delete' => 'slettet',
@@ -1851,19 +1854,19 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'myhome' => 'A minha casa',
+	'myhome' => 'A Minha Casa',
 	'wikiactivity' => 'Actividade na Wiki',
-	'myhome-activity-more' => 'ver as mudanças mais recentes',
-	'myhome-activity-feed' => 'Mudanças recentes',
+	'myhome-activity-more' => 'ver mais actividade recente',
+	'myhome-activity-feed' => 'Actividade recente',
 	'myhome-activity-feed-empty' => "Esta wiki está a aguardar a sua participação.
 Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-watchlist-feed' => 'Páginas vigiadas',
 	'myhome-watchlist-feed-empty' => 'Pode adicionar páginas à sua lista de páginas vigiadas clicando o link "{{int:watch}}" na barra do topo da página.
 Use a lista de páginas vigiadas para monitorizar alterações das páginas que o interessam.',
-	'myhome-user-contributions-feed' => 'Contribuições',
+	'myhome-user-contributions-feed' => 'Colaborações',
 	'myhome-hot-spots-feed' => 'Pontos Quentes',
 	'myhome-hot-spots-feed-empty' => "Esta wiki está a aguardar a sua participação.
-Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever! \\",
+Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
 	'myhome-hot-spots-brandnew' => "Esta wiki é nova. Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'tog-myhomedisableredirect' => 'Desactivar o meu redireccionamento para A Minha Casa',
@@ -1930,7 +1933,7 @@ Pode, por exemplo:
 	'myhome-default-view-checkbox' => 'Tornar $1 a minha vista padrão',
 	'myhome-default-view-success' => 'Foi configurada',
 	'tooltip-pt-myhome' => 'Ir para A Minha Casa',
-	'activityfeed' => 'Feed das mudanças',
+	'activityfeed' => 'Actividade recente',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

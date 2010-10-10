@@ -349,6 +349,7 @@ on someone else\'s talk page!',
 
 /** Message documentation (Message documentation)
  * @author Avatar
+ * @author EugeneZelenko
  * @author LWChris
  * @author McDutchie
  * @author Siebrand
@@ -405,6 +406,7 @@ All messages for the triggers: {{msg-mw|achievements-badge-your-desc-blogcomment
 	'achievements-profile-title-challenges' => "Capitalization has been requested by Product Management, please don't changeit",
 	'achievements-ranked' => 'Parameter:
 * $1 is the rank number of a user on a wiki with regards to achievement points.',
+	'achievements-viewless' => '{{Identical|Close}}',
 	'achievements-recent-earned-badges' => "Capitalization has been requested by Product Management, please don't changeit",
 	'achievements-recent-info' => 'Parameters:
 * $1 is a link to a user page
@@ -535,7 +537,7 @@ $messages['be-tarask'] = array(
 	'achievements-silver' => 'Срэбра',
 	'achievements-bronze' => 'Бронза',
 	'achievements-you-must' => 'Вам неабходна $1, каб атрымаць гэтую ўзнагароду.',
-	'leaderboard-button' => 'Лідэры па ўзнагародам',
+	'leaderboard-button' => 'Дошка гонару',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|ачко|ачкі|ачкоў}}</small>',
 	'achievements-track-name-edit' => 'Рэдагаваць трэк',
 	'achievements-track-name-picture' => 'Выява трэку',
@@ -556,6 +558,32 @@ $messages['be-tarask'] = array(
 	'achievements-ranked' => 'Узровень № $1 у {{GRAMMAR:месны|{{SITENAME}}}}',
 	'achievements-no-badges' => 'Праглядзіце сьпіс пададзены ніжэй, каб убачыць узнагароды, якія Вы можаце атрымаць у {{GRAMMAR:месны|{{SITENAME}}}}!',
 	'achievements-viewall' => 'Паказаць усё',
+	'achievements-viewless' => 'Закрыць',
+	'achievements-profile-title-oasis' => 'дасягненьні <br /> ачкоў',
+	'achievements-ranked-oasis' => '$1 займае [[Special:Leaderboard|$2 месца]] ў {{GRAMMAR:месны|{{SITENAME}}}}',
+	'achievements-viewall-oasis' => 'Паказаць усё',
+	'leaderboard-intro' => "'''«Што такое дасягненьні?»'''
+Вы можаце атрымаць спэцыяльныя ўзнагароды за ўдзел у {{GRAMMAR:месны|{{SITENAME}}}}!
+Кожная ўзнагарода, якую Вы атрымаеце, дадае ачкі да Вашага агульнага ліку:
+Бронзавая ўзнагарода адпавядае 10 ачкам, срэбраная ўзнагарода — 50 ачкам, і залатая ўзнагарода — 100 ачкам.
+
+Калі Вы далучаецеся да {{GRAMMAR:родны|{{SITENAME}}}}, Ваш профіль удзельніка паказвае ўзнагароды, якія Вы атрымалі, і сьпіс задачаў, якія стаяць перад Вамі.
+[[Special:MyPage|Перайсьці ў Ваш профіль удзельніка, каб яго праверыць]]!",
+	'leaderboard' => 'Дошка гонару',
+	'achievements-recent-earned-badges' => 'Апошнія атрыманыя ўзнагароды',
+	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />атрыманая <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'атрымаў <strong><a href="$3" class="badgeName">$1</a></strong> узнагароду<br />$2',
+	'achievements-leaderboard-disclaimer' => 'Дошка гонару паказвае зьмены з ўчарашняга дня',
+	'achievements-leaderboard-rank-label' => 'месца',
+	'achievements-leaderboard-member-label' => 'удзельнік',
+	'achievements-leaderboard-points-label' => 'ачкоў',
+	'achievements-send' => 'Захаваць выяву',
+	'achievements-save' => 'Захаваць зьмены',
+	'achievements-reverted' => 'Узнагарода вернутая за арыгіналу.',
+	'achievements-customize' => 'Устанавіць выяву',
+	'achievements-customize-new-category-track' => 'Стварыць новы трэк для катэгорыі:',
+	'achievements-enable-track' => 'уключана',
+	'achievements-revert' => 'Аднавіць па змоўчваньні',
 );
 
 /** Breton (Brezhoneg)
@@ -2604,6 +2632,37 @@ $messages['ksh'] = array(
 	'achievements-bronze' => 'Brongße',
 	'achievements-you-must' => 'Do moß ald $1, öm dä Orde ze verdeene.',
 	'achievements-leaderboard-points-label' => 'Pünkscher',
+	'achievements-send' => 'Beld avshpeishere!',
+	'achievements-save' => 'Änderunge avspeichere',
+	'achievements-community-platinum-edit' => 'ändere',
+	'achievements-community-platinum-save' => 'afspeichere',
+	'achievements-badge-name-edit-0' => 'Määt ene Ongerscheid',
+	'achievements-badge-name-edit-1' => 'Blooß der Aanfang',
+	'achievements-badge-name-edit-2' => 'Ene Endrock hengerlohße',
+	'achievements-badge-name-edit-3' => 'Fründ vum Wiki',
+	'achievements-badge-name-edit-4' => 'Metmaacher',
+	'achievements-badge-name-edit-5' => 'Wiki-Opbouer',
+	'achievements-badge-name-edit-6' => 'Aanföhrer vum Wiki',
+	'achievements-badge-name-edit-7' => 'Äxpäät vum Wiki',
+	'achievements-badge-name-picture-0' => 'Schnappschoß',
+	'achievements-badge-name-picture-1' => 'Papparazi',
+	'achievements-badge-name-picture-2' => 'Beldermäächer',
+	'achievements-badge-name-picture-3' => 'Sammler',
+	'achievements-badge-name-picture-4' => 'Hät Kunß jään',
+	'achievements-badge-name-picture-5' => 'Dekeratöör',
+	'achievements-badge-name-picture-6' => 'Jeschtallder',
+	'achievements-badge-name-picture-7' => 'Kurator',
+	'achievements-badge-name-category-0' => 'Maach en Verbendung',
+	'achievements-badge-name-category-1' => 'Wääch frei Määcher',
+	'achievements-badge-name-category-2' => 'Fochscher',
+	'achievements-badge-name-category-3' => 'Aanföhrer vun ene Tuur',
+	'achievements-badge-name-category-4' => 'Stüürmann',
+	'achievements-badge-name-category-5' => 'Bröckebouer',
+	'achievements-badge-name-category-6' => 'Wiki_Planer',
+	'achievements-badge-name-blogpost-0' => 'Hät jät ze verzälle',
+	'achievements-badge-name-blogpost-1' => 'Hät fönef Saache ze saare',
+	'achievements-badge-name-blogpost-3' => 'Et Häz vun de Pattei',
+	'achievements-badge-name-blogpost-4' => 'Öffentlesch Reddeschwenger',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

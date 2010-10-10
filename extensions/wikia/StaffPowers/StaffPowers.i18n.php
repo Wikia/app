@@ -37,6 +37,13 @@ $messages['ar'] = array(
 	'staffpowers-ipblock-aborted' => 'منع موظفي ويكيا غير ممكن. الرجاء إستعمال [[خاص:Contact]] للإبلاغ عن أي قضايا أو مشاكل مع الموظفين لدينا.',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'staffpowers-ipblock-aborted' => 'Wikia əməkdaşını bloklamaq mümkün deyil. Zəhmət olmasa, bizim əməkdaşlarımızla bağlı problemlər haqqında məlumat vermək üçün [[Special:Contact]] səhifəsindən istifadə edin.',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */

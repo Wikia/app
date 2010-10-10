@@ -205,10 +205,23 @@ $messages['es'] = array(
 	'themedesigner-small' => 'Pequeño',
 	'themedesigner-medium' => 'Mediano',
 	'themedesigner-large' => 'Grande',
+	'themedesigner-button-save-im-done' => '¡Listo, guardar!',
+	'themedesigner-button-cancel' => 'Cancelar',
+	'themedesigner-pick-a-color' => 'Elegir un color',
+	'themedesigner-color-name-or-hex-code' => 'Nombre o código hexadecimal del color',
+	'themedesigner-button-ok' => 'Aceptar',
+	'themedesigner-pick-an-image' => 'Elegir una imagen',
+	'themedesigner-dont-use-a-background' => 'No usar una imagen de fondo',
+	'themedesigner-upload-your-own' => 'Subir un diseño propio',
+	'themedesigner-button-upload' => 'Subir',
+	'themedesigner-rules-background' => 'jpg, gif o png. Límite: 100 Kb',
+	'themedesigner-default' => 'Por defecto',
 	'themedesigner-button-edit' => 'Editar',
 	'themedesigner-font' => 'fuente',
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Guardar',
+	'themedesigner-rules-wordmark' => '250×65 píxeles (sólo archivos .png)',
+	'themedesigner-history-item' => '$1 por $2',
 );
 
 /** French (Français)
@@ -216,6 +229,7 @@ $messages['es'] = array(
  * @author Peter17
  * @author Sherbrooke
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'themedesigner-desc' => 'Permet aux administrateurs du wiki de concevoir un thème pour un wiki',
@@ -223,7 +237,7 @@ $messages['fr'] = array(
 	'themedesigner-background' => 'Arrière-plan',
 	'themedesigner-page' => 'Page',
 	'themedesigner-color' => 'couleur',
-	'themedesigner-graphic' => 'graphique',
+	'themedesigner-graphic' => 'image',
 	'themedesigner-buttons' => 'boutons',
 	'themedesigner-links' => 'liens',
 	'themedesigner-header' => 'en-tête',
@@ -232,7 +246,7 @@ $messages['fr'] = array(
 	'themedesigner-small' => 'Petit',
 	'themedesigner-medium' => 'Moyen',
 	'themedesigner-large' => 'Grand',
-	'themedesigner-tile-background' => 'arrière-plan du carreau',
+	'themedesigner-tile-background' => 'arrière-plan en mosaïque',
 	'themedesigner-tab-theme' => 'Thème',
 	'themedesigner-tab-customize' => 'Personnaliser',
 	'themedesigner-tab-wordmark' => 'Symbole',
@@ -240,13 +254,13 @@ $messages['fr'] = array(
 	'themedesigner-previous-versions' => 'Versions précédentes',
 	'themedesigner-button-save-im-done' => 'Enregistrer, j’ai fini',
 	'themedesigner-button-cancel' => 'Annuler',
-	'themedesigner-pick-a-color' => 'Choisir une couleur',
+	'themedesigner-pick-a-color' => 'Sélectionnez une couleur',
 	'themedesigner-enter-your-own' => 'Saisissez la vôtre',
-	'themedesigner-color-name-or-hex-code' => 'Nom de la couleur ou code hexadécimal',
+	'themedesigner-color-name-or-hex-code' => 'Nom couleur ou code hexa.',
 	'themedesigner-button-ok' => 'Ok',
-	'themedesigner-pick-an-image' => 'Choisir une image',
+	'themedesigner-pick-an-image' => 'Sélectionnez une image',
 	'themedesigner-dont-use-a-background' => 'Ne pas utiliser d’arrière-plan',
-	'themedesigner-upload-your-own' => 'Importer le vôtre',
+	'themedesigner-upload-your-own' => 'Importez la vôtre',
 	'themedesigner-button-upload' => 'Importer',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Limite : 100 Ko',
 	'themedesigner-default' => 'Défaut',
@@ -254,9 +268,10 @@ $messages['fr'] = array(
 	'themedesigner-font' => 'police',
 	'themedesigner-size' => 'taille',
 	'themedesigner-button-save' => 'Enregistrer',
-	'themedesigner-upload-a-graphic' => 'importer un graphique',
-	'themedesigner-rules-wordmark' => '250×65 pixels (fichiers .png seulement)',
-	'themedesigner-dont-use-a-graphic' => 'Ne pas utiliser de graphique',
+	'themedesigner-upload-a-graphic' => 'importer une image',
+	'themedesigner-rules-wordmark' => '250×65 pixels (fichiers .png uniquement)',
+	'themedesigner-dont-use-a-graphic' => "Ne pas utiliser d'image",
+	'themedesigner-history-item' => '$1 par $2',
 );
 
 /** Galician (Galego)
@@ -355,6 +370,8 @@ $messages['ia'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'themedesigner-desc' => '管理者がウィキのテーマをデザインできるようにする',
+	'themedesigner-title' => 'テーマデザイナ',
 	'themedesigner-background' => '背景',
 	'themedesigner-page' => 'ページ',
 	'themedesigner-color' => '背景色',
@@ -371,11 +388,28 @@ $messages['ja'] = array(
 	'themedesigner-tab-theme' => 'テーマ',
 	'themedesigner-tab-customize' => 'カスタマイズ',
 	'themedesigner-tab-wordmark' => 'ロゴ',
+	'themedesigner-preview-mode' => 'プレビューモード...',
+	'themedesigner-previous-versions' => '以前のバージョン',
+	'themedesigner-button-save-im-done' => '保存して終了',
+	'themedesigner-button-cancel' => '中止',
 	'themedesigner-pick-a-color' => '色を選択',
+	'themedesigner-enter-your-own' => 'オリジナルの色を指定',
+	'themedesigner-color-name-or-hex-code' => '色名もしくは16進コードを入力',
+	'themedesigner-button-ok' => 'OK',
+	'themedesigner-pick-an-image' => '画像を選択',
+	'themedesigner-dont-use-a-background' => '背景画像を使用しない',
+	'themedesigner-upload-your-own' => 'オリジナルの画像をアップロード',
+	'themedesigner-button-upload' => 'アップロード',
+	'themedesigner-rules-background' => 'jpg, gif, png のいずれか。100 キロバイトまで。',
 	'themedesigner-default' => 'デフォルト',
 	'themedesigner-button-edit' => '編集',
 	'themedesigner-font' => 'フォント',
 	'themedesigner-size' => 'サイズ',
+	'themedesigner-button-save' => '保存',
+	'themedesigner-upload-a-graphic' => '画像をアップロード',
+	'themedesigner-rules-wordmark' => '250x65 ピクセル（.png ファイルのみ）',
+	'themedesigner-dont-use-a-graphic' => '画像を使用しない',
+	'themedesigner-history-item' => '$1 by $2',
 );
 
 /** Macedonian (Македонски)
@@ -476,7 +510,7 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
-	'themedesigner-title' => 'Wikia-temautfordring',
+	'themedesigner-title' => 'Wikia-temautforming',
 	'themedesigner-background' => 'Bakgrunn',
 	'themedesigner-page' => 'Side',
 	'themedesigner-color' => 'farge',
@@ -530,11 +564,38 @@ $messages['pms'] = array(
 	'themedesigner-graphic' => 'gràfich',
 	'themedesigner-buttons' => 'boton',
 	'themedesigner-links' => 'anliure',
+	'themedesigner-header' => 'testà',
 	'themedesigner-text-wordmark' => 'Marcator ëd test',
 	'themedesigner-graphic-wordmark' => 'Marcator ëd gràfich',
 	'themedesigner-small' => 'Cit',
 	'themedesigner-medium' => 'Medi',
 	'themedesigner-large' => 'Gròss',
+	'themedesigner-tile-background' => 'sfond dël mon',
+	'themedesigner-tab-theme' => 'Tema',
+	'themedesigner-tab-customize' => 'Përsonalisa',
+	'themedesigner-tab-wordmark' => 'Marcador ëd paròla',
+	'themedesigner-preview-mode' => 'Manera Preuva...',
+	'themedesigner-previous-versions' => 'Version prima',
+	'themedesigner-button-save-im-done' => "Salva, i l'heu fàit",
+	'themedesigner-button-cancel' => 'Scancela',
+	'themedesigner-pick-a-color' => 'Pija un color',
+	'themedesigner-enter-your-own' => 'Ansëriss tò pròpi',
+	'themedesigner-color-name-or-hex-code' => 'Nòm color o còdes esadecimal',
+	'themedesigner-button-ok' => 'Va bin',
+	'themedesigner-pick-an-image' => 'Pija na figura',
+	'themedesigner-dont-use-a-background' => 'Dòvra pa në sfond',
+	'themedesigner-upload-your-own' => 'Caria tò pròpi',
+	'themedesigner-button-upload' => 'Carié',
+	'themedesigner-rules-background' => 'jpg, gif o png. lìmit ëd 100 kilobyte',
+	'themedesigner-default' => 'Për sòlit',
+	'themedesigner-button-edit' => 'Modìfica',
+	'themedesigner-font' => 'font (caràter)',
+	'themedesigner-size' => 'dimension',
+	'themedesigner-button-save' => 'Salva',
+	'themedesigner-upload-a-graphic' => 'caria un gràfich',
+	'themedesigner-rules-wordmark' => '250x65 pixel (mach file .png)',
+	'themedesigner-dont-use-a-graphic' => 'Dòvra pa un gràfich',
+	'themedesigner-history-item' => '$1 da $2',
 );
 
 /** Pashto (پښتو)
@@ -595,6 +656,7 @@ $messages['pt'] = array(
 	'themedesigner-upload-a-graphic' => 'upload de uma imagem',
 	'themedesigner-rules-wordmark' => '250x65 pixels (só ficheiros .png)',
 	'themedesigner-dont-use-a-graphic' => 'Não usar uma imagem',
+	'themedesigner-history-item' => '$1 de $2',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

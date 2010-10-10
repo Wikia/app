@@ -41,6 +41,13 @@ $messages['arn'] = array(
 	'wikiaupload' => 'Wikia mew pvramkvnun',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'wikiaupload' => 'Wikia yükləmələri',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by

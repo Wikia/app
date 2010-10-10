@@ -305,6 +305,7 @@ $messages['ia'] = array(
 	'dump-database-request' => 'Requestar un actualisation',
 	'dump-database-request-info' => '(Le copias es normalmente generate cata septimana)',
 	'dump-database-request-submit' => 'Inviar requesta',
+	'dump-database-request-already-submitted' => 'Un discarga ha essite requestate recentemente (minus de 7 dies retro)',
 	'dump-database-request-requested' => 'Requesta de un copia del base de datos inviate',
 	'dump-database-info-more' => 'Vide <a href="http://community.wikia.com/wiki/Help:Database_download">ulterior informationes</a>',
 );
@@ -428,6 +429,7 @@ Wikia maakt automatisch back-ups van alle wiki's.",
 	'dump-database-request' => 'Update aanvragen',
 	'dump-database-request-info' => 'Dumps worden meestal wekelijks aangemaakt.',
 	'dump-database-request-submit' => 'Verzoek versturen',
+	'dump-database-request-already-submitted' => 'Dump is onlangs gevraagd (minder dan 7 dagen geleden)',
 	'dump-database-request-requested' => 'Het verzoek voor de databasedump is ingediend.',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer informatie</a>.',
 );

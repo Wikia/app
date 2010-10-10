@@ -1393,7 +1393,7 @@ Buat blog daftar halaman untuk kategori seperti "Barack Obama", "Penggemar Fiksi
 	'blog-emptyparam' => 'Nama parameter tidak boleh kosong',
 	'blog-defaulttitle' => 'Blog',
 	'blog-continuereading' => 'Lanjutkan membaca &raquo;',
-	'blog-readfullpost' => 'Baca seluruh posting',
+	'blog-readfullpost' => 'Baca lebih lanjut',
 	'blog-olderposts' => 'Posting lama',
 	'blog-newerposts' => 'Posting terbaru',
 	'blog-nbrcomments' => '{{PLURAL:$1|Satu komentar|$1 komentar}}',
