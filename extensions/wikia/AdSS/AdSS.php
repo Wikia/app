@@ -14,7 +14,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'AdSS',
 	'version' => '0.1',
 	'author' => 'Emil Podlaszewski',
-	'descriptionmsg' => 'adss-extension-description',
+	'descriptionmsg' => 'adss-desc',
 );
 $wgExtensionMessagesFiles['AdSS'] = $dir . 'AdSS.i18n.php';
 $wgExtensionAliasesFiles['AdSS'] = $dir . 'AdSS.alias.php';
