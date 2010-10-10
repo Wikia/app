@@ -65,6 +65,15 @@ $messages['fr'] = array(
 	'feed-title-blogcomments' => 'Commentaires à $1',
 );
 
+/** Galician (Galego)
+ * @author Xanocebreiro
+ */
+$messages['gl'] = array(
+	'feed-title-blogposts' => 'Anotacións de blogue recentes',
+	'feed-title-recent-images' => 'Imaxes recentes',
+	'all-blog-posts' => 'todas as categorías',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -134,16 +143,17 @@ $messages['no'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'partnerfeed' => 'Feed dij cambrada',
-	'error-no-article' => 'Eror: Pa gnun paràmetr "artìcol" passà',
+	'partnerfeed' => 'Cambrada ëd fluss',
+	'error-no-article' => 'Eror: Gnun paràmetr "artìcol" passà',
 	'feed-title-blogposts' => 'Mëssagi dë Scartari recent',
 	'feed-title-recent-badges' => 'Distintiv recent',
 	'feed-title-recent-images' => 'Figure recente',
 	'feed-title-leaderboard' => 'Tàula dij sucess',
-	'feed-main-title' => 'Feed dij partner ëd Wikia',
+	'feed-main-title' => 'Fluss ëd cambrada Wikia',
 	'all-blog-posts' => 'tute le categorìe',
 	'blog-posts-from-listing' => 'da listé: $1',
 	'feed-title-hot-content' => 'Contnù càud - $1',
@@ -158,6 +168,23 @@ $messages['pt'] = array(
 	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
 	'feed-title-blogposts' => 'Entradas recentes em blogues',
 	'feed-title-recent-badges' => 'Distintivos recentes',
+	'feed-title-recent-images' => 'Imagens recentes',
+	'feed-title-leaderboard' => 'Liderança de medalhas',
+	'feed-main-title' => 'Feed de um parceiro da Wikia',
+	'all-blog-posts' => 'todas as categorias',
+	'blog-posts-from-listing' => 'da listagem: $1',
+	'feed-title-hot-content' => 'Conteúdo popular - $1',
+	'feed-title-blogcomments' => 'Comentários em $1',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'partnerfeed' => 'Feed de um parceiro',
+	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
+	'feed-title-blogposts' => 'Entradas recentes em blogues',
+	'feed-title-recent-badges' => 'Condecorações recentes',
 	'feed-title-recent-images' => 'Imagens recentes',
 	'feed-title-leaderboard' => 'Liderança de medalhas',
 	'feed-main-title' => 'Feed de um parceiro da Wikia',

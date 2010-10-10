@@ -793,6 +793,7 @@ $messages['fi'] = array(
  * @author Peter17
  * @author Slamduck
  * @author Urhixidur
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'wmu-upload' => 'Importer',
@@ -830,7 +831,7 @@ $messages['fr'] = array(
 	'wmu-success' => '<h1>Succès</h1>Votre image a été insérée.',
 	'wmu-success-placeholder' => '<h1>Succès</h1>',
 	'wmu-return' => 'Revenir à la modification',
-	'wmu-back' => 'revenir',
+	'wmu-back' => 'retour',
 	'wmu-close' => 'fermer',
 	'wmu-warn1' => "Vous devez d'abord spécifier votre requête !",
 	'wmu-warn2' => "Vous devez d'abord sélectionner un fichier !",

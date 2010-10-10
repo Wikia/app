@@ -144,6 +144,7 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -271,6 +272,14 @@ Evit doare eo bet kemmet ho wiki gant an implijer enrollet $USERNAME ! Perak ned
 Seblantout a ra en defe unan bennak kemmet ho wiki ! Perak ne yafec\'h ket <a href="$MYHOMEURL">da welet petra \'zo bet kemmet</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
 	'founderemails-lot-happening-subject' => "Un toullad traoù a c'hoarvez war ho lec'hienn hiziv !",
+	'founderemails-lot-happening-body' => 'Demat dit $FOUNDERNAME,
+
+Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet penaos emaén kont.
+
+-- Skipailh Wikia',
+	'founderemails-lot-happening-body-HTML' => 'Demat dit $FOUNDERNAME,<br /><br />
+Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet penaos emañ kont.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Skipailh wikia</div>',
 );
 
 /** German (Deutsch)
@@ -1685,13 +1694,13 @@ A smija che quaidun a l'abia modificà soa wiki! Përchè a controla nen \$MYHOM
 A smija che quaidun a l\'abia modificà soa wiki! Përchè <a href="$MYHOMEURL">a controla nen</a> për vëdde lòn ch\'a l\'é cangià?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
 	'founderemails-lot-happening-subject' => "Un mucc ëd ròba a l'é capitaje su tò sit ancheuj!",
-	'founderemails-lot-happening-body' => 'cerea $FOUNDERNAME,
+	'founderemails-lot-happening-body' => "cerea \$FOUNDERNAME,
 
-A-i é un mucc ëd ròba capità su toa wiki ancheuj! Sàuta da $MYHOMEURL për vëdde lòn ch\'a sta capitand.
+A-i é un mucc ëd ròba capità su soa wiki ancheuj! Ch'a vada ansima a \$MYHOMEURL për vëdde lòn ch'a càpita.
 
--- L\'Echip Wikia',
-	'founderemails-lot-happening-body-HTML' => 'cerea $FOUNDERNAME,<br /><br />
-A-i é un mucc ëd ròba capità su toa wiki ancheuj! Sàuta da $MYHOMEURL për vëdde lòn ch\'a sta capitand.<br /><br />
+-- L'Echip Wikia",
+	'founderemails-lot-happening-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A-i é un mucc ëd ròba capità su soa wiki ancheuj! Ch\'a vada ansima a $MYHOMEURL për vëdde lòn ch\'a ancàpita.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
 );
 

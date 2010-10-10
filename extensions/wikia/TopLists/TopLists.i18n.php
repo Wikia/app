@@ -112,6 +112,7 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -124,11 +125,25 @@ $messages['br'] = array(
 	'toplists-error-invalid-picture' => "N'eo ket reizh ar skeudenn diuzet.",
 	'toplists-error-title-exists' => 'N\'eus ket eus ar bajenn-se. Gellout a rit mont da <a href="$2" target="_blank">$1</a> pe reiñ un anv disheñvel.',
 	'toplists-error-title-spam' => 'En destenn pourchaset ez eus un nebeut gerioù anavezet evel strobus.',
+	'toplists-error-article-blocked' => "Ho tigarez. N'oc'h ket aotreet da grouiñ ur bajenn nevez dezhi an anv-mañ.",
+	'toplists-error-article-not-exists' => 'N\'eus ket eus ar pennad "$1". Ha fellout a ra deoc\'h <a href="$2" target="_blank">e grouiñ</a> ?',
+	'toplists-error-picture-not-exists' => 'N\'eus ket eus ar restr "$1". Ha fellout a ra deoc\'h <a href="$2" target="_blank">hec\'h enporzhiañ</a> ?',
+	'toplists-error-duplicated-entry' => "N'hallit ket obet gant an hevelep anv ouzhpenn ur wezh.",
+	'toplists-error-empty-item-name' => "N'hall ket anv un elfenn bzeañ goullo.",
+	'toplists-item-cannot-delete' => "C'hwitet eo bet diverkadenn an elfenn-mañ",
+	'toplists-error-image-already-exists' => "Ur skeudenn dezhi an hevelep anv zo c'hoazh.",
+	'toplists-error-add-item-anon' => 'N\'eo ket aotreet an implijerien dizanv da ouzhpennañ elfennoù d\'ar rolloù. <a class="ajaxLogin" id="login" href="$1">Kevreit</a> pe <a class="ajaxLogin" id="signup" href="$2">savit ur gont nevez</a>.',
+	'toplists-error-add-item-permission' => "Fazi aotre : N'eo ket aotreet ho kont da grouiñ elfennoù nevez.",
+	'toplists-error-add-item-list-not-exists' => 'N\'eus ket eus ar roll Top 10 "$1".',
+	'toplists-error-backslash-not-allowed' => 'N\'eo ket aotreet an arouezenn "/" e titl ur roll Top 10.',
 	'toplists-editor-title-label' => 'Anv ar roll',
 	'toplists-editor-title-placeholder' => 'Roit un anv evit ar roll',
+	'toplists-editor-related-article-label' => 'Pajenn kar',
 	'toplists-editor-related-article-optional-label' => 'diret',
+	'toplists-editor-related-article-placeholder' => "Merkañ anv ur bajenn zo anezhi c'hoazh",
 	'toplists-editor-image-browser-tooltip' => 'Ouzhpennañ ur skeudenn',
 	'toplists-editor-remove-item-tooltip' => 'Tennañ an objed',
+	'toplists-editor-drag-item-tooltip' => 'Lakait da riklañ evit cheñch an urzh',
 	'toplists-editor-add-item-label' => 'Ouzhpennañ un objed nevez',
 	'toplists-editor-add-item-tooltip' => "Ouzhpennañ un objed nevez d'ar roll",
 	'toplists-create-button' => 'Krouiñ ur roll',
@@ -137,19 +152,28 @@ $messages['br'] = array(
 	'toplists-items-removed' => '$1 {{PLURAL:$1|objed|objed}} dilamet',
 	'toplists-items-created' => '$1 {{PLURAL:$1|objed|objed}} krouet',
 	'toplists-items-updated' => '$1 {{PLURAL:$1|objed|objed}} hizivaet',
+	'toplists-items-nochange' => "N'eus bet cheñchet elfenn ebet",
 	'toplits-image-browser-no-picture-selected' => "N'eus skeudenn diuzet ebet",
 	'toplits-image-browser-clear-picture' => 'Diverkañ ar skeudenn',
+	'toplits-image-browser-selected-picture' => 'Skeudenn diuzet evit ar mare : $1',
 	'toplists-image-browser-upload-btn' => 'Dibab',
 	'toplists-image-browser-upload-label' => 'Enporzhiañ ho hini',
 	'toplists-list-creation-summary' => 'O krouiñ ur roll, $1',
 	'toplists-list-update-summary' => "Oc'h enporzhiañ ur roll, $1",
+	'toplists-item-creation-summary' => 'O krouiñ ur roll elfennoù',
+	'toplists-item-update-summary' => 'O hizivaat ur roll elfennoù',
 	'toplists-item-remove-summary' => 'Objed dilamet eus ar roll',
+	'toplists-item-restored' => 'Elfenn assavet',
 	'toplists-list-related-to' => 'Liammet ouzh :',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />mouezh|$1<br />mouezh}}',
 	'toplists-list-created-by' => 'gant [[User:$1|$1]]',
 	'toplists-list-vote-up' => 'Votiñ a-du',
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vot|vot}} e $2',
 	'toplists-list-add-item-label' => 'Ouzhpennañ un elfenn',
+	'toplists-list-add-item-name-label' => 'Lezel ar roll da vont...',
+	'toplists-list-item-voted' => 'Votet',
+	'toplists-createpage-dialog-label' => 'Roll Top 10',
+	'toplists-email-subject' => 'Kemmet ez eus bet ur roll Top 10',
 	'toplists-email-body' => 'Demat a-berzh Wikia !
 
 Kemmet eo bet ar roll <a href="$1">$2</a> war Wikia.
@@ -166,6 +190,7 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 	'toplists-hours' => '$1 {{PLURAL:$1|eur|eur}}',
 	'toplists-days' => '$1 {{PLURAL:$1|deiz|deiz}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|sizhun|sizhun}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'en deus votet war ur roll Top 10 list war $WIKINAME !',
 );
 
 /** Spanish (Español)
@@ -261,6 +286,18 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
 	'toplists-days' => '$1 jour{{PLURAL:$1||s}}',
 	'toplists-weeks' => '$1 semaine{{PLURAL:$1||s}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'a voté sur une liste du Top 10 sur $WIKINAME !',
+);
+
+/** Galician (Galego)
+ * @author Xanocebreiro
+ */
+$messages['gl'] = array(
+	'toplists-editor-related-article-label' => 'Páxina relacionada',
+	'toplists-editor-related-article-optional-label' => 'opcional',
+	'toplists-editor-related-article-placeholder' => 'Introduza un nome de páxina existente',
+	'toplists-editor-image-browser-tooltip' => 'Engadir unha imaxe',
+	'toplists-editor-remove-item-tooltip' => 'Eliminar elemento',
+	'toplists-editor-add-item-label' => 'Engadir un elemento novo',
 );
 
 /** Interlingua (Interlingua)
@@ -589,12 +626,13 @@ Du kan <a href="$4">slette abbonementet</a> på endringer i listen.',
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'toplists-desc' => 'Liste dij prim 10',
 	'right-toplists-create-edit-list' => 'Crea e modìfica le pàgine dle liste dij Prim 10',
-	'right-toplists-create-item' => 'Crea e gionta element a na pàgina ëd liste dij Prim 10',
+	'right-toplists-create-item' => "Creé e gionta dj'element a na pàgina ëd lista dij Prim 10",
 	'createtoplist' => 'Crea na lista neuva dij Prim 10',
 	'edittoplist' => 'Modìfica dij Prim 10',
 );

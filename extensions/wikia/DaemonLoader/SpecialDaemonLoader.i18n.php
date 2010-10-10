@@ -295,6 +295,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Absay
  * @author Crazymadlover
  * @author Locos epraix
  * @author Pertile
@@ -315,7 +316,7 @@ $messages['es'] = array(
 	'daemonloader_paramname' => 'Nombre parámetro',
 	'daemonloader_paramdesc' => 'Descripción del parámetro',
 	'daemonloader_paramtype' => 'Tipo de parámetro',
-	'daemonloader_paramremove' => 'Remover?',
+	'daemonloader_paramremove' => '¿Eliminar?',
 	'daemonloader_removedaemon' => 'Eliminar Daemon',
 	'daemonloader_paramdefvalue' => 'Valor por defecto',
 	'daemonloader_alldaemons' => 'Todos los Daemon',
@@ -357,7 +358,7 @@ $messages['es'] = array(
 	'daemonloader_created' => 'Creado',
 	'daemonloader_options' => 'Opciones',
 	'daemonloader_nojobsfound' => 'Ningún trabajo encontrado',
-	'daemonloader_removejobconfirm' => 'Estás seguro?',
+	'daemonloader_removejobconfirm' => '¿Estás seguro?',
 );
 
 /** Finnish (Suomi)

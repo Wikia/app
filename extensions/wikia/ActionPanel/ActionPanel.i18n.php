@@ -437,8 +437,13 @@ $messages['sv'] = array(
  */
 $messages['ta'] = array(
 	'action_panel_edit_title' => 'விடை',
+	'action_panel_title' => 'துரிதமாகச் செயல்படும் குழு',
 	'action_panel_categorize' => 'பகுக்கவும்',
 	'action_panel_categorize_help' => 'ஒரு வரிக்கு ஒரு பகுப்பு',
+	'action_panel_categories_summary' => 'பகுப்புக்களைச் சேர்க்கவும்',
+	'action_panel_save_success' => 'தங்களது கட்டுரை சேமிக்கப்பட்டுள்ளது.',
+	'action_panel_rename_success' => 'தங்களது கட்டுரைக்கு மறுபெயர் இடப்பட்டுள்ளது.',
+	'action_panel_categorize_success' => 'தங்களது பகுப்புக்கள் சேர்க்கப்பட்டுவிட்டன',
 );
 
 /** Telugu (తెలుగు)

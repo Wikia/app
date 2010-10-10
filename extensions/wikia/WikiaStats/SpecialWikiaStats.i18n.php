@@ -5454,6 +5454,31 @@ $messages['sv'] = array(
 	'wikiastats_now' => 'nu',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'wikiastats_panel_close_btn' => 'மூடுக',
+	'wikiastats_active_day' => 'நாள்',
+	'wikiastats_active_month' => 'மாதம்',
+	'wikiastats_active_year' => 'ஆண்டு',
+	'wikiastats_active_months' => 'மாதங்கள்',
+	'wikiastats_articles_text' => 'கட்டுரைகள்',
+	'wikiastats_other' => 'மற்றவை',
+	'wikiastats_links' => 'இணைப்புக்கள்',
+	'wikiastats_images' => 'படங்கள்',
+	'wikiastats_uploaded_images' => 'பதிவேற்றப்பட்டுவிட்டது',
+	'wikiastats_date' => 'தேதி',
+	'wikiastats_namespace' => 'பெயர்வெளி',
+	'wikiastats_show' => 'காட்டு',
+	'wikiastats_hide' => 'மறை',
+	'wikiastats_wikiname' => 'பெயர்:',
+	'wikiastats_total' => 'மொத்தம்',
+	'wikiastats_new' => 'புதிய',
+	'wikiastats_more_txt' => 'மேலும்',
+	'wikiastats_now' => 'இப்பொழுது',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

@@ -114,9 +114,14 @@ $messages['br'] = array(
 );
 
 /** Bosnian (Bosanski)
+ * @author CERminator
  * @author Palapa
  */
 $messages['bs'] = array(
+	'specialmultiplelookup-desc' => 'Daje informacije korisniku za provjeru više računa na više wikija',
+	'multilookup' => 'Pretraga više računa',
+	'multilookupstitle' => 'Pretraga više računa',
+	'multilookupselectuser' => 'Traženje računa sa istom IP adresom na više wikija',
 	'multilookupgo' => 'Idi',
 	'multilookupnotspecify' => 'Još niste naznačili IP adresu.',
 	'multilookupnext' => 'Slijedeći',
@@ -125,8 +130,10 @@ $messages['bs'] = array(
 	'multilookupinvalidresults' => 'Neispravni rezultati!',
 	'multilookupnoresultfound' => 'Nema pronađenih rezultata!',
 	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Link doprinosa',
 	'multilookupdetails' => 'Pgledajte detalje',
 	'multilookuplistwikiainfo' => 'Lista wikija koje su uređivane od korisnika sa IP adresom <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP adresa "<b>$1</b>" ne postoji. Provjerite navedenu IP adresu da li je tačno napisana.</p>',
 	'multilookuplastedit' => 'Posljednje uređivanje sa ove IP adrese:',
 	'right-multilookup' => 'Potraži informacije o korisnicima na više wikija',
 );

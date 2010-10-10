@@ -117,13 +117,14 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Jean-Frédéric
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'ajaxpoll-percentVotes' => '$1% de tous les votes',
 	'ajaxpoll-thankyou' => "Merci d'avoir voté!",
 	'ajaxpoll-error' => 'Une erreur est survenue lors de la validation de votre vote, veuillez réessayer.',
 	'ajaxpoll-summary' => 'Le sondage fut créé le $1 $2, et $3 personnes ont déjà voté.',
-	'ajaxpoll-submit' => 'Votez!',
+	'ajaxpoll-submit' => 'Voter !',
 	'ajaxpoll-closed' => 'Le sondage est désormais terminé. Comparez les résultats.',
 	'ajaxpoll-submitting' => "Veuillez patienter pendant l'envoi de votre vote...",
 );

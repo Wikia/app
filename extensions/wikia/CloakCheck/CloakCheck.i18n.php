@@ -178,31 +178,36 @@ $messages['no'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'cloakcheck' => "Contròl d'amissibilità për la covertura IRC",
-	'cloakcheck-desc' => "A dà n'antërfacia tut-an-un për verifiché j'arceste për na covertura IRC",
+	'cloakcheck-desc' => "A dà n'antërfacia antëgrà për verifiché j'arceste për na covertura IRC",
 	'cloakcheck-form-username' => 'Nòm utent:',
-	'cloakcheck-form-check' => 'Contròla nòm utent',
+	'cloakcheck-form-check' => "Controlé lë stranòm d'utent",
 	'cloakcheck-form-check-self' => "Contròla l'amissibilità ëd covertura IRC",
-	'cloakcheck-process-empty' => 'Ël nòm utent a deuv pa esse veuid.',
-	'cloakcheck-process-notexist' => 'Ël nòm utent a esist pa.',
-	'cloakcheck-process-username' => 'Nòm utent: $1',
-	'cloakcheck-process-accountage-yes' => "Ël cont a l'é basta vej.",
+	'cloakcheck-process-empty' => "Lë stranòm d'utent a peul pa esse veuid.",
+	'cloakcheck-process-notexist' => "Lë stranòm d'utent a esist pa.",
+	'cloakcheck-process-username' => "Stranòm d'utent: $1",
+	'cloakcheck-process-accountage-yes' => "Ël cont a l'é vej a basta.",
 	'cloakcheck-process-accountage-no' => "Ël cont a l'é tròp neuv.",
-	'cloakcheck-process-emailconf-yes' => 'Adrëssa e-mail confirmà.',
-	'cloakcheck-process-emailconf-no' => 'Adrëssa e-mail pa confirmà.',
-	'cloakcheck-process-edits-yes' => "L'utent a l'ha basta modìfiche.",
-	'cloakcheck-process-edits-no' => "L'utent a l'ha pa basta modìfiche.",
+	'cloakcheck-process-emailconf-yes' => 'Adrëssa eletrònica confirmà.',
+	'cloakcheck-process-emailconf-no' => 'Adrëssa eletrònica nen confirmà.',
+	'cloakcheck-process-edits-yes' => "L'utent a l'ha a basta ëd modìfiche.",
+	'cloakcheck-process-edits-no' => "L'utent a l'ha pa a basta ëd modìfiche.",
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
+	'cloakcheck' => 'Verificação de eligibilidade para um cloak IRC',
+	'cloakcheck-desc' => 'Fornece uma interface única para verificação dos requisitos de um cloak IRC',
 	'cloakcheck-form-username' => 'Nome de utilizador:',
 	'cloakcheck-form-check' => 'Verificar nome de utilizador',
+	'cloakcheck-form-check-self' => 'Verificar a eligibilidade para um cloak IRC',
 	'cloakcheck-process-empty' => 'O nome do utilizador não pode estar vazio.',
 	'cloakcheck-process-notexist' => 'O nome de utilizador não existe.',
 	'cloakcheck-process-username' => 'Nome de utilizador: $1',
@@ -225,5 +230,25 @@ $messages['ru'] = array(
 	'cloakcheck-process-emailconf-no' => 'Адрес электронной почты не подтверждён.',
 	'cloakcheck-process-edits-yes' => 'Участником сделано необходимое число правок.',
 	'cloakcheck-process-edits-no' => 'Участником не сделано необходимого числа правок.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'cloakcheck' => 'Pagsusuri ng pagkamaaari ng balabal na IRC',
+	'cloakcheck-desc' => 'Nagbibigay ng lahat-nasa-isang ugnayang-mukha upang matiyak ang mga kailangan para sa isang balabal na IRC',
+	'cloakcheck-form-username' => 'Pangalan ng tagagamit:',
+	'cloakcheck-form-check' => 'Suriin ang pangalan ng tagagamit',
+	'cloakcheck-form-check-self' => 'Suriin ang pagkamaaari ng balabal na IRC',
+	'cloakcheck-process-empty' => 'Hindi dapat walang laman ang pangalan ng tagagamit.',
+	'cloakcheck-process-notexist' => 'Hindi umiiral ang pangalan ng tagagamit.',
+	'cloakcheck-process-username' => 'Pangalan ng tagagamit: $1',
+	'cloakcheck-process-accountage-yes' => 'Nasa sapat na gulang na ang akawnt.',
+	'cloakcheck-process-accountage-no' => 'Napakabago pa ng akawnt.',
+	'cloakcheck-process-emailconf-yes' => 'Natiyak ang tirahan ng e-liham.',
+	'cloakcheck-process-emailconf-no' => 'Hindi natiyak ang tirahan ng e-liham.',
+	'cloakcheck-process-edits-yes' => 'May sapat na pamamatnugot ang tagagamit.',
+	'cloakcheck-process-edits-no' => 'Walang sapat na mga pamamatnugot ang tagagamit.',
 );
 

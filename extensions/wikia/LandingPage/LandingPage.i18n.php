@@ -65,33 +65,42 @@ $messages['es'] = array(
 );
 
 /** French (Français)
+ * @author Peter17
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'landingpage' => 'Bienvenue sur Wikia',
-	'landingpage-secondary-line' => "Un lieu pour '''découvrir''','''créer''' et '''partager ce que vous aimez'''.
-
-Nous avons une toute nouvelle apparence qui va bientôt vivre dans l’ensemble de Wikia. En attendant, découvrez quelques uns de nos wikis en test et lisez ce que cette apparence signifiera pour vous.",
+	'landingpage-secondary-line' => "Un lieu pour '''découvrir''','''créer''' et '''partager ce que vous aimez'''.",
+	'landingpage-secondary-2' => 'Notre nouvelle apparence est en ligne ! Sur la droite vous pourrez en savoir plus sur nous ou consulter quelques exemples.',
+	'landingpage-secondary-3' => 'Ou faites le grand saut et commencez à explorer le nouveau Wikia en cliquant sur le bouton ci-dessous.',
 	'landingpage-examples' => 'Découvrez quelques exemples',
 	'landingpage-buttons-about-wikia' => 'À propos de Wikia',
+	'landingpage-buttons-update-me' => 'Utiliser la nouvelle apparence !',
+	'landingpage-buttons-new-user' => 'Je suis un nouvel utilisateur',
+	'landingpage-buttons-new-user-more' => 'Commencer ici',
 	'landingpage-buttons-learn-more' => 'En savoir plus',
 	'landingpage-buttons-new-look' => 'La nouvelle apparence',
 	'landingpage-buttons-faqs' => 'Liste de FAQ',
 	'landingpage-buttons-about-make-the-move' => 'Faire la transition',
 	'landingpage-buttons-transition-guide' => 'Guide de transition',
 	'landingpage-quote' => '... La nouvelle apparence est épurée, élégante, fonctionnelle et fonctionne dans l’ensemble très bien. » — un utilisateur de Wikia avec plus de 2&nbsp;500 modifications',
+	'landingpage-change' => 'Vous utilisez maintenant la nouvelle apparence de Wikia.',
+	'landingpage-change-notification' => "Vos préférences ont été sauvegardées. Restez sur cette page pour en savoir plus, rendez-vous sur votre wiki favori ou découvrez l'un de nos wikis vedette.",
+	'landingpage-change-back-text' => "Je veux voir l'ancienne apparence, montrez-moi comment.",
+	'landingpage-dive-in' => 'Faites le grand saut et découvrez le nouveau Wikia',
 );
 
 /** Galician (Galego)
  * @author Toliño
+ * @author Xanocebreiro
  */
 $messages['gl'] = array(
 	'landingpage' => 'Benvido a Wikia',
-	'landingpage-secondary-line' => "Un lugar para '''descubrir''', '''crear''' e '''compartir o que lle gusta'''.
-
-Temos preparado un novo aspecto que axiña incluiremos en todos os Wikia. Entrementres, explore algúns dos nosos wikis en probas e bótelle un ollo ao que significará para vostede o novo aspecto.",
+	'landingpage-secondary-line' => "Un lugar para '''descubrir''', '''crear''' e '''compartir o que lle gusta'''.",
 	'landingpage-examples' => 'Vexa algúns exemplos',
 	'landingpage-buttons-about-wikia' => 'Acerca de Wikia',
+	'landingpage-buttons-new-user-more' => 'Comece Aquí',
 	'landingpage-buttons-learn-more' => 'Máis información',
 	'landingpage-buttons-new-look' => 'O novo aspecto',
 	'landingpage-buttons-faqs' => 'Preguntas máis frecuentes',
@@ -105,11 +114,9 @@ Temos preparado un novo aspecto que axiña incluiremos en todos os Wikia. Entrem
  */
 $messages['ia'] = array(
 	'landingpage' => 'Benvenite a Wikia',
-	'landingpage-secondary-line' => "Un loco pro '''discoperir''', '''crear''' e '''condivider lo que te place'''.
-
-Nos ha preparate un nove aspecto que essera tosto inserite in tote Wikia. In le interim, explora alcunes de nostre wikis beta e informa te a proposito de lo que iste aspecto significara pro te.",
+	'landingpage-secondary-line' => "Un loco pro '''discoperir''', '''crear''' e '''condivider lo que te place'''.",
 	'landingpage-secondary-2' => 'Nos ha justo introducite un apparentia totalmente nove! Lege plus a proposito de nos, o vide alcun exemplos al dextra.',
-	'landingpage-secondary-3' => 'O comencia immediatemente a explorar le nove Wikia per cliccar super le button hic infra.',
+	'landingpage-secondary-3' => 'Reguarda iste curte video pro jectar un oculo sur iste nove mundo excitative -- alora comencia per cliccar hic infra.',
 	'landingpage-examples' => 'Examina alcun exemplos',
 	'landingpage-buttons-about-wikia' => 'A proposito de Wikia',
 	'landingpage-buttons-update-me' => 'Cambia me al nove apparentia!',
@@ -135,9 +142,7 @@ Nos ha preparate un nove aspecto que essera tosto inserite in tote Wikia. In le 
  */
 $messages['mk'] = array(
 	'landingpage' => 'Добредојдовте на Викија',
-	'landingpage-secondary-line' => "Место за '''откривање''', '''создавање''' и '''споделување на она што го сакате'''.
-
-Имаме сосем нов изглед што наскоро ќе оди во живо низ целата Викија. Во меѓувреме истражете некои наши бета-викија и прочитајте што од овој изглед ќе се однесува на вас.",
+	'landingpage-secondary-line' => "Место за '''откривање''', '''создавање''' и '''споделување на она што го сакате'''.",
 	'landingpage-secondary-2' => 'Штотуку прејдовме на работње во живо, и тоа со сосем нов изглед! Прочитајте повеќе за нас, или погледајте некои примери десно.',
 	'landingpage-secondary-3' => 'Или пак веднаш впуштете се во разоткривање новата Викија притискајќи на копчето подолу.',
 	'landingpage-examples' => 'Ѕирнете некои примери',
@@ -163,11 +168,9 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'landingpage' => 'Welkom bij Wikia',
-	'landingpage-secondary-line' => "Een plek om te '''ontdekken''', '''te maken''' en '''te delen wat u pleziert'''. 
-
-We hebben een nieuw uiterlijk dat straks overal te zien is bij Wikia. Intussen kunt u alvast een voorproefje krijgen in een aantal van onze proefwiki's en lezen wat het voor u betekent.",
+	'landingpage-secondary-line' => "Een plek om te '''ontdekken''', '''te maken''' en '''te delen wat u pleziert'''.",
 	'landingpage-secondary-2' => 'We hebben ons nieuwe uiterlijk gelanceerd! Lees meer over ons of bekijk rechts een paar voorbeelden.',
-	'landingpage-secondary-3' => 'U kunt ook in het diepe springen en het nieuwe Wikia verkennen door hieronder op de knop te klikken.',
+	'landingpage-secondary-3' => 'Bekijk deze korte video om een kijkje in deze nieuwe en spannende wereld te krijgen. Ga daarna binnen door hieronder te klikken.',
 	'landingpage-examples' => 'Enkele voorbeelden bekijken',
 	'landingpage-buttons-about-wikia' => 'Over Wikia',
 	'landingpage-buttons-update-me' => 'Ik wil het nieuwe uiterlijk gebruiken!',
@@ -191,9 +194,7 @@ We hebben een nieuw uiterlijk dat straks overal te zien is bij Wikia. Intussen k
  */
 $messages['no'] = array(
 	'landingpage' => 'Velkommen til Wikia',
-	'landingpage-secondary-line' => "Et sted for å '''oppdage''', '''skape''' og '''dele det du elsker'''.
-
-Vi har et helt nytt utseende som snart publiseres over hele Wikia. I mellomtiden kan du utforske noen av våre betawikier og lese deg opp på hva dette utseende vil bety for deg.",
+	'landingpage-secondary-line' => "Et sted for å '''oppdage''', '''skape''' og '''dele det du elsker'''.",
 	'landingpage-secondary-2' => 'Vi har nettopp gått live med et helt nytt utseende! Les mer om oss, eller se på noen eksempler til høyre.',
 	'landingpage-secondary-3' => 'Eller bare hoppe i det og begynne å utforske det nye Wikia ved å trykke på knappen under.',
 	'landingpage-examples' => 'Sjekk ut noen eksempler',
@@ -214,21 +215,29 @@ Vi har et helt nytt utseende som snart publiseres over hele Wikia. I mellomtiden
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'landingpage' => 'Bin ëvnù su Wikia',
-	'landingpage-secondary-line' => "Un pòst për '''dëscheurve''', '''creé''' e condivide lòn ch'at pias'''.
-
-I l'oma n'aspet neuv dël brand che prest a andrà viv su tute le Wikia. Ant ël midem temp, espora quaidun-e ëd nòste wiki beta e les lòn che sossì a vorerà dì për ti.",
-	'landingpage-examples' => 'Contròla quaich esempi',
+	'landingpage-secondary-line' => "Un pòst për '''dëscheurve''', '''creé''' e '''partagé lòn ch'a-j pias'''.",
+	'landingpage-secondary-2' => "I soma pen-a andà an linia con na neuva presentassion dla marca! Ch'a lesa ëd pi ansima ëd noi, o ch'a varda chèich esempi an sla drita.",
+	'landingpage-secondary-3' => "O ch'a intra bele mach andrinta e ch'a ancamin-a a esploré la neuva Wikia an sgnacand an sël boton sì-sota.",
+	'landingpage-examples' => "Ch'a bèica chèich esempi",
 	'landingpage-buttons-about-wikia' => 'A propòsit ëd Wikia',
+	'landingpage-buttons-update-me' => 'Cangg-me a la presentassion neuva!',
+	'landingpage-buttons-new-user' => "I son n'utent neuv",
+	'landingpage-buttons-new-user-more' => 'Ancamin-a Ambelessì',
 	'landingpage-buttons-learn-more' => 'Ampara ëd pi',
 	'landingpage-buttons-new-look' => "L'aspet neuv",
-	'landingpage-buttons-faqs' => 'FAQ',
-	'landingpage-buttons-about-make-the-move' => 'Fà la mòssa',
+	'landingpage-buttons-faqs' => 'Soens an ciamo',
+	'landingpage-buttons-about-make-the-move' => "Fé l'operassion",
 	'landingpage-buttons-transition-guide' => 'Guida ëd transission',
 	'landingpage-quote' => "...l'aspet neuv a l'é elegant, stilos, funsional, e tut a gira motobin mej\". - N'utent Wikia con pi ëd 2500 modìfiche",
+	'landingpage-change' => "It l'has cangià për da bin soa pel a la neuva presentassion ëd Wikia.",
+	'landingpage-change-notification' => "Ij sò gust a son ëstàit salvà. Ch'a resta su sta pàgina për savèjne ëd pi, ch'a vada su soa wiki preferìa o ch'a esplòra un-a ëd nòste wiki potensià.",
+	'landingpage-change-back-text' => 'I veuj vëdde la presentassion veja, mostreme coma fé.',
+	'landingpage-dive-in' => "Ch'a vada a vëdde la neuva Wikia",
 );
 
 /** Portuguese (Português)
@@ -236,17 +245,24 @@ I l'oma n'aspet neuv dël brand che prest a andrà viv su tute le Wikia. Ant ël
  */
 $messages['pt'] = array(
 	'landingpage' => 'Bem-vindo(a) à Wikia!',
-	'landingpage-secondary-line' => "Um lugar onde pode '''descobrir''', '''criar''' e '''partilhar aquilo de que gosta'''.
-
-Temos um visual novo que em breve estará ao vivo em todas as wikis. Entretanto, explore algumas das wikis de teste e informe-se sobre o significado deste visual para si.",
+	'landingpage-secondary-line' => "Um lugar onde pode '''descobrir''', '''criar''' e '''partilhar aquilo de que gosta'''.",
+	'landingpage-secondary-2' => 'Acabámos de estrear um visual completamente novo! Saiba mais sobre este assunto, ou veja alguns exemplos à direita.',
+	'landingpage-secondary-3' => 'Ou atire-se e comece a explorar a nova Wikia, clicando o botão abaixo.',
 	'landingpage-examples' => 'Veja alguns exemplos',
 	'landingpage-buttons-about-wikia' => 'Sobre a Wikia',
+	'landingpage-buttons-update-me' => 'Mudar-me para o novo visual!',
+	'landingpage-buttons-new-user' => 'Sou um utilizador novo',
+	'landingpage-buttons-new-user-more' => 'Comece Aqui',
 	'landingpage-buttons-learn-more' => 'Saiba mais',
 	'landingpage-buttons-new-look' => 'O novo visual',
 	'landingpage-buttons-faqs' => 'FAQs',
 	'landingpage-buttons-about-make-the-move' => 'Adopte o novo visual',
 	'landingpage-buttons-transition-guide' => 'Guia de transição',
 	'landingpage-quote' => '... o novo visual é elegante, moderno, funcional e globalmente funciona muito bem." - Utilizador da Wikia com mais de 2500 edições',
+	'landingpage-change' => 'Mudou o seu tema para o novo visual da Wikia.',
+	'landingpage-change-notification' => 'As suas preferências foram gravadas. Mantenha-se nesta página para saber mais, visite a sua wiki favorita ou explore uma das wikis destacadas.',
+	'landingpage-change-back-text' => 'Quero ver o visual antigo; mostrem-me como.',
+	'landingpage-dive-in' => 'Atire-se e fique a conhecer a nova Wikia',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -265,9 +281,7 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'landingpage' => 'Добро пожаловать в Викиа',
-	'landingpage-secondary-line' => "Место для '''исследования''', '''создания''' и '''обмена тем, что вы любите'''.
-
-У нас появился новый интерфейс, который скоро будет включён во всех проектах Викиа. Уже сейчас можно посмотреть на некоторые бета-версии проектов, прочитать, какие новые функции будут вам полезны.",
+	'landingpage-secondary-line' => "Место для '''исследования''', '''создания''' и '''обмена тем, что вы любите'''.",
 	'landingpage-examples' => 'Посмотрите примеры',
 	'landingpage-buttons-about-wikia' => 'О Викии',
 	'landingpage-buttons-learn-more' => 'Подробнее',
@@ -283,9 +297,7 @@ $messages['ru'] = array(
  */
 $messages['tl'] = array(
 	'landingpage' => 'Maligayang Pagdating sa Wikia',
-	'landingpage-secondary-line' => "Isang pook upang '''tuklasin''', '''likhain''' at '''ipamahagi kung ano ang minamahal mo'''.
-
-Mayroon kaming bagumbagong anyo na darating nang buhay sa kahabaan ng lahat ng Wikia.  Pansamantala, galugarin ang ilan sa aming mga wiking beta at magbasa tungkol sa kung ano ang magiging kahulugan para sa iyo ng kaanyuhang ito.",
+	'landingpage-secondary-line' => "Isang pook upang '''tuklasin''', '''likhain''' at '''ipamahagi kung ano ang minamahal mo'''.",
 	'landingpage-secondary-2' => 'Naing buhay na ang aming bagumbagong anyo!  Magbasa pa ng marami tungkol sa amin, o tanawin ang ilang mga halimbawang nasa kanan.',
 	'landingpage-secondary-3' => 'O lumundag nang papasok at magsimulang galugarin ang bagong Wikia sa pamamagitan ng pagpindot sa pindutang nasa ibaba.',
 	'landingpage-examples' => 'Tingnan ang ilang mga halimbawa',

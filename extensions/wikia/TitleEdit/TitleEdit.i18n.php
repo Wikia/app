@@ -118,13 +118,19 @@ $messages['ay'] = array(
 	'titleedit' => 'Turkaña',
 );
 
-/** Azerbaijani (Azərbaycanca) */
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
 $messages['az'] = array(
-	'titleedit' => 'Redaktə',
+	'titleedit-desc' => 'Adın dəyişdirilməsi düyməsini səhifənin yuxarı hissəsinə əlavə edir',
+	'titleedit' => 'redaktə',
 );
 
-/** Bashkir (Башҡорт) */
+/** Bashkir (Башҡорт)
+ * @author Assele
+ */
 $messages['ba'] = array(
+	'titleedit-desc' => 'Биттең өҫкө өлөшөнә исем алмаштырыу төймәһен өҫтәй',
 	'titleedit' => 'Үҙгәртергә',
 );
 

@@ -275,6 +275,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Farras
  * @author Irwangatot
  * @author Kenrick95
  */
@@ -288,6 +289,7 @@ $messages['id'] = array(
 	'wva-title' => 'Cara cepat menambah Video dari URL',
 	'wva-notlogged' => 'Anda harus login atau daftar untuk memasukkan video.',
 	'wva-notallowed' => 'Anda tidak dapat menyisipkan video di wiki ini.',
+	'wva-protected' => 'Video ini dilindungi.',
 );
 
 /** Igbo (Igbo)

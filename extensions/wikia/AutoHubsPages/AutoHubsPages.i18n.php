@@ -220,6 +220,7 @@ $messages['no'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
@@ -229,14 +230,16 @@ $messages['pms'] = array(
 	'hub-topusers-header' => 'Prim $1 Utent',
 	'hub-featured' => 'Prime $1 wiki',
 	'hub-header' => '$1 Wiki',
-	'hub-hotspot-info' => 'Coste a son le pàgine pi càude sta sman-a, valutà da tanti editor.',
+	'hub-hotspot-info' => 'Coste a son le pàgine pi ative dë sta sman-a, valutà da tanti editor.',
 	'hub-blog-comments' => '{{PLURAL:$1|un coment|$1 coment}}',
 	'hub-blog-continue' => 'Continua a lese',
 	'hub-blog-showarticle' => 'Smon-e la pàgina',
 	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt"> {{PLURAL:$1|pont|pont}} ëd modìfica</span>',
 	'hub-hotspot-from' => 'da',
-	'hub-hide-feed' => 'Stërma feed',
-	'hub-show-feed' => 'Smon Feed',
+	'hub-hide-feed' => 'Stërmé ël fluss',
+	'hub-show-feed' => 'Smon-e ël fluss',
+	'hub-contributors-info' => 'Costi a son ij prim utent dë sta sman-a, an órdin ëd nùmer ëd modìfiche.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editor}}</span>',
 );
 
 /** Pashto (پښتو)

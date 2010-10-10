@@ -35,9 +35,13 @@ Please remember, avatars are global - removing a user's avatar removes it across
 );
 
 /** Message documentation (Message documentation)
+ * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'blog-avatar-error-type' => 'Parameters:
+* $1 is the provided invalid MIME type
+* $2 is a comma separated list of allowed MIME types.',
 	'right-removeavatar' => '{{doc-right|removeavatar}}',
 );
 
@@ -298,6 +302,7 @@ Per favor memora que le avatares es global; remover le avatar de un usator lo re
 	'blog-avatar-error-nofile' => 'Per favor selige un file del disco',
 	'blog-avatar-error-size' => 'Le file incargate es troppo grande; le maximo permittite es $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Impossibile salveguardar le file',
+	'blog-avatar-error-type' => 'Typo MIME invalide. Fornite: $1 - Permittite: $2',
 	'blog-avatar-changed-log' => 'Addeva o cambiava avatar',
 	'blog-avatar-removed-log' => 'Removeva le avatares de $1',
 	'blog-avatar-save-info' => 'Pro salveguardar le modificationes, <a href="#prefcontrol">va al basso</a> e preme e button "{{int:saveprefs}}"',
@@ -444,6 +449,7 @@ Avatars voor een gebruiker worden in alle Wikia verwijderd.',
 	'blog-avatar-error-size' => 'Het geüploade bestand is te groot.
 De maximale toegestane grootte is $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Kan bestand niet opslaan',
+	'blog-avatar-error-type' => 'Ongeldig MIME-type. Opgegeven: $1 en toegestaan zijn: $2',
 	'blog-avatar-changed-log' => 'Avatar gewijzigd of toegevoegd',
 	'blog-avatar-removed-log' => 'heeft de avatars van $1 verwijderd',
 	'blog-avatar-save-info' => 'Als u de wijzigingen wilt opslaan, klik dan <a href="#prefcontrol">go to bottom</a> op de knop "{{int:saveprefs}}"',
