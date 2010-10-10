@@ -640,10 +640,12 @@ class Masthead {
 		 */
 		$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
 		if (!in_array($aImgInfo['mime'], $aAllowMime)) {
+			global $wgLang;
+
 			// This seems to be the most appropriate error message to describe that the image type is invalid.
 			// Available error codes; http://php.net/manual/en/features.file-upload.errors.php
 			$errorNo = UPLOAD_ERR_EXTENSION;
-			$errorMsg = wfMsg('blog-avatar-error-type', $aImgInfo['mime'], implode(',', $aAllowMime));
+			$errorMsg = wfMsg('blog-avatar-error-type', $aImgInfo['mime'], $wgLang->listToText( $aAllowMime ) );
 
 //				Wikia::log( __METHOD__, 'mime', $errorMsg);
 			wfProfileOut(__METHOD__);
