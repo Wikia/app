@@ -8,11 +8,11 @@
 $messages = array();
 
 $messages['en'] = array(
-	'adss-extension-description' => 'Ad Self Service',
+	'adss-desc' => 'Ad Self Service',
 	'adss' => 'AdSS',
 	'adss-sponsor-links' => 'Sponsored links on Wikia',
-	'adss-ad-header' => '== External Sponsor Links ==',
-	'adss-ad-default-text' => 'Click Here!',
+	'adss-ad-header' => '== External sponsor links ==',
+	'adss-ad-default-text' => 'Click here!',
 	'adss-ad-default-desc' => 'Buy a sponsored link and description for your website on this page. Act quickly, the few sponsorship slots sell out fast!',
 	'adss-form-header' => 'Design your ad',
 	'adss-form-url' => 'URL of sponsoring website (your website):',
@@ -54,7 +54,6 @@ $messages['en'] = array(
 	'adss-per-site' => 'All pages',
 	'adss-per-page' => 'One page only',
 );
-
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
@@ -357,4 +356,3 @@ $messages['tl'] = array(
 	'adss-button-save-pay' => 'Sagipin',
 	'right-adss-admin' => 'Administrator of AdSS',
 );
-
