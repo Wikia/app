@@ -22,9 +22,9 @@ $messages['en'] = array(
 	'adss-form-page' => 'Page to sponsor:',
 	'adss-form-price' => 'Sponsorship amount:',
 	'adss-form-email' => 'Your e-mail address:',
-	'adss-form-usd-per-day' => '$1 USD per day',	
-	'adss-form-usd-per-week' => '$1 USD per week',	
-	'adss-form-usd-per-month' => '$1 USD per month',	
+	'adss-form-usd-per-day' => '$1 USD per day',
+	'adss-form-usd-per-week' => '$1 USD per week',
+	'adss-form-usd-per-month' => '$1 USD per month',
 	'adss-form-field-empty-errormsg' => 'This field must not be empty',
 	'adss-form-non-existent-title-errormsg' => 'This page does not exist',
 	'adss-form-pick-plan-errormsg' => 'You must select a plan',
@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'adss-form-page-plan-description' => 'Target specific pages to match your Campaign',
 	'adss-form-page-plan-price' => '1 link costs $1',
 	'adss-form-thanks' => "Thank you for your Sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
-	 
+
 	 Go and [[Special:AdSS|buy]] another ad!",
 	'adss-button-preview' => 'Preview',
 	'adss-button-edit' => 'Edit',
@@ -46,11 +46,11 @@ $messages['en'] = array(
 	'adss-preview-header' => 'Preview',
 	'adss-preview-prompt' => 'Here is what your sponsorship will look like - click "{{int:adss-button-edit}}" to go back and make changes, or "{{int:adss-button-save-pay}}" to save it and go to PayPal.',
 	'adss-paypal-error' => "Couldn't create PayPal payment this time. Please try again later.
-	
-	Return to [[Special:AdSS]].",
+
+Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-error' => "An error ocurred. Please try again later.
-	
-	Return to [[Special:AdSS]].",
+
+Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-per-site' => 'All pages',
 	'adss-per-page' => 'One page only',
 );
