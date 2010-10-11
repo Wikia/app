@@ -207,6 +207,7 @@ packages :
 					'../js/plugins/linksuggest/plugin.js',
 					'../js/plugins/media/plugin.js',
 					'../js/plugins/modeswitch/plugin.js',
+					'../js/plugins/overlay/plugin.js',
 					'../js/plugins/paste/plugin.js',
 					'../js/plugins/placeholder/plugin.js',
 					'../js/plugins/signature/plugin.js',

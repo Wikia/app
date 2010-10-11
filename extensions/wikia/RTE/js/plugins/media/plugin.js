@@ -1,27 +1,13 @@
 CKEDITOR.plugins.add('rte-media',
 {
-	overlays: false,
-
 	init: function(editor) {
 		var self = this;
 
-		editor.on('instanceReady', function() {
-			// add node in which image menus will be stored
-			self.overlays = $('<div id="RTEMediaOverlays" />');
-			$('#RTEStuff').append(self.overlays);
-		});
-
 		editor.on('wysiwygModeReady', function() {
-			// clean media menus
-			if (typeof self.overlays == 'object') {
-				self.overlays.html('');
-			}
-
 			// get all media (images / videos) - don't include placeholders
 			var media = RTE.tools.getMedia();
 
 			// regenerate media menu
-			media.removeData('overlay');
 			self.setupMedia(media);
 
 			// get all image / video placeholders
@@ -82,177 +68,6 @@ CKEDITOR.plugins.add('rte-media',
 		RTE.mediaEditor.plugin = self;
 	},
 
-	// generate HTML for media menu
-	getOverlay: function(image) {
-		var self = this;
-
-		if (!this.overlays) {
-			// we're not ready yet
-			return;
-		}
-
-		// get node in which menu is / will be stored
-		var overlay = image.data('overlay');
-
-		// generate node where menu will be stored
-		if (typeof overlay == 'undefined') {
-			var data = image.getData();
-
-			// image with thumb of frame
-			var isFramed = image.hasClass('thumb') || image.hasClass('frame');
-
-			// image width (including paddings and borders)
-			var width = parseInt(image.attr('width'));
-			if (isFramed) {
-				if (CKEDITOR.env.ie && CKEDITOR.env.version <= 7) {
-					// IE8-
-					width += 2;
-				}
-				else {
-					width += 8;
-				}
-			}
-
-			// create menu node
-			overlay = $('<div class="RTEMediaOverlay">');
-			overlay.width(width + 'px').attr('type', image.attr('type'));
-			overlay.html('<div class="RTEMediaMenu color1">' +
-				'<span class="RTEMediaOverlayEdit">' + RTE.instance.lang.media.edit  + '</span> ' +
-				'<span class="RTEMediaOverlayDelete">' + RTE.instance.lang.media['delete'] + '</span>' +
-				'</div>');
-
-			// render image caption
-			var captionContent = data.params.captionParsed || data.params.caption;
-			if (captionContent && isFramed) {
-				var captionTop = parseInt(image.attr('height') + 7);
-				var captionWidth = image.attr('width');
-
-				// IE8-
-				if (CKEDITOR.env.ie && CKEDITOR.env.version <= 7) {
-					captionTop -= 25; /* padding-top (25px) */
-					captionWidth -= 6; /* padding (3px) * 2 */
-				}
-
-				var caption = $('<div>').
-					addClass('RTEMediaCaption').
-					css('top',captionTop + 'px').
-					width(captionWidth).
-					html(captionContent);
-
-				caption.appendTo(overlay);
-			}
-
-			// setup events
-			overlay.bind('mouseover', function() {
-				// don't hide this menu
-				self.showOverlay(image);
-			});
-
-			overlay.bind('mouseout', function() {
-				// hide this menu
-				self.hideOverlay(image);
-			});
-
-			// add it and store it in image data
-			this.overlays.append(overlay);
-			image.data('overlay', overlay);
-
-			// handle clicks on [edit] / [delete]
-			overlay.find('.RTEMediaOverlayEdit').bind('click', function(ev) {
-				// hide preview
-				overlay.hide();
-
-				// call editor for image
-				$(image).trigger('edit');
-
-				// tracking
-				RTE.track(self.getTrackingType(image), 'menu', 'edit');
-			});
-
-			overlay.find('.RTEMediaOverlayDelete').bind('click', function(ev) {
-				var type = self.getTrackingType(image);
-
-				// tracking
-				RTE.track(type, 'menu', 'delete');
-
-				// show modal version of confirm()
-				var title = RTE.instance.lang[type].confirmDeleteTitle;
-				var msg = RTE.instance.lang[type].confirmDelete;
-
-				RTE.tools.confirm(title, msg, function() {
-					RTE.tools.removeElement(image);
-
-					// remove menu
-					overlay.remove();
-				});
-			});
-		}
-
-		return overlay;
-	},
-
-	// show media menu
-	showOverlay: function(image) {
-		var overlay = this.getOverlay(image);
-
-		// position image menu over an image
-		var position = RTE.tools.getPlaceholderPosition(image);
-
-		if (image.hasClass('media-placeholder')) {
-			// image / video placeholder
-			position.top += 2;
-			position.left += 2;
-		}
-		else {
-			// take image margins into consideration
-			if ( image.hasClass('thumb') || image.hasClass('frame') ) {
-				position.top += 6;
-
-				if (!image.hasClass('alignLeft')) {
-					position.left += 18;
-				}
-			}
-		}
-
-		overlay.css({
-			'left': position.left + 'px',
-			'top': parseInt(position.top + 2) + 'px'
-		});
-
-		// don't show [modify] / [remove] menu above RTE toolbar
-		var menu = overlay.children().eq(0);
-		if (position.top > 0) {
-			menu.show();
-		}
-
-		// don't show caption when it's going outside RTE window (RT #46409)
-		var caption = overlay.children().eq(1);
-		var positionCaption = parseInt(position.top) + parseInt(caption.css('top')) + 16 /* caption height */;
-
-		if (positionCaption < RTE.tools.getEditorHeight()) {
-			caption.show();
-		}
-
-		// show whole media overlay
-		overlay.show();
-
-		// clear timeout used to hide preview with small delay
-		if (timeoutId = image.data('hideTimeout')) {
-			clearTimeout(timeoutId);
-		}
-	},
-
-	// hide media menu
-	hideOverlay: function(image) {
-		var overlay = this.getOverlay(image);
-
-		// hide menu 100 ms after mouse is out (this prevents flickering)
-		image.data('hideTimeout', setTimeout(function() {
-			overlay.children().hide();
-			overlay.hide().removeData('hideTimeout');
-		}, 100));
-	},
-
 	// setup both images and videos (including placeholders)
 	setupMedia: function(media) {
 		var self = this;
@@ -265,22 +80,44 @@ CKEDITOR.plugins.add('rte-media',
 		// keep constant value of _rte_instance
 		media.attr('_rte_instance', RTE.instanceId);
 
+		// setup overlay
+		var msgs = RTE.instance.lang.media;
+
+		RTE.overlay.add(media, [
+			{
+				label: msgs['edit'],
+				class: 'RTEMediaOverlayEdit',
+				callback: function(node) {
+					var type = self.getTrackingType(node);
+
+					node.trigger('edit');
+
+					// tracking
+					RTE.track(type, 'menu', 'edit');
+				}
+			},
+			{
+				label: msgs['delete'],
+				class: 'RTEMediaOverlayDelete',
+				callback: function(node) {
+					var type = self.getTrackingType(node);
+
+					// show modal version of confirm()
+					var title = RTE.instance.lang[type].confirmDeleteTitle;
+					var msg = RTE.instance.lang[type].confirmDelete;
+
+					RTE.tools.confirm(title, msg, function() {
+						RTE.tools.removeElement(image);
+					});
+
+					// tracking
+					RTE.track(type, 'menu', 'delete');
+				}
+			}
+		]);
+
 		// unbind previous events
 		media.unbind('.media');
-
-		// setup events
-		media.bind('mouseover.media', function() {
-			self.showOverlay($(this));
-		});
-
-		media.bind('mouseout.media', function() {
-			self.hideOverlay($(this));
-		});
-
-		media.bind('contextmenu.media', function(ev) {
-			// don't show CK context menu
-			ev.stopPropagation();
-		});
 
 		// track when drag&drop starts
 		media.bind('dragged.media', function(ev) {
