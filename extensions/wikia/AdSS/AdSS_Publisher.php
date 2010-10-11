@@ -3,16 +3,17 @@
 class AdSS_Publisher {
 
 	static function getSiteAdsAjax() {
+		global $wgSquidMaxage;
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
 		$ads = self::getSiteAds();
 
 		$adsRendered = array();
-		$minExpire = 0;
+		$minExpire = $wgSquidMaxage + time();
 		foreach( $ads as $ad ) {
 			$adsRendered[] = $ad->render();
-			if( $minExpire == 0  || $minExpire > $ad->expires ) {
+			if( $minExpire > $ad->expires ) {
 				$minExpire = $ad->expires;
 			}
 		}
@@ -23,12 +24,12 @@ class AdSS_Publisher {
 	}
 
 	static function getSiteAds() {
-		global $wgAdSS_DBname, $wgCityId, $wgMemc;
+		global $wgAdSS_DBname, $wgCityId, $wgMemc, $wgSquidMaxage;
 
 		$memcKey = wfMemcKey( "adss", "siteads" );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
-			$minExpire = 0;
+			$minExpire = $wgSquidMaxage + time();
 			$ads = array();
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
@@ -39,7 +40,7 @@ class AdSS_Publisher {
 						), __METHOD__ );
 			foreach( $res as $row ) {
 				$ad = AdSS_Ad::newFromRow( $row );
-				if( $minExpire == 0  || $minExpire > $ad->expires ) {
+				if( $minExpire > $ad->expires ) {
 					$minExpire = $ad->expires;
 				}
 				$ads[] = $ad;
@@ -53,7 +54,7 @@ class AdSS_Publisher {
 	}
 
 	static function getPageAds( $title ) {
-		global $wgMemc, $wgAdSS_DBname, $wgCityId;
+		global $wgMemc, $wgAdSS_DBname, $wgCityId, $wgSquidMaxage;
 
 		if( !self::canShowAds( $title ) ) {
 			return array();
@@ -62,7 +63,7 @@ class AdSS_Publisher {
 		$memcKey = wfMemcKey( "adss", "pageads", $title->getArticleID() );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
-			$minExpire = 0;
+			$minExpire = $wgSquidMaxage;
 			$ads = array();
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
@@ -73,7 +74,7 @@ class AdSS_Publisher {
 						), __METHOD__ );
 			foreach( $res as $row ) {
 				$ad = AdSS_Ad::newFromRow( $row );
-				if( $minExpire == 0  || $minExpire > $ad->expires ) {
+				if( $minExpire > $ad->expires ) {
 					$minExpire = $ad->expires;
 				}
 				$ads[] = $ad;
