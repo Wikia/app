@@ -41,7 +41,12 @@ var WikiHeader = {
 	mouseover: function(event) {
 
 		//Hide all subnavs except for this one
-		WikiHeader.subnav.not($(this).find(".subnav")).css("top", "-9999px");
+		var otherSubnavs = WikiHeader.subnav.not($(this).find(".subnav"));
+		if($('body').data('accessible')) {
+			otherSubnavs.css("top", "-9999px");
+		} else {
+			otherSubnavs.hide();
+		}
 
 		//Cancel mouseoutTimer
 		clearTimeout(WikiHeader.mouseoutTimer);
@@ -104,7 +109,7 @@ var WikiHeader = {
 		var subnav = $(parent).children('ul');
 
 		if (subnav.exists()) {
-			subnav.css("top", WikiHeader.navtop);
+			subnav.css("top", WikiHeader.navtop).show();
 			//WikiHeader.ads.css("visibility", "hidden");
 
 			$.tracker.byStr('wikiheader/wikinav/open');
@@ -113,7 +118,11 @@ var WikiHeader = {
 
 	hideNav: function() {
 		//Hide subnav
-		WikiHeader.subnav.css("top", "-9999px");
+		if($('body').data('accessible')) {
+			WikiHeader.subnav.css("top", "-9999px");
+		} else {
+			WikiHeader.subnav.hide();
+		}
 		//WikiHeader.ads.css("visibility", "visible");
 	},
 
