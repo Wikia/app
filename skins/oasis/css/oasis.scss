@@ -42,7 +42,8 @@
 @import "core/Preferences";
 @import "core/tabs";
 
-// Ubiquitous modules that should be combined here to save space. Preceded by comments so we can see what was packaged. //
+// Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
 @import "modules/LatestPhotos";
 @import "/extensions/wikia/ShareFeature/css/ShareFeature.css";
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
+@import "/extensions/wikia/Blogs/css/oasis.scss";
