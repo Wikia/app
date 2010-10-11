@@ -367,11 +367,7 @@ class SkinChooser {
 			}
 		}
 
-		if( $wgRequest->getVal('useskin') == 'oasis' ) {
-			$wgRequest->setVal('useskin', 'monaco');
-		}
-
-		// RT#68169 - only allow useskin=wikia for beta & staff.
+		// only allow useskin=wikia for beta & staff.
 		global $wgUser;
 		if(( $wgRequest->getVal('useskin') == 'wikia' ) && $wgUser->isAllowed( 'useskinwikia' )) {
 			$wgRequest->setVal('useskin', 'oasis');
