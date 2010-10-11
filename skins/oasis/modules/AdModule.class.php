@@ -88,7 +88,8 @@ class AdModule extends Module {
 
 		if(isset(self::$config[$this->slotname])) {
 			if (in_array($this->slotname, self::$slotsUseGetAd)) {
-				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
+				$params = array('saveDartUrlinParams'=>true);
+				$this->ad = AdEngine::getInstance()->getAd($this->slotname, $params);
 			}
 			else {
 				$this->ad = AdEngine::getInstance()->getPlaceHolderIframe($this->slotname);

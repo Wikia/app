@@ -327,5 +327,13 @@ class BodyModule extends Module {
 		// wlee: Oasis ad development 
 		global $wgRequest; 
 		$this->showTestAds = $wgRequest->getVal( 'showtestads' );
+		if (empty($wgSuppressAds)) {
+			$slotnames = array('INVISIBLE_1', 'INVISIBLE_2');
+			$params = array('noDocumentWrite'=>true);
+			foreach ($slotnames as $slotname) {
+				$ad = AdEngine::getInstance()->getAd($slotname, $params);
+				$wgOut->addScript($ad);
+			}
+		}
 	}
 }
