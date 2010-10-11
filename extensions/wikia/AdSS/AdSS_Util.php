@@ -22,10 +22,15 @@ class AdSS_Util {
 	}
 
 	static function formatPrice( $priceConf ) {
+		global $wgLang;
+		$price = $priceConf['price'];
+		if( intval( $price ) == $price ) {
+			$price = intval( $price );
+		}
 		switch( $priceConf['period'] ) {
-			case 'd': return wfMsgHtml( 'adss-form-usd-per-day', $priceConf['price'] );
-			case 'w': return wfMsgHtml( 'adss-form-usd-per-week', $priceConf['price'] );
-			case 'm': return wfMsgHtml( 'adss-form-usd-per-month', $priceConf['price'] );
+			case 'd': return wfMsgHtml( 'adss-form-usd-per-day', $wgLang->formatNum( $price ) );
+			case 'w': return wfMsgHtml( 'adss-form-usd-per-week', $wgLang->formatNum( $price ) );
+			case 'm': return wfMsgHtml( 'adss-form-usd-per-month', $wgLang->formatNum( $price ) );
 		}
 	}
 
@@ -46,19 +51,54 @@ class AdSS_Util {
 		return $response;
 	}
 
-	static function flushCache( $pageId=0 ) {
-		global $wgMemc, $wgScriptPath;
+	static function flushCache( $pageId=0, $wikiId=0 ) {
+		global $wgMemc, $wgServer, $wgScript, $wgArticlePath, $wgCityId;
+
+		$wikiDb = false;
+		$wikiServer = false;
+		$wikiScript = false;
+		$wikiArticlePath = false;
+
+		if( $wikiId > 0 && $wikiId != $wgCityId ) {
+			$wiki = WikiFactory::getWikiByID( $wikiId );
+			if( !isset( $wiki->city_id ) || $wiki->city_id != $wikiId ) {
+				wfDebug( __METHOD__ . ": Wrong wikiId!!\n" );
+				return;
+			}
+			$wikiDb = $wiki->city_dbname;
+			$wikiServer = WikiFactory::getVarValueByName( "wgServer", $wikiId );
+			$wikiScript = WikiFactory::getVarValueByName( "wgScript", $wikiId );
+			$wikiArticlePath = WikiFactory::getVarValueByName( "wgArticlePath", $wikiId );
+		}
+		$dbw = wfGetDB( DB_MASTER, array(), $wikiDb );
+		if( $wikiServer === false ) $wikiServer = $wgServer;
+		if( $wikiScript === false ) $wikiScript = $wgScript;
+		if( $wikiArticlePath === false ) $wikiArticlePath = $wgArticlePath;
+
 		if( $pageId > 0 ) {
-			$title = Title::newFromID( $pageId );
-			$title->invalidateCache();
-			$memcKey = wfMemcKey( 'adss', 'pageads', $pageId );
-			$url =$title->getFullURL();
+			$title = $dbw->selectRow( 
+					'page',
+					'page_title',
+					array( 'page_id' => $pageId )
+					);
+			
+			$dbw->update(
+					'page',
+					array( 'page_touched' => $dbw->timestamp() ),
+					array( 'page_id' => $pageId )
+				    );
+			wfDebug( __METHOD__ . ": updated page_touched on $wikiDb for page_id=$pageId\n");
+
+			$url = $wikiServer . str_replace( '$1', $title, $wikiArticlePath );
+			$memcKey = $dbw->getWikiID() . ":adss:pageads:$pageId";
 		} else {
-			$memcKey = wfMemcKey( 'adss', 'siteads' );
-			$url = $wgScriptPath . '?action=ajax&rs=AdSS_Publisher::getSiteAdsAjax';
+			$url = $wikiServer . $wikiScript . '?action=ajax&rs=AdSS_Publisher::getSiteAdsAjax';
+			$memcKey = $dbw->getWikiID() . ":adss:siteads";
 		}
 		$wgMemc->delete( $memcKey );
+		wfDebug( __METHOD__ . ": deleted memcached key $memcKey\n" );
 		SquidUpdate::purge( array( $url ) );
+		wfDebug( __METHOD__ . ": purged $url\n" );
 	}
 
 	static function getToken() {

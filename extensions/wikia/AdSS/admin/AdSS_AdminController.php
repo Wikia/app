@@ -58,19 +58,14 @@ class AdSS_AdminController {
 						$title = Title::newFromID( $ad->pageId );
 						if( !$title || !$title->exists() ) {
 							$r = array( 'result' => 'error', 'respmsg' => 'no such title' );
-							$priceConf = null;
-						} else {
-							$priceConf = AdSS_Util::getPagePricing( $title );
 						}
-					} else {
-						$priceConf = AdSS_Util::getSitePricing();
 					}
 
-					if( $priceConf !== null ) {
+					if( empty( $r ) ) {
 						$pp = new PaymentProcessor();
 						$respArr = array();
-						if( $pp->collectPayment( $row->ppa_baid, $priceConf['price'], $respArr ) ) {
-							$ad->refresh( $priceConf );
+						if( $pp->collectPayment( $row->ppa_baid, $ad->price['price'], $respArr ) ) {
+							$ad->refresh();
 
 							$r = array(
 									'result'  => 'success',
@@ -85,7 +80,7 @@ class AdSS_AdminController {
 								$r = array( 'result' => 'error', 'respmsg' => "paypal error:\n$respArr[RESPMSG]" );
 							}
 						}
-						AdSS_Util::flushCache( $ad->pageId );
+						AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
 						AdSS_Util::commitAjaxChanges();
 					}
 				}
@@ -109,7 +104,7 @@ class AdSS_AdminController {
 			if( $id == $ad->id ) {
 				$ad->close();
 
-				AdSS_Util::flushCache( $ad->pageId );
+				AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
 				AdSS_Util::commitAjaxChanges();
 				$r = array(
 						'result' => 'success',
