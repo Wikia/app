@@ -348,12 +348,16 @@ class TopList extends TopListBase {
 		if( $checkResult === true ) {
 			$contentText = '';
 
-			if ( !empty( $this->mRelatedArticle ) ) {
-				$contentText .= ' ' . TOPLIST_ATTRIBUTE_RELATED . '="' . htmlspecialchars( $this->mRelatedArticle->getText() ) . '"';
+			$relatedArticle = $this->getRelatedArticle();
+			
+			if ( !empty( $relatedArticle ) ) {
+				$contentText .= ' ' . TOPLIST_ATTRIBUTE_RELATED . '="' . htmlspecialchars( $relatedArticle->getText() ) . '"';
 			}
 
-			if ( !empty( $this->mPicture ) ) {
-				$contentText .= ' ' . TOPLIST_ATTRIBUTE_PICTURE . '="' . htmlspecialchars( $this->mPicture->getText() ) . '"';
+			$picture = $this->getPicture();
+			
+			if ( !empty( $picture ) ) {
+				$contentText .= ' ' . TOPLIST_ATTRIBUTE_PICTURE . '="' . htmlspecialchars( $picture->getText() ) . '"';
 			}
 
 			$contentText .= ' ' . TOPLIST_ATTRIBUTE_LASTUPDATE . '="' . wfTimestampNow() . '"';
