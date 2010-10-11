@@ -40,8 +40,21 @@ class AdSS_AdminPager extends TablePager {
 				return $tmpl->render( 'ad' );
 			case 'ad_page_id':
 				if( $this->ad->pageId > 0 ) {
-					$title = Title::newFromID( $this->ad->pageId );
-					return "Page<br />\n(".$this->getSkin()->link( $title ).")";
+					global $wgCityId;
+					if( $this->ad->wikiId == $wgCityId ) {
+						$title = Title::newFromID( $this->ad->pageId );
+						$url = $this->getSkin()->link( $title );
+					} else {
+						$wiki = WikiFactory::getWikiByID( $this->ad->wikiId );
+						$dbr = wfGetDB( DB_SLAVE, array(), $wiki->city_dbname );
+						$title = $dbr->selectField( 'page', 'page_title', array( 'page_id'=>$this->ad->pageId ) );
+						$wServer = WikiFactory::getVarValueByName( "wgServer", $this->ad->wikiId );
+						$wArticlePath = WikiFactory::getVarValueByName( "wgArticlePath", $this->ad->wikiId );
+						$url = Xml::element( 'a',
+								array( 'href' => $wServer . str_replace( '$1', $title, $wArticlePath ) ),
+								$title );
+					}
+					return "Page<br />\n($url)";
 				} else {
 					return 'Site';
 				}
