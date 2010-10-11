@@ -52,6 +52,7 @@ window.RTE = {
 		'linksuggest',
 		'media',
 		'modeswitch',
+		'overlay',
 		'paste',
 		'placeholder',
 		'signature',
@@ -60,8 +61,7 @@ window.RTE = {
 		'toolbar',
 		'tools',
 		'track',
-		'widescreen',
-		'toolbar'
+		'widescreen'
 	],
 
 	// use firebug / opera console to log events / dump objects
