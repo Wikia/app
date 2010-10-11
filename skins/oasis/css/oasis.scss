@@ -44,6 +44,6 @@
 
 // Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
 @import "modules/LatestPhotos";
-@import "/extensions/wikia/ShareFeature/css/ShareFeature.css";
+@import "../../../extensions/wikia/Blogs/css/oasis.scss"; // SASS imports are relative to the current file
+@import "/extensions/wikia/ShareFeature/css/ShareFeature.css"; // Plain CSS imports are relative to the base directory (where sassServer.php runs).
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
-//@import "/extensions/wikia/Blogs/css/oasis.scss";
