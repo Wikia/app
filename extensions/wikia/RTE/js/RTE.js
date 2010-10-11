@@ -267,13 +267,11 @@ window.RTE = {
 			(window.RTEDevMode ? 'in development mode' : CKEDITOR.revision + ' build ' + CKEDITOR.version) +
 			') is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
-		// editor resizing
-		if (typeof window.EditEnhancements == 'function') {
-			EditEnhancements();
-		}
-
 		// fire custom event for "track" plugin
 		RTE.instance.fire('RTEready');
+
+		// let extensions do their tasks when RTE is fully loaded
+		$(document.body).add(window).trigger('rteready');
 
 		if(!RTE.config.startupFocus) {
 			setTimeout(function() {RTE.instance.focus(); }, 100);

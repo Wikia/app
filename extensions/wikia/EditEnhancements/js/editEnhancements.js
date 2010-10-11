@@ -1,45 +1,45 @@
 EditEnhancements = function() {
 	this.calculate = function() {
-		
+
 		if ($('#wpTextbox1___Frame').exists()) { // FCK-editor
-			
+
 			var textbox = $('#wpTextbox1___Frame');
-		}	
+		}
 		else if ( $('#cke_contents_wpTextbox1').exists()) { // CKeditor
 			var textbox = $('#cke_contents_wpTextbox1');
 		}
-		
+
 		else  {// MW editor
 			var textbox = $('#wpTextbox1');
 		}
-		
+
 		var toolbar = $('#cke_contents_wpTextbox1');
 
 		var viewportHeight = $(window).height();
 		var viewportHeight = window.innerHeight ? window.innerHeight : $(window).height(); // Opera 9.5
-					
+
 		var textareaTop = Math.floor(textbox.offset().top);
 
 		var stuff = Array(
 		//'#blogInfo', '.blogPostForm',	// @todo blog stuff elements
 		'#toolbar', // mediaWiki
 		'.cke_top','#csMainContainer','#edit_enhancements_toolbar');
-		
+
 		var height = 0;
 		$.each( stuff, function(i, l){
 			if ($(l).exists()) {
 				height += $(l).outerHeight();
 			}
 		});
-		
+
 		var targetHeight = viewportHeight - height;
-		
+
 		// limit the height-changes to be within <300, 800>
 		targetHeight = Math.min(Math.max(targetHeight, 200), 800);
-		
+
 		//set the textbox height
 		textbox.height(targetHeight);
-		
+
 		// rescale summary box
 		var items = toolbar.find('li');
 		var summaryBox = $('#wpSummaryEnhanced');
@@ -91,7 +91,7 @@ EditEnhancementsLoad = function() {
 	var interval = setInterval(EditEnhancementsLoop, 500);
 
 	// scoll to editor top on load
-	
+
 	// modifications for Oasis
 	if (window.skin == 'oasis') {
 		var toolbar = $('#edit_enhancements_toolbar');
@@ -108,11 +108,12 @@ EditEnhancementsLoad = function() {
 
 $(window).bind({
 	'load': EditEnhancementsLoad,
-	'resize': EditEnhancements
+	'resize': EditEnhancements,
+	'rteready': EditEnhancements
 });
 
 
-/** enables jump to top of the edtir after editor has been loaded **/
+/** enables jump to top of the editor after editor has been loaded **/
 $(document).ready(function() {
 	if (skin == 'oasis') {
 		jumpToEditor();
@@ -121,16 +122,15 @@ $(document).ready(function() {
 
 
 jumpToEditor = function() {
-	// TinyMCE enabled
+	// CKEditor enabled
 	if ($('.cke_editor').exists()) {
 		$('html, body').animate({ scrollTop: $('.cke_editor').eq(0).offset().top }, 1);
 	}
 	// mediaWiki Editor enabled
 	else if ($('#toolbar').exists() && $('#toolbar').is(':visible') == true) {
-		$('html, body').animate({ scrollTop: $('#toolbar').eq(0).offset().top }, 1);		
+		$('html, body').animate({ scrollTop: $('#toolbar').eq(0).offset().top }, 1);
 	}
 	else {
 		var checkForFinalEditorLoad = window.setTimeout('jumpToEditor()', 100);
 	}
 }
-
