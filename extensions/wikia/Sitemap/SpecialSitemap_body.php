@@ -139,16 +139,21 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @access private
 	 */
 	private function verifyGoogle() {
-		global $wgGoogleWebmasterToolsCode;
+		global $wgGoogleWebmasterToolsCode, $wgOut;
 
+		$wgOut->disable();
+
+		$out = "";
 		if( $wgGoogleWebmasterToolsCode == $this->mGoogleCode ) {
 			header( "Cache-Control: public, max-age=3600", true );
-			echo "google-site-verification: google{$this->mGoogleCode}.html";
+			$out .= "google-site-verification: google{$this->mGoogleCode}.html";
 		}
 		else {
 			header( "Cache-Control: no-cache" );
 			header( "HTTP/1.0 404 Not Found" );
+			$out .= "go away";
 		}
+		print $out;
 	}
 
 	/**
