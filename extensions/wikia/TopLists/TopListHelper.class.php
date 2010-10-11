@@ -300,6 +300,15 @@ class TopListHelper {
 		return true;
 	}
 
+	public static function onAddPage( &$title, &$titletext, &$sortkey ){
+		if( $title->getNamespace() == NS_TOPLIST )
+		{
+			$sortkey = $titletext = $title->getText();
+		}
+
+		return true;
+	}
+
 	/**
 	 * formats a timespan in a seconds/minutes/hours/days/weeks count string
 	 *
