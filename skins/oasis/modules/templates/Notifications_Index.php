@@ -46,7 +46,22 @@
 						$first = 0;
 					}
 					break;
-				
+
+				case NotificationsModule::NOTIFICATION_CUSTOM:
+?>
+		<div data-type="<?= $notification['type'] ?>" data-name="<?= $notification['data']['name'] ?>">
+<?php
+					if (!empty($notification['data']['dismissUrl'])) {
+?>
+			<a class="sprite close-notification" data-url="<?= htmlspecialchars($notification['data']['dismissUrl']) ?>"></a>
+<?php
+					}
+?>
+			<?= $notification['message'] ?>
+		</div>
+<?php
+				break;
+
 				// render generic notification
 				default:
 ?>
