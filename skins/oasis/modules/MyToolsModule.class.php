@@ -31,9 +31,14 @@ class MyToolsModule extends Module {
 			foreach($tools as $tool) {
 				$page = SpecialPage::getPageByAlias($tool);
 				if(is_object($page)) {
+					$href = $page->getTitle()->getLocalUrl();
+					if($tool == 'RecentChangesLinked') {
+						global $wgTitle;
+						$href .= '/'.$wgTitle->getPartialUrl();
+					}
 					$out[] = array(
 						'text' => $page->getDescription(),
-						'href' => $page->getTitle()->getLocalUrl(),
+						'href' => $href,
 						'usercan' => $page->userCanExecute($wgUser),
 						'name' => strtolower($tool),
 					);
