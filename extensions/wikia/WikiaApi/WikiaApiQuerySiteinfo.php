@@ -45,12 +45,14 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		$result = $this->getResult();
 		$lang_id = WikiFactory::LangCodeToId($wgLanguageCode);
 		$cats = WikiFactory::getCategory($this->cityId);
+		$oWiki = WikiFactory::getWikiByID($this->cityId);
 		$cat_id = ( !emptY($cats) ) ? $cats->cat_id : 0;
 		$data = array( 
 			"langid" => $lang_id,
 			"id" => $this->cityId,
 			"catid" => $cat_id,
-			"pagetitle" => wfMsg( 'pagetitle' )
+			"pagetitle" => wfMsg( 'pagetitle' ),
+			"flags"	=> $oWiki->city_flags
 		);
 		$result->setIndexedTagName($data, $property);
 		$result->addValue('query', $property, $data);
