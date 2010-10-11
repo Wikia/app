@@ -48,6 +48,13 @@ WikiaNotificationsApp = {
 					nextNotification.css("display", "block");
 					break;
 
+				// dismiss custom notifications
+				case 10:
+					$.post($(this).attr('data-url'), WikiaNotificationsApp.purgeCurrentPage);
+
+					// remove wrapping <li>
+					notification.parent().remove();
+
 				default:
 					// remove wrapping <li>
 					notification.parent().remove();
@@ -58,9 +65,8 @@ WikiaNotificationsApp = {
 		// tracking of shown notifications
 		notifications.children('li').each(function() {
 			var notification = $(this).children();
-			var notificationType = notification.attr('data-type');
 
-			$.tracker.byStr('notifications/' + WikiaNotificationsApp.getTypeById(notificationType) + '/view');
+			$.tracker.byStr('notifications/' + WikiaNotificationsApp.getNotificationType(notification) + '/view');
 		});
 
 		// track clicks on links inside notifications
@@ -69,16 +75,17 @@ WikiaNotificationsApp = {
 
 			if (node.is('a')) {
 				var notification = node.closest('div');
-				var notificationType = parseInt(notification.attr('data-type'));
-
 				var eventName = node.hasClass('close-notification') ? 'dismiss' : 'link';
-				$.tracker.byStr('notifications/' + WikiaNotificationsApp.getTypeById(notificationType) + '/' + eventName);
+
+				$.tracker.byStr('notifications/' + WikiaNotificationsApp.getNotificationType(notification) + '/' + eventName);
 			}
 		});
 	},
 
-	// get notification type name based on given type ID (used by tracking code)
-	getTypeById: function(type) {
+	// get notification type name
+	getNotificationType: function(notification) {
+		var type = parseInt(notification.attr('data-type'));
+
 		switch(parseInt(type)) {
 			case 1:
 				return 'newmessage';
@@ -90,6 +97,8 @@ WikiaNotificationsApp = {
 				return 'editsimilar';
 			case 5:
 				return 'sidewidemessages';
+			case 10:
+				return notification.attr('data-name');
 		}
 
 		return false;

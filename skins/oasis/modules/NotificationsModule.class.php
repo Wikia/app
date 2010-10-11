@@ -22,6 +22,8 @@ class NotificationsModule extends Module {
 	const NOTIFICATION_EDIT_SIMILAR = 4;
 	const NOTIFICATION_SITEWIDE = 5;
 
+	const NOTIFICATION_CUSTOM = 10;
+
 	// stack for notifications
 	static private $notificationsStack;
 
@@ -66,9 +68,14 @@ class NotificationsModule extends Module {
 		// add testing notification
 		/*
 		self::addNotification('test test test test test test test test test test test test test test test test test test test test');
+		self::addNotification('new talk page', array(), self::NOTIFICATION_TALK_PAGE_MESSAGE);
 		self::addNotification('test test <a href="#">test</a> test', array(), self::NOTIFICATION_COMMUNITY_MESSAGE);
 		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>', array('points' => 10, 'picture' => '', 'name' => 'awesome'), self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
-		*/
+		self::addNotification('custom notifiation', array(
+			'name' => 'foo-bar',
+			'dismissUrl' => '/index.php?action=test',
+		), self::NOTIFICATION_CUSTOM);
+		/**/
 
 		// render notifications
 		$this->notifications = self::$notificationsStack;
