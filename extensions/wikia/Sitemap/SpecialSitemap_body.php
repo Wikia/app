@@ -143,7 +143,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		if( $wgGoogleWebmasterToolsCode == $this->mGoogleCode ) {
 			header( "Cache-Control: public, max-age=3600", true );
-			echo "google-site-verification: google{$matches[1]}.html";
+			echo "google-site-verification: google{$this->mGoogleCode}.html";
 		}
 		else {
 			header( "Cache-Control: no-cache" );
