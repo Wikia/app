@@ -22,6 +22,7 @@ class ListusersData {
 	var $mOffset;
 	var $mOrder;
 	var $mOrderOptions;
+	var $mUseKey;
 	
 	var $mDBh;
 	var $mTable;
@@ -41,6 +42,14 @@ class ListusersData {
 			'dtedit' 	=> array( 'editdate %s' )
 		);
 				
+		$this->mUseKeyOptions = array(
+			'username'	=> 'wiki_user_name_edits',
+			'groups' 	=> '',
+			'revcnt' 	=> 'wiki_edits_by_user',
+			'loggedin' 	=> '',
+			'dtedit' 	=> 'wiki_editdate_user_edits'
+		);
+						
 		if ( $load == 1 ) {
 			$this->load();
 		}
@@ -74,6 +83,7 @@ class ListusersData {
 					foreach ( $this->mOrderOptions[$orderName] as $orderStr ) {
 						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
 					}
+					$this->mUseKey = $this->mUseKeyOptions[$orderName];
 				}			
 			}
 		}
@@ -164,7 +174,7 @@ class ListusersData {
 				$sk = $wgUser->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( $this->mTable . ' as e1', 'user_login_history_summary as ul1' ),
+					array( $this->mTable . ' as e1 ' . ( ($this->mUseKey) ? 'use key('.$this->mUseKey.')' : '' ) , 'user_login_history_summary as ul1' ),
 					array( 
 						'e1.user_id', 
 						'user_name', 
