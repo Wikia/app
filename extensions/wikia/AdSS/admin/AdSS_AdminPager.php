@@ -2,7 +2,7 @@
 
 class AdSS_AdminPager extends TablePager {
 
-	private $mTitle, $mAd;
+	private $mTitle, $ad;
 
 	function __construct() {
 		global $wgAdSS_DBname;
@@ -20,28 +20,33 @@ class AdSS_AdminPager extends TablePager {
 	}
 
 	function formatRow( $row ) {
-		$this->mAd = AdSS_Ad::newFromRow( $row );
+		$this->ad = AdSS_Ad::newFromRow( $row );
 		return parent::formatRow( $row );
 	}
 
 	function formatValue( $name, $value ) {
 		global $wgAdSS_templatesDir;
 		switch( $name ) {
+			case 'ad_wiki_id':
+				$wiki = WikiFactory::getWikiByID( $value );
+				return $wiki->city_title;
 			case 'ad_id':
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
-				$tmpl->set( 'ad', $this->mAd );
+				$tmpl->set( 'ad', $this->ad );
 				return $tmpl->render( 'actionLink' );
 			case 'ad_text':
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
-				$tmpl->set( 'ad', $this->mAd );
+				$tmpl->set( 'ad', $this->ad );
 				return $tmpl->render( 'ad' );
 			case 'ad_page_id':
-				if( $this->mAd->pageId > 0 ) {
-					$title = Title::newFromID( $this->mAd->pageId );
+				if( $this->ad->pageId > 0 ) {
+					$title = Title::newFromID( $this->ad->pageId );
 					return "Page<br />\n(".$this->getSkin()->link( $title ).")";
 				} else {
 					return 'Site';
 				}
+			case 'ad_price':
+				return AdSS_Util::formatPrice( $this->ad->price );
 			default:
 				return $value;
 		}
@@ -53,23 +58,23 @@ class AdSS_AdminPager extends TablePager {
 
 	function getFieldNames() {
 		return array(
+				'ad_wiki_id'    => 'Wikia',
 				'ad_page_id'    => 'Type',
 				'ad_text'       => 'Ad',
 				'ad_user_email' => 'User',
 				'ad_created'    => 'Created',
 				'ad_expires'    => 'Expires',
 				'ppa_baid'      => 'Billing Agreement ID',
+				'ad_price'      => 'Price',
 				'ad_id'         => 'Action',
 			    );
 	}
 
 	function getQueryInfo() {
-		global $wgCityId;
 		return array(
 				'tables' => array( 'ads', 'pp_tokens', 'pp_agreements' ),
 				'fields' => array( '*' ),
 				'conds'  => array(
-					'ad_wiki_id' => $wgCityId,
 					'ad_closed' => null,
 					'ad_id = ppt_ad_id',
 					'ppt_token = ppa_token',

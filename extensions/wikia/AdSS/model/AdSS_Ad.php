@@ -13,6 +13,7 @@ class AdSS_Ad {
 	public $closed;
 	public $expires;
 	public $email;
+	public $price;
 
 	function __construct() {
 		global $wgCityId;
@@ -27,6 +28,7 @@ class AdSS_Ad {
 		$this->closed = null;
 		$this->expires = null;
 		$this->email = '';
+		$this->price = AdSS_Util::getSitePricing();
 	}
 
 	static function newFromForm( $f ) {
@@ -54,8 +56,9 @@ class AdSS_Ad {
 		$this->desc = $f->get( 'wpDesc' );
 		if( $f->get( 'wpType' ) == 'page' ) {
 			$title = Title::newFromText( $f->get( 'wpPage' ) );
-			if( $title ) {
+			if( $title && $title->exists() ) {
 				$this->pageId = $title->getArticleId();
+				$this->price = AdSS_Util::getPagePricing( $title );
 			}
 		}
 		$this->email = $f->get( 'wpEmail' );
@@ -75,6 +78,10 @@ class AdSS_Ad {
 		$this->closed = wfTimestampOrNull( TS_UNIX, $row->ad_closed );
 		$this->expires = wfTimestampOrNull( TS_UNIX, $row->ad_expires );
 		$this->email = $row->ad_user_email;
+		$this->price = array(
+				'price'  => $row->ad_price,
+				'period' => $row->ad_price_period,
+				);
 	}
 
 	function loadFromDB() {
@@ -99,14 +106,16 @@ class AdSS_Ad {
 		if( $this->id == 0 ) {
 			$dbw->insert( 'ads',
 					array(
-						'ad_url'        => $this->url,
-						'ad_text'       => $this->text,
-						'ad_desc'       => $this->desc,
-						'ad_wiki_id'    => $this->wikiId,
-						'ad_page_id'    => $this->pageId,
-						'ad_status'     => $this->status,
-						'ad_created'    => wfTimestampNow( TS_DB ),
-						'ad_user_email' => $this->email,
+						'ad_url'          => $this->url,
+						'ad_text'         => $this->text,
+						'ad_desc'         => $this->desc,
+						'ad_wiki_id'      => $this->wikiId,
+						'ad_page_id'      => $this->pageId,
+						'ad_status'       => $this->status,
+						'ad_created'      => wfTimestampNow( TS_DB ),
+						'ad_user_email'   => $this->email,
+						'ad_price'        => $this->price['price'],
+						'ad_price_period' => $this->price['period'],
 					     ),
 					__METHOD__
 				    );
@@ -123,6 +132,8 @@ class AdSS_Ad {
 						'ad_closed'     => wfTimestampOrNull( TS_DB, $this->closed),
 						'ad_expires'    => wfTimestampOrNull( TS_DB, $this->expires),
 						'ad_user_email' => $this->email,
+						'ad_price'        => $this->price['price'],
+						'ad_price_period' => $this->price['period'],
 					     ),
 					array(
 						'ad_id' => $this->id
@@ -139,7 +150,7 @@ class AdSS_Ad {
 		return $tmpl->render( 'ad' );
 	}
 
-	function refresh( $priceConf ) {
+	function refresh() {
 		$now = time();
 		if( is_null( $this->expires ) ) {
 			$this->expires = $now;
@@ -148,7 +159,7 @@ class AdSS_Ad {
 				$this->expires = $now;
 			}
 		}
-		switch( $priceConf['period'] ) {
+		switch( $this->price['period'] ) {
 			case 'd': $period = "+1 day"; break;
 			case 'w': $period = "+1 week"; break;
 			case 'm': $period = "+1 month"; break;
