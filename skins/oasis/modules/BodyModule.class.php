@@ -320,7 +320,8 @@ class BodyModule extends Module {
 
 		// load CSS for blogs if enabled
 		if ($wgEnableBlog) {
-			$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
+			// Imported inside of oasis.scss now to reduce HTTP requests (since most wikis have this enabled).
+			//$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
 		}
 
 		// wlee: Oasis ad development 
