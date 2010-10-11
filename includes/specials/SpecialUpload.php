@@ -34,6 +34,10 @@ class UploadForm {
 	const UPLOAD_WARNING = 12;
 	const INTERNAL_ERROR = 13;
 
+	/*Wikia change start*/
+	static public $uploadFieldName = 'wpUploadFile';
+	/*Wikia change end*/
+
 	/**#@+
 	 * @access private
 	 */
@@ -126,10 +130,12 @@ class UploadForm {
 	 * @access private
 	 */
 	function initializeFromUpload( $request ) {
-		$this->mTempPath       = $request->getFileTempName( 'wpUploadFile' );
-		$this->mFileSize       = $request->getFileSize( 'wpUploadFile' );
-		$this->mSrcName        = $request->getFileName( 'wpUploadFile' );
-		$this->mCurlError      = $request->getUploadError( 'wpUploadFile' );
+		/*wikia change start*/
+		$this->mTempPath       = $request->getFileTempName( self::$uploadFieldName );
+		$this->mFileSize       = $request->getFileSize( self::$uploadFieldName );
+		$this->mSrcName        = $request->getFileName( self::$uploadFieldName );
+		$this->mCurlError      = $request->getUploadError( self::$uploadFieldName );
+		/*Wikia change end*/
 		$this->mSessionKey     = false;
 		$this->mStashed        = false;
 		$this->mRemoveTempFile = false; // PHP will handle this
