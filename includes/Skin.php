@@ -509,9 +509,15 @@ class Skin extends Linker {
 
 		wfProfileIn( __METHOD__ );
 
+		// Wikia change for new skin project
+		$jsFileName = $this->getSkinName();
+		if($jsFileName == 'oasis') {
+			$jsFileName = 'wikia';
+		}
+
 		$s = "/* generated javascript */\n";
 		$s .= "if (!window.skin) {\n";
-		$s .= "\tvar skin = '" . Xml::escapeJsString( $this->getSkinName() ) . "';\n";
+		$s .= "\tvar skin = '" . Xml::escapeJsString( $jsFileName ) . "';\n";
 		$s .= "\tvar stylepath = '" . Xml::escapeJsString( $wgStylePath ) . "';\n";
 		$s .= "}";
 		$s .= "\n\n/* MediaWiki:Common.js */\n";
@@ -521,10 +527,10 @@ class Skin extends Linker {
 			$s .= $commonJs . "\n";
 		}
 
-		$s .= "\n\n/* MediaWiki:".ucfirst( $this->getSkinName() ).".js */\n";
+		$s .= "\n\n/* MediaWiki:".ucfirst( $jsFileName ).".js */\n";
 		// avoid inclusion of non defined user JavaScript (with custom skins only)
 		// by checking for default message content
-		$msgKey = ucfirst( $this->getSkinName() ).'.js';
+		$msgKey = ucfirst( $jsFileName ).'.js';
 		$userJS = wfMsgForContent($msgKey);
 		if ( !wfEmptyMsg( $msgKey, $userJS ) ) {
 			$s .= $userJS . "\n";
