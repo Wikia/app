@@ -46,8 +46,6 @@
 	<div class="InputSet AutoCompleteWrapper">
 		<label for="related_article_name">
 			<?= wfMsg( 'toplists-editor-related-article-label' ) ;?>
-			&nbsp;
-			<small>(<?= wfMsg( 'toplists-editor-related-article-optional-label' ) ;?>)</small>
 		</label>
 
 		<input type="text" name="related_article_name" placeholder="<?= wfMsg( 'toplists-editor-related-article-placeholder' ) ;?>"

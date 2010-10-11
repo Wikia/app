@@ -1,5 +1,5 @@
 == Changes since 201010.2 ==
-* 
+* rt#71497: Change picture caption message (TOR)
 
 == Changes since 201010.1 ==
 * rt#70632: Oasis: messages don't use parameters (TOR)
