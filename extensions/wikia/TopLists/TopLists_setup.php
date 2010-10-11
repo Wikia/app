@@ -127,6 +127,7 @@ $wgHooks[ 'TitleMoveComplete' ][] = 'TopListHelper::onTitleMoveComplete';
 $wgHooks[ 'UserGetRights' ][] = 'TopListHelper::onUserGetRights';
 $wgHooks[ 'getUserPermissionsErrors' ][] = 'TopListHelper::onGetUserPermissionsErrors';
 $wgHooks[ 'FBConnect::BeforePushEvent' ][] = 'TopListHelper::onBeforePushEvent';
+$wgHooks[ 'CategoryPage::AddPage' ][] = 'TopListHelper::onAddPage';
 
 //parser functions, tags and attributes
 define( 'TOPLIST_TAG', 'toplist' );

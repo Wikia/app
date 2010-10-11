@@ -17,6 +17,9 @@ $messages['en'] = array(
 	'createtoplist' => 'Create a new Top 10 list',
 	'edittoplist' => 'Edit Top 10 list',
 
+	//category
+	'toplists-category' => 'Top 10 Lists',
+
 	//errors
 	'toplists-error-invalid-title' => 'The supplied text is not valid.',
 	'toplists-error-invalid-picture' => 'The selected picture is not valid.',
@@ -108,6 +111,7 @@ Head to Wikia to check out the changes! $1
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 );
 

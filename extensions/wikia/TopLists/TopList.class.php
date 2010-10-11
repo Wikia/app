@@ -372,7 +372,7 @@ class TopList extends TopListBase {
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
-			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", $this->_getItemsSummaryStatusMsg(), $editMode );
+			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />[[Category:" . wfMsgForContent( 'toplists-category' ) . "]]", $this->_getItemsSummaryStatusMsg(), $editMode );
 
 			if( $editMode == EDIT_NEW ) {
 				$article->doWatch();
