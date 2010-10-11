@@ -40,8 +40,7 @@ $messages['en'] = array(
 	//editor
 	'toplists-editor-title-label' => 'List name',
 	'toplists-editor-title-placeholder' => 'Enter a name for the list',
-	'toplists-editor-related-article-label' => 'Related page',
-	'toplists-editor-related-article-optional-label' => 'optional',
+	'toplists-editor-related-article-label' => 'Related page <small>(optional, but selects an image)</small>',
 	'toplists-editor-related-article-placeholder' => 'Enter an existing page name',
 	'toplists-editor-image-browser-tooltip' => 'Add a picture',
 	'toplists-editor-remove-item-tooltip' => 'Remove item',
