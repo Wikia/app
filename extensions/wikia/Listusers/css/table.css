@@ -29,3 +29,4 @@ table.TablePager td.sorting_2 { background-color: #EEEEFF; }
 table.TablePager td.sorting_3 { background-color: #E0E2FF; }
 table.TablePager td.sorting_4 { background-color: #F2FFD0; }
 table.TablePager td.sorting_5 { background-color: #FFD2F0; }
+.dataTables_processing {float:left}

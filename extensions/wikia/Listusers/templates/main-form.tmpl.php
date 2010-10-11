@@ -26,7 +26,7 @@ $(document).ready(function() {
 			"sInfoEmpty": "<?=wfMsg('listusersrecordspager','0', '0', '0');?>",
 			"sInfoFiltered": "",
 			"sSearch": "<?=wfMsg('search')?>",
-			"sProcessing": "<?=wfMsg('livepreview-loading')?>",
+			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?=wfMsg('livepreview-loading')?>",
 			"oPaginate" : {
 				"sFirst": "<?=wfMsg('table_pager_first')?>",
 				"sPrevious": "<?=wfMsg('table_pager_prev')?>",
