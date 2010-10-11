@@ -71,6 +71,10 @@
 				background-color: mix($color-buttons, $color-page, 5%);
 				color: $color-text;
 			}
+			.RTEMediaCaption {
+				background-color: $color-article-thumb-background;
+				border-color: $color-article-thumb-border;
+			}
 		}
 		// modal tweaks
 		.cke_dialog {
