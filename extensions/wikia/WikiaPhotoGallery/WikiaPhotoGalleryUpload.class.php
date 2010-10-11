@@ -7,15 +7,14 @@
  */
 
 class WikiaPhotoGalleryUpload {
-
-	const uploadFieldName = 'wpUploadFile';
+	const DEFAULT_FILE_FIELD_NAME = 'wpUploadFile';
 
 	/**
 	 * Handle image upload
 	 *
  	 * Returns array with uploaded files details or error details
 	 */
-	public static function uploadImage() {
+	public static function uploadImage( $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME, $destFileName = null, $forceOverwrite = false ) {
 		global $IP, $wgRequest, $wgUser;
 
 		wfProfileIn(__METHOD__);
@@ -33,18 +32,18 @@ class WikiaPhotoGalleryUpload {
 			return $ret;
 		}
 
-		$imageName = stripslashes($wgRequest->getFileName(self::uploadFieldName));
+		$imageName =  stripslashes( ( !empty( $destFileName ) ) ? $destFileName : $wgRequest->getFileName( $uploadFieldName ) );
 
 		// validate name and content of uploaded photo
-		$nameValidation = self::checkImageName($imageName);
-		$contentValidation = self::checkUploadedContent();
+		$nameValidation = self::checkImageName( $imageName, $uploadFieldName );
+		$contentValidation = self::checkUploadedContent( $uploadFieldName );
 
 		if ($nameValidation == UploadForm::SUCCESS && $contentValidation == UploadForm::SUCCESS) {
 			// get path to uploaded image
-			$imagePath = $wgRequest->getFileTempName(self::uploadFieldName);
+			$imagePath = $wgRequest->getFileTempName( $uploadFieldName );
 
 			// check if image with this name is already uploaded
-			if (self::imageExists($imageName)) {
+			if ( self::imageExists( $imageName ) && !$forceOverwrite ) {
 				// upload as temporary file
 				self::log(__METHOD__, "image '{$imageName}' already exists!");
 
@@ -54,7 +53,7 @@ class WikiaPhotoGalleryUpload {
 				$localRepo = RepoGroup::singleton()->getLocalRepo();
 
 				$file = new FakeLocalFile($title, $localRepo);
-				$file->upload($wgRequest->getFileTempName(self::uploadFieldName), '', '');
+				$file->upload( $wgRequest->getFileTempName( $uploadFieldName ), '', '' );
 
 				// store uploaded image in GarbageCollector (image will be removed if not used)
 				$tempId = self::tempFileStoreInfo($tempName);
@@ -173,12 +172,12 @@ class WikiaPhotoGalleryUpload {
 	/**
 	 * Perform image name check
 	 */
-	private static function checkImageName($imageName) {
+	private static function checkImageName( $imageName, $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME ) {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		self::log(__METHOD__, "checking image name '{$imageName}'");
-
+		UploadForm::$uploadFieldName = $uploadFieldName;
 		$form = new UploadForm($wgRequest);
 
 		// validate image name
@@ -242,14 +241,15 @@ class WikiaPhotoGalleryUpload {
 	/**
 	 * Perform uploaded content check
 	 */
-	private static function checkUploadedContent() {
+	private static function checkUploadedContent( $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME ) {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
+		UploadForm::$uploadFieldName = $uploadFieldName;
 		$form = new UploadForm($wgRequest);
 
 		// get name of uploaded image
-		$imageName = stripslashes($wgRequest->getFileName(self::uploadFieldName));
+		$imageName = stripslashes( $wgRequest->getFileName( $uploadFieldName ) );
 
 		// file is empty - don't perform any further checks
 		if ($imageName == '') {
