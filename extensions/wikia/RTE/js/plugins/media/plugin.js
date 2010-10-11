@@ -129,7 +129,7 @@ CKEDITOR.plugins.add('rte-media',
 
 		// setup events once more on each drag&drop
 		RTE.getEditor().unbind('dropped.media').bind('dropped.media', function(ev, extra) {
-                        var target = $(ev.target);
+			var target = $(ev.target);
 
 			// handle images and videos only
 			if (!target.hasClass('image') && !target.hasClass('video') && !target.hasClass('media-placeholder')) {
@@ -286,7 +286,7 @@ CKEDITOR.plugins.add('rte-media',
 
 		// setup events once more on each drag&drop
 		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function(ev, extra) {
-                        var target = $(ev.target);
+			var target = $(ev.target);
 
 			// keep image/video placeholders
 			target = target.filter('.media-placeholder');
