@@ -191,6 +191,11 @@ class CategoryViewer {
 	function addPage( $title, $sortkey, $pageLength, $isRedirect = false ) {
 		global $wgContLang;
 		$titletext = $wgContLang->convert( $title->getPrefixedText() );
+
+		/*Wikia changes start*/
+		wfRunHooks('CategoryPage::AddPage', array(&$title, &$titletext, &$sortkey));
+		/*Wikia changes end*/
+
 		$this->articles[] = $isRedirect
 			? '<span class="redirect-in-category">' . $this->getSkin()->makeKnownLinkObj( $title, $titletext ) . '</span>'
 			: $this->getSkin()->makeSizeLinkObj( $pageLength, $title, $titletext );
