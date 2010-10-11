@@ -164,7 +164,7 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->mNamespace = $match[ 1 ];
 			$this->mPage = $match[ 2 ];
 		}
-		elseif( preg_match( "/^\/google([0-9a-f]{16}).html$/", $this->mType, $match ) ) {
+		elseif( preg_match( "/^google([0-9a-f]{16}).html$/", $this->mType, $match ) ) {
 			$this->mType = "google";
 			$this->mGoogleCode = $match[ 1 ];
 		}
