@@ -73,7 +73,7 @@
 	}
 	.subnav {
 		@include menu-regular;
-		display: block;
+		display: none;
 		min-width: 150px;
 		padding: 5px;
 		top: -9999px;
