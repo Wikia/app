@@ -30,13 +30,18 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 	public function getAd($slotname, $slot, $params = null){
 		$url = $this->getUrl($slotname, $slot);
 		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
-		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
-		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
-		$out .= <<<EOT
+		if (!empty($params['noDocumentWrite'])) {
+			$out .= '<script type="text/javascript" src="'.$url.'"></script>' . "\n";
+		}
+		else {
+			$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
+			// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
+			$out .= <<<EOT
 		dartUrl = "$url";
 		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
-		$out .= "/*]]>*/</script>\n";
+			$out .= "/*]]>*/</script>\n";
+		}
 
 		return $out;
 	}
