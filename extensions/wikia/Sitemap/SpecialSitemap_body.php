@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SitemapPage extends UnlistedSpecialPage {
 
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
-		$mSizeLimit, $mPage;
+		$mSizeLimit, $mPage, $mGoogleCode;
 
 	public $mCacheTime;
 
@@ -80,14 +80,20 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->mType = $t;
 		}
 
-		$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
 		$this->parseType();
-		$this->getNamespacesList();
-		if ( $this->mType == "namespace" ) {
-			$this->generateNamespace();
+
+		if( $this->mType == "google" ) {
+			$this->verifyGoogle();
 		}
 		else {
-			$this->generateIndex();
+			$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
+			$this->getNamespacesList();
+			if ( $this->mType == "namespace" ) {
+				$this->generateNamespace();
+			}
+			else {
+				$this->generateIndex();
+			}
 		}
 	}
 
@@ -126,6 +132,25 @@ class SitemapPage extends UnlistedSpecialPage {
 		return $this->mNamespaces;
 	}
 
+
+	/**
+	 * compare provided hex with local configuration
+	 *
+	 * @access private
+	 */
+	private function verifyGoogle() {
+		global $wgGoogleWebmasterToolsCode;
+
+		if( $wgGoogleWebmasterToolsCode == $this->mGoogleCode ) {
+			header( "Cache-Control: public, max-age=3600", true );
+			echo "google-site-verification: google{$matches[1]}.html";
+		}
+		else {
+			header( "Cache-Control: no-cache" );
+			header( "HTTP/1.0 404 Not Found" );
+		}
+	}
+
 	/**
 	 * parse type and set mType and mNamespace
 	 */
@@ -138,6 +163,10 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->mType = "namespace";
 			$this->mNamespace = $match[ 1 ];
 			$this->mPage = $match[ 2 ];
+		}
+		elseif( preg_match( "/^\/google([0-9a-f]{16}).html$/", $this->mType, $match ) ) {
+			$this->mType = "google";
+			$this->mGoogleCode = $match[ 1 ];
 		}
 		else {
 			$this->mType = "index";
