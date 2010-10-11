@@ -23,13 +23,17 @@
 	}
 	.commentslikes {
 		float: right;
-		padding: 6px 0;
+		padding: 1px 0;
 		margin: 0px -10px 4px 0;
+		.likes {
+			padding-top: 1px;
+		}
 	}
 	h1 {
 		display: inline;
 		font-size: 26px;
 		margin: 0 10px 0 0;
+		line-height: 27px;
 		strong {
 			font-weight: bold;
 			margin-right: 5px;
@@ -126,8 +130,9 @@
 	}
 	.wikia-button,
 	.wikia-menu-button {
-		vertical-align: text-bottom;
+		vertical-align: top;
 		z-index: 2;
+		margin-top: 2px;
 		&[data-id=edit],
 		a[data-id=edit]{
 			left: -2px;
@@ -145,7 +150,7 @@
 	}
 	.mainpage-tally {
 		float: right;
-		padding: 6px 0;
+		padding: 1px 0;
 		margin-right: 10px;
 		span {
 			float: left;
@@ -155,7 +160,7 @@
 		border-right: 1px solid $color-page-border;
 		float: right;
 		line-height: 20px;
-		margin-top: 6px;
+		margin-top: 2px;
 		padding: 0 10px;
 		img {
 			background: url(/skins/oasis/images/sprite.png) -1024px 0 no-repeat; /* $wgCdnStylePath */			
@@ -170,7 +175,7 @@
 	.WikiaSearch {
 		position: absolute;
 		right: 0;
-		top: 4px;
+		top: 1px;
 	}
 	details {
 		width: 980px;
