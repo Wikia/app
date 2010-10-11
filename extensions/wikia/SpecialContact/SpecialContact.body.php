@@ -303,23 +303,18 @@ class ContactForm extends SpecialPage {
 			}
 		}
 
-		#neat trick here: we prefil the browser info in from PHP var, with note about no JS.
+		#we prefil the browser info in from PHP var
 		$wgOut->addHtml("
 			</table>
-			<input type=\"hidden\" id=\"wpBrowser\" name=\"wpBrowser\" value=\"{$_SERVER['HTTP_USER_AGENT']}; JavaScript: disabled;\" />
+			<input type=\"hidden\" id=\"wpBrowser\" name=\"wpBrowser\" value=\"{$_SERVER['HTTP_USER_AGENT']};\" />
 		</form>\n");
 
-		#then, inside a javascript block, we set it again (but browser comes from same php var), with flash version at the end
-		#result: when JS=off, we still get browser, and no js message.
-		#when JS=on, we get browser+flash ver. win win.
+		#then, inside a javascript block, we add message that JS is enabled
+		#result: when JS=off, we still get browser;
+		#when JS=on, we get browser+JS=ON. win win.
 		$wgOut->addHtml("\n<script type=\"text/javascript\">/*<![CDATA[*/
-				//user agent
-				info = 'Browser: {$_SERVER['HTTP_USER_AGENT']}';
-				//flash
-				flashVer = parseInt(YAHOO.Tools.checkFlash()) ? YAHOO.Tools.checkFlash() : 'none';
-				info += '; Flash: ' + flashVer;
-
-				document.getElementById('wpBrowser').value = info;
+				var wpB = document.getElementById('wpBrowser');
+				wpB.value = wpB.value + '; JavaScript Enabled;';
 			/*]]>*/</script>\n");
 
 		return;
