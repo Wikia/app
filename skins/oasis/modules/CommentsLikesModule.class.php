@@ -120,20 +120,14 @@ class CommentsLikesModule extends Module {
 		if (isset($data['comments']) && is_numeric($data['comments'])) {
 			$this->comments = $data['comments'];
 
-			if (!empty($this->showLike)) {
-				// format number of comments (1200 -> 1k, 9999 -> 9k, 1.300.000 -> 1M)
-				$this->formattedComments = $this->comments;
+			// format number of comments (1200 -> 1k, 9999 -> 9k, 1.300.000 -> 1M)
+			$this->formattedComments = $this->comments;
 
-				if ($this->comments > 999999) {
-					$this->formattedComments = wfMsg('oasis-page-header-comments-m', floor($this->comments / 1000000));
-				}
-				else if ($this->comments > 999) {
-					$this->formattedComments = wfMsg('oasis-page-header-comments-k', floor($this->comments / 1000));
-				}
+			if ($this->comments > 999999) {
+				$this->formattedComments = wfMsg('oasis-page-header-comments-m', floor($this->comments / 1000000));
 			}
-			else {
-				// use old-style formatting of comments number
-				$this->formattedComments = $wgLang->formatNum($this->comments);
+			else if ($this->comments > 999) {
+				$this->formattedComments = wfMsg('oasis-page-header-comments-k', floor($this->comments / 1000));
 			}
 
 			$this->commentsLink = $this->getCommentsLink();
