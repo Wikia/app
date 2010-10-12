@@ -9,9 +9,8 @@ class CommentsLikesModule extends Module {
 
 	var $wgBlankImgUrl;
 
-	private $contextTitle;
-
 	var $comments;
+	var $commentsBubble;
 	var $formattedComments;
 	var $commentsAccesskey;
 	var $commentsEnabled;
@@ -22,6 +21,8 @@ class CommentsLikesModule extends Module {
 	var $likeHref;
 	var $likeRef;
 	var $likeTheme;
+
+	private $contextTitle;
 
 	/**
 	 * Are article comments enabled for context title?
@@ -137,6 +138,9 @@ class CommentsLikesModule extends Module {
 			$this->commentsEnabled = $this->checkArticleComments();
 
 			$this->commentsAccesskey = ' accesskey="t"';
+
+			// render comments count as just a bubble
+			$this->commentsBubble = !empty($data['bubble']);
 		}
 
 		wfProfileOut(__METHOD__);

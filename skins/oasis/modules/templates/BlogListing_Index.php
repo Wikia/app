@@ -9,13 +9,13 @@
 			$title = Title::newFromText($post['title'], $post['namespace']);
 		?>
 			<li class="WikiaBlogListingPost">
-			<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $post['comments'], 'likes' => $post['likes'], 'title' => $title)); ?>
+			<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $post['comments'], 'bubble' => true, 'title' => $title)); ?>
 
 			<h1><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h1>
 
 		<details>
 			<?= $post['avatar'] ?>
-			<span><?= $post['date'] ?></span>			
+			<span><?= $post['date'] ?></span>
 			<span> by <a href="<?= htmlspecialchars($post['userpage']) ?>"><?= $post['username'] ?></a></span>
 		</details>
 
