@@ -1,21 +1,19 @@
-.watched-list {
-  float: left;
-  width: 98%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  clear: both;
-  list-style: none inside none;
-  margin-left: 0px;
+ul.watched-list {
+	clear: both;
+	float: left;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 98%;
 }
- 
+
 .watched-list li {
-  float: left;
-  width: 30%;
-  margin: 0;
-  padding: 0;
-  position: relative;
-} 
+	float: left;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 30%;
+}
 
 .watched-list li span {
 	display: block;
@@ -29,20 +27,22 @@
 }
 
 .ajax-show-more {
-  font-size:15px;
+	font-size:15px;
 }
 
 .ajax-unwatch {
-	margin-top: 3px;
-	margin-left: 2px;
-	position: relative;
-	xleft: -28px;
 	float: left;
+	margin: 3px 0 0 2px;
+	position: relative;
 	visibility: hidden;
 }
 
+.skin-oasis .ajax-unwatch {
+	margin: 0 0 0 5px;
+}
+
 .otherNs {
-  visibility: hidden;
+	visibility: hidden;
 }
 
 .hideInfoSpan {
