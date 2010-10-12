@@ -139,12 +139,13 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @access private
 	 */
 	private function verifyGoogle() {
-		global $wgGoogleSiteVerification, $wgOut;
+		global $wgGoogleSiteVerification, $wgGoogleSiteVerificationAlwaysValid, $wgOut;
 
 		$wgOut->disable();
 
 		$out = "";
-		if( $wgGoogleSiteVerification == $this->mGoogleCode ) {
+		if( $wgGoogleSiteVerification == $this->mGoogleCode ||
+			$wgGoogleSiteVerificationAlwaysValid ) {
 			header( "Cache-Control: public, max-age=3600", true );
 			$out .= "google-site-verification: google{$this->mGoogleCode}.html";
 		}

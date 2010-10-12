@@ -614,3 +614,10 @@ $wgSuppressNamespacePrefix = array();
  * number of comment to be removed in one request
  */
 $wgMaxCommentsToDelete = 100;
+
+
+/**
+ * @name wgGoogleSiteVerificationAlwaysValid
+ * @see extensions/wikia/Sitemap/SpecialSitemap_body.php
+ */
+$wgGoogleSiteVerificationAlwaysValid = false;
