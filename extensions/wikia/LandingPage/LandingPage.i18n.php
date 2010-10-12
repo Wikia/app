@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''.",
 	'landingpage-secondary-2' => "We’ve just gone live with a brand new look! Read more about us, or view some examples to the right.",
 	'landingpage-secondary-3' => 'Watch this short video to get a glimpse of this exciting new world -- then get started by clicking below.',
-	'landingpage-language-links' => "* Español|en\n* Deutsch|de",
+	'landingpage-language-links' => "* Español|es\n* Deutsch|de",
 
 	'landingpage-examples' => 'Check out some examples',
 	'landingpage-buttons-about-wikia' => 'About Wikia',
