@@ -10,12 +10,10 @@ class StaticChute {
 	public $bytesIn = 0;
 	public $bytesOut = 0;
 
-	// TODO: FIXME: This is not great having this here AND in wgCdnStylePath in CommonSettings, etc., but since StaticChute
-	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
-	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb27932/common"; // NOTE: ALSO CHANGE VALUE IN /wikia-conf/CommonSettings.php!
-
 	// RT #23935 - one value to purge'em all
-	const cacheBuster = '201007.5';
+	private $cacheBuster; // set in the constructor.
+
+	public $cdnStylePath;
 
 	public $config = array();
 
@@ -30,6 +28,12 @@ class StaticChute {
 		if (! in_array($fileType, $this->supportedFileTypes)){
 			return;
 		}
+
+		global $IP;
+		require_once "$IP/includes/wikia/wgCacheBuster.php";
+		global $wgCacheBuster; // need this in case the constructor is called multiple times (since require_once will only happen once).
+		$this->cacheBuster = $wgCacheBuster;
+		$this->cdnStylePath = "http://images1.wikia.nocookie.net/__cb{$this->cacheBuster}/common";
 
 		$this->fileType = $fileType;
 
@@ -540,7 +544,7 @@ class StaticChute {
 		foreach($files as $file){
 			$data .= file_get_contents($file);
 		}
-		return md5($data . $this->cdnStylePath . self::cacheBuster);
+		return md5($data . $this->cdnStylePath . $this->cacheBuster);
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
