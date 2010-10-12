@@ -30,6 +30,9 @@ class StaticChute {
 		}
 
 		global $IP;
+		if(empty($IP)){ // backup plan
+			$IP = realpath(dirname(__FILE__) . "/../../..");
+		}
 		require_once "$IP/includes/wikia/wgCacheBuster.php";
 		global $wgCacheBuster; // need this in case the constructor is called multiple times (since require_once will only happen once).
 		$this->cacheBuster = $wgCacheBuster;
