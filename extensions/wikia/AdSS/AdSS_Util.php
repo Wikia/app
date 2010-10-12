@@ -76,7 +76,7 @@ class AdSS_Util {
 		if( $wikiArticlePath === false ) $wikiArticlePath = $wgArticlePath;
 
 		if( $pageId > 0 ) {
-			$title = $dbw->selectRow( 
+			$title = $dbw->selectField( 
 					'page',
 					'page_title',
 					array( 'page_id' => $pageId )
