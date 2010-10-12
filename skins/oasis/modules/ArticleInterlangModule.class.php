@@ -32,33 +32,51 @@ class ArticleInterlangModule extends Module {
 		}
 		
 		$language_urls = $this->language_urls;
-	
+		
 		// only display the interlang links if there are interlanguage links
 		if(!empty($language_urls) && is_array($language_urls)) {
 			$lang_index = array();
 			
+			// language order
+			$this->langSortBy = array("interwiki-en" => 1, "interwiki-de" => 2, "interwiki-es" => 3, "interwiki-ru" => 4, "interwiki-pl" => 5, "interwiki-fr" => 6, "interwiki-it" => 7, "interwiki-pt" => 8);
+			
+			
+			
 			foreach($language_urls as $val) {
-
-				// remove duplicates
 				if (!in_array($val['href'], $lang_index)) {
-					array_push($lang_index, $val['href']);
+					if (!isset($this->langSortBy[$val["class"]])) {
+						$this->langSortBy[$val["class"]] = true;
+					}	
 					
-					$list[] = array(
+					$this->langSortBy[$val["class"]] = array(
 							'href'  => $val['href'], 
 							'name'  => $val['text'],
+							'class'  => $val['class'],
 					);
+					
 				}
 			}
+			//	ordering the languages
+			foreach ($this->langSortBy as $key => $value) {
+				 if (!is_array($value)) {
+						unset($this->langSortBy[$key]);
+				}	
+			}		
 		}
 		
-				
-		if (!empty($list)) {
-			$this->language_list = $list;
+		if (!empty($this->langSortBy)) {
+			$this->language_list = $this->langSortBy;
+			
 			if (count($this->language_list) >= $this->max_visible) {
 				$this->enable_more = true;
 			}
 			
 		}	
+		
 		wfProfileOut(__METHOD__);
+	}
+	
+	static function languageSorting($a, $b) {
+		strcmp($a["class"], $b["class"]); 
 	}
 }
