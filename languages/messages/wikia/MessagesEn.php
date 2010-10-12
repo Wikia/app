@@ -1027,7 +1027,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-page-header-history-link' => 'View full history',
 'oasis-page-header-back-to-article' => 'Back to page',
 'oasis-page-header-back-to-template' => 'Back to template',
-'oasis-page-header-back-to-mediawiki' => 'Back to Mediawiki page',
+'oasis-page-header-back-to-mediawiki' => 'Back to MediaWiki page',
 'oasis-page-header-back-to-category' => 'Back to Category',
 'oasis-page-header-back-to-file' => 'Back to File',
 'oasis-page-header-back-to-video' => 'Back to Video',
