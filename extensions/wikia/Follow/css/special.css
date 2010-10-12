@@ -37,10 +37,6 @@ ul.watched-list {
 	visibility: hidden;
 }
 
-.skin-oasis .ajax-unwatch {
-	margin: 0 0 0 5px;
-}
-
 .otherNs {
 	visibility: hidden;
 }
@@ -48,4 +44,13 @@ ul.watched-list {
 .hideInfoSpan {
 	float:left;
 	margin-right:10px;
+}
+
+/* Oasis specific fixes */
+.skin-oasis .watched-list li {
+	width: 49%;
+}
+
+.skin-oasis .ajax-unwatch {
+	margin: 0 0 0 5px;
 }
