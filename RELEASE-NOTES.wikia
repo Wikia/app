@@ -1,4 +1,5 @@
 == Changes since 201010.2 ==
+* rt#71145: Oasis: Special:Following no longer shows unfollow icon (bad css) (macbre)
 * rt#69941: Oasis: Talk icon/link on Template and MediaWiki pages are jarbled (macbre)
 * rt#71587: Oasis: Recent Wiki Activity module should show blue links instead of red (macbre)
 * rt#71622: Add language links to landing page (macbre)
