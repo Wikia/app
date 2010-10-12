@@ -77,7 +77,7 @@ class WikiFactory {
 		2 => "editable by staff",
 		3 => "editable by user"
 	);
-	
+
 	static public $mIsUsed = false;
 
 	/**
@@ -619,6 +619,21 @@ class WikiFactory {
 						array("city_id" => $city_id ),
 						__METHOD__ );
 					break;
+
+				case "wgDBcluster":
+					/**
+					 * city_cluster
+					 *
+					 * city_cluster = null for first cluster
+					 * @todo handle deleting values of this variable
+					 */
+					$dbw->update(
+						self::table("city_list"),
+						array("city_cluster" => $value ),
+						array("city_id" => $city_id ),
+						__METHOD__ );
+					break;
+
 				case 'wgMetaNamespace':
 				case 'wgMetaNamespaceTalk':
 					#--- these cannot contain spaces!
@@ -1517,7 +1532,7 @@ class WikiFactory {
 				"cv_variable_type",
 				"cv_variable_group",
 				"cv_access_level",
-                                "cv_is_unique"
+				"cv_is_unique"
 			),
 			$condition,
 			__METHOD__
@@ -2334,7 +2349,7 @@ class WikiFactory {
 		if ( !empty( $lang_code ) ) {
 			$key = sprintf( "wikifactory:languages" );
 			$languages = $wgMemc->get( $key );
-			
+
 			if ( !isset( $languages[$lang_code] ) ) {
 				$dbr = self::db( DB_SLAVE );
 				$oRes = $dbr->select(
@@ -2351,7 +2366,7 @@ class WikiFactory {
 
 				$wgMemc->set( $key, $languages, 60 * 60 * 24 );
 			}
-			
+
 			$lang_id = $languages[$lang_code];
 		}
 
@@ -2375,7 +2390,7 @@ class WikiFactory {
 	 * @return array an array containing the list of city ID's matching the variable's value, an empty array if none matches
 	 */
 	static function getCityIDsFromVarValue( $varID, $val, $cond ) {
-		
+
 		wfProfileIn(__METHOD__);
 
 		$varID = ( int ) $varID;
@@ -2383,7 +2398,7 @@ class WikiFactory {
 		$aWhere = array(
 			'cv_variable_id' => $varID
 		);
-		
+
 		$dbr = self::db( DB_SLAVE );
 
 		if ( in_array($cond, array( 'LIKE', 'NOT LIKE' ) ) ) {
@@ -2406,11 +2421,11 @@ class WikiFactory {
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 			$aWikis[] = $oRow->cv_city_id;
 		}
-		
+
 		$dbr->freeResult( $oRes );
-		
+
 		wfProfileOut(__METHOD__);
-		
+
 		return $aWikis;
 	}
 };
