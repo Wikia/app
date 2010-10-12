@@ -68,9 +68,9 @@ class PhalanxStats extends UnlistedSpecialPage {
 		} else {
 			$block['expire'] = $wgLang->timeanddate( $block['expire'] );
 		}
-		$block['exact'] = $block['exact'] ? 'Yes' : 'No';
 		$block['regex'] = $block['regex'] ? 'Yes' : 'No';
 		$block['case'] = $block['case'] ? 'Yes' : 'No';
+		$block['exact'] = $block['exact'] ? 'Yes' : 'No';
 		$block['type'] = implode( ', ', Phalanx::getTypeNames( $block['type'] ) );
 		$block['lang'] = empty($block['lang']) ? '*' : $block['lang'];
 
@@ -85,9 +85,9 @@ class PhalanxStats extends UnlistedSpecialPage {
 			wfMsg('phalanx-stats-table-type'),
 			wfMsg('phalanx-stats-table-create'),
 			wfMsg('phalanx-stats-table-expire'),
-			wfMsg('phalanx-stats-table-exact'),
 			wfMsg('phalanx-stats-table-regex'),
 			wfMsg('phalanx-stats-table-case'),
+			wfMsg('phalanx-stats-table-exact'),
 			wfMsg('phalanx-stats-table-language'),
 		);
 
