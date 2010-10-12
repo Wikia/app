@@ -7,11 +7,12 @@ CREATE TABLE ads (
   ad_page_id int unsigned NOT NULL,
   ad_status tinyint unsigned NOT NULL,
   ad_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  ad_closed timestamp NULL DEFAULT NULL,
-  ad_expires timestamp NULL DEFAULT NULL,
+  ad_closed timestamp DEFAULT NULL,
+  ad_expires timestamp DEFAULT NULL,
+  ad_weight tinyint unsigned NOT NULL,
   ad_user_email varchar(255) NOT NULL,
-  ad_price decimal(5,2) DEFAULT NULL,
-  ad_price_period char(1) DEFAULT NULL,
+  ad_price decimal(5,2) NOT NULL,
+  ad_price_period char(1) NOT NULL,
 ) ENGINE=InnoDB;
 
 -- PayPal Set EC requests

@@ -28,7 +28,7 @@ foreach( $res as $row ) {
 
 	$pp = new PaymentProcessor();
 	$respArr = array();
-	if( $pp->collectPayment( $row->ppa_baid, $ad->price['price'], $respArr ) ) {
+	if( $pp->collectPayment( $row->ppa_baid, $ad->price['price'] * $ad->weight, $respArr ) ) {
 		$ad->refresh();
 		echo "REFRESHED! (".wfTimestamp( TS_DB, $ad->expires).")\n";
 	} else {

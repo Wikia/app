@@ -43,7 +43,9 @@ class AdSS_Publisher {
 				if( $minExpire > $ad->expires ) {
 					$minExpire = $ad->expires;
 				}
-				$ads[] = $ad;
+				for( $i=1; $i<=$ad->weight; $i++ ) {
+					$ads[] = $ad;
+				}
 			}
 			$dbr->freeResult( $res );
 
@@ -91,19 +93,8 @@ class AdSS_Publisher {
 		global $wgTitle;
 		if( self::canShowAds( $wgTitle ) ) {
 			wfLoadExtensionMessages( 'AdSS' );
-			$ads = self::getPageAds( $wgTitle );
-			
-			$selfAd = new AdSS_Ad();
-			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL( 'page='.$wgTitle->getText() ) );
-			$selfAd->text = wfMsg( 'adss-ad-default-text' );
-			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
-
-			$text .= wfMsgWikiHtml( 'adss-ad-header' );
+			$text = wfMsgWikiHtml( 'adss-ad-header' );
 			$text .= Xml::openElement( 'ul', array( 'class' => 'adss' ) );
-			foreach( $ads as $ad ) {
-				$text .= $ad->render();
-			}
-			$text .= $selfAd->render();
 			$text .= Xml::closeElement( 'ul' );
 		}
 		return true;

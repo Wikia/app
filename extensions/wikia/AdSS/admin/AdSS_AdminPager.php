@@ -73,6 +73,7 @@ class AdSS_AdminPager extends TablePager {
 		return array(
 				'ad_wiki_id'    => 'Wikia',
 				'ad_page_id'    => 'Type',
+				'ad_weight'     => 'No. shares',
 				'ad_text'       => 'Ad',
 				'ad_user_email' => 'User',
 				'ad_created'    => 'Created',
