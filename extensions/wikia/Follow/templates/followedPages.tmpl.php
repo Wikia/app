@@ -9,8 +9,8 @@
 	global $wgServer,$wgScript, $wgUser;
 	$sk = $wgUser->getSkin();
 ?>
-<?php foreach ($data as $key => $value): ?> 
-	<?php if(empty($more)): ?>	
+<?php foreach ($data as $key => $value): ?>
+	<?php if(empty($more)): ?>
 		<h2 class="firstHeading"><?php echo wfMsg($value['ns'] , array("$1" => $value['count']) ) ?>
 
 		</h2>
@@ -24,28 +24,28 @@
 				<?php
 				global $wgBlankImgUrl;
 				?>
-				<img alt="<?php echo wfMsg( 'wikiafollowedpages-special-delete-tooltip' ); ?>" class="sprite delete" id="" src="<?php print $wgBlankImgUrl; ?>"/>
-			</a> 
+				<img alt="<?php echo wfMsg( 'wikiafollowedpages-special-delete-tooltip' ); ?>" class="<?= Wikia::isOasis() ? 'sprite-small close' : 'sprite delete' ?>" id="" src="<?php print $wgBlankImgUrl; ?>"/>
+			</a>
 			<?php endif; ?>
 			<span>
 				<?php echo $sk->link( Title::newFromText( $value2[1], $value2['wl_namespace'] ), $value2['wl_title'], array( 'class' => 'title-link' ) ); ?>
 				<?php if(!empty($value2['by_user'])): ?>
 					<?php echo wfMsg('wikiafollowedpages-special-blog-by', array("$1" => $value2['by_user']) ) ?>
-				<?php endif;?>		 
+				<?php endif;?>
 			</span>
 			<?php if(!empty($value2['other_namespace'])): ?>
 			<span class="otherNs" >
 					<?php echo wfMsg('wikiafollowedpages-special-namespace', array("$1" => $value2['other_namespace']) ) ?>
 			</span>
-			<?php endif;?>		
+			<?php endif;?>
                 </li>
-	<?php endforeach;?>	
-	<?php if(empty($more)): ?>	
+	<?php endforeach;?>
+	<?php if(empty($more)): ?>
 		</ul>
 		<div style="clear: both; height:30px;text-align: right">
                     	<?php if($value['show_more']): ?>
-				<a  id="more-<? echo $value['ns']; ?>" style="display:none;" class="ajax-show-more" href="<?php echo 
-$wgServer.$wgScript."?action=ajax&rs=FollowHelper::showAll&head=".$value['ns']."&user_id=".$user_id ?>"><?php echo 
+				<a  id="more-<? echo $value['ns']; ?>" style="display:none;" class="ajax-show-more" href="<?php echo
+$wgServer.$wgScript."?action=ajax&rs=FollowHelper::showAll&head=".$value['ns']."&user_id=".$user_id ?>"><?php echo
 wfMsg('wikiafollowedpages-special-showmore'); ?></a>
 			<?php endif;?>
                 </div>
