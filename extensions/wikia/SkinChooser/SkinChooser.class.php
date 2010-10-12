@@ -369,7 +369,7 @@ class SkinChooser {
 
 		// only allow useskin=wikia for beta & staff.
 		global $wgUser;
-		if(( $wgRequest->getVal('useskin') == 'wikia' ) && $wgUser->isAllowed( 'useskinwikia' )) {
+		if( $wgRequest->getVal('useskin') == 'wikia' ) {
 			$wgRequest->setVal('useskin', 'oasis');
 		}
 		if(!empty($wgForceSkin)) {
@@ -426,7 +426,7 @@ class SkinChooser {
 			}
 		} else {
 			$userSkin = self::getUserOption('skin');
-			if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'useskinwikia' )) {
+			if( !$isOasisPublicBeta && $userSkin == 'oasis' ) {
 				$userSkin = 'monaco';
 			}
 
@@ -472,11 +472,6 @@ class SkinChooser {
 		global $wgEnableAnswers;
 		if ($userSkin == 'answers' && empty($wgEnableAnswers)) {
 			$userSkin = 'monaco';
-		}
-
-		global $wgGiveMeOasis;
-		if(!empty($wgGiveMeOasis) && $wgRequest->getBool($wgGiveMeOasis, false)) {
-			$userSkin = 'oasis';
 		}
 
 		$user->mSkin = &Skin::newFromKey($userSkin);
