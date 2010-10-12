@@ -29,7 +29,7 @@ $Factory.VariableCallback = {
         YAHOO.log( "simple replace failure " + oResponse.responseText );
         $Factory.Busy(0);
     },
-    timeout: 30
+    timeout: 50000
 };
 
 $Factory.FilterCallback = {
@@ -44,7 +44,7 @@ $Factory.FilterCallback = {
         $Factory.Busy(0);
         $Dom.get("wk-variable-select").disabled = false;
     },
-    timeout: 30
+    timeout: 50000
 };
 
 $Factory.ReplaceCallback = {
@@ -61,7 +61,7 @@ $Factory.ReplaceCallback = {
     failure: function( oResponse ) {
         $Factory.Busy(0);
     },
-    timeout: 30
+    timeout: 50000
 };
 
 $Factory.Busy = function (state) {
@@ -105,7 +105,7 @@ $Factory.Domain.Callback = {
     failure: function( oResponse ) {
         $Factory.Busy(0);
     },
-    timeout: 30
+    timeout: 20000
 };
 
 $Factory.Domain.add = function ( e ) {
@@ -318,7 +318,7 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 					}
 				}
 			},
-			timeout: 30
+			timeout: 50000
 		});
 	}
 };
