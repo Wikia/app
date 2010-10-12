@@ -100,7 +100,7 @@ class UserPagesHeaderModule extends Module {
 		);
 
 		// blog
-		if (defined('NS_BLOG_ARTICLE')) {
+		if (defined('NS_BLOG_ARTICLE') && !User::isIP($this->userName)) {
 			$tabs[] = array(
 				'link' => View::link(Title::newFromText($userName, NS_BLOG_ARTICLE), wfMsg('blog-page'), array(), array(), 'known'),
 				'selected' => ($namespace == NS_BLOG_ARTICLE),
