@@ -14,13 +14,12 @@ class AdSS_AdminController {
 		$token = AdSS_Util::getToken();
 
 		$pager = new AdSS_AdminPager();
-		if( $pager->getNumRows() ) {
-			$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
-			$tmpl->set( 'token', $token );
-			$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
-			$tmpl->set( 'adList', $pager->getBody() );
-			$wgOut->addHTML( $tmpl->render( 'adList' ) );
-		}
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
+		$tmpl->set( 'token', $token );
+		$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
+		$tmpl->set( 'filterForm', $pager->getFilterForm() );
+		$tmpl->set( 'adList', $pager->getBody() );
+		$wgOut->addHTML( $tmpl->render( 'adList' ) );
 	}
 
 	static function acceptAdAjax( $id, $token ) {
@@ -43,6 +42,8 @@ class AdSS_AdminController {
 						'ad_id' => $id,
 						'ad_id = ppt_ad_id',
 						'ppt_token = ppa_token',
+						'ad_closed' => null,
+						'ad_expires' => null,
 					     ),
 					__METHOD__
 					);

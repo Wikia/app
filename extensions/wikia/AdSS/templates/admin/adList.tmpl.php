@@ -1,3 +1,4 @@
+<?php echo $filterForm; ?>
 <?php echo $adList; ?>
 <?php echo $navigationBar; ?>
 
