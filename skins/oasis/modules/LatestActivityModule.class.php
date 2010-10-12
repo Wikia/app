@@ -15,7 +15,7 @@ class LatestActivityModule extends Module {
 
 		wfLoadExtensionMessages('MyHome');
 
-		$mKey = wfMemcKey('mOasisLatestActivity');
+		$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode());
 		$feedData = $wgMemc->get($mKey);
 		if (empty($feedData)) {
 
@@ -37,7 +37,7 @@ class LatestActivityModule extends Module {
 		}
 
 		// Time strings are slow to calculate, but we still want them to update frequently (60 seconds)
-		$mKeyTimes = wfMemcKey('mOasisLatestActivity_times');
+		$mKeyTimes = wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode());
 		$this->changeList = $wgMemc->get($mKeyTimes, array());
 
 		if(empty($this->changeList) && !empty($feedData) && is_array($feedData['results'])) {
@@ -79,9 +79,9 @@ class LatestActivityModule extends Module {
 
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		global $wgMemc;
-		$wgMemc->delete(wfMemcKey('mOasisLatestActivity'));
-		$wgMemc->delete(wfMemcKey('mOasisLatestActivity_times'));
+		global $wgMemc, $wgLang;
+		$wgMemc->delete(wfMemcKey('mOasisLatestActivity', $wgLang->getCode()));
+		$wgMemc->delete(wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode()));
 		return true;
 	}
 
