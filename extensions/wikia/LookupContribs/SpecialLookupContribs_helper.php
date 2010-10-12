@@ -14,40 +14,40 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class LookupContribsCore {
-    var $mUsername;
-    var $mUserId;
-    var $mNumRecords;
-    var $oUser;
-
-    public function __construct($username) {
-        $this->mUsername = $username;
+	var $mUsername;
+	var $mUserId;
+	var $mNumRecords;
+	var $oUser;
+		
+	public function __construct($username) {
+		$this->mUsername = $username;
 		$this->oUser = User::newFromName($this->mUsername);
 		if ( $this->oUser instanceof User ) {
 			$this->mUserId = $this->oUser->getId();
 		}
 		wfLoadExtensionMessages("SpecialLookupContribs");
-    }
+	}
 
 	/* return if such user exists */
 	public function checkUser() {
 		global $wgUser;
-       	wfProfileIn( __METHOD__ );
-
+		wfProfileIn( __METHOD__ );
+		
 		if ( empty($this->mUsername) ) {
 			wfDebug( "Empty username\n" );
-        	wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( !$this->oUser instanceof User ) {
 			wfDebug( "User {$this->mUsername} not found\n" );
-        	wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( empty($this->mUserId) ) {
 			wfDebug( "User {$this->mUsername} not found\n" );
-        	wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -59,23 +59,64 @@ class LookupContribsCore {
 		return true;
 	}
 
-	public function getNumRecords() { return $this->mNumRecords; }
-	
-	private function __getWikiData($city_id) { 
-		$res = array();
-		$oRow = WikiFactory::getWikiByID($city_id);
-		if ( is_object($oRow) ) {
-			$res = array(
-				"id"		=> $oRow->city_id,
-				"url" 		=> $oRow->city_url,
-				"dbname"	=> $oRow->city_dbname,
-				"title"		=> $oRow->city_title,
-				"active"	=> $oRow->city_public
-			);
-		}
-		return $res;
+	public function getNumRecords() { 
+		return $this->mNumRecords; 
 	}
 
+	public function checkUserActivityExternal($limit = LC_LIMIT, $offset = 0) {
+		global $wgMemc, $wgContLang, $wgStatsDB;
+		wfProfileIn( __METHOD__ );
+		
+		$userActivity = array();
+
+		$memkey = __METHOD__ . ":{$this->mUserId}";
+		$data = $wgMemc->get($memkey);
+		if (!is_array ($data) || LOOKUPCONTRIBS_NO_CACHE) {
+			#---
+			$dbr = wfGetDB(DB_SLAVE, "stats", $wgStatsDB);
+			if (!is_null($dbr)) {
+				/* rows */
+				$res = $dbr->select(
+					array ('events'),
+					array (
+						'wiki_id', 
+						'max(rev_timestamp) as ts_edit_last' 
+					),
+					array (
+						'wiki_id > 0',
+						'user_id'    => $this->mUserId,
+						'event_type' => array(1,2)
+					),
+					__METHOD__
+					array (
+						'LIMIT'  => $limit,
+						'OFFSET' => $offset
+					)
+				);
+				
+				$loop = 0;
+				while ( $row = $dbr->fetchObject($res) ) {
+					#if ( $loop >= $limit ) break;
+					/* WF */
+					$wData = $this->__getWikiData($row->wiki_id);
+					/* exists */
+					if ( !empty($wData) && ( !empty($wData['active']) ) ) { 
+						$userActivity[] = $wData;
+					}
+					$loop++;
+				}
+				$dbr->freeResult($res);
+
+				if (!LOOKUPCONTRIBS_NO_CACHE) $wgMemc->set( $memkey, $userActivity, 60*10 );
+			}
+		} else {
+			$userActivity = $data;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $userActivity;
+	}
+	
 	/* array */
 	function getExclusionList() {
 		global $wgLookupContribsExcluded;
@@ -97,66 +138,16 @@ class LookupContribsCore {
 		return $result ;
 	}
 
-	function exclusionCheck ($database) {
+	function exclusionCheck($database) {
 		global $wgLookupContribsExcluded;
 		/* grumble grumble _precautions_ cough */
 		if (!isset($wgLookupContribsExcluded) || (!is_array($wgLookupContribsExcluded)) || (empty($wgLookupContribsExcluded))  ) {
 			return true;
 		}
 		foreach ($wgLookupContribsExcluded as $excluded) {
-	       	if ($excluded == $database) return false;
+			if ($excluded == $database) return false;
 		}
 		return true;
-	}
-
-	public function checkUserActivityExternal() {
-		global $wgMemc, $wgContLang, $wgExternalDatawareDB, $wgExternalSharedDB;
-        wfProfileIn( __METHOD__ );
-		
-		$userActivity = array();
-
-		$memkey = __METHOD__ . ":{$this->mUserId}:$wgExternalSharedDB";
-		$data = $wgMemc->get($memkey);
-		if (!is_array ($data) || LOOKUPCONTRIBS_NO_CACHE) {
-			#---
-			$dbr = wfGetDB(DB_SLAVE, "blobs", $wgExternalDatawareDB);
-			if (!is_null($dbr)) {
-				/* rows */
-				$res = $dbr->select(
-					array ('user_summary'),
-					array (
-						'city_id', 
-						'ts_edit_last', 
-						'unix_timestamp(ts_edit_last) as max_timestamp'
-					),
-					array (
-						'city_id > 0',
-						'user_id' => $this->mUserId,
-						'ts_edit_last is not null'
-					),
-					__METHOD__
-				);
-				
-				while ( $row = $dbr->fetchObject($res) ) {
-					/* WF */
-					$wData = $this->__getWikiData($row->city_id);
-					/* exists */
-					if ( !empty($wData) && ( !empty($wData['active']) ) ) { 
-						$userActivity[$row->max_timestamp] = $wData;
-					}
-				}
-				$dbr->freeResult($res);
-
-				if ( !empty($userActivity) ) krsort($userActivity);
-
-				if (!LOOKUPCONTRIBS_NO_CACHE) $wgMemc->set( $memkey, $userActivity, 60*5 );
-			}
-		} else {
-			$userActivity = $data;
-		}
-
-       	wfProfileOut( __METHOD__ );
-		return $userActivity;
 	}
 
 	private function __getDBname($database) {
@@ -166,7 +157,7 @@ class LookupContribsCore {
 
 	private function __getNamespace( $nspace ) {
 		global $wgContentNamespaces;
-       	wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$res = array();
 		$nspace = intval($nspace);
@@ -181,21 +172,35 @@ class LookupContribsCore {
 				break;
 			default: $res = array($nspace); 
 		}
-		
-       	wfProfileOut( __METHOD__ );
+
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+
+	private function __getWikiData($city_id) { 
+		$res = array();
+		$oRow = WikiFactory::getWikiByID($city_id);
+		if ( is_object($oRow) ) {
+			$res = array(
+				"id"		  => $oRow->city_id,
+				"url" 		=> $oRow->city_url,
+				"dbname"	=> $oRow->city_dbname,
+				"title"		=> $oRow->city_title,
+				"active"	=> $oRow->city_public
+			);
+		}
 		return $res;
 	}
 
 	private function __normalMode( $dbr, $database, $nspace ) {
-       	wfProfileIn( __METHOD__ );
-
+		wfProfileIn( __METHOD__ );
 		$conditions = array (
 			'rev_user' => $this->mUserId,
 			' rc_timestamp = rev_timestamp '
 		);
 		$namespaces = $this->__getNamespace($nspace);
 		if ( !empty($namespaces) ) {
-			$conditions[] = ' rc_namespace in (' . $dbr->makeList($namespaces) . ') ';
+			$conditions['rc_namespace'] = $namespaces;
 		}
 
 		$res = $dbr->select(
@@ -216,12 +221,12 @@ class LookupContribsCore {
 			)
 		);
 
-       	wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
 	private function __finalMode( $dbr, $database, $nspace ) {
-       	wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$conditions = array (
 			'rev_user' => $this->mUserId,
@@ -229,7 +234,7 @@ class LookupContribsCore {
 		);
 		$namespaces = $this->__getNamespace($nspace);
 		if ( !empty($namespaces) ) {
-			$conditions[] = ' page_namespace in (' . $dbr->makeList($namespaces) . ') ';
+			$conditions['page_namespace'] = $namespaces;
 		}
 
 		$res = $dbr->select(
@@ -249,12 +254,13 @@ class LookupContribsCore {
 				'ORDER BY'	=> 'rev_timestamp DESC',
 			)
 		);
-       	wfProfileOut( __METHOD__ );
-       	return $res;
+
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	private function __allMode( $dbr, $database, $nspace ) {
-       	wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$conditions = array (
 			'rev_user' => $this->mUserId,
@@ -262,7 +268,7 @@ class LookupContribsCore {
 		);
 		$namespaces = $this->__getNamespace($nspace);
 		if ( !empty($namespaces) ) {
-			$conditions[] = ' page_namespace in (' . $dbr->makeList($namespaces) . ') ';
+			$conditions['page_namespace'] = $namespaces;
 		}
 
 		$res = $dbr->select(
@@ -283,12 +289,12 @@ class LookupContribsCore {
 			)
 		);
 
-       	wfProfileOut( __METHOD__ );
-       	return $res;
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 	
 	private function __getLogs( $dbr, $nspace ) {
-       	wfProfileIn( __METHOD__ );
+   	wfProfileIn( __METHOD__ );
 
 		$conditions = array (
 			'log_action' => "tag",
@@ -296,7 +302,7 @@ class LookupContribsCore {
 		);
 		$namespaces = $this->__getNamespace($nspace);
 		if ( !empty($namespaces) ) {
-			$conditions[] = ' log_namespace in (' . $dbr->makeList($namespaces) . ') ';
+			$conditions['log_namespace'] = $namespaces;
 		}
 
 		$res = $dbr->select (
@@ -315,19 +321,19 @@ class LookupContribsCore {
 			__METHOD__
 		);
 
-       	wfProfileOut( __METHOD__ );
-       	return $res;
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 	
 	private function __getArchive( $dbr, $nspace ) {
-       	wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$conditions = array (
 			'ar_user' => $this->mUserId,
 		);
 		$namespaces = $this->__getNamespace($nspace);
 		if ( !empty($namespaces) ) {
-			$conditions[] = ' ar_namespace in (' . $dbr->makeList($namespaces) . ') ';
+			$conditions['ar_namespace'] = $namespaces;
 		}
 
 		$res = $dbr->select (
@@ -346,8 +352,8 @@ class LookupContribsCore {
 			__METHOD__
 		);
 	
-       	wfProfileOut( __METHOD__ );
-       	return $res;
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	/* fetch all contributions from that given database */
@@ -554,7 +560,5 @@ class LookupContribsCore {
 
 		return $result;
 	}
-
 }
 
-?>
