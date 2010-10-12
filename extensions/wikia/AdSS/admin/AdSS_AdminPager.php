@@ -3,12 +3,27 @@
 class AdSS_AdminPager extends TablePager {
 
 	private $mTitle, $ad;
+	private $mFilter = 'pending';
+	private $mFiltersShown = array(
+			'all' => 'All',
+			'active' => 'In rotation (accepted & not expired)',
+			'pending' => 'Pending acceptance',
+			'expired' => 'Expired (not closed)',
+			'closed' => 'Closed',
+			);
 
 	function __construct() {
 		global $wgAdSS_DBname;
+
 		parent::__construct();
+
 		$this->mDb = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/admin" );
+
+		$filter = $this->mRequest->getVal( 'filter', $this->mFilter );
+		if( array_key_exists( $filter, $this->mFiltersShown ) ) {
+			$this->mFilter = $filter;
+		}
 	}
 
 	function getTitle() {
@@ -16,7 +31,7 @@ class AdSS_AdminPager extends TablePager {
 	}
 
 	function isFieldSortable( $field ) {
-		return in_array( $field, array( 'ad_created', 'ad_expires' ) );
+		return in_array( $field, array( 'ad_created', 'ad_expires', 'ad_closed' ) );
 	}
 
 	function formatRow( $row ) {
@@ -31,6 +46,7 @@ class AdSS_AdminPager extends TablePager {
 				$wiki = WikiFactory::getWikiByID( $value );
 				return $wiki->city_title;
 			case 'ad_id':
+				if( $this->ad->closed ) return '';
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 				$tmpl->set( 'ad', $this->ad );
 				return $tmpl->render( 'actionLink' );
@@ -78,6 +94,7 @@ class AdSS_AdminPager extends TablePager {
 				'ad_user_email' => 'User',
 				'ad_created'    => 'Created',
 				'ad_expires'    => 'Expires',
+				'ad_closed'     => 'Closed',
 				'ppa_baid'      => 'Billing Agreement ID',
 				'ad_price'      => 'Price',
 				'ad_id'         => 'Action',
@@ -85,15 +102,57 @@ class AdSS_AdminPager extends TablePager {
 	}
 
 	function getQueryInfo() {
-		return array(
+		$qi = array(
 				'tables' => array( 'ads', 'pp_tokens', 'pp_agreements' ),
 				'fields' => array( '*' ),
 				'conds'  => array(
-					'ad_closed' => null,
 					'ad_id = ppt_ad_id',
 					'ppt_token = ppa_token',
 					)
 			    );
+		switch( $this->mFilter ) {
+			case 'active':
+				$qi['conds'][] = 'ad_closed IS NULL';
+				$qi['conds'][] = 'ad_expires > NOW()';
+				break;
+			case 'pending':
+				$qi['conds'][] = 'ad_closed IS NULL';
+				$qi['conds'][] = 'ad_expires IS NULL';
+				break;
+			case 'expired':
+				$qi['conds'][] = 'ad_closed IS NULL';
+				$qi['conds'][] = 'ad_expires <= NOW()';
+				break;
+			case 'closed':
+				$qi['conds'][] = 'ad_closed IS NOT NULL';
+				break;
+		}
+		return $qi;
+	}
+
+	function getFilterSelect() {
+		$s = "<label for=\"filter\">Show ads:</label>";
+		$s .= "<select name=\"filter\">";
+		foreach( $this->mFiltersShown as $fkey => $fval ) {
+			$selected = '';
+			if( $fkey == $this->mFilter ) {
+				$selected = " selected";
+			}
+			$fval = htmlspecialchars( $fval );
+			$s .= "<option value=\"$fkey\"$selected>$fval</option>\n";
+		}
+		$s .= "</select>";
+		return $s;
+	}
+
+	function getFilterForm() {
+		$url = $this->getTitle()->escapeLocalURL();
+		return
+			"<form method=\"get\" action=\"$url\">" .
+			$this->getFilterSelect() .
+			"\n<input type=\"submit\" />\n" .
+			//$this->getHiddenFields( array('filter','title') ) .
+			"</form>\n";
 	}
 
 }
