@@ -19,7 +19,6 @@ class LookupContribsPage extends SpecialPage {
 	 */
 	function  __construct() {
 		parent::__construct( "LookupContribs"  /*class*/, 'lookupcontribs' /*restriction*/);
-		wfLoadExtensionMessages("SpecialLookupContribs");
 	}
 	
 	public function execute( $subpage ) {
@@ -73,25 +72,25 @@ class LookupContribsPage extends SpecialPage {
 	/* draws the form itself  */
 	function showForm ($error = "") {
 		global $wgOut;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$action = $this->mTitle->escapeLocalURL("");
 
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-			"error"		=> $error,
-            "action"	=> $action,
-            "username"  => $this->mUsername,
-            "mode"     	=> $this->mMode,
-            "view"    	=> $this->mView,
-        ));
-        $wgOut->addHTML( $oTmpl->execute("main-form") );
-        wfProfileOut( __METHOD__ );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+				"error"     => $error,
+				"action"    => $action,
+				"username"  => $this->mUsername,
+				"mode"      => $this->mMode,
+				"view"      => $this->mView,
+		));
+		$wgOut->addHTML( $oTmpl->execute("main-form") );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	/* draws the results table  */
 	function showUserList() {
 		global $wgOut, $wgRequest, $wgLang ;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
 		if (empty($this->mUsername)) {
@@ -125,7 +124,7 @@ class LookupContribsPage extends SpecialPage {
 	
 	function getResults() {
 		global $wgOut, $wgRequest ;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
 		if (empty($this->mUsername)) {
@@ -154,7 +153,6 @@ class LookupContribsPage extends SpecialPage {
 		}
 
 		/* before, we need that numResults */
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
-	
 }
