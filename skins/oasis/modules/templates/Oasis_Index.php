@@ -48,9 +48,9 @@
 		print $staticChuteHtml."\n";
 	}
 ?>
-<?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
-
 <?= $analytics ?>
+
+<?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 
 <!-- Tracking pixels-->
 <?= $trackingPixels ?>
