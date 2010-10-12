@@ -34,7 +34,7 @@ $messages['en'] = array(
 	'adss-form-site-plan-description' => 'Gain greater exposure by buying a sponsored link across a wiki.
 
 1 share is currently equal to 25% of {{SITENAME}} sponsored links. The size of the share may go up or down depending on how many others buy shares. You can cancel at any time.',
-	'adss-form-site-plan-price' => '1 ad costs $1',
+	'adss-form-site-plan-price' => '1 share costs $1',
 	'adss-form-page-plan-header' => 'Buy a link on an individual page',
 	'adss-form-page-plan-description' => 'Target specific pages to match your Campaign',
 	'adss-form-page-plan-price' => '1 link costs $1',
