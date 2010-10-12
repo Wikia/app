@@ -1,5 +1,5 @@
 <?php
-	// show both comments and FB likes (new design)
+	// show both comments and FB likes
 	if (isset($comments) && $showLike) {
 ?>
 <ul class="commentslikes">
@@ -13,7 +13,7 @@
 </ul>
 <?php
 	}
-	// show just comments (old design)
+	// show just comments
 	else if (isset($comments)) {
 ?>
 	<div class="commentslikes">
