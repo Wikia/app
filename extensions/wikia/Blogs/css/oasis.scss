@@ -133,7 +133,7 @@
 	}
 	ul {
 		margin: 15px 0 0;
-		li {
+		.WikiaBlogListingPost {
 			@include clearfix;
 			border-top: solid 1px $color-page-border;
 			list-style: none;
