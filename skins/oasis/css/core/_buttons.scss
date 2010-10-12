@@ -86,7 +86,7 @@ This list-based button is used in the page header for edit/history/delete action
 ******************************/
 .wikia-menu-button {
 	*display: inline;
-	list-style: none;
+	list-style: none !important;
 	margin: 0;
 	position: relative;
 	text-align: left;
