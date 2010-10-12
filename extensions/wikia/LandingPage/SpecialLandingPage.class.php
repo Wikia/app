@@ -74,16 +74,31 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 
 		);
 
+		// parse language links (RT #71622)
+		$languageLinks = array();
+
+		$parsedMsg = wfStringToArray(wfMsg('landingpage-language-links'), '*', 10);
+		foreach($parsedMsg as $item) {
+			if ($item != '') {
+				list($text, $lang) = explode('|', $item);
+				$languageLinks[] = array(
+					'text' => $text,
+					'href' => $wgTitle->getLocalUrl("uselang={$lang}"),
+				);
+			}
+		}
+
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
-			'imagesPath' => $wgExtensionsPath . '/wikia/LandingPage/images/',
-			'wgBlankImgUrl' => $wgBlankImgUrl,
-			'wikis' => $wikis,
 			'button_url' => $this->button_url,
 			'current_skin' => $wgUser->mOptions["skin"],
+			'imagesPath' => $wgExtensionsPath . '/wikia/LandingPage/images/',
+			'languageLinks' => $languageLinks,
 			'logInClass' => $this->logInClass,
-			'loggedIn' => $this->loggedIn
+			'loggedIn' => $this->loggedIn,
+			'wgBlankImgUrl' => $wgBlankImgUrl,
+			'wikis' => $wikis,
 		));
 
 		$wgOut->addHTML($template->render('main'));

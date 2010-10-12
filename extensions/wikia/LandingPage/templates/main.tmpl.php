@@ -1,21 +1,30 @@
 <section class="LandingPage">
+	<ul class="LandingPageLanguageLinks">
+<?php
+	foreach($languageLinks as $item) {
+?>
+		<li>[<a href="<?= htmlspecialchars($item['href']) ?>"><?= htmlspecialchars($item['text']) ?></a>]</li>
+<?php
+	}
+?>
+	</ul>
 	<section class="LandingPageRow">
 		<section class="LandingPageWelcome">
 			<h1><?= wfMsg('landingpage') ?></h1>
 			<h2><?= wfMsgExt('landingpage-secondary-line', array('parse')) ?></h2>
-			
+
 			<?php if ($loggedIn == true && $current_skin == "oasis") { ?>
 				<h3><?= wfMsgExt('landingpage-dive-in', array('parse')) ?></h3>
 			<?php }
 			else { ?>
 				<!--<h3><?= wfMsgExt('landingpage-secondary-2', array('parse')) ?></h3>-->
 				<h3><?= wfMsgExt('landingpage-secondary-3', array('parse')) ?></h3>
-			
+
 			<?php
 			}
 			?>
-			
-			
+
+
 <?php	if ($loggedIn == false || ( $loggedIn == true && $current_skin != "oasis")) { ?>
 			<section class="LandingPageButtonUpdate">
 				<a href="<?= $button_url ?>" <?= $logInClass ?> ref="?new-wikia=true">
@@ -27,7 +36,7 @@
 	<?php } ?>
 
 <?php if ($loggedIn == true && $current_skin == "oasis") {	?>
-			<section class="LandingPageExamples">	
+			<section class="LandingPageExamples">
 					<ul>
 			<?php foreach($wikis as $wiki) { ?>
 						<li>
@@ -44,33 +53,12 @@
 	<?php } ?>
 			<section class="LandingPageSwitchBack">
 				<h3><a href="<?= wfMsg('landingpage-change-back-link') ?>"><?= wfMsg('landingpage-change-back-text') ?></a></h3>
-			
+
 			</section>
 		</section>
 
 		<section class="LandingPageScreenshots">
-		
 			<iframe class="video" width="450" height="263" frameborder="0" src="http://player.vimeo.com/video/15645799"></iframe>
-			
-			<!--<h1>This 
-				<?= wfMsg('landingpage-examples') ?>
-				<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
-			</h1>
-			<ul>
-<?php
-				foreach($wikis as $wiki) {
-?>
-				<li>
-					<a href="<?= $wiki['url'] ?>">
-						<img src="<?= $imagesPath . $wiki['image'] ?>" alt="" width="124" height="84">
-						<?= $wiki['name'] ?>
-					</a>
-				</li>
-<?php
-				}
-?>
-			</ul>-->
-			
 		</section>
 	</section>
 
