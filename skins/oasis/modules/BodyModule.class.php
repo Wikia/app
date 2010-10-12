@@ -286,6 +286,10 @@ class BodyModule extends Module {
 				$this->headerModuleAction = 'EditPage';
 			}
 			if ($wgEnableCorporatePageExt) {
+			
+				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
+				wfLoadExtensionMessages( 'AutoHubsPages' );
+				
 				$wgOut->addStyle(wfGetSassUrl("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
 				$wgOut->addScript('<script src="/extensions/wikia/CorporatePage/js/CorporateSlider.js"></script>');
 
