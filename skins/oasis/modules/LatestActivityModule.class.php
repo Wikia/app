@@ -5,7 +5,7 @@ class LatestActivityModule extends Module {
 
 	var $wgSingleH1;
 	var $wgBlankImgUrl;
-	
+
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
@@ -46,7 +46,7 @@ class LatestActivityModule extends Module {
 				$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
 				$item['user_name'] = $change['username'];
 				$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
-				$item['user_href'] = $change['user'];
+				$item['user_href'] = AvatarService::renderLink($item['user_name']);
 				$item['page_title'] = $change['title'];
 				$item['changetype'] = $change['type'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
