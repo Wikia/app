@@ -64,7 +64,7 @@ class AdSS_AdminController {
 					if( empty( $r ) ) {
 						$pp = new PaymentProcessor();
 						$respArr = array();
-						if( $pp->collectPayment( $row->ppa_baid, $ad->price['price'], $respArr ) ) {
+						if( $pp->collectPayment( $row->ppa_baid, $ad->price['price'] * $ad->weight, $respArr ) ) {
 							$ad->refresh();
 
 							$r = array(

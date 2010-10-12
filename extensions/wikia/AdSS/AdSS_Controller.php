@@ -65,6 +65,9 @@ class AdSS_Controller extends SpecialPage {
 		}
 
 		$ad = AdSS_Ad::newFromForm( $adForm );
+		if( $ad->pageId > 0 ) {
+			$ad->weight = 1;
+		}
 		$ad->save();
 
 		$selfUrl = $this->getTitle()->getFullURL();

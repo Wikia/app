@@ -12,6 +12,7 @@ class AdSS_Ad {
 	public $created;
 	public $closed;
 	public $expires;
+	public $weight;
 	public $email;
 	public $price;
 
@@ -27,6 +28,7 @@ class AdSS_Ad {
 		$this->created = null;
 		$this->closed = null;
 		$this->expires = null;
+		$this->weight = 1;
 		$this->email = '';
 		$this->price = AdSS_Util::getSitePricing();
 	}
@@ -61,6 +63,7 @@ class AdSS_Ad {
 				$this->price = AdSS_Util::getPagePricing( $title );
 			}
 		}
+		$this->weight = $f->get( 'wpWeight' );
 		$this->email = $f->get( 'wpEmail' );
 	}
 
@@ -77,6 +80,7 @@ class AdSS_Ad {
 		$this->created = wfTimestampOrNull( TS_UNIX, $row->ad_created );
 		$this->closed = wfTimestampOrNull( TS_UNIX, $row->ad_closed );
 		$this->expires = wfTimestampOrNull( TS_UNIX, $row->ad_expires );
+		$this->weight = $row->ad_weight;
 		$this->email = $row->ad_user_email;
 		$this->price = array(
 				'price'  => $row->ad_price,
@@ -113,6 +117,7 @@ class AdSS_Ad {
 						'ad_page_id'      => $this->pageId,
 						'ad_status'       => $this->status,
 						'ad_created'      => wfTimestampNow( TS_DB ),
+						'ad_weight'       => $this->weight,
 						'ad_user_email'   => $this->email,
 						'ad_price'        => $this->price['price'],
 						'ad_price_period' => $this->price['period'],
@@ -131,6 +136,7 @@ class AdSS_Ad {
 						'ad_status'     => $this->status,
 						'ad_closed'     => wfTimestampOrNull( TS_DB, $this->closed),
 						'ad_expires'    => wfTimestampOrNull( TS_DB, $this->expires),
+						'ad_weight'       => $this->weight,
 						'ad_user_email' => $this->email,
 						'ad_price'        => $this->price['price'],
 						'ad_price_period' => $this->price['period'],

@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'adss-form-type' => 'Sponsorship type:',
 	'adss-form-page' => 'Page to sponsor:',
 	'adss-form-price' => 'Sponsorship amount:',
+	'adss-form-shares' => 'Number of shares:',
 	'adss-form-email' => 'Your e-mail address:',
 	'adss-form-usd-per-day' => '$$1 per day',
 	'adss-form-usd-per-week' => '$$1 per week',
@@ -30,7 +31,9 @@ $messages['en'] = array(
 	'adss-form-pick-plan-errormsg' => 'You must select a plan',
 	'adss-form-pick-plan' => 'Pick a plan',
 	'adss-form-site-plan-header' => 'Buy a link across a wiki',
-	'adss-form-site-plan-description' => 'Gain greater exposure by buying a sponsored link across a wiki.',
+	'adss-form-site-plan-description' => 'Gain greater exposure by buying a sponsored link across a wiki.
+
+1 share is currently equal to 25% of {{SITENAME}} sponsored links. The size of the share may go up or down depending on how many others buy shares. You can cancel at any time.',
 	'adss-form-site-plan-price' => '1 ad costs $1',
 	'adss-form-page-plan-header' => 'Buy a link on an individual page',
 	'adss-form-page-plan-description' => 'Target specific pages to match your Campaign',

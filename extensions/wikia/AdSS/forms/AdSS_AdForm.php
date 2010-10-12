@@ -7,12 +7,13 @@ class AdSS_AdForm {
 
 	function __construct() {
 		$this->fields = array(
-				'wpUrl'   => '',
-				'wpText'  => '',
-				'wpDesc'  => '',
-				'wpType'  => '',
-				'wpPage'  => '',
-				'wpEmail' => '',
+				'wpUrl'    => '',
+				'wpText'   => '',
+				'wpDesc'   => '',
+				'wpType'   => '',
+				'wpPage'   => '',
+				'wpWeight' => '',
+				'wpEmail'  => '',
 				);
 		$this->errors = array();
 	}
@@ -29,6 +30,7 @@ class AdSS_AdForm {
 		$this->fields['wpDesc'] = $r->getText( 'wpDesc' );
 		$this->fields['wpType'] = $r->getText( 'wpType' );
 		$this->fields['wpPage'] = $r->getText( 'wpPage' );
+		$this->fields['wpWeight'] = $r->getText( 'wpWeight' );
 		$this->fields['wpEmail'] = $r->getText( 'wpEmail' );
 	}
 

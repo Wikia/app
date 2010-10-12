@@ -43,6 +43,16 @@
 			<?php echo $adForm->error( 'wpDesc' ); ?>
 			<textarea name="wpDesc" id="wpDesc"><?php $adForm->output( 'wpDesc' ); ?></textarea>
 
+			<div>
+			<label for="wpWeight"><?php echo wfMsgHtml( 'adss-form-shares' ); ?></label>
+			<?php echo $adForm->error( 'wpWeight' ); ?>
+			<select name="wpWeight" id="wpWeight">
+			  <?php for( $i=1; $i<=4; $i++): ?>
+			  <option<?php if( $adForm->get('wpWeight')==$i ) echo " selected"; ?>><?php echo $i;?></option>
+			  <?php endfor; ?>
+			</select>
+			</div>
+
 			<label for="wpEmail"><?php echo wfMsgHtml( 'adss-form-email' ); ?></label>
 			<?php echo $adForm->error( 'wpEmail' ); ?>
 			<input type="text" name="wpEmail" value="<?php $adForm->output( 'wpEmail' ); ?>" />
@@ -65,24 +75,27 @@
 <script type="text/javascript">/*<![CDATA[*/
 $(function() {
 	if( $("#wpType").val() == "page" ) {
-		$("section.item-1").css({opacity:0.2, height:"110px"});
+		$("section.item-1").css({opacity:0.2});
+		$("#wpWeight").parent().hide();
 	}
 	if( $("#wpType").val() == "site" ) {
-		$("section.item-2").css({opacity:0.2, height:"110px"});
+		$("section.item-2").css({opacity:0.2});
 		$("#wpPage").parent().hide();
 	}
 } );
 $("#wpSelectSite").click( function() {
 	$("#wpType").val("site");
-	$("section.item-1").animate({opacity:1, height:"160px"});
-	$("section.item-2").animate({opacity:0.2, height:"110px"});
+	$("section.item-1").animate({opacity:1});
+	$("section.item-2").animate({opacity:0.2});
 	$("#wpPage").parent().hide("slow");
+	$("#wpWeight").parent().show("slow");
 } );
 $("#wpSelectPage").click( function() {
 	$("#wpType").val("page");
-	$("section.item-1").animate({opacity:0.2, height:"110px"});
-	$("section.item-2").animate({opacity:1, height:"160px"});
+	$("section.item-1").animate({opacity:0.2});
+	$("section.item-2").animate({opacity:1});
 	$("#wpPage").parent().show("slow");
+	$("#wpWeight").parent().hide("slow");
 } );
 $("#wpUrl").keyup( function() {
 	$("div.sponsormsg > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );
