@@ -186,15 +186,21 @@ var ImageLightbox = {
 
 			// setup tracking
 			'callback': function() {
+				var lightbox = $('#lightbox');
+
 				$('#lightbox-link').click(function() {
 					self.track('/details');
 				});
 
 				$('#lightbox-caption-content').html(caption);
 
-				// reposition lightbox
-				var width =$('#lightbox').width();
-				$('#lightbox').resizeModal(width);
+				// resize lightbox (used mostly for external images)
+				lightbox.resizeModal(lightbox.width());
+
+				// RT #69824
+				if (window.skin == 'oasis') {
+					lightbox.css('top', lightbox.getModalTopOffset());
+				}
 
 				// remove lock
 				delete self.lock;
