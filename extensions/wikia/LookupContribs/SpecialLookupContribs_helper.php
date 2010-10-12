@@ -87,7 +87,7 @@ class LookupContribsCore {
 						'user_id'    => $this->mUserId,
 						'event_type' => array(1,2)
 					),
-					__METHOD__
+					__METHOD__,
 					array (
 						'LIMIT'  => $limit,
 						'OFFSET' => $offset
