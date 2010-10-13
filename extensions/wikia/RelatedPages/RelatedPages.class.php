@@ -121,7 +121,8 @@ class RelatedPages {
 				$images = $imageServing->getImages(1); // get just one image per article
 
 				// TMP: always remove last article to get a text snippeting working example
-				$images = array_slice($images, 0, $limit-1, true);
+				// macbre: removed as requested by Angie
+				//$images = array_slice($images, 0, $limit-1, true);
 
 				foreach( $this->pages as $pageId => $data ) {
 					if( isset( $images[$pageId] ) ) {
