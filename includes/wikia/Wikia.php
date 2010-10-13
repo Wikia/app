@@ -12,14 +12,20 @@ $wgAjaxExportList[] = 'WikiaAssets::combined';
 
 class WikiaAssets {
 
-	private static function get($url) {
-
+	/**
+	 * Since this function will return a string (containing comments) even in
+	 * the case of failure.  If the optional 'resultWasEmpty' is provided, it will
+	 * be set to true if the actual request returns an empty string.
+	 */
+	private static function get($url, $resultWasEmpty=false) {
 		global $wgRequest;
 
 		if(!$wgRequest->getBool('nia')) {
 
 			$out = "\n/* Version: nginx Call to: {$url} */\n";
 			$out .= '<!--# include virtual="'.$url.'" -->';
+			
+			$resultWasEmpty = true; // always empty now... we don't have nginx anymore.
 
 			return $out;
 
@@ -36,7 +42,11 @@ class WikiaAssets {
 			}
 
 			$out = "\n/* Version: not-nginx Call to: {$url} */\n";
-			$out .= Http::get($url);
+			$content = trim(Http::get($url));
+			if($content == ""){
+				$resultWasEmpty = true;
+			}
+			$out .= $content;
 
 			return $out;
 
@@ -70,8 +80,12 @@ class WikiaAssets {
 		global $wgRequest, $wgStylePath, $wgStyleVersion;
 
 		$type = $wgRequest->getVal('type');
+		
+		global $wgHttpProxy;
+		$wgHttpProxy = "127.0.0.1:80";
 
 		$contentType = "";
+		$hadAnError = false;
 		if($type == 'CoreCSS') {
 			$contentType = "text/css";
 			$themename = $wgRequest->getVal('themename');
@@ -109,7 +123,9 @@ class WikiaAssets {
 					$reference['url'] .= '&'.$cb;
 				}
 
-				$out .= self::get($reference['url']);
+				$errorOnThisCall = false;
+				$out .= self::get($reference['url'], $errorOnThisCall);
+				$hadAnError |= $errorOnThisCall;
 			}
 		} else if($type == 'SiteCSS') {
 			$contentType = "text/css";
@@ -120,7 +136,9 @@ class WikiaAssets {
 			foreach($ref as $reference) {
 				//$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
 				//$out .= '<!--# include virtual="'.$reference['url'].'" -->';
-				$out .= self::get($reference['url']);
+				$errorOnThisCall = false;
+				$out .= self::get($reference['url'], $errorOnThisCall);
+				$hadAnError |= $errorOnThisCall;
 			}
 		} else if($type == 'CoreJS') {
 			$contentType = "text/javascript";
@@ -159,12 +177,15 @@ class WikiaAssets {
 			$out = '';
 			foreach($references as $reference) {
 				//$out .= '<!--# include virtual="'.$reference.'" -->';
-				$out .= self::get($reference);
+
+				$errorOnThisCall = false;
+				$out .= self::get($reference, $errorOnThisCall);
+				$hadAnError |= $errorOnThisCall;
 			}
 		}
 		
-		// If we couldn't actually get the content... tell varnish/akamai/etc. not to cache this.
-		if(trim($out) == ""){
+		// If one or more of the files failed... tell varnish/akamai/etc. not to cache this.
+		if($hadAnError){
 			header('HTTP/1.0 503 Temporary error');
 		} else {
 			header("Content-type: $contentType");
