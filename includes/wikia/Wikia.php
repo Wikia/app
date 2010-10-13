@@ -71,8 +71,9 @@ class WikiaAssets {
 
 		$type = $wgRequest->getVal('type');
 
+		$contentType = "";
 		if($type == 'CoreCSS') {
-
+			$contentType = "text/css";
 			$themename = $wgRequest->getVal('themename');
 			$browser = $wgRequest->getVal('browser');
 
@@ -111,6 +112,7 @@ class WikiaAssets {
 				$out .= self::get($reference['url']);
 			}
 		} else if($type == 'SiteCSS') {
+			$contentType = "text/css";
 			$out = '';
 			$themename = $wgRequest->getVal('themename');
 			$cb = $wgRequest->getVal('cb');
@@ -121,9 +123,7 @@ class WikiaAssets {
 				$out .= self::get($reference['url']);
 			}
 		} else if($type == 'CoreJS') {
-			header('Content-type: text/javascript');
-			header('Cache-Control: max-age=2592000, public');
-
+			$contentType = "text/javascript";
 			$references = array();
 			
 			// configure based on skin
@@ -161,12 +161,16 @@ class WikiaAssets {
 				//$out .= '<!--# include virtual="'.$reference.'" -->';
 				$out .= self::get($reference);
 			}
-			echo $out;
-			exit();
+		}
+		
+		// If we couldn't actually get the content... tell varnish/akamai/etc. not to cache this.
+		if(trim($out) == ""){
+			header('HTTP/1.0 503 Temporary error');
+		} else {
+			header("Content-type: $contentType");
+			header('Cache-Control: max-age=2592000, public');
 		}
 
-		header('Content-type: text/css');
-		header('Cache-Control: max-age=2592000, public');
 		echo $out;
 		exit();
 	}
