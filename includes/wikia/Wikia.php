@@ -97,13 +97,17 @@ class WikiaAssets {
 				if(isset($reference['browser']) && $reference['browser'] != $browser) {
 					continue;
 				}
+
+				// There are race-conditions in deployment.  Always use the greater style version b/w the request and the local value.
+				$cb = $wgRequest->getVal('cb', 0);
+				$cb = max($wgStyleVersion, $cb);
+				
 				if(strpos($reference['url'], '?') === false) {
-					$reference['url'] .= '?'.$wgStyleVersion;
+					$reference['url'] .= '?'.$cb;
 				} else {
-					$reference['url'] .= '&'.$wgStyleVersion;
+					$reference['url'] .= '&'.$cb;
 				}
-				//$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
-				//$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+
 				$out .= self::get($reference['url']);
 			}
 		} else if($type == 'SiteCSS') {
