@@ -72,7 +72,6 @@ if(count($data) < $MIN_NUM_PARAMS){
 			exit;
 		} else {
 			// This is causing too many race conditions.  For now, we won't store this to disk.
-			/*
 			// Store the result in the correct static-file that the browser was looking for when it came here.
 			$destDir = $dir . "/". $params['type'] . "/" . $params['packages'];
 			@mkdir($destDir, 0775, true); // assume the directory doesn't exist and make it (recursive).
@@ -82,7 +81,6 @@ if(count($data) < $MIN_NUM_PARAMS){
 			$TMP_SUFFIX = "_TMP";
 			file_put_contents($fileName . $TMP_SUFFIX, $content, LOCK_EX);
 			rename($fileName . $TMP_SUFFIX, $fileName);
-			*/
 
 			// Print the whole content of the file (with correct headers).
 			header('HTTP/1.0 200 OK');
