@@ -57,6 +57,11 @@ button {
 		&:active {
 			@include linear-gradient($color-secondary-button, top, darken($color-secondary-button, 4%), 35%, darken($color-secondary-button-highlight, 4%), 65%);			
 		}
+		img {
+			&.chevron {
+				border-color: $color-text transparent transparent;
+				}
+			}
 	}
 }
 
@@ -139,6 +144,64 @@ This list-based button is used in the page header for edit/history/delete action
 		@include border-radius-sw(0);
 		ul {
 			display: block;
+		}
+	}
+
+}
+
+/*****************************
+Secondary Wikia Menu Button
+This list-based button used for all additional actions
+******************************/
+.wikia-menu-button {
+	&.secondary {
+		border: 1px solid $color-page-border;
+			*display: inline;
+			list-style: none;
+			margin: 0;
+			position: relative;
+			text-align: left;
+		>li>a {
+			border-right: 1px solid mix($color-text, $color-page-border, 0%);
+			color: $color-text;
+			display: inline;
+			margin-right: 4px;
+			padding-right: 4px;
+			position: relative;
+		}
+		ul {
+			background: $color-page;
+			border: 2px solid $color-page-border;
+			display: none;
+			left: -1px;
+			list-style: none;
+			margin: 0;
+			padding: 5px;
+			position: absolute;
+			top: 19px;
+			z-index: 100;
+			a {
+				color: $color-text;
+				display: block;
+				padding: 4px 4px 2px;
+				&:hover {
+					background: $color-menu-highlight;
+				}
+			}
+			li {
+				border-top: 1px solid $color-page-border;
+				line-height: normal;
+				&:first-child {
+					border: 0;
+				}
+			}
+		}
+		&.active {
+			@include border-radius-se(0);
+			@include border-radius-sw(0);
+			ul {
+				display: block;
+			}
 		}
 	}
 }
