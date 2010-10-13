@@ -39,6 +39,7 @@ class OasisModule extends Module {
 	var $displaytitle;
 	var $mimetype;
 	var $charset;
+	var $body_ondblclick;
 	var $dir;
 	var $lang;
 	var $pageclass;
@@ -117,7 +118,7 @@ class OasisModule extends Module {
 
 		// track page load time
 		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
+		
 		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
 		if (43339 == $wgCityId){
 			$this->analytics .= AnalyticsEngine::track("GA_Urchin", "lyrics");
