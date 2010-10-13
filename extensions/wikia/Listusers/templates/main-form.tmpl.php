@@ -139,7 +139,7 @@ $(document).ready(function() {
 <? 
 	$i = 0; 
 	foreach ($obj->mGroups as $groupName => $group) {
-		if ( $i > 0 && $i % 5 == 0) { ?> </tr><tr> <? } 
+		if ( $i > 0 && $i % 4 == 0) { ?> </tr><tr> <? } 
 
 		$found += ( isset($group['cnt']) ) ? intval($group['cnt']) : 0;
 		$groupLink = wfMsgExt("Grouppage-{$groupName}", array('parseinline') );
