@@ -19,6 +19,16 @@ var PageHeader = {
 		$("time.timeago").
 			data('maxdiff', 14 * 86400 * 1000).
 			timeago();
+
+		// RT #72155: resize FB like wrapper to match width of an iframe
+		if (typeof FB != 'undefined') {
+			FB.Event.subscribe('xfbml.render', function() {
+				var likeWrapper = $('.commentslikes').children('.likes');
+
+				// allow wrapper to resize
+				likeWrapper.css('width', 'auto');
+			});
+		}
 	},
 
 	historyMouseover: function(event) {
