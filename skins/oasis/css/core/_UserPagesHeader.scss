@@ -106,9 +106,7 @@
 	}
 	.wikia-button,
 	.wikia-menu-button {
-		position: absolute;
-		right: 10px;
-		top: 0;
+		float: right;
 		a[data-id=editprofile] .icon,
 		&[data-id=editprofile] .icon,
 		&[data-id=createblogpost] .icon {
