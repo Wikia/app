@@ -76,7 +76,10 @@ if(count($data) < $MIN_NUM_PARAMS){
 			@mkdir($destDir, 0775, true); // assume the directory doesn't exist and make it (recursive).
 			$fileName = $destDir . "/" . $params['checksum'] . "." . $params['type'];
 
-			file_put_contents($fileName, $content, LOCK_EX);
+			// Avoid race-conditions by writing the file first, then moving it into place.
+			$TMP_SUFFIX = "_TMP";
+			file_put_contents($fileName . $TMP_SUFFIX, $content, LOCK_EX);
+			rename($fileName . $TMP_SUFFIX, $fileName);
 
 			// Print the whole content of the file (with correct headers).
 			header('HTTP/1.0 200 OK');
