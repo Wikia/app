@@ -426,10 +426,6 @@ class SkinChooser {
 			}
 		} else {
 			$userSkin = self::getUserOption('skin');
-			if( !$isOasisPublicBeta && $userSkin == 'oasis' ) {
-				$userSkin = 'monaco';
-			}
-
 			$userTheme = self::getUserOption('theme');
 			if(empty($userSkin)) {
 				if(!empty($wgAdminSkin)) {
