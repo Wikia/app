@@ -20,7 +20,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 /**
  * Use revision number
  */
-require_once "$IP/includes/wikia/wgCacheBuster.php";
+include "$IP/includes/wikia/wgCacheBuster.php";
 $wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = $wgCacheBuster;
 
 /**
