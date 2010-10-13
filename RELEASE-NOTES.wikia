@@ -1,4 +1,5 @@
 == Changes since 201010.2 ==
+* rt#72161: Sub tag does not work in Oasis (macbre)
 * rt#71668: let any user use useskin=wikia now (TOR)
 * rt#71148: Oasis: Special:Following has overlapping issues because of Oasis rail (macbre)
 * rt#71145: Oasis: Special:Following no longer shows unfollow icon (bad css) (macbre)
