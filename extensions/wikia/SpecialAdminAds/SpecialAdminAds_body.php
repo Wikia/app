@@ -10,7 +10,7 @@ class SpecialAdminAds extends SpecialPage {
 	private $adlimit = 100;//number of ads to show on page - NOTE: Not used.  There is a local var w/the same name below... probably not intentional.
 	private $ispaypal;
 
-	var $emergencyEmail = 'ad-ops@wikia-inc.com';
+	var $emergencyEmail = 'emil@wikia-inc.com';
 
 	public function __construct() {
 		global $IP;
