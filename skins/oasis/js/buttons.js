@@ -21,27 +21,24 @@ var WikiaButtons = {
 	},
 
 	setup: function() {
-		//This function is run only once per button to detect arrow starting position and set menu min-width.
-
-		var buttonWidth = $(this).outerWidth();
-
-		//Store where the arrow begins (arrow section of menu buttons is 20px wide)
-		$(this).data("arrowStart", buttonWidth - 20);
-
-		//Store where the button begins
-		$(this).data("buttonStart", $(this).offset().left);
-
-		//Set min-width of menu, minus 4 for borders
-		$(this).find("ul").css("min-width", buttonWidth - 14);
+		//This function is run only once per button
+		$(this).data('menu', $(this).find("ul"));
 	},
 
 	click: function(event) {
-		if (event.pageX > $(this).data("arrowStart") + $(this).data("buttonStart")) {
-			//Mouse is on arrow. Show menu.
+		if(event.target.tagName !== 'A'){
+			var width = $(this).outerWidth();
+			
+			if(width !== $(this).data('prevWidth')){
+				$(this).data('prevWidth', width);
+
+				var menu = $(this).data('menu');
+				width = width - (parseInt(menu.css('padding-left')) + parseInt(menu.css('padding-right')) + parseInt(menu.css('border-left-width')) + parseInt(menu.css('border-right-width')));
+				
+				menu.css("min-width", width);
+			}
+			
 			$(this).toggleClass("active");
-		} else {
-			//Mouse is not on arrow. Go to first anchor's href.
-			//document.location = $(this).find("a").first().attr("href");
 		}
 	},
 
