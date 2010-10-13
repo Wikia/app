@@ -5,15 +5,10 @@ class RelatedPagesModule extends Module {
 	public $pages = null;
 	public $skipRendering = false;
 
-	var $wgSingleH1;
-
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgSingleH1;
+		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc;
 
 		$relatedPages = RelatedPages::getInstance();
-
-		// add CSS for this module
-		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/RelatedPages/RelatedPages.scss"));
 
 		// check for mainpage
 		if( Wikia::isMainPage() ) {
@@ -43,6 +38,9 @@ class RelatedPagesModule extends Module {
 
 		if( !$this->skipRendering ) {
 			wfLoadExtensionMessages( 'RelatedPages' );
+
+			// add CSS for this module
+			$wgOut->addStyle(wfGetSassUrl("extensions/wikia/RelatedPages/RelatedPages.scss"));
 
 			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
 			$this->pages = $wgMemc->get($mKey);
