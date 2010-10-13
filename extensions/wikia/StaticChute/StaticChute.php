@@ -33,8 +33,7 @@ class StaticChute {
 		if(empty($IP)){ // backup plan
 			$IP = realpath(dirname(__FILE__) . "/../../..");
 		}
-		require_once "$IP/includes/wikia/wgCacheBuster.php";
-		global $wgCacheBuster; // need this in case the constructor is called multiple times (since require_once will only happen once).
+		include "$IP/includes/wikia/wgCacheBuster.php";
 		$this->cacheBuster = $wgCacheBuster;
 		$this->cdnStylePath = "http://images1.wikia.nocookie.net/__cb{$this->cacheBuster}/common";
 
