@@ -2,7 +2,9 @@
 
 <li id="comm-<?=$commentId?>" class="article-comments-li <?=$rowClass?>">
 	<div class="comment-avatar">
-		<?= AvatarService::renderAvatar($comment['username'], 50) ?>
+		<a href="<?= htmlspecialchars(AvatarService::getUrl($comment['username'])) ?>">
+			<?= AvatarService::renderAvatar($comment['username'], 50) ?>
+		</a>
 	</div>
 	<blockquote>
 		<div class="article-comm-text" id="comm-text-<?= $comment['articleId'] ?>">
