@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?= $lang ?>" dir="<?= $dir ?>" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html lang="<?= $lang ?>" dir="<?= $dir ?>">
 <head>
 	<meta http-equiv="Content-Type" content="<?= $mimetype ?>; charset=<?= $charset ?>">
 	<meta name="viewport" content="width=1200">
