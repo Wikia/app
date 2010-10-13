@@ -26,19 +26,25 @@ var WikiaButtons = {
 	},
 
 	click: function(event) {
-		if(event.target.tagName !== 'A'){
-			var width = $(this).outerWidth();
-			
-			if(width !== $(this).data('prevWidth')){
-				$(this).data('prevWidth', width);
+		if(typeof $(this).attr('disabled') === 'undefined'){
+			if(event.target.tagName !== 'A'){
+				var width = $(this).outerWidth();
 
-				var menu = $(this).data('menu');
-				width = width - (parseInt(menu.css('padding-left')) + parseInt(menu.css('padding-right')) + parseInt(menu.css('border-left-width')) + parseInt(menu.css('border-right-width')));
-				
-				menu.css("min-width", width);
+				if(width !== $(this).data('prevWidth')){
+					$(this).data('prevWidth', width);
+
+					var menu = $(this).data('menu');
+					width = width - (parseInt(menu.css('padding-left')) + parseInt(menu.css('padding-right')) + parseInt(menu.css('border-left-width')) + parseInt(menu.css('border-right-width')));
+
+					menu.css("min-width", width);
+				}
+
+				$(this).toggleClass("active");
 			}
-			
-			$(this).toggleClass("active");
+		}
+		else{
+			event.preventDefault();
+			return false;
 		}
 	},
 
