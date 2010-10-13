@@ -264,6 +264,11 @@ class UserPagesHeaderModule extends Module {
 			}
 		}
 
+		// don't show stats for user pages with too long titles (RT #68818)
+		if (mb_strlen($this->title) > 35) {
+			$this->stats = false;
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 

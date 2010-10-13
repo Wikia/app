@@ -19,7 +19,24 @@
 ?>
 		</li>
 	</ul>
-
+<?php
+	// render edit button / dropdown menu
+	if (!empty($actionButton)) {
+		echo wfRenderModule('MenuButton', 'Index', array(
+			'action' => $actionButton,
+			'image' => $actionImage,
+			'name' => $actionName,
+		));
+	}
+	else if (!empty($actionMenu)) {
+		echo wfRenderModule('MenuButton', 'Index', array(
+			'action' => $actionMenu['action'],
+			'image' => $actionImage,
+			'dropdown' => $actionMenu['dropdown'],
+			'name' => $actionName,
+		));
+	}
+?>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 	<?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
 
@@ -49,24 +66,6 @@
 ?>
 		</ul>
 	</div>
-<?php
-	// render edit button / dropdown menu
-	if (!empty($actionButton)) {
-		echo wfRenderModule('MenuButton', 'Index', array(
-			'action' => $actionButton,
-			'image' => $actionImage,
-			'name' => $actionName,
-		));
-	}
-	else if (!empty($actionMenu)) {
-		echo wfRenderModule('MenuButton', 'Index', array(
-			'action' => $actionMenu['action'],
-			'image' => $actionImage,
-			'dropdown' => $actionMenu['dropdown'],
-			'name' => $actionName,
-		));
-	}
-?>
 </div>
 <?php
 	if ($subtitle != '') {
@@ -74,8 +73,5 @@
 <div id="contentSub"><?= $subtitle ?></div>
 <?php
 	}
-	
-	
-
 ?>
 	<a name="EditPage"></a>
