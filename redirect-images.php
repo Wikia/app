@@ -5,9 +5,9 @@
  */
 
 $HeadURL = split('/', '$HeadURL$');
-$wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
+$wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5]; // we generally use wgCacheBuster now instead.  can use that here instead of wgReleaseNumber if desired
 
-$wgStylePath      = "http://images.wikia.com/common/releases_{$wgReleaseNumber}/skins";
+$wgStylePath      = "http://images.wikia.com/common/__cb{$wgReleaseNumber}/skins";
 $newUrl = "";
 $age = 1200;
 
