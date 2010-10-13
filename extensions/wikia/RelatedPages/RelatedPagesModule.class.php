@@ -48,7 +48,7 @@ class RelatedPagesModule extends Module {
 			$this->pages = $wgMemc->get($mKey);
 			if (empty($this->pages)) {
 				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
-				$wgMemc->set($mKey, $this->pages);
+				$wgMemc->set($mKey, $this->pages, 3 * 3600);
 			}
 
 			// add collision detection code
