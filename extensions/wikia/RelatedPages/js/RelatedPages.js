@@ -16,8 +16,8 @@ RelatedPages = {
 
 		var module = $('.RelatedPagesModule');
 
-		// move the module after (at least) 3rd <h2> section
-		var addAfter = 3;
+		// move the module after (at least) 2nd <h2> section
+		var addAfter = 2;
 
 		// get 2nd level headings
 		var sections = content.find('.mw-headline').parent().filter('h2');
