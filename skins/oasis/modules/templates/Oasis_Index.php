@@ -39,7 +39,7 @@
 		}
 	?>
 </head>
-<body class="<?= implode(' ', $bodyClasses) ?>">
+<body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
 <?= $printableCss ?>
 <?php
