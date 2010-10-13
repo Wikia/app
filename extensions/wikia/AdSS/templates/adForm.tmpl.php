@@ -9,7 +9,7 @@
 
 			<section class="box item-1">
 				<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
-				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-description' ); ?>
+				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-description', 25 ); ?>
 				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', AdSS_Util::formatPrice( $sitePricing ) ); ?>
 				<input class="wikia-button" type="button" id="wpSelectSite" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
 			</section>
