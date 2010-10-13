@@ -5,7 +5,7 @@
 		<?php foreach($pages as $page) { ?>
 			<li>
 				<?php if( isset( $page['imgUrl'] ) ) { ?>
-				<img src="<?= $page['imgUrl']; ?>" width="200" height="100">
+				<a href="<?= $page['url']; ?>"><img src="<?= $page['imgUrl']; ?>" width="200" height="100"></a>
 				<?php } else { ?>
 				<div class="articleSnippet"><p><?= $page['text']; ?></p></div>
 				<?php } ?>
