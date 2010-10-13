@@ -678,10 +678,12 @@ class SiteWideMessages extends SpecialPage {
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		//step 1 of 3: get all active messages sent to *all*
+		//left outer join here now returns rows where recipient_id is null, but skips users which are NOT our guy. :)
 		$dbResult = $DB->Query (
-			  'SELECT msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_recipient_id AS user_id, msg_status AS status'
+			  'SELECT ' . MSG_TEXT_DB . '.msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_recipient_id AS user_id, msg_status AS status'
 			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' ON ' . MSG_TEXT_DB . '.msg_id = ' . MSG_STATUS_DB . '.msg_id'
+			. ' AND ' . MSG_STATUS_DB . '.msg_recipient_id = '. $DB->AddQuotes($user->GetID())
 			. ' WHERE msg_removed = ' . MSG_REMOVED_NO
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
