@@ -529,6 +529,29 @@ var initTracker = function() {
 		}
 	});
 
+	// Related Pages module
+	$('.RelatedPagesModule').click(function(ev) {
+		var fakeUrl = 'module/relatedpages/';
+		var node = $(ev.target);
+
+		if (node.is('img')) {
+			node = node.parent();
+		}
+
+		if (!node.is('a')) {
+			return;
+		}
+
+		if (node.hasClass('more')) {
+			$.tracker.byStr(fakeUrl + 'link');
+		}
+		else {
+			$.tracker.byStr(fakeUrl + 'image');
+		}
+
+		// don't track as clicks within content
+		ev.stopPropagation();
+	});
 
 	// track clicks on Facebook's "Like" buttons
 	try {
