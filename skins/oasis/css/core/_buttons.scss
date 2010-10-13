@@ -103,8 +103,10 @@ This list-based button is used in the page header for edit/history/delete action
 		color: $color-button-text;
 		display: inline;
 		margin-right: 4px;
-		padding-right: 4px;
 		position: relative;
+		margin-left: -7px !important;
+		padding: 3px 4px 3px;
+		padding-left: 7px !important;
 	}
 	ul {
 		background: $color-page;
