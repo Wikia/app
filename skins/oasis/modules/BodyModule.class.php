@@ -238,8 +238,8 @@ class BodyModule extends Module {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
-		// For now, no modules on Custom namespaces.  Could add a flag to control this.
-		if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal)) {
+		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
+		if (is_array($wgExtraNamespacesLocal) && in_array($subjectNamespace, $wgExtraNamespacesLocal && !in_array($subjectNamespace, $wgContentNamespaces))) {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
