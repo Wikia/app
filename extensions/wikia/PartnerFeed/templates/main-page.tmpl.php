@@ -1,36 +1,44 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- MAIN-PAGE -->
 <ul>
+	<? if ( $displayAchievements ){ ?>
 	<li>
 		<a href="?feed=rss&type=RecentBadges">
-			Recent earned badges for a specific Wiki
+			<?=wfMsg('partner-feed-earned-badges'); ?>
 		</a>
 	</li>
+	<? } ?>
+	<? if ( $displayBlogs ){ ?>
 	<li>
 		<a href="?feed=rss&type=RecentBlogPosts&listing=Recent posts">
-			Recent blog posts related to a promotion
+			<?=wfMsg('partner-feed-recent-blog-posts'); ?>
 		</a>
 	</li>
+	<? } ?>
+	<? if ( $displayAchievements ){ ?>
 	<li>
 		<a href="?feed=rss&type=AchivementsLeaderboard">
-			Wikis achievements leaderboard
+			<?=wfMsg('partner-feed-achievements-leaderboard'); ?>
 		</a>
 	</li>
+	<? } ?>
 	<li>
 		<a href="?feed=rss&type=RecentImages">
-			Gallery of the latest images that have been uploaded
+			<?=wfMsg('partner-feed-latest-images'); ?>
 		</a>
 	</li>
 	<li>
 		<a href="?feed=rss&type=HotContent&hub=tv">
-			Hub / verticals "Hot Content" as ranked by # of editors
+			<?=wfMsg('partner-feed-hotcontent'); ?>
 		</a>
 	</li>
+	<? if ( $displayBlogs ){ ?>
 	<li>
 		<a href="?feed=rss&type=RecentBlogComments&blogpost=user/post">
-			Recent comments related to specified blog post.
+			<?=wfMsg('partner-feed-recent-blog-comments'); ?>
 		</a>
 	</li>
+	<? } ?>
 </ul>
 
 <!-- END OF MAIN-PAGE -->

@@ -67,15 +67,29 @@ class PartnerFeed extends SpecialPage {
 					$this->FeedRecentBlogComments ( $feed );
 				break;
 				default :
-					$this->showFeed( $feed );
+					$this->showMenu();
 				break;
 			}
 		} else {
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$wgOut->addHTML( $oTmpl->execute( "main-page" ) );
+			$this->showMenu();
 		}
 
 		return false;
+	}
+
+
+	private function showMenu(){
+
+		global $wgOut, $wgEnableAchievementsExt, $wgEnableBlogArticles;
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars(
+			array (
+			    'displayBlogs' => (!empty($wgEnableBlogArticles)),
+			    'displayAchievements' => (!empty($wgEnableAchievementsExt))
+			)
+		);
+		$wgOut->addHTML( $oTmpl->execute( "main-page" ) );
 	}
 
 /**
@@ -85,50 +99,56 @@ class PartnerFeed extends SpecialPage {
  */
 	private function FeedRecentBlogComments ( $format ){
 
-		global $wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath, $wgRequest;
+		global	$wgEnableBlogArticles, $wgParser, $wgUser, $wgServer,
+			$wgOut, $wgExtensionsPath, $wgRequest;
 
-		// local settings
-		$maxNumberOfBlogComments = 10;
-		$userAvatarSize = 48;
-
-		$sBlogPost = $wgRequest->getText ( "blogpost", false );
-		$oTitle = Title::newFromText( $sBlogPost , 500);
-		if ( $oTitle->getArticleID() > 0 ){
-
-			$articleCommentList = ArticleCommentList::newFromTitle($oTitle);
-			$articleCommentList->newFromTitle( $oTitle );
-			$aCommentPages = $articleCommentList->getCommentPages();
-
-			$counter = $maxNumberOfBlogComments;
-			$feedArray = array();
-			foreach ($aCommentPages as $commentPage){
-
-				if ( ( $maxNumberOfBlogComments-- ) == 0){
-					break;
-				}
-				$tmpArticleComment = $commentPage['level1']->getData();
-
-				$feedArray[] = array(
-					'title' => '',
-					'description' => $tmpArticleComment['text'],
-					'url' => $oTitle->getFullURL(),
-					'date' => $commentPage['level1']->mFirstRevision->getTimestamp(),
-					'author' => $tmpArticleComment['author']->getName(),
-					'otherTags' => array(
-						'image' => AvatarService::getAvatarUrl( $commentPage['level1']->mUser->getName(), $userAvatarSize )
-					)
-				);
-			}
-
-			$this->showFeed( $format , wfMsg( 'feed-title-blogcomments', $oTitle->getFullText() ),  $feedArray);
-
+		if (empty($wgEnableBlogArticles)){
+			$this->showMenu();
 		} else {
 
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"blogPostName"		=> $sBlogPost
-			));
-			$wgOut->addHTML( $oTmpl->execute( "error-page-blog-comments" ) );
+			// local settings
+			$maxNumberOfBlogComments = 10;
+			$userAvatarSize = 48;
+
+			$sBlogPost = $wgRequest->getText ( "blogpost", false );
+			$oTitle = Title::newFromText( $sBlogPost , 500);
+			if ( $oTitle->getArticleID() > 0 ){
+
+				$articleCommentList = ArticleCommentList::newFromTitle($oTitle);
+				$articleCommentList->newFromTitle( $oTitle );
+				$aCommentPages = $articleCommentList->getCommentPages();
+
+				$counter = $maxNumberOfBlogComments;
+				$feedArray = array();
+				foreach ($aCommentPages as $commentPage){
+
+					if ( ( $maxNumberOfBlogComments-- ) == 0){
+						break;
+					}
+					$tmpArticleComment = $commentPage['level1']->getData();
+
+					$feedArray[] = array(
+						'title' => '',
+						'description' => $tmpArticleComment['text'],
+						'url' => $oTitle->getFullURL(),
+						'date' => $commentPage['level1']->mFirstRevision->getTimestamp(),
+						'author' => $tmpArticleComment['author']->getName(),
+						'otherTags' => array(
+							'image' => AvatarService::getAvatarUrl( $commentPage['level1']->mUser->getName(), $userAvatarSize )
+						)
+					);
+				}
+
+				$this->showFeed( $format , wfMsg( 'feed-title-blogcomments', $oTitle->getFullText() ),  $feedArray);
+
+			} else {
+
+				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+				$oTmpl->set_vars( array(
+					"blogPostName"		=> $sBlogPost
+				));
+				$wgOut->addHTML( $oTmpl->execute( "error-page-blog-comments" ) );
+			}
 		}
 	}
 
@@ -139,59 +159,64 @@ class PartnerFeed extends SpecialPage {
  */
 	private function FeedRecentBlogPosts ( $format ){
 		
-		global $wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath, $wgRequest;
+		global	$wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath,
+			$wgRequest, $wgEnableBlogArticles;
 
-		// local settings
-		$maxNumberOfBlogPosts = 10;
-		$postCharacterLimit = 293;
-		$userAvatarSize = 48;
-
-		// If blog listing does not exit treats parameter as empty;
-		$sListing = $wgRequest->getVal( 'listing' );
-		if ( !empty( $sListing ) && !Title::newFromText( $sListing, 502 )->exists() ){
-			unset($sListing);
-		};
-
-		$oBlogListing = new CreateBlogListingPage;
-		$oBlogListing->setFormData('listingAuthors', '');
-		$oBlogListing->setFormData('tagContent', '');
-		if ( !empty( $sListing ) ){
-			$oBlogListing->parseTag( urldecode( $sListing ) );
-			$subTitleName = wfMsg('blog-posts-from-listing', $sListing);
+		if ( empty($wgEnableBlogArticles) ){
+			$this->showMenu();
 		} else {
-			$oBlogListing->setFormData('listingCategories', '');
-			$subTitleName = wfMsg('all-blog-posts');
-		}
+			// local settings
+			$maxNumberOfBlogPosts = 10;
+			$postCharacterLimit = 293;
+			$userAvatarSize = 48;
 
-		$input = $oBlogListing->buildTagContent();
+			// If blog listing does not exit treats parameter as empty;
+			$sListing = $wgRequest->getVal( 'listing' );
+			if ( !empty( $sListing ) && !Title::newFromText( $sListing, 502 )->exists() ){
+				unset($sListing);
+			};
 
-		$db = wfGetDB( DB_SLAVE, 'dpl' );
+			$oBlogListing = new CreateBlogListingPage;
+			$oBlogListing->setFormData('listingAuthors', '');
+			$oBlogListing->setFormData('tagContent', '');
+			if ( !empty( $sListing ) ){
+				$oBlogListing->parseTag( urldecode( $sListing ) );
+				$subTitleName = wfMsg('blog-posts-from-listing', $sListing);
+			} else {
+				$oBlogListing->setFormData('listingCategories', '');
+				$subTitleName = wfMsg('all-blog-posts');
+			}
 
-		$params = array (
-			"summary" => true,
-			"timestamp" => true,
-			"count" => $maxNumberOfBlogPosts,
-		);
+			$input = $oBlogListing->buildTagContent();
 
-		$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, true );
-		$feedArray = array();
+			$db = wfGetDB( DB_SLAVE, 'dpl' );
 
-		foreach( $result as $val ){
-			$oTitle = Title::newFromID($val['page']);
-
-			$aValue = explode('/' , $oTitle->getText());
-			$feedArray[] = array(
-				'title' => $aValue[1],
-				'description' => substr( str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ), 0, $postCharacterLimit ),
-				'url' => $wgServer.$val['userpage'],
-				'date' => $val['date'],
-				'author' => $val['username'],
-				'otherTags' => array(
-					'image' => AvatarService::getAvatarUrl($val['username'], $userAvatarSize)
-				)
+			$params = array (
+				"summary" => true,
+				"timestamp" => true,
+				"count" => $maxNumberOfBlogPosts,
 			);
+
+			$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, true );
+			$feedArray = array();
+
+			foreach( $result as $val ){
+				$oTitle = Title::newFromID($val['page']);
+
+				$aValue = explode('/' , $oTitle->getText());
+				$feedArray[] = array(
+					'title' => $aValue[1],
+					'description' => substr( str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ), 0, $postCharacterLimit ),
+					'url' => $wgServer.$val['userpage'],
+					'date' => $val['date'],
+					'author' => $val['username'],
+					'otherTags' => array(
+						'image' => AvatarService::getAvatarUrl($val['username'], $userAvatarSize)
+					)
+				);
+			}
+			$this->showFeed( $format , wfMsg('feed-title-blogposts').' - '.$subTitleName, $feedArray);
 		}
-		$this->showFeed( $format , wfMsg('feed-title-blogposts').' - '.$subTitleName, $feedArray);
 	}
 
 /**
@@ -200,53 +225,58 @@ class PartnerFeed extends SpecialPage {
  */
 	private function FeedRecentBadges ( $format ){
 
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgServer;
-		wfLoadExtensionMessages( 'AchievementsII' );
-		// local settings
-		$howOld = 30;
-		$maxBadgesToDisplay = 6;
-		$badgeImageSize = 56;
-		$userNameLength = 22;
-		$badgeNameLength = 29;
-		$rankingService = new AchRankingService();
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgServer, $wgEnableAchievementsExt;
 
-		// ignore welcome badges
-		$blackList = array(BADGE_WELCOME);
+		if ( empty ($wgEnableAchievementsExt) ){
+			$this->showMenu();
+		} else {
+			wfLoadExtensionMessages( 'AchievementsII' );
+			// local settings
+			$howOld = 30;
+			$maxBadgesToDisplay = 6;
+			$badgeImageSize = 56;
+			$userNameLength = 22;
+			$badgeNameLength = 29;
+			$rankingService = new AchRankingService();
 
-		$awardedBadges = $rankingService->getRecentAwardedBadges( null, $maxBadgesToDisplay, $howOld, $blackList );
+			// ignore welcome badges
+			$blackList = array(BADGE_WELCOME);
 
-		$recents = array();
-		$count = 1;
+			$awardedBadges = $rankingService->getRecentAwardedBadges( null, $maxBadgesToDisplay, $howOld, $blackList );
 
-		$feedArray = array();
-		// getRecentAwardedBadges can sometimes return more than $max items
-		foreach ( $awardedBadges as $badgeData ) {
-			$recents[] = $badgeData;
-			$descriptionText = wfMsg('achievements-recent-info',
-				$badgeData['user']->getUserPage()->getLocalURL(),
-				substr($badgeData['user']->getName(), 0, $userNameLength),
-				substr($badgeData['badge']->getName(), 0, $badgeNameLength),
-				$badgeData['badge']->getGiveFor(),
-				wfTimeFormatAgo($badgeData['date'])
-			);
-			$descriptionText = preg_replace('/<br\s*\/*>/i',"$1 $2",$descriptionText);
-			$descriptionText = strip_tags($descriptionText);
-			$feedArray[] = array (
-				'title' => $badgeData['user']->mName ,
-				'description' => $descriptionText,
-				'url' => $badgeData['user']->getUserPage()->getFullURL(),
-				'date' => $badgeData['date'],
-				'author' => '',
-				'otherTags' => array(
-				    'image' => $badgeData['badge']->getPictureUrl($badgeImageSize),
-				)
-			);
+			$recents = array();
+			$count = 1;
 
-			if ( $count++ >= $maxBadgesToDisplay ){
-				break;
+			$feedArray = array();
+			// getRecentAwardedBadges can sometimes return more than $max items
+			foreach ( $awardedBadges as $badgeData ) {
+				$recents[] = $badgeData;
+				$descriptionText = wfMsg('achievements-recent-info',
+					$badgeData['user']->getUserPage()->getLocalURL(),
+					substr($badgeData['user']->getName(), 0, $userNameLength),
+					substr($badgeData['badge']->getName(), 0, $badgeNameLength),
+					$badgeData['badge']->getGiveFor(),
+					wfTimeFormatAgo($badgeData['date'])
+				);
+				$descriptionText = preg_replace('/<br\s*\/*>/i',"$1 $2",$descriptionText);
+				$descriptionText = strip_tags($descriptionText);
+				$feedArray[] = array (
+					'title' => $badgeData['user']->mName ,
+					'description' => $descriptionText,
+					'url' => $badgeData['user']->getUserPage()->getFullURL(),
+					'date' => $badgeData['date'],
+					'author' => '',
+					'otherTags' => array(
+					    'image' => $badgeData['badge']->getPictureUrl($badgeImageSize),
+					)
+				);
+
+				if ( $count++ >= $maxBadgesToDisplay ){
+					break;
+				}
 			}
+			$this->showFeed( $format , wfMsg('feed-title-recent-badges'),  $feedArray);
 		}
-		$this->showFeed( $format , wfMsg('feed-title-recent-badges'),  $feedArray);
 
 	}
 
@@ -487,56 +517,62 @@ class PartnerFeed extends SpecialPage {
  */
 	private function FeedAchivementsLeaderboard ( $format ) {
 
-		global $wgLang, $wgServer, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
-		wfLoadExtensionMessages('AchievementsII');
+		global	$wgEnableAchievementsExt, $wgLang, $wgServer, $wgOut,
+			$wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle,
+			$wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
 
-		// local settings
-		$maxEntries = 20;
-		$howOld = 3;
-		$userAvatarSize = 48;
-		
-		$rankingService = new AchRankingService();
-		$ranking = $rankingService->getUsersRanking( 20, true );
+		if ( empty($wgEnableAchievementsExt) ){
+			$this->showMenu();
+		} else {
+			wfLoadExtensionMessages('AchievementsII');
 
-		$levels = array( BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE );
-		$recents = array();
-		
-		foreach( $levels as $level ) {
-			$limit = 3;
-			$blackList = null;
-			if( $level == BADGE_LEVEL_BRONZE ) {
-				if( $maxEntries <= 0 ) break;
+			// local settings
+			$maxEntries = 20;
+			$howOld = 3;
+			$userAvatarSize = 48;
 
-				$limit = $maxEntries;
-				$blackList = array( BADGE_WELCOME );
+			$rankingService = new AchRankingService();
+			$ranking = $rankingService->getUsersRanking( 20, true );
+
+			$levels = array( BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE );
+			$recents = array();
+
+			foreach( $levels as $level ) {
+				$limit = 3;
+				$blackList = null;
+				if( $level == BADGE_LEVEL_BRONZE ) {
+					if( $maxEntries <= 0 ) break;
+
+					$limit = $maxEntries;
+					$blackList = array( BADGE_WELCOME );
+				}
+
+				$awardedBadges = $rankingService->getRecentAwardedBadges( $level, $limit, $howOld, $blackList );
+
+				if ( $total = count ( $awardedBadges ) ) {
+					$recents[$level] = $awardedBadges;
+					$maxEntries -= $total;
+				}
 			}
-
-			$awardedBadges = $rankingService->getRecentAwardedBadges( $level, $limit, $howOld, $blackList );
-
-			if ( $total = count ( $awardedBadges ) ) {
-				$recents[$level] = $awardedBadges;
-				$maxEntries -= $total;
+			$feedArray = array();
+			foreach( $ranking as $rank => $rankedUser ){
+				++$rank;
+				$name = htmlspecialchars( $rankedUser->getName() );
+				$feedArray[] = array(
+					'title' =>  $rank,
+					'description' => $name,
+					'url' => $wgServer.$rankedUser->getUserPageUrl(),
+					'date' => time(),
+					'author' => 'Wikia',
+					'',
+					'otherTags' => array(
+						'image' =>AvatarService::getAvatarUrl( $rankedUser->getName(), $userAvatarSize ),
+						'score' => $wgLang->formatNum( $rankedUser->getScore() )
+					)
+				);
 			}
+			$this->showFeed( $format , wfMsg('feed-title-leaderboard'),  $feedArray);
 		}
-		$feedArray = array();
-		foreach( $ranking as $rank => $rankedUser ){
-			++$rank;
-			$name = htmlspecialchars( $rankedUser->getName() );
-			$feedArray[] = array(
-				'title' =>  $rank,
-				'description' => $name,
-				'url' => $wgServer.$rankedUser->getUserPageUrl(),
-				'date' => time(),
-				'author' => 'Wikia',
-				'',
-				'otherTags' => array(
-					'image' =>AvatarService::getAvatarUrl( $rankedUser->getName(), $userAvatarSize ),
-					'score' => $wgLang->formatNum( $rankedUser->getScore() )
-				)
-			);			
-  		}
-
-		$this->showFeed( $format , wfMsg('feed-title-leaderboard'),  $feedArray);
 	}
 
 /**
@@ -549,8 +585,8 @@ class PartnerFeed extends SpecialPage {
  */
 	private function showFeed( $format, $subtitle, $feedData ) {
 		
-		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgTitle;
-		global $wgSitename;
+		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgTitle, $wgSitename;
+		
 		wfProfileIn( __METHOD__ );
 		$sFeedName = self::getFeedClass( $format );
 		$feed = new $sFeedName( wfMsg('feed-main-title'),  $subtitle, $wgTitle->getFullUrl() );
