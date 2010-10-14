@@ -1,4 +1,5 @@
 == Changes since 201010.2 ==
+* rt#72613: Can we change the text body color for dark wikis (macbre)
 * rt#68848: Oasis: Link avatars to user pages (macbre)
 * rt#68818: Oasis: Long user page names causing design problems (macbre)
 * rt#72161: Sub tag does not work in Oasis (macbre)
