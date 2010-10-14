@@ -47,8 +47,7 @@
 			padding: 0 3px;
 			vertical-align: baseline;
 		}
-		.icon {
-			background: url(/skins/oasis/images/sprite.png) -1128px 0 no-repeat; /* $wgCdnStylePath */
+		.sprite {
 			position:relative;
 			top: 1px;
 		}
@@ -139,13 +138,6 @@
 			margin-right: 2px;
 			padding-right: 8px;
 			position: relative;
-			.icon {
-				background: url(/skins/oasis/images/sprite.png) -1000px -16px no-repeat; /* $wgCdnStylePath */
-				vertical-align: text-bottom;
-			}
-		}
-		a[data-id=add] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1024px 0 no-repeat; /* $wgCdnStylePath */
 		}
 	}
 	.mainpage-tally {
@@ -162,11 +154,6 @@
 		line-height: 20px;
 		margin-top: 2px;
 		padding: 0 10px;
-		img {
-			background: url(/skins/oasis/images/sprite.png) -1024px 0 no-repeat; /* $wgCdnStylePath */			
-			height: 16px;
-			width: 22px;
-		}
 	}
 }
 .oasis-one-column .WikiaPageHeader {

@@ -121,14 +121,12 @@
 			@include border-radius(3px);
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
 			height: 19px;
+			text-align: center;
 			width: 19px;
-			img {
-				background: url(/skins/oasis/images/sprite.png) -1098px -32px no-repeat; /* $wgCdnStylePath */
+			.sprite.close {
 				cursor: pointer;
-				height: 15px;
-				margin-top: 2px;
-				vertical-align: baseline;
-				width: 15px;
+				margin-top: 4px;
+				position: static;
 			}
 		}
 		// tabs

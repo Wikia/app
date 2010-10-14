@@ -107,17 +107,6 @@
 	.wikia-button,
 	.wikia-menu-button {
 		float: right;
-		a[data-id=editprofile] .icon,
-		&[data-id=editprofile] .icon,
-		&[data-id=createblogpost] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat; /* $wgCdnStylePath */
-		}
-		a[data-id=leavemessage] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
-		}
-		a[data-id=addtopic] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
-		}
 	}
 }
 

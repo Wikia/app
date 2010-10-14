@@ -61,8 +61,8 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		if (ArticleAdLogic::isMainPage()) echo wfRenderModule('Search');
 		echo wfRenderModule('RandomWiki');
 } else { ?>
-		<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif') ?>
-		<?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('accesskey' => 'g', 'class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif') ?>
+		<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
+		<?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('accesskey' => 'g', 'class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif', null, 'sprite activity') ?>
 <?php } ?>
 	</div>
 	<div style="position: absolute; top: -1000px">

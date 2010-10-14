@@ -32,47 +32,36 @@
 			margin-right: 5px;
 			vertical-align: middle;
 		}
-	}
-	.share {
-		@include clearfix;
-		background-image: url(/skins/oasis/images/checkers.png); /* $wgCdnStylePath */
-		display: block;
-		list-style: none;
-		padding-right: 30px;
-		>li {
-			border-right: 1px solid mix($color-header-text, $color-header, 20%);
-			float: right;
-			height: 16px;
-			line-height: 16px;
-			margin-top: 2px;
-			padding: 0 10px;
-			&:first-child {
-				border: 0;
+		>ul {
+			@include clearfix;
+			background-image: url(/skins/oasis/images/checkers.png); /* $wgCdnStylePath */
+			display: block;
+			list-style: none;
+			padding-right: 30px;
+			>li {
+				border-right: 1px solid mix($color-header-text, $color-header, 20%);
+				float: right;
+				height: 16px;
+				line-height: 16px;
+				margin-top: 2px;
+				padding: 0 10px;
+				&:first-child {
+					border: 0;
+				}
+				img {
+					margin: 0 6px 0 1px;
+				}
+				>a {
+					color: $color-header-text;
+				}
+			}
+			.my-tools-edit {
+				font-size: 10px;
+				text-align: right;
 			}
 			img {
-				height: 15px;
-				margin: 0 6px 0 1px;
-				width: 15px;
-				&.mytools-icon {
-					background: url(/skins/oasis/images/sprite.png) -1112px -32px no-repeat; /* $wgCdnStylePath */
-				}
-				&.follow-icon {
-					background: url(/skins/oasis/images/sprite.png) -1112px -16px no-repeat; /* $wgCdnStylePath */
-				}
-				&.share-icon {
-					background: url(/skins/oasis/images/sprite.png) -1112px -48px no-repeat; /* $wgCdnStylePath */
-				}
+				cursor: pointer;
 			}
-		}
-		.my-tools-edit {
-			font-size: 10px;
-			text-align: right;
-		}
-		a {
-			color: $color-header-text;
-		}
-		img {
-			cursor: pointer;
 		}
 	}
 	.my-tools-menu {

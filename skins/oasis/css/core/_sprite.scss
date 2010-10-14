@@ -39,7 +39,64 @@
 		height: 16px;
 		width: 21px;
 	}
+	
+	//Search button
+	&.search {
+		background-position: -1036px -16px;
+	}
+	
+	//Toolbar 
+	&.mytools {
+		background-position: -1112px -32px;
+		height: 15px;
+		width: 15px;
+	}
+	&.follow {
+		background-position: -1112px -16px;
+		height: 15px;
+		width: 15px;
+	}
+	&.share {
+		background-position: -1112px -48px;
+		height: 15px;
+		width: 15px;
+	}
+	
+	&.logo {
+		background-position: -1000px -41px;
+		height: 23px;
+		width: 91px;
+	}
 
+	//My Tools Configuration
+	&.drag {
+		background-position: -1144px -32px;
+		height: 17px;
+		width: 16px;		
+	}
+	&.trash {
+		background-position: -1128px -16px;
+		height: 16px;
+		width: 16px;	
+	}
+
+	//Wiki Header buttons
+	&.activity {
+		background-position: -1128px -48px;
+		height: 14px;
+		width: 17px;
+	}
+	&.random {
+		background-position: -1144px -16px;
+		height: 13px;
+		width: 13px;
+	}
+	
+	&.close {
+		background-position: -1098px -34px;
+		height: 11px;
+		width: 11px;
+	}
 
 	&.edit-pencil {
 		background-position: -1000px -16px;
@@ -55,6 +112,11 @@
 		background-position: -1058px -16px;
 		height: 16px;
 		width: 22px;
+	}
+	&.lock {
+		background-position: -1128px -32px;
+		height: 12px;
+		width: 9px;
 	}
 
 	&.remove {

@@ -116,7 +116,7 @@ CKEDITOR.themes.add( 'wikia', (function()
 							' cke_', editor.lang.dir, '" style="position:absolute">' +
 							'<div class="%body">' +
 								'<div id="%title#" class="%title"></div>' +
-								'<div id="%close_button#" class="%close_button"><img src="' + window.stylepath + '/common/blank.gif" /></div>' +
+								'<div id="%close_button#" class="%close_button"><img src="' + window.stylepath + '/common/blank.gif" class="sprite close" /></div>' +
 								'<div id="%tabs#" class="%tabs accent tabs"></div>' +
 								'<div id="%contents#" class="%contents"></div>' +
 								'<div id="%footer#" class="%footer"></div>' +

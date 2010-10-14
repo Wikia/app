@@ -66,6 +66,7 @@ class MenuButtonModule extends Module {
 					break;
 
 				case self::LOCK_ICON:
+					$img_class = 'sprite lock';
 					$height = 12;
 					$width = 9;
 					$this->class = 'view-source';

@@ -5,24 +5,24 @@
 		<?php if ($showNotifications) { 
 	 		echo wfRenderModule('Notifications'); 
 	 	} ?> 
-		<ul class="share">
+		<ul>
 
 <?php if($showMyTools) { ?>
 			<li class="mytools">
-				<img src="<?= $wgBlankImgUrl; ?>" class="mytools-icon" height="15" width="15">
+				<img src="<?= $wgBlankImgUrl; ?>" class="sprite mytools" height="15" width="15">
 				<a href="#"><?= wfMsg('oasis-mytools') ?></a>
 				<?= wfRenderModule('MyTools') ?>
 			</li>
 <?php } ?>
 <?php if($showFollow && $follow) { ?>
 			<li>
-				<a href="<?= $follow['href'] ?>"><img src="<?= $wgBlankImgUrl; ?>" class="follow-icon" height="15" width="15"></a>
+				<a href="<?= $follow['href'] ?>"><img src="<?= $wgBlankImgUrl; ?>" class="sprite follow" height="15" width="15"></a>
 				<a accesskey= "w" href="<?= $follow['href'] ?>" id="ca-<?= $follow['action'] ?>"><?= $follow['text'] ?></a>
 			</li>
 <?php } ?>
 <?php if($showShare) { ?>
 			<li id="ca-share_feature">
-				<img src="<?= $wgBlankImgUrl; ?>" class="share-icon" height="15" width="15">
+				<img src="<?= $wgBlankImgUrl; ?>" class="sprite share" height="15" width="15">
 				<a href="#" id="control_share_feature"><?= wfMsg('oasis-share') ?></a>
 			</li>
 <?php } ?>

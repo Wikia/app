@@ -112,19 +112,8 @@
 			img {
 				left: -2px;
 				position: relative;
-				height: 16px;
 				top: 0;
 				vertical-align: text-bottom;
-			}
-			&[data-id=randompage] img {
-				background: url(/skins/oasis/images/sprite.png) no-repeat scroll -1144px -16px transparent; /* $wgCdnStylePath */
-				height: 13px;
-				width: 13px;
-			}
-			&[data-id=wikiactivity] img {
-				background: url(/skins/oasis/images/sprite.png) no-repeat scroll -1128px -48px transparent; /* $wgCdnStylePath */
-				height: 14px;
-				width: 17px;
 			}
 		}
 		a:first-child {
