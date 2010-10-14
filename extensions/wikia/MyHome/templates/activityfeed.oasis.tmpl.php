@@ -1,4 +1,13 @@
+
+
+
+
 <div id="myhome-main">
+	<nav class="activity-nav">
+		<?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif', null, 'sprite activity') ?>
+		<?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist', array('class' => 'wikia-button secondary', 'data-id' => 'wikiactivity-watchlist'), 'blank.gif', null) ?>
+	</nav>
+	
 <?php  if( isset( $emptyMessage ) ) { ?>
 	<h3 class="myhome-empty-message"><?php print $emptyMessage ?></h3>
 <?php	} else { ?>
