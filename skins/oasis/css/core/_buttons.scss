@@ -105,7 +105,7 @@ This list-based button is used in the page header for edit/history/delete action
 			border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
 			color: $color-button-text;
 			display: inline-block;
-			padding-left: 5px;
+			padding: 0 8px 0 5px;
 		}
 	}
 	ul {
