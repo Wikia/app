@@ -77,7 +77,6 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 
 		if ($wgEnableOpenXSPC) {
 			$adtag = <<<EOT
-<!-- AdProviderOpenX slot: $slotname zoneid: $zoneId  -->
 <script type='text/javascript'>/*<![CDATA[*/
 	document.write('<scr'+'ipt type="text/javascript">');
 	document.write('OA_show($zoneId);');
@@ -187,7 +186,6 @@ EOT;
 			$adUrlScript = $this->getAdUrlScript($slotname, $params);
 			$adUrlScript = str_replace("\n", " ", $adUrlScript);
 			$adtag .= <<<EOT
-<!-- AdProviderOpenX slot: $slotname zoneid: {$zoneIds[$i]}  -->
 	document.write('$adUrlScript');
 EOT;
 		}
