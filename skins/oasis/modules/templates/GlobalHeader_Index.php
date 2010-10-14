@@ -22,9 +22,6 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 						<ul class="subnav">
 							<li>
 								<?= AdEngine::getInstance()->getAd('SPOTLIGHT_GLOBALNAV_'.++$i) ?>
-								<!--
-								<img src="<?= $wgCdnStylePath ?>/oasis/images/temp_globalnav_spotlight.jpg" width="270" height="143">
-								-->
 							</li>
 <?php
 		foreach($menuNodes[$level0]['children'] as $level1) {

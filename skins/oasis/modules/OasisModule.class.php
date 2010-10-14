@@ -46,6 +46,9 @@ class OasisModule extends Module {
 	var $skinnameclass;
 	var $bottomscripts;
 
+	// global vars
+	var $wgEnableOpenXSPC;
+
 	public function executeIndex() {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId;
 

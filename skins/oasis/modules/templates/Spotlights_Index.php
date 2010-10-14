@@ -13,8 +13,7 @@
 		<?= wfRenderModule('RandomWiki') ?>
 		<? } ?>
 	</header>
-	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?>"<? } } ?>>
-		<?= AdEngine::getInstance()->getLazyLoadableAdGroup($adGroupName, $adslots) ?>
+	<ul>
 		<? for ($i=0; $i<$n_adslots; $i++) { ?>
 		<li class="WikiaSpotlight item-<?= $i+1 ?>">
 			<?= AdEngine::getInstance()->getAd($adslots[$i]) ?>
