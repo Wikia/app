@@ -106,6 +106,7 @@ class RelatedPages {
 			}
 			arsort($pageCounters);
 
+			$pages = array();
 			foreach ( array_keys( $pageCounters ) as $pageId ) {
 				$title = Title::newFromId( $pageId );
 
@@ -113,46 +114,63 @@ class RelatedPages {
 				if(!empty($title) && $title->exists() && !$title->isRedirect()) {
 					$prefixedTitle = $title->getPrefixedText();
 
-					$this->pages[ $pageId ] = array(
+					$pages[$pageId] = array(
 						'url' => $title->getLocalUrl(),
 						'title' => $prefixedTitle,
 						'wrappedTitle' => $this->getWrappedTitle($prefixedTitle),
 					);
 
-					wfDebug(__METHOD__ . ": adding page '{$prefixedTitle}'\n");
+					wfDebug(__METHOD__ . ": adding page '{$prefixedTitle}' (#{$pageId})\n");
 				}
 
-				if (count($this->pages) >= $limit) {
+				// get more pages (some can be filtered out - RT #72703)
+				if (count($pages) >= $limit * 2) {
 					break;
 				}
 			}
 
 			if( class_exists('imageServing') ) {
 				// ImageServing extension enabled, get images
-				$imageServing = new imageServing( array_keys( $this->pages ), 200, array( 'w' => 2, 'h' => 1 ) );
+				$imageServing = new imageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
 				$images = $imageServing->getImages(1); // get just one image per article
 
 				// TMP: always remove last article to get a text snippeting working example
 				// macbre: removed as requested by Angie
 				//$images = array_slice($images, 0, $limit-1, true);
 
-				foreach( $this->pages as $pageId => $data ) {
+				foreach( $pages as $pageId => $data ) {
 					if( isset( $images[$pageId] ) ) {
 						$image = $images[$pageId][0];
 						$data['imgUrl'] = $image['url'];
+
+						$this->pages[] = $data;
 					}
 					else {
 						// no images, get a text snippet
 						$data['text'] = $this->getArticleSnippet( $pageId );
+
+						if ($data['text'] != '') {
+							$this->pages[] = $data;
+						}
 					}
-					$this->pages[ $pageId ] = $data;
+
+					if (count($this->pages) >= $limit) {
+						break;
+					}
 				}
 			}
 			else {
 				// ImageServing not enabled, just get text snippets for all articles
-				foreach( $this->pages as $pageId => $data ) {
+				foreach( $pages as $pageId => &$data ) {
 					$data['text'] = $this->getArticleSnippet( $pageId );
-					$this->pages[ $pageId ] = $data;
+
+					if ($data['text'] != '') {
+						$this->pages[] = $data;
+					}
+
+					if (count($this->pages) >= $limit) {
+						break;
+					}
 				}
 			}
 		} // if $categories
@@ -345,7 +363,11 @@ class RelatedPages {
 		$content = preg_replace('/\s+/',' ',$content);
 
 		// store first x characters of parsed content
-		$content = mb_substr($content, 0, $length);
+		$content = trim(mb_substr($content, 0, $length));
+
+		if ($content == '') {
+			wfDebug(__METHOD__ . ": got empty snippet for article #{$articleId}\n");
+		}
 
 		wfProfileOut(__METHOD__);
 		return $content;
