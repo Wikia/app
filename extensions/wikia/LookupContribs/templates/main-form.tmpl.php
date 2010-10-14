@@ -1,11 +1,11 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
-function lcShowDetails(dbname) {
+function lcShowDetails(dbname, mode) {
 	var username = '<?=$username?>';
 	var action = '<?=$action?>';
-	var sel_mode = '#lc-mode-' + dbname;
-	var mode = ( $(sel_mode).exists() ) ? $(sel_mode).val() : '';
+	//var sel_mode = '#lc-mode-' + dbname;
+	//var mode = ( $(sel_mode).exists() ) ? $(sel_mode).val() : '';
 					
 	if ( !username ) {
 		return false;
@@ -54,7 +54,7 @@ $(document).ready(function() {
 		"aoColumnDefs": [ 
 			{ "bVisible": false,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "bVisible": false,  "aTargets": [ 1 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },			
+			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false, "sClass": "lc-datetime" },			
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '" target="new">' + oObj.aData[3] + '</a></span>';
@@ -69,12 +69,12 @@ $(document).ready(function() {
 			{ "sClass": "lc-datetime", "aTargets": [ 4 ], "bSortable" : false },
 			{
 				"fnRender": function ( oObj ) {
-					var row = '<select name="mode" id="lc-mode-' + oObj.aData[1] + '" class="small" style="width:70%">';
-<? foreach ( $modes as $mode => $modeName ) : ?>					
-					row += '<option value="<?=$mode?>"><?=$modeName?></option>';
-<? endforeach ?>
-					row += '</select>&#160;&#160;';
-					row += '<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onclick="lcShowDetails(\'' + oObj.aData[1] + '\');" class="paginate_button">';
+					var row = '<div style="white-space:nowrap">';
+<? $loop = 0; foreach ( $modes as $mode => $modeName ) : ?>						
+					row += '(<a href="javascript:void(0)" onclick="lcShowDetails(\'' + oObj.aData[1] + '\', \'<?=$mode?>\');"><?=$modeName?></a>)';
+<? if ( $loop < count($modes) - 1 ) : ?> row += ' &#183; '; <? endif ?>					
+<? $loop++; endforeach ?> 
+					row += '</div>';
 					return row;
 				},
 				"aTargets": [ 5 ],
@@ -148,27 +148,27 @@ $(document).ready(function() {
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lc-table">
 	<thead>
 		<tr>
-			<th>#</th>
-			<th><?=wfMsg('lookupcontribswikidbname')?></th>			
-			<th><?=wfMsg('lookupcontribswikititle')?></th>			
-			<th><?=wfMsg('lookupcontribswikiurl')?></th>
-			<th style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
-			<th style="width:100%"><?=wfMsg('lookupcontribsdetails')?></th>
+			<th width="2%">#</th>
+			<th width="3%"><?=wfMsg('lookupcontribswikidbname')?></th>			
+			<th width="100%"><?=wfMsg('lookupcontribswikititle')?></th>			
+			<th width="20%"><?=wfMsg('lookupcontribswikiurl')?></th>
+			<th width="20%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
+			<th width="20%"><?=wfMsg('lookupcontribscontribtitleforuser')?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="5" class="dataTables_empty"><?=wfMsg('livepreview-loading')?></td>
+			<td colspan="6" class="dataTables_empty"><?=wfMsg('livepreview-loading')?></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
-			<th>#</th>
-			<th><?=wfMsg('lookupcontribswikidbname')?></th>			
-			<th><?=wfMsg('lookupcontribswikititle')?></th>			
-			<th><?=wfMsg('lookupcontribswikiurl')?></th>
-			<th style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
-			<th style="width:100%"><?=wfMsg('lookupcontribsdetails')?></th>
+			<th width="2%">#</th>
+			<th width="3%"><?=wfMsg('lookupcontribswikidbname')?></th>			
+			<th width="100%"><?=wfMsg('lookupcontribswikititle')?></th>			
+			<th width="20%"><?=wfMsg('lookupcontribswikiurl')?></th>
+			<th width="20%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
+			<th width="20%"><?=wfMsg('lookupcontribscontribtitleforuser')?></th>
 		</tr>
 	</tfoot>
 </table>

@@ -53,6 +53,12 @@ class LookupContribsPage extends SpecialPage {
 			'all'	 => wfMsg('lookupcontribsselectmodeall')
 		) ;
 		
+		$this->mShortModes = array(
+			'normal' => wfMsg('lookupcontribsnormal'),
+			'final' => wfMsg('lookupcontribsfinal'),
+			'all' => wfMsg('lookupcontribsall')
+		);
+		
 		$this->mViewModes = array ('full', 'links');
 		$wgOut->setPageTitle( wfMsg('lookupcontribstitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -102,7 +108,7 @@ class LookupContribsPage extends SpecialPage {
 			"username"  => $this->mUsername,
 			"mode"      => $this->mMode,
 			"view"      => $this->mView,
-			"modes"		=> $this->mModes
+			"modes"		=> $this->mShortModes
 		));
 		$wgOut->addHTML( $oTmpl->execute("main-form") );
 		wfProfileOut( __METHOD__ );

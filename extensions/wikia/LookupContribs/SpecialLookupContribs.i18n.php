@@ -55,6 +55,10 @@ Check given username for possible typos.</p>',
 	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
 	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
 	'lookupcontribscontent' => 'content',
+	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
+	'lookupcontribsnormal' => 'recent',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'all'
 );
 
 /** Message documentation (Message documentation)
