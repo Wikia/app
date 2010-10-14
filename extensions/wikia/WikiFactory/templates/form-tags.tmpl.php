@@ -35,7 +35,8 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 <?php
 	if( is_array( $tags ) ):
 		global $wgBlankImgUrl;
-		$remove_icon = '<img src="'.$wgBlankImgUrl.'" class="sprite delete" alt="remove" />';
+		$icon_class = Wikia::isOasis() ? 'remove' /*oasis*/ : 'delete' /*monaco*/;
+		$remove_icon = '<img src="'.$wgBlankImgUrl.'" class="sprite '.$icon_class.'" alt="remove" />';
 		foreach( $tags as $id => $tag ):
 			echo ' ' . Xml::tags('a',
 				array(
