@@ -35,15 +35,15 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		'SPECIAL_INTERSTITIAL_BOXAD_1' => 5,
 		'TOP_RIGHT_BOXAD' => 5,
 
-		'SPOTLIGHT_GLOBALNAV_1' => 6,
-		'SPOTLIGHT_GLOBALNAV_2' => 6,
-		'SPOTLIGHT_GLOBALNAV_3' => 6,
-		'SPOTLIGHT_RAIL_1' => 6,
-		'SPOTLIGHT_RAIL_2' => 6,
-		'SPOTLIGHT_RAIL_3' => 6,
-		'SPOTLIGHT_FOOTER_1' => 6,
-		'SPOTLIGHT_FOOTER_2' => 6,
-		'SPOTLIGHT_FOOTER_3' => 6,
+		'SPOTLIGHT_GLOBALNAV_1' => 20,
+		'SPOTLIGHT_GLOBALNAV_2' => 21,
+		'SPOTLIGHT_GLOBALNAV_3' => 22,
+		'SPOTLIGHT_RAIL_1' => 17,
+		'SPOTLIGHT_RAIL_2' => 18,
+		'SPOTLIGHT_RAIL_3' => 19,
+		'SPOTLIGHT_FOOTER_1' => 14,
+		'SPOTLIGHT_FOOTER_2' => 15,
+		'SPOTLIGHT_FOOTER_3' => 16,
 
 		'default' => 0, // FIXME
 	);
@@ -52,6 +52,7 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
         private $slotsToCall = array();
 
 		const WIKIA_AFFILIATE_ID = 2;
+		const OASIS_SPOTLIGHTS_AFFILIATE_ID = 3;
 
         public function addSlotToCall($slotname){
                 $this->slotsToCall[]=$slotname;
@@ -76,12 +77,21 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		}
 
 		if ($wgEnableOpenXSPC) {
+/*
 			$adtag = <<<EOT
-<script type='text/javascript'>/*<![CDATA[*/
+<script type='text/javascript'>
+	document.write('<scr'+'ipt type="text/javascript">');
+	document.write('wgAfterContentAndJS.push(function(){ bezen.domwrite.capture(); bezen.dom.appendScript(document.getElementById("Wrapper_$slotname"), bezen.dom.element( "script", {"type":"text/javascript"}, "OA_show($zoneId);" ), bezen.nix ); });');
+	document.write('</scr'+'ipt>');
+</script>
+EOT;
+*/
+			$adtag = <<<EOT
+<script type='text/javascript'>
 	document.write('<scr'+'ipt type="text/javascript">');
 	document.write('OA_show($zoneId);');
 	document.write('</scr'+'ipt>');
-/*]]>*/</script>
+</script>
 EOT;
 			//@todo use lazy loading
 		}
@@ -264,10 +274,10 @@ EOT;
 		return $adUrlScript;
 	}
 
-	public static function getOpenXSPCUrlScript() {
+	public static function getOpenXSPCUrlScript($affiliate_id=self::WIKIA_AFFILIATE_ID) {
 		$base_url = '/__spotlights/spcjs.php';
 
-		$url_script = self::getUrlScript($base_url, '', '', self::WIKIA_AFFILIATE_ID);
+		$url_script = self::getUrlScript($base_url, '', '', $affiliate_id);
 		$openxspc_url_script = <<<EOT
 	{$url_script}
 	var openxspc_base_url = base_url;
