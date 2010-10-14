@@ -111,11 +111,15 @@ class RelatedPages {
 
 				// filter out redirect pages (RT #72662)
 				if(!empty($title) && $title->exists() && !$title->isRedirect()) {
+					$prefixedTitle = $title->getPrefixedText();
+
 					$this->pages[ $pageId ] = array(
 						'url' => $title->getLocalUrl(),
-						'title' => $title->getPrefixedText(),
-						'wrappedTitle' => $this->getWrappedTitle( $title->getPrefixedText() )
+						'title' => $prefixedTitle,
+						'wrappedTitle' => $this->getWrappedTitle($prefixedTitle),
 					);
+
+					wfDebug(__METHOD__ . ": adding page '{$prefixedTitle}'\n");
 				}
 
 				if (count($this->pages) >= $limit) {
@@ -298,6 +302,7 @@ class RelatedPages {
 	 * @param int $length snippet length (in characters)
 	 */
 	public function getArticleSnippet( $articleId, $length = 100 ) {
+		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgParser;
 
 		$article = Article::newFromID( $articleId );
@@ -316,6 +321,11 @@ class RelatedPages {
 
 		// skip "edit" section and TOC
 		$content .= "\n__NOEDITSECTION__\n__NOTOC__";
+
+		// remove parser hooks from wikitext (RT #72703)
+		$hooks = $wgParser->getTags();
+		$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
+		$content = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#', '', $content);
 
 		$tmpParser = new Parser();
 		$content = $tmpParser->parse( $content, $wgTitle, new ParserOptions )->getText();
@@ -336,8 +346,8 @@ class RelatedPages {
 
 		// store first x characters of parsed content
 		$content = mb_substr($content, 0, $length);
-		$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&'));
 
+		wfProfileOut(__METHOD__);
 		return $content;
 	}
 
