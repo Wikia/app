@@ -134,6 +134,8 @@ $wgAutoloadClasses['ArticleInterlangModule'] = $IP.'/skins/oasis/modules/Article
 $wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiModule.class.php';
 
 
+$wgAutoloadClasses['ArticleInfoBoxModule'] = $IP.'/skins/oasis/modules/ArticleInfoBoxModule.class.php';
+
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
 
 // TODO:move this inclusion to CommonExtensions?

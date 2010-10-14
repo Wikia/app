@@ -69,11 +69,6 @@
 		vertical-align: super;
 	}
 
-	sub {
-		font-size: 11px;
-		vertical-align: sub;
-	}
-
 	ul, ol {
 		margin: 0.4em 0 0.5em 2.5em;
 	}
@@ -297,6 +292,106 @@
 	.TablePager th { background-color: #eeeeff; color: #000 }
 	.TablePager td { background-color: #ffffff; color: #000 }
 	.TablePager tr:hover td { background-color: #eeeeff }
+	
+	
+	.InfoBox {
+		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+		border: 1px $color-page-border solid;
+		float: right;
+		line-height: 12px;
+		
+		padding: {
+			left: 10px;
+			right: 10px;
+		}
+		margin: 0 0 16px 16px;
+
+		table {
+			border-collapse: collapse;
+			width: 243px;
+					
+			td {
+				margin: 0px;
+				padding: 0px;
+				overflow: hidden;
+				vertical-align: top;
+				width: 100%;
+			}
+			
+			th {
+				@extends td;
+				font-weight: bold;
+			}
+			
+			thead {
+				tr {
+					margin-top: 20px;
+				}
+				th {
+					font-size: 17px;
+					font-weight: bold;
+					padding: {
+						bottom: 20px;
+						top: 20px;
+						left: 10px;
+						right: 10px;
+					}
+					text-align: left;
+				}
+				
+				.infobox-image {
+					text-align: center;
+					overflow: hidden;
+					padding: {
+						top: 0px;
+						bottom: 10px;
+						right: 10px;
+						left: 10px;
+					}
+				}
+			
+				.infobox-caption {
+					text-align: center;
+					font-size: 12px;			
+				}
+				.infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
+			}
+	
+			// /** the infobox content **/
+			tbody {
+				border-top: 1px $color-page-border solid;
+				display: block;
+				margin: 20px 0px;
+				
+				td {
+					padding: {
+						left: 10px;
+						right: 20px;
+						top: 7px;
+					}
+					vertical-align: top;
+				}
+				
+				th {
+					@extends td;
+					font-weight: bold;
+					padding: {
+						left: 12px;
+						top: 7px;
+					}
+					text-align: left;
+					vertical-align: top;
+					width: 30%;
+				}
+				
+				.infobox-subhead {
+					padding-top: 20px;
+				}
+
+			}
+		}
+		
+	}
 }
 
 // RT #70017: wikitable class for skinning normal tables

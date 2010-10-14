@@ -254,8 +254,10 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgSingleH1, $wgEnableCorporatePageExt;
-
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgSingleH1, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest;
+		
+		// InfoBox - Testing
+		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
 		$this->bodytext = Module::get('ContentDisplay')->getData('bodytext');
