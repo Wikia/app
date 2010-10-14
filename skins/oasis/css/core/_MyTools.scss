@@ -49,18 +49,12 @@
 	}
 
 	.drag {
-		background: url(/skins/oasis/images/sprite.png) -1144px -32px no-repeat; /* $wgCdnStylePath */
 		cursor: move;
-		height: 17px;
 		left: 2px;
-		width: 16px;
 	}
 	.trash {
-		background: url(/skins/oasis/images/sprite.png) -1128px -16px no-repeat; /* $wgCdnStylePath */
 		cursor: pointer;
-		height: 16px;
 		right: 2px;
-		width: 16px;
 	}
 
 	.help-text {

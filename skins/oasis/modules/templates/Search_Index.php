@@ -2,7 +2,7 @@
 	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f">
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
 	<input type="submit">
-	<button class="secondary"><img src="<?= $wgBlankImgUrl ?>" height="17" width="21"></button>
+	<button class="secondary"><img src="<?= $wgBlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 </form>
 <?php
 if ($wgTitle->isSpecial('Search')) {
