@@ -3,10 +3,10 @@
 $i = 0; $prevPage = $nextPage = "";
 if ($iPageCount > 1) {
 	if ( $iPage != 0 ) { 
-		$prevPage = '<a href="#" id="wk-blog-prev-link" onclick="wkBlogShowPage(-1);">&#171; '.wfMsg('blog-newerposts').'</a>';
+		$prevPage = '<a href="javascript:wkBlogShowPage(-1);" id="wk-blog-prev-link">&#171; '.wfMsg('blog-newerposts').'</a>';
 	} 
 	if ( ($iPage + 1) != $iPageCount ) {
-		$nextPage = '<a href="#" id="wk-blog-next-link" onclick="wkBlogShowPage(1);">'.wfMsg('blog-olderposts').' &#187;</a>';
+		$nextPage = '<a href="javascript:wkBlogShowPage(1);" id="wk-blog-next-link">'.wfMsg('blog-olderposts').' &#187;</a>';
 	}	
 ?>	
 <script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/Blogs/js/BlogsPager.js?<?=$wgStyleVersion?>"></script>

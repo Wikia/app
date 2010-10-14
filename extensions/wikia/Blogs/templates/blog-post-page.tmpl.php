@@ -1,5 +1,4 @@
 <!-- s:<?= __FILE__ ?> -->
-<div id="wk_blogs_loader" style="float:right;"></div>
 <div class="wk_blogs_post" id="wk_blogs_post">
 <?php
 global $wgBlankImgUrl;
@@ -61,6 +60,7 @@ if (!empty($aRows)) {
 <?php
 } /* if (!empty($aRows)) */
 ?>
+	<div id="wk_blogs_loader" style="float:right;"></div>
 	<div class="wk_blogs_pager"><?php if (!empty($sPager)) { echo $sPager; } ?></div>
 </div>
 <!-- e:<?= __FILE__ ?> -->
