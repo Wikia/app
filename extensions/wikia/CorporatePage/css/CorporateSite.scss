@@ -68,7 +68,7 @@
 		position: relative;
 
 		&.small {
-			height: 290px;
+			height: 250px;
 			width: 620px;
 		}
 		&.big {
@@ -117,7 +117,7 @@
 			overflow: hidden;
 
 			&.small {
-				height: 290px;
+				height: 250px;
 				width: 620px;
 			}
 			&.big {
@@ -144,19 +144,17 @@
 			opacity: .5;
 		}
 		
-	}
-	
-	.hub {
-		height: 327px !important;
-		.description {
-			top: 174px !important;
+		&.hub {
+			height: 287px;
+			.description {
+				top: 131px;
+			}
+			
+			.nav {
+				top: 239px ;
+			}
 		}
 		
-		.nav {
-			
-				top: 279px !important;
-
-		}
 	}
 
 	#spotlight-slider-0 .spotlight-slider {
