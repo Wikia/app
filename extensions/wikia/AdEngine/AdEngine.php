@@ -38,22 +38,24 @@ function adEngineAdditionalScripts( &$out, &$sk ){
 		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.load.js?$wgStyleVersion'></script>\n");
 	}
 	if ($wgEnableOpenXSPC) {
+		/*	will: commenting out because call to OpenX SPC is now in Oasis_Index, HEAD
 		// class autoloader probably hasn't run yet
 		if (!class_exists('AdProviderOpenX', false)) {
 			require "$IP/extensions/wikia/AdEngine/AdProviderOpenX.php";
 		}
-		$urlScript = AdProviderOpenX::getOpenXSPCUrlScript();
+		$urlScript = AdProviderOpenX::getOpenXSPCUrlScript(AdProviderOpenX::OASIS_SPOTLIGHTS_AFFILIATE_ID);
 		$urlScript = str_replace("\n", ' ', $urlScript);
 		$script = <<<EOT
-<script type='text/javascript'>/*<![CDATA[*/
+<script type='text/javascript'>
 	document.write('<scr'+'ipt type="text/javascript">');
 	document.write('$urlScript');
 	document.write('</scr'+'ipt>');
 	document.write('<scr'+'ipt type="text/javascript">$.getScript(openxspc_base_url);</scr'+'ipt>');
 
-/*]]>*/</script>
+</script>
 EOT;
 		$out->addScript($script);	// @todo move to StaticChute.php
+		*/
 	}
 	return true;
 } // end adEngineAdditionalScripts()
