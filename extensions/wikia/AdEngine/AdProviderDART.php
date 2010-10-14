@@ -247,18 +247,16 @@ EOT;
 		 * tile=1 is a parameter that, in conjunction with other sequential tile values on a page, will enable the competitive categories and roadblock features to work. Tile values should match the amount of ads on a given page, but they do not necessarily need to match the order in which the ads appear.													*/
 		// Nick wrote: Chose to hard code this for now based on slot, for simplicity
 		switch($slotname) {
-			case 'INVISIBLE_TOP': return 'tile=1;';
-			case 'TOP_RIGHT_BOXAD': return 'tile=2;';
-			case 'TOP_LEADERBOARD': return 'tile=3;';
-			case 'LEFT_SKYSCRAPER_1': return 'tile=4;';
-			case 'LEFT_SKYSCRAPER_2': return 'tile=4;'; // same so both skyscrapers don't show. Note: This isn't working.
-			case 'LEFT_SKYSCRAPER_3': return 'tile=7;'; 
-			case 'FOOTER_BOXAD': return 'tile=6;';
-			case 'HOME_INVISIBLE_TOP': return 'tile=1';
-			case 'HOME_TOP_RIGHT_BOXAD': return 'tile=2;';
-			case 'HOME_TOP_LEADERBOARD': return 'tile=3;';
-			case 'HOME_LEFT_SKYSCRAPER_1': return 'tile=4;';
-			case 'HOME_LEFT_SKYSCRAPER_2': return 'tile=4;';
+			case 'TOP_RIGHT_BOXAD': return 'tile=1;';
+			case 'TOP_LEADERBOARD': return 'tile=2;';
+			case 'LEFT_SKYSCRAPER_1': return 'tile=3;';
+			case 'LEFT_SKYSCRAPER_2': return 'tile=3;'; // same so both skyscrapers don't show. Note: This isn't working.
+			case 'LEFT_SKYSCRAPER_3': return 'tile=6;'; 
+			case 'FOOTER_BOXAD': return 'tile=5;';
+			case 'HOME_TOP_RIGHT_BOXAD': return 'tile=1;';
+			case 'HOME_TOP_LEADERBOARD': return 'tile=2;';
+			case 'HOME_LEFT_SKYSCRAPER_1': return 'tile=3;';
+			case 'HOME_LEFT_SKYSCRAPER_2': return 'tile=3;';
 			default: return '';
 		}
 	}
