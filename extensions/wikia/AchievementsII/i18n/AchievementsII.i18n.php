@@ -314,7 +314,7 @@ on someone else\'s talk page!',
 	 * Badges' details for info in notification
 	 */
 	'achievements-badge-your-desc-edit' => 'for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-your-desc-edit-plus-category' => 'for making {{PLURAL:$1|your first edit|$1 edit}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
 	'achievements-badge-your-desc-picture' => 'for adding {{PLURAL:$1|your first picture|$1 pictures}} to {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-your-desc-category' => 'for adding {{PLURAL:$1|your first page|$1 pages}} to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-your-desc-blogpost' => 'for writing {{PLURAL:$1|your first blog post|$1 blog posts}}!',
