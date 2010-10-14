@@ -1,4 +1,5 @@
 == Changes since 201010.2 ==
+* rt#72703: Related pages: Filter out parser hooks code from article snippet (macbre)
 * rt#72662: Related pages: Don't include redirects (macbre)
 * rt#72155: Header too long for most languages (macbre)
 * rt#72613: Can we change the text body color for dark wikis (macbre)
