@@ -106,13 +106,21 @@ class RelatedPages {
 			}
 			arsort($pageCounters);
 
-			$count = 0;
 			foreach ( array_keys( $pageCounters ) as $pageId ) {
 				$title = Title::newFromId( $pageId );
-				if(!empty($title) && $title->exists() && $count < $limit) {
-					$this->pages[ $title->getArticleID() ] = array( 'url' => $title->getFullUrl(), 'title' => $title->getPrefixedText(), 'wrappedTitle' => $this->getWrappedTitle( $title->getPrefixedText() ) );
+
+				// filter out redirect pages (RT #72662)
+				if(!empty($title) && $title->exists() && !$title->isRedirect()) {
+					$this->pages[ $pageId ] = array(
+						'url' => $title->getLocalUrl(),
+						'title' => $title->getPrefixedText(),
+						'wrappedTitle' => $this->getWrappedTitle( $title->getPrefixedText() )
+					);
 				}
-				$count++;
+
+				if (count($this->pages) >= $limit) {
+					break;
+				}
 			}
 
 			if( class_exists('imageServing') ) {
