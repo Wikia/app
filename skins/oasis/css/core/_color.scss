@@ -13,7 +13,7 @@ $background-tiled: get_command_line_param("background-tiled", true);
 // Text color
 $color-text: #3a3a3a;
 @if lightness($color-page) < 50 {
-	$color-text: #B0B0B0;
+	$color-text: #D5D4D4;
 }
 
 // GlobalHeader
