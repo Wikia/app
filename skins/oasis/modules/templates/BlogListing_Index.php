@@ -50,6 +50,9 @@
 			echo View::link(Title::newFromText(wfMsg('blogs-recent-url')), wfMsg('oasis-more'), array('class' => 'more'));
 		}
 		if (isset($pager)) {
+			echo "<div id='wk_blogs_loader2' style='float:right;'></div>";
+			echo "<div class='wk_blogs_pager'>";
 			echo $pager;
+			echo "</div>";
 	} ?>
 </section>

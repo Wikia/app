@@ -1254,12 +1254,8 @@ class BlogTemplateClass {
 				"wgStyleVersion"	=> $wgStyleVersion,
 			) );
 			#---
-			if (Wikia::isOasis()) {
-				$sPager = $oTmpl->execute("blog-pager");
-			} else {
-				$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager-ajax") :
-						( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager") : "" );
-			}
+			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager-ajax") :
+					( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager") : "" );
 		}
 
 		wfProfileOut( __METHOD__ );
