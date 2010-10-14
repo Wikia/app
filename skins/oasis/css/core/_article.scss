@@ -1,8 +1,8 @@
 .WikiaArticle {
-	line-height: 1.8em;
+	line-height: 24px;
+	min-height: 250px;
 	padding: 0 10px;
 	position: relative;
-	min-height: 250px;
 	z-index: 1;
 	h1, h2, h3, h4, h5, h6 {
 		margin: .5em 0 .2em;
@@ -112,18 +112,18 @@
 		}
 	}
 	.floatright {
+		border: 0;
 		clear: right;
 		float: right;
-		position: relative;
 		margin: 0 0 6px 6px;
-		border: 0;
+		position: relative;
 	}
 	.floatleft {
-		float: left;
-		clear: left;
-		position: relative;
-		margin: 0 6px 6px 0;
 		border: 0;
+		clear: left;
+		float: left;
+		margin: 0 6px 6px 0;
+		position: relative;
 	}
 	.thumbinner {
 		//background-color: $color-article-thumb-background;
@@ -134,8 +134,8 @@
 		text-align: center;
 	}
 	.thumbcaption {
+		line-height: 24px;
 		padding: 4px 1px 0 1px;
-		line-height: 18px;
 		text-align: left;
 	}
 	.tright {
@@ -186,9 +186,6 @@
 			display: inline;
 			font-size: 14px;
 		}
-		.toctoggle {
-			font-size: 12px;
-		}
 	}
 	p {
 		margin: 0.4em 0 0.5em;
@@ -211,7 +208,7 @@
 		border: 1px solid $color-article-toc-border;
 		background-color: $color-article-toc-background;
 		padding: 5px;
-		font-size: 12px;
+		font-size: 13px;
 		margin-bottom: 5px;
 		margin-left: 0;
 		margin-right: 0;
@@ -292,14 +289,14 @@
 	.TablePager th { background-color: #eeeeff; color: #000 }
 	.TablePager td { background-color: #ffffff; color: #000 }
 	.TablePager tr:hover td { background-color: #eeeeff }
-	
-	
+
+
 	.InfoBox {
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		border: 1px $color-page-border solid;
 		float: right;
 		line-height: 12px;
-		
+
 		padding: {
 			left: 10px;
 			right: 10px;
@@ -309,7 +306,7 @@
 		table {
 			border-collapse: collapse;
 			width: 243px;
-					
+
 			td {
 				margin: 0px;
 				padding: 0px;
@@ -317,12 +314,12 @@
 				vertical-align: top;
 				width: 100%;
 			}
-			
+
 			th {
 				@extends td;
 				font-weight: bold;
 			}
-			
+
 			thead {
 				tr {
 					margin-top: 20px;
@@ -338,7 +335,7 @@
 					}
 					text-align: left;
 				}
-				
+
 				.infobox-image {
 					text-align: center;
 					overflow: hidden;
@@ -349,20 +346,20 @@
 						left: 10px;
 					}
 				}
-			
+
 				.infobox-caption {
 					text-align: center;
-					font-size: 12px;			
+					font-size: 13px;
 				}
 				.infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
 			}
-	
+
 			// /** the infobox content **/
 			tbody {
 				border-top: 1px $color-page-border solid;
 				display: block;
 				margin: 20px 0px;
-				
+
 				td {
 					padding: {
 						left: 10px;
@@ -371,7 +368,7 @@
 					}
 					vertical-align: top;
 				}
-				
+
 				th {
 					@extends td;
 					font-weight: bold;
@@ -383,14 +380,14 @@
 					vertical-align: top;
 					width: 30%;
 				}
-				
+
 				.infobox-subhead {
 					padding-top: 20px;
 				}
 
 			}
 		}
-		
+
 	}
 }
 

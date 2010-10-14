@@ -24,7 +24,8 @@
 	}
 	.badge-text {
 		@include clearfix;
-		font-size: 12px;
+		font-size: 13px;
+		line-height: 24px;
 		padding: {
 			bottom: 8px;
 		}
@@ -79,6 +80,7 @@
 			width: 170px;
 			p {
 				font-size: 13px;
+				line-height: 24px;
 			}
 		}
 		img {

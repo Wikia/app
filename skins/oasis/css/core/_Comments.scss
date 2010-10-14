@@ -36,8 +36,8 @@
 	}
 	.session {
 		@include clearfix;
-		font-size: 12px;
-		line-height: 14px;
+		font-size: 13px;
+		line-height: 15px;
 		margin-top: 5px;
 		padding: 5px;
 		float: left;
@@ -75,19 +75,15 @@
 			right: 5px;
 			bottom: 15px;
 		}
-
 		padding: 2px;
 		width: 574px;
-		font-size: 12px !important;
-		font {
-			family: "Dagny", "Helvetica", "Arial", sans-serif;
-		}
+		font-size: 13px !important;
+		font-family: "Helvetica", "Arial", sans-serif;
 	}
 	.wikia-button {
 		float: right;
 		margin-right: 5px;
 	}
-
 }
 
 
@@ -97,8 +93,8 @@
 	list-style: none;
 
 	textarea {
-		font-family: "Dagny", "Helvetica", "Arial", sans-serif;
-		font-size: 11px;
+		font-family: "Helvetica", "Arial", sans-serif;
+		font-size: 13px;
 		width: 528px !important;
 	}
 	.sub-comments {
@@ -136,12 +132,12 @@
 		padding: 15px 10px 10px 15px;
 		position: relative;
 		p {
-			line-height: 1.8em;
+			line-height: 24px;
 			margin-bottom: 1em;
 		}
 		ul, ol {
 			margin: 0.4em 0 0.5em 2.5em;
-			line-height: 1.8em;
+			line-height: 24px;
 		}
 		ol {
 			list-style: decimal;
