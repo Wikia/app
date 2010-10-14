@@ -31,7 +31,7 @@ class ExternalStoreRiak {
 	 * @access public
 	 */
 	public function fetchFromURL( $url ) {
-		list( $proto, $bucket, $key ) = explode( "/", $url );
+		list( $proto, $bucket, $key ) = explode( "/", $url, 3 );
 		$this->mRiakBucket = $bucket;
 		return $this->fetchBlob( $key );
 	}
