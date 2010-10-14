@@ -59,6 +59,7 @@ if(count($data) < $MIN_NUM_PARAMS){
 		echo $StaticChute->comment("Invalid 'packages' or 'files'");
 		exit;
 	}
+	$_GET['checksum'] = $checksum; // StaticChute won't set the Expires header unless we have this.
 	$content = $StaticChute->process($files);
 
 	// If content === true then it was a not-modified conditional-get. We don't get an opportunity to save the file, but this specific
