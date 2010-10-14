@@ -26,7 +26,7 @@
 
 @mixin blockInput {
 	@include opacity(75);
-	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $ wgCdnStylePath */
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
 	height: 100%;
 	width: 100%;
 	position: absolute;
