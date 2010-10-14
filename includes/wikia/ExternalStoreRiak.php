@@ -73,14 +73,21 @@ class ExternalStoreRiak {
 	 * @access private
 	 */
 	private function fetchBlob( $key ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$value = false;
 		if( $this->mRiakBucket ) {
 			$bucket = $this->mRiakClient()->bucket( $this->mRiakBucket );
 			$object = $bucket->getBinary( $key );
 			if( $object->exists() ) {
-				return $object->getData();
+				$value = $object->getData();
 			}
 		}
-		return false;
+
+		wfProfileOut( __METHOD__ );
+
+		return $value;
 	}
 
 	/**
@@ -88,10 +95,15 @@ class ExternalStoreRiak {
 	 * @access private
 	 */
 	private function storeBlob( $key, $data ) {
+
+		wfProfileIn( __METHOD__ );
+
 		if( $this->mRiakBucket ) {
 			$bucket = $this->mRiakClient()->bucket( $this->mRiakBucket );
 			$object = $bucket->newBinary( $key, $data );
 			$object->store();
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 };
