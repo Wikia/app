@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class LookupContribsPage extends SpecialPage {
-	private $mTitle, $mUsername, $mMode, $mModeText, $mView, $mModes, $mViewModes;
+	private $mTitle, $mUsername, $mMode, $mModeText, $mView, $mModes, $mViewModes, $mNSpace;
 	private $mUserPage, $mUserLink;
 	private $mCore;
 	/**
@@ -22,7 +22,7 @@ class LookupContribsPage extends SpecialPage {
 	}
 	
 	public function execute( $subpage ) {
-		global $wgUser, $wgOut, $wgRequest;
+		global $wgOut, $wgRequest, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgStylePath, $wgUser;
 		wfLoadExtensionMessages("SpecialLookupContribs");
 
 		if( $wgUser->isBlocked() ) {
@@ -42,11 +42,18 @@ class LookupContribsPage extends SpecialPage {
 		 * initial output
 		 */
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'LookupContribs' );
-		$this->mUsername = $wgRequest->getVal ('target');
+		$this->mUsername = $wgRequest->getVal ('target', $subpage);
 		$this->mMode = $wgRequest->getVal ('mode');
 		$this->mView = $wgRequest->getVal ('view');
-		$this->mModes = array ('normal', 'final') ;
-		$this->mViewModes = array ('full', 'links') ;
+		$this->mWiki = $wgRequest->getVal ('wiki');
+		$this->mNSpace = $wgRequest->getVal ('ns', -1);
+		$this->mModes = array (
+			'normal' => wfMsg('lookupcontribsselectmodenormal'),
+			'final'  => wfMsg('lookupcontribsselectmodefinal'),
+			'all'	 => wfMsg('lookupcontribsselectmodeall')
+		) ;
+		
+		$this->mViewModes = array ('full', 'links');
 		$wgOut->setPageTitle( wfMsg('lookupcontribstitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
@@ -61,35 +68,49 @@ class LookupContribsPage extends SpecialPage {
 			$this->mModeText = ($this->mMode == 'normal') ? wfMsg('lookupcontribsrecentcontributions', $this->mUserLink) : wfMsg('lookupcontribsfinalcontributions', $this->mUserLink);
 			$wgOut->setSubtitle ($this->mModeText);
 		}
-
+		
 		/**
 		 * show form
 		 */
-		$this->showForm();
-		$this->showUserList();
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+				 
+		if ( !empty($this->mMode) && !empty($this->mWiki) ) {
+			if ( !in_array( $this->mMode, array_keys($this->mModes) ) ) {
+				return;
+			}
+			$this->showWikiForm();
+		} else {
+			$this->showMainForm();
+		}
+		#$this->showUserList();
 	}
 
 	/* draws the form itself  */
-	function showForm ($error = "") {
+	function showMainForm ($error = "") {
 		global $wgOut;
+		
 		wfProfileIn( __METHOD__ );
+
 		$action = $this->mTitle->escapeLocalURL("");
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-				"error"     => $error,
-				"action"    => $action,
-				"username"  => $this->mUsername,
-				"mode"      => $this->mMode,
-				"view"      => $this->mView,
+			"title" 	=> $this->mTitle,
+			"error"     => $error,
+			"action"    => $action,
+			"username"  => $this->mUsername,
+			"mode"      => $this->mMode,
+			"view"      => $this->mView,
+			"modes"		=> $this->mModes
 		));
 		$wgOut->addHTML( $oTmpl->execute("main-form") );
 		wfProfileOut( __METHOD__ );
 	}
 	
 	/* draws the results table  */
-	function showUserList() {
-		global $wgOut, $wgRequest, $wgLang ;
+	function showWikiForm($error = "") {
+		global $wgOut, $wgLang ;
 		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
@@ -98,27 +119,23 @@ class LookupContribsPage extends SpecialPage {
 			return false ;
 		}
 		
-		$this->mCore = new LookupContribsCore($this->mUsername);
-		#---
 		$action = $this->mTitle->escapeLocalURL("");
-		$this->numResults = 0;
-		/* check user activity */
-		$userActivity = array();
-		if ( $this->mCore->checkUser() ) {
-			$userActivity = $this->mCore->checkUserActivityExternal();
-		}
+		$oWiki = WikiFactory::getWikiByDB($this->mWiki);
 				
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"action"		=> $action,
-			"numResults"	=> $this->numResults,
-			"username"  	=> $this->mUsername,
-			"mode"     		=> $this->mMode,
-			"view"    		=> $this->mView,
-			"userActivity" 	=> $userActivity,
-			"nspaces"		=> $wgLang->getFormattedNamespaces(),
+			"title" 	=> $this->mTitle,
+			"error"     => $error,
+			"action"    => $action,
+			"username"  => $this->mUsername,
+			"mode"      => $this->mMode,
+			"view"      => $this->mView,
+			"modes"		=> $this->mModes,
+			"wiki"		=> $this->mWiki,
+			"nspace"	=> $this->mNSpace,
+			"nspaces"	=> $wgLang->getFormattedNamespaces(),
 		));
-		$wgOut->addHTML( $oTmpl->execute("user-activity") );
+		$wgOut->addHTML( $oTmpl->execute("mode-form") );
 		wfProfileOut( __METHOD__ );
 	}
 	
@@ -146,7 +163,7 @@ class LookupContribsPage extends SpecialPage {
 			return false;
 		}
 
-		if (!in_array($this->mMode, $this->mModes)) {
+		if (!in_array($this->mMode, array_keys($this->mModes))) {
 			$wgOut->addHTML( wfMsg('lookupcontribsinvalidmode', $this->mMode) ) ;
 			wfProfileOut( __METHOD__ );
 			return false;

@@ -1,24 +1,15 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
-function lcShowDetails(dbname) {
-	var username = '<?=$username?>';
-	var action = '<?=$action?>';
-	var sel_mode = '#lc-mode-' + dbname;
-	var mode = ( $(sel_mode).exists() ) ? $(sel_mode).val() : '';
-					
-	if ( !username ) {
-		return false;
-	}	
-	
-	document.location.href = action + '?target=' + username + '&wiki=' + dbname + '&mode=' + mode;
-}
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
 	var username = '<?=$username?>';
+	var mode = '<?=$mode?>';
+	var wiki = '<?=$wiki?>';
+	var nspace = '<?=$nspace?>';
 				
-	if ( !username ) {
+	if ( !username && !mode && !wiki ) {
 		return;
 	}
 	
@@ -42,45 +33,23 @@ $(document).ready(function() {
 		"aaSorting" : [],
 		"iDisplayLength" : 25,
 		"aLengthMenu": [[25, 50, 100, 250], [25, 50, 100, 250]],
-		"sDom": '<"dttoolbar"><"top"flip>rt<"bottom"p><"clear">',
+		"sDom": '<"top"flip>r<"dttoolbar">t<"bottom"p><"clear">',
 		"aoColumns": [
 			{ "sName": "id" },
-			{ "sName": "dbname" },
 			{ "sName": "title" },			
-			{ "sName": "url" },
-			{ "sName": "lastedit" },
-			{ "sName": "options" }
+			{ "sName": "diff" },
+			{ "sName": "history" },
+			{ "sName": "contribution" },						
+			{ "sName": "edit" },
 		],
 		"aoColumnDefs": [ 
-			{ "bVisible": false,  "aTargets": [ 0 ], "bSortable" : false },
-			{ "bVisible": false,  "aTargets": [ 1 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },			
-			{
-				"fnRender": function ( oObj ) {
-					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '" target="new">' + oObj.aData[3] + '</a></span>';
-					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + username + '" target="new">';
-					row += '<?=wfMsg('lookupcontribscontribs')?>';
-					row += '</a>)</span>';
-					return row;
-				},
-				"aTargets": [ 3 ],
-				"bSortable": false
-			},
-			{ "sClass": "lc-datetime", "aTargets": [ 4 ], "bSortable" : false },
-			{
-				"fnRender": function ( oObj ) {
-					var row = '<select name="mode" id="lc-mode-' + oObj.aData[1] + '" class="small" style="width:70%">';
-<? foreach ( $modes as $mode => $modeName ) : ?>					
-					row += '<option value="<?=$mode?>"><?=$modeName?></option>';
-<? endforeach ?>
-					row += '</select>&#160;&#160;';
-					row += '<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onclick="lcShowDetails(\'' + oObj.aData[1] + '\');" class="paginate_button">';
-					return row;
-				},
-				"aTargets": [ 5 ],
-				"bSortable" : false 
-			}
-		],		
+			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
+			{ "bVisible": true,  "aTargets": [ 1 ], "bSortable" : false },
+			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },
+			{ "bVisible": true,  "aTargets": [ 3 ], "bSortable" : false },			
+			{ "bVisible": true,  "aTargets": [ 4 ], "bSortable" : false },			
+			{ "bVisible": true,  "aTargets": [ 5 ], "bSortable" : false }
+		],
 		"bProcessing": true,
 		"bServerSide": true,
 		"bFilter" : false,
@@ -108,14 +77,17 @@ $(document).ready(function() {
 					case 'iColumns'			: iColumns = aoData[i].value; break;
 					case 'iSortingCols'		: sortingCols = aoData[i].value; break;
 				}
-			}
+			}				
 				
 			$.ajax( {
 				"dataType": 'json', 
 				"type": "POST", 
 				"url": sSource, 
 				"data": [
-					{ 'name' : 'username',	'value' : ( $('#lc_search').exists() ) ? $('#lc_search').val() : '' },
+					{ 'name' : 'username',	'value' : username },
+					{ 'name' : 'mode', 		'value' : ( $('#lc-mode').exists() ) ? $('#lc-mode').val() : mode },
+					{ 'name' : 'ns',		'value' : ( $('#lc-nspace').exists() ) ? $('#lc-nspace').val() : -1 },
+					{ 'name' : 'wiki', 		'value' : wiki },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
 					{ 'name' : 'loop', 		'value' : loop },
@@ -126,9 +98,29 @@ $(document).ready(function() {
 			} );
 		}		
 	} );
+
+	var toolbar = '<div class="lc_toolbar">';
+	//toolbar += '<span class="lc_toolbar lc_first"><?=wfMsg('show')?>:</span>';
+	toolbar += '<span class="lc_filter"><select name="lc-mode" id="lc-mode" class="small">';
+<? foreach ( $modes as $mode => $modeName ) : ?>					
+	toolbar += '<option ' + ((mode == '<?=$mode?>')?'selected="true"':'') + ' value="<?=$mode?>"><?=$modeName?></option>';
+<? endforeach ?>
+	toolbar += '</select></span>';	
 	
-	//oTable.fnSetColumnVis( 0, false );
-	//oTable.fnSetColumnVis( 1, false );
+	toolbar += '<span class="lc_filter"><select id="lc-nspace" class="small">';
+	toolbar += '<option value="-1"><?=wfMsg('allpages')?></option>';
+	toolbar += '<option value="-2"><?=wfMsgExt('lookupcontribsshowpages', array(), wfMsg('lookupcontribscontent') )?></option>';
+	toolbar += '<optgroup label="<?=wfMsgExt('allinnamespace', array(), "")?>">';
+<? if ( !empty($nspaces) ) foreach ($nspaces as $id => $nspace) : if ( $id < 0 ) continue; ?>	
+	toolbar += '<option ' + ((nspace == <?=$id?>)?'selected="true"':'') + ' value="<?=$id?>"><?=( $id != 0 ) ? $nspace : wfMsg('nstab-main')?></option>';
+<? endforeach ?>
+	toolbar += '</optgroup></select>';
+	toolbar += '</span>';
+
+	toolbar += '<span class="lc_filter"><input type="button" value="<?=wfMsg('show')?>" id="lc-showdata"></span></div>';
+	
+	$("div.dttoolbar").html( toolbar );
+	$('#lc-showdata').click( function() { oTable.fnDraw(); } );
 	
 } );
 
@@ -139,8 +131,8 @@ $(document).ready(function() {
 <form method="post" action="<?=$action?>" id="lc-form">
 <div class="lc_filter">
 	<span class="lc_filter lc_first"><?= wfMsg('lookupcontribsselectuser') ?></span>
-	<span class="lc_filter"><input type="text" name="target" id="lc_search" size="50" value="<?=$username?>"></span>
-	<span class="lc_filter"><input type="button" value="<?=wfMsg('lookupcontribsgo')?>" id="lc-showuser" onclick="submit();"></span>
+	<span class="lc_filter"><input type="text" name="lc_search" id="lc_search" size="50" value="<?=$username?>"></span>
+	<span class="lc_filter"><input type="button" value="<?=wfMsg('lookupcontribsgo')?>" id="lc-showuser"></span>
 </div>
 </form>
 </div>
@@ -148,12 +140,10 @@ $(document).ready(function() {
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lc-table">
 	<thead>
 		<tr>
-			<th>#</th>
-			<th><?=wfMsg('lookupcontribswikidbname')?></th>			
-			<th><?=wfMsg('lookupcontribswikititle')?></th>			
-			<th><?=wfMsg('lookupcontribswikiurl')?></th>
-			<th style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
-			<th style="width:100%"><?=wfMsg('lookupcontribsdetails')?></th>
+			<th width="2%">#</th>
+			<th width="65%"><?=wfMsg('lookupcontribswikititle')?></th>			
+			<th width="18%" colspan="3"><?=wfMsg('lookupcontribswikioptions')?></th>			
+			<th width="15%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -163,12 +153,10 @@ $(document).ready(function() {
 	</tbody>
 	<tfoot>
 		<tr>
-			<th>#</th>
-			<th><?=wfMsg('lookupcontribswikidbname')?></th>			
+			<th width="2%">#</th>
 			<th><?=wfMsg('lookupcontribswikititle')?></th>			
-			<th><?=wfMsg('lookupcontribswikiurl')?></th>
+			<th colspan="3"><?=wfMsg('lookupcontribswikioptions')?></th>			
 			<th style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
-			<th style="width:100%"><?=wfMsg('lookupcontribsdetails')?></th>
 		</tr>
 	</tfoot>
 </table>
