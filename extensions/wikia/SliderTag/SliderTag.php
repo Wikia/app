@@ -21,6 +21,7 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['SliderTag'] = $dir . 'SliderTag.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'wfSliderTag';
+$wgHooks['MessageCacheReplace'][] = 'wfSliderTagMessageCacheReplace';
 
 function wfSliderTag( &$parser ) {
 	$parser->setHook( 'slider', 'wfSlider' );
@@ -32,13 +33,31 @@ function wfSlider( $input, $args, $parser ) {
 	global $wgOut, $wgScriptPath, $wgStyleVersion;
 
 	$article = $args['id'];
+
+	/**
+	 * store keys used in tag, it will be used for invalidation later
+	 */
+	$solidCache = wfGetSolidCacheStorage();
+	$tags = $solidCache->get( "SliderTags" );
+	if( is_array( $tags ) ) {
+		/**
+		 * remove duplicates
+		 */
+		array_push( $tags, $article );
+		$tags = array_unique( $tags );
+	}
+	else {
+		$tags = array( $article );
+	}
+	$solidCache->set( "SliderTags", $tags );
+
 	$data = CorporatePageHelper::parseMsgImg( $article, true );
 	$html = '';
 
 	if ( $data ) {
 		wfLoadExtensionMessages( 'SliderTag' );
 		$html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
-    
+
 		$html .= '<div id="spotlight-slider"><ul>';
 
 		foreach ( $data as $key => $value ) {
@@ -65,4 +84,29 @@ SLIDERITEM;
 	}
 
 	return $html;
+}
+
+/**
+ * Hook
+ *
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ */
+function wfSliderTagMessageCacheReplace( $title, $text ) {
+	global $parserCache;
+
+	wfProfileIn( __METHOD__ );
+
+	$solidCache = wfGetSolidCacheStorage();
+	$tags = $solidCache->get( "SliderTags" );
+	if( is_array( $tags ) ) {
+		foreach( $tags as $tag ) {
+			if( $tag == $title ) {
+				$parserCache->delete( wfMemcKey( $text ) );
+			}
+		}
+	}
+
+	wfProfileOut( __METHOD__ );
+
+	return true;
 }

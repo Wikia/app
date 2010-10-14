@@ -550,6 +550,7 @@ $wgRiakNodePort   = "8098";
 $wgRiakNodePrefix = "riak";
 $wgAutoloadClasses[ "RiakClient" ] = "{$IP}/lib/riak/riak.php";
 $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
+$wgSolidCacheType = CACHE_RIAK;
 
 /*
  * @name $wgWikiaHideImportsFromIrc

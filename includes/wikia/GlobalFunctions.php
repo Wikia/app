@@ -1139,3 +1139,13 @@ function wfGenerateUnsubToken( $email, $timestamp ) {
 	$token = sha1($timestamp . $email . $wgUnsubscribeSalt);
 	return $token;
 }
+
+/**
+ * Get the cache object used by the solid cache, it should be "more solid" cache
+ * than memcache (for example riak)
+ */
+function &wfGetSolidCacheStorage() {
+	global $wgSolidCacheType;
+	$ret =& wfGetCache( $wgSolidCacheType );
+	return $ret;
+}
