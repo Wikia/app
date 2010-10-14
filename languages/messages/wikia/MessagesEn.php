@@ -1005,6 +1005,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-button-random-page' => 'Random Page',
 'oasis-button-random-wiki' => 'Random Wiki',
 'oasis-button-wiki-activity' => 'Wiki Activity',
+'oasis-button-wiki-activity-watchlist' => 'Followed Pages Activity',
 'oasis-activity-header' => 'Recent Wiki Activity',
 'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|page on this wiki|pages on this wiki}}</span>',
 'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|photo on this wiki|photos on this wiki}}</span>',
