@@ -615,6 +615,8 @@ class Sanitizer {
 	 * @param array $whitelist list of allowed attribute names
 	 * @return array
 	 *
+	 * data-* attribute support added by christian@wikia-inc.com
+	 *
 	 * @todo Check for legal values where the DTD limits things.
 	 * @todo Check for unique id attribute :P
 	 */
@@ -622,7 +624,7 @@ class Sanitizer {
 		$whitelist = array_flip( $whitelist );
 		$out = array();
 		foreach( $attribs as $attribute => $value ) {
-			if( !isset( $whitelist[$attribute] ) ) {
+			if( !isset( $whitelist[$attribute] ) && strpos($attribute, 'data-') === false ) {
 				continue;
 			}
 			# Strip javascript "expression" from stylesheets.
