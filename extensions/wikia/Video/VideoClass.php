@@ -480,7 +480,7 @@ class YouTubeVideo extends FlashVideo{
 			throw new MWException( 'youtube constructor given bogus video object.' );
 		}
 		$this->video =& $video;
-		$this->video->ratio = 425/355;
+		$this->video->ratio = 640/385;
 		$this->id = $this->extractYouTubeID( $this->video->getURL() );
 		$this->url = "http://www.youtube.com/v/{$this->id}";
 		return $this;
