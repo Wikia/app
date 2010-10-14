@@ -803,7 +803,7 @@ EOD;
 				$ratio =  (40 / 35);
 				break;
 			case self::V_YOUTUBE:
-				$ratio =  (425 / 355);
+				$ratio =  (640 / 385);
 				break;
 			case self::V_SEVENLOAD:
 				$ratio =  (500 / 408);
