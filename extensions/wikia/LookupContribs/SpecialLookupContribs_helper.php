@@ -16,17 +16,64 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class LookupContribsCore {
 	var $mUsername;
 	var $mUserId;
+	var $mMode;
+	var $mDBname;
+	var $mLimit;
+	var $mOffset;
+	var $mWikiID;
+	var $mWikia;
+	var $mNamespaces; 
 	var $mNumRecords;
 	var $oUser;
 		
-	public function __construct($username) {
+	public function __construct($username, $mode = 0, $dbname = '', $nspace = false) {
 		$this->mUsername = $username;
 		$this->oUser = User::newFromName($this->mUsername);
 		if ( $this->oUser instanceof User ) {
 			$this->mUserId = $this->oUser->getId();
 		}
+		$this->setMode( $mode );
+		$this->setDBname( $dbname );
+		$this->setNamespaces( $nspace );
+		$this->setNumRecords();
 		wfLoadExtensionMessages("SpecialLookupContribs");
 	}
+
+	public function setDBname ( $dbname = '' ) { 
+		if ( $dbname ) {
+			$this->mDBname = $dbname; 
+			$this->mWikiID = WikiFactory::DBtoID($this->mDBname);
+			$this->mWikia = WikiFactory::getWikiByID($this->mWikiID);	
+		}
+	}
+	public function getDBname () { global $wgDBname; return (LC_TEST) ? $wgDBname : $this->mDBname; }
+	public function setMode ( $mode = 0 ) { $this->mMode = $mode; }
+	public function setLimit ( $limit = LC_LIMIT ) { $this->mLimit = $limit; }
+	public function setOffset ( $offset = 0 ) { $this->mOffset = $offset; }
+	public function setNamespaces ( $nspace = false ) { if ( $nspace !== false ) $this->mNamespaces = $nspace; }
+	public function getNamespaces() {
+		global $wgContentNamespaces;
+		wfProfileIn( __METHOD__ );
+		
+		$res = array();
+		$nspace = intval($this->mNamespaces);
+		switch($nspace) {
+			case -1: break; #all namespaces
+			case -2: # contentNamespaces
+				if ( !empty($wgContentNamespaces) && is_array($wgContentNamespaces) ) {
+					$res = $wgContentNamespaces;
+				} else {
+					$res = array(NS_MAIN);
+				}
+				break;
+			default: $res = array($nspace); 
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+	public function setNumRecords( $num = 0 ) { $this->mNumRecords = $num; }
+	public function getNumRecords() { return $this->mNumRecords; }	
 
 	/* return if such user exists */
 	public function checkUser() {
@@ -59,49 +106,63 @@ class LookupContribsCore {
 		return true;
 	}
 
-	public function getNumRecords() { 
-		return $this->mNumRecords; 
-	}
-
-	public function checkUserActivityExternal($limit = LC_LIMIT, $offset = 0) {
+	public function checkUserActivity() {
 		global $wgMemc, $wgContLang, $wgStatsDB;
 		wfProfileIn( __METHOD__ );
 		
-		$userActivity = array();
+		$userActivity = array(
+			'data' => array(), 
+			'cnt' => 0
+		);
 
-		$memkey = __METHOD__ . ":{$this->mUserId}";
+		$memkey = __METHOD__ . ":{$this->mUserId}:data:{$this->mLimit}:{$this->mOffset}";
 		$data = $wgMemc->get($memkey);
 		if (!is_array ($data) || LOOKUPCONTRIBS_NO_CACHE) {
 			#---
 			$dbr = wfGetDB(DB_SLAVE, "stats", $wgStatsDB);
 			if (!is_null($dbr)) {
+				$where =  array (
+					'wiki_id > 0',
+					'user_id'    => $this->mUserId,
+					'event_type' => array(1,2)
+				);
+				/* number of records */
+				$oRow = $dbr->selectRow(
+					array ('events'),
+					array ( 'count(distinct(wiki_id)) as cnt' ),
+					$where,
+					__METHOD__
+				);
+				if ( is_object($oRow) ) {
+					$userActivity['cnt'] = $oRow->cnt;
+				}			
+					
 				/* rows */
 				$res = $dbr->select(
 					array ('events'),
 					array (
 						'wiki_id', 
-						'max(rev_timestamp) as ts_edit_last' 
+						'max(unix_timestamp(rev_timestamp)) as last_edit' 
 					),
-					array (
-						'wiki_id > 0',
-						'user_id'    => $this->mUserId,
-						'event_type' => array(1,2)
-					),
+					$where,
 					__METHOD__,
 					array (
-						'LIMIT'  => $limit,
-						'OFFSET' => $offset
+						'GROUP BY' => 'wiki_id',
+						'ORDER BY' => 'last_edit DESC',
+						'LIMIT'  => $this->mLimit * 2,
+						'OFFSET' => $this->mOffset
 					)
 				);
 				
 				$loop = 0;
 				while ( $row = $dbr->fetchObject($res) ) {
-					#if ( $loop >= $limit ) break;
+					if ( $loop >= $this->mLimit ) break;
 					/* WF */
-					$wData = $this->__getWikiData($row->wiki_id);
+					$wData = $this->getWikiData($row->wiki_id);
 					/* exists */
 					if ( !empty($wData) && ( !empty($wData['active']) ) ) { 
-						$userActivity[] = $wData;
+						$wData['last_edit'] = $row->last_edit;
+						$userActivity['data'][] = $wData;
 					}
 					$loop++;
 				}
@@ -138,51 +199,12 @@ class LookupContribsCore {
 		return $result ;
 	}
 
-	function exclusionCheck($database) {
-		global $wgLookupContribsExcluded;
-		/* grumble grumble _precautions_ cough */
-		if (!isset($wgLookupContribsExcluded) || (!is_array($wgLookupContribsExcluded)) || (empty($wgLookupContribsExcluded))  ) {
-			return true;
-		}
-		foreach ($wgLookupContribsExcluded as $excluded) {
-			if ($excluded == $database) return false;
-		}
-		return true;
-	}
-
-	private function __getDBname($database) {
-		global $wgDBname;
-		return (LC_TEST) ? $wgDBname : $database;
-	}
-
-	private function __getNamespace( $nspace ) {
-		global $wgContentNamespaces;
-		wfProfileIn( __METHOD__ );
-		
-		$res = array();
-		$nspace = intval($nspace);
-		switch($nspace) {
-			case -1: break; #all namespaces
-			case -2: # contentNamespaces
-				if ( !empty($wgContentNamespaces) && is_array($wgContentNamespaces) ) {
-					$res = $wgContentNamespaces;
-				} else {
-					$res = array(NS_MAIN);
-				}
-				break;
-			default: $res = array($nspace); 
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $res;
-	}
-
-	private function __getWikiData($city_id) { 
+	private function getWikiData($city_id) { 
 		$res = array();
 		$oRow = WikiFactory::getWikiByID($city_id);
 		if ( is_object($oRow) ) {
 			$res = array(
-				"id"		  => $oRow->city_id,
+				"id"		=> $oRow->city_id,
 				"url" 		=> $oRow->city_url,
 				"dbname"	=> $oRow->city_dbname,
 				"title"		=> $oRow->city_title,
@@ -192,17 +214,34 @@ class LookupContribsCore {
 		return $res;
 	}
 
-	private function __normalMode( $dbr, $database, $nspace ) {
+	private function normalMode( $dbr ) {
 		wfProfileIn( __METHOD__ );
+
+		$data = array(
+			'cnt' => 0,
+			'res' => false
+		);
+		
 		$conditions = array (
 			'rev_user' => $this->mUserId,
 			' rc_timestamp = rev_timestamp '
 		);
-		$namespaces = $this->__getNamespace($nspace);
+		$namespaces = $this->getNamespaces();
 		if ( !empty($namespaces) ) {
 			$conditions['rc_namespace'] = $namespaces;
 		}
 
+		/* number of records */
+		$oRow = $dbr->selectRow(
+			array ('recentchanges', 'revision'),
+			array ( 'count(0) as cnt' ),
+			$conditions,
+			__METHOD__
+		);
+		if ( is_object($oRow) ) {
+			$data['cnt'] = $oRow->cnt;
+		}		
+		
 		$res = $dbr->select(
 			array ('recentchanges', 'revision'),
 			array (
@@ -217,25 +256,45 @@ class LookupContribsCore {
 			$conditions,
 			__METHOD__,
 			array (
-				'ORDER BY' => 'rev_timestamp DESC'
+				'ORDER BY'  => 'rev_timestamp DESC',
+				'LIMIT' 	=> $this->mLimit,
+				'OFFSET'	=> $this->mOffset
 			)
 		);
 
+		$data['res'] = $res;
+
 		wfProfileOut( __METHOD__ );
-		return $res;
+		return $data;
 	}
 
-	private function __finalMode( $dbr, $database, $nspace ) {
+	private function finalMode( $dbr ) {
 		wfProfileIn( __METHOD__ );
 
+		$data = array(
+			'cnt' => 0,
+			'res' => false
+		);
+		
 		$conditions = array (
 			'rev_user' => $this->mUserId,
 			' rev_id = page_latest '
 		);
-		$namespaces = $this->__getNamespace($nspace);
+		$namespaces = $this->getNamespaces();
 		if ( !empty($namespaces) ) {
 			$conditions['page_namespace'] = $namespaces;
 		}
+		
+		/* number of records */
+		$oRow = $dbr->selectRow(
+			array ( 'revision', 'page' ),
+			array ( 'count(0) as cnt' ),
+			$conditions,
+			__METHOD__
+		);
+		if ( is_object($oRow) ) {
+			$data['cnt'] = $oRow->cnt;
+		}				
 
 		$res = $dbr->select(
 			array ( 'revision', 'page' ),
@@ -252,25 +311,45 @@ class LookupContribsCore {
 			__METHOD__,
 			array (
 				'ORDER BY'	=> 'rev_timestamp DESC',
+				'LIMIT'		=> $this->mLimit,
+				'OFFSET'	=> $this->mOffset
 			)
 		);
-
+		
+		$data['res'] = $res;
+		
 		wfProfileOut( __METHOD__ );
-		return $res;
+		return $data;
 	}
 
-	private function __allMode( $dbr, $database, $nspace ) {
+	private function allMode( $dbr ) {
 		wfProfileIn( __METHOD__ );
 
+		$data = array(
+			'cnt' => 0,
+			'res' => false
+		);
+		
 		$conditions = array (
 			'rev_user' => $this->mUserId,
 			' page_id = rev_page '
 		);
-		$namespaces = $this->__getNamespace($nspace);
+		$namespaces = $this->getNamespaces();
 		if ( !empty($namespaces) ) {
 			$conditions['page_namespace'] = $namespaces;
 		}
 
+		/* number of records */
+		$oRow = $dbr->selectRow(
+			array ( 'revision', 'page' ),
+			array ( 'count(0) as cnt' ),
+			$conditions,
+			__METHOD__
+		);
+		if ( is_object($oRow) ) {
+			$data['cnt'] = $oRow->cnt;
+		}	
+		
 		$res = $dbr->select(
 			array ( 'revision', 'page' ),
 			array (
@@ -286,25 +365,45 @@ class LookupContribsCore {
 			__METHOD__,
 			array (
 				'ORDER BY'	=> 'rev_timestamp DESC',
+				'LIMIT'		=> $this->mLimit,
+				'OFFSET'	=> $this->mOffset
 			)
 		);
 
+		$data['res'] = $res;
+
 		wfProfileOut( __METHOD__ );
-		return $res;
+		return $data;
 	}
 	
-	private function __getLogs( $dbr, $nspace ) {
-   	wfProfileIn( __METHOD__ );
+	private function getLogs( $dbr ) {
+		wfProfileIn( __METHOD__ );
 
-		$conditions = array (
-			'log_action' => "tag",
-			'log_user' => $this->mUserId,
+		$data = array(
+			'cnt' => 0,
+			'res' => false
 		);
-		$namespaces = $this->__getNamespace($nspace);
+		
+		$conditions = array (
+			'log_action'	=> "tag",
+			'log_user'		=> $this->mUserId,
+		);
+		$namespaces = $this->getNamespaces();
 		if ( !empty($namespaces) ) {
 			$conditions['log_namespace'] = $namespaces;
 		}
 
+		/* number of records */
+		$oRow = $dbr->selectRow(
+			array ('logging'),
+			array ( 'count(0) as cnt' ),
+			$conditions,
+			__METHOD__
+		);
+		if ( is_object($oRow) ) {
+			$data['cnt'] = $oRow->cnt;
+		}		
+		
 		$res = $dbr->select (
 			'logging',
 			array (
@@ -318,25 +417,47 @@ class LookupContribsCore {
 				'0 as page_remove'
 			),
 			$conditions,
-			__METHOD__
+			__METHOD__,
+			array(
+				'LIMIT' => $this->mLimit,
+				'OFFSET' => $this->mOffset
+			)			
 		);
-
+	
+		$data['res'] = $res;
+		
 		wfProfileOut( __METHOD__ );
-		return $res;
+		return $data;
 	}
 	
-	private function __getArchive( $dbr, $nspace ) {
+	private function getArchive( $dbr ) {
 		wfProfileIn( __METHOD__ );
-
+		
+		$data = array(
+			'cnt' => 0,
+			'res' => false
+		);
+		
 		$conditions = array (
 			'ar_user' => $this->mUserId,
 		);
-		$namespaces = $this->__getNamespace($nspace);
+		$namespaces = $this->getNamespaces();
 		if ( !empty($namespaces) ) {
 			$conditions['ar_namespace'] = $namespaces;
 		}
+		
+		/* number of records */
+		$oRow = $dbr->selectRow(
+			array ('archive'),
+			array ( 'count(0) as cnt' ),
+			$conditions,
+			__METHOD__
+		);
+		if ( is_object($oRow) ) {
+			$data['cnt'] = $oRow->cnt;
+		}			
 
-		$res = $dbr->select (
+		$res = $dbr->select(
 			'archive',
 			array (
 				'ar_timestamp as timestamp',
@@ -349,81 +470,88 @@ class LookupContribsCore {
 				'1 as page_remove'
 			),
 			$conditions,
-			__METHOD__
+			__METHOD__,
+			array(
+				'LIMIT' => $this->mLimit,
+				'OFFSET' => $this->mOffset
+			)
 		);
 	
+		$data['res'] = $res;
+		
 		wfProfileOut( __METHOD__ );
-		return $res;
+		return $data;
 	}
 
 	/* fetch all contributions from that given database */
-	public function fetchContribs ($database, $fetch_mode, $nspace) {
+	public function fetchContribs ( ) {
 		global $wgOut, $wgRequest, $wgLang, $wgMemc, $wgContLang;
 		wfProfileIn( __METHOD__ );
-		$fetched_data = array ();
+		
+		$fetched_data = array(
+			'cnt' => 0,
+			'data' => array()
+		);
+		$dbr = wfGetDB( DB_SLAVE, 'stats', $this->getDBname() );
 
-		$result_found_already = false;
+		$cnt = 0;
 		$res = false;
 		
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
-		$key = __METHOD__ . ":$fetch_mode:$database:{$this->mUserId}";
-		$data = $wgMemc->get($key);
+		$memkey = __METHOD__ . ":{$this->mMode}:{$this->mDBname}:{$this->mNamespaces}:{$this->mUserId}:{$this->mLimit}:{$this->mOffset}";
+		$data = $wgMemc->get($memkey);
 
 		if ( !is_array($data) || LOOKUPCONTRIBS_NO_CACHE) {
 			/* get that data from database */
-			$this->mNumRecords = 0;
-			$dbr = wfGetDB(DB_SLAVE, 'stats', $this->__getDBname($database));
-			/* excluded DB */
-			$excCities = $this->getExclusionList();
-			/* mode */
-			switch ($fetch_mode) {
-				case "normal"	: $res = $this->__normalMode( $dbr, $database, $nspace ); break;
-				case "final"	: $res = $this->__finalMode( $dbr, $database, $nspace ); break;
-				case "all"		: $res = $this->__allMode( $dbr, $database, $nspace ); break;
-				default			: $res = false;
+			switch ($this->mMode) {
+				case "normal"	: $data = $this->normalMode( $dbr ); break;
+				case "final"	: $data = $this->finalMode( $dbr ); break;
+				case "all"		: $data = $this->allMode( $dbr ); break;
+				default			: $data = false;
 			}
-
-			$city_id = WikiFactory::DBtoID($database);
-			$oWikia = WikiFactory::getWikiByID($city_id);
 			
-			if ( !empty($res) && !empty($oWikia) ) {
+			if ( $data == false ) {
+				wfProfileOut( __METHOD__ );	
+				return false;			
+			}
+			
+			$res = $data['res'];
+			$fetched_data['cnt'] = $data['cnt'];
+			$this->mNumRecords = 0;
+			if ( !empty($res) && !empty($this->mWikia) ) {
 				/* rows */
 				while ( $row = $dbr->fetchObject( $res ) ) {
-					$row->rc_database 	= $database;
-					$row->rc_url 		= $oWikia->city_url;
-					$row->rc_city_title = $oWikia->city_title;
+					$row->rc_database 	= $this->mDBname;
+					$row->rc_url 		= $this->mWikia->city_url;
+					$row->rc_city_title = $this->mWikia->city_title;
 					$row->log_comment 	= false;
 					/* array */
-					$fetched_data[$row->timestamp] = $row;
+					$fetched_data['data'][] = $row;
 					/* inc */
 					$this->mNumRecords++;
 				}
 				$dbr->freeResult( $res );
 				unset($res) ;
-				/* found results */
-				$result_found_already = ($this->mNumRecords > 0);
 
 				// this produces additional results...
 				// don't do that if we are in links mode and result was found already
-				if ( empty($result_found_already) ) {
-					$res = $this->__getLogs( $dbr, $nspace );
+				if ( $this->mNumRecords == 0 && $this->mOffset == 0 ) {
+					$res = $this->getLogs( $dbr );
 					/* num records */
 					$num_res = $dbr->numRows( $res );
 					if ( !empty($res) && !empty($num_res) ) {
 						/* rows */
-						$this->mNumRecords = 0;
 						while ( $row = $dbr->fetchObject( $res ) ) {
-							$row->rc_database 	= $database;
-							$row->rc_url 		= $oWikia->city_url;
-							$row->rc_city_title = $oWikia->city_title;
+							$row->rc_database 	= $this->mDBname;
+							$row->rc_url 		= $this->mWikia->city_url;
+							$row->rc_city_title = $this->mWikia->city_title;
 							/* array */
-							$fetched_data[$row->timestamp] = $row;
+							$fetched_data['data'][] = $row;
 							$this->mNumRecords++;
 						}
 						$dbr->freeResult( $res );
 						unset($res);
 					}
-					$result_found_already = ($this->mNumRecords > 0);
 				}
 
 				/*
@@ -431,19 +559,19 @@ class LookupContribsCore {
 				 * and display what articles was edited by user
 				 *
 				 */
-				if ( empty($result_found_already) && ($fetch_mode == 'all') ) {
-					$res = $this->__getArchive( $dbr, $nspace );
+				if ( ( $this->mNumRecords == 0 ) && ( $this->mOffset == 0 ) && ($this->mMode == 'all') ) {
+					$res = $this->getArchive( $dbr );
 					/* num records */
 					$num_res = $dbr->numRows( $res );
 					if ( !empty($res) && !empty($num_res) ) {
 						/* rows */
 						$this->mNumRecords = 0;
 						while ( $row = $dbr->fetchObject( $res ) ) {
-							$row->rc_database 	= $database;
-							$row->rc_url 		= $oWikia->city_url;
-							$row->rc_city_title = $oWikia->city_title;
+							$row->rc_database 	= $this->mDBname;
+							$row->rc_url 		= $this->mWikia->city_url;
+							$row->rc_city_title = $this->mWikia->city_title;
 							/* array */
-							$fetched_data[$row->timestamp] = $row;
+							$fetched_data['data'][] = $row;
 							$this->mNumRecords++;
 						}
 						$dbr->freeResult( $res );
@@ -519,21 +647,22 @@ class LookupContribsCore {
 		return $r;
 	}
 
-	public function produceLine($row, $username, $mode) {
+	public function produceLine($row) {
 		global $wgLang, $wgOut, $wgRequest, $wgUser;
+		
 		$result = array();
 		$sk = $wgUser->getSkin();
-		$page_user = Title::makeTitle (NS_USER, $username);
+		$page_user = Title::makeTitle (NS_USER, $this->mUsername);
 		#---
 		$page_contribs = "";
 		if ($row->page_remove == 1) {
 			$page_contribs = Title::makeTitle (NS_SPECIAL, "Log");
 		} else {
-			$page_contribs = Title::makeTitle (NS_SPECIAL, "Contributions/{$username}");
+			$page_contribs = Title::makeTitle (NS_SPECIAL, "Contributions/{$this->mUsername}");
 		}
 		$meta = strtr($row->rc_city_title,' ','_');
 		$page = Title::makeTitle ($row->rc_namespace, $row->rc_title);
-		$user = $sk->makeKnownLinkObj ($page_user, $username);
+		$user = $sk->makeKnownLinkObj ($page_user, $this->mUsername);
 		#---
 		$contrib = "";
 		if ($row->page_remove == 1) {
