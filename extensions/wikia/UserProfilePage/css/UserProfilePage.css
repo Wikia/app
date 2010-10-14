@@ -7,6 +7,7 @@
 }
 
 .uppBox h1 {
+	clear: both;
 	font-weight: bold;
 	font-size: 12px;
 	padding: 5px;
@@ -14,11 +15,12 @@
 
 .uppWikiBox {
 		border: 1px solid #000000;
-		width: 106px;
-		height: 77px;
+		width: 120px;
+		height: 110px;
 		padding: 2px;
 		float: left;
 		margin-left: 5px;
+		margin-bottom: 5px;
 	}
 
 .uppAchievementsBox {
