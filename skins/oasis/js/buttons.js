@@ -26,7 +26,7 @@ var WikiaButtons = {
 	},
 
 	click: function(event) {
-		if(typeof $(this).attr('disabled') === 'undefined'){
+		if(!$(this).attr('disabled')){
 			if(event.target.tagName !== 'A'){
 				var width = $(this).outerWidth();
 

@@ -91,22 +91,22 @@ This list-based button is used in the page header for edit/history/delete action
 ******************************/
 .wikia-menu-button {
 	*display: inline;
-	list-style: none !important;
+	list-style: none;
 	margin: 0;
+	padding: 0;
 	position: relative;
 	text-align: left;
 	a:hover {
 		text-decoration: none;
 	}
-	>li>a {
-		border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
-		color: $color-button-text;
-		display: inline;
-		margin-right: 4px;
-		position: relative;
-		margin-left: -7px !important;
-		padding: 3px 4px 3px;
-		padding-left: 7px !important;
+	>li {
+		float: left; /*IE7 don't take out*/
+		>a {
+			border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
+			color: $color-button-text;
+			display: inline-block;
+			padding-left: 5px;
+		}
 	}
 	ul {
 		background: $color-page;
@@ -140,6 +140,7 @@ This list-based button is used in the page header for edit/history/delete action
 	}
 	.chevron {
 		border-top-color: $color-button-text;
+		margin: 0 7px 0 1px;
 	}
 	&.active {
 		@include border-radius-se(0);
