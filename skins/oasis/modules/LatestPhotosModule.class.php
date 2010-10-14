@@ -167,7 +167,8 @@ class LatestPhotosModule extends Module {
 
     public static function onImageUpload(&$image) {
 		global $wgMemc;
-		$wgMemc->delete(LatestPhotosModule::memcacheKey());
+		// deletes key after 10 seconds, to give db time to catch up
+		$wgMemc->delete(LatestPhotosModule::memcacheKey(), 10);
 		return true;
     }
 
