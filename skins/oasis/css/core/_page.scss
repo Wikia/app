@@ -64,7 +64,7 @@
 	@include clearfix;
 	font-size: 10px;
 	line-height: 1em;
-	padding-left: 4px;
+	padding-left: 2px;
 	text-transform: uppercase;
 	em {
 		float: left;
@@ -72,12 +72,12 @@
 		font-style: normal;
 		letter-spacing: -0.5px;
 		line-height: 26px;
-		margin-right: 5px;
+		margin-right: 3px;
 	}
 	span {
 		float: left;
 		&.fixedwidth {
-			width: 60px;
+			width: 61px;
 		}
 	}
 }
