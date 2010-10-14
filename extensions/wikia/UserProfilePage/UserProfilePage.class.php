@@ -11,22 +11,53 @@ class UserProfilePage {
 	}
 
 	public function get( $pageBody ) {
-		global $wgSitename;
+		global $wgOut, $wgSitename, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
-		$oTmpl = new EasyTemplate( dirname(__FILE__) . "/templates/" );
-		$oTmpl->set_vars(
+		//$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
+
+		$userContribsProvider = new UserContribsProviderService;
+
+		$template = new EasyTemplate( dirname(__FILE__) . "/templates/" );
+		$template->set_vars(
 			array(
 				'wikiName'     => $wgSitename,
 				'userName'     => $this->user->getName(),
 				'userPageUrl'  => $this->user->getUserPage()->getLocalUrl(),
-				'activityFeed' => $this->populateActivityFeedVars(),
+				'activityFeed' => $this->renderUserActivityFeed( $userContribsProvider->get( 6, $this->user ) ),
 				'imageFeed'    => $this->populateImageFeedVars(),
 				'wikiSwitch'   => $this->populateWikiSwitchVars(),
+				'topPages'     => $this->getTopPages(),
 				'aboutSection' => $this->populateAboutSectionVars(),
 				'pageBody'     => $pageBody,
 			));
 
-		return $oTmpl->render("user-profile-page");
+		return $template->render( 'user-profile-page' );
+	}
+
+	/**
+	 * render user's activity feed
+	 * @param array $data
+	 * @return string
+	 */
+	private function renderUserActivityFeed( Array $data ) {
+		global $wgBlankImgUrl;
+		wfProfileIn(__METHOD__);
+
+		$template = new EasyTemplate( dirname(__FILE__) . "/templates/" );
+		$template->set_vars(
+			array(
+				'data' => $data,
+				'assets' => array( 'blank' => $wgBlankImgUrl )
+			)
+		);
+
+		// add header and wrap
+		//if (!empty($wrap)) {
+		//	$content = $this->wrap($content, false);
+		//}
+
+		wfProfileOut(__METHOD__);
+		return $template->render( 'user-contributions' );
 	}
 
 	private function populateAboutSectionVars() {
@@ -49,6 +80,7 @@ class UserProfilePage {
 		return array( 'body' => $sArticleBody, 'articleEditUrl' => $sArticleEditUrl );
 	}
 
+	/*
 	private function populateActivityFeedVars() {
 		return array('types' => array(	'all'    => $this->getRecentActivity(),
 										'media'  => $this->getRecentActivity('media'),
@@ -57,6 +89,7 @@ class UserProfilePage {
 										'talk'   => $this->getRecentActivity('talk'),
 					));
 	}
+	*/
 
 	private function populateImageFeedVars() {
 		return array('images' => $this->getRecentUploadedPhotos());
@@ -94,6 +127,7 @@ class UserProfilePage {
 		return true;
 	}
 
+	/*
 	function getRecentActivity ($filter = false) {
 		$feedProxy = new ActivityFeedAPIProxy();
 		$feedProxy->APIparams['rcuser_text'] = $this->user->getName();
@@ -184,6 +218,7 @@ class UserProfilePage {
 			return '';
 		}
 	}
+	*/
 
 	public function getRecentUploadedPhotos() {
 		$dbs = wfGetDB(DB_SLAVE);
@@ -238,6 +273,68 @@ class UserProfilePage {
 		return $photos;
 	}
 
+	public function getTopPages() {
+		global $wgMemc, $wgStatsDB, $wgCityId, $wgContentNamespaces;
+
+		//select page_id, count(page_id) from stats.events where wiki_id = N and user_id = N and event_type in (1,2) group by 1 order by 2 desc limit 10;
+		$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+		$res = $dbs->select(
+			array( 'stats.events' ),
+			array( 'page_id', 'count(page_id) AS count' ),
+			array(
+				'wiki_id' => $wgCityId,
+				'user_id' => $this->user->getId() ),
+				'event_type IN (1,2)',
+				'page_ns IN (' . join( ',', $wgContentNamespaces ) . ')',
+			__METHOD__,
+			array(
+				'GROUP BY' => 'page_id',
+				'ORDER BY' => 'count DESC',
+				'LIMIT' => 6
+			)
+		);
+
+		/* revision
+		$dbs = wfGetDB( DB_SLAVE );
+		$res = $dbs->select(
+			array( 'revision' ),
+			array( 'rev_page', 'count(*) AS count' ),
+			array( 'rev_user' => $this->user->getId() ),
+			__METHOD__,
+			array(
+				'GROUP BY' => 'rev_page',
+				'ORDER BY' => 'count DESC',
+				'LIMIT' => 6
+			)
+		);
+		*/
+
+		$pages = array();
+		while($row = $dbs->fetchObject($res)) {
+			$pageId = $row->page_id;
+			$title = Title::newFromID( $pageId );
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
+				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $row->count );
+			}
+		}
+
+		if( class_exists('imageServing') ) {
+			// ImageServing extension enabled, get images
+			$imageServing = new imageServing( array_keys( $pages ), 100, array( 'w' => 1, 'h' => 1 ) );
+			$images = $imageServing->getImages(1); // get just one image per article
+
+			foreach( $pages as $pageId => $data ) {
+				if( isset( $images[$pageId] ) ) {
+					$image = $images[$pageId][0];
+					$data['imgUrl'] = $image['url'];
+				}
+				$pages[ $pageId ] = $data;
+			}
+		}
+
+		return $pages;
+	}
+
 	public function getTopWikis() {
 		global $wgExternalDatawareDB;
 
@@ -267,7 +364,7 @@ class UserProfilePage {
 			$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
 		}
 
-		/* tmp - local only
+		// tmp - local only
 		$wikis = array( 4832 => 72, 3613 => 60, 4036 => 35, 177 => 72 ); // test data
 		foreach($wikis as $wikiId => $editCount) {
 			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
@@ -275,7 +372,7 @@ class UserProfilePage {
 			$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 			$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
 		}
-		*/
+		//
 
 		return $wikis;
 	}

@@ -97,6 +97,7 @@ $wgAutoloadClasses['NavigationService']  =  $IP.'/includes/wikia/services/Naviga
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
+$wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
 
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';

@@ -24,7 +24,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionFunctions[] = 'wfUserProfilePageInit';
 
 function wfUserProfilePageInit() {
-	global $wgHooks, $wgExtensionMessagesFiles, $wgAutoloadClasses;
+	global $wgHooks, $wgExtensionMessagesFiles, $wgAutoloadClasses, $wgAjaxExportList;
 
 	$dir = dirname(__FILE__) . '/';
 
@@ -34,7 +34,6 @@ function wfUserProfilePageInit() {
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePage::outputPageHook';
 	//$wgHooks['RecentChange_save'][] = 'RecentChangeDetail::register';
 	//$wgHooks['LinksUpdateComplete'][] = 'RecentChangeDetail::registerMediaInsertEvent';
-
 
 
 	/**
@@ -52,7 +51,9 @@ function wfUserProfilePageInit() {
 	$wgAutoloadClasses['UserProfilePage'] = $dir . 'UserProfilePage.class.php';
 	$wgAutoloadClasses['RecentChangeDetail'] = $dir . 'RecentChangeDetail.class.php';
 
-	// extension css - not an ideal solution putting it here, just for now..
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	// extension css and js - not an ideal solution putting it here, just for now.. :>
+	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+
 	$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/UserProfilePage/css/UserProfilePage.css?{$wgStyleVersion}\" />" );
+	//$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 }
