@@ -31,19 +31,23 @@ class PageHeaderModule extends Module {
 	 * Use MW core variable to generate action button
 	 */
 	private function prepareActionButton() {
-		global $wgTitle;
+		global $wgTitle, $wgRequest;
 
 		$namespace = $wgTitle->getNamespace();
+		$isDiff = $wgRequest->getVal('diff');
 
-		// remove "add section" action for Forum namespace pages
-		if ($namespace == NS_FORUM && isset($this->content_actions['addsection'])) {
-			unset($this->content_actions['addsection']);
+		// "Add topic" action
+		if (isset($this->content_actions['addsection'])) {
+			// remove on Forum namespace pages / diff pages (RT #72666)
+			if ($namespace == NS_FORUM || $isDiff) {
+				unset($this->content_actions['addsection']);
+			}
 		}
 
 		// action button
 		#print_pre($this->content_actions);
 
-		// add section
+		// "Add topic"
 		if (isset($this->content_actions['addsection'])) {
 			$this->action = $this->content_actions['addsection'];
 			$this->action['text'] = wfMsg('oasis-page-header-add-topic');
