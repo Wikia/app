@@ -9,21 +9,35 @@
  *
  */
 
+$optionsWithArgs = array( 'limit' );
+
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
+
+$limits = isset( $options[ "limit" ] )
+	? array( "LIMIT" => $options[ "limit" ] )
+	: array();
 
 $dbr = WikiFactory::db( DB_SLAVE );
 $sth = $dbr->select(
 	array( "user" ),
-	array( "user_id" ),
+	array( "user_id", "user_name" ),
 	array( "user_options like '%monaco%'" ),
-	__METHOD__
+	__METHOD__,
+	$limits
 );
 
 while( $row = $dbr->fetchObject( $sth ) ) {
 	$user = User::newFromId( $row->user_id );
 	if( $user ) {
-		print $user->getOption( "skin" ) . "\n";
-		//$user->invalidateCache();
+		/**
+		 * not needed but maybe user changed something meanwhile
+		 */
+		if( $user->getOption( "skin" ) === "monaco" ) {
+			echo "Moving {$row->user_name} ({$row->user_id}) skin preferences from monaco to oasis";
+			$user->setOption( "skin", "oasis" );
+			$user->saveSettings();
+			$user->invalidateCache();
+		}
 	}
 }
