@@ -548,9 +548,6 @@ var initTracker = function() {
 		else {
 			$.tracker.byStr(fakeUrl + 'image');
 		}
-
-		// don't track as clicks within content
-		ev.stopPropagation();
 	});
 
 	// track clicks on Facebook's "Like" buttons
