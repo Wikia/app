@@ -444,6 +444,10 @@ $(function() {
 		return;
 	}
 
+	if(skin == 'oasis') {
+		importStylesheetURI(wgExtensionsPath+ '/wikia/TabView/TabView.css?' + wgStyleVersion);
+	}
+
 	$.getScript(stylepath + '/common/jquery/jquery.flytabs.js?' + wgStyleVersion, function() {
 		$().log(window.__FlyTabs, 'TabView');
 
