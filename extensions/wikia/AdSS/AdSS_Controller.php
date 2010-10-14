@@ -86,7 +86,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function processPayPalReturn( $token ) {
-		global $wgAdSS_templatesDir, $wgOut;
+		global $wgAdSS_templatesDir, $wgOut, $wgAdSS_contactEmail;
 
 		$pp = new PaymentProcessor();
 
@@ -109,6 +109,25 @@ class AdSS_Controller extends SpecialPage {
 		}
 
 		$wgOut->addHTML( wfMsgWikiHtml( 'adss-form-thanks' ) );
+
+		if( !empty( $wgAdSS_contactEmail ) ) {
+			$to = array();
+			foreach( $wgAdSS_contactEmail as $a ) {
+				$to[] = new MailAddress( $a );
+			}
+			//FIXME move it to a template
+			$subject = '[AdSS] new ad pending approval';
+
+			$body = "New ad has been just created and it's waiting your approval:\n";
+			$body .= Title::makeTitle( NS_SPECIAL, "AdSS/admin" )->getFullURL();
+			$body .= "\n\n";
+			$body .= "Created by: {$ad->user_email}\n";
+			$body .= "Ad link text: {$ad->text}\n";
+			$body .= "Ad URL: {$ad->url}\n";
+			$body .= "Ad description: {$ad->desc}\n";
+
+			UserMailer::send( $to, new MailAddress( 'adss@wikia-inc.com' ), $subject, $body );
+		}
 	}
 
 }
