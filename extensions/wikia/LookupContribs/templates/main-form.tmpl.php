@@ -150,7 +150,7 @@ $(document).ready(function() {
 		<tr>
 			<th width="2%">#</th>
 			<th width="3%"><?=wfMsg('lookupcontribswikidbname')?></th>			
-			<th width="100%"><?=wfMsg('lookupcontribswikititle')?></th>			
+			<th width="35%"><?=wfMsg('lookupcontribswikititle')?></th>			
 			<th width="20%"><?=wfMsg('lookupcontribswikiurl')?></th>
 			<th width="20%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
 			<th width="20%"><?=wfMsg('lookupcontribscontribtitleforuser')?></th>
@@ -165,7 +165,7 @@ $(document).ready(function() {
 		<tr>
 			<th width="2%">#</th>
 			<th width="3%"><?=wfMsg('lookupcontribswikidbname')?></th>			
-			<th width="100%"><?=wfMsg('lookupcontribswikititle')?></th>			
+			<th width="35%"><?=wfMsg('lookupcontribswikititle')?></th>			
 			<th width="20%"><?=wfMsg('lookupcontribswikiurl')?></th>
 			<th width="20%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
 			<th width="20%"><?=wfMsg('lookupcontribscontribtitleforuser')?></th>
