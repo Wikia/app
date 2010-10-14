@@ -32,7 +32,7 @@
 			margin-right: 5px;
 			vertical-align: middle;
 		}
-		>ul {
+		.tools {
 			@include clearfix;
 			background-image: url(/skins/oasis/images/checkers.png); /* $wgCdnStylePath */
 			display: block;

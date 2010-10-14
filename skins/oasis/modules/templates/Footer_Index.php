@@ -5,7 +5,7 @@
 		<?php if ($showNotifications) { 
 	 		echo wfRenderModule('Notifications'); 
 	 	} ?> 
-		<ul>
+		<ul class="tools">
 
 <?php if($showMyTools) { ?>
 			<li class="mytools">
