@@ -3,6 +3,7 @@ wgAfterContentAndJS.push(
 		var AnchorAd = {
 			settings: {
 				close: {
+					background: "000000",
 					xoffset: 0,
 					yoffset: 0
 				},
@@ -37,19 +38,20 @@ wgAfterContentAndJS.push(
 						height: 100px;\
 						top: 10px;\
 					}\
-					.sprite.close {\
-						background-position: -1146px -50px;\
+					.close {\
+						background: url("/extensions/wikia/AdEngine/close_button.png") #' + AnchorAd.settings.close.background + ';\
 						cursor: pointer;\
-						height: 14px;\
-						left: ' + parseInt(955 + AnchorAd.settings.close.yoffset) + 'px;\
+						height: 18px;\
+						left: ' + parseInt(950 + AnchorAd.settings.close.yoffset) + 'px;\
 						position: absolute;\
-						top: ' + parseInt(5 + AnchorAd.settings.close.yoffset) + 'px;\
-						width: 14px;\
+						top: ' + parseInt(0 + AnchorAd.settings.close.yoffset) + 'px;\
+						width: 18px;\
+						z-index: 1;\
 					}\
 				</style>\
 				<div class="wikia_anchor_wrapper">\
 					<div class="wikia_anchor_ad">\
-						<img src="http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif" class="sprite close" />\
+						<div class="close"></div>\
 						<a class="clickable"></a>\
 					</div>\
 				</div>';
