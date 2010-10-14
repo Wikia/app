@@ -47,6 +47,7 @@
 ?>
 #wiki-factory .tabs {
 	list-style: none;
+	margin-left: 0.5em;
 }
 
 #wiki-factory .selected {
