@@ -15,7 +15,7 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
 $dbr = wfGetDB( DB_SLAVE );
-$ext = new ExternalStoreRiak;
+$riak = new ExternalStoreRiak;
 
 
 $sth = $dbr->query( "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id" );
@@ -28,4 +28,5 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	}
 	$key = sprintf( "%d:%d:%d", $wgCityId, $row->rev_page, $row->rev_id );
 	echo "Moving from db to riak with key $key\n";
+	$riak->storeBlob( $key, $text );
 }

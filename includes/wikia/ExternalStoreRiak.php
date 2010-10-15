@@ -20,7 +20,7 @@ class ExternalStoreRiak {
 	public function __construct() {
 		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy ;
 
-		$this->mRiakClient = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy );
+		$this->mRiakClient = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, 'mapred', $wgRiakNodeProxy );
 
 	}
 
@@ -49,24 +49,6 @@ class ExternalStoreRiak {
 	}
 
 
-	/**
-	 * prepare blob for storing in in riak, construct key from $page_id, $rev_id
-	 * and $cluster
-	 *
-	 * @param string $cluster -- cluster name used in blob url
-	 * @param mixed $data -- data for storing
-	 * @param integer $page_id -- article id from page table
-	 * @param integer $rev_id -- revision id from revision table
-	 *
-	 * @access public
-	 */
-	public function storeArchive( $cluster, $data, $page_id, $rev_id ) {
-		global $wgCityId;
-
-		$this->mRiakBucket = $cluster;
-		$key = sprintf( "%d:%d:%d", $wgCityId, $page_id, $rev_id );
-		$this->storeBlob( $key, $data );
-	}
 
 	/**
 	 * fetch blob from riak, bucket should be already defined
@@ -92,18 +74,27 @@ class ExternalStoreRiak {
 
 	/**
 	 * store blob in riak in given key, bucket should be already defined
-	 * @access private
+	 * @access public
+	 *
+	 * @return boolean status
 	 */
-	private function storeBlob( $key, $data ) {
+	public function storeBlob( $key, $data ) {
 
 		wfProfileIn( __METHOD__ );
+
+		$status = false;
 
 		if( $this->mRiakBucket ) {
 			$bucket = $this->mRiakClient()->bucket( $this->mRiakBucket );
 			$object = $bucket->newBinary( $key, $data );
-			$object->store();
+			$status = $object->store();
+		}
+		else {
+			Wikia::log( __METHOD__, false, "bucket is not defined" );
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		return $status;
 	}
 };

@@ -34,7 +34,7 @@ class RiakCache extends BagOStuff {
 		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy;
 
 		try {
-			$riak = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy );
+			$riak = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, 'mapred', $wgRiakNodeProxy );
 		}
 		catch ( Exception $e ) {
 			Wikia::log( __METHOD__, "error", $e->getMessage() );
