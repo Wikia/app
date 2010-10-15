@@ -26,6 +26,6 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	if( strpos( $row->old_flags, "external" ) !== false ) {
 		$text = ExternalStore::fetchFromURL( $row->old_text );
 	}
-	$key = sprintf( "%d:%d:%d", $wgCityId, $row->rev_page_id, $row->rev_id );
+	$key = sprintf( "%d:%d:%d", $wgCityId, $row->rev_page, $row->rev_id );
 	echo "Moving from db to riak with key $key\n";
 }
