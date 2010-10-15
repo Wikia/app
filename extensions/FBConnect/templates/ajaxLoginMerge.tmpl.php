@@ -2,6 +2,10 @@
 	<div class="neutral_ajaxLogin clearfix">
 		<?php
 			if(Wikia::isOasis()){
+				// add FB login button (RT #68846)
+				echo wfMsg('comboajaxlogin-log-in-with-facebook-oasis');
+				echo '<div class="ajax-login-fb-login">' . $fbButtton . '</div>';
+
 				echo wfMsg("comboajaxlogin-connectmarketing-oasis");
 			} else {
 				echo wfMsg("comboajaxlogin-connectmarketing");

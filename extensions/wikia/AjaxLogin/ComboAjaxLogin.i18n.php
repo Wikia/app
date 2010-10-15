@@ -6,18 +6,18 @@ $messages['en'] = array(
 	'comboajaxlogin-desc' => 'Dynamic box which allow users to login, remind password and register users',
 	"comboajaxlogin-createlog" => "Log in or create an account",
 	"comboajaxlogin-actionmsg" => "To perform this action you first need to log in or create an account",
-	"comboajaxlogin-actionmsg-protected" => "To perform this action you first need to log in or create an account.",	
+	"comboajaxlogin-actionmsg-protected" => "To perform this action you first need to log in or create an account.",
 	"comboajaxlogin-connectmarketing" => "<h1>Connect your accounts</h1>
 <ul>
 <li>Keep your current username, history, edits... nothing changes except how you log in</li>
 <li>Share your activity on Wikia with your friends on Facebook</li>
 <li>Complete control of what is published</li>
 </ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Log in with Facebook Connect</h1>',
 	"comboajaxlogin-connectmarketing-oasis" => "<h1>Connect your Wikia account to Facebook</h1>
 <ul>
 <li>Keep your current username, history, edits... nothing changes except how you log in</li>
-<li>Share your activity on Wikia with your friends on Facebook</li>
-<li>Complete control of what is published</li>
+<li>Share your activity on Wikia with your friends on Facebook, with complete control of what is published</li>
 </ul>",
 	"comboajaxlogin-connectmarketing-back" => "&laquo; Back",
 	"comboajaxlogin-connectmarketing-forward" => "Get started &raquo;",
@@ -167,10 +167,10 @@ $messages['fr'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retour',
 	'comboajaxlogin-connectmarketing-forward' => 'Avant de commencer &raquo;',
-	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan. 
+	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan.
 
 Une fois que vous avez terminé, vous pouvez vous connecter facilement à l'aide de n'importe quel bouton Facebook Connect.",
-	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit. 
+	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit.
 Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 );
 
