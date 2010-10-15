@@ -31,7 +31,7 @@ class BodyModule extends Module {
 
 	var $wgSingleH1;
 
-	var $showTestAds;	// wlee: for Oasis ad development 
+	var $showTestAds;	// wlee: for Oasis ad development
 
 	private static $onEditPage;
 
@@ -49,7 +49,7 @@ class BodyModule extends Module {
 	public static function isEditPage() {
 		global $wgRequest;
 		return !empty(self::$onEditPage) ||
-			$wgRequest->getVal('diff') /* diff pages */ ||
+			!is_null($wgRequest->getVal('diff')) /* diff pages - RT #69931 */ ||
 			in_array($wgRequest->getVal('action', 'view'), array('edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */));
 	}
 
@@ -255,7 +255,7 @@ class BodyModule extends Module {
 
 	public function executeIndex() {
 		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgSingleH1, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest;
-		
+
 		// InfoBox - Testing
 		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
 		$this->isMainPage = ArticleAdLogic::isMainPage();
@@ -288,10 +288,10 @@ class BodyModule extends Module {
 				$this->headerModuleAction = 'EditPage';
 			}
 			if ($wgEnableCorporatePageExt) {
-			
+
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
 				wfLoadExtensionMessages( 'AutoHubsPages' );
-				
+
 				$wgOut->addStyle(wfGetSassUrl("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
 				$wgOut->addScript('<script src="/extensions/wikia/CorporatePage/js/CorporateSlider.js"></script>');
 
@@ -330,8 +330,8 @@ class BodyModule extends Module {
 			//$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
 		}
 
-		// wlee: Oasis ad development 
-		global $wgRequest; 
+		// wlee: Oasis ad development
+		global $wgRequest;
 		$this->showTestAds = $wgRequest->getVal( 'showtestads' );
 	}
 }

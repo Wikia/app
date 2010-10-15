@@ -364,7 +364,7 @@ class PageHeaderModule extends Module {
 
 		$isPreview = $wgRequest->getCheck( 'wpPreview' ) || $wgRequest->getCheck( 'wpLivePreview' );
 		$isShowChanges = $wgRequest->getCheck( 'wpDiff' );
-		$isDiff = $wgRequest->getVal('diff');
+		$isDiff = !is_null($wgRequest->getVal('diff')); // RT #69931
 		$isEdit = in_array($action, array('edit', 'submit'));
 		$isHistory = $action == 'history';
 
