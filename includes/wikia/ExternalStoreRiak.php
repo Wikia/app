@@ -23,6 +23,7 @@ class ExternalStoreRiak {
 		$this->mRiakBucket = "blobs";
 		$this->mRiakClient = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, 'mapred', $wgRiakNodeProxy );
 
+
 	}
 
 	/**
@@ -69,7 +70,7 @@ class ExternalStoreRiak {
 
 		$value = false;
 		if( $this->mRiakBucket ) {
-			$bucket = $this->mRiakClient()->bucket( $this->mRiakBucket );
+			$bucket = $this->mRiakClient->bucket( $this->mRiakBucket );
 			$object = $bucket->getBinary( $key );
 			if( $object->exists() ) {
 				$value = $object->getData();
@@ -94,7 +95,7 @@ class ExternalStoreRiak {
 		$status = false;
 
 		if( $this->mRiakBucket ) {
-			$bucket = $this->mRiakClient()->bucket( $this->mRiakBucket );
+			$bucket = $this->mRiakClient->bucket( $this->mRiakBucket );
 			$object = $bucket->newBinary( $key, $data );
 			$status = $object->store();
 		}
