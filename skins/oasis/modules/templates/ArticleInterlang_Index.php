@@ -9,7 +9,7 @@
 	$class= "";
 	foreach ($language_list as $val) {
 		$count++;	 ?>
-		<li<?= $class ?>><a href="<?= $val["href"] ?>"><?= $val["name"]; ?></a></li>
+		<li <?= $class ?> ><a href="<?= $val["href"] ?>"><?= $val["name"]; ?></a></li>
 		
 		
 		<?php 
