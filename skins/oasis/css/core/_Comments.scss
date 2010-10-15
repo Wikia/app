@@ -210,8 +210,10 @@
 	}
 
 	.buttons {
-		float: right;
 		@include clearfix;
+		bottom: 5px;
+		position: absolute;
+		right: 5px;
 	}
 
 	.throbber {
