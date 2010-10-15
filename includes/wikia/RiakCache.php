@@ -31,10 +31,10 @@ class RiakCache extends BagOStuff {
 	 * @see http://riak.basho.com/edoc/raw-http-howto.txt for HTTP interface
 	 */
 	function getRiakClient() {
-		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix;
+		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy;
 
 		try {
-			$riak = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix );
+			$riak = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy );
 		}
 		catch ( Exception $e ) {
 			Wikia::log( __METHOD__, "error", $e->getMessage() );
