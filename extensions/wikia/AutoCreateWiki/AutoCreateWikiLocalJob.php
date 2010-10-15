@@ -101,6 +101,7 @@ class AutoCreateWikiLocalJob extends Job {
 		$this->protectKeyPages();
 		$this->queueReminderMail();
 		$this->sendRevisionToScribe();
+		$this->addStarterImagesToUploadLog();
 
 		if(class_exists(AchProcessor)) {
 			$ap = new AchProcessor();
@@ -566,7 +567,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * send pages from starters to scribe
 	 *
 	 * @access private
-	 * @author Piotr Molski (eloy)
+	 * @author Piotr Molski (moli)
 	 *
 	 */
 	private function sendRevisionToScribe( ) {
@@ -606,4 +607,51 @@ class AutoCreateWikiLocalJob extends Job {
 
 		wfProfileOut( __METHOD__ );
 	}
+	
+	/**
+	 * log starter images to upload_log table 
+	 *
+	 * @access private
+	 * @author Piotr Molski (moli)
+	 *
+	 */
+	private function addStarterImagesToUploadLog( ) {
+		global $wgEnableUploadInfoExt;
+		wfProfileIn( __METHOD__ );
+	
+		if ( empty($wgEnableUploadInfoExt) ) {
+			wfProfileOut( __METHOD__ );		
+			return;	
+		}
+
+		$files = array("Wiki.png", "Favicon.ico");
+		$dbr = wfGetDB( DB_SLAVE );
+		$oRes = $dbr->select(
+			array( 'page' ),
+			array( 'page_title' ),
+			array( 'page_namespace' => NS_IMAGE ),
+			__METHOD__
+		);
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			if ( !in_array($oRow->page_title, $files) ) {
+				$files[] = $oRow->page_title;
+			}
+		}
+		$dbr->freeResult( $oRes );
+				
+		$loop = 0;
+		foreach ( $files as $image ) {
+			$oTitle = Title::newFromText($image, NS_IMAGE);
+			$file = wfLocalFile( $oTitle );
+			if ( is_object($file) ) {
+				# add to upload_log
+				UploadInfo::log( $oTitle, $file->getFullPath(), $file->getRel(), "", "u" );
+				$loop++;
+			}
+		}
+
+		Wikia::log( __METHOD__, "info", "added {$loop} images to upload_log table" );
+
+		wfProfileOut( __METHOD__ );
+	}	
 }
