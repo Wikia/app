@@ -1007,6 +1007,8 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-button-wiki-activity' => 'Wiki Activity',
 'oasis-button-wiki-activity-watchlist' => 'Followed Pages Activity',
 'oasis-activity-header' => 'Recent Wiki Activity',
+'oasis-activity-watchlist-login' => "The Followed Pages Activity feature is only available if you\'re logged in.<br /><br />'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''",
+
 'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|page on this wiki|pages on this wiki}}</span>',
 'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|photo on this wiki|photos on this wiki}}</span>',
 'oasis-latest-photos-more' => 'See more &gt;',
