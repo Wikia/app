@@ -80,6 +80,11 @@ var ImageLightbox = {
 			return;
 		}
 
+		// don't show lightbox for linked slideshow with local images (RT #73121)
+		if (target.hasClass('wikia-slideshow-image') && !target.parent().hasClass('wikia-slideshow-from-feed')) {
+			return;
+		}
+
 		// don't open lightbox when user do Ctrl + click (RT #48476)
 		if (ev.ctrlKey) {
 			return;
