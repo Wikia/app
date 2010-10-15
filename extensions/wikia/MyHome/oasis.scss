@@ -101,11 +101,22 @@
 	}
 }
 
+
 .activity-nav {
 	border-bottom: 1px solid $color-page-border;
-	
+	height: 36px;
+	overflow: hidden;
 	margin-bottom: 10px;
 	padding-bottom: 9px;
+	
+	ul {
+		list-style: none;
+		margin-left: 0px;
+		li {
+			float: left;
+			list-style: none;
+		}
+	}
 }
 
 .latest-activity-watchlist-login {
@@ -114,3 +125,4 @@
 	margin-right: auto;
 	background-color: Red;
 }
+

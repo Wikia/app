@@ -1,6 +1,10 @@
 <?php
 
 class SpecialWikiActivity extends SpecialPage {
+	var $activeTab;
+	var $classActivity;
+	var $classWatchlist;
+	
 	
 	function __construct() {
 		wfLoadExtensionMessages('MyHome');
@@ -20,20 +24,21 @@ class SpecialWikiActivity extends SpecialPage {
 			return;
 		}
 		
-		// watchlist
+		// watchlist feed
 		if($par == 'watchlist') {
+			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+				$this->classWatchlist = "selected";
+			}
+			
 			// not available for anons
 			if($wgUser->isAnon()) {
 				if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-					
-					printout("test test test"); exit;
-					
 					$wgOut->wrapWikiMsg( '<div class="latest-activity-watchlist-login" >$1</div>', array('oasis-activity-watchlist-login', wfGetReturntoParam()) );
 				}
 				else {
 					$wgOut->wrapWikiMsg( '<div id="myhome-log-in">$1</div>', array('myhome-log-in', wfGetReturntoParam()) );
 				}
-				
+
 				//oasis-activity-watchlist-login
 				// RT #23970
 				$wgOut->addInlineScript(<<<JS
@@ -43,7 +48,7 @@ $(function() {
 	});
 });
 JS
-						);
+				);
 				wfProfileOut(__METHOD__);
 				return;
 			}
@@ -53,11 +58,16 @@ JS
 				$feedRenderer = new WatchlistFeedRenderer();
 			}
 		} else {
-			// activity
+			// activity feed
+			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+				$this->classActivity = "selected";
+			}
+			
 			$feedSelected = 'activity';
 			$feedProxy = new ActivityFeedAPIProxy();
 			$feedRenderer = new ActivityFeedRenderer();
 		}
+		
 		$feedProvider = new DataFeedProvider($feedProxy);
 		
 		// WikiActivity.js is MyHome.js modified for Oasis
@@ -93,7 +103,9 @@ JS
 						'blank' => $wgBlankImgUrl,
 						),
 					'showMore' => $showMore,
-					'type' => 'activity'
+					'type' => 'activity',
+					'classWatchlist' => $this->classWatchlist,
+					'classActivity' => $this->classActivity,
 					));  // FIXME: remove
 		
 		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/MyHome/oasis.scss"));
