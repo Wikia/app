@@ -198,41 +198,6 @@ class PageStatsService extends Service {
 					$categories[$obj->cl_to] = $obj->cnt;
 				}
 			}
-				
-			if ( count($categories) < $limit ) {
-				# run second query
-				$res = $dbr->select(
-					array('categorylinks AS c1', 'categorylinks AS c2'),
-					array('c2.cl_to, count(c2.cl_from) as cnt'),
-					array(),
-					__METHOD__,
-					array(
-						'GROUP BY' => 'c2.cl_to',
-					),
-					array(
-						'categorylinks AS c2' => array(
-							'JOIN',
-							implode (' AND ',
-								array(
-									'c1.cl_to = c2.cl_to',
-									"c2.cl_from = {$this->pageId}",
-								)
-							)
-						),
-					)
-				);
-
-				// order and filter out blacklisted categories
-				$categories = array();
-				while($obj = $dbr->fetchObject($res)) {
-					if (!$this->isCategoryBlacklisted($obj->cl_to)) {
-						$categories[$obj->cl_to] = $obj->cnt;
-					}
-				}
-				arsort($categories);
-				// get two most linked categories and store in cache
-				$categories = array_slice($categories, 0, 2);
-			}
 			
 			$wgMemc->set($key, $categories, self::CACHE_TTL);
 
