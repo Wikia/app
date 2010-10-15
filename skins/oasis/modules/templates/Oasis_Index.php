@@ -15,6 +15,7 @@
 
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
+	<?= $anonSiteCss ?>
 
 	<?= $globalVariablesScript ?>
 

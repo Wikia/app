@@ -633,10 +633,13 @@ END;
 			if( empty($this->themename) || $this->themename == 'custom' ) {
 				$skinname = $this->getSkinName();
 				if($skinname == 'oasis') {
-					// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
-					global $wgOasisLastCssScripts;
-					$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
-					$wgOasisLastCssScripts[] = self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI );
+					// For anon users, SiteCSS will be added in a combined format in OasisModule in anonSiteCSS.
+					if($wgUser->isLoggedIn()){
+						// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
+						global $wgOasisLastCssScripts;
+						$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
+						$wgOasisLastCssScripts[] = self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI );
+					}
 				} else {
 					$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 					$out->addStyle( self::makeNSUrl( $skinname . '.css', $query, NS_MEDIAWIKI ) );
@@ -658,9 +661,12 @@ END;
 		// Wikia change - start (Sean)
 		$skinname = $this->getSkinName();
 		if($skinname == 'oasis'){
-			global $wgOasisLastCssScripts;
-			$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
-			$wgOasisLastCssScripts[] = self::makeUrl( '-', wfArrayToCGI( $siteargs ) );
+			// For anon users, SiteCSS will be added in a combined format in OasisModule in anonSiteCSS.
+			if($wgUser->isLoggedIn()){
+				global $wgOasisLastCssScripts;
+				$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
+				$wgOasisLastCssScripts[] = self::makeUrl( '-', wfArrayToCGI( $siteargs ) );
+			}
 		} else {
 			$out->addStyle( self::makeUrl( '-', wfArrayToCGI( $siteargs ) ) );
 		}
