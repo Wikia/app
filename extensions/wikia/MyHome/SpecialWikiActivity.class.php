@@ -20,11 +20,38 @@ class SpecialWikiActivity extends SpecialPage {
 			return;
 		}
 		
+		// watchlist
 		if($par == 'watchlist') {
-			// watchlist
-			$feedSelected = 'watchlist';
-			$feedProxy = new WatchlistFeedAPIProxy();
-			$feedRenderer = new WatchlistFeedRenderer();
+			// not available for anons
+			if($wgUser->isAnon()) {
+				if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+					
+					printout("test test test"); exit;
+					
+					$wgOut->wrapWikiMsg( '<div class="latest-activity-watchlist-login" >$1</div>', array('oasis-activity-watchlist-login', wfGetReturntoParam()) );
+				}
+				else {
+					$wgOut->wrapWikiMsg( '<div id="myhome-log-in">$1</div>', array('myhome-log-in', wfGetReturntoParam()) );
+				}
+				
+				//oasis-activity-watchlist-login
+				// RT #23970
+				$wgOut->addInlineScript(<<<JS
+$(function() {
+	$('#myhome-log-in').find('a').click(function(ev) {
+		openLogin(ev);
+	});
+});
+JS
+						);
+				wfProfileOut(__METHOD__);
+				return;
+			}
+			else {
+				$feedSelected = 'watchlist';
+				$feedProxy = new WatchlistFeedAPIProxy();
+				$feedRenderer = new WatchlistFeedRenderer();
+			}
 		} else {
 			// activity
 			$feedSelected = 'activity';
