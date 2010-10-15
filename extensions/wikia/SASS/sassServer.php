@@ -27,7 +27,7 @@
 // There should be a symlink in the docroot (often /usr/wikia/docroot/wiki.factory) pointing to /extensions/wikia/SASS/wikia_sass.rb (or wherever the file actually is).
 $RUBY_MODULE_SCRIPT = "wikia_sass.rb";
 $FULL_SASS_PATH = "/var/lib/gems/1.8/bin/sass";
-$TMP_DIR = "/tmp/sass";
+$TMP_DIR = "/var/tmp/sass";
 $MEMC_KEY_PREFIX = "sassServer";
 $CHECK_BACK_LATER_MESSAGE = "/* processing */";
 $CHECK_BACK_CACHE_DURATION = 30; // nice & short.  If it can't generate in this time, it's likely that something went wrong.
