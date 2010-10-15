@@ -93,7 +93,19 @@ class OasisModule extends Module {
 				$wgOut->addStyle( $cssScript );
 			}
 		}
-		$this->csslinks = $wgOut->buildCssLinks();
+
+		// Remove the media="print CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
+		$printStyles = array();
+		$tmpOut = new OutputPage();
+		$tmpOut->styles = $wgOut->styles;
+		foreach($tmpOut->styles as $style => $options) {
+			if (isset($options['media']) && $options['media'] == 'print') {
+				unset($tmpOut->styles[$style]);
+				$printStyles[$style] = $options;
+			}
+		}
+
+		$this->csslinks = $tmpOut->buildCssLinks();
 
 		$this->clearDefaultMeta($wgOut->mMetatags);
 		$this->headlinks = $wgOut->getHeadLinks();
@@ -106,12 +118,12 @@ class OasisModule extends Module {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
 
 		// printable CSS (to be added at the bottom of the page)
-		$this->printableCss = Xml::element('link', array(
-			'href' => wfGetSassUrl('skins/oasis/css/print.scss'),
-			'media' => $wgOut->transformCssMedia('print'),
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-		));
+		$printStyles[wfGetSassUrl('skins/oasis/css/print.scss')] = array("media" => "print");
+		$this->data['csslinksbottom-urls'] = $printStyles;
+		$tmpOut->styles = $printStyles;
+		$this->data['csslinksbottom'] = $tmpOut->buildCssLinks(); // plain HTML (not async-loading) used by delayedPrintCSSdownload() if this is the printable version of the page.
+
+		$this->printableCss = $this->delayedPrintCSSdownload(); // The HTML for the CSS links (whether async or not).
 
 		// load Google Analytics code
 		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
@@ -178,7 +190,7 @@ class OasisModule extends Module {
 
 //		// load WikiaScriptLoader
 //		// macbre: this is minified version of /skins/monaco/js/WikiaScriptLoader.js using Google Closure
-//		$this->wikiaScriptLoader = "\t\t" . '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write(\'<script src="\'+ b+\'" type="text/javascript"><\/script>\');b=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",b)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>';
+		$this->wikiaScriptLoader = "\t\t" . '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write(\'<script src="\'+ b+\'" type="text/javascript"><\/script>\');b=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",b)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>';
 //
 //		global $wgAllInOne, $wgRequest;
 //		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
@@ -268,5 +280,39 @@ class OasisModule extends Module {
 //
 //		wfProfileOut(__METHOD__ . '::JSloader');
 
-	}
+	} // end executeIndex()
+	
+	/**
+	 * @author Sean Colombo, Macbre.
+	 */
+	private function delayedPrintCSSdownload() {
+		global $wgRequest;
+		wfProfileIn( __METHOD__ );
+
+		ob_start();
+		if ($wgRequest->getVal('printable')) {
+			// regular download
+			$this->html('csslinksbottom');
+		} else {
+			// async download
+			$cssMediaWiki = $this->data['csslinksbottom-urls'];
+			$cssReferences = array_keys($cssMediaWiki);
+
+			$cssReferences = Wikia::json_encode($cssReferences);
+
+			echo <<<EOF
+		<script type="text/javascript">/*<![CDATA[*/
+			(function(){
+				var cssReferences = $cssReferences;
+				var len = cssReferences.length;
+				for(var i=0; i<len; i++)
+					setTimeout("wsl.loadCSS.call(wsl, '" + cssReferences[i] + "', 'print')", 100);
+			})();
+		/*]]>*/</script>
+EOF;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return ob_get_clean();
+	} // end delayedPrintCSSdownload()
 }

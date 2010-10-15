@@ -30,8 +30,8 @@
 		if(!$jsAtBottom) {
 			print "\n<!-- Combined JS files (StaticChute) -->\n";
 			print $staticChuteHtml."\n";
-			// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
-			//print $wikiaScriptLoader;
+			print $wikiaScriptLoader; // needed for jsLoader and for the asnyc loading of CSS files.
+			// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THIS LINE:
 			//print $jsLoader;
 			print "<!-- Headscripts -->\n";
 			print $headscripts."\n";
@@ -46,7 +46,6 @@
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
-<?= $printableCss ?>
 <?php
 	if($jsAtBottom) {
 		print "<!-- Combined JS files (StaticChute) -->\n";
@@ -63,8 +62,8 @@
 <?php
 	// Load Javacript right before the closing body tag.
 	if($jsAtBottom){
-		// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
-		//print $wikiaScriptLoader;
+		print $wikiaScriptLoader; // needed for jsLoader and for the asnyc loading of CSS files.
+		// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THIS LINE:
 		//print $jsLoader;
 
 		print "<!-- Headscripts -->\n";
@@ -77,6 +76,8 @@
 	print $bottomscripts;
 	print "<!-- end Bottomscripts -->\n";
 ?>
+<?= $printableCss ?>
+
 <?= wfReportTime()."\n" ?>
 </body>
 <?= wfRenderModule('Ad', 'Config') ?>
