@@ -98,6 +98,9 @@
 .skin-oasis #AjaxLoginBox .or-div{
 	display:none;
 }
+#AjaxLoginConnectMarketing .ajax-login-fb-login {
+	padding: 10px 0 20px 0;
+}
 .skin-oasis #AjaxLoginConnectMarketing {
 	border-right:none;
 	margin-left:-10px; /* to make the bar fully hide after clicking 'get started' */
