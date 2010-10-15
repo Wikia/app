@@ -16,11 +16,13 @@
 		right: 0;
 	}
 	.wikia-menu-button {
-		position: relative;
-		right: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 	details {
 		@include clearfix;
+		*display: inline;
 		padding: 8px 0;
 		.avatar {
 			float: left;
