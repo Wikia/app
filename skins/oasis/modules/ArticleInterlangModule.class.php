@@ -15,7 +15,8 @@ class ArticleInterlangModule extends Module {
 	
 	public function executeIndex() {
 		global $wgOut, $wgStylePath;
-		$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/Interlang.js"></script>');
+		// moved to static chuke
+		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/Interlang.js"></script>');
 		wfProfileIn(__METHOD__);
 		$this->WidgetLanguages();
 		
