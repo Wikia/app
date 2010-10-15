@@ -32,7 +32,7 @@ class ContentDisplayModule extends Module {
 
 		$html = Xml::openElement('div', array('class' => 'picture-attribution')) .
 			$avatar .
-			wfMsgForContent('oasis-content-picture-added-by', $link) .
+			wfMsg('oasis-content-picture-added-by', $link) .
 			Xml::closeElement('div');
 
 		// add it after the caption
