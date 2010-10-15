@@ -61,9 +61,11 @@ function renderHiddenForm($skin, &$html) {
  */
 function GetComboAjaxLogin() {
 	wfLoadExtensionMessages('ComboAjaxLogin');
-	$response = new AjaxResponse();
 	$tmpl = AjaxLoginForm::getTemplateForCombinedForms();
-	$response->addText( $tmpl->execute('ComboAjaxLogin') );
+
+	$response = new AjaxResponse($tmpl->execute('ComboAjaxLogin'));
+	$response->setContentType('text/html; charset=utf-8');
+
 	return $response;
 }
 
@@ -308,7 +310,7 @@ class AjaxLoginForm extends LoginForm {
 		if( !($returntoquery == '') ){
 			$returntoquery = "&returntoquery=" . wfUrlencode( $returntoquery );
 		}
-		
+
 		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login&action=submitlogin".$returnto.$returntoquery );
 		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto.$returntoquery );
 
