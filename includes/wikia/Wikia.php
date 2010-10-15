@@ -132,7 +132,7 @@ class WikiaAssets {
 			$out = '';
 			$themename = $wgRequest->getVal('themename');
 			$cb = $wgRequest->getVal('cb');
-			$ref = WikiaAssets::GetSiteCSSReferences($themename, $cb);
+			$ref = WikiaAssets::GetSiteCSSReferences($themename, $cb, Wikia::isOasis());
 			foreach($ref as $reference) {
 				//$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
 				//$out .= '<!--# include virtual="'.$reference['url'].'" -->';
@@ -199,7 +199,7 @@ class WikiaAssets {
 	/**
 	 * The optional cache-buster can be used to get around the current problems where purges are behind.
 	 */
-	private function GetSiteCSSReferences($themename, $cb = "") {
+	private function GetSiteCSSReferences($themename, $cb = "", $isOasis=false) {
 		$cssReferences = array();
 		global $wgSquidMaxage;
 		$siteargs = array(
@@ -213,11 +213,15 @@ class WikiaAssets {
 			'cb' => $cb
 		) + $siteargs );
 
-		// We urldecode these now because nginx does not expect them to be URL encoded.
-		$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI)));
+		if($isOasis){
+			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Wikia.css', $query, NS_MEDIAWIKI)));
+		} else {
+			// We urldecode these now because nginx does not expect them to be URL encoded.
+			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI)));
 
-		if(empty($themename) || $themename == 'custom' ) {
-			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI)));
+			if(empty($themename) || $themename == 'custom' ) {
+				$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI)));
+			}
 		}
 
 		$siteargs['gen'] = 'css';
@@ -226,7 +230,7 @@ class WikiaAssets {
 
 		return $cssReferences;
 	}
-
+	
 	public static function GetExtensionsCSS($styles) {
 		// exclude user and site css
 		foreach($styles as $style => $options) {
@@ -264,6 +268,11 @@ class WikiaAssets {
 		return $out . $tmpOut->buildCssLinks();
 	}
 
+	/**
+	 * Returns the HTML to put into the page for SiteCSS.  According to
+	 * configuration, this may or may not be just a call to __wikia_combined
+	 * for the SiteCSS files.
+	 */
 	public static function GetSiteCSS($themename, $isRTL, $isAllInOne) {
 		$out = "\n<!-- GetSiteCSS -->";
 
