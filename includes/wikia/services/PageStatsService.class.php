@@ -170,43 +170,70 @@ class PageStatsService extends Service {
 		$categories = $wgMemc->get($key);
 		if (!is_array($categories)) {
 			wfProfileIn(__METHOD__ . '::miss');
+			$limit = 2;
 
 			// get list of articles categories with number of articles "linked" to them
-			$dbr = wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);			
+
+			// check querycache first
 			$res = $dbr->select(
-				array('categorylinks AS c1', 'categorylinks AS c2'),
-				array('c2.cl_to, count(c2.cl_from) as cnt'),
-				array(),
+				array('querycache, categorylinks'),
+				array('qc_title as cl_to, qc_value as cnt'),
+				array(
+					'qc_title = cl_to', 
+					'qc_type' => 'Mostpopularcategories',
+					'cl_from' => $this->pageId
+				),
 				__METHOD__,
 				array(
-					'GROUP BY' => 'c2.cl_to',
-				),
-				array(
-					'categorylinks AS c2' => array(
-						'JOIN',
-						implode (' AND ',
-							array(
-								'c1.cl_to = c2.cl_to',
-								"c2.cl_from = {$this->pageId}",
-							)
-						)
-					),
+					'ORDER BY' => 'qc_value DESC',
+					'LIMIT'    => $limit
 				)
 			);
 
 			// order and filter out blacklisted categories
 			$categories = array();
-
 			while($obj = $dbr->fetchObject($res)) {
 				if (!$this->isCategoryBlacklisted($obj->cl_to)) {
 					$categories[$obj->cl_to] = $obj->cnt;
 				}
 			}
+				
+			if ( count($categories) < $limit ) {
+				# run second query
+				$res = $dbr->select(
+					array('categorylinks AS c1', 'categorylinks AS c2'),
+					array('c2.cl_to, count(c2.cl_from) as cnt'),
+					array(),
+					__METHOD__,
+					array(
+						'GROUP BY' => 'c2.cl_to',
+					),
+					array(
+						'categorylinks AS c2' => array(
+							'JOIN',
+							implode (' AND ',
+								array(
+									'c1.cl_to = c2.cl_to',
+									"c2.cl_from = {$this->pageId}",
+								)
+							)
+						),
+					)
+				);
 
-			arsort($categories);
-
-			// get two most linked categories and store in cache
-			$categories = array_slice($categories, 0, 2);
+				// order and filter out blacklisted categories
+				$categories = array();
+				while($obj = $dbr->fetchObject($res)) {
+					if (!$this->isCategoryBlacklisted($obj->cl_to)) {
+						$categories[$obj->cl_to] = $obj->cnt;
+					}
+				}
+				arsort($categories);
+				// get two most linked categories and store in cache
+				$categories = array_slice($categories, 0, 2);
+			}
+			
 			$wgMemc->set($key, $categories, self::CACHE_TTL);
 
 			wfProfileOut(__METHOD__ . '::miss');
