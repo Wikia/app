@@ -1,4 +1,5 @@
 == Changes since 201010.2 ==
+* rt#69931: Oasis: Diff link from watchlist e-mails shows the old diff page (macbre)
 * rt#72977: Related pages: Section appears above when you click on Table of contents link (macbre)
 * rt#72571: Oasis: Increase the font size and line spacing (macbre)
 * rt#72703: Related pages: Filter out parser hooks code from article snippet (macbre)
