@@ -42,7 +42,7 @@ RelatedPages = {
 
 			this.log('moving before #' + sectionId + ' section (' + sectionMatch.children().first().text() + ')');
 
-			module.insertBefore(sectionMatch);
+			module.insertBefore( sectionMatch.prev() /* RT #72977 */);
 		}
 		// sections found, but none without collision
 		else if (sections.length > addAfter) {
