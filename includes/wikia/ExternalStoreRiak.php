@@ -20,6 +20,7 @@ class ExternalStoreRiak {
 	public function __construct() {
 		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy ;
 
+		$this->mRiakBucket = "blobs";
 		$this->mRiakClient = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, 'mapred', $wgRiakNodeProxy );
 
 	}
@@ -44,11 +45,19 @@ class ExternalStoreRiak {
 	 * @return string URL
 	 */
 	public function store( $bucket, $data ) {
-		$this->mRiakBucket = $bucket;
+		# key for blobs is not known here
 		return false;
 	}
 
 
+	/**
+	 * Set bucket for storing blobs
+	 *
+	 * @param string $bucket bucket name
+	 */
+	public function setBucket( $bucket ) {
+		$this->mRiakBucket = $bucket;
+	}
 
 	/**
 	 * fetch blob from riak, bucket should be already defined
