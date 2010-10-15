@@ -34,7 +34,7 @@ class PageHeaderModule extends Module {
 		global $wgTitle, $wgRequest;
 
 		$namespace = $wgTitle->getNamespace();
-		$isDiff = $wgRequest->getVal('diff');
+		$isDiff = !is_null($wgRequest->getVal('diff'));
 
 		// "Add topic" action
 		if (isset($this->content_actions['addsection'])) {
