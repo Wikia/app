@@ -31,7 +31,7 @@
 		display: none;
 	}
 	nav:before {
-		background: url("/skins/oasis/images/sprite.png") no-repeat; /* $wgCdnStylePath */
+		background: url("/skins/oasis/images/sprite.png") 0 -32px no-repeat; /* $wgCdnStylePath */
 		bottom: -12px;
 		content: " ";
 		height: 12px;
