@@ -43,14 +43,24 @@ class AdSS_Controller extends SpecialPage {
 	function displayForm( $adForm ) {
 		global $wgOut, $wgUser, $wgAdSS_templatesDir;
 
+		$sitePricing = AdSS_Util::getSitePricing();
+
+		$adsCount = count( AdSS_Publisher::getSiteAds() );
+		if( $adsCount > 0 ) {
+			$currentShare = min( $sitePricing['max-share'], 1/$adsCount );
+		} else {
+			$currentShare = $sitePricing['max-share'];
+		}
+
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
 		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
-		$tmpl->set( 'sitePricing', AdSS_Util::getSitePricing() );
+		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
 		$tmpl->set( 'adForm', $adForm );
 		$tmpl->set( 'ad', AdSS_Ad::newFromForm( $adForm ) );
+		$tmpl->set( 'currentShare', intval( $currentShare * 100 ) );
 
 		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
