@@ -156,6 +156,9 @@ class MenuButtonModule extends Module {
 			case 'edit':
 				$accesskey = 'e';
 				break;
+			case 'editprofile':
+				$accesskey = 'e';
+				break;
 			case 'move':
 				$accesskey = 'm';
 				break;
