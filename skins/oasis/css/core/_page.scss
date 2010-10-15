@@ -13,7 +13,7 @@
 .WikiaMainContent {
 	float: left;
 	width: $width-outside - 320px;
-
+	z-index: 0;
 	// one column layout (no right rail)
 	.oasis-one-column & {
 		width: $width-outside;
