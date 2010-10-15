@@ -71,6 +71,7 @@ class WikiFactoryTags {
 		wfProfileIn( __METHOD__ );
 		if( $this->mCityId ) {
 			$wgMemc->delete( $this->cacheKey() );
+			$wgMemc->delete( $this->cacheKey(2) );
 		}
 		wfProfileOut( __METHOD__ );
 	}
