@@ -1,11 +1,9 @@
-
-
-
-
 <div id="myhome-main">
-	<nav class="activity-nav">
-		<?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif', null, 'sprite activity') ?>
-		<?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist', array('class' => 'wikia-button secondary', 'data-id' => 'wikiactivity-watchlist'), 'blank.gif', null) ?>
+	<nav class="activity-nav tabs">
+		<ul>
+			<li class="<?= $classActivity ?>"><?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('class' => $classActivity, 'data-id' => 'wikiactivity'), 'blank.gif', null, 'sprite activity') ?></li>
+			<li class="<?= $classWatchlist ?>"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist', array('class' => $classWatchlist, 'data-id' => 'wikiactivity-watchlist'), 'blank.gif', null) ?></li>
+		</ul>
 	</nav>
 	
 <?php  if( isset( $emptyMessage ) ) { ?>
