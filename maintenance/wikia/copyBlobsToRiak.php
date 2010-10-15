@@ -22,6 +22,7 @@ $riak = new ExternalStoreRiak;
 
 
 $sth = $dbr->query( "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id" );
+$counter = 0;
 while( $row = $dbr->fetchObject( $sth ) ) {
 	/**
 	 * get only external revisions
@@ -32,6 +33,8 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 			$key = sprintf( "%d:%d:%d", $wgCityId, $row->rev_page, $row->rev_id );
 			echo "Moving from db to riak with key $key\n";
 			$riak->storeBlob( $key, $text );
+			$counter++;
 		}
 	}
 }
+echo "Moved $counter blobs to riak\n";
