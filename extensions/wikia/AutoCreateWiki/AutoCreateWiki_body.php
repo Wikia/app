@@ -554,19 +554,22 @@ class AutoCreateWikiPage extends SpecialPage {
 			"{$IP}/maintenance/archives/wikia/patch-watchlist-improvements.sql",
 			"{$IP}/maintenance/archives/wikia/patch-create-blog_listing_relation.sql",
 			"{$IP}/maintenance/archives/wikia/patch-create-page_vote.sql",
-			"{$IP}/maintenance/archives/wikia/patch-create-page_visited.sql"
+			"{$IP}/maintenance/archives/wikia/patch-create-page_visited.sql",
 		);
 
 		/**
-		 * better safe then sorry
+		 * tables which maybe exists or maybe not, better safe than sorry
 		 */
-		if( is_readable( "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql" ) &&
-			is_readable( "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql" )
-		) {
-			$sqlfiles[] = "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql";
-			$sqlfiles[] = "{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql";
+		$extrafiles = array(
+			"{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql",
+			"{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
+			"{$IP}/extensions/wikia/ImageServing/sql/table.sql"
+		);
+		foreach( $extrafiles as $file ) {
+			if( is_readable( $file ) ) {
+				$sqlfiles[] = $file;
+			}
 		}
-
 
 		/**
 		 * additional tables per type
