@@ -84,6 +84,7 @@ $wgAutoloadClasses["WikiMover"] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMo
 $wgAutoloadClasses["WikiFactoryHub"] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses['AnalyticsEngine'] = "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 $wgAutoloadClasses['SimplePie'] = "$IP/lib/SimplePie/simplepie.inc";
+$wgAutoloadClasses['FakeLocalFile'] = "$IP/includes/wikia/FakeLocalFile.class.php";
 
 // core
 $wgAutoloadClasses['View']  =  $IP.'/includes/wikia/View.php';
