@@ -1,5 +1,5 @@
 .WikiaArticle {
-	line-height: 1.8em;
+	@include bodytext;
 	padding: 0 10px;
 	position: relative;
 	min-height: 250px;
@@ -155,10 +155,8 @@
 	.picture-attribution {
 		display: block;
 		font-size: 11px;
-		text-align: left;
-		position: relative;
-		top: -2px;
 		margin-right: 16px;
+		text-align: left;
 	}
 	.picture-attribution .avatar {
 		margin-right: 3px;
@@ -206,14 +204,14 @@
 	.printfooter {
 		display: none;
 	}
-	
+
 	a.external, a[href^="gopher://"] {
 		background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
 		background-position: top right;
 		background-repeat: no-repeat;
 		padding-right: 13px;
 	}
-	
+
 	#filetoc {
 		text-align: center;
 		border: 1px solid $color-article-toc-border;
@@ -300,14 +298,14 @@
 	.TablePager th { background-color: #eeeeff; color: #000 }
 	.TablePager td { background-color: #ffffff; color: #000 }
 	.TablePager tr:hover td { background-color: #eeeeff }
-	
-	
+
+
 	.InfoBox {
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		border: 1px $color-page-border solid;
 		float: right;
 		line-height: 12px;
-		
+
 		padding: {
 			left: 10px;
 			right: 10px;
@@ -317,7 +315,7 @@
 		table {
 			border-collapse: collapse;
 			width: 243px;
-					
+
 			td {
 				margin: 0px;
 				padding: 0px;
@@ -325,12 +323,12 @@
 				vertical-align: top;
 				width: 100%;
 			}
-			
+
 			th {
 				@extends td;
 				font-weight: bold;
 			}
-			
+
 			thead {
 				tr {
 					margin-top: 20px;
@@ -346,7 +344,7 @@
 					}
 					text-align: left;
 				}
-				
+
 				.infobox-image {
 					text-align: center;
 					overflow: hidden;
@@ -357,20 +355,20 @@
 						left: 10px;
 					}
 				}
-			
+
 				.infobox-caption {
 					text-align: center;
-					font-size: 12px;			
+					font-size: 12px;
 				}
 				.infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
 			}
-	
+
 			// /** the infobox content **/
 			tbody {
 				border-top: 1px $color-page-border solid;
 				display: block;
 				margin: 20px 0px;
-				
+
 				td {
 					padding: {
 						left: 10px;
@@ -379,7 +377,7 @@
 					}
 					vertical-align: top;
 				}
-				
+
 				th {
 					@extends td;
 					font-weight: bold;
@@ -391,14 +389,14 @@
 					vertical-align: top;
 					width: 30%;
 				}
-				
+
 				.infobox-subhead {
 					padding-top: 20px;
 				}
 
 			}
 		}
-		
+
 	}
 }
 

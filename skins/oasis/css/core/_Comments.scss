@@ -130,18 +130,14 @@
 		float: left;
 	}
 	blockquote {
+		@include bodytext;
 		@include border-radius(5px);
 		border: 1px solid $color-page-border;
 		margin: 0 5px 0 75px;
 		padding: 15px 10px 10px 15px;
 		position: relative;
-		p {
-			line-height: 1.8em;
-			margin-bottom: 1em;
-		}
 		ul, ol {
 			margin: 0.4em 0 0.5em 2.5em;
-			line-height: 1.8em;
 		}
 		ol {
 			list-style: decimal;
@@ -158,7 +154,6 @@
 		small {
 			font-size: .78em;
 		}
-
 		.article-comm-text {
 			overflow: hidden;
 			width: 553px;
