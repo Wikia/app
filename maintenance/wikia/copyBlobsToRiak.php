@@ -15,6 +15,9 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
 $dbr = wfGetDB( DB_SLAVE );
+
+$wgRiakNodeHost="dev-riak1";
+$wgRiakProxy="dev-riak1:8098";
 $riak = new ExternalStoreRiak;
 
 
