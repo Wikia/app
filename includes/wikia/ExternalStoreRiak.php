@@ -18,9 +18,9 @@ class ExternalStoreRiak {
 	 * @access public
 	 */
 	public function __construct() {
-		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix;
+		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy ;
 
-		$this->mRiakClient = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix );
+		$this->mRiakClient = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy );
 
 	}
 
