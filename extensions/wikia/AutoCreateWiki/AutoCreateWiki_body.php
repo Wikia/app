@@ -732,10 +732,17 @@ class AutoCreateWikiPage extends SpecialPage {
 		$output = wfShellExec( $cmd );
 		$this->log( $output );
 
+		//RT:70428 for german and spanish, default to oasis
+		global $wgOasisSkin2010103;
+		
 		/**
 		 * RT:68926 set default skin to oasis
 		 */
-		if($this->mType != 'answers' && $this->mWikiData[ "language" ] == 'en') {
+		if ($this->mType != 'answers' && 
+			( $this->mWikiData[ "language" ] == 'en' ||
+				( !empty($wgOasisSkin2010103) && in_array($this->mWikiData[ "language" ], array('de', 'es') ) )
+			) 
+		){
 			WikiFactory::setVarByName("wgDefaultSkin", $this->mWikiId, 'oasis');
 		}
 
