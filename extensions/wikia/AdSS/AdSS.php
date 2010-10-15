@@ -55,4 +55,17 @@ $wgAdSS_DBname = 'adss';
 $wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
 $wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
 $wgPayflowProCredentials = array(); 
-$wgAdSS_pricingConf = array();
+$wgAdSS_pricingConf = array(
+		'site' => array(
+			'price'     => '5.00',
+			'period'    => 'd', //daily
+			'max-share' => '0.25',
+			),
+		'page' => array(
+			'#default#' => array(
+				'price'   => '5.00',
+				'period'  => 'm', //monthly
+				),
+			),
+		);
+
