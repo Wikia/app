@@ -177,7 +177,7 @@ class PageStatsService extends Service {
 
 			// check querycache first
 			$res = $dbr->select(
-				array('querycache, categorylinks'),
+				array('querycache', 'categorylinks'),
 				array('qc_title as cl_to, qc_value as cnt'),
 				array(
 					'qc_title = cl_to', 
