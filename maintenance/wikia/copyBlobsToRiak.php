@@ -22,18 +22,27 @@ $riak = new ExternalStoreRiak;
 
 
 $sth = $dbr->query( "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id" );
-$counter = 0;
+$c = 0;
+
 while( $row = $dbr->fetchObject( $sth ) ) {
 	/**
 	 * get only external revisions
 	 */
 	if( strpos( $row->old_flags, "external" ) !== false ) {
+		$t = microtime( true );
 		$text = ExternalStore::fetchFromURL( $row->old_text );
+		$t = microtime( true ) - $t;
+		$timeMs = intval( $t * 1000 );
+		$t = microtime( true );
+		echo "Getting blobs from db, time=$timeMS\n";
 		if( $text ) {
 			$key = sprintf( "%d:%d:%d", $wgCityId, $row->rev_page, $row->rev_id );
-			echo "Moving from db to riak with key $key\n";
 			$riak->storeBlob( $key, $text );
-			$counter++;
+			$t = microtime( true ) - $t;
+			$timeMs = intval( $t * 1000 );
+			$t = microtime( true );
+			$c++;
+			echo "Moving from db to riak with key $key, time=$timeMS\n";
 		}
 	}
 }
