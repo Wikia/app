@@ -46,4 +46,4 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		}
 	}
 }
-echo "Moved $counter blobs to riak\n";
+echo "Moved $c blobs to riak\n";
