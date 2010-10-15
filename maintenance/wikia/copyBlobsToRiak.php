@@ -17,7 +17,7 @@ require_once( "commandLine.inc" );
 $dbr = wfGetDB( DB_SLAVE );
 
 $wgRiakNodeHost="dev-riak1";
-$wgRiakProxy="dev-riak1:8098";
+$wgRiakNodeProxy="dev-riak1:8098";
 $riak = new ExternalStoreRiak;
 
 
