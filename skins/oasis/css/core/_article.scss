@@ -203,6 +203,14 @@
 	.printfooter {
 		display: none;
 	}
+	
+	a.external, a[href^="gopher://"] {
+		background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
+		background-position: top right;
+		background-repeat: no-repeat;
+		padding-right: 13px;
+	}
+	
 	#filetoc {
 		text-align: center;
 		border: 1px solid $color-article-toc-border;

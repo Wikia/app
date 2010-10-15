@@ -14,7 +14,7 @@
 		width: $width-outside + 10px;
 		z-index: 900;
 		&:after {
-			background: url(/skins/oasis/images/sprite.png) no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/oasis/images/sprite.png) 0 -32px no-repeat; /* $wgCdnStylePath */
 			content: " ";
 			height: 12px;
 			left: 5px;
