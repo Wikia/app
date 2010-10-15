@@ -50,11 +50,12 @@ class WikiFactoryTags {
 	/**
 	 *
 	 * @access private
+	 * @param integer which type of array we're storing
 	 *
 	 * @return string  key used for caching
 	 */
-	private function cacheKey( ) {
-		return sprintf( "wikifactory:tags:v1:%d", $this->mCityId );
+	private function cacheKey( $version=1 ) {
+		return sprintf( "wikifactory:tags:v".$version.":%d", $this->mCityId );
 	}
 
 
@@ -147,7 +148,7 @@ class WikiFactoryTags {
 			/**
 			 * check if cache has any values stored
 			 */
-			$result = $wgMemc->get( $this->cacheKey() );
+			$result = $wgMemc->get( $this->cacheKey(2) );
 			$usedb  = is_array( $result ) ? false : true;
 		}
 		else {
@@ -155,7 +156,7 @@ class WikiFactoryTags {
 		}
 
 		if( $usedb ) {
-			$dbr = WikiFactory::db( DB_SLAVE );
+			$dbr = WikiFactory::db( ($skipcache)?(DB_MASTER):(DB_SLAVE) );
 			$sth = $dbr->select(
 				array( "city_tag"  ),
 				array( "id", "name" ),
@@ -170,7 +171,7 @@ class WikiFactoryTags {
 			/**
 			 * set in cache for future use
 			 */
-			$wgMemc->set( $this->cacheKey(), $result, 60*60*24 );
+			$wgMemc->set( $this->cacheKey(2), $result, 60*60*24 );
 		}
 
 		wfProfileOut( __METHOD__ );
