@@ -2,6 +2,7 @@
 	clear: both;
 	padding-top: 23px;
 	position: relative;
+	z-index: 1;
 	.toolbar {
 		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 		border-top: 3px solid #000;
