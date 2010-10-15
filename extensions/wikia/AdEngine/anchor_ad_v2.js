@@ -39,7 +39,7 @@ wgAfterContentAndJS.push(
 						top: 10px;\
 					}\
 					.close {\
-						background: url("/extensions/wikia/AdEngine/close_button.png") #' + AnchorAd.settings.close.background + ';\
+						background: url("/extensions/wikia/AdEngine/close_button.png");\
 						cursor: pointer;\
 						height: 18px;\
 						left: ' + parseInt(950 + AnchorAd.settings.close.yoffset) + 'px;\
@@ -48,10 +48,19 @@ wgAfterContentAndJS.push(
 						width: 18px;\
 						z-index: 1;\
 					}\
+					.close_background {\
+						background-color: #' + AnchorAd.settings.close.background + ';\
+						height: 14px;\
+						left: ' + parseInt(952 + AnchorAd.settings.close.yoffset) + 'px;\
+						position: absolute;\
+						top: ' + parseInt(2 + AnchorAd.settings.close.yoffset) + 'px;\
+						width: 14px;\
+						z-index: 0;\
+					}\
 				</style>\
 				<div class="wikia_anchor_wrapper">\
 					<div class="wikia_anchor_ad">\
-						<div class="close"></div>\
+						<div class="close"></div><div class="close_background"></div>\
 						<a class="clickable"></a>\
 					</div>\
 				</div>';
