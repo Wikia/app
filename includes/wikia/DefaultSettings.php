@@ -134,7 +134,6 @@ $wgAutoloadClasses['PopularBlogPostsModule'] = $IP.'/skins/oasis/modules/Popular
 $wgAutoloadClasses['RandomWikiModule'] = $IP.'/skins/oasis/modules/RandomWikiModule.class.php';
 $wgAutoloadClasses['ArticleInterlangModule'] = $IP.'/skins/oasis/modules/ArticleInterlangModule.class.php';
 $wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiModule.class.php';
-$wgAutoloadClasses['SemanticDataModule'] = $IP.'/skins/oasis/modules/SemanticDataModule.class.php';
 
 
 $wgAutoloadClasses['ArticleInfoBoxModule'] = $IP.'/skins/oasis/modules/ArticleInfoBoxModule.class.php';
