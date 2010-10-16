@@ -303,7 +303,7 @@ class OasisModule extends Module {
 		ob_start();
 		if ($wgRequest->getVal('printable')) {
 			// regular download
-			$this->html('csslinksbottom');
+			Module::getSkinTemplateObj()->html('csslinksbottom');
 		} else {
 			// async download
 			$cssMediaWiki = $this->data['csslinksbottom-urls'];
