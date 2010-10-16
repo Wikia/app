@@ -4,6 +4,7 @@ class SpotlightsModule extends Module {
 	var $wgBlankImgUrl;
 	var $wgSingleH1;
 	var $wgNoExternals;
+	var $wgEnableOpenXSPC;
 	var $mode;
 	var $adslots;
 	var $n_adslots;

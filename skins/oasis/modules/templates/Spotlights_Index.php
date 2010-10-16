@@ -13,9 +13,14 @@
 		<?= wfRenderModule('RandomWiki') ?>
 		<? } ?>
 	</header>
+	<? if ($wgEnableOpenXSPC) { ?>
 	<ul>
+	<? } else { ?>
+	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?>"<? } } ?>>
+		<?= AdEngine::getInstance()->getLazyLoadableAdGroup($adGroupName, $adslots) ?>
+	<? } ?>
 		<? for ($i=0; $i<$n_adslots; $i++) { ?>
-		<li class="WikiaSpotlight item-<?= $i+1 ?>">
+		<li class="WikiaSpotlight item-<?= $i+1 ?>" id="Wrapper_<?= $adslots[$i]?>">
 			<?= AdEngine::getInstance()->getAd($adslots[$i]) ?>
 		</li>
 		<? } ?>

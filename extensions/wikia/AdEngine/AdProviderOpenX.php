@@ -77,15 +77,15 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		}
 
 		if ($wgEnableOpenXSPC) {
-/*
 			$adtag = <<<EOT
 <script type='text/javascript'>
 	document.write('<scr'+'ipt type="text/javascript">');
-	document.write('wgAfterContentAndJS.push(function(){ bezen.domwrite.capture(); bezen.dom.appendScript(document.getElementById("Wrapper_$slotname"), bezen.dom.element( "script", {"type":"text/javascript"}, "OA_show($zoneId);" ), bezen.nix ); });');
+	//document.write('wgAfterContentAndJS.push(function(){ bezen.domwrite.capture(); bezen.dom.appendScript(document.body, bezen.dom.element( "script", {"type":"text/javascript"}, "OA_show($zoneId);" ), function(){ bezen.domwrite.render(document.body, function (){ alert("appended!"); }); } ); });');
+	document.write('wgAfterContentAndJS.push(function(){ bezen.domwrite.capture(); var parent=document.getElementById("Wrapper_$slotname"); var scriptSrc = wgScript + "?action=ajax&rs=axShowOpenXAd&rsargs[0]=$zoneId"; bezen.load.script(parent, scriptSrc, function(){ bezen.domwrite.render( parent ); } ); });');
 	document.write('</scr'+'ipt>');
 </script>
 EOT;
-*/
+/*
 			$adtag = <<<EOT
 <script type='text/javascript'>
 	document.write('<scr'+'ipt type="text/javascript">');
@@ -93,6 +93,7 @@ EOT;
 	document.write('</scr'+'ipt>');
 </script>
 EOT;
+*/
 			//@todo use lazy loading
 		}
 		else {
@@ -344,7 +345,7 @@ EOT;
 		// wlee: removing property 'display' is a hack to force FOOTER_SPOTLIGHT_LEFT to show up. not sure
 		// why this ad slot has "display: none" in the first place
 		// RT #65988: must clone iframe, set src then append to parentNode. Setting src on original iframe creates unnecessary entry in browser history
-                $out = '<script type="text/javascript">' .
+		$out = '<script type="text/javascript">' .
 			$adUrlScript .
                         $function_name . ' = function() { ' .
 			'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " .
@@ -355,7 +356,8 @@ EOT;
 			"if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
 			//'var ad_iframe = document.getElementById("' . addslashes($slotname) ."_iframe\"); ad_iframe.src=base_url_".addslashes($slotname)."; if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
 
-                return $out;
-        }
+		return $out;
+	}
 
 }
+

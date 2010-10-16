@@ -31,8 +31,6 @@ class BodyModule extends Module {
 
 	var $wgSingleH1;
 
-	var $showTestAds;	// wlee: for Oasis ad development
-
 	private static $onEditPage;
 
 	/**
@@ -329,9 +327,5 @@ class BodyModule extends Module {
 			// Imported inside of oasis.scss now to reduce HTTP requests (since most wikis have this enabled).
 			//$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
 		}
-
-		// wlee: Oasis ad development
-		global $wgRequest;
-		$this->showTestAds = $wgRequest->getVal( 'showtestads' );
 	}
 }

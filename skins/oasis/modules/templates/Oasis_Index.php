@@ -38,12 +38,6 @@
 			print $headscripts."\n";
 		}
 	?>
-	<? if ($wgEnableOpenXSPC) { // will: this is very ugly but necessary to make OpenX SPC work. this call must take place in HEAD! ?>
-	<script>
-		<?= str_replace("\n", ' ', AdProviderOpenX::getOpenXSPCUrlScript(AdProviderOpenX::OASIS_SPOTLIGHTS_AFFILIATE_ID)); ?>
-		document.write('<scr'+'ipt type="text/javascript" src="'+openxspc_base_url+'"></scr'+'ipt>');
-	</script>
-	<? } ?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>

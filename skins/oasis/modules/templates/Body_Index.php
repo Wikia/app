@@ -8,8 +8,8 @@
 </div>
 <?= $afterBodyHtml ?>
 
-<? if ($showTestAds) { echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')); } ?>
-<? if ($showTestAds) { echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')); } ?>
+<?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
+<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
 <?= wfRenderModule('GlobalHeader') ?>
 
 <section id="WikiaPage" class="WikiaPage">

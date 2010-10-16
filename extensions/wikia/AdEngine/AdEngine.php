@@ -17,6 +17,15 @@ function wfAdEngineSetupJSVars($vars) {
 	return true;
 }
 
+function axShowOpenXAd($zoneId) {
+	global $wgRequest;
+
+	$out = "OA_show($zoneId);";
+
+	return $out;
+}
+$wgAjaxExportList[] = "axShowOpenXAd";
+
 /**
  * Before the page is rendered this gives us a chance to cram some Javascript in.
  */
@@ -38,7 +47,6 @@ function adEngineAdditionalScripts( &$out, &$sk ){
 		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.load.js?$wgStyleVersion'></script>\n");
 	}
 	if ($wgEnableOpenXSPC) {
-		/*	will: commenting out because call to OpenX SPC is now in Oasis_Index, HEAD
 		// class autoloader probably hasn't run yet
 		if (!class_exists('AdProviderOpenX', false)) {
 			require "$IP/extensions/wikia/AdEngine/AdProviderOpenX.php";
@@ -55,7 +63,6 @@ function adEngineAdditionalScripts( &$out, &$sk ){
 </script>
 EOT;
 		$out->addScript($script);	// @todo move to StaticChute.php
-		*/
 	}
 	return true;
 } // end adEngineAdditionalScripts()
