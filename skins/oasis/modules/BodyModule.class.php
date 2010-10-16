@@ -176,7 +176,7 @@ class BodyModule extends Module {
 		}
 
 		// Content, category and forum namespaces
-		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM)) ||
+		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT)) ||
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
