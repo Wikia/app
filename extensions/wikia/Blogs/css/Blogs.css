@@ -352,3 +352,11 @@ float:left;
 margin-left:65px;
 }
 
+.wikiaSkinMonaco .WikiaBlogListing,
+.skin-oasis #wk_blogs_article {
+	display: none;
+}
+.skin-oasis .WikiaBlogListing,
+.wikiaSkinMonaco #wk_blogs_article {
+	display: block;
+}

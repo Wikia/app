@@ -978,7 +978,7 @@ class BlogTemplateClass {
 		return $aOutput;
 	}
 
-	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
+	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false, $knownSkin = false ) {
 		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
@@ -1198,7 +1198,12 @@ class BlogTemplateClass {
 								$result = $oTmpl->execute("blog-article-page");
 							}
 							// macbre: let Oasis add HTML
-							wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
+							if(empty($knownSkin)) {
+								wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
+							} else if($knownSkin == 'oasis'){
+								$result = "";
+								wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
+							}
 						} else {
 							unset($result);
 							$result = self::__makeRssOutput($aResult);
@@ -1277,7 +1282,7 @@ class BlogTemplateClass {
 		return $res;
 	}
 
-	public static function axShowCurrentPage ($articleId, $namespace, $offset) {
+	public static function axShowCurrentPage ($articleId, $namespace, $offset, $skin) {
 		global $wgParser;
 		wfProfileIn( __METHOD__ );
 		$result = "";
@@ -1319,7 +1324,7 @@ class BlogTemplateClass {
 						/* set new value of offset */
 						$params['offset'] = $offset;
 						/* run parser */
-						$result = self::parseTag( $input, $params, $wgParser );
+						$result = self::parseTag( $input, $params, $wgParser, false, $skin );
 					}
 				}
 			} else {

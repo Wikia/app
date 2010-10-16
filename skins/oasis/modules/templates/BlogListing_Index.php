@@ -1,4 +1,4 @@
-<section class="<?= $blogListingClass ?>" style="display: none">
+<section class="<?= $blogListingClass ?>">
 	<h3><?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
 		<?= $title ?>
 		<span class="reload"><?= View::link($wgTitle, "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?></span>
