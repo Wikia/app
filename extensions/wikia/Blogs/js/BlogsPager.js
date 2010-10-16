@@ -8,21 +8,21 @@ function wkBlogShowPage(offset) {
 		wkBlogLoader.html("<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\">");
 		wkBlogLoader2.html("<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\">");
 		offset = parseInt(__offset) + parseInt(offset);
-		var params = "&rsargs[0]=" + wgArticleId + "&rsargs[1]=" + wgNamespaceNumber + "&rsargs[2]=" + offset;
+		var params = "&rsargs[0]=" + wgArticleId + "&rsargs[1]=" + wgNamespaceNumber + "&rsargs[2]=" + offset + "&rsargs[3]=" + (skin && skin == 'oasis' ? 'oasis' : 'monaco');
 		var baseurl = wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params;
-		jQuery.get( wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params,
+		$.get( wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params,
 			function(data) {
 				if(data) {
-					var dataM = $(data).filter('#wk_blogs_article');
-					var dataO = $(data).filter('.WikiaBlogListing');
-					$(".WikiaBlogListing").empty().append(dataO);
-					$("#wk_blogs_article").empty().append(dataM);
+					if(skin == 'oasis') {
+						$(".WikiaBlogListing").empty().append(data);
+					} else {
+						$("#wk_blogs_article").empty().append(data);
+					}
 					$('html, body').animate({scrollTop: $('body').offset().top}, 400);
-				} 
+				}
 				wkBlogLoader.html("");
 				wkBlogLoader2.html("");
 			}
 		);
 	}
-	return false;
 }

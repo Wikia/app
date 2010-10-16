@@ -43,8 +43,13 @@
 }
 
 // /** hide blog listing rendered for Monaco ***/
-#wk_blogs_article {
+.wikiaSkinMonaco .WikiaBlogListing,
+.skin-oasis #wk_blogs_article {
 	display: none;
+}
+.skin-oasis .WikiaBlogListing,
+.wikiaSkinMonaco #wk_blogs_article {
+	display: block;
 }
 .wk_blogs_panel {
 	display: none;
@@ -52,10 +57,6 @@
 
 // styling for Oasis blog listing
 .WikiaBlogListing {
-	// show this HTML on Oasis
-	.skin-oasis & {
-		display: block !important;
-	}
 	ul {
 		list-style: none;
 		margin: 0;
