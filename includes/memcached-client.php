@@ -407,7 +407,7 @@ class memcached
     */
    function get ($key)
    {
-      $fname = 'memcached::get';
+      $fname = "memcached::get::$key";  // Owen wants to get more profiling info
       wfProfileIn( $fname );
 
       if ( $this->_debug ) {
