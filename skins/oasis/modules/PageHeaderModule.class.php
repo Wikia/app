@@ -158,7 +158,8 @@ class PageHeaderModule extends Module {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		global $wgTitle, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix;
+		global $wgTitle, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId;
+		wfProfileIn(__METHOD__);
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
@@ -183,11 +184,19 @@ class PageHeaderModule extends Module {
 			$this->likes = true;
 
 			// get two popular categories this article is in
-			$categories = $service->getMostLinkedCategories();
+			$categories = array();
+			
+			// FIXME: Might want to make a WikiFactory variable for controlling this feature if we aren't
+			// comfortable with its performance.
+			// NOTE: Skip getMostLinkedCategories() on Lyrics and Marvel because we're not sure yet that it's fast enough.
+			$LYRICS_CITY_ID = "43339";
+			$MARVEL_CITY_ID = "2233";
+			if(($wgCityId != $LYRICS_CITY_ID)  && ($wgCityId != $MARVEL_CITY_ID)){
+				$categories = $service->getMostLinkedCategories();
+			}
 
 			// render links to most linked category page
 			$this->categories = array();
-
 			foreach($categories as $category => $cnt) {
 				$title = Title::newFromText($category, NS_CATEGORY);
 				$this->categories[] = View::link($title, $title->getText());
@@ -342,6 +351,8 @@ class PageHeaderModule extends Module {
 		if (!empty($wgSupressPageSubtitle)) {
 			$this->subtitle = '';
 		}
+		
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
