@@ -213,9 +213,11 @@ class WikiaAssets {
 			'cb' => $cb
 		) + $siteargs );
 		
+		// Sometimes, this function is called on the page itself, sometimes it's called by the combiner.
+		// The page can use Wikia::isOasis(), but the combiner needs the request param.
 		global $wgRequest;
 		$isOasis = $wgRequest->getVal('isOasis', "");
-		$isOasis = (($isOasis != "") && (strtolower($isOasis) != "false"));
+		$isOasis = (Wikia::isOasis() || (($isOasis != "") && (strtolower($isOasis) != "false")));
 		if($isOasis){
 			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Wikia.css', $query, NS_MEDIAWIKI)));
 		} else {
