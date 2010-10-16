@@ -72,7 +72,7 @@ Please try another one!',
 	/*
 	 * Leaderboard
 	 */
-	'leaderboard-intro' => "'''&ldquo;What are Achievements?&rdquo;'''
+	'leaderboard-intro' => "'''“What are Achievements?”'''
 You can earn special badges by participating on this wiki!
 Each badge that you earn adds points to your total score:
 Bronze badges are worth 10 points, Silver badges are worth 50 points, and Gold badges are worth 100 points.
