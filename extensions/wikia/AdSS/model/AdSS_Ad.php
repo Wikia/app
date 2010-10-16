@@ -91,7 +91,7 @@ class AdSS_Ad {
 	function loadFromDB() {
 		global $wgAdSS_DBname;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 		$row = $dbr->selectRow( 'ads', '*', array( 'ad_id' => $this->id ), __METHOD__ );
 		if( $row === false ) {
 			// invalid ad_id
