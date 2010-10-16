@@ -10,7 +10,7 @@ class AdSS_Publisher {
 		$ads = self::getSiteAds();
 
 		$adsRendered = array();
-		$minExpire = $wgSquidMaxage + time();
+		$minExpire = 60*60 + time();
 		foreach( $ads as $ad ) {
 			$adsRendered[] = $ad->render();
 			if( $minExpire > $ad->expires ) {
@@ -29,9 +29,9 @@ class AdSS_Publisher {
 		$memcKey = wfMemcKey( "adss", "siteads" );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
-			$minExpire = $wgSquidMaxage + time();
+			$minExpire = 60*60 + time();
 			$ads = array();
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+			$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
 						'ad_wiki_id' => $wgCityId,
 						'ad_page_id' => 0,
@@ -65,9 +65,9 @@ class AdSS_Publisher {
 		$memcKey = wfMemcKey( "adss", "pageads", $title->getArticleID() );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
-			$minExpire = $wgSquidMaxage;
+			$minExpire = 60*60 + time();
 			$ads = array();
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+			$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
 						'ad_wiki_id' => $wgCityId,
 						'ad_page_id' => $title->getArticleID(),

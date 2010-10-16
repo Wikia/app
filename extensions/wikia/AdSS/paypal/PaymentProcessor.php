@@ -42,7 +42,7 @@ class PaymentProcessor {
 	function getAdId( $token ) {
 		global $wgAdSS_DBname;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 		return $dbr->selectField( 'pp_tokens', 'ppt_ad_id', array( 'ppt_token' => $token ), __METHOD__ );
 	}
 
@@ -84,7 +84,7 @@ class PaymentProcessor {
 		global $wgAdSS_DBname;
 
 		// check if the request was already made
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 		$payerId = $dbr->selectField( 'pp_details', 'ppd_payerid', array( 'ppd_token' => $token ), __METHOD__ );
 		if( $payerId !== false ) {
 			return $payerId;
@@ -146,7 +146,7 @@ class PaymentProcessor {
 		global $wgAdSS_DBname;
 
 		// check if the request was already made
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 		$baid = $dbr->selectField( 'pp_agreements', 'ppa_baid', array( 'ppa_token' => $token ), __METHOD__ );
 		if( $baid !== false ) {
 			return $baid;
