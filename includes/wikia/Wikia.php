@@ -132,7 +132,7 @@ class WikiaAssets {
 			$out = '';
 			$themename = $wgRequest->getVal('themename');
 			$cb = $wgRequest->getVal('cb');
-			$ref = WikiaAssets::GetSiteCSSReferences($themename, $cb, Wikia::isOasis());
+			$ref = WikiaAssets::GetSiteCSSReferences($themename, $cb);
 			foreach($ref as $reference) {
 				//$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
 				//$out .= '<!--# include virtual="'.$reference['url'].'" -->';
@@ -199,7 +199,7 @@ class WikiaAssets {
 	/**
 	 * The optional cache-buster can be used to get around the current problems where purges are behind.
 	 */
-	private function GetSiteCSSReferences($themename, $cb = "", $isOasis=false) {
+	private function GetSiteCSSReferences($themename, $cb = "") {
 		$cssReferences = array();
 		global $wgSquidMaxage;
 		$siteargs = array(
@@ -212,7 +212,10 @@ class WikiaAssets {
 			'smaxage' => $wgSquidMaxage,
 			'cb' => $cb
 		) + $siteargs );
-
+		
+		global $wgRequest;
+		$isOasis = $wgRequest->getVal('isOasis', "");
+		$isOasis = (($isOasis != "") && (strtolower($isOasis) != "false"));
 		if($isOasis){
 			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Wikia.css', $query, NS_MEDIAWIKI)));
 		} else {
@@ -291,7 +294,8 @@ class WikiaAssets {
 				$prefix = $wgWikiaCombinedPrefix;
 			}
 			global $wgScriptPath;
-			$url = $wgScriptPath."/{$prefix}cb={$cb}{$wgStyleVersion}&amp;type=SiteCSS&amp;themename={$themename}&amp;rtl={$isRTL}";
+			$isOasis = (Wikia::isOasis()?"&amp;isOasis=true":"");
+			$url = $wgScriptPath."/{$prefix}cb={$cb}{$wgStyleVersion}&amp;type=SiteCSS&amp;themename={$themename}&amp;rtl={$isRTL}".$isOasis;
 			$out .= '<link rel="stylesheet" type="text/css" href="'.$url.'" />';
 		} else {
 			$ref = WikiaAssets::GetSiteCSSReferences($themename);
