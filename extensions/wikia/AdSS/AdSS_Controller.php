@@ -36,6 +36,7 @@ class AdSS_Controller extends SpecialPage {
 					$adForm->set( 'wpPage', $page );
 				}
 			}
+			$adForm->set( 'wpType', 'site' );
 			$this->displayForm( $adForm );
 		}
 	}
