@@ -68,7 +68,7 @@ If you'd like to see My Home, please visit '''[[Special:Preferences|your Prefere
 
 	'myhome-namespace-blog' => 'Blog',
 
-	'myhome-community-corner-header' => 'Community Corner',
+	'myhome-community-corner-header' => 'Community Messages',
 	'oasis-myhome-community-corner-edit' => 'edit message &gt;',
 	'myhome-community-corner-edit' => 'edit message',
 	'community-corner' => "'''Welcome to My Home!'''
@@ -1373,7 +1373,7 @@ $messages['mk'] = array(
 	'myhome-activity-feed' => 'Канал со најнови активности',
 	'myhome-activity-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-watchlist-feed' => 'Список на набљудувања',
-	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „{{int:watch}}“ во лентата на врвот од страницата. 
+	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „{{int:watch}}“ во лентата на врвот од страницата.
 Со списокот можете да ги следите најновите промени во страниците за кои сте заинтересирани.',
 	'myhome-user-contributions-feed' => 'Придонеси',
 	'myhome-hot-spots-feed' => 'Најактивни места',
@@ -1412,8 +1412,8 @@ $messages['mk'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додадена фотографија|Додадени фотографии}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додадена видеоснимка|Додадени видеоснимки}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додадена категорија|Додадени категории}}',
-	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе кликнете на „{{int:editthispage}}“ не било која статија, и ќе го додадете она од коешто имате познавања. 
-Секој може да прави измени, да додава информации и да поправа грешки. 
+	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе кликнете на „{{int:editthispage}}“ не било која статија, и ќе го додадете она од коешто имате познавања.
+Секој може да прави измени, да додава информации и да поправа грешки.
 Викито го гради заедницата, и штом еднаш ќе го стиснете копчето за уредување, веќе станувате дел од таа заедница. Испробајте!',
 	'myhome-hot-spots-number-of-editors' => 'уредници',
 	'myhome-log-in' => "<center>Функцијата „Мојата домашна страница“ е достапна само ако сте најавени.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Најавете се за да ја видите страницата!]'''</big></center>",
@@ -1781,7 +1781,7 @@ $messages['pms'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Fòto giontà|Fòto giontà}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Filmà giontà|Filmà giontà}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorìa giontà|Categorìe giontà}}',
-	'myhome-user-contributions-empty' => "A peul anserisse an sta wiki-sì an sgnacand \"{{int:editthispage}}\" su qualsëssìa pàgina, e giontand lòn ch'a sa. Tuti a peulo fé 'd modìfiche, gionté dj'anformassion o corege dj'eror. 
+	'myhome-user-contributions-empty' => "A peul anserisse an sta wiki-sì an sgnacand \"{{int:editthispage}}\" su qualsëssìa pàgina, e giontand lòn ch'a sa. Tuti a peulo fé 'd modìfiche, gionté dj'anformassion o corege dj'eror.
 La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modìfica, chiel a l'é part ëd la comunità. Ch'a fasa la preuva!",
 	'myhome-hot-spots-number-of-editors' => 'editor',
 	'myhome-log-in' => "<center>La funsion Mia Intrada a l'é disponìbil mach s'a l'é intrà ant ël sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Ch'a intra ant ël sistema për vëdde sta pàgina-sì!]'''</big></center>",
@@ -1835,7 +1835,7 @@ $messages['ps'] = array(
 
 دا مخ په همدې ويکي باندې د هغو پېښو په اړه چې تازه پېښې شوي، له تاسې سره مرسته کوي.
 
-که تاسې د دې ويکي بنسټګر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی. 
+که تاسې د دې ويکي بنسټګر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی.
 د بېلګې په توګه، تاسې کولای شی چې:
 
 * يوه داسې پروژه ترتيب کړی چې د دې ويکي د بېلابېلو برخو د جوړ سبب شي
