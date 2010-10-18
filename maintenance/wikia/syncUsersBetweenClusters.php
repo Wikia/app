@@ -14,6 +14,7 @@ require_once( "commandLine.inc" );
 
 if( empty( $wgDBcluster ) ) {
 	wfOut( "Do not run this script on first cluster\n" );
+	exit( 0 );
 }
 
 $missing = array();
