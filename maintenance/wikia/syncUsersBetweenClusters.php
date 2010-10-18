@@ -37,7 +37,7 @@ foreach( $missing as $user_id ) {
 		__METHOD__
 	);
 
-	if( $dbw->insert( "user", $user, __METHOD__ )) {
+	if( $dbw->insert( "user", (array)$user, __METHOD__ )) {
 		wfOut( "{$user["user_id"]} {$user["user_name"]} copied.\n" );
 	}
 }
