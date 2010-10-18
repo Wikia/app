@@ -31,6 +31,7 @@ $MIN_NUM_PARAMS = 3;
 
 // From the Request, figure out the parameters for StaticChute.
 $requestUri = $_SERVER['REQUEST_URI'];
+$requestUri = preg_replace("/^https?:\/\/.*?\//i", "", $requestUri);
 $requestUri = preg_replace("/^\/?$DIR_NAME\/?(.*)$/i", "\\1", $requestUri);
 $data = explode("/", $requestUri);
 
