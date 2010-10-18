@@ -270,6 +270,7 @@ class memcached
 
       $this->_cache_sock = array();
       $this->_host_dead = array();
+	  $this->_dupe_cache = array();
 
       $this->_timeout_seconds = 0;
       $this->_timeout_microseconds = 500000;
@@ -441,9 +442,10 @@ class memcached
       @$this->stats['get']++;
 
 	  // Shortcut duplicate memcache requests for the same key in the same request
-	  if (isset($this->_dupe_cache[$key])) 
+	  if (isset($this->_dupe_cache[$key])) {
+         wfProfileOut( $fname );
          return $this->_dupe_cache[$key];
-
+      }
       $cmd = "get $key\r\n";
       if (!$this->_safe_fwrite($sock, $cmd, strlen($cmd)))
       {
