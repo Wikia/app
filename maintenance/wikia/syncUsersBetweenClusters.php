@@ -25,6 +25,17 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 
 $missing = array_unique( $missing );
 
+$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB ); // main wikicities
+$dbw = wfGetDB( DB_MASTER, array(), "wikicities_$wgDBcluster" ); // local wikicities for cluster
+
 foreach( $missing as $user_id ) {
-  wfOut( "$user_id missing on wikicities_$wgDBcluster\n" );
+	wfOut( "$user_id missing on wikicities_$wgDBcluster\n" );
+	$user = $dbr->selectRow(
+		array( "user" ),
+		array( "*" ),
+		array( "user_id" => $user_id ),
+		__METHOD__
+	);
+
+	print_r( $user );
 }
