@@ -463,26 +463,27 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		wfProfileOut( __METHOD__ );
 	}
 	
-	private function _get_user_ip($user_id) {
+	private function _get_user_ip($user_id, $page_title, $page_namespace) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$db = $this->getDB();
 
-
-		$key = __METHOD__ . ":" . intval($user_id);
+		$key = __METHOD__ . ":rec:" . $user_id . ":" .md5($page_title.$page_namespace) . "\n";
 		$oRow = $wgMemc->get(md5($key));
 
 		if ( empty($oRow) ) {
 			$this->profileDBIn();
 			$oRow = $db->selectRow( 
-				'cu_changes', 
-				'cuc_user, cuc_ip, cuc_timestamp', 
+				'recentchanges', 
+				'rc_ip', 
 				array( 
-					'cuc_user'	=> $user_id 
+					'rc_user'	   => $user_id,
+					'rc_title'     => $page_title,
+					'rc_namespace' => $page_namespace
 				),
 				__METHOD__, 
 				array( 
-					'ORDER BY' => 'cuc_user desc, cuc_ip desc, cuc_timestamp desc' 
+					'ORDER BY' => 'rc_id DESC' 
 				)
 			);
 			$this->profileDBOut();
@@ -490,8 +491,35 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		}
 
 		$ip = '';
-		if ( is_object($oRow) && isset($oRow->cuc_ip) ) {
-			$ip = $oRow->cuc_ip;
+		if ( is_object($oRow) && isset($oRow->rc_ip) ) {
+			$ip = $oRow->rc_ip;
+		}
+		
+		if ( empty($ip) ) {
+			$key = __METHOD__ . ":cu:" . intval($user_id);
+			$oRow = $wgMemc->get(md5($key));
+
+			if ( empty($oRow) ) {
+				$this->profileDBIn();
+				$oRow = $db->selectRow( 
+					'cu_changes', 
+					'cuc_user, cuc_ip, cuc_timestamp', 
+					array( 
+						'cuc_user'	=> $user_id 
+					),
+					__METHOD__, 
+					array( 
+						'ORDER BY' => 'cuc_user desc, cuc_ip desc, cuc_timestamp desc' 
+					)
+				);
+				$this->profileDBOut();
+				$wgMemc->set($key, $oRow, 60*60);
+			}
+
+			$ip = '';
+			if ( is_object($oRow) && isset($oRow->cuc_ip) ) {
+				$ip = $oRow->cuc_ip;
+			}
 		}
 		
 		wfProfileOut( __METHOD__ );
@@ -569,7 +597,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			# user id
 			$vals['userid'] = $oRevision->getUser();
 			# user ip
-			$vals['user_ip'] = ( IP::isIPAddress($vals['username']) ) ? $vals['username'] : $this->_get_user_ip($vals['userid']);
+			$vals['user_ip'] = ( IP::isIPAddress($vals['username']) ) ? $vals['username'] : $this->_get_user_ip($vals['userid'], $oRow->page_title, $oRow->page_namespace);
 			# user is bot
 			$vals['userisbot'] = intval( $this->_user_is_bot( $vals['username'] ) );
 			# is new
@@ -600,7 +628,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			# user id
 			$vals['userid'] = intval($oRow->rev_user);
 			# user ip
-			$vals['user_ip'] = ( IP::isIPAddress($vals['username']) ) ? $vals['username'] : $this->_get_user_ip($vals['userid']);
+			$vals['user_ip'] = ( IP::isIPAddress($vals['username']) ) ? $vals['username'] : $this->_get_user_ip($vals['userid'], $oRow->page_title, $oRow->page_namespace);
 			# user is bot
 			$vals['userisbot'] = intval( $this->_user_is_bot( $vals['username'] ) );
 			# is new
