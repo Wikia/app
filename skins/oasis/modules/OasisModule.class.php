@@ -30,7 +30,7 @@ class OasisModule extends Module {
 	var $headscripts;
 	var $body;
 	var $globalVariablesScript;
-	var $analytics;
+	var $googleAnalytics;
 	var $trackingPixels;
 	var $printableCss;
 	var $jsAtBottom;
@@ -140,17 +140,17 @@ class OasisModule extends Module {
 		$this->printableCss = $this->delayedPrintCSSdownload(); // The HTML for the CSS links (whether async or not).
 
 		// load Google Analytics code
-		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 
 		// onewiki GA
-		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 
 		// track page load time
-		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
 		
 		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
 		if (43339 == $wgCityId){
-			$this->analytics .= AnalyticsEngine::track("GA_Urchin", "lyrics");
+			$this->googleAnalytics .= AnalyticsEngine::track("GA_Urchin", "lyrics");
 		}
 
 		// Quant serve moved *after* the ads because it depends on Athena/Provider values.
