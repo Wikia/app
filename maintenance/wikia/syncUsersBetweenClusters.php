@@ -18,7 +18,7 @@ if( empty( $wgDBcluster ) ) {
 
 $missing = array();
 $dbr = wfGetDB( DB_MASTER );
-$sth = $dbr->query(  "select log_user from logging where log_user not in ( select user_id from user )" );
+$sth = $dbr->query(  "select log_user from logging where log_user not in ( select user_id from `wikicities_{$wgDBcluster}`.`user` )" );
 while( $row = $dbr->fetchObject( $sth ) ) {
 	$missing[] = $row->log_user;
 }
