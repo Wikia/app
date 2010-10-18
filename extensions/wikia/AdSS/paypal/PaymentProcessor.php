@@ -80,6 +80,36 @@ class PaymentProcessor {
 		return true;
 	}
 
+	function retryPayment( $req_id, $baid, $amount, &$respArr = array() ) {
+		global $wgAdSS_DBname;
+
+		// make request to Payflow
+		$pa = new PayflowAPI();
+		$respArr = $pa->doExpressCheckoutPayment( $req_id, $baid, $amount );
+
+		// save response in the DB
+		$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
+		$dbw->update( 'pp_payments',
+				array( 'ppp_responded'     => wfTimestampNow( TS_DB ) ) + $this->mapRespArr( array(
+					'ppp_result'        => 'RESULT',
+					'ppp_respmsg'       => 'RESPMSG',
+					'ppp_correlationid' => 'CORRELATIONID',
+					'ppp_pnref'         => 'PNREF',
+					'ppp_ppref'         => 'PPREF',
+					'ppp_feeamt'        => 'FEEAMT',
+					'ppp_paymenttype'   => 'PAYMENTTYPE',
+					'ppp_pendingreason' => 'PENDINGREASON',
+				     ), $respArr ),
+				array( 'ppp_id' => $req_id ),
+				__METHOD__
+			    );
+
+		if( !isset( $respArr['RESULT'] ) || $respArr['RESULT'] != 0 ) {
+			return false;
+		}
+		return true;
+	}
+
 	private function fetchPayerId( $token ) {
 		global $wgAdSS_DBname;
 
