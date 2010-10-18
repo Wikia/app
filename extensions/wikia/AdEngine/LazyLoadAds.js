@@ -58,9 +58,16 @@ var LazyLoadAds = {
 					var adslot = elemId;
 
 					if($('#'+elemId).get(0).nodeName == 'IFRAME') {
-						window["fillIframe_" + adslot.replace("_iframe", "")]();
+						var fillFunction = "fillIframe_" + adslot.replace("_iframe", "");
 					} else {
-						window["fillElem_" + adslot]();
+						var fillFunction = "fillElem_" + adslot;
+					}
+
+					if (typeof(window[fillFunction]) !== 'undefined') {
+						window[fillFunction]();
+					}
+					else {
+						LazyLoadAds.log("Warning! " + fillFunction + " does not exist.");
 					}
 
 					$("#"+elemId).addClass('AdLazyLoaded');
