@@ -6,6 +6,11 @@
 	padding: 20px 0 0;
 }
 
+#TOP_LEADERBOARD .jumbo {
+	margin-top: -20px;
+	margin-bottom: -20px;
+}
+
 #LEFT_SKYSCRAPER_2 {
 	@include rail-module;
 }
