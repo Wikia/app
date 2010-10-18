@@ -18,6 +18,7 @@
 * rt#71587: Oasis: Recent Wiki Activity module should show blue links instead of red (macbre)
 * rt#71622: Add language links to landing page (macbre)
 * rt#71497: Change picture caption message (TOR)
+* Rewrote LyricWiki API success-rate tracking (using memcached instead of mysql) & displayed those stats on Special:Soapfailures (sean)
 
 == Changes since 201010.1 ==
 * rt#70632: Oasis: messages don't use parameters (TOR)
