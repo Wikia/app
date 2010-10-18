@@ -501,7 +501,7 @@ $(function() {
 	</div>
 	<div id="wk-wf-info">
 		<?php echo $wiki->city_description ?>
-		<table border="1" cellpadding="3" cellspacing="0">
+		<table class="wikitable">
 			<thead class="wf-tinyhead">
 				<tr>
 					<th>id</th>
