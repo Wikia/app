@@ -179,7 +179,7 @@ function wfSoapFailures(){
 			
 			// Display some hit-rate stats.
 			include "soap_stats.php"; // for tracking success/failure
-			print "<br/><br/><br/><table style='border:1px;' cellpadding='5px'>\n";
+			print "<br/><br/><br/><table border='1px' cellpadding='5px'>\n";
 			print "\t<tr><th>".wfMsg('soapfailures-stats-timeperiod')."</th><th>".wfMsg('soapfailures-stats-numfound')."</th><th>".wfMsg('soapfailures-stats-numnotfound')."</th><th>&nbsp;</th></tr>\n";
 
 			$stats = lw_soapStats_getStats(LW_TERM_DAILY);
