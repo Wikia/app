@@ -41,7 +41,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 	}
 
 	protected function appendWikidesc($property) {
-		global $wgLanguageCode;
+		global $wgLanguageCode, $wgDBcluster;
 		$result = $this->getResult();
 		$lang_id = WikiFactory::LangCodeToId($wgLanguageCode);
 		$cats = WikiFactory::getCategory($this->cityId);
@@ -52,7 +52,8 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 			"id" => $this->cityId,
 			"catid" => $cat_id,
 			"pagetitle" => wfMsg( 'pagetitle' ),
-			"flags"	=> $oWiki->city_flags
+			"flags"	=> $oWiki->city_flags,
+			"position" => ( isset($wgDBcluster) ) ? $wgDBcluster : $oWiki->city_cluster
 		);
 		$result->setIndexedTagName($data, $property);
 		$result->addValue('query', $property, $data);
