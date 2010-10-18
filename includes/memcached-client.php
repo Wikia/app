@@ -283,7 +283,11 @@ class memcached
     *
     * @param   string  $key     Key to set with data
     * @param   mixed   $val     Value to store
-    * @param   integer $exp     (optional) Time to expire data at
+	* @param $exp Integer: (optional) Expiration time. This can be a number of seconds
+	* to cache for (up to 30 days inclusive).  Any timespans of 30 days + 1 second or
+	* longer must be the timestamp of the time at which the mapping should expire. It
+	* is safe to use timestamps in all cases, regardless of exipration
+	* eg: strtotime("+3 hour")
     *
     * @return  boolean
     * @access  public
@@ -522,7 +526,9 @@ class memcached
     * @param   string   $key     Key to increment
     * @param   integer  $amt     (optional) amount to increment
     *
-    * @return  integer  New key value?
+    * @return  integer  null if the key does not exist yet (this does NOT
+	* create new mappings if the key does not exist). If the key does
+	* exist, this returns the new value for that key.
     * @access  public
     */
    function incr ($key, $amt=1)
@@ -538,8 +544,12 @@ class memcached
     *
     * @param   string   $key     Key to set value as
     * @param   mixed    $value   Value to store
-    * @param   integer  $exp     (optional) Experiation time
-    *
+	* @param $exp Integer: (optional) Expiration time. This can be a number of seconds
+	* to cache for (up to 30 days inclusive).  Any timespans of 30 days + 1 second or
+	* longer must be the timestamp of the time at which the mapping should expire. It
+	* is safe to use timestamps in all cases, regardless of exipration
+	* eg: strtotime("+3 hour")
+	*
     * @return  boolean
     * @access  public
     */
@@ -596,7 +606,11 @@ class memcached
     *
     * @param   string   $key     Key to set value as
     * @param   mixed    $value   Value to set
-    * @param   integer  $exp     (optional) Experiation time
+	* @param $exp Integer: (optional) Expiration time. This can be a number of seconds
+	* to cache for (up to 30 days inclusive).  Any timespans of 30 days + 1 second or
+	* longer must be the timestamp of the time at which the mapping should expire. It
+	* is safe to use timestamps in all cases, regardless of exipration
+	* eg: strtotime("+3 hour")
     *
     * @return  boolean  TRUE on success
     * @access  public
@@ -956,7 +970,11 @@ class memcached
     * @param   string   $cmd     Command to perform
     * @param   string   $key     Key to act on
     * @param   mixed    $val     What we need to store
-    * @param   integer  $exp     When it should expire
+	* @param $exp Integer: (optional) Expiration time. This can be a number of seconds
+	* to cache for (up to 30 days inclusive).  Any timespans of 30 days + 1 second or
+	* longer must be the timestamp of the time at which the mapping should expire. It
+	* is safe to use timestamps in all cases, regardless of exipration
+	* eg: strtotime("+3 hour")
     *
     * @return  boolean
     * @access  private
