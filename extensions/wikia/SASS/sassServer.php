@@ -238,6 +238,10 @@ function readThenDeleteFile($tmpFile, &$errorStr=""){
 	$cssContent = @file_get_contents($tmpFile);
 	if($cssContent === false){
 		$errorStr .= "Could not open tmp file \"$tmpFile\".  Make sure the apache process still has the right permissions to write to this directory.\n";
+		
+		// TODO: Should we detect the error-case where 'tmpFile' doesn't exist?  What this would imply to me was that there was a race-condition and another
+		// process was creating the file slightly before this one, and it managed to delete the file before we got to read it.  In this case, the result would be in memcached either now or
+		// in a few miliseconds.
 	}
 	@unlink($tmpFile);
 	return $cssContent;
@@ -251,12 +255,14 @@ function readThenDeleteFile($tmpFile, &$errorStr=""){
 function outputHeadersAndCss($cssContent, $errorStr=""){
 	// Print the generated CSS (with correct headers)
 	header("Content-type: text/css");
+	header('Vary: Accept-Encoding'); // always send this even when we don't compress the response
 
-
-	// TODO: Should we detect the error-case where 'tmpFile' doesn't exist?  What this would imply to me was that there was a race-condition and another
-	// process was creating the file slightly before this one, and it managed to delete the file before we got to read it.  In this case, the result would be in memcached either now or
-	// in a few miliseconds.
-
+	// Caching-related headers
+	$dateFormat = 'D, d M Y H:i:s \G\M\T';
+	header('Last-Modified: ' . gmdate($dateFormat)); // Last modified right now.
+	// Far-future expiration
+	header('Expires: ' . gmdate($dateFormat, strtotime("+13 years")));
+	header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
 
 	// Since this emits a header, it needs to be done before printing content.
 	$timeToGenerate = "/* ".wfReportTime()." */";
