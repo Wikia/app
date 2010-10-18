@@ -132,7 +132,10 @@ class OasisModule extends Module {
 		$printStyles[wfGetSassUrl('skins/oasis/css/print.scss')] = array("media" => "print");
 		$this->data['csslinksbottom-urls'] = $printStyles;
 		$tmpOut->styles = $printStyles;
-		$this->data['csslinksbottom'] = $tmpOut->buildCssLinks(); // plain HTML (not async-loading) used by delayedPrintCSSdownload() if this is the printable version of the page.
+
+		// Plain HTML (not async-loading) used by delayedPrintCSSdownload() if this is the printable version of the page.
+		//$this->data['csslinksbottom'] = $tmpOut->buildCssLinks(); 
+		Module::getSkinTemplateObj()->set('csslinksbottom', $tmpOut->buildCssLinks());
 
 		$this->printableCss = $this->delayedPrintCSSdownload(); // The HTML for the CSS links (whether async or not).
 
