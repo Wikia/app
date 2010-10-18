@@ -16,9 +16,9 @@ class WikiFactoryReporter extends SpecialPage
 
 	function execute($params)
 	{
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgRequest;
 
-		$wgOut->setPageTitle('WikiFactory Reporter: wgFileExtensions');
+		$wgOut->setPageTitle('WikiFactory Reporter');
 		$wgOut->setRobotpolicy('noindex,nofollow');
 		$wgOut->setArticleRelated(false);
 
@@ -27,29 +27,39 @@ class WikiFactoryReporter extends SpecialPage
 			return;
 		}
 
-		$wgOut->addHTML('<h2>Global Settings</h2>');
-		$wgOut->addHTML($this->getGlobalSettings());
+		$this->varid = $wgRequest->getInt('varid');
 
-		$wgOut->addHTML('<h2>Custom Settings</h2>');
-		$wgOut->addHTML($this->getCustomSettings());
-	}
+		$this->disable_limit = $wgRequest->getBool('nolimit');
 
-	function getGlobalSettings()
-	{
-		global $wgFileExtensions;
-		$output = $wgFileExtensions;
+		/***********************************************/
+		$vars = WikiFactory::getVariables( "cv_name", 0, 0);
+		$select = new XmlSelect( 'varid', false, $this->varid);
 
-		global $wgFileExtensionsLocal;
-		if (is_array($wgFileExtensionsLocal))
+		if( !empty($this->varid) )
 		{
-			$output = array_diff($output, $wgFileExtensionsLocal);
+			//the cast is because the Xml select uses === to detect the default
+			$select->setDefault( (string)$this->varid);
+
+			//change the name, using the var name
+			$variable = WikiFactory::getVarById($this->varid, 0);
+			$wgOut->setPageTitle('WikiFactory Reporter: ' . $variable->cv_name);
 		}
 
-		sort($output);
-		$output = join(', ', $output);
-		$output = "<p>{$output}</p>";
+		foreach($vars as $variable)
+		{
+			$select->addOption( "{$variable->cv_name} ({$variable->cv_id})", $variable->cv_id );
+		}
 
-		return $output;
+		$wgOut->addHTML( "<form action='' method='get'>\n" );
+		$wgOut->addHTML( $select->getHTML() );
+		$wgOut->addHTML( "<input type='submit'>\n" );
+		$wgOut->addHTML( "</form>\n" );
+		/***********************************************/
+
+		if( !empty($this->varid) )
+		{
+			$wgOut->addHTML($this->getCustomSettings());
+		}
 	}
 
 	function getCustomSettings()
@@ -62,27 +72,55 @@ class WikiFactoryReporter extends SpecialPage
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$res = $dbr->select(
 			array($city_list, $cv, $cv_pool),
-			array('cv_value', 'city_url'),
+			array('cv_value', 'city_url', 'city_id'),
 			array
 			(
 				"{$city_list}.city_id = {$cv}.cv_city_id",
 				"{$cv}.cv_variable_id = {$cv_pool}.cv_id",
-				"{$cv_pool}.cv_name   = 'wgFileExtensionsLocal'",
+				"{$cv_pool}.cv_id     = '{$this->varid}'",
 			),
 			__METHOD__
 		);
 
+		$variable = WikiFactory::getVarById($this->varid, 0);
+
 		$data = array();
+		$values = array();
+		$row_count = $dbr->numRows($res);
+
+		if( $row_count == 0 ) {
+			$dbr->freeResult($res);
+			$out = "no settings found in WikiFactory\n";
+			return $out;
+		}
+
+			$this->over_limit = false;
+		if( $row_count > 1000 )
+		{
+			$this->over_limit = true;
+		}
+		if( $this->disable_limit )
+		{
+			$this->over_limit = false;
+		}
+
 		while ($row = $dbr->fetchObject($res))
 		{
+			$city_id = $row->city_id;
 			$cv_value = unserialize($row->cv_value);
+			$nom_value = $cv_value;
 			if (is_array($cv_value))
 			{
-				sort($cv_value);
+				asort($cv_value);
 				$cv_value = join(', ', $cv_value);
+				$nom_value = 'array';
+			} elseif( is_bool($cv_value) )
+			{
+				$cv_value = ($cv_value)?('true'):('false');
+				$nom_value = $cv_value;
 			} else
 			{
-				$cv_value = 'Error. Not an array?!?';
+				#$cv_value = 'Error. Not an array?!?';
 			}
 
 			if (preg_match('/http:\/\/([\w\.\-]+)\//', $row->city_url, $matches))
@@ -95,20 +133,44 @@ class WikiFactoryReporter extends SpecialPage
 
 			if (!empty($cv_value))
 			{
-				$data[] = array($cv_value, $city_url);
+				if( count($data) <= 1000 || $this->disable_limit)
+				{
+					$data[] = array('value'=>$cv_value, 'url'=>$city_url, 'city'=>$city_id);
+				}
+				
+				$values[] = $nom_value;
 			}
 		}
 
-		$dbr->freeResult($res);
+			$dbr->freeResult($res);
+		$acv = array_count_values($values);
+		asort($acv);
+		unset($values);
+
+		$gt = GlobalTitle::newFromText('WikiFactory', NS_SPECIAL, 177);
+
+		$limit_message = '';
+		if( $this->over_limit ) {
+			$limit_message = Wikia::errorbox("Warning, this variable has {$row_count} entries. Only first 1000 shown");
+			$QS = http_build_query( array('varid'=>$variable->cv_variable_id, 'nolimit' => 1) );
+			$limit_message .= "<a href='/index.php?title=Special:WikiFactoryReporter&{$QS}'>Click here to load all results</a>\n";
+		}
+
+		$groups = WikiFactory::getGroups();
+		$variable->var_group = $groups[$variable->cv_variable_group];
 
 		$tmpl = new EasyTemplate(dirname(__FILE__) . '/templates/');
 		$tmpl->set_vars(array
 		(
-			'th'   =>  array('wgFileExtensions', 'wiki'),
-			'data' => $data,
+			'th'       => array($variable->cv_name, 'wiki', 'city_id'),
+			'data'     => $data,
+			'variable' => $variable,
+			'acv'      => $acv,
+			'wf_base'  => $gt->getFullUrl(),
+			'limit_message'  => $limit_message,
 		));
-		$out = $tmpl->execute('reporter');
 
+		$out = $tmpl->execute('reporter');
 		return $out;
 	}
 }
