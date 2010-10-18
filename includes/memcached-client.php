@@ -238,6 +238,12 @@ class memcached
     */
    var $_memc_host;
 
+   /**
+    * Internal dupe cache to avoid unnecessary network requests
+    * If a get() is done twice in a single request use the stored value
+    */
+   var $_dupe_cache;
+
    // }}}
    // }}}
    // {{{ methods
@@ -331,6 +337,8 @@ class memcached
       if (!$this->_active)
          return false;
 
+	  unset($this->_dupe_cache[$key]);
+
       $sock = $this->get_sock($key);
       if (!is_resource($sock))
          return false;
@@ -419,24 +427,28 @@ class memcached
       }
 
       if (!$this->_active) {
-	 wfProfileOut( $fname );
+         wfProfileOut( $fname );
          return false;
       }
 
       $sock = $this->get_sock($key);
 
       if (!is_resource($sock)) {
-	 wfProfileOut( $fname );
+		 wfProfileOut( $fname );
          return false;
       }
 
       @$this->stats['get']++;
 
+	  // Shortcut duplicate memcache requests for the same key in the same request
+	  if (isset($this->_dupe_cache[$key])) 
+         return $this->_dupe_cache[$key];
+
       $cmd = "get $key\r\n";
       if (!$this->_safe_fwrite($sock, $cmd, strlen($cmd)))
       {
          $this->_dead_sock($sock);
-	 wfProfileOut( $fname );
+         wfProfileOut( $fname );
          return false;
       }
 
@@ -446,6 +458,8 @@ class memcached
       if ($this->_debug)
          foreach ($val as $k => $v)
             $this->_debugprint(sprintf("MemCache: sock %s got %s\n", serialize($sock), $k));
+
+	  $this->_dupe_cache[$key] = isset($val[$key]) ? $val[$key] : null;
 
       wfProfileOut( $fname );
       return isset($val[$key]) ? $val[$key] : null;
@@ -880,6 +894,9 @@ class memcached
          return null;
 
       $key = is_array($key) ? $key[1] : $key;
+
+	  unset($this->_dupe_cache[$key]);
+
       @$this->stats[$cmd]++;
       if (!$this->_safe_fwrite($sock, "$cmd $key $amt\r\n"))
          return $this->_dead_sock($sock);
@@ -987,6 +1004,9 @@ class memcached
       $sock = $this->get_sock($key);
       if (!is_resource($sock))
          return false;
+
+      // Shortcut duplicate memcache requests for the same key in the same request
+      $this->_dupe_cache[$key] = $val;
 
       @$this->stats[$cmd]++;
 
