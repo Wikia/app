@@ -6,10 +6,10 @@
  */
 
 function wfSpecialNewimages( $par, $specialPage ) {
-	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
+	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles, $wgEnableWikiaPhotoGalleryExt;
 	global $wmu;
 
-	if ($wgUseWikiaNewFiles)
+	if ($wgUseWikiaNewFiles && $wgEnableWikiaPhotoGalleryExt)
 		return wfSpecialWikiaNewFiles( $par, $specialPage );
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
