@@ -263,6 +263,13 @@ $messages['mk'] = array(
 	'tagsreportgenerated' => 'Создадено на $1',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'tagsreportgo' => 'Үзүүлэх',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

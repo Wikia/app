@@ -33,6 +33,18 @@ $messages['af'] = array(
 	'mostvisitedpagessearchbtn' => 'soek',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'mostvisitedpages' => 'Ən çox nəzərdən keçirilən səhifələr',
+	'mostvisitedpagessearchtext' => 'Məqalənin adı:',
+	'mostvisitedpagessearchbtn' => 'axtar',
+	'mostvisitedpageslatest' => 'sonuncu $1 dəqiqə ərzində',
+	'mostvisitedpageslatestlink' => 'Sonuncu nəzərdən keçirilən səhifələrə bax',
+	'mostvisitedpagesalllink' => 'Ən çox nəzərdən keçirilən səhifələrə bax',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Wizardist
  */

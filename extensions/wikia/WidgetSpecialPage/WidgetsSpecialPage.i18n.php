@@ -244,9 +244,9 @@ Altere as [[Special:Preferences#prefsection-1|suas preferências]] para usar est
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'widgets-specialpage-info' => 'Le gioielle fatìane megghie cu une de le masckere nove, pe esembie cu [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].<br />
+	'widgets-specialpage-info' => "Le gioielle fatìane megghie cu 'a masckere [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].<br />
 
-Pe piacere cange [[Special:Preferences#prefsection-1|le preferenze tune]] pe ausà stu strumende.',
+Pe piacere cange [[Special:Preferences#prefsection-1|le preferenze tune]] pe ausà stu strumende.",
 	'widgets-specialpage-try-dashboard' => "Sta pàgene tène 'n'elenghe de tutte le gioielle disponibbele. Pe vedè le gioielle tune fatià veje jndr'à [[Special:WidgetDashboard]].",
 );
 

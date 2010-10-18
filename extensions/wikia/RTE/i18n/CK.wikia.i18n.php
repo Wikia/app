@@ -1621,6 +1621,14 @@ $messages['sr-ec'] = array(
 	'rte-ck-video-add' => 'Додај видео запис',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'rte-ck-templateDropDown-label' => 'வார்ப்புரு',
+	'rte-ck-templateEditor-dialog-insert' => 'உள்ளிடு',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

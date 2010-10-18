@@ -1191,6 +1191,18 @@ $messages['sw'] = array(
 	'daemonloader_enddate' => 'Tarehe ya kumaliza',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'daemonloader_startdate' => 'ஆரம்பத்தேதி',
+	'daemonloader_enddate' => 'முடிவுத்தேதி',
+	'daemonloader_emails' => 'மின்னஞ்சல் முகவரிகள்',
+	'daemonloader_createdby' => 'உருவாக்கியவர்',
+	'daemonloader_created' => 'உருவாக்கப்பட்டுவிட்டது',
+	'daemonloader_options' => 'விருப்பத்தேர்வுகள்',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

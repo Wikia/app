@@ -440,6 +440,8 @@ $4 is any of:
 * $3 is a URL to the server script path
 * $4 is the site name
 * $5 is a URL to a user profile page',
+	'achievements-community-platinum-edit' => '{{Identical|Edit}}',
+	'achievements-community-platinum-save' => '{{Identical|Save}}',
 	'achievements-badge-name-edit-0' => "Capitalization has been requested by Product Management, please don't changeit",
 	'achievements-badge-name-edit-1' => "Capitalization has been requested by Product Management, please don't changeit",
 	'achievements-badge-name-edit-2' => "Capitalization has been requested by Product Management, please don't changeit",
@@ -532,7 +534,7 @@ $messages['be-tarask'] = array(
 	'achievements-non-existing-category' => 'Пазначаная катэгорыя не існуе.',
 	'achievements-edit-plus-category-track-exists' => 'Пазначаная катэгорыя ўжо <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Перайсьці да трэку">прызначаны трэк</a>.',
 	'achievements-no-stub-category' => 'Калі ласка, не стварайце трэкі для накідаў.',
-	'achievements-platinum' => 'Плаціна',
+	'achievements-platinum' => 'Плятына',
 	'achievements-gold' => 'Золата',
 	'achievements-silver' => 'Срэбра',
 	'achievements-bronze' => 'Бронза',
@@ -584,6 +586,60 @@ $messages['be-tarask'] = array(
 	'achievements-customize-new-category-track' => 'Стварыць новы трэк для катэгорыі:',
 	'achievements-enable-track' => 'уключана',
 	'achievements-revert' => 'Аднавіць па змоўчваньні',
+	'achievements-special-saved' => 'Зьмены захаваныя.',
+	'achievements-special' => 'Спэцыяльныя дасягненьні',
+	'achievements-secret' => 'Сакрэтныя дасягненьні',
+	'achievementscustomize' => 'Зьмяніць ўзнагароды',
+	'achievements-about-title' => 'Пра гэтую старонку…',
+	'achievements-about-content' => 'Адміністратары {{GRAMMAR:родны|{{SITENAME}}}} могуць зьмяняць назвы і выявы узнагародаў.
+
+Вы можаце загрузіць любую выяву ў фармаце .jpg ці .png, і яна аўтаматычна будзе ўстаўленая ў рамку.
+Будзе лепей, калі Вашая выява будзе квадратнай, і калі самая важная частка выявы будзе знаходзіцца ў цэнтры.
+
+Вы можаце выкарыстоўваць прамавугольныя выявы, але памятайце, што часткі выявы па-за межамі рамкі ня будуць паказвацца.
+Калі Вы маеце графічную праграму, то Вы можаце памясьціць важную частку выявы ў цэнтар.
+Калі Вы ня маеце графічнай праграмы, то можаце паспрабаваць выкарыстоўваць некалькі выяваў, каб выбраць тую, якая будзе пасаваць Вам найлепей!
+Калі Вам не спадабалася выява, якую Вы ўжо выбралі, націсьніце «{{int:achievements-revert}}», каб вярнуцца да пачатковай выявы.
+
+Таксама, Вы можаце зьмяняць назвы ўзнагародаў, каб яны лепей адпавядалі тэме {{GRAMMAR:родны|{{SITENAME}}}}.
+Калі Вы зьмянілі назву ўзнагароды, націсьніце «{{int:achievements-save}}», каб захаваць Вашыя зьмены.
+Цешцеся!',
+	'platinum' => 'Плятына',
+	'achievements-community-platinum-awarded-email-subject' => 'Вы атрымалі новую плятынавую ўзнагароду!',
+	'achievements-community-platinum-awarded-email-body-text' => "Віншуем, $1!
+
+Вас толькі што узнагародзілі '$2' плятынавай узнагародай на $4 ($3).
+Да Вашага рахунку дадаецца 250 пунктаў!
+
+Вы можаце ўбачыць Вашую новую ўзнагароду ў Вашым профілі:
+
+$5",
+	'achievements-community-platinum-awarded-email-body-html' => '<strong>Віншуем, $1!</strong><br /><br />
+Вы былі ўзнагароджаны плятынавай узнагародай \'<strong>$2</strong>\' на <a href="$3">$4</a>.
+Да Вашага рахунку дадаецца 250 ачкоў!<br /><br />
+Вы можаце ўбачыць Вашую новую ўзнагароду ў <a href="$5">Вашым профілі</a>.',
+	'achievements-community-platinum-awarded-for' => 'Узнагароджаны за:',
+	'achievements-community-platinum-how-to-earn' => 'Як атрымаць:',
+	'achievements-community-platinum-awarded-for-example' => 'напрыклад, «за выкананьне…»',
+	'achievements-community-platinum-how-to-earn-example' => 'напрыклад, «зрабіць тры рэдагаваньня…»',
+	'achievements-community-platinum-badge-image' => 'Выява ўзнагароды:',
+	'achievements-community-platinum-awarded-to' => 'Узнагароджаны:',
+	'achievements-community-platinum-current-badges' => 'Цяперашнія плятынавыя ўзнагароды',
+	'achievements-community-platinum-create-badge' => 'Стварыць узнагароду',
+	'achievements-community-platinum-enabled' => 'уключана',
+	'achievements-community-platinum-show-recents' => 'паказаць у апошніх узнагародах',
+	'achievements-community-platinum-edit' => 'рэдагаваць',
+	'achievements-community-platinum-save' => 'захаваць',
+	'achievements-badge-name-edit-0' => 'Рабіць зьмены',
+	'achievements-badge-name-edit-1' => 'Толькі пачатак',
+	'achievements-badge-name-edit-2' => 'Рабіць Вашыя меткі',
+	'achievements-badge-name-edit-3' => 'Сябар {{GRAMMAR:родны|{{SITENAME}}}}',
+	'achievements-badge-name-edit-4' => 'Супрацоўнік',
+	'achievements-badge-name-edit-5' => 'Будаўнік Вікі',
+	'achievements-badge-name-edit-6' => 'Вікі-лідэр',
+	'achievements-badge-name-edit-7' => 'Вікі-экспэрт',
+	'achievements-badge-name-picture-0' => 'Здымак',
+	'achievements-badge-name-picture-1' => 'Папараццы',
 );
 
 /** Breton (Brezhoneg)
@@ -940,7 +996,7 @@ Bitte versuche es mit einem anderen!',
 	'achievements-profile-title-oasis' => 'Leistungs- <br /> punkte',
 	'achievements-ranked-oasis' => '$1 belegt [[Special:Leaderboard|Rang #$2]] in diesem Wiki',
 	'achievements-viewall-oasis' => 'Sehe alle',
-	'leaderboard-intro' => "'''&ldquo;Was sind Herausforderungen?&rdquo;'''
+	'leaderboard-intro' => "'''„Was sind Herausforderungen?“'''
 Du kannst spezielle Abzeichen durch die Teilnahme in diesem Wiki verdienen!
 Jedes Abzeichen, das du verdienst, bringt dir Punkte für deine Gesamtpunktzahl:
 Bronze-Abzeichen sind 10 Punkte wert, Silber-Abzeichen haben einen Wert von 50 Punkten und Gold-Abzeichen sind 100 Punkte wert.
@@ -3781,6 +3837,7 @@ Essa imagem não funciona.
 Assegure-se de que se trata de um ficheiro .jpg ou .png.
 Se ainda assim a imagem não funcionar, poderá ser demasiado grande.
 Tente outra imagem, por favor!',
+	'achievements-upload-not-allowed' => 'Os administradores podem alterar os nomes e imagens das Medalhas na página [[Special:AchievementsCustomize|Personalizar medalhas]].',
 	'achievements-non-existing-category' => 'A categoria especificada não existe.',
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Ouro',
@@ -3788,14 +3845,47 @@ Tente outra imagem, por favor!',
 	'achievements-bronze' => 'Bronze',
 	'achievements-you-must' => 'Para receber esta medalha tem de $1.',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|ponto|pontos}}</small>',
+	'achievements-notification-title' => 'Muito bem, $1!',
+	'achievements-notification-subtitle' => 'Acaba de receber a medalha "$1" $2',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Veja mais medalhas que pode ganhar]]!</big></strong>',
 	'achievements-points' => '$1 {{PLURAL:$1|ponto|pontos}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|ponto|pontos}}',
+	'achievements-earned' => 'Esta medalha foi recebida por {{PLURAL:$1|1 utilizador|$1 utilizadores}}.',
+	'achievements-profile-title' => '{{PLURAL:$2|A medalha ganhada|As $2 medalhas ganhadas}} por $1',
+	'achievements-profile-title-no' => 'As medalhas de $1',
+	'achievements-profile-title-challenges' => 'Mais medalhas que pode ganhar!',
+	'achievements-profile-customize' => 'Personalizar medalhas >',
+	'achievements-ranked' => 'Posição #$1 nesta wiki',
+	'achievements-no-badges' => 'Verifique na lista abaixo as medalhas que pode ganhar nesta wiki!',
 	'achievements-viewall' => 'Ver tudo',
 	'achievements-viewless' => 'Fechar',
+	'achievements-profile-title-oasis' => 'pontos <br /> obtidos',
+	'achievements-ranked-oasis' => '$1 está na [[Special:Leaderboard|Posição #$2]] nesta wiki',
 	'achievements-viewall-oasis' => 'Ver tudo',
+	'leaderboard-intro' => "'''“O que são as Medalhas?”'''
+Pode ganhar medalhas especiais colaborando nesta wiki!
+Cada medalha que ganha aumenta a sua pontuação total:
+as medalhas de Bronze valem 10 pontos, as de Prata 50 pontos e as de Ouro 100 pontos.
+
+Quando se inscreve na wiki, o seu perfil de utilizador apresenta as medalhas que já ganhou e mostra uma lista dos desafios que estão disponíveis.
+[[Special:MyPage|Visite o seu perfil de utilizador para ficar a conhecê-los]]!",
+	'achievements-recent-earned-badges' => 'Medalhas Recebidas Recentemente',
+	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />recebida por <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'recebeu a medalha <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
+	'achievements-leaderboard-disclaimer' => 'A tabela de liderança mostra as alterações desde ontem',
 	'achievements-leaderboard-rank-label' => 'posição',
 	'achievements-leaderboard-member-label' => 'membro',
 	'achievements-leaderboard-points-label' => 'pontos',
+	'achievements-send' => 'Gravar imagem',
+	'achievements-save' => 'Gravar alterações',
+	'achievements-reverted' => 'Medalha revertida para a original.',
+	'achievements-customize' => 'Personalizar imagem',
+	'achievements-special-saved' => 'As alterações foram gravadas.',
+	'achievementscustomize' => 'Personalizar medalhas',
+	'achievements-about-title' => 'Sobre esta página...',
+	'platinum' => 'Platina',
+	'achievements-community-platinum-awarded-email-subject' => 'Recebeu uma nova medalha de Platina!',
+	'achievements-community-platinum-create-badge' => 'Criar medalha',
 	'achievements-community-platinum-enabled' => 'activado',
 	'achievements-community-platinum-edit' => 'editar',
 	'achievements-community-platinum-save' => 'gravar',
@@ -3829,6 +3919,38 @@ Tente outra imagem, por favor!',
 	'achievements-badge-to-get-pounce' => 'ser rápido',
 	'achievements-badge-to-get-caffeinated' => 'fazer {{PLURAL:$1|uma edição|$1 edições}} num único dia',
 	'achievements-badge-to-get-luckyedit' => 'ter sorte',
+	'achievements-badge-to-get-community-platinum-details' => 'Esta é uma medalha especial de Platina, só disponível por um período limitado!',
+	'achievements-badge-hover-desc-blogcomment' => 'por escrever um comentário<br />
+{{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
+	'achievements-badge-hover-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
+	'achievements-badge-hover-desc-welcome' => 'por colaborar na wiki!',
+	'achievements-badge-hover-desc-introduction' => 'por acrescentar informação<br />
+à sua página de utilizador!',
+	'achievements-badge-hover-desc-sayhi' => 'por deixar uma mensagem na<br />
+página de discussão de outro utilizador!',
+	'achievements-badge-hover-desc-creator' => 'por criar a wiki!',
+	'achievements-badge-hover-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
+	'achievements-badge-hover-desc-caffeinated' => 'por fazer 100 edições num único dia!',
+	'achievements-badge-hover-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
+	'achievements-badge-hover-desc-community-platinum' => 'Esta é uma medalha especial de Platina, só disponível por um período limitado!',
+	'achievements-badge-your-desc-edit' => 'por ter feito {{PLURAL:$1|a sua primeira edição|$1 edições}} de {{PLURAL:$1|uma página|páginas}}!',
+	'achievements-badge-your-desc-blogcomment' => 'por escrever um comentário {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
+	'achievements-badge-your-desc-welcome' => 'por colaborar na wiki!',
+	'achievements-badge-your-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
+	'achievements-badge-your-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
+	'achievements-badge-your-desc-creator' => 'por criar a wiki!',
+	'achievements-badge-your-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
+	'achievements-badge-your-desc-caffeinated' => 'por fazer 100 edições num único dia!',
+	'achievements-badge-your-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
+	'achievements-badge-desc-blogcomment' => 'por escrever um comentário {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
+	'achievements-badge-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
+	'achievements-badge-desc-welcome' => 'por colaborar na wiki!',
+	'achievements-badge-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
+	'achievements-badge-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
+	'achievements-badge-desc-creator' => 'por criar a wiki!',
+	'achievements-badge-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
+	'achievements-badge-desc-caffeinated' => 'por fazer 100 edições num único dia!',
+	'achievements-badge-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -4016,6 +4138,7 @@ $messages['ru'] = array(
 	'achievements-badge-your-desc-love' => 'за ежедневный вклад в вики в течение {{PLURAL:$1|дня|$1 дней}}',
 	'achievements-badge-your-desc-welcome' => 'за присоединение к вики!',
 	'achievements-badge-your-desc-introduction' => 'за создание своей собственной страницы участника!',
+	'achievements-badge-your-desc-sayhi' => 'за написание сообщения на чьей-то странице обсуждения!',
 	'achievements-badge-your-desc-creator' => 'за создание вики!',
 	'achievements-badge-your-desc-caffeinated' => 'за 100 правок на страницах за один день!',
 	'achievements-badge-desc-edit' => 'за $1 {{PLURAL:$1|правку|правок}} на {{PLURAL:$1|странице|страницах}}!',
@@ -4080,14 +4203,24 @@ Tafadhali jaribu nyingine!',
  * @author TRYPPN
  */
 $messages['ta'] = array(
+	'achievements-platinum' => 'பிளேட்டினம்',
 	'achievements-gold' => 'தங்கம்',
 	'achievements-silver' => 'வெள்ளி',
 	'achievements-bronze' => 'வெண்கலம்',
 	'achievements-viewall' => 'எல்லாவற்றையும் பார்க்கவும்',
 	'achievements-viewless' => 'மூடுக',
 	'achievements-viewall-oasis' => 'எல்லாவற்றையும் பார்க்கவும்',
+	'achievements-leaderboard-rank-label' => 'தர வரிசை',
 	'achievements-leaderboard-member-label' => 'உறுப்பினர்',
+	'achievements-leaderboard-points-label' => 'புள்ளிகள்',
+	'achievements-send' => 'படத்தைச் சேமி',
+	'achievements-save' => 'மாற்றங்களைச் சேமி',
 	'achievements-enable-track' => 'பயன்பாட்டில் உள்ளது',
+	'achievements-special-saved' => 'மாற்றங்கள் சேமிக்கப்பட்டுவிட்டன.',
+	'achievements-special' => 'சிறப்பான சாதனைகள்',
+	'achievements-secret' => 'இரகசியமான சாதனைகள்',
+	'achievements-about-title' => 'இந்த பக்கத்தைப்பற்றி...',
+	'platinum' => 'பிளேட்டினம்',
 	'achievements-community-platinum-enabled' => 'பயன்பாட்டில் உள்ளது',
 	'achievements-community-platinum-edit' => 'தொகு',
 	'achievements-community-platinum-save' => 'சேமி',

@@ -391,6 +391,15 @@ $messages['sw'] = array(
 	'cntool-label-preview' => 'Hakiki',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'cntool-button-preview' => 'முன்தோற்றம்',
+	'cntool-button-save' => 'சேமி',
+	'cntool-label-preview' => 'முன்தோற்றம்:',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

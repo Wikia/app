@@ -1128,6 +1128,17 @@ $messages['sw'] = array(
 	'createpage-dialog-blank' => 'Ukurasa tupu',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'createpage-sp-title' => 'ஒரு புதிய பக்கத்தை உருவாக்கவும்',
+	'createpage_title' => 'ஒரு புதிய பக்கத்தை உருவாக்கவும்',
+	'createpage_title_caption' => 'தலைப்பு:',
+	'createpage_enter_text' => 'சொற்றொடர்:',
+	'createpage_invalid_title_error' => 'தவறான தலைப்பு',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

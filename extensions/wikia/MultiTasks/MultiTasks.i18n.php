@@ -1801,6 +1801,9 @@ $messages['ps'] = array(
 	'multidelete_this_wiki' => 'همدا ويکي',
 	'multidelete_all_wikis' => 'ټولې ويکي ګانې',
 	'multidelete_selected_wikis' => 'ټاکلې ويکي ګانې',
+	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
+	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
+	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );
 
 /** Portuguese (Português)
@@ -2134,6 +2137,23 @@ $messages['sv'] = array(
 	'multidelete_french_wikis' => 'alla franska wikis',
 	'multidelete_swedish_wikis' => 'alla svenska wikis',
 	'multidelete_german_wikis' => 'alla tyska wikis',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'multitasks-link-back-label' => 'இங்கு',
+	'multiwikiedit_button' => 'தொகுக்கவும்',
+	'multiwikiedit_confirm' => 'உறுதிசெய்',
+	'multiwikiedit_caption' => 'பக்கப்பட்டியல்',
+	'multiwikiedit_minoredit_caption' => 'சிறு தொகுப்பு',
+	'multiwikiedit_select_yourself' => 'தாங்கள்',
+	'multidelete_caption' => 'பக்கப்பட்டியல்',
+	'multidelete_select_all' => 'எல்லாவற்றையும் தேர்வுசெய்யவும்',
+	'multiwikifindpagenames' => 'பக்கங்களின் பெயர்களைக் கண்டுபிடி',
+	'multiwikienterpagename' => 'பக்கத்தின் பெயரொன்றை இடுக:',
+	'multiwikirecords' => '$1 விக்கி கண்டுபிடிக்கப்பட்டுவிட்டது',
 );
 
 /** Telugu (తెలుగు)

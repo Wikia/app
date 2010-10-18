@@ -2452,6 +2452,13 @@ $messages['ml'] = array(
 	'closewiki-unknown' => 'അജ്ഞാതം',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'closed-reason' => 'Шалтгаан:',
+);
+
 /** Maltese (Malti)
  * @author Chrisportelli
  */
@@ -3047,12 +3054,16 @@ $messages['ps'] = array(
 	'awc-metrics-articles' => 'ليکنې',
 	'awc-metrics-edits' => 'سمونونه',
 	'awc-metrics-images' => 'انځورونه',
+	'awc-metrics-pageviews' => 'د مخ<br />ليدنې',
 	'awc-metrics-close' => 'تړل',
 	'awc-metrics-active' => 'فعال',
 	'awc-metrics-closed' => 'تړل شوی',
 	'awc-metrics-hubs' => 'نوې ويکي ګانې (هره مياشت)',
 	'awc-metrics-news-day' => 'نوې ويکي ګانې (هره ورځ)',
+	'awc-metrics-sum-month' => 'شمېر (په يوې مياشت کې)',
+	'awc-metrics-sum-day' => 'شمېر (په پوه ورځ کې)',
 	'awc-metrics-this-month' => 'همدا مياشت',
+	'awc-metrics-last-month' => 'وروستۍ {{PLURAL:$1|مياشت|$1 مياشتې}}',
 	'awc-metrics-close-listed' => 'په لړليک کې ټول تړل',
 	'awc-metrics-close-checked' => 'په نښه شوي تړل',
 	'closed-wiki' => 'تړل شوې ويکي',
@@ -3065,6 +3076,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Crazymadlover
+ * @author Giro720
  * @author Hamilton Abreu
  * @author Masked Rogue
  * @author Waldir
@@ -3094,6 +3106,7 @@ $messages['pt'] = array(
 	'wikifactory-label-close' => 'Fechar',
 	'wikifactory-label-tags' => 'Etiquetas',
 	'wikifactory-label-tags2' => 'Etiquetas',
+	'wikifactory-label-findtags' => 'EncontrarEtiquetas',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'right-wikifactory' => 'Alterar configurações internas das wikis',
 	'wikifactory-domain-edit' => 'editar esta URL',

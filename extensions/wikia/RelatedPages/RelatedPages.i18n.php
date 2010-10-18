@@ -22,6 +22,14 @@ $messages['af'] = array(
 	'wikiarelatedpages-heading' => 'Lees meer',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'wikiarelatedpages-desc' => 'Səhifələrə əlaqəli səhifələrin siyahısını əlavə edir',
+	'wikiarelatedpages-heading' => 'Daha ətraflı',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */

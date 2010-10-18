@@ -1993,6 +1993,14 @@ $messages['ru'] = array(
 <div style="font-style: italic; font-size: 120%;">-- Команда Викиа</div>',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'founderemails-email-0-days-passed-subject' => 'விக்கியா தங்களை அன்புடன் வரவேற்கிறது !',
+	'founderemails-email-page-edited-anon-subject' => 'யாரோ தங்களது விக்கியை மாற்றிவிட்டார்கள் !',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

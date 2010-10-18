@@ -345,6 +345,13 @@ $messages['km'] = array(
 	'wva-notallowed' => 'អ្នកមិនអាចបញ្ចូលវីដេអូនៅក្នុងវិគីនេះទេ។',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'wva-add' => 'ಸೇರಿಸು',
+);
+
 /** Karachay-Balkar (Къарачай-Малкъар)
  * @author Къарачайлы
  */

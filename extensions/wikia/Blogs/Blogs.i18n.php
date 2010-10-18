@@ -2776,6 +2776,23 @@ Anzisha kurasa za kuorodhesha blogu kwa ajili ya jamii kama "Barack Obama", "Muz
 	'blog-movepage-badtitle' => 'Jina la mchango wa blogu ni batili.',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'create-blog-categories-submit' => 'சமர்ப்பி',
+	'create-blog-save' => 'பக்கத்தை சேமி',
+	'create-blog-preview' => 'முன்தோற்றம் காட்டு',
+	'create-blog-listing-preview' => 'முன்தோற்றம்',
+	'create-blog-listing-sortby-author' => 'ஆசிரியர்',
+	'blog-comment-delete' => 'நீக்கவும்',
+	'blog-comment-hide' => 'மறை',
+	'blog-comment-unhide' => 'மறைக்கவேண்டாம்',
+	'blog-comment-history' => 'வரலாறு',
+	'blog-comment-edit' => 'தொகு',
+	'blog-comment-sending' => 'அனுப்பப்படுகிறது...',
+);
+
 /** Telugu (తెలుగు)
  * @author Ravichandra
  * @author Veeven

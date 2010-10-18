@@ -107,6 +107,7 @@ $messages['br'] = array(
 	'dump-database-request' => 'Goulenn un hizivadenn',
 	'dump-database-request-info' => '(Graet e vez an tumpoù dre sizhun dre vras)',
 	'dump-database-request-submit' => 'Kas ar reked',
+	'dump-database-request-already-submitted' => "Goulennet ez eus bet krouiñ un diell nevez zo (nebetoc'h eget 7 devezh zo)",
 	'dump-database-request-requested' => 'Kaset eo bet ar reked evit tumpañ an diaz roadennoù',
 	'dump-database-info-more' => 'Mar plij lennit <a href="http://community.wikia.com/wiki/Help:Database_download">amañ</a> evit muioc\'h a ditouroù',
 );
@@ -169,6 +170,7 @@ $messages['de'] = array(
 	'dump-database-request' => 'Ein Update beantragen',
 	'dump-database-request-info' => '(Dumps werden normalerweise wöchentlich generiert)',
 	'dump-database-request-submit' => 'Anfrage absenden',
+	'dump-database-request-already-submitted' => 'Dump wurde kürzlich (weniger als 7 Tagen) angefordert',
 	'dump-database-request-requested' => 'Anfrage nach Datenbank-Dump gesendet',
 	'dump-database-info-more' => 'Bitte siehe <a href="http://community.wikia.com/wiki/Help:Database_download">hier</a> für weitere Infos.',
 );
@@ -188,6 +190,7 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Bola
+ * @author Locos epraix
  * @author Translationista
  */
 $messages['es'] = array(
@@ -200,6 +203,7 @@ $messages['es'] = array(
 	'dump-database-request' => 'Solicitar una actualización',
 	'dump-database-request-info' => '(Las descargas normalmente se generan semanalmente)',
 	'dump-database-request-submit' => 'Enviar solicitud',
+	'dump-database-request-already-submitted' => 'Se ha solicitado volcado recientemente (hace menos de 7 días)',
 	'dump-database-request-requested' => 'Solicitud para envío de descarga de base de datos',
 	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">ver esto</a> para más información',
 );
@@ -235,6 +239,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author Jean-Frédéric
+ * @author Peter17
  */
 $messages['fr'] = array(
 	'dump-database' => 'Dumps de la base de données',
@@ -246,6 +251,7 @@ $messages['fr'] = array(
 	'dump-database-request' => 'Demander une mise à jour',
 	'dump-database-request-info' => '(Les dumps sont généralement effectués chaque semaine)',
 	'dump-database-request-submit' => 'Envoyer la requête',
+	'dump-database-request-already-submitted' => 'La création d’une archive a été récemment demandée (il y a moins de 7 jours)',
 	'dump-database-request-requested' => 'Requête pour un dump de la base de donnée envoyée',
 	'dump-database-info-more' => 'Voyez <a href="http://community.wikia.com/wiki/Help:Database_download">ceci</a> pour plus d\'informations',
 );
@@ -263,6 +269,7 @@ $messages['gl'] = array(
 	'dump-database-request' => 'Solicitar unha actualización',
 	'dump-database-request-info' => '(As copias xéranse frecuentemente cada semana)',
 	'dump-database-request-submit' => 'Enviar a solicitude',
+	'dump-database-request-already-submitted' => 'A copia de seguridade solicitouse recentemente (hai menos de 7 días)',
 	'dump-database-request-requested' => 'Enviouse a solicitude da copia da base de datos',
 	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">lea isto</a> para obter máis información',
 );
@@ -402,16 +409,17 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'dump-database' => 'Складирани резервни записи',
-	'dump-database-info' => 'Складираните резервни записи на базата (dumps) можат да се користат за лично резервно зачувување (Викија автоматски прави посебни резервни зачувувања на сите викија) или ботови за одржување',
+	'dump-database' => 'Базни резерви',
+	'dump-database-info' => 'Складираните резервни базни резерви (dumps) можат да се користат за лично резервно зачувување (Викија автоматски прави посебни резервни зачувувања на сите викија) или ботови за одржување',
 	'dump-database-curr-pages' => 'Тековни страници',
 	'dump-database-curr-pages-info' => '(Оваа верзија е обично најдобра за ботови)',
 	'dump-database-full-pages' => 'Тековни страници и историја',
 	'dump-database-full-pages-info' => '(Предупредување: оваа податотека може да биде многу голема)',
 	'dump-database-request' => 'Побарај поднова',
-	'dump-database-request-info' => '(Складираните резервни записи обично се создаваат еднаш неделно)',
+	'dump-database-request-info' => '(Складираните базни резерви обично се создаваат еднаш неделно)',
 	'dump-database-request-submit' => 'Испрати барање',
-	'dump-database-request-requested' => 'Барањето за складиран резервен запис на базата е испратено',
+	'dump-database-request-already-submitted' => 'Базната резерва е побарана неодамна (пред помалку од 7 дена)',
+	'dump-database-request-requested' => 'Барањето за базната резерва е испратено',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте тука</a> за повеќе информации',
 );
 
@@ -435,6 +443,7 @@ Wikia maakt automatisch back-ups van alle wiki's.",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -447,6 +456,7 @@ $messages['no'] = array(
 	'dump-database-request' => 'Be om en oppdatering',
 	'dump-database-request-info' => '(Dumpinger er vanligvis generert ukentlig)',
 	'dump-database-request-submit' => 'Send forespørsel',
+	'dump-database-request-already-submitted' => 'Dumping har nylig blitt etterspurt (mindre enn 7 dager siden)',
 	'dump-database-request-requested' => 'Forespørsel om databasedump sendt',
 	'dump-database-info-more' => 'Vennligst <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> for mer info',
 );
@@ -493,6 +503,7 @@ $messages['pms'] = array(
 	'dump-database-request' => 'Ciama na modìfica',
 	'dump-database-request-info' => '(Ij dump a son normalment generà setimanalment)',
 	'dump-database-request-submit' => 'Manda arcesta',
+	'dump-database-request-already-submitted' => "La creassion ëd n'archivi a l'é stàita ciamà recentement (men che 7 di fà)",
 	'dump-database-request-requested' => 'Arcesta për dump dla base ëd dàit mandà',
 	'dump-database-info-more' => 'Për piasì <a href="http://community.wikia.com/wiki/Help:Database_download">varda</a> për savèjne ëd pi',
 );
@@ -519,12 +530,14 @@ $messages['pt'] = array(
 	'dump-database-request' => 'Pedir uma actualização',
 	'dump-database-request-info' => '(Normalmente as cópias em ficheiro são geradas semanalmente)',
 	'dump-database-request-submit' => 'Enviar pedido',
+	'dump-database-request-already-submitted' => 'Foi solicitada recentemente uma cópia para ficheiro (há menos de 7 dias)',
 	'dump-database-request-requested' => 'Foi enviado o pedido de cópia da base de dados para ficheiro',
 	'dump-database-info-more' => 'Consulte <a href="http://community.wikia.com/wiki/Help:Database_download">download da base de dados</a> para mais informação, por favor',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'dump-database' => 'Descarregamento do banco de dados',
@@ -536,6 +549,7 @@ $messages['pt-br'] = array(
 	'dump-database-request' => 'Pedir atualização',
 	'dump-database-request-info' => '(Descarregamentos geralmente são gerados semanalmente)',
 	'dump-database-request-submit' => 'Enviar pedido',
+	'dump-database-request-already-submitted' => 'Foi solicitada recentemente uma cópia para arquivo (há menos de 7 dias)',
 	'dump-database-request-requested' => 'Pedido para descarregamento do banco de dados enviado',
 	'dump-database-info-more' => 'Por favor <a href="http://community.wikia.com/wiki/Help:Database_download">veja isto</a> para mais informações',
 );
@@ -547,6 +561,7 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author MaxSem
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -559,6 +574,7 @@ $messages['ru'] = array(
 	'dump-database-request' => 'Запросить обновление',
 	'dump-database-request-info' => '(Дампы обычно генерируются еженедельно)',
 	'dump-database-request-submit' => 'Отправить запрос',
+	'dump-database-request-already-submitted' => 'Резервная копия была запрошена недавно (менее 7 дней назад).',
 	'dump-database-request-requested' => 'Запрос на дамп базы данных отправлен',
 	'dump-database-info-more' => 'Пожалуйста, <a href="http://community.wikia.com/wiki/Help:Database_download">см. дополнительные сведения</a>',
 );
@@ -620,6 +636,7 @@ $messages['tl'] = array(
 	'dump-database-request' => 'Humiling ng isang pagsasapanahon',
 	'dump-database-request-info' => '(Karaniwang linggo-linggong nililikha ang mga tapunan)',
 	'dump-database-request-submit' => 'Ipadala ang hiling',
+	'dump-database-request-already-submitted' => 'Ang pagtatapon ay hiniling kamakailan lamang (mababa kaysa 7 mga araw na ang nakalilipas)',
 	'dump-database-request-requested' => 'Hilingin ang ipinadalang tapunan ng talaan ng mga dato',
 	'dump-database-info-more' => 'Paki <a href="http://community.wikia.com/wiki/Help:Database_download">tingnan</a> para sa iba pang kabatiran',
 );

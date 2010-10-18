@@ -674,6 +674,13 @@ $messages['sr-ec'] = array(
 	'user-badge-edits-txt' => 'Измене',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'user-badge-edits-txt' => 'தொகுப்புக்கள்',
+);
+
 /** Telugu (తెలుగు)
  * @author Ravichandra
  * @author Veeven

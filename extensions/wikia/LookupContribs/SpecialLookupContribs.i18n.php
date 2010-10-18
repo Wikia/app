@@ -160,6 +160,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -191,8 +192,10 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribswikidbname' => 'DB-Name',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribswikioptions' => 'Optionen',
 	'lookupcontribscontribslink' => 'Link zu Beiträgen',
 	'lookupcontribsdetails' => 'Weitere Details für:',
+	'lookupcontribslastedited' => 'Zuletzt bearbeitet',
 	'lookupcontribscontribs' => 'Beiträge',
 	'lookupcontribsnbrresult' => 'Anzahl der Ergebnisse:',
 	'lookupcontribsnext' => 'Nächste',
@@ -205,6 +208,8 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'right-lookupcontribs' => 'Globale Beiarbeitungen des Benutzer anzeigen',
 	'lookupcontribsshowpages' => 'Alle Seiten ($1 Namensräume)',
 	'lookupcontribscontent' => 'Inhalt',
+	'lookupcontribscontribtitleforuser' => 'Bearbeitungen für Benutzer:',
+	'lookupcontribsall' => 'alle',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -312,8 +317,11 @@ $messages['fr'] = array(
 	'lookupcontribswikidbname' => 'Nom de la base de données',
 	'lookupcontribswikiurl' => 'Url',
 	'lookupcontribswikititle' => 'Titre',
+	'lookupcontribswikioptions' => 'Options',
 	'lookupcontribscontribslink' => 'Liens vers les contributions',
 	'lookupcontribsdetails' => 'Voir les détails pour :',
+	'lookupcontribslastedited' => 'Dernière modification',
+	'lookupcontribsrecordspager' => "Affichage des enregistrements '''$1''' à '''$2''' sur '''$3'''.",
 	'lookupcontribscontribs' => 'contributions',
 	'lookupcontribsnbrresult' => 'Nombre de résultats :',
 	'lookupcontribsnext' => 'suivant',
@@ -326,6 +334,10 @@ $messages['fr'] = array(
 	'right-lookupcontribs' => "Voir les modifications globales de l'utilisateur",
 	'lookupcontribsshowpages' => 'Toutes les pages (espaces de noms $1)',
 	'lookupcontribscontent' => 'contenu',
+	'lookupcontribscontribtitleforuser' => 'Contributions de l’utilisateur :',
+	'lookupcontribsnormal' => 'récent',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'tout',
 );
 
 /** Galician (Galego)
@@ -358,8 +370,11 @@ $messages['gl'] = array(
 	'lookupcontribswikidbname' => 'Nome da base de datos',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Título',
+	'lookupcontribswikioptions' => 'Opcións',
 	'lookupcontribscontribslink' => 'Ligazón cara ás contribucións',
 	'lookupcontribsdetails' => 'Olle os detalles para:',
+	'lookupcontribslastedited' => 'Última edición',
+	'lookupcontribsrecordspager' => "Mostrando os rexistros do '''$1''' ao '''$2''' dun total de '''$3'''.",
 	'lookupcontribscontribs' => 'contribucións',
 	'lookupcontribsnbrresult' => 'Número de resultados:',
 	'lookupcontribsnext' => 'seguinte',
@@ -372,6 +387,10 @@ $messages['gl'] = array(
 	'right-lookupcontribs' => 'Ollar as edicións globais do usuario',
 	'lookupcontribsshowpages' => 'Todas as páxinas (espazos de nomes $1)',
 	'lookupcontribscontent' => 'contido',
+	'lookupcontribscontribtitleforuser' => 'Contribucións do usuario:',
+	'lookupcontribsnormal' => 'recentes',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'todas',
 );
 
 /** Hungarian (Magyar)
@@ -427,8 +446,11 @@ $messages['ia'] = array(
 	'lookupcontribswikidbname' => 'Nomine del base de datos',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titulo',
+	'lookupcontribswikioptions' => 'Optiones',
 	'lookupcontribscontribslink' => 'Ligamine al contributiones',
 	'lookupcontribsdetails' => 'Vider detalios pro:',
+	'lookupcontribslastedited' => 'Ultime modification',
+	'lookupcontribsrecordspager' => "Monstra regulas '''$1''' a '''$2''' de '''$3'''.",
 	'lookupcontribscontribs' => 'contributiones',
 	'lookupcontribsnbrresult' => 'Numero del resultato:',
 	'lookupcontribsnext' => 'sequente',
@@ -441,6 +463,10 @@ $messages['ia'] = array(
 	'right-lookupcontribs' => 'Vider le modificationes global del usator',
 	'lookupcontribsshowpages' => 'Tote le paginas ($1 spatios de nomines)',
 	'lookupcontribscontent' => 'contento',
+	'lookupcontribscontribtitleforuser' => 'Contributiones del usator:',
+	'lookupcontribsnormal' => 'recente',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'tote',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -550,8 +576,11 @@ $messages['mk'] = array(
 	'lookupcontribswikidbname' => 'Име на база на податоци',
 	'lookupcontribswikiurl' => 'URL-адреса',
 	'lookupcontribswikititle' => 'Наслов',
+	'lookupcontribswikioptions' => 'Нагодувања',
 	'lookupcontribscontribslink' => 'Врска за придонеси',
 	'lookupcontribsdetails' => 'Видете подробности за:',
+	'lookupcontribslastedited' => 'Последно уредување',
+	'lookupcontribsrecordspager' => "Прикажани '''$1''' до '''$2''' записи од вкупно '''$3'''.",
 	'lookupcontribscontribs' => 'придонеси',
 	'lookupcontribsnbrresult' => 'Број на резултатот:',
 	'lookupcontribsnext' => 'следно',
@@ -564,6 +593,10 @@ $messages['mk'] = array(
 	'right-lookupcontribs' => 'Види глобални уредувања на корисник',
 	'lookupcontribsshowpages' => 'Сите страници ($1 именски простори)',
 	'lookupcontribscontent' => 'содржини',
+	'lookupcontribscontribtitleforuser' => 'Придонеси на корисникот:',
+	'lookupcontribsnormal' => 'скорешни',
+	'lookupcontribsfinal' => 'последни',
+	'lookupcontribsall' => 'сите',
 );
 
 /** Dutch (Nederlands)
@@ -598,8 +631,11 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribswikidbname' => 'Databasenaam',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Paginanaam',
+	'lookupcontribswikioptions' => 'Instellingen',
 	'lookupcontribscontribslink' => 'Bijdragenverwijzing',
 	'lookupcontribsdetails' => 'Details bekijken voor:',
+	'lookupcontribslastedited' => 'Laatste bewerking',
+	'lookupcontribsrecordspager' => "Regels '''$1''' tot '''$2''' van '''$3''' worden weergegeven.",
 	'lookupcontribscontribs' => 'bijdragen',
 	'lookupcontribsnbrresult' => 'Resultaatnummer:',
 	'lookupcontribsnext' => 'volgende',
@@ -612,6 +648,10 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'right-lookupcontribs' => 'Globale bewerkingen van gebruiker bekijken',
 	'lookupcontribsshowpages' => "Alle pagina's ($1 naamruimten)",
 	'lookupcontribscontent' => 'inhoud',
+	'lookupcontribscontribtitleforuser' => 'Bijdragen van gebruiker:',
+	'lookupcontribsnormal' => 'recent',
+	'lookupcontribsfinal' => 'laatste',
+	'lookupcontribsall' => 'alle',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -647,8 +687,11 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'lookupcontribswikidbname' => 'DB-navn',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Tittel',
+	'lookupcontribswikioptions' => 'Alternativer',
 	'lookupcontribscontribslink' => 'Bidragslenke',
 	'lookupcontribsdetails' => 'Se detaljer for:',
+	'lookupcontribslastedited' => 'Sist redigert',
+	'lookupcontribsrecordspager' => "Viser '''$1''' til '''$2''' av '''$3''' oppføringer.",
 	'lookupcontribscontribs' => 'bidrag',
 	'lookupcontribsnbrresult' => 'Antall resultat:',
 	'lookupcontribsnext' => 'neste',
@@ -661,6 +704,10 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'right-lookupcontribs' => 'Vis brukerens globale endringer',
 	'lookupcontribsshowpages' => 'Alle sider ($1 navnerom)',
 	'lookupcontribscontent' => 'innhold',
+	'lookupcontribscontribtitleforuser' => 'Bidrag fra bruker:',
+	'lookupcontribsnormal' => 'siste',
+	'lookupcontribsfinal' => 'siste',
+	'lookupcontribsall' => 'alle',
 );
 
 /** Occitan (Occitan)
@@ -725,8 +772,11 @@ $messages['pms'] = array(
 	'lookupcontribswikidbname' => 'Nòm DB',
 	'lookupcontribswikiurl' => "Adrëssa an sl'aragnà",
 	'lookupcontribswikititle' => 'Tìtol',
+	'lookupcontribswikioptions' => 'Opsion',
 	'lookupcontribscontribslink' => 'Colegament dij contribù',
 	'lookupcontribsdetails' => 'Varda detaj për:',
+	'lookupcontribslastedited' => 'Ùltim modìficà',
+	'lookupcontribsrecordspager' => "Mosté da '''$1''' a '''$2''' ëd '''$3''' record.",
 	'lookupcontribscontribs' => 'contribù',
 	'lookupcontribsnbrresult' => "Nùmer d'arzultà:",
 	'lookupcontribsnext' => 'dapress',
@@ -739,6 +789,10 @@ $messages['pms'] = array(
 	'right-lookupcontribs' => "varda modìfiche globaj dl'utent",
 	'lookupcontribsshowpages' => 'Tute le pàgine (spassi nominal $1)',
 	'lookupcontribscontent' => 'contnù',
+	'lookupcontribscontribtitleforuser' => 'Contribussion për utent:',
+	'lookupcontribsnormal' => 'recent',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'tuti',
 );
 
 /** Pashto (پښتو)
@@ -789,8 +843,11 @@ Verifique se se enganou no nome do utilizador.</p>',
 	'lookupcontribswikidbname' => 'Base de Dados',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Título',
+	'lookupcontribswikioptions' => 'Opções',
 	'lookupcontribscontribslink' => 'Link para contribuições',
 	'lookupcontribsdetails' => 'Ver detalhes de:',
+	'lookupcontribslastedited' => 'Última edição',
+	'lookupcontribsrecordspager' => "A mostrar os registos '''$1''' a '''$2''' de '''$3'''.",
 	'lookupcontribscontribs' => 'contribuições',
 	'lookupcontribsnbrresult' => 'Nº do resultado:',
 	'lookupcontribsnext' => 'seguintes',
@@ -803,6 +860,10 @@ Verifique se se enganou no nome do utilizador.</p>',
 	'right-lookupcontribs' => 'Ver as edições globais do utilizador',
 	'lookupcontribsshowpages' => 'Todas as páginas ($1 espaços nominais)',
 	'lookupcontribscontent' => 'conteúdo',
+	'lookupcontribscontribtitleforuser' => 'Contribuições do utilizador:',
+	'lookupcontribsnormal' => 'recentes',
+	'lookupcontribsfinal' => 'finais',
+	'lookupcontribsall' => 'todas',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -917,6 +978,17 @@ $messages['sw'] = array(
 	'lookupcontribsprevious' => 'iliyotangulia',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'tofauti',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'lookupcontribsnext' => 'அடுத்தது',
+	'lookupcontribsprevious' => 'முந்தைய',
+	'lookupcontribspageremoved' => 'நீக்கப்பட்டது:',
+	'lookupcontribshist' => 'வரலாறு',
+	'lookupcontribsdiff' => 'வேறுபாடு',
 );
 
 /** Telugu (తెలుగు)

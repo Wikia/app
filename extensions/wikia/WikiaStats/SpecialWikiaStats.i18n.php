@@ -3188,8 +3188,10 @@ $messages['kn'] = array(
 	'wikiastats_active_month' => 'ತಿಂಗಳು',
 	'wikiastats_active_year' => 'ವರ್ಷ',
 	'wikiastats_active_months' => 'ತಿಂಗಳುಗಳು',
+	'wikiastats_namespace' => 'ನಾಮವರ್ಗ',
 	'wikiastats_wikiname' => 'ಹೆಸರು:',
 	'wikiastats_wikicategory' => 'ವರ್ಗ:',
+	'wikiastats_xls_cancel' => 'ರದ್ದು ಮಾಡು',
 	'wikiastats_search_text' => 'ಹುಡುಕು:',
 );
 
@@ -3764,6 +3766,15 @@ $messages['mk'] = array(
 	'wikiastats_nbr_format' => 'Формат на бројките:',
 	'wikiastats_pageviews_daily' => 'Дневни статистики (овој месец)',
 	'wikiastats_pageviews_month' => 'Месечни статистики',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'wikiastats_show' => 'Үзүүлэх',
+	'wikiastats_wikilang' => 'Хэл:',
+	'wikiastats_xls_cancel' => 'Цуцлах',
 );
 
 /** Maltese (Malti)

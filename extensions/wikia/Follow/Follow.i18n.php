@@ -1768,6 +1768,14 @@ $messages['sw'] = array(
 	'wikiafollowedpages-userpage-hide' => 'ficha',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'wikiafollowedpages-userpage-more' => 'மேலும்',
+	'wikiafollowedpages-userpage-hide' => 'மறை',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

@@ -217,6 +217,22 @@ $messages['ja'] = array(
 	'ircgate-channel' => 'チャンネル:',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'ircgate-username' => 'ಬಳಕೆದಾರ ಹೆಸರು:',
+	'ircgate-channel' => 'ಚಾನೆಲ್:',
+);
+
+/** Lingala (Lingála)
+ * @author Eruedin
+ */
+$messages['ln'] = array(
+	'ircgate-username' => 'Kómbó ya mosáleli:',
+	'ircgate-channel' => 'Lileko:',
+);
+
 /** Latvian (Latviešu)
  * @author Xil
  */

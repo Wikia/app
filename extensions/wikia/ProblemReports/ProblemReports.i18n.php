@@ -125,6 +125,7 @@ $messages['qqq'] = array(
 	'prlog_removedentry' => 'Log message. Preceded by something like "17:04, 9 July 2010 Username (Talk | contribs | block)"',
 	'pr_what_problem' => '{{Identical|Subject}}',
 	'pr_what_problem_other' => '{{Identical|Other}}',
+	'pr_what_problem_spam_short' => '{{Identical|Spam}}',
 	'pr_what_problem_incorrect_content_short' => '{{Identical|Content}}',
 	'pr_what_problem_other_short' => '{{Identical|Other}}',
 	'pr_describe_problem' => '{{Identical|Message}}',
@@ -206,6 +207,16 @@ $messages['an'] = array(
  */
 $messages['ar'] = array(
 	'pr_status_wait' => 'انتظر...',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'pr_table_problem_id' => 'ID problemlər',
+	'pr_table_wiki_name' => 'Vikinin adı',
+	'pr_table_problem_type' => 'Problemin tipi',
+	'pr_status_wait' => 'gözləyin...',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -362,7 +373,7 @@ Mar plij kemmit danvez an diverradenn.',
 	'pr_table_page_link' => 'Pajenn',
 	'pr_table_date_submitted' => 'Deiziad kas',
 	'pr_table_reporter_name' => 'Anv an daneveller',
-	'pr_table_description' => 'Diskrivadur',
+	'pr_table_description' => 'Deskrivadur',
 	'pr_table_comments' => 'Evezhiadennoù',
 	'pr_table_status' => 'Statud',
 	'pr_table_actions' => 'Oberoù',
@@ -652,10 +663,11 @@ Ohjelmistovirheistä voi ilmoittaa foorumeilla. Tämän lomakkeen kautta tehdyt 
 /** French (Français)
  * @author IAlex
  * @author Slamduck
+ * @author Wyz
  * @author Zetud
  */
 $messages['fr'] = array(
-	'problemreports' => 'Liste des rapports de problème',
+	'problemreports' => 'Liste des rapports de problèmes',
 	'reportproblem' => 'Rapporter un problème',
 	'prlogtext' => 'Rapports de problème',
 	'prlogheader' => 'Liste des problèmes rapportés et les modifications de leurs statuts',
@@ -1532,6 +1544,7 @@ $messages['ps'] = array(
 	'pr_table_wiki_name' => 'ويکي نوم',
 	'pr_table_page_link' => 'مخ',
 	'pr_table_description' => 'څرګندونه',
+	'pr_table_comments' => 'تبصرې',
 	'pr_table_status' => 'دريځ',
 	'pr_status_2' => 'تړل شوی',
 );
@@ -1897,6 +1910,25 @@ $messages['sv'] = array(
 	'pr_status_10' => 'ta bort rapport',
 	'pr_status_wait' => 'vänta...',
 	'pr_msg_exchead' => 'Meddelandet är för långt',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'pr_what_problem_unselect' => 'அனைத்தும்',
+	'pr_what_problem_spam_short' => 'வீண்செய்தி',
+	'pr_what_problem_incorrect_content_short' => 'உள்ளடக்கம்',
+	'pr_what_problem_other_short' => 'மற்றவை',
+	'pr_describe_problem' => 'செய்தி',
+	'pr_table_description' => 'விளக்கம்',
+	'pr_table_comments' => 'கருத்துரைகள்',
+	'pr_table_status' => 'நிலைமை',
+	'pr_table_actions' => 'செயல்கள்',
+	'pr_status_0' => 'நிலுவையிலுள்ளது',
+	'pr_status_1' => 'நிலையானது',
+	'pr_status_2' => 'மூடப்பட்டது',
+	'pr_status_wait' => 'காத்திருக்கவும்...',
 );
 
 /** Tagalog (Tagalog)
