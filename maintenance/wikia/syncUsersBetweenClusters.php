@@ -30,14 +30,15 @@ $dbw = wfGetDB( DB_MASTER, array(), "wikicities_$wgDBcluster" ); // local wikici
 
 foreach( $missing as $user_id ) {
 	wfOut( "$user_id missing on wikicities_$wgDBcluster\n" );
-	$user = $dbr->selectRow(
+	$sth = $dbr->select(
 		array( "`user`" ),
 		array( "*" ),
 		array( "user_id" => $user_id ),
 		__METHOD__
 	);
+	$user = $dbr->fetchRow( $sth );
 
-	if( $dbw->insert( "user", (array)$user, __METHOD__ )) {
+	if( $dbw->insert( "user", $user, __METHOD__ )) {
 		wfOut( "{$user["user_id"]} {$user["user_name"]} copied.\n" );
 	}
 }
