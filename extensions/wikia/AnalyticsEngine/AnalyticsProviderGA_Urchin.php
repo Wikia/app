@@ -37,6 +37,8 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		        return $this->noads();
 		case 'female':
 		    return $this->female();
+		case "varnish-stat":
+		    return $this->varnishstat();
 
                   default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
@@ -82,6 +84,17 @@ urchinTracker();
 }
 </script>';
 	}
+
+	private function varnishstat() {
+	    return '<script type="text/javascript">
+var varnish_server;
+if (varnish_server = document.cookie.match(/varnish-stat=([^;]+)/)[1]) {
+_uff=0;
+_uacct="UA-288915-48";
+urchinTracker(varnish_server);
+}
+</script>';
+		}
 
 	private function female() {
 		return '<script type="text/javascript">

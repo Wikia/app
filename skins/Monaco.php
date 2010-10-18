@@ -2010,6 +2010,7 @@ echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
 echo AnalyticsEngine::track('GA_Urchin', 'noads');
 echo AnalyticsEngine::track('GA_Urchin', 'female');
+echo AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
 if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
 ?>
 <!-- End Analytics -->
