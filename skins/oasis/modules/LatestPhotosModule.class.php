@@ -1,6 +1,8 @@
 <?php
 class LatestPhotosModule extends Module {
 
+	const BLACKLIST_MESSAGE = 'Photosblacklist';
+
 	var $thumbUrls;
 	var $wgBlankImgUrl;
 	var $enableScroll;
@@ -24,9 +26,7 @@ class LatestPhotosModule extends Module {
 		// Pull the list of images from memcache first
 		$this->thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
 		if (empty($this->thumbUrls)) {
-
 			// api service
-
 			$params = array(
 				'action' => 'query',
 				'list' => 'logevents',
@@ -38,7 +38,6 @@ class LatestPhotosModule extends Module {
 			$apiData = ApiService::call($params);
 
 			if (empty($apiData)) {
-				wfProfileOut(__METHOD__);
 				return false;
 			}
 			$imageList = $apiData['query']['logevents'];
@@ -100,27 +99,75 @@ class LatestPhotosModule extends Module {
 		$retval = array();
 		if (isset($element['title'])) {
 			$title = Title::newFromText($element['title']);
-			$retval = array('url' => $title->getFullUrl(), 'file' => wfFindFile ( $title ));
+			$retval = array('url' => $title->getLocalUrl(), 'file' => wfFindFile ( $title ));
 		}
 		return $retval;
 	}
 
 	private function filterImages($element) {
 		$file = $element['file'];
-		if (isset($file->title)) {
+		$ret = true;
 
+		if (isset($file->title)) {
 			// filter by filetype and filesize (RT #42075)
 			$type = $file->minor_mime;
 			$width = $file->width;
 			$height = $file->height;
+			$name = $file->title->getPrefixedText();
+
 			// FIXME: why is 'ogg' showing up as an image type?
-			if ($type == 'ogg') return false;
-			if ($width < 100) return false;
-			if ($height < 100) return false;
+			if ($type == 'ogg') {
+				$ret = false;
+			}
+			if ($width < 100) {
+				$ret = false;
+			}
+			if ($height < 100) {
+				$ret = false;
+			}
+
+			// RT #70016: check blacklist
+			if ($this->isImageBlacklisted($name)) {
+				wfDebug(__METHOD__ . ": {$name} blacklisted\n");
+				$ret = false;
+			}
 		} else {
-			return false;
+			$ret = false;
 		}
-		return true;
+
+		return $ret;
+	}
+
+	private function isImageBlacklisted($filename) {
+		$blacklist = $this->getBlacklist();
+		return !empty($blacklist[$filename]);
+	}
+
+	private function getBlacklist() {
+		wfProfileIn(__METHOD__);
+		static $blacklist = null;
+
+		if (is_null($blacklist)) {
+			$lines = getMessageAsArray(self::BLACKLIST_MESSAGE);
+			$blacklist = array();
+
+			if (!empty($lines)) {
+				foreach($lines as $line) {
+					$image = Title::newFromText(trim($line, "* "), NS_FILE);
+					if (!empty($image)) {
+						$blacklist[ $image->getPrefixedText() ] = 1;
+					}
+				}
+
+				wfDebug(__METHOD__ . ": blacklist loaded\n");
+			}
+			else {
+				wfDebug(__METHOD__ . ": blacklist is empty\n");
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $blacklist;
 	}
 
 	private function getLinkedFiles ( $name ) {
@@ -177,5 +224,17 @@ class LatestPhotosModule extends Module {
 		$wgMemc->delete(LatestPhotosModule::memcacheKey());
 		return true;
     }
+
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		global $wgMemc;
+		$title = $article->getTitle();
+
+		if ($title->getNamespace() == NS_MEDIAWIKI &&  $title->getText() == self::BLACKLIST_MESSAGE) {
+			wfDebug(__METHOD__ . ": photos blacklist has been updated\n");
+			$wgMemc->delete(LatestPhotosModule::memcacheKey());
+		}
+
+		return true;
+	}
 
 }
