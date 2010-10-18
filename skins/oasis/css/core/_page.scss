@@ -1,9 +1,10 @@
 .WikiaPage {
 	background: $color-page;
 	border: 1px solid $color-page-border;
-	margin: 0 auto;
+	margin: 0 auto -59px;
 	padding-top: 59px;
 	position: relative;
+	top: -59px;
 	width: $width-outside;
 	>h1:first-child {
 		display: none;

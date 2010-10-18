@@ -21,10 +21,8 @@
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 	border-top: 3px solid #000;
 	color: $color-header-text;
-	left: 50%;
-	margin-left: -$width-outside/2 - 5;
-	position: absolute;
-	top: 31px;
+	margin: 0 auto;
+	position: relative;
 	width: $width-outside + 10px;
 	z-index: 1000;
 	h1 {

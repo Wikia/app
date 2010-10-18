@@ -15,6 +15,11 @@ body {
 		background-repeat: no-repeat;
 	}
 }
+@if $oasisHD == 1 {
+	body {
+		min-width: $width-outside + 40;
+	}
+}
 
 a {
 	color: $color-links;
