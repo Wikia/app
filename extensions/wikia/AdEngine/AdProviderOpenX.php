@@ -35,24 +35,49 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		'SPECIAL_INTERSTITIAL_BOXAD_1' => 5,
 		'TOP_RIGHT_BOXAD' => 5,
 
-		'SPOTLIGHT_GLOBALNAV_1' => 20,
-		'SPOTLIGHT_GLOBALNAV_2' => 21,
-		'SPOTLIGHT_GLOBALNAV_3' => 22,
-		'SPOTLIGHT_RAIL_1' => 17,
-		'SPOTLIGHT_RAIL_2' => 18,
-		'SPOTLIGHT_RAIL_3' => 19,
-		'SPOTLIGHT_FOOTER_1' => 14,
-		'SPOTLIGHT_FOOTER_2' => 15,
-		'SPOTLIGHT_FOOTER_3' => 16,
+		// will: moving init of spotlights to __construct(). temporary move.
+		//'SPOTLIGHT_GLOBALNAV_1' => 20,
+		//'SPOTLIGHT_GLOBALNAV_2' => 21,
+		//'SPOTLIGHT_GLOBALNAV_3' => 22,
+		//'SPOTLIGHT_RAIL_1' => 17,
+		//'SPOTLIGHT_RAIL_2' => 18,
+		//'SPOTLIGHT_RAIL_3' => 19,
+		//'SPOTLIGHT_FOOTER_1' => 14,
+		//'SPOTLIGHT_FOOTER_2' => 15,
+		//'SPOTLIGHT_FOOTER_3' => 16,
 
 		'default' => 0, // FIXME
 	);
-
 
         private $slotsToCall = array();
 
 		const WIKIA_AFFILIATE_ID = 2;
 		const OASIS_SPOTLIGHTS_AFFILIATE_ID = 3;
+
+	public function __construct() {
+		if (1) {
+			$this->zoneIds['SPOTLIGHT_GLOBALNAV_1'] = 20;
+			$this->zoneIds['SPOTLIGHT_GLOBALNAV_2'] = 21;
+			$this->zoneIds['SPOTLIGHT_GLOBALNAV_3'] = 22;
+			$this->zoneIds['SPOTLIGHT_RAIL_1'] = 17;
+			$this->zoneIds['SPOTLIGHT_RAIL_2'] = 18;
+			$this->zoneIds['SPOTLIGHT_RAIL_3'] = 19;
+			$this->zoneIds['SPOTLIGHT_FOOTER_1'] = 14;
+			$this->zoneIds['SPOTLIGHT_FOOTER_2'] = 15;
+			$this->zoneIds['SPOTLIGHT_FOOTER_3'] = 16;
+		}
+		else {
+			$this->zoneIds['SPOTLIGHT_GLOBALNAV_1'] = 6;
+			$this->zoneIds['SPOTLIGHT_GLOBALNAV_2'] = 6;
+			$this->zoneIds['SPOTLIGHT_GLOBALNAV_3'] = 6;
+			$this->zoneIds['SPOTLIGHT_RAIL_1'] = 6;
+			$this->zoneIds['SPOTLIGHT_RAIL_2'] = 6;
+			$this->zoneIds['SPOTLIGHT_RAIL_3'] = 6;
+			$this->zoneIds['SPOTLIGHT_FOOTER_1'] = 6;
+			$this->zoneIds['SPOTLIGHT_FOOTER_2'] = 6;
+			$this->zoneIds['SPOTLIGHT_FOOTER_3'] = 6;
+		}
+	}
 
         public function addSlotToCall($slotname){
                 $this->slotsToCall[]=$slotname;
