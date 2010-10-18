@@ -141,13 +141,13 @@ function wfSoapFailures(){
 			print "<table>\n";
 			print "\t<tr><th>".wfMsg('soapfailures-stats-timeperiod')."</th><th>".wfMsg('soapfailures-stats-numfound')."</th><th>".wfMsg('soapfailures-stats-numnotfound')."</th><th>&nbsp;</th></tr>\n";
 
-			$stats = lw_soapStats_term(LW_TERM_DAILY);
+			$stats = lw_soapStats_getStats(LW_TERM_DAILY);
 			print "\t<tr><td>".wfMsg('soapfailures-stats-period-today')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 
-			$stats = lw_soapStats_term(LW_TERM_WEEKLY);
+			$stats = lw_soapStats_getStats(LW_TERM_WEEKLY);
 			print "\t<tr><td>".wfMsg('soapfailures-stats-period-thisweek')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 			
-			$stats = lw_soapStats_term(LW_TERM_MONTHLY);
+			$stats = lw_soapStats_getStats(LW_TERM_MONTHLY);
 			print "\t<tr><td>".wfMsg('soapfailures-stats-period-thismonth')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 			print "</table>\n";
 
