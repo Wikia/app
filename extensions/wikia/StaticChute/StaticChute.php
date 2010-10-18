@@ -151,6 +151,7 @@ class StaticChute {
 			'../extensions/wikia/Userengagement/Userengagement.js',
 			'common/contributed.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
+			"../extensions/wikia/ArticleComments/js/ArticleComments.js",
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
@@ -196,6 +197,7 @@ class StaticChute {
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'common/contributed.js',
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
@@ -328,6 +330,7 @@ class StaticChute {
 			"oasis/js/LatestPhotos.js",
 			"oasis/js/Interlang.js",
 			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
+			"../extensions/wikia/ArticleComments/js/ArticleComments.js",
 			"oasis/js/WikiaNotifications.js",
 			"oasis/js/Spotlights.js",
 
@@ -371,6 +374,7 @@ class StaticChute {
 			"oasis/js/WikiHeader.js",
 			"oasis/js/LatestPhotos.js",
 			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
+			"../extensions/wikia/ArticleComments/js/ArticleComments.js",
 			"oasis/js/WikiaNotifications.js",
 			"oasis/js/Spotlights.js",
 
