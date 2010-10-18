@@ -132,7 +132,7 @@ class AdSS_Controller extends SpecialPage {
 			$body = "New ad has been just created and it's waiting your approval:\n";
 			$body .= Title::makeTitle( NS_SPECIAL, "AdSS/admin" )->getFullURL();
 			$body .= "\n\n";
-			$body .= "Created by: {$ad->user_email}\n";
+			$body .= "Created by: {$ad->email}\n";
 			$body .= "Ad link text: {$ad->text}\n";
 			$body .= "Ad URL: {$ad->url}\n";
 			$body .= "Ad description: {$ad->desc}\n";
