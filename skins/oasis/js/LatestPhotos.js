@@ -1,5 +1,5 @@
-$(function() {
-	LatestPhotos.init();
+$(window).load(function() {
+    LatestPhotos.init();
 });
 
 var LatestPhotos = {
@@ -10,28 +10,41 @@ var LatestPhotos = {
 	carousel: false,
 
 	init: function() {
-		this.carousel = $('.LatestPhotosModule').find('.carousel');
-		this.attachListeners();
-		this.lazyLoadImages();
+		LatestPhotos.carousel = $('.LatestPhotosModule').find('.carousel');
+		LatestPhotos.attachListeners();
+		//LatestPhotos.lazyLoadImages(3);
 	},
 
-	lazyLoadImages: function() {
+	lazyLoadImages: function(limit) {
+		//var firstInit = true;
 		var images = this.carousel.find('img').filter('[data-src]');
 		$().log('lazy loading images', 'LatestPhotos');
-
+			
+		var count = 0;
 		images.each(function() {
-			var image = $(this);
-			image.
-				attr('src', image.attr('data-src')).
-				removeAttr('data-src');
+			count ++;
+			if (count > limit) { // exit the loop for init image loading.
+				return false;
+			}
+			//if ( ( firstInit == false  && count > LatestPhotos.initLoadedImages) || firstInit == true) {
+				var image = $(this);
+				image.
+					attr('src', image.attr('data-src')).
+					removeAttr('data-src');
+			//}
 		});
+			
 	},
 
 	attachListeners: function() {
 		LatestPhotos.attachBlindImages();
 		$('.LatestPhotosModule .next').click(LatestPhotos.nextImage);
 		$('.LatestPhotosModule .previous').click(LatestPhotos.previousImage);
-
+			
+		$(".LatestPhotosModule").mouseover(function() {
+			LatestPhotos.lazyLoadImages('rest');
+		});
+			
 		LatestPhotos.enableBrowsing();
 	},
 
