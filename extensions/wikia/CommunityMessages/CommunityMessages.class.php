@@ -86,7 +86,7 @@ class CommunityMessages {
 		wfRunHooks('CommunityMessages::showMessage', array(&$msg));
 
 		// add to user messages
-		$msgs .= $msg;
+		//$msgs .= $msg; # don't show this message in Monaco (RT #73911)
 
 		return true;
 	}
