@@ -41,14 +41,22 @@
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
+
+<?= $googleAnalytics ?>
+
 <?php
 	if($jsAtBottom) {
 		print "<!-- Combined JS files (StaticChute) -->\n";
 		print $staticChuteHtml."\n";
 	}
 ?>
-<?= $analytics ?>
 
+<?php
+	if (empty($wgSuppressAds)) {
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+	}
+?>
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 
 <!-- Tracking pixels-->
