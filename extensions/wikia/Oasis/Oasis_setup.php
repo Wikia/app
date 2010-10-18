@@ -13,18 +13,18 @@ function wfOasisSetup() {
 	global $wgHooks;
 
 	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'UserStatsService::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityModule::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderModule::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'LatestPhotosModule::onArticleSaveComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'UserStatsService::onArticleSaveComplete';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingModule::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingModule::renderBlogListing';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyModule::onEditPageRender';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'PageHeaderModule::modifyEditPage';
-	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
-	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
 	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosModule::onImageDelete';
+	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
+	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
+	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
 
 	// confirmations
 	$wgHooks['PreferencesMainPrefsForm'][] = 'NotificationsModule::addPreferencesConfirmation';

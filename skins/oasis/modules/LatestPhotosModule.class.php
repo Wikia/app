@@ -225,11 +225,10 @@ class LatestPhotosModule extends Module {
 		return true;
     }
 
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		global $wgMemc;
-		$title = $article->getTitle();
 
-		if ($title->getNamespace() == NS_MEDIAWIKI &&  $title->getText() == self::BLACKLIST_MESSAGE) {
+	public static function onMessageCacheReplace($title, $text) {
+		global $wgMemc;
+		if ($title == self::BLACKLIST_MESSAGE) {
 			wfDebug(__METHOD__ . ": photos blacklist has been updated\n");
 			$wgMemc->delete(LatestPhotosModule::memcacheKey());
 		}
