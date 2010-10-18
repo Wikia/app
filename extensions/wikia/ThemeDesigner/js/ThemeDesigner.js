@@ -246,8 +246,8 @@ var ThemeDesigner = {
 				if (color == "" || color == $("#color-name").attr("placeholder")) {
 					return;
 				}
-				
-				// RT:70673 trim string 
+
+				// RT:70673 trim string
 				//color = $.trim(color);
 
 				// add hash if needed
@@ -613,7 +613,7 @@ var ThemeDesigner = {
 			if (ThemeDesigner.settings["wordmark-type"] == "text") {
 				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
 					.css({
-						"background-image": "none",
+						"background-image": "none"
 					})
 					.removeClass()
 					.addClass("wordmark")
@@ -626,7 +626,7 @@ var ThemeDesigner = {
 				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
 					.addClass("graphic")
 					.css({
-						"background-image": "url(" + ThemeDesigner.settings["wordmark-image-url"] + ")",
+						"background-image": "url(" + ThemeDesigner.settings["wordmark-image-url"] + ")"
 					})
 					.find("a").hide()
 			}

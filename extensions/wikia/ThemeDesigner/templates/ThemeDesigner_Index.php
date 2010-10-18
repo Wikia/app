@@ -55,8 +55,8 @@
 <?php
 	if(count($themeHistory) > 0) {
 ?>
-				<div class="history">
-					<div class="revisions"><?= count($themeHistory) ?></div>
+				<span class="history">
+					<span class="revisions"><?= count($themeHistory) ?></span>
 					<?= wfMsg('themedesigner-previous-versions') ?>
 					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 					<ul>
@@ -71,7 +71,7 @@
 					}
 					?>
 					</ul>
-				</div>
+				</span>
 <?php
 	} //end if
 ?>

@@ -27,7 +27,7 @@ body {
 	position: relative;
 	h1 {
 		font-size: 18px;
-	}	
+	}
 }
 
 .Navigation {
@@ -79,6 +79,7 @@ body {
 			top: 12px;
 			&.save {
 				right: 130px;
+				*width: 150px;
 			}
 			&.cancel {
 				right: 10px;
