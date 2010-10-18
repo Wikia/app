@@ -147,10 +147,13 @@ class OasisModule extends Module {
 
 		// track page load time
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-		
+
+		// record which varnish this page was served by
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
+
 		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
 		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track("GA_Urchin", "lyrics");
+			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
 		}
 
 		// Quant serve moved *after* the ads because it depends on Athena/Provider values.
