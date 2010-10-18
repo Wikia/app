@@ -20,6 +20,7 @@ $LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
 $MIN_SECONDS_TO_LOG = 15; // if the script takes longer than this many seconds to run, the request will be logged.
 $startTime = microtime(true);
+$funcsOnly = (defined('LYRICWIKI_SOAP_FUNCS_ONLY') && LYRICWIKI_SOAP_FUNCS_ONLY);
 
 define('TRACK_REQUEST_RUNTIMES', false);
 GLOBAL $REQUEST_TYPE;
@@ -48,20 +49,23 @@ $LW_PATH = (isset($LW_PATH)?$LW_PATH:"./");
 GLOBAL $wgScriptPath;
 // This wrap protects us from connecting to the DB when the API is shut down - at least it's intended to: we haven't verified this yet.
 if(!$SHUT_DOWN_API){
-	if(!defined('MEDIAWIKI')){
-		define( 'MEDIAWIKI', true );
-	}
 	if(!defined('LYRICWIKI_SOAP')){
 		define( 'LYRICWIKI_SOAP', true ); // so that LocalSettings.php knows not to include extra files.
 	}
 
-	require_once $LW_PATH."includes/Defines.php";
+	if(!$funcsOnly){
+		if(!defined('MEDIAWIKI')){
+			define( 'MEDIAWIKI', true );
+		}
 
-	if($LW_PATH != "./"){ // another (probably futile) attempt to allow entry points other than in the root directory.
-		$wgScriptPath = $LW_PATH;
+		require_once $LW_PATH."includes/Defines.php";
+
+		if($LW_PATH != "./"){ // another (probably futile) attempt to allow entry points other than in the root directory.
+			$wgScriptPath = $LW_PATH;
+		}
+
+		require (dirname(__FILE__) . '/../../../includes/WebStart.php');
 	}
-
-	require (dirname(__FILE__) . '/../../../includes/WebStart.php');
 } else if(!function_exists("wfReadOnly")){
 	// Since we skip the MediaWiki stack when the API is disabled, this stub is needed.
 	function wfReadOnly(){return true;}
@@ -117,7 +121,6 @@ if(!function_exists("lw_connect_readOnly")){
 // If another local script wants to use these functions, it can just include
 // this file with LYRICWIKI_SOAP_FUNCS_ONLY and then call the
 // functions directly.
-$funcsOnly = (defined('LYRICWIKI_SOAP_FUNCS_ONLY') && LYRICWIKI_SOAP_FUNCS_ONLY);
 if(!$funcsOnly){
 	// Really basic logging for the requests.
 	// $LOG_FILE = fopen("./lw_API_log.txt", "a");
@@ -855,8 +858,10 @@ function getSong($artist, $song="", $doHyphens=true){
 				if(!$SHUT_DOWN_API){
 					// SWC 20090501 - Shut this down to reduce database load.  I don't generally track the success rate right now, so it's pretty flat around 50%.
 					// Can re-enable this later if we actually start paying attention to this again.
-					//require_once "soap_stats.php"; // for tracking success/failure
-					//lw_soapStats_logHit($resultFound);
+					
+					// SWC 20101017 - Rewriting this to use memcached.  Should be fast enough now.
+					include "soap_stats.php"; // for tracking success/failure
+					lw_soapStats_logHit($resultFound);
 				}
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
