@@ -1,3 +1,8 @@
+== Changes since 201010.3 ==
+* rt#70036: Oasis: Notification for Community corner updated doesn't work (macbre)
+* rt#73909: Change default community corner title message to "Community Messages" (macbre)
+* rt#73911: Community messages link in Monaco should be changed to point to My Home, not Activity (macbre)
+
 == Changes since 201010.2 ==
 * rt#72724: HAwelcome: blocking User:Wikia no longer disables welcome (uberfuzzy)
 * rt#68846: Oasis: Add fb login button to ajax login (macbre)
