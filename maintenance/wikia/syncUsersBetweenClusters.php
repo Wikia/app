@@ -17,10 +17,18 @@ if( empty( $wgDBcluster ) ) {
 }
 
 $missing = array();
+
+// from logging
 $dbr = wfGetDB( DB_MASTER );
 $sth = $dbr->query(  "select log_user from logging where log_user not in ( select user_id from `wikicities_{$wgDBcluster}`.`user` )" );
 while( $row = $dbr->fetchObject( $sth ) ) {
 	$missing[] = $row->log_user;
+}
+
+// from revision
+$sth = $dbr->query(  "select rev_user from revision where rev_user not in ( select user_id from `wikicities_{$wgDBcluster}`.`user` )" );
+while( $row = $dbr->fetchObject( $sth ) ) {
+	$missing[] = $row->rev_user;
 }
 
 $missing = array_unique( $missing );
