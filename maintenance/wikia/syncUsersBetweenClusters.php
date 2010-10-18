@@ -26,5 +26,5 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 $missing = array_unique( $missing );
 
 foreach( $missing as $user_id ) {
-	wfOut( "$user_id missing on wikicities_$wgDBcluster\n";
+  wfOut( "$user_id missing on wikicities_$wgDBcluster\n" );
 }
