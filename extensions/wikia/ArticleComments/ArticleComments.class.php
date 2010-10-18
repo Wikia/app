@@ -137,7 +137,8 @@ class ArticleCommentInit {
 		wfProfileIn( __METHOD__ );
 
 		if (self::ArticleCommentCheck()) {
-			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
+			//Moved to StaticChute
+			//$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
 			/** preventing Oasis from adding this CSS-file **/
 			global $wgUser;
 			if( get_class($wgUser->getSkin()) != 'SkinOasis' ) {
