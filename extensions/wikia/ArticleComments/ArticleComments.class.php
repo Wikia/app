@@ -409,6 +409,7 @@ class ArticleComment {
 
 			if ( $this->mFirstRevision ) {
 				$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
+				$this->mUser->setName( $this->mFirstRevision->getUserText() );
 			}
 			else {
 				$result = false;
