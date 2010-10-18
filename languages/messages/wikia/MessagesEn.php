@@ -1094,7 +1094,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 # user-facing (editable) Oasis messages
 # names adjusted to be easy-er for the user to remember
-'categoryblacklist' => '* fuck',
+'categoryblacklist' => '* stub',
 'wiki-navigation' => '*#visited#|TopContent
 *#category1#
 *#category2#
