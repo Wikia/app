@@ -91,6 +91,7 @@ $wgAutoloadClasses['WikiaCentralAuthUserArrayFromResult'] = "$caBase/WikiaCentra
 
 $wgHooks['AuthPluginSetup'][] = 'WikiaCentralAuthHooks::onAuthPluginSetup';
 $wgHooks['AddNewAccount'][] = 'WikiaCentralAuthHooks::onAddNewAccount';
+$wgHooks['AddNewAccount2'][] = 'WikiaCentralAuthHooks::onAddNewAccount';
 $wgHooks['AbortNewAccount'][] = 'WikiaCentralAuthHooks::onAbortNewAccount';
 $wgHooks['UserLogout'][] = 'WikiaCentralAuthHooks::onUserLogout';
 $wgHooks['UserArrayFromResult'][] = 'WikiaCentralAuthHooks::onUserArrayFromResult';
