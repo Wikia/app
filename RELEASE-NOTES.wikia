@@ -1,4 +1,5 @@
 == Changes since 201010.3 ==
+* rt#70016: Oasis: Create Mediawiki Blacklist for Photos on This Wiki module (macbre)
 * rt#70036: Oasis: Notification for Community corner updated doesn't work (macbre)
 * rt#73909: Change default community corner title message to "Community Messages" (macbre)
 * rt#73911: Community messages link in Monaco should be changed to point to My Home, not Activity (macbre)
