@@ -13,7 +13,7 @@ if (!defined('MEDIAWIKI')) {
 
 class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 
-	private $variablesList = array('wgDefaultSkin','wgDefaultTheme','wgAdminSkin','wgArticlePath','wgScriptPath','wgScript','wgServer','wgLanguageCode','wgCityId','wgContentNamespaces');
+	private $variablesList = array('wgDefaultSkin','wgDefaultTheme','wgAdminSkin','wgArticlePath','wgScriptPath','wgScript','wgServer','wgLanguageCode','wgCityId','wgContentNamespaces','wgWikiaGlobalUserGroups');
 
 	public function __construct($query, $moduleName) {
 		parent :: __construct($query, $moduleName, 'si');
