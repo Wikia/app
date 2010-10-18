@@ -38,6 +38,25 @@ foreach( $missing as $user_id ) {
 	);
 	$user = $dbr->fetchRow( $sth );
 
+	$user = array(
+		"user_id" => $user[ "user_id" ],
+		"user_name" => $user[ "user_name" ],
+		"user_real_name" => $user[ "user_real_name" ],
+		"user_password" => $user[ "user_password" ],
+		"user_newpassword" => $user[ "user_newpassword" ],
+		"user_email" => $user[ "user_email" ],
+		"user_options" => $user[ "user_options" ],
+		"user_touched" => $user[ "user_touched" ],
+		"user_token" => $user[ "user_token" ],
+		"user_email_authenticated" => $user[ "user_email_authenticated" ],
+		"user_email_token" => $user[ "user_email_token" ],
+		"user_email_token_expires" => $user[ "user_email_token_expires" ],
+		"user_registration" => $user[ "user_registration" ],
+		"user_newpass_time" => $user[ "user_newpass_time" ],
+		"user_editcount" => $user[ "user_editcount" ],
+		"user_birthdate" => $user[ "user_birthdate" ]
+	);
+
 	if( $dbw->insert( "user", $user, __METHOD__ )) {
 		wfOut( "{$user["user_id"]} {$user["user_name"]} copied.\n" );
 	}
