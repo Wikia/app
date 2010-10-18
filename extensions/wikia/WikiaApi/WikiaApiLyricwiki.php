@@ -35,6 +35,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	public function execute() {
 		global $IP;
 
+		define('LYRICWIKI_SOAP_FUNCS_ONLY', true);
 		require( "$IP/extensions/3rdparty/LyricWiki/server.php" );
 
 		$func = $song = $artist = $fmt = null;

@@ -135,7 +135,23 @@ function wfSoapFailures(){
 			$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 
 			print wfMsg('soapfailures-intro');
+			
+			// Display some hit-rate stats.
+			include "soap_stats.php"; // for tracking success/failure
+			print "<table>\n";
+			print "\t<tr><th>".wfMsg('soapfailures-stats-timeperiod')."</th><th>".wfMsg('soapfailures-stats-numfound')."</th><th>".wfMsg('soapfailures-stats-numnotfound')."</th><th>&nbsp;</th></tr>\n";
 
+			$stats = lw_soapStats_term(LW_TERM_DAILY);
+			print "\t<tr><td>".wfMsg('soapfailures-stats-period-today')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
+
+			$stats = lw_soapStats_term(LW_TERM_WEEKLY);
+			print "\t<tr><td>".wfMsg('soapfailures-stats-period-thisweek')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
+			
+			$stats = lw_soapStats_term(LW_TERM_MONTHLY);
+			print "\t<tr><td>".wfMsg('soapfailures-stats-period-thismonth')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
+			print "</table>\n";
+
+			
 			print "This page is cached every 2 hours - \n";
 			print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
 			$queryString = "SELECT * FROM lw_soap_failures ORDER BY numRequests DESC LIMIT $MAX_RESULTS";

@@ -3,6 +3,14 @@
 $messages = array();
 $messages['en'] = array(
 	'soapfailures' => 'SOAP Page Failures',
+	
+	'soapfailures-stats-timeperiod' => 'Time period',
+	'soapfailures-stats-numfound' => 'Num found',
+	'soapfailures-stats-numnotfound' => 'Not found',
+	'soapfailures-stats-period-today' => 'Today',
+	'soapfailures-stats-period-thisweek' => 'This week',
+	'soapfailures-stats-period-thismonth' => 'This month',
+
 	'soapfailures-mark-as-fixed' => 'Mark a song as fixed (does a test first):',
 	'soapfailures-fixed' => 'Fixed',
 	'soapfailures-artist' => 'Artist:',
