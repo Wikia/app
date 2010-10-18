@@ -31,7 +31,7 @@ $dbw = wfGetDB( DB_MASTER, array(), "wikicities_$wgDBcluster" ); // local wikici
 foreach( $missing as $user_id ) {
 	wfOut( "$user_id missing on wikicities_$wgDBcluster\n" );
 	$user = $dbr->selectRow(
-		array( "user" ),
+		array( "`user`" ),
 		array( "*" ),
 		array( "user_id" => $user_id ),
 		__METHOD__
