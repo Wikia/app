@@ -54,7 +54,7 @@ WikiaFooterApp = {
 					
 					toolbar.css({
 						left: edge,
-						right: edge,
+						right: edge
 					});
 				}				
 			});
