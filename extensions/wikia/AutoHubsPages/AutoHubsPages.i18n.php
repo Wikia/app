@@ -278,3 +278,12 @@ $messages['ru'] = array(
 	'unhide' => 'Показать',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'hub-header' => '$1 விக்கிகள்',
+	'hub-blog-continue' => 'படிப்பதைத் தொடரவும்',
+	'hub-blog-showarticle' => 'பக்கத்தைக் காட்டவும்',
+);
+

@@ -3231,8 +3231,17 @@ $messages['sw'] = array(
  * @author TRYPPN
  */
 $messages['ta'] = array(
+	'autocreatewiki-category-select' => 'ஒன்றைத் தேர்வு செய்யவும்',
+	'autocreatewiki-birthdate' => 'பிறந்த தேதி:',
+	'autocreatewiki-remember' => 'என்னை நினைவில் வைத்துக்கொள்ளவும்',
+	'autocreatewiki-create-account' => 'கணக்கு ஒன்றை உருவாக்கவும்',
 	'autocreatewiki-done' => 'செய்துமுடிக்கப்பட்டது',
 	'autocreatewiki-error' => 'தவறு',
+	'autocreatewiki-category-label' => 'பகுப்பு:',
+	'autocreatewiki-category-other' => 'மற்றவை',
+	'autocreatewiki-log-title' => 'தங்களது விக்கி உருவாக்கப்பட்டுவிட்டது',
+	'autocreatewiki-welcometalk-log' => 'வரவேற்பு செய்தி',
+	'newwikis' => 'புதிய விக்கிகள்',
 );
 
 /** Telugu (తెలుగు)

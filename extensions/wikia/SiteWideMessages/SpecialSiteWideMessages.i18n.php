@@ -281,6 +281,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -341,7 +342,7 @@ $messages['br'] = array(
 	'swm-list-table-tools' => 'Ostilhoù',
 	'swm-list-table-lang' => 'Yezhoù',
 	'swm-yes' => 'Ya',
-	'swm-no' => 'Nann',
+	'swm-no' => 'Ket',
 	'swm-error-no-such-wiki' => "N'eus ket a wiki evel-se",
 	'swm-error-no-such-user' => "N'eus ket eus an implijer merket",
 	'swm-error-empty-message' => "Ebarzhiñ endalc'h ar gemennadenn-mañ.",
@@ -1080,6 +1081,16 @@ $messages['mk'] = array(
 	'swm-lang-other' => 'сите преостанати јазици',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'swm-label-language' => 'Хэл',
+	'swm-list-table-lang' => 'Хэлнүүд',
+	'swm-yes' => 'Тийм',
+	'swm-no' => 'Үгүй',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -1591,6 +1602,16 @@ $messages['sw'] = array(
 	'swm-label-recipient-wikis' => 'Wiki',
 	'swm-label-recipient-users' => 'Watumiaji',
 	'swm-label-mode-wikis-all' => 'Wiki zote',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'swm-button-preview' => '[ முன்தோற்றம் ]',
+	'swm-button-send' => '[ அனுப்பு ]',
+	'swm-button-save' => '[ சேமி ]',
+	'swm-button-new' => '[ புதியது ]',
 );
 
 /** Telugu (తెలుగు)

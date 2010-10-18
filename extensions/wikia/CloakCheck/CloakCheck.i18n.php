@@ -46,6 +46,14 @@ $messages['br'] = array(
 	'cloakcheck-process-edits-no' => "N'eus ket trawalc'h a zegasadennoù gant an implijer-mañ.",
 );
 
+/** German (Deutsch)
+ * @author Diebuche
+ */
+$messages['de'] = array(
+	'cloakcheck-process-emailconf-yes' => 'E-Mail-Adresse bestätigt.',
+	'cloakcheck-process-emailconf-no' => 'E-Mail-Adresse nicht bestätigt.',
+);
+
 /** Spanish (Español)
  * @author Absay
  * @author Locos epraix
@@ -230,6 +238,16 @@ $messages['ru'] = array(
 	'cloakcheck-process-emailconf-no' => 'Адрес электронной почты не подтверждён.',
 	'cloakcheck-process-edits-yes' => 'Участником сделано необходимое число правок.',
 	'cloakcheck-process-edits-no' => 'Участником не сделано необходимого числа правок.',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'cloakcheck-form-username' => 'பயனர் பெயர்:',
+	'cloakcheck-form-check' => 'பயனர் பெயரை சரிபார்க்கவும்',
+	'cloakcheck-process-username' => 'பயனர் பெயர்: $1',
+	'cloakcheck-process-accountage-no' => 'கணக்கு மிகவும் புதியது.',
 );
 
 /** Tagalog (Tagalog)

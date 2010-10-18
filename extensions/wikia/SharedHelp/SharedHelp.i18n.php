@@ -48,10 +48,11 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
-	'sharedhelp-desc' => 'Holt Seiten aus dem [[w:c:Help|Help Wikia]] und fügt sie in den {{ns:help}}-Namensraum dieses Wikis ein',
+	'sharedhelp-desc' => 'Holt Seiten aus dem [[w:c:hilfe|Hilfe Wikia]] und fügt sie in den {{ns:help}}-Namensraum dieses Wikis ein',
 	'sharedhelp-autotalkcreate-summary' => 'Diskussionsseite automatisch erstellt',
 );
 

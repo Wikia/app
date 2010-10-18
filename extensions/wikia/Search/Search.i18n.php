@@ -31,6 +31,17 @@ $messages['af'] = array(
 	'wikiasearch-search-wikia' => 'Deursoek Wikia',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'wikiasearch-titles-only' => 'Yalnız səhifə başlıqlarında axtar',
+	'wikiasearch-system-error-msg' => 'Sistem xətasına görə axtarış etmək mümkün deyil',
+	'wikiasearch-search-this-wiki' => 'Yalnız Wikia Central üzrə axtarış',
+	'wikiasearch-search-wikia' => 'Wikiada axtar',
+	'wikiasearch-image-results' => '"$1" üçün şəkil axtarışının nəticələri',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by

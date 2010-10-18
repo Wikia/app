@@ -69,6 +69,15 @@ $messages['ar'] = array(
 	'wikiavideo-create' => 'أضف فيديو',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'wikiavideo-back' => 'geri',
+	'wikiavideo-category' => 'Videolar',
+	'wikiavideo-pixel' => 'piksel',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by

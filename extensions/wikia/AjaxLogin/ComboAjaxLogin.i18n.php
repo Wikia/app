@@ -84,6 +84,7 @@ Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
 /** German (Deutsch)
+ * @author Diebuche
  * @author LWChris
  * @author The Evil IP address
  */
@@ -98,6 +99,7 @@ $messages['de'] = array(
 <li>Teile deine Aktivität auf Wikia mit deinen Freunden auf Facebook</li>
 <li>Komplette Kontrolle darüber, was veröffentlicht wird</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Mit Facebook Connect einloggen</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Verbinde dein Wikia-Benutzerkonto mit Facebook</h1>
 <ul>
 <li>Behalte deinen momentanen Benutzernamen, Geschichte, Bearbeitungen … nichts ändert sich außer der Art und Weise, wie du dich einloggst</li>
@@ -128,11 +130,11 @@ $messages['es'] = array(
 <li>Comparte con tus amigos en Facebook la actividad que realices en Wikia</li>
 <li>Controla completamente qué cosas publicas</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Enlaza tus cuentas</h1>
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Conecta tus cuentas</h1>
 <ul>
 <li>Conserva tus datos actuales: nombre de usuario, historial, ediciones, etc. Nada cambia salvo la forma de iniciar sesión</li>
 <li>Comparte con tus amigos en Facebook la actividad que realices en Wikia</li>
-<li>Controla completamente qué cosas publicas</li>
+<li>Ten completo control sobre lo que publicas</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Regresar',
 	'comboajaxlogin-connectmarketing-forward' => 'Comenzar &raquo;',
@@ -159,18 +161,19 @@ $messages['fr'] = array(
 <li>Partage votre activité sur Wikia avec vos amis sur Facebook</li>
 <li>Contrôle complet de ce qui est publié</li>
 </ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Se connecter avec Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Connectez votre compte Wikia à Facebook</h1>
 <ul>
 <li>Conservez vos nom d’utilisateur, historique et modifications actuels... rien ne change sauf votre manière de vous connecter</li>
-<li>Partagez votre activité sur Wikia avec vos amis de Facebook</li>
+<li>Partagez votre activité sur Wikia avec vos amis de Facebook, en contrôlant complètement ce qui est publié</li>
 <li>Contrôlez parfaitement ce qui est publié</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retour',
 	'comboajaxlogin-connectmarketing-forward' => 'Avant de commencer &raquo;',
-	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan.
+	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan. 
 
 Une fois que vous avez terminé, vous pouvez vous connecter facilement à l'aide de n'importe quel bouton Facebook Connect.",
-	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit.
+	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit. 
 Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 );
 
@@ -188,11 +191,11 @@ $messages['gl'] = array(
 <li>Comparta a súa actividade en Wikia cos seus amigos do Facebook</li>
 <li>Control total do que se publica</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Identificarse co Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Conecte a súa conta de Wikia coa do Facebook</h1>
 <ul>
 <li>Manteña o seu nome de usuario actual, o historial, as edicións... Non cambia nada, agás o xeito de acceder ao sistema</li>
-<li>Comparta a súa actividade en Wikia cos seus amigos do Facebook</li>
-<li>Control total do que se publica</li>
+<li>Comparta a súa actividade en Wikia cos seus amigos do Facebook, con control total do que se publica</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Volver',
 	'comboajaxlogin-connectmarketing-forward' => 'Comezar &raquo;',
@@ -217,11 +220,11 @@ $messages['ia'] = array(
 <li>Reparti tu activitate in Wikia con tu amicos in Facebook</li>
 <li>Controlo complete de lo que es publicate</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Aperir session con Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Connecter tu conto de Wikia a Facebook</h1>
 <ul>
 <li>Mantene tu actual nomine de usator, historia, modificationes... Nihil cambia excepte como aperir un session</li>
-<li>Reparti tu activitate in Wikia con tu amicos in Facebook</li>
-<li>Controlo complete de lo que es publicate</li>
+<li>Condivide tu activitate in Wikia con tu amicos in Facebook, con controlo complete de lo que es publicate</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retro',
 	'comboajaxlogin-connectmarketing-forward' => 'Comenciar &raquo;',
@@ -297,11 +300,11 @@ $messages['mk'] = array(
 <li>Споделете ги вашите активности на Викија со пријателите на Facebook</li>
 <li>Целосна контрола врз она што се објавува</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Најава со Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Поврзете си ја сметката на Викија со Facebook</h1>
 <ul>
 <li>Го задржувате сегашното корисничко име, историјата, уредувањата... ништо нема да се смени, освен начинот на најава</li>
-<li>Споделувајте ги вашите активности на Викија со пријателите на Facebook</li>
-<li>Имате целосна контрола врз она што се објавува</li>
+<li>Споделувајте ги вашите активности на Викија со пријателите на Facebook, со целосна контрола врз она што се објавува</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
 	'comboajaxlogin-connectmarketing-forward' => 'Започнете &raquo;',
@@ -326,11 +329,11 @@ $messages['nl'] = array(
 <li>Deel uw activiteit bij Wikia met uw vrienden op Facebook</li>
 <li>Volledige controle over wat wordt gepubliceerd</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Aanmelden via Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Uw Wikia-gebruiker met uw Facebook-gebruiker verbinden</h1>
 <ul>
 <li>Behoud uw huidige gebruikersnaam, geschiedenis, bewerkingen, enzovoort. Niets wijzigt, behalve de manier waarop u aanmeldt</li>
-<li>Deel uw activiteit bij Wikia met uw vrienden op Facebook</li>
-<li>Volledige controle over wat wordt gepubliceerd</li>
+<li>Deel uw activiteit bij Wikia met uw vrienden op Facebook en behoud volledige controle over wat wordt gepubliceerd</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '« Terug',
 	'comboajaxlogin-connectmarketing-forward' => 'Aan de slag »',
@@ -355,11 +358,11 @@ $messages['no'] = array(
 <li>Del aktiviteten din på Wikia med vennene dine på Facebook</li>
 <li>Full kontroll over hva som publiseres</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Logg inn med Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Koble Wikia-kontoen din til Facebook</h1>
 <ul>
-<li>Behold ditt nåværende brukernavn, historie, endringer... Ingenting forandres bortsett fra hvordan du logger inn</li>
-<li>Del aktiviteten din på Wikia med vennene dine på Facebook</li>
-<li>Full kontroll over hva som publiseres</li>
+<li>Behold nåværende brukernavn, historie, endringer... Ingenting forandres bortsett fra hvordan du logger inn</li>
+<li>Del aktiviteten din på Wikia med vennene dine på Facebook, med full kontroll over hva som publiseres</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Tilbake',
 	'comboajaxlogin-connectmarketing-forward' => 'Kom i gang &raquo;',
@@ -391,11 +394,11 @@ $messages['pms'] = array(
 <li>A partagia soa atività su Wikia con ij sò amis su Facebook</li>
 <li>Contròl complet ëd lòn ch'a l'é publicà</li>
 </ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Intré an Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => "<h1>Ch'a colega sò cont Wikia a Facebook</h1>
 <ul>
-<li>Ch'a goerna sò stranòm utent corent, stòria, modìfiche... a cangia gnente, gavà la fasson d'intré ant ël sistema</li>
-<li>Ch'a condivida soa atività su Wikia con ij sò amis su Facebook</li>
-<li>Contròl complet ëd lòn ch'a l'é publicà</li>
+<li>Ch'a goerna sò stranòm utent corent, stòria, modìfiche... a cangia gnente gavà la fasson d'intré ant ël sistema</li>
+<li>Ch'a condivida soa atività su Wikia con ij sò amis ëd Facebook, con contròl complet ëd lòn ch'a l'é publicà</li>
 </ul>",
 	'comboajaxlogin-connectmarketing-back' => '&laquo; André',
 	'comboajaxlogin-connectmarketing-forward' => 'Ancamin-a &raquo;',
@@ -426,15 +429,15 @@ $messages['pt'] = array(
 	'comboajaxlogin-actionmsg-protected' => 'Para editar esta página protegida, precisa de autenticar-se ou criar uma conta.',
 	'comboajaxlogin-connectmarketing' => '<h1>Ligue as suas contas</h1>
 <ul>
-<li>Mantenha o seu nome de utilizador, historial e edições... Nada muda, excepto a forma como se autentica</li>
+<li>Mantenha o seu nome de utilizador, historial e edições... nada muda, excepto a forma como se autentica</li>
 <li>Partilhe a sua actividade na Wikia com os seus amigos no Facebook</li>
 <li>Controlo total do que é publicado</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autenticar-se com o Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ligue a sua conta Wikia ao Facebook</h1>
 <ul>
 <li>Mantenha o seu nome de utilizador, histórico, edições... nada muda, excepto a forma como entra</li>
-<li>Partilhe a sua actividade na Wikia com os amigos no Facebook</li>
-<li>Controlo total do que é publicado</li>
+<li>Partilhe a sua actividade na Wikia com os amigos no Facebook com controlo total do que é publicado</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Voltar',
 	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',
@@ -477,6 +480,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 /** Russian (Русский)
  * @author Eleferen
  * @author G0rn
+ * @author MaxSem
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -490,11 +494,11 @@ $messages['ru'] = array(
 <li>Делитесь своей активностью в Wikia с вашими друзьями в Facebook</li>
 <li>Полный контроль над тем, что будет опубликовано</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Представиться системе с помощью Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Подключите свою учётную запись Wikia к Facebook</h1>
 <ul>
 <li>Сохраните имя пользователя, историю, правки… Ничего не изменится кроме входа в систему.</li>
-<li>Делитесь своей активностью в Wikia с вашими друзьями в Facebook.</li>
-<li>Полный контроль над тем, что будет опубликовано.</li>
+<li>Делитесь своей активностью в Wikia с вашими друзьями в Facebook, сохраняя полный контроль над тем, что будет опубликовано.</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
 	'comboajaxlogin-connectmarketing-forward' => 'Начало работы &raquo;',

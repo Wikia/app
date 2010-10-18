@@ -18,6 +18,14 @@ $messages['qqq'] = array(
 	'withoutimages-desc' => '{{desc}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'withoutimages-desc' => "Voeg 'n [[Special:Withoutimages|spesiale bladsy]] by om bladsye sonder beelde te lys",
+	'withoutimages' => 'Bladsye sonder beelde',
+);
+
 /** Old English (Ænglisc)
  * @author Gott wisst
  */
@@ -137,6 +145,14 @@ $messages['eu'] = array(
 $messages['fa'] = array(
 	'withoutimages-desc' => 'اضافه‌کردن یک [[Special:Withoutimages|صفحهٔ ویژه]] برای دیدن صفحه‌ها بدون تصاویر.',
 	'withoutimages' => 'صفحه‌های بدون تصاویر',
+);
+
+/** Finnish (Suomi)
+ * @author Str4nd
+ */
+$messages['fi'] = array(
+	'withoutimages-desc' => 'Lisää [[Special:Withoutimages|toimintosivun]] kuvattomien sivujen näyttämiseen.',
+	'withoutimages' => 'Sivut ilman kuvia',
 );
 
 /** French (Français)

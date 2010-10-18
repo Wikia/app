@@ -228,8 +228,11 @@ $messages['bug'] = array(
 	'titleedit' => 'Padécéŋ',
 );
 
-/** Catalan (Català) */
+/** Catalan (Català)
+ * @author Solde
+ */
 $messages['ca'] = array(
+	'titleedit-desc' => "Afegeix el títol botó d'edició a la part superior de les pàgines",
 	'titleedit' => 'Edita',
 );
 

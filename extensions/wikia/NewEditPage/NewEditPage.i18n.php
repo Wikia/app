@@ -24,6 +24,13 @@ $messages['ang'] = array(
 	'templatesused-toggle' => 'Sēon/hȳdan {{PLURAL:$1|$1 þing|$1 þing}}',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'templatesused-toggle' => 'Göstər/gizlə $1 {{PLURAL:$1|qeyd|qeydlər}}',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */

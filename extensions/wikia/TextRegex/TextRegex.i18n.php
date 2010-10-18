@@ -128,6 +128,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -153,7 +154,7 @@ $messages['br'] = array(
 	'textregex-nodata-found' => "N'eus ket bet kavet roadennoù",
 	'textregex-stats-record' => "ar ger''$1'' a oa bet implijet gant $2 war $3 (''displegadenn: $4'')",
 	'textregex-select-subpage' => 'Dibab unan eus frazennoù al listenn :',
-	'textregex-select-default' => '-- dibab --',
+	'textregex-select-default' => '-- diuzañ --',
 	'textregex-create-subpage' => 'pe krouit ur roll nevez :',
 	'textregex-select-regexlist' => "mont d'ar roll",
 	'textregex-invalid-regexid' => 'Frazenn fall.',

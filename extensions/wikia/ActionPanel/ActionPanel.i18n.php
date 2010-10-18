@@ -38,6 +38,19 @@ $messages['af'] = array(
 	'action_panel_categorize_success' => 'U kategorieë is bygevoeg.',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'action_panel_edit_title' => 'Cavab',
+	'action_panel_categorize' => 'Kateqoriyalaşdır',
+	'action_panel_categorize_help' => 'Hər sətirə bir kateqoriya',
+	'action_panel_categories_summary' => 'Kateqoriyalar əlavə et',
+	'action_panel_save_success' => 'Sizin məqaləniz saxlanılmışdır.',
+	'action_panel_rename_success' => 'Sizin məqalənin adı dəyişdirilmişdir.',
+	'action_panel_categorize_success' => 'Sizin kateqoriyalar əlavə edilmişdir.',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -444,6 +457,7 @@ $messages['ta'] = array(
 	'action_panel_save_success' => 'தங்களது கட்டுரை சேமிக்கப்பட்டுள்ளது.',
 	'action_panel_rename_success' => 'தங்களது கட்டுரைக்கு மறுபெயர் இடப்பட்டுள்ளது.',
 	'action_panel_categorize_success' => 'தங்களது பகுப்புக்கள் சேர்க்கப்பட்டுவிட்டன',
+	'actionpanel-desc' => 'ஒரு கையடக்கமான மேல் திறப்பானது, பகுக்கவும், மறுபெயரிடவும், தொகுக்கவும் தங்களை அனுமதிக்கிறது.',
 );
 
 /** Telugu (తెలుగు)

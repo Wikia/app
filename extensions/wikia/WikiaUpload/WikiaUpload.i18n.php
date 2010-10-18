@@ -255,6 +255,13 @@ $messages['li'] = array(
 	'wikiaupload' => 'Wikia-upload',
 );
 
+/** Lingala (Lingála)
+ * @author Eruedin
+ */
+$messages['ln'] = array(
+	'wikiaupload' => 'Bokɔngi Wikia',
+);
+
 /** Latvian (Latviešu)
  * @author Xil
  */

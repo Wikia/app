@@ -93,22 +93,29 @@ $messages['be-tarask'] = array(
  */
 $messages['br'] = array(
 	'wikistickies' => 'WikiStickies',
+	'wikistickies-desc' => 'Ar mell Wiki Stickies pegus da sachañ ho selloù !',
+	'wikistickies-newpages-hd' => 'Ha gallout a rit ouzhpennañ titouroù war unan eus eus ar pajennoù nevez-mañ ?',
 	'wikistickies-withoutimages-hd' => "Ha gallout a rit ouzhpennañ ur skeudenn d'unan eus ar pajennoù-mañ ?",
-	'wikistickies-newpages-st' => '<span class="fake_newpages">Ha gellout a rafec\'h ouzhpennañ titouroù d\'ar bajenn-se diwar-benn</span> $1?',
-	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Ha gellout a rafec\'h kregiñ ur bajenn diwar-benn</span> $1?',
-	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Ha gellout a rafec\'h ouzhpennañ ur skeudenn d\'ar bajenn diwar-benn</span> $1?',
-	'wikistickies-newpages-st-short' => '<span>Ha gellout a rit ouzhpennañ titouroù diwar-benn</span> $1?',
-	'wikistickies-wantedpages-st-short' => '<span>Ha gellout a rit kregiñ gant ur bajenn nevez diwar-benn</span> $1?',
-	'wikistickies-withoutimages-st-short' => '<span>Ha gellout a rit ouzhpennañ ur skeudenn da</span> $1?',
+	'wikistickies-wantedpages-hd' => 'Ha gallout a rit kregiñ gant unan eus ar pajennoù hon eus ezhomm anezho ?',
+	'wikistickies-newpages-st' => '<span class="fake_newpages">Ha gallout a rafec\'h ouzhpennañ titouroù d\'ar bajenn-se diwar-benn</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Ha gallout a rafec\'h kregiñ ur bajenn diwar-benn</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Ha gallout a rafec\'h ouzhpennañ ur skeudenn d\'ar bajenn diwar-benn</span> $1?',
+	'wikistickies-newpages-st-short' => '<span>Ha gallout a rit ouzhpennañ titouroù diwar-benn</span> $1?',
+	'wikistickies-wantedpages-st-short' => '<span>Ha gallout a rit kregiñ gant ur bajenn nevez diwar-benn</span> $1?',
+	'wikistickies-withoutimages-st-short' => '<span>Ha gallout a rit ouzhpennañ ur skeudenn da</span> $1?',
 	'wikistickies-save-changes' => "Enrollañ ar c'hemmoù",
 	'wikistickies-more' => "gwelout muioc'h",
 	'wikistickies-admins-hd' => 'Merourien hepken',
+	'wikistickies-admins-msg' => "Ar re-mañ n'eo ket ho wiki Stickies boas.
+Setu aze traoù na c'hallont bezañ graet nemet gant merourien ar wiki hag a c'hall kaout levezon war tres ar wiki evit an holl.",
 	'wikistickies-logo-hd' => 'Enporzhiañ ul logo',
 	'wikistickies-theme-hd' => 'Dibab un tem',
 	'wikistickies-custom-hd' => "Krouiñ ho WikiStickies deoc'h",
+	'wikistickies-custom-msg' => "Gallout a rit degas kemmoù da [[MediaWiki:CommunityStickies|bajenn ar CommunityStickies]] evit ouzpennañ un notenn WikiStickies nevez !
+Ouzhpennit elfennoù d'ar roll hag e vint gwelet war da bajenn degemer ha war ar bajenn-mañ.",
 	'wikistickies-next' => "War-lec'h →",
 	'wikistickies-hide' => 'kuzhat',
-	'wikistickies-see-more' => "Gwelout muioc'h a bajennoù hag o deus ezhomm sikour",
+	'wikistickies-see-more' => 'Gwelet pajennoù all o deus ezhomm skoazell',
 );
 
 /** Bosnian (Bosanski)
@@ -501,6 +508,8 @@ Gionté dj'element a la lista, e a apariran ansima a Mia Intrada e su costa pàg
  */
 $messages['ps'] = array(
 	'wikistickies-save-changes' => 'بدلونونه خوندي کول',
+	'wikistickies-admins-hd' => 'يوازې پازوالان',
+	'wikistickies-hide' => 'پټول',
 );
 
 /** Portuguese (Português)

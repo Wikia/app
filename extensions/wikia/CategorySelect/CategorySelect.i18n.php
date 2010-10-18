@@ -397,6 +397,13 @@ $messages['ja'] = array(
 	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'categoryselect-button-cancel' => 'ರದ್ದು ಮಾಡು',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -432,6 +439,13 @@ $messages['mk'] = array(
 	'categoryselect-error-db-locked' => 'Базата на податоци е заклучена.',
 	'categoryselect-edit-abort' => 'Измените кои се обидовте да ги направите се откажани од кука за додатоци',
 	'tog-disablecategoryselect' => 'Оневозможи означување на категории',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'categoryselect-button-cancel' => 'Цуцлах',
 );
 
 /** Dutch (Nederlands)

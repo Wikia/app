@@ -348,6 +348,13 @@ Den Artikel '''$1''' konnt net fonnt ginn.
 * Fir op d'haaptsäit vun dësem Site ze goen, klickt op de Link:  [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Lingala (Lingála)
+ * @author Eruedin
+ */
+$messages['ln'] = array(
+	'our404handler' => 'Zíko 404: Lonkásá ezalí tɛ́.',
+);
+
 /** Latvian (Latviešu)
  * @author Xil
  */
