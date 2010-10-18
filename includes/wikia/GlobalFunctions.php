@@ -1027,7 +1027,7 @@ function wfGetEmailPostbackToken($emailId, $emailAddr){
  * WARNING: The forceSassParams parameter is expected to ALREADY BE urlencode()ed.
  */
 function wfGetSassUrl($fileName, $forceSassParams=null){
-	global $wgCdnRootUrl, $wgStyleVersion, $wgDontRewriteSassUrl;
+	global $wgCdnRootUrl, $wgStyleVersion, $wgDontRewriteSassUrl, $wgOasisHD;
 	wfProfileIn( __METHOD__ );
 
 	$url = $fileName;
@@ -1042,6 +1042,10 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 		$sassParams = $forceSassParams;
 	} else {
 		$sassParams = SassUtil::getSassParams();
+	}
+	
+	if ($wgOasisHD) {
+		$sassParams .= "&hd=1";
 	}
 
 	// Calculate the security-hash.

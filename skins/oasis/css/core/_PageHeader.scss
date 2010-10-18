@@ -68,7 +68,7 @@
 		margin: 5px 0 20px;
 		position: relative;
 		text-align: right;
-		width: 670px;
+		width: $width-outside - 330;
 		z-index: 1;
 	}
 	.history {

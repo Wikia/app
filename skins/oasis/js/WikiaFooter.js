@@ -5,7 +5,8 @@ $(function() {
 WikiaFooterApp = {
 
 	settings: {
-		delay: 350
+		delay: 350,
+		float: false
 	},
 
 	init: function() {
@@ -14,27 +15,53 @@ WikiaFooterApp = {
 
 		//Variables
 		var footer = $("#WikiaFooter");
-		if(footer) {
-			var sharebar = footer.children(".toolbar");
+		if(footer) {	
+			var toolbar = footer.children(".toolbar");
 			var windowObj = $(window);
 	
-			//float the share bar
-			sharebar.addClass("float");
-	
-			//scroll detection
+			//Scroll Detection
 			windowObj.scroll(function() {
 				var scroll = windowObj.scrollTop() + windowObj.height();
-				var line = footer.offset().top + sharebar.outerHeight();
+				var line = footer.offset().top + toolbar.outerHeight();
 	
 				//Scrolled past line? Lock that footer!
-				if (scroll > line && sharebar.hasClass("float")) {
-					sharebar.removeClass("float");
-				} else if (scroll < line && !sharebar.hasClass("float")) {
-					sharebar.addClass("float");
+				if (scroll > line && toolbar.hasClass("float")) {
+					WikiaFooterApp.settings.float = false;
+					toolbar.removeClass("float").css({
+						left: "50%",
+						right: "auto"
+					});
+				} else if (scroll < line && !toolbar.hasClass("float")) {
+					toolbar.addClass("float");
+					WikiaFooterApp.settings.float = true;
+					windowObj.resize();
 				}
 			});
-		}
+						
+			//Resize Detection
+			windowObj.resize(function() {
+				//Resizing should run all functions bound to scrolling because the location of "the fold" is changing.
+				windowObj.scroll();
+				
+				if (WikiaFooterApp.settings.float) {
+					var viewport = parseInt($(window).width());
+					var page = parseInt($("#WikiaPage").width());
+					var edge = Math.ceil((viewport - page) / 2) - 5; //ribbon effect offsets width by 5
+					
+					if (edge < -5) {
+						edge = -5;
+					}
+					
+					toolbar.css({
+						left: edge,
+						right: edge,
+					});
+				}				
+			});
 
+			//trigger scroll once to properly setup the floating footer
+			windowObj.scroll();
+		}
 	},
 
 	myToolsSetup: function() {

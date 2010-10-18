@@ -1,3 +1,9 @@
 // Dimension Variables //
+$oasisHD: get_command_line_param("hd", 0);
+
 $width-outside: 1000px;
+@if $oasisHD == 1 {
+	$width-outside: 1200px;
+}
+
 $width-rail: 300px;
