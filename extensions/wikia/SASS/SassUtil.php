@@ -50,8 +50,6 @@ class SassUtil {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
-		// cache buster for wordmark and background image (current revision of settings history)
-
 		$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
 		$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
 		$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
