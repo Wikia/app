@@ -396,9 +396,9 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
-		$dbw = WikiFactory::db( DB_MASTER );
+		$dbs = WikiFactory::db( DB_SLAVE );
 
-		$res = $dbw->select(
+		$res = $dbs->select(
 				array( "city_list"),
 				array( "city_id,
 						city_description as city_description,
@@ -411,7 +411,7 @@ class WikiaStatsAutoHubsConsumerDB {
 				__METHOD__
 		);
 
-		while ( $value = $this->dbs->fetchRow($res) ) {
+		while ( $value = $dbs->fetchRow($res) ) {
 			if( !empty($city_array[$value['city_id']]) ) {
 				$city_array[$value['city_id']] = array_merge( $value, $city_array[$value['city_id']]);
 				$city_array[$value['city_id']]['city_description'] = trim( $city_array[$value['city_id']]['city_description'] );
