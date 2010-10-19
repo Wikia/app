@@ -10,15 +10,14 @@ var PageHeader = {
 	},
 
 	init: function() {
+		// setup history dropdowm
 		PageHeader.history = $("#WikiaPageHeader").find(".history");
 		PageHeader.history
-			.one("mouseover", PageHeader.loadAvatars)
+			.one("mouseover", PageHeader.lazyLoadHistoryDropdown)
 			.hover(PageHeader.historyMouseover, PageHeader.historyMouseout);
 
 		// RT #70400: show .. ago only for edits made 2 weeks ago or later
-		$("time.timeago").
-			data('maxdiff', 14 * 86400 * 1000).
-			timeago();
+		PageHeader.setupTimeAgo(PageHeader.history.find("time.timeago"));
 
 		// RT #72155: resize FB like wrapper to match width of an iframe
 		if (typeof FB != 'undefined') {
@@ -29,6 +28,12 @@ var PageHeader = {
 				likeWrapper.css('width', 'auto');
 			});
 		}
+	},
+
+	setupTimeAgo: function(node) {
+		node.
+			data('maxdiff', 14 * 86400 * 1000).
+			timeago();
 	},
 
 	historyMouseover: function(event) {
@@ -55,10 +60,29 @@ var PageHeader = {
 		}, PageHeader.settings.mouseoutDelay);
 	},
 
-	loadAvatars: function() {
+	lazyLoadHistoryDropdown: function() {
+		// RT #74319: lazy load entries in history dropdown
+		$.get(wgScript, {
+			action: 'ajax',
+			rs: 'moduleProxy',
+			moduleName: 'HistoryDropdown',
+			actionName: 'PreviousEdits',
+			outputType: 'html',
+			title: window.wgPageName,
+			cb: window.wgCurRevisionId,
+			uselang: window.wgUserLanguage
+		}, function(html) {
+			PageHeader.history.find('.view-all').before(html);
+
+			PageHeader.setupTimeAgo(PageHeader.history.find("time.timeago"));
+		});
+
+		// lazy load of avatars
+		/*
 		$(".avatar", PageHeader.history).each(function() {
 			$(this).attr("src", $(this).attr("data-realUrl"));
 		});
+		*/
 	}
 
 };

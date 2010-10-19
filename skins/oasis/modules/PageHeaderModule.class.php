@@ -114,11 +114,11 @@ class PageHeaderModule extends Module {
 
 		// get info about current revision and list of authors of recent five edits
 		// This key is refreshed by the onArticleSaveComplete() hook
-		$mKey = wfMemcKey('mOasisRecentRevisions', $wgTitle->getArticleId());
+		$mKey = wfMemcKey('mOasisRecentRevisions2', $wgTitle->getArticleId());
 		$revisions = $wgMemc->get($mKey);
 
 		if (empty($revisions)) {
-			$revisions = $service->getRecentRevisions();
+			$revisions = $service->getCurrentRevision();
 
 			// format timestamps, render avatars and user links
 			if (is_array($revisions)) {
@@ -127,8 +127,6 @@ class PageHeaderModule extends Module {
 						$revision['avatarUrl'] = AvatarService::getAvatarUrl($revision['user']);
 						$revision['link'] = AvatarService::renderLink($revision['user']);
 					}
-				// This is handled by the jquery timeago() plugin now
-				// $revision['timestamp'] = self::formatTimestamp($revision['timestamp']);
 				}
 			}
 			$wgMemc->set($mKey, $revisions);
@@ -185,7 +183,7 @@ class PageHeaderModule extends Module {
 
 			// get two popular categories this article is in
 			$categories = array();
-			
+
 			// FIXME: Might want to make a WikiFactory variable for controlling this feature if we aren't
 			// comfortable with its performance.
 			// NOTE: Skip getMostLinkedCategories() on Lyrics and Marvel because we're not sure yet that it's fast enough.
@@ -351,7 +349,7 @@ class PageHeaderModule extends Module {
 		if (!empty($wgSupressPageSubtitle)) {
 			$this->subtitle = '';
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -512,7 +510,7 @@ class PageHeaderModule extends Module {
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;
-		$wgMemc->delete(wfMemcKey('mOasisRecentRevisions', $article->getTitle()->getArticleId()));
+		$wgMemc->delete(wfMemcKey('mOasisRecentRevisions2', $article->getTitle()->getArticleId()));
 		return true;
 	}
 }

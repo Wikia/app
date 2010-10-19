@@ -68,8 +68,11 @@ class PageStatsService extends Service {
 		// invalidate cached data from getMostLinkedCategories()
 		$wgMemc->delete($this->getKey('mostlinkedcategories'));
 
-		// invalidate cached data from getRecentRevisions()
-		$wgMemc->delete($this->getKey('revisions3'));
+		// invalidate cached data from getCurrentRevision()
+		$wgMemc->delete($this->getKey('current-revision'));
+
+		// invalidate cached data from getPreviousEdits()
+		$wgMemc->delete($this->getKey('previous-edits'));
 
 		// invalidate cached data from getCommentsCount()
 		$title = Title::newFromId($this->pageId, GAID_FOR_UPDATE /* fix for slave lag */);
@@ -330,9 +333,9 @@ class PageStatsService extends Service {
 	}
 
 	/**
-	 * Get current revision data and authors of five recent edits (filter out bots and blocked users)
+	 * Get current revision data (filter out bots and blocked users)
 	 */
-	public function getRecentRevisions() {
+	public function getCurrentRevision() {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
@@ -343,14 +346,14 @@ class PageStatsService extends Service {
 		}
 
 		// try to get cached data
-		$key = $this->getKey('revisions3');
+		$key = $this->getKey('current-revision');
 		$ret = $wgMemc->get($key);
 
-		if (true) {
+		if (empty($ret)) {
 			wfProfileIn(__METHOD__ . '::miss');
 
-			// get last five revisions + the current one
-			$data = $this->getRevisionsFromAPI(6);
+			// get the current revision
+			$data = $this->getRevisionsFromAPI(1);
 
 			// prepare result
 			$ret = array(
@@ -363,7 +366,49 @@ class PageStatsService extends Service {
 			}
 			else {
 				$ret['current'] = array_shift($data['revisions']);
-				$ret = array_merge($ret, $data['revisions']);
+			}
+
+			$wgMemc->set($key, $ret, self::CACHE_TTL);
+
+			wfProfileOut(__METHOD__ . '::miss');
+		}
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	}
+
+	/**
+	 * Get five previous edits (before the current revision)
+	 */
+	public function getPreviousEdits() {
+		global $wgMemc;
+		wfProfileIn(__METHOD__);
+
+		// handle not existing pages
+		if ($this->pageId == 0) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+
+		// get five edits
+		$limit = 5;
+
+		// try to get cached data
+		$key = $this->getKey('previous-edits');
+		$ret = $wgMemc->get($key);
+
+		if (empty($ret)) {
+			wfProfileIn(__METHOD__ . '::miss');
+
+			// get the current revision
+			$data = $this->getRevisionsFromAPI(6);
+
+			// prepare result
+			$ret = array();
+
+			// no revisions left - show only timestamp of most recent edit
+			if (!empty($data['revisions'])) {
+				$ret = array_slice($data['revisions'], 1, $limit);
 			}
 
 			$wgMemc->set($key, $ret, self::CACHE_TTL);
