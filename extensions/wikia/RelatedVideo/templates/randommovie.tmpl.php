@@ -1,0 +1,1 @@
+<script type="text/javascript" src="http://pshared.5min.com/Scripts/PlayerSeed.js?sid=<?=$videoSid; ?>&width=<?=$playerWidth; ?>&height=<?=$playerHeight; ?>&videoControlDisplayColor=%23191919&categories=<?=$categories; ?>&autoStart=true&cbCustomID=video_companion"></script>
