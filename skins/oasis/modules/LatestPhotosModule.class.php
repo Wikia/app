@@ -10,6 +10,7 @@ class LatestPhotosModule extends Module {
 	var $total;
 
 	var $wgSingleH1;
+	var $wgStylePath;
 
 	public function executeIndex() {
 		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgMemc, $wgSingleH1;

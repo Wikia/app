@@ -18,8 +18,8 @@ var LatestPhotos = {
 	lazyLoadImages: function(limit) {
 		//var firstInit = true;
 		var images = this.carousel.find('img').filter('[data-src]');
-		$().log('lazy loading images', 'LatestPhotos');
-			
+		$().log('lazy loading rest of images', 'LatestPhotos');
+
 		var count = 0;
 		images.each(function() {
 			count ++;
@@ -33,18 +33,18 @@ var LatestPhotos = {
 					removeAttr('data-src');
 			//}
 		});
-			
+
 	},
 
 	attachListeners: function() {
 		LatestPhotos.attachBlindImages();
 		$('.LatestPhotosModule .next').click(LatestPhotos.nextImage);
 		$('.LatestPhotosModule .previous').click(LatestPhotos.previousImage);
-			
-		$(".LatestPhotosModule").mouseover(function() {
+
+		$(".LatestPhotosModule").one('mouseover', function() {
 			LatestPhotos.lazyLoadImages('rest');
 		});
-			
+
 		LatestPhotos.enableBrowsing();
 	},
 

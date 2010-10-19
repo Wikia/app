@@ -54,7 +54,10 @@ else {
 	?>
 	<?php
 	if (count($thumbUrls) > 2) { ?>
-		<li class="see-all"><?= View::specialPageLink('NewFiles', 'oasis-latest-photos-inner-message') ?></li>
+		<li class="see-all">
+			<?= View::specialPageLink('NewFiles', 'oasis-latest-photos-inner-message') ?>
+			<img data-src="<?= $wgStylePath ?>/oasis/images/empty_gallery.png" />
+		</li>
 	<?php
 	}
 	else {?>
