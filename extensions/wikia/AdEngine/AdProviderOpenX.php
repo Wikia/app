@@ -55,24 +55,34 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		const OASIS_SPOTLIGHTS_AFFILIATE_ID = 3;
 
 	public function __construct() {
-		if (1) {
+
+		global $wgEnableSpotlightsV2_GlobalNav, $wgEnableSpotlightsV2_Rail, $wgEnableSpotlightsV2_Footer;
+
+		if($wgEnableSpotlightsV2_GlobalNav) {
 			$this->zoneIds['SPOTLIGHT_GLOBALNAV_1'] = 20;
 			$this->zoneIds['SPOTLIGHT_GLOBALNAV_2'] = 21;
 			$this->zoneIds['SPOTLIGHT_GLOBALNAV_3'] = 22;
-			$this->zoneIds['SPOTLIGHT_RAIL_1'] = 17;
-			$this->zoneIds['SPOTLIGHT_RAIL_2'] = 18;
-			$this->zoneIds['SPOTLIGHT_RAIL_3'] = 19;
-			$this->zoneIds['SPOTLIGHT_FOOTER_1'] = 14;
-			$this->zoneIds['SPOTLIGHT_FOOTER_2'] = 15;
-			$this->zoneIds['SPOTLIGHT_FOOTER_3'] = 16;
-		}
-		else {
+		} else {
 			$this->zoneIds['SPOTLIGHT_GLOBALNAV_1'] = 6;
 			$this->zoneIds['SPOTLIGHT_GLOBALNAV_2'] = 6;
 			$this->zoneIds['SPOTLIGHT_GLOBALNAV_3'] = 6;
+		}
+
+		if($wgEnableSpotlightsV2_Rail) {
+			$this->zoneIds['SPOTLIGHT_RAIL_1'] = 17;
+			$this->zoneIds['SPOTLIGHT_RAIL_2'] = 18;
+			$this->zoneIds['SPOTLIGHT_RAIL_3'] = 19;
+		} else {
 			$this->zoneIds['SPOTLIGHT_RAIL_1'] = 6;
 			$this->zoneIds['SPOTLIGHT_RAIL_2'] = 6;
 			$this->zoneIds['SPOTLIGHT_RAIL_3'] = 6;
+		}
+
+		if($wgEnableSpotlightsV2_Footer) {
+			$this->zoneIds['SPOTLIGHT_FOOTER_1'] = 14;
+			$this->zoneIds['SPOTLIGHT_FOOTER_2'] = 15;
+			$this->zoneIds['SPOTLIGHT_FOOTER_3'] = 16;
+		} else {
 			$this->zoneIds['SPOTLIGHT_FOOTER_1'] = 6;
 			$this->zoneIds['SPOTLIGHT_FOOTER_2'] = 6;
 			$this->zoneIds['SPOTLIGHT_FOOTER_3'] = 6;
@@ -103,8 +113,8 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 
 		if ($wgEnableOpenXSPC) {
 			$fillElemFunctionPrefix = AdEngine::fillElemFunctionPrefix;
-			// will: Note about invocation below. Ideally, we would create a script element using bezen.dom.element that 
-			// contains one line: OA_show($zoneId). Then we would append the script to the appropriate element using 
+			// will: Note about invocation below. Ideally, we would create a script element using bezen.dom.element that
+			// contains one line: OA_show($zoneId). Then we would append the script to the appropriate element using
 			// bezen.dom.appendScript(). Unfortunately, I could not get this to work. As a workaround, I made an AJAX
 			// URL to return OA_show($zoneId), and appended this script using bezen.load.script.
 			$adtag = <<<EOT
@@ -207,7 +217,7 @@ EOT;
 /*]]>*/</script>
 EOT;
 
-		// leave marker that these slots are in a lazy load group. 
+		// leave marker that these slots are in a lazy load group.
 		// getAd() will use these markers
 		foreach ($slotnames as $slotname) {
 			self::$adSlotInLazyLoadGroup[$slotname] = true;
@@ -215,7 +225,7 @@ EOT;
 
 		return $adtag;
 	}
-	
+
 	private function getAdUrlScripts($slotnames, $zoneIds, $params) {
 		$n_slotnames = sizeof($slotnames);
 		$adtag = <<<EOT
@@ -255,13 +265,13 @@ EOT;
 		$script = '';
 
 		if (!is_array($slotnames) || !sizeof($slotnames)) {
-			return $script; 
+			return $script;
 		}
 
 		$slotname = array_shift($slotnames);
 
 		$script .= <<<EOT
-		var parent_{$slotname} = document.getElementById("{$slotname}"); 
+		var parent_{$slotname} = document.getElementById("{$slotname}");
 		bezen.load.script(parent_{$slotname}, base_url_{$slotname}, function(){
 			bezen.domwrite.render(parent_{$slotname}, function (){
 EOT;
@@ -359,11 +369,11 @@ EOT;
 	base_url += "&id=$affiliate_id";
 EOT;
 		}
-		
+
 		$adUrlScript .= <<<EOT
 	base_url += "&block=1";
 EOT;
-		
+
 		return $adUrlScript;
 	}
 
