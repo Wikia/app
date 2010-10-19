@@ -118,7 +118,7 @@ class OasisModule extends Module {
 				global $wgWikiaCombinedPrefix;
 				$prefix = $wgWikiaCombinedPrefix;
 			}
-			$wgOut->addScript("/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS");
+			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS\"><!-- combined anon site js --></script>");
 			$this->staticChuteHtml = ""; // don't use StaticChute under these conditions (it's inside of CoreJS).
 		} else {
 			// If we use StaticChute right on the page (rather than loaded asynchronously), we'll use this var.
