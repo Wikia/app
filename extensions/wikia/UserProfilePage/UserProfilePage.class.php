@@ -6,6 +6,7 @@ class UserProfilePage {
 	 */
 	private $user;
 	private $hiddenPages = null;
+	private $hiddenWikis = null;
 	private $templateEngine = null;
 
 	public function __construct( User $user ) {
@@ -32,7 +33,7 @@ class UserProfilePage {
 				'userPageUrl'      => $this->user->getUserPage()->getLocalUrl(),
 				'activityFeedBody' => $this->renderUserActivityFeed( $userContribsProvider->get( 6, $this->user ) ),
 				'wikiSwitch'       => $this->populateWikiSwitchVars(),
-				'topPagesBody'     => $this->renderTopPages( $this->getTopPages() ),
+				'topPagesBody'     => $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->getHiddenTopPages() ),
 				'aboutSection'     => $this->populateAboutSectionVars(),
 				'pageBody'         => $pageBody,
 			));
@@ -60,22 +61,35 @@ class UserProfilePage {
 	}
 
 	/**
-	 * render user's top pages section
-	 * @param array $data
+	 * render user's top (pages or wikis) section
+	 * @param string $sectionName
+	 * @param array $topData
+	 * @param array $topDataHidden
 	 * @return string
 	 */
-	private function renderTopPages( Array $data ) {
+	private function renderTopSection( $sectionName, Array $topData, Array $topDataHidden ) {
 		wfProfileIn(__METHOD__);
+
+		// create title objects for hidden pages, so we can get a valid urls
+		$hidden = array();
+		foreach( $topDataHidden as $pageTitleText ) {
+			$title = Title::newFromText( $pageTitleText );
+			if( $title instanceof Title ) {
+				$hidden[] = array( 'title' => $title->getText(), 'url' => $title->getFullUrl() );
+			}
+		}
 
 		$this->templateEngine->set_vars(
 			array(
-				'topPages' => $data,
+				'topData' => $topData,
+				'topDataHidden' => $hidden
 			)
 		);
 
 		wfProfileOut(__METHOD__);
-		return $this->templateEngine->render( 'user-top-pages' );
+		return $this->templateEngine->render( $sectionName );
 	}
+
 
 	private function populateAboutSectionVars() {
 		global $wgOut;
@@ -148,7 +162,7 @@ class UserProfilePage {
 		$pages = array( 4 => 289, 1883 => 164, 1122 => 140, 31374 => 112, 2335 => 83, 78622 => 82 ); // test data
 		foreach($pages as $pageId => $editCount) {
 			$title = Title::newFromID( $pageId );
-			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) && ( !$this->isPageHidden( $title->getText() ) ) ) {
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) && ( !$this->isTopPageHidden( $title->getText() ) ) ) {
 				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount );
 			}
 			else {
@@ -161,7 +175,7 @@ class UserProfilePage {
 		while($row = $dbs->fetchObject($res)) {
 			$pageId = $row->page_id;
 			$title = Title::newFromID( $pageId );
-			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) && ( !$this->isPageHidden( $title->getText() ) ) ) {
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) && ( !$this->isTopPageHidden( $title->getText() ) ) ) {
 				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $row->count );
 			}
 			else {
@@ -251,17 +265,17 @@ class UserProfilePage {
 
 	private function hidePage( $pageTitleText ) {
 		wfProfileIn( __METHOD__ );
-		if( !$this->isPageHidden( $pageTitleText ) ) {
+		if( !$this->isTopPageHidden( $pageTitleText ) ) {
 			$this->hiddenPages[] = $pageTitleText;
 			$this->updateHiddenPagesInDb();
 		}
-		return $this->renderTopPages( $this->getTopPages() );
+		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->getHiddenTopPages() );
 		wfProfileOut( __METHOD__ );
 	}
 
 	private function unhidePage( $pageTitleText ) {
 		wfProfileIn( __METHOD__ );
-		if( $this->isPageHidden( $pageTitleText ) ) {
+		if( $this->isTopPageHidden( $pageTitleText ) ) {
 			for( $i = 0; $i < count( $this->hiddenPages ); $i++ ) {
 				if( $this->hiddenPages[ $i ] == $pageTitleText ) {
 					unset( $this->hiddenPages[ $i ] );
@@ -271,7 +285,7 @@ class UserProfilePage {
 			//unset( $this->hiddenPages[ $pageTitleText ] );
 			$this->updateHiddenPagesInDb();
 		}
-		return $this->renderTopPages( $this->getTopPages() );
+		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->getHiddenTopPages() );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -293,19 +307,25 @@ class UserProfilePage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function isPageHidden( $pageTitleText ) {
-		return ( in_array( $pageTitleText, $this->getHiddenPages() ) ? true : false );
+	public function isTopPageHidden( $pageTitleText ) {
+		return ( in_array( $pageTitleText, $this->getHiddenTopPages() ) ? true : false );
 	}
 
 	private function hideWiki( $wikiName ) {
-		return true;
+		wfProfileIn( __METHOD__ );
+		if( !$this->isTopWikiHidden( $wikiName ) ) {
+			$this->hiddenWikis[] = $wikiName;
+			$this->updateHiddenWikisInDb();
+		}
+		return $this->renderTopWikis( $this->getTopWikis(), $this->getHiddenTopWikis() );
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function unhideWiki( $wikiName ) {
 		return true;
 	}
 
-	private function getHiddenPages() {
+	private function getHiddenTopPages() {
 		if( $this->hiddenPages == null ) {
 			$dbs = wfGetDB( DB_MASTER );
 
