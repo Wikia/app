@@ -139,14 +139,10 @@ class AchConfig {
 	}
 
 	static public function getInstance() {
-		wfProfileIn(__METHOD__);
-
 		if (!isset(self::$mInstance))
 			self::$mInstance = new self();
 
 		return self::$mInstance;
-
-		wfProfileOut(__METHOD__);
 	}
 
 	private function fetchAll($useMasterDb = false) {
