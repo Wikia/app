@@ -56,7 +56,7 @@ $.fn.extend({
 				zIndex = Math.max(zIndex, parseInt($(this).css('zIndex')));
 			});
 
-			zIndex += 1000;
+			zIndex += 2000000001; //close to the highest possible z-index value
 		}
 		/*
 		function getModalTop() {
@@ -257,7 +257,7 @@ $.fn.extend({
 		var wrapper = this.closest(".modalWrapper");
 
 		// let's have it dynamically generated, so every newly created modal will be on the top
-		var zIndex = ($('#positioned_elements').children('.blackout').length+1) * 1000;
+		var zIndex = ($('#positioned_elements').children('.blackout').length+1) * 2000000001;
 
 		// show associated blackout
 		var blackout = $(this).data('blackout');

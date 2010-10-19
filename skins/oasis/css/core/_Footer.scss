@@ -13,7 +13,6 @@
 		position: absolute;
 		top: 0;
 		width: $width-outside + 10px;
-		z-index: 900;
 		&:after {
 			background: url(/skins/oasis/images/sprite.png) 0 -32px no-repeat; /* $wgCdnStylePath */
 			content: " ";
@@ -29,6 +28,7 @@
 			position: fixed;
 			top: auto;
 			width: auto;
+			z-index: 2000000000; //close to highest possible z-index to defeat third party ads
 		}
 		img {
 			float: left;
