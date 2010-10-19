@@ -6,6 +6,7 @@ class GlobalHeaderModule extends Module {
 	var $wgStylePath;
 	var $wgCdnStylePath;
 	var $wgSingleH1;
+	var $wgEnableSpotlightsV2_GlobalNav;
 
 	var $centralUrl;
 	var $createWikiUrl;
