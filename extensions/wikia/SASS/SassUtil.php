@@ -93,7 +93,7 @@ class SassUtil {
 		static $cb = null;
 
 		if (is_null($cb)) {
-			$currentSettings = array_pop($wgOasisThemeSettingsHistory);
+			$currentSettings = end($wgOasisThemeSettingsHistory);
 			if (!empty($currentSettings['revision'])) {
 				$cb = $currentSettings['revision'];
 			}
