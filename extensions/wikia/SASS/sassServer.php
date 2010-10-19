@@ -270,8 +270,6 @@ function outputHeadersAndCss($cssContent, $errorStr=""){
 		header('Expires: ' . gmdate($dateFormat, strtotime("+13 years")));
 		header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
 
-		
-
 		print $cssContent;
 	}
 
