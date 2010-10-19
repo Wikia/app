@@ -124,7 +124,7 @@ class BodyModule extends Module {
 
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail, $wgEnableUserProfilePagesExt;
 
 		$railModuleList = array();
 
@@ -193,13 +193,21 @@ class BodyModule extends Module {
 		// User page namespaces
 		if(in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces())) {
 			$page_owner = User::newFromName($wgTitle->getText());
+
 			if($page_owner) {
-				if(!$page_owner->getOption('hidefollowedpages')) {
+				if( !$page_owner->getOption('hidefollowedpages') && empty( $wgEnableUserProfilePagesExt ) ) {
 					$railModuleList[1200] = array('FollowedPages', 'Index', null);
 				}
+
 				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
 					$railModuleList[1350] = array('Achievements', 'Index', null);
 				}
+			}
+			
+			if ( !empty( $wgEnableUserProfilePagesExt ) ) {
+				$railModuleList[1499] = array('UserProfileRail', 'TopWikis', null);
+				$railModuleList[1498] = array('UserProfileRail', 'RecentActivity', null);
+				$railModuleList[1497] = array('UserProfileRail', 'TopPages', null);
 			}
 		}
 

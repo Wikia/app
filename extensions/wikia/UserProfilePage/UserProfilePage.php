@@ -12,7 +12,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'User Profile Page',
-	'author' => 'Adrian \'ADi\' Wieczorek, Garth Webb',
+	'author' => 'Adrian \'ADi\' Wieczorek, Garth Webb, Federico "Lox" Lucignano',
 	'url' => 'http://www.wikia.com' ,
 	'description' => 'provides a user page that is fun and easy to update',
 	'descriptionmsg' => 'userprofilepage-desc'
@@ -48,7 +48,7 @@ function wfUserProfilePageInit() {
 	$wgAutoloadClasses['UserProfilePage'] = $dir . 'UserProfilePage.class.php';
 	$wgAutoloadClasses['UserProfilePageHelper'] = $dir . 'UserProfilePageHelper.class.php';
 	$wgAutoloadClasses['RecentChangeDetail'] = $dir . 'RecentChangeDetail.class.php';
-
+	$wgAutoloadClasses['UserProfileRailModule'] = $dir . 'UserProfileRailModule.class.php';
 	/**
 	 * ajax
 	 */
