@@ -136,8 +136,16 @@ class WikiaAssets {
 			$cb = $wgRequest->getVal('cb');
 			$ref = WikiaAssets::GetSiteCSSReferences($themename, $cb);
 			foreach($ref as $reference) {
-				//$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
-				//$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+				$errorOnThisCall = false;
+				$out .= self::get($reference['url'], $errorOnThisCall);
+				$hadAnError |= $errorOnThisCall;
+			}
+		} else if($type == 'PrintCSS') {
+			$contentType = "text/css";
+			$out = '';
+			$cb = $wgRequest->getVal('cb');
+			$ref = WikiaAssets::GetPrintCSSReferences($cb);
+			foreach($ref as $reference) {
 				$errorOnThisCall = false;
 				$out .= self::get($reference['url'], $errorOnThisCall);
 				$hadAnError |= $errorOnThisCall;
@@ -178,8 +186,6 @@ class WikiaAssets {
 
 			$out = '';
 			foreach($references as $reference) {
-				//$out .= '<!--# include virtual="'.$reference.'" -->';
-
 				$errorOnThisCall = false;
 				$out .= self::get($reference, $errorOnThisCall);
 				$hadAnError |= $errorOnThisCall;
@@ -214,13 +220,14 @@ class WikiaAssets {
 			'smaxage' => $wgSquidMaxage,
 			'cb' => $cb
 		) + $siteargs );
-		
+
 		// Sometimes, this function is called on the page itself, sometimes it's called by the combiner.
 		// The page can use Wikia::isOasis(), but the combiner needs the request param.
 		global $wgRequest;
 		$isOasis = (Wikia::isOasis() || $wgRequest->getBool('isOasis'));
 		if($isOasis){
 			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Wikia.css', $query, NS_MEDIAWIKI)));
+			$useskin = 'oasis';
 		} else {
 			// We urldecode these now because nginx does not expect them to be URL encoded.
 			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI)));
@@ -228,15 +235,45 @@ class WikiaAssets {
 			if(empty($themename) || $themename == 'custom' ) {
 				$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI)));
 			}
+			$useskin = 'monaco';
 		}
 
 		$siteargs['gen'] = 'css';
-		$siteargs['useskin'] = 'monaco';
+		$siteargs['useskin'] = $useskin;
 		$cssReferences[] = array('url' => urldecode(Skin::makeUrl( '-', wfArrayToCGI( $siteargs ) )));
 
 		return $cssReferences;
 	}
 	
+	private function GetPrintCSSReferences($cb=""){
+		$cssReferences = array();
+		global $wgSquidMaxage;
+		$siteargs = array(
+			'action' => 'raw',
+			'maxage' => $wgSquidMaxage,
+		);
+		$query = wfArrayToCGI( array(
+			'usemsgcache' => 'yes',
+			'ctype' => 'text/css',
+			'smaxage' => $wgSquidMaxage,
+			'cb' => $cb
+		) + $siteargs );
+
+		// Sometimes, this function is called on the page itself, sometimes it's called by the combiner.
+		// The page can use Wikia::isOasis(), but the combiner needs the request param.
+		$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Print.css', $query, NS_MEDIAWIKI)));
+		if($isOasis){
+			$package = "oasis_css_print";
+		} else {
+			$package = "monaco_css_print";
+		}
+		$StaticChute = new StaticChute('css');
+		$StaticChute->useLocalChuteUrl();
+		$cssReferences = array_merge($cssReferences, $StaticChute->getFileList('packages' => $package));
+
+		return $cssReferences;
+	}
+
 	public static function GetExtensionsCSS($styles) {
 		// exclude user and site css
 		foreach($styles as $style => $options) {

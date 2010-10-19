@@ -78,7 +78,7 @@ class OasisModule extends Module {
 		$staticChute->useLocalChuteUrl();
 
 		// If we decide to use CoreJS, then that will replace the staticChute call as well as the call to "-".
-		$useCoreJs = false;
+		$isAnonArticleView = false;
 
 		$packagePrefix = "oasis_";
 		if($wgUser->isLoggedIn()) {
@@ -102,12 +102,12 @@ class OasisModule extends Module {
 				$package = $packagePrefix.'anon_article_js';
 
 				// Use CoreJS via __wikia_combined instead of StaticChute and "-".
-				$useCoreJs = true;
+				$isAnonArticleView = true;
 			}
 		}
 
 		// If this is an anon on an article-page, we can combine two of the files into one.
-		if($useCoreJs && $allInOne){
+		if($isAnonArticleView && $allInOne){
 			global $parserMemc, $wgStyleVersion;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
 
@@ -185,7 +185,31 @@ class OasisModule extends Module {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
 
 		// printable CSS (to be added at the bottom of the page)
-		$printStyles[wfGetSassUrl('skins/oasis/css/print.scss')] = array("media" => "print");
+		$StaticChute = new StaticChute('css');
+		$StaticChute->useLocalChuteUrl();
+		$oasisPrintStyles = $StaticChute->getFileList('packages' => 'oasis_css_print');
+		foreach($oasisPrintStyles as $cssUrl){
+			$printStyles[$cssUrl] = array("media" => "print");
+		}
+
+		// If this is an anon article view, use the combined version of the print files.
+		if($isAnonArticleView && $allInOne){
+			// Create the combined URL.
+			global $parserMemc, $wgStyleVersion;
+			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
+
+			global $wgDevelEnvironment;
+			if(empty($wgDevelEnvironment)){
+				$prefix = "__wikia_combined/";
+			} else {
+				global $wgWikiaCombinedPrefix;
+				$prefix = $wgWikiaCombinedPrefix;
+			}
+
+			// Completely replace the print styles with the combined version.
+			$printStyles = array( "/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS" );
+		}
+
 		$this->data['csslinksbottom-urls'] = $printStyles;
 		$tmpOut->styles = $printStyles;
 
