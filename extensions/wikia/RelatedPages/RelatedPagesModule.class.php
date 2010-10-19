@@ -40,7 +40,8 @@ class RelatedPagesModule extends Module {
 			wfLoadExtensionMessages( 'RelatedPages' );
 
 			// add CSS for this module
-			$wgOut->addStyle(wfGetSassUrl("extensions/wikia/RelatedPages/RelatedPages.scss"));
+			// Moved to Oasis.scss
+			//$wgOut->addStyle(wfGetSassUrl("extensions/wikia/RelatedPages/RelatedPages.scss"));
 
 			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
 			$this->pages = $wgMemc->get($mKey);
@@ -50,8 +51,9 @@ class RelatedPagesModule extends Module {
 			}
 
 			// add collision detection code
-			global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RelatedPages/js/RelatedPages.js?{$wgStyleVersion}\"></script>\n");
+			// Moved to StaticChute.
+			//global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+			//$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RelatedPages/js/RelatedPages.js?{$wgStyleVersion}\"></script>\n");
 		}
 		else {
 			$this->pages = array();
