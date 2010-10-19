@@ -37,10 +37,13 @@ class WikiaAssets {
 
 			$url = str_replace('&amp;', '&', $url);
 
-			if(stripos($url, '/') === 0) {
-				$url = $wgServer.$url;
-			} else {
-				$url = $wgServer.'/'.$url;
+			// Re-write local URLs to have the server name at the beginning.
+			if(preg_match("/^https?:\/\//i", $url) == 0){
+				if(stripos($url, '/') === 0) {
+					$url = $wgServer.$url;
+				} else {
+					$url = $wgServer.'/'.$url;
+				}
 			}
 
 			$out = "\n/* Version: not-nginx Call to: {$url} */\n";
