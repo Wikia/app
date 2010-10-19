@@ -1,8 +1,9 @@
 <div id="myhome-main">
-	<nav class="activity-nav tabs">
+	<nav class="activity-nav">
 		<ul>
-			<li class="<?= $classActivity ?>"><?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('class' => $classActivity, 'data-id' => 'wikiactivity'), 'blank.gif', null, 'sprite activity') ?></li>
-			<li class="<?= $classWatchlist ?>"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist', array('class' => $classWatchlist, 'data-id' => 'wikiactivity-watchlist'), 'blank.gif', null) ?></li>
+			<li class="<?= $classWatchlist ?>"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li>		
+			<li class="<?= $classActivity ?>"><?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity-feed') ?></li>
+
 		</ul>
 	</nav>
 	
