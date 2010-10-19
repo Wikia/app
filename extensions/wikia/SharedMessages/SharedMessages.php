@@ -45,31 +45,37 @@ function wfGetSharedMessage($messageTitle, &$message){
 }
 
 function getSharedMessageText(&$title) {
-	global $wgExternalSharedDB;
-	if(!$wgExternalSharedDB) {
+	global $wgExternalSharedDB, $wgDBname, $wgMemc;
+	if ( empty($wgExternalSharedDB) ) {
 		return null;
 	}
+	
+	$memkey = wfForeignMemcKey($wgExternalSharedDB, __METHOD__, $title->getNamespace(), $title->getDBkey());
+	$cached = ( $wgDBname == $wgExternalSharedDB ) ? '' : $wgMemc->get($memkey); 
 
-	$db =& wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+	$result = null;
+	if ( empty($cached) ) {
+		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-	$row = $db->selectRow(
-			array(
-				"page",
-				"revision",
-				"text"
-			),
-			array('*'),
+		$row = $db->selectRow(
+			array( 'page', 'revision', 'text' ),
+			array( '*' ),
 			array(
 				'page_namespace' => $title->getNamespace(),
 				'page_title' => $title->getDBkey(),
 				'page_latest = rev_id',
 				'old_id = rev_text_id'
-			)
+			),
+			__METHOD__
 		);
 
-	if($row) {
-		return Revision::getRevisionText($row);
+		if ($row) {
+			$result = Revision::getRevisionText($row);
+			$wgMemc->set($memkey, $result, 60*60);
+		} 
 	} else {
-		return null;
+		$result = $cached;
 	}
+	
+	return $result;
 }
