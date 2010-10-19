@@ -32,8 +32,8 @@ class UserProfilePage {
 			array(
 				'userName'         => $this->user->getName(),
 				'activityFeedBody' => $this->renderUserActivityFeed( $userContribsProvider->get( 6, $this->user ) ),
-				'topWikisBody'     => $this->renderTopSection( 'user-top-wikis', $this->getTopWikis(), $this->getHiddenTopWikis() ),
-				'topPagesBody'     => $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->getHiddenTopPages() ),
+				'topWikisBody'     => $this->renderTopSection( 'user-top-wikis', $this->getTopWikis(), $this->populateHiddenTopWikisVars( $this->getHiddenTopWikis() ) ),
+				'topPagesBody'     => $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->populateHiddenTopPagesVars( $this->getHiddenTopPages() ) ),
 				'aboutSection'     => $this->populateAboutSectionVars(),
 				'pageBody'         => $pageBody,
 			));
@@ -70,19 +70,10 @@ class UserProfilePage {
 	private function renderTopSection( $sectionName, Array $topData, Array $topDataHidden ) {
 		wfProfileIn(__METHOD__);
 
-		// create title objects for hidden pages, so we can get a valid urls
-		$hidden = array();
-		foreach( $topDataHidden as $pageTitleText ) {
-			$title = Title::newFromText( $pageTitleText );
-			if( $title instanceof Title ) {
-				$hidden[] = array( 'title' => $title->getText(), 'url' => $title->getFullUrl() );
-			}
-		}
-
 		$this->templateEngine->set_vars(
 			array(
 				'topData' => $topData,
-				'topDataHidden' => $hidden
+				'topDataHidden' => $topDataHidden
 			)
 		);
 
@@ -90,6 +81,28 @@ class UserProfilePage {
 		return $this->templateEngine->render( $sectionName );
 	}
 
+	private function populateHiddenTopPagesVars( $hiddenPages ) {
+		// create title objects for hidden pages, so we can get a valid urls
+		$vars = array();
+		foreach( $hiddenPages as $pageTitleText ) {
+			$title = Title::newFromText( $pageTitleText );
+			if( $title instanceof Title ) {
+				$vars[] = array( 'title' => $title->getText(), 'url' => $title->getFullUrl() );
+			}
+		}
+		return $vars;
+	}
+
+	private function populateHiddenTopWikisVars( $hiddenWikis ) {
+		$vars = array();
+		foreach( $hiddenWikis as $wikiId ) {
+			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+
+			$vars[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl );
+		}
+		return $vars;
+	}
 
 	private function populateAboutSectionVars() {
 		global $wgOut;
@@ -222,7 +235,7 @@ class UserProfilePage {
 			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 			$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
-			if( !$this->isTopWikiHidden( $wikiUrl ) ) {
+			if( !$this->isTopWikiHidden( $wikiId ) ) {
 				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
 			}
 		}
@@ -234,7 +247,7 @@ class UserProfilePage {
 			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 			$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 
-			if( !$this->isTopWikiHidden( $wikiUrl ) ) {
+			if( !$this->isTopWikiHidden( $wikiId ) ) {
 				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
 			}
 		}
@@ -267,7 +280,7 @@ class UserProfilePage {
 			$this->hiddenPages[] = $pageTitleText;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
 		}
-		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->getHiddenTopPages() );
+		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->populateHiddenTopPagesVars( $this->getHiddenTopPages() ) );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -282,7 +295,7 @@ class UserProfilePage {
 			}
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
 		}
-		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->getHiddenTopPages() );
+		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->populateHiddenTopPagesVars( $this->getHiddenTopPages() ) );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -308,30 +321,30 @@ class UserProfilePage {
 		return ( in_array( $pageTitleText, $this->getHiddenTopPages() ) ? true : false );
 	}
 
-	public function isTopWikiHidden( $wikiUrl ) {
-		return ( in_array( $wikiUrl, $this->getHiddenTopWikis() ) ? true : false );
+	public function isTopWikiHidden( $wikiId ) {
+		return ( in_array( $wikiId, $this->getHiddenTopWikis() ) ? true : false );
 	}
 
-	private function hideWiki( $wikiUrl) {
+	private function hideWiki( $wikiId) {
 		wfProfileIn( __METHOD__ );
 		global $wgExternalSharedDB;
 
-		if( !$this->isTopWikiHidden( $wikiUrl ) ) {
-			$this->hiddenWikis[] = $wikiUrl;
+		if( !$this->isTopWikiHidden( $wikiId ) ) {
+			$this->hiddenWikis[] = $wikiId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
 		}
 
-		return $this->renderTopSection( 'user-top-wikis', $this->getTopWikis(), $this->getHiddenTopWikis() );
+		return $this->renderTopSection( 'user-top-wikis', $this->getTopWikis(), $this->populateHiddenTopWikisVars( $this->getHiddenTopWikis() ) );
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function unhideWiki( $wikiUrl ) {
+	private function unhideWiki( $wikiId ) {
 		wfProfileIn( __METHOD__ );
 		global $wgExternalSharedDB;
 
-		if( $this->isTopWikiHidden( $wikiUrl) ) {
+		if( $this->isTopWikiHidden( $wikiId) ) {
 			for( $i = 0; $i < count( $this->hiddenWikis ); $i++ ) {
-				if( $this->hiddenWikis[ $i ] == $wikiUrl ) {
+				if( $this->hiddenWikis[ $i ] == $wikiId ) {
 					unset( $this->hiddenWikis[ $i ] );
 					$this->hiddenWikis = array_values( $this->hiddenWikis );
 				}
@@ -339,7 +352,7 @@ class UserProfilePage {
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
 		}
 
-		return $this->renderTopSection( 'user-top-wikis', $this->getTopPages(), $this->getHiddenTopPages() );
+		return $this->renderTopSection( 'user-top-wikis', $this->getTopPages(), $this->populateHiddenTopWikisVars( $this->getHiddenTopWikis() ) );
 		wfProfileOut( __METHOD__ );
 	}
 
