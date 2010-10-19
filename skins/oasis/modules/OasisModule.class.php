@@ -187,7 +187,7 @@ class OasisModule extends Module {
 		// printable CSS (to be added at the bottom of the page)
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
-		$oasisPrintStyles = StaticChute->config['oasis_css_print'];
+		$oasisPrintStyles = $StaticChute->config['oasis_css_print'];
 		foreach($oasisPrintStyles as $cssUrl){
 			$printStyles[$cssUrl] = array("media" => "print");
 		}
