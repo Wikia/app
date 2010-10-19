@@ -215,4 +215,45 @@
 	}
 }
 
+.WikiaRelatedVideoModule {
+	@include rail-module;
+	h1 {
+		margin-bottom: 0;
+	}
+	.WikiaRelatedVideoContent {
+		overflow: hidden;
+		margin-left: 18px;
+		a {
+			font-size: 10px;
+			bont-weight: bold;
+		}
+	}
+	.WikiaRelatedVideoContentContainer {
+		margin-top: -50px;
+	}
+}
+
+.WikiaRelatedVideoSpotlightModule {
+	width: 269px;
+	height: 143px;
+	background-color: black;
+	padding: 0px;
+	.WikiaRelatedVideoSpotlightModuleWrapper {
+		width: 249px;
+		height: 143px;
+		margin-left: 10px;
+		overflow: hidden;
+		.WikiaRelatedVideoContentContainer {
+			position: relative;
+			a {
+				font-size: 10px;
+				bont-weight: bold;
+				float: right;
+				color: white;
+			}
+		}
+	}
+
+}
+
 @import "Comments";
