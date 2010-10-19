@@ -18,29 +18,37 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		switch ($event){
 			case "lyrics":
 				return $this->lyrics();
-
 				break;
+				
 		  case AnalyticsEngine::EVENT_PAGEVIEW:
-			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>';
+				return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>';
+		  
 		  case 'hub':
-			if (empty($eventDetails['name'])){
-				return '<!-- Missing category name  for hub tracking event -->';
-			}
-			$hub = "/" . str_replace(' ', '_', $eventDetails['name']);
-			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($hub).'");</script>';
+				if (empty($eventDetails['name'])){
+					return '<!-- Missing category name  for hub tracking event -->';
+				}
+				$hub = "/" . str_replace(' ', '_', $eventDetails['name']);
+				return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($hub).'");</script>';
+		  
 		  case 'onewiki':
-			return $this->onewiki($eventDetails[0]);
+				return $this->onewiki($eventDetails[0]);
 
 		  case 'pagetime':
-			return $this->pagetime($eventDetails[0]);
-                  case 'noads':
-		        return $this->noads();
-		case 'female':
-		    return $this->female();
-		case "varnish-stat":
-		    return $this->varnishstat();
+				return $this->pagetime($eventDetails[0]);
+			
+			case 'noads':
+				return $this->noads();
+			
+			case 'female':
+				return $this->female();
+		
+			case "varnish-stat":
+				return $this->varnishstat();
 
-                  default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
+			case "browser-width":
+				return $this->browserWidth();
+
+			default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
 
@@ -103,6 +111,24 @@ _uff=0;
 _uacct="UA-288915-47";
 urchinTracker();
 }
+</script>';
+	}
+
+	private function browserWidth() {
+		return '<script type="text/javascript">
+_uff=0;
+_uacct="UA-288915-49";
+
+var screenWidth = screen.width;
+var browserWidth = document.body.offsetWidth;
+
+var browserThousands = Math.floor(browserWidth/1000) * 1000;
+browserWidth = browserWidth - browserThousands;
+var browserHundreds = Math.floor(browserWidth/100) * 100;
+browserWidth = browserWidth - browserHundreds;
+var browserTens = Math.floor(browserWidth/10) * 10;
+
+urchinTracker("resolution/" + screenWidth + "/" + browserThousands + "/" + browserHundreds + "/" + browserTens);
 </script>';
 	}
 

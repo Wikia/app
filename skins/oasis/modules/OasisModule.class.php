@@ -147,6 +147,9 @@ class OasisModule extends Module {
 
 		// track page load time
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
+		
+		// track browser width
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-width');
 
 		// record which varnish this page was served by
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
