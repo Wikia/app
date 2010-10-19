@@ -29,9 +29,7 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
 /**
  * define hooks for WikiFactory here
  */
-
 $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
-#$wgHooks[ "RecentChange_save" ][] = "WikiFactoryUpdate::addPostCommitUpdate";
 
 class WikiFactory {
 
@@ -2328,8 +2326,12 @@ class WikiFactory {
 		if( strtolower($article->getTitle()) == "mediawiki:description" ) {
 			$out = trim( strip_tags( wfMsg('description') ) );
 			$db = WikiFactory::db( DB_MASTER );
-			$sql = " UPDATE city_list SET city_description =" . $db->addQuotes($out) . " where city_id= '".$wgCityId."' ;\n";
-			$db->query($sql);
+			$db->update(
+				"city_list",
+				array( "city_description" => $out ),
+				array( "city_id" => $wgCityId ),
+				__METHOD__
+			);
 		}
 
 		return true;
@@ -2440,72 +2442,3 @@ class WikiFactory {
 		return $aWikis;
 	}
 };
-
-/**
- * update city_last_timestamp in city_list table with current timestamp
- *
- * @author Krzysztof Krzyżaniak (eloy)
- */
-class WikiFactoryUpdate {
-
-	private $mCityId;
-
-	/**
-	 * constructor
-	 *
-	 * @access public
-	 */
-	public function __construct( $city_id ) {
-		$this->mCityId = $city_id;
-	}
-
-	/**
-	 * doUpdate -- called on deferred update loop
-	 *
-	 * update city_last_timestamp in city_list table with current timestamp
-	 *
-	 * @access public
-	 * @static
-	 *
-	 * @param RecentChanges $rc	instance of RecentChanges class
-	 *
-	 */
-	public function doUpdate() {
-		global $wgWikicitiesReadOnly;
-
-		if( ! WikiFactory::isUsed() || $wgWikicitiesReadOnly ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used or in read-only mode." );
-			return false;
-		}
-
-		$dbw = WikiFactory::db( DB_MASTER );
-		return $dbw->update(
-			"city_list",
-			array( "city_last_timestamp" => wfTimestamp( TS_DB, time() ) ),
-			array( "city_id" => $this->mCityId ),
-			__METHOD__
-		);
-	}
-
-	/**
-	 * addPostCommitUpdate
-	 *
-	 * static method called as hook
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param RecentChanges	$rc	RecentChanges object
-	 *
-	 * @return true means process other hooks
-	 */
-	static public function addPostCommitUpdate( &$rc ) {
-		global $wgPostCommitUpdateList, $wgCityId;
-
-		if( ! wfReadOnly() ) {
-			$deffUpdate = new WikiFactoryUpdate( $wgCityId );
-			array_push( $wgPostCommitUpdateList, $deffUpdate );
-		}
-		return true;
-	}
-}
