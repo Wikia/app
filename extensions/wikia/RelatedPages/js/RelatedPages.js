@@ -4,6 +4,8 @@ $(function() {
 });
 
 RelatedPages = {
+	module: false,
+
 	log: function(msg) {
 		$().log(msg, 'RelatedPages');
 	},
@@ -15,7 +17,7 @@ RelatedPages = {
 		var content = $('#WikiaArticle');
 		var contentWidth = content.width();
 
-		var module = $('.RelatedPagesModule');
+		this.module = $('.RelatedPagesModule');
 
 		// move the module after (at least) 2nd <h2> section
 		var addAfter = 2;
@@ -42,7 +44,7 @@ RelatedPages = {
 			var sectionId = sections.index(sectionMatch) + 1;
 
 			this.log('moving before #' + sectionId + ' section (' + sectionMatch.children().first().text() + ')');
-			module.insertBefore( sectionMatch.prev() /* RT #72977 */);
+			this.module.insertBefore( sectionMatch.prev() /* RT #72977 */);
 		}
 		// sections found, but none without collision
 		else if (sections.length > addAfter) {
@@ -56,27 +58,29 @@ RelatedPages = {
 		var time = (new Date()).getTime() - start;
 		this.log('done in ' + time + ' ms');
 	},
-	
+
 	scroll_threshold: 300,
-	
+
 	attachLazyLoaderEvents: function() {
-		$(window).scroll(RelatedPages.updateScroll);
-		RelatedPages.updateScroll(); // check if we are already in the visible area
+		if (RelatedPages.module.exists()) {
+			$(window).scroll(RelatedPages.updateScroll);
+			RelatedPages.updateScroll(); // check if we are already in the visible area
+		}
 	},
-	
+
 	updateScroll: function() {
-		RelatedPages.log('updated after scroll');
+		//RelatedPages.log('updated after scroll');
 		var fold = $(window).height() + $(window).scrollTop();
-		var topVal = $('.RelatedPagesModule').offset().top;
+		var topVal = RelatedPages.module.offset().top;
 
 		if(topVal > 0 && topVal < (fold + RelatedPages.scroll_threshold)) {
 			RelatedPages.lazyLoadImages();
 		}
 	},
-	
+
 	lazyLoadImages: function() {
 		RelatedPages.log('loading RelatedPages images');
-		var images = $('.RelatedPagesModule').find('img').filter('[data-src]');
+		var images = RelatedPages.module.find('img').filter('[data-src]');
 		images.each(function() {
 			var image = $(this);
 			image.
