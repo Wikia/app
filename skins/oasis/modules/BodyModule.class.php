@@ -200,7 +200,7 @@ class BodyModule extends Module {
 		}
 
 		if (self::isBlogPost() || self::isBlogListing()) {
-			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
+		//	$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 		//	$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 		}
 
