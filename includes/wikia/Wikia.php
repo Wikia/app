@@ -20,7 +20,9 @@ class WikiaAssets {
 	private static function get($url, $resultWasEmpty=false) {
 		global $wgRequest;
 
-		if(!$wgRequest->getBool('nia')) {
+		//$useNginx = !$wgRequest->getBool('nia');
+		$useNginx = false; // we don't use nginx.  TODO: Delete the nginx code if we're sure we're never going back.
+		if($useNginx) {
 
 			$out = "\n/* Version: nginx Call to: {$url} */\n";
 			$out .= '<!--# include virtual="'.$url.'" -->';
