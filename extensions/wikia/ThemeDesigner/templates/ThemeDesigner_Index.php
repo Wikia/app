@@ -22,12 +22,12 @@
 		var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
 	</script>
 
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.tracker.js"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/aim.js"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js?<?= $wgStyleVersion ?>">"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.tracker.js?<?= $wgStyleVersion ?>">"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js?<?= $wgStyleVersion ?>">"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/ThemeDesigner.js?<?= $wgStyleVersion ?>">"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/aim.js?<?= $wgStyleVersion ?>">"></script>
 
 </head>
 <body>
