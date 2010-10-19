@@ -68,9 +68,9 @@ var PageHeader = {
 			moduleName: 'HistoryDropdown',
 			actionName: 'PreviousEdits',
 			outputType: 'html',
-			title: window.wgPageName,
-			cb: window.wgCurRevisionId,
-			uselang: window.wgUserLanguage
+			title: wgPageName,
+			cb: wgCurRevisionId,
+			uselang: wgUserLanguage
 		}, function(html) {
 			PageHeader.history.find('.view-all').before(html);
 
