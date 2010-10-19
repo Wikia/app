@@ -14,12 +14,12 @@
 }
 
 .LatestPhotosModule {
-	@include rail-module;	
+	@include rail-module;
 
 	>h1 {
 		display: none;
 	}
-	
+
 	.tally {
 		margin-bottom: 10px;
 	}
@@ -59,14 +59,14 @@
 			}
 		}
 	}
-	
+
 	.wikia-button {
 		img {
 			margin-right: 5px;
 			margin-top: 1px;
-		}		
+		}
 	}
-	
+
 	// /** Chevrons left and right **/
 	a {
 		&:active {
@@ -90,23 +90,23 @@
 		border-left-width: 0px;
 
 	}
-	
+
 	.latest-images-left-inactive {
 		border-color: transparent $color-page-border transparent $color-page-border;
 	}
-	
+
 	.latest-images-right {
 		@include arrow-style;
 		border-color: transparent transparent transparent $color-links;
 		border-right-width: 0px;
 	}
-	
+
 	.latest-images-right-inactive {
 		border-color:  transparent transparent transparent $color-page-border;
 	}
-	
-	
-	
+
+
+
 	// /** when there are less then 3 images **/
 	.hidden {
 		visibility: hidden;
@@ -122,7 +122,7 @@
 			position: relative;
 		}
 	}
-	
+
 	ul { // /** id class: .carousel **/
 		display: block;
 		left: 4px;
@@ -136,6 +136,7 @@
 				right: 2px;
 				bottom: 40px;
 			}
+			position: relative;
 			width: 82px;
 			&.blind {
 				border-color: transparent;
@@ -160,23 +161,27 @@
 			}
 		}
 		.see-all {
-			background: {
-				image: url(/skins/oasis/images/empty_gallery.png); /* $wgCdnStylePath */
-				position: -62px -17px;
-				color: #FFF;
-			}
 			text-align: center;
 			a {
 				border: 3px solid #FFF;
 				font-size: 14px;
 				font-weight: bold;
 				height: 55px;
+				*left: 0;
 				padding-top: 21px;
+				position: absolute;
 				width: 76px;
+				z-index: 1;
+			}
+			img {
+				left: 0;
+				opacity: 1;
+				position: absolute;
+				top: 0;
 			}
 		}
 		.add-more {
-			@extend .see-all;	
+			@extend .see-all;
 			a {
 				font-size: 11px;
 				height: 61px;
@@ -190,11 +195,11 @@
 				padding-top: 9px;
 			}
 			&:hover {
-				text-decoration: none;					
+				text-decoration: none;
 			}
 		}
 	}
-	
+
 	.more {
 		margin-top: 8px;
 	}
