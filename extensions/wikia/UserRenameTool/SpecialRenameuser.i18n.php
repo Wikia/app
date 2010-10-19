@@ -56,9 +56,9 @@ The rest will be done in background. You will be notified via e-mail when it is 
 	'renameuser-page-moved'   => 'The page $1 has been moved to $2.',
 	'renameuser-page-unmoved' => 'The page $1 could not be moved to $2.',
 
-	'renameuser-finished-email-subject' => 'User rename process completed',
-	'renameuser-finished-email-body-text' => 'The move process for "<nowiki>$1</nowiki>" has been completed.',
-	'renameuser-finished-email-body-html' => 'The move process for "<nowiki>$1</nowiki>" has been completed.',
+	'renameuser-finished-email-subject' => 'User rename process completed for [$1]',
+	'renameuser-finished-email-body-text' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
+	'renameuser-finished-email-body-html' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
 	
 	'renameuserlogpage'     => 'User rename log',
 	'renameuserlogpagetext' => 'This is a log of changes to user names.',
