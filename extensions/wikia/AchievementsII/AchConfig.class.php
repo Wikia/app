@@ -179,6 +179,7 @@ class AchConfig {
 					$this->mNotInTrackCommunityPlatinum[$row->id] = array('enabled' => $row->enabled, 'show_recents' => $row->show_recents);
 				else {
 					wfDebug("Uknown badge type for {$row->id}");
+					wfProfileOut(__METHOD__);
 					return false;
 				}
 
@@ -249,8 +250,6 @@ class AchConfig {
 	}
 
 	public function getBadgeType($badgeTypeId) {
-		wfProfileIn(__METHOD__);
-
 		//check the static data first starting with the smallest array
 		if(isset($this->mNotInTrackStatic[$badgeTypeId]))
 			return BADGE_TYPE_NOTINTRACKSTATIC;
@@ -271,9 +270,6 @@ class AchConfig {
 
 			return false;
 		}
-
-		//not really happening since return exist before this call
-		wfProfileOut(__METHOD__);
 	}
 
 	public function isInRecents($badgeTypeId) {
