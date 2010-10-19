@@ -94,6 +94,7 @@ class AdModule extends Module {
 				$this->ad = AdEngine::getInstance()->getPlaceHolderIframe($this->slotname);
 			}
 		}
+		wfRunHooks('AfterAdModuleExecute', array( &$this ));
 
 	}
 
