@@ -2073,15 +2073,15 @@ class WikiFactory {
 	 * @return StdObject ($row->cat_id $row->cat_name) or false
 	 */
 	static public function getCategory( $city_id ) {
-		global $wgMemc;
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
+		$oMemc = wfGetCache( CACHE_MEMCACHED );
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
-		$cached = $wgMemc->get($memkey);
+		$cached = $oMemc->get($memkey);
 		if ( empty($cached) ) {
 			$dbr = self::db( DB_SLAVE );
 
@@ -2094,7 +2094,7 @@ class WikiFactory {
 				),
 				__METHOD__
 			);
-			$wgMemc->set($memkey, $row, 60*60*24);
+			$oMemc->set($memkey, $row, 60*60*24);
 		} else {
 			$row = $cached;
 		}
