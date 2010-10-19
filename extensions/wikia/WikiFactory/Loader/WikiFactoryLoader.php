@@ -185,7 +185,7 @@ class WikiFactoryLoader {
 	 *
 	 * @return object Database	database handler
 	 */
-	public function getDB( $type = DB_MASTER ) {
+	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
 		if( $this->mDBhandler instanceof Database ) {
@@ -557,7 +557,7 @@ class WikiFactoryLoader {
 		 */
 		if( ! isset( $this->mVariables["wgDBname"] ) ) {
 			wfProfileIn( __METHOD__."-varsdb" );
-			$dbr = $this->getDB( DB_MASTER );
+			$dbr = $this->getDB();
 			$oRes = $dbr->select(
 				array(
 					"city_variables",
