@@ -17,6 +17,10 @@ function wfAdEngineSetupJSVars($vars) {
 	return true;
 }
 
+// will: Note about AJAX function below. Ideally, the client would create a script element using bezen.dom.element that 
+// contains one line: OA_show($zoneId). Then it would append the script to the appropriate element using 
+// bezen.dom.appendScript(). Unfortunately, I could not get this to work. As a workaround,  here is an AJAX
+// URL to return OA_show($zoneId). The client should append the response using bezen.load.script.
 function axShowOpenXAd($zoneId) {
 	global $wgRequest;
 
