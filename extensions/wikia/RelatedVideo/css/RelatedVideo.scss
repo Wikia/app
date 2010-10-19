@@ -1,0 +1,166 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css//mixins/box-shadow";
+@import "../../../../skins/oasis/css//mixins/clearfix";
+@import "../../../../skins/oasis/css//core/color";
+
+$thumb-size-width: 130px;
+$thumb-size-height: 115px;
+$thumb-border-top: 4px;
+$thumb-border-bottom: 5px;
+$thumb-border-left: 5px;
+$thumb-border-right: 6px;
+$details-fg-color: $color-page;  // #ffffff
+$details-bg-color: $color-links; // #0076ba
+
+.related-video-main {
+	width: 655px;
+	padding: 5px;
+
+	.related-video-box-advert {
+		float: right;
+		width: 300px;
+		height: 250px;
+	}
+
+	.related-video-title {
+		margin-bottom: 20px;
+	}
+
+	.related-video-player {
+		width: 645px;
+		margin-left: 5px;
+	}
+
+	.related-video-gallery {
+		position: relative;
+		width: 100%;
+		margin: 6px auto;
+		padding: 0;
+
+		br {
+			position: relative;
+			float: left;
+			display: block;
+			width: 100%;
+			clear: both;
+		}
+
+		hr {
+			$color: a3a3a3;
+			@include clearfix;
+			display: block;
+			position: relative;
+			float: left;
+
+			width: 100%;
+			border-top: 1px solid $color;
+			border-width: 1px 0 0 0;
+			height: 1px;
+		}
+	}
+
+	.related-video-gallery-item {
+		list-style: none;
+
+		position: relative;
+		display: inline-block;
+		width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
+		margin: 10px;
+		vertical-align: top;
+
+		a, a:hover, a:visited {
+			color: $color-text;
+			text-decoration:none;
+			display: block;
+		}
+
+		img {
+			@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
+
+			position: absolute;
+			padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+			width: $thumb-size-width;
+			height: $thumb-size-height;
+			background-color: $color-page;
+		}
+		.related-video-gallery-item-play {
+
+			position: absolute;
+			width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
+			height: $thumb-size-height + $thumb-border-top + $thumb-border-bottom;
+			background: transparent url(http://images.wikia.com/common/extensions/wikia/MyHome/images/play.png) no-repeat 50% 50%;
+			z-index: 100;
+		}
+
+		.snippet {
+			@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
+
+			position: absolute;
+			padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+			width: $thumb-size-width;
+			height: $thumb-size-height;
+			overflow: hidden;
+			background-color: $color-page;
+
+			.quote {
+				font-style: normal;
+				font-weight: bold;
+				font-size: 40px;
+				color: $color-text;
+				position: absolute;
+				display: block;
+				left: 7px;
+				top: 17px;
+				padding: 0;
+			}
+
+			.text {
+				font-family: Helvetica,Arial,sans-serif; /* overriden in Monaco */
+				font-style: normal;
+				font-size: 13px;
+				font-weight: bold;
+				color: $color-text;
+				position: relative;
+				display: block;
+				margin: 0;
+				padding: 0;
+				padding-left: 24px;
+				padding-top: 13px;
+				line-height: 17px;
+				height: 85px;
+				overflow: hidden;
+			}
+		}
+
+		span.details {
+			@include border-radius-ne(9px);
+			@include border-radius-se(9px);
+			position: relative;
+			display: inline-block;
+			background-color: $details-bg-color;
+			color: $details-fg-color;
+			padding: 3px 13px 3px 10px;
+			margin-top: $thumb-size-height + $thumb-border-top - 9px;
+			line-height: 16px;
+			max-height: 48px;
+			overflow: hidden;
+		}
+	}
+}
+
+.related-video-right-rail {
+	float: right;
+	width: 305px;
+	padding: 0px;
+	margin: 58px 0px 10px 0px;
+
+}
+
+/* FF3.0 hack */
+.related-video-gallery-item img, .related-video-gallery-item .snippet, x:-moz-any-link {
+	border: 1px solid mix($color-page, #000, 60%);
+}
+.related-video-gallery-item img, .related-video-gallery-item .snippet, x:-moz-any-link, x:first-of-type  {
+	border: 0px solid;
+}
+/* end of FF3.0 hack */
