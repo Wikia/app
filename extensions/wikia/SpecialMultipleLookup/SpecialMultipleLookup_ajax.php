@@ -12,45 +12,98 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 # ############################# Ajax ##################################
+############################## Ajax ##################################
+class MultiLookupAjax {	
+	function __construct() { /* not used */ }
 
-function axWMultiLookupUserActivityDetails( $dbname, $ip, $limit = 25, $offset = 0 )
-{
-	global $wgRequest, $wgUser;
-	if ( empty( $wgUser ) ) { return ""; }
-	if ( $wgUser->isBlocked() ) { return ""; }
-	if ( !$wgUser->isLoggedIn() ) { return ""; }
-	if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
-		return ""; # --- later change to something reasonable
-	}
+	function axData() {
+		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgLang;
+		
+        wfProfileIn( __METHOD__ );
+	
+		$username 	= $wgRequest->getVal('username');
+		$dbname		= $wgRequest->getVal('wiki');
+		$limit		= $wgRequest->getVal('limit');
+		$offset		= $wgRequest->getVal('offset');
+		$loop		= $wgRequest->getVal('loop');
+		$order		= $wgRequest->getVal('order');
+		$numOrder	= $wgRequest->getVal('numOrder');
 
-	$mLCCore = new MultipleLookupCore( $ip );
-	$aResponse = array();
-	if ( $mLCCore->checkIp() ) {
-		$data = $mLCCore->fetchContribs ( $dbname );
-  		/* order by timestamp desc */
-  		$nbr_records = 0;
-  		$result = array();
-		$res = array();
-		if ( !empty( $data ) && is_array( $data ) ) {
-			ksort( $data );
-			$result = array_slice( $data, $offset * $limit, $limit, true );
-			$loop = 0;
-			foreach ( $result as $date => $row ) {
-				$res[$loop] = $mLCCore->produceLine( $row, $ip );
-				$loop++;
-			}
-			$nbr_records = count( $data );
+		$result = array(
+			'sEcho' => intval($loop), 
+			'iTotalRecords' => 0, 
+			'iTotalDisplayRecords' => 0, 
+			'sColumns' => '',
+			'aaData' => array()
+		);
+				
+		//$dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1
+		
+		if ( empty($wgUser) ) { return ""; }
+		if ( $wgUser->isBlocked() ) { return ""; }
+		if ( !$wgUser->isLoggedIn() ) { return ""; }
+		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
+			wfProfileOut( __METHOD__ );			
+			return Wikia::json_encode($result); 
 		}
-		$aResponse = array( "nbr_records" => intval( $nbr_records ), "limit" => $limit, "offset" => $offset, "res" => $res );
-	}
 
-	if ( !function_exists( 'json_encode' ) ) {
-		$oJson = new Services_JSON();
-		return $oJson->encode( $aResponse );
-	} else {
-		return json_encode( $aResponse );
+		$oML = new MultipleLookupCore($username);
+		if ( empty($dbname) ) {
+			$oML->setLimit($limit);
+			$oML->setOffset($offset);
+			$activity = $oML->checkUserActivity();
+			if ( !empty($activity) ) {
+				$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
+				$result['iTotalDisplayRecords'] = count($activity);
+				$result['sColumns'] = 'id,dbname,title,url,options';
+				$rows = array();			
+				$data = array_slice($activity, $offset, $limit);
+				$loop = 1;
+				foreach ( $data as $row ) {
+					$rows[] = array(
+						$loop + $offset, // wiki Id
+						$row[0], // wiki dbname
+						$row[1], //wiki title
+						$row[2], // wiki url 
+						'' //options
+					);			
+					$loop++;				
+				}
+				$result['aaData'] = $rows;
+			}
+		} else {
+			$oML->setDBname($dbname);
+			$oML->setLimit($limit);
+			$oML->setOffset($offset);
+			$data = $oML->fetchContribs();
+			/* order by timestamp desc */
+			$nbr_records = 0;
+			if ( !empty($data) && is_array($data) ) {
+				$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
+				$result['iTotalDisplayRecords'] = $oML->getNumRecords();
+				$result['sColumns'] = 'id,dbname,title,edit';
+				$rows = array();
+				if ( isset($data) ) {
+					$loop = 1;
+					foreach ($data as $user_name => $row) {
+						list ($link, $last_edit) = array_values($oML->produceLine( $row ));
+						$rows[] = array(
+							$loop + $offset, // id
+							$dbname,
+							$link, // title 
+							$last_edit
+						);
+						$loop++;
+					}
+				}
+				$result['aaData'] = $rows;					
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );			
+		return Wikia::json_encode($result); 
 	}
 }
 
 global $wgAjaxExportList;
-$wgAjaxExportList[] = "axWMultiLookupUserActivityDetails";
+$wgAjaxExportList[] = "MultiLookupAjax::axData";

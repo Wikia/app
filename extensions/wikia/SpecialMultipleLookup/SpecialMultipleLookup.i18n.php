@@ -25,7 +25,12 @@ $messages['en'] = array(
 	'multilookuplistwikiainfo' => 'List of wikis where pages were edited by users from IP address <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP address "<b>$1</b>" does not exist. Check given IP address for possible typos.</p>',
 	'multilookuplastedit' => 'Last edit from this IP address:',
-
+	'multilookupwikidbname' => 'DB name',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Title',
+	'multilookupwikioptions' => 'Options',
+	'multilookuplastedithdr' => 'Last edit',
+	'multilookuprecordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
 	'right-multilookup' => 'Look up information on users in multiple wikis',
 );
 
