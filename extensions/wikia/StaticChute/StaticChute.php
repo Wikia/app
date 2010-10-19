@@ -669,7 +669,6 @@ class StaticChute {
 	}
 
 	public function getChuteUrlForPackage($packages, $type = null){
-		global $wgStyleVersion;
 		if ($type === null){
 			$type = $this->fileType;
 		}
@@ -682,7 +681,7 @@ class StaticChute {
 
 		$checksum = $this->getChecksum($files);
 
-		return $this->getChuteUrlPath() . "/static/$type/$packages/$checksum.$type?$wgStyleVersion";
+		return $this->getChuteUrlPath() . "/static/$type/$packages/$checksum.$type";
 	}
 
 	private function getWidgetsAssets() {
