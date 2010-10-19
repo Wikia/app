@@ -10,57 +10,69 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 DROP TABLE IF EXISTS `ach_user_score`;
 CREATE TABLE IF NOT EXISTS `ach_user_score` (
-  `wiki_id` int(9) signed NOT NULL,
-  `user_id` int(5) unsigned NOT NULL,
-  `score` int(10) unsigned NOT NULL,
-  UNIQUE KEY `wiki_id` (`wiki_id`,`user_id`),
-  KEY `user_id` (`user_id`)
+	`wiki_id` int(9) signed NOT NULL,
+	`user_id` int(5) unsigned NOT NULL,
+	`score` int(10) unsigned NOT NULL,
+	UNIQUE KEY `wiki_id` (`wiki_id`,`user_id`),
+	KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `ach_user_counters`;
 CREATE TABLE IF NOT EXISTS `ach_user_counters` (
-  `user_id` int(5) unsigned NOT NULL,
-  `data` text NOT NULL,
-  PRIMARY KEY (`user_id`)
+	`user_id` int(5) unsigned NOT NULL,
+	`data` text NOT NULL,
+	PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `ach_user_badges`;
 CREATE TABLE IF NOT EXISTS `ach_user_badges` (
-  `wiki_id` int(9) signed NOT NULL,
-  `user_id` int(5) unsigned NOT NULL,
-  `badge_type_id` int(10) signed NOT NULL,
-  `badge_lap` tinyint(3) unsigned NULL,
-  `badge_level` tinyint(3) unsigned NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `notified` tinyint(1) NOT NULL DEFAULT '0',
-  KEY `id` (`wiki_id`, `user_id`),
-  KEY `badge_count` (`wiki_id`, `badge_type_id`, `badge_lap`),
-  KEY `level_date2` (`wiki_id`, `badge_level`, `date`, `badge_lap`)
+	`wiki_id` int(9) signed NOT NULL,
+	`user_id` int(5) unsigned NOT NULL,
+	`badge_type_id` int(10) signed NOT NULL,
+	`badge_lap` tinyint(3) unsigned NULL,
+	`badge_level` tinyint(3) unsigned NOT NULL,
+	`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`notified` tinyint(1) NOT NULL DEFAULT '0',
+	KEY `id` (`wiki_id`, `user_id`),
+	KEY `badge_count` (`wiki_id`, `badge_type_id`, `badge_lap`),
+	KEY `level_date2` (`wiki_id`, `badge_level`, `date`, `badge_lap`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `ach_custom_badges`;
 CREATE TABLE IF NOT EXISTS `ach_custom_badges` (
-  `id` int(10) signed NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `wiki_id` int(9) signed NOT NULL,
-  `cat` varchar(255),
-  `enabled` tinyint(1) NOT NULL DEFAULT 0,
-  `show_recents` tinyint(1) NOT NULL DEFAULT 0,
-  `type` tinyint(1) NOT NULL,
-  `link` varbinary(255),
-  KEY `id` (`wiki_id`, `id`),
-  KEY `type` (`wiki_id`, `type`)
+	`id` int(10) signed NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`wiki_id` int(9) signed NOT NULL,
+	`cat` varchar(255),
+	`enabled` tinyint(1) NOT NULL DEFAULT 0,
+	`type` tinyint(1) NOT NULL,
+	`sponsored` TINYINT(1) NOT NULL DEFAULT 0,
+	`badge_tracking_url` VARCHAR(255) DEFAULT NULL,
+	`hover_tracking_url` VARCHAR(255) DEFAULT NULL,
+	`click_tracking_url` VARCHAR(255) DEFAULT NULL;
+	KEY `id` (`wiki_id`, `id`),
+	KEY `type` (`wiki_id`, `type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `ach_ranking_snapshots`;
 CREATE TABLE `ach_ranking_snapshots` (
-`wiki_id` INT( 9 ) NOT NULL ,
-`date` DATETIME NOT NULL ,
-`data` TEXT NOT NULL ,
-UNIQUE (
-`wiki_id`
+	`wiki_id` INT( 9 ) NOT NULL ,
+	`date` DATETIME NOT NULL ,
+	`data` TEXT NOT NULL ,
+	UNIQUE (
+	`wiki_id`
 )
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+/*
+ALTER TABLE ach_custom_badges
+	DROP `link`,
+	DROP `show_recents`,
+	ADD `sponsored` TINYINT(1) NOT NULL DEFAULT 0,
+	ADD `badge_tracking_url` VARCHAR(255) DEFAULT NULL,
+	ADD `hover_tracking_url` VARCHAR(255) DEFAULT NULL,
+	ADD `click_tracking_url` VARCHAR(255) DEFAULT NULL;
+*/

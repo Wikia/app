@@ -18,6 +18,10 @@ Please try another one!',
 	'achievements-edit-plus-category-track-exists' => 'The specified category already has an <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">associated track</a>.',
 	'achievements-no-stub-category' => 'Please do not create tracks for stubs.',
 
+	//rights
+	'right-platinum' => 'Create and edit Platinum badges',
+	'right-sponsored-achievements' => 'Manage Sponsored achievements',
+	
 	/*
 	 * Badges' levels
 	 */
@@ -167,7 +171,14 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-community-platinum-show-recents' => 'show in recent badges',
 	'achievements-community-platinum-edit' => 'edit',
 	'achievements-community-platinum-save' => 'save',
-
+	'achievements-community-platinum-cancel' => 'cancel',
+	'achievements-community-platinum-sponsored-label' => 'Sponsored achievement',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Hover picture <small>(hover minimum size: 270px x 100px)</small>:',
+	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Tracking URL for badge impressions:',
+	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Tracking URL for Hover impression:',
+	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Badge link <small>(DART click command URL)</small>:',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Click for more information',
+	
 	/*
 	 * Badges' names
 	 */

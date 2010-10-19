@@ -42,39 +42,88 @@ class AchPlatinumService {
 		return $out;
 	}
 
-    public static function getList() {
-    	wfProfileIn(__METHOD__);
+	public static function getList() {
+		wfProfileIn(__METHOD__);
 
-    	global $wgCityId, $wgExternalSharedDB;
+		global $wgCityId, $wgExternalSharedDB;
 
-		$badges = array();
+			$badges = array();
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
-		$res = $dbr->select(
-			'ach_custom_badges',
-			array('id', 'enabled', 'show_recents', 'link'),
-			array('wiki_id' => $wgCityId, 'type' => BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM),
-			__METHOD__,
-			array('ORDER BY' => 'id DESC'));
+			$res = $dbr->select(
+				'ach_custom_badges',
+				array('id', 'enabled', 'sponsored', 'badge_tracking_url', 'hover_tracking_url', 'click_tracking_url'),
+				array('wiki_id' => $wgCityId, 'type' => BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM),
+				__METHOD__,
+				array('ORDER BY' => 'id DESC'));
 
-		while($row = $dbr->fetchObject($res)) {
-			$badge = array();
+			while($row = $dbr->fetchObject($res)) {
+				$badge = array();
 
-			$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($row->id));
-			if($image) {
-				$badge['type_id'] = $row->id;
-				$badge['enabled'] = $row->enabled;
-				$badge['show_recents'] = $row->show_recents;
-				$badge['thumb_url'] = $image->getThumbnail(90)->getUrl();
-				$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
+				$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($row->id));
 
-				$badges[] = $badge;
+				if($image) {
+					$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $row->id ) );
+
+					$badge['type_id'] = $row->id;
+					$badge['enabled'] = $row->enabled;
+					$badge['thumb_url'] = $image->getThumbnail(90)->getUrl();
+					$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
+					$badge[ 'is_sponsored' ] = $row->sponsored;
+					$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;
+					$badge[ 'hover_tracking_url' ] = $row->hover_tracking_url;
+					$badge[ 'click_tracking_url' ] = $row->click_tracking_url;
+					$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) : null;
+
+					$badges[] = $badge;
+				}
 			}
-		}
 
-    	wfProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $badges;
-    }
+	}
 
+	public static function getBadge( $badgeTypeId ) {
+		wfProfileIn(__METHOD__);
+
+		global $wgCityId, $wgExternalSharedDB;
+
+			$badges = array();
+
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
+			$res = $dbr->select(
+				'ach_custom_badges',
+				array('id', 'enabled', 'sponsored', 'badge_tracking_url', 'hover_tracking_url', 'click_tracking_url'),
+				array('id' => $badgeTypeId ),
+				__METHOD__
+			);
+
+			if($row = $dbr->fetchObject($res)) {
+				$badge = array();
+
+				$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($row->id));
+
+				if($image) {
+					$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $row->id ) );
+
+					$badge['type_id'] = $row->id;
+					$badge['enabled'] = $row->enabled;
+					$badge['thumb_url'] = $image->getThumbnail(90)->getUrl();
+					$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
+					$badge[ 'is_sponsored' ] = $row->sponsored;
+					$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;
+					$badge[ 'hover_tracking_url' ] = $row->hover_tracking_url;
+					$badge[ 'click_tracking_url' ] = $row->click_tracking_url;
+					$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) : null;
+
+					wfProfileOut(__METHOD__);
+					return $badge;
+				}
+			}
+
+		wfProfileOut(__METHOD__);
+		return false;
+	}
 }
