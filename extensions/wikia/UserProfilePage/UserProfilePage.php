@@ -31,16 +31,13 @@ function wfUserProfilePageInit() {
 	/**
 	 * hooks
 	 */
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePage::outputPageHook';
-	//$wgHooks['RecentChange_save'][] = 'RecentChangeDetail::register';
-	//$wgHooks['LinksUpdateComplete'][] = 'RecentChangeDetail::registerMediaInsertEvent';
-
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHelper::onSkinTemplateOutputPageBeforeExec';
 
 	/**
 	 * messages file
 	 */
 	$wgExtensionMessagesFiles['UserProfilePage'] = $dir . 'UserProfilePage.i18n.php';
-	$wgExtensionMessagesFiles['MyHome'] = dirname($dir) . '/MyHome/MyHome.i18n.php';
+	//$wgExtensionMessagesFiles['MyHome'] = dirname($dir) . '/MyHome/MyHome.i18n.php';
 
 	// we have to load extension messages here in order to Special:CreateFromTemplate work properly
 	wfLoadExtensionMessages('UserProfilePage');
@@ -49,11 +46,17 @@ function wfUserProfilePageInit() {
 	 * classes
 	 */
 	$wgAutoloadClasses['UserProfilePage'] = $dir . 'UserProfilePage.class.php';
+	$wgAutoloadClasses['UserProfilePageHelper'] = $dir . 'UserProfilePageHelper.class.php';
 	$wgAutoloadClasses['RecentChangeDetail'] = $dir . 'RecentChangeDetail.class.php';
+
+	/**
+	 * ajax
+	 */
+	$wgAjaxExportList[] = 'UserProfilePageHelper::doAction';
 
 	// extension css and js - not an ideal solution putting it here, just for now.. :>
 	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
 	$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/UserProfilePage/css/UserProfilePage.css?{$wgStyleVersion}\" />" );
-	//$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 }

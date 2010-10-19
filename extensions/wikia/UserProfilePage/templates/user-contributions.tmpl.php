@@ -1,9 +1,9 @@
 <?php
-if (count($data)) {
+if (count($activityFeed)) {
 ?>
 	<ul id="myhome-user-contributions" class="activityfeed reset">
 <?php
-	foreach($data as $row) {
+	foreach($activityFeed as $row) {
 ?>
 		<li class="activity-type-<?= UserContributionsRenderer::getIconType($row) ?>">
 			<?php print FeedRenderer::getSprite( $row, $assets['blank'] ) ?>

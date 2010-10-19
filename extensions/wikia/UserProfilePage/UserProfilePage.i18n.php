@@ -11,7 +11,6 @@ $messages['en'] = array(
 	'userprofilepage-activity-delete'  => '$1 deleted the $2 page $3 ago',
 	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
 	'userprofilepage-recent-activity-title' => '$1\'s Recent Activity',
-	'userprofilepage-recent-images-title' => 'Recent Images',
 	'userprofilepage-top-wikis-title' => '$1\'s Top Wiki\'s',
 	'userprofilepage-wiki-edits' => '$1 {{PLURAL:$1|edit|edits}}',
 	'userprofilepage-users-notes-title' => '$1\'s Notes',
