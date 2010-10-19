@@ -54,6 +54,7 @@ class UserRenameLocalTask extends BatchTask {
 		$process->addLog('User rename local task start.');
 		
 		$oldUsername = $this->mParams['rename_old_name'];
+		$newUsername = $this->mParams['rename_new_name'];
 		$requestorID = (int)$this->mParams['requestor_id'];
 
 		foreach($this->mParams as $key => &$param){
@@ -108,12 +109,12 @@ class UserRenameLocalTask extends BatchTask {
 		//send e-mail to the user that rename process has finished
 		if($requestorUser->getEmail() != null){
 			$requestorUser->sendMail(
-				wfMsgForContent('renameuser-finished-email-subject'),
-				wfMsgForContent('renameuser-finished-email-body-text', $oldUsername),
+				wfMsgForContent('renameuser-finished-email-subject', $oldUsername),
+				wfMsgForContent('renameuser-finished-email-body-text', $oldUsername, $newUsername),
 				null, //from
 				null, //replyto
 				'UserRenameProcessFinishedNotification',
-				wfMsgForContent('renameuser-finished-email-body-html', $oldUsername)
+				wfMsgForContent('renameuser-finished-email-body-html', $oldUsername, $newUsername)
 			);
 			$process->addLog("Notification sent.");
 		}
