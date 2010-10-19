@@ -21,7 +21,12 @@
 	<? } ?>
 		<? for ($i=0; $i<$n_adslots; $i++) { ?>
 		<li class="WikiaSpotlight item-<?= $i+1 ?><? if ($wgEnableOpenXSPC && $useLazyLoadAdClass) { echo ' ' . AdEngine::lazyLoadAdClass; } ?>" id="<?= $adslots[$i]?>">
-			<?= AdEngine::getInstance()->getAd($adslots[$i]) ?>
+			<?
+			if ( empty( $forceContent[$1] ) ) {
+				echo AdEngine::getInstance()->getAd( $adslots[$i] );
+			} else {
+				echo $forceContent[$i];
+			}  ?>
 		</li>
 		<? } ?>
 	</ul>
