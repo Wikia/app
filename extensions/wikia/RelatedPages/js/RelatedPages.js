@@ -1,5 +1,6 @@
 $(function() {
 	    RelatedPages.init.call(RelatedPages);
+	    RelatedPages.attachLazyLoaderEvents();
 });
 
 RelatedPages = {
@@ -41,7 +42,6 @@ RelatedPages = {
 			var sectionId = sections.index(sectionMatch) + 1;
 
 			this.log('moving before #' + sectionId + ' section (' + sectionMatch.children().first().text() + ')');
-
 			module.insertBefore( sectionMatch.prev() /* RT #72977 */);
 		}
 		// sections found, but none without collision
@@ -55,5 +55,32 @@ RelatedPages = {
 
 		var time = (new Date()).getTime() - start;
 		this.log('done in ' + time + ' ms');
+	},
+	
+	scroll_threshold: 300,
+	
+	attachLazyLoaderEvents: function() {
+		$(window).scroll(RelatedPages.updateScroll);
+		RelatedPages.updateScroll(); // check if we are already in the visible area
+	},
+	
+	updateScroll: function() {
+		var fold = $(window).height() + $(window).scrollTop();
+		var topVal = $('.RelatedPagesModule').offset().top;
+
+		if(topVal > 0 && topVal < (fold + RelatedPages.scroll_threshold)) {
+			RelatedPages.lazyLoadImages();
+		}
+	},
+	
+	lazyLoadImages: function() {
+		var images = $('.RelatedPagesModule').find('img').filter('[data-src]');
+		images.each(function() {
+			var image = $(this);
+			image.
+				attr('src', image.attr('data-src')).
+				removeAttr('data-src');
+		});
+		$(window).unbind('scroll', RelatedPages.updateScroll);
 	}
 }

@@ -24,6 +24,12 @@
 		&:first-child {
 			margin-left: 0;
 		}
+		
+		img {
+			width: 200px;
+			height: 100px;
+			display: inline-block;
+		}
 	}
 	.articleSnippet {
 		height: 100px;
