@@ -240,7 +240,7 @@ var ThemeDesigner = {
 			$("#ColorNameForm").submit(function(event) {
 				event.preventDefault();
 
-				var color = $.trim($("#color-name").val());
+				var color = $.trim($("#color-name").val().toLowerCase());
 
 				// was anything submitted?
 				if (color == "" || color == $("#color-name").attr("placeholder")) {

@@ -13,9 +13,9 @@
 $wgHooks['MakeGlobalVariablesScript'][] = 'SassUtil::onMakeGlobalVariablesScript';
 //$wgHooks['BeforePageDisplay'][] = 'SassUtil::BeforePageDisplay'; // not needed right now - js is in StaticChute
 
-define('DEFAULT_OASIS_THEME', 'oasis');
+class SassUtil {
 
-class SassUtil{
+	const DEFAULT_OASIS_THEME = 'oasis';
 
 	/**
 	 * Creates a hash which serves as a (admittedly weak) cryptographic signature so that
@@ -50,11 +50,11 @@ class SassUtil{
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
-		$oasisSettings["color-body"] = $settings["color-body"];
-		$oasisSettings["color-page"] = $settings["color-page"];
-		$oasisSettings["color-buttons"] = $settings["color-buttons"];
-		$oasisSettings["color-links"] = $settings["color-links"];
-		$oasisSettings["color-header"] = $settings["color-header"];
+		$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
+		$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
+		$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
+		$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
+		$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
 		$oasisSettings["background-image"] = $settings["background-image"];
 		$oasisSettings["background-align"] = $settings["background-align"];
 		$oasisSettings["background-tiled"] = $settings["background-tiled"];
@@ -62,7 +62,7 @@ class SassUtil{
 		if($wgContLang && $wgContLang->isRTL()){
 			$oasisSettings['rtl'] = 'true';
 		}
-		
+
 		// RT:70673
 		foreach ($oasisSettings as $key => $val) {
 			if(!empty($val)) {
@@ -81,7 +81,15 @@ class SassUtil{
 	 */
 	private static function getDefaultOasisSettings() {
 		global $wgOasisThemes;
-		return $wgOasisThemes[DEFAULT_OASIS_THEME];
+		return $wgOasisThemes[self::DEFAULT_OASIS_THEME];
+	}
+
+	/**
+	 * Get normalized color value (RT #74057)
+	 */
+	private static function sanitizeColor($color) {
+		$color = trim(strtolower($color));
+		return $color;
 	}
 
 	/**
