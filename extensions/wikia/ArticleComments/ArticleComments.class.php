@@ -1361,8 +1361,8 @@ class ArticleCommentList {
 		$showall = $wgRequest->getText( 'showall', false );
 
 		//get first or last page to show newest comments in default view
-		//TODO: always master? use master only when new comment added
-		$comments = $this->getCommentPages(true, false);
+		//default to using slave. comments are posted with ajax which hits master db
+		$comments = $this->getCommentPages(false, false);
 		$countComments = $this->getCountAll();
 		$countCommentsNested = $this->getCountAllNested();
 		$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
