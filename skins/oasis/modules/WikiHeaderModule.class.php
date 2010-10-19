@@ -50,7 +50,6 @@ class WikiHeaderModule extends Module {
 	}
 
 	public function executeIndex() {
-
 		global $wgOut, $wgCityId, $wgUser, $wgMemc;
 
 		$themeSettings = new ThemeSettings();
@@ -62,7 +61,8 @@ class WikiHeaderModule extends Module {
 		$this->wordmarkFont = $settings["wordmark-font"];
 
 		if ($this->wordmarkType == "graphic") {
-			$this->wordmarkStyle = 'style="background: url('. $settings["wordmark-image-url"] .') no-repeat"';
+			$wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+			$this->wordmarkStyle = 'style="background: url('. $wordmarkUrl .') no-repeat"';
 		} else {
 			$this->wordmarkStyle = '';
 		}
@@ -76,7 +76,6 @@ class WikiHeaderModule extends Module {
 
 		$service = new NavigationService();
 		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7), 60*60*3 /* 3 hours */, true);
-
 	}
 
 }
