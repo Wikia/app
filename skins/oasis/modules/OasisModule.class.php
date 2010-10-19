@@ -118,9 +118,9 @@ class OasisModule extends Module {
 				global $wgWikiaCombinedPrefix;
 				$prefix = $wgWikiaCombinedPrefix;
 			}
-		// TODO: PROBABLY REMOVE... THIS LOADS THE CODE TOO LATE.
-		//	$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS\"><!-- combined anon site js --></script>");
-		
+			// This would load our JS too late.
+			// $wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS\"><!-- combined anon site js --></script>");
+
 			// Replace the normal StaticChute with the combined call.
 			$this->staticChuteHtml = "<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS\"><!-- combined anon Core JS (StaticChute and '-') --></script>";
 		} else {
