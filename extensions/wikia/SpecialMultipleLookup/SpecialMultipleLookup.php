@@ -17,8 +17,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'specialmultiplelookup-desc',
 	'author' => array( 'Bartek Lapinski', 'Piotr Molski' ),
 );
-define( "MULTILOOKUP_NO_CACHE", true );
-define( "ML_TEST", 1 );
+define( "MULTILOOKUP_NO_CACHE", false );
+define( "ML_TEST", 0 );
 $wgExtensionMessagesFiles["MultiLookup"] = dirname( __FILE__ ) . '/SpecialMultipleLookup.i18n.php';
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_helper.php' );
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_ajax.php' );
