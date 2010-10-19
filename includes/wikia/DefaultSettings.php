@@ -579,6 +579,11 @@ $wgEnableCOPPA = true;
 require_once( "$IP/extensions/wikia/SASS/SassUtil.php" );
 
 /**
+ * Default value for ThemeDesigner history
+ */
+$wgOasisThemeSettingsHistory = array();
+
+/**
  * @name wgPreWikiFactoryValues
  * optionally stores variable values as they were before overridden by WikiFactory
  */
