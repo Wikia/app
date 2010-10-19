@@ -20,7 +20,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 					<li>
 						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wgBlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 						<ul class="subnav">
-							<li id="Wrapper_SPOTLIGHT_GLOBALNAV_<?= ++$i?>">
+							<li id="SPOTLIGHT_GLOBALNAV_<?= ++$i?>">
 								<?= AdEngine::getInstance()->getAd('SPOTLIGHT_GLOBALNAV_'.$i) ?>
 							</li>
 <?php

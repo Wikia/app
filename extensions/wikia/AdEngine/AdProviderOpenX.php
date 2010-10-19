@@ -102,11 +102,15 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		}
 
 		if ($wgEnableOpenXSPC) {
+			$fillElemFunctionPrefix = AdEngine::fillElemFunctionPrefix;
+			// will: Note about invocation below. Ideally, we would create a script element using bezen.dom.element that 
+			// contains one line: OA_show($zoneId). Then we would append the script to the appropriate element using 
+			// bezen.dom.appendScript(). Unfortunately, I could not get this to work. As a workaround, I made an AJAX
+			// URL to return OA_show($zoneId), and appended this script using bezen.load.script.
 			$adtag = <<<EOT
 <script type='text/javascript'>
 	document.write('<scr'+'ipt type="text/javascript">');
-	//document.write('wgAfterContentAndJS.push(function(){ bezen.domwrite.capture(); bezen.dom.appendScript(document.body, bezen.dom.element( "script", {"type":"text/javascript"}, "OA_show($zoneId);" ), function(){ bezen.domwrite.render(document.body, function (){ alert("appended!"); }); } ); });');
-	document.write('wgAfterContentAndJS.push(function(){ bezen.domwrite.capture(); var parent=document.getElementById("Wrapper_$slotname"); var scriptSrc = wgScript + "?action=ajax&rs=axShowOpenXAd&rsargs[0]=$zoneId"; bezen.load.script(parent, scriptSrc, function(){ bezen.domwrite.render( parent ); } ); });');
+	document.write('$fillElemFunctionPrefix'+'$slotname = function(){ bezen.domwrite.capture(); var parent=document.getElementById("$slotname"); var scriptSrc = wgScript + "?action=ajax&rs=axShowOpenXAd&rsargs[0]=$zoneId"; bezen.load.script(parent, scriptSrc, function(){ bezen.domwrite.render( parent ); } ); }');
 	document.write('</scr'+'ipt>');
 </script>
 EOT;
