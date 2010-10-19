@@ -51,7 +51,7 @@ class OasisModule extends Module {
 	var $wgEnableOpenXSPC;
 
 	public function executeIndex() {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
 
 		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
 
@@ -71,17 +71,70 @@ class OasisModule extends Module {
 		if(!empty($skin->themename)) {
 			$this->bodyClasses[] = "oasis-{$skin->themename}";
 		}
+		
+		// Merged JS files via StaticChute
+		// get the right package from StaticChute
+		$staticChute = new StaticChute('js');
+		$staticChute->useLocalChuteUrl();
 
-		// add site JS
-		// copied from Skin::getHeadScripts
-		global $wgUseSiteJs, $wgJsMimeType;
-		if (!empty($wgUseSiteJs)) {
-			$jsCache = $wgUser->isLoggedIn() ? '&smaxage=0' : '';
-			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"".
-					htmlspecialchars(Skin::makeUrl('-',
-							"action=raw$jsCache&gen=js&useskin=" .
-							urlencode( $skin->getSkinName() ) ) ) .
-					"\"><!-- site js --></script>");
+		// If we decide to use CoreJS, then that will replace the staticChute call as well as the call to "-".
+		$useCoreJs = false;
+
+		$packagePrefix = "oasis_";
+		if($wgUser->isLoggedIn()) {
+			$package = $packagePrefix.'loggedin_js';
+		} else {
+			// list of namespaces and actions on which we should load package with YUI
+			$ns = array(NS_SPECIAL);
+			$actions = array('edit', 'preview', 'submit');
+
+			// add blog namespaces
+			global $wgEnableBlogArticles;
+			if(!empty($wgEnableBlogArticles)) {
+				$ns = array_merge($ns, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK));
+			}
+
+			if(in_array($wgTitle->getNamespace(), $ns) || in_array($wgRequest->getVal('action', 'view'), $actions)) {
+				// edit mode & special/blog pages (package with YUI)
+				$package = $packagePrefix.'anon_everything_else_js';
+			} else {
+				// view mode (package without YUI)
+				$package = $packagePrefix.'anon_article_js';
+
+				// Use CoreJS via __wikia_combined instead of StaticChute and "-".
+				$useCoreJs = true;
+			}
+		}
+
+		// If this is an anon on an article-page, we can combine two of the files into one.
+		if($useCoreJs){
+			global $parserMemc, $wgStyleVersion;
+			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
+
+			global $wgDevelEnvironment;
+			if(empty($wgDevelEnvironment)){
+				$prefix = "__wikia_combined/";
+			} else {
+				global $wgWikiaCombinedPrefix;
+				$prefix = $wgWikiaCombinedPrefix;
+			}
+			$wgOut->addScript("/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS");
+			$this->staticChuteHtml = ""; // don't use StaticChute under these conditions (it's inside of CoreJS).
+		} else {
+			// If we use StaticChute right on the page (rather than loaded asynchronously), we'll use this var.
+			$this->staticChuteHtml = $staticChute->getChuteHtmlForPackage($package);
+
+			// add site JS
+			// copied from Skin::getHeadScripts
+			global $wgUseSiteJs;
+			if (!empty($wgUseSiteJs)) {
+				$jsCache = $wgUser->isLoggedIn() ? '&smaxage=0' : '';
+				$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"".
+						htmlspecialchars(Skin::makeUrl('-',
+								"action=raw$jsCache&gen=js&useskin=" .
+								urlencode( $skin->getSkinName() ) ) ) .
+						"\"><!-- site js --></script>");
+			}
 		}
 
 		// We re-process the wgOut scripts and links here so modules can add to the arrays inside their execute method
@@ -176,37 +229,6 @@ class OasisModule extends Module {
 		else {
 			$this->jsAtBottom = true;
 		}
-
-		// Merged JS files via StaticChute
-		// get the right package from StaticChute
-		$staticChute = new StaticChute('js');
-		$staticChute->useLocalChuteUrl();
-
-		$packagePrefix = "oasis_";
-		if($wgUser->isLoggedIn()) {
-			$package = $packagePrefix.'loggedin_js';
-		} else {
-
-			// list of namespaces and actions on which we should load package with YUI
-			$ns = array(NS_SPECIAL);
-			$actions = array('edit', 'preview', 'submit');
-
-			// add blog namespaces
-			global $wgEnableBlogArticles;
-			if(!empty($wgEnableBlogArticles)) {
-				$ns = array_merge($ns, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK));
-			}
-
-			if(in_array($wgTitle->getNamespace(), $ns) || in_array($wgRequest->getVal('action', 'view'), $actions)) {
-				// edit mode & special/blog pages (package with YUI)
-				$package = $packagePrefix.'anon_everything_else_js';
-			} else {
-				// view mode (package without YUI)
-				$package = $packagePrefix.'anon_article_js';
-			}
-		}
-		// If we use StaticChute right on the page (rather than loaded asynchronously), we'll use this var.
-		$this->staticChuteHtml = $staticChute->getChuteHtmlForPackage($package);
 
 //		// load WikiaScriptLoader
 //		// macbre: this is minified version of /skins/monaco/js/WikiaScriptLoader.js using Google Closure
