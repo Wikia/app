@@ -17,6 +17,7 @@ $messages['en'] = array(
 	'userprofilepage-about-section-title' => 'About $1',
 	'userprofilepage-edit-button' => 'edit',
 	'userprofilepage-top-pages-section-title' => '$1\'s Top $2 Pages',
+	'userprofilepage-hidden-top-pages-section-title' => 'Hidden Top Pages',
 	'userprofilepage-top-page-edits' => '$1 edits',
 	'userprofilepage-about-article-title' => 'About',
 	'userprofilepage-about-empty-section' => 'This section is empty, click edit to add some stuff here!',

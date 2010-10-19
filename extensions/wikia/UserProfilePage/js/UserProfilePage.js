@@ -9,12 +9,9 @@ var UserProfilePage = {
 		UserProfilePage._topWikisWrapper = $('#profile-top-wikis-body');
 		UserProfilePage._topPagesWrapper = $('#profile-top-pages-body');
 		UserProfilePage.attachEvents();
-		console.log( UserProfilePage._topPagesWrapper );
 	},
 	
 	doAction: function(name, type, value) {
-		console.log( name +' '+ type +' '+ value );
-
 		$.getJSON(wgScript,
 				{
 					'action': 'ajax',
@@ -25,19 +22,23 @@ var UserProfilePage = {
 				},
 				function(response) {
 					if(response.result === true) {
-						console.log( response );
-						//UserProfilePage._topWikisWrapper.replaceWith(response.listBody);
-						//UserProfilePage._topWikisWrapper = $('#toplists-list-body');
-						//UserProfilePage._topWikisWrapper.find('#' + response.votedId).closest('li').find('.ItemNumber')
+						if( response.type == 'page' ) {
+							UserProfilePage._topPagesWrapper.replaceWith( response.html );
+							UserProfilePage._topPagesWrapper = $('#profile-top-pages-body');
+						}
+						if( response.type == 'wiki' ) {
+							UserProfilePage._topWikisWrapper.replaceWith( response.html );
+							UserProfilePage._topWikisWrapper = $('#profile-top-wikis-body');
+						}
 					}
 				}
 			);
-
 	},
 
 	attachEvents: function() {
 		UserProfilePage._topWikisWrapper.find('.HideButton').bind('click', function() { UserProfilePage.doAction( 'hide', 'wiki', this.title ); } );
 		UserProfilePage._topPagesWrapper.find('.HideButton').bind('click', function() { UserProfilePage.doAction( 'hide', 'page', this.title ); } );
+		UserProfilePage._topPagesWrapper.find('.UnhideButton').bind('click', function() { UserProfilePage.doAction( 'unhide', 'page', this.title ); } );
 	}
 
 };
