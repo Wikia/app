@@ -257,17 +257,23 @@ function outputHeadersAndCss($cssContent, $errorStr=""){
 	header("Content-type: text/css");
 	header('Vary: Accept-Encoding'); // always send this even when we don't compress the response
 
-	// Caching-related headers
-	$dateFormat = 'D, d M Y H:i:s \G\M\T';
-	header('Last-Modified: ' . gmdate($dateFormat)); // Last modified right now.
-	// Far-future expiration
-	header('Expires: ' . gmdate($dateFormat, strtotime("+13 years")));
-	header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
-
 	// Since this emits a header, it needs to be done before printing content.
 	$timeToGenerate = "/* ".wfReportTime()." */";
+	
+	if(trim($cssContent) == ""){
+		header('HTTP/1.0 503 Temporary Error');
+	} else {
+		// Caching-related headers
+		$dateFormat = 'D, d M Y H:i:s \G\M\T';
+		header('Last-Modified: ' . gmdate($dateFormat)); // Last modified right now.
+		// Far-future expiration
+		header('Expires: ' . gmdate($dateFormat, strtotime("+13 years")));
+		header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
 
-	print $cssContent;
+		
+
+		print $cssContent;
+	}
 
 	// If there was an error, print it out into the resulting CSS.
 	if($errorStr != ""){
