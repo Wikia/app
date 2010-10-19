@@ -4,7 +4,7 @@ use wikia_mailer;
 
 CREATE TABLE IF NOT EXISTS mail (
        id INT PRIMARY KEY AUTO_INCREMENT,
-       created DATETIME NOT NULL, # when we sent it from apache
+       created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, # when we sent it from apache
        src VARCHAR(255) NOT NULL,            
        dst VARCHAR(255) NOT NULL,
        hdr TEXT NOT NULL,
