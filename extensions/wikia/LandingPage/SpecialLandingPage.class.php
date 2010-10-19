@@ -13,15 +13,6 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgStyleVersion, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
-
-		// forces the skin to oasis
-		if ($wgRequest->getVal("new-wikia")) {
-			$wgUser->setOption("skin", "oasis");
-			$wgUser->saveSettings();
-			NotificationsModule::addConfirmation(wfMsg('landingpage-change-notification'), array(), 1);
-		}
-
-		$this->button_url = $wgTitle->getLocalURL(array("new-wikia"=> "true"));
 		$this->setHeaders();
 		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/LandingPage/css/LandingPage.scss'));
 
@@ -29,17 +20,6 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		// hide wiki and page header
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
-
-
-		if ($wgUser->isLoggedIn() === true) {
-			$this->logInClass = '';
-			$this->loggedIn = true;
-		}
-		else {
-			$this->logInClass = ' class="ajaxLoginRequest"';
-			$this->loggedIn = false;
-
-		}
 
 		// only shown "My Tools" on floating toolbar
 		$wgShowMyToolsOnly = true;
@@ -91,12 +71,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
-			'button_url' => $this->button_url,
-			'current_skin' => $wgUser->mOptions["skin"],
 			'imagesPath' => $wgExtensionsPath . '/wikia/LandingPage/images/',
 			'languageLinks' => $languageLinks,
-			'logInClass' => $this->logInClass,
-			'loggedIn' => $this->loggedIn,
 			'wgBlankImgUrl' => $wgBlankImgUrl,
 			'wikis' => $wikis,
 		));
