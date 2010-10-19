@@ -12,6 +12,7 @@ class SpotlightsModule extends Module {
 	var $titleMsg;
 	var $adGroupName;
 	var $useLazyLoadAdClass;
+	var $forceContent; # array that overrides declared spotlight display, used for for example in Related Videos
 
 /**
  * This method displays spotlights.  Since they appear in two places, it has a required parameter.
@@ -37,6 +38,8 @@ class SpotlightsModule extends Module {
 		$this->titleMsg = 'oasis-spotlights-' . strtolower($params['mode']) . '-title';
 		$this->adGroupName = $params['adGroupName'];
 
+		wfRunHooks('BeforeExecuteSpotlightsIndex', array( &$this ));
+
 		$this->useLazyLoadAdClass = true;
 		if (empty($wgEnableAdsLazyLoad)) {
 			$this->useLazyLoadAdClass = false;
@@ -51,5 +54,4 @@ class SpotlightsModule extends Module {
 			}
 		}
 	}
-
 }
