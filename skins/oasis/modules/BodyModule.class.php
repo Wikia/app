@@ -246,6 +246,8 @@ class BodyModule extends Module {
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
 		$railModuleList[1050] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3'));
 
+		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
+
 		wfProfileOut(__METHOD__);
 		return $railModuleList;
 	}
