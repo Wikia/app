@@ -18,7 +18,7 @@ class SpecialLeaderboard extends SpecialPage {
 		$this->setHeaders();
 		
 		$skinName = get_class($wgUser->getSkin());
-
+		
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard.css?{$wgStyleVersion}");
 		if( $skinName == 'SkinMonoBook' ) {
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_monobook.css?{$wgStyleVersion}");

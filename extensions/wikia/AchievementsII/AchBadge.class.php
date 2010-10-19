@@ -118,6 +118,16 @@ class AchBadge {
 		return "{$wgExtensionsPath}/wikia/AchievementsII/images/badges/{$subdir}/{$pictureName}";
 	}
 
+	public function getHoverPictureUrl() {
+		$image = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $this->mBadgeTypeId ) );
+
+		if($image) {
+			return wfReplaceImageServer( $image->getFullUrl() );
+		}
+
+		return false;
+	}
+
 	public function getEarnedBy() {
 		global $wgCityId, $wgExternalSharedDB;
 
@@ -137,6 +147,22 @@ class AchBadge {
 	//TODO: works only if category has been passed to constructor
 	public function getCategory() {
 		return AchConfig::getInstance()->getBadgeTrackCategory($this->mBadgeTypeId);
+	}
+
+	public function getTrackingUrl() {
+		return AchConfig::getInstance()->getBadgeTrackingUrl( $this->mBadgeTypeId );
+	}
+
+	public function getClickCommandUrl() {
+		return AchConfig::getInstance()->getBadgeClickCommandUrl( $this->mBadgeTypeId );
+	}
+
+	public function getHoverTrackingUrl() {
+		return AchConfig::getInstance()->getBadgeHoverTrackingUrl( $this->mBadgeTypeId );
+	}
+
+	public function isSponsored() {
+		return AchConfig::getInstance()->isSponsored( $this->mBadgeTypeId );
 	}
 
 	/**
