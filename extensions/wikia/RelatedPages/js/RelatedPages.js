@@ -65,6 +65,7 @@ RelatedPages = {
 	},
 	
 	updateScroll: function() {
+		RelatedPages.log('updated after scroll');
 		var fold = $(window).height() + $(window).scrollTop();
 		var topVal = $('.RelatedPagesModule').offset().top;
 
@@ -74,6 +75,7 @@ RelatedPages = {
 	},
 	
 	lazyLoadImages: function() {
+		RelatedPages.log('loading RelatedPages images');
 		var images = $('.RelatedPagesModule').find('img').filter('[data-src]');
 		images.each(function() {
 			var image = $(this);
