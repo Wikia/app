@@ -246,6 +246,7 @@ class WikiaAssets {
 	}
 	
 	private function GetPrintCSSReferences($cb=""){
+		global $wgRequest;
 		$cssReferences = array();
 		global $wgSquidMaxage;
 		$siteargs = array(
