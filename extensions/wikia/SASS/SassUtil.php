@@ -50,12 +50,14 @@ class SassUtil {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
+		// cache buster for wordmark and background image (current revision of settings history)
+
 		$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
 		$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
 		$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
 		$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
 		$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
-		$oasisSettings["background-image"] = $settings["background-image"];
+		$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
 		$oasisSettings["background-align"] = $settings["background-align"];
 		$oasisSettings["background-tiled"] = $settings["background-tiled"];
 
@@ -82,6 +84,28 @@ class SassUtil {
 	private static function getDefaultOasisSettings() {
 		global $wgOasisThemes;
 		return $wgOasisThemes[self::DEFAULT_OASIS_THEME];
+	}
+
+	/**
+	 * Get cache buster value for current version of theme settings
+	 */
+	public static function getCacheBuster() {
+		global $wgOasisThemeSettingsHistory;
+		wfProfileIn(__METHOD__);
+		static $cb = null;
+
+		if (is_null($cb)) {
+			$currentSettings = array_pop($wgOasisThemeSettingsHistory);
+			if (!empty($currentSettings['revision'])) {
+				$cb = $currentSettings['revision'];
+			}
+			else {
+				$cb = 1;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $cb;
 	}
 
 	/**
