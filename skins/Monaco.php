@@ -579,13 +579,8 @@ EOS;
 		$jsReferences = array();
 
 		if($allinone && $package == 'monaco_anon_article_js') {
-			global $parserMemc, $wgStyleVersion, $wgEnableViewYUI;
+			global $parserMemc, $wgStyleVersion;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-
-			$addParam = "";
-			if (!empty($wgEnableViewYUI)) {
-				$addParam = "&yui=1";
-			}
 
 			global $wgDevelEnvironment;
 			if(empty($wgDevelEnvironment)){
