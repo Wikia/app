@@ -3,12 +3,12 @@
 
 		<div id="profile-activity-feed" class="uppBox">
 			<h1 class="color1"><?= wfMsg( 'userprofilepage-recent-activity-title', array( $userName ) ); ?></h1>
-				<?= $activityFeedBody; ?>
+			<?= $activityFeedBody; ?>
 		</div>
 
 		<div id="profile-top-pages" class="uppBox">
 			<h1 class="color1"><?= wfMsg( 'userprofilepage-top-pages-section-title', array( $userName, $wikiName ) ); ?></h1>
-				<?= $topPagesBody; ?>
+			<?= $topPagesBody; ?>
 		</div>
 
 		<div id="profile-editable-area" class="uppBox">
@@ -24,20 +24,7 @@
 
 		<div id="profile-top-wikis-section" class="uppBox">
 			<h1 class="color1"><?= wfMsg( 'userprofilepage-top-wikis-title', array( $userName ) ); ?></h1>
-				<div id="profile-top-wikis-body">
-					<?php foreach( $wikiSwitch['topWikis'] as $wikiId => $wikiData ): ?>
-						<div class="uppWikiBox">
-							<?php if($isOwner): ?>
-								<a href="#" class="HideButton" title="<?=$wikiData['wikiUrl'];?>">[x]</a>
-							<?php endif; ?>
-							<a href="<?=$wikiData['wikiUrl'];?><?=$userPageUrl;?>" title="<?=$wikiData['wikiName'];?>">
-								<img alt="<?=$wikiData['wikiName'];?>" src="<?=$wikiData['wikiLogo'];?>" width="102" height="73" align="middle" />
-							</a>
-							<div><?= $wikiData['wikiName']; ?> (<?= wfMsg( 'userprofilepage-wiki-edits', array( $wikiData['editCount'] ) ); ?>)</div>
-							<!-- wordmark! -->
-						</div>
-					<?php endforeach; ?>
-				</div>
+			<?= $topWikisBody; ?>
 		</div>
 
 		<div id="profile-about-section" class="uppBox">
