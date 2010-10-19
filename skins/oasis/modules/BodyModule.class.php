@@ -200,7 +200,7 @@ class BodyModule extends Module {
 		}
 
 		if (self::isBlogPost() || self::isBlogListing()) {
-		//	$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
+			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 		//	$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 		}
 
@@ -222,7 +222,7 @@ class BodyModule extends Module {
 			}
 			else if (self::isHubPage()) {
 				$railModuleList[1490] = array('CorporateSite', 'HotSpots', null);
-				$railModuleList[1480] = array('CorporateSite', 'PopularHubPosts', null);
+			//	$railModuleList[1480] = array('CorporateSite', 'PopularHubPosts', null);
 				$railModuleList[1470] = array('CorporateSite', 'TopHubUsers', null);
 			} else {  // content pages
 				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
