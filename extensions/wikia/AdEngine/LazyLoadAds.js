@@ -65,6 +65,7 @@ var LazyLoadAds = {
 
 					if (typeof(window[fillFunction]) !== 'undefined') {
 						window[fillFunction]();
+						window[fillFunction] = null;
 					}
 					else {
 						LazyLoadAds.log("Warning! " + fillFunction + " does not exist.");
