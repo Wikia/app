@@ -164,7 +164,7 @@ class AchConfig {
 				elseif($type == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM)
 					$store = &$this->mNotInTrackCommunityPlatinum;
 				else {
-					wfDebug("Uknown badge type for {$badgeTypeId}");
+					wfDebug("Unknown badge type for {$badgeTypeId}");
 					return false;
 				}
 
@@ -184,7 +184,7 @@ class AchConfig {
 						'click_tracking_url' => $row->click_tracking_url
 					);
 				} else {
-					wfDebug("Uknown badge type for {$row->id}");
+					wfDebug("Unknown badge type for {$row->id}");
 					wfProfileOut(__METHOD__);
 					return false;
 				}
@@ -224,7 +224,7 @@ class AchConfig {
 					$this->mInTrackEditPlusCategory[$badgeTypeId] = array('enabled' => $row->enabled, 'category' => $row->cat);
 				}
 				else {
-					wfDebug("Uknown badge type for {$badgeTypeId}");
+					wfDebug("Unknown badge type for {$badgeTypeId}");
 					return false;
 				}
 
@@ -277,7 +277,7 @@ class AchConfig {
 				elseif(isset($this->mInTrackEditPlusCategory[$badgeTypeId]))
 					return BADGE_TYPE_INTRACKEDITPLUSCATEGORY;
 				else
-					wfDebug("Uknown badge type for {$badgeTypeId}");
+					wfDebug("Unknown badge type for {$badgeTypeId}");
 			}
 
 			return false;
