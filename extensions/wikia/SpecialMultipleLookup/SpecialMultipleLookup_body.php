@@ -24,7 +24,7 @@ class MultipleLookupPage extends SpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgUser, $wgOut, $wgRequest;
+		global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
 
 		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -47,17 +47,21 @@ class MultipleLookupPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$this->mUsername = $wgRequest->getVal ( 'target' );
+		$this->mWiki = $wgRequest->getVal ('wiki');
 		if ( $this->mUsername !== null ) { $this->mUsername = trim( $this->mUsername ); }
 
-		/**
-		 * show form
-		 */
-		$this->showForm();
-		$this->showUserList();
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialMultipleLookup/css/table.css?{$wgStyleVersion}");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+				 
+		if ( !empty($this->mWiki) ) {
+			$this->showWikiForm();
+		} else {
+			$this->showMainForm();
+		}
 	}
 
 	/* draws the form itself  */
-	function showForm ( $error = "" ) {
+	function showMainForm ( $error = "" ) {
 		global $wgOut;
 		wfProfileIn( __METHOD__ );
 		$action = $this->mTitle->escapeLocalURL( "" );
@@ -65,6 +69,7 @@ class MultipleLookupPage extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"error"		=> $error,
+			"title" 	=> $this->mTitle,			
 			"action"	=> $action,
 			"username"  => $this->mUsername,
 		) );
@@ -72,66 +77,32 @@ class MultipleLookupPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	function showUserList() {
-		global $wgOut, $wgRequest ;
+	/* draws the results table  */
+	function showWikiForm($error = "") {
+		global $wgOut, $wgLang ;
 		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
-		if ( empty( $this->mUsername ) ) {
+		if (empty($this->mUsername)) {
 			wfProfileOut( __METHOD__ );
 			return false ;
 		}
-
-		$this->mCore = new MultipleLookupCore( $this->mUsername );
-		# ---
-		$action = $this->mTitle->escapeLocalURL( "" );
-		$this->numResults = 0;
-		/* check user activity */
-		$userActivity = $this->mCore->checkUserActivity( $this->mUsername );
-		$userActivityWikiaList = array();
-		$userActivityWikiaListByCnt = array();
-		if ( !empty( $userActivity ) ) {
-			$userActivityWikiaList = explode( ",", $userActivity );
-			if ( is_array( $userActivityWikiaList ) ) {
-				foreach ( $userActivityWikiaList as $id => $wikisWithCnt ) {
-					$_temp = explode( "<CNT>", $wikisWithCnt );
-					if ( is_array( $_temp ) && count( $_temp ) == 2 ) {
-						$wikiName = $_temp[0];
-						$cnt = $_temp[1];
-						$userActivityWikiaListByCnt[$cnt][] = $wikiName;
-					}
-				}
-			}
-			/* sort array */
-			unset( $userActivityWikiaList );
-			$userActivityWikiaList = array();
-			if ( !empty( $userActivityWikiaListByCnt ) ) {
-				$loop = 0;
-				krsort( $userActivityWikiaListByCnt );
-				foreach ( $userActivityWikiaListByCnt as $cnt => $wikis ) {
-					if ( is_array( $wikis ) && !empty( $wikis ) ) {
-						foreach ( $wikis as $i => $wikiName ) {
-							$wikiRow = WikiFactory::getWikiByDB( $wikiName );
-							$userActivityWikiaList[$loop] = array( $wikiName, ( !empty( $wikiRow ) ) ? $wikiRow->city_url : "" );
-							$loop++;
-						}
-					}
-				}
-			}
-
-			// sort(&$userActivityWikiaList);
-		}
-
+		
+		$action = $this->mTitle->escapeLocalURL("");
+		$oWiki = WikiFactory::getWikiByDB($this->mWiki);
+				
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"action"		=> $action,
-			"username"  	=> $this->mUsername,
-			"userActivity" 	=> $userActivityWikiaList,
-		) );
-		$wgOut->addHTML( $oTmpl->execute( "user-activity" ) );
+			"title" 	=> $this->mTitle,
+			"error"     => $error,
+			"action"    => $action,
+			"username"  => $this->mUsername,
+			"wiki"		=> $this->mWiki,
+		));
+		$wgOut->addHTML( $oTmpl->execute("wiki-form") );
 		wfProfileOut( __METHOD__ );
 	}
-
+	
 	function getResults() {
 		global $wgOut, $wgRequest ;
 		wfProfileIn( __METHOD__ );

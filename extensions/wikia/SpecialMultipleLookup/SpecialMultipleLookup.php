@@ -17,15 +17,14 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'specialmultiplelookup-desc',
 	'author' => array( 'Bartek Lapinski', 'Piotr Molski' ),
 );
-define( "MULTILOOKUP_NO_CACHE", false );
-define( "ML_TEST", 0 );
+define( "MULTILOOKUP_NO_CACHE", true );
+define( "ML_TEST", 1 );
 $wgExtensionMessagesFiles["MultiLookup"] = dirname( __FILE__ ) . '/SpecialMultipleLookup.i18n.php';
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_helper.php' );
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_ajax.php' );
+require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_hooks.php' );
 
 $wgAvailableRights[] = 'multilookup';
 
 extAddSpecialPage( dirname( __FILE__ ) . '/SpecialMultipleLookup_body.php', 'MultiLookup', 'MultipleLookupPage' );
 $wgSpecialPageGroups['MultiLookup'] = 'users';
-
-$wgHooks['ContributionsToolLinks'][] = 'wfLoadMultiLookupLink';
