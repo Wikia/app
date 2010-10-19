@@ -269,7 +269,7 @@ class WikiaAssets {
 		}
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
-		$cssReferences = array_merge($cssReferences, $StaticChute->getFileList('packages' => $package));
+		$cssReferences = array_merge($cssReferences, $StaticChute->getFileList(array('packages' => $package)));
 
 		return $cssReferences;
 	}
