@@ -112,7 +112,7 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 
 		// This section allows us to use c1 or c2 as a source for wiki databases
 		// Be aware that this means the database has to be loaded in the right cluster according to wikicities!
-		$db = wfGetDB( DB_MASTER, "dump", $wgWikiFactoryDB );
+		$db = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
 		$sql = 'SELECT city_cluster from city_list where city_id = ' . $cityId;
 		$result = $db->query( $sql, __METHOD__ );
 
@@ -122,8 +122,8 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 		// Final sanity check to make sure our database exists
 		if ($forcedWikiDomain != DEVBOX_DEFAULT_WIKI_DOMAIN) {
 			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
-			$db1 = wfGetDB( DB_MASTER, "dump", $wgWikiFactoryDB );
-			$db2 = wfGetDB( DB_MASTER, "dump", $wgWikiFactoryDB . '_c2'); // lame
+			$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
+			$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
 
 			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
 			if (array_search($dbname, $devbox_dbs) === false) {
@@ -300,8 +300,8 @@ function getHtmlForDatabaseComparisonTool(){
 	global $wgDBname,$wgExternalSharedDB, $wgWikiFactoryDB;
 
 	//$db_dev = wfGetDB( DB_MASTER, "dump", $wgDBname );
-	$db1 = wfGetDB( DB_MASTER, "dump", $wgWikiFactoryDB );
-	$db2 = wfGetDB( DB_MASTER, "dump", $wgWikiFactoryDB . '_c2'); // lame
+	$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
+	$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
 
 	$devbox_c1_dbs = getDevBoxOverrideDatabases($db1);
 	$devbox_c2_dbs = getDevBoxOverrideDatabases($db2);
