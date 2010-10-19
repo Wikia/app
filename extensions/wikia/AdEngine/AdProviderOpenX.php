@@ -57,6 +57,7 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 	public function __construct() {
 
 		global $wgEnableSpotlightsV2_GlobalNav, $wgEnableSpotlightsV2_Rail, $wgEnableSpotlightsV2_Footer;
+		global $wgEnableOpenXSPC;
 
 		if($wgEnableSpotlightsV2_GlobalNav) {
 			$this->zoneIds['SPOTLIGHT_GLOBALNAV_1'] = 20;
@@ -87,6 +88,12 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 			$this->zoneIds['SPOTLIGHT_FOOTER_2'] = 6;
 			$this->zoneIds['SPOTLIGHT_FOOTER_3'] = 6;
 		}
+
+		// OpenX SPC should not be used with zone 6. If zone 6 is used, turn off SPC
+		if (!$wgEnableSpotlightsV2_GlobalNav || !$wgEnableSpotlightsV2_Rail || !$wgEnableSpotlightsV2_Footer) {
+			$wgEnableOpenXSPC = false;
+		}
+
 	}
 
         public function addSlotToCall($slotname){
@@ -111,55 +118,29 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 			return $this->getAdPlaceholder($slotname, false);
 		}
 
-		if ($wgEnableOpenXSPC) {
-			$fillElemFunctionPrefix = AdEngine::fillElemFunctionPrefix;
-			// will: Note about invocation below. Ideally, we would create a script element using bezen.dom.element that
-			// contains one line: OA_show($zoneId). Then we would append the script to the appropriate element using
-			// bezen.dom.appendScript(). Unfortunately, I could not get this to work. As a workaround, I made an AJAX
-			// URL to return OA_show($zoneId), and appended this script using bezen.load.script.
-			$adtag = <<<EOT
-<script type='text/javascript'>
-	document.write('<scr'+'ipt type="text/javascript">');
-	document.write('$fillElemFunctionPrefix'+'$slotname = function(){ bezen.domwrite.capture(); var parent=document.getElementById("$slotname"); var scriptSrc = wgScript + "?action=ajax&rs=axShowOpenXAd&rsargs[0]=$zoneId"; bezen.load.script(parent, scriptSrc, function(){ bezen.domwrite.render( parent ); } ); }');
-	document.write('</scr'+'ipt>');
-</script>
-EOT;
-/*
-			$adtag = <<<EOT
-<script type='text/javascript'>
-	document.write('<scr'+'ipt type="text/javascript">');
-	document.write('OA_show($zoneId);');
-	document.write('</scr'+'ipt>');
-</script>
-EOT;
-*/
-			//@todo use lazy loading
+		$adtag = '';
+
+		if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
+			$adtag .= $this->getAdPlaceholder($slotname, true);
 		}
-		else {
-			$adtag = '';
 
-			if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
-				$adtag .= $this->getAdPlaceholder($slotname, true);
-			}
-
-			$adtag .= <<<EOT
+		$adtag .= <<<EOT
 <script type='text/javascript'>/*<![CDATA[*/
 EOT;
-			$adtag .= $this->getAdUrlScripts(array($slotname), array($zoneId), $params);
-			if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
-				$functionName = AdEngine::fillElemFunctionPrefix . $slotname;
-				$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, array($slotname));
-				$adtag .= <<<EOT
+		$adtag .= $this->getAdUrlScripts(array($slotname), array($zoneId), $params);
+		if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
+			$functionName = AdEngine::fillElemFunctionPrefix . $slotname;
+			$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, array($slotname));
+			$adtag .= <<<EOT
 	document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
 /*]]>*/</script>
 EOT;
-			}
-			else {
-				$adtag .= <<<EOT
+		}
+		else {
+			$adtag .= <<<EOT
 	document.write('<scr'+'ipt type="text/javascript" src="'+base_url_{$slotname}+'"></scr'+'ipt>');
 /*]]>*/</script>
 EOT;
-			}
 		}
 
 		return $adtag;
@@ -298,14 +279,23 @@ EOT;
 			return;
 		}
 
-		if ($is_iframe) {
-			$base_url = '/__spotlights/afr.php';
+		global $wgEnableOpenXSPC;
+		if ($wgEnableOpenXSPC) {
+			$url_script = <<<EOT
+	var base_url = wgScript + "?action=ajax&rs=axShowOpenXAd&rsargs[0]=$zoneId";
+EOT;
 		}
 		else {
-			$base_url = '/__spotlights/ajs.php';
+			if ($is_iframe) {
+				$base_url = '/__spotlights/afr.php';
+			}
+			else {
+				$base_url = '/__spotlights/ajs.php';
+			}
+
+			$url_script = self::getUrlScript($base_url, $slotname, $zoneId, '', $params);
 		}
 
-		$url_script = self::getUrlScript($base_url, $slotname, $zoneId, '', $params);
 		$adUrlScript = <<<EOT
 	{$url_script}
 	var base_url_{$slotname} = base_url;
