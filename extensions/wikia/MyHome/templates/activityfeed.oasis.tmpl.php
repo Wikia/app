@@ -2,7 +2,7 @@
 	<nav class="activity-nav">
 		<ul>
 			<li class="<?= $classWatchlist ?>"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li>		
-			<li class="<?= $classActivity ?>"><?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity-feed') ?></li>
+			<li class="<?= $classActivity ?>"><?= View::specialPageLink('RecentChanges', 'oasis-button-wiki-activity-feed') ?></li>
 
 		</ul>
 	</nav>
