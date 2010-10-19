@@ -23,6 +23,16 @@
 table.TablePager { border: 1px solid gray;}
 /*]]>*/
 </style>
+<form id="WikiFactoryDomainSelector" method="post" action="<?php echo $title->getLocalUrl( 'action=select' ) ?>">
+<div class="wk-form-row">
+ <ul>
+ <li><label>Domain name</label></li>
+ <li><input type="text" name="wpCityDomain" id="citydomain" value="<?php echo $domain ?>" size="24" maxlength="255" /></li>
+ <li><button style="z-index:9002">Get configuration</button></li>
+ </ul>
+</div>
+</form>
+<br/>
 <!-- s:short info -->
 <ul>
 	<li>
@@ -48,15 +58,6 @@ table.TablePager { border: 1px solid gray;}
 </ul>
 <!-- e:short info -->
 <br />
-<form id="WikiFactoryDomainSelector" method="post" action="<?php echo $title->getLocalUrl( 'action=select' ) ?>">
-<div class="wk-form-row">
- <ul>
- <li><label>Domain name</label></li>
- <li><input type="text" name="wpCityDomain" id="citydomain" value="<?php echo $domain ?>" size="24" maxlength="255" /></li>
- <li><button style="z-index:9002">Get configuration</button></li>
- </ul>
-</div>
-</form>
 <script type="text/javascript">
 /*<![CDATA[*/
 	$.loadJQueryAutocomplete(function() {
