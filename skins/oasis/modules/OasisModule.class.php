@@ -207,7 +207,9 @@ class OasisModule extends Module {
 			}
 
 			// Completely replace the print styles with the combined version.
-			$printStyles = array( "/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS" );
+			$printStyles = array(
+				"/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS" => array("media" => "print")
+			);
 		}
 
 		$this->data['csslinksbottom-urls'] = $printStyles;
