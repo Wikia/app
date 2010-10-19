@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<h2>Variable Data - <?php echo $variable->cv_name ?>  <small>[<a href='#' id="wk-variable-change" title="Click here to edit this variable" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>edit</a>]</small></h2>
+<h2>Variable Data - <?php echo $variable->cv_name ?>  <small>[<a href='#' id="wk-variable-change" title="Click here to edit this variable's settings" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>edit</a>]</small></h2>
 <div style="margin:.5em 0;"><?php echo $variable->cv_description ?></div>
 <table class="wikitable">
 	<thead class="wf-tinyhead">
