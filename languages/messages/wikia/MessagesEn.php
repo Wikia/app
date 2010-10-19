@@ -1090,6 +1090,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 'oasis-interlang-show-all' => '... see all >',
 'oasis-interlang-languages' => 'Languages:',
+'photosblacklist' => '* example-blacklist.png',
 
 # user-facing (editable) Oasis messages
 # names adjusted to be easy-er for the user to remember
