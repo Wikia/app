@@ -2232,7 +2232,7 @@ class WikiFactory {
 					"cv_access_level" => $cv_access_level,
 					"cv_variable_group" => $cv_variable_group,
 					"cv_description" => $cv_description,
-                                        "cv_is_unique" => $cv_is_unique
+					"cv_is_unique" => $cv_is_unique
 				),
 				__METHOD__
 			);
