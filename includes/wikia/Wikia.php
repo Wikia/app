@@ -259,9 +259,11 @@ class WikiaAssets {
 			'cb' => $cb
 		) + $siteargs );
 
+		$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Print.css', $query, NS_MEDIAWIKI)));
+
 		// Sometimes, this function is called on the page itself, sometimes it's called by the combiner.
 		// The page can use Wikia::isOasis(), but the combiner needs the request param.
-		$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Print.css', $query, NS_MEDIAWIKI)));
+		$isOasis = (Wikia::isOasis() || $wgRequest->getBool('isOasis'));
 		if($isOasis){
 			$package = "oasis_css_print";
 		} else {
