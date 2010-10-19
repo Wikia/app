@@ -173,14 +173,14 @@ class PageStatsService extends Service {
 			$limit = 2;
 
 			// get list of articles categories with number of articles "linked" to them
-			$dbr = wfGetDB(DB_SLAVE);			
+			$dbr = wfGetDB(DB_SLAVE);
 
 			// check querycache first
 			$res = $dbr->select(
 				array('querycache', 'categorylinks'),
 				array('qc_title as cl_to, qc_value as cnt'),
 				array(
-					'qc_title = cl_to', 
+					'qc_title = cl_to',
 					'qc_type' => 'Mostpopularcategories',
 					'cl_from' => $this->pageId
 				),
@@ -198,7 +198,7 @@ class PageStatsService extends Service {
 					$categories[$obj->cl_to] = $obj->cnt;
 				}
 			}
-			
+
 			$wgMemc->set($key, $categories, self::CACHE_TTL);
 
 			wfProfileOut(__METHOD__ . '::miss');
@@ -333,9 +333,8 @@ class PageStatsService extends Service {
 	 * Get current revision data and authors of five recent edits (filter out bots and blocked users)
 	 */
 	public function getRecentRevisions() {
-		wfProfileIn(__METHOD__);
-
 		global $wgMemc;
+		wfProfileIn(__METHOD__);
 
 		// handle not existing pages
 		if ($this->pageId == 0) {
@@ -345,42 +344,13 @@ class PageStatsService extends Service {
 
 		// try to get cached data
 		$key = $this->getKey('revisions3');
-
 		$ret = $wgMemc->get($key);
-		if (!is_array($ret)) {
+
+		if (true) {
 			wfProfileIn(__METHOD__ . '::miss');
 
-			// get last five revisions (including the current one)
-			$recentRevisionsLimit = 5;
-
-			$apiData = ApiService::call(array(
-				'action' => 'query',
-				'prop' => 'revisions',
-				'pageids' => $this->pageId,
-				'rvlimit' => $recentRevisionsLimit * 4,
-				'rvprop' => 'timestamp|user',
-			));
-
-			if (empty($apiData)) {
-				wfProfileOut(__METHOD__);
-				return false;
-			}
-
-			$pageData = array_pop($apiData['query']['pages']);
-
-			// article has no revisions
-			if (empty($pageData['revisions'])) {
-				wfProfileOut(__METHOD__);
-				return false;
-			}
-
-			$revisions = $pageData['revisions'];
-
-			// get timestamp of most recent edit
-			$latestEditTimestamp = $revisions[0]['timestamp'];
-
-			// filter out bots and blocked users
-			$revisions = array_values(array_filter($revisions, 'PageStatsService::filterOutEditors'));
+			// get last five revisions + the current one
+			$data = $this->getRevisionsFromAPI(6);
 
 			// prepare result
 			$ret = array(
@@ -388,18 +358,70 @@ class PageStatsService extends Service {
 			);
 
 			// no revisions left - show only timestamp of most recent edit
-			if (empty($revisions)) {
-				$ret['current']['timestamp'] = $latestEditTimestamp;
+			if (empty($data['revisions'])) {
+				$ret['current']['timestamp'] = $data['latest'];
 			}
 			else {
-				$ret['current'] = array_shift($revisions);
-				$ret = array_merge($ret, array_slice($revisions, 0, 5));
+				$ret['current'] = array_shift($data['revisions']);
+				$ret = array_merge($ret, $data['revisions']);
 			}
 
 			$wgMemc->set($key, $ret, self::CACHE_TTL);
 
 			wfProfileOut(__METHOD__ . '::miss');
 		}
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	}
+
+	/**
+	 * Get recent article revisions with filtered users
+	 */
+	private function getRevisionsFromAPI($limit) {
+		wfProfileIn(__METHOD__);
+
+		$apiData = ApiService::call(array(
+			'action' => 'query',
+			'prop' => 'revisions',
+			'pageids' => $this->pageId,
+			'rvlimit' => $limit * 4,
+			'rvprop' => 'timestamp|user',
+		));
+
+		if (empty($apiData)) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+
+		$pageData = array_pop($apiData['query']['pages']);
+
+		// article has no revisions
+		if (empty($pageData['revisions'])) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+
+		$revisions = $pageData['revisions'];
+		$filteredRevisions = array();
+		$count = 0;
+
+		// filter out bots and blocked users
+		foreach($revisions as $revision) {
+			if (self::filterOutEditors($revision)) {
+				$filteredRevisions[] = $revision;
+				$count++;
+			}
+
+			if ($count >= $limit) {
+				break;
+			}
+		}
+
+		$ret = array(
+			'latest' => $revisions[0]['timestamp'],
+			'revisions' => $filteredRevisions,
+		);
 
 		wfProfileOut(__METHOD__);
 		return $ret;
