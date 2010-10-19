@@ -6,6 +6,7 @@ class SpotlightsModule extends Module {
 	var $wgNoExternals;
 	var $wgEnableOpenXSPC;
 	var $wgEnableSpotlightsV2_Footer;
+	var $wgEnableSpotlightsV2_Rail;
 	var $mode;
 	var $adslots;
 	var $n_adslots;

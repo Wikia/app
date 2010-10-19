@@ -124,7 +124,7 @@ class BodyModule extends Module {
 
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail;
 
 		$railModuleList = array();
 
@@ -156,8 +156,10 @@ class BodyModule extends Module {
 					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('LatestActivity', 'Index', null),
 					1250 => array('LatestPhotos', 'Index', null),
-				//	1150 => array('Spotlights', 'Index', $spotlightsParams), // temp removed, see rt#74008
 				);
+				if($wgEnableSpotlightsV2_Rail) {
+					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+				}
 			}
 			else {
 				// don't show any module for MW core special pages
@@ -183,7 +185,9 @@ class BodyModule extends Module {
 			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
 			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
-		//	$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+			if($wgEnableSpotlightsV2_Rail) {
+				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+			}
 		}
 
 		// User page namespaces
@@ -201,7 +205,9 @@ class BodyModule extends Module {
 
 		if (self::isBlogPost() || self::isBlogListing()) {
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
-		//	$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+			if($wgEnableSpotlightsV2_Rail) {
+				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+			}
 		}
 
 		// Display comments on content and blog pages

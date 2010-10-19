@@ -16,7 +16,7 @@
 	<? if ($wgEnableOpenXSPC) { ?>
 	<ul>
 	<? } else { ?>
-	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?><?= $mode == 'rail' ? ($wgEnableSpotlightsV2_Rail ? ' SPOTLIGHT_RAIL' : '') : ($wgEnableSpotlightsV2_Footer ? ' SPOTLIGHT_FOOTER' : '') ?>"<? } } ?>>
+	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?><?= $mode == 'RAIL' ? ($wgEnableSpotlightsV2_Rail ? ' SPOTLIGHT_RAIL' : '') : ($wgEnableSpotlightsV2_Footer ? ' SPOTLIGHT_FOOTER' : '') ?>"<? } } ?>>
 		<?= AdEngine::getInstance()->getLazyLoadableAdGroup($adGroupName, $adslots) ?>
 	<? } ?>
 		<? for ($i=0; $i<$n_adslots; $i++) { ?>
