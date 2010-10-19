@@ -101,7 +101,7 @@ CKEDITOR.plugins.add('rte-overlay',
 			var item = this;
 
 			$('<span>').
-				addClass(item.class).
+				addClass(item['class']).
 				html(item.label).
 				bind('click', function(ev) {
 					self.hideOverlay(node);

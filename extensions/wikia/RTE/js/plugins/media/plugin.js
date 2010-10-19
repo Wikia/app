@@ -86,7 +86,7 @@ CKEDITOR.plugins.add('rte-media',
 		RTE.overlay.add(media, [
 			{
 				label: msgs['edit'],
-				class: 'RTEMediaOverlayEdit',
+				'class': 'RTEMediaOverlayEdit',
 				callback: function(node) {
 					var type = self.getTrackingType(node);
 
@@ -98,7 +98,7 @@ CKEDITOR.plugins.add('rte-media',
 			},
 			{
 				label: msgs['delete'],
-				class: 'RTEMediaOverlayDelete',
+				'class': 'RTEMediaOverlayDelete',
 				callback: function(node) {
 					var type = self.getTrackingType(node);
 
