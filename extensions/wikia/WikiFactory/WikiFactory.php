@@ -2079,6 +2079,9 @@ class WikiFactory {
 			return false;
 		}
 
+		/**
+		 * it is called in CommonExtensions.php so wgMemc is not initialized there
+		 */
 		$oMemc = wfGetCache( CACHE_MEMCACHED );
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
