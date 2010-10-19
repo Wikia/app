@@ -193,7 +193,7 @@ class OasisModule extends Module {
 		}
 
 		// If this is an anon article view, use the combined version of the print files.
-		if($isAnonArticleView && $allInOne){
+		if($allInOne){
 			// Create the combined URL.
 			global $parserMemc, $wgStyleVersion;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
