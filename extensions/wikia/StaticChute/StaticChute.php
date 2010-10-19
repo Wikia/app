@@ -410,11 +410,19 @@ class StaticChute {
 		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
 		$this->config['oasis_anon_everything_else_js'] = $this->config['oasis_anon_article_js'];
 		
+		// Sometimes we load StaticChute from outside of the MediaWiki stack (eg: /static/404handler), but fortunately
+		// during those times, we don't need the oasis_print_css, so just skip it.
+		if(function_exists('wfGetSassUrl')){
+			$oasisPrintCss = wfGetSassUrl('skins/oasis/css/print.scss');
+		} else {
+			$oasisPrintCss = "";
+		}
+
 		// Although this will probably always be one file (since sass can combine files), this is defined
 		// here so that multiple code-paths (the combiner and OasisModule.class) can access the same definition
 		// of what the print-css is.
 		$this->config['oasis_css_print'] = array(
-			wfGetSassUrl('skins/oasis/css/print.scss')
+			$oasisPrintCss
 		);
 	} // end generateConfigSkinOasis()
 
