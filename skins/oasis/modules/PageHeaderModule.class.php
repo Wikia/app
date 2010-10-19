@@ -306,7 +306,10 @@ class PageHeaderModule extends Module {
 
 				// special case for wiki activity page
 				if ($wgTitle->isSpecial('WikiActivity')) {
-					$this->subtitle = View::specialPageLink('RecentChanges', 'oasis-page-header-subtitle-special-wikiactivity');
+					/*$this->subtitle = View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist');
+					$this->subtitle .= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity-feed');*/
+					$this->subtitle = '&nbsp;';
+					
 				} else if ($wgTitle->isSpecial('ThemeDesignerPreview')) {
 					// fake static data for ThemeDesignerPreview
 					$this->revisions = array('current' => array('user' => 'foo',

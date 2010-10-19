@@ -1005,6 +1005,8 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-button-random-page' => 'Random Page',
 'oasis-button-random-wiki' => 'Random Wiki',
 'oasis-button-wiki-activity' => 'Wiki Activity',
+'oasis-button-wiki-activity-feed' => 'See all activity &gt;',
+'oasis-button-wiki-activity-watchlist' => ' Followed Pages only',
 'oasis-activity-header' => 'Recent Wiki Activity',
 'oasis-related-video-header' => 'Related Videos',
 'oasis-related-video-by-5min' => 'Powered by 5min',

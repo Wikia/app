@@ -101,20 +101,48 @@
 	}
 }
 
+.WikiaPageHeader {
+	h2 {
+		a:first-child {
+			border-right: 1px solid $color-page-border;
+			margin-right: 8px;
+			padding-right: 8px;
+
+		}
+	}
+}
 
 .activity-nav {
-	border-bottom: 1px solid $color-page-border;
 	height: 36px;
+	left: 11px;
 	overflow: hidden;
+	position: absolute;
 	margin-bottom: 10px;
 	padding-bottom: 9px;
+	top: -51px;
 	
+	z-index: 200;
 	ul {
 		list-style: none;
 		margin-left: 0px;
 		li {
 			float: left;
 			list-style: none;
+			
+			&:first-child {
+				border-right: solid 1px $color-page-border;
+				margin-right: 6px;
+				padding-right: 7px;
+			}
+				
+			&.selected {
+				a {
+					color: $color-text;
+					&:hover {
+						text-decoration: none;
+					}
+				}
+			}
 		}
 	}
 }
@@ -125,4 +153,3 @@
 	margin-right: auto;
 	background-color: Red;
 }
-
