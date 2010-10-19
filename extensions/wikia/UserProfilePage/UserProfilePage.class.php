@@ -5,9 +5,17 @@ class UserProfilePage {
 	 * @var User
 	 */
 	private $user;
+	private $hiddenPages = null;
+	private $templateEngine = null;
 
 	public function __construct( User $user ) {
+		global $wgUser;
+
 		$this->user = $user;
+		$this->templateEngine = new EasyTemplate( dirname(__FILE__) . "/templates/" );
+
+		// set "global" template variables
+		$this->templateEngine->set( 'isOwner', ( $this->user->getId() == $wgUser->getId() ) ? true : false );
 	}
 
 	public function get( $pageBody ) {
@@ -17,25 +25,22 @@ class UserProfilePage {
 
 		$userContribsProvider = new UserContribsProviderService;
 
-		$template = new EasyTemplate( dirname(__FILE__) . "/templates/" );
-		$template->set_vars(
+		$this->templateEngine->set_vars(
 			array(
-				'wikiName'     => $wgSitename,
-				'userName'     => $this->user->getName(),
-				'userPageUrl'  => $this->user->getUserPage()->getLocalUrl(),
-				'activityFeed' => $this->renderUserActivityFeed( $userContribsProvider->get( 6, $this->user ) ),
-				'imageFeed'    => $this->populateImageFeedVars(),
-				'wikiSwitch'   => $this->populateWikiSwitchVars(),
-				'topPages'     => $this->getTopPages(),
-				'aboutSection' => $this->populateAboutSectionVars(),
-				'pageBody'     => $pageBody,
+				'wikiName'         => $wgSitename,
+				'userName'         => $this->user->getName(),
+				'userPageUrl'      => $this->user->getUserPage()->getLocalUrl(),
+				'activityFeedBody' => $this->renderUserActivityFeed( $userContribsProvider->get( 6, $this->user ) ),
+				'wikiSwitch'       => $this->populateWikiSwitchVars(),
+				'topPagesBody'     => $this->renderTopPages( $this->getTopPages() ),
+				'aboutSection'     => $this->populateAboutSectionVars(),
+				'pageBody'         => $pageBody,
 			));
-
-		return $template->render( 'user-profile-page' );
+		return $this->templateEngine->render( 'user-profile-page' );
 	}
 
 	/**
-	 * render user's activity feed
+	 * render user's activity feed section
 	 * @param array $data
 	 * @return string
 	 */
@@ -43,21 +48,33 @@ class UserProfilePage {
 		global $wgBlankImgUrl;
 		wfProfileIn(__METHOD__);
 
-		$template = new EasyTemplate( dirname(__FILE__) . "/templates/" );
-		$template->set_vars(
+		$this->templateEngine->set_vars(
 			array(
-				'data' => $data,
+				'activityFeed' => $data,
 				'assets' => array( 'blank' => $wgBlankImgUrl )
 			)
 		);
 
-		// add header and wrap
-		//if (!empty($wrap)) {
-		//	$content = $this->wrap($content, false);
-		//}
+		wfProfileOut(__METHOD__);
+		return $this->templateEngine->render( 'user-contributions' );
+	}
+
+	/**
+	 * render user's top pages section
+	 * @param array $data
+	 * @return string
+	 */
+	private function renderTopPages( Array $data ) {
+		wfProfileIn(__METHOD__);
+
+		$this->templateEngine->set_vars(
+			array(
+				'topPages' => $data,
+			)
+		);
 
 		wfProfileOut(__METHOD__);
-		return $template->render( 'user-contributions' );
+		return $this->templateEngine->render( 'user-top-pages' );
 	}
 
 	private function populateAboutSectionVars() {
@@ -80,201 +97,19 @@ class UserProfilePage {
 		return array( 'body' => $sArticleBody, 'articleEditUrl' => $sArticleEditUrl );
 	}
 
-	/*
-	private function populateActivityFeedVars() {
-		return array('types' => array(	'all'    => $this->getRecentActivity(),
-										'media'  => $this->getRecentActivity('media'),
-										'create' => $this->getRecentActivity('create'),
-										'tend'   => $this->getRecentActivity('tend'),
-										'talk'   => $this->getRecentActivity('talk'),
-					));
-	}
-	*/
-
-	private function populateImageFeedVars() {
-		return array('images' => $this->getRecentUploadedPhotos());
-	}
-
 	private function populateWikiSwitchVars() {
 		return array( 'topWikis' => $this->getTopWikis() );
 	}
 
-	static public function outputPageHook( $skin, $template ) {
-		global $wgRequest;
-		wfProfileIn(__METHOD__);
-
-		wfLoadExtensionMessages('MyHome');
-
-		// Return without any changes if this isn't in the user namespace OR
-		// if the user is doing something besides viewing or purging this page
-		$action = $wgRequest->getVal('action', 'view');
-		if ($skin->mTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
-			return true;
-		}
-
-		$user = User::newFromName( $skin->mTitle->getDBKey() );
-
-		// sanity check
-		if ( !is_object( $user ) ) {
-			return true;
-		}
-		$user->load();
-
-		$profilePage = new UserProfilePage( $user );
-		$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/*
-	function getRecentActivity ($filter = false) {
-		$feedProxy = new ActivityFeedAPIProxy();
-		$feedProxy->APIparams['rcuser_text'] = $this->user->getName();
-
-		$feedData = null;
-
-		if ($filter == 'media') {
-			$feedData['results'] = array();
-			$data = array(); //RecentChangeDetail::getUserChanges($this->user->getId(), 'imageInserts', 5);
-
-
-			foreach ($data as $detail) {
-				$rc = $detail->recentChange();
-				if (!$rc) continue;
-
-				$key = $rc->getAttribute('rc_title');
-
-				$result = null;
-				if (!isset($feedData['results'][$key])) {
-					$title = Title::makeTitle($rc->getAttribute('rc_namespace'),
-											  $rc->getAttribute('rc_title'));
-
-					$type = $rc->getAttribute('rc_type');
-					switch ( $type ) {
-						case RC_EDIT:  $type = 'edit'; break;
-						case RC_NEW:   $type = 'new'; break;
-					}
-
-					$userLink = null;
-					$userText = $rc->getAttribute('rc_user_text');
-					$ut = Title::newFromText($userText, NS_USER);
-					if($ut->isKnown()) {
-						$userLink = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow'), $userText);
-					} else {
-						//$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow', 'class' => 'new'), $res['user']);
-						$userLink = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$userText, 'rel' => 'nofollow'), $userText);
-					}
-
-					$result = array(
-						'type'      => $type,
-						'title'     => $title->getText(),
-						'url'       => $title->getLocalUrl(),
-						'diff'      => '',
-						'timestamp' => $detail->timestamp,
-						'user'      => $userLink,
-						'ns'        => $detail->pageNs
-					);
-					$feedData['results'][$key] = $result;
-				} else {
-					$result = $feedData['results'][$key];
-				}
-
-				// Reuse code from the MyHome extension via DataFeedProvider
-				$imageName = $detail->value;
-				if($imageName{0} == ':') { // video
-					$video = DataFeedProvider::getVideoThumb(substr($imageName, 1));
-					if (isset($video))
-						$result['new_videos'][] = $video;
-				} else {
-					$image = DataFeedProvider::getImageThumb($imageName);
-					if (isset($image))
-						$result['new_images'][] = $image;
-				}
-
-				// Set this back in case $result was null before
-				$feedData['results'][$key] = $result;
- 			}
-		} elseif ($filter == 'create') {
-			$feedProxy->APIparams['rcnamespace'] = NS_MAIN;
-			$feedProxy->APIparams['rctype'] = 'new';
-		} elseif ($filter == 'tend') {
-			$feedProxy->APIparams['rcshow'] = '!bot|minor';
-		} elseif ($filter == 'talk') {
-			$feedProxy->APIparams['rcnamespace'] = NS_USER_TALK;
-		}
-
-		if (!isset($feedData)) {
-			$feedProvider = new DataFeedProvider($feedProxy);
-			$feedData = $feedProvider->get(5);
-		}
-
-		$parameters = null;
-		$feedRenderer = new ActivityFeedRenderer();
-
-		if (count($feedData['results'])) {
-			return $feedRenderer->render($feedData, false, $parameters);
-		} else {
-			return '';
-		}
-	}
-	*/
-
-	public function getRecentUploadedPhotos() {
-		$dbs = wfGetDB(DB_SLAVE);
-		$res = $dbs->select(
-			array( 'recentchanges' ),
-			array( 'rc_title' ),
-			array( 'rc_user'      => $this->user->getId(),
-				   'rc_namespace' => NS_FILE,
-				   'rc_type'      => RC_LOG),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'rc_timestamp DESC',
-				'LIMIT'    => 5
-			)
-		);
-
-		$photos = array();
-		while($row = $dbs->fetchObject($res)) {
-			$img = wfFindFile($row->rc_title);
-
-			if ($img->getHeight() > $img->getWidth()) {
-				$thumbWidth = 96;
-				$thumbHeight = round(96*($img->getHeight()/$img->getWidth()));
-				$pad = round(($thumbHeight - $thumbWidth)/2);
-				$clip     = $pad."px 96px ".(96+$pad)."px 0px";
-				$top_pad  = '-'.$pad.'px';
-				$left_pad = '0px';
-			} else {
-				$thumbHeight = 96;
-				$thumbWidth = round(96*($img->getWidth()/$img->getHeight()));
-				$pad = round(($thumbWidth - $thumbHeight)/2);
-				$clip     = "0px ".(96+$pad)."px 96px ".$pad."px";
-				$top_pad  = '0px';
-				$left_pad = '-'.$pad.'px';
-			}
-
-			$thumb = $img->transform(array(	'width'  => $thumbWidth,
-											'height' => $thumbHeight));
-			$thumbUrl = $thumb->getUrl();
-			$thumbUrl = preg_replace('/images\d+.wikia.nocookie.net/', 'garth.wikia-dev.com', $thumbUrl);
-
-			$photos[] = array('name'     => $row->rc_title,
-							  'thumbUrl' => $thumbUrl,
-							  'height'   => $thumbHeight,
-							  'width'    => $thumbWidth,
-							  'clip'     => $clip,
-				              'topPad'  => $top_pad,
-				              'leftPad' => $left_pad
-							 );
-		}
-
-		return $photos;
-	}
-
+	/**
+	 * get list of user's top pages (most edited)
+	 *
+	 * @author ADi
+	 * @return array
+	 */
 	public function getTopPages() {
 		global $wgMemc, $wgStatsDB, $wgCityId, $wgContentNamespaces;
+		wfProfileIn(__METHOD__);
 
 		//select page_id, count(page_id) from stats.events where wiki_id = N and user_id = N and event_type in (1,2) group by 1 order by 2 desc limit 10;
 		$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
@@ -309,14 +144,32 @@ class UserProfilePage {
 		);
 		*/
 
+		// TMP: dev-box only
+		$pages = array( 4 => 289, 1883 => 164, 1122 => 140, 31374 => 112, 2335 => 83, 78622 => 82 ); // test data
+		foreach($pages as $pageId => $editCount) {
+			$title = Title::newFromID( $pageId );
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) && ( !$this->isPageHidden( $title->getText() ) ) ) {
+				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount );
+			}
+			else {
+				unset( $pages[ $pageId ] );
+			}
+		}
+
+		/*
 		$pages = array();
 		while($row = $dbs->fetchObject($res)) {
 			$pageId = $row->page_id;
 			$title = Title::newFromID( $pageId );
-			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) && ( !$this->isPageHidden( $title->getText() ) ) ) {
 				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $row->count );
 			}
+			else {
+				unset( $pages[ $pageId ] );
+			}
 		}
+		*/
+
 
 		if( class_exists('imageServing') ) {
 			// ImageServing extension enabled, get images
@@ -332,6 +185,7 @@ class UserProfilePage {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $pages;
 	}
 
@@ -364,7 +218,7 @@ class UserProfilePage {
 			$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
 		}
 
-		// tmp - local only
+		// TMP: local only
 		$wikis = array( 4832 => 72, 3613 => 60, 4036 => 35, 177 => 72 ); // test data
 		foreach($wikis as $wikiId => $editCount) {
 			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
@@ -375,6 +229,97 @@ class UserProfilePage {
 		//
 
 		return $wikis;
+	}
+
+	/**
+	 * perform action (hide/unhide page or wiki)
+	 *
+	 * @author ADi
+	 * @param string $actionName
+	 * @param string $type
+	 * @param string $value
+	 */
+	public function doAction( $actionName, $type, $value) {
+		wfProfileIn( __METHOD__ );
+		$methodName = strtolower( $actionName ) . ucfirst( $type );
+
+		if( method_exists( $this, $methodName ) ) {
+			return call_user_func_array( array( $this, $methodName ), array( $value ) );
+		}
+		wfProfileOut( __METHOD__ );
+	}
+
+	private function hidePage( $pageTitleText ) {
+		wfProfileIn( __METHOD__ );
+		if( !$this->isPageHidden( $pageTitleText ) ) {
+			$this->hiddenPages[] = $pageTitleText;
+			$this->updateHiddenPagesInDb();
+		}
+		return $this->renderTopPages( $this->getTopPages() );
+		wfProfileOut( __METHOD__ );
+	}
+
+	private function unhidePage( $pageTitleText ) {
+		wfProfileIn( __METHOD__ );
+		if( $this->isPageHidden( $pageTitleText ) ) {
+			for( $i = 0; $i < count( $this->hiddenPages ); $i++ ) {
+				if( $this->hiddenPages[ $i ] == $pageTitleText ) {
+					unset( $this->hiddenPages[ $i ] );
+					$this->hiddenPages = array_values( $this->hiddenPages );
+				}
+			}
+			//unset( $this->hiddenPages[ $pageTitleText ] );
+			$this->updateHiddenPagesInDb();
+		}
+		return $this->renderTopPages( $this->getTopPages() );
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * auxiliary function for updating hidden pages in db
+	 */
+	private function updateHiddenPagesInDb() {
+		wfProfileIn( __METHOD__ );
+
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->replace(
+				'page_wikia_props',
+				null,
+				array( 'page_id' => $this->user->getId(), 'propname' => 10, 'props' => serialize( $this->hiddenPages ) ),
+				__METHOD__
+			);
+		$dbw->commit();
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	public function isPageHidden( $pageTitleText ) {
+		return ( in_array( $pageTitleText, $this->getHiddenPages() ) ? true : false );
+	}
+
+	private function hideWiki( $wikiName ) {
+		return true;
+	}
+
+	private function unhideWiki( $wikiName ) {
+		return true;
+	}
+
+	private function getHiddenPages() {
+		if( $this->hiddenPages == null ) {
+			$dbs = wfGetDB( DB_MASTER );
+
+			$row = $dbs->selectRow(
+				array( 'page_wikia_props' ),
+				array( 'props' ),
+				array( 'page_id' => $this->user->getId(), 'propname' => 10 ),
+				__METHOD__,
+				array()
+			);
+
+			$this->hiddenPages = ( empty($row) ? array() : unserialize( $row->props ) );
+		}
+		return $this->hiddenPages;
 	}
 
 }
