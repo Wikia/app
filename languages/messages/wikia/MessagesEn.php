@@ -1005,10 +1005,9 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-button-random-page' => 'Random Page',
 'oasis-button-random-wiki' => 'Random Wiki',
 'oasis-button-wiki-activity' => 'Wiki Activity',
-'oasis-button-wiki-activity-watchlist' => 'Followed Pages Activity',
 'oasis-activity-header' => 'Recent Wiki Activity',
-'oasis-activity-watchlist-login' => "The Followed Pages Activity feature is only available if you\'re logged in.<br /><br />'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''",
-
+'oasis-related-video-header' => 'Related Videos',
+'oasis-related-video-by-5min' => 'Powered by 5min',
 'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|page on this wiki|pages on this wiki}}</span>',
 'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|photo on this wiki|photos on this wiki}}</span>',
 'oasis-latest-photos-more' => 'See more &gt;',
@@ -1106,5 +1105,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'imageseo-featured-on' => 'Featured on:',
 'imageseo-featured-more' => 'more&hellip;',
 
-'wikianewfiles-title'   => 'New photos on this wiki',
+# 5min video
+'oasis-related-video-by-5min'	=> 'by 5min Video',
+'oasis-related-video-header'	=> 'Related Videos'
 ));
