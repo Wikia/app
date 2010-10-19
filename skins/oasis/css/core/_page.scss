@@ -1,10 +1,9 @@
 .WikiaPage {
 	background: $color-page;
 	border: 1px solid $color-page-border;
-	margin: 0 auto -59px;
+	margin: -59px auto -39px;
 	padding-top: 59px;
 	position: relative;
-	top: -59px;
 	width: $width-outside;
 	>h1:first-child {
 		display: none;
@@ -14,7 +13,6 @@
 .WikiaMainContent {
 	float: left;
 	width: $width-outside - 320px;
-	z-index: 0;
 	// one column layout (no right rail)
 	.oasis-one-column & {
 		width: $width-outside;
