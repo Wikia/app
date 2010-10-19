@@ -107,7 +107,7 @@ class OasisModule extends Module {
 		}
 
 		// If this is an anon on an article-page, we can combine two of the files into one.
-		if($useCoreJs){
+		if($useCoreJs && $allInOne){
 			global $parserMemc, $wgStyleVersion;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
 
