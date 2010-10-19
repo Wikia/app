@@ -271,7 +271,9 @@ class WikiaAssets {
 		}
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
-		$cssReferences = array_merge($cssReferences, $StaticChute->getFileList(array('packages' => $package)));
+		foreach($StaticChute->config[$package] as $url){
+			$cssReferences[] = array('url' => $url);
+		}
 
 		return $cssReferences;
 	}
