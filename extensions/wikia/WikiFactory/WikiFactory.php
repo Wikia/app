@@ -2073,23 +2073,31 @@ class WikiFactory {
 	 * @return StdObject ($row->cat_id $row->cat_name) or false
 	 */
 	static public function getCategory( $city_id ) {
+		global $wgMemc;
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		$dbr = self::db( DB_SLAVE );
+		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
+		$cached = $wgMemc->get($memkey);
+		if ( empty($cached) ) {
+			$dbr = self::db( DB_SLAVE );
 
-		$row = $dbr->selectRow(
-			array( "city_cat_mapping", "city_cats" ),
-			array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_name" ),
-			array(
-				"city_id" => $city_id,
-				"city_cats.cat_id = city_cat_mapping.cat_id"
-			),
-			__METHOD__
-		);
+			$row = $dbr->selectRow(
+				array( "city_cat_mapping", "city_cats" ),
+				array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_name" ),
+				array(
+					"city_id" => $city_id,
+					"city_cats.cat_id = city_cat_mapping.cat_id"
+				),
+				__METHOD__
+			);
+			$wgMemc->set($memkey, $row, 60*60*24);
+		} else {
+			$row = $cached;
+		}
 
 		return empty( $row ) ? false : $row;
 	}
