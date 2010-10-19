@@ -201,8 +201,11 @@
 }
 
 .WikiaSpotlight {
+	background-color: $color-page;
+	color: $color-text;
 	display: inline-block;
 	width: 270px;
+/*
 	p {
 		background: #d3dee3;
 		color: #0f3547;
@@ -213,6 +216,7 @@
 	img {
 		display: block;
 	}
+*/
 }
 
 .WikiaRelatedVideoModule {
