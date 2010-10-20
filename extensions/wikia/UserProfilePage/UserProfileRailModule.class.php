@@ -5,6 +5,7 @@ class UserProfileRailModule extends Module {
 	var $userIsOwner;
 	var $userPageUrl;
 	var $activityFeed;
+	var $specialContribsLink;
 	
 	public function executeTopWikis() {
 		wfProfileIn( __METHOD__ );
@@ -31,9 +32,12 @@ class UserProfileRailModule extends Module {
 
 		$userContribsProvider = new UserContribsProviderService;
 		$user = UserProfilePage::getInstance()->getUser();
+		$specialPageTitle = Title::newFromText( 'Contributions', NS_SPECIAL );
+
 		$this->userName =  $user->getName();
 		$this->wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
 		$this->activityFeed = $userContribsProvider->get( 6, $user );
+		$this->specialContribsLink = $specialPageTitle->getFullUrl() . '/' . $this->userName;
 
 		wfProfileOut( __METHOD__ );
 	}

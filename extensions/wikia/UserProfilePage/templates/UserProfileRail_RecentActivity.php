@@ -10,6 +10,12 @@
 				</li>
 			<? endforeach ;?>
 		</ul>
+
+		<a class="more view-all" href="<?= $specialContribsLink ;?>">
+			<?= wfMsg( 'userprofilepage-top-recent-activity-see-more' ); ?>
+			<img src="<?= wfBlankImgUrl() ;?>" class="chevron" />
+		</a>
+		
 	<? else :?>
 		<?= wfMsg( 'userprofilepage-recent-activity-default', $userName ) ;?>
 	<? endif ;?>
