@@ -8,13 +8,13 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgOut, $wgExtensionsPath;
+		global $wgOut, $wgExtensionsPath, $wgCacheBuster;
 
 		$this->setHeaders();
 
 		$wgOut->setPageTitle('Example Page Title');
 
-		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js"></script>');
+		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js?'. $wgCacheBuster .'"></script>');
 		$wgOut->addLink(array(
 				"type" => "text/css",
 				"rel" => "stylesheet",

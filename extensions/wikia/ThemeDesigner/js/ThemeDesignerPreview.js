@@ -17,9 +17,11 @@ var ThemeDesignerPreview = {
 		$("a.new").removeClass("new");
 		
 		//no floating footer on preview
-		$("#WikiaFooter").children(".toolbar").removeClass("float");
-		$(window).unbind("scroll");
-		
+		$(window).unbind("scroll").unbind("resize");
+		$("#WikiaFooter").children(".toolbar").removeClass("float").css({
+			left: "50%",
+			right: "auto"
+		});
 		//click mask
 		$("body").append('<div id="clickmask" class="clickmask"></div>');
 	},
