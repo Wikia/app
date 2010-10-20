@@ -22,7 +22,11 @@ class AdSS_Controller extends SpecialPage {
 		if ( $wgRequest->wasPosted() && AdSS_Util::matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
 			$submitType = $wgRequest->getText( 'wpSubmit' );
 			$adForm->loadFromRequest( $wgRequest );
-			$this->save( $adForm );
+			if( $wgUser->isAllowed( 'adss-admin' ) ) {
+				$this->saveSpecial( $adForm );
+			} else {
+				$this->save( $adForm );
+			}
 		} elseif( ( $subpage == 'paypal/return' ) && ( $wgRequest->getSessionData( 'ecToken' ) == $wgRequest->getText( 'token' ) ) ) {
 			unset( $_SESSION['ecToken'] );
 			$this->processPayPalReturn( $wgRequest->getText( "token" ) );
@@ -42,7 +46,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function displayForm( $adForm ) {
-		global $wgOut, $wgUser, $wgAdSS_templatesDir;
+		global $wgOut, $wgAdSS_templatesDir, $wgUser;
 
 		$sitePricing = AdSS_Util::getSitePricing();
 
@@ -55,7 +59,11 @@ class AdSS_Controller extends SpecialPage {
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
-		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
+		if( $wgUser->isAllowed( 'adss-admin' ) ) {
+			$tmpl->set( 'submit', 'Add this ad NOW' );
+		} else {
+			$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
+		}
 		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
@@ -94,6 +102,26 @@ class AdSS_Controller extends SpecialPage {
 			// show error
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		}
+	}
+
+	function saveSpecial( $adForm ) {
+		global $wgOut;
+
+		if( !$adForm->isValid() ) {
+			$this->displayForm( $adForm );
+			return;
+		}
+
+		$ad = AdSS_Ad::newFromForm( $adForm );
+		if( $ad->pageId > 0 ) {
+			$ad->weight = 1;
+		}
+		$ad->expires = strtotime( "+1 month", time() ); 
+
+		$ad->save();
+		AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
+
+		$wgOut->addHTML( "Your ad has been added to the system." );
 	}
 
 	function processPayPalReturn( $token ) {
