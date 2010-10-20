@@ -251,7 +251,7 @@ class BodyModule extends Module {
 			return array();
 		}
 		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
-		if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal) && !array_key_exists($subjectNamespace, $wgContentNamespaces)) {
+		if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal) && !in_array($subjectNamespace, $wgContentNamespaces)) {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
