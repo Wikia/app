@@ -69,15 +69,11 @@ function tabbedprefs(prefform) {
 // it can be used by any feature to link to specific tabs of
 // Special:Preferences
 function initprefs () {
-        if (typeof (wgCanonicalSpecialPageName) != 'undefined') {
-                if ('Preferences' == wgCanonicalSpecialPageName) {
-                        var prefform = document.getElementById('preferences');
-                        if (prefform) {
-                                tabbedprefs (prefform) ;
-                                loadsection (prefform) ;
-                        }
-                }
-        }
+	var prefform = document.getElementById('preferences');
+	if (prefform) {
+		tabbedprefs(prefform);
+		loadsection(prefform);
+	}
 }
 
 // added by Bartek for Wikia, 18.03.2008/29.07.2008
