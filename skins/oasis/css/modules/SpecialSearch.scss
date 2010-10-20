@@ -1,14 +1,14 @@
 /** @todo remove includes and bind in main oasis.scss **/
 // Mixins
 @import "../mixins/gradient";
+@import "../mixins/bodytext";
 
 // Oasis Page Modules //
 @import "../core/color";
 
 .mw-search-results {
-	font-size: 13px;
 	.searchresult {
-		line-height: 1.8em;
+		@include bodytext;
 	}
 }
 
