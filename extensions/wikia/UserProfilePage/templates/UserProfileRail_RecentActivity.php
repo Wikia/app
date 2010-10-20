@@ -1,3 +1,16 @@
-<section class="UserProfileRailModule_TopWikis">
-	<h2>RECENT ACTIVITY</h2>
+<section class="UserProfileRailModule_RecentActivity">
+	<h2></h2>
+	<?if ( count($activityFeed) ) :?>
+		<ul class="activity_feed">
+			<? foreach( $activityFeed as $row ) :?>
+				<li>
+					<?= FeedRenderer::getSprite( $row, wfBlankImgUrl() ) ;?>
+					<span><a href="<?= htmlspecialchars( $row['url'] ) ;?>" class="title" rel="nofollow"><?= htmlspecialchars( $row['title'] ) ;?></a></span>
+					<span class="time-ago"><?= FeedRenderer::formatTimestamp( $row['timestamp'] );?></span>
+				</li>
+			<? endforeach ;?>
+		</ul>
+	<? else :?>
+		<?= wfMsgExt( 'userprofilepage-contributions-empty', array('parse') ) ;?>
+	<? endif ;?>
 </section>

@@ -40,32 +40,11 @@ class UserProfilePage {
 		$this->templateEngine->set_vars(
 			array(
 				'userName'         => $this->user->getName(),
-				'activityFeedBody' => $this->renderUserActivityFeed( $userContribsProvider->get( 6, $this->user ) ),
 				'topPagesBody'     => $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->populateHiddenTopPagesVars( $this->getHiddenTopPages() ) ),
 				'aboutSection'     => $this->populateAboutSectionVars(),
 				'pageBody'         => $pageBody,
 			));
 		return $this->templateEngine->render( 'user-profile-page' );
-	}
-
-	/**
-	 * render user's activity feed section
-	 * @param array $data
-	 * @return string
-	 */
-	private function renderUserActivityFeed( Array $data ) {
-		global $wgBlankImgUrl;
-		wfProfileIn(__METHOD__);
-
-		$this->templateEngine->set_vars(
-			array(
-				'activityFeed' => $data,
-				'assets' => array( 'blank' => $wgBlankImgUrl )
-			)
-		);
-
-		wfProfileOut(__METHOD__);
-		return $this->templateEngine->render( 'user-contributions' );
 	}
 
 	/**
