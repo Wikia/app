@@ -158,7 +158,8 @@ class WikiaAssets {
 			$references = array();
 			
 			// configure based on skin
-			if(Wikia::isOasis()){
+			//if(Wikia::isOasis()){
+			if($wgRequest->getBool('isOasis', false)) {
 				$packageName = "oasis_anon_article_js";
 				$skinName = "oasis";
 			} else {
