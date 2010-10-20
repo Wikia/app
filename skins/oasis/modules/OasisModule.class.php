@@ -276,7 +276,7 @@ EOF;
 			// $wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS\"><!-- combined anon site js --></script>");
 
 			// Replace the normal StaticChute with the combined call.
-			$this->jsFiles = "<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS\"><!-- combined anon Core JS (StaticChute and '-') --></script>";
+			$this->jsFiles = "<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS&isOasis=true\"><!-- combined anon Core JS (StaticChute and '-') --></script>";
 		} else {
 			// If we use StaticChute right on the page (rather than loaded asynchronously), we'll use this var.
 			$this->jsFiles = $staticChute->getChuteHtmlForPackage($package);
