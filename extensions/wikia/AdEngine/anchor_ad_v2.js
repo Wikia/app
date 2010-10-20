@@ -32,9 +32,9 @@ wgAfterContentAndJS.push(
 					.wikia_anchor_ad .clickable {\
 						cursor: pointer;\
 						display: block;\
-						left: 90px;\
+						left: 0;\
 						position: absolute;\
-						width: 800px;\
+						width: 950px;\
 						height: 100px;\
 						top: 10px;\
 					}\
