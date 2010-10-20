@@ -92,10 +92,10 @@ SLIDERITEM;
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  */
 function wfSliderTagMessageCacheReplace( $title, $text ) {
-	global $parserCache;
 
 	wfProfileIn( __METHOD__ );
 
+	$parserCache = ParserCache::singleton();
 	$solidCache = wfGetSolidCacheStorage();
 	$tags = $solidCache->get( "SliderTags" );
 	if( is_array( $tags ) ) {
