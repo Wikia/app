@@ -29,13 +29,9 @@
 		var wgNow = new Date();
 	/*]]>*/</script><?php
 		if(!$jsAtBottom) {
-			print "\n<!-- Combined JS files (StaticChute) -->\n";
-			print $staticChuteHtml."\n";
-			print $wikiaScriptLoader; // needed for jsLoader and for the asnyc loading of CSS files.
-			// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THIS LINE:
-			//print $jsLoader;
-			print "<!-- Headscripts -->\n";
-			print $headscripts."\n";
+			print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
+			print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
+			print $jsFiles . "\n";
 		}
 	?>
 </head>
@@ -46,8 +42,9 @@
 
 <?php
 	if($jsAtBottom) {
-		print "<!-- Combined JS files (StaticChute) -->\n";
-		print $staticChuteHtml."\n";
+		print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
+		print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
+		print $jsFiles . "\n";
 	}
 ?>
 
@@ -63,16 +60,6 @@
 <?= $trackingPixels ?>
 
 <?php
-	// Load Javacript right before the closing body tag.
-	if($jsAtBottom){
-		print $wikiaScriptLoader; // needed for jsLoader and for the asnyc loading of CSS files.
-		// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THIS LINE:
-		//print $jsLoader;
-
-		print "<!-- Headscripts -->\n";
-		print $headscripts."\n";
-
-	}
 	print '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
 	print "<!-- BottomScripts -->\n";
