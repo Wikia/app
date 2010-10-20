@@ -3,15 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'userprofilepage-desc' => 'Provides a user page that is fun and easy to update',
-	'userprofilepage-activity-edit'    => '$1 edited the $2 article $3 ago',
-	'userprofilepage-activity-new'     => '$1 created $2 $3 ago',
-	'userprofilepage-activity-comment' => '$1 commented on $2 $3 ago',
-	'userprofilepage-activity-image'   => '$1 uploaded an image to $2 $3 ago',
-	'userprofilepage-activity-video'   => '$1 uploaded a video to $2 $3 ago',
-	'userprofilepage-activity-delete'  => '$1 deleted the $2 page $3 ago',
-	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
-	'userprofilepage-recent-activity-title' => '$1\'s recent activity',
-	'userprofilepage-wiki-edits' => '$1 {{PLURAL:$1|edit|edits}}',
+	
 	'userprofilepage-users-notes-title' => '$1\'s notes',
 	'userprofilepage-about-section-title' => 'About $1',
 	'userprofilepage-edit-button' => 'edit',
@@ -28,6 +20,16 @@ $messages['en'] = array(
 	'userprofilepage-top-wikis-unhide-label' => 'unhide',
 	'userprofilepage-top-wikis-hide-label' => 'hide',
 
+	//Recent activity
+	'userprofilepage-recent-activity-title' => '$1\'s recent $2 activity',
+	'userprofilepage-activity-edit'    => '$1 edited the $2 article $3 ago',
+	'userprofilepage-activity-new'     => '$1 created $2 $3 ago',
+	'userprofilepage-activity-comment' => '$1 commented on $2 $3 ago',
+	'userprofilepage-activity-image'   => '$1 uploaded an image to $2 $3 ago',
+	'userprofilepage-activity-video'   => '$1 uploaded a video to $2 $3 ago',
+	'userprofilepage-activity-delete'  => '$1 deleted the $2 page $3 ago',
+	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
+	
 	'recipes-template-aboutuser-fields' => '
 * wpTitle
 ** type|input
