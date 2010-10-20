@@ -129,7 +129,7 @@
 			float: left;
 			list-style: none;
 			
-			&:first-child {
+			&.watchlist {
 				border-right: solid 1px $color-page-border;
 				margin-right: 6px;
 				padding-right: 7px;

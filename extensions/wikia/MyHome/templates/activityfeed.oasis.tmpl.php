@@ -1,7 +1,9 @@
 <div id="myhome-main">
 	<nav class="activity-nav">
 		<ul>
-			<li class="<?= $classWatchlist ?>"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li>		
+			<?php if ($loggedIn === true) { ?>
+			<li class="<?= $classWatchlist ?> watchlist"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li>		
+			<?php } ?>
 			<li class="<?= $classActivity ?>"><?= View::specialPageLink('RecentChanges', 'oasis-button-wiki-activity-feed') ?></li>
 
 		</ul>
