@@ -95,13 +95,13 @@ function wfSliderTagMessageCacheReplace( $title, $text ) {
 
 	wfProfileIn( __METHOD__ );
 
-	$parserCache = ParserCache::singleton();
+	global $parserMemc;
 	$solidCache = wfGetSolidCacheStorage();
 	$tags = $solidCache->get( "SliderTags" );
 	if( is_array( $tags ) ) {
 		foreach( $tags as $tag ) {
 			if( $tag == $title ) {
-				$parserCache->delete( wfMemcKey( $text ) );
+				 $parserMemc->delete( wfMemcKey( $text ) );
 			}
 		}
 	}
