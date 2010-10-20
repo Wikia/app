@@ -4,6 +4,7 @@ class SpecialWikiActivity extends SpecialPage {
 	var $activeTab;
 	var $classActivity;
 	var $classWatchlist;
+	var $loggedIn;
 	
 	
 	function __construct() {
@@ -98,6 +99,10 @@ JS
 			$template->set('emptyMessage', wfMsgExt("myhome-activity-feed-empty", array( 'parse' )));
 		}
 		
+		
+		$this->loggedIn = ($wgUser->isLoggedIn() === true) ? true: false;	
+		
+		
 		$template->set_vars(array(
 					'assets' => array(
 						'blank' => $wgBlankImgUrl,
@@ -106,6 +111,7 @@ JS
 					'type' => 'activity',
 					'classWatchlist' => $this->classWatchlist,
 					'classActivity' => $this->classActivity,
+					'loggedIn' => $this->loggedIn
 					));  // FIXME: remove
 		
 		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/MyHome/oasis.scss"));
