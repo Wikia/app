@@ -1,11 +1,6 @@
 <div id='profile-content'>
 	<div id='profile-content-left-column' class="uppColumn">
 
-		<div id="profile-activity-feed" class="uppBox">
-			<h1 class="color1"><?= wfMsg( 'userprofilepage-recent-activity-title', array( $userName ) ); ?></h1>
-			<?= $activityFeedBody; ?>
-		</div>
-
 		<div id="profile-top-pages" class="uppBox">
 			<h1 class="color1"><?= wfMsg( 'userprofilepage-top-pages-section-title', array( $userName, $wikiName ) ); ?></h1>
 			<?= $topPagesBody; ?>

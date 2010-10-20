@@ -4,6 +4,7 @@ class UserProfileRailModule extends Module {
 	var $topWikis;
 	var $userIsOwner;
 	var $userPageUrl;
+	var $activityFeed;
 	
 	public function executeTopWikis() {
 		//global $wgOut;
@@ -25,7 +26,10 @@ class UserProfileRailModule extends Module {
 		}
 	}
 
-	public function executeRecentActivity() {}
+	public function executeRecentActivity() {
+		$userContribsProvider = new UserContribsProviderService;
+		$this->activityFeed = $userContribsProvider->get( 6, UserProfilePage::getInstance()->getUser() );
+	}
 
 	public function executeTopPages() {}
 
