@@ -25,7 +25,7 @@ class UserProfilePageHelper {
 		}
 		$user->load();
 
-		$profilePage = new UserProfilePage( $user );
+		$profilePage = UserProfilePage::getInstance( $user );
 		$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
 
 		wfProfileOut(__METHOD__);

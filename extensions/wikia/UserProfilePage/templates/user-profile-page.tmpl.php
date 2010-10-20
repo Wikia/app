@@ -22,11 +22,6 @@
 	</div>
 	<div id='profile-content-right-column' class="uppColumn">
 
-		<div id="profile-top-wikis-section" class="uppBox">
-			<h1 class="color1"><?= wfMsg( 'userprofilepage-top-wikis-title', array( $userName ) ); ?></h1>
-			<?= $topWikisBody; ?>
-		</div>
-
 		<div id="profile-about-section" class="uppBox">
 			<h1 class="color1">
 				<?= wfMsg( 'userprofilepage-about-section-title', array( $userName ) ); ?>
