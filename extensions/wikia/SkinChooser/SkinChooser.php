@@ -6,7 +6,7 @@
  */
 
 // basic permissions
-$wgGroupPermissions['sysop']['setadminskin'] = true;
+#$wgGroupPermissions['sysop']['setadminskin'] = true; #rt74835
 $wgGroupPermissions['staff']['setadminskin'] = true;
 
 $dir = dirname(__FILE__) . '/';
