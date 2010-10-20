@@ -134,7 +134,7 @@
 		position: absolute;
 		top: -9999px;
 		width: $width-outside - 20px;
-		z-index: 2000000000; //close to the highest possible z-index value
+		z-index: $zTop;
 		&.show {
 			display: block;
 			top: 44px;

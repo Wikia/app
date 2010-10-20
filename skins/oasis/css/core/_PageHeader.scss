@@ -76,6 +76,7 @@
 		position: absolute;
 		text-align: left;
 		top: 0;
+		z-index: $zTop;
 		li {
 			display: none;
 			&:first-child {
@@ -89,7 +90,7 @@
 			@include menu-regular;
 			display: block;
 			left: -2px;
-			top: -1px;
+			top: -2px;
 			z-index: 100;
 			li {
 				border-bottom: 0;
