@@ -116,6 +116,23 @@ function testAvatars() {
 
 }
 
+function testRiak() {
+	$cache = wfGetCache( CACHE_RIAK );
+
+	foreach( range( 1, 20 ) as $r ) {
+		$key = wfMemcKey( "eloy", "test", $r );
+		$v1 = "test";
+		$cache->set( $key, $value, 50 );
+		$v2 = $cache->$get( $key );
+		if( $v1 === $v2 ) {
+			wfOut( "$key OK\n" );
+		}
+		else {
+			wfOut( "$key ERROR\n" );
+		}
+		$cache->delete( $key );
+	}
+}
 #
 # main
 #
@@ -124,4 +141,5 @@ function testAvatars() {
 #testWF();
 #curlSolrUpdate();
 #testInterwikiLink();
-testAvatars();
+#testAvatars();
+testRiak();
