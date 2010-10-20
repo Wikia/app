@@ -1,11 +1,5 @@
 <div id='profile-content'>
 	<div id='profile-content-left-column' class="uppColumn">
-
-		<div id="profile-top-pages" class="uppBox">
-			<h1 class="color1"><?= wfMsg( 'userprofilepage-top-pages-section-title', array( $userName, $wikiName ) ); ?></h1>
-			<?= $topPagesBody; ?>
-		</div>
-
 		<div id="profile-editable-area" class="uppBox">
 			<h1 class="color1">
 				<?= wfMsg( 'userprofilepage-users-notes-title', array( $userName ) )?>
@@ -13,10 +7,8 @@
 			</h1>
 			<?=$pageBody;?>
 		</div>
-
 	</div>
 	<div id='profile-content-right-column' class="uppColumn">
-
 		<div id="profile-about-section" class="uppBox">
 			<h1 class="color1">
 				<?= wfMsg( 'userprofilepage-about-section-title', array( $userName ) ); ?>
@@ -26,10 +18,5 @@
 			<br />
 			<br />
 		</div>
-
-		<div id="profile-achievements-section" class="uppAchievementsBox">
-		 <i>Achievements here</i>
-		</div>
-
 	</div>
 </div>
