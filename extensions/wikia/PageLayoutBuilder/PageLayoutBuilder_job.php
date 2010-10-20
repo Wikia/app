@@ -30,14 +30,6 @@ $wgExtensionMessagesFiles	[ "PageLayoutBuilder" ]			= dirname(__FILE__) . '/Page
 
 class PageLayoutBuilderJob extends Job {
 
-	private
-		$mUserId,
-		$mUserName,
-		$mUserIP,
-		$mUser,
-		$mAnon,
-		$mSysop;
-
 	const WELCOMEUSER = "Wikia";
 	const PBLAYOUT = "PageLayoutBuilder";
 	const NS_LAYOUT = 902;
@@ -60,12 +52,77 @@ class PageLayoutBuilderJob extends Job {
 	 * @access public
 	 */
 	public function run() {
-		global $wgUser, $wgTitle, $wgErrorLog;
+		global $wgUser, $wgTitle, $wgErrorLog, $wgParser;
 
 		wfProfileIn( __METHOD__ );
 
-		wfProfileOut( __METHOD__ );
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
 
+		if( is_null( $this->title ) ) {
+			$this->error = "PageLayoutBuilder: Invalid title";
+			Wikia::log( __METHOD__, "pglayout", "Invalid title" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$page_id = $this->title->getArticleID();
+		if ( empty($page_id) ) {
+			$page_id = $this->title->getArticleID(GAID_FOR_UPDATE);			
+		}
+		if( empty( $page_id ) ) {
+			$this->error = "PageLayoutBuilder: Invalid title (identifier not found)";
+			Wikia::log( __METHOD__, "pglayout", "Invalid title (identifier not found) ");
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$revision = Revision::newFromTitle( $this->title );
+		if ( !$revision ) {
+			$this->error = "PageLayoutBuilder: Article not found '" . $this->title->getPrefixedDBkey() . "'";
+			Wikia::log( __METHOD__, "pglayout", "Article not found '" . $this->title->getPrefixedDBkey() . "'");
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		wfProfileIn( __METHOD__.'-parse' );
+		$options = new ParserOptions;
+		$parserOutput = $wgParser->parse( $revision->getText(), $this->title, $options, true, true, $revision->getId() );
+		wfProfileOut( __METHOD__.'-parse' );
+		
+		wfProfileIn( __METHOD__.'-update' );
+		$update = new LinksUpdate( $this->title, $parserOutput, false );
+		$update->doUpdate();
+		wfProfileIn( __METHOD__.'-update' );
+		
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 
+			array( 'plb_page', 'page' ), 
+			array( 'plb_p_page_id', 'page_title', 'page_namespace' ),
+			array( 
+				'plb_p_layout_id' => $page_id,
+				'plb_p_page_id = page_id'
+			), 
+			__METHOD__
+		);
+
+		$jobs = array();
+		foreach( $res as $row ) {
+			$oTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
+			if ( is_null($oTitle) ) {
+				Wikia::log( __METHOD__, "pglayout", "{$row->page_title} ({$row->page_namespace}) ");
+				continue;				
+			}
+			$jobs[] = new RefreshLinksJob( $oTitle, '' );
+		}
+		
+		if ( !empty($jobs) ) {
+			Job::batchInsert( $jobs );		
+		}
+		
+		$wgErrorLog = $oldValue;
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
