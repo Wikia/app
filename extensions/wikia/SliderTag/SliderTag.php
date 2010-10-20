@@ -38,7 +38,7 @@ function wfSlider( $input, $args, $parser ) {
 	 * store keys used in tag, it will be used for invalidation later
 	 */
 	$solidCache = wfGetSolidCacheStorage();
-	$tags = $solidCache->get( "SliderTags" );
+	$tags = $solidCache->get( wfMemcKey( "SliderTags" ) );
 	if( is_array( $tags ) ) {
 		/**
 		 * remove duplicates
@@ -97,7 +97,7 @@ function wfSliderTagMessageCacheReplace( $title, $text ) {
 
 	global $parserMemc;
 	$solidCache = wfGetSolidCacheStorage();
-	$tags = $solidCache->get( "SliderTags" );
+	$tags = $solidCache->get( wfMemcKey( "SliderTags" ) );
 	if( is_array( $tags ) ) {
 		foreach( $tags as $tag ) {
 			if( $tag == $title ) {
