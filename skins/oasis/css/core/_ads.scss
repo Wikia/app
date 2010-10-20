@@ -38,8 +38,8 @@ On hold for now
 	margin-bottom: 10px\9; //IE8
 }
 #HOME_TOP_LEADERBOARD {
-	@include linear-gradient(transparent, top, rgba($color-page, .0001), 90%, $color-page, 100%);	
-	height: 200px;	
+	@include linear-gradient(transparent, top, rgba($color-page, .0001), 90%, $color-page, 100%);
+	height: 200px;
 }
 //Appropriate margins around different size ads
 #HOME_TOP_LEADERBOARD div[id*="728x90"] {
@@ -53,4 +53,27 @@ On hold for now
 //Invisible ads
 #HOME_INVISIBLE_TOP, #INVISIBLE_TOP, #INVISIBLE_1, #INVISIBLE_2 {
 	position: absolute;
+}
+
+// changes for $wgEnableSpotlightsV2
+.GlobalNavigation {
+	.subnav {
+		.SPOTLIGHT_GLOBALNAV {
+			left: 10px;
+			margin-top: 17px;
+			position: relative;
+		}
+	}
+}
+
+.WikiaFooter {
+	section {
+		.SPOTLIGHT_FOOTER {
+			padding: 55px 28px 33px;
+			.WikiaSpotlight {
+				height: 123px;
+				width: 255px;
+			}
+		}
+	}
 }
