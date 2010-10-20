@@ -420,7 +420,7 @@ class memcached
     */
    function get ($key)
    {
-      $fname = "memcached::get::$key";  // Owen wants to get more profiling info
+      $fname = "memcached::get";
       wfProfileIn( $fname );
 
       if ( $this->_debug ) {
@@ -461,7 +461,16 @@ class memcached
          foreach ($val as $k => $v)
             $this->_debugprint(sprintf("MemCache: sock %s got %s\n", serialize($sock), $k));
 
-	  $this->_dupe_cache[$key] = isset($val[$key]) ? $val[$key] : null;
+      // Owen wants to get more detailed profiling info
+      if (isset ($val[$key])) {
+         $this->_dupe_cache[$key] = $val[$key];
+         wfProfileIn ( $fname . "::$key !HIT");
+         wfProfileOut ( $fname . "::$key !HIT");
+      } else {
+         $this->_dupe_cache[$key] = null;
+         wfProfileIn ( $fname . "::$key !MISS");
+         wfProfileOut ( $fname . "::$key !MISS");
+      }
 
       wfProfileOut( $fname );
       return isset($val[$key]) ? $val[$key] : null;
