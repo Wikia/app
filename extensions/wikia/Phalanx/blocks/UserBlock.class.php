@@ -16,23 +16,23 @@ class UserBlock {
 		wfProfileIn( __METHOD__ );
 
 		$ret = true;
+		$text = $user->getName();
 
 		// RT#42011: RegexBlock records strange results
 		// don't write stats for other user than visiting user
 		$isCurrentUser = $user->getName() == $wgUser->getName();
 
 		// check cache first before proceeeding
-		$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getID() );
+		$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $text );
 		$cachedState = $wgMemc->get( $cacheKey );
-		if ( !empty( $cachedState ) && $cachedState['timestamp'] > Phalanx::getLastUpdate() ) {
+		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
 				self::setUserData( $user, $cachedSate['block'], $text, $user->isAnon(), $isCurrentUser );
 			}
-
+			wfProfileOut( __METHOD__ );
 			return $cachedState['return'];
 		}
 
-		$text = $user->getName();
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
 
 		if ( !empty($blocksData) && !empty($text) ) {
@@ -50,7 +50,7 @@ class UserBlock {
 
 		// populate cache if not done before
 		if ( $ret ) {
-			$chachedState = array(
+			$cachedState = array(
 				'timestamp' => wfTimestampNow(),
 				'block' => false,
 				'return' => $ret,
@@ -77,8 +77,8 @@ class UserBlock {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 				self::setUserData( $user, $blockData, $text, $isBlockIP );
 
-				$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getID() );
-				$chachedState = array(
+				$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getName() );
+				$cachedState = array(
 					'timestamp' => wfTimestampNow(),
 					'block' => $blockData,
 					'return' => false,
