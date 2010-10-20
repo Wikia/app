@@ -34,7 +34,7 @@ wgAfterContentAndJS.push(
 						display: block;\
 						left: 0;\
 						position: absolute;\
-						width: 950px;\
+						width: 955px;\
 						height: 100px;\
 						top: 10px;\
 					}\
@@ -42,7 +42,7 @@ wgAfterContentAndJS.push(
 						background: url("/extensions/wikia/AdEngine/close_button.png");\
 						cursor: pointer;\
 						height: 18px;\
-						left: ' + parseInt(950 + AnchorAd.settings.close.yoffset) + 'px;\
+						left: ' + parseInt(962 + AnchorAd.settings.close.yoffset) + 'px;\
 						position: absolute;\
 						top: ' + parseInt(0 + AnchorAd.settings.close.yoffset) + 'px;\
 						width: 18px;\
@@ -51,7 +51,7 @@ wgAfterContentAndJS.push(
 					.close_background {\
 						background-color: #' + AnchorAd.settings.close.background + ';\
 						height: 14px;\
-						left: ' + parseInt(952 + AnchorAd.settings.close.yoffset) + 'px;\
+						left: ' + parseInt(964 + AnchorAd.settings.close.xoffset) + 'px;\
 						position: absolute;\
 						top: ' + parseInt(2 + AnchorAd.settings.close.yoffset) + 'px;\
 						width: 14px;\
