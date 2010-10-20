@@ -20,7 +20,7 @@
 		<?php 
 		}
 		
-		if ($enable_more == true && $count > $max_visible && $request_all != true) {
+		if ($enable_more == true && $count >= $max_visible && $request_all != true) {
 			$class = ' class="more"';
 		}
 	} ?>
