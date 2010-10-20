@@ -1,4 +1,6 @@
 == Changes since 201010.3 ==
+* rt#74546: Oasis: Blank blog listings (macbre)
+* rt#74424: Oasis: Change body text line spacing to 22.5px (macbre)
 * rt#74057: Oasis: Theme designer breaks for case-sensitive color picker (macbre)
 * rt#73292: Theme Designer problem with old Internet Explorer (macbre)
 * rt#70016: Oasis: Create Mediawiki Blacklist for Photos on This Wiki module (macbre)
