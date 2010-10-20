@@ -632,7 +632,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$html = Xml::openElement('div', array(
 			'id' => $id,
 			'hash' => $hash,
-			'class' =>  'wikia-gallery clearfix'.
+			'class' =>  'wikia-gallery'.
 				(($isTemplate) ? ' template' : null).
 				" wikia-gallery-position-{$position}".
 				" wikia-gallery-spacing-{$spacing}".
@@ -1184,7 +1184,7 @@ JS;
 			'data-feed-title' => wfMsg('wikiaPhotoGallery-lightbox-caption', $this->mData['feedTitle']),
 			'id' => $id,
 			'hash' => $hash,
-			'class' =>  'wikia-gallery clearfix'.
+			'class' =>  'wikia-gallery'.
 				(($isTemplate) ? ' template' : null).
 				" wikia-gallery-position-{$position}".
 				" wikia-gallery-spacing-{$spacing}".
