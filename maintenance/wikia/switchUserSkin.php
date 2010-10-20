@@ -34,7 +34,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		 * not needed but maybe user changed something meanwhile
 		 */
 		if( $user->getOption( "skin" ) === "monaco" ) {
-			echo "Moving {$row->user_name} ({$row->user_id}) skin preferences from monaco to oasis";
+			wfOut ("Moving {$user->getName()} ({$user->getId()}) skin preferences from monaco to oasis\n");
 			$user->setOption( "skin", "oasis" );
 			$user->saveSettings();
 			$user->invalidateCache();
