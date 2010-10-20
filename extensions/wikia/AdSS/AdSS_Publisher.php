@@ -130,11 +130,14 @@ class AdSS_Publisher {
 
 	static function canShowAds( $title ) {
 		global $wgUser;
-		return  !$wgUser->isLoggedIn() &&
-			isset( $title ) && is_object( $title ) &&
-			$title->exists() &&
-			$title->getNamespace() == NS_MAIN &&
-			!$title->equals( Title::newMainPage() );
+		if( empty($_GET['showads']) && is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ) {
+			return false;
+		} else {
+			return  isset( $title ) && is_object( $title ) &&
+				$title->exists() &&
+				$title->getNamespace() == NS_MAIN &&
+				!$title->equals( Title::newMainPage() );
+		}
 	}
 
 	static function onOutputPageCheckLastModified( &$modifiedTimes ) {
