@@ -67,7 +67,7 @@
 					<div class="top-wiki-data">
 						<h2><a href="<?php echo $value['city_url'] ?>" class="top-wiki-link"><?php echo $value['city_title'] ?></a></h2>
 						<p><?php echo $value['city_description'] ?></p>
-						<?php if( $data['is_menager']): ?>
+						<?php if( $data['is_manager']): ?>
 							<?php if($value['hide']): ?>
 								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&dir=delete"><?php echo wfMsg('hub-show-feed'); ?></a>
 							<?php else: ?>
@@ -132,7 +132,7 @@
 					<a href="<?php echo $value['page_url'] ?>#blog-comments-ul"><img src="<?= wfBlankImgUrl() ?>" class="sprite talk" /> <span><?php
 						global $wgLang;
 						echo wfMsgExt( 'hub-blog-comments', 'parsemag', $wgLang->formatNum( $value['all_count']) ) ?></span></a></p>
-					<?php if( $data['is_menager']): ?>
+					<?php if( $data['is_manager']): ?>
 						<?php if ($value['hide'] ): ?>
 							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=delete" ><?php echo wfMsg('hub-show-feed'); ?></a>
 						<?php else: ?>
@@ -191,7 +191,7 @@
 					<span>
 						<span class="page-activity-wiki"><?php echo wfMsg('hub-hotspot-from') ?></span>
 							<a class="wikia-wiki-link" href="<?php echo $value['wikiurl'] ?>"><?php echo $value['wikiname'] ?></a>
-							<?php if( $data['is_menager']): ?>
+							<?php if( $data['is_manager']): ?>
 								<?php if( $value['hide'] ): ?>
 									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=1" ><?php echo wfMsg('hub-show-feed'); ?></a>
 								<?php else: ?>
