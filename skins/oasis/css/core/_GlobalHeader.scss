@@ -24,7 +24,7 @@
 	margin: 0 auto;
 	position: relative;
 	width: $width-outside + 10px;
-	z-index: 1000;
+	z-index: $zTop;
 	h1 {
 		display: none;
 	}
@@ -134,7 +134,6 @@
 		position: absolute;
 		top: -9999px;
 		width: $width-outside - 20px;
-		z-index: $zTop;
 		&.show {
 			display: block;
 			top: 44px;
