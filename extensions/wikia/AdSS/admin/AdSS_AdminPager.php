@@ -5,11 +5,12 @@ class AdSS_AdminPager extends TablePager {
 	private $mTitle, $ad;
 	private $mFilter = 'pending';
 	private $mFiltersShown = array(
-			'all' => 'All',
-			'active' => 'In rotation (accepted & not expired)',
+			'all'     => 'All',
+			'active'  => 'In rotation (accepted & not expired)',
 			'pending' => 'Pending acceptance',
 			'expired' => 'Expired (not closed)',
-			'closed' => 'Closed',
+			'closed'  => 'Closed',
+			'special' => 'Special - manually added by Gil',
 			);
 
 	function __construct() {
@@ -125,6 +126,17 @@ class AdSS_AdminPager extends TablePager {
 				break;
 			case 'closed':
 				$qi['conds'][] = 'ad_closed IS NOT NULL';
+				break;
+			case 'special':
+				$qi['conds'] = array( 
+						'ad_closed IS NULL',
+						'ad_expires > NOW()',
+						'ppa_baid IS NULL',
+						);
+				$qi['join_conds'] = array(
+						'pp_tokens' => array( 'LEFT JOIN', 'ad_id = ppt_ad_id'),
+						'pp_agreements' => array( 'LEFT JOIN', 'ppt_token = ppa_token' ),
+						);
 				break;
 		}
 		return $qi;
