@@ -119,11 +119,12 @@ function testAvatars() {
 function testRiak() {
 	$cache = wfGetCache( CACHE_RIAK );
 
-	foreach( range( 1, 20 ) as $r ) {
+	foreach( range( 1, 2 ) as $r ) {
 		$key = wfMemcKey( "eloy", "test", $r );
 		$v1 = "test";
-		$cache->set( $key, $value, 50 );
-		$v2 = $cache->$get( $key );
+		$cache->set( $key, $v1, 50 );
+		$v2 = $cache->get( $key );
+		print_r( $v2 );
 		if( $v1 === $v2 ) {
 			wfOut( "$key OK\n" );
 		}
