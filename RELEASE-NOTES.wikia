@@ -1,4 +1,5 @@
 == Changes since 201010.3 ==
+* rt#74635: Oasis: No tabs in special:preferences (macbre)
 * rt#74546: Oasis: Blank blog listings (macbre)
 * rt#74424: Oasis: Change body text line spacing to 22.5px (macbre)
 * rt#74057: Oasis: Theme designer breaks for case-sensitive color picker (macbre)
