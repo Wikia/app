@@ -22,8 +22,11 @@ WikiaFooterApp = {
 			//Scroll Detection
 			windowObj.scroll(function() {
 				var scroll = windowObj.scrollTop() + windowObj.height();
-				var line = footer.offset().top + toolbar.outerHeight();
-	
+				var line = 0;
+				if(footer.offset()){
+					line = footer.offset().top + toolbar.outerHeight();
+				}
+
 				//Scrolled past line? Lock that footer!
 				if (scroll > line && toolbar.hasClass("float")) {
 					WikiaFooterApp.settings.float = false;
