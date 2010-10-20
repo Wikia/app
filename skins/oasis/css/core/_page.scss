@@ -197,7 +197,7 @@
 		.banner-corner-right {
 			border: 19px solid transparent;
 			border-right-width: 20px;
-			border-right-color: $color-page;
+			border-right-color: $color-module-highlight;
 			position: absolute;
 			right: 0px;
 			top: 0px;
@@ -262,18 +262,6 @@
 	color: $color-text;
 	display: inline-block;
 	width: 270px;
-/*
-	p {
-		background: #d3dee3;
-		color: #0f3547;
-		font-size: 12px;
-		padding: 10px;
-		text-align: left;
-	}
-	img {
-		display: block;
-	}
-*/
 }
 
 .WikiaRelatedVideoModule {
