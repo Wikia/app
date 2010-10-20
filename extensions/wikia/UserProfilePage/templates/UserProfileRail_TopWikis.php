@@ -39,7 +39,10 @@
 	
 	<? $hiddenCount = count($hiddenTopWikis) ;?>
 	<? if( $userIsOwner && $hiddenCount ) :?>
-		<a class="more view-all"><?= wfMsgExt( 'userprofilepage-top-wikis-hidden-see-more', array( 'parsemag' ), $hiddenCount ); ?></a>
+		<a class="more view-all">
+			<?= wfMsgExt( 'userprofilepage-top-wikis-hidden-see-more', array( 'parsemag' ), $hiddenCount ); ?>
+			<img src="<?= wfBlankImgUrl() ;?>" class="chevron" />
+		</a>
 
 		<ul id="profile-top-pages-hidden">
 			<? foreach( $hiddenTopWikis as $wikiId => $wikiData ) :?>

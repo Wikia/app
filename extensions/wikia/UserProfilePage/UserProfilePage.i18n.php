@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'userprofilepage-activity-delete'  => '$1 deleted the $2 page $3 ago',
 	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
 	'userprofilepage-recent-activity-default' => '$1 has joined Wikia',
+	'userprofilepage-top-recent-activity-see-more' => 'See all',
 	
 	'recipes-template-aboutuser-fields' => '
 * wpTitle
