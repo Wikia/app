@@ -2,6 +2,7 @@
 @import "../mixins/rail-module";
 @import "../mixins/clearfix";
 @import "../mixins/border-radius";
+@import "../mixins/bodytext";
 
 $color-hot_1: #CC0033;
 $color-hot_2: #FF9900;
@@ -65,16 +66,16 @@ $color-hot_5: #006699;
 .CommunityCornerModule {
 	@include rail-module;
 	@include clearfix;
+	@include bodytext;
 
 	a.more {
 		clear:both;
 	}
 	p {
-		line-height: 1.8em;
+		@include bodytext;
 		margin: 0.4em 0 0 0.5em;
 	}
 	ul {
-		line-height: 1.8em;
 		list-style-type: disc;
 		margin: 0.4em 0 0.5em 2.5em;
 	}
