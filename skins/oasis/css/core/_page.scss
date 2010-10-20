@@ -159,23 +159,81 @@
 #WikiaSpotlightsModule {
 	display: none;
 	@include rail-module;
-	padding: 8px;
+	padding: 8px 8px 8px 15px;
 	header {
-		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
-		border-top: 5px solid #000;
-		color: $color-header-text;
-		h1, .headline-div {
-			font-size: 14px;
-			font-weight: normal;
-			margin: 0;
-		}
-		a {
+		background-color: $color-header;
+		height: 36px;
+		left: -2px;
+		padding: 3px 0 0 0;
+		position: absolute;
+		width: 189px;
+		h1,
+		.headline-div {
+			@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 100%);
+			border-bottom: 2px solid $color-page;
+			border-top: 1px solid $color-page;
 			color: $color-header-text;
+			display: block;
+			font-size: 15px;
+			font-weight: normal;
+			height: 25px;
+			margin: 0;
+			padding: 8px 0 0 11px;
+			.logo {
+				filter:progid:DXImageTransform.Microsoft.Matrix(Dx=0, Dy=0, M11=0.7, M12=0, M21=0, M22=0.7);
+				-moz-transform: matrix(0.7, 0, 0, 0.7, -16px, -5px);
+				-webkit-transform: matrix(0.7, 0, 0, 0.7, -15, -4);
+				position: absolute;
+				right: 7px;
+				top: 12px;
+			}
+		}
+		.banner-corner-left {
+			border: 1px solid transparent;
+			border-color: $color-header $color-header transparent transparent;
+			bottom: 0;
+			width: 0;
+		}
+		.banner-corner-right {
+			border: 19px solid transparent;
+			border-right-width: 20px;
+			border-right-color: $color-page;
+			position: absolute;
+			right: 0px;
+			top: 0px;
 		}
 	}
 	ul {
-		margin-top: 50px;
+		margin-top: 65px;
 		list-style: none;
+		li {
+			@include clearfix;
+			height: 95px;
+			margin-bottom: 30px;
+			.highlight {
+				float: left;
+				margin-right: 10px;
+				img {
+					height: 95px;
+					width: 95px;
+				}
+			}
+			em {
+				display: block;
+				font-weight: bold;
+				margin-bottom: 2px;
+			}
+			.seemore {
+				display: block;
+				font-size: 12px;
+				font-weight: normal;
+				margin-top: 2px;
+			}
+		}
+		/* remove placeholder later */
+		.placeholder {
+			background-color: red;
+		}
 	}
 	.WikiaSpotlight {
 		display: block;
@@ -184,9 +242,9 @@
 			display: block;
 		}
 	}
-	.banner-corner-left, .banner-corner-right {
-		border-width: 1px;
-		bottom: -2px;
+	.wikia-button {
+		margin: 0 7px 7px 0;
+		padding: 0 7px;
 	}
 }
 
