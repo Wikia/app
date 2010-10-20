@@ -41,7 +41,7 @@ class PageLayoutBuilderJob extends Job {
 	 * @param array $params Job parameters (table, start and end page_ids)
 	 * @param integer $id job_id
 	 */
-	public function __construct( $title, $params, $id = 0 ) {
+	public function __construct( $title, $params = '', $id = 0 ) {
 		wfLoadExtensionMessages( self::PBLAYOUT );
 		parent::__construct( self::PBLAYOUT, $title, $params, $id );
 	}
