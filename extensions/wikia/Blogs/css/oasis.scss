@@ -49,7 +49,7 @@
 }
 .skin-oasis .WikiaBlogListing,
 .wikiaSkinMonaco #wk_blogs_article {
-	display: block;
+	display: block !important; // has to !important to override inline CSS
 }
 .wk_blogs_panel {
 	display: none;
