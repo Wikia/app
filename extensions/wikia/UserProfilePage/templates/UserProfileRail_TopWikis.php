@@ -36,6 +36,7 @@
 			<? endforeach; ?>
 		</tbody>
 	</table>
+	
 	<? $hiddenCount = count($hiddenTopWikis) ;?>
 	<? if( $userIsOwner && $hiddenCount ) :?>
 		<a class="more view-all"><?= wfMsgExt( 'userprofilepage-top-wikis-hidden-see-more', array( 'parsemag' ), $hiddenCount ); ?></a>

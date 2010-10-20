@@ -3,6 +3,7 @@ class UserProfileRailModule extends Module {
 	var $hiddenTopWikis;
 	var $topWikis;
 	var $userIsOwner;
+	var $userPageUrl;
 	
 	public function executeTopWikis() {
 		//global $wgOut;
@@ -10,10 +11,12 @@ class UserProfileRailModule extends Module {
 		//$wgOut->addStyle(wfGetSassUrl("extensions/wikia/AchievementsII/css/oasis.scss"));
 		// add JS for this module
 		//$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
+		$user = UserProfilePage::getInstance()->getUser();
 		$this->topWikis = $this->getTopWikis();
 		$this->hiddenTopWikis = $this->getHiddenTopWikis();
 		$this->userIsOwner = UserProfilePage::getInstance()->userIsOwner();
-		$this->userName =  UserProfilePage::getInstance()->getUser()->getName();
+		$this->userName =  $user->getName();
+		$thos->userPageUrl = $user->getUserPage()->getLocalUrl();
 		
 		foreach ( $this->topWikis as $wikiId => $wikiData ) {
 			if( in_array( $wikiId, $this->hiddenTopWikis ) ) {
@@ -68,7 +71,7 @@ class UserProfileRailModule extends Module {
 		$wikis = array();
 
 		if( $wgDevelEnvironment ) {//DevBox test
-			$wikis = array( 4832 => 72, 3613 => 60, 4036 => 35, 177 => 72 ); // test data
+			$wikis = array( 4832 => 72, 3613 => 60, 4036 => 35, 177 => 12 ); // test data
 
 			foreach($wikis as $wikiId => $editCount) {
 				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
@@ -97,7 +100,7 @@ class UserProfileRailModule extends Module {
 	public function getHiddenTopWikis() {
 		wfProfileIn( __METHOD__ );
 		global $wgExternalSharedDB;
-
+		
 		$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
 		$wikis = UserProfilePage::getInstance()->getHiddenFromDb( $dbs );
 
