@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/core/layout";
 
 .clickmask {
 	@include opacity(0);
@@ -8,5 +9,5 @@
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 999999;
+	z-index: $zTop + 1;
 }
