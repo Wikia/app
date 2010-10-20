@@ -34,10 +34,10 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		 * not needed but maybe user changed something meanwhile
 		 */
 		if( $user->getOption( "skin" ) === "" ) {
-			wfOut ("Moving {$user->getName()} ({$user->getId()}) skin preferences from monaco to oasis\n");
-#			$user->setOption( "skin", "oasis" );
-#			$user->saveSettings();
-#			$user->invalidateCache();
+			wfOut ("Moving {$user->getName()} ({$user->getId()}) skin preferences from {$user->getOption( "skin" )} to oasis\n");
+			$user->setOption( "skin", "oasis" );
+			$user->saveSettings();
+			$user->invalidateCache();
 		}
 	}
 }
