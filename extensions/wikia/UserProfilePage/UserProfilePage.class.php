@@ -8,6 +8,15 @@ class UserProfilePage {
 	private $hiddenPages = null;
 	private $hiddenWikis = null;
 	private $templateEngine = null;
+	private static $mInstance = null;
+
+	static public function getInstance( User $user = null ) {
+		if ( empty( self::$mInstance ) ) {
+			self::$mInstance = new self( $user );
+		}
+		
+		return self::$mInstance;
+	}
 
 	public function __construct( User $user ) {
 		global $wgUser, $wgSitename;
@@ -16,7 +25,7 @@ class UserProfilePage {
 		$this->templateEngine = new EasyTemplate( dirname(__FILE__) . "/templates/" );
 
 		// set "global" template variables
-		$this->templateEngine->set( 'isOwner', ( $this->user->getId() == $wgUser->getId() ) ? true : false );
+		$this->templateEngine->set( 'isOwner', $this->userIsOwner() );
 		$this->templateEngine->set( 'userPageUrl', $this->user->getUserPage()->getLocalUrl() );
 		$this->templateEngine->set( 'wikiName', $wgSitename );
 	}
@@ -32,7 +41,6 @@ class UserProfilePage {
 			array(
 				'userName'         => $this->user->getName(),
 				'activityFeedBody' => $this->renderUserActivityFeed( $userContribsProvider->get( 6, $this->user ) ),
-				'topWikisBody'     => $this->renderTopSection( 'user-top-wikis', $this->getTopWikis(), $this->populateHiddenTopWikisVars( $this->getHiddenTopWikis() ) ),
 				'topPagesBody'     => $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->populateHiddenTopPagesVars( $this->getHiddenTopPages() ) ),
 				'aboutSection'     => $this->populateAboutSectionVars(),
 				'pageBody'         => $pageBody,
@@ -212,50 +220,6 @@ class UserProfilePage {
 		return $pages;
 	}
 
-	public function getTopWikis() {
-		global $wgExternalDatawareDB;
-
-		// SELECT lu_wikia_id, lu_rev_cnt FROM city_local_users WHERE lu_user_id=$userId ORDER BY lu_rev_cnt DESC LIMIT $limit;
-		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
-		$res = $dbs->select(
-			array( 'city_local_users' ),
-			array( 'lu_wikia_id', 'lu_rev_cnt' ),
-			array( 'lu_user_id' => $this->user->getId() ),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'lu_rev_cnt DESC',
-				'LIMIT' => 4
-			)
-		);
-
-		$wikis = array();
-		while($row = $dbs->fetchObject($res)) {
-			$wikiId = $row->lu_wikia_id;
-			$editCount = $row->lu_rev_cnt;
-			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-			$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
-			if( !$this->isTopWikiHidden( $wikiId ) ) {
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
-			}
-		}
-
-		// TMP: local only
-		$wikis = array( 4832 => 72, 3613 => 60, 4036 => 35, 177 => 72 ); // test data
-		foreach($wikis as $wikiId => $editCount) {
-			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-			$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
-
-			if( !$this->isTopWikiHidden( $wikiId ) ) {
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
-			}
-		}
-		//
-
-		return $wikis;
-	}
-
 	/**
 	 * perform action (hide/unhide page or wiki)
 	 *
@@ -321,10 +285,6 @@ class UserProfilePage {
 		return ( in_array( $pageTitleText, $this->getHiddenTopPages() ) ? true : false );
 	}
 
-	public function isTopWikiHidden( $wikiId ) {
-		return ( in_array( $wikiId, $this->getHiddenTopWikis() ) ? true : false );
-	}
-
 	private function hideWiki( $wikiId) {
 		wfProfileIn( __METHOD__ );
 		global $wgExternalSharedDB;
@@ -361,31 +321,18 @@ class UserProfilePage {
 
 		if( $this->hiddenPages == null ) {
 			$dbs = wfGetDB( DB_SLAVE );
-			$this->hiddenPages = $this->getHiddenFromDb( $dbs );
+			$this->hiddenPages = self::getHiddenFromDb( $dbs );
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $this->hiddenPages;
 	}
 
-	private function getHiddenTopWikis() {
-		wfProfileIn( __METHOD__ );
-		global $wgExternalSharedDB;
-
-		if( $this->hiddenWikis == null ) {
-			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
-			$this->hiddenWikis = $this->getHiddenFromDb( $dbs );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $this->hiddenWikis;
-	}
-
 	/**
 	 * auxiliary method for getting hidden pages/wikis from db
 	 * @author ADi
 	 */
-	private function getHiddenFromDb( $dbHandler ) {
+	public function getHiddenFromDb( $dbHandler ) {
 		$row = $dbHandler->selectRow(
 			array( 'page_wikia_props' ),
 			array( 'props' ),
@@ -393,7 +340,17 @@ class UserProfilePage {
 			__METHOD__,
 			array()
 		);
+		
 		return ( empty($row) ? array() : unserialize( $row->props ) );
 	}
 
+	public function getUser() {
+		return $this->user;
+	}
+
+	public function userIsOwner() {
+		global $wgUser;
+		
+		return $this->user->getId() == $wgUser->getId();
+	}
 }

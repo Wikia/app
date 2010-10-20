@@ -11,7 +11,6 @@ $messages['en'] = array(
 	'userprofilepage-activity-delete'  => '$1 deleted the $2 page $3 ago',
 	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
 	'userprofilepage-recent-activity-title' => '$1\'s recent activity',
-	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
 	'userprofilepage-wiki-edits' => '$1 {{PLURAL:$1|edit|edits}}',
 	'userprofilepage-users-notes-title' => '$1\'s notes',
 	'userprofilepage-about-section-title' => 'About $1',
@@ -21,6 +20,14 @@ $messages['en'] = array(
 	'userprofilepage-top-page-edits' => '$1 edits',
 	'userprofilepage-about-article-title' => 'About',
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
+
+	//Top Wikis
+	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
+	'userprofilepage-top-wikis-edit-count' => 'Number of edits',
+	'userprofilepage-top-wikis-hidden-see-more' => 'You\'ve hidden {{PLURAL:$1|$1 wiki|$1 wikis}}',
+	'userprofilepage-top-wikis-unhide-label' => 'unhide',
+	'userprofilepage-top-wikis-hide-label' => 'hide',
+
 	'recipes-template-aboutuser-fields' => '
 * wpTitle
 ** type|input
