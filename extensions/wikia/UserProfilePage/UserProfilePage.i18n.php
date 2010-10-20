@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'userprofilepage-desc' => 'provides a user page that is fun and easy to update',
+	'userprofilepage-desc' => 'Provides a user page that is fun and easy to update',
 	'userprofilepage-activity-edit'    => '$1 edited the $2 article $3 ago',
 	'userprofilepage-activity-new'     => '$1 created $2 $3 ago',
 	'userprofilepage-activity-comment' => '$1 commented on $2 $3 ago',
@@ -10,17 +10,17 @@ $messages['en'] = array(
 	'userprofilepage-activity-video'   => '$1 uploaded a video to $2 $3 ago',
 	'userprofilepage-activity-delete'  => '$1 deleted the $2 page $3 ago',
 	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
-	'userprofilepage-recent-activity-title' => '$1\'s Recent Activity',
-	'userprofilepage-top-wikis-title' => '$1\'s Top Wiki\'s',
+	'userprofilepage-recent-activity-title' => '$1\'s recent activity',
+	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
 	'userprofilepage-wiki-edits' => '$1 {{PLURAL:$1|edit|edits}}',
-	'userprofilepage-users-notes-title' => '$1\'s Notes',
+	'userprofilepage-users-notes-title' => '$1\'s notes',
 	'userprofilepage-about-section-title' => 'About $1',
 	'userprofilepage-edit-button' => 'edit',
-	'userprofilepage-top-pages-section-title' => '$1\'s Top $2 Pages',
-	'userprofilepage-hidden-top-pages-section-title' => 'Hidden Top Pages',
+	'userprofilepage-top-pages-section-title' => '$1\'s Top $2 pages',
+	'userprofilepage-hidden-top-pages-section-title' => 'Hidden Top pages',
 	'userprofilepage-top-page-edits' => '$1 edits',
 	'userprofilepage-about-article-title' => 'About',
-	'userprofilepage-about-empty-section' => 'This section is empty, click edit to add some stuff here!',
+	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
 	'recipes-template-aboutuser-fields' => '
 * wpTitle
 ** type|input
