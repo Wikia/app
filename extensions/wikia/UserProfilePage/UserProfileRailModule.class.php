@@ -7,11 +7,8 @@ class UserProfileRailModule extends Module {
 	var $activityFeed;
 	
 	public function executeTopWikis() {
-		//global $wgOut;
-		// add CSS for this module
-		//$wgOut->addStyle(wfGetSassUrl("extensions/wikia/AchievementsII/css/oasis.scss"));
-		// add JS for this module
-		//$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
+		wfProfileIn( __METHOD__ );
+		
 		$user = UserProfilePage::getInstance()->getUser();
 		$this->topWikis = $this->getTopWikis();
 		$this->hiddenTopWikis = $this->getHiddenTopWikis();
@@ -24,36 +21,28 @@ class UserProfileRailModule extends Module {
 				unset( $this->topWikis[ $wikiId ] );
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function executeRecentActivity() {
+		wfProfileIn( __METHOD__ );
+		global $wgCityId;
+
 		$userContribsProvider = new UserContribsProviderService;
-		$this->activityFeed = $userContribsProvider->get( 6, UserProfilePage::getInstance()->getUser() );
+		$user = UserProfilePage::getInstance()->getUser();
+		$this->userName =  $user->getName();
+		$this->wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
+		$this->activityFeed = $userContribsProvider->get( 6, $user );
+
+		wfProfileOut( __METHOD__ );
 	}
 
-	public function executeTopPages() {}
-
-	/**
-	 * adds the hook for own JavaScript variables in the document
-	 */
-	/*public function __construct() {
-		global $wgHooks;
-		$wgHooks['MakeGlobalVariablesScript'][] = 'UserProfileTopWikisModule::addAchievementsJSVariables';
-	}*/
-
-
-	/**
-	 * adds JavaScript variables inside the page source, cl
-	 *
-	 * @param mixed $vars the main vars for the JavaScript printout
-	 *
-	 */
-	/*static function addAchievementsJSVariables (&$vars) {
-		$lang_view_all = wfMsg('achievements-viewall-oasis');
-		$lang_view_less = wfMsg('achievements-viewless');
-		$vars['wgAchievementsMoreButton'] = array($lang_view_all, $lang_view_less);
-		return true;
-	}*/
+	public function executeTopPages() {
+		wfProfileIn( __METHOD__ );
+		
+		wfProfileOut( __METHOD__ );
+	}
 
 	public function getTopWikis() {
 		wfProfileIn( __METHOD__ );
@@ -111,4 +100,26 @@ class UserProfileRailModule extends Module {
 		wfProfileOut( __METHOD__ );
 		return $wikis;
 	}
+
+	/**
+	 * adds the hook for own JavaScript variables in the document
+	 */
+	/*public function __construct() {
+		global $wgHooks;
+		$wgHooks['MakeGlobalVariablesScript'][] = 'UserProfileTopWikisModule::addAchievementsJSVariables';
+	}*/
+
+
+	/**
+	 * adds JavaScript variables inside the page source, cl
+	 *
+	 * @param mixed $vars the main vars for the JavaScript printout
+	 *
+	 */
+	/*static function addAchievementsJSVariables (&$vars) {
+		$lang_view_all = wfMsg('achievements-viewall-oasis');
+		$lang_view_less = wfMsg('achievements-viewless');
+		$vars['wgAchievementsMoreButton'] = array($lang_view_all, $lang_view_less);
+		return true;
+	}*/
 }

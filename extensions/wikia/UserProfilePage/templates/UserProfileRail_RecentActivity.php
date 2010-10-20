@@ -1,5 +1,5 @@
 <section class="UserProfileRailModule_RecentActivity">
-	<h2></h2>
+	<h2><?= wfMsg( 'userprofilepage-recent-activity-title', $userName, $wikiName ) ;?></h2>
 	<?if ( count($activityFeed) ) :?>
 		<ul class="activity_feed">
 			<? foreach( $activityFeed as $row ) :?>

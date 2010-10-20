@@ -58,6 +58,6 @@ function wfUserProfilePageInit() {
 	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
 
-	$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/TopWikis.scss" ) );
+	$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 }
