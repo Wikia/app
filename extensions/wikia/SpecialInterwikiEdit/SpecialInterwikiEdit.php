@@ -385,7 +385,7 @@ function wfSIWEEditInterwiki(){
 				<label for='iw_prefix'>Interwiki Prefix</label>
 			</td>
 			<td>
-				<input name='iw_prefix' value='' />
+				<input name='iw_prefix' value='' size='8' />
 			</td>
 		</tr>
 		<tr>
@@ -393,7 +393,7 @@ function wfSIWEEditInterwiki(){
 				<label for='iw_url'>Interwiki URL</label>
 			</td>
 			<td>
-				<input name='iw_url' value='' />
+				<input name='iw_url' value='' size='50' />
 			</td>
 		</tr>
 		<tr>
