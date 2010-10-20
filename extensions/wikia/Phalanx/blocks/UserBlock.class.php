@@ -12,16 +12,28 @@
 
 class UserBlock {
 	public static function blockCheck(&$user) {
-		global $wgUser;
+		global $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
+
+		$ret = true;
 
 		// RT#42011: RegexBlock records strange results
 		// don't write stats for other user than visiting user
 		$isCurrentUser = $user->getName() == $wgUser->getName();
 
+		// check cache first before proceeeding
+		$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getID() );
+		$cachedState = $wgMemc->get( $cacheKey );
+		if ( !empty( $cachedState ) && $cachedState['timestamp'] > Phalanx::getLastUpdate() ) {
+			if ( !$cachedState['return'] && $isCurrentUser ) {
+				self::setUserData( $user, $cachedSate['block'], $text, $user->isAnon(), $isCurrentUser );
+			}
+
+			return $cachedState['return'];
+		}
+
 		$text = $user->getName();
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
-		$ret = true;
 
 		if ( !empty($blocksData) && !empty($text) ) {
 			if ( $user->isAnon() ) {
@@ -36,11 +48,22 @@ class UserBlock {
 			}
 		}
 
+		// populate cache if not done before
+		if ( $ret ) {
+			$chachedState = array(
+				'timestamp' => wfTimestampNow(),
+				'block' => false,
+				'return' => $ret,
+			);
+			$wgMemc->set( $cacheKey, $cachedState );
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
 	private static function blockCheckInternal( &$user, $blocksData, $text, $isBlockIP = false, $writeStats = true ) {
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		foreach ($blocksData as $blockData) {
@@ -53,6 +76,15 @@ class UserBlock {
 			if ( $result['blocked'] ) {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 				self::setUserData( $user, $blockData, $text, $isBlockIP );
+
+				$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getID() );
+				$chachedState = array(
+					'timestamp' => wfTimestampNow(),
+					'block' => $blockData,
+					'return' => false,
+				);
+				$wgMemc->set( $cacheKey, $cachedState );
+				
 				wfProfileOut( __METHOD__ );
 				return false;
 			}

@@ -290,6 +290,8 @@ class PhalanxHelper {
 				}
 			}
 		}
+
+		Phalanx::setLastUpdate();
 	}
 
 	/**

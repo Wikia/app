@@ -10,6 +10,7 @@ class Phalanx {
 	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
 	const SCRIBE_KEY = 'log_phalanx';
+	const LAST_UPDATE_KEY = 'phalanx:last-update';
 
 	public static $typeNames = array(
 		1 => 'content',
@@ -31,6 +32,22 @@ class Phalanx {
 		$expiry_text = array("1 hour","2 hours","4 hours","6 hours","1 day","3 days","1 week","2 weeks","1 month","3 months","6 months","1 year","infinite");
 
 		return array_combine($expiry_text, $expiry_values);
+	}
+
+	/*
+	 * get last filter change date
+	 */
+	static public function getLastUpdate() {
+		global $wgMemc;
+		return $wgMemc->get( wfSharedMemcKey( self::LAST_UPDATE_KEY ) );
+	}
+
+	/*
+	 *
+	 */
+	static public function setLastUpdate() {
+		global $wgMemc;
+		return $wgMemc->set( wfSharedMemcKey( self::LAST_UPDATE_KEY ), wfTimestampNow() );
 	}
 
 	/*
