@@ -22,7 +22,7 @@ class AutoHubsPagesArticle extends Article {
 		$tagname = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
 		$vars = AutoHubsPagesHelper::getHubsFeedsVariable( $tagname );
 
-		$isMenager = $wgUser->isAllowed( 'corporatepagemanager' );
+		$isManager = $wgUser->isAllowed( 'corporatepagemanager' );
 		$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
 
 		$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
@@ -32,10 +32,10 @@ class AutoHubsPagesArticle extends Article {
 		$pars['tagname'] = $tag_name;
 		$pars['title'] = $wgTitle;
 		$pars['var_feeds'] = $vars[$tag_name];
-		$pars['is_menager'] = $isMenager;
+		$pars['is_manager'] = $isManager;
 		$pars['tag_id'] = $tag_id;
 
-		if ($isMenager) {
+		if ($isManager) {
 			$temp = $datafeeds->getTopWikis($tag_id, $lang, 30, true, true);
 			$pars['topWikis1'] = $temp['value'];
 		} else {
@@ -46,7 +46,7 @@ class AutoHubsPagesArticle extends Article {
 		$temp = $datafeeds->getTopUsers($tag_id, $lang,5);
 		$pars['topEditors'] = $temp['value'];
 
-		if ($isMenager) {
+		if ($isManager) {
 			$temp = $datafeeds->getTopBlogs($tag_id, $lang, 9, 3, true, true);
 		} else {
 			$temp = $datafeeds->getTopBlogs($tag_id, $lang, 3, 1);
@@ -54,7 +54,7 @@ class AutoHubsPagesArticle extends Article {
 
 		$pars['topBlogs'] = $temp['value'];
 
-		if ($isMenager) {
+		if ($isManager) {
 			$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true);
 		} else {
 			$temp = $datafeeds->getTopArticles($tag_id, $lang, 5, 1);
