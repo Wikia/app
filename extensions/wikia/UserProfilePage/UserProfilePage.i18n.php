@@ -7,9 +7,6 @@ $messages['en'] = array(
 	'userprofilepage-users-notes-title' => '$1\'s notes',
 	'userprofilepage-about-section-title' => 'About $1',
 	'userprofilepage-edit-button' => 'edit',
-	'userprofilepage-top-pages-section-title' => '$1\'s Top $2 pages',
-	'userprofilepage-hidden-top-pages-section-title' => 'Hidden Top pages',
-	'userprofilepage-top-page-edits' => '$1 edits',
 	'userprofilepage-about-article-title' => 'About',
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
 
@@ -31,6 +28,12 @@ $messages['en'] = array(
 	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
 	'userprofilepage-recent-activity-default' => '$1 has joined Wikia',
 	'userprofilepage-top-recent-activity-see-more' => 'See all',
+
+	//Top pages
+	'userprofilepage-top-pages-title' => '$1\'s Top $2 pages',
+	'userprofilepage-top-page-unhide-label' => 'unhide',
+	'userprofilepage-top-pages-hidden-see-more' => 'You\'ve hidden {{PLURAL:$1|$1 page|$1 pages}}',
+	'userprofilepage-top-pages-default' => 'You don\'t have any top pages yet. Why not check out some <a href="$1">random pages</a> on the wiki?',
 	
 	'recipes-template-aboutuser-fields' => '
 * wpTitle

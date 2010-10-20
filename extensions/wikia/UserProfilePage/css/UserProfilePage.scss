@@ -6,6 +6,14 @@
 //@import "../../../../skins/oasis/css/mixins/forms";
 //@import "../../../../skins/oasis/css/mixins/opacity";
 
+@mixin moduleTitle(){
+	h2 {
+		font-size: 14px;
+		font-weight: bold;
+	}
+}
+
+
 .UserProfileRailModule_TopWikis {
 	h2 {
 		font-size: 12px;
@@ -14,8 +22,9 @@
 }
 
 .UserProfileRailModule_RecentActivity {
-	h2 {
-		font-size: 14px;
-		font-weight: bold;
-	}
+	@include moduleTitle;
+}
+
+.UserProfileRailModule_TopPages {
+	@include moduleTitle;
 }

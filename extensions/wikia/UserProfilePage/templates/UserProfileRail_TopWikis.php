@@ -44,7 +44,7 @@
 			<img src="<?= wfBlankImgUrl() ;?>" class="chevron" />
 		</a>
 
-		<ul id="profile-top-pages-hidden">
+		<ul id="profile-top-wikis-hidden">
 			<? foreach( $hiddenTopWikis as $wikiId => $wikiData ) :?>
 				<li>
 					<div class="wordmark">
