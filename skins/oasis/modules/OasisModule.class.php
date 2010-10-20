@@ -220,7 +220,7 @@ EOF;
 	} // end delayedPrintCSSdownload()
 
 	private function setupStaticChute() {
-		global $wgUser, $wgOut, $wgJsMimeType, $wgRequest, $wgAllInOne;
+		global $wgUser, $wgOut, $wgJsMimeType, $wgRequest, $wgAllInOne, $wgTitle;
 		wfProfileIn(__METHOD__);
 
 		$skin = $wgUser->getSkin();
