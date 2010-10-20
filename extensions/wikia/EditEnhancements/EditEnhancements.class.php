@@ -41,10 +41,10 @@ class EditEnhancements {
 	public function editPageJS($skin, &$html) {
 		// moved into /js/editEnhancements.js
 		if ($skin->skinname = 'oasis') {
-			global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+			global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 
-			$wgOut->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/EditEnhancements/js/editEnhancements.js?$wgStyleVersion'></script>\n");	
-			
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/EditEnhancements/js/editEnhancements.js?{$wgStyleVersion}\"></script>\n");
+
 		}
 		else {
 			$html .= $this->tmpl->render('EditEnhancementsJS');
