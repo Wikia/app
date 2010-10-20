@@ -23,7 +23,7 @@ class UserBlock {
 		$isCurrentUser = $user->getName() == $wgUser->getName();
 
 		// check cache first before proceeeding
-		$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $text );
+		$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getTitleKey() );
 		$cachedState = $wgMemc->get( $cacheKey );
 		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
@@ -77,7 +77,7 @@ class UserBlock {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 				self::setUserData( $user, $blockData, $text, $isBlockIP );
 
-				$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getName() );
+				$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getTitleKey() );
 				$cachedState = array(
 					'timestamp' => wfTimestampNow(),
 					'block' => $blockData,
