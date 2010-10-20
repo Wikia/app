@@ -22,7 +22,7 @@ $dbr = WikiFactory::db( DB_SLAVE );
 $sth = $dbr->select(
 	array( "user" ),
 	array( "user_id", "user_name" ),
-	array( "user_options like '%monaco%'" ),
+	array( "user_options not like '%skin=wowwiki%' and user_options not like '%skin=monaco%' and user_options not like '%skin=oasis%' and user_options not like '%skin=monobook%' and user_options not like '%skin=lostbook%'" ),
 	__METHOD__,
 	$limits
 );
@@ -33,11 +33,11 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		/**
 		 * not needed but maybe user changed something meanwhile
 		 */
-		if( $user->getOption( "skin" ) === "monaco" ) {
+		if( $user->getOption( "skin" ) === "" ) {
 			wfOut ("Moving {$user->getName()} ({$user->getId()}) skin preferences from monaco to oasis\n");
-			$user->setOption( "skin", "oasis" );
-			$user->saveSettings();
-			$user->invalidateCache();
+#			$user->setOption( "skin", "oasis" );
+#			$user->saveSettings();
+#			$user->invalidateCache();
 		}
 	}
 }
