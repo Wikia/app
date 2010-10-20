@@ -11,6 +11,6 @@
 			<? endforeach ;?>
 		</ul>
 	<? else :?>
-		<?= wfMsgExt( 'userprofilepage-contributions-empty', array('parse') ) ;?>
+		<?= wfMsg( 'userprofilepage-recent-activity-default', $userName ) ;?>
 	<? endif ;?>
 </section>
