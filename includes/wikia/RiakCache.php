@@ -80,14 +80,13 @@ class RiakCache extends BagOStuff {
 		$data   = $object->getData();
 		$value  = false;
 		if( is_array( $data ) ) {
-			$timestamp = array_shift( $data );
 			$value     = array_shift( $data );
+			$timestamp = array_shift( $data );
 			if( $timestamp < time() ) {
 				$this->delete( $key );
 				$value = false;
 			}
 		}
-
 		return $value;
 	}
 
