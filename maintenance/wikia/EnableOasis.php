@@ -42,6 +42,9 @@ $exceptions = array(
 	'neciklopedio.wikia',
 	'de.uncyclopedia.org',
 	'uncyclopedia.wikia.com',
+	'halo.wikia.com', # ad campaign
+	'gearsofwar.wikia.com', # ad campaign
+	'callofduty.wikia.com', # ad campaign
 );
 
 // list of allowed languages taken from Release plan
