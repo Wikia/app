@@ -78,7 +78,6 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$block2['text'] = $block['text']; unset($block['text']);
 		$block2['reason'] = $block['reason']; unset($block['reason']);
 		
-		//TODO: add i18n
 		$headers = array(
 			wfMsg('phalanx-stats-table-id'),
 			wfMsg('phalanx-stats-table-user'),
@@ -129,25 +128,25 @@ class PhalanxStats extends UnlistedSpecialPage {
 	
 	private function block_wikia($par) {
 		global $wgOut, $wgLang, $wgUser, $wgRequest;
-		
+
 		$oWiki = WikiFactory::getWikiById( $par );
 		if ( !is_object($oWiki) ) {
 			return false;
 		}
 		$url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
-				
+		$sitename = WikiFactory::getVarValueByName( "wgSitename", $oWiki->city_id );
+
 		#we have a valid id, change title to use it
 		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') . ': ' . $url );
 
 		// process block data for display
-		$block['wiki_id'] = $oWiki->city_id;
-		$block['sitename'] = $oWiki->city_sitename;
-		$block['url'] = $url;
-		$block['last_timestamp'] = $wgLang->timeanddate( $oWiki->city_last_timestamp );
+		$data['wiki_id'] = $oWiki->city_id;
+		$data['sitename'] = $sitename;
+		$data['url'] = $url;
+		$data['last_timestamp'] = $wgLang->timeanddate( $oWiki->city_last_timestamp );
 
 		$html = '';
 		
-		//TODO: add i18n
 		$headers = array(
 			wfMsg('phalanx-stats-table-wiki-id'),
 			wfMsg('phalanx-stats-table-wiki-name'),
@@ -162,7 +161,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 		);
 
 		#use magic to build it
-		$table = Xml::buildTable( array( $block ), $tableAttribs, $headers );
+		$table = Xml::buildTable( array( $data ), $tableAttribs, $headers );
 		$html .=  $table . "<br />\n";
 
 		$wgOut->addHTML( $html );
