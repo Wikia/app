@@ -92,7 +92,7 @@ foreach ( $list as $wiki ) {
 
 	$input = '';
 
-	if ( isset( $options['force'] ) ) {
+	if ( !isset( $options['force'] ) ) {
 		if ( in_array( $currentSkin, array( 'monobook', 'uncyclopedia', 'oasis' ) ) ) {
 			echo "$wiki: CAUTION! Current skin is $currentSkin!\n";
 		}
