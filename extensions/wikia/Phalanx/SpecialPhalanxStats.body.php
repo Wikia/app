@@ -61,23 +61,26 @@ class PhalanxStats extends UnlistedSpecialPage {
 		}
 
 		// process block data for display
-		$block['author_id'] = User::newFromId( $block['author_id'] )->getName();
-		$block['timestamp'] = $wgLang->timeanddate( $block['timestamp'] );
+		$data = array();
+		$data['id'] = $block['id'];
+		$data['author_id'] = User::newFromId( $block['author_id'] )->getName();
+		$data['type'] = implode( ', ', Phalanx::getTypeNames( $block['type'] ) );
+
+		$data['timestamp'] = $wgLang->timeanddate( $block['timestamp'] );
 		if ( $block['expire'] == null ) {
-			$block['expire'] = 'infinte';
+			$data['expire'] = 'infinte';
 		} else {
-			$block['expire'] = $wgLang->timeanddate( $block['expire'] );
+			$data['expire'] = $wgLang->timeanddate( $block['expire'] );
 		}
-		$block['regex'] = $block['regex'] ? 'Yes' : 'No';
-		$block['case'] = $block['case'] ? 'Yes' : 'No';
-		$block['exact'] = $block['exact'] ? 'Yes' : 'No';
-		$block['type'] = implode( ', ', Phalanx::getTypeNames( $block['type'] ) );
-		$block['lang'] = empty($block['lang']) ? '*' : $block['lang'];
+		$data['regex'] = $block['regex'] ? 'Yes' : 'No';
+		$data['case']  = $block['case']  ? 'Yes' : 'No';
+		$data['exact'] = $block['exact'] ? 'Yes' : 'No';
+		$data['lang'] = empty($block['lang']) ? '*' : $block['lang'];
 
 		#pull these out of the array, so they dont get used in the top rows
-		$block2['text'] = $block['text']; unset($block['text']);
-		$block2['reason'] = $block['reason']; unset($block['reason']);
-		
+		$data2['text'] = $block['text'];
+		$data2['reason'] = $block['reason'];
+
 		$headers = array(
 			wfMsg('phalanx-stats-table-id'),
 			wfMsg('phalanx-stats-table-user'),
@@ -99,12 +102,12 @@ class PhalanxStats extends UnlistedSpecialPage {
 		);
 
 		#use magic to build it
-		$table = Xml::buildTable( array( $block ), $tableAttribs, $headers );
+		$table = Xml::buildTable( array( $data ), $tableAttribs, $headers );
 		#rip off bottom
 		$table = str_replace("</table>", "", $table);
 		#add some stuff
-		$table .= "<tr><th>".wfMsg('phalanx-stats-table-text')."</th><td colspan='8'>" . htmlspecialchars($block2['text']) . "</td></tr>";
-		$table .= "<tr><th>".wfMsg('phalanx-stats-table-reason')."</th><td colspan='8'>{$block2['reason']}</td></tr>";
+		$table .= "<tr><th>".wfMsg('phalanx-stats-table-text')."</th><td colspan='8'>" . htmlspecialchars($data2['text']) . "</td></tr>";
+		$table .= "<tr><th>".wfMsg('phalanx-stats-table-reason')."</th><td colspan='8'>{$data2['reason']}</td></tr>";
 		#seal it back up
 		$table .= "</table>";
 
