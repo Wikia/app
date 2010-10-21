@@ -95,8 +95,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 		$tableAttribs = array(
 			'border' => 1,
-			'cellpadding' => 4,
-			'cellspacing' => 0,
+			'class' => 'wikitable',
 			'style' => "font-family:monospace;",
 		);
 
