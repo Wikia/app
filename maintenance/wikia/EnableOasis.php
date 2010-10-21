@@ -45,6 +45,13 @@ $exceptions = array(
 	'halo.wikia.com', # ad campaign
 	'gearsofwar.wikia.com', # ad campaign
 	'callofduty.wikia.com', # ad campaign
+	'aoc.wikia.com', # ad campaign, per Mike
+	'cityofheroes.wikia.com', # ad campaign, per Mike
+	'aceattorney.wikia.com', # ad campaign, per Mike
+	'alanwake.wikia.com', # ad campaign, per Mike
+	'saintsrow.wikia.com', # ad campaign, per Mike
+	'halofanon.wikia.com', # ad campaign, per Mike
+	'sonicfanon.wikia.com', # ad campaign, per Mike
 );
 
 // list of allowed languages taken from Release plan
