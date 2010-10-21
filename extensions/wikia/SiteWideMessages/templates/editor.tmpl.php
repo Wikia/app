@@ -183,7 +183,7 @@
 							echo " checked='checked'";
 						}
 						echo " />";
-						echo "<label for='swm-lang-other'>" . wfMsg( 'swm-lang-other' ) . "</label>";
+						echo "<label for='swm-lang-other'>" . wfMsg( 'swm-lang-other' ) . "</label>&nbsp;";
 					}
 				?>
 				<br />
