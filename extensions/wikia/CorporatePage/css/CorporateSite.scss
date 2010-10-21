@@ -40,7 +40,7 @@
 		text-align: left;
 	}
 	#homepage-feature-sidebar h2 {
-		background: url(http://images.wikia.com/common/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;
+		background: url(/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;  /* $wgCdnStylePath */
 		font-size: 18px;
 		line-height: normal;
 		margin-top: 20px;
@@ -52,7 +52,7 @@
 		line-height: normal;
 	}
 	.create-wiki-container {
-		background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
+		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;  /* $wgCdnStylePath */
 		min-height: 90px;
 		text-align: center;
 	}
@@ -111,7 +111,7 @@
 		}
 		.spotlight-slider {
 
-			background: url(http://images.wikia.com/common/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;
+			background: url(/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;  /* $wgCdnStylePath */
 			position: absolute;
 			top: 0;
 			overflow: hidden;
@@ -204,7 +204,7 @@
 	}
 	
 	.selected {
-		background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
+		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;  /* $wgCdnStylePath */
 
 		padding:16px 5px 0;
 		img {
@@ -238,7 +238,7 @@
 			margin-top: 3px;
 			
 			li {
-				background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat;
+				background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat;  /* $wgCdnStylePath */
 				float: left;
 				margin-right: 2px;
 				display: inline-block;
@@ -417,7 +417,7 @@
 	}	
 	/* If we need to hilite a particular entry, the following apply. */
 	#wikia-global-hot-spots .hilite .page-activity-badge {
-		background: url(http://images.wikia.com/common/extensions/wikia/MyHome/images/fire.png) repeat-x;
+		background: url(/extensions/wikia/MyHome/images/fire.png) repeat-x;  /* $wgCdnStylePath */
 		padding-top: 30px;
 	}
 	#wikia-global-hot-spots .hilite .page-activity-sources {
@@ -518,7 +518,7 @@ h1#hub-name {
   -moz-background-clip:border;
   -moz-background-inline-policy:continuous;
   -moz-background-origin:padding;
-  background:transparent url(http://images.wikia.com/common/skins/corporate/images/bg.top-wikis.middle.white.620x5.png) repeat-y scroll 0 0;
+  background:transparent url(/skins/corporate/images/bg.top-wikis.middle.white.620x5.png) repeat-y scroll 0 0;  /* $wgCdnStylePath */
   width:620px;
 }
 
@@ -526,7 +526,7 @@ h1#hub-name {
   -moz-background-clip:border;
   -moz-background-inline-policy:continuous;
   -moz-background-origin:padding;
-  background:transparent url(http://images.wikia.com/common/skins/corporate/images/bg.top-wikis.bottom.white.620x25.png) no-repeat scroll center bottom;
+  background:transparent url(/skins/corporate/images/bg.top-wikis.bottom.white.620x25.png) no-repeat scroll center bottom;  /* $wgCdnStylePath */
   padding-bottom:25px;
   width: 620px;
 }
@@ -535,7 +535,7 @@ h1#hub-name {
   -moz-background-clip:border;
   -moz-background-inline-policy:continuous;
   -moz-background-origin:padding;
-  background:transparent url(http://images.wikia.com/common/skins/corporate/images/bg.top-wikis.top.white.620x25.png) no-repeat scroll 0 0;
+  background:transparent url(/skins/corporate/images/bg.top-wikis.top.white.620x25.png) no-repeat scroll 0 0;  /* $wgCdnStylePath */
   font-size:15px;
   padding-top:5px;
 }
