@@ -1251,7 +1251,13 @@ class EditPage {
 						$wgOut->addWikiMsg( 'usercssjsyoucanpreview' );
 					}
 				} else {
-					$wgOut->addWikiMsg( 'userinvalidcssjstitle', $wgTitle->getSkinFromCssJsSubpage() );
+					/* Wikia change begin - @author: Uberfuzzy */
+					# rt75168, confusing "there is no wikia" message
+					$CssJsSubSkin = $wgTitle->getSkinFromCssJsSubpage()
+					if( $CssJsSubSkin != 'wikia' ) {
+						$wgOut->addWikiMsg( 'userinvalidcssjstitle', $CssJsSubSkin );
+					}
+					/* Wikia change end */
 				}
 			}
 		}
