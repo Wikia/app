@@ -26,7 +26,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author'         => array( 'Federico "Lox" Lucignano', 'Władysław Bodzek' ),
 	'url'            => '',
 	'description'    => 'Renames a user (need \'\'renameuser\'\' right)',
-	'descriptionmsg' => 'renameuser-desc',
+	'descriptionmsg' => 'userrenametool-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -60,8 +60,8 @@ define('COMMUNITY_CENTRAL_CITY_ID', 177);//city_id for community.wikia.com
 //log type
 global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
 $wgLogTypes[]                          = 'renameuser';
-$wgLogNames['renameuser']              = 'renameuserlogpage';
-$wgLogHeaders['renameuser']            = 'renameuserlogpagetext';
+$wgLogNames['renameuser']              = 'userrenametool-logpage';
+$wgLogHeaders['renameuser']            = 'userrenametool-logpagetext';
 
 //task types
 if(function_exists( "extAddBatchTask" ) ) {

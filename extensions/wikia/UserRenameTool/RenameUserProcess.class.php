@@ -266,21 +266,21 @@ class RenameUserProcess {
 		
 		//Invalid old user name entered
 		if(!$oun){
-			$this->addError(wfMsgForContent('renameusererrorinvalid', $this->mRequestData->oldUsername));
+			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
 
 		//Invalid new user name entered
 		if(!$nun){
-			$this->addError(wfMsgForContent('renameusererrorinvalidnew', $this->mRequestData->newUsername));
+			$this->addError(wfMsgForContent('userrenametool-errorinvalidnew', $this->mRequestData->newUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
 
 		//Old username is the same as new username
 		if($oldTitle->getText() === $newTitle->getText()){
-			$this->addError(wfMsgForContent('renameuser-error-same-user'));
+			$this->addError(wfMsgForContent('userrenametool-error-same-user'));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -297,13 +297,13 @@ class RenameUserProcess {
 		
 		// It won't be an object if for instance "|" is supplied as a value
 		if(!is_object($olduser)){
-			$this->addError(wfMsgForContent('renameusererrorinvalid', $this->mRequestData->oldUsername));
+			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
 		
 		if(!is_object($newuser) || !User::isCreatableName($newuser->getName())){
-			$this->addError(wfMsgForContent('renameusererrorinvalid', $this->mRequestData->newUsername));
+			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->newUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -339,7 +339,7 @@ class RenameUserProcess {
 
 		//If old user name does not exist:
 		if($uid == 0){
-			$this->addError(wfMsgForContent( 'renameusererrordoesnotexist', $this->mRequestData->oldUsername));
+			$this->addError(wfMsgForContent( 'userrenametool-errordoesnotexist', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -350,17 +350,17 @@ class RenameUserProcess {
 				$blockedBy = (string)User::whoIs((int)$blockedBy);
 			}
 
-			$this->addError(wfMsgForContent( 'renameusererrorblocked', $this->mRequestData->oldUsername, $blockedBy, $olduser->blockedFor()));
+			$this->addError(wfMsgForContent( 'userrenametool-errorblocked', $this->mRequestData->oldUsername, $blockedBy, $olduser->blockedFor()));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
 		elseif($olduser->isLocked()){
-			$this->addError(wfMsgForContent( 'renameusererrolocked', $this->mRequestData->oldUsername));
+			$this->addError(wfMsgForContent( 'userrenametool-errorlocked', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
 		elseif($olduser->isBot()){
-			$this->addError(wfMsgForContent( 'renameusererrorbot', $this->mRequestData->oldUsername));
+			$this->addError(wfMsgForContent( 'userrenametool-errorbot', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -424,19 +424,19 @@ class RenameUserProcess {
 			 * Not needed, process must be resumable even in case of fatal errors, if 2 processes are run nothing bad happens
 			//if the process is already running throw an error
 			if($processing){
-				$this->addError(wfMsgForContent( 'renameusererrorprocessing', $olduser->getName(), $newuser->getName()));
+				$this->addError(wfMsgForContent( 'userrenametool-errorprocessing', $olduser->getName(), $newuser->getName()));
 				wfProfileOut(__METHOD__);
 				return false;
 			}*/
 			
 			if($repeating){
-				$this->addWarning(wfMsgForContent('renameuser-warn-repeat', $this->mRequestData->oldUsername, $this->mRequestData->newUsername));
+				$this->addWarning(wfMsgForContent('userrenametool-warn-repeat', $this->mRequestData->oldUsername, $this->mRequestData->newUsername));
 				//Swap the uids because the real user ID is the new user ID in this special case
 				$fakeuid = $uid;
 				$uid = $newuser->idForName();
 			} else {
 				//In the case other than repeating the process drop an error
-				$this->addError(wfMsgForContent( 'renameusererrorexists', $newuser->getName()));
+				$this->addError(wfMsgForContent( 'userrenametool-errorexists', $newuser->getName()));
 				wfProfileOut(__METHOD__);
 				return false;
 			}
@@ -548,7 +548,7 @@ class RenameUserProcess {
 		// Give other affected extensions a chance to validate or abort
 		if( !wfRunHooks( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername, &$this->mErrors ) ) ) {
 			$this->addLog("Aborting procedure as requested by hook.");
-			$this->addError(wfMsgForContent( 'renameuser-error-extension-abort' ));
+			$this->addError(wfMsgForContent( 'userrenametool-error-extension-abort' ));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -581,7 +581,7 @@ class RenameUserProcess {
 				//if main shared DB, rename operation failed and not repeating then something's wrong dude...
 				if($clusterName === RenameUserHelper::CLUSTER_DEFAULT && empty($this->mFakeUserId)){
 					$this->addLog("Cluster {$clusterName} is the main shared DB, aborting.");
-					$this->addError(wfMsgForContent('renameuser-error-cannot-rename-account'));
+					$this->addError(wfMsgForContent('userrenametool-error-cannot-rename-account'));
 					wfProfileOut(__METHOD__);
 					return false;
 				}
@@ -633,7 +633,7 @@ class RenameUserProcess {
 
 			if(!$this->mPhalanxBlockId) {
 				$this->addLog("Creation of the block failed.");
-				$this->addError(wfMsgForContent('renameuser-error-cannot-create-block'));
+				$this->addError(wfMsgForContent('userrenametool-error-cannot-create-block'));
 				wfProfileOut(__METHOD__);
 				return false;
 			} else {
@@ -800,17 +800,17 @@ class RenameUserProcess {
 				//Info: The other case is when renaming is repeated - no action should be taken
 				if ($newPage->exists() && !$oldPage->isValidMoveTarget($newPage)){
 					$this->addLog("Updating wiki \"{$cityDb}\": User page " . $newPage->getText() . " already exists, moving cancelled.");
-					$this->addWarning(wfMsgForContent('renameuser-page-exists', $newPage->getText()));
+					$this->addWarning(wfMsgForContent('userrenametool-page-exists', $newPage->getText()));
 				}
 				else{
 					$this->addLog("Moving page " . $oldPage->getText() . " in namespace {$row->page_namespace} to " . $newTitle->getText() );
-					$success = $oldPage->moveTo($newPage, false, wfMsgForContent('renameuser-move-log', $oldTitle->getText(), $newTitle->getText()));
+					$success = $oldPage->moveTo($newPage, false, wfMsgForContent('userrenametool-move-log', $oldTitle->getText(), $newTitle->getText()));
 
 					if($success === true){
 						$this->addLog("Updating wiki \"{$cityDb}\": User page " . $oldPage->getText() . " moved to " . $newPage->getText() . '.');
 					} else {
 						$this->addLog("Updating wiki \"{$cityDb}\": User page " . $oldPage->getText() . " could not be moved to " . $newPage->getText() . '.');
-						$this->addWarning(wfMsgForContent('renameuser-page-unmoved', array($oldPage->getText(), $newPage->getText())));
+						$this->addWarning(wfMsgForContent('userrenametool-page-unmoved', array($oldPage->getText(), $newPage->getText())));
 					}
 				}
 			}
@@ -833,7 +833,7 @@ class RenameUserProcess {
 		
 		// Save entry in local Special:Log
 		// Important: assuming that run inside the maintenance script
-		$this->addLocalLog(wfMsgExt( 'renameusersuccess', array( 'content' ), $this->mOldUsername, $this->mNewUsername ));
+		$this->addLocalLog(wfMsgExt( 'userrenametool-success', array( 'content' ), $this->mOldUsername, $this->mNewUsername ));
 
 		$this->addLog("Finished updating wiki database: {$cityDb}");
 		
@@ -863,7 +863,7 @@ class RenameUserProcess {
 		try {
 			if (!$dbw->tableExists($table)){
 				$this->addLog("Table \"$table\" does not exist in database {$dbName}");
-				$this->addWarning( wfMsgForContent( 'renameuser-warn-table-missing', $dbName, $table ) );
+				$this->addWarning( wfMsgForContent( 'userrenametool-warn-table-missing', $dbName, $table ) );
 				wfProfileOut(__METHOD__);
 				return false;
 			}
@@ -1110,5 +1110,4 @@ class RenameUserProcess {
 		// Force uppercase of newusername, otherwise wikis with wgCapitalLinks=false can create lc usernames
 		return Title::makeTitleSafe(NS_USER, $wgContLang->ucfirst($username));
 	}
-
 }

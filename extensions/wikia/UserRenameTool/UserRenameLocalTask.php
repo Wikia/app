@@ -109,12 +109,12 @@ class UserRenameLocalTask extends BatchTask {
 		//send e-mail to the user that rename process has finished
 		if($requestorUser->getEmail() != null){
 			$requestorUser->sendMail(
-				wfMsgForContent('renameuser-finished-email-subject', $oldUsername),
-				wfMsgForContent('renameuser-finished-email-body-text', $oldUsername, $newUsername),
+				wfMsgForContent('userrenametool-finished-email-subject', $oldUsername),
+				wfMsgForContent('userrenametool-finished-email-body-text', $oldUsername, $newUsername),
 				null, //from
 				null, //replyto
 				'UserRenameProcessFinishedNotification',
-				wfMsgForContent('renameuser-finished-email-body-html', $oldUsername, $newUsername)
+				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
 			);
 			$process->addLog("Notification sent.");
 		}
@@ -185,5 +185,4 @@ class UserRenameLocalTask extends BatchTask {
     public function submitForm() {
         return true;
     }
-
 }

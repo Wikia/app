@@ -4,11 +4,11 @@
 	<input type="hidden" name="token" value="<?=$token;?>"/>
 	<fieldset>
 		<legend><?=wfMsgForContent( 'renameuser' )?></legend>
-		<p><strong><?=wfMsgExt('renameuser-warning', array('parse'));?></strong></p>
+		<p><strong><?=wfMsgExt('userrenametool-warning', array('parse'));?></strong></p>
 		<table id='mw-renameuser-table'>
 			<tr>
 				<td class='mw-label'>
-					<label for='oldusername'><?=wfMsgForContent('renameuserold')?></label>
+					<label for='oldusername'><?=wfMsgForContent('userrenametool-old')?></label>
 				</td>
 				<td class='mw-input'>
 					<input type="text" name="oldusername" size="20" tabindex="1" value="<?=$oldusername;?>"<?=($warnings) ? ' disabled' : null;?>/>
@@ -17,7 +17,7 @@
 			</tr>
 			<tr>
 				<td class='mw-label'>
-					<label for='newusername'><?=wfMsgForContent( 'renameusernew' )?></label>
+					<label for='newusername'><?=wfMsgForContent( 'userrenametool-new' )?></label>
 				</td>
 				<td class='mw-input'>
 					<input type="text" name="newusername" size="20" tabindex="2" value="<?=$newusername;?>"<?=($warnings) ? ' disabled' : null;?>/>
@@ -26,7 +26,7 @@
 			</tr>
 			<tr>
 				<td class='mw-label'>
-					<label for='reason'><?=wfMsgForContent( 'renameuserreason' )?></label>
+					<label for='reason'><?=wfMsgForContent( 'userrenametool-reason' )?></label>
 				</td>
 				<td class='mw-input'>
 					<input type="text" name="reason" size="60" tabindex="3" value="<?=$reason;?>"<?=($warnings) ? ' disabled' : null;?>/>
@@ -35,21 +35,21 @@
 			</tr>
 			<?if($warnings):?>
 				<tr>
-					<td class='mw-label'><?= wfMsgWikiHtml( 'renameuserwarnings' ); ?></td>
+					<td class='mw-label'><?= wfMsgWikiHtml( 'userrenametool-warnings' ); ?></td>
 					<td class='mw-input'>
 						<ul style="color: red; font-weight: bold">
 							<li>
 								<?= implode( '</li><li>', $warnings ); ?>
 							</li>
 						</ul>
-						<p><strong><?=wfMsgForContent('renameuser-confirm-intro');?></strong></p>
+						<p><strong><?=wfMsgForContent('userrenametool-confirm-intro');?></strong></p>
 					</td>
 				</tr>
 				<tr>
 					<td><input type="hidden" name="confirmaction" value="1"/>&nbsp;</td>
 					<td class='mw-submit'>
-						<input id="submit" type="submit" name="submit" tabindex="4" value="<?=wfMsgForContent( 'renameuser-confirm-yes' );?>"/>
-						<input id="cancel" type="button" name="cancel" tabindex="5" value="<?=wfMsgForContent( 'renameuser-confirm-no' );?>" onclick="window.location.href='<?=$wgTitle->getFullURL();?>';"/>
+						<input id="submit" type="submit" name="submit" tabindex="4" value="<?=wfMsgForContent( 'userrenametool-confirm-yes' );?>"/>
+						<input id="cancel" type="button" name="cancel" tabindex="5" value="<?=wfMsgForContent( 'userrenametool-confirm-no' );?>" onclick="window.location.href='<?=$wgTitle->getFullURL();?>';"/>
 					</td>
 				</tr>
 			<?else:?>
@@ -57,7 +57,7 @@
 					<td>&nbsp;
 					</td>
 					<td class='mw-submit'>
-						<input id="submit" type="submit" name="submit" tabindex="4" value="<?=wfMsgForContent( 'renameusersubmit' );?>"/>
+						<input id="submit" type="submit" name="submit" tabindex="4" value="<?=wfMsgForContent( 'userrenametool-submit' );?>"/>
 					</td>
 				</tr>
 			<?endif;?>
