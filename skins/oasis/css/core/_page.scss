@@ -176,15 +176,15 @@
 			display: block;
 			font-size: 15px;
 			font-weight: normal;
-			height: 25px;
+			height: 23px;
 			margin: 0;
-			padding: 8px 0 0 11px;
+			padding: 10px 0 0 11px;
 			.logo {
 				filter:progid:DXImageTransform.Microsoft.Matrix(Dx=0, Dy=0, M11=0.7, M12=0, M21=0, M22=0.7);
-				-moz-transform: matrix(0.7, 0, 0, 0.7, -16px, -5px);
-				-webkit-transform: matrix(0.7, 0, 0, 0.7, -15, -4);
+				-moz-transform: matrix(0.7, 0, 0, 0.7, -16px, -3px);
+				-webkit-transform: matrix(0.7, 0, 0, 0.7, -15, -2);
 				position: absolute;
-				right: 7px;
+				right: 12px;
 				top: 12px;
 			}
 		}
