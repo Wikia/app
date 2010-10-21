@@ -378,6 +378,10 @@ if (jQuery.browser.msie)
 			thisObj.find(button_selector).removeClass('selected');
 			thisObj.find(button_selector).eq(curslide).addClass('selected');
 
+			if(options.slideCallback) {
+				options.slideCallback(curslide);
+			}
+
 			thisObj.find('.'+ options.slidesClass).each(function(){
 					switch(options.transitionType){
 						case 'crossFade':
