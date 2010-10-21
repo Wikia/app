@@ -4,9 +4,16 @@
  * Simple script to enable Oasis on a per-wiki basis
  * Takes a file containing a line-by-line list of URLs as first parameter
  *
- * USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php [--yes]
+ * Note: Remember to run the script from a host that has all varnishes in your keys file (best: deploy-s1) and check if pdsh works first
+ * by doing:
+ * 	pdsh -g all_varnish date
+ * if some machines refuse connection, ssh to each one manually. If that doesn't work, call Ops.
+ *
+ * USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php [--yes] [--nopurge]
  *
  * Use the --yes switch to auto-answer yes to all prompts.
+ *
+ * Use the --nopurge switch to skip Varnish purges.
  *
  * @date 2010-10-21
  * @author Lucas Garczewski <tor@wikia-inc.com>
@@ -42,7 +49,7 @@ $allowedLanguages = array( 'en', 'de', 'es' );
 
 if ( empty( $list ) ) {
 	echo "ERROR: List file empty or not readable. Please provide a line-by-line list of wikis.\n";
-	echo "USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php [--yes]\n";
+	echo "USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php [--yes] [--nopurge]\n";
 
 	exit;
 }
@@ -142,7 +149,7 @@ foreach ( $list as $wiki ) {
 	WikiFactory::clearCache( $id );
 
 	// purge varnishes
-	if ( !isset( $options['nopurge'] ) {
+	if ( !isset( $options['nopurge'] ) ) {
 		$cmd = "pdsh -g all_varnish varnishadm -T :6082 'purge req.http.host == \"" . $domain . "\"'";
 		passthru( $cmd );
 	}
