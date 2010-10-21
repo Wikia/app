@@ -272,7 +272,7 @@ EOT;
 		}
 
 		global $wgEnableOpenXSPC;
-		if ($wgEnableOpenXSPC) {
+		if ($wgEnableOpenXSPC && substr($slotname, 10) == 'SPOTLIGHT_') {	// only for Oasis spotlights (e.g. slotname = "SPOTLIGHT_ ...")
 			$url_script = <<<EOT
 	var base_url = wgScript + "?action=ajax&rs=axShowOpenXAd&rsargs[0]=$zoneId";
 EOT;
