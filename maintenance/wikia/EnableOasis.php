@@ -142,8 +142,10 @@ foreach ( $list as $wiki ) {
 	WikiFactory::clearCache( $id );
 
 	// purge varnishes
-	$cmd = "pdsh -g all_varnish varnishadm -T :6082 'purge req.http.host == \"" . $domain . "\"'";
-	passthru( $cmd );
+	if ( !isset( $options['nopurge'] ) {
+		$cmd = "pdsh -g all_varnish varnishadm -T :6082 'purge req.http.host == \"" . $domain . "\"'";
+		passthru( $cmd );
+	}
 
 	echo "$wiki: PROCESSING COMPLETED\n";
 }
