@@ -115,17 +115,13 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		}
 
 		if (!empty(self::$adSlotInLazyLoadGroup[$slotname])) {
-			return $this->getAdPlaceholder($slotname, false);
+			return;
 		}
 
 		$adtag = '';
-
-		if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
-			$adtag .= $this->getAdPlaceholder($slotname, true);
-		}
-
 		$adtag .= <<<EOT
-<script type='text/javascript'>/*<![CDATA[*/
+<script type='text/javascript'>
+	wgAfterContentAndJS.push(function() {
 EOT;
 		$adtag .= $this->getAdUrlScripts(array($slotname), array($zoneId), $params);
 		if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
@@ -133,27 +129,21 @@ EOT;
 			$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, array($slotname));
 			$adtag .= <<<EOT
 	document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
-/*]]>*/</script>
 EOT;
 		}
 		else {
 			$adtag .= <<<EOT
 	document.write('<scr'+'ipt type="text/javascript" src="'+base_url_{$slotname}+'"></scr'+'ipt>');
-/*]]>*/</script>
 EOT;
 		}
 
+		$adtag .= <<<EOT
+	});
+</script>
+EOT;
+
 		return $adtag;
 
-	}
-
-	public function getAdPlaceholder($slotname, $useLazyLoadAdClass=true) {
-		$html = '<div ';
-		if ($useLazyLoadAdClass) {
-			$html .= 'class="'.AdEngine::lazyLoadAdClass.'" ';
-		}
-		$html .= 'id="'.$slotname.'"></div>';
-		return $html;
 	}
 
 	/**
@@ -186,7 +176,8 @@ EOT;
 		}
 
 		$adtag = <<<EOT
-<script type='text/javascript'>/*<![CDATA[*/
+<script type='text/javascript'>
+	wgAfterContentAndJS.push(function() {
 EOT;
 		// urls of scripts for slots
 		$adtag .= $this->getAdUrlScripts($slotnames, $zoneIds, $params);
@@ -194,8 +185,9 @@ EOT;
 		$functionName = AdEngine::fillElemFunctionPrefix . $adGroupName;
 		$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, $slotnames);
 		$adtag .= <<<EOT
-	document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
-/*]]>*/</script>
+		document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
+	});
+</script>
 EOT;
 
 		// leave marker that these slots are in a lazy load group.
@@ -327,41 +319,7 @@ EOT;
 		}
 
 		$adUrlScript = <<<EOT
-	var base_url = "$base_url";
-	base_url += "?loc=" + escape(window.location);
-	if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);
-	if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);
-	if(typeof document.mmm_fo != "undefined") base_url += "&mmm_fo=1";
-	base_url += "&target=_top";
-	if(typeof AdsCB != "undefined") { base_url += "&cb=" + AdsCB; } else { base_url += "&cb=" + Math.floor(Math.random()*99999999); }
-	if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;
-	base_url += "&hub={$cat['short']}";
-	base_url += "&skin_name=" + skin;
-	base_url += "&cont_lang=" + wgContentLanguage;
-	base_url += "&user_lang=" + wgUserLanguage;
-	base_url += "&dbname=" + wgDB;
-	base_url += "&tags=" + wgWikiFactoryTagNames.join(",");
-	base_url += "{$additional_params}";
-EOT;
-
-		if (!empty($slotname)) {
-			$adUrlScript .= <<<EOT
-	base_url += "&slotname={$slotname}";
-EOT;
-		}
-		if (!empty($zone_id)) {
-			$adUrlScript .= <<<EOT
-	base_url += "&zoneid=$zone_id";
-EOT;
-		}
-		if (!empty($affiliate_id)) {
-			$adUrlScript .= <<<EOT
-	base_url += "&id=$affiliate_id";
-EOT;
-		}
-
-		$adUrlScript .= <<<EOT
-	base_url += "&block=1";
+	base_url = AdProviderOpenX.getUrl("$base_url", "$slotname", "$zone_id", "$affiliate_id", "{$cat['short']}", "$additional_params");
 EOT;
 
 		return $adUrlScript;
