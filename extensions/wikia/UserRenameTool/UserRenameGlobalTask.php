@@ -95,5 +95,4 @@ class UserRenameGlobalTask extends BatchTask {
     public function submitForm() {
         return true;
     }
-
 }

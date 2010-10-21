@@ -74,7 +74,7 @@ class SpecialRenameuser extends SpecialPage {
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
 			if ($status) {
-				$infos[] = wfMsgForContent('renameuser-info-in-progress');
+				$infos[] = wfMsgForContent('userrenametool-info-in-progress');
 			}
 		}
 
