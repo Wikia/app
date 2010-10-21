@@ -4,7 +4,9 @@
  * Simple script to enable Oasis on a per-wiki basis
  * Takes a file containing a line-by-line list of URLs as first parameter
  *
- * USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php
+ * USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php [--yes]
+ *
+ * Use the --yes switch to auto-answer yes to all prompts.
  *
  * @date 2010-10-21
  * @author Lucas Garczewski <tor@wikia-inc.com>
@@ -37,7 +39,7 @@ $exceptions = array(
 
 if ( empty( $list ) ) {
 	echo "ERROR: List file empty or not readable. Please provide a line-by-line list of wikis.\n";
-	echo "USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php\n";
+	echo "USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php [--yes]\n";
 
 	exit;
 }
@@ -67,6 +69,8 @@ function parseInput( $input ) {
 }
 
 foreach ( $list as $wiki ) {
+	echo "\n";
+
 	$wiki = sanitizeUrl( $wiki );
 
 	// get wiki ID
@@ -82,7 +86,7 @@ foreach ( $list as $wiki ) {
 
 	if ( empty( $oUrl ) ) {
 		// should never happen, but...
-		echo "$wiki: ERROR (failed to get URL for ID $id; something's wrong)";
+		echo "$wiki: ERROR (failed to get URL for ID $id; something's wrong)\n";
 		continue;
 	}
 
@@ -90,17 +94,18 @@ foreach ( $list as $wiki ) {
 
 	$currentSkin = WikiFactory::getVarByName( 'wgDefaultSkin', $id );
 
-	$input = '';
+	// handle exceptions
+	if ( in_array( $currentSkin, array( 'monobook', 'uncyclopedia', 'oasis' ) ) ) {
+		echo "$wiki: SKIPPING! Current skin is $currentSkin! Will NOT process.\n";
+		continue;
+	}
 
-	if ( !isset( $options['force'] ) ) {
-		if ( in_array( $currentSkin, array( 'monobook', 'uncyclopedia', 'oasis' ) ) ) {
-			echo "$wiki: CAUTION! Current skin is $currentSkin!\n";
-		}
+	if ( in_array( $domain, $exceptions ) ) {
+		echo "$wiki: SKIPPING! This wiki is listed as an exception in the Rallout Plan!\n";
+		continue;
+	}
 
-		if ( in_array( $domain, $exceptions ) ) {
-			echo "$wiki: CAUTION! This wiki is listed as an exception in the Rallout Plan!\n";
-		}
-
+	if ( !isset( $options['yes'] ) ) {
 		$response = null;
 		// repeat until we get a valid response
 		while ( is_null( $response ) ) {
@@ -126,6 +131,4 @@ foreach ( $list as $wiki ) {
 	exec( "pdsh -g all_varnish varnishadm -T :6082 'purge req.http.host == \"" . $domain . "\"'" );
 
 	echo "$wiki: PROCESSING COMPLETED\n";
-
-	echo "\n";
 }
