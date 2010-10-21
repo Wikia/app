@@ -106,7 +106,7 @@ foreach ( $list as $wiki ) {
 		while ( is_null( $response ) ) {
 			echo "$wiki: Are you sure you want to switch to Oasis? [yes/no] ";
 			$input = fgets( STDIN );
-			$response = praseInput( $input );
+			$response = parseInput( $input );
 		}
 
 		if ( !$response ) {
