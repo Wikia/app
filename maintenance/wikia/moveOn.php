@@ -6,7 +6,7 @@
  * @file
  * @ingroup Maintenance
  *
- * USAGE: php moveOn.php [-u <user>] [-r <reason>] [-ot <old title>] [-on <old title namespace>] [-nt <new title>] [-nn <new title namespace>] [-redirect] [-watch]
+ * USAGE: php moveOn.php [-u <user>] [-r <reason>] [--ot <old title>] [--on <old title namespace>] [--nt <new title>] [--nn <new title namespace>] [--redirect 1] [--watch 1]
  *  -movetalk - move talk page if possible
  *  -movesub  - move subpages
  *  -redirect - leave a redirect behind
@@ -15,7 +15,7 @@
 
 $oldCwd = getcwd();
 $optionsWithArgs = array( 'u', 'ot', 'on', 'nt', 'nn', 'redirect', 'watch', 'r' );
-
+ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
 chdir( $oldCwd );
@@ -28,6 +28,8 @@ $oldtitle = $newtitle = $reason = '';
 $oldnamespace = $newnamespace = 0;
 $redirect = $watch = false;
 $interval = 0;
+
+#echo print_r($options, true);
 
 if ( isset( $options['u'] ) )  $user = $options['u'];
 if ( isset( $options['r'] ) )  $reason = $options['r'];
@@ -45,29 +47,29 @@ $wgUser = User::newFromName( $user );
 $file = fopen( $filename, 'r' );
 if ( !$file ) {
 	print "Unable to read file, exiting\n";
-	exit;
+	exit(1);
 }
 
 $dbw = wfGetDB( DB_MASTER );
 
 # check titles
-$oOldFile = Title::newFromText( $oldtitle, $oldnamespace );
-$oNewFile = Title::newFromText( $newtitle, $newnamespace );
-if ( is_null( $oOldFile ) ) {
+$oOldTitle = Title::newFromText( $oldtitle, $oldnamespace );
+$oNewTitle = Title::newFromText( $newtitle, $newnamespace );
+if ( is_null( $oOldTitle ) ) {
 	print "Invalid old title for: " . $oldtitle . " ns: " . $oldnamespace . " \n";
-	exit();
+	exit(1);
 }
 
-if ( is_null( $oNewFile ) ) {
+if ( is_null( $oNewTitle ) ) {
 	print "Invalid new title for: " . $newtitle . " ns: " . $newnamespace . " \n";
-	exit();
+	exit(1);
 }
 
 # Check user rights
 $permErrors = $oOldTitle->getUserPermissionsErrors( 'move', $wgUser );
 if ( !empty( $permErrors ) ) {
 	print "User " . $wgUser->getName() . " doesn't have permission for move page: " . implode(", ", $permErrors) . "\n";
-	exit();
+	exit(1);
 }
 
 if ( $wgUser->isAllowed( 'suppressredirect' ) ) {
@@ -85,7 +87,7 @@ if ( $err !== true ) {
 	$dbw->rollback();
 	$msg = array_shift( $err[0] );
 	print "\nMove failed: " . wfMsg( $msg, $err[0] );
-	exit;
+	exit(1);
 }
 
 $dbw->immediateCommit();

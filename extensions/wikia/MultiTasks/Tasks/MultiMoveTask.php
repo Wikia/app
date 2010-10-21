@@ -78,7 +78,7 @@ class MultiMoveTask extends BatchTask {
 		}
 
 		# additional options
-		$options_switches = array('-redirect','-watch');
+		$options_switches = array('--redirect','--watch');
 		$options_descriptions = array(
 			'leave a redirect behind',
 			'add page to the watchlist'
@@ -88,8 +88,8 @@ class MultiMoveTask extends BatchTask {
 		$flags = $data["flags"] ;
 		for ($j = 0; $j < count ($flags); $j++) {
 			if ( $flags[$j] ) {
-				$semiglobals .= " " . $options_switches[$j];
-				$this->log(' - ' . $options_descriptions[$j]);
+				$semiglobals .= " " . $options_switches[$j] . " 1";
+				$this->log(' -- ' . $options_descriptions[$j]);
 			}
 		}		
 		
@@ -128,13 +128,13 @@ class MultiMoveTask extends BatchTask {
 				}
 				# command
 				$sCommand  = "SERVER_ID={$oWiki->city_id} php $IP/maintenance/wikia/moveOn.php ";
-				$sCommand .= "-u " . $username . " ";
-				$sCommand .= "-ot " . escapeshellarg($this->title) . " ";
-				$sCommand .= "-on " . $this->namespace . " ";
-				$sCommand .= "-nt " . escapeshellarg($this->newtitle) . " ";
-				$sCommand .= "-nn " . $this->newnamespace . " ";			
+				$sCommand .= "--u " . $username . " ";
+				$sCommand .= "--ot " . escapeshellarg($this->title) . " ";
+				$sCommand .= "--on " . $this->namespace . " ";
+				$sCommand .= "--nt " . escapeshellarg($this->newtitle) . " ";
+				$sCommand .= "--nn " . $this->newnamespace . " ";			
 				if ( $reason ) 
-					$sCommand .= "-r " . $reason . " ";
+					$sCommand .= "--r " . $reason . " ";
 				$sCommand .= $semiglobals . " ";
 				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
