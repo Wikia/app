@@ -90,7 +90,7 @@ foreach ( $list as $wiki ) {
 		continue;
 	}
 
-	$domain = sanitizeUrl( $oUrl->cv_value );
+	$domain = sanitizeUrl( unserialize( $oUrl->cv_value ) );
 
 	$currentSkin = WikiFactory::getVarByName( 'wgDefaultSkin', $id );
 
@@ -128,7 +128,8 @@ foreach ( $list as $wiki ) {
 	WikiFactory::clearCache( $id );
 
 	// purge varnishes
-	exec( "pdsh -g all_varnish varnishadm -T :6082 'purge req.http.host == \"" . $domain . "\"'" );
+	$cmd = "pdsh -g all_varnish varnishadm -T :6082 'purge req.http.host == \"" . $domain . "\"'";
+	passthru( $cmd );
 
 	echo "$wiki: PROCESSING COMPLETED\n";
 }
