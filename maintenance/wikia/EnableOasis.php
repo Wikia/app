@@ -37,6 +37,9 @@ $exceptions = array(
 	'uncyclopedia.wikia.com',
 );
 
+// list of allowed languages taken from Release plan
+$allowedLanguages = array( 'en', 'de', 'es' );
+
 if ( empty( $list ) ) {
 	echo "ERROR: List file empty or not readable. Please provide a line-by-line list of wikis.\n";
 	echo "USAGE: SERVER_ID=177 php EnableOasis.php /path/to/file --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php [--yes]\n";
@@ -84,15 +87,21 @@ foreach ( $list as $wiki ) {
 	// get URL, in case the one given is not the main one
 	$oUrl = WikiFactory::getVarByName( 'wgServer', $id );
 
-	if ( empty( $oUrl ) ) {
+	$oLang = WikiFactory::getVarByName( 'wgLanguageCode', $id );
+
+	$oSkin = WikiFactory::getVarByName( 'wgDefaultSkin', $id );
+
+	if ( empty( $oUrl ) || empty( $oLang ) ) {
 		// should never happen, but...
-		echo "$wiki: ERROR (failed to get URL for ID $id; something's wrong)\n";
+		echo "$wiki: ERROR (failed to get URL for ID $id or language; something's wrong)\n";
 		continue;
 	}
 
 	$domain = sanitizeUrl( unserialize( $oUrl->cv_value ) );
 
-	$currentSkin = WikiFactory::getVarByName( 'wgDefaultSkin', $id );
+	$lang = unserialize( $oLang->cv_value );
+
+	$currentSkin = $oSkin ? unserialize( $oLang->cv_value ) : null;
 
 	// handle exceptions
 	if ( in_array( $currentSkin, array( 'monobook', 'uncyclopedia', 'oasis' ) ) ) {
@@ -102,6 +111,11 @@ foreach ( $list as $wiki ) {
 
 	if ( in_array( $domain, $exceptions ) ) {
 		echo "$wiki: SKIPPING! This wiki is listed as an exception in the Rallout Plan!\n";
+		continue;
+	}
+
+	if ( !in_array( $lang, $allowedLanguages ) ) {
+		echo "$wiki: SKIPPING! Wiki's language ($lang) is not on the allowed languaes list.\n";
 		continue;
 	}
 
