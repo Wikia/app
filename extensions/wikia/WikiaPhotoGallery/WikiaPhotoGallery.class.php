@@ -1102,19 +1102,25 @@ class WikiaPhotoGallery extends ImageGallery {
 wgAfterContentAndJS.push(function() {
 	$.getScript(stylepath + '/common/jquery/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
 		var slideshow = $('#$id');
-
-		slideshow.find('li').each(function() {
-			var item = $(this);
-			if (item.attr('title')!='')item.css('backgroundImage', 'url(' + item.attr('title') + ')');
-			item.removeAttr('title');
-		});
+		var cb = function(index) {
+			var item = slideshow.find('li').eq(index);
+			if (item.attr('title')) {
+				item.css('backgroundImage', 'url(' + item.attr('title') + ')');
+				item.removeAttr('title');
+			}
+		};
+		
+		var item = slideshow.find('li').first();
+		if (item.attr('title')!='')item.css('backgroundImage', 'url(' + item.attr('title') + ')');
+		item.removeAttr('title');
 
 		slideshow.slideshow({
 			buttonsClass:	'wikia-button',
 			nextClass:	'wikia-slideshow-next',
 			prevClass:	'wikia-slideshow-prev',
 			slideWidth:	'{$width}',
-			slidesClass:	'wikia-slideshow-images'
+			slidesClass:	'wikia-slideshow-images',
+			slideCallback: cb
 		});
 
 		$().log('#$id initialized', 'Slideshow');
