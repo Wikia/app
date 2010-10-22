@@ -202,3 +202,6 @@ function moduleProxy() {
 	wfProfileOut(__METHOD__);
 	return $response;
 }
+
+// Messages
+$wgExtensionMessagesFiles['Oasis'] = dirname(__FILE__) . '/Oasis.i18n.php';

@@ -52,6 +52,8 @@ class OasisModule extends Module {
 	public function executeIndex() {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
 
+		wfLoadExtensionMessages('Oasis');
+
 		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		$this->body = wfRenderModule('Body');
