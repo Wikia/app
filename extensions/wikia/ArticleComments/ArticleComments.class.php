@@ -1001,6 +1001,63 @@ class ArticleComment {
 		return true;
 	}
 
+	/**
+	 * create task to move comment
+	 *
+	 * @access public
+	 * @static
+	 */
+	static private function addMoveTask( $oCommentTitle, &$oNewTitle, $taskParams ) {
+		wfProfileIn( __METHOD__ );
+		
+		if ( !is_object( $oCommentTitle ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		$parts = self::explode($oCommentTitle->getDBkey());
+		$commentTitleText = implode('/', $parts['partsOriginal']);
+
+		$newCommentTitle = Title::newFromText(
+			sprintf( '%s/%s', $oNewTitle->getText(), $commentTitleText ),
+			MWNamespace::getTalk($oNewTitle->getNamespace()) );
+
+		$taskParams['page'] = $oCommentTitle->getFullText();
+		$taskParams['newpage'] = $newCommentTitle->getFullText();
+		$thisTask = new MultiMoveTask( $taskParams );
+		$submit_id = $thisTask->submitForm();	
+		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * move one comment 
+	 *
+	 * @access public
+	 * @static
+	 */
+	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
+		wfProfileIn( __METHOD__ );
+		
+		if ( !is_object( $oCommentTitle ) ) {
+			wfProfileOut( __METHOD__ );
+			return array('invalid title');
+		}
+				
+		$parts = self::explode($oCommentTitle->getDBkey());
+		$commentTitleText = implode('/', $parts['partsOriginal']);
+
+		$newCommentTitle = Title::newFromText(
+			sprintf( '%s/%s', $oNewTitle->getText(), $commentTitleText ),
+			MWNamespace::getTalk($oNewTitle->getNamespace()) );
+
+		$error = $oCommentTitle->moveTo( $newCommentTitle, false, $reason, false );
+
+		wfProfileOut( __METHOD__ );
+		return $error;
+	}
 
 	/**
 	 * hook
@@ -1009,52 +1066,86 @@ class ArticleComment {
 	 * @static
 	 */
 	static public function moveComments( /*MovePageForm*/ &$form , /*Title*/ &$oOldTitle , /*Title*/ &$oNewTitle ) {
-		global $wgUser, $wgRC2UDPEnabled;
+		global $wgUser, $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$commentList = ArticleCommentList::newFromTitle( $oOldTitle );
 		$comments = $commentList->getCommentPages(true, false);
+
 		if (count($comments)) {
+			$mAllowTaskMove = false;
+			if ( isset($wgMaxCommentsToMove) && ( $wgMaxCommentsToMove > 0) && ( !empty($wgEnableMultiDeleteExt) ) ) {
+				$mAllowTaskMove = true;
+			}
+			
 			$irc_backup = $wgRC2UDPEnabled;	//backup
 			$wgRC2UDPEnabled = false; //turn off
-			foreach ($comments as $aCommentArr) {
+			$finish = $moved = 0;
+			$comments = array_values($comments);
+			foreach ($comments as $id => $aCommentArr) {
 				$oCommentTitle = $aCommentArr['level1']->getTitle();
-				$parts = self::explode($oCommentTitle->getDBkey());
-				$commentTitleText = implode('/', $parts['partsOriginal']);
-
-				$newCommentTitle = Title::newFromText(
-					sprintf( '%s/%s', $oNewTitle->getText(), $commentTitleText ),
-					MWNamespace::getTalk($oNewTitle->getNamespace()) );
-
-				$error = $oCommentTitle->moveTo( $newCommentTitle, false, $form->reason, false );
+				
+				# move comment level #1
+				$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 				if ( $error !== true ) {
 					Wikia::log( __METHOD__, 'movepage',
 						'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
 						'new comment: ' . $newCommentTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
 					);
+				} else {
+					$moved++;
 				}
 
 				if (isset($aCommentArr['level2'])) {
 					foreach ($aCommentArr['level2'] as $oComment) {
 						$oCommentTitle = $oComment->getTitle();
-						$parts = self::explode($oCommentTitle->getDBkey());
-						$commentTitleText = implode('/', $parts['partsOriginal']);
-
-						$newCommentTitle = Title::newFromText(
-							sprintf( '%s/%s', $oNewTitle->getText(), $commentTitleText ),
-							MWNamespace::getTalk($oNewTitle->getNamespace()) );
-
-						$error = $oCommentTitle->moveTo( $newCommentTitle, false, $form->reason, false );
+						
+						# move comment level #2
+						$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 						if ( $error !== true ) {
 							Wikia::log( __METHOD__, 'movepage',
 								'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
 								'new comment: ' . $newCommentTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
 							);
+						} else {
+							$moved++;
+						}
+					}
+				}
+				
+				if ( $mAllowTaskMove && $wgMaxCommentsToMove < $moved ) {
+					$finish = $id;
+					break;
+				}
+			}
+
+			# rest comments move to task
+			if ( $finish > 0 && $finish < count($comments) ) {
+				$taskParams= array(
+					'wikis'		=> '',
+					'reason' 	=> $form->reason,
+					'lang'		=> '',
+					'cat'		=> '',
+					'selwikia'	=> $wgCityId,
+					'user'		=> $wgUser->getName()
+				);
+
+				for ( $i = $finish + 1; $i < count($comments); $i++ ) {
+					$aCommentArr = $comments[$i];
+					$oCommentTitle = $aCommentArr['level1']->getTitle();
+					self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );	
+					if (isset($aCommentArr['level2'])) {
+						foreach ($aCommentArr['level2'] as $oComment) {	
+							$oCommentTitle = $oComment->getTitle();	
+							self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );	
 						}
 					}
 				}
 			}
+						
 			$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
+			$listing = ArticleCommentList::newFromTitle($oNewTitle);
+			$listing->purge();			
 		} else {
 			Wikia::log( __METHOD__, 'movepage', 'cannot move article comments, because no comments: ' . $oOldTitle->getPrefixedText());
 		}
