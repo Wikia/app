@@ -1253,7 +1253,7 @@ class EditPage {
 				} else {
 					/* Wikia change begin - @author: Uberfuzzy */
 					# rt75168, confusing "there is no wikia" message
-					$CssJsSubSkin = $wgTitle->getSkinFromCssJsSubpage()
+					$CssJsSubSkin = $wgTitle->getSkinFromCssJsSubpage();
 					if( $CssJsSubSkin != 'wikia' ) {
 						$wgOut->addWikiMsg( 'userinvalidcssjstitle', $CssJsSubSkin );
 					}
