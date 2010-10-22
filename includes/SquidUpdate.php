@@ -309,8 +309,14 @@ class SquidUpdate {
 	}
 
 	static function ScribePurge( $urlArr ) {
+		global $wgEnableScribeReport;
 		wfProfileIn( __METHOD__ );
 		$key = 'varnish_purges';
+		
+		if ( empty($wgEnableScribeReport) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
 		
 		try {
 			foreach ( $urlArr as $url ) {
