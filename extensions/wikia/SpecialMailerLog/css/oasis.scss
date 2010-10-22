@@ -1,0 +1,22 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/rail-module";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+
+.descending {
+	width: 0px;
+	border-width: 6px;
+	border-style: solid;
+	border-color: white transparent transparent;
+}
+
+.ascending {
+	width: 0px;
+	border-width: 6px;
+	border-style: solid;
+	border-color: transparent transparent white;
+}
+
+.wikia-mailer-log td,th {
+	vertical-align: top;
+}
