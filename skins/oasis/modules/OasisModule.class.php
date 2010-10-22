@@ -51,7 +51,7 @@ class OasisModule extends Module {
 
 	public function executeIndex() {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
-
+		
 		wfLoadExtensionMessages('Oasis');
 
 		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
@@ -301,7 +301,7 @@ EOF;
 
 	// TODO: implement as a separate module?
 	private function lazyLoadJS() {
-		global $wgTitle, $wgOut, $wgJsMimeType;
+		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		// decide where JS should be placed (only add JS at the top for special and edit pages)
@@ -343,6 +343,15 @@ EOF;
 		}
 
 		wfProfileOut(__METHOD__ . '::regexp');
+
+		if($wgUser->isLoggedIn()){
+			global $wgSquidMaxage;
+			$siteargs = array(
+				'action' => 'raw',
+				'maxage' => $wgSquidMaxage,
+			);
+			$jsReferences[] = Skin::makeUrl($wgUser->getUserPage()->getPrefixedText().'/wikia.js', wfArrayToCGI($siteargs));
+		}
 
 		// generate code to load JS files
 		$jsReferences = Wikia::json_encode($jsReferences);
