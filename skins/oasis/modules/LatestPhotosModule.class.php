@@ -115,8 +115,10 @@ class LatestPhotosModule extends Module {
 			$width = $file->width;
 			$height = $file->height;
 			$name = $file->title->getPrefixedText();
-
-			// FIXME: why is 'ogg' showing up as an image type?
+			// Don't try to display WikiCommons Remote files (RT# 75588)
+			if (get_class($file) == "ForeignAPIFile") {
+				$ret = false;
+			}
 			if ($type == 'ogg') {
 				$ret = false;
 			}
