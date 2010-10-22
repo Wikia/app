@@ -215,8 +215,11 @@ class LatestPhotosModule extends Module {
 
     public static function onImageUpload(&$image) {
 		global $wgMemc;
-		// deletes key after 10 seconds, to give db time to catch up
-		$wgMemc->delete(LatestPhotosModule::memcacheKey(), 10);
+		// avoid a race in update event propgation by deleting key after 10 seconds
+		// Memcache delete with a timeout is not implemented, but we can use set to fake it
+		$thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
+		if (!empty($thumbUrls))
+			$wgMemc->set(LatestPhotosModule::memcacheKey(), $thumbUrls, 10);
 		return true;
     }
 
