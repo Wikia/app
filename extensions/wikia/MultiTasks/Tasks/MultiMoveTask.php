@@ -43,13 +43,13 @@ class MultiMoveTask extends BatchTask {
 		$data = unserialize($params->task_arguments);
 		
 		# old article
-		$oOldTitle = Title::newFromText($data['page']);
+		$oOldTitle = ( isset($data['page']) ) ? Title::newFromText($data['page']) : null;
 		if ( !is_object($oOldTitle) ) {
-			$this->log("Page " . $data['page'] . " is invalid - task was terminated ");
+			$this->log("Page " . @$data['page'] . " is invalid - task was terminated ");
 			return true;
 		}
 		if( !$oOldTitle->exists() ) {
-			$this->log("Page " . $data['page'] . " doesn't exist - task was terminated ");
+			$this->log("Page " . @$data['page'] . " doesn't exist - task was terminated ");
 			return true;
 		}
 		$this->namespace = $oOldTitle->getNamespace();
@@ -57,13 +57,13 @@ class MultiMoveTask extends BatchTask {
 		$resultTitle = $oOldTitle->getFullText();
 				
 		# new article
-		$oNewTitle = Title::newFromText($data['newpage']);
+		$oNewTitle = ( isset($data['newpage']) ) ? Title::newFromText($data['newpage']) : null;
 		if ( !is_object($oNewTitle) ) {
-			$this->log("Page to move: " . $data['newpage'] . " is invalid - task was terminated ");
+			$this->log("Page to move: " . @$data['newpage'] . " is invalid - task was terminated ");
 			return true;
 		}
 		if( $oNewTitle->exists() ) {
-			$this->log("Page to move: " . $data['newpage'] . " exists - task was terminated ");
+			$this->log("Page to move: " . @$data['newpage'] . " exists - task was terminated ");
 			return true;
 		}
 		$this->newnamespace = $oNewTitle->getNamespace();
@@ -71,41 +71,31 @@ class MultiMoveTask extends BatchTask {
 		$newResultTitle = $oNewTitle->getFullText();
 				
 		# user 
-		$username = escapeshellarg($data["user"]);
+		$username = ( isset($data["user"]) ) ? escapeshellarg($data["user"]) : 'Maintenance script';
 		$oUser = User::newFromName( $username );
 		if ( !is_object($oUser) ) {
 			$username = '';
 		}
 
-		# additional options
-		$options_switches = array('--redirect','--watch');
-		$options_descriptions = array(
-			'leave a redirect behind',
-			'add page to the watchlist'
-		);
-		/* initialize semi-global options */
-		$semiglobals = '' ;
-		$flags = $data["flags"] ;
-		for ($j = 0; $j < count ($flags); $j++) {
-			if ( $flags[$j] ) {
-				$semiglobals .= " " . $options_switches[$j] . " 1";
-				$this->log(' -- ' . $options_descriptions[$j]);
-			}
-		}		
+		# redirect
+		$redirect = ( isset($data["redirect"]) ) ? $data["redirect"] : 0 ;
+
+		# watch the new page
+		$watch = ( isset($data["watch"]) ) ? $data["watch"] : 0;
 		
 		# reason
-		$reason = escapeshellarg($data['reason']);
+		$reason = ( isset($data["reason"]) ) ? escapeshellarg($data["reason"]) : "";
 				
 		# lang
-		$lang = $data["lang"];
+		$lang = ( isset($data["lang"]) ) ? $data["lang"] : null;
 		
 		# cat
-		$cat = intval($data["cat"]);
+		$cat = ( isset($data["cat"]) ) ? intval($data["cat"]) : null;
 		
 		# wikis
-		$range = escapeshellarg($data["range"]);
-		$selwikia = intval($data["selwikia"]);
-		$wikis = $data["wikis"];
+		$range = ( isset($data["range"]) ) ? escapeshellarg($data["range"]) : null;
+		$selwikia = ( isset($data["selwikia"]) ) ? intval($data["selwikia"]) : null;
+		$wikis = ( isset($data["wikis"]) ) ? $data["wikis"] : null;
 		$pre_wikis = array();
 		if ( !empty($wikis) ) {
 			$pre_wikis = explode( ",", $wikis );
@@ -114,7 +104,7 @@ class MultiMoveTask extends BatchTask {
 
 		# start task
 		$this->addLog('Starting task.');
-		$this->addLog('Page ' . $data['page'] . ' is moved by ' . $this->mUser . ' (as ' . $username . ') to ' . $data['newpage'] );
+		$this->addLog('Page ' . @$data['page'] . ' is moved by ' . $this->mUser . ' (as ' . $username . ') to ' . @$data['newpage'] );
 
 		$this->log("Found " . count($wikiList) . " Wikis to proceed");
 		if ( !empty($wikiList) ) {
@@ -135,15 +125,20 @@ class MultiMoveTask extends BatchTask {
 				$sCommand .= "--nn " . $this->newnamespace . " ";			
 				if ( $reason ) 
 					$sCommand .= "--r " . $reason . " ";
-				$sCommand .= $semiglobals . " ";
+				if ( $redirect ) 
+					$sCommand .= "--redirect 1 ";
+				if ( $watch ) 
+					$sCommand .= "--watch 1 ";
 				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
-				$actual_title = wfShellExec( $sCommand, $retval );
+				$log = wfShellExec( $sCommand, $retval );
 				if ($retval) {
-					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
+					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $log);
 				}
 				else {
-					$this->log ('<a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title) . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
+					$nTitle = $oNewTitle->getFullText();
+					$this->log ('<a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($nTitle) . '">' . $city_url . $city_path . '?title=' . $nTitle . '</a>');
+					$this->log ("Log: \n" . $log ."\n");
 				}
 			}
 		}

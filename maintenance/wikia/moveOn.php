@@ -29,7 +29,7 @@ $oldnamespace = $newnamespace = 0;
 $redirect = $watch = false;
 $interval = 0;
 
-#echo print_r($options, true);
+echo print_r($options, true);
 
 if ( isset( $options['u'] ) )  $user = $options['u'];
 if ( isset( $options['r'] ) )  $reason = $options['r'];
@@ -66,11 +66,11 @@ if ( is_null( $oNewTitle ) ) {
 }
 
 # Check user rights
-$permErrors = $oOldTitle->getUserPermissionsErrors( 'move', $wgUser );
+/*$permErrors = $oOldTitle->getUserPermissionsErrors( 'move', $wgUser );
 if ( !empty( $permErrors ) ) {
-	print "User " . $wgUser->getName() . " doesn't have permission for move page: " . implode(", ", $permErrors) . "\n";
+	print "User " . $wgUser->getName() . " doesn't have permission for move page: " . ( is_array($permErrors) ? implode(", ", $permErrors) : $permErrors ). "\n";
 	exit(1);
-}
+}*/
 
 if ( $wgUser->isAllowed( 'suppressredirect' ) ) {
 	$createRedirect = $redirect;
@@ -82,7 +82,7 @@ print "move: " . $oOldTitle->getPrefixedText() . " to " . $oNewTitle->getPrefixe
 
 $dbw->begin();
 
-$err = $oOldTitle->moveTo( $oNewTitle, true, $reason, $createRedirect );
+$err = $oOldTitle->moveTo( $oNewTitle, false, $reason, $createRedirect );
 if ( $err !== true ) {
 	$dbw->rollback();
 	$msg = array_shift( $err[0] );

@@ -627,6 +627,11 @@ $wgSuppressNamespacePrefix = array();
  */
 $wgMaxCommentsToDelete = 100;
 
+/**
+ * @name $wgMaxCommentsToMove
+ * number of comment to be moved in one request
+ */
+$wgMaxCommentsToMove = 50;
 
 /**
  * @name wgGoogleSiteVerificationAlwaysValid

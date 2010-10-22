@@ -29,5 +29,7 @@ extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiDelete_body.php', 'Multidel
 
 require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/MultiDeleteTask.php", "multidelete", "MultiDeleteTask" );
+# add multi move page here 
+extAddBatchTask( dirname(__FILE__)."/Tasks/MultiMoveTask.php", "multimove", "MultiMoveTask" );
 
 $wgSpecialPageGroups['Multidelete'] = 'pagetools';
