@@ -13,8 +13,17 @@ class AdModule extends Module {
 		if(!$wgOut->isArticle()) {
 			return;
 		}
-		// No ads on corporate home page
+		// Ads on corporate hub pages only
 		if($wgEnableCorporatePageExt) {
+			if (BodyModule::isHubPage()) {
+				self::$config['CORP_TOP_LEADERBOARD'] = true;
+				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
+				self::$config['INVISIBLE_1'] = true;
+				self::$config['INVISIBLE_2'] = true;
+				if(!empty($wgEnableAdInvisibleTop)) {
+					self::$config['INVISIBLE_TOP'] = true;
+				}
+			}
 			return;
 		}
 

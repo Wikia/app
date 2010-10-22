@@ -235,9 +235,10 @@ class BodyModule extends Module {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
-				$railModuleList[1490] = array('CorporateSite', 'HotSpots', null);
-			//	$railModuleList[1480] = array('CorporateSite', 'PopularHubPosts', null);
-				$railModuleList[1470] = array('CorporateSite', 'TopHubUsers', null);
+				$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
+				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
+			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
+				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
 			} else {  // content pages
 				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
 			}
