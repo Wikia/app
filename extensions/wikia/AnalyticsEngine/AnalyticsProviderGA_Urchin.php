@@ -45,8 +45,8 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 			case "varnish-stat":
 				return $this->varnishstat();
 
-			case "browser-width":
-				return $this->browserWidth();
+			case "browser-height":
+				return $this->browserHeight();
 
 			default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
@@ -114,6 +114,8 @@ urchinTracker();
 </script>';
 	}
 
+/*
+	// Track actual browser width by screen width
 	private function browserWidth() {
 		return '<script type="text/javascript">
 _uff=0;
@@ -131,6 +133,23 @@ var browserTens = Math.floor(browserWidth/10) * 10;
 urchinTracker("resolution/" + screenWidth + "/" + browserThousands + "/" + browserHundreds + "/" + browserTens);
 </script>';
 	}
+*/
+
+	private function browserHeight() {
+		return '<script type="text/javascript">
+_uff=0;
+_uacct="UA-288915-50";
+
+var browserHeight = window.innerHeight || document.documentElement.clientHeight;
+
+var browserHundreds = Math.floor(browserHeight/100) * 100;
+browserHeight = browserHeight - browserHundreds;
+
+urchinTracker("browserheight/" + browserHundreds + "/" + browserHeight);
+</script>';
+	}
+
+
 
 	private function lyrics() {
 		global $wgRequest;
