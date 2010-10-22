@@ -15,9 +15,17 @@ function efHideTagsSetup(&$parser) {
 	$parser->setHook( 'comments', 'efHideTags' );
 	/* copy above line and change tag name to hide additional tags */
 
+	$parser->setHook( 'loggedin', 'efJustPrintTags' );
+	$parser->setHook( 'loggedout', 'efJustPrintTags' );
+	/* copy above line and change tag name to just print additional tags */
+
 	return true;
 }
 
 function efHideTags( $contents, $attributes, $parser ) {
 	return '';
+}
+
+function efJustPrintTags( $contents, $attributes, $parser ) {
+	return htmlspecialchars( $contents );
 }
