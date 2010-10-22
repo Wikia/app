@@ -29,7 +29,7 @@ $oldnamespace = $newnamespace = 0;
 $redirect = $watch = false;
 $interval = 0;
 
-echo print_r($options, true);
+#echo print_r($options, true);
 
 if ( isset( $options['u'] ) )  $user = $options['u'];
 if ( isset( $options['r'] ) )  $reason = $options['r'];
