@@ -283,6 +283,7 @@ class BlogArticle extends Article {
 		wfProfileIn(__METHOD__);
 
 		if( !isset( $catView->blogs ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		$ti = htmlspecialchars( $catView->title->getText() );
