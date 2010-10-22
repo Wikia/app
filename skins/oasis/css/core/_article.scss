@@ -300,102 +300,102 @@
 
 
 	.InfoBox {
+		$cell-width: 225px;
+		
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		border: 1px $color-page-border solid;
 		float: right;
 		line-height: 12px;
 
 		padding: {
+			bottom: 20px;
 			left: 10px;
 			right: 10px;
 		}
-		margin: 0 0 16px 16px;
+		margin: {
+			top: 0px;
+			right: 0px;
+			bottom: 16px;
+			left: 16px;
+		}
 
 		table {
 			border-collapse: collapse;
-			width: 243px;
+			width: $cell-width;
 
 			td {
-				margin: 0px;
-				padding: 0px;
 				overflow: hidden;
+				padding: {
+					left: 10px;
+					right: 20px;
+					top: 7px;
+				}
 				vertical-align: top;
-				width: 100%;
 			}
 
 			th {
 				@extends td;
 				font-weight: bold;
-			}
-
-			thead {
-				tr {
-					margin-top: 20px;
+				
+				padding: {
+					left: 12px;
+					top: 7px;
 				}
-				th {
+				text-align: left;
+				vertical-align: top;
+				width: 30%;
+				
+				&.header {
 					font-size: 17px;
 					font-weight: bold;
+					margin-top: 20px;
 					padding: {
 						bottom: 20px;
 						top: 20px;
 						left: 10px;
 						right: 10px;
 					}
-					text-align: left;
+					text-align: left;	
 				}
-
-				.infobox-image {
-					text-align: center;
-					overflow: hidden;
-					padding: {
-						top: 0px;
-						bottom: 10px;
-						right: 10px;
-						left: 10px;
-					}
+			}
+			
+			.infobox-image {
+				text-align: center;
+				overflow: hidden;
+				padding: {
+					top: 0px;
+					bottom: 10px;
+					right: 10px;
+					left: 10px;
 				}
-
-				.infobox-caption {
-					text-align: center;
-					font-size: 12px;
-				}
-				.infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
+				width: $cell-width;
+				
+			}
+			
+			.infobox-caption {
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
+			
+			.infobox-subhead {
+				padding-top: 20px;
 			}
 
 			// /** the infobox content **/
-			tbody {
-				border-top: 1px $color-page-border solid;
+			tr {
 				display: block;
-				margin: 20px 0px;
-
-				td {
-					padding: {
-						left: 10px;
-						right: 20px;
-						top: 7px;
+				&.section {			
+					th:first-child {
+						border-top: 1px $color-page-border solid;
+						display: block;
+						margin-top: 20px;
+						width: $cell-width;
 					}
-					vertical-align: top;
 				}
-
-				th {
-					@extends td;
-					font-weight: bold;
-					padding: {
-						left: 12px;
-						top: 7px;
-					}
-					text-align: left;
-					vertical-align: top;
-					width: 30%;
-				}
-
-				.infobox-subhead {
-					padding-top: 20px;
-				}
-
 			}
 		}
-
 	}
 }
 
