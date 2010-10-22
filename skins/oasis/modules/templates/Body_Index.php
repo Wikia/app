@@ -21,12 +21,12 @@
 	if ($isMainPage) {
 		echo '<div class="WikiaMainPageBanner">';
 	}
-	?>
-
-	<?= wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD')) ?>
-	<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD')) ?>
-
-	<?
+	if ($wgEnableCorporatePageExt) {
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
+	} else {
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
+	}
 	if ($isMainPage) {
 		echo '</div>';
 	}
