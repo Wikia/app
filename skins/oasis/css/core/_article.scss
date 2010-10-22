@@ -299,7 +299,7 @@
 	.TablePager tr:hover td { background-color: #eeeeff }
 
 
-	.InfoBox {
+	.wikia-infobox {
 		$cell-width: 225px;
 		
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
@@ -320,6 +320,7 @@
 		}
 
 		table {
+			@include bodytext;
 			border-collapse: collapse;
 			width: $cell-width;
 
@@ -345,7 +346,7 @@
 				vertical-align: top;
 				width: 30%;
 				
-				&.header {
+				&.wikia-infobox-header {
 					font-size: 17px;
 					font-weight: bold;
 					margin-top: 20px;
@@ -359,7 +360,7 @@
 				}
 			}
 			
-			.infobox-image {
+			.wikia-infobox-image {
 				text-align: center;
 				overflow: hidden;
 				padding: {
@@ -372,21 +373,21 @@
 				
 			}
 			
-			.infobox-caption {
+			.wikia-infobox-caption {
 				text-align: center;
 				font-size: 12px;
 			}
 			
-			.infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
+			.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
 			
-			.infobox-subhead {
+			.wikia-infobox-subhead {
 				padding-top: 20px;
 			}
 
 			// /** the infobox content **/
 			tr {
 				display: block;
-				&.section {			
+				&.wikia-infobox-section {			
 					th:first-child {
 						border-top: 1px $color-page-border solid;
 						display: block;
