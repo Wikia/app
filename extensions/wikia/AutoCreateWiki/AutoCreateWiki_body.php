@@ -732,20 +732,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$output = wfShellExec( $cmd );
 		$this->log( $output );
 
-		//RT:70428 for german and spanish, default to oasis
-		global $wgOasisSkin2010103;
-		
-		/**
-		 * RT:68926 set default skin to oasis
-		 */
-		if ($this->mType != 'answers' && 
-			( $this->mWikiData[ "language" ] == 'en' ||
-				( !empty($wgOasisSkin2010103) && in_array($this->mWikiData[ "language" ], array('de', 'es') ) )
-			) 
-		){
-			WikiFactory::setVarByName("wgDefaultSkin", $this->mWikiId, 'oasis');
-		}
-
 		/**
 		 * show congratulation message
 		 */
@@ -1594,9 +1580,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		switch( $this->mType ) {
-			case "default":
-				$WFSettingsVars[ "wgDefaultSkin" ] = 'oasis';
-				break;
 			case "answers":
 				$WFSettingsVars[ "wgRateLimits" ] = array (
 					'move' => array (
@@ -1627,6 +1610,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				if (Wikia::langToSomethingMap(array("ar" => true, "he" => true, "ja" => true, "th" => true, "zh" => true), $this->mWikiData["language"], false)) {
 					$WFSettingsVars[ "wgDisableAnswersShortQuestionsRedirect" ] = true;
 				}
+				break;
+			default:
 				break;
 		}
 
