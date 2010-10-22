@@ -10,7 +10,6 @@ WikiaFooterApp = {
 	},
 
 	init: function() {
-
 		WikiaFooterApp.myToolsSetup();
 
 		//Variables
@@ -20,7 +19,7 @@ WikiaFooterApp = {
 			var windowObj = $(window);
 	
 			//Scroll Detection
-			windowObj.scroll(function() {
+			windowObj.resolvePosition = function() {
 				var scroll = windowObj.scrollTop() + windowObj.height();
 				var line = 0;
 				if(footer.offset()){
@@ -37,15 +36,19 @@ WikiaFooterApp = {
 				} else if (scroll < line && !toolbar.hasClass("float")) {
 					toolbar.addClass("float");
 					WikiaFooterApp.settings.float = true;
-					windowObj.resize();
+					windowObj.centerBar();
 				}
-			});
+			};
 						
 			//Resize Detection
 			windowObj.resize(function() {
 				//Resizing should run all functions bound to scrolling because the location of "the fold" is changing.
 				windowObj.scroll();
 				
+				windowObj.centerBar();
+			});
+			
+			windowObj.centerBar = function () {
 				if (WikiaFooterApp.settings.float) {
 					var viewport = parseInt($(window).width());
 					var page = parseInt($("#WikiaPage").width());
@@ -59,11 +62,12 @@ WikiaFooterApp = {
 						left: edge,
 						right: edge
 					});
-				}				
-			});
+				}
+			};
 
-			//trigger scroll once to properly setup the floating footer
-			windowObj.scroll();
+			windowObj.resolvePosition();
+			
+			windowObj.scroll(windowObj.resolvePosition);
 		}
 	},
 
