@@ -11,15 +11,15 @@ require( '/usr/wikia/source/trunk/maintenance/commandLine.inc' );
 
 $dbr = wfGetDB( DB_SLAVE );
 
-$res = $dbr->select( 'Comments', '*' );
+$res = $dbr->query( 'select * from Comments join page on Comment_Page_ID = page_id where page_namespace = 500' );
 
 while( $row = $res->fetchObject() ) {
 
 	$content = $row->Comment_Text;
 	$user = User::newFromName( $row->Comment_Username );
 
-	$cTitle = $row->Comment_page_title;
-	$cNamespace = $row->Comment_page_namespace;
+	$cTitle = $row->page_title;
+	$cNamespace = 500;
 	$cContent = $row->Comment_Text;
 
 	try {
@@ -33,15 +33,19 @@ while( $row = $res->fetchObject() ) {
 
 	$newTitle = $cTitle . '/' . '@comment-' . $row->Comment_Username . '-' . $date_suffix;
 
-	$wTitle = Title::newFromText( $newTitle, $cNamespace + 1 );
+	$wTitle = Title::newFromText( $newTitle, 500 + 1 );
 
 	$parentTitle = Title::newFromText( $cTitle, $cNamespace );
 
 	$wArticle = new Article( $wTitle );
 	if ( !$wArticle->exists() && is_object( $parentTitle ) && $parentTitle->exists() ) {
-		wfWaitForSlaves( 5 );
+		wfWaitForSlaves( 3 );
 
-		$wArticle->doEdit( $content, 'Importing comments from old armchair', 0, false, $user );
+		$wArticle->doEdit( $content, 'Importing comments from old armchair', EDIT_FORCE_BOT, false, $user );
+
+		wfWaitForSlaves( 3 );
+	} else {
+		echo "skipped one: ID {$row->Comment_ID}\n";
 	}
 
 	$i++;
@@ -49,4 +53,5 @@ while( $row = $res->fetchObject() ) {
 	if ( $i % 10 == 0 ) {
 		echo $i . "\n";
 	}
+
 }
