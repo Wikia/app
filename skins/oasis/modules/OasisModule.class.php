@@ -52,8 +52,6 @@ class OasisModule extends Module {
 	public function executeIndex() {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
 		
-		wfLoadExtensionMessages('Oasis');
-
 		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		$this->body = wfRenderModule('Body');
@@ -165,8 +163,8 @@ class OasisModule extends Module {
 		// track page load time
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
 
-		// track browser width
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-width');
+		// track browser height
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
 
 		// record which varnish this page was served by
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
