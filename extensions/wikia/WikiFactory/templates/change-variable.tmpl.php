@@ -51,7 +51,7 @@
 		</select><br/>
 
 		Description of what this variable does:<br/>
-		<textarea id="wk-change-cv_description" name="cv_description" value=""><?php print $cv_description; ?></textarea><br/>
+		<textarea id="wk-change-cv_description" name="cv_description" value="" rows="4" cols="75"><?php print $cv_description; ?></textarea><br/>
 
 		<input type="submit" name="submit" value="Change Variable" onclick='javascript:$Factory.Variable.submitChangeVariable(this, [ "wk-variable-select", 1]);return false;' />
 		&nbsp;&nbsp;&nbsp;
