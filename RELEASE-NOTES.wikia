@@ -1,4 +1,5 @@
 == Changes since 201010.3 ==
+* rt#75251: Enable TOP_RIGHT_BOXAD on Category and Blog Namespaces (Nef)
 * rt#74635: Oasis: No tabs in special:preferences (macbre)
 * rt#74546: Oasis: Blank blog listings (macbre)
 * rt#74424: Oasis: Change body text line spacing to 22.5px (macbre)
