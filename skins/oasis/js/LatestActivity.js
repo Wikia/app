@@ -8,7 +8,7 @@ var LatestActivity = {
 	},
 	
 	lazyLoadContent: function() {
-		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=LatestActivity&actionName=Index&outputType=html',
+		$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=LatestActivity&actionName=Index&outputType=html',
 			function(data) {
 				// IE would lose styling otherwise
 				if ($.browser.msie) {
