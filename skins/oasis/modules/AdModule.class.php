@@ -72,12 +72,15 @@ class AdModule extends Module {
 			} else if($namespace == NS_CATEGORY) {
 				// category page
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['LEFT_SKYSCRAPER_2'] = true;
 				if(ArticleAdLogic::isLongArticle(self::getSkinTemplateObj()->data['bodytext'])) {
 					// long page
 					self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 					self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				}
+			} else if($namespace == NS_BLOG_ARTICLE) {
+				self::$config['TOP_RIGHT_BOXAD'] = true;
 			}
 		}
 	}
