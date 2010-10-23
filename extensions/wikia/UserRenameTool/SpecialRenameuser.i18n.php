@@ -559,7 +559,6 @@ $messages['cs'] = array(
 	'userrenametool-page-unmoved' => 'Stránku $1 se nepodařilo přesunout na $2.',
 	'userrenametool-logpage' => 'Kniha přejmenování uživatelů',
 	'userrenametool-logpagetext' => 'Toto je záznam přejmenování uživatelů (změn uživatelského jména).',
-	爀攀渀愀洀攀甀猀攀爀氀logentry' => 'přejmenovává $1 na „$2“',
 	'userrenametool-log' => '{{PLURAL:$1|1 editace|$1 editace|$1 editací}}. Zdůvodnění: $2',
 	'userrenametool-move-log' => 'Automatický přesun při přejmenování uživatele „[[User:$1|$1]]“ na „[[User:$2|$2]]“',
 	'right-renameuser' => 'Přejmenovávání uživatelů',
@@ -2659,7 +2658,6 @@ $messages['sr-ec'] = array(
 	'userrenametool-page-exists' => 'Страница $1 већ постоји и не може бити аутоматски преснимљена.',
 	'userrenametool-page-moved' => 'Страница $1 је премештена на $2.',
 	'userrenametool-page-unmoved' => 'Страница $1 не може бити премештена на $2.',
-	爀攀渀愀洀攀甀猀攀爀氀logpage' => 'Историја преименовања корисника',
 	'userrenametool-logpagetext' => 'Ово је историја измена преименовања корисника',
 	'userrenametool-logentry' => 'је преименовао $1 у „$2“',
 	'userrenametool-log' => '{{PLURAL:$1|1 измена|$1 измене|$1 измена}}. Разлог: $2',
@@ -3214,4 +3212,3 @@ $messages['zh-hant'] = array(
 $messages['zu'] = array(
 	'userrenametool-submit' => 'Yisa',
 );
-
