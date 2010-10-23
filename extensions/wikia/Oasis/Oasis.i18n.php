@@ -96,7 +96,7 @@ You can reorder or delete tools in the field below.
 	'oasis-popular-blogs-title' => 'Popular blog<br />posts',
 	'oasis-spotlights-rail-title' => 'More from ',
 	'oasis-spotlights-footer-title' => "Around Wikia's network",
-	'themedesigner' => 'Theme designer', // FIXME: give this an extension specific key prefix. Also is defined in ThemeDesigner, already!
+	'themedesigner' => 'Theme designer', // FIXME: give this an extension specific key prefix. Also is defined in ThemeDesigner, already. Keys should be defined once in the whole code base.
 	'oasis-pages-on-wiki-header' => 'Pages on $1',
 	'oasis-latest-activity-new' => '$1 created $2',
 	'oasis-latest-activity-edit' => '$1 edited $2',
