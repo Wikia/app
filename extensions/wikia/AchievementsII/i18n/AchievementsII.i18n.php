@@ -113,7 +113,7 @@ It works best when your picture is square, and when the most important part of t
 
 You can use rectangular pictures, but you might find that a bit gets cropped out by the frame.
 If you have a graphics program, then you can crop your picture to put the important part of the image in the center.
-If you do no have a graphics program, then just experiment with different pictures until you find the ones that work for you!
+If you do not have a graphics program, then just experiment with different pictures until you find the ones that work for you!
 If you do not like the picture that you have chosen, click "{{int:achievements-revert}}" to go back to the original graphic.
 
 You can also give the badges new names that reflect the topic of the wiki.
