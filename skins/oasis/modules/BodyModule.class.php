@@ -256,6 +256,11 @@ class BodyModule extends Module {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
+		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
+		if (!$wgTitle->userCanRead()) {
+			wfProfileOut(__METHOD__);
+			return array();
+		}
 
 		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
