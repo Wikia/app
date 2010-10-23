@@ -96,7 +96,7 @@ You can reorder or delete tools in the field below.
 	'oasis-popular-blogs-title' => 'Popular blog<br />posts',
 	'oasis-spotlights-rail-title' => 'More from ',
 	'oasis-spotlights-footer-title' => "Around Wikia's network",
-	'themedesigner' => 'Theme designer',
+	'themedesigner' => 'Theme designer', // FIXME: give this an extension specific key prefix. Also is defined in ThemeDesigner, already!
 	'oasis-pages-on-wiki-header' => 'Pages on $1',
 	'oasis-latest-activity-new' => '$1 created $2',
 	'oasis-latest-activity-edit' => '$1 edited $2',
@@ -104,12 +104,12 @@ You can reorder or delete tools in the field below.
 
 	'oasis-interlang-show-all' => '... see all >',
 	'oasis-interlang-languages' => 'Languages:',
-	'photosblacklist' => '* example-blacklist.png',
+	'photosblacklist' => '* example-blacklist.png', // FIXME: give this an extension specific key prefix.
 
 	# user-facing (editable) Oasis messages
 	# names adjusted to be easy-er for the user to remember
-	'categoryblacklist' => '* stub',
-	'wiki-navigation' => '*#visited#|TopContent
+	'categoryblacklist' => '* stub', // FIXME: give this an extension specific key prefix.
+	'wiki-navigation' => '*#visited#|TopContent // FIXME: give this an extension specific key prefix.
 *#category1#
 *#category2#
 *portal-url|Community
@@ -117,8 +117,8 @@ You can reorder or delete tools in the field below.
 **forum-url|Forum',
 
 # Related to ImageSEO RT#55755
-	'imageseo-featured-on' => 'Featured on:',
-	'imageseo-featured-more' => 'more...',
+	'imageseo-featured-on' => 'Featured on:', // FIXME: give this an extension specific key prefix.
+	'imageseo-featured-more' => 'more...', // FIXME: give this an extension specific key prefix.
 
 	# 5min video
 	'oasis-related-video-by-5min'	=> 'by 5min Video',
