@@ -61,7 +61,7 @@ $messages['en'] = array(
 	'oasis-page-header-subtitle-template' => 'Template page',
 	'oasis-page-header-subtitle-category' => 'Category page',
 	'oasis-page-header-subtitle-forum' => 'Forum page',
-	'oasis-page-header-subtitle-special-wikiactivity' => 'See all activity &gt;',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'See all activity >',
 	'oasis-search-results-from' => 'Showing results from: $1',
 	'oasis-user-page-change-avatar' => 'Change avatar',
 	'oasis-content-picture-added-by' => 'Added by $1',
@@ -118,7 +118,7 @@ You can reorder or delete tools in the field below.
 
 # Related to ImageSEO RT#55755
 	'imageseo-featured-on' => 'Featured on:',
-	'imageseo-featured-more' => 'more&hellip;',
+	'imageseo-featured-more' => 'more...',
 
 	# 5min video
 	'oasis-related-video-by-5min'	=> 'by 5min Video',
