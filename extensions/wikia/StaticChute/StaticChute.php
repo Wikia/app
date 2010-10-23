@@ -335,6 +335,7 @@ class StaticChute {
 			"oasis/js/WikiHeader.js",
 			"oasis/js/LatestPhotos.js",
 			"oasis/js/Interlang.js",
+			"oasis/js/LatestActivity.js", // only for Anons
 			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
 			"../extensions/wikia/ArticleComments/js/ArticleComments.js",
 			"../extensions/wikia/RelatedPages/js/RelatedPages.js",
