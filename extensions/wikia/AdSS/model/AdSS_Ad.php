@@ -3,6 +3,7 @@
 class AdSS_Ad {
 
 	public $id;
+	public $userId;
 	public $url;
 	public $text;
 	public $desc;
@@ -13,12 +14,14 @@ class AdSS_Ad {
 	public $closed;
 	public $expires;
 	public $weight;
-	public $email;
 	public $price;
+
+	private $user;
 
 	function __construct() {
 		global $wgCityId;
 		$this->id = 0;
+		$this->userId = 0;
 		$this->url = '';
 		$this->text = '';
 		$this->desc = '';
@@ -29,8 +32,8 @@ class AdSS_Ad {
 		$this->closed = null;
 		$this->expires = null;
 		$this->weight = 1;
-		$this->email = '';
 		$this->price = AdSS_Util::getSitePricing();
+		$this->user = null;
 	}
 
 	static function newFromForm( $f ) {
@@ -56,21 +59,22 @@ class AdSS_Ad {
 		$this->url = $f->get( 'wpUrl' );
 		$this->text = $f->get( 'wpText' );
 		$this->desc = $f->get( 'wpDesc' );
+		$this->weight = $f->get( 'wpWeight' );
 		if( $f->get( 'wpType' ) == 'page' ) {
 			$title = Title::newFromText( $f->get( 'wpPage' ) );
 			if( $title && $title->exists() ) {
 				$this->pageId = $title->getArticleId();
 				$this->price = AdSS_Util::getPagePricing( $title );
+				$this->weight = 1;
 			}
 		}
-		$this->weight = $f->get( 'wpWeight' );
-		$this->email = $f->get( 'wpEmail' );
 	}
 
 	function loadFromRow( $row ) {
 		if( isset( $row->ad_id ) ) {
 			$this->id = intval( $row->ad_id );
 		}
+		$this->userId = $row->ad_user_id;
 		$this->url = $row->ad_url;
 		$this->text = $row->ad_text;
 		$this->desc = $row->ad_desc;
@@ -81,7 +85,6 @@ class AdSS_Ad {
 		$this->closed = wfTimestampOrNull( TS_UNIX, $row->ad_closed );
 		$this->expires = wfTimestampOrNull( TS_UNIX, $row->ad_expires );
 		$this->weight = $row->ad_weight;
-		$this->email = $row->ad_user_email;
 		$this->price = array(
 				'price'  => $row->ad_price,
 				'period' => $row->ad_price_period,
@@ -110,6 +113,7 @@ class AdSS_Ad {
 		if( $this->id == 0 ) {
 			$dbw->insert( 'ads',
 					array(
+						'ad_user_id'      => $this->userId,
 						'ad_url'          => $this->url,
 						'ad_text'         => $this->text,
 						'ad_desc'         => $this->desc,
@@ -119,7 +123,6 @@ class AdSS_Ad {
 						'ad_created'      => wfTimestampNow( TS_DB ),
 						'ad_expires'      => wfTimestampOrNull( TS_DB, $this->expires ),
 						'ad_weight'       => $this->weight,
-						'ad_user_email'   => $this->email,
 						'ad_price'        => $this->price['price'],
 						'ad_price_period' => $this->price['period'],
 					     ),
@@ -129,6 +132,7 @@ class AdSS_Ad {
 		} else {
 			$dbw->update( 'ads',
 					array(
+						'ad_user_id'      => $this->userId,
 						'ad_url'          => $this->url,
 						'ad_text'         => $this->text,
 						'ad_desc'         => $this->desc,
@@ -138,7 +142,6 @@ class AdSS_Ad {
 						'ad_closed'       => wfTimestampOrNull( TS_DB, $this->closed ),
 						'ad_expires'      => wfTimestampOrNull( TS_DB, $this->expires ),
 						'ad_weight'       => $this->weight,
-						'ad_user_email'   => $this->email,
 						'ad_price'        => $this->price['price'],
 						'ad_price_period' => $this->price['period'],
 					     ),
@@ -179,4 +182,17 @@ class AdSS_Ad {
 		$this->closed = wfTimestampNow( TS_DB );
 		$this->save();
 	}
+
+	function getUser() {
+		if( !$this->user ) {
+			$this->user = AdSS_User::newFromId( $this->userId );
+		}
+		return $this->user;
+	}
+
+	function setUser( $user ) {
+		$this->user = $user;
+		$this->userId = $user->id;
+	}
+
 }

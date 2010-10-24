@@ -27,8 +27,7 @@ class AdSS_Controller extends SpecialPage {
 			} else {
 				$this->save( $adForm );
 			}
-		} elseif( ( $subpage == 'paypal/return' ) && ( $wgRequest->getSessionData( 'ecToken' ) == $wgRequest->getText( 'token' ) ) ) {
-			unset( $_SESSION['ecToken'] );
+		} elseif( $subpage == 'paypal/return' ) {
 			$this->processPayPalReturn( $wgRequest->getText( "token" ) );
 		} elseif( $subpage == 'paypal/cancel' ) {
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
@@ -83,21 +82,17 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
-		$ad = AdSS_Ad::newFromForm( $adForm );
-		if( $ad->pageId > 0 ) {
-			$ad->weight = 1;
-		}
-		$ad->save();
-
+		//TODO: authenticate as an existing advertiser (using password) or register new account
+		// (for now, authenticate via PayPal)
 		$selfUrl = $this->getTitle()->getFullURL();
 		$returnUrl = $selfUrl . '/paypal/return';
 		$cancelUrl = $selfUrl . '/paypal/cancel';
 		$pp = new PaymentProcessor();
-		$token = $pp->initialize( $ad, $returnUrl, $cancelUrl );
-		if( $token ) {
+		if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
 			// redirect to PayPal
-			$_SESSION['ecToken'] = $token;
-			$wgOut->redirect( $wgPayPalUrl . $token );
+			$_SESSION['ecToken'] = $pp->getToken();
+			$_SESSION['AdSS_adForm'] = $adForm;
+			$wgOut->redirect( $wgPayPalUrl . $pp->getToken() );
 		} else {
 			// show error
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
@@ -112,11 +107,17 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
+		$user = AdSS_User::newFromForm( $adForm );
+		if( !$user->loadFromDB() ) {
+			$user->save();
+		}
+
 		$ad = AdSS_Ad::newFromForm( $adForm );
 		if( $ad->pageId > 0 ) {
 			$ad->weight = 1;
 		}
 		$ad->expires = strtotime( "+1 month", time() ); 
+		$ad->setUser( $user );
 
 		$ad->save();
 		AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
@@ -127,23 +128,49 @@ class AdSS_Controller extends SpecialPage {
 	function processPayPalReturn( $token ) {
 		global $wgAdSS_templatesDir, $wgOut, $wgAdSS_contactEmail;
 
-		$pp = new PaymentProcessor();
+		if( empty( $_SESSION['ecToken'] ) || ( $_SESSION['ecToken'] != $token ) ) {
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-token-error' ) );
+			return;
+		}
+		unset( $_SESSION['ecToken'] );
+		$adForm = $_SESSION['AdSS_adForm'];
 
-		$adId = $pp->getAdId( $token );
-		if( !$adId ) {
-			$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
+		$pp_new = new PaymentProcessor( $token );
+
+		$payerId = $pp_new->fetchPayerId();
+		if( $payerId === false ) {
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 			return;
 		}
 
-		$ad = AdSS_Ad::newFromId( $adId );
-		if( $adId != $ad->id ) {
-			$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
-			return;
+		$baid = false;
+		$pp_existing = PaymentProcessor::newFromPayerId( $payerId, $adForm->get( 'wpEmail' ) );
+		if( $pp_existing ) {
+			$user = AdSS_User::newFromId( $pp_existing->getUserId() );
+			wfDebug( "AdSS: got existing user: {$user->toString()})\n" );
+			$baid = $pp_existing->getBillingAgreement();
+			if( $baid ) wfDebug( "AdSS: got existing BAID: $baid\n" );
+		} else {
+			$user = AdSS_User::newFromForm( $adForm );
+			$user->save();
+			wfDebug( "AdSS: created new user: {$user->toString()})\n" );
 		}
+		$pp_new->setUserId( $user->id );
 
-		$baid = $pp->createBillingAgreement( $token );
+		if( $baid === false ) {
+			$baid = $pp_new->createBillingAgreement();
+			wfDebug( "AdSS: created new BAID: $baid\n" );
+		}
 		if( $baid === false ) {
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
+			return;
+		}
+
+		$ad = AdSS_Ad::newFromForm( $adForm );
+		$ad->setUser( $user );
+		$ad->save();
+		if( $ad->id == 0 ) {
+			$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
 			return;
 		}
 
@@ -160,7 +187,7 @@ class AdSS_Controller extends SpecialPage {
 			$body = "New ad has been just created and it's waiting your approval:\n";
 			$body .= Title::makeTitle( NS_SPECIAL, "AdSS/admin" )->getFullURL();
 			$body .= "\n\n";
-			$body .= "Created by: {$ad->email}\n";
+			$body .= "Created by: {$ad->getUser()->toString()}\n";
 			$body .= "Ad link text: {$ad->text}\n";
 			$body .= "Ad URL: {$ad->url}\n";
 			$body .= "Ad description: {$ad->desc}\n";

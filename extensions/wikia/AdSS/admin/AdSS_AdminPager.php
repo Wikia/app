@@ -77,6 +77,8 @@ class AdSS_AdminPager extends TablePager {
 				}
 			case 'ad_price':
 				return AdSS_Util::formatPrice( $this->ad->price );
+			case 'ad_user_id':
+				return AdSS_User::newFromId( $value )->toString();
 			default:
 				return $value;
 		}
@@ -88,44 +90,47 @@ class AdSS_AdminPager extends TablePager {
 
 	function getFieldNames() {
 		return array(
-				'ad_wiki_id'    => 'Wikia',
-				'ad_page_id'    => 'Type',
-				'ad_weight'     => 'No. shares',
-				'ad_text'       => 'Ad',
-				'ad_user_email' => 'User',
-				'ad_created'    => 'Created',
-				'ad_expires'    => 'Expires',
-				'ad_closed'     => 'Closed',
-				'ppa_baid'      => 'Billing Agreement ID',
-				'ad_price'      => 'Price',
-				'ad_id'         => 'Action',
+				'ad_wiki_id' => 'Wikia',
+				'ad_page_id' => 'Type',
+				'ad_weight'  => 'No. shares',
+				'ad_text'    => 'Ad',
+				'ad_user_id' => 'User',
+				'ad_created' => 'Created',
+				'ad_expires' => 'Expires',
+				'ad_closed'  => 'Closed',
+				'ad_price'   => 'Price',
+				'ad_id'      => 'Action',
 			    );
 	}
 
 	function getQueryInfo() {
 		$qi = array(
-				'tables' => array( 'ads', 'pp_tokens', 'pp_agreements' ),
+				'tables' => array( 'ads' ),
 				'fields' => array( '*' ),
-				'conds'  => array(
-					'ad_id = ppt_ad_id',
-					'ppt_token = ppa_token',
-					)
 			    );
 		switch( $this->mFilter ) {
 			case 'active':
-				$qi['conds'][] = 'ad_closed IS NULL';
-				$qi['conds'][] = 'ad_expires > NOW()';
+				$qi['conds'] = array(
+						'ad_closed IS NULL',
+						'ad_expires > NOW()',
+						);
 				break;
 			case 'pending':
-				$qi['conds'][] = 'ad_closed IS NULL';
-				$qi['conds'][] = 'ad_expires IS NULL';
+				$qi['conds'] = array(
+						'ad_closed IS NULL',
+						'ad_expires IS NULL',
+						);
 				break;
 			case 'expired':
-				$qi['conds'][] = 'ad_closed IS NULL';
-				$qi['conds'][] = 'ad_expires <= NOW()';
+				$qi['conds'] = array(
+						'ad_closed IS NULL',
+						'ad_expires <= NOW()',
+						);
 				break;
 			case 'closed':
-				$qi['conds'][] = 'ad_closed IS NOT NULL';
+				$qi['conds'] = array(
+						'ad_closed IS NOT NULL',
+						);
 				break;
 			case 'special':
 				$qi['conds'] = array( 

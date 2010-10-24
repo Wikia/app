@@ -90,15 +90,22 @@ class AdSS_Util {
 			wfDebug( __METHOD__ . ": updated page_touched on $wikiDb for page_id=$pageId\n");
 
 			$url = $wikiServer . str_replace( '$1', $title, $wikiArticlePath );
-			$memcKey = $dbw->getWikiID() . ":adss:pageads:$pageId";
 		} else {
 			$url = $wikiServer . $wikiScript . '?action=ajax&rs=AdSS_Publisher::getSiteAdsAjax';
-			$memcKey = $dbw->getWikiID() . ":adss:siteads";
 		}
-		$wgMemc->delete( $memcKey );
-		wfDebug( __METHOD__ . ": deleted memcached key $memcKey\n" );
+		$wgMemc->delete( self::memcKey( $pageId ) );
 		SquidUpdate::purge( array( $url ) );
-		wfDebug( __METHOD__ . ": purged $url\n" );
+	}
+
+	static function memcKey( $wikiId=0, $pageId=0 ) {
+		if( !$wikiId ) {
+			$wikiId = wfWikiID();
+		}
+		if( $pageId ) {
+			return "$wikiId:adss:2:pageads:$pageId";
+		} else {
+			return "$wikiId:adss:2:siteads";
+		}
 	}
 
 	static function getToken() {
