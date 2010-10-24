@@ -94,7 +94,7 @@ You can reorder or delete tools in the field below.
 	'oasis-section-edit' => 'Edit',
 	'oasis-section-edit-alt' => 'Edit $1 section',
 	'oasis-popular-blogs-title' => 'Popular blog<br />posts',
-	'oasis-spotlights-rail-title' => 'More from ',
+	'oasis-spotlights-rail-title' => 'More from',
 	'oasis-spotlights-footer-title' => "Around Wikia's network",
 	'themedesigner' => 'Theme designer', // FIXME: give this an extension specific key prefix. Also is defined in ThemeDesigner, already. Keys should be defined once in the whole code base.
 	'oasis-pages-on-wiki-header' => 'Pages on $1',
