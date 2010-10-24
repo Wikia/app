@@ -33,56 +33,33 @@ class AdSS_AdminController {
 		} elseif( $token != AdSS_Util::getToken() ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'token mismatch' );
 		} else {
-			//FIXME refactor this piece into another data class
-			$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
-			$row = $dbw->selectRow(
-					array( 'ads', 'pp_tokens', 'pp_agreements' ),
-					'*',
-					array(
-						'ad_id' => $id,
-						'ad_id = ppt_ad_id',
-						'ppt_token = ppa_token',
-						'ad_closed' => null,
-						'ad_expires' => null,
-					     ),
-					__METHOD__
-					);
-			if( $row === false ) {
+			$ad = AdSS_Ad::newFromId( $id );
+			if( ( $ad->id != $id ) || ( $ad->closed != null ) || ( $ad->expires != null ) ) {
 				$r = array( 'result' => 'error', 'respmsg' => 'no such ad' );
 			} else {
-				$ad = AdSS_Ad::newFromRow( $row );
-				if( $id != $ad->id ) {
-					$r = array( 'result' => 'error', 'respmsg' => 'no such ad' );
-				} else {
-					$title = null;
-					if( $ad->pageId > 0 ) {
-						$title = Title::newFromID( $ad->pageId );
-						if( !$title || !$title->exists() ) {
-							$r = array( 'result' => 'error', 'respmsg' => 'no such title' );
-						}
+				if( $ad->pageId > 0 ) {
+					$title = Title::newFromID( $ad->pageId );
+					if( !$title || !$title->exists() ) {
+						$r = array( 'result' => 'error', 'respmsg' => 'no such article' );
 					}
+				}
 
-					if( empty( $r ) ) {
-						$pp = new PaymentProcessor();
-						$respArr = array();
-						if( $pp->collectPayment( $row->ppa_baid, $ad->price['price'] * $ad->weight, $respArr ) ) {
-							$ad->refresh();
-
-							$r = array(
-									'result'  => 'success',
-									'id'      => $ad->id,
-									'expires' => wfTimestamp( TS_DB, $ad->expires ),
-								  );
-						} else {
-							if( ( $respArr['RESULT'] ==  12 ) && ( $respArr['RESPMSG'] == 'Declined: 10201-Agreement was canceled' ) ) {
-								$ad->close();
-								$r = array( 'result' => 'error', 'respmsg' => 'billing agreement canceled' );
-							} else {
-								$r = array( 'result' => 'error', 'respmsg' => "paypal error:\n$respArr[RESPMSG]" );
-							}
-						}
+				if( empty( $r ) ) {
+					$billing = new AdSS_Billing();
+					if( $billing->addCharge( $ad ) ) {
+						$ad->refresh();
 						AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
 						AdSS_Util::commitAjaxChanges();
+						$r = array(
+							'result'  => 'success',
+							'id'      => $ad->id,
+							'expires' => wfTimestamp( TS_DB, $ad->expires ),
+						);
+					} else {
+						$r = array(
+							'result'  => 'error',
+							'respmsg' => 'Could not charge user',
+						);
 					}
 				}
 			}

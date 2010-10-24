@@ -26,7 +26,7 @@ class AdSS_Publisher {
 	static function getSiteAds() {
 		global $wgAdSS_DBname, $wgCityId, $wgMemc, $wgSquidMaxage;
 
-		$memcKey = wfMemcKey( "adss", "siteads" );
+		$memcKey = AdSS_Util::memcKey();
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
 			$minExpire = 60*60 + time();
@@ -62,7 +62,7 @@ class AdSS_Publisher {
 			return array();
 		}
 
-		$memcKey = wfMemcKey( "adss", "pageads", $title->getArticleID() );
+		$memcKey = AdSS_Util::memcKey( $title->getArticleID() );
 		$ads = $wgMemc->get( $memcKey );
 		if( $ads === null || $ads === false ) {
 			$minExpire = 60*60 + time();

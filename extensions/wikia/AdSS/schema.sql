@@ -1,5 +1,24 @@
+CREATE TABLE users (
+  user_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_registered timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  user_email varchar(255) NOT NULL,
+  user_password varchar(255) NOT NULL,
+  user_newpassword varchar(255) DEFAULT NULL
+) ENGINE=InnoDB;
+CREATE UNIQUE INDEX user_email ON users (user_email);
+
+CREATE TABLE billing (
+  billing_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  billing_user_id int unsigned NOT NULL,
+  billing_timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  billing_amount decimal(5,2) NOT NULL,
+  billing_ad_id int NOT NULL,
+  billing_ppp_id int NOT NULL
+) ENGINE=InnoDB;
+
 CREATE TABLE ads (
   ad_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  ad_user_id int unsigned NOT NULL,
   ad_url varchar(255) NOT NULL,
   ad_text varchar(255) NOT NULL,
   ad_desc varchar(255) NOT NULL,
@@ -7,25 +26,24 @@ CREATE TABLE ads (
   ad_page_id int unsigned NOT NULL,
   ad_status tinyint unsigned NOT NULL,
   ad_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  ad_closed timestamp DEFAULT NULL,
-  ad_expires timestamp DEFAULT NULL,
+  ad_closed timestamp NULL DEFAULT NULL,
+  ad_expires timestamp NULL DEFAULT NULL,
   ad_weight tinyint unsigned NOT NULL,
-  ad_user_email varchar(255) NOT NULL,
   ad_price decimal(5,2) NOT NULL,
-  ad_price_period char(1) NOT NULL,
+  ad_price_period char(1) NOT NULL
 ) ENGINE=InnoDB;
 
 -- PayPal Set EC requests
 -- action=S
 CREATE TABLE pp_tokens (
   ppt_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  ppt_ad_id int unsigned NOT NULL,
   ppt_requested timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ppt_result smallint signed,
   ppt_respmsg varchar(255) DEFAULT NULL,
   ppt_correlationid char(13) DEFAULT NULL,
   ppt_responded timestamp NULL DEFAULT NULL,
-  ppt_token char(20) DEFAULT NULL
+  ppt_token char(20) DEFAULT NULL,
+  ppt_user_id int unsigned DEFAULT NULL
 ) ENGINE=InnoDB;
 CREATE UNIQUE INDEX ppt_token ON pp_tokens (ppt_token);
 
@@ -79,7 +97,8 @@ CREATE TABLE pp_agreements (
   ppa_correlationid char(13) DEFAULT NULL,
   ppa_responded timestamp NULL DEFAULT NULL,
   ppa_pnref char(12) DEFAULT NULL,
-  ppa_baid char(19) DEFAULT NULL
+  ppa_baid char(19) DEFAULT NULL,
+  ppa_canceled timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB;
 CREATE UNIQUE INDEX ppa_token ON pp_agreements (ppa_token);
 CREATE INDEX ppa_baid ON pp_agreements (ppa_baid);

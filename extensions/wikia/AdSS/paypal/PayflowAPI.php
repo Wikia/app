@@ -91,6 +91,23 @@ class PayflowAPI {
 		return $this->query( $headers, $nvpReqArr, $opts );
 	}
 
+	function checkCustomerBillingAgreement( $baid ) {
+		$headers = array();
+		$this->setHeaders( $headers );
+		$nvpReqArr = array();
+		$this->setNvpReqArr( $nvpReqArr );
+		$opts = array();
+		$this->setOptions( $opts );
+
+		// not required
+		//$headers[] = "X-VPS-Request-ID: X$req_id";
+
+		$nvpReqArr["ACTION"]    = "U";
+		$nvpReqArr["BAID"]      = $baid;
+
+		return $this->query( $headers, $nvpReqArr, $opts );
+	}
+
 	function doExpressCheckoutPayment( $req_id, $baid, $amount ) {
 		$headers = array();
 		$this->setHeaders( $headers );
@@ -105,6 +122,40 @@ class PayflowAPI {
 		$nvpReqArr["ACTION"]  = "D";
 		$nvpReqArr["AMT"]     = $amount;
 		$nvpReqArr["BAID"]    = $baid;
+
+		return $this->query( $headers, $nvpReqArr, $opts );
+	}
+
+	function doExpressCheckoutAuthorization( $req_id, $baid, $amount ) {
+		$headers = array();
+		$this->setHeaders( $headers );
+		$nvpReqArr = array();
+		$this->setNvpReqArr( $nvpReqArr );
+		$opts = array();
+		$this->setOptions( $opts );
+
+		$headers[] = "X-VPS-Request-ID: A$req_id";
+
+		$nvpReqArr["TRXTYPE"] = "A";
+		$nvpReqArr["ACTION"]  = "D";
+		$nvpReqArr["AMT"]     = $amount;
+		$nvpReqArr["BAID"]    = $baid;
+
+		return $this->query( $headers, $nvpReqArr, $opts );
+	}
+
+	function doExpressCheckoutVoid( $req_id, $orig_id ) {
+		$headers = array();
+		$this->setHeaders( $headers );
+		$nvpReqArr = array();
+		$this->setNvpReqArr( $nvpReqArr );
+		$opts = array();
+		$this->setOptions( $opts );
+
+		$headers[] = "X-VPS-Request-ID: V$req_id";
+
+		$nvpReqArr["TRXTYPE"] = "V";
+		$nvpReqArr["ORIGID"]  = $orig_id;
 
 		return $this->query( $headers, $nvpReqArr, $opts );
 	}
