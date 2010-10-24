@@ -472,6 +472,8 @@ class PageHeaderModule extends Module {
 		}
 		else if (BodyModule::isHubPage()) {
 			$this->title = wfMsg('hub-header', $wgTitle);
+			global $wgOut;
+			$wgOut->addScriptFile('../oasis/js/CorporateHub.js');
 		}
 	}
 
