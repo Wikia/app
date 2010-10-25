@@ -228,9 +228,6 @@ var initTracker = function() {
 
 		// Create a Page
 		if (node.hasClass('wikia-button')) {
-			$.tracker.byStr(fakeUrl + 'createpage');
-
-			// duplicated because of RT #68550
 			$.tracker.byStr('action/createapage/module');
 		}
 	});

@@ -257,12 +257,6 @@ jQuery.tracker = function() {
 				return;
 			}
 
-			/* picture attribution */
-			if (link.parent().hasClass('picture-attribution')) {
-				track("photoAttribution");
-				return;
-			}
-
 			if (!isOasis) {
 				track("unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
 			}
