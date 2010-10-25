@@ -40,6 +40,7 @@ class AdSS_Controller extends SpecialPage {
 				}
 			}
 			$adForm->set( 'wpType', 'site' );
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/view")' );
 			$this->displayForm( $adForm );
 		}
 	}
@@ -78,6 +79,7 @@ class AdSS_Controller extends SpecialPage {
 		global $wgOut, $wgPayPalUrl;
 
 		if( !$adForm->isValid() ) {
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/view/errors")' );
 			$this->displayForm( $adForm );
 			return;
 		}
@@ -92,9 +94,11 @@ class AdSS_Controller extends SpecialPage {
 			// redirect to PayPal
 			$_SESSION['ecToken'] = $pp->getToken();
 			$_SESSION['AdSS_adForm'] = $adForm;
+			//TODO use http meta redirect so we can add GA tracking
 			$wgOut->redirect( $wgPayPalUrl . $pp->getToken() );
 		} else {
 			// show error
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/redirect/error")' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		}
 	}
@@ -103,6 +107,7 @@ class AdSS_Controller extends SpecialPage {
 		global $wgOut;
 
 		if( !$adForm->isValid() ) {
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/view/errors")' );
 			$this->displayForm( $adForm );
 			return;
 		}
@@ -122,6 +127,7 @@ class AdSS_Controller extends SpecialPage {
 		$ad->save();
 		AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
 
+		$wgOut->addInlineScript( '$.tracker.byStr("adss/form/saveSpecial")' );
 		$wgOut->addHTML( "Your ad has been added to the system." );
 	}
 
@@ -129,6 +135,7 @@ class AdSS_Controller extends SpecialPage {
 		global $wgAdSS_templatesDir, $wgOut, $wgAdSS_contactEmail;
 
 		if( empty( $_SESSION['ecToken'] ) || ( $_SESSION['ecToken'] != $token ) ) {
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/return/error")' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-token-error' ) );
 			return;
 		}
@@ -139,6 +146,7 @@ class AdSS_Controller extends SpecialPage {
 
 		$payerId = $pp_new->fetchPayerId();
 		if( $payerId === false ) {
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/return/error")' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 			return;
 		}
@@ -162,6 +170,7 @@ class AdSS_Controller extends SpecialPage {
 			wfDebug( "AdSS: created new BAID: $baid\n" );
 		}
 		if( $baid === false ) {
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/return/error")' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 			return;
 		}
@@ -170,10 +179,12 @@ class AdSS_Controller extends SpecialPage {
 		$ad->setUser( $user );
 		$ad->save();
 		if( $ad->id == 0 ) {
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/return/error")' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
 			return;
 		}
 
+		$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/return/ok")' );
 		$wgOut->addHTML( wfMsgWikiHtml( 'adss-form-thanks' ) );
 
 		if( !empty( $wgAdSS_contactEmail ) ) {
