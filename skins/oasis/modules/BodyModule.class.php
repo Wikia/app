@@ -203,8 +203,8 @@ class BodyModule extends Module {
 					$railModuleList[1350] = array('Achievements', 'Index', null);
 				}
 			}
-			
-			if ( !empty( $wgEnableUserProfilePagesExt ) ) {
+
+			if ( !empty( $wgEnableUserProfilePagesExt ) && in_array( $wgTitle->getNamespace(), array ( NS_USER, NS_USER_TALK ) ) ) {
 				$railModuleList[1499] = array('UserProfileRail', 'TopWikis', null);
 				$railModuleList[1498] = array('UserProfileRail', 'RecentActivity', null);
 				$railModuleList[1497] = array('UserProfileRail', 'TopPages', null);
