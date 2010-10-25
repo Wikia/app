@@ -10,7 +10,7 @@ var initTracker = function() {
 		}
 		// start a wiki
 		else if (node.is('.wikia-button')) {
-			$.tracker.byStr(fakeUrl + 'startawiki');
+			$.tracker.byStr('action/startawiki');
 		}
 		// global navigation
 		else if (node.hasParent('#GlobalNavigation')) {
@@ -383,7 +383,7 @@ var initTracker = function() {
 		}
 		// "Add a photo"
 		else if (node.hasClass('wikia-button')) {
-			$.tracker.byStr(fakeUrl + 'addphoto');
+			$.tracker.byStr('action/addphoto/photosmodule');
 		}
 		// photos
 		else if (node.parent().is('li')) {
@@ -402,13 +402,15 @@ var initTracker = function() {
 
 		// Create blog post
 		if (node.hasClass('wikia-button')) {
+			fakeUrl = 'action/createblogpost/';
+
 			// only for <bloglist> (within content)
 			if (node.hasParent('#WikiaArticle')) {
-				$.tracker.byStr('action/createblogpost/bloglistingtag');
+				$.tracker.byStr(fakeUrl + 'bloglistingtag');
 			}
 			// right rail module
 			else {
-				$.tracker.byStr(fakeUrl + 'createblogpost');
+				$.tracker.byStr(fakeUrl + 'blogmodule');
 			}
 		}
 		// items
