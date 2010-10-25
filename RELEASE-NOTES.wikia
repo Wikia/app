@@ -1,3 +1,8 @@
+== Changes since 201010.4 ==
+* rt#75226: Oasis click-tracking update (macbre)
+* rt#77277: Oasis click-tracking: floating toolbar tracking is gone (macbre)
+* rt#77278: Oasis click-tracking: Wiki Activity page tracking for Recent changes is gone (macbre)
+
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
 * rt#75251: Enable TOP_RIGHT_BOXAD on Category and Blog Namespaces (Nef)
