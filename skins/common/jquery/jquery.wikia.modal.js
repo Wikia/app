@@ -49,14 +49,18 @@ $.fn.extend({
 		// let's have it dynamically generated, so every newly created modal will be on top
 		if (settings.zIndex) {
 			var zIndex = parseInt(settings.zIndex);
-		}	else {
+		}
+		else {
 			var zIndex = 0;
 
-			$("body").children('.blackout').add('#positioned_elements').children('.blackout').each(function() {
-				zIndex = Math.max(zIndex, parseInt($(this).css('zIndex')));
-			});
+			$("body").children('.blackout').
+				// for Monaco
+				add($('#positioned_elements').children('.blackout')).
+				each(function() {
+					zIndex = Math.max(zIndex, parseInt($(this).css('zIndex')));
+				});
 
-			zIndex += 2000000001; //close to the highest possible z-index value
+			zIndex = Math.max(20000001, zIndex + 1); //close to the highest possible z-index value
 		}
 		/*
 		function getModalTop() {
