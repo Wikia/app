@@ -140,8 +140,8 @@
 	margin: 0;
 }
 
-/* copied from monaco/css/widgets.css for Anwers skin */
-.yui-ac-content {
+/* copied from monaco/css/widgets.css for Answers skin */
+.wikiaSkinMonaco .yui-ac-content {
 	background: #FFFFFF none repeat scroll 0 0;
 	border: 1px solid #808080 !important;
 	color: #000000;
@@ -151,7 +151,7 @@
 	z-index: 9050;
 }
 
-.yui-ac-content ul {
+.wikiaSkinMonaco .yui-ac-content ul {
 	float: none !important;
 	list-style-image: none !important;
 	margin: 0 !important;
@@ -159,7 +159,7 @@
 	width: 100%;
 }
 
-.yui-ac-content li {
+.wikiaSkinMonaco .yui-ac-content li {
 	cursor: default;
 	float:none !important;
 	font-size: 9pt;
