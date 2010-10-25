@@ -42,9 +42,7 @@ var LazyLoadAds = {
 
 		//LazyLoadAds.log("update");
 
-		if(LazyLoadAds.lazyLoadAdTops == null) {
-			LazyLoadAds.calculateSlotsOffsets();
-		}
+		LazyLoadAds.calculateSlotsOffsets();
 
 		var fold = $(window).height() + $(window).scrollTop();
 
