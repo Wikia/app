@@ -46,6 +46,7 @@ var LatestPhotos = {
 		});
 
 		LatestPhotos.enableBrowsing();
+		LatestPhotos.addLightboxTracking();
 	},
 
 	attachBlindImages: function() {
@@ -118,6 +119,25 @@ var LatestPhotos = {
 			else {
 				LatestPhotos.enable_previous = true;
 			}
+		});
+	},
+
+	// add extra tracking for lightbox shown for image from latest photos module (RT #74852)
+	addLightboxTracking: function() {
+		this.carousel.bind('lightbox', function(ev, lightbox) {
+			$().log('lightbox shown', 'LatestPhotos');
+
+			var fakeUrl = 'module/latestphotos/';
+			var lightboxCaptionLinks = $('#lightbox-caption-content').find('a');
+
+			// user name
+			lightboxCaptionLinks.eq(0).trackClick(fakeUrl + 'lightboxusername');
+
+			// page name
+			lightboxCaptionLinks.filter('.wikia-gallery-item-posted').trackClick(fakeUrl + 'lightboxlink');
+
+			// "more"
+			lightboxCaptionLinks.filter('.wikia-gallery-item-more').trackClick(fakeUrl + 'lightboxmore');
 		});
 	},
 
