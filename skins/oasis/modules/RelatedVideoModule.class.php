@@ -12,17 +12,19 @@ class RelatedVideoModule extends Module {
 
 	public function executeIndex() {
 
-		global $wgServer, $wgRelatedVideoCategories;
+		global $wgServer, $wgRelatedVideoCategories, $wgWikiaRelatedVideoSid;
 		$this->categories = $wgRelatedVideoCategories;
 		$this->server = $wgServer;
+		$this->sid = $wgWikiaRelatedVideoSid;
 
 	}
 
 	public function executeSpotlight(){
 		
-		global $wgServer, $wgRelatedVideoCategories;
+		global $wgServer, $wgRelatedVideoCategories, $wgWikiaRelatedVideoSid;
 		$this->categories = $wgRelatedVideoCategories;
 		$this->server = $wgServer;
+		$this->sid = $wgWikiaRelatedVideoSid;
 
 	}
 }
