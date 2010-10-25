@@ -199,6 +199,14 @@ $messages['an'] = array(
 	'vet-insert' => 'Insertar',
 );
 
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'vet-license' => 'Ліцэнзія',
+	'vet-size' => 'Памер',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -770,6 +778,84 @@ $messages['ha'] = array(
 	'vet-find-btn' => 'Nema',
 );
 
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'vet-upload' => 'כתובת מלאה',
+	'vet-notlogged' => 'התחברו או הרשמו כדי להוסיף סרטונים',
+	'vet-find' => 'חיפוש סרטון',
+	'vet-thiswiki' => 'באתר',
+	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'המשך',
+	'vet-find-btn' => 'חיפוש',
+	'vet-flickr-inf' => 'חיפוש תמונות ברישיון חופשי ב־Flickr והוספה לאתר.',
+	'vet-conflict-inf' => '<h1 style=";text-align:right;direction:rtl"> אופס, סרטון עם שם זהה כבר קיים. </h1> מה ברצונך לעשות עם <b>$1?</b>',
+	'vet-rename' => 'שינוי שם הסרטון',
+	'vet-existing' => 'שימוש בסרטונים קיימים',
+	'vet-overwrite' => 'החלפת הסרטון הקיים באחר',
+	'vet-insert' => 'הוספה',
+	'vet-details-inf' => '<h1>פרטי הקובץ</h1>בחירת שם לסרטון.השם צריך לתאר אותו.',
+	'vet-name' => 'שם',
+	'vet-license' => 'רישיון',
+	'vet-details-inf2' => '<h1 style=";text-align:right;direction:rtl"> אפשרויות תצוגה</h1>',
+	'vet-size' => 'גודל',
+	'vet-thumbnail' => 'ממוזער',
+	'vet-fullsize' => 'גודל מלא ($1x$2px)',
+	'vet-width' => 'רוחב',
+	'vet-layout' => 'פריסה',
+	'vet-caption' => 'תיאור',
+	'vet-optional' => '(אפשרי)',
+	'vet-insert2' => 'הוספת סרטון',
+	'vet-update' => 'עדכון סרטון',
+	'vet-video-replace-link' => 'כדי להחליף את הסרטון, עברו אל [[: $ 1]]',
+	'vet-prev' => '8 הקודמים',
+	'vet-next' => '8 הבאים',
+	'vet-metacafe' => 'סרטוני Metacafe ($1 {{PLURAL:$1|תוצאה|תוצאות}})',
+	'vet-insert3' => 'הוספת סרטון',
+	'vet-recent-inf' => 'סרטונים שנוספו לאחרונה',
+	'vet-thiswiki2' => 'סרטונים מהאתר ($1 {{PLURAL:$1|תוצאה|תוצאות}})',
+	'vet-success' => '<h1 style=";text-align:right;direction:rtl"> הצלחה </h1>',
+	'vet-return' => 'חזרה לעריכה',
+	'vet-back' => 'חזרה',
+	'vet-close' => 'סגירה',
+	'vet-warn1' => 'צריך לציין את שם הקובץ קודם!',
+	'vet-warn2' => 'נא לצרף כתובת הסרטון להוספה',
+	'vet-warn3' => 'נא לכתוב את שם הסרטון להוספה',
+	'vet-imagelink' => '<b>חדש!</b> הוספת סרטונים',
+	'vet-imagebutton' => 'הוספת סרטונים',
+	'vet-license-cc' => 'רשיון לפי Creative Commons Attribution Share-Alike 3.0',
+	'vet-name-incorrect' => 'שם הסרטון מכיל תווים לא חוקיים',
+	'vet-uploadtext' => "'''טופס זה מאפשר לך להעלות ולהציג קבצי הדפים בקלות.''' 
+
+''ראו גם  [[Special:Log/upload|יומן העלאות]] ו[[Special:ImageList|רשימת כל הקבצים באתר]].''",
+	'vet-show-message' => 'הצגת הודעה',
+	'vet-hide-message' => 'הסתרת הודעה',
+	'vet-hide-license-msg' => 'הסתרת הרישיון',
+	'vet-show-license-msg' => 'הצגת הרישיון',
+	'vet-max-thumb' => 'חריגה מגודל סרטון מקסימלי ,מחזיר לגודל המקורי',
+	'vet-notallowed' => 'לא ניתן להוסיף סרטונים לאתר.',
+	'vet-title' => 'הוספת סרטון לדף',
+	'vet-supported' => 'אתרי וידאו נתמכים:',
+	'vet-preview' => '<i>תצוגה זו לא בקנה מידה</i>',
+	'vet-bad-url' => 'כתובת האתר שצורפה אינה חוקית',
+	'vet-non-existing' => 'הסרטון  שצורף אינו קיים',
+	'vet-main-info' => '<i>חיפוש סרטונים או הכנסת כתובת הסרטון המלאה מאחד האתרים הנתמכים</i>',
+	'vet-page-success' => 'דף הסרטונים עודכן בהצלחה. ייתכן שיהיה צורך לרענן את דף הסרטונים כדי לראות את השינוי.',
+	'vet-add-button' => 'הוסף סרטון',
+	'vet-added-from-gallery' => 'סרטון נוסף מתוך גלריית הסרטונים',
+	'vet-see-all' => 'הצג הכל',
+	'vet-bad-search' => 'שגיאה בטעינת שאילתת החיפוש.',
+	'vet-no-preview' => 'לא ניתן להוסיף סרטון מדף במצב תצוגה מקדימה',
+	'vet-single-success' => 'הסרטון הוצב בדף בהצלחה.',
+	'vet-gallery-create-success' => 'גלריית הסרטונים נוספה לדף.',
+	'vet-gallery-add-success' => 'הסרטון נוסף לגלריית הסרטונים בדף.',
+	'vet-left' => 'שמאל',
+	'vet-right' => 'ימין',
+	'vet-gallery' => 'גלריה',
+	'vet-protected' => 'סרטון זה מוגן.',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -1085,6 +1171,13 @@ $messages['ja'] = array(
 	'vet-protected' => 'この動画は保護されています',
 );
 
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'vet-find-btn' => 'Ujarlerit',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -1188,6 +1281,13 @@ $messages['mk'] = array(
 	'vet-right' => 'Десно',
 	'vet-gallery' => 'Галерија',
 	'vet-protected' => 'Оваа видеоснимка е заштитена',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'vet-upload-btn' => 'Явах',
 );
 
 /** Maltese (Malti)
@@ -1905,8 +2005,15 @@ $messages['te'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
+	'vet-find-btn' => 'Знайти',
 	'vet-insert' => 'Вставити',
+	'vet-name' => 'Назва',
+	'vet-prev' => 'Попередні 8',
+	'vet-next' => 'Наступні 8',
+	'vet-back' => 'Назад',
+	'vet-close' => 'Закрити',
 );
 

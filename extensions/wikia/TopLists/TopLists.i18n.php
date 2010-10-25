@@ -731,6 +731,72 @@ $messages['pms'] = array(
 	'toplists-error-invalid-title' => 'Ël test dàit a va nen bin.',
 	'toplists-error-invalid-picture' => "La figura selessionà a l'é pa bon-a.",
 	'toplists-error-title-exists' => 'Sta pàgina a esist già. It peule andé a <a href="$2" target="_blank">$1</a> o dé un nòm diferent.',
+	'toplists-error-title-spam' => 'Ël test dàit a conten quàiche paròle arconossùe com rumenta.',
+	'toplists-error-article-blocked' => 'It peule pa creé na pàgina con sto nòm. Spiasent.',
+	'toplists-error-article-not-exists' => '"$1" a esist pa. Veus-to <a href="$2" target="_blank">creelo</a>?',
+	'toplists-error-picture-not-exists' => '"$1" a esist pa. Veus-to <a href="$2" target="_blank">carielo</a>?',
+	'toplists-error-duplicated-entry' => 'It peule pa dovré ëll midem nòm pi che na vira.',
+	'toplists-error-empty-item-name' => "Ël nòm ëd n'element esistent a peul pa esse veuid.",
+	'toplists-item-cannot-delete' => 'Scanselassin dë sto element falìa.',
+	'toplists-error-image-already-exists' => 'na figura con ë midem nòm a esist già.',
+	'toplists-error-add-item-anon' => 'J\'utent anònim a peulo pa gionté element a la lista. Për piasì <a class="ajaxLogin" id="login" href="$1">Intra</a> o <a class="ajaxLogin" id="signup" href="$2">registra un cont neuv</a>.',
+	'toplists-error-add-item-permission' => "Eror ëd përmess: Tò cont a l'ha pa ël drit ëd creé element neuv.",
+	'toplists-error-add-item-list-not-exists' => 'La lista "$1" dij Prim 10 a esist pa.',
+	'toplists-error-backslash-not-allowed' => 'Ël caràter "/" a l\'é pa përmëttù ant ël tìtol ëd na lista dij Prim 10.',
+	'toplists-editor-title-label' => 'Nòm lista',
+	'toplists-editor-title-placeholder' => 'Ansëriss un nòm për la lista',
+	'toplists-editor-related-article-label' => 'Pàgina corelà <small>(opsional, ma selession-a na figura)</small>',
+	'toplists-editor-related-article-placeholder' => 'Ansëriss un nòm ëd pàgina esistent',
+	'toplists-editor-image-browser-tooltip' => 'Gionta na figura',
+	'toplists-editor-remove-item-tooltip' => 'Gava element',
+	'toplists-editor-drag-item-tooltip' => 'Tira për cangé ordin',
+	'toplists-editor-add-item-label' => "Gionta n'element neuv",
+	'toplists-editor-add-item-tooltip' => "Gionta n'element neuv a la lista",
+	'toplists-create-button' => 'Crea lista',
+	'toplists-update-button' => 'Salva lista',
+	'toplists-cancel-button' => 'Scancela',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|element|element}} gavà',
+	'toplists-items-created' => '$1 {{PLURAL:$1|element|element}} creà',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|element|element}} agiornà',
+	'toplists-items-nochange' => 'Pa gnun element cangià',
+	'toplits-image-browser-no-picture-selected' => 'Pa gnun-e figure selessionà',
+	'toplits-image-browser-clear-picture' => 'Scansela figura',
+	'toplits-image-browser-selected-picture' => 'Selessionà al moment: $1',
+	'toplists-image-browser-upload-btn' => 'Sern',
+	'toplists-image-browser-upload-label' => 'Caria tò pròpi',
+	'toplists-list-creation-summary' => 'Creé na lista, $1',
+	'toplists-list-update-summary' => 'Agiorné na lista, $1',
+	'toplists-item-creation-summary' => "Creé n'element ëd na lista",
+	'toplists-item-update-summary' => "Agiorné n'element ëd na lista",
+	'toplists-item-remove-summary' => 'Element gavà da na lista',
+	'toplists-item-restored' => 'Element ripristinà',
+	'toplists-list-related-to' => 'Corelà a:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />vot|$1<br />vot}}',
+	'toplists-list-created-by' => 'da [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Vòta su',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vot|vot}} an $2',
+	'toplists-list-add-item-label' => 'Gionta element',
+	'toplists-list-add-item-name-label' => 'Manten la lista andasend...',
+	'toplists-list-item-voted' => 'Votà',
+	'toplists-createpage-dialog-label' => 'Lista dij prim 10',
+	'toplists-email-subject' => "Na lista dij Prim 10 a l'é stàita cangià",
+	'toplists-email-body' => 'Cerea da Wikia!
+
+La lista <a href="$1">$2</a> su Wikia a l\'é stàita cangià.
+
+ $3
+
+Và su Wikia për controlé ij cambi! $1
+
+- Wikia
+
+It peule <a href="$4">disiscrivte</a> dai cambi a la lista.',
+	'toplists-seconds' => '$1 {{PLURAL:$1|second|second}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minuta|minute}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|ora|ore}}',
+	'toplists-days' => '$1 {{PLURAL:$1|di|di}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|sman-a|sman-e}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'a l\'ha votà su na lista dij Prim 10 su $WIKINAME!',
 );
 
 /** Pashto (پښتو)
@@ -754,6 +820,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author GTNS
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -770,6 +837,11 @@ $messages['pt'] = array(
 	'toplists-error-image-already-exists' => 'Uma imagem com o mesmo nome já existe.',
 	'toplists-error-add-item-anon' => 'Utilizadores anónimos não têm permissão para adicionar itens a listas. Por favor <a class="ajaxLogin" id="login" href="$1">autentique-se</a> ou <a class="ajaxLogin" id="signup" href="$2">crie uma nova conta</a>.',
 	'toplists-error-add-item-permission' => 'Erro de permissão: Não foi concedida à sua conta a capacidade de criar novos itens.',
+	'toplists-seconds' => '$1 {{PLURAL:$1|segundo|segundos}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minuto|minutos}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|hora|horas}}',
+	'toplists-days' => '$1 {{PLURAL:$1|dia|dias}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
 );
 
 /** Russian (Русский)

@@ -50,6 +50,7 @@ $messages['br'] = array(
  * @author Diebuche
  */
 $messages['de'] = array(
+	'cloakcheck-form-check' => 'Benutzernamen überprüfen',
 	'cloakcheck-process-emailconf-yes' => 'E-Mail-Adresse bestätigt.',
 	'cloakcheck-process-emailconf-no' => 'E-Mail-Adresse nicht bestätigt.',
 );

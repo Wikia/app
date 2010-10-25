@@ -2167,6 +2167,13 @@ $messages['te'] = array(
 	'multidelete_english_wikis' => 'అన్ని ఆంగ్ల వికీలు',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'multidelete_button' => 'ВИЛУЧИТИ',
+);
+
 /** Chinese (Taiwan) (‪中文(台灣)‬) */
 $messages['zh-tw'] = array(
 	'multiwikiedit_norecentchanges_caption' => '不要將此項修訂顯示於最近修改頁。',

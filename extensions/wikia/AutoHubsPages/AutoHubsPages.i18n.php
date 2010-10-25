@@ -64,6 +64,13 @@ $messages['br'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|oberour|oberour}}</span>',
 );
 
+/** German (Deutsch)
+ * @author Diebuche
+ */
+$messages['de'] = array(
+	'unhide' => 'Einblenden���',
+);
+
 /** Spanish (Español)
  * @author Absay
  */

@@ -131,6 +131,13 @@ $messages['af'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'Voorskou',
 );
 
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'rte-ck-templateDropDown-label' => 'Шаблон',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -1822,11 +1829,18 @@ $messages['tr'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'rte-ck-bucket-insert' => 'Вставити',
 	'rte-ck-errorPopupTitle' => 'Помилка!',
+	'rte-ck-hoverPreview-comment-title' => 'Коментар',
+	'rte-ck-hoverPreview-delete' => 'вилучити',
+	'rte-ck-hoverPreview-edit' => 'редагувати',
 	'rte-ck-link-error-title' => 'Помилка',
 	'rte-ck-link-external-tab' => 'Зовнішнє посилання',
 	'rte-ck-link-internal-pageName' => 'Назва сторінки',
 	'rte-ck-link-internal-tab' => 'Внутрішнє посилання',
+	'rte-ck-media-delete' => 'видалити',
+	'rte-ck-templateDropDown-label' => 'Шаблон',
+	'rte-ck-templateEditor-dialog-insert' => 'Вставити',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Вибрати інший шаблон',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметри',
 );

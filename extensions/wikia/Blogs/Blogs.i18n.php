@@ -325,6 +325,13 @@ $messages['ar'] = array(
 	'blog-movepage-badtitle' => 'عنوان مدونة غير صالح',
 );
 
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'blog-comment-history' => 'гісторыя',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Wizardist
@@ -1666,6 +1673,15 @@ $messages['lb'] = array(
 	'blog-fromsitename' => 'Vu(n) $1',
 );
 
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'create-blog-categories-submit' => 'Iesniegt',
+	'create-blog-save' => 'Saglabāt lapu',
+	'blog-comments' => 'Komentāri',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -2962,6 +2978,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'createblogpage' => 'Створити блог',
@@ -2975,6 +2992,9 @@ $messages['uk'] = array(
 	'create-blog-listing-preview' => 'Попередній перегляд',
 	'create-blog-listing-sortby' => 'Сортувати за',
 	'create-blog-listing-sortby-author' => 'автором',
+	'blog-comments' => 'Коментарі',
+	'blog-comment-delete' => 'вилучити',
+	'blog-comment-history' => 'історія',
 	'blog-refresh-label' => 'Оновити',
 	'blogs-reportproblem' => 'Повідомити про проблему',
 );

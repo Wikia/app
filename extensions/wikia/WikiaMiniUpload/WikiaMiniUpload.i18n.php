@@ -941,6 +941,7 @@ $messages['gl'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author YaronSh
  * @author שומבלע
  */
 $messages['he'] = array(
@@ -952,10 +953,10 @@ $messages['he'] = array(
 	'wmu-upload-btn' => 'העלאה',
 	'wmu-find-btn' => 'חיפוש',
 	'wmu-flickr-inf' => 'חיפוש תמונות ברישיון חופשי ב־Flickr והוספה לאתר.',
-	'wmu-conflict-inf' => '<h1 style=";text-align:right;direction:rtl"> אופס, קובץ עם שם זהה כבר קיים. </h1> מה אתם רוצים לעשות עם <b>$ 1?</b>',
+	'wmu-conflict-inf' => '<h1 style=";text-align:right;direction:rtl"> אופס, קובץ עם שם זהה כבר קיים. </h1> מה ברצונך לעשות עם <b>$1?</b>',
 	'wmu-rename' => 'שינוי שם התמונה',
 	'wmu-existing' => 'שימוש בתמונה קיימת',
-	'wmu-overwrite' => 'החלפת התמונה הקיימת עם תמונה אחרת',
+	'wmu-overwrite' => 'החלפת התמונה הקיימת באחרת',
 	'wmu-insert' => 'הוספה',
 	'wmu-details-inf' => '<h1>פרטי הקובץ</h1>בחירת שם לקובץ.השם צריך לתאר אותו.',
 	'wmu-name' => 'שם',
@@ -968,7 +969,7 @@ $messages['he'] = array(
 	'wmu-layout' => 'פריסה',
 	'wmu-caption' => 'תיאור',
 	'wmu-link' => 'קישור',
-	'wmu-optional' => '(אופציונלי)',
+	'wmu-optional' => '(אפשרי)',
 	'wmu-insert2' => 'הוספת הקובץ',
 	'wmu-prev' => '8 הקודמים',
 	'wmu-next' => '8 הבאים',
@@ -976,9 +977,12 @@ $messages['he'] = array(
 	'wmu-insert3' => 'הוספת התמונה',
 	'wmu-recent-inf' => 'תמונות שהועלו לאחרונה',
 	'wmu-thiswiki2' => 'תמונות מהאתר ($1 {{PLURAL:$1|תוצאה|תוצאות}})',
+	'wmu-success' => '<h1>הצלחה</h1>התמונה שלך נוספה.',
+	'wmu-success-placeholder' => '<h1>הצלחה</h1>',
 	'wmu-return' => 'חזרה לעריכה',
 	'wmu-back' => 'חזרה',
 	'wmu-close' => 'סגירה',
+	'wmu-warn1' => 'עליך לציין שאילתה תחילה!',
 	'wmu-warn2' => 'צריך לבחור קובץ תחילה!',
 	'wmu-warn3' => 'צריך לציין את שם הקובץ קודם!',
 	'wmu-imagelink' => '<b>חדש!</b> הוספת תמונות',
@@ -991,15 +995,17 @@ $messages['he'] = array(
 
 ''ראו גם  [[Special:Log/upload|יומן העלאות]] ו[[Special:ImageList|רשימת כל הקבצים באתר]].''",
 	'wmu-show-message' => 'הצגת הודעה',
-	'wmu-hide-message' => 'הסתרת ההודעה',
+	'wmu-hide-message' => 'הסתרת הודעה',
 	'wmu-hide-license-msg' => 'הסתרת הרישיון',
 	'wmu-show-license-msg' => 'הצגת הרישיון',
 	'wmu-max-thumb' => 'חריגה מגודל תמונה מקסימלי ,מחזיר לגודל המקורי',
 	'wmu-notallowed' => 'לא ניתן להעלות תמונות',
 	'wmu-readonly' => ' לא ניתן להעלות תמונות, זהו מצב קריאה בלבד',
+	'wmu-placeholder' => 'מציין מקום',
 	'wmu-gallery' => 'גלריה',
-	'wmu-columns' => '$1 {{PLURAL:$1|עמודה|עמודות}}',
+	'wmu-columns' => '{{PLURAL:$1|עמודה אחת|$1 עמודות}}',
 	'wmu-column' => 'עמודות',
+	'wmu-added-from-plc' => 'נוסף קובץ דרך מציין מיקום התמונה',
 	'wmu-uploaddisabled' => 'העלאת הקבצים אינה זמינה באתר זה',
 	'wmu-gallery-success' => 'תמונה נוספה לגלריה החדשה. לחצו למטה להוסיף תמונות נוספות או כדי להכניס את הגלריה',
 	'wmu-gallery-btn1' => 'הוספת תמונה נוספת',
@@ -2069,6 +2075,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'wmu-upload' => 'Завантажити',
@@ -2081,7 +2088,12 @@ $messages['uk'] = array(
 	'wmu-size' => 'Розмір',
 	'wmu-width' => 'Ширина',
 	'wmu-caption' => 'Підпис',
+	'wmu-link' => 'Посилання',
 	'wmu-insert2' => 'Вставити файл',
+	'wmu-prev' => 'Попередні 8',
+	'wmu-next' => 'Наступні 8',
+	'wmu-back' => 'назад',
+	'wmu-close' => 'закрити',
 	'wmu-imagebutton' => 'Додати зображення',
 	'wmu-gallery' => 'Галерея',
 );

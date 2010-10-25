@@ -129,6 +129,8 @@ $messages['de'] = array(
 	'adss-button-select' => 'Auswählen',
 	'adss-preview-header' => 'Vorschau',
 	'adss-preview-prompt' => 'Hier siehst du, wie deine Patenschaft aussehen wird - klicke auf „Bearbeiten“, um Änderungen vorzunehmen, oder auf „Speichern“, um mit PayPal fortzufahren.',
+	'adss-per-site' => 'Alle Seiten',
+	'adss-per-page' => 'Nur eine Seite',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -419,15 +421,15 @@ $messages['nl'] = array(
 	'adss-form-field-empty-errormsg' => 'Dit veld mag niet leeggelaten worden',
 	'adss-form-non-existent-title-errormsg' => 'Deze pagina bestaat niet',
 	'adss-form-pick-plan-errormsg' => 'U moet een propositie kiezen',
-	'adss-form-pick-plan' => 'Kies een propositie',
-	'adss-form-site-plan-header' => "Een verwijzing tussen wiki's kopen",
+	'adss-form-pick-plan' => 'Kies een pakket',
+	'adss-form-site-plan-header' => "Koop een verwijzing tussen wiki's",
 	'adss-form-site-plan-description' => 'Vergroot uw zichtbaarheid door een gesponsorde verwijzing voor in een hele wiki aan te kopen.
 
 Eén aandeel staat momenteel gelijk aan $1% van de gesponsorde verwijzingen in {{SITENAME}}.
 De grootte van het aandeel kan stijgen of dalen afhankelijk van hoeveel anderen aandelen kopen.
 U kunt op ieder moment stoppen met sponsoren.',
 	'adss-form-site-plan-price' => 'Eén aandeel kost $1',
-	'adss-form-page-plan-header' => 'Een verwijzing op een enkele pagina kopen',
+	'adss-form-page-plan-header' => 'Koop een verwijzing op een enkele pagina',
 	'adss-form-page-plan-description' => "Kies pagina's uit die passen bij uw campagne",
 	'adss-form-page-plan-price' => 'Een verwijzing kost $1',
 	'adss-form-thanks' => 'Dank u wel voor uw sponsoring! Uw advertentie is aangekocht en wordt weergegeven na handmatige goedkeuring (binnen 48 uur).

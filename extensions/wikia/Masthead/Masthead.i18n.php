@@ -554,6 +554,15 @@ Për piasì, ch'as visa che j'avatar a son globaj - an gavand n'avatar ëd n'ute
 	'right-removeavatar' => "Gava j'avatar ëd l'utent",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'blog-avatar-edit' => 'بدلول',
+	'blog-avatar-delete' => 'ړنګول',
+	'blog-avatar-getuser' => 'پلټل',
+);
+
 /** Portuguese (Português)
  * @author Giro720
  * @author Hamilton Abreu

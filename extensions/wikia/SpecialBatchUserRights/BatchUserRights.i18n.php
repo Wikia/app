@@ -300,3 +300,10 @@ Hindi ito makagagawa ng anumang bagay.
 Ang natitirang bahagi ng pahina ay papahintulutang tumakbo upang maginhawa mong makita kung ang alin man sa mga pangalan ng tagagamit ay hindi maikakarga.',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'batchuserrights-desc' => 'Дозволяє додавати одного або декількох користувачів в групу за одну дію',
+);
+

@@ -427,6 +427,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'daemonloader' => 'Chargeur de démon',
@@ -442,7 +443,7 @@ $messages['fr'] = array(
 	'daemonloader_paramname' => 'Nom du paramètre',
 	'daemonloader_paramdesc' => 'Description du paramètre',
 	'daemonloader_paramtype' => 'Type du paramètre',
-	'daemonloader_paramremove' => 'Supprimer ?',
+	'daemonloader_paramremove' => 'Enlever ?',
 	'daemonloader_removedaemon' => 'Supprimer le démon',
 	'daemonloader_paramdefvalue' => 'Valeur par défaut',
 	'daemonloader_alldaemons' => 'Tous les démons',
@@ -798,7 +799,7 @@ $messages['nl'] = array(
 	'daemonloader_daemonparams' => 'Procesparameters',
 	'daemonloader_createdby' => 'Aangemaakt door',
 	'daemonloader_created' => 'Aangemaakt op',
-	'daemonloader_options' => 'Instellingen',
+	'daemonloader_options' => 'Opties',
 	'daemonloader_nojobsfound' => 'Er zijn geen taken gevonden',
 	'daemonloader_removejobconfirm' => 'Weet u het zeker?',
 );

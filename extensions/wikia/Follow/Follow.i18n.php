@@ -785,6 +785,49 @@ Volva e edite a miúdo...
 </p>',
 );
 
+/** Hebrew (עברית)
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'follow-desc' => 'שיפורים לתכונת רשימת המעקב',
+	'wikiafollowedpages-special-heading-category' => 'קטגוריות ($1)',
+	'wikiafollowedpages-special-heading-article' => 'ערכים ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'בלוגים ורשומות ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'שרשורים בפורומים ($1)',
+	'wikiafollowedpages-special-heading-project' => 'דפי מיזם ($1)',
+	'wikiafollowedpages-special-heading-user' => 'דפי משתמש ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'דפי תבניות ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'דפי מדיה־ויקי ($1)',
+	'wikiafollowedpages-special-heading-media' => 'תמונות וקטעי וידאו ($1)',
+	'wikiafollowedpages-special-namespace' => '(דף $1)',
+	'wikiafollowedpages-special-empty' => 'רשימת הדפים אחריהם עקב המשתמש ריקה.
+נא להוסיף דפים לרשימה זו על ידי לחיצה על "{{int:watch}}" בראש הדף.',
+	'wikiafollowedpages-special-anon' => 'נא [[Special:Signup|להיכנס]] כדי ליצור או לצפות ברשימת הדפים שבמעקב.',
+	'oasis-wikiafollowedpages-special-seeall' => 'צפייה בהכול >',
+	'wikiafollowedpages-special-seeall' => 'צפייה בהכול >',
+	'wikiafollowedpages-special-showall' => 'הצגת הכול >',
+	'wikiafollowedpages-special-showmore' => 'הצגת עוד',
+	'wikiafollowedpages-special-title' => 'דפים במעקב',
+	'wikiafollowedpages-special-delete-tooltip' => 'הסרת דף זה',
+	'wikiafollowedpages-special-hidden' => 'בחירת המשתמש{{GENDER:$1||ה|הם}} היא להסתיר את רשימת הדפים של{{GENDER:$1|ו|ת|ים}} שבמעקב מפני צפייה ציבורית.',
+	'wikiafollowedpages-special-hidden-unhide' => 'הצגת רשימה זו.',
+	'wikiafollowedpages-special-blog-by' => 'על ידי $1',
+	'wikiafollowedpages-masthead' => 'דפים במעקב',
+	'wikiafollowedpages-following' => 'במעקב אחר',
+	'wikiafollowedpages-special-title-userbar' => 'דפים במעקב',
+	'tog-enotiffollowedpages' => 'יש לשלוח לי דוא״ל כאשר דף אחריו אני במעקב משתנה',
+	'tog-enotiffollowedminoredits' => 'יש לשלוח לי דוא״ל על שינויים מזעריים בדפים אחריהם אני במעקב',
+	'wikiafollowedpages-prefs-advanced' => 'אפשרויות מתקדמות',
+	'wikiafollowedpages-prefs-watchlist' => 'רשימת מעקב בלבד',
+	'tog-hidefollowedpages' => 'הפיכת רשימות דפי המעקב שלי לפרטיות',
+	'follow-categoryadd-summary' => 'נוסף דף לקטגוריה',
+	'follow-bloglisting-summary' => 'פורסם בלוג בדף בלוג',
+	'wikiafollowedpages-userpage-heading' => 'דפים שאחריהם אני במעקב',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'הסתרת רשימות הדפים שבמעקב מצפייה ציבורית',
+	'wikiafollowedpages-userpage-more' => 'עוד',
+	'wikiafollowedpages-userpage-hide' => 'הסתרה',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -1495,11 +1538,13 @@ $messages['ps'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'د مېډياويکي مخونه ($1)',
 	'wikiafollowedpages-special-heading-media' => 'انځورونه او ويډيوګانې ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 مخ)',
-	'wikiafollowedpages-special-showall' => 'ټول ښکاره کول',
+	'wikiafollowedpages-special-showall' => 'ټول ښکاره کول >',
+	'wikiafollowedpages-special-showmore' => 'نور ښکاره کول',
 	'wikiafollowedpages-special-title' => 'څارلي مخونه',
 	'wikiafollowedpages-masthead' => 'څارلي مخونه',
 	'wikiafollowedpages-following' => 'د څار لاندې',
 	'wikiafollowedpages-special-title-userbar' => 'څارلي مخونه',
+	'wikiafollowedpages-prefs-watchlist' => 'يوازې کتنلړ',
 	'wikiafollowedpages-userpage-heading' => 'هغه مخونه چې زه يې څارم',
 	'wikiafollowedpages-userpage-more' => 'نور',
 	'wikiafollowedpages-userpage-hide' => 'پټول',

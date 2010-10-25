@@ -209,5 +209,6 @@ $messages['tl'] = array(
  */
 $messages['uk'] = array(
 	'sharedhelp-desc' => 'Бере сторінки з [[w:c:Help|Help Wikia]] і додає їх до простору назв {{ns:help}} цієї вікі',
+	'sharedhelp-autotalkcreate-summary' => 'Сторінку обговорення створено автоматично',
 );
 

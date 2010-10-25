@@ -334,6 +334,26 @@ $messages['gl'] = array(
 	'wikiavideo-intro-old' => "Está a piques de borrar a versión de '''[$1 $5]''' a data de [$4 $3 ás $2].",
 );
 
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'wikiavideo-reverted' => 'הסרטון $1 שוחזר בהצלחה. חיזרו אל $2.',
+	'wikiavideo-unreverted' => 'אינכם מורשים לשחזר $1.',
+	'wikiavideo-added' => 'סרטון נוסף $ 1',
+	'wikiavideo-back' => 'חזרה',
+	'wikiavideo-create' => 'הוסף סרטון',
+	'wikiavideo-replace' => 'החלף סרטון',
+	'wikiavideo-category' => 'סרטוני וידאו',
+	'wikiavideo-links' => 'קישורים',
+	'wikiavideo-placeholder' => 'מציין מיקום',
+	'wikiavideo-gallery-template' => 'גלריית הסרטונים הזו נמצאת בתבנית ואינה ניתנת לעריכה במצב תצוגה. נא לערוך את התבנית המתאימה.',
+	'wikiavideo-not-supported' => 'אין תמיכה בהוספת סרטוני וידאו ממצב תצוגה אל הגלריות.',
+	'wikiavideo-pixel' => 'פיקסל',
+	'wikiavideo-deleted-old' => "הגרסה של '''[$1 $2]''' מתאריך $4, $3 נמחקה.",
+	'wikiavideo-intro-old' => "אתם מוחקים את הגרסה  '''[$1 $5]''' מתאריך [$4 $3, $2].",
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -547,6 +567,19 @@ $messages['no'] = array(
 	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
 );
 
+/** Punjabi (ਪੰਜਾਬੀ)
+ * @author Aalam
+ */
+$messages['pa'] = array(
+	'wikiavideo-added' => '$1 ਵਿਡੀਓ ਸ਼ਾਮਲ ਕੀਤੀ ਗਈ',
+	'wikiavideo-back' => 'ਪਿੱਛੇ',
+	'wikiavideo-create' => 'ਵਿਡੀਓ ਸ਼ਾਮਲ',
+	'wikiavideo-replace' => 'ਵਿਡੀਓ ਬਦਲੋ',
+	'wikiavideo-category' => 'ਵਿਡੀਓ',
+	'wikiavideo-links' => 'ਲਿੰਕ',
+	'wikiavideo-placeholder' => 'ਥਾਂ',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
@@ -751,10 +784,12 @@ $messages['tr'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'wikiavideo-back' => 'назад',
 	'wikiavideo-category' => 'Відео',
+	'wikiavideo-links' => 'Посилання',
 	'wikiavideo-intro-old' => "Ви вилучаєте версію '''[$1 $5]''' від [$4 $3, $2].",
 );
 

@@ -91,6 +91,13 @@ Probeer asseblief weer.",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 terug na die lys]',
 );
 
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статыстыка]',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -756,5 +763,13 @@ Subukan uli.',
 	'textregex-invalid-regexid' => 'Hindi tanggap na parirala.',
 	'textregex-phrase-statistics' => "Estadistika para sa pariralang \"'''\$1'''\" (bilang ng mga talaan: \$2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 bumalik sa talaan]',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 вилучити]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статистика]',
 );
 

@@ -474,6 +474,7 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Marcin Łukasz Kiejzik
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'dump-database' => 'Zrzuty bazy danych',
@@ -485,6 +486,7 @@ $messages['pl'] = array(
 	'dump-database-request' => 'Wniosek o aktualizację',
 	'dump-database-request-info' => '(Zrzuty są zwykle generowane co tydzień)',
 	'dump-database-request-submit' => 'Wyślij zapytanie',
+	'dump-database-request-already-submitted' => 'Zrzut był pobierany niedawno (mniej niż 7 dni temu)',
 	'dump-database-request-requested' => 'Wniosek o wysłanie zrzutu bazy danych',
 	'dump-database-info-more' => 'Proszę zobaczyć<a href="http://community.wikia.com/wiki/Help:Database_download">tę stronę</a> po więcej informacji',
 );
@@ -644,6 +646,7 @@ $messages['tl'] = array(
 /** Ukrainian (Українська)
  * @author Alex Khimich
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'dump-database' => 'Дампи бази данних',
@@ -655,6 +658,7 @@ $messages['uk'] = array(
 	'dump-database-request' => 'Запросити оновлення',
 	'dump-database-request-info' => '(Дампи зазвичай створюються щотижня)',
 	'dump-database-request-submit' => 'Надіслати запит',
+	'dump-database-request-already-submitted' => 'Запит на створення дампа було надіслано недавно (менше 7 днів тому)',
 	'dump-database-request-requested' => 'Запит на створення дампа бази данних надіслано.',
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );

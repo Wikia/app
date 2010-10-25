@@ -303,6 +303,13 @@ $messages['ja'] = array(
 	'whereisextension-search-type-full' => 'Like演算子:',
 );
 
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'whereisextension-submit' => 'Ujarlerit',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -535,5 +542,13 @@ $messages['tl'] = array(
 	'whereisextension-search-type' => 'Uri:',
 	'whereisextension-search-type-bool' => 'Booleano',
 	'whereisextension-search-type-full' => 'Wangis',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'whereisextension-submit' => 'Шукати',
+	'whereisextension-filter' => 'Фільтр',
 );
 

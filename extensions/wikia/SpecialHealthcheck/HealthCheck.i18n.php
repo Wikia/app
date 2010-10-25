@@ -209,3 +209,10 @@ $messages['tl'] = array(
 	'healthcheck-desc' => 'Isang [[Special:HealthCheck|natatanging pahina]] para sa pagsusuri ng katayuan ng panghain',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Спеціальна сторінка]] для перевірки стану сервера',
+);
+
