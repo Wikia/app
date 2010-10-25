@@ -5,6 +5,7 @@
 * rt#74157: Oasis click-tracking: Is user name tracked in Latest Activity module? (macbre)
 * rt#74852: Oasis click-tracking: Add tracking for Photos on This Wiki lightbox links (macbre)
 * rt#75110: Opera bugs (macbre)
+* rt#74340: Link suggest type ahead drop down box not styled (macbre)
 
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
