@@ -1,5 +1,7 @@
-@import "../../../skins/oasis/css/core/color";
 @import url('/extensions/wikia/CategorySelect/CategorySelect.css');
+
+@import "../../../skins/oasis/css/core/color";
+@import "../../../skins/oasis/css/mixins/yui-suggest";
 
 /* Oasis fixes */
 .csViewMode #csButtonsContainer {
@@ -10,4 +12,8 @@
 	input {
 		padding: 0 12px;
 	}
+}
+
+#csSuggestContainer {
+	@include yui-suggest;
 }

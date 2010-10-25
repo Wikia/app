@@ -486,7 +486,16 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';".CategorySelectGetCategories(true)."</script>");
 	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
-	$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.css?$wgStyleVersion\" />");
+
+	// use SCSS file for Oasis
+	if (Wikia::isOasis()) {
+		$cssFile = wfGetSassUrl('/extensions/wikia/CategorySelect/oasis.scss');
+	}
+	else {
+		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/CategorySelect.css?{$wgStyleVersion}";
+	}
+
+	$wgOut->addExtensionStyle($cssFile);
 
 	$categories = is_null($wgCategorySelectMetaData) ? '' : CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'wiki');
 

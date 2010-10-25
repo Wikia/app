@@ -1,0 +1,26 @@
+@mixin yui-suggest {
+	.yui-ac-content {
+		background-color: $color-page;
+		border: 1px solid #000 !important;
+		color: $color-text;
+		overflow: hidden;
+		position: absolute;
+		width: 100%;
+		z-index: 9050;
+		ul {
+			float: none !important;
+			list-style-image: none !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			width: 100%;
+		}
+		li {
+			cursor: default;
+			float:none !important;
+			font-size: 9pt;
+			margin: 0 !important;
+			padding: 1px 0 0 3px;
+			white-space: nowrap;
+		}
+	}
+}

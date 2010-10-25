@@ -4,7 +4,7 @@
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
-
+@import "../mixins/yui-suggest";
 
 .skin-oasis {
 	#cke_top_wpTextbox1 {
@@ -325,4 +325,9 @@
 	.float {
 			position: inherit;
 	}
+}
+
+// RT #74340: add styling for LinkSuggest
+.link-suggest-container {
+	@include yui-suggest;
 }
