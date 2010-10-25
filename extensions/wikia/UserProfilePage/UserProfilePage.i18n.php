@@ -87,7 +87,7 @@ $messages['en'] = array(
 	'recipes-template-user-gender-hint' => 'Gender',
 	'recipes-template-user-affiliation-label' => 'Affiliation',
 	'recipes-template-user-affiliation-hint' => 'Affiliation',
-	'recipes-template-aboutuser-wikitext' => '{|
+	'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //-->{|
 |-
 | <<wpDescription>>
 |-

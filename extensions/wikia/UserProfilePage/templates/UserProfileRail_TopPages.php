@@ -7,7 +7,7 @@
 					<a class="HideButton" title="<?= $page['title'] ;?>">[x]</a>
 				<? endif ;?>
 				<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>">
-					<img src="<?= $topPageImages[ $pageId ][ 0 ] ;?>" /><br />
+					<img src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" /><br />
 					<strong><?= $page['title'] ;?></strong>
 				</a>
 				<br />
