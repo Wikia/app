@@ -12,12 +12,17 @@ RelatedPages = {
 	init: function() {
 		var start = (new Date()).getTime();
 
+		this.module = $('.RelatedPagesModule');
+
+		// there's no Related Pages module on this page
+		if (!this.module.exists()) {
+			return;
+		}
+
 		this.log('init');
 
 		var content = $('#WikiaArticle');
 		var contentWidth = content.width();
-
-		this.module = $('.RelatedPagesModule');
 
 		// move the module after (at least) 2nd <h2> section
 		var addAfter = 2;
