@@ -168,6 +168,22 @@ $messages['ha'] = array(
 	'tagsreportgo' => 'Nuna',
 );
 
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'tagsreport' => 'דפים המכילים תגים',
+	'tagsreporttitle' => 'דפים המכילים תגים',
+	'tagsreportselecttag' => 'בחירת תג:',
+	'tagsreportgo' => 'הצגה',
+	'tagsreportnotspecify' => 'לא נבחרו תגים',
+	'tagsreportnoresults' => 'לא נמצאו תוצאות',
+	'tagsreportmainnspace' => 'ראשי',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|עמוד|עמודים}})',
+	'tagsreportpagesfound' => "נמצאו <strong>$1</strong>  דפים שכוללים תגים מיוחדים (dpl, youtube, וכו'.)",
+	'tagsreportgenerated' => 'נוצר ב־$1',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */

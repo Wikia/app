@@ -119,10 +119,11 @@ $messages['gl'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author שומבלע
  */
 $messages['he'] = array(
 	'imgplc-create' => 'הוסף תמונה',
-	'imgplc-placeholder' => 'מקוםלתמונה',
+	'imgplc-placeholder' => 'מציין מיקום',
 	'imgplc-image' => 'תמונה',
 	'imgplc-notinhistory' => 'לא ניתן להוסיף תמונה במצב היסטוריה.',
 );

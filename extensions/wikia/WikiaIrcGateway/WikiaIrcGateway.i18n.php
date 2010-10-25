@@ -161,6 +161,14 @@ $messages['gl'] = array(
 	'ircgate-channel' => 'Canle:',
 );
 
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'ircgate-username' => 'שם משתמש:',
+	'ircgate-channel' => 'ערוץ:',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -247,6 +255,13 @@ $messages['lv'] = array(
 $messages['mk'] = array(
 	'ircgate-username' => 'Корисничко име:',
 	'ircgate-channel' => 'Канал:',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'ircgate-username' => 'Хэрэглэгчийн нэр:',
 );
 
 /** Nepali (नेपाली)
@@ -373,6 +388,14 @@ $messages['tl'] = array(
 $messages['tr'] = array(
 	'ircgate-username' => 'Kullanıcı adı:',
 	'ircgate-channel' => 'Kanal:',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'ircgate-username' => "Ім'я користувача:",
+	'ircgate-channel' => 'Канал:',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

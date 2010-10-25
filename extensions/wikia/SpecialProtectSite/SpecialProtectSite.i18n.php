@@ -660,8 +660,10 @@ $messages['tl'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'protectsite-title' => 'Налаштування захисту сайту',
+	'protectsite-comment' => 'Коментар:',
 );
 

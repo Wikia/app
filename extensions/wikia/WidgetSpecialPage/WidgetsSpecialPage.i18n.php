@@ -284,9 +284,11 @@ Pakibago ang [[Special:Preferences#prefsection-1|mga nais mo]] upang magamit ang
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
-	'widgets-specialpage-info' => 'Віджети найкраще працюють з однією із нових тем оформлення, наприклад, [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Віджети працюють з оформленням [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
 Будь ласка, змініть [[Special:Preferences#prefsection-1|ваші налаштування]], щоб використовувати цей інструмент.',
 	'widgets-specialpage-try-dashboard' => 'Ця сторінка містить список всіх доступних віджетів. Щоб переглянути ваші віджети в дії, перейдіть на [[Special:WidgetDashboard]].',
 );

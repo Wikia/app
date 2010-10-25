@@ -315,6 +315,20 @@ $messages['oc'] = array(
 	'ajaxpoll-submitting' => 'Pacientatz pendent lo mandadís de vòstre vòte...',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ * @author Vae
+ */
+$messages['pl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;wszystkich głosów',
+	'ajaxpoll-thankyou' => 'Dziękujemy za Twój głos!',
+	'ajaxpoll-error' => 'Wystąpił problem w trakcie oddawania głosu, spróbuj jeszcze raz.',
+	'ajaxpoll-summary' => 'Głosowanie utworzono dnia $2, o godzinie $1. {{PLURAL:$3|Głosowała $3 osoba|Głosowały $3 osoby|Głosowało $3 osób}}.',
+	'ajaxpoll-submit' => 'Zapisz głos!',
+	'ajaxpoll-closed' => 'Głosowanie jest już zakończone. Życzymy przyjemnej lektury wyników.',
+	'ajaxpoll-submitting' => 'Proszę czekać – trwa zapisywanie głosu...',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

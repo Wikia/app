@@ -2992,6 +2992,13 @@ $messages['ja'] = array(
 	'wikiastats_pageviews_month' => '月ごとの統計',
 );
 
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'wikiastats_search_text' => 'Ujaruk:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
@@ -5517,17 +5524,21 @@ $messages['te'] = array(
 	'wikiastats_username' => 'వాడుకరి',
 	'wikiastats_usernames' => 'వాడుకరులు',
 	'wikiastats_edits' => 'మార్పులు',
+	'wikiastats_bytes' => 'బైట్లు',
 	'wikiastats_words' => 'పదాలు',
 	'wikiastats_redirects' => 'దారిమార్పులు',
 	'wikiastats_visits' => 'సందర్శనలు',
 	'wikiastats_official' => 'అధికారిక',
+	'wikiastats_previous_month' => 'గత<br />నెల',
 	'wikiastats_total' => 'మొత్తం',
 	'wikiastats_more_txt' => 'మరిన్ని',
 	'wikiastats_days_ago' => 'రోజుల క్రితం',
 	'wikiastats_month_ago' => '$1 $2 క్రితం',
 	'wikiastats_wikilang' => 'భాష:',
+	'wikiastats_mainstats_short_column_G' => 'వ్యాసాల సంఖ్య',
 	'wikiastats_mainstats_short_column_L' => 'పదాలు',
 	'wikiastats_tables' => 'పట్టికలు',
+	'wikiastats_comparisons_table_9' => 'వ్యాసాల సంఖ్య',
 	'wikiastats_comparisons_table_14' => 'పదాలు',
 	'wikiastats_trend_value' => 'విలువ',
 	'wikiastats_trend_where_text' => 'ఎక్కడ:',
@@ -5535,8 +5546,14 @@ $messages['te'] = array(
 	'wikiastats_xls_cancel' => 'రద్దుచేయి',
 	'wikiastats_main_statistics_legend' => 'ప్రధాన గణాంకాలు',
 	'wikiastats_other_statistics_legend' => 'ఇతర గణాంకాలు',
+	'wikiastats_search_text' => 'వెతుకు:',
+	'wikiastats_restricted_page' => 'నియంత్రిత పుట.<br />
+వికియా గణాంకాలను చూడడానికి మీరు ప్రవేశించివుండాలి.
+దయచేసి [[Special:UserLogin|ప్రవేశించండి]] లేదా మీకు ఇప్పటికే ఖాతా లేకపోతే ఒక కొత్త ఖాతాని సృష్టించుకోండి.',
 	'wikiastats_mediawiki_stats' => 'మీడియావికీ గణాంకాలు:',
 	'wikiastats_statistics_information' => 'గణాంక సమాచారం',
+	'wikiastats_pageviews_daily' => 'రోజువారీ గణాంకాలు (ఈ నెల)',
+	'wikiastats_pageviews_month' => 'నెలసరి గణాంకాలు',
 );
 
 /** Tagalog (Tagalog)
@@ -5819,17 +5836,21 @@ $messages['uk'] = array(
 	'wikiastats_first_edit' => 'Перше редагування',
 	'wikiastats_last_edit' => 'Останнє редагування',
 	'wikiastats_total' => 'всього',
+	'wikiastats_more_txt' => 'більше',
 	'wikiastats_days_ago' => 'днів тому',
 	'wikiastats_month_ago' => '$1 $2 тому',
 	'wikiastats_wikicreated' => 'Створено:',
 	'wikiastats_wikilang' => 'Мова:',
 	'wikiastats_mainstats_short_column_G' => 'Кількість статей',
 	'wikiastats_mainstats_short_column_M' => 'Зображення',
+	'wikiastats_tables' => 'Таблиці',
 	'wikiastats_comparisons_table_9' => 'Кількість статей',
 	'wikiastats_comparisons_table_15' => 'Зображення',
 	'wikiastats_comparisons_table_16' => 'Зовнішні посилання',
 	'wikiastats_back_to_prevpage' => 'Назад',
+	'wikiastats_trend_value' => 'значення',
 	'wikiastats_trend_formula' => 'Формула',
+	'wikiastats_xls_cancel' => 'Скасувати',
 	'wikiastats_search_text' => 'Пошук:',
 	'wikiastats_sort_list_size' => 'Сортувати список за розміром',
 	'wikiastats_sort_list_alphabet' => 'Сортувати список за алфавітом',

@@ -103,8 +103,7 @@ $messages['de'] = array(
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Verbinde dein Wikia-Benutzerkonto mit Facebook</h1>
 <ul>
 <li>Behalte deinen momentanen Benutzernamen, Geschichte, Bearbeitungen … nichts ändert sich außer der Art und Weise, wie du dich einloggst</li>
-<li>Teile deine Aktivität auf Wikia mit deinen Freunden auf Facebook</li>
-<li>Komplette Kontrolle darüber, was veröffentlicht wird</li>
+<li>Teile deine Aktivität auf Wikia mit deinen Freunden auf Facebook, mit kompletter Kontrolle darüber, was veröffentlicht wird</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Zurück',
 	'comboajaxlogin-connectmarketing-forward' => 'Anfangen &raquo;',
@@ -543,6 +542,7 @@ Pakisubukan uli o [[Special:Contact|iulat ito]].',
  */
 $messages['uk'] = array(
 	'comboajaxlogin-createlog' => 'Увійти або створити обліковий запис',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
 );
 
 /** Vietnamese (Tiếng Việt)

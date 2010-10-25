@@ -433,9 +433,11 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (Українська)
  * @author Ast
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'wikiasearch-titles-only' => 'Шукати тільки в заголовках сторінок',
 	'wikiasearch-system-error-msg' => 'Ваш пошук не може бути виконаним через системну помилку',
+	'wikiasearch-image-results' => 'Результати пошуку зображень для "$1"',
 );
 

@@ -1187,6 +1187,13 @@ $messages['mk'] = array(
 	'right-problemreports_global' => 'Менување на состојба и тип на ПријавувањПроблеми низ разни викија',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'pr_table_page_link' => 'Хуудас',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -2038,11 +2045,13 @@ $messages['uk'] = array(
 	'prlog_removedentry' => 'вилучив проблему $1',
 	'pr_what_problem' => 'Тема',
 	'pr_what_problem_software_bug' => 'помилка у програмному забезпеченні вікі',
+	'pr_what_problem_other' => 'інше',
 	'pr_what_problem_select' => 'Будь ласка, виберіть тип проблеми',
 	'pr_what_problem_spam_short' => 'спам',
 	'pr_what_problem_vandalised_short' => 'вандал',
 	'pr_what_problem_incorrect_content_short' => 'вміст',
 	'pr_what_problem_software_bug_short' => 'помилка',
+	'pr_what_problem_other_short' => 'інше',
 	'pr_what_problem_change' => 'Змінити тип проблеми',
 	'pr_describe_problem' => 'Повідомлення',
 	'pr_what_page' => 'Назва сторінки',

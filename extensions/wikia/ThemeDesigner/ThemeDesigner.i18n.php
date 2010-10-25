@@ -490,6 +490,13 @@ $messages['mk'] = array(
 	'themedesigner-history-item' => '$1 од $2',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'themedesigner-page' => 'Хуудас',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand

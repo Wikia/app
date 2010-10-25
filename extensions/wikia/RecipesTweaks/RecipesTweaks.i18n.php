@@ -378,3 +378,10 @@ $messages['tl'] = array(
 	'recipes-history' => 'Tingnan ang mga pagbabago sa pahinang ito',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'recipes-more' => 'Більше',
+);
+

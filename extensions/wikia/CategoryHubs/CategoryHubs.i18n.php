@@ -239,6 +239,7 @@ $messages['fi'] = array(
  * @author IAlex
  * @author Jean-Frédéric
  * @author Peter17
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'cathub-desc' => "Extension pour utiliser les pages de catégories en tant que centre d'activité. Conçu pour [http://answers.wikia.com answers.wikia.com]",
@@ -265,7 +266,7 @@ $messages['fr'] = array(
 	'cathub-edit-success' => 'Votre réponse a été sauvegardée',
 	'cathub-prev' => '&larr; Précédent',
 	'cathub-next' => 'Suivant &rarr;',
-	'cathub-tags' => 'Étiquettes',
+	'cathub-tags' => 'Balises',
 );
 
 /** Galician (Galego)

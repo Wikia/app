@@ -425,3 +425,10 @@ $messages['tl'] = array(
 Ilagay sa isip na ang mga resulta ay hindi nakatala sa kahit saan man at hindi kaagad mababaligtad sa panahong ito nang walang tulong ng Tek (ginagawan ito ng paraan).',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'cntool-button-save' => 'Зберегти',
+);
+

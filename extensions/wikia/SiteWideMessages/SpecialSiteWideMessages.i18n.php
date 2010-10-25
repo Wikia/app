@@ -606,6 +606,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'sitewidemessages' => 'Messages à travers le site',
@@ -617,7 +618,7 @@ $messages['fr'] = array(
 	'swm-page-title-list' => 'Messages à travers le site :: Liste',
 	'swm-label-preview' => 'Prévisualiser',
 	'swm-label-edit' => 'Modifier',
-	'swm-label-remove' => 'Supprimer',
+	'swm-label-remove' => 'Enlever',
 	'swm-label-sent' => 'Envoyé',
 	'swm-label-list' => 'Liste',
 	'swm-label-recipient' => 'Destinataires',
@@ -659,7 +660,7 @@ $messages['fr'] = array(
 	'swm-list-table-group' => 'Groupe',
 	'swm-list-table-expire' => 'Expire',
 	'swm-list-table-date' => "Date d'envoi",
-	'swm-list-table-removed' => 'Supprimé',
+	'swm-list-table-removed' => 'Enlevé',
 	'swm-list-table-content' => 'Contenu',
 	'swm-list-table-tools' => 'Outils',
 	'swm-list-table-lang' => 'Langues',
@@ -1766,6 +1767,24 @@ $messages['tt-cyrl'] = array(
 	'swm-error-empty-message' => 'Хатның эчтәлеген кертегез',
 	'swm-error-empty-group' => 'Төркемнең исемен кертегез',
 	'swm-lang-other' => 'башка телләр',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'swm-label-edit' => 'Редагувати',
+	'swm-label-remove' => 'Вилучити',
+	'swm-label-list' => 'Список',
+	'swm-label-recipient-users' => 'Користувачі',
+	'swm-label-comment' => 'Коментар',
+	'swm-label-language' => 'Мова',
+	'swm-button-save' => '[ Зберегти ]',
+	'swm-button-new' => '[ Нове ]',
+	'swm-list-table-group' => 'Група',
+	'swm-list-table-tools' => 'Інструменти',
+	'swm-list-table-lang' => 'Мови',
+	'swm-no' => 'Ні',
 );
 
 /** Volapük (Volapük)

@@ -454,6 +454,14 @@ Article '''$1''' introbable.
 * Per aténher la pagina d'acuèlh, clicatz aqueste ligam : [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Punjabi (ਪੰਜਾਬੀ)
+ * @author Aalam
+ */
+$messages['pa'] = array(
+	'our404handler' => 'ਗਲਤੀ ੪੦੪: ਸਫ਼ਾ ਨਹੀਂ ਲੱਭਿਆ!',
+	'our404handler-oops' => 'ਇਹ ਸਫ਼ੇ ਨਹੀਂ ਹੈ, ਜਿੰਨ੍ਹਾਂ ਨੂੰ ਤੁਸੀਂ ਲੱਭਦੇ ਸੀ। ਜਾਰੀ ਰੱਖੋ ਜੀ।',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */

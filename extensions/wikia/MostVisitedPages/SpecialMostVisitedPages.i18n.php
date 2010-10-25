@@ -453,12 +453,15 @@ $messages['tyv'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'mostvisitedpages' => 'Сторінки, які найчастіше переглядають',
 	'mostvisitedpagessearchtext' => 'Назва статті:',
 	'mostvisitedpagessearchbtn' => 'пошук',
 	'mostvisitedpageslatest' => 'за останні $1 {{PLURAL:$1|хвилини|хвилин}}',
+	'mostvisitedpageslatestlink' => 'Показати останні відвідані сторінки',
+	'mostvisitedpagesalllink' => 'Показати найбільш відвідувані сторінки',
 );
 
 /** Vietnamese (Tiếng Việt)

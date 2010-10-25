@@ -331,13 +331,14 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author Peter17
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'editaccount' => 'Modifier le compte',
 	'editaccount-desc' => "Permet aux membres du personnel de gérer les informations sur les comptes d'utilisateur",
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Modifier un compte',
-	'editaccount-frame-usage' => 'Avis',
+	'editaccount-frame-usage' => 'Note',
 	'editaccount-usage' => "Les données des utilisateurs sont cachées séparément pour chaque wiki. Si vous réinitialisez le mot de passe ou l'adresse électronique, le cache ne sera annulé que pour ce wiki. Veuillez rediriger l'utilisateur vers ce wiki pour qu'il se connecte avec son nouveau mot de passe pour éviter les problèmes de cache.",
 	'editaccount-label-select' => 'Sélectionner un compte utilisateur',
 	'editaccount-submit-account' => 'Gérer le compte',
@@ -715,6 +716,25 @@ $messages['no'] = array(
 	'editaccount-log-entry-close' => 'deaktiverte konto $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Denne kontoen har blitt deaktivert.</div>',
 	'right-editaccount' => 'Rediger andre brukeres innstillinger',
+);
+
+/** Punjabi (ਪੰਜਾਬੀ)
+ * @author Aalam
+ */
+$messages['pa'] = array(
+	'editaccount' => 'ਅਕਾਊਂਟ ਸੋਧ',
+	'editaccount-desc' => 'ਸਟਾਫ਼ ਮੈਂਬਰ ਨੂੰ ਯੂਜ਼ਰ ਅਕਾਊਂਟ ਜਾਣਕਾਰੀ ਪਰਬੰਧ ਕਰਨ ਦਿਉ',
+	'editaccount-frame-manage' => 'ਅਕਾਊਂਟ ਸੋਧੋ',
+	'editaccount-frame-usage' => 'ਨੋਟ',
+	'editaccount-label-select' => 'ਯੂਜ਼ਰ ਅਕਾਊਂਟ ਚੁਣੋ',
+	'editaccount-submit-account' => 'ਅਕਾਊਂਟ ਪਰਬੰਧ',
+	'editaccount-frame-account' => 'ਯੂਜ਼ਰ ਅਕਾਊਂਟ ਸੋਧ ਜਾਰੀ: $1',
+	'editaccount-label-email' => 'ਨਵਾਂ ਈਮੇਲ ਐਡਰੈੱਸ ਸੈੱਟ ਕਰੋ',
+	'editaccount-label-pass' => 'ਨਵਾਂ ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ',
+	'editaccount-label-realname' => 'ਨਵਾਂ ਅਸਲੀ ਨਾਂ ਸੈੱਟ ਕਰੋ',
+	'editaccount-submit-email' => 'ਈਮੇਲ ਐਡਰੈੱਸ ਸੰਭਾਲੋ',
+	'editaccount-submit-pass' => 'ਪਾਸਵਰਡ ਸੰਭਾਲੋ',
+	'editaccount-submit-realname' => 'ਅਸਲੀ ਨਾਂ ਸੰਭਾਲੋ',
 );
 
 /** Piedmontese (Piemontèis)

@@ -550,7 +550,7 @@ Per favor entra un altere nomine.',
 	'createpage-dialog-format' => 'Disposition standard',
 	'createpage-dialog-blank' => 'Pagina vacue',
 	'createpage-error-empty-title' => 'Per favor scribe un titulo pro tu articulo',
-	'createpage-error-invalid-title' => 'Pardono, le titulo del articulo esseva invalide.
+	'createpage-error-invalid-title' => 'Pardono, le titulo del articulo es invalide.
 Per favor usa un altere articulo.',
 	'createpage-error-article-exists' => 'Un articulo con iste titulo ja existe.
 Tu pote visitar <a href="$1">$2</a>, o renominar tu pagina.',
@@ -869,6 +869,32 @@ Skriv den første seksjonen av artikkelen din her.
 ==Seksjonsoverskrift==
 
 Skriv den andre seksjonen av artikkelen din her.',
+);
+
+/** Punjabi (ਪੰਜਾਬੀ)
+ * @author Aalam
+ */
+$messages['pa'] = array(
+	'createpage-desc' => 'ਵਿਕਿ ਦੇ WYSIWYG ਐਡੀਟਰ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉਣਾ ਮਨਜ਼ੂਰ',
+	'createpage-sp-title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉ',
+	'createpage_title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਓ',
+	'createpage_title_caption' => 'ਟਾਈਟਲ:',
+	'createpage_enter_text' => 'ਟੈਕਸਟ:',
+	'createpage_empty_title_error' => 'ਟਾਈਟਲ ਚਾਹੀਦਾ ਹੈ',
+	'createpage_empty_article_body_error' => 'ਸਫ਼ਾ ਟੈਕਸਟ ਚਾਹੀਦਾ ਹੈ',
+	'createpage_invalid_title_error' => 'ਗਲਤ ਟਾਈਟਲ',
+	'createpage_article_already_exists' => 'ਉਸ ਨਾਂ ਨਾਲ ਸਫ਼ਾ ਪਹਿਲਾਂ ਹੀ ਮਨਜ਼ੂਰ ਹੈ।
+ਵੱਖਰਾ ਨਾਂ ਚੁਣੋ ਜੀ।',
+	'createpage_spam' => 'ਅਫਸੋਸ, ਤੁਹਾਡੀ ਸੋਧ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕੀ',
+	'createpage-dialog-title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਓ',
+	'createpage-dialog-message1' => 'ਬੱਲੇ ਬੱਲੇ, ਤੁਸੀਂ ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਇਆ ਹੈ!',
+	'createpage-dialog-message2' => 'ਤੁਸੀਂ ਇਸ ਦਾ ਕੀ ਨਾਂ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?',
+	'createpage-dialog-choose' => 'ਸਫ਼ਾ ਲੇਆਉਟ ਚੁਣੋ ਜੀ:',
+	'createpage-dialog-format' => 'ਸਟੈਂਡਰਡ ਲੇਆਉਟ',
+	'createpage-dialog-blank' => 'ਖਾਲੀ ਸਫ਼ਾ',
+	'createpage-error-empty-title' => 'ਆਪਣੇ ਸਫ਼ੇ ਲਈ ਟਾਈਟਲ ਲਿਖੋ ਜੀ',
+	'createpage-error-article-exists' => 'ਉਸ ਟਾਈਟਲ ਨਾਲ ਸਫ਼ਾ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।
+ਤੁਸੀਂ <a href="$1">$2</a> ਵਰਤ ਸਕਦੇ ਹੋ ਜਾਂ ਆਪਣੇ ਸਫ਼ੇ ਦਾ ਨਾਂ ਬਦਲ ਸਕਦੇ ਹੋ',
 );
 
 /** Polish (Polski)

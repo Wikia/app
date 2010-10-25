@@ -250,6 +250,14 @@ $messages['lb'] = array(
 	'withoutimages' => 'Säiten ouni Biller',
 );
 
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'withoutimages-desc' => 'Pievieno [[Special:Withoutimages|īpašo lapu]], kurā parādās lapas bez attēliem',
+	'withoutimages' => 'Lapas bez attēliem',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

@@ -397,6 +397,15 @@ $messages['ar'] = array(
 	'closed-reason' => 'السبب:',
 );
 
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'wf_cc_name' => 'Катэгорыя',
+	'awc-metrics-close' => 'Закрыць',
+	'closed-reason' => 'Прычына:',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -1388,7 +1397,7 @@ $messages['fr'] = array(
 	'wikifactory-label-actions' => 'Actions',
 	'wikifactory-label-close' => 'Clôturer',
 	'wikifactory-label-tags' => 'Balises',
-	'wikifactory-label-tags2' => 'Étiquettes',
+	'wikifactory-label-tags2' => 'Balises',
 	'wikifactory-label-masstags' => 'MasseÉtiquettes',
 	'wikifactory-label-findtags' => 'RechercheÉtiquettes',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
@@ -2818,8 +2827,12 @@ $messages['pl'] = array(
 	'wikifactory-label-actions' => 'Operacje',
 	'wikifactory-label-close' => 'Zamknij',
 	'wikifactory-label-tags' => 'Znaczniki',
+	'wikifactory-label-tags2' => 'Znaczniki',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'right-wikifactory' => 'Zmień ustawienia wewnętrzne dla tej wiki',
+	'wikifactory-domain-edit' => 'edytuj ten adres URL',
+	'wikifactory-domain-remove' => 'usuń ten adres URL z wiki',
+	'wikifactory-domain-setmain' => 'wstaw ten adres URL do wgServer',
 	'closewiki-check-and-confirm' => 'Sprawdź wiki i potwierdź operację',
 	'closewiki-redirect-to' => 'Przekierowanie do',
 	'closewiki-message' => 'nazwa domeny $1',
@@ -3869,6 +3882,7 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'closewiki' => 'Закрити Вікі',
@@ -3897,6 +3911,7 @@ $messages['uk'] = array(
 	'awc-metrics-edits' => 'Редагування',
 	'awc-metrics-images' => 'Зображення',
 	'awc-metrics-close' => 'Закрити',
+	'awc-metrics-active' => 'активний',
 	'awc-metrics-fewer-than' => 'що мають менше ніж $1 {{PLURAL:$1|статтю|статті|статей}},',
 	'awc-metrics-edits-label' => '$1 {{PLURAL:$1|редагування|редагування|редагувань}} за $2,',
 	'awc-metrics-this-month' => 'цього місяця',

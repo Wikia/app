@@ -426,3 +426,11 @@ $messages['tl'] = array(
 	'sponsorpage-save' => 'Sagipin',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'sponsorpage-edit' => 'Редагувати',
+	'sponsorpage-save' => 'Зберегти',
+);
+

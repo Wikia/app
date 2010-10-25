@@ -241,11 +241,19 @@ $messages['gl'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author שומבלע
  */
 $messages['he'] = array(
+	'wva-success' => 'דף הסרטונים $1 נוסף בהצלחה.',
+	'wva-success-replaced' => 'דף הסרטונים $1 הוחלף בהצלחה.',
+	'wva-failure' => 'נא לספק פרמטרים חוקיים.',
+	'wva-name' => 'הכנסת השם:',
+	'wva-url' => 'הוספת כתובת האתר:',
 	'wva-add' => 'הוספה',
 	'wva-title' => 'הוספה מהירה של סרטון מכתובת',
-	'wva-notlogged' => 'אתה צריך להתחבר או להירשם בכדי להוסיף סרטונים.',
+	'wva-notlogged' => 'התחברו או הרשמו כדי להוסיף סרטונים.',
+	'wva-notallowed' => 'לא ניתן להוסיף סרטונים לאתר.',
+	'wva-protected' => 'סרטון זה מוגן.',
 );
 
 /** Hungarian (Magyar)
@@ -390,6 +398,13 @@ $messages['mk'] = array(
 	'wva-notlogged' => 'Треба да сте најавени или да се регистрирате за да можете да вметнувате видеоснимки.',
 	'wva-notallowed' => 'Не можете да вметнувате видеоснимки на ова вики.',
 	'wva-protected' => 'Оваа видеоснимка е заштитена.',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'wva-add' => 'Нэмэх',
 );
 
 /** Dutch (Nederlands)
@@ -601,6 +616,7 @@ $messages['tl'] = array(
 /** Ukrainian (Українська)
  * @author Ast
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'wva-success' => 'Сторінка відео $1 була успішно записана.',
@@ -612,5 +628,6 @@ $messages['uk'] = array(
 	'wva-title' => 'Швидке додавання відео по URL',
 	'wva-notlogged' => 'Для того, щоб вставити відео, Вам потрібно увійти до системи або зареєструватися.',
 	'wva-notallowed' => 'Ви не можете додавати відео у цю Вікі.',
+	'wva-protected' => 'Це відео захищено.',
 );
 

@@ -198,6 +198,12 @@ $messages['no'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'partner-feed-achievements-leaderboard' => 'Tàula dle realisassion dle Wiki',
+	'partner-feed-earned-badges' => 'Distintiv vagnà recentement për na Wiki specifica',
+	'partner-feed-recent-blog-posts' => 'Mëssagi dë scartari recent relativ a na promossion',
+	'partner-feed-latest-images' => "Galarìa dj'ùltime figure ch'a son ëstàite carià",
+	'partner-feed-hotcontent' => "Sènter ëd contnù ativ classificà për nùmer d'editor",
+	'partner-feed-recent-blog-comments' => 'Coment recent colegà al mëssagi dë scartari specificà.',
 	'partnerfeed' => 'Cambrada ëd fluss',
 	'error-no-article' => 'Eror: Gnun paràmetr "artìcol" passà',
 	'feed-title-blogposts' => 'Mëssagi dë Scartari recent',
@@ -275,5 +281,13 @@ $messages['tl'] = array(
 	'blog-posts-from-listing' => 'mula sa pagkakalista: $1',
 	'feed-title-hot-content' => 'Mainit na nilalaman - $1',
 	'feed-title-blogcomments' => 'Mga puna sa $1',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'all-blog-posts' => 'усі категорії',
+	'feed-title-blogcomments' => 'Коментарі до $1',
 );
 

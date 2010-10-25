@@ -368,7 +368,7 @@ Klaskit eta !",
 	'myhome-log-in' => "<center>An arc'hwel Ma Degemer a c'hallit kaout nemet e vefec'h kevreet.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Kevreit, mar plij, evit gwelet ar  bajenn-mañ]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "Ne c'haller kaout an Arc'hwel Ma Degemer nemet e vefe implijet ar fichadenn Monaco ganeoc'h. M'ho peus c'hoant da vont war Ma Degemer, gweladennit'''[[Special:Preferences|ho Tibaboù gwellañ]]''', mar plij, evit kemmañ ho fichadenn.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Korn ar gumuniezh',
+	'myhome-community-corner-header' => 'Kemennadennoù ar gumuniezh',
 	'oasis-myhome-community-corner-edit' => 'kemmañ ar gemennadenn &gt;',
 	'myhome-community-corner-edit' => 'kemmañ ar gemennadenn',
 	'community-corner' => "'''Degemer mat war Ma Degemer !'''
@@ -820,7 +820,7 @@ Essayez donc !",
 	'myhome-log-in' => "<center>La fonction Mon Accueil n'est disponible que si vous êtes connecté(e).<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Veuillez vous connecter pour voir cette page !]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "La fonction Mon Accueil n'est disponible que si vous utilisez l'habillage Monaco. Si vous voulez accéder à Mon Accueil, veuillez modifier '''[[Special:Preferences|vos Préférences]]''' pour changer votre habillage.",
 	'myhome-namespace-blog' => 'Blogue',
-	'myhome-community-corner-header' => 'Le coin de la Communauté',
+	'myhome-community-corner-header' => 'Messages de la communauté',
 	'oasis-myhome-community-corner-edit' => 'modifier le message &gt;',
 	'myhome-community-corner-edit' => 'modifier le message',
 	'community-corner' => "'''Bienvenue sur Mon Accueil !'''
@@ -902,7 +902,7 @@ Anímese a intentalo!',
 	'myhome-log-in' => "<center>A función \"a miña páxina de inicio\" só está dispoñible se antes accedeu ao sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|\$1}} Por favor, conéctese para ollar esta páxina!]'''</big></center>",
 	'myhome-switch-to-monaco' => "A función \"a miña páxina de inicio\" só está dispoñible se emprega a aparencia Mónaco. Se quere ver a miña páxina de inicio, por favor, visite as '''[[Special:Preferences|súas preferencias]]''' para cambiar a súa aparencia.",
 	'myhome-namespace-blog' => 'Blogue',
-	'myhome-community-corner-header' => 'A taberna da comunidade',
+	'myhome-community-corner-header' => 'Mensaxes da comunidade',
 	'oasis-myhome-community-corner-edit' => 'editar a mensaxe &gt;',
 	'myhome-community-corner-edit' => 'editar a mensaxe',
 	'community-corner' => "'''Benvido á miña páxina de inicio!'''
@@ -1093,7 +1093,7 @@ $messages['ia'] = array(
 	'myhome-log-in' => "<center>Tu pagina initial es solmente disponibile si tu es authenticate.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Aperi un session pro vider iste pagina!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Le pagina initial es solmente disponibile si tu usa le apparentia Monaco. Si tu vole vider tu pagina initial, visita le '''[[Special:Preferences|preferentias]]''' pro cambiar de apparentia.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Taverna del communitate',
+	'myhome-community-corner-header' => 'Messages del communitate',
 	'oasis-myhome-community-corner-edit' => 'modificar message &gt;',
 	'myhome-community-corner-edit' => 'modificar message',
 	'community-corner' => "'''Benvenite a Mi pagina initial!'''
@@ -1419,7 +1419,7 @@ $messages['mk'] = array(
 	'myhome-log-in' => "<center>Функцијата „Мојата домашна страница“ е достапна само ако сте најавени.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Најавете се за да ја видите страницата!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Функцијата „Мојата домашна страница“ е достапна само ако го користите изгледот „Монако“. Ако сакате да ја видите „Мојата домашна страница“, одете на '''[[Special:Preferences|вашите нагодувања]]''' и променете го изгледот.",
 	'myhome-namespace-blog' => 'Блог',
-	'myhome-community-corner-header' => 'Катче на заедницата',
+	'myhome-community-corner-header' => 'Пораки на заедницата',
 	'oasis-myhome-community-corner-edit' => 'уреди порака &gt;',
 	'myhome-community-corner-edit' => 'уреди порака',
 	'community-corner' => "'''Добредојдовте на Вашата домашна страница!'''
@@ -1602,7 +1602,7 @@ Prøv det!',
 	'myhome-switch-to-monaco' => "Mitt hjem-funksjonen er kun tilgjengelig om du bruker utseendet Monaco.
 Om du vil se Mitt hjem, gå til '''[[Special:Preferences|innstillingene dine]]''' for å endre drakt.",
 	'myhome-namespace-blog' => 'Blogg',
-	'myhome-community-corner-header' => 'Fellesskapshjørnet',
+	'myhome-community-corner-header' => 'Fellesskapsbeskjeder',
 	'oasis-myhome-community-corner-edit' => 'rediger melding &gt;',
 	'myhome-community-corner-edit' => 'rediger melding',
 	'community-corner' => "'''Velkommen til Mitt hjem.'''
@@ -1787,7 +1787,7 @@ La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modì
 	'myhome-log-in' => "<center>La funsion Mia Intrada a l'é disponìbil mach s'a l'é intrà ant ël sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Ch'a intra ant ël sistema për vëdde sta pàgina-sì!]'''</big></center>",
 	'myhome-switch-to-monaco' => "La funsion Mia Intrada a l'é mach disponìbil s'a deuvra la pel Monaco. S'a vorèissa vardé Mia Intrada, për piasì ch'a vìsita '''[[Special:Preferences|sò Gust]]''' për cangé soa pel.",
 	'myhome-namespace-blog' => 'Scartari',
-	'myhome-community-corner-header' => 'Canton ëd la Comunità',
+	'myhome-community-corner-header' => 'Mëssagi ëd la Comunità',
 	'oasis-myhome-community-corner-edit' => 'modifiché ël mëssagi &gt;',
 	'myhome-community-corner-edit' => 'modìfica mëssagi',
 	'community-corner' => "'''Bin ëvnù a Mia Intrada!'''
@@ -1913,7 +1913,7 @@ Experimente!',
 	'myhome-switch-to-monaco' => "A funcionalidade A Minha Casa só fica disponível se estiver a usar o tema Mónaco.
 Se quer ver A Minha Casa, visite '''[[Special:Preferences|as suas Preferências]]''' para mudar de tema.",
 	'myhome-namespace-blog' => 'Blogue',
-	'myhome-community-corner-header' => 'Cantinho Comunitário',
+	'myhome-community-corner-header' => 'Mensagens Comunitárias',
 	'oasis-myhome-community-corner-edit' => 'editar mensagem &gt;',
 	'myhome-community-corner-edit' => 'editar mensagem',
 	'community-corner' => "'''Bem-vindo(a) à A Minha Casa!'''
@@ -2089,7 +2089,7 @@ $messages['ru'] = array(
 	'myhome-log-in' => "<center>Функционал «Личный кабинет» будет доступен, только если вы представитесь системе.<br /><br /><big>'''[{{fullurl:Special:UserLogin|$1}} Для просмотра этой страницы необходимо представиться системе!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Функционал «Личный кабинет» доступен только при использовании оформления «Monaco». Если вы желаете видеть этот функционал, то откройте '''[[Special:Preferences|ваши настройки]]''' и измените стиль оформления.",
 	'myhome-namespace-blog' => 'Блог',
-	'myhome-community-corner-header' => 'Уголок сообщества',
+	'myhome-community-corner-header' => 'Сообщения сообщества',
 	'oasis-myhome-community-corner-edit' => 'править сообщение &gt;',
 	'myhome-community-corner-edit' => 'править сообщение',
 	'community-corner' => "'''Добро пожаловать в свой личный кабинет!'''
@@ -2139,6 +2139,13 @@ $messages['si'] = array(
 	'myhome-feed-move' => 'පිටුව ගෙනයන ලදී.',
 	'myhome-feed-talkpage' => 'සාකච්ඡා පිටුව',
 	'myhome-feed-delete' => 'මකාදමන ලදී.',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'myhome-feed-summary-details' => 'Povzetek',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -2468,6 +2475,7 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'myhome' => 'Моя домашня сторінка',
+	'wikiactivity' => 'Вікі-діяльність',
 	'myhome-activity-feed' => 'Останні зміни',
 	'myhome-watchlist-feed' => 'Список спостереження',
 	'myhome-user-contributions-feed' => 'Внесок',
@@ -2489,13 +2497,15 @@ $messages['uk'] = array(
 	'myhome-feed-new-page-details' => 'Нова сторінка',
 	'myhome-feed-summary-details' => 'Короткий опис',
 	'myhome-feed-section-edit-details' => 'Відредаговано розділ',
+	'myhome-feed-new-blog-comment-details' => 'Коментар',
+	'myhome-feed-new-article-comment-details' => 'Коментар',
 	'myhome-feed-move-details' => 'Перейменовано',
 	'myhome-feed-redirect-details' => 'Перенаправлення',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додано зображення|Додані зображення}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додано категорію|Додані категорії}}',
 	'myhome-hot-spots-number-of-editors' => 'редактори',
 	'myhome-log-in' => "<center>Можливості \"Моєї домашньої сторінки\" доступні тільки після входу в систему.<br /><br /><big>'''[{{fullurl:Special:Signup|\$1}} Будь ласка, увійдіть, щоб побачити цю сторінку!]'''</big></center>",
-	'myhome-community-corner-header' => 'Куточок спільноти',
+	'myhome-community-corner-header' => 'Повідомлення спільноти',
 	'myhome-community-corner-edit' => 'редагувати повідомлення',
 	'myhome-hot-spots-definition' => 'Сторінки з найбільшою кількістю редакторів за {{PLURAL:$1|останній день|останні $1 дні|останніх $1 днів}}.',
 	'tooltip-pt-myhome' => 'На мою домашню сторінку',
