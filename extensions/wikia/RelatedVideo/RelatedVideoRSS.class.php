@@ -28,7 +28,6 @@ class RelatedVideoRSS {
 		return new RelatedVideoRSS( $url );
 	}
 
-
 	public function getTitle() {
 		foreach ($this->feed->get_items() as $item) {
 			return $this->getTagData( $item->get_item_tags( '', 'title' ) );
@@ -60,3 +59,4 @@ class RelatedVideoRSS {
 		return $tagResult[0]["data"];
 	}
 }
+

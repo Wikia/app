@@ -13,10 +13,12 @@ if ( !defined('MEDIAWIKI') ) {
   */
 
 $dir = dirname(__FILE__) . '/';
+
 $wgAutoloadClasses['RelatedVideo']		= $dir . 'RelatedVideo.body.php';
 $wgAutoloadClasses['RelatedVideoRSS']		= $dir . 'RelatedVideoRSS.class.php';
 $wgAutoloadClasses['RelatedVideoHelper']	= $dir . 'RelatedVideoHelper.class.php';
 $wgExtensionMessagesFiles['RelatedVideo']	= $dir . 'i18n/RelatedVideo.i18n.php';
+$wgAutoloadClasses['RelatedVideoModule']	= $IP.'/skins/oasis/modules/RelatedVideoModule.class.php';
 
 $wgSpecialPages['RelatedVideo']			= 'RelatedVideo';
 $wgSpecialPageGroups['RelatedVideo']		= 'wikia';

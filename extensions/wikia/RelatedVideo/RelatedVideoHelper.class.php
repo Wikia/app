@@ -19,7 +19,7 @@
 
 		static function onAfterAdModuleExecute( &$adModule ){
 
-			global $wgTitle;
+			global $wgTitle, $wgRequest;
 			
 			if ( $wgTitle->isSpecial( 'RelatedVideo' ) && ( $adModule->slotname == 'TOP_LEADERBOARD' ) ){
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -65,9 +65,9 @@
 
 		static function onBeforeExecuteSpotlightsIndex( &$spotlightsModule ){
 
-			global $wgUser, $wgTitle;
-
-			if ( $wgUser->isAnon() || $wgTitle->isSpecial('RelatedVideo') ){
+			global $wgUser, $wgTitle, $wgEnableRelatedVideoSpotlight;
+			
+			if ( !empty( $wgEnableRelatedVideoSpotlight ) && ( $wgUser->isAnon() || $wgTitle->isSpecial('RelatedVideo') ) ){
 				if ( isset($spotlightsModule) && ($spotlightsModule->adslots[2] == 'SPOTLIGHT_FOOTER_3')) {
 					$forceContent = false;
 					$forceContent = array();

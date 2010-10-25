@@ -3,17 +3,17 @@
 @import "../../../../skins/oasis/css//mixins/clearfix";
 @import "../../../../skins/oasis/css//core/color";
 
-$thumb-size-width: 130px;
-$thumb-size-height: 115px;
-$thumb-border-top: 4px;
+$thumb-size-width: 140px;
+$thumb-size-height: 105px;
+$thumb-border-top: 6px;
 $thumb-border-bottom: 5px;
-$thumb-border-left: 5px;
+$thumb-border-left: 6px;
 $thumb-border-right: 6px;
 $details-fg-color: $color-page;  // #ffffff
 $details-bg-color: $color-links; // #0076ba
 
 .related-video-main {
-	width: 655px;
+	width: 665px;
 	padding: 5px;
 
 	.related-video-box-advert {
@@ -65,7 +65,7 @@ $details-bg-color: $color-links; // #0076ba
 		position: relative;
 		display: inline-block;
 		width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
-		margin: 10px;
+		margin: 5px;
 		vertical-align: top;
 
 		a, a:hover, a:visited {
