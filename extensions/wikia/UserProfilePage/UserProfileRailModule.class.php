@@ -20,7 +20,7 @@ class UserProfileRailModule extends Module {
 		$this->userIsOwner = UserProfilePage::getInstance()->userIsOwner();
 		$this->userName =  $user->getName();
 		$thos->userPageUrl = $user->getUserPage()->getLocalUrl();
-		
+
 		foreach ( $this->topWikis as $wikiId => $wikiData ) {
 			if( in_array( $wikiId, $this->hiddenTopWikis ) ) {
 				unset( $this->topWikis[ $wikiId ] );
@@ -68,15 +68,6 @@ class UserProfileRailModule extends Module {
 			// ImageServing extension enabled, get images
 			$imageServing = new imageServing( array_keys( $this->topPages ), 80, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
 			$this->topPageImages = $imageServing->getImages(1); // get just one image per article
-
-			/*foreach( $pages as $pageId => $data ) {
-				if( isset( $images[$pageId] ) ) {
-					$image = $images[$pageId][0];
-					$data['imgUrl'] = $image['url'];
-				}
-
-				$pages[ $pageId ] = $data;
-			}*/
 		}
 		
 		wfProfileOut( __METHOD__ );
@@ -141,6 +132,7 @@ class UserProfileRailModule extends Module {
 		$wikis = UserProfilePage::getInstance()->getHiddenFromDb( $dbs );
 
 		wfProfileOut( __METHOD__ );
+		
 		return $wikis;
 	}
 
