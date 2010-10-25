@@ -17,7 +17,7 @@ var WikiActivity = {
 		$('.activityfeed-video-thumbnail').live('click', WikiActivity.loadVideoPlayer);
 
 		// track clicks on link to Special:RecentChanges (Oasis specific)
-		$('#WikiaPageHeader').find('a').trackClick('wikiactivity/recentchanges');
+		$('#myhome-main').find('.activity-nav').find('a').last().trackClick('wikiactivity/recentchanges');
 	},
 
 	log: function(msg) {
