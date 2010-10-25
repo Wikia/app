@@ -172,7 +172,7 @@ var initTracker = function() {
 	});
 
 	// toolbar
-	$('#WikiaFooter').find('.share').click(function(ev) {
+	$('#WikiaFooter').find('.tools').click(function(ev) {
 		var fakeUrl = 'toolbar/';
 		var node = $(ev.target);
 
