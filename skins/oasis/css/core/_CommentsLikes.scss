@@ -60,9 +60,11 @@
 		vertical-align: middle;
 		margin: 0 3px;
 	}
-	 // IE7
 	.comments {
+		 // IE7
 		*position: relative;
 		*top: -2px;
+		// Opera (RT #75110)
+		white-space: nowrap;
 	}
 }
