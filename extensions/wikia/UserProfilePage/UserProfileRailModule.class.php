@@ -10,6 +10,7 @@ class UserProfileRailModule extends Module {
 	var $hiddenTopPages;
 	var $topPageImages;
 	var $specialRandomLink;
+	var $maxEdits;
 	
 	public function executeTopWikis() {
 		wfProfileIn( __METHOD__ );
@@ -21,9 +22,13 @@ class UserProfileRailModule extends Module {
 		$this->userName =  $user->getName();
 		$thos->userPageUrl = $user->getUserPage()->getLocalUrl();
 
+		$this->maxEdits = 0;
+		
 		foreach ( $this->topWikis as $wikiId => $wikiData ) {
 			if( in_array( $wikiId, $this->hiddenTopWikis ) ) {
 				unset( $this->topWikis[ $wikiId ] );
+			} elseif ( $wikiData[ 'editCount' ] > $this->maxEdits ) {
+				$this->maxEdits = $wikiData[ 'editCount' ];
 			}
 		}
 
@@ -126,11 +131,29 @@ class UserProfileRailModule extends Module {
 
 	public function getHiddenTopWikis() {
 		wfProfileIn( __METHOD__ );
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgDevelEnvironment;
 		
 		$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
 		$wikis = UserProfilePage::getInstance()->getHiddenFromDb( $dbs );
 
+		if( $wgDevelEnvironment ) {//DevBox test
+			$wikis = array(
+				933 => 72,
+				2677 => 60,
+				899 => 35,
+				1057 => 12
+			); // test data
+
+			foreach($wikis as $wikiId => $editCount) {
+				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+
+				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
+			}
+
+		}
+		
 		wfProfileOut( __METHOD__ );
 		
 		return $wikis;

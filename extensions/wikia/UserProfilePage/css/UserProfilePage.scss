@@ -2,6 +2,7 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
 //@import "../../../../skins/oasis/css/mixins/menus";
 //@import "../../../../skins/oasis/css/mixins/forms";
 //@import "../../../../skins/oasis/css/mixins/opacity";
@@ -13,12 +14,142 @@
 	}
 }
 
+@mixin moreLink(){
+	.more {
+		float: right;
+		font-size: 10px;
+		font-weight: bold;
+	}
+}
+
 
 .UserProfileRailModule_TopWikis {
+	@include moreLink;
+	position: relative;
+	height: 180px;
+
 	h2 {
 		font-size: 12px;
 		font-weight: bold;
 	}
+
+	table {
+		width: 100%;
+		margin-bottom: 10px;
+		
+		tr {
+			height: 30px;
+			
+			&.odd {
+				background-color: $color-comment-odd;
+			}
+
+			th {
+				text-align: left;
+				vertical-align: middle;
+				width: 50%;
+			}
+
+			td {
+				text-align: left;
+				vertical-align: middle;
+				padding: 0;
+
+				&.rank{
+					padding-left: 6px;
+					
+					.counter {
+						font:{
+							weight: bold;
+							size: 13px;
+						}
+
+						color: darken($color-page-border, 20%);
+					}
+
+					.hide-control {
+						display: none;
+					}
+				}
+
+				&.edit-count {
+					.percentage-bar {
+						@include border-radius(10px);
+						@include linear-gradient($color-buttons, right, $color-button-highlight, 35%, $color-buttons, 65%);
+						color: $color-button-text;
+						display: inline-block;
+						font-size: 10px;
+						height: 15px;
+						line-height: 16px;
+						margin: 0;
+						padding: 0 7px;
+						min-width: 9%;
+					}
+				}
+
+				img {
+					vertical-align: middle;
+				}
+			}
+		}
+	}
+
+	img{
+		&.chevron {
+			border-top-color: $color-text;
+		}
+	}
+
+	#profile-top-wikis-hidden{
+		position: absolute;
+		right: 0;
+
+		li {
+			&.unhide-link{
+				text-align: right;
+				padding-bottom: 10px;
+
+				.more {
+					float: none;
+				}
+			}
+
+			&.hidden-wiki {
+				@include clearfix;
+				border-top: 1px solid $color-page-border;
+				padding: 5px 10px 5px 10px;
+
+				.wordmark {
+					float: left;
+				}
+
+				.unhide-control {
+					float: right;
+					margin-left: 10px;
+
+					.UnhideButton {
+						line-height: 20px;
+
+						img {
+							vertical-align: middle;
+						}
+					}
+				}
+
+				&.first{
+					border-top: none;
+				}
+			}
+		}
+	}
+}
+
+.user-profile-box{
+	@include box-shadow(0, 10px, 10px, mix($color-page, #000));
+	border: 1px solid $color-page-border;
+	background-color: $color-page;
+	z-index: 2000;
+	padding: 10px;
 }
 
 .UserProfileRailModule_RecentActivity {
