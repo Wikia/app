@@ -75,9 +75,9 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 
 		// Devboxes run on different domains than just what is in WikiFactory.
 		global $wgDevelEnvironment;
-        if($wgDevelEnvironment){
+		if($wgDevelEnvironment){
 			array_unshift($whiteList, $_SERVER['SERVER_NAME']);             
-        }
+		}
 
 		$isWhitelisted = false;
 		foreach($whiteList as $whiteListedUrl) {
