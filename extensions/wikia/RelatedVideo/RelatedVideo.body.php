@@ -86,7 +86,7 @@ class RelatedVideo extends SpecialPage {
 		$video = (int)$videoId;
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/RelatedVideo/css/RelatedVideo.scss' ) );
 
-		// if no videoId or video from id doesn't exist displays RandomVideo.
+		// if no videoId or video from id doesn't exist displays RandomVideo.			
 		if ( empty( $videoId ) ){
 			$this->showRandomVideo();
 		} else {
