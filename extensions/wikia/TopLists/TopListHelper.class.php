@@ -248,7 +248,7 @@ class TopListHelper {
 
 			$options[ 'toplist' ] = array(
 				'namespace' => NS_TOPLIST,
-				'label' => 'toplists-createpage-dialog-label',
+				'label' => wfMsg( 'toplists-createpage-dialog-label' ),
 				'icon' => "{$wgCdnStylePath}/extensions/wikia/TopLists/images/thumbnail_toplist.png",
 				'trackingId' => 'toplist',
 				'submitUrl' => "{$url}/$1"

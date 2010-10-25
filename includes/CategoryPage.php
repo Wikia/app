@@ -223,11 +223,18 @@ class CategoryViewer {
 			$pageCondition = '1 = 1';
 			$this->flip = false;
 		}
+
+		$userCon = '1 = 1';
+		/* Wikia change begin - @author: TomekO */
+		/* Category Galleries hook */
+		wfRunHooks('CategoryPage::beforeCategoryData',array(&$userCon));
+		/* Wikia change end */
+
 		$res = $dbr->select(
 			array( 'page', 'categorylinks', 'category' ),
 			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
 				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
-			array( $pageCondition, 'cl_to' => $this->title->getDBkey() ),
+			array( $userCon, $pageCondition, 'cl_to' => $this->title->getDBkey() ),
 			__METHOD__,
 			array( 'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
 				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),

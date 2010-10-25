@@ -199,7 +199,7 @@ CKEDITOR.plugins.add('rte-overlay',
 		var isFramed = node.hasClass('thumb') || node.hasClass('frame');
 
 		// image width (including paddings and borders)
-		var width = parseInt(node.attr('width'));
+		var width = node.is('img') ? parseInt(node.attr('width')) : node.innerWidth();
 		if (isFramed) {
 			if (CKEDITOR.env.ie && CKEDITOR.env.version <= 7) {
 				// IE8-
@@ -225,23 +225,26 @@ RTE.overlay = {
 		node.data('items', items);
 
 		// assign overlay to given node
-		node.
-			// remove previously added event handlers
-			unbind('.overlay').
-			bind({
-				'mouseover.overlay': function(ev) {
-					self.showOverlay($(ev.target));
-				},
-				'mouseout.overlay': function(ev) {
-					self.hideOverlay($(ev.target));
-				},
-				'contextmenu.overlay': function(ev) {
-					// don't show browser's context menu
-					ev.preventDefault();
-
-					// don't show CKEditor's context menu
-					ev.stopPropagation();
-				}
-			});
+		node.each(function(i,el){
+			el = $(el)
+				.removeData('overlay')
+				// remove previously added event handlers
+				.unbind('.overlay')
+				.bind({
+					'mouseover.overlay': function(ev) {
+						self.showOverlay(el);
+					},
+					'mouseout.overlay': function(ev) {
+						self.hideOverlay(el);
+					},
+					'contextmenu.overlay': function(ev) {
+						// don't show browser's context menu
+						ev.preventDefault();
+	
+						// don't show CKEditor's context menu
+						ev.stopPropagation();
+					}
+				});
+		});
 	}
 };

@@ -9,8 +9,7 @@ class EditEnhancements {
 	private $undo;
 	private $tmpl;
 
-
-	function __construct($action) {
+	function __construct($action = '') {
 		global $wgHooks, $wgRequest;
 
 		$this->action = $action;
@@ -77,9 +76,12 @@ class EditEnhancements {
 
 	function showButtons($EditPage, &$buttons) {
 		$this->buttons = $buttons;
-
-		// Change it to hide
-		$buttons['save'] = $buttons['preview'] = '';
+		if(isset($this->buttons['diff'])) {
+			unset( $this->buttons['diff'] );
+			$buttons = array('diff' => $buttons['diff'] );
+		} else {
+			$buttons = array();
+		}
 		return true;
 	}
 

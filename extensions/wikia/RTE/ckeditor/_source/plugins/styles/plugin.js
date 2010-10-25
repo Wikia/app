@@ -1261,19 +1261,23 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 	function applyStyle( document, remove )
 	{
-		// Wikia - start
-		document.fire('applyStyle', {style: this.element, remove: remove});
-		// Wikia - end
-
 		// Get all ranges from the selection.
 		var selection = document.getSelection();
 		var ranges = selection.getRanges();
 		var func = remove ? this.removeFromRange : this.applyToRange;
 
+		// Wikia - start
+		document.fire('applyStyle', {style: this.element, remove: remove, selection: selection, ranges: ranges});
+		// Wikia - end
+		
 		// Apply the style to the ranges.
 		for ( var i = 0 ; i < ranges.length ; i++ )
 			func.call( this, ranges[ i ] );
 
+		// Wikia - start
+		document.fire('afterApplyStyle', {style: this.element, remove: remove, selection: selection, ranges: ranges});
+		// Wikia - end
+		
 		// Select the ranges again.
 		selection.selectRanges( ranges );
 	}

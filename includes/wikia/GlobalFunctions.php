@@ -1084,7 +1084,6 @@ function wfAutomaticReadOnly() {
 function wfBlankImgUrl(){
 	global $wgBlankImgUrl;
 	return $wgBlankImgUrl;
-
 } // end wfBlankImgUrl()
 
 /**
@@ -1152,4 +1151,59 @@ function &wfGetSolidCacheStorage() {
 	global $wgSolidCacheType;
 	$ret =& wfGetCache( $wgSolidCacheType );
 	return $ret;
+}
+
+
+/*
+ * set value of wikia article prop list of type is define in
+ */
+
+function wfSetWikiaPageProp($type, $pageID, $value) {
+	$db = wfGetDB(DB_MASTER, array());
+	$db->replace('page_wikia_props','',
+		array(
+			'page_id' =>  $pageID,
+			'propname' => $type,
+			'props' => serialize($value)
+		)
+	);
+}
+
+
+/*
+ * get value of wikia article prop list of type is define in
+ */
+
+function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE) {
+	$db = wfGetDB($db, array());
+	$res = $db->select('page_wikia_props',
+		array('props'),
+		array(
+			'page_id' =>  $pageID,
+			'propname' => $type,
+		),
+		__METHOD__
+	);
+	
+	if($out = $db->fetchRow($res)) {
+		return unserialize($out['props']);
+	}
+
+	return null;
+}
+
+
+/*
+ * delete value of wikia article prop
+ */
+
+function wfDeleteWikiaPageProp($type, $pageID) {
+	$db = wfGetDB(DB_MASTER, array());
+	$res = $db->delete('page_wikia_props',
+		array(
+			'page_id' =>  $pageID,
+			'propname' => $type,
+		),
+		__METHOD__
+	);
 }

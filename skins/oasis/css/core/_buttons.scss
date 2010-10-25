@@ -99,14 +99,13 @@ This list-based button is used in the page header for edit/history/delete action
 	a:hover {
 		text-decoration: none;
 	}
-	>li {
-		float: left; /*IE7 don't take out*/
-		>a {
-			border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
-			color: $color-button-text;
-			display: inline-block;
-			padding: 0 8px 0 5px;
-		}
+	>li>a, >li>span {
+		border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
+		color: $color-button-text;
+		display: inline;
+		margin-right: 4px;
+		padding-right: 4px;
+		position: relative;
 	}
 	ul {
 		background: $color-page;

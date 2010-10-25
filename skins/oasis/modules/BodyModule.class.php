@@ -128,7 +128,7 @@ class BodyModule extends Module {
 
 		$railModuleList = array();
 
-		$spotlightsParams = array('mode'=>'RAIL', 'adslots'=>array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule', 'adGroupName'=>'SPOTLIGHT_RAIL');
+		$spotlightsParams = array('mode'=>'RAIL', 'adslots'=> array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule', 'adGroupName'=>'SPOTLIGHT_RAIL');
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -160,6 +160,11 @@ class BodyModule extends Module {
 				if($wgEnableSpotlightsV2_Rail) {
 					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 				}
+			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
+					$railModuleList = array (
+						1501 => array('Search', 'Index', null),
+						1500 => array('PageLayoutBuilderForm', 'Index', null)
+					);
 			}
 			else {
 				// don't show any module for MW core special pages
@@ -174,7 +179,6 @@ class BodyModule extends Module {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 			);
-
 		}
 
 		// Content, category and forum namespaces
@@ -269,6 +273,7 @@ class BodyModule extends Module {
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 
 		wfProfileOut(__METHOD__);
+
 		return $railModuleList;
 	}
 

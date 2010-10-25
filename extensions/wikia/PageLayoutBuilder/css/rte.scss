@@ -1,0 +1,40 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/core/color";
+
+.plb-rte-widget {
+	display: inline;
+	zoom: 1;
+	display: inline-block;
+	
+	border: 1px solid $color-page-border;
+	background: $color-secondary-button;
+	padding: 1px 4px;
+	
+	cursor: pointer;
+	
+	.plb-rte-widget-caption {
+		display: block;
+		font-weight: bold;
+	}
+}
+
+
+
+.plb-rte-widget-plb_input {
+	display: inline-block;
+}
+
+.plb-rte-widget-plb_mlinput {
+	display: block;
+	
+	.plb-rte-widget-sample-text {
+		display: block;
+	}
+}
+
+.plb-rte-widget-plb_image {
+	padding-bottom: 4px;
+}

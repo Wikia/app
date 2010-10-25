@@ -1,0 +1,11 @@
+//
+// Java policy file with bulletproof permissions to avoid problems with
+// restricted Java environment. On Mac OS X, in particular, the JDK default
+// default policy file is quite locked down.
+//
+// See http://forums.seleniumhq.org/thread.jspa?messageID=35076#35076
+
+grant {
+	permission java.security.AllPermission;
+};
+

@@ -1,0 +1,92 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/rail-module";
+
+div.plb-article-form-space {
+	@include clearfix;
+	padding-bottom: 5px;
+	&.separator {
+		border-bottom: 1px solid $color-page-border;
+		margin-bottom: 10px;
+		padding: 0 0 15px 0;
+	}
+	&.form {
+		padding-bottom: 15px;
+	}
+}
+
+ul.plb-form-actions {
+	list-style: none;
+	li {
+		float: left;
+		padding-left:1px;
+		padding-right:1px;
+		span {
+			margin-right:8px;
+		}
+	}
+}
+
+.FormCornerModule {
+	@include rail-module;
+	@include clearfix;
+
+	a.more {
+		clear:both;
+	}
+	p {
+		margin-bottom:10px;
+		span {
+			font-size: 16px;
+		}
+	}
+	ul {
+		list-style: none;
+		margin-top:20px;
+		li {
+			float: left;
+			height:24px;
+			line-height:24px;
+			padding-right:4px;
+		}
+		.username {
+			line-height: 12px;
+		}
+	}
+}
+
+.plb-empty-input {
+	color:gray;
+}
+
+.plb-mlinput-textarea {
+	height: 200px;
+	width: 670px;
+}
+
+.WikiaArticle{
+	p.plb-form-caption-p {
+			margin: 0;
+			font-weight: bold;
+		}
+}
+
+.plb-input {
+	width: 99%;
+}
+
+.plb-form-errorbox {
+	background-color:#FFFFCC;
+	border:1px solid #AAAAAA;
+	width:100%;
+	ul {
+		padding-left:30px;
+	}
+	strong {
+		padding-left:13px;
+		list-style:none outside none;
+	}
+}

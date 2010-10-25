@@ -3538,8 +3538,11 @@ class Parser
 					$dataIdx = RTEData::put('placeholder', array('type' => 'ext', 'wikitextIdx' => $wikitextIdx));
 					return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 				}
+
+				//echo "1";
 			}
 			else {
+				//echo "2";
 				RTE::log(__METHOD__, "skipped default placeholder for <{$name}>");
 
 				// restore value of $content
@@ -3587,6 +3590,10 @@ class Parser
 						if ( !is_callable( $this->mTagHooks[$name] ) ) {
 							throw new MWException( "Tag hook for $name is not callable\n" );
 						}
+						# PLB - begin
+						# @author: Tomasz Odrobny
+						$this->mCurrentTagName = $name;
+						# PLB - end 
 						$output = call_user_func_array( $this->mTagHooks[$name],
 							array( $content, $attributes, $this ) );
 					} else {

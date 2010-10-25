@@ -131,8 +131,6 @@ window.RTE = {
 
 		// add and position wrapper for extra RTE stuff
 		$('<div id="RTEStuff" />').appendTo('body');
-		RTE.repositionRTEStuff();
-		$(window).bind('resize', RTE.repositionRTEStuff);
 
 		// make textarea wysiwygable and store editor instance object
 		RTE.instance = CKEDITOR.replace('wpTextbox1', RTE.config);
@@ -202,6 +200,8 @@ window.RTE = {
 			css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
 		}
 
+		GlobalTriggers.fire('rterequestcss',css);
+
 		for (var n=0; n<css.length; n++) {
 			var cb = ( (css[n].indexOf('?') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
 			RTE.instance.addCss('@import url(' + css[n] + cb + ');');
@@ -253,9 +253,6 @@ window.RTE = {
 			editor.fire('modeSwitch');
 		}
 
-		// reposition #RTEStuff
-		RTE.repositionRTEStuff();
-
 		// ok, we're done!
 		RTE.loaded = true;
 		RTE.loading(false);
@@ -272,6 +269,11 @@ window.RTE = {
 
 		// let extensions do their tasks when RTE is fully loaded
 		$(document.body).add(window).trigger('rteready');
+		GlobalTriggers.fire('rteready',RTE.instance);
+
+		// reposition #RTEStuff
+		RTE.repositionRTEStuff();
+		$(window).bind('resize', RTE.repositionRTEStuff);
 
 		if(!RTE.config.startupFocus) {
 			setTimeout(function() {RTE.instance.focus(); }, 100);
@@ -310,16 +312,14 @@ window.RTE = {
 
 	// reposition #RTEStuff div
 	repositionRTEStuff: function() {
-		var editorPosition = $('#editform').offset();
-		var toolbarPosition = $('#cke_wpTextbox1').position(); // in Special:CreatePage CKeditor is not the first child of editform
-
-		if (!toolbarPosition) {
-			toolbarPosition = {top: 0};
-		}
+		$('#RTEStuff').css({left:0,top:0});
+		var bodyPadding = $('#RTEStuff').offset();
+		
+		var editorPosition = $('#cke_contents_wpTextbox1').offset();
 
 		$('#RTEStuff').css({
-			'left': parseInt(editorPosition.left) + 'px',
-			'top': parseInt(editorPosition.top + toolbarPosition.top + $('#cke_top_wpTextbox1').height()) + 'px'
+			'left': parseInt(editorPosition.left - bodyPadding.left) + 'px',
+			'top': parseInt(editorPosition.top - bodyPadding.top) + 'px'
 		});
 	},
 
@@ -620,6 +620,8 @@ jQuery.fn.setType = function(type) {
 
 // load RTE on DOM ready
 jQuery(function() {
+	GlobalTriggers.fire('rtebeforeinit',RTE,CKEDITOR);
+
 	RTE.log('starting...');
 
 	// select initial mode

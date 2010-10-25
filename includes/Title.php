@@ -2141,15 +2141,22 @@ class Title {
 	 * @return \type{\bool} true if the update succeded
 	 */
 	public function invalidateCache() {
+		global $wgMemc;
 		if( wfReadOnly() ) {
 			return;
 		}
+		
 		$dbw = wfGetDB( DB_MASTER );
+		$ts = $dbw->timestamp();
 		$success = $dbw->update( 'page',
 			array( 'page_touched' => $dbw->timestamp() ),
 			$this->pageCond(),
 			__METHOD__
 		);
+
+		$key = wfMemcKey("page_touched",implode("_", $this->pageCond()));
+		$wgMemc->set( $key,  $ts, 60 );
+
 		HTMLFileCache::clearFileCache( $this );
 		return $success;
 	}
@@ -3525,6 +3532,7 @@ class Title {
 	public function getTouched( $db = NULL ) {
 		$db = isset($db) ? $db : wfGetDB( DB_SLAVE );
 		$touched = $db->selectField( 'page', 'page_touched', $this->pageCond(), __METHOD__ );
+		echo $touched;
 		return $touched;
 	}
 

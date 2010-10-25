@@ -1,0 +1,34 @@
+AllMessages,This is a list of system messages available in the MediaWiki
+AllPages,Display pages starting at:
+AncientPages,Oldest pages
+BrokenRedirects,The following redirects link
+Categories,Display categories starting at:
+CategoryTree,Show category tree
+Contact,Contact Wikia
+Contributions,Show contributions of new accounts only
+Disambiguations,A page is treated as disambiguation page
+DoubleRedirects,The following data
+Editcount,User:
+FewestRevisions,Pages with the fewest revisions
+ImageList,This special page shows all uploaded files.
+InviteSpecialPage,Choose from your existing contacts:
+ListRedirects,redirects
+ListUsers,Display users starting at
+Log,Combined display of
+LonelyPages,The following pages are not linked from or transcluded into other pages in
+LongPages,Long pages
+NewImages,Gallery of new files
+NewPages,Namespace
+ProblemReports,Total number of reports
+ProtectedTitles,Namespace
+RecentChanges,Recent changes
+RecentChangesLinked,Related changes
+ShortPages,Short pages
+TagsReport,pages, which contain special tag
+UncategorizedImages,Uncategorized files
+UncategorizedPages,Uncategorized pages
+UnusedImages,Please note that other web sites may link
+UnusedTemplates,This page lists all pages in the
+UserLogin,Username
+Version,This wiki is powered by
+WithoutInterwiki,Pages without language links
