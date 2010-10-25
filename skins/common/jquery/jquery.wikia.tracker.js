@@ -14,6 +14,8 @@ function getTarget(ev) {
 */
 
 jQuery.tracker = function() {
+	var isOasis = (window.skin == 'oasis');
+	var content = isOasis ? $('#WikiaArticle') : $('#bodyContent');
 
     // Page view
     if(wgIsArticle) {
@@ -28,7 +30,7 @@ jQuery.tracker = function() {
     // Recent changes tracking
     if(wgCanonicalSpecialPageName == 'Recentchanges') {
         $.tracker.byStr('RecentChanges/view');
-        $('#bodyContent').click(function (e) {
+        content.click(function (e) {
             var target = getTarget(e);
             if($.nodeName(target, 'a')) {
                 if($.nodeName(target.parentNode, 'fieldset')) {
@@ -163,9 +165,6 @@ jQuery.tracker = function() {
 
 	// tracking for article content links (done by Nef / updated by Macbre)
 	if (wgIsArticle && wgArticleId > 0) {
-		var isOasis = (window.skin == 'oasis');
-		var content = isOasis ? $('#WikiaArticle') : $('#bodyContent');
-
 		// catch all clicks inside article content, but track clicks on links only
 		content.click(function(e) {
 			var track = function(fakeUrl) {
