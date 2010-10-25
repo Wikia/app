@@ -12,7 +12,10 @@ class AdSS_Publisher {
 		$adsRendered = array();
 		$minExpire = 60*60 + time();
 		foreach( $ads as $ad ) {
-			$adsRendered[] = $ad->render();
+			$adsRendered[] = array(
+					'id'   => $ad->id,
+					'html' => $ad->render(),
+					);
 			if( $minExpire > $ad->expires ) {
 				$minExpire = $ad->expires;
 			}
