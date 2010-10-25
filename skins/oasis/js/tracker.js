@@ -244,13 +244,15 @@ var initTracker = function() {
 		else if (node.hasClass('more')) {
 			$.tracker.byStr(fakeUrl + 'more');
 		}
-		// user page links
-		else if (node.hasParent('details')) {
-			$.tracker.byStr(fakeUrl + 'username');
-		}
-		// items
-		else if (node.hasParent('li')) {
-			$.tracker.byStr(fakeUrl + 'article');
+		else if (node.hasParent('em')) {
+			// user page links
+			if (node.index() == 0) {
+				$.tracker.byStr(fakeUrl + 'username');
+			}
+			// page name
+			else {
+				$.tracker.byStr(fakeUrl + 'article');
+			}
 		}
 	});
 
