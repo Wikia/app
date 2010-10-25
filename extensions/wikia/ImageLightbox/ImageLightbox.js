@@ -1,4 +1,7 @@
 var ImageLightbox = {
+	// store element which was clicked to trigger lightbox - custom event will be fired when lightbox will be shown
+	target: false,
+
 	log: function(msg) {
 		$().log(msg, 'ImageLightbox');
 	},
@@ -89,6 +92,9 @@ var ImageLightbox = {
 		if (ev.ctrlKey) {
 			return;
 		}
+
+		// store clicked element
+		this.target = target;
 
 		// handle lightboxes for external images
 		if (target.hasClass('link-external')) {
@@ -205,6 +211,12 @@ var ImageLightbox = {
 				// RT #69824
 				if (window.skin == 'oasis') {
 					lightbox.css('top', lightbox.getModalTopOffset());
+				}
+
+				// fire custom event (RT #74852)
+				if (self.target) {
+					self.target.trigger('lightbox', [lightbox]);
+					self.target = false;
 				}
 
 				// remove lock
