@@ -149,12 +149,17 @@ class Editcount extends SpecialPage {
 
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$res = $dbs->select(
-			array( 'city_user_edits' ),
-			array( 'ue_edit_namespace as namespace', 'ue_edit_count as count' ),
+			array( 'events' ),
+			array( 'page_ns as namespace', 'count(page_ns) as count' ),
 			array(
-				'ue_user_id' => $uid
+				'user_id' => $uid,
+				' ( event_type = 1 ) or ( event_type = 2 ) '
 			),
-			__METHOD__
+			__METHOD__,
+			array (
+				'GROUP BY' => 'page_ns',
+				'ORDER BY' => 'null'
+			)
 		);
 
 		while( $row = $dbs->fetchObject( $res ) ) {

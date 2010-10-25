@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<table class="ecmaintable">
+<table class="TablePager">
 <tr>
 	<th rowspan="2" class="ecrowright" valign="bottom"><?=$total?></th>
 	<th colspan="2" class="ecrowcenter"><?=$wikiName?></th>
