@@ -20,7 +20,6 @@ class AdSS_Controller extends SpecialPage {
 
 		$adForm = new AdSS_AdForm();
 		if ( $wgRequest->wasPosted() && AdSS_Util::matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
-			$submitType = $wgRequest->getText( 'wpSubmit' );
 			$adForm->loadFromRequest( $wgRequest );
 			if( $wgUser->isAllowed( 'adss-admin' ) ) {
 				$this->saveSpecial( $adForm );
@@ -59,11 +58,9 @@ class AdSS_Controller extends SpecialPage {
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
-		if( $wgUser->isAllowed( 'adss-admin' ) ) {
-			$tmpl->set( 'submit', 'Add this ad NOW' );
-		} else {
-			$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
-		}
+		$tmpl->set( 'login', wfMsgHtml( 'adss-button-login' ) );
+		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
+		$tmpl->set( 'isAdmin', $wgUser->isAllowed( 'adss-admin' ) );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
@@ -76,7 +73,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function save( $adForm ) {
-		global $wgOut, $wgPayPalUrl;
+		global $wgOut, $wgPayPalUrl, $wgRequest;
 
 		if( !$adForm->isValid() ) {
 			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/view/errors")' );
@@ -84,8 +81,21 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
-		//TODO: authenticate as an existing advertiser (using password) or register new account
-		// (for now, authenticate via PayPal)
+		if( $wgRequest->getText( 'wpSubmit' ) == wfMsgHtml( 'adss-button-login' ) ) {
+			$user = AdSS_User::newFromForm( $adForm );
+			if( $user ) {
+				$pp = PaymentProcessor::newFromUserId( $user->id );
+				if( $pp && $pp->getBillingAgreement() ) {
+					$this->saveAdInternal( $adForm, $user, "adss/form/save" );
+					return;
+				}
+			} else {
+				$adForm->errors['wpEmail'] = wfMsgHtml( 'adss-form-auth-errormsg' );
+				$this->displayForm( $adForm );
+				return;
+			}
+		}
+
 		$selfUrl = $this->getTitle()->getFullURL();
 		$returnUrl = $selfUrl . '/paypal/return';
 		$cancelUrl = $selfUrl . '/paypal/cancel';
@@ -113,8 +123,11 @@ class AdSS_Controller extends SpecialPage {
 		}
 
 		$user = AdSS_User::newFromForm( $adForm );
-		if( !$user->loadFromDB() ) {
-			$user->save();
+		if( !$user ) {
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/view/errors")' );
+			$adForm->errors['wpEmail'] = wfMsgHtml( 'adss-form-auth-errormsg' );
+			$this->displayForm( $adForm );
+			return;
 		}
 
 		$ad = AdSS_Ad::newFromForm( $adForm );
@@ -175,16 +188,22 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
+		$this->saveAdInternal( $adForm, $user, "adss/form/paypal/return" );
+	}
+
+	private function saveAdInternal( $adForm, $user, $fakeUrl ) {
+		global $wgOut, $wgAdSS_contactEmail;
+
 		$ad = AdSS_Ad::newFromForm( $adForm );
 		$ad->setUser( $user );
 		$ad->save();
 		if( $ad->id == 0 ) {
-			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/return/error")' );
+			$wgOut->addInlineScript( '$.tracker.byStr("'.$fakeUrl.'/error")' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
 			return;
 		}
 
-		$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/return/ok")' );
+		$wgOut->addInlineScript( '$.tracker.byStr("'.$fakeUrl.'/ok")' );
 		$wgOut->addHTML( wfMsgWikiHtml( 'adss-form-thanks' ) );
 
 		if( !empty( $wgAdSS_contactEmail ) ) {

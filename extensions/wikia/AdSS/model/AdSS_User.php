@@ -16,28 +16,43 @@ class AdSS_User {
 		$this->newpassword = '';
 	}
 
-	static function newFromForm( $f ) {
-		$user = new AdSS_User();
-		$user->loadFromForm( $f );
-		return $user;
+	static function newFromId( $id ) {
+		global $wgAdSS_DBname;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$row = $dbr->selectRow( 'users', '*', array( 'user_id' => $id ), __METHOD__ );
+		if( $row ) {
+			$user = self::newFromRow( $row );
+			if( $user->id == $id ) {
+				return $user;
+			}
+		}
+		return false;
 	}
 
-	static function newFromId( $id ) {
-		$user = new AdSS_User();
-		$user->id = $id;
-		$user->loadFromDB();
-		return $user;
+	static function newFromForm( $f ) {
+		global $wgAdSS_DBname;
+
+		$email = $f->get( "wpEmail" );
+		$password = $f->get( "wpPassword" );
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$res = $dbr->select( 'users', '*', array( 'user_email' => $email ), __METHOD__ );
+
+		foreach( $res as $row ) {
+			$user = self::newFromRow( $row );
+			if( $user->password == md5( $user->id . $password ) ) {
+				$dbr->freeResult( $res );
+				return $user;
+			}
+		}
+		return false;
 	}
 
 	static function newFromRow( $row ) {
-		$user = new AdSS_User();
+		$user = new self();
 		$user->loadFromRow( $row );
 		return $user;
-	}
-
-	function loadFromForm( $f ) {
-		//todo
-		$this->email = $f->get( 'wpEmail' );
 	}
 
 	function loadFromRow( $row ) {
@@ -48,30 +63,6 @@ class AdSS_User {
 		$this->email = $row->user_email;
 		$this->password = $row->user_password;
 		$this->newpassword = $row->user_newpassword;
-	}
-
-	function loadFromDB() {
-		global $wgAdSS_DBname;
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
-		if( $this->id > 0 ) {
-			$conds = array( 'user_id' => $this->id );
-		} else {
-			if( !empty( $this->email ) ) {
-				$conds = array( 'user_email' => $this->email );
-			} else {
-				// invalid key
-				return false;
-			}
-		}
-		$row = $dbr->selectRow( 'users', '*', $conds, __METHOD__ );
-		if( $row === false ) {
-			$this->id = 0;
-			return false;
-		} else {
-			$this->loadFromRow( $row );
-			return true;
-		}
 	}
 
 	function save() {
