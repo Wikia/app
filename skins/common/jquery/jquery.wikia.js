@@ -1,5 +1,3 @@
-$G = function(id) {return document.getElementById(id)};
-
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
 
@@ -531,3 +529,184 @@ jQuery.fn.placeholder = function() {
 		});
 	}
 }
+
+$.extend({
+	createClass: function (sc,o) {
+//		$().log(sc,'createClass-superclass');
+//		$().log(o,'createClass-overrides');
+		if (typeof o.constructor != 'function' || o.constructor == Object.prototype.constructor) {
+			o.constructor = function(){sc.apply(this,arguments);};
+//			$().log('constructor created','createClass');
+		}
+		var bc = o.constructor;
+		var f = function() {};
+		f.prototype = sc.prototype || {};
+		bc.prototype = new f();
+		for (var m in o)
+			bc.prototype[m] = o[m];
+		bc.prototype.constructor = bc;
+		bc.superclass = sc.prototype;
+		return bc;
+	}
+});
+
+Observable = $.createClass(Object,{
+	constructor: function() {
+		Observable.superclass.constructor.apply(this,arguments);
+		this.events = {};
+	},
+	
+	bind: function(e,cb,scope) {
+		if (typeof e == 'object') {
+			for (var i in e) {
+				if (i !== 'scope') {
+					this.bind(i,e[i],e.scope||scope);
+				}
+			}
+		} else {
+			scope == scope || this;
+			this.events[e] = this.events[e] || [];
+			this.events[e].push({
+				fn: cb,
+				scope: scope
+			});
+		}
+		return true;
+	},
+	
+	unbind: function(e,cb,scope) {
+		if (typeof e == 'object') {
+			for (var i in e) {
+				if (i !== 'scope') {
+					this.unbind(i,e[i],e.scope||scope);
+				}
+			}
+		}
+		if (!this.events[e]) {
+			return false;
+		}
+		scope == scope || this;
+		for (i in this.events[e]) {
+			if (this.events[e][i].fn == cb && this.events[e][i].scope == scope) {
+				delete this.events[e][i];
+				return true;
+			}
+		}
+		return false;
+	},
+	
+	on: function(e,cb) {
+		this.bind.apply(this,arguments);
+	},
+	
+	un: function(e,cb) {
+		this.unbind.apply(this,arguments);
+	},
+	
+	relayEvent: function(o,e,te) {
+		te = te || e;
+		o.bind(e,function() {
+			var a = [te].concat(arguments);
+			this.fire.apply(this,a);
+		},this);
+	},
+	
+	fire: function(e) {
+		var a = Array.prototype.slice.call(arguments,1);
+		if (!this.events[e])
+			return;
+		var ee = this.events[e];
+		for (i=0;i<ee.length;i++) {
+			if (typeof ee[i].fn == 'function') {
+				var scope = ee[i].scope || this;
+				if (ee[i].fn.apply(scope,a) === false) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+});
+
+GlobalTriggers = (function(){
+	var GlobalTriggersClass = $.createClass(Observable,{
+		
+		fired: null,
+		
+		constructor: function() {
+			GlobalTriggersClass.superclass.constructor.apply(this);
+			this.fired = {};
+		},
+		
+		bind: function(e,cb) {
+			GlobalTriggersClass.superclass.bind.apply(this,arguments);
+			if (typeof e == 'object') {
+				return;
+			}
+			
+			if (typeof this.fired[e] != 'undefined') {
+				var a = this.fired[e].slice(0);
+				setTimeout(function(){
+					for (i=0;i<a.length;i++) {
+						cb.apply(window,a[i]);
+					}
+				},10);
+			}
+		},
+		
+		fire: function(e) {
+			var a = Array.prototype.slice.call(arguments,1);
+			this.fired[e] = this.fired[e] || [];
+			this.fired[e].push(a);
+			GlobalTriggersClass.superclass.fire.apply(this,arguments);
+		}
+		
+	});
+	return new GlobalTriggersClass();
+})();
+
+Timer = $.createClass(Object,{
+	
+	callback: null,
+	timeout: 1000,
+	timer: null,
+	
+	constructor: function ( callback, timeout ) {
+		this.callback = callback;
+		this.timeout = timeout || this.timeout;
+	},
+	
+	run: function () {
+		this.callback.apply(window);
+	},
+	
+	start: function ( timeout ) {
+		this.stop();
+		timeout = timeout || this.timeout;
+		this.timer = setTimeout(this.callback,timeout);
+	},
+	
+	stop: function () {
+		if (this.timer != null) {
+			clearTimeout(this.timer);
+			this.timer = null;
+		}
+	}
+	
+});
+
+$.extend(Timer,{
+	
+	create: function( callback, timeout ) {
+		var timer = new Timer(callback,timeout);
+		return timer;
+	},
+	
+	once: function ( callback, timeout ) {
+		var timer = Timer.create(callback,timeout);
+		timer.start();
+		return timer;
+	}
+	
+})

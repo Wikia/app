@@ -234,7 +234,9 @@ class RTE {
 		// add disabled='disabled' attribute
 		$buttons = array('save', 'preview', 'diff');
 		foreach($buttons as $button) {
-			$checkboxes[$button] = substr($checkboxes[$button], 0, -3) . ' disabled="disabled" />';
+			if(!empty($checkboxes[$button])) {
+				$checkboxes[$button] = substr($checkboxes[$button], 0, -3) . ' disabled="disabled" />';
+			}
 		}
 
 		wfProfileOut(__METHOD__);

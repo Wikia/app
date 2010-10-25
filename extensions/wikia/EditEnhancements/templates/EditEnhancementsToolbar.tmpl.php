@@ -55,16 +55,19 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#wpDiff').addClass('secondary');
-		$('.editHelp').prepend(' | ');
+		if($("#wpDiff").length > 0) {
+			$('#wpDiff').addClass('secondary');
+			$('.editHelp').prepend(' | ');
+		}
 	});
 </script>
 
 <div class="<?= ($skinname == 'SkinMonaco' ? 'accent clearfix' : '') ?>" id="edit_enhancements_toolbar">
 	<ul>
 		<li><?=$summary ?></div></li>
-		<li><?=$buttons['save'] ?></li>
-		<li><?=$buttons['preview'] ?></li>
+		<?php foreach($buttons as $value): ?>
+			<li><?=$value ?></li>
+		<?php endforeach; ?>
 		<li class="minor"><?=$checkboxes['minor'] ?></li>
 		<li><?=$checkboxes['watch'] ?></li>
 		<?php if ($action != 'edit' || $undo) { ?>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+    <ci>
+        <user>
+            <regular>
+                <username></username>
+                <password></password>
+            </regular>
+            <facebook>
+                <username></username>
+                <password></password>
+            </facebook>
+            <wikiabot>
+                <username></username>
+                <password></password>
+            </wikiabot>
+            <wikiastaff>
+                <username></username>
+                <password></password>
+            </wikiastaff>
+            <wikiasysop>
+                <username></username>
+                <password></password>
+            </wikiasysop>
+            <daishkendes>
+                <username></username>
+                <password></password>
+            </daishkendes>
+        </user>
+        <extension>
+            <wikia>
+                <PageLayoutBuilder>
+                </PageLayoutBuilder>
+            </wikia>
+        </extension>
+    </ci>
+    <development extends="ci">
+    </development>
+</configdata>

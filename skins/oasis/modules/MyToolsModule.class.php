@@ -97,6 +97,8 @@ class MyToolsModule extends Module {
 			);
 		}
 
+		wfRunHooks('MyTools::getDefaultTools', array(&$out));
+
 		return $out;
 	}
 

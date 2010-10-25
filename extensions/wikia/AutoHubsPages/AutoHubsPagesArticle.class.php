@@ -106,7 +106,6 @@ class AutoHubsPagesArticle extends Article {
 
 		return true;
 	}
-
 }
 
 

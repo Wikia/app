@@ -329,6 +329,8 @@ class PageHeaderModule extends Module {
 					$this->actionImage = '';
 					$this->actionName = 'edit';
 					$this->dropdown = array('foo', 'bar');
+				} elseif($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
+					$this->subtitle = "";
 				}
 				break;
 

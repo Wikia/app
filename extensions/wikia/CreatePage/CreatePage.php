@@ -121,7 +121,7 @@ function wfCreatePageAjaxGetDialog() {
 
 	$options['format'] = array(
 		'namespace' => NS_MAIN,
-		'label' => 'createpage-dialog-format',
+		'label' => wfMsg( 'createpage-dialog-format' ),
 		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
 		'trackingId' => 'standardlayout',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
@@ -129,13 +129,14 @@ function wfCreatePageAjaxGetDialog() {
 
 	$options['blank'] = array(
 		'namespace' => NS_MAIN,
-		'label' => 'createpage-dialog-blank',
+		'label' => wfMsg( 'createpage-dialog-blank' ),
 		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_blank.png",
 		'trackingId' => 'blankpage',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit"
 	);
 
-	wfRunHooks( 'CreatePage::FetchOptions', array( &$options ) );
+	$listtype = "short";
+	wfRunHooks( 'CreatePage::FetchOptions', array( &$options, &$listtype ) );
 
 	$optionsCount = count( $options );
 	$detectedWidth = ( $optionsCount * CREATEPAGE_ITEM_WIDTH );
@@ -162,7 +163,8 @@ function wfCreatePageAjaxGetDialog() {
 
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
-			'options' => $options
+			'options' => $options,
+			'type' => $listtype
 		)
 	);
 

@@ -63,6 +63,8 @@ class RTEData {
 			}
 		}
 
+		return self::convertDataToAttributes($data);
+		/*
 		// generate unique CK instance ID
 		$instance =  RTE:: getInstanceId();
 
@@ -71,5 +73,25 @@ class RTEData {
 		$encoded = Sanitizer::encodeAttribute($encoded);
 
 		return " _rte_data=\"{$encoded}\" _rte_instance=\"{$instance}\" ";
+		*/
+	}
+
+	public static function convertDataToAttributes($data) {
+		// generate unique CK instance ID
+		$instance =  RTE:: getInstanceId();
+
+		// properly encode JSON
+		$encoded = RTEReverseParser::encodeRTEData($data);
+		$encoded = Sanitizer::encodeAttribute($encoded);
+
+		return " _rte_data=\"{$encoded}\" _rte_instance=\"{$instance}\" ";
+	}
+
+	public static function addDataToTag($data, $text) {
+		$firstSpace = strpos($text, ' ');
+		if($data === null || $firstSpace === false) {
+			return $text;
+		}
+		return substr($text, 0, $firstSpace) . ' ' . self::convertDataToAttributes($data) . ' ' . substr($text, $firstSpace + 1);
 	}
 }

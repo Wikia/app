@@ -140,6 +140,7 @@ $.fn.extend({
 
 		// macbre: function called when modal is closed
 		var onClose = (typeof settings.onClose == 'function') ? settings.onClose : false;
+		var closeOnBlackoutClick = (typeof settings.closeOnBlackoutClick == 'boolean') ? settings.closeOnBlackoutClick : true;
 
 		wrapper.find('.close').bind("click", function() {
 			var wrapper = $(this).closest('.modalWrapper');
@@ -195,6 +196,10 @@ $.fn.extend({
 			.css({zIndex: zIndex})
 			.fadeTo("fast", 0.65)
 			.bind("click", function() {
+				if (!closeOnBlackoutClick) {
+					return;
+				}
+				
 				if (onClose) {
 					// let extension decide what to do
 					// close can be prevented by onClose() returning false
@@ -202,12 +207,12 @@ $.fn.extend({
 						return;
 					}
 				}
-
-			if (persistent) {
-				wrapper.hideModal();
-			} else {
-				wrapper.closeModal();
-			}
+				
+				if (persistent) {
+					wrapper.hideModal();
+				} else {
+					wrapper.closeModal();
+				}
 		});
 
 		if (skin == "oasis") {
@@ -217,6 +222,8 @@ $.fn.extend({
 		}
 
 		wrapper.data('blackout', blackout);
+		
+		return wrapper;
 	},
 
 

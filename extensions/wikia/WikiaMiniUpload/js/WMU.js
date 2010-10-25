@@ -839,6 +839,7 @@ function WMU_displayDetails(responseText) {
 			WMU_slider.setValue(125, true);
 		}
 		$G('ImageLinkRow').style.display = 'none';
+
 	}
 	if ($G( 'WMU_error_box' )) {
 		alert( $G( 'WMU_error_box' ).innerHTML );
@@ -888,6 +889,12 @@ function WMU_displayDetails(responseText) {
 			$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
 //		}
 //	}
+
+	if(typeof(WMU_Event_OnLoadDetails) == "function") {
+		setTimeout(function() {
+			WMU_Event_OnLoadDetails();
+		},100);
+	}
 	WMU_indicator(1, false);
 }
 
@@ -972,7 +979,7 @@ function WMU_insertImage(e, type) {
 		}
 	}
 
-        if( -2 == WMU_gallery ) { // placeholder magic
+	if( -2 == WMU_gallery ) { // placeholder magic
 		if( 0 == WMU_link ) {
 			if( $G('ImageUploadLink') ) {
 				if( '' != $G('ImageUploadLink').value ) {
@@ -982,7 +989,7 @@ function WMU_insertImage(e, type) {
 		} else  {
 			params.push( 'link=' + WMU_link );
 		}
-        }
+	}
 
 	var callback = {
 		success: function(o) {

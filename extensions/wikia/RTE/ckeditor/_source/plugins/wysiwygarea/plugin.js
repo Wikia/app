@@ -29,6 +29,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			if ( this.dataProcessor )
 				data = this.dataProcessor.toHtml( data );
 
+			// Wikia - start
+			var eventDataEx = {
+				insertType: 'html',
+				selection: selection,
+				ranges: selection && selection.getRanges(),
+				data: data
+			};
+			this.fire('beforeInsertContent',eventDataEx);
+			// Wikia - end
+			
 			if ( CKEDITOR.env.ie )
 			{
 				var selIsLocked = selection.isLocked;
@@ -49,6 +59,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			CKEDITOR.tools.setTimeout( function()
 				{
+					// Wikia - start
+					this.fire('afterInsertContent',eventDataEx);
+					// Wikia - end
 					this.fire( 'saveSnapshot' );
 				}, 0, this );
 		}
@@ -73,6 +86,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			if ( selIsLocked )
 				selection.unlock();
 
+			// Wikia - start
+			var eventDataEx = {
+				insertType: 'element',
+				selection: selection,
+				ranges: selection && selection.getRanges(),
+				element: element
+			};
+			this.fire('beforeInsertContent',eventDataEx);
+			// Wikia - end
+			
 			var range, clone, lastElement, bookmark;
 
 			for ( var i = ranges.length - 1 ; i >= 0 ; i-- )
@@ -135,6 +158,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// 'insertElement' to be included either, e.g. Form-based dialogs' 'commitContents'
 			// call.
 			CKEDITOR.tools.setTimeout( function(){
+				// Wikia - start
+				this.fire('afterInsertContent',eventDataEx);
+				// Wikia - end
 				this.fire( 'saveSnapshot' );
 			}, 0, this );
 		}

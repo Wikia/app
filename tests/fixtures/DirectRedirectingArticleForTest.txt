@@ -1,0 +1,24 @@
+==Direct redirecting==
+
+{|border="1"
+!interwiki link 
+!rendered url
+|-
+|[http://www.wikia.com/wiki/c:wiedzmin wikia:c:wiedzmin]
+|http://wiedzmin.wikia.com/wiki/
+|-
+|[http://www.wikia.com/wiki/c:wiedzmin w:c:wiedzmin]
+|http://wiedzmin.wikia.com/wiki/
+|-
+|[http://www.wikia.com/wiki/c:wiedzmin:Geralt w:c:wiedzmin:Geralt]
+|http://wiedzmin.wikia.com/wiki/Geralt
+|-
+|[http://www.wikia.com/wiki/c:wowwiki:Stormwind w:c:wowwiki:Stormwind]
+|http://www.wowwiki.com/Stormwind
+|-
+|[http://www.wikia.com/wiki/c:plemiona:User:Adi3ek/Test w:c:plemiona:User:Adi3ek/Test]
+|http://plemiona.wikia.com/wiki/User:Adi3ek/Test
+|-
+|[http://www.wikia.com/wiki/c:memoryalpha:Julian_Bashir w:c:memoryalpha:Julian_Bashir]
+|http://memory-alpha.org/en/wiki/Julian_Bashir
+|}

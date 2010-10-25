@@ -53,7 +53,7 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	private function parseLines($lines, $maxChildrenAtLevel = array()) {
+	public function parseLines($lines, $maxChildrenAtLevel = array()) {
 		wfProfileIn( __METHOD__ );
 
 		$nodes = array();
@@ -124,7 +124,7 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	private function parseOneLine($line) {
+	public function parseOneLine($line) {
 		wfProfileIn( __METHOD__ );
 
 		// trim spaces and asterisks from line and then split it to maximum two chunks

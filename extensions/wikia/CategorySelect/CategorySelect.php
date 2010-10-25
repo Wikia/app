@@ -74,7 +74,7 @@ function CategorySelectInit($forceInit = false) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectInitializeHooks($output, $article, $title, $user, $request) {
+function CategorySelectInitializeHooks($output, $article, $title, $user, $request, $force = false ) {
 	global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
 
 	// Check user preferences option
@@ -93,9 +93,12 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	// Initialize only for namespace:
 	// (a) content (on view)
 	// (b) content, file, user, etc. (on edit)
-	if ( ( !in_array($title->mNamespace, $wgContentNamespaces) && ( $action == 'view' || $action == 'purge' ) )
-		|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) ) {
-		return true;
+	
+	if(!$force) {
+		if ( ( !in_array($title->mNamespace, $wgContentNamespaces) && ( $action == 'view' || $action == 'purge' ) )
+			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) ) {
+			return true;
+		}
 	}
 
 	// Don't initialize on CSS and JS user subpages
@@ -445,6 +448,10 @@ function CategorySelectGetCategoryLinksBegin(&$categoryLinks) {
 function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	global $wgRequest, $wgExtensionsPath, $wgOut, $wgStylePath;
 
+	if(!wfRunHooks ('CategorySelect:beforeDisplayingView', array () )) {
+		return false;
+	}
+
 	$action = $wgRequest->getVal('action', 'view');
 	//for redirected page this hook is ran twice - check for button existence and don't add second one (fixes rt#12223)
 	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
@@ -499,9 +506,12 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	$categories = is_null($wgCategorySelectMetaData) ? '' : CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'wiki');
 
+	$text = "";
+	wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) ) ;
+	
 	$result = '
 	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
-	<div id="csMainContainer">
+	<div id="csMainContainer"> ' . $text . '
 		<div id="csSuggestContainer">
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 		</div>

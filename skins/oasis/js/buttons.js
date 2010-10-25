@@ -14,10 +14,17 @@ var WikiaButtons = {
 		WikiaButtons.timer = null;
 
 		//Events
-		WikiaButtons.menuButtons
-			.one("mouseover", WikiaButtons.setup)
+		WikiaButtons.add(WikiaButtons.menuButtons);
+	},
+	
+	add: function( e, opts ) {
+		var defaults = {
+			click: WikiaButtons.click	
+		};
+		var s = opts ? $.extend(defaults,opts) : defaults;
+		e	.one("mouseover", WikiaButtons.setup)
 			.hover(WikiaButtons.mouseover, WikiaButtons.mouseout)
-			.click(WikiaButtons.click);
+			.click(s.click);
 	},
 
 	setup: function() {
@@ -48,6 +55,13 @@ var WikiaButtons = {
 		}
 	},
 
+	clickToggle: function(event) {
+		var m = $('>li>ul',$(this));
+		if (m.length == 0 || $.contains(m[0],event.target))	
+			return;
+		$(this).toggleClass("active");
+	},
+	
 	mouseover: function() {
 
 		//Stop mouseout timer if running

@@ -226,6 +226,16 @@ class RTEReverseParser {
 
 		$out = '';
 
+
+		if($node->hasAttribute("__custom_ph")) {
+			wfRunHooks('RTEcustomHandleTag', array($node, &$out) );
+			if( $out != '' ) {
+				wfProfileOut(__METHOD__ . "::{$node->nodeName}");
+				wfProfileOut(__METHOD__);
+				return $out;
+			}
+		}
+
 		// handle placeholders
 		if ($node->hasAttribute('_rte_placeholder')) {
 			$out = $this->handlePlaceholder($node, $textContent);
@@ -1651,7 +1661,7 @@ class RTEReverseParser {
 	/**
 	 * Decode and return data stored in _rte_data attribute
 	 */
-	private static function getRTEData($node) {
+	public static function getRTEData($node) {
 		wfProfileIn(__METHOD__);
 
 		$value = $node->getAttribute('_rte_data');

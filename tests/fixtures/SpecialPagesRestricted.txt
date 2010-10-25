@@ -1,0 +1,8 @@
+Block,IP Address or username
+CheckUser,This tool scans recent changes to retrieve the IPs
+MultiLookup,Search for accounts
+MultipleUpload,Upload multiple files
+Preferences,Your e-mail address was authenticated on
+RegexBlock,Use the form below to block write access from a specific IP
+UnwatchedPages,The following data is cached
+Upload,Upload image
