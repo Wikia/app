@@ -221,11 +221,11 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		$wgOut->setPageTitle( $this->editTitle1 );;
 		$wgOut->setHTMLTitle(  strip_tags($this->editTitle1) );
-
+		$wgOut->mPageLinkTitle = true;
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 
 		
-		$oTmpl->set_vars(array(
+		$oTmpl->set_vars( array(
 		    "data" => $this->mFormData,
 			"iserror" => (count($this->mFormErrors) > 0),
 			"errors" => $this->mFormErrors,
@@ -233,7 +233,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			"title2" =>	$this->editTitle2,
 			"showtitle"  => !(!empty($this->isFromDb) && $this->isFromDb),
 			"previewdata" =>  isset($this->previewOut) ?  $this->previewOut:""
-		));
+		) );
 		$wgOut->addHTML( $oTmpl->render("create-form") );
 	}
 
