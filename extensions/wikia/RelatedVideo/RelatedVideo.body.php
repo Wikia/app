@@ -94,7 +94,7 @@ class RelatedVideo extends SpecialPage {
 
 			// 5min video API url.
 			$FiveMinApiParams = array(
-			    "autoStart=true",
+			    "auto_start=true",
 			    "width={$this->playerWidth}",
 			    "height={$this->playerHeight}",
 			    "num_related_return={$this->playerRelatedNo}",
