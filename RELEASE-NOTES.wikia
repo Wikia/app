@@ -7,6 +7,7 @@
 * rt#75110: Opera bugs (macbre)
 * rt#74340: Link suggest type ahead drop down box not styled (macbre)
 * rt#75378: Oasis: Modal popup CSS very broken in Opera (including login popup) (macbre)
+* rt#77776: Video gallery upload dialog overlapped by global nav header (macbre)
 
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
