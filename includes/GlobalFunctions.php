@@ -2678,12 +2678,10 @@ function wfHttpOnlySafe() {
  */
 function wfSetupSession() {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly;
-	global $wgSessionsInRiak, $wgSessionsInTokyoTyrant;
+	global $wgSessionsInRiak;
 
 	if( $wgSessionsInMemcached ) {
 		require_once( 'MemcachedSessions.php' );
-	} elseif ( $wgSessionsInTokyoTyrant ) {
-		require_once( 'wikia/TokyoTyrantSessionsHandler.php' );
 	} elseif ( $wgSessionsInRiak ) {
 		require_once( 'wikia/RiakSessionsHandler.php' );
 	}
@@ -2818,7 +2816,7 @@ function wfSplitWikiID( $wiki ) {
  * Note: multiple calls to wfGetDB(DB_SLAVE) during the course of one request
  * will always return the same object, unless the underlying connection or load
  * balancer is manually destroyed.
- * @return Databases 
+ * @return Databases
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 	return wfGetLB( $wiki )->getConnection( $db, $groups, $wiki );
