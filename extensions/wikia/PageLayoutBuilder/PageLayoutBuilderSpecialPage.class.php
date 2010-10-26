@@ -219,10 +219,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			}
 		}
 
-		$wgOut->setPageTitle( strip_tags($this->editTitle1) );;
-		$wgOut->setHTMLTitle($this->editTitle1 );
+		$wgOut->setPageTitle( $this->editTitle1 );;
+		$wgOut->setHTMLTitle(  strip_tags($this->editTitle1) );
+
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 
+		
 		$oTmpl->set_vars(array(
 		    "data" => $this->mFormData,
 			"iserror" => (count($this->mFormErrors) > 0),

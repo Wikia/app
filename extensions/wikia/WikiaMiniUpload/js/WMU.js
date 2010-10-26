@@ -144,7 +144,7 @@ function WMU_moveBackButton(selector) {
  * Functions/methods
  */
 if(mwCustomEditButtons) {
-	if ( !$G( 'siteSub' )) {
+	if ( $("#siteSub").length == 0 ) {
 		mwCustomEditButtons[mwCustomEditButtons.length] = {
 			"imageFile": stylepath + '/../extensions/wikia/WikiaMiniUpload/images/button_wmu.png',
 			"speedTip": wmu_imagebutton,
