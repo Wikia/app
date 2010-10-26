@@ -5,6 +5,7 @@
 	$widgetHtmlTemplate = $widgetData['html'];
 	$widgetAttributes = $widgetData['attributes'];
 	$widgetRequiredAttributes = $widgetData['required_attributes'];
+	$widgetAttributeCaptions = $widgetData['attribute_captions'];
 	$widgetLogic = $widgetData['logic'];
 ?>
 PageLayoutBuilder.Library['<?php echo $widgetName; ?>'] = {
@@ -13,6 +14,7 @@ PageLayoutBuilder.Library['<?php echo $widgetName; ?>'] = {
 	listItemHtml: <?php echo $widgetHtmlListItem; ?>,
 	templateHtml: <?php echo $widgetHtmlTemplate; ?>,
 	attributes: <?php echo $widgetAttributes; ?>,
+	attributeCaptions: <?php echo $widgetAttributeCaptions; ?>,
 	requiredAttributes: <?php echo $widgetRequiredAttributes; ?><?php echo empty($widgetLogic)?"":","?>
 	<?php echo $widgetLogic; ?>
 };
