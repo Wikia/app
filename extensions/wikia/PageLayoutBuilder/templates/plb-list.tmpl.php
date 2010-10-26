@@ -19,10 +19,13 @@
 		<?php foreach($data as $value): ?>
 			<tr>
 				<td class="name" >
-					<p><?php echo $value['page_title'] ?></p>
+					<p class="layout-name" ><?php echo $value['page_title'] ?></p>
 					<p>
 						<?php foreach ($value['page_actions'] as $action): ?>
 							<a href="<?php echo $action['link'] ?>" class="PLBActionLink <?php echo $action['class'] ?>" ><? echo $action['name']; ?></a>
+							<?php if($action['separator']): ?>
+								|
+							<?php endif; ?> 
 						<?php endforeach; ?>
 					</p>
 					<input type="hidden" class="page_id" value="<?php echo $value['page_id'] ?>" />
