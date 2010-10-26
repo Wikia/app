@@ -286,13 +286,14 @@ class RTE {
 		// link to raw version of MediaWiki:Common.css
 		global $wgSquidMaxage;
 		$query = wfArrayToCGI(array(
-			'action' => 'raw',
-			'maxage' => $wgSquidMaxage,
 			'usemsgcache' => 'yes',
 			'ctype' => 'text/css',
 			'smaxage' => $wgSquidMaxage,
+			'action' => 'raw',
+			'maxage' => $wgSquidMaxage,
 		));
-		$vars['RTEMWCommonCss'] = $wgServer . Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI);
+
+		$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( Wikia::isOasis() ? 'Wikia.css' : 'Common.css', $query, NS_MEDIAWIKI);
 
 		// domain and path for cookies
 		global $wgCookieDomain, $wgCookiePath;
