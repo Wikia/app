@@ -184,7 +184,7 @@ function VET_moveBackButton(selector) {
  * Functions/methods
  */
 if(mwCustomEditButtons) {
-	if ( !$G( 'siteSub' )) {
+	if ( $("#siteSub").length == 0 ) {
 		mwCustomEditButtons[mwCustomEditButtons.length] = {
 			"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet.png',
 			"speedTip": vet_imagebutton,
