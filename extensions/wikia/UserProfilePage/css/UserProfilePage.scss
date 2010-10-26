@@ -221,3 +221,14 @@ ul.user-profile-action-menu {
 		}
 	}
 }
+
+.WikiaUserPagesHeader {
+	.tabs-container {
+		position: static;
+		margin-top: 60px;
+		
+		.tabs {
+			margin-bottom: 3px;
+		}
+	}
+}

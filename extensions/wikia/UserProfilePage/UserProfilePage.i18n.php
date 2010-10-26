@@ -4,9 +4,9 @@ $messages = array();
 $messages['en'] = array(
 	'userprofilepage-desc' => 'Provides a user page that is fun and easy to update',
 
-	'userprofilepage-users-notes-title' => '$1\'s notes',
-	'userprofilepage-about-section-title' => 'About $1',
-	'userprofilepage-edit-button' => 'edit',
+	'userprofilepage-users-notes-title' => 'About me',
+	'userprofilepage-about-section-title' => 'My $1 interview',
+	'userprofilepage-edit-button' => 'Edit',
 	'userprofilepage-about-article-title' => 'About',
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
 
