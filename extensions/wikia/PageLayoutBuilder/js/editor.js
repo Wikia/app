@@ -135,6 +135,10 @@
 	PLB.Widgets = {};
 	
 	PLB.Widgets['plb_image'] = $.createClass(PLB.Widget,{
+
+		constructor: function() {
+			PLB.Widgets['plb_image'].superclass.constructor.apply(this,arguments);
+		},
 		
 		extSetProperties: function ( props ) {
 			if (typeof props['align'] != 'undefined') {
@@ -333,8 +337,11 @@
 			});
 			
 			// Fetch PLB editor data through Ajax call
-			$.getScript(window.wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
-					$.proxy(this.onDataLoaded,this));
+			var dataLoadedCallback = $.proxy(this.onDataLoaded,this);
+			$(function(){
+				$.getScript(window.wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
+						dataLoadedCallback);
+			});
 		},
 		
 		// Store the information that RTE is ready
@@ -958,6 +965,10 @@
 	
 	PLB.PropertyEditors['plb_image'] = $.createClass(PLB.PropertyEditor,{
 		
+		constructor: function() {
+			PLB.PropertyEditors['plb_image'].superclass.constructor.apply(this,arguments);
+		},
+		
 		extFormValidate: function(state) {
 			if (this.values['size'] != '') {
 				var e = parseInt(this.values['size']);
@@ -986,6 +997,10 @@
 	});
 
 	PLB.PropertyEditors['plb_sinput'] = $.createClass(PLB.PropertyEditor,{
+
+		constructor: function() {
+			PLB.PropertyEditors['plb_sinput'].superclass.constructor.apply(this,arguments);
+		},
 		
 		extFormValidate: function(state) {
 			if (this.values['options'].indexOf('|') == -1) {
