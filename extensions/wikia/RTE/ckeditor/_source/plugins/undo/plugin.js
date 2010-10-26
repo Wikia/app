@@ -148,6 +148,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	var Image = CKEDITOR.plugins.undo.Image = function( editor )
 	{
 		this.editor = editor;
+		
+		// Wikia - start
+		editor.fire('beforeCreateUndoSnapshot');
+		// Wikia - end
+		
 		var contents = editor.getSnapshot(),
 			selection	= contents && editor.getSelection();
 
@@ -156,6 +161,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		this.contents	= contents;
 		this.bookmarks	= selection && selection.createBookmarks2( true );
+		
+		// Wikia - start
+		editor.fire('afterCreateUndoSnapshot');
+		// Wikia - end
 	};
 
 	// Attributes that browser may changing them when setting via innerHTML.
