@@ -534,11 +534,12 @@ $.extend({
 	createClass: function (sc,o) {
 //		$().log(sc,'createClass-superclass');
 //		$().log(o,'createClass-overrides');
-		if (typeof o.constructor != 'function' || o.constructor == Object.prototype.constructor) {
-			o.constructor = function(){sc.apply(this,arguments);};
+		var constructor = o.constructor;
+		if (typeof constructor != 'function' || constructor == Object.prototype.constructor) {
+			constructor = function(){sc.apply(this,arguments);};
 //			$().log('constructor created','createClass');
 		}
-		var bc = o.constructor;
+		var bc = constructor;
 		var f = function() {};
 		f.prototype = sc.prototype || {};
 		bc.prototype = new f();
