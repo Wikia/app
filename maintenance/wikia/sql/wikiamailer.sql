@@ -7,9 +7,11 @@ CREATE TABLE IF NOT EXISTS mail (
        created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, # when we sent it from apache
        src VARCHAR(255) NOT NULL,            
        dst VARCHAR(255) NOT NULL,
+       subj VARCHAR(255) NOT NULL, # For reporting only, subjects longer than 255 will be truncated
        hdr TEXT NOT NULL,
        msg TEXT NOT NULL,
        city_id INT NOT NULL,
+       attempted DATETIME,      # The first time we attempt to send this message
        locked_by VARCHAR(255),  # which sender has it    
        locked DATETIME,         # when the sender grabbed it
        transmitted DATETIME,    # when we sent it to the outsideworld
@@ -21,8 +23,10 @@ CREATE TABLE IF NOT EXISTS mail (
        opened DATETIME,
        clicked DATETIME,
        INDEX(dst),
+       INDEX(subj),
        INDEX(city_id),
        INDEX(locked_by),
+       INDEX(attempted),
        INDEX(transmitted),
        INDEX(locked)
 );
