@@ -96,7 +96,7 @@ abstract class LayoutWidgetBase {
 
 		return true;
 	}
-	
+
 	public function renderForFormCaption() {
 		return XML::element('p', array('class' => 'plb-form-caption-p'), $this->getAttrVal( "caption" ));
 	}
@@ -205,4 +205,20 @@ abstract class LayoutWidgetBase {
 				'required' => 0,
 		);
 	}
+
+	public function getAttrCaptions() {
+		$messages = array();
+		$attrs = $this->getAllAttrs();
+		foreach ($attrs as $name => $value) {
+			$messages[$name] = wfMsg("plb-property-editor-$name");
+		}
+		$this->overrideAttrCaptions($messages);
+		return $messages;
+	}
+
+	// to be overriden
+	protected function overrideAttrCaptions( &$messages ) {
+		return;
+	}
+
 }

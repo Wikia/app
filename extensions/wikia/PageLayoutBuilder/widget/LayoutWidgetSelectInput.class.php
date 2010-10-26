@@ -81,4 +81,8 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 				'options' => '',
 		);
 	}
+
+	protected function overrideAttrCaptions( &$messages ) {
+		$messages['options'] = wfMsg('plb-property-editor-choices');
+	}
 }

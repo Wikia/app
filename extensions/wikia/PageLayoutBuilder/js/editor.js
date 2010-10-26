@@ -554,9 +554,9 @@
 		onWidgetChanged : function (widget,type,props) {
 			if (this.adding) {
 				var el = this.adding.getElement();
-				this.insertPlaceholders();
+//				this.insertPlaceholders();
 				this.rte.insertElement(el);
-				this.replacePlaceholders();
+//				this.replacePlaceholders();
 				this.adding = null;
 			}
 			this.fire('changed',this,widget,type,props);
@@ -781,6 +781,7 @@
 			this.editorHtml = PLB.Library[this.type].editorHtml;
 			this.attributes = PLB.Library[this.type].attributes;
 			this.requiredAttributes = PLB.Library[this.type].requiredAttributes;
+			this.attributeCaptions = PLB.Library[this.type].attributeCaptions;
 			this.values = $.extend({},this.attributes,values);
 			$.extend(this,PLB.Library[this.type]);
 		},
@@ -881,7 +882,26 @@
 			},this));
 			this.extFormValidate(state);
 			this.valid = state.valid;
+			this.validStatus = state.status;
+			this.showValidation();
 			return this.valid;
+		},
+		
+		showValidation: function() {
+			var box = this.form.find('>:first-child');
+			if (box.length == 0 || !box.hasClass('plb-pe-validation-status')) {
+				box = $('<div class="plb-pe-validation-status" />');
+				this.form.prepend(box);
+			}
+			box.css('display',this.valid?'none':'block');
+			var s = this.validStatus;
+			var msg = [];
+			for (var i in s) {
+				if (s[i].length > 0) {
+					msg.push(this.attributeCaptions[i] + ' ' + s[i].join(', '));
+				}
+			}
+			box.html(msg.join('<br />'));
 		},
 		
 		onChange: function(ev) {
@@ -954,7 +974,7 @@
 		extFormValidate: function(state) {
 			if (this.values['options'].indexOf('|') == -1) {
 				state.status['options'].push(PLB.Lang['plb-property-editor-not-enough-items']);
-				state.valid = true;
+				state.valid = false;
 			}
 		},
 		

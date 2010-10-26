@@ -277,4 +277,10 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 				'type' => 'frameless'
 		);
 	}
+
+	protected function overrideAttrCaptions( &$messages ) {
+		$messages['align'] = wfMsg('plb-property-editor-alignment');
+		$messages['size'] = wfMsg('plb-property-editor-maximum-width');
+		$messages['type'] = wfMsg('plb-property-editor-thumbnail');
+	}
 }

@@ -271,6 +271,12 @@ $plb-window-items-margin: 6px;
 		
 	}
 	
+	.plb-pe-validation-status {
+		background-color: #FFFFCC;
+		border: 1px solid #AAAAAA;
+		padding: 6px;
+	}
+	
 	.plb-pe-buttons {
 	
 		text-align: center;
@@ -393,7 +399,7 @@ $plb-window-items-margin: 6px;
 }
 
 .WikiaArticle a.wikia-button:visited {
-	color:$color-button-text;
+	color: $color-button-text;
 }
 
 

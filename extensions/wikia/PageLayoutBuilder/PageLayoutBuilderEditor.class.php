@@ -44,6 +44,7 @@
 					'html' => Wikia::json_encode($widgetInstance->RTEElementDecoratorAndRender(true)),
 					'attributes' => Wikia::json_encode($widgetInstance->getAllAttrs()),
 					'required_attributes' => Wikia::json_encode($widgetInstance->getRequiredAttrs()),
+					'attribute_captions' => Wikia::json_encode($widgetInstance->getAttrCaptions()),
 					'logic' => $widgetLogic,
 				);
 
