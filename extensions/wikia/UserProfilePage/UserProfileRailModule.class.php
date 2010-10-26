@@ -108,7 +108,7 @@ class UserProfileRailModule extends Module {
 
 		if( class_exists('imageServing') ) {
 			// ImageServing extension enabled, get images
-			$imageServing = new imageServing( array_keys( $this->topPages ), 80, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
+			$imageServing = new imageServing( array_keys( $this->topPages ), 70, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
 			$this->topPageImages = $imageServing->getImages(1); // get just one image per article
 		}
 
@@ -281,11 +281,27 @@ class UserProfileRailModule extends Module {
 	}
 
 	public function getHiddenTopPages() {
+		global $wgDevelEnvironment;
+		
 		wfProfileIn( __METHOD__ );
 
 		$dbs = wfGetDB( DB_SLAVE );
 		$pages = UserProfilePage::getInstance()->getHiddenFromDb( $dbs );
 
+		if( $wgDevelEnvironment ) {//DevBox test
+			$pages = array( 8 => 289, 456 => 164, 2345 => 140, 12322 => 112, 66 => 83, 6767 => 82 ); // test data
+			foreach($pages as $pageId => $editCount) {
+				$title = Title::newFromID( $pageId );
+				if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
+					$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount );
+				}
+				else {
+					unset( $pages[ $pageId ] );
+				}
+			}
+
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
