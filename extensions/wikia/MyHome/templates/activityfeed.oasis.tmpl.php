@@ -1,21 +1,11 @@
 <div id="myhome-main">
-	<nav class="activity-nav">
-		<ul>
-			<?php if ($loggedIn === true) { ?>
-			<li class="<?= $classWatchlist ?> watchlist"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li>		
-			<?php } ?>
-			<li class="<?= $classActivity ?>"><?= View::specialPageLink('RecentChanges', 'oasis-button-wiki-activity-feed') ?></li>
-
-		</ul>
-	</nav>
-	
 <?php  if( isset( $emptyMessage ) ) { ?>
 	<h3 class="myhome-empty-message"><?php print $emptyMessage ?></h3>
 <?php	} else { ?>
-	<ul class="activityfeed reset" id="<?php print $tagid ?>">
+	<ul class="activityfeed reset" id="myhome-activityfeed" data-type="<?= $type ?>">
 	<?php foreach($data as $row) { ?>
 		<li class="activity-type-<?php print FeedRenderer::getIconType($row) ?> activity-ns-<?php print $row['ns'] ?>">
-		<?php print FeedRenderer::getSprite( $row, $assets['blank'] )	?>
+		<?php print FeedRenderer::getSprite( $row, $wgBlankImgUrl) ?>
 		<?php if( isset( $row['url'] ) ) { ?>
 			<strong><a class="title" href="<?php print htmlspecialchars($row['url']) ?>"><?php print htmlspecialchars($row['title'])  ?></a></strong><br />
 		<?php } else { ?>

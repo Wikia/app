@@ -10,9 +10,14 @@ var WikiActivity = {
 		// handle clicks on "more"
 		$('.activity-feed-more').children('a').click(WikiActivity.fetchMore);
 
-		// use jquery 'live' function to make sure links work on second page too
+		// handle click on default view switch
+		$('#wikiactivity-default-view-switch').
+			removeAttr('disabled').
+			click(WikiActivity.setDefaultView);
+
 		// track clicks within activity feed
-		$('#myhome-activityfeed').live('click', WikiActivity.trackClick);
+		$('#myhome-main').click(WikiActivity.trackClick);
+
 		// catch clicks on video thumbnails and load player
 		$('.activityfeed-video-thumbnail').live('click', WikiActivity.loadVideoPlayer);
 
@@ -57,6 +62,10 @@ var WikiActivity = {
 		else if (node.parent().is('cite')) {
 			WikiActivity.track('user');
 		}
+		// badge (r25110 refactored)
+		else if (node.hasClass('badgeName')) {
+			WikiActivity.track('achievement/link');
+		}
 		// detail links (categories, images, videos)
 		else if (node.hasParent('tr[data-type]')) {
 			var type = node.closest('tr').attr('data-type');
@@ -75,6 +84,24 @@ var WikiActivity = {
 					break;
 			}
 		}
+	},
+
+	setDefaultView: function() {
+		var node = $(this);
+		var defaultView = node.attr('data-type');
+
+		WikiActivity.ajax('setDefaultView', {'defaultView': defaultView}, function (data) {
+			if (data.msg) {
+				var parent = node.parent();
+
+				// show message and slooowly fade out
+				parent.html(data.msg);
+
+				setTimeout(function() {
+					parent.slideUp();
+				}, 2000);
+			}
+		});
 	},
 
 	// show popup with video player when clicked on video thumbnail
@@ -121,7 +148,7 @@ var WikiActivity = {
 
 		var node = $(ev.target);
 
-		var feedContent = $('#myhome-main >ul').last();
+		var feedContent = $('#myhome-main').children('ul').last();
 		var fetchSince = node.attr('data-since');
 
 		WikiActivity.log('fetching feed since ' + fetchSince, 'WikiActivity');
