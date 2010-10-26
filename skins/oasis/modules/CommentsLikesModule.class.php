@@ -75,7 +75,7 @@ class CommentsLikesModule extends Module {
 
 	public function executeIndex($data) {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgLang, $wgContentNamespaces;
+		global $wgTitle, $wgLang, $wgContentNamespaces, $wgExtraNamespacesLocal;
 
 		// set the page for which we're showing comments / likes
 		// used for proper linking on blog posts listings
@@ -98,6 +98,10 @@ class CommentsLikesModule extends Module {
 			// check namespaces
 			$ns = $this->contextTitle->getNamespace();
 			if (in_array($ns, $wgContentNamespaces)) {
+				$this->likeRef = 'content_page';
+			}
+			// RT #74393: include custom namespaces
+			else if (in_array($ns, array_keys($wgExtraNamespacesLocal))) {
 				$this->likeRef = 'content_page';
 			}
 			else if (defined('NS_BLOG_ARTICLE') && $ns == NS_BLOG_ARTICLE) {
