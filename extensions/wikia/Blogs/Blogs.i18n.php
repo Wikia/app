@@ -94,7 +94,12 @@ Create blog listing pages for categories such as "Barack Obama", "Fan Fiction", 
 	"blog-comment-edit" => "edit",
 	"blog-comment-error" => "Comment could not be saved",
 	"blog-comment-cannot-add" => "You cannot add comment to blog.",
-	"blog-avatar-defaults" => "Avatar.jpg",
+	"blog-avatar-defaults" => "Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg",
 	"blug-cut-sign" => "…",
 	'blog-avatar-preferences-title' => "Avatar",
 	"blog-page-rate" => "Rate this article:",
