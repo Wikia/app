@@ -10,6 +10,7 @@
 * rt#77776: Video gallery upload dialog overlapped by global nav header (macbre)
 * rt#77759: RTE: not using Wikia.css styling (macbre)
 * rt#74393: Oasis: Add Like to custom namespaces (macbre)
+* rt#78393: Edit page: lazy load MW toolbar images in Wysiwyg mode (macbre)
 
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
