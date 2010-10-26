@@ -8,8 +8,6 @@ class UserProfilePageHelper {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		//wfLoadExtensionMessages('MyHome');
-
 		// Return without any changes if this isn't in the user namespace OR
 		// if the user is doing something besides viewing or purging this page
 		$action = $wgRequest->getVal('action', 'view');
@@ -17,7 +15,7 @@ class UserProfilePageHelper {
 			return true;
 		}
 
-		$user = User::newFromName( $skin->mTitle->getDBKey() );
+		$user = self::getUserFromTitle( $skin->mTitle );
 
 		// sanity check
 		if ( !is_object( $user ) ) {
@@ -54,5 +52,9 @@ class UserProfilePageHelper {
 		$response->setContentType( 'application/json; charset=utf-8' );
 
 		return $response;
+	}
+
+	public static function getUserFromTitle( Title $title) {
+		return User::newFromName( $title->getDBKey() );
 	}
 }

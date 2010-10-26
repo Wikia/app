@@ -38,12 +38,56 @@ class UserProfileRailModule extends Module {
 		wfProfileIn( __METHOD__ );
 		global $wgCityId;
 
+		wfLoadExtensionMessages('MyHome');
+
 		$user = UserProfilePage::getInstance()->getUser();
 		$specialPageTitle = Title::newFromText( 'Contributions', NS_SPECIAL );
 
 		$this->userName =  $user->getName();
 		$this->wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
-		$this->activityFeed = $this->getActivityFeed();
+
+
+//echo "<pre>";
+		foreach ( $this->getActivityFeed() as $change ) {
+//var_dump( $change );
+			$item = array();
+			$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
+			$item['user_name'] = $this->userName;
+			//$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
+			$item['user_href'] = AvatarService::renderLink($item['user_name']);
+			$item['page_title'] = $change['title'];
+			$item['changetype'] = $change['type'];
+			$title = Title::newFromText( $change['title'], $change['namespace'] );
+			if ( is_object($title) ) {
+				$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl()), $item['page_title']);
+			}
+			switch ($change['type']) {
+				case 'new':
+					$item['changemessage'] = wfMsg("userprofilepage-activity-new", $item['page_href']);
+					$item['changeicon'] = 'new';
+					break;
+				case 'edit':
+					$item['changemessage'] = wfMsg("userprofilepage-activity-edit", $item['page_href']);
+					$item['changeicon'] = 'edit';
+					break;
+				case 'delete':
+					$item['changemessage'] = wfMsg("userprofilepage-activity-delete", $item['page_href']);
+					$item['changeicon'] = 'delete';
+					break;
+				case 'upload':
+					$item['changemessage'] = wfMsg("userprofilepage-activity-image", $item['page_href']);
+					$item['changeicon'] = 'upload';
+					break;
+				default:
+					$item['changemessage'] = '';
+					break;
+			}
+			$this->activityFeed[] = $item;
+		}
+			//echo "<pre>";
+//var_dump( $this->activityFeed );
+//exit;
+
 		$this->specialContribsLink = $specialPageTitle->getFullUrl() . '/' . $this->userName;
 
 		wfProfileOut( __METHOD__ );

@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'userprofilepage-desc' => 'Provides a user page that is fun and easy to update',
-	
+
 	'userprofilepage-users-notes-title' => '$1\'s notes',
 	'userprofilepage-about-section-title' => 'About $1',
 	'userprofilepage-edit-button' => 'edit',
@@ -19,13 +19,13 @@ $messages['en'] = array(
 
 	//Recent activity
 	'userprofilepage-recent-activity-title' => '$1\'s recent $2 activity',
-	'userprofilepage-activity-edit'    => '$1 edited the $2 article $3 ago',
-	'userprofilepage-activity-new'     => '$1 created $2 $3 ago',
-	'userprofilepage-activity-comment' => '$1 commented on $2 $3 ago',
-	'userprofilepage-activity-image'   => '$1 uploaded an image to $2 $3 ago',
-	'userprofilepage-activity-video'   => '$1 uploaded a video to $2 $3 ago',
-	'userprofilepage-activity-delete'  => '$1 deleted the $2 page $3 ago',
-	'userprofilepage-activity-talk'    => '$1 left a message on $2\'s talk page $3 ago',
+	'userprofilepage-activity-edit'    => 'edited the $1 article',
+	'userprofilepage-activity-new'     => 'created $1',
+	'userprofilepage-activity-comment' => 'commented on $1',
+	'userprofilepage-activity-image'   => 'uploaded an image to $1',
+	'userprofilepage-activity-video'   => 'uploaded a video to $1',
+	'userprofilepage-activity-delete'  => 'deleted the $1 page',
+	'userprofilepage-activity-talk'    => 'left a message on $1\'s talk page',
 	'userprofilepage-recent-activity-default' => '$1 has joined Wikia',
 	'userprofilepage-top-recent-activity-see-more' => 'See all',
 
@@ -34,7 +34,7 @@ $messages['en'] = array(
 	'userprofilepage-top-page-unhide-label' => 'unhide',
 	'userprofilepage-top-pages-hidden-see-more' => 'You\'ve hidden {{PLURAL:$1|$1 page|$1 pages}}',
 	'userprofilepage-top-pages-default' => 'You don\'t have any top pages yet. Why not check out some <a href="$1">random pages</a> on the wiki?',
-	
+
 	'recipes-template-aboutuser-fields' => '
 * wpTitle
 ** type|input
