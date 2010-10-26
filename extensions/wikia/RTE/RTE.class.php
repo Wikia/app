@@ -168,6 +168,9 @@ class RTE {
 		// add CSS class to <body> tag
 		$wgHooks['SkinGetPageClasses'][] = 'RTE::addBodyClass';
 
+		// remove default editor toolbar (RT #78393)
+		$wgHooks['EditPage::showEditForm:toolbar'][] = 'RTE::removeDefaultToolbar';
+
 		// add fake form used by MW suggest
 		$wgOut->addHTML( Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form') );
 
@@ -310,6 +313,17 @@ class RTE {
 	 */
 	public static function addBodyClass(&$classes) {
 		$classes .= ' rte';
+		return true;
+	}
+
+	/**
+	 * Removes default editor toolbar, so we can lazy load icons for source mode toolbar (RT #78393)
+	 */
+	public static function removeDefaultToolbar(&$editPage, &$wgOut, &$toolbar) {
+		$toolbar = strtr($toolbar, array(
+			"<div id='toolbar' style='clear:both'>" => '',
+			'</div>' => '',
+		));
 		return true;
 	}
 
