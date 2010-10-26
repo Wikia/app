@@ -207,7 +207,8 @@ EOT;
 		for ($i=0; $i<$n_slotnames; $i++) {
 			$slotname =& $slotnames[$i];
 			$adUrlScript = $this->getAdUrlScript($slotname, $params);
-			$adUrlScript = str_replace("\n", " ", $adUrlScript);
+//			$adUrlScript = str_replace("\n", " ", $adUrlScript);
+			$adUrlScript = $this->fixNewLines($adUrlScript);
 			$adtag .= <<<EOT
 	document.write('$adUrlScript');
 EOT;
@@ -229,7 +230,8 @@ EOT;
 		$fill_elem_script .= <<<EOT
 	};
 EOT;
-		$fill_elem_script = str_replace("\n", ' ', $fill_elem_script);
+//		$fill_elem_script = str_replace("\n", ' ', $fill_elem_script);
+		$fill_elem_script = $this->fixNewLines($fill_elem_script);
 
 		return $fill_elem_script;
 	}
@@ -344,6 +346,12 @@ EOT;
 			//'var ad_iframe = document.getElementById("' . addslashes($slotname) ."_iframe\"); ad_iframe.src=base_url_".addslashes($slotname)."; if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
 
 		return $out;
+	}
+
+	protected function fixNewLines( $text ) {
+		$order = array("\r\n", "\n", "\r");
+		$replace = ' ';
+		return str_replace($order,$replace,$text);
 	}
 
 }
