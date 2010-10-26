@@ -3,35 +3,12 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-//@import "../../../../skins/oasis/css/mixins/menus";
-//@import "../../../../skins/oasis/css/mixins/forms";
-//@import "../../../../skins/oasis/css/mixins/opacity";
-
-@mixin moduleTitle(){
-	h2 {
-		font-size: 14px;
-		font-weight: bold;
-	}
-}
-
-@mixin moreLink(){
-	.more {
-		float: right;
-		font-size: 10px;
-		font-weight: bold;
-	}
-}
-
+@import "../../../../skins/oasis/css/mixins/rail-module";
+@import "../../../../skins/oasis/css/mixins/opacity";
 
 .UserProfileRailModule_TopWikis {
-	@include moreLink;
 	position: relative;
 	height: 180px;
-
-	h2 {
-		font-size: 12px;
-		font-weight: bold;
-	}
 
 	table {
 		width: 100%;
@@ -48,6 +25,8 @@
 				text-align: left;
 				vertical-align: middle;
 				width: 50%;
+				font-size: 12px;
+				font-weight: bold;
 			}
 
 			td {
@@ -118,6 +97,7 @@
 				@include clearfix;
 				border-top: 1px solid $color-page-border;
 				padding: 5px 10px 5px 10px;
+				display: none;
 
 				.wordmark {
 					float: left;
@@ -142,6 +122,12 @@
 			}
 		}
 	}
+
+	.more {
+		float: right;
+		font-size: 10px;
+		font-weight: bold;
+	}
 }
 
 .user-profile-box{
@@ -153,9 +139,9 @@
 }
 
 .UserProfileRailModule_RecentActivity {
-	@include moduleTitle;
+	@include rail-module;
 }
 
 .UserProfileRailModule_TopPages {
-	@include moduleTitle;
+	@include rail-module;
 }

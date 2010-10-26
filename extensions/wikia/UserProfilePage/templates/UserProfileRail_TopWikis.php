@@ -2,12 +2,8 @@
 	<table cellspacing="0" cellpadding="0">
 		<thead>
 			<tr>
-				<th colspan="2">
-					<h2><?= wfMsg( 'userprofilepage-top-wikis-title', $userName ) ;?></h2>
-				</th>
-				<th>
-					<h2><?= wfMsg( 'userprofilepage-top-wikis-edit-count' ) ;?></h2>
-				</th>
+				<th colspan="2"><?= wfMsg( 'userprofilepage-top-wikis-title', $userName ) ;?></th>
+				<th><?= wfMsg( 'userprofilepage-top-wikis-edit-count' ) ;?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,7 +39,7 @@
 	
 	<? $hiddenCount = count($hiddenTopWikis) ;?>
 	<? if( $userIsOwner && $hiddenCount ) :?>
-		<ul id="profile-top-wikis-hidden" class="user-profile-box">
+		<ul id="profile-top-wikis-hidden">
 			<li class="unhide-link">
 				<a class="more view-all">
 					<?= wfMsgExt( 'userprofilepage-top-wikis-hidden-see-more', array( 'parsemag' ), $hiddenCount ); ?>
