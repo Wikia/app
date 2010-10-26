@@ -125,7 +125,9 @@ class SitemapPage extends UnlistedSpecialPage {
 		);
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			$this->mNamespaces[] = $row->page_namespace;
+			if( $row->page_namespace >= 0 ) {
+				$this->mNamespaces[] = $row->page_namespace;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 
