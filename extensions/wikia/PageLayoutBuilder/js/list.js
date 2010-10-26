@@ -1,4 +1,3 @@
-/*
 window.PageLayoutBuilder = window.PageLayoutBuilder || {};
 
 
@@ -48,4 +47,4 @@ PageLayoutBuilder.list.initList = function() {
 	return false;
 }
 
-$(PageLayoutBuilder.list.initList); */
+$(PageLayoutBuilder.list.initList);

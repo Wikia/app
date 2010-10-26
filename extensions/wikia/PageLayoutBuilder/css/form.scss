@@ -90,3 +90,22 @@ ul.plb-form-actions {
 		list-style:none outside none;
 	}
 }
+
+.plb-form-template-toolbar {
+	position: absolute;
+	top: -24px;
+	img {
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/toolbar_sprite.png); /* $--wgCdnStylePath */
+		border: solid 1px #a2a2a2;
+		cursor: pointer;
+		&.toolbar-bold {
+			background-position: 0 0;
+		}
+		&.toolbar-italic {
+			background-position: 0 -24px;
+		}
+		&.toolbar-link {
+			background-position: 0 -48px;
+		}
+	}
+}
