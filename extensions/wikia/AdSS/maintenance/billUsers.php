@@ -8,7 +8,7 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
-$balance_threshold = 20;
+$balance_threshold = 50;
 
 echo "Checking for users that owe us $".$balance_threshold." or more OR haven't been billed in last month\n";
 $dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
