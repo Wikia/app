@@ -191,9 +191,10 @@ window.RTE = {
 		else {
 			css.push(window.stylepath + '/monobook/main.css');
 			css.push(CKEDITOR.basePath + '../css/RTEcontent.css');
-			// load MediaWiki:Common.css
-			css.push(window.RTEMWCommonCss);
 		}
+
+		// load MW:Common.css / MW:Wikia.css (RT #77759)
+		css.push(window.RTESiteCss);
 
 		// Bartek - for RT #43217
 		if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
@@ -314,7 +315,7 @@ window.RTE = {
 	repositionRTEStuff: function() {
 		$('#RTEStuff').css({left:0,top:0});
 		var bodyPadding = $('#RTEStuff').offset();
-		
+
 		var editorPosition = $('#cke_contents_wpTextbox1').offset();
 
 		$('#RTEStuff').css({
