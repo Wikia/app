@@ -79,7 +79,7 @@ class AdModule extends Module {
 					self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 					self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				}
-			} else if(  defined ( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE) {
+			} else if( BodyModule::isBlogPost() ) {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 			}
 		}
