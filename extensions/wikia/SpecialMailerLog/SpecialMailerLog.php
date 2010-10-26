@@ -19,6 +19,12 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
+		if ( !$wgUser || $wgUser->getID() == 0 ) {
+			$login = SpecialPage::getTitleFor( 'UserLogin' );
+			$wgOut->redirect( $login->getFullURL( 'returnto=Special:MailerLog' ) );
+			return false;
+		}
+
 		// Setup extra resources
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/SpecialMailerLog/css/oasis.scss' ) );
 
@@ -49,7 +55,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		$num_rows = $dbr->selectField( 'mail', 'COUNT(*)', $filter, __METHOD__ );
 
 		$res = $dbr->select( 'mail',
-							 array( 'id', 'created', 'city_id', 'dst', 'hdr', 'msg', 'locked', 'transmitted', 'is_error', 'error_status', 'error_msg', 'opened'),
+							 array( 'id', 'created', 'city_id', 'dst', 'hdr', 'subj', 'msg', 'locked', 'transmitted', 'is_error', 'error_status', 'error_msg', 'opened'),
 							 $filter,
 							 __METHOD__,
 							 array('ORDER BY' => $sort.' '.$sort_dir,
@@ -68,7 +74,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 									'wiki_name'    => Wikifactory::IdtoDB( $row->city_id ),
 									'to'           => $row->dst,
 									'user_url'     => self::getUserURL($row->dst),
-									'subject'      => self::getSubject($row->hdr),
+									'subject'      => $row->subj,
 									'msg_full'     => $body,
 									'msg_short'    => self::getShortBody($body),
 									'attempted'    => $row->locked,
@@ -101,11 +107,6 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 	    $wgOut->addHtml($oTmpl->execute("wikia-mailer-log"));
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	private function getSubject ( $header) {
-		preg_match('/Subject: (.+)/', $header, $matches);
-		return $matches[1];
 	}
 	
 	private function getBody ( $raw_body ) {
@@ -180,6 +181,14 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 			$filter_roster['Created'] = array('value' => $match[0],
 											  'off'   => 'off_filter_created');
 		}
+		
+		$filter_wiki_name = $wgRequest->getVal('new_filter_wiki_name', null);
+		if ($filter_wiki_name) {
+			$filter_wiki_name = preg_replace('!^http://|/$!', '', $filter_wiki_name);
+			$filter_wiki_name = preg_replace('!\.wikia\.com!', '', $filter_wiki_name);
+
+			$wgRequest->setVal('new_filter_wiki_id', Wikifactory::DBtoId( $filter_wiki_name ));
+		}
 
 		$filter_wiki_id = $wgRequest->getVal('new_filter_wiki_id',
 											 $wgRequest->getVal('filter_wiki_id', null));
@@ -188,17 +197,12 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		// Force a few values depending on who the viewer is
 		if( !$wgUser->isAllowed( "staff" ) ) {
-			if ($wgUser->isAllowed( 'siteadmin' )) {
-				$filter_wiki_id = $wgCityId;
-				$forced_wiki_id = true;
-			} else {
-				$filter_dst = $wgUser->getEmail();
-				$forced_dst = true;
-			}
+			$filter_dst = $wgUser->getEmail();
+			$forced_dst = true;
 		}
 
 		if ($wgRequest->getVal('off_filter_wiki_id', null) && !isset($forced_wiki_id)) $filter_wiki_id = null;
-		
+
 		if ($filter_wiki_id) {
 			$filter[] = "city_id = $filter_wiki_id";
 			if (!isset($forced_wiki_id)) {
@@ -218,7 +222,24 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 												'off'   => 'off_filter_dst');
 			}
 		}
-		
+
+		$filter_subject = $wgRequest->getVal('new_filter_subject',
+											 $wgRequest->getVal('filter_subject', null));
+
+		if ($filter_subject) {
+			$filter[] = "subj LIKE '%$filter_subject%'";
+			$query[] = "filter_subject=$filter_subject";
+			$filter_roster['Subject'] = $filter_subject;
+		}
+
+		$filter_body = $wgRequest->getVal('new_filter_body',
+										  $wgRequest->getVal('filter_body', null));
+
+		if ($filter_body) {
+			$filter[] = "msg LIKE '%$filter_body%'";
+			$query[] = "filter_body=$filter_body";
+			$filter_roster['Body'] = $filter_body;
+		}
 
 		$filter_transmitted = $wgRequest->getVal('new_filter_transmitted',
 												 $wgRequest->getVal('filter_transmitted', null));
