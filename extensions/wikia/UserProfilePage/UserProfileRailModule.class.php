@@ -11,19 +11,18 @@ class UserProfileRailModule extends Module {
 	var $topPageImages;
 	var $specialRandomLink;
 	var $maxEdits;
-	
+
 	public function executeTopWikis() {
 		wfProfileIn( __METHOD__ );
-		
+
 		$user = UserProfilePage::getInstance()->getUser();
 		$this->topWikis = $this->getTopWikis();
 		$this->hiddenTopWikis = $this->getHiddenTopWikis();
 		$this->userIsOwner = UserProfilePage::getInstance()->userIsOwner();
 		$this->userName =  $user->getName();
 		$thos->userPageUrl = $user->getUserPage()->getLocalUrl();
-
 		$this->maxEdits = 0;
-		
+
 		foreach ( $this->topWikis as $wikiId => $wikiData ) {
 			if( in_array( $wikiId, $this->hiddenTopWikis ) ) {
 				unset( $this->topWikis[ $wikiId ] );
@@ -74,7 +73,7 @@ class UserProfileRailModule extends Module {
 			$imageServing = new imageServing( array_keys( $this->topPages ), 80, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
 			$this->topPageImages = $imageServing->getImages(1); // get just one image per article
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -120,7 +119,7 @@ class UserProfileRailModule extends Module {
 				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
-				
+
 				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
 			}
 		}
@@ -132,7 +131,7 @@ class UserProfileRailModule extends Module {
 	public function getHiddenTopWikis() {
 		wfProfileIn( __METHOD__ );
 		global $wgExternalSharedDB, $wgDevelEnvironment;
-		
+
 		$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
 		$wikis = UserProfilePage::getInstance()->getHiddenFromDb( $dbs );
 
@@ -153,15 +152,15 @@ class UserProfileRailModule extends Module {
 			}
 
 		}
-		
+
 		wfProfileOut( __METHOD__ );
-		
+
 		return $wikis;
 	}
 
 	public function getActivityFeed() {
 		wfProfileIn( __METHOD__ );
-		
+
 		$userContribsProvider = new UserContribsProviderService;
 		$user = UserProfilePage::getInstance()->getUser();
 
