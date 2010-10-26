@@ -22,7 +22,7 @@ function showHelp() {
 }
 
 function wfEditStats($options = array()) {
-	global $wgExternalDatawareDB, $wgTTCache, $wgDBname;
+	global $wgExternalDatawareDB, $wgDBname;
 
 	$m = array();
 	$count_edits = $count_content_edits = 0;
