@@ -13,7 +13,7 @@
 
 class RiakSessionHandler {
 
-	const BUCKET = "session";
+	const BUCKET = "sessions";
 	const EXPIRE = 3600;
 
 	/**
@@ -60,17 +60,23 @@ class RiakSessionHandler {
 	}
 
 	static public function read( $id ) {
-		$cache = new RiakCache( self::BUCKET );
+		global $wgRiakSessionNode;
+
+		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
 		return $cache->get( self::key( $id ) );
 	}
 
 	static public function write( $id, $data ) {
-		$cache = new RiakCache( self::BUCKET );
+		global $wgRiakSessionNode;
+
+		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
 		$cache->set( self::key( $id ), $data, self::EXPIRE );
 	}
 
 	static public function destroy( $id ) {
-		$cache = new RiakCache( self::BUCKET );
+		global $wgRiakSessionNode;
+
+		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
 		$cache->delete( $id );
 	}
 

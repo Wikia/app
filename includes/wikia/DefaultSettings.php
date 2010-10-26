@@ -546,9 +546,31 @@ $wgUseExternalEditor = false;
  */
 define( "CACHE_RIAK", 10 );
 $wgSessionsInRiak = false;
-$wgRiakNodeHost   = "127.0.0.1";
-$wgRiakNodePort   = "8098";
-$wgRiakNodePrefix = "riak";
+
+$wgRiakStorageNodes = array(
+	"default" => array(
+		"host" => "127.0.0.1",
+		"port" => "8098",
+		"prefix" => "riak",
+		"proxy" => false
+	)
+);
+/**
+ * riak connection data used in RiakCache handler or wfGetSolidCacheStorage
+ *
+ * @see includes/wikia/GlobalFunctions.php
+ * @see includes/wikia/RiakCache.php
+ *
+ */
+$wgRiakDefaultNode = "default";
+
+/**
+ * riak connection data used in session handler
+ * @see includes/wikia/RiakSessionsHandler.php
+ */
+$wgRiakSessionNode = "default";
+
+
 $wgAutoloadClasses[ "RiakClient" ] = "{$IP}/lib/riak/riak.php";
 $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
 $wgAutoloadClasses[ "ExternalStoreRiak"  ] = "{$IP}/includes/wikia/ExternalStoreRiak.php";
