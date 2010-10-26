@@ -203,6 +203,11 @@
 			return this.rte.tools.insertElement.apply(this.rte.tools,arguments);
 		},
 		
+		isFullWysiwyg: function() {
+			var s;
+			return this.instance && (s=this.instance.getSelection()) && s.getNative();
+		},
+		
 		onRTEReady: function(instance) {
 			this.rte = RTE;
 			this.instance = instance;
@@ -376,6 +381,9 @@
 		},
 		
 		onRTEBeforeCreateUndoSnapshot: function(rte,data,e) {
+			if (!rte.isFullWysiwyg()) {
+				return;
+			}
 			$().log('','PLB->>>-onRTEBeforeCreateUndoSnapshot');
 			var undoSnapshot = {};
 			
@@ -389,6 +397,9 @@
 		},
 		
 		onRTEAfterCreateUndoSnapshot: function(rte,data,e) {
+			if (!rte.isFullWysiwyg()) {
+				return;
+			}
 			$().log('','PLB->>>-onRTEAfterCreateUndoSnapshot');
 			var debug = {};
 			if (this.undoSnapshot) {
@@ -406,6 +417,9 @@
 		},
 		
 		insertPlaceholders: function (rte,state) {
+			if (!rte.isFullWysiwyg()) {
+				return;
+			}
 			if (state.command && state.command.canUndo === false) {
 				return;
 			}
@@ -433,6 +447,9 @@
 		},
 		
 		replacePlaceholders: function (rte,state) {
+			if (!rte.isFullWysiwyg()) {
+				return;
+			}
 			// Now, this routine does nothing if there are no placeholders
 			// so it is safe to execute event if placeholders were not inserted earlier
 //			if (state.command && state.command.canUndo === false) {
@@ -480,7 +497,6 @@
 		},
 		
 		saveSelection: function( data ) {
-			
 			var sel = data && typeof data == 'object' && data.selection || this.rte.instance.getSelection();
 			var ranges = data && typeof data == 'object' && data.ranges || sel.getRanges();
 			return {
