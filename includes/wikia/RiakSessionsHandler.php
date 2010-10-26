@@ -77,7 +77,7 @@ class RiakSessionHandler {
 		global $wgRiakSessionNode;
 
 		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
-		$cache->delete( $id );
+		$cache->delete( self::key( $id ) );
 	}
 
 	static public function gc( $maxlifetime ) {
