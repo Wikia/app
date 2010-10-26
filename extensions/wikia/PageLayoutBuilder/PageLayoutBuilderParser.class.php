@@ -246,7 +246,7 @@ class PageLayoutBuilderParser extends Parser {
 		foreach ( $attributes as $key => $value) {
 			if( strpos($key, "val_") === 0 ) {
 				$key = (int) str_replace("val_", "" , $key);
-				$this->formValues[$key] = htmlspecialchars_decode($value);
+				$this->formValues[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
 			}
 		}
 		wfProfileOut(__METHOD__);

@@ -163,7 +163,11 @@ td.plb-toolbox {
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
-			
+			button {
+				&.wikia-button {
+					color:$color-button-text;
+				}
+			}
 			li {
 				margin: 0;
 				height: $item-outer-height;
