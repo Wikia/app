@@ -228,7 +228,7 @@ class PageHeaderModule extends Module {
 
 		// talk pages
 		if ($wgTitle->isTalkPage()) {
-			// remove comments button
+			// remove comments & FB like button
 			$this->comments = false;
 
 			// Talk: <page name without namespace prefix>
@@ -309,7 +309,7 @@ class PageHeaderModule extends Module {
 					/*$this->subtitle = View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist');
 					$this->subtitle .= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity-feed');*/
 					$this->subtitle = '&nbsp;';
-					
+
 				} else if ($wgTitle->isSpecial('ThemeDesignerPreview')) {
 					// fake static data for ThemeDesignerPreview
 					$this->revisions = array('current' => array('user' => 'foo',
