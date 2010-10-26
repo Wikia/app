@@ -28,12 +28,12 @@ class ExternalStoreRiak {
 
 	/**
 	 * Fetch data from given URL
-	 * @param string $url An url of the form riak://bucket/<key>
+	 * @param string $url An url of the form riak://<host>/<bucket>/<key>
 	 *
 	 * @access public
 	 */
 	public function fetchFromURL( $url ) {
-		list( $proto, $bucket, $key ) = explode( "/", $url, 3 );
+		list( $proto, $host, $bucket, $key ) = explode( "/", $url, 4 );
 		$this->mRiakBucket = $bucket;
 		return $this->fetchBlob( $key );
 	}
