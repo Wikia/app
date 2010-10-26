@@ -37,7 +37,7 @@ function wfUserProfilePageInit() {
 	 * messages file
 	 */
 	$wgExtensionMessagesFiles['UserProfilePage'] = $dir . 'UserProfilePage.i18n.php';
-	//$wgExtensionMessagesFiles['MyHome'] = dirname($dir) . '/MyHome/MyHome.i18n.php';
+	$wgExtensionMessagesFiles['MyHome'] = dirname($dir) . '/MyHome/MyHome.i18n.php';
 
 	// we have to load extension messages here in order to Special:CreateFromTemplate work properly
 	wfLoadExtensionMessages('UserProfilePage');
@@ -48,7 +48,9 @@ function wfUserProfilePageInit() {
 	$wgAutoloadClasses['UserProfilePage'] = $dir . 'UserProfilePage.class.php';
 	$wgAutoloadClasses['UserProfilePageHelper'] = $dir . 'UserProfilePageHelper.class.php';
 	$wgAutoloadClasses['RecentChangeDetail'] = $dir . 'RecentChangeDetail.class.php';
+	$wgAutoloadClasses['UserProfilePageModule'] = $dir . 'UserProfilePageModule.class.php';
 	$wgAutoloadClasses['UserProfileRailModule'] = $dir . 'UserProfileRailModule.class.php';
+
 	/**
 	 * ajax
 	 */

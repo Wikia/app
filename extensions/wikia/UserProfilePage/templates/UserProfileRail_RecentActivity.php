@@ -4,15 +4,15 @@
 		<ul class="activity_feed">
 			<? foreach( $activityFeed as $row ) :?>
 				<li>
-					<?= FeedRenderer::getSprite( $row, wfBlankImgUrl() ) ;?>
-					<em><a href="<?= htmlspecialchars( $row['url'] ) ;?>" class="title" rel="nofollow"><?= htmlspecialchars( $row['title'] ) ;?></a></em>
-					<details><?= FeedRenderer::formatTimestamp( $row['timestamp'] );?></details>
+					<img src="<?= wfBlankImgUrl() ?>" class="sprite <?= $row['changeicon'] ?>" height="20" width="20">
+					<em><?= $row['changemessage'] ?></em>
+					<details><?= $row['time_ago'] ?></details>
 				</li>
 			<? endforeach ;?>
 		</ul>
 
 		<a class="more view-all" href="<?= $specialContribsLink ;?>"><?= wfMsg( 'userprofilepage-top-recent-activity-see-more' ); ?> &gt;</a>
-		
+
 	<? else :?>
 		<?= wfMsg( 'userprofilepage-recent-activity-default', $userName ) ;?>
 	<? endif ;?>

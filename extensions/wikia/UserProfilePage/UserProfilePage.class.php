@@ -11,10 +11,14 @@ class UserProfilePage {
 	private static $mInstance = null;
 
 	static public function getInstance( User $user = null ) {
+		global $wgTitle;
 		if ( empty( self::$mInstance ) ) {
+			if (! ($user instanceof User) ) {
+				$user = UserProfilePageHelper::getUserFromTitle( $wgTitle );
+			}
 			self::$mInstance = new self( $user );
 		}
-		
+
 		return self::$mInstance;
 	}
 
@@ -218,7 +222,7 @@ class UserProfilePage {
 			__METHOD__,
 			array()
 		);
-		
+
 		return ( empty($row) ? array() : unserialize( $row->props ) );
 	}
 
@@ -228,7 +232,7 @@ class UserProfilePage {
 
 	public function userIsOwner() {
 		global $wgUser;
-		
+
 		return $this->user->getId() == $wgUser->getId();
 	}
 }
