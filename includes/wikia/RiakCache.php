@@ -15,10 +15,26 @@
  */
 class RiakCache extends BagOStuff {
 
-	private $mBucket;
+	private $mBucket, $mNode;
 
-	public function __construct( $bucket = false ) {
+	public function __construct( $bucket = false, $node = false ) {
+		global $wgRiakStorageNodes, $wgRiakDefaultNode;
+
 		$this->mBucket = $bucket;
+		if( $node ) {
+			if( isset( $wgRiakStorageNodes[ $node ] ) ) {
+				$this->mNode  = $wgRiakStorageNodes[ $node ];
+			}
+			else {
+				wfDie( "Node $node is not defined in wgRiakStorageNodes variable" );
+			}
+		}
+		else {
+			/**
+			 * @todo should we die if not defined too?
+			 */
+			$this->mNode  = $wgRiakStorageNodes[ $wgRiakDefaultNode ];
+		}
 	}
 
 	/**
@@ -31,10 +47,14 @@ class RiakCache extends BagOStuff {
 	 * @see http://riak.basho.com/edoc/raw-http-howto.txt for HTTP interface
 	 */
 	function getRiakClient() {
-		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy;
-
 		try {
-			$riak = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, 'mapred', $wgRiakNodeProxy );
+			$riak = new RiakClient(
+				$this->mNode[ "host" ],
+				$this->mNode[ "port" ],
+				$this->mNode[ "prefix" ],
+				'mapred',
+				$this->mNode[ "proxy" ]
+			);
 		}
 		catch ( Exception $e ) {
 			Wikia::log( __METHOD__, "error", $e->getMessage() );
