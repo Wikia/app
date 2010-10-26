@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'20101026',revision:'r28937',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'20101026',revision:'r28950',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -3065,7 +3065,7 @@ undoManager.type(event);});});editor.on('beforeModeUnload',function()
 {undoManager.reset();editor.fire('saveSnapshot');};editor.on('updateSnapshot',function()
 {if(undoManager.currentImage&&new Image(editor).equals(undoManager.currentImage))
 setTimeout(function(){undoManager.update();},0);});}});CKEDITOR.plugins.undo={};var Image=CKEDITOR.plugins.undo.Image=function(editor)
-{this.editor=editor;var contents=editor.getSnapshot(),selection=contents&&editor.getSelection();CKEDITOR.env.ie&&contents&&(contents=contents.replace(/\s+_cke_expando=".*?"/g,''));this.contents=contents;this.bookmarks=selection&&selection.createBookmarks2(true);};var protectedAttrs=/\b(?:href|src|name)="[^"]*?"/gi;Image.prototype={equals:function(otherImage,contentOnly)
+{this.editor=editor;editor.fire('beforeCreateUndoSnapshot');var contents=editor.getSnapshot(),selection=contents&&editor.getSelection();CKEDITOR.env.ie&&contents&&(contents=contents.replace(/\s+_cke_expando=".*?"/g,''));this.contents=contents;this.bookmarks=selection&&selection.createBookmarks2(true);editor.fire('afterCreateUndoSnapshot');};var protectedAttrs=/\b(?:href|src|name)="[^"]*?"/gi;Image.prototype={equals:function(otherImage,contentOnly)
 {var thisContents=this.contents,otherContents=otherImage.contents;if(CKEDITOR.env.ie&&(CKEDITOR.env.ie7Compat||CKEDITOR.env.ie6Compat))
 {thisContents=thisContents.replace(protectedAttrs,'');otherContents=otherContents.replace(protectedAttrs,'');}
 if(thisContents!=otherContents)
