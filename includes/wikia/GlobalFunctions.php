@@ -1043,7 +1043,7 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 	} else {
 		$sassParams = SassUtil::getSassParams();
 	}
-	
+
 	if ($wgOasisHD) {
 		$sassParams .= "&hd=1";
 	}
@@ -1146,11 +1146,16 @@ function wfGenerateUnsubToken( $email, $timestamp ) {
 /**
  * Get the cache object used by the solid cache, it should be "more solid" cache
  * than memcache (for example riak)
+ *
+ * @param mixed $bucket -- if solid storage is riak define bucket there
  */
-function &wfGetSolidCacheStorage() {
+function &wfGetSolidCacheStorage( $bucket = false ) {
 	global $wgSolidCacheType;
-	$ret =& wfGetCache( $wgSolidCacheType );
-	return $ret;
+	$cache = wfGetCache( $wgSolidCacheType );
+	if( $bucket && method_exists( $cache, "setBucket" ) ) {
+		$cache->setBucket( $bucket );
+	}
+	return $cache;
 }
 
 
@@ -1184,7 +1189,7 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE) {
 		),
 		__METHOD__
 	);
-	
+
 	if($out = $db->fetchRow($res)) {
 		return unserialize($out['props']);
 	}
