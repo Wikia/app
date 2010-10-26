@@ -1,19 +1,17 @@
 <section class="UserProfileRailModule_TopPages">
 	<h2><?= wfMsg( 'userprofilepage-top-pages-title', array( $userName, $wikiName ) ) ;?></h2>
 	<? if( count( $topPages ) ) :?>
-		<ul>
-			<? foreach( $topPages as $pageId => $page ) :?>
-				<? if( $userIsOwner ) :?>
-					<a class="HideButton" title="<?= $page['title'] ;?>">[x]</a>
-				<? endif ;?>
+		<? foreach( $topPages as $pageId => $page ) :?>
+			<div class="top-page-item">
 				<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>">
-					<img src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" /><br />
-					<strong><?= $page['title'] ;?></strong>
+					<div class="top-page-item-image">
+						<img src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" alt="<?= $page['title'] ;?>">
+					</div>
+					<details><?= $page['title'] ;?></details>
 				</a>
-				<br />
-			<? endforeach ;?>
-		</ul>
-
+			</div>
+		<? endforeach ;?>
+		
 		<? $hiddenCount = count($hiddenTopPages) ;?>
 		<? if( $userIsOwner && $hiddenCount ) :?>
 			<a class="more view-all">

@@ -1,4 +1,4 @@
-<section class="WikiaActivityModule">
+<section class="UserProfileRailModule_RecentActivity WikiaActivityModule">
 	<h1 class="activity-heading"><?= wfMsg( 'userprofilepage-recent-activity-title', $userName, $wikiName ) ;?></h1>
 	<?if ( count($activityFeed) ) :?>
 		<ul class="activity_feed">
