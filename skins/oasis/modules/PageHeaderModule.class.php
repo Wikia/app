@@ -304,13 +304,8 @@ class PageHeaderModule extends Module {
 			case NS_SPECIAL:
 				$this->subtitle = wfMsg('oasis-page-header-subtitle-special');
 
-				// special case for wiki activity page
-				if ($wgTitle->isSpecial('WikiActivity')) {
-					/*$this->subtitle = View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist');
-					$this->subtitle .= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity-feed');*/
-					$this->subtitle = '&nbsp;';
-
-				} else if ($wgTitle->isSpecial('ThemeDesignerPreview')) {
+				// FIXME: use PageHeaderIndexAfterExecute hook instead
+				if ($wgTitle->isSpecial('ThemeDesignerPreview')) {
 					// fake static data for ThemeDesignerPreview
 					$this->revisions = array('current' => array('user' => 'foo',
 							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg',
@@ -329,7 +324,9 @@ class PageHeaderModule extends Module {
 					$this->actionImage = '';
 					$this->actionName = 'edit';
 					$this->dropdown = array('foo', 'bar');
-				} elseif($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
+				}
+				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
+				elseif($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
 					$this->subtitle = "";
 				}
 				break;

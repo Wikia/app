@@ -5,18 +5,20 @@ class SpecialWikiActivity extends SpecialPage {
 	var $classActivity;
 	var $classWatchlist;
 	var $loggedIn;
-	
-	
+
+	private $defaultView;
+	private $feedSelected;
+
 	function __construct() {
 		wfLoadExtensionMessages('MyHome');
 		parent::__construct('WikiActivity', '' /* no restriction */, true /* listed */);
 	}
-	
+
 	function execute($par) {
 		wfProfileIn(__METHOD__);
-		global $wgOut, $wgUser, $wgTitle;
+		global $wgOut, $wgUser, $wgTitle, $wgBlankImgUrl;
 		$this->setHeaders();
-		
+
 		// not available for skins different then monaco / answers
 		$skinName = get_class($wgUser->getSkin());
 		if (!in_array($skinName, array('SkinMonaco', 'SkinAnswers', 'SkinOasis'))) {
@@ -24,13 +26,24 @@ class SpecialWikiActivity extends SpecialPage {
 			wfProfileOut(__METHOD__);
 			return;
 		}
-		
+
+		// choose default view (RT #68074)
+		if ($wgUser->isLoggedIn()) {
+			$this->defaultView = MyHome::getDefaultView();
+			if ($par == '') {
+				$par = $this->defaultView;
+			}
+		}
+		else {
+			$this->defaultView = false;
+		}
+
 		// watchlist feed
 		if($par == 'watchlist') {
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
 				$this->classWatchlist = "selected";
 			}
-			
+
 			// not available for anons
 			if($wgUser->isAnon()) {
 				if (get_class($wgUser->getSkin()) == 'SkinOasis') {
@@ -54,7 +67,7 @@ JS
 				return;
 			}
 			else {
-				$feedSelected = 'watchlist';
+				$this->feedSelected = 'watchlist';
 				$feedProxy = new WatchlistFeedAPIProxy();
 				$feedRenderer = new WatchlistFeedRenderer();
 			}
@@ -63,34 +76,33 @@ JS
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
 				$this->classActivity = "selected";
 			}
-			
-			$feedSelected = 'activity';
+
+			$this->feedSelected = 'activity';
 			$feedProxy = new ActivityFeedAPIProxy();
 			$feedRenderer = new ActivityFeedRenderer();
 		}
-		
+
 		$feedProvider = new DataFeedProvider($feedProxy);
-		
+
 		// WikiActivity.js is MyHome.js modified for Oasis
 		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js?{$wgStyleVersion}\"></script>\n");
-		
+		$wgOut->addExtensionStyle(wfGetSassUrl('extensions/wikia/MyHome/oasis.scss'));
+
 		$data = $feedProvider->get(50);  // this breaks when set to 60...
-		
-		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt, $wgExtensionsPath, $wgStyleVersion;
+
+		// FIXME: do it in AchievementsII extension
+		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
 		}
-		
+
 		// use message from MyHome as special page title
-		//$wgOut->setPageTitle(wfMsg('myhome-activity-feed'));
 		$wgOut->setPageTitle(wfMsg('oasis-activity-header'));
-		
+
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set('data', $data['results']);
-		$template->set('tagid', 'myhome-activityfeed'); // FIXME: remove
-		
-		global $wgBlankImgUrl;
+
 		$showMore = isset($data['query-continue']);
 		if ($showMore) {
 			$template->set('query_continue', $data['query-continue']);
@@ -98,28 +110,49 @@ JS
 		if (empty($data['results'])) {
 			$template->set('emptyMessage', wfMsgExt("myhome-activity-feed-empty", array( 'parse' )));
 		}
-		
-		
-		$this->loggedIn = ($wgUser->isLoggedIn() === true) ? true: false;	
-		
-		
+
 		$template->set_vars(array(
-					'assets' => array(
-						'blank' => $wgBlankImgUrl,
-						),
-					'showMore' => $showMore,
-					'type' => 'activity',
-					'classWatchlist' => $this->classWatchlist,
-					'classActivity' => $this->classActivity,
-					'loggedIn' => $this->loggedIn
-					));  // FIXME: remove
-		
-		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/MyHome/oasis.scss"));
-		
+			'showMore' => $showMore,
+			'type' => $this->feedSelected,
+			'wgBlankImgUrl' => $wgBlankImgUrl,
+		));
+
 		$wgOut->addHTML($template->render('activityfeed.oasis'));
-		
+
+		// page header: replace subtitle with navigation
+		global $wgHooks;
+		$wgHooks['PageHeaderIndexAfterExecute'][] = array(&$this, 'addNavigation');
+
 		wfProfileOut(__METHOD__);
 	}
-	
-}
 
+	/**
+	 * Replaces page header's subtitle with navigation for WikiActivity
+	 *
+	 * @author macbre
+	 */
+	function addNavigation(&$moduleObject, &$params) {
+		global $wgUser;
+		wfProfileIn(__METHOD__);
+
+		$template = new EasyTemplate(dirname(__FILE__).'/templates');
+
+		// RT #68074: show default view checkbox for logged-in users only
+		$showDefaultViewSwitch = $wgUser->isLoggedIn() && ($this->defaultView != $this->feedSelected);
+
+		$template->set_vars(array(
+			'classActivity' => $this->classActivity,
+			'classWatchlist' => $this->classWatchlist,
+			'defaultView' => $this->defaultView,
+			'loggedIn' => $wgUser->isLoggedIn(),
+			'showDefaultViewSwitch' => $showDefaultViewSwitch,
+			'type' => $this->feedSelected,
+		));
+
+		// replace subtitle with navigation for WikiActivity
+		$moduleObject->subtitle = $template->render('navigation.oasis');
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+}

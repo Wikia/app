@@ -101,40 +101,28 @@
 	}
 }
 
-.WikiaPageHeader {
-	h2 {
-		a:first-child {
-			border-right: 1px solid $color-page-border;
-			margin-right: 8px;
-			padding-right: 8px;
-
-		}
-	}
-}
-
 .activity-nav {
-	height: 36px;
-	left: 11px;
-	overflow: hidden;
-	position: absolute;
-	margin-bottom: 10px;
-	padding-bottom: 9px;
-	top: -51px;
-	
-	z-index: 200;
+	margin: 1px 0 -5px 0;
 	ul {
+		@include clearfix;
 		list-style: none;
 		margin-left: 0px;
 		li {
 			float: left;
 			list-style: none;
-			
+
+			a {
+				border-right: none;
+				margin: 0;
+				padding: 0;
+			}
+
 			&.watchlist {
 				border-right: solid 1px $color-page-border;
 				margin-right: 6px;
 				padding-right: 7px;
 			}
-				
+
 			&.selected {
 				a {
 					color: $color-text;

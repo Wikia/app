@@ -24,11 +24,4 @@
 		</li>
 	<?php } // endforeach; ?>
 	</ul>
-	<script type='text/javascript'>
-		$(document).ready(function(){
-			$('a.badgeName').click(function(){
-				WET.byStr('activityFeed/achievement/link');
-			});
-		});
-	</script>
 <?php } // endif; ?>
