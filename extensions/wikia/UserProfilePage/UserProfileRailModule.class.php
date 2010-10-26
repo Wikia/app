@@ -46,10 +46,7 @@ class UserProfileRailModule extends Module {
 		$this->userName =  $user->getName();
 		$this->wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
 
-
-//echo "<pre>";
 		foreach ( $this->getActivityFeed() as $change ) {
-//var_dump( $change );
 			$item = array();
 			$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
 			$item['user_name'] = $this->userName;
@@ -84,9 +81,6 @@ class UserProfileRailModule extends Module {
 			}
 			$this->activityFeed[] = $item;
 		}
-			//echo "<pre>";
-//var_dump( $this->activityFeed );
-//exit;
 
 		$this->specialContribsLink = $specialPageTitle->getFullUrl() . '/' . $this->userName;
 
