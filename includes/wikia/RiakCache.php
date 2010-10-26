@@ -87,7 +87,7 @@ class RiakCache extends BagOStuff {
 		if( empty( $this->mBucket ) ) {
 			$this->mBucket = $wgDBname;
 		}
-		wfDebugLog( __CLASS__,  __METHOD__ . ": getting $bucket as riak bucket.\n" );
+		wfDebugLog( __CLASS__,  __METHOD__ . ": getting {$this->mBucket} as riak bucket.\n" );
 
 		return $this->mBucket;
 	}
