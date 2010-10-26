@@ -52,7 +52,7 @@
 // modify "YUI" extensions (VET / WMU)
 yui-overlay, .yui-panel-container {
 	position: absolute;
-	z-index: 2000 !important;
+	z-index: $zTop + 2 !important;
 }
 
 .yui-panel {
@@ -63,10 +63,10 @@ yui-overlay, .yui-panel-container {
 
 .mask {
 	background: $color-page;
-	margin-top: -20px;
+	margin-top: -30px;
 	opacity: .8;
 	position: fixed;
-	z-index: 1999 !important;
+	z-index: $zTop + 1 !important;
 }
 
 .skin-oasis {
