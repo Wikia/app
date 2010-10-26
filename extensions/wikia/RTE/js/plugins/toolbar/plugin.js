@@ -130,29 +130,33 @@ CKEDITOR.plugins.add('rte-toolbar',
 				color: RTE.config.baseColor
 			});
 
-
-			var toolbar = $('#cke_toolbar');
-
-			// render new MW toolbar inside CK
-			var MWtoolbar = $('#mw-toolbar');
-
-			// add buttons
-			for (var i = 0; i < mwEditButtons.length; i++) {
-				mwInsertEditButton(MWtoolbar[0], mwEditButtons[i]);
-			}
-
-			for (var i = 0; i < mwCustomEditButtons.length; i++) {
-				mwInsertEditButton(MWtoolbar[0], mwCustomEditButtons[i]);
-			}
-
 			// toolbar is ready!
-			editor.fire('toolbarReady', toolbar);
-
-			// remove MW toolbar (rendered by MW core)
-			$('#toolbar').remove();
+			editor.fire('toolbarReady', $('#cke_toolbar'));
 
 			// reference to editor container (wrapping element for iframe / textarea)
 			self.editorContainer = $(RTE.instance.container.$).find('.cke_contents');
+		});
+
+		// lazy load MW toolbar for source mode (RT #78393)
+		editor.on('mode', function() {
+			if (this.mode == 'source') {
+				var MWtoolbar = $('#mw-toolbar');
+
+				if (MWtoolbar.children().length == 0) {
+					var i, toolbarNode = MWtoolbar.get(0);
+
+					// add buttons
+					for (i = 0; i < mwEditButtons.length; i++) {
+						mwInsertEditButton(toolbarNode, mwEditButtons[i]);
+					}
+
+					for (i = 0; i < mwCustomEditButtons.length; i++) {
+						mwInsertEditButton(toolbarNode, mwCustomEditButtons[i]);
+					}
+
+					RTE.log('lazy loading source mode toolbar');
+				}
+			}
 		});
 
 		// override insertTags function, so it works in CK source mode
