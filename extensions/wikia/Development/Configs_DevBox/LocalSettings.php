@@ -70,7 +70,17 @@ $wgSessionMemCachedServers = array(
 	1 => "10.8.36.107:11000", # dev-memcached2
 );
 
-
+/**
+ * definition of riak nodes
+ */
+$wgRiakStorageNodes = array(
+	"storage" => array(
+		"host" => "storage-dev",
+		"port" => "80",
+		"prefix" => "riak",
+		"proxy" => $wgHTTPProxy
+	)
+);
 
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
