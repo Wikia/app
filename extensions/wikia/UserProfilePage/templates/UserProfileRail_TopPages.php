@@ -14,19 +14,24 @@
 		
 		<? $hiddenCount = count($hiddenTopPages) ;?>
 		<? if( $userIsOwner && $hiddenCount ) :?>
-			<a class="more view-all">
-				<?= wfMsgExt( 'userprofilepage-top-pages-hidden-see-more', array( 'parsemag' ), $hiddenCount ); ?>
-				<img src="<?= wfBlankImgUrl() ;?>" class="chevron" />
-			</a>
-
-			<ul id="profile-top-pages-hidden">
+			<ul class="user-profile-action-menu" id="profile-top-pages-hidden">
+				<li class="unhide-link">
+					<a class="more view-all">
+						<?= wfMsgExt( 'userprofilepage-top-pages-hidden-see-more', array( 'parsemag' ), $hiddenCount ); ?>
+						<img src="<?= wfBlankImgUrl() ;?>" class="chevron" />
+					</a>
+				</li>
+				<? $counter = 0 ;?>
 				<? foreach( $hiddenTopPages as $pageId => $page ) :?>
-					<li>
-						<div class="page-title">
+					<li class="hidden-item<?= ( $counter++ == 0 ) ? ' first' : null;?>">
+						<div class="item-name">
 							<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>"><?= $page['title'] ;?></a>
 						</div>
 						<div class="unhide-control">
-							<a class="UnhideButton" title="<?= $page['title'] ;?>"><?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?></a>
+							<a class="UnhideButton" title="<?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?>" data-id="<?= $pageId; ?>">
+								<img class="sprite-small add" src="<?= wfBlankImgUrl() ;?>" alt="<?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?>"/>
+								<?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?>
+							</a>
 						</div>
 					</li>
 				<? endforeach; ?>

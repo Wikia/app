@@ -8,11 +8,11 @@
 
 .UserProfileRailModule_TopWikis {
 	position: relative;
-	height: 180px;
+	padding-bottom: 25px;
 
 	table {
 		width: 100%;
-		margin-bottom: 10px;
+		margin-bottom: 5px;
 		
 		tr {
 			height: 30px;
@@ -73,60 +73,91 @@
 		}
 	}
 
-	img{
-		&.chevron {
-			border-top-color: $color-text;
-		}
-	}
-
-	#profile-top-wikis-hidden{
-		position: absolute;
-		right: 0;
-
-		li {
-			&.unhide-link{
-				text-align: right;
-				padding-bottom: 10px;
-
-				.more {
-					float: none;
-				}
-			}
-
-			&.hidden-wiki {
-				@include clearfix;
-				border-top: 1px solid $color-page-border;
-				padding: 5px 10px 5px 10px;
-				display: none;
-
-				.wordmark {
-					float: left;
-				}
-
-				.unhide-control {
-					float: right;
-					margin-left: 10px;
-
-					.UnhideButton {
-						line-height: 20px;
-
-						img {
-							vertical-align: middle;
-						}
-					}
-				}
-
-				&.first{
-					border-top: none;
-				}
-			}
-		}
-	}
-
 	.more {
 		float: right;
 		font-size: 10px;
 		font-weight: bold;
+	}
+}
+
+.UserProfileRailModule_TopPages {
+	@include rail-module;
+	padding-bottom: 20px;
+
+	.top-page-item {
+		position: relative;
+		display: inline-block;
+		width: 70px;
+		margin: 10px;
+		vertical-align: top;
+
+		a, a:hover, a:visited {
+			color: $color-text;
+			text-decoration:none;
+			display: block;
+		}
+
+		img {
+			@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
+			position: absolute;
+			padding: 3px;
+			width: 70px;
+			height: 107px;
+			background-color: $color-page;
+		}
+
+		.snippet {
+			@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
+			position: absolute;
+			padding: 3px;
+			width: 70px;
+			height: 107px;
+			overflow: hidden;
+			background-color: $color-page;
+
+			.quote {
+				font-style: normal;
+				font-weight: bold;
+				font-size: 40px;
+				color: $color-text;
+				position: absolute;
+				display: block;
+				left: 7px;
+				//top: 0px;
+				padding: 0;
+			}
+
+			.text {
+				font-style: normal;
+				font-size: 13px;
+				font-weight: bold;
+				color: $color-text;
+				position: relative;
+				display: block;
+				margin: 0;
+				padding: 0;
+				padding-left: 24px;
+				padding-top: 13px;
+				line-height: 17px;
+				height: 85px;
+				overflow: hidden;
+			}
+		}
+
+		details {
+			@include border-radius-ne(9px);
+			@include border-radius-se(9px);
+			position: relative;
+			display: inline-block;
+			background-color: $color-buttons;
+			color: $color-button-text;
+			padding: 3px 13px 3px 10px;
+			margin-top: 100px;
+			line-height: 16px;
+			max-height: 48px;
+			overflow: hidden;
+			font-weight: normal;
+		}
 	}
 }
 
@@ -138,10 +169,55 @@
 	padding: 10px;
 }
 
-.UserProfileRailModule_RecentActivity {
+ul.user-profile-action-menu {
+	position: absolute;
+	right: 8px;
 
-}
+	li {
+		&.unhide-link{
+			text-align: right;
+			padding-bottom: 10px;
 
-.UserProfileRailModule_TopPages {
-	@include rail-module;
+			.more {
+				float: none;
+			}
+
+			img{
+				&.chevron {
+					border-top-color: $color-text;
+				}
+			}
+		}
+
+		&.hidden-item {
+			@include clearfix;
+			border-top: 1px solid $color-page-border;
+			padding: 5px 10px 5px 10px;
+			display: none;
+
+			.item-name {
+				line-height: 20px;
+				vertical-align: middle;
+				float: left;
+			}
+
+			.unhide-control {
+				float: right;
+				margin-left: 10px;
+				
+				.UnhideButton {
+					line-height: 20px;
+					font-weight: normal;
+
+					img {
+						vertical-align: middle;
+					}
+				}
+			}
+
+			&.first{
+				border-top: none;
+			}
+		}
+	}
 }

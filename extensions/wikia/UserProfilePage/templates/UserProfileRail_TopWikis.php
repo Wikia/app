@@ -39,7 +39,7 @@
 	
 	<? $hiddenCount = count($hiddenTopWikis) ;?>
 	<? if( $userIsOwner && $hiddenCount ) :?>
-		<ul id="profile-top-wikis-hidden">
+		<ul class="user-profile-action-menu" id="profile-top-wikis-hidden">
 			<li class="unhide-link">
 				<a class="more view-all">
 					<?= wfMsgExt( 'userprofilepage-top-wikis-hidden-see-more', array( 'parsemag' ), $hiddenCount ); ?>
@@ -48,8 +48,8 @@
 			</li>
 			<? $counter = 0 ;?>
 			<? foreach( $hiddenTopWikis as $wikiId => $wikiData ) :?>
-				<li class="hidden-wiki<?= ( $counter++ == 0 ) ? ' first' : null;?>">
-					<div class="wordmark">
+				<li class="hidden-item<?= ( $counter++ == 0 ) ? ' first' : null;?>">
+					<div class="item-name">
 						<a href="<?= $wikiData[ 'wikiUrl' ] ;?><?= $userPageUrl ;?>" title="<?= $wikiData[ 'wikiName' ] ;?>">
 							<? if( !empty( $wikiData[ 'wikiLogo' ] ) ) :?>
 								<img alt="<?= $wikiData[ 'wikiName' ] ;?>" src="<?= $wikiData[ 'wikiLogo' ] ;?>" width="80" height="20"/>
