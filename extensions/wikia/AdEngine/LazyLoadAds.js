@@ -29,7 +29,7 @@ var LazyLoadAds = {
 
 	calculateSlotsOffsets: function() {
 
-		LazyLoadAds.log("calculateSlotsOffsets");
+		//LazyLoadAds.log("calculateSlotsOffsets");
 
 		LazyLoadAds.lazyLoadAdTops = {};
 
