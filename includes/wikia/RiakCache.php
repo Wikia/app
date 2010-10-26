@@ -23,9 +23,11 @@ class RiakCache extends BagOStuff {
 		$this->mBucket = $bucket;
 		if( $node ) {
 			if( isset( $wgRiakStorageNodes[ $node ] ) ) {
+				wfDebug( __METHOD__ . ": using $node as requested riak node." );
 				$this->mNode  = $wgRiakStorageNodes[ $node ];
 			}
 			else {
+				wfDebug( __METHOD__ . ": node $node is not defined in wgRiakStorageNodes variable." );
 				wfDie( "Node $node is not defined in wgRiakStorageNodes variable" );
 			}
 		}
@@ -33,6 +35,7 @@ class RiakCache extends BagOStuff {
 			/**
 			 * @todo should we die if not defined too?
 			 */
+			wfDebug( __METHOD__ . ": using $wgRiakDefaultNode as default riak node." );
 			$this->mNode  = $wgRiakStorageNodes[ $wgRiakDefaultNode ];
 		}
 	}
