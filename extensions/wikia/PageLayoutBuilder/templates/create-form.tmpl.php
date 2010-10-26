@@ -2,7 +2,13 @@
 	<div class="plb-preview-div">
 		<?php echo $previewdata; ?>
 	</div>
-	<div class="plb-article-form-space separator" ></div>
+
+	<div class="WikiaPageHeader editbox" id="WikiaEditBoxHeader">
+		<h1>
+			<?php echo $title2 ?>
+		</h1>
+	</div>
+		
 <?php endif; ?>
 
 <?php if($iserror): ?>

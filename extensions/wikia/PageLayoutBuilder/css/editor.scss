@@ -296,13 +296,19 @@ $plb-window-items-margin: 6px;
 	width:424px;
 }
 
-
-.plb-editor-desc {
-	width:424px;
+#editform {
+	textarea {
+		&.plb-editor-desc {
+			width:99%;
+			height:50px;
+		}
+	}
 }
+
 
 #plbLayoutList {
 	margin-bottom:10px;
+	width: 100%;
 	thead{
 		td{
 			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
@@ -335,6 +341,9 @@ $plb-window-items-margin: 6px;
 			width:300px;
 			p {
 				margin:0;
+				&.layout-name {
+					font-size: 15px;
+				}
 			}
 			.delete {
 				background: url(/extensions/wikia/PageLayoutBuilder/images/trash-icon.png);

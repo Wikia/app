@@ -52,15 +52,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		//TODO: merge editor and form files
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/editor.scss' ) . "?cb=".time()  );
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) . "?cb=".time()  );
-		$wgOut->addScriptFile( $wgExtensionsPath."/wikia/PageLayoutBuilder/js/editor.js" );
 		
 		$action = $wgRequest->getVal("action");
-		
 		if($action == 'list') {
 			$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/js/list.js");
 			$this->executeList();
 			return true;
 		}
+		
+		$wgOut->addScriptFile( $wgExtensionsPath."/wikia/PageLayoutBuilder/js/editor.js" );
 
 		if($wgRequest->wasPosted() && ($wgRequest->getVal("action") == "submit") ) {
 			if($this->parseForm()) {
@@ -149,21 +149,31 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$out[$key]['page_actions']['edit'] = array(
 				"link" => $title->getFullURL('plbId='.$value['page_id'] ),
 				"name" => XML::element("img",array("src" => $wgBlankImgUrl)).wfMsg("plb-list-action-edit"),
-				"class" => "edit wikia-button secondary"
+				"class" => "edit wikia-button secondary",
+				"separator" => 1,
 			);
 
 			if($value['not_publish']) {
 				$out[$key]['page_actions']['publish'] = array(
 					"link" => "#plbId-".$value['page_id'],
 					"name" => wfMsg("plb-list-action-publish"),
-					"class" => "publish"
+					"class" => "publish",
+					"separator" => 1,
 				);
 			}
+			
+			$out[$key]['page_actions']['create'] = array(
+				"link" => Title::newFromText('PageLayoutBuilderForm', NS_SPECIAL)->getFullURL("plbId=".$value['page_id']),
+				"name" => wfMsg("plb-list-action-create"),
+				"class" => "create",
+				"separator" => 1,
+			);
 
 			$out[$key]['page_actions']['delete'] = array(
 				"link" => "#plbId-".$value['page_id'],
 				"name" => "",//wfMsg("plb-list-action-delete"),
-				"class" => "delete"
+				"class" => "delete",
+				"separator" => 0,
 			);
 
 			$out[$key]['profile_name'] = $value['rev_user']->getName();
@@ -197,13 +207,20 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-
-		if(!$this->isFromDb) {
-			$wgOut->setPageTitle( wfMsg("plb-create-title") );
+		$this->editTitle2 = "";
+		if(isset($this->previewOut)) {
+			$this->editTitle1 = wfMsg('plb-create-preview-title', array("$1" => $this->mTitle->getText() )); 
+			$this->editTitle2 = wfMsg('plb-create-edit-title', array("$1" => $this->mTitle->getText() ));
 		} else {
-			$wgOut->setPageTitle( $this->mTitle->getText() );
+			if(!$this->isFromDb) {
+				$this->editTitle1 = wfMsg( 'plb-create-new-title' );				
+			} else {
+				$this->editTitle1 = wfMsg('plb-create-edit-title', array("$1" => $this->mTitle->getText() ));
+			}
 		}
 
+		$wgOut->setPageTitle( strip_tags($this->editTitle1) );;
+		$wgOut->setHTMLTitle($this->editTitle1 );
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 
 		$oTmpl->set_vars(array(
@@ -211,6 +228,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			"iserror" => (count($this->mFormErrors) > 0),
 			"errors" => $this->mFormErrors,
 			"ispreview" => isset($this->previewOut),
+			"title2" =>	$this->editTitle2,
 			"showtitle"  => !(!empty($this->isFromDb) && $this->isFromDb),
 			"previewdata" =>  isset($this->previewOut) ?  $this->previewOut:""
 		));
@@ -590,3 +608,4 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 	}
 }
+
