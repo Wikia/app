@@ -23,11 +23,11 @@ class RiakCache extends BagOStuff {
 		$this->mBucket = $bucket;
 		if( $node ) {
 			if( isset( $wgRiakStorageNodes[ $node ] ) ) {
-				wfDebug( __METHOD__ . ": using $node as requested riak node." );
+				wfDebugLog( __CLASS__, __METHOD__ . ": using $node as requested riak node.", true );
 				$this->mNode  = $wgRiakStorageNodes[ $node ];
 			}
 			else {
-				wfDebug( __METHOD__ . ": node $node is not defined in wgRiakStorageNodes variable." );
+				wfDebugLog( __CLASS__, __METHOD__ . ": node $node is not defined in wgRiakStorageNodes variable.\n", true );
 				wfDie( "Node $node is not defined in wgRiakStorageNodes variable" );
 			}
 		}
@@ -35,7 +35,7 @@ class RiakCache extends BagOStuff {
 			/**
 			 * @todo should we die if not defined too?
 			 */
-			wfDebug( __METHOD__ . ": using $wgRiakDefaultNode as default riak node." );
+			wfDebugLog( __CLASS__, __METHOD__ . ": using $wgRiakDefaultNode as default riak node.\n", true );
 			$this->mNode  = $wgRiakStorageNodes[ $wgRiakDefaultNode ];
 		}
 	}
@@ -60,7 +60,7 @@ class RiakCache extends BagOStuff {
 			);
 		}
 		catch ( Exception $e ) {
-			Wikia::log( __METHOD__, "error", $e->getMessage() );
+			wfDebugLog( __CLASS__, __METHOD__ . ": catched exception, error: " . $e->getMessage() . ".\n", true );
 			$riak = false;
 		}
 		return $riak;
@@ -72,6 +72,7 @@ class RiakCache extends BagOStuff {
 	 * @param String $bucket -- bucket name
 	 */
 	public function setBucket( $bucket ) {
+		wfDebugLog( __CLASS__,  __METHOD__ . ": setting $bucket as riak bucket.\n" );
 		$this->mBucket = $bucket;
 	}
 
@@ -110,6 +111,7 @@ class RiakCache extends BagOStuff {
 				$value = false;
 			}
 		}
+		wfDebugLog( __CLASS__, __METHOD__ . ": getting value from key $key.\n" );
 		return $value;
 	}
 
@@ -123,6 +125,7 @@ class RiakCache extends BagOStuff {
 		$bucket = $this->getRiakClient()->bucket( $this->getBucket() );
 		$object = $bucket->newObject( $key, array( $value, empty( $exptime ) ? 0 : time() + $exptime  ) );
 		$object->store();
+		wfDebugLog( __CLASS__, __METHOD__ . ": storing value for key $key.\n" );
 	}
 
 	/**
@@ -135,6 +138,7 @@ class RiakCache extends BagOStuff {
 		$object = $bucket->get( $key );
 		$object->delete();
 		$object->reload();
+		wfDebugLog( __CLASS__, __METHOD__ . ": deleting value from key $key.\n" );
 	}
 
 	public function keys() {
