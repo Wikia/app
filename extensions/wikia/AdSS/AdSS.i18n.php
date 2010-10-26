@@ -54,6 +54,8 @@ $messages['en'] = array(
 	'adss-button-select' => 'Select',
 	'adss-preview-header' => 'Preview',
 	'adss-preview-prompt' => 'Here is what your sponsorship will look like - click "{{int:adss-button-edit}}" to go back and make changes, or "{{int:adss-button-save-pay}}" to save it and go to PayPal.',
+	'adss-click-here' => 'Click here',
+	'adss-paypal-redirect' => '$1 if you are not redirected to PayPal within 5 seconds.',
 	'adss-paypal-error' => "Couldn't create PayPal payment this time. Please try again later.
 
 Return to [[Special:AdSS|{{int:Adss}}]].",

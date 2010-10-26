@@ -104,8 +104,9 @@ class AdSS_Controller extends SpecialPage {
 			// redirect to PayPal
 			$_SESSION['ecToken'] = $pp->getToken();
 			$_SESSION['AdSS_adForm'] = $adForm;
-			//TODO use http meta redirect so we can add GA tracking
-			$wgOut->redirect( $wgPayPalUrl . $pp->getToken() );
+			$wgOut->addMeta( 'http:Refresh', '0;URL=' . $wgPayPalUrl . $pp->getToken() );
+			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/redirect/ok")' );
+			$wgOut->addHTML( wfMsgHtml( 'adss-paypal-redirect', Xml::element( 'a', array( 'href' => $wgPayPalUrl . $pp->getToken() ), wfMsg( 'adss-click-here' ) ) ) );
 		} else {
 			// show error
 			$wgOut->addInlineScript( '$.tracker.byStr("adss/form/paypal/redirect/error")' );
