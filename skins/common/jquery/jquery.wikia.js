@@ -586,7 +586,7 @@ Observable = $.createClass(Object,{
 			return false;
 		}
 		scope == scope || this;
-		for (i in this.events[e]) {
+		for (var i in this.events[e]) {
 			if (this.events[e][i].fn == cb && this.events[e][i].scope == scope) {
 				delete this.events[e][i];
 				return true;
@@ -616,7 +616,7 @@ Observable = $.createClass(Object,{
 		if (!this.events[e])
 			return;
 		var ee = this.events[e];
-		for (i=0;i<ee.length;i++) {
+		for (var i=0;i<ee.length;i++) {
 			if (typeof ee[i].fn == 'function') {
 				var scope = ee[i].scope || this;
 				if (ee[i].fn.apply(scope,a) === false) {

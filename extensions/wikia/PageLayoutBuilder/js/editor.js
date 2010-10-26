@@ -5,6 +5,7 @@
 	var PLB = window.PageLayoutBuilder;
 
 	$.extend(PLB,{
+		Util: {},
 		PARAM_TYPE: '__plb_type',
 		PARAM_PREFIX: '__plb_param_',
 		PARAM_ID: '__plb_param_id',
@@ -27,7 +28,7 @@
 	 *   - attributes - list of allowed attributes and its default values
 	 *   - requiredAttributes - list of required attributes
 	 */
-
+	
 	PLB.Widget = $.createClass(Object,{
 		
 		ed: null,
@@ -211,6 +212,8 @@
 			this.instance.on('afterCommandExec',$.proxy(this.onRTEAfterCommandExec,this));
 			this.instance.on('beforeInsertContent',$.proxy(this.onRTEBeforeInsertContent,this));
 			this.instance.on('afterInsertContent',$.proxy(this.onRTEAfterInsertContent,this));
+			this.instance.on('beforeCreateUndoSnapshot',$.proxy(this.onRTEBeforeCreateUndoSnapshot,this));
+			this.instance.on('afterCreateUndoSnapshot',$.proxy(this.onRTEAfterCreateUndoSnapshot,this));
 			
 			this.fire('ready',this);
 		},
@@ -222,12 +225,12 @@
 			}
 			this.document = this.instance.document;
 			this.body = this.rte.getEditor();
-			/*
+			
 			this.document.removeListener(this.onRTEBeforeApplyStyleCallback);
 			this.document.removeListener(this.onRTEAfterApplyStyleCallback);
 			this.document.on('applyStyle',this.onRTEBeforeApplyStyleCallback);
 			this.document.on('afterApplyStyle',this.onRTEAfterApplyStyleCallback);
-			*/
+			
 			this.fire('rebind',this);
 		},
 		
@@ -240,22 +243,22 @@
 		},
 		
 		onRTEBeforeCommandExec: function( event ) {
-			$().log(event,'RTE-before-command-exec');
+//			$().log(event,'RTE-before-command-exec');
 			this.fire('beforecommand',this,event.data,event);
 		},
 		
 		onRTEAfterCommandExec: function( event ) {
-			$().log(event,'RTE-after-command-exec');
+//			$().log(event,'RTE-after-command-exec');
 			this.fire('aftercommand',this,event.data,event);
 		},
 		
 		onRTEBeforeInsertContent: function( event ) {
-			$().log(event,'RTE-before-insert');
+//			$().log(event,'RTE-before-insert');
 			this.fire('beforecommand',this,event.data,event);
 		},
 		
 		onRTEAfterInsertContent: function( event ) {
-			$().log(event,'RTE-after-insert');
+//			$().log(event,'RTE-after-insert');
 			this.fire('aftercommand',this,event.data,event);
 		},
 		
@@ -265,6 +268,14 @@
 		
 		onRTEModeSwitch: function() {
 			this.fire('modeswitch',this,this.instance.mode);
+		},
+		
+		onRTEBeforeCreateUndoSnapshot: function( event ) {
+			this.fire('beforesnapshot',this,event.data,event);
+		},
+		
+		onRTEAfterCreateUndoSnapshot: function( event ) {
+			this.fire('aftersnapshot',this,event.data,event);
 		}
 		
 	});
@@ -306,9 +317,13 @@
 				ready: this.onRTEReady,
 				rebind: this.onRTERebind,
 				requestcss: this.onRTERequestCSS,
+				modeswitch: this.onRTEModeSwitch,
+				beforestyle: this.insertPlaceholders,
+				afterstyle: this.replacePlaceholders,
 				beforecommand: this.insertPlaceholders,
 				aftercommand: this.replacePlaceholders,
-				modeswitch: this.onRTEModeSwitch,
+				beforesnapshot: this.onRTEBeforeCreateUndoSnapshot,
+				aftersnapshot: this.onRTEAfterCreateUndoSnapshot,
 				scope: this
 			});
 			
@@ -360,28 +375,61 @@
 			}
 		},
 		
+		onRTEBeforeCreateUndoSnapshot: function(rte,data,e) {
+			$().log('','PLB->>>-onRTEBeforeCreateUndoSnapshot');
+			var undoSnapshot = {};
+			
+			undoSnapshot.selection = this.saveSelection(null,null);
+			undoSnapshot.elements = this.replacePlaceholders(this.rte,undoSnapshot.selection);
+			this.restoreSelection(undoSnapshot.selection);
+			
+			this.undoSnapshot = undoSnapshot;
+			
+			$().log(this.undoSnapshot,'PLB-<<<-onRTEBeforeCreateUndoSnapshot');
+		},
+		
+		onRTEAfterCreateUndoSnapshot: function(rte,data,e) {
+			$().log('','PLB->>>-onRTEAfterCreateUndoSnapshot');
+			var debug = {};
+			if (this.undoSnapshot) {
+				var us = this.undoSnapshot;
+				var placeholders = []
+				for (var i=0;i<us.elements.length;i++) {
+					placeholders.push(this.createPlaceholder(us.elements[i]));
+				}
+				debug.placeholders = placeholders;
+				this.restoreSelection(us.selection)
+			}
+			
+			this.undoSnapshot = null;
+			$().log(debug,'PLB-<<<-onRTEAfterCreateUndoSnapshot');
+		},
+		
 		insertPlaceholders: function (rte,state) {
 			if (state.command && state.command.canUndo === false) {
 				return;
 			}
-			var stateCopy = $.extend({},state);
-			if (!state.selection) {
-				stateCopy.selection = this.rte.getInstance().getSelection();
-				stateCopy.ranges = stateCopy.selection.getRanges();
-			}
 			
+			$().log('','PLB->>>-insertPlaceholders');
+			
+			var debug = {};
+			var selData = this.saveSelection(state.selection,state.ranges);
+			
+			var placeholders = [];
 			var elements = this.getWidgetElements();
 			for (var i=0;i<elements.length;i++) {
-				var w = $(elements[i]).wrap('<div class="plb-rte-widget-placeholder" />').parent();
-				var p = $('<img src="" alt="placeholder"/>')
-					.attr('plbdata',w.html())
-					.addClass('plb-rte-widget-placeholder');
-				w.replaceWith(p);
+				placeholders.push(this.createPlaceholder(elements[i]));
 			}
-			
-			$().log('insertPlaceholders','PLB');
+			this.restoreSelection(selData);
 		    
-		    stateCopy.selection.selectRanges( stateCopy.ranges );
+			debug.selection = selData;
+			debug.placeholders = placeholders;
+			
+			$().log(debug,'PLB-<<<-insertPlaceholders');
+			
+			this.fire('placeholderscreated',placeholders);
+		    
+		    return placeholders;
 		},
 		
 		replacePlaceholders: function (rte,state) {
@@ -390,11 +438,59 @@
 //			if (state.command && state.command.canUndo === false) {
 //				return;
 //			}
-		    var elements = $('.plb-rte-widget-placeholder',rte.getBody());
-		    for( var i = 0; i < elements.length; i++ ) {
-		    	var w = $(elements[i]);
-		    	w.replaceWith($(w.attr('plbdata')));
+			$().log('','PLB->>>-replacePlaceholders');
+			
+			var debug = {};
+			var selData = this.saveSelection(state.selection,state.ranges);
+			
+			var elements = [];
+		    var placeholders = $('.plb-rte-widget-placeholder',rte.getBody());
+		    for( var i = 0; i < placeholders.length; i++ ) {
+		    	elements.push(this.replacePlaceholder(placeholders[i]));
 		    }
+		    this.restoreSelection(selData);
+		    
+		    debug.selection = selData;
+		    debug.elements = elements;
+
+		    this.fire('placeholdersremoved',elements);
+		    
+		    $().log(debug,'PLB-<<<-replacePlaceholders');
+		    
+		    return elements;
+		},
+		
+		createPlaceholder: function( el ) {
+			var wrapper = $(el).wrap('<div class="plb-rte-widget-placeholder" />').parent();
+			var ph = $('<img src="" alt="placeholder"/>')
+				.attr('plbdata',wrapper.html())
+				.addClass('plb-rte-widget-placeholder');
+			wrapper.replaceWith(ph);
+			return ph;
+		},
+		
+		replacePlaceholder: function( el ) {
+			var wrapper = $(el);
+			var widgetEl = null;
+			if (wrapper.hasClass('plb-rte-widget-placeholder')) {
+				widgetEl = $(wrapper.attr('plbdata'));
+				wrapper.replaceWith(widgetEl);
+			}
+			return widgetEl;
+		},
+		
+		saveSelection: function( data ) {
+			
+			var sel = data && typeof data == 'object' && data.selection || this.rte.instance.getSelection();
+			var ranges = data && typeof data == 'object' && data.ranges || sel.getRanges();
+			return {
+				selection: sel,
+				ranges: ranges
+			};
+		},
+		
+		restoreSelection: function( data ) {
+			data.selection.selectRanges(data.ranges);
 		},
 		
 		onRTEModeSwitch: function (rte,mode) {
@@ -496,16 +592,21 @@
 		widgetsList: null,
 		refreshTimer: null,
 		refreshTimerDelay: 500,
+		rebindOverlaysTimer: null,
+		rebindOverlaysTimerDelay: 500,
 		
 		constructor: function( editor ) {
 			PLB.UI.superclass.constructor.call(this);
 			
 			this.refreshTimer = Timer.create($.proxy(this.refresh,this),this.refreshTimerDelay);
+			this.rebindOverlaysTimer = Timer.create($.proxy(this.rebindOverlays,this),this.rebindOverlaysTimerDelay);
 			
 			this.ed = editor;
-			this.ed.on('rebind',$.proxy(this.rebind,this));
-			this.ed.on('changed',$.proxy(this.rebindOverlays,this));
-			this.ed.on('changed',$.proxy(this.refresh,this));
+			this.ed.bind('rebind', this.rebind, this);
+			this.ed.bind('changed', this.rebindOverlays, this);
+			this.ed.bind('changed', this.refresh, this);
+			this.ed.bind('placeholdersremoved', this.delayedRebindOverlays, this);
+			this.ed.bind('placeholdersremoved', this.delayedRefresh, this);
 			this.rte = this.ed.rte;
 			
 			this.el = this.rte.getSidebar();
@@ -559,7 +660,12 @@
 			this.refresh();
 		},
 		
+		delayedRebindOverlays : function () {
+			this.rebindOverlaysTimer.start();
+		},
+		
 		rebindOverlays: function() {
+			this.rebindOverlaysTimer.stop();
 			var widgets = this.ed.getWidgetElements();
 			$().log(widgets,'PLB-overlay refresh');
 			this.rte.getRTE().overlay.add(widgets, [{
