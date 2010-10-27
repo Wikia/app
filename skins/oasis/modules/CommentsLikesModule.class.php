@@ -76,6 +76,9 @@ class CommentsLikesModule extends Module {
 	public function executeIndex($data) {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgLang, $wgContentNamespaces, $wgExtraNamespacesLocal;
+		if(empty($wgExtraNamespacesLocal)){
+			$wgExtraNamespacesLocal = array();
+		}
 
 		// set the page for which we're showing comments / likes
 		// used for proper linking on blog posts listings
