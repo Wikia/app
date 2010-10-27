@@ -109,12 +109,12 @@ You can reorder or delete tools in the field below.
 	# user-facing (editable) Oasis messages
 	# names adjusted to be easy-er for the user to remember
 	'categoryblacklist' => '* stub', // FIXME: give this an extension specific key prefix.
-	'wiki-navigation' => '*#visited#|TopContent // FIXME: give this an extension specific key prefix.
+	'wiki-navigation' => '*#visited#|TopContent
 *#category1#
 *#category2#
 *portal-url|Community
 **blogs-recent-url|blogs-recent-url-text
-**forum-url|Forum',
+**forum-url|Forum', // FIXME: give this an extension specific key prefix.
 
 # Related to ImageSEO RT#55755
 	'imageseo-featured-on' => 'Featured on:', // FIXME: give this an extension specific key prefix.
