@@ -15,7 +15,7 @@
  */
 class RiakCache extends BagOStuff {
 
-	private $mBucket, $mNode;
+	private $mBucket, $mNode, $mNodeName;
 
 	public function __construct( $bucket = false, $node = false ) {
 		global $wgRiakStorageNodes, $wgRiakDefaultNode;
@@ -25,6 +25,7 @@ class RiakCache extends BagOStuff {
 			if( isset( $wgRiakStorageNodes[ $node ] ) ) {
 				wfDebugLog( __CLASS__, __METHOD__ . ": using $node as requested riak node.", true );
 				$this->mNode  = $wgRiakStorageNodes[ $node ];
+				$this->mNodeName = $node;
 			}
 			else {
 				wfDebugLog( __CLASS__, __METHOD__ . ": node $node is not defined in wgRiakStorageNodes variable.\n", true );
@@ -33,10 +34,12 @@ class RiakCache extends BagOStuff {
 		}
 		else {
 			/**
-			 * @todo should we die if not defined too?
+			 * fallback to default riak node, used in ExternalStoreRiak for example
+			 * @see includes/wikia/ExternalStoreRiak.php
 			 */
 			wfDebugLog( __CLASS__, __METHOD__ . ": using $wgRiakDefaultNode as default riak node.\n", true );
 			$this->mNode  = $wgRiakStorageNodes[ $wgRiakDefaultNode ];
+			$this->mNodeName = $wgRiakDefaultNode;
 		}
 	}
 
@@ -104,6 +107,17 @@ class RiakCache extends BagOStuff {
 		wfDebugLog( __CLASS__,  __METHOD__ . $this->riakNode() . ": getting {$this->mBucket} as riak bucket.\n" );
 
 		return $this->mBucket;
+	}
+
+	/**
+	 * get node name
+	 *
+	 * @access public
+	 *
+	 * @return string node name
+	 */
+	public function getNodeName() {
+		return $this->mNodeName;
 	}
 
 	/**

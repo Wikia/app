@@ -10,7 +10,7 @@
 
 class ExternalStoreRiak {
 
-	private $mRiakClient, $mRiakBucket;
+	private $mRiakBucket, $mRiakNode;
 
 	/**
 	 * public constructor, uses globals defined somewhere else
@@ -18,12 +18,24 @@ class ExternalStoreRiak {
 	 * @access public
 	 */
 	public function __construct() {
-		global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, $wgRiakNodeProxy ;
-
 		$this->mRiakBucket = "blobs";
-		$this->mRiakClient = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix, 'mapred', $wgRiakNodeProxy );
+	}
 
+	/**
+	 * get riak database handler
+	 *
+	 * @acccess private
+	 */
+	private function getClient() {
 
+		wfProfileIn( __METHOD__ );
+
+		$riak = new RiakCache( $this->mRiakBucket, $this->mRiakNode );
+		$this->mRiakNode = $riak->getNodeName();
+
+		wfProfileOut( __METHOD__ );
+
+		return $riak->getRiakClient();
 	}
 
 	/**
@@ -33,16 +45,18 @@ class ExternalStoreRiak {
 	 * @access public
 	 */
 	public function fetchFromURL( $url ) {
-		list( $proto, $host, $bucket, $key ) = explode( "/", $url, 4 );
+		list( $proto, $x, $node, $bucket, $key ) = explode( "/", $url, 5 );
+		wfDebugLog( "RiakCache", __METHOD__ . ": node: $node, bucket: $bucket, key: $key\n" );
 		$this->mRiakBucket = $bucket;
+		$this->mRiakNode = $node;
 		return $this->fetchBlob( $key );
 	}
 
 	/**
 	 * Insert a data item into a given cluster
 	 *
-	 * @param $cluster String: the cluster name
-	 * @param $data String: the data item
+	 * @param string $bucket the cluster name
+	 * @param string $data the data item
 	 * @return string URL
 	 */
 	public function store( $bucket, $data ) {
@@ -62,6 +76,10 @@ class ExternalStoreRiak {
 
 	/**
 	 * fetch blob from riak, bucket should be already defined
+	 *
+	 * @param string $key key to resource
+	 * @param string $node node name for riak configuration
+	 *
 	 * @access private
 	 */
 	private function fetchBlob( $key ) {
@@ -70,7 +88,8 @@ class ExternalStoreRiak {
 
 		$value = false;
 		if( $this->mRiakBucket ) {
-			$bucket = $this->mRiakClient->bucket( $this->mRiakBucket );
+			$client = $this->getClient();
+			$bucket = $client->bucket( $this->mRiakBucket );
 			$object = $bucket->getBinary( $key );
 			if( $object->exists() ) {
 				$value = $object->getData();
@@ -92,19 +111,31 @@ class ExternalStoreRiak {
 
 		wfProfileIn( __METHOD__ );
 
-		$status = false;
+		$url = false;
 
 		if( $this->mRiakBucket ) {
-			$bucket = $this->mRiakClient->bucket( $this->mRiakBucket );
+			/**
+			 * false = get default riak node for storage,
+			 * will be set in getClient()
+			 */
+			$this->mRiakNode =  false;
+			$client = $this->getClient();
+			$bucket = $client->bucket( $this->mRiakBucket );
 			$object = $bucket->newBinary( $key, $data );
 			$status = $object->store();
+
+			$url = sprintf( "riak://%s/%s/%s", $this->mRiakNode, $this->mRiakBucket, $key );
 		}
 		else {
 			Wikia::log( __METHOD__, false, "bucket is not defined" );
 		}
 
+		/**
+		 * construct url
+		 */
+
 		wfProfileOut( __METHOD__ );
 
-		return $status;
+		return $url;
 	}
 };
