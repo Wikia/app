@@ -1,78 +1,50 @@
 <section class="LandingPage">
+	<div class="LandingPageSearch">
+		<?= wfRenderPartial("Search", "Index", array ("placeholder" => "Search Wikia", "fulltext" => "0", "wgBlankImgUrl" => $wgBlankImgUrl, "wgTitle" => $wgTitle)); ?>
+	</div>
+
 	<ul class="LandingPageLanguageLinks">
 <?php
-	foreach($languageLinks as $item) {
+foreach($languageLinks as $item) {
 ?>
 		<li>[<a href="<?= htmlspecialchars($item['href']) ?>"><?= htmlspecialchars($item['text']) ?></a>]</li>
 <?php
-	}
+}
 ?>
 	</ul>
-	<section class="LandingPageRow">
-		<section class="LandingPageWelcome">
-			<h1><?= wfMsg('landingpage') ?></h1>
-			<h2><?= wfMsgExt('landingpage-secondary-line', array('parse')) ?></h2>
-			<h3><?= wfMsgExt('landingpage-dive-in', array('parse')) ?></h3>
 
-			<section class="LandingPageExamples">
-					<ul>
-			<?php foreach($wikis as $wiki) { ?>
-						<li>
-							<a href="<?= $wiki['url'] ?>">
-								<img src="<?= $imagesPath . $wiki['image'] ?>" alt="" width="124" height="84">
-								<?= $wiki['name'] ?>
-							</a>
-						</li>
-			<?php
-		}
-		?>
-					</ul>
-			</section>
+	<ul class="LandingPageSocialLinks">
+		<li class="twitter"><a alt="Follow us on Twitter" href="http://www.twitter.com/wikia"></a></li>
+		<li class="facebook"><a alt="Wikia on Facebook" href="http://www.facebook.com/wikia"></a></li>
+		<li class="blog"><a alt="Read our Blog" href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog"></a></li>
+	</ul>
 
-			<section class="LandingPageSwitchBack">
-				<h3><a href="<?= wfMsg('landingpage-change-back-link') ?>"><?= wfMsg('landingpage-change-back-text') ?></a></h3>
-
-			</section>
-		</section>
-
-		<section class="LandingPageScreenshots">
-			<iframe class="video" width="450" height="263" frameborder="0" src="http://player.vimeo.com/video/15645799"></iframe>
-		</section>
-	</section>
-
-	<section class="LandingPageRow LandingPageButtons">
+	<div class="LandingPageSites">
+		<h2><?= wfMsg('landingpage-start-exploring') ?></h2>
+		<p><?= wfMsg('landingpage-start-exploring-text') ?></p>
+		
+		
 		<ul>
-			<li class="item-1">
-			<?= wfMsg('landingpage-buttons-new-look') ?><br />
-				<a href="<?= wfMsg('landingpage-buttons-new-look-link') ?>"><?= wfMsg('landingpage-buttons-faqs') ?></a>
-			</li>
-			<li class="item-2">
-				<?= wfMsg('landingpage-buttons-about-make-the-move') ?><br />
-				<a href="<?= wfMsg('landingpage-buttons-about-make-the-move-link') ?>"><?= wfMsg('landingpage-buttons-transition-guide') ?></a>
-			</li>
-			<li class="item-3">
-				<?= wfMsg('landingpage-buttons-new-user') ?><br />
-				<a href="<?= wfMsg('landingpage-buttons-new-user-link') ?>"><?= wfMsg('landingpage-buttons-new-user-more') ?></a>
-			</li>
+			<li class="superpower"><a alt="Superpower Wiki" href="http://powerlisting.wikia.com"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="harrypotter"><a alt="Harry Potter Wiki" href="http://harrypotter.wikia.com"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="glee"><a alt="Glee Wiki" href="http://glee.wikia.com"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="medalofhonor"><a alt="Medla of Honor Wiki" href="http://medalofhonor.wikia.com"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="poptarts"><a alt="Pop Tarts Wiki" href="http://poptarts.wikia.com"><img src="<?= $wgBlankImgUrl ?>"></a></li>
 		</ul>
+		<a href="http://community.wikia.com/wiki/The_new_look" class="more"><?= wfMsg('landingpage-readfaq') ?></a>
+	</div>
+
+	<section class="LandingPageWelcome">
+				<h1><?= wfMsg('landingpage') ?></h1>
 	</section>
 
-	<section class="LandingPageRow">
-		<blockquote class="LandingPageQuote">
-			<big>"</big>
-			<?= wfMsg('landingpage-quote') ?>
-		</blockquote>
-
-		<ul class="LandingPageLinks">
-			<li>
-				<a href="<?= wfMsg('landingpage-facebook-link') ?>"><img src="<?= $imagesPath ?>icon-facebook.png" alt="" width="61" height=^61"></a>
-			</li>
-			<li>
-				<a href="<?= wfMsg('landingpage-wikia-blog-link') ?>"><img src="<?= $imagesPath ?>icon-wikia-blog.png" alt="" width="61" height=^61"></a>
-			</li>
-			<li>
-				<a href="<?= wfMsg('landingpage-twitter-link') ?>"><img src="<?= $imagesPath ?>icon-twitter.png" alt="" width="61" height=^61"></a>
-			</li>
-		</ul>
+	<section class="LandingPageVideo">
+		<iframe class="video" swidth="605" sheight="335" frameborder="0" src="http://player.vimeo.com/video/15645799">		</iframe>
 	</section>
+		
+	
+	<p class="LandingPageMain">
+		<?= wfMsg('landingpage-text') ?>
+		<a href="http://community.wikia.com/wiki/About_Wikia" class="more"><?= wfMsg('landingpage-buttons-learn-more') ?></a>
+	</p>
 </section>

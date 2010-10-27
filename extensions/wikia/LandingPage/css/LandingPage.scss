@@ -7,20 +7,66 @@
 }
 
 .LandingPage {
-	margin: 30px 0;
-	.LandingPageRow {
-		@include clearfix;
-		margin: 25px 0;
-		padding: 10px 50px;
-	}
+	margin: 54px 0;
 
+	.LandingPageSearch {
+		float: right;
+		left: 4px;
+		margin-right: 9px;
+		margin-top: -6px;
+		
+		width: 331px;
+		.placeholder {
+			width: 287px;
+		}
+		.secondary {
+			height: 27px;
+			top: 0px;
+			border: 1px solid $color-page-border;
+		}
+	}
+	 
+	ul.LandingPageSocialLinks {
+		position: absolute;
+		left: 531px;
+		top: -2px;
+		list-style: none;
+		margin: 0px;
+		
+		li {
+			background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat;  /* $wgCdnStylePath */
+			float: left;
+			margin-right: 7px;
+			display: inline-block;
+			
+			&.facebook {
+				background-position: -2px -249px;
+			}
+			
+			&.blog {
+				background-position: -36px -249px;
+			}
+			
+			&.twitter {
+				background-position: -73px -249px;
+			}
+			
+			a {
+				width: 30px;
+				height: 30px;
+				display: block;
+			}
+		}	
+	}
+		
 	.LandingPageLanguageLinks {
 		@include clearfix;
 		list-style: none;
 		margin: 0;
+		float: right;
 		position: absolute;
 		right: 20px;
-		top: -20px;
+		top: -41px;
 		li {
 			float: left;
 			margin: 0 4px;
@@ -28,107 +74,37 @@
 	}
 
 	.LandingPageWelcome {
-		float: left;
+		margin-left: 11px;
 		width: 400px;
 		h1 {
 			color: $color-links;
-			font-size: 28px;
+			font-size: 30px;
 			font-weight: bold;
-			margin: 0 0 0.5em 0;
-		}
-
-		h2 {
-			border-bottom: none;
-			margin-top: 0px;
-			p {
-				margin-top: 0px;
-				font-size: 23px;
-				line-height: 1.3;
-			}
-		}
-
-		h3 {
-			p {
-				//font-size: 20px;
-				//line-height: 1.8;
-			}
+			margin: 0px;
+			margin-bottom: 8px;
 		}
 
 		p {
 			font-size: 17px;
-			margin: 0.4em 0;
-		}
-
-		.LandingPageButtonUpdate {
-			text-align: center;
-			width: 396px;
-			margin-top: 21px;
-			button {
-				@include border-radius(10px);
-				color: #ffffff;
-				height: 40px;
-				font-size: 19px;
-				margin: {
-					bottom: 10px;
-					left: auto;
-					right: auto;
-					top: 18px;
-				}
-				padding: {
-					left: 12px;
-					right: 12px;
-				}
-			}
-
-			h3 {
-				font-size: 16px;
-				margin: {
-					left: auto;
-					right: auto;
-				}
-			}
-
-		}
-		.LandingPageSwitchBack {
-			@extend .LandingPageButtonUpdate;
-			margin-top: 13px;
 		}
 	}
 
-
-	.LandingPageExamples {
-		margin-top: 10px;
-		ul {
-			margin: 0;
-			list-style: none;
-			text-align: center;
-			li {
-				display: inline-block;
-				line-height: 2.5em;
-				margin: 1px 2px;
-			}
-			a {
-				font-size: 12px;
-				font-weight: normal;
-			}
-			img {
-				border: solid 1px mix($color-text, $color-page, 20);
-				display: block;
-			}
-		}
-	}
-
-	.LandingPageScreenshots {
+	.LandingPageVideo {
 		@include rail-module;
-		float: right;
+		@include clearfix;
 		padding-top: 10px;
-		margin-top: 20px;
-		width: 450px;
+		width: 608px;
+		height: 343px;
+		margin: {
+			top: 8px;
+			left: 10px;
+		}
 
 		.video {
-			width: 450px;
-			height: 263px;
+			width: 605px;
+			height: 340px;
 			border: none;
+			margin: 0px;
 		}
 
 		h1 {
@@ -145,6 +121,7 @@
 				left: 0;
 			}
 		}
+		
 		ul {
 			margin: 0;
 			list-style: none;
@@ -165,73 +142,102 @@
 		}
 	}
 
-	.LandingPageButtons {
-		background-color: mix($color-text, $color-page, 10);
-		border-top: solid 1px mix($color-text, $color-page, 20);
-		border-bottom: solid 1px mix($color-text, $color-page, 20);
+	.LandingPageSites {
+		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+		border: 1px solid $color-page-border;
+		clear: both;
+		float: right;
+		margin-right: 8px;
+		padding: 15px;
+		width: 300px;
+
 		ul {
-			@include clearfix;
+			margin: 0;
 			list-style: none;
-			margin: 20px 0;
 			text-align: center;
+						
 			li {
-				@include rail-module;
-				background-color: $color-module-highlight;
-				border: none;
-				display: inline-block;
-				font-size: 20px;
-				font-weight: bold;
-				line-height: 1.4em;
-				margin: 0;
-				padding: 15px;
-				text-align: left;
-				width: 220px;
-				-moz-box-shadow: 0 0 10px mix($color-text, $color-page, 50);
-				a {
-					background-image: url(/extensions/wikia/LandingPage/images/arrow.png);
-					background-position: 0 50%;
-					background-repeat: no-repeat;
-					color: #a6d046; /* probably should be blue */
-					font-size: 20px;
-					font-weight: normal;
-					padding-left: 25px;
+				background: url(/extensions/wikia/LandingPage/images/sites_sprite.gif) no-repeat; /* $wgCdnStylePath */
+				border-bottom: 1px solid $color-page-border;
+				height: 82px;
+				
+				img {
+					width: 300px;
+					height: 82px;
 				}
-				&.item-1 {
-					float: left;
+				
+				&.superpower {
+					background-position: 32px 0px;
+					height: 70px;
+					img {
+						height: 70px;
+					}
 				}
-				&.item-3 {
-					float: right;
+				
+				&.harrypotter {
+					background-position: 32px -66px;
+				}
+				
+				&.glee {
+					background-position: 32px -146px;
+				}
+				
+				&.medalofhonor {
+					background-position: 32px -234px;
+				}
+				
+				&.poptarts {
+					background-position: 32px -317px;
+					border-bottom: none;
 				}
 			}
 		}
+		
+		.more {
+			float: right;
+			font-size: 13px;
+		}
+		
+		h2 {
+			border-bottom: none;
+			font: {
+				size: 22px;
+				weight: bold;
+			}
+			color: $color-text;
+			
+			margin-top: 0px;
+			margin-bottom: 2px;
+			padding: 0px;
+			
+			overflow: visible !important; // /** change! **/
+		}
 	}
 
-	.LandingPageQuote {
-		border-right: solid 1px mix($color-text, $color-page, 30);
-		color: mix($color-text, $color-page, 80);
-		float: left;
-		font-size: 20px;
-		font-weight: bold;
-		line-height: 1.3em;
-		padding: 10px 20px 10px 40px;
-		position: relative;
-		width: 550px;
-		big {
-			font-size: 60px;
-			left: 0;
-			position: absolute;
+	.LandingPageMain {
+		@include clearfix;
+		display: block;
+		margin: {
+			left: 10px !important;
+			right: 10px !important;
+			top: 5px;
+		}	
+		font-size: 22px !important;
+		line-height: 30px;
+		
+		width: 623px;
+		strong {
+			font-weight: bold;
+		}
+		
+		.more {
+			font: {
+				size: 16px;
+			}
 		}
 	}
-	.LandingPageLinks {
-		float: right;
-		list-style: none;
-		margin: 5px 0;
-		li {
-			float: left;
-			margin-left: 40px;
-		}
-		li:first-child {
-			margin-left: 0;
-		}
-	}
+}
+
+#WikiaArticleBottomAd {
+	display: none;
 }

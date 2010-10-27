@@ -3,43 +3,28 @@
 $messages = array();
 
 $messages['en'] = array(
-	'landingpage' => 'Welcome to Wikia',
-	'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''.",
-	'landingpage-secondary-2' => "We’ve just gone live with a brand new look! Read more about us, or view some examples to the right.",
-	'landingpage-secondary-3' => 'Watch this short video to get a glimpse of this exciting new world -- then get started by clicking below.',
-	'landingpage-language-links' => "* English|en\n* Español|es\n* Deutsch|de\n* Français|fr",
-
-	'landingpage-examples' => 'Check out some examples',
-	'landingpage-buttons-about-wikia' => 'About Wikia',
-	'landingpage-buttons-about-wikia-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
-
-	'landingpage-buttons-update-me' => 'Switch me to the new look!',
-
-	'landingpage-buttons-new-user' => 'I\'m a new user',
-	'landingpage-buttons-new-user-more' => 'Start Here',
-	'landingpage-buttons-new-user-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
-
-	'landingpage-buttons-learn-more' => 'Learn more',
-
-	'landingpage-buttons-new-look' => 'The new look',
-	'landingpage-buttons-new-look-link' => 'http://www.community.wikia.com/wiki/The_new_look',
-	'landingpage-buttons-faqs' => 'FAQs',
-	'landingpage-buttons-about-make-the-move' => 'Make the move',
-	'landingpage-buttons-about-make-the-move-link' => 'http://www.community.wikia.com/wiki/Transition_guide',
-	'landingpage-buttons-transition-guide' => 'Transition guide',
-	'landingpage-quote' => '...the new look is sleek, stylish, functional, and overall performs very well." - Wikia user with over 2500 edits',
-	'landingpage-quote-2' => 'I heart the hell out of the new toolbar. Finally, a place where the damn thing makes sense.',
-	'landingpage-quote-3' => 'I am so glad Wikia figured out that wikis do not have to look like engineering papers from 1998.',
-	'landingpage-facebook-link' => 'http://www.facebook.com/wikia',
-	'landingpage-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
-	'landingpage-twitter-link' => 'http://www.twitter.com/wikia',
-
-	'landingpage-change' => 'You have successfully changed your skin to the new Wikia look.',
-	'landingpage-change-notification' => 'Your preferences have been saved. Stay on this page to find out more, head over to your favorite wiki or explore one of our featured wikis.',
-	'landingpage-change-back-text' => 'I want to see the old look, show me how.',
-	'landingpage-change-back-link' => 'http://www.community.wikia.com/wiki/Monaco_instructions',
-	'landingpage-dive-in'=> 'Dive right in and check out the new Wikia.'
-);
+		'landingpage' => 'Welcome to Wikia',
+		
+		'landingpage-start-exploring' => 'Ready to start exploring?',
+		'landingpage-start-exploring-text' => 'Search for your favorite topic or browse some community favorites below.',	'landingpage-readfaq' => 'Questions? Read our FAQ &gt;',
+		'landingpage-text' => 'At Wikia you can <strong>connect with people</strong> who share your <strong>passions and interests</strong>. Find your group, make comments and edits, even <strong>start your own website</strong> and community.',
+		'landingpage-buttons-learn-more' => 'Learn more',
+		
+		'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''.",
+		'landingpage-secondary-2' => "We’ve just gone live with a brand new look! Read more about us, or view some examples to the right.",
+		'landingpage-secondary-3' => 'Watch this short video to get a glimpse of this exciting new world -- then get started by clicking below.',
+		'landingpage-language-links' => "* English|en\n* Español|es\n* Deutsch|de\n* Français|fr",
+		
+		'landingpage-examples' => 'Check out some examples',
+		'landingpage-buttons-about-wikia' => 'About Wikia',
+		'landingpage-buttons-about-wikia-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
+		
+		'landingpage-buttons-update-me' => 'Switch me to the new look!',
+		
+		'landingpage-buttons-new-user' => 'I\'m a new user',
+		'landingpage-buttons-new-user-more' => 'Start Here',
+		'landingpage-buttons-new-user-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
+		'landingpage-buttons-learn-more' => 'Learn more &gt;');
 
 /** Breton (Brezhoneg)
  * @author Y-M D
