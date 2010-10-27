@@ -18,7 +18,7 @@ var LatestPhotos = {
 	lazyLoadImages: function(limit) {
 		//var firstInit = true;
 		var images = this.carousel.find('img').filter('[data-src]');
-		$().log('lazy loading rest of images', 'LatestPhotos');
+//		$().log('lazy loading rest of images', 'LatestPhotos');
 
 		var count = 0;
 		images.each(function() {
@@ -125,7 +125,7 @@ var LatestPhotos = {
 	// add extra tracking for lightbox shown for image from latest photos module (RT #74852)
 	addLightboxTracking: function() {
 		this.carousel.bind('lightbox', function(ev, lightbox) {
-			$().log('lightbox shown', 'LatestPhotos');
+//			$().log('lightbox shown', 'LatestPhotos');
 
 			var fakeUrl = 'module/latestphotos/';
 			var lightboxCaptionLinks = $('#lightbox-caption-content').find('a');

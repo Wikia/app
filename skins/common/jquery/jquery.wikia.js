@@ -462,6 +462,7 @@ $(function() {
 });
 
 // macbre: page loading times (onDOMready / window onLoad)
+/* RT#79681 Removing console.log statements in production
 $(function() {
 	if (typeof wgNow != 'undefined') {
 		var loadTime = (new Date()).getTime() - wgNow.getTime();
@@ -475,6 +476,7 @@ $(window).bind('load', function() {
 		$().log('window onload after ' + loadTime + ' ms', window.skin);
 	}
 });
+*/
 
 
 
