@@ -506,6 +506,9 @@ class ArticleComment {
 				$buttons[] = $img . $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
 
+			$commentId = $this->getTitle()->getArticleId();
+			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comment-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($this->mFirstRevision->getTimestamp()) . "</a>";
+
 			$comment = array(
 				'articleId' => $articleId,
 				'author' => $this->mUser,
@@ -515,7 +518,7 @@ class ArticleComment {
 				'replyButton' => $replyButton,
 				'sig' => $sig,
 				'text' => $text,
-				'timestamp' => wfTimeFormatAgo($this->mFirstRevision->getTimestamp()),
+				'timestamp' => $timestamp,
 				'title' => $this->mTitle,
 				'isStaff' => $isStaff
 			);
@@ -1974,15 +1977,39 @@ class ArticleCommentList {
 			$diff = $wgRequest->getText('diff', '');
 			$oldid = $wgRequest->getText('oldid', '');
 			$action = $wgRequest->getText('action', '');
+			$permalink = $wgRequest->getInt( 'permalink', 0 );
 			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history')) {
 				$parts = ArticleComment::explode($title->getText());
 				$redirect = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
 				if ($redirect) {
-					$wgOut->redirect($redirect->getFullUrl());
+					$query = array();
+					if ( $permalink ) {
+						$page = self::getPageForComment( $redirect, $permalink );
+						if ( $page > 1 ) {
+							$query = array( 'page' => $page );
+						}
+					}
+					$wgOut->redirect($redirect->getFullUrl( $query ));
 				}
 			}
 		}
 		return true;
+	}
+
+	static private function getPageForComment( $title, $id ) {
+		global $wgArticleCommentsMaxPerPage;
+
+		$page = 0;
+
+		$list = ArticleCommentList::newFromTitle( $title );
+		$comments = $list->getCommentPages( false, false );
+		$keys = array_keys( $comments );
+		$found = array_search( $id, $keys );
+		if ( $found !== false ) {
+			$page = ceil( ( $found + 1 ) / $wgArticleCommentsMaxPerPage );
+		}
+
+		return $page;
 	}
 
 	/**
