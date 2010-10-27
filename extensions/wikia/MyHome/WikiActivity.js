@@ -3,8 +3,15 @@ $(function() {
 });
 
 var WikiActivity = {
+	feedType: false,
+	wrapper: false,
 
 	init: function() {
+		WikiActivity.wrapper = $('#wikiactivity-main');
+
+		// activity / watchlist
+		WikiActivity.feedType = WikiActivity.wrapper.attr('data-type');
+
 		WikiActivity.track('view');
 
 		// handle clicks on "more"
@@ -16,13 +23,13 @@ var WikiActivity = {
 			click(WikiActivity.setDefaultView);
 
 		// track clicks within activity feed
-		$('#myhome-main').click(WikiActivity.trackClick);
+		WikiActivity.wrapper.click(WikiActivity.trackClick);
 
 		// catch clicks on video thumbnails and load player
 		$('.activityfeed-video-thumbnail').live('click', WikiActivity.loadVideoPlayer);
 
 		// track clicks on link to Special:RecentChanges (Oasis specific)
-		$('#myhome-main').find('.activity-nav').find('a').last().trackClick('wikiactivity/recentchanges');
+		WikiActivity.wrapper.find('.activity-nav').find('a').last().trackClick('wikiactivity/recentchanges');
 	},
 
 	log: function(msg) {
@@ -34,6 +41,11 @@ var WikiActivity = {
 	},
 
 	track: function(fakeUrl) {
+		// RT #78654
+		if (WikiActivity.feedType == 'watchlist') {
+			fakeUrl = 'watchlist/' + fakeUrl;
+		}
+
 		$.tracker.byStr('wikiactivity/' + fakeUrl);
 	},
 
@@ -148,7 +160,7 @@ var WikiActivity = {
 
 		var node = $(ev.target);
 
-		var feedContent = $('#myhome-main').children('ul').last();
+		var feedContent = WikiActivity.wrapper.children('ul').last();
 		var fetchSince = node.attr('data-since');
 
 		WikiActivity.log('fetching feed since ' + fetchSince, 'WikiActivity');
