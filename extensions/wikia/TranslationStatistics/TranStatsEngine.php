@@ -15,26 +15,54 @@ class TransStatsEngine {
 
 		// @TODO add cache here?
 
-		foreach ( $this->groupList as $group ) {
+		$raw_file = file_get_contents( 'extensions.txt' );
+		$groups = explode( "\n\n", $raw_file );
+
+		foreach ( $groups as $group ) {
 			$messages = array();
 
+			// @TODO make this not be wikia-specific
+                        $group = explode( "\n", $group );
+
+                        $name = str_replace( ' ', '', array_shift( $group ) );
+
 			$defaults = array(
-					'group' => $group,
+					'group' => $name,
 					'languages' => array( 'en' )
 					);
 
 
-			// @TODO make this not be wikia-specific
-			include( "$IP/extensions/wikia/$group/Special$group.i18n.php" ); 
+			$params = array();
+
+			foreach ( $group as $line ) {
+				$line_raw = explode( '=', $line );
+				if ( count( $line_raw ) > 1 ) {
+					$param_name = trim( $line_raw[0] );
+					$param_value = trim( $line_raw[1] );
+					$params[$param_name] = $param_value;
+				}
+			}
+
+			if ( isset( $params['file'] ) ) {
+				$res = include( "$IP/extensions/wikia/" . $params['file'] ); 
+			} else {
+				$res = include( "$IP/extensions/wikia/$name/$name.i18n.php" ); 
+			}
+
+			if ( !$res ) {
+				echo "ERROR INCLUDING FILE $name\n";
+				continue;
+			}
 
 			// collect messages
 			$this->allMessages = array_merge( $this->allMessages, array_fill_keys( array_keys( $messages['en'] ), $defaults ) );
 
 			// collect meta-information
-			$this->allGroups[$group] = array(
+			$this->allGroups[$name] = array(
 				'total' => count( $messages['en'] ),
 				'translated' => array(),
 			);
+
 		}
 
 		return true;

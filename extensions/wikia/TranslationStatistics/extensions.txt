@@ -1,0 +1,272 @@
+Achievements II
+file = AchievementsII/i18n/AchievementsII.i18n.php
+
+Action Panel
+
+Ad SS
+
+Combo Ajax Login
+file = AjaxLogin/ComboAjaxLogin.i18n.php
+descmsg = comboajaxlogin-desc
+
+Ajax Poll
+
+Auto Create Wiki
+optional = autocreatewiki-reminder-subject, autocreatewiki-language-top-list
+ignored = requestwiki-filter-language, autocreatewiki-tagline
+
+Auto Hubs Pages
+
+Badges
+file = Badges/UserBadges.i18n.php
+optional = user-badge-left-align, user-badge-center-align, user-badge-right-align
+
+Blogs
+aliasfile = Blogs/Blogs.alias.php
+optional = blug-cut-sign
+ignored = create-blog-empty-article, blog-listing-zero-self, blogs-recent-url, blog-avatar-defaults
+
+Batch User Rights
+file = SpecialBatchUserRights/BatchUserRights.i18n.php
+aliasfile = SpecialBatchUserRights/BatchUserRights.alias.php
+
+Category Hubs
+
+Category Select
+
+Cloak Check
+
+Comments Forum
+file = CommentsForum/Forum.i18n.php
+
+Community Messages
+
+Contest Tool
+file = ContestTool/SpecialContestTool.i18n.php
+
+#Commented out 2010-02-01 -- tor
+#Dropping in favour of CreatePage (below)
+#Create A Page
+#file = CreateAPage/MultiEdit.i18n.php
+#optional = createplate-Blank, createplate-list
+
+Create Page
+file = CreatePage/CreatePage.i18n.php
+ignored = createpage-newpagelayout
+
+Daemon Loader
+file = DaemonLoader/SpecialDaemonLoader.i18n.php
+
+Edit Account
+file = EditAccount/SpecialEditAccount.i18n.php
+
+Editing Tips
+
+Edit Research
+
+Follow
+aliasfile = Follow/Follow.alias.php
+
+Force Subject For New Section
+
+Founder Emails
+
+Global Watchlist
+
+Grace Expired
+file = GraceExpired/SpecialGraceExpired.i18n.php
+
+HA Welcome
+ignored = welcome-enabled, welcome-user, welcome-bot
+
+Health Check
+file = SpecialHealthcheck/HealthCheck.i18n.php
+
+Helper Panel
+
+Image Placeholder
+
+Interstitial - Outbound Screen
+file = Interstitial/OutboundScreen.i18n.php
+
+Interwiki Dispatcher
+file = InterwikiDispatcher/SpecialInterwikiDispatcher.i18n.php
+aliasfile = InterwikiDispatcher/SpecialInterwikiDispatcher.alias.php
+
+Landing Page
+optional = landingpage-buttons-about-wikia-link, landingpage-buttons-new-look-link, landingpage-buttons-about-make-the-move-link, landingpage-change-back-link
+optional = landingpage-quote-2, landingpage-quote-3, landingpage-language-links
+ignored = landingpage-facebook-link, landingpage-wikia-blog-link, landingpage-twitter-link, landingpage-buttons-new-user-link
+
+Link Suggest
+
+Lookup Contribs
+file = LookupContribs/SpecialLookupContribs.i18n.php
+
+Masthead
+
+Most Popular Articles
+file = MostPopularArticles/SpecialMostPopularArticles.i18n.php
+
+Most Popular Categories
+file = MostPopularCategories/SpecialMostPopularCategories.i18n.php
+
+Most Visited Pages
+file = MostVisitedPages/SpecialMostVisitedPages.i18n.php
+
+Multi Tasks
+
+My Home
+ignored = accesskey-pt-myhome
+
+New Edit Page
+
+# Do not enable. Uses globals in messages and elsewhere in the file
+# and is moved to JS unparsed.
+#New Wiki Builder
+#aliasfile = NewWikiBuilder/NewWikiBuilder.alias.php
+
+Oasis
+optional = oasis-latest-photos-single
+ignored = wiki-navigation, categoryblacklist, photosblacklist
+
+Our 404 Handler
+file = Our404Handler/SpecialOur404Handler.i18n.php
+
+Partner Feed
+
+Problem Reports
+
+Quick Create
+
+Random Wiki
+file = RandomWiki/SpecialRandomWiki.i18n.php
+
+Recipes Tweaks
+
+Related Pages
+descmsg = wikiarelatedpages-desc
+
+Related Video
+file = RelatedVideo/i18n/RelatedVideo.i18n.php
+
+RTE - Base
+file = RTE/i18n/RTE.i18n.php
+
+RTE - CK Wikia
+file = RTE/i18n/CK.wikia.i18n.php
+
+Search
+
+Shared Help
+
+Share Feature
+
+Sitemap
+aliasfile = Sitemap/Sitemap.alias.php
+
+Site Wide Messages
+file = SiteWideMessages/SpecialSiteWideMessages.i18n.php
+ignored = swm-expire-options
+
+Slider Tag
+
+Special Interwiki Edit
+
+Special Mini Upload
+
+Special Multiple Lookup
+
+Special Private Domains
+
+Special Protect Site
+
+Special Sponsor Page
+descmsg = sponsorpage-desc
+file = SpecialSponsorPage/Sponsor.i18n.php
+optional = sponsor-template
+
+Special Widget Dashboard
+
+Staff Powers
+
+Tags Report
+file = TagsReport/SpecialTagsReport.i18n.php
+
+Task Manager
+file = TaskManager/SpecialTaskManager.i18n.php
+
+Text Regex
+aliasfile = TextRegex/TextRegex.alias.php
+
+Theme Designer
+
+Theory tab
+ignored = theorytab-subpage
+
+Title Edit
+
+Top Lists
+ignored = toplists-msg-fb-OnRateArticle-link, toplists-msg-fb-OnRateArticle
+
+User Rename Tool
+file = UserRenameTool/SpecialRenameuser.i18n.php
+ignored = renameuser, right-renameuser
+
+Video Embed Tool
+
+Watch Sub Pages
+descmsg = wikia-watchsubpages-desc
+
+Where Is Extension
+file = WhereIsExtension/SpecialWhereIsExtension.i18n.php
+
+Wikia Video Add
+file = VideoEmbedTool/WikiaVideoAdd.i18n.php
+
+Widget Special Page
+file = WidgetSpecialPage/WidgetsSpecialPage.i18n.php
+
+Wikia Irc Gateway
+ignored = ircgate-channellist
+
+Wikia Mini Upload
+
+Wikia Photo Gallery
+
+Wikia Stats
+file = WikiaStats/SpecialWikiaStats.i18n.php
+optional = wikiastats_prev_rank, wikiastats_prev_rank_xls, wikiastats_xls_files_stats
+optional = wikiastats_history_mainstats_value1, wikiastats_history_mainstats_value2, wikiastats_history_mainstats_value3, wikiastats_history_mainstats_value4
+optional = wikiastats_creation_wikia_filename
+ignored = wikiastats_distrib_article_counting, wikiastats_filename_mainstats, wikiastats_filename_other1, wikiastats_filename_other2
+ignored = wikiastats_filename_other3, wikiastats_filename_other4, wikiastats_filename_other5, wikiastats_filename_other6
+ignored = wikiastats_filename_other7, wikiastats_filename_other8, wikiastats_filename_trend, wikiastats_filename_creation
+ignored = wikiastats_filename_column_A, wikiastats_filename_column_B, wikiastats_filename_column_C, wikiastats_filename_column_D
+ignored = wikiastats_filename_column_E, wikiastats_filename_column_F, wikiastats_filename_column_G, wikiastats_filename_column_H
+ignored = wikiastats_filename_column_I, wikiastats_filename_column_J, wikiastats_filename_column_K, wikiastats_filename_column_L
+ignored = wikiastats_filename_column_M, wikiastats_filename_column_N, wikiastats_filename_column_O
+
+Wikia Upload
+
+Wikia Video
+
+Wikia Widget
+
+Wiki Factory Dumps
+file = WikiFactory/Dumps/DumpsOnDemand.i18n.php
+
+Wiki Factory Reporter
+file = WikiFactory/Reporter/SpecialWikiFactoryReporter.i18n.php
+
+Wiki Factory
+file = WikiFactory/SpecialWikiFactory.i18n.php
+optional = wikifactory-label-eznamespace
+ignored = awc-metrics-language-top-list
+
+Wiki Stickies
+aliasfile = WikiStickies/SpecialWikiStickies.alias.php
+
+Without images
+file = WikiStickies/SpecialWithoutimages.i18n.php
+aliasfile = WikiStickies/SpecialWithoutimages.alias.php
