@@ -25,6 +25,7 @@ class LatestPhotosModule extends Module {
 		$this->total = SiteStats::images();
 
 		// Pull the list of images from memcache first
+		// FIXME: create and use service (see RT #79288)
 		$this->thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
 		if (empty($this->thumbUrls)) {
 			// api service
