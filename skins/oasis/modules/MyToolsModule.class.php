@@ -4,6 +4,8 @@ class MyToolsModule extends Module {
 	var $defaultTools;
 	var $customTools;
 	var $wgBlankImgUrl;
+	var $content_actions;
+	var $nav_urls;
 
 	public function executeIndex($params) {
 		global $wgUser, $wgOut, $wgStylePath;
@@ -55,33 +57,29 @@ class MyToolsModule extends Module {
 
 		$out = array();
 
-		if(isset(self::$skinTemplateObj->data['content_actions']['edit'])) {
-
-			// history link
-			if(isset(self::$skinTemplateObj->data['content_actions']['history'])) {
-				$out[] = array(
-					'text' => self::$skinTemplateObj->data['content_actions']['history']['text'],
-					'href' => self::$skinTemplateObj->data['content_actions']['history']['href'],
-					'name' => 'history',
-				);
-			}
-
+		// history link
+		if(isset($this->content_actions['history'])) {
+			$out[] = array(
+				'text' => $this->content_actions['history']['text'],
+				'href' => $this->content_actions['history']['href'],
+				'name' => 'history',
+			);
 		}
 
 		// what links here link
-		if(isset(self::$skinTemplateObj->data['nav_urls']['whatlinkshere'])) {
+		if(isset($this->nav_urls['whatlinkshere'])) {
 			$out[] = array(
 				'text' => SpecialPage::getPageByAlias('whatlinkshere')->getDescription(),
-				'href' => self::$skinTemplateObj->data['nav_urls']['whatlinkshere']['href'],
+				'href' => $this->nav_urls['whatlinkshere']['href'],
 				'name' => 'whatlinkshere',
 			);
 		}
 
 		// block user
-		if(!empty(self::$skinTemplateObj->data['nav_urls']['blockip'])) {
+		if(!empty($this->nav_urls['blockip'])) {
 			$out[] = array(
 				'text' => wfMsg('blockip'),
-				'href' => self::$skinTemplateObj->data['nav_urls']['blockip']['href'],
+				'href' => $this->nav_urls['blockip']['href'],
 				'name' => 'blockip',
 			);
 		}
