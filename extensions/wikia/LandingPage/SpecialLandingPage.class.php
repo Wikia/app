@@ -3,7 +3,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 	var $button_url;
 	var $loggedIn;
 	var $logInClass;
-
+	
+	
 	function __construct() {
 		wfLoadExtensionMessages('LandingPage');
 		parent::__construct('LandingPage');
@@ -12,7 +13,6 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 	function execute($par ) {
 		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgStyleVersion, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
-
 		$this->setHeaders();
 		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/LandingPage/css/LandingPage.scss'));
 
@@ -75,6 +75,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			'languageLinks' => $languageLinks,
 			'wgBlankImgUrl' => $wgBlankImgUrl,
 			'wikis' => $wikis,
+			'wgTitle' => $wgTitle
 		));
 
 		$wgOut->addHTML($template->render('main'));
