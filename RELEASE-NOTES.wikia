@@ -14,6 +14,8 @@
 * rt#75260: Oasis: Log-in dialogue layout is broken (macbre)
 * rt#76386: PvX's rate extension does not hook into oasis menu correctly (macbre)
 * rt#78654: Oasis click-tracking: Add tracking for WikiActivity/watchlist items (macbre)
+* rt#79534: Uncyclopedia JS causing White-Out (macbre)
+* rt#79548: Image and video uploader missing from source mode (macbre)
 
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
