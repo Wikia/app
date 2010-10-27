@@ -28,6 +28,7 @@ class UserPagesHeaderModule extends Module {
 	var $tabs;
 	var $userName;
 	var $userPage;
+	var $isUserProfilePageExt = false;
 
 	/**
 	 * Checks whether given user name is the current user
@@ -159,15 +160,24 @@ class UserPagesHeaderModule extends Module {
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle;
+		global $wgTitle, $wgEnableUserProfilePagesExt;
 
 		$namespace = $wgTitle->getNamespace();
 
 		// get user name to display in header
 		$this->userName = self::getUserName();
 
-		// render avatar (100x100)
-		$this->avatar = AvatarService::renderAvatar($this->userName, 100);
+		if ( !empty( $wgEnableUserProfilePagesExt ) ) {
+			$this->isUserProfilePageExt = true;
+
+			// render bigger avatar (200x200) when UserProfilePage extension is enabled
+			$this->avatar = AvatarService::renderAvatar($this->userName, 200);
+		}
+		else {
+			// render avatar (100x100)
+			$this->avatar = AvatarService::renderAvatar($this->userName, 100);
+
+		}
 
 		// show "Unregistered contributor" + IP for anon accounts
 		if (User::isIP($this->userName)) {
@@ -201,15 +211,31 @@ class UserPagesHeaderModule extends Module {
 
 		// page type specific stuff
 		if ($namespace == NS_USER) {
-			// edit button
-			if (isset($this->content_actions['edit'])) {
-				$this->actionMenu['action'] = array(
-					'href' => $this->content_actions['edit']['href'] ."#EditPage",
-					'text' => wfMsg('oasis-page-header-edit-profile'),
-				);
+			if ( !$this->isUserProfilePageExt ) {
+				// edit button
+				if (isset($this->content_actions['edit'])) {
+					$this->actionMenu['action'] = array(
+						'href' => $this->content_actions['edit']['href'] ."#EditPage",
+						'text' => wfMsg('oasis-page-header-edit-profile'),
+					);
 
-				$this->actionImage = MenuButtonModule::EDIT_ICON;
-				$this->actionName = 'editprofile';
+					$this->actionImage = MenuButtonModule::EDIT_ICON;
+					$this->actionName = 'editprofile';
+				}
+			}
+			else {
+				// UserProfilePage extension stuff
+				if(!self::isItMe($this->userName)) {
+					$user = User::newFromName( $this->userName );
+
+					$this->actionMenu['action'] = array(
+						'href' => $user->getTalkPage()->getLocalUrl( 'action=edit' ),
+						'text' => wfMsg('userprofilepage-leave-message'),
+					);
+
+					$this->actionImage = MenuButtonModule::MESSAGE_ICON;
+					$this->actionName = 'leavemessage';
+				}
 			}
 		}
 		else if ($namespace == NS_USER_TALK) {

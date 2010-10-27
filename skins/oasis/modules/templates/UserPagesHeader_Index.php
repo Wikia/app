@@ -19,35 +19,75 @@
 ?>
 		</li>
 	</ul>
-<?php
-	// render edit button / dropdown menu
-	if (!empty($actionButton)) {
-		echo wfRenderModule('MenuButton', 'Index', array(
-			'action' => $actionButton,
-			'image' => $actionImage,
-			'name' => $actionName,
-		));
-	}
-	else if (!empty($actionMenu)) {
-		echo wfRenderModule('MenuButton', 'Index', array(
-			'action' => $actionMenu['action'],
-			'image' => $actionImage,
-			'dropdown' => $actionMenu['dropdown'],
-			'name' => $actionName,
-		));
-	}
-?>
+<?php if (!$isUserProfilePageExt) { ?>
+	<?php
+		// render edit button / dropdown menu
+		if (!empty($actionButton)) {
+			echo wfRenderModule('MenuButton', 'Index', array(
+				'action' => $actionButton,
+				'image' => $actionImage,
+				'name' => $actionName,
+			));
+		}
+		else if (!empty($actionMenu)) {
+			echo wfRenderModule('MenuButton', 'Index', array(
+				'action' => $actionMenu['action'],
+				'image' => $actionImage,
+				'dropdown' => $actionMenu['dropdown'],
+				'name' => $actionName,
+			));
+		}
+	?>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 	<?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
 
-<?php
-	if (!empty($stats)) {
-?>
-	<span class="member-since"><?= wfMsg('oasis-member-since', $stats['date']) ?></span>
-	<span class="member-edits"><?= wfMsgExt('oasis-edits-counter', array('parsemag'), $stats['edits']) ?></span>
-<?php
-	}
-?>
+	<?php
+		if (!empty($stats)) {
+	?>
+		<span class="member-since"><?= wfMsg('oasis-member-since', $stats['date']) ?></span>
+		<span class="member-edits"><?= wfMsgExt('oasis-edits-counter', array('parsemag'), $stats['edits']) ?></span>
+	<?php
+		}
+	?>
+<?php } else { ?>
+	<!-- UserProfilePage Extension stuff /BEGIN -->
+	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
+	<hr />
+
+	<?php
+		// render edit button / dropdown menu
+		if (!empty($actionButton)) {
+			echo wfRenderModule('MenuButton', 'Index', array(
+				'action' => $actionButton,
+				'image' => $actionImage,
+				'name' => $actionName,
+			));
+		}
+		else if (!empty($actionMenu)) {
+			echo wfRenderModule('MenuButton', 'Index', array(
+				'action' => $actionMenu['action'],
+				'image' => $actionImage,
+				'dropdown' => $actionMenu['dropdown'],
+				'name' => $actionName,
+			));
+		}
+	?>
+
+
+<?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
+	<?php
+		if (!empty($stats)) {
+	?>
+		<span><?= $stats['edits']; ?></span>
+
+		<span><?= wfMsg('userprofilepage-edits-since') ?></span>
+		<span><?=$stats['date']?></span>
+
+	<?php
+		}
+	?>
+	<!-- UserProfilePage Extension stuff /END -->
+<?php } // isUserProfilePageExt ?>
 
 	<div class="tabs-container">
 		<ul class="tabs">
