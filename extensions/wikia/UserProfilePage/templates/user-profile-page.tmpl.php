@@ -1,5 +1,5 @@
 <div id='profile-content'>
-	<div id="profile-about-section" class="uppBox">
+	<div class="user-about-section" data-generic-avatar="<?= AvatarService::getAvatarUrl( null, 22 ) ;?>" data-user-avatar="<?= AvatarService::getAvatarUrl( $userName, 22 ) ;?>">
 		<h2>
 			<? $sectionName = wfMsg( 'userprofilepage-about-section-title', array( $wikiName ) ) ;?>
 			<?= $sectionName ;?>
@@ -13,7 +13,7 @@
 		<?= $aboutSection['body']; ?>
 	</div>
 
-	<div id="profile-editable-area" class="uppBox">
+	<div class="user-notes-section">
 		<h2>
 			<? $sectionName = wfMsg( 'userprofilepage-users-notes-title' ) ;?>
 			<?= $sectionName ;?>
