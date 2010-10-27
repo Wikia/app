@@ -128,7 +128,7 @@ EOT;
 			$functionName = AdEngine::fillElemFunctionPrefix . $slotname;
 			$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, array($slotname));
 			$adtag .= <<<EOT
-	document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
+	$fill_elem_script
 EOT;
 		}
 		else {
@@ -185,7 +185,7 @@ EOT;
 		$functionName = AdEngine::fillElemFunctionPrefix . $adGroupName;
 		$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, $slotnames);
 		$adtag .= <<<EOT
-		document.write('<scr'+'ipt type="text/javascript">{$fill_elem_script}</scr'+'ipt>');
+		$fill_elem_script
 	});
 </script>
 EOT;
@@ -201,22 +201,14 @@ EOT;
 
 	private function getAdUrlScripts($slotnames, $zoneIds, $params) {
 		$n_slotnames = sizeof($slotnames);
-		$adtag = <<<EOT
-	document.write('<scr'+'ipt type="text/javascript">');
-EOT;
+		$adtag = "";
 		for ($i=0; $i<$n_slotnames; $i++) {
 			$slotname =& $slotnames[$i];
 			$adUrlScript = $this->getAdUrlScript($slotname, $params);
 //			$adUrlScript = str_replace("\n", " ", $adUrlScript);
 			$adUrlScript = $this->fixNewLines($adUrlScript);
-			$adtag .= <<<EOT
-	document.write('$adUrlScript');
-EOT;
+			$adtag .= $adUrlScript;
 		}
-
-		$adtag .= <<<EOT
-	document.write('</scr'+'ipt>');
-EOT;
 
 		return $adtag;
 	}
