@@ -117,22 +117,10 @@ function testAvatars() {
 }
 
 function testRiak() {
-	$cache = wfGetCache( CACHE_RIAK );
+	$store = new ExternalStoreRiak;
 
-	foreach( range( 1, 2 ) as $r ) {
-		$key = wfMemcKey( "eloy", "test", $r );
-		$v1 = "test";
-		$cache->set( $key, $v1, 50 );
-		$v2 = $cache->get( $key );
-		print_r( $v2 );
-		if( $v1 === $v2 ) {
-			wfOut( "$key OK\n" );
-		}
-		else {
-			wfOut( "$key ERROR\n" );
-		}
-		$cache->delete( $key );
-	}
+	$store->fetchFromURL( "riak://storage/blobs/222:333:444" );
+	
 }
 #
 # main
