@@ -48,10 +48,12 @@ class SpotlightsModule extends Module {
 		}
 		else {
 			for ($i=0; $i<$this->n_adslots; $i++) {
-				$slotname =& $this->adslots[$i];
-				if (empty($wgAdslotsLazyLoad[$slotname])) {
-					$this->useLazyLoadAdClass = false;
-					break;
+				if(isset($this->adslots[$i])) {
+					$slotname =& $this->adslots[$i];
+					if (empty($wgAdslotsLazyLoad[$slotname])) {
+						$this->useLazyLoadAdClass = false;
+						break;
+					}
 				}
 			}
 		}
