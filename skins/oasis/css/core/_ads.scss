@@ -1,41 +1,71 @@
+/** Leaderboards **/
 #LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
 	text-align: center;
 }
-
 #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
 	padding: 20px 0 0;
 }
-
 #TOP_LEADERBOARD .jumbo {
 	margin-top: -20px;
 	margin-bottom: -20px;
 }
 
+
+/** Skyscrapers **/
 #LEFT_SKYSCRAPER_2 {
 	@include rail-module;
 }
 
+
+/** Box ads **/
 #HOME_TOP_RIGHT_BOXAD {
 	float: right;
 	margin-bottom: 10px;
 	position: relative;
 	z-index: 100;
 }
-
 #TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
 }
 
+
+/** Spotlights **/
 #SPOTLIGHT_GLOBALNAV_1, #SPOTLIGHT_GLOBALNAV_2, #SPOTLIGHT_GLOBALNAV_3 {
 	width: 269px;
 	&.SPOTLIGHT_GLOBALNAV {
 		width: 255px;	
 	}
 }
+// changes for $wgEnableSpotlightsV2
+.GlobalNavigation { 
+	.subnav { 
+		.SPOTLIGHT_GLOBALNAV {
+			left: 10px;
+			margin-top: 17px;
+			position: relative;
+		}
+	}
+}
+.WikiaFooter { 
+	section {
+		.SPOTLIGHT_FOOTER {
+			padding: 55px 28px 33px;
+			.WikiaSpotlight {
+				height: 123px;
+				width: 255px;
+			}
+		}
+	}
+}
+
+/** Invisible ads **/
+#HOME_INVISIBLE_TOP, #INVISIBLE_TOP, #INVISIBLE_1, #INVISIBLE_2 {
+	position: absolute;
+}
 
 
-//Mainpage styling
+/** Mainpage styling **/
 /*
 On hold for now
 .WikiaMainPageBanner {
@@ -54,31 +84,3 @@ On hold for now
 	padding-top: 40px;
 }
 */
-
-//Invisible ads
-#HOME_INVISIBLE_TOP, #INVISIBLE_TOP, #INVISIBLE_1, #INVISIBLE_2 {
-	position: absolute;
-}
-
-// changes for $wgEnableSpotlightsV2
-.GlobalNavigation {
-	.subnav {
-		.SPOTLIGHT_GLOBALNAV {
-			left: 10px;
-			margin-top: 17px;
-			position: relative;
-		}
-	}
-}
-
-.WikiaFooter {
-	section {
-		.SPOTLIGHT_FOOTER {
-			padding: 55px 28px 33px;
-			.WikiaSpotlight {
-				height: 123px;
-				width: 255px;
-			}
-		}
-	}
-}
