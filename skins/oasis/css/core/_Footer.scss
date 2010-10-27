@@ -23,11 +23,13 @@
 		}
 		&.float {
 			bottom: 0;
-			margin-left: 0;
 			position: fixed;
 			top: auto;
-			width: auto;
 			z-index: $zTop;
+		}
+		&.small {
+			left: -5px;
+			margin-left: auto;
 		}
 		img {
 			float: left;
