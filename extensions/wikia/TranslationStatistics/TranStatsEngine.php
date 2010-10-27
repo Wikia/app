@@ -72,11 +72,11 @@ class TransStatsEngine {
 	public function calculateState() {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$dbr->select( 'page', array( 'page_namespace' => NS_MEDIAWIKI, 'page_title LIKE "%/%"' ) );
+		$res = $dbr->select( 'page', array( 'page_title' ), array( 'page_namespace' => NS_MEDIAWIKI, 'page_title LIKE "%/%"' ) );
 
 		while ( $translation = $dbr->fetchObject( $res ) ) {
-			$translationData = explode( $translation->page_title, '/' );
-
+			$translationData = explode( '/', $translation->page_title );
+			$translationData[0] = strtolower( $translationData[0] );
 			if ( empty( $this->allMessages[$translationData[0]] ) ) {
 				// not a registered message, move on to the next one
 				continue;
@@ -85,7 +85,7 @@ class TransStatsEngine {
 			$this->incrementCounters( $translationData[0], $translationData[1] );
 		}
 
-		die( var_dump( $this->allMessages ) );
+		die( var_dump( $this->allGroups ) );
 	}
 
 	/** GETTERS **/
@@ -102,9 +102,12 @@ class TransStatsEngine {
 	/** INCREMENTERS **/
 
 	private function incrementCounters( $msg, $lang ) {
-			$group = $this->almessages[$msg]['group'];
+			$group = $this->allMessages[$msg]['group'];
 
                         $this->allMessages[$msg]['languages'][] = $lang;
+			if ( !isset( $this->allGroups[$group]['translated'][$lang] ) ) {
+				$this->allGroups[$group]['translated'][$lang] = 0;
+			}
                         $this->allGroups[$group]['translated'][$lang]++; // ProductStats
 	}
 }
