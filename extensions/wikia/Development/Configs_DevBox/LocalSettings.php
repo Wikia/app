@@ -71,16 +71,16 @@ $wgSessionMemCachedServers = array(
 );
 
 /**
- * definition of riak nodes
+ * definition of riak nodes for development environment
  */
-$wgRiakStorageNodes = array(
-	"storage" => array(
-		"host" => "storage-dev",
-		"port" => "80",
-		"prefix" => "riak",
-		"proxy" => $wgHTTPProxy
-	)
+$wgRiakStorageNodes[ "storage-dev" ] = array(
+	"host" => "storage-dev",
+	"port" => "80",
+	"prefix" => "riak",
+	"proxy" => $wgHTTPProxy
 );
+$wgRiakDefaultNode = "storage-dev";
+$wgRiakSessionNode = "storage-dev";
 
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
