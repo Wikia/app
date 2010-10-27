@@ -25,26 +25,39 @@ $lastActiveUserId = 0;
 foreach( $res as $row ) {
 	$user = AdSS_User::newFromRow( $row );
 	$pp = new PaymentProcessor( $row->ppt_token );
-	echo "{$user->toString()} | {$row->ppd_email} ({$row->ppd_payerid}) | {$row->ppa_baid} | {$row->ppa_responded} | ";
+	$adCount = getActiveAdCount( $user->id );
+	echo "{$user->toString()} | {$row->ppd_email} ({$row->ppd_payerid}) | {$row->ppa_baid} | {$row->ppa_responded} | $adCount | ";
 
-	$respArr = array();
-	if( $pp->checkBillingAgreement( $row->ppa_baid, $respArr ) ) {
-		if( $lastActiveUserId != $user->id ) {
-			echo "ACTIVE!\n";
-			$lastActiveUserId = $user->id;
-		} else {
-			echo "active (canceling... ";
-			$pp->cancelBillingAgreement( $row->ppa_baid );
-			echo "done)\n";
-		}
+	if( $adCount == 0 ) {
+		echo "No ads (canceling... ";
+		$pp->cancelBillingAgreement( $row->ppa_baid );
+		echo "done)\n";
 	} else {
-		if( ( $respArr['RESULT'] ==  12 ) && ( $respArr['RESPMSG'] == 'Declined: 10201-Billing Agreement was cancelled' ) ) {
-			echo "Canceled (marking in our DB... ";
-			$pp->cancelBillingAgreement( $row->ppa_baid );
-			echo "done)\n";
+		$respArr = array();
+		if( $pp->checkBillingAgreement( $row->ppa_baid, $respArr ) ) {
+			if( $lastActiveUserId != $user->id ) {
+				echo "ACTIVE!\n";
+				$lastActiveUserId = $user->id;
+			} else {
+				echo "active (canceling... ";
+				$pp->cancelBillingAgreement( $row->ppa_baid );
+				echo "done)\n";
+			}
 		} else {
-			echo "Failed (skipping...)\n";
+			if( ( $respArr['RESULT'] ==  12 ) && ( $respArr['RESPMSG'] == 'Declined: 10201-Billing Agreement was cancelled' ) ) {
+				echo "Canceled (marking in our DB... ";
+				$pp->cancelBillingAgreement( $row->ppa_baid );
+				echo "done)\n";
+			} else {
+				echo "Failed (skipping...)\n";
+			}
 		}
 	}
 }
 $dbw->freeResult( $res );
+
+function getActiveAdCount( $userId ) {
+	global $wgAdSS_DBname;
+	$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
+	return $dbw->selectField( 'ads', 'count(*)', array( 'ad_user_id' => $userId, 'ad_closed' => null, 'ad_expires IS NOT NULL' ), __METHOD__ ); 
+}
