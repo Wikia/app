@@ -11,6 +11,8 @@ class SpecialWikiActivity extends SpecialPage {
 
 	function __construct() {
 		wfLoadExtensionMessages('MyHome');
+		wfLoadExtensionMessages('Oasis'); // RT #74757
+
 		parent::__construct('WikiActivity', '' /* no restriction */, true /* listed */);
 	}
 
