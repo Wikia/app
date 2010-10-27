@@ -27,7 +27,7 @@ var ImageLightbox = {
 			var article = $('#bodyContent');
 		}
 
-		this.log('init');
+//		this.log('init');
 
 		article.
 			unbind('.lightbox').

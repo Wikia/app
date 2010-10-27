@@ -16,11 +16,11 @@ var LazyLoadAds = {
 
 	init : function() {
 
-		LazyLoadAds.log("init");
+//		LazyLoadAds.log("init");
 
 		$(function() {
 
-			LazyLoadAds.log("real init");
+//			LazyLoadAds.log("real init");
 
 			LazyLoadAds.update();
 			$(window).scroll(LazyLoadAds.update);
@@ -51,7 +51,7 @@ var LazyLoadAds = {
 			if(!$("#"+elemId).hasClass('AdLazyLoaded')) {
 				if(topVal > 0 && topVal < (fold + LazyLoadAds.settings.threshhold)) {
 
-					LazyLoadAds.log("About to fill: " + elemId);
+//					LazyLoadAds.log("About to fill: " + elemId);
 
 					var adslot = elemId;
 
