@@ -1,8 +1,8 @@
-<div id="myhome-main">
+<div id="wikiactivity-main" data-type="<?= $type ?>">
 <?php  if( isset( $emptyMessage ) ) { ?>
 	<h3 class="myhome-empty-message"><?php print $emptyMessage ?></h3>
 <?php	} else { ?>
-	<ul class="activityfeed reset" id="myhome-activityfeed" data-type="<?= $type ?>">
+	<ul class="activityfeed reset" id="myhome-activityfeed">
 	<?php foreach($data as $row) { ?>
 		<li class="activity-type-<?php print FeedRenderer::getIconType($row) ?> activity-ns-<?php print $row['ns'] ?>">
 		<?php print FeedRenderer::getSprite( $row, $wgBlankImgUrl) ?>
@@ -24,6 +24,3 @@
 	  }
 	} // endif; ?>
 </div>
-<?php
-
-?>
