@@ -55,6 +55,13 @@ class UserProfilePageHelper {
 	}
 
 	public static function getUserFromTitle( Title $title) {
-		return User::newFromName( $title->getDBKey() );
+		$userName = '';
+
+		if( $title->isSubpage() ) {
+			$userName = $title->getBaseText();
+		} else {
+			$userName = $title->getText();
+		}
+		return User::newFromName( $userName );
 	}
 }

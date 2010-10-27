@@ -2,13 +2,22 @@
 	<h2><?= wfMsg( 'userprofilepage-top-pages-title', array( $userName, $wikiName ) ) ;?></h2>
 	<? if( count( $topPages ) ) :?>
 		<? foreach( $topPages as $pageId => $page ) :?>
-			<div class="top-page-item">
+			<div class="top-page-item hovered">
 				<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>">
 					<div class="top-page-item-image">
-						<img src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" alt="<?= $page['title'] ;?>">
+						<img class="item-thumbnail" src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" alt="<?= $page['title'] ;?>">
 					</div>
 					<details><?= $page['title'] ;?></details>
 				</a>
+
+				<? if( $userIsOwner )  :?>
+					<div class="hide-control">
+						<a class="HideButton" title="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>" data-id="<?= $pageId ;?>">
+							<img class="sprite-small close" src="<?= wfBlankImgUrl() ;?>" alt="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>"/>
+							<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>
+						</a>
+					</div>
+				<? endif; ?>
 			</div>
 		<? endforeach ;?>
 		

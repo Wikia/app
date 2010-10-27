@@ -48,7 +48,7 @@ $messages['en'] = array(
 ** required|true
 ** readOnly|true
 * wpDescription
-** type|textarea
+** type|input
 ** label|user-description
 ** hint|user-description
 ** hintHideable|true
@@ -91,7 +91,24 @@ $messages['en'] = array(
 	'recipes-template-user-gender-hint' => 'Gender',
 	'recipes-template-user-affiliation-label' => 'Affiliation',
 	'recipes-template-user-affiliation-hint' => 'Affiliation',
-	'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //-->{|
+	'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //-->
+<div class="interview">
+*<div class="question">How would you describe yourself?</div>
+*<div class="answer"><<wpDescription>></div>
+*<div class="question">When did you born?</div>
+*<div class="answer"><<wpBirthDate>></div>
+*<div class="question">What\'s your species?</div>
+*<div class="answer"><<wpSpecies>></div>
+
+*<div class="question">What are your abilities?</div>
+*<div class="answer"><<wpAbilities>></div>
+*<div class="question">What\'s your gender?</div>
+*<div class="answer"><<wpGender>></div>
+*<div class="question">Do you have any affiliation?</div>
+*<div class="answer"><<wpAffiliation>></div>
+</div>
+',
+	/*'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //-->{|
 |-
 | <<wpDescription>>
 |-
@@ -115,5 +132,5 @@ $messages['en'] = array(
 | Affiliation
 | <<wpAffiliation>>
 |-
-|}'
+|}'*/
 );
