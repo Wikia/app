@@ -3,8 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'related-video-random-video'	=> 'Random Video',
-	'related-video-related'		=> 'Related Videos',
-	'relatedvideo'			=> 'Related Videos'
+	'related-video-random-video' => 'Random video',
+	'related-video-related'      => 'Related videos',
+	'relatedvideo'               => 'Related videos',
 );
-
