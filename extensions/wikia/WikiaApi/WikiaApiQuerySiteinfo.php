@@ -53,6 +53,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 			"catid" => $cat_id,
 			"pagetitle" => wfMsg( 'pagetitle' ),
 			"flags"	=> $oWiki->city_flags,
+			"db" => $oWiki->city_dbname,
 			"position" => ( isset($wgDBcluster) ) ? $wgDBcluster : $oWiki->city_cluster
 		);
 		$result->setIndexedTagName($data, $property);
