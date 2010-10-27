@@ -84,7 +84,7 @@ class SkinUncyclopedia extends SkinMonoBook {
 <div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT') . '</div>
 </td>
 </tr>
-</table>' . 
+</table>' .
 AdEngine::getInstance()->getDelayedIframeLoadingCode();
 
 		$tpl->set('ads_columngoogle', $spotlights );
@@ -125,5 +125,8 @@ class UncyclopediaTemplate extends MonoBookTemplate {
 	  <li id="f-disclaimer"><a href="<?= $skin->makeUrl('Uncyclopedia:General_disclaimer');?>" title="Uncyclopedia:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<div id="f-hosting"><i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.</div>
+
+	<!-- RT #79534 -->
+	<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>
 <?php	}
 }
