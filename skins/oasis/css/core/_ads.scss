@@ -27,6 +27,14 @@
 	z-index: 100;
 }
 
+#SPOTLIGHT_GLOBALNAV_1, #SPOTLIGHT_GLOBALNAV_2, #SPOTLIGHT_GLOBALNAV_3 {
+	width: 269px;
+	&.SPOTLIGHT_GLOBALNAV {
+		width: 255px;	
+	}
+}
+
+
 //Mainpage styling
 /*
 On hold for now
