@@ -11,6 +11,9 @@
 * rt#77759: RTE: not using Wikia.css styling (macbre)
 * rt#74393: Oasis: Add Like to custom namespaces (macbre)
 * rt#78393: Edit page: lazy load MW toolbar images in Wysiwyg mode (macbre)
+* rt#75260: Oasis: Log-in dialogue layout is broken (macbre)
+* rt#76386: PvX's rate extension does not hook into oasis menu correctly (macbre)
+* rt#78654: Oasis click-tracking: Add tracking for WikiActivity/watchlist items (macbre)
 
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
