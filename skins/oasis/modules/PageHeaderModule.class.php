@@ -305,29 +305,8 @@ class PageHeaderModule extends Module {
 			case NS_SPECIAL:
 				$this->subtitle = wfMsg('oasis-page-header-subtitle-special');
 
-				// FIXME: use PageHeaderIndexAfterExecute hook instead
-				if ($wgTitle->isSpecial('ThemeDesignerPreview')) {
-					// fake static data for ThemeDesignerPreview
-					$this->revisions = array('current' => array('user' => 'foo',
-							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg',
-							'link' => '<a>FunnyBunny</a>',
-							'timestamp' => ''),
-						array('user' => 'foo',
-							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg',
-							'link' => '<a>FunnyBunny</a>',
-							'timestamp' => ''));
-					//$title = Title::newFromText("More Examples", NS_CATEGORY);
-					//$this->categories[] = View::link($title, $title->getText());
-					$this->categories = array("<a>More Sample</a>", "<a>Others</a>");
-					$this->comments = 23;
-					$this->subtitle = false;
-					$this->action = array("text" => "Edit this page");
-					$this->actionImage = '';
-					$this->actionName = 'edit';
-					$this->dropdown = array('foo', 'bar');
-				}
 				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
-				elseif($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
+				if($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
 					$this->subtitle = "";
 				}
 				break;
