@@ -167,19 +167,58 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		$filter = array();
 
-		$filter_created = $wgRequest->getVal('new_filter_created',
-											 $wgRequest->getVal('filter_created', null));
-		if ($wgRequest->getVal('off_filter_created', null)) $filter_created = null;
-		
-		if ($filter_created) {
-			preg_match('/^((\d+)-(\d+)-(\d+))/', $filter_created, $match);
-			$start = $match[0].' 00:00:00';
-			$end   = $match[0].' 23:59:59';
+		$created_type = $wgRequest->getVal('new_created_type',
+										   $wgRequest->getVal('created_type', 'exactly'));
+		$created_num  = $wgRequest->getVal('new_created_number',
+										   $wgRequest->getVal('created_number', null));
+		$created_unit = $wgRequest->getVal('new_created_unit',
+										   $wgRequest->getVal('created_unit', 'day'));
+		if ($created_num) {
+			$filter[] = "DATE(created) ".($created_type == 'exactly' ? '=' : '>=')." DATE(DATE_SUB(NOW(), INTERVAL $created_num $created_unit))";
+			$query[] = "created_type=$created_type";
+			$query[] = "created_number=$created_num";
+			$query[] = "created_unit=$created_unit";
+			if ($created_type == 'exactly') $filter_roster['CreatedTypeExact'] = 1;
+			if ($created_type == 'after')   $filter_roster['CreatedTypeAfter'] = 1;
+			if ($created_unit == 'day')     $filter_roster['CreatedUnitDays']  = 1;
+			if ($created_unit == 'week')    $filter_roster['CreatedUnitWeeks'] = 1;
+			$filter_roster['CreatedNum'] = $created_num;
+		}
 
-			$filter[] = "created BETWEEN '$start' AND '$end'";
-			$query[] = "filter_created=$filter_created";
-			$filter_roster['Created'] = array('value' => $match[0],
-											  'off'   => 'off_filter_created');
+		$attempted_type = $wgRequest->getVal('new_attempted_type',
+										   $wgRequest->getVal('attempted_type', 'exactly'));
+		$attempted_num  = $wgRequest->getVal('new_attempted_number',
+										   $wgRequest->getVal('attempted_number', null));
+		$attempted_unit = $wgRequest->getVal('new_attempted_unit',
+										   $wgRequest->getVal('attempted_unit', 'day'));
+		if ($attempted_num) {
+			$filter[] = "DATE(attempted) ".($attempted_type == 'exactly' ? '=' : '>=')." DATE(DATE_SUB(NOW(), INTERVAL $attempted_num $attempted_unit))";
+			$query[] = "attempted_type=$attempted_type";
+			$query[] = "attempted_number=$attempted_num";
+			$query[] = "attempted_unit=$attempted_unit";
+			if ($attempted_type == 'exactly') $filter_roster['AttemptedTypeExact'] = 1;
+			if ($attempted_type == 'after')   $filter_roster['AttemptedTypeAfter'] = 1;
+			if ($attempted_unit == 'day')     $filter_roster['AttemptedUnitDays']  = 1;
+			if ($attempted_unit == 'week')    $filter_roster['AttemptedUnitWeeks'] = 1;
+			$filter_roster['attemptedNum'] = $attempted_num;
+		}
+
+		$transmitted_type = $wgRequest->getVal('new_transmitted_type',
+										   $wgRequest->getVal('transmitted_type', 'exactly'));
+		$transmitted_num  = $wgRequest->getVal('new_transmitted_number',
+										   $wgRequest->getVal('transmitted_number', null));
+		$transmitted_unit = $wgRequest->getVal('new_transmitted_unit',
+										   $wgRequest->getVal('transmitted_unit', 'day'));
+		if ($transmitted_num) {
+			$filter[] = "DATE(transmitted) ".($transmitted_type == 'exactly' ? '=' : '>=')." DATE(DATE_SUB(NOW(), INTERVAL $transmitted_num $transmitted_unit))";
+			$query[] = "transmitted_type=$transmitted_type";
+			$query[] = "transmitted_number=$transmitted_num";
+			$query[] = "transmitted_unit=$transmitted_unit";
+			if ($transmitted_type == 'exactly') $filter_roster['TransmittedTypeExact'] = 1;
+			if ($transmitted_type == 'after')   $filter_roster['TransmittedTypeAfter'] = 1;
+			if ($transmitted_unit == 'day')     $filter_roster['TransmittedUnitDays']  = 1;
+			if ($transmitted_unit == 'week')    $filter_roster['TransmittedUnitWeeks'] = 1;
+			$filter_roster['TransmittedNum'] = $transmitted_num;
 		}
 		
 		$filter_wiki_name = $wgRequest->getVal('new_filter_wiki_name', null);
@@ -239,22 +278,6 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 			$filter[] = "msg LIKE '%$filter_body%'";
 			$query[] = "filter_body=$filter_body";
 			$filter_roster['Body'] = $filter_body;
-		}
-
-		$filter_transmitted = $wgRequest->getVal('new_filter_transmitted',
-												 $wgRequest->getVal('filter_transmitted', null));
-												 
-		if ($wgRequest->getVal('off_filter_transmitted', null)) $filter_transmitted = null;
-		
-		if ($filter_transmitted) {
-			preg_match('/^((\d+)-(\d+)-(\d+))/', $filter_transmitted, $match);
-			$start = $match[0].' 00:00:00';
-			$end   = $match[0].' 23:59:59';
-
-			$filter[] = "transmitted BETWEEN '$start' AND '$end'";
-			$query[] = "filter_transmitted=$filter_transmitted";
-			$filter_roster['Transmitted'] = array('value' => $match[0],
-												  'off'   => 'off_filter_transmitted');
 		}
 
 		$filter_errors = $wgRequest->getVal('new_filter_errors',
