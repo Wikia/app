@@ -12,18 +12,19 @@
 ?>
 
 #cityselect {z-index:9000} /* for IE z-index of absolute divs inside relative divs issue */
-#mailer-wiki-name {z-index:0;} /* abs for ie quirks */
+#mailer-wiki-name {z-index:0} /* abs for ie quirks */
 
 #MailerLogDomainSelector {position: relative; z-index: 10}
 
 #MailerLogDomainSelector .autocomplete { background: white; border-color: #D9D9D9; border-style: solid; border-width: 1px 2px 2px; margin-top: 2px; overflow: hidden; position: relative; top: 3px; }
 
-#mailer-wiki-name {width: 350px}
+#mailer-wiki-name, #mailer-email, #mailer-subject, #mailer-body {width: 300px}
 
 .wk-form-row { list-style-type: none; display: inline; margin:0; }
 .wk-form-row li { display: inline; }
-.wk-form-row label { width: 10em; float: left; text-align: left; vertical-align: middle; margin: 5px 0 0 0; }
+.wk-form-row label { width: 8em; float: left; text-align: left; vertical-align: middle; margin: 5px 0 0 0; }
 
+.mailer-log-table { width: 980px; }
 .mailer-log-table td { margin-left: 0px; margin-right: 0px; border-left: 0px; border-right: 0px; border-spacing: 0px 0px; }
 .mailer-log-row-top td { border-top: solid 2px #444444; }
 
@@ -32,7 +33,8 @@ table.TablePager { border: 1px solid gray;}
 /*]]>*/
 	</style>
 
-	<form id="MailerLogCreatedSelector" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
+	<form id="MailerLogCreatedSelector" class="clearfix" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
+		<div id="mailer-search-dates" style="float: right">
 		<div class="wk-form-row<?= array_key_exists('CreatedNum', $filter_roster) ? ' filter-on' : '' ?>">
  			<ul>
  				<li><label>Created</label></li>
@@ -48,13 +50,10 @@ table.TablePager { border: 1px solid gray;}
 					</select>
 					ago
 				</li>
-				<li><button style="z-index:9002">Apply</button></li>
 				<li><button style="z-index:9002" onclick="$('#mailer-created-num').val('');">Clear</button></li>
 			</ul>
 		</div>
-	</form>
 
-	<form id="MailerLogAttemptedSelector" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
 		<div class="wk-form-row<?= array_key_exists('AttemptedNum', $filter_roster) ? ' filter-on' : '' ?>">
  			<ul>
  				<li><label>Attempted</label></li>
@@ -70,13 +69,10 @@ table.TablePager { border: 1px solid gray;}
 					</select>
 					ago
 				</li>
-				<li><button style="z-index:9002">Apply</button></li>
 				<li><button style="z-index:9002" onclick="$('#mailer-attempted-num').val('');">Clear</button></li>
 			</ul>
 		</div>
-	</form>
 
-	<form id="MailerLogTransmittedSelector" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
 		<div class="wk-form-row <?= array_key_exists('TransmittedNum', $filter_roster) ? ' filter-on' : '' ?>">
  			<ul>
  				<li><label>Transmitted</label></li>
@@ -92,53 +88,50 @@ table.TablePager { border: 1px solid gray;}
 					</select>
 					ago
 				</li>
-				<li><button style="z-index:9002">Apply</button></li>
 				<li><button style="z-index:9002" onclick="$('#mailer-transmitted-num').val('');">Clear</button></li>
 			</ul>
 		</div>
-	</form>
-
-	<form id="MailerLogDomainSelector" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
-		<div class="wk-form-row<?= array_key_exists('Wiki', $filter_roster) ? ' filter-on' : '' ?>">
- 			<ul>
- 				<li><label>Domain name</label></li>
-				<li><input type="hidden" name="off_filter_wiki_id" id="mailer-off-wiki-id"><input type="text" name="new_filter_wiki_name" id="mailer-wiki-name" value="<?= array_key_exists('Wiki', $filter_roster) ? $filter_roster['Wiki']['value'] : '' ?>" size="24" maxlength="255" /></li>
-				<li><button style="z-index:9002">Apply</button></li>
-				<li><button style="z-index:9002" onclick="$('#mailer-off-wiki-id').val(1);">Clear</button></li>
-			</ul>
 		</div>
-	</form>
 
-	<form id="MailerLogEmailSelector" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
+		<div id="mailer-search-text" style="float: left">
+		<div id="MailerLogDomainSelector">
+			<div class="wk-form-row<?= array_key_exists('Wiki', $filter_roster) ? ' filter-on' : '' ?>">
+ 				<ul>
+ 					<li><label>Domain name</label></li>
+					<li><input type="hidden" name="off_filter_wiki_id" id="mailer-off-wiki-id"><input type="text" name="new_filter_wiki_name" id="mailer-wiki-name" value="<?= array_key_exists('Wiki', $filter_roster) ? $filter_roster['Wiki']['value'] : '' ?>" size="16" maxlength="255" /></li>
+					<li><button style="z-index:9002" onclick="$('#mailer-off-wiki-id').val(1);">Clear</button></li>
+				</ul>
+			</div>
+		</div>
+
 		<div class="wk-form-row<?= array_key_exists('Email', $filter_roster) ? ' filter-on' : '' ?>">
  			<ul>
  				<li><label>Email Address</label></li>
 				<li><input type="text" name="new_filter_dst" id="mailer-email" value="<?= array_key_exists('Email', $filter_roster) ? $filter_roster['Email']['value'] : '' ?>" size="24" maxlength="255" /></li>
-				<li><button style="z-index:9002">Apply</button></li>
 				<li><button style="z-index:9002" onclick="clearFilter(form, 'mailer-email');">Clear</button></li>
 			</ul>
 		</div>
-	</form>
-	
-	<form id="MailerLogSubjectSelector" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
+
 		<div class="wk-form-row<?= array_key_exists('Subject', $filter_roster) ? ' filter-on' : '' ?>">
  			<ul>
  				<li><label>Subject</label></li>
 				<li><input type="text" name="new_filter_subject" id="mailer-subject" value="<?= array_key_exists('Subject', $filter_roster) ? $filter_roster['Subject'] : '' ?>" size="24" maxlength="255" /></li>
-				<li><button style="z-index:9002">Apply</button></li>
 				<li><button style="z-index:9002" onclick="clearFilter(form, 'mailer-subject');">Clear</button></li>
 			</ul>
 		</div>
-	</form>
 
-	<form id="MailerLogBodySelector" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
 		<div class="wk-form-row<?= array_key_exists('Body', $filter_roster) ? ' filter-on' : '' ?>">
  			<ul>
  				<li><label>Body</label></li>
 				<li><input type="text" name="new_filter_body" id="mailer-body" value="<?= array_key_exists('Body', $filter_roster) ? $filter_roster['Body'] : '' ?>" size="24" maxlength="255" /></li>
-				<li><button style="z-index:9002">Apply</button></li>
 				<li><button style="z-index:9002" onclick="clearFilter(form, 'mailer-body');">Clear</button></li>
 			</ul>
+		</div>
+		</div>
+		<br />
+		<div class="search-controls" style="clear: both; display: block;" >
+			<button style="z-index:9002" onclick="window.location.href='<?= $scriptURL ?>'; return false">Clear All</button>
+			<button style="z-index:9002">Search</button>
 		</div>
 	</form>
 
@@ -199,11 +192,11 @@ table.TablePager { border: 1px solid gray;}
 		<?php foreach ($records as $row): ?>
 		<tr class="mailer-log-row-top">
 			<td><?= $row['id'] ?></td>
-			<td><a href="<?= $scriptURL ?>?<?= $query_string ?>&new_filter_created=<?= $row['created'] ?>"><?= $row['created'] ?></a></td>
+			<td><?= $row['created'] ?></td>
 			<td><a href="<?= $scriptURL ?>?<?= $query_string ?>&new_filter_wiki_id=<?= $row['city_id'] ?>"><?= $row['wiki_name'] ?></a></td>
 			<td><a href="<?= $scriptURL ?>?<?= $query_string ?>&new_filter_dst=<?= $row['to'] ?>"><?= $row['to'] ?></a></td>
 			<td><?= $row['attempted'] ?></td>
-			<td><a href="<?= $scriptURL ?>?<?= $query_string ?>&new_filter_transmitted=<?= $row['transmitted'] ?>"><?= $row['transmitted'] ?></a></td>
+			<td><?= $row['transmitted'] ?></td>
 			<td><a href="<?= $scriptURL ?>?<?= $query_string ?>&new_filter_error=1"><?= $row['error_msg'] ?></td>
 		</tr>
 		<tr>
