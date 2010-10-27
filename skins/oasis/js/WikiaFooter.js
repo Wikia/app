@@ -17,6 +17,7 @@ WikiaFooterApp = {
 		if(footer) {	
 			var toolbar = footer.children(".toolbar");
 			var windowObj = $(window);
+			var originalWidth = toolbar.width();
 	
 			//Scroll Detection
 			windowObj.resolvePosition = function() {
@@ -25,49 +26,34 @@ WikiaFooterApp = {
 				if(footer.offset()){
 					line = footer.offset().top + toolbar.outerHeight();
 				}
-
-				//Scrolled past line? Lock that footer!
+				
 				if (scroll > line && toolbar.hasClass("float")) {
-					WikiaFooterApp.settings.float = false;
-					toolbar.removeClass("float").css({
-						left: "50%",
-						right: "auto"
-					});
+					toolbar.removeClass("float");
+					windowObj.centerBar();
 				} else if (scroll < line && !toolbar.hasClass("float")) {
 					toolbar.addClass("float");
-					WikiaFooterApp.settings.float = true;
 					windowObj.centerBar();
 				}
 			};
-						
-			//Resize Detection
-			windowObj.resize(function() {
-				//Resizing should run all functions bound to scrolling because the location of "the fold" is changing.
-				windowObj.scroll();
-				
-				windowObj.centerBar();
-			});
-			
-			windowObj.centerBar = function () {
-				if (WikiaFooterApp.settings.float) {
-					var viewport = parseInt($(window).width());
-					var page = parseInt($("#WikiaPage").width());
-					var edge = Math.ceil((viewport - page) / 2) - 5; //ribbon effect offsets width by 5
-					
-					if (edge < -5) {
-						edge = -5;
-					}
-					
-					toolbar.css({
-						left: edge,
-						right: edge
-					});
-				}
-			};
 
-			windowObj.resolvePosition();
+			windowObj.centerBar = function() {
+				var w = windowObj.width();
+				if(w < originalWidth && toolbar.hasClass('float')) {
+					toolbar.css('width', w+10);
+					if(!toolbar.hasClass('small')){
+						toolbar.addClass('small');
+					}
+				} else if(toolbar.hasClass('small')) {
+					toolbar.css('width', originalWidth);
+					toolbar.removeClass('small');
+				}
+				windowObj.resolvePosition();
+			}
 			
+			windowObj.resolvePosition();
+			windowObj.centerBar();		
 			windowObj.scroll(windowObj.resolvePosition);
+			windowObj.resize(windowObj.centerBar);
 		}
 	},
 
