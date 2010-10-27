@@ -83,7 +83,7 @@ wgAfterContentAndJS.push(
 				if (AnchorAd.settings.url) {
 					$(".wikia_anchor_ad .clickable").click(function() {
 						WET.byStr("anchor_ad/jumped");
-						window.location = AnchorAd.settings.url;
+						window.open(AnchorAd.settings.url, "blank");
 					});
 				}
 
