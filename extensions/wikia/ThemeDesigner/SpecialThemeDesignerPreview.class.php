@@ -24,6 +24,41 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 		$wgOut->addHtml(wfRenderModule('ThemeDesigner', 'Preview'));
 
+		// page header: use static date
+		global $wgHooks;
+		$wgHooks['PageHeaderIndexAfterExecute'][] = 'SpecialThemeDesignerPreview::modifyHeaderData';
+
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Use fake data for page header when rendering page preview
+	 *
+	 * @author macbre
+	 */
+	static function modifyHeaderData(&$moduleObject, &$params) {
+		global $wgExtensionsPath;
+		wfProfileIn(__METHOD__);
+
+		// fake static data for ThemeDesignerPreview
+		$moduleObject->revisions = array(
+			'current' => array(
+				'user' => 'foo',
+				'avatarUrl' => "{$wgExtensionsPath}/wikia/ThemeDesigner/images/td-avatar.jpg",
+				'link' => '<a>FunnyBunny</a>',
+				'timestamp' => ''
+			),
+		);
+
+		$moduleObject->categories = array("<a>More Sample</a>", "<a>Others</a>");
+		$moduleObject->comments = 23;
+		$moduleObject->subtitle = false;
+		$moduleObject->action = array("text" => "Edit this page");
+		$moduleObject->actionImage = '';
+		$moduleObject->actionName = 'edit';
+		$moduleObject->dropdown = array('foo', 'bar');
+
+		wfProfileOut(__METHOD__);
+		return true;
 	}
 }
