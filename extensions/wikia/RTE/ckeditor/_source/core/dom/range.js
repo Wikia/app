@@ -682,7 +682,7 @@ CKEDITOR.dom.range = function( document )
 			var container = this.startContainer;
 			var offset = this.startOffset;
 
-			if ( container.type != CKEDITOR.NODE_ELEMENT )
+			if ( container.type != CKEDITOR.NODE_ELEMENT && container.type != CKEDITOR.NODE_COMMENT )
 			{
 				if ( !offset )
 					this.setStartBefore( container );
@@ -693,7 +693,7 @@ CKEDITOR.dom.range = function( document )
 			container = this.endContainer;
 			offset = this.endOffset;
 
-			if ( container.type != CKEDITOR.NODE_ELEMENT )
+			if ( container.type != CKEDITOR.NODE_ELEMENT && container.type != CKEDITOR.NODE_COMMENT )
 			{
 				if ( !offset )
 					this.setEndBefore( container );
@@ -920,7 +920,7 @@ CKEDITOR.dom.range = function( document )
 								// If this is a visible element.
 								// We need to check for the bookmark attribute because IE insists on
 								// rendering the display:none nodes we use for bookmarks. (#3363)
-								if ( sibling.$.offsetWidth > 0 && !sibling.getAttribute( '_fck_bookmark' ) )
+								if ( sibling.$.offsetWidth > 0 && sibling.$.nodeType == CKEDITOR.NODE_ELEMENT && !sibling.getAttribute( '_fck_bookmark' ) )
 								{
 									// We'll accept it only if we need
 									// whitespace, and this is an inline
@@ -1079,7 +1079,7 @@ CKEDITOR.dom.range = function( document )
 								// If this is a visible element.
 								// We need to check for the bookmark attribute because IE insists on
 								// rendering the display:none nodes we use for bookmarks. (#3363)
-								if ( sibling.$.offsetWidth > 0 && !sibling.getAttribute( '_fck_bookmark' ) )
+								if ( sibling.$.offsetWidth > 0 && sibling.$.nodeType == CKEDITOR.NODE_ELEMENT && !sibling.getAttribute( '_fck_bookmark' ) )
 								{
 									// We'll accept it only if we need
 									// whitespace, and this is an inline

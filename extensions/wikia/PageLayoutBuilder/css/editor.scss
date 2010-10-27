@@ -31,6 +31,9 @@ td.plb-toolbox {
 				border-width: 3px;
 				width: 0;
 			}
+			li > ul > li {
+				padding-right: 6px;
+			}
 		}
 		
 		.wikia-menu-button {
@@ -46,13 +49,14 @@ td.plb-toolbox {
 			>li, >li *, .chevron  {
 				cursor: pointer;
 			}
-			>li>a, >li>span {
-				border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
-				color: $color-button-text;
-				display: inline;
-				margin-right: 4px;
-				padding-right: 4px;
-				position: relative;
+			>li {
+				float: left; /*IE7 don't take out*/
+				>a, >span {
+					border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
+					color: $color-button-text;
+					display: inline-block;
+					padding: 0 8px 0 5px;
+				}
 			}
 			ul {
 				background: $color-page;
@@ -197,29 +201,36 @@ td.plb-toolbox {
 				display: block;
 			}
 			
-			
-			li > button.edit, li > a.delete {
+			li > .buttons {
 				position: absolute;
 				display: block;
-				margin-top: -9px;
 				top: 50%;
-				height: 18px;
-				line-height: 18px;
-				cursor: pointer;
-			}
-			
-			li > button.edit {
-				border: 1px solid $color-text;
-				padding: 0 2px;
-				right: 24px;
-			}
-			
-			li > a.delete {
-				right: 5px;
-				width: 16px;
-				height: 16px;
-				margin-top: -8px;
-				background: url(/extensions/wikia/PageLayoutBuilder/images/trash-icon.png)
+				right: 0;
+				margin-right: 12px;
+				margin-top: -9px;
+				width: auto;
+				height: 22px;
+				line-height: 22px;
+				vertical-align: middle;
+				
+				>button, >a {
+					float: left;
+					display: block;
+					cursor: pointer;
+				}
+				
+				>.edit {
+					border: 1px solid $color-text;
+					padding: 0 2px;
+				}
+				
+				>.delete {
+					margin-top: 3px;
+					margin-left: 3px;
+					width: 16px;
+					height: 16px;
+					background: url(/extensions/wikia/PageLayoutBuilder/images/trash-icon.png)
+				}
 			}
 	
 	/*

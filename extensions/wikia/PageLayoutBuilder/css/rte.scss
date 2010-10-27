@@ -37,4 +37,8 @@
 
 .plb-rte-widget-plb_image {
 	padding-bottom: 4px;
+	img {
+		display: block;
+		zoom: 1;
+	}
 }

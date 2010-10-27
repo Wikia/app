@@ -117,6 +117,7 @@
 		
 		onEditorSave : function ( pe ) {
 			var v = pe.getValues();
+			this.ed.fire('widgetbeforechange',this,this.getType(),v);
 			this.setProperties(v);
 			this.editing = false;
 			this.ed.fire('widgetchanged',this,this.getType(),v);
@@ -175,6 +176,8 @@
 		
 		onRTEBeforeApplyStyleCallback: null,
 		onRTEAfterApplyStyleCallback: null,
+		
+		modeReadyFired: false,
 
 		constructor: function(instance) {
 			PLB.RTEInstance.superclass.constructor.apply(this);
@@ -204,7 +207,14 @@
 		},
 		
 		insertElement: function () {
-			return this.rte.tools.insertElement.apply(this.rte.tools,arguments);
+			/*
+			var args = arguments;
+			var rte = this.rte;
+			Timer.once($.proxy(function(){
+				rte.tools.insertElement.apply(rte.tools,args);
+			},this),500);
+			*/
+			this.rte.tools.insertElement.apply(this.rte.tools,arguments);
 		},
 		
 		isFullWysiwyg: function() {
@@ -216,7 +226,7 @@
 			this.rte = RTE;
 			this.instance = instance;
 			this.instance.on('wysiwygModeReady',$.proxy(this.onRTEWysiwygModeReady,this));
-			this.instance.on('mode',$.proxy(this.onRTEModeSwitch,this));
+			this.instance.on('mode',$.proxy(this.onRTEModeSwitched,this));
 			this.instance.on('beforeCommandExec',$.proxy(this.onRTEBeforeCommandExec,this));
 			this.instance.on('afterCommandExec',$.proxy(this.onRTEAfterCommandExec,this));
 			this.instance.on('beforeInsertContent',$.proxy(this.onRTEBeforeInsertContent,this));
@@ -228,6 +238,10 @@
 		},
 		
 		onRTEWysiwygModeReady: function () {
+			if (!this.modeReadyFired) {
+				this.modeReadyFired = true;
+				this.fire('modeready',this,this.instance.mode);
+			}
 			if (!this.onRTEBeforeApplyStyleCallback) {
 				this.onRTEBeforeApplyStyleCallback = $.proxy(this.onRTEBeforeApplyStyle,this);
 				this.onRTEAfterApplyStyleCallback = $.proxy(this.onRTEAfterApplyStyle,this);
@@ -275,7 +289,8 @@
 			this.fire('requestcss',this,css);
 		},
 		
-		onRTEModeSwitch: function() {
+		onRTEModeSwitched: function() {
+			this.modeReadyFired = false;
 			this.fire('modeswitch',this,this.instance.mode);
 		},
 		
@@ -315,6 +330,7 @@
 			this.usedWidgetIds = {};
 			
 			this.on({
+				widgetbeforechange: this.onWidgetBeforeChange,
 				widgetchanged: this.onWidgetChanged,
 				widgetafteredit: this.onWidgetAfterEdit,
 				scope: this
@@ -327,6 +343,7 @@
 				rebind: this.onRTERebind,
 				requestcss: this.onRTERequestCSS,
 				modeswitch: this.onRTEModeSwitch,
+				modeready: this.onRTEModeReady,
 				beforestyle: this.insertPlaceholders,
 				afterstyle: this.replacePlaceholders,
 				beforecommand: this.insertPlaceholders,
@@ -485,12 +502,21 @@
 		},
 		
 		createPlaceholder: function( el ) {
+			el = $(el);
+			var wrapper = $('<div>').append(el.clone());
+			var ph = $('<img contentEditable="false" src="" alt="placeholder"/>')
+				.attr('plbdata',wrapper.html())
+				.addClass('plb-rte-widget-placeholder');
+			el.replaceWith(ph);
+			return ph;
+			/*
 			var wrapper = $(el).wrap('<div class="plb-rte-widget-placeholder" />').parent();
 			var ph = $('<img src="" alt="placeholder"/>')
 				.attr('plbdata',wrapper.html())
 				.addClass('plb-rte-widget-placeholder');
 			wrapper.replaceWith(ph);
 			return ph;
+			*/
 		},
 		
 		replacePlaceholder: function( el ) {
@@ -520,6 +546,18 @@
 			if (this.ui) {
 				this.ui[mode=='source'?'hide':'show']();
 			}
+		},
+		
+		onRTEModeReady: function (rte,mode) {
+			/*
+			if (mode == 'wysiwyg') {
+				Timer.once(function(){
+//					rte.instance.getMode('wysiwyg').focus();
+//					rte.instance.focusManager.focus();
+					rte.instance.focus();
+				},500);
+			}
+			*/
 		},
 		
 		getWidgetElements : function () {
@@ -574,14 +612,20 @@
 			w.edit();
 		},
 		
+		onWidgetBeforeChange : function (widget,type,props) {
+			this.rte.instance.fire('saveSnapshot');
+		},
+		
 		onWidgetChanged : function (widget,type,props) {
 			if (this.adding) {
 				var el = this.adding.getElement();
+				this.rte.instance.focus();
 //				this.insertPlaceholders();
 				this.rte.insertElement(el);
 //				this.replacePlaceholders();
 				this.adding = null;
 			}
+			this.rte.instance.fire('saveSnapshot');
 			this.fire('changed',this,widget,type,props);
 		},
 		
@@ -598,7 +642,9 @@
 		},
 		
 		onDeleteWidgetRequest: function ( id ) {
+			this.rte.instance.fire('saveSnapshot');
 			this.getWidget(id).remove();
+			this.rte.instance.fire('saveSnapshot');
 			this.fire('changed');
 		}
 		
@@ -667,7 +713,7 @@
 			});
 			this.widgetsSummary = $('.plb-manager',this.el);
 			this.widgetsList = $('.plb-widget-list',this.el);
-			this.widgetsList.css('max-height',(this.el.innerHeight() - this.widgetsSummary.outerHeight() - this.widgetsList.css('margin') * 2) + 'px');
+			this.widgetsList.css('max-height',(this.el.innerHeight() - this.widgetsSummary.outerHeight() - parseInt(this.widgetsList.css('margin')) * 2) + 'px');
 		},
 
 		rebind: function () {
@@ -720,14 +766,14 @@
 			// Clear list in the toolbox
 			this.widgetsList.empty();
 			// Prepare buttons overlay for list items
-			var bs = "<button class=\"wikia-button edit\">"+PLB.Lang['plb-editor-edit']+"</button><a href=\"#\" class=\"delete\"></a>";
+			var bs = "<span class=\"buttons\"><button class=\"wikia-button edit\">"+PLB.Lang['plb-editor-edit']+"</button><a href=\"#\" class=\"delete\"></a></span>";
 			// For each widget found do ...
 			$.each(l,$.proxy(function(i,e){
 				var html = PLB.Library[e.getType()].listItemHtml
 					.replace("[$ID]",e.getId())
 					.replace("[$CAPTION]",e.getCaption())
 					.replace("[$BUTTONS]",bs);
-				$(html).appendTo(this.widgetsList);
+				$(html).addClass('plb-add-menu-item-'+e.getType()).appendTo(this.widgetsList);
 			},this));
 			// Set visibility of list depending on whether we have any element or not
 			this.widgetsList.css('display',l.length>0?"block":"none");
@@ -864,6 +910,7 @@
 			var el = $('[name='+name+']',this.form);
 			if (el.length>0) {
 				if (el.attr('type') == 'checkbox') {
+					value = 0 + Number(value);
 					el.attr('checked', value ? true : false );
 				} else {
 					el.val(value);
@@ -906,7 +953,7 @@
 			this.extFormValidate(state);
 			this.valid = state.valid;
 			this.validStatus = state.status;
-			this.showValidation();
+//			this.showValidation();
 			return this.valid;
 		},
 		
@@ -931,13 +978,13 @@
 			this.updateValues();
 			this.extFormChange(ev);
 			this.validate();
-			this.saveButton.attr('disabled',this.valid?'':'disabled');
 		},
 		
 		doSave: function() {
 			this.updateValues();
 			this.validate();
-			if (this.saveButton.attr('disabled') == 'disabled') {
+			this.showValidation();
+			if (!this.valid) {
 				return false;
 			}
 			
