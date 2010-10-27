@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'adss-form-shares' => 'Number of shares:',
 	'adss-form-email' => 'Your e-mail address:',
 	'adss-form-password' => 'Your password:',
-	'adss-form-login-link' => 'Log in',
+	'adss-form-login-link' => 'Log in', // FIXME: 'adss-form-login-desc'
 	'adss-form-login-desc' => 'Have a password? $1 to save your time and buy the ad with just one click!',
 	'adss-form-usd-per-day' => '$$1 per day',
 	'adss-form-usd-per-week' => '$$1 per week',
@@ -54,7 +54,7 @@ $messages['en'] = array(
 	'adss-button-select' => 'Select',
 	'adss-preview-header' => 'Preview',
 	'adss-preview-prompt' => 'Here is what your sponsorship will look like - click "{{int:adss-button-edit}}" to go back and make changes, or "{{int:adss-button-save-pay}}" to save it and go to PayPal.',
-	'adss-click-here' => 'Click here',
+	'adss-click-here' => 'Click here', // FIXME: Merge in 'adss-paypal-redirect'. Bad i18n.
 	'adss-paypal-redirect' => '$1 if you are not redirected to PayPal within 5 seconds.',
 	'adss-paypal-error' => "Couldn't create PayPal payment this time. Please try again later.
 
