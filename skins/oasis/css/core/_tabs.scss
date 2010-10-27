@@ -5,6 +5,7 @@
 	li {
 		float: left;
 		margin: 0 1px;
+		padding: 0;
 		position: relative;
 		a {
 			@include border-radius-nw(5px);
