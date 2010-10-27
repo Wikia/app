@@ -47,8 +47,13 @@ class PageHeaderModule extends Module {
 		// action button
 		#print_pre($this->content_actions);
 
+		// PvX's rate (RT #76386)
+		if (isset($this->content_actions['rate'])) {
+			$this->action = $this->content_actions['rate'];
+			$this->actionName = 'rate';
+		}
 		// "Add topic"
-		if (isset($this->content_actions['addsection'])) {
+		else if (isset($this->content_actions['addsection'])) {
 			$this->action = $this->content_actions['addsection'];
 			$this->action['text'] = wfMsg('oasis-page-header-add-topic');
 
@@ -66,7 +71,7 @@ class PageHeaderModule extends Module {
 			$this->action = $this->content_actions['edit'];
 			$this->actionImage = MenuButtonModule::EDIT_ICON;
 			$this->actionName = 'edit';
-			$this->action["href"] .= "#EditPage"; // jumping to a-tag
+			$this->action['href'] .= '#EditPage'; // jumping to a-tag
 		}
 		// view source
 		else if (isset($this->content_actions['viewsource'])) {
@@ -80,17 +85,13 @@ class PageHeaderModule extends Module {
 	 * Get content actions for dropdown
 	 */
 	private function getDropdownActions() {
-
-		// var_dump($this->content_actions);
 		$ret = array();
 
 		// items to be added to "edit" dropdown
 		$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
 
-		// add "edit" to dropdown if edit button says:
-		//  * "Add topic" (__NEWSECTIONLINK__ magic word used on Forum namespace pages)
-		//  * "Edit with form" (SMW pages)
-		if (in_array($this->actionName, array('addtopic', 'form-edit'))) {
+		// add "edit" to dropdown (if action button is not an edit)
+		if (!in_array($this->actionName, array('edit', 'source'))) {
 			array_unshift($actions, 'edit');
 		}
 
