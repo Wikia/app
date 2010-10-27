@@ -127,7 +127,7 @@ class ExternalStoreRiak {
 			$url = sprintf( "riak://%s/%s/%s", $this->mRiakNode, $this->mRiakBucket, $key );
 		}
 		else {
-			Wikia::log( __METHOD__, false, "bucket is not defined" );
+			wfDebugLog( "RiakCache", __METHOD__ . ": bucket is not defined" );
 		}
 
 		/**
