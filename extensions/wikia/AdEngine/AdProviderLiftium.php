@@ -26,6 +26,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
                 $called = true;
 
 		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgLiftiumDevHosts, $wgDevelEnvironment;
+		global $wgDartCustomKeyValues;
 
 		// See Liftium.js for documentation on options
 		$options = array();
@@ -43,6 +44,10 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();
 		$options['kv_page_type'] = ArticleAdLogic::getPageType();
 		$options['geoUrl'] = "http://geoiplookup.wikia.com/";
+		if (!empty($wgDartCustomKeyValues)) {
+			$options['kv_dart'] = $wgDartCustomKeyValues;
+		}
+		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
 
 		// LiftiumOptions as json
 		$out = '<script type="text/javascript">' . "\n";
@@ -108,4 +113,16 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 
                 return $out;
 	}
+
+        function getProviderValues($slot) {
+                global $wgLanguageCode;
+		$out = "lang=" . preg_replace("/-.*/", "", $wgLanguageCode);
+
+		global $wgDartCustomKeyValues;
+		if (!empty($wgDartCustomKeyValues)) {
+			$out .= ";" . $wgDartCustomKeyValues;
+		}
+
+                return $out;
+        }
 }
