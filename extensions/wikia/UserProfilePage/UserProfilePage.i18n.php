@@ -10,6 +10,10 @@ $messages['en'] = array(
 	'userprofilepage-about-article-title' => 'About',
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
 
+	// Masthead
+	'userprofilepage-leave-message' => 'Leave message',
+	'userprofilepage-edits-since' => 'Edits since joining',
+
 	//Top Wikis
 	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
 	'userprofilepage-top-wikis-edit-count' => 'Number of edits',
