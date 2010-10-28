@@ -17,6 +17,9 @@
  */
 
 class CommunityMessages {
+	//used as type in user_flags table
+	const USER_FLAGS_COMMUNITY_MESSAGES = 0;
+
 	static $messageSeen = false;
 
 	/**
@@ -149,10 +152,11 @@ class CommunityMessages {
 			//we have newer message - update user's timestamp
 			if ($userTimestamp === false || $communityMessagesTimestamp > $userTimestamp) {
 				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
-				$dbw->replace('user_messages', null /*not used*/,
+				$dbw->replace('user_flags', null /*not used*/,
 					array(
 						'city_id' => $wgCityId,
 						'user_id' => $wgUser->getID(),
+						'type' => self::USER_FLAGS_COMMUNITY_MESSAGES,
 						'timestamp' => wfTimestamp(TS_DB, $communityMessagesTimestamp)
 					),
 					__METHOD__
@@ -182,9 +186,9 @@ class CommunityMessages {
 		global $wgCityId, $wgExternalDatawareDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 		$userTimestamp = $dbr->selectField(
-			'user_messages',
+			'user_flags',
 			'timestamp',
-			array('city_id' => $wgCityId, 'user_id' => $user->getID()),
+			array('city_id' => $wgCityId, 'user_id' => $user->getID(), 'type' => self::USER_FLAGS_COMMUNITY_MESSAGES),
 			__METHOD__
 		);
 		return $userTimestamp ? wfTimestamp(TS_UNIX, $userTimestamp) : false;
