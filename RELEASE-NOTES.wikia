@@ -1,4 +1,5 @@
 == Changes since 201010.4 ==
+* rt#56279: Investigate building Amazon ad based on artist name on LyricWiki (Nef)
 * rt#75226: Oasis click-tracking update (macbre)
 * rt#77277: Oasis click-tracking: floating toolbar tracking is gone (macbre)
 * rt#77278: Oasis click-tracking: Wiki Activity page tracking for Recent changes is gone (macbre)
