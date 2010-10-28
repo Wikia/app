@@ -119,8 +119,8 @@ function testAvatars() {
 function testRiak() {
 	$store = new ExternalStoreRiak;
 
-	$store->fetchFromURL( "riak://storage/blobs/222:333:444" );
-	
+	echo $store->fetchFromURL( "riak://storage/blobs/222:333:444" );
+
 }
 #
 # main
