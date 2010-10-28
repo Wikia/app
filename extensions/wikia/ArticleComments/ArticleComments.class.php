@@ -510,6 +510,7 @@ class ArticleComment {
 			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comment-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($this->mFirstRevision->getTimestamp()) . "</a>";
 
 			$comment = array(
+				'id' => $commentId,
 				'articleId' => $articleId,
 				'author' => $this->mUser,
 				'username' => $this->mUser->getName(),
