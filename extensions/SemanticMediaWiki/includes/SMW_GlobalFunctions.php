@@ -600,7 +600,7 @@ function smwfShowBrowseLink($skintemplate) {
 /**
  * simple wrapper
  */
-function &smwwfGetDB( $type ) {
+function &smwfGetDB( $type ) {
 	global $smwgUseExternalDB, $wgDBname, $smwgDBname;
 
 	$smwgDBname = $wgDBname;
