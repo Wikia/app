@@ -597,3 +597,9 @@ function smwfShowBrowseLink($skintemplate) {
 		return $smwgMasterStore;
 	}
 
+/**
+ * simple wrapper
+ */
+function &smwwfGetDB( $type ) {
+	return wfGetDB( $type, 'smw' );
+}
