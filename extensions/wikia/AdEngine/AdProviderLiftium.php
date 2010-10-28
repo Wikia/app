@@ -35,6 +35,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		$options['kv_wgDBname'] = $wgDBname;
                 if (is_object($wgTitle)){
                        $options['kv_article_id'] = $wgTitle->getArticleID();
+                       $options['kv_wpage'] = $wgTitle->getPartialURL();
 		}
 		$cat = AdEngine::getCachedCategory();
 		$options['kv_Hub'] = $cat['name'];
