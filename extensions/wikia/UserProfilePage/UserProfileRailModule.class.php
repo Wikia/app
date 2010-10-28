@@ -11,6 +11,8 @@ class UserProfileRailModule extends Module {
 	var $topPageImages;
 	var $specialRandomLink;
 	var $maxEdits;
+	private $maxTopPages = 6;
+	private $commentToEditRatio = 0.3;
 
 	public function executeTopWikis() {
 		wfProfileIn( __METHOD__ );
@@ -219,21 +221,21 @@ class UserProfileRailModule extends Module {
 		//select page_id, count(page_id) from stats.events where wiki_id = N and user_id = N and event_type in (1,2) group by 1 order by 2 desc limit 10;
 		$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 		$res = $dbs->select(
-			array( 'stats.events' ),
+			array( $wgStatsDB . '.events' ),
 			array( 'page_id', 'count(page_id) AS count' ),
 			array(
 				'wiki_id' => $wgCityId,
-				'user_id' => UserProfilePage::getInstance()->getUser()->getId() ),
+				'user_id' => UserProfilePage::getInstance()->getUser()->getId(),
 				'event_type IN (1,2)',
-				'page_ns IN (' . join( ',', $wgContentNamespaces ) . ')',
+				'page_ns IN (' . join( ',', $wgContentNamespaces ) . ')'
+			),
 			__METHOD__,
 			array(
 				'GROUP BY' => 'page_id',
 				'ORDER BY' => 'count DESC',
-				'LIMIT' => 6
+				'LIMIT' => $this->maxTopPages
 			)
 		);
-
 		/* revision
 		$dbs = wfGetDB( DB_SLAVE );
 		$res = $dbs->select(
@@ -250,31 +252,87 @@ class UserProfileRailModule extends Module {
 		*/
 
 		$pages = array();
-
-		if( $wgDevelEnvironment ) {//DevBox test
-			$pages = array( 4 => 289, 1883 => 164, 1122 => 140, 31374 => 112, 2335 => 83, 78622 => 82 ); // test data
-			foreach($pages as $pageId => $editCount) {
-				$title = Title::newFromID( $pageId );
-				if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
-					$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount );
-				}
-				else {
-					unset( $pages[ $pageId ] );
-				}
-			}
-
+		if( $wgDevelEnvironment ) { //DevBox test
+			$pages = array( 4 => 28, 1883 => 16, 1122 => 14, 31374 => 11, 2335 => 8, 78622 => 3 ); // test data
 		} else {
-			while($row = $dbs->fetchObject($res)) {
-				$pageId = $row->page_id;
-				$title = Title::newFromID( $pageId );
-				if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
-					$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $row->count );
-				}
-				else {
-					unset( $pages[ $pageId ] );
+			while( $row = $dbs->fetchObject($res) ) {
+				$pages[ $row->page_id ] = $row->count;
+			}
+		}
+
+		// get top commented pages and merge
+		foreach( $this->getTopCommentedPages() as $pageId => $commentCount ) {
+			$commentPoints = round( $commentCount * $this->commentToEditRatio );
+			if( isset( $pages[ $pageId ] ) ) {
+				$pages[ $pageId ] += $commentPoints;
+			}
+			else {
+				$pages[ $pageId ] = $commentPoints;
+			}
+		}
+
+		arsort( $pages );
+
+		foreach($pages as $pageId => $editCount) {
+			$title = Title::newFromID( $pageId );
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
+				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount );
+			}
+			else {
+				unset( $pages[ $pageId ] );
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return array_slice( $pages, 0, $this->maxTopPages );
+	}
+
+	public function getTopCommentedPages() {
+		global $wgMemc, $wgArticleCommentsNamespaces, $wgEnableArticleCommentsExt;
+		wfProfileIn(__METHOD__);
+
+		$talkNamespaces = array();
+
+		if( is_array($wgArticleCommentsNamespaces) ) {
+			foreach( $wgArticleCommentsNamespaces as $ns ) {
+				$talkNamespaces[] = MWNamespace::getTalk( $ns );
+			}
+		}
+
+		if( count($talkNamespaces) == 0 || empty($wgEnableArticleCommentsExt) ) {
+			wfProfileOut(__METHOD__);
+			return array();
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			array( 'page', 'revision' ),
+			array( 'page_title', 'page_namespace' ),
+			array(
+				'page_id=rev_page',
+				'rev_user' => UserProfilePage::getInstance()->getUser()->getId(),
+				'page_namespace IN (' . join( ',', $talkNamespaces ) . ')',
+			),
+			__METHOD__,
+			array()
+		);
+
+		$pages = array();
+		while($row = $dbr->fetchObject($res)) {
+			if( strpos( $row->page_title, '@comment') !== false ) {
+				$commentData = ArticleComment::explode( $row->page_title );
+				if( !empty( $commentData ) ) {
+					$title = Title::newFromText( $commentData['title'], MWNamespace::getSubject( $row->page_namespace )   );
+					if( isset( $pages[$title->getArticleId()] ) ) {
+						$pages[$title->getArticleId()]++;
+					}
+					else {
+						$pages[$title->getArticleId()] = 1;
+					}
 				}
 			}
 		}
+		arsort(  $pages );
 
 		wfProfileOut(__METHOD__);
 		return $pages;
@@ -282,7 +340,7 @@ class UserProfileRailModule extends Module {
 
 	public function getHiddenTopPages() {
 		global $wgDevelEnvironment;
-		
+
 		wfProfileIn( __METHOD__ );
 
 		$dbs = wfGetDB( DB_SLAVE );
@@ -301,7 +359,7 @@ class UserProfileRailModule extends Module {
 			}
 
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
