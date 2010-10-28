@@ -98,7 +98,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'new-edit-page-preview-notice' => 'Modo de vista previa: aínda non se gardou ningún cambio! Vai abaixo para continuar a edición.',
+	'new-edit-page-preview-notice' => 'Modo de vista previa: aínda non se gardou ningún cambio! Vaia abaixo para continuar a edición.',
 	'templatesused-toggle' => 'Mostrar/agochar {{PLURAL:$1|$1 elemento|$1 elementos}}',
 );
 

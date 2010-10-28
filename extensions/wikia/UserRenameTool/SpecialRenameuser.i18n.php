@@ -389,6 +389,7 @@ $messages['bn'] = array(
 
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'userrenametool-desc' => "Adenvel un implijer (ret eo kaout ''gwirioù adenvel'')",
@@ -396,6 +397,7 @@ $messages['br'] = array(
 	'userrenametool-new' => 'Anv implijer nevez :',
 	'userrenametool-reason' => 'Abeg evit adenvel :',
 	'userrenametool-move' => 'Kas ar pajennoù implijer ha kaozeal (hag o ispajennoù) betek o anv nevez',
+	'userrenametool-warnings' => 'Diwallit :',
 	'userrenametool-submit' => 'Adenvel',
 	'userrenametool-errordoesnotexist' => 'An implijer "<nowiki>$1</nowiki>" n\'eus ket anezhañ',
 	'userrenametool-errorexists' => 'Krouet eo bet an anv implijer "<nowiki>$1</nowiki>" dija',
@@ -404,6 +406,8 @@ $messages['br'] = array(
 	'userrenametool-error-request' => 'Ur gudenn zo bet gant degemer ar reked. Kit war-gil ha klaskit en-dro.',
 	'userrenametool-error-same-user' => "N'haller ket adenvel un implijer gant an hevelep anv hag a-raok.",
 	'userrenametool-success' => 'Deuet eo an implijer "<nowiki>$1</nowiki>" da vezañ "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-yes' => 'Ya',
+	'userrenametool-confirm-no' => 'Ket',
 	'userrenametool-page-exists' => "Bez' ez eus eus ar bajenn $1 dija, n'haller ket hec'h erlec'hiañ ent emgefreek.",
 	'userrenametool-page-moved' => 'Adkaset eo bet ar bajenn $1 da $2.',
 	'userrenametool-page-unmoved' => "N'eus ket bet gallet adkas ar bajenn $1 da $2.",
@@ -1004,25 +1008,28 @@ $messages['ga'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'userrenametool-desc' => "Renomear un usuario (precisa dereito de ''renomear usuarios'')",
+	'userrenametool-desc' => "Engade unha [[Special:UserRenameTool|páxina especial]] para renomear un usuario (cómpre ter o dereito de ''renomear usuarios'') e procesar todos os datos relacionados",
 	'userrenametool-old' => 'Nome de usuario actual:',
 	'userrenametool-new' => 'Novo nome de usuario:',
 	'userrenametool-reason' => 'Razón para mudar o nome:',
-	'userrenametool-move' => 'Mover usuario e páxinas de talk (e as súas subpáxinas) a un novo nome',
+	'userrenametool-move' => 'Mover as páxinas de usuario e de conversa (xunto coas subpáxinas) ao novo nome',
 	'userrenametool-reserve' => 'Reservar o nome de usuario vello para un uso posterior',
 	'userrenametool-warnings' => 'Avisos:',
 	'userrenametool-confirm' => 'Si, renomear este usuario',
-	'userrenametool-submit' => 'Enviar',
-	'userrenametool-errordoesnotexist' => 'O usuario "<nowiki>$1</nowiki>" non existe',
-	'userrenametool-errorexists' => 'O usuario "<nowiki>$1</nowiki>" xa existe',
-	'userrenametool-errorinvalid' => 'O nome de usuario "<nowiki>$1</nowiki>" non é válido',
+	'userrenametool-submit' => 'Mudar o nome de usuario',
+	'userrenametool-errordoesnotexist' => 'O usuario "<nowiki>$1</nowiki>" non existe.',
+	'userrenametool-errorexists' => 'O usuario "<nowiki>$1</nowiki>" xa existe.',
+	'userrenametool-errorinvalid' => 'O nome de usuario "<nowiki>$1</nowiki>" non é válido.',
 	'userrenametool-errortoomany' => 'O usuario "<nowiki>$1</nowiki>" ten {{PLURAL:$2|unha contribución|$2 contribucións}}; mudar o nome dun usuario con máis {{PLURAL:$3|dunha contribución|de $3 contribucións}} podería afectar negativamente ao rendemento do sitio.',
-	'userrenametool-error-request' => 'Houbo un problema coa recepción da solitidude. Volte atrás e ténteo de novo.',
-	'userrenametool-error-same-user' => 'Non pode renomear a un usuario ao mesmo nome que tiña antes.',
+	'userrenametool-error-request' => 'Houbo un problema coa recepción da solicitude.
+Volva atrás e inténteo de novo.',
+	'userrenametool-error-same-user' => 'Non pode mudar o nome dun usuario ao mesmo nome que tiña antes.',
 	'userrenametool-success' => 'O usuario "<nowiki>$1</nowiki>" mudou o nome a "<nowiki>$2</nowiki>"',
-	'userrenametool-page-exists' => 'A páxina $1 xa existe e non pode ser automaticamente sobreescrita.',
-	'userrenametool-page-moved' => 'A páxina $1 foi movida a $2.',
-	'userrenametool-page-unmoved' => 'A páxina $1 non pode ser movida a $2.',
+	'userrenametool-confirm-yes' => 'Si',
+	'userrenametool-confirm-no' => 'Non',
+	'userrenametool-page-exists' => 'A páxina "$1" xa existe e non pode ser sobrescrita automaticamente.',
+	'userrenametool-page-moved' => 'A páxina "$1" foi movida a "$2".',
+	'userrenametool-page-unmoved' => 'A páxina "$1" non pode ser movida a "$2".',
 	'userrenametool-logpage' => 'Rexistro de usuarios que mudaron o nome',
 	'userrenametool-logpagetext' => 'Este é un rexistro dos cambios nos nomes de usuario.',
 	'userrenametool-logentry' => 'mudou o nome de "$1" a "$2"',
@@ -1746,6 +1753,7 @@ $messages['la'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'userrenametool' => 'Engem Benotzer säin Numm änneren',
 	'userrenametool-desc' => "Setzt eng [[Special:UserRenameTool|Spezialsäit]] derbäi fir e Benotzer ëmzebenennen (brauch dofir ''renameuser''-Rechter) an all domat verbonnen Aktiounen duerchzeféieren",
 	'userrenametool-old' => 'Aktuelle Benotzernumm:',
 	'userrenametool-new' => 'Neie Benotzernumm:',
@@ -1758,14 +1766,20 @@ $messages['lb'] = array(
 	'userrenametool-errordoesnotexist' => 'De Benotzer "<nowiki>$1</nowiki>" gëtt et net.',
 	'userrenametool-errorexists' => 'De Benotzer "<nowiki>$1</nowiki>" gët et schonn.',
 	'userrenametool-errorinvalid' => 'De Benotzernumm "<nowiki>$1</nowiki>" kann net benotzt ginn.',
+	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" ass kee valabelen neie Benotzernumm.',
 	'userrenametool-errortoomany' => 'De Benotzer "<nowiki>$1</nowiki>" huet $2 {{PLURAL:$2|Ännerung|Ännerunge}} gemaach. D\'Ännerung vum Benotzernumm vun engem Benotzer mat méi wéi $3 {{PLURAL:$3|Ännerung|Ännerunge}} kann d\'Vitesse vum Site staark beaflossen.',
 	'userrenametool-error-request' => 'Et gouf e Problem mat ärer Ufro.
 Gitt w.e.g. zréck a versicht et nach eng Kéier.',
 	'userrenametool-error-same-user' => 'Dir kënnt kee Benotzernumm änneren, an him dee selweschte Numm erëmginn.',
+	'userrenametool-error-extension-abort' => "E puer vun den installéierten Erweiderungen loossen d'Ëmbenennen net zou.",
 	'userrenametool-success' => 'De Benotzer "<nowiki>$1</nowiki>" gouf "<nowiki>$2</nowiki>" ëmbenannt.',
+	'userrenametool-confirm-intro' => 'Wëllt Dir dat wierklech maachen?',
+	'userrenametool-confirm-yes' => 'Jo',
+	'userrenametool-confirm-no' => 'Neen',
 	'userrenametool-page-exists' => "D'Säit $1 gëtt et schonns a kann net automatesch iwwerschriwwe ginn.",
 	'userrenametool-page-moved' => "D'Säit $1 gouf op $2 geréckelt.",
 	'userrenametool-page-unmoved' => "D'Säit $1 konnt net op $2 geréckelt ginn.",
+	'userrenametool-finished-email-subject' => 'Prozedur vum "Benotzer ëmbenennen" ofgeschloss fir ($1)',
 	'userrenametool-logpage' => 'Logbuch vun den Ännerunge vum Benotzernumm',
 	'userrenametool-logpagetext' => 'An dësem Logbuch ginn Ännerunge vu Benotzernimm festgehal.',
 	'userrenametool-logentry' => 'huet de Benotzer $1 op "$2" ëmbenannt',

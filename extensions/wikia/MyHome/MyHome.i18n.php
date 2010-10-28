@@ -1997,7 +1997,7 @@ Experimente!',
 	'myhome-log-in' => "<center>As opções da Minha Página Inícial estão disponíveis apenas quando você está logado.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Por favor, faça o login para visualizar essa página!]'''</big></center>",
 	'myhome-switch-to-monaco' => "As opções da Minha Página Incial estão disponíveis apenas se você estiver usando a estilo (skin) Monaco. Se você deseja visualizar a Minha Página Inicial, por favor visite '''[[Special:Preferences|suas preferências]]''' e mude o seu estilo (skin).",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Portal comunitário',
+	'myhome-community-corner-header' => 'Mensagens Comunitárias',
 	'oasis-myhome-community-corner-edit' => 'editar mensagem &gt;',
 	'myhome-community-corner-edit' => 'editar mensagem',
 	'community-corner' => "'''Bem-vindo a sua página inicial!'''

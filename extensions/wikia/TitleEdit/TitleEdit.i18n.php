@@ -134,8 +134,11 @@ $messages['ba'] = array(
 	'titleedit' => 'Үҙгәртергә',
 );
 
-/** Bavarian (Boarisch) */
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
 $messages['bar'] = array(
+	'titleedit-desc' => 'Fiagt Titl-Beorweitungs-Button om auf da Seiten dazua',
 	'titleedit' => 'werkln',
 );
 
@@ -872,8 +875,11 @@ $messages['ml'] = array(
 	'titleedit' => 'മാറ്റിയെഴുതുക',
 );
 
-/** Mongolian (Монгол) */
+/** Mongolian (Монгол)
+ * @author Namchin
+ */
 $messages['mn'] = array(
+	'titleedit-desc' => 'Хуудасны дээр гарчиг засах товч нэмнэ',
 	'titleedit' => 'Засварлах',
 );
 

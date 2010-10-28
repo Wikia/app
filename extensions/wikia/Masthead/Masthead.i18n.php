@@ -618,6 +618,7 @@ Lembre-se, por favor, que os avatares são globais - removendo-o aqui remove-o d
 	'blog-avatar-error-nofile' => 'Escolha um arquivo do disco, por favor',
 	'blog-avatar-error-size' => 'O arquivo é demasiado grande; o tamanho máximo é $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Não foi possível salvar o arquivo',
+	'blog-avatar-error-type' => 'Tipo MIME inválido. Fornecido: $1 - Permitidos: $2',
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
 	'blog-avatar-removed-log' => 'Removeu os avatares de $1',
 	'blog-avatar-save-info' => 'Para salvar as alterações <a href="#prefcontrol">vá ao final da página</a> e clique no botão "{{int:saveprefs}}"',

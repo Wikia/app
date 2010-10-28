@@ -503,6 +503,10 @@ $messages['sl'] = array(
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'Vse skupine',
 	'whereisextension-name-contains' => 'ime spremenljivke vsebuje',
+	'whereisextension-search-like-value' => 'Kot:',
+	'whereisextension-search-type' => 'Vrsta:',
+	'whereisextension-search-type-bool' => 'Logična vrednost',
+	'whereisextension-search-type-full' => 'Kot',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -550,5 +554,7 @@ $messages['tl'] = array(
 $messages['uk'] = array(
 	'whereisextension-submit' => 'Шукати',
 	'whereisextension-filter' => 'Фільтр',
+	'whereisextension-all-groups' => 'Всі групи',
+	'whereisextension-search-type' => 'Тип:',
 );
 
