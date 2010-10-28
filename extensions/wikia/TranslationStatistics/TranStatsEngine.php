@@ -3,8 +3,13 @@
 class TransStatsEngine {
 
 	private $inputFile;
-	private $groupList = array( 'EditAccount' );
 	private $allMessages = array();
+	private $allGroups = array();
+	private $project;
+
+	function __construct( $project = NS_MEDIAWIKI ) {
+		$this->project = $project;
+	}
 
 	private function processProductList() {
 		
@@ -20,19 +25,17 @@ class TransStatsEngine {
 
 		foreach ( $groups as $group ) {
 			$messages = array();
+			$params = array();
 
-			// @TODO make this not be wikia-specific
                         $group = explode( "\n", $group );
 
-                        $name = str_replace( ' ', '', array_shift( $group ) );
+                        $name = array_shift( $group );
+			$defaultFile = str_replace( ' ', '', $name );
 
 			$defaults = array(
 					'group' => $name,
 					'languages' => array( 'en' )
 					);
-
-
-			$params = array();
 
 			foreach ( $group as $line ) {
 				$line_raw = explode( '=', $line );
@@ -43,14 +46,15 @@ class TransStatsEngine {
 				}
 			}
 
+			// @TODO make this not be wikia-specific
 			if ( isset( $params['file'] ) ) {
 				$res = include( "$IP/extensions/wikia/" . $params['file'] ); 
 			} else {
-				$res = include( "$IP/extensions/wikia/$name/$name.i18n.php" ); 
+				$res = include( "$IP/extensions/wikia/$defaultFile/$defaultFile.i18n.php" ); 
 			}
 
 			if ( !$res ) {
-				echo "ERROR INCLUDING FILE $name\n";
+				echo "ERROR INCLUDING FILE FOR GROUP $name\n";
 				continue;
 			}
 
@@ -72,13 +76,18 @@ class TransStatsEngine {
 	public function calculateState() {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res = $dbr->select( 'page', array( 'page_title' ), array( 'page_namespace' => NS_MEDIAWIKI, 'page_title LIKE "%/%"' ) );
+		$res = $dbr->select( 'page', array( 'page_title' ), array( 'page_namespace' => $this->project, 'page_title LIKE "%/%"' ) );
 
 		while ( $translation = $dbr->fetchObject( $res ) ) {
 			$translationData = explode( '/', $translation->page_title );
 			$translationData[0] = strtolower( $translationData[0] );
 			if ( empty( $this->allMessages[$translationData[0]] ) ) {
 				// not a registered message, move on to the next one
+				continue;
+			}
+
+			if ( $translationData[1] == 'qqq' ) {
+				// translator hints, not a real language
 				continue;
 			}
 
