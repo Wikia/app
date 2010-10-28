@@ -133,6 +133,12 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 			$this->addWhereIf('page_is_redirect = 0 OR page_is_redirect IS NULL', isset ($show['!redirect']));
 		}
 
+		//  *** Wikia change (@author ADi) *** /Begin
+		if(!is_null($params['user'])) {
+			$this->addWhereFld('rc_user_text', $this->prepareUsername( $params['user'] ));
+		}
+		// *** Wikia change (@author ADi) *** /End
+
 		/* Add the fields we're concerned with to out query. */
 		$this->addFields(array (
 			'rc_timestamp',
@@ -223,6 +229,33 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 
 		/* Format the result */
 		$this->getResult()->setIndexedTagName_internal(array('query', $this->getModuleName()), 'rc');
+	}
+
+	/**
+	 * (Wikia) Validate the 'user' parameter
+	 * @param string $userName user name
+	 * @author ADi
+	 */
+	private function prepareUsername( $userName ) {
+		if( $userName ) {
+			$userName = User::getCanonicalName( $userName, 'valid' );
+			if( $userName === false ) {
+				$this->dieUsage( "User name {$userName} is not valid", 'param_user' );
+			}
+			else {
+				$user = User::newFromName( $userName );
+				$userId = $user->idForName();
+				if( empty( $userId ) ) {
+					$this->dieUsage( "User name {$userName} not found", 'param_user' );
+				}
+				else {
+					return $userName;
+				}
+			}
+		}
+		else {
+			$this->dieUsage( 'User parameter may not be empty', 'param_user' );
+		}
 	}
 
 	/**
@@ -441,7 +474,12 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 					'new',
 					'log'
 				)
+			),
+			//  *** Wikia change (@author ADi) *** /Begin
+			'user' => array (
+				ApiBase :: PARAM_ISMULTI => false,
 			)
+			//  *** Wikia change (@author ADi) *** /End
 		);
 	}
 
@@ -458,7 +496,8 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 				'For example, to see only minor edits done by logged-in users, set show=minor|!anon'
 			),
 			'type' => 'Which types of changes to show.',
-			'limit' => 'How many total changes to return.'
+			'limit' => 'How many total changes to return.',
+			'user' => 'Filter results per user name'
 		);
 	}
 
