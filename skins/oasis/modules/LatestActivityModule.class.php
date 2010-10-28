@@ -6,9 +6,7 @@ class LatestActivityModule extends Module {
 	var $wgSingleH1;
 	var $wgBlankImgUrl;
 	var $moduleHeader;
-	var $specialContribsLink;
 	var $userName = '';
-
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
