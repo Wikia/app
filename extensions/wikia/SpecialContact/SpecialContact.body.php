@@ -39,7 +39,7 @@ class ContactForm extends SpecialPage {
 
 			#malformed email?
 			if (!User::isValidEmailAddr($this->mEmail)) {
-				$this->err .= "\n" . wfMsg('contactpage-email-failed');
+				$this->err .= "\n" . wfMsg('invalidemailaddress');
 			}
 
 			#empty message text?
