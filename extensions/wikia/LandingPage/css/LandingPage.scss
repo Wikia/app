@@ -67,7 +67,7 @@
 		position: absolute;
 		right: 20px;
 		top: -41px;
-		visibility: hidden; // /** temp **/
+
 		li {
 			float: left;
 			margin: 0 4px;
@@ -76,7 +76,7 @@
 
 	.LandingPageWelcome {
 		margin-left: 11px;
-		width: 400px;
+		width: 475px;
 		h1 {
 			color: $color-links;
 			font-size: 30px;
@@ -156,9 +156,9 @@
 			margin: 0;
 			list-style: none;
 			text-align: center;
-						
+
 			li {
-				background: url(/extensions/wikia/LandingPage/images/sites_sprite.gif) no-repeat; /* $wgCdnStylePath */
+				background: url(/messaging/images/8/8f/Landingpage-wikis-en.png) no-repeat; /* $wgCdnStylePath */
 				border-bottom: 1px solid $color-page-border;
 				height: 82px;
 				
@@ -167,7 +167,7 @@
 					height: 82px;
 				}
 				
-				&.superpower {
+				&.landingpage-site1  {
 					background-position: 32px 0px;
 					height: 70px;
 					img {
@@ -175,21 +175,102 @@
 					}
 				}
 				
-				&.harrypotter {
+				&.landingpage-site2 {
 					background-position: 32px -66px;
 				}
 				
-				&.glee {
+				&.landingpage-site3 {
 					background-position: 32px -146px;
 				}
 				
-				&.medalofhonor {
+				&.landingpage-site4 {
 					background-position: 32px -234px;
 				}
 				
-				&.poptarts {
+				&.landingpage-site5 {
 					background-position: 32px -317px;
 					border-bottom: none;
+				}
+			}
+			
+			// /** sprites based on languages **/
+			
+			&.landingpage-language-br {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-br.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-de {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-de.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}			
+			&.landingpage-language-es {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-es.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}			
+			&.landingpage-language-fr {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-fr.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-ia {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-ia.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-mk {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-mk.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-nl {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-nl.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-no {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-no.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-pms {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-pms.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-pt {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-pt.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-pt-br {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-pt-br.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-ru {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-ru.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
+				}
+			}
+			&.landingpage-language-tl {
+				li {
+					background-image: url(/messaging/images/8/8f/Landingpage-wikis-tl.png); /* $wgCdnStylePath */
+					background-repeat: no-repeat;
 				}
 			}
 		}

@@ -24,36 +24,6 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		// only shown "My Tools" on floating toolbar
 		$wgShowMyToolsOnly = true;
 
-		// example wikis
-		$wikis = array(
-			array(
-				'name' => 'Muppet Wiki',
-				'url' => 'http://muppet.wikia.com',
-				'image' => 'muppet-wiki.jpg',
-			),
-			array(
-				'name' => 'Healthy Recipes',
-				'url' => 'http://healthyrecipes.wikia.com',
-				'image' => 'healthy-recipes.jpg',
-			),
-			array(
-				'name' => 'Twilight Saga',
-				'url' => 'http://twilight.wikia.com',
-				'image' => 'twilight-saga.jpg',
-			),
-			array(
-				'name' => 'Glee',
-				'url' => 'http://glee.wikia.com',
-				'image' => 'glee.jpg',
-			),
-			array(
-				'name' => 'Red Dead Redemption',
-				'url' => 'http://reddead.wikia.com',
-				'image' => 'red-dead-redemption.jpg',
-			),
-
-		);
-
 		// parse language links (RT #71622)
 		$languageLinks = array();
 
@@ -67,6 +37,16 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 				);
 			}
 		}
+		
+	
+	
+		if ( isset($wgRequest->data['uselang'] )) {
+			$languageClass = 'landingpage-language-' .$wgRequest->data['uselang'];
+		}
+		else {
+			$languageClass = '';
+		}
+	
 
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
@@ -74,8 +54,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			'imagesPath' => $wgExtensionsPath . '/wikia/LandingPage/images/',
 			'languageLinks' => $languageLinks,
 			'wgBlankImgUrl' => $wgBlankImgUrl,
-			'wikis' => $wikis,
-			'wgTitle' => $wgTitle
+			'wgTitle' => $wgTitle,
+			'languageClass' => $languageClass
 		));
 
 		$wgOut->addHTML($template->render('main'));
