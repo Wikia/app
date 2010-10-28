@@ -10,9 +10,16 @@ class PageHeaderModule extends Module {
 	var $wgStylePath;
 
 	var $content_actions;
-	var $displaytitle;
+	var $displaytitle; // if true - don't encode HTML
 	var $title;
-	var $contentsub;
+	var $subtitle;
+
+	// RT #72366 - line with page type, redirect info, link to subject page and old revision data
+	var $pageType;
+	var $pageSubject;
+	var $pageRedirect;
+
+	var $pageSubtitle;
 
 	var $action;
 	var $actionName;
@@ -23,7 +30,6 @@ class PageHeaderModule extends Module {
 	var $likes;
 	var $pageExists;
 	var $showSearchBox;
-	var $subtitle;
 	var $isMainPage;
 	var $total;
 
@@ -157,11 +163,14 @@ class PageHeaderModule extends Module {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		global $wgTitle, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId;
+		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId;
 		wfProfileIn(__METHOD__);
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
+
+		// currently used skin
+		$skin = $wgUser->getSkin();
 
 		// action button (edit / view soruce) and dropdown for it
 		$this->prepareActionButton();
@@ -222,11 +231,6 @@ class PageHeaderModule extends Module {
 			$this->title = $wgTitle->getText();
 		}
 
-		// show contentSub links (RT #68421 and RT #70442)
-		if (in_array($ns, array(NS_MEDIAWIKI, NS_TEMPLATE, NS_SPECIAL, NS_CATEGORY, NS_FORUM))) {
-			$this->contentsub = $this->subtitle;
-		}
-
 		// talk pages
 		if ($wgTitle->isTalkPage()) {
 			// remove comments & FB like button
@@ -264,7 +268,7 @@ class PageHeaderModule extends Module {
 				$msgKey = 'oasis-page-header-back-to-video';
 			}
 
-			$this->subtitle = View::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
+			$this->pageSubject = View::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
 		}
 
 		// category pages
@@ -292,32 +296,44 @@ class PageHeaderModule extends Module {
 			$this->revisions = false;
 		}
 
-		// render proper message below page title (Mediawiki page, Template page, ...)
+		// render page type info
 		switch($ns) {
 			case NS_MEDIAWIKI:
-				$this->subtitle = wfMsg('oasis-page-header-subtitle-mediawiki');
+				$this->pageType = wfMsg('oasis-page-header-subtitle-mediawiki');
 				break;
 
 			case NS_TEMPLATE:
-				$this->subtitle = wfMsg('oasis-page-header-subtitle-template');
+				$this->pageType = wfMsg('oasis-page-header-subtitle-template');
 				break;
 
 			case NS_SPECIAL:
-				$this->subtitle = wfMsg('oasis-page-header-subtitle-special');
+				$this->pageType = wfMsg('oasis-page-header-subtitle-special');
 
 				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
 				if($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
-					$this->subtitle = "";
+					$this->pageType = "";
 				}
 				break;
 
 			case NS_CATEGORY:
-				$this->subtitle = wfMsg('oasis-page-header-subtitle-category');
+				$this->pageType = wfMsg('oasis-page-header-subtitle-category');
 				break;
 
 			case NS_FORUM:
-				$this->subtitle = wfMsg('oasis-page-header-subtitle-forum');
+				$this->pageType = wfMsg('oasis-page-header-subtitle-forum');
 				break;
+		}
+
+		// render subpage info
+		$this->pageSubject = $skin->subPageSubtitle();
+
+		// render MW subtitle (contains old revision data)
+		$this->subtitle = $wgOut->getSubtitle();
+
+		// render redirect info
+		if (!empty($wgArticle->mRedirectedFrom)) {
+			$this->pageRedirect = trim($this->subtitle, '()');
+			$this->subtitle = '';
 		}
 
 		// if page is rendered using one column layout, show search box as a part of page header
@@ -330,6 +346,17 @@ class PageHeaderModule extends Module {
 
 		if (!empty($wgSupressPageSubtitle)) {
 			$this->subtitle = '';
+		}
+		else {
+			// render pageType, pageSubject and pageSubtitle as one message
+			$subtitle = array_filter(array(
+				$this->pageType,
+				$this->pageSubject,
+				$this->pageRedirect,
+			));
+
+			$pipe = wfMsg('pipe-separator');
+			$this->pageSubtitle = implode(" {$pipe} ", $subtitle);
 		}
 
 		wfProfileOut(__METHOD__);

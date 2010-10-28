@@ -152,7 +152,7 @@ JS
 		));
 
 		// replace subtitle with navigation for WikiActivity
-		$moduleObject->subtitle = $template->render('navigation.oasis');
+		$moduleObject->pageSubtitle = $template->render('navigation.oasis');
 
 		wfProfileOut(__METHOD__);
 		return true;
