@@ -749,7 +749,7 @@ class Masthead {
 	 * @param String $html -- generated html
 	 */
 	static public function additionalUserProfilePreferences($oPrefs, &$html) {
-		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory;
+		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory, $wgOasis2010111;
 		wfProfileIn( __METHOD__ );
 		$oAvatarObj = Masthead::newFromUser( $wgUser );
 		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
@@ -784,6 +784,12 @@ class Masthead {
 
 		$html .= wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
 		$html .= $oTmpl->execute('pref-avatar-form');
+		 
+		if (!empty($wgOasis2010111)) {
+			$html .= '<tr><td class="pref-label" colspan="2">'.SkinChooser::renderSkinPreferencesFormHtml($oPrefs).'</td></tr>';
+			global $wgAllowUserSkin;
+			$wgAllowUserSkin = false;
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
