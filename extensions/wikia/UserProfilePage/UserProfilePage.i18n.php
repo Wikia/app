@@ -4,6 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'userprofilepage-desc' => 'Provides a user page that is fun and easy to update',
 
+	'userprofilepage-edit-avatar-label' => 'Edit picture',
 	'userprofilepage-users-notes-title' => 'About me',
 	'userprofilepage-about-section-title' => 'My $1 interview',
 	'userprofilepage-edit-button' => 'Edit',
@@ -12,7 +13,7 @@ $messages['en'] = array(
 
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',
-	'userprofilepage-edits-since' => 'Edits since joining',
+	'userprofilepage-edits-since' => 'Edits since joining<br/>$1',
 
 	//Top Wikis
 	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
