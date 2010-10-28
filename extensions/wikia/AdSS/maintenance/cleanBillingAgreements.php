@@ -59,5 +59,5 @@ $dbw->freeResult( $res );
 function getActiveAdCount( $userId ) {
 	global $wgAdSS_DBname;
 	$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
-	return $dbw->selectField( 'ads', 'count(*)', array( 'ad_user_id' => $userId, 'ad_closed' => null, 'ad_expires IS NOT NULL' ), __METHOD__ ); 
+	return $dbw->selectField( 'ads', 'count(*)', array( 'ad_user_id' => $userId, 'ad_closed' => null ), __METHOD__ ); 
 }
