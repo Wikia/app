@@ -28,6 +28,20 @@ $messages['qqq'] = array(
 * $1 is a user name.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'commentsforum-desc' => 'Forumagtige funksionaliteit vir kommentaar',
+	'forum_by_user_category' => '$1 deur gebruiker',
+	'forum_about_title' => 'Aangaande die forum',
+	'forum_about_text' => 'Hierdie is die forum.',
+	'forum_comments_of_day' => 'Top kommentaar',
+	'forum_new_articles' => 'Nuwe forumboodskappe',
+	'forum_by' => 'Gepos deur $1',
+	'forum_inthenews' => 'In die nuus',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D

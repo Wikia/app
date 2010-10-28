@@ -860,7 +860,7 @@ $messages['hu'] = array(
 	'pr_thank_you' => 'Köszönjük, hogy jelentette a problémát! 
 
 [[Special:ProblemReports/$1|Itt követhető a kijavítása]].',
-	'pr_thank_you_error' => 'Hiba történt a hibajelentés küldése közben, próbálkozz később...',
+	'pr_thank_you_error' => 'Hiba történt a hibajelentés küldése közben, próbálkozz később…',
 	'pr_empty_summary' => 'Add meg a probléma rövid leírását',
 	'pr_empty_email' => 'Add meg az e-mail címedet',
 	'pr_mailer_notice' => 'A beállításaidnál megadott email cím lesz a levél küldője, így a címzett tud válaszolni.',

@@ -559,6 +559,13 @@ $messages['si'] = array(
 $messages['sl'] = array(
 	'our404handler' => 'Napaka 404: Strani ni mogoče najti!',
 	'our404handler-oops' => 'To niso strani, ki ste jih iskali. Pojdite naprej, prosim.',
+	'message404' => "'''Resnično nam je žal, vendar iz neznanega razloga zehtevana stran ne obstaja.'''
+
+Članka '''$1''' ni bilo mogoče najti.
+
+* Poskusite lahko članek [[$2]]
+* Uporabite lahko iskalno polje na levem robu strani
+* Za obisk glavne strani tega mesta kliknite povezavo: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

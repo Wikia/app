@@ -461,11 +461,11 @@ $messages['pt-br'] = array(
 <li>Partilhe a sua atividade na Wikia com os seus amigos no Facebook</li>
 <li>Controle total do que é publicado</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autenticar-se com o Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ligue a sua conta Wikia ao Facebook</h1>
 <ul>
-<li>Mantenha o seu nome de usuário, histórico, edições... nada muda, excepto a forma como entra</li>
-<li>Partilhe a sua atividade na Wikia com os amigos no Facebook</li>
-<li>Controle total do que é publicado</li>
+<li>Mantenha o seu nome de usuário, histórico, edições... nada muda, exceto a forma como você entra</li>
+<li>Partilhe a sua atividade na Wikia com os amigos no Facebook com controle total do que é publicado</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Voltar',
 	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',

@@ -151,6 +151,48 @@ $messages['be-tarask'] = array(
 	'themedesigner' => 'Канструктар тэмаў',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'oasis-home' => 'Degemer',
+	'oasis-more' => "Gwelout muioc'h >",
+	'oasis-mytools' => 'Ma ostilhoù',
+	'oasis-follow' => 'Heuliañ',
+	'oasis-share' => 'Rannañ',
+	'oasis-edit-protected-article' => 'Kevreañ evit kemmañ',
+	'oasis-button-random-page' => 'Ur bajenn dre zegouezh',
+	'oasis-button-random-wiki' => 'Ur wiki dre zegouezh',
+	'oasis-button-wiki-activity' => 'Oberiantiz ar wiki',
+	'oasis-button-wiki-activity-watchlist' => 'Pajennoù heuliet hepken >',
+	'oasis-activity-header' => 'Oberiantizoù wiki nevez',
+	'oasis-latest-photos-more' => "Gwelout muioc'h >",
+	'oasis-latest-photos-inner-message' => 'Gwelout an holl skeudennoù',
+	'oasis-latest-photos-by' => 'gant',
+	'oasis-latest-photos-posted-in' => 'Postet e',
+	'oasis-latest-photos-more-dotdotdot' => "muioc'h...",
+	'oasis-global-nav-create-wiki' => 'Kregiñ gant ur wiki',
+	'oasis-page-header-comments-k' => '$1k',
+	'oasis-page-header-comments-m' => '$1M',
+	'oasis-page-header-talk' => 'Kaozeal',
+	'oasis-user-page-change-avatar' => 'Kemmañ an avatar',
+	'oasis-content-picture-added-by' => 'Ouzhpennet gant $1',
+	'oasis-notification-youhavenewmessages' => '$1 ho peus.',
+	'oasis-edit-my-tools-link' => 'Kemmañ Ma binvioù',
+	'oasis-edit-my-tools-title' => 'Kemmañ Ma binvioù',
+	'oasis-edit-my-tools-addtool' => 'Ouzhpennañ un ostilh',
+	'oasis-edit-my-tools-save' => 'Enrollañ',
+	'oasis-comments-show-all' => 'Diskouez pep tra',
+	'oasis-comments-added-by' => '$1 gant $2',
+	'oasis-random-wiki' => 'Ur wiki dre zegouezh',
+	'oasis-add-photo' => 'Ouzhpennañ ur skeudenn',
+	'oasis-add-page' => 'Ouzhpennañ ur bajenn',
+	'oasis-section-edit' => 'Kemmañ',
+	'oasis-section-edit-alt' => 'Kemmañ $1 (rann)',
+	'oasis-interlang-languages' => 'Yezhoù :',
+	'imageseo-featured-more' => "muioc'h...",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -179,6 +221,7 @@ $messages['es'] = array(
 /** French (Français)
  * @author Sherbrooke
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'oasis-home' => 'Accueil',
@@ -191,7 +234,7 @@ $messages['fr'] = array(
 	'oasis-button-random-page' => 'Page au hasard',
 	'oasis-button-random-wiki' => 'Un wiki au hasard',
 	'oasis-button-wiki-activity' => 'Activité du wiki',
-	'oasis-button-wiki-activity-feed' => 'Voir toutes les activités >',
+	'oasis-button-wiki-activity-feed' => "Voir toute l'activité >",
 	'oasis-button-wiki-activity-watchlist' => 'Pages suivies seulement',
 	'oasis-activity-watchlist-login' => 'Vous devez vous connecter pour ne voir que vos pages suivies.',
 	'oasis-activity-header' => 'Activité récente du wiki',
@@ -239,7 +282,7 @@ $messages['fr'] = array(
 	'oasis-page-header-subtitle-template' => 'Page de modèle',
 	'oasis-page-header-subtitle-category' => 'Page de catégorie',
 	'oasis-page-header-subtitle-forum' => 'Page de forum',
-	'oasis-page-header-subtitle-special-wikiactivity' => 'Voir toutes les activités >',
+	'oasis-page-header-subtitle-special-wikiactivity' => "Voir toute l'activité >",
 	'oasis-search-results-from' => 'Affichage des résultats de : $1',
 	'oasis-user-page-change-avatar' => 'Changer d’avatar',
 	'oasis-content-picture-added-by' => 'Ajouté par $1',
@@ -265,7 +308,7 @@ Vous pouvez réordonner ou supprimer des outils dans le champ ci-dessous.
 	'oasis-comments-show-all' => 'Tout afficher',
 	'oasis-comments-added-by' => '$1 par $2',
 	'oasis-random-wiki' => 'Un wiki au hasard',
-	'oasis-add-photo' => 'Ajouter une photo',
+	'oasis-add-photo' => 'Ajouter photo',
 	'oasis-anon-user' => 'Un contributeur Wikia',
 	'oasis-create-page' => 'Créer une nouvelle page sur ce wiki',
 	'oasis-add-page' => 'Ajouter une page',
@@ -273,7 +316,7 @@ Vous pouvez réordonner ou supprimer des outils dans le champ ci-dessous.
 	'oasis-section-edit-alt' => 'Modifier $1 (section)',
 	'oasis-popular-blogs-title' => 'Messages de blogues<br />populaires',
 	'oasis-spotlights-rail-title' => 'Plus depuis',
-	'oasis-spotlights-footer-title' => 'Autour de réseau de Wikia',
+	'oasis-spotlights-footer-title' => 'Autour du réseau de Wikia',
 	'themedesigner' => 'Concepteur de thème',
 	'oasis-pages-on-wiki-header' => 'Pages sur $1',
 	'oasis-latest-activity-new' => '$1 a créé $2',
@@ -289,6 +332,33 @@ Vous pouvez réordonner ou supprimer des outils dans le champ ci-dessous.
  * @author Toliño
  */
 $messages['gl'] = array(
+	'oasis-home' => 'Inicio',
+	'oasis-follow' => 'Seguir',
+	'oasis-share' => 'Compartir',
+	'oasis-edit-protected-article' => 'Acceda ao sistema para editar',
+	'oasis-button-random-page' => 'Páxina aleatoria',
+	'oasis-button-random-wiki' => 'Wiki ao chou',
+	'oasis-button-wiki-activity' => 'Actividade no wiki',
+	'oasis-activity-header' => 'Actividade recente no wiki',
+	'oasis-latest-photos-by' => 'por',
+	'oasis-latest-photos-posted-in' => 'Publicado en',
+	'oasis-latest-photos-more-dotdotdot' => 'máis...',
+	'oasis-page-header-comments' => '{{PLURAL:$1|Comentario|Comentarios}}',
+	'oasis-page-header-talk' => 'Conversa',
+	'oasis-page-header-back-to-article' => 'Volver á páxina',
+	'oasis-page-header-back-to-file' => 'Volver ao ficheiro',
+	'oasis-page-header-back-to-video' => 'Volver ao vídeo',
+	'oasis-page-header-add-topic' => 'Engadir un comentario',
+	'oasis-page-header-edit-profile' => 'Editar o perfil',
+	'oasis-page-header-editing' => '<strong>Edición de:</strong> $1',
+	'oasis-page-header-preview' => '<strong>Vista previa:</strong> $1',
+	'oasis-page-header-changes' => '<strong>Cambios:</strong> $1',
+	'oasis-page-header-diff' => '<strong>Cambios:</strong> $1',
+	'oasis-page-header-history' => '<strong>Historial:</strong> $1',
+	'oasis-preview-confirmation' => 'Modo de vista previa: aínda non se gardou ningún cambio! Vaia abaixo para continuar a edición.',
+	'oasis-badge-notification' => 'Acaba de obter a insignia "$2" $3',
+	'oasis-badge-notification-see-more' => 'Olle máis insignias que pode gañar!',
+	'oasis-page-header-subtitle-special' => 'Páxina especial',
 	'themedesigner' => 'Deseñador de temas visuais',
 );
 
@@ -301,6 +371,7 @@ $messages['ia'] = array(
 	'oasis-mytools' => 'Mi utensiles',
 	'oasis-follow' => 'Sequer',
 	'oasis-share' => 'Condivider',
+	'oasis-like' => 'Me place',
 	'oasis-edit-protected-article' => 'Aperi session pro modificar',
 	'oasis-button-random-page' => 'Pagina aleatori',
 	'oasis-button-random-wiki' => 'Wiki aleatori',
@@ -326,6 +397,26 @@ $messages['ia'] = array(
 	'oasis-page-header-comments-k' => '$1k',
 	'oasis-page-header-comments-m' => '$1M',
 	'oasis-page-header-talk' => 'Discussion',
+	'oasis-page-header-edited-by' => 'Modificate $1 per $2',
+	'oasis-page-header-edited' => 'Modificate $1',
+	'oasis-page-header-read-more' => 'Lege plus: $1',
+	'oasis-page-header-history-link' => 'Vider historia complete',
+	'oasis-page-header-back-to-article' => 'Retornar al pagina',
+	'oasis-page-header-back-to-template' => 'Retornar al patrono',
+	'oasis-page-header-back-to-mediawiki' => 'Retornar al pagina MediaWiki',
+	'oasis-page-header-back-to-category' => 'Retornar al categoria',
+	'oasis-page-header-back-to-file' => 'Retornar al file',
+	'oasis-page-header-back-to-video' => 'Retornar al video',
+	'oasis-page-header-add-topic' => 'Adder topico',
+	'oasis-page-header-edit-profile' => 'Modificar profilo',
+	'oasis-page-header-editing' => '<strong>Modification de:</strong> $1',
+	'oasis-page-header-editing-section' => '<strong>Modification de:</strong> $1 <em>(section)</em>',
+	'oasis-page-header-preview' => '<strong>Previsualisation:</strong> $1',
+	'oasis-page-header-changes' => '<strong>Cambios:</strong> $1',
+	'oasis-page-header-diff' => '<strong>Cambios:</strong> $1',
+	'oasis-page-header-history' => '<strong>Historia:</strong> $1',
+	'oasis-anon-header' => 'Contributor anonyme <small>$1</small>',
+	'oasis-preview-confirmation' => 'Previsualisation: cambios non ancora salveguardate! Rola a basso pro continuar le modification.',
 	'themedesigner' => 'Designator de apparentias',
 );
 
@@ -686,5 +777,12 @@ $messages['ru'] = array(
  */
 $messages['tl'] = array(
 	'themedesigner' => 'Tagapagdisenyo ng Tema',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'oasis-button-random-page' => 'Випадкова сторінка',
 );
 

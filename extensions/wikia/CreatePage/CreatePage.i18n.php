@@ -1108,6 +1108,50 @@ $messages['ru'] = array(
 Напишите здесь вторую секцию вашей статьи.',
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'createpage-desc' => 'Викиа визуал эрэдээктэрин көмөтүнэн саҥа сирэйдэри оҥорору хааччыйар',
+	'createpage-sp-title' => 'Саҥа сирэйи оҥоруу',
+	'createpage_title' => 'Саҥа ыстатыйаны айыы',
+	'createpage_title_caption' => 'Аата:',
+	'createpage_enter_text' => 'Тиэкиһэ:',
+	'createpage_empty_title_error' => 'Хайаан да ааттаныахтаах',
+	'createpage_empty_article_body_error' => 'Хайаан да тиэкистээх буолуохтаах',
+	'createpage_invalid_title_error' => 'Сатаммат аат',
+	'createpage_article_already_exists' => 'маннык ааттаах ыстатыйа баар эбит.
+Бука диэн, атын аатта суруй.',
+	'createpage_spam' => 'Баалаама, эн көннөрүүҥ бигэргэтиллэр кыаҕа суох эбит',
+	'createpage_cant_edit' => 'Көннөрүү кыайан киирбэтэ',
+	'createpage-dialog-title' => 'Саҥа ыстатыйаны айыы',
+	'createpage-dialog-message1' => 'Уруй, эн саҥа ыстатыйаны айан эрэҕин!',
+	'createpage-dialog-message2' => 'Хайдах ааттаары гынаҕын?',
+	'createpage-dialog-choose' => 'Сирэй макетын тал:',
+	'createpage-dialog-format' => 'Стандарт макет',
+	'createpage-dialog-blank' => 'Кураанах сирэй',
+	'createpage-error-empty-title' => 'Бука диэн, ыстатыйаҕын ааттаа',
+	'createpage-error-invalid-title' => 'Баалаама, ыстатыйаҥ аата барсыбат.
+Бука диэн, атыннык ааттаа.',
+	'createpage-error-article-exists' => 'Маннык ааттаах ыстатыйа баар эбит.
+<a href="$1">$2</a> сирэйгэ киириэххин сөп эбэтэр бэйэҥ айбыт сирэйгин атыннык ааттыаххын сөп',
+	'createpage-error-article-spam' => 'Баалаама, эн суруйбут ааккын спаам-сиидэ аһарбата.
+Бука диэн, атын ааты тал.',
+	'createpage-error-article-blocked' => 'Хомойуох иһин, билигин маннык ыстатыйаны айарыҥ табыллыбат.',
+	'tog-createpagedefaultblank' => 'Саҥа сирэйи айар буоллахха кураанах сирэйи аһарга',
+	'tog-createpagepopupdisabled' => 'Саҥа сирэйи айарга тахсан кэлэр түннүгү таһаарыма',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Манна ыстатыйаҥ бастакы аҥаарын суруй.
+
+==Салаа баһа==
+
+Манна ыстатыйаҥ бастакы салаатын суруй.
+
+==Салаа баһа==
+
+Манна ыстатыйаҥ иккис салаатын суруй.',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor

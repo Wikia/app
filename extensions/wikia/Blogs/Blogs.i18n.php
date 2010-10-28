@@ -199,7 +199,6 @@ Kies asseblief 'n ander naam.",
 	'blog-comment-unhide' => 'wys',
 	'blog-comment-history' => 'geskiedenis',
 	'blog-comment-edit' => 'wysig',
-	'blog-avatar-defaults' => 'Avatar.jpg',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Beoordeel hierdie artikel:',
 	'blog-refresh-label' => 'Verfris',
@@ -579,12 +578,6 @@ $messages['de'] = array(
 	'blog-comment-edit' => 'Bearbeiten',
 	'blog-comment-error' => 'Dein Kommentar konnte nicht gespeichert werden',
 	'blog-comment-cannot-add' => 'Du kannst keine Kommentare zum Blog hinzufügen.',
-	'blog-avatar-defaults' => 'Avatar.jpg
-Avatar2.jpg
-Avatar3.jpg
-Avatar4.jpg
-Avatar5.jpg
-Avatar6.jpg',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Bewerte diesen Artikel:',
 	'blog-create-post-label' => 'Blogeintrag erstellen',
@@ -735,12 +728,6 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-comment-edit' => '(editar)',
 	'blog-comment-error' => 'El comentario no pudo ser guardado',
 	'blog-comment-cannot-add' => 'No puedes añadir un comentario al blog.',
-	'blog-avatar-defaults' => 'Avatar.jpg
-Avatar2.jpg
-Avatar3.jpg
-Avatar4.jpg
-Avatar5.jpg
-Avatar6.jpg',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Valora esta entrada:',
 	'blog-create-post-label' => 'Crear nueva entrada',
@@ -912,7 +899,6 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fan Fiction" tai voit 
 	'blog-comment-edit' => 'muokkaa',
 	'blog-comment-error' => 'Kommenttia ei tallennettu',
 	'blog-comment-cannot-add' => 'Et voi lähettää kommentteja tähän blogiin.',
-	'blog-avatar-defaults' => 'Avatar.jpg',
 	'blug-cut-sign' => '…',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Arvostele artikkeli:',
@@ -1030,7 +1016,6 @@ Créez des pages de listes de blogues pour des catégories comme « Barack Obama
 	'blog-comment-edit' => 'modifier',
 	'blog-comment-error' => 'Le commentaire n’a pas pu être enregistré',
 	'blog-comment-cannot-add' => 'Vous ne pouvez ajouter un commentaire au blogue.',
-	'blog-avatar-defaults' => 'Avatar.jpg Wiki.png',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Évaluer l’article :',
 	'blog-create-post-label' => 'Créer un billet de blogue',
@@ -1512,7 +1497,6 @@ $messages['it'] = array(
 	'blog-comment-unhide' => 'Mostra',
 	'blog-comment-error' => 'Il commento non è stato salvato',
 	'blog-comment-cannot-add' => 'Non è possibile aggiungere commenti al blog.',
-	'blog-avatar-defaults' => 'Avatar.jpg Avatar2.jpg Avatar3.jpg Avatar4.jpg Avatar5.jpg Avatar6.jpg',
 	'blog-page-rate' => 'Valuta questo articolo:',
 	'blog-create-post-label' => 'Crea un nuovo post',
 	'blog-create-label' => 'Crea un post',
@@ -1738,6 +1722,7 @@ $messages['mk'] = array(
 	'create-blog-listing-sortby' => 'Подреди по',
 	'create-blog-listing-sortby-date' => 'Најнови',
 	'create-blog-listing-sortby-author' => 'Автор',
+	'create-blog-listing-sortby-comments' => 'Број на коментари',
 	'create-blog-listing-output-as-box' => 'Создај код за копирање и залепување',
 	'create-blog-listing-output-as-page' => 'Создај попис на нова страница',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Ознаката на блог-записот не е препознаена на страницата',
@@ -1855,6 +1840,7 @@ Maak bloglijsten aan voor categorieën zoals "Barack Obama", "Fan Fiction" of co
 	'create-blog-listing-sortby' => 'Sorteren op',
 	'create-blog-listing-sortby-date' => 'Meest recent',
 	'create-blog-listing-sortby-author' => 'Auteur',
+	'create-blog-listing-sortby-comments' => 'Aantal opmerkingen',
 	'create-blog-listing-output-as-box' => 'Code aanmaken om te kopiëren en plakken',
 	'create-blog-listing-output-as-page' => 'Lijst als nieuwe pagina aanmaken',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Het label voor de bloglijst wordt niet aangetroffen op de pagina',

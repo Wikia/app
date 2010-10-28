@@ -369,7 +369,11 @@ $messages['ru'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'cntool-label-select' => 'Vnesite veljaven naslov strani',
+	'cntool-button-preview' => 'Predogled',
 	'cntool-button-save' => 'Shrani',
+	'cntool-label-content' => 'Spodaj spremenite vsebino članka:',
+	'cntool-label-preview' => 'Predogled:',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
