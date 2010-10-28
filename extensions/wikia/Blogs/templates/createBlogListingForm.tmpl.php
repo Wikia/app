@@ -2,29 +2,24 @@
 <script type="text/javascript">
 /*<![CDATA[*/
 //
-YAHOO.namespace("CreateBlogListing");
+var wgAjaxPath = wgScriptPath + wgScript;
+var CreateBlogListing = {};
 
-var BL = YAHOO.CreateBlogListing;
-var YD = YAHOO.util.Dom;
-
-BL.checkMatchesCallback = {
-	success: function( oResponse ) {
-		var respData = oResponse.responseText;
-		YD.get( "blogListingMatches" ).innerHTML =  '<span class="matches-info">' + (respData ? respData : '0') + ' <?php echo wfMsg('create-blog-listing-matches-info'); ?></span>';
-		YD.get( "blogListingCalculateMatches" ).value = '<?php echo wfMsg('create-blog-listing-matches-recalculate'); ?>';
-	}
+CreateBlogListing.checkMatchesCallback = function( respData ) {
+	$( "#blogListingMatches" ).html('<span class="matches-info">' + (respData ? respData : '0') + ' <?php echo wfMsg('create-blog-listing-matches-info'); ?></span>');
+	$( "#blogListingCalculateMatches" ).val('<?php echo wfMsg('create-blog-listing-matches-recalculate'); ?>');
 };
 
-BL.checkMatches = function (e) {
-	var listingCategories = YD.get( "wpCategoryTextarea1" ).value;
-	//var listingAuthors = YD.get( "blogListingAuthors" ).value;
-	YD.get( "blogListingMatches" ).innerHTML =  '<?php echo Wikia::ImageProgress() ?>';
-	YAHOO.util.Connect.asyncRequest( "GET", "<?php echo $title->getLocalUrl('action=ajax&rs=CreateBlogListingPage::axBlogListingCheckMatches')?>&categories=" + listingCategories, BL.checkMatchesCallback);
-};
+CreateBlogListing.checkMatches = function (e) {
+		var listingCategories = $( "#wpCategoryTextarea1" ).val();
+		//var listingAuthors = YD.get( "blogListingAuthors" ).value;
+		$( "#blogListingMatches" ).html('<?php echo Wikia::ImageProgress() ?>');
+		$.get(wgAjaxPath, {action: "ajax", rs: "CreateBlogListingPage::axBlogListingCheckMatches", categories: encodeURIComponent(listingCategories)}, CreateBlogListing.checkMatchesCallback);
+	};
 
-
-
-	YAHOO.util.Event.addListener( "blogListingCalculateMatches", "click", BL.checkMatches );
+$(document).ready( function () {
+	$('#blogListingCalculateMatches').click( CreateBlogListing.checkMatches );
+} );
 /*]]>*/
 </script>
 <strong><?php echo wfMsg( "create-blog-listing-form-title" ) ?></strong><br />
