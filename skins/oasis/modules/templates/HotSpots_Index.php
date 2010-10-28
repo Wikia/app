@@ -1,4 +1,4 @@
-<div class="HotSpotsModule">
+<section class="HotSpotsModule">
 
 <?php
 if(count($data) == 5) {
@@ -50,4 +50,4 @@ if(count($data) == 5) {
 } else { echo wfMsgExt('myhome-hot-spots-brandnew', array('parseinline')); } ?>
 
 
-</div>
+</section>

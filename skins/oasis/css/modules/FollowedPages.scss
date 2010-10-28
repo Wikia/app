@@ -1,10 +1,8 @@
-@import "../mixins/rail-module";
 @import "../mixins/border-radius";
 @import "../mixins/clearfix";
 @import "../core/color";
 
 .FollowedPagesModule {
-	@include rail-module;
 	line-height:20px;
 	li {
 		border-top: 1px solid $color-page-border;
