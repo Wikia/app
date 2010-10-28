@@ -139,23 +139,15 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 		// lazy load MW toolbar for source mode (RT #78393)
 		editor.on('mode', function() {
+			// source mode is ready
 			if (this.mode == 'source') {
-				var MWtoolbar = $('#mw-toolbar');
-
-				if (MWtoolbar.children().length == 0) {
-					var i, toolbarNode = MWtoolbar.get(0);
-
-					// add buttons
-					for (i = 0; i < mwEditButtons.length; i++) {
-						mwInsertEditButton(toolbarNode, mwEditButtons[i]);
-					}
-
-					for (i = 0; i < mwCustomEditButtons.length; i++) {
-						mwInsertEditButton(toolbarNode, mwCustomEditButtons[i]);
-					}
-
-					RTE.log('lazy loading source mode toolbar');
-				}
+				self.loadSourceToolbar();
+			}
+		});
+		editor.on('modeSwitch', function() {
+			// switching from wysiwyg to source mode
+			if (this.mode == 'wysiwyg') {
+				self.loadSourceToolbar();
 			}
 		});
 
@@ -354,5 +346,25 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 		// cleanup
 		buttons.css('height', 'auto');
+	},
+
+	loadSourceToolbar: function() {
+		var MWtoolbar = $('#mw-toolbar');
+
+		if (MWtoolbar.children().length == 0) {
+			var i, toolbarNode = MWtoolbar.get(0);
+
+			// add buttons
+			for (i = 0; i < mwEditButtons.length; i++) {
+				mwInsertEditButton(toolbarNode, mwEditButtons[i]);
+			}
+
+			for (i = 0; i < mwCustomEditButtons.length; i++) {
+				mwInsertEditButton(toolbarNode, mwCustomEditButtons[i]);
+			}
+
+			RTE.log('loading source mode toolbar');
+		}
 	}
+
 });
