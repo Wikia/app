@@ -6,7 +6,6 @@ class LatestActivityModule extends Module {
 	var $wgSingleH1;
 	var $wgBlankImgUrl;
 	var $moduleHeader;
-	var $isUserProfilePageExt = false;
 	var $specialContribsLink;
 	var $userName = '';
 
@@ -27,13 +26,11 @@ class LatestActivityModule extends Module {
 			if( !empty( $user ) ) {
 				$this->userName = $user->getName();
 				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
-				$this->isUserProfilePageExt = true;
 			}
 		}
 
 		$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode(), $this->userName);
-		//TODO: caching tmp turned off for testing
-		//$feedData = $wgMemc->get($mKey);
+		$feedData = $wgMemc->get($mKey);
 		if (empty($feedData)) {
 
 			// data provider
