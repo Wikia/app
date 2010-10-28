@@ -517,7 +517,7 @@ class Skin extends Linker {
 
 		$s = "/* generated javascript */\n";
 		$s .= "if (!window.skin) {\n";
-		$s .= "\tvar skin = '" . Xml::escapeJsString( $jsFileName ) . "';\n";
+		$s .= "\tvar skin = '" . Xml::escapeJsString( $this->getSkinName() ) . "';\n";
 		$s .= "\tvar stylepath = '" . Xml::escapeJsString( $wgStylePath ) . "';\n";
 		$s .= "}";
 		$s .= "\n\n/* MediaWiki:Common.js */\n";
