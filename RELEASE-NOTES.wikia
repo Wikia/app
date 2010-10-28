@@ -16,6 +16,8 @@
 * rt#78654: Oasis click-tracking: Add tracking for WikiActivity/watchlist items (macbre)
 * rt#79534: Uncyclopedia JS causing White-Out (macbre)
 * rt#79548: Image and video uploader missing from source mode (macbre)
+* rt#72366: Improve design for multiple pagetype notifiers (macbre)
+* rt#72676: Oasis: Talk page previous versions don't have the prev version heading (macbre)
 
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
