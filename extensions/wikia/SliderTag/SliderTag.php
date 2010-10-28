@@ -101,7 +101,7 @@ function wfSliderTagMessageCacheReplace( $title, $text ) {
 	if( is_array( $tags ) ) {
 		foreach( $tags as $tag ) {
 			if( $tag == $title ) {
-				 $parserMemc->delete( wfMemcKey( $text ) );
+				 $parserMemc->delete( wfMemcKey( $title ) );
 			}
 		}
 	}
