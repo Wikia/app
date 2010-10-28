@@ -507,7 +507,7 @@ class ArticleComment {
 			}
 
 			$commentId = $this->getTitle()->getArticleId();
-			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comment-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($this->mFirstRevision->getTimestamp()) . "</a>";
+			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($this->mFirstRevision->getTimestamp()) . "</a>";
 
 			$comment = array(
 				'id' => $commentId,
