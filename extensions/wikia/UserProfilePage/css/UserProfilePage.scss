@@ -78,7 +78,7 @@
 				}
 			}
 
-			&:hover {
+			&.removable:hover {
 				td {
 					&.rank{
 						.counter{
@@ -306,6 +306,7 @@ ul.user-profile-action-menu {
 						margin-left: 34px;
 						border: 1px solid $color-page-border;
 						padding: 3px 10px 3px 10px;
+						overflow: hidden;
 
 						&.question {
 							@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
