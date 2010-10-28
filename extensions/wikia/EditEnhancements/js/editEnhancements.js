@@ -1,34 +1,41 @@
 EditEnhancements = function() {
 	this.calculate = function() {
+		var textbox = false;
 
 		if ($('#wpTextbox1___Frame').exists()) { // FCK-editor
-
-			var textbox = $('#wpTextbox1___Frame');
+			textbox = $('#wpTextbox1___Frame');
 		}
 		else if ( $('#cke_contents_wpTextbox1').exists()) { // CKeditor
-			var textbox = $('#cke_contents_wpTextbox1');
+			textbox = $('#cke_contents_wpTextbox1');
 		}
-
-		else  {// MW editor
-			var textbox = $('#wpTextbox1');
+		else  { // MW editor
+			 textbox = $('#wpTextbox1');
 		}
 
 		var toolbar = $('#cke_contents_wpTextbox1');
 
+		var textboxOffset = textbox.offset();
+
+		// textbox not fully initialized (RT #79980)
+		if (!textboxOffset) {
+			return;
+		}
+
+		var textareaTop = Math.floor(textboxOffset.top);
+
 		var viewportHeight = $(window).height();
 		var viewportHeight = window.innerHeight ? window.innerHeight : $(window).height(); // Opera 9.5
 
-		var textareaTop = Math.floor(textbox.offset().top);
-
-		var stuff = Array(
+		var stuff = [
 		//'#blogInfo', '.blogPostForm',	// @todo blog stuff elements
 		'#toolbar', // mediaWiki
-		'.cke_top','#csMainContainer','#edit_enhancements_toolbar');
+		'.cke_top','#csMainContainer','#edit_enhancements_toolbar'];
 
 		var height = 0;
-		$.each( stuff, function(i, l){
-			if ($(l).exists()) {
-				height += $(l).outerHeight();
+		$.each(stuff, function(index, item) {
+			var node = $(item);
+			if (node.exists()) {
+				height += node.outerHeight();
 			}
 		});
 
