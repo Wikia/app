@@ -1,4 +1,5 @@
 <fieldset class="panel">
+<?php echo $navigationBar; ?>
 <?php echo $filterForm; ?>
 <?php echo $adList; ?>
 <?php echo $navigationBar; ?>

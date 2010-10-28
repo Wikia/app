@@ -57,8 +57,15 @@ class AdSS_ManagerController {
 	}
 
 	function displayBilling() {
-		global $wgOut;
-		$wgOut->addHTML( "Billing goes here" );
+		global $wgOut, $wgAdSS_templatesDir;
+
+		$pager = new AdSS_ManagerBillingPager( $this->userId );
+
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
+		$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
+		$tmpl->set( 'billing', $pager->getBody() );
+
+		$wgOut->addHTML( $tmpl->render( 'billing' ) );
 	}
 
 	function displayForm( $loginForm ) {
