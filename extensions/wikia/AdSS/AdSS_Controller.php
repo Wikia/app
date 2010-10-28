@@ -5,22 +5,36 @@ class AdSS_Controller extends SpecialPage {
 		parent::__construct("AdSS");
 	}
 
-	function execute( $subpage ) {
+	function execute( $sub ) {
 		global $wgRequest, $wgUser, $wgOut;
 
 		wfLoadExtensionMessages( 'AdSS' );
 		$this->setHeaders();
 		$wgOut->setPageTitle( wfMsg( 'adss-sponsor-links' ) );
 
-		if( $subpage == 'admin' ) {
+		$sub = explode( '/', $sub );
+
+		if( $sub[0] == 'admin' ) {
 			$adminController = new AdSS_AdminController( $this );
-			$adminController->execute( $subpage );
+			$adminController->execute( $sub );
 			return;
 		}
-		if( $subpage == 'manager' ) {
+		if( $sub[0] == 'manager' ) {
 			$managerController = new AdSS_ManagerController( $this );
-			$managerController->execute( $subpage );
+			$managerController->execute( $sub );
 			return;
+		}
+		if( $sub[0] == 'paypal' ) {
+			if( isset( $sub[1] ) ) {
+				if( $sub[1] == 'return' ) {
+					$this->processPayPalReturn( $wgRequest->getText( "token" ) );
+					return;
+				}
+				if( $sub[1] == 'cancel' ) {
+					$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
+					return;
+				}
+			}
 		}
 
 		$adForm = new AdSS_AdForm();
@@ -31,10 +45,6 @@ class AdSS_Controller extends SpecialPage {
 			} else {
 				$this->save( $adForm );
 			}
-		} elseif( $subpage == 'paypal/return' ) {
-			$this->processPayPalReturn( $wgRequest->getText( "token" ) );
-		} elseif( $subpage == 'paypal/cancel' ) {
-			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		} else {
 			$page = $wgRequest->getText( 'page' );
 			if( !empty( $page ) ) {

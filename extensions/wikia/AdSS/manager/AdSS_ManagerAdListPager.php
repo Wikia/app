@@ -1,6 +1,6 @@
 <?php
 
-class AdSS_ManagerPager extends TablePager {
+class AdSS_ManagerAdListPager extends TablePager {
 
 	private $mTitle, $ad, $userId;
 	private $mFilter = 'active';

@@ -1,6 +1,8 @@
+<fieldset class="panel">
 <?php echo $filterForm; ?>
 <?php echo $adList; ?>
 <?php echo $navigationBar; ?>
+</fieldset>
 
 <script type="text/javascript">/*<![CDATA[*/
 $("a.close").click( function(e) {
