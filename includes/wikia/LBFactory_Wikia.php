@@ -13,7 +13,8 @@
 class LBFactory_Wikia extends LBFactory_Multi {
 
 	function getSectionForWiki( $wiki = false ) {
-		global $wgDBname, $wgDBcluster;
+		global $wgDBname, $wgDBcluster, $smwgUseExternalDB;
+
 		if ( $this->lastWiki === $wiki ) {
 			return $this->lastSection;
 		}
@@ -28,6 +29,10 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			} else {
 				$section = 'DEFAULT';
 			}
+		} elseif( $smwgUseExternalDB && preg_match("^smw\+\-(.+)", $dbName, $subpatterns )
+			&& isset( $this->sectionsByDB[ "smw+" ] ) ) {
+			$section = "smw+";
+			$wiki = substr( $wiki, 4 );
 		} else {
 			// this is a foreign db that either has a cluster defined in WikiFactory...
 			$section = WikiFactory::getVarValueByName( 'wgDBcluster', WikiFactory::DBtoID( $wiki ) );

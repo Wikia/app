@@ -660,3 +660,11 @@ $wgMaxCommentsToMove = 50;
  * @see extensions/wikia/Sitemap/SpecialSitemap_body.php
  */
 $wgGoogleSiteVerificationAlwaysValid = false;
+
+/**
+ * is Semantic Mediawiki uses external database cluster
+ * @name $smwgUseExternalDB
+ *
+ * @see includes/wikia/LBFactory_Multi.php
+ */
+$smwgUseExternalDB = false;
