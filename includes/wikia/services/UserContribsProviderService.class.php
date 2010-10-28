@@ -20,7 +20,6 @@ class UserContribsProviderService extends Service {
 		$api = new ApiMain(new FauxRequest($params));
 		$api->execute();
 		$res = &$api->GetResultData();
-
 		$i = -1;
 		foreach ($res['query']['usercontribs'] as &$entry) {
 			$titleObj = Title::newFromText($entry['title']);

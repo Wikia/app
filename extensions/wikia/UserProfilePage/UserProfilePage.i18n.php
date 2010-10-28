@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'userprofilepage-top-wikis-hide-label' => 'hide',
 
 	//Recent activity
-	'userprofilepage-recent-activity-title' => '$1\'s recent $2 activity',
+	'userprofilepage-recent-activity-title' => '$1\'s recent activity',
 	'userprofilepage-activity-edit'    => 'edited the $1 article',
 	'userprofilepage-activity-new'     => 'created $1',
 	'userprofilepage-activity-comment' => 'commented on $1',

@@ -211,6 +211,7 @@ class BodyModule extends Module {
 			if ( !empty( $wgEnableUserProfilePagesExt ) ) {
 				$railModuleList[1499] = array('UserProfileRail', 'TopWikis', null);
 				$railModuleList[1498] = array('UserProfileRail', 'RecentActivity', null);
+				$railModuleList[1498] = array('LatestActivity', 'Index', null);
 				$railModuleList[1497] = array('UserProfileRail', 'TopPages', null);
 			}
 		}

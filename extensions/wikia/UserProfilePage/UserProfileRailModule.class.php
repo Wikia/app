@@ -37,63 +37,6 @@ class UserProfileRailModule extends Module {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function executeRecentActivity() {
-		wfProfileIn( __METHOD__ );
-		global $wgCityId;
-
-		wfLoadExtensionMessages('MyHome');
-
-		$user = UserProfilePage::getInstance()->getUser();
-		$specialPageTitle = Title::newFromText( 'Contributions', NS_SPECIAL );
-
-		$this->userName =  $user->getName();
-		$this->wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
-
-		foreach ( $this->getActivityFeed() as $change ) {
-			$item = array();
-			$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
-			$item['user_name'] = $this->userName;
-			//$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
-			$item['user_href'] = AvatarService::renderLink($item['user_name']);
-			$item['page_title'] = $change['title'];
-			$item['changetype'] = $change['type'];
-			$title = Title::newFromText( $change['title'], $change['namespace'] );
-			if ( is_object($title) ) {
-				$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl()), $item['page_title']);
-			}
-			switch ($change['type']) {
-				case 'new':
-					$item['changemessage'] = wfMsg("userprofilepage-activity-new", $item['page_href']);
-					$item['changeicon'] = 'new';
-					break;
-				case 'edit':
-					$item['changemessage'] = wfMsg("userprofilepage-activity-edit", $item['page_href']);
-					$item['changeicon'] = 'edit';
-					break;
-				case 'delete':
-					$item['changemessage'] = wfMsg("userprofilepage-activity-delete", $item['page_href']);
-					$item['changeicon'] = 'delete';
-					break;
-				case 'upload':
-					$item['changemessage'] = wfMsg("userprofilepage-activity-image", $item['page_href']);
-					$item['changeicon'] = 'upload';
-					break;
-				default:
-					$item['changemessage'] = '';
-					break;
-			}
-			$this->activityFeed[] = $item;
-		}
-
-		$this->specialContribsLink = $specialPageTitle->getFullUrl() . '/' . $this->userName;
-
-		if( empty( $this->activityFeed ) ) {
-			$this->userRegistrationDate = wfTimeFormatAgo( $user->getRegistration() );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
 	public function executeTopPages() {
 		wfProfileIn( __METHOD__ );
 		global $wgCityId;
@@ -201,16 +144,6 @@ class UserProfileRailModule extends Module {
 		wfProfileOut( __METHOD__ );
 
 		return $wikis;
-	}
-
-	public function getActivityFeed() {
-		wfProfileIn( __METHOD__ );
-
-		$userContribsProvider = new UserContribsProviderService;
-		$user = UserProfilePage::getInstance()->getUser();
-
-		wfProfileOut( __METHOD__ );
-		return $userContribsProvider->get( 6, $user );
 	}
 
 	/**
