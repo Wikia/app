@@ -23,7 +23,7 @@ $wgAdSS_templatesDir = $dir . 'templates';
 
 $wgAutoloadClasses['AdSS_Controller'] = $dir . 'AdSS_Controller.php';
 $wgAutoloadClasses['AdSS_ManagerController'] = $dir . 'manager/AdSS_ManagerController.php';
-$wgAutoloadClasses['AdSS_ManagerPager'] = $dir . 'manager/AdSS_ManagerPager.php';
+$wgAutoloadClasses['AdSS_ManagerAdListPager'] = $dir . 'manager/AdSS_ManagerAdListPager.php';
 $wgAutoloadClasses['AdSS_AdminController'] = $dir . 'admin/AdSS_AdminController.php';
 $wgAutoloadClasses['AdSS_AdminPager'] = $dir . 'admin/AdSS_AdminPager.php';
 $wgAutoloadClasses['AdSS_Ad'] = $dir . 'model/AdSS_Ad.php';

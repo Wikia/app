@@ -2,12 +2,20 @@
 
 class AdSS_ManagerController {
 
-	function execute( $subpage ) {
-		global $wgRequest;
+	private $tabs = array( 'adList', 'billing' );
+	private $selectedTab = 'adList';
+	private $userId;
 
-		$userId = $wgRequest->getSessionData( "AdSS_userId" );
-		if( $userId ) {
-			$this->displayAds( $userId );
+	function execute( $sub ) {
+		global $wgRequest, $wgOut;
+
+		if( isset( $sub[1] ) && in_array( $sub[1], $this->tabs ) ) {
+			$this->selectedTab = $sub[1];
+		}
+		$this->userId = $wgRequest->getSessionData( "AdSS_userId" );
+
+		if( $this->userId ) {
+			$this->displayPanel();
 		} else {
 			$loginForm = new AdSS_ManagerLoginForm();
 			if( $wgRequest->wasPosted() && AdSS_Util::matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
@@ -17,12 +25,28 @@ class AdSS_ManagerController {
 				$this->displayForm( $loginForm );
 			}
 		}
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/manager.scss' ) );
 	}
 
-	function displayAds( $userId ) {
+	function displayTabs() {
 		global $wgOut, $wgAdSS_templatesDir;
 
-		$pager = new AdSS_ManagerPager( $userId );
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
+		$tmpl->set( 'selfUrl', Title::makeTitle( NS_SPECIAL, "AdSS/manager" )->getLocalURL() );
+		$tmpl->set( 'selectedTab', $this->selectedTab );
+		$tmpl->set( 'tabs', $this->tabs );
+		$wgOut->addHTML( $tmpl->render( 'tabs' ) );
+	}
+
+	function displayPanel() {
+		$this->displayTabs();
+		call_user_func( array( $this, 'display'.ucfirst($this->selectedTab ) ) );
+	}
+
+	function displayAdList() {
+		global $wgOut, $wgAdSS_templatesDir;
+
+		$pager = new AdSS_ManagerAdListPager( $this->userId );
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
 		$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
@@ -30,6 +54,11 @@ class AdSS_ManagerController {
 		$tmpl->set( 'adList', $pager->getBody() );
 
 		$wgOut->addHTML( $tmpl->render( 'adList' ) );
+	}
+
+	function displayBilling() {
+		global $wgOut;
+		$wgOut->addHTML( "Billing goes here" );
 	}
 
 	function displayForm( $loginForm ) {
@@ -58,7 +87,8 @@ class AdSS_ManagerController {
 		$user = AdSS_User::newFromForm( $loginForm );
 		if( $user ) {
 			$wgRequest->setSessionData( "AdSS_userId", $user->id );
-			$this->displayAds( $user->id );
+			$this->userId = $user->id;
+			$this->displayPanel();
 		} else {
 			$loginForm->errors['wpEmail'] = wfMsgHtml( 'adss-form-auth-errormsg' );
 			$this->displayForm( $loginForm );

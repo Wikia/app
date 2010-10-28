@@ -66,6 +66,8 @@ Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-per-site' => 'All pages',
 	'adss-per-page' => 'One page only',
 	'adss-close' => 'Close',
+	'adss-manager-tab-adList' => 'Your ads',
+	'adss-manager-tab-billing' => 'Billing',
 );
 
 /** Message documentation (Message documentation)
