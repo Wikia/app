@@ -30,7 +30,7 @@ class LatestActivityModule extends Module {
 		}
 
 		$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode(), $this->userName);
-		$feedData = $wgMemc->get($mKey);
+		//$feedData = $wgMemc->get($mKey);
 		if (empty($feedData)) {
 
 			// data provider
@@ -69,15 +69,30 @@ class LatestActivityModule extends Module {
 				}
 				switch ($change['type']) {
 					case 'new':
-						$item['changemessage'] = wfMsg("oasis-latest-activity-new", $item['user_href'], $item['page_href']);
+						if( empty( $this->userName ) ) {
+							$item['changemessage'] = wfMsg("oasis-latest-activity-new", $item['user_href'], $item['page_href']);
+						}
+						else {
+							$item['changemessage'] = wfMsg("userprofilepage-activity-new", $item['page_href']);
+						}
 						$item['changeicon'] = 'new';
 						break;
 					case 'edit':
-						$item['changemessage'] = wfMsg("oasis-latest-activity-edit", $item['user_href'], $item['page_href']);
+						if( empty( $this->userName ) ) {
+							$item['changemessage'] = wfMsg("oasis-latest-activity-edit", $item['user_href'], $item['page_href']);
+						}
+						else {
+							$item['changemessage'] = wfMsg("userprofilepage-activity-edit", $item['page_href']);
+						}
 						$item['changeicon'] = 'edit';
 						break;
 					case 'delete':
-						$item['changemessage'] = wfMsg("oasis-latest-activity-delete", $item['user_href'], $item['page_href']);
+						if( empty( $this->userName ) ) {
+							$item['changemessage'] = wfMsg("oasis-latest-activity-delete", $item['user_href'], $item['page_href']);
+						}
+						else {
+							$item['changemessage'] = wfMsg("userprofilepage-activity-delete", $item['page_href']);
+						}
 						$item['changeicon'] = 'delete';
 						break;
 					default:
