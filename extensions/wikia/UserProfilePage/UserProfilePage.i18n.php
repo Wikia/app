@@ -91,8 +91,7 @@ $messages['en'] = array(
 	'recipes-template-user-gender-hint' => 'Gender',
 	'recipes-template-user-affiliation-label' => 'Affiliation',
 	'recipes-template-user-affiliation-hint' => 'Affiliation',
-	'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //-->
-<div class="interview">
+	'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //--><div class="interview">
 *<div class="question">How would you describe yourself?</div>
 *<div class="answer"><<wpDescription>></div>
 *<div class="question">When did you born?</div>
@@ -105,8 +104,7 @@ $messages['en'] = array(
 *<div class="question">What\'s your gender?</div>
 *<div class="answer"><<wpGender>></div>
 *<div class="question">Do you have any affiliation?</div>
-*<div class="answer"><<wpAffiliation>></div>
-</div>
+*<div class="answer"><<wpAffiliation>></div></div>
 ',
 	/*'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //-->{|
 |-

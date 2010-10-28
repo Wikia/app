@@ -9,7 +9,7 @@
 		<tbody>
 			<? $counter = 0 ;?>
 			<? foreach( $topWikis as $wikiId => $wikiData ) :?>
-				<tr class="<?= ( ( ++$counter % 2 ) == 0) ? 'odd' : null;?>">
+				<tr class="<?= ( ( ++$counter % 2 ) == 0) ? 'odd' : null;?><?= ($userIsOwner) ? ' removable' : null ;?>">
 					<td class="rank">
 						<span class="counter">#<?= $counter ;?></span>
 						<? if( $userIsOwner )  :?>

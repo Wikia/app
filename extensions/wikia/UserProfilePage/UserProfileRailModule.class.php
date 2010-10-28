@@ -11,6 +11,7 @@ class UserProfileRailModule extends Module {
 	var $topPageImages;
 	var $specialRandomLink;
 	var $maxEdits;
+	var $userRegistrationDate;
 	private $maxTopPages = 6;
 	private $commentToEditRatio = 0.3;
 
@@ -85,6 +86,10 @@ class UserProfileRailModule extends Module {
 		}
 
 		$this->specialContribsLink = $specialPageTitle->getFullUrl() . '/' . $this->userName;
+
+		if( empty( $this->activityFeed ) ) {
+			$this->userRegistrationDate = wfTimeFormatAgo( $user->getRegistration() );
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
