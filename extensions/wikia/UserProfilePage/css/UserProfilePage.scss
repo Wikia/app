@@ -270,9 +270,57 @@ ul.user-profile-action-menu {
 }
 
 .WikiaUserPagesHeader {
+	.wikia-avatar {
+		.avatar-menu {
+			@include opacity(85);
+			display: none;
+			background-color: $color-page;
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 3px;
+
+			span {
+				display: block;
+				line-height: 9px;
+				font-weight: normal;
+
+				img {
+					vertical-align: middle;
+				}
+			}
+		}
+
+		&:hover {
+			.avatar-menu {
+				display: block;
+			}
+		}
+	}
+
+	.wikia-menu-button {
+		float: none;
+	}
+
+	.edits-info {
+		margin-top: 5px;
+
+		.count {
+			float: left;
+			font-size: 31px;
+			line-height: 28px;
+			margin-right: 3px;
+		}
+
+		.date {
+			text-transform: uppercase;
+			line-height: 13px;
+		}
+	}
+	
 	.tabs-container {
 		position: static;
-		margin-top: 60px;
+		margin-top: 170px;
 		
 		.tabs {
 			margin-bottom: 3px;

@@ -1,4 +1,6 @@
 <div id="WikiaUserPagesHeader" class="WikiaUserPagesHeader">
+	
+<?php if ( empty( $isUserProfilePageExt ) ) { ?>
 	<ul class="wikia-avatar<?= !empty($avatarMenu) ? ' wikia-avatar-menu' : '' ?>">
 		<li>
 			<a href="<?= htmlspecialchars($userPage) ?>" class="avatar-link"><?= $avatar ?></a>
@@ -19,7 +21,6 @@
 ?>
 		</li>
 	</ul>
-<?php if (!$isUserProfilePageExt) { ?>
 	<?php
 		// render edit button / dropdown menu
 		if (!empty($actionButton)) {
@@ -51,6 +52,19 @@
 	?>
 <?php } else { ?>
 	<!-- UserProfilePage Extension stuff /BEGIN -->
+	<div class="wikia-avatar">
+		<a href="<?= htmlspecialchars($userPage) ?>" class="avatar-link"><?= $avatar ?></a>
+		<? if (!empty($avatarMenu)) :?>
+			<div class="avatar-menu">
+				<? foreach( $avatarMenu as $item ) :?>
+					<span>
+						<img class="sprite edit-pencil" src="<?= wfBlankImgUrl() ;?>"/>
+						<?= $item ?>
+					</span>
+				<? endforeach ;?>
+			</div>
+		<? endif ;?>
+	</div>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 	<hr />
 
@@ -78,10 +92,10 @@
 	<?php
 		if (!empty($stats)) {
 	?>
-		<span><?= $stats['edits']; ?></span>
-
-		<span><?= wfMsg('userprofilepage-edits-since') ?></span>
-		<span><?=$stats['date']?></span>
+		<div class="edits-info">
+			<span class="count"><?= $stats['edits']; ?></span>
+			<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $stats['date'] ) ;?></span>
+		</div>
 
 	<?php
 		}
