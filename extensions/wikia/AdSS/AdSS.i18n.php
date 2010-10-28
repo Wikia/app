@@ -68,6 +68,9 @@ Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-close' => 'Close',
 	'adss-manager-tab-adList' => 'Your ads',
 	'adss-manager-tab-billing' => 'Billing',
+	'adss-admin-tab-adList' => 'List of ads',
+	'adss-admin-tab-billing' => 'Billing',
+	'adss-admin-tab-reports' => 'Reports',
 );
 
 /** Message documentation (Message documentation)
