@@ -344,13 +344,25 @@ EOF;
 
 		wfProfileOut(__METHOD__ . '::regexp');
 
+		// add user JS (if User:XXX/wikia.js page exists)
+		// copied from Skin::getHeadScripts
 		if($wgUser->isLoggedIn()){
-			global $wgSquidMaxage;
-			$siteargs = array(
-				'action' => 'raw',
-				'maxage' => $wgSquidMaxage,
-			);
-			$jsReferences[] = Skin::makeUrl($wgUser->getUserPage()->getPrefixedText().'/wikia.js', wfArrayToCGI($siteargs));
+			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
+
+			$userJS = $wgUser->getUserPage()->getPrefixedText().'/wikia.js';
+			$userJStitle = Title::newFromText($userJS);
+
+			if ($userJStitle->exists()) {
+				global $wgSquidMaxage;
+				$siteargs = array(
+					'action' => 'raw',
+					'maxage' => $wgSquidMaxage,
+				);
+
+				$jsReferences[] = Skin::makeUrl($userJS, wfArrayToCGI($siteargs));
+			}
+
+			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
 
 		// generate code to load JS files
