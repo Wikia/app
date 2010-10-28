@@ -133,7 +133,7 @@ CreatePage.redLinkClick = function(e, titleText) {
 
 $(function() {
 	if( window.WikiaEnableNewCreatepage ) {
-//		$().log('init', 'CreatePage');
+		$().log('init', 'CreatePage');
 
 		if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 			if( $( '#dynamic-links-write-article-icon' ).exists() ) {

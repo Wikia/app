@@ -264,14 +264,7 @@ jQuery.tracker = function() {
 
 
 	if (typeof initTracker == 'function') {
-//		benchmark
-//		var start = (new Date()).getTime();
-
 		initTracker();
-
-//		benchmark
-//		var time = (new Date()).getTime() - start;
-//		$().log('initTracker() executed in ' + time + ' ms', 'tracker');
 	}
 };
 
@@ -312,16 +305,16 @@ jQuery.tracker.track = function(fakeurl) {
 
 	if(typeof urchinTracker != 'undefined') {
 		_uacct = "UA-2871474-1";
-//		$().log('tracker: ' + fake);
+		$().log('tracker: ' + fake);
 		urchinTracker(fake);
 		if(wgPrivateTracker) {
 			fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
-//			$().log('tracker: ' + fake);
+			$().log('tracker: ' + fake);
 			urchinTracker(fake);
 		}
 	}
 	else {
-//		$().log('tracker [void]: ' + fake);
+		$().log('tracker [void]: ' + fake);
 	}
 };
 

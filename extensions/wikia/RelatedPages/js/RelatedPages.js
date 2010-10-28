@@ -10,7 +10,7 @@ RelatedPages = {
 		$().log(msg, 'RelatedPages');
 	},
 	init: function() {
-//		var start = (new Date()).getTime();
+		//var start = (new Date()).getTime();
 
 		this.module = $('.RelatedPagesModule');
 
@@ -19,7 +19,7 @@ RelatedPages = {
 			return;
 		}
 
-//		this.log('init');
+		//this.log('init');
 
 		var content = $('#WikiaArticle');
 		var contentWidth = content.width();
@@ -30,7 +30,7 @@ RelatedPages = {
 		// get 2nd level headings
 		var sections = content.find('.mw-headline').parent().filter('h2');
 
-//		this.log('found ' + sections.length + ' section(s)');
+		//this.log('found ' + sections.length + ' section(s)');
 
 		// find section without collision
 		var sectionMatch = false;
@@ -48,20 +48,20 @@ RelatedPages = {
 		if (sectionMatch) {
 			var sectionId = sections.index(sectionMatch) + 1;
 
-//			this.log('moving before #' + sectionId + ' section (' + sectionMatch.children().first().text() + ')');
+			this.log('moving before #' + sectionId + ' section (' + sectionMatch.children().first().text() + ')');
 			this.module.insertBefore( sectionMatch.prev() /* RT #72977 */);
 		}
 		// sections found, but none without collision
 		else if (sections.length > addAfter) {
-//			this.log('collision detected');
+			this.log('collision detected');
 		}
 		// not enough sections found
 		else {
-//			this.log('article is too short (less than ' + addAfter + ' sections)');
+			this.log('article is too short (less than ' + addAfter + ' sections)');
 		}
 
-//		var time = (new Date()).getTime() - start;
-//		this.log('done in ' + time + ' ms');
+		//var time = (new Date()).getTime() - start;
+		//this.log('done in ' + time + ' ms');
 	},
 
 	scroll_threshold: 300,
