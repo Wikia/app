@@ -4,20 +4,19 @@
 		<input name="wpToken" type="hidden" value="<?php echo $token; ?>" />
 		<input name="wpType" id="wpType" type="hidden" value="<?php echo $adForm->output( 'wpType' ); ?>" />
 
+		<div class="chooseheader"><?php echo wfMsgHtml( 'adss-form-pick-plan' ); ?></div>
 		<fieldset>
-			<legend><?php echo wfMsgHtml( 'adss-form-pick-plan' ); ?></legend>
-
 			<section class="box item-1">
 				<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
-				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-description', $currentShare ); ?>
-				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', AdSS_Util::formatPrice( $sitePricing ) ); ?>
+				<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', AdSS_Util::formatPrice( $sitePricing ) ); ?></div>
+				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing ) ); ?>
 				<input class="wikia-button" type="button" id="wpSelectSite" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
 			</section>
 
 			<section class="box item-2">
 				<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
-				<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description' ); ?>
-				<?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing ) ); ?>
+				<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing ) ); ?></div>
+				<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', AdSS_Util::formatPrice( $pagePricing ) ); ?>
 				<input class="wikia-button" type="button" id="wpSelectPage" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
 			</section>
 		</fieldset>

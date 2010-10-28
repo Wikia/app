@@ -33,17 +33,17 @@ $messages['en'] = array(
 	'adss-form-field-empty-errormsg' => 'This field must not be empty',
 	'adss-form-non-existent-title-errormsg' => 'This page does not exist',
 	'adss-form-pick-plan-errormsg' => 'You must select a plan',
-	'adss-form-pick-plan' => 'Pick a plan',
-	'adss-form-site-plan-header' => 'Buy a link across a wiki',
-	'adss-form-site-plan-description' => 'Gain greater exposure by buying a sponsored link across a wiki.
-
-1 share is currently equal to $1% of {{SITENAME}} sponsored links. The size of the share may go up or down depending on how many others buy shares. You can cancel at any time.',
-	'adss-form-site-plan-price' => '1 share costs $1',
-	'adss-form-page-plan-header' => 'Buy a link on an individual page',
-	'adss-form-page-plan-description' => 'Target specific pages to match your Campaign',
-	'adss-form-page-plan-price' => '1 link costs $1',
+	'adss-form-pick-plan' => 'Choose your plan',
+	'adss-form-site-plan-header' => 'Buy a link across the whole wiki',
+	'adss-form-site-plan-description' => 'Get your links running across the whole wiki for one low price.
+	
+1 share is currently equal to $1% of {{SITENAME}} sponsored links and only costs $2. You can cancel at any time.',
+	'adss-form-site-plan-price' => '$1 for one share',
+	'adss-form-page-plan-header' => 'Buy a link on just this page',
+	'adss-form-page-plan-description' => 'This let you target a custom message to the best page for your product at only $1, and you can cancel at any time.',
+	'adss-form-page-plan-price' => '$1 for one link',
 	'adss-form-or' => '- or -',
-	'adss-form-thanks' => "Thank you for your Sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
+	'adss-form-thanks' => "Thank you for your sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
 
 	 Go and [[Special:AdSS|buy]] another ad!",
 	'adss-button-preview' => 'Preview',

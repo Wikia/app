@@ -14,19 +14,21 @@
 		}
 	}
 
+	.chooseheader {
+		font-size: 300%;
+		font-weight: bold;
+		padding: 30px 0px 10px;
+		text-align: center;
+	}
+
 	fieldset {
 		@include clearfix;
 		border: none;
 		padding: 0;
 
-		legend {
-			padding: 0;
-		}
-
-
 		section.box {
 			@include rail-module;
-			height: 160px;
+			height: 180px;
 
 			.wikia-button {
 				bottom: 5px;
@@ -50,6 +52,23 @@
 			display: block;
 			margin: 0.5em 0;
 		}
+
+		h3 {
+			font-size: 180%;
+			font-weight: bold;
+			letter-spacing: -1px;
+			margin-top: 0px;
+			padding: 0px;
+		}
+
+		.price {
+			font-size: 130%;
+			padding: 0px 0px 15px;
+		}
+
+		p {
+			padding: 5px 0px 5px;
+		}
 	}
 }
 
@@ -61,7 +80,7 @@
 
 	fieldset {
 		section.box {
-			height: 200px;
+			height: 220px;
 		}
 		input[type="text"], textarea {
 			width: 80%;
