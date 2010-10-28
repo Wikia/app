@@ -259,78 +259,81 @@ class SkinChooser {
 
 		$html .= '</div>';
 
-		# Display ComboBox for admins/staff only
-		if( $wgUser->isAllowed( 'setadminskin' ) ) {
-
-			$html .= "<br/><h2>".wfMsg('admin_skin')."</h2>".wfMsg('defaultskin_choose');
-			$html .= '<select name="adminSkin" id="adminSkin">';
-
-			foreach($wgSkinTheme as $skinKey => $skinVal) {
-
-				# Do not display skins which are defined in wgSkipSkins array
-				if(in_array($skinKey, $wgSkipSkins)) {
-					continue;
-				}
-				if($skinKey == 'quartz') {
-					$skinKeyA = explode('-', $wgAdminSkin);
-					if($skinKey != $skinKeyA[0]) {
+		// RT:71650 removing monaco.  admin options are only for monaco.
+		if(empty($wgOasis2010111)) {
+			# Display ComboBox for admins/staff only
+			if( $wgUser->isAllowed( 'setadminskin' ) ) {
+	
+				$html .= "<br/><h2>".wfMsg('admin_skin')."</h2>".wfMsg('defaultskin_choose');
+				$html .= '<select name="adminSkin" id="adminSkin">';
+	
+				foreach($wgSkinTheme as $skinKey => $skinVal) {
+	
+					# Do not display skins which are defined in wgSkipSkins array
+					if(in_array($skinKey, $wgSkipSkins)) {
 						continue;
 					}
-				}
-
-				if(count($wgSkinTheme[$skinKey]) > 0) {
-					$html .= '<optgroup label="'.wfMsg($skinKey . '_skins').'">';
-					foreach($wgSkinTheme[$skinKey] as $themeKey => $themeVal) {
-
-						# Do not display themes which are defined in wgSkipThemes
-						if(isset($wgSkipThemes[$skinKey]) && in_array($themeVal, $wgSkipThemes[$skinKey])) {
+					if($skinKey == 'quartz') {
+						$skinKeyA = explode('-', $wgAdminSkin);
+						if($skinKey != $skinKeyA[0]) {
 							continue;
 						}
-						if($skinKey == 'quartz') {
-							if($themeVal != $skinKeyA[1]) {
+					}
+	
+					if(count($wgSkinTheme[$skinKey]) > 0) {
+						$html .= '<optgroup label="'.wfMsg($skinKey . '_skins').'">';
+						foreach($wgSkinTheme[$skinKey] as $themeKey => $themeVal) {
+	
+							# Do not display themes which are defined in wgSkipThemes
+							if(isset($wgSkipThemes[$skinKey]) && in_array($themeVal, $wgSkipThemes[$skinKey])) {
 								continue;
 							}
+							if($skinKey == 'quartz') {
+								if($themeVal != $skinKeyA[1]) {
+									continue;
+								}
+							}
+							$skinkey = $skinKey . '-' . $themeVal;
+							$html .= "<option value='{$skinkey}'".($skinkey == $wgAdminSkin ? ' selected' : '').">".wfMsg($skinkey)."</option>";
 						}
-						$skinkey = $skinKey . '-' . $themeVal;
-						$html .= "<option value='{$skinkey}'".($skinkey == $wgAdminSkin ? ' selected' : '').">".wfMsg($skinkey)."</option>";
+						$html .= '</optgroup>';
 					}
-					$html .= '</optgroup>';
 				}
-			}
-			$html .= "<option value='ds'".(empty($wgAdminSkin) ? ' selected' : '').">".wfMsg('adminskin_ds')."</option>";
-			$html .= '</select>';
-
-			wfLoadExtensionMessages('SkinChooser');
-			//$html .= wfMsg( 'skinchooser-customcss' );
-			global $wgTitle;
-			$tmpParser = new Parser();
-			$tmpParser->setOutputType(OT_HTML);
-			$tmpParserOptions = new ParserOptions();
-			$html .= $tmpParser->parse( wfMsg( 'skinchooser-customcss' ), $wgTitle, $tmpParserOptions)->getText();
-		} else {
-			$html .= '<br/>';
-			if(!empty($wgAdminSkin)) {
-				$elems = explode('-', $wgAdminSkin);
-				$skin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
-				$theme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
-				if($theme != 'custom') {
-					$html .= wfMsg('defaultskin1', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin));
-				} else {
-					global $wgEnableAnswers;
-					if( !empty($wgEnableAnswers) ) {
-						$skinname = 'Answers';
-					} else {
-						$skinname = ucfirst($skin);
-					}
-					$html .= wfMsgForContent('defaultskin2', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin), Skin::makeNSUrl($skinname.'.css','',NS_MEDIAWIKI));
-				}
+				$html .= "<option value='ds'".(empty($wgAdminSkin) ? ' selected' : '').">".wfMsg('adminskin_ds')."</option>";
+				$html .= '</select>';
+	
+				wfLoadExtensionMessages('SkinChooser');
+				//$html .= wfMsg( 'skinchooser-customcss' );
+				global $wgTitle;
+				$tmpParser = new Parser();
+				$tmpParser->setOutputType(OT_HTML);
+				$tmpParserOptions = new ParserOptions();
+				$html .= $tmpParser->parse( wfMsg( 'skinchooser-customcss' ), $wgTitle, $tmpParserOptions)->getText();
 			} else {
-				if(empty($wgDefaultTheme)) {
-					$name = $validSkinNames2[$wgDefaultSkin];
+				$html .= '<br/>';
+				if(!empty($wgAdminSkin)) {
+					$elems = explode('-', $wgAdminSkin);
+					$skin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
+					$theme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
+					if($theme != 'custom') {
+						$html .= wfMsg('defaultskin1', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin));
+					} else {
+						global $wgEnableAnswers;
+						if( !empty($wgEnableAnswers) ) {
+							$skinname = 'Answers';
+						} else {
+							$skinname = ucfirst($skin);
+						}
+						$html .= wfMsgForContent('defaultskin2', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin), Skin::makeNSUrl($skinname.'.css','',NS_MEDIAWIKI));
+					}
 				} else {
-					$name = wfMsg($wgDefaultSkin.'_skins').' '.wfMsg($wgDefaultSkin.'-'.$wgDefaultTheme);
+					if(empty($wgDefaultTheme)) {
+						$name = $validSkinNames2[$wgDefaultSkin];
+					} else {
+						$name = wfMsg($wgDefaultSkin.'_skins').' '.wfMsg($wgDefaultSkin.'-'.$wgDefaultTheme);
+					}
+					$html .= wfMsg('defaultskin3',$name);
 				}
-				$html .= wfMsg('defaultskin3',$name);
 			}
 		}
 
@@ -343,7 +346,7 @@ class SkinChooser {
 	public static function getSkin($user) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
-		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest;
+		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgOasis2010111;
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
 		wfProfileIn(__METHOD__);
@@ -445,12 +448,16 @@ class SkinChooser {
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				} else {
-					$userSkin = 'monaco';
+					$userSkin = 'oasis';
 				}
 			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
+			}
+			// RT:71650 no one gets monaco after 11-10-2010.  'en' gets this on 11-03-2010 (remove wgOasis2010111 after 11-10-2010)
+			if (!empty($wgOasis2010111) && $userSkin == 'monaco') {
+				$userSkin = 'oasis';
 			}
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
