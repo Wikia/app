@@ -356,6 +356,14 @@ on someone else\'s talk page!',
 	'achievements-badge-desc-pounce' => 'for making edits on 100 pages within an hour of the page\'s creation!',
 	'achievements-badge-desc-caffeinated' => 'for making 100 edits on pages in a single day!',
 	'achievements-badge-desc-luckyedit' => 'for making the Lucky $1th edit on the wiki!',
+
+	//UserProfilePages module
+	'achievements-userprofile-title-no' => "$1's Earned Badges",
+	'achievements-userprofile-title' => "$1's Earned {{PLURAL:$2|Badge|Badges}} ($2)",
+	'achievements-userprofile-no-badges-owner' => 'Check out the list below to see the badges that you can earn on this wiki!',
+	'achievements-userprofile-no-badges-visitor' => "This user hasn't earned any badge yet.",
+	'achievements-userprofile-profile-score' => '<em>$1</em> Achievement<br/>points',
+	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Ranked #$1]]<br/>on this wiki',
 );
 
 /** Message documentation (Message documentation)

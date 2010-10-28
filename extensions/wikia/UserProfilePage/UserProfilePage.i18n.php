@@ -13,7 +13,7 @@ $messages['en'] = array(
 
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',
-	'userprofilepage-edits-since' => 'Edits since joining<br/>$1',
+	'userprofilepage-edits-since' => 'Edits since joining this wiki<br/>$1',
 
 	//Top Wikis
 	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
@@ -106,30 +106,5 @@ $messages['en'] = array(
 *<div class="answer"><<wpGender>></div>
 *<div class="question">Do you have any affiliation?</div>
 *<div class="answer"><<wpAffiliation>></div></div>
-',
-	/*'recipes-template-aboutuser-wikitext' => '<!--Change at your own risk //-->{|
-|-
-| <<wpDescription>>
-|-
-! colspan="2" style="font-size:9pt; font-weight:bold;" align="left" | Biographical information
-|-
-| Born
-| <<wpBirthDate>>
-|}
-{|
-|-
-! colspan="2" style="font-size:9pt; font-weight:bold;" | Physical description
-! colspan="2" style="font-size:9pt; font-weight:bold;" | Family information
-|-
-| Species
-| <<wpSpecies>>
-| Abilities
-| <<wpAbilities>>
-|-
-| Gender
-| <<wpGender>>
-| Affiliation
-| <<wpAffiliation>>
-|-
-|}'*/
+'
 );

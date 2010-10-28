@@ -212,6 +212,10 @@ class BodyModule extends Module {
 				$railModuleList[1499] = array('UserProfileRail', 'TopWikis', null);
 				$railModuleList[1498] = array('LatestActivity', 'Index', null);
 				$railModuleList[1497] = array('UserProfileRail', 'TopPages', null);
+
+				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
+					$railModuleList[1350] = array('Achievements', 'UserProfilePagesModule', null);
+				}
 			}
 		}
 

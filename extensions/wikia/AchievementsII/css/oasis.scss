@@ -203,3 +203,55 @@
 		@include clearfix;
 	}
 }
+
+.UserProfileAchievementsModule {
+	h1 {
+		margin-bottom: 0px;
+	}
+
+	.data {
+		@include clearfix;
+
+		details, details > p {
+			margin: 0px;
+			font-size: 11px;
+			line-height: 13px;
+
+			a {
+				font: {
+					weight: normal;
+					size: 11px;
+				}
+
+			}
+		}
+		
+		.tally {
+			float: left;
+			width: 120px;
+		}
+
+		.ranking {
+			text-align: right;
+			float: right;
+		}
+	}
+
+	.more {
+		font-weight: bold;
+	}
+
+	ul {
+		li {
+			border: none;
+
+			p {
+				line-height: 11px;
+			}
+
+			.badge-icon-earnable {
+				margin-top: 0px
+			}
+		}
+	}
+}

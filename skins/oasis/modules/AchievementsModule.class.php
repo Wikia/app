@@ -26,6 +26,22 @@ class AchievementsModule extends Module {
 		//$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
 
+		$this->getBadgesData();
+	}
+
+	public function executeUserProfilePagesModule() {
+		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
+
+		// add CSS for this module
+		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/AchievementsII/css/oasis.scss" ) );
+		// add JS for this module
+		$wgOut->addScript( "<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n" );
+		$this->getBadgesData();
+		wfLoadExtensionMessages( 'UserProfilePage' );
+	}
+
+
+	private function getBadgesData(){
 		// get achievement lists
 		$rankingService = new AchRankingService();
 		$userProfileService = new AchUserProfileService();
@@ -57,14 +73,12 @@ class AchievementsModule extends Module {
 
 		// UI elements
 		$this->leaderboard_url = Skin::makeSpecialUrl("Leaderboard");
-		
+
 
 		if($userProfileService->mUserViewer && $userProfileService->mUserViewer->isAllowed('editinterface')) {
 			$this->customize_url = Skin::makeSpecialUrl("AchievementsCustomize");
 		}
-
 	}
-
 
 	/**
 	 * adds the hock for own JavaScript variables in the document
