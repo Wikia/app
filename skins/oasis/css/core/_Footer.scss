@@ -42,6 +42,7 @@
 			display: block;
 			list-style: none;
 			padding-right: 30px;
+			z-index: 1000;	/* IE7 */
 			>li {
 				border-right: 1px solid mix($color-header-text, $color-header, 20%);
 				float: right;
@@ -74,6 +75,7 @@
 		bottom: 22px;
 		min-width: 120px;
 		right: 0;
+		z-index: 1000;	/* Footer Ad: 999 */
 		span {
 			color: mix($color-text, $color-page);
 			display: block;
