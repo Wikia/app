@@ -18,7 +18,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 		parent::__construct();
 
 		$this->mDb = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/manager" );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/manager/adList" );
 
 		$filter = $this->mRequest->getVal( 'filter', $this->mFilter );
 		if( array_key_exists( $filter, $this->mFiltersShown ) ) {
