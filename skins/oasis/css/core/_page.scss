@@ -166,7 +166,7 @@
 		left: -2px;
 		padding: 3px 0 0 0;
 		position: absolute;
-		width: 189px;
+		width: auto;
 		h1,
 		.headline-div {
 			@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 100%);
@@ -176,16 +176,16 @@
 			display: block;
 			font-size: 15px;
 			font-weight: normal;
-			height: 23px;
+			height: 33px;
 			margin: 0;
-			padding: 10px 0 0 11px;
+			padding: 0 11px;
 			.logo {
 				filter:progid:DXImageTransform.Microsoft.Matrix(Dx=0, Dy=0, M11=0.7, M12=0, M21=0, M22=0.7);
 				-moz-transform: matrix(0.7, 0, 0, 0.7, -16px, -3px);
 				-webkit-transform: matrix(0.7, 0, 0, 0.7, -15, -2);
-				position: absolute;
-				right: 12px;
-				top: 12px;
+				left: 8px;
+				position: relative;
+				top: 7px;
 			}
 		}
 		.banner-corner-left {
