@@ -7,7 +7,6 @@
 		</div>
 		<div class="tally mainpage-tally">
 			<?= wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), $total, 'fixedwidth' ) ?>
-			<? /* View::specialPageLink('CreatePage', null, 'wikia-chiclet-button createpage', 'blank.gif', 'oasis-create-page'); */ ?>
 		</div>
 	<? } ?>
 
@@ -27,9 +26,16 @@
 	}
 
 	// render page type line
+	if ($pageSubtitle != '') {
+?>
+	<h2><?= $pageSubtitle ?></h2>
+<?php
+	}
+
+	// MW subtitle
 	if ($subtitle != '') {
 ?>
-	<h2><?= $subtitle ?></h2>
+	<div class="subtitle"><?= $subtitle ?></div>
 <?php
 	}
 
@@ -59,10 +65,3 @@
 	}
 ?>
 </header>
-<?php
-	if ($contentsub != '') {
-?>
-<div id="contentSub"><?= $contentsub ?></div>
-<?php
-	}
-?>

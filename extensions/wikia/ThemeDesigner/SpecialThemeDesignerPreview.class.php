@@ -52,7 +52,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 		$moduleObject->categories = array("<a>More Sample</a>", "<a>Others</a>");
 		$moduleObject->comments = 23;
-		$moduleObject->subtitle = false;
+		$moduleObject->pageSubtitle = false;
 		$moduleObject->action = array("text" => "Edit this page");
 		$moduleObject->actionImage = '';
 		$moduleObject->actionName = 'edit';
