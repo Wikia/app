@@ -130,6 +130,8 @@ class SkinCorporateBase extends SkinTemplate {
 
 		$newtalks = $wgUser->getNewMessageLinks();
 
+		wfProfileOut( __METHOD__."-stuff2" );
+
 		wfProfileIn( __METHOD__."-stuff3" );
 		$tpl->setRef( 'skin', $this );
 
@@ -158,6 +160,9 @@ class SkinCorporateBase extends SkinTemplate {
 		// allow extensions adding stuff after the page content.
 		// See Skin::afterContentHook() for further documentation.
 		$tpl->set ('dataAfterContent', $this->afterContentHook());
+
+		wfProfileOut( __METHOD__."-stuff3" );
+
 		// execute template
 		wfProfileIn( __METHOD__."-execute" );
 		$res = $tpl->execute();
