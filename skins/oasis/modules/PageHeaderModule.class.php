@@ -16,6 +16,7 @@ class PageHeaderModule extends Module {
 
 	// RT #72366 - line with page type, redirect info, link to subject page and old revision data
 	var $pageType;
+	var $pageTalkSubject;
 	var $pageSubject;
 	var $pageRedirect;
 
@@ -268,7 +269,7 @@ class PageHeaderModule extends Module {
 				$msgKey = 'oasis-page-header-back-to-video';
 			}
 
-			$this->pageSubject = View::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
+			$this->pageTalkSubject = View::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
 		}
 
 		// category pages
@@ -351,6 +352,7 @@ class PageHeaderModule extends Module {
 			// render pageType, pageSubject and pageSubtitle as one message
 			$subtitle = array_filter(array(
 				$this->pageType,
+				$this->pageTalkSubject,
 				$this->pageSubject,
 				$this->pageRedirect,
 			));
@@ -358,6 +360,8 @@ class PageHeaderModule extends Module {
 			$pipe = wfMsg('pipe-separator');
 			$this->pageSubtitle = implode(" {$pipe} ", $subtitle);
 		}
+
+		print_pre($this);
 
 		wfProfileOut(__METHOD__);
 	}
