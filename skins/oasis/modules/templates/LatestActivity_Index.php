@@ -1,4 +1,4 @@
-<section class="WikiaActivityModule <?= $isUserProfilePageExt ? 'UserProfileRailModule_RecentActivity' : ''; ?>">
+<section class="WikiaActivityModule <?= !empty( $userName ) ? 'UserProfileRailModule_RecentActivity' : ''; ?>">
 	<? if (!$wgSingleH1) { ?>
 		<h1 class="activity-heading"><?= $moduleHeader ?></h1>
 	<? } else { ?>
