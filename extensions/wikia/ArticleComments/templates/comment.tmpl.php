@@ -1,6 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<div class="article-comments">
-	<a name="comment-<?= $comment['id'] ?>" />
+<div id="comm-<?= $comment['id'] ?>" class="article-comments">
 	<div class="comment-avatar">
 		<?= $comment['avatar'] ?>
 	</div>
