@@ -1,30 +1,31 @@
 <?php
 
-class AdSS_AdminPager extends TablePager {
+class AdSS_ManagerPager extends TablePager {
 
-	private $mTitle, $ad;
-	private $mFilter = 'pending';
+	private $mTitle, $ad, $userId;
+	private $mFilter = 'active';
 	private $mFiltersShown = array(
 			'all'     => 'All',
 			'active'  => 'In rotation (accepted & not expired)',
 			'pending' => 'Pending acceptance',
 			'expired' => 'Expired (not closed)',
 			'closed'  => 'Closed',
-			'special' => 'Special - manually added by Gil',
 			);
 
-	function __construct() {
+	function __construct( $userId ) {
 		global $wgAdSS_DBname;
 
 		parent::__construct();
 
 		$this->mDb = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/admin" );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/manager" );
 
 		$filter = $this->mRequest->getVal( 'filter', $this->mFilter );
 		if( array_key_exists( $filter, $this->mFiltersShown ) ) {
 			$this->mFilter = $filter;
 		}
+
+		$this->userId = $userId;
 	}
 
 	function getTitle() {
@@ -46,13 +47,13 @@ class AdSS_AdminPager extends TablePager {
 			case 'ad_wiki_id':
 				$wiki = WikiFactory::getWikiByID( $value );
 				return $wiki->city_title;
-			case 'ad_id':
-				if( $this->ad->closed ) return '';
-				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
+			case 'ad_closed':
+				if( $this->ad->closed ) return $value;
+				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
 				$tmpl->set( 'ad', $this->ad );
-				return $tmpl->render( 'actionLink' );
+				return $tmpl->render( 'actionClose' );
 			case 'ad_text':
-				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
+				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
 				$tmpl->set( 'ad', $this->ad );
 				return $tmpl->render( 'ad' );
 			case 'ad_page_id':
@@ -75,10 +76,23 @@ class AdSS_AdminPager extends TablePager {
 				} else {
 					return 'Site';
 				}
+			case 'ad_weight':
+				if( $this->ad->pageId == 0 ) {
+					if( !$this->ad->closed && ( !$this->ad->expires || $this->ad->expires > time() ) ) {
+						$ret = "$value (" . Xml::element( 'a', array( 'href' => '#' ), '+' );
+						if( $this->ad->weight > 1 ) {
+							$ret .= " / " . Xml::element( 'a', array( 'href' => '#' ), '-' );
+						}
+						$ret .= ")";
+						return $ret;
+					} else {
+						return $value;
+					}
+				} else {
+					return '';
+				}
 			case 'ad_price':
 				return AdSS_Util::formatPrice( $this->ad->price, $this->ad->weight );
-			case 'ad_user_id':
-				return AdSS_User::newFromId( $value )->toString();
 			default:
 				return $value;
 		}
@@ -93,13 +107,11 @@ class AdSS_AdminPager extends TablePager {
 				'ad_wiki_id' => 'Wikia',
 				'ad_page_id' => 'Type',
 				'ad_weight'  => 'No. shares',
+				'ad_price'   => 'Price',
 				'ad_text'    => 'Ad',
-				'ad_user_id' => 'User',
 				'ad_created' => 'Created',
 				'ad_expires' => 'Expires',
 				'ad_closed'  => 'Closed',
-				'ad_price'   => 'Price',
-				'ad_id'      => 'Action',
 			    );
 	}
 
@@ -107,36 +119,30 @@ class AdSS_AdminPager extends TablePager {
 		$qi = array(
 				'tables' => array( 'ads' ),
 				'fields' => array( '*' ),
+				'conds'  => array( 'ad_user_id' => $this->userId ),
 			    );
 		switch( $this->mFilter ) {
 			case 'active':
-				$qi['conds'] = array(
+				$qi['conds'] += array(
 						'ad_closed IS NULL',
 						'ad_expires > NOW()',
 						);
 				break;
 			case 'pending':
-				$qi['conds'] = array(
+				$qi['conds'] += array(
 						'ad_closed IS NULL',
 						'ad_expires IS NULL',
 						);
 				break;
 			case 'expired':
-				$qi['conds'] = array(
+				$qi['conds'] += array(
 						'ad_closed IS NULL',
 						'ad_expires <= NOW()',
 						);
 				break;
 			case 'closed':
-				$qi['conds'] = array(
+				$qi['conds'] += array(
 						'ad_closed IS NOT NULL',
-						);
-				break;
-			case 'special':
-				$qi['conds'] = array( 
-						'ad_closed IS NULL',
-						'ad_expires > NOW()',
-						'ad_user_id = 1',
 						);
 				break;
 		}

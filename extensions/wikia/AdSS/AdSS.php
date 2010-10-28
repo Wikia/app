@@ -22,12 +22,15 @@ $wgExtensionAliasesFiles['AdSS'] = $dir . 'AdSS.alias.php';
 $wgAdSS_templatesDir = $dir . 'templates';
 
 $wgAutoloadClasses['AdSS_Controller'] = $dir . 'AdSS_Controller.php';
+$wgAutoloadClasses['AdSS_ManagerController'] = $dir . 'manager/AdSS_ManagerController.php';
+$wgAutoloadClasses['AdSS_ManagerPager'] = $dir . 'manager/AdSS_ManagerPager.php';
 $wgAutoloadClasses['AdSS_AdminController'] = $dir . 'admin/AdSS_AdminController.php';
 $wgAutoloadClasses['AdSS_AdminPager'] = $dir . 'admin/AdSS_AdminPager.php';
 $wgAutoloadClasses['AdSS_Ad'] = $dir . 'model/AdSS_Ad.php';
 $wgAutoloadClasses['AdSS_Billing'] = $dir . 'model/AdSS_Billing.php';
 $wgAutoloadClasses['AdSS_User'] = $dir . 'model/AdSS_User.php';
 $wgAutoloadClasses['AdSS_AdForm'] = $dir . 'forms/AdSS_AdForm.php';
+$wgAutoloadClasses['AdSS_ManagerLoginForm'] = $dir . 'forms/AdSS_ManagerLoginForm.php';
 $wgAutoloadClasses['AdSS_Publisher'] = $dir . 'AdSS_Publisher.php';
 $wgAutoloadClasses['AdSS_Util'] = $dir . 'AdSS_Util.php';
 $wgAutoloadClasses['PaymentProcessor'] = $dir . 'paypal/PaymentProcessor.php';
@@ -50,6 +53,7 @@ $wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
 $wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::acceptAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
+$wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
 
 $wgAdSS_DBname = 'adss';
 
