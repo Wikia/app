@@ -464,10 +464,12 @@ class SkinChooser {
 
 		$useskin = $wgRequest->getVal('useskin', $userSkin);
 		$elems = explode('-', $useskin);
-		$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
-		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
-		$userTheme = $wgRequest->getVal('usetheme', $userTheme);
-
+		if(empty($wgOasis2010111) || ($user->isLoggedIn() && (in_array('staff', $user->getEffectiveGroups()) || in_array('helpers', $user->getEffectiveGroups()) ) ) ){
+			$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
+			$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
+			$userTheme = $wgRequest->getVal('usetheme', $userTheme);
+		} 
+		
 		if(empty($userTheme) && strpos($userSkin, 'quartz-') === 0) {
 			$userSkin = 'quartz';
 			$userTheme = '';
