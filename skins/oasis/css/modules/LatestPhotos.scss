@@ -1,4 +1,3 @@
-@import "../mixins/rail-module";
 @import "../mixins/border-radius";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
@@ -14,8 +13,6 @@
 }
 
 .LatestPhotosModule {
-	@include rail-module;
-
 	>h1 {
 		display: none;
 	}

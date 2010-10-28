@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/rail-module";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 
@@ -138,7 +137,6 @@
 }
 /* rail in the right side */
 .WikiaLatestEarnedBadgesModule {
-	@include rail-module;
 	.clearfix { /** @todo questionable **/
 		@include clearfix;
 	}
@@ -148,7 +146,6 @@
 	/*background: #00F;*/
 	border-top: 10px;
 
-	@include rail-module;
 	.achievements-leaderboard-button {
 		clear: both;
 		margin: {

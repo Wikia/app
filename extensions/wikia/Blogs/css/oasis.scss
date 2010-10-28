@@ -1,6 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/rail-module";
 
 /* FILE: /extensions/wikia/Blogs/css/oasis.scss */
 
@@ -111,7 +110,6 @@
 // /** styling for Oasis blog listing box and rail module **/
 
 .WikiaBlogListingBox {
-	@include rail-module;
 	display: block !important;
 	line-height: 16px;
 	width: 282px;

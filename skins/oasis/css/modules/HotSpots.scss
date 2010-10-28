@@ -1,5 +1,4 @@
 @import "../core/color";
-@import "../mixins/rail-module";
 @import "../mixins/clearfix";
 @import "../mixins/border-radius";
 @import "../mixins/bodytext";
@@ -11,7 +10,6 @@ $color-hot_4: #339900;
 $color-hot_5: #006699;
 
 .HotSpotsModule {
-	@include rail-module;
 	p {
 		margin-bottom: 5px;
 	}
@@ -64,7 +62,6 @@ $color-hot_5: #006699;
 }
 
 .CommunityCornerModule {
-	@include rail-module;
 	@include clearfix;
 	@include bodytext;
 
