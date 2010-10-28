@@ -3,7 +3,8 @@
 <?php echo $navigationBar; ?>
 
 <script type="text/javascript">/*<![CDATA[*/
-$("a.close").click( function() {
+$("a.close").click( function(e) {
+	e.preventDefault();
 	if( confirm( 'Are you sure you want to delete this ad?' ) ) {
 		var id = $(this).parent().attr("id");
 		$.getJSON( wgScript, {

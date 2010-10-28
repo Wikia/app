@@ -5,7 +5,8 @@
 <script type="text/javascript">/*<![CDATA[*/
 var token = <?php echo Xml::encodeJsVar( $token ); ?>;
 
-$("a.accept").click( function() {
+$("a.accept").click( function(e) {
+	e.preventDefault();
 	if( confirm( 'Are you sure you want to accept this ad?' ) ) {
 		var id = $(this).parent().attr("id");
 		$.getJSON( wgScript, {
@@ -26,7 +27,8 @@ $("a.accept").click( function() {
 	}
 } );
 
-$("a.close").click( function() {
+$("a.close").click( function(e) {
+	e.preventDefault();
 	if( confirm( 'Are you sure you want to delete this ad?' ) ) {
 		var id = $(this).parent().attr("id");
 		$.getJSON( wgScript, {
