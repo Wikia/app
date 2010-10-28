@@ -1,8 +1,8 @@
 <section class="WikiaActivityModule">
 	<? if (!$wgSingleH1) { ?>
-		<h1 class="activity-heading"><?= wfMsg('oasis-activity-header') ?></h1>
+		<h1 class="activity-heading"><?= $moduleHeader ?></h1>
 	<? } else { ?>
-		<div class="headline-div activity-heading"><?= wfMsg('oasis-activity-header') ?></div>
+		<div class="headline-div activity-heading"><?= $moduleHeader ?></div>
 	<? } ?>
 	<ul>
 <?php

@@ -64,4 +64,19 @@ class UserProfilePageHelper {
 		}
 		return User::newFromName( $userName );
 	}
+
+	/**
+	 * same as getUserFromTitle() but return false when user account doesn't exists
+	 * @param Title $title page title
+	 */
+	public static function getExistingUserFromTitle( Title $title ) {
+		$user = self::getUserFromTitle( $title );
+		if($user instanceof User) {
+			$userId = $user->idForName();
+			if( !empty( $userId ) ) {
+				return $user;
+			}
+		}
+		return false;
+	}
 }
