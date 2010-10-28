@@ -699,6 +699,7 @@
 			$.each(PLB.Library,function(i,v){
 				$(v.menuItemHtml)
 					.attr(PLB.PARAM_TYPE,i)
+					.addClass('plb-add-menu-item-'+i)
 					.appendTo(addMenu);
 			});
 			$('li',addMenu)
@@ -773,7 +774,7 @@
 					.replace("[$ID]",e.getId())
 					.replace("[$CAPTION]",e.getCaption())
 					.replace("[$BUTTONS]",bs);
-				$(html).addClass('plb-add-menu-item-'+e.getType()).appendTo(this.widgetsList);
+				$(html).appendTo(this.widgetsList);
 			},this));
 			// Set visibility of list depending on whether we have any element or not
 			this.widgetsList.css('display',l.length>0?"block":"none");
