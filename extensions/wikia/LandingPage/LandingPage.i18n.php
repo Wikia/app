@@ -9,22 +9,27 @@ $messages['en'] = array(
 		'landingpage-start-exploring-text' => 'Search for your favorite topic or browse some community favorites below.',	'landingpage-readfaq' => 'Questions? Read our FAQ &gt;',
 		'landingpage-text' => 'At Wikia you can <strong>connect with people</strong> who share your <strong>passions and interests</strong>. Find your group, make comments and edits, even <strong>start your own website</strong> and community.',
 		'landingpage-buttons-learn-more' => 'Learn more',
-		
-		'landingpage-secondary-line' => "A place to '''discover''', '''create''' and '''share what you love'''.",
-		'landingpage-secondary-2' => "We’ve just gone live with a brand new look! Read more about us, or view some examples to the right.",
-		'landingpage-secondary-3' => 'Watch this short video to get a glimpse of this exciting new world -- then get started by clicking below.',
 		'landingpage-language-links' => "* English|en\n* Español|es\n* Deutsch|de\n* Français|fr",
 		
-		'landingpage-examples' => 'Check out some examples',
-		'landingpage-buttons-about-wikia' => 'About Wikia',
-		'landingpage-buttons-about-wikia-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
+		'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',
+		'landingpage-buttons-learn-more' => 'Learn more &gt;',
+		'landingpage-twitter-url' => 'http://www.twitter.com/wikia',
+		'landingpage-facebook-url' => 'http://www.facebook.com/wikia',
+		'landingpage-wikia-blog-url' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
+		'landingpage-faq-url' => 'http://community.wikia.com/wiki/The_new_look',
 		
-		'landingpage-buttons-update-me' => 'Switch me to the new look!',
+		'landingpage-site1-url' => 'http://powerlisting.wikia.com',
+		'landingpage-site2-url' => 'http://harrypotter.wikia.com',
+		'landingpage-site3-url' => 'http://glee.wikia.com"',
+		'landingpage-site4-url' => 'http://medalofhonor.wikia.com',
+		'landingpage-site5-url' => 'http://poptarts.wikia.com',
 		
-		'landingpage-buttons-new-user' => 'I\'m a new user',
-		'landingpage-buttons-new-user-more' => 'Start Here',
-		'landingpage-buttons-new-user-link' => 'http://www.community.wikia.com/wiki/About_Wikia',
-		'landingpage-buttons-learn-more' => 'Learn more &gt;');
+		'landingpage-site1-alt' => 'Superpower Wiki',
+		'landingpage-site2-alt' => 'Harry Potter Wiki',
+		'landingpage-site3-alt' => 'Glee Wiki',
+		'landingpage-site4-alt' => 'Medla of Honor Wiki',
+		'landingpage-site5-alt' => 'Pop Tarts Wiki'
+);
 
 /** Breton (Brezhoneg)
  * @author Y-M D
