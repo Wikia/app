@@ -601,13 +601,13 @@ function smwfShowBrowseLink($skintemplate) {
  * simple wrapper
  */
 function &smwwfGetDB( $type ) {
-	global $smwgUseExternalDB, $wgDBname;
+	global $smwgUseExternalDB, $wgDBname, $smwgDBname;
 
-	$name = $wgDBname;
+	$smwgDBname = $wgDBname;
 
 	if( $smwgUseExternalDB ) {
-		$name = "smw+" . $name;
+		$smwgDBname = "smw+" . $name;
 	}
 
-	return wfGetDB( $type, 'smw', $name );
+	return wfGetDB( $type, 'smw', $smwgDBname );
 }
