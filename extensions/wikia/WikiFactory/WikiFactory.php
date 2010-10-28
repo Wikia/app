@@ -53,6 +53,7 @@ class WikiFactory {
 	const FLAG_FREE_WIKI_URL 			= 8;
 	const FLAG_HIDE_DB_IMAGES 			= 16;
 	const FLAG_REDIRECT 				= 32;
+	const FLAG_ADOPTABLE				= 64;	//used by AutomaticWikiAdoption
 
 	const db            = "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
