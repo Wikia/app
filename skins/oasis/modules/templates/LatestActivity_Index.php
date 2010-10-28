@@ -20,7 +20,7 @@
 ?>
 	</ul>
 
-	<? if ( $isUserProfilePageExt && count($changeList) ) :?>
+	<? if ( $userName && count($changeList) ) :?>
 		<?= View::specialPageLink('Contributions/' . $userName, 'userprofilepage-top-recent-activity-see-more', 'more') ;?>
 	<? else: ?>
 		<?= View::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
