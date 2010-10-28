@@ -361,8 +361,6 @@ class PageHeaderModule extends Module {
 			$this->pageSubtitle = implode(" {$pipe} ", $subtitle);
 		}
 
-		print_pre($this);
-
 		wfProfileOut(__METHOD__);
 	}
 
