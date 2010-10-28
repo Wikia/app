@@ -37,20 +37,20 @@ class AdSS_Ad {
 	}
 
 	static function newFromForm( $f ) {
-		$ad = new AdSS_Ad();
+		$ad = new self();
 		$ad->loadFromForm( $f );
 		return $ad;
 	}
 
 	static function newFromId( $id ) {
-		$ad = new AdSS_Ad();
+		$ad = new self();
 		$ad->id = $id;
 		$ad->loadFromDB();
 		return $ad;
 	}
 
 	static function newFromRow( $row ) {
-		$ad = new AdSS_Ad();
+		$ad = new self();
 		$ad->loadFromRow( $row );
 		return $ad;
 	}

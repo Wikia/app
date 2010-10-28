@@ -48,7 +48,8 @@ $messages['en'] = array(
 	 Go and [[Special:AdSS|buy]] another ad!",
 	'adss-button-preview' => 'Preview',
 	'adss-button-edit' => 'Edit',
-	'adss-button-login' => 'Log in and buy NOW',
+	'adss-button-login' => 'Log in',
+	'adss-button-login-buy' => 'Log in and buy NOW',
 	'adss-button-save-pay' => 'Save & pay',
 	'adss-button-pay-paypal' => 'Pay with PayPal',
 	'adss-button-select' => 'Select',
@@ -64,6 +65,7 @@ Return to [[Special:AdSS|{{int:Adss}}]].",
 Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-per-site' => 'All pages',
 	'adss-per-page' => 'One page only',
+	'adss-close' => 'Close',
 );
 
 /** Message documentation (Message documentation)

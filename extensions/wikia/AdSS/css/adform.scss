@@ -56,12 +56,15 @@
 // monaco fixes
 .wikiaSkinMonaco .SponsoredLinkForm {
 	.box {
-		width: 380px;
+		width: 45%;
 	}
 
 	fieldset {
+		section.box {
+			height: 200px;
+		}
 		input[type="text"], textarea {
-			width: 335px;
+			width: 80%;
 		}
 	}
 }

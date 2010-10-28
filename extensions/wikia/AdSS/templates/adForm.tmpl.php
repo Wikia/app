@@ -113,9 +113,10 @@ $("#wpSelectPage").click( function() {
 	$("#wpPage").parent().show("slow");
 	$("#wpWeight").parent().hide("slow");
 } );
-$("#adssLoginAction > a").click( function() {
-	$("#adssLoginAction").hide();
-	$("#wpPassword").parent().show("slow");
+$("#adssLoginAction > a").click( function(e) {
+	e.preventDefault();
+	$("#adssLoginAction").hide("fast");
+	$("#wpPassword").parent().show("fast");
 } );
 $("#wpUrl").keyup( function() {
 	$("div.sponsormsg > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );

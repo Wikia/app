@@ -19,14 +19,14 @@ class AdSS_Billing {
 	}
 
 	static function newFromId( $id ) {
-		$billing = new AdSS_Billing();
+		$billing = new self();
 		$billing->id = $id;
 		$billing->loadFromDB();
 		return $billing;
 	}
 
 	static function newFromRow( $row ) {
-		$billing = new AdSS_Billing();
+		$billing = new self();
 		$billing->loadFromRow( $row );
 		return $billing;
 	}

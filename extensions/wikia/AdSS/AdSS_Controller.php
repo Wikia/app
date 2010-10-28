@@ -13,8 +13,13 @@ class AdSS_Controller extends SpecialPage {
 		$wgOut->setPageTitle( wfMsg( 'adss-sponsor-links' ) );
 
 		if( $subpage == 'admin' ) {
-			$adminController = new AdSS_AdminController();
+			$adminController = new AdSS_AdminController( $this );
 			$adminController->execute( $subpage );
+			return;
+		}
+		if( $subpage == 'manager' ) {
+			$managerController = new AdSS_ManagerController( $this );
+			$managerController->execute( $subpage );
 			return;
 		}
 
@@ -58,7 +63,7 @@ class AdSS_Controller extends SpecialPage {
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
-		$tmpl->set( 'login', wfMsgHtml( 'adss-button-login' ) );
+		$tmpl->set( 'login', wfMsgHtml( 'adss-button-login-buy' ) );
 		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
 		$tmpl->set( 'isAdmin', $wgUser->isAllowed( 'adss-admin' ) );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
@@ -81,7 +86,7 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
-		if( $wgRequest->getText( 'wpSubmit' ) == wfMsgHtml( 'adss-button-login' ) ) {
+		if( $wgRequest->getText( 'wpSubmit' ) == wfMsgHtml( 'adss-button-login-buy' ) ) {
 			$user = AdSS_User::newFromForm( $adForm );
 			if( $user ) {
 				$pp = PaymentProcessor::newFromUserId( $user->id );
