@@ -331,9 +331,15 @@ class PageHeaderModule extends Module {
 		// render MW subtitle (contains old revision data)
 		$this->subtitle = $wgOut->getSubtitle();
 
-		// render redirect info
+		// render redirect info (redirected from)
 		if (!empty($wgArticle->mRedirectedFrom)) {
 			$this->pageRedirect = trim($this->subtitle, '()');
+			$this->subtitle = '';
+		}
+
+		// render redirect page (redirect to)
+		if ($wgTitle->isRedirect()) {
+			$this->pageType = $this->subtitle;
 			$this->subtitle = '';
 		}
 
