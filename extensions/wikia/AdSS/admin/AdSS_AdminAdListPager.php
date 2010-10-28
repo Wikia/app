@@ -1,6 +1,6 @@
 <?php
 
-class AdSS_AdminPager extends TablePager {
+class AdSS_AdminAdListPager extends TablePager {
 
 	private $mTitle, $ad;
 	private $mFilter = 'pending';
@@ -10,7 +10,6 @@ class AdSS_AdminPager extends TablePager {
 			'pending' => 'Pending acceptance',
 			'expired' => 'Expired (not closed)',
 			'closed'  => 'Closed',
-			'special' => 'Special - manually added by Gil',
 			);
 
 	function __construct() {
@@ -19,7 +18,7 @@ class AdSS_AdminPager extends TablePager {
 		parent::__construct();
 
 		$this->mDb = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/admin" );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/admin/adList" );
 
 		$filter = $this->mRequest->getVal( 'filter', $this->mFilter );
 		if( array_key_exists( $filter, $this->mFiltersShown ) ) {
@@ -130,13 +129,6 @@ class AdSS_AdminPager extends TablePager {
 			case 'closed':
 				$qi['conds'] = array(
 						'ad_closed IS NOT NULL',
-						);
-				break;
-			case 'special':
-				$qi['conds'] = array( 
-						'ad_closed IS NULL',
-						'ad_expires > NOW()',
-						'ad_user_id = 1',
 						);
 				break;
 		}

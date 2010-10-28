@@ -2,7 +2,10 @@
 
 class AdSS_AdminController {
 
-	function execute( $subpage ) {
+	private $tabs = array( 'adList', 'billing', 'reports' );
+	private $selectedTab = 'adList';
+
+	function execute( $sub ) {
 		global $wgOut, $wgAdSS_templatesDir, $wgUser;
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
@@ -10,16 +13,70 @@ class AdSS_AdminController {
 			return;
 		}
 
+		if( isset( $sub[1] ) && in_array( $sub[1], $this->tabs ) ) {
+			$this->selectedTab = $sub[1];
+		}
+
+		$this->displayPanel();
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/admin.scss' ) );
+	}
+
+	function displayTabs() {
+		global $wgOut, $wgAdSS_templatesDir;
+
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
+		$tmpl->set( 'selfUrl', Title::makeTitle( NS_SPECIAL, "AdSS/admin" )->getLocalURL() );
+		$tmpl->set( 'selectedTab', $this->selectedTab );
+		$tmpl->set( 'tabs', $this->tabs );
+		$wgOut->addHTML( $tmpl->render( 'tabs' ) );
+	}
+
+	function displayPanel() {
+		$this->displayTabs();
+		call_user_func( array( $this, 'display'.ucfirst($this->selectedTab ) ) );
+	}
+
+	function displayAdList() {
+		global $wgAdSS_templatesDir, $wgOut;
+
 		AdSS_Util::generateToken();
 		$token = AdSS_Util::getToken();
 
-		$pager = new AdSS_AdminPager();
+		$pager = new AdSS_AdminAdListPager();
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 		$tmpl->set( 'token', $token );
 		$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
 		$tmpl->set( 'filterForm', $pager->getFilterForm() );
 		$tmpl->set( 'adList', $pager->getBody() );
 		$wgOut->addHTML( $tmpl->render( 'adList' ) );
+	}
+
+	function displayBilling() {
+		global $wgOut, $wgAdSS_templatesDir;
+
+		$pager = new AdSS_AdminBillingPager();
+
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
+		$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
+		$tmpl->set( 'billing', $pager->getBody() );
+
+		$wgOut->addHTML( $tmpl->render( 'billing' ) );
+	}
+
+	function displayReports() {
+		global $wgOut, $wgAdSS_DBname;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$res = $dbr->select( 'billing', array( 'date( billing_timestamp ) as billing_date', 'sum(-billing_amount) as income' ), 'billing_ad_id > 0', __METHOD__, array( 'GROUP BY' => 'billing_date', 'ORDER BY' => 'billing_date desc', 'LIMIT' => 7 ) );
+		$d = array();
+		$x = array();
+		foreach( $res as $row ) {
+			$d[] = $row->income;
+			$x[] = $row->billing_date;
+		}
+
+		$w=600; $h=300;
+		$wgOut->addHTML( "<img width=\"$w\" height=\"$h\" src=\"http://chart.apis.google.com/chart?chxt=x,y&chbh=a&chs={$w}x{$h}&cht=bvg&chco=A2C180&chd=t:".implode( ",", array_reverse($d) )."&chm=N*cUSD0*,000000,0,-1,12&chxl=0:|".implode( "|", array_reverse($x) )."|&chtt=Daily+Income+(last+7+days)\" />" );
 	}
 
 	static function acceptAdAjax( $id, $token ) {
