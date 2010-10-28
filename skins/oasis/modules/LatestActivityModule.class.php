@@ -6,6 +6,10 @@ class LatestActivityModule extends Module {
 	var $wgSingleH1;
 	var $wgBlankImgUrl;
 	var $moduleHeader;
+	var $isUserProfilePageExt = false;
+	var $specialContribsLink;
+	var $userName = '';
+
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
@@ -18,16 +22,16 @@ class LatestActivityModule extends Module {
 
 		$this->moduleHeader = wfMsg('oasis-activity-header');
 
-		$userName = '';
 		if( !empty( $wgEnableUserProfilePagesExt ) && in_array($wgTitle->getNamespace(), array(NS_USER, NS_USER_TALK)) ) {
 			$user = UserProfilePageHelper::getExistingUserFromTitle( $wgTitle );
 			if( !empty( $user ) ) {
-				$userName = $user->getName();
-				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $userName));
+				$this->userName = $user->getName();
+				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
+				$this->isUserProfilePageExt = true;
 			}
 		}
 
-		$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode(), $userName);
+		$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode(), $this->userName);
 		//TODO: caching tmp turned off for testing
 		//$feedData = $wgMemc->get($mKey);
 		if (empty($feedData)) {
@@ -43,7 +47,7 @@ class LatestActivityModule extends Module {
 					'includeNamespaces' => $includeNamespaces
 					);
 
-			$feedProxy = new ActivityFeedAPIProxy($includeNamespaces, $userName);
+			$feedProxy = new ActivityFeedAPIProxy($includeNamespaces, $this->userName);
 			$feedProvider = new DataFeedProvider($feedProxy, 1, $parameters);
 			$feedData = $feedProvider->get($maxElements);
 			$wgMemc->set($mKey, $feedData);

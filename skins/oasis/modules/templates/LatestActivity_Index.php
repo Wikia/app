@@ -1,4 +1,4 @@
-<section class="WikiaActivityModule">
+<section class="WikiaActivityModule <?= $isUserProfilePageExt ? 'UserProfileRailModule_RecentActivity' : ''; ?>">
 	<? if (!$wgSingleH1) { ?>
 		<h1 class="activity-heading"><?= $moduleHeader ?></h1>
 	<? } else { ?>
@@ -19,5 +19,10 @@
 	}
 ?>
 	</ul>
-	<?= View::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
+
+	<? if ( $isUserProfilePageExt && count($changeList) ) :?>
+		<?= View::specialPageLink('Contributions/' . $userName, 'userprofilepage-top-recent-activity-see-more', 'more') ;?>
+	<? else: ?>
+		<?= View::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
+	<? endif ;?>
 </section>
