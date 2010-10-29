@@ -21,7 +21,6 @@ $(function() {
 				$(response[rand_no-1].html).insertBefore( sponsormsg.find("li").last() ).bind( "click", {adId: adId},
 					function(event) {
 						$.tracker.byStr( "adss/publisher/click/"+event.data.adId );
-						alert( "adss/publisher/click/"+event.data.adId );
 					}
 				);
 				$.tracker.byStr( "adss/publisher/view/"+adId );
