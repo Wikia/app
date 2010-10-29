@@ -34,7 +34,7 @@ echo $sql . "\n";
 $sth = $dbr->query( $sql );
 $c = 0;
 
-$total = microtime( true );
+$total = time();
 while( $row = $dbr->fetchObject( $sth ) ) {
 	/**
 	 * get only external revisions
@@ -54,5 +54,5 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		}
 	}
 }
-$total = ( microtime( true ) - $total ) / 1000;
+$total = ( $time - $total );
 echo "Moved $c blobs to riak. Total time: $total sec.\n";
