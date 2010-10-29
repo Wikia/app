@@ -132,6 +132,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					newBlock = new CKEDITOR.dom.element('p');
 				}
 				// Wikia - end
+				
 
 				// Recreate the inline elements tree, which was available
 				// before hitting enter, so the same styles will be available in
@@ -139,13 +140,30 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				var elementPath = splitInfo.elementPath;
 				if ( elementPath )
 				{
+					// Wikia - start
+					var notEditableIndex = -1;
+					for (var i = elementPath.elements.length - 1 ; i >= 0 ; i--) {
+						if (elementPath.elements[i].$.contentEditable == "false") {
+							notEditableIndex = i;
+							break;
+						}
+						
+					}
+					// Wikia - end
+					
 					for ( var i = 0, len = elementPath.elements.length ; i < len ; i++ )
 					{
 						var element = elementPath.elements[ i ];
 
 						if ( element.equals( elementPath.block ) || element.equals( elementPath.blockLimit ) )
 							break;
-
+						
+						// Wikia - start
+						if ( i <= notEditableIndex ) {
+							continue;
+						}
+						// Wikia - end
+						
 						if ( CKEDITOR.dtd.$removeEmpty[ element.getName() ] )
 						{
 							element = element.clone();
@@ -177,7 +195,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				// Move the selection to the new block.
 				range.moveToElementEditStart( isStartOfBlock && !isEndOfBlock ? nextBlock : newBlock );
-		}
+			}
 
 			if ( !CKEDITOR.env.ie )
 			{
