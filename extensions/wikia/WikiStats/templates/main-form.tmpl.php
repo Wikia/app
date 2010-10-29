@@ -8,6 +8,7 @@ if ( $userIsSpecial ) {
 	$tabs['anonbreakdown'] 	= array('url' => sprintf( "%s/anonbreakdown", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_breakdown_anons') );
 	$tabs['latestview']		= array('url' => sprintf( "%s/latestview", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_latest_pageviews') );
 	$tabs['userview'] 		= array('url' => sprintf( "%s/userview", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_latest_userviews') );
+	$tabs['activity'] 		= array('url' => sprintf( "%s/activity", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_active_useredits') );
 }
 ?>
 <div id="ws-addinfo" class="ws-addinfo"></div>

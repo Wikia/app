@@ -22,7 +22,6 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mToDate;
     var $mTab;
     var $mUser;
-    var $mUserRights;
     var $mSkin;
     var $mCityId;
     var $mCityDBName;
@@ -36,7 +35,6 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mMonth;
     var $mLimit;
 	   
-	private $allowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
 	private $TEST = 0;
 	private $defaultAction = 'main';
     const USE_MEMC = 0;
@@ -63,16 +61,11 @@ class WikiStatsPage extends IncludableSpecialPage
             $wgOut->readOnlyPage();
             return;
         }
+
+        $this->mStats = WikiStats::newFromId($this->mCityId);        
         
 		$this->mUser = $wgUser;
-		$this->mUserRights 	= $this->mUser->getEffectiveGroups();         
-		$this->userIsSpecial = 0;
-		foreach ( $this->mUserRights as $id => $right ) {
-			if ( in_array( $right, $this->allowedGroups ) ) {
-				$this->userIsSpecial = 1; 
-				break;
-			}
-		}
+		$this->userIsSpecial = $this->mStats->isAllowed();
         
 		$this->mFromDate 	= intval($wgRequest->getVal( "wsfrom", sprintf("%d%d", WIKISTATS_MIN_STATS_YEAR, WIKISTATS_MIN_STATS_MONTH) ));
 		$this->mToDate 		= intval($wgRequest->getVal( "wsto", sprintf("%d%d", date("Y"), date("m") ) ));
@@ -87,8 +80,8 @@ class WikiStatsPage extends IncludableSpecialPage
 		if ( $this->userIsSpecial ) {		
 			$this->mLang 		= $wgRequest->getVal("wslang", "");
 			$this->mHub 		= $wgRequest->getVal("wscat", "");
-			$domain = $wgRequest->getVal( "wswiki", "" );
-			$all = $wgRequest->getVal( "wsall", 0 );
+			$domain 			= $wgRequest->getVal( "wswiki", "" );
+			$all 				= $wgRequest->getVal( "wsall", 0 );
 		}
 		
 		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
@@ -105,10 +98,10 @@ class WikiStatsPage extends IncludableSpecialPage
 		}
 				
 		$m = array();
-		$this->toYear = date('Y');
-		$this->toMonth = date('m');
-		$this->fromYear = WIKISTATS_MIN_STATS_YEAR;
-		$this->fromMonth = WIKISTATS_MIN_STATS_MONTH;
+		$this->toYear 		= date('Y');
+		$this->toMonth 		= date('m');
+		$this->fromYear 	= WIKISTATS_MIN_STATS_YEAR;
+		$this->fromMonth 	= WIKISTATS_MIN_STATS_MONTH;
 		
 		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mFromDate, $m) ) {
 			list (, $this->fromYear, $this->fromMonth) = $m; 
@@ -132,7 +125,6 @@ class WikiStatsPage extends IncludableSpecialPage
 		}
 
         #--- WikiaGenericStats instance
-        $this->mStats = WikiStats::newFromId($this->mCityId);
         $this->mStats->setStatsDate( array( 
         	'fromMonth' => $this->fromMonth,
         	'fromYear' 	=> $this->fromYear,
@@ -157,7 +149,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		if ( $this->mAction ) {
 			$func = sprintf("show%s", ucfirst(strtolower($this->mAction)));
 			if ( method_exists($this, $func) ) {
-				$this->$func();
+				$this->$func($subpage);
 			}
 		} 
     }
@@ -208,7 +200,7 @@ class WikiStatsPage extends IncludableSpecialPage
         return 1;
 	}
 	
-	private function showMenu() {
+	private function showMenu($subpage = '') {
 		global $wgOut, $wgDBname;
         wfProfileIn( __METHOD__ );
 
@@ -258,7 +250,7 @@ class WikiStatsPage extends IncludableSpecialPage
         return $res;
 	}
 	
-	private function showMain() {
+	private function showMain($subpage = '') {
         global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
 		#---
 		if ( empty($this->mXLS) ) {
@@ -300,12 +292,12 @@ class WikiStatsPage extends IncludableSpecialPage
         return 1; 
 	}
 	
-	private function showBreakdown() {
+	private function showBreakdown($subpage = '') {
 		$this->__showBreakdown(0);
         return 1; 
 	}
 	
-	private function showAnonbreakdown() {
+	private function showAnonbreakdown($subpage = '') {
 		$this->__showBreakdown(1);
         return 1; 
 	}	
@@ -343,7 +335,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		return 1; 
 	}
 	
-	private function showLatestview() {
+	private function showLatestview($subpage = '') {
 		global $wgUser, $wgContLang, $wgLang, $wgOut;
 		
 		wfProfileIn( __METHOD__ );
@@ -360,7 +352,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		wfProfileOut( __METHOD__ );
 	}
 	
-	private function showUserview() {
+	private function showUserview($subpage = '') {
 		global $wgUser, $wgContLang, $wgLang, $wgOut;
 		
 		wfProfileIn( __METHOD__ );
@@ -377,6 +369,63 @@ class WikiStatsPage extends IncludableSpecialPage
 		wfProfileOut( __METHOD__ );
 	}
 		
+	private function showActivity($subpage = '') {
+		global $wgUser, $wgContLang, $wgLang, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgJsMimeType;
+		
+		wfProfileIn( __METHOD__ );
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+		
+		@list (, $pyear, $pmonth, $plang, $pcat) = explode("/", $subpage);
+		
+		$aTopLanguages = explode(',', wfMsg('wikistats_language_toplist'));
+		$aLanguages = wfGetFixedLanguageNames();
+		asort($aLanguages);
+		#-
+		$hubs = WikiFactoryHub::getInstance();
+		$_cats = $hubs->getCategories();
+		$aCategories = array();
+		if ( !empty($_cats) ) {
+			foreach ( $_cats as $id => $cat ) {
+				if ( !isset($aCategories[$id]) ) {
+					$aCategories[$id] = $cat['name'];
+					if ( $pcat == $cat['name'] ) {
+						$pcat = intval($id);
+					}
+				}
+			}
+		};
+		
+		if ( !is_numeric($pcat) ) {
+			$pcat = 0;
+		}
+		
+		if ( empty($pyear) ) {
+			$pyear = date('Y');
+		}
+		
+		if ( empty($pmonth) ) {
+			$pmonth = date('m');
+		}
+		
+		#$rows = $this->mStats->userEdits(1);
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"user"			=> $wgUser,
+			"cityId"		=> $this->mCityId,
+			"wgContLang" 	=> $wgContLang,
+			"wgLang"		=> $wgLang,
+        	"topLanguages"	=> $aTopLanguages,
+        	"aLanguages"	=> $aLanguages,
+        	"categories"	=> $aCategories,	
+        	"pyear"			=> $pyear,
+        	"pmonth"		=> $pmonth,
+        	"plang"			=> ( !empty($plang) ) ? $plang : $wgLang->getCode(),
+        	"pcat"			=> $pcat
+		) );
+		$wgOut->addHTML( $oTmpl->execute("wiki_activity") ); 
+		wfProfileOut( __METHOD__ );
+	}
+			
 	private function showMonth() {
         wfProfileIn( __METHOD__ );
         echo __METHOD__ ;
