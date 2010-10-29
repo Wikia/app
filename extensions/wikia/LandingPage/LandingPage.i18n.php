@@ -18,17 +18,11 @@ $messages['en'] = array(
 		'landingpage-wikia-blog-url' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 		'landingpage-faq-url' => 'http://community.wikia.com/wiki/The_new_look',
 		
-		'landingpage-site1-url' => 'http://powerlisting.wikia.com',
-		'landingpage-site2-url' => 'http://harrypotter.wikia.com',
-		'landingpage-site3-url' => 'http://glee.wikia.com"',
-		'landingpage-site4-url' => 'http://medalofhonor.wikia.com',
-		'landingpage-site5-url' => 'http://poptarts.wikia.com',
-		
-		'landingpage-site1-alt' => 'Superpower Wiki',
-		'landingpage-site2-alt' => 'Harry Potter Wiki',
-		'landingpage-site3-alt' => 'Glee Wiki',
-		'landingpage-site4-alt' => 'Medla of Honor Wiki',
-		'landingpage-site5-alt' => 'Pop Tarts Wiki'
+		'landingpage-sites' =>  "* http://powerlisting.wikia.com|Superpower Wiki|File:landingpage-wikis-en.png
+			* http://harrypotter.wikia.com|Harry Potter Wiki|landingpage-wikis-en.png
+			* http://glee.wikia.com|Glee Wiki|landingpage-wikis-en.png
+			* http://medalofhonor.wikia.com|Medla of Honor Wiki|landingpage-wikis-en.png
+			* http://poptarts.wikia.com|Pop Tarts Wikii|landingpage-wikis-en.png",
 );
 
 /** Breton (Brezhoneg)
