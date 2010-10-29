@@ -55,4 +55,4 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	}
 }
 $total = ( microtime( true ) - $total ) / 1000;
-echo "Moved $c blobs to riak. Total time: $time sec.\n";
+echo "Moved $c blobs to riak. Total time: $total sec.\n";
