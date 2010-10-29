@@ -396,11 +396,6 @@ class SkinChooser {
 			$user->mSkin = &Skin::newFromKey($userSkin);
 			$user->mSkin->themename = $userTheme;
 
-			// FIXME: add support for oasis themes
-			if ($userSkin == 'oasis') {
-				$user->mSkin->themename = $wgRequest->getVal('usetheme', $userTheme);
-			}
-
 			self::log(__METHOD__, "forced skin to be {$wgForceSkin}");
 
 			wfProfileOut(__METHOD__);
@@ -442,6 +437,12 @@ class SkinChooser {
 		} else {
 			$userSkin = self::getUserOption('skin');
 			$userTheme = self::getUserOption('theme');
+
+			//RT:81173 Answers force hack.  It's in here because wgForceSkin is overwritten in CommonExtensions to '', most likely due to allowing admin skins and themes.  This will force answers and falls through to admin skin and theme logic if there is one.
+			if(!empty($wgDefaultSkin) && $wgDefaultSkin == 'answers') {
+				$userSkin = 'answers';
+			}
+			
 			if(empty($userSkin)) {
 				if(!empty($wgAdminSkin)) {
 					$adminSkinArray = explode('-', $wgAdminSkin);
@@ -459,6 +460,7 @@ class SkinChooser {
 			if (!empty($wgOasis2010111) && $userSkin == 'monaco') {
 				$userSkin = 'oasis';
 			}
+			
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
 
