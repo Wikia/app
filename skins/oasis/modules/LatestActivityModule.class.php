@@ -27,8 +27,11 @@ class LatestActivityModule extends Module {
 			}
 		}
 
-		$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode(), $this->userName);
-		//$feedData = $wgMemc->get($mKey);
+		if( empty($this->userName) ) {
+			$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode());
+			$feedData = $wgMemc->get($mKey);
+		}
+
 		if (empty($feedData)) {
 
 			// data provider
@@ -49,8 +52,10 @@ class LatestActivityModule extends Module {
 		}
 
 		// Time strings are slow to calculate, but we still want them to update frequently (60 seconds)
-		$mKeyTimes = wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode(), $this->userName);
-		$this->changeList = $wgMemc->get($mKeyTimes, array());
+		if( empty($this->userName)) {
+			$mKeyTimes = wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode());
+			$this->changeList = $wgMemc->get($mKeyTimes, array());
+		}
 
 		if(empty($this->changeList) && !empty($feedData) && is_array($feedData['results'])) {
 			foreach ( $feedData['results'] as $change ) {
