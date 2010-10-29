@@ -1,6 +1,7 @@
 <?php
 /**
  * @author Nick O'Neill
+ * @author Krzysztof Krzyżaniak (eloy) - Hook routine, purging support
  * This extension provides a generic way for users to add feature sliders to any wiki
 */
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -10,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'SliderTag',
-	'author'         => "Nick O'Neill",
+	'author'         => array( "Nick O'Neill", "Krzysztof Krzyżaniak (eloy)" ),
 	'descriptionmsg' => 'slidertag-desc',
 );
 
