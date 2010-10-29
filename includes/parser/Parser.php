@@ -3593,7 +3593,7 @@ class Parser
 						# PLB - begin
 						# @author: Tomasz Odrobny
 						$this->mCurrentTagName = $name;
-						# PLB - end 
+						# PLB - end
 						$output = call_user_func_array( $this->mTagHooks[$name],
 							array( $content, $attributes, $this ) );
 					} else {
@@ -3732,12 +3732,17 @@ class Parser
 		global $wgMaxTocLevel, $wgContLang, $wgEnforceHtmlIds;
 
 		$doNumberHeadings = $this->mOptions->getNumberHeadings();
-		$showEditLink = $this->mOptions->getEditSection() && wfRunHooks('EditForm::MultiEdit:Section', array($text));
+		$showEditLink = $this->mOptions->getEditSection() && wfRunHooks('EditForm::MultiEdit:Section', array($text) /* Wikia - still needed? */);
 
 		// Do not call quickUserCan unless necessary
 		if( $showEditLink && !$this->mTitle->quickUserCan( 'edit' ) ) {
 			$showEditLink = 0;
 		}
+
+		/* Wikia change begin - @author: Macbre */
+		/* Allow extensions to force section edit link (RT #79897)*/
+		wfRunHooks('Parser::showEditLink', array(&$this, &$showEditLink));
+		/* Wikia change end */
 
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] )  || $this->mOptions->getIsPrintable() ) {

@@ -12,6 +12,7 @@ $wgExtensionFunctions[] = 'wfOasisSetup';
 function wfOasisSetup() {
 	global $wgHooks;
 
+	// modules and services
 	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityModule::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderModule::onArticleSaveComplete';
@@ -24,6 +25,7 @@ function wfOasisSetup() {
 	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosModule::onImageDelete';
 	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
+	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayModule::onShowEditLink';
 	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
 
 	// confirmations
@@ -46,7 +48,7 @@ function wfOasisSetup() {
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals');
-	
+
 	// messages
 	wfLoadExtensionMessages('Oasis');
 }
