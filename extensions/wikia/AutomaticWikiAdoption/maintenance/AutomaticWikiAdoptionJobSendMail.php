@@ -25,8 +25,8 @@ class AutomaticWikiAdoptionJobSendMail {
 			}
 
 			$adminUser = User::newFromId($adminId);
-			if ($adminUser->isEmailConfirmed()) {
-				//TODO: add some parameters (at least link to wiki)
+			$acceptMails = $adminUser->getOption('adoptionmails', null);
+			if ($acceptMails && $adminUser->isEmailConfirmed()) {
 				$adminName = $adminUser->getName();
 				$adminUser->sendMail(
 					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"),

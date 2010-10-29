@@ -301,6 +301,41 @@ class AutomaticWikiAdoptionHelper {
 		return true;
 	}
 
+	/**
+	 * Hook handler
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 */
+	static function ongetUserProfilePreferencesCustomEmailToggles(&$PreferencesForm, &$enotifminoredits) {
+		global $wgUser;
+		wfProfileIn(__METHOD__);
+
+		//for admins only
+		if (in_array('sysop', $wgUser->getGroups())) {
+			$enotifminoredits .= $PreferencesForm->getToggle('adoptionmails');
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Hook handler
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 */
+	public static function onUserToggles($toggles, $defaults = false) {
+		wfProfileIn(__METHOD__);
+
+		if (is_array($defaults)) {
+			$defaults[] = 'adoptionmails';
+		} else {
+			$toggles[] = 'adoptionmails';
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
 
 	/**
 	 * Dismisses notification about wiki adoption
