@@ -88,4 +88,19 @@ class UserProfilePageHelper {
 			return '';
 		}
 	}
+
+	public static function onAlternateEdit( &$oEditPage ) {
+		global $wgOut, $wgUser;
+		$title = $oEditPage->mTitle;
+		if( $title->getNamespace() == NS_USER ) {
+			$user = self::getUserFromTitle( $title );
+			if( !empty( $user ) && strcmp( $user->getName(), $wgUser->getName() ) != 0 ) {
+				$wgOut->clearHTML();
+				$wgOut->showErrorPage( 'userprofilepage-edit-permision-denied', 'userprofilepage-edit-permision-denied-info' );
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

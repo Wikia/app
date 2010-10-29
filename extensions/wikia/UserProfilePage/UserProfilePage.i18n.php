@@ -10,6 +10,8 @@ $messages['en'] = array(
 	'userprofilepage-edit-button' => 'Edit',
 	'userprofilepage-about-article-title' => 'About',
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
+	'userprofilepage-edit-permision-denied' => 'Edit permissions denied',
+	'userprofilepage-edit-permision-denied-info' => 'You don\'t have permissions to edit sombody\'s user page or subpage',
 
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',

@@ -32,6 +32,7 @@ function wfUserProfilePageInit() {
 	 * hooks
 	 */
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHelper::onSkinTemplateOutputPageBeforeExec';
+	$wgHooks[ 'AlternateEdit' ][] = 'UserProfilePageHelper::onAlternateEdit';
 
 	/**
 	 * messages file
