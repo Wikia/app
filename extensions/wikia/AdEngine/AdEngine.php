@@ -9,10 +9,16 @@ $wgExtensionCredits['other'][] = array(
 
 $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
+
 function wfAdEngineSetupJSVars($vars) {
-	global $wgEnableAdsInContent;
+	global $wgEnableAdsInContent, $wgEnableOpenXSPC;
 
 	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
+
+	// OpenX SPC (init in AdProviderOpenX.js)
+	$vars["wgEnableOpenXSPC"] = $wgEnableOpenXSPC;
+	$cat = AdEngine::getCachedCategory();
+	$vars["cityShort"] = $cat['short'];
 
 	return true;
 }
@@ -35,39 +41,8 @@ $wgAjaxExportList[] = "axShowOpenXAd";
  */
 function adEngineAdditionalScripts( &$out, &$sk ){
 	global $IP;
-	global $wgEnableAdsLazyLoad, $wgEnableOpenXSPC;
 	global $wgExtensionsPath,$wgStyleVersion;
 
-	if ($wgEnableAdsLazyLoad) {
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");	// moved to StaticChute.php
-		// bezen files moved to StaticChute
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.js?$wgStyleVersion'></script>\n");
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.string.js?$wgStyleVersion'></script>\n");
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.array.js?$wgStyleVersion'></script>\n");
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.error.js?$wgStyleVersion'></script>\n");
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.dom.js?$wgStyleVersion'></script>\n");
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.domwrite.js?$wgStyleVersion'></script>\n");
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.object.js?$wgStyleVersion'></script>\n");
-		//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/bezen/bezen.load.js?$wgStyleVersion'></script>\n");
-	}
-	if ($wgEnableOpenXSPC) {
-		// class autoloader probably hasn't run yet
-		if (!class_exists('AdProviderOpenX', false)) {
-			require "$IP/extensions/wikia/AdEngine/AdProviderOpenX.php";
-		}
-		$urlScript = AdProviderOpenX::getOpenXSPCUrlScript(AdProviderOpenX::OASIS_SPOTLIGHTS_AFFILIATE_ID);
-		$urlScript = str_replace("\n", ' ', $urlScript);
-		$script = <<<EOT
-<script type='text/javascript'>
-	document.write('<scr'+'ipt type="text/javascript">');
-	document.write('$urlScript');
-	document.write('</scr'+'ipt>');
-	document.write('<scr'+'ipt type="text/javascript">$.getScript(openxspc_base_url);</scr'+'ipt>');
-
-</script>
-EOT;
-		$out->addScript($script);	// @todo move to StaticChute.php
-	}
 	return true;
 } // end adEngineAdditionalScripts()
 
