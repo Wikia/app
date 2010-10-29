@@ -83,4 +83,5 @@ Your wiki has been adopted! This means that someone else has volunteered to help
 <b>The Wikia Team</b>
 
 <small><small>You can click here to <nowiki><a href=\"{{fullurl:{{ns:special}}:Preferences}}\">unsubscribe</a></nowiki> from changes to this list</small>.</small>",
+	'tog-adoptionmails' => 'Email me when something changes about wiki administration (admins only)',
 );

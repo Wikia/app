@@ -44,12 +44,13 @@ $wgSpecialPages['AutomaticWikiAdoption'] = 'SpecialAutomaticWikiAdoption';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function AutomaticWikiAdoptionInit() {
-	global $wgHooks;
+	global $wgHooks, $wgDefaultUserOptions;
+
+	$wgDefaultUserOptions['adoptionmails'] = 1;
 
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'AutomaticWikiAdoptionHelper::onSkinTemplateOutputPageBeforeExec';
-//	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'AutomaticWikiAdoption::onSkinTemplatePageBeforeUserMsg';
-//	$wgHooks['ArticleSaveComplete'][] = 'AutomaticWikiAdoption::onArticleSaveComplete';
-//	$wgHooks['BeforePageDisplay'][] = 'AutomaticWikiAdoption::onBeforePageDisplay';
+	$wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'AutomaticWikiAdoptionHelper::ongetUserProfilePreferencesCustomEmailToggles';
+	$wgHooks['UserToggles'][] = 'AutomaticWikiAdoptionHelper::onUserToggles';
 }
 
 // Ajax dispatcher
