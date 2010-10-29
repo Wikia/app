@@ -51,7 +51,7 @@
 		}
 	?>
 <?php } else { ?>
-	<!-- UserProfilePage Extension stuff /BEGIN -->
+	<!-- UserProfilePage Extension /BEGIN -->
 	<div class="wikia-avatar">
 		<a href="<?= htmlspecialchars($userPage) ?>" class="avatar-link"><?= $avatar ?></a>
 		<? if (!empty($avatarMenu)) :?>
@@ -66,8 +66,6 @@
 		<? endif ;?>
 	</div>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
-	<hr />
-
 	<?php
 		// render edit button / dropdown menu
 		if (!empty($actionButton)) {
@@ -97,16 +95,16 @@
 			<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $stats['date'] ) ;?></span>
 		</div>
 		<?php if( count($lastActionData) ): ?>
-		<div>
-			<img src="<?= wfBlankImgUrl() ;?>" class="sprite <?= $lastActionData['changeicon'] ?>" height="20" width="20">
-			<span><?= $lastActionData['changemessage']; ?></span><br />
-			<span><i><?= $lastActionData['intro']; ?></i></span>
-		</div>
+			<div class="last-action">
+				<img src="<?= wfBlankImgUrl() ;?>" class="sprite <?= $lastActionData['changeicon'] ?>" height="20" width="20">
+				<span class="last-action-title"><?= $lastActionData['changemessage']; ?></span>
+				<span class="last-action-snippet"><i><?= $lastActionData['intro']; ?></i></span>
+			</div>
 		<?php endif; ?>
 	<?php
 		}
 	?>
-	<!-- UserProfilePage Extension stuff /END -->
+	<!-- UserProfilePage Extension /END -->
 <?php } // isUserProfilePageExt ?>
 
 	<div class="tabs-container">

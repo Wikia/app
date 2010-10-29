@@ -5,6 +5,8 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
+$color-lighter-text: mix($color-page, $color-text, 50%);
+
 .WikiaRail {
 	&>.UserProfileRailModule_TopWikis {
 		position: relative;
@@ -43,7 +45,7 @@
 								size: 13px;
 							}
 
-							color: darken($color-page-border, 20%);
+							color: $color-lighter-text;
 						}
 
 						.hide-control {
@@ -270,7 +272,17 @@
 }
 
 .WikiaUserPagesHeader {
+	height: 270px;
+	
+	&>h1 {
+		border-bottom: 1px solid #D9D9D9;
+		display: block;
+		margin-left: 218px;
+	}
+
 	.wikia-avatar {
+		margin-right: 10px;
+		
 		.avatar-menu {
 			@include opacity(85);
 			display: none;
@@ -312,11 +324,12 @@
 		}
 	}
 
-	.wikia-menu-button, .wikia-button {
+	&>.wikia-menu-button, &>.wikia-button {
 		float: none;
+		margin-top: 10px;
 	}
 
-	.edits-info {
+	&>.edits-info {
 		margin-top: 5px;
 
 		.count {
@@ -331,10 +344,32 @@
 			line-height: 13px;
 		}
 	}
+
+	&>.last-action {
+		margin-top: 15px;
+		
+		img {
+			float: left;
+		}
+
+		.last-action-title, .last-action-snippet {
+			margin-left: 245px;
+			display: block;
+		}
+
+		.last-action-title {
+			color: $color-lighter-text;
+		}
+		
+		.last-action-snippet {
+			font-size: 120%;
+		}
+	}
 	
 	.tabs-container {
-		position: static;
-		margin-top: 170px;
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
 		
 		.tabs {
 			margin-bottom: 3px;
