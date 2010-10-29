@@ -238,7 +238,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	}
 
 	private function renderPreview($type = 'form' ) {
-		global  $wgOut;
+		global  $wgOut, $wgExtensionsPath;
+		
+		if($type == "form") {
+			$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/widget/allWidgets.js");
+		}
+		
 		$title = $this->mArticle->getTitle();
 		$parser = new PageLayoutBuilderParser();
 		$parserOut = $parser->parseForLayoutPreview( $this->mEditPage->textbox1, $title, $type);
@@ -514,7 +519,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	public static function getUserPermissionsErrors( &$title, &$user, &$action, &$result ) {
 		if( $title->getNamespace() == NS_PLB_LAYOUT ) {
 			$result = array();
-			if( $user->isAllowed( 'plbmanager' ) ) {
+			if( $user->isAllowed( 'plbmanager' )  && ($action == 'create' || $action == 'edit') ) {
 				$result = null;
 				return true;
 			} else {

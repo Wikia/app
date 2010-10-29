@@ -26,7 +26,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 
 			WMU_insertImage = function() {
 				$.ajax({
-				  url: wgScript + '?action=ajax&rs=layoutWidgetImage::getUrlImageAjax&name=' + $("#ImageUploadMWname").val() + "&size=" + size,
+				  url: wgScript + '?action=ajax&rs=LayoutWidgetImage::getUrlImageAjax&name=' + $("#ImageUploadMWname").val() + "&size=" + size,
 				  dataType: "json",
 				  method: "get",
 				  success: function(data) {

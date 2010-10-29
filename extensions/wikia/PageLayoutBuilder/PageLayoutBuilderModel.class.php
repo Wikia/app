@@ -194,7 +194,18 @@ class PageLayoutBuilderModel {
 	}
 
 	public static function layoutMarkAsDelete($layout_id) {
-		return wfSetWikiaPageProp(WPP_PLB_LAYOUT_DELETE, $layout_id, 1);
+		if(self::layoutIsDelete($layout_id)) {
+			return null;
+		}
+		$title = Title::newFromID($layout_id);
+		if($title->getNamespace() == NS_PLB_LAYOUT) {
+			$db = wfGetDB(DB_MASTER, array());
+			//* rename it to prevent title validation problem */
+			$db->query("update page set page_title = CONCAT(page_title, '-', page_id) where page_id = ".((int) $title->getArticleId()));	
+			$db->commit();			
+			return wfSetWikiaPageProp(WPP_PLB_LAYOUT_DELETE, $layout_id, 1);
+		}
+		return null;
 	}
 
 	public static function layoutMarkAsNoPublish($layout_id) {
