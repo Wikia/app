@@ -173,7 +173,7 @@ class UserPagesHeaderModule extends Module {
 			$this->isUserProfilePageExt = true;
 
 			// render bigger avatar (200x200) when UserProfilePage extension is enabled
-			$this->avatar = AvatarService::renderAvatar($this->userName, 200);
+			$this->avatar = AvatarService::renderAvatar($this->userName, 200, true);
 
 			$actionData = UserProfilePage::getInstance()->getUserLastAction();
 			$this->lastActionMessage = UserProfilePageHelper::formatLastActionMessage( $actionData );
