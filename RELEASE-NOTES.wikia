@@ -21,6 +21,7 @@
 * rt#72366: Improve design for multiple pagetype notifiers (macbre)
 * rt#72676: Oasis: Talk page previous versions don't have the prev version heading (macbre)
 * rt#78858: Create twitteruser tag (macbre)
+* rt#80543: Tweaks to Oasis infobox design (macbre)
 
 == Changes since 201010.3 ==
 * rt#73209: no google analytics pixel on hub pages (Nef)
