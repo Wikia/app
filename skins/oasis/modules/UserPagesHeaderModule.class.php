@@ -29,8 +29,7 @@ class UserPagesHeaderModule extends Module {
 	var $userName;
 	var $userPage;
 	var $isUserProfilePageExt = false;
-	var $lastActionMessage = '';
-	var $lastActionMessageIntro = '';
+	var $lastActionData = null;
 
 	/**
 	 * Checks whether given user name is the current user
@@ -175,16 +174,16 @@ class UserPagesHeaderModule extends Module {
 			// render bigger avatar (200x200) when UserProfilePage extension is enabled
 			$this->avatar = AvatarService::renderAvatar($this->userName, 200, true);
 
-			$actionData = UserProfilePage::getInstance()->getUserLastAction();
-			$this->lastActionMessage = UserProfilePageHelper::formatLastActionMessage( $actionData );
-			if( isset($actionData['intro']) ) {
-				$this->lastActionMessageIntro = '"' . $actionData['intro'] . '"';
+			$this->lastActionData = UserProfilePage::getInstance()->getUserLastAction();
+			if( count($this->lastActionData) ) {
+				$this->lastActionData['changemessage'] = UserProfilePageHelper::formatLastActionMessage( $this->lastActionData );
+				$this->lastActionData['changeicon'] = $this->lastActionData['type'];
 			}
 		}
 		else {
 			// render avatar (100x100)
 			$this->avatar = AvatarService::renderAvatar($this->userName, 100);
-
+			$this->lastActionData = array();
 		}
 
 		// show "Unregistered contributor" + IP for anon accounts
