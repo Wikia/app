@@ -251,7 +251,7 @@ class AdEngine {
 				'as_id' => $row->as_id,
 				'size' => $row->size,
 				'provider_id' => $row->provider_id,
-				'provider' => $this->providers[$row->provider_id],	 // information only
+				'provider' => isset($this->providers[$row->provider_id]) ? $this->providers[$row->provider_id] : 'null',	 // information only
 				'enabled' => $row->enabled,
 				'load_priority' => $row->load_priority
 			);
