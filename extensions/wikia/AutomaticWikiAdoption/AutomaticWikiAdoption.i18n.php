@@ -30,13 +30,57 @@ $messages['en'] = array(
 	'automaticwikiadoption-not-allowed' => "We're sorry, you can't adopt this wiki right now.",
 	'automaticwikiadoption-log-reason' => 'AutomaticWikiAdoption',
 	'automaticwikiadoption-notification' => "$1 is up for adoption! You can become the new owner. '''Adopt now!'''",
-	'automaticwikiadoption-mail-first-subject' => '',
-	'automaticwikiadoption-mail-first-content' => '',
-	'automaticwikiadoption-mail-first-content-HTML' => '',
-	'automaticwikiadoption-mail-second-subject' => '',
-	'automaticwikiadoption-mail-second-content' => '',
-	'automaticwikiadoption-mail-second-content-HTML' => '',
-	'automaticwikiadoption-mail-adoption-subject' => '',
-	'automaticwikiadoption-mail-adoption-content' => '',
-	'automaticwikiadoption-mail-adoption-content-HTML' => '',
+	'automaticwikiadoption-mail-first-subject' => "We haven't seen you around in a while",
+	'automaticwikiadoption-mail-first-content' => "Hi $1,
+
+It's been a couple of weeks since we've seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.
+
+If you need help taking care of the wiki, you can also allow other community members to become admins by going to http://community.wikia.com/wiki/Special:UserRights.
+
+The Wikia Team
+
+
+
+You can click here to {{fullurl:{{ns:special}}:Preferences}} from changes to this list.",
+	'automaticwikiadoption-mail-first-content-HTML' => "Hi $1,
+
+It's been a couple of weeks since we've seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.
+
+If you need help taking care of the wiki, you can also allow other community members to become admins by going to <a href=\"http://community.wikia.com/wiki/Special:UserRights\">User Rights management></a>.
+
+<b>The Wikia Team</b>
+
+
+
+<small>You can click here to <nowiki><a href=\"{{fullurl:{{ns:special}}:Preferences}}\">unsubscribe</a></nowiki> from changes to this list.</small>",
+	'automaticwikiadoption-mail-second-subject' => "We'll be putting your wiki up for adoption soon",
+	'automaticwikiadoption-mail-second-content' => "Hi $1,
+
+It's been a while since we've seen an administrator around on your wiki. It's important to have active administrators for the community so the wiki can continue to run smoothly - so we'll be putting your wiki up for adoption soon to enable to have a chance to become administrators.
+
+The Wikia Team
+
+You can click here to {{fullurl:{{ns:special}}:Preferences}} from changes to this list.",
+	'automaticwikiadoption-mail-second-content-HTML' => "Hi $1,
+
+It's been a while since we've seen an administrator around on your wiki. It's important to have active administrators for the community so the wiki can continue to run smoothly - so we'll be putting your wiki up for adoption soon to enable to have a chance to become administrators.
+
+<b>The Wikia Team</b>
+
+<small><small>You can click here to <nowiki><a href=\"{{fullurl:{{ns:special}}:Preferences}}\">unsubscribe</a></nowiki> from changes to this list</small>.</small>",
+	'automaticwikiadoption-mail-adoption-subject' => 'Your wiki has been adopted',
+	'automaticwikiadoption-mail-adoption-content' => "Hi $1,
+
+Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an admin, and you're welcome to come back at any time.
+
+The Wikia Team
+
+You can click here to {{fullurl:{{ns:special}}:Preferences}} from changes to this list.",
+	'automaticwikiadoption-mail-adoption-content-HTML' => "Hi $1,
+
+Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an admin, and you're welcome to come back at any time.
+
+<b>The Wikia Team</b>
+
+<small><small>You can click here to <nowiki><a href=\"{{fullurl:{{ns:special}}:Preferences}}\">unsubscribe</a></nowiki> from changes to this list</small>.</small>",
 );
