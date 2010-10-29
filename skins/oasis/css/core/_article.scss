@@ -301,7 +301,7 @@
 
 	.wikia-infobox {
 		$cell-width: 225px;
-		
+
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		border: 1px $color-page-border solid;
 		float: right;
@@ -322,12 +322,14 @@
 		table {
 			@include bodytext;
 			border-collapse: collapse;
+			line-height: 15px;
 			width: $cell-width;
 
 			td {
 				overflow: hidden;
 				padding: {
-					left: 10px;
+					bottom: 7px;
+					left: 0x;
 					right: 20px;
 					top: 7px;
 				}
@@ -337,15 +339,16 @@
 			th {
 				@extends td;
 				font-weight: bold;
-				
 				padding: {
-					left: 12px;
+					bottom: 7px;
+					left: 7px;
+					right: 10px;
 					top: 7px;
 				}
 				text-align: left;
 				vertical-align: top;
 				width: 30%;
-				
+
 				&.wikia-infobox-header {
 					font-size: 17px;
 					font-weight: bold;
@@ -356,43 +359,31 @@
 						left: 10px;
 						right: 10px;
 					}
-					text-align: left;	
+					text-align: left;
 				}
 			}
-			
+
 			.wikia-infobox-image {
 				text-align: center;
 				overflow: hidden;
-				padding: {
-					top: 0px;
-					bottom: 10px;
-					right: 10px;
-					left: 10px;
-				}
+				padding: 0;
 				width: $cell-width;
-				
 			}
-			
+
 			.wikia-infobox-caption {
 				text-align: center;
 				font-size: 12px;
 			}
-			
-			.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
-			
-			.wikia-infobox-subhead {
-				padding-top: 20px;
-			}
 
-			// /** the infobox content **/
-			tr {
-				display: block;
-				&.wikia-infobox-section {			
-					th:first-child {
+			.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
+
+			// sections separator
+			.wikia-infobox-section {
+				th:first-child {
+					div {
 						border-top: 1px $color-page-border solid;
-						display: block;
-						margin-top: 20px;
-						width: $cell-width;
+						margin-top: 7px;
+						padding-top: 20px;
 					}
 				}
 			}
