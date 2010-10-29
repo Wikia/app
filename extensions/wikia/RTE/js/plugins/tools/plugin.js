@@ -149,13 +149,13 @@ window.RTE.tools = {
 			// IE: ignore page scroll, use editarea scroll
 			scrollTop = scrollTopEditor;
 		}
-		else if (CKEDITOR.env.webkit) {
-			// RT #46408: use different property for Safari to get v-scroll offset
-			scrollTopEditor = RTE.instance.document.$.body.scrollTop;
+		else 
+		{
+			if (CKEDITOR.env.webkit) {
+				// RT #46408: use different property for Safari to get v-scroll offset
+				scrollTopEditor = RTE.instance.document.$.body.scrollTop;
+			}
 
-			scrollTop = scrollTopEditor;
-		}
-		else {
 			// use both page and editarea scroll
 			scrollTop = scrollTopPage + scrollTopEditor;
 

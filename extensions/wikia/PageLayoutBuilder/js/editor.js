@@ -15,6 +15,7 @@
 		Data: {},
 		Library: {},
 		Lang: {},
+		rteReadyDelay: 1000,
 		nextId: 1,
 		nextWidgetId: 1000
 	});
@@ -254,6 +255,8 @@
 			this.document.on('applyStyle',this.onRTEBeforeApplyStyleCallback);
 			this.document.on('afterApplyStyle',this.onRTEAfterApplyStyleCallback);
 			
+			this.instance.focus();
+			
 			this.fire('rebind',this);
 		},
 		
@@ -343,7 +346,6 @@
 				rebind: this.onRTERebind,
 				requestcss: this.onRTERequestCSS,
 				modeswitch: this.onRTEModeSwitch,
-				modeready: this.onRTEModeReady,
 				beforestyle: this.insertPlaceholders,
 				afterstyle: this.replacePlaceholders,
 				beforecommand: this.insertPlaceholders,
@@ -548,18 +550,6 @@
 			}
 		},
 		
-		onRTEModeReady: function (rte,mode) {
-			/*
-			if (mode == 'wysiwyg') {
-				Timer.once(function(){
-//					rte.instance.getMode('wysiwyg').focus();
-//					rte.instance.focusManager.focus();
-					rte.instance.focus();
-				},500);
-			}
-			*/
-		},
-		
 		getWidgetElements : function () {
 			return $('.plb-rte-widget',this.rte.getBody());
 		},
@@ -705,10 +695,12 @@
 			$('li',addMenu)
 				.css('cursor','pointer')
 				.bind({
-					click: $.proxy(this.onAddElementClick,this),
-					mouseenter: $.proxy(this.onMouseEnter,this),
-					mouseout: $.proxy(this.onMouseOut,this)
-				});
+					click: $.proxy(this.onAddElementClick,this)
+				})
+				.hover(
+					$.proxy(this.onMouseEnter,this),
+					$.proxy(this.onMouseLeave,this)
+				);
 			WikiaButtons.add(this.addButton,{
 				click:WikiaButtons.clickToggle
 			});
@@ -771,8 +763,8 @@
 			// For each widget found do ...
 			$.each(l,$.proxy(function(i,e){
 				var html = PLB.Library[e.getType()].listItemHtml
-					.replace("[$ID]",e.getId())
-					.replace("[$CAPTION]",e.getCaption())
+					.replace("[$ID]",$.htmlentities(e.getId()))
+					.replace("[$CAPTION]",$.htmlentities(e.getCaption()))
 					.replace("[$BUTTONS]",bs);
 				$(html).appendTo(this.widgetsList);
 			},this));
@@ -780,23 +772,29 @@
 			this.widgetsList.css('display',l.length>0?"block":"none");
 			// Substitute the overall count of widgets in the list header
 			$('.plb-widgets-count',this.el).html(l.length);
-			// Visual hovering - bind to mouseenter and mouseout of each child
+			// Visual hovering for all children
 			this.widgetsList.children()
-				.bind({
-					mouseenter: $.proxy(this.onMouseEnter,this),
-					mouseout: $.proxy(this.onMouseOut,this)
-				});
+				.hover(
+					$.proxy(this.onMouseEnter,this),
+					$.proxy(this.onMouseLeave,this)
+				);
 			// Bind to the edit and delete buttons from the overlay
 			$('.edit',this.widgetsList).click($.proxy(this.onItemEditClick,this));
 			$('.delete',this.widgetsList).click($.proxy(this.onItemDeleteClick,this));
+			
+			this.refreshHovers(this.ed.getWidgetElements());
 		},
 		
 		onMouseEnter : function (e) {
-			$(e.target).addClass('hover');
+			var el = $(e.target).closest('li');
+			el.addClass('hover');
+			$().log(el[0],'mouseenter');
 		},
 		
-		onMouseOut : function (e) {
-			$(e.target).removeClass('hover');
+		onMouseLeave : function (e) {
+			var el = $(e.target).closest('li');
+			el.removeClass('hover');
+			$().log(el[0],'mouseleave');
 		},
 		
 		// Handle click on edit button in the widgets list
@@ -817,7 +815,7 @@
 
 		// Handle click on add element button
 		onAddElementClick : function (e) {
-			var el = $(e.target);
+			var el = $(e.target).closest('li');
 			this.addButton.removeClass('hover');
 			this.fire('create',el.attr(PLB.PARAM_TYPE));
 			return false;
@@ -825,6 +823,21 @@
 		
 		onOverlayEditClick : function(node) {
 			this.fire('edit',$(node));
+		},
+		
+		refreshHovers : function(elements) {
+			elements.each(function(i,el){
+				el = $(el)
+					.unbind('.plbhover')
+					.bind({
+						'mouseenter.overlay': function() {
+							el.addClass('hover');
+						},
+						'mouseleave.overlay': function() {
+							el.removeClass('hover');
+						}
+					});
+			});
 		}
 		
 	});
@@ -879,6 +892,9 @@
 			$('[name],',this.form).change($.proxy(this.onChange,this));
 			$('[name],',this.form).blur($.proxy(this.onChange,this));
 			$('input[name], textare[name]',this.form).keyup($.proxy(this.onChange,this));
+			$('.helpicon',this.form).each(function(i,el){
+				new PLB.Tooltip(el);
+			});
 			this.onChange();
 
 			// Show modal box
@@ -1089,6 +1105,43 @@
 		}
 		return new PLB.PropertyEditors[type](type,values);
 	};
+	
+	PLB.Tooltip = $.createClass(Object,{
+		
+		ts: null,
+		
+		el: null,
+		tip: null,
+		
+		constructor: function( el ) {
+			this.el = $(el);
+			this.el.hover($.proxy(this.enter,this),$.proxy(this.leave,this));
+			this.tip = $('>.helpicon-text',this.el);
+			this.ts = $('#TooltipHolder') || $('<div id="TooltipHolder"')
+		},
+		
+		enter: function() {
+			/*
+			var offset = this.el.offset();
+			offset.left += this.el.outerWidth() + 2;
+			this.tip
+				.css('position','absolute')
+				.css('left',offset.left + 'px')
+				.css('top',offset.top + 'px');
+			*/
+			this.tip
+				.css('position','absolute')
+				.css('left',(this.el.outerWidth() + 2)+'px')
+				.css('top','0');
+			this.tip.css('display','block');
+		},
+		
+		leave: function() {
+			this.tip.css('display','none');
+		}
+		
+		
+	});
 	
 	window.plb = new PLB.Editor();	
 	

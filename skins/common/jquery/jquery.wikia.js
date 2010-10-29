@@ -530,6 +530,11 @@ jQuery.fn.placeholder = function() {
 	}
 }
 
+$.htmlentities = function ( s ) {
+	return String(s).replace(/\&/g,'&'+'amp;').replace(/</g,'&'+'lt;')
+    	.replace(/>/g,'&'+'gt;').replace(/\'/g,'&'+'apos;').replace(/\"/g,'&'+'quot;');
+}
+
 $.extend({
 	createClass: function (sc,o) {
 //		$().log(sc,'createClass-superclass');
