@@ -38,12 +38,12 @@ $wgAutoloadClasses['LayoutWidgetBase'] = $dir . "widget/LayoutWidgetBase.class.p
 $wgPLBwidgets['plb_input'] = 'LayoutWidgetInput';
 $wgAutoloadClasses['LayoutWidgetInput'] = $dir . "widget/LayoutWidgetInput.class.php";
 
-$wgPLBwidgets['plb_mlinput'] = 'LayoutWidgetMultiLineInput';
 $wgAutoloadClasses['LayoutWidgetMultiLineInput'] = $dir . "widget/LayoutWidgetMultiLineInput.class.php";
 $wgAjaxExportList[] = 'LayoutWidgetImage::getUrlImageAjax';
 
 $wgPLBwidgets['plb_image'] = 'LayoutWidgetImage';
 $wgAutoloadClasses['LayoutWidgetImage'] = $dir . "widget/LayoutWidgetImage.class.php";
+$wgPLBwidgets['plb_mlinput'] = 'LayoutWidgetMultiLineInput';
 
 $wgPLBwidgets['plb_sinput'] = 'LayoutWidgetSelectInput';
 $wgAutoloadClasses['LayoutWidgetSelectInput'] = $dir . "widget/LayoutWidgetSelectInput.class.php";
