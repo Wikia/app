@@ -27,13 +27,14 @@ class AutomaticWikiAdoptionJobSendMail {
 			$adminUser = User::newFromId($adminId);
 			if ($adminUser->isEmailConfirmed()) {
 				//TODO: add some parameters (at least link to wiki)
+				$adminName = $adminUser->getName();
 				$adminUser->sendMail(
 					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"),
-					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content"),
+					wfMsgExt("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", array('content', 'parsemag'), $adminName),
 					null, //from
 					null, //replyto
 					'AutomaticWikiAdoption',
-					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML")
+					wfMsgExt("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", array('content', 'parsemag'), $adminName)
 				);
 			}
 		}
