@@ -27,3 +27,8 @@ AdProviderOpenX.getUrl = function (baseUrl, slotname, zoneId, affiliateId, hub, 
 
 	return AdProviderOpenX.url;
 }
+
+if (window.wgEnableOpenXSPC) {
+	var openxspc_base_url = AdProviderOpenX.getUrl("/__spotlights/spcjs.php", "", "", 3, window.cityShort, "");
+	$.getScript(openxspc_base_url);
+}
