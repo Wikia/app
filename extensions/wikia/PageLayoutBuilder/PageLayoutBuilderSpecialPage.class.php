@@ -106,7 +106,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		if( $this->isCategorySelect() ) {
 			$wgRequest->setVal('action', 'edit');
 			CategorySelectInit(true);
-			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, true);
+			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null, true);
 		}
 		
 		$this->renderCreatePage();
@@ -615,4 +615,3 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 	}
 }
-
