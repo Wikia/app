@@ -31,6 +31,7 @@ $messages['en'] = array(
 	"wikistats_unreg_wikians_count" => "$1 register $2 found",
 	"wikistats_latest_pageviews" => "Latest visited pages",
 	"wikistats_latest_userviews" => "Active users (page views)",
+	"wikistats_active_useredits" => "Activity (per language)",
 	"wikistats_latest_userviews_pages" => "$1 visited pages",
 	"wikistats_latest_userviews_list" => "List of users who have visited Wiki in the last hour (order by latest visit)",
 	"wikistats_latest_pageviews_subtitle" => "in the last $1 minutes",
@@ -231,6 +232,8 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 	"wikistats_language_top" => "Top $1 languages",
 	"wikistats_language_all" => "All languages",
 	"wikistats_language_toplist" => "de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh",
+	"wikistats_recordspager" => "Showing '''$1''' to '''$2''' of '''$3''' records.",
+	"wikistats_title" => "Title",
 );
 
 /** Message documentation (Message documentation)

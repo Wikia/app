@@ -1374,4 +1374,49 @@ class WikiStatsXLS {
 		unset($columnRange);
 		$this->setXLSFileEnd();
 	}
+	
+	public function makeWikiaActivity($params)	{
+		$this->setXLSHeader();
+
+		#----
+		$this->setXLSFileBegin();
+		
+		$col = 1;
+		$this->writeXLSLabel(1, $col, wfMsg("wikistats_active_useredits"));
+		#lang
+		$this->writeXLSLabel(2, $col, wfMsg('wikistats_wikilang'));
+		$this->writeXLSLabel(2, $col+1, @$params['lang']);
+		#category
+		$col = 1;
+		$this->writeXLSLabel(3, $col, wfMsg('wikistats_wikicategory'));
+		$this->writeXLSLabel(3, $col+1, @$params['cat']);		
+		#date
+		$col = 1;
+		$this->writeXLSLabel(4, $col, wfMsg('wikistats_date'));
+		$this->writeXLSLabel(4, $col+1, @$params['year']);
+		$this->writeXLSLabel(4, $col+2, @$params['month']);				
+
+		$col = 1;
+		$this->writeXLSLabel(5, $col, '#');
+		$this->writeXLSLabel(5, $col+1, wfMsg('wikistats_database'));
+		$this->writeXLSLabel(5, $col+2,wfMsg('wikistats_title'));	
+		$this->writeXLSLabel(5, $col+3,wfMsg('wikistats_wikiurl'));	
+		$this->writeXLSLabel(5, $col+4,wfMsg('wikistats_unique_users'));	
+		$this->writeXLSLabel(5, $col+5,wfMsg('wikistats_edits'));	
+		$this->writeXLSLabel(5, $col+6,wfMsg('wikistats_articles_text'));	
+		$this->writeXLSLabel(5, $col+7,wfMsg('wikistats_last_edit'));	
+										
+		$row = 6;
+		foreach ($this->mData as $city_id => $columns) {
+			$row++;
+			$col = 1;
+			foreach ( $columns as $id => $value ) {
+				if ( $id > 7 ) continue;
+				$this->writeXLSLabel($row,$col,$value);
+				$col++;
+			}
+		}
+							
+		$this->setXLSFileEnd();
+	}	
 }

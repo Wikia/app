@@ -93,6 +93,65 @@ class WikiStatsAjax {
         wfProfileOut( __METHOD__ );
 		return $out;		
 	}
+	
+	private function __activity() {
+		global $wgOut, $wgUser, $wgRequest;
+        wfProfileIn( __METHOD__ );
+		
+		$op 		= $wgRequest->getVal('op', '');
+		$lang    	= $wgRequest->getVal('lang');
+		$cat		= $wgRequest->getVal('cat');
+		$year 		= $wgRequest->getVal('year', date('Y'));
+		$month		= $wgRequest->getVal('month', date('m'));
+		$limit		= $wgRequest->getVal('limit');
+		$offset		= $wgRequest->getVal('offset');
+		$loop		= $wgRequest->getVal('loop');
+		$order		= $wgRequest->getVal('order');
+		$numOrder	= $wgRequest->getVal('numOrder');
+
+		$result = array(
+			'sEcho' => intval($loop), 
+			'iTotalRecords' => 0, 
+			'iTotalDisplayRecords' => 0, 
+			'sColumns' => '',
+			'aaData' => array()
+		);
+				
+		if ( empty($wgUser) ) { return ""; }
+		if ( $wgUser->isBlocked() ) { return ""; }
+		if ( !$wgUser->isLoggedIn() ) { return ""; }
+	
+		$params = array(
+			'year' 		=> $year, 
+			'month'		=> $month, 
+			'lang'		=> $lang, 
+			'cat'		=> $cat, 
+			'order' 	=> $order, 
+			'limit'		=> $limit, 
+			'offset' 	=> $offset		
+		);
+		
+		if ( empty($op) ) {
+			#error_log ( print_r($params, true) );
+			$data = $this->mStats->getWikiActivity( $params );
+
+			if ( !empty($result) ) {
+				$result['iTotalRecords'] = intval(count($data['res']));
+				$result['iTotalDisplayRecords'] = isset( $data['cnt'] ) ?  intval( $data['cnt'] ) : 0;
+				$result['sColumns'] = 'id,dbname,title,url,users,edits,articles,lastedit,users_diff,edits_diff,articles_diff';
+				$result['aaData'] = ( $result['iTotalRecords'] > 0 ) ? array_values($data['res']) : array();
+			}
+		} elseif ( $op == 'xls' ) {
+			$data = $this->mStats->getWikiActivity( $params, 1 );
+			
+			$XLSObj = new WikiStatsXLS( $this, $data['res'], wfMsg('wikistats_active_useredits'));
+			$XLSObj->makeWikiaActivity($params);	
+			exit;		
+		}
+		
+		wfProfileOut( __METHOD__ );			
+		return Wikia::json_encode($result); 		
+	}
 }
 
 function axWStats() {

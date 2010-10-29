@@ -41,10 +41,10 @@ class WikiStats {
     const EVENT_LOG_TYPE = 'stats';
     const PV_LIMIT = 100;
     const PV_DELTA = 180;
+    const DEF_LIMIT = 25;
+   
+  	var $mAllowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
 	
-	// show only local statistics for wikia
-	var $localStats = false;
-
 	/**
 	 * initialization
 	 * @param $cityid
@@ -86,7 +86,7 @@ class WikiStats {
     public function setHub($value)			{ $this->mHub = $value; }
     public function setLang($value)			{ $this->mLang = $value; }
 
-	public function getLocalStats() 		{ return $this->localStats; }
+	public function getLocalStats() 		{ return $this->mLocalStats; }
     public function getRangeColumns() 		{ return $this->mRange; }
     public function getRangeDate() 			{ return $this->mDateRange; }
     public function getUpdateDate() 		{ return $this->mUpdateDate; }
@@ -101,6 +101,20 @@ class WikiStats {
 			$this->mSkin = $wgUser->getSkin();
 		}
 		return $this->mSkin;
+	}
+
+	public function isAllowed() {
+		global $wgUser;
+		$userRights = $wgUser->getEffectiveGroups();         
+		$allowed = 0;
+		foreach ( $userRights as $id => $right ) {
+			if ( in_array( $right, $this->mAllowedGroups ) ) {
+				$allowed = 1; 
+				break;
+			}
+		}
+		
+		return $allowed;
 	}
 
 	private function __load() {
@@ -1123,4 +1137,206 @@ class WikiStats {
 		
 		return $date;
 	}
+	
+	/*
+	 * Wikis activity (per language, category and date)
+	 * 
+	 * @access public
+	 * 
+	 * list of Wikis activity for language, category and date
+	 */		
+	public function getWikiActivity( $params = array(), $xls = 0 ) {
+		global $wgLang, $wgStatsDB, $wgUser, $wgMemc;
+		wfProfileIn( __METHOD__ );
+		
+		if ( empty($params) ) {
+			wfProfileOut( __METHOD__ ) ;
+			return false;
+		}
+		
+		# only for special users
+		if ( !$this->isAllowed() ) {
+			Wikia::log( __METHOD__, false, "unauthorized user: " . $wgUser->getName() . " tried to retrieve data");
+			return false;
+		}
+		
+		$data = array('cnt' => 0, 'res' => null);
+		
+		$year  = ( isset( $params['year']  )  ) ? intval($params['year'])  : date('Y');
+		$month = ( isset( $params['month'] )  ) ? intval($params['month']) : date('m');
+		$lang  = ( isset( $params['lang']  )  ) ? $params['lang']  : ''; 
+		$cat   = ( isset( $params['cat']   )  ) ? $params['cat'] : '';
+		$order = ( isset( $params['order'] )  ) ? $params['order'] : '';
+		$limit = ( isset( $params['limit'] )  ) ? intval($params['limit']) : self::DEF_LIMIT;
+		$offset =( isset( $params['offset'])  ) ? intval($params['offset']) : 0;
+		
+		$dbr = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
+				
+		# order 
+		$orderOptions = array(
+			'id'		=> 'wiki_id',
+			'dbname'	=> 'city_dbname',
+			'title'		=> 'city_title',
+			'url'		=> 'city_url',
+			'users'		=> 'users_all',
+			'edits'		=> 'articles_edits',
+			'articles'	=> 'articles',
+			'lastedit' 	=> 'city_last_timestamp'
+		);
+		$sql_order = 'null';
+		if ( !empty($order) ) {
+			$options = array();
+			$tmp = explode('|', $order);
+			if ( !empty($tmp) ) {
+				foreach ( $tmp as $inx ) {
+					@list ( $val, $desc ) = explode(':', $inx);
+					$options[] = $orderOptions[$val] . " " . $desc;
+				}
+			}
+			
+			if ( !empty($options) ) {
+				$sql_order = implode(',', $options);
+			}
+		}
+				
+		# tables		
+		$tables = array( 
+			'wikia_monthly_stats', 
+			'wikicities.city_list AS cl', 
+			'wikicities.city_cat_mapping AS ccm' 
+		);
+				
+		#conditions
+		$conditions = array(
+			'stats_date' => sprintf("%04d%02d", $year, $month),
+			'city_public' => 1
+		);
+		
+		if ( !empty($lang) ) {
+			$conditions['cl.city_lang'] = $lang;
+		}
+		
+		if ( !empty($cat) ) {
+			$conditions['ccm.cat_id'] = $cat;
+		}
+		
+		# join
+		$join = array(
+			'wikicities.city_list AS cl' => array( 
+				'JOIN', 
+				'cl.city_id = wiki_id' 
+			),
+			'wikicities.city_cat_mapping AS ccm' => array( 
+				'JOIN', 
+				'ccm.city_id = wiki_id' 
+			),
+		);
+		
+		# order & limit
+		$order = $xls == 1 ? array() : array(
+			'ORDER BY'  => $sql_order,
+			'LIMIT' 	=> $limit,
+			'OFFSET'	=> $offset
+		);
+		
+		
+    	$memkey = sprintf( "count_%s_%s_%s_%d", __METHOD__, implode('_', array_keys($conditions)), implode('_', array_values($conditions)), $xls );
+		$data['cnt'] = $wgMemc->get( $memkey );
+				
+		/* number of records */
+		if ( empty($data['cnt']) ) {
+			$oRow = $dbr->selectRow(
+				$tables,
+				array ( 'count(0) as cnt' ),
+				$conditions,
+				__METHOD__,
+				'',
+				$join
+			);
+			
+			if ( is_object($oRow) ) {
+				$data['cnt'] = $oRow->cnt;
+			}
+			$wgMemc->set($memkey, $data['cnt'], 60 * 60 * 3);
+		}
+		
+		if ( $data['cnt'] > 0 ) {
+			
+			$memkey = sprintf( "data_%s_%s_%d", __METHOD__, $year.'_'.$month.'_'.$lang.'_'.$cat.'_'.$order.'_'.$limit.'_'.$offset.'_'.$wgLang->getCode(), $xls );
+			$data['res'] = $wgMemc->get( $memkey );
+			
+			if ( empty($data['res']) ) {
+				$data['res'] = array();
+				$oRes = $dbr->select ( 
+					$tables,
+					array( 
+						'cl.city_id', 
+						'city_dbname', 
+						'city_title', 
+						'city_url', 
+						'users_all', 
+						'articles', 
+						'articles_edits', 
+						'city_last_timestamp' 
+					),
+					$conditions,
+					__METHOD__,
+					$order,
+					$join
+				);	
+
+				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+					$data['res'][$oRow->city_id] = array(
+						$oRow->city_id,
+						$oRow->city_dbname,
+						$oRow->city_title,
+						$oRow->city_url,
+						$oRow->users_all,
+						$oRow->articles_edits,						
+						$oRow->articles,
+						$wgLang->timeanddate( $oRow->city_last_timestamp ),
+						0, # prev # users
+						0, # prev # edits
+						0  # prev # articles
+					);
+				}
+				$dbr->freeResult( $oRes );		
+				
+				if ( !empty($data['res']) && $xls == 0 ) {
+					$prev_year = $year;
+					$prev_month = $month - 1;
+					if ( $prev_month == 0 ) {
+						$prev_month = 12; $prev_year--;
+					}
+					$oRes = $dbr->select ( 
+						array( 'wikia_monthly_stats' ),
+						array( 
+							'wiki_id', 
+							'users_all', 
+							'articles', 
+							'articles_edits', 
+						),
+						array(
+							'stats_date' => sprintf("%04d%02d", $prev_year, $prev_month),
+							'wiki_id' => array_keys($data['res'])
+						),
+						__METHOD__
+					);	
+					
+					while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+						$data['res'][$oRow->wiki_id][7] = $oRow->users_all;
+						$data['res'][$oRow->wiki_id][8] = $oRow->articles_edits;
+						$data['res'][$oRow->wiki_id][9] = $oRow->articles;
+					}
+					$dbr->freeResult( $oRes );						
+				}		
+				
+				$wgMemc->set($memkey, $data['res'], 60 * 60 * 3);
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $data;
+	}
+
 };
