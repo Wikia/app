@@ -4,10 +4,13 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 
+$toolbox-width: 300px;
 $manager-height: 36px;
 $color-list-background: darken($color-page,30%);
 
 td.plb-toolbox {
+	width: $toolbox-width;
+	max-width: $toolbox-width;
 	vertical-align: top;
 	
 	a, a:hover, a:active, a:visited {
@@ -229,7 +232,7 @@ td.plb-toolbox {
 					margin-left: 3px;
 					width: 16px;
 					height: 16px;
-					background: url(/extensions/wikia/PageLayoutBuilder/images/trash-icon.png)
+					background: url(/extensions/wikia/PageLayoutBuilder/images/trash-icon.png);
 				}
 			}
 	
@@ -284,6 +287,25 @@ $plb-window-items-margin: 6px;
 			width: auto;
 		}
 		
+	}
+	
+	.helpicon {
+		display: inline;
+		zoom: 1;
+		display: inline-block;
+		position: relative;
+		background-image: url(/skins/common/images/icon_help.png);
+		width: 16px;
+		height: 16px;
+	}
+	
+	.helpicon-text {
+		display: none;
+		
+		border: 2px solid mix($color-body,$color-buttons,70%);
+		background: $color-page;
+		width: 300px;
+		padding: 3px 6px;
 	}
 	
 	.plb-pe-validation-status {

@@ -57,7 +57,7 @@ abstract class LayoutWidgetBase {
 				}
 
 			}
-			return Xml::element($data["__plb_type"], $params);
+			return RTEParser::markEntities(Xml::element($data["__plb_type"], $params));
 		}
 		return "";
 	}
@@ -208,11 +208,13 @@ abstract class LayoutWidgetBase {
 
 	public function getAttrCaptions() {
 		$messages = array();
+		$this->overrideAttrCaptions($messages);
 		$attrs = $this->getAllAttrs();
 		foreach ($attrs as $name => $value) {
-			$messages[$name] = wfMsg("plb-property-editor-$name");
+			if (empty($messages[$name])) {
+				$messages[$name] = wfMsg("plb-property-editor-$name");
+			}
 		}
-		$this->overrideAttrCaptions($messages);
 		return $messages;
 	}
 

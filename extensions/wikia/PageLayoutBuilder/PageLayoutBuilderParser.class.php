@@ -92,7 +92,12 @@ class PageLayoutBuilderParser extends Parser {
 		return true;
 	}
 
-	public static function parserTag( $content, $attributes,Parser $self ) {
+	public static function parserTag( $content, $attributes, Parser $self ) {
+		// TODO: move to RTEParser
+		foreach ($attributes as $k => $v) {
+			$attributes[$k] = htmlspecialchars_decode(RTEParser::unmarkEntities($v),ENT_QUOTES);
+		}
+
 		$value = (isset($attributes['id']) && isset($self->formValues[$attributes['id']])) ? $self->formValues[$attributes['id']]:"";
 		$error = (isset($attributes['id']) && isset($self->errorsList[$attributes['id']]));
 
@@ -107,18 +112,18 @@ class PageLayoutBuilderParser extends Parser {
 		}
 
 		$marker = $self->uniqPrefix() . "-WIDGET_PLB-{".count($self->plbMarkers)."}-\x7f";
-		
+
 		if(empty($oWidget)) {
 			return self::parserReturnMarker($self, $marker, wfMsg('plb-special-form-unknow-error'));
 		}
-		
+
 		global $wgRTEParserEnabled;
 		if(empty($wgRTEParserEnabled)) {
 			$validateElementStatus = $oWidget->validateAttribute($self->mPlbFormElements);
 			if ($validateElementStatus !== true) {
 				return self::parserReturnMarker($self, $marker, $validateElementStatus);
 			}
-			
+
 			$self->getOptions();
 
 			if(!empty($self->getOptions()->isArticlePreview) && ($self->getOptions()->isArticlePreview)) {
@@ -147,7 +152,7 @@ class PageLayoutBuilderParser extends Parser {
 	public static function parserLayoutTag( $content, $attributes, Parser $self ) {
 		global $wgUser, $wgPLBwidgets;
 		$title = $self->Title();
-		
+
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
 
 		if(empty($attributes['layout_id'])) {
@@ -180,7 +185,7 @@ class PageLayoutBuilderParser extends Parser {
 			$value = isset( $formValues[$id] ) ? $formValues[$id]:"";
 
 			$oWidget = LayoutWidgetBase::getNewWidget($name, $elementAttributes, $value );
-		
+
 			$validateElementStatus = $oWidget->validateAttribute($elementsOut);
 			if($validateElementStatus === true) {
 				if($oWidget->isEmpty()) {
@@ -196,12 +201,12 @@ class PageLayoutBuilderParser extends Parser {
 				$element->outertext = self::parserReturnMarker($self, $marker, $validateElementStatus);
 			}
 		}
-		
+
 		$self->getOptions();
 		if(!empty($self->getOptions()->isPreparse) && ($self->getOptions()->isPreparse)) {
 			return $dom->__toString();
 		}
-		
+
 		return $self->recursiveTagParse( self::removeGalleryAndIP($dom->__toString()) );
 	}
 	/*
@@ -213,7 +218,7 @@ class PageLayoutBuilderParser extends Parser {
 		if(!(PageLayoutBuilderModel::articleIsFromPLB( $page_title->getArticleID() ) == $layout_id )) {
 			return false;
 		}
-		
+
 		$oArticle = new Article( $page_title );
 		$cArticle = $oArticle->getContent();
 
@@ -264,7 +269,7 @@ class PageLayoutBuilderParser extends Parser {
 		if($wgRTEParserEnabled) {
 			return true;
 		}
-		
+
 		if($self->getTitle()->getNamespace() ==  NS_PLB_LAYOUT) {
 			$text = self::removeGalleryAndIP($text);
 		}
