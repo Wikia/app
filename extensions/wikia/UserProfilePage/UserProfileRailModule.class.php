@@ -87,7 +87,7 @@ class UserProfileRailModule extends Module {
 		if( $wgDevelEnvironment ) {//DevBox test
 			$wikis = array(
 				4832 => 72,
-				3613 => 60,
+				831 => 60,
 				4036 => 35,
 				177 => 12
 			); // test data
@@ -96,8 +96,19 @@ class UserProfileRailModule extends Module {
 				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+				if( isset($themeSettings['wordmark-image-url']) ) {
+					$wikiLogo = $themeSettings['wordmark-image-url'];
+				}
+				elseif( isset($themeSettings['wordmark-text']) ) {
+					$wikiLogo = '';
+					$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
+				}
+				else {
+					$wordmarkText = '';
+				}
 
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
+				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
 			}
 
 		} else {
@@ -107,8 +118,19 @@ class UserProfileRailModule extends Module {
 				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+				if( isset($themeSettings['wordmark-image-url']) ) {
+					$wikiLogo = $themeSettings['wordmark-image-url'];
+				}
+				elseif( isset($themeSettings['wordmark-text']) ) {
+					$wikiLogo = '';
+					$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
+				}
+				else {
+					$wordmarkText = '';
+				}
 
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
+				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
 			}
 		}
 
