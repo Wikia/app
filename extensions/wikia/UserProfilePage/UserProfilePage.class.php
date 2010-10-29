@@ -22,8 +22,8 @@ class UserProfilePage {
 		return self::$mInstance;
 	}
 
-	public function __construct( User $user ) {
-		global $wgUser, $wgSitename;
+	private function __construct( User $user ) {
+		global $wgSitename;
 
 		$this->user = $user;
 		$this->templateEngine = new EasyTemplate( dirname(__FILE__) . "/templates/" );
@@ -235,4 +235,57 @@ class UserProfilePage {
 
 		return $this->user->getId() == $wgUser->getId();
 	}
+
+	public function getUserLastActionCacheKey() {
+		return wfMemcKey( __CLASS__, 'userLastAction', $this->getUser()->getName() );
+	}
+
+	/**
+	 * return user's last activity on wiki (create/adit/delete article etc.)
+	 * @author ADi
+	 * @return array
+	 */
+	public function getUserLastAction() {
+		global $wgMemc, $wgContentNamespaces, $wgLang;
+
+		$mKey = $this->getUserLastActionCacheKey();
+		//TODO: enable caching
+		//$cachedData = $wgMemc->get($mKey);
+		if (empty($cachedData)) {
+
+			$maxElements = 1;
+			$includeNamespaces = implode('|', $wgContentNamespaces);
+			$parameters = array(
+				'type' => 'widget',
+				'maxElements' => $maxElements,
+				'flags' => array('shortlist'),
+				'uselang' => $wgLang->getCode(),
+				'includeNamespaces' => $includeNamespaces
+			);
+
+			$feedProxy = new ActivityFeedAPIProxy($includeNamespaces, $this->getUser()->getName());
+			$feedProvider = new DataFeedProvider($feedProxy, 1, $parameters);
+			$feedData = $feedProvider->get($maxElements);
+
+			if( isset($feedData['results']) ) {
+				$cachedData = array_shift( $feedData['results'] );
+			}
+			else {
+				$cachedData = array();
+			}
+			$this->setUserLastActionToCache( $cachedData );
+		}
+
+		return $cachedData;
+	}
+
+	/**
+	 * (this is a separate function in case we want to call it from LatestActivityModule)
+	 * @param array $actionData
+	 */
+	public function setUserLastActionToCache( Array $actionData ) {
+		global $wgMemc;
+		$wgMemc->set( $this->getUserLastActionCacheKey(), $actionData, 3600 );
+	}
+
 }
