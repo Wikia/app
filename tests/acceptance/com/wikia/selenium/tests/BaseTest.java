@@ -34,24 +34,21 @@ import java.util.Map;
  */
 public class BaseTest {
 
-	public static final String TIMEOUT = "60000";
+	public static final String TIMEOUT = "120000";
 	private String webSite;
 	private XMLConfiguration testConfig;
 	
-	public XMLConfiguration getTestConfig(){
+	public XMLConfiguration getTestConfig() throws Exception{
 		if (null == this.testConfig) {
 			String testsdir = System.getenv("TESTSDIR");
 			if (null == testsdir) {
 				testsdir = System.getenv("PWD") + "/source/tests";
 			}
 			if (null != testsdir) {
-				try {
-					this.testConfig = new XMLConfiguration();
-					this.testConfig.setBasePath(testsdir);
-					this.testConfig.setFileName("config.xml");
-					this.testConfig.load();
-				} catch (ConfigurationException ce) {
-				}
+				this.testConfig = new XMLConfiguration();
+				this.testConfig.setBasePath(testsdir);
+				this.testConfig.setFileName("config.xml");
+				this.testConfig.load();
 			}
 		}
 		return this.testConfig;
@@ -83,12 +80,7 @@ public class BaseTest {
 		session().type("wpPassword2Ajax", password);
 		session().click("wpLoginattempt");
 		waitForElement("//body");
-		if(isOasis()) {
-			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
-		} else {
-			waitForElement("//*[@id=\"header_username\"]/a[text() = \"" + username + "\"]");
-		}
-		
+		waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
 	}
 
 	protected void login() throws Exception {
@@ -108,14 +100,15 @@ public class BaseTest {
 	}
 
 	protected void loginAsRegular() throws Exception {
-		login(getTestConfig().getString("ci.user.regular.username"), getTestConfig().getString("ci.user.wikiabot.regular"));
+		login(getTestConfig().getString("ci.user.regular.username"), getTestConfig().getString("ci.user.regular.password"));
 	}
 
 	protected void logout() throws Exception {
-		session().open("index.php?useskin=monaco");
+		session().open("index.php?useskin=oasis");
 		session().click("link=Log out");
 		session().waitForPageToLoad(TIMEOUT);
-		assertTrue(session().isElementPresent("//a[@id='login']"));
+		assertTrue(session().isTextPresent("You have been logged out."));
+		assertTrue(session().isElementPresent("//a[@class='ajaxLogin']"));
 	}
 
 	protected void waitForElement(String elementId, int timeOut)
