@@ -33,11 +33,6 @@ foreach($languageLinks as $item) {
 		<?php 
 		} ?>
 		
-		<!--	<li class="landingpage-site1" style="background-image: url(<?= $spriteFileUrl ?>)" ><a alt="<?= wfMsg('landingpage-site1-alt') ?>" href="<?= wfMsg('landingpage-site1-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site2" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site2-alt') ?>" href="<?= wfMsg('landingpage-site2-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site3" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site3-alt') ?>" href="<?= wfMsg('landingpage-site3-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site4" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site4-alt') ?>" href="<?= wfMsg('landingpage-site4-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site5" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site5-alt') ?>" href="<?= wfMsg('landingpage-site5-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>-->
 		</ul>
 		<a href="<?= wfMsg('landingpage-faq-url') ?>" class="more"><?= wfMsg('landingpage-readfaq') ?></a>
 	</div>
