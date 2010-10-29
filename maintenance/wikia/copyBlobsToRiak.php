@@ -9,7 +9,7 @@
  *
  */
 
-$optionsWithArgs = array( 'page-from', 'page-to', 'target' );
+$optionsWithArgs = array( 'rev-from', 'rev-to' );
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
@@ -17,8 +17,18 @@ require_once( "commandLine.inc" );
 $dbr = wfGetDB( DB_SLAVE );
 
 $riak = new ExternalStoreRiak;
+$condition = "";
+if( $options[ "rev-from" ] && $options[ "rev-to"] ) {
+	$condition = sprintf("AND rev_id BETWEEN %d AND %d", $options[ "rev-from" ], $options[ "rev-to" ]);
+}
+elseif( $options[ "rev-from" ] && !$options[ "rev-to"] ) {
+	$condition = sprintf("AND rev_id > %d", $options[ "rev-from" ] );
+}
+elseif( !$options[ "rev-from" ] && $options[ "rev-to"] ) {
+	$condition = sprintf("AND rev_id < %d", $options[ "rev-to" ] );
+}
 
-$sth = $dbr->query( "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id" );
+$sth = $dbr->query( "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id $condition ORDER BY rev_id" );
 $c = 0;
 
 while( $row = $dbr->fetchObject( $sth ) ) {
