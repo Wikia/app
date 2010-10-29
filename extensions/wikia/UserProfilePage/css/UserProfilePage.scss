@@ -5,253 +5,192 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
-.UserProfileRailModule_TopWikis {
-	position: relative;
-	padding-bottom: 25px;
+.WikiaRail {
+	&>.UserProfileRailModule_TopWikis {
+		position: relative;
+		padding-bottom: 25px;
 
-	table {
-		width: 100%;
-		margin-bottom: 5px;
-		
-		tr {
-			height: 30px;
-			
-			&.odd {
-				background-color: $color-comment-odd;
-			}
+		table {
+			width: 100%;
+			margin-bottom: 5px;
 
-			th {
-				text-align: left;
-				vertical-align: middle;
-				width: 50%;
-				font-size: 12px;
-				font-weight: bold;
-			}
+			tr {
+				height: 30px;
 
-			td {
-				text-align: left;
-				vertical-align: middle;
-				padding: 3px;
+				&.odd {
+					background-color: $color-comment-odd;
+				}
 
-				&.rank{
-					padding-left: 6px;
-					
-					.counter {
-						font:{
+				th {
+					text-align: left;
+					vertical-align: middle;
+					width: 50%;
+					font-size: 12px;
+					font-weight: bold;
+				}
+
+				td {
+					text-align: left;
+					vertical-align: middle;
+					padding: 3px;
+
+					&.rank{
+						padding-left: 6px;
+
+						.counter {
+							font:{
+								weight: bold;
+								size: 13px;
+							}
+
+							color: darken($color-page-border, 20%);
+						}
+
+						.hide-control {
+							display: none;
+						}
+					}
+
+					&.wordmark {
+						font: {
 							weight: bold;
 							size: 13px;
 						}
-
-						color: darken($color-page-border, 20%);
 					}
 
-					.hide-control {
-						display: none;
-					}
-				}
-
-				&.wordmark {
-					font: {
-						weight: bold;
-						size: 13px;
-					}
-				}
-
-				&.edit-count {
-					.percentage-bar {
-						@include border-radius(10px);
-						@include linear-gradient($color-buttons, right, $color-button-highlight, 35%, $color-buttons, 65%);
-						color: $color-button-text;
-						display: inline-block;
-						font-size: 10px;
-						height: 15px;
-						line-height: 16px;
-						margin: 0;
-						padding: 0 7px;
-						min-width: 9%;
-					}
-				}
-
-				img {
-					vertical-align: middle;
-				}
-			}
-
-			&.removable:hover {
-				td {
-					&.rank{
-						.counter{
-							display:none;
+					&.edit-count {
+						.percentage-bar {
+							@include border-radius(10px);
+							@include linear-gradient($color-buttons, right, $color-button-highlight, 35%, $color-buttons, 65%);
+							color: $color-button-text;
+							display: inline-block;
+							font-size: 10px;
+							height: 15px;
+							line-height: 16px;
+							margin: 0;
+							padding: 0 7px;
+							min-width: 9%;
 						}
-						
-						.hide-control {
-							display: block;
+					}
+
+					img {
+						vertical-align: middle;
+					}
+				}
+
+				&.removable:hover {
+					td {
+						&.rank{
+							.counter{
+								display:none;
+							}
+
+							.hide-control {
+								display: block;
+							}
 						}
 					}
 				}
 			}
 		}
+
+		.more {
+			float: right;
+			font-size: 10px;
+			font-weight: bold;
+		}
 	}
 
-	.more {
-		float: right;
-		font-size: 10px;
-		font-weight: bold;
-	}
-}
+	&>.UserProfileRailModule_TopPages {
+		padding-bottom: 20px;
 
-.UserProfileRailModule_TopPages {
-	padding-bottom: 20px;
-
-	.top-page-item {
-		position: relative;
-		display: inline-block;
-		width: 70px;
-		margin: 10px;
-		vertical-align: top;
-
-		a, a:hover, a:visited {
-			color: $color-text;
-			text-decoration:none;
-			display: block;
-		}
-
-		img.item-thumbnail {
-			@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
-			position: absolute;
-			padding: 3px;
-			width: 70px;
-			height: 107px;
-			background-color: $color-page;
-		}
-
-		.snippet {
-			@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
-			position: absolute;
-			padding: 3px;
-			width: 70px;
-			height: 107px;
-			overflow: hidden;
-			background-color: $color-page;
-
-			.quote {
-				font-style: normal;
-				font-weight: bold;
-				font-size: 40px;
-				color: $color-text;
-				position: absolute;
-				display: block;
-				left: 7px;
-				//top: 0px;
-				padding: 0;
-			}
-
-			.text {
-				font-style: normal;
-				font-size: 13px;
-				font-weight: bold;
-				color: $color-text;
-				position: relative;
-				display: block;
-				margin: 0;
-				padding: 0;
-				padding-left: 24px;
-				padding-top: 13px;
-				line-height: 17px;
-				height: 85px;
-				overflow: hidden;
-			}
-		}
-
-		details {
-			@include border-radius-ne(9px);
-			@include border-radius-se(9px);
+		.top-page-item {
 			position: relative;
 			display: inline-block;
-			background-color: $color-buttons;
-			color: $color-button-text;
-			padding: 3px 5px 3px;
-			margin-top: 100px;
-			line-height: 16px;
-			max-height: 48px;
-			overflow: hidden;
-			font-weight: normal;
-			font-size: 11px;
-		}
+			width: 70px;
+			margin: 10px;
+			vertical-align: top;
 
-		.hide-control {
-			@include opacity(85);
-			display: none;
-			background-color: $color-page;
-			position: absolute;
-			top: 3px;
-			right: -3px;
-			padding: 3px;
-
-			a {
-				line-height: 9px;
-				font-weight: normal;
-
-				img {
-					vertical-align: middle;
-				}
-			}
-		}
-
-		&:hover {
-			.hide-control {
+			a, a:hover, a:visited {
+				color: $color-text;
+				text-decoration:none;
 				display: block;
 			}
-		}
-	}
-}
 
-.user-profile-box{
-	@include box-shadow(0, 10px, 10px, mix($color-page, #000));
-	border: 1px solid $color-page-border;
-	background-color: $color-page;
-	z-index: 2000;
-	padding: 10px;
-}
-
-ul.user-profile-action-menu {
-	position: absolute;
-	right: 8px;
-
-	li {
-		&.unhide-link{
-			text-align: right;
-			padding-bottom: 10px;
-
-			.more {
-				float: none;
+			img.item-thumbnail {
+				@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
+				position: absolute;
+				padding: 3px;
+				width: 70px;
+				height: 107px;
+				background-color: $color-page;
 			}
 
-			img{
-				&.chevron {
-					border-top-color: $color-text;
+			.snippet {
+				@include box-shadow(0, 0, 25px, mix($color-page, #000, 60%));
+				position: absolute;
+				padding: 3px;
+				width: 70px;
+				height: 107px;
+				overflow: hidden;
+				background-color: $color-page;
+
+				.quote {
+					font-style: normal;
+					font-weight: bold;
+					font-size: 40px;
+					color: $color-text;
+					position: absolute;
+					display: block;
+					left: 7px;
+					//top: 0px;
+					padding: 0;
+				}
+
+				.text {
+					font-style: normal;
+					font-size: 13px;
+					font-weight: bold;
+					color: $color-text;
+					position: relative;
+					display: block;
+					margin: 0;
+					padding: 0;
+					padding-left: 24px;
+					padding-top: 13px;
+					line-height: 17px;
+					height: 85px;
+					overflow: hidden;
 				}
 			}
-		}
 
-		&.hidden-item {
-			@include clearfix;
-			border-top: 1px solid $color-page-border;
-			padding: 5px 10px 5px 10px;
-			display: none;
-
-			.item-name {
-				line-height: 20px;
-				vertical-align: middle;
-				float: left;
+			details {
+				@include border-radius-ne(9px);
+				@include border-radius-se(9px);
+				position: relative;
+				display: inline-block;
+				background-color: $color-buttons;
+				color: $color-button-text;
+				padding: 3px 5px 3px;
+				margin-top: 100px;
+				line-height: 16px;
+				max-height: 48px;
+				overflow: hidden;
+				font-weight: normal;
+				font-size: 11px;
 			}
 
-			.unhide-control {
-				float: right;
-				margin-left: 10px;
-				
-				.UnhideButton {
-					line-height: 20px;
+			.hide-control {
+				@include opacity(85);
+				display: none;
+				background-color: $color-page;
+				position: absolute;
+				top: 3px;
+				right: -3px;
+				padding: 3px;
+
+				a {
+					line-height: 9px;
 					font-weight: normal;
 
 					img {
@@ -260,8 +199,71 @@ ul.user-profile-action-menu {
 				}
 			}
 
-			&.first{
-				border-top: none;
+			&:hover {
+				.hide-control {
+					display: block;
+				}
+			}
+		}
+	}
+
+	.user-profile-box{
+		@include box-shadow(0, 10px, 10px, mix($color-page, #000));
+		border: 1px solid $color-page-border;
+		background-color: $color-page;
+		z-index: 2000;
+		padding: 10px;
+	}
+
+	ul.user-profile-action-menu {
+		position: absolute;
+		right: 8px;
+
+		li {
+			&.unhide-link{
+				text-align: right;
+				padding-bottom: 10px;
+
+				.more {
+					float: none;
+				}
+
+				img{
+					&.chevron {
+						border-top-color: $color-text;
+					}
+				}
+			}
+
+			&.hidden-item {
+				@include clearfix;
+				border-top: 1px solid $color-page-border;
+				padding: 5px 10px 5px 10px;
+				display: none;
+
+				.item-name {
+					line-height: 20px;
+					vertical-align: middle;
+					float: left;
+				}
+
+				.unhide-control {
+					float: right;
+					margin-left: 10px;
+
+					.UnhideButton {
+						line-height: 20px;
+						font-weight: normal;
+
+						img {
+							vertical-align: middle;
+						}
+					}
+				}
+
+				&.first{
+					border-top: none;
+				}
 			}
 		}
 	}

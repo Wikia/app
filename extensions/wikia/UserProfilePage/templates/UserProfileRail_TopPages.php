@@ -1,5 +1,5 @@
 <section class="UserProfileRailModule_TopPages">
-	<h2><?= wfMsg( 'userprofilepage-top-pages-title', array( $userName, $wikiName ) ) ;?></h2>
+	<h1><?= wfMsg( 'userprofilepage-top-pages-title', array( $userName, $wikiName ) ) ;?></h1>
 	<? if( count( $topPages ) ) :?>
 		<? foreach( $topPages as $pageId => $page ) :?>
 			<div class="top-page-item hovered">
