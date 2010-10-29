@@ -56,6 +56,7 @@ function wfContentFeedsInitParserHooks( &$parser ) {
 
 	$parser->setHook( 'mostvisited', 'ContentFeeds::mostVisitedParserHook' );
 	$parser->setHook( 'wikitweets', 'ContentFeeds::wikiTweetsParserHook' );
+	$parser->setHook( 'twitteruser', 'ContentFeeds::userTweetsParserHook' );
 	$parser->setHook( 'newpageslist', 'ContentFeeds::newPagesListParserHook' );
 	$parser->setHook( 'topuserslist', 'ContentFeeds::topUsersListParserHook' );
 	$parser->setHook( 'highestrated', 'ContentFeeds::highestRatedParserHook' );
