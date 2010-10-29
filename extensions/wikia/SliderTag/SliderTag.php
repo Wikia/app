@@ -111,6 +111,7 @@ function wfSliderTagMessageCacheReplace( $title, $text ) {
 				foreach( $pages as $page ) {
 					$title = Title::newFromID( $page );
 					if( $title ) {
+						wfDebug( __METHOD__ . ": purging article {$title->getLocalUrl()} which contains slider tag." );
 						$title->invalidateCache();
 						$title->purgeSquid();
 					}
