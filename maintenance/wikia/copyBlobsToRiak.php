@@ -29,10 +29,11 @@ elseif( !$options[ "rev-from" ] && $options[ "rev-to"] ) {
 }
 
 $sql = "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id $condition ORDER BY rev_id";
+echo $sql . "\n";
+
 $sth = $dbr->query( $sql );
 $c = 0;
-echo $sql . "\n";
-exit(0);
+
 while( $row = $dbr->fetchObject( $sth ) ) {
 	/**
 	 * get only external revisions
