@@ -11,7 +11,7 @@ class UserProfilePageHelper {
 		// Return without any changes if this isn't in the user namespace OR
 		// if the user is doing something besides viewing or purging this page
 		$action = $wgRequest->getVal('action', 'view');
-		if ($skin->mTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
+		if ($skin->mTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge') || $skin->mTitle->isSubpage()) {
 			return true;
 		}
 
