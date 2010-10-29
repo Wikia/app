@@ -96,10 +96,13 @@
 			<span class="count"><?= $stats['edits']; ?></span>
 			<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $stats['date'] ) ;?></span>
 		</div>
+		<?php if( count($lastActionData) ): ?>
 		<div>
-			<span><?= $lastActionMessage; ?></span><br />
-			<span><i><?= $lastActionMessageIntro?></i></span>
+			<img src="<?= wfBlankImgUrl() ;?>" class="sprite <?= $lastActionData['changeicon'] ?>" height="20" width="20">
+			<span><?= $lastActionData['changemessage']; ?></span><br />
+			<span><i><?= $lastActionData['intro']; ?></i></span>
 		</div>
+		<?php endif; ?>
 	<?php
 		}
 	?>
