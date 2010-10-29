@@ -48,7 +48,9 @@ class LatestActivityModule extends Module {
 			$feedProxy = new ActivityFeedAPIProxy($includeNamespaces, $this->userName);
 			$feedProvider = new DataFeedProvider($feedProxy, 1, $parameters);
 			$feedData = $feedProvider->get($maxElements);
-			$wgMemc->set($mKey, $feedData);
+			if( empty($this->userName) ) {
+				$wgMemc->set($mKey, $feedData);
+			}
 		}
 
 		// Time strings are slow to calculate, but we still want them to update frequently (60 seconds)
@@ -104,7 +106,9 @@ class LatestActivityModule extends Module {
 				}
 				$this->changeList[] = $item;
 			}
-			$wgMemc->set($mKeyTimes, $this->changeList, 60);
+			if( empty($this->userName) ) {
+				$wgMemc->set($mKeyTimes, $this->changeList, 60);
+			}
 		}
 		wfProfileOut( __METHOD__ );
 	}
