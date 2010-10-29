@@ -23,12 +23,21 @@ foreach($languageLinks as $item) {
 		<h2><?= wfMsg('landingpage-start-exploring') ?></h2>
 		<p><?= wfMsg('landingpage-start-exploring-text') ?></p>
 		
-		<ul class="<?= $languageClass ?>">
-			<li class="landingpage-site1"><a alt="<?= wfMsg('landingpage-site1-alt') ?>" href="<?= wfMsg('landingpage-site1-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site2"><a alt="<?= wfMsg('landingpage-site2-alt') ?>" href="<?= wfMsg('landingpage-site2-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site3"><a alt="<?= wfMsg('landingpage-site3-alt') ?>" href="<?= wfMsg('landingpage-site3-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site4"><a alt="<?= wfMsg('landingpage-site4-alt') ?>" href="<?= wfMsg('landingpage-site4-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-			<li class="landingpage-site5"><a alt="<?= wfMsg('landingpage-site5-alt') ?>" href="<?= wfMsg('landingpage-site5-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+		<ul>
+		
+<?php
+		$counter = 0;
+		foreach ($landingPageLinks as $link) {
+			$counter ++; ?>
+			<li class="landingpage-site<?= $counter ?>" style="background-image: url(<?= $link["imagename"] ?>)" ><a alt="<?=  $link["title"] ?>" href="<?= $link["href"] ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+		<?php 
+		} ?>
+		
+		<!--	<li class="landingpage-site1" style="background-image: url(<?= $spriteFileUrl ?>)" ><a alt="<?= wfMsg('landingpage-site1-alt') ?>" href="<?= wfMsg('landingpage-site1-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="landingpage-site2" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site2-alt') ?>" href="<?= wfMsg('landingpage-site2-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="landingpage-site3" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site3-alt') ?>" href="<?= wfMsg('landingpage-site3-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="landingpage-site4" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site4-alt') ?>" href="<?= wfMsg('landingpage-site4-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
+			<li class="landingpage-site5" style="background-image: url(<?= $spriteFileUrl ?>)"><a alt="<?= wfMsg('landingpage-site5-alt') ?>" href="<?= wfMsg('landingpage-site5-url') ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>-->
 		</ul>
 		<a href="<?= wfMsg('landingpage-faq-url') ?>" class="more"><?= wfMsg('landingpage-readfaq') ?></a>
 	</div>

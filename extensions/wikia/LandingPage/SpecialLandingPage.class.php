@@ -38,16 +38,9 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			}
 		}
 		
-	
-	
-		if ( isset($wgRequest->data['uselang'] )) {
-			$languageClass = 'landingpage-language-' .$wgRequest->data['uselang'];
-		}
-		else {
-			$languageClass = '';
-		}
-	
-
+		// fetching the landingpage sites
+		$landingPageLinks = CorporatePageHelper::parseMsgImg( 'landingpage-sites', false );
+		
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
@@ -55,7 +48,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			'languageLinks' => $languageLinks,
 			'wgBlankImgUrl' => $wgBlankImgUrl,
 			'wgTitle' => $wgTitle,
-			'languageClass' => $languageClass
+			'landingPageLinks' => $landingPageLinks
 		));
 
 		$wgOut->addHTML($template->render('main'));
