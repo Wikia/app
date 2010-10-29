@@ -270,7 +270,8 @@ class UserProfilePage {
 			if( isset($feedData['results']) ) {
 				$cachedData = array_shift( $feedData['results'] );
 			}
-			else {
+
+			if( empty( $cachedData ) ) {
 				$cachedData = array();
 			}
 			$this->setUserLastActionToCache( $cachedData );
