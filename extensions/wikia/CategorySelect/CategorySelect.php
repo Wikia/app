@@ -45,11 +45,11 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
 function CategorySelectInit($forceInit = false) {
 	global $wgRequest, $wgUser;
 
-	if($wgRequest->getVal('usecatsel','') == "no") {
+	if ($wgRequest->getVal('usecatsel','') == "no") {
 		return true;
 	}
 
-	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
+	if ( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
 	}
 
@@ -74,17 +74,17 @@ function CategorySelectInit($forceInit = false) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectInitializeHooks($output, $article, $title, $user, $request, $force = false ) {
+function CategorySelectInitializeHooks($output, $article, $title, $user, $request, $mediawiki, $force = false ) {
 	global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
 
 	// Check user preferences option
-	if($wgUser->getOption('disablecategoryselect') == true) {
+	if ($wgUser->getOption('disablecategoryselect') == true) {
 		return true;
 	}
 
 	// Initialize only for allowed skins
 	$allowedSkins = array( 'SkinMonaco', 'SkinAwesome', 'SkinAnswers', 'SkinOasis' );
-	if( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
+	if ( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
 		return true;
 	}
 
@@ -93,8 +93,8 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	// Initialize only for namespace:
 	// (a) content (on view)
 	// (b) content, file, user, etc. (on edit)
-	
-	if(!$force) {
+
+	if (!$force) {
 		if ( ( !in_array($title->mNamespace, $wgContentNamespaces) && ( $action == 'view' || $action == 'purge' ) )
 			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) ) {
 			return true;
@@ -111,8 +111,8 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		return true;
 	}
 
-	if($action == 'view' || $action == 'purge') {
-		if($title->mArticleID == 0) {
+	if ($action == 'view' || $action == 'purge') {
+		if ($title->mArticleID == 0) {
 			return true;
 		}
 		if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
@@ -122,7 +122,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 		$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
-	} else if($action == 'edit' || $action == 'submit') {
+	} else if ($action == 'edit' || $action == 'submit') {
 		//edit mode
 		$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
 		$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
@@ -181,7 +181,7 @@ function CategorySelectGetCategories($inline = false) {
 	}
 	$out = 'var categoryArray = ["'.join('","', $categories).'"];';
 
-	if($inline === true) {
+	if ($inline === true) {
 		return $out;
 	} else {
 		$ar = new AjaxResponse($out);
@@ -232,7 +232,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 		if (is_null($title)) {
 			$result['error'] = wfMsg('categoryselect-error-not-exist', $articleId);
 		} else {
-			if($title->userCan('edit') && !$wgUser->isBlocked()) {
+			if ($title->userCan('edit') && !$wgUser->isBlocked()) {
 				global $wgOut;
 
 				$result = null;
@@ -448,7 +448,7 @@ function CategorySelectGetCategoryLinksBegin(&$categoryLinks) {
 function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	global $wgRequest, $wgExtensionsPath, $wgOut, $wgStylePath;
 
-	if(!wfRunHooks ('CategorySelect:beforeDisplayingView', array () )) {
+	if (!wfRunHooks ('CategorySelect:beforeDisplayingView', array () )) {
 		return false;
 	}
 
@@ -508,7 +508,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	$text = "";
 	wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) ) ;
-	
+
 	$result = '
 	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
 	<div id="csMainContainer"> ' . $text . '
@@ -563,7 +563,7 @@ function CategorySelectGenerateHTMLforView() {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectToggleUserPreference($toggles, $default_array = false) {
-	if(is_array($default_array)) {
+	if (is_array($default_array)) {
 		$default_array[] = 'disablecategoryselect';
 	} else {
 		$toggles[] = 'disablecategoryselect';
