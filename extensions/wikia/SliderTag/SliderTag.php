@@ -30,7 +30,7 @@ function wfSliderTag( &$parser ) {
 }
 
 function wfSlider( $input, $args, $parser ) {
-	global $wgOut, $wgScriptPath, $wgStyleVersion;
+	global $wgOut, $wgScriptPath, $wgStyleVersion, $wgTitle;
 
 	$article = $args['id'];
 
@@ -40,16 +40,24 @@ function wfSlider( $input, $args, $parser ) {
 	$solidCache = wfGetSolidCacheStorage();
 	$tags = $solidCache->get( wfMemcKey( "SliderTags" ) );
 	if( is_array( $tags ) ) {
-		/**
-		 * remove duplicates
-		 */
-		array_push( $tags, $article );
-		$tags = array_unique( $tags );
+		if( isset( $tags[ $article ] ) && is_array( $tags[ $article ] ) ) {
+			/**
+			 * remove duplicates
+			 */
+			array_push( $tags[ $article ], $wgTitle->getArticleID() );
+			$tags[ $article ] = array_unique( $tags[ $article ] );
+		}
+		else {
+			$tags[ $article ] = array( $wgTitle->getArticleID() );
+		}
 	}
 	else {
-		$tags = array( $article );
+		$tags = array();
+		$tags[ $article ] = array( $wgTitle->getArticleID() );
 	}
-	$solidCache->set( "SliderTags", $tags );
+
+
+	$solidCache->set( wfMemcKey( "SliderTags" ), $tags );
 
 	$data = CorporatePageHelper::parseMsgImg( $article, true );
 	$html = '';
@@ -95,13 +103,18 @@ function wfSliderTagMessageCacheReplace( $title, $text ) {
 
 	wfProfileIn( __METHOD__ );
 
-	global $parserMemc;
 	$solidCache = wfGetSolidCacheStorage();
 	$tags = $solidCache->get( wfMemcKey( "SliderTags" ) );
 	if( is_array( $tags ) ) {
-		foreach( $tags as $tag ) {
-			if( $tag == $title ) {
-				 $parserMemc->delete( wfMemcKey( $title ) );
+		foreach( $tags as $tag => $pages ) {
+			if( $tag == $title && is_array( $pages ) ) {
+				foreach( $pages as $page ) {
+					$title = Title::newFromID( $page );
+					if( $title ) {
+						$title->invalidateCache();
+						$title->purgeSquid();
+					}
+				}
 			}
 		}
 	}
