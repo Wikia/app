@@ -3,6 +3,7 @@
 class ContentFeeds {
 
 	public static $wikiTweetsTagCount = 0;
+	public static $userTweetsTagCount = 0;
 
 	private static function extractArgs( $args ) {
 		global $wgContLang;
@@ -52,7 +53,7 @@ class ContentFeeds {
 	public static function wikiTweetsParserHook( $input, $args, $parser ) {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgTitle;
 
-		$limit = isset($args['size']) ? $args['size'] : 5;
+		$limit = isset($args['size']) && intval($args['size']) ? $args['size'] : 5;
 		$phrase = isset($args['keywords']) ? $args['keywords'] : '';
 
 		if(empty($phrase)) {
@@ -61,14 +62,14 @@ class ContentFeeds {
 
 		// parse all "magic words" in the phrase
 		$tmpParser = new Parser();
-		$phrase = strip_tags( $tmpParser->parse( $phrase, $wgTitle, $parser->mOptions )->getText() );
+		$phrase = trim( strip_tags( $tmpParser->parse( $phrase, $wgTitle, $parser->mOptions )->getText() ) );
 
 		$phrase = urlencode($phrase);
 		self::$wikiTweetsTagCount++;
 		$tagId = 'cfWikiTweetsTag' . self::$wikiTweetsTagCount;
 
 		$tagBody = '<ul class="cfWikiTweetsTag" id="' . $tagId . '">';
-		$tagBody.= '<a href="http://search.twitter.com/search?q=' . $phrase . '" target="_blank">Loading ...</a>';
+		$tagBody.= '<a href="http://search.twitter.com/search?q=' . urlencode($phrase) . '" target="_blank">Loading ...</a>';
 		$tagBody.= '</ul>';
 
 		$jsBody = <<<SCRIPT
@@ -76,6 +77,44 @@ class ContentFeeds {
 	wgAfterContentAndJS.push(function() {
 		$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/ContentFeeds.js?{$wgStyleVersion}', function() {
 			$( function() { ContentFeeds.getTweets('{$tagId}','{$phrase}',{$limit}); });
+		});
+	});
+/*]]>*/</script>
+SCRIPT;
+
+		// remove whitespaces from inline JS code
+		$jsBody = preg_replace("#[\n\t]+#", '', $jsBody);
+
+		return $tagBody . $jsBody;
+	}
+
+	/**
+	 * parser hook for <twitteruser> tag
+	 * @author macbre
+	 * @return string tag body
+	 */
+	public static function userTweetsParserHook( $input, $args, $parser ) {
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgTitle;
+
+		$limit = isset($args['limit']) && intval($args['limit']) ? $args['limit'] : 5;
+		$user = isset($args['username']) ? $args['username'] : '';
+
+		if(empty($user)) {
+			return '';
+		}
+
+		self::$userTweetsTagCount++;
+		$tagId = 'cfUserTweetsTag' . self::$userTweetsTagCount;
+
+		$tagBody = '<ul class="cfUserTweetsTag" id="' . $tagId . '">';
+		$tagBody.= '<a href="http://twitter.com/' . urlencode($user) . '" target="_blank">Loading ...</a>';
+		$tagBody.= '</ul>';
+
+		$jsBody = <<<SCRIPT
+<script type="text/javascript">/*<![CDATA[*/
+	wgAfterContentAndJS.push(function() {
+		$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/ContentFeeds.js?{$wgStyleVersion}', function() {
+			$( function() { ContentFeeds.getUserTweets('{$tagId}','{$user}',{$limit}); });
 		});
 	});
 /*]]>*/</script>
