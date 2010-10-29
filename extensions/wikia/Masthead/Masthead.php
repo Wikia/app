@@ -12,8 +12,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-define ('AVATAR_DEFAULT_WIDTH', 100);
-define ('AVATAR_DEFAULT_HEIGHT', 100);
+define ('AVATAR_DEFAULT_WIDTH', 200);
+define ('AVATAR_DEFAULT_HEIGHT', 200);
 define ('AVATAR_LOG_NAME', 'useravatar');
 define ('AVATAR_USER_OPTION_NAME', 'avatar');
 define ('AVATAR_MAX_SIZE', 512000 );
@@ -312,7 +312,16 @@ class Masthead {
 	 *
 	 * @return string -- url to Avatar
 	 */
-	public function getThumbnail( $width, $inPurgeFormat = false ) {
+	public function getThumbnail( $width, $inPurgeFormat = false, $avoidUpscaling = false ) {
+		
+		if( $avoidUpscaling ) {
+			list( $imageWidth ) = getimagesize( $this->getFullPath );
+
+			if( $width > $imageWidth ) {
+					$width = $imageWidth;
+			}
+		}
+
 		if($inPurgeFormat){
 			$url = $this->getPurgeUrl( '/thumb/' );
 		} else {

@@ -25,7 +25,7 @@ class AvatarService extends Service {
 	/**
 	 * Get URL to default avatar
 	 */
-	static private function getDefaultAvatar($avatarSize) {
+	static public function getDefaultAvatar($avatarSize) {
 		wfProfileIn(__METHOD__);
 		global $wgStylePath;
 
@@ -77,7 +77,7 @@ class AvatarService extends Service {
 	/**
 	 * Get URL for avatar
 	 */
-	static function getAvatarUrl($userName, $avatarSize = 20) {
+	static function getAvatarUrl($userName, $avatarSize = 20, $avoidUpscaling = false) {
 		wfProfileIn(__METHOD__);
 
 		static $avatarsCache;
@@ -97,7 +97,7 @@ class AvatarService extends Service {
 				return $avatarUrl;
 			}
 
-			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize);
+			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize, $avoidUpscaling);
 
 			$avatarsCache[$key] = $avatarUrl;
 		}
@@ -109,18 +109,26 @@ class AvatarService extends Service {
 	/**
 	 * Render avatar
 	 */
-	static function renderAvatar($userName, $avatarSize = 20) {
+	static function renderAvatar($userName, $avatarSize = 20, $avoidUpscaling = false) {
 		wfProfileIn(__METHOD__);
 
-		$avatarUrl = self::getAvatarUrl($userName, $avatarSize);
-
-		$ret = Xml::element('img', array(
-			'src' => $avatarUrl,
-			'width' => $avatarSize,
-			'height' => $avatarSize,
-			'class' => 'avatar',
-			'alt' => $userName,
-		));
+		$avatarUrl = self::getAvatarUrl($userName, $avatarSize, $avoidUpscaling);
+		
+		if( $avoidUpscaling ) {
+			$ret = Xml::element('img', array(
+				'src' => $avatarUrl,
+				'class' => 'avatar',
+				'alt' => $userName,
+			));
+		} else {
+			$ret = Xml::element('img', array(
+				'src' => $avatarUrl,
+				'width' => $avatarSize,
+				'height' => $avatarSize,
+				'class' => 'avatar',
+				'alt' => $userName,
+			));
+		}
 
 		wfProfileOut(__METHOD__);
 		return $ret;
