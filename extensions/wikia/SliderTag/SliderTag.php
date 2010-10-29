@@ -40,23 +40,23 @@ function wfSlider( $input, $args, $parser ) {
 	 */
 	$solidCache = wfGetSolidCacheStorage();
 	$tags = $solidCache->get( wfMemcKey( "SliderTags" ) );
-	if( is_array( $tags ) ) {
+	$page_id = $wgTitle->getArticleID();
+	if( $page_id && is_array( $tags ) ) {
 		if( isset( $tags[ $article ] ) && is_array( $tags[ $article ] ) ) {
 			/**
 			 * remove duplicates
 			 */
-			array_push( $tags[ $article ], $wgTitle->getArticleID() );
+			array_push( $tags[ $article ], $page_id );
 			$tags[ $article ] = array_unique( $tags[ $article ] );
 		}
 		else {
-			$tags[ $article ] = array( $wgTitle->getArticleID() );
+			$tags[ $article ] = array( $page_id );
 		}
 	}
 	else {
 		$tags = array();
-		$tags[ $article ] = array( $wgTitle->getArticleID() );
+		$tags[ $article ] = array( $page_id );
 	}
-
 
 	$solidCache->set( wfMemcKey( "SliderTags" ), $tags );
 
