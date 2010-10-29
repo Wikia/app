@@ -54,5 +54,5 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		}
 	}
 }
-$total = ( $time - $total );
+$total = ( time() - $total );
 echo "Moved $c blobs to riak. Total time: $total sec.\n";
