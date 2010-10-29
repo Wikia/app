@@ -14,6 +14,12 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 	});
 });
 
+$(function () { // this line makes sure this code runs on page load
+	$('.checkall').click(function () {
+		$(this).parents('fieldset:eq(0)').find(':checkbox').attr('checked', this.checked);
+	});
+})
+
 /*]]>*/
 </script>
 <form action="<?php echo $title->getFullUrl() ?>" method="post">
@@ -51,13 +57,17 @@ endif;
 if( $searchTagWikiIdsCount > 0 ) : ?>
 <fieldset>
 	<legend>Tagged wikis (<?php echo $searchTagWikiIdsCount; ?>)</legend>
+	<table>
+		<tr>
+			<td class="mw-input"><input type="checkbox" class="checkall"/> Check all </td>
+		</tr>
 		<tr>
 			<td class="mw-input">
-				<?php foreach( $searchTagWikiIds as $wikiId ): ?>
-					<input type='checkbox' name="remove_tag_id[]" value="<?php echo $wikiId; ?>"> <?
-					echo '<a href="' . $wikiFactoryUrl . "/" . $wikiId . '">' .
-					"<strong>" . $wikiId . "</strong> - " . WikiFactory::getVarValueByName('wgServer', $wikiId);
-					?></a><br />
+				<?php foreach( $searchTagWikiIds as $wikiId ):
+					print Xml::checkLabel( $wikiId, "remove_tag_id[]", 'check-'.$wikiId );
+					print " - <strong><a href=\"{$wikiFactoryUrl}/{$wikiId}\" title=\"open this wiki in WikiFactory\" >" .
+						WikiFactory::getVarValueByName('wgServer', $wikiId);
+					?></a></strong><br />
 				<?php endforeach; ?><br/>
 			</td>
 		</tr>
