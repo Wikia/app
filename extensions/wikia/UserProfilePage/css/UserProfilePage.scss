@@ -3,7 +3,6 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/rail-module";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
 .UserProfileRailModule_TopWikis {
@@ -102,7 +101,6 @@
 }
 
 .UserProfileRailModule_TopPages {
-	@include rail-module;
 	padding-bottom: 20px;
 
 	.top-page-item {
@@ -298,7 +296,7 @@ ul.user-profile-action-menu {
 		}
 	}
 
-	.wikia-menu-button {
+	.wikia-menu-button, .wikia-button {
 		float: none;
 	}
 
