@@ -1,4 +1,4 @@
-<section class="UserProfileRailModule_TopWikis">
+<div class="UserProfileRailModule_TopWikis">
 	<table cellspacing="0" cellpadding="0">
 		<thead>
 			<tr>
@@ -68,4 +68,4 @@
 			<? endforeach; ?>
 		</ul>
 	<? endif ;?>
-</section>
+</div>
