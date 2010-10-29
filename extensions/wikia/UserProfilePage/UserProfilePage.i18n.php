@@ -14,6 +14,10 @@ $messages['en'] = array(
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',
 	'userprofilepage-edits-since' => 'Edits since joining this wiki<br/>$1',
+	'userprofilepage-user-last-action-edit' => '$1 edited the <a href="$2">$3</a> article',
+	'userprofilepage-user-last-action-new' => '$1 created <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 deleted the <a href="$2">$3</a> page',
+
 
 	//Top Wikis
 	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',

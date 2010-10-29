@@ -1,5 +1,5 @@
 <div id="WikiaUserPagesHeader" class="WikiaUserPagesHeader">
-	
+
 <?php if ( empty( $isUserProfilePageExt ) ) { ?>
 	<ul class="wikia-avatar<?= !empty($avatarMenu) ? ' wikia-avatar-menu' : '' ?>">
 		<li>
@@ -96,7 +96,10 @@
 			<span class="count"><?= $stats['edits']; ?></span>
 			<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $stats['date'] ) ;?></span>
 		</div>
-
+		<div>
+			<span><?= $lastActionMessage; ?></span><br />
+			<span><i><?= $lastActionMessageIntro?></i></span>
+		</div>
 	<?php
 		}
 	?>

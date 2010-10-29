@@ -79,4 +79,13 @@ class UserProfilePageHelper {
 		}
 		return false;
 	}
+
+	public static function formatLastActionMessage( $actionData ) {
+		if( count($actionData) ) {
+			return wfMsg( 'userprofilepage-user-last-action-' . $actionData['type'], array( wfTimeFormatAgoOnlyRecent($actionData['timestamp']), $actionData['url'], $actionData['title'] ) );
+		}
+		else {
+			return '';
+		}
+	}
 }

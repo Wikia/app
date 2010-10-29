@@ -29,6 +29,8 @@ class UserPagesHeaderModule extends Module {
 	var $userName;
 	var $userPage;
 	var $isUserProfilePageExt = false;
+	var $lastActionMessage = '';
+	var $lastActionMessageIntro = '';
 
 	/**
 	 * Checks whether given user name is the current user
@@ -172,6 +174,12 @@ class UserPagesHeaderModule extends Module {
 
 			// render bigger avatar (200x200) when UserProfilePage extension is enabled
 			$this->avatar = AvatarService::renderAvatar($this->userName, 200);
+
+			$actionData = UserProfilePage::getInstance()->getUserLastAction();
+			$this->lastActionMessage = UserProfilePageHelper::formatLastActionMessage( $actionData );
+			if( isset($actionData['intro']) ) {
+				$this->lastActionMessageIntro = '"' . $actionData['intro'] . '"';
+			}
 		}
 		else {
 			// render avatar (100x100)
