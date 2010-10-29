@@ -1,6 +1,6 @@
 <?php
 /**
- * Renders page content: adds picture attribution info and replaces section edit links with chicklet buttons
+ * Renders page content: adds picture attribution info and replaces section edit links with pencil icon and link
  *
  * @author Maciej Brencz
  */
@@ -42,6 +42,21 @@ class ContentDisplayModule extends Module {
 
 		wfProfileOut(__METHOD__);
 
+		return true;
+	}
+
+	/**
+	 * Show section edit link for anons (RT #79897)
+	 */
+	static function onShowEditLink(&$parser, &$showEditLink) {
+		global $wgUser;
+		wfProfileIn(__METHOD__);
+
+		if ($wgUser->isAnon() && $parser->mOptions->getEditSection()) {
+			$showEditLink = true;
+		}
+
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
