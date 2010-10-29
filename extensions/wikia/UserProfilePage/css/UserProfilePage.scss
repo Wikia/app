@@ -8,7 +8,7 @@
 .WikiaRail {
 	&>.UserProfileRailModule_TopWikis {
 		position: relative;
-		padding-bottom: 25px;
+		padding-bottom: 76px;
 
 		table {
 			width: 100%;
@@ -294,6 +294,20 @@
 		&:hover {
 			.avatar-menu {
 				display: block;
+			}
+		}
+
+		.avatar-link {
+			@include box-shadow(0, 0, 10px, mix($color-page, #000, 80%));
+			width: 200px;
+			height: 200px;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 200px;
+
+			img {
+				display: inline;
+				vertical-align: middle;
 			}
 		}
 	}
