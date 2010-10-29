@@ -28,9 +28,11 @@ elseif( !$options[ "rev-from" ] && $options[ "rev-to"] ) {
 	$condition = sprintf("AND rev_id < %d", $options[ "rev-to" ] );
 }
 
-$sth = $dbr->query( "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id $condition ORDER BY rev_id" );
+$sql = "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2 WHERE old_id = rev_text_id $condition ORDER BY rev_id";
+$sth = $dbr->query( $sql );
 $c = 0;
-
+echo $sql . "\n";
+exit(0);
 while( $row = $dbr->fetchObject( $sth ) ) {
 	/**
 	 * get only external revisions
@@ -39,9 +41,9 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		$t = microtime( true );
 		$text = ExternalStore::fetchFromURL( $row->old_text );
 		$t = microtime( true ) - $t;
-		$t = microtime( true );
 		echo "Getting blobs from db, time={$t}\n";
 		if( $text ) {
+			$t = microtime( true );
 			$key = sprintf( "%d:%d:%d", $wgCityId, $row->rev_page, $row->rev_id );
 			$riak->storeBlob( $key, $text );
 			$t = microtime( true ) - $t;
