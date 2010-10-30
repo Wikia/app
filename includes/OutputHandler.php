@@ -114,7 +114,7 @@ function wfMangleFlashPolicy( $s ) {
  * Add a Content-Length header if possible. This makes it cooperate with squid better.
  */
 function wfDoContentLength( $length ) {
-	if ( !headers_sent() && $_SERVER['SERVER_PROTOCOL'] == 'HTTP/1.0' ) {
+	if ( !headers_sent() ) {
 		header( "Content-Length: $length" );
 	}
 }
