@@ -114,9 +114,11 @@ function wfMangleFlashPolicy( $s ) {
  * Add a Content-Length header if possible. This makes it cooperate with squid better.
  */
 function wfDoContentLength( $length ) {
+        /* Wikia change - begin */
 	if ( !headers_sent() ) {
 		header( "Content-Length: $length" );
 	}
+	/* Wikia change - end */
 }
 
 /**
