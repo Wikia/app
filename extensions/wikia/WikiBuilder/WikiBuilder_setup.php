@@ -24,3 +24,6 @@ $wgGroupPermissions['*']['wikibuilder'] = false;
 $wgGroupPermissions['sysop']['wikibuilder'] = true;
 $wgGroupPermissions['bureaucrat']['wikibuilder'] = true;
 $wgGroupPermissions['staff']['wikibuilder'] = true;
+
+$wgAutoloadClasses['ApiCreateMultiplePages'] = dirname(__FILE__).'/../NewWikiBuilder/ApiCreateMultiplePages.php';
+$wgAPIModules['createmultiplepages'] = 'ApiCreateMultiplePages';
