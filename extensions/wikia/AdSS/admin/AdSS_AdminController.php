@@ -76,7 +76,7 @@ class AdSS_AdminController {
 		}
 
 		$w=600; $h=300;
-		$wgOut->addHTML( "<img width=\"$w\" height=\"$h\" src=\"http://chart.apis.google.com/chart?chxt=x,y&chbh=a&chs={$w}x{$h}&cht=bvg&chco=A2C180&chd=t:".implode( ",", array_reverse($d) )."&chm=N*cUSD0*,000000,0,-1,12&chxl=0:|".implode( "|", array_reverse($x) )."|&chtt=Daily+Income+(last+7+days)\" />" );
+		$wgOut->addHTML( "<img width=\"$w\" height=\"$h\" src=\"http://chart.apis.google.com/chart?chxt=x,y&chbh=a&chs={$w}x{$h}&cht=bvg&chco=A2C180&chd=t:".implode( ",", array_reverse($d) )."&chds=0,150&chm=N*cUSD0*,000000,0,-1,12&chxr=1,0,150&chxl=0:|".implode( "|", array_reverse($x) )."|&chtt=Daily+Income+(last+7+days)\" />" );
 	}
 
 	static function acceptAdAjax( $id, $token ) {
