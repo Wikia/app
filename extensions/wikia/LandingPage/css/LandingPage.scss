@@ -168,6 +168,7 @@
 				
 				&.landingpage-site1  {
 					background-position: 32px 0px;
+					background-repeat: no-repeat;
 					height: 70px;
 					img {
 						height: 70px;
@@ -176,18 +177,22 @@
 				
 				&.landingpage-site2 {
 					background-position: 32px -66px;
+					background-repeat: no-repeat;
 				}
 				
 				&.landingpage-site3 {
 					background-position: 32px -146px;
+					background-repeat: no-repeat;
 				}
 				
 				&.landingpage-site4 {
 					background-position: 32px -234px;
+					background-repeat: no-repeat;
 				}
 				
 				&.landingpage-site5 {
 					background-position: 32px -317px;
+					background-repeat: no-repeat;
 					border-bottom: none;
 				}
 			}
