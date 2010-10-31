@@ -18,7 +18,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'automaticwikiadoption' => 'AutomaticWikiAdoption',
+	'automaticwikiadoption' => 'Automatic wiki adoption',
 	'automaticwikiadoption-desc' => 'TODO',
 	'automaticwikiadoption-header' => 'Adopt this wiki',
 	'automaticwikiadoption-button-adopt' => 'Adopt now',
