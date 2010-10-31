@@ -129,10 +129,11 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  */
 $messages['fi'] = array(
-	'wikiaupload' => 'Kopioi Wikiaan',
+	'wikiaupload' => 'Kopioi Wikia-palvelimelle',
 );
 
 /** French (Français)

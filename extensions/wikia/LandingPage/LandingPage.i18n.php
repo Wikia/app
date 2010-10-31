@@ -65,7 +65,11 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'landingpage' => 'Benvido a Wikia',
-	'landingpage-buttons-learn-more' => 'Máis información',
+	'landingpage-start-exploring' => 'Preparado para comezar a explorar?',
+	'landingpage-start-exploring-text' => 'Busque o seu tema preferido ou navegue por entre os favoritos da comunidade.',
+	'landingpage-readfaq' => 'Ten preguntas? Lea as nosas preguntas máis frecuentes &gt;',
+	'landingpage-text' => 'En Wikia pode <strong>conectar coas persoas</strong> que comparten as súas <strong>paixóns e intereses</strong>. Atope o seu grupo, deixe comentarios e edicións, mesmo <strong>comece a súa propia páxina web</strong> e comunidade.',
+	'landingpage-buttons-learn-more' => 'Máis información &gt;',
 );
 
 /** Interlingua (Interlingua)
@@ -76,7 +80,8 @@ $messages['ia'] = array(
 	'landingpage-start-exploring' => 'Preste a comenciar a explorar?',
 	'landingpage-start-exploring-text' => 'Cerca tu topico favorite o explora alcun favoritos del communitate hic infra.',
 	'landingpage-readfaq' => 'Questiones? Lege nostre FAQ &gt;',
-	'landingpage-buttons-learn-more' => 'Plus info',
+	'landingpage-text' => 'In Wikia tu pote <strong>connecter te a personas</strong> que ha <strong>passiones e interesses</strong> in commun con te. Cerca tu gruppo, face commentos e modificationes, o mesmo <strong>comencia tu proprie sito web</strong> e communitate.',
+	'landingpage-buttons-learn-more' => 'Leger plus &gt;',
 );
 
 /** Macedonian (Македонски)
@@ -119,7 +124,7 @@ $messages['no'] = array(
 	'landingpage-start-exploring-text' => 'Søk i favorittemaene dine eller se gjennom noen av fellesskapets favoritter nedenfor.',
 	'landingpage-readfaq' => 'Spørsmål? Les FAQ-en vår &gt;',
 	'landingpage-text' => 'På Wikia kan du <strong>komme i kontakt med mennesker</strong> som deler din <strong>lidenskap og interesse</strong>. Finn din gruppe, kommenter og rediger, og kanskje til og med <strong>starte din egen nettside</strong> og fellesskap.',
-	'landingpage-buttons-learn-more' => 'Lær mer',
+	'landingpage-buttons-learn-more' => 'Lær mer &gt;',
 );
 
 /** Piedmontese (Piemontèis)
@@ -136,7 +141,11 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'landingpage' => 'Bem-vindo(a) à Wikia!',
-	'landingpage-buttons-learn-more' => 'Saiba mais',
+	'landingpage-start-exploring' => 'Pronto para começar a explorar?',
+	'landingpage-start-exploring-text' => 'Pesquise o seu tema preferido ou visite alguns dos preferidos pela comunidade, abaixo.',
+	'landingpage-readfaq' => 'Perguntas? Leia a nossa FAQ &gt;',
+	'landingpage-text' => 'Na Wikia pode <strong>ligar-se a pessoas</strong> que partilham as suas <strong>paixões e interesses</strong>. Descubra o seu grupo, faça comentários e edições, ou <strong>crie o seu site</strong> e uma comunidade de utilizadores.',
+	'landingpage-buttons-learn-more' => 'Saiba mais &gt;',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

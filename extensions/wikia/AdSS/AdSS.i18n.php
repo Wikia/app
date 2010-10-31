@@ -294,13 +294,15 @@ $messages['gl'] = array(
 	'adss-form-field-empty-errormsg' => 'Este campo non pode estar baleiro',
 	'adss-form-non-existent-title-errormsg' => 'Esta páxina non existe',
 	'adss-form-pick-plan-errormsg' => 'Ten que seleccionar un plan',
-	'adss-form-pick-plan' => 'Elixir un plan',
-	'adss-form-site-plan-header' => 'Comprar unha ligazón nun wiki',
-	'adss-form-site-plan-price' => '1 acción custa $1',
-	'adss-form-page-plan-header' => 'Comprar unha ligazón nunha páxina individual',
+	'adss-form-pick-plan' => 'Escolla o seu plan',
+	'adss-form-site-plan-header' => 'Comprar unha ligazón en todo o wiki',
+	'adss-form-site-plan-price' => '$1 por unha acción',
+	'adss-form-page-plan-header' => 'Comprar unha ligazón soamente nesta páxina',
 	'adss-form-page-plan-price' => '1 ligazón custa $1',
 	'adss-form-or' => '- ou -',
-	'adss-form-thanks' => 'Grazas polo seu patrocinio!',
+	'adss-form-thanks' => 'Grazas polo seu patrocinio! O seu anuncio xa está comprado e comezará a aparecer despois da aprobación manual (nas vindeiras 48 horas).
+
+Por que non [[Special:AdSS|merca]] outro anuncio?',
 	'adss-button-preview' => 'Vista previa',
 	'adss-button-edit' => 'Editar',
 	'adss-button-login' => 'Rexistro',
@@ -350,14 +352,14 @@ $messages['ia'] = array(
 	'adss-form-field-empty-errormsg' => 'Iste campo non debe esser vacue',
 	'adss-form-non-existent-title-errormsg' => 'Iste pagina non existe',
 	'adss-form-pick-plan-errormsg' => 'Tu debe seliger un plano',
-	'adss-form-pick-plan' => 'Selige un plano',
-	'adss-form-site-plan-header' => 'Compra un ligamine trans un wiki',
-	'adss-form-site-plan-description' => 'Gania major visibilitate: acquire un ligamine sponsorisate in tote un wiki!
+	'adss-form-pick-plan' => 'Selige tu plano',
+	'adss-form-site-plan-header' => 'Compra un ligamine in tote le wiki',
+	'adss-form-site-plan-description' => 'Diffunde vostre ligamines in tote le wiki pro un sol precio basse.
 
-1 parte equala actualmente $1% del ligamines sponsorisate de {{SITENAME}}. Le grandor del parte pote augmentar o diminuer dependente del numero de personas qui compra partes. Tu pote cancellar a omne momento.',
-	'adss-form-site-plan-price' => '1 parte costa $1',
-	'adss-form-page-plan-header' => 'Acquire un ligamine sur un pagina individual',
-	'adss-form-page-plan-description' => 'Selectionar paginas specificamente pro vostre campania',
+1 parte equala actualmente $1% del ligamines sponsorisate de {{SITENAME}} e costa solmente $2. Vos pote cancellar a omne momento.',
+	'adss-form-site-plan-price' => '$1 per parte',
+	'adss-form-page-plan-header' => 'Acquire un ligamine sur iste pagina individual',
+	'adss-form-page-plan-description' => 'Isto permitte diriger un message personalisate al optime pagina pro vostre producto pro solmente $1, e vos pote cancellar a omne momento.',
 	'adss-form-page-plan-price' => '1 ligamine costa $1',
 	'adss-form-or' => '- o -',
 	'adss-form-thanks' => 'Gratias pro le sponsorisation! Le acquisition del annuncio ha succedite e illo entrara in circulation post approbation manual (intra 48 horas).
@@ -365,7 +367,7 @@ $messages['ia'] = array(
 	 Ora tu pote [[Special:AdSS|comprar]] un altere annuncio!',
 	'adss-button-preview' => 'Previsualisar',
 	'adss-button-edit' => 'Modificar',
-	'adss-button-login' => 'Aperi session e compra ORA',
+	'adss-button-login' => 'Aperir session',
 	'adss-button-login-buy' => 'Aperi session e compra ORA',
 	'adss-button-save-pay' => 'Salveguardar',
 	'adss-button-pay-paypal' => 'Pagar con PayPal',
@@ -440,12 +442,12 @@ $messages['mk'] = array(
 	'adss-form-pick-plan-errormsg' => 'Мора да изберете план',
 	'adss-form-pick-plan' => 'Одберете план',
 	'adss-form-site-plan-header' => 'Купете врска за сите страници на викито',
-	'adss-form-site-plan-description' => 'Стекнете поголема истакнатост со спонзорирана врска на сите страници на викито.
+	'adss-form-site-plan-description' => 'Набавете врски за цело вики за една, ниска цена.
 
-1 акција моментално вреди $1% спонзорирани врски на {{SITENAME}}. Вредноста на акцијата може да се менува, зависно од тоа колку корисници ќе купат акции. Ова можете да го откажете во секое време.',
-	'adss-form-site-plan-price' => '1 акција чини $1',
-	'adss-form-page-plan-header' => 'Купете врска на поединечна страница',
-	'adss-form-page-plan-description' => 'Одберете поединечна страница што одговара на вашата кампања',
+1 акција моментално вреди $1% спонзорирани врски на {{SITENAME}}, и чини само $2. Ова можете да го откажете во секое време.',
+	'adss-form-site-plan-price' => '$1 за една акција',
+	'adss-form-page-plan-header' => 'Купете врска само на оваа страница',
+	'adss-form-page-plan-description' => 'Со ова можете да составите прилагодена порака за страницата што е најпогодна за вашиот производ, и тоа за само $1. Ова можете да го откажете во секое време.',
 	'adss-form-page-plan-price' => '1 врска чини $1',
 	'adss-form-or' => '- или -',
 	'adss-form-thanks' => 'Ви благодариме за спонзорството! Рекламата е успешно купена, и истата ќе оди во живо откако ќе биде рачно одобрена (макс. во рок од 48 часа).
@@ -453,7 +455,8 @@ $messages['mk'] = array(
 [[Special:AdSS|Купете]] уште една реклама!',
 	'adss-button-preview' => 'Преглед',
 	'adss-button-edit' => 'Уреди',
-	'adss-button-login' => 'Најавете се и купете ВЕДНАШ',
+	'adss-button-login' => 'Најава',
+	'adss-button-login-buy' => 'Најавете се и купете ВЕДНАШ',
 	'adss-button-save-pay' => 'Зачувај',
 	'adss-button-pay-paypal' => 'Платете со PayPal',
 	'adss-button-select' => 'Одбери',
@@ -469,6 +472,12 @@ $messages['mk'] = array(
 Назад кон [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Сите страници',
 	'adss-per-page' => 'Само една страница',
+	'adss-close' => 'Затвори',
+	'adss-manager-tab-adList' => 'Ваши реклами',
+	'adss-manager-tab-billing' => 'Фактурирање',
+	'adss-admin-tab-adList' => 'Список на реклами',
+	'adss-admin-tab-billing' => 'Фактурирање',
+	'adss-admin-tab-reports' => 'Извештаи',
 );
 
 /** Dutch (Nederlands)
@@ -504,7 +513,7 @@ $messages['nl'] = array(
 	'adss-form-pick-plan-errormsg' => 'U moet een propositie kiezen',
 	'adss-form-pick-plan' => 'Kies uw pakket',
 	'adss-form-site-plan-header' => 'Koop een verwijzing in de hele wiki',
-	'adss-form-site-plan-description' => 'Laat uw verwijzing weergeven in de hele wiki voor een lage prijs.
+	'adss-form-site-plan-description' => 'Laat uw verwijzing weergeven in de hele wiki voor één lage prijs.
 
 Eén aandeel staat momenteel gelijk aan $1% van de gesponsorde verwijzingen in {{SITENAME}} en kost maar $2.
 U kunt op ieder moment annuleren.',
@@ -573,14 +582,14 @@ $messages['no'] = array(
 	'adss-form-field-empty-errormsg' => 'Dette feltet kan ikke være tomt',
 	'adss-form-non-existent-title-errormsg' => 'Denne siden finnes ikke',
 	'adss-form-pick-plan-errormsg' => 'Du må velge en plan',
-	'adss-form-pick-plan' => 'Velg en plan',
+	'adss-form-pick-plan' => 'Velg din plan',
 	'adss-form-site-plan-header' => 'Kjøp en lenke over hele wikien',
-	'adss-form-site-plan-description' => 'Få større eksponering ved å kjøpe en sponset lenke over en hel wiki.
+	'adss-form-site-plan-description' => 'Få lenkene dine over hele wikien til én lav pris.
 
-1 aksje er for øyeblikket tilsvarende $1 % av {{SITENAME}}-sponsede lenker. Størrelsen på aksjen kan gå opp og ned avhengig av hvor mange andre som kjøper aksjer. Du kan avbestille når som helst.',
-	'adss-form-site-plan-price' => '1 aksje koster $1',
-	'adss-form-page-plan-header' => 'Kjøp en lenke på en enkelt side',
-	'adss-form-page-plan-description' => 'Velg ut spesifikke sider som passer din kampanje',
+1 aksje er for øyeblikket tilsvarende $1 % av {{SITENAME}}-sponsede lenker og koster kun $2. Du kan avbestille når som helst.',
+	'adss-form-site-plan-price' => '$1 for én aksje',
+	'adss-form-page-plan-header' => 'Kjøp en lenke kun på denne siden',
+	'adss-form-page-plan-description' => 'Dette lar deg velge en egen melding til den beste siden for ditt produkt kun på $1, og du kan avbestille når som helst.',
 	'adss-form-page-plan-price' => '1 lenke koster $1',
 	'adss-form-or' => '- eller -',
 	'adss-form-thanks' => 'Takk for sponsingen din! Annonsen din har blitt kjøpt og vil offentliggjøres etter manuell godkjenning (innen 48 timer).
@@ -588,7 +597,7 @@ $messages['no'] = array(
 Gå og [[Special:AdSS|kjøp]] enda en annonse!',
 	'adss-button-preview' => 'Forhåndsvis',
 	'adss-button-edit' => 'Rediger',
-	'adss-button-login' => 'Logg inn og kjøp NÅ',
+	'adss-button-login' => 'Logg inn',
 	'adss-button-login-buy' => 'Logg inn og kjøp NÅ',
 	'adss-button-save-pay' => 'Lagre',
 	'adss-button-pay-paypal' => 'Betal med PayPal',
@@ -698,14 +707,14 @@ $messages['pt'] = array(
 	'adss-form-field-empty-errormsg' => 'Este campo não pode estar vazio',
 	'adss-form-non-existent-title-errormsg' => 'Esta página não existe',
 	'adss-form-pick-plan-errormsg' => 'Tem que seleccionar um plano',
-	'adss-form-pick-plan' => 'Escolha um plano',
-	'adss-form-site-plan-header' => 'Compre um link numa wiki',
-	'adss-form-site-plan-description' => 'Receba mais exposição comprando um link patrocinado numa wiki.
+	'adss-form-pick-plan' => 'Escolha o seu plano',
+	'adss-form-site-plan-header' => 'Compre um link para a wiki toda',
+	'adss-form-site-plan-description' => 'Tenha os seus links na wiki toda por baixo custo.
 
-1 acção é, neste momento, igual a $1% dos links patrocinados da {{SITENAME}}. O tamanho da acção pode aumentar ou diminuir, dependendo de quantas outras pessoas compram acções. Pode cancelar em qualquer altura.',
-	'adss-form-site-plan-price' => '1 acção custa $1',
-	'adss-form-page-plan-header' => 'Comprar um link numa página individual',
-	'adss-form-page-plan-description' => 'Direccione a sua Campanha para páginas específicas relacionadas com ela',
+1 acção é, neste momento, igual a $1% dos links patrocinados da {{SITENAME}} e só custa $2. Pode cancelar em qualquer altura.',
+	'adss-form-site-plan-price' => '$1 por uma acção',
+	'adss-form-page-plan-header' => 'Comprar um link só nesta página',
+	'adss-form-page-plan-description' => 'Isto permite-lhe direccionar uma mensagem personalizada para a melhor página para o seu produto por apenas $1 e pode cancelar em qualquer altura.',
 	'adss-form-page-plan-price' => '1 link custa $1',
 	'adss-form-or' => '- ou -',
 	'adss-form-thanks' => 'Obrigado pelo seu patrocínio! O seu anúncio foi comprado e ficará visível após aprovação manual (dentro de 48 horas).
@@ -713,7 +722,8 @@ $messages['pt'] = array(
 Agora [[Special:AdSS|compre]] outro anúncio!',
 	'adss-button-preview' => 'Antevisão',
 	'adss-button-edit' => 'Editar',
-	'adss-button-login' => 'Autentique-se e compre AGORA',
+	'adss-button-login' => 'Autenticação',
+	'adss-button-login-buy' => 'Autentique-se e compre AGORA',
 	'adss-button-save-pay' => 'Gravar e pagar',
 	'adss-button-pay-paypal' => 'Pagar com PayPal',
 	'adss-button-select' => 'Seleccionar',
@@ -729,6 +739,12 @@ Voltar para [[Special:AdSS|{{int:AdSS}}]].',
 Voltar para [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Todas as páginas',
 	'adss-per-page' => 'Apenas uma página',
+	'adss-close' => 'Fechar',
+	'adss-manager-tab-adList' => 'Os seus anúncios',
+	'adss-manager-tab-billing' => 'Facturação',
+	'adss-admin-tab-adList' => 'Lista de anúncios',
+	'adss-admin-tab-billing' => 'Facturação',
+	'adss-admin-tab-reports' => 'Relatórios',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

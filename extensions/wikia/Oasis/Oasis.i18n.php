@@ -203,11 +203,15 @@ $messages['bs'] = array(
 /** German (Deutsch)
  * @author Diebuche
  * @author LWChris
+ * @author SVG
  */
 $messages['de'] = array(
+	'oasis-follow' => 'Folgen',
 	'oasis-latest-photos-inner-message' => 'Alle Bilder ansehen',
 	'oasis-latest-photos-single' => '+',
+	'oasis-latest-photos-by' => 'von',
 	'oasis-latest-photos-more-dotdotdot' => 'Mehr...',
+	'oasis-page-header-talk' => 'Diskussion',
 	'themedesigner' => 'Theme Designer',
 );
 
@@ -340,6 +344,7 @@ $messages['gl'] = array(
 	'oasis-button-random-wiki' => 'Wiki ao chou',
 	'oasis-button-wiki-activity' => 'Actividade no wiki',
 	'oasis-activity-header' => 'Actividade recente no wiki',
+	'oasis-related-video-header' => 'Vídeos relacionados',
 	'oasis-latest-photos-by' => 'por',
 	'oasis-latest-photos-posted-in' => 'Publicado en',
 	'oasis-latest-photos-more-dotdotdot' => 'máis...',
@@ -359,6 +364,9 @@ $messages['gl'] = array(
 	'oasis-badge-notification' => 'Acaba de obter a insignia "$2" $3',
 	'oasis-badge-notification-see-more' => 'Olle máis insignias que pode gañar!',
 	'oasis-page-header-subtitle-special' => 'Páxina especial',
+	'oasis-page-header-subtitle-template' => 'Páxina de modelo',
+	'oasis-page-header-subtitle-category' => 'Páxina de categoría',
+	'oasis-page-header-subtitle-forum' => 'Páxina de foro',
 	'themedesigner' => 'Deseñador de temas visuais',
 );
 
@@ -417,7 +425,57 @@ $messages['ia'] = array(
 	'oasis-page-header-history' => '<strong>Historia:</strong> $1',
 	'oasis-anon-header' => 'Contributor anonyme <small>$1</small>',
 	'oasis-preview-confirmation' => 'Previsualisation: cambios non ancora salveguardate! Rola a basso pro continuar le modification.',
+	'oasis-badge-notification' => 'Tu ha justo ganiate le insignia "$2" $3',
+	'oasis-badge-notification-see-more' => 'Vide plus insignias que tu pote ganiar!',
+	'oasis-page-header-subtitle-mediawiki' => 'Pagina MediaWiki',
+	'oasis-page-header-subtitle-special' => 'Pagina special',
+	'oasis-page-header-subtitle-template' => 'Pagina de patrono',
+	'oasis-page-header-subtitle-category' => 'Pagina de categoria',
+	'oasis-page-header-subtitle-forum' => 'Pagina de foro',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Vider tote le activitate >',
+	'oasis-search-results-from' => 'Lista de resultatos ab: $1',
+	'oasis-user-page-change-avatar' => 'Cambiar de avatar',
+	'oasis-content-picture-added-by' => 'Addite per $1',
+	'oasis-confirmation-page-deleted' => '"$1" ha essite delite. ([[Special:Undelete/$1|restaurar]])',
+	'oasis-confirmation-comment-deleted' => 'Le commento ha essite delite.',
+	'oasis-confirmation-page-undeleted' => 'Iste pagina ha essite restaurate.',
+	'oasis-confirmation-user-logout' => 'Tu session ha essite claudite.',
+	'oasis-notification-youhavenewmessages' => 'Tu ha $1.',
+	'oasis-member-since' => 'Membro depost $1',
+	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|modification|modificationes}} facite</sup>',
+	'oasis-edit-my-tools-link' => 'Modificar mi instrumentos',
+	'oasis-edit-my-tools-title' => 'Modificar mi instrumentos',
+	'oasis-edit-my-tools-addtool' => 'Adder instrumento',
+	'oasis-edit-my-tools-list' => 'Lista de instrumentos',
+	'oasis-edit-my-tools-save' => 'Salveguardar',
+	'oasis-edit-my-tools-about' => 'A proposito de mi instrumentos',
+	'oasis-edit-my-tools-desc' => 'Pro adder instrumentos avantiate a tu instrumentario, entra le nomine del instrumento in iste campo de texto.
+Tu pote reordinar o remover instrumentos in le campo hic infra.
+
+[[Help:MyTools|Lista de instrumentos wiki pro contributores experte >]]',
+	'oasis-comments-header' => '$1 {{PLURAL:$1|commento|commentos}}',
+	'oasis-comments-showing-most-recent' => 'Lista del $1 plus recentes',
+	'oasis-comments-show-all' => 'Monstrar totes',
+	'oasis-comments-added-by' => '$1 per $2',
+	'oasis-random-wiki' => 'Wiki aleatori',
+	'oasis-add-photo' => 'Adder un photo',
+	'oasis-anon-user' => 'Un contributor a Wikia',
+	'oasis-create-page' => 'Crear un nove pagina in iste wiki',
+	'oasis-add-page' => 'Adder pagina',
+	'oasis-section-edit' => 'Modificar',
+	'oasis-section-edit-alt' => 'Modificar section $1',
+	'oasis-popular-blogs-title' => 'Messages de<br />blog popular',
+	'oasis-spotlights-rail-title' => 'Plus de',
+	'oasis-spotlights-footer-title' => 'Circa le rete de Wikia',
 	'themedesigner' => 'Designator de apparentias',
+	'oasis-pages-on-wiki-header' => 'Paginas sur $1',
+	'oasis-latest-activity-new' => '$1 creava $2',
+	'oasis-latest-activity-edit' => '$1 modificava $2',
+	'oasis-latest-activity-delete' => '$1 deleva $2',
+	'oasis-interlang-show-all' => '... vider totes >',
+	'oasis-interlang-languages' => 'Linguas:',
+	'imageseo-featured-on' => 'In evidentia sur:',
+	'imageseo-featured-more' => 'plus...',
 );
 
 /** Macedonian (Македонски)
@@ -767,9 +825,52 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kaganer
  */
 $messages['ru'] = array(
+	'oasis-home' => 'Заглавная',
+	'oasis-more' => 'Подробнее >',
+	'oasis-mytools' => 'Мои инструменты',
+	'oasis-share' => 'Поделиться',
+	'oasis-like' => 'Мне нравится',
+	'oasis-button-random-page' => 'Случайная страница',
+	'oasis-button-random-wiki' => 'Случайная вики',
+	'oasis-button-wiki-activity' => 'Вики-деятельность',
+	'oasis-button-wiki-activity-feed' => 'Вся активность >',
+	'oasis-latest-photos-more' => 'Подробнее >',
+	'oasis-latest-photos-inner-message' => 'Смотреть все фотографии',
+	'oasis-latest-photos-more-dotdotdot' => 'больше...',
+	'oasis-global-nav-create-wiki' => 'Создать вики',
+	'oasis-page-header-talk' => 'Обсуждение',
+	'oasis-page-header-history-link' => 'Просмотр полной истории',
+	'oasis-page-header-add-topic' => 'Добавить тему',
+	'oasis-page-header-edit-profile' => 'Редактировать личные данные',
+	'oasis-page-header-subtitle-mediawiki' => 'Сообщение MediaWiki',
+	'oasis-page-header-subtitle-special' => 'Спецстраница',
+	'oasis-page-header-subtitle-template' => 'Страница-шаблон',
+	'oasis-page-header-subtitle-category' => 'Страница категории',
+	'oasis-page-header-subtitle-forum' => 'Страница форума',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Вся активность >',
+	'oasis-user-page-change-avatar' => 'Изменить аватар',
+	'oasis-confirmation-comment-deleted' => 'Комментарий удалён.',
+	'oasis-confirmation-page-undeleted' => 'Эта страница восстановлена.',
+	'oasis-notification-youhavenewmessages' => 'У вас есть $1.',
+	'oasis-edit-my-tools-link' => 'Изменить мои инструменты',
+	'oasis-edit-my-tools-title' => 'Изменить мои инструменты',
+	'oasis-edit-my-tools-addtool' => 'Добавить инструмент',
+	'oasis-edit-my-tools-list' => 'Список инструментов',
+	'oasis-edit-my-tools-save' => 'Сохранить',
+	'oasis-edit-my-tools-about' => 'О моих инструментах',
+	'oasis-comments-show-all' => 'Показать все',
+	'oasis-random-wiki' => 'Случайная вики',
+	'oasis-create-page' => 'Создать новую страницу в этой вики',
+	'oasis-section-edit' => 'Править',
+	'oasis-section-edit-alt' => 'Править раздел $1',
+	'oasis-spotlights-footer-title' => 'О Викиа-сети',
 	'themedesigner' => 'Конструктор тем',
+	'oasis-interlang-show-all' => '... см. все >',
+	'oasis-interlang-languages' => 'Языки:',
+	'imageseo-featured-more' => 'больше ...',
 );
 
 /** Tagalog (Tagalog)

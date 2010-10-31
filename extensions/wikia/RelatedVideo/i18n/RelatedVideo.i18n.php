@@ -35,6 +35,15 @@ $messages['gl'] = array(
 	'relatedvideo' => 'Vídeos relacionados',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'related-video-random-video' => 'Video aleatori',
+	'related-video-related' => 'Videos similar',
+	'relatedvideo' => 'Videos similar',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -78,6 +87,15 @@ $messages['pt-br'] = array(
 	'related-video-random-video' => 'Vídeo aleatório',
 	'related-video-related' => 'Vídeos relacionados',
 	'relatedvideo' => 'Vídeos relacionados',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'related-video-random-video' => 'యాదృచ్చిక దృశ్యకం',
+	'related-video-related' => 'సంబంధిత దృశ్యకాలు',
+	'relatedvideo' => 'సంబంధిత దృశ్యకాలు',
 );
 
 /** Ukrainian (Українська)
