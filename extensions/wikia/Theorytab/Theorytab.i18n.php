@@ -306,6 +306,14 @@ $messages['tr'] = array(
 	'theorytab-parent-title' => 'Ana madde',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'theorytab-title' => 'Теорія',
+	'theorytab-parent-title' => 'Батьківська стаття',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Frankou
  */

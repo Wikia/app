@@ -287,6 +287,16 @@ $messages['es'] = array(
 	'toplists-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'toplists-desc' => 'Top 10 -luettelot',
+	'right-toplists-create-edit-list' => 'Luo ja muokkaa Top 10 -luettelosivuja',
+	'right-toplists-create-item' => 'Luo ja lisää kohteita Top 10 -luettelosivulle',
+	'createtoplist' => 'Luo uusi Top 10 -luettelo',
+);
+
 /** French (Français)
  * @author Peter17
  * @author Verdy p

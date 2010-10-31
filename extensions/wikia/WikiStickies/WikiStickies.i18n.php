@@ -224,6 +224,23 @@ Agregar items a la lista, y aparecerán en tu página inicial y en esta página'
 	'wikistickies-see-more' => 'Ver más páginas que necesiten ayuda',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'wikistickies-newpages-hd' => 'Voitko lisätä tietoja yhdelle näistä uusista sivuista?',
+	'wikistickies-withoutimages-hd' => 'Voitko lisätä kuvan yhteen näistä sivuista?',
+	'wikistickies-wantedpages-hd' => 'Voitko aloittaa yhden sivun, jota tarvitsemme?',
+	'wikistickies-save-changes' => 'Tallenna muutokset',
+	'wikistickies-more' => 'katso lisää',
+	'wikistickies-admins-hd' => 'Ylläpitäjät vain',
+	'wikistickies-logo-hd' => 'Kopioi logo palvelimelle',
+	'wikistickies-theme-hd' => 'Valitse teema',
+	'wikistickies-next' => 'Seuraava →',
+	'wikistickies-hide' => 'piilota',
+	'wikistickies-see-more' => 'Katso lisää sivuja, jotka tarvitsevat apua',
+);
+
 /** French (Français)
  * @author Peter17
  */

@@ -974,6 +974,7 @@ $messages['da'] = array(
  * @author McDutchie
  * @author Mr. Richard Bolla
  * @author MtaÄ
+ * @author SVG
  * @author The Evil IP address
  * @author Umherirrender
  */
@@ -1001,8 +1002,13 @@ $messages['de'] = array(
 	'wikifactory-label-actions' => 'Aktionen',
 	'wikifactory-label-close' => 'Schließen',
 	'wikifactory-label-tags' => 'Tags',
+	'wikifactory-label-tags2' => 'Tags',
+	'wikifactory-label-findtags' => 'Finde Tags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'right-wikifactory' => 'Interne Einstellungen für Wikis ändern',
+	'wikifactory-domain-edit' => 'Bearbeite diese URL',
+	'wikifactory-domain-remove' => 'Entferne diese URL aus dem Wiki',
+	'wikifactory-domain-setmain' => 'Setze diese URL in wgServer ein',
 	'closewiki-check-and-confirm' => 'Wikis überprüfen und Aktion bestätigen',
 	'closewiki-redirect-to' => 'Weiterleiten nach',
 	'closewiki-message' => 'Domainname $1',

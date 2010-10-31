@@ -776,10 +776,29 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Silvonen
  */
 $messages['fi'] = array(
+	'wmu-name' => 'Nimi',
+	'wmu-license' => 'Lisenssi',
+	'wmu-details-inf2' => '<h1>Artikkelivalitsimet</h1>Valitse miltä haluat tämän tiedoston näkyvän sivullasi.',
+	'wmu-size' => 'Koko',
+	'wmu-thumbnail' => 'Pienoiskuva',
+	'wmu-fullsize' => 'Täysikokoinen ($1x$2px)',
 	'wmu-width' => 'Leveys',
+	'wmu-layout' => 'Asettelu',
+	'wmu-caption' => 'Kuvateksti',
+	'wmu-link' => 'Linkki',
+	'wmu-optional' => '(Valinnainen)',
+	'wmu-insert2' => 'Lisää tiedosto',
+	'wmu-prev' => 'Edelliset 8',
+	'wmu-next' => 'Seuraavat 8',
+	'wmu-flickr2' => 'Flickr-kuvat ($1 {{PLURAL:$1|tulos|tulosta}})',
+	'wmu-insert3' => 'Lisää tämä kuva',
+	'wmu-recent-inf' => 'Viimeksi lähetetyt tiedostot',
+	'wmu-thiswiki2' => 'Tämä wiki-kuvat ($1 {{PLURAL:$1|tulos|tulokset}})',
+	'wmu-success' => '<h1>Onnistui</h1>Kuvasi on lisätty.',
 	'wmu-imagebutton' => 'Lisää kuvia',
 	'wmu-show-message' => 'näytä viesti',
 	'wmu-hide-message' => 'piilota viesti',

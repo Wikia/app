@@ -944,6 +944,17 @@ $messages['sah'] = array(
 	'editaccount-frame-manage' => 'Бэлиэтэммит ааты уларытыы',
 	'editaccount-frame-usage' => 'Быһаарыы',
 	'editaccount-usage' => 'Дааннайдар хас биирдии биикигэ тус туспа кээштэнэллэр. Киирии тылгын уонна электроннай почтаҥ аадырыһын уларыттаххына, ол эрэ биикиҥ кээһиттэн сүтүө. Бука диэн, кыттааччыны саҥа киирии тылынан киирэрин көрдөс.',
+	'editaccount-label-select' => 'Кытааччы бэлиэтэммит аатын тал',
+	'editaccount-submit-account' => 'Ааты салайыы',
+	'editaccount-frame-account' => 'Бэлиэтэммит ааты уларытыы: $1',
+	'editaccount-frame-close' => 'Бэлиэтэммит ааты араарыы: $1',
+	'editaccount-label-email' => 'Электрон почта саҥа аадырыһын киллэрии',
+	'editaccount-label-pass' => 'Саҥа киирии тылы туруоруу',
+	'editaccount-label-realname' => 'Саҥа дьиҥнээх ааты суруйуу',
+	'editaccount-submit-email' => 'Электрон почтаны бигэргэтии',
+	'editaccount-submit-pass' => 'Киирии тылы бигэргэтии',
+	'editaccount-submit-realname' => 'Дьиҥнээх ааты бигэргэтии',
+	'editaccount-submit-close' => 'Бэлиэтэммит ааты суох оҥоруу',
 );
 
 /** Sinhala (සිංහල)
