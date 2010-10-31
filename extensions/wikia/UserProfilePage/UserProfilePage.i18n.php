@@ -1,4 +1,5 @@
 <?php
+
 $messages = array();
 
 $messages['en'] = array(
@@ -11,26 +12,25 @@ $messages['en'] = array(
 	'userprofilepage-about-article-title' => 'About',
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
 	'userprofilepage-edit-permision-denied' => 'Edit permissions denied',
-	'userprofilepage-edit-permision-denied-info' => 'You don\'t have permissions to edit sombody\'s user page or subpage',
+	'userprofilepage-edit-permision-denied-info' => 'You do not have permissions to edit somebody\'s user page or subpage',
 
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',
 	'userprofilepage-edits-since' => 'Edits since joining this wiki<br/>$1',
-	'userprofilepage-user-last-action-edit' => '$1 edited the <a href="$2">$3</a> article',
+	'userprofilepage-user-last-action-edit' => '$1 edited the <a href="$2">$3</a> page',
 	'userprofilepage-user-last-action-new' => '$1 created <a href="$2">$3</a>',
 	'userprofilepage-user-last-action-delete' => '$1 deleted the <a href="$2">$3</a> page',
-
 
 	//Top Wikis
 	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
 	'userprofilepage-top-wikis-edit-count' => 'Number of edits',
-	'userprofilepage-top-wikis-hidden-see-more' => 'You\'ve hidden {{PLURAL:$1|$1 wiki|$1 wikis}}',
+	'userprofilepage-top-wikis-hidden-see-more' => 'You have hidden {{PLURAL:$1|$1 wiki|$1 wikis}}',
 	'userprofilepage-top-wikis-unhide-label' => 'unhide',
 	'userprofilepage-top-wikis-hide-label' => 'hide',
 
 	//Recent activity
 	'userprofilepage-recent-activity-title' => '$1\'s recent activity',
-	'userprofilepage-activity-edit'    => 'edited the $1 article',
+	'userprofilepage-activity-edit'    => 'edited the $1 page',
 	'userprofilepage-activity-new'     => 'created $1',
 	'userprofilepage-activity-comment' => 'commented on $1',
 	'userprofilepage-activity-image'   => 'uploaded an image to $1',
@@ -43,11 +43,10 @@ $messages['en'] = array(
 	//Top pages
 	'userprofilepage-top-pages-title' => '$1\'s Top $2 pages',
 	'userprofilepage-top-page-unhide-label' => 'unhide',
-	'userprofilepage-top-pages-hidden-see-more' => 'You\'ve hidden {{PLURAL:$1|$1 page|$1 pages}}',
-	'userprofilepage-top-pages-default' => 'You don\'t have any top pages yet. Why not check out some <a href="$1">random pages</a> on the wiki?',
+	'userprofilepage-top-pages-hidden-see-more' => 'You have hidden {{PLURAL:$1|$1 page|$1 pages}}',
+	'userprofilepage-top-pages-default' => 'You do not have any top pages yet. Why not check out some <a href="$1">random pages</a> on the wiki?',
 
-	'recipes-template-aboutuser-fields' => '
-* wpTitle
+	'recipes-template-aboutuser-fields' => '* wpTitle
 ** type|input
 ** label|title
 ** hint|title
@@ -111,6 +110,5 @@ $messages['en'] = array(
 *<div class="question">What\'s your gender?</div>
 *<div class="answer"><<wpGender>></div>
 *<div class="question">Do you have any affiliation?</div>
-*<div class="answer"><<wpAffiliation>></div></div>
-'
+*<div class="answer"><<wpAffiliation>></div></div>',
 );
