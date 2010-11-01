@@ -39,10 +39,6 @@
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
 
-<!-- comScore -->
-<?= $comScore ?>
-
-<!-- googleAnalytics -->
 <?= $googleAnalytics ?>
 
 <?php
@@ -61,8 +57,8 @@
 ?>
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 
-<!-- quantServe -->
-<?= $quantServe ?>
+<!-- Tracking pixels-->
+<?= $trackingPixels ?>
 
 <?php
 	print '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";

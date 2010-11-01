@@ -29,11 +29,8 @@ class OasisModule extends Module {
 	var $headlinks;
 	var $body;
 	var $globalVariablesScript;
-
 	var $googleAnalytics;
-	var $comScore;
-	var $quantServe;
-
+	var $trackingPixels;
 	var $printableCss;
 	var $jsAtBottom;
 
@@ -179,13 +176,15 @@ class OasisModule extends Module {
 			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
 		}
 
-		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
-
-		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
-			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+		// Quant serve moved *after* the ads because it depends on Athena/Provider values.
+		// macbre: RT #25697 - hide Quantcast Tags on edit pages
+		$this->trackingPixels = "";
+		if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
+			$this->trackingPixels .= '<!-- QuantServe and comscore hidden on edit page -->';
+		} else {
+			$this->trackingPixels .= AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->trackingPixels .= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
-
 	} // end executeIndex()
 
 	/**
