@@ -44,11 +44,5 @@
 	</ul>
 </section>
 
-<div class="HomeContent">
-	<h2>Get Started Today</h2>
-	
-	<p>Create a wiki about your favorite topic and begin collaborating with people who love what you love.</p>
-	 <span><a href="http://www.wikia.com/Special:CreateWiki" class="wikia-button" style="font-size: 23px; padding: 20px 20px 20px 20px;">Start a wiki now</a></span>
-</div>
 <?php	} ?>
 <?php } ?>
