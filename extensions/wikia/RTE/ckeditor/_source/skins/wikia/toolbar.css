@@ -565,6 +565,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .rte_source span.cke_button_source {
 	border: solid 1px #000;
 	visibility: visible;
+	position: relative;
 	z-index: 50;
 }
 

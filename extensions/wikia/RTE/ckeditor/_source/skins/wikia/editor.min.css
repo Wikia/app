@@ -190,7 +190,7 @@ a{background-position:0 -2024px}#cke_toolbar span.cke_disabled .cke_icon,
 .tagline{display:block;height:0px}.wikiaSkinMonaco.rte_source
 #cke_top_wpTextbox1{height:45px !important}.rte_source
 #cke_toolbar{visibility:hidden}.rte_source
-span.cke_button_source{border:solid 1px #000;visibility:visible;z-index:50}.wikiaSkinMonaco.rte_source
+span.cke_button_source{border:solid 1px #000;visibility:visible; position: relative; z-index:50}.wikiaSkinMonaco.rte_source
 span.cke_button_source{position:absolute;right:10px;top:10px}#editform #mw-toolbar{display:block !important;left:12px;position:absolute;top:12px;visibility:hidden}.rte_source #editform #mw-toolbar{visibility:visible}.rte_source .cke_browser_ie7 #cke_toolbar
 td{border:none}.rte_source .cke_browser_ie
 #cke_toolbar_row{height:45px !important}.cke_skin_wikia
