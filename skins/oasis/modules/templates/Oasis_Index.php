@@ -60,6 +60,8 @@
 <!-- Tracking pixels-->
 <?= $trackingPixels ?>
 
+<?= AdEngine::getInstance()->getOpenXSPCCode() ?>
+
 <?php
 	print '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 

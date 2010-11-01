@@ -16,7 +16,6 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 
 	// OpenX SPC (init in AdProviderOpenX.js)
-	$vars["wgEnableOpenXSPC"] = $wgEnableOpenXSPC;
 	$cat = AdEngine::getCachedCategory();
 	$vars["cityShort"] = $cat['short'];
 
@@ -738,6 +737,17 @@ class AdEngine {
 				$out [] = $slotname;
 			}
 		}
+		return $out;
+	}
+
+	public function getOpenXSPCCode() {
+		$out = <<<EOT
+<script type="text/javascript">
+	var openxspc_base_url = AdProviderOpenX.getUrl("/__spotlights/spcjs.php", "", "", 3, window.cityShort, "");
+	$.getScript(openxspc_base_url);
+</script>
+EOT;
+
 		return $out;
 	}
 
