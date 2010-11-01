@@ -5,6 +5,8 @@
 	
 	input[type="text"] {
 		@include input-field;
+		background: $color-module-highlight;
+		color: $color-text;
 		width: 292px;
 	}
 
@@ -16,6 +18,13 @@
 		position: absolute;
 		right: 1px;
 		top: 1px;
+		@if lightness($color-page) < 50 {
+			@include linear-gradient($color-text, top, $color-text, 35%, darken($color-text, 15%), 65%);
+			&:hover {
+				$color-button-hover: darken($color-text, 20%);
+				@include linear-gradient($color-button-hover, top, $color-button-hover, 35%, darken($color-button-hover, 15%), 65%);
+			}
+		}
 	}
 
 	input[type="submit"] {
