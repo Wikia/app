@@ -40,12 +40,6 @@
 	#wordmark-edit-button {
 		margin-top: 15px;
 	}
-	#wordmark {
-		@include wordmark;
-	}
-	#wordmark-edit {
-		display: none;
-	}
 	#wordmark-shield {
 		@include opacity(75);
 		background: #FFF;

@@ -140,18 +140,10 @@ var ThemeDesigner = {
 		});
 
 		// handle wordmark editing
-		$("#wordmark-edit-button").click(function(event) {
-			event.preventDefault();
-			$("#wordmark, #wordmark-edit").toggle();
-
-			ThemeDesigner.track('wordmark/edit');
-		});
-
 		$("#wordmark-edit").find("button").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
-			$("#wordmark, #wordmark-edit").toggle();
-
+			
 			ThemeDesigner.track('wordmark/save');
 		});
 
@@ -363,11 +355,11 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled" || setting == "color-header") {
+		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled" || setting == "color-header" || setting == "wordmark-font") {
 			reloadCSS = true;
 		}
 
-		if(setting == "wordmark-font" || setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type" || setting == "background-align") {
+		if(setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type" || setting == "background-align") {
 			updateSkinPreview = true;
 		}
 
@@ -603,6 +595,7 @@ var ThemeDesigner = {
 			sass += "&background-image=" + encodeURIComponent(ThemeDesigner.settings["background-image"]);
 			sass += "&background-align=" + escape(ThemeDesigner.settings["background-align"]);
 			sass += "&background-tiled=" + escape(ThemeDesigner.settings["background-tiled"]);
+			sass += "&wordmark-font=" + escape(ThemeDesigner.settings["wordmark-font"]);
 			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sass);
 		}
 
@@ -617,7 +610,6 @@ var ThemeDesigner = {
 					})
 					.removeClass()
 					.addClass("wordmark")
-					.addClass(ThemeDesigner.settings["wordmark-font"])
 					.addClass(ThemeDesigner.settings["wordmark-font-size"])
 					.find("a")
 						.text(ThemeDesigner.settings["wordmark-text"])

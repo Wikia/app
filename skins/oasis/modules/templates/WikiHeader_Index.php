@@ -1,10 +1,10 @@
 <header id="WikiHeader" class="WikiHeader">
 	<? if ($wgSingleH1) { ?>
-	<div class="headline-div wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?> <?= $wordmarkFont ?>" <?= $wordmarkStyle ?>>
+	<div class="headline-div wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?>" <?= $wordmarkStyle ?>>
 		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>"><?= htmlspecialchars($wordmarkText) ?></a>
 	</div>
 	<? } else { ?>
-	<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?> <?= $wordmarkFont ?>" <?= $wordmarkStyle ?>>
+	<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?>" <?= $wordmarkStyle ?>>
 		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>"><?= htmlspecialchars($wordmarkText) ?></a>
 	</h1>
 	<? } ?>

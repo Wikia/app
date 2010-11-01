@@ -35,7 +35,6 @@ $messages['en'] = array(
 	'themedesigner-button-upload' => 'Upload',
 	'themedesigner-rules-background' => 'jpg, gif or png. 100 kilobyte limit',
 	'themedesigner-default' => 'Default',
-	'themedesigner-button-edit' => 'Edit',
 	'themedesigner-font' => 'font',
 	'themedesigner-size' => 'size',
 	'themedesigner-button-save' => 'Save',
@@ -43,6 +42,7 @@ $messages['en'] = array(
 	'themedesigner-rules-wordmark' => '250x65 pixels (only .png files)',
 	'themedesigner-dont-use-a-graphic' => 'Don\'t use a graphic',
 	'themedesigner-history-item' => '$1 by $2',
+	'themedesigner-button-change-text' => 'Change text',
 );
 
 /** Message documentation (Message documentation)
@@ -544,7 +544,7 @@ $messages['nl'] = array(
 	'themedesigner-history-item' => '$1 door $2',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(

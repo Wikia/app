@@ -4,9 +4,6 @@
 
 		<ul class="controls">
 			<li>
-				<button class="secondary" id="wordmark-edit-button"><img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/secondary_edit.png"> <?= wfMsg('themedesigner-button-edit') ?></button>
-			</li>
-			<li>
 				<h2><?= wfMsg('themedesigner-font') ?></h2>
 				<select id="wordmark-font">
 					<option value="default"><?= wfMsg('themedesigner-default') ?></option>
@@ -36,11 +33,9 @@
 			</li>
 		</ul>
 
-		<div id="wordmark"></div>
-
 		<div id="wordmark-edit">
 			<input type="text">
-			<button><?= wfMsg('themedesigner-button-save') ?></button>
+			<button><?= wfMsg('themedesigner-button-change-text') ?></button>
 		</div>
 
 		<div id="wordmark-shield"></div>
