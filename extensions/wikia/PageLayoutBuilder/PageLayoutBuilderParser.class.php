@@ -192,7 +192,7 @@ class PageLayoutBuilderParser extends Parser {
 					if($self->getOptions()->isPreparse) {
 						$element->outertext = "";
 					} else {
-						$element->outertext = self::parserReturnMarker($self, $marker, $oWidget->renderForResultEmpty($self->getTitle()));
+						$element->outertext = $oWidget->renderForResultEmpty($self->getTitle());
 					}
 				} else {
 					$element->outertext = $oWidget->renderForResult();
@@ -204,7 +204,8 @@ class PageLayoutBuilderParser extends Parser {
 
 		$self->getOptions();
 		if(!empty($self->getOptions()->isPreparse) && ($self->getOptions()->isPreparse)) {
-			return $dom->__toString();
+			$marker = $self->uniqPrefix() . "-LAYOUT_PLB-{".time()."}-\x7f";
+			return self::parserReturnMarker($self, $marker, $dom->__toString());
 		}
 
 		return $self->recursiveTagParse( self::removeGalleryAndIP($dom->__toString()) );

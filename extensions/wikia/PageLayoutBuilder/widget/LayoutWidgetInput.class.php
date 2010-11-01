@@ -8,7 +8,7 @@ class LayoutWidgetInput extends LayoutWidgetBase {
 	public function renderForForm() {
 		$style = "";
 		if($this->error) {
-			$style = "border-color: maroon;";
+			$style = "border-color: red; border-style: solid;";
 		}
 
 		return XML::element('input',

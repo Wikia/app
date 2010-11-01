@@ -207,3 +207,21 @@ $(function() {
 });
 
 //* END MULTILINE *//
+
+
+//* select *//
+
+$(function() {
+	$(".plb-select-empty").mousedown(function(e) { 
+	    $(e.target).attr("style","") 
+	});
+	
+	$(".plb-select-empty").change(function(e) {
+	    var element = $(e.target);
+	    if( $(e.target).val() == "") {
+	        $(e.target).css("color", "gray");
+	    }
+	});
+});
+// * select * //
+

@@ -1,5 +1,5 @@
 <?php if( $display ): ?>
-	<div class="FormCornerModule">
+	<section class="FormCornerModule">
 		<p><?php echo wfMsg('plb-special-form-box-caption', array($layoutName)); ?></p>
 		<?php echo $layoutDesc; ?>
 		<ul>
@@ -14,5 +14,5 @@
 				<?php echo $titleTime; ?>
 			</li>
 		</ul>
-	</div>
+	</section>
 <?php endif; ?>

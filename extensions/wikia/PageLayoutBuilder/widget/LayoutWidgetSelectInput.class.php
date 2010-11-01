@@ -8,15 +8,20 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 	public function renderForForm() {
 		$style = "";
 		if($this->error) {
-			$style = "border-color: maroon;";
+			$style .= "border-color: red; border-style: solid;";
 		}
 
+		if( empty($this->value) ) {
+			$style .= "color:gray;";
+		}
+		
 		$out = XML::openElement('select',
 							array(
 								'name' => 'plb_'.$this->getAttrVal('id', true),
 								'type' => 'text',
 								'value' => $this->value,
-								'style' => $style
+								'style' => $style,
+								'class' => empty($this->value) ? "plb-select-empty":""
 							));
 
 
