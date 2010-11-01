@@ -72,6 +72,20 @@ class RelatedPages {
 		$categories = $this->getCategories();
 
 		if ( count($categories) > 0 ) {
+			//RT:80681 Category blacklist
+			$blacklist = explode( "\n",wfMsgForContent( 'categoryblacklist' ));
+			if(!empty($blacklist)) {
+				foreach($blacklist as $word) {
+					$word = trim(strtolower($word), '* ');
+					for($i = 0; $i < count($categories); $i++) {
+						if($word == strtolower($categories[$i])){
+							$categories[$i] = false;
+						}
+					}
+				}
+				$categories = array_filter($categories);
+			}
+		
 			$categories = $this->getCategoriesByRank( $categories );
 			if( count( $categories ) > $this->categoriesLimit ) {
 				// limit the number of categories to look for
