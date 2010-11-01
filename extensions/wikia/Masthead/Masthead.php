@@ -869,8 +869,9 @@ class Masthead {
 						// FIXME: is there a way to know what sizes will be used w/o hardcoding them here?
 						$urls = array(
 							$oAvatarObj->getPurgeUrl(),
-							$oAvatarObj->getThumbnailPurgeUrl(20),
-							$oAvatarObj->getThumbnailPurgeUrl(100)
+							$oAvatarObj->getThumbnailPurgeUrl(20), # user-links & history dropdown
+							$oAvatarObj->getThumbnailPurgeUrl(50), # article-comments
+							$oAvatarObj->getThumbnailPurgeUrl(100) # user-profile
 						);
 						SquidUpdate::purge($urls);
 					}
