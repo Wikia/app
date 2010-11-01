@@ -5,8 +5,9 @@
 <table border="0" width="100%" valign="top">
 <tr>
 	<td valign="top" width="<?=$imgW + 10?>px">
-		<table style="border:1px solid #DFDFDF;margin:8px 2px;width:<?=$imgW?>px;height:<?=$imgH?>px;">
-		    <tr><td valign="middle" align="center"><img height="<?=$imgH?>" width="<?=$imgW?>" src="<?=$sUserImg?>" border="0" /></td></tr>
+		<table style="border:1px solid #DFDFDF;margin:8px 2px;width:<?=$imgW?>px;height:<?=$imgH?>px;"><?php
+			// Appended a random num to the end of the avatar URL so that we don't use the cached version (so that changes are immediately visible when uploading a new version. ?>
+		    <tr><td valign="middle" align="center"><img height="<?=$imgH?>" width="<?=$imgW?>" src="<?=$sUserImg?>?<?php print rand(0, 9999); ?>" border="0" /></td></tr>
 		</table>
 	</td>
 	<td><div style="text-align:left;padding:3px;">
