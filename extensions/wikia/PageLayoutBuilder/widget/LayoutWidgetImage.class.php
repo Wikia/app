@@ -13,7 +13,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$data['error'] = "";
 
 		if($this->error) {
-			$style = "border-color: maroon;";
+			$style = "border-color: red; border-style: solid;";
 			$data['error'] = $style;
 		}
 

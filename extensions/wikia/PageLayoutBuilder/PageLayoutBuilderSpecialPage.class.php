@@ -148,7 +148,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		foreach( $out as $key => $value ) {
 			$out[$key]['page_actions']['edit'] = array(
 				"link" => $title->getFullURL('plbId='.$value['page_id'] ),
-				"name" => XML::element("img",array("src" => $wgBlankImgUrl)).wfMsg("plb-list-action-edit"),
+				"name" => wfMsg("plb-list-action-edit"), //XML::element("img",array("src" => $wgBlankImgUrl)).
 				"class" => "edit wikia-button secondary",
 				"separator" => 1,
 			);
@@ -180,6 +180,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$out[$key]['profile_link'] = AvatarService::getUrl($out[$key]['profile_name']);
 			$out[$key]['profile_avatar'] = AvatarService::renderAvatar($out[$key]['profile_name'], 20);
 			$out[$key]['edit_date'] = $wgContLang->date( $out[$key]['rev_timestamp'] );
+			$out[$key]['page_title'] = str_replace("_", " ", $out[$key]['page_title']);
 		}
 		
 

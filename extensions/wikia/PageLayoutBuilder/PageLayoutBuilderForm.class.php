@@ -139,7 +139,9 @@ class PageLayoutBuilderForm extends SpecialPage {
 				$validateResult = $oWidget->validateForm();
 				if(!($validateResult === true)) {
 					$this->formErrorsList[$key] = 1;
-					$this->formErrors = $this->formErrors + $validateResult;
+					if(!in_array($validateResult, $this->formErrors)) {
+						$this->formErrors = $this->formErrors + $validateResult;	
+					}
 				}
 
 				$tagValues['val_'.$key] = $reqVal;
@@ -193,7 +195,8 @@ class PageLayoutBuilderForm extends SpecialPage {
 
 		if(PageLayoutBuilderModel::layoutIsDelete($this->id)) {
 			$preParser = new PageLayoutBuilderParser();
-			$parserOut = $preParser->preParserArticle($mwText, $this->mArticle->getTitle() );
+			$fakeTitle = new FakeTitle();
+			$parserOut = $preParser->preParserArticle($mwText, $fakeTitle );
 			$mwText = $parserOut->getText();
 		}
 		

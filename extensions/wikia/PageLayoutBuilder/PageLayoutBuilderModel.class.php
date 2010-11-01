@@ -62,7 +62,7 @@ class PageLayoutBuilderModel {
 		$out = array();
 		while($row = $db->fetchRow($res)) {
 			$row['props'] = unserialize($row['props']);
-			$row['desc'] = $row['props']['desc'];
+			$row['desc'] =  $row['props']['desc'];
 			$row['rev_user'] = User::newFromId($row['rev_user']);
 			$row['not_publish'] = !empty($not_publish[$row['page_id']]);
 			$out[] = $row;
@@ -101,10 +101,14 @@ class PageLayoutBuilderModel {
 		if($out) {
 			$value = $value + $out;
 		}
+		
+		if(!empty($value['desc'])) {
+			$value['desc'] = htmlspecialchars($value['desc']);
+		}
+		
 		wfSetWikiaPageProp(WPP_PLB_PROPS, $id, $value);
 		return $value;
 	}
-
 
 	public static function saveElementList( $layout_id, $elements) {
 		$db = wfGetDB(DB_MASTER, array());
