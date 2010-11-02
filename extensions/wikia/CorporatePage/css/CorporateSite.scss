@@ -666,3 +666,16 @@
 .printfooter, .emptymwmsg {
 	display: none;
 }
+
+// /** Search box positioning **/
+
+.buttons .WikiaSearch { 
+	position: absolute; 
+	bottom: -10px; 
+	right: 90px; 
+	z-index: 99; 
+} 
+	 	 
+#wikia-search-submit { 
+	outline:none\9; 
+} 
