@@ -1,5 +1,5 @@
 == Changes since 201011.1 ==
-*
+* rt#75238: Oasis Related pages: Article titles break in the middle of a word (macbre)
 
 == Changes since 201010.4 ==
 * rt#81277: Disable categoryselect on the template namespace (Marooned)
