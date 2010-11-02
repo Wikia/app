@@ -103,6 +103,28 @@
 		<?php endif; ?>
 	<?php
 		}
+
+		if(!empty($userRights)) {
+			foreach($userRights as $rightName) {
+				switch($rightName) {
+					case 'siteadmin':
+						echo '<spa>admin</span>';
+						break;
+					case 'staff':
+						echo '<spa>staff</span>';
+						break;
+					case 'bot':
+						echo '<spa>bot</span>';
+						break;
+					case 'bureaucrat': // TODO: check the right name
+						echo '<spa>bureaucrat</span>';
+						break;
+					case 'helper': // TODO: check the right name
+						echo '<spa>helper</span>';
+						break;
+				}
+			}
+		}
 	?>
 	<!-- UserProfilePage Extension /END -->
 <?php } // isUserProfilePageExt ?>
