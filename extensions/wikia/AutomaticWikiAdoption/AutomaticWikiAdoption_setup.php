@@ -38,15 +38,15 @@ $wgAutoloadClasses['AutomaticWikiAdoptionHelper'] = "$dir/AutomaticWikiAdoptionH
 $wgAutoloadClasses['SpecialAutomaticWikiAdoption'] = "$dir/SpecialAutomaticWikiAdoption.class.php";
 $wgSpecialPages['AutomaticWikiAdoption'] = 'SpecialAutomaticWikiAdoption';
 
+$wgDefaultUserOptions['adoptionmails'] = 1;
+
 /**
  * Initialize hooks
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function AutomaticWikiAdoptionInit() {
-	global $wgHooks, $wgDefaultUserOptions;
-
-	$wgDefaultUserOptions['adoptionmails'] = 1;
+	global $wgHooks;
 
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'AutomaticWikiAdoptionHelper::onSkinTemplateOutputPageBeforeExec';
 	$wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'AutomaticWikiAdoptionHelper::ongetUserProfilePreferencesCustomEmailToggles';
