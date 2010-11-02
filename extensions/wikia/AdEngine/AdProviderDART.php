@@ -91,6 +91,11 @@ EOT;
 		$url .= self::getQuantcastSegmentKV();
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
+		if (!empty($_COOKIE['wikia-ab'])) {	// wlee: A/B test for Artur and AdOps
+			if (strstr($_COOKIE['wikia-ab'], 'nofooter=1') !== FALSE) {
+				$url .= 'nofooter=1;';
+			}
+		}
 		$url .= "sz=" . $slot['size'] . ';';
 		$url .= $this->getTileKV($slotname);
 		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
