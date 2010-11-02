@@ -181,7 +181,13 @@ class UserPagesHeaderModule extends Module {
 				$this->lastActionData['changeicon'] = $this->lastActionData['type'];
 			}
 
-			$this->userRights = UserProfilePage::getInstance()->getUserRights();
+			$this->userRights = array_intersect( UserProfilePage::getInstance()->getUserRights(), array(
+				'admin',
+				'bot',
+				'staff',
+				'helper',
+				'beaurocrat'
+			));
 		}
 		else {
 			// render avatar (100x100)

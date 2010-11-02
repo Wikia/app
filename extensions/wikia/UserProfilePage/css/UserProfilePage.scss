@@ -280,6 +280,29 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 		margin-left: 218px;
 	}
 
+	.user-groups {
+		@include clearfix;
+		float: right;
+		margin: 7px 5px 0 0;
+		
+		li {
+			font: {
+				size: 11px;
+				weight: bold;
+			}
+
+			background: {
+				image: url(http://muppets.federico.wikia-dev.com/skins/oasis/images/checkers.png);
+				position: 0px 14px;
+				repeat: repeat-x;
+			}
+			
+			float: left;
+			height: 20px;
+			margin-right: 5px;
+		}
+	}
+
 	.wikia-avatar {
 		margin-right: 10px;
 		
