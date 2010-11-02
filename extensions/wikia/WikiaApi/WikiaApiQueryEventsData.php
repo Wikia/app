@@ -454,6 +454,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			'id' => $oRow->page_id,
 			'title' => $oRow->page_title,
 			'namespace' => $oRow->page_namespace,
+			'lctitle' => mb_strtolower( $oRow->page_title ),
+			'latest' => intval($vals['page_latest']),
 		);
 		
 		$this->getResult()->setIndexedTagName($vals, 'events');
@@ -650,6 +652,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$vals['video'] = 0;
 		}
 		$vals['media_type'] = $this->getMediaType($oTitle, $oRow->page_namespace);
+		$vals['page_latest'] = $oTitle->getLatestRevID();
 
 		wfProfileOut( __METHOD__ );
 		return $vals;
