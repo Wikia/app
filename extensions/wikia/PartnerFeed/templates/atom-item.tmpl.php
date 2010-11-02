@@ -9,6 +9,10 @@
 <?}?>
 <? if( $item->getComments() ) {?>			<comments><![CDATA[ <?=$item->getComments(); ?>]]></comments>
 <?}?>
-<? foreach( $item->OtherTags as $key => $val ) {?>			<<?=$key; ?>><?=$item->getOtherTag($key); ?>}</<?=$key; ?>>
-<?}?>
+<? foreach( $item->OtherTags as $key => $val ) { if ($key == 'media:thumbnail'){
+?>			<<?=$key; ?> url="<?=$item->getOtherTag($key); ?>" />
+<?
+}else{
+?>			<<?=$key; ?>><?=$item->getOtherTag($key); ?></<?=$key; ?>>
+<?}}?>
 		</entry>

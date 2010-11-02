@@ -52,6 +52,25 @@ class PartnerRSSFeed extends RSSFeed {
 		
 		echo $oTmpl->execute( "rss-item" );
 	}
+
+	function outHeader() {
+		global $wgVersion;
+
+		$this->outXmlHeader();
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"language"		=> $this->getLanguage(),
+			"title"			=> $this->getTitle(),
+			"url"			=> $this->getUrl(),
+			"timeNow"		=> $this->formatTime( wfTimestampNow() ),
+			"description"		=> $this->getDescription(),
+			"version"		=> $wgVersion
+		));
+
+		echo $oTmpl->execute( "rss-header" );
+		
+	}
+
 }
 
 class PartnerAtomFeed extends AtomFeed {
@@ -66,6 +85,27 @@ class PartnerAtomFeed extends AtomFeed {
 		));
 
 		echo $oTmpl->execute( "atom-item" );
+	}
+
+	function outHeader() {
+		global $wgVersion;
+
+
+		$this->outXmlHeader();
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"language"		=> $this->getLanguage(),
+			"feedId"		=> $this->getFeedId(),
+			"title"			=> $this->getTitle(),
+			"selfUrl"		=> $this->getSelfUrl(),
+			"url"			=> $this->getUrl(),
+			"timeNow"		=> $this->formatTime( wfTimestampNow() ),
+			"description"		=> $this->getDescription(),
+			"version"		=> $wgVersion
+		));
+
+		echo $oTmpl->execute( "atom-header" );
+
 	}
 }
 ?>
