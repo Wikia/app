@@ -67,17 +67,16 @@ class UserProfileRailModule extends Module {
 
 	public function getTopWikis() {
 		wfProfileIn( __METHOD__ );
-		global $wgExternalDatawareDB, $wgDevelEnvironment;
+		global $wgStatsDB, $wgDevelEnvironment;
 
-		// SELECT lu_wikia_id, lu_rev_cnt FROM city_local_users WHERE lu_user_id=$userId ORDER BY lu_rev_cnt DESC LIMIT $limit;
-		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$res = $dbs->select(
-			array( 'city_local_users' ),
-			array( 'lu_wikia_id', 'lu_rev_cnt' ),
-			array( 'lu_user_id' => UserProfilePage::getInstance()->getUser()->getId() ),
+			array( 'specials.events_local_users' ),
+			array( 'wiki_id', 'edits' ),
+			array( 'user_id' => UserProfilePage::getInstance()->getUser()->getId() ),
 			__METHOD__,
 			array(
-				'ORDER BY' => 'lu_rev_cnt DESC',
+				'ORDER BY' => 'edits DESC',
 				'LIMIT' => 4
 			)
 		);
@@ -113,8 +112,8 @@ class UserProfileRailModule extends Module {
 
 		} else {
 			while ( $row = $dbs->fetchObject( $res ) ) {
-				$wikiId = $row->lu_wikia_id;
-				$editCount = $row->lu_rev_cnt;
+				$wikiId = $row->wiki_id;
+				$editCount = $row->edits;
 				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
