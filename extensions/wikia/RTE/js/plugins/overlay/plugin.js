@@ -3,6 +3,9 @@ CKEDITOR.plugins.add('rte-overlay',
 	// overlays container
 	overlays: false,
 
+	// currently shown overlay (RT #84138)
+	currentOverlay: false,
+
 	init: function(editor) {
 		var self = this;
 
@@ -11,8 +14,7 @@ CKEDITOR.plugins.add('rte-overlay',
 
 		// add node in which overlays will be stored
 		editor.on('instanceReady', function() {
-			self.overlays = $('<div>', {id : 'RTEMediaOverlays'}).
-				appendTo($('#RTEStuff'));
+			self.overlays = $('<div>', {id : 'RTEMediaOverlays'}).appendTo($('#RTEStuff'));
 		});
 
 		// clean overlays when switching from source to wysiwyg mode
@@ -21,6 +23,24 @@ CKEDITOR.plugins.add('rte-overlay',
 				self.overlays.html('');
 			}
 		});
+
+		// periodically check currently shown overlay (RT #84138)
+		setInterval(function() {
+			self.checkCurrentOverlay();
+		}, 1000);
+	},
+
+	// periodically check currently shown overlay
+	checkCurrentOverlay: function() {
+		if (this.currentOverlay) {
+			var node = this.currentOverlay.data('node');
+
+			// node for currently shown overlay has been removed - remove overlay
+			if (node && !node.hasParent('body')) {
+				this.currentOverlay.remove();
+				this.currentOverlay = false;
+			}
+		}
 	},
 
 	showOverlay: function(node) {
@@ -47,11 +67,15 @@ CKEDITOR.plugins.add('rte-overlay',
 			caption.show();
 		}
 
+		// show all overlays
+		this.overlays.children().hide();
+
 		// show overlay + caption wrapper
-		overlay.show();
+		this.currentOverlay = overlay.show();
 
 		// clear timeout used to hide preview with small delay
-		if (timeoutId = node.data('hideTimeout')) {
+		var timeoutId = node.data('hideTimeout');
+		if (timeoutId) {
 			clearTimeout(timeoutId);
 		}
 	},
@@ -65,6 +89,8 @@ CKEDITOR.plugins.add('rte-overlay',
 		node.data('hideTimeout', setTimeout(function() {
 			overlay.children().hide();
 			overlay.hide();
+
+			this.currentOverlay = false;
 
 			node.removeData('hideTimeout');
 		}, 100));
@@ -127,6 +153,9 @@ CKEDITOR.plugins.add('rte-overlay',
 				self.hideOverlay(node);
 			}
 		});
+
+		// store reference to node for which this overlay is rendered (RT #84138)
+		overlay.data('node', node);
 
 		// add overlay to the wrapper
 		this.overlays.append(overlay);
@@ -225,22 +254,22 @@ RTE.overlay = {
 		node.data('items', items);
 
 		// assign overlay to given node
-		node.each(function(i,el){
-			el = $(el)
+		node.each(function() {
+			var node = $(this)
 				.removeData('overlay')
 				// remove previously added event handlers
 				.unbind('.overlay')
 				.bind({
 					'mouseover.overlay': function(ev) {
-						self.showOverlay(el);
+						self.showOverlay(node);
 					},
 					'mouseout.overlay': function(ev) {
-						self.hideOverlay(el);
+						self.hideOverlay(node);
 					},
 					'contextmenu.overlay': function(ev) {
 						// don't show browser's context menu
 						ev.preventDefault();
-	
+
 						// don't show CKEditor's context menu
 						ev.stopPropagation();
 					}
