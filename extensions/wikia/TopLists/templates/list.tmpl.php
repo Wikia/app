@@ -1,5 +1,5 @@
 <div id="toplists-list-body">
-	<input type="hidden" id="top-list-title" value="<?= $list->getTitle()->getText() ;?>" />
+	<input type="hidden" id="top-list-title" value="<?= $list->getTitle()->getText() ;?>">
 	<? if ( !empty( $relatedImage ) ) :?>
 		<div class="thumb tright">
 			<div class="thumbinner" style="width:200px;">
