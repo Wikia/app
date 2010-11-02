@@ -39,7 +39,7 @@
 				<? endforeach ;?>
 			<? endif ;?>
 		<? else :?>
-			<big><strong><?= $listName ;?></strong></big>
+			<big><strong><?= htmlspecialchars($listName) ;?></strong></big>
 		<? endif ;?>
 	</div>
 
@@ -70,7 +70,7 @@
 				<div class="ItemNumber">#<?= ( $item['type'] != 'template' ) ? $position : null ;?></div>
 
 				<div class="ItemName">
-					<input type="text" name="items_names[]" value="<?= $item['value'] ;?>"
+					<input type="text" name="items_names[]" value="<?= htmlspecialchars($item['value']) ;?>"
 						<?= ( $item['type'] == 'template' ) ? ' disabled' : null ;?>
 						<?= ( !empty( $errors[ "item_{$position}" ] ) ) ? ' class="error"' : null ;?> />
 				</div>
