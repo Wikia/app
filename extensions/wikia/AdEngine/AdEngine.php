@@ -741,13 +741,10 @@ class AdEngine {
 	}
 
 	public function getOpenXSPCCode() {
-		global $wgRequest,$wgNoExternals,$wgShowAds;
+		global $wgRequest,$wgNoExternals;
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
-		if(!empty($wgNoExternals)){
-			$wgShowAds = false;
-		}
 
-		if(empty($wgShowAds)){
+		if(!empty($wgNoExternals)){
 			$out = "";
 		} else {
 			$out = <<<EOT
