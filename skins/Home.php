@@ -326,7 +326,7 @@ class HomeTemplate extends QuickTemplate {
 		wfProfileIn( __METHOD__ );
 
 		global $wgRequest, $wgUser, $wgTitle, $wgDBname, $wgUseAjax, $wgOut;
-		global $wgEnableAjaxLogin, $wgShowAds, $wgUseAdServer, $wgDotDisplay, $wgAdServerUrl;
+		global $wgEnableAjaxLogin, $wgShowAds, $wgUseAdServer, $wgAdServerUrl;
 		global $wgAdServerTest, $wgWikiaUniqueBrowserId;
 		global $wgNoWideAd;
 		global $wgStyleVersion;
