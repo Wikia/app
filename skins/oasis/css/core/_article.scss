@@ -200,11 +200,20 @@
 		display: none;
 	}
 
+	// FIXME: anyone still using gopher?
 	a.external, a[href^="gopher://"] {
 		background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
 		background-position: top right;
 		background-repeat: no-repeat;
 		padding-right: 13px;
+	}
+
+	// RT #75154
+	.plainlinks {
+		a {
+			background-image: none;
+			padding-right: 0;
+		}
 	}
 
 	#filetoc {
