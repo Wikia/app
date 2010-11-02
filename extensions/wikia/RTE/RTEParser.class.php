@@ -8,7 +8,7 @@ class RTEParser extends Parser {
 	// used in tweaked doBlockLevels()
 	private $lastLineWasEmpty = null;
 	private $lastOutput = null;
-	private $inDiv = null;
+	private $inDivStack = 0;
 
 	// image params grabed in ParserMakeImageParams hook to be used in makeImage
 	private static $imageParams = null;
@@ -72,7 +72,7 @@ class RTEParser extends Parser {
 
 		// RT #37702: parser has added an empty paragraph for empty line of wikitext
 		// when parsing wikitext inside <div></div> section
-		if ($this->inDiv && $this->lastLineWasEmpty && ($output != $this->lastOutput) && $this->emptyLinesBefore > 0) {
+		if ($this->inDivStack > 0 && $this->lastLineWasEmpty && ($output != $this->lastOutput) && $this->emptyLinesBefore > 0) {
 			//RTE::log(__METHOD__, 'parser has added an empty paragraph inside <div></div>');
 
 			// two lines will be added when reverse parsing <p>
@@ -93,11 +93,11 @@ class RTEParser extends Parser {
 
 		if ($closematch) {
 			if (preg_match('/<div/iS', $t)) {
-				$this->inDiv = true;
+				$this->inDivStack++;
 			}
 
 			if (preg_match('/<\/div/iS', $t)) {
-				$this->inDiv = false;
+				$this->inDivStack--;
 			}
 		}
 
