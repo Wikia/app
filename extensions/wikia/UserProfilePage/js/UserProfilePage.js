@@ -41,9 +41,32 @@ var UserProfilePage = {
 	},
 
 	attachEvents: function() {
-		UserProfilePage._topWikisWrapper.find('.HideButton').bind('click', function() {UserProfilePage.doAction( 'hide', 'wiki', this.title );} );
-		UserProfilePage._topPagesWrapper.find('.HideButton').bind('click', function() {UserProfilePage.doAction( 'hide', 'page', this.title );} );
-		UserProfilePage._topPagesWrapper.find('.UnhideButton').bind('click', function() {UserProfilePage.doAction( 'unhide', 'page', this.title );} );
+		$('#profile-top-wikis-hidden').find('a.more').click(function(){
+			if(!$('#profile-top-wikis-hidden').hasClass('user-profile-box')){
+				$('#profile-top-wikis-hidden').addClass('user-profile-box');
+
+				$('body').unbind('click.UserProfilePage_boxClose').bind('click.boxClose', function(event) {
+					if (!$(event.target).closest('#profile-top-wikis-hidden').length) {
+						$('#profile-top-wikis-hidden').removeClass('user-profile-box');
+					};
+				});
+			}
+		});
+
+		$('#profile-top-pages-hidden').find('a.more').click(function(){
+			if(!$('#profile-top-pages-hidden').hasClass('user-profile-box')){
+				$('#profile-top-pages-hidden').addClass('user-profile-box');
+
+				$('body').unbind('click.UserProfilePage_boxClose').bind('click.boxClose', function(event) {
+					if (!$(event.target).closest('#profile-top-pages-hidden').length) {
+						$('#profile-top-pages-hidden').removeClass('user-profile-box');
+					};
+				});
+			}
+		});
+
+		/*UserProfilePage._topPagesWrapper.find('.HideButton').bind('click', function() {UserProfilePage.doAction( 'hide', 'page', this.title );} );
+		UserProfilePage._topPagesWrapper.find('.UnhideButton').bind('click', function() {UserProfilePage.doAction( 'unhide', 'page', this.title );} );*/
 	},
 
 	enrichAboutSection: function(){

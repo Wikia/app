@@ -163,6 +163,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 					line-height: 17px;
 					height: 85px;
 					overflow: hidden;
+					width: 85px
 				}
 			}
 
@@ -209,12 +210,19 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 		}
 	}
 
-	.user-profile-box{
-		@include box-shadow(0, 10px, 10px, mix($color-page, #000));
-		border: 1px solid $color-page-border;
-		background-color: $color-page;
-		z-index: 2000;
-		padding: 10px;
+	#profile-top-wikis-hidden, #profile-top-pages-hidden.user-profile-box {
+		&.user-profile-box {
+			display: block;
+			@include box-shadow(0, 10px, 10px, mix($color-page, #000));
+			border: 1px solid $color-page-border;
+			background-color: $color-page;
+			z-index: 2000;
+			padding: 10px;
+
+			&>li.hidden-item {
+				display: block;
+			}
+		}
 	}
 
 	ul.user-profile-action-menu {
