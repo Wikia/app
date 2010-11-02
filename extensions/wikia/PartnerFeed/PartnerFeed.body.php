@@ -537,6 +537,10 @@ class PartnerFeed extends SpecialPage {
 			$levels = array( BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE );
 			$recents = array();
 
+			$specialPage = SpecialPage::getPage('Leaderboard');
+			$specialPageTitle = $specialPage->getTitle();
+			$pageUrl = $specialPageTitle->getFullUrl();
+
 			foreach( $levels as $level ) {
 				$limit = 3;
 				$blackList = null;
@@ -559,15 +563,14 @@ class PartnerFeed extends SpecialPage {
 				++$rank;
 				$name = htmlspecialchars( $rankedUser->getName() );
 				$feedArray[] = array(
-					'title' =>  $rank,
-					'description' => $name,
-					'url' => $wgServer.$rankedUser->getUserPageUrl(),
+					'title' =>  $name,
+					'description' => $wgLang->formatNum( $rankedUser->getScore() ),
+					'url' => $pageUrl,
 					'date' => time(),
-					'author' => 'Wikia',
+					'author' => '',
 					'',
 					'otherTags' => array(
-						'image' =>AvatarService::getAvatarUrl( $rankedUser->getName(), $userAvatarSize ),
-						'score' => $wgLang->formatNum( $rankedUser->getScore() )
+						'media:thumbnail' =>AvatarService::getAvatarUrl( $rankedUser->getName(), $userAvatarSize ),
 					)
 				);
 			}
