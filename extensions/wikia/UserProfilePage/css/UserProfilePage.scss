@@ -292,14 +292,14 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 			}
 
 			background: {
-				image: url(http://muppets.federico.wikia-dev.com/skins/oasis/images/checkers.png);
+				image: url(/skins/oasis/images/checkers.png);/* $wgCdnStylePath */
 				position: 0px 14px;
 				repeat: repeat-x;
 			}
 			
 			float: left;
 			height: 20px;
-			margin-right: 5px;
+			margin-right: 7px;
 		}
 	}
 
@@ -311,8 +311,8 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 			display: none;
 			background-color: $color-page;
 			position: absolute;
-			top: 0;
-			right: 0;
+			top: 1px;
+			right: 1px;
 			padding: 3px;
 
 			span {
