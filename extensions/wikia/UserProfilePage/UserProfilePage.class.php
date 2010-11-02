@@ -289,4 +289,8 @@ class UserProfilePage {
 		$wgMemc->set( $this->getUserLastActionCacheKey(), $actionData, 3600 );
 	}
 
+	public function getUserRights() {
+		return $this->user->getRights();
+	}
+
 }

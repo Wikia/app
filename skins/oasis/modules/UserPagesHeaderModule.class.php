@@ -30,6 +30,7 @@ class UserPagesHeaderModule extends Module {
 	var $userPage;
 	var $isUserProfilePageExt = false;
 	var $lastActionData = null;
+	var $userRights = null;
 
 	/**
 	 * Checks whether given user name is the current user
@@ -179,6 +180,8 @@ class UserPagesHeaderModule extends Module {
 				$this->lastActionData['changemessage'] = UserProfilePageHelper::formatLastActionMessage( $this->lastActionData );
 				$this->lastActionData['changeicon'] = $this->lastActionData['type'];
 			}
+
+			$this->userRights = UserProfilePage::getInstance()->getUserRights();
 		}
 		else {
 			// render avatar (100x100)
