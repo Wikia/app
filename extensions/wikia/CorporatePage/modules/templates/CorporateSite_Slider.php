@@ -42,14 +42,5 @@
 		<li class="twitter"><a href="<?= wfMsg('corporatepage-twitter-link') ?>"></a></li>
 	</ul>
 </section>
-
-
-<div class="HomeContent">
-	<h2><?= wfMsg('corporatepage-homecontent-headline') ?></h2>
-	
-	<p><?= wfMsg('corporatepage-homecontent-intro') ?></p>
-	 <span><a href="http://www.wikia.com/Special:CreateWiki" class="wikia-button"><?= wfMsg('corporatepage-homecontent-button') ?></a></span>
-</div>
-
 <?php	} ?>
 <?php } ?>
