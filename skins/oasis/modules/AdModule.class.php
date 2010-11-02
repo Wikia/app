@@ -10,7 +10,7 @@ class AdModule extends Module {
 
 		self::$config = array();
 
-		if(!$wgOut->isArticle()) {
+		if(!$wgOut->isArticle() && !$wgTitle->isSpecial('Search')){ // RT#74422 Run ads on search results page
 			return;
 		}
 		// Ads on corporate hub pages only
