@@ -4,23 +4,46 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 
+$widget-margin-std: 3px 4px 3px 9px;
+$widget-margin-hover: 2px 3px 2px 9px;
 .plb-rte-widget {
 	display: inline;
 	zoom: 1;
 	display: inline-block;
+	position: relative;
 	
+	/*
 	border: 1px solid $color-page-border;
 	background: $color-secondary-button;
-	padding: 1px 4px;
+	*/
+	padding: 2px 4px;
+	padding-left: 9px;
+	
+	/* Redesigned UI */
+	border-color: transparent;
+	border-style: solid;
+	border-width: 0;
+	border-left-width: 1px;
+	margin: $widget-margin-std;
 	
 	cursor: pointer;
-	
-	.plb-rte-widget-caption {
-		display: block;
-		font-weight: bold;
-	}
 }
 
+.plb-rte-widget-plb_mlinput {
+	padding: 6px 9px;
+}
+.plb-rte-widget-plb_image {
+	padding: 6px 6px;
+}
+
+/* Redesigned UI */
+.plb-rte-widget.hover {
+	border-width: 1px;
+	margin: $widget-margin-hover;
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-hover-background.png);
+	background-repeat: repeat;
+	background-color: transparent;
+}
 
 
 .plb-rte-widget-plb_input {
@@ -36,9 +59,141 @@
 }
 
 .plb-rte-widget-plb_image {
-	padding-bottom: 4px;
+	padding: 4px;
 	img {
 		display: block;
 		zoom: 1;
 	}
+}
+
+
+
+/* Redesigned UI */
+
+.plb-rte-widget-plb_input {
+	border-color: #5ba70d;
+}
+.plb-rte-widget-plb_mlinput {
+	border-color: #a33e17;
+}
+.plb-rte-widget-plb_sinput {
+	border-color: #7f36ae;
+}
+.plb-rte-widget-plb_image {
+	border-color: #0043ad;
+}
+
+.plb-rte-widget-caption {
+	@include border-radius(3px);
+	position: absolute;
+	left: 15px;
+	top: -8px;
+	padding: 0 4px 1px;
+	
+	height: 12px;
+	line-height: 12px;
+	font-size: 10px;
+	font-weight: bold;
+	background-color: transparent;
+	color: white;
+	display: none;
+}
+
+.plb-rte-widget.hover .plb-rte-widget-caption {
+	display: inline-block;
+}
+
+.plb-rte-widget-plb_input .plb-rte-widget-caption {
+	background-color: #5ba70d;
+}
+.plb-rte-widget-plb_mlinput .plb-rte-widget-caption {
+	background-color: #a33e17;
+}
+.plb-rte-widget-plb_sinput .plb-rte-widget-caption {
+	background-color: #7f36ae;
+}
+.plb-rte-widget-plb_image .plb-rte-widget-caption {
+	background-color: #0043ad;
+}
+
+
+.plb-rte-widget-edit-button-placer {
+	position: absolute;
+	right: 3px;
+	top: 1px;
+	
+	background-color: transparent;
+	display: none;
+}
+
+.plb-rte-widget-plb_image .plb-rte-widget-edit-button-placer {
+	top: 3px;
+}
+
+.plb-rte-widget.hover .plb-rte-widget-edit-button-placer {
+	display: block;
+}
+
+
+.plb-rte-widget-horiz-line, .plb-rte-widget-box-icon {
+	padding: 0;
+	margin: 0;
+	border-width: 0px;
+}
+
+.plb-rte-widget-horiz-line {
+	height: 1px;
+	width: 26px;
+	display: inline-block;
+	position: absolute;
+	left: -1px;
+	text-indent: -10000px;
+	&.plb-rte-widget-top-line {
+		top: -1px;
+	}
+	&.plb-rte-widget-bottom-line{
+		bottom: -1px;
+	}
+}
+.plb-rte-widget-plb_input .plb-rte-widget-horiz-line {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_input.png);
+}
+.plb-rte-widget-plb_mlinput .plb-rte-widget-horiz-line {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_mlinput.png);
+}
+.plb-rte-widget-plb_sinput .plb-rte-widget-horiz-line {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_sinput.png);
+}
+.plb-rte-widget-plb_image .plb-rte-widget-horiz-line {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_image.png);
+}
+
+.plb-rte-widget-box-icon {
+	height: 14px;
+	width: 14px;
+	margin-top: -7px;
+	margin-left: -7px;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	text-indent: -10000px;
+}
+
+.plb-rte-widget-plb_input .plb-rte-widget-box-icon {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_input.png);
+}
+.plb-rte-widget-plb_mlinput .plb-rte-widget-box-icon {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_mlinput.png);
+}
+.plb-rte-widget-plb_sinput .plb-rte-widget-box-icon {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_sinput.png);
+}
+.plb-rte-widget-plb_image .plb-rte-widget-box-icon {
+	background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_image.png);
+}
+
+[unselectable=on] {
+	-moz-user-select:none;
+	-webkit-user-select:none;
 }

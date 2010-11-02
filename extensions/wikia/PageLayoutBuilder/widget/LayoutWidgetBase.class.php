@@ -218,9 +218,20 @@ abstract class LayoutWidgetBase {
 		return $messages;
 	}
 
-	// to be overriden
+	// to be overriden (optional)
 	protected function overrideAttrCaptions( &$messages ) {
 		return;
+	}
+
+	protected function getRTEUIMarkup() {
+		$content = "&nbsp;";
+//		$content = "";
+		return
+			 "<span contenteditable=\"false\" class=\"plb-rte-widget-box-icon\" unselectable=\"on\">$content</span>"
+			."<span contenteditable=\"false\" class=\"plb-rte-widget-horiz-line plb-rte-widget-top-line\" unselectable=\"on\">$content</span>"
+			."<span contenteditable=\"false\" class=\"plb-rte-widget-horiz-line plb-rte-widget-bottom-line\" unselectable=\"on\">$content</span>"
+			."<span contenteditable=\"false\" class=\"plb-rte-widget-edit-button-placer\" unselectable=\"on\">"
+				."<button class=\"plb-rte-widget-edit-button wikia-button secondary\">".htmlspecialchars(wfMsg('plb-editor-edit'))."</button></span>";
 	}
 
 }

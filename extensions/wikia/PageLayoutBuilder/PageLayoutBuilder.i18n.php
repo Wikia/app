@@ -80,6 +80,7 @@ $messages['en'] = array (
 	'plb-parser-preview-image-add' => 'Select a picture',
 	'plb-parser-preview-input' => 'The user\'s text will appear here.',
 	'plb-parser-preview-mlinput' => 'This is a multi-line element. When a user fills in the form to create new pages based on this layout, they will see a big input box, and when they fill it in to generate a page, that text will appear in this block on your layout. Combining this with other variables means you can create beautiful and complete layouts, but all users need to do is fill in a form - so you can get lots of amazing pages generated as quickly as possible.',
+	'plb-parser-preview-sinput' => 'The user\'s choice will appear here.',
 	'plb-special-form-none-value' => 'plb-special-form-none-value',
 	'plb-create-from-article-new' => '<span style="color:red">New!</span> Layout Builder',
 	'plb-create-from-article-button' => 'Make a Layout from this page',

@@ -39,6 +39,7 @@ class LayoutWidgetInput extends LayoutWidgetBase {
 	public function renderForRTE() {
 		wfLoadExtensionMessages("PageLayoutBuilder");
 		$caption = $this->getAttrVal('caption'); // is not default value is error message for RTE
+		$sampleText = wfMsg('plb-parser-preview-input');
 		return
 			XML::openElement('span',
 				array(
@@ -47,6 +48,8 @@ class LayoutWidgetInput extends LayoutWidgetBase {
 			."<span contenteditable=\"false\" class=\"plb-rte-widget-caption\">"
 				.htmlspecialchars(empty($caption) ? wfMsg("plb-editor-enter-caption") : $caption)
 				."</span>"
+			."<span contenteditable=\"false\" class=\"plb-rte-widget-sample-text\">" . htmlspecialchars($sampleText) . "</span>"
+			.$this->getRTEUIMarkup()
 			.XML::closeElement('span');
 	}
 }

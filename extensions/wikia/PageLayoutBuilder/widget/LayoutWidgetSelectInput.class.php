@@ -14,7 +14,7 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 		if( empty($this->value) ) {
 			$style .= "color:gray;";
 		}
-		
+
 		$out = XML::openElement('select',
 							array(
 								'name' => 'plb_'.$this->getAttrVal('id', true),
@@ -57,6 +57,7 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 	public function renderForRTE() {
 		wfLoadExtensionMessages("PageLayoutBuilder");
 		$caption = $this->getAttrVal('caption'); // is not default value is error message for RTE
+		$sampleText = wfMsg('plb-parser-preview-sinput');
 		return
 			XML::openElement('span',
 				array(
@@ -65,6 +66,8 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 			."<span contenteditable=\"false\" class=\"plb-rte-widget-caption\">"
 				.htmlspecialchars(empty($caption) ? wfMsg("plb-editor-enter-caption") : $caption)
 				."</span>"
+			."<span contenteditable=\"false\" class=\"plb-rte-widget-sample-text\">" . htmlspecialchars($sampleText) . "</span>"
+			.$this->getRTEUIMarkup()
 			.XML::closeElement('span');
 	}
 

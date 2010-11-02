@@ -728,6 +728,8 @@
 		
 		rebindOverlays: function() {
 			this.rebindOverlaysTimer.stop();
+			// XXX: temporary
+			return;
 			var widgets = this.ed.getWidgetElements();
 			$().log(widgets,'PLB-overlay refresh');
 			this.rte.getRTE().overlay.add(widgets, [{
@@ -759,7 +761,7 @@
 			// Clear list in the toolbox
 			this.widgetsList.empty();
 			// Prepare buttons overlay for list items
-			var bs = "<span class=\"buttons\"><button class=\"wikia-button edit\">"+PLB.Lang['plb-editor-edit']+"</button><a href=\"#\" class=\"delete\"></a></span>";
+			var bs = "<span class=\"buttons\"><button class=\"wikia-button secondary edit\">"+PLB.Lang['plb-editor-edit']+"</button><a href=\"#\" class=\"delete\"></a></span>";
 			// For each widget found do ...
 			$.each(l,$.proxy(function(i,e){
 				var html = PLB.Library[e.getType()].listItemHtml
@@ -781,6 +783,12 @@
 			// Bind to the edit and delete buttons from the overlay
 			$('.edit',this.widgetsList).click($.proxy(this.onItemEditClick,this));
 			$('.delete',this.widgetsList).click($.proxy(this.onItemDeleteClick,this));
+			
+			$('.plb-rte-widget-edit-button',this.rte.getBody()).each($.proxy(function(i,e){
+				$(e)
+					.unbind('.plbeditbutton')
+					.bind('click.plbeditbutton',$.proxy(this.onWidgetEditClick,this));
+			},this));
 			
 			this.refreshHovers(this.ed.getWidgetElements());
 		},
@@ -823,6 +831,11 @@
 		
 		onOverlayEditClick : function(node) {
 			this.fire('edit',$(node));
+		},
+		
+		onWidgetEditClick : function(event) {
+			var w = $(event.target).closest('.plb-rte-widget');
+			this.fire('edit',w);
 		},
 		
 		refreshHovers : function(elements) {
@@ -1132,7 +1145,7 @@
 			this.tip
 				.css('position','absolute')
 				.css('left',(this.el.outerWidth() + 2)+'px')
-				.css('top','0');
+				.css('bottom','-'+(this.el.outerHeight() - 2)+'px');
 			this.tip.css('display','block');
 		},
 		
