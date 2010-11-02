@@ -31,14 +31,11 @@ button {
 		@include linear-gradient(false, top, darken($color-buttons, 4%), 35%, darken($color-button-highlight, 4%), 65%);
 		color: $color-button-text;
 	}
-	&:visited {
-		color: $color-button-text;
-	}
 	&[disabled] {
 		cursor: default;
 		opacity: .5;
 		&:active {
-			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);	
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 		}
 	}
 	img {
@@ -52,10 +49,10 @@ button {
 		border: 1px solid $color-page-border;
 		color: $color-text;
 		&:hover {
-			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);	
+			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
 		}
 		&:active {
-			@include linear-gradient($color-secondary-button, top, darken($color-secondary-button, 4%), 35%, darken($color-secondary-button-highlight, 4%), 65%);			
+			@include linear-gradient($color-secondary-button, top, darken($color-secondary-button, 4%), 35%, darken($color-secondary-button-highlight, 4%), 65%);
 		}
 		img {
 			&.chevron {
@@ -245,6 +242,6 @@ button.wikia-chiclet-button {
 .loginToEditProtectedPage {
 	padding: 0px 5px;
 	img {
-		margin-right: 8px;	
+		margin-right: 8px;
 	}
 }
