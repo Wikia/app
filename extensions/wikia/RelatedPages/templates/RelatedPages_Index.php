@@ -9,7 +9,7 @@
 				<?php } else { ?>
 				<div class="articleSnippet"><p><?= $page['text']; ?></p></div>
 				<?php } ?>
-				<a href="<?= $page['url']; ?>" class="more"><?= $page['wrappedTitle'] ?></a>
+				<a href="<?= $page['url']; ?>" class="more"><?= $page['title'] ?></a>
 			</li>
 		<?php } ?>
 		</ul>

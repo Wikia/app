@@ -131,7 +131,6 @@ class RelatedPages {
 					$pages[$pageId] = array(
 						'url' => $title->getLocalUrl(),
 						'title' => $prefixedTitle,
-						'wrappedTitle' => $this->getWrappedTitle($prefixedTitle),
 					);
 
 					wfDebug(__METHOD__ . ": adding page '{$prefixedTitle}' (#{$pageId})\n");
@@ -191,10 +190,6 @@ class RelatedPages {
 
 		wfProfileOut( __METHOD__ );
 		return $this->pages;
-	}
-
-	private function getWrappedTitle( $titleText ) {
-		return chunk_split( $titleText, 30, '<br />' );
 	}
 
 	/**
