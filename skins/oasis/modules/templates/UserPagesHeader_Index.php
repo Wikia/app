@@ -65,6 +65,13 @@
 			</div>
 		<? endif ;?>
 	</div>
+	<? if(!empty($userRights)) :?>
+                <ul class="user-groups">
+			<? foreach ( $userRights as $rightName ) :?>
+				<li><?= wfMsg('userprofilepage-user-group-' . $rightName) ;?></li>
+			<? endforeach ;?>
+		</ul>
+	<? endif ;?>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 	<?php
 		// render edit button / dropdown menu
@@ -87,9 +94,7 @@
 
 
 <?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
-	<?php
-		if (!empty($stats)) {
-	?>
+	<? if (!empty($stats)) :?>
 		<div class="edits-info">
 			<span class="count"><?= $stats['edits']; ?></span>
 			<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $stats['date'] ) ;?></span>
@@ -101,31 +106,7 @@
 				<span class="last-action-snippet"><i><?= $lastActionData['intro']; ?></i></span>
 			</div>
 		<?php endif; ?>
-	<?php
-		}
-
-		if(!empty($userRights)) {
-			foreach($userRights as $rightName) {
-				switch($rightName) {
-					case 'siteadmin':
-						echo '<spa>admin</span>';
-						break;
-					case 'staff':
-						echo '<spa>staff</span>';
-						break;
-					case 'bot':
-						echo '<spa>bot</span>';
-						break;
-					case 'bureaucrat': // TODO: check the right name
-						echo '<spa>bureaucrat</span>';
-						break;
-					case 'helper': // TODO: check the right name
-						echo '<spa>helper</span>';
-						break;
-				}
-			}
-		}
-	?>
+	<? endif ;?>
 	<!-- UserProfilePage Extension /END -->
 <?php } // isUserProfilePageExt ?>
 
