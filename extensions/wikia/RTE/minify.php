@@ -11,6 +11,7 @@ error_reporting(E_ERROR);
 // this function takes type (CSS/JS) and list of files
 // and saves minified version in file provided
 function minify($type, $files, $target) {
+	global $wgCacheBuster;
 	$count = count($files);
 	echo "Packaging {$target} ({$count} files)...";
 
@@ -19,12 +20,14 @@ function minify($type, $files, $target) {
 	$chute->httpCache = false;
 
 	$revision = SpecialVersion::getSvnRevision(dirname(__FILE__));
-	$date = date('Ymd');
+	$cb = $wgCacheBuster;
 
 	$header = <<<HEAD
 /*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
+
+DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate this file!
 */
 
 HEAD;
@@ -39,7 +42,7 @@ HEAD;
 	$res = str_replace("\xEF\xBB\xBF", '', $res);
 
 	// add cache buster to images
-	$res = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . $date . '\\2', $res);
+	$res = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . $cb . '\\2', $res);
 
 	// minify
 	switch($type) {
@@ -59,7 +62,7 @@ HEAD;
 
 			// add date and revision data
 			$res = str_replace('%REV%', "r{$revision}", $res);
-			$res = str_replace('%VERSION%', $date, $res);
+			$res = str_replace('%VERSION%', date('Ymd'), $res);
 			break;
 	}
 
