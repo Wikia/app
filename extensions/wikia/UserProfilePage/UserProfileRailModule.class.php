@@ -232,10 +232,12 @@ class UserProfileRailModule extends Module {
 
 		arsort( $pages );
 
+		$articleService = new ArticleService();
 		foreach($pages as $pageId => $editCount) {
 			$title = Title::newFromID( $pageId );
 			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
-				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount );
+				$articleService->setArticleById( $title->getArticleID() );
+				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount, 'textSnippet' => $articleService->getTextSnippet( 100 ) );
 			}
 			else {
 				unset( $pages[ $pageId ] );

@@ -5,7 +5,11 @@
 			<div class="top-page-item hovered">
 				<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>">
 					<div class="top-page-item-image">
-						<img class="item-thumbnail" src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" alt="<?= $page['title'] ;?>">
+						<?php if( empty( $topPageImages[ $pageId ][ 0 ][ 'url' ] ) ): ?>
+							<img class="item-thumbnail" src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" alt="<?= $page['title'] ;?>">
+						<?php else: ?>
+							<?= $page['textSnippet']; ?>
+						<?php endif; ?>
 					</div>
 					<details><?= $page['title'] ;?></details>
 				</a>
@@ -20,7 +24,7 @@
 				<? endif; ?>
 			</div>
 		<? endforeach ;?>
-		
+
 		<? $hiddenCount = count($hiddenTopPages) ;?>
 		<? if( $userIsOwner && $hiddenCount ) :?>
 			<ul class="user-profile-action-menu" id="profile-top-pages-hidden">

@@ -85,7 +85,7 @@ class RelatedPages {
 				}
 				$categories = array_filter($categories);
 			}
-		
+
 			$categories = $this->getCategoriesByRank( $categories );
 			if( count( $categories ) > $this->categoriesLimit ) {
 				// limit the number of categories to look for
@@ -329,57 +329,8 @@ class RelatedPages {
 	 * @param int $length snippet length (in characters)
 	 */
 	public function getArticleSnippet( $articleId, $length = 100 ) {
-		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgParser;
-
-		$article = Article::newFromID( $articleId );
-		$content = $article->getContent();
-
-		// Perl magic will happen! Beware! Perl 5.10 required!
-		$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#i';
-
-		// remove {{..}} tags
-		$re = strtr( $re_magic, array( 'S' => "\\{", 'E' => "\\}", 'X' => '' ));
-		$content = preg_replace($re, '', $content);
-
-		// remove [[Image:...]] and [[File:...]] tags
-		$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|File):" ));
-		$content = preg_replace($re, '', $content);
-
-		// skip "edit" section and TOC
-		$content .= "\n__NOEDITSECTION__\n__NOTOC__";
-
-		// remove parser hooks from wikitext (RT #72703)
-		$hooks = $wgParser->getTags();
-		$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
-		$content = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#', '', $content);
-
-		$tmpParser = new Parser();
-		$content = $tmpParser->parse( $content, $wgTitle, new ParserOptions )->getText();
-
-		// remove <script> tags (RT #46350)
-		$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
-
-		// experimental: remove <th> tags
-		$content = preg_replace('#<th[^>]*>(.*?)<\/th>#s', '', $content);
-
-		// remove HTML tags
-		$content = trim(strip_tags($content));
-
-		// compress white characters
-		$content = mb_substr($content, 0, $length + 200);
-		$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&'));
-		$content = preg_replace('/\s+/',' ',$content);
-
-		// store first x characters of parsed content
-		$content = trim(mb_substr($content, 0, $length));
-
-		if ($content == '') {
-			wfDebug(__METHOD__ . ": got empty snippet for article #{$articleId}\n");
-		}
-
-		wfProfileOut(__METHOD__);
-		return $content;
+		$service = new ArticleService( $articleId );
+		return $service->getTextSnippet();
 	}
 
 	public static function onOutputPageMakeCategoryLinks( $outputPage, $categories, $categoryLinks ) {
