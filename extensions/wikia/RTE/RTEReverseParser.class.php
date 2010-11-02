@@ -1211,8 +1211,8 @@ class RTEReverseParser {
 					}
 				}
 
-				// add \n if previous node is <div> (RT #54113)
-				if (self::previousSiblingIs($node, 'div')) {
+				// add \n if previous node is <div> (RT #54113) or <span> (RT #83859)
+				if (self::previousSiblingIs($node, array('div', 'span'))) {
 					$out = "\n{$out}";
 				}
 
