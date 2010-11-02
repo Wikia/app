@@ -4,6 +4,8 @@
 * rt#77779: Video gallery "add video" button text changes to visited link color after clicking (macbre)
 * rt#75154: Oasis: plainlinks doesn't exist in oasis (macbre)
 * rt#83859: RTE corrupts wikitext on page with complex html+table (macbre)
+* rt#84363: Make sure spotlights don't show up when noexternals=1 (sean)
+* rt#84389: Don't request onedot anymore (sean)
 
 == Changes since 201010.4 ==
 * rt#81277: Disable categoryselect on the template namespace (Marooned)
