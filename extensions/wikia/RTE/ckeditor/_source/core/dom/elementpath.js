@@ -112,5 +112,15 @@ CKEDITOR.dom.elementPath.prototype =
 		}
 
 		return null;
+	},
+	
+	isContentEditable : function() {
+		var e = this.elements;
+		var state = "true";
+		for (var i = e.length - 1 ; i >= 0 ; i-- ) {
+			if (e[i].$.contentEditable != "inherit")
+				state = e[i].$.contentEditable;
+		}
+		return state == "true";
 	}
 };

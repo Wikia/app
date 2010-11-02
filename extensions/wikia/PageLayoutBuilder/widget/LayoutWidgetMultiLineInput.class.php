@@ -40,6 +40,7 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 				.htmlspecialchars(empty($caption) ? wfMsg("plb-editor-enter-caption") : $caption)
 				."</span>"
 			."<span contenteditable=\"false\" class=\"plb-rte-widget-sample-text\">" . htmlspecialchars($sampleText) . "</span>"
+			.$this->getRTEUIMarkup()
 			.XML::closeElement('span');
 	}
 

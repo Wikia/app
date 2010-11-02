@@ -23,9 +23,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		{
 			// Get the range for the current selection.
 			range = range || getRange( editor );
+			
+			// Wikia - start
+			var xStartPath = new CKEDITOR.dom.elementPath( range.startContainer ),
+				xEndPath = new CKEDITOR.dom.elementPath( range.endContainer );
+			if (!xStartPath.isContentEditable() || !xEndPath.isContentEditable()) {
+				return;
+			} 
+			// Wikia - end
 
 			var doc = range.document;
-
+			
 			// Exit the list when we're inside an empty list item block. (#5376)
 			if ( range.checkStartOfBlock() && range.checkEndOfBlock() )
 			{
@@ -149,6 +157,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						}
 						
 					}
+					$().log({
+						elementPath: elementPath,
+						elementPathBlock: elementPath.block,
+						elementPathBlockLimit: elementPath.blockLimit,
+						notEditableIndex: notEditableIndex
+					},'RTE-enterkey');
 					// Wikia - end
 					
 					for ( var i = 0, len = elementPath.elements.length ; i < len ; i++ )

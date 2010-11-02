@@ -174,6 +174,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 				.htmlspecialchars(empty($caption) ? wfMsg("plb-editor-enter-caption") : $caption)
 				."</span>"
 			."<img contenteditable=\"false\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: ".$this->getAttrVal('size',150)."px\" alt=\"".htmlspecialchars($caption)."\">"
+			.$this->getRTEUIMarkup()
 			.XML::closeElement('span');
 	}
 
