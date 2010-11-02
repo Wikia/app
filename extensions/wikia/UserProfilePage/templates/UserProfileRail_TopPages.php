@@ -8,7 +8,10 @@
 						<?php if( !empty( $topPageImages[ $pageId ][ 0 ][ 'url' ] ) ): ?>
 							<img class="item-thumbnail" src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" alt="<?= $page['title'] ;?>">
 						<?php else: ?>
-							<?= $page['textSnippet']; ?>
+							<div class="snippet">
+								<span class="quote">“</span>
+								<span class="text"><?= $page['textSnippet']; ?></span>
+							</div>
 						<?php endif; ?>
 					</div>
 					<details><?= $page['title'] ;?></details>
