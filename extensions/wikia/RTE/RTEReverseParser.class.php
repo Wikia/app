@@ -362,7 +362,7 @@ class RTEReverseParser {
 	}
 
 	/**
-	 * Handle RTE placeholders (templates, magic words, media placeholders)
+	 * Handle RTE placeholders (templates, magic words, media placeholders, HTML comments)
 	 */
 	private function handlePlaceholder($node, $textContent) {
 		wfProfileIn(__METHOD__);
@@ -370,9 +370,21 @@ class RTEReverseParser {
 		// get meta data
 		$data = self::getRTEData($node);
 
-		wfProfileOut(__METHOD__);
+		$out = $data['wikitext'];
 
-		return $data['wikitext'];
+		// extra fixes for different types of placeholders
+		switch($data['type']) {
+			case 'comment':
+				// FIXME: dirty fix for RT #83859
+				// assuming here that comments in wysiyg mode must be placed at the beginning of new line
+				if (self::isChildOf($node->parentNode, 'div')) {
+					$out = "\n{$out}";
+				}
+				break;
+		}
+
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	/**
