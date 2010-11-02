@@ -130,7 +130,7 @@ function spotlightSlider_setup() {
 	}
 	
 	//move spotlights
-	$(".spotlight-slider").each(function() {
+	$(".spotlight-slider-image").each(function() {
 		$(this).css("left", parseInt($(this).css("left")) - (size * random));
 	});
 
@@ -142,7 +142,7 @@ function spotlightSlider_setup() {
 
 	//bind events
 	$("#spotlight-slider .nav").click(function() {
-		if($("#spotlight-slider .spotlight-slider").queue().length == 0) {
+		if($("#spotlight-slider .spotlight-slider-image").queue().length == 0) {
 			clearInterval(spotlightSlider_timer);
 			spotlightSlider_scroll($(this));
 		}
@@ -160,7 +160,7 @@ function spotlightSlider_slideshow() {
 function spotlightSlider_scroll(nav) {
 	//setup variables
 	var thumb_index = nav.parent().prevAll().length;
-	var scroll_by = parseInt(nav.parent().find(".spotlight-slider").css("left"));
+	var scroll_by = parseInt(nav.parent().find(".spotlight-slider-image").css("left"));
 	//set "selected" class
 	$("#spotlight-slider .nav").removeClass("selected");
 	nav.addClass("selected");
@@ -168,7 +168,7 @@ function spotlightSlider_scroll(nav) {
 	$("#spotlight-slider .description").clearQueue().hide();
 	//scroll
 		
-	$("#spotlight-slider .spotlight-slider").animate({
+	$("#spotlight-slider .spotlight-slider-image").animate({
 		left: "-=" + scroll_by
 	}, function() {
 		$("#spotlight-slider-" + thumb_index).find(".description").fadeIn();
