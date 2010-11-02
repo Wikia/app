@@ -46,7 +46,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			$this->mCategorySelectEnabled = true;
 			$wgRequest->setVal('action', 'edit');
 			CategorySelectInit(true);
-			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null);
+			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null);
 		}
 
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );

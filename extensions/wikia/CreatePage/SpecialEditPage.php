@@ -33,7 +33,7 @@ abstract class SpecialEditPage extends SpecialPage {
 			$this->mCategorySelectEnabled = true;
 			$FORCE_INIT = true;
 			CategorySelectInit( $FORCE_INIT );
-			CategorySelectInitializeHooks( null, null, $this->mTitle, null, null );
+			CategorySelectInitializeHooks( null, null, $this->mTitle, null, null, null );
 		}
 	}
 
