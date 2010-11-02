@@ -5,7 +5,7 @@
 			<div class="top-page-item hovered">
 				<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>">
 					<div class="top-page-item-image">
-						<?php if( empty( $topPageImages[ $pageId ][ 0 ][ 'url' ] ) ): ?>
+						<?php if( !empty( $topPageImages[ $pageId ][ 0 ][ 'url' ] ) ): ?>
 							<img class="item-thumbnail" src="<?= $topPageImages[ $pageId ][ 0 ][ 'url' ] ;?>" alt="<?= $page['title'] ;?>">
 						<?php else: ?>
 							<?= $page['textSnippet']; ?>
