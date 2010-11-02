@@ -1,4 +1,5 @@
 == Changes since 201011.1 ==
+* rt#84138: RTE: when you delete an object with overlay, overlay does not vanish (macbre)
 * rt#75238: Oasis Related pages: Article titles break in the middle of a word (macbre)
 
 == Changes since 201010.4 ==
