@@ -129,3 +129,6 @@ $wgUseImageResize   = false; // for thumbnails to work correctly
 
 // So that SASS will be generated locally.
 $wgCdnRootUrl = "";
+
+// OpenXSPC
+$wgEnableOpenXSPC = true;
