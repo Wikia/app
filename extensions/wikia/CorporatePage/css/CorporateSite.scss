@@ -2,71 +2,67 @@
 @import "../../../../skins/oasis/css/mixins/rail-module";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
 
-/* @group =Homepage-specific styles. */
 
-	/* @group -Feature-box specifics. */
-	#HomepageFeature {
-		margin-left: 17px;
-		border-bottom: 1px solid #FFF;
+.HomeContent {
+	border: {
+		bottom: solid 1px $color-page-border;
+		top: solid 1px $color-page-border;	
 	}
-	#homepage-feature-box {
-		background: #FFF;
-		border: 1px solid #CCC;
-		margin: 0 1px 20px 1px;
-		outline: 1px solid #FFF;
-		padding: 8px;
+	margin: {
+			left: 10px;
+			right: 10px;
+			top: 27px;
+			bottom: 30px;
 	}
-	#homepage-feature-sidebar {
-		color: #333;
-		float: right;
-		width: 300px;
+	padding: 0 0 22px 29px;
+	
+	a {
+		color: $color-header-text;
+		&:visited, &:active {
+			@extend a;
+		}
 	}
-	#homepage-feature-sidebar h1 {
-		color: #000;
-		font-size: 24px;
-		font-weight: 600;
-		line-height: normal;
-		margin-top: 15px;
-	}
-	#homepage-feature-sidebar div h2 {
-		background: none;
-		color: #666;
-		font-size: 21px;
-		font-weight: normal;
-		line-height: normal;
-		margin: 0;
-		padding: 0;
-		text-align: left;
-	}
-	#homepage-feature-sidebar h2 {
-		background: url(/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;  /* $wgCdnStylePath */
+	
+	p {
 		font-size: 18px;
-		line-height: normal;
-		margin-top: 20px;
-		padding-top: 20px;
-		text-align: center;
+		width: 520px;	
 	}
-	#homepage-feature-sidebar p {
-		font-size: 13px;
-		line-height: normal;
+	
+	h2 {
+		border: none;
+		padding-top: 9px;
+		font-size: 23px;
 	}
-	.create-wiki-container {
-		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;  /* $wgCdnStylePath */
-		min-height: 90px;
-		text-align: center;
+
+
+	// /** the button **/
+	span {
+		float: right;
+		position: relative;
+		top: -71px;
+		margin-right: 80px;
 	}
-	.create-wiki-container a {
-		margin-top: 85px;
+	
+	.wikia-button {
+		font-size: 23px;
+		padding: 20px;
 	}
-	#homepage-feature-sidebar .create-wiki-container {
-		background-position: 30px -122px;
-	}
+}
+
+#HomepageFeature {
+	margin-left: 17px;
+	border-bottom: 1px solid #FFF;
 
 	#spotlight-slider {
 		overflow: hidden;
 		position: relative;
 
+		ul {
+			list-style: none;
+		}
+		
 		&.small {
 			height: 250px;
 			width: 620px;
@@ -74,7 +70,6 @@
 		&.big {
 			height: 423px;
 			width: 943px;
-			// margin-bottom: 100px;
 		}
 
 		.description {
@@ -87,30 +82,35 @@
 			top: 265px;
 			width: 600px;
 			z-index: 99;
-		}
-		.description h2 {
-			display: block;
-			font-size: 24px;
-			font-weight: normal;
-			line-height: normal;
-			text-shadow: 0 1px 1px #000;
-			border-bottom: none;
-			margin-bottom: 3px;
-			border: none;
+			
+			h2 {
+				border: none;
+				display: block;
+				font: {
+					size: 24px;
+					weight: normal;
+				}
+				line-height: normal;
+				margin-bottom: 3px;
+				text-shadow: 0 1px 1px #000;
+			}
+			
+			p {
+				border: none;
+				font: {
+					size: 16px;
+					weight: bold;
+				}
+				line-height: normal;
+				margin: {
+					top: 0px;
+					bottom: 4px;
+				}
+				text-shadow: 0 1px 1px #000;
+			}
 		}
 		
-
-		
-		.description p {
-			font-size: 16px;
-			line-height: normal;
-			margin: 0 0 .3em;
-			text-shadow: 0 1px 1px #000;
-			font-weight: bold;
-			border: none;
-		}
-		.spotlight-slider {
-
+		.spotlight-slider-image {
 			background: url(/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;  /* $wgCdnStylePath */
 			position: absolute;
 			top: 0;
@@ -125,6 +125,7 @@
 				width: 943px;
 			}
 		}
+		
 		p .nav {
 			&.small {
 				padding: 16px 5px 0;
@@ -151,746 +152,517 @@
 			}
 			
 			.nav {
-				top: 239px ;
+				top: 239px;
+			}
+		}
+		
+		// /** image positioning **/
+		#spotlight-slider-0 {
+			 .spotlight-slider-image {
+				left: 0;
+			}
+			.nav {
+				left: 0px;
+			}
+		}
+
+		#spotlight-slider-1 {
+			 .spotlight-slider-image {
+				&.big {
+					left: 943px;
+				}
+				&.small {
+					left: 620px;
+				}
+			}
+			.nav {
+				left: 60px;
+			}
+		}
+
+		#spotlight-slider-2 {
+			.spotlight-slider-image {
+				&.big {
+					left: 1886px;
+				}
+				&.small {
+					left: 1240px;
+				}
+			}
+			.nav {
+				left: 120px;
+			}
+		}
+
+		#spotlight-slider-3 {
+			.spotlight-slider-image {
+				&.big {
+					left: 2829px;
+				}
+				&.small {
+					left: 1860px;
+				}
+			 }
+			.nav {
+				left: 180px;
+			}
+		}
+
+		// /** 4 icons underneath the big images **/
+		.nav {
+			padding: {
+				top: 16px;
+				bottom: 5px;
+			}
+			position: absolute;
+			top: 369px;
+			
+			&.selected {
+				background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -13px -56px;  /* $wgCdnStylePath */
+
+				img {
+					opacity: 1 !important;
+				}	
+			}
+		}
+	}
+}
+	
+// /** social links **/
+.HomepageLink {
+	float: right;
+	position: relative;
+	right: 17px;
+	top: -43px;
+	
+	.stay-connected {
+		border: none;
+		margin: none;
+		margin-top: 9px;
+		font-size: 12px;
+	}	
+	
+	p {
+		float: left;
+		margin-right: 10px;
+	}
+	
+	ul {
+		list-style: none;
+		float: right;
+		margin: 0px;
+		margin-top: 3px;
+		
+		li {
+			background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat;  /* $wgCdnStylePath */
+			float: left;
+			margin-right: 2px;
+			display: inline-block;
+			
+			&.facebook {
+				background-position: -2px -249px;
+			}
+			
+			&.blog {
+				background-position: -36px -249px;
+			}
+			
+			&.twitter {
+				background-position: -73px -249px;
+			}
+			
+			a {
+				width: 30px;
+				height: 30px;
+				display: block;
+			}
+		}	
+	}
+}
+	
+	/* @group -Hot Spots */
+
+#wikia-global-hot-spots {
+	@include rail-module;
+	clear: both;
+	float: none;
+	
+	
+	
+	h1 {
+		margin-bottom: 15px;
+	}
+	
+	p {
+		margin-bottom: 5px;
+	}
+	
+	ol {
+		padding: 0;
+		
+		li {
+			@include clearfix;
+			clear: left;
+			border-bottom: solid 1px $color-page-border;
+			list-style-type: none;
+			padding-top: 8px;
+			
+			&:first-child {
+				.page-activity-sources {
+					margin-top: 29px;
+				}
+			}
+			
+			&:last-child {
+				border: none;
+			}
+		}
+	}
+
+	strong {
+		font: {
+			size: 20px;
+			weight: normal;
+		}
+		line-height: 30px;
+		padding: {
+			left: 4px;
+			right: 4px;
+		}
+		vertical-align: middle;
+	}
+	
+	.page-activity-badge {
+		color: #FFF;
+		float: left;
+		height: 26px;
+		margin: {
+			bottom: 10px;
+			right: 4px;
+		}
+		text-align: right;
+		
+		div {
+			@include border-radius(5px);
+			float: left;
+			padding: {
+				left: 6px;
+				right: 6px;
+			}
+		
+			span {
+				line-height: 28px;
+				padding: {
+					left: 4px;
+					right: 4px;
+				}
+				font-size: 12px;
+				vertical-align: middle;
+			}
+		}
+		
+		.page-activity-level-1 {
+			background-color: #C03;
+		}
+		.page-activity-level-2 {
+			background-color: #F90;
+		}
+		.page-activity-level-3 {
+			background-color: #FC0;
+		}
+		.page-activity-level-4 {
+			background-color: #390;
+		}
+		.page-activity-level-5 {
+			background-color: #069;
+		}
+		.page-activity-level-x {
+			background-color: #E0E0E0;
+		}	
+	}
+	
+	.page-activity-sources {
+		display: block;
+		margin-left: 93px;
+		width: 190px;
+		img {
+			position: relative;
+			top: -2px;
+			vertical-align: middle;
+		}
+		span {
+			color: #666;
+			padding-top: 0px;
+			clear: right;
+			display: block;
+			span {
+				display: inline;
+			}
+		}
+		
+		.wikia-wiki-link {
+			color: #333;
+			width: 100px;
+			font-size: 12px;
+		}
+		
+		.head-hide-link {
+			clear: both;
+			display: block;
+			font-weight: bold;
+		}
+		
+	}
+	
+	.hilite {
+		.page-activity-badge {
+			background: url(/extensions/wikia/MyHome/images/fire.png) repeat-x;  /* $wgCdnStylePath */
+			padding-top: 30px;	
+		}
+	}
+	
+	.wikia-page-link {
+		font: {
+			size: 13px;
+			weight: bold;
+		}
+	}
+	
+	// /** admin CSS **/
+	.toggleContainer {
+		margin-top: -16px;
+	}
+}
+
+
+.MainArticle {
+	
+	p {
+		margin: 5px 0px;
+	}
+	li {
+		@extend p;	
+	}
+	dt {
+		@extend p;
+	}
+	dd {
+		@extend p;
+	}
+}
+
+.hub-top-wikis {
+	.clearfix {
+		overflow: visible;
+	}
+}
+
+
+#hub-top-wikis {
+  margin-top: 25px;
+
+	h1 {
+		font-size: 22px;
+		margin: {
+			top: 5px;
+			bottom: 10px;
+		}
+		color: #000;
+		font-weight: 600;
+	}
+
+	#top-wikis-lists-box {
+	  width: 620px;
+	  margin-top: 20px;
+		h2 {
+			font-size: 18px;
+			line-height: 1em;
+			padding: 0;
+			margin-top: 1px;
+		}
+		
+		p {
+			padding: 0;
+			margin: 0;
+			color: #666;
+		}
+	
+		span {
+			&.green-box {
+				background-color: #339900;
+				color: #fff;
+				float: left;
+				margin: 0 10px 0 0;
+				font: {
+					size: 12px;
+					weight: bold;
+				}
+				padding:0 2px;
+				text-align:center;
+				width:15px;
+			}
+		}
+		
+		.top-wiki-data {
+			float: left;
+		}
+		ul {
+			li {
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+				margin-top: 15px;
+				min-height: 60px;
+				.top-wiki-data {
+					width: 560px;
+				}
+			}
+				
+			&#top-wikis-list-1 {
+				width: 590px;
+				padding: 0;
+				margin: 0 10px;
+			}
+		}
+	}
+}
+
+
+#hub-side-box {
+	#wikia-global-hot-spots {
+		width: 300px;
+	
+		.page-activity-sources {
+			line-height: 22.5px;
+		}
+		.hilite {
+			.page-activity-sources {
+				padding-top: 28px;
+			}
+		}
+		
+		.page-activity-badge {
+			margin-right: 4px;
+		}
+		
+		.page-activity-sources {
+			margin-left: 110px;
+			padding-top: 0;
+		}
+		
+		.wikia-page-link {
+			font-weight: normal;
+		}
+		
+		p {
+			margin: 0;
+		}
+		
+		ol {
+			li {
+				margin: 8px 0;
 			}
 		}
 		
 	}
-
-	#spotlight-slider-0 .spotlight-slider {
-		left: 0;
-	}
-	#spotlight-slider-0 .nav {
-		left: 0px;
-	}
-	#spotlight-slider-1 .spotlight-slider {
-		&.big {
-			left: 943px;
-		}
-		&.small {
-			left: 620px;
-		}
-	}
-	#spotlight-slider-1 .nav {
-		left: 60px;
-	}
-	#spotlight-slider-2 .spotlight-slider {
-		&.big {
-			left: 1886px;
-		}
-		&.small {
-		left: 1240px;
-		}
-	}
-	#spotlight-slider-2 .nav {
-		left: 120px;
-	}
-	#spotlight-slider-3 .spotlight-slider {
-		&.big {
-			left: 2829px;
-		}
-		&.small {
-			left: 1860px;
-		}
-	}
-	#spotlight-slider-3 .nav {
-		left: 180px;
-	}
-	
-	.nav {
-		padding:16px 5px 0;		
-		position: absolute;
-		top: 369px;
-	}
-	
-	.selected {
-		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;  /* $wgCdnStylePath */
-
-		padding:16px 5px 0;
-		img {
-			opacity: 1 !important;
-		}
-	}
-	
-	.AjaxLoginButtons {
-		.selected {
-			background-image: none !important;
-			padding: 0px !important;
-		}	
-	}
-	
-	
-	
-	// /** social links **/
-	.HomepageLink {
-		.stay-connected {
-			border: none;
-			margin: none;
-			margin-top: 9px;
-			font-size: 12px;
-		}	
-		
-		float: right;
-		position: relative;
-		right: 17px;
-		top: -43px;
-		
-		p {
-			float: left;
-			margin-right: 10px;
-		}
-		
-		ul {
-			list-style: none;
-			float: right;
-			margin: 0px;
-			margin-top: 3px;
-			
-			li {
-				background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat;  /* $wgCdnStylePath */
-				float: left;
-				margin-right: 2px;
-				display: inline-block;
-				
-				&.facebook {
-					background-position: -2px -249px;
-				}
-				
-				&.blog {
-					background-position: -36px -249px;
-				}
-				
-				&.twitter {
-					background-position: -73px -249px;
-				}
-				
-				a {
-					width: 30px;
-					height: 30px;
-					display: block;
-				}
-			}	
-		}
-	}
-	
-	.HomeContent {
-		border-bottom: solid 1px $color-page-border;
-		border-top: solid 1px $color-page-border;	
-
-		margin: {
-			left: 10px;
-			right: 10px;
-			top: 27px;
-			bottom: 30px;
-		}
-		padding-bottom: 22px;
-		padding-left: 29px;
-			
-		a, a:visited, a:active {
-			color: $color-header-text;
-		}
-
-		p {
-			font-size: 18px;
-			width: 520px;	
-		}
-		
-		h2 {
-			border: none;
-			padding-top: 9px;
-			font-size: 23px;			
-		}
-		
-
-		// /** the button **/
-		span {
-			float: right;
-			position: relative;
-			top: -71px;
-			margin-right: 80px;
-		}
-	}
-		
-	/* @end */
-
-
-	/* @group -Hot Spots */
-
-	#wikia-global-hot-spots {
-		@include rail-module;
-	}
-
-	#wikia-global-hot-spots, #wikia-global-hot-spots .page-activity-badge,
-	#wikia-global-hot-spots .page-activity-badge div {
-		float: left;
-	}
-
-	#wikia-global-hot-spots h1 {
-		margin-bottom: 12px;
-	}
-	#wikia-global-hot-spots p {
-		margin-bottom: 1em;
-	}
-	#wikia-global-hot-spots ol {
-		padding: 0;
-	}
-	#wikia-global-hot-spots ol li {
-		@include clearfix;
-		clear: left;
-		list-style-type: none;
-		border-bottom: solid 1px $color-page-border;
-		padding-top: 8px;
-		&:last-child {
-		border: none;
-		}
-	}
-	#wikia-global-hot-spots .page-activity-badge {
-		color: #FFF;
-		height: 26px;
-		margin-bottom: 10px;
-		margin-right: 4px;
-		text-align: right;
-	}
-	#wikia-global-hot-spots .hot-spots-hilite {
-		margin-right: 10px;
-	}
-	#wikia-global-hot-spots .page-activity-badge div {
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-                padding-left: 6px;
-                padding-right: 6px;
-	}
-	#wikia-global-hot-spots strong {
-		font-size: 20px;
-		font-weight: normal;
-		line-height: 30px;
-                padding-left: 4px;
-                padding-right: 4px;
-                vertical-align: middle;
-	}
-	#wikia-global-hot-spots .page-activity-badge span {
-		line-height: 28px;
-                padding-left: 4px;
-                padding-right: 4px;
-                vertical-align: middle;
-	}
-	#wikia-global-hot-spots .page-activity-badge span,
-	#wikia-global-hot-spots .page-activity-sources span,
-	#wikia-global-hot-spots .wikia-wiki-link {
-		font-size: 12px;
-	}
-	
-	#wikia-global-hot-spots li:first-child {
-		.page-activity-sources {
-			margin-top: 29px;
-		}
-		
-	}
-	#wikia-global-hot-spots .page-activity-sources {
-		display: block;
-		margin-left: 93px;
-	}
-	#wikia-global-hot-spots .page-activity-sources img {
-		position: relative;
-		top: -2px;
-		vertical-align: middle;
-	}
-	#wikia-global-hot-spots .wikia-page-link {
-		font-size: 13px;
-		font-weight: bold;
-	}
-	#wikia-global-hot-spots .page-activity-sources span {
-		color: #666;
-		white-space: nowrap;
-	}
-	#wikia-global-hot-spots .page-activity-sources .wikia-wiki-link {
-		color: #333;
-	}
-	.page-activity-level-1 {
-		background-color: #C03;
-	}
-	.page-activity-level-2 {
-		background-color: #F90;
-	}
-	.page-activity-level-3 {
-		background-color: #FC0;
-	}
-	.page-activity-level-4 {
-		background-color: #390;
-	}
-	.page-activity-level-5 {
-		background-color: #069;
-	}
-	.page-activity-level-x {
-		background-color: #E0E0E0;
-	}	
-	/* If we need to hilite a particular entry, the following apply. */
-	#wikia-global-hot-spots .hilite .page-activity-badge {
-		background: url(/extensions/wikia/MyHome/images/fire.png) repeat-x;  /* $wgCdnStylePath */
-		padding-top: 30px;
-	}
-	#wikia-global-hot-spots .hilite .page-activity-sources {
-	}
-
-	/* @end */
-
-
-/* @group Specific MediaWiki overrides */
-
-.printfooter, .emptymwmsg {
-	display: none;
 }
 
-/* @end */
+
+#hub-top-contributors {
+	@include rail-module;
+	position: inherit !important; // /** @ todo remove important **/
+	clear: both;
+	h1 {
+		margin-bottom: 12px;
+	}
+  
+	ul {
+		padding: 0;
+		li {
+			list-style-type: none;
+			margin: 15px 0; 
+			
+			img {
+				height: 30px;
+				width: 30px;
+				background-color: white;
+				padding: 2px;
+				margin: 0 10px 0 0;
+				border: 1px solid $color-page-border;
+				vertical-align: top;
+			}
+			
+			span {
+				&.h2 {
+					display: inline-block;
+					font-size: 16px;
+					margin: 8px 10px 0 0;
+					vertical-align: top;
+				}
+			}
+			
+			.userEditPoints {
+				background:#E0E0E0;
+				text-transform:uppercase;
+				display: inline-block;
+				text-align: center;
+				overflow: hidden;
+				color: #0A0A0A;
+				vertical-align: top;
+				margin-top: 5px;
+				
+				span {
+					&.txt {
+						font-size: 10px;
+						border: {
+							color:#AAAAAA #AAAAAA #AAAAAA -moz-use-text-color;
+							style:solid solid solid none;
+							width: 1px 1px 1px 0;
+						}
+						background-color: #e0e0e0;
+						@include linear-gradient(false, top, #fbfbfb, 20%, #e0e0e0, 70%);
+						line-height:17px;
+						padding:1px 5px 2px;
+						display: inline-block;
+					}
+					
+					&.userPoints {
+						@include linear-gradient(false, top, #fcf297, 20%, #f6dd5d, 70%);
+						border: 1px solid #0A0A0A;
+						display: inline-block;
+						font: {
+							weight: bold;
+							size: 10px;
+						}
+						padding: 1px 5px 2px;
+						line-height: 17px;
+						
+					}
+				}
+			}
+		}
+	}
+	.toggleContainer {
+		margin-top: -8px;
+	}
+}
+
+
+// /** Admin CSS **/
 
 .toggleContainer {
 	float: right;
-	margin-top: -30px;
-	margin-right: 5px;
-}
-
-#hub-blogs .toggleContainer {
-	margin-top: -20px;
-}
-
-#wikia-global-hot-spots .toggleContainer {
-	margin-top: -16px;
-}
-
-#hub-top-contributors .toggleContainer {
-	margin-top: -8px;
-}
-
-
-/* Wil added for Hubs -- TODO: move this to proper place */
-.MainArticle p,
-.MainArticle li,
-.MainArticle dt, 
-.MainArticle dd {
-  margin: 5px 0;
-}
-
-.clearfix {
-  overflow: visible;
-}
-
-h1#hub-name {
-	margin-bottom: 5px;
-	border-bottom: 1px solid #aaa;
-	width: 100%;
-	font-size: 28px;
-	color: #006cb1;
-	margin-top:45px;
-}
-
-#hub-featured-box {
-  float: left;
-  width: 620px;
-  margin-top: 10px;
-}
-
-#hub-top-wikis {
-  margin-top: 25px;
-}
-
-#hub-top-wikis h1 {
-  font-size: 22px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  color: #000;
-  font-weight: 600;
-}
-
-#hub-featured-spotlight {
-  background-color: pink;
-  height: 300px;
-  margin-bottom: 30px;
-}
-
-#hub-featured-box #spotlight-slider ul {
-  padding: 0 0;
-}
-
-#hub-featured-box #spotlight-slider .nav {
-  top: 240px;
-}
-
-#hub-featured-box #spotlight-slider .description h2 {
-  font-size: 24px;
-}
-
-#hub-featured-box #spotlight-slider .description p {
-  font-size: 16px;
-}
-
-#top-wiki-info {
-  -moz-background-clip:border;
-  -moz-background-inline-policy:continuous;
-  -moz-background-origin:padding;
-  background:transparent url(/skins/corporate/images/bg.top-wikis.middle.white.620x5.png) repeat-y scroll 0 0;  /* $wgCdnStylePath */
-  width:620px;
-}
-
-#top-wiki-info .shrinkwrap {
-  -moz-background-clip:border;
-  -moz-background-inline-policy:continuous;
-  -moz-background-origin:padding;
-  background:transparent url(/skins/corporate/images/bg.top-wikis.bottom.white.620x25.png) no-repeat scroll center bottom;  /* $wgCdnStylePath */
-  padding-bottom:25px;
-  width: 620px;
-}
-
-#top-wiki-info div#stuff-it {
-  -moz-background-clip:border;
-  -moz-background-inline-policy:continuous;
-  -moz-background-origin:padding;
-  background:transparent url(/skins/corporate/images/bg.top-wikis.top.white.620x25.png) no-repeat scroll 0 0;  /* $wgCdnStylePath */
-  font-size:15px;
-  padding-top:5px;
-}
-
-#top-wiki-info img {
-  float: left;
-  margin-left: 10px;
-  max-height: 100px;
-  max-width: 160px;
-}
-
-#top-wiki-meta-box {
-  float: right;
-  width: 450px;
-  text-align: center;
-  margin: 10px 0;
-}
-
-#top-wiki-meta-box h2 {
-  margin-top: 0px;
-}
-
-#center-me {
-  width: -moz-fit-content;
-  margin: 0 auto;
-}
-
-#top-wiki-info div.clearfix {
-  margin: 5px 15px 0;
-}
-
-ul#top-wiki-meta {
-  font-size:11px;
-  margin-top:5px;
-}
-
-ul#top-wiki-meta li {
-  margin: 0 0 2px;
-  list-style-type: none;
-  color: #333;
-  font-size: 13px;
-  float: left;
-  margin-right: 10px;
-}
-
-ul#top-wiki-meta li span {
-  color: #339900;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-#top-wikis-lists-box {
-  width: 620px;
-  margin-top: 20px;
-}
-
-#top-wikis-lists-box h2 {
-  font-size: 18px;
-  line-height: 1em;
-  padding: 0;
-  margin-top: 1px;
-}
-
-#top-wikis-lists-box p {
-  padding: 0;
-  margin: 0;
-  color: #666;
-}
-
-#top-wikis-lists-box span.green-box {
-  background-color: #339900;
-  color: #fff;
-  font-weight: bold;
-  float: left;
-  margin: 0 10px 0 0;  
-  font-size: 12px;
-  font-weight:bold;
-  padding:0 2px;
-  text-align:center;
-  width:15px;
-}
-
-#top-wikis-lists-box .top-wiki-data {
-  float: left;
-}
-
-#top-wikis-lists-box ul li {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  margin-top: 15px;
-  min-height: 60px;
-}
-
-#top-wikis-lists-box ul#top-wikis-list-1 {
-  width: 590px;
-  padding: 0;
-  margin: 0 10px;
-}
-
-#top-wikis-lists-box ul li .top-wiki-data {
-  width: 560px;
-}
-
-#hub-side-box {
-  width: 300px;
-  float: right;
-  margin: 25px 0 0 20px;
-}
-
-#hub-side-box h1 {
-  font-size: 22px;
-  margin: 10px 0 5px;
-  color: #000;
-}
-
-#hub-side-box h2 {
-  font-size: 16px;
-  margin: 0;
-}
-
-#hub-blogs,
-#hub-side-box #wikia-global-hot-spots {
-  margin: 0 0 20px;
-}
-
-#hub-blogs h1 {
-	font-size: 18px;
-}
-
-#hub-blogs {
-	width:300;
-}
-
-#hub-top-contributors {
-  @include rail-module;
-}
-#hub-top-contributors h1 {
-  margin-bottom: 12px;
-}
-ul#hub-blog-articles {
-  padding: 0;
-}
-
-ul#hub-blog-articles h2 {
-  width: 100%;
-  overflow: hidden;
-}
-
-ul#hub-blog-articles li {
-  list-style-type: none;
-  margin: 0 0 25px;
-}
-
-ul#hub-blog-articles li cite {
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-}
-
-ul#hub-blog-articles div.clearfix {
-  height: 95px\9;
-  margin-bottom: 5px\9;
-}
-
-ul#hub-blog-articles li p {
-  font-size: 12px;
-  margin: 5px 0;
-}
-
-ul#hub-blog-articles li p.blog-jump {
-  float: right;
-  font-size: 12px;
-  margin: 5px 0 0;
-}
-
-ul#hub-blog-articles li span.user-info {
-  font-weight: 100;
-}
-
-ul#hub-blog-articles li img.blog-image {
-  float: right;
-  margin: 5px 0 5px 5px;
-  max-height: 90px;
-  max-width: 90px;
-}
-
-ul#hub-blog-articles li .blog-jump-icon {
-  position:absolute;
-  clip:rect(0pt, 736px, 16px, 720px);
-  top: 0; 
-  left: -720px;
-}
-
-#hub-side-box #wikia-global-hot-spots .page-activity-sources {
-  line-height: 1.5em;
-}
-
-#hub-side-box #wikia-global-hot-spots .hilite .page-activity-sources {
-  padding-top: 28px;
-}
-
-#hub-side-box #wikia-global-hot-spots .page-activity-sources {
-  padding-top: 0;
-}
-
-#hub-side-box #wikia-global-hot-spots {
-  width: 300px;
-}
-
-#hub-side-box #wikia-global-hot-spots p {
-  margin: 0;
-}
-
-#hub-side-box #wikia-global-hot-spots ol li { 
-  margin: 8px 0;
-}
-
-#hub-side-box #wikia-global-hot-spots .page-activity-badge {
-  margin-right: 4px;
-}
-
-#hub-side-box #wikia-global-hot-spots .page-activity-sources {
-  margin-left: 110px;
-}
-
-#hub-side-box #wikia-global-hot-spots .wikia-page-link { 
-  font-weight: normal;
-}
-#hub-top-contributors ul {
-  padding: 0;
-}
-
-#hub-top-contributors ul li {
-  list-style-type: none;
-  margin: 15px 0; 
-}
-
-#hub-top-contributors ul li img {
-  height: 30px;
-  width: 30px;
-  background-color: white;
-  padding: 2px;
-  margin: 0 10px 0 0;
-  border:1px solid #AAAAAA;
-  vertical-align: top;
-}
-
-#hub-top-contributors ul li span.h2 {
-  display: inline-block;
-  font-size: 16px;
-  margin: 8px 10px 0 0;
-  vertical-align: top;
-}
-
-#hub-top-contributors ul li .userEditPoints {
-  -moz-background-clip:border;
-  -moz-background-inline-policy:continuous;
-  -moz-background-origin:padding;
-  background:#E0E0E0;
-  text-transform:uppercase;
-  display: inline-block;
-  text-align: center;
-  overflow: hidden;
-  color: #0A0A0A;
-  vertical-align: top;
-  margin-top: 5px;
-}
-
-#hub-top-contributors ul li .userEditPoints span.txt {
-  font-size: 10px;
-  border-color:#AAAAAA -moz-use-text-color #AAAAAA #AAAAAA;
-  border-style:solid none solid solid;
-  border-width: 1px 0px 1px 1px;
-  background-color: #e0e0e0;
-  background: -moz-linear-gradient(top, #fbfbfb 20%, #e0e0e0 70%);
-  background: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fbfbfb), to(#e0e0e0));
-  line-height:17px;
-  padding:1px 5px 2px;
-  display: inline-block;
-}
-
-#hub-top-contributors ul li .userEditPoints span.userPoints + span.txt {
-  font-size: 10px;
-  border-color:#AAAAAA #AAAAAA #AAAAAA -moz-use-text-color;
-  border-style:solid solid solid none;
-  border-width: 1px 1px 1px 0;
-  background-color: #e0e0e0;
-  background: -moz-linear-gradient(top, #fbfbfb 20%, #e0e0e0 70%);
-  background: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fbfbfb), to(#e0e0e0));
-  line-height:17px;
-  padding:1px 5px 2px;
-  display: inline-block;
-}
-
-#hub-top-contributors ul li .userEditPoints span.userPoints {
-  -moz-background-clip:border;
-  -moz-background-inline-policy:continuous;
-  -moz-background-origin:padding;
-  background-color: #f6dd5d;
-  background: -moz-linear-gradient(top, #fcf297 20%, #f6dd5d 70%);
-  background: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fcf297), to(#f6dd5d));
-  border: 1px solid #0A0A0A;
-  font-weight:bold;
-  font-size: 10px;
-  padding: 1px 5px 2px;
-  line-height: 17px;
-  display: inline-block;
+	margin: {
+		top: -30px;
+		right: 5px;
+	}
 }
 
 .hide-blog {
-	background: gray ;
+	background: gray;
 }
 
-#hub-blogs p.first_head {
-  margin-bottom: 15px;
-}
 
-.clear-fix {
-  clear:both;
-}
-
-.buttons .WikiaSearch {
-	position: absolute;
-	bottom: -10px;
-	right: 90px;
-	z-index: 99;
-}
-
-#wikia-search-submit {
- outline:none\9;
-}
-
-/* Turn off a bunch of HTML elements for the main page */
-
-.WikiaBlogListingBox .wikia-button {
+.printfooter, .emptymwmsg {
 	display: none;
-}
-.WikiaBlogListingBox .more {
-	display: none;
-}
-
-.editsection {
-	display: none;
-}
-
-.fb_iframe_widget {
-	padding-bottom: 50px;
 }

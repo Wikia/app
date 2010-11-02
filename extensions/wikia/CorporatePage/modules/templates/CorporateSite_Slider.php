@@ -11,7 +11,7 @@
 		?>
 		<li id="spotlight-slider-<?php echo $key; ?>">
 			<a href="<?php echo $value['href'] ?>">
-				<img src="<?php echo $value['imagename'] ?>" class="spotlight-slider <?php echo $slider_class; ?>">
+				<img src="<?php echo $value['imagename'] ?>" class="spotlight-slider-image <?php echo $slider_class; ?>">
 			</a>
 			<div class="description">
 				<h2><?php echo $value['title'] ?></h2>
@@ -34,7 +34,6 @@
 
 <?php 
 	if ($isMainPage == true) {?>
-
 <section class="HomepageLink">
 	<p class="stay-connected"><?= wfMsg('corporatepage-stay-in-the-know') ?></p>
 	<ul>
@@ -43,6 +42,14 @@
 		<li class="twitter"><a href="<?= wfMsg('corporatepage-twitter-link') ?>"></a></li>
 	</ul>
 </section>
+
+
+<div class="HomeContent">
+	<h2><?= wfMsg('corporatepage-homecontent-headline') ?></h2>
+	
+	<p><?= wfMsg('corporatepage-homecontent-intro') ?></p>
+	 <span><a href="http://www.wikia.com/Special:CreateWiki" class="wikia-button"><?= wfMsg('corporatepage-homecontent-button') ?></a></span>
+</div>
 
 <?php	} ?>
 <?php } ?>
