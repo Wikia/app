@@ -55,7 +55,7 @@ class AutomaticWikiAdoptionGatherData {
 
 	function getDataMapper() {
 		if ($this->dataMapper === null) {
-			$this->dataMapper = new AutomaticWikiAdoptionDataMapper();
+			$this->dataMapper = new AutomaticWikiAdoptionGatherDataMapper();
 		}
 
 		return $this->dataMapper;
