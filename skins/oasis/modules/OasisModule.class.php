@@ -4,6 +4,8 @@ class OasisModule extends Module {
 
 	private static $extraBodyClasses = array();
 
+	private $printStyles;
+
 	/**
 	 * Add extra CSS classes to <body> tag
 	 * @author: Inez Korczyński
@@ -77,6 +79,7 @@ class OasisModule extends Module {
 		// Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run
 		// later than normal extensions and therefore add themselves later than the wiki/user specific CSS is
 		// normally added.
+		// See Skin::setupUserCss()
 		global $wgOasisLastCssScripts;
 		if(!empty($wgOasisLastCssScripts)){
 			foreach($wgOasisLastCssScripts as $cssScript){
@@ -93,13 +96,13 @@ class OasisModule extends Module {
 		}
 
 		// Remove the media="print CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
-		$printStyles = array();
+		$this->printStyles = array();
 		$tmpOut = new OutputPage();
 		$tmpOut->styles = $wgOut->styles;
 		foreach($tmpOut->styles as $style => $options) {
 			if (isset($options['media']) && $options['media'] == 'print') {
 				unset($tmpOut->styles[$style]);
-				$printStyles[$style] = $options;
+				$this->printStyles[$style] = $options;
 			}
 		}
 
@@ -117,11 +120,12 @@ class OasisModule extends Module {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
 
 		// printable CSS (to be added at the bottom of the page)
+		// FIXME: move to renderPrintCSS() method
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
 		$oasisPrintStyles = $StaticChute->config['oasis_css_print'];
 		foreach($oasisPrintStyles as $cssUrl){
-			$printStyles[$cssUrl] = array("media" => "print");
+			$this->printStyles[$cssUrl] = array("media" => "print");
 		}
 
 		// If this is an anon article view, use the combined version of the print files.
@@ -139,19 +143,12 @@ class OasisModule extends Module {
 			}
 
 			// Completely replace the print styles with the combined version.
-			$printStyles = array(
+			$this->printStyles = array(
 				"/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS&isOasis=true" => array("media" => "print")
 			);
 		}
 
-		$this->data['csslinksbottom-urls'] = $printStyles;
-		$tmpOut->styles = $printStyles;
-
-		// Plain HTML (not async-loading) used by delayedPrintCSSdownload() if this is the printable version of the page.
-		//$this->data['csslinksbottom'] = $tmpOut->buildCssLinks();
-		Module::getSkinTemplateObj()->set('csslinksbottom', $tmpOut->buildCssLinks());
-
-		$this->printableCss = $this->delayedPrintCSSdownload(); // The HTML for the CSS links (whether async or not).
+		$this->printableCss = $this->renderPrintCSS(); // The HTML for the CSS links (whether async or not).
 
 		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
 		$this->loadJs();
@@ -193,22 +190,20 @@ class OasisModule extends Module {
 	/**
 	 * @author Sean Colombo
 	 */
-	private function delayedPrintCSSdownload() {
+	private function renderPrintCSS() {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
-		ob_start();
 		if ($wgRequest->getVal('printable')) {
-			// regular download
-			Module::getSkinTemplateObj()->html('csslinksbottom');
+			// render <link> tags for print preview
+			$tmpOut = new OutputPage();
+			$tmpOut->styles = $this->printStyles;
+			$ret = $tmpOut->buildCssLinks();
 		} else {
 			// async download
-			$cssMediaWiki = $this->data['csslinksbottom-urls'];
-			$cssReferences = array_keys($cssMediaWiki);
+			$cssReferences = Wikia::json_encode(array_keys($this->printStyles));
 
-			$cssReferences = Wikia::json_encode($cssReferences);
-
-			echo <<<EOF
+			$ret = <<<EOF
 		<script type="text/javascript">/*<![CDATA[*/
 			(function(){
 				var cssReferences = $cssReferences;
@@ -221,7 +216,7 @@ EOF;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return ob_get_clean();
+		return $ret;
 	} // end delayedPrintCSSdownload()
 
 	private function setupStaticChute() {

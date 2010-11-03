@@ -87,6 +87,8 @@
 	print $bottomscripts;
 	print "<!-- end Bottomscripts -->\n";
 ?>
+
+<!-- printable CSS -->
 <?= $printableCss ?>
 
 <?= wfReportTime()."\n" ?>
