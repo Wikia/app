@@ -22,9 +22,8 @@ var UserProfilePage = {
 	
 	doAction: function(name, type, value) {
 		var wrapper = ( type === 'wiki' ) ? UserProfilePage._topWikisWrapper : UserProfilePage._topPagesWrapper;
-		wrapper.addClass('busy');
-		wrapper.find('*').click(function(event){event.preventDefault()});
-		
+		UserProfilePage.blockInput(wrapper);
+
 		$.getJSON(wgScript,
 				{
 					'action': 'ajax',
@@ -34,7 +33,8 @@ var UserProfilePage = {
 					'value': value
 				},
 				function(response) {
-					$().log(response);
+					UserProfilePage.unblockInput(wrapper);
+					
 					if(response.result === true) {
 						if( response.type === 'page' ) {
 							UserProfilePage._topPagesWrapper.replaceWith( response.html );
@@ -102,6 +102,14 @@ var UserProfilePage = {
 			var elm = $(this);
 			elm.parent().prepend($('<img src="' + section.attr('data-' + ((elm.hasClass('question')) ? 'generic' : 'user') + '-avatar') + '">'));
 		});
-	}
+	},
 
+	unblockInput: function(context){
+		context.find('.profile-loading-screen').remove();
+	},
+
+	blockInput: function(context){
+		UserProfilePage.unblockInput(context);
+		context.prepend('<div class="profile-loading-screen"></div>');
+	}
 };
