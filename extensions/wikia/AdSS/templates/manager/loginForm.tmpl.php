@@ -23,7 +23,7 @@
 	</tr>
 
 	<tr>
-	<td />
+	<td></td>
 	<td class="mw-submit">
 	<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $submit; ?>" />
 	</td>
