@@ -89,13 +89,9 @@ EOT;
 		$url .= $wpage;
 		$url .= $this->getKeywordsKV();
 		$url .= self::getQuantcastSegmentKV();
+		$url .= "nofooter=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
-		if (!empty($_COOKIE['wikia-ab'])) {	// wlee: A/B test for Artur and AdOps
-			if (strstr($_COOKIE['wikia-ab'], 'nofooter=1') !== FALSE) {
-				$url .= 'nofooter=1;';
-			}
-		}
 		$url .= "sz=" . $slot['size'] . ';';
 		$url .= $this->getTileKV($slotname);
 		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
@@ -364,20 +360,23 @@ EOT;
 		return 'dmn=' . $this->sanitizeKeyValue($match1[0]) . ';';
 	}
 
-        protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
-			$this->useIframe = true; 
-			
-			// RT #65988: must clone iframe, set src then append to parentNode. Setting src on original iframe creates unnecessary entry in browser history
-			$out = '<script type="text/javascript">' .
-			$function_name . ' = function() { ' .
-			'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " .
-			'if (typeof ad_iframeOld == "undefined") { return; } ' .
-			"var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " .
-			'ad_iframe.src="'.addslashes($this->getUrl($slotname, $slot)) .
-			"\"; parent_node.removeChild(ad_iframeOld); parent_node.appendChild(ad_iframe); }</script>";
+	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
+		$this->useIframe = true; 
+		
+		// RT #65988: must clone iframe, set src then append to parentNode. Setting src on original iframe creates unnecessary entry in browser history
+		$out = '<script type="text/javascript">' .
+		$function_name . ' = function() { ' .
+		'var url = "'.addslashes($this->getUrl($slotname, $slot)).'"; ' . "\n" .
+		'var nofooter = ""; ' . "\n" .	// wlee: A/B test for footer ads
+		'if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } url = url.replace("nofooter=N;", nofooter); ' . "\n" .
+		'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " . "\n" .
+		'if (typeof ad_iframeOld == "undefined") { return; } ' . "\n" .
+		"var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " . "\n" .
+		'ad_iframe.src = url; ' . "\n" .
+		"parent_node.removeChild(ad_iframeOld); parent_node.appendChild(ad_iframe); }</script>";
 
-                return $out;
-        }
+		return $out;
+	}
 
 }
 
