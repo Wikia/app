@@ -67,6 +67,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 						.percentage-bar {
 							@include border-radius(10px);
 							@include linear-gradient($color-buttons, right, $color-button-highlight, 35%, $color-buttons, 65%);
+							min-width: 6px;
 							color: $color-button-text;
 							display: inline-block;
 							font-size: 10px;
