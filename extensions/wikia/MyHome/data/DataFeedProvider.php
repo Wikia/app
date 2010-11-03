@@ -306,7 +306,8 @@ class DataFeedProvider {
 		|| ($res['ns'] == NS_TEMPLATE && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_MEDIAWIKI && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_IMAGE && $this->proxyType == self::WL)
-		|| ($res['ns'] == NS_VIDEO && $this->proxyType == self::WL)) {
+		|| ($res['ns'] == NS_VIDEO && $this->proxyType == self::WL)
+		|| (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST) ) {
 
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
@@ -317,7 +318,7 @@ class DataFeedProvider {
 				if (isset($res['rc_params']['summary'])) {
 					$item['comment'] = $res['rc_params']['summary'];
 				}
-			} else if ($res['comment'] != '') {
+			} else if ($res['comment'] != '' && $res['ns'] != NS_TOPLIST) {
 				$item['comment'] = $res['comment'];
 			}
 
@@ -357,7 +358,7 @@ class DataFeedProvider {
 		|| in_array(($res['ns']-1), $wgContentNamespaces)
 		|| ($res['ns']-1) == 110
 		|| ($res['ns']-1) == NS_PROJECT
-		|| ($res['ns']-1) == NS_CATEGORY) {
+		|| ($res['ns']-1) == NS_CATEGORY ) {
 
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
@@ -396,6 +397,13 @@ class DataFeedProvider {
 			if ($this->proxyType == self::WL) {
 				$item['title'] = $res['title'];
 				$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE)->getLocalUrl();
+			}
+		} else if (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST ) {
+			if ($this->proxyType == self::AF && !stripos($res['title'], 'toplist-item') ) {
+				$item['title'] = $res['title'];
+				$item['url'] = Title::newFromText($title->getBaseText(), NS_TOPLIST)->getLocalUrl();
+				$res['comment'] = ''; // suppressing needless details
+				$res['rc_params'] = '';
 			}
 		}
 
