@@ -10,7 +10,7 @@ class TopList extends TopListBase {
 	protected $mRelatedArticle = null;
 	protected $mPicture = null;
 	protected $mItems = array();
-	protected $mUserCanVote = null;
+	protected $mUserCanVote = false;
 
 	/**
 	 * @author Federico "Lox" Lucignano
