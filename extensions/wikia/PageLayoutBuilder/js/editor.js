@@ -796,13 +796,13 @@
 		onMouseEnter : function (e) {
 			var el = $(e.target).closest('li');
 			el.addClass('hover');
-			$().log(el[0],'mouseenter');
+//			$().log(el[0],'mouseenter');
 		},
 		
 		onMouseLeave : function (e) {
 			var el = $(e.target).closest('li');
 			el.removeClass('hover');
-			$().log(el[0],'mouseleave');
+//			$().log(el[0],'mouseleave');
 		},
 		
 		// Handle click on edit button in the widgets list
@@ -836,6 +836,7 @@
 		onWidgetEditClick : function(event) {
 			var w = $(event.target).closest('.plb-rte-widget');
 			this.fire('edit',w);
+			return false;
 		},
 		
 		refreshHovers : function(elements) {
