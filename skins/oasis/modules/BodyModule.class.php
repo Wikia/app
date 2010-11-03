@@ -316,15 +316,19 @@ class BodyModule extends Module {
 			if (self::isEditPage()) {
 				$this->headerModuleAction = 'EditPage';
 			}
+
+			// FIXME: move to separate module
 			if ($wgEnableCorporatePageExt) {
 
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
 				wfLoadExtensionMessages( 'AutoHubsPages' );
 
 				$wgOut->addStyle(wfGetSassUrl("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
-				$wgOut->addScript('<script src="/extensions/wikia/CorporatePage/js/CorporateSlider.js"></script>');
 
-//				$this->wgSuppressFooter	= true;
+				global $wgExtensionsPath, $wgJsMimeType;
+				$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/CorporatePage/js/CorporateSlider.js\" type=\"{$wgJsMimeType}\"></script>");
+
+				// $this->wgSuppressFooter = true;
 				$this->wgSuppressArticleCategories = true;
 				$this->displayComments = false;
 				if (ArticleAdLogic::isMainPage()) {
