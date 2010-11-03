@@ -195,7 +195,13 @@ class UserProfilePage {
 			array()
 		);
 
-		$result = unserialize( $row->props );
+		if( !empty($row) ) {
+			$result = unserialize( $row->props );
+		}
+		else {
+			$result = null;
+		}
+
 		return ( empty($result) ? array() : $result );
 	}
 
@@ -297,7 +303,7 @@ class UserProfilePage {
 				if( !$this->isTopWikiHidden( $wikiId ) ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-					$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 					$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 					if( isset($themeSettings['wordmark-image-url']) ) {
 						$wikiLogo = $themeSettings['wordmark-image-url'];
@@ -324,7 +330,7 @@ class UserProfilePage {
 					$editCount = $row->edits;
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-					$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 					$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 					if( isset($themeSettings['wordmark-image-url']) ) {
 						$wikiLogo = $themeSettings['wordmark-image-url'];
