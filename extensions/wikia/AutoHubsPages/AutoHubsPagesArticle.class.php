@@ -72,10 +72,6 @@ class AutoHubsPagesArticle extends Article {
 	public function view() {
 		global $wgOut, $wgScriptPath, $wgSkin;
 
-		if( $wgSkin != 'corporate' ) {
-			$wgOut->addStyle( "$wgScriptPath/extensions/wikia/AutoHubsPages/css/hubs.css" );
-		}
-
 		wfLoadExtensionMessages('AutoHubsPages');
 		
 		$data = $this->prepareData();
