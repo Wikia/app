@@ -88,7 +88,7 @@ class ListusersData {
 			}
 		}
 		if ( empty($this->mOrder) ) {
-			$this->mOrder[] = sprintf( $this->mOrderOptions[Listusers::DEF_ORDER], Listusers::DEF_ORDER_ASC );
+			$this->mOrder[] = sprintf( $this->mOrderOptions[Listusers::DEF_ORDER] );
 		}
 	}
 
