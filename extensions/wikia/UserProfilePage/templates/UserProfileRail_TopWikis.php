@@ -32,7 +32,8 @@
 						</a>
 					</td>
 					<td class="edit-count">
-						<div class="percentage-bar" style="width: <?= round( ( $wikiData[ 'editCount' ] / $maxEdits ) * 100 ) - 10 ;?>%"><?= $wikiData[ 'editCount' ] ;?></div>
+						<? $percentageWidth = round( ( $wikiData[ 'editCount' ] / $maxEdits ) * 100 ) - 10 ;?>
+						<div class="percentage-bar"<?= ( $percentageWidth < 3 ) ? null : " style=\"width: {$percentageWidth}%;\"" ;?>><?= $wikiData[ 'editCount' ] ;?></div>
 					</td>
 				</tr>
 			<? endforeach; ?>
