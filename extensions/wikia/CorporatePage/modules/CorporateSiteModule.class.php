@@ -43,6 +43,7 @@ class CorporateSiteModule extends Module {
 		$this->hidetopwikis = false;
 		$this->data['title'] = $wgTitle;
 		$this->data['topWikis1'] = $temp['value'];
+		$this->data['tag_id'] = $tag_id;
 		$this->data['is_menager'] = $isManager;
 	}
 
@@ -170,6 +171,7 @@ class CorporateSiteModule extends Module {
 
 		$this->data['title'] = $wgTitle;
 		$this->data['hotSpots'] = $temp['value'];
+		$this->data['tag_id'] = $tag_id;
 		$this->data['is_menager'] = $isManager;
 	}
 	
