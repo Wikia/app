@@ -391,7 +391,7 @@ class UserProfilePage {
 
 		$hiddenTopPages = $this->getHiddenTopPages();
 		if(count($hiddenTopPages)) {
-			$where['page_id'] = 'NOT IN (' . join( ',', $hiddenTopPages ) . ')';
+			$where[] = 'page_id NOT IN (' . join( ',', $hiddenTopPages ) . ')';
 		}
 
 		$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
@@ -422,13 +422,13 @@ class UserProfilePage {
 		*/
 
 		$pages = array();
-		if( $wgDevelEnvironment ) { //DevBox test
-			$pages = array( 4 => 28, 1883 => 16, 1122 => 14, 31374 => 11, 2335 => 8, 78622 => 3 ); // test data
-		} else {
+		//if( $wgDevelEnvironment ) { //DevBox test
+		//	$pages = array( 4 => 28, 1883 => 16, 1122 => 14, 31374 => 11, 2335 => 8, 78622 => 3 ); // test data
+		//} else {
 			while( $row = $dbs->fetchObject($res) ) {
 				$pages[ $row->page_id ] = $row->count;
 			}
-		}
+		//}
 
 		// get top commented pages and merge
 		foreach( $this->getTopCommentedPages() as $pageId => $commentCount ) {
@@ -484,7 +484,7 @@ class UserProfilePage {
 		);
 		$hiddenTopPages = $this->getHiddenTopPages();
 		if(count($hiddenTopPages)) {
-			$where['page_id'] = 'NOT IN (' . join( ',', $hiddenTopPages ) . ')';
+			$where[] = 'page_id NOT IN (' . join( ',', $hiddenTopPages ) . ')';
 		}
 
 		$dbr = wfGetDB( DB_SLAVE );
