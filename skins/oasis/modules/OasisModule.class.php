@@ -151,8 +151,8 @@ class OasisModule extends Module {
 
 		$this->printableCss = $this->delayedPrintCSSdownload(); // The HTML for the CSS links (whether async or not).
 
-		// setup lazy loading of JS using WSL (WikiaScriptLoader)
-		$this->lazyLoadJS();
+		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
+		$this->loadJs();
 
 		// load Google Analytics code
 		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
@@ -300,7 +300,7 @@ EOF;
 	}
 
 	// TODO: implement as a separate module?
-	private function lazyLoadJS() {
+	private function loadJs() {
 		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser;
 		wfProfileIn(__METHOD__);
 
