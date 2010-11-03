@@ -94,7 +94,7 @@ class UserProfileRailModule extends Module {
 			}
 			else {
 				$wikiLogo = '';
-				$wordmarkText = '';
+				$wordmarkText = $wikiName;
 			}
 
 			$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => 0);

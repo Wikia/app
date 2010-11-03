@@ -315,7 +315,7 @@ class UserProfilePage {
 					}
 					else {
 						$wikiLogo = '';
-						$wordmarkText = '';
+						$wordmarkText = $wikiName;
 					}
 					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
 				}
@@ -343,7 +343,7 @@ class UserProfilePage {
 					}
 					else {
 						$wikiLogo = '';
-						$wordmarkText = '';
+						$wordmarkText = $wikiName;
 					}
 
 					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
