@@ -20,7 +20,7 @@ class UserBlock {
 
 		// RT#42011: RegexBlock records strange results
 		// don't write stats for other user than visiting user
-		$isCurrentUser = $user->getName() == $wgUser->getName();
+		$isCurrentUser = $text == $wgUser->getName();
 
 		// check cache first before proceeeding
 		$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getTitleKey() );
@@ -84,7 +84,7 @@ class UserBlock {
 					'return' => false,
 				);
 				$wgMemc->set( $cacheKey, $cachedState );
-				
+
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
