@@ -82,7 +82,20 @@ class UserProfileRailModule extends Module {
 		foreach( $hiddenWikis as $wikiId ) {
 			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-			$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+			//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+			$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+			if( isset($themeSettings['wordmark-image-url']) ) {
+				$wikiLogo = $themeSettings['wordmark-image-url'];
+				$wordmarkText = '';
+			}
+			elseif( isset($themeSettings['wordmark-text']) ) {
+				$wikiLogo = '';
+				$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
+			}
+			else {
+				$wikiLogo = '';
+				$wordmarkText = '';
+			}
 
 			$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => 0);
 		}

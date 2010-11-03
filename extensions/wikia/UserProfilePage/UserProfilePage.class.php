@@ -314,6 +314,7 @@ class UserProfilePage {
 						$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
 					}
 					else {
+						$wikiLogo = '';
 						$wordmarkText = '';
 					}
 					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
@@ -341,6 +342,7 @@ class UserProfilePage {
 						$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
 					}
 					else {
+						$wikiLogo = '';
 						$wordmarkText = '';
 					}
 
