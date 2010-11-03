@@ -49,6 +49,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 						}
 
 						.hide-control {
+							cursor: pointer;
 							display: none;
 						}
 					}
@@ -97,6 +98,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 		}
 
 		.more {
+			cursor: pointer;
 			float: right;
 			font-size: 10px;
 			font-weight: bold;
@@ -104,7 +106,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 	}
 
 	&>.UserProfileRailModule_TopPages {
-		padding-bottom: 20px;
+		padding-bottom: 35px;
 
 		.top-page-item {
 			position: relative;
@@ -138,28 +140,31 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 				background-color: $color-page;
 
 				.quote {
-					font-style: normal;
-					font-weight: bold;
-					font-size: 40px;
+					font: {
+						style: normal;
+						weight: bold;
+						size: 40px;
+					}
+					
 					color: $color-text;
 					position: absolute;
 					display: block;
 					left: 7px;
-					//top: 0px;
 					padding: 0;
 				}
 
 				.text {
-					font-style: normal;
-					font-size: 13px;
-					font-weight: bold;
+					font: {
+						style: normal;
+						size: 13px;
+						weight: bold;
+					}
+					
 					color: $color-text;
 					position: relative;
 					display: block;
 					margin: 0;
-					padding: 0;
-					padding-left: 24px;
-					padding-top: 13px;
+					padding: 13px 0 0 24px;
 					line-height: 17px;
 					height: 85px;
 					overflow: hidden;
@@ -195,6 +200,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 				a {
 					line-height: 9px;
 					font-weight: normal;
+					cursor: pointer;
 
 					img {
 						vertical-align: middle;
@@ -210,24 +216,31 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 		}
 	}
 
-	#profile-top-wikis-hidden, #profile-top-pages-hidden.user-profile-box {
+	#profile-top-wikis-hidden, #profile-top-pages-hidden {
+		padding: 5px;
+
 		&.user-profile-box {
 			display: block;
 			@include box-shadow(0, 10px, 10px, mix($color-page, #000));
 			border: 1px solid $color-page-border;
 			background-color: $color-page;
 			z-index: 2000;
-			padding: 10px;
 
 			&>li.hidden-item {
 				display: block;
+			}
+
+			a.more {
+				color: $color-text;
+				text-decoration: none;
+				cursor: default;
 			}
 		}
 	}
 
 	ul.user-profile-action-menu {
 		position: absolute;
-		right: 8px;
+		right: 0px;
 
 		li {
 			&.unhide-link{
@@ -235,6 +248,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 				padding-bottom: 10px;
 
 				.more {
+					cursor: pointer;
 					float: none;
 				}
 
@@ -262,6 +276,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 					margin-left: 10px;
 
 					.UnhideButton {
+						cursor: pointer;
 						line-height: 20px;
 						font-weight: normal;
 
@@ -440,9 +455,12 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 							@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
 
 							&:after {
-								border-color: transparent $color-secondary-button-highlight $color-secondary-button-highlight transparent;
-								border-style: solid;
-								border-width: 4px;
+								border: {
+									color: transparent $color-secondary-button-highlight $color-secondary-button-highlight transparent;
+									style: solid;
+									width: 4px;
+								}
+								
 								content: ' ';
 								height: 0px;
 								left: 28px;
@@ -457,9 +475,12 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 							margin-bottom: 20px;
 
 							&:after {
-								border-color: transparent mix($color-secondary-button-highlight, $color-button-highlight, 90%) mix($color-secondary-button-highlight, $color-button-highlight, 90%) transparent;
-								border-style: solid;
-								border-width: 4px;
+								border: {
+									color: transparent mix($color-secondary-button-highlight, $color-button-highlight, 90%) mix($color-secondary-button-highlight, $color-button-highlight, 90%) transparent;
+									style: solid;
+									width: 4px;
+								}
+								
 								content: ' ';
 								height: 0px;
 								left: 28px;
@@ -471,9 +492,12 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 
 						&.answer, &.question {
 							&:before {
-								border-color: transparent $color-page-border $color-page-border transparent;
-								border-style: solid;
-								border-width: 5px;
+								border: {
+									color: transparent $color-page-border $color-page-border transparent;
+									style: solid;
+									width: 5px;
+								}
+								
 								content: ' ';
 								height: 0px;
 								left: 26px;
