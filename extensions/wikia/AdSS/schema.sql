@@ -19,9 +19,9 @@ CREATE TABLE billing (
 CREATE TABLE ads (
   ad_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   ad_user_id int unsigned NOT NULL,
-  ad_url varchar(255) NOT NULL,
-  ad_text varchar(255) NOT NULL,
-  ad_desc varchar(255) NOT NULL,
+  ad_url text NOT NULL,
+  ad_text text NOT NULL,
+  ad_desc text NOT NULL,
   ad_wiki_id int unsigned NOT NULL,
   ad_page_id int unsigned NOT NULL,
   ad_status tinyint unsigned NOT NULL,
