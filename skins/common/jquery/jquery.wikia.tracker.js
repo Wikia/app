@@ -312,6 +312,14 @@ jQuery.tracker.track = function(fakeurl) {
 			$().log('tracker: ' + fake);
 			urchinTracker(fake);
 		}
+
+		var testGroupName = document.cookie.match(/wikia-ab=\/name=([^\/]*)/);
+		if(testGroupName) {
+			_uacct = "UA-19473076-1";
+			fake = '/1_' + skinname + '/' + testGroupName[1] + '/' + username + '/' + fakeurl;
+			$().log('tracker: ' + fake);
+			urchinTracker(fake);
+		}
 	}
 	else {
 		$().log('tracker [void]: ' + fake);
