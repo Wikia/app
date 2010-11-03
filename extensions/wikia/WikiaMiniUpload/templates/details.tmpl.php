@@ -1,5 +1,5 @@
 <?php
-global $wgExtensionsPath;
+global $wgExtensionsPath; 
 if(isset($props['name'])) {
 ?>
 <div id="ImageUploadSection">
@@ -138,6 +138,7 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 	<tr class="ImageUploadNoBorder">
 		<td>&nbsp;</td>
 		<td>
+			<a class="backbutton" href="#" style="display:none" ><?= wfMsg('wmu-back') ?></a>
 			<input type="submit" value="<?= wfMsg('wmu-insert2') ?>" onclick="WMU_insertImage(event, 'details');" />
 		</td>
 	</tr>
