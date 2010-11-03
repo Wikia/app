@@ -12,13 +12,20 @@
 		// NOTE: CSS files that are needed on every Oasis page should go into the bottom of /skins/oasis/css/oasis.scss
 		// It serves the function that StaticChute formerly served for CSS.
 	?>
-
+	
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 	<?= $anonSiteCss ?>
 
-
 	<?= $globalVariablesScript ?>
+
+	<!-- Small Header A/B Test -->
+	<script>
+		if (document.cookie.match(/wikia-ab=[^;]*(smallheader=1)/)) {
+		//if (document.cookie.indexOf("smallheader")) {
+			document.write('<link rel="stylesheet" href="' + stylepath + '/oasis/css/small_header.css">');
+		}
+	</script>
 
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>

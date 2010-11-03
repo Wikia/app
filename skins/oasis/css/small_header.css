@@ -1,0 +1,85 @@
+body {
+	padding-top: 0;
+}
+
+
+/* Wikia Header */
+.WikiaLogo img {
+	filter:progid:DXImageTransform.Microsoft.Matrix(Dx=0, Dy=0, M11=0.8, M12=0, M21=0, M22=0.8);
+	-moz-transform: matrix(0.8, 0, 0, 0.8, 0, 0);
+	-webkit-transform: matrix(0.8, 0, 0, 0.8, 0, 0);
+}
+.WikiaHeader {
+	border-top: none;
+	margin-top: 0;
+}
+.WikiaHeader .wikia-button {
+	height: 15px;
+	line-height: 15px;
+	padding-left: 9px;
+	padding-right: 9px;
+}
+.WikiaHeader nav {
+	border-top: none;
+	height: 32px;
+}
+.WikiaHeader nav:before {
+	display: none;
+}
+.WikiaHeader li {
+	height: 20px;
+	margin-top: 7px;
+}
+
+.GlobalNavigation li {
+	height: 26px;
+	margin-top: -7px;
+	padding-top: 7px;
+}
+.GlobalNavigation > li > a {
+	font-size: 12px;
+}
+.GlobalNavigation .subnav.show {
+	top: 32px;
+}
+
+.AccountNavigation {
+	top: 0;
+}
+.AccountNavigation li {
+	height: 26px;
+	margin-top: 0;
+	padding-top: 7px;
+}
+.AccountNavigation > li > a {
+	font-size: 10px;
+}
+.AccountNavigation .subnav.show {
+	top: 32px;
+}
+
+
+
+/* Leaderboards */
+#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
+	padding-top: 6px;
+}
+
+
+/* Wiki Header */
+.WikiHeader {
+	margin-bottom: 0;
+	padding-top: 5px;
+}
+
+.WikiHeader h1:before, 
+.WikiHeader .headline-div:before, 
+.WikiHeader .shadow-mask {
+	display: none;
+}
+
+
+/* Page Header */
+.WikiaPageHeader details {
+	margin-bottom: 10px;
+}
