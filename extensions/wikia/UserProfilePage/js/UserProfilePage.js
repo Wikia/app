@@ -21,25 +21,26 @@ var UserProfilePage = {
 	},
 	
 	doAction: function(name, type, value) {
-		var data = {
-			'action': 'ajax',
-			'rs': 'UserProfilePageHelper::doAction',
-			'name': name,
-			'type': type,
-			'value': value
-		}
-
-		$().log(data);
+		var wrapper = ( type === 'wiki' ) ? UserProfilePage._topWikisWrapper : UserProfilePage._topPagesWrapper;
+		wrapper.addClass('busy');
+		wrapper.find('*').click(function(event){event.preventDefault(), event.preventBubble()});
+		
 		$.getJSON(wgScript,
-				data,
+				{
+					'action': 'ajax',
+					'rs': 'UserProfilePageHelper::doAction',
+					'name': name,
+					'type': type,
+					'value': value
+				},
 				function(response) {
 					$().log(response);
 					if(response.result === true) {
-						if( response.type == 'page' ) {
+						if( response.type === 'page' ) {
 							UserProfilePage._topPagesWrapper.replaceWith( response.html );
 							UserProfilePage._topPagesWrapper = $('#profile-top-pages-body');
 						}
-						if( response.type == 'wiki' ) {
+						if( response.type === 'wiki' ) {
 							UserProfilePage._topWikisWrapper.replaceWith( response.html );
 							UserProfilePage._topWikisWrapper = $('#profile-top-wikis-body');
 						}
