@@ -13,6 +13,7 @@ class UserProfileRailModule extends Module {
 	var $maxEdits;
 	var $userRegistrationDate;
 	private $maxTopPages = 6;
+	private $maxTopWikis = 5;
 	private $commentToEditRatio = 0.3;
 
 	public function executeTopWikis() {
@@ -77,7 +78,7 @@ class UserProfileRailModule extends Module {
 			__METHOD__,
 			array(
 				'ORDER BY' => 'edits DESC',
-				'LIMIT' => 4
+				'LIMIT' => $this->maxTopWikis
 			)
 		);
 
@@ -88,7 +89,8 @@ class UserProfileRailModule extends Module {
 				4832 => 72,
 				831 => 60,
 				4036 => 35,
-				177 => 12
+				177 => 12,
+				1890 => 5
 			); // test data
 
 			foreach($wikis as $wikiId => $editCount) {
