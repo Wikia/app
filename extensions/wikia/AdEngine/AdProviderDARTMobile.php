@@ -15,8 +15,8 @@ class AdProviderDARTMobile extends AdProviderDART {
 			$this->getDomainKV($_SERVER['HTTP_HOST']) .
 			'pos=' . $slotname . ';' .
 			$this->getKeywordsKV() .
-			. "qcseg=N;" .	 // wlee: placeholder for JS that sets the real key-value. See AdProviderDART::getIframeFillFunctionDefinition()
-			. "nofooter=N;" .	// wlee: placeholder for JS that sets the real key-value. See AdProviderDART::getIframeFillFunctionDefinition()
+			"qcseg=N;" .	 // wlee: placeholder for JS that sets the real key-value. See AdProviderDART::getIframeFillFunctionDefinition()
+			"nofooter=N;" .	// wlee: placeholder for JS that sets the real key-value. See AdProviderDART::getIframeFillFunctionDefinition()
 			$this->getLocKV($slotname) .
 			$this->getDcoptKV($slotname) .
 			"sz=" . $slot['size'] . ';' .
