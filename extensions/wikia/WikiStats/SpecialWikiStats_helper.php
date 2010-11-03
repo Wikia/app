@@ -1262,7 +1262,7 @@ class WikiStats {
 		
 		if ( $data['cnt'] > 0 ) {
 			
-			$memkey = sprintf( "data_%s_%s_%d", __METHOD__, $year.'_'.$month.'_'.$lang.'_'.$cat.'_'.$order.'_'.$limit.'_'.$offset.'_'.$wgLang->getCode(), $xls );
+			$memkey = sprintf( "acdata_%s_%s_%d", __METHOD__, $year.'_'.$month.'_'.$lang.'_'.$cat.'_'.$order.'_'.$limit.'_'.$offset.'_'.$wgLang->getCode(), $xls );
 			$data['res'] = $wgMemc->get( $memkey );
 			
 			if ( empty($data['res']) ) {
@@ -1324,9 +1324,9 @@ class WikiStats {
 					);	
 					
 					while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-						$data['res'][$oRow->wiki_id][7] = $oRow->users_all;
-						$data['res'][$oRow->wiki_id][8] = $oRow->articles_edits;
-						$data['res'][$oRow->wiki_id][9] = $oRow->articles;
+						$data['res'][$oRow->wiki_id][8] = $oRow->users_all;
+						$data['res'][$oRow->wiki_id][9] = $oRow->articles_edits;
+						$data['res'][$oRow->wiki_id][10] = $oRow->articles;
 					}
 					$dbr->freeResult( $oRes );						
 				}		
