@@ -307,7 +307,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 
 	public function getTopWikis($tag_id, $lang, $limit, $show_hide = false, $force_reload = false) {
-		global $wgMemc $wgDotDisplay;
+		global $wgMemc, $wgDotDisplay;
 
 		wfProfileIn( __METHOD__ );
 		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis_top", $tag_id, $lang, $limit );
