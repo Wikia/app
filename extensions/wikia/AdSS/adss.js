@@ -11,6 +11,7 @@ $(function() {
 				$.tracker.byStr( "adss/publisher/click/0" );
 			}
 		);
+		$.tracker.byStr( "adss/publisher/view/0" );
 	}
 	$.getJSON(wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax'},
 		function(response) {
