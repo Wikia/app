@@ -14,7 +14,7 @@ $("a.close").click( function(e) {
 			}, function( response ) {
 				if( response.result == "success" ) {
 					var cur = $('span#'+response.id);
-					cur.html(response.closed);
+					cur.closest("tr").remove();
 				} else {
 					alert(response.respmsg);
 				}
