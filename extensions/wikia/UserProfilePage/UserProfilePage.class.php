@@ -362,11 +362,13 @@ class UserProfilePage {
 		wfProfileIn( __METHOD__ );
 		global $wgExternalSharedDB, $wgDevelEnvironment;
 
-		$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
-		$wikis = $this->getHiddenFromDb( $dbs );
+		if( empty($this->hiddenWikis) ) {
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
+			$this->hiddenWikis = $this->getHiddenFromDb( $dbs );
+		}
 
 		wfProfileOut( __METHOD__ );
-		return $wikis;
+		return $this->hiddenWikis;
 	}
 
 	/**
@@ -519,11 +521,13 @@ class UserProfilePage {
 		global $wgDevelEnvironment;
 		wfProfileIn( __METHOD__ );
 
-		$dbs = wfGetDB( DB_SLAVE );
-		$pages = $this->getHiddenFromDb( $dbs );
+		if( empty($this->hiddenPages) ) {
+			$dbs = wfGetDB( DB_SLAVE );
+			$this->hiddenPages = $this->getHiddenFromDb( $dbs );
+		}
 
 		wfProfileOut( __METHOD__ );
-		return $pages;
+		return $this->hiddenPages;
 	}
 
 }
