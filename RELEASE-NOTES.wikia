@@ -7,6 +7,8 @@
 * rt#84363: Make sure spotlights don't show up when noexternals=1 (sean)
 * rt#84389: Don't request onedot anymore (sean)
 * rt#84264: Oasis Related pages: Move related pages module to the bottom of the page (macbre)
+* rt#84366: RTE: source mode should use full width (macbre)
+* rt#84586: RTE: RTE.instanceId is not kept up to date (macbre)
 
 == Changes since 201010.4 ==
 * rt#81277: Disable categoryselect on the template namespace (Marooned)
