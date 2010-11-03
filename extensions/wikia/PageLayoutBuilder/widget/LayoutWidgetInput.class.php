@@ -27,8 +27,8 @@ class LayoutWidgetInput extends LayoutWidgetBase {
 		return $this->value;
 	}
 
-	public function renderForResultEmpty(Title $title) {
-		return wfMsg("plb-parser-empty-value", array("%1" => $title->getFullURL("action=edit"))) ;
+	public function renderForResultEmpty($url) {
+		return wfMsg("plb-parser-empty-value", array("%1" =>$url)) ;
 	}
 
 	public function renderForPreview() {

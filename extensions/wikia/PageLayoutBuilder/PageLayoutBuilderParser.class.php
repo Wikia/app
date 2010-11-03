@@ -176,7 +176,7 @@ class PageLayoutBuilderParser extends Parser {
 		$formValues = $plbParser->extractFormValues($attributes);
 		$elements = array_keys($wgPLBwidgets);
 		$elementsOut = array();
-
+		$parserOptions = $self->getOptions();
 		foreach($dom->find(implode(",", $elements)) as $element) {
 			$marker = $self->uniqPrefix() . "-LAYOUT_PLB-{".count($self->plbMarkers)."}-\x7f";
 			$name = trim($element->tag);
@@ -189,10 +189,11 @@ class PageLayoutBuilderParser extends Parser {
 			$validateElementStatus = $oWidget->validateAttribute($elementsOut);
 			if($validateElementStatus === true) {
 				if($oWidget->isEmpty()) {
-					if($self->getOptions()->isPreparse) {
+					if(!empty($parserOptions->isPreparse)) {
 						$element->outertext = "";
 					} else {
-						$element->outertext = $oWidget->renderForResultEmpty($self->getTitle());
+						$url = $parserOptions->getIsPreview() ? "#":$self->getTitle()->getFullURL("action=edit");
+						$element->outertext = self::parserReturnMarker($self, $marker, $oWidget->renderForResultEmpty($url));
 					}
 				} else {
 					$element->outertext = $oWidget->renderForResult();

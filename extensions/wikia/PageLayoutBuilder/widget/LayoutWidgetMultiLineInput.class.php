@@ -24,9 +24,17 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 
 	public function renderForPreview() {
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
-		return wfMsg('plb-parser-preview-mlinput');
+		return "<p>".wfMsg('plb-parser-preview-mlinput')."</p>";
 	}
-
+	
+	public function renderForResult() {
+		return "<p>".$this->value."</p>";
+	}
+	
+	public function renderForResultEmpty($url) {
+		return "<p>".wfMsg("plb-parser-empty-value", array("%1" => $url ))."</p>";
+	}
+	
 	public function renderForRTE() {
 		wfLoadExtensionMessages("PageLayoutBuilder");
 		$caption = $this->getAttrVal('caption'); // is not default value is error message for RTE

@@ -69,7 +69,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		}
 	}
 
-	public function renderForResultEmpty(Title $title) {
+	public function renderForResultEmpty($url) {
 		global $wgExtensionsPath, $wgTitle;
 
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
@@ -77,7 +77,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$data['id'] = "";
 		$data['isform'] = true;
 		$data['isempty'] = true;
-		$data['editurl'] = $wgTitle->getFullUrl("action=edit");
+		$data['editurl'] = $url;
 		$data['img'] = "";
 		$data['avatar'] = $wgExtensionsPath.'/wikia/PageLayoutBuilder/widget/images/user.jpg';
 		$data['caption'] = $this->getAttrVal( 'caption');

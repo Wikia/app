@@ -175,9 +175,7 @@
 		document: null,
 		body: null,
 		
-		onRTEBeforeApplyStyleCallback: null,
-		onRTEAfterApplyStyleCallback: null,
-		
+		onRTEDocumentCallbacks: null,
 		modeReadyFired: false,
 
 		constructor: function(instance) {
@@ -234,31 +232,51 @@
 			this.instance.on('afterInsertContent',$.proxy(this.onRTEAfterInsertContent,this));
 			this.instance.on('beforeCreateUndoSnapshot',$.proxy(this.onRTEBeforeCreateUndoSnapshot,this));
 			this.instance.on('afterCreateUndoSnapshot',$.proxy(this.onRTEAfterCreateUndoSnapshot,this));
-			
+			this.instance.on('afterPaste', $.proxy(this.onRTEAfterPaste,this));
 			this.fire('ready',this);
 		},
 		
-		onRTEWysiwygModeReady: function () {
+		onRTEWysiwygModeReady: function () {			
 			if (!this.modeReadyFired) {
 				this.modeReadyFired = true;
 				this.fire('modeready',this,this.instance.mode);
 			}
-			if (!this.onRTEBeforeApplyStyleCallback) {
-				this.onRTEBeforeApplyStyleCallback = $.proxy(this.onRTEBeforeApplyStyle,this);
-				this.onRTEAfterApplyStyleCallback = $.proxy(this.onRTEAfterApplyStyle,this);
+			
+			if (this.onRTEDocumentCallbacks == null) {
+				this.onRTEDocumentCallbacks = {};
+				this.onRTEDocumentCallbacks['applyStyle'] = { type : "document", "callback": $.proxy(this.onRTEBeforeApplyStyle,this) };
+				this.onRTEDocumentCallbacks['afterApplyStyle'] = { type : "document", "callback": $.proxy(this.onRTEAfterApplyStyle,this) }; 
+				this.onRTEDocumentCallbacks['beforepaste'] = { type : "body", "callback":  $.proxy(this.onRTEBeforePaste,this) };
 			}
+			
 			this.document = this.instance.document;
 			this.body = this.rte.getEditor();
 			
-			this.document.removeListener(this.onRTEBeforeApplyStyleCallback);
-			this.document.removeListener(this.onRTEAfterApplyStyleCallback);
-			this.document.on('applyStyle',this.onRTEBeforeApplyStyleCallback);
-			this.document.on('afterApplyStyle',this.onRTEAfterApplyStyleCallback);
+			var target = null;
+			for( var i in this.onRTEDocumentCallbacks ) {
+				if(this.onRTEDocumentCallbacks[i].type == "document") {
+					target = this.document; 
+				}
+
+				if(this.onRTEDocumentCallbacks[i].type == "body") {
+					target = this.document.getBody();
+				}
+				
+				target.removeListener(i, this.onRTEDocumentCallbacks[i].callback);
+				target.on(i, this.onRTEDocumentCallbacks[i].callback);
+			}
 			
-			this.instance.focus();
-			
+			this.instance.focus();			
 			this.fire('rebind',this);
 		},
+		
+		onRTEBeforePaste: function( event ) {
+			this.fire('beforepaste',this,event.data,event);
+		},
+		
+		onRTEAfterPaste: function( event ) {
+			this.fire('afterpaste',this,event.data,event);
+		},		
 		
 		onRTEBeforeApplyStyle: function( event ) {
 			this.fire('beforestyle',this,event.data,event);
@@ -320,6 +338,7 @@
 		adding: null,
 		
 		placeholders: null,
+		pastedage: 1,
 		
 		nextWidgetId: 1,
 		usedWidgetIds: null,
@@ -352,6 +371,8 @@
 				aftercommand: this.replacePlaceholders,
 				beforesnapshot: this.onRTEBeforeCreateUndoSnapshot,
 				aftersnapshot: this.onRTEAfterCreateUndoSnapshot,
+				beforepaste: this.onBeforePaste,
+				afterpaste: this.onAfterPaste,
 				scope: this
 			});
 			
@@ -362,7 +383,32 @@
 						dataLoadedCallback);
 			});
 		},
+		onBeforePaste : function() {
+			var elements = this.getWidgetElements();
+			var element = null;
+			for(var i = 0; i < elements.length; i++ ) {
+				element = $(elements[i]);
+				element.attr('__paste_age', this.pastedage);
+			}
+			this.pastedage++;
+		},
 		
+		onAfterPaste: function() {
+			this.fixPaste(); 
+		},
+
+		//FF 3.6.10 bug with Params filter		
+		fixPaste: function() 
+		{
+			var elements = this.getWidgetElements();
+			var element = null;
+			for(var i = 0; i < elements.length; i++ ) {
+				element = $(elements[i]);
+				if(!element.attr('_rte_instance')) {
+					element.replaceWith("");	
+				}
+			}	
+		},
 		// Store the information that RTE is ready
 		onRTEReady : function () {
 			this.isRTEReady = true;
@@ -500,6 +546,7 @@
 		    
 		    $().log(debug,'PLB-<<<-replacePlaceholders');
 		    
+		    this.fixPaste();
 		    return elements;
 		},
 		
@@ -598,6 +645,8 @@
 			var el = $(PLB.Library[type].templateHtml);
 			var w = PLB.Widget.create(this,el);
 			w.setId(this.generateWidgetId());
+			w.getEl().attr('_rte_instance', window.RTEInstanceId);
+			window.RTEInstanceId
 			this.adding = w;
 			w.edit();
 		},
@@ -764,11 +813,13 @@
 			var bs = "<span class=\"buttons\"><button class=\"wikia-button secondary edit\">"+PLB.Lang['plb-editor-edit']+"</button><a href=\"#\" class=\"delete\"></a></span>";
 			// For each widget found do ...
 			$.each(l,$.proxy(function(i,e){
-				var html = PLB.Library[e.getType()].listItemHtml
-					.replace("[$ID]",$.htmlentities(e.getId()))
-					.replace("[$CAPTION]",$.htmlentities(e.getCaption()))
-					.replace("[$BUTTONS]",bs);
-				$(html).appendTo(this.widgetsList);
+				if(PLB.Library[e.getType()]) {
+					var html = PLB.Library[e.getType()].listItemHtml
+						.replace("[$ID]",$.htmlentities(e.getId()))
+						.replace("[$CAPTION]",$.htmlentities(e.getCaption()))
+						.replace("[$BUTTONS]",bs);
+					$(html).appendTo(this.widgetsList);	
+				}
 			},this));
 			// Set visibility of list depending on whether we have any element or not
 			this.widgetsList.css('display',l.length>0?"block":"none");
@@ -1093,8 +1144,9 @@
 				var ll = [];
 				$.each(l,function(i,v){
 					if (v != '')
-						ll.push(v);
+						ll.push(v.replace("|", "&#124;"));
 				});
+				  
 				state.value = ll.join('|');
 			}
 		},
@@ -1105,7 +1157,7 @@
 				var ll = [];
 				$.each(l,function(i,v){
 					if (v != '')
-						ll.push(v);
+						ll.push(v.replace("&#124;", "|"));
 				});
 				this.writeValue('x-options',ll.join('\n'));
 			}

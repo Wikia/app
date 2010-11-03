@@ -72,7 +72,7 @@ $messages['en'] = array (
 	'plb-parser-id-not-unique' => 'plb-parser-id-not-unique',
 	'plb-parser-id-too-long' => 'plb-parser-id-too-long',
 	'plb-parser-no-attribute' => 'plb-parser-no-attribute',
-	'plb-parser-empty-value' => 'There is no value for this section (<a href="%1">add</a>)',
+	'plb-parser-empty-value' => 'There is no value for this section',
 	'plb-parser-empty-value-image' => 'Add image',
 	'plb-parser-preview-image-user' => 'Added by <b>$1</b>',
 	'plb-parser-preview-image-username' => "Username",
