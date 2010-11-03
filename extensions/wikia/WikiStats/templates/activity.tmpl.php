@@ -2,7 +2,7 @@
 	<form id="ws-form" action="<?= $mTitle->getLocalUrl() ?>/<?=$mAction?>" method="get">
 	<div id="ws-wikians-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
-			<span><?= (isset($anons)) ? wfMsg('wikistats_anon_wikians') :  wfMsg('wikistats_active_absent_wikians') ?></span>
+			<span><?= (isset($anons) && $anons > 0) ? wfMsg('wikistats_anon_wikians') :  wfMsg('wikistats_active_absent_wikians') ?></span>
 		</div>	
 		<span class="small" style="padding:0"><?= wfMsg('wikistats_active_wikians_subtitle') ?></span>
 	</div>
@@ -18,7 +18,7 @@
 		<option <?= $selected ?> value="<?= $i ?>"><?= ( $i > 0 ) ? $i . " " .$month_name : $month_name ?></option>
 <?php } ?>	
 		</select>, 
-		<?= (isset($anons)) ? wfMsg("wikistats_number_anons") : wfMsg("wikistats_number_editors") ?>
+		<?= (isset($anons) && $anons > 0) ? wfMsg("wikistats_number_anons") : wfMsg("wikistats_number_editors") ?>
 		<select id="ws-breakdown-limit" name="wslimit" style="text-align:left; font-size:11px;">
 <?php 
 	foreach ( array(10, 25, 50, 100) as $value ) { 
@@ -30,9 +30,9 @@
 		</span>
 		<span class="wk-select-class">
 			<input type="submit" id="ws-breakdown-btn" value="<?= wfMsg('wikistats_showstats_btn') ?>" />
-			<!--<input type="button" id="ws-breakdown-<?= (isset($anons)) ? "anons-" : "" ?>xls-btn" value="<?= wfMsg('wikistats_export_xls') ?>" /> -->
+			<!--<input type="button" id="ws-breakdown-<?= (isset($anons) && $anons > 0) ? "anons-" : "" ?>xls-btn" value="<?= wfMsg('wikistats_export_xls') ?>" /> -->
 		</span>
 	</div>
 	</form>
-	<div id="ws-breakdown-data<?=(isset($anons)) ? $anons : 0?>"><?=$data?></div>
+	<div id="ws-breakdown-data<?=(isset($anons) && $anons > 0) ? $anons : 0?>"><?=$data?></div>
 </div>
