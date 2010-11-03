@@ -1,4 +1,4 @@
-<div class="UserProfileRailModule_TopWikis">
+<div id="profile-top-wikis-body" class="UserProfileRailModule_TopWikis">
 	<table cellspacing="0" cellpadding="0">
 		<thead>
 			<tr>
