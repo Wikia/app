@@ -55,6 +55,8 @@
 						<a href="<?= $wikiData[ 'wikiUrl' ] ;?><?= $userPageUrl ;?>" title="<?= $wikiData[ 'wikiName' ] ;?>">
 							<? if( !empty( $wikiData[ 'wikiLogo' ] ) ) :?>
 								<img alt="<?= $wikiData[ 'wikiName' ] ;?>" src="<?= $wikiData[ 'wikiLogo' ] ;?>" width="80" height="20"/>
+							<? elseif( !empty( $wikiData['wikiWordmarkText'] ) ) :?>
+								<?= $wikiData[ 'wikiWordmarkText' ] ;?>
 							<? else :?>
 								<?= $wikiData[ 'wikiName' ] ;?>
 							<? endif ;?>
