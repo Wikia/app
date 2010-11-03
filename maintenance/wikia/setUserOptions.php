@@ -26,6 +26,14 @@ if (isset($options['help'])) {
 		  --quiet    do not print anything to output\n\n");
 }
 
+
+$force = isset($options['force']);
+$quiet = isset($options['quiet']);
+$from  = isset($options['from']);
+
+if( isset( $from ) ) {
+  $limitUsers = array( 'user_id >= $from' );
+}
 $dbr = WikiFactory::db(DB_SLAVE);
 $res = $dbr->select(
 	'user',
@@ -34,9 +42,8 @@ $res = $dbr->select(
 	__METHOD__
 );
 
-$force = isset($options['force']);
-$quiet = isset($options['quiet']);
 $count = 0;
+
 
 while ($row = $dbr->fetchObject($res)) {
 	$user = User::newFromId($row->user_id);
