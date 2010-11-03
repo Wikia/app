@@ -42,7 +42,7 @@ class UserProfilePageHelper {
 		$value = $wgRequest->getVal( 'value' );
 
 		if( is_object( $wgUser ) && $wgUser->getId() && !empty( $name ) && !empty( $type ) && !empty( $value ) ) {
-			$profilePage = new UserProfilePage( $wgUser );
+			$profilePage = UserProfilePage::getInstance( $wgUser );
 			$result['type'] = $type;
 			$result['html'] = $profilePage->doAction( $name, $type, $value );
 		}

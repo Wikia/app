@@ -51,7 +51,7 @@ var UserProfilePage = {
 
 	attachEvents: function() {
 		//handle click outside hidden elements popup menu
-		$('#profile-top-wikis-hidden').find('a.more').click(function(){
+		$('#profile-top-wikis-hidden').find('a.more').live( 'click', function() {
 			if(!UserProfilePage._hiddenWikisWrapper.hasClass('user-profile-box')){
 				UserProfilePage._hiddenWikisWrapper.addClass('user-profile-box');
 
@@ -64,7 +64,7 @@ var UserProfilePage = {
 		});
 
 		//handle click outside hidden elements popup menu
-		$('#profile-top-pages-hidden').find('a.more').click(function(){
+		$('#profile-top-pages-hidden').find('a.more').live( 'click', function() {
 			if(!UserProfilePage._hiddenTopPagesWrapper.hasClass('user-profile-box')){
 				UserProfilePage._hiddenTopPagesWrapper.addClass('user-profile-box');
 
@@ -76,20 +76,20 @@ var UserProfilePage = {
 			}
 		});
 
-		UserProfilePage._topWikisWrapper.find('.HideButton').bind('click', function(){
+		UserProfilePage._topWikisWrapper.find('.HideButton').live('click', function(){
 			UserProfilePage.doAction('hide', 'wiki', $(this).attr('data-id' ));
 		});
 
-		UserProfilePage._topWikisWrapper.find('.UnhideButton').bind('click', function(){
+		UserProfilePage._topWikisWrapper.find('.UnhideButton').live('click', function(){
 			UserProfilePage._hiddenWikisWrapper.removeClass('user-profile-box');
 			UserProfilePage.doAction('unhide', 'wiki', $(this).attr('data-id' ));
 		});
 
-		UserProfilePage._topPagesWrapper.find('.HideButton').bind('click', function(){
+		UserProfilePage._topPagesWrapper.find('.HideButton').live('click', function(){
 			UserProfilePage.doAction('hide', 'page', $(this).attr('data-id' ));
 		});
 
-		UserProfilePage._topPagesWrapper.find('.UnhideButton').bind('click', function(){
+		UserProfilePage._topPagesWrapper.find('.UnhideButton').live('click', function(){
 			UserProfilePage._hiddenTopPagesWrapper.removeClass('user-profile-box');
 			UserProfilePage.doAction('unhide', 'page', $(this).attr('data-id' ));
 		});

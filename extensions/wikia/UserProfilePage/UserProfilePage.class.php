@@ -9,6 +9,7 @@ class UserProfilePage {
 	private $hiddenWikis = null;
 	private $templateEngine = null;
 	private static $mInstance = null;
+	private $commentToEditRatio = 0.3;
 
 	static public function getInstance( User $user = null ) {
 		global $wgTitle;
@@ -57,41 +58,8 @@ class UserProfilePage {
 	 * @param array $topDataHidden
 	 * @return string
 	 */
-	private function renderTopSection( $sectionName, Array $topData, Array $topDataHidden ) {
-		wfProfileIn(__METHOD__);
-
-		$this->templateEngine->set_vars(
-			array(
-				'topData' => $topData,
-				'topDataHidden' => $topDataHidden
-			)
-		);
-
-		wfProfileOut(__METHOD__);
-		return $this->templateEngine->render( $sectionName );
-	}
-
-	private function populateHiddenTopPagesVars( $hiddenPages ) {
-		// create title objects for hidden pages, so we can get a valid urls
-		$vars = array();
-		foreach( $hiddenPages as $pageTitleText ) {
-			$title = Title::newFromText( $pageTitleText );
-			if( $title instanceof Title ) {
-				$vars[] = array( 'title' => $title->getText(), 'url' => $title->getFullUrl() );
-			}
-		}
-		return $vars;
-	}
-
-	private function populateHiddenTopWikisVars( $hiddenWikis ) {
-		$vars = array();
-		foreach( $hiddenWikis as $wikiId ) {
-			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-
-			$vars[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl );
-		}
-		return $vars;
+	private function renderTopSection( $sectionName ) {
+		return wfRenderModule( 'UserProfileRail', $sectionName );
 	}
 
 	private function populateAboutSectionVars() {
@@ -132,28 +100,28 @@ class UserProfilePage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function hidePage( $pageTitleText ) {
+	private function hidePage( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		if( !$this->isTopPageHidden( $pageTitleText ) ) {
-			$this->hiddenPages[] = $pageTitleText;
+		if( !$this->isTopPageHidden( $pageId) ) {
+			$this->hiddenPages[] = $pageId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
 		}
-		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->populateHiddenTopPagesVars( $this->getHiddenTopPages() ) );
+		return $this->renderTopSection( 'TopPages' );
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function unhidePage( $pageTitleText ) {
+	private function unhidePage( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		if( $this->isTopPageHidden( $pageTitleText ) ) {
+		if( $this->isTopPageHidden( $pageId ) ) {
 			for( $i = 0; $i < count( $this->hiddenPages ); $i++ ) {
-				if( $this->hiddenPages[ $i ] == $pageTitleText ) {
+				if( $this->hiddenPages[ $i ] == $pageId ) {
 					unset( $this->hiddenPages[ $i ] );
 					$this->hiddenPages = array_values( $this->hiddenPages );
 				}
 			}
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
 		}
-		return $this->renderTopSection( 'user-top-pages', $this->getTopPages(), $this->populateHiddenTopPagesVars( $this->getHiddenTopPages() ) );
+		return $this->renderTopSection( 'TopPages' );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -175,8 +143,12 @@ class UserProfilePage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function isTopPageHidden( $pageTitleText ) {
-		return ( in_array( $pageTitleText, $this->getHiddenTopPages() ) ? true : false );
+	public function isTopPageHidden( $pageId) {
+		return ( in_array( $pageId, $this->getHiddenTopPages() ) ? true : false );
+	}
+
+	public function isTopWikiHidden( $wikiId ) {
+		return ( in_array( $wikiId, $this->getHiddenTopWikis() ) ? true : false );
 	}
 
 	private function hideWiki( $wikiId) {
@@ -188,7 +160,7 @@ class UserProfilePage {
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
 		}
 
-		return $this->renderTopSection( 'user-top-wikis', $this->getTopWikis(), $this->populateHiddenTopWikisVars( $this->getHiddenTopWikis() ) );
+		return $this->renderTopSection( 'TopWikis' );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -206,7 +178,7 @@ class UserProfilePage {
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
 		}
 
-		return $this->renderTopSection( 'user-top-wikis', $this->getTopPages(), $this->populateHiddenTopWikisVars( $this->getHiddenTopWikis() ) );
+		return $this->renderTopSection( 'TopWikis' );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -214,7 +186,7 @@ class UserProfilePage {
 	 * auxiliary method for getting hidden pages/wikis from db
 	 * @author ADi
 	 */
-	public function getHiddenFromDb( $dbHandler ) {
+	private function getHiddenFromDb( $dbHandler ) {
 		$row = $dbHandler->selectRow(
 			array( 'page_wikia_props' ),
 			array( 'props' ),
@@ -223,7 +195,8 @@ class UserProfilePage {
 			array()
 		);
 
-		return ( empty($row) ? array() : unserialize( $row->props ) );
+		$result = unserialize( $row->props );
+		return ( empty($result) ? array() : $result );
 	}
 
 	public function getUser() {
@@ -291,6 +264,258 @@ class UserProfilePage {
 
 	public function getUserRights() {
 		return $this->user->getRights();
+	}
+
+	public function getTopWikis( $limit = 5 ) {
+		wfProfileIn( __METHOD__ );
+		global $wgStatsDB, $wgDevelEnvironment;
+
+		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		$res = $dbs->select(
+			array( 'specials.events_local_users' ),
+			array( 'wiki_id', 'edits' ),
+			array( 'user_id' => $this->getUser()->getId() ),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'edits DESC',
+				'LIMIT' => $limit
+			)
+		);
+
+		$wikis = array();
+
+		if( $wgDevelEnvironment ) {//DevBox test
+			$wikis = array(
+				4832 => 72,
+				831 => 60,
+				4036 => 35,
+				177 => 12,
+				1890 => 5
+			); // test data
+
+			foreach($wikis as $wikiId => $editCount) {
+				if( !$this->isTopWikiHidden( $wikiId ) ) {
+					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+					$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+					$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+					if( isset($themeSettings['wordmark-image-url']) ) {
+						$wikiLogo = $themeSettings['wordmark-image-url'];
+						$wordmarkText = '';
+					}
+					elseif( isset($themeSettings['wordmark-text']) ) {
+						$wikiLogo = '';
+						$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
+					}
+					else {
+						$wordmarkText = '';
+					}
+					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
+				}
+				else {
+					unset($wikis[$wikiId]);
+				}
+			}
+
+		} else {
+			while ( $row = $dbs->fetchObject( $res ) ) {
+				if( !$this->isTopWikiHidden( $wikiId ) ) {
+					$wikiId = $row->wiki_id;
+					$editCount = $row->edits;
+					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+					$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+					$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+					if( isset($themeSettings['wordmark-image-url']) ) {
+						$wikiLogo = $themeSettings['wordmark-image-url'];
+						$wordmarkText = '';
+					}
+					elseif( isset($themeSettings['wordmark-text']) ) {
+						$wikiLogo = '';
+						$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
+					}
+					else {
+						$wordmarkText = '';
+					}
+
+					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
+				}
+				else {
+					unset($wikis[$wikiId]);
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $wikis;
+	}
+
+	public function getHiddenTopWikis() {
+		wfProfileIn( __METHOD__ );
+		global $wgExternalSharedDB, $wgDevelEnvironment;
+
+		$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
+		$wikis = $this->getHiddenFromDb( $dbs );
+
+		wfProfileOut( __METHOD__ );
+		return $wikis;
+	}
+
+	/**
+	 * get list of user's top pages (most edited)
+	 *
+	 * @author ADi
+	 * @return array
+	 */
+	public function getTopPages( $limit = 6 ) {
+		global $wgMemc, $wgStatsDB, $wgCityId, $wgContentNamespaces, $wgDevelEnvironment;
+		wfProfileIn(__METHOD__);
+
+		//select page_id, count(page_id) from stats.events where wiki_id = N and user_id = N and event_type in (1,2) group by 1 order by 2 desc limit 10;
+		$where = array(
+				'wiki_id' => $wgCityId,
+				'user_id' => $this->getUser()->getId(),
+				'event_type IN (1,2)',
+				'page_ns IN (' . join( ',', $wgContentNamespaces ) . ')'
+			);
+
+		$hiddenTopPages = $this->getHiddenTopPages();
+		if(count($hiddenTopPages)) {
+			$where['page_id'] = 'NOT IN (' . join( ',', $hiddenTopPages ) . ')';
+		}
+
+		$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+		$res = $dbs->select(
+			array( $wgStatsDB . '.events' ),
+			array( 'page_id', 'count(page_id) AS count' ),
+			$where,
+			__METHOD__,
+			array(
+				'GROUP BY' => 'page_id',
+				'ORDER BY' => 'count DESC',
+				'LIMIT' => $limit
+			)
+		);
+		/* revision
+		$dbs = wfGetDB( DB_SLAVE );
+		$res = $dbs->select(
+			array( 'revision' ),
+			array( 'rev_page', 'count(*) AS count' ),
+			array( 'rev_user' => $this->user->getId() ),
+			__METHOD__,
+			array(
+				'GROUP BY' => 'rev_page',
+				'ORDER BY' => 'count DESC',
+				'LIMIT' => 6
+			)
+		);
+		*/
+
+		$pages = array();
+		if( $wgDevelEnvironment ) { //DevBox test
+			$pages = array( 4 => 28, 1883 => 16, 1122 => 14, 31374 => 11, 2335 => 8, 78622 => 3 ); // test data
+		} else {
+			while( $row = $dbs->fetchObject($res) ) {
+				$pages[ $row->page_id ] = $row->count;
+			}
+		}
+
+		// get top commented pages and merge
+		foreach( $this->getTopCommentedPages() as $pageId => $commentCount ) {
+			$commentPoints = round( $commentCount * $this->commentToEditRatio );
+			if( isset( $pages[ $pageId ] ) ) {
+				$pages[ $pageId ] += $commentPoints;
+			}
+			else {
+				$pages[ $pageId ] = $commentPoints;
+			}
+		}
+
+		arsort( $pages );
+
+		$articleService = new ArticleService();
+		foreach($pages as $pageId => $editCount) {
+			$title = Title::newFromID( $pageId );
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
+				$articleService->setArticleById( $title->getArticleID() );
+				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount, 'textSnippet' => $articleService->getTextSnippet( 100 ) );
+			}
+			else {
+				unset( $pages[ $pageId ] );
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		//var_dump( $pages );
+		return array_slice( $pages, 0, $limit );
+	}
+
+	public function getTopCommentedPages() {
+		global $wgMemc, $wgArticleCommentsNamespaces, $wgEnableArticleCommentsExt;
+		wfProfileIn(__METHOD__);
+
+		$talkNamespaces = array();
+
+		if( is_array($wgArticleCommentsNamespaces) ) {
+			foreach( $wgArticleCommentsNamespaces as $ns ) {
+				$talkNamespaces[] = MWNamespace::getTalk( $ns );
+			}
+		}
+
+		if( count($talkNamespaces) == 0 || empty($wgEnableArticleCommentsExt) ) {
+			wfProfileOut(__METHOD__);
+			return array();
+		}
+
+		$where = array(
+				'page_id=rev_page',
+				'rev_user' => $this->getUser()->getId(),
+				'page_namespace IN (' . join( ',', $talkNamespaces ) . ')',
+		);
+		$hiddenTopPages = $this->getHiddenTopPages();
+		if(count($hiddenTopPages)) {
+			$where['page_id'] = 'NOT IN (' . join( ',', $hiddenTopPages ) . ')';
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			array( 'page', 'revision' ),
+			array( 'page_title', 'page_namespace' ),
+			$where,
+			__METHOD__,
+			array()
+		);
+
+		$pages = array();
+		while($row = $dbr->fetchObject($res)) {
+			if( strpos( $row->page_title, '@comment') !== false ) {
+				$commentData = ArticleComment::explode( $row->page_title );
+				if( !empty( $commentData ) ) {
+					$title = Title::newFromText( $commentData['title'], MWNamespace::getSubject( $row->page_namespace )   );
+					if( isset( $pages[$title->getArticleId()] ) ) {
+						$pages[$title->getArticleId()]++;
+					}
+					else {
+						$pages[$title->getArticleId()] = 1;
+					}
+				}
+			}
+		}
+		arsort(  $pages );
+
+		wfProfileOut(__METHOD__);
+		return $pages;
+	}
+
+	public function getHiddenTopPages() {
+		global $wgDevelEnvironment;
+		wfProfileIn( __METHOD__ );
+
+		$dbs = wfGetDB( DB_SLAVE );
+		$pages = $this->getHiddenFromDb( $dbs );
+
+		wfProfileOut( __METHOD__ );
+		return $pages;
 	}
 
 }
