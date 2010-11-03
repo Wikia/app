@@ -326,8 +326,8 @@ class UserProfilePage {
 
 		} else {
 			while ( $row = $dbs->fetchObject( $res ) ) {
+				$wikiId = $row->wiki_id;
 				if( !$this->isTopWikiHidden( $wikiId ) ) {
-					$wikiId = $row->wiki_id;
 					$editCount = $row->edits;
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
