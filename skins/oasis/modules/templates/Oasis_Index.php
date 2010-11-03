@@ -12,10 +12,21 @@
 		// NOTE: CSS files that are needed on every Oasis page should go into the bottom of /skins/oasis/css/oasis.scss
 		// It serves the function that StaticChute formerly served for CSS.
 	?>
-	
+
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 	<?= $anonSiteCss ?>
+	<?php
+		// RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook)
+		if ($pagecss != '') {
+	?>
+
+
+	<!-- page CSS -->
+	<style type="text/css"><?= $pagecss ?></style>
+	<?php
+		}
+	?>
 
 	<?= $globalVariablesScript ?>
 
