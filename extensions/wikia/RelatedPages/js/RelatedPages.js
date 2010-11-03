@@ -10,9 +10,7 @@ RelatedPages = {
 		$().log(msg, 'RelatedPages');
 	},
 	init: function() {
-		//var start = (new Date()).getTime();
-
-		this.module = $('.RelatedPagesModule');
+		this.module = $('.RelatedPagesModule').first();
 
 		// there's no Related Pages module on this page
 		if (!this.module.exists()) {
@@ -24,8 +22,13 @@ RelatedPages = {
 		var content = $('#WikiaArticle');
 		var contentWidth = content.width();
 
-		// move the module after (at least) 2nd <h2> section
-		var addAfter = 2;
+		// move the module after (at least) #x <h2> section (RT #84264)
+		var addAfter = parseInt(this.module.attr('data-add-after-section'));
+
+		// module is configured to stay at the bottom of the page
+		if (!addAfter) {
+			return;
+		}
 
 		// get 2nd level headings
 		var sections = content.find('.mw-headline').parent().filter('h2');
