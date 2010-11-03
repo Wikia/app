@@ -38,8 +38,6 @@ $wgAutoloadClasses['AutomaticWikiAdoptionHelper'] = "$dir/AutomaticWikiAdoptionH
 $wgAutoloadClasses['SpecialAutomaticWikiAdoption'] = "$dir/SpecialAutomaticWikiAdoption.class.php";
 $wgSpecialPages['AutomaticWikiAdoption'] = 'SpecialAutomaticWikiAdoption';
 
-$wgDefaultUserOptions['adoptionmails'] = 1;
-
 /**
  * Initialize hooks
  *
