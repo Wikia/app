@@ -25,6 +25,13 @@ $messages['en'] = array(
         'userprofilepage-user-group-bot' => 'Bot',
         'userprofilepage-user-group-bureaucrat' => 'Bureaucrat',
         'userprofilepage-user-group-helper' => 'Helper',
+	'userprofilepage-user-group-helper-vstf' => 'VSTF',
+	'userprofilepage-user-group-siteadmin-tooltip' => 'This user is an Admin on this wiki',
+        'userprofilepage-user-group-staff-tooltip' => 'This user is a Wikia Staff member',
+        'userprofilepage-user-group-bot-tooltip' => 'This user is a Bot',
+        'userprofilepage-user-group-bureaucrat-tooltip' => 'This user is a Bureaucrat on this wiki',
+        'userprofilepage-user-group-helper-tooltip' => 'This user is an Helper on this wiki',
+	'userprofilepage-user-group-helper-vstf-tooltip' => 'This user is a member of the Spam Task Force',
 
 	//Top Wikis
 	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',

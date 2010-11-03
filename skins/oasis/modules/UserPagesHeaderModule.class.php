@@ -186,7 +186,8 @@ class UserPagesHeaderModule extends Module {
 				'bot',
 				'staff',
 				'helper',
-				'beaurocrat'
+				'beaurocrat',
+				'vstf'
 			));
 		}
 		else {
