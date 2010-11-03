@@ -204,6 +204,11 @@
 }
 #cke_contents_wpTextbox1_sidebar {
 	width: 300px;
+
+	// RT #84366
+	.rte_source & {
+		width: 0;
+	}
 }
 
 // editing tips
