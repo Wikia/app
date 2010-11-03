@@ -219,12 +219,14 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 	}
 
 	#profile-top-wikis-body, #profile-top-pages-body {
-		&.busy{
-			@include opacity(25);
-
-			* {
-				cursor: wait;
-			}
+		.profile-loading-screen {
+			@include opacity(75);
+			background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			z-index: 2;
+			cursor: wait;
 		}
 	}
 
