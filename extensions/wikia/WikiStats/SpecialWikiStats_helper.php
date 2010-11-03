@@ -661,7 +661,7 @@ class WikiStats {
 			$next = $id + 1;
 			# 
 		    $record = false;
-		    if ( array_key_exists($date, $this->mMainStats) ) {
+		    if ( is_array($this->mMainStats) && array_key_exists($date, $this->mMainStats) ) {
 			    $record = $this->mMainStats[$date];
             }
 			if ( empty($record) ) continue;
