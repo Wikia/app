@@ -98,6 +98,7 @@ class UserProfileRailModule extends Module {
 				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+
 				if( isset($themeSettings['wordmark-image-url']) ) {
 					$wikiLogo = $themeSettings['wordmark-image-url'];
 				}
@@ -120,6 +121,7 @@ class UserProfileRailModule extends Module {
 				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+
 				if( isset($themeSettings['wordmark-image-url']) ) {
 					$wikiLogo = $themeSettings['wordmark-image-url'];
 				}
@@ -158,8 +160,20 @@ class UserProfileRailModule extends Module {
 				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 				$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => $editCount );
+				if( isset($themeSettings['wordmark-image-url']) ) {
+					$wikiLogo = $themeSettings['wordmark-image-url'];
+				}
+				elseif( isset($themeSettings['wordmark-text']) ) {
+					$wikiLogo = '';
+					$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
+				}
+				else {
+					$wordmarkText = '';
+				}
+
+				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
 			}
 
 		}
