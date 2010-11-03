@@ -21,21 +21,17 @@ var UserProfilePage = {
 	},
 	
 	doAction: function(name, type, value) {
-		$().log({
+		var data = {
 			'action': 'ajax',
 			'rs': 'UserProfilePageHelper::doAction',
 			'name': name,
 			'type': type,
 			'value': value
-		});
+		}
+
+		$().log(data);
 		$.getJSON(wgScript,
-				{
-					'action': 'ajax',
-					'rs': 'UserProfilePageHelper::doAction',
-					'name': name,
-					'type': type,
-					'value': value
-				},
+				data,
 				function(response) {
 					$().log(response);
 					if(response.result === true) {
@@ -84,6 +80,7 @@ var UserProfilePage = {
 		});
 
 		UserProfilePage._topWikisWrapper.find('.UnhideButton').bind('click', function(){
+			UserProfilePage._hiddenWikisWrapper.removeClass('user-profile-box');
 			UserProfilePage.doAction('unhide', 'wiki', $(this).attr('data-id' ));
 		});
 
@@ -92,6 +89,7 @@ var UserProfilePage = {
 		});
 
 		UserProfilePage._topPagesWrapper.find('.UnhideButton').bind('click', function(){
+			UserProfilePage._hiddenTopPagesWrapper.removeClass('user-profile-box');
 			UserProfilePage.doAction('unhide', 'page', $(this).attr('data-id' ));
 		});
 	},
