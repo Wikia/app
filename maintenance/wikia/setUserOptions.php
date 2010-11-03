@@ -43,7 +43,7 @@ while ($row = $dbr->fetchObject($res)) {
 	if ($user) {
 		$optionsChanged = 0;
 		foreach ($preferences as $key => $val) {
-			if ($user->getOption($key, null) === null || $force) {
+			if ($force || $user->getOption($key, null) === null) {
 				$user->setOption($key, $val);
 				$optionsChanged++;
 				if (!$quiet) {
