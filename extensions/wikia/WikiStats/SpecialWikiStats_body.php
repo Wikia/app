@@ -125,7 +125,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		}
 
         #--- WikiaGenericStats instance
-        $this->mStats = WikiStats::newFromId($wgCityId);        
+        $this->mStats = WikiStats::newFromId($this->mCityId);        
 
         $this->mStats->setStatsDate( array( 
         	'fromMonth' => $this->fromMonth,
