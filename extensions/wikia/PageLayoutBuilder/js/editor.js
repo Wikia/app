@@ -645,7 +645,7 @@
 			var el = $(PLB.Library[type].templateHtml);
 			var w = PLB.Widget.create(this,el);
 			w.setId(this.generateWidgetId());
-			w.getEl().attr('_rte_instance', window.RTEInstanceId);
+			w.getElement().attr('_rte_instance', window.RTEInstanceId);
 			window.RTEInstanceId
 			this.adding = w;
 			w.edit();
