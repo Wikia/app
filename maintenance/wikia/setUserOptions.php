@@ -64,6 +64,7 @@ while ($row = $dbr->fetchObject($res)) {
 			$count++;
 		}
 	}
+	usleep( 5000 );
 }
 
 if (!$quiet) {
