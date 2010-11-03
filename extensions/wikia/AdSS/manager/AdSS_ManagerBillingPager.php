@@ -28,16 +28,14 @@ class AdSS_ManagerBillingPager extends TablePager {
 	}
 
 	function formatValue( $name, $value ) {
-		global $wgAdSS_templatesDir;
+		global $wgAdSS_templatesDir, $wgLang;
 		switch( $name ) {
-			case 'billing_id':
-				if( $this->bl->adId > 0 ) {
-					return 'AdSS Fee';
-				} elseif( $this->bl->paymentId > 0 ) {
-					return 'PayPal payment';
-				} else {
-					return '???';
-				}
+			case 'billing_amount':
+				return $value > 0 ? wfMsgHtml( 'adss-paypal-payment' ) : wfMsg( 'adss-adss-fee' );
+			case 'billing_ad_id':
+				return $value ? wfMsg( 'adss-amount', $wgLang->formatNum( -$this->bl->amount ) ) : '';
+			case 'billing_ppp_id':
+				return $value ? wfMsg( 'adss-amount', $wgLang->formatNum( (float) $this->bl->amount ) ) : '';
 			default:
 				return $value;
 		}
@@ -54,9 +52,10 @@ class AdSS_ManagerBillingPager extends TablePager {
 
 	function getFieldNames() {
 		return array(
-				'billing_timestamp' => 'Timestamp',
-				'billing_id'        => 'Type',
-				'billing_amount'    => 'Amount',
+				'billing_timestamp' => wfMsgHtml( 'adss-timestamp' ),
+				'billing_amount'    => wfMsgHtml( 'adss-description' ),
+				'billing_ad_id'     => wfMsgHtml( 'adss-fee' ),
+				'billing_ppp_id'    => wfMsgHtml( 'adss-paid' ),
 			    );
 	}
 

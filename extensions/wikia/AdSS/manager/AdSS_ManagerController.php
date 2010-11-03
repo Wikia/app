@@ -49,15 +49,13 @@ class AdSS_ManagerController {
 		$pager = new AdSS_ManagerAdListPager( $this->userId );
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
-		$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
-		$tmpl->set( 'filterForm', $pager->getFilterForm() );
 		$tmpl->set( 'adList', $pager->getBody() );
 
 		$wgOut->addHTML( $tmpl->render( 'adList' ) );
 	}
 
 	function displayBilling() {
-		global $wgOut, $wgAdSS_templatesDir;
+		global $wgOut, $wgAdSS_templatesDir, $wgJsMimeType;
 
 		$pager = new AdSS_ManagerBillingPager( $this->userId );
 
@@ -110,14 +108,14 @@ class AdSS_ManagerController {
 
 		$userId = $wgRequest->getSessionData( "AdSS_userId" );
 		if( !$userId ) {
-			$r = array( 'result' => 'error', 'respmsg' => 'You must be logged-in' );
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-not-logged-in' ) );
 		} else {
 			$ad = AdSS_Ad::newFromId( $id );
 			if( $id != $ad->id ) {
-				$r = array( 'result' => 'error', 'respmsg' => 'wrong id' );
+				$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-wrong-id' ) );
 			} else {
 				if( $userId != $ad->userId ) {
-					$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
+					$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-no-permission' ) );
 				} else {
 					$ad->close();
 

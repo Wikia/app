@@ -3,14 +3,6 @@
 class AdSS_ManagerAdListPager extends TablePager {
 
 	private $mTitle, $ad, $userId;
-	private $mFilter = 'active';
-	private $mFiltersShown = array(
-			'all'     => 'All',
-			'active'  => 'In rotation (accepted & not expired)',
-			'pending' => 'Pending acceptance',
-			'expired' => 'Expired (not closed)',
-			'closed'  => 'Closed',
-			);
 
 	function __construct( $userId ) {
 		global $wgAdSS_DBname;
@@ -19,12 +11,6 @@ class AdSS_ManagerAdListPager extends TablePager {
 
 		$this->mDb = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AdSS/manager/adList" );
-
-		$filter = $this->mRequest->getVal( 'filter', $this->mFilter );
-		if( array_key_exists( $filter, $this->mFiltersShown ) ) {
-			$this->mFilter = $filter;
-		}
-
 		$this->userId = $userId;
 	}
 
@@ -33,7 +19,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 	}
 
 	function isFieldSortable( $field ) {
-		return in_array( $field, array( 'ad_created', 'ad_expires', 'ad_closed' ) );
+		return false;
 	}
 
 	function formatRow( $row ) {
@@ -46,17 +32,8 @@ class AdSS_ManagerAdListPager extends TablePager {
 		switch( $name ) {
 			case 'ad_wiki_id':
 				$wiki = WikiFactory::getWikiByID( $value );
-				return $wiki->city_title;
-			case 'ad_closed':
-				if( $this->ad->closed ) return $value;
-				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
-				$tmpl->set( 'ad', $this->ad );
-				return $tmpl->render( 'actionClose' );
-			case 'ad_text':
-				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
-				$tmpl->set( 'ad', $this->ad );
-				return $tmpl->render( 'ad' );
-			case 'ad_page_id':
+				return Xml::element( 'a', array('href'=>$wiki->city_url), $wiki->city_title );
+			case 'ad_type':
 				if( $this->ad->pageId > 0 ) {
 					global $wgCityId;
 					if( $this->ad->wikiId == $wgCityId ) {
@@ -72,12 +49,13 @@ class AdSS_ManagerAdListPager extends TablePager {
 								array( 'href' => $wServer . str_replace( '$1', $title, $wArticlePath ) ),
 								$title );
 					}
-					return "Page<br />\n($url)";
+					return wfMsg( 'adss-per-page' ) . "<br />\n($url)";
 				} else {
-					return 'Site';
+					return wfMsg( 'adss-per-site' );
 				}
 			case 'ad_weight':
 				if( $this->ad->pageId == 0 ) {
+					return $value;
 					if( !$this->ad->closed && ( !$this->ad->expires || $this->ad->expires > time() ) ) {
 						$ret = "$value (" . Xml::element( 'a', array( 'href' => '#' ), '+' );
 						if( $this->ad->weight > 1 ) {
@@ -89,29 +67,59 @@ class AdSS_ManagerAdListPager extends TablePager {
 						return $value;
 					}
 				} else {
-					return '';
+					return '-';
 				}
+			case 'ad_desc':
+				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
+				$tmpl->set( 'ad', $this->ad );
+				return $tmpl->render( 'ad' );
+			case 'ad_status':
+				if( $this->ad->closed && $this->ad->expires ) {
+					$status = 'canceled';
+				} elseif( $this->ad->closed && !$this->ad->expires ) {
+					$status = 'rejected';
+				} elseif( !$this->ad->closed && $this->ad->expires ) {
+					$status = 'approved';
+				} elseif( !$this->ad->closed && !$this->ad->expires ) {
+					$status = 'pending';
+				}
+				return "<div class=\"$status\">" . wfMsg( "adss-$status" ) . "</div>";
+			case 'ad_created':
+			case 'ad_closed':
+			case 'ad_expires':
+				return substr( $value, 0, 10 );
 			case 'ad_price':
 				return AdSS_Util::formatPrice( $this->ad->price, $this->ad->weight );
+			case 'ad_action':
+				if( !$this->ad->closed ) {
+					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
+					$tmpl->set( 'ad', $this->ad );
+					return $tmpl->render( 'actionClose' );
+				}
+				return '';
 			default:
 				return $value;
 		}
 	}
 
 	function getDefaultSort() {
-		return "ad_created";
+		return "ad_id";
+	}
+
+	function getDefaultDirections() {
+		return true;
 	}
 
 	function getFieldNames() {
 		return array(
-				'ad_wiki_id' => 'Wikia',
-				'ad_page_id' => 'Type',
-				'ad_weight'  => 'No. shares',
-				'ad_price'   => 'Price',
-				'ad_text'    => 'Ad',
-				'ad_created' => 'Created',
-				'ad_expires' => 'Expires',
-				'ad_closed'  => 'Closed',
+				'ad_wiki_id' => wfMsgHtml( 'adss-wikia' ),
+				'ad_type'    => wfMsgHtml( 'adss-type' ),
+				'ad_weight'  => wfMsgHtml( 'adss-no-shares' ),
+				'ad_price'   => wfMsgHtml( 'adss-price' ),
+				'ad_desc'    => wfMsgHtml( 'adss-ad' ),
+				'ad_status'  => wfMsgHtml( 'adss-status' ),
+				'ad_created' => wfMsgHtml( 'adss-created' ),
+				'ad_action'  => '',
 			    );
 	}
 
@@ -121,57 +129,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 				'fields' => array( '*' ),
 				'conds'  => array( 'ad_user_id' => $this->userId ),
 			    );
-		switch( $this->mFilter ) {
-			case 'active':
-				$qi['conds'] += array(
-						'ad_closed IS NULL',
-						'ad_expires > NOW()',
-						);
-				break;
-			case 'pending':
-				$qi['conds'] += array(
-						'ad_closed IS NULL',
-						'ad_expires IS NULL',
-						);
-				break;
-			case 'expired':
-				$qi['conds'] += array(
-						'ad_closed IS NULL',
-						'ad_expires <= NOW()',
-						);
-				break;
-			case 'closed':
-				$qi['conds'] += array(
-						'ad_closed IS NOT NULL',
-						);
-				break;
-		}
 		return $qi;
-	}
-
-	function getFilterSelect() {
-		$s = "<label for=\"filter\">Show ads:</label>";
-		$s .= "<select name=\"filter\">";
-		foreach( $this->mFiltersShown as $fkey => $fval ) {
-			$selected = '';
-			if( $fkey == $this->mFilter ) {
-				$selected = " selected";
-			}
-			$fval = htmlspecialchars( $fval );
-			$s .= "<option value=\"$fkey\"$selected>$fval</option>\n";
-		}
-		$s .= "</select>";
-		return $s;
-	}
-
-	function getFilterForm() {
-		$url = $this->getTitle()->escapeLocalURL();
-		return
-			"<form method=\"get\" action=\"$url\">" .
-			$this->getFilterSelect() .
-			"\n<input type=\"submit\" />\n" .
-			//$this->getHiddenFields( array('filter','title') ) .
-			"</form>\n";
 	}
 
 }

@@ -9,6 +9,21 @@ ul.tabs {
 	margin: 5px;
 }
 
-td.TablePager_col_billing_amount {
+td.TablePager_col_billing_ad_id {
 	text-align: right;
+}
+td.TablePager_col_billing_ppp_id {
+	text-align: right;
+}
+
+.approved {
+	color: green;
+}
+
+.canceled {
+	color: red;
+}
+
+.rejected {
+	color: red;
 }
