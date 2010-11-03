@@ -12,10 +12,12 @@ class UserProfileRailModule extends Module {
 	var $specialRandomLink;
 	var $maxEdits;
 	var $userRegistrationDate;
+	var $currentWikiId;
 	private $maxTopPages = 6;
 	private $maxTopWikis = 5;
 
 	public function executeTopWikis() {
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$userProfilePage = UserProfilePage::getInstance();
@@ -26,6 +28,7 @@ class UserProfileRailModule extends Module {
 		$this->userName =  $user->getName();
 		$thos->userPageUrl = $user->getUserPage()->getLocalUrl();
 		$this->maxEdits = 0;
+		$this->currentWikiId = $wgCityId;
 
 		foreach ( $this->topWikis as $wikiId => $wikiData ) {
 			if ( $wikiData[ 'editCount' ] > $this->maxEdits ) {
