@@ -243,8 +243,6 @@ window.RTE = {
 
 		// override "Source" button to send AJAX request first, instead of mode switching
 		CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
-			RTE.log('switching mode');
-
 			if (editor.mode == 'wysiwyg') {
 				editor.fire('saveSnapshot');
 			}
