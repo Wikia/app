@@ -10,7 +10,9 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 .WikiaRail {
 	&>.UserProfileRailModule_TopWikis {
 		position: relative;
-		padding-bottom: 76px;
+		padding-bottom: 25px;
+		margin-bottom: 10px;
+		min-height: 195px;
 
 		table {
 			width: 100%;
@@ -72,7 +74,6 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 							line-height: 16px;
 							margin: 0;
 							padding: 0 7px;
-							min-width: 9%;
 						}
 					}
 
