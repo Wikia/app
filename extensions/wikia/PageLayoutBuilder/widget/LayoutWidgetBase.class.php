@@ -11,7 +11,7 @@ abstract class LayoutWidgetBase {
 	abstract public function renderForPreview();
 
 	abstract public function renderForResult();
-	abstract public function renderForResultEmpty(Title $title);
+	abstract public function renderForResultEmpty($url);
 
 	abstract public function renderForRTE();
 
