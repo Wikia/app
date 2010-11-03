@@ -14,19 +14,20 @@ class RTEAjax {
 		RTE::log(__METHOD__, $wikitext);
 
 		$ret = array(
-			'html' => RTE::WikitextToHtml($wikitext)
+			'html' => RTE::WikitextToHtml($wikitext),
+			'instanceId' => RTE::getInstanceId(),
 		);
 
 		if (RTE::edgeCasesFound()) {
-			$ret['edgecase'] = array(
-				'type' => RTE::getEdgeCaseType(),
-				'info' => array(
-					'title' => wfMsg('rte-edgecase-info-title'),
-					'content' => wfMsg('rte-edgecase-info'),
-				),
+			$ret = array(
+				'edgecase' => array(
+					'type' => RTE::getEdgeCaseType(),
+					'info' => array(
+						'title' => wfMsg('rte-edgecase-info-title'),
+						'content' => wfMsg('rte-edgecase-info'),
+					),
+				)
 			);
-
-			unset($ret['html']);
 		}
 
 		wfProfileOut(__METHOD__);

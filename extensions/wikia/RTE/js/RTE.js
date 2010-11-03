@@ -390,6 +390,9 @@ window.RTE = {
 					RTE.instance.setMode('wysiwyg');
 					RTE.instance.setData(data.html);
 
+					// RT #84586: update instanceId
+					RTE.instanceId = data.instanceId;
+
 					RTE.track('switchMode', 'source2wysiwyg');
 				});
 				break;
