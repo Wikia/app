@@ -86,6 +86,13 @@ $wgAutoloadClasses['AnalyticsEngine'] = "$IP/extensions/wikia/AnalyticsEngine/An
 $wgAutoloadClasses['SimplePie'] = "$IP/lib/SimplePie/simplepie.inc";
 $wgAutoloadClasses['FakeLocalFile'] = "$IP/includes/wikia/FakeLocalFile.class.php";
 
+//AutomaticWikiAdoption
+$wgAutoloadClasses['AutomaticWikiAdoptionGatherData']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php';
+$wgAutoloadClasses['AutomaticWikiAdoptionGatherDataMapper']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherDataMapper.php';
+$wgAutoloadClasses['AutomaticWikiAdoptionJobSendMail']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionJobSendMail.php';
+$wgAutoloadClasses['AutomaticWikiAdoptionJobSetAdoptionFlag']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionJobSetAdoptionFlag.php';
+$wgAutoloadClasses['AutomaticWikiAdoptionJobFactory']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionJobFactory.php';
+
 // core
 $wgAutoloadClasses['View']  =  $IP.'/includes/wikia/View.php';
 $wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
