@@ -599,6 +599,9 @@ END;
 		global $wgRequest, $wgContLang, $wgUser;
 		global $wgAllowUserCss, $wgUseSiteCss, $wgSquidMaxage, $wgStylePath;
 
+		// FIXME: override this method in Oasis skin?
+		global $wgOasisLastCssScripts;
+
 		wfProfileIn( __METHOD__ );
 
 		$this->setupSkinUserCss( $out );
@@ -636,8 +639,6 @@ END;
 					// For anon users, SiteCSS will be added in a combined format in OasisModule in anonSiteCSS.
 					if($wgUser->isLoggedIn()){
 						// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
-						global $wgOasisLastCssScripts;
-						$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
 						$wgOasisLastCssScripts[] = self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI );
 					}
 				} else {
@@ -663,8 +664,6 @@ END;
 		if($skinname == 'oasis'){
 			// For anon users, SiteCSS will be added in a combined format in OasisModule in anonSiteCSS.
 			if($wgUser->isLoggedIn()){
-				global $wgOasisLastCssScripts;
-				$wgOasisLastCssScripts = (isset($wgOasisLastCssScripts)?$wgOasisLastCssScripts:array());
 				$wgOasisLastCssScripts[] = self::makeUrl( '-', wfArrayToCGI( $siteargs ) );
 			}
 		} else {
@@ -695,7 +694,15 @@ END;
 				if ($userCSStitle->exists()) {
 					$rev = Revision::newFromTitle($userCSStitle, $userCSStitle->getLatestRevID());
 					if (!empty($rev) && $rev->getText() != '') {
-						$out->addStyle( self::makeUrl($userCSS, 'action=raw&ctype=text/css') );
+						$userCSSurl = self::makeUrl($userCSS, 'action=raw&ctype=text/css');
+
+						if ($skinname == 'oasis') {
+							// RT #68514 - load in specific order
+							$wgOasisLastCssScripts[] = $userCSSurl;
+						}
+						else {
+							$out->addStyle( $userCSSurl );
+						}
 					}
 				}
 

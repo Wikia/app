@@ -23,16 +23,17 @@ class OasisModule extends Module {
 	}
 
 	// template vars
+	var $anonSiteCss;
+	var $body;
 	var $bodyClasses;
 	var $csslinks;
-	var $anonSiteCss;
-	var $headlinks;
-	var $body;
 	var $globalVariablesScript;
 	var $googleAnalytics;
-	var $trackingPixels;
-	var $printableCss;
+	var $headlinks;
 	var $jsAtBottom;
+	var $pagecss;
+	var $printableCss;
+	var $trackingPixels;
 
 	// skin/template vars
 	var $pagetitle;
@@ -102,6 +103,7 @@ class OasisModule extends Module {
 			}
 		}
 
+		// render CSS <link> tags
 		$this->csslinks = $tmpOut->buildCssLinks();
 
 		$this->clearDefaultMeta($wgOut->mMetatags);
@@ -154,6 +156,7 @@ class OasisModule extends Module {
 		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
 		$this->loadJs();
 
+		// FIXME: create separate module for stats stuff?
 		// load Google Analytics code
 		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 
