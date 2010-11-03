@@ -10,7 +10,7 @@ require_once( "commandLine.inc" );
 
 $balance_threshold = 50;
 
-echo "Checking for users that owe us $".$balance_threshold." or more OR haven't been billed in last month\n";
+echo "Checking for users that owe us $".$balance_threshold." or more OR haven't been billed in last month OR owe us anything but have no more ads in rotation\n";
 $dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 $res = $dbw->select(
 		array( 'billing' ),
@@ -19,7 +19,7 @@ $res = $dbw->select(
 		__METHOD__,
 		array(
 			'GROUP BY' => 'billing_user_id',
-			'HAVING' => "billing_balance <= -$balance_threshold OR ( billing_balance < 0 and last_billed < date_sub( now(), interval 1 month ) )",
+			'HAVING' => "billing_balance <= -$balance_threshold OR ( billing_balance < 0 and last_billed < date_sub( now(), interval 1 month ) ) OR ( billing_balance < 0 and billing_user_id in ( select ad_user_id from ads group by ad_user_id having sum( if( ad_expires is not null and ad_closed is null, 1, 0 ) ) = 0 ) )",
 		     )
 	       );
 foreach( $res as $row ) {
