@@ -63,6 +63,12 @@ class MultiDeleteTask extends BatchTask {
 		$this->title = str_replace( ' ', '_', $page->getText() );
 		$resultTitle = $page->getFullText();
 
+		$task_params = "";
+		foreach ( $data as $key => $value ) {
+			$task_params .= " --$key = $value \n";
+		}
+		$this->log("Task params: " . $task_params );
+
 		$range = escapeshellarg($data["range"]);
 		$selwikia = intval($data["selwikia"]);
 		$wikis = $data["wikis"];
@@ -79,16 +85,16 @@ class MultiDeleteTask extends BatchTask {
 
 		$this->log("Found " . count($wikiList) . " Wikis to proceed");
 		if ( !empty($wikiList) ) {
-			foreach ( $wikiList as $city_id => $oWiki ) {
+			foreach ( $wikiList as $id => $city_id ) {
 				$retval = "";
-				$city_url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
-				$city_path = WikiFactory::getVarValueByName( "wgScript", $oWiki->city_id );
+				$city_url = WikiFactory::getVarValueByName( "wgServer", $city_id );
+				$city_path = WikiFactory::getVarValueByName( "wgScript", $city_id );
 				
 				if ( empty($city_url) ) {
-					$city_url = 'wiki id in WikiFactory: ' . $oWiki->city_id;
+					$city_url = 'wiki id in WikiFactory: ' . $city_id;
 				}
 				# command
-				$sCommand  = "SERVER_ID={$oWiki->city_id} php $IP/maintenance/wikia/deleteOn.php ";
+				$sCommand  = "SERVER_ID={$city_id} php $IP/maintenance/wikia/deleteOn.php ";
 				$sCommand .= "-u " . $username . " ";
 				$sCommand .= "-t " . escapeshellarg($this->title) . " ";
 				$sCommand .= "-n " . $this->namespace . " ";
@@ -212,7 +218,6 @@ class MultiDeleteTask extends BatchTask {
 				),
 				__METHOD__
 			);
-			$wikiArr = array();
 			while ( $oRow = $dbr->fetchObject($oRes) ) {
 				$wikiList[] = $oRow->city_id;
 			}
@@ -237,15 +242,35 @@ class MultiDeleteTask extends BatchTask {
 		);
 
 		$wikiArr = array();
-		while ( $oRow = $dbr->fetchObject($oRes) ) {
-			# check exists in array
-			if ( !empty($wikiList) && !in_array( $oRow->city_id, $wikiList ) ) continue;
-			# add to array
-			$wikiArr[$oRow->city_id] = $oRow;
+		if ( $dbr->numRows($oRes) > 0 ) {
+			while ( $oRow = $dbr->fetchObject($oRes) ) {
+				# check exists in array
+				if ( !empty($wikiList) && !in_array( $oRow->city_id, $wikiList ) ) continue;
+				# add to array
+				$wikiArr[$oRow->city_id] = $oRow->city_id;
+			}
+			$dbr->freeResult ($oRes);
+		} elseif ( !empty($wikiaId) && ( !empty($wikiList) && !in_array( $wikiaId, $wikiList ) ) ) {
+			$dbname = WikiFactory::IDtoDB($wikiaId);
+			$dbr = wfGetDB (DB_SLAVE, 'stats', $dbname);
+			$where = array(
+				"page_title"		=> $this->title,
+				"page_namespace" 	=> $this->namespace,
+			);
+			
+			$oRow = $dbr->selectRow(
+				array( "page" ),
+				array( "page_id" ),
+				$where,
+				__METHOD__
+			);
+			
+			if ( !empty($oRow) ) {
+				$wikiArr[$wikiaId] = $wikiaId;
+			}
 		}
-		$dbr->freeResult ($oRes) ;
 
-		$this->log("Found: " . count($wikiArr) . " articles");
+		$this->log("Found: " . count($wikiArr) . " Articles");
 		if ( count($wikiArr) ) {
 			if ( !empty($lang) || !empty($cat) ) {
 				$this->log("Apply filter: language: $lang, category: $cat");
