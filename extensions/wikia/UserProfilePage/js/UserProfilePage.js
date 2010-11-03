@@ -23,7 +23,7 @@ var UserProfilePage = {
 	doAction: function(name, type, value) {
 		var wrapper = ( type === 'wiki' ) ? UserProfilePage._topWikisWrapper : UserProfilePage._topPagesWrapper;
 		wrapper.addClass('busy');
-		wrapper.find('*').click(function(event){event.preventDefault(), event.preventBubble()});
+		wrapper.find('*').click(function(event){event.preventDefault()});
 		
 		$.getJSON(wgScript,
 				{
