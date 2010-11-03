@@ -50,6 +50,21 @@ QuantcastSegments.setQuantcastData = function () {
 	}
 };
 
+QuantcastSegments.getQcsegAsDARTKeyValues = function () {
+	var segmentsCookie = $.parseJSON( $.cookies.get(QuantcastSegments.segCookieName) );
+	var segs = '';
+	if (typeof(wgIntegrateQuantcastSegments) === 'undefined' || !wgIntegrateQuantcastSegments) {
+		return segs;
+	}
+	if (typeof(segmentsCookie) != 'undefined') {
+		for (var i=0; i<segmentsCookie.segments.length; i++) {
+			segs += 'qcseg=' + segmentsCookie.segments[i].id + ';';
+		}
+	}
+
+	return segs;
+}
+
 if (typeof(wgCollectQuantcastSegments) !== 'undefined' && wgCollectQuantcastSegments) {
 	QuantcastSegments.setQuantcastData();
 }
