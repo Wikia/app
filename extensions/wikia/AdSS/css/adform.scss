@@ -1,7 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/rail-module";
-@import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
 
 .SponsoredLinkForm {
 	.box {
@@ -27,8 +27,15 @@
 		padding: 0;
 
 		section.box {
-			@include rail-module;
-			height: 180px;
+			// copied from .WikiaRail > section rule (/skins/oasis/css/core/_page.scss)
+			@include clearfix;
+			@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+			border: 1px solid $color-page-border;
+			margin-bottom: 10px;
+			padding: 16px 8px 8px;
+			position: relative;
+
+			height: 230px;
 
 			.wikia-button {
 				bottom: 5px;
