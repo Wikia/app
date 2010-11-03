@@ -6,6 +6,7 @@
 * rt#83859: RTE corrupts wikitext on page with complex html+table (macbre)
 * rt#84363: Make sure spotlights don't show up when noexternals=1 (sean)
 * rt#84389: Don't request onedot anymore (sean)
+* rt#84264: Oasis Related pages: Move related pages module to the bottom of the page (macbre)
 
 == Changes since 201010.4 ==
 * rt#81277: Disable categoryselect on the template namespace (Marooned)
