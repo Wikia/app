@@ -116,6 +116,7 @@ function WMU_moveBackButton(selector) {
 	// store back button
 	if (typeof window.WMUbackButton == 'undefined') {
 		var backButtonOriginal = $('#ImageUploadBack');
+		console.log(backButtonOriginal);
 		var backButton = backButtonOriginal.clone();
 
 		// keep the original one, but force it to be hidden
@@ -126,6 +127,13 @@ function WMU_moveBackButton(selector) {
 
 		// keep reference to <a> tag
 		backButton = backButton.children('a').addClass('wikia-button yui-back secondary');
+		
+		backDetails = $(".ImageUploadNoBorder a.backbutton");
+
+		if(backDetails.length > 0) {
+		    backButton.empty().append( backDetails.text() );
+		}
+		
 		window.WMUbackButton = backButton;
 	}
 
