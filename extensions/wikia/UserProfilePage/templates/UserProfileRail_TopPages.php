@@ -19,7 +19,7 @@
 
 				<? if( $userIsOwner )  :?>
 					<div class="hide-control">
-						<a class="HideButton" title="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>" data-id="<?= $pageId ;?>">
+						<a class="HideButton" title="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>" data-id="<?= $page['id'];?>">
 							<img class="sprite-small close" src="<?= wfBlankImgUrl() ;?>" alt="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>"/>
 							<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>
 						</a>
@@ -44,7 +44,7 @@
 							<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>"><?= $page['title'] ;?></a>
 						</div>
 						<div class="unhide-control">
-							<a class="UnhideButton" title="<?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?>" data-id="<?= $pageId; ?>">
+							<a class="UnhideButton" title="<?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?>" data-id="<?= $page['id'];?>">
 								<img class="sprite-small add" src="<?= wfBlankImgUrl() ;?>" alt="<?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?>"/>
 								<?= wfMsg( 'userprofilepage-top-page-unhide-label' ) ;?>
 							</a>
