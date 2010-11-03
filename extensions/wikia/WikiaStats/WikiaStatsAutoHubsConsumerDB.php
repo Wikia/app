@@ -307,7 +307,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 
 	public function getTopWikis($tag_id, $lang, $limit, $show_hide = false, $force_reload = false) {
-		global $wgMemc;
+		global $wgMemc $wgDotDisplay;
 
 		wfProfileIn( __METHOD__ );
 		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis_top", $tag_id, $lang, $limit );
@@ -340,11 +340,11 @@ class WikiaStatsAutoHubsConsumerDB {
 				)
 		);
 		
-		if ( $this->dbs->numRows( $res ) == 0 ) {
+		if ( $this->dbs->numRows( $res ) == 0 && !empty($wgDotDisplay) ) {
 			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
 			$conditions[] = "use_date > $date";
 			$res = $this->dbs->select(
-					array( ' stats.page_views_tags use key(tag_lang) ' ),
+					array( '`stats`.`page_views_tags` use key(tag_lang) ' ),
 					array( 'tag_id as tag_id,
 							city_id as city_id,
 							sum(pv_views) as count ' ),
