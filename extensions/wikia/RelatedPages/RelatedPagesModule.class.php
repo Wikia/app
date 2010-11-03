@@ -2,11 +2,12 @@
 
 class RelatedPagesModule extends Module {
 
+	public $addAfterSection;
 	public $pages = null;
 	public $skipRendering = false;
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc;
+		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
 
 		$relatedPages = RelatedPages::getInstance();
 
@@ -44,6 +45,11 @@ class RelatedPagesModule extends Module {
 			if (empty($this->pages)) {
 				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
 				$wgMemc->set($mKey, $this->pages, 3 * 3600);
+			}
+
+			// RT #84264
+			if (!empty($wgRelatedPagesAddAfterSection) && is_numeric($wgRelatedPagesAddAfterSection)) {
+				$this->addAfterSection = intval($wgRelatedPagesAddAfterSection);
 			}
 		}
 		else {
