@@ -62,7 +62,7 @@ class WikiStatsPage extends IncludableSpecialPage
             return;
         }
 
-        $this->mStats = WikiStats::newFromId($this->mCityId);        
+        $this->mStats = WikiStats::newFromId($wgCityId);        
         
 		$this->mUser = $wgUser;
 		$this->userIsSpecial = $this->mStats->isAllowed();
@@ -125,6 +125,8 @@ class WikiStatsPage extends IncludableSpecialPage
 		}
 
         #--- WikiaGenericStats instance
+        $this->mStats = WikiStats::newFromId($wgCityId);        
+
         $this->mStats->setStatsDate( array( 
         	'fromMonth' => $this->fromMonth,
         	'fromYear' 	=> $this->fromYear,
