@@ -11,7 +11,6 @@ error_reporting(E_ERROR);
 // this function takes type (CSS/JS) and list of files
 // and saves minified version in file provided
 function minify($type, $files, $target) {
-	global $wgCacheBuster;
 	$count = count($files);
 	echo "Packaging {$target} ({$count} files)...";
 
@@ -20,7 +19,6 @@ function minify($type, $files, $target) {
 	$chute->httpCache = false;
 
 	$revision = SpecialVersion::getSvnRevision(dirname(__FILE__));
-	$cb = $wgCacheBuster;
 
 	$header = <<<HEAD
 /*
@@ -40,9 +38,6 @@ HEAD;
 
 	// remove BOM UTF-8 marker
 	$res = str_replace("\xEF\xBB\xBF", '', $res);
-
-	// add cache buster to images
-	$res = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . $cb . '\\2', $res);
 
 	// minify
 	switch($type) {
