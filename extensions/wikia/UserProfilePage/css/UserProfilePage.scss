@@ -337,6 +337,12 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 			float: left;
 			height: 20px;
 			margin-right: 7px;
+
+			a {
+				text-decoration: none;
+				color: $color-text;
+				cursor: default;
+			}
 		}
 	}
 

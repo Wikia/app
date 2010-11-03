@@ -68,7 +68,7 @@
 	<? if(!empty($userRights)) :?>
                 <ul class="user-groups">
 			<? foreach ( $userRights as $rightName ) :?>
-				<li><?= wfMsg('userprofilepage-user-group-' . $rightName) ;?></li>
+				<li><a title="<?= wfMsg("userprofilepage-user-group-{$rightName}-tooltip") ;?>"><?= wfMsg('userprofilepage-user-group-' . $rightName) ;?></a></li>
 			<? endforeach ;?>
 		</ul>
 	<? endif ;?>
