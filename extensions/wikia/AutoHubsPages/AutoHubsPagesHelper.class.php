@@ -128,7 +128,7 @@ class AutoHubsPagesHelper{
 		$city_id = (int) $wgRequest->getVal('city_id', 0); 
 		$page_id = (int) $wgRequest->getVal('page_id', 0);
 		$dir = $wgRequest->getVal('dir', 'add');  
-		$ws = new WikiaStatsAutoHubsConsumerDB();		
+		$ws = new WikiaStatsAutoHubsConsumerDB(DB_MASTER);
 		$result = array();
 		if ($dir == 'add') {
 			if ( $wgRequest->getVal('type') == 'article') {
