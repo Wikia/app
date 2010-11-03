@@ -14,9 +14,15 @@
 						<span class="counter">#<?= $counter ;?></span>
 						<? if( $userIsOwner )  :?>
 							<span class="hide-control">
-								<a class="HideButton" title="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>" data-id="<?= $wikiId ;?>">
-									<img class="sprite-small close" src="<?= wfBlankImgUrl() ;?>" alt="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>"/>
-								</a>
+								<? if ( $wikiId != $currentWikiId ) :?>
+									<a class="HideButton" title="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>" data-id="<?= $wikiId ;?>">
+										<img class="sprite-small close" src="<?= wfBlankImgUrl() ;?>" alt="<?= wfMsg( 'userprofilepage-top-wikis-hide-label' ) ;?>"/>
+									</a>
+								<? else :?>
+									<a class="LockButton" title="<?= wfMsg( 'userprofilepage-top-wikis-locked-label' ) ;?>">
+										<img class="sprite lock" src="<?= wfBlankImgUrl() ;?>" alt="<?= wfMsg( 'userprofilepage-top-wikis-locked-label' ) ;?>"/>
+									</a>
+								<? endif ;?>
 							</span>
 						<? endif; ?>
 					</td>

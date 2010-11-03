@@ -51,8 +51,11 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 						}
 
 						.hide-control {
-							cursor: pointer;
 							display: none;
+
+							.HideButton {
+								cursor: pointer;
+							}
 						}
 					}
 

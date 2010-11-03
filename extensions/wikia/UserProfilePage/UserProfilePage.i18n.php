@@ -39,6 +39,7 @@ $messages['en'] = array(
 	'userprofilepage-top-wikis-hidden-see-more' => 'You have hidden {{PLURAL:$1|$1 wiki|$1 wikis}}',
 	'userprofilepage-top-wikis-unhide-label' => 'unhide',
 	'userprofilepage-top-wikis-hide-label' => 'hide',
+	'userprofilepage-top-wikis-locked-label' => 'The current wiki can\'t be hidden',
 
 	//Recent activity
 	'userprofilepage-recent-activity-title' => '$1\'s recent activity',

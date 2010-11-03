@@ -24,34 +24,39 @@ var UserProfilePage = {
 		var wrapper = ( type === 'wiki' ) ? UserProfilePage._topWikisWrapper : UserProfilePage._topPagesWrapper;
 		UserProfilePage.blockInput(wrapper);
 
-		$.getJSON(wgScript,
-				{
-					'action': 'ajax',
-					'rs': 'UserProfilePageHelper::doAction',
-					'name': name,
-					'type': type,
-					'value': value
-				},
-				function(response) {
-					UserProfilePage.unblockInput(wrapper);
-					
-					if(response.result === true) {
-						if( response.type === 'page' ) {
-							UserProfilePage._topPagesWrapper.replaceWith( response.html );
-							UserProfilePage._topPagesWrapper = $('#profile-top-pages-body');
-						}
-						if( response.type === 'wiki' ) {
-							UserProfilePage._topWikisWrapper.replaceWith( response.html );
-							UserProfilePage._topWikisWrapper = $('#profile-top-wikis-body');
-						}
+		$.getJSON(
+			wgScript,
+			{
+				'action': 'ajax',
+				'rs': 'UserProfilePageHelper::doAction',
+				'name': name,
+				'type': type,
+				'value': value
+			},
+			function(response) {
+				UserProfilePage.unblockInput(wrapper);
+
+				if(response.result === true) {
+					if( response.type === 'page' ) {
+						UserProfilePage._topPagesWrapper.replaceWith(response.html);
+						UserProfilePage._topPagesWrapper = $('#profile-top-pages-body');
+						UserProfilePage._hiddenTopPagesWrapper = $('#profile-top-pages-hidden');
+					}
+
+					if( response.type === 'wiki' ) {
+						UserProfilePage._topWikisWrapper.replaceWith( response.html );
+						UserProfilePage._topWikisWrapper = $('#profile-top-wikis-body');
+						UserProfilePage._hiddenWikisWrapper = $('#profile-top-wikis-hidden');
 					}
 				}
-			);
+			}
+		);
 	},
 
 	attachEvents: function() {
 		//handle click outside hidden elements popup menu
-		$('#profile-top-wikis-hidden').find('a.more').live( 'click', function() {
+		UserProfilePage._topWikisWrapper.find('a.more').live( 'click', function() {
+			$().log('asd');
 			if(!UserProfilePage._hiddenWikisWrapper.hasClass('user-profile-box')){
 				UserProfilePage._hiddenWikisWrapper.addClass('user-profile-box');
 
@@ -64,7 +69,8 @@ var UserProfilePage = {
 		});
 
 		//handle click outside hidden elements popup menu
-		$('#profile-top-pages-hidden').find('a.more').live( 'click', function() {
+		UserProfilePage._topPagesWrapper.find('a.more').live( 'click', function() {
+			$().log('dsa');
 			if(!UserProfilePage._hiddenTopPagesWrapper.hasClass('user-profile-box')){
 				UserProfilePage._hiddenTopPagesWrapper.addClass('user-profile-box');
 
