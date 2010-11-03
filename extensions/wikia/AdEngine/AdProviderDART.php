@@ -88,7 +88,7 @@ EOT;
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $wpage;
 		$url .= $this->getKeywordsKV();
-		$url .= self::getQuantcastSegmentKV();
+		$url .= "qcseg=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= "nofooter=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
@@ -99,33 +99,6 @@ EOT;
 		$url .= 'endtag=$;';
 		$url .= "ord=" . $rand . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
 		return $url;
-	}
-
-	/**
-	 * Quantcast integration guide: multiple segments specified as "qcseg=A;qcseg=B;".
-	 * Segments should be located near end of DART URL.
-	 */
-	public static function getQuantcastSegmentKV() {
-		global $wgIntegrateQuantcastSegments;
-
-		$segs = '';
-
-		if (empty($wgIntegrateQuantcastSegments)) {
-			return $segs;
-		}
-
-		if (class_exists('QuantcastSegments', false)) {
-			if (!empty($_COOKIE[QuantcastSegments::SEGMENTS_COOKIE_NAME])) {
-				$segments_cookie = json_decode($_COOKIE[QuantcastSegments::SEGMENTS_COOKIE_NAME]);
-				if (is_object($segments_cookie) && is_array($segments_cookie->segments)) {
-					foreach ($segments_cookie->segments as $segment) {
-						$segs .= 'qcseg='.$segment->id.';';
-					}
-				}
-			}
-		}
-
-		return $segs;
 	}
 
 	/* From DART Webmaster guide:
@@ -366,7 +339,9 @@ EOT;
 		// RT #65988: must clone iframe, set src then append to parentNode. Setting src on original iframe creates unnecessary entry in browser history
 		$out = '<script type="text/javascript">' .
 		$function_name . ' = function() { ' .
-		'var url = "'.addslashes($this->getUrl($slotname, $slot)).'"; ' . "\n" .
+		'var url = "'.addslashes($this->getUrl($slotname, $slot)).'"; ' . "\n" .	// url is actually a template with tokens to replace
+		'var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues(); ' . "\n" .	// wlee: Quantcast Segments
+		'url = url.replace("qcseg=N;", qcsegs); ' . "\n" .
 		'var nofooter = ""; ' . "\n" .	// wlee: A/B test for footer ads
 		'if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } url = url.replace("nofooter=N;", nofooter); ' . "\n" .
 		'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " . "\n" .
