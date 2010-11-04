@@ -279,7 +279,7 @@ class UserProfilePage {
 
 	public function getTopWikis( $limit = 5 ) {
 		wfProfileIn( __METHOD__ );
-		global $wgStatsDB, $wgDevelEnvironment;
+		global $wgStatsDB, $wgDevelEnvironment, $wgCityId;
 
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$res = $dbs->select(
@@ -305,7 +305,7 @@ class UserProfilePage {
 			); // test data
 
 			foreach($wikis as $wikiId => $editCount) {
-				if( !$this->isTopWikiHidden( $wikiId ) ) {
+				if( !$this->isTopWikiHidden( $wikiId ) || ( $wikiId == $wgCityId ) ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
