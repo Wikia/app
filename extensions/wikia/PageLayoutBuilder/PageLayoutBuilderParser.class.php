@@ -134,8 +134,8 @@ class PageLayoutBuilderParser extends Parser {
 			}
 		} else {
 			if($oWidget->isParagraph()) {
-				//TODO: solution to the problem of dressed in p more sophisticated way
-				return self::parserReturnMarker($self, $marker, "\n</p>".$oWidget->RTEElementDecoratorAndRender()."<p>");	
+				//add pre to marker to prevent p dressing 
+				return self::parserReturnMarker($self, "<pre>".$marker."</pre>", $oWidget->RTEElementDecoratorAndRender());	
 			} else {
 				return self::parserReturnMarker($self, $marker, $oWidget->RTEElementDecoratorAndRender());
 			}
@@ -152,8 +152,6 @@ class PageLayoutBuilderParser extends Parser {
 		if(!empty($self->plbMarkers)) {
 			$text = strtr($text, $self->plbMarkers);
 		}
-		//TODO: solution to the problem of dressed in p more sophisticated way
-		$text = str_replace("<p>\n</p>", "", $text);
 		return true;
 	}
 
