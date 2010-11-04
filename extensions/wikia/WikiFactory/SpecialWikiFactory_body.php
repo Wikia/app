@@ -295,6 +295,19 @@ class WikiFactoryPage extends SpecialPage {
 						$info = $this->doSharedUploadEnable( $wgRequest );
 					}
 					break;
+				case "google":
+					if ($wgRequest->getVal('wt-add-site')) {
+						$this->doAddToWebmasterTools();
+					} else if ($wgRequest->getVal('wt-rem-site')) {
+						$this->doRemoveFromWebmasterTools();
+					} else if ($wgRequest->getVal('wt-verify-site')) {
+						$this->doVerifyWithWebmasterTools();
+					} else if ($wgRequest->getVal('wt-add-verify-site')) {
+						if ($this->doAddToWebmasterTools()) {
+							$this->doVerifyWithWebmasterTools();
+						}
+					}
+					break;
 			}
 		}
 		else {
@@ -360,6 +373,18 @@ class WikiFactoryPage extends SpecialPage {
 				"limit"     => $pager->getForm(),
 				"body"      => $pager->getBody(),
 				"nav"       => $pager->getNavigationBar()
+			);
+		}
+		if( $this->mTab === "google" ) {
+			global $wgGoogleWebToolsAccts;
+		
+			$api = new WebmasterToolsAPI('wikiastaff0001@gmail.com', 'wikia123', $this->mWiki);
+			$info = $api->site_info();
+
+			$vars[ "google" ] = array(
+				"info"     => $info,
+				"accounts" => $wgGoogleWebToolsAccts,
+				"api"      => $api,
 			);
 		}
 		if( $this->mTab === "ezsharedupload" ) {
@@ -874,12 +899,41 @@ class WikiFactoryPage extends SpecialPage {
 				$varOverrides['cv_access_level'] = $cv_access_level;
 				$varOverrides['cv_variable_group'] = $cv_variable_group;
 				$varOverrides['cv_description'] = $cv_description;
-                                $varOverrides['cv_is_unique'] = $cv_is_unique;
+				$varOverrides['cv_is_unique'] = $cv_is_unique;
 			}
 		}
 		return $html;
 	}
 
+	private function doAddToWebmasterTools () {
+		global $wgRequest, $wgGoogleWebToolsAccts;
+		$acct_name = $wgRequest->getVal('wt-account-name');
+		
+		if (array_key_exists($acct_name, $wgGoogleWebToolsAccts)) {
+			$acct_pass = $wgGoogleWebToolsAccts[$acct_name]['pass'];
+	
+			$api = new WebmasterToolsAPI($acct_name, $acct_pass, $this->mWiki);
+			$api->add_site();
+			return true;
+		} else {
+			// Display error
+			return false;
+		}
+	}
+	
+	private function doRemoveFromWebmasterTools () {
+		$api = new WebmasterToolsAPI('wikiastaff0001@gmail.com', 'wikia123', $this->mWiki);
+		$api->remove_site();
+		
+		return true;
+	}
+	
+	private function doVerifyWithWebmasterTools () {
+		$api = new WebmasterToolsAPI('wikiastaff0001@gmail.com', 'wikia123', $this->mWiki);
+		$api->verify_site();
+		
+		return true;
+	}
 }
 
 /**
@@ -1140,5 +1194,223 @@ class CityListPager {
 
 	static public function bold( $subject, $search ) {
 		echo str_replace( $search, "<strong>{$search}</strong>", $subject );
+	}
+};
+
+class WebmasterToolsAPI {
+
+	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
+	
+	private $mAuth, $mEmail, $mPass, $mType, $mSource, $mService, $mWiki, $mSiteURI;
+
+	/**
+	 * constructor
+	 *
+	 * @access public
+	 */
+	public function __construct( $email, $pass, $wiki ) {
+		$this->mEmail   = $email;
+		$this->mPass    = $pass;
+		$this->mType    = 'GOOGLE';
+		$this->mSource  = 'WIKIA';
+		$this->mService = 'sitemaps';
+
+		if (!is_object($wiki)) {
+			$wiki = WikiFactory::getWikiByID( $wiki );
+			if (!$wiki) {
+				throw new Exception("Could not find wiki by ID");
+			}
+		}
+		$this->mWiki    = $wiki;
+		$this->mSiteURI = $this->make_site_uri();
+		$this->mAuth    = $this->getAuthToken();
+	}
+	
+	private function getAuthToken () {
+		$content = Http::post('https://www.google.com/accounts/ClientLogin',
+							  null,
+							  array(CURLOPT_POSTFIELDS => array(
+										"Email"       => $this->mEmail,
+                                		"Passwd"      => $this->mPass,
+                                		"accountType" => $this->mType,
+                                		"source"      => $this->mSource,
+                                		"service"     => $this->mService,
+							 		)
+							 )
+			 	   );	
+
+		if (preg_match('/Auth=(\S+)/', $content, $matches)) {
+    		return $matches[1];
+    	} else {
+    		return;
+    	}
+    }
+	
+	private function normalize_site ($site) {
+		if (!preg_match('!^http://!', $site)) $site = 'http://'.$site;
+		if (!preg_match('!/$!', $site))       $site = $site.'/';
+		
+		return $site;
+	}
+	
+	private function make_site_uri () {
+		$site = $this->normalize_site($this->mWiki->city_url);
+    	$uri = self::FEED_URI . '/sites/' . urlencode($site);
+    	return $uri;
+	}
+	
+	private function make_site_id () {
+		return $this->normalize_site($this->mWiki->city_url).'sitemap-index.xml';
+	}
+ 
+	public function site_info () {   	
+		$content = Http::get($this->mSiteURI,
+							 null,
+							 array(CURLOPT_HTTPHEADER => array('Authorization: GoogleLogin auth='.$this->mAuth))
+				   );
+		if (!$content) return;
+
+		$doc = new DOMDocument();
+		$doc->loadXML($content);
+    	
+		$e = $doc->documentElement;
+		$info = array();
+
+		foreach ($e->childNodes as $node) {
+			switch ($node->nodeName) {
+				case 'updated':
+					$info['updated'] = $node->nodeValue;
+					break;
+				case 'wt:verified':
+					$info['verified'] = $node->nodeValue == 'true' ? true : false;
+					break;
+				case 'wt:verification-method':
+					if (preg_match('/google([a-f0-9]+)\.html/', $node->nodeValue, $matches)) {
+						$info['verification_code'] = $matches[1];
+					}
+					break;
+				case 'title':
+					$info['site'] = $node->nodeValue;
+					break;
+				default:
+					//error_log("#### NODE: ".$node->nodeName.'='.$node->nodeValue);
+			}
+		}
+
+		$info['account_name'] = $this->mEmail;
+
+		return $info;
+	}
+
+	public function add_site () {
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars(array( "site" => $this->normalize_site($this->mWiki->city_url)));
+		$xml = $oTmpl->execute("wt-add-request");
+		
+		$content = Http::post($uri = self::FEED_URI . '/sites/',
+							  null,
+							  array(CURLOPT_POSTFIELDS => $xml,
+							  		CURLOPT_HTTPHEADER => array('Content-type: application/atom+xml',
+							  									'Authorization: GoogleLogin auth='.$this->mAuth)
+							 )
+			 	   );
+
+		if ($content) {
+			WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, $this->mEmail);
+		
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function remove_site () {
+		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
+
+		// Update the wgGoogleSiteVerification variable with this code
+		WikiFactory::setVarByName('wgGoogleSiteVerification', $this->mWiki->city_id, '');
+		WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, '');
+
+		$c = curl_init( $this->mSiteURI );
+		curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
+		curl_setopt($c, CURLOPT_TIMEOUT, $wgHTTPTimeout);
+		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
+		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
+		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'DELETE' );				
+		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth));
+
+		curl_exec( $c );
+
+		# Don't return the text of error messages, return false on error
+		$retcode = curl_getinfo( $c, CURLINFO_HTTP_CODE );
+
+		if ( $retcode != 200 ) {
+			error_log("Failed to delete site ".$this->mWiki->site_url." from Webmaster Tools.  Code=".$retcode);
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public function verify_site ($code = null) {
+
+		if (!$code) {
+			$info = $this->site_info();
+			$code = $info['verification_code'];
+		}
+		
+		// Update the wgGoogleSiteVerification variable with this code
+		WikiFactory::setVarByName('wgGoogleSiteVerification', $this->mWiki->city_id, $code);
+
+		// Send the verification request to google
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array( "site_id" => $this->make_site_id()) );
+		$xml = $oTmpl->execute("wt-verify-request");
+
+		if ($this->put_verify($xml)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private function put_verify ( $xml ) {
+		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
+
+		$c = curl_init( $this->mSiteURI );
+		curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
+		curl_setopt($c, CURLOPT_TIMEOUT, $wgHTTPTimeout);
+		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
+		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
+		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'PUT' );
+				
+		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth,
+												  'Content-type: application/atom+xml'));
+
+		curl_setopt($c, CURLOPT_POSTFIELDS, $xml);
+
+		ob_start();
+		curl_exec( $c );
+		$text = ob_get_contents();
+		ob_end_clean();
+
+		# Don't return the text of error messages, return false on error
+		$retcode = curl_getinfo( $c, CURLINFO_HTTP_CODE );
+
+		if ( $retcode != 200 ) {
+			wfDebug( __METHOD__ . ": HTTP return code $retcode\n" );
+			$text = false;
+		}
+		# Don't return truncated output
+		$errno = curl_errno( $c );
+		if ( $errno != CURLE_OK ) {
+			$errstr = curl_error( $c );
+			wfDebug( __METHOD__ . ": CURL error code $errno: $errstr\n" );
+			$text = false;
+		}
+		curl_close( $c );
+		
+		return $text;
 	}
 };

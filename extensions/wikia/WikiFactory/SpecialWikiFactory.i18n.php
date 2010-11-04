@@ -29,6 +29,7 @@ $messages['en'] = array(
 	"wikifactory-label-return" => "Return to list",
 	"wikifactory-label-clog" => "Changelog",
 	"wikifactory-label-actions" => "Actions",
+        "wikifactory-label-google" => "Google Tools",
 	"wikifactory-label-close" => "Close",
 	"wikifactory-label-tags" => "Tags",
 	"wikifactory-label-tags2" => "Tags",
