@@ -143,13 +143,17 @@
 		},
 		
 		extSetProperties: function ( props ) {
+			/* align */
 			if (typeof props['align'] != 'undefined') {
-				var wysiwygAlign = props['align'] == 'left' ? 'left' : 'right';
-				this.el.css('float',wysiwygAlign);
-				this.el.css('clear',wysiwygAlign);
+				this.el
+					.removeClass('plb-rte-widget-align-left plb-rte-widget-align-center plb-rte-widget-align-right')
+					.addClass('plb-rte-widget-align-'+props['align']);
 			}
+			/* width */
 			var width = props['size'] || this.md.attributes['size'];
+			this.el.css('width',width+'px');
 			$('img',this.el).css('width',width+'px');
+			/* caption */
 			if (typeof props['caption'] != 'undefined') {
 				$('img',this.el).attr('alt',props['caption']);
 			}
@@ -696,6 +700,7 @@
 		rte: null,
 		
 		addButton: null,
+		widgetsManager: null,
 		widgetsSummary: null,
 		widgetsList: null,
 		refreshTimer: null,
@@ -753,9 +758,10 @@
 			WikiaButtons.add(this.addButton,{
 				click:WikiaButtons.clickToggle
 			});
-			this.widgetsSummary = $('.plb-manager',this.el);
+			this.widgetsManager = $('.plb-manager',this.el);
+			this.widgetsSummary = $('.plb-widgets-summary',this.el);
 			this.widgetsList = $('.plb-widget-list',this.el);
-			this.widgetsList.css('max-height',(this.el.innerHeight() - this.widgetsSummary.outerHeight() - parseInt(this.widgetsList.css('margin')) * 2) + 'px');
+			this.widgetsList.css('max-height',(this.el.innerHeight() - this.widgetsManager.outerHeight()- this.widgetsSummary.outerHeight()) + 'px');
 		},
 
 		rebind: function () {
@@ -810,7 +816,8 @@
 			// Clear list in the toolbox
 			this.widgetsList.empty();
 			// Prepare buttons overlay for list items
-			var bs = "<span class=\"buttons\"><button class=\"wikia-button secondary edit\">"+PLB.Lang['plb-editor-edit']+"</button><a href=\"#\" class=\"delete\"></a></span>";
+			var bs = "<span class=\"buttons\"><button class=\"wikia-button secondary edit\">"+PLB.Lang['plb-editor-edit']+"</button>"
+				+"<a href=\"#\" class=\"sprite trash delete\"></a></span>";
 			// For each widget found do ...
 			$.each(l,$.proxy(function(i,e){
 				if(PLB.Library[e.getType()]) {

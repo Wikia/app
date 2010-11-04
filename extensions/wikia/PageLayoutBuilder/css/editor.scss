@@ -213,29 +213,21 @@ td.plb-toolbox {
 				top: 50%;
 				right: 0;
 				margin-right: 12px;
-				margin-top: -9px;
+				margin-top: -8px;
 				width: auto;
 				height: 22px;
 				line-height: 22px;
-				vertical-align: middle;
 				
 				>button, >a {
 					float: left;
 					display: block;
 					cursor: pointer;
-				}
-				
-				>.edit {
-					border: 1px solid $color-text;
-					padding: 0 2px;
+					margin-left: 6px;
 				}
 				
 				>.delete {
-					margin-top: 3px;
-					margin-left: 3px;
-					width: 16px;
-					height: 16px;
-					background: url(/extensions/wikia/PageLayoutBuilder/images/trash-icon.png);
+					width: 16px;  // width and height must be repeated from the .sprite.delete class
+					height: 16px; // because they get overriden by ck css rules
 				}
 			}
 	
