@@ -29,14 +29,22 @@ class AdSS_AdminBillingPager extends TablePager {
 	function formatValue( $name, $value ) {
 		global $wgAdSS_templatesDir, $wgLang;
 		switch( $name ) {
-			case 'billing_amount':
-				return $value > 0 ? wfMsgHtml( 'adss-paypal-payment' ) : wfMsg( 'adss-adss-fee' );
-			case 'billing_ad_id':
-				return $value ? wfMsg( 'adss-amount', $wgLang->formatNum( -$this->bl->amount ) ) : '';
-			case 'billing_ppp_id':
-				return $value ? wfMsg( 'adss-amount', $wgLang->formatNum( (float) $this->bl->amount ) ) : '';
+			case 'billing_timestamp':
+				return substr( $value, 0, 16 );
 			case 'billing_user_id':
 				return AdSS_User::newFromId( $value )->toString();
+			case 'description':
+				if( $this->bl->paymentId ) {
+					return wfMsgHtml( 'adss-paypal-payment' );
+				} elseif( $this->bl->adId ) {
+				       	return wfMsg( 'adss-adss-fee' );
+				} else {
+					return '';
+				}
+			case 'fee':
+				return $this->bl->amount < 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( -$this->bl->amount ) ) : '';
+			case 'paid':
+				return $this->bl->amount > 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( (float) $this->bl->amount ) ) : '';
 			default:
 				return $value;
 		}
@@ -55,9 +63,9 @@ class AdSS_AdminBillingPager extends TablePager {
 		return array(
 				'billing_timestamp' => wfMsgHtml( 'adss-timestamp' ),
 				'billing_user_id'   => 'User',
-				'billing_amount'    => wfMsgHtml( 'adss-description' ),
-				'billing_ad_id'     => wfMsgHtml( 'adss-fee' ),
-				'billing_ppp_id'    => wfMsgHtml( 'adss-paid' ),
+				'description'       => wfMsgHtml( 'adss-description' ),
+				'fee'               => wfMsgHtml( 'adss-fee' ),
+				'paid'              => wfMsgHtml( 'adss-paid' ),
 			    );
 	}
 
