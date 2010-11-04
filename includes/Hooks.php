@@ -112,6 +112,12 @@ function wfRunHooks($event, $args = array()) {
 		// Run autoloader (workaround for call_user_func_array bug)
 		is_callable( $callback );
 
+		/* $hook_args have to be an array - throw exception when it's not (RT#72109)  */
+		if (!is_array($hook_args)) {
+			throw new MWException( "Detected bug in an extension! " .
+				"Hook $callback ran with params passed not as an array. " );
+		}
+
 		/* Call the hook. */
 		wfProfileIn( $func );
 		$retval = call_user_func_array( $callback, $hook_args );

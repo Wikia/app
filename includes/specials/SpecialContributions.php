@@ -89,7 +89,7 @@ class SpecialContributions extends SpecialPage {
 			return $this->feed( $feedType );
 		}
 
-		wfRunHooks( 'SpecialContributionsBeforeMainOutput', $id );
+		wfRunHooks( 'SpecialContributionsBeforeMainOutput', array($id) );
 
 		$wgOut->addHTML( $this->getForm() );
 
