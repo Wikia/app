@@ -554,7 +554,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		foreach($out as $value) {
 			if( empty($value['not_publish']) ) {
 				$options[$value['page_id']] = array(
-					'label' => $value['page_title'],
+					'label' => str_replace("_", " " ,$value['page_title']),
 					'desc' => $value['desc'],
 					'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
 					'trackingId' => 'blankpage',

@@ -116,7 +116,6 @@ function WMU_moveBackButton(selector) {
 	// store back button
 	if (typeof window.WMUbackButton == 'undefined') {
 		var backButtonOriginal = $('#ImageUploadBack');
-		console.log(backButtonOriginal);
 		var backButton = backButtonOriginal.clone();
 
 		// keep the original one, but force it to be hidden
