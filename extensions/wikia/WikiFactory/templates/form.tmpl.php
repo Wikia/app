@@ -53,6 +53,31 @@
 #wiki-factory .selected {
 	font-weight: bold;
 }
+
+.errorbox, .successbox {
+font-size: larger;
+border: 2px solid;
+padding: .5em 1em;
+float: left;
+margin-bottom: 2em;
+color: #000;
+}
+.errorbox {
+border-color: red;
+background-color: #fff2f2;
+}
+.successbox {
+border-color: green;
+background-color: #dfd;
+}
+.errorbox h2, .successbox h2 {
+font-size: 1em;
+font-weight: bold;
+display: inline;
+margin: 0 .5em 0 0;
+border: none;
+}
+
 <?php
 //end oasis tab styling
 	}
