@@ -11,6 +11,10 @@ class UserProfilePage {
 	private static $mInstance = null;
 	private $commentToEditRatio = 0.3;
 
+	/**
+	 * @param User $user
+	 * @return UserProfilePage
+	 */
 	static public function getInstance( User $user = null ) {
 		global $wgTitle;
 		if ( empty( self::$mInstance ) ) {
