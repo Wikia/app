@@ -33,14 +33,15 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 		$wgTitle = Title::newMainPage();
 		$articleId = $wgTitle->getArticleId();
 		$article = Article::newFromId($articleId);
-		$key = wfMemcKey('services', 'pageheader', 'revisions3', $articleId);
+		$key = wfMemcKey('services', 'pageheader', 'current-revision', $articleId);
 
 		$service = new PageStatsService($articleId);
 
 		$this->assertType('array', $service->getMostLinkedCategories());
 		$this->assertType('int', $service->getCommentsCount());
 		$this->assertType('int', $service->getLikesCount());
-		$this->assertType('array', $service->getRecentRevisions());
+		$this->assertType('array', $service->getCurrentRevision());
+		$this->assertType('array', $service->getPreviousEdits());
 		$this->assertType('string', $service->getFirstRevisionTimestamp());
 
 		// comments counter regenerating
@@ -56,7 +57,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 		$data = $wgMemc->get($key);
 		$this->assertTrue(empty($data));
 
-		$service->getRecentRevisions();
+		$service->getCurrentRevision();
 
 		$data = $wgMemc->get($key);
 		$this->assertFalse(empty($data));
@@ -67,7 +68,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 		$data = $wgMemc->get($key);
 		$this->assertTrue(empty($data));
 
-		$service->getRecentRevisions();
+		$service->getCurrentRevision();
 
 		// regenerate data
 		$service->regenerateData();
