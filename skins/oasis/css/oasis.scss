@@ -41,6 +41,7 @@
 @import "core/Notifications";
 @import "core/Preferences";
 @import "core/tabs";
+@import "core/Paginator";
 
 // Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
 @import "modules/LatestPhotos";
