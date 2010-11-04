@@ -39,7 +39,7 @@ class AdSS_ManagerBillingPager extends TablePager {
 					$r = wfMsgHtml( 'adss-adss-fee' );
 					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
 					$tmpl->set( 'ad', AdSS_Ad::newFromId( $this->bl->adId ) );
-					$r .= "<div style=\"display:none\">".$tmpl->render( 'ad' )."</div>";
+					$r .= "<div style=\"display:none\"><ul><li>".$tmpl->render( 'ad' )."</li></ul></div>";
 					return $r;
 				} else {
 					return '';
