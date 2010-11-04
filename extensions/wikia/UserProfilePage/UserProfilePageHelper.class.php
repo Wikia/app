@@ -26,7 +26,12 @@ class UserProfilePageHelper {
 		$profilePage = UserProfilePage::getInstance( $user );
 		$article = Article::newFromID( $template->data['articleid'] );
 		if( is_null( $article ) ) {
-			$template->data['bodytext'] = $profilePage->get( wfMsg('userprofilepage-empty-about-me-section') );
+			if( $profilePage->userIsOwner() ) {
+				$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-my-about-me-section', array( $skin->mTitle->getLocalUrl( 'action=edit' ) ) ) );
+			}
+			else {
+				$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-somebodys-about-me-section', array( $profilePage->getUser()->getName(), $profilePage->getUser()->getTalkPage()->getLocalUrl( 'action=edit' ) ) ) );
+			}
 		}
 		else {
 			$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );

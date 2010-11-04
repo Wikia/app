@@ -13,7 +13,8 @@ $messages['en'] = array(
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
 	'userprofilepage-edit-permision-denied' => 'Edit permissions denied',
 	'userprofilepage-edit-permision-denied-info' => 'You do not have permissions to edit somebody\'s user page or subpage',
-	'userprofilepage-empty-about-me-section' => 'This section is empty, click edit to add some content here!',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Everyone on this wiki would love to know more about you!</div><a href="$1">Edit this section</a> to add more about yourself and tell us about the things you love.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 hasn\'t added any information yet.</div>You can <a href="$2">leave them a message</a> instead',
 
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',
