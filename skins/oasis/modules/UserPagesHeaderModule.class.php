@@ -179,6 +179,17 @@ class UserPagesHeaderModule extends Module {
 			if( count($this->lastActionData) ) {
 				$this->lastActionData['changemessage'] = UserProfilePageHelper::formatLastActionMessage( $this->lastActionData );
 				$this->lastActionData['changeicon'] = $this->lastActionData['type'];
+				if( empty( $this->lastActionData['intro'] ) ) {
+					// try to get article text snippet if there's no intro section from rc_data
+					$lastTitle = Title::newFromText( $this->lastActionData['title'], $this->lastActionData['ns'] );
+					if( !empty( $lastTitle->getArticleId() ) ) {
+						$articleService = new ArticleService( $lastTitle->getArticleId() );
+						$this->lastActionData['intro'] = $articleService->getTextSnippet( 100 );
+					}
+					else {
+						$this->lastActionData['intro'] = '';
+					}
+				}
 			}
 
 			$this->userRights = array_intersect( UserProfilePage::getInstance()->getUserRights(), array(
