@@ -1,0 +1,76 @@
+@import "color";
+@import "../mixins/clearfix";
+@import "../mixins/border-radius";
+
+.wikia-paginator {
+	
+	height: 30px;
+
+	div {
+
+		ul {
+			
+			list-style: none;
+			margin: 0px auto 10px auto;
+			padding: 0px;
+			list-style-type: none;
+			text-align: center;
+
+			li {
+				margin: 0px;
+				padding: 0px;
+				display: inline;
+			}
+
+			a {
+
+				text-decoration: none;
+			}
+
+			.paginator-page {
+				display: inline-block;
+				height: 16px;
+				line-height: 16px;
+				margin: 0px;
+				min-width: 20px;
+				padding: 2px;
+				color: $color-links;
+				border-right: solid 1px $color-buttons;
+
+				&:hover {
+					color: $color-button-text;
+					background-color: $color-buttons;
+					text-decoration: none;
+				}
+
+				&.active {
+					color: $color-button-text;
+					background-color: $color-buttons;
+					text-decoration: none;
+					border: none;
+				}
+
+			}
+
+			.paginator-spacer {
+				display: inline-block;
+				height: 16px;
+				line-height: 16px;
+				margin:0px;
+				min-width: 20px;
+				padding: 2px;
+				text-align: center;
+				color: $color-links;
+				border-right: solid 1px $color-buttons;
+			}
+
+			.special {
+				padding: 2px 5px 2px 5px;
+			}
+
+			.no-border {
+				border: none;
+			}
+		}
+	}
+}
