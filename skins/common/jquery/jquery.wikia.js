@@ -424,16 +424,7 @@ jQuery.fn.isChrome = function() {
  */
 $.fn.hasParent = function(selector) {
 	// use just the first element from current collection
-	var node = this.first();
-
-	// go down the DOM tree
-	while (node.exists() && !node.is('body')) {
-		node = node.parent();
-		if (node.is(selector)) {
-			return true;
-		}
-	}
-	return false;
+	return this.first().parent().closest(selector).exists();
 }
 
 // RT #19369: TabView
@@ -561,7 +552,7 @@ Observable = $.createClass(Object,{
 		Observable.superclass.constructor.apply(this,arguments);
 		this.events = {};
 	},
-	
+
 	bind: function(e,cb,scope) {
 		if (typeof e == 'object') {
 			for (var i in e) {
@@ -579,7 +570,7 @@ Observable = $.createClass(Object,{
 		}
 		return true;
 	},
-	
+
 	unbind: function(e,cb,scope) {
 		if (typeof e == 'object') {
 			for (var i in e) {
@@ -600,15 +591,15 @@ Observable = $.createClass(Object,{
 		}
 		return false;
 	},
-	
+
 	on: function(e,cb) {
 		this.bind.apply(this,arguments);
 	},
-	
+
 	un: function(e,cb) {
 		this.unbind.apply(this,arguments);
 	},
-	
+
 	relayEvent: function(o,e,te) {
 		te = te || e;
 		o.bind(e,function() {
@@ -616,7 +607,7 @@ Observable = $.createClass(Object,{
 			this.fire.apply(this,a);
 		},this);
 	},
-	
+
 	fire: function(e) {
 		var a = Array.prototype.slice.call(arguments,1);
 		if (!this.events[e])
@@ -632,25 +623,25 @@ Observable = $.createClass(Object,{
 		}
 		return true;
 	}
-	
+
 });
 
 GlobalTriggers = (function(){
 	var GlobalTriggersClass = $.createClass(Observable,{
-		
+
 		fired: null,
-		
+
 		constructor: function() {
 			GlobalTriggersClass.superclass.constructor.apply(this);
 			this.fired = {};
 		},
-		
+
 		bind: function(e,cb) {
 			GlobalTriggersClass.superclass.bind.apply(this,arguments);
 			if (typeof e == 'object') {
 				return;
 			}
-			
+
 			if (typeof this.fired[e] != 'undefined') {
 				var a = this.fired[e].slice(0);
 				setTimeout(function(){
@@ -660,59 +651,59 @@ GlobalTriggers = (function(){
 				},10);
 			}
 		},
-		
+
 		fire: function(e) {
 			var a = Array.prototype.slice.call(arguments,1);
 			this.fired[e] = this.fired[e] || [];
 			this.fired[e].push(a);
 			GlobalTriggersClass.superclass.fire.apply(this,arguments);
 		}
-		
+
 	});
 	return new GlobalTriggersClass();
 })();
 
 Timer = $.createClass(Object,{
-	
+
 	callback: null,
 	timeout: 1000,
 	timer: null,
-	
+
 	constructor: function ( callback, timeout ) {
 		this.callback = callback;
 		this.timeout = timeout || this.timeout;
 	},
-	
+
 	run: function () {
 		this.callback.apply(window);
 	},
-	
+
 	start: function ( timeout ) {
 		this.stop();
 		timeout = timeout || this.timeout;
 		this.timer = setTimeout(this.callback,timeout);
 	},
-	
+
 	stop: function () {
 		if (this.timer != null) {
 			clearTimeout(this.timer);
 			this.timer = null;
 		}
 	}
-	
+
 });
 
 $.extend(Timer,{
-	
+
 	create: function( callback, timeout ) {
 		var timer = new Timer(callback,timeout);
 		return timer;
 	},
-	
+
 	once: function ( callback, timeout ) {
 		var timer = Timer.create(callback,timeout);
 		timer.start();
 		return timer;
 	}
-	
+
 })
