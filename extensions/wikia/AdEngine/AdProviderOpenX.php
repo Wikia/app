@@ -214,8 +214,22 @@ EOT;
 	}
 
 	private function getFillElemFunctionDefinition($functionName, Array $slotnames) {
+
+		$out = "{$functionName} = function () {";
+		for($i = 0; $i < count($slotnames); $i++) {
+			$out .= "if (typeof(OA_output['{$this->zoneIds[$slotnames[$i]]}']) != 'undefined') $('#{$slotnames[$i]}').html(OA_output['{$this->zoneIds[$slotnames[$i]]}']);";
+		}
+		$out .= "};";
+		return $out;
+
+		// CODE BELOW (AND AROUND) TO BE REFACTORED / Inez
+
+
 		$fill_elem_script = <<<EOT
 	{$functionName} = function () {
+
+		$('#{$slotnames[0]}').html(OA_output['{$this->zoneIds[$slotnames[0]]}']);
+
 		bezen.domwrite.capture();
 EOT;
 		$fill_elem_script .= $this->getBezenLoadScriptDefinition($slotnames);
