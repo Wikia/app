@@ -143,71 +143,67 @@
 	}
 }
 
-.AchievementsModule {
-	/*background: #00F;*/
-	border-top: 10px;
+.WikiaRail {
+	& > section.AchievementsModule {
+		/*background: #00F;*/
+		border-top: 10px;
 
-	.achievements-leaderboard-button {
-		clear: both;
-		margin: {
-			top: 10px;
-			bottom: 10px;
-		}
-	}
-	details {
-		margin: {
-			top: 10px;
-			bottom: 5px;
-		}
-		line-height: 10px;
-		text-transform: uppercase;
-	}
-	.view-all {
-		cursor: pointer;
-		margin: {
-			top: 10px;
-			bottom: 5px;
-		}
-		@include clearfix;
-	}
-	ul.badges-icons {
-		list-style-type: none;
-		margin-top: 20px;
-		@include clearfix;
-		li {
-			display: inline-block;
-			border-bottom: none!important;
-			margin: 7px 0;
-			padding: 0;
-			img {
-				float: left;
+		.achievements-leaderboard-button {
+			clear: both;
+			margin: {
+				top: 10px;
+				bottom: 10px;
 			}
 		}
+		details {
+			margin: {
+				top: 10px;
+				bottom: 5px;
+			}
+			line-height: 10px;
+			text-transform: uppercase;
+		}
+		.view-all {
+			cursor: pointer;
+			margin: {
+				top: 10px;
+				bottom: 5px;
+			}
+			@include clearfix;
+		}
+		ul.badges-icons {
+			list-style-type: none;
+			margin-top: 20px;
+			@include clearfix;
+			li {
+				display: inline-block;
+				border-bottom: none!important;
+				margin: 7px 0;
+				padding: 0;
+				img {
+					float: left;
+				}
+			}
 
-	}
-	.badge-text {
-		padding {
-			margin-top: 13px;
+		}
+		.badge-text {
+			padding {
+				margin-top: 13px;
+			}
+		}
+		.badges-more {
+			display: none;
+		}
+		.more {
+			font-weight: normal;
+		}
+		.line-top {
+			margin-top: 10px;
+			@include clearfix;
 		}
 	}
-	.badges-more {
-		display: none;
-	}
-	.more {
-		font-weight: normal;
-	}
-	.line-top {
-		margin-top: 10px;
-		@include clearfix;
-	}
-}
-
-.WikiaRail {
+	
 	& > section.UserProfileAchievementsModule {
-
-		h1 {
-			margin-bottom: 0px;
-		}
 
 		.data {
 			@include clearfix;
