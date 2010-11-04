@@ -180,4 +180,18 @@ $item-width: 415px;
 			}
 		}
 	}
+	
+	.create-new-list {
+		h5 {
+			font-weight: bold;
+			font-size: 14px;
+		 	em {
+		 		color: red;
+		 		font-style: normal;
+		 	}
+		}
+		.createtoplist {
+			padding: 2px 7px 0;
+		}
+	}
 }
