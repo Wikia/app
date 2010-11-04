@@ -4,7 +4,7 @@
 		echo '<h1>'.wfMsg('achievements-profile-title-no', $ownerName).'</h1>'.wfMsg('achievements-no-badges');
 	} else {
 ?>
-	<h2><?= wfMsgExt('achievements-profile-title', array('parsemag'), $ownerName, count($ownerBadges)) ?></h2>
+	<h1><?= wfMsgExt('achievements-profile-title', array('parsemag'), $ownerName, count($ownerBadges)) ?></h1>
 	
 	<details class="tally">
 		<em><?= $ownerScore ?></em> <?= wfMsg('achievements-profile-title-oasis') ?>
