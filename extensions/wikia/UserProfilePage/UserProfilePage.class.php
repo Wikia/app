@@ -47,6 +47,7 @@ class UserProfilePage {
 				'userName'         => $this->user->getName(),
 				'aboutSection'     => $this->populateAboutSectionVars(),
 				'pageBody'         => $pageBody,
+				'extensionsPath'   => $wgExtensionsPath
 			));
 		return $this->templateEngine->render( 'user-profile-page' );
 	}
