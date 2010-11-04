@@ -34,6 +34,44 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
 		$out .= <<<EOT
 		dartUrl = "$url";
+		if (typeof(QuantcastSegments) !== "undefined") {
+			dartUrl = dartUrl.replace("qcseg=N;", QuantcastSegments.getQcsegAsDARTKeyValues());	
+		}
+		else {
+    		if (typeof(wgIntegrateQuantcastSegments) !== 'undefined' && wgIntegrateQuantcastSegments) {
+				if (typeof(readCookie) == "undefined") {
+					readCookie = function(name) { 
+						var nameEQ = name + "=";
+						var ca = document.cookie.split(';');
+						for(var i=0;i < ca.length;i++) {
+							var c = ca[i];
+							while (c.charAt(0)==' ') c = c.substring(1,c.length);
+							if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+						}
+						return null;
+					}
+				}
+				if (typeof(getQuantcastSegmentKV) == 'undefined') {
+					getQuantcastSegmentKV = function() {
+    					var kv = '';
+						if (qcCookie = readCookie('qcseg')) {
+        					var qc = eval("(" + unescape(qcCookie) + ")");
+        					if (qc.segments) {
+            					for (var i in qc.segments) {
+                					kv += 'qcseg=' + qc.segments[i].id + ';';
+            					}
+        					}
+						}
+						return kv;
+					}
+				}
+
+				dartUrl = dartUrl.replace("qcseg=N;", getQuantcastSegmentKV());
+    		}
+		}
+		var nofooter = "";
+		if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } 
+		dartUrl = dartUrl.replace("nofooter=N;", nofooter); 
 		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
 		$out .= "/*]]>*/</script>\n";
@@ -340,8 +378,10 @@ EOT;
 		$out = '<script type="text/javascript">' .
 		$function_name . ' = function() { ' .
 		'var url = "'.addslashes($this->getUrl($slotname, $slot)).'"; ' . "\n" .	// url is actually a template with tokens to replace
+		'if (typeof(QuantcastSegments) !== "undefined") { ' .
 		'var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues(); ' . "\n" .	// wlee: Quantcast Segments
 		'url = url.replace("qcseg=N;", qcsegs); ' . "\n" .
+		'} ' .
 		'var nofooter = ""; ' . "\n" .	// wlee: A/B test for footer ads
 		'if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } url = url.replace("nofooter=N;", nofooter); ' . "\n" .
 		'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " . "\n" .
