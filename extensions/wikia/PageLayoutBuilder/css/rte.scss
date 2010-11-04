@@ -6,8 +6,8 @@
 
 $widget-margin-std: 5px 4px 3px 9px;
 $widget-margin-hover: 4px 3px 2px 9px;
-$widget-margin-block-std: 12px 4px 3px 9px;
-$widget-margin-block-hover: 11px 3px 2px 9px;
+$widget-margin-block-std: 13px 4px 13px 9px;
+$widget-margin-block-hover: 12px 3px 12px 9px;
 .plb-rte-widget {
 	position: relative;
 	cursor: pointer;
@@ -32,32 +32,42 @@ $widget-margin-block-hover: 11px 3px 2px 9px;
 	}
 	
 	// padding
-	padding: 2px 4px;
-	padding-left: 9px;
-	&.plb-rte-widget-plb_mlinput { padding: 6px 9px; }
-	&.plb-rte-widget-plb_image { padding: 6px 6px; }
+	padding: 5px 5px 5px 12px;
+	&.plb-rte-widget-plb_mlinput { padding: 12px 5px 12px 15px; }
+	&.plb-rte-widget-plb_image { padding: 15px; }
 
-	// border and background on hover
+	// margin
 	margin: $widget-margin-std;
 	&.plb-rte-widget-plb_mlinput { margin: $widget-margin-block-std; }
+	&.plb-rte-widget-plb_image.plb-rte-widget-align-center { 
+		margin: $widget-margin-block-std;
+		margin-left: auto;
+		margin-right: auto; 
+	}
 	
+	// border and background on hover
 	border-style: solid;
-	border-width: 0;
-	border-left-width: 1px;
+	border-width: 1px;
 	border-color: transparent;
-	&.plb-rte-widget-plb_input { border-color: #5ba70d; }
-	&.plb-rte-widget-plb_mlinput { border-color: #a33e17; }
-	&.plb-rte-widget-plb_sinput { border-color: #7f36ae; }
-	&.plb-rte-widget-plb_image { border-color: #0043ad; }
-	
+	&.plb-rte-widget-plb_input { border-left-color: #5ba70d; }
+	&.plb-rte-widget-plb_mlinput { border-left-color: #a33e17; }
+	&.plb-rte-widget-plb_sinput { border-left-color: #7f36ae; }
+	&.plb-rte-widget-plb_image { border-left-color: #0043ad; }
+	&.plb-rte-widget-plb_input.hover { border-color: #5ba70d; }
+	&.plb-rte-widget-plb_mlinput.hover { border-color: #a33e17; }
+	&.plb-rte-widget-plb_sinput.hover { border-color: #7f36ae; }
+	&.plb-rte-widget-plb_image.hover { border-color: #0043ad; }
+
 	&.hover {
-		border-width: 1px;
-		margin: $widget-margin-hover;
+//		border-width: 1px;
+//		margin: $widget-margin-hover;
 		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-hover-background.png);
 		background-repeat: repeat;
 		background-color: transparent;
 		
-		&.plb-rte-widget-plb_mlinput { margin: $widget-margin-block-hover; }
+		&.plb-rte-widget-plb_mlinput, .WikiaArticle p + &.plb-rte-widget-plb_mlinput { 
+//			margin: $widget-margin-block-hover;
+		}
 	}
 }
 
@@ -77,6 +87,7 @@ $widget-margin-block-hover: 11px 3px 2px 9px;
 		background-color: transparent;
 		color: white;
 		display: none;
+		z-index: 1;
 	}
 	.plb-rte-widget.hover & {
 		display: inline-block;
@@ -96,6 +107,7 @@ $widget-margin-block-hover: 11px 3px 2px 9px;
 		
 		background-color: transparent;
 		display: none;
+		z-index: 1;
 	}
 	.plb-rte-widget.hover & {
 		display: block;
@@ -142,7 +154,7 @@ $widget-margin-block-hover: 11px 3px 2px 9px;
 	}
 }
 	
-/* visual elements - horizontal lines */
+// visual elements - horizontal lines
 .plb-rte-widget-horiz-line {
 	.plb-rte-widget & {
 		height: 1px;
@@ -150,6 +162,7 @@ $widget-margin-block-hover: 11px 3px 2px 9px;
 		display: inline-block;
 		position: absolute;
 		left: -1px;
+		border-left: 20px solid transparent;
 		&.plb-rte-widget-top-line {
 			top: -1px;
 		}
@@ -157,17 +170,41 @@ $widget-margin-block-hover: 11px 3px 2px 9px;
 			bottom: -1px;
 		}
 	}
+	
 	.plb-rte-widget-plb_input & {
+		border-color: #5ba70d;
 		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_input.png);
 	}
 	.plb-rte-widget-plb_mlinput & {
+		border-color: #a33e17;
 		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_mlinput.png);
 	}
 	.plb-rte-widget-plb_sinput & {
+		border-color: #7f36ae;
 		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_sinput.png);
 	}
 	.plb-rte-widget-plb_image & {
+		border-color: #0043ad;
 		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_image.png);
+	}
+}
+
+// image alignment
+.plb-rte-widget {
+	&.plb-rte-widget-align-left {
+		display: block;
+		float: left;
+		clear: left;
+	}
+	&.plb-rte-widget-align-right {
+		display: block;
+		float: right;
+		clear: right;
+	}
+	&.plb-rte-widget-align-center {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
 	}
 }
 

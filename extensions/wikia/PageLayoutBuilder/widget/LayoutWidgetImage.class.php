@@ -158,22 +158,19 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 
 		$tagOptions = array();
 		$align = $this->getAttrVal('align');
-		if ($align == 'left') {
-			$tagOptions['style'] = 'float: left; clear: left;';
-		} else {
-			$tagOptions['style'] = 'float: right; clear: right;';
-		}
+		$width = $this->getAttrVal('size',150);
+		$tagOptions['style'] = "width: {$width}px;";
 
 		return
 			XML::openElement('span',
 				$tagOptions
 				+ array(
-					"class" => "plb-rte-widget plb-rte-widget-plb_image" )
+					"class" => "plb-rte-widget plb-rte-widget-plb_image plb-rte-widget-align-{$align}" )
 				+ $this->getBaseParamForRTE())
 			."<span contenteditable=\"false\" class=\"plb-rte-widget-caption\">"
 				.htmlspecialchars(empty($caption) ? wfMsg("plb-editor-enter-caption") : $caption)
 				."</span>"
-			."<img contenteditable=\"false\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: ".$this->getAttrVal('size',150)."px\" alt=\"".htmlspecialchars($caption)."\">"
+			."<img contenteditable=\"false\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: {$width}px\" alt=\"".htmlspecialchars($caption)."\">"
 			.$this->getRTEUIMarkup()
 			.XML::closeElement('span');
 	}
