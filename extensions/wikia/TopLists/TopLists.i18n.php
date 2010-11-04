@@ -105,7 +105,11 @@ Head to Wikia to check out the changes! $1
 	//FB connect article vote message
 	'toplists-msg-fb-OnRateArticle-link' => '$ARTICLENAME',
 	'toplists-msg-fb-OnRateArticle-short' =>  'has voted on a Top 10 list on $WIKINAME!', // @todo FIXME: If possible add username as a variable here.
-	'toplists-msg-fb-OnRateArticle' => '$TEXT'
+	'toplists-msg-fb-OnRateArticle' => '$TEXT',
+	
+	//Create list call to action
+	'toplists-create-heading' => '<em>New!</em> Create Your Own Top Ten',
+	'toplists-create-button-msg' => 'Create a list'
 );
 
 /** Message documentation (Message documentation) */
@@ -645,7 +649,7 @@ U kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-msg-fb-OnRateArticle-short' => 'heeft gestemd op een Top 10 lijst op $WIKINAME!',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
