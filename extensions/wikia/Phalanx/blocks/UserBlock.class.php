@@ -27,7 +27,7 @@ class UserBlock {
 		$cachedState = $wgMemc->get( $cacheKey );
 		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
-				self::setUserData( $user, $cachedSate['block'], $text, $user->isAnon(), $isCurrentUser );
+				self::setUserData( $user, $cachedState['block'], $text, $user->isAnon(), $isCurrentUser );
 			}
 			wfProfileOut( __METHOD__ );
 			return $cachedState['return'];
