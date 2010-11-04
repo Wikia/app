@@ -4,10 +4,9 @@ class PageLayoutBuilderForm extends SpecialPage {
     function __construct() {
 	    wfLoadExtensionMessages( 'PageLayoutBuilder' );	
 	    parent::__construct( 'PageLayoutBuilderForm', 'PageLayoutBuilderForm' );
-    }
-
+	}
     function execute($article_id = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath;
+		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath,$wgScriptPath ;
 
 		$this->pageId = (int) $wgRequest->getVal('pageId', ''); // article ID
 		$this->id = (int) $wgRequest->getVal('plbId',''); // layout ID
@@ -27,11 +26,11 @@ class PageLayoutBuilderForm extends SpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
-
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ). "?cb=".time() );
+		
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) );
 		$wgOut->addStyle( wfGetSassUrl( 'skins/oasis/css/core/_EditPage.scss' ) );
 		
-		$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/widget/allWidgets.js");
+		$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
 		
 		if($this->pageId > 0) {
 			if( $this->id != PageLayoutBuilderModel::articleIsFromPLB( $this->pageId ) ) {

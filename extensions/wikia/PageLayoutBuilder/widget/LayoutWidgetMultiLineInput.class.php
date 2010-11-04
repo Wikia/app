@@ -40,7 +40,7 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 		$caption = $this->getAttrVal('caption'); // is not default value is error message for RTE
 		$sampleText = wfMsg('plb-parser-preview-mlinput');
 		return
-			XML::openElement('span',
+			XML::openElement('p',
 				array(
 					"class" => "plb-rte-widget plb-rte-widget-plb_mlinput",
 				) + $this->getBaseParamForRTE())
@@ -49,9 +49,13 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 				."</span>"
 			."<span contenteditable=\"false\" class=\"plb-rte-widget-sample-text\">" . htmlspecialchars($sampleText) . "</span>"
 			.$this->getRTEUIMarkup()
-			.XML::closeElement('span');
+			.XML::closeElement('p');
 	}
 
+	function isParagraph() {
+		return true;
+	}
+	
 	public function getAllAttrs() {
 		//param name => default value
 		return array(
