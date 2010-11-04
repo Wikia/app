@@ -50,6 +50,10 @@ class Http {
 			$c = curl_init( $url );
 			if ( self::isLocalURL( $url ) ) {
 				curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
+				curl_setopt($c, CURLOPT_HTTPHEADER, array(
+						'Connection: ',
+						'Proxy-Connection: ',
+						));
 			} else if ($wgHTTPProxy) {
 				curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
 			}
