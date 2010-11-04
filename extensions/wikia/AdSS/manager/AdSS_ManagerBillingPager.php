@@ -37,11 +37,9 @@ class AdSS_ManagerBillingPager extends TablePager {
 					return wfMsgHtml( 'adss-paypal-payment' );
 				} elseif( $this->bl->adId ) {
 					$r = wfMsgHtml( 'adss-adss-fee' );
-					/* TODO show the ad as a tooltip on mouseover
 					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
 					$tmpl->set( 'ad', AdSS_Ad::newFromId( $this->bl->adId ) );
 					$r .= "<div style=\"display:none\">".$tmpl->render( 'ad' )."</div>";
-					*/
 					return $r;
 				} else {
 					return '';
