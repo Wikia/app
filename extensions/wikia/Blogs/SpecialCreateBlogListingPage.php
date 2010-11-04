@@ -111,9 +111,9 @@ class CreateBlogListingPage extends SpecialBlogPage {
 	}
 
 	protected function renderForm() {
-		global $wgOut, $wgScriptPath;
+		global $wgOut, $wgExtensionsPath;
 
-		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
