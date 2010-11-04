@@ -179,7 +179,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			wfDebug( __METHOD__ . ": Don't use central user groups \n" );
 			return;
 		}
-		
+
 		if ( isset( $this->mGroups ) ) {
 			wfDebug( __METHOD__ . ": Groups are loaded \n" );
 			return;
@@ -953,8 +953,8 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		);
 
 		if( isset( $_GET['action'] ) && $_GET['action'] == 'ajax' ) {
-                        $dbw->commit();
-                }
+			$dbw->commit();
+		}
 
 		$this->invalidateCache();
 	}
@@ -991,7 +991,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
         if ( wfReadOnly() ) {
             return;
         }
-		
+
 		if ( !$wgWikiaCentralUseGlobalGroups ) {
 			wfDebug( __METHOD__ . ": Don't use central user groups \n" );
 			return;
@@ -1196,7 +1196,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	}
 
 	/*
-	 * check local user name from DB_MASTER 
+	 * check local user name from DB_MASTER
 	 */
 	function idFromName() {
 		$what = array( 'user_id' );
@@ -1208,8 +1208,8 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$id = 0;
 		} else {
 			$id = $s->user_id;
-		}	
-			
+		}
+
 		return $id;
 	}
 
