@@ -26,7 +26,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
     }
 
     function execute($article_id = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath;
+		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScriptPath;
 
 		if( !$wgUser->isLoggedIn() ) {
 			$wgOut->showErrorPage( 'plb-special-no-login', 'plb-login-required', array(wfGetReturntoParam()));
@@ -47,20 +47,18 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$wgOut->permissionRequired( 'plbmanager' );
 			return true;
 		}
-		
-		//TODO: remove it
-		//TODO: merge editor and form files
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/editor.scss' ) . "?cb=".time()  );
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) . "?cb=".time()  );
+
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/editor.scss' )  );
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) );
 		
 		$action = $wgRequest->getVal("action");
 		if($action == 'list') {
-			$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/js/list.js");
+			$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/list.js");
 			$this->executeList();
 			return true;
 		}
 		
-		$wgOut->addScriptFile( $wgExtensionsPath."/wikia/PageLayoutBuilder/js/editor.js" );
+		$wgOut->addScriptFile( $wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/editor.js" );
 
 		if($wgRequest->wasPosted() && ($wgRequest->getVal("action") == "submit") ) {
 			if($this->parseForm()) {
@@ -239,10 +237,10 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	}
 
 	private function renderPreview($type = 'form' ) {
-		global  $wgOut, $wgExtensionsPath;
+		global  $wgOut, $wgExtensionsPath, $wgScriptPath;
 		
 		if($type == "form") {
-			$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/widget/allWidgets.js");
+			$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
 		}
 		
 		$title = $this->mArticle->getTitle();

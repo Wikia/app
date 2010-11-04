@@ -57,7 +57,12 @@ abstract class LayoutWidgetBase {
 				}
 
 			}
-			return RTEParser::markEntities(Xml::element($data["__plb_type"], $params));
+			if($class->isParagraph()) {
+				//TODO: solution to the problem of dressed in p more sophisticated way
+				return RTEParser::markEntities(Xml::element($data["__plb_type"], $params))."\n";
+			} else {
+				return RTEParser::markEntities(Xml::element($data["__plb_type"], $params));
+			}
 		}
 		return "";
 	}
@@ -216,6 +221,10 @@ abstract class LayoutWidgetBase {
 			}
 		}
 		return $messages;
+	}
+	
+	public function isParagraph() {
+		return false;
 	}
 
 	// to be overriden (optional)
