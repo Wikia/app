@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
 	'userprofilepage-edit-permision-denied' => 'Edit permissions denied',
 	'userprofilepage-edit-permision-denied-info' => 'You do not have permissions to edit somebody\'s user page or subpage',
+	'userprofilepage-empty-about-me-section' => 'This section is empty, click edit to add some content here!',
 
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',

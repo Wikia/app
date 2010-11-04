@@ -24,7 +24,13 @@ class UserProfilePageHelper {
 		$user->load();
 
 		$profilePage = UserProfilePage::getInstance( $user );
-		$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
+		$article = Article::newFromID( $template->data['articleid'] );
+		if( is_null( $article ) ) {
+			$template->data['bodytext'] = $profilePage->get( wfMsg('userprofilepage-empty-about-me-section') );
+		}
+		else {
+			$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
