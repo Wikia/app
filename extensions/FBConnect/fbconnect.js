@@ -128,7 +128,7 @@ function sendToConnectOnLoginForSpecificForm(formName){
 		if(formName != ""){
 	        formName = "/"+formName;
 	    }
-		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + (fbReturnToTitle ? fbReturnToTitle : wgPageTitle) + "&returntoquery=" + wgPageQuery;
+		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + (fbReturnToTitle ? fbReturnToTitle : wgPageName) + "&returntoquery=" + wgPageQuery;
 
 		if (formName == "/ConnectExisting") {
 			window.location.href = destUrl;
