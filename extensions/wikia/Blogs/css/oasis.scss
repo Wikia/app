@@ -115,8 +115,12 @@
 	width: 282px;
 
 	.wikia-button {	 // /** adding padding to make the button look wider **/
+		float: right;
 		margin-top: -1px;
 		padding: 0px 5px;
+		a {
+			color: white;
+		}
 	}
 	.commentslikes {
 		bottom: 11px;
@@ -152,7 +156,9 @@
 		}
 	}
 	h3 {
-		@extend h1;
+		font-weight: bold;
+		font-size: 17px;
+		line-height: 17px;
 		margin-left: 0px;
 	}
 
