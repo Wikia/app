@@ -57,7 +57,7 @@ PageLayoutBuilder.setupTextarea = function(node) {
 	var toolbar = $('<div>').
 		addClass('plb-form-template-toolbar').
 		insertBefore(node).
-		hide().css('top', parseInt($(node).position().top - 25) + "px" );
+		hide();
 	
 	// show toolbar on focus / hide on blur
 	var toolbarHideTimeout = false;
@@ -65,7 +65,7 @@ PageLayoutBuilder.setupTextarea = function(node) {
 	node.unbind('.editor').
 		bind('focus.editor', function(ev) {
 			clearTimeout(toolbarHideTimeout);
-			toolbar.show();
+			toolbar.show().css('top', parseInt($(ev.target).position().top - 25) + "px" );
 		}).
 		bind('blur.editor', function(ev) {
 			toolbarHideTimeout = setTimeout(function() {
