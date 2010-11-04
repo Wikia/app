@@ -162,7 +162,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$tagOptions['style'] = "width: {$width}px;";
 
 		return
-			XML::openElement('span',
+			XML::openElement('div',
 				$tagOptions
 				+ array(
 					"class" => "plb-rte-widget plb-rte-widget-plb_image plb-rte-widget-align-{$align}" )
@@ -172,7 +172,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 				."</span>"
 			."<img contenteditable=\"false\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: {$width}px\" alt=\"".htmlspecialchars($caption)."\">"
 			.$this->getRTEUIMarkup()
-			.XML::closeElement('span');
+			.XML::closeElement('div');
 	}
 
 	public function validateAttribute(array &$elements) {
@@ -280,5 +280,9 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$messages['align'] = wfMsg('plb-property-editor-alignment');
 		$messages['size'] = wfMsg('plb-property-editor-maximum-width');
 		$messages['type'] = wfMsg('plb-property-editor-thumbnail');
+	}
+
+	public function isParagraph() {
+		return true;
 	}
 }
