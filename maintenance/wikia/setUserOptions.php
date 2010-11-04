@@ -14,7 +14,7 @@
 $limitUsers = '';	//WHERE in SQL
 $preferences = array('adoptionmails' => '1');	//pairs key=value
 ///
-
+$optionsWithArgs = array( "from" );
 ini_set('include_path', dirname(__FILE__) . '/..' );
 require_once('commandLine.inc');
 
@@ -29,11 +29,12 @@ if (isset($options['help'])) {
 
 $force = isset($options['force']);
 $quiet = isset($options['quiet']);
-$from  = isset($options['from']);
+$from  = $options['from'];
 
-if( isset( $from ) ) {
-  $limitUsers = array( 'user_id >= $from' );
+if(  $from ) {
+  $limitUsers = array( "user_id >= $from" );
 }
+
 $dbr = WikiFactory::db(DB_SLAVE);
 $res = $dbr->select(
 	'user',
@@ -64,7 +65,7 @@ while ($row = $dbr->fetchObject($res)) {
 			$count++;
 		}
 	}
-	usleep( 5000 );
+	wfWaitForSlaves( 5 );
 }
 
 if (!$quiet) {
