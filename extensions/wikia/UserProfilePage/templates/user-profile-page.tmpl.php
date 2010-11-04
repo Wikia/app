@@ -1,5 +1,5 @@
 <div id='profile-content'>
-	<div class="user-about-section" data-generic-avatar="<?= AvatarService::getDefaultAvatar( 22 ) ;?>" data-user-avatar="<?= AvatarService::getAvatarUrl( $userName, 22 ) ;?>">
+	<div class="user-about-section" data-generic-avatar="<?= $extensionsPath ;?>/wikia/UserProfilePage/img/mic.jpg" data-user-avatar="<?= AvatarService::getAvatarUrl( $userName, 22 ) ;?>">
 		<h2>
 			<? $sectionName = wfMsg( 'userprofilepage-about-section-title', array( $wikiName ) ) ;?>
 			<?= $sectionName ;?>
