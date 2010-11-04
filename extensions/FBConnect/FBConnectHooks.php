@@ -218,6 +218,11 @@ STYLE;
 
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl('Userlogout',
 						$wgTitle->isSpecial('Preferences') ? '' : "returnto={$thisurl}");
+		
+		$vals = $wgRequest->getValues();
+		if(!empty($vals) && !empty($vals['title'])) {
+			$vars['fbReturnToTitle'] = $vals['title'];
+		}
 
 		return true;
 	}
