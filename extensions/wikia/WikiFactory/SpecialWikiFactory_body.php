@@ -87,6 +87,9 @@ class WikiFactoryPage extends SpecialPage {
 		elseif ( $subpage === "short.stats" ) {
 			$wgOut->addHTML( $this->shortStats() );
 		}
+		elseif ( $subpage === "long.stats" ) {
+			$wgOut->addHTML( $this->longStats() );
+		}
 		elseif ( strtolower($subpage) === "add.variable" ) {
 			$varOverrides = array();
 			$wgOut->addHTML( $this->doAddVariableForm($varOverrides) ); // process the post (if relevant).
@@ -731,7 +734,19 @@ class WikiFactoryPage extends SpecialPage {
 	}
 
 	private function shortStats() {
+		return $this->doStats(90);
+	}
+	private function longStats() {
+		return $this->doStats();
+	}
 
+	private function doStats($days=null) {
+
+		$where = null;
+		if( !empty($days) ) {
+			$ymd = gmdate('Y-m-d', strtotime("{$days} days ago"));
+			$where = array("city_created > '{$ymd}'");
+		}
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$res = $dbr->select(
 			array( "city_list" ),
@@ -740,7 +755,7 @@ class WikiFactoryPage extends SpecialPage {
 				"city_public",
 				"count(*) as count"
 			),
-			false,
+			$where,
 			__METHOD__,
 			array(
 				  "GROUP BY" => "date(city_created), city_public",
@@ -769,7 +784,7 @@ class WikiFactoryPage extends SpecialPage {
 
 		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$Tmpl->set( "stats", $stats );
-
+		$Tmpl->set( "days", $days );
 
 		return $Tmpl->render( "shortstats" );
 	}

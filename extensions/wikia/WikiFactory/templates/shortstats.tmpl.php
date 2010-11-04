@@ -1,6 +1,10 @@
 <h2>
 	Wikis created daily:
 </h2>
+<?php if($days) {
+	print "last {$days} days<br/>\n";
+}
+?>
 <table class="filehistory">
 	<tr>
 		<th>date</th>
