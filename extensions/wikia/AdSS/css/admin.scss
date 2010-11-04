@@ -9,10 +9,10 @@ ul.tabs {
 	margin: 5px;
 }
 
-td.TablePager_col_billing_ad_id {
-	text-align: right;
+td.TablePager_col_description {
+	width: 300px;
 }
-td.TablePager_col_billing_ppp_id {
+td.TablePager_col_fee, td.TablePager_col_paid {
 	text-align: right;
 }
 
