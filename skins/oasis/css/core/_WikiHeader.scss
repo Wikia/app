@@ -2,7 +2,6 @@
 	margin: 0 0 15px;
 	padding: 20px 10px 9px;
 	position: relative;
-	z-index: 50;
 	.wordmark {
 		@include wordmark;
 		color: $color-links;
@@ -44,7 +43,6 @@
 		left: 260px;
 		position: absolute;
 		width: 510px;
-		z-index: 3;
 		>h1 {
 			display: none;
 		}
@@ -77,6 +75,7 @@
 		min-width: 150px;
 		padding: 5px;
 		top: -9999px;
+		z-index: $zTop;
 		li {
 			*float: none;
 			*width: auto;
