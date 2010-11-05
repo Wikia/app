@@ -48,7 +48,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 		div {
 			position: absolute;
-			background-color: $color-page-border;
+			background-color: $color-inctive-button;
 			width: 5px;
 			height: 5px;
 			margin: 0px;
@@ -92,7 +92,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 		div {
 			position: absolute;
-			background-color: $color-page-border;
+			background-color: $color-inctive-button;
 			width: 11px;
 			height: 1px;
 			margin: 0px;
