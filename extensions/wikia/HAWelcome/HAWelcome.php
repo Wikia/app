@@ -108,7 +108,7 @@ class HAWelcomeJob extends Job {
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
-		$sysop = trim( wfMsg( "welcome-user" ) );
+		$sysop = trim( wfMsgForContent( "welcome-user" ) );
 		if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
 			$tmpUser = $wgUser;
 			$wgUser  = User::newFromName( self::WELCOMEUSER );
@@ -149,7 +149,7 @@ class HAWelcomeJob extends Job {
 								else {
 									$key = "welcome-message-anon";
 								}
-								$welcomeMsg = wfMsgExt( $key, "parsemag",
+								$welcomeMsg = wfMsgExt( $key, array("parsemag", "content"),
 								array(
 									$this->getPrefixedText(),
 									$sysopPage->getPrefixedText(),
@@ -172,7 +172,7 @@ class HAWelcomeJob extends Job {
 									$userArticle = new Article( $userPage, 0 );
 									Wikia::log( __METHOD__, "userpage", $userPage->getFullUrl() );
 									if( ! $userArticle->exists() ) {
-										$pageMsg = wfMsg( "welcome-user-page" );
+										$pageMsg = wfMsgForContent( "welcome-user-page" );
 										$userArticle->doEdit( $pageMsg, false, $flags );
 									}
 								}
@@ -191,7 +191,7 @@ class HAWelcomeJob extends Job {
 								else {
 									$key = "welcome-message-user";
 								}
-								$welcomeMsg = wfMsgExt( $key, "parsemag",
+								$welcomeMsg = wfMsgExt( $key, array("parsemag", "content"),
 								array(
 									$this->getPrefixedText(),
 									$sysopPage->getPrefixedText(),
@@ -205,7 +205,7 @@ class HAWelcomeJob extends Job {
 						}
 						if( $welcomeMsg ) {
 							$wgTitle = $talkPage; /** is it necessary there? **/
-							$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), $flags );
+							$talkArticle->doEdit( $welcomeMsg, wfMsgForContent( "welcome-message-log" ), $flags );
 						}
 					}
 					$wgTitle = $tmpTitle;
@@ -492,13 +492,13 @@ class HAWelcomeJob extends Job {
 				$userLink,
 				$wgContLang->getNsText(NS_USER_TALK),
 				$SysopName,
-				wfMsg( "talkpagelinktext" ),
+				wfMsgForContent( "talkpagelinktext" ),
 				$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
 				);
 		} else {
 			// $1 = wiki link to user's user: page
 			// $2 = plain version of user's name (for future use)
-			$signature = wfMsg('staffsig-text', $userLink, $SysopName);
+			$signature = wfMsgForContent('staffsig-text', $userLink, $SysopName);
 		}
 
 		// restore from backup
@@ -578,7 +578,7 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
-		$sysop  = trim( wfMsg( "welcome-user" ) );
+		$sysop  = trim( wfMsgForContent( "welcome-user" ) );
 		$groups = $User->getEffectiveGroups();
 		$result = false;
 
