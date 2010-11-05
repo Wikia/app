@@ -17,12 +17,15 @@
 <?php
 		}
 	}
+	elseif(!empty($userName)) {
+		echo wfMsg( 'userprofilepage-recent-activity-default', $userName );
+	}
 ?>
 	</ul>
 
 	<? if ( $userName && count($changeList) ) :?>
 		<?= View::specialPageLink('Contributions/' . $userName, 'userprofilepage-top-recent-activity-see-more', 'more') ;?>
-	<? else: ?>
+	<? elseif(empty($userName)): ?>
 		<?= View::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
 	<? endif ;?>
 </section>
