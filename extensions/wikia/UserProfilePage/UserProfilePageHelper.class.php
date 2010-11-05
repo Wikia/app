@@ -5,7 +5,7 @@ class UserProfilePageHelper {
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
-		global $wgRequest;
+		global $wgRequest, $wgEnableUserProfilePagesExt;
 		wfProfileIn(__METHOD__);
 
 		// Return without any changes if this isn't in the user namespace OR
@@ -22,6 +22,13 @@ class UserProfilePageHelper {
 			return true;
 		}
 		$user->load();
+		
+		// fallback for non-existent users
+		if( $user->getId() == 0 ) {
+			$template->data['bodytext'] = wfMsg( 'userprofilepage-user-doesnt-exists', array( $user->getName() ) );
+			$wgEnableUserProfilePagesExt = false;
+			return true;
+		}
 
 		$profilePage = UserProfilePage::getInstance( $user );
 		$article = Article::newFromID( $template->data['articleid'] );
