@@ -35,7 +35,7 @@ class UserChangesHistory {
 	 */
 	static public function LoginHistoryHook( $from, $user, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
-		global $wgStatsDB;
+		global $wgEnableScribeReport, $wgStatsDB;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -53,29 +53,43 @@ class UserChangesHistory {
 					# ignore
 				}
 				else {
-					$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+					$params = array(
+						"user_id"   		=> $id,
+						"city_id"   		=> $wgCityId,
+						"ulh_from"  		=> $from,
+						"ulh_rememberme" 	=> $user->getOption('rememberpassword')
+					);
+					if ( !empty($wgEnableScribeReport) ) {
+						# use scribe
+						$key = "log_login";
+						try {
+							$data = Wikia::json_encode( $params );
+							WScribeClient::singleton($key)->send($data);
+						}
+						catch( TException $e ) {
+							Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+						}
+					} else {
+						# use database
+						$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
 
-					$status = $dbw->insert(
-						"user_login_history",
-						array(
-							"user_id"   => $id,
-							"city_id"   => $wgCityId,
-							"ulh_from"  => $from,
-							"ulh_rememberme" => $user->getOption('rememberpassword')
-						),
-						__METHOD__,
-						array('IGNORE')
-					);
-					
-					$status = $dbw->replace(
-						"user_login_history_summary",
-						array( 'user_id' ),
-						array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
-						__METHOD__
-					);
-					
-					if ( $dbw->getFlag( DBO_TRX ) ) {
-						$dbw->commit();
+						$status = $dbw->insert(
+							"user_login_history",
+							$params,
+							__METHOD__,
+							array('IGNORE')
+						);
+						
+						$status = $dbw->replace(
+							"user_login_history_summary",
+							array( 'user_id' ),
+							array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
+							__METHOD__
+						);
+						
+						if ( $dbw->getFlag( DBO_TRX ) ) {
+							$dbw->commit();
+						}
 					}
 				}
 			}
@@ -102,7 +116,7 @@ class UserChangesHistory {
 	 */
 	static public function SavePreferencesHook( $preferences, $user, $msg ) {
 
-		global $wgStatsDB;
+		global $wgStatsDB, $wgEnableScribeReport;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -114,30 +128,44 @@ class UserChangesHistory {
 			 * caanot use "insert from select" because we got two different db
 			 * clusters. But we should have all user data already loaded.
 			 */
-
-			$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
-
-			/**
-			 * so far encodeOptions is public by default but could be
-			 * private in future
-			 */
-			$status = $dbw->insert(
-				"user_history",
-				array(
-					"user_id"          => $id,
-					"user_name"        => $user->mName,
-					"user_real_name"   => $user->mRealName,
-					"user_password"    => $user->mPassword,
-					"user_newpassword" => $user->mNewpassword,
-					"user_email"       => $user->mEmail,
-					"user_options"     => $user->encodeOptions(),
-					"user_touched"     => $user->mTouched,
-					"user_token"       => $user->mToken,
-				),
-				__METHOD__
+			$params = array(
+				"user_id"          => $id,
+				"user_name"        => $user->mName,
+				"user_real_name"   => $user->mRealName,
+				"user_password"    => $user->mPassword,
+				"user_newpassword" => $user->mNewpassword,
+				"user_email"       => $user->mEmail,
+				"user_options"     => $user->encodeOptions(),
+				"user_touched"     => $user->mTouched,
+				"user_token"       => $user->mToken
 			);
-			if ( $dbw->getFlag( DBO_TRX ) ) {
-				$dbw->commit();
+			
+			if ( !empty($wgEnableScribeReport) ) {
+				# use scribe
+				$key = "log_savepreferences";
+				try {
+					$data = Wikia::json_encode( $params );
+					WScribeClient::singleton($key)->send($data);
+				}
+				catch( TException $e ) {
+					Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+				}
+			} else {			 
+
+				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+
+				/**
+				 * so far encodeOptions is public by default but could be
+				 * private in future
+				 */
+				$status = $dbw->insert(
+					"user_history",
+					$params,
+					__METHOD__
+				);
+				if ( $dbw->getFlag( DBO_TRX ) ) {
+					$dbw->commit();
+				}
 			}
 		}
 
