@@ -51,10 +51,10 @@ var AjaxLogin = {
 			})
 			.appendTo("#ajaxlogin_password_cell2");
 		}
-		
+
 		if ($('#wpRemember2Ajax').length < 1) {
 			if( $('#wpRemember1Ajax').length > 0 ) {
-				var labels = this.form.find('label');		
+				var labels = this.form.find('label');
 				$('#wpRemember1Ajax')
 					.clone()
 					.attr({
@@ -77,7 +77,7 @@ var AjaxLogin = {
 		$("#wpPassword2Ajax").keypress(
 		function(e) {
 			return AjaxLogin.tabOrderHack(e, '#wpRemember2Ajax');
-		}); 
+		});
 
 		$("#wpRemember2Ajax").keypress(
 		function(e) {
@@ -99,7 +99,7 @@ var AjaxLogin = {
 			window.wgAjaxLoginOnInit();
 		}
 		$().log('AjaxLogin: init()');
-	},	
+	},
 	close: function()
 	{
 		$('#AjaxLoginBoxWrapper').closeModal();
@@ -145,12 +145,12 @@ var AjaxLogin = {
 				window.location.href = wgServer + wgScriptPath;
 			} else if((wgCanonicalSpecialPageName == "Signup") || (wgCanonicalSpecialPageName == "Connect")){
 				// If we just registered from a whole registration page (not a popup), head back to where we came from.
-				
+
 				var destUrl = wgServer + wgScript ;
 				if (wgReturnTo.length > 0 ) {
-					destUrl += "?title=" + wgReturnTo; 
-				}	
-				
+					destUrl += "?title=" + wgReturnTo;
+				}
+
 				if((typeof wgReturnToQuery != 'undefined') && (wgReturnToQuery.length > 0)){
 					destUrl += "&" + wgReturnToQuery
 				}
@@ -163,7 +163,7 @@ var AjaxLogin = {
 	doReload: function() {
 		// Result was still being cached with .reload(true).  Need to use explicit cachebuster.
 		//window.location.reload(true);
-		var location = window.location.href;	
+		var location = window.location.href;
 		var delim = "?";
 		if(location.indexOf("?") > 0){
 			delim = "&";
@@ -202,7 +202,7 @@ var AjaxLogin = {
 
 		// Let's block login form (disable buttons and input boxes)
 		AjaxLogin.blockLoginForm(true);
-		
+
 		// This function is used to submit login form and the login and connect form, so we have to store which one it is.
 		var formId = AjaxLogin.form.id;
 
@@ -352,10 +352,21 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#wpGoRegister').addClass('selected');
 					$('#wpGoLogin').removeClass('selected');
 					$('#AjaxLoginLoginForm').hide();
-			       		$('#AjaxLoginRegisterForm').show();
+					$('#AjaxLoginRegisterForm').show();
 					if ($('#wpName2').length > 0) $('#wpName2').focus();
-					
-			        	WET.byStr(AjaxLogin.WET_str + '/choosecreateaccount');
+
+		        	WET.byStr(AjaxLogin.WET_str + '/choosecreateaccount');
+
+					// RT #85685 - add click handler for "log in" link in read-only message
+					var readOnlyMessage = $('#AjaxLoginReadOnlyMessage');
+					if (readOnlyMessage.exists()) {
+						readOnlyMessage.
+							find('a[href="#"]').
+							click(function(ev) {
+								ev.preventDefault();
+								AjaxLogin.showLogin()
+							});
+					}
 				},
 				showLogin : function() {
 					AjaxLogin.isShow = true;
@@ -477,7 +488,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				return false;
 			}
 			UserRegistration.submitForm.statusAjax = true;
-			
+
 			var check = false;
 			var addparam = "";
 			if (type == "mail") {
@@ -487,7 +498,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				check = UserRegistration.checkForm();
 				addparam = "&wpCreateaccount=1";
 			}
-			
+
 			if (check) {
 				$("#userloginErrorBox").hide();
 				$.ajax({

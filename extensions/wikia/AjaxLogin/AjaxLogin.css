@@ -248,3 +248,21 @@
 	margin: 1em 3em 1em 0;
 	padding: 6px 6px 6px 6px;
 }
+
+/* RT #85685 */
+#AjaxLoginReadOnlyMessage {
+	line-height: 22.5px;
+}
+
+#AjaxLoginReadOnlyMessage h2 {
+	font-size: 18px;
+	margin-top: 1em;
+}
+
+#AjaxLoginReadOnlyMessage p + p {
+	margin: 1.5em 0;
+}
+
+#AjaxLoginReadOnlyMessage em {
+	font-style: italic;
+}
