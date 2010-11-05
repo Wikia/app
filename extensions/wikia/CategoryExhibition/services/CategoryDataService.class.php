@@ -10,9 +10,7 @@ class CategoryDataService extends Service {
 		$articles = array();
 		while ($row = $res->fetchObject($res)) {
 			$articles[intval($row->page_id)] = array(
-				'page_id'		=> $row->page_id,
-				'page_title'		=> $row->page_title,
-				'page_namespace'	=> $mNamespace
+				'page_id'		=> $row->page_id
 			);
 		}
 		return $articles;

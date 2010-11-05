@@ -13,6 +13,14 @@ $thumb-border-right: 6px;
 $details-fg-color: $color-button-text;  
 $details-bg-color: $color-buttons;
 
+$color-inctive-button: mix($color-page, #000, 60%);
+@if lightness($color-page) < 50 {
+	$color-inctive-button: lighten($color-inctive-button, 25%);
+}
+
+@if lightness($color-page) < 80 {
+		$color: lighten($color, 20%);
+	}
 
 
 #toplists-loading-screen {
@@ -23,6 +31,102 @@ $details-bg-color: $color-buttons;
 
 	float: right;
 	margin: 0 5px 5px 5px;
+
+	a {
+		vertical-align: middle;
+	}
+
+	#category-exhibition-display-new {
+
+		display: inline-block;
+		position: relative;
+		width: 14px;
+		height: 14px;
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png');
+		background-repeat: no-repeat;
+		background-position: center;
+
+		div {
+			position: absolute;
+			background-color: $color-page-border;
+			width: 5px;
+			height: 5px;
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		&.active {
+			div {
+				background-color: $color-buttons;
+			}
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png');
+		}
+
+		#cat-exh-new-one {
+			top: 2px;
+			left: 1px;
+		}
+		#cat-exh-new-two {
+			top: 8px;
+			left: 7px;
+		}
+		#cat-exh-new-three {
+			top: 2px;
+			left: 7px;
+		}
+		#cat-exh-new-four {
+			top: 8px;
+			left: 1px;
+		}
+
+	}
+
+	#category-exhibition-display-old {
+		display: inline-block;
+		position: relative;
+		width: 14px;
+		height: 14px;
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png');
+		background-repeat: no-repeat;
+		background-position: center;
+
+		div {
+			position: absolute;
+			background-color: $color-page-border;
+			width: 11px;
+			height: 1px;
+			margin: 0px;
+			padding: 0px;
+		}
+
+		&.active {
+			div {
+				background-color: $color-buttons;
+			}
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png');
+		}
+
+		#cat-exh-old-one {
+			top: 3px;
+			left: 3px;
+		}
+		#cat-exh-old-two {
+			top: 5px;
+			left: 3px;
+		}
+		#cat-exh-old-three {
+			top: 7px;
+			left: 3px;
+		}
+		#cat-exh-old-four {
+			top: 9px;
+			left: 3px;
+		}
+		#cat-exh-old-five {
+			top: 11px;
+			left: 3px;
+		}
+	}
 }
 
 .category-gallery {
@@ -88,6 +192,16 @@ $details-bg-color: $color-buttons;
 		color: $color-text;
 		text-decoration:none;
 		display: block;
+	}
+	div.category-gallery-placeholder {
+
+		display: block;
+		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+		width: $thumb-size-width;
+		height: $thumb-size-height;
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png');
+		background-repeat: no-repeat;
+		background-position: center;
 	}
 
 	img {

@@ -9,16 +9,19 @@ class CategoryExhibitionSectionBlogs extends CategoryExhibitionSection {
 	public $templateName = 'blogs';
 
 	public function getSectionHTML(){
-		$this->loadPaginationVars();
-		$oTmpl = $this->getTemplateForNameSpace( 500 );
+
+		global $wgCategoryExhibitionBlogsSectionRows;
+		$oTmpl = $this->getTemplateForNameSpace( 500, $wgCategoryExhibitionBlogsSectionRows * 4 );
 		return $this->executeTemplate( $oTmpl );
 	}
 
 	public function getSectionAxHTML( $paginatorPosition, $sUrl ){
+
+		global $wgCategoryExhibitionBlogsSectionRows;
 		$this->isFromAjax = true;
 		$this->paginatorPosition = $paginatorPosition;
 		$this->sUrl = $sUrl;
-		$oTmpl = $this->getTemplateForNameSpace( 500 );
+		$oTmpl = $this->getTemplateForNameSpace( 500, $wgCategoryExhibitionBlogsSectionRows * 4 );
 		return $this->executeTemplate( $oTmpl );
 	}
 }

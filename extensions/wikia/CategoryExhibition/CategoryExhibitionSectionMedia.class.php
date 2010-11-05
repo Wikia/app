@@ -10,13 +10,14 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 
 	public function getHTML() {
 
-		global $wgRequest;
+		global $wgRequest, $wgCategoryExhibitionMediaSectionRows;
+
 		$cachedContent = $this->getFromCache();
 		if ( empty( $cachedContent ) ){
 			// grabs data fo videos and images
 			$aTmpData = $this->fetchSectionItems( array( NS_FILE, NS_VIDEO ) );
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
-				$pages = Paginator::newFromArray( $aTmpData, 16 );
+				$pages = Paginator::newFromArray( $aTmpData, $wgCategoryExhibitionMediaSectionRows * 4 );
 				$pageData = $pages->getPage( $this->paginatorPosition, true);
 				$aData = array();
 				foreach( $pageData as $item ){

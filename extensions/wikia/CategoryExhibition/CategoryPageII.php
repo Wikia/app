@@ -15,7 +15,8 @@ class CategoryPageII extends CategoryPage {
 	var $viewerClass = 'CategoryPageIIViewer';
 	
 	function addScripts(){
-		# For overloading
+		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js?{$wgStyleVersion}\" ></script>\n");
 	}
 
 	function openShowCategory() {

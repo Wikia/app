@@ -8,15 +8,16 @@
 				<div class="category-gallery-item ">
 					<a href="<?=$row['url'] ?>" title="<?=$row['title'] ?>">
 						<div class="category-gallery-item-image">
-							<?php if (!empty($row['img'])) {?>
+							<?php if ( !empty($row['img']) ) {?>
 								<img src="<?=$row['img'] ?>" alt="<?=$row['title'] ?>" />
-							<?php } else { ?>
+							<?php } elseif( !empty($row['snippet']) ) { ?>
 								<div class="snippet">
 									<span class="quote">&#x201C;</span>
 									<span class="text"><?=$row['snippet']; ?></span>
 								</div>
-							<?php } ?>
-
+							<?php } else {
+								?><div class="snippet category-gallery-placeholder" ></div><?
+							}?>
 						</div>
 						<details><?=$row['title'] ?></details>
 					</a>
