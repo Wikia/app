@@ -67,7 +67,7 @@ class AdSS_AdminController {
 		global $wgOut, $wgAdSS_DBname, $wgAdSS_templatesDir;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
-		$res = $dbr->select( 'billing', array( 'date( billing_timestamp ) as billing_date', 'sum(-billing_amount) as income' ), 'billing_ad_id > 0', __METHOD__, array( 'GROUP BY' => 'billing_date', 'ORDER BY' => 'billing_date', 'LIMIT' => 7 ) );
+		$res = $dbr->select( 'billing', array( 'date( billing_timestamp ) as billing_date', 'sum(-billing_amount) as income' ), 'billing_ad_id > 0', __METHOD__, array( 'GROUP BY' => 'billing_date', 'ORDER BY' => 'billing_date desc', 'LIMIT' => 7 ) );
 		$d = array();
 		$xl0 = array();
 		foreach( $res as $row ) {
@@ -79,10 +79,10 @@ class AdSS_AdminController {
 		$tmpl->set( 'w', 600 );
 		$tmpl->set( 'h', 300 );
 		$tmpl->set( 'maxY', 200 );
-		$tmpl->set( 'd', implode( ',', $d ) );
-		$tmpl->set( 'xl0', implode( '|', $xl0 ) );
+		$tmpl->set( 'd', implode( ',', array_reverse( $d ) ) );
+		$tmpl->set( 'xl0', implode( '|', array_reverse( $xl0 ) ) );
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$dbr->freeResult( $res );
 		$res = $dbr->select(
 				'billing',
 				array(
