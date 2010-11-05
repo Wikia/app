@@ -194,11 +194,11 @@ class UserPagesHeaderModule extends Module {
 			}
 
 			$this->userRights = array_intersect( UserProfilePage::getInstance()->getUserRights(), array(
-				'admin',
+				'sysop',
 				'bot',
 				'staff',
 				'helper',
-				'beaurocrat',
+				'bureaucrat',
 				'vstf'
 			));
 		}
