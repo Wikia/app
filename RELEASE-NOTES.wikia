@@ -1,4 +1,5 @@
 == Changes since 201011.1 ==
+* rt#85526: Security problem: hijacking sessionid (Marooned)
 * rt#72109: SpecialContributions on contractor broken (Marooned)
 * rt#75589: Call to undefined method (Marooned)
 * rt#84671: Create new wiki fails (Marooned)
