@@ -61,7 +61,7 @@ class UserChangesHistory {
 					);
 					if ( !empty($wgEnableScribeReport) ) {
 						# use scribe
-						$key = "log_login";
+						$key = "trigger_login";
 						try {
 							$data = Wikia::json_encode( $params );
 							WScribeClient::singleton($key)->send($data);
@@ -142,7 +142,7 @@ class UserChangesHistory {
 			
 			if ( !empty($wgEnableScribeReport) ) {
 				# use scribe
-				$key = "log_savepreferences";
+				$key = "trigger_savepreferences";
 				try {
 					$data = Wikia::json_encode( $params );
 					WScribeClient::singleton($key)->send($data);
