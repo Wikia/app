@@ -95,7 +95,6 @@ class ApiLogin extends ApiBase {
 				$result['result'] = 'NeedToken';
 				$result['token'] = $loginForm->getLoginToken();
 				$result['cookieprefix'] = $wgCookiePrefix;
-				$result['sessionid'] = session_id();
 				break;
 			
 			case LoginForm::WRONG_TOKEN:
