@@ -65,7 +65,7 @@ switch($LW_AMZN_LAYOUT){
 	break;
 }
 
-$title = $wgRequest->getVal('title', 'Cake');
+$title = $wgRequest->getVal('keywords', 'Cake');
 displayAdForTitle($title);
 
 
