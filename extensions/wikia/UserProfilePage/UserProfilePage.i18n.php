@@ -15,6 +15,7 @@ $messages['en'] = array(
 	'userprofilepage-edit-permision-denied-info' => 'You do not have permissions to edit somebody\'s user page or subpage',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Everyone on this wiki would love to know more about you!</div><a href="$1">Edit this section</a> to add more about yourself and tell us about the things you love.',
 	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 hasn\'t added any information yet.</div>You can <a href="$2">leave them a message</a> instead',
+	'userprofilepage-user-doesnt-exists' => 'User $1 doesn\'t exists',
 
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',
