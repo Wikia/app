@@ -37,6 +37,12 @@ class AdSS_Controller extends SpecialPage {
 			}
 		}
 
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/readonly") } )' );
+			return;
+		}
+
 		$adForm = new AdSS_AdForm();
 		if ( $wgRequest->wasPosted() && AdSS_Util::matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
 			$adForm->loadFromRequest( $wgRequest );
