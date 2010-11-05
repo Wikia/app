@@ -51,7 +51,7 @@ function TOCimprovementsAddBodyClass($classes) {
 	// do not touch skins other than Monaco (this condition must not be in TOCimprovementsInit() as it expand stub object too fast and ?usetheme does not work)
 	// init only for anons
 	$skinName = get_class($wgUser->getSkin());
-	if ($skinName != 'SkinMonaco' || !$wgUser->isAnon()) {
+	if (!in_array($skinName, array('SkinMonaco', 'SkinOasis')) || !$wgUser->isAnon()) {
 		return true;
 	}
 	$wgHooks['MakeGlobalVariablesScript'][] = 'TOCimprovementsSetupVars';
