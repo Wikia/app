@@ -20,6 +20,9 @@
 				text-decoration: none;
 			}
 		}
+		.chevron {
+			display: none;
+		}
 	}
 	.selected {
 		@include box-shadow(-3px, 7px, 7px, $color-active-tab-shadow);
@@ -33,6 +36,7 @@
 		.chevron {
 			border-color: transparent transparent $color-page;
 			bottom: 0;
+			display: block;
 			left: 50%;
 			position: absolute;
 		}
