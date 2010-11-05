@@ -1,4 +1,4 @@
-<section class="CommunityCornerModule">
+<section class="CommunityCornerModule module">
 	<h2 class="dark_text_2"><?=wfMsg('myhome-community-corner-header')?></h2>
 	<div id="myhome-community-corner-content"><?=wfMsgExt('community-corner', array('parse','content'))?></div>
 	

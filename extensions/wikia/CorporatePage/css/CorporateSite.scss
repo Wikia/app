@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/rail-module";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
@@ -283,7 +282,6 @@
 	/* @group -Hot Spots */
 
 #wikia-global-hot-spots {
-	@include rail-module;
 	clear: both;
 	float: none;
 	
@@ -569,7 +567,6 @@
 
 
 #hub-top-contributors {
-	@include rail-module;
 	position: inherit !important; // /** @ todo remove important **/
 	clear: both;
 	h1 {

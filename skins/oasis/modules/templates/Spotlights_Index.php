@@ -25,7 +25,7 @@
 </section>
 <? } else if ($mode == 'RAIL') { ?>
 
-<section <?= (!empty($sectionId) ? 'id="'.$sectionId.'"' : '') ?>>
+<section <?= (!empty($sectionId) ? 'id="'.$sectionId.'"' : '') ?> class="module">
 	<header>
 		<? if ($wgSingleH1) { ?>
 			<div class="headline-div"><?= wfMsg($titleMsg) ?><img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61"></div>

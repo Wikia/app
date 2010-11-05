@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/rail-module";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
@@ -92,7 +91,6 @@
 	}
 
 	.LandingPageVideo {
-		@include rail-module;
 		@include clearfix;
 		padding-top: 10px;
 		width: 608px;

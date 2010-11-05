@@ -52,7 +52,7 @@
 	padding: 0 10px;
 	width: $width-rail;
 
-	>section {
+	.module {
 		@include clearfix;
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		border: 1px solid $color-page-border;
@@ -78,14 +78,6 @@
 			float: right;
 			font-size: 10px;
 			font-weight: bold;
-		}
-		a {
-			font: {
-				size: 13px;
-				weight: bold;
-			}
-			margin: 0;
-			padding: 0;
 		}
 		p {
 			line-height: 21px;
@@ -343,7 +335,6 @@
 }
 
 .WikiaRelatedVideoModule {
-	@include rail-module;
 	h1 {
 		margin-bottom: 0;
 	}
