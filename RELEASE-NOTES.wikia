@@ -15,6 +15,7 @@
 * rt#68514: Oasis: Extension Inventory: GlobalCSSJS will not work correctly (macbre)
 * rt#84735: Add section edit links to H4s (macbre)
 * rt#60373: Photo Gallery: upload button can be slow to react + bad active area (macbre)
+* rt#85514: Oasis: Table of contents defaults to [hide] for anons (macbre)
 
 == Changes since 201010.4 ==
 * rt#81277: Disable categoryselect on the template namespace (Marooned)
