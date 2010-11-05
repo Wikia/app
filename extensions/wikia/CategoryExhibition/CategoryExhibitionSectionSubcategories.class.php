@@ -16,8 +16,9 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 
 	public function getSectionHTML(){
 
+		global $wgCategoryExhibitionSubCategoriesSectionRows;
 		$this->loadPaginationVars();
-		$oTmpl = $this->getTemplateForNameSpace( NS_CATEGORY, 8  );
+		$oTmpl = $this->getTemplateForNameSpace( NS_CATEGORY, $wgCategoryExhibitionSubCategoriesSectionRows * 4 );
 		return $this->executeTemplate( $oTmpl );
 	}
 
@@ -30,10 +31,11 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 
 	public function getSectionAxHTML( $paginatorPosition, $sUrl ){
 
+		global $wgCategoryExhibitionSubCategoriesSectionRows;
 		$this->isFromAjax = true;
 		$this->paginatorPosition = $paginatorPosition;
 		$this->sUrl = $sUrl;
-		$oTmpl = $this->getTemplateForNameSpace( NS_CATEGORY, 8 );
+		$oTmpl = $this->getTemplateForNameSpace( NS_CATEGORY, $wgCategoryExhibitionSubCategoriesSectionRows * 4 );
 		return $this->executeTemplate( $oTmpl );
 	}
 
@@ -64,7 +66,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			}
 			$aData[] = array(
 			    'id'		=> $item['page_id'],
-			    'title'		=> Title::newFromDBkey($item['page_title'])->getText(),
+			    'title'		=> Title::newFromID($item['page_id'])->getText(),
 			    'img'		=> $imageUrl,
 			    'url'		=> Title::newFromID($item['page_id'])->getFullURL(),
 			    'snippet'		=> $snippetText,

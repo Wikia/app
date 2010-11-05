@@ -14,11 +14,6 @@ class CategoryExhibitionPage extends CategoryPageII {
 
 	var $viewerClass = 'CategoryExhibitionViewer';
 
-	function addScripts(){
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js?{$wgStyleVersion}\" ></script>\n");
-	}
-
 	function closeShowCategory() {
 		global $wgOut, $wgRequest;
 		$viewer = new $this->viewerClass( $this->mTitle );

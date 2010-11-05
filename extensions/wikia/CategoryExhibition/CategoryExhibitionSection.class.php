@@ -5,8 +5,8 @@
  */
 class CategoryExhibitionSection {
 
-	protected $thumbWidth = 105;
-	protected $thumbHeight = 90;		
+	protected $thumbWidth = 130;
+	protected $thumbHeight = 115;
 	protected $thumbMedia = 130;		// width for media section
 	protected $displayOption = false;	// current state of display option
 	protected $sortOption = false;		// current state of sort option
@@ -139,7 +139,7 @@ class CategoryExhibitionSection {
 	public function getDisplayType(){
 
 		global $wgUser, $wgCookiePrefix;
-		
+
 		if ( !empty( $this->displayOption ) && in_array( $this->displayOption, $this->allowedDisplayOptions ) ){
 			return $this->displayOption;
 		}
@@ -150,14 +150,14 @@ class CategoryExhibitionSection {
 		} else {
 			$return = $wgUser->getOption( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
 		}
-		
+
 		if ( !empty( $return ) && in_array( $return, $this->allowedDisplayOptions ) ){
 			return $return;
 		} else {
 			return $this->allowedDisplayOptions[0];
 		}
 	}
-	
+
 	/**
 	 * main function returning fillet template ready to print.
 	 * @param $itemsPerPage int number of articles per page
@@ -219,7 +219,7 @@ class CategoryExhibitionSection {
 
 	public function getSectionHTML( ) {
 
-		# for overloading 
+		# for overloading
 	}
 
 	/**
@@ -233,10 +233,10 @@ class CategoryExhibitionSection {
 		if ( !is_array( $mPageId ) ){
 			$mPageId = array( $mPageId );
 		}
-		
+
 		$imageServing = new imageServing( $mPageId, $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 		$imageUrl = '';
-		
+
 		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
 			if ( !empty( $value[0]['name'] ) ){
 				$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
@@ -271,22 +271,22 @@ class CategoryExhibitionSection {
 					$snippetText = $snippetService->getTextSnippet();
 				}
 			}
-			
+
 			$aData[] = array(
 			    'id'	=> $item['page_id'],
-			    'title'	=> Title::newFromDBkey($item['page_title'])->getText(),
+			    'title'	=> Title::newFromID($item['page_id'])->getText(),
 			    'img'	=> $imageUrl,
 			    'url'	=> Title::newFromID($item['page_id'])->getFullURL(),
 			    'snippet'	=> $snippetText
 			);
-		};
+		};		
 		return $aData;
 	}
 
 	/**
 	 * Loads data for pagination.
 	 */
-	
+
 	function loadPaginationVars( ){
 
 		global $wgTitle, $wgRequest;
