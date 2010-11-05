@@ -144,7 +144,7 @@
 }
 
 .WikiaRail {
-	& > section.AchievementsModule {
+	& > div.AchievementsModule {
 		/*background: #00F;*/
 		border-top: 10px;
 
@@ -203,7 +203,7 @@
 		}
 	}
 	
-	& > section.UserProfileAchievementsModule {
+	& > div.UserProfileAchievementsModule {
 
 		.data {
 			@include clearfix;

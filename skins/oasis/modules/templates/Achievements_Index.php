@@ -1,4 +1,4 @@
-<section class="AchievementsModule module">
+<div class="module AchievementsModule">
 <?php
 	if(count($ownerBadges) == 0) {
 		echo '<h1>'.wfMsg('achievements-profile-title-no', $ownerName).'</h1>'.wfMsg('achievements-no-badges');
@@ -81,4 +81,4 @@
 	}
 	?>
 	</ul>
-</section>
+</div>
