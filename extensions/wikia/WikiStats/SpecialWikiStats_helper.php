@@ -1232,14 +1232,6 @@ class WikiStats {
 			),
 		);
 		
-		# order & limit
-		$order = $xls == 1 ? array() : array(
-			'ORDER BY'  => $sql_order,
-			'LIMIT' 	=> $limit,
-			'OFFSET'	=> $offset
-		);
-		
-		
     	$memkey = sprintf( "count_%s_%s_%s_%d", __METHOD__, implode('_', array_keys($conditions)), implode('_', array_values($conditions)), $xls );
 		$data['cnt'] = $wgMemc->get( $memkey );
 				
@@ -1263,10 +1255,19 @@ class WikiStats {
 		if ( $data['cnt'] > 0 ) {
 			
 			$memkey = sprintf( "acdata_%s_%s_%d", __METHOD__, $year.'_'.$month.'_'.$lang.'_'.$cat.'_'.$order.'_'.$limit.'_'.$offset.'_'.$wgLang->getCode(), $xls );
+			
 			$data['res'] = $wgMemc->get( $memkey );
 			
 			if ( empty($data['res']) ) {
 				$data['res'] = array();
+				
+				# order & limit
+				$order = $xls == 1 ? array() : array(
+					'ORDER BY'  => $sql_order,
+					'LIMIT' 	=> $limit,
+					'OFFSET'	=> $offset
+				);
+						
 				$oRes = $dbr->select ( 
 					$tables,
 					array( 
