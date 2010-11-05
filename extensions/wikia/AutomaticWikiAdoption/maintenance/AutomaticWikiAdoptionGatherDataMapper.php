@@ -33,7 +33,7 @@ class AutomaticWikiAdoptionGatherDataMapper {
 
 		//get wikis with pages < 1000 and admins not active in last 14 days
 		$res = $dbrStats->query(
-			'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 where e1.wiki_id > 0 group by e1.wiki_id having sum_edits < 1000 and (select count(0) from events_local_users e2 where e1.wiki_id = e2.wiki_id and all_groups like "%sysop%" and editdate > now() - interval 14 day) = 0;',
+			'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 where e1.wiki_id > 0 group by e1.wiki_id having sum_edits < 1000 and (select count(0) from specials.events_local_users e2 where e1.wiki_id = e2.wiki_id and all_groups like "%sysop%" and editdate > now() - interval 14 day) = 0;',
 			__METHOD__
 		);
 
