@@ -57,6 +57,9 @@ class AdSS_Ad {
 
 	function loadFromForm( $f ) {
 		$this->url = $f->get( 'wpUrl' );
+		if( strtolower( mb_substr( $this->url, 0, 7 ) ) == 'http://' ) {
+			$this->url = mb_substr( $this->url, 7 );
+		}
 		$this->text = $f->get( 'wpText' );
 		$this->desc = $f->get( 'wpDesc' );
 		$this->weight = $f->get( 'wpWeight' );
