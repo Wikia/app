@@ -268,12 +268,13 @@ class AjaxLoginForm extends LoginForm {
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$response = new AjaxResponse();
 
+		$type = $wgRequest->getVal('type', '');
+
 		if (!wfReadOnly()){
 			if(empty($ajaxLoginForm)){
 				$ajaxLoginForm = new AjaxLoginForm($wgRequest,'signup');
 			}
 			$ajaxLoginForm->execute();
-			$type = $wgRequest->getVal('type', '');
 
 			if (!empty($ajaxLoginForm->ajaxTemplate)) {
 				$lastmsg = $ajaxLoginForm->ajaxTemplate->data['message'];
