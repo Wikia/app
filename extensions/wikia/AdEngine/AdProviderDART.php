@@ -115,6 +115,11 @@ EOT;
 			$wpage = '';
 		}
 
+		$src = 'direct';
+		if (AdEngine::getInstance()->getProviderNameForSlotname($slotname) == 'AdDriver') {
+			$src = 'driver';
+		}
+
 		$url = 'http://ad.doubleclick.net/';
 		$url .= $this->getAdType() . '/';
 		$url .= $this->getFirstChunk() . ';';
@@ -130,6 +135,7 @@ EOT;
 		$url .= "nofooter=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
+		$url .= "src=$src;";
 		$url .= "sz=" . $slot['size'] . ';';
 		$url .= $this->getTileKV($slotname);
 		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
