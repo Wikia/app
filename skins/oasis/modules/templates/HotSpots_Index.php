@@ -1,4 +1,4 @@
-<section class="HotSpotsModule">
+<section class="HotSpotsModule module">
 
 <?php
 if(count($data) == 5) {

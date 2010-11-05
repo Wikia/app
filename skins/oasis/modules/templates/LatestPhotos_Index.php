@@ -1,4 +1,4 @@
-<section class="LatestPhotosModule">
+<section class="LatestPhotosModule module">
 	<? if (!$wgSingleH1) { ?>
 	<h1>Latest Photos</h1>
 	<? } ?>

@@ -1,4 +1,4 @@
-<section class="FollowedPagesModule">
+<section class="FollowedPagesModule module">
 	<h1><?= wfMsg('wikiafollowedpages-userpage-heading') ?></h1>
 <?php
 	if(count($data) == 0) {

@@ -1,4 +1,4 @@
-	<section id="hub-top-contributors"<?php echo $hidetopeditors ?>>
+	<section id="hub-top-contributors"<?php echo $hidetopeditors ?> class="module">
 		<h1><?php echo wfMsg('hub-topusers-header', $data['title']) ?></h1>
 		<?php
 			global $wgUser;

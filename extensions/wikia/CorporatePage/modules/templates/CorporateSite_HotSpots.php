@@ -1,4 +1,4 @@
-	<section id="wikia-global-hot-spots" style="" <?= $hidehotspots ?>>
+	<section id="wikia-global-hot-spots" class="module" style="" <?= $hidehotspots ?>>
 		<h1><?php echo wfMsg('hub-hotspot-header', $data['title']) ?></h1>
 		<?php
 			if( $wgUser->isAllowed( 'corporatepagemanager' ) ) {

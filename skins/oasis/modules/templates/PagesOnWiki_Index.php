@@ -1,4 +1,4 @@
-<section class="WikiaPagesOnWikiModule">
+<section class="WikiaPagesOnWikiModule module">
 	<? if (!$wgSingleH1) { ?>
 		<h1><?= wfMsg('oasis-pages-on-wiki-header', $wgSitename) ?></h1>
 	<? } ?>
