@@ -91,7 +91,7 @@ border: none;
 #wk-wf-variables, #wk-wf-domains, #wk-wf-info {
     border: 1px dotted lightgray; background: #f9f9f9; padding: 4px;
 }
-#wk-busy-div {
+#wk-busy-bar {
     position:fixed;
     top:1em;
     right:1em;
@@ -157,24 +157,38 @@ $Factory.ReplaceCallback = {
         $Factory.Busy(0);
         // other conditions
         if ( Data["div-name"] == "wf-clear-cache") {
+            $Factory.BusyCache(0);
             setTimeout("var alink = function(){ $('#wf-clear-cache').html('<?php echo wfMsg("wikifactory_removevariable") ?>');};alink();",2000);
         }
     },
     failure: function( oResponse ) {
         $Factory.Busy(0);
+        $Factory.BusyCache(0);
     },
     timeout: 50000
 };
 
 $Factory.Busy = function (state) {
-    if (state == 0) {
-        $("#wk-busy-div" ).css( "display", "none");
-    }
-    else {
-    	$("#wk-busy-div" ).css( "display", "block");
-    }
+	if (state == 0) {
+		$("#wk-busy-bar").css( "display", "none");
+		//console.log('busy->OFF');
+	}
+	else {
+		$("#wk-busy-bar").css( "display", 'block');
+		//console.log('busy->ON');
+	}
 };
 
+$Factory.BusyCache = function (state) {
+	if (state == 0) {
+		$("#wk-busy-cache").css( "display", "none");
+		//console.log('cachebusy->OFF');
+	}
+	else {
+		$("#wk-busy-cache").css( "display", 'inline');
+		//console.log('cachebusy->ON');
+	}
+};
 
 $Factory.Domain.CRUD = function(mode, domain, addparams) {
 	$Factory.Busy(1);
@@ -401,7 +415,7 @@ $Factory.Variable.filter = function ( e ) {
 
 // clear data in memcached
 $Factory.Variable.clear = function ( e ) {
-    $Factory.Busy(1);
+    $Factory.BusyCache(1);
     var params = "&cityid=" + $Factory.city_id;
 	$.ajax({
     	type:"POST",
@@ -485,14 +499,14 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 					}
 				}
 			},
-	  	 	timeout: 50000
-	   });
+			timeout: 50000
+		});
 	}
 };
 
 $Factory.Variable.close_submit = function (opt) {
-    $Factory.Busy(1);
-    var oForm = $('#wf-close-form');
+	$Factory.Busy(1);
+	var oForm = $('#wf-close-form');
 	submitField = document.createElement("input");
 	submitField.type = "hidden";
 	submitField.name = "submit" + opt;
@@ -518,15 +532,13 @@ $(function() {
 /*]]>*/
 </script>
 <div id="wiki-factory">
+	<div id="wk-busy-bar" style="display: none;"><img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" /></div>
 	<h2>
 		Wiki info: <span class="wiki-sitename"><?php echo $wiki->city_title ?></span> <sup><small><a href="<?php echo $wikiFactoryUrl . '/' . $wiki->city_id; ?>/variables/wgSitename">edit</a></small></sup>
 	</h2>
-	<div id="wk-busy-div" style="display: none;">
-		<img src="http://images.wikia.com/common/progress_bar.gif" width="100" height="9" alt="Wait..." border="0" />'
-	</div>
 	<div id="wk-wf-info">
-		<?php echo $wiki->city_description ?>
-		<table class="wikitable">
+		<table><tr><td>
+		<table class="wikitable" style="margin:0">
 			<thead class="wf-tinyhead">
 				<tr>
 					<th>id</th>
@@ -543,52 +555,24 @@ $(function() {
 				<td><?php echo empty( $cluster ) ? "c1<acronym title='default'>*</acronym>" : $cluster ?></td>
 				<td><?php echo $wiki->city_lang ?></td>
 				<td><?php
-					$cats = $hub->getBreadCrumb( $wiki->city_id );
-					if( is_array( $cats ) ):
-						foreach( $cats as $cat ):
-							echo "<acronym title=\"id:{$cat["id"]}\">{$cat["name"]}</acronym>";
-						endforeach;
-					endif;
+					$wgHub = WikiFactory::getCategory( $wiki->city_id );
+					echo "<acronym title=\"id:{$wgHub->cat_id}\">{$wgHub->cat_name}</acronym>";
 				?></td>
 				<td><?php echo $statuses[ $wiki->city_public ] ?></td>
 			</tr>
 		</table>
+		</td>
+		<td><button class="wikia-button" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></button><?
+				?><div id="wk-busy-cache" style="margin-left:1em; display: none;">
+					<img src="http://images.wikia.com/common/skins/common/images/ajax.gif" width="16" height="16" alt="Wait..." border="0" />
+				</div></td>
+		</tr></table>
 		<ul>
-			<?php  #hide tags in upper area when on tags tab, so people dont get confused by non-updating data
+			<?php  #hide domain in upper area when on domain tab, so people dont get confused by non-updating data
 				if( $tab !== "domains" ): ?><li>
 				Wiki domain: <strong><a href="<?php echo $wiki->city_url ?>"><?php echo $wiki->city_url ?></a></strong>
 				<sup><a href="<?php echo "{$wikiFactoryUrl}/{$wiki->city_id}"; ?>/domains">edit</a></sup>
 			</li><?php endif; ?>
-			<li>
-				Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
-			</li>
-			<li>
-				Founder name: <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
-					<? if($wiki->city_founding_user): ?>
-					<sup><a href="<?php echo $wikiFactoryUrl; ?>/Metrics?founder=<?php echo urlencode($user_name); ?>">more by user</a></sup><? endif; ?>
-			</li>
-			<li>
-				Founder email: <?php if( empty( $wiki->city_founding_email) ) :
-					print "<i>empty</i>";
-				else:
-					print "<strong>" . $wiki->city_founding_email . "</strong>";
-					print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?email=". urlencode($wiki->city_founding_email) . "\">more by email</a></sup>";
-				endif; ?>
-			</li>
-			<?php  #hide tags in upper area when on tags tab, so people dont get confused by non-updating data
-				if( $tab !== "tags" ): ?><li>
-				Tags: <?php if( is_array( $tags ) ): echo "<strong>"; foreach( $tags as $id => $tag ): echo "{$tag} "; endforeach; echo "</strong>"; endif; ?>
-				<sup><a href="<?php echo "{$wikiFactoryUrl}/{$wiki->city_id}"; ?>/tags">edit</a></sup>
-			</li><?php endif; ?>
-			<?php if ($statuses[$wiki->city_public] == 'disabled') : ?><li>
-				<div>Disabled reason: <?=wfMsg('closed-reason')?> (<?=$wiki->city_additional?>)</div>
-			</li><?php endif ?>
-		</ul>
-		<br/>
-		<ul>
-			<li>
-				<button class="wikia-button" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></button>
-			</li>
 			<li>
 				<a href="<?php echo $wikiFactoryUrl; ?>"><?php echo wfMsg( "wikifactory-label-return" ); ?></a>
 			</li>
@@ -600,6 +584,9 @@ $(function() {
 			$subTags = in_array($tab, array('tags', 'masstags', 'findtags') );
 		?>
 		<ul class="tabs" id="wiki-factory-tabs">
+			<li <?php echo ( $tab === "info" ) ? 'class="selected"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "info", $tab, $wiki->city_id ); ?>
+			</li>
 			<li <?php echo ( $subVariables ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "variables", ( ($subVariables)?'variables':$tab ), $wiki->city_id ); ?>
 			</li>
@@ -655,6 +642,10 @@ $(function() {
 <?php
 	}
 	switch( $tab ):
+		case "info":
+			include_once( "form-info.tmpl.php" );
+		break;
+
 		case "variables":
 			include_once( "form-variables.tmpl.php" );
 		break;
