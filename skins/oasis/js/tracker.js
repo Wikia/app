@@ -552,7 +552,7 @@ var initTracker = function() {
 	});
 
 	// track clicks on Facebook's "Like" buttons
-	try {
+	if (typeof FB != 'undefined') {
 		FB.Event.subscribe('edge.create', function(resp) {
 			$.tracker.byStr('pageheader/like');
 		});
@@ -560,6 +560,5 @@ var initTracker = function() {
 		FB.Event.subscribe('comments.add', function(resp) {
 			$.tracker.byStr('pageheader/post');
 		});
-	} catch(e) {
 	}
 }
