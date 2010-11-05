@@ -20,28 +20,29 @@
 		<td><?php echo ($variable->cv_is_unique == 1 ? "yes":"no"); ?></td>
 	</tr>
 </table>
-<ul>
-	<li><?php $WIEbase = "http://community.wikia.com/wiki/Special:WhereIsExtension?var=" . $variable->cv_id; ?>
-		Where is... <small><a href="<? echo $WIEbase ?>&val=2">Any value</a><?php
+<ul><?php $WIEbase = "http://community.wikia.com/wiki/Special:WhereIsExtension?var=" . $variable->cv_id; ?>
+	<li>
+		Where is... <a href="<? echo $WIEbase ?>&val=2">Any value</a><?php
 		if( $variable->cv_variable_type == 'boolean' ) {
 			print " &middot; <a href='{$WIEbase}&val=0'>True</a>";
 			print " &middot; <a href='{$WIEbase}&val=1'>False</a>";
 		}
-		?></small></li>
+		?></li>
+	<?php global $wgEnableWikiFactoryReporter;
+		if( !empty($wgEnableWikiFactoryReporter) ): ?><li>
+		<a href="http://community.wikia.com/wiki/Special:WikiFactoryReporter?varid=<?php echo $variable->cv_id ?>">Values Reporter</a>
+	</li><?php endif; ?>
 	<li>
-		Manual: <small>
+		Manual:
 		&nbsp;<a href="http://www.mediawiki.org/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at mediawiki.org'>MediaWiki</a>
-		&nbsp;<a href="http://contractor.wikia-inc.com/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at contractor.wikia'>Wikia</a></small>
+		&nbsp;<a href="http://contractor.wikia-inc.com/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at contractor.wikia'>Wikia</a>
 	</li>
 	<li>
 		<a href="<?php echo "{$wikiFactoryUrl}/{$variable->cv_city_id}/variables/{$variable->cv_name}"; ?>">permalink</a>
 	</li>
 </ul>
 <h2>
-    Variable value
-    <span style="font-size: small;">
-        <!-- [<a id="wk-var-remove" title="Remove value" href="#">remove value</a>] -->
-    </span>
+	Variable value
 </h2>
 
 <div style="width: 45%; float: left">
