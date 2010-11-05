@@ -1,4 +1,4 @@
-<section class="AchievementsModule UserProfileAchievementsModule">
+<div class="module AchievementsModule UserProfileAchievementsModule">
 	<? if(count($ownerBadges) == 0) :?>
 		<h1><?= wfMsg('achievements-userprofile-title-no', $ownerName);?></h1>
 		<?= wfMsg( ( $viewer_is_owner == true ) ? 'achievements-userprofile-no-badges-owner' : 'achievements-userprofile-no-badges-visitor' ) ;?>
@@ -58,11 +58,11 @@
 			<? endif ;?>
 		</div>
 	<? endif ;?>
-</section>
+</div>
 
 
 <? if ( $viewer_is_owner == true ) :?>
-	<section class="AchievementsModule UserProfileAchievementsModule">
+	<div class="module AchievementsModule UserProfileAchievementsModule">
 		<h1><?= wfMsg('achievements-profile-title-challenges', $ownerName) ?></h1>
 
 		<ul class="badges-tracks badges">
@@ -70,5 +70,5 @@
 		</ul>
 		
 		<a href="<?= $customize_url ?>" class="more view-all"><?= wfMsg('achievements-profile-customize') ?></a>
-	</section>
+	</div>
 <? endif ;?>
