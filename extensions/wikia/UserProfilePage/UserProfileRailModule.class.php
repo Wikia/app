@@ -4,6 +4,7 @@ class UserProfileRailModule extends Module {
 	var $topWikis;
 	var $userIsOwner;
 	var $userPageUrl;
+	var $userName;
 	var $activityFeed;
 	var $specialContribsLink;
 	var $topPages;
@@ -26,7 +27,8 @@ class UserProfileRailModule extends Module {
 		$this->hiddenTopWikis = $this->populateHiddenTopWikis( $userProfilePage->getHiddenTopWikis() );
 		$this->userIsOwner = $userProfilePage->userIsOwner();
 		$this->userName =  $user->getName();
-		$thos->userPageUrl = $user->getUserPage()->getLocalUrl();
+		$title = Title::newFromText($this->userName, NS_USER);
+		$this->userPageUrl = $title->getLocalUrl();
 		$this->maxEdits = 0;
 		$this->currentWikiId = $wgCityId;
 
