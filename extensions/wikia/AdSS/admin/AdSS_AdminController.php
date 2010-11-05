@@ -64,19 +64,52 @@ class AdSS_AdminController {
 	}
 
 	function displayReports() {
-		global $wgOut, $wgAdSS_DBname;
+		global $wgOut, $wgAdSS_DBname, $wgAdSS_templatesDir;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
-		$res = $dbr->select( 'billing', array( 'date( billing_timestamp ) as billing_date', 'sum(-billing_amount) as income' ), 'billing_ad_id > 0', __METHOD__, array( 'GROUP BY' => 'billing_date', 'ORDER BY' => 'billing_date desc', 'LIMIT' => 7 ) );
+		$res = $dbr->select( 'billing', array( 'date( billing_timestamp ) as billing_date', 'sum(-billing_amount) as income' ), 'billing_ad_id > 0', __METHOD__, array( 'GROUP BY' => 'billing_date', 'ORDER BY' => 'billing_date', 'LIMIT' => 7 ) );
 		$d = array();
-		$x = array();
+		$xl0 = array();
 		foreach( $res as $row ) {
 			$d[] = $row->income;
-			$x[] = $row->billing_date;
+			$xl0[] = $row->billing_date;
 		}
+		
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
+		$tmpl->set( 'w', 600 );
+		$tmpl->set( 'h', 300 );
+		$tmpl->set( 'maxY', 200 );
+		$tmpl->set( 'd', implode( ',', $d ) );
+		$tmpl->set( 'xl0', implode( '|', $xl0 ) );
 
-		$w=600; $h=300; $maxY = 200;
-		$wgOut->addHTML( "<img width=\"$w\" height=\"$h\" src=\"http://chart.apis.google.com/chart?chxt=x,y&chbh=a&chs={$w}x{$h}&cht=bvg&chco=A2C180&chd=t:".implode( ",", array_reverse($d) )."&chds=0,$maxY&chm=N*cUSD0*,000000,0,-1,12&chxr=1,0,$maxY&chxl=0:|".implode( "|", array_reverse($x) )."|&chtt=Daily+Income+(last+7+days)\" />" );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$res = $dbr->select(
+				'billing',
+				array(
+					'billing_user_id',
+					'sum(-billing_amount) as billing_balance',
+					'max( if (billing_ppp_id>0, billing_timestamp, null ) ) as last_billed',
+					),
+				null,
+				__METHOD__,
+				array(
+					'GROUP BY' => 'billing_user_id',
+					'HAVING'   => 'billing_balance > 0',
+					'ORDER BY' => 'billing_user_id',
+					)
+				);
+		$lines = array();
+		foreach( $res as $row ) {
+			$lines[] = array(
+					'user'       => AdSS_User::newFromId( $row->billing_user_id )->toString(),
+					'amount'     => $row->billing_balance,
+					'lastBilled' => $row->last_billed,
+					);
+		}
+		$tmpl->set( 'lines', $lines );
+
+		$wgOut->addHTML( $tmpl->render( 'reports' ) );
+
 	}
 
 	static function acceptAdAjax( $id, $token ) {
