@@ -26,6 +26,11 @@ $messages['en'] = array(
 Once you are done, you can log in easily using any Facebook Connect button.",
 	"comboajaxlogin-post-not-understood" => "There was an error in the way this form was constructed.
 Please try again or [[Special:Contact|report this]].",
+	'comboajaxlogin-readonlytext' => "<h2>Sorry!</h2>
+<p>You can't create an account at the moment - we should be up and running again shortly. Here's what's happening:<br /><em>$1</em></p>
+<p>Please check <a href=\"http://twitter.com/wikia\">Twitter</a> or <a href=\"http://facebook.com/wikia\">Facebook</a> for more information.
+<br />
+(If you already have an account, you can <a href=\"#\">log in</a> as normal, but you won't be able to edit.)</p>",
 );
 
 /** Message documentation (Message documentation)
@@ -169,10 +174,10 @@ $messages['fr'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retour',
 	'comboajaxlogin-connectmarketing-forward' => 'Avant de commencer &raquo;',
-	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan. 
+	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan.
 
 Une fois que vous avez terminé, vous pouvez vous connecter facilement à l'aide de n'importe quel bouton Facebook Connect.",
-	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit. 
+	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit.
 Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 );
 
