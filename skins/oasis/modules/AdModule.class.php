@@ -99,11 +99,16 @@ class AdModule extends Module {
 		$this->slotname = $params['slotname'];
 
 		if(isset(self::$config[$this->slotname])) {
-			if (in_array($this->slotname, self::$slotsUseGetAd)) {
+			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
 			}
 			else {
-				$this->ad = AdEngine::getInstance()->getPlaceHolderIframe($this->slotname);
+				if (in_array($this->slotname, self::$slotsUseGetAd)) {
+					$this->ad = AdEngine::getInstance()->getAd($this->slotname);
+				}
+				else {
+					$this->ad = AdEngine::getInstance()->getPlaceHolderIframe($this->slotname);
+				}
 			}
 		}
 		wfRunHooks('AfterAdModuleExecute', array( &$this ));

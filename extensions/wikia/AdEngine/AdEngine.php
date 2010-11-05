@@ -11,13 +11,16 @@ $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
-	global $wgEnableAdsInContent, $wgEnableOpenXSPC;
+	global $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdDriverCookieLifetime;
 
 	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 
 	// OpenX SPC (init in AdProviderOpenX.js)
 	$cat = AdEngine::getCachedCategory();
 	$vars["cityShort"] = $cat['short'];
+
+	// AdDriver
+	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
 
 	return true;
 }
@@ -92,6 +95,7 @@ class AdEngine {
 		'7' => 'ContextWeb',
 		'8' => 'DARTMobile',
 		'9' => 'Liftium',
+		'10' => 'AdDriver',
 		'-1' => 'Null'
 	);
 
@@ -430,6 +434,7 @@ class AdEngine {
 			case 'contextweb': return AdProviderContextWeb::getInstance();
 			case 'dartmobile': return AdProviderDARTMobile::getInstance();
 			case 'liftium': return AdProviderLiftium::getInstance();
+			case 'addriver': return AdProviderAdDriver::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
@@ -756,6 +761,10 @@ EOT;
 		}
 
 		return $out;
+	}
+
+	public function getProviderNameForSlotname($slotname) {
+		return $this->providers[$this->slots[$slotname]['provider_id']];
 	}
 
 }
