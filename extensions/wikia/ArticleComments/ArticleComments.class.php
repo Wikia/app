@@ -1330,6 +1330,14 @@ class ArticleCommentList {
 		$this->mCountAll = count($this->mCommentsAll);
 		//1st level descending, 2nd level ascending
 		krsort($this->mCommentsAll, SORT_NUMERIC);
+		// Set our nested count here RT#85503
+		$this->mCountAllNested = 0;
+		foreach ($this->mCommentsAll as $comment) {
+			$this->mCountAllNested++;
+			if (isset($comment['level2'])) {
+				$this->mCountAllNested += count($comment['level2']);
+			}
+		}
 		//pagination
 		if ($page !== false && ($showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/)) {
 			$this->mComments = array_slice($this->mCommentsAll, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
@@ -1638,7 +1646,7 @@ class ArticleCommentList {
 		if ($title) {
 			$title->invalidateCache();
 			$titleURL = $title->getFullUrl();
-			$urls = array("$titleURL?shawall=1");
+			$urls = array("$titleURL?showall=1");
 			SquidUpdate::purge($urls);
 		} else {
 			Wikia::log(__METHOD__, 'error', "bad URL for comment, whole title: {$this->mText}");
