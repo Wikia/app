@@ -13,5 +13,4 @@ $messages['en'] = array(
 	'category-exhibition-blogs-header'		=> 'Blog posts',
 	'category-exhibition-display-old'		=> 'Category List view',
 	'category-exhibition-display-new'		=> 'Category Exhibition view'
-
 );
