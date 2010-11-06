@@ -9,7 +9,6 @@ $messages['en'] = array(
 		'user-badge-hide-color' => 'Hide color details',
 		'user-badge-selected-color' => 'Currently selected color {rgb}',
 		'user-badge-web-color' => 'Closest websafe color: {rgb}. Click to select!',
-		'user-badge-dialog-title' => 'Please choose a color',
 		'user-badge-left-align' => 'left',
 		'user-badge-right-align' => 'right',
 		'user-badge-center-align' => 'center',

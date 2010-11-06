@@ -118,7 +118,6 @@ colorDialog = function() {
             this.dialog.render();
 
 			__colorDialog = this.dialog;
-			//document.getElementById('yui-picker-panel_h').innerHTML = ColorTxt["DIALOG_HEADER"];
             Event.on(["ub-header-btn-txt-color", "ub-header-btn-bg-color", "ub-body-btn-bg-color", "ub-body-btn-label-color", "ub-body-btn-data-color"], "click", function(e) {
 				__id = this.id;
 				var color = YAHOO.util.Dom.getStyle(this.id, 'backgroundColor');

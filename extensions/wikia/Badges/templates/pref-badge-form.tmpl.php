@@ -6,7 +6,6 @@ ColorTxt["SHOW_CONTROLS"] = "<?=wfMsg("user-badge-show-color")?>";
 ColorTxt["HIDE_CONTROLS"] = "<?=wfMsg("user-badge-hide-color")?>";
 ColorTxt["CURRENT_COLOR"] = "<?=wfMsg("user-badge-selected-color")?>";
 ColorTxt["CLOSEST_WEBSAFE"] = "<?=wfMsg("user-badge-web-color")?>";
-ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 </script>
 <table>
 <tr>
