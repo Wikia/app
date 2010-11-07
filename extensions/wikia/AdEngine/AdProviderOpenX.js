@@ -43,7 +43,7 @@ AdProviderOpenX.getUrl2 = function() {
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
 	url += "&dbname=" + wgDB;
-	url += "&tags=" + wgWikiFactoryTagNames.join(",");
+	url += "&tags=" + escape(wgWikiFactoryTagNames.join(","));
 	url += "&block=1";
 	url += (document.charset ? '&charset='+document.charset : (document.characterSet ? '&charset='+document.characterSet : ''));
 
