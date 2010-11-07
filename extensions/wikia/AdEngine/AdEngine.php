@@ -754,8 +754,9 @@ class AdEngine {
 		} else {
 			$out = <<<EOT
 	<script type="text/javascript">
-		var openxspc_base_url = AdProviderOpenX.getUrl("/__spotlights/spcjs.php", "", "", 3, window.cityShort, "");
-		$.getScript(openxspc_base_url);
+		//var openxspc_base_url = AdProviderOpenX.getUrl("/__spotlights/spcjs.php", "", "", 3, window.cityShort, "");
+		//$.getScript(openxspc_base_url);
+		$.getScript(AdProviderOpenX.getUrl2());
 	</script>
 EOT;
 		}
