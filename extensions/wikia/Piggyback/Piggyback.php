@@ -14,9 +14,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Piggyback',
 	'author' => 'Tomasz Odrobny',
 	'url' => '',
-	'description' => 'Logon other user account',
-	'descriptionmsg' => 'myextension-desc',
-	'version' => '0.0.0',
+	'descriptionmsg' => 'piggyback-desc',
+	'version' => '0.0.1',
 );
 
 $dir = dirname(__FILE__) . '/';
