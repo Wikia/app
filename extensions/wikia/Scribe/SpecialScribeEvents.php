@@ -19,9 +19,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
-    "name" => "Multi-Title Finder",
-    "description" => "Staff tool to search for a specific title across Wikia ",
-    "author" => "Moli <moli at wikia.com>"
+    'name' => 'Multi-Title Finder',
+    'author' => "Moli <moli at wikia.com>",
+    'descriptionmsg' => 'scribe-desc',
 );
 
 #--- messages file
