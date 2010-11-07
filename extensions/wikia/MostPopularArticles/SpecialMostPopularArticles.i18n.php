@@ -113,6 +113,13 @@ $messages['gsw'] = array(
 	'mostpopulararticles' => 'Am meischte gändereti Artikel in dr Datebank',
 );
 
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'mostpopulararticles' => 'דפי התוכן הפופולריים ביותר (מבסיס הנתונים)',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */

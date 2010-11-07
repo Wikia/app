@@ -219,11 +219,12 @@ $messages['br'] = array(
 );
 
 /** Bosnian (Bosanski)
+ * @author CERminator
  * @author Palapa
  */
 $messages['bs'] = array(
 	'titleedit-desc' => 'Dodaje dugme za uređivanje na vrh stranica.',
-	'titleedit' => 'Uredi',
+	'titleedit' => 'uredi',
 );
 
 /** Buginese (ᨅᨔ ᨕᨘᨁᨗ) */

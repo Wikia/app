@@ -1547,6 +1547,7 @@ $messages['ps'] = array(
 	'pr_what_problem_unselect' => 'ټول',
 	'pr_what_problem_other_short' => 'بل',
 	'pr_describe_problem' => 'پيغام',
+	'pr_what_page' => 'د مخ سرليک',
 	'pr_mailer_to_default' => 'د ويکي يا کارن',
 	'pr_table_wiki_name' => 'ويکي نوم',
 	'pr_table_page_link' => 'مخ',

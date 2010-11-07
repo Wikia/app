@@ -64,6 +64,14 @@ $messages['es'] = array(
 	'tog-watchlistsubpages' => 'Seguir subpáginas',
 );
 
+/** Finnish (Suomi)
+ * @author Nike
+ */
+$messages['fi'] = array(
+	'wikia-watchsubpages-desc' => 'Automaattinen alasivujen seuraaminen',
+	'tog-watchlistsubpages' => 'Seuraa alasivuja',
+);
+
 /** French (Français)
  * @author Sherbrooke
  */

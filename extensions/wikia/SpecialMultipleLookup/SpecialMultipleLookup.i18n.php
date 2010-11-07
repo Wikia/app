@@ -115,6 +115,8 @@ $messages['br'] = array(
 	'multilookuplistwikiainfo' => "roll ar wikioù zo bet kemmet pennadoù warno gant an implierien o deus ur chomlec'h IP :<b>$1</b>",
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" n\'eus ket anezhañ.  Gwiriit ar chomlec\'h IP abalamour da fazioù a c\'\'hallfe bezañ ennañ. C</p>',
 	'multilookuplastedit' => "Kemm diwezhañ ar chomlec'h IP-mañ :",
+	'multilookupwikititle' => 'Titl',
+	'multilookupwikioptions' => 'Dibarzhioù',
 	'right-multilookup' => 'Klask titouroù diwar-benn implijerien e meur a wiki.',
 );
 
@@ -526,6 +528,7 @@ $messages['ps'] = array(
 	'multilookupprevious' => 'پخوانی',
 	'multilookupnbrresult' => 'د پايلو شمېر:',
 	'multilookupwiki' => 'ويکي',
+	'multilookupwikititle' => 'سرليک',
 );
 
 /** Portuguese (Português)

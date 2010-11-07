@@ -101,7 +101,6 @@ $messages['af'] = array(
 	'themedesigner-button-upload' => 'Oplaai',
 	'themedesigner-rules-background' => 'JPG, GIF of PNG. Maksimum 100 kilogrepe.',
 	'themedesigner-default' => 'Standaard',
-	'themedesigner-button-edit' => 'Wysig',
 	'themedesigner-font' => 'lettertipe',
 	'themedesigner-size' => 'grootte',
 	'themedesigner-button-save' => 'Stoor',
@@ -168,7 +167,6 @@ $messages['br'] = array(
 	'themedesigner-button-upload' => 'Enporzhiañ',
 	'themedesigner-rules-background' => 'jpg, gif pe png. Bevenn : 100 Ko',
 	'themedesigner-default' => 'Dre ziouer',
-	'themedesigner-button-edit' => 'Kemmañ',
 	'themedesigner-font' => 'font',
 	'themedesigner-size' => 'ment',
 	'themedesigner-button-save' => 'Enrollañ',
@@ -248,7 +246,6 @@ $messages['es'] = array(
 	'themedesigner-button-upload' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif o png. Límite: 100 Kb',
 	'themedesigner-default' => 'Por defecto',
-	'themedesigner-button-edit' => 'Editar',
 	'themedesigner-font' => 'fuente',
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Guardar',
@@ -296,7 +293,6 @@ $messages['fr'] = array(
 	'themedesigner-button-upload' => 'Importer',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Limite : 100 Ko',
 	'themedesigner-default' => 'Défaut',
-	'themedesigner-button-edit' => 'Modifier',
 	'themedesigner-font' => 'police',
 	'themedesigner-size' => 'taille',
 	'themedesigner-button-save' => 'Enregistrer',
@@ -342,7 +338,6 @@ $messages['gl'] = array(
 	'themedesigner-button-upload' => 'Cargar',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo de 100 kB',
 	'themedesigner-default' => 'Por defecto',
-	'themedesigner-button-edit' => 'Editar',
 	'themedesigner-font' => 'Fonte de letra',
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Gardar',
@@ -350,6 +345,7 @@ $messages['gl'] = array(
 	'themedesigner-rules-wordmark' => '250x65 píxeles (só ficheiros .png)',
 	'themedesigner-dont-use-a-graphic' => 'Non usar un gráfico',
 	'themedesigner-history-item' => '$1 por $2',
+	'themedesigner-button-change-text' => 'Cambiar o texto',
 );
 
 /** Interlingua (Interlingua)
@@ -388,7 +384,6 @@ $messages['ia'] = array(
 	'themedesigner-button-upload' => 'Incargar',
 	'themedesigner-rules-background' => 'JPG, GIF o PNG. Limite de 100 kilobytes.',
 	'themedesigner-default' => 'Predefinition',
-	'themedesigner-button-edit' => 'Modificar',
 	'themedesigner-font' => 'typo de litteras',
 	'themedesigner-size' => 'dimension',
 	'themedesigner-button-save' => 'Salveguardar',
@@ -396,6 +391,7 @@ $messages['ia'] = array(
 	'themedesigner-rules-wordmark' => '250x65 pixels (files .png solmente)',
 	'themedesigner-dont-use-a-graphic' => 'Non usar un graphico',
 	'themedesigner-history-item' => '$1 per $2',
+	'themedesigner-button-change-text' => 'Cambiar texto',
 );
 
 /** Japanese (日本語)
@@ -434,7 +430,6 @@ $messages['ja'] = array(
 	'themedesigner-button-upload' => 'アップロード',
 	'themedesigner-rules-background' => 'jpg, gif, png のいずれか。100 キロバイトまで。',
 	'themedesigner-default' => 'デフォルト',
-	'themedesigner-button-edit' => '編集',
 	'themedesigner-font' => 'フォント',
 	'themedesigner-size' => 'サイズ',
 	'themedesigner-button-save' => '保存',
@@ -480,7 +475,6 @@ $messages['mk'] = array(
 	'themedesigner-button-upload' => 'Подигни',
 	'themedesigner-rules-background' => 'jpg, gif или png. Ограничено на 100 килобајти',
 	'themedesigner-default' => 'По основно',
-	'themedesigner-button-edit' => 'Уреди',
 	'themedesigner-font' => 'фонт',
 	'themedesigner-size' => 'големина',
 	'themedesigner-button-save' => 'Зачувај',
@@ -488,6 +482,7 @@ $messages['mk'] = array(
 	'themedesigner-rules-wordmark' => '250x65 пиксели (само .png податотеки)',
 	'themedesigner-dont-use-a-graphic' => 'Не користи графика',
 	'themedesigner-history-item' => '$1 од $2',
+	'themedesigner-button-change-text' => 'Измени текст',
 );
 
 /** Mongolian (Монгол)
@@ -534,7 +529,6 @@ $messages['nl'] = array(
 	'themedesigner-button-upload' => 'Uploaden',
 	'themedesigner-rules-background' => 'JPG, GIF of PNG. Maximaal 100 kilobyte.',
 	'themedesigner-default' => 'Standaard',
-	'themedesigner-button-edit' => 'Bewerken',
 	'themedesigner-font' => 'lettertype',
 	'themedesigner-size' => 'grootte',
 	'themedesigner-button-save' => 'Opslaan',
@@ -542,9 +536,10 @@ $messages['nl'] = array(
 	'themedesigner-rules-wordmark' => '250 x 65 pixels (alleen PNG-bestanden)',
 	'themedesigner-dont-use-a-graphic' => 'Geen afbeelding gebruiken',
 	'themedesigner-history-item' => '$1 door $2',
+	'themedesigner-button-change-text' => 'Tekst wijzigen',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -580,7 +575,6 @@ $messages['no'] = array(
 	'themedesigner-button-upload' => 'Last opp',
 	'themedesigner-rules-background' => 'jpg, gif eller png. Grense på 100 kilobyte',
 	'themedesigner-default' => 'Standard',
-	'themedesigner-button-edit' => 'Rediger',
 	'themedesigner-font' => 'skrifttype',
 	'themedesigner-size' => 'størrelse',
 	'themedesigner-button-save' => 'Lagre',
@@ -588,6 +582,52 @@ $messages['no'] = array(
 	'themedesigner-rules-wordmark' => '250x65 piksler (kun .png-filer)',
 	'themedesigner-dont-use-a-graphic' => 'Ikke bruk en grafikk',
 	'themedesigner-history-item' => '$1 av $2',
+	'themedesigner-button-change-text' => 'Skift tekst',
+);
+
+/** Polish (Polski)
+ * @author Cloudissimo
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'themedesigner-desc' => 'Pozwala administratorom edytować motyw graficzny wiki.',
+	'themedesigner-background' => 'Tło',
+	'themedesigner-page' => 'Strona',
+	'themedesigner-color' => 'kolor',
+	'themedesigner-graphic' => 'grafika',
+	'themedesigner-buttons' => 'przyciski',
+	'themedesigner-links' => 'linki',
+	'themedesigner-header' => 'nagłówek',
+	'themedesigner-text-wordmark' => 'Logo tekstowe',
+	'themedesigner-graphic-wordmark' => 'Logo graficzne',
+	'themedesigner-small' => 'Mała',
+	'themedesigner-medium' => 'Średnia',
+	'themedesigner-large' => 'Duża',
+	'themedesigner-tile-background' => 'powtarzaj tło',
+	'themedesigner-tab-theme' => 'Motyw',
+	'themedesigner-tab-customize' => 'Dostosuj',
+	'themedesigner-tab-wordmark' => 'Logo tekstowe',
+	'themedesigner-preview-mode' => 'Tryb podglądu...',
+	'themedesigner-previous-versions' => 'Poprzednie wersje',
+	'themedesigner-button-save-im-done' => 'Zapisz, zakończono',
+	'themedesigner-button-cancel' => 'Anuluj',
+	'themedesigner-pick-a-color' => 'Wybierz kolor',
+	'themedesigner-enter-your-own' => 'Wybierz własny',
+	'themedesigner-color-name-or-hex-code' => 'Nazwa koloru lub kod szesnastkowy',
+	'themedesigner-button-ok' => 'Ok',
+	'themedesigner-pick-an-image' => 'Wybierz grafikę',
+	'themedesigner-dont-use-a-background' => 'Nie używaj tła',
+	'themedesigner-upload-your-own' => 'Prześlij własne',
+	'themedesigner-button-upload' => 'Prześlij',
+	'themedesigner-rules-background' => 'jpg, gif lub png. ograniczenie do 100 kilobajtów',
+	'themedesigner-font' => 'czcionka',
+	'themedesigner-size' => 'rozmiar',
+	'themedesigner-button-save' => 'Zapisz',
+	'themedesigner-upload-a-graphic' => 'prześlij grafikę',
+	'themedesigner-rules-wordmark' => '250x65 pikseli (tylko pliki .png)',
+	'themedesigner-dont-use-a-graphic' => 'Nie używaj grafiki',
+	'themedesigner-history-item' => '$1 przez $2',
+	'themedesigner-button-change-text' => 'Zmień tekst',
 );
 
 /** Piedmontese (Piemontèis)
@@ -627,7 +667,6 @@ $messages['pms'] = array(
 	'themedesigner-button-upload' => 'Carié',
 	'themedesigner-rules-background' => 'jpg, gif o png. lìmit ëd 100 kilobyte',
 	'themedesigner-default' => 'Për sòlit',
-	'themedesigner-button-edit' => 'Modìfica',
 	'themedesigner-font' => 'font (caràter)',
 	'themedesigner-size' => 'dimension',
 	'themedesigner-button-save' => 'Salva',
@@ -649,6 +688,10 @@ $messages['ps'] = array(
 	'themedesigner-small' => 'وړوکی',
 	'themedesigner-medium' => 'منځوی',
 	'themedesigner-large' => 'لوی',
+	'themedesigner-button-cancel' => 'ناګارل',
+	'themedesigner-font' => 'ليکبڼه',
+	'themedesigner-size' => 'کچه',
+	'themedesigner-button-save' => 'خوندي کول',
 );
 
 /** Portuguese (Português)
@@ -688,7 +731,6 @@ $messages['pt'] = array(
 	'themedesigner-button-upload' => 'Upload',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Máx: 100 KB',
 	'themedesigner-default' => 'Padrão',
-	'themedesigner-button-edit' => 'Editar',
 	'themedesigner-font' => 'fonte',
 	'themedesigner-size' => 'tamanho',
 	'themedesigner-button-save' => 'Gravar',
@@ -747,7 +789,6 @@ $messages['ru'] = array(
 	'themedesigner-button-upload' => 'Загрузить',
 	'themedesigner-rules-background' => 'jpg, gif или png. Лимит составляет 100 килобайт',
 	'themedesigner-default' => 'По умолчанию',
-	'themedesigner-button-edit' => 'Править',
 	'themedesigner-font' => 'шрифт',
 	'themedesigner-size' => 'размер',
 	'themedesigner-button-save' => 'Сохранить',

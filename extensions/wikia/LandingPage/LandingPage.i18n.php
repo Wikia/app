@@ -26,11 +26,13 @@ $messages['en'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'landingpage' => "Deuet mat oc'h war Wikia",
-	'landingpage-buttons-learn-more' => "Gouzout hiroc'h",
+	'landingpage-readfaq' => 'Goulennoù ? Lennit hor FAG &gt;',
+	'landingpage-buttons-learn-more' => "Gouzout hiroc'h &gt;",
 );
 
 /** German (Deutsch)
@@ -56,7 +58,11 @@ $messages['es'] = array(
  */
 $messages['fr'] = array(
 	'landingpage' => 'Bienvenue sur Wikia',
-	'landingpage-buttons-learn-more' => 'En savoir plus',
+	'landingpage-start-exploring' => "Prêt à commencer l'exploration ?",
+	'landingpage-start-exploring-text' => 'Recherchez le sujet qui vous intéresse ou parcourez les favoris de la communauté ci-dessous.',
+	'landingpage-readfaq' => 'Des questions ? Lisez notre FAQ &gt;',
+	'landingpage-text' => "Chez Wikia vous pouvez <strong>communiquer avec des gens</strong> qui partagent vos <strong>centres d'intérêt</strong>. Trouvez votre groupe, commentez et éditez, vous pouvez même <strong>démarrer votre propre site</strong> et communauté.",
+	'landingpage-buttons-learn-more' => 'En savoir plus &gt;',
 );
 
 /** Galician (Galego)

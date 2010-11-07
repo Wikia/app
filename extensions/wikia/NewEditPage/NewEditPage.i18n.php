@@ -40,10 +40,11 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'new-edit-page-preview-notice' => "Mod rakwelet : n'eo bet enrollet kemm ebet evit poent ! Kit da benn izelañ ar bajenn evit kenderc'hel gant ar c'hemmoù.",
+	'new-edit-page-preview-notice' => "Mod rakwelet : n'eus bet enrollet kemm ebet evit poent ! Kit e traoñ ar bajenn evit kenderc'hel da zegas kemmoù.",
 	'templatesused-toggle' => 'Diskouez/kuzhat $1 elfenn{{PLURAL:$1||}}',
 );
 

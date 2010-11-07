@@ -217,6 +217,13 @@ $messages['pms'] = array(
 	'feed-title-blogcomments' => 'Coment a $1',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'all-blog-posts' => 'ټولې وېشنيزې',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

@@ -112,6 +112,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -142,8 +143,10 @@ $messages['br'] = array(
 	'lookupcontribswikidbname' => 'Anv an diaz roadennoù',
 	'lookupcontribswikiurl' => 'Url',
 	'lookupcontribswikititle' => 'Titl',
+	'lookupcontribswikioptions' => 'Dibarzhioù',
 	'lookupcontribscontribslink' => 'Liammoù war-du an degasadennoù',
 	'lookupcontribsdetails' => 'Gwelet ar munudoù evit :',
+	'lookupcontribslastedited' => 'Kemmet da ziwezhañ',
 	'lookupcontribscontribs' => 'degasadennoù',
 	'lookupcontribsnbrresult' => "Niver a zisoc'hoù :",
 	'lookupcontribsnext' => 'da-heul',
@@ -156,6 +159,9 @@ $messages['br'] = array(
 	'right-lookupcontribs' => 'Gwelet kemmoù hollek an implijer',
 	'lookupcontribsshowpages' => 'An holl bajennoù (egorennoù anvioù $1)',
 	'lookupcontribscontent' => 'danvez',
+	'lookupcontribscontribtitleforuser' => 'Degasadennoù an implijer :',
+	'lookupcontribsnormal' => 'nevez',
+	'lookupcontribsall' => 'pep tra',
 );
 
 /** German (Deutsch)

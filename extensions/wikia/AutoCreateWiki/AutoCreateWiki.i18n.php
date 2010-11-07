@@ -2639,6 +2639,7 @@ $messages['ps'] = array(
 	'autocreatewiki-success-title-default' => 'ستاسې ويکي جوړ شو!',
 	'autocreatewiki-success-has-been-created' => 'جوړ شو!',
 	'autocreatewiki-success-get-started' => 'پېلول',
+	'autocreatewiki-title-template' => '$1 ويکي',
 	'autocreatewiki-invalid-username' => 'دا کارن نوم سم نه دی.',
 	'autocreatewiki-busy-username' => 'دا کارن نوم بل چا ځانته ټاکلی.',
 	'autocreatewiki-blocked-username' => 'تاسې کارن حساب نه شی جوړولای.',
@@ -2666,7 +2667,7 @@ $messages['pt'] = array(
 	'createwiki' => 'Criar uma wiki nova',
 	'autocreatewiki-chooseone' => 'Escolha uma',
 	'autocreatewiki-required' => '$1 = obrigatório',
-	'autocreatewiki-web-address' => 'Endereço na internet:',
+	'autocreatewiki-web-address' => 'URL da wiki:',
 	'autocreatewiki-category-select' => 'Seleccione uma',
 	'autocreatewiki-language-top' => 'As $1 línguas de topo',
 	'autocreatewiki-language-all' => 'Todas as línguas',
@@ -2751,11 +2752,11 @@ Seleccione uma apropriada da lista descendente.',
 	'autocreatewiki-welcomesubject' => '$1 foi criada!',
 	'autocreatewiki-welcomebody' => 'Olá $2,
 
-A Wikia que solicitou está agora disponível em <$1> Esperamos vê-lo a editá-la em breve!
+A wiki que solicitou está agora disponível em <$1>. Esperamos vê-lo a editá-la em breve!
 
-Adicionámos alguma Informação e Dicas na sua página de dicussão do utilizador (<$5>) para ajudá-lo a começar.
+Adicionámos alguma Informação e Dicas na sua Página de Discussão (<$5>) para ajudá-lo a começar.
 
-Se tiver algum problema, pode pedir ajuda à comunidade de utilizadores da wiki em <http://www.wikia.com/wiki/Forum:Help_desk>, ou por correio electrónico para community@wikia.com. Também pode visitar o nosso canal  IRC #wikia de conversação ao vivo <http://irc.wikia.com>.
+Se tiver algum problema, pode pedir ajuda à comunidade de utilizadores da wiki em <http://www.wikia.com/wiki/Forum:Help_desk>, ou por correio electrónico para community@wikia.com. Também pode visitar o nosso canal IRC #wikia de conversação ao vivo <http://irc.wikia.com>.
 
 Se tiver quaisquer questões, pode contactar-me directamente por correio electrónico ou na minha página de discussão.
 
@@ -2769,9 +2770,9 @@ A Equipa da Comunidade Wikia
 	'autocreatewiki-welcometalk' => "== Bem-vindo(a)! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Olá \$1 -- é óptimo contar com '''\$4''' na comunidade Wikia!
 
-Agora tem um site completo na internet para preencher de informação, imagens e vídeos sobre o seu assunto preferido. Mas, para já, ele só contém páginas vazias... Assustador, não é? Aqui vão algumas sugestões para começar.
+Agora tem um site completo na internet para preencher com informação, imagens e vídeos sobre o seu assunto preferido. Mas, para já, ele só contém páginas vazias... Assustador, não é? Aqui vão algumas sugestões para começar.
 
-* '''Apresente o seu tópico''' na página inicial. Esta é a oportunidade de explicar aos visitantes tudo sobre o tema do seu tópico. Escreva tudo o que quiser! A sua descrição pode conter links para todas as páginas importantes do site.
+* '''Apresente o tema''' na página inicial. Esta é a oportunidade de explicar aos visitantes tudo sobre o tema da wiki. Escreva tudo o que quiser! A sua descrição pode conter links para todas as páginas importantes do site.
 
 * '''Crie algumas páginas novas''' -- só uma frase ou duas já serão um bom começo. Não se deixe bloquear pela página vazia! Uma wiki vive da adição e alteração de coisas ao longo do tempo. Também pode adicionar imagens e vídeos, para preencher a página e torná-la mais interessante.
 

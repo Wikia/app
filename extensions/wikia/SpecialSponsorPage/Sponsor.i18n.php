@@ -34,6 +34,22 @@ $messages['qqq'] = array(
 	'sponsorpage-save' => '{{Identical|Save}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'sponsor-header' => '<h2>Eksterne borge</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Borg hierdie bladsy</a></li>',
+	'sponsor-form-page' => 'Bladsy om te borg:',
+	'sponsor-form-price' => 'Borgbedrag:',
+	'sponsor-form-email' => 'U e-posadres:',
+	'sponsor-form-thanks' => 'Baie dankie vir u borgskap!',
+	'sponsor-price-45yr' => '$45 (USD) per jaar',
+	'sponsor-price-5mo' => '$5 (USD) per maand',
+	'sponsorpage-edit' => 'Wysig',
+	'sponsorpage-save' => 'Stoor',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -129,6 +145,29 @@ $messages['es'] = array(
 	'sponsor-price-5mo' => '$5 por mes',
 	'sponsorpage-edit' => 'Editar',
 	'sponsorpage-save' => 'Grabar',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Nike
+ */
+$messages['fi'] = array(
+	'sponsorpage-desc' => 'Mahdollistaa sivujen sponsoroimisen',
+	'sponsor-header' => '<h2>Ulkoiset sponsorointilinkit</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsoroi tätä sivua</a></li>',
+	'sponsor-preview-prompt' => 'Tältä sponsorointisi näyttää – palaa takaisin tekemään muutoksia napsauttamalla »Muokkaa» tai tallenna napsauttamalla »Tallenna» ja siirry PayPal-sivustolle.',
+	'sponsor-preview-errors' => 'Lähetyksessäsi on virheitä:',
+	'sponsor-form-url' => 'Sponsorointiverkkosivun (sivustosi) verkko-osoite:',
+	'sponsor-form-linktext' => 'Teksti, jonka haluat näkyvän linkissä:',
+	'sponsor-form-additionaltext' => 'Teksti, joka näytetään linkkisi alla:',
+	'sponsor-form-page' => 'Sponsoroitava sivu:',
+	'sponsor-form-price' => 'Sponsorointisumma:',
+	'sponsor-form-email' => 'Sähköpostiosoite:',
+	'sponsor-form-thanks' => 'Kiitos sponsoroinnistasi!',
+	'sponsor-price-45yr' => '45 dollaria vuodessa',
+	'sponsor-price-5mo' => '5 dollaria kuukaudessa',
+	'sponsorpage-edit' => 'Muokkaa',
+	'sponsorpage-save' => 'Tallenna',
 );
 
 /** French (Français)
@@ -317,6 +356,14 @@ $messages['pms'] = array(
 	'sponsor-price-5mo' => '$5 al mèis',
 	'sponsorpage-edit' => 'Modìfica',
 	'sponsorpage-save' => 'Salva',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'sponsorpage-edit' => 'سمول',
+	'sponsorpage-save' => 'خوندي کول',
 );
 
 /** Portuguese (Português)

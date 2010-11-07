@@ -293,15 +293,88 @@ $messages['es'] = array(
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author Nike
  */
 $messages['fi'] = array(
 	'toplists-desc' => 'Top 10 -luettelot',
 	'right-toplists-create-edit-list' => 'Luo ja muokkaa Top 10 -luettelosivuja',
 	'right-toplists-create-item' => 'Luo ja lisää kohteita Top 10 -luettelosivulle',
 	'createtoplist' => 'Luo uusi Top 10 -luettelo',
+	'edittoplist' => 'Muokkaa Top 10 -luetteloa',
+	'toplists-category' => 'Top 10 -luettelot',
+	'toplists-error-invalid-title' => 'Toimitettu teksti ei kelpaa.',
+	'toplists-error-invalid-picture' => 'Valittu kuva ei kelpaa.',
+	'toplists-error-title-exists' => 'Tämä sivu on jo olemassa. Voit siirtyä kohteeseen <a href="$2" target="_blank">$1</a> tai tarjota eri nimen.',
+	'toplists-error-title-spam' => 'Tarjottu teksti sisältää joitakin sanoja, jotka on tunnistettu roskapostina.',
+	'toplists-error-article-blocked' => 'Et voi valitettavasti luoda tämän nimistä sivu.',
+	'toplists-error-article-not-exists' => '"$1" ei ole olemassa. Haluatko <a href="$2" target="_blank">luoda sen</a>?',
+	'toplists-error-picture-not-exists' => '"$1" ei ole olemassa. Haluatko <a href="$2" target="_blank">kopioida sen palvelimelle</a>?',
+	'toplists-error-duplicated-entry' => 'Et voi käyttää samaa nimeä kuin kerran.',
+	'toplists-error-empty-item-name' => 'Olemassaolevan kohteen nimi ei voi olla tyhjä.',
+	'toplists-item-cannot-delete' => 'Tämän kohteen poistaminen epäonnistui.',
+	'toplists-error-image-already-exists' => 'Samanniminen kuva on jo olemassa.',
+	'toplists-error-add-item-anon' => 'Anonyymit käyttäjät eivät voi lisätä kohteita luetteloihin. Ole hyvä ja <a class="ajaxLogin" id="login" href="$1">Kirjaudu sisään</a> tai <a class="ajaxLogin" id="signup" href="$2">rekisteröi uusi tili</a>.',
+	'toplists-error-add-item-permission' => 'Käyttöoikeusvirhe: Tilille ei ole myönnetty oikeutta luoda uusia kohteita.',
+	'toplists-error-add-item-list-not-exists' => '"$1" Top 10 -luetteloa ei ole olemassa.',
+	'toplists-error-backslash-not-allowed' => '"/"-merkki ei ole sallittu Top 10 -luettelon otsikossa.',
+	'toplists-editor-title-label' => 'Luettelonimi',
+	'toplists-editor-title-placeholder' => 'Kirjoita luettelon nimi',
+	'toplists-editor-related-article-label' => 'Liittyvä sivu <small>(valinnainen, mutta valitsee kuvan)</small>',
+	'toplists-editor-related-article-placeholder' => 'Anna olemassa olevan sivun nimi',
+	'toplists-editor-image-browser-tooltip' => 'Lisää kuva',
+	'toplists-editor-remove-item-tooltip' => 'Poista kohde',
+	'toplists-editor-drag-item-tooltip' => 'Voit muuttaa järjestystä vetämällä',
+	'toplists-editor-add-item-label' => 'Lisää uusi kohde',
+	'toplists-editor-add-item-tooltip' => 'Lisää uusi kohde luetteloon',
+	'toplists-create-button' => 'Luo luettelo',
+	'toplists-update-button' => 'Tallenna luettelo',
+	'toplists-cancel-button' => 'Peruuta',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|kohde|kohdetta}} poistettu',
+	'toplists-items-created' => '$1 {{PLURAL:$1|kohde|kohdetta}} luotu',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|kohde|kohdetta}} päivitetty',
+	'toplists-items-nochange' => 'Ei muuttuneita kohteita',
+	'toplits-image-browser-no-picture-selected' => 'Ei kuvaa valittuna',
+	'toplits-image-browser-clear-picture' => 'Tyhjennä kuva',
+	'toplits-image-browser-selected-picture' => 'Tällä hetkellä valittuna: $1',
+	'toplists-image-browser-upload-btn' => 'Valitse',
+	'toplists-image-browser-upload-label' => 'Lähetä oma',
+	'toplists-list-creation-summary' => 'Luodaan luetteloa, $1',
+	'toplists-list-update-summary' => 'Päivitetään luetteloa, $1',
+	'toplists-item-creation-summary' => 'Luodaan luettelokohde',
+	'toplists-item-update-summary' => 'Päivitetään luettelokohde',
+	'toplists-item-remove-summary' => 'Kohde poistettu luettelosta',
+	'toplists-item-restored' => 'Kohde palautettu',
+	'toplists-list-related-to' => 'Liittyy kohteeseen:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />ääni|$1<br />ääntä}}',
+	'toplists-list-created-by' => ': [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Kannatusääni',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|ääni|ääntä}} kohteessa $2',
+	'toplists-list-add-item-label' => 'Lisää kohde',
+	'toplists-list-add-item-name-label' => 'Pidä luettelo käynnissä...',
+	'toplists-list-item-voted' => 'Äänestetty',
+	'toplists-createpage-dialog-label' => 'Top10-lista',
+	'toplists-email-subject' => 'Top10-lista on muuttunut',
+	'toplists-email-body' => 'Hei Wikiasta!
+
+Luettelo <a href="$1">$2</a> Wikiassa on muuttunut.
+
+ $3
+
+Suuntaa Wikiaan muutosten tarkistamiseksi! $1
+
+- Wikia
+
+Voit <a href="$4">perua päivitykset</a> luettelon muutoksista.',
+	'toplists-seconds' => '$1 {{PLURAL:$1|sekunti|sekuntia}} sitten',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minuutti|minuuttia}} sitten',
+	'toplists-hours' => '$1 {{PLURAL:$1|tunti|tuntia}} sitten',
+	'toplists-days' => '$1 {{PLURAL:$1|päivä|päivää}} sitten',
+	'toplists-weeks' => '$1 {{PLURAL:$1|viikko|viikkoa}} sitten',
+	'toplists-msg-fb-OnRateArticle-short' => 'on äänestänyt Top10-listaa wikissä $WIKINAME!',
 );
 
 /** French (Français)
+ * @author Jean-Frédéric
  * @author Peter17
  * @author Verdy p
  */
@@ -381,6 +454,8 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
 	'toplists-days' => '$1 jour{{PLURAL:$1||s}}',
 	'toplists-weeks' => '$1 semaine{{PLURAL:$1||s}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'a voté sur une liste du Top 10 sur $WIKINAME !',
+	'toplists-create-heading' => '<em>Nouveau !</em> Créez votre propre top dix',
+	'toplists-create-button-msg' => 'Créer une liste',
 );
 
 /** Galician (Galego)
@@ -485,6 +560,8 @@ Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
 	'toplists-days' => '$1 {{PLURAL:$1|die|dies}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|septimana|septimanas}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'ha votate in un lista Top 10 in $WIKINAME!',
+	'toplists-create-heading' => '<em>Nove!</em> Crea tu proprie top dece',
+	'toplists-create-button-msg' => 'Crear un lista',
 );
 
 /** Macedonian (Македонски)
@@ -566,6 +643,8 @@ $messages['mk'] = array(
 	'toplists-days' => '$1 {{PLURAL:$1|ден|дена}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|недела|недели}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'гласаше на списокот на 10 најкотирани на $WIKINAME!',
+	'toplists-create-heading' => '<em>Ново!</em> Создајте свои „10 најкотирани“',
+	'toplists-create-button-msg' => 'Создај список',
 );
 
 /** Dutch (Nederlands)
@@ -647,9 +726,11 @@ U kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-days' => '$1 {{PLURAL:$1|dag|dagen}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|week|weken}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'heeft gestemd op een Top 10 lijst op $WIKINAME!',
+	'toplists-create-heading' => '<em>Nieuw!</em> Maak uw eigen Top 10 aan',
+	'toplists-create-button-msg' => 'Lijst aanmaken',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -729,6 +810,8 @@ Du kan <a href="$4">slette abbonementet</a> på endringer i listen.',
 	'toplists-days' => '{{PLURAL:$1|én dag|$1 dager}}',
 	'toplists-weeks' => '{{PLURAL:$1|én uke|$1 uker}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'har stemt på en Topp 10-liste på $WIKINAME!',
+	'toplists-create-heading' => '<em>Nyhet!</em> Lag din egen Topp ti',
+	'toplists-create-button-msg' => 'Opprett en liste',
 );
 
 /** Piedmontese (Piemontèis)

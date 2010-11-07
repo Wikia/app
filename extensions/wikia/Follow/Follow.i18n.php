@@ -271,6 +271,7 @@ Ouzhpennit pajennoù d\'ar roll-se en ur klikañ war "{{int:watch}}" e talbenn a
 );
 
 /** German (Deutsch)
+ * @author Avatar
  * @author Kjell
  * @author LWChris
  * @author Lyzzy
@@ -291,7 +292,7 @@ $messages['de'] = array(
 	'wikiafollowedpages-special-empty' => 'Die Liste der beobachteten Seiten dieses Benutzers ist leer.
 Du kannst durch Klicken des {{int:watch}}-Buttons Seiten dieser Liste hinzufügen.',
 	'wikiafollowedpages-special-anon' => 'Bitte [[Special:Signup|anmelden]] um deine Beobachtungsliste zu erstellen oder betrachten.',
-	'oasis-wikiafollowedpages-special-seeall' => 'Sehe alle >',
+	'oasis-wikiafollowedpages-special-seeall' => 'Zeige alle >',
 	'wikiafollowedpages-special-seeall' => 'Sehe alle >',
 	'wikiafollowedpages-special-showall' => 'Alle anzeigen',
 	'wikiafollowedpages-special-showmore' => 'Zeige mehr',
@@ -786,6 +787,7 @@ Volva e edite a miúdo...
 );
 
 /** Hebrew (עברית)
+ * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
@@ -826,6 +828,40 @@ $messages['he'] = array(
 	'wikiafollowedpages-userpage-hide-tooltip' => 'הסתרת רשימות הדפים שבמעקב מצפייה ציבורית',
 	'wikiafollowedpages-userpage-more' => 'עוד',
 	'wikiafollowedpages-userpage-hide' => 'הסתרה',
+	'wikiafollowedpages-userpage-empty' => 'רשימת הדפים אחריהם עקב המשתמש ריקה.
+ניתן להוסיף דפים לרשימה זו על ידי לחיצה על "{{int:watch}}" בראש דף.',
+	'enotif_subject_categoryadd' => 'הדף $PAGETITLE ב{{grammar:תחילית|{{SITENAME}}}} נוסף ל$CATEGORYNAME על־ידי $PAGEEDITOR',
+	'enotif_body_categoryadd' => 'לכבוד $WATCHINGUSERNAME,
+
+נוסף דף לקטגוריה שאתם עוקבים אחריה ב{{grammar:תחילית|{{SITENAME}}}}.
+
+ראו "$PAGETITLE_URL" לדף החדש.
+
+אנא בקרו וערכו לעיתים קרובות...
+
+{{SITENAME}}
+
+___________________________________________
+* Check out our featured wikis! http://www.wikia.com
+
+* רוצים לקבוע אילו הודעות דוא"ל לקבל?
+ראו: {{fullurl:{{ns:special}}:Preferences}}.',
+	'enotif_body_categoryadd-html' => '<p>
+לכבוד $WATCHINGUSERNAME,
+<br /><br />
+נוסף דף לקטגוריה שאתם עוקבים אחריה ב{{grammar:תחילית|{{SITENAME}}}}.
+<br /><br />
+ראו <a href="$PAGETITLE_URL">$PAGETITLE</a> לדף החדש.
+<br /><br />
+אנא בקרו וערכו לעיתים קרובות...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
+<li>רוצים לקבוע אילו הודעות דוא"ל לקבל? ראו <a href="{{fullurl:{{ns:special}}:Preferences}}">העדפות המשתמש</a></li>
+</ul>
+</p>',
 );
 
 /** Interlingua (Interlingua)
@@ -1538,6 +1574,8 @@ $messages['ps'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'د مېډياويکي مخونه ($1)',
 	'wikiafollowedpages-special-heading-media' => 'انځورونه او ويډيوګانې ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 مخ)',
+	'oasis-wikiafollowedpages-special-seeall' => 'ټول کتل >',
+	'wikiafollowedpages-special-seeall' => 'ټول کتل >',
 	'wikiafollowedpages-special-showall' => 'ټول ښکاره کول >',
 	'wikiafollowedpages-special-showmore' => 'نور ښکاره کول',
 	'wikiafollowedpages-special-title' => 'څارلي مخونه',
