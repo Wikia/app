@@ -525,6 +525,7 @@ Gionté dj'element a la lista, e a apariran ansima a Mia Intrada e su costa pàg
  */
 $messages['ps'] = array(
 	'wikistickies-save-changes' => 'بدلونونه خوندي کول',
+	'wikistickies-more' => 'نور کتل',
 	'wikistickies-admins-hd' => 'يوازې پازوالان',
 	'wikistickies-hide' => 'پټول',
 );

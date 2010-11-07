@@ -118,6 +118,13 @@ $messages['gl'] = array(
 	'mostpopularcategories' => 'Categorías máis populares',
 );
 
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'mostpopularcategories' => 'הקטגוריות הפופולריות ביותר',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */

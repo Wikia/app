@@ -77,6 +77,13 @@ $messages['gv'] = array(
 	'tog-disablelinksuggest' => 'Ny taishbyney kiangley-choyrlaghey',
 );
 
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'tog-disablelinksuggest' => 'ביטול הצגת הצעות לקישורים',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */

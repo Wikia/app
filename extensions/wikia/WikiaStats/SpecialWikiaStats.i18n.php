@@ -838,6 +838,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author McDutchie
  * @author Y-M D
@@ -934,7 +935,7 @@ $messages['br'] = array(
 	'wikiastats_count' => 'kont',
 	'wikiastats_unique_users' => 'Implijerien zibar',
 	'wikiastats_first_edit' => 'Kemm kentañ',
-	'wikiastats_last_edit' => 'kemm ziwezhañ',
+	'wikiastats_last_edit' => 'Kemm diwezhañ',
 	'wikiastats_rank' => 'renk',
 	'wikiastats_previous_month' => 'miz<br />kent',
 	'wikiastats_total' => 'hollad',
@@ -4647,6 +4648,7 @@ $messages['ps'] = array(
 	'wikiastats_usernames' => 'کارنان',
 	'wikiastats_edits' => 'سمونونه',
 	'wikiastats_bytes' => 'بايټونه',
+	'wikiastats_size' => 'کچه',
 	'wikiastats_words' => 'وييونه',
 	'wikiastats_internal' => 'کورنۍ',
 	'wikiastats_image' => 'انځور',
@@ -4676,6 +4678,7 @@ $messages['ps'] = array(
 	'wikiastats_trend_where_text' => 'چېرته:',
 	'wikiastats_trend_all_wikia_text' => 'ټولې ويکي ګانې',
 	'wikiastats_always_selected' => '(تل ټاکل شوی)',
+	'wikiastats_full_dump_stats' => 'بشپړ',
 	'wikiastats_xls_cancel' => 'ناګارل',
 	'wikiastats_select_text' => 'ويکيا ټاکل:',
 	'wikiastats_select_btn' => 'ټاکل',

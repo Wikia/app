@@ -47,6 +47,7 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -56,11 +57,15 @@ $messages['br'] = array(
 	'hub-topusers-header' => 'Implijerien pennañ eus $1',
 	'hub-featured' => 'Wikioù pennañ eus $1',
 	'hub-header' => 'Wikioù $1',
+	'hub-hotspot-info' => 'Setu pajennoù buhezekañ ar sizhun, urzhiet dre an niver a skridaozerien.',
 	'hub-blog-comments' => '{{PLURAL:$1|un evezhiadenn|$1 evezhiadenn}}',
 	'hub-blog-continue' => "Kenderc'hel da lenn",
 	'hub-blog-showarticle' => 'Gwelet ar bajenn',
 	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|poent|poent}} kemmañ</span>',
 	'hub-hotspot-from' => 'eus',
+	'hub-hide-feed' => 'Kuzhat al lanvad',
+	'hub-show-feed' => 'Diskouez al lanvad',
+	'hub-contributors-info' => 'Setu implijerien oberiantañ ar sizhun, urzhiet dre an niver a gemmoù.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|oberour|oberour}}</span>',
 );
 
@@ -253,6 +258,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'hub-header' => '$1 ويکي ګانې',
 	'hub-blog-showarticle' => 'مخ ښکاره کول',
 );
 

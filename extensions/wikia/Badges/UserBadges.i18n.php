@@ -36,6 +36,13 @@ $messages['en'] = array(
 		'user-badge-save-info' => 'If you want to save changes, scroll to the page end and press the "{{int:saveprefs}}" button',
 );
 
+/** Message documentation (Message documentation)
+ * @author Nike
+ */
+$messages['qqq'] = array(
+	'user-badge-data-color' => 'This is a label for an input field that contains the setting for the colour of the data of a badge.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -56,7 +63,6 @@ $messages['br'] = array(
 	'user-badge-hide-color' => 'Kuzhat munudoù al livioù',
 	'user-badge-selected-color' => 'Liv diuzet er mare-mañ {rgb}',
 	'user-badge-web-color' => 'Liv web boaz an tostañ : {rgb}. Klikit evit diuzañ !',
-	'user-badge-dialog-title' => 'Mar plij dibabit ul liv',
 	'user-badge-current' => 'Badj red',
 	'user-badge-configure' => 'Kefluniañ ho badj',
 	'user-badge-not-found' => "N'eo bet kavet badj ebet !",
@@ -92,7 +98,6 @@ $messages['de'] = array(
 	'user-badge-hide-color' => 'Verstecke Farbdetails',
 	'user-badge-selected-color' => 'Momentan gewählte Farbe {rgb}',
 	'user-badge-web-color' => 'Ähnlichste websichere Farbe: {rgb}. Klicke zur Auswahl!',
-	'user-badge-dialog-title' => 'Bitte wähle eine Farbe',
 	'user-badge-left-align' => 'links',
 	'user-badge-right-align' => 'rechts',
 	'user-badge-center-align' => 'mitte',
@@ -125,7 +130,6 @@ $messages['de'] = array(
  * @author The Evil IP address
  */
 $messages['de-formal'] = array(
-	'user-badge-dialog-title' => 'Bitte wählen Sie eine Farbe',
 	'user-badge-configure' => 'Richten Sie Ihren Sticker ein',
 	'user-badge-use-configurator' => 'Benutzen Sie den Konfigurator um einen neuen Sticker zu erstellen!',
 	'user-badge-save-info' => 'Wenn Sie die Änderungen speichern möchten, scrollen Sie bitte zum Ende der Seite und klicken Sie auf „{{int:saveprefs}}“.',
@@ -142,7 +146,6 @@ $messages['en-gb'] = array(
 	'user-badge-hide-color' => 'Hide colour details',
 	'user-badge-selected-color' => 'Currently selected colour {rgb}',
 	'user-badge-web-color' => 'Closest websafe colour: {rgb} Click to select!',
-	'user-badge-dialog-title' => 'Please choose a colour',
 	'user-badge-current' => 'Current badge',
 	'user-badge-configure' => 'Configure your badge',
 	'user-badge-not-found' => 'No badge found!',
@@ -180,7 +183,6 @@ $messages['es'] = array(
 	'user-badge-hide-color' => 'Ocultar los detalles del color',
 	'user-badge-selected-color' => 'Color {rgb} actualmente seleccionado',
 	'user-badge-web-color' => 'Color web estándar más cercano: {rgb}. ¡Haga clic aquí para seleccionarlo!',
-	'user-badge-dialog-title' => 'Por favor escoja un color',
 	'user-badge-current' => 'Insignia actual',
 	'user-badge-configure' => 'Configure su insignia',
 	'user-badge-not-found' => '¡No se ha encontrado ninguna insignia!',
@@ -207,12 +209,37 @@ $messages['es'] = array(
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author Nike
  */
 $messages['fi'] = array(
+	'user-badge-title' => 'Käyttäjärintanappi',
 	'user-badge-invalid-color' => 'Kirjoitettu virheellinen heksadesimaaliarvo',
 	'user-badge-show-color' => 'Näytä väriyksityiskohdat',
 	'user-badge-hide-color' => 'Piilota väriyksityiskohdat',
+	'user-badge-selected-color' => 'Valittu väri {rgb}',
+	'user-badge-web-color' => 'Lähin verkossa turvallisesti käytettävä väri: {rgb}. Valitse napsauttamalla.',
+	'user-badge-current' => 'Nykyinen rintanappi',
+	'user-badge-configure' => 'Määritä rintanappisi',
+	'user-badge-not-found' => 'Rintanappia ei löytynyt!',
+	'user-badge-use-configurator' => 'Käytä asetusohjelmaa uuden rintanapin luomiseen!',
+	'user-badge-create' => 'Luo rintanappi:',
+	'user-badge-overwrite-msg' => 'Korvaa olemassaoleva rintanappi',
+	'user-badge-header-body-box' => 'Otsake ja sisältö:',
+	'user-badge-header-text' => 'Otsaketekstiväri:',
+	'user-badge-header-bgcolor' => 'Otsaketaustaväri:',
+	'user-badge-body-bgcolor' => 'Sisällön taustaväri:',
+	'user-badge-text-align' => 'Otsaketekstin tasaus:',
 	'user-badge-logo-opt' => 'Kuva-asetukset:',
+	'user-badge-wikia-logo-pos' => 'Wikia-logon sijainti:',
+	'user-badge-small-wikia-logo-pos' => 'Pienen Wikia-logon sijainti:',
+	'user-badge-label-color' => 'Nimikeväri (käyttäjänimi, muokkaukset):',
+	'user-badge-small-wikia-logo-color' => 'Wikia-logon väri:',
+	'user-badge-data-color' => 'Sisältöväri:',
+	'user-badge-edits-txt' => 'Muokkaukset',
+	'user-bagde-copypaste-ext-code' => 'Kopioi ja liitä (ulkoiset sivustot)',
+	'user-bagde-copypaste-int-code' => 'Kopioi ja liitä (tämä Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Kopioi ja liitä (muu Wikia)',
+	'user-badge-save-info' => 'Jos haluat tallentaa muutokset, vieritä sivun loppuun ja napsauta »{{int:saveprefs}}»',
 );
 
 /** French (Français)
@@ -226,7 +253,6 @@ $messages['fr'] = array(
 	'user-badge-hide-color' => 'Masquer les détails des couleurs',
 	'user-badge-selected-color' => 'Couleur actuellement sélectionnée {rgb}',
 	'user-badge-web-color' => 'Couleur web standard la plus proche : {rgb}. Cliquez pour la sélectionner !',
-	'user-badge-dialog-title' => 'Veuillez choisir une couleur',
 	'user-badge-current' => 'Badge actuel',
 	'user-badge-configure' => 'Configurer votre badge',
 	'user-badge-not-found' => 'Aucun badge trouvé !',
@@ -261,7 +287,6 @@ $messages['gl'] = array(
 	'user-badge-hide-color' => 'Agochar os detalles das cores',
 	'user-badge-selected-color' => 'Cor seleccionada nestes intres: {rgb}',
 	'user-badge-web-color' => 'Cor web que máis preto está: {rgb}. Prema aquí para seleccionala!',
-	'user-badge-dialog-title' => 'Por favor, seleccione unha cor',
 	'user-badge-current' => 'Insignia actual',
 	'user-badge-configure' => 'Configurar a súa insignia',
 	'user-badge-not-found' => 'No se atopou ningunha insignia!',
@@ -296,7 +321,6 @@ $messages['hu'] = array(
 	'user-badge-hide-color' => 'Színezés részleteinek elrejtése',
 	'user-badge-selected-color' => 'Jelenleg kiválasztott szín {rgb}',
 	'user-badge-web-color' => 'Legközelebbi webtűrő szín: {rgb}. Kattints a kiválasztáshoz!',
-	'user-badge-dialog-title' => 'Kérlek válassz egy színt',
 	'user-badge-current' => 'Jelenlegi kitűző',
 	'user-badge-configure' => 'Kitűződ beállítása',
 	'user-badge-not-found' => 'Nem található kitűző!',
@@ -331,7 +355,6 @@ $messages['ia'] = array(
 	'user-badge-hide-color' => 'Celar detalios de color',
 	'user-badge-selected-color' => 'Color actualmente seligite {rgb}',
 	'user-badge-web-color' => 'Le color secur pro web le plus proxime: {rgb}. Clicca pro seliger!',
-	'user-badge-dialog-title' => 'Per favor selige un color',
 	'user-badge-current' => 'Insignia actual',
 	'user-badge-configure' => 'Configurar tu insignia',
 	'user-badge-not-found' => 'Nulle insignia trovate!',
@@ -383,7 +406,6 @@ $messages['ja'] = array(
 	'user-badge-hide-color' => '色の詳細を非表示',
 	'user-badge-selected-color' => '現在選択されている色 - {rgb}',
 	'user-badge-web-color' => '最も近いウェブセーフカラーは {rgb} です。これを選択する場合はクリックしてください。',
-	'user-badge-dialog-title' => '色を選択する:',
 	'user-badge-left-align' => '左',
 	'user-badge-right-align' => '右',
 	'user-badge-center-align' => '中央',
@@ -432,7 +454,6 @@ $messages['mk'] = array(
 	'user-badge-hide-color' => 'Сокриј податоци за боја',
 	'user-badge-selected-color' => 'Моментално одбрана боја  {rgb}',
 	'user-badge-web-color' => 'Најприближна мрежна боја: {rgb}. Кликнете за да одберете!',
-	'user-badge-dialog-title' => 'Одберете боја',
 	'user-badge-current' => 'Тековна значка',
 	'user-badge-configure' => 'Конфигурирајте ја вашата значка',
 	'user-badge-not-found' => 'Нема пронајдено значка!',
@@ -468,7 +489,6 @@ $messages['nl'] = array(
 	'user-badge-selected-color' => 'Huidige geselecteerde kleur {rgb}',
 	'user-badge-web-color' => 'Meest gelijkende webkleur: {rgb}.
 Klik om te selecteren!',
-	'user-badge-dialog-title' => 'Kies alstublieft een kleur',
 	'user-badge-current' => 'Huidige onderscheiding',
 	'user-badge-configure' => 'Uw onderscheiding instellen',
 	'user-badge-not-found' => 'Er is geen onderscheiding aangetroffen!',
@@ -504,7 +524,6 @@ $messages['no'] = array(
 	'user-badge-hide-color' => 'Skjul fargedetaljer',
 	'user-badge-selected-color' => 'Gjeldende valgte farge {rgb}',
 	'user-badge-web-color' => 'Nærmeste nettsikre farge: {rgb}. Klikk for å velge!',
-	'user-badge-dialog-title' => 'Vennligst velg en farge',
 	'user-badge-current' => 'Nåværende utmerkelse',
 	'user-badge-configure' => 'Konfigurer utmerkelsen din',
 	'user-badge-not-found' => 'Ingen utmerkelse funnet!',
@@ -540,7 +559,6 @@ $messages['pms'] = array(
 	'user-badge-hide-color' => 'Stërma ij detaj ëd color',
 	'user-badge-selected-color' => 'Color selessionà al moment (rgb)',
 	'user-badge-web-color' => "Color dl'aragnà stàndard pi vzin: (rgb). Ch'a sgnaca për selessionelo!",
-	'user-badge-dialog-title' => 'Për piasì sern un color',
 	'user-badge-current' => 'Tesserin corent',
 	'user-badge-configure' => 'Configura Tò tesserin',
 	'user-badge-not-found' => 'Pa gnun tesserin trovà!',
@@ -583,7 +601,6 @@ $messages['pt'] = array(
 	'user-badge-hide-color' => 'Esconder detalhes de cor',
 	'user-badge-selected-color' => 'Cor seleccionada {rgb}',
 	'user-badge-web-color' => 'Cor mais aproximada, apropriada para uso na internet: {rgb}. Clique para seleccionar!',
-	'user-badge-dialog-title' => 'Seleccione uma cor',
 	'user-badge-current' => 'Distintivo actual',
 	'user-badge-configure' => 'Configurar o seu distintivo',
 	'user-badge-not-found' => 'Não foi encontrado nenhum distintivo',
@@ -618,7 +635,6 @@ $messages['pt-br'] = array(
 	'user-badge-hide-color' => 'Esconder detalhes de cor',
 	'user-badge-selected-color' => 'Cor selecionada {rgb}',
 	'user-badge-web-color' => 'Cor mais aproximada, apropriada para uso na internet: {rgb}. Clique para selecionar!',
-	'user-badge-dialog-title' => 'Por favor, escolha uma cor',
 	'user-badge-data-color' => 'Cor dos dados:',
 	'user-badge-edits-txt' => 'Edições',
 	'user-bagde-copypaste-ext-code' => 'Copiar e colar (sites externos)',
@@ -639,7 +655,6 @@ $messages['ru'] = array(
 	'user-badge-hide-color' => 'Скрыть сведения о цвете',
 	'user-badge-selected-color' => 'Выбранный сейчас цвет {rgb}',
 	'user-badge-web-color' => 'Ближайшие WebSafe-цвет: {rgb}. Нажмите для выбора!',
-	'user-badge-dialog-title' => 'Пожалуйста, выберите цвет',
 	'user-badge-current' => 'Текущая карточка',
 	'user-badge-configure' => 'Настроить свою карточку',
 	'user-badge-not-found' => 'Не найдено карточки!',
@@ -689,7 +704,6 @@ $messages['te'] = array(
 	'user-badge-invalid-color' => 'సరైన అష్టాదశాంశ విలువ కాదు',
 	'user-badge-show-color' => 'వర్ణాల వివరాలు చూపండి',
 	'user-badge-hide-color' => 'వర్ణాల వివరాలు దాచండి',
-	'user-badge-dialog-title' => 'దయచేసి ఒక రంగును ఎన్నుకోండి',
 	'user-badge-logo-opt' => 'బొమ్మ ఎంపికలు:',
 	'user-badge-wikia-logo-pos' => 'వికియా చిహ్నపు స్థానము:',
 	'user-badge-small-wikia-logo-color' => 'వికియా చిహ్నపు రంగు:',
@@ -707,7 +721,6 @@ $messages['tl'] = array(
 	'user-badge-hide-color' => 'Itago ang mga detalye ng kulay',
 	'user-badge-selected-color' => 'Kasalukuyang napiling kulay {rgb}',
 	'user-badge-web-color' => 'Pinakamalapit na kulay na ligtas para sa web: {rgb}.  Pindutin upang piliin!',
-	'user-badge-dialog-title' => 'Mangyaring pumili ng isang kulay',
 	'user-badge-current' => 'Kasalukuyang tsapa',
 	'user-badge-configure' => 'Iayos ang tsapa Mo',
 	'user-badge-not-found' => 'Walang natagpuang tsapa!',
@@ -741,6 +754,5 @@ $messages['zh-hans'] = array(
 	'user-badge-hide-color' => '隐藏色彩细节',
 	'user-badge-selected-color' => '目前选择的颜色 {rgb}',
 	'user-badge-web-color' => '临近的网络安全色：{rgb}。点击以选择！',
-	'user-badge-dialog-title' => '请选择一个颜色',
 );
 

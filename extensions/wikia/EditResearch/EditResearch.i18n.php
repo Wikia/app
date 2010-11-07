@@ -86,6 +86,7 @@ $messages['fi'] = array(
 	'search_wikipedia' => 'Etsi Wikipediasta',
 	'previous' => 'edellinen',
 	'research_no_results' => 'Sivuja ei löytynyt. Etsi uudelleen.',
+	'research_wikipedia_title' => 'Tutki vastaustasi Wikipediassa',
 	'research_this' => 'Tutki tätä',
 );
 

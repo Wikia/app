@@ -1343,6 +1343,7 @@ $messages['ps'] = array(
 	'swm-list-table-group' => 'ډله',
 	'swm-list-table-expire' => 'د پای نېټه',
 	'swm-list-table-date' => 'د لېږلو نېټه',
+	'swm-list-table-content' => 'مينځپانګه',
 	'swm-list-table-tools' => 'اوزارونه',
 	'swm-list-table-lang' => 'ژبې',
 	'swm-yes' => 'هو',

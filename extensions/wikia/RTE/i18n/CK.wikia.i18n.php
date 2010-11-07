@@ -124,6 +124,7 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'rte-ck-errorPopupTitle' => 'Fout!',
 	'rte-ck-hoverPreview-comment-title' => 'Opmerking',
+	'rte-ck-hoverPreview-edit' => 'wysig',
 	'rte-ck-link-error-title' => 'Fout',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-templateEditor-editor-parameters' => 'Parameters',
@@ -1315,10 +1316,13 @@ $messages['ps'] = array(
 	'rte-ck-link-external-tab' => 'باندنۍ تړنه',
 	'rte-ck-link-internal-pageName' => 'د مخ نوم',
 	'rte-ck-link-internal-tab' => 'کورنۍ تړنه',
+	'rte-ck-link-status-external' => 'باندنۍ تړنه',
 	'rte-ck-signature-add' => 'خپل لاسليک ورګډول',
 	'rte-ck-signature-label' => 'لاسليک',
 	'rte-ck-templateDropDown-label' => 'کينډۍ',
 	'rte-ck-templateEditor-dialog-insert' => 'ورټومبل',
+	'rte-ck-templateEditor-editor-previewButton' => 'مخليدنه',
+	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
 	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
 );
 

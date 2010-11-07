@@ -539,6 +539,28 @@ $4 is any of:
 * $1 is the so manieth edit that was made to the wiki',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'achievements-platinum' => 'Platinum',
+	'achievements-gold' => 'Goud',
+	'achievements-silver' => 'Silwer',
+	'achievements-bronze' => 'Brons',
+	'achievements-viewall' => 'Wys almal',
+	'achievements-viewless' => 'Sluit',
+	'achievements-leaderboard-rank-label' => 'rang',
+	'achievements-leaderboard-member-label' => 'Lid',
+	'achievements-leaderboard-points-label' => 'punte',
+	'platinum' => 'Platinum',
+	'achievements-community-platinum-edit' => 'wysig',
+	'achievements-community-platinum-save' => 'stoor',
+	'achievements-community-platinum-cancel' => 'kanselleer',
+	'achievements-badge-name-picture-3' => 'Versamelaar',
+	'achievements-badge-name-picture-6' => 'Ontwerper',
+	'achievements-badge-name-picture-7' => 'Kurator',
+);
+
 /** Belarusian (Беларуская)
  * @author Тест
  */
@@ -692,6 +714,18 @@ $5",
 	'achievements-badge-name-blogcomment-1' => 'І яшчэ адна рэч',
 	'achievements-badge-name-love-0' => 'Ключ да {{GRAMMAR:родны|{{SITENAME}}}}!',
 	'achievements-badge-name-love-1' => 'Два тыдні ў {{GRAMMAR:месны|{{SITENAME}}}}',
+	'achievements-badge-name-love-2' => 'Прыхільны',
+	'achievements-badge-name-love-3' => 'Прызначаны',
+	'achievements-badge-name-love-4' => 'Захапляючыся',
+	'achievements-badge-name-love-5' => 'Жыцьцё ў {{GRAMMAR:месны|{{SITENAME}}}}',
+	'achievements-badge-name-love-6' => 'Герой {{GRAMMAR:родны|{{SITENAME}}}}!',
+	'achievements-badge-name-welcome' => 'Вітаем у {{GRAMMAR:месны|{{SITENAME}}}}',
+	'achievements-badge-name-introduction' => 'Уводзіны',
+	'achievements-badge-name-sayhi' => 'Спыняецца, каб павітацца',
+	'achievements-badge-name-creator' => 'Стваральнік',
+	'achievements-badge-name-luckyedit' => 'Шчасьлівае рэдагаваньне',
+	'achievements-badge-to-get-edit' => 'зрабіць $1 {{PLURAL:$1|рэдагаваньне|рэдагаваньня|рэдагаваньняў}} на {{PLURAL:$1|старонцы|старонках}}',
+	'achievements-badge-to-get-picture' => 'дадаць $1 {{PLURAL:$1|выяву|выявы|выяваў}} на {{PLURAL:$1|старонцы|старонках}}',
 );
 
 /** Breton (Brezhoneg)
@@ -723,14 +757,14 @@ Mar plij klaskit gant unan all !",
 	'achievements-track-name-blogcomment' => 'Tournamant evezhiadennoù diwar-benn ur blog',
 	'achievements-track-name-love' => 'Tournamant "Karantez evit ar Wiki"',
 	'achievements-notification-title' => "War an hent mat emaoc'h, $1 !",
-	'achievements-notification-subtitle' => '$2 emaoc\'h o paouez gounit ar badj "$1"',
+	'achievements-notification-subtitle' => 'Emoc\'h o paouez gounit ar badj "$1" $2',
 	'achievements-notification-link' => "<strong><big>[[Special:MyPage|Sellit ouzh muioc'h a badjoù a c'hellit gounid]] !</big></strong>",
 	'achievements-points' => '$1 poent{{PLURAL:$1||}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|poent|poent}}',
 	'achievements-earned' => 'Gounezet eo bet ar badj-mañ gant {{PLURAL:$1|1|$1}} implijer.',
 	'achievements-profile-title' => 'An $2 {{PLURAL:$2||badj|badj}} gounezet gant $1',
 	'achievements-profile-title-no' => 'Badjoù $1',
-	'achievements-profile-title-challenges' => "Badjoù all hag a c'hellit gounit !",
+	'achievements-profile-title-challenges' => "Badjoù all hag a c'hallit gounit !",
 	'achievements-profile-customize' => 'Personelaat ar badjoù >',
 	'achievements-ranked' => 'Renket #$1 war ar wiki-mañ',
 	'achievements-no-badges' => "Taolit ur sell d'ar roll amañ a-is evit gwelet ar badjoù a c'hellit gounid war ar wiki-mañ !",
@@ -788,6 +822,7 @@ Taolit ur sell d\'ho badj dispar nevez war ho <a href="$5">pajenn implijer</a>.'
 	'achievements-community-platinum-show-recents' => 'diskouez e-mesk ar badjoù nevez',
 	'achievements-community-platinum-edit' => 'kemmañ',
 	'achievements-community-platinum-save' => 'enrollañ',
+	'achievements-community-platinum-cancel' => 'nullañ',
 	'achievements-badge-name-edit-0' => "A ra an diforc'h",
 	'achievements-badge-name-edit-1' => "N'eo nemet ar pennkentañ",
 	'achievements-badge-name-edit-3' => "Mignon d'ar wiki",
@@ -910,6 +945,9 @@ war pajenn kaozeal unan bennak all !',
 	'achievements-badge-desc-pounce' => 'evit bezañ degaset kemmoù war 100 pajenn en eurvezh goude krouidigezh ar bajenn !',
 	'achievements-badge-desc-caffeinated' => 'evit bezañ degaset 100 kemm e pajennoù en un devezh !',
 	'achievements-badge-desc-luckyedit' => 'evit bezañ degaset ar $1vet kemm gant chañs war ar wiki !',
+	'achievements-userprofile-title-no' => 'Badjoù gounezet gant $1',
+	'achievements-userprofile-title' => '{{PLURAL:$2|Badj|Badjoù}} gounezet gant $1 ($2)',
+	'achievements-userprofile-ranked' => '[[Special:Leaderboard|gant ar renk #$1]] war ar wiki-mañ',
 );
 
 /** Bosnian (Bosanski)
@@ -1019,6 +1057,8 @@ Bitte versuche es mit einem anderen!',
 	'achievements-non-existing-category' => 'Die angegebene Kategorie existiert nicht.',
 	'achievements-edit-plus-category-track-exists' => 'Die angegebene Kateogrie hat bereits eine <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">Laufbahn</a>.',
 	'achievements-no-stub-category' => 'Bitte lege keine Laufbahn für Stubs an.',
+	'right-platinum' => 'Platin-Abzeichen erstellen und bearbeiten',
+	'right-sponsored-achievements' => 'Gesponserte Herausforderungen verwalten',
 	'achievements-platinum' => 'Platin',
 	'achievements-gold' => 'Gold',
 	'achievements-silver' => 'Silber',
@@ -1136,6 +1176,12 @@ Schau dir dein hübsches neues Abzeichen auf deiner <a href="$5">Benutzerseite</
 	'achievements-community-platinum-edit' => 'bearbeiten',
 	'achievements-community-platinum-save' => 'speichern',
 	'achievements-community-platinum-cancel' => 'Abbrechen',
+	'achievements-community-platinum-sponsored-label' => 'Gesponserte Herausforderungen',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Mouseover-Bild <small>(Mindestmaße: 270px x 100px)</small>:',
+	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Tracking-URL für Abzeichen-Eindrücke:',
+	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Tracking-URL für Hover-Eindruck:',
+	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Abzeichen-Link <small>(PFEIL Klick URL)</small>:',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klicken für mehr Informationen',
 	'achievements-badge-name-edit-0' => 'Macht einen Unterschied',
 	'achievements-badge-name-edit-1' => 'Nur der Anfang',
 	'achievements-badge-name-edit-2' => 'Machst Dir Einen Namen',
@@ -1276,6 +1322,12 @@ auf der Diskussionsseite eines anderen!',
 	'achievements-badge-desc-pounce' => 'für Bearbeitungen auf 100 Seiten innerhalb der ersten Stunde nach der Erstellung!',
 	'achievements-badge-desc-caffeinated' => 'für 100 Bearbeitungen auf Seiten an einem einzigen Tag!',
 	'achievements-badge-desc-luckyedit' => 'für die Glückliche $1ste Bearbeitung in dem Wiki!',
+	'achievements-userprofile-title-no' => 'Abzeichen von $1',
+	'achievements-userprofile-title' => '{{PLURAL:$2|Das|Die}} Abzeichen von $1 ($2)',
+	'achievements-userprofile-no-badges-owner' => 'Schau dir die Liste unten an, um die Abzeichen anzusehen, die du dir in diesem Wiki verdienen kannst!',
+	'achievements-userprofile-no-badges-visitor' => 'Dieser Benutzer hat noch keine Abzeichen verdient.',
+	'achievements-userprofile-profile-score' => '<em>$1</em> Herausforderungs-<br />punkte',
+	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Rang #$1]]<br />in diesem Wiki',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -1389,6 +1441,8 @@ Por favor, inténtalo con otra imagen.',
 	'achievements-non-existing-category' => 'La categoría especificada no existe.',
 	'achievements-edit-plus-category-track-exists' => 'La categoría especificada ya tiene un <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Ir al logro">logro asociado</a>.',
 	'achievements-no-stub-category' => 'Por favor, no crees grupos de logros para bocetos.',
+	'right-platinum' => 'Crear y editar logros de Platino',
+	'right-sponsored-achievements' => 'Administrar logros patrocinados',
 	'achievements-platinum' => 'Platino',
 	'achievements-gold' => 'Oro',
 	'achievements-silver' => 'Plata',
@@ -1504,6 +1558,12 @@ Echa un vistazo a este logro de lujo en tu <a href="$5">perfil de usuario</a>.',
 	'achievements-community-platinum-show-recents' => 'mostrar en logros recientes',
 	'achievements-community-platinum-edit' => 'editar',
 	'achievements-community-platinum-save' => 'guardar',
+	'achievements-community-platinum-cancel' => 'cancelar',
+	'achievements-community-platinum-sponsored-label' => 'Logro Patrocinado',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Imagen resaltable <small>(tamaño mínimo de la imagen: 270px x 100px)</small>:',
+	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'URL de seguimiento para las impresiones del logro',
+	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'URL de seguimiento para las impresiones de la imagen resaltable:',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Haz clic para más información',
 	'achievements-badge-name-edit-0' => 'Marcando la Diferencia',
 	'achievements-badge-name-edit-1' => 'Sólo el Principio',
 	'achievements-badge-name-edit-2' => 'Dejando Tu Marca',
@@ -1630,6 +1690,34 @@ en la página de discusión de alguien más!',
 	'achievements-badge-desc-pounce' => 'por hacer ediciones en 100 páginas dentro de la primera hora de vida las páginas!',
 	'achievements-badge-desc-caffeinated' => ' por hacer 100 ediciones en páginas en un solo día!',
 	'achievements-badge-desc-luckyedit' => 'por hacer la edición afortunada $1th en el wiki!',
+	'achievements-userprofile-title-no' => '$1 logros conseguidos',
+);
+
+/** Persian (فارسی)
+ * @author Persianizer
+ */
+$messages['fa'] = array(
+	'achievementsii-desc' => 'سامانه‌ای برای مدال‌های افتخار کاربران ویکی',
+	'achievements-upload-error' => 'با پوزش!
+این عکس کار نمی‌کند.
+اطمینان حاصل کنید که پرونده با پسوند.پی‌ان‌جی یا .جی‌پی‌جی است.
+لطفا یکی دیگر را امتحان کنید!',
+	'achievements-non-existing-category' => 'رده مشخص‌شده وجود ندارد',
+	'right-platinum' => 'ایجاد و ویرایش مدال‌های پلاتینیوم',
+	'right-sponsored-achievements' => 'مدیریت دستاوردهای حمایت‌شده',
+	'achievements-platinum' => 'پلاتینیوم',
+	'achievements-gold' => 'زرین',
+	'achievements-silver' => 'نقره',
+	'achievements-bronze' => 'برنز',
+	'achievements-you-must' => 'شما به $1 برای کسب این مدال نیاز دارید',
+	'achievements-masthead-points' => '$1 <small>{{جمع:$1|امتیاز|امتیازها}}</small>',
+	'achievements-track-name-edit' => 'رد ویرایش',
+	'achievements-track-name-picture' => 'رد تصاویر',
+	'achievements-track-name-category' => 'رد رده‌ها',
+	'achievements-track-name-blogpost' => 'رد پست وبلاگ',
+	'achievements-track-name-blogcomment' => 'رد دیدگاه وبلاگ',
+	'achievements-track-name-love' => 'رد عشق ویکی',
+	'achievements-notification-title' => 'مانده به، $1!',
 );
 
 /** French (Français)
@@ -2191,7 +2279,12 @@ na páxina de conversa de alguén!',
 	'achievements-badge-desc-pounce' => 'por facer edicións en 100 páxinas durante a hora seguinte á creación da mesma!',
 	'achievements-badge-desc-caffeinated' => 'por facer 100 edicións en páxinas nun mesmo día!',
 	'achievements-badge-desc-luckyedit' => 'por facer a $1ª edición afortunada no wiki!',
+	'achievements-userprofile-title-no' => 'Insignias gañadas por $1',
+	'achievements-userprofile-title' => '{{PLURAL:$2|Insignia gañada|Insignias gañadas}} por $1 ($2)',
 	'achievements-userprofile-no-badges-owner' => 'Consulte a lista que aparece a continuación para ollar as insignias que pode gañar neste wiki!',
+	'achievements-userprofile-no-badges-visitor' => 'Este usuario aínda non gañou ningunha insignia.',
+	'achievements-userprofile-profile-score' => '<em>$1</em> puntos<br />de logro',
+	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Posto nº$1]]<br />neste wiki',
 );
 
 /** Hungarian (Magyar) */
@@ -3965,6 +4058,9 @@ $messages['ps'] = array(
 	'achievements-badge-name-love-5' => 'يو ويکي ژوند',
 	'achievements-badge-name-welcome' => 'ويکي ته ښه راغلاست',
 	'achievements-badge-name-introduction' => 'پېژندنه',
+	'achievements-badge-to-get-welcome' => 'ويکي سره يوځای کېدل',
+	'achievements-badge-to-get-introduction' => 'خپل کارن مخ ته يې ګډول',
+	'achievements-badge-your-desc-creator' => 'د ويکي جوړولو لپاره!',
 );
 
 /** Portuguese (Português)

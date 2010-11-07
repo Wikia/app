@@ -207,6 +207,14 @@ $messages['pms'] = array(
 	'cloakcheck-process-edits-no' => "L'utent a l'ha pa a basta ëd modìfiche.",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'cloakcheck-form-username' => 'کارن-نوم:',
+	'cloakcheck-process-username' => 'کارن-نوم: $1',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Waldir

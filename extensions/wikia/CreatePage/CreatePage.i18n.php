@@ -345,6 +345,7 @@ An article with that title already exists.
 Mesedez erabili izenburu ezberdin bat.',
 	'createpage-error-article-blocked' => 'Barkatu, ezin duzu une honetan artikulu hori sortu.',
 	'tog-createpagedefaultblank' => 'Erabili orrialde txuria lehenetsiz orrialde berri bat sortzean',
+	'tog-createpagepopupdisabled' => 'Orriak Sortu pop-up ezgaitu',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Hemen zure artikuluaren lehen parrafoa idatz ezazu.
 

@@ -433,3 +433,11 @@ $messages['uk'] = array(
 	'withoutimages' => 'Сторінки без зображень',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Gaoxuewei
+ */
+$messages['zh-hans'] = array(
+	'withoutimages-desc' => '增加一个[[Special:Withoutimages|特殊页面]]以便显示无图页面',
+	'withoutimages' => '无图页面',
+);
+

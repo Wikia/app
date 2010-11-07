@@ -149,6 +149,19 @@ $messages['gl'] = array(
 	'mostvisitedpagesalllink' => 'Ollar as páxinas máis visitadas',
 );
 
+/** Hebrew (עברית)
+ * @author Rotemliss
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'mostvisitedpages' => 'הדפים הנצפים ביותר',
+	'mostvisitedpagessearchtext' => 'שם הדף:',
+	'mostvisitedpagessearchbtn' => 'חיפוש',
+	'mostvisitedpageslatest' => '{{PLURAL:בדקה האחרונה|ב־$1 הדקות האחרונות}}',
+	'mostvisitedpageslatestlink' => 'הצגת הדפים שנצפו לאחרונה',
+	'mostvisitedpagesalllink' => 'הצגת הדפים הנצפים ביותר',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -319,6 +332,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'mostvisitedpages' => 'تر ټولو ډېر کتل شوي مخونه',
 	'mostvisitedpagessearchtext' => 'د ليکنې نوم:',
 	'mostvisitedpagessearchbtn' => 'پلټل',
 );

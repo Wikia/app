@@ -73,15 +73,16 @@ $messages['br'] = array(
 );
 
 /** Welsh (Cymraeg)
+ * @author Lloffiwr
  * @author Xxglennxx
  */
 $messages['cy'] = array(
-	'widgetdashboard' => 'Dashfwrdd Teclyn',
-	'mu_size_your_image' => "Rhowch faint i'ch delwedd",
-	'almosttheretext' => 'Defnyddiwch y llithrydd i ddewis faint y mân-lun, rhoi pennawd, a chlicio ar Mewnosod',
+	'widgetdashboard' => 'Sgrin drafod y Teclyn',
+	'mu_size_your_image' => 'Pennwch faint eich delwedd',
+	'almosttheretext' => 'Defnyddiwch y llithrydd i ddewis maint y mân-lun, rhoi pennawd, a chlicio ar Mewnosod',
 	'insertfullsize' => 'Mewnosod delwedd maint llawn wreiddiol',
 	'insertthumbnail' => 'Mewnosod mân-lun',
-	'thumbnailsize' => 'Maint mân-lun:',
+	'thumbnailsize' => 'Maint y mân-lun:',
 	'captionoptional' => 'Pennawd (dewisol):',
 	'insertimage' => 'Mewnosod Delwedd',
 	'leftalign-tooltip' => "Alinio i'r chwith",

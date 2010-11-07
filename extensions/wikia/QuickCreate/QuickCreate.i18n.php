@@ -79,6 +79,15 @@ $messages['es'] = array(
 	'quickcreate' => 'envía tu receta',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Nike
+ */
+$messages['fi'] = array(
+	'quickcreate-desc' => 'Lisää "luo uusi sivu" -painikkeen, jolla anonyymit käyttäjät voiva kirjautua sisään',
+	'quickcreate' => 'reseptin lähetys',
+);
+
 /** French (Français)
  * @author Cywil
  * @author IAlex

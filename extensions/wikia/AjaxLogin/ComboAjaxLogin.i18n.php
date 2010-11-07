@@ -73,6 +73,7 @@ $messages['br'] = array(
 <li>Rannit hoc'h obererezh war Wikia gant ho mignoned war Facebook</li>
 <li>Kontroll klok war ar pezh a vez embannet</li>
 </ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Kevreañ gant Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => "<h1>Kevreit ho kont wikia da Facebook</h1>
 <ul>
 <li>Dalc'hit hoc'h anv implijer red, istor ar c'hemmoù... ne cheñch netra nemet an doare da gevreañ</li>
@@ -174,10 +175,10 @@ $messages['fr'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retour',
 	'comboajaxlogin-connectmarketing-forward' => 'Avant de commencer &raquo;',
-	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan.
+	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan. 
 
 Une fois que vous avez terminé, vous pouvez vous connecter facilement à l'aide de n'importe quel bouton Facebook Connect.",
-	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit.
+	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit. 
 Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 );
 
@@ -237,6 +238,11 @@ $messages['ia'] = array(
 Quando tu ha finite, tu pote aperir un session facilemente usante qualcunque button Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Il habeva un error in le modo del qual iste formulario ha essite construite.
 Per favor tenta lo de novo o [[Special:Contact|reporta isto]].',
+	'comboajaxlogin-readonlytext' => '<h2>Pardono!</h2>
+<p>Tu non pote crear un conto a iste momento - iste problema technic deberea esser resolvite tosto. Ecce lo que occurre:<br /><em>$1</em></p>
+<p>Reguarda <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> pro plus informationes.
+<br />
+(Si tu ha jam un conto, tu pote <a href="#">aperir session</a> como sempre, ma tu non potera modificar.)</p>',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -317,6 +323,11 @@ $messages['mk'] = array(
 Кога сте готови, можете да се најавите користејќи било кое копче за поврзување на Facebook.',
 	'comboajaxlogin-post-not-understood' => 'Има грешка во склопот на овој образец.
 Обидете се повторно или [[Special:Contact|пријавете ја грешката]].',
+	'comboajaxlogin-readonlytext' => '<h2>Жалиме!</h2>
+<p>Моментално не можете да создадете сметка - но би требало набргу да проработиме. Еве што се случува:<br /><em>$1</em></p>
+<p>За повеќе информации, погледајте на <a href="http://twitter.com/wikia">Twitter</a> или <a href="http://facebook.com/wikia">Facebook</a>.
+<br />
+(Ако веќе имате сметка, тогаш ќе можете да се <a href="#">најавите</a> како секогаш, но нема да можете да уредувате.)</p>',
 );
 
 /** Dutch (Nederlands)
@@ -346,6 +357,11 @@ $messages['nl'] = array(
 Nadat u dit hebt uitgevoerd, kunt u eenvoudig aanmelden met de knop Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Er is een fout opgetreden bij het samenstellen van dit formulier.
 Probeer het nog een keer of [[Special:Contact|rapporteer dit]].',
+	'comboajaxlogin-readonlytext' => '<h2>Storing</h2>
+<p>U kunt op dit moment geen gebruiker aanmaken. Meestal is de site weer snel beschikbaar. Dit is wat er aan de hand is:<br /><em>$1</em></p>
+<p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.
+<br />
+Als u al een gebruiker hebt, kunt u <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -375,6 +391,11 @@ $messages['no'] = array(
 Så fort du er ferdig, kan du enkelt logge inn med en hvilken som helst Facebook Connect-knapp.',
 	'comboajaxlogin-post-not-understood' => 'Det er en feil i måten skjemaet ble bygget på.
 Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
+	'comboajaxlogin-readonlytext' => '<h2>Beklager!</h2>
+<p>Du kan ikke opprette en konto for øyeblikket - vi er sannsyneligvis oppe og går igjen om kort tid. Her er det som skjer:<br /><em>$1</em></p>
+<p>Vennligst sjekk ut <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> for mer informasjon.
+<br />
+(Hvis du allerede har en konto, kan du <a href="#">logge inn</a> som vanlig, men du vil ikke kunne redigere.)</p>',
 );
 
 /** Polish (Polski) */

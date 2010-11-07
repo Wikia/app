@@ -277,6 +277,13 @@ $messages['pms'] = array(
 	'recipes-history' => "varda ij cambi a st'arseta-sì",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'savedpages' => 'خوندي مخونه',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

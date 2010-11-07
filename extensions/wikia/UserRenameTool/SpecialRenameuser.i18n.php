@@ -558,7 +558,7 @@ $messages['cu'] = array(
  * @author Lloffiwr
  */
 $messages['cy'] = array(
-	'userrenametool-desc' => "Yn ychwanegu [[Special:Renameuser|tudalen arbennig]] er mwyn gallu ail-enwi cyfrif defnyddiwr (sydd angen y gallu ''renameuser'')",
+	'userrenametool-desc' => "Yn ychwanegu [[Special:UserRenameTool|tudalen arbennig]] er mwyn gallu ail-enwi cyfrif defnyddiwr (sydd angen y gallu ''renameuser'') a phrosesu'r data cysylltiedig",
 	'userrenametool-old' => 'Enw defnyddiwr presennol:',
 	'userrenametool-new' => 'Enw defnyddiwr newydd:',
 	'userrenametool-reason' => 'Y rheswm dros ail-enwi:',
@@ -588,6 +588,7 @@ Ewch yn ôl a cheisio eto, os gwelwch yn dda.',
 /** German (Deutsch)
  * @author Raimond Spekking
  * @author Spacebirdy
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
@@ -614,7 +615,7 @@ $messages['de'] = array(
 	'userrenametool-logpagetext' => 'In diesem Logbuch werden die Änderungen von Benutzernamen protokolliert.',
 	'userrenametool-logentry' => 'hat „$1“ in „$2“ umbenannt',
 	'userrenametool-log' => '{{PLURAL:$1|1 Bearbeitung|$1 Bearbeitungen}}. Grund: $2',
-	'userrenametool-move-log' => 'durch die Umbenennung von „[[User:$1|$1]]“ nach „[[User:$2|$2]]“ automatisch verschobene Seite',
+	'userrenametool-move-log' => 'durch die Umbenennung von „[[User:$1|$1]]“ in „[[User:$2|$2]]“ automatisch verschobene Seite',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -2367,6 +2368,8 @@ $messages['ps'] = array(
 	'userrenametool-errorexists' => 'د "<nowiki>$1</nowiki>" په نامه يو کارونکی له پخوا نه شته.',
 	'userrenametool-error-request' => 'د غوښتنې په ترلاسه کولو کې يوه ستونزه راپېښه شوه.
 مهرباني وکړی بېرته پرشا ولاړ شی او يو ځل بيا پرې کوښښ وکړی.',
+	'userrenametool-confirm-yes' => 'هو',
+	'userrenametool-confirm-no' => 'نه',
 	'userrenametool-logpage' => 'د کارن-نوم يادښت',
 );
 

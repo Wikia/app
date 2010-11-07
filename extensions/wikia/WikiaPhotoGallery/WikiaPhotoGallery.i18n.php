@@ -562,6 +562,7 @@ $messages['br'] = array(
 	'wikiaphotogallery-desc' => "Reiñ a ra un etrefas evit merañ ar skeudennaouegoù hag ar c'hinnigoù luc'hvannoù er pajennoù",
 	'wikiaPhotoGallery-back' => 'Distreiñ',
 	'wikiaPhotoGallery-finish' => 'Echuiñ',
+	'wikiaPhotoGallery-lightbox-caption' => 'Dre $1',
 	'wikiaPhotoGallery-add-gallery' => "Ensoc'hañ ur skeudennaoueg pe ur c'hinnig luc'hvannoù",
 	'wikiaPhotoGallery-viewmode-addphoto' => "Ouzhpennañ ur skeudenn d'ar skeudennaoueg-mañ",
 	'wikiaPhotoGallery-edit-abort' => "Ar c'hemm e oac'h o klask ober a zo bet harzhet gant ur sonnell eus un astenn",
@@ -3751,6 +3752,13 @@ $messages['ta'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'வலது',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'இந்த பக்கம்',
 	'wikiaPhotoGallery-upload-selectbutton' => 'தேர்வு செய்',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ఈ పుట',
 );
 
 /** Tagalog (Tagalog)

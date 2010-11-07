@@ -8,6 +8,24 @@ $messages['en'] = array(
 	'relatedvideo'               => 'Related videos',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'related-video-random-video' => 'Lukrake video',
+	'related-video-related' => 'Verwante video',
+	'relatedvideo' => "Verwante video's",
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'related-video-random-video' => 'Video dre zegouezh',
+	'related-video-related' => 'Videoioù kar',
+	'relatedvideo' => 'Videoioù kar',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
