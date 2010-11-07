@@ -11,10 +11,8 @@ EOT;
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'StaffLog',
 	'author' => 'Tomasz Odrobny',
-	'url' => '',
-	'description' => 'Central logging for wikia staff ',
-	'descriptionmsg' => 'myextension-desc',
-	'version' => '0.0.0',
+	'descriptionmsg' => 'stafflog-desc',
+	'version' => '0.0.1',
 );
 
 $dir = dirname(__FILE__) . '/';
