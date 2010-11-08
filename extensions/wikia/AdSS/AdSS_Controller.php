@@ -46,11 +46,7 @@ class AdSS_Controller extends SpecialPage {
 		$adForm = new AdSS_AdForm();
 		if ( $wgRequest->wasPosted() && AdSS_Util::matchToken( $wgRequest->getText( 'wpToken' ) ) ) {
 			$adForm->loadFromRequest( $wgRequest );
-			if( $wgUser->isAllowed( 'adss-admin' ) ) {
-				$this->saveSpecial( $adForm );
-			} else {
-				$this->save( $adForm );
-			}
+			$this->save( $adForm );
 		} else {
 			$page = $wgRequest->getText( 'page' );
 			if( !empty( $page ) ) {
@@ -81,7 +77,6 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
 		$tmpl->set( 'login', wfMsgHtml( 'adss-button-login-buy' ) );
 		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
-		$tmpl->set( 'isAdmin', $wgUser->isAllowed( 'adss-admin' ) );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
@@ -133,37 +128,6 @@ class AdSS_Controller extends SpecialPage {
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/redirect/error") } )' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		}
-	}
-
-	function saveSpecial( $adForm ) {
-		global $wgOut;
-
-		if( !$adForm->isValid() ) {
-			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/errors") } )' );
-			$this->displayForm( $adForm );
-			return;
-		}
-
-		$user = AdSS_User::newFromForm( $adForm );
-		if( !$user ) {
-			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/errors") } )' );
-			$adForm->errors['wpEmail'] = wfMsgHtml( 'adss-form-auth-errormsg' );
-			$this->displayForm( $adForm );
-			return;
-		}
-
-		$ad = AdSS_Ad::newFromForm( $adForm );
-		if( $ad->pageId > 0 ) {
-			$ad->weight = 1;
-		}
-		$ad->expires = strtotime( "+1 month", time() ); 
-		$ad->setUser( $user );
-
-		$ad->save();
-		AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
-
-		$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/saveSpecial") } )' );
-		$wgOut->addHTML( "Your ad has been added to the system." );
 	}
 
 	function processPayPalReturn( $token ) {
