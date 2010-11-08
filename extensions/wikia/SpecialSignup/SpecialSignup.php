@@ -8,7 +8,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Sign up',
 	'author' => 'Bartek Lapinski',
 	'descriptionmsg' => 'signup-desc',
-	'version' => '2.0.1,
+	'version' => '2.0.1',
 );
 
 $dir = dirname(__FILE__) . '/';
