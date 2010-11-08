@@ -76,4 +76,4 @@ $wgAdSS_pricingConf = array(
 				),
 			),
 		);
-
+$wgAdSSBillingThreshold = 50;

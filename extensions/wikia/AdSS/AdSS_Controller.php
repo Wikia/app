@@ -158,8 +158,7 @@ class AdSS_Controller extends SpecialPage {
 			$baid = $pp_existing->getBillingAgreement();
 			if( $baid ) wfDebug( "AdSS: got existing BAID: $baid\n" );
 		} else {
-			$user = AdSS_User::newFromForm( $adForm );
-			$user->save();
+			$user = AdSS_User::register( $adForm->get( 'wpEmail' ) );
 			wfDebug( "AdSS: created new user: {$user->toString()})\n" );
 		}
 		$pp_new->setUserId( $user->id );
@@ -178,7 +177,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	private function saveAdInternal( $adForm, $user, $fakeUrl ) {
-		global $wgOut, $wgAdSS_contactEmail;
+		global $wgOut, $wgAdSS_contactEmail, $wgNoReplyAddress;
 
 		$ad = AdSS_Ad::newFromForm( $adForm );
 		$ad->setUser( $user );
@@ -201,14 +200,14 @@ class AdSS_Controller extends SpecialPage {
 			$subject = '[AdSS] new ad pending approval';
 
 			$body = "New ad has been just created and it's waiting your approval:\n";
-			$body .= Title::makeTitle( NS_SPECIAL, "AdSS/admin" )->getFullURL();
+			$body .= SpecialPage::getTitleFor( 'AdSS/admin' )->getFullURL();
 			$body .= "\n\n";
 			$body .= "Created by: {$ad->getUser()->toString()}\n";
 			$body .= "Ad link text: {$ad->text}\n";
 			$body .= "Ad URL: {$ad->url}\n";
 			$body .= "Ad description: {$ad->desc}\n";
 
-			UserMailer::send( $to, new MailAddress( 'adss@wikia-inc.com' ), $subject, $body );
+			UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
 		}
 	}
 
