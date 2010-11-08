@@ -40,7 +40,7 @@ class UserProfilePage {
 	}
 
 	public function get( $pageBody ) {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUserProfilePagesHideInterviewSection;
 
 		//$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 
@@ -49,7 +49,8 @@ class UserProfilePage {
 		$this->templateEngine->set_vars(
 			array(
 				'userName'         => $this->user->getName(),
-				'aboutSection'     => $this->populateAboutSectionVars(),
+				'aboutSection'     => ( !$wgUserProfilePagesHideInterviewSection ) ? $this->populateAboutSectionVars() : null,
+				'hideAboutSection' => $wgUserProfilePagesHideInterviewSection,
 				'pageBody'         => $pageBody,
 				'extensionsPath'   => $wgExtensionsPath
 			));
