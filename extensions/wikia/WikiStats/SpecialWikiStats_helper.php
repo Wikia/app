@@ -1308,25 +1308,40 @@ class WikiStats {
 					if ( $prev_month == 0 ) {
 						$prev_month = 12; $prev_year--;
 					}
-					$where = array(
-						'stats_date' => sprintf("%04d%02d", $prev_year, $prev_month)
-					);
 					
-					if ( !$summary ) {
-						$where['wiki_id'] = array_keys($data['res']);			
+					if ( $summary ) {
+						$conditions['stats_date'] = sprintf("%04d%02d", $prev_year, $prev_month);
+						$oRes = $dbr->select ( 
+							$tables,
+							array( 
+								'0 as wiki_id',
+								'sum(users_all) as users_all', 
+								'sum(articles) as articles', 
+								'sum(articles_edits) as articles_edits'
+							),
+							$conditions,
+							__METHOD__,
+							$order,
+							$join
+						);							
+					} else {
+						$where = array(
+							'stats_date' => sprintf("%04d%02d", $prev_year, $prev_month),
+							'wiki_id'	 => array_keys($data['res'])
+						);	
+	
+						$oRes = $dbr->select ( 
+							array( 'wikia_monthly_stats' ),
+							array( 
+								'wiki_id', 
+								'users_all', 
+								'articles', 
+								'articles_edits'
+							),
+							$where,
+							__METHOD__
+						);	
 					}
-					
-					$oRes = $dbr->select ( 
-						array( 'wikia_monthly_stats' ),
-						array( 
-							($summary) ? '0 as wiki_id'                          : 'wiki_id', 
-							($summary) ? 'sum(users_all) as users_all'           : 'users_all', 
-							($summary) ? 'sum(articles) as articles'             : 'articles', 
-							($summary) ? 'sum(articles_edits) as articles_edits' : 'articles_edits'
-						),
-						$where,
-						__METHOD__
-					);	
 					
 					while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 						$data['res'][$oRow->wiki_id][8] = $oRow->users_all;
