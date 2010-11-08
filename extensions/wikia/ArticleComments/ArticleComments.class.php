@@ -1256,13 +1256,6 @@ class ArticleCommentList {
 	public function getCountAllNested() {
 		if ($this->mCountAllNested === false) {
 			$this->getCommentPages(false, false);
-			$this->mCountAllNested = 0;
-			foreach ($this->mCommentsAll as $comment) {
-				$this->mCountAllNested++;
-				if (isset($comment['level2'])) {
-					$this->mCountAllNested += count($comment['level2']);
-				}
-			}
 		}
 		return $this->mCountAllNested;
 	}
