@@ -2,7 +2,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'My Home',
-	'description' => 'A private home of Wikia for logged-in users',
+	'descriptionmsg' => 'myhome-desc',
 	'author' => array('Inez Korczyński', 'Maciej Brencz', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 

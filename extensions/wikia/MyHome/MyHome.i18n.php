@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'myhome-desc' => 'A private home page for logged-in users',
 	'myhome' => 'My Home',
 	'wikiactivity' => 'Wiki Activity',
 	'myhome-activity-more' => 'see more recent activity',
