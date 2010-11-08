@@ -3,16 +3,11 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 
-.SponsoredLinkForm {
-	.box {
-		float: left;
-		padding: 8px;
-		width: 460px;
+.SponsoredLinkDesc {
 
-		&.item-2 {
-			float: right;
-		}
-	}
+	height: 420px;
+	margin: 0px auto;
+	width: 958px;
 
 	.chooseheader {
 		font-size: 300%;
@@ -21,29 +16,49 @@
 		text-align: center;
 	}
 
+	section.box {
+		// copied from .WikiaRail > section rule (/skins/oasis/css/core/_page.scss)
+		@include clearfix;
+		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+		border: 1px solid $color-page-border;
+		margin-bottom: 10px;
+		padding: 16px 8px 8px;
+		position: relative;
+
+		float: left;
+		height: 270px;
+		margin-top: 15px;
+		opacity: 0.5;
+		width: 300px;
+
+		&.selected {
+			border: 3px solid $color-page-border;
+			height: 300px;
+			margin-top: 0px;
+			opacity: 1;
+		}
+
+		.wikia-button {
+			bottom: 10px;
+			left: 50%;
+			margin-left: -50px;
+			padding: 0 20px;
+			position: absolute;
+		}
+	}
+}
+
+.SponsoredLinkForm {
+
 	fieldset {
 		@include clearfix;
 		border: none;
+		float: left;
 		padding: 0;
+		width: 460px;
 
-		section.box {
-			// copied from .WikiaRail > section rule (/skins/oasis/css/core/_page.scss)
-			@include clearfix;
-			@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
-			border: 1px solid $color-page-border;
-			margin-bottom: 10px;
-			padding: 16px 8px 8px;
-			position: relative;
-
-			height: 230px;
-
-			.wikia-button {
-				bottom: 5px;
-				left: 50%;
-				margin-left: -50px;
-				padding: 0 20px;
-				position: absolute;
-			}
+		&.preview {
+			float: right;
 		}
 
 		label {

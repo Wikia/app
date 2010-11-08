@@ -1,27 +1,34 @@
-<?php echo $adForm->error( 'wpType' ); ?>
+<section class="SponsoredLinkDesc">
+	<?php echo $adForm->error( 'wpType' ); ?>
+	<div class="chooseheader"><?php echo wfMsgHtml( 'adss-form-pick-plan' ); ?></div>
+		<section class="box">
+			<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', AdSS_Util::formatPrice( $sitePricing ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-site-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing ) ); ?>
+			<input class="wikia-button" type="button" id="wpSelectSite" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
+		</section>
+
+		<section class="box">
+			<h3><?php echo wfMsgHtml( 'adss-form-site-premium-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-site-premium-plan-price', AdSS_Util::formatPrice( $sitePricing, 3 ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-site-premium-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing, 3 ) ); ?>
+			<input class="wikia-button" type="button" id="wpSelectSitePremium" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
+		</section>
+
+		<section class="box">
+			<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', AdSS_Util::formatPrice( $pagePricing ) ); ?>
+			<input class="wikia-button" type="button" id="wpSelectPage" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
+		</section>
+</section>
+
 <section class="SponsoredLinkForm">
 	<form method="post" action="<?php echo $action; ?>">
 		<input name="wpToken" type="hidden" value="<?php echo $token; ?>" />
 		<input name="wpType" id="wpType" type="hidden" value="<?php echo $adForm->output( 'wpType' ); ?>" />
 
-		<div class="chooseheader"><?php echo wfMsgHtml( 'adss-form-pick-plan' ); ?></div>
-		<fieldset>
-			<section class="box item-1">
-				<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
-				<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', AdSS_Util::formatPrice( $sitePricing ) ); ?></div>
-				<?php echo wfMsgWikiHtml( 'adss-form-site-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing ) ); ?>
-				<input class="wikia-button" type="button" id="wpSelectSite" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
-			</section>
-
-			<section class="box item-2">
-				<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
-				<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing ) ); ?></div>
-				<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', AdSS_Util::formatPrice( $pagePricing ) ); ?>
-				<input class="wikia-button" type="button" id="wpSelectPage" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
-			</section>
-		</fieldset>
-
-		<fieldset class="box item-1">
+		<fieldset class="form">
 			<legend><?php echo wfMsgHtml( 'adss-form-header' ); ?></legend>
 
 			<div>
@@ -67,7 +74,7 @@
 			<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $submit; ?>" />
 		</fieldset>
 
-		<fieldset class="box item-2">
+		<fieldset class="preview">
 			<legend><?php echo wfMsgHtml( 'adss-preview-header' ); ?></legend>
 			<?php echo wfMsgWikiHtml( 'adss-ad-header' ); ?>
 			<div class="sponsormsg">
@@ -81,26 +88,38 @@
 
 <script type="text/javascript">/*<![CDATA[*/
 $(function() {
-	if( $("#wpType").val() == "page" ) {
-		$("section.item-1").css({opacity:0.2});
+	if( $("#wpType").val() == "site-premium" ) {
+		$("#wpSelectSitePremium").parent().addClass("selected");
+		$("#wpPage").parent().hide();
+		$("#wpWeight").val("4").attr("disabled", true);
+	}
+	else if( $("#wpType").val() == "page" ) {
+		$("#wpSelectPage").parent().addClass("selected");
 		$("#wpWeight").parent().hide();
 	}
-	if( $("#wpType").val() == "site" ) {
-		$("section.item-2").css({opacity:0.2});
+	else if( $("#wpType").val() == "site" ) {
+		$("#wpSelectSite").parent().addClass("selected");
 		$("#wpPage").parent().hide();
 	}
 } );
 $("#wpSelectSite").click( function() {
+	$(".SponsoredLinkDesc section").removeClass("selected");
+	$(this).parent().addClass("selected");
 	$("#wpType").val("site");
-	$("section.item-1").animate({opacity:1});
-	$("section.item-2").animate({opacity:0.2});
 	$("#wpPage").parent().hide("slow");
-	$("#wpWeight").parent().show("slow");
+	$("#wpWeight").val("1").removeAttr("disabled").parent().show("slow");
+} );
+$("#wpSelectSitePremium").click( function() {
+	$(".SponsoredLinkDesc section").removeClass("selected");
+	$(this).parent().addClass("selected");
+	$("#wpType").val("site-premium");
+	$("#wpPage").parent().hide("slow");
+	$("#wpWeight").val("4").attr("disabled", true).parent().show("slow");
 } );
 $("#wpSelectPage").click( function() {
+	$(".SponsoredLinkDesc section").removeClass("selected");
+	$(this).parent().addClass("selected");
 	$("#wpType").val("page");
-	$("section.item-1").animate({opacity:0.2});
-	$("section.item-2").animate({opacity:1});
 	$("#wpPage").parent().show("slow");
 	$("#wpWeight").parent().hide("slow");
 } );

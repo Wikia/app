@@ -55,7 +55,7 @@ class AdSS_Controller extends SpecialPage {
 					$adForm->set( 'wpPage', $page );
 				}
 			}
-			$adForm->set( 'wpType', 'site' );
+			$adForm->set( 'wpType', 'site-premium' );
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view") } )' );
 			$this->displayForm( $adForm );
 		}

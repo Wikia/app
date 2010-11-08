@@ -39,6 +39,11 @@ $messages['en'] = array(
 
 1 share is currently equal to $1% of {{SITENAME}} sponsored links and only costs $2. You can cancel at any time.',
 	'adss-form-site-plan-price' => '$1 for one share',
+	'adss-form-site-premium-plan-header' => 'Buy a premium link across the whole wiki',
+	'adss-form-site-premium-plan-description' => 'Get your links running across the whole wiki for one low price and get even more exposure by buying more shares.
+
+1 share is currently equal to $1% of {{SITENAME}} sponsored links. With this option you are buying four shares at the price of three! You can cancel at any time.',
+	'adss-form-site-premium-plan-price' => 'Only $1 for four shares!',
 	'adss-form-page-plan-header' => 'Buy a link on just this page',
 	'adss-form-page-plan-description' => 'This let you target a custom message to the best page for your product at only $1, and you can cancel at any time.',
 	'adss-form-page-plan-price' => '$1 for one link',
