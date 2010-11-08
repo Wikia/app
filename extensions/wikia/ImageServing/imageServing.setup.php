@@ -3,10 +3,10 @@ if ( ! defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => 'image Serving',
+	'name' => 'Image Serving',
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'imageserving-desc',
-	'version' => '1.0.0',
+	'version' => '1.0.1',
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -19,10 +19,13 @@ $wgHooks['LinksUpdateComplete'][] = 'imageServingHelper::buildIndexOnPageEdit';
 $wgHooks['ImageBeforeProduceHTML'][] = 'imageServingHelper::replaceImages';
 
 if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
-	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'imageServingHelper::replaceGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );	
+	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'imageServingHelper::replaceGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
 } else {
 	$wgHooks['BeforeParserrenderImageGallery'] = array( 'imageServingHelper::replaceGallery' );
 }
+
+// i18n
+$wgExtensionMessagesFiles['ImageServing'] = $dir . 'ImageServing.i18n.php';
 
 /* Adds imageCrop api to lists */
 if ( !empty( $wgEnablePartnerFeedExt ) ) {
