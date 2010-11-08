@@ -15,16 +15,15 @@ class GlobalHeaderModule extends Module {
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgLang;
 
-		// generate link to central wiki for language of this wiki
-		$langCode = ($wgLang->mCode == 'en') ? '': $wgLang->mCode;
-		
-		$this->centralUrl = 'http://www.wikia.com/go/' .$langCode;
-
 		// generate link to AutoWikiCreate
 		$userlang = $wgLang->getCode();
 		$userlang = $userlang == 'en' ? '' : "?uselang=$userlang";
 
 		$this->createWikiUrl = "http://www.wikia.com/Special:CreateWiki{$userlang}";
+
+		// generate link to central wiki for language of this wiki
+		$langCode = ($userlang == 'en') ? '': $userlang;
+		$this->centralUrl = 'http://www.wikia.com/go/' .$langCode;
 
 		// global navigation menu
 		$category = WikiFactory::getCategory($wgCityId);
