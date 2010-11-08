@@ -83,14 +83,15 @@ class RiakSessionHandler {
 	static public function gc( $maxlifetime ) {
 		return true;
 	}
-
 }
 
-session_set_save_handler(
-	array( "RiakSessionHandler", "open" ),
-	array( "RiakSessionHandler", "close" ),
-	array( "RiakSessionHandler", "read" ),
-	array( "RiakSessionHandler", "write" ),
-	array( "RiakSessionHandler", "destroy" ),
-	array( "RiakSessionHandler", "gc" )
-);
+if( $wgSessionsInRiak ) {
+	session_set_save_handler(
+		array( "RiakSessionHandler", "open" ),
+		array( "RiakSessionHandler", "close" ),
+		array( "RiakSessionHandler", "read" ),
+		array( "RiakSessionHandler", "write" ),
+		array( "RiakSessionHandler", "destroy" ),
+		array( "RiakSessionHandler", "gc" )
+	);
+}
