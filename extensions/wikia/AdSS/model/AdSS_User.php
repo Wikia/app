@@ -41,12 +41,28 @@ class AdSS_User {
 
 		foreach( $res as $row ) {
 			$user = self::newFromRow( $row );
-			if( $user->password == md5( $user->id . $password ) ) {
+			if( $user->password == $user->cryptPassword( $password ) ) {
 				$dbr->freeResult( $res );
 				return $user;
 			}
 		}
 		return false;
+	}
+
+	static function register( $email ) {
+		$user = new self();
+		$user->email = $email;
+		$user->save();
+		if( $user->id ) {
+			$password = self::randomPassword();
+			$user->password = $user->cryptPassword( $password );
+			$user->save();
+
+			$user->sendWelcomeMessage( $password );
+			return $user;
+		} else {
+			return false;
+		}
 	}
 
 	static function newFromRow( $row ) {
@@ -93,6 +109,37 @@ class AdSS_User {
 					__METHOD__
 				    );
 		}
+	}
+
+	function sendWelcomeMessage( $password ) {
+		global $wgPasswordSender, $wgAdSSBillingThreshold;
+		$to = new MailAddress( $this->email );
+		$from = new MailAddress( $wgPasswordSender );
+		$subject = wfMsg( 'adss-welcome-subject' );
+		$url = SpecialPage::getTitleFor( 'AdSS/manager' )->getFullURL();
+		$body = wfMsg( 'adss-welcome-body', $url, $this->email, $password, $wgAdSSBillingThreshold );
+		UserMailer::send( $to, $from, $subject, $body );
+	}
+
+	/**
+	  Return a random password. Copied from MW User class
+	  */
+	static function randomPassword() {
+		global $wgMinimalPasswordLength;
+		$pwchars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz';
+		$l = strlen( $pwchars ) - 1;
+
+		$pwlength = max( 7, $wgMinimalPasswordLength );
+		$digit = mt_rand(0, $pwlength - 1);
+		$np = '';
+		for ( $i = 0; $i < $pwlength; $i++ ) {
+			$np .= $i == $digit ? chr( mt_rand(48, 57) ) : $pwchars{ mt_rand(0, $l)};
+		}
+		return $np;
+	}
+
+	function cryptPassword( $password ) {
+		return md5( $this->id . $password );
 	}
 
 	function toString() {

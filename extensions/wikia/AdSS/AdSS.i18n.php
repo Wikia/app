@@ -93,6 +93,25 @@ Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-timestamp' => 'Timestamp',
 	'adss-description' => 'Description',
 	'adss-amount' => '$$1',
+	'adss-welcome-subject' => '[AdSS] Thank you for your sponsorship!',
+	'adss-welcome-body' => 'Hi,
+
+Congratulations, your account is set up and your ads will start
+running within 48 hours. You can login using the details below to
+double check your ad text, purchase additional ads or review your
+bill. Wikia bills are sent via Paypal every time you have spent
+$$4 or more.
+	
+URL: $1
+Username: $2
+Password: $3
+
+Please save your password in a secure spot.  If you lose it, you can
+contact customer support at: http://www.wikia.com/wiki/Special:Contact
+and we will send you the password to your email address on file.
+
+-- 
+Wikia Team',
 );
 
 /** Message documentation (Message documentation)

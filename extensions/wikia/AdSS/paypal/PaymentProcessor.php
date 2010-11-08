@@ -21,10 +21,10 @@ class PaymentProcessor {
 		);
 		if( $email ) {
 			$tables[] = 'users';
-			$conds += array(
+			$conds = array_merge( $conds, array(
 				'ppt_user_id = user_id',
 				'user_email' => $email,
-			);
+				) );
 		}
 		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppt_user_id DESC' ) );
 		if( $row ) {
@@ -44,10 +44,10 @@ class PaymentProcessor {
 		$conds = array( 'ppt_user_id' => $userId );
 		if( $withBAID ) {
 			$tables[] = 'pp_agreements';
-			$conds += array(
+			$conds = array_merge( $conds, array(
 				'ppt_token = ppa_token',
 				'ppa_canceled IS NULL',
-			);
+				) );
 		}
 		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppt_id DESC' ) );
 		if( $row ) {
