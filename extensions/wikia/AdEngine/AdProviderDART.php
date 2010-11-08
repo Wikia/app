@@ -116,8 +116,12 @@ EOT;
 		}
 
 		$src = 'direct';
+		$mtfIFPath = '';
 		if (AdEngine::getInstance()->getProviderNameForSlotname($slotname) == 'AdDriver') {
 			$src = 'driver';
+		}
+		else {
+			$mtfIFPath .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
 		}
 
 		$url = 'http://ad.doubleclick.net/';
@@ -135,10 +139,11 @@ EOT;
 		$url .= "nofooter=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
+		$url .= $mtfIFPath;
 		$url .= "src=$src;";
 		$url .= "sz=" . $slot['size'] . ';';
+		$url .= 'mtfInline=true;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
 		$url .= $this->getTileKV($slotname);
-		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
 		$url .= "ord=" . $rand . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
