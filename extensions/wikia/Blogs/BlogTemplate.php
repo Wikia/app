@@ -1215,7 +1215,8 @@ class BlogTemplateClass {
 						else {
 							if ( self::$aOptions['type'] != 'array' ) {
 								$sk = $wgUser->getSkin();
-								$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
+								$result = ""; // RT #69906
+								// $result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
 							}
 							else {
 								$result = "";
