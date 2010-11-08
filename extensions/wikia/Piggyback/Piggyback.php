@@ -13,7 +13,6 @@ EOT;
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Piggyback',
 	'author' => 'Tomasz Odrobny',
-	'url' => '',
 	'descriptionmsg' => 'piggyback-desc',
 	'version' => '0.0.1',
 );
