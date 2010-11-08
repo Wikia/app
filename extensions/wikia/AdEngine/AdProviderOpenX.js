@@ -1,6 +1,6 @@
 var AdProviderOpenX = {
 	url : '',
-	url2 : '',
+	url2 : ''
 };
 
 AdProviderOpenX.getUrl = function (baseUrl, slotname, zoneId, affiliateId, hub, additionalParams) {
