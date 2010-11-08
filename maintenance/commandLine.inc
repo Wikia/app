@@ -165,8 +165,8 @@ if ( file_exists( dirname(__FILE__).'/wikimedia-mode' ) ) {
 	}
 	
 	#require_once( $IP.'/includes/ProfilerStub.php' );
-	require( $IP.'/includes/Defines.php' );
-	require( $IP.'/CommonSettings.php' );
+	require_once( $IP.'/includes/Defines.php' );
+	require_once( $IP.'/CommonSettings.php' );
 	if ( !$wgUseNormalUser ) {
 		require( $IP.'/AdminSettings.php' );
 	}

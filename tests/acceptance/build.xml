@@ -13,11 +13,11 @@
   <property name="test.logs" location="logs"/>
   <property name="test.reports" location="reports"/>
 
-  <property name="webSite" value="http://techteam-qa10.wikia.com/" />
+  <property name="webSite" value="" />
   <property name="seleniumHost" value="localhost" />
   <property name="seleniumPort" value="4444" />
   <property name="browser" value="firefox" />
-  <property name="uploadFileName" value="WikiaBotPicture.png" />
+  <property name="uploadFileName" value="" />
 
   <property name="groups" value="" />
   <property name="threadCount" value="4" />
