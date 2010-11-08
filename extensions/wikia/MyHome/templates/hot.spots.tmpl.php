@@ -10,7 +10,7 @@ if(count($data) == 5) {
 <?php } ?>
 </ul>
 <?php } else if(count($data) == 2) {
-	echo '<p style="margin-bottom: 5px">'.wfMsg('myhome-hot-spots-definition', $data['interval']).'</p>';
+	echo '<p style="margin-bottom: 5px">'.wfMsgExt('myhome-hot-spots-definition','parsemag',$data['interval']).'</p>';
 	$hotSpotSeverity = 1; //used to set background color heat level. 1 (hottest) - 5 (coolest).
 	$hotSpotLast = Array(); //used to compare the last rendered item to current.
 	$hotSpotFire = '';
