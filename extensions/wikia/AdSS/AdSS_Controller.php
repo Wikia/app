@@ -155,6 +155,14 @@ class AdSS_Controller extends SpecialPage {
 		if( $pp_existing ) {
 			$user = AdSS_User::newFromId( $pp_existing->getUserId() );
 			wfDebug( "AdSS: got existing user: {$user->toString()})\n" );
+			if( $user->password == '' ) {
+				// generate a new password
+				$password = AdSS_User::randomPassword();
+				$user->password = $user->cryptPassword( $password );
+				$user->save();
+				$user->sendWelcomeMessage( $password );
+			}
+
 			$baid = $pp_existing->getBillingAgreement();
 			if( $baid ) wfDebug( "AdSS: got existing BAID: $baid\n" );
 		} else {
