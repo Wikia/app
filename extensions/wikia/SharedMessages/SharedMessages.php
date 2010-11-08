@@ -7,9 +7,12 @@ $wgExtensionFunctions[] = 'wfSharedMessages';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SharedMessages',
-	'description' => 'Allows drawing "shared*" messages from the shared DB',
+	'descriptionmsg' => 'sharedmessages-desc',
 	'author' => 'Inez Korczyński'
 );
+
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['SharedMessages'] = $dir . 'SharedMessages.i18n.php';
 
 function wfSharedMessages() {
 	global $wgHooks;
@@ -49,9 +52,9 @@ function getSharedMessageText(&$title) {
 	if ( empty($wgExternalSharedDB) ) {
 		return null;
 	}
-	
+
 	$memkey = wfForeignMemcKey($wgExternalSharedDB, __METHOD__, $title->getNamespace(), $title->getDBkey());
-	$cached = ( $wgDBname == $wgExternalSharedDB ) ? '' : $wgMemc->get($memkey); 
+	$cached = ( $wgDBname == $wgExternalSharedDB ) ? '' : $wgMemc->get($memkey);
 
 	$result = null;
 	if ( empty($cached) ) {
@@ -72,10 +75,10 @@ function getSharedMessageText(&$title) {
 		if ($row) {
 			$result = Revision::getRevisionText($row);
 			$wgMemc->set($memkey, $result, 60*60);
-		} 
+		}
 	} else {
 		$result = $cached;
 	}
-	
+
 	return $result;
 }
