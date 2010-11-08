@@ -6,10 +6,10 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class WikiaLogoTest extends BaseTest {
 
-	@Test(groups="postRelease")
+	@Test(groups={"oasis"})
 	public void testWikiaLogoLink() throws Exception {
 		session().open("/");
-		session().click("link=Wikia");
+		session().click("//li[@class='WikiaLogo']/a");
 		session().waitForPageToLoad(TIMEOUT);
 		assertEquals("http://www.wikia.com/Wikia", session().getLocation());
 	}
