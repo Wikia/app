@@ -208,7 +208,9 @@ class PageHeaderModule extends Module {
 			$this->categories = array();
 			foreach($categories as $category => $cnt) {
 				$title = Title::newFromText($category, NS_CATEGORY);
-				$this->categories[] = View::link($title, $title->getText());
+				if($title) {
+					$this->categories[] = View::link($title, $title->getText());
+				}
 			}
 
 			// get info about current revision and list of authors of recent five edits
