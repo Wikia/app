@@ -35,9 +35,9 @@ class AdSS_AdminBillingPager extends TablePager {
 				return AdSS_User::newFromId( $value )->toString();
 			case 'description':
 				if( $this->bl->paymentId ) {
-					return wfMsgHtml( 'adss-paypal-payment' );
+					return wfMsgHtml( 'adss-paypal-payment' ) . " (ID=" . $this->bl->paymentId . ")";
 				} elseif( $this->bl->adId ) {
-					$r = wfMsgHtml( 'adss-adss-fee' );
+					$r = wfMsgHtml( 'adss-adss-fee' ) . " (ID=" . $this->bl->adId . ")";
 					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 					$tmpl->set( 'ad', AdSS_Ad::newFromId( $this->bl->adId ) );
 					$r .= "<div style=\"display:none\"><ul><li>".$tmpl->render( 'ad' )."</li></ul></div>";

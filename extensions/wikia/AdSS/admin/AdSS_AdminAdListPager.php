@@ -45,7 +45,7 @@ class AdSS_AdminAdListPager extends TablePager {
 			case 'ad_wiki_id':
 				$wiki = WikiFactory::getWikiByID( $value );
 				return $wiki->city_title;
-			case 'ad_id':
+			case 'ad_action':
 				if( $this->ad->closed ) return '';
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 				$tmpl->set( 'ad', $this->ad );
@@ -89,6 +89,7 @@ class AdSS_AdminAdListPager extends TablePager {
 
 	function getFieldNames() {
 		return array(
+				'ad_id'      => 'Ad ID',
 				'ad_wiki_id' => 'Wikia',
 				'ad_page_id' => 'Type',
 				'ad_weight'  => 'No. shares',
@@ -98,7 +99,7 @@ class AdSS_AdminAdListPager extends TablePager {
 				'ad_expires' => 'Expires',
 				'ad_closed'  => 'Closed',
 				'ad_price'   => 'Price',
-				'ad_id'      => 'Action',
+				'ad_action'  => 'Action',
 			    );
 	}
 
