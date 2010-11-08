@@ -87,7 +87,7 @@ For example, you could:
 * Give a shout-out to a contributor who's added something special to the wiki
 
 * Or just post some words of encouragement!",
-	'myhome-hot-spots-definition' => 'Pages with the most editors in the last $1 days.',
+	'myhome-hot-spots-definition' => 'Pages with the most editors in the last {{PLURAL:$1|day|$1 days}}.',
 
 	'myhome-default-view-checkbox' => 'Make $1 my default view',
 	'myhome-default-view-success' => 'Okay, this is your default now',
