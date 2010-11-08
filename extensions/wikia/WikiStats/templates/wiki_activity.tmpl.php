@@ -70,8 +70,13 @@ $(document).ready(function() {
 			{ "bVisible": false,  "aTargets": [ 3 ], "bSortable" : false },
 			{
 				"fnRender": function ( oObj ) {
-					var change = ( oObj.aData[8] > oObj.aData[4] ) ? ' <span style="color:#00FF00;">&#8593;</span> ' : '<span></span>';
-					change = ( oObj.aData[8] < oObj.aData[4] ) ? ' <span style="color:#FF0000;">&#8595;</span> ' : change;
+					var change = '<span></span>';
+					
+					if ( oObj.aData[8] > oObj.aData[4] ) {
+						change = ' <span style="color:#FF0000;">&#8595;</span> ' ;
+					} else if ( oObj.aData[8] < oObj.aData[4] ) {
+						change = ' <span style="color:#00FF00;">&#8593;</span> ';
+					}
 					var row = '<span class="ws-row">' + oObj.aData[4] + ' ' + change + '</span>';
 					return row;
 				},
@@ -80,8 +85,13 @@ $(document).ready(function() {
 			},
 			{
 				"fnRender": function ( oObj ) {
-					var change = ( oObj.aData[9] > oObj.aData[5] ) ? ' <span style="color:#00FF00;">&#8593;</span> ' : '<span></span>';
-					change = ( oObj.aData[9] < oObj.aData[5] ) ? ' <span style="color:#FF0000;">&#8595;</span> ' : change;
+					var change = '<span></span>';
+					
+					if ( oObj.aData[9] > oObj.aData[5] ) {
+						change = ' <span style="color:#FF0000;">&#8595;</span> ' ;
+					} else if ( oObj.aData[9] < oObj.aData[5] ) {
+						change = ' <span style="color:#00FF00;">&#8593;</span> ';
+					}
 					var row = '<span class="ws-row">' + oObj.aData[5] + ' ' + change + '</span>';
 					return row;
 				},
@@ -90,8 +100,13 @@ $(document).ready(function() {
 			},
 			{
 				"fnRender": function ( oObj ) {
-					var change = ( oObj.aData[10] > oObj.aData[6] ) ? ' <span style="color:#00FF00">&#8593;</span> ' : '<span></span>';
-					change = ( oObj.aData[10] < oObj.aData[6] ) ? ' <span style="color:#FF0000;">&#8595;</span> ' : change;
+					var change = '<span></span>';
+					
+					if ( oObj.aData[10] > oObj.aData[6] ) {
+						change = ' <span style="color:#FF0000;">&#8595;</span> ' ;
+					} else if ( oObj.aData[10] < oObj.aData[6] ) {
+						change = ' <span style="color:#00FF00;">&#8593;</span> ';
+					}
 					var row = '<span class="ws-row">' + oObj.aData[6] + ' ' + change + '</span>';
 					return row;
 				},
