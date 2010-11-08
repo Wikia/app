@@ -5,7 +5,6 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CorporatePage',
 	'author' => 'Tomasz Odrobny',
-	'url' => '',
 	'description' => 'global page for wikia.com',
 	'descriptionmsg' => 'myextension-desc',
 	'version' => '1.0.0',
