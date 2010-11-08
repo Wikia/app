@@ -7,10 +7,8 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Sign up',
 	'author' => 'Bartek Lapinski',
-	'url' => '',
-	'description' => 'Alias extension for Special:Userlogin',
-	'descriptionmsg' => '',
-	'version' => '2.0.0',
+	'descriptionmsg' => 'signup-desc',
+	'version' => '2.0.1,
 );
 
 $dir = dirname(__FILE__) . '/';
