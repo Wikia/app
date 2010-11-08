@@ -1412,7 +1412,11 @@ class WikiStatsXLS {
 			$col = 1;
 			foreach ( $columns as $id => $value ) {
 				if ( $id > 7 ) continue;
-				$this->writeXLSLabel($row,$col,$value);
+				if (is_numeric($value)) {
+					$this->writeXLSNumber($row, $col, $value); 
+				} else {
+					$this->writeXLSLabel($row,$col,$value);
+				}
 				$col++;
 			}
 		}

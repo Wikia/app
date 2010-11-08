@@ -48,6 +48,9 @@ $(document).ready(function() {
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="ws-row"><a target="new" href="http://community.wikia.com/index.php?title=Special:WikiFactory/db:' + oObj.aData[1] + '" target="new">' + oObj.aData[1] + '</a></span>';
+					if ( oObj.aData[0] == 0 ) {
+						row = '<span class="ws-row">' + oObj.aData[1] + '</span>';
+					}
 					return row;
 				},
 				"aTargets": [ 1 ],
@@ -56,6 +59,9 @@ $(document).ready(function() {
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="ws-row"><a target="new" href="' + oObj.aData[3] + '" target="new">' + oObj.aData[2] + '</a></span>';
+					if ( oObj.aData[0] == 0 ) {
+						row = '<span class="ws-row">' + oObj.aData[2] + '</span>';
+					}					
 					return row;
 				},
 				"aTargets": [ 2 ],
@@ -157,6 +163,7 @@ $(document).ready(function() {
 					{ 'name' : 'cat',		'value' : ( $('#ws_cat').exists() ) ? $('#ws_cat').val() : '' },
 					{ 'name' : 'year',		'value' : ( $('#ws_year').exists() ) ? $('#ws_year').val() : '' },
 					{ 'name' : 'month',		'value' : ( $('#ws_month').exists() ) ? $('#ws_month').val() : '' },
+					{ 'name' : 'summary',	'value' : ( $('#wsall').exists() ) ? $('#wsall:checked').val() : 0 },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
 					{ 'name' : 'loop', 		'value' : loop },
@@ -238,6 +245,7 @@ for ( $i=2001; $i <= date('Y'); $i++ ) :
 			</li>
 		</ul>
 		<ul>	
+			<input name="wsall" id="wsall" type="checkbox" value="1" /><?=wfMsg('wikistats_summary_data')?>
 			<li><input type="submit" id="wsactivebtn" value="<?= wfMsg("wikistats_showstats_btn") ?>"  /></li>
 			<li><input type="submit" id="wsactivexls" value="<?= wfMsg("wikistats_export_xls") ?>" /></li>
 		</ul>

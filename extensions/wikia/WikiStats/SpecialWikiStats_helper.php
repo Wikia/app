@@ -975,8 +975,6 @@ class WikiStats {
 					);
 				}
 			}
-			#error_log ("active = " . print_r($wikians_active, true));
-			#error_log ("absent = " . print_r($wikians_absent, true));
 			
 			#---
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -1169,6 +1167,7 @@ class WikiStats {
 		$order = ( isset( $params['order'] )  ) ? $params['order'] : '';
 		$limit = ( isset( $params['limit'] )  ) ? intval($params['limit']) : self::DEF_LIMIT;
 		$offset =( isset( $params['offset'])  ) ? intval($params['offset']) : 0;
+		$summary=( isset( $params['summary']) ) ? intval($params['summary']) : 0;
 		
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
 				
@@ -1254,7 +1253,7 @@ class WikiStats {
 		
 		if ( $data['cnt'] > 0 ) {
 			
-			$memkey = sprintf( "acdata_%s_%s_%d", __METHOD__, $year.'_'.$month.'_'.$lang.'_'.$cat.'_'.$order.'_'.$limit.'_'.$offset.'_'.$wgLang->getCode(), $xls );
+			$memkey = sprintf( "acdata_%s_%s_%d", __METHOD__, $year.'_'.$month.'_'.$lang.'_'.$cat.'_'.$order.'_'.$limit.'_'.$offset.'_'.$wgLang->getCode().'_'.$summary, $xls );
 			
 			$data['res'] = $wgMemc->get( $memkey );
 			
@@ -1271,14 +1270,14 @@ class WikiStats {
 				$oRes = $dbr->select ( 
 					$tables,
 					array( 
-						'cl.city_id', 
-						'city_dbname', 
-						'city_title', 
-						'city_url', 
-						'users_all', 
-						'articles', 
-						'articles_edits', 
-						'city_last_timestamp' 
+						($summary) ? '0 as city_id'        : 'cl.city_id', 
+						($summary) ? '\'\' as city_dbname' : 'city_dbname', 
+						($summary) ? '\'\' as city_title'  : 'city_title', 
+						($summary) ? '\'\' as city_url'    : 'city_url', 
+						($summary) ? 'sum(users_all) as users_all'           : 'users_all', 
+						($summary) ? 'sum(articles) as articles'             : 'articles', 
+						($summary) ? 'sum(articles_edits) as articles_edits' : 'articles_edits', 
+						($summary) ? '\'\' as ts'          : 'city_last_timestamp as ts' 
 					),
 					$conditions,
 					__METHOD__,
@@ -1287,15 +1286,15 @@ class WikiStats {
 				);	
 
 				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-					$data['res'][$oRow->city_id] = array(
-						$oRow->city_id,
-						$oRow->city_dbname,
-						$oRow->city_title,
-						$oRow->city_url,
+					$data['res'][( $summary ) ? 0 : $oRow->city_id] = array(
+						($summary) ? 0 : $oRow->city_id,
+						($summary) ? wfMsg('wikistats_summary_data') : $oRow->city_dbname,
+						($summary) ? wfMsg('wikistats_summary_data') : $oRow->city_title,
+						($summary) ? wfMsg('wikistats_summary_data') : $oRow->city_url,
 						$oRow->users_all,
 						$oRow->articles_edits,						
 						$oRow->articles,
-						$wgLang->timeanddate( $oRow->city_last_timestamp ),
+						($summary) ? '' : $wgLang->timeanddate( $oRow->ts ),
 						0, # prev # users
 						0, # prev # edits
 						0  # prev # articles
@@ -1309,18 +1308,23 @@ class WikiStats {
 					if ( $prev_month == 0 ) {
 						$prev_month = 12; $prev_year--;
 					}
+					$where = array(
+						'stats_date' => sprintf("%04d%02d", $prev_year, $prev_month)
+					);
+					
+					if ( !$summary ) {
+						$where['wiki_id'] = array_keys($data['res']);			
+					}
+					
 					$oRes = $dbr->select ( 
 						array( 'wikia_monthly_stats' ),
 						array( 
-							'wiki_id', 
-							'users_all', 
-							'articles', 
-							'articles_edits', 
+							($summary) ? '0 as wiki_id'                          : 'wiki_id', 
+							($summary) ? 'sum(users_all) as users_all'           : 'users_all', 
+							($summary) ? 'sum(articles) as articles'             : 'articles', 
+							($summary) ? 'sum(articles_edits) as articles_edits' : 'articles_edits'
 						),
-						array(
-							'stats_date' => sprintf("%04d%02d", $prev_year, $prev_month),
-							'wiki_id' => array_keys($data['res'])
-						),
+						$where,
 						__METHOD__
 					);	
 					

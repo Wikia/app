@@ -234,6 +234,7 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 	"wikistats_language_toplist" => "de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh",
 	"wikistats_recordspager" => "Showing '''$1''' to '''$2''' of '''$3''' records.",
 	"wikistats_title" => "Title",
+	"wikistats_summary_data" => "Summary data"
 );
 
 /** Message documentation (Message documentation)

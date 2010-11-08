@@ -108,6 +108,7 @@ class WikiStatsAjax {
 		$loop		= $wgRequest->getVal('loop');
 		$order		= $wgRequest->getVal('order');
 		$numOrder	= $wgRequest->getVal('numOrder');
+		$summary 	= $wgRequest->getVal('summary');
 
 		$result = array(
 			'sEcho' => intval($loop), 
@@ -128,7 +129,8 @@ class WikiStatsAjax {
 			'cat'		=> $cat, 
 			'order' 	=> $order, 
 			'limit'		=> $limit, 
-			'offset' 	=> $offset		
+			'offset' 	=> $offset,
+			'summary'	=> $summary	
 		);
 		
 		if ( empty($op) ) {
