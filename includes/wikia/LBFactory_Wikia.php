@@ -29,8 +29,8 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			} else {
 				$section = 'DEFAULT';
 			}
-		} elseif( $smwgUseExternalDB && preg_match("^smw\+\-(.+)", $dbName, $subpatterns )
-			&& isset( $this->sectionsByDB[ "smw+" ] ) ) {
+		} elseif( $smwgUseExternalDB && substr($dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
+			wfDebugLog( "connect", __METHOD__ . ": section smw+ choosen form $wiki\n" );
 			$section = "smw+";
 			$wiki = substr( $wiki, 4 );
 		} else {
