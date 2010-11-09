@@ -146,15 +146,20 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
  *
  * Hostname scheme: override.developer.wikia-dev.com
  * Example: muppet.owen.wikia-dev.com -> muppet.wikia.com
+ * Example: es.gta.owen.wikia-dev.com -> es.gta.wikia.com
+ *
+ * TODO: figure out if .poz domains are still used?
+ * 	if (array_search('poz', $aHostParts) !== false){
+ *		array_pop($aHostParts);  // remove .poz if it exists in the host name
+ *	}
  */
 function getForcedWikiValue(){
 	if (!isset($_SERVER['HTTP_HOST'])) return "";
-	$hostCount = count (explode(".", $_SERVER['HTTP_HOST']));
-	if ( $hostCount == 4 || $hostCount == 5) {
-		$override = array_shift(explode(".", $_SERVER['HTTP_HOST']));
-		return "$override.wikia.com";
-	}
-	return "";
+	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return "";
+	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
+	array_pop($aHostParts);  // remove developer name
+	$override = implode(".", $aHostParts);
+	return "$override.wikia.com";
 } // end getForcedWikiValue()
 
 
