@@ -372,3 +372,8 @@ $smwgTranslate = false;
 ##
 $smwgAdminRefreshStore = true;
 ##
+
+##
+# Default database connection used in SQLStore
+##
+$smwgDBname = $wgDBname;
