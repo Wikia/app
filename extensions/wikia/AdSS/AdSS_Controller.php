@@ -145,11 +145,6 @@ class AdSS_Controller extends SpecialPage {
 		unset( $_SESSION['ecToken'] );
 		$adForm = $_SESSION['AdSS_adForm'];
 
-		if( $wgUser->isAllowed( 'adss-admin' ) ) {
-			$this->saveAdInternal( $adForm, $user, "adss/form/paypal/return" );
-			return;
-		}
-
 		$pp_new = new PaymentProcessor( $token );
 
 		$payerId = $pp_new->fetchPayerId();

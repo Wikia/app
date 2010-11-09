@@ -72,12 +72,14 @@ class AdSS_Ad {
 				}
 				break;
 			case 'site-premium':
-				$this->amount = 3 * AdSS_Util::getSitePricing();
 				$this->weight = 4;
+				$this->price = AdSS_Util::getSitePricing();
+				$this->price['price'] = 3 * $this->price['price'];
 				break;
 			default /* site */:
-				$this->amount = AdSS_Util::getSitePricing();
 				$this->weight = $f->get( 'wpWeight' );
+				$this->price = AdSS_Util::getSitePricing();
+				$this->price['price'] = $this->weight * $this->price['price'];
 				break;
 		}
 	}
