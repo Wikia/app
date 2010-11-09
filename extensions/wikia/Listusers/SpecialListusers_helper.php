@@ -438,7 +438,14 @@ class ListusersData {
 		);
 		$groups = array();
 		if ( $oRow !== false ) {
-			$groups = array_filter(explode( ";", $oRow->all_groups ), function($a) { return !empty($a); } );
+			$tmp = explode( ";", $oRow->all_groups );
+			if ( !empty($tmp) ) {
+				foreach ( $tmp as $g ) {
+					if ( !empty($g) ) { 
+						$groups[] = $g;
+					}
+				}
+			}
 		}
 		
 		$central_groups = array();
