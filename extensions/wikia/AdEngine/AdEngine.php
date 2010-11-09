@@ -765,7 +765,8 @@ EOT;
 	}
 
 	public function getProviderNameForSlotname($slotname) {
-		return $this->providers[$this->slots[$slotname]['provider_id']];
+		return isset($this->slots[$slotname]) && isset($this->providers[$this->slots[$slotname]])
+			? $this->providers[$this->slots[$slotname]['provider_id']]
+			: '';
 	}
-
 }
