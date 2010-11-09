@@ -80,7 +80,7 @@ class AdSS_Billing {
 	function addCharge( $ad ) {
 		$this->userId = $ad->userId;
 		$this->adId = $ad->id;
-		$this->amount = -( $ad->price['price'] * $ad->weight );
+		$this->amount = -$ad->price['price'];
 		return $this->save();
 	}
 

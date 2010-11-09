@@ -89,7 +89,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function save( $adForm ) {
-		global $wgOut, $wgPayPalUrl, $wgRequest;
+		global $wgOut, $wgPayPalUrl, $wgRequest, $wgUser;
 
 		if( !$adForm->isValid() ) {
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/errors") } )' );
@@ -100,6 +100,10 @@ class AdSS_Controller extends SpecialPage {
 		if( $wgRequest->getText( 'wpSubmit' ) == wfMsgHtml( 'adss-button-login-buy' ) ) {
 			$user = AdSS_User::newFromForm( $adForm );
 			if( $user ) {
+				if( $wgUser->isAllowed( 'adss-admin' ) ) {
+					$this->saveAdInternal( $adForm, $user, "adss/form/save" );
+					return;
+				}
 				$pp = PaymentProcessor::newFromUserId( $user->id );
 				if( $pp && $pp->getBillingAgreement() ) {
 					$this->saveAdInternal( $adForm, $user, "adss/form/save" );
@@ -131,7 +135,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function processPayPalReturn( $token ) {
-		global $wgAdSS_templatesDir, $wgOut, $wgAdSS_contactEmail;
+		global $wgAdSS_templatesDir, $wgOut, $wgAdSS_contactEmail, $wgUser;
 
 		if( empty( $_SESSION['ecToken'] ) || ( $_SESSION['ecToken'] != $token ) ) {
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/return/error") } )' );
@@ -140,6 +144,11 @@ class AdSS_Controller extends SpecialPage {
 		}
 		unset( $_SESSION['ecToken'] );
 		$adForm = $_SESSION['AdSS_adForm'];
+
+		if( $wgUser->isAllowed( 'adss-admin' ) ) {
+			$this->saveAdInternal( $adForm, $user, "adss/form/paypal/return" );
+			return;
+		}
 
 		$pp_new = new PaymentProcessor( $token );
 
@@ -185,10 +194,13 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	private function saveAdInternal( $adForm, $user, $fakeUrl ) {
-		global $wgOut, $wgAdSS_contactEmail, $wgNoReplyAddress;
+		global $wgOut, $wgAdSS_contactEmail, $wgNoReplyAddress, $wgUser;
 
 		$ad = AdSS_Ad::newFromForm( $adForm );
 		$ad->setUser( $user );
+		if( $wgUser->isAllowed( 'adss-admin' ) ) {
+			$ad->expires = strtotime( "+10 years", time() );
+		}
 		$ad->save();
 		if( $ad->id == 0 ) {
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("'.$fakeUrl.'/error") } )' );
@@ -199,7 +211,9 @@ class AdSS_Controller extends SpecialPage {
 		$wgOut->addInlineScript( '$(function() { $.tracker.byStr("'.$fakeUrl.'/ok") } )' );
 		$wgOut->addHTML( wfMsgWikiHtml( 'adss-form-thanks' ) );
 
-		if( !empty( $wgAdSS_contactEmail ) ) {
+		if( $wgUser->isAllowed( 'adss-admin' ) ) {
+			AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
+		} elseif( !empty( $wgAdSS_contactEmail ) ) {
 			$to = array();
 			foreach( $wgAdSS_contactEmail as $a ) {
 				$to[] = new MailAddress( $a );
