@@ -423,11 +423,11 @@ class ListusersData {
 			return true;
 		}
 		
-		global $wgCityId;
+		$user_id = $user->getID();
 		$dbr = wfGetDB(DB_SLAVE, array(), $this->mDBh);
 		$where = array( 
-			"user_id" 	=> $user->getID(),
-			"wiki_id" 	=> $wgCityId
+			"user_id" 	=> $user_id,
+			"wiki_id" 	=> $this->mCityId
 		);
 
 		$oRow = $dbr->selectRow( 
@@ -436,32 +436,85 @@ class ListusersData {
 			$where,
 			__METHOD__ 
 		);
-		if ( $oRow !== false && !empty( $oRow->all_groups ) ) {
-			$groups = explode( ";", $oRow->all_groups );
-			if ( !empty($addgroup) ) {
-				$groups = array_unique( array_merge($groups, $addgroup) );
-			} 
-			if ( !empty($removegroup) ) {
-				$groups = array_unique( array_diff($groups, $removegroup) );
-			}
-			if ( !empty($groups) ) { 
-				sort($groups);
-				$elements = count($groups);
-				$singlegroup = ( $elements > 0 ) ? $groups[$elements-1] : "";
-				
-				$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
-				$dbw->update(
-					$this->mTable,
-					array(
-						"single_group"	=> $singlegroup,
-						"all_groups"	=> @implode(";", $groups)
-					),
-					$where,
-					__METHOD__
-				);
+		$groups = array();
+		if ( $oRow !== false ) {
+			$groups = array_filter(explode( ";", $oRow->all_groups ), function($a) { return !empty($a); } );
+		}
+		
+		$central_groups = array();
+		if ( class_exists('UserRights') ) {
+			if ( !UserRights::isCentralWiki() ) {
+				$central_groups = UserRights::getGlobalGroups($user);
 			}
 		}
 		
+		# add groups
+		if ( !empty($addgroup) ) {
+			$groups = array_unique( array_merge($groups, $addgroup) );
+		} 
+		# remove groups
+		if ( !empty($removegroup) ) {
+			$groups = array_unique( array_diff($groups, $removegroup) );
+		}
+		#central groups
+		if ( !empty($central_groups) ) {
+			$groups = array_unique( array_merge($groups, $central_groups) );
+		}
+
+		if ( !empty($groups) ) { 
+			sort( $groups );
+		}
+		$elements = count($groups);
+		$singlegroup = ( $elements > 0 ) ? $groups[$elements-1] : "";
+		$allgroups = ( $elements > 0 ) ? implode(";", $groups) : "";
+		
+		$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
+		if ( empty($oRow) ) {
+			$edits = User::edits($user_id);
+
+			$dbr = wfGetDB( DB_SLAVE );
+			$revRow = $dbr->selectRow( 
+				'revision', 
+				array( 'rev_id', 'rev_timestamp' ),
+				array( 'rev_user' => $user_id ),
+				__METHOD__,
+				array( 'ORDER BY' => 'rev_timestamp DESC' )
+			);
+			if ( empty($revRow) ) {
+				$editdate = $lastrev = null;
+			} else {
+				$editdate = wfTimestamp( TS_DB, $revRow->rev_timestamp );
+				$lastrev = $revRow->rev_id;
+			}
+
+			$dbw->insert(
+				$this->mTable,
+				array(
+					"wiki_id"        => $this->mCityId,
+					"user_id"        => $user_id,
+					"user_name"  	 => $user->getName(),
+					"last_ip"		 => 0,
+					"edits"			 => $edits,
+					"editdate"		 => $editdate,
+					"last_revision"  => $lastrev,
+					"cnt_groups"	 => $elements,
+					"single_group"   => $singlegroup,
+					"all_groups"	 => $allgroups					
+				),
+				__METHOD__
+			);
+		} else {
+			$dbw->update(
+				$this->mTable,
+				array(
+					"cnt_groups"	=> $elements,
+					"single_group"	=> $singlegroup,
+					"all_groups"	=> $allgroups
+				),
+				$where,
+				__METHOD__
+			);
+		}
 		wfProfileOut( __METHOD__ );		
 		return true;
 	}
