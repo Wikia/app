@@ -75,7 +75,7 @@ class AdSS_AdminAdListPager extends TablePager {
 					return 'Site';
 				}
 			case 'ad_price':
-				return AdSS_Util::formatPrice( $this->ad->price, $this->ad->weight );
+				return AdSS_Util::formatPrice( $this->ad->price );
 			case 'ad_user_id':
 				return AdSS_User::newFromId( $value )->toString();
 			default:

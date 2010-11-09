@@ -21,9 +21,9 @@ class AdSS_Util {
 		return $wgAdSS_pricingConf['page']['#default#'];
 	}
 
-	static function formatPrice( $priceConf, $weight=1 ) {
+	static function formatPrice( $priceConf, $shares=1 ) {
 		global $wgLang;
-		$price = $priceConf['price'] * $weight;
+		$price = $priceConf['price'] * $shares;
 		if( intval( $price ) == $price ) {
 			$price = intval( $price );
 		}

@@ -56,6 +56,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 			case 'ad_weight':
 				if( $this->ad->pageId == 0 ) {
 					return $value;
+					//TODO
 					if( !$this->ad->closed && ( !$this->ad->expires || $this->ad->expires > time() ) ) {
 						$ret = "$value (" . Xml::element( 'a', array( 'href' => '#' ), '+' );
 						if( $this->ad->weight > 1 ) {
@@ -89,7 +90,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 			case 'ad_expires':
 				return substr( $value, 0, 10 );
 			case 'ad_price':
-				return AdSS_Util::formatPrice( $this->ad->price, $this->ad->weight );
+				return AdSS_Util::formatPrice( $this->ad->price );
 			case 'ad_action':
 				if( !$this->ad->closed ) {
 					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );

@@ -32,7 +32,7 @@ class AdSS_Ad {
 		$this->closed = null;
 		$this->expires = null;
 		$this->weight = 1;
-		$this->price = AdSS_Util::getSitePricing();
+		$this->price = 0;
 		$this->user = null;
 	}
 
@@ -62,14 +62,23 @@ class AdSS_Ad {
 		}
 		$this->text = $f->get( 'wpText' );
 		$this->desc = $f->get( 'wpDesc' );
-		$this->weight = $f->get( 'wpWeight' );
-		if( $f->get( 'wpType' ) == 'page' ) {
-			$title = Title::newFromText( $f->get( 'wpPage' ) );
-			if( $title && $title->exists() ) {
-				$this->pageId = $title->getArticleId();
-				$this->price = AdSS_Util::getPagePricing( $title );
-				$this->weight = 1;
-			}
+		switch( $f->get( 'wpType' ) ) {
+			case 'page':
+				$title = Title::newFromText( $f->get( 'wpPage' ) );
+				if( $title && $title->exists() ) {
+					$this->pageId = $title->getArticleId();
+					$this->price = AdSS_Util::getPagePricing( $title );
+					$this->weight = 1;
+				}
+				break;
+			case 'site-premium':
+				$this->amount = 3 * AdSS_Util::getSitePricing();
+				$this->weight = 4;
+				break;
+			default /* site */:
+				$this->amount = AdSS_Util::getSitePricing();
+				$this->weight = $f->get( 'wpWeight' );
+				break;
 		}
 	}
 
