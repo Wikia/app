@@ -23,6 +23,7 @@ if (isset($options['help'])) {
 		  --quiet    do not print anything to output\n\n");
 }
 
+$wgExtensionMessagesFiles['AutomaticWikiAdoption'] = $GLOBALS['IP'] . '/extensions/wikia/AutomaticWikiAdoption/AutomaticWikiAdoption.i18n.php';
 require_once( $GLOBALS['IP'].'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php' );
 
 $maintenance = new AutomaticWikiAdoptionGatherData();
