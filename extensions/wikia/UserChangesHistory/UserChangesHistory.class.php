@@ -61,10 +61,13 @@ class UserChangesHistory {
 					);
 					if ( !empty($wgEnableScribeReport) ) {
 						# use scribe
-						$key = "trigger_login";
 						try {
-							$data = Wikia::json_encode( $params );
-							WScribeClient::singleton($key)->send($data);
+							$message = array(
+								'method' => 'login',
+								'params' => $params
+							);
+							$data = Wikia::json_encode( $message );
+							WScribeClient::singleton('trigger')->send($data);
 						}
 						catch( TException $e ) {
 							Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
@@ -144,8 +147,12 @@ class UserChangesHistory {
 				# use scribe
 				$key = "trigger_savepreferences";
 				try {
-					$data = Wikia::json_encode( $params );
-					WScribeClient::singleton($key)->send($data);
+					$message = array(
+						'method' => 'savepreferences',
+						'params' => $params
+					);
+					$data = Wikia::json_encode( $message );
+					WScribeClient::singleton('trigger')->send($data);					
 				}
 				catch( TException $e ) {
 					Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
