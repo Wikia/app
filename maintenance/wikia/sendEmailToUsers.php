@@ -16,7 +16,7 @@ require_once( dirname(__FILE__)."/../../includes/UserMailer.php" );
 $optionsWithArgs = array('list');
 
 if (isset($options['help']) || !isset($options['list'])) {
-	die( "Usage: php setUserOptions.php --list=file [--quiet]
+	die( "Usage: php sendEmailToUsers.php --list=file [--quiet]
 
 		  --help       you are reading it right now
 		  --list=file  path to .php file that will be included - has to provide $users array of $user_id => array($data)
