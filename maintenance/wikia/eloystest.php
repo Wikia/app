@@ -122,6 +122,12 @@ function testRiak() {
 	echo $store->fetchFromURL( "riak://storage/blobs/222:333:444" );
 
 }
+
+function testExternalSMW() {
+	global $wgDBname;
+
+	$dbr = wfGetDB( DB_MASTER, 'smw', 'smw+' . $wgDBname );
+}
 #
 # main
 #
@@ -131,4 +137,5 @@ function testRiak() {
 #curlSolrUpdate();
 #testInterwikiLink();
 #testAvatars();
-testRiak();
+#testRiak();
+testExternalSMW();
