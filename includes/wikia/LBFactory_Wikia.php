@@ -30,8 +30,8 @@ class LBFactory_Wikia extends LBFactory_Multi {
 				$section = 'DEFAULT';
 			}
 		} elseif( $smwgUseExternalDB && substr($dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
-			$section = "smw+";
-			wfDebugLog( "connect", __METHOD__ . ": section smw+ choosen for $wiki\n" );
+			$section = "smw";
+			wfDebugLog( "connect", __METHOD__ . ": section smw choosen for $wiki\n" );
 		} else {
 			// this is a foreign db that either has a cluster defined in WikiFactory...
 			$section = WikiFactory::getVarValueByName( 'wgDBcluster', WikiFactory::DBtoID( $wiki ) );
