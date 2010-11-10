@@ -113,7 +113,7 @@ $(document).ready(function() {
 	
 	var toolbar = '<div class="lu_filter">';
 	toolbar += '<span class="lu_filter lu_first"><?= wfMsg('listusersstartingtext') ?></span>';
-	toolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5"></span>';
+	toolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5" value="<?=$defUser?>"></span>';
 	toolbar += '<span class="lu_filter lu_first"><?= wfMsg('listuserscontributed') ?></span>';
 	toolbar += '<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" >';
 	<? foreach ($obj->mContribs as $val => $text) { ?>
