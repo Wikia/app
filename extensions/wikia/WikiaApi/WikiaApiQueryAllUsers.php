@@ -250,7 +250,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			// Add user's group info
 			if ( $this->fld_groups ) {
 				if ( !is_null($row->ug_group2) && !empty($wgWikiaGlobalUserGroups) ) {
-					if ( in_array($row->ug_group2, $wgWikiaGlobalUserGroups)	) 
+					if ( in_array($row->ug_group2, $wgWikiaGlobalUserGroups) ) 
 						$lastUserData['groups'][] = $row->ug_group2;
 				}
 				
@@ -264,6 +264,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 				}
 				
 				if ( isset($lastUserData['groups']) ) {
+					$lastUserData['groups'] = array_unique($lastUserData['groups']);
 					$result->setIndexedTagName($lastUserData['groups'], 'g');
 				}
 			}
