@@ -88,6 +88,9 @@ class Listusers extends SpecialPage {
 			}
 		} elseif ( !empty( $subpage ) ) {
 			@list ( $subpage, $this->mDefContrib, $this->mUserStart ) = explode("/", $subpage);
+			if ( !in_array($this->mDefContrib, array_keys($this->mContribs) ) ) {
+				$this->mDefContrib = null;
+			}
 			if ( strpos( $subpage, "," ) !== false )  {
 				$this->mDefGroups = explode( ",", $subpage );
 			} else {
