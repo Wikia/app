@@ -2087,11 +2087,6 @@ class WikiFactory {
 			return false;
 		}
 
-		if ( $wgWikicitiesReadOnly ) {
-			Wikia::log( __METHOD__, '', 'wgWikicitiesReadOnly mode. Skipping update.');
-			return false;
-		}
-
 		wfProfileIn( __METHOD__ );
 
 		$dbw = self::db( DB_SLAVE );
