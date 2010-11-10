@@ -20,6 +20,9 @@ class Listusers extends SpecialPage {
 	var $mContribs;
 	var $mData;
 	
+	var $mDefContrib = null;
+	var $mUserStart = '';
+	
 	const TITLE 			= 'Listusers';
 	const DEF_GROUP_NAME 	= 'all';
 	const DEF_EDITS 		= 5;
@@ -84,12 +87,15 @@ class Listusers extends SpecialPage {
 				$this->mDefGroups = array( $target );
 			}
 		} elseif ( !empty( $subpage ) ) {
+			@list ( $subpage, $this->mDefContrib, $this->mUserStart ) = explode("/", $subpage);
 			if ( strpos( $subpage, "," ) !== false )  {
 				$this->mDefGroups = explode( ",", $subpage );
 			} else {
 				$this->mDefGroups = array( $subpage );
 			}
 		}
+		
+		$this->mDefContrib = is_null($this->mDefContrib) ? self::DEF_EDITS : $this->mDefContrib;
 
 		/* listusersHelper */
 		$this->mData = new ListusersData($this->mCityId);
@@ -126,7 +132,8 @@ class Listusers extends SpecialPage {
 			"wgContLang"		=> $wgContLang,
 			"wgExtensionsPath"	=> $wgExtensionsPath, 
 			"wgStylePath"		=> $wgStylePath,
-			"defContrib"		=> self::DEF_EDITS,
+			"defContrib"		=> $this->mDefContrib,
+			"defUser"			=> $this->mUserStart,
 			"wgUser"			=> $wgUser,
 			"title"				=> self::TITLE
 		));
