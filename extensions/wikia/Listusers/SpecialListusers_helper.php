@@ -503,7 +503,7 @@ class ListusersData {
 					"last_ip"		 => 0,
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
-					"last_revision"  => $lastrev,
+					"last_revision"  => intval($lastrev),
 					"cnt_groups"	 => $elements,
 					"single_group"   => $singlegroup,
 					"all_groups"	 => $allgroups					
