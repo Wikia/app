@@ -54,6 +54,8 @@ class WikiFactory {
 	const FLAG_HIDE_DB_IMAGES 			= 16;
 	const FLAG_REDIRECT 				= 32;
 	const FLAG_ADOPTABLE				= 64;	//used by AutomaticWikiAdoption
+	const FLAG_ADOPT_MAIL_FIRST			= 128;	//used by AutomaticWikiAdoption
+	const FLAG_ADOPT_MAIL_SECOND		= 256;	//used by AutomaticWikiAdoption
 
 	const db            = "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
@@ -1987,8 +1989,8 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param integer	$city_public	status in city_list
 	 * @param integer	$city_id		wikia identifier in city_list
+	 * @param integer	$city_flags		binary flags
 	 *
 	 * @return boolean, usually true when success
 	 */
@@ -2030,8 +2032,8 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param integer	$city_public	status in city_list
 	 * @param integer	$city_id		wikia identifier in city_list
+	 * @param integer	$city_flags		binary flags
 	 *
 	 * @return boolean, usually true when success
 	 */
@@ -2062,6 +2064,48 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	/**
+	 * getFlags
+	 *
+	 * get binary flags for city
+	 *
+	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param integer	$city_id		wikia identifier in city_list
+	 *
+	 * @return flags
+	 */
+	static public function getFlags( $city_id ) {
+		global $wgWikicitiesReadOnly;
+
+		if ( !self::isUsed() ) {
+			Wikia::log( __METHOD__, 'info', 'WikiFactory is not used.' );
+			return false;
+		}
+
+		if ( $wgWikicitiesReadOnly ) {
+			Wikia::log( __METHOD__, '', 'wgWikicitiesReadOnly mode. Skipping update.');
+			return false;
+		}
+
+		wfProfileIn( __METHOD__ );
+
+		$dbw = self::db( DB_SLAVE );
+		$city_flags = $dbw->selectField(
+			'city_list',
+			'city_flags',
+			array( 'city_id' => $city_id ),
+			__METHOD__
+		);
+		self::log( self::LOG_STATUS, sprintf('Binary flags %s read from city_flags', decbin( $city_flags ) ), $city_id );
+
+		wfProfileOut( __METHOD__ );
+
+		return $city_flags;
 	}
 
 	/**

@@ -35,24 +35,20 @@ $messages['en'] = array(
 
 It's been a couple of weeks since we have seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.
 
-If you need help taking care of the wiki, you can also allow other community members to become administrators by going to http://community.wikia.com/wiki/Special:UserRights.
+If you need help taking care of the wiki, you can also allow other community members to become administrators by going to $2.
 
 The Wikia Team
 
-
-
-Click the following link to unsubscribe from changes to this list: {{fullurl:{{ns:special}}:Preferences}}.",
-	'automaticwikiadoption-mail-first-content-HTML' => "Hi $1,
-
-It's been a couple of weeks since we've seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.
-
-If you need help taking care of the wiki, you can also allow other community members to become administrators by going to <a href=\"http://community.wikia.com/wiki/Special:UserRights\">User rights management</a>.
-
-<b>The Wikia Team</b>
-
-
-
-<small>You can <nowiki><a href=\"{{fullurl:{{ns:special}}:Preferences}}\">unsubscribe</a></nowiki> from changes to this list.</small>",
+Click the following link to unsubscribe from changes to this list: $3.",
+	'automaticwikiadoption-mail-first-content-HTML' => "Hi $1,<br/>
+<br/>
+It's been a couple of weeks since we've seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.<br/>
+<br/>
+If you need help taking care of the wiki, you can also allow other community members to become administrators by going to <a href=\"$2\">User rights management</a>.<br/>
+<br/>
+<b>The Wikia Team</b><br/>
+<br/>
+<small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
 	'automaticwikiadoption-mail-second-subject' => "We will put your wiki up for adoption soon",
 	'automaticwikiadoption-mail-second-content' => "Hi $1,
 
@@ -60,14 +56,14 @@ It's been a while since we've seen an administrator around on your wiki. It's im
 
 The Wikia Team
 
-Click the following link to unsubscribe from changes to this list: {{fullurl:{{ns:special}}:Preferences}}.",
+Click the following link to unsubscribe from changes to this list: $3.",
 	'automaticwikiadoption-mail-second-content-HTML' => "Hi $1,
 
 It's been a while since we have seen an administrator around on your wiki. It is important to have active administrators for the community so the wiki can continue to run smoothly - so we will put your wiki up for adoption soon to give it a chance to have active administrators again.
 
 <b>The Wikia Team</b>
 
-<small>You can <nowiki><a href=\"{{fullurl:{{ns:special}}:Preferences}}\">unsubscribe</a></nowiki> from changes to this list.</small>",
+<small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
 	'automaticwikiadoption-mail-adoption-subject' => 'Your wiki has been adopted',
 	'automaticwikiadoption-mail-adoption-content' => "Hi $1,
 
@@ -75,14 +71,14 @@ Your wiki has been adopted! This means that someone else has volunteered to help
 
 The Wikia Team
 
-Click the following link to unsubscribe from changes to this list: {{fullurl:{{ns:special}}:Preferences}}.",
-	'automaticwikiadoption-mail-adoption-content-HTML' => "Hi $1,
-
-Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an admin, and you're welcome to come back at any time.
-
-<b>The Wikia Team</b>
-
-<small>You can <nowiki><a href=\"{{fullurl:{{ns:special}}:Preferences}}\">unsubscribe</a></nowiki> from changes to this list.</small>",
+Click the following link to unsubscribe from changes to this list: $3.",
+	'automaticwikiadoption-mail-adoption-content-HTML' => "Hi $1,<br/>
+<br/>
+Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an admin, and you're welcome to come back at any time.<br/>
+<br/>
+<b>The Wikia Team</b><br/>
+<br/>
+<small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
 	'tog-adoptionmails' => 'E-mail me when something changes about wiki administration (administrators only)',
 );
 
@@ -239,4 +235,3 @@ $messages['pt'] = array(
 $messages['te'] = array(
 	'automaticwikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
 );
-

@@ -16,6 +16,25 @@
 
 class AutomaticWikiAdoptionJobSendMail {
 	function execute($commandLineOptions, $jobOptions, $wikiId, $wikiData) {
+		global $wgEnableAutomaticWikiAdoptionExt;
+
+		//do not send e-mail when extension is disabled
+		if (empty($wgEnableAutomaticWikiAdoptionExt)) {
+			return;
+		}
+
+		$flags = $jobOptions['dataMapper']->getFlags($wikiId);
+		$flag = $jobOptions['mailType'] == 'first' ? WikiFactory::FLAG_ADOPT_MAIL_FIRST : WikiFactory::FLAG_ADOPT_MAIL_SECOND;
+		//this kind of e-mail already sent for this wiki
+		if ($flags & $flag) {
+			return;
+		}
+
+		$globalTitleUserRights = GlobalTitle::newFromText('UserRights', -1, $wikiId);
+		$specialUserRightsUrl = $globalTitleUserRights->getFullURL();
+		$globalTitlePreferences = GlobalTitle::newFromText('Preferences', -1, $wikiId);
+		$specialPreferencesUrl = $globalTitlePreferences->getFullURL();
+
 		wfLoadExtensionMessages('AutomaticWikiAdoption');
 		//at least one admin has not edited during xx days
 		foreach ($wikiData['admins'] as $adminId) {
@@ -30,13 +49,15 @@ class AutomaticWikiAdoptionJobSendMail {
 				$adminName = $adminUser->getName();
 				$adminUser->sendMail(
 					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"),
-					wfMsgExt("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", array('content', 'parsemag'), $adminName),
+					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl),
 					null, //from
 					null, //replyto
 					'AutomaticWikiAdoption',
-					wfMsgExt("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", array('content', 'parsemag'), $adminName)
+					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", $adminName, $specialUserRightsUrl, $specialPreferencesUrl)
 				);
 			}
 		}
+
+		$jobOptions['dataMapper']->setFlags($wikiId, $flag);
 	}
 }
