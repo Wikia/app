@@ -488,7 +488,8 @@ class ListusersData {
 				array( 'ORDER BY' => 'rev_timestamp DESC' )
 			);
 			if ( empty($revRow) ) {
-				$editdate = $lastrev = null;
+				$editdate = '0000-00-00 00:00:00';
+				$lastrev = 0;
 			} else {
 				$editdate = wfTimestamp( TS_DB, $revRow->rev_timestamp );
 				$lastrev = $revRow->rev_id;
