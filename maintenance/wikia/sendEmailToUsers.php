@@ -14,6 +14,7 @@ require_once( dirname(__FILE__)."/../commandLine.inc" );
 require_once( dirname(__FILE__)."/../../includes/UserMailer.php" );
 
 $optionsWithArgs = array('list');
+$quiet = isset($options['quiet']);
 
 if (isset($options['help']) || !isset($options['list'])) {
 	die( "Usage: php sendEmailToUsers.php --list=file [--quiet]
@@ -56,5 +57,8 @@ foreach ($users as $userId => $userMails) {
 			null, //replyto
 			'AutomaticWikiAdoption'
 		);
+		if (!$quiet) {
+			echo "Sent mail (type:$type) to user (ID:$userId).\n";
+		}
 	}
 }
