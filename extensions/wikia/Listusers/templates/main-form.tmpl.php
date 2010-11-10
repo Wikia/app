@@ -99,7 +99,7 @@ $(document).ready(function() {
 				"data": [
 					{ 'name' : 'groups', 	'value' : groups },
 					{ 'name' : 'username',	'value' : ( $('#lu_search').exists() ) ? $('#lu_search').val() : '' },
-					{ 'name' : 'edits', 	'value' : ( $('#lu_contributed').exists() ) ? $('#lu_contributed').val() : <?=$defContrib?> },
+					{ 'name' : 'edits', 	'value' : ( $('#lu_contributed').exists() ) ? $('#lu_contributed').val() : <?=intval($defContrib)?> },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
 					{ 'name' : 'loop', 		'value' : loop },
