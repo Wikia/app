@@ -67,7 +67,8 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 			$base = "/__varnish_liftium/";
 			$version = "";
 		}
-		$out .=  '<script type="text/javascript" src="'. $base .'js/Liftium.js' . $version . '"></script>' . "\n";
+		$out .=  '<script type="text/javascript" src="/extensions/wikia/AdEngine//Liftium.js' . $version . '"></script>' . "\n";
+		//$out .=  '<script type="text/javascript" src="'. $base .'js/Liftium.js' . $version . '"></script>' . "\n";
 		$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.js' . $version . '"></script>' . "\n";
 
 		return $out;
