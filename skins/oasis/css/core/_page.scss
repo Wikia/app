@@ -5,6 +5,7 @@
 	padding-top: 59px;
 	position: relative;
 	width: $width-outside;
+	z-index: 1;
 	>h1:first-child {
 		display: none;
 	}
