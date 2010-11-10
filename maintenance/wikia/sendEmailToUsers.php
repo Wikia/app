@@ -45,10 +45,21 @@ The Wikia Team'
 	)
 );
 
+if (!$quiet) {
+	$count = count($users);
+	echo "Processing $count users.\n";
+}
+
 foreach ($users as $userId => $userMails) {
 	$type = $userMails > 1 ? 'second' : 'first';
 	$user = User::newFromId($userId);
 	$acceptMails = $user->getOption('adoptionmails', null);
+	if (!$quiet) {
+		$accept = $acceptMails ? 'is accepting `adoptionmails`' : 'is not accepting `adoptionmails`';
+		$confirmed = $user->isEmailConfirmed() ? 'has confirmed e-mail' : 'has not confirmed e-mail';
+		echo "User (ID:$userId) $acceptMails and $confirmed.\n";
+	}
+
 	if ($acceptMails && $user->isEmailConfirmed()) {
 		$user->sendMail(
 			$mails[$type]['subject'],
