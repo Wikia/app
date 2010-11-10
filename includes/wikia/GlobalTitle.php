@@ -235,7 +235,7 @@ class GlobalTitle {
 		/**
 		 * get value from city_list.city_url
 		 */
-		$city = WikiFactory::getWikiByID( $city_id );
+		$city = WikiFactory::getWikiByID( $this->mCityId );
 		if( $city ) {
 			$server = rtrim( $server->city_url, "/" );
 			$this->mServer = $server;
