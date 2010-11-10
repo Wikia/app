@@ -14,19 +14,24 @@ class PaymentProcessor {
 		global $wgAdSS_DBname;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
-		$tables = array( 'pp_details', 'pp_tokens' );
+		$tables = array( 'pp_details', 'pp_tokens', 'pp_agreements' );
 		$conds = array(
-			'ppd_payerid' => $payerId, 
-			'ppd_token = ppt_token',
-		);
+				'ppd_payerid' => $payerId,
+			      );
+		$join_conds = array(
+				'pp_tokens' => array( 'JOIN', 'ppd_token = ppt_token' ),
+				'pp_agreements' => array( 'LEFT JOIN', 'ppd_token=ppa_token' ),
+				);
 		if( $email ) {
 			$tables[] = 'users';
 			$conds = array_merge( $conds, array(
-				'ppt_user_id = user_id',
-				'user_email' => $email,
-				) );
+						'user_email' => $email,
+						) );
+			$join_conds = array_merge( $join_conds, array(
+						'users' => array( 'JOIN', 'ppt_user_id = user_id' ),
+						) );
 		}
-		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppt_user_id DESC' ) );
+		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppt_user_id DESC, ppa_canceled is not null, ppa_responded DESC' ) );
 		if( $row ) {
 			$pp = new self( $row->ppt_token );
 			$pp->userId = $row->ppt_user_id;
