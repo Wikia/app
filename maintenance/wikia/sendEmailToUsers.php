@@ -29,14 +29,29 @@ if (!isset($users)) {
 	die( 'Provided file did not contain $users variable.' );
 }
 
+$mails = array(
+	'first' => array(
+		'subject' => 'Oops, we sent you an email by mistake',
+		'content' => 'We mistakenly sent you an email with the subject line “We haven’t seen you around in a while.”  Our team was running some tests and accidentally sent out these emails to inactive adminstrators.  Please disregard the message and accept our apologies for any confusion.  
+ 
+The Wikia Team'
+	),
+	'second' => array(
+		'subject' => 'Oops, we sent you some emails by mistake',
+		'content' => 'We mistakenly sent you some emails with the subject line “We haven’t seen you around in a while.”  Our team was running some tests and accidentally sent out these emails to inactive adminstrators.  Please disregard the message and accept our apologies for any confusion.
+ 
+The Wikia Team'
+	)
+);
+
 foreach ($users as $userId => $userMails) {
 	$type = $userMails > 1 ? 'second' : 'first';
 	$user = User::newFromId($userId);
 	$acceptMails = $user->getOption('adoptionmails', null);
 	if ($acceptMails && $user->isEmailConfirmed()) {
 		$user->sendMail(
-			wfMsg("mail-$type-subject"),
-			wfMsg("mail-$type-content"),
+			$mails[$type]['subject'],
+			$mails[$type]['content'],
 			null, //from
 			null, //replyto
 			'AutomaticWikiAdoption'
