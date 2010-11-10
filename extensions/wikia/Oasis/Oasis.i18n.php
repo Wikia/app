@@ -122,7 +122,12 @@ You can reorder or delete tools in the field below.
 
 	# 5min video
 	'oasis-related-video-by-5min'	=> 'by 5min Video',
-	'oasis-related-video-header'	=> 'Related Videos'
+	'oasis-related-video-header'	=> 'Related Videos',
+
+	# edit page in read-only mode RT#85688
+	'oasis-editpage-readonlywarning' => "<h2>Sorry!</h2>
+<p>You can't edit this article at the moment - we should be up and running again shortly. Here's what's happening:<br /><em>$1</em></p>
+<p>Please check <a href=\"http://twitter.com/wikia\">Twitter</a> or <a href=\"http://facebook.com/wikia\">Facebook</a> for more information.</p>",
 );
 
 /** Message documentation (Message documentation)

@@ -13,6 +13,7 @@ function wfOasisSetup() {
 	global $wgHooks;
 
 	// modules and services
+	$wgHooks['AlternateEdit'][] = 'EditPageModule::onAlternateEdit';
 	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityModule::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderModule::onArticleSaveComplete';
