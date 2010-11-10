@@ -18,6 +18,7 @@
 * rt#60373: Photo Gallery: upload button can be slow to react + bad active area (macbre)
 * rt#85514: Oasis: Table of contents defaults to [hide] for anons (macbre)
 * rt#85685: Creating an account during read-only (macbre)
+* rt#85688: Edit form is displayed when the site is read-only (macbre)
 
 == Changes since 201010.4 ==
 * rt#81277: Disable categoryselect on the template namespace (Marooned)
