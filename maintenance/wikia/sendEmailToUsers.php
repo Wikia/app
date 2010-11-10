@@ -11,7 +11,6 @@
  */
 
 require_once( dirname(__FILE__)."/../commandLine.inc" );
-require_once( dirname(__FILE__)."/../../includes/UserMailer.php" );
 
 $optionsWithArgs = array('list');
 $quiet = isset($options['quiet']);
