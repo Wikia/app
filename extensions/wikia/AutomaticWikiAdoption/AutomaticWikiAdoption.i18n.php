@@ -40,19 +40,15 @@ If you need help taking care of the wiki, you can also allow other community mem
 The Wikia Team
 
 Click the following link to unsubscribe from changes to this list: $3.",
-	'automaticwikiadoption-mail-first-content-HTML' => "Hi $1,<br/>
-<br/>
-It's been a couple of weeks since we've seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.<br/>
-<br/>
-If you need help taking care of the wiki, you can also allow other community members to become administrators by going to <a href=\"$2\">User rights management</a>.<br/>
-<br/>
-<b>The Wikia Team</b><br/>
-<br/>
+	'automaticwikiadoption-mail-first-content-HTML' => "Hi $1,<br /><br />
+It's been a couple of weeks since we have seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.<br /><br />
+If you need help taking care of the wiki, you can also allow other community members to become administrators by going to <a href=\"$2\">User rights management</a>.<br /><br />
+<b>The Wikia Team</b><br /><br />
 <small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
 	'automaticwikiadoption-mail-second-subject' => "We will put your wiki up for adoption soon",
 	'automaticwikiadoption-mail-second-content' => "Hi $1,
 
-It's been a while since we've seen an administrator around on your wiki. It's important to have active administrators for the community so the wiki can continue to run smoothly - so we will put your wiki up for adoption soon to give it a chance to have active administrators again.
+It's been a while since we have seen an administrator around on your wiki. It is important to have active administrators for the community so the wiki can continue to run smoothly - so we will put your wiki up for adoption soon to give it a chance to have active administrators again.
 
 The Wikia Team
 
@@ -67,17 +63,14 @@ It's been a while since we have seen an administrator around on your wiki. It is
 	'automaticwikiadoption-mail-adoption-subject' => 'Your wiki has been adopted',
 	'automaticwikiadoption-mail-adoption-content' => "Hi $1,
 
-Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an admin, and you're welcome to come back at any time.
+Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you are still an administrator, and you are welcome to come back at any time.
 
 The Wikia Team
 
 Click the following link to unsubscribe from changes to this list: $3.",
-	'automaticwikiadoption-mail-adoption-content-HTML' => "Hi $1,<br/>
-<br/>
-Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an admin, and you're welcome to come back at any time.<br/>
-<br/>
-<b>The Wikia Team</b><br/>
-<br/>
+	'automaticwikiadoption-mail-adoption-content-HTML' => "Hi $1,<br /><br />
+Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an administrator, and you are welcome to come back at any time.<br /><br />
+<b>The Wikia Team</b><br /><br />
 <small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
 	'tog-adoptionmails' => 'E-mail me when something changes about wiki administration (administrators only)',
 );
