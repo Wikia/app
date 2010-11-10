@@ -17,13 +17,7 @@
 class AutomaticWikiAdoptionJobSetAdoptionFlag {
 	function execute($commandLineOptions, $jobOptions, $wikiId, $wikiData) {
 		//let wiki to be adopted
-		//TODO: use WikiFactory::setFlags() ? many queries instead of one - but logs this changes into WF log
-		$row = $jobOptions['dataMapper']->getWikicitiesDB()->update(
-			'city_list',
-			'city_flags = ( city_flags | ' . WikiFactory::FLAG_ADOPTABLE . ' )',
-			array('city_id' => $wikiId),
-			__METHOD__
-		);
+		$jobOptions['dataMapper']->setFlags($wikiId, WikiFactory::FLAG_ADOPTABLE);
 
 		//print info
 		if (!isset($commandLineOptions['quiet'])) {

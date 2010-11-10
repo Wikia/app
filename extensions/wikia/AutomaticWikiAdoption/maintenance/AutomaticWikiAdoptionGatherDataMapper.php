@@ -57,4 +57,12 @@ class AutomaticWikiAdoptionGatherDataMapper {
 
 		return $recentAdminEdit;
 	}
+
+	function getFlags($wikiId) {
+		return WikiFactory::getFlags($wikiId);
+	}
+
+	function setFlags($wikiId, $flags) {
+		WikiFactory::setFlags($wikiId, $flags);
+	}
 }
