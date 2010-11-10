@@ -215,6 +215,10 @@ class WikiaApiLyricwiki extends ApiBase {
 				$result = getSong($artist, $songName);
 				$this->writeJSON($result);
 				break;
+			case "realjson":
+				$result = getSong($artist, $songName);
+				$this->writeRealJSON($result);
+				break;
 			case "xml":
 				header('Content-Type: application/xml', true);
 				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -357,48 +361,66 @@ class WikiaApiLyricwiki extends ApiBase {
         }
 	} // end dumpXML()
 
-//////////////////////////////////////////////////////////////////////////////
-// Thanks to Stefan Fussenegger (Fuzy) for the code which the below code is based on (he released his code to public-domain).
-//////////////////////////////////////////////////////////////////////////////
-////
-// escape strings for ' quoted JS strings
-////
-function escapeJavaScript($val) {
-        // escape literal backslashes
-        $val = str_replace('\\', '\\\\', $val);
-        // escape '
-        $val = str_replace("'", "\\'", $val);
-        // replace new lines with \n
-        $val = str_replace("\n", "\\n", $val);
-        return $val;
-}
+	//////////////////////////////////////////////////////////////////////////////
+	// Thanks to Stefan Fussenegger (Fuzy) for the code which the below code is based on (he released his code to public-domain).
+	//////////////////////////////////////////////////////////////////////////////
+	////
+	// escape strings for ' quoted JS strings
+	////
+	function escapeJavaScript($val, $escapeDoubleQuotesInstead=false) {
+			// escape literal backslashes
+			$val = str_replace('\\', '\\\\', $val);
+			if($escapeDoubleQuotesInstead){
+				// escape "
+				$val = str_replace('"', '\\"', $val);
+			} else {
+				// escape '
+				$val = str_replace("'", "\\'", $val);
+			}
+			// replace new lines with \n
+			$val = str_replace("\n", "\\n", $val);
+			return $val;
+	}
 
-////
-// create object with JS code
-////
-function writeJS(&$results) {
-        header('Content-type: text/javascript; charset=UTF-8');
-        echo "function lyricwikiSong(){\n";
-        echo "this.artist='".$this->escapeJavaScript(utf8_decode($results['artist']))."';\n";
-        echo "this.song='".$this->escapeJavaScript(utf8_decode($results['song']))."';\n";
-        echo "this.lyrics='".$this->escapeJavaScript(utf8_decode($results['lyrics']))."';\n";
-        echo "this.url='".$this->escapeJavaScript($results['url'])."';\n";
-        echo "}\n";
-        echo "var song = new lyricwikiSong();\n";
-}
+	////
+	// create object with JS code
+	////
+	function writeJS(&$results) {
+			header('Content-type: text/javascript; charset=UTF-8');
+			echo "function lyricwikiSong(){\n";
+			echo "this.artist='".$this->escapeJavaScript(utf8_decode($results['artist']))."';\n";
+			echo "this.song='".$this->escapeJavaScript(utf8_decode($results['song']))."';\n";
+			echo "this.lyrics='".$this->escapeJavaScript(utf8_decode($results['lyrics']))."';\n";
+			echo "this.url='".$this->escapeJavaScript($results['url'])."';\n";
+			echo "}\n";
+			echo "var song = new lyricwikiSong();\n";
+	}
 
-////
-// create object using JSON format
-////
-function writeJSON(&$results) {
-        header('Content-type: text/javascript; charset=UTF-8');
-        echo "song = {\n";
-        echo "'artist':'".$this->escapeJavaScript(utf8_decode($results['artist']))."',\n";
-        echo "'song':'".$this->escapeJavaScript(utf8_decode($results['song']))."',\n";
-        echo "'lyrics':'".$this->escapeJavaScript(utf8_decode($results['lyrics']))."',\n";
-        echo "'url':'".$this->escapeJavaScript($results['url'])."'\n";
-        echo "}\n";
-}
+	////
+	// create object using a broken JSON format (oops)
+	////
+	function writeJSON(&$results) {
+			header('Content-type: text/javascript; charset=UTF-8');
+			echo "song = {\n";
+			echo "'artist':'".$this->escapeJavaScript(utf8_decode($results['artist']))."',\n";
+			echo "'song':'".$this->escapeJavaScript(utf8_decode($results['song']))."',\n";
+			echo "'lyrics':'".$this->escapeJavaScript(utf8_decode($results['lyrics']))."',\n";
+			echo "'url':'".$this->escapeJavaScript($results['url'])."'\n";
+			echo "}\n";
+	}
+
+	////
+	// create object using JSON format
+	////
+	function writeRealJSON(&$results) {
+			header('Content-type: text/javascript; charset=UTF-8');
+			echo "{";
+			echo '"artist":"'.$this->escapeJavaScript(utf8_decode($results['artist']), true).'",';
+			echo '"song":"'.$this->escapeJavaScript(utf8_decode($results['song']), true).'",';
+			echo '"lyrics":"'.$this->escapeJavaScript(utf8_decode($results['lyrics']), true).'",';
+			echo '"url":"'.$this->escapeJavaScript($results['url'], true).'"';
+			echo "}";
+	}
 
 
 }
