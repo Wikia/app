@@ -98,7 +98,7 @@ $(document).ready(function() {
 				"url": sSource, 
 				"data": [
 					{ 'name' : 'groups', 	'value' : groups },
-					{ 'name' : 'username',	'value' : ( $('#lu_search').exists() ) ? $('#lu_search').val() : '' },
+					{ 'name' : 'username',	'value' : ( $('#lu_search').exists() ) ? $('#lu_search').val() : '<?=addslashes($defUser)?>' },
 					{ 'name' : 'edits', 	'value' : ( $('#lu_contributed').exists() ) ? $('#lu_contributed').val() : <?=intval($defContrib)?> },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
