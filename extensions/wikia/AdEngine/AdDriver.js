@@ -1,5 +1,3 @@
-alert('loading AdDriver.js');
-
 var AdDriver = {
 	isHighValue : true,
 	minNumDARTCall : 3,
@@ -31,7 +29,7 @@ AdDriver.getNumDARTCall = function(slotname) {
 			}
 		}
 	}
-	alert('num calls for ' + slotname + ': ' + num);
+	//alert('num calls for ' + slotname + ': ' + num);
 
 	return num;
 }
@@ -92,7 +90,7 @@ AdDriver.hasDARTCallNoAd = function(slotname) {
 			}
 		}
 	}
-	alert('hasDARTCallNoAd for ' + slotname + ': ' + value);
+	//alert('hasDARTCallNoAd for ' + slotname + ': ' + value);
 
 	return value;
 }
@@ -126,20 +124,27 @@ AdDriver.setDARTCallNoAd = function(slotname, value) {
 	return value;
 }
 
-AdDriver.callDART = function(slotname, url) {
-	document.write('<scri'+'pt type="text/javascript" src="'+url+'"></scri'+'pt>');
+AdDriver.callDART = function(slotname, size, url) {
+	bezen.domwrite.capture();
+	var slot = document.getElementById(slotname);
+	bezen.load.script(slot, url, function() {
+		bezen.domwrite.render(slot, function() {
+			//alert('rendering dart ad for ' + slotname);
+			AdDriver.callDARTCallback(slotname, size);
+		})
+	});
+	//document.write('<scri'+'pt type="text/javascript" src="'+url+'"></scri'+'pt>');
 }
 
 AdDriver.callDARTCallback = function(slotname, size) {
-alert('dart callback');
+//alert('dart callback');
 	if (typeof(window.adDriverDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverDARTCallNoAds[slotname]) {
 		return;
 	}
 	else {
-	alert('setting dart call no ad');
+	//alert('setting dart call no ad');
 		AdDriver.setDARTCallNoAd(slotname, window.wgNow.getTime());
-		alert('calling liftium');
-		//AdDriver.callLiftium(slotname, size);
+		AdDriver.callLiftium(slotname, size);
 	}
 }
 
@@ -167,28 +172,39 @@ AdDriver.callDARTCallbackTimerTest = function(slotname, dartUrl) {
 }
 
 AdDriver.callLiftium = function(slotname, size) {
-	LiftiumOptions.placement = slotname;
-	LiftiumDART.placement = slotname;
-	Liftium.callAd(size);
+		//alert('calling liftium for ' + slotname);
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	var text = document.createTextNode("LiftiumOptions.placement = '"+slotname+"'; LiftiumDART.placement = '"+slotname+"'; Liftium.callAd('"+size+"');");
+	script.appendChild(text);
+	bezen.domwrite.capture();
+	var slot = document.getElementById(slotname+'_Liftium');
+	//alert('about to append script to ' + slot.id);
+	bezen.dom.appendScript(slot, script, function() {
+		//alert('rendering liftium ad for ' + slot.id);
+		bezen.domwrite.render(slot, function() {
+			//alert('rendered liftium ad for ' + slot.id);
+		})
+	});
 }
 
 AdDriver.callAd = function(slotname, size, dartUrl) {
-	alert("callAd on " + slotname);
+	//alert("callAd on " + slotname);
 	if (AdDriver.isHighValue) {
 		if (AdDriver.getNumDARTCall(slotname) < AdDriver.minNumDARTCall || !AdDriver.hasDARTCallNoAd(slotname)) {
 			AdDriver.incrementNumDARTCall(slotname);
 			AdDriver.setDARTCallNoAd(slotname, null);
-			AdDriver.callDART(slotname, dartUrl);
-			var callbackTimer = setInterval(function() {
-				if (AdDriver.callDARTCallbackTimerTest(slotname, dartUrl)) {
-					clearInterval(callbackTimer);
-					AdDriver.callDARTCallback(slotname, size);
-				}
-			}, 100);
+			AdDriver.callDART(slotname, size, dartUrl);
+			//var callbackTimer = setInterval(function() {
+				//if (AdDriver.callDARTCallbackTimerTest(slotname, dartUrl)) {
+					//clearInterval(callbackTimer);
+					//AdDriver.callDARTCallback(slotname, size);
+				//}
+			//}, 100);
 		}
 	}
 	else {
-		AdDriver.callLiftium(slotname, size);
+		//AdDriver.callLiftium(slotname, size);
 	}
 }
 
