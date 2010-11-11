@@ -168,26 +168,41 @@ function CategorySelectSetupVars($vars) {
  * @author Inez Korczyński
  */
 function CategorySelectGetCategories($inline = false) {
-	$dbr = wfGetDB(DB_SLAVE);
-	$res = $dbr->select(
-		'category',
-		'cat_title',
-		array('cat_pages > 0'),
-		__METHOD__
-	);
-	$categories = array();
-	while($row = $dbr->fetchObject($res)) {
-		$categories[] = str_replace('_', ' ', addslashes($row->cat_title));
-	}
-	$out = 'var categoryArray = ["'.join('","', $categories).'"];';
+	global $wgMemc, $wgCityId;
 
-	if ($inline === true) {
-		return $out;
-	} else {
-		$ar = new AjaxResponse($out);
-		$ar->setCacheDuration(60 * 60);
-		return $ar;
+	wfProfileIn(__METHOD__);
+
+	$key = wfMemcKey('CategorySelectGetCategories');
+	$out = $wgMemc->get($key);
+
+	if (!$out) {
+		$dbr = wfGetDB(DB_SLAVE);
+		$res = $dbr->select(
+			'category',
+			'cat_title',
+			array('cat_pages > 0'),
+			__METHOD__,
+			array('ORDER BY' => 'cat_pages DESC',
+			      'LIMIT'    => '20000'));
+
+		$categories = array();
+		while($row = $dbr->fetchObject($res)) {
+			$categories[] = str_replace('_', ' ', addslashes($row->cat_title));
+		}
+		$out = 'var categoryArray = ["'.join('","', $categories).'"];';
+
+		// Cache for a day
+		$wgMemc->set($key, $out, 86400);
 	}
+	
+	if (!$inline) {
+		$out = new AjaxResponse($out);
+		$out->setCacheDuration(60 * 60);
+	}
+	
+	wfProfileOut(__METHOD__);
+
+	return $out;
 }
 
 /**
