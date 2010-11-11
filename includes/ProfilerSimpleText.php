@@ -19,8 +19,16 @@ require_once( dirname( __FILE__ ) . '/ProfilerSimple.php' );
  */
 class ProfilerSimpleText extends ProfilerSimple {
 	public $visible=false; /* Show as <PRE> or <!-- ? */
+	// if invisible is set, do not echo output at all because we want to handle the output some other way */
+	public $invisible=false;  	/* Wikia change */
 
 	function getFunctionReport() {
+		/* Wikia change begin */
+		if ($this->invisible) {
+			uasort($this->mCollated,array('self','sort'));
+			return;
+		}
+		/* Wikia change end */
 		if ($this->visible) print "<pre>";
 			else print "<!--\n";
 		uasort($this->mCollated,array('self','sort'));
