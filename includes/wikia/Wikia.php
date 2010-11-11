@@ -437,6 +437,7 @@ $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
+//$wgHooks['IsTrustedProxy'][] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 /**
  * This class have only static methods so they can be used anywhere
@@ -444,6 +445,19 @@ $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
  */
 
 class Wikia {
+/*
+	public static function trustInternalIps(&$ip, &$trusted) {
+		$min = ip2long('10.0.0.0');
+		$max = ip2long('10.255.255.255');
+
+		$longip = ip2long($ip);
+		if($longip >= $min && $longip <= $max) {
+			$trusted = true;
+		}
+
+		return true;
+	}
+*/
 
 	private static $vars = array();
 
