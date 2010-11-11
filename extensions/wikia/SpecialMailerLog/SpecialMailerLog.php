@@ -4,6 +4,7 @@
  * Show a formatted view of the wikia_mailer table
  * Allows searching and sorting on most columns and adjustable page paging.
  * 
+ *
  */
 
 
