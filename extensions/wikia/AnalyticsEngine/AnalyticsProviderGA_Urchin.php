@@ -86,9 +86,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 	private function abtest() {
 	    return '<script type="text/javascript">
 var abtest_ua;
-if(abtest_ua = document.cookie.match(/wikia-ab=[^;]*UA=(.*?)\//)[1]) {
+if(abtest_ua = document.cookie.match(/wikia-ab=[^;]*UA=(.*?)\//)) {
 _uff=0;
-_uacct=abtest_ua;
+_uacct=abtest_ua[1];
 urchinTracker();
 }
 </script>
@@ -114,10 +114,10 @@ urchinTracker();
 	private function varnishstat() {
 	    return '<script type="text/javascript">
 var varnish_server;
-if (varnish_server = document.cookie.match(/varnish-stat=([^;]+)/)[1]) {
+if (varnish_server = document.cookie.match(/varnish-stat=([^;]+)/)) {
 _uff=0;
 _uacct="UA-288915-48";
-urchinTracker(varnish_server);
+urchinTracker(varnish_server[1]);
 }
 </script>';
 		}
