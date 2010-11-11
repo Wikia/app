@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'oasis-latest-photos-more' => 'See more >',
 	'oasis-latest-photos-inner-message' => 'See all photos',
 	'oasis-latest-photos-single' => '+',
-	'oasis-latest-photos-empty' => 'Anyone can help to make this Wiki look amazing<br /><span>Click here to add a photo.</span>',
+	'oasis-latest-photos-empty' => 'Anyone can help to make this wiki look amazing<br /><span>Add a photo!</span>',
 	'oasis-latest-photos-by' => 'by',
 	'oasis-latest-photos-posted-in' => 'Posted in',
 	'oasis-latest-photos-more-dotdotdot' => 'more...',
@@ -84,7 +84,7 @@ You can reorder or delete tools in the field below.
 [[Help:MyTools|List of advanced wiki contributor tools >]]",
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
 	'oasis-comments-showing-most-recent' => 'Showing $1 most recent',
-	'oasis-comments-anonymous-prompt' => 'Anonymous User<br/> <a href="#">Log in?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anonymous User<br /> <a href="#">Log in?</a>',
 	'oasis-comments-show-all' => 'Show all',
 	'oasis-comments-added-by' => '$1 by $2',
 	'oasis-random-wiki' => 'Random Wiki',
@@ -97,7 +97,7 @@ You can reorder or delete tools in the field below.
 	'oasis-popular-blogs-title' => 'Popular blog<br />posts',
 	'oasis-spotlights-rail-title' => 'More from',
 	'oasis-spotlights-footer-title' => "Around Wikia's network",
-	'themedesigner' => 'Theme designer', // FIXME: give this an extension specific key prefix. Also is defined in ThemeDesigner, already. Keys should be defined once in the whole code base.
+	'themedesigner' => 'Theme designer', // @todo FIXME: give this an extension specific key prefix. Also is defined in ThemeDesigner, already. Keys should be defined once in the whole code base.
 	'oasis-pages-on-wiki-header' => 'Pages on $1',
 	'oasis-latest-activity-new' => '$1 created $2',
 	'oasis-latest-activity-edit' => '$1 edited $2',
@@ -105,21 +105,21 @@ You can reorder or delete tools in the field below.
 
 	'oasis-interlang-show-all' => '... see all >',
 	'oasis-interlang-languages' => 'Languages:',
-	'photosblacklist' => '* example-blacklist.png', // FIXME: give this an extension specific key prefix.
+	'photosblacklist' => '* example-blacklist.png', // @todo FIXME: give this an extension specific key prefix.
 
 	# user-facing (editable) Oasis messages
 	# names adjusted to be easy-er for the user to remember
-	'categoryblacklist' => '* stub', // FIXME: give this an extension specific key prefix.
+	'categoryblacklist' => '* stub', // @todo FIXME: give this an extension specific key prefix.
 	'wiki-navigation' => '*#visited#|TopContent
 *#category1#
 *#category2#
 *portal-url|Community
 **blogs-recent-url|blogs-recent-url-text
-**forum-url|Forum', // FIXME: give this an extension specific key prefix.
+**forum-url|Forum', // @todo FIXME: give this an extension specific key prefix.
 
-# Related to ImageSEO RT#55755
-	'imageseo-featured-on' => 'Featured on:', // FIXME: give this an extension specific key prefix.
-	'imageseo-featured-more' => 'more...', // FIXME: give this an extension specific key prefix.
+	# Related to ImageSEO RT#55755
+	'imageseo-featured-on' => 'Featured on:', // @todo FIXME: give this an extension specific key prefix.
+	'imageseo-featured-more' => 'more...', // @todo FIXME: give this an extension specific key prefix.
 
 	# 5min video
 	'oasis-related-video-by-5min'	=> 'by 5min Video',
@@ -127,7 +127,7 @@ You can reorder or delete tools in the field below.
 
 	# edit page in read-only mode RT#85688
 	'oasis-editpage-readonlywarning' => "<h2>Sorry!</h2>
-<p>You can't edit this article at the moment - we should be up and running again shortly. Here's what's happening:<br /><em>$1</em></p>
+<p>You cannot edit this page at the moment. We should be up and running again shortly. Here's what's happening:<br /><em>$1</em></p>
 <p>Please check <a href=\"http://twitter.com/wikia\">Twitter</a> or <a href=\"http://facebook.com/wikia\">Facebook</a> for more information.</p>",
 );
 
