@@ -45,6 +45,7 @@ require_once( "$preIP/includes/WebStart.php" );
 require_once( "$preIP/includes/Wiki.php" );
 $mediaWiki = new MediaWiki();
 
+wfAppendTimerHeader('AS', $wgRequestTime, true);
 wfProfileIn( 'main-misc-setup' );
 OutputPage::setEncodings(); # Not really used yet
 

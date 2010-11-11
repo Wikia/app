@@ -441,7 +441,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'delicious', $this->deliciousLink() );
 
 		$tpl->setRef( 'debug', $out->mDebugtext );
-		$tpl->set( 'reporttime', wfReportTime() );
+//		$tpl->set( 'reporttime', wfReportTime() );  // Wikia change -- moved this further down in page rendering.
 		$tpl->set( 'sitenotice', wfGetSiteNotice() );
 		$tpl->set( 'bottomscripts', $this->bottomScripts() );
 

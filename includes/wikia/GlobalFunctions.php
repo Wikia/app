@@ -1212,3 +1212,57 @@ function wfDeleteWikiaPageProp($type, $pageID) {
 		__METHOD__
 	);
 }
+
+/* Utility function to append a field to the X-Timer Header
+ *
+ * Params: Label, Time, Flag: Calc as Offset from Varnish true/false
+ * labels so far: AS (apache start), AE (apache end), CD (cpu duration), MD (memcache duration), DD (database duration)
+ *
+ * Example: wfAppendTimerHeader('AS', $wgRequestTime, true);	// log apache start time as offset from X-Timer
+ * Example: wfAppendTimerHeader('CD', $elapsedcpu);				// log absolute duration
+ * Example: wfAppendTimerHeader('AE', microtime(true), true);   // log apache end time as offset from X-Timer
+ *
+ * Varnish turns this feature on by setting a header
+ * X-Timer: S1289350323.474201918,VS0,AS13,CD150,MD30,DD30,AE240,VE255
+ * Varnish also sets this as a cookie
+ * Set-Cookie: loadtime=S1289350323.474201918,VS0,AS13,CD150,MD30,DD30,AE240,VE255;
+ *
+ */
+function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
+	global $wgApacheTimerString;
+	if ($wgApacheTimerString == false) {
+		$headers = apache_request_headers();  // seems like we can't re-read the header after setting it so do it once
+		if (isset($headers['X-Timer'])) {
+			$wgApacheTimerString = $headers['X-Timer'];
+		}
+	}
+	if( $wgApacheTimerString ) {
+		if ($calculateOffset) {
+			list($startTime) = explode(',',$wgApacheTimerString);
+ 			$startTime = substr($startTime, 1);  // chop off the S
+			$wgApacheTimerString .= sprintf(",%s%d",$label, ($time - $startTime) * 1000);
+		} else {
+			// do not need offset from start, just append the label and duration to our header
+			$wgApacheTimerString .= sprintf(",%s%d",$label, ($time * 1000));
+		}
+	}
+}
+
+/*
+ * Set the X-Timer header at the end of page processing.
+ * This is intended to be called from OutputPage::output
+ */
+function wgSendTimerHeader () {
+	global $wgApacheTimerString, $wgProfiler;
+
+	if ($wgProfiler instanceof ProfilerSimpleText) {
+		wfAppendTimerHeader('MD', $wgProfiler->mCollated['memcached::get']['real']);
+		$db_time = $wgProfiler->mCollated['Database::query-master']['real'] + $wgProfiler->mCollated['Database::query']['real'];
+		wfAppendTimerHeader('DD', $db_time);
+	}
+	// Corresponding start time AS is at the top of index.php
+	if ($wgApacheTimerString) {
+		wfAppendTimerHeader('AE', microtime(true), true);
+		header ("X-Timer: $wgApacheTimerString");
+	}
+}

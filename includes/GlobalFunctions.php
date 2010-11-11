@@ -877,7 +877,9 @@ function wfReportTime() {
 		$elapsedcpu = 0;
 	}
 	if( $wgShowHostnames) header( sprintf( "X-Served-By-Backend: %s", wfHostname() ) );
-
+	/* Wikia change -- log elapsed and cpu times in X-Timer header */
+//	wfAppendTimerHeader('ED', $elapsed);
+	wfAppendTimerHeader('CD', $elapsedcpu);
 	wfProfileOut( __METHOD__ );
 	return $wgShowHostnames
 		? sprintf( "<!-- Served by %s in %01.3f secs. cpu: %01.3f -->", wfHostname(), $elapsed, $elapsedcpu )
