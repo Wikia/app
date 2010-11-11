@@ -215,12 +215,9 @@ class ArticleCommentsAjax {
 
 			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
 
-			// RT#68254
+			// RT#68254 RT#69919 RT#86385
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				// RT#69919
-				$data = $listing->getData();
-				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $data['commentListRaw']));
-				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
+				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => true));
 				$count = $wgLang->formatNum($listing->getCountAllNested());
 				$counter = array(
 				    'plain' =>		$count,
@@ -262,7 +259,7 @@ class ArticleCommentsAjax {
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments));
+				$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
 			} else {
 				$text = ArticleCommentList::formatList($comments);
 			}
