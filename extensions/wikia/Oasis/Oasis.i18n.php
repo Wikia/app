@@ -84,6 +84,7 @@ You can reorder or delete tools in the field below.
 [[Help:MyTools|List of advanced wiki contributor tools >]]",
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
 	'oasis-comments-showing-most-recent' => 'Showing $1 most recent',
+	'oasis-comments-anonymous-prompt' => 'Anonymous User<br/> <a href="#">Log in?</a>',
 	'oasis-comments-show-all' => 'Show all',
 	'oasis-comments-added-by' => '$1 by $2',
 	'oasis-random-wiki' => 'Random Wiki',
