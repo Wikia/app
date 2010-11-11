@@ -169,7 +169,9 @@ class OasisModule extends Module {
 		// record which varnish this page was served by
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
 
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
+//		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
+
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
 
 		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
 		if (43339 == $wgCityId){

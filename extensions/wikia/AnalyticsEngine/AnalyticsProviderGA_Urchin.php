@@ -48,6 +48,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 			case "browser-height":
 				return $this->browserHeight();
 
+          		case "abtest":
+		                return $this->abtest();
+
 			default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
@@ -79,6 +82,21 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 			</script>';
 	}
 
+
+	private function abtest() {
+	    return '<script type="text/javascript">
+var abtest_ua;
+if(abtest_ua = document.cookie.match(/wikia-ab=[^;]*UA=(.*?)\//)[1]) {
+_uff=0;
+_uacct=abtest_ua;
+urchinTracker();
+}
+</script>
+';
+
+
+	}
+	
 	private function noads() {
 		return '<script type="text/javascript">
 if(document.cookie.match(/wikia-test=selected/)) {
