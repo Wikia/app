@@ -29,7 +29,7 @@
 					// echo "You are Logged in as " . $avatar->mUser->getName(); /** out for now until designer tells gives updates on specs **/
 				} else {
 				/** @todo make anonymous posting impossible and force login **/
-					echo "Anonymous User<br/> " . ' <a href="#">Log in?</a>';
+					echo wfMsg('oasis-comments-anonymous-prompt');
 				}
 			?>
 		</div>
