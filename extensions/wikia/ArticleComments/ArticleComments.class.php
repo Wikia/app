@@ -354,6 +354,10 @@ class ArticleComment {
 			 */
 			$title = Title::newFromID( $id, GAID_FOR_UPDATE );
 
+			//RT#86385 Why do we get an ID of 0 here sometimes?  Just set it!
+			if ($title->getArticleID() == 0) {
+				$title->mArticleID = $id;
+			}
 			if ( ! $title ) {
 				return false;
 			}
@@ -825,7 +829,7 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
 				if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-					$text = wfRenderPartial('ArticleComments', 'Comment', array('comment' => $comment->getData(), 'commentId' => $commentId, 'rowClass' => ''));
+					$text = wfRenderPartial('ArticleComments', 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => ''));
 				} else {
 					$text = $comment->render(true);
 				}
