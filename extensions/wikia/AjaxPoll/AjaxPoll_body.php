@@ -10,6 +10,7 @@ class AjaxPollClass {
 	 * check for table existence
 	 */
 	const BAR_WIDTH = "250"; #-- pixels
+	const MEMC_PREFIX_GETVOTES = 'AjaxPollClass::getVotes';
 
 	public $mId, $mBody, $mAttribs, $mParser, $mQuestion, $mStatus, $mTotal;
 	public $mTitle, $mCreated;
@@ -138,10 +139,10 @@ class AjaxPollClass {
 	 *
 	 * get HTML for votes
 	 *
-	 * @return array: votes for this pool
+	 * @return array: votes for this poll
 	 */
 	public function getVotes() {
-		global $wgLang;
+		global $wgLang, $wgMemc;
 
 		if ( is_null( $this->mId ) ) {
 			return null;
@@ -151,35 +152,46 @@ class AjaxPollClass {
 		$votes = array();
 		$total = 0;
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$oRes = $dbr->select(
-			array( "poll_vote" ),
-			array( "poll_answer", "poll_user" ),
-			array( "poll_id" => $this->mId ),
-			__METHOD__
-		);
-
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
-			if( isset( $votes[ $oRow->poll_answer ] ) ) {
-				$votes[ $oRow->poll_answer ][ "value" ]++;
-			} else {
-				$votes[ $oRow->poll_answer ][ "value" ] = 1;
+		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
+		$votes = $wgMemc->get($memcKey);
+		if($votes){
+			foreach($votes as $ans => $ansData){
+				$total += $ansData["value"];
 			}
-			$total++;
-		}
-		$dbr->freeResult( $oRes );
+		} else {
+			$dbr = wfGetDB( DB_SLAVE );
+			$oRes = $dbr->select(
+				array( "poll_vote" ),
+				array( "poll_answer" ),
+				array( "poll_id" => $this->mId ),
+				__METHOD__
+			);
 
-		/**
-		 * count percentage of answers
-		 */
-		foreach( $votes as $nr => $vote ) {
-			$percent = $vote[ "value" ] / $total * 100;
-			$votes[ $nr ][ "percent" ] = round($percent, 2);
-			$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				if( isset( $votes[ $oRow->poll_answer ] ) ) {
+					$votes[ $oRow->poll_answer ][ "value" ]++;
+				} else {
+					$votes[ $oRow->poll_answer ][ "value" ] = 1;
+				}
+				$total++;
+			}
+			$dbr->freeResult( $oRes );
 
-			$percent = $wgLang->formatNum(round($percent, 2));
-			$votes[ $nr ][ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
-			$votes[ $nr ][ "key" ] = $nr;
+			/**
+			 * count percentage of answers
+			 */
+			foreach( $votes as $nr => $vote ) {
+				$percent = $vote[ "value" ] / $total * 100;
+				$votes[ $nr ][ "percent" ] = round($percent, 2);
+				$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
+
+				$percent = $wgLang->formatNum(round($percent, 2));
+				$votes[ $nr ][ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
+				$votes[ $nr ][ "key" ] = $nr;
+			}
+
+			// NOTE: Remember to purge everywhere that poll_vote is updated.
+			$wgMemc->set($memcKey, $votes, 3600);
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -362,6 +374,7 @@ JS;
 	 */
 	public function doSubmit( &$request ) {
 		global $wgUser, $wgTitle, $parserMemc;
+		wfProfileIn( __METHOD__ );
 
 		$status = false;
 		$vote = $request->getVal( "wpPollRadio" . $this->mId, null );
@@ -392,6 +405,13 @@ JS;
 			"total" => $total,
 			"status" => $status
 		);
+		
+		// Purge the vote stats.
+		global $wgMemc;
+		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
+		$wgMemc->delete($memcKey);
+		
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 
