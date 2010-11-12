@@ -602,5 +602,5 @@ function smwfShowBrowseLink($skintemplate) {
  */
 function &smwfGetDB( $type ) {
 	global $smwgDBname;
-	return wfGetDB( $type, 'smw', $smwgDBname );
+	return wfGetDB( $type, ( $type == DB_MASTER ) ? array() : 'smw', $smwgDBname );
 }
