@@ -89,6 +89,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 			}
 		}
 
+
 		if(!$isWhitelisted) {
 			// make the actual link
 			$special = SpecialPage::getTitleFor( 'Outbound' );
@@ -99,8 +100,9 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 				$link = Xml::tags('a', array(
 					'class' => 'external',
 					'rel' => 'nofollow',
-					'title' => $url,
-					'href' => $href,
+					//'title' => $url,
+					'ref' => $href,
+					'href' => $url,
 				), $text);
 
 				return false;

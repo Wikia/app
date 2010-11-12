@@ -155,7 +155,7 @@ class StaticChute {
 			'../extensions/wikia/ArticleComments/js/ArticleComments.js',
 			"../extensions/wikia/RelatedPages/js/RelatedPages.js",
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
-			'../extensions/wikia/Interstitial/Interstitial.js',
+			//'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
@@ -251,7 +251,7 @@ class StaticChute {
 			'common/contributed.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
-			'../extensions/wikia/Interstitial/Interstitial.js',
+			//'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
@@ -365,6 +365,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
+			'../extensions/wikia/Interstitial/Exitstitial.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
 
