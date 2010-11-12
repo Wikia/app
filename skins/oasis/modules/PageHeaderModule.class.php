@@ -33,6 +33,9 @@ class PageHeaderModule extends Module {
 	var $showSearchBox;
 	var $isMainPage;
 	var $total;
+	
+	var $wgUser;
+	var $isNewFiles;
 
 	/**
 	 * Use MW core variable to generate action button
@@ -315,6 +318,9 @@ class PageHeaderModule extends Module {
 				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
 				if($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
 					$this->pageType = "";
+				}
+				if($wgTitle->isSpecial('Newimages')) {
+					$this->isNewFiles = true;
 				}
 				break;
 

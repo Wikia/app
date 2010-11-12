@@ -1,6 +1,99 @@
 $(window).load(function() {
     LatestPhotos.init();
+    UploadPhotos.init();
 });
+
+var UploadPhotos = {
+	d: false,
+	destfile: false,
+	filepath: false,
+	doptions: {persistent: false, width:600},
+	status: false,
+	libinit: false,
+	init: function() {
+		if(!($(".upphotoslogin").exists())) {
+			$(".upphotos").click(UploadPhotos.showDialog);
+		}
+	},
+	showDialog: function(evt) {
+		evt.preventDefault();
+		$.get(wgScript, {
+			action: 'ajax',
+			rs: 'moduleProxy',
+			moduleName: 'UploadPhotos',
+			actionName: 'Index',
+			outputType: 'html',
+			title: wgPageName,
+			cb: wgCurRevisionId,
+			uselang: wgUserLanguage
+		}, function(html) {
+			// pre-cache dom elements
+			UploadPhotos.d = $(html).makeModal(UploadPhotos.doptions);
+			UploadPhotos.destfile = UploadPhotos.d.find("input[name=wpDestFile]");
+			UploadPhotos.filepath = UploadPhotos.d.find("input[name=wpUploadFile]");
+			UploadPhotos.status = UploadPhotos.d.find("div.status");
+			UploadPhotos.advanced = UploadPhotos.d.find(".advanced");
+			UploadPhotos.options = UploadPhotos.d.find(".options");
+			UploadPhotos.uploadbutton = UploadPhotos.d.find("input[type=submit]");
+			
+			// event handlers
+			UploadPhotos.filepath.change(UploadPhotos.filePathSet);
+			UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
+			UploadPhotos.advanced.click(function(evt) {
+				evt.preventDefault();
+				UploadPhotos.options.toggle(400);//animate({height: "toggle"}, "slow");
+			});
+		});
+		if (!UploadPhotos.libinit) {
+			$.getScript("/extensions/wikia/ThemeDesigner/js/aim.js");	// TODO: find a permanent place for aim
+			UploadPhotos.libinit = true;
+		}
+	},
+	uploadCallback: {
+		onComplete: function(res) {
+			res = $("<div/>").html(res).text();
+			var json = $.evalJSON(res);
+			if(json) {
+				if(json['status'] == 0) {	// 0 is success...
+					window.location = '/wiki/Special:NewFiles';
+				} else {
+					UploadPhotos.status.addClass("error").fadeIn("slow").html(json['statusMessage']);
+					UploadPhotos.uploadbutton.removeAttr("disabled");
+				}
+			}
+		},
+		onStart: function() {
+			UploadPhotos.uploadbutton.attr("disabled", "true");
+			UploadPhotos.status.hide("fast", function() {$(this).removeClass("error")});
+		}
+	},
+	filePathSet: function() {
+		if (UploadPhotos.filepath.val()) {
+			var filename = UploadPhotos.filepath.val().replace(/^.*\\/, '');
+			UploadPhotos.destfile.val(filename);
+			UploadPhotos.destFileSet();
+		}
+	},
+	destFileSet: function() {
+		if (UploadPhotos.destfile.val()) {
+			$.get(wgScript, {
+				wpDestFile: UploadPhotos.destfile.val(),
+				action: 'ajax',
+				rs: 'moduleProxy',
+				moduleName: 'UploadPhotos',
+				actionName: 'ExistsWarning',
+				outputType: 'html',
+				title: wgPageName,
+				cb: wgCurRevisionId,
+				uselang: wgUserLanguage
+			}, function(html) {
+				if(html) {
+					UploadPhotos.status.removeClass("error").html(html);
+				}
+			});
+		}
+	}
+}
 
 var LatestPhotos = {
 	browsing: false,

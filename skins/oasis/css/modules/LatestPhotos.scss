@@ -12,6 +12,48 @@
 	width: 0;
 }
 
+.UploadPhotos {
+	input[type=checkbox] {
+		cursor: pointer;
+	}
+	.options {
+		display: none;
+		label {
+			display:block;
+			margin-top:15px;
+		}
+		textarea {
+			height: 4em;
+			width: 425px;
+		}
+	}
+	.error {
+
+	}
+	.advanced {
+		display: block;
+		margin: 5px 0;
+	}
+	.status {
+		padding: 10px;
+		li {
+			list-style: none;
+		}
+		.thumbinner, .wikia-gallery-item {
+			margin: 10px auto;
+		}
+		.wikia-gallery-item {
+			display: block;
+			margin: 0 auto;
+			padding: 0;
+		}
+		h3 {
+			color: red;
+			margin-bottom: 5px;
+		}
+	}
+}
+
 .LatestPhotosModule {
 	>h1 {
 		display: none;
