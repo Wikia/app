@@ -24,7 +24,8 @@
 	}
 	.badge-text {
 		@include clearfix;
-		font-size: 12px;
+		font-size: 13px;
+		line-height: 20px;
 		padding: {
 			bottom: 8px;
 		}
@@ -32,9 +33,11 @@
 			margin-left: 50px;
 		}
 	}
-	img {
-		position: static !important; // /** Moncaco uses position absolute **/
+
+	a.sponsored-link, img {
+		position: static !important; // /** Monaco uses position absolute **/
 	}
+
 	li {
 		border-bottom: 1px solid $color-page-border;
 		margin: 10px 2px 7px 0;
@@ -43,7 +46,9 @@
 		&:last-child {
 			border-bottom: none;
 		}
+		position: relative;
 	}
+
 	.badge-icon-earnable {
 		float: left;
 		margin: {
@@ -51,6 +56,7 @@
 			top: 3px;
 		}
 	}
+
 	.profile-hover { // /** the popup when mouse stays over badge **/
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		@include border-radius(3px);
