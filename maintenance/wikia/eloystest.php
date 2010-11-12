@@ -124,11 +124,14 @@ function testRiak() {
 }
 
 function testExternalSMW() {
-  global $wgDBname, $wgDebugLogGroups, $wgDebugLogFile;
+	global $wgDBname, $wgDebugLogGroups, $wgDebugLogFile, $smwgDBname;
 	$wgDebugLogGroups[ "connect" ] = "php://stderr";
 	$wgDebugLogFile = "php://stderr";
 
-	$dbr = wfGetDB( DB_MASTER, 'smw', 'smw+' . $wgDBname );
+	$name = empty( $smwgDBname ) ? $wgDBname : $smwgDBname;
+
+	$dbw = wfGetDB( DB_MASTER, array(), $name );
+	$dbr = wfGetDB( DB_SLAVE, 'smw', $name );
 }
 #
 # main
