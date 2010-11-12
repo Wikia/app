@@ -7,18 +7,21 @@ AchievementsLeaderboard = {
 		//Set correct initial state of page intro (visible or hidden)
 
 		//TODO: check cookie
-		$("#about-achievements").children(".open").hide();
+		if ($.cookies.get("ShowSpecialLeaderboardIntro") == "no") {
+			$("#about-achievements")
+				.children(".hide, div").hide().end()
+				.children(".open").show();
+		}
 		
-		
-	
 		//Enable hiding/showing page intro
 		$("#about-achievements").children("span").click(function() {
 			var text = $("#about-achievements").children("div");
 			if ($(this).hasClass("open")) {
 				text.slideDown();
+				$.cookies.set("ShowSpecialLeaderboardIntro", "yes");
 			} else if ($(this).hasClass("hide")) {
 				text.slideUp();
-				$.cookie.set("AchivementsIntro", false);
+				$.cookies.set("ShowSpecialLeaderboardIntro", "no");
 			}
 			$("#about-achievements").children("span").toggle();
 		});
