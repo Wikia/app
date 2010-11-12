@@ -18,6 +18,15 @@ class AutomaticWikiAdoptionGatherData {
 	private $factory, $dataMapper;
 	//entry point
 	function run($commandLineOptions) {
+		global $wgEnableAutomaticWikiAdoptionMaintenanceScript;
+
+		if (empty($wgEnableAutomaticWikiAdoptionMaintenanceScript)) {
+			if (!isset($commandLineOptions['quiet'])) {
+				echo "wgEnableAutomaticWikiAdoptionMaintenanceScript not true - quitting.\n";
+			}
+			return;
+		}
+
 		$recentAdminEdit = $this->getDataMapper()->getData();
 		$wikisToAdopt = 0;
 		$time14days = strtotime('-14 days');
