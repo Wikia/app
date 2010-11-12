@@ -18,7 +18,7 @@ class SpecialLeaderboard extends SpecialPage {
 		$this->setHeaders();
 		
 		$wgOut->setPageTitle(wfMsg('achievements-title'));
-
+		
 		$skinName = get_class($wgUser->getSkin());
 
 		if ($skinName == 'SkinOasis') {

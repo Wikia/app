@@ -9,6 +9,14 @@
 	padding: 0;
 }
 
+.customize-platinum-badge span.tip{
+	font-size: 10px;
+}
+
+.readonly span.tip{
+	display: none;
+}
+
 .customize-platinum-badge label {
 	font-weight: bold;
 }
@@ -32,6 +40,53 @@
 	padding-left: 10px;
 	width: 230px;
 }
+
+.customize-platinum-badge .sponsored-fields {
+	margin-top: 10px;
+}
+
+.customize-platinum-badge .sponsored-fields-1 {
+	padding-bottom: 5px;
+}
+
+.customize-platinum-badge .sponsored-fields-3 p {
+	font-size: 12px;
+}
+
+.sponsored-fields input[type=text] {
+	width: 100%;
+	display: block;
+}
+
+.sponsored-fields input {
+	margin-bottom: 10px;
+}
+
+.customize-platinum-badge .sponsored-fields-3 label {
+	display: block;
+}
+
+.sponsored-fields label[for=hover_content] {
+	display: none;
+}
+
+.customize-platinum-badge .sponsored-fields-3 {
+	padding-top: 10px;
+}
+
+.customize-platinum-badge .sponsored-fields-2{
+	text-align: center;
+}
+
+.customize-platinum-badge .sponsored-fields-3{
+	border-top: 1px solid #AAA;
+	margin-bottom: 20px;
+}
+
+.editable .badges .profile-hover.sponsored-hover > .earned {
+	display:block;
+}
+
 .customize-platinum-badge textarea {
 	display: block;
 	height: 50px;
@@ -39,7 +94,7 @@
 	width: 220px;
 }
 
-.customize-platinum-badge .badge-preview {
+.customize-platinum-badge .badge-preview, .sponsored-fields .hover-content-preview {
 	border-style: dashed;
 	border-width: 1px;
 	display: block;
@@ -58,7 +113,7 @@
 	clear: both;
 	padding: 5px 10px;
 }
-.customize-platinum-badge .button-save {
+.customize-platinum-badge .button-save, .customize-platinum-badge .button-cancel {
 	display: none;
 }
 
@@ -102,4 +157,16 @@ span.input-suggestion {
 
 fieldset.readonly span.input-suggestion {
 	display:none;
+}
+
+/*sponsored achievement hover preview (the template uses the oasis,scss files too*/
+.editable .sponsored-fields label[for=hover_content] {
+	display: block;
+}
+
+.sponsored-fields .sponsored-fields-2 .badges .sponsored-hover{
+	display: inline-block;
+	position: relative;
+	margin-bottom: 10px;
+	text-align: left;
 }

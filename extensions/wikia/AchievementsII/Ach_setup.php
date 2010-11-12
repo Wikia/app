@@ -1,6 +1,9 @@
 <?php
 define('ACHIEVEMENTS_ENABLED', true);
 
+define('ACHIEVEMENTS_BADGE_PREFIX', 'badge-');
+define('ACHIEVEMENTS_HOVER_PREFIX', 'achievements-badge-hover-');
+
 // BADGE LEVELS
 define('BADGE_LEVEL_BRONZE', 1);
 define('BADGE_LEVEL_SILVER', 2);
@@ -49,6 +52,10 @@ $wgGroupPermissions['*']['platinum'] = false;
 $wgGroupPermissions['staff']['platinum'] = true;
 $wgGroupPermissions['helper']['platinum'] = true;
 
+$wgAvailableRights[] = 'sponsored-achievements';
+$wgGroupPermissions['*']['sponsored-achievements'] = false;
+$wgGroupPermissions['staff']['sponsored-achievements'] = true;
+
 // AUTOLOADS
 
 // config
@@ -72,6 +79,9 @@ $wgAutoloadClasses['AchNotificationService'] = $dir.'services/AchNotificationSer
 // models
 $wgAutoloadClasses['AchRankedUser'] = $dir.'AchRankedUser.class.php';
 $wgAutoloadClasses['AchBadge'] = $dir.'AchBadge.class.php';
+
+//dependencies
+$wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
 // I18N
 $wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
@@ -132,7 +142,13 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 }
 
 function Ach_UploadVerification($destName, $tempPath, &$error) {
-	if(strlen($destName) > 6 && stripos($destName, 'badge-') === 0) {
+	global $wgUser;
+	
+	if(
+		( strlen($destName) > strlen( ACHIEVEMENTS_BADGE_PREFIX ) && stripos($destName, ACHIEVEMENTS_BADGE_PREFIX) === 0 ) ||
+		( strlen($destName) > strlen( ACHIEVEMENTS_HOVER_PREFIX ) && stripos($destName, ACHIEVEMENTS_HOVER_PREFIX) === 0 && !$wgUser->isAllowed( 'sponsored-achievements' ) )
+	) {
+		wfLoadExtensionMessages( 'AchievementsII' );
 		$error = wfMsgExt('achievements-upload-not-allowed', array('parse'));
 		return false;
 	}

@@ -139,12 +139,10 @@ class AchRankingService {
 		$res = $dbr->select('ach_user_badges', 'user_id, badge_type_id, badge_lap, badge_level, date', $conds, __METHOD__, $rules);
 		
 		while(($row = $dbr->fetchObject($res)) && (count($badges) <= $limit)) {
-			if(AchConfig::getInstance()->isInRecents($row->badge_type_id)) {
-				$user = User::newFromId($row->user_id);
-				
-				if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
-					$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
-				}
+			$user = User::newFromId($row->user_id);
+
+			if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
+				$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
 			}
 		}
 
