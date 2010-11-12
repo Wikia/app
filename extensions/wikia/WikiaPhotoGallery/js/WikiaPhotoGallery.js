@@ -2352,9 +2352,7 @@ var WikiaPhotoGallery = {
 		//done here since the dialog closes in many different ways and some of them use animation fx
 		$('#WikiaPhotoGalleryEditor').remove();
 
-		/*var editorPopup = $('#WikiaPhotoGalleryEditor');
-
-		if (!editorPopup.exists()) {*/
+		$.loadJQueryUI(function() {
 			self.ajax('getEditorDialog', {title: wgPageName}, function(data) {
 				// store messages
 				self.editor.msg = data.msg;
@@ -2426,17 +2424,7 @@ var WikiaPhotoGallery = {
 				// load CSS for wikia-tabs
 				importStylesheetURI(stylepath + '/common/wikia_ui/tabs.css?' + wgStyleVersion);
 			});
-		/*}
-		else {
-			self.setupEditor(params);
-
-			// change height of the editor popup before it's shown (RT #55203)
-			$('#WikiaPhotoGalleryEditorPagesWrapper').height(height);
-
-			// resize dialog (RT #55210)
-			editorPopup.resizeModal(width);
-			editorPopup.showModal();
-		}*/
+		});
 	},
 
 	// fetch and show pop out dialog for given slideshow
@@ -2707,29 +2695,49 @@ var WikiaPhotoGallery = {
 	// create wikitext from JSON data
 	JSONtoWikiText: function(data) {
 		var HTML = '<gallery';
+		var isSlideshow = this.isSlideshow();
 
 		// add type="slideshow" tag attribute
-		if (this.isSlideshow()) {
+		if (isSlideshow) {
 			data.params['type'] = 'slideshow';
 		}
 
 		// handle <gallery> tag attributes
-		for (param in data.params) {
-			//ignore default values
-			if (
-				(param == 'widths' && data.params[param] == '185') ||
-				(param == 'position' && data.params[param] == 'left')
-			) {
-				continue;
+		$.each(data.params, function(key, value) {
+			WikiaPhotoGallery.log([key, value]);
+
+			// filter out default values
+			switch(key) {
+				// slideshow has by default 300px, gallery - 185px
+				case 'widths':
+					if (isSlideshow && value == 300) {
+						return;
+					}
+					if (!isSlideshow && value == 185) {
+						return;
+					}
+					break;
+
+				// slideshow is by default aligned right, gallery - left (RT #68263)
+				case 'position':
+					if (isSlideshow && value == 'right') {
+						return;
+					}
+					if (!isSlideshow && value == 'left') {
+						return;
+					}
+					break;
+
+				// do not add helper param to final wikitext
+				case 'usefeed':
+					return;
 			}
-			//do not add helper param to final wikitext
-			if (param == 'usefeed') {
-				continue;
+
+			if (value != '') {
+				HTML += ' ' + key + '="' + value + '"';
 			}
-			if (data.params[param] != '') {
-				HTML += ' ' + param + '="' + data.params[param] + '"';
-			}
-		}
+		});
+
 		HTML += '>\n';
 
 		if ((typeof data.params.rssfeed == 'undefined' || data.params.rssfeed == '') &&
