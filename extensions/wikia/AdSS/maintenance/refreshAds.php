@@ -21,7 +21,7 @@ $res = $dbw->select(
 		__METHOD__
 	       );
 foreach( $res as $row ) {
-	$ad = AdSS_Ad::newFromRow( $row );
+	$ad = AdSS_AdFactory::createFromRow( $row );
 	echo "{$ad->wikiId} | {$ad->id} | {$ad->text} | {$ad->url} | ".wfTimestamp( TS_DB, $ad->expires )." | ";
 
 	$billing = new AdSS_Billing();
