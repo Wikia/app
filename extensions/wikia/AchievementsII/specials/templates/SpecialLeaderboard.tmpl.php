@@ -1,42 +1,69 @@
-<div id="about-achievements" class="accent">
-	<?= wfMsgExt( 'leaderboard-intro', array( 'parse' ), $username ) ?>
-</div>
-
-<div id="leaderboard-body" class="accent">
-  <div class="leaderboard-body-inner">
-  	<h1 class="achievements-title"><?= wfMsg('leaderboard') ?></h1>
-  	<ul id="leaderboard">
-  		<li class="accent list-heading">
-  			<div id="rank-label"><?= wfMsg('achievements-leaderboard-rank-label'); ?></div>
-  			<div id="member-label"><?= wfMsg('achievements-leaderboard-member-label'); ?></div>
-  			<div id="points-label"><?= wfMsg('achievements-leaderboard-points-label'); ?></div>
-  		</li>
-  		<?foreach($ranking as $rank => $rankedUser):?>
-  			<?php
-  			global $wgExtensionsPath, $wgLang;
-  			$curRanking = $rankedUser->getCurrentRanking();
-  			$prevRanking = $rankedUser->getPreviousRanking();
-  			?>
-  			<li class="accent">
-  				<div class="user-rank accent">
-  					<span><?=++$rank;?></span>
-  					<?if($curRanking < $prevRanking):?>
-  						<img src="<?="{$wgExtensionsPath}/wikia/AchievementsII/images/uparrow.png";?>" />
-  					<?elseif($curRanking > $prevRanking && $prevRanking !== null):?>
-  						<img src="<?="{$wgExtensionsPath}/wikia/AchievementsII/images/downarrow.png";?>" />
-  					<?endif;?>
-  				</div>
-  				<img class="user-avatar" src="<?=$rankedUser->getAvatarUrl();?>" width="25" height="25" />
-  				<div class="user-name"><a href="<?=$rankedUser->getUserPageUrl();?>"><?=htmlspecialchars($rankedUser->getName());?></a></div>
-  				<div class="user-score"><?=$wgLang->formatNum($rankedUser->getScore());?></div>
-  			</li>
-  		<?endforeach;?>
-  	</ul>
-  	<div id="legend">
-  		<?= wfMsg('achievements-leaderboard-disclaimer'); ?>
-  	</div>
+<div id="about-achievements">
+	<span class="hide"><?= wfMsg('leaderboard-intro-hide') ?></span>
+	<span class="open"><?= wfMsg('leaderboard-intro-open') ?></span>
+	<h1><?= wfMsg('leaderboard-intro-headline') ?></h1>
+	<div>
+		<?= wfMsgExt( 'leaderboard-intro', 'parse', $userpage ) ?>
+		<ul>
+			<li class="bronze">
+				<?= wfMsg('achievements-bronze') ?>
+				<span><?= wfMsg('achievements-bronze-points') ?></span>
+			</li>
+			<li class="silver">
+				<?= wfMsg('achievements-silver') ?>
+				<span><?= wfMsg('achievements-silver-points') ?></span>
+			</li>
+			<li class="gold">
+				<?= wfMsg('achievements-gold') ?>
+				<span><?= wfMsg('achievements-gold-points') ?></span>
+			</li>
+		</ul>	
 	</div>
 </div>
+
+<h1 class="achievements-title"><?= wfMsg('leaderboard-title') ?></h1>
+
+<table class="LeaderboardTable">
+	<thead>
+		<tr>
+			<th><?= wfMsg('achievements-leaderboard-rank-label'); ?></th>
+			<th><?= wfMsg('achievements-leaderboard-member-label'); ?></th>
+			<th><?= wfMsg('achievements-leaderboard-points-label'); ?></th>
+			<th><?= wfMsg('achievements-leaderboard-most-recently-earned-label'); ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?
+		foreach($ranking as $rank => $rankedUser){
+		global $wgExtensionsPath, $wgLang;
+		/*
+		$curRanking = $rankedUser->getCurrentRanking();
+		$prevRanking = $rankedUser->getPreviousRanking();
+		*/
+		$badge = $topUserBadges[$rankedUser->getID()];
+		
+	?>
+		<tr>
+			<td class="rank">
+				<span><?=++$rank;?></span>
+			</td>
+			<td class="user">
+				<img src="<?=$rankedUser->getAvatarUrl();?>" width="35" height="35">
+				<a href="<?=$rankedUser->getUserPageUrl();?>"><?=htmlspecialchars($rankedUser->getName());?></a>
+			</td>
+			<td class="tally">
+				<em><?=$wgLang->formatNum($rankedUser->getScore());?></em>
+				<span>Points</span>
+			</td>
+			<td class="badge">
+				<img src="<?=$badge->getPictureURL(40)?>" class="badge-icon">
+				<?=$badge->getName()?>
+			</td>
+		</tr>
+	<? } //endforeach ?>
+	</tbody>
+</table>
+
 <?php
 	global $wgUser;
 	if (get_class($wgUser->getSkin()) != 'SkinOasis') {

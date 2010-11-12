@@ -1,0 +1,108 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+#about-achievements {
+	@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+	border: 1px solid $color-page-border;
+	font-size: 12px;
+	line-height: 1.3em;
+	margin-bottom: 30px;
+	padding: 5px 10px;
+	h1 {
+		font-size: 20px;
+		line-height: normal;
+		margin: 0;
+	}
+	>span {
+		cursor: pointer;
+		float: right;
+		margin-top: 5px;
+		&:after {
+			border-style: solid;
+			border-width: 5px;
+			content: " ";
+			display: inline-block;
+			margin-left: 3px;
+			position: relative;
+		}
+		&.open:after {
+			border-color: $color-text transparent transparent;
+			top: 3px;
+		}
+		&.hide:after {
+			border-color: transparent transparent $color-text;
+			bottom: 3px;
+		}
+	}
+	>div {
+		margin-top: 10px;
+	}
+	ul {
+		@include clearfix;
+		list-style: none;
+		margin: 0;
+		li {
+			float: left;
+			font-size: 18px;
+			font-weight: bold;
+			line-height: 50px;
+			margin-right: 30px;
+		}
+	 	span {
+	 		display: inline-block;
+	 		font-size: 11px;
+	 		height: 35px;
+	 		line-height: 10px;
+	 		padding-top: 15px;
+	 		text-align: center;
+	 		width: 50px;		
+		}
+		.bronze span {
+			background: url(/extensions/wikia/AchievementsII/images/bronze_badge_blank.png);
+		}
+		.silver span {
+			background: url(/extensions/wikia/AchievementsII/images/silver_badge_blank.png);
+		}
+		.gold span {
+			background: url(/extensions/wikia/AchievementsII/images/gold_badge_blank.png);
+		}
+	}
+}
+
+.LeaderboardTable {
+	border-collapse: collapse;
+	width: 100%;
+	tr {
+		border-bottom: 1px solid $color-page-border;
+	}
+	th {
+		font-weight: normal;
+		text-align: left;
+	}
+	td {
+		padding: 5px;
+	}
+	.rank span {
+		@include linear-gradient(null, top, $color-page, 50%, mix($color-page, black, 95%), 100%);
+		border: 1px solid $color-page-border;
+		display: block;
+		font-weight: bold;
+		height: 35px;
+		line-height: 35px;
+		text-align: center;
+		width: 35px;
+	}
+	.user {
+		font-weight: bold;
+	}
+	.tally {
+		em {
+			font-style: normal;
+		}
+	}
+	.badge {
+		font-weight: bold;
+	}
+}
