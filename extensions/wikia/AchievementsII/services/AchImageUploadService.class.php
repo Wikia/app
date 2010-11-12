@@ -214,13 +214,4 @@ class AchImageUploadService {
 
 		return $file;
 	}
-
-	public static function uploadHover( $destinationFileName ) {
-		global $wgRequest;
-		
-		wfLoadExtensionMessages( 'WikiaPhotoGallery' );
-		$ret = WikiaPhotoGalleryUpload::uploadImage( 'hover_content', $destinationFileName, true );
-
-		return $ret;
-	}
 }

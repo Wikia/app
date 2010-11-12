@@ -24,8 +24,7 @@
 	}
 	.badge-text {
 		@include clearfix;
-		font-size: 13px;
-		line-height: 20px;
+		font-size: 12px;
 		padding: {
 			bottom: 8px;
 		}
@@ -33,11 +32,9 @@
 			margin-left: 50px;
 		}
 	}
-
-	a.sponsored-link, img {
-		position: static !important; // /** Monaco uses position absolute **/
+	img {
+		position: static !important; // /** Moncaco uses position absolute **/
 	}
-
 	li {
 		border-bottom: 1px solid $color-page-border;
 		margin: 10px 2px 7px 0;
@@ -46,9 +43,7 @@
 		&:last-child {
 			border-bottom: none;
 		}
-		position: relative;
 	}
-
 	.badge-icon-earnable {
 		float: left;
 		margin: {
@@ -56,86 +51,44 @@
 			top: 3px;
 		}
 	}
-
 	.profile-hover { // /** the popup when mouse stays over badge **/
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		@include border-radius(3px);
 		background-color: White;
 		border: solid 1px $color-page-border;
-		display: none;
+		display: none; /* for testing porpuse */
+		left: -400px;
+		margin-bottom: 100px;
 		padding: 5px 10px;
 		position: absolute;
-		min-width: 270px;
-		z-index: 1001;
-		margin-bottom: 3px;
-
-		&.sponsored-hover {
-			@include border-radius-se(0);
-			@include border-radius-sw(0);
-			padding: 0 0 0 0;
-			border: {
-				color:$color-buttons;
-				style: solid;
-				top-width: 3px;
-				right-width: 3px;
-				left-width: 3px;
-				bottom: none;
-			}
-
-			img {
-				margin: 0 0 0 0;
-			}
-
-			& > .earned {
-				clear: both;
-				font-size: 10px;
-				font-weight: bold;
-				text-align: right;
-				color: $color-button-text;
-				background-color: $color-buttons;
-				line-height: 20px;
-				margin: 0 0 0 0;
-			}
-		}
+		width: 270px;
+		z-index: 1;
 
 		h3 {
-			font-size: 13px;
+			font-size: 13px !important;
 			font-weight: bold;
 			margin-bottom: 3px;
 			padding-top: 10px !important;
-			text-align: left;
 		}
-
-		p{
+		p, h3 {
 			font-size: 11px;
-			text-align: left;
+			text-align: left !important;
 		}
-
 		.profile-hover-text {
 			float: right;
 			width: 170px;
 
 			p {
-				font-size: 11px;
-				line-height: 18px;
+				font-size: 13px;
 			}
 		}
 
 		img {
-			float: left;
-			margin: {
-				top: 8px;
-				bottom: 8px;
-			}
+			margin-top: 8px;
 		}
 	}
 }
 
-.recent-badges,.badges-tracks{
-	.profile-hover{
-		right: 100px;
-	}
-}
 /* rail in the right side */
 .WikiaLatestEarnedBadgesModule {
 	.clearfix { /** @todo questionable **/

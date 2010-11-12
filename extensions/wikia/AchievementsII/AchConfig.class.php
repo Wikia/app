@@ -152,7 +152,7 @@ class AchConfig {
 
 		if(!$this->mAllDataFetched) {
 			$dbr = wfGetDB(($useMasterDb) ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB);
-			$res = $dbr->select('ach_custom_badges', 'id, type, enabled, cat, sponsored, badge_tracking_url, hover_tracking_url, click_tracking_url', array('wiki_id' => $wgCityId), __METHOD__);
+			$res = $dbr->select('ach_custom_badges', 'id, type, enabled, show_recents, cat, link', array('wiki_id' => $wgCityId), __METHOD__);
 
 			while($row = $dbr->fetchObject($res)) {
 				//WARNING: if DB schema changes array will change too, it's efficient but can turn to being dangerous
@@ -175,15 +175,9 @@ class AchConfig {
 
 				if($row->type == BADGE_TYPE_INTRACKEDITPLUSCATEGORY)
 					$this->mInTrackEditPlusCategory[$row->id] = array('enabled' => $row->enabled, 'category' => $row->cat);
-				elseif($row->type == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM) {
-					$this->mNotInTrackCommunityPlatinum[$row->id] = array(
-						'enabled' => $row->enabled,
-						'is_sponsored' => $row->sponsored,
-						'badge_tracking_url' => $row->badge_tracking_url,
-						'hover_tracking_url' => $row->hover_tracking_url,
-						'click_tracking_url' => $row->click_tracking_url
-					);
-				} else {
+				elseif($row->type == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM)
+					$this->mNotInTrackCommunityPlatinum[$row->id] = array('enabled' => $row->enabled, 'show_recents' => $row->show_recents);
+				else {
 					wfDebug("Unknown badge type for {$row->id}");
 					wfProfileOut(__METHOD__);
 					return false;
@@ -209,15 +203,9 @@ class AchConfig {
 			global $wgExternalSharedDB;
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
-			if($row = $dbr->selectRow('ach_custom_badges', 'type, enabled, cat, sponsored, badge_tracking_url, hover_tracking_url, click_tracking_url', array('id' => $badgeTypeId), __METHOD__)) {
+			if($row = $dbr->selectRow('ach_custom_badges', 'type, enabled, show_recents, cat, link', array('id' => $badgeTypeId), __METHOD__)) {
 				if($row->type == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM) {
-					$this->mNotInTrackCommunityPlatinum[$badgeTypeId] = array(
-						'enabled' => $row->enabled,
-						'is_sponsored' => $row->sponsored,
-						'badge_tracking_url' => $row->badge_tracking_url,
-						'hover_tracking_url' => $row->hover_tracking_url,
-						'click_tracking_url' => $row->click_tracking_url
-					);
+					$this->mNotInTrackCommunityPlatinum[$badgeTypeId] = array('enabled' => $row->enabled, 'show_recents' => $row->show_recents);
 
 				}
 				elseif($row->type == BADGE_TYPE_INTRACKEDITPLUSCATEGORY) {
@@ -284,6 +272,23 @@ class AchConfig {
 		}
 	}
 
+	public function isInRecents($badgeTypeId) {
+		if($badgeTypeId < 0) {
+			return true;
+		} else {
+			$item = null;
+
+			if($this->fetchAll()) {
+				if(isset($this->mNotInTrackCommunityPlatinum[$badgeTypeId]))
+					return $this->mNotInTrackCommunityPlatinum[$badgeTypeId]['show_recents'];
+				elseif(isset($this->mInTrackEditPlusCategory[$badgeTypeId]))
+					return true;
+			}
+
+
+		}
+	}
+
 	public function isEnabled($badgeTypeId) {
 		if($badgeTypeId < 0) {
 			return true;
@@ -344,20 +349,6 @@ class AchConfig {
 
 		wfProfileOut(__METHOD__);
 		return false;
-	}
-
-	public function isSponsored( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-
-		$badgeType = $this->getBadgeType($badgeTypeId);
-
-		if ( $badgeType == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM ) {
-			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'is_sponsored' ];
-		}
-
-		return false;
-
-		wfProfileOut(__METHOD__);
 	}
 
 	public function getLevelMsgKeyPart($level) {
@@ -461,11 +452,7 @@ class AchConfig {
 		if($badgeTypeId == BADGE_LUCKYEDIT) {
 			$badge_lap = null;
 		}
-		return (($withPrefix) ? ACHIEVEMENTS_BADGE_PREFIX : null) . $this->getBadgeMsgKeyPart($badgeTypeId). (($badge_lap !== null) ? "-{$badge_lap}" : null) . (($postfix !== null) ? "-{$postfix}" : null) . '.png';
-	}
-
-	public function getHoverPictureName( $badgeTypeId ) {
-		return ACHIEVEMENTS_HOVER_PREFIX . $this->getBadgeMsgKeyPart( $badgeTypeId ) . '.png';
+		return (($withPrefix) ? 'badge-' : null) . $this->getBadgeMsgKeyPart($badgeTypeId). (($badge_lap !== null) ? "-{$badge_lap}" : null) . (($postfix !== null) ? "-{$postfix}" : null) . '.png';
 	}
 
 	public function getRequiredEvents($badgeTypeId, $badge_lap = null) {
@@ -530,42 +517,6 @@ class AchConfig {
 		}
 
 		return false;
-	}
-
-	public function getBadgeClickCommandUrl( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-
-		if ( $this->isSponsored( $badgeTypeId ) ) {
-			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'click_tracking_url' ];
-		}
-
-		return false;
-
-		wfProfileOut(__METHOD__);
-	}
-
-	public function getBadgeTrackingUrl( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-		
-		if ( $this->isSponsored( $badgeTypeId ) ) {
-			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'badge_tracking_url' ];
-		}
-
-		return false;
-
-		wfProfileOut(__METHOD__);
-	}
-
-	public function getBadgeHoverTrackingUrl( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-
-		if ( $this->isSponsored( $badgeTypeId ) ) {
-			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'hover_tracking_url' ];
-		}
-
-		return false;
-
-		wfProfileOut(__METHOD__);
 	}
 
 	public function refreshData($useMasterDb = false) {

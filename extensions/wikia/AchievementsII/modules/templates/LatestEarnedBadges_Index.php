@@ -1,6 +1,6 @@
-<section class="WikiaLatestEarnedBadgesModule">
+<section class="WikiaLatestEarnedBadgesModule module">
 	<?= AdEngine::getInstance()->getPlaceHolderIframe("ACHIEVEMENTS_BOXAD") ?>
-	<h2 class="achievements-title"><?= wfMsg('achievements-recent-earned-badges'); ?></h2>
+	<h1 class="achievements-title"><?= wfMsg('achievements-recent-earned-badges'); ?></h1>
 	
 	<ul class="recent-badges badges">
 		<?=	wfRenderPartial('LatestEarnedBadges', 'ListBadges', array('badges'=> $recents, 'displayMode'=> 'LatestBadges')); ?>

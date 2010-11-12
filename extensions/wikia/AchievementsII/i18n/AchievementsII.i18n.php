@@ -18,10 +18,6 @@ Please try another one!',
 	'achievements-edit-plus-category-track-exists' => 'The specified category already has an <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">associated track</a>.',
 	'achievements-no-stub-category' => 'Please do not create tracks for stubs.',
 
-	//rights
-	'right-platinum' => 'Create and edit Platinum badges',
-	'right-sponsored-achievements' => 'Manage Sponsored achievements',
-	
 	/*
 	 * Badges' levels
 	 */
@@ -29,6 +25,9 @@ Please try another one!',
 	'achievements-gold' => 'Gold',
 	'achievements-silver' => 'Silver',
 	'achievements-bronze' => 'Bronze',
+	'achievements-gold-points' => '100<br>pts',
+	'achievements-silver-points' => '50<br>pts',
+	'achievements-bronze-points' => '10<br>pts',
 
 	/*
 	 * Misc
@@ -76,21 +75,23 @@ Please try another one!',
 	/*
 	 * Leaderboard
 	 */
-	'leaderboard-intro' => "'''“What are Achievements?”'''
-You can earn special badges by participating on this wiki!
-Each badge that you earn adds points to your total score:
-Bronze badges are worth 10 points, Silver badges are worth 50 points, and Gold badges are worth 100 points.
-
-When you join the wiki, your user profile displays the badges that you have earned, and shows you a list of the challenges that are available for you.
-[[Special:MyPage|Go to your user profile to check it out]]!",
+	'leaderboard-intro-hide' => 'hide',	
+	'leaderboard-intro-open' => 'open',
+	'leaderboard-intro-headline' => "Badges. A brief intro.",
+	'leaderboard-intro' => "By participating (making edits, uploading photos) on this wiki, you can earn badges.<br>Each badge earns you points which can move you up the leaderboard.
+	
+	'''What are badges worth?'''",
 	'leaderboard' => 'Achievements leaderboard',
+	'achievements-title' => 'Achievements',
+	'leaderboard-title' => 'Leaderboard',
 	'achievements-recent-earned-badges' => 'Recent Earned Badges',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />earned by <a href="$1">$2</a><br />$5',
 	'achievements-activityfeed-info' => 'earned the <strong><a href="$3" class="badgeName">$1</a></strong> badge<br />$2',
 	'achievements-leaderboard-disclaimer' => 'Leaderboard shows changes since yesterday',
-	'achievements-leaderboard-rank-label' => 'rank',
-	'achievements-leaderboard-member-label' => 'member',
-	'achievements-leaderboard-points-label' => 'points',
+	'achievements-leaderboard-rank-label' => 'Rank',
+	'achievements-leaderboard-member-label' => 'Member',
+	'achievements-leaderboard-points-label' => 'Points',
+	'achievements-leaderboard-most-recently-earned-label' => 'Most recently earned',
 	/*
 	 * AchievementsCustomize
 	 */
@@ -171,14 +172,7 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-community-platinum-show-recents' => 'show in recent badges',
 	'achievements-community-platinum-edit' => 'edit',
 	'achievements-community-platinum-save' => 'save',
-	'achievements-community-platinum-cancel' => 'cancel',
-	'achievements-community-platinum-sponsored-label' => 'Sponsored achievement',
-	'achievements-community-platinum-sponsored-hover-content-label' => 'Hover picture <small>(hover minimum size: 270px x 100px)</small>:',
-	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Tracking URL for badge impressions:',
-	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Tracking URL for Hover impression:',
-	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Badge link <small>(DART click command URL)</small>:',
-	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Click for more information',
-	
+
 	/*
 	 * Badges' names
 	 */
@@ -3477,7 +3471,7 @@ de overlegpagina van een andere gebruiker!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Op plaats #$1]]<br />op deze wiki',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
