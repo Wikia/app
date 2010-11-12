@@ -3,18 +3,19 @@
 class AdSS_Publisher {
 
 	static function getSiteAdsAjax() {
-		global $wgSquidMaxage;
+		global $wgSquidMaxage, $wgAdSS_templatesDir;
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
 		$ads = self::getSiteAds();
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 
 		$adsRendered = array();
 		$minExpire = 60*60 + time();
 		foreach( $ads as $ad ) {
 			$adsRendered[] = array(
 					'id'   => $ad->id,
-					'html' => $ad->render(),
+					'html' => $ad->render( $tmpl ),
 					);
 			if( $minExpire > $ad->expires ) {
 				$minExpire = $ad->expires;
@@ -104,21 +105,22 @@ class AdSS_Publisher {
 	}
 
 	static function onMakeGlobalVariablesScript( &$vars ) {
-		global $wgTitle;
+		global $wgTitle, $wgAdSS_templatesDir;
 		if( self::canShowAds( $wgTitle ) ) {
 			wfLoadExtensionMessages( 'AdSS' );
 			$ads = self::getPageAds( $wgTitle );
+			$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 			
-			$selfAd = new AdSS_Ad();
+			$selfAd = new AdSS_TextAd();
 			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL( 'page='.$wgTitle->getText() ) );
 			$selfAd->text = wfMsg( 'adss-ad-default-text' );
 			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
 
 			$vars['wgAdSS_pageAds'] = array();
 			foreach( $ads as $ad ) {
-				$vars['wgAdSS_pageAds'][] = $ad->render();
+				$vars['wgAdSS_pageAds'][] = $ad->render( $tmpl );
 			}
-			$vars['wgAdSS_selfAd'] = $selfAd->render();
+			$vars['wgAdSS_selfAd'] = $selfAd->render( $tmpl );
 		}
 		return true;
 	}

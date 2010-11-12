@@ -73,7 +73,10 @@ class AdSS_Controller extends SpecialPage {
 			$currentShare = $sitePricing['max-share'];
 		}
 
+		$ad = AdSS_AdFactory::createFromForm( $adForm );
+
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
+		$tmpl->set( 'ad', $ad->render( $tmpl ) );
 		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
 		$tmpl->set( 'login', wfMsgHtml( 'adss-button-login-buy' ) );
 		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
@@ -81,7 +84,6 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
 		$tmpl->set( 'adForm', $adForm );
-		$tmpl->set( 'ad', AdSS_AdFactory::createFromForm( $adForm ) );
 		$tmpl->set( 'currentShare', intval( $currentShare * 100 ) );
 
 		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
