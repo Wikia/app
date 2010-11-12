@@ -3,10 +3,8 @@
 class AdSS_Ad {
 
 	public $id;
+	public $type;
 	public $userId;
-	public $url;
-	public $text;
-	public $desc;
 	public $wikiId;
 	public $pageId;
 	public $status;
@@ -16,15 +14,12 @@ class AdSS_Ad {
 	public $weight;
 	public $price;
 
-	private $user;
+	protected $user;
 
 	function __construct() {
 		global $wgCityId;
 		$this->id = 0;
 		$this->userId = 0;
-		$this->url = '';
-		$this->text = '';
-		$this->desc = '';
 		$this->wikiId = $wgCityId;
 		$this->pageId = 0;
 		$this->status = 0;
@@ -36,32 +31,7 @@ class AdSS_Ad {
 		$this->user = null;
 	}
 
-	static function newFromForm( $f ) {
-		$ad = new self();
-		$ad->loadFromForm( $f );
-		return $ad;
-	}
-
-	static function newFromId( $id ) {
-		$ad = new self();
-		$ad->id = $id;
-		$ad->loadFromDB();
-		return $ad;
-	}
-
-	static function newFromRow( $row ) {
-		$ad = new self();
-		$ad->loadFromRow( $row );
-		return $ad;
-	}
-
 	function loadFromForm( $f ) {
-		$this->url = $f->get( 'wpUrl' );
-		if( strtolower( mb_substr( $this->url, 0, 7 ) ) == 'http://' ) {
-			$this->url = mb_substr( $this->url, 7 );
-		}
-		$this->text = $f->get( 'wpText' );
-		$this->desc = $f->get( 'wpDesc' );
 		switch( $f->get( 'wpType' ) ) {
 			case 'page':
 				$title = Title::newFromText( $f->get( 'wpPage' ) );
@@ -89,9 +59,6 @@ class AdSS_Ad {
 			$this->id = intval( $row->ad_id );
 		}
 		$this->userId = $row->ad_user_id;
-		$this->url = $row->ad_url;
-		$this->text = $row->ad_text;
-		$this->desc = $row->ad_desc;
 		$this->wikiId = $row->ad_wiki_id;
 		$this->pageId = $row->ad_page_id;
 		$this->status = $row->ad_status;
@@ -103,21 +70,6 @@ class AdSS_Ad {
 				'price'  => $row->ad_price,
 				'period' => $row->ad_price_period,
 				);
-	}
-
-	function loadFromDB() {
-		global $wgAdSS_DBname;
-
-		$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
-		$row = $dbr->selectRow( 'ads', '*', array( 'ad_id' => $this->id ), __METHOD__ );
-		if( $row === false ) {
-			// invalid ad_id
-			$this->id = 0;
-			return false;
-		} else {
-			$this->loadFromRow( $row );
-			return true;
-		}
 	}
 
 	function save() {
@@ -167,12 +119,7 @@ class AdSS_Ad {
 		}
 	}
 
-	function render() {
-		global $wgAdSS_templatesDir;
-		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
-		$tmpl->set( 'ad', $this );
-		return $tmpl->render( 'ad' );
-	}
+	abstract function render();
 
 	function refresh() {
 		$now = time();
