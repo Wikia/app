@@ -20,9 +20,9 @@ class AdSS_AdForm {
 	}
 
 	static function newFromRequest( $r ) {
-		$ad = new self();
-		$ad->loadFromRequest( $r );
-		return $ad;
+		$adForm = new self();
+		$adForm->loadFromRequest( $r );
+		return $adForm;
 	}
 
 	function loadFromRequest( $r ) {

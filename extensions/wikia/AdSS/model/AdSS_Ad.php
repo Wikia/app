@@ -4,6 +4,7 @@ abstract class AdSS_Ad {
 
 	public $id;
 	public $type;
+	public $url;
 	public $userId;
 	public $wikiId;
 	public $pageId;
@@ -19,6 +20,7 @@ abstract class AdSS_Ad {
 	function __construct() {
 		global $wgCityId;
 		$this->id = 0;
+		$this->url = '';
 		$this->userId = 0;
 		$this->wikiId = $wgCityId;
 		$this->pageId = 0;
@@ -32,6 +34,10 @@ abstract class AdSS_Ad {
 	}
 
 	function loadFromForm( $f ) {
+		$this->url = $f->get( 'wpUrl' );
+		if( strtolower( mb_substr( $this->url, 0, 7 ) ) == 'http://' ) {
+			$this->url = mb_substr( $this->url, 7 );
+		}
 		switch( $f->get( 'wpType' ) ) {
 			case 'page':
 				$title = Title::newFromText( $f->get( 'wpPage' ) );
@@ -58,6 +64,7 @@ abstract class AdSS_Ad {
 		if( isset( $row->ad_id ) ) {
 			$this->id = intval( $row->ad_id );
 		}
+		$this->url = $row->ad_url;
 		$this->userId = $row->ad_user_id;
 		$this->wikiId = $row->ad_wiki_id;
 		$this->pageId = $row->ad_page_id;

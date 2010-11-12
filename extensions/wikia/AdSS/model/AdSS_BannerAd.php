@@ -6,6 +6,7 @@ class AdSS_BannerAd extends AdSS_Ad {
 
 	function __construct() {
 		parent::__construct();
+		$this->type = 'b';
 		$this->bannerPath;
 	}
 
@@ -27,6 +28,7 @@ class AdSS_BannerAd extends AdSS_Ad {
 			$dbw->insert( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_type'         => $this->type,
 						'ad_banner_path'  => $this->bannerPath,
 						'ad_wiki_id'      => $this->wikiId,
 						'ad_page_id'      => $this->pageId,
@@ -44,6 +46,7 @@ class AdSS_BannerAd extends AdSS_Ad {
 			$dbw->update( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_type'         => $this->type,
 						'ad_banner_path'  => $this->bannerPath,
 						'ad_wiki_id'      => $this->wikiId,
 						'ad_page_id'      => $this->pageId,

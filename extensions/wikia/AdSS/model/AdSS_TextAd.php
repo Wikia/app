@@ -2,31 +2,24 @@
 
 class AdSS_TextAd extends AdSS_Ad {
 
-	public $url;
 	public $text;
 	public $desc;
 
 	function __construct() {
 		parent::__construct();
-
-		$this->url = '';
+		$this->type = 't';
 		$this->text = '';
 		$this->desc = '';
 	}
 
 	function loadFromForm( $f ) {
 		parent::loadFromForm( $f );
-		$this->url = $f->get( 'wpUrl' );
-		if( strtolower( mb_substr( $this->url, 0, 7 ) ) == 'http://' ) {
-			$this->url = mb_substr( $this->url, 7 );
-		}
 		$this->text = $f->get( 'wpText' );
 		$this->desc = $f->get( 'wpDesc' );
 	}
 
 	function loadFromRow( $row ) {
 		parent::loadFromRow( $row );
-		$this->url = $row->ad_url;
 		$this->text = $row->ad_text;
 		$this->desc = $row->ad_desc;
 	}
@@ -39,6 +32,7 @@ class AdSS_TextAd extends AdSS_Ad {
 			$dbw->insert( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_type'         => $this->type,
 						'ad_url'          => $this->url,
 						'ad_text'         => $this->text,
 						'ad_desc'         => $this->desc,
@@ -58,6 +52,7 @@ class AdSS_TextAd extends AdSS_Ad {
 			$dbw->update( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_type'         => $this->type,
 						'ad_url'          => $this->url,
 						'ad_text'         => $this->text,
 						'ad_desc'         => $this->desc,
