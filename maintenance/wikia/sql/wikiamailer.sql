@@ -42,5 +42,6 @@ CREATE TABLE IF NOT EXISTS postbackLog (
 	senderDbName VARCHAR(255),
 	url VARCHAR(255), # only comes with "click" event
 	status VARCHAR(255), # only comes with "bounce" event
-	reason VARCHAR(255) # only comes with "bounce" event
+	reason VARCHAR(255), # only comes with "bounce" event
+	received TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP # timestamp these postbacks
 );
