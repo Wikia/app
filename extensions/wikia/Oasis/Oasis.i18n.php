@@ -129,6 +129,9 @@ You can reorder or delete tools in the field below.
 	'oasis-editpage-readonlywarning' => "<h2>Sorry!</h2>
 <p>You cannot edit this page at the moment. We should be up and running again shortly. Here's what's happening:<br /><em>$1</em></p>
 <p>Please check <a href=\"http://twitter.com/wikia\">Twitter</a> or <a href=\"http://facebook.com/wikia\">Facebook</a> for more information.</p>",
+	'oasis-upload-photos-title' => 'Upload a Photo to the Wiki',
+	'oasis-upload-photos-advanced' => 'Advanced options',
+	
 );
 
 /** Message documentation (Message documentation)
@@ -767,7 +770,7 @@ U kunt hulpmiddelen verwijderen of ordenen in het veld hieronder.
 	'imageseo-featured-more' => 'meer...',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(

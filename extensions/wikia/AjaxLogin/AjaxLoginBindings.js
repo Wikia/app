@@ -156,7 +156,7 @@ $(function() {
 			return false;
 		});
 
-		var editpromptable = $("#ca-viewsource").add("#te-editanon").add('.loginToEditProtectedPage');
+		var editpromptable = $("#ca-viewsource").add("#te-editanon").add('.loginToEditProtectedPage').add(".upphotoslogin");
 
 		// add .editsection on wikis with anon editing disabled
 		if ( (typeof wgDisableAnonymousEditig !== 'undefined') && (wgDisableAnonymousEditig) ) {
@@ -168,12 +168,16 @@ $(function() {
 			var message = true; // base 'login requiref for this action'
 			if ($(e.target).is(".loginToEditProtectedPage")) {
 				message = 'protected';
+			} else if ($(e.target).is(".upphotoslogin")) {
+				message = 'reload';
 			}
 
 			showComboAjaxForPlaceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					if(message == 'protected'){
 						AjaxLogin.doReload('action=edit');
+					} else if(message == 'reload') {
+						AjaxLogin.doReload('');
 					} else {
 						var target = $(e.target);
 						if( target.is('a') ){

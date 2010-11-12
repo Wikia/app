@@ -24,7 +24,13 @@
 	if (!empty($action)) {
 		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
 	}
+	if (!empty($isNewFiles)) {
+?>
 
+	<?= View::specialPageLink('Upload', 'oasis-add-photo', (!$wgUser->isLoggedIn() ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo') ?>
+	
+<?php
+	}
 	// render page type line
 	if ($pageSubtitle != '') {
 ?>
