@@ -1,75 +1,205 @@
+/* requires jquery */
+/* requires Liftium.js */
+/* requires extensions/wikia/Geo/geo.js */
+/* requires extensions/wikia/QuantcastSegments/qcs.js */
 var AdDriver = {
-	isHighValue : true,
-	minNumDARTCall : 3,
-	cookieNameNumDARTCall : 'adDriverNumDARTCall',
-	cookieDelimiter : '^',
-	cookieSlotnameCallTimestampDelimiter : '%',
-	cookieNameDARTCallNoAd : 'adDriverDARTCallNoAd',
+	geoData: Geo.getGeoData(),
+	minNumDARTCall: 3,
+	cookieNameNumDARTCall: 'adDriverNumDARTCall',
+	cookieNameDARTCallNoAd: 'adDriverDARTCallNoAd',
 
 	init: function() {
 		window.adDriverDARTCallNoAds = new Array();
 		window.adDriverAdCallComplete = new Array();
+	},
+
+	log: function(msg) {
+		$().log('AdDriver: ' + msg);
 	}
+}
+
+AdDriver.isNoAdWiki = function() {
+	switch (wgDB) {
+		case 'diabetesindogs':
+		case 'help':
+		case 'lahomeless':
+		case 'wikicities':
+			return true;
+	}
+
+	return false;
+}
+
+AdDriver.getAdProviderForSpecialCase = function(slotname) {
+	switch (wgDB) {
+		case 'geekfeminism':
+		case 'kinkontap':
+		case 'lostpedia':
+		case 'sexpositive':
+		case 'wswiki':
+		case 'valuewiki':
+			return 'Liftium';
+			break;
+		case 'glee':
+		case 'lyricwiki':
+			switch (slotname) {
+				case 'CORP_TOP_RIGHT_BOXAD':
+				case 'HOME_TOP_RIGHT_BOXAD':
+				case 'TOP_RIGHT_BOXAD':
+					return 'Liftium';
+					break;
+				default:
+			}
+			break;
+		case 'howto':
+			switch (slotname) {
+				case 'CORP_TOP_LEADERBOARD':
+				case 'HOME_TOP_LEADERBOARD':
+				case 'TOP_LEADERBOARD':
+					return 'NO-AD';
+					break;	
+				default:
+					return 'Liftium';
+			}
+			break;
+		case 'cookbook_import':
+			//switch (slotname) {
+				//case 'LEFT_SKYSCRAPER_2':
+				//case 'LEFT_SKYSCRAPER_3':
+				//case 'TOP_RIGHT_BOXAD':
+					//return 'NO-AD';
+					//break;	
+				//default:
+					//return 'Liftium';
+			//}
+			break;
+		default:
+	}
+
+	switch (skin) {
+		case 'answers':
+			switch (slotname) {
+				case 'CORP_TOP_LEADERBOARD':
+				case 'HOME_TOP_LEADERBOARD':
+				case 'TOP_LEADERBOARD':
+					return 'NO-AD';
+					break;
+				case 'INCONTENT_BOXAD_1':
+					switch (wgDB) {
+						case 'answers':
+							return 'NO-AD';
+							break;
+						default:
+					}
+					break;
+				default:
+			}
+			break;
+		default:
+	}
+
+	return '';
+}
+
+AdDriver.isHighValue = function(slotname) {
+	switch (slotname) {
+		case 'CORP_TOP_LEADERBOARD':
+		case 'HOME_TOP_LEADERBOARD':
+		case 'TOP_LEADERBOARD':
+		case 'CORP_TOP_RIGHT_BOXAD':
+		case 'HOME_TOP_RIGHT_BOXAD':
+		case 'TOP_RIGHT_BOXAD':
+		case 'HOME_INVISIBLE_TOP':
+		case 'INVISIBLE_TOP':	// skin
+		case 'INVISIBLE_1':		// footer
+			// continue processing after switch
+			break;
+		default:
+			return false;
+	}
+
+	switch (AdDriver.geoData['country']) {
+		case 'CA':
+		case 'DE':
+		case 'ES':
+		case 'FR':
+		case 'IT':
+		case 'UK':
+		case 'US':
+			// continue processing after switch
+			break;
+		default:
+			return false;
+	}
+
+	return true;
 }
 
 AdDriver.getNumDARTCall = function(slotname) {
 	var num = 0;
 
-	numDARTCallCookie = Liftium.cookie(AdDriver.cookieNameNumDARTCall);
-	if (typeof(numDARTCallCookie) != 'undefined' && numDARTCallCookie) {
-		slotnameCallTimestamps = numDARTCallCookie.split(AdDriver.cookieDelimiter);
-		for (var i = 0; i < slotnameCallTimestamps.length; i++) {
-			slotnameCallTimestamp = slotnameCallTimestamps[i].split(AdDriver.cookieSlotnameCallTimestampDelimiter);	
-			slotnameCall = slotnameCallTimestamp[0].split('=');
-			if (slotnameCall[0] == slotname) {
-				if (parseInt(slotnameCallTimestamp[1]) + window.wgAdDriverCookieLifetime*60000 > window.wgNow.getTime()) {
-					num = slotnameCall[1];
+	try {
+		var numDARTCallCookie = $.cookies.get(AdDriver.cookieNameNumDARTCall);
+		if (typeof(numDARTCallCookie) != 'undefined' && numDARTCallCookie) {
+			var slotnameObjs = $.parseJSON(numDARTCallCookie);
+			for (var i = 0; i < slotnameObjs.length; i++) {
+				if (slotnameObjs[i].slotname == slotname) {
+					if (parseInt(slotnameObjs[i].ts) + window.wgAdDriverCookieLifetime*3600000 > window.wgNow.getTime()) {	// wgAdDriverCookieLifetime in hours, convert to msec
+						num = parseInt(slotnameObjs[i].num);
+						break;
+					}
 				}
-				break;
 			}
 		}
 	}
-	//alert('num calls for ' + slotname + ': ' + num);
+	catch (e) {
+		AdDriver.log(e.message);
+	}
+
+	AdDriver.log(slotname + ' has ' + num + ' DART calls');
 
 	return num;
 }
 
 AdDriver.incrementNumDARTCall = function(slotname) {
-	var newCookie = '';
 
-	numDARTCallCookie = Liftium.cookie(AdDriver.cookieNameNumDARTCall);
-	if (typeof(numDARTCallCookie) != 'undefined' && numDARTCallCookie) {
-		var slotnameInCookie = false;
-		var newCookieElems = new Array();
-		slotnameCallTimestamps = numDARTCallCookie.split(AdDriver.cookieDelimiter);
-		for (var i = 0; i < slotnameCallTimestamps.length; i++) {
-			slotnameCallTimestamp = slotnameCallTimestamps[i].split(AdDriver.cookieSlotnameCallTimestampDelimiter);	
-			slotnameCall = slotnameCallTimestamp[0].split('=');
-			if (slotnameCall[0] == slotname) {
-				slotnameInCookie = true;
-				var num = 0;
-				var timestamp = window.wgNow.getTime();
-				if (parseInt(slotnameCallTimestamp[1]) + window.wgAdDriverCookieLifetime*60000 > window.wgNow.getTime()) {
-					num = slotnameCall[1];
-					timestamp = slotnameCallTimestamp[1];
+	var newSlotnameObjs = new Array();
+	var num = 0;
+	var timestamp = window.wgNow.getTime();
+	var slotnameInCookie = false;
+
+	try {
+		var numDARTCallCookie = $.cookies.get(AdDriver.cookieNameNumDARTCall);
+		if (typeof(numDARTCallCookie) != 'undefined' && numDARTCallCookie) {
+			// find slotname and increment count
+			var slotnameObjs = $.parseJSON(numDARTCallCookie);
+			for (var i = 0; i < slotnameObjs.length; i++) {
+				if (slotnameObjs[i].slotname == slotname) {
+					slotnameInCookie = true;
+					if (parseInt(slotnameObjs[i].ts) + window.wgAdDriverCookieLifetime*3600000 > window.wgNow.getTime()) {	// wgAdDriverCookieLifetime in hours, convert to msec
+						num = parseInt(slotnameObjs[i].num);
+						timestamp = parseInt(slotnameObjs[i].ts);
+					}
+					newSlotnameObjs.push( {slotname : slotname, num : ++num, ts : timestamp} );
 				}
-				newCookieElems.push( slotname + '=' + (parseInt(num)+1) + AdDriver.cookieSlotnameCallTimestampDelimiter + timestamp );
-			}
-			else {
-				newCookieElems.push( slotnameCallTimestamp );
+				else {
+					newSlotnameObjs.push(slotnameObjs[i]);
+				}
 			}
 		}
-		if (!slotnameInCookie) {
-			newCookieElems.push( slotname + '=1' + AdDriver.cookieSlotnameCallTimestampDelimiter + window.wgNow.getTime() );
-		}
-		newCookie = newCookieElems.join(AdDriver.cookieDelimiter);
 	}
-	else {
-		var newCookie = slotname + '=1' + AdDriver.cookieSlotnameCallTimestampDelimiter + window.wgNow.getTime();
+	catch (e) {
+		AdDriver.log(e.message);
 	}
 
-	var cookieOptions = {expires : window.wgAdDriverCookieLifetime*60000};
-	Liftium.cookie(AdDriver.cookieNameNumDARTCall, newCookie, cookieOptions);
+	if (!slotnameInCookie) {
+		newSlotnameObjs.push( {slotname : slotname, num : ++num, ts : timestamp} );
+	}
+
+	var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath, domain: wgCookieDomain};
+	$().log(newSlotnameObjs);
+	$.cookies.set(AdDriver.cookieNameNumDARTCall, JSON.stringify(newSlotnameObjs), cookieOptions);
+	$().log($.cookies.get(AdDriver.cookieNameNumDARTCall));
 
 	return num;
 }
@@ -77,135 +207,260 @@ AdDriver.incrementNumDARTCall = function(slotname) {
 AdDriver.hasDARTCallNoAd = function(slotname) {
 	var value = false;
 
-	DARTCallNoAdCookie = Liftium.cookie(AdDriver.cookieNameDARTCallNoAd);
-	if (typeof(DARTCallNoAdCookie) != 'undefined' && DARTCallNoAdCookie) {
-		slotnameTimestamps = DARTCallNoAdCookie.split(AdDriver.cookieDelimiter);
-		for (var i = 0; i < slotnameTimestamps.length; i++) {
-			slotnameTimestamp = slotnameTimestamps[i].split('=');
-			if (slotnameTimestamp[0] == slotname) {
-				if (parseInt(slotnameTimestamp[1]) + window.wgAdDriverCookieLifetime*60000 > window.wgNow.getTime()) {
-					value = true;
+	try {
+		var DARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameDARTCallNoAd);
+		if (typeof(DARTCallNoAdCookie) != 'undefined' && DARTCallNoAdCookie) {
+			var slotnameTimestamps = $.parseJSON(DARTCallNoAdCookie);
+			for (var i = 0; i < slotnameTimestamps.length; i++) {
+				if (slotnameTimestamps[i].slotname == slotname) {
+					if (parseInt(slotnameTimestamps[i].ts) + window.wgAdDriverCookieLifetime*3600000 > window.wgNow.getTime()) {	// wgAdDriverCookieLifetime in hours, convert to msec
+						value = true;
+					}
+					break;
 				}
-				break;
 			}
 		}
 	}
-	//alert('hasDARTCallNoAd for ' + slotname + ': ' + value);
+	catch (e) {
+		AdDriver.log(e.message);
+	}
+
+	AdDriver.log(slotname + ' has no-ad DART call? ' + value);
 
 	return value;
 }
 
 AdDriver.setDARTCallNoAd = function(slotname, value) {
-	var newCookie = '';
+	var newSlotnameTimestamps = new Array();
+	var slotnameInCookie = false;
 
-	DARTCallNoAdCookie = Liftium.cookie(AdDriver.cookieNameDARTCallNoAd);
-	if (typeof(DARTCallNoAdCookie) != 'undefined' && DARTCallNoAdCookie) {
-		var slotnameInCookie = false;
-		var newCookieElems = new Array();
-		slotnameTimestamps = DARTCallNoAdCookie.split(AdDriver.cookieDelimiter);
-		for (var i = 0; i < slotnameTimestamps.length; i++) {
-			slotnameTimestamp = slotnameTimestamps[i].split('=');
-			if (slotnameTimestamp[0] == slotname && value) {
-				newCookieElems.push( slotname + '=' + value );
+	try {
+		var DARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameDARTCallNoAd);
+		if (typeof(DARTCallNoAdCookie) != 'undefined' && DARTCallNoAdCookie) {
+			var slotnameTimestamps = $.parseJSON(DARTCallNoAdCookie);
+			// look for slotname. If there is a new value, change the old value. If
+			// the new value is null, simply do not include slotname in updated cookie.
+			for (var i = 0; i < slotnameTimestamps.length; i++) {
+				if (slotnameTimestamps[i].slotname == slotname) {
+					slotnameInCookie = true;
+					if (value) {
+						newSlotnameTimestamps.push( {slotname: slotname, ts: value} );
+					}
+				}
+				else {
+					newSlotnameTimestamps.push(slotnameTimestamps[i]);
+				}
 			}
 		}
-		if (!slotnameInCookie && value) {
-			newCookieElems.push( slotname + '=' + value );
-		}
-		newCookie = newCookieElems.join(AdDriver.cookieDelimiter);
 	}
-	else if (value) {
-		var newCookie = slotname + '=' + value;
+	catch (e) {
+		AdDriver.log(e.message);
 	}
 
-	var cookieOptions = {expires : window.wgAdDriverCookieLifetime*60000};
-	Liftium.cookie(AdDriver.cookieNameDARTCallNoAd, newCookie, cookieOptions);
+	if (value && !slotnameInCookie) {
+		newSlotnameTimestamps.push( {slotname: slotname, ts: value} );
+	}
+
+	if (newSlotnameTimestamps.length) {
+		var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath, domain: wgCookieDomain};
+		$.cookies.set(AdDriver.cookieNameDARTCallNoAd, JSON.stringify(newSlotnameTimestamps), cookieOptions);
+	}
 
 	return value;
 }
 
-AdDriver.callDART = function(slotname, size, url) {
-	bezen.domwrite.capture();
-	var slot = document.getElementById(slotname);
-	bezen.load.script(slot, url, function() {
-		bezen.domwrite.render(slot, function() {
-			//alert('rendering dart ad for ' + slotname);
-			AdDriver.callDARTCallback(slotname, size);
-		})
-	});
-	//document.write('<scri'+'pt type="text/javascript" src="'+url+'"></scri'+'pt>');
+AdDriver.beforeCallDART = function(slotname) {
+	AdDriver.incrementNumDARTCall(slotname);
+	AdDriver.setDARTCallNoAd(slotname, null);
 }
 
-AdDriver.callDARTCallback = function(slotname, size) {
-//alert('dart callback');
+AdDriver.callDARTCallback = function(slotname) {
 	if (typeof(window.adDriverDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverDARTCallNoAds[slotname]) {
+		AdDriver.log(slotname + ' was filled with DART ad');
 		return;
 	}
 	else {
-	//alert('setting dart call no ad');
 		AdDriver.setDARTCallNoAd(slotname, window.wgNow.getTime());
-		AdDriver.callLiftium(slotname, size);
+		AdDriver.log(slotname + ' was not filled with DART ad');
+		return 'Liftium';
 	}
 }
 
-AdDriver.callDARTCallbackTimerTest = function(slotname, dartUrl) {
-	if (window.adDriverAdCallComplete[slotname]) {	// DART returned no ad
-		return true;
-	}
-	else {
-		var lastChild = document.getElementById(slotname).lastChild;
-		if (lastChild.nodeName.toLowerCase() == 'script') {
-			// check if DART returned a script
-			if (!lastChild.attributes.getNamedItem('src').value) {
-				return true;
-			}
-			else if (lastChild.attributes.getNamedItem('src').value != dartUrl) {
-				return true;
-			}
-		}
-		else {	// DART returned an img or some other non-script
-			return true;
-		}
+AdDriver.getAdProvider = function(slotname, size, dartUrl) {
+	var specialCaseAdProvider = AdDriver.getAdProviderForSpecialCase(slotname);
+	if (specialCaseAdProvider) {
+		return specialCaseAdProvider;
 	}
 
-	return false;
-}
+	if (!dartUrl) {
+		return 'Liftium';
+	}
 
-AdDriver.callLiftium = function(slotname, size) {
-		//alert('calling liftium for ' + slotname);
-	var script = document.createElement('script');
-	script.type = 'text/javascript';
-	var text = document.createTextNode("LiftiumOptions.placement = '"+slotname+"'; LiftiumDART.placement = '"+slotname+"'; Liftium.callAd('"+size+"');");
-	script.appendChild(text);
-	bezen.domwrite.capture();
-	var slot = document.getElementById(slotname+'_Liftium');
-	//alert('about to append script to ' + slot.id);
-	bezen.dom.appendScript(slot, script, function() {
-		//alert('rendering liftium ad for ' + slot.id);
-		bezen.domwrite.render(slot, function() {
-			//alert('rendered liftium ad for ' + slot.id);
-		})
-	});
-}
-
-AdDriver.callAd = function(slotname, size, dartUrl) {
-	//alert("callAd on " + slotname);
-	if (AdDriver.isHighValue) {
+	if (AdDriver.isHighValue(slotname)) {
 		if (AdDriver.getNumDARTCall(slotname) < AdDriver.minNumDARTCall || !AdDriver.hasDARTCallNoAd(slotname)) {
-			AdDriver.incrementNumDARTCall(slotname);
-			AdDriver.setDARTCallNoAd(slotname, null);
-			AdDriver.callDART(slotname, size, dartUrl);
-			//var callbackTimer = setInterval(function() {
-				//if (AdDriver.callDARTCallbackTimerTest(slotname, dartUrl)) {
-					//clearInterval(callbackTimer);
-					//AdDriver.callDARTCallback(slotname, size);
-				//}
-			//}, 100);
+			return 'DART';
 		}
 	}
-	else {
-		//AdDriver.callLiftium(slotname, size);
-	}
+
+	return 'Liftium';
 }
 
 AdDriver.init();
+
+
+var AdDriverCall = function (slotname, size, dartUrl) {
+	this.replaceTokensInDARTUrl = function(url) {
+		// Quantcast Segments
+		if (typeof(QuantcastSegments) !== "undefined") {
+			var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues();
+			url = url.replace("qcseg=N;", qcsegs);
+		}
+
+		// A/B tests
+		var nofooter = '';
+		if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { 
+			nofooter = "nofooter=1;"; 
+		} 
+		url = url.replace("nofooter=N;", nofooter);
+
+		return url;
+	};
+
+	this.slotname = slotname;
+	this.size = size;
+	this.dartUrl = this.replaceTokensInDARTUrl(dartUrl);
+}
+
+var AdDriverDelayedLoader = {
+	adDriverCalls : new Array(),
+	currentAd : null
+}
+
+AdDriverDelayedLoader.appendCall = function(adDriverCall) {
+	AdDriverDelayedLoader.adDriverCalls.push(adDriverCall);
+}
+
+AdDriverDelayedLoader.prependCall = function(adDriverCall) {
+	AdDriverDelayedLoader.adDriverCalls.unshift(adDriverCall);
+}
+
+AdDriverDelayedLoader.capture = function() {
+	bezen.domwrite.capture();
+}
+
+AdDriverDelayedLoader.restore = function() {
+	bezen.domwrite.restore();
+}
+
+
+AdDriverDelayedLoader.callDART = function() {
+
+	AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...');
+
+	AdDriver.beforeCallDART(AdDriverDelayedLoader.currentAd.slotname);
+			
+	var slot = document.getElementById(AdDriverDelayedLoader.currentAd.slotname);
+
+	bezen.load.script(slot, AdDriverDelayedLoader.currentAd.dartUrl, function() {
+
+		bezen.domwrite.render(slot, function() {
+
+			var callbackAdProvider = AdDriver.callDARTCallback(AdDriverDelayedLoader.currentAd.slotname);
+
+			if (callbackAdProvider == 'Liftium') {
+						
+				var liftiumCall = new AdDriverCall(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, '');
+
+				AdDriverDelayedLoader.prependCall(liftiumCall);
+
+			}
+
+			AdDriverDelayedLoader.loadNext();
+
+		})
+
+	});
+
+}
+
+AdDriverDelayedLoader.callLiftium = function() {
+
+	var slotname = AdDriverDelayedLoader.currentAd.slotname;
+
+	AdDriver.log(slotname + ': calling Liftium...');
+
+	var size = AdDriverDelayedLoader.currentAd.size;
+
+	LiftiumOptions.placement = slotname;
+
+	LiftiumDART.placement = slotname; 
+	
+	try {
+
+		Liftium.callAd(size);
+
+		var slot = document.getElementById(slotname);
+
+		bezen.domwrite.render(slot, function() {
+
+			AdDriverDelayedLoader.loadNext();
+
+		});
+	
+	}
+	catch (e) {
+		
+		AdDriver.log(e.message);
+
+		AdDriverDelayedLoader.loadNext();
+	}
+
+}
+
+AdDriverDelayedLoader.loadNext = function() {
+
+	if (AdDriverDelayedLoader.adDriverCalls.length) {
+
+		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverCalls.shift();
+
+		var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.dartUrl);
+
+		if (adProvider == 'DART') {
+
+			AdDriverDelayedLoader.callDART();
+
+		}
+		else if (adProvider == 'Liftium') {
+			
+			AdDriverDelayedLoader.callLiftium();
+
+		}
+		else {
+
+			AdDriverDelayedLoader.loadNext();
+
+		}
+
+	}
+	else {
+
+		//AdDriverDelayedLoader.restore();
+
+	}
+
+}
+
+AdDriverDelayedLoader.load = function() {
+
+	if (AdDriver.isNoAdWiki()) {
+
+		return;
+
+	}
+
+	AdDriverDelayedLoader.capture();
+
+	AdDriverDelayedLoader.loadNext();
+
+}
+
