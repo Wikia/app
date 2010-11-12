@@ -38,6 +38,7 @@ require_once ("$preIP/extensions/wikia/LangRedirect/LangRedirect.php") ;
  * @file
  */
 
+try {
 
 # Initialise common code
 require_once( "$preIP/includes/WebStart.php" );
@@ -121,4 +122,8 @@ $mediaWiki->finalCleanup( $wgDeferredUpdateList, $wgOut );
 $mediaWiki->doUpdates( $wgPostCommitUpdateList );
 
 $mediaWiki->restInPeace();
+
+} catch (Exception $e) {
+	error_log("Message: ".$e->getMessage);
+}
 
