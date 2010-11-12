@@ -70,6 +70,49 @@ class AchUserProfileService {
     	return $out;
     }
 
+	/*
+	 * Service method to get the most recently earned badge for a list of users
+	 * This is used in the new Leaderboard special page
+	 *
+	 * @param array $user_ids
+	 * @return array of badge objects key by user_id
+	 *
+	 * Usage: $profileService->getMostRecentUserBadge(array('1', '2'));
+	 * Returns: Array (
+	 *			[1] => AchBadge Object
+	 *			[2] => AchBadge Object
+	 *		)
+	 */
+
+	public function getMostRecentUserBadge($user_ids) {
+		global $wgCityId, $wgExternalSharedDB;
+    	wfProfileIn(__METHOD__);
+
+		$badges = array();
+
+		if (is_array($user_ids) && count($user_ids) > 0) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
+			$conds = array();
+			$conds['wiki_id'] = $wgCityId;
+			$conds[] = "user_id IN (" . implode(',', $user_ids) . ")";
+			$conts[] = "date = (SELECT max(date) from ach_user_badges a1 where wiki_id = $wgCityId and user_id = a1.user_id) ";
+
+			$res = $dbr->select(
+				'ach_user_badges',
+				'user_id, badge_type_id, badge_lap',
+				$conds,
+				__METHOD__,
+				array('ORDER BY' => 'date DESC')
+			);
+			while($row = $dbr->fetchObject($res)) {
+				$badges[$row->user_id] = new AchBadge($row->badge_type_id, $row->badge_lap);
+			}
+		}
+		wfProfileOut(__METHOD__);
+		return $badges;
+	}
+
     private function prepareChallenges() {
     	wfProfileIn(__METHOD__);
 
