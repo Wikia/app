@@ -52,8 +52,7 @@ class AdSS_AdminAdListPager extends TablePager {
 				return $tmpl->render( 'actionLink' );
 			case 'ad_text':
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
-				$tmpl->set( 'ad', $this->ad );
-				return $tmpl->render( 'ad' );
+				return $this->ad->render( $tmpl );
 			case 'ad_page_id':
 				if( $this->ad->pageId > 0 ) {
 					global $wgCityId;

@@ -79,7 +79,7 @@
 			<?php echo wfMsgWikiHtml( 'adss-ad-header' ); ?>
 			<div class="sponsormsg">
 			<ul>
-			  <?php echo $ad->render(); ?>
+			  <?php echo $ad ?>
 			</ul>
 			</div>
 		</fieldset>

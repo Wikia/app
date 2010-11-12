@@ -72,8 +72,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 				}
 			case 'ad_desc':
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
-				$tmpl->set( 'ad', $this->ad );
-				return $tmpl->render( 'ad' );
+				return $this->ad->render( $tmpl );
 			case 'ad_status':
 				if( $this->ad->closed && $this->ad->expires ) {
 					$status = 'canceled';
