@@ -59,6 +59,7 @@ Default value:
 <?php
 $name = $variable->cv_name;
 global $$name;
+global $preWFValues;
 if( isset( $preWFValues[$name] ) ) {
 	// was modified, spit out saved default
 	echo "<pre>" . var_export( $preWFValues[$name], true ) . "</pre>";
