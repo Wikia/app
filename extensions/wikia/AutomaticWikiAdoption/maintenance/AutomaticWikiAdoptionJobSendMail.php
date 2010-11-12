@@ -16,13 +16,6 @@
 
 class AutomaticWikiAdoptionJobSendMail {
 	function execute($commandLineOptions, $jobOptions, $wikiId, $wikiData) {
-		global $wgEnableAutomaticWikiAdoptionExt;
-
-		//do not send e-mail when extension is disabled
-		if (empty($wgEnableAutomaticWikiAdoptionExt)) {
-			return;
-		}
-
 		$flags = $jobOptions['dataMapper']->getFlags($wikiId);
 		$flag = $jobOptions['mailType'] == 'first' ? WikiFactory::FLAG_ADOPT_MAIL_FIRST : WikiFactory::FLAG_ADOPT_MAIL_SECOND;
 		//this kind of e-mail already sent for this wiki
