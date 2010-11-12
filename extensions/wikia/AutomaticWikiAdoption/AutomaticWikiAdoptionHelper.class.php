@@ -197,16 +197,10 @@ class AutomaticWikiAdoptionHelper {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	private static function isWikiAdoptable($wikiId) {
-		global $wgExternalSharedDB, $wgAutomaticWikiAdoptionForbidden;
+		global $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 
 		$canAdopt = false;
-
-		//staff have set a "remove adoption" flag in WF
-		if (!empty($wgAutomaticWikiAdoptionForbidden)) {
-			wfProfileOut(__METHOD__);
-			return $canAdopt;
-		}
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$row = $dbr->selectRow(
