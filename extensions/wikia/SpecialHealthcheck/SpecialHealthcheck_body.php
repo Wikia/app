@@ -70,6 +70,15 @@ class HealthCheck extends UnlistedSpecialPage {
 			$statusMsg  = 'Server status is: NOT OK - Disabled';
 		}
 
+
+		// Varnish should respond with a 200 for any request to any host with this path
+		// The Http class takes care of the proxying through varnish for us.
+		$content = Http::get("http://x/__varnish_nagios_check");
+		if (!$content) {
+			$statusCode = 503;
+			$statusMsg  = 'Server status is: NOT OK - Varnish not responding';
+		}
+
 		$wgOut->setStatusCode( $statusCode );
 		$wgOut->addHTML( $statusMsg );
 	}
