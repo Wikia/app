@@ -42,7 +42,7 @@ class AdSS_Publisher {
 						'ad_expires > NOW()'
 						), __METHOD__ );
 			foreach( $res as $row ) {
-				$ad = AdSS_Ad::newFromRow( $row );
+				$ad = AdSS_AdFactory::createFromRow( $row );
 				if( $minExpire > $ad->expires ) {
 					$minExpire = $ad->expires;
 				}
@@ -78,7 +78,7 @@ class AdSS_Publisher {
 						'ad_expires > NOW()'
 						), __METHOD__ );
 			foreach( $res as $row ) {
-				$ad = AdSS_Ad::newFromRow( $row );
+				$ad = AdSS_AdFactory::createFromRow( $row );
 				if( $minExpire > $ad->expires ) {
 					$minExpire = $ad->expires;
 				}

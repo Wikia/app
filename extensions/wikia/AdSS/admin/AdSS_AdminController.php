@@ -123,7 +123,7 @@ class AdSS_AdminController {
 		} elseif( $token != AdSS_Util::getToken() ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'token mismatch' );
 		} else {
-			$ad = AdSS_Ad::newFromId( $id );
+			$ad = AdSS_AdFactory::createFromId( $id );
 			if( ( $ad->id != $id ) || ( $ad->closed != null ) || ( $ad->expires != null ) ) {
 				$r = array( 'result' => 'error', 'respmsg' => 'no such ad' );
 			} else {
@@ -168,7 +168,7 @@ class AdSS_AdminController {
 		if( !$wgUser->isAllowed( 'adss-admin' ) && ( $token == AdSS_Util::getToken() ) ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'token mismatch' );
 		} else {
-			$ad = AdSS_Ad::newFromId( $id );
+			$ad = AdSS_AdFactory::createFromId( $id );
 			if( $id == $ad->id ) {
 				$ad->close();
 

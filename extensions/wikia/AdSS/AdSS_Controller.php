@@ -81,7 +81,7 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
 		$tmpl->set( 'adForm', $adForm );
-		$tmpl->set( 'ad', AdSS_Ad::newFromForm( $adForm ) );
+		$tmpl->set( 'ad', AdSS_AdFactory::createFromForm( $adForm ) );
 		$tmpl->set( 'currentShare', intval( $currentShare * 100 ) );
 
 		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
@@ -191,7 +191,7 @@ class AdSS_Controller extends SpecialPage {
 	private function saveAdInternal( $adForm, $user, $fakeUrl ) {
 		global $wgOut, $wgAdSS_contactEmail, $wgNoReplyAddress, $wgUser;
 
-		$ad = AdSS_Ad::newFromForm( $adForm );
+		$ad = AdSS_AdFactory::createFromForm( $adForm );
 		$ad->setUser( $user );
 		if( $wgUser->isAllowed( 'adss-admin' ) ) {
 			$ad->expires = strtotime( "+10 years", time() );

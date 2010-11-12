@@ -35,7 +35,7 @@ class AdSS_AdminAdListPager extends TablePager {
 	}
 
 	function formatRow( $row ) {
-		$this->ad = AdSS_Ad::newFromRow( $row );
+		$this->ad = AdSS_AdFactory::createFromRow( $row );
 		return parent::formatRow( $row );
 	}
 

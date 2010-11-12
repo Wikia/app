@@ -110,7 +110,7 @@ class AdSS_ManagerController {
 		if( !$userId ) {
 			$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-not-logged-in' ) );
 		} else {
-			$ad = AdSS_Ad::newFromId( $id );
+			$ad = AdSS_AdFactory::createFromId( $id );
 			if( $id != $ad->id ) {
 				$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-wrong-id' ) );
 			} else {
