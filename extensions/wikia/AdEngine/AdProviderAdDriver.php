@@ -16,18 +16,18 @@ class AdProviderAdDriver implements iAdProvider {
 	public function getAd($slotname, $slot, $params = null) {
 		$out = '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">';
 		$out .= '</div>';
-		$out .= '<div id="' . htmlspecialchars($slotname) . '_Liftium" class="wikia-ad noprint"></div>';
-		//$out = $this->getSetupHtml();
-		$out .= AdProviderLiftium::getInstance()->getSetupHtml();
-
 		$dartUrl = AdProviderDART::getInstance()->getUrl($slotname, $slot);
-		$script = <<<EOT
+		$out .= <<<EOT
 <script type="text/javascript">
-	AdDriver.callAd("$slotname", "{$slot['size']}",  "$dartUrl");
+	wgAfterContentAndJS.push(function() {
+		if (typeof(AdDriverDelayedLoader) != 'undefined') {
+			AdDriverDelayedLoader.appendCall(new AdDriverCall("$slotname", "{$slot['size']}",  "$dartUrl"));
+		}
+	});
 </script>
 EOT;
-		global $wgOut;
-		$wgOut->addScript($script);
+		//$out = $this->getSetupHtml();
+		$out .= AdProviderLiftium::getInstance()->getSetupHtml();
 
 		return $out;
 	}
