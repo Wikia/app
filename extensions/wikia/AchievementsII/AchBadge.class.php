@@ -129,14 +129,29 @@ class AchBadge {
 	}
 
 	public function getEarnedBy() {
-		global $wgCityId, $wgExternalSharedDB;
+		global $wgCityId, $wgExternalSharedDB, $wgMemc;
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$memkey = sprintf( "achbadge:earned:%d:%d:%d", $wgCityId, $this->mBadgeTypeId, $this->mBadgeLap );
+		$value = $wgMemc->get( $memkey );
+		if ( empty($value) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$value = $dbr->selectField(
+				'ach_user_badges',
+				'count(distinct(user_id))',
+				array(
+					'badge_type_id' => $this->mBadgeTypeId, 
+					'badge_lap' => $this->mBadgeLap, 
+					'wiki_id' => $wgCityId
+				), 
+				__METHOD__,
+				array(
+					'USE INDEX' => 'user_wiki_badge'
+				)
+			);
+			$wgMemc->set($memkey, $value, 60*30);
+		}
 
-		return $dbr->selectField(
-			'ach_user_badges',
-			'count(distinct(user_id))',
-			array('badge_type_id' => $this->mBadgeTypeId, 'badge_lap' => $this->mBadgeLap, 'wiki_id' => $wgCityId), __METHOD__);
+		return $value;
 	}
 
 	//TODO: works only if level has been passed to constructor, level should be inferred by the number of events for the user for E+C and inTrackStatic, maybe too much processing for this bit of information?
