@@ -23,7 +23,7 @@
 
 <h1 class="achievements-title"><?= wfMsg('leaderboard-title') ?></h1>
 
-<table class="LeaderboardTable">
+<table id="LeaderboardTable" class="LeaderboardTable">
 	<thead>
 		<tr>
 			<th><?= wfMsg('achievements-leaderboard-rank-label'); ?></th>
@@ -56,8 +56,17 @@
 				<span>Points</span>
 			</td>
 			<td class="badge">
-				<img src="<?=$badge->getPictureURL(40)?>" class="badge-icon">
-				<?=$badge->getName()?>
+				<div class="badges" style="position: relative;">
+					<div class="profile-hover">
+						<img src="<?=$badge->getPictureURL(90)?>">
+						<div class="profile-hover-text">
+							<h3 class="badge-name"><?=$badge->getName()?></h3>
+							<p><?=$badge->getDetails()?></p>							
+						</div>
+					</div>
+					<img src="<?=$badge->getPictureURL(40)?>" class="badge-icon">
+					<?=$badge->getName()?>
+				</div>
 			</td>
 		</tr>
 	<? } //endforeach ?>

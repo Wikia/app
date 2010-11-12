@@ -27,9 +27,12 @@
 			margin-left: 3px;
 			position: relative;
 		}
-		&.open:after {
-			border-color: $color-text transparent transparent;
-			top: 3px;
+		&.open {
+			display: none;
+			&:after {
+				border-color: $color-text transparent transparent;
+				top: 3px;			
+			}
 		}
 		&.hide:after {
 			border-color: transparent transparent $color-text;
@@ -101,8 +104,5 @@
 		em {
 			font-style: normal;
 		}
-	}
-	.badge {
-		font-weight: bold;
 	}
 }
