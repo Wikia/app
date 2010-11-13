@@ -159,6 +159,7 @@ class AjaxPollClass {
 				$total += $ansData["value"];
 			}
 		} else {
+			$votes = array();
 			$dbr = wfGetDB( DB_SLAVE );
 			$oRes = $dbr->select(
 				array( "poll_vote" ),
