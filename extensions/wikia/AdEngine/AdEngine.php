@@ -11,13 +11,16 @@ $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
-	global $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdDriverCookieLifetime;
+	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdDriverCookieLifetime;
 
+	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
+	$vars['wgNoExternals'] = $wgNoExternals;
 	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 
 	// OpenX SPC (init in AdProviderOpenX.js)
 	$cat = AdEngine::getCachedCategory();
 	$vars["cityShort"] = $cat['short'];
+	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
 
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
@@ -742,25 +745,6 @@ class AdEngine {
 				$out [] = $slotname;
 			}
 		}
-		return $out;
-	}
-
-	public function getOpenXSPCCode() {
-		global $wgRequest,$wgNoExternals;
-		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
-
-		if(!empty($wgNoExternals)){
-			$out = "";
-		} else {
-			$out = <<<EOT
-	<script type="text/javascript">
-		//var openxspc_base_url = AdProviderOpenX.getUrl("/__spotlights/spcjs.php", "", "", 3, window.cityShort, "");
-		//$.getScript(openxspc_base_url);
-		$.getScript(AdProviderOpenX.getUrl2());
-	</script>
-EOT;
-		}
-
 		return $out;
 	}
 

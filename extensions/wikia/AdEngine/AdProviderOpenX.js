@@ -51,3 +51,7 @@ AdProviderOpenX.getUrl2 = function() {
 
 	return AdProviderOpenX.url2;
 }
+
+if (!wgNoExternals && wgEnableOpenXSPC) {
+	$.getScript(AdProviderOpenX.getUrl2());
+}
