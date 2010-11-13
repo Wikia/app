@@ -270,6 +270,15 @@ class SMWSQLStore2QueryEngine {
 			wfProfileOut('SMWSQLStore2Queries::getInstanceQueryResult (SMW)');
 			return $result;
 		}
+
+		global $wgSMWQueryCache;  // initialize a global query cache
+		if ($wgSMWQueryCache==false) $wgSMWQueryCache = array();
+		$hash = md5(serialize($qobj));
+		if (isset($wgSMWQueryCache[$hash])) {
+			wfProfileOut('SMWSQLStore2Queries::getInstanceQueryResult (SMW)');
+			return $wgSMWQueryCache[$hash];
+		}
+
 		$sql_options = $this->getSQLOptions($query,$rootid);
 		$sortfields = implode($qobj->sortfields,','); // also select those, required in standard SQL (though MySQL is quite about it)
 		$res = $this->m_dbs->select($this->m_dbs->tableName($qobj->jointable) . " AS $qobj->alias" . $qobj->from,
@@ -332,6 +341,7 @@ class SMWSQLStore2QueryEngine {
 			$result->addRow($row);
 		}
 		wfProfileOut('SMWSQLStore2Queries::getInstanceQueryResult (SMW)');
+		$wgSMWQueryCache[$hash] = $result;
 		return $result;
 	}
 
