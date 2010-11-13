@@ -112,29 +112,25 @@ class GoogleAnalyticsPageSpeed {
 
 }
 
-$dbw = wfGetDB(DB_MASTER, array(), 'stats');
-$dbw->replace('pagespeed', array(), array('date' => '2010-01-01 00:00:00', 'relative' => 50, 'absolute' => 50, 'loadtime' => 50));
+function loadData($date) {
+	global $wgWikiaGALogin, $wgWikiaGAPassword;
+	$ga = new GoogleAnalyticsPageSpeed($wgWikiaGALogin, $wgWikiaGAPassword, '19262743', '127.0.0.1:6081');
+	$results = $ga->getResults($date);
+	$report = $ga->getReport($results, array(99, 95, 75, 50));
+	
+	$dbw = wfGetDB(DB_MASTER, array(), 'stats');
 
-				/*
-$ga = new GoogleAnalyticsPageSpeed($wgWikiaGALogin, $wgWikiaGAPassword, '19262743', '127.0.0.1:6081');
-$results = $ga->getResults();
-$report = $ga->getReport($results, array(99, 95, 75, 50));
+	foreach($report as $hour => $val) {
+		foreach($val as $data) {
+			$dbw->replace('pagespeed', array(), array(
+				'date' => "{$date} {$hour}:00:00",
+				'relative' => $data['relative'],
+				'absolute' => $data['absolute'],
+				'loadtime' => $data['loadtime']));
+		}
+		
+	}
+	
+}
 
-
-
-$res = $dbw->select( 'mail',
-					 array( 'id', 'hdr' ),
-					 array( 'subj IS NULL' ),
-					 '',
-					 array()
-				   );
-*/
-
-exit();
-
-
-
-
-print_r($report);
-
-echo "\n\n\nDONE\n\n\n";
+//loadData('2010-11-11');
