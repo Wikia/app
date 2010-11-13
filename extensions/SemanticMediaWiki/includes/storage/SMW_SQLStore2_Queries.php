@@ -271,6 +271,7 @@ class SMWSQLStore2QueryEngine {
 			return $result;
 		}
 
+		/* Wikia change begin */
 		global $wgSMWQueryCache;  // initialize a global query cache
 		if ($wgSMWQueryCache==false) $wgSMWQueryCache = array();
 		$hash = md5(serialize($qobj));
@@ -278,6 +279,7 @@ class SMWSQLStore2QueryEngine {
 			wfProfileOut('SMWSQLStore2Queries::getInstanceQueryResult (SMW)');
 			return $wgSMWQueryCache[$hash];
 		}
+		/* Wikia change end */
 
 		$sql_options = $this->getSQLOptions($query,$rootid);
 		$sortfields = implode($qobj->sortfields,','); // also select those, required in standard SQL (though MySQL is quite about it)
