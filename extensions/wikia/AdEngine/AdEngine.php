@@ -11,7 +11,7 @@ $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
-	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdSlot_INVISIBLE_1, $wgAdDriverCookieLifetime;
+	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdslot_INVISIBLE_1, $wgAdDriverCookieLifetime;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
@@ -23,7 +23,7 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
 
 	// footer ads
-	$vars['wgAdSlot_INVISIBLE_1'] = $wgAdSlot_INVISIBLE_1;
+	$vars['wgAdslot_INVISIBLE_1'] = $wgAdslot_INVISIBLE_1;
 
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;

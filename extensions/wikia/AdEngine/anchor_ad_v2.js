@@ -102,11 +102,11 @@ var displayAnchorAd = function(){
 		AnchorAd.init();
 	}
 
-if (wgAdSlot_INVISIBLE_1 == 'AdDriver') {
+if (wgAdslot_INVISIBLE_1 == 'AdDriver') {
 	displayAnchorAd();
 }
 else {
-	wgAfterContentAndJS.push(
+	wgAfterContentAndJS.push(function() {
 		displayAnchorAd();
-	);
+	});
 }
