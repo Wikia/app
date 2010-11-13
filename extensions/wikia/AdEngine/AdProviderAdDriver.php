@@ -15,7 +15,6 @@ class AdProviderAdDriver implements iAdProvider {
 
 	public function getAd($slotname, $slot, $params = null) {
 		$out = '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">';
-		$out .= '</div>';
 		$dartUrl = AdProviderDART::getInstance()->getUrl($slotname, $slot);
 		$out .= <<<EOT
 <script type="text/javascript">
@@ -26,6 +25,7 @@ class AdProviderAdDriver implements iAdProvider {
 	});
 </script>
 EOT;
+		$out .= '</div>';
 		//$out = $this->getSetupHtml();
 		$out .= AdProviderLiftium::getInstance()->getSetupHtml();
 

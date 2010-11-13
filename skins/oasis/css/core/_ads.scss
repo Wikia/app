@@ -1,6 +1,12 @@
 /** Leaderboards **/
 #LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
 	text-align: center;
+	div[id^=Liftium_] { 
+		display: inline-block; 
+		text-align: center; 
+		zoom: 1;	// IE7 hack
+		*display: inline;	// IE7 hack
+	}
 }
 #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
 	padding: 20px 0 0;

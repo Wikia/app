@@ -1,5 +1,4 @@
-wgAfterContentAndJS.push(
-	function(){
+var displayAnchorAd = function(){
 		var AnchorAd = {
 			settings: {
 				close: {
@@ -102,4 +101,12 @@ wgAfterContentAndJS.push(
 
 		AnchorAd.init();
 	}
-);
+
+if (wgAdSlot_INVISIBLE_1 == 'AdDriver') {
+	displayAnchorAd();
+}
+else {
+	wgAfterContentAndJS.push(
+		displayAnchorAd();
+	);
+}
