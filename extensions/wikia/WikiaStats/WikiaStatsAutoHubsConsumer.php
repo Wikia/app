@@ -62,7 +62,7 @@ class WikiaStatsAutoHubsConsumer {
 				Wikia::log( __METHOD__, 'events', 'Read ' . $loop . ' events (for ' . count($result). ' Wikis) successfully. Next timestamp: ' . $this->mDate );				
 		
 				if ( !empty($result) ) {
-					$producerDB = new WikiaStatsAutoHubsConsumerDB();
+					$producerDB = new WikiaStatsAutoHubsConsumerDB(DB_MASTER);
 					$data = array(
 						'blogs' 	=> array(),
 						'articles' 	=> array(),
