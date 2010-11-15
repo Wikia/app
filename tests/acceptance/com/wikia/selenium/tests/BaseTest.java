@@ -7,6 +7,7 @@ import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,14 +41,9 @@ public class BaseTest {
 	
 	public XMLConfiguration getTestConfig() throws Exception{
 		if (null == this.testConfig) {
-			String testsdir = System.getenv("TESTSDIR");
-			if (null == testsdir) {
-				testsdir = System.getenv("PWD") + "/source/tests";
-			}
-			if (null != testsdir) {
-				this.testConfig = new XMLConfiguration();
-				this.testConfig.setBasePath(testsdir);
-				this.testConfig.setFileName("config.xml");
+			File file = new File(System.getenv("TESTSCONFIG"));
+			if (null != file) {
+				this.testConfig = new XMLConfiguration(file);
 				this.testConfig.load();
 			}
 		}
