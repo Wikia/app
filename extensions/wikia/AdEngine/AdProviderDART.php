@@ -280,6 +280,8 @@ EOT;
 			case 'HOME_TOP_LEADERBOARD': return 'tile=2;';
 			case 'HOME_LEFT_SKYSCRAPER_1': return 'tile=3;';
 			case 'HOME_LEFT_SKYSCRAPER_2': return 'tile=3;';
+			case 'CORP_TOP_RIGHT_BOXAD': return 'tile=1;';
+			case 'CORP_TOP_LEADERBOARD': return 'tile=2;';
 			default: return '';
 		}
 	}
@@ -298,6 +300,8 @@ EOT;
 		  case 'HOME_TOP_LEADERBOARD': return "loc=top;";
 		  case 'HOME_LEFT_SKYSCRAPER_1': return "loc=top;";
 		  case 'HOME_LEFT_SKYSCRAPER_2': return "loc=middle;";
+		  case 'CORP_TOP_RIGHT_BOXAD': return "loc=top;";
+		  case 'CORP_TOP_LEADERBOARD': return "loc=top;";
 		  case 'INCONTENT_BOXAD_1': return "loc=middle;";
 		  case 'INCONTENT_BOXAD_2': return "loc=middle;";
 		  case 'INCONTENT_BOXAD_3': return "loc=middle;";
