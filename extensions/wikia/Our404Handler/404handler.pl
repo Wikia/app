@@ -199,6 +199,7 @@ my @tests = qw(
 	/r/runescape/images/thumb/4/41/Wardrobe.gif/180px-Wardrobe.gif
 	/d/desencyclopedie/images/thumb/5/51/Uri.svg/120px-Uri.svg.png
 	/m/muppet/images/thumb/0/0f/Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg/55px-Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg
+	/w/wikiality/images/thumb/300px-Kool-Aid2.jpg
 );
 use warnings;
 my @done = ();
@@ -286,10 +287,6 @@ while( $request->Accept() >= 0 || $test ) {
 
 	my $thumbnail = $basepath . '/' . $path;
 
-	#
-	# remove varnish/apache marker
-	#
-	$thumbnail =~ s/__thumbnail_gen//;
 
 	my @parts = split( "/", $path );
 	my $last = pop @parts;
@@ -331,7 +328,8 @@ while( $request->Accept() >= 0 || $test ) {
 		# create false positives (it's not perfect though )
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
-		if( index( $last, $original ) != -1 ) {
+		if( $last !~ /$origname/ ) {
+			$last_status = 404;
 			print STDERR "$origname not found in $last\n" if $debug;
 		}
 		else {
