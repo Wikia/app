@@ -97,3 +97,9 @@ On hold for now
 	padding-top: 40px;
 }
 */
+
+/** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
+body >a >img[src$="noad.gif"] {
+	position: absolute;
+	z-index: 0;
+}
