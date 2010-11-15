@@ -16,31 +16,26 @@
 		</section>
 
 		<section class="box">
-			<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
-			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing ) ); ?></div>
-			<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', AdSS_Util::formatPrice( $pagePricing ) ); ?>
-			<input class="wikia-button" type="button" id="wpSelectPage" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
+			<h3><?php echo wfMsgHtml( 'adss-form-banner-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-banner-plan-price', AdSS_Util::formatPrice( $bannerPricing ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-banner-plan-description', AdSS_Util::formatPrice( $bannerPricing ) ); ?>
+			<input class="wikia-button" type="button" id="wpSelectBanner" name="wpSelect" value="<?php echo wfMsgHtml( 'adss-button-select' ); ?>" />
 		</section>
 </section>
 
 <section class="SponsoredLinkForm">
-	<form method="post" action="<?php echo $action; ?>">
+	<form method="post" enctype="multipart/form-data" action="<?php echo $action; ?>">
 		<input name="wpToken" type="hidden" value="<?php echo $token; ?>" />
 		<input name="wpType" id="wpType" type="hidden" value="<?php echo $adForm->output( 'wpType' ); ?>" />
 
 		<fieldset class="form">
 			<legend><?php echo wfMsgHtml( 'adss-form-header' ); ?></legend>
 
-			<div>
-			<label for="wpPage"><?php echo wfMsgHtml( 'adss-form-page' ); ?></label>
-			<?php echo $adForm->error( 'wpPage' ); ?>
-			<input type="text" name="wpPage" id="wpPage" value="<?php $adForm->output( 'wpPage' ); ?>" />
-			</div>
-
 			<label for="wpUrl"><?php echo wfMsgHtml( 'adss-form-url' ); ?></label>
 			<?php echo $adForm->error( 'wpUrl' ); ?>
 			http:// <input type="text" name="wpUrl" id="wpUrl" value="<?php $adForm->output( 'wpUrl' ); ?>" />
 
+			<div>
 			<label for="wpText"><?php echo wfMsgHtml( 'adss-form-linktext' ); ?></label>
 			<?php echo $adForm->error( 'wpText' ); ?>
 			<input type="text" name="wpText" id="wpText" value="<?php $adForm->output( 'wpText' ); ?>" />
@@ -48,6 +43,13 @@
 			<label for="wpDesc"><?php echo wfMsgHtml( 'adss-form-additionaltext' ); ?></label>
 			<?php echo $adForm->error( 'wpDesc' ); ?>
 			<textarea name="wpDesc" id="wpDesc"><?php $adForm->output( 'wpDesc' ); ?></textarea>
+			</div>
+
+			<div>
+			<label for="wpBanner"><?php echo wfMsgHtml( 'adss-form-banner' ); ?></label>
+			<?php echo $adForm->error( 'wpBanner' ); ?>
+			<input type="file" name="wpBanner" id="wpBanner" value="<?php $adForm->output( 'wpBanner' ); ?>" />
+			</div>
 
 			<div>
 			<label for="wpWeight"><?php echo wfMsgHtml( 'adss-form-shares' ); ?></label>
@@ -90,38 +92,44 @@
 $(function() {
 	if( $("#wpType").val() == "site-premium" ) {
 		$("#wpSelectSitePremium").parent().addClass("selected");
-		$("#wpPage").parent().hide();
+		$("#wpBanner").parent().hide();
 		$("#wpWeight").val("4").attr("disabled", true);
-	}
-	else if( $("#wpType").val() == "page" ) {
-		$("#wpSelectPage").parent().addClass("selected");
-		$("#wpWeight").parent().hide();
 	}
 	else if( $("#wpType").val() == "site" ) {
 		$("#wpSelectSite").parent().addClass("selected");
-		$("#wpPage").parent().hide();
+		$("#wpBanner").parent().hide();
+	}
+	else if( $("#wpType").val() == "banner" ) {
+		$("#wpSelectPage").parent().addClass("selected");
+		$("#wpText").parent().hide();
 	}
 } );
 $("#wpSelectSite").click( function() {
 	$(".SponsoredLinkDesc section").removeClass("selected");
 	$(this).parent().addClass("selected");
 	$("#wpType").val("site");
-	$("#wpPage").parent().hide("slow");
+	$("#wpBanner").parent().hide("slow");
+	$("#wpText").parent().show("slow");
 	$("#wpWeight").val("1").removeAttr("disabled").parent().show("slow");
+	$("fieldset.preview").show();
 } );
 $("#wpSelectSitePremium").click( function() {
 	$(".SponsoredLinkDesc section").removeClass("selected");
 	$(this).parent().addClass("selected");
 	$("#wpType").val("site-premium");
-	$("#wpPage").parent().hide("slow");
+	$("#wpBanner").parent().hide("slow");
+	$("#wpText").parent().show("slow");
 	$("#wpWeight").val("4").attr("disabled", true).parent().show("slow");
+	$("fieldset.preview").show();
 } );
-$("#wpSelectPage").click( function() {
+$("#wpSelectBanner").click( function() {
 	$(".SponsoredLinkDesc section").removeClass("selected");
 	$(this).parent().addClass("selected");
-	$("#wpType").val("page");
-	$("#wpPage").parent().show("slow");
+	$("#wpType").val("banner");
+	$("#wpBanner").parent().show("slow");
+	$("#wpText").parent().hide("slow");
 	$("#wpWeight").parent().hide("slow");
+	$("fieldset.preview").hide();
 } );
 $("#adssLoginAction > a").click( function(e) {
 	e.preventDefault();

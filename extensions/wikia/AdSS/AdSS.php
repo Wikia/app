@@ -78,5 +78,9 @@ $wgAdSS_pricingConf = array(
 				'period'  => 'm', //monthly
 				),
 			),
+		'banner' => array(
+			'price'  => '20.00',
+			'period' => 'd', //daily
+			),
 		);
 $wgAdSSBillingThreshold = 50;

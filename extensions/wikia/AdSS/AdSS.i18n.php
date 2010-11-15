@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'adss-form-additionaltext' => 'Text to be displayed under your link:',
 	'adss-form-type' => 'Sponsorship type:',
 	'adss-form-page' => 'Page to sponsor:',
+	'adss-form-banner' => 'Your banner:',
 	'adss-form-price' => 'Sponsorship amount:',
 	'adss-form-shares' => 'Number of shares:',
 	'adss-form-email' => 'Your e-mail address:',
@@ -47,6 +48,9 @@ $messages['en'] = array(
 	'adss-form-page-plan-header' => 'Buy a link on just this page',
 	'adss-form-page-plan-description' => 'This let you target a custom message to the best page for your product at only $1, and you can cancel at any time.',
 	'adss-form-page-plan-price' => '$1 for one link',
+	'adss-form-banner-plan-header' => 'Buy a banner on top of every page',
+	'adss-form-banner-plan-description' => 'Get your banner running across the whole wiki for one low price.',
+	'adss-form-banner-plan-price' => '$1 for one banner',
 	'adss-form-or' => '- or -',
 	'adss-form-thanks' => "Thank you for your sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
 

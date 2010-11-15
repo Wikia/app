@@ -112,7 +112,7 @@ class AdSS_Publisher {
 			$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 			
 			$selfAd = new AdSS_TextAd();
-			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL( 'page='.$wgTitle->getText() ) );
+			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL() );
 			$selfAd->text = wfMsg( 'adss-ad-default-text' );
 			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
 

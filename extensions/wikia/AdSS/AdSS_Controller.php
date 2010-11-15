@@ -48,13 +48,6 @@ class AdSS_Controller extends SpecialPage {
 			$adForm->loadFromRequest( $wgRequest );
 			$this->save( $adForm );
 		} else {
-			$page = $wgRequest->getText( 'page' );
-			if( !empty( $page ) ) {
-				$title = Title::newFromText( $page );
-				if( $title && $title->exists() ) {
-					$adForm->set( 'wpPage', $page );
-				}
-			}
 			$adForm->set( 'wpType', 'site-premium' );
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view") } )' );
 			$this->displayForm( $adForm );
@@ -82,7 +75,7 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$tmpl->set( 'sitePricing', $sitePricing );
-		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing( Title::newFromText( $adForm->get( 'wpPage' ) ) ) );
+		$tmpl->set( 'bannerPricing', AdSS_Util::getBannerPricing() );
 		$tmpl->set( 'adForm', $adForm );
 		$tmpl->set( 'currentShare', intval( $currentShare * 100 ) );
 
@@ -223,7 +216,7 @@ class AdSS_Controller extends SpecialPage {
 			$body .= "\n\n";
 			$body .= "Created by: {$ad->getUser()->toString()}\n";
 			$body .= "Ad link text: {$ad->text}\n";
-			$body .= "Ad URL: {$ad->url}\n";
+			$body .= "Ad URL: http://{$ad->url}\n";
 			$body .= "Ad description: {$ad->desc}\n";
 
 			UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
