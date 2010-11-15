@@ -1,4 +1,4 @@
-$(window).load(function() {
+$(function() {
     LatestPhotos.init();
     UploadPhotos.init();
 });
@@ -35,7 +35,7 @@ var UploadPhotos = {
 			UploadPhotos.advanced = UploadPhotos.d.find(".advanced");
 			UploadPhotos.options = UploadPhotos.d.find(".options");
 			UploadPhotos.uploadbutton = UploadPhotos.d.find("input[type=submit]");
-			
+
 			// event handlers
 			UploadPhotos.filepath.change(UploadPhotos.filePathSet);
 			UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
