@@ -234,8 +234,7 @@ class UserProfilePage {
 		global $wgMemc, $wgContentNamespaces, $wgLang;
 
 		$mKey = $this->getUserLastActionCacheKey();
-		//TODO: enable caching
-		//$cachedData = $wgMemc->get($mKey);
+		$cachedData = $wgMemc->get($mKey);
 		if (empty($cachedData)) {
 
 			$maxElements = 1;
