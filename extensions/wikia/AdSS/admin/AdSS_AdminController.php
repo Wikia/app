@@ -78,7 +78,7 @@ class AdSS_AdminController {
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 		$tmpl->set( 'w', 600 );
 		$tmpl->set( 'h', 300 );
-		$tmpl->set( 'maxY', 200 );
+		$tmpl->set( 'maxY', 250 );
 		$tmpl->set( 'd', implode( ',', array_reverse( $d ) ) );
 		$tmpl->set( 'xl0', implode( '|', array_reverse( $xl0 ) ) );
 
