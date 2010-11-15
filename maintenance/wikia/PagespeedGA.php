@@ -17,13 +17,22 @@ class GoogleAnalyticsPageSpeed {
 		$this->gapi = new gapi($login, $password, null, 'curl', $proxy);
 		$this->profileId = $profileId;
 	}
-	
-	private function getGAResultSet($date, $i) {
-		$limit = 2000;
-		$start = $i * $limit + 1;
 
-		$this->gapi->requestReportData($this->profileId, array('pagePath', 'hour'), array('pageviews'), array('pageviews'), 'pagePath=~^\/oasis.* && pageviews >= 100',	$date, $date, $start, $limit);
-		return $this->gapi->getResults();
+	public function insertReportIntoDB($date, $thresholds) {
+		$report = $this->getReport($this->getResults($date), $thresholds);
+
+		$rows = array();
+		
+		foreach($report as $hour => $val) {
+			foreach($val as $data) {
+				$rows[] = array('date' => "{$date} {$hour}:00:00", 'relative' => $data['relative'], 'absolute' => $data['absolute'], 'loadtime' => $data['loadtime']);
+			}
+		}
+		
+		if(count($rows) > 0) {
+			$dbw = wfGetDB(DB_MASTER, array(), 'stats');
+			$dbw->replace('pagespeed', array(), $rows);			
+		}
 	}
 	
 	public function getResults($date) {
@@ -76,15 +85,29 @@ class GoogleAnalyticsPageSpeed {
 		$report = array();
 		
 		foreach($data as $hour => $results) {
-			$report[$hour] = $this->getOneReport($results, $thresholds);
+			$report[$hour] = $this->getReportPerHour($results, $thresholds);
 		}
 		
 		ksort($report);
 
 		return $report;
 	}
-	
-	private function getOneReport($data, $thresholds) {
+
+	private function getGAResultSet($date, $i) {
+		$limit = 1000;
+		$start = $i * $limit + 1;
+		
+		echo "Getting GA results for {$date} package: {$i}\n";
+
+		$this->gapi->requestReportData($this->profileId, array('pagePath', 'hour'), array('pageviews'), array('pageviews'), 'pagePath=~^\/oasis.* && pageviews >= 100',	$date, $date, $start, $limit);
+
+		echo "Sleeping a little bit\n";
+		sleep(2);
+		
+		return $this->gapi->getResults();
+	}
+
+	private function getReportPerHour($data, $thresholds) {
 		$onereport = array();
 		ksort($data);
 		$visits = array_sum($data);
@@ -112,25 +135,15 @@ class GoogleAnalyticsPageSpeed {
 
 }
 
-function loadData($date) {
-	global $wgWikiaGALogin, $wgWikiaGAPassword;
-	$ga = new GoogleAnalyticsPageSpeed($wgWikiaGALogin, $wgWikiaGAPassword, '19262743', '127.0.0.1:6081');
-	$results = $ga->getResults($date);
-	$report = $ga->getReport($results, array(99, 95, 75, 50));
-	
-	$dbw = wfGetDB(DB_MASTER, array(), 'stats');
+$dates = array(date('Y-m-d'), date('Y-m-d', strtotime('-1 day')));
+$thresholds = array(99, 95, 75, 50);
 
-	foreach($report as $hour => $val) {
-		foreach($val as $data) {
-			$dbw->replace('pagespeed', array(), array(
-				'date' => "{$date} {$hour}:00:00",
-				'relative' => $data['relative'],
-				'absolute' => $data['absolute'],
-				'loadtime' => $data['loadtime']));
-		}
-		
+foreach($dates as $date) {
+	try {
+		$ga = new GoogleAnalyticsPageSpeed($wgWikiaGALogin, $wgWikiaGAPassword, '19262743', '127.0.0.1:6081');
+		$ga->insertReportIntoDB($date, $thresholds);
+	} catch (Exception $e) {
+		echo "Caught exception: {$e->getMessage()}\n";
 	}
-	
 }
 
-//loadData('2010-11-11');
