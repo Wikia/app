@@ -35,7 +35,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			 * overwrite database name using templateOverridesByServer
 			 */
 			wfDebugLog( "connect", __METHOD__ . ": section smw choosen for $wiki\n" );
-			foreach( $this->sectionLoads[ $section ] as $server ) {
+			foreach( $this->sectionLoads[ $section ] as $server => $weight ) {
 				if( !is_array( $this->templateOverridesByServer[ $server ] ) ) {
 					 $this->templateOverridesByServer[ $server ] = array();
 				}
