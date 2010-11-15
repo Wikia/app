@@ -282,11 +282,17 @@ class UserProfilePage {
 		wfProfileIn( __METHOD__ );
 		global $wgStatsDB, $wgDevelEnvironment, $wgCityId;
 
+		$where = array( 'user_id' => $this->getUser()->getId() );
+		$hiddenTopWikis = $this->getHiddenTopWikis();
+		if(count($hiddenTopWikis)) {
+			$where[] = 'wiki_id NOT IN (' . join( ',', $hiddenTopWikis ) . ')';
+		}
+
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$res = $dbs->select(
 			array( 'specials.events_local_users' ),
 			array( 'wiki_id', 'edits' ),
-			array( 'user_id' => $this->getUser()->getId() ),
+			$where,
 			__METHOD__,
 			array(
 				'ORDER BY' => 'edits DESC',
@@ -333,30 +339,25 @@ class UserProfilePage {
 		} else {
 			while ( $row = $dbs->fetchObject( $res ) ) {
 				$wikiId = $row->wiki_id;
-				if( !$this->isTopWikiHidden( $wikiId ) ) {
-					$editCount = $row->edits;
-					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
-					$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
-					if( isset($themeSettings['wordmark-image-url']) ) {
-						$wikiLogo = $themeSettings['wordmark-image-url'];
-						$wordmarkText = '';
-					}
-					elseif( isset($themeSettings['wordmark-text']) ) {
-						$wikiLogo = '';
-						$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
-					}
-					else {
-						$wikiLogo = '';
-						$wordmarkText = $wikiName;
-					}
-
-					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
+				$editCount = $row->edits;
+				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+				//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+				if( isset($themeSettings['wordmark-image-url']) ) {
+					$wikiLogo = $themeSettings['wordmark-image-url'];
+					$wordmarkText = '';
+				}
+				elseif( isset($themeSettings['wordmark-text']) ) {
+					$wikiLogo = '';
+					$wordmarkText = '<span style="color: ' . $themeSettings['color-header'] . '">' .$themeSettings['wordmark-text'] . '</span>';
 				}
 				else {
-					unset($wikis[$wikiId]);
+					$wikiLogo = '';
+					$wordmarkText = $wikiName;
 				}
+
+				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'wikiWordmarkText' => $wordmarkText, 'editCount' => $editCount );
 			}
 		}
 
