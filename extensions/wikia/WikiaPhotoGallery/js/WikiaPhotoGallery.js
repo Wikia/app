@@ -862,7 +862,7 @@ var WikiaPhotoGallery = {
 
 		// setup clicks on "Select" button
 		$('#WikiaPhotoGallerySearchResultsSelect').unbind('.selectImage').bind('click.selectImage', function(ev) {
-			var selected = results.find('input[checked]');
+			var selected = results.find('input:checked');
 			self.log(selected.length + ' image(s) selected')
 
 			if (!selected.exists()) {
