@@ -10,6 +10,7 @@ class AdSS_AdForm {
 				'wpUrl'      => '',
 				'wpText'     => '',
 				'wpDesc'     => '',
+				'wpBanner'   => '',
 				'wpType'     => '',
 				'wpPage'     => '',
 				'wpWeight'   => '',
@@ -31,6 +32,7 @@ class AdSS_AdForm {
 		$this->fields['wpDesc'] = $r->getText( 'wpDesc' );
 		$this->fields['wpType'] = $r->getText( 'wpType' );
 		$this->fields['wpPage'] = $r->getText( 'wpPage' );
+		$this->fields['wpBanner'] = $r->getText( 'wpBanner' );
 		$this->fields['wpWeight'] = $r->getText( 'wpWeight' );
 		$this->fields['wpEmail'] = $r->getText( 'wpEmail' );
 		$this->fields['wpPassword'] = $r->getText( 'wpPassword' );

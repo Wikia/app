@@ -7,6 +7,11 @@ class AdSS_Util {
 		return $wgAdSS_pricingConf['site'];
 	}
 
+	static function getBannerPricing() {
+		global $wgAdSS_pricingConf;
+		return $wgAdSS_pricingConf['banner'];
+	}
+
 	static function getPagePricing( $title=null ) {
 		global $wgAdSS_pricingConf;
 
@@ -38,6 +43,8 @@ class AdSS_Util {
 		global $wgSquidMaxage;
 		if( $wpType == 'page' ) {
 			$priceConf = self::getPagePricing( Title::newFromText( $wpPage ) );
+		} elseif( $wpType == 'banner' ) {
+			$priceConf = self::getBannerPricing();
 		} else {
 			$priceConf = self::getSitePricing();
 		}
