@@ -30,20 +30,22 @@ class GoogleAnalyticsPageSpeed {
 		}
 		
 		if(count($rows) > 0) {
-			$dbw = wfGetDB(DB_MASTER, array(), 'stats');
-			$dbw->replace('pagespeed', array(), $rows);			
+			$dbw = wfGetDB(DB_MASTER, array(), 'performance_stats');
+			$dbw->replace('pagespeedga', array(), $rows);			
 		}
 	}
 	
 	public function getResults($date) {
-
+		
 		$results = array();
 
 		$i = 0;
+		
+		$limit = 1000;
 
 		do {
 
-			$resultSet = $this->getGAResultSet($date, $i);
+			$resultSet = $this->getGAResultSet($date, $i, $limit);
 			
 			foreach($resultSet as $result) {
 				
@@ -75,7 +77,7 @@ class GoogleAnalyticsPageSpeed {
 			}
 			$i++;
 
-		} while (count($resultSet) > 0);
+		} while (count($resultSet) == $limit);
 
 		return $results;
 
@@ -93,15 +95,15 @@ class GoogleAnalyticsPageSpeed {
 		return $report;
 	}
 
-	private function getGAResultSet($date, $i) {
-		$limit = 1000;
+	private function getGAResultSet($date, $i, $limit) {
+
 		$start = $i * $limit + 1;
 		
 		echo "Getting GA results for {$date} package: {$i}\n";
 
 		$this->gapi->requestReportData($this->profileId, array('pagePath', 'hour'), array('pageviews'), array('pageviews'), 'pagePath=~^\/oasis.* && pageviews >= 100',	$date, $date, $start, $limit);
 
-		echo "Sleeping a little bit\n";
+		echo "Sleeping 2 seconds\n";
 		sleep(2);
 		
 		return $this->gapi->getResults();
@@ -145,5 +147,7 @@ foreach($dates as $date) {
 	} catch (Exception $e) {
 		echo "Caught exception: {$e->getMessage()}\n";
 	}
+	echo "Sleeping 15 seconds\n";
+	sleep(15);
 }
 
