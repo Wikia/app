@@ -105,7 +105,7 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
         public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot, $params = null) {
-		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad, $wgEnableOpenXSPC;
 
 		$zoneId = $this->getZoneId($slotname);
 
@@ -124,12 +124,20 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 	wgAfterContentAndJS.push(function() {
 EOT;
 		$adtag .= $this->getAdUrlScripts(array($slotname), array($zoneId), $params);
-		if (!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload)) {
+		if ($wgEnableOpenXSPC || 
+		(!empty($wgEnableAdsLazyLoad) && !empty($wgAdslotsLazyLoad[$slotname]) && !empty($this->enable_lazyload))) {
 			$functionName = AdEngine::fillElemFunctionPrefix . $slotname;
 			$fill_elem_script = $this->getFillElemFunctionDefinition($functionName, array($slotname));
 			$adtag .= <<<EOT
 	$fill_elem_script
 EOT;
+			if (empty($wgEnableAdsLazyLoad) || empty($wgAdslotsLazyLoad[$slotname]) || empty($this->enable_lazyload)) {
+				// setTimeout makees it much more likely that the OpenX SPC will have completed by the time
+				// the call to display the ad is made
+				$adtag .= <<<EOT
+	setTimeout($functionName, 1000);
+EOT;
+			}
 		}
 		else {
 			$adtag .= <<<EOT
