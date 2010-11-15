@@ -105,7 +105,7 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
         public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot, $params = null) {
-		global $wgEnableOpenXSPC, $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
 		$zoneId = $this->getZoneId($slotname);
 
@@ -205,7 +205,6 @@ EOT;
 		for ($i=0; $i<$n_slotnames; $i++) {
 			$slotname =& $slotnames[$i];
 			$adUrlScript = $this->getAdUrlScript($slotname, $params);
-//			$adUrlScript = str_replace("\n", " ", $adUrlScript);
 			$adUrlScript = $this->fixNewLines($adUrlScript);
 			$adtag .= $adUrlScript;
 		}
@@ -214,32 +213,12 @@ EOT;
 	}
 
 	private function getFillElemFunctionDefinition($functionName, Array $slotnames) {
-
 		$out = "{$functionName} = function () {";
 		for($i = 0; $i < count($slotnames); $i++) {
-			$out .= "if (typeof(OA_output['{$this->zoneIds[$slotnames[$i]]}']) != 'undefined') $('#{$slotnames[$i]}').html(OA_output['{$this->zoneIds[$slotnames[$i]]}']);";
+			$out .= "if (typeof(OA_output) != 'undefined' && typeof(OA_output['{$this->zoneIds[$slotnames[$i]]}']) != 'undefined') $('#{$slotnames[$i]}').html(OA_output['{$this->zoneIds[$slotnames[$i]]}']);";
 		}
 		$out .= "};";
 		return $out;
-
-		// CODE BELOW (AND AROUND) TO BE REFACTORED / Inez
-
-
-		$fill_elem_script = <<<EOT
-	{$functionName} = function () {
-
-		$('#{$slotnames[0]}').html(OA_output['{$this->zoneIds[$slotnames[0]]}']);
-
-		bezen.domwrite.capture();
-EOT;
-		$fill_elem_script .= $this->getBezenLoadScriptDefinition($slotnames);
-		$fill_elem_script .= <<<EOT
-	};
-EOT;
-//		$fill_elem_script = str_replace("\n", ' ', $fill_elem_script);
-		$fill_elem_script = $this->fixNewLines($fill_elem_script);
-
-		return $fill_elem_script;
 	}
 
 	private function getBezenLoadScriptDefinition(Array $slotnames) {
@@ -281,9 +260,8 @@ EOT;
 
 		global $wgEnableOpenXSPC;
 		if ($wgEnableOpenXSPC && substr($slotname, 0, 10) == 'SPOTLIGHT_') {	// only for Oasis spotlights (e.g. slotname = "SPOTLIGHT_ ...")
-			$url_script = <<<EOT
-	var base_url = wgScript + "?action=ajax&rs=axShowOpenXAd&rsargs[0]=$zoneId";
-EOT;
+			// don't need a url. will show ad using local Javascript
+			return;
 		}
 		else {
 			if ($is_iframe) {
