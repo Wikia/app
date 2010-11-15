@@ -35,6 +35,7 @@ use Getopt::Long;
 use LWP::UserAgent;
 use DateTime;
 use Cwd;
+use Try::Tiny;
 
 #
 # constant
@@ -175,6 +176,7 @@ sub videoThumbnail {
 
 no warnings; # avoid "Possible attempt to separate words with commas"
 my @tests = qw(
+	/b/blazblue/images/thumb/c/cf/MakotoChibi.png/82px-0%2C182%2C0%2C182-MakotoChibi.png
 	/c/carnivores/images/thumb/5/59/Padlock.svg/120px-Padlock.svg.png
 	/y/yugioh/images/thumb/a/ae/Flag_of_the_United_Kingdom.svg/700px-Flag_of_the_United_Kingdom.svg.png
 	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
@@ -533,8 +535,13 @@ while( $request->Accept() >= 0 || $test ) {
 						}
 					}
 
-					my $origw  = $image->getwidth();
-					my $origh  = $image->getheight();
+					my $origw  = 0;
+					my $origh  = 0;
+
+					try {
+						my $origw  = $image->getwidth();
+						my $origh  = $image->getheight();
+					};
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					say STDERR "Original size $origw x $origh, time: $t_elapsed" if $debug > 2;
 					if( $origw && $origh ) {
