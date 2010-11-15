@@ -313,7 +313,7 @@ jQuery.tracker.track = function(fakeurl) {
 			urchinTracker(fake);
 		}
 
-		var testGroupName = document.cookie.match(/wikia-ab=\/name=([^\/]*)/);
+		var testGroupName = document.cookie.match(/wikia-ab=[^;]*name=(.*?)\//);
 		if(testGroupName) {
 			_uacct = "UA-19473076-1";
 			fake = '/1_' + skinname + '/' + testGroupName[1] + '/' + username + '/' + fakeurl;
