@@ -22,7 +22,7 @@ class UserProfilePageHelper {
 			return true;
 		}
 		$user->load();
-		
+
 		// fallback for non-existent users
 		if( $user->getId() == 0 ) {
 			$template->data['bodytext'] = wfMsg( 'userprofilepage-user-doesnt-exists', array( $user->getName() ) );
@@ -75,11 +75,9 @@ class UserProfilePageHelper {
 	public static function getUserFromTitle( Title $title) {
 		$userName = '';
 
-		if( $title->isSubpage() ) {
-			$userName = $title->getBaseText();
-		} else {
-			$userName = $title->getText();
-		}
+		$parts = explode( '/', $title->getText() );
+		$userName = $parts[0];
+
 		return User::newFromName( $userName );
 	}
 
