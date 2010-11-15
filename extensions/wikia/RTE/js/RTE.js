@@ -119,8 +119,8 @@ window.RTE = {
 		// set startup mode
 		RTE.config.startupMode = mode;
 
-		// RT #69635: disable media drag&drop on Chrome & Firefox 3.6.9+ (fixed in Firefox 3.6.11)
-		RTE.config.disableDragDrop = $().isChrome() || (CKEDITOR.env.gecko && CKEDITOR.env.version > 10900 && CKEDITOR.env.version < 10902);
+		// RT #69635: disable media drag&drop in Firefox 3.6.9+ (fixed in Firefox 3.6.11)
+		RTE.config.disableDragDrop = (CKEDITOR.env.gecko && CKEDITOR.env.version > 10900 && CKEDITOR.env.version < 10902);
 
 		if (RTE.config.disableDragDrop) {
 			RTE.log('media drag&drop disabled');
@@ -176,6 +176,9 @@ window.RTE = {
 		// event fired when Widescreen button in pressed
 		RTE.instance.on('widescreen', RTE.onWidescreen);
 
+		// clean HTML returned by CKeditor
+		RTE.instance.on('getData', RTE.filterHtml);
+
 		// CK is loading...
 		RTE.loading(true);
 	},
@@ -186,7 +189,7 @@ window.RTE = {
 
 		if (window.skin == 'oasis') {
 			// RT #69159
-			css.push(wfGetSassUrl('/extensions/wikia/RTE/css/oasis.scss'));
+			RTE.instance.config.contentsCss = wfGetSassUrl('/extensions/wikia/RTE/css/oasis.scss');
 		}
 		else {
 			css.push(window.stylepath + '/monobook/main.css');
@@ -259,8 +262,8 @@ window.RTE = {
 		// calculate load time
 		RTE.loadTime = ( (new Date()).getTime() - window.wgRTEStart.getTime() ) / 1000;
 
-		RTE.log('CKeditor v' + window.CKEditorVersion + ' (' +
-			(window.RTEDevMode ? 'in development mode' : CKEDITOR.revision + ' build ' + CKEDITOR.version) +
+		RTE.log('CKEditor v' + CKEDITOR.version + ' (' +
+			(window.RTEDevMode ? 'in development mode' : CKEDITOR.revision) +
 			') is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
 		// fire custom event for "track" plugin
@@ -399,6 +402,19 @@ window.RTE = {
 		}
 	},
 
+	// filter HTML returned by CKEditor
+	filterHtml: function(ev) {
+		if (ev.editor.mode == 'wysiwyg') {
+			ev.data.dataValue = ev.data.dataValue.
+				// remove "data-rte-instance" attributes
+				replace(' data-rte-instance="' + RTE.instanceId + '"', '').
+				// remove <div> added by Firebug
+				replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
+
+			//$().log(ev.data, 'RTE.filterHtml');
+		}
+	},
+
 	// constants (taken from global JS variables added by RTE backend)
 	constants: {
 		localPath: window.RTELocalPath,
@@ -478,7 +494,7 @@ CKEDITOR.config.toolbar_Wikia =
 // extend CK core objects
 //
 
-// override this method, so we can ignore attributes matching _rte_*
+// override this method, so we can ignore attributes matching data-rte-*
 CKEDITOR.dom.element.prototype.hasAttributesOriginal = CKEDITOR.dom.element.prototype.hasAttributes;
 
 CKEDITOR.dom.element.prototype.hasAttributes = function() {
@@ -486,7 +502,7 @@ CKEDITOR.dom.element.prototype.hasAttributes = function() {
 
 	// check for internal RTE attributes
 	if (ret == true) {
-		var internalAttribs = ['_rte_washtml', '_rte_line_start', '_rte_empty_lines_before'];
+		var internalAttribs = ['data-rte-washtml', 'data-rte-line-start', 'data-rte-empty-lines-before'];
 
 		for (i=0; i<internalAttribs.length; i++) {
 			if (this.hasAttribute(internalAttribs[i])) {
@@ -573,13 +589,21 @@ CKEDITOR.dom.element.prototype.setState = function( state ) {
 	}
 };
 
+/**
+ * @author wladek
+ * @constant
+ * @description
+ * Used in selection.getRanges() as an additional value for the onlyEditables parameter
+ */
+CKEDITOR.ONLY_FORMATTABLES = 2;
+
 //
 // extend jQuery
 //
 
 // get meta data from given node
 jQuery.fn.getData = function() {
-	var json = this.attr('_rte_data');
+	var json = this.attr('data-rte-meta');
 	if (!json) {
 		return {};
 	}
@@ -609,25 +633,26 @@ jQuery.fn.setData = function(key, value) {
 	// encode JSON
 	var json = $.toJSON(data);
 
-	this.attr('_rte_data', encodeURIComponent(json));
+	this.attr('data-rte-meta', encodeURIComponent(json));
 
 	// return modified data
 	return data;
 }
 
-// set type of given placeholder
-jQuery.fn.setType = function(type) {
-	$(this).attr('class', 'placeholder placeholder-' + type).setData('type', type);
+// set type of current placeholder
+jQuery.fn.setPlaceholderType = function(type) {
+	$(this).
+		attr('class', 'placeholder placeholder-' + type).
+		setData('type', type);
 }
 
 // load RTE on DOM ready
 jQuery(function() {
 	GlobalTriggers.fire('rtebeforeinit',RTE,CKEDITOR);
 
-	RTE.log('starting...');
+	RTE.log('loading...');
 
 	// select initial mode
 	var mode = window.RTEInitMode ? window.RTEInitMode : 'wysiwyg';
-
 	RTE.init(mode);
 });

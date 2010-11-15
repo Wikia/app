@@ -126,13 +126,13 @@ function WMU_moveBackButton(selector) {
 
 		// keep reference to <a> tag
 		backButton = backButton.children('a').addClass('wikia-button yui-back secondary');
-		
+
 		backDetails = $(".ImageUploadNoBorder a.backbutton");
 
 		if(backDetails.length > 0) {
 		    backButton.empty().append( backDetails.text() );
 		}
-		
+
 		window.WMUbackButton = backButton;
 	}
 
@@ -143,8 +143,6 @@ function WMU_moveBackButton(selector) {
 	window.WMUbackButton.clone().
 		click(WMU_back).
 		insertBefore(selector);
-
-	$().log([window.WMUbackButton, selector], 'WMU');
 }
 
 /*
@@ -176,13 +174,13 @@ $(function() {
 });
 
 function WMU_addHandler() {
-	var btn = $G('mw-editbutton-wmu');
-	if(btn == null) {
-		setTimeout('WMU_addHandler()', 250);
+	// FIXME
+	if(!$('#mw-editbutton-wmu').exists()) {
+		setTimeout(WMU_addHandler, 250);
 		return;
 	}
 	$.loadYUI(function(){
-		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', btn], 'click',  WMU_show);
+		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', 'mw-editbutton-wmu'], 'click',  WMU_show);
 	});
 }
 

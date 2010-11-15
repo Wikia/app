@@ -64,8 +64,8 @@ CKEDITOR.plugins.add('rte-link',
 
 		// handle pasted links from local wiki
 		editor.on('afterPaste', function() {
-			// get links without _rte_data attribute
-			var pastedLinks = RTE.getEditor().find('a').not('a[_rte_data]');
+			// get links without meta data attribute
+			var pastedLinks = RTE.getEditor().find('a').not('a[data-rte-meta]');
 
 			if (!pastedLinks.exists()) {
 				return;
@@ -178,12 +178,15 @@ CKEDITOR.unlinkCommand.prototype =
 			element = rangeRoot.getAscendant( 'a', true );
 			if ( !element )
 				continue;
-			ranges[i].selectNodeContents( element );
+			this.removeLink(editor,element,ranges[i]);
 		}
 
-		selection.selectRanges( ranges );
-		editor.document.$.execCommand( 'unlink', false, null );
 		selection.selectBookmarks( bookmarks );
+	},
+	
+	removeLink : function( editor, element )
+	{
+		element.remove( true );
 	}
 };
 

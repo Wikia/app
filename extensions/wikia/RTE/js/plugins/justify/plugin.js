@@ -70,12 +70,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					block.removeAttribute( 'align' );
 
 					// Wikia: remove internal RTE attributes
-					block.removeAttribute('_rte_style');
-					block.removeAttribute('_rte_attribs');
+					block.removeAttribute('data-rte-style');
+					block.removeAttribute('data-rte-attribs');
 
 					// Wikia: render paragraphs as wikitext
 					if (block.getName() == 'p') {
-						block.removeAttribute('_rte_washtml');
+						block.removeAttribute('data-rte-washtml');
 					}
 
 					// Wikia: <th> is centre aligned by default

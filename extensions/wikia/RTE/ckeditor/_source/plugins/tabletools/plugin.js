@@ -146,14 +146,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			return;
 
 		// Create a clone of the row.
-		var newRow = row.clone( true );
+		var newRow = row.clone( 1 );
 
-		// Insert the new row before of it.
-		newRow.insertBefore( row );
+		insertBefore ?
+			newRow.insertBefore( row ) :
+			newRow.insertAfter( row );
 
-		// Clean one of the rows to produce the illusion of inserting an empty row
-		// before or after.
-		clearRow( insertBefore ? newRow.$ : row.$ );
+		// Clean the new row.
+		clearRow( newRow.$ );
 	}
 
 	function deleteRows( selectionOrRow )
@@ -216,7 +216,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		// Get the cell where the selection is placed in.
 		var startElement = selection.getStartElement();
-		var cell = startElement.getAscendant( 'td', true ) || startElement.getAscendant( 'th', true );
+		var cell = startElement.getAscendant( 'td', 1 ) || startElement.getAscendant( 'th', 1 );
 
 		if ( !cell )
 			return;
@@ -234,7 +234,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			if ( $row.cells.length < ( cellIndex + 1 ) )
 				continue;
 
-			cell = new CKEDITOR.dom.element( $row.cells[ cellIndex ].cloneNode( false ) );
+			cell = ( new CKEDITOR.dom.element( $row.cells[ cellIndex ] ) ).clone( 0 );
 
 			if ( !CKEDITOR.env.ie )
 				cell.appendBogus();
@@ -339,7 +339,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	function insertCell( selection, insertBefore )
 	{
 		var startElement = selection.getStartElement();
-		var cell = startElement.getAscendant( 'td', true ) || startElement.getAscendant( 'th', true );
+		var cell = startElement.getAscendant( 'td', 1 ) || startElement.getAscendant( 'th', 1 );
 
 		if ( !cell )
 			return;
@@ -400,51 +400,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		range.select( true );
 	}
 
-	function buildTableMap( table )
-	{
-
-		var aRows = table.$.rows ;
-
-		// Row and Column counters.
-		var r = -1 ;
-
-		var aMap = [];
-
-		for ( var i = 0 ; i < aRows.length ; i++ )
-		{
-			r++ ;
-			!aMap[r] && ( aMap[r] = [] );
-
-			var c = -1 ;
-
-			for ( var j = 0 ; j < aRows[i].cells.length ; j++ )
-			{
-				var oCell = aRows[i].cells[j] ;
-
-				c++ ;
-				while ( aMap[r][c] )
-					c++ ;
-
-				var iColSpan = isNaN( oCell.colSpan ) ? 1 : oCell.colSpan ;
-				var iRowSpan = isNaN( oCell.rowSpan ) ? 1 : oCell.rowSpan ;
-
-				for ( var rs = 0 ; rs < iRowSpan ; rs++ )
-				{
-					if ( !aMap[r + rs] )
-						aMap[r + rs] = new Array() ;
-
-					for ( var cs = 0 ; cs < iColSpan ; cs++ )
-					{
-						aMap[r + rs][c + cs] = aRows[i].cells[j] ;
-					}
-				}
-
-				c += iColSpan - 1 ;
-			}
-		}
-		return aMap ;
-	}
-
 	function cellInRow( tableMap, rowIndex, cell )
 	{
 		var oRow = tableMap[ rowIndex ];
@@ -498,7 +453,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		var	cell,
 			firstCell = cells[ 0 ],
 			table = firstCell.getAscendant( 'table' ),
-			map = buildTableMap( table ),
+			map = CKEDITOR.tools.buildTableMap( table ),
 			mapHeight = map.length,
 			mapWidth = map[ 0 ].length,
 			startRow = firstCell.getParent().$.rowIndex,
@@ -633,7 +588,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		var cell = cells[ 0 ],
 			tr = cell.getParent(),
 			table = tr.getAscendant( 'table' ),
-			map = buildTableMap( table ),
+			map = CKEDITOR.tools.buildTableMap( table ),
 			rowIndex = tr.$.rowIndex,
 			colIndex = cellInRow( map, rowIndex, cell ),
 			rowSpan = cell.$.rowSpan,
@@ -709,7 +664,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		var cell = cells[ 0 ],
 			tr = cell.getParent(),
 			table = tr.getAscendant( 'table' ),
-			map = buildTableMap( table ),
+			map = CKEDITOR.tools.buildTableMap( table ),
 			rowIndex = tr.$.rowIndex,
 			colIndex = cellInRow( map, rowIndex, cell ),
 			colSpan = cell.$.colSpan,
@@ -759,9 +714,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				{
 					exec : function( editor )
 					{
-						var selection = editor.getSelection();
-						var startElement = selection && selection.getStartElement();
-						var table = startElement && startElement.getAscendant( 'table', true );
+						var selection = editor.getSelection(),
+							startElement = selection && selection.getStartElement(),
+							table = startElement && startElement.getAscendant( 'table', 1 );
 
 						if ( !table )
 							return;
@@ -772,9 +727,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						range.collapse();
 						selection.selectRanges( [ range ] );
 
-						// If the table's parent has only one child, remove it,except body,as well.( #5416 )
+						// If the table's parent has only one child remove it as well (unless it's the body or a table cell) (#5416, #6289)
 						var parent = table.getParent();
-						if ( parent.getChildCount() == 1 && parent.getName() != 'body' )
+						if ( parent.getChildCount() == 1 && !parent.is( 'body', 'td', 'th' ) )
 							parent.remove();
 						else
 							table.remove();
@@ -1088,7 +1043,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				editor.contextMenu.addListener( function( element, selection )
 					{
-						if ( !element )
+						if ( !element || element.isReadOnly() )
 							return null;
 
 						while ( element )
@@ -1114,3 +1069,52 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	};
 	CKEDITOR.plugins.add( 'tabletools', CKEDITOR.plugins.tabletools );
 })();
+
+/**
+ * Create a two-dimension array that reflects the actual layout of table cells,
+ * with cell spans, with mappings to the original td elements.
+ * @param table {CKEDITOR.dom.element}
+ */
+CKEDITOR.tools.buildTableMap = function ( table )
+{
+	var aRows = table.$.rows ;
+
+	// Row and Column counters.
+	var r = -1 ;
+
+	var aMap = [];
+
+	for ( var i = 0 ; i < aRows.length ; i++ )
+	{
+		r++ ;
+		!aMap[r] && ( aMap[r] = [] );
+
+		var c = -1 ;
+
+		for ( var j = 0 ; j < aRows[i].cells.length ; j++ )
+		{
+			var oCell = aRows[i].cells[j] ;
+
+			c++ ;
+			while ( aMap[r][c] )
+				c++ ;
+
+			var iColSpan = isNaN( oCell.colSpan ) ? 1 : oCell.colSpan ;
+			var iRowSpan = isNaN( oCell.rowSpan ) ? 1 : oCell.rowSpan ;
+
+			for ( var rs = 0 ; rs < iRowSpan ; rs++ )
+			{
+				if ( !aMap[r + rs] )
+					aMap[r + rs] = [];
+
+				for ( var cs = 0 ; cs < iColSpan ; cs++ )
+				{
+					aMap[r + rs][c + cs] = aRows[i].cells[j] ;
+				}
+			}
+
+			c += iColSpan - 1 ;
+		}
+	}
+	return aMap ;
+};

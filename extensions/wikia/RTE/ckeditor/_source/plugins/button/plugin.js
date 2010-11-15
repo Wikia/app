@@ -70,7 +70,7 @@ CKEDITOR.ui.button.prototype =
 	render : function( editor, output )
 	{
 		var env = CKEDITOR.env,
-			id = this._.id = 'cke_' + CKEDITOR.tools.getNextNumber(),
+			id = this._.id = CKEDITOR.tools.getNextId(),
 			classes = '',
 			command = this.command, // Get the command name.
 			clickFn,
@@ -155,7 +155,7 @@ CKEDITOR.ui.button.prototype =
 			'<span class="cke_button ' + classes + (this.wrapperClassName ? (' ' + this.wrapperClassName) : '') + '">',
 			'<a id="', id, '"' +
 				' class="', classes, '"',
-				env.gecko && env.version >= 10900 && !env.hc  ? '' : '" href="javascript:void(\''+ ( this.title || '' ).replace( "'"+ '' )+ '\')"',
+				env.gecko && env.version >= 10900 && !env.hc  ? '' : '" href="javascript:void(\''+ ( this.title || '' ).replace( "'", '' )+ '\')"',
 				' title="', this.title, '"' +
 				' tabindex="-1"' +
 				' hidefocus="true"' +

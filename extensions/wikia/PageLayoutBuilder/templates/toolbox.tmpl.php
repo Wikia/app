@@ -20,3 +20,6 @@
 	<ul class='plb-widget-list' style="display: hidden">
 	</ul>
 </div>
+<div class="plb-widgets-tutorial">
+	<?php echo wfMsg('plb-editor-left-sidebar-tutorial'); ?>
+</div>

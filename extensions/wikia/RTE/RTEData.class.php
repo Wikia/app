@@ -64,27 +64,17 @@ class RTEData {
 		}
 
 		return self::convertDataToAttributes($data);
-		/*
-		// generate unique CK instance ID
-		$instance =  RTE:: getInstanceId();
-
-		// properly encode JSON
-		$encoded = RTEReverseParser::encodeRTEData($data);
-		$encoded = Sanitizer::encodeAttribute($encoded);
-
-		return " _rte_data=\"{$encoded}\" _rte_instance=\"{$instance}\" ";
-		*/
 	}
 
 	public static function convertDataToAttributes($data) {
-		// generate unique CK instance ID
+		// get ID of current CK instance
 		$instance =  RTE:: getInstanceId();
 
 		// properly encode JSON
 		$encoded = RTEReverseParser::encodeRTEData($data);
 		$encoded = Sanitizer::encodeAttribute($encoded);
 
-		return " _rte_data=\"{$encoded}\" _rte_instance=\"{$instance}\" ";
+		return " data-rte-meta=\"{$encoded}\" data-rte-instance=\"{$instance}\" ";
 	}
 
 	public static function addDataToTag($data, $text) {
@@ -94,4 +84,37 @@ class RTEData {
 		}
 		return substr($text, 0, $firstSpace) . ' ' . self::convertDataToAttributes($data) . ' ' . substr($text, $firstSpace + 1);
 	}
+
+	/**
+	 * Checks if given wikitext contains unprocessed RTEData markers
+	 *
+	 * @author Macbre
+	 */
+	public static function checkWikitextForMarkers($wikitext) {
+		return strpos($wikitext, "\x7f") !== false ||
+			strpos($wikitext, '_rte_wikitextidx') !== false ||
+			strpos($wikitext, '_rte_dataidx') !== false;
+	}
+
+	/**
+	 * Replaces \x7f-03-xxxx markers (internal links) with wikitext (RT #90616)
+	 *
+	 * Returns true if any marker has been replaced.
+	 *
+	 * @author Macbre
+	 */
+	 public static function resolveLinksInMediaCaption(&$wikitext) {
+		 wfProfileIn(__METHOD__);
+		 $resolved = false;
+
+		 // remove \x7f-03-xxxx markers
+		 if (strpos($wikitext, "\x7f-" . RTEMarker::INTERNAL_WIKITEXT) !== false) {
+			 $wikitext = preg_replace('/\x7f-' . RTEMarker::INTERNAL_WIKITEXT .'-\d{4}/', '', $wikitext);
+
+			 $resolved = true;
+		 }
+
+		 wfProfileOut(__METHOD__);
+		 return $resolved;
+	 }
 }

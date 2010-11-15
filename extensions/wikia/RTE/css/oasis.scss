@@ -9,16 +9,6 @@ body {
 /**
  * images
  */
-img.alignCenter {
-	display: block;
-	margin: 0 auto;
-}
-
-img.alignRight {
-	display: block;
-	margin: 0 0 0 auto;
-}
-
 img.image,
 img.media-placeholder,
 img.video {
@@ -30,15 +20,11 @@ img.thumb,
 img.frame {
 	background: $color-article-thumb-background;
 	border: 1px solid $color-article-thumb-border;
-	padding: 3px;
-}
-
-img.thumb,
-img.frame {
 	clear: right;
 	display: inline;
 	float: right;
 	margin: 6px 0 10px 18px;
+	padding: 3px;
 }
 
 img.alignLeft {
@@ -54,11 +40,23 @@ img.alignNone {
 	margin: 6px 18px 10px 0;
 }
 
+img.alignCenter {
+	display: block;
+	margin: 0 auto;
+}
+
+img.alignRight {
+	clear: right;
+	display: block;
+	float: right;
+	margin: 0 0 0 auto;
+}
 
 /* border */
 img.border {
 	border: 1px solid $color-article-thumb-border;
 }
+
 /* caption indicator */
 img.withCaption {
 	background-image: url('/extensions/wikia/RTE/images/imageCaption.png');/* $wgCdnStylePath */
@@ -111,17 +109,68 @@ img.image-gallery {
 
 img.image-slideshow {
 	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-placeholder.png);/* $wgCdnStylePath */
+
+	&.alignLeft {
+		float: left;
+		margin-right: 18px;
+	}
+
+	&.alignCenter {
+		margin: 0 auto;
+	}
+
+	&.alignRight {
+		float: right;
+	}
 }
 
-img.image-slideshow.alignLeft {
-	float: left;
-	margin-right: 18px;
+/* redlinks (RT #87906) */
+a.new {
+	color: #cc2200 !important;
 }
 
-img.image-slideshow.alignCenter {
-	margin: 0 auto;
+/* RT #89023 */
+h1 {
+	display: block !important;
 }
 
-img.image-slideshow.alignRight {
-	float: right;
+/* dropdowns */
+.cke_panel_grouptitle {
+	background-color: $color-menu-highlight;
+	color: $color-text;
+}
+
+.cke_panel_block {
+	a {
+		border: none;
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: $color-menu-highlight;
+			text-decoration: none;
+		}
+	}
+}
+
+/* style format dropdown */
+.cke_panel_listItem {
+	&.cke_selected a {
+		border: solid 1px $color-module-shadow;
+		background-color: $color-menu-highlight;
+	}
+	h2 {
+		font-size: 18px;
+	}
+	h3 {
+		font-size: 16px;
+	}
+	h4 {
+		font-size: 14px;
+	}
+	h5 {
+		font-size: 12px;
+	}
+	pre {
+		font-family: monospace;
+	}
 }

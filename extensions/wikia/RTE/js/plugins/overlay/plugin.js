@@ -171,10 +171,10 @@ CKEDITOR.plugins.add('rte-overlay',
 		// get RTE data
 		var data = node.getData();
 
-		// image with thumb of frame
+		// media with thumb of frame
 		var isFramed = node.hasClass('thumb') || node.hasClass('frame');
 
-		// render image caption
+		// render media caption
 		var captionContent = (typeof data.params != 'undefined') && (data.params.captionParsed || data.params.caption);
 		if (captionContent && isFramed) {
 			var captionTop = parseInt(node.attr('height') + 7);
@@ -190,7 +190,11 @@ CKEDITOR.plugins.add('rte-overlay',
 				addClass('RTEMediaCaption').
 				css('top',captionTop + 'px').
 				width(captionWidth).
-				html(captionContent);
+				html(captionContent).
+				click(function(ev) {
+					// disable clicks on links inside caption
+					ev.preventDefault();
+				});
 
 			return caption;
 		}

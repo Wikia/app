@@ -10,8 +10,8 @@ CKEDITOR.plugins.add('rte-entities',
 			var element = selection.getStartElement();
 
 			// check for span with entity attribute
-			if (element.hasAttribute('_rte_entity')) {
-				var entity = element.getAttribute('_rte_entity');
+			if (element.hasAttribute('data-rte-entity')) {
+				var entity = element.getAttribute('data-rte-entity');
 				RTE.log('entity span: &' + entity + ';');
 
 				self.insideEntitySpan = true;

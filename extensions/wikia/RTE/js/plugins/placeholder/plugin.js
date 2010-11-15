@@ -350,7 +350,7 @@ CKEDITOR.plugins.add('rte-placeholder',
                         var target = $(ev.target);
 
 			// filter out non placeholders
-			target = target.filter('img[_rte_placeholder]');
+			target = target.filter('img.placeholder');
 
 			self.setupPlaceholder(target);
 		});

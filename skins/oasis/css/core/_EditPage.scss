@@ -74,6 +74,10 @@
 			.RTEMediaCaption {
 				background-color: $color-article-thumb-background;
 				border-color: $color-article-thumb-border;
+				cursor: default;
+				a {
+					cursor: default;
+				}
 			}
 		}
 		// modal tweaks

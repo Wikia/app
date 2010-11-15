@@ -243,7 +243,7 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 						me.onOpen();
 				};
 
-			panel.onHide = function()
+			panel.onHide = function( preventOnClose )
 				{
 					if ( me.className )
 						this.element.getFirst().removeClass( me.className + '_panel' );
@@ -252,7 +252,7 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 
 					me._.on = 0;
 
-					if ( me.onClose )
+					if ( !preventOnClose && me.onClose )
 						me.onClose();
 				};
 

@@ -560,6 +560,10 @@ Observable = $.createClass(Object,{
 					this.bind(i,e[i],e.scope||scope);
 				}
 			}
+		} else if ($.isArray(cb)) {
+			for (var i=0;i<cb.length;i++) {
+				this.bind(e,cb[i],scope);
+			}
 		} else {
 			scope == scope || this;
 			this.events[e] = this.events[e] || [];
@@ -573,23 +577,32 @@ Observable = $.createClass(Object,{
 
 	unbind: function(e,cb,scope) {
 		if (typeof e == 'object') {
+			var ret = false;
 			for (var i in e) {
 				if (i !== 'scope') {
-					this.unbind(i,e[i],e.scope||scope);
+					ret = this.unbind(i,e[i],e.scope||scope) || ret;
 				}
 			}
-		}
-		if (!this.events[e]) {
+			return ret;
+		} else if ($.isArray(cb)) {
+			var ret = false;
+			for (var i=0;i<cb.length;i++) {
+				ret = this.unbind(e,cb[i],scope) || ret;
+			}
+			return ret;
+		} else {
+			if (!this.events[e]) {
+				return false;
+			}
+			scope == scope || this;
+			for (var i in this.events[e]) {
+				if (this.events[e][i].fn == cb && this.events[e][i].scope == scope) {
+					delete this.events[e][i];
+					return true;
+				}
+			}
 			return false;
 		}
-		scope == scope || this;
-		for (var i in this.events[e]) {
-			if (this.events[e][i].fn == cb && this.events[e][i].scope == scope) {
-				delete this.events[e][i];
-				return true;
-			}
-		}
-		return false;
 	},
 
 	on: function(e,cb) {
@@ -600,7 +613,7 @@ Observable = $.createClass(Object,{
 		this.unbind.apply(this,arguments);
 	},
 
-	relayEvent: function(o,e,te) {
+	relayEvents: function(o,e,te) {
 		te = te || e;
 		o.bind(e,function() {
 			var a = [te].concat(arguments);

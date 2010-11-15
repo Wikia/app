@@ -460,59 +460,52 @@ EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 	}
 
-	// generates the video window (in FCK editor)
-	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb) {
-		global $wgStylePath, $wgWysiwygMetaData;
+	// generates the video thumb for CKeditor (plain image with RTE meta data)
+	public function generateThumbForRTE($wikitext, $title, $align, $width, $caption, $thumb, $frame, $holders) {
+		wfProfileIn(__METHOD__);
 
-		$code = $this->getThumbnailCode($width);
+		// try to resolve internal links in broken image caption (RT #90616)
+		if (RTEData::resolveLinksInMediaCaption($wikitext)) {
+			// now resolve link markers in caption parsed to HTML
+			if (!empty($holders)) {
+				$holders->replace($caption);
+			}
 
-		// fill  meta data
-		$wgWysiwygMetaData[$refid]['href'] = !empty($title) ? $title->getPrefixedText() : '';
-		$wgWysiwygMetaData[$refid]['align'] = $align;
-		if (!empty($width)) $wgWysiwygMetaData[$refid]['width'] = intval($width);
-
-		if(empty($thumb)) {
-			return "<div class=\"t{$align}\" refid=\"{$refid}\" style=\"position:relative;width:{$width}px\">{$code}</div>";
+			RTE::log(__METHOD__ . ': resolved internal link');
 		}
 
-		if ($caption != '') $wgWysiwygMetaData[$refid]['caption'] = $caption;
+		RTE::log(__METHOD__, $wikitext);
 
-		$wgWysiwygMetaData[$refid]['thumb'] = 1;
-
-		$url = $this->mTitle->getLocalURL('');
-
-		$s = <<<EOD
-<div class="thumb t{$align}" refid="{$refid}" style="position:relative">
-	<div class="thumbinner" style="width:{$width}px;">
-		{$code}
-		<div class="thumbcaption">
-			<div class="magnify"><a href="{$url}" class="internal"><img src="{$wgStylePath}/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div>
-			$caption
-		</div>
-	</div>
-</div>
-EOD;
-		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
-
-	}
-
-	// generates the video thumb for CKeditor (plain image with RTE meta data)
-	public function generateThumbForCK($wikitext, $title, $align, $width, $caption, $thumb) {
-		wfProfileIn(__METHOD__);
+		// RT #89713: trigger an edgecase when there's a link / double brackets in video caption
+		if (RTEData::checkWikitextForMarkers($wikitext)) {
+			RTE::$edgeCases[] = 'COMPLEX.09';
+		}
 
 		// render video thumb
 		$video = $this->getThumbnailCode($width, false);
 
 		// add extra CSS classes
 		$videoClass = array('video');
-		if ($align != 'vetnone') {
-			$videoClass[] = 'align' . ucfirst($align);
+
+		switch($align) {
+			case 'left':
+				$videoClass[] = 'alignLeft';
+				break;
+
+			case 'right':
+				if (empty($thumb)) {
+					$videoClass[] = 'alignRight';
+				}
+				break;
 		}
+
 		if (!empty($thumb)) {
 			$videoClass[] = 'thumb';
-		}
-		if ($caption != '') {
-			$videoClass[] = 'withCaption';
+
+			// only thumbed (with frame) videos can have captions
+			if ($caption != '') {
+				$videoClass[] = 'withCaption';
+			}
 		}
 
 		$class = 'class="' . implode(' ', $videoClass) . '"';
@@ -528,8 +521,19 @@ EOD;
 		if (!empty($width)) {
 			$params['width'] = intval($width);
 		}
+
+		// macbre: caption contains HTML (but it should contain wikitext)
 		if ($caption != '') {
-			$params['caption'] = $caption;
+			$wikitextParts = explode('|', trim($wikitext, '[]'));
+
+			// let's assume caption is the last part of image wikitext
+			$originalCaption = end($wikitextParts);
+			$originalCaption = htmlspecialchars_decode($originalCaption);
+
+			$params['caption'] = $originalCaption;
+
+			// HTML
+			$params['captionParsed'] = $caption;
 		}
 		if (!empty($thumb)) {
 			$params['thumb'] = 1;

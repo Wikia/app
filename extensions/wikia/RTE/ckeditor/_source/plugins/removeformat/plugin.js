@@ -35,9 +35,11 @@ CKEDITOR.plugins.removeformat =
 					( editor._.removeAttributes = editor.config.removeFormatAttributes.split( ',' ) );
 
 				var filter = CKEDITOR.plugins.removeformat.filter;
-				var ranges = editor.getSelection().getRanges();
+				var ranges = editor.getSelection().getRanges( 1 ),
+					iterator = ranges.createIterator(),
+					range;
 
-				for ( var i = 0, range ; range = ranges[ i ] ; i++ )
+				while ( ( range = iterator.getNextRange() ) )
 				{
 					if ( range.collapsed )
 						continue;
@@ -48,8 +50,8 @@ CKEDITOR.plugins.removeformat =
 					var bookmark = range.createBookmark();
 
 					// The style will be applied within the bookmark boundaries.
-					var startNode	= bookmark.startNode;
-					var endNode		= bookmark.endNode;
+					var startNode	= bookmark.startNode,
+						endNode		= bookmark.endNode;
 
 					// We need to check the selection boundaries (bookmark spans) to break
 					// the code in a way that we can properly remove partially selected nodes.
@@ -64,8 +66,8 @@ CKEDITOR.plugins.removeformat =
 					var breakParent = function( node )
 					{
 						// Let's start checking the start boundary.
-						var path = new CKEDITOR.dom.elementPath( node );
-						var pathElements = path.elements;
+						var path = new CKEDITOR.dom.elementPath( node ),
+							pathElements = path.elements;
 
 						for ( var i = 1, pathElement ; pathElement = pathElements[ i ] ; i++ )
 						{
@@ -101,9 +103,12 @@ CKEDITOR.plugins.removeformat =
 						{
 							// Remove elements nodes that match with this style rules.
 							if ( tagsRegex.test( currentNode.getName() ) )
-								currentNode.remove( true );
+								currentNode.remove( 1 );
 							else
+							{
 								currentNode.removeAttributes( removeAttributes );
+								editor.fire( 'removeFormatCleanup', currentNode );
+							}
 						}
 
 						currentNode = nextNode;
@@ -170,3 +175,10 @@ CKEDITOR.config.removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,
  * @example
  */
 CKEDITOR.config.removeFormatAttributes = 'class,style,lang,width,height,align,hspace,valign';
+
+/**
+ * Fired after an element was cleaned by the removeFormat plugin.
+ * @name CKEDITOR#removeFormatCleanup
+ * @event
+ * @param {Object} data.element The element that was cleaned up.
+ */

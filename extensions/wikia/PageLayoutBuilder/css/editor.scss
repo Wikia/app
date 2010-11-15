@@ -242,6 +242,13 @@ td.plb-toolbox {
 	*/
 		}
 	}
+	
+	.plb-widgets-tutorial {
+		margin: 6px;
+		margin-left: 0;
+		padding: 0 6px;
+		white-space: normal;
+	}
 }
 	
 $plb-window-width: 400px;
@@ -307,6 +314,15 @@ $plb-window-items-margin: 6px;
 		background-color: #FFFFCC;
 		border: 1px solid #AAAAAA;
 		padding: 6px;
+	}
+	
+	.plb-pe-field-error {
+//		border: 1px solid red;
+		border-color: red;
+		border-style: solid;
+	}
+	input[type=checkbox] {
+		border-width: 2px;
 	}
 	
 	.plb-pe-buttons {

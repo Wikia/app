@@ -52,7 +52,7 @@ CKEDITOR.plugins.add('rte-paste',
 		var pasted = diff.pasted;
 
 		// try to get instance data (city ID and RTE instance ID)
-		var matches = pasted.match(/_rte_instance="([a-z0-9-]+)"/);
+		var matches = pasted.match(/data-rte-instance="([a-z0-9-]+)"/);
 		if (matches) {
 			var instanceId = matches[1];
 			if (instanceId == RTE.instanceId) {
@@ -82,7 +82,7 @@ CKEDITOR.plugins.add('rte-paste',
 				RTE.log('paste: detected line breaks in pasted content');
 
 				// let's replace single linebreaks with HTML <br />
-				var html = diff['new'].replace(/([^>])<br>([^<])/g, '$1<br _rte_washtml="true" />$2');
+				var html = diff['new'].replace(/([^>])<br>([^<])/g, '$1<br data-rte-washtml="1" />$2');
 				editor.setData(html);
 			}
 		}
