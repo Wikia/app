@@ -328,9 +328,9 @@ while( $request->Accept() >= 0 || $test ) {
 		# create false positives (it's not perfect though )
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
-		if( $last !~ /$origname/ ) {
+		if( index( $last, $origname ) == -1 ) {
 			$last_status = 404;
-			print STDERR "$origname not found in $last\n" if $debug;
+			say STDERR "$origname not found in $last" if $debug;
 		}
 		else {
 			#
@@ -537,8 +537,8 @@ while( $request->Accept() >= 0 || $test ) {
 					my $origh  = 0;
 
 					try {
-						my $origw  = $image->getwidth();
-						my $origh  = $image->getheight();
+						$origw  = $image->getwidth();
+						$origh  = $image->getheight();
 					};
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					say STDERR "Original size $origw x $origh, time: $t_elapsed" if $debug > 2;
