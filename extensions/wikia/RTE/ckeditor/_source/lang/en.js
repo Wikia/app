@@ -105,6 +105,10 @@ CKEDITOR.lang['en'] =
 		targetTop		: 'Topmost Window (_top)',
 		targetSelf		: 'Same Window (_self)',
 		targetParent	: 'Parent Window (_parent)',
+		langDirLTR		: 'Left to Right (LTR)',
+		langDirRTL		: 'Right to Left (RTL)',
+		styles			: 'Style',
+		cssClasses		: 'Stylesheet Classes',
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>'
@@ -196,6 +200,7 @@ CKEDITOR.lang['en'] =
 		bulletedTitle		: 'Bulleted List Properties',
 		type				: 'Type',
 		start				: 'Start',
+		validateStartNumber				:'List start number must be a whole number.',
 		circle				: 'Circle',
 		disc				: 'Disc',
 		square				: 'Square',
@@ -642,7 +647,7 @@ CKEDITOR.lang['en'] =
 		'008080' : 'Teal',
 		'000080' : 'Navy',
 		'4B0082' : 'Indigo',
-		'696969' : 'Dim Gray',
+		'696969' : 'Dark Gray',
 		'B22222' : 'Fire Brick',
 		'A52A2A' : 'Brown',
 		'DAA520' : 'Golden Rod',
@@ -658,7 +663,7 @@ CKEDITOR.lang['en'] =
 		'0FF' : 'Cyan',
 		'00F' : 'Blue',
 		'EE82EE' : 'Violet',
-		'A9A9A9' : 'Dark Gray',
+		'A9A9A9' : 'Dim Gray',
 		'FFA07A' : 'Light Salmon',
 		'FFA500' : 'Orange',
 		'FFFF00' : 'Yellow',
@@ -707,7 +712,7 @@ CKEDITOR.lang['en'] =
 		dic_restore		: 'Restore',
 		dic_delete		: 'Delete',
 		dic_rename		: 'Rename',
-		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type it\'s name and click the Restore button.',
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.',
 
 		aboutTab		: 'About'
 	},
@@ -743,5 +748,11 @@ CKEDITOR.lang['en'] =
 	},
 
 	toolbarCollapse	: 'Collapse Toolbar',
-	toolbarExpand	: 'Expand Toolbar'
+	toolbarExpand	: 'Expand Toolbar',
+
+	bidi :
+	{
+		ltr : 'Text direction from left to right',
+		rtl : 'Text direction from right to left'
+	}
 };

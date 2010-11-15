@@ -11,7 +11,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 			RTE.instance.fire('wysiwygModeReady');
 
 			// get dropped element (and remove marking attribute)
-			var droppedElement = RTE.getEditor().find('[_rte_dragged]').removeAttr('_rte_dragged');
+			var droppedElement = RTE.getEditor().find('[data-rte-dragged]').removeAttr('data-rte-dragged');
 
 			RTE.log('dropped element:');
 			RTE.log(droppedElement);
@@ -47,10 +47,13 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 		// "mark" dragged element
 		var target = $(ev.target);
-		target.attr('_rte_dragged', true);
+		target.attr('data-rte-dragged', true);
 
 		// trigger custom event
 		target.trigger('dragged');
+
+		// fix for Chrome
+		RTE.instance.fire('wysiwygModeReady');
 	},
 
 	onDuringDragDrop: function(ev) {
@@ -82,7 +85,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 		// setup drag&drop support
 		editor.on('wysiwygModeReady', function() {
 			// fire "dropped" custom event when element is drag&drop-ed
-			// mark dragged element with _rte_dragged attribute
+			// mark dragged element with data-rte-dragged attribute
 			//
 			// @see https://developer.mozilla.org/en/DragDrop/Drag_and_Drop (new version - Fx3.5+)
 			// @see https://developer.mozilla.org/en/Drag_and_Drop (old version - Fx3.0)
@@ -109,7 +112,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 					var target = $(ev.target);
 
 					// remove "marking" attribute
-					target.removeAttr('_rte_dragged');
+					target.removeAttr('data-rte-dragged');
 
 					// remove selection box
 					ev.preventDefault();

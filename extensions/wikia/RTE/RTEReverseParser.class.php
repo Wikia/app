@@ -35,7 +35,7 @@ class RTEReverseParser {
 			wfProfileIn(__METHOD__.'::preFixes');
 
 			// fix IE bug with &nbsp; being added add the end of HTML
-			$html = str_replace('<p><br _rte_bogus="true" />&nbsp;</p>', '', $html);
+			$html = str_replace('<p><br data-rte-bogus="true" />&nbsp;</p>', '', $html);
 
 			// fix &nbsp; entity b0rken by CK
 			$html = str_replace("\xC2\xA0", '&nbsp;', $html);
@@ -222,25 +222,13 @@ class RTEReverseParser {
 	 */
 	private function handleTag($node, $textContent) {
 		wfProfileIn(__METHOD__);
-		wfProfileIn(__METHOD__ . "::{$node->nodeName}");
 
 		$out = '';
 
-
-		if($node->hasAttribute("__custom_ph")) {
-			wfRunHooks('RTEcustomHandleTag', array($node, &$out) );
-			if( $out != '' ) {
-				wfProfileOut(__METHOD__ . "::{$node->nodeName}");
-				wfProfileOut(__METHOD__);
-				return $out;
-			}
-		}
-
 		// handle placeholders
-		if ($node->hasAttribute('_rte_placeholder')) {
+		if (self::isPlaceholder($node)) {
 			$out = $this->handlePlaceholder($node, $textContent);
 
-			wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 			wfProfileOut(__METHOD__);
 			return $out;
 		}
@@ -250,7 +238,7 @@ class RTEReverseParser {
 			$out = $this->handleHtml($node, $textContent);
 		}
 		// handle nodes wrapping HTML entities
-		else if ($node->hasAttribute('_rte_entity')) {
+		else if ($node->hasAttribute('data-rte-entity')) {
 			$out = $this->handleEntity($node, $textContent);
 		}
 		// handle other elements
@@ -309,14 +297,14 @@ class RTEReverseParser {
 				$out = $this->handleListItem($node, $textContent);
 				break;
 
-			// headers
+			// headings
 			case 'h1':
 			case 'h2':
 			case 'h3':
 			case 'h4':
 			case 'h5':
 			case 'h6':
-				$out = $this->handleHeader($node, $textContent);
+				$out = $this->handleHeading($node, $textContent);
 				break;
 
 			// tables
@@ -350,25 +338,36 @@ class RTEReverseParser {
 				break;
 		}
 
-		// support _rte_empty_lines_before attribute
+		// support data-rte-empty-lines-before attribute
 		if (self::getEmptyLinesBefore($node) % 2 == 1) {
 			$out = "\n{$out}";
 		}
 
-		wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 		wfProfileOut(__METHOD__);
-
 		return $out;
 	}
 
 	/**
-	 * Handle RTE placeholders (templates, magic words, media placeholders, HTML comments)
+	 * Handle RTE placeholders (templates, magic words, media placeholders, HTML comments, custom placeholders)
 	 */
 	private function handlePlaceholder($node, $textContent) {
 		wfProfileIn(__METHOD__);
 
 		// get meta data
 		$data = self::getRTEData($node);
+
+		// support custom placeholder added by extensions
+		if(!empty($data['custom-placeholder'])) {
+			$out = '';
+
+			wfDebug(__METHOD__ . ": triggering hook for '{$node->nodeName}' custom placeholder\n");
+			wfRunHooks('RTEcustomHandleTag', array($node, &$out));
+
+			if($out != '') {
+				wfProfileOut(__METHOD__);
+				return $out;
+			}
+		}
 
 		$out = $data['wikitext'];
 
@@ -396,7 +395,7 @@ class RTEReverseParser {
 		$prefix = $suffix = $beforeText = $beforeClose = '';
 
 		// add line break
-		if ($node->hasAttribute('_rte_line_start')) {
+		if ($node->hasAttribute('data-rte-line-start')) {
 			$parentWasHtml = !empty($node->parentNode) && self::wasHtml($node->parentNode);
 
 			if ($parentWasHtml) {
@@ -414,9 +413,9 @@ class RTEReverseParser {
 					$prefix = '';
 				}
 
-				// if first child of this HTML block have _rte_line_start, add line break before closing tag
+				// if first child of this HTML block have data-rte-line-start, add line break before closing tag
 				if ( !empty($node->firstChild) && ($node->firstChild->nodeType == XML_ELEMENT_NODE) ) {
-					if ($node->firstChild->hasAttribute('_rte_line_start')) {
+					if ($node->firstChild->hasAttribute('data-rte-line-start')) {
 						$beforeClose = "\n";
 					}
 				}
@@ -433,7 +432,7 @@ class RTEReverseParser {
 
 		// fix for first paragraph / pre / table / .. inside <div>
 		if ($node->nodeName == 'div') {
-			// ignore nodes rendered from HTML (with "_rte_washtml" attribute)
+			// ignore nodes rendered from HTML (with "data-rte-washtml" attribute)
 			if (self::firstChildIs($node, array('pre', 'table', 'ul', 'ol', 'dl')) && !self::wasHtml($node->firstChild)) {
 				$beforeText = "\n";
 			}
@@ -483,7 +482,7 @@ class RTEReverseParser {
 	private function handleEntity($node, $textContent) {
 		wfProfileIn(__METHOD__);
 
-		$entity = $node->getAttribute('_rte_entity');
+		$entity = $node->getAttribute('data-rte-entity');
 
 		// convert text content back to HTML entity
 		$textEncoded = htmlentities($textContent, ENT_COMPAT, 'UTF-8');
@@ -613,7 +612,7 @@ class RTEReverseParser {
 		// empty paragraphs added in CK / already existing in wikitext
 		// RT #37897
 		if (($textContent == self::getEntityMarker('nbsp')) || ($textContent == '&nbsp;')) {
-			if ($node->hasAttribute('_rte_new_node')) {
+			if ($node->hasAttribute('data-rte-new-node')) {
 				$textContent = '';
 			}
 			else {
@@ -622,7 +621,7 @@ class RTEReverseParser {
 		}
 
 		// RT#40786: handle "filler" paragraphs added between headings
-		if ($node->hasAttribute('_rte_filler') && $textContent == "\n") {
+		if ($node->hasAttribute('data-rte-filler') && $textContent == "\n") {
 			RTE::log(__METHOD__.'::filler', 'empty filler paragraph found');
 
 			wfProfileOut(__METHOD__);
@@ -641,9 +640,9 @@ class RTEReverseParser {
 			}
 
 			// parse "margin-left" style attribute
-			$marginLeft = self::getCssProperty($node, 'margin-left');
-			if (!empty($marginLeft)) {
-				$textContent = str_repeat(':', $marginLeft / 40) . " {$textContent}";
+			$indentLevel = self::getIndentationLevel($node);
+			if ($indentLevel) {
+				$textContent = str_repeat(':', $indentLevel) . " {$textContent}";
 			}
 		}
 
@@ -655,7 +654,8 @@ class RTEReverseParser {
 		}
 
 		// this node was added in CK
-		else if ( self::isNewNode($node)) {
+		// handle paragraphs outside tables only (RT #56402)
+		else if (self::isNewNode($node) && self::isChildOf($node, 'body')) {
 			// previous element is paragraph
 			if (self::previousSiblingIs($node, 'p') && !self::isNewNode($node->previousSibling)) {
 				$out = "\n{$out}";
@@ -696,7 +696,7 @@ class RTEReverseParser {
 		$out = "\n";
 
 		// handle <br /> added by Shift+Enter
-		if ($node->hasAttribute('_rte_shift_enter')) {
+		if ($node->hasAttribute('data-rte-shift-enter')) {
 			$out = "<br />";
 			if(!empty($node->parentNode->parentNode) && !self::isListNode($node->parentNode->parentNode)) { // (RT#37118)
 				$out .= "\n";
@@ -771,6 +771,9 @@ class RTEReverseParser {
 				// [[foo|foo]] -> [[foo]]
 				// [[foo|foos]] -> [[foo]]s
 
+				// check for possible trails
+				$trail = false;
+
 				// start link wikitext
 				$out = "[[";
 
@@ -790,11 +793,17 @@ class RTEReverseParser {
 					$data['link'] = $textContent;
 				}
 
+				// keep [[/foo/]] (RT #56095)
+				if ($data['link'] == "{$pageName}/{$textContentOriginal}") {
+					$data['link'] = "/{$textContent}/";
+
+					// don't check for possible trails
+					$trail = '';
+				}
+
 				$out .= $data['link'];
 
 				// check for possible trail
-				$trail = false;
-
 				// [[foo|foos]] -> [[foo]]s
 				if ( (strlen($textContentOriginal) > strlen($data['link'])) ) {
 					if (substr($textContentOriginal, 0, strlen($data['link'])) == $data['link']) {
@@ -1048,7 +1057,17 @@ class RTEReverseParser {
 				// check for <ul><li><ul><li>789</li></ul></li></ul>
 				// this is list item with nested list inside
 				if ( self::startsWithListWikitext($textContent) ) {
-					$out = "{$textContent}\n";
+					// RT #41140 - maintain following wikitext:
+					// *[spaces]
+					// **foo
+					// **bar
+					$spaces = strspn($textContent, ' '); // count [spaces]
+					if ($spaces > 0) {
+						$out = $this->listBullets . str_repeat(' ', $spaces) . "\n" . ltrim($textContent) . "\n";
+					}
+					else {
+						$out = "{$textContent}\n";
+					}
 				}
 				else {
 					$out = "{$this->listBullets}{$textContent}\n";
@@ -1094,13 +1113,18 @@ class RTEReverseParser {
 				}
 				// check for <dl><dd><ul><li>1</li></ul></dd></dl>
 				// this is intended list item with nested list inside
-				else if ( self::startsWithListWikitext($textContent) ) {
+				else if (self::startsWithListWikitext($textContent)) {
 					$out = "{$textContent}\n";
 				}
-				// allow UL/OL id DT (RT#52593)
+				// allow UL/OL inside DT (RT#52593)
 				else if(self::firstChildIs($node, array('ul', 'ol'))) {
 					$out = "{$textContent}\n";
-				} else {
+				}
+				// handle indentation changes made in wysiwyg mode (RT #74089)
+				else if ($indentLevel = self::getIndentationLevel($node)) {
+					$out = $this->listBullets . str_repeat(':', $indentLevel) . "{$textContent}\n";
+				}
+				else {
 					$out = "{$this->listBullets}{$textContent}\n";
 				}
 
@@ -1167,20 +1191,26 @@ class RTEReverseParser {
 	/**
 	 * Handle header
 	 */
-	private function handleHeader($node, $textContent) {
+	private function handleHeading($node, $textContent) {
 		wfProfileIn(__METHOD__);
 
 		$level = str_repeat('=', intval($node->nodeName{1}));
 
 		$textContent = self::addSpaces($node, $textContent);
 
-		$out = "{$level}{$textContent}{$level}\n";
+		if ($textContent != '') {
+			$out = "{$level}{$textContent}{$level}\n";
 
-		$out = $this->fixForTableCell($node, $out);
+			$out = $this->fixForTableCell($node, $out);
 
-		// RT #38254
-		if (self::isChildOf($node, 'div') && self::isFirstChild($node)) {
-			$out = "\n{$out}";
+			// RT #38254
+			if (self::isChildOf($node, 'div') && self::isFirstChild($node)) {
+				$out = "\n{$out}";
+			}
+		}
+		else {
+			// RT #75625: don't render empty headings
+			$out = "\n";
 		}
 
 		wfProfileOut(__METHOD__);
@@ -1218,7 +1248,7 @@ class RTEReverseParser {
 
 				// add \n if previous node is header and table is inside <div> (RT #44119)
 				if (self::isChildOf($node, 'div')) {
-					if (!empty($node->previousSibling) && self::isHeaderNode($node->previousSibling)) {
+					if (!empty($node->previousSibling) && self::isHeadingNode($node->previousSibling)) {
 						$out = "\n{$out}";
 					}
 				}
@@ -1280,8 +1310,8 @@ class RTEReverseParser {
 				$char = ($node->nodeName == 'td') ? '|' : '!';
 
 				// support cells separated using double pipe
-				$shortRowMarkup = $node->hasAttribute('_rte_short_row_markup');
-				$spacesAfterLastCell = intval( $node->getAttribute('_rte_spaces_after_last_cell') );
+				$shortRowMarkup = $node->hasAttribute('data-rte-short-row-markup');
+				$spacesAfterLastCell = intval( $node->getAttribute('data-rte-spaces-after-last-cell') );
 
 				if($shortRowMarkup) {
 					// add trailing spaces from previous cell (RT #33879)
@@ -1329,7 +1359,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		// get RTE data
-		$data =self::getRTEData($node);
+		$data = self::getRTEData($node);
 
 		// TODO: try to generate wikitext based on data
 		$out = $data['wikitext'];
@@ -1426,9 +1456,9 @@ class RTEReverseParser {
 	}
 
 	/**
-	 * Checks if given node is header
+	 * Checks if given node is heading
 	 */
-	private static function isHeaderNode($node) {
+	private static function isHeadingNode($node) {
 		return !empty($node->nodeName) && $node->nodeName{0} == 'h' && is_numeric($node->nodeName{1});
 	}
 
@@ -1572,76 +1602,75 @@ class RTEReverseParser {
 	 * Checks if given node (check is only performed for paragraphs) was pasted
 	 */
 	private static function isPasted($node) {
-		return !$node->hasAttribute('_rte_fromparser') && !$node->hasAttribute('_rte_new_mode');
+		return !$node->hasAttribute('data-rte-fromparser') && !$node->hasAttribute('data-rte-new-mode');
 	}
 
 	/**
 	 * Checks if given node was added into CK
 	 */
 	private static function isNewNode($node) {
-		return $node->hasAttribute('_rte_new_node') && (self::getEmptyLinesBefore($node) == 0);
+		return $node->hasAttribute('data-rte-new-node') && (self::getEmptyLinesBefore($node) == 0);
 	}
 
 	/**
 	 * Checks if given node is placeholder
 	 */
 	private static function isPlaceholder($node) {
-		return $node->hasAttribute('_rte_placeholder');
+		$data = self::getRTEData($node);
+		return !empty($data) && !empty($data['placeholder']);
 	}
 
 	/**
 	 * Check if given node was rendered from HTML node
 	 */
 	private static function wasHtml($node) {
-		return $node->hasAttribute('_rte_washtml');
+		return $node->hasAttribute('data-rte-washtml');
 	}
 
 	/**
-	 * Get value of _rte_empty_lines_before attribute
+	 * Get value of data-rte-empty-lines-before attribute
 	 */
 	private static function getEmptyLinesBefore($node) {
-		return intval($node->getAttribute('_rte_empty_lines_before'));
+		return intval($node->getAttribute('data-rte-empty-lines-before'));
 	}
 
 	/**
-         * Get string with "HTML" formatted list of node attributes (attributes with _rte prefixes will be removed)
-         */
-        private static function getAttributesStr($node) {
-                if(!$node->hasAttributes()) {
-                        return '';
-                }
+	 * Get string with "HTML" formatted list of node attributes (attributes with _rte prefixes will be removed)
+	 */
+	private static function getAttributesStr($node) {
+		if(!$node->hasAttributes()) {
+			return '';
+		}
 
 		wfProfileIn(__METHOD__);
 
-                // replace style attribute with _rte_style
-                if ($node->hasAttribute('_rte_style')) {
-                        $node->setAttribute('style', $node->getAttribute('_rte_style'));
-                }
+		// replace style attribute with data-rte-style
+		if ($node->hasAttribute('data-rte-style')) {
+			$node->setAttribute('style', $node->getAttribute('data-rte-style'));
+		}
 
-                // try to get attributes from previously stored attribute (RT #23998)
-                $attrStr = $node->getAttribute('_rte_attribs');
+		// try to get attributes from previously stored attribute (RT #23998)
+		$attrStr = $node->getAttribute('data-rte-attribs');
 
-                if ( $attrStr != '' ) {
+		if ( $attrStr != '' ) {
 			// decode entities
 			$attrStr = str_replace("\x7f", '&quot;', $attrStr);
-                        $attrStr = htmlspecialchars_decode($attrStr);
-                }
-                else {
-                        foreach ($node->attributes as $attrName => $attrNode) {
-                                // ignore attributes used internally by RTE ("washtml" and with "_rte_" or "jquery" prefix)
-                                if ( $attrName == 'washtml' ||
-					substr($attrName, 0, 5) == '_rte_' ||
-					substr($attrName, 0, 6) == 'jquery' ) {
-                                        continue;
-                                }
-                                $attrStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
-                        }
-                }
+			$attrStr = htmlspecialchars_decode($attrStr);
+		}
+		else {
+			foreach ($node->attributes as $attrName => $attrNode) {
+				// ignore attributes used internally by RTE ("data-rte-" or "jquery" prefix)
+				if (substr($attrName, 0, 9) == 'data-rte-' || substr($attrName, 0, 6) == 'jquery') {
+					continue;
+				}
+				$attrStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
+			}
+		}
 
 		wfProfileOut(__METHOD__);
 
-                return $attrStr;
-        }
+		return $attrStr;
+	}
 
 	/**
 	 * Get value of given CSS property
@@ -1671,12 +1700,35 @@ class RTEReverseParser {
 	}
 
 	/**
-	 * Decode and return data stored in _rte_data attribute
+	 * Returns indentation level of give node
+	 */
+	private static function getIndentationLevel($node) {
+		wfProfileIn(__METHOD__);
+
+		$indentLevel = 0;
+
+		$marginLeft = self::getCssProperty($node, 'margin-left');
+		if (!empty($marginLeft)) {
+			$indentLevel = intval($marginLeft / 40);
+		}
+
+		wfProfileOut(__METHOD__);
+		return $indentLevel;
+	}
+
+	/**
+	 * Decode and return meta data stored in data-rte-meta attribute
 	 */
 	public static function getRTEData($node) {
 		wfProfileIn(__METHOD__);
 
-		$value = $node->getAttribute('_rte_data');
+		// check cached result
+		if (!empty($node->data)) {
+			wfProfileOut(__METHOD__);
+			return $node->data;
+		}
+
+		$value = $node->getAttribute('data-rte-meta');
 
 		if (!empty($value)) {
 			$value = htmlspecialchars_decode($value);
@@ -1689,6 +1741,9 @@ class RTEReverseParser {
 			if (!empty($data)) {
 				RTE::log(__METHOD__, $data);
 
+				// cache data
+				$node->data = $data;
+
 				wfProfileOut(__METHOD__);
 				return $data;
 			}
@@ -1700,7 +1755,7 @@ class RTEReverseParser {
 	}
 
 	/**
-	 * Encode data to be stored in _rte_data attribute
+	 * Encode meta data to be stored in data-rte-meta attribute
 	 */
 	public static function encodeRTEData($data) {
 		wfProfileIn(__METHOD__);
@@ -1779,7 +1834,7 @@ class RTEReverseParser {
 	/**
 	 * Returns textContent of given node with spaces added
 	 *
-	 * Number of spaces is based on _rte_spaces_after and _rte_spaces_before attributes
+	 * Number of spaces is based on data-rte-spaces-after and data-rte-spaces-before attributes
 	 */
 	private static function addSpaces($node, $textContent) {
 		wfProfileIn(__METHOD__);
@@ -1788,12 +1843,12 @@ class RTEReverseParser {
 
 		// RT #40013
 		if ( ($textContent != '') && ($textContent != '&nbsp;') ) {
-			$spacesAfter = intval($node->getAttribute('_rte_spaces_after'));
-			$spacesBefore = intval($node->getAttribute('_rte_spaces_before'));
+			$spacesAfter = intval($node->getAttribute('data-rte-spaces-after'));
+			$spacesBefore = intval($node->getAttribute('data-rte-spaces-before'));
 		}
 		else {
 			$textContent = '';
-			$spacesAfter = intval($node->getAttribute('_rte_spaces_after'));
+			$spacesAfter = intval($node->getAttribute('data-rte-spaces-after'));
 			$spacesBefore = 0;
 		}
 

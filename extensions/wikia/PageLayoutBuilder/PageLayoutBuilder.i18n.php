@@ -92,6 +92,7 @@ $messages['en'] = array (
 	'plb-editor-edit' => 'Edit',
 	'plb-editor-overlay-edit' => 'edit',
 	'plb-editor-enter-caption' => 'Enter caption...',
+	'plb-editor-left-sidebar-tutorial' => '<br /><b>Welcome to the Layout Builder!</b><br /><br />To start adding form elements click the <i>Add element</i> button above and choose the type of the element.<br /><br />The form for the user creating new article will be automatically generated based on all elements you put into the layout.',
 	'plb-widget-name-plb_input' => 'Input Box',
 	'plb-widget-name-plb_mlinput' => 'Paragraph',
 	'plb-widget-name-plb_image' => 'Image',

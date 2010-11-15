@@ -23,17 +23,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		{
 			// Get the range for the current selection.
 			range = range || getRange( editor );
-			
+
 			// Wikia - start
 			var xStartPath = new CKEDITOR.dom.elementPath( range.startContainer ),
 				xEndPath = new CKEDITOR.dom.elementPath( range.endContainer );
 			if (!xStartPath.isContentEditable() || !xEndPath.isContentEditable()) {
 				return;
-			} 
+			}
 			// Wikia - end
 
 			var doc = range.document;
-			
+
 			// Exit the list when we're inside an empty list item block. (#5376)
 			if ( range.checkStartOfBlock() && range.checkEndOfBlock() )
 			{
@@ -72,7 +72,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				if ( node.is( 'li' ) )
 				{
 					nextBlock.breakParent( node );
-					nextBlock.move( nextBlock.getNext(), true );
+					nextBlock.move( nextBlock.getNext(), 1 );
 				}
 			}
 			else if ( previousBlock && ( node = previousBlock.getParent() ) && node.is( 'li' ) )
@@ -99,12 +99,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				if ( nextBlock ) {
 					// Wikia - start
 					// add empty line between paragraphs when parsing back to wikitext
-					// if first node is comment (wikitext line-break marker), don't add _rte_empty_lines_before attribute
-					var firstChild = nextBlock.getFirst();
-					if (firstChild.$.nodeType != CKEDITOR.NODE_COMMENT) {
-						nextBlock.setAttribute('_rte_empty_lines_before', 1);
+					// if first node is comment (wikitext line-break marker), don't add data-rte-empty-lines-before attribute
+					if (nextBlock.is('p')) {
+						var firstChild = nextBlock.getFirst();
+						if (firstChild.$.nodeType != CKEDITOR.NODE_COMMENT) {
+							nextBlock.setAttribute('data-rte-empty-lines-before', 1);
+						}
+						nextBlock.setAttribute('data-rte-fromparser', 1);
 					}
-					nextBlock.setAttribute('_rte_fromparser', 1);
 					// Wikia - end
 
 					range.moveToElementEditStart( nextBlock );
@@ -140,7 +142,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					newBlock = new CKEDITOR.dom.element('p');
 				}
 				// Wikia - end
-				
+
 
 				// Recreate the inline elements tree, which was available
 				// before hitting enter, so the same styles will be available in
@@ -155,7 +157,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							notEditableIndex = i;
 							break;
 						}
-						
+
 					}
 					$().log({
 						elementPath: elementPath,
@@ -164,20 +166,20 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						notEditableIndex: notEditableIndex
 					},'RTE-enterkey');
 					// Wikia - end
-					
+
 					for ( var i = 0, len = elementPath.elements.length ; i < len ; i++ )
 					{
 						var element = elementPath.elements[ i ];
 
 						if ( element.equals( elementPath.block ) || element.equals( elementPath.blockLimit ) )
 							break;
-						
+
 						// Wikia - start
 						if ( i <= notEditableIndex ) {
 							continue;
 						}
 						// Wikia - end
-						
+
 						if ( CKEDITOR.dtd.$removeEmpty[ element.getName() ] )
 						{
 							element = element.clone();
@@ -191,7 +193,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					newBlock.appendBogus();
 
 				// Wikia - mark paragraphs added in wysiwyg mode
-				newBlock.setAttribute('_rte_new_node', true);
+				newBlock.setAttribute('data-rte-new-node', true);
 
 				range.insertNode( newBlock );
 
@@ -242,6 +244,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// Get the range for the current selection.
 			range = range || getRange( editor );
 
+			// We may not have valid ranges to work on, like when inside a
+			// contenteditable=false element.
+			if ( !range )
+				return;
+
+			// We may not have valid ranges to work on, like when inside a
+			// contenteditable=false element.
+			if ( !range )
+				return;
+
 			var doc = range.document;
 
 			// Determine the block element to be used.
@@ -288,7 +300,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					lineBreak = doc.createElement( 'br' );
 
 					// Wikia -- start
-					lineBreak.setAttribute('_rte_shift_enter', true);
+					lineBreak.setAttribute('data-rte-shift-enter', true);
 					// Wikia -- end
 				}
 
@@ -365,7 +377,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			return true;
 		}
 		else
-			return enter( editor, editor.config.shiftEnterMode, true );
+			return enter( editor, editor.config.shiftEnterMode, 1 );
 	}
 
 	function enter( editor, mode, forceMode )
@@ -383,7 +395,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		setTimeout( function()
 			{
 				editor.fire( 'saveSnapshot' );	// Save undo step.
-				if ( mode == CKEDITOR.ENTER_BR || editor.getSelection().getStartElement().hasAscendant( 'pre', true ) )
+				if ( mode == CKEDITOR.ENTER_BR || editor.getSelection().getStartElement().hasAscendant( 'pre', 1 ) )
 					enterBr( editor, mode, null, forceMode );
 				else
 					enterBlock( editor, mode, null, forceMode );
@@ -397,7 +409,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	function getRange( editor )
 	{
 		// Get the selection ranges.
-		var ranges = editor.getSelection().getRanges();
+		var ranges = editor.getSelection().getRanges( true );
 
 		// Delete the contents of all ranges except the first one.
 		for ( var i = ranges.length - 1 ; i > 0 ; i-- )

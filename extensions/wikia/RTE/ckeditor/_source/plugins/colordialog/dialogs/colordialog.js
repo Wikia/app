@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -14,13 +14,11 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 		// Reference the dialog.
 		var dialog;
 
-		function spacer()
+		var spacer =
 		{
-			return {
-				type : 'html',
-				html : '&nbsp;'
-			};
-		}
+			type : 'html',
+			html : '&nbsp;'
+		};
 
 		function clearSelected()
 		{
@@ -30,11 +28,11 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 
 		function updateSelected( evt )
 		{
-			if ( ! (evt instanceof CKEDITOR.dom.event ) )
+			if ( ! ( evt instanceof CKEDITOR.dom.event ) )
 				evt = new CKEDITOR.dom.event( evt );
 
 			var target = evt.getTarget(),
-					color;
+				color;
 
 			if ( target.getName() == 'a' && ( color = target.getChild( 0 ).getHtml() ) )
 				dialog.getContentElement( 'picker', 'selectedColor' ).setValue( color );
@@ -42,7 +40,7 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 
 		function updateHighlight( event )
 		{
-			if ( ! (event instanceof CKEDITOR.dom.event ) )
+			if ( ! ( event instanceof CKEDITOR.dom.event ) )
 				event = event.data;
 
 			var target = event.getTarget(),
@@ -61,21 +59,19 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 			$doc.getById( hicolorTextId ).setHtml( '&nbsp;' );
 		}
 
-		var onMouseout = $tools.addFunction( clearHighlight );
-
-		var onClick = updateSelected,
-				onClickHandler = CKEDITOR.tools.addFunction( onClick );
-
-		var onFocus = updateHighlight,
-				onBlur = clearHighlight;
+		var onMouseout = $tools.addFunction( clearHighlight ),
+			onClick = updateSelected,
+			onClickHandler = CKEDITOR.tools.addFunction( onClick ),
+			onFocus = updateHighlight,
+			onBlur = clearHighlight;
 
 		var onKeydownHandler = CKEDITOR.tools.addFunction( function( ev )
 		{
 			ev = new CKEDITOR.dom.event( ev );
 			var element = ev.getTarget();
 			var relative, nodeToMove;
-			var keystroke = ev.getKeystroke();
-			var rtl = editor.lang.dir == 'rtl';
+			var keystroke = ev.getKeystroke(),
+				rtl = editor.lang.dir == 'rtl';
 
 			switch ( keystroke )
 			{
@@ -177,14 +173,14 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 		function createColorTable()
 		{
 			// Create the base colors array.
-			var aColors = ['00','33','66','99','cc','ff'];
+			var aColors = [ '00', '33', '66', '99', 'cc', 'ff' ];
 
 			// This function combines two ranges of three values from the color array into a row.
 			function appendColorRow( rangeA, rangeB )
 			{
 				for ( var i = rangeA ; i < rangeA + 3 ; i++ )
 				{
-					var row = table.$.insertRow(-1);
+					var row = table.$.insertRow( -1 );
 
 					for ( var j = rangeB ; j < rangeB + 3 ; j++ )
 					{
@@ -243,11 +239,12 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 
 		var numbering = function( id )
 			{
-				return id + CKEDITOR.tools.getNextNumber();
+				return CKEDITOR.tools.getNextId() + '_' + id;
 			},
 			hicolorId = numbering( 'hicolor' ),
 			hicolorTextId = numbering( 'hicolortext' ),
-			selHiColorId = numbering( 'selhicolor' );
+			selHiColorId = numbering( 'selhicolor' ),
+			tableLabelId = numbering( 'color_table_label' );
 
 		return {
 			title : lang.title,
@@ -273,8 +270,8 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 							[
 								{
 									type : 'html',
-									html : '<table role="listbox" aria-labelledby="color_table_label" onmouseout="CKEDITOR.tools.callFunction( ' + onMouseout + ' );">' + table.getHtml() + '</table>' +
-												'<span id="color_table_label" class="cke_voice_label">' + lang.options +'</span>',
+									html : '<table role="listbox" aria-labelledby="' + tableLabelId + '" onmouseout="CKEDITOR.tools.callFunction( ' + onMouseout + ' );">' + table.getHtml() + '</table>' +
+												'<span id="' + tableLabelId + '" class="cke_voice_label">' + lang.options +'</span>',
 									onLoad : function()
 									{
 										var table = CKEDITOR.document.getById( this.domId );
@@ -286,7 +283,7 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 										firstColor.focus();
 									}
 								},
-								spacer(),
+								spacer,
 								{
 									type : 'vbox',
 									padding : 0,
@@ -319,7 +316,7 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 												}
 											}
 										},
-										spacer(),
+										spacer,
 										{
 											type : 'button',
 											id : 'clear',

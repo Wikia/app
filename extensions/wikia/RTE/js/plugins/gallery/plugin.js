@@ -28,6 +28,9 @@ CKEDITOR.plugins.add('rte-gallery',
 				className: 'RTEGalleryButton',
 				command: 'addphotogallery'
 			});
+
+			// ... and block it when cursor is placed within a header (RT #67987)
+			RTE.tools.blockCommandInHeader('addphotogallery');
 		}
 		else {
 			RTE.log('WikiaPhotoGallery is not enabled here - disabling "Gallery" button');

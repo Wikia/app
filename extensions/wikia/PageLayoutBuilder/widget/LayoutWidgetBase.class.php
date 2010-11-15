@@ -155,23 +155,27 @@ abstract class LayoutWidgetBase {
 	public function getBaseParamForRTE() {
 		$base = array(
 			'contenteditable' => 'false',
-			'__custom_ph' => '__custom_ph',
+			'formateditable' => 'true',
 			'__plb_type' => $this->getName(),
 		);
 		return $base;
 	}
 
 	public function RTEElementDecoratorAndRender( $directly = false ) {
-		$params = array("__plb_type" => $this->getName());
+		$data = array(
+			'placeholder' => true,
+			'custom-placeholder' => true,
+			'__plb_type' => $this->getName(),
+		);
 		foreach(array_keys($this->getAllAttrs()) as $name ) {
 			if(isset($this->attributes[$name])) {
-				$params["__plb_param_".$name] = $this->attributes[$name];
+				$data["__plb_param_".$name] = $this->attributes[$name];
 			}
 		}
 		if ($directly) {
-			return RTEData::addDataToTag($params, $this->renderForRTE());
+			return RTEData::addDataToTag($data, $this->renderForRTE());
 		} else {
-			$dataIdx = RTEData::put('data', $params);
+			$dataIdx = RTEData::put('data', $data);
 			return RTEData::addIdxToTag($dataIdx, $this->renderForRTE());
 		}
 	}
@@ -222,7 +226,7 @@ abstract class LayoutWidgetBase {
 		}
 		return $messages;
 	}
-	
+
 	public function isParagraph() {
 		return false;
 	}
@@ -235,11 +239,12 @@ abstract class LayoutWidgetBase {
 	protected function getRTEUIMarkup() {
 		$content = "&nbsp;";
 //		$content = "";
+		//" contenteditable=\"false\"";
 		return
-			 "<span contenteditable=\"false\" class=\"plb-rte-widget-box-icon\" unselectable=\"on\">$content</span>"
-			."<span contenteditable=\"false\" class=\"plb-rte-widget-horiz-line plb-rte-widget-top-line\" unselectable=\"on\">$content</span>"
-			."<span contenteditable=\"false\" class=\"plb-rte-widget-horiz-line plb-rte-widget-bottom-line\" unselectable=\"on\">$content</span>"
-			."<span contenteditable=\"false\" class=\"plb-rte-widget-edit-button-placer\" unselectable=\"on\">"
+			 "<span class=\"plb-rte-widget-box-icon\">$content</span>"
+			."<span class=\"plb-rte-widget-horiz-line plb-rte-widget-top-line\">$content</span>"
+			."<span class=\"plb-rte-widget-horiz-line plb-rte-widget-bottom-line\">$content</span>"
+			."<span class=\"plb-rte-widget-edit-button-placer\">"
 				."<button class=\"plb-rte-widget-edit-button wikia-button secondary\">".htmlspecialchars(wfMsg('plb-editor-edit'))."</button></span>";
 	}
 

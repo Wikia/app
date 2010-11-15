@@ -105,6 +105,10 @@ CKEDITOR.lang['nb'] =
 		targetTop		: 'Hele vindu (_top)',
 		targetSelf		: 'Samme vindu (_self)',
 		targetParent	: 'Foreldrevindu (_parent)',
+		langDirLTR		: 'Left to Right (LTR)', // MISSING
+		langDirRTL		: 'Right to Left (RTL)', // MISSING
+		styles			: 'Style', // MISSING
+		cssClasses		: 'Stylesheet Classes', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, utilgjenglig</span>'
@@ -196,6 +200,7 @@ CKEDITOR.lang['nb'] =
 		bulletedTitle		: 'Bulleted List Properties', // MISSING
 		type				: 'Type', // MISSING
 		start				: 'Start', // MISSING
+		validateStartNumber				:'List start number must be a whole number.', // MISSING
 		circle				: 'Circle', // MISSING
 		disc				: 'Disc', // MISSING
 		square				: 'Square', // MISSING
@@ -707,7 +712,7 @@ CKEDITOR.lang['nb'] =
 		dic_restore		: 'Restore', // MISSING
 		dic_delete		: 'Delete', // MISSING
 		dic_rename		: 'Rename', // MISSING
-		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type it\'s name and click the Restore button.', // MISSING
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
 
 		aboutTab		: 'Om'
 	},
@@ -743,5 +748,11 @@ CKEDITOR.lang['nb'] =
 	},
 
 	toolbarCollapse	: 'Slå sammen verktøylinje',
-	toolbarExpand	: 'Vis verktøylinje'
+	toolbarExpand	: 'Vis verktøylinje',
+
+	bidi :
+	{
+		ltr : 'Text direction from left to right', // MISSING
+		rtl : 'Text direction from right to left' // MISSING
+	}
 };

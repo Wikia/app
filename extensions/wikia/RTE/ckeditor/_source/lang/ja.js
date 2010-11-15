@@ -105,6 +105,10 @@ CKEDITOR.lang['ja'] =
 		targetTop		: 'Topmost Window (_top)', // MISSING
 		targetSelf		: 'Same Window (_self)', // MISSING
 		targetParent	: 'Parent Window (_parent)', // MISSING
+		langDirLTR		: 'Left to Right (LTR)', // MISSING
+		langDirRTL		: 'Right to Left (RTL)', // MISSING
+		styles			: 'Style', // MISSING
+		cssClasses		: 'Stylesheet Classes', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, 利用不可能</span>'
@@ -196,6 +200,7 @@ CKEDITOR.lang['ja'] =
 		bulletedTitle		: 'Bulleted List Properties', // MISSING
 		type				: 'Type', // MISSING
 		start				: 'Start', // MISSING
+		validateStartNumber				:'List start number must be a whole number.', // MISSING
 		circle				: 'Circle', // MISSING
 		disc				: 'Disc', // MISSING
 		square				: 'Square', // MISSING
@@ -221,9 +226,9 @@ CKEDITOR.lang['ja'] =
 		findWhat			: '検索する文字列:',
 		replaceWith			: '置換えする文字列:',
 		notFoundMsg			: '指定された文字列は見つかりませんでした。',
-		matchCase			: '部分一致',
-		matchWord			: '単語単位で一致',
-		matchCyclic			: '大文字/小文字区別一致',
+		matchCase			: '大文字と小文字を区別する',
+		matchWord			: '単語単位で探す',
+		matchCyclic			: '一周する',
 		replaceAll			: 'すべて置換え',
 		replaceSuccessMsg	: '%1 個置換しました。'
 	},
@@ -642,7 +647,7 @@ CKEDITOR.lang['ja'] =
 		'008080' : 'Teal', // MISSING
 		'000080' : 'Navy', // MISSING
 		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dim Gray', // MISSING
+		'696969' : 'Dark Gray', // MISSING
 		'B22222' : 'Fire Brick', // MISSING
 		'A52A2A' : 'Brown', // MISSING
 		'DAA520' : 'Golden Rod', // MISSING
@@ -658,7 +663,7 @@ CKEDITOR.lang['ja'] =
 		'0FF' : 'Cyan', // MISSING
 		'00F' : 'Blue', // MISSING
 		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dark Gray', // MISSING
+		'A9A9A9' : 'Dim Gray', // MISSING
 		'FFA07A' : 'Light Salmon', // MISSING
 		'FFA500' : 'Orange', // MISSING
 		'FFFF00' : 'Yellow', // MISSING
@@ -707,7 +712,7 @@ CKEDITOR.lang['ja'] =
 		dic_restore		: 'Restore', // MISSING
 		dic_delete		: 'Delete', // MISSING
 		dic_rename		: 'Rename', // MISSING
-		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type it\'s name and click the Restore button.', // MISSING
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
 
 		aboutTab		: 'バージョン情報'
 	},
@@ -743,5 +748,11 @@ CKEDITOR.lang['ja'] =
 	},
 
 	toolbarCollapse	: 'ツールバーを閉じる',
-	toolbarExpand	: 'ツールバーを開く'
+	toolbarExpand	: 'ツールバーを開く',
+
+	bidi :
+	{
+		ltr : 'Text direction from left to right', // MISSING
+		rtl : 'Text direction from right to left' // MISSING
+	}
 };

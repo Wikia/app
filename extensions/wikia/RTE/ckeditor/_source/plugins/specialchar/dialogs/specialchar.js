@@ -15,22 +15,25 @@ CKEDITOR.dialog.add( 'specialchar', function( editor )
 	var insertSpecialChar = function ( specialChar )
 	{
 		var selection = editor.getSelection(),
-			ranges	  = selection.getRanges(),
+			ranges = selection.getRanges( true ),
 			range, textNode;
 
 		editor.fire( 'saveSnapshot' );
 
-		for ( var i = 0, len = ranges.length ; i < len ; i++ )
+		for ( var i = ranges.length - 1; i >= 0 ; i-- )
 		{
 			range = ranges[ i ];
 			range.deleteContents();
 
-			textNode =  CKEDITOR.dom.element.createFromHtml( specialChar );
+			textNode = CKEDITOR.dom.element.createFromHtml( specialChar );
 			range.insertNode( textNode );
 		}
 
-		range.moveToPosition( textNode, CKEDITOR.POSITION_AFTER_END );
-		range.select();
+		if ( range )
+		{
+			range.moveToPosition( textNode, CKEDITOR.POSITION_AFTER_END );
+			range.select();
+		}
 
 		editor.fire( 'saveSnapshot' );
 	};
@@ -109,8 +112,8 @@ CKEDITOR.dialog.add( 'specialchar', function( editor )
 		// Get an Anchor element.
 		var element = ev.getTarget();
 		var relative, nodeToMove;
-		var keystroke = ev.getKeystroke();
-		var rtl = editor.lang.dir == 'rtl';
+		var keystroke = ev.getKeystroke(),
+			rtl = editor.lang.dir == 'rtl';
 
 		switch ( keystroke )
 		{
@@ -262,7 +265,7 @@ CKEDITOR.dialog.add( 'specialchar', function( editor )
 			var columns = this.definition.charColumns,
 				chars = this.definition.chars;
 
-			var charsTableLabel =  'specialchar_table_label' + CKEDITOR.tools.getNextNumber();
+			var charsTableLabel =  CKEDITOR.tools.getNextId() + '_specialchar_table_label';
 			var html = [ '<table role="listbox" aria-labelledby="' + charsTableLabel + '"' +
 						 			' style="width: 320px; height: 100%; border-collapse: separate;"' +
 						 			' align="center" cellspacing="2" cellpadding="2" border="0">' ];
@@ -344,11 +347,11 @@ CKEDITOR.dialog.add( 'specialchar', function( editor )
 								focus : function()
 								{
 									var firstChar = this.getElement().getElementsByTag( 'a' ).getItem( 0 );
-									setTimeout(function()
+									setTimeout( function()
 									{
 										firstChar.focus();
 										onFocus( null, firstChar );
-									});
+									}, 0 );
 								},
 								onShow : function()
 								{
@@ -357,7 +360,7 @@ CKEDITOR.dialog.add( 'specialchar', function( editor )
 										{
 											firstChar.focus();
 											onFocus( null, firstChar );
-										});
+										}, 0 );
 								},
 								onLoad : function( event )
 								{

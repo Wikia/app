@@ -1841,7 +1841,7 @@ class Parser
 						global $wgRTEParserEnabled;
 						if (!empty($wgRTEParserEnabled)) {
 							$wikitext = RTEData::get('wikitext', $RTE_wikitextIdx);
-							$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, $wikitext);
+							$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, $wikitext, false, $holders /* needed by RT #90616 */);
 						} else {
 							$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, '', $in_template);
 						}

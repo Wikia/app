@@ -176,8 +176,6 @@ function VET_moveBackButton(selector) {
 	window.VETbackButton.clone().
 		click(VET_back).
 		insertBefore(selector);
-
-	$().log([window.VETbackButton, selector], 'VET');
 }
 
 /*
@@ -227,12 +225,12 @@ function VET_showReplace(e) {
 }
 
 function VET_addHandler() {
-	var btn = $G('mw-editbutton-vet');
-	if(btn == null) {
- 		setTimeout('VET_addHandler()', 250);
+	// FIXME
+	if(!$('#mw-editbutton-vet').exists()) {
+ 		setTimeout(VET_addHandler, 250);
   		return;
   	}
-  	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink', btn], 'click',  VET_show);
+  	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink', 'mw-editbutton-vet'], 'click',  VET_show);
 }
 
 function VET_toggleSizing( enable ) {

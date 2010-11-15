@@ -261,10 +261,10 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 			// get RTE double brackets info
 			var info = RTE.templateEditor.placeholder.data('info');
 
-			// let's decide which screen to show by default start with step #1)
+			// let's decide which screen to show (by default start with step #1 - template chooser)
 			var step = 1;
 
-			if (typeof info !=  'undefined') {
+			if (info) {
 				RTE.log(info);
 
 				// this is template with params - step #2 (parameters editor)

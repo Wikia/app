@@ -96,6 +96,15 @@
 			this.extSetProperties( props );
 		},
 		
+		setAge : function ( value ) {
+			this.el.attr('data-plb-paste-age',value);
+		},
+		
+		getAge : function () {
+			var v = parseInt(this.el.attr('data-plb-paste-age'));
+			return isNaN(v) ? 0 : v;
+		},
+		
 		edit : function () {
 			if (this.editing) {
 				return;
@@ -369,14 +378,20 @@
 				rebind: this.onRTERebind,
 				requestcss: this.onRTERequestCSS,
 				modeswitch: this.onRTEModeSwitch,
+				/*
 				beforestyle: this.insertPlaceholders,
 				afterstyle: this.replacePlaceholders,
 				beforecommand: this.insertPlaceholders,
 				aftercommand: this.replacePlaceholders,
 				beforesnapshot: this.onRTEBeforeCreateUndoSnapshot,
 				aftersnapshot: this.onRTEAfterCreateUndoSnapshot,
-				beforepaste: this.onBeforePaste,
-				afterpaste: this.onAfterPaste,
+				*/
+				
+				afterstyle: this.onContentChange,
+				aftercommand: this.onContentChange,
+				
+				beforepaste: this.onRTEBeforePaste,
+				afterpaste: this.onRTEAfterPaste,
 				scope: this
 			});
 			
@@ -387,32 +402,60 @@
 						dataLoadedCallback);
 			});
 		},
-		onBeforePaste : function() {
-			var elements = this.getWidgetElements();
-			var element = null;
-			for(var i = 0; i < elements.length; i++ ) {
-				element = $(elements[i]);
-				element.attr('__paste_age', this.pastedage);
+		
+		onRTEBeforePaste : function() {
+			var list = this.getWidgets();
+			for (var i=0;i<list.length;i++) {
+				list[i].setAge(this.pastedage);
 			}
 			this.pastedage++;
 		},
 		
-		onAfterPaste: function() {
+		onRTEAfterPaste: function() {
 			this.fixPaste(); 
 		},
 
-		//FF 3.6.10 bug with Params filter		
-		fixPaste: function() 
-		{
-			var elements = this.getWidgetElements();
-			var element = null;
-			for(var i = 0; i < elements.length; i++ ) {
-				element = $(elements[i]);
-				if(!element.attr('_rte_instance')) {
-					element.replaceWith("");	
+		fixPasteCollision: function ( list ) {
+			if (list.length > 1) {
+				var bestIdx = 0, bestAge = list[0].getAge();
+				for (var i=1;i<list.length;i++) {
+					var curAge = list[i].getAge();
+					if (curAge > bestAge) {
+						bextIdx = i;
+						bestAge = curAge;
+					}
 				}
-			}	
+				for (var i=0;i<list.length;i++) {
+					if (i != bestIdx) {
+						list[i].setId(this.generateWidgetId());
+					}
+				}
+			}
 		},
+		
+		fixPaste: function()
+		{
+			var list = this.getWidgets();
+			var sorted = {};
+			for (var i=0;i<list.length;i++) {
+				var el = list[i];
+				var e = el.getElement();
+				if (!e.attr('_rte_instance')) {
+					delete list[i];
+					e.remove();
+				} else {
+					sorted[el.getId()] = sorted[el.getId()] || [];
+					sorted[el.getId()].push(el);
+				}
+			}
+			
+			for (var i in sorted) {
+				if (sorted[i].length > 1) {
+					this.fixPasteCollision(sorted[i]);
+				}
+			}
+		},
+		
 		// Store the information that RTE is ready
 		onRTEReady : function () {
 			this.isRTEReady = true;
@@ -465,7 +508,9 @@
 			
 			undoSnapshot.selection = this.saveSelection(null,null);
 			undoSnapshot.elements = this.replacePlaceholders(this.rte,undoSnapshot.selection);
-			this.restoreSelection(undoSnapshot.selection);
+			if (undoSnapshot.elements.length > 0) {
+				this.restoreSelection(undoSnapshot.selection);
+			}
 			
 			this.undoSnapshot = undoSnapshot;
 			
@@ -481,11 +526,13 @@
 			if (this.undoSnapshot) {
 				var us = this.undoSnapshot;
 				var placeholders = []
-				for (var i=0;i<us.elements.length;i++) {
-					placeholders.push(this.createPlaceholder(us.elements[i]));
+				if (us.elements.length > 0) {
+					for (var i=0;i<us.elements.length;i++) {
+						placeholders.push(this.createPlaceholder(us.elements[i]));
+					}
+					this.restoreSelection(us.selection)
 				}
 				debug.placeholders = placeholders;
-				this.restoreSelection(us.selection)
 			}
 			
 			this.undoSnapshot = null;
@@ -557,7 +604,7 @@
 		createPlaceholder: function( el ) {
 			el = $(el);
 			var wrapper = $('<div>').append(el.clone());
-			var ph = $('<img contentEditable="false" src="" alt="placeholder"/>')
+			var ph = $('<img formatEditable="true" src="" alt="placeholder"/>')
 				.attr('plbdata',wrapper.html())
 				.addClass('plb-rte-widget-placeholder');
 			el.replaceWith(ph);
@@ -663,9 +710,7 @@
 			if (this.adding) {
 				var el = this.adding.getElement();
 				this.rte.instance.focus();
-//				this.insertPlaceholders();
 				this.rte.insertElement(el);
-//				this.replacePlaceholders();
 				this.adding = null;
 			}
 			this.rte.instance.fire('saveSnapshot');
@@ -689,6 +734,10 @@
 			this.getWidget(id).remove();
 			this.rte.instance.fire('saveSnapshot');
 			this.fire('changed');
+		},
+		
+		onContentChange: function () {
+			this.fire('changed');
 		}
 		
 	});
@@ -701,6 +750,8 @@
 		
 		addButton: null,
 		widgetsManager: null,
+		widgetsTutorial: null,
+		widgetsInfo: null,
 		widgetsSummary: null,
 		widgetsList: null,
 		refreshTimer: null,
@@ -715,11 +766,12 @@
 			this.rebindOverlaysTimer = Timer.create($.proxy(this.rebindOverlays,this),this.rebindOverlaysTimerDelay);
 			
 			this.ed = editor;
-			this.ed.bind('rebind', this.rebind, this);
-			this.ed.bind('changed', this.rebindOverlays, this);
-			this.ed.bind('changed', this.refresh, this);
-			this.ed.bind('placeholdersremoved', this.delayedRebindOverlays, this);
-			this.ed.bind('placeholdersremoved', this.delayedRefresh, this);
+			this.ed.bind({
+				rebind: this.rebind,
+				changed: [ this.rebindOverlays, this.refresh ],
+//				placeholdersremoved: [ this.delayedRebindOverlays, this.delayedRefresh ],
+				scope: this
+			});
 			this.rte = this.ed.rte;
 			
 			this.el = this.rte.getSidebar();
@@ -759,6 +811,9 @@
 				click:WikiaButtons.clickToggle
 			});
 			this.widgetsManager = $('.plb-manager',this.el);
+			this.widgetsTutorial = $('.plb-widgets-tutorial',this.el);
+			this.widgetsTutorial.css('max-height',(this.el.innerHeight() - this.widgetsManager.outerHeight()) + 'px');
+			this.widgetsInfo = $('.plb-widgets',this.el);
 			this.widgetsSummary = $('.plb-widgets-summary',this.el);
 			this.widgetsList = $('.plb-widget-list',this.el);
 			this.widgetsList.css('max-height',(this.el.innerHeight() - this.widgetsManager.outerHeight()- this.widgetsSummary.outerHeight()) + 'px');
@@ -829,7 +884,14 @@
 				}
 			},this));
 			// Set visibility of list depending on whether we have any element or not
-			this.widgetsList.css('display',l.length>0?"block":"none");
+			if (l.length > 0) {
+				this.widgetsTutorial.css('display','none');
+				this.widgetsInfo.css('display','block');
+			} else {
+				this.widgetsInfo.css('display','none');
+				this.widgetsTutorial.css('display','block');
+			}
+			//this.widgetsList.css('display',l.length>0?"block":"none");
 			// Substitute the overall count of widgets in the list header
 			$('.plb-widgets-count',this.el).html(l.length);
 			// Visual hovering for all children
@@ -902,10 +964,10 @@
 				el = $(el)
 					.unbind('.plbhover')
 					.bind({
-						'mouseenter.overlay': function() {
+						'mouseenter.plbhover': function() {
 							el.addClass('hover');
 						},
-						'mouseleave.overlay': function() {
+						'mouseleave.plbhover': function() {
 							el.removeClass('hover');
 						}
 					});
@@ -1009,6 +1071,15 @@
 			this.extFormSetValue(name,state);
 		},
 		
+		showFieldValidation: function( name, value ) {
+			var el = $('[name='+name+']',this.form);
+			if (el.length>0) {
+				el[value?'removeClass':'addClass']('plb-pe-field-error');
+			}
+			var state = { value: value };
+			this.extShowFieldValidation(name,state);
+		},
+		
 		readValues: function( el ) {
 			$.each(this.attributes,$.proxy(function(attr,d){
 				if (attr != PLB.PARAM_ID_RAW) {
@@ -1059,6 +1130,7 @@
 				if (s[i].length > 0) {
 					msg.push(this.attributeCaptions[i] + ' ' + s[i].join(', '));
 				}
+				this.showFieldValidation(i,s[i].length == 0);
 			}
 			box.html(msg.join('<br />'));
 		},
@@ -1093,7 +1165,8 @@
 		extFormGetValue: function() {},
 		extFormSetValue: function() {},
 		extFormValidate: function() {},
-		extFormChange: function() {}
+		extFormChange: function() {},
+		extShowFieldValidation: function() {}
 		
 	});
 	
@@ -1127,6 +1200,12 @@
 		extFormSetValue: function(name,state) {
 			if (name == 'type') {
 				this.writeValue('x-type',state.value == 'thumb' ? 1 : 0);
+			}
+		},
+		
+		extShowFieldValidation: function(name,state) {
+			if (name == 'type') {
+				this.showFieldValidation('x-type',state.value);
 			}
 		}
 	
@@ -1167,6 +1246,12 @@
 						ll.push(v.replace("&#124;", "|"));
 				});
 				this.writeValue('x-options',ll.join('\n'));
+			}
+		},
+		
+		extShowFieldValidation: function(name,state) {
+			if (name == 'options') {
+				this.showFieldValidation('x-options',state.value);
 			}
 		}
 	

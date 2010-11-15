@@ -657,6 +657,75 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype,
 					child.parentNode.removeChild( child ) ;
 				}
 			}
+		},
+		
+		// Wikia - start
+		findFormattableAncestor : function()
+		{
+			var current = this;
+			while( current )
+			{
+				if ( current.type == CKEDITOR.NODE_ELEMENT )
+				{
+					if ( current.is( 'body' ) || current.getCustomData( '_cke_notReadOnly' ) )
+						break;
+
+					if ( current.getAttribute( 'contentEditable' ) == 'false' ) {
+						if (current.getAttribute( 'formatEditable' ) == 'true') {
+							return current;
+						}
+					} else if ( current.getAttribute( 'contentEditable' ) == 'true' )
+						break;
+				}
+				current = current.getParent();
+			}
+
+			return false;
+		},
+		
+		isReadOnlyNotFormattable : function ()
+		{
+			var current = this;
+			while( current )
+			{
+				if ( current.type == CKEDITOR.NODE_ELEMENT )
+				{
+					if ( current.is( 'body' ) || current.getCustomData( '_cke_notReadOnly' ) )
+						break;
+
+					if ( current.getAttribute( 'contentEditable' ) == 'false' ) {
+						if ( current.getAttribute( 'formatEditable' ) != 'true') {
+							return current;
+						}
+					} else if ( current.getAttribute( 'contentEditable' ) == 'true' )
+						break;
+				}
+				current = current.getParent();
+			}
+
+			return false;
+		},
+		// Wikia - end
+
+		isReadOnly : function()
+		{
+			var current = this;
+			while( current )
+			{
+				if ( current.type == CKEDITOR.NODE_ELEMENT )
+				{
+					if ( current.is( 'body' ) || current.getCustomData( '_cke_notReadOnly' ) )
+						break;
+
+					if ( current.getAttribute( 'contentEditable' ) == 'false' )
+						return current;
+					else if ( current.getAttribute( 'contentEditable' ) == 'true' )
+						break;
+				}
+				current = current.getParent();
+			}
+
+			return false;
 		}
 	}
 );

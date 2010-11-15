@@ -48,7 +48,7 @@ class RTEParser extends Parser {
 
 		// mark wasHTML elements starting the line of wikitext
 		wfProfileIn(__METHOD__ . '::lineStart');
-		$oLine = preg_replace('/^<([^>]+_rte_washtml="true")/', '<$1 _rte_line_start="true"', $oLine);
+		$oLine = preg_replace('/^<([^>]+data-rte-washtml="1")/', '<$1 data-rte-line-start="true"', $oLine);
 		wfProfileOut(__METHOD__ . '::lineStart');
 
 		// store parser output before this line of wikitext is parsed
@@ -179,7 +179,23 @@ class RTEParser extends Parser {
 			'params' => array_merge($params['frame'], $params['handler']),
 		);
 
-		if(strpos($data['wikitext'] , "\x7f") !== false || strpos($data['wikitext'], '_rte_wikitextidx') !== false || strpos($data['wikitext'], '_rte_dataidx') !== false) {
+		// params cleanup
+		if (isset($data['params']['title'])) {
+			unset($data['params']['title']);
+		}
+
+		// try to resolve internal links in image caption (RT #90616)
+		if (RTEData::resolveLinksInMediaCaption($data['wikitext'])) {
+			// now resolve link markers in caption parsed to HTML
+			if (!empty($holders)) {
+				$holders->replace($data['params']['caption']);
+			}
+
+			RTE::log(__METHOD__ . ': resolved internal link');
+		}
+
+		// trigger an edgecase when image caption contains double brackets markers
+		if (RTEData::checkWikitextForMarkers($data['wikitext'])) {
 			RTE::$edgeCases[] = 'COMPLEX.09';
 		}
 
@@ -193,7 +209,7 @@ class RTEParser extends Parser {
 			$data['params']['caption'] = '';
 		}
 
-		// get "unparsed" caption from original wikitext
+		// get "unparsed" caption from original wikitext and store parsed one as 'captionParsed'
 		if ($data['params']['caption'] != '') {
 			$wikitext = trim($data['wikitext'], '[]');
 			$wikitextParts = explode('|', $wikitext);
@@ -452,29 +468,29 @@ class RTEParser extends Parser {
 		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(</[^>]+></)%s', '\2', $html);
 
 		// move empty lines counter data from comment to next opening tag attribute (thx to Marooned)
-		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<[^/][^>]*)>%s', '\2\3 _rte_empty_lines_before="\1">', $html);
+		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<[^/][^>]*)>%s', '\2\3 data-rte-empty-lines-before="\1">', $html);
 
 		// remove not replaced EMPTY_LINES_BEFORE comments
-		// <!-- RTE_EMPTY_LINES_BEFORE_1 -- _rte_empty_lines_before="1">
+		// <!-- RTE_EMPTY_LINES_BEFORE_1 -- data-rte-empty-lines-before="1">
 		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) [^>]+>%s', '', $html);
 
-		// add _rte_spaces_before for list items and table cells
+		// add data-rte-spaces-before for list items and table cells
 		$html = preg_replace_callback("/<(li|dd|dt|td|th)([^>]*)>(\x20+)/", 'RTEParser::spacesBeforeCallback', $html);
 
 		// replace placeholder markers with placeholders
 		$html = preg_replace_callback("/\x7f-01-(\d{4})/", 'RTE::replacePlaceholder', $html);
 
-		// replace dataidx attribute with _rte_data attribute storing JSON encoded meta data
+		// replace dataidx attribute with data-rte-meta attribute storing JSON encoded meta data
 		$html = preg_replace_callback('/ _rte_dataidx="(\d{4})" /', 'RTEData::replaceIdxByData', $html);
 
 		$html = preg_replace("/\x7f-(?:".RTEMarker::INTERNAL_WIKITEXT."|".RTEMarker::EXTERNAL_WIKITEXT.")-\d{4}/", '', $html);
 		// RT#40786: add empty paragraphs between headings (</h3>\n<h3 ...)
-		$html = preg_replace("%(</h\d>\s)(<h\d)%s", '$1<p _rte_filler="true"></p>$2', $html);
+		$html = preg_replace("%(</h\d>\s)(<h\d)%s", '$1<p data-rte-filler="true"></p>$2', $html);
 
 		wfProfileOut(__METHOD__ . '::regexp');
 
 		// add extra attribute for p tags coming from parser
-		$html = strtr($html, array('<p>' => '<p _rte_fromparser="true">', '<p ' => '<p _rte_fromparser="true" '));
+		$html = strtr($html, array('<p>' => '<p data-rte-fromparser="true">', '<p ' => '<p data-rte-fromparser="true" '));
 
 		// add empty paragraph for new / empty pages
 		if ($html == '') {
@@ -556,11 +572,11 @@ class RTEParser extends Parser {
 	private static function shortRowMarkupCallback($matches) {
 		wfProfileIn(__METHOD__);
 
-		$ret = $matches[0] . ' _rte_short_row_markup="true"';
+		$ret = $matches[0] . ' data-rte-short-row-markup="true"';
 
 		$spacesAfterLastCell = strlen($matches[1]);
 		if ($spacesAfterLastCell > 0) {
-			$ret .= " _rte_spaces_after_last_cell=\"{$spacesAfterLastCell}\"";
+			$ret .= " data-rte-spaces-after-last-cell=\"{$spacesAfterLastCell}\"";
 		}
 
 		wfProfileOut(__METHOD__);
@@ -574,7 +590,7 @@ class RTEParser extends Parser {
 		wfProfileIn(__METHOD__);
 
 		$spacesBefore = strlen($matches[3]);
-		$ret = "<{$matches[1]}{$matches[2]} _rte_spaces_before=\"{$spacesBefore}\">";
+		$ret = "<{$matches[1]}{$matches[2]} data-rte-spaces-before=\"{$spacesBefore}\">";
 
 		wfProfileOut(__METHOD__);
 		return $ret;
@@ -614,14 +630,14 @@ class RTEParser extends Parser {
 	private static function wrapEntities($text) {
 		wfProfileIn(__METHOD__);
 
-		$res = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '<span _rte_entity="\1">&\1;</span>', $text);
+		$res = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '<span data-rte-entity="\1">&\1;</span>', $text);
 
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
 	/**
-	 * Generate _rte_attribs attribute storing original list of HTML node attributes
+	 * Generate data-rte-attribs attribute storing original list of HTML node attributes
 	 */
 	public static function encodeAttributesStr($attribs) {
 		wfProfileIn(__METHOD__);
@@ -634,7 +650,7 @@ class RTEParser extends Parser {
 			'&#039;' => '\'',
 		));
 
-		$ret = "_rte_attribs=\"{$encoded}\"";
+		$ret = "data-rte-attribs=\"{$encoded}\"";
 
 		wfProfileOut(__METHOD__);
 

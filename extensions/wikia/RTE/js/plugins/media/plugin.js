@@ -41,9 +41,11 @@ CKEDITOR.plugins.add('rte-media',
 			command: 'addimage'
 		});
 
+		// ... and block it when cursor is placed within a header (RT #67987)
+		RTE.tools.blockCommandInHeader('addimage');
+
 		// check for existance of VideoEmbedTool
 		if (typeof window.VET_show == 'function') {
-
 			// register "Add Video" command
 			editor.addCommand('addvideo', {
 				exec: function(editor) {
@@ -58,6 +60,9 @@ CKEDITOR.plugins.add('rte-media',
 				className: 'RTEVideoButton',
 				command: 'addvideo'
 			});
+
+			// ... and block it when cursor is placed within a header (RT #67987)
+			RTE.tools.blockCommandInHeader('addvideo');
 		}
 		else {
 			RTE.log('VET is not enabled here - disabling "Video" button');
@@ -77,8 +82,8 @@ CKEDITOR.plugins.add('rte-media',
 			return;
 		}
 
-		// keep constant value of _rte_instance
-		media.attr('_rte_instance', RTE.instanceId);
+		// keep consistent value of RTE instance ID
+		media.attr('data-rte-instance', RTE.instanceId);
 
 		// setup overlay
 		var msgs = RTE.instance.lang.media;
@@ -136,6 +141,15 @@ CKEDITOR.plugins.add('rte-media',
 				return;
 			}
 
+			// don't allow images to be drag&dropped into headers (RT #67987)
+			var parentNode = target.parent();
+			if ((/h\d/i).test(parentNode.attr('nodeName'))) {
+				// move image outside the header
+				parentNode.after(target);
+
+				RTE.log('image moved outside the header');
+			}
+
 			// calculate relative positon
 			var editorX = parseInt(extra.pageX - $('#editform').offset().left);
 			var editorWidth = parseInt($('#editform').width());
@@ -178,7 +192,7 @@ CKEDITOR.plugins.add('rte-media',
 
 			RTE.log('media alignment: ' + oldAlign + ' -> ' + newAlign);
 
-			// update image rte-data and wikitext
+			// update image meta data and wikitext
 			var wikitext = data.wikitext;
 			var re = new RegExp('\\|' + oldAlign + '(\\||])');
 
@@ -245,8 +259,7 @@ CKEDITOR.plugins.add('rte-media',
 	// image specific setup
 	setupImage: function(image) {
 		image.bind('edit.media', function(ev) {
-			RTE.log('Image clicked');
-			RTE.log($(this).getData());
+			RTE.log('image clicked');
 
 			// call WikiaMiniUpload and provide WMU with image clicked
 			RTE.tools.callFunction(window.WMU_show,$(this));
@@ -256,8 +269,7 @@ CKEDITOR.plugins.add('rte-media',
 	// video specific setup
 	setupVideo: function(video) {
 		video.bind('edit.media', function(ev) {
-			RTE.log('Video clicked');
-			RTE.log($(this).getData());
+			RTE.log('video clicked');
 
 			// call VideoEmbedTool and provide VET with video clicked
 			RTE.tools.callFunction(window.VET_show,$(this));

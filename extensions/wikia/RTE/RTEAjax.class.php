@@ -103,8 +103,15 @@ class RTEAjax {
 
 		$wikitext = $wgRequest->getVal('wikitext', '');
 
-		$parser = new RTEParser();
 		$parserOptions = new ParserOptions();
+		// don't show [edit] link for sections
+		$parserOptions->setEditSection(false);
+		// use modified Linker
+		$parserOptions->setSkin( new RTELinker() );
+		// disable headings numbering
+		$parserOptions->setNumberHeadings(false);
+
+		$parser = new RTEParser();
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
 		$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $parserOptions);

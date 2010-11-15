@@ -41,20 +41,20 @@ function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
 
 function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $page ) {
 	global $wgExcludedWantedFiles;
-	
+
 	$where = "";
 	if ( !empty($wgExcludedWantedFiles) && is_array($wgExcludedWantedFiles) ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$where = " and il_to not in (" . $dbr->makeList($wgExcludedWantedFiles) . ") ";
 	}
-	
+
 	$sql = "SELECT $name as type, " . NS_FILE . " as namespace,il_to as title, COUNT(*) as value ";
 	$sql .= "FROM $imagelinks ";
 	$sql .= "LEFT JOIN $page ON il_to = page_title AND page_namespace = ". NS_FILE ." ";
 	$sql .= "WHERE page_title IS NULL AND LOCATE(':', il_to) != 1 ";
 	$sql .= $where;
 	$sql .= "GROUP BY il_to ";
-	
+
 	return true;
 }
 
@@ -83,13 +83,13 @@ function WikiaVideoNewImagesBeforeQuery( $where ) {
 }
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
-	global $wgExtraNamespaces, $wgWysiwygParserEnabled, $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
+	global $wgExtraNamespaces, $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
 
 	$wgWikiaVideoGalleryId = 0;
 	$wgWikiaVideoPlaceholderId = 0;
 
-	// macbre: don't touch anything when parsing for FCK
-	if (!empty($wgWysiwygParserEnabled) || !empty($wgRTEParserEnabled)) {
+	// macbre: don't touch anything when parsing for RTE
+	if (!empty($wgRTEParserEnabled)) {
 		return true;
 	}
 	// fix for RT #22010
@@ -253,8 +253,8 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	return $out;
 }
 
-function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_template = false ) {
-	global $wgWysiwygParserEnabled, $wgRTEParserEnabled, $wgRequest;
+function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_template = false, $holders = false /* needed by RT #90616 */ ) {
+	global $wgRTEParserEnabled, $wgRequest;
 	wfProfileIn('WikiaVideo_makeVideo');
 
 	// placeholder? treat differently
@@ -263,10 +263,6 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		global $wgExtensionMessagesFiles, $wgWikiaVideoPlaceholderId, $wgContLang;
 		$wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.php';
 		wfLoadExtensionMessages( 'WikiaVideo' );
-
-		if (!empty($wgWysiwygParserEnabled)) {
-			$refid = Wysiwyg_GetRefId($options, true); // strip refid
-		}
 
 		$params = array_map( 'trim', explode( '|', $options ) );
 
@@ -318,16 +314,8 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			}
 		}
 
-		// macbre: Wysiwyg support for video placeholder
-		if (!empty($wgWysiwygParserEnabled)) {
-			// register new metadata entry
-			$refid = Wysiwyg_SetRefId('video_add', array('width' => $width, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext), false, true);
-
-		}
-		else {
-			$show =  ' VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ); ';
-			$onclick= '$.loadYUI( function() { if (typeof VET_show != \'function\' ){  $.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() {'.$show.' importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) }  ) }else{ '.$show.'} } )';
-		}
+		$show =  ' VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ); ';
+		$onclick= '$.loadYUI( function() { if (typeof VET_show != \'function\' ){  $.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() {'.$show.' importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) }  ) }else{ '.$show.'} } )';
 
 		// render HTML (RT #21087)
 		$html = '';
@@ -400,11 +388,11 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 	}
 
 	if(!$title->exists()) {
-		//Wysiwyg: generate wikitext placeholder for not exisiting video
-		if (!empty($wgWysiwygParserEnabled)) {
-			$out = Wysiwyg_SetRefId('placeholder', array('text' => $wikitext));
-		}
-		else if (!empty($wgRTEParserEnabled)) {
+		// RTE: generate wikitext placeholder for not exisiting video
+		if (!empty($wgRTEParserEnabled)) {
+			// try to resolve internal links in broken image caption (RT #90616)
+			RTEData::resolveLinksInMediaCaption($wikitext);
+
 			RTE::log(__METHOD__ . '::brokenVideoLink', $wikitext);
 
 			// add broken-video link placeholder
@@ -415,20 +403,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . $title->getDBKey());
 		}
 	} else {
-		// get refId from Wysiwyg
-		if (!empty($wgWysiwygParserEnabled)) {
-			$refId = Wysiwyg_GetRefId($options, true);
-		}
-		else {
-			$refId = 0;
-		}
-
 		$params = array_map( 'trim', explode( '|', $options) );
-
-		//Wysiwyg: remove markers
-		if (!empty($wgWysiwygParserEnabled)) {
-			$params = array_map( create_function('$par', 'return preg_replace(\'%\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f%si\', \'\\2\', $par);'), $params);
-		}
 
 		// defaults
 		$width = 400;
@@ -463,12 +438,9 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		$video = new VideoPage($title);
 		$video->load();
 
-		// generate different HTML for MW editor and FCK/CK editor
-		if (!empty($wgWysiwygParserEnabled)) {
-			$out = $video->generateWysiwygWindow($refId, $title, $align, $width, $caption, $thumb, $frame);
-		}
-		else if (!empty($wgRTEParserEnabled)) {
-			$out = $video->generateThumbForCK($wikitext, $title, $align, $width, $caption, $thumb, $frame);
+		// RTE: generate different HTML for MW editor and RTE
+		if (!empty($wgRTEParserEnabled)) {
+			$out = $video->generateThumbForRTE($wikitext, $title, $align, $width, $caption, $thumb, $frame, $holders);
 		}
 		else {
 			$out = $video->generateWindow($align, $width, $caption, $thumb, $frame);

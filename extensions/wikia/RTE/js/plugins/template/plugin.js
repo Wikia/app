@@ -212,7 +212,7 @@ RTE.templateEditor = {
 						RTE.log(data);
 
 						var placeholder = RTE.templateEditor.placeholder;
-						placeholder.setType(data.type);
+						placeholder.setPlaceholderType(data.type);
 						placeholder.setData(data);
 
 						// update placeholder
@@ -284,6 +284,9 @@ RTE.templateEditor = {
 				// generate preview
 				this.doPreview();
 
+				// RT #61758
+				var wikitextParts = data.wikitext.split('|'); RTE.log(data.wikitext); RTE.log(wikitextParts);
+
 				break;
 
 /*
@@ -315,7 +318,7 @@ RTE.templateEditor = {
 			wikitext: '{{' + templateName + '}}'
 		};
 
-		this.placeholder.setType('double-brackets');
+		this.placeholder.setPlaceholderType('double-brackets');
 		this.placeholder.setData(data);
 
 		RTE.templateEditor.usePlaceholder(this.placeholder);

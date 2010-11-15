@@ -167,10 +167,11 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 				+ array(
 					"class" => "plb-rte-widget plb-rte-widget-plb_image plb-rte-widget-align-{$align}" )
 				+ $this->getBaseParamForRTE())
-			."<span contenteditable=\"false\" class=\"plb-rte-widget-caption\">"
+			."<span class=\"plb-rte-widget-caption\">"
 				.htmlspecialchars(empty($caption) ? wfMsg("plb-editor-enter-caption") : $caption)
 				."</span>"
-			."<img contenteditable=\"false\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: {$width}px\" alt=\"".htmlspecialchars($caption)."\">"
+			."<span class=\"plb-rte-widget-cover\">&nbsp;</span>"
+			."<img src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: {$width}px\" alt=\"".htmlspecialchars($caption)."\">"
 			.$this->getRTEUIMarkup()
 			.XML::closeElement('div');
 	}

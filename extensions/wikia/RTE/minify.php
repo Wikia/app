@@ -19,6 +19,7 @@ function minify($type, $files, $target) {
 	$chute->httpCache = false;
 
 	$revision = SpecialVersion::getSvnRevision(dirname(__FILE__));
+	$build = date('Ymd');
 
 	$header = <<<HEAD
 /*
@@ -56,8 +57,8 @@ HEAD;
 			$res = $chute->minifyJSData($res);
 
 			// add date and revision data
-			$res = str_replace('%REV%', "r{$revision}", $res);
-			$res = str_replace('%VERSION%', date('Ymd'), $res);
+			$res = str_replace('%REV%', "r{$revision} build {$build}", $res);
+			$res = str_replace('%VERSION%', CKEditor::version, $res);
 			break;
 	}
 

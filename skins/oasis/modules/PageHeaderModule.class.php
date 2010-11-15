@@ -514,10 +514,6 @@ class PageHeaderModule extends Module {
 			global $wgOut;
 			$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/core/_EditPage.scss'));
 
-			// TODO: dirty hack to make CategorySelect works
-			$wgOut->addScriptFile('jquery/jquery-ui-1.7.2.custom.js');
-			$wgOut->addScriptFile('jquery/jquery.json-1.3.js');
-
 			// render preview notice bar
 			if ($editPage->preview) {
 				// show preview confirmation bar below global nav

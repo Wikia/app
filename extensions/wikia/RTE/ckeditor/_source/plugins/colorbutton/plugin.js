@@ -40,12 +40,15 @@ CKEDITOR.plugins.add( 'colorbutton',
 						block.autoSize = true;
 						block.element.addClass( 'cke_colorblock' );
 						block.element.setHtml( renderColors( panel, type ) );
+						// The block should not have scrollbars (#5933, #6056)
+						block.element.getDocument().getBody().setStyle( 'overflow', 'hidden' );
 
 						var keys = block.keys;
-						keys[ 39 ]	= 'next';					// ARROW-RIGHT
+						var rtl = editor.lang.dir == 'rtl';
+						keys[ rtl ? 37 : 39 ]	= 'next';					// ARROW-RIGHT
 						keys[ 40 ]	= 'next';					// ARROW-DOWN
 						keys[ 9 ]	= 'next';					// TAB
-						keys[ 37 ]	= 'prev';					// ARROW-LEFT
+						keys[ rtl ? 39 : 37 ]	= 'prev';					// ARROW-LEFT
 						keys[ 38 ]	= 'prev';					// ARROW-UP
 						keys[ CKEDITOR.SHIFT + 9 ]	= 'prev';	// SHIFT + TAB
 						keys[ 32 ]	= 'click';					// SPACE
@@ -158,7 +161,7 @@ CKEDITOR.plugins.add( 'colorbutton',
 			}
 
 			// Render the "More Colors" button.
-			if ( config.colorButton_enableMore )
+			if ( config.colorButton_enableMore === undefined || config.colorButton_enableMore )
 			{
 				output.push(
 					'</tr>' +
@@ -171,7 +174,7 @@ CKEDITOR.plugins.add( 'colorbutton',
 								' role="option" aria-posinset="', total, '" aria-setsize="', total, '">',
 								lang.more,
 							'</a>' +
-						'</td>' );	// It is later in the code.
+						'</td>' );	// tr is later in the code.
 			}
 
 			output.push( '</tr></table>' );
@@ -183,12 +186,11 @@ CKEDITOR.plugins.add( 'colorbutton',
 
 /**
  * Whether to enable the "More Colors..." button in the color selectors.
- * @default false
+ * @default true
  * @type Boolean
  * @example
  * config.colorButton_enableMore = false;
  */
-CKEDITOR.config.colorButton_enableMore = true;
 
 /**
  * Defines the colors to be displayed in the color selectors. It's a string

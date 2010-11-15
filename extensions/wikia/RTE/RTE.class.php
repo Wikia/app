@@ -97,6 +97,9 @@ class RTE {
 	 * @author: Macbre
 	 */
 	public static function renderPlaceholder($label, $data) {
+		// this is placeholder
+		$data['placeholder'] = 1;
+
 		// store data
 		$dataIdx = RTEData::put('data', $data);
 
@@ -104,7 +107,6 @@ class RTE {
 		global $wgBlankImgUrl;
 		return Xml::element('img', array(
 			'_rte_dataidx' => sprintf('%04d', $dataIdx),
-			'_rte_placeholder' => true,
 			'class' => "placeholder placeholder-{$data['type']}",
 			'src' => $wgBlankImgUrl,
 			'type' => $data['type'],
@@ -257,14 +259,13 @@ class RTE {
 
 		wfProfileIn(__METHOD__);
 
-		// CKEditor core version
-		$vars['CKEditorVersion'] = CKEditor::version;
-
 		// CK instance id
 		$vars['RTEInstanceId'] = self::getInstanceId();
 
 		// development version of CK?
-		$vars['RTEDevMode'] = !empty(self::$devMode);
+		if (!empty(self::$devMode)) {
+			$vars['RTEDevMode'] = true;
+		}
 
 		// initial CK mode (wysiwyg / source)
 		$vars['RTEInitMode'] = self::$initMode;

@@ -489,8 +489,8 @@ class Sanitizer {
 						# RTE (Rich Text Editor) - begin
 						# @author: Inez Korczyński
 						if(!empty($wgRTEParserEnabled)) {
-							if(!$slash && strpos($newparams, '_rte_data') === false) {
-								$newparams = ' _rte_washtml="true"' . $newparams;
+							if(!$slash && strpos($newparams, 'data-rte-meta') === false) {
+								$newparams = ' data-rte-washtml="1"' . $newparams;
 							}
 						}
 						# RTE - end
@@ -523,7 +523,7 @@ class Sanitizer {
 					# @author: Inez Korczyński
 					if(!empty($wgRTEParserEnabled)) {
 						if(!$slash) {
-							$newparams = ' _rte_washtml="true"' . $newparams;
+							$newparams = ' data-rte-washtml="1"' . $newparams;
 						}
 					}
 					# RTE - end
@@ -690,7 +690,7 @@ class Sanitizer {
 			$space = '[\\x20\\t\\r\\n\\f]';
 			$nl = '(?:\\n|\\r\\n|\\r|\\f)';
 			$backslash = '\\\\';
-			$decodeRegex = "/ $backslash 
+			$decodeRegex = "/ $backslash
 				(?:
 					($nl) |  # 1. Line continuation
 					([0-9A-Fa-f]{1,6})$space? |  # 2. character number
@@ -769,7 +769,7 @@ class Sanitizer {
 			# @author: Inez Korczyński
 			global $wgRTEParserEnabled;
 			if(!empty($wgRTEParserEnabled) && $encAttribute == 'style') {
-				$attribs[] = "_rte_style=\"$encValue\"";
+				$attribs[] = "data-rte-style=\"$encValue\"";
 			}
 			# RTE - end
 		}

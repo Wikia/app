@@ -7,6 +7,24 @@ window.RTE.tools = {
 		window.$.showModal(title, '<p>' + content + '</p>', {className: 'RTEModal', width: 500});
 	},
 
+	// block given button (RTE command) when cursor is placed within a header (RT #67987)
+	blockCommandInHeader: function(commandName) {
+		var editor = RTE.instance,
+			command = editor.getCommand(commandName);
+
+		if (command) {
+			editor.on('selectionChange', CKEDITOR.tools.bind(RTE.tools.blockCommandInHeaderOnSelectionChange, command));
+		}
+	},
+
+	blockCommandInHeaderOnSelectionChange: function(ev) {
+		var path = ev.data.path,
+			nodeName = path.block ? path.block.getName() : '',
+			disabled = (/h\d/).test(nodeName);
+
+		return this.setState(disabled ? CKEDITOR.TRISTATE_DISABLED : CKEDITOR.TRISTATE_OFF);
+	},
+
 	// call given function with special RTE event type and provide function with given element and extra data
 	callFunction: function(fn, element, data) {
 		// extra check
@@ -86,11 +104,12 @@ window.RTE.tools = {
 
 		// CSS classes and attributes
 		placeholder.addClass('placeholder placeholder-' + type);
-		placeholder.attr('src', wgBlankImgUrl).attr('type', type).attr('_rte_placeholder', 1).attr('_rte_instance', RTE.instanceId);
+		placeholder.attr('src', wgBlankImgUrl).attr('type', type).attr('data-rte-instance', RTE.instanceId);
 
 		// set meta data
-		data = (typeof data == 'object') ? data : {};
+		data = data && (typeof data == 'object') ? data : {};
 		data.type = type;
+		data.placeholder = true;
 
 		placeholder.setData(data);
 
@@ -149,7 +168,7 @@ window.RTE.tools = {
 			// IE: ignore page scroll, use editarea scroll
 			scrollTop = scrollTopEditor;
 		}
-		else 
+		else
 		{
 			if (CKEDITOR.env.webkit) {
 				// RT #46408: use different property for Safari to get v-scroll offset

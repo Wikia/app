@@ -34,10 +34,10 @@ class RTELinker extends Linker {
 
 		// add extra attributes to store number of spaces
 		if ($spacesAfter > 0) {
-			$attribs = " _rte_spaces_after=\"{$spacesAfter}\"{$attribs}";
+			$attribs = " data-rte-spaces-after=\"{$spacesAfter}\"{$attribs}";
 		}
 		if ($spacesBefore > 0) {
-			$attribs = " _rte_spaces_before=\"{$spacesBefore}\"{$attribs}";
+			$attribs = " data-rte-spaces-before=\"{$spacesBefore}\"{$attribs}";
 		}
 
 		// render HTMl
@@ -73,6 +73,13 @@ class RTELinker extends Linker {
 	 * Returns placeholder for broken image link
 	 */
 	public function makeBrokenImageLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '', $time = false, $wikitextIdx = null ) {
+		// try to resolve internal links in broken image caption (RT #90616)
+		$wikitext = RTEData::get('wikitext', $wikitextIdx);
+		if (RTEData::resolveLinksInMediaCaption($wikitext)) {
+			// update wikitext data
+			$wikitextIdx = RTEData::put('wikitext', $wikitext);
+		}
+
 		$dataIdx = RTEData::put('placeholder', array('type' => 'broken-image', 'wikitextIdx' => $wikitextIdx, 'title' => $title->getDBkey()));
 		return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 	}

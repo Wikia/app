@@ -11,17 +11,26 @@ Markers definition:
 * \x7f-FF - Used to encode double quotes (") in JSON-encoded strings.
 
 
-HTML attributes used by RTE:
+Custom HTML5 data-* attributes used by RTE:
 
-* _rte_attribs - stores original list of HTML attributes and their values (to preserve their order and formatting)
-* _rte_data - JSON-encoded meta data of given node (template, image, ...)
-* _rte_empty_lines_before - number of empty lines of wikitext before given node
-* _rte_entity - used in entities' wrapping spans (contains "name" of wrapped entity)
-* _rte_placeholder - indicates given node is placeholder (template, magic word, broken image link, ...)
-* _rte_short_row_markup - number of trailing spaces for previous table cell
-* _rte_spaces_before - number of spaces at the beginning of given node text content (list item, table cell)
-* _rte_style - stores original value of style attribute (to preserve their order and formatting)
-* _rte_washtml - indicates whether given node was HTML node in wikitext
+* data-rte-attibs - stores original list of HTML attributes and their values (to preserve their order and formatting)
+* data-rte-empty-lines-before - number of empty lines of wikitext before given node
+* data-rte-entity - used in entities' wrapping spans (contains "name" of wrapped entity)
+* data-rte-filler - marks paragraphs added between headings
+* data-rte-fromparser - marks paragraphs rendered by MW parser
+* data-rte-instance - stores instance ID of editor in which given element is (used by paste tracking code)
+* data-rte-line-start - marks HTML node at the beginning of wikitext line
+* data-rte-meta - JSON-encoded meta data of current node (used by placeholders, images, ...)
+* data-rte-new-node - marks paragraphs nodes added in wysiwyg mode
+* data-rte-shift-enter - marks <br /> tags added by Shift+Enter in wysiwyg mode
+* data-rte-short-row-markup - marks <td> / <th> tags rendered using short / "one line" wikitext markup
+* data-rte-spaces-after - number of spaces at the end of given node text content (table cell)
+* data-rte-spaces-after-last-cell - number of spaces between current and next table cell
+* data-rte-spaces-before - number of spaces at the beginning of given node text content (list item, table cell)
+* data-rte-style - stores original value of style attribute (to preserve their order and formatting)
+* data-rte-washtml - indicates whether given node was HTML node in wikitext
+* _rte_wikitextidx - used internally be RTEParser
+* _rte_dataidx - used internally be RTEParser
 
 
 i18n files:

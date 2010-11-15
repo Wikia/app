@@ -21,7 +21,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			}
 			$(".link-type-note span").html(editor.lang.link.status.external);
 			$(".link-type-note img")[0].className = 'sprite external';
-			
+
 			// disable suggestions on the name box if external url
 		}else if( mode == 'internal' ){
 			var radios = linkDialog.getContentElement('internal','linktype');
@@ -40,7 +40,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		if( pageName ){
 			$(".link-type-note span").html(editor.lang.link.status.checking);
 			$(".link-type-note img")[0].className = 'sprite progress';
-			
+
 			// check our page name for validity
 			RTE.ajax('checkInternalLink', {title: pageName}, function(data){
 				if( data.exists ){
@@ -89,11 +89,16 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				}
 			}else{
 				// select a mode for our two proper link types
-				if( data.type == 'internal' ){
-					setMode('internal');
-					setTimeout(checkStatus,200);
-				}else if( data.type == 'external' ){
-					setMode('external');
+				switch(data.type) {
+					case 'internal':
+						setMode('internal');
+						setTimeout(checkStatus,200);
+						break;
+
+					case 'external':
+					case 'external-raw': // RT #85491
+						setMode('external');
+						break;
 				}
 			}
 
@@ -111,9 +116,10 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					}
 					break;
 
-				// case 'external-raw':
-				// 	setValues('external', data.link);
-				// 	break;
+				// RT #85491
+				case 'external-raw':
+					setValues('external', data.link);
+					break;
 
 				case 'internal':
 					setValues('internal', data.link, data.text);
@@ -124,7 +130,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		else {
 			var linkTextField = this.getContentElement('internal', 'label');
 			//linkTextField.enable();
-			
+
 			// creating new link from selection
 			var selectionContent = RTE.tools.getSelectionContent();
 			setMode('internal');
@@ -142,7 +148,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 				RTE.log('link: using selected text "' + selectionContent + '" for new '+tab+' link');
 			}else{
-				
+
 				RTE.log('link: fresh link');
 			}
 		}
@@ -165,13 +171,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		}
 
 		// Apply style.
-		var style = new CKEDITOR.style( { element : 'a', attributes: {'_rte_new_link': true} } );
+		var style = new CKEDITOR.style( { element : 'a', attributes: {'data-rte-new-link-temporary': true} } );
 		style.type = CKEDITOR.STYLE_INLINE;		// need to override... dunno why.
 		style.apply( editor.document );
 
-		// get just created link using _rte_new_link attribute
-		var node = RTE.getEditor().find('a[_rte_new_link]');
-		node.removeAttr('_rte_new_link');
+		// get just created link using data-rte-new-link-temporary marker attribute
+		var node = RTE.getEditor().find('a[data-rte-new-link-temporary]');
+		node.removeAttr('data-rte-new-link-temporary');
 
 		// return CKEDITOR DOM element for just created link
 		var link = new CKEDITOR.dom.element(node[0]);
@@ -214,12 +220,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'id': 'name',
 						onKeyUp: function() {
 							var linkTextField = this.getDialog().getContentElement('internal', 'label');
-							
+
 							// set mode to external if we detect a link
 							if( RTE.tools.isExternalLink(this.getValue()) ){
 								setMode('external');
 							}
-							
+
 							var linktype = this.getDialog().getContentElement('internal', 'linktype').getValue();
 							if( linktype == 'wiki' ){
 								// pretend we're checking for the page name,
@@ -231,7 +237,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								$(".link-type-note img")[0].className = 'sprite progress';
 								existsTimeout = setTimeout(checkStatus,1000);
 							}
-							
+
 							if( linkTextField.getValue() == '' ){
 								linkTextDirty = false;
 							}
@@ -246,7 +252,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								// validate page name and anchors (RT #34047)
 								var re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
 								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
-								
+
 								return validPageNameFunc.apply(this);
 							}
 							else{
@@ -318,7 +324,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			// tracking
 			var self = this;
-			
+
 			// reset our dirty value
 			linkTextDirty = false;
 
@@ -406,7 +412,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 						type = 'externalNumbered';
 					}
-					
+
 					element.setAttribute('href',data.link);
 
 					// set content and class of link element
@@ -445,7 +451,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			}
 
 			$(element.$).setData(data);
-			
+
 			// log updated meta data entry
 			RTE.log('updating link data');
 			RTE.log( [element, $(element.$).getData()] );
