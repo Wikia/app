@@ -2,14 +2,15 @@
 /* requires Liftium.js */
 /* requires extensions/wikia/Geo/geo.js */
 /* requires extensions/wikia/QuantcastSegments/qcs.js */
+/* requires extensions/wikia/AdEngine/ghost */
 var AdDriver = {
 	geoData: Geo.getGeoData(),
 	minNumDARTCall: 3,
 	cookieNameNumDARTCall: 'adDriverNumDARTCall',
-	cookieNameDARTCallNoAd: 'adDriverDARTCallNoAd',
+	cookieNameLastDARTCallNoAd: 'adDriverLastDARTCallNoAd',
 
 	init: function() {
-		window.adDriverDARTCallNoAds = new Array();
+		window.adDriverLastDARTCallNoAds = new Array();
 		window.adDriverAdCallComplete = new Array();
 	},
 
@@ -196,19 +197,19 @@ AdDriver.incrementNumDARTCall = function(slotname) {
 		newSlotnameObjs.push( {slotname : slotname, num : ++num, ts : timestamp} );
 	}
 
-	var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath, domain: wgCookieDomain};
+	var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
 	$.cookies.set(AdDriver.cookieNameNumDARTCall, JSON.stringify(newSlotnameObjs), cookieOptions);
 
 	return num;
 }
 
-AdDriver.hasDARTCallNoAd = function(slotname) {
+AdDriver.isLastDARTCallNoAd = function(slotname) {
 	var value = false;
 
 	try {
-		var DARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameDARTCallNoAd);
-		if (typeof(DARTCallNoAdCookie) != 'undefined' && DARTCallNoAdCookie) {
-			var slotnameTimestamps = $.parseJSON(DARTCallNoAdCookie);
+		var lastDARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameLastDARTCallNoAd);
+		if (typeof(lastDARTCallNoAdCookie) != 'undefined' && lastDARTCallNoAdCookie) {
+			var slotnameTimestamps = $.parseJSON(lastDARTCallNoAdCookie);
 			for (var i = 0; i < slotnameTimestamps.length; i++) {
 				if (slotnameTimestamps[i].slotname == slotname) {
 					if (parseInt(slotnameTimestamps[i].ts) + window.wgAdDriverCookieLifetime*3600000 > window.wgNow.getTime()) {	// wgAdDriverCookieLifetime in hours, convert to msec
@@ -223,19 +224,19 @@ AdDriver.hasDARTCallNoAd = function(slotname) {
 		AdDriver.log(e.message);
 	}
 
-	AdDriver.log(slotname + ' has no-ad DART call? ' + value);
+	AdDriver.log(slotname + ' last DART call had no ad? ' + value);
 
 	return value;
 }
 
-AdDriver.setDARTCallNoAd = function(slotname, value) {
+AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 	var newSlotnameTimestamps = new Array();
 	var slotnameInCookie = false;
 
 	try {
-		var DARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameDARTCallNoAd);
-		if (typeof(DARTCallNoAdCookie) != 'undefined' && DARTCallNoAdCookie) {
-			var slotnameTimestamps = $.parseJSON(DARTCallNoAdCookie);
+		var lastDARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameLastDARTCallNoAd);
+		if (typeof(lastDARTCallNoAdCookie) != 'undefined' && lastDARTCallNoAdCookie) {
+			var slotnameTimestamps = $.parseJSON(lastDARTCallNoAdCookie);
 			// look for slotname. If there is a new value, change the old value. If
 			// the new value is null, simply do not include slotname in updated cookie.
 			for (var i = 0; i < slotnameTimestamps.length; i++) {
@@ -260,8 +261,8 @@ AdDriver.setDARTCallNoAd = function(slotname, value) {
 	}
 
 	if (newSlotnameTimestamps.length) {
-		var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath, domain: wgCookieDomain};
-		$.cookies.set(AdDriver.cookieNameDARTCallNoAd, JSON.stringify(newSlotnameTimestamps), cookieOptions);
+		var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
+		$.cookies.set(AdDriver.cookieNameLastDARTCallNoAd, JSON.stringify(newSlotnameTimestamps), cookieOptions);
 	}
 
 	return value;
@@ -269,16 +270,16 @@ AdDriver.setDARTCallNoAd = function(slotname, value) {
 
 AdDriver.beforeCallDART = function(slotname) {
 	AdDriver.incrementNumDARTCall(slotname);
-	AdDriver.setDARTCallNoAd(slotname, null);
+	AdDriver.setLastDARTCallNoAd(slotname, null);
 }
 
 AdDriver.callDARTCallback = function(slotname) {
-	if (typeof(window.adDriverDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverDARTCallNoAds[slotname]) {
+	if (typeof(window.adDriverLastDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slotname]) {
 		AdDriver.log(slotname + ' was filled by DART');
 		return;
 	}
 	else {
-		AdDriver.setDARTCallNoAd(slotname, window.wgNow.getTime());
+		AdDriver.setLastDARTCallNoAd(slotname, window.wgNow.getTime());
 		AdDriver.log(slotname + ' was not filled by DART');
 		return 'Liftium';
 	}
@@ -295,7 +296,7 @@ AdDriver.getAdProvider = function(slotname, size, dartUrl) {
 	}
 
 	if (AdDriver.isHighValue(slotname)) {
-		if (AdDriver.getNumDARTCall(slotname) < AdDriver.minNumDARTCall || !AdDriver.hasDARTCallNoAd(slotname)) {
+		if (AdDriver.getNumDARTCall(slotname) < AdDriver.minNumDARTCall || !AdDriver.isLastDARTCallNoAd(slotname)) {
 			return 'DART';
 		}
 	}
@@ -342,28 +343,16 @@ AdDriverDelayedLoader.prependCall = function(adDriverCall) {
 	AdDriverDelayedLoader.adDriverCalls.unshift(adDriverCall);
 }
 
-AdDriverDelayedLoader.capture = function() {
-	//bezen.domwrite.capture();
-}
-
-AdDriverDelayedLoader.restore = function() {
-	//bezen.domwrite.restore();
-}
-
-
 AdDriverDelayedLoader.callDART = function() {
-
 	AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...');
-
 	AdDriver.beforeCallDART(AdDriverDelayedLoader.currentAd.slotname);
-			
 	var slot = document.getElementById(AdDriverDelayedLoader.currentAd.slotname);
 
 	ghostwriter(
 		slot,
 		{
 			insertType: "append",
-			script: { text: "document.write('<scr'+'ipt src=\""+AdDriverDelayedLoader.currentAd.dartUrl+"\"></scr'+'ipt>');" },
+			script: { src: AdDriverDelayedLoader.currentAd.dartUrl },
 			done: function() { 
 				var callbackAdProvider = AdDriver.callDARTCallback(AdDriverDelayedLoader.currentAd.slotname); 
 				if (callbackAdProvider == 'Liftium') { 
@@ -374,40 +363,13 @@ AdDriverDelayedLoader.callDART = function() {
 			}
 		}
 	);
-	/*
-	bezen.load.script(slot, AdDriverDelayedLoader.currentAd.dartUrl, function() {
-
-		bezen.domwrite.render(slot, function() {
-
-			var callbackAdProvider = AdDriver.callDARTCallback(AdDriverDelayedLoader.currentAd.slotname);
-
-			if (callbackAdProvider == 'Liftium') {
-						
-				var liftiumCall = new AdDriverCall(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, '');
-
-				AdDriverDelayedLoader.prependCall(liftiumCall);
-
-			}
-
-			AdDriverDelayedLoader.loadNext();
-
-		})
-
-	});
-	*/
-
 }
 
 AdDriverDelayedLoader.callLiftium = function() {
-
 	var slotname = AdDriverDelayedLoader.currentAd.slotname;
-
 	AdDriver.log(slotname + ': calling Liftium...');
-
 	var size = AdDriverDelayedLoader.currentAd.size;
-
 	LiftiumOptions.placement = slotname;
-
 	LiftiumDART.placement = slotname; 
 	
 	try {
@@ -422,73 +384,35 @@ AdDriverDelayedLoader.callLiftium = function() {
 				}
 			}
 		);
-
-		/*
-		Liftium.callAd(size);
-
-		var slot = document.getElementById(slotname);
-
-		bezen.domwrite.render(slot, function() {
-
-			AdDriverDelayedLoader.loadNext();
-
-		});
-		*/
-	
 	}
 	catch (e) {
-		
 		AdDriver.log(e.message);
-
 		AdDriverDelayedLoader.loadNext();
 	}
-
 }
 
 AdDriverDelayedLoader.loadNext = function() {
-
 	if (AdDriverDelayedLoader.adDriverCalls.length) {
-
 		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverCalls.shift();
 
 		var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.dartUrl);
-
 		if (adProvider == 'DART') {
-
 			AdDriverDelayedLoader.callDART();
-
 		}
 		else if (adProvider == 'Liftium') {
-			
 			AdDriverDelayedLoader.callLiftium();
-
 		}
 		else {
-
 			AdDriverDelayedLoader.loadNext();
-
 		}
-
 	}
-	else {
-
-		//AdDriverDelayedLoader.restore();
-
-	}
-
 }
 
 AdDriverDelayedLoader.load = function() {
-
 	if (AdDriver.isNoAdWiki()) {
-
 		return;
-
 	}
 
-	AdDriverDelayedLoader.capture();
-
 	AdDriverDelayedLoader.loadNext();
-
 }
 
