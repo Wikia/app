@@ -9,7 +9,7 @@ var LazyLoadAds = {
 	},
 
 	settings : {
-		threshhold : 300
+		threshhold : 200
 	},
 
 	lazyLoadAdTops : null,
