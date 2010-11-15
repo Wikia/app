@@ -9,6 +9,7 @@
  */
 
 $wgSpecialPages['SendGridPostback'] = 'SendGridPostback';
+
 /*$wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SendGridPostback',
 	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo', // FIXME: please point to a location where to get more information on this extension (presumably mediawiki.org/wiki/Extension/BatchUserRights
@@ -36,26 +37,16 @@ class SendGridPostback extends UnlistedSpecialPage {
 	 * @param $par Mixed: string if any subpage provided, else null
 	 */
 	function execute( $par ) {
-		global $wgOut;
+		global $wgOut, $_POST, $wgRequest, $IP;
+
 		wfProfileIn(__METHOD__);
-		
-		global $IP;
+
 		require "$IP/lib/Mail.php";
 		require "$IP/lib/Mail/wikiadb.php";
-		
+
 		$this->outputHeader();
 		$this->setHeaders();
 
-		// Store the raw data of the postback.
-		ob_start();
-		global $_POST;
-		print_r($_POST);
-		$postString = ob_get_clean();
-
-		// Writes to syslog1:/var/log/httpd - just buying time until we implement the rest.
-		//Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
-		
-		global $wgRequest;
 		$emailId = $wgRequest->getVal('wikia-email-id');
 		$emailAddr = $wgRequest->getVal('email');
 		$cityId = $wgRequest->getVal('wikia-email-city-id'); // cityId of the wiki which sent the email
@@ -70,48 +61,104 @@ class SendGridPostback extends UnlistedSpecialPage {
 
 			// Take action on the eventType.
 			$eventType = $wgRequest->getVal('event');
-			switch($eventType){
+			switch ($eventType) {
 			case 'click':
-				// NOTE: ALSO COMES WITH 'url' OF THE LINK THAT WAS CLICKED ON.
-				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
+				$this->handleClick($emailId, $emailAddr);
 				break;
 			case 'open':
-				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
+				$this->handleOpen($emailId, $emailAddr);
 				break;
 			case 'unsubscribe':
-				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
+				$this->handleUnsubscribe($emailId, $emailAddr);
 				break;
 			case 'bounce':
-				// NOTE: ALSO COMES WITH 'status' AND 'reason' FOR THE BOUNCE.
-				
-				// TODO: REMOVE THIS ONCE WE ACTUALLY PROCESS THE DATA.
-				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
-
-				// TODO: Update the wikia_mailer database with the info from the post
-				// TODO: Update the wikia_mailer database with the info from the post
-				
-				// TODO: Get all users which use the email address provided.
-				// TODO: Get all users which use the email address provided.
-				
-				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies) for each user found.
-				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies) for each user found.
-
+				$this->handleBounce($emailId, $emailAddr, $wgRequest->getVal('status'), $wgRequest->getVal('reason'));
 				break;
 			case 'spamreport':
-				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
+				$this->handleSpam($emailId, $emailAddr);
 				break;
 			default:
-				Wikia::log(__METHOD__, false, "Unrecognized type: <postback>" . $postString . "</postback>\n", true);
+				Wikia::log(__METHOD__, false, "Unrecognized type: <postback>" . print_r($_POST, true) . "</postback>\n", true);
 			}
 
 			$wgOut->addHtml("Postback processed.");
 		} else {
 			// Log the token-validation problem.
-			Wikia::log(__METHOD__, false, "INVALID TOKEN DURING THIS POSTBACK: <postback>" . $postString . "</postback>\n", true);
+			Wikia::log(__METHOD__, false, "INVALID TOKEN DURING THIS POSTBACK: <postback>" . print_r($_POST, true) . "</postback>\n", true);
 			$wgOut->addHtml("Postback token did not match expected value.  Ignoring.");
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+	
+	private function handleClick ($id, $email, $url) {
+		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
+		
+		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw->update(
+			Mail_wikiadb::$MAIL_TABLE_NAME,
+			array( /* SET */'clicked' => date('Y-m-d H:i:s') ),
+			array( /* WHERE */'id' => $id ),
+			""
+		);
+	}
+	
+	private function handleOpen ($id, $email) {
+		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
+
+		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw->update(
+			Mail_wikiadb::$MAIL_TABLE_NAME,
+			array( /* SET */'opened' => date('Y-m-d H:i:s') ),
+			array( /* WHERE */'id' => $id ),
+			""
+		);
+	}
+	
+	private function handleUnsubscribe ($id, $email) {
+		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
+	}
+	
+	private function handleBounce ($id, $email, $status, $reason) {
+		Wikia::log(__METHOD__, false, "<postback>$email, $status, $reason</postback>\n", true);
+
+		// Update the mail table to include details about the bounce		
+		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw->update(
+			Mail_wikiadb::$MAIL_TABLE_NAME,
+			array( /* SET */'is_bounce'    => 1,
+							'error_status' => $status,
+							'error_msg'    => $reason ),
+			array( /* WHERE */'id' => $id ),
+			""
+		);
+		
+		// Invalidate the users email to force them to reverify it
+		$dbr = wfGetDb(DB_SLAVE);
+		$res = $dbr->select( 'user',
+							 array( 'id' ),
+							 array( 'user_email' => $email ),
+							 __METHOD__
+						   );
+		while ($row = $dbr->fetchObject($res)) {
+			$user = User::newFromId($row->id);
+			if (!$user) next;
+			
+			$user->invalidateEmail();
+			$user->saveSettings();
+		}
+	}
+	
+	private function handleSpam ($id, $email) {
+		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
+		
+		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw->update(
+			Mail_wikiadb::$MAIL_TABLE_NAME,
+			array( /* SET */'is_spam'  => 1 ),
+			array( /* WHERE */'id' => $id ),
+			""
+		);
 	}
 	
 	/**
