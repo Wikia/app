@@ -40,7 +40,7 @@ class AdSS_AdForm {
 	}
 
 	function isValid() {
-		$nonEmptyFields = array( 'wpUrl', 'wpText', 'wpDesc', 'wpEmail' );
+		$nonEmptyFields = array( 'wpUrl', 'wpEmail' );
 		foreach( $nonEmptyFields as $f ) {
 			if( empty( $this->fields[$f] ) ) {
 				$this->errors[$f] = wfMsgHtml( 'adss-form-field-empty-errormsg' );
@@ -52,6 +52,13 @@ class AdSS_AdForm {
 		} elseif( $this->fields['wpType'] == 'banner' ) {
 		       	if( $this->fields['wpBannerUploadError'] ) {
 				$this->errors['wpBanner'] = wfMsgHtml( 'adss-form-banner-upload-errormsg' );
+			}
+		} else {
+			$nonEmptyFields = array( 'wpText', 'wpDesc' );
+			foreach( $nonEmptyFields as $f ) {
+				if( empty( $this->fields[$f] ) ) {
+					$this->errors[$f] = wfMsgHtml( 'adss-form-field-empty-errormsg' );
+				}
 			}
 		}
 			

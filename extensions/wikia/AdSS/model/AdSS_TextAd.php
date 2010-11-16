@@ -32,6 +32,7 @@ class AdSS_TextAd extends AdSS_Ad {
 			$dbw->insert( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_user_email'   => $this->userEmail,
 						'ad_type'         => $this->type,
 						'ad_url'          => $this->url,
 						'ad_text'         => $this->text,
@@ -52,6 +53,7 @@ class AdSS_TextAd extends AdSS_Ad {
 			$dbw->update( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_user_email'   => $this->userEmail,
 						'ad_type'         => $this->type,
 						'ad_url'          => $this->url,
 						'ad_text'         => $this->text,

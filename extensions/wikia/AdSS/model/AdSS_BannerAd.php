@@ -29,7 +29,9 @@ class AdSS_BannerAd extends AdSS_Ad {
 			$dbw->insert( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_user_email'   => $this->userEmail,
 						'ad_type'         => $this->type,
+						'ad_url'          => $this->url,
 						'ad_wiki_id'      => $this->wikiId,
 						'ad_page_id'      => $this->pageId,
 						'ad_status'       => $this->status,
@@ -46,7 +48,9 @@ class AdSS_BannerAd extends AdSS_Ad {
 			$dbw->update( 'ads',
 					array(
 						'ad_user_id'      => $this->userId,
+						'ad_user_email'   => $this->userEmail,
 						'ad_type'         => $this->type,
+						'ad_url'          => $this->url,
 						'ad_wiki_id'      => $this->wikiId,
 						'ad_page_id'      => $this->pageId,
 						'ad_status'       => $this->status,
@@ -76,7 +80,6 @@ class AdSS_BannerAd extends AdSS_Ad {
 	function getBannerPath() {
 		global $wgAdSS_BannerUploadDirectory;
 		$dir = $wgAdSS_BannerUploadDirectory;
-		wfMkdirParent( $dir );
 		if( substr( $dir, -1 ) != '/' ) {
 			$dir .= '/';
 		}
