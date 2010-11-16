@@ -31,7 +31,7 @@ class GoogleAnalyticsPageSpeed {
 		
 		if(count($rows) > 0) {
 			$dbw = wfGetDB(DB_MASTER, array(), 'performance_stats');
-			$dbw->replace('pagespeedga', array(), $rows);			
+			$dbw->replace('pagespeed', array(), $rows);			
 		}
 	}
 	
