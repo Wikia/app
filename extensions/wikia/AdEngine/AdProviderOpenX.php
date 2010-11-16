@@ -229,28 +229,6 @@ EOT;
 		return $out;
 	}
 
-	private function getBezenLoadScriptDefinition(Array $slotnames) {
-		$script = '';
-
-		if (!is_array($slotnames) || !sizeof($slotnames)) {
-			return $script;
-		}
-
-		$slotname = array_shift($slotnames);
-
-		$script .= <<<EOT
-		var parent_{$slotname} = document.getElementById("{$slotname}");
-		bezen.load.script(parent_{$slotname}, base_url_{$slotname}, function(){
-			bezen.domwrite.render(parent_{$slotname}, function (){
-EOT;
-		$script .= $this->getBezenLoadScriptDefinition($slotnames);
-		$script .= <<<EOT
-			});
-		});
-EOT;
-		return $script;
-	}
-
 	public function getZoneId($slotname){
 		if(isset($this->zoneIds[$slotname])){
 			return $this->zoneIds[$slotname];

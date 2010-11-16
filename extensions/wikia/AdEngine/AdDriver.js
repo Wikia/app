@@ -328,7 +328,6 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 		// ord
 		if (typeof(window.dartOrd) == 'undefined') {
 			window.dartOrd = Math.floor(Math.random()*10000000000000000);
-			$().log('set ord to ' + window.dartOrd);
 		}
 		url = url.replace("ord=N?", "ord="+window.dartOrd+"?");
 
