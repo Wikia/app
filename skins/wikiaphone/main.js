@@ -34,6 +34,4 @@ document.onclick = function(event){
 				}
 			}
 	}
-	
-	return false;
 };
