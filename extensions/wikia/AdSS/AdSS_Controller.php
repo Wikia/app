@@ -96,12 +96,12 @@ class AdSS_Controller extends SpecialPage {
 			$user = AdSS_User::newFromForm( $adForm );
 			if( $user ) {
 				if( $wgUser->isAllowed( 'adss-admin' ) ) {
-					$this->saveAdInternal( $adForm, $user, "adss/form/save" );
+					$this->saveAdInternal( AdSS_AdFactory::createFromForm( $adForm ), $user, "adss/form/save" );
 					return;
 				}
 				$pp = PaymentProcessor::newFromUserId( $user->id );
 				if( $pp && $pp->getBillingAgreement() ) {
-					$this->saveAdInternal( $adForm, $user, "adss/form/save" );
+					$this->saveAdInternal( AdSS_AdFactory::createFromForm( $adForm ), $user, "adss/form/save" );
 					return;
 				}
 			} else {
@@ -116,14 +116,21 @@ class AdSS_Controller extends SpecialPage {
 		$cancelUrl = $selfUrl . '/paypal/cancel';
 		$pp = new PaymentProcessor();
 		if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
-			// redirect to PayPal
-			$_SESSION['ecToken'] = $pp->getToken();
-			$_SESSION['AdSS_adForm'] = $adForm;
-			$wgOut->addMeta( 'http:Refresh', '0;URL=' . $wgPayPalUrl . $pp->getToken() );
-			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/redirect/ok") } )' );
-			$wgOut->addHTML( wfMsgHtml( 'adss-paypal-redirect', Xml::element( 'a', array( 'href' => $wgPayPalUrl . $pp->getToken() ), wfMsg( 'adss-click-here' ) ) ) );
+			$ad = AdSS_AdFactory::createFromForm( $adForm );
+			$ad->save();
+			if( $ad->id > 0 ) {
+				$pp->setAdId( $ad->id );
+				// redirect to PayPal
+				$wgOut->addMeta( 'http:Refresh', '0;URL=' . $wgPayPalUrl . $pp->getToken() );
+				$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/redirect/ok") } )' );
+				$wgOut->addHTML( wfMsgHtml( 'adss-paypal-redirect', Xml::element( 'a', array( 'href' => $wgPayPalUrl . $pp->getToken() ), wfMsg( 'adss-click-here' ) ) ) );
+			} else {
+				// couldn't save the ad
+				$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/save/error") } )' );
+				$wgOut->addHTML( wfMsgWikiHtml( 'adss-error' ) );
+			}
 		} else {
-			// show error
+			// show PP error
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/redirect/error") } )' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 		}
@@ -132,15 +139,18 @@ class AdSS_Controller extends SpecialPage {
 	function processPayPalReturn( $token ) {
 		global $wgAdSS_templatesDir, $wgOut, $wgAdSS_contactEmail, $wgUser;
 
-		if( empty( $_SESSION['ecToken'] ) || ( $_SESSION['ecToken'] != $token ) ) {
+		$pp_new = new PaymentProcessor( $token );
+
+		$ad = null;
+		$adId = $pp_new->getAdId();
+		if( $adId ) {
+			$ad = AdSS_AdFactory::createFromId( $adId );
+		}
+		if( $ad === null ) {
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/return/error") } )' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-token-error' ) );
 			return;
 		}
-		unset( $_SESSION['ecToken'] );
-		$adForm = $_SESSION['AdSS_adForm'];
-
-		$pp_new = new PaymentProcessor( $token );
 
 		$payerId = $pp_new->fetchPayerId();
 		if( $payerId === false ) {
@@ -150,7 +160,7 @@ class AdSS_Controller extends SpecialPage {
 		}
 
 		$baid = false;
-		$pp_existing = PaymentProcessor::newFromPayerId( $payerId, $adForm->get( 'wpEmail' ) );
+		$pp_existing = PaymentProcessor::newFromPayerId( $payerId, $ad->userEmail );
 		if( $pp_existing ) {
 			$user = AdSS_User::newFromId( $pp_existing->getUserId() );
 			wfDebug( "AdSS: got existing user: {$user->toString()})\n" );
@@ -165,7 +175,7 @@ class AdSS_Controller extends SpecialPage {
 			$baid = $pp_existing->getBillingAgreement();
 			if( $baid ) wfDebug( "AdSS: got existing BAID: $baid\n" );
 		} else {
-			$user = AdSS_User::register( $adForm->get( 'wpEmail' ) );
+			$user = AdSS_User::register( $ad->userEmail );
 			wfDebug( "AdSS: created new user: {$user->toString()})\n" );
 		}
 		$pp_new->setUserId( $user->id );
@@ -180,13 +190,12 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
-		$this->saveAdInternal( $adForm, $user, "adss/form/paypal/return" );
+		$this->saveAdInternal( $ad, $user, "adss/form/paypal/return" );
 	}
 
-	private function saveAdInternal( $adForm, $user, $fakeUrl ) {
+	private function saveAdInternal( $ad, $user, $fakeUrl ) {
 		global $wgOut, $wgAdSS_contactEmail, $wgNoReplyAddress, $wgUser;
 
-		$ad = AdSS_AdFactory::createFromForm( $adForm );
 		$ad->setUser( $user );
 		if( $wgUser->isAllowed( 'adss-admin' ) ) {
 			$ad->expires = strtotime( "+10 years", time() );

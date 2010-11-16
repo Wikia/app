@@ -3,10 +3,12 @@
 class PaymentProcessor {
 
 	private $token;
+	private $adId;
 	private $userId;
 
 	function __construct( $token = null ) {
 		$this->token = $token;
+		$this->adId = null;
 		$this->userId = null;
 	}
 
@@ -164,6 +166,22 @@ class PaymentProcessor {
 			return false;
 		}
 		return $respArr['PAYERID'];
+	}
+
+	function getAdId() {
+		global $wgAdSS_DBname;
+		if( !$this->adId ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+			$this->adId = $dbr->selectField( 'pp_tokens', 'ppt_ad_id', array( 'ppt_token' => $this->token ), __METHOD__ );
+		}
+		return $this->adId;
+	}
+
+	function setAdId( $adId ) {
+		global $wgAdSS_DBname;
+		$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
+		$dbw->update( 'pp_tokens', array( 'ppt_ad_id' => $adId ), array( 'ppt_token' => $this->token ), __METHOD__ );
+		$this->adId = $adId;
 	}
 
 	function getUserId() {

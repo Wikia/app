@@ -32,7 +32,8 @@ class AdSS_AdForm {
 		$this->fields['wpDesc'] = $r->getText( 'wpDesc' );
 		$this->fields['wpType'] = $r->getText( 'wpType' );
 		$this->fields['wpPage'] = $r->getText( 'wpPage' );
-		$this->fields['wpBanner'] = $r->getText( 'wpBanner' );
+		$this->fields['wpBanner'] = $r->getFileTempname( 'wpBanner' );
+		$this->fields['wpBannerUploadError'] = $r->getUploadError( 'wpBanner' );
 		$this->fields['wpWeight'] = $r->getText( 'wpWeight' );
 		$this->fields['wpEmail'] = $r->getText( 'wpEmail' );
 		$this->fields['wpPassword'] = $r->getText( 'wpPassword' );
@@ -48,14 +49,9 @@ class AdSS_AdForm {
 
 		if( $this->fields['wpType'] == '' ) {
 			$this->errors['wpType'] = wfMsgHtml( 'adss-form-pick-plan-errormsg' );
-		} elseif( $this->fields['wpType'] == 'page' ) {
-		       	if( empty( $this->fields['wpPage'] ) ) {
-				$this->errors['wpPage'] = wfMsgHtml( 'adss-form-field-empty-errormsg' );
-			} else {
-				$title = Title::newFromText( $this->fields['wpPage'] );
-				if( !$title || !$title->exists() ) {
-					$this->errors['wpPage'] = wfMsgHtml( 'adss-form-non-existent-title-errormsg' );
-				}
+		} elseif( $this->fields['wpType'] == 'banner' ) {
+		       	if( $this->fields['wpBannerUploadError'] ) {
+				$this->errors['wpBanner'] = wfMsgHtml( 'adss-form-banner-upload-errormsg' );
 			}
 		}
 			

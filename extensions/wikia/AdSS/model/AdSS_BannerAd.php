@@ -2,22 +2,23 @@
 
 class AdSS_BannerAd extends AdSS_Ad {
 
-	public $bannerPath;
+	// The temporary filename of the file in which the uploaded banner was
+	// stored on the server.
+	public $tmpBannerPath;
 
 	function __construct() {
 		parent::__construct();
 		$this->type = 'b';
-		$this->bannerPath;
+		$this->tmpBannerPath = null;
 	}
 
 	function loadFromForm( $f ) {
 		parent::loadFromForm( $f );
-		$this->bannerPath = $f->get( 'wpBannerPath' );
+		$this->tmpBannerPath = $f->get( 'wpBanner' );
 	}
 
 	function loadFromRow( $row ) {
 		parent::loadFromRow( $row );
-		$this->bannerPath = $row->banner_path;
 	}
 
 	function save() {
@@ -29,7 +30,6 @@ class AdSS_BannerAd extends AdSS_Ad {
 					array(
 						'ad_user_id'      => $this->userId,
 						'ad_type'         => $this->type,
-						'ad_banner_path'  => $this->bannerPath,
 						'ad_wiki_id'      => $this->wikiId,
 						'ad_page_id'      => $this->pageId,
 						'ad_status'       => $this->status,
@@ -47,7 +47,6 @@ class AdSS_BannerAd extends AdSS_Ad {
 					array(
 						'ad_user_id'      => $this->userId,
 						'ad_type'         => $this->type,
-						'ad_banner_path'  => $this->bannerPath,
 						'ad_wiki_id'      => $this->wikiId,
 						'ad_page_id'      => $this->pageId,
 						'ad_status'       => $this->status,
@@ -63,10 +62,33 @@ class AdSS_BannerAd extends AdSS_Ad {
 					__METHOD__
 				    );
 		}
+		if( $this->tmpBannerPath ) {
+			move_uploaded_file( $this->tmpBannerPath, $this->getBannerPath() );
+			$this->tmpBannerPath = null;
+		}
 	}
 
 	function render( $tmpl ) {
 		$tmpl->set( 'ad', $this );
 		return $tmpl->render( 'bannerAd' );
+	}
+
+	function getBannerPath() {
+		global $wgAdSS_BannerUploadDirectory;
+		$dir = $wgAdSS_BannerUploadDirectory;
+		wfMkdirParent( $dir );
+		if( substr( $dir, -1 ) != '/' ) {
+			$dir .= '/';
+		}
+		return $dir . $this->id;
+	}
+
+	function getBannerURL() {
+		global $wgAdSS_BannerUploadPath;
+		$url = $wgAdSS_BannerUploadPath;
+		if( substr( $url, -1 ) != '/' ) {
+			$url .= '/';
+		}
+		return $url . $this->id;
 	}
 }

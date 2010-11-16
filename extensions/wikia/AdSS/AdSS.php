@@ -61,6 +61,8 @@ $wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
 $wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
 
 $wgAdSS_DBname = 'adss';
+$wgAdSS_BannerUploadDirectory = $wgUploadDirectory . '/adss';
+$wgAdSS_BannerUploadPath = $wgUploadPath . '/adss';
 
 // override in your LocalSettings.php
 $wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
