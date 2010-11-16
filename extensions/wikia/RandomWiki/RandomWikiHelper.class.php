@@ -9,9 +9,9 @@ class RandomWikiHelper {
 
 	static private $pageviewsLimits = array(
 		'en' => 15000,
-		'de' => 3000,
-		'es' => 1000,
-		'default' => 300
+		'de' => 1000,
+		'es' => 300,
+		'default' => 100
 	);
 
 	static private $mData = null;
