@@ -3,7 +3,7 @@
  * MobileApiRecommendedContent module
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-class MobileApiRecommendedContent {
+class MobileApiRecommendedContent extends MobileApiBase {
 	const WF_WIKI_RECOMMEND_VAR = 'wgMobileApiWikiRecommend';
 	const WF_WIKI_CATEGORY_VAR = 'wgMobileApiWikiCategory';
 	
@@ -13,7 +13,7 @@ class MobileApiRecommendedContent {
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
 	//http://muppets.federico.wikia-dev.com/index.php?action=ajax&rs=MobileAppHelper::getRecommendedWikis
-	public static function getRecommendedWikis( WebRequest $request ){
+	public function getRecommendedWikis(){
 		wfProfileIn( __METHOD__ );
 		
 		//if ( $request->wasPosted() ) {
@@ -32,26 +32,22 @@ class MobileApiRecommendedContent {
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 					
 					$ret[] = Array(
-						//'title' => ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName,
+						'name' => ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName,
 						//'font' => ( !empty( $wikiThemeSettings[ 'wordmark-font' ] ) ) ? $wikiThemeSettings[ 'wordmark-font' ] : null,
 						'color' => ( !empty( $wikiThemeSettings[ 'wordmark-color' ] ) ) ? $wikiThemeSettings[ 'wordmark-color' ] : null,
 						'backgroundColor' => ( !empty( $wikiThemeSettings[ 'color-page' ] ) ) ? $wikiThemeSettings[ 'color-page' ] : null,
 						'homeUrl' => $wikiUrl,
-						'leftImage'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null,
-						'indentionLevel' => '2'
+						'logoUrl'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null,
+						'indentationLevel' => '2'
 						//,'data' => var_dump( $wikiThemeSettings, true )//debug only
 					);
 				}
 			}
 			
-			$json = Wikia::json_encode( $ret );
-			$response = new AjaxResponse( $json );
-			$response->setContentType( 'application/json; charset=utf-8' );
-			
-			wfProfileOut( __METHOD__ );
-			return $response;
-		/*}
+			$this->setResponseContentType('application/json; charset=utf-8');
+			$this->setResponseContent( Wikia::json_encode( $ret ) );
+		//}
 		
-		wfProfileOut( __METHOD__ );*/
+		wfProfileOut( __METHOD__ );
 	}
 }

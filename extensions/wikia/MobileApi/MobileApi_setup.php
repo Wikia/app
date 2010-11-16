@@ -27,11 +27,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'mobileapi-desc'
 );
 
-$wgMobileApiModules;
 $dir = dirname( __FILE__ ) . '/';
 
+//classes
+$wgAutoloadClasses[ 'MobileApiBase' ] = "{$dir}/modules/MobileApiBase.class.php";
+
 //modules
-global $wgMobileApiModules;
+global $wgMobileApiModules;//TODO: add to DefaultSettings.php in includes/wikia
 $wgMobileApiModules = array(
 	'MobileApiRecommendedContent' => "{$dir}/modules/MobileApiRecommendedContent.class.php"
 );
@@ -41,34 +43,32 @@ $wgExtensionMessagesFiles['MobileApp'] = $dir . '/MobileApi.i18n.php';
 
 //ajax exports
 global $wgAjaxExportList;
-$wgAjaxExportList['MobileApi'] = 'mobileApiMain';
+$wgAjaxExportList[] = 'MobileApi';
 
-function mobileApiMain( WebRequest $request = null ) {
-	global $wgMobileApiModules, $wgAutoloadClasses;
+function MobileApi() {
+	global $wgMobileApiModules, $wgAutoloadClasses, $wgRequest;
 	wfProfileIn( __METHOD__ );
 	
-	if ( empty( $request ) ) {
-		global $wgRequest;
-		$request = $wgRequest;
-	}
-	
-	$moduleName = $request->getVal( 'module' );
-	$actionName = $request->getVal( 'action' );
-	$out = null;
+	$moduleName = $wgRequest->getVal( 'module' );
+	$methodName = $wgRequest->getVal( 'method' );
+	$out = new AjaxResponse();
 	$module = null;
 	
-	if( in_array( $moduleName, $wgMobileApiModules ) ) {
+	if( !empty( $wgMobileApiModules[ $moduleName ] ) ) {
 		
 		$wgAutoloadClasses[ $moduleName ] = $wgMobileApiModules[ $moduleName ];
 		
-		if( method_exists( $moduleName, $actionName ) ) {
-			$module = new $moduleName();
-			$out = $module->$actionName($request);
+		if( method_exists( $moduleName, $methodName ) ) {
+			$module = new $moduleName( $wgRequest );
+			$module->$methodName();
+			$out->addText( $module->getResponseContent() );
+			$out->setContentType( $module->getResponseContentType() );
+			$out->setResponseCode( $module->getResponseStatusCode() );
 		}
 	}
 	
 	if( empty( $module ) ) {
-		$request->response()->header( 'HTTP/1.1 404 Not Found' );
+		$out->setResponseCode('404 Not Found');
 	}
 	
 	wfProfileOut(__METHOD__);
