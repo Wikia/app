@@ -75,17 +75,17 @@ class RandomWikiHelper {
 						'specials.page_views_summary_tags as pv'//this table stores only the last 4 weeks worth of data
 					),
 					array(
-						'cl.city_id AS city_id',
+						'pv.city_id AS city_id',
 						'sum(pv.pv_views) as pageviews'
 					),
 					array(
 						'cl.city_id = pv.city_id',
 						'cl.city_lang' => self::$mLanguage,
-						'cl.city_public' => true,
+						'cl.city_public' => 1,
 					),
 					__METHOD__,
 					array(
-						'GROUP BY' => 'cl.city_id',
+						'GROUP BY' => 'cl.city_id'
 					)
 			);
 			
