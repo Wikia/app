@@ -6,6 +6,7 @@ abstract class AdSS_Ad {
 	public $type;
 	public $url;
 	public $userId;
+	public $userEmail;
 	public $wikiId;
 	public $pageId;
 	public $status;
@@ -22,6 +23,7 @@ abstract class AdSS_Ad {
 		$this->id = 0;
 		$this->url = '';
 		$this->userId = 0;
+		$this->userEmail = '';
 		$this->wikiId = $wgCityId;
 		$this->pageId = 0;
 		$this->status = 0;
@@ -34,6 +36,7 @@ abstract class AdSS_Ad {
 	}
 
 	function loadFromForm( $f ) {
+		$this->userEmail = $f->get( 'wpEmail' );
 		$this->url = $f->get( 'wpUrl' );
 		if( strtolower( mb_substr( $this->url, 0, 7 ) ) == 'http://' ) {
 			$this->url = mb_substr( $this->url, 7 );
@@ -71,6 +74,7 @@ abstract class AdSS_Ad {
 		}
 		$this->url = $row->ad_url;
 		$this->userId = $row->ad_user_id;
+		$this->userEmail = $row->ad_user_email;
 		$this->wikiId = $row->ad_wiki_id;
 		$this->pageId = $row->ad_page_id;
 		$this->status = $row->ad_status;
@@ -121,6 +125,7 @@ abstract class AdSS_Ad {
 	function setUser( $user ) {
 		$this->user = $user;
 		$this->userId = $user->id;
+		$this->userEmail = $user->email;
 	}
 
 }

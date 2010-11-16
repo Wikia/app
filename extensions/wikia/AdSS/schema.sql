@@ -25,7 +25,6 @@ CREATE TABLE ads (
   ad_url text NULL DEFAULT NULL,
   ad_text text NULL DEFAULT NULL,
   ad_desc text NULL DEFAULT NULL,
-  ad_banner_path text NULL DEFAULT NULL,
   ad_status tinyint unsigned NOT NULL,
   ad_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ad_closed timestamp NULL DEFAULT NULL,
@@ -45,6 +44,7 @@ CREATE TABLE pp_tokens (
   ppt_correlationid char(13) DEFAULT NULL,
   ppt_responded timestamp NULL DEFAULT NULL,
   ppt_token char(20) DEFAULT NULL,
+  ppt_ad_id int unsigned DEFAULT NULL,
   ppt_user_id int unsigned DEFAULT NULL
 ) ENGINE=InnoDB;
 CREATE UNIQUE INDEX ppt_token ON pp_tokens (ppt_token);
