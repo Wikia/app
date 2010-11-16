@@ -44,10 +44,11 @@
 	background-repeat: no-repeat;
 	display: block;
 	height: 100%;
-	width: 100%;
-	text-decoration: none;
+	line-height: 1px;
 	overflow: hidden;
+	text-decoration: none;
 	vertical-align: middle;
+	width: 100%;
 }
 
 .wikia-gallery-item .thumb div {
