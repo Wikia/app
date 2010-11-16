@@ -10,7 +10,7 @@ class RandomWikiHelper {
 	static private $pageviewsLimits = array(
 		'en' => 15000,
 		'es' => 1000,
-		'de' => 800,
+		'de' => 900,
 		'default' => 500
 	);
 
