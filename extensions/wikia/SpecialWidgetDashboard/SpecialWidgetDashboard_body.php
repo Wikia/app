@@ -23,6 +23,7 @@ class SpecialWidgetDashboard extends SpecialPage {
 
 		switch (WidgetFramework::getInstance()->GetSkin()) {
 		case 'monaco':
+		case 'oasis':
 			$wgOut->addWikiMsg( 'widgetdashboard-description' );
 
 			$wgOut->addHTML('<div class="sidebar widget_sidebar widget_dashboard reset">');

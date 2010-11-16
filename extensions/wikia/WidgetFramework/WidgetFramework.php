@@ -48,6 +48,9 @@ class WidgetFramework {
 			case "SkinQuartz":
 				$this->skinname = 'quartz';
 				break;
+			case "SkinOasis":
+				$this->skinname = 'oasis';
+				break;
 			default:
 				# This is a generalization, but we don't really care
 				# most of the times -- widgets are only displayed on
@@ -207,6 +210,10 @@ class WidgetFramework {
 	}
 
 	protected function load($name) {
+		global $wgOut, $wgScriptPath;
+		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.js')) {
+			$wgOut->addScriptFile($wgScriptPath . '/extensions/wikia/WidgetFramework' . '/Widgets/' . $name . '/' . $name . '.js');
+		}
 		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.php')) {
 			require_once(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.php');
 			return true;
@@ -292,7 +299,7 @@ class WidgetFramework {
 			$widget['id'] = 'widget_' . $widget['id'];
 		}
 
-		if($this->skinname == 'monaco') {
+		if($this->skinname == 'monaco' || $this->skinname=='oasis') {
 			global $wgBlankImgUrl;
 			$closeButton = ($closeable) ? "<img src=\"$wgBlankImgUrl\" id=\"{$widget['id']}_close\" class=\"sprite-small close\" />" : '';
 			$editButton  = ($editable) ? "<img src=\"$wgBlankImgUrl\" id=\"{$widget['id']}_edit\" class=\"sprite-small settings\" />" : '';

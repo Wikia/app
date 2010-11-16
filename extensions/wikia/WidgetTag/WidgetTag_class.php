@@ -23,7 +23,7 @@ class WidgetTagRenderer extends WidgetFramework {
 		}
 
 		// we support only quartz & monaco skin in this feature
-		if ( ($this->skinname != 'monaco') && ($this->skinname != 'quartz') ) {
+		if ( ($this->skinname != 'monaco') && ($this->skinname != 'quartz') && $this->skinname != 'oasis' ) {
 			return '';
 		}
 
