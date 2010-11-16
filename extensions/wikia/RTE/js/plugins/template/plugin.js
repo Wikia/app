@@ -107,39 +107,106 @@ RTE.templateEditor = {
 		});
 	},
 
-	// generate template wikitext from given list of parameters
+	// generate template wikitext from given name and list of parameters
 	generateWikitext: function(name, params) {
-		var wikitext, paramsCount = 0;
+		var wikitext,
+			paramsCount = 0,
+			currentData = this.placeholder ? this.placeholder.getData() : false;
 
-		// name of template
-		wikitext = '{{' + name;
+		// "parse" current wikitext
+		var wikitextParts = currentData.wikitext.
+			replace(/\[\[(.*)\|(.*)\]\]/g, '[[$1\x7f$2]]'). // mark pipes inside internal links syntax [[Foo|Bar]]
+			substring(2, currentData.wikitext.length - 2).	// remove {{ and }}
+			split('|');										// split by pipe
 
-		// parameters
-		$.each(params, function(key, value) {
-			if (value == '') {
-				return;
-			}
-			wikitext += '\n|';
+		//RTE.log(currentData.wikitext); RTE.log(wikitextParts); RTE.log(params);
 
-			if (parseInt(key) == key) {
-				// unnamed param
-				wikitext += value;
-			}
-			else {
-				// named param
-				wikitext += key + ' = ' + value;
-			}
+		// parts of new wikitext (first one is template name from current wikitext)
+		var partsStack = [wikitextParts.shift()];
 
-			paramsCount++;
-		});
+		// counter for unnamed parameters
+		var unnamedCounter = 0;
 
-		// add extra line when needed
-		if (paramsCount > 0) {
-			wikitext += '\n';
+		// set to true if line break is found in partTail
+		var lineBreakInTail = false;
+
+		// if there's currently no param, add new line after each part of the template
+		if (wikitextParts.length == 0) {
+			partsStack = [name + "\n"];
+			lineBreakInTail = true;
 		}
 
-		// close wikimarkup
+		// parse and update each part
+		$.each(wikitextParts, function(i, part) {
+			var parsedPart = part.match(/([^=]+)( *\= *)(.*)(\n?)/); //RTE.log(parsedPart);
+
+			// param name    = value (named parameter)
+			if (parsedPart) {
+				var partName = $.trim(parsedPart[1]);
+				var partSeparator = parsedPart[2];
+				var partValue = parsedPart[3];
+				var partTail = parsedPart[4];
+
+				if (partTail != '') {
+					lineBreakInTail = true;
+				}
+
+				// update this part with new value
+				if (params[partName] != '') {
+					partsStack.push(parsedPart[1] + partSeparator + params[partName] + partTail);
+					delete params[partName];
+				}
+			}
+			// foo bar (unnamed parameter)
+			else {
+				parsedPart = part.match(/(.*)(\n?)/); //RTE.log(parsedPart);
+
+				var partName = ++unnamedCounter;
+				var partValue = parsedPart[1];
+				var partTail = parsedPart[2];
+
+				if (partTail != '') {
+					lineBreakInTail = true;
+				}
+
+				// update this part with new value
+				if (params[partName] != '') {
+					partsStack.push(params[partName] + partTail);
+					delete params[partName];
+				}
+				else {
+					// add empty part to stack (empty unnamed param)
+					partsStack.push(lineBreakInTail ? '\n' : '');
+				}
+			}
+		});
+
+		// add new params
+		$.each(params, function(key, value) {
+			// unnamed param (add even if empty)
+			if (parseInt(key) && parseInt(key) == key) {
+				partsStack.push((value != '' ? value : '') + (lineBreakInTail ? '\n' : ''));
+			}
+			// named param
+			else {
+				if (value != '') {
+					partsStack.push(key + ' = ' + value + (lineBreakInTail ? '\n' : ''));
+				}
+			}
+		});
+
+		//RTE.log(partsStack);
+
+		// generate new wikitext
+		wikitext = '{{';
+		wikitext += partsStack.
+			join('|').				// join template params
+			replace('\x7f', '|').	// replace pipe markers
+			replace(/\|+$/g, '').	// remove trailing pipes
+			replace(/\n+$/g, '');	// remove trailing line breaks
 		wikitext += '}}';
+
+		$().log(currentData.wikitext, 'RTE: old wikitext'); $().log(wikitext, 'RTE: new wikitext');
 
 		return wikitext;
 	},
@@ -283,16 +350,9 @@ RTE.templateEditor = {
 
 				// generate preview
 				this.doPreview();
-
-				// RT #61758
-				var wikitextParts = data.wikitext.split('|'); RTE.log(data.wikitext); RTE.log(wikitextParts);
-
 				break;
 
-/*
-			// next dev cycle
-
-			// wikitext source editor
+			// wikitext source editor (advanced mode)
 			case 3:
 				// get wikitext source
 				$('#templateAdvEditorSource').attr('value', data.wikitext);
@@ -301,9 +361,7 @@ RTE.templateEditor = {
 				RTE.tools.parse(data.wikitext, function(html) {
 					$('#templateAdvPreview').html(html);
 				});
-
 				break;
-*/
 		}
 	},
 
