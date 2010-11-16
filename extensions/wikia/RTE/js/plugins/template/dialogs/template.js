@@ -301,6 +301,8 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 			var step = (this.getActiveTab() == 'step1') ? 'search' : 'editor';
 
 			RTE.track('template', 'dialog', step, 'close');
-		}
+		},
+		// don't focus on first page when starting template editor on second page
+		onFocus: function() {}
 	};
 });
