@@ -244,7 +244,7 @@ class UserPagesHeaderModule extends Module {
 				// edit button
 				if (isset($this->content_actions['edit'])) {
 					$this->actionMenu['action'] = array(
-						'href' => $this->content_actions['edit']['href'] ."#EditPage",
+						'href' => $this->content_actions['edit']['href'],
 						'text' => wfMsg('oasis-page-header-edit-profile'),
 					);
 
@@ -271,7 +271,7 @@ class UserPagesHeaderModule extends Module {
 			// "Leave a message" button
 			if (isset($this->content_actions['addsection']['href'])) {
 				$this->actionMenu['action'] = array(
-					'href' => $this->content_actions['addsection']['href'] ."#EditPage",
+					'href' => $this->content_actions['addsection']['href'],
 					'text' => wfMsg('add_comment'),
 				);
 
@@ -281,7 +281,7 @@ class UserPagesHeaderModule extends Module {
 				// different handling for "My talk page"
 				if (self::isItMe($this->userName)) {
 					$this->actionMenu['action']['text'] = wfMsg('edit');
-					$this->actionMenu['action']['href'] = $this->content_actions['edit']['href'] ."#EditPage";
+					$this->actionMenu['action']['href'] = $this->content_actions['edit']['href'];
 
 					$this->actionImage = MenuButtonModule::EDIT_ICON;
 					$this->actionName = 'edit';
@@ -294,7 +294,7 @@ class UserPagesHeaderModule extends Module {
 				wfLoadExtensionMessages('Blogs');
 
 				$this->actionButton = array(
-					'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl() ."#EditPage",
+					'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
 					'text' => wfMsg('blog-create-post-label'),
 				);
 
@@ -385,7 +385,7 @@ class UserPagesHeaderModule extends Module {
 		wfLoadExtensionMessages('Blogs');
 		// "Create blog post" button
 		$this->actionButton = array(
-			'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl() ."#EditPage",
+			'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
 			'text' => wfMsg('blog-create-post-label'),
 		);
 		$this->title = wfMsg('create-blog-post-category');
