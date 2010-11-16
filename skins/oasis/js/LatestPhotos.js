@@ -40,6 +40,7 @@ var UploadPhotos = {
 			UploadPhotos.conflict = UploadPhotos.d.find(".conflict");
 			UploadPhotos.ignore = UploadPhotos.d.find("input[name=wpIgnoreWarning]");
 			UploadPhotos.override = UploadPhotos.d.find(".override");
+			UploadPhotos.overrideinput = UploadPhotos.override.find("input");
 			UploadPhotos.ajaxwait = UploadPhotos.d.find(".ajaxwait");
 			UploadPhotos.dfcache = {};
 			
@@ -57,6 +58,7 @@ var UploadPhotos = {
 				UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
 				console.log('foo');
 			});
+			$.tracker.byStr('action/uploadphoto/dialog');
 		});
 		if (!UploadPhotos.libinit) {
 			$.getScript("/extensions/wikia/ThemeDesigner/js/aim.js");	// TODO: find a permanent place for aim
@@ -69,6 +71,7 @@ var UploadPhotos = {
 			var json = $.evalJSON(res);
 			if(json) {
 				if(json['status'] == 0) {	// 0 is success...
+					$.tracker.byStr('action/uploadphoto/upload');
 					window.location = '/wiki/Special:NewFiles';
 				} else if(json['status'] == 12) {	// show conflict dialog
 					UploadPhotos.step1.hide(400, function() {
@@ -127,6 +130,8 @@ var UploadPhotos = {
 			UploadPhotos.override.fadeIn(400);
 			UploadPhotos.status.removeClass("error").html(html).show(400);
 		} else {
+			UploadPhotos.override.fadeOut(400);
+			UploadPhotos.overrideinput.attr("checked", false);
 			UploadPhotos.status.removeClass("error").hide(400);
 		}
 	}	
