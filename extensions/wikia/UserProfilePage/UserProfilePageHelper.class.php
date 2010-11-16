@@ -11,7 +11,8 @@ class UserProfilePageHelper {
 		// Return without any changes if this isn't in the user namespace OR
 		// if the user is doing something besides viewing or purging this page
 		$action = $wgRequest->getVal('action', 'view');
-		if ($skin->mTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge') || $skin->mTitle->isSubpage()) {
+		if ( !in_array( $skin->mTitle->getNamespace(), array( NS_USER, NS_USER_TALK ) ) || ($action != 'view' && $action != 'purge') || $skin->mTitle->isSubpage()) {
+			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
 
@@ -19,6 +20,7 @@ class UserProfilePageHelper {
 
 		// sanity check
 		if ( !is_object( $user ) ) {
+			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
 		$user->load();
