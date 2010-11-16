@@ -273,9 +273,24 @@ AdDriver.beforeCallDART = function(slotname) {
 	AdDriver.setLastDARTCallNoAd(slotname, null);
 }
 
+AdDriver.postProcessSlot = function(slotname) {
+	switch (slotname) {
+		case 'CORP_TOP_LEADERBOARD':
+		case 'HOME_TOP_LEADERBOARD':
+		case 'TOP_LEADERBOARD':
+			// if jumbo/expanding leaderboard, change padding-top and padding-bottom
+			if (($('#'+slotname).height() > 30 && $('#'+slotname).height() < 90) // expandable leaderboard, minimized state
+			|| $('#'+slotname).height() > 95) { // jumbo leaderboard or expandable leaderboard, maximized state
+				$('#'+slotname).css('padding-top', 0); 
+			}
+			break;
+	}
+}
+
 AdDriver.callDARTCallback = function(slotname) {
 	if (typeof(window.adDriverLastDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slotname]) {
 		AdDriver.log(slotname + ' was filled by DART');
+		AdDriver.postProcessSlot(slotname);
 		return;
 	}
 	else {
@@ -402,6 +417,7 @@ AdDriverDelayedLoader.callLiftium = function() {
 				insertType: "append",
 				script: { text: "Liftium.callAd(\""+size+"\");" },
 				done: function() { 
+					AdDriver.postProcessSlot(slotname);
 					AdDriverDelayedLoader.loadNext();
 				}
 			}

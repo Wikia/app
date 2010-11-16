@@ -1,7 +1,10 @@
 /** Leaderboards **/
 #LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
 	text-align: center;
-	div[id^=Liftium_] { 
+	>div {
+		margin: 0 auto;
+	}
+	>div[id^=Liftium_] { 
 		display: inline-block; 
 		text-align: center; 
 		zoom: 1;	// IE7 hack
