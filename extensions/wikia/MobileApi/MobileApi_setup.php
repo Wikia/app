@@ -30,16 +30,16 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 //classes
-$wgAutoloadClasses[ 'MobileApiBase' ] = "{$dir}/modules/MobileApiBase.class.php";
+$wgAutoloadClasses[ 'MobileApiBase' ] = "{$dir}modules/MobileApiBase.class.php";
 
 //modules
 global $wgMobileApiModules;//TODO: add to DefaultSettings.php in includes/wikia
 $wgMobileApiModules = array(
-	'MobileApiRecommendedContent' => "{$dir}/modules/MobileApiRecommendedContent.class.php"
+	'MobileApiRecommendedContent' => "{$dir}modules/MobileApiRecommendedContent.class.php"
 );
 
 // i18n
-$wgExtensionMessagesFiles['MobileApp'] = $dir . '/MobileApi.i18n.php';
+$wgExtensionMessagesFiles['MobileApp'] = "{$dir}MobileApi.i18n.php';
 
 //ajax exports
 global $wgAjaxExportList;
