@@ -281,6 +281,12 @@ AdDriver.callDARTCallback = function(slotname) {
 	else {
 		AdDriver.setLastDARTCallNoAd(slotname, window.wgNow.getTime());
 		AdDriver.log(slotname + ' was not filled by DART');
+		switch (slotname) {	// do not call Liftium for certain slots
+			case 'INVISIBLE_TOP':
+			case 'INVISIBLE_1':
+				return;
+				break;
+		}
 		return 'Liftium';
 	}
 }
@@ -309,6 +315,23 @@ AdDriver.init();
 
 var AdDriverCall = function (slotname, size, dartUrl) {
 	this.replaceTokensInDARTUrl = function(url) {
+
+		// tile and ord are synchronized only for DART calls made by AdDriver.
+		// DART calls made by Liftium will have different tile and ord values.
+
+		// tile
+		if (typeof(window.dartTile) == 'undefined') {
+			window.dartTile = 1;
+		}
+		url = url.replace("tile=N;", "tile="+(window.dartTile++)+";");
+
+		// ord
+		if (typeof(window.dartOrd) == 'undefined') {
+			window.dartOrd = Math.floor(Math.random()*10000000000000000);
+			$().log('set ord to ' + window.dartOrd);
+		}
+		url = url.replace("ord=N?", "ord="+window.dartOrd+"?");
+
 		// Quantcast Segments
 		if (typeof(QuantcastSegments) !== "undefined") {
 			var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues();

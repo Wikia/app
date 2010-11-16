@@ -39,16 +39,12 @@ EOT;
 		}
 		$called = true;
 
-		global $wgDevelEnvironment;
-		if ($wgDevelEnvironment) {
-			$base = '';
-		}
-		else {
-			$base = '';
-		}
-
-		global $wgCacheBuster;
-		$out =  '<script type="text/javascript" src="'. $base .'/extensions/wikia/AdEngine/AdDriver.js?' . $wgCacheBuster . '"></script>' . "\n";
+		$out = <<<EOT
+<script type="text/javascript">
+	var dartTile = 1;
+	var dartOrd = Math.random()*10000000000000000;
+</script>
+EOT;
 
 		return $out;
 	}
