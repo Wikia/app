@@ -3,15 +3,13 @@
 class RandomWikiHelper {
 	const CACHE_KEY_TOKEN = 'wikicities:RandomWiki:list';
 	const WF_VAR_NAME = 'wgRandomWikiRecommend';
-	const PAGEVIEWS_TIME_SPAN = 30; // days
 	const COUNT_LIMIT = 200;
-	const TRACK_LIMIT = 20;
-	const CACHE_EXPIRY = 24; // hours
+	const CACHE_EXPIRY = 48; // hours
 
 	static private $pageviewsLimits = array(
-		'en' => 20000,
-		'de' => 10000,
-		'es' => 8000,
+		'en' => 15000,
+		'de' => 8000,
+		'es' => 5000,
 		'default' => 1000
 	);
 
@@ -27,86 +25,73 @@ class RandomWikiHelper {
 	}
 
 	static public function loadData( $forceRefresh = false, $forceLanguage = null ) {
-
+		global $wgMemc, $wgStatsDB, $wgContLang, $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
-
-		global $wgMemc, $wgStatsDB, $wgContLang;
-
+		
 		self::$mLanguage = ( !empty( $forceLanguage ) ) ? $forceLanguage : $wgContLang->getCode();
 		$cacheKey = self::CACHE_KEY_TOKEN . ':' . strtoupper( self::$mLanguage );
-
+		
 		self::$mData = $wgMemc->get( $cacheKey );
-
+		
 		if ( empty( self::$mData ) || $forceRefresh ) {
 			self::$mData = array( );
-
-			// get a list of existing wikis in the current language
-			$wikiFactoryLang = WikiFactory::getVarByName( 'wgLanguageCode', null );
+			
 			$wikisIDs = array();
-
-			if ( !empty( $wikiFactoryLang ) && !empty( $wikiFactoryLang->cv_variable_id ) ) {
-				$wikisIDs = WikiFactory::getCityIDsFromVarValue( $wikiFactoryLang->cv_variable_id, self::$mLanguage, '=' );
-			}
-
-			// purging closed wikis
-			$dbr = WikiFactory::db( DB_SLAVE );
-
-			$res = $dbr->select(
-				'city_list',
-				'city_id',
-				array(
-					'city_public' => true,
-					'city_id IN (' . implode( ',', $wikisIDs ) . ')'
-				)
-			);
-
-			$wikisIDs = array();
-
-			while ( $row = $dbr->fetchObject( $res ) ) {
-				$wikisIDs[] = $row->city_id;
-			}
-
-			$dbr->freeResult( $res );
-
-			// get all the wikis selected by the sales team
+			
+			// get all the active wikis selected by the sales team
 			$wikiFactoryRecommended = WikiFactory::getVarByName( self::WF_VAR_NAME, null );
 			self::$mData[ 'recommended' ] = array( );
-
+			
 			if ( !empty( $wikiFactoryRecommended ) && !empty( $wikiFactoryRecommended->cv_variable_id ) ) {
-				self::$mData[ 'recommended' ] = WikiFactory::getCityIDsFromVarValue( $wikiFactoryRecommended->cv_variable_id, true, '=' );
-			}
-
-			// filter the recommendation list, oly take what's intersecting the main list
-			if ( !empty( self::$mData[ 'recommended' ] ) && !empty( $wikisIDs ) ) {
-				self::$mData[ 'recommended' ] = array_intersect( self::$mData[ 'recommended' ], $wikisIDs );
-			}
-
-			// the list is clear, now filter by the total amount of pageviews in the specified span of time, it must be bigger then the predefined limit
-			// and group the wikis by hub.
-			// having filtered the list should make things faster
-			$dbr = wfGetDB( DB_SLAVE, array( ), $wgStatsDB );
-
-			$wikis = $dbr->select(
-					'page_views_tags',
+				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+				
+				$res = $dbr->select(
 					array(
-						'city_id',
-						'sum(pv_views) as pageviews'
+						'city_list',
+						'city_variables'
+					),
+					'city_id',
+					array(
+						'city_id = cv_city_id',
+						'city_public' => true,
+						'city_lang' => self::$mLanguage,
+						'cv_variable_id' => $wikiFactoryRecommended,
+						'cv_value' => true
+					)
+				);
+				
+				while ( $row = $dbr->fetchObject( $res ) ) {
+					self::$mData[ 'recommended' ][] = $row->city_id;
+				}
+				
+				$dbr->freeResult( $res );
+			}
+			
+			$dbr = wfGetDB( DB_SLAVE, array( ), $wgStatsDB );
+			
+			$wikis = $dbr->select(
+					array(
+						'wikicities.city_list as cl',
+						'specials.page_views_summary_tags as pv'//this table stores only the last 4 weeks worth of data
 					),
 					array(
-						'city_id IN (' . implode( ',', $wikisIDs ) . ')',
-						'ts > (NOW() - INTERVAL ' . self::PAGEVIEWS_TIME_SPAN . ' day)'
+						'cl.city_id AS city_id',
+						'sum(pv.pv_views) as pageviews'
+					),
+					array(
+						'cl.city_id = pv.city_id',
+						'cl.city_lang' => self::$mLanguage,
+						'cl.city_public' => true,
 					),
 					__METHOD__,
 					array(
-						'GROUP BY' => 'city_id',
+						'GROUP BY' => 'cl.city_id',
 					)
 			);
-
+			
 			$counter = 0;
-			self::$mData[ 'hubs' ] = array( );
-			$minPageViews = ( isset( self::$pageviewsLimits[ self::$mLanguage ] ) ) ?
-				self::$pageviewsLimits[ self::$mLanguage ] :
-				self::$pageviewsLimits[ 'default' ];
+			self::$mData[ 'hubs' ] = array();
+			$minPageViews = ( isset( self::$pageviewsLimits[ self::$mLanguage ] ) ) ? self::$pageviewsLimits[ self::$mLanguage ] : self::$pageviewsLimits[ 'default' ];
 
 			while ( ( $wiki = $dbr->fetchObject( $wikis ) ) && ( $counter < self::COUNT_LIMIT ) ) {
 				if ( $wiki->pageviews >= $minPageViews ) {
@@ -138,8 +123,6 @@ class RandomWikiHelper {
 			}
 
 			self::$mData[ 'total' ] = $counter;
-
-			// cache it for 24h only, wiki can be closed at any time
 			$wgMemc->set( $cacheKey, self::$mData, 3600 * self::CACHE_EXPIRY );
 		}
 
