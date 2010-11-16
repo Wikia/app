@@ -21,7 +21,7 @@ Please try another one!',
 	//rights
 	'right-platinum' => 'Create and edit Platinum badges',
 	'right-sponsored-achievements' => 'Manage Sponsored achievements',
-	
+
 	/*
 	 * Badges' levels
 	 */
@@ -29,9 +29,9 @@ Please try another one!',
 	'achievements-gold' => 'Gold',
 	'achievements-silver' => 'Silver',
 	'achievements-bronze' => 'Bronze',
-	'achievements-gold-points' => '100<br>pts',
-	'achievements-silver-points' => '50<br>pts',
-	'achievements-bronze-points' => '10<br>pts',
+	'achievements-gold-points' => '100<br />pts',
+	'achievements-silver-points' => '50<br />pts',
+	'achievements-bronze-points' => '10<br />pts',
 
 	/*
 	 * Misc
@@ -79,11 +79,11 @@ Please try another one!',
 	/*
 	 * Leaderboard
 	 */
-	'leaderboard-intro-hide' => 'hide',	
+	'leaderboard-intro-hide' => 'hide',
 	'leaderboard-intro-open' => 'open',
 	'leaderboard-intro-headline' => "Badges. A brief intro.",
-	'leaderboard-intro' => "By participating (making edits, uploading photos) on this wiki, you can earn badges.<br>Each badge earns you points which can move you up the leaderboard.
-	
+	'leaderboard-intro' => "By participating (making edits, uploading photos) on this wiki, you can earn badges.<br />Each badge earns you points which can move you up the leaderboard.
+
 	'''What are badges worth?'''",
 	'leaderboard' => 'Achievements leaderboard',
 	'achievements-title' => 'Achievements',
@@ -183,7 +183,7 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Tracking URL for Hover impression:',
 	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Badge link <small>(DART click command URL)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Click for more information',
-	
+
 	/*
 	 * Badges' names
 	 */
@@ -1099,7 +1099,7 @@ Du kannst spezielle Abzeichen durch die Teilnahme in diesem Wiki verdienen!
 Jedes Abzeichen, das du verdienst, bringt dir Punkte für deine Gesamtpunktzahl:
 Bronze-Abzeichen sind 10 Punkte wert, Silber-Abzeichen haben einen Wert von 50 Punkten und Gold-Abzeichen sind 100 Punkte wert.
 
-Wenn du dem Wiki beitrittst, zeigt dein Benutzerprofil die Abzeichen an, die du verdient hast, und zeigt dir eine Liste der Herausforderungen, die für dich verfügbar sind. 
+Wenn du dem Wiki beitrittst, zeigt dein Benutzerprofil die Abzeichen an, die du verdient hast, und zeigt dir eine Liste der Herausforderungen, die für dich verfügbar sind.
 [[Special:MyPage|Geh zu deinem Benutzerprofil um es dir anzusehen]]!",
 	'leaderboard' => 'Rangliste',
 	'achievements-recent-earned-badges' => 'Kürzlich Verdiente Abzeichen',
@@ -1245,9 +1245,9 @@ Schau dir dein hübsches neues Abzeichen auf deiner <a href="$5">Benutzerseite</
 	'achievements-badge-to-get-pounce' => 'sei schnell',
 	'achievements-badge-to-get-caffeinated' => 'mache {{PLURAL:$1|eine Bearbeitung|$1 Bearbeitungen}} an einem einzigen Tag',
 	'achievements-badge-to-get-luckyedit' => 'habe Glück',
-	'achievements-badge-to-get-edit-details' => 'Fehlt etwas? 
-Ist da ein Fehler? 
-Keine Angst. 
+	'achievements-badge-to-get-edit-details' => 'Fehlt etwas?
+Ist da ein Fehler?
+Keine Angst.
 Klicke auf den „{{int:edit}}“-Button und du kannst zu jeder Seite beitragen!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'Die <strong>$1</strong> Seiten brauchen deine Hilfe!
 Klicke auf den „{{int:edit}}“-Button auf einer beliebigen Seite in dieser Kategorie, um zu helfen.
@@ -1376,9 +1376,9 @@ Benutzer, die Auszeichnungen für diese Verknüpfung erhalten haben, werden ihre
 
 Dies kann helfen, eine neue Dimension der Freude zu den Erfolgen hinzuzufügen.
 Versuchen Sie es mal!',
-	'achievements-badge-to-get-edit-details' => 'Fehlt etwas? 
-Ist da ein Fehler? 
-Keine Angst. 
+	'achievements-badge-to-get-edit-details' => 'Fehlt etwas?
+Ist da ein Fehler?
+Keine Angst.
 Klicken Sie auf den „{{int:edit}}“-Button und Sie können zu jeder Seite beitragen!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'Die <strong>$1</strong> Seiten brauchen Ihre Hilfe!
 Klicken Sie auf den „{{int:edit}}“-Button auf einer beliebigen Seite in dieser Kategorie, um zu helfen.
@@ -1515,7 +1515,7 @@ Si tienes un programa gráfico, puedes arreglar la imagen para poner la parte m�
 ¡Si no tienes un programa gráfico, puedes probar con diferentes imágenes hasta que encuentres la que funcione mejor!
 Si no has elegido aún la imagen para poner, haz clic en "{{int:achievements-revert}}" para volver a la imagen original.
 
-También puedes dar nuevos nombres a los logros para que estén relacionados con el tema del wiki. 
+También puedes dar nuevos nombres a los logros para que estén relacionados con el tema del wiki.
 Cuando hayas cambiado el nombre de los logros, haz clic en "{{int:achievements-save}}" para guardar los cambios.
 ¡Diviértete!',
 	'achievements-edit-plus-category-track-name' => '$1 logro de edición',
@@ -1632,7 +1632,7 @@ Echa un vistazo a este logro de lujo en tu <a href="$5">perfil de usuario</a>.',
 	'achievements-badge-to-get-picture-details' => 'Haz clic en el botón "{{int:edit}}", y después en el botón de "{{int:rte-ck-image-add}}". Puedes añadir una imagen desde tu ordenador, o desde otra página del wiki.',
 	'achievements-badge-to-get-category-details' => 'Las categorías son etiquetas que ayudan a los lectores a encontrar páginas similares. Haz clic en el botón de "{{int:categoryselect-addcategory-button}}" para añadir la página a una categoría.',
 	'achievements-badge-to-get-blogpost-details' => '¡Escribe tu opinión y tus preguntas! Haz clic en "{{int:blogs-recent-url-text}}" en el panel lateral, y después en el enlace de la izquierda para "{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-blogcomment-details' => '¡Añade tu granito de arena! 
+	'achievements-badge-to-get-blogcomment-details' => '¡Añade tu granito de arena!
 Lee cualquiera de las entradas de blog, y escribe tus propias opiniones en los comentarios.',
 	'achievements-badge-to-get-love-details' => '¡El contador se reinicia si dejas de editar durante un día, asegúrate de volver al wiki cada día!',
 	'achievements-badge-to-get-welcome-details' => 'Haz clic en el botón "{{int:autocreatewiki-create-account}}" arriba a la derecha para participar en la comunidad. ¡Así podrás comenzar a ganar tus propios logros!',
@@ -1640,9 +1640,9 @@ Lee cualquiera de las entradas de blog, y escribe tus propias opiniones en los c
 	'achievements-badge-to-get-sayhi-details' => 'Puedes dejar mensajes a otros usuarios haciendo clic en "{{int:tooltip-ca-addsection}}" al comienzo de la página de discusión. ¡Para pedirle ayuda, agradecerle su trabajo, o para decirle hola!',
 	'achievements-badge-to-get-creator-details' => 'Este logro se otorga a la persona que fundó el wiki. ¡Haz clic en el botón "{{int:createwiki}}" arriba, para comenzar tu propio sitio sobre el tema que más te guste!',
 	'achievements-badge-to-get-pounce-details' => 'Tienes que ser rápido para conseguir este logro. ¡Haz clic en el botón de "{{int:activityfeed}}" para ver las nuevas páginas que los usuarios están creando!',
-	'achievements-badge-to-get-caffeinated-details' => 'Necesitarás todo un día para conseguir este logro. 
+	'achievements-badge-to-get-caffeinated-details' => 'Necesitarás todo un día para conseguir este logro.
 ¡No dejes de editar!',
-	'achievements-badge-to-get-luckyedit-details' => 'Necesitas suerte para conseguir este logro. 
+	'achievements-badge-to-get-luckyedit-details' => 'Necesitas suerte para conseguir este logro.
 ¡No dejes de editar!',
 	'achievements-badge-to-get-community-platinum-details' => '¡Este es un logro especial de platino que solamente estará disponible por un tiempo limitado!',
 	'achievements-badge-hover-desc-edit' => 'por hacer $1 {{PLURAL:$1|edición|ediciones}}<br />
@@ -2746,10 +2746,10 @@ $messages['ja'] = array(
  */
 $messages['ko'] = array(
 	'achievementsii-desc' => '위키 사용자의 기여도를 배지로 환산해주는 시스템',
-	'achievements-upload-error' => '죄송합니다! 
+	'achievements-upload-error' => '죄송합니다!
 이 그림은 적합하지 않습니다.
-그림의 확장자가 .jpg 또는.png 이어야 합니다. 
-또는 그림이 너무 무겁기 때문일수도 있습니다. 
+그림의 확장자가 .jpg 또는.png 이어야 합니다.
+또는 그림이 너무 무겁기 때문일수도 있습니다.
 다른 그림으로 시도해보세요.',
 	'achievements-upload-not-allowed' => '관리자는 [[특수기능:AchievementsCustomize|배지 설정]] 문서를 통해 이름과 성취 배지의 사진을 변경할 수 있습니다.',
 	'achievements-non-existing-category' => '지정한 분류가 존재하지 않습니다.',
@@ -2976,8 +2976,8 @@ $messages['mk'] = array(
 	'achievements-ranked-oasis' => '$1 се [[Special:Leaderboard|котира на $2 место]] на ова вики',
 	'achievements-viewall-oasis' => 'Сите',
 	'leaderboard-intro' => "'''&ldquo;What are Achievements?&rdquo;'''
-Со учество на ова вики можете да заработите специјални значки! 
-Секоја заработена значка ви носи бодови кон вкупното салдо: 
+Со учество на ова вики можете да заработите специјални значки!
+Секоја заработена значка ви носи бодови кон вкупното салдо:
 Бронзените значки носат 10 бода, Сребрените значки носат 50 бода, а Златните носат 100 бода.
 
 Кога ќе се зачлените на викито, на корисничкиот профил се истакнати значките што сте ги заработиле, како и список на предизвиците кои ви се достапни. [[Special:MyPage|Одете на вашиот кориснички профил и погледајте!]]",
@@ -3005,16 +3005,16 @@ $messages['mk'] = array(
 
 Можете да подигнете било која .jpg или .png слика, и истата автоматски ќе биде сместена во рамката. Ова најдобро работи ако сликата е квадратна, и кога најважниот дел од неа е точно во средината.
 
-Можете да користите и правоаголни слики, но знајте дека рамката ќе засече делови од неа. 
-Доколку имате графички програм, тогаш можете да ја кадрирате сликата за да го поставите важниот дел во средината. 
-Ако немате, тогаш едноставно пробувајте разни слики, додека не ја најдете таа што највеќе ви одговара! 
+Можете да користите и правоаголни слики, но знајте дека рамката ќе засече делови од неа.
+Доколку имате графички програм, тогаш можете да ја кадрирате сликата за да го поставите важниот дел во средината.
+Ако немате, тогаш едноставно пробувајте разни слики, додека не ја најдете таа што највеќе ви одговара!
 Ако не ви се допаѓа одбраната слика, кликнете на „Врати по основно“ за да ја вратите првично зададената слика.
 
-Значките можете да ги именувате со нови називи соодветни на тематиката на викито. Кога сте готови со преименувањето, кликнете на „Зачувај промени“. 
+Значките можете да ги именувате со нови називи соодветни на тематиката на викито. Кога сте готови со преименувањето, кликнете на „Зачувај промени“.
 Ви пожелуваме пријатни мигови!',
 	'achievements-edit-plus-category-track-name' => '$1 лента за уредување',
 	'achievements-create-edit-plus-category-title' => 'Создај нова Лента за уредување',
-	'achievements-create-edit-plus-category-content' => 'Можете да создадете нов комплет од значки со кои ќе се наградуваат корисниците за нивните уредувања на страници во дадена категорија, за да се нагласи извесен дел мрежното место каде корисниците би сакале да работат. 
+	'achievements-create-edit-plus-category-content' => 'Можете да создадете нов комплет од значки со кои ќе се наградуваат корисниците за нивните уредувања на страници во дадена категорија, за да се нагласи извесен дел мрежното место каде корисниците би сакале да работат.
 Можете да создадете повеќе од една лента со категории, па затоа одберете две категории преку кои корисниците би можеле да ги покажат своите стручности! Потпалете соперништво меѓу корисниците кои уредуваат страници за Вампири и они што уредуваат Врколаци, or Волшебници и Нормалци, или Автботови и Десептикони.
 
 За да создадете нова лента „Уредување во категорија“, внесете го името на категоријата во долунаведеното поле. Обичната лента за Уредување ќе си постои и понатаму; ова ќе создаде засебна лента што можете посебно да ја прилагодите.
@@ -3023,7 +3023,7 @@ $messages['mk'] = array(
 
 Кога ќе завршите со прилагодувањето, кликнете на кутивчето „{{int:achievements-enable-track}}“ за да ја пуштите (овозможите) новата лента, а потоа кликнете на „{{int:achievements-save}}“. Новата лента ќе им се појави на профилите на корисниците, и тие ќе почнат да заработуваат значки со уредување на страници од таа категорија. Можете и да ја оневозможите лентата подоцна, кога ќе решите дека повеќе не сакате да ја истакнувате таа категорија. Корисниците што имаат заработено значки од таа лента ќе си ги зачуваат засекогаш, дури и по нејзиното оневозможување.
 
-Со ова достигнувањата ќе ги збогатите и со забава. 
+Со ова достигнувањата ќе ги збогатите и со забава.
 Пробајте ги!',
 	'achievements-create-edit-plus-category' => 'Создај ја нумерава',
 	'platinum' => 'Платина',
@@ -3115,31 +3115,31 @@ $5',
 	'achievements-badge-to-get-pounce' => 'да бидеш брз',
 	'achievements-badge-to-get-caffeinated' => 'да имаш направено $1 уредувања на страници за еден ден',
 	'achievements-badge-to-get-luckyedit' => 'да имаш среќа',
-	'achievements-badge-to-get-edit-details' => 'Нешто што недостасува? 
-Да не има некоја грешка? 
-Не се стегајте. 
+	'achievements-badge-to-get-edit-details' => 'Нешто што недостасува?
+Да не има некоја грешка?
+Не се стегајте.
 Кликнете на копчето „{{int:edit}}“, и можете да допринесувате на секоја страница!',
-	'achievements-badge-to-get-edit-plus-category-details' => 'Потребна е вашата помош на страниците за <strong>$1</strong>! 
-Кликнете на копчето „{{int:edit}}“ на некоја страница од таа категорија за да помогнете. 
+	'achievements-badge-to-get-edit-plus-category-details' => 'Потребна е вашата помош на страниците за <strong>$1</strong>!
+Кликнете на копчето „{{int:edit}}“ на некоја страница од таа категорија за да помогнете.
 Искажете ја вашата поддршка за страниците на $1!',
-	'achievements-badge-to-get-picture-details' => 'Кликнете на копчето „{{int:edit}}“, а потоа на копчето „{{int:rte-ck-image-add}}“. 
+	'achievements-badge-to-get-picture-details' => 'Кликнете на копчето „{{int:edit}}“, а потоа на копчето „{{int:rte-ck-image-add}}“.
 Можете да додадете слика од вашиот сметач, или од друга страница на викито.',
-	'achievements-badge-to-get-category-details' => 'Категориите претставуваат ознаки што им помагаат на корисниците да пронајдат слични страници. 
+	'achievements-badge-to-get-category-details' => 'Категориите претставуваат ознаки што им помагаат на корисниците да пронајдат слични страници.
 Кликнете на копчето „{{int:categoryselect-addcategory-button}}“ на дното од страницата за да ја заведете страницата во категорија.',
-	'achievements-badge-to-get-blogpost-details' => 'Запишете ги вашите мислења и прашања! 
+	'achievements-badge-to-get-blogpost-details' => 'Запишете ги вашите мислења и прашања!
 Кликнете на „{{int:blogs-recent-url-text}}“ во страничната лента, а потоа на врската лево за „{{int:create-blog-post-title}}“.',
 	'achievements-badge-to-get-blogcomment-details' => 'Искажете се! Прочитајте некој од скорешните блог-записи и запишете ги вашите размисли во полето за коментари.',
 	'achievements-badge-to-get-love-details' => 'Бројачот се враќа почеток ако пропуштите ден, па затоа навраќајте на викито секој ден!',
-	'achievements-badge-to-get-welcome-details' => 'Кликнете на копчето „{{int:autocreatewiki-create-account}}“ во горниот десен агол за да се приклучите кон заеднцата. 
+	'achievements-badge-to-get-welcome-details' => 'Кликнете на копчето „{{int:autocreatewiki-create-account}}“ во горниот десен агол за да се приклучите кон заеднцата.
 Потоа можете да почнете да си печалите значки!',
-	'achievements-badge-to-get-introduction-details' => 'Дали ви е празна корисничката страница? 
-Кликнете на вашето корисничко име најгоре за да видите. 
+	'achievements-badge-to-get-introduction-details' => 'Дали ви е празна корисничката страница?
+Кликнете на вашето корисничко име најгоре за да видите.
 Кликнете на „{{int:edit}}“ за да ставите некои податоци за себе!',
-	'achievements-badge-to-get-sayhi-details' => 'Можете да им оставате пораки на другите корисници со стискање на „{{int:tooltip-ca-addsection}}“ на нивната страница за разговор. 
+	'achievements-badge-to-get-sayhi-details' => 'Можете да им оставате пораки на другите корисници со стискање на „{{int:tooltip-ca-addsection}}“ на нивната страница за разговор.
 Вака можете да побарате помош, да им се заблагодарите за трудот, или едноставно да ги поздравите!',
-	'achievements-badge-to-get-creator-details' => 'Оваа страница се доделува на личноста која е основач на викито. 
+	'achievements-badge-to-get-creator-details' => 'Оваа страница се доделува на личноста која е основач на викито.
 Кликнете на копчето „{{int:createwiki}}“ најгоре и започнете мрежно-место на вашата омилена тематика!',
-	'achievements-badge-to-get-pounce-details' => 'За да ја добиете оваа значка мора да бидете брзи. 
+	'achievements-badge-to-get-pounce-details' => 'За да ја добиете оваа значка мора да бидете брзи.
 Кликнете на копчето „{{int:activityfeed}}“ за да ги видите новите страници што ги создаваат корисниците!',
 	'achievements-badge-to-get-caffeinated-details' => 'Треба доста работа за да ја заработите оваа значка. Продолжете така!',
 	'achievements-badge-to-get-luckyedit-details' => 'Треба да имате среќа за да ја добиете оваа значка. Продолжете со уредување!',
@@ -3530,7 +3530,7 @@ Vennligst prøv et annet!',
 	'achievements-ranked-oasis' => '$1 er [[Special:Leaderboard|Rangert #$2]] på denne wikien',
 	'achievements-viewall-oasis' => 'Se alle',
 	'leaderboard-intro' => "'''&laquo;Hva er utmerkelser?&rdquo;'''
-Du kan motta spesielle utmerkelser ved å delta på denne wikien! 
+Du kan motta spesielle utmerkelser ved å delta på denne wikien!
 Hver utmerkelse du oppnår gir poeng til den totale poengsummen sin:
 Bronseutmerkelser er verdt 10 poeng, Sølvutmerkelser er verdt 50 poeng, og Gullutmerkelser er verdt 100 poeng.
 
@@ -3561,7 +3561,7 @@ Når du blir med i wikien, viser brukerprofilen din de utmerkelsene du har motta
 Du kan laste opp ethvert .jpg- eller .png-bilde, og bildet vil automatisk passe inn i rammen.
 Det fungerer best når bildet er kvadratisk, og når den viktigste delene av bildet er i midten.
 
-Du kan bruke rektangulære bilder, men vil kanskje oppleve at biter vil bli fjernet av rammen. 
+Du kan bruke rektangulære bilder, men vil kanskje oppleve at biter vil bli fjernet av rammen.
 Hvis du har et grafikkprogram, kan du beskjære bildet for å plassere den viktigste delen av bildet i midten.
 Hvis du ikke har det, kan du eksperimentere med forskjellige bilder til du finner det som passer deg best!
 Hvis du ikke liker bildet du har valgt, trykker du «{{int:achievements-revert}}» for å gå tilbake til den ordinære grafikken.
@@ -4515,14 +4515,14 @@ $messages['ru'] = array(
 	'achievements-badge-to-get-sayhi' => 'кто-то оставил сообщение на странице обсуждения',
 	'achievements-badge-to-get-creator' => 'является создателем этой вики',
 	'achievements-badge-to-get-pounce' => 'быть быстрым',
-	'achievements-badge-to-get-edit-details' => 'Чего-то не хватает? 
-Есть ошибки? 
-Не стесняйтесь. 
+	'achievements-badge-to-get-edit-details' => 'Чего-то не хватает?
+Есть ошибки?
+Не стесняйтесь.
 Нажмите на кнопку «{{int:edit}}», чтобы изменить содержимое страницы!',
 	'achievements-badge-to-get-love-details' => 'Счетчик сбрасывается, если вы пропустите один день, поэтому не забудьте возвращаться в вики каждый день!',
-	'achievements-badge-to-get-welcome-details' => 'Нажмите на кнопку «{{int:autocreatewiki-create-account}}» в правом верхнем углу, чтобы присоединиться к сообществу. 
+	'achievements-badge-to-get-welcome-details' => 'Нажмите на кнопку «{{int:autocreatewiki-create-account}}» в правом верхнем углу, чтобы присоединиться к сообществу.
 Вы можете начать зарабатывать собственные значки!',
-	'achievements-badge-to-get-creator-details' => 'Этот значок даётся создателю вики-сайта. 
+	'achievements-badge-to-get-creator-details' => 'Этот значок даётся создателю вики-сайта.
 Нажмите на кнопку «{{int:createwiki}}» вверху, чтобы создать вики-сайт на вашу любимую тему!',
 	'achievements-badge-to-get-community-platinum-details' => 'Это особый Платиновый значок, который доступен в течение ограниченного времени!',
 	'achievements-badge-hover-desc-edit' => 'за $1 {{PLURAL:$1|правку|правок}}<br />на {{PLURAL:$1|странице|страницах}}!',
