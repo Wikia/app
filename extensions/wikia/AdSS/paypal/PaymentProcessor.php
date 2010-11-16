@@ -33,7 +33,7 @@ class PaymentProcessor {
 						'users' => array( 'JOIN', 'ppt_user_id = user_id' ),
 						) );
 		}
-		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppt_user_id DESC, ppa_canceled is not null, ppa_responded DESC' ) );
+		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppt_user_id DESC, ppa_canceled is not null, ppa_responded DESC' ), $join_conds );
 		if( $row ) {
 			$pp = new self( $row->ppt_token );
 			$pp->userId = $row->ppt_user_id;

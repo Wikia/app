@@ -224,9 +224,16 @@ class AdSS_Controller extends SpecialPage {
 			$body .= SpecialPage::getTitleFor( 'AdSS/admin' )->getFullURL();
 			$body .= "\n\n";
 			$body .= "Created by: {$ad->getUser()->toString()}\n";
-			$body .= "Ad link text: {$ad->text}\n";
 			$body .= "Ad URL: http://{$ad->url}\n";
-			$body .= "Ad description: {$ad->desc}\n";
+			switch( $ad->type ) {
+				case 't':
+					$body .= "Ad link text: {$ad->text}\n";
+					$body .= "Ad description: {$ad->desc}\n";
+					break;
+				case 'b':
+					$body .= "Banner: {$ad->getBannerURL}\n";
+					break;
+			}
 
 			UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
 		}

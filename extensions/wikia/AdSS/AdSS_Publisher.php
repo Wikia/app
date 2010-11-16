@@ -38,6 +38,7 @@ class AdSS_Publisher {
 			$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
 						'ad_wiki_id' => $wgCityId,
+						'ad_type' => 't',
 						'ad_page_id' => 0,
 						'ad_closed' => null,
 						'ad_expires > NOW()'
@@ -74,6 +75,7 @@ class AdSS_Publisher {
 			$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
 						'ad_wiki_id' => $wgCityId,
+						'ad_type' => 't',
 						'ad_page_id' => $title->getArticleID(),
 						'ad_closed' => null,
 						'ad_expires > NOW()'
