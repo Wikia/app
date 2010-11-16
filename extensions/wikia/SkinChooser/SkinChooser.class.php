@@ -178,11 +178,11 @@ class SkinChooser {
 		$wgOut->addHTML(SkinChooser::renderSkinPreferencesFormHtml($pref));
 		return false;
 	}
-	
+
 	public static function renderSkinPreferencesFormHtml($pref) {
 		global $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgForceSkin, $wgEnableAnswers, $wgOasis2010111;
 		$html = '';
-		
+
 		// don't show "See custom wikis" inside misc tab
 		$pref->mUsedToggles['skinoverwrite'] = true;
 
@@ -263,12 +263,12 @@ class SkinChooser {
 		if(empty($wgOasis2010111)) {
 			# Display ComboBox for admins/staff only
 			if( $wgUser->isAllowed( 'setadminskin' ) ) {
-	
+
 				$html .= "<br/><h2>".wfMsg('admin_skin')."</h2>".wfMsg('defaultskin_choose');
 				$html .= '<select name="adminSkin" id="adminSkin">';
-	
+
 				foreach($wgSkinTheme as $skinKey => $skinVal) {
-	
+
 					# Do not display skins which are defined in wgSkipSkins array
 					if(in_array($skinKey, $wgSkipSkins)) {
 						continue;
@@ -279,11 +279,11 @@ class SkinChooser {
 							continue;
 						}
 					}
-	
+
 					if(count($wgSkinTheme[$skinKey]) > 0) {
 						$html .= '<optgroup label="'.wfMsg($skinKey . '_skins').'">';
 						foreach($wgSkinTheme[$skinKey] as $themeKey => $themeVal) {
-	
+
 							# Do not display themes which are defined in wgSkipThemes
 							if(isset($wgSkipThemes[$skinKey]) && in_array($themeVal, $wgSkipThemes[$skinKey])) {
 								continue;
@@ -301,7 +301,7 @@ class SkinChooser {
 				}
 				$html .= "<option value='ds'".(empty($wgAdminSkin) ? ' selected' : '').">".wfMsg('adminskin_ds')."</option>";
 				$html .= '</select>';
-	
+
 				wfLoadExtensionMessages('SkinChooser');
 				//$html .= wfMsg( 'skinchooser-customcss' );
 				global $wgTitle;
@@ -350,6 +350,19 @@ class SkinChooser {
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
 		wfProfileIn(__METHOD__);
+
+		/**
+		 * check headers sent by varnish, if X-Skin is send force skin
+		 * @author eloy, requested by artur
+		 */
+		if( function_exists( 'apache_request_headers' ) ) {
+			$headers = apache_request_headers();
+			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone" ) ) ) {
+				$user->mSkin = &Skin::newFromKey( $headers[ "X-Skin" ] );
+				wfProfileOut(__METHOD__);
+				return false;
+			}
+		}
 
 		if(!($wgTitle instanceof Title) || in_array( self::getUserOption('skin'), $wgSkipSkins )) {
 			$user->mSkin = &Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
@@ -442,7 +455,7 @@ class SkinChooser {
 			if(!empty($wgDefaultSkin) && $wgDefaultSkin == 'answers') {
 				$userSkin = 'answers';
 			}
-			
+
 			if(empty($userSkin)) {
 				if(!empty($wgAdminSkin)) {
 					$adminSkinArray = explode('-', $wgAdminSkin);
@@ -460,7 +473,7 @@ class SkinChooser {
 			if (!empty($wgOasis2010111) && $userSkin == 'monaco') {
 				$userSkin = 'oasis';
 			}
-			
+
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
 
@@ -471,7 +484,7 @@ class SkinChooser {
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
 		$userTheme = $wgRequest->getVal('usetheme', $userTheme);
 
-		
+
 		if(empty($userTheme) && strpos($userSkin, 'quartz-') === 0) {
 			$userSkin = 'quartz';
 			$userTheme = '';
