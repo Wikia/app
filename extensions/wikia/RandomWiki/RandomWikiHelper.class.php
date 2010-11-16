@@ -4,6 +4,7 @@ class RandomWikiHelper {
 	const CACHE_KEY_TOKEN = 'wikicities:RandomWiki:list';
 	const WF_VAR_NAME = 'wgRandomWikiRecommend';
 	const COUNT_LIMIT = 200;
+	const TRACK_LIMIT = 20;
 	const CACHE_EXPIRY = 48; // hours
 
 	static private $pageviewsLimits = array(
