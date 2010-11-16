@@ -131,6 +131,7 @@ You can reorder or delete tools in the field below.
 <p>Please check <a href=\"http://twitter.com/wikia\">Twitter</a> or <a href=\"http://facebook.com/wikia\">Facebook</a> for more information.</p>",
 	'oasis-upload-photos-title' => 'Upload a Photo to the Wiki',
 	'oasis-upload-photos-advanced' => 'Advanced options',
+	'oasis-upload-photos-force' => 'Upload anyway',
 	
 );
 

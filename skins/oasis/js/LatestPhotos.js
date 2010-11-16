@@ -35,13 +35,27 @@ var UploadPhotos = {
 			UploadPhotos.advanced = UploadPhotos.d.find(".advanced");
 			UploadPhotos.options = UploadPhotos.d.find(".options");
 			UploadPhotos.uploadbutton = UploadPhotos.d.find("input[type=submit]");
-
+			UploadPhotos.step1 = UploadPhotos.d.find(".step-1");
+			UploadPhotos.step2 = UploadPhotos.d.find(".step-2");
+			UploadPhotos.conflict = UploadPhotos.d.find(".conflict");
+			UploadPhotos.ignore = UploadPhotos.d.find("input[name=wpIgnoreWarning]");
+			UploadPhotos.override = UploadPhotos.d.find(".override");
+			UploadPhotos.ajaxwait = UploadPhotos.d.find(".ajaxwait");
+			UploadPhotos.dfcache = {};
+			
 			// event handlers
 			UploadPhotos.filepath.change(UploadPhotos.filePathSet);
 			UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
 			UploadPhotos.advanced.click(function(evt) {
 				evt.preventDefault();
-				UploadPhotos.options.toggle(400);//animate({height: "toggle"}, "slow");
+				UploadPhotos.options.toggle(400);
+			});
+			UploadPhotos.destfile.keyup(function() {
+				if(UploadPhotos.dftimer) {
+					clearTimeout(UploadPhotos.dftimer);
+				}
+				UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
+				console.log('foo');
 			});
 		});
 		if (!UploadPhotos.libinit) {
@@ -56,14 +70,25 @@ var UploadPhotos = {
 			if(json) {
 				if(json['status'] == 0) {	// 0 is success...
 					window.location = '/wiki/Special:NewFiles';
+				} else if(json['status'] == 12) {	// show conflict dialog
+					UploadPhotos.step1.hide(400, function() {
+						UploadPhotos.conflict.html(json['statusMessage']);
+						UploadPhotos.step2.show(400, function() {
+							UploadPhotos.uploadbutton.removeAttr("disabled").show();
+							UploadPhotos.ajaxwait.hide();
+						});
+					});
+					UploadPhotos.ignore.attr("checked", true);
 				} else {
-					UploadPhotos.status.addClass("error").fadeIn("slow").html(json['statusMessage']);
-					UploadPhotos.uploadbutton.removeAttr("disabled");
+					UploadPhotos.status.addClass("error").show(400).html(json['statusMessage']);
+					UploadPhotos.uploadbutton.removeAttr("disabled").show();
+					UploadPhotos.ajaxwait.hide();
 				}
 			}
 		},
 		onStart: function() {
-			UploadPhotos.uploadbutton.attr("disabled", "true");
+			UploadPhotos.uploadbutton.attr("disabled", "true").hide();
+			UploadPhotos.ajaxwait.show();
 			UploadPhotos.status.hide("fast", function() {$(this).removeClass("error")});
 		}
 	},
@@ -76,23 +101,35 @@ var UploadPhotos = {
 	},
 	destFileSet: function() {
 		if (UploadPhotos.destfile.val()) {
-			$.get(wgScript, {
-				wpDestFile: UploadPhotos.destfile.val(),
-				action: 'ajax',
-				rs: 'moduleProxy',
-				moduleName: 'UploadPhotos',
-				actionName: 'ExistsWarning',
-				outputType: 'html',
-				title: wgPageName,
-				cb: wgCurRevisionId,
-				uselang: wgUserLanguage
-			}, function(html) {
-				if(html) {
-					UploadPhotos.status.removeClass("error").html(html);
-				}
-			});
+			var df = UploadPhotos.destfile.val();
+			if (UploadPhotos.dfcache[df]) {
+				UploadPhotos.destFileInputSet(UploadPhotos.dfcache[df]);
+			} else {			
+				$.get(wgScript, {
+					wpDestFile: UploadPhotos.destfile.val(),
+					action: 'ajax',
+					rs: 'moduleProxy',
+					moduleName: 'UploadPhotos',
+					actionName: 'ExistsWarning',
+					outputType: 'html',
+					title: wgPageName,
+					cb: wgCurRevisionId,
+					uselang: wgUserLanguage
+				}, function(html) {
+					UploadPhotos.dfcache[df] = html;
+					UploadPhotos.destFileInputSet(html);
+				});
+			}
 		}
-	}
+	},
+	destFileInputSet: function(html) {
+		if(html && $.trim(html)) {
+			UploadPhotos.override.fadeIn(400);
+			UploadPhotos.status.removeClass("error").html(html).show(400);
+		} else {
+			UploadPhotos.status.removeClass("error").hide(400);
+		}
+	}	
 }
 
 var LatestPhotos = {
