@@ -9,9 +9,9 @@ class RandomWikiHelper {
 
 	static private $pageviewsLimits = array(
 		'en' => 15000,
-		'de' => 8000,
-		'es' => 5000,
-		'default' => 1000
+		'de' => 3000,
+		'es' => 1000,
+		'default' => 300
 	);
 
 	static private $mData = null;
@@ -56,7 +56,7 @@ class RandomWikiHelper {
 						'city_id = cv_city_id',
 						'city_public' => true,
 						'city_lang' => self::$mLanguage,
-						'cv_variable_id' => $wikiFactoryRecommended,
+						'cv_variable_id' => $wikiFactoryRecommended->cv_variable_id,
 						'cv_value' => true
 					)
 				);
