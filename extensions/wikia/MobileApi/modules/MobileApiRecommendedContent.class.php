@@ -12,7 +12,6 @@ class MobileApiRecommendedContent extends MobileApiBase {
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	//http://muppets.federico.wikia-dev.com/index.php?action=ajax&rs=MobileAppHelper::getRecommendedWikis
 	public function getRecommendedWikis(){
 		wfProfileIn( __METHOD__ );
 		
@@ -37,8 +36,7 @@ class MobileApiRecommendedContent extends MobileApiBase {
 						'color' => ( !empty( $wikiThemeSettings[ 'wordmark-color' ] ) ) ? $wikiThemeSettings[ 'wordmark-color' ] : null,
 						'backgroundColor' => ( !empty( $wikiThemeSettings[ 'color-page' ] ) ) ? $wikiThemeSettings[ 'color-page' ] : null,
 						'homeUrl' => $wikiUrl,
-						'logoUrl'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null,
-						'indentationLevel' => '2'
+						'logoUrl'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null
 						//,'data' => var_dump( $wikiThemeSettings, true )//debug only
 					);
 				}
