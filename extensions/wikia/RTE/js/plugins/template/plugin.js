@@ -200,10 +200,10 @@ RTE.templateEditor = {
 		// generate new wikitext
 		wikitext = '{{';
 		wikitext += partsStack.
-			join('|').				// join template params
-			replace('\x7f', '|').	// replace pipe markers
-			replace(/\|+$/g, '').	// remove trailing pipes
-			replace(/\n+$/g, '');	// remove trailing line breaks
+			join('|').					// join template params
+			replace('\x7f', '|').		// replace pipe markers
+			replace(/[\n|]+$/g, '').	// remove trailing pipes
+			replace(/\n+$/g, '');		// remove trailing line breaks
 		wikitext += '}}';
 
 		$().log(currentData.wikitext, 'RTE: old wikitext'); $().log(wikitext, 'RTE: new wikitext');
