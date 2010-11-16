@@ -88,7 +88,7 @@ function efLoadPhalanxLink( $id, $nt, &$links ){
 	global $wgUser;
 	if( $wgUser->isAllowed( 'phalanx' ) ) {
 		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
-			Title::newFromText('community:Special:Phalanx'),
+			GlobalTitle::newFromText('Phalanx', NS_SPECIAL, 177),
 			'Phalanx',
 			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText() ) )
 			);
