@@ -149,6 +149,7 @@ class ArticleCommentInit {
 		return true;
 	}
 
+	//TODO: not used in oasis - remove
 	static public function ArticleCommentHideTab(&$skin, &$content_actions) {
 		global $wgArticleCommentsHideDiscussionTab;
 		wfProfileIn( __METHOD__ );
@@ -171,6 +172,7 @@ class ArticleCommentInit {
 	 *
 	 * @static
 	 * @access public
+	 * @todo TODO: not working - check
 	 *
 	 * @return true -- because it's a hook
 	 */
@@ -537,6 +539,7 @@ class ArticleComment {
 	/**
 	 * render -- generate HTML for displaying comment
 	 *
+	 * @deprecated not used in Oasis
 	 * @return String -- generated HTML text
 	 */
 	public function render($master = false) {
@@ -556,6 +559,10 @@ class ArticleComment {
 		return $text;
 	}
 
+	/*
+	 *
+	 * @deprecated use Oasis service
+	 */
 	function getAvatarImg($user){
 		if (class_exists('Masthead')) {
 			return Masthead::newFromUser( $user )->display( 50, 50 );
@@ -663,7 +670,7 @@ class ArticleComment {
 				array(
 					'canEdit'		=> $this->canEdit(),
 					'comment'		=> $this->mLastRevision->getText(),
-					'isReadOnly'		=> wfReadOnly(),
+					'isReadOnly'	=> wfReadOnly(),
 					'stylePath'		=> $wgStylePath,
 					'title'			=> $this->mTitle
 				)
@@ -725,16 +732,10 @@ class ArticleComment {
 			$editPage->edittime = $article->getTimestamp();
 			$editPage->textbox1 = $text;
 			$bot = $user->isAllowed('bot');
+			//this function calls Article::onArticleCreate which clears cache for article and it's talk page
 			$retval = $editPage->internalAttemptSave( $result, $bot );
 
-			/**
-			 * clear comments cache for this article
-			 */
-			$title->invalidateCache();
-			$title->purgeSquid();
-
 			$key = $title->getPrefixedDBkey();
-			$wgMemc->delete( wfMemcKey( 'articlecomment', 'listing', $key, 0 ) );
 			$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $title->getArticleID() ) );
 
 			$res = array( $retval, $article );
@@ -803,16 +804,10 @@ class ArticleComment {
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
 		$bot = $user->isAllowed('bot');
+		//this function calls Article::onArticleCreate which clears cache for article and it's talk page
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
-		/**
-		 * clear comments cache for this article
-		 */
-		$title->invalidateCache();
-		$title->purgeSquid();
-
 		$key = $title->getPrefixedDBkey();
-		$wgMemc->delete( wfMemcKey( 'articlecomment', 'listing', $key, 0 ) );
 
 		wfProfileOut( __METHOD__ );
 
@@ -840,8 +835,8 @@ class ArticleComment {
 					$ok = self::addArticlePageToWatchlist($comment, $commentId) ;
 				}
 				$message = false;
-				$listing = ArticleCommentList::newFromTitle($comment->mTitle);
-				$listing->purge();
+
+				//commit before purging
 				wfGetDB(DB_MASTER)->commit();
 				break;
 			default:
@@ -1017,12 +1012,12 @@ class ArticleComment {
 	 */
 	static private function addMoveTask( $oCommentTitle, &$oNewTitle, $taskParams ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( !is_object( $oCommentTitle ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		$parts = self::explode($oCommentTitle->getDBkey());
 		$commentTitleText = implode('/', $parts['partsOriginal']);
 
@@ -1033,7 +1028,7 @@ class ArticleComment {
 		$taskParams['page'] = $oCommentTitle->getFullText();
 		$taskParams['newpage'] = $newCommentTitle->getFullText();
 		$thisTask = new MultiMoveTask( $taskParams );
-		$submit_id = $thisTask->submitForm();	
+		$submit_id = $thisTask->submitForm();
 		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
 
 		wfProfileOut( __METHOD__ );
@@ -1041,19 +1036,19 @@ class ArticleComment {
 	}
 
 	/**
-	 * move one comment 
+	 * move one comment
 	 *
 	 * @access public
 	 * @static
 	 */
 	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( !is_object( $oCommentTitle ) ) {
 			wfProfileOut( __METHOD__ );
 			return array('invalid title');
 		}
-				
+
 		$parts = self::explode($oCommentTitle->getDBkey());
 		$commentTitleText = implode('/', $parts['partsOriginal']);
 
@@ -1085,14 +1080,14 @@ class ArticleComment {
 			if ( isset($wgMaxCommentsToMove) && ( $wgMaxCommentsToMove > 0) && ( !empty($wgEnableMultiDeleteExt) ) ) {
 				$mAllowTaskMove = true;
 			}
-			
+
 			$irc_backup = $wgRC2UDPEnabled;	//backup
 			$wgRC2UDPEnabled = false; //turn off
 			$finish = $moved = 0;
 			$comments = array_values($comments);
 			foreach ($comments as $id => $aCommentArr) {
 				$oCommentTitle = $aCommentArr['level1']->getTitle();
-				
+
 				# move comment level #1
 				$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 				if ( $error !== true ) {
@@ -1107,7 +1102,7 @@ class ArticleComment {
 				if (isset($aCommentArr['level2'])) {
 					foreach ($aCommentArr['level2'] as $oComment) {
 						$oCommentTitle = $oComment->getTitle();
-						
+
 						# move comment level #2
 						$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 						if ( $error !== true ) {
@@ -1120,7 +1115,7 @@ class ArticleComment {
 						}
 					}
 				}
-				
+
 				if ( $mAllowTaskMove && $wgMaxCommentsToMove < $moved ) {
 					$finish = $id;
 					break;
@@ -1141,19 +1136,19 @@ class ArticleComment {
 				for ( $i = $finish + 1; $i < count($comments); $i++ ) {
 					$aCommentArr = $comments[$i];
 					$oCommentTitle = $aCommentArr['level1']->getTitle();
-					self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );	
+					self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );
 					if (isset($aCommentArr['level2'])) {
-						foreach ($aCommentArr['level2'] as $oComment) {	
-							$oCommentTitle = $oComment->getTitle();	
-							self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );	
+						foreach ($aCommentArr['level2'] as $oComment) {
+							$oCommentTitle = $oComment->getTitle();
+							self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );
 						}
 					}
 				}
 			}
-						
+
 			$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 			$listing = ArticleCommentList::newFromTitle($oNewTitle);
-			$listing->purge();			
+			$listing->purge();
 		} else {
 			Wikia::log( __METHOD__, 'movepage', 'cannot move article comments, because no comments: ' . $oOldTitle->getPrefixedText());
 		}
@@ -1353,7 +1348,7 @@ class ArticleCommentList {
 	 *
 	 * @return array
 	 */
-	public function getAllCommentPages( ) {
+	public function getAllCommentPages() {
 		wfProfileIn( __METHOD__ );
 
 		$pages = array();
@@ -1510,6 +1505,7 @@ class ArticleCommentList {
 	 * render -- return HTML code for displaying comments
 	 *
 	 * @access public
+	 * @deprecated - not used in Oasis
 	 *
 	 * @return String HTML text with rendered comments section
 	 */
@@ -1631,23 +1627,13 @@ class ArticleCommentList {
 	 */
 	public function purge() {
 		global $wgMemc;
+		wfProfileIn( __METHOD__ );
 
 		$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $this->mTitle->getArticleID() ) );
-
 		$this->mTitle->invalidateCache();
 		$this->mTitle->purgeSquid();
 
-		//purge varnish
-		$parts = ArticleComment::explode($this->mText);
-		$title = Title::newFromText($parts['title'], MWNamespace::getSubject($this->mTitle->getNamespace()));
-		if ($title) {
-			$title->invalidateCache();
-			$titleURL = $title->getFullUrl();
-			$urls = array("$titleURL?showall=1");
-			SquidUpdate::purge($urls);
-		} else {
-			Wikia::log(__METHOD__, 'error', "bad URL for comment, whole title: {$this->mText}");
-		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
