@@ -13,6 +13,9 @@ if( !defined( 'MEDIAWIKI' ) )
 /** */
 require_once( dirname(__FILE__) . '/MonoBook.php' );
 
+global $wgHooks;
+$wgHooks['MakeGlobalVariablesScript'][] = 'SkinWikiaphone::onMakeGlobalVariablesScript';
+
 /**
  * @todo document
  * @ingroup Skins
@@ -46,6 +49,13 @@ class SkinWikiaphone extends SkinTemplate {
 	function printTopHtml() {
 	        echo AdEngine::getInstance()->getAd('MOBILE_TOP_LEADERBOARD');
 	}
+	
+	public static function onMakeGlobalVariablesScript( $vars ) {
+		global $wgContLang;
+		
+		$vars['CategoryNamespaceMessage'] = $wgContLang->getNsText(NS_CATEGORY);
+		$vars['SpecialNamespaceMessage'] = $wgContLang->getNsText(NS_SPECIAL);
+		
+		return true;
+	}
 }
-
-
