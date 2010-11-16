@@ -38,6 +38,7 @@
 * rt#56095: RTE changing wikitext when it shouldn't: [[/subpage links/]] (macbre)
 * rt#67987: RTE should not allow images in headers (macbre)
 * rt#61758: RTE visual template editor is overzealous (macbre)
+* rt#65005: RTE: issue with linebreaks and unnamed parameters in templates (macbre)
 
 == Changes since 201010.4 ==
 * rt#81277: Disable categoryselect on the template namespace (Marooned)
