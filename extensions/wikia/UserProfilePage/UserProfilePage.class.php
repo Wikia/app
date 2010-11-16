@@ -238,7 +238,7 @@ class UserProfilePage {
 		if (empty($cachedData)) {
 
 			//prevent from API calls for non-existent accounts
-			$userId = $this->getUser()->getId();
+			$userId = $this->getUser()->idForName();
 			if( empty( $userId ) ) {
 				return array();
 			}
