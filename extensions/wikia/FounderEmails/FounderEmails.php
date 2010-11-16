@@ -52,11 +52,11 @@ $wgFounderEmailsExtensionConfig = array(
 $wgExtensionFunctions[] = 'wfFounderEmailsInit';
 
 function wfFounderEmailsInit() {
-	global $wgOut, $wgJsMimeType, $wgScriptPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig;
+	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig;
 
 	$dir = dirname( __FILE__ ) . '/';
 
-	$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/wikia/FounderEmails/js/FounderEmails.js?$wgStyleVersion\"></script>" );
+	$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/FounderEmails/js/FounderEmails.js?$wgStyleVersion\"></script>" );
 
 	// load messages from file
 	wfLoadExtensionMessages( 'FounderEmails' );
