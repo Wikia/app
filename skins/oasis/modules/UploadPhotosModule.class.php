@@ -52,6 +52,8 @@ class UploadPhotosModule extends Module {
 		$this->existsWarning = UploadForm::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
 		if(!empty($this->existsWarning) && $this->existsWarning != '&nbsp;') {
 			$this->existsWarning = '<h3>'.wfMsg('uploadwarning').'</h3>'.$this->existsWarning;
+		} else {
+			$this->existsWarning = '';
 		}
 		
 		wfProfileOut(__METHOD__);
