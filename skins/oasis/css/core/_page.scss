@@ -51,7 +51,6 @@
 	float: right;
 	padding: 0 10px;
 	width: $width-rail;
-	z-index: $zTop - 1;	// IE fix
 
 	.module {
 		@include clearfix;
