@@ -64,7 +64,7 @@ class WidgetsSpecialPage extends SpecialPage
 			$skinname = 'SkinMonaco';
 		}
 	
-		if ( !in_array( $skinname, array('SkinQuartz', 'SkinMonaco')) ) {  
+		if ( !in_array( $skinname, array('SkinQuartz', 'SkinMonaco', 'SkinOasis')) ) {
 			$wgOut->addHTML( '<div id="widgets-info" class="plainlinks">' . wfMsgExt('widgets-specialpage-info', 'parse') . '</div>' );
 			return;
 		}
