@@ -28,14 +28,12 @@
 		float: left;
 		height: 270px;
 		margin-top: 15px;
-		opacity: 0.5;
 		width: 300px;
 
 		&.selected {
 			border: 3px solid $color-page-border;
 			height: 300px;
 			margin-top: 0px;
-			opacity: 1;
 		}
 
 		.wikia-button {
@@ -96,6 +94,10 @@
 			padding: 5px 0px 5px;
 		}
 	}
+}
+
+.WikiaPageHeader h2 {
+	display: none;
 }
 
 // monaco fixes
