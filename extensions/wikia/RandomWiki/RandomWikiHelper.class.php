@@ -42,7 +42,7 @@ class RandomWikiHelper {
 			self::$mData[ 'recommended' ] = array( );
 			
 			if ( !empty( $wikiFactoryRecommended ) && !empty( $wikiFactoryRecommended->cv_variable_id ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+				$dbr = WikiFactory::db( DB_SLAVE );
 				
 				$res = $dbr->select(
 					array(
@@ -55,7 +55,7 @@ class RandomWikiHelper {
 						'city_public' => 1,
 						'city_lang' => self::$mLanguage,
 						'cv_variable_id' => $wikiFactoryRecommended->cv_variable_id,
-						'cv_value' => "'" . serialize( true ) . "'"
+						'cv_value' => serialize( true )
 					)
 				);
 				
