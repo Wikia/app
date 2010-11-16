@@ -237,6 +237,12 @@ class UserProfilePage {
 		$cachedData = $wgMemc->get($mKey);
 		if (empty($cachedData)) {
 
+			//prevent from API calls for non-existent accounts
+			$userId = $this->getUser()->getId();
+			if( empty( $userId ) ) {
+				return array();
+			}
+
 			$maxElements = 1;
 			$includeNamespaces = implode('|', $wgContentNamespaces);
 			$parameters = array(
