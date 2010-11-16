@@ -39,7 +39,7 @@ $wgMobileApiModules = array(
 );
 
 // i18n
-$wgExtensionMessagesFiles['MobileApp'] = "{$dir}MobileApi.i18n.php';
+$wgExtensionMessagesFiles['MobileApp'] = "{$dir}MobileApi.i18n.php";
 
 //ajax exports
 global $wgAjaxExportList;
