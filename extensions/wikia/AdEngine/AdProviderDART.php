@@ -116,9 +116,13 @@ EOT;
 		}
 
 		$src = 'direct';
+		$tile = $this->getTileKV($slotname);
 		$mtfIFPath = '';
+		$ord = $rand;
 		if (AdEngine::getInstance()->getProviderNameForSlotname($slotname) == 'AdDriver') {
 			$src = 'driver';
+			$tile = 'tile=N;';
+			$ord = 'N';
 		}
 		else {
 			$mtfIFPath .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
@@ -143,10 +147,10 @@ EOT;
 		$url .= "src=$src;";
 		$url .= "sz=" . $slot['size'] . ';';
 		$url .= 'mtfInline=true;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-		$url .= $this->getTileKV($slotname);
+		$url .= $tile;
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
-		$url .= "ord=" . $rand . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
+		$url .= "ord=" . $ord . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
 		return $url;
 	}
 
@@ -329,6 +333,7 @@ EOT;
 		switch ($slotname){
 			case 'TOP_LEADERBOARD': return 'dcopt=ist;';
 			case 'HOME_TOP_LEADERBOARD': return 'dcopt=ist;';
+			case 'CORP_TOP_LEADERBOARD': return 'dcopt=ist;';
 			case 'EXIT_STITIAL_INVISIBLE': return 'dcopt=ist;';
 			default: return '';
 		}
