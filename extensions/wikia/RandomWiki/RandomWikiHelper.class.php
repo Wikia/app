@@ -52,10 +52,10 @@ class RandomWikiHelper {
 					'city_id',
 					array(
 						'city_id = cv_city_id',
-						'city_public' => true,
+						'city_public' => 1,
 						'city_lang' => self::$mLanguage,
 						'cv_variable_id' => $wikiFactoryRecommended->cv_variable_id,
-						'cv_value' => true
+						'cv_value' => "'" . serialize( true ) . "'"
 					)
 				);
 				
