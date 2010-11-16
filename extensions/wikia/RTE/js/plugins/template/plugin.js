@@ -175,8 +175,8 @@ RTE.templateEditor = {
 					delete params[partName];
 				}
 				else {
-					// add empty part to stack (empty unnamed param)
-					partsStack.push(lineBreakInTail ? '\n' : '');
+					// add empty unnamed param to stack, don't add line break (RT #93340)
+					partsStack.push('');
 				}
 			}
 		});
@@ -185,7 +185,13 @@ RTE.templateEditor = {
 		$.each(params, function(key, value) {
 			// unnamed param (add even if empty)
 			if (parseInt(key) && parseInt(key) == key) {
-				partsStack.push((value != '' ? value : '') + (lineBreakInTail ? '\n' : ''));
+				// for unnamed params don't add line break (RT #93340)
+				partsStack.push(value != '' ? value : '');
+
+				// remove line break from template name (RT #93340)
+				if (wikitextParts.length == 0) {
+					partsStack[0] = $.trim(partsStack[0]);
+				}
 			}
 			// named param
 			else {
