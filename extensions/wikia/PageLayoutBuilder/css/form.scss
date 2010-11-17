@@ -3,7 +3,6 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/rail-module";
 
 div.plb-article-form-space {
 	@include clearfix;
@@ -31,7 +30,6 @@ ul.plb-form-actions {
 }
 
 .FormCornerModule {
-	@include rail-module;
 	@include clearfix;
 
 	a.more {
