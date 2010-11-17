@@ -297,5 +297,6 @@ function realoadAutoCreateForm(){
 	$("#wiki-submit").attr("disabled",true);
 	$("#wiki-cancel").attr("disabled",true);
 	$("#highlightform").attr("action",formViewAction);
+	$('#highlightform').unbind('submit');
 	$("#highlightform").submit();
 }
