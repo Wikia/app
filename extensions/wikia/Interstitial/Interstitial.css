@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	text-align: center;
 }
 #userData{
 	line-height:32px;
@@ -12,16 +13,17 @@ body {
 	height:35px;
 }
 #wikia_page{
-	position: absolute;
-	top: 41px !important; /* some skins override this */
-	left: 50%;
-	width: 800px;
-	margin: 0 0 0 -400px;
-	padding-top: 0px;
 	background-color: white;
-	z-index:1002;
+	display: inline-block;
+	height: auto;
+	margin: -150px auto 0;
 	overflow: auto;
-	height:auto;
+	padding-top: 0px;
+	position: inherit;
+	top: 0;
+	z-index: 1002;
+	zoom: 1;	// IE7 hack
+	display: inline;
 	-moz-border-radius-bottomleft: 10px;
 	-moz-border-radius-bottomright: 10px;
 }
