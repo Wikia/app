@@ -32,18 +32,26 @@ class UserProfilePageHelper {
 			return true;
 		}
 
-		$profilePage = UserProfilePage::getInstance( $user );
-		$article = Article::newFromID( $template->data['articleid'] );
-		if( is_null( $article ) ) {
-			if( $profilePage->userIsOwner() ) {
-				$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-my-about-me-section', array( $skin->mTitle->getLocalUrl( 'action=edit' ) ) ) );
-			}
-			else {
-				$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-somebodys-about-me-section', array( $profilePage->getUser()->getName(), $profilePage->getUser()->getTalkPage()->getLocalUrl( 'action=edit' ) ) ) );
-			}
+		if( $skin->mTitle->getNamespace() == NS_USER_TALK ) {
+			// don't replace page content for talk pege (RT: #98342)
+			wfProfileOut(__METHOD__);
+			return true;
 		}
 		else {
-			$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
+			// NS_USER namespace
+			$profilePage = UserProfilePage::getInstance( $user );
+			$article = Article::newFromID( $template->data['articleid'] );
+			if( is_null( $article ) ) {
+				if( $profilePage->userIsOwner() ) {
+					$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-my-about-me-section', array( $skin->mTitle->getLocalUrl( 'action=edit' ) ) ) );
+				}
+				else {
+					$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-somebodys-about-me-section', array( $profilePage->getUser()->getName(), $profilePage->getUser()->getTalkPage()->getLocalUrl( 'action=edit' ) ) ) );
+				}
+			}
+			else {
+				$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
+			}
 		}
 
 		wfProfileOut(__METHOD__);
