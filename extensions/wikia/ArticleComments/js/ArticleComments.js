@@ -153,6 +153,7 @@ var ArticleComments = {
 		if (ArticleComments.processing) return;
 		if ($.trim($(e.data.source).val()) == '') return;
 		$(e.data.source).attr('readonly', 'readonly');
+		$(e.target).attr('disabled', true);
 
 		var data = {
 			action: 'ajax',
@@ -201,8 +202,10 @@ var ArticleComments = {
 				$('#article-comm-info').html(json.msg);
 			}
 			$(e.data.source).removeAttr('readonly');
+			$(e.target).removeAttr('disabled');
 			$(e.data.source).val('');
 			ArticleComments.processing = false;
+			
 		});
 		ArticleComments.processing = true;
 		ArticleComments.log('end: postComment');
