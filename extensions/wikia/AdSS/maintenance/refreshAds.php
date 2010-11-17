@@ -22,7 +22,7 @@ $res = $dbw->select(
 	       );
 foreach( $res as $row ) {
 	$ad = AdSS_AdFactory::createFromRow( $row );
-	echo "{$ad->wikiId} | {$ad->id} | {$ad->text} | {$ad->url} | ".wfTimestamp( TS_DB, $ad->expires )." | ";
+	echo "{$ad->wikiId} | {$ad->id} | {$ad->userEmail} | {$ad->url} | ".wfTimestamp( TS_DB, $ad->expires )." | ";
 
 	$billing = new AdSS_Billing();
 	if( $billing->addCharge( $ad ) ) {
