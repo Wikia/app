@@ -237,7 +237,8 @@ class MyToolsModule extends Module {
 			'CreatePage',
 			'Preferences',
 			'Random',
-			'WikiActivity'
+			'WikiActivity',
+			'MyContributions',
 		);
 	}
 }

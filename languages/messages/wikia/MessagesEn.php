@@ -995,4 +995,5 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'button-createpage' => 'Create a Page',
 
 'wikianewfiles-title' => 'New photos on this wiki',
+'mycontributions' => 'My Contributions',
 ));
