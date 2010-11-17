@@ -65,6 +65,9 @@ class WidgetTagRenderer extends WidgetFramework {
 		// try to display it using widget function
 		$output = $widgetType($id, $widgetParams);
 
+		// Add any required javascript for the widget
+		$output .= $this->getJavascript($widget);
+
 		// wrap widget content
 		$output = $this->wrap($widget, $output);
 
