@@ -461,3 +461,24 @@ table.wikitable {
 		}
 	}
 }
+
+// /** Exitstitial Links **/
+#exitstitalInfoboxWrapper {
+	h1 {
+		margin-right: 5px;
+		p {
+			font-size: 12px;
+			color: $color-text;
+			padding-top: 5px;
+		}
+	}
+
+	.close {
+		display: none;
+	}
+
+	.wikia-button {
+		float: right;
+	}
+}
+
