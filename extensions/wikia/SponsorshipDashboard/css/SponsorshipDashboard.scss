@@ -1,0 +1,47 @@
+#placeholder {
+
+	width:930px;
+	height:400px;
+	margin-left: 20px;
+}
+
+#overview {
+
+	float:right;
+	margin-right:30px;
+	margin-top:10px;
+	width:300px;
+	height:50px;
+}
+
+.colorHolder {
+
+	width: 20px;
+	display: inline-block;
+	margin-top:2px;
+}
+
+#toolTip {
+	position: absolute;
+	display: none;
+	color: #000;
+	padding: 2px;
+	background-color: #fff;
+	opacity: 0.80
+}
+
+#hubposition {
+	text-align: right;
+	margin-right: 40px;
+	
+}
+
+#choices {
+	margin-left: 20px;
+}
+
+#show {
+	margin-left: 20px;
+}
+
+/* end of FF3.0 hack */
