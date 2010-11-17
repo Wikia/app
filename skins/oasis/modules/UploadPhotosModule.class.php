@@ -34,8 +34,6 @@ class UploadPhotosModule extends Module {
 		if ($this->status > 0) {
 			$this->statusMessage = $this->uploadMessage($this->status, $details, $f);
 		}
-		
-		hyunbug($f);
 	
 		echo json_encode($this->getData());
 		header('content-type: text/plain; charset=utf-8');
