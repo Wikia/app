@@ -180,7 +180,7 @@ ACWikiRequest.wikiAccountKeyUp = function(e) {
 		var field = document.getElementById(id);
 		if (id) {
 			if ( !allowAction(e) ) {
-				$(e).preventDefault();
+				e.preventDefault();
 				ACWikiRequest.checkAccount(e, id);
 			}
 		};
