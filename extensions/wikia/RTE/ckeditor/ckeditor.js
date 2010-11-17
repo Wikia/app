@@ -7,7 +7,7 @@ DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate 
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r29888 build 20101116',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r29957 build 20101117',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -5478,8 +5478,9 @@ var dropdown=this;setTimeout(function(){dropdown.setValue(false);},50);}});}});R
 $.each(wikitextParts,function(i,part){var parsedPart=part.match(/([^=]+)( *\= *)(.*)(\n?)/);if(parsedPart){var partName=$.trim(parsedPart[1]);var partSeparator=parsedPart[2];var partValue=parsedPart[3];var partTail=parsedPart[4];if(partTail!=''){lineBreakInTail=true;}
 if(params[partName]!=''){partsStack.push(parsedPart[1]+partSeparator+params[partName]+partTail);delete params[partName];}}
 else{parsedPart=part.match(/(.*)(\n?)/);var partName=++unnamedCounter;var partValue=parsedPart[1];var partTail=parsedPart[2];if(partTail!=''){lineBreakInTail=true;}
-if(params[partName]!=''){partsStack.push(params[partName]+partTail);delete params[partName];}
-else{partsStack.push('');}}});$.each(params,function(key,value){if(parseInt(key)&&parseInt(key)==key){partsStack.push(value!=''?value:'');if(wikitextParts.length==0){partsStack[0]=$.trim(partsStack[0]);}}
+if(params[partName]!=''){partsStack.push(params[partName]+partTail);}
+else{partsStack.push('');}
+delete params[partName];}});$.each(params,function(key,value){if(parseInt(key)&&parseInt(key)==key){partsStack.push(value!=''?value:'');if(wikitextParts.length==0){partsStack[0]=$.trim(partsStack[0]);}}
 else{if(value!=''){partsStack.push(key+' = '+value+(lineBreakInTail?'\n':''));}}});wikitext='{{';wikitext+=partsStack.join('|').replace('\x7f','|').replace(/[\n|]+$/g,'').replace(/\n+$/g,'');wikitext+='}}';$().log(currentData.wikitext,'RTE: old wikitext');$().log(wikitext,'RTE: new wikitext');return wikitext;},selectStep:function(stepId){RTE.log('showing step #'+stepId);RTE.log(this.placeholder);var dialog=this.dialog;dialog.selectPage('step'+stepId);var info=this.placeholder.data('info');var data=this.placeholder.getData();$('.templateEditorDialog').find('.cke_dialog_footer').hide();switch(stepId){case 1:var renderFirstStep=function(){var html='';$(window.RTEHotTemplates).each(function(i,template){html+='<li><a rel="'+template+'">'+template.replace(/_/g,' ')+'</a></li>';});$('#templateEditorHotTemplates').html(html);var html='';$(window.RTEMagicWords.magicWords).each(function(i,magic){html+='<li><a rel="'+magic+'">'+magic.toUpperCase()+'</a></li>';});$('#templateEditorMagicWords').html(html);var self=this;$('#templateEditorHotTemplates').find('a').click(function(ev){var templateName=$(this).attr('rel');RTE.templateEditor.selectTemplate(dialog,templateName);});$('#templateEditorMagicWords').find('a').click(function(ev){var name=$(this).attr('rel');RTE.log('adding magic word: '+name);var data={};var isDoubleUnderscore=RTEMagicWords.doubleUnderscores.indexOf(name)>-1;if(isDoubleUnderscore){data.type='double-underscore';data.wikitext='__'+name.toUpperCase()+'__';}
 else{data.type='double-brackets';data.title=name.toUpperCase();data.wikitext='{{'+name.toUpperCase()+'}}';}
 RTE.log(data);var placeholder=RTE.templateEditor.placeholder;placeholder.setPlaceholderType(data.type);placeholder.setData(data);RTE.templateEditor.usePlaceholder(placeholder);dialog.hide();RTE.templateEditor.commitChanges();});dialog.enableSuggesionsOn(dialog.getContentElement('step1','templateSearchQuery'),[10]);}

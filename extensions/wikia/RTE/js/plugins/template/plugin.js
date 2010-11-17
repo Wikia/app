@@ -172,12 +172,13 @@ RTE.templateEditor = {
 				// update this part with new value
 				if (params[partName] != '') {
 					partsStack.push(params[partName] + partTail);
-					delete params[partName];
 				}
 				else {
 					// add empty unnamed param to stack, don't add line break (RT #93340)
 					partsStack.push('');
 				}
+
+				delete params[partName];
 			}
 		});
 
