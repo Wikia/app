@@ -14,27 +14,10 @@
 			}
 		/*]]>*/</script>
 	</head>
-	<body class="color2"<?php if($redirectDelay > 0): ?> onLoad="setTimeout(doRedirect, <?php print ($redirectDelay * 1000);?>)"<?php endif?>>
+	<body<?php if($redirectDelay > 0): ?> onLoad="setTimeout(doRedirect, <?php print ($redirectDelay * 1000);?>)"<?php endif?>>
 		<?php print (empty($athenaInitStuff)?"":$athenaInitStuff); ?>
-		<div id="wikia_header" class="color2">
-			<div class="monaco_shinkwrap">
-				<?php print (empty($loginMsg)?"":"<div id='userData'>$loginMsg</div>"); ?>
-				<div id="wikiaBranding">
-					<div id="wikia_logo">Wikia</div>
-				</div>
-			</div>
-		</div>
-		<div id='background_strip'>
-			&nbsp;
-		</div>
-		<div id="wikia_page">
-			<div class='interstitial_fg_top color1' id="page_bar">
-				<?php print (empty($pageBarMsg)?"":"<div class='left'>$pageBarMsg</div>"); ?>
-				<a href = "<?php print htmlspecialchars( $url ); ?>" class='wikia-button' id='skip_ad'><?php print $skip; ?></a>
-			</div>
-			<div class='interstitial_fg_body'>
-				<?php print $adCode ?>
-			</div>
+		<div class='interstitial_fg_body'>
+			<?php print $adCode ?>
 		</div>
 		<!-- Begin Analytics -->
 		<?php

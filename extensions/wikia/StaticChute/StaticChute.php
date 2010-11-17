@@ -330,6 +330,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
+			'../extensions/wikia/Interstitial/Exitstitial.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
 

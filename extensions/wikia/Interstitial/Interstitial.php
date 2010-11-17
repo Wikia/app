@@ -6,6 +6,7 @@
  * @author Sean Colombo (forgive me)
  */
 
+
 $wgHooks['MakeGlobalVariablesScript'][] = 'interstitialsJsGlobalVariables';
 
 define('INTERSTITIALS_SP', 'Interstitial'); // name of the Special Page and associated resources
@@ -22,17 +23,23 @@ define('INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS', 10);
  * @return true to allow subsequent functions for same hook to run.
  */
 function interstitialsJsGlobalVariables(&$vars){
+	
 	global $wgCookieDomain, $wgCookiePath;
 	global $wgAdsInterstitialsEnabled, $wgAdsInterstitialsPagesBeforeFirstAd, $wgAdsInterstitialsPagesBetweenAds;
-
+	global $wgSitename;
+	
 	wfLoadExtensionMessages(INTERSTITIALS_SP);
-
+	
+	$vars['wgExitstitialTitle'] =  wfMsg('exitstitial-title') .$wgSitename;
+	$vars['wgExitstitialRegister'] = wfMsg('exitstitial-register');
+	$vars['wgExitstitialButton'] = wfMsg('exitstitial-button');
+	
 	$vars['wgCookieDomain'] = $wgCookieDomain;
 	$vars['wgCookiePath'] = $wgCookiePath;
 	$vars['wgAdsInterstitialsEnabled'] = $wgAdsInterstitialsEnabled;
 	$vars['wgAdsInterstitialsPagesBeforeFirstAd'] = (empty($wgAdsInterstitialsPagesBeforeFirstAd)?INTERSTITIAL_DEFAULT_PAGES_BEFORE_FIRST_AD:$wgAdsInterstitialsPagesBeforeFirstAd);
 	$vars['wgAdsInterstitialsPagesBetweenAds'] = (empty($wgAdsInterstitialsPagesBetweenAds)?INTERSTITIAL_DEFAULT_PAGES_BETWEEN_ADS:$wgAdsInterstitialsPagesBetweenAds);
-
+	
 	global $wgScriptPath;
 	$special = SpecialPage::getTitleFor( INTERSTITIALS_SP );
 	$vars['wgInterstitialPath'] = $special->getFullUrl("u=");
