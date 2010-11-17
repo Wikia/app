@@ -15,6 +15,30 @@
 			</li>
 			<li><span style="padding:0px"><?=wfMsg('wikistats_trend_all_wikia_text')?></span></li>
 		</ul>
+<?php if (isset($definedNamespaces) && is_array($definedNamespaces) ): ?>		
+		<ul>
+			<li style="vertical-align:top"><span><?=wfMsg('wikistats_ns_statistics_legend')?></span></li>
+			<li><select name="wsns[]" id="wsns[]" multiple size="7">
+				<!--<option value=""></option>-->
+				<!--<optgroup label="<?= wfMsg('wikistats_namespace_top') ?>">-->		
+<?php foreach ($definedNamespaces as $id => $values) : ?>
+<?php $selected = (in_array($id, $mNS)) ? " selected=\"selected\" " : ""; ?>
+				<option value="<?php echo $id ?>" <?= $selected ?>><?php echo $values['name']?></option>
+<?php endforeach ?>
+				<optgroup label="<?= wfMsg('wikistats_ns_statistics_legend') ?>">
+<?php if (isset($namespaces) && is_array($namespaces)) : ?>
+<?php foreach ($namespaces as $id => $sName) : ?>
+<?php if ( $id > 0 ) : ?>
+<?php $selected = (in_array($id, $mNS)) ? " selected=\"selected\" " : ""; ?>
+				<option value="<?=$id?>" <?=$selected?>><?=$sName?></option>
+<?php endif ?>
+<?php endforeach ?>
+				<!--</optgroup>-->
+<?php endif ?>
+				</select>
+			</li>	
+		</ul>					
+<?php endif ?>
 		<ul>
 			<li><span><?= wfMsg('wikistats_daterange_from') ?></span>
 			<select id="ws-month-from">
@@ -80,7 +104,7 @@ while ($minYear <= $maxYear) { $selected = ($curYear == $minYear) ? " selected=\
 			</li>
 		</ul>
 		<ul>
-			<li><input type="submit" id="wsshowbtn" value="<?= wfMsg("wikistats_showstats_btn") ?>"  /></li>
+			<li><input type="submit" id="wsshowbtn" value="<?= wfMsg("wikistats_showstats_btn") ?>" onclick="$('#wsxls').val('0');" /></li>
 			<!--<li><input type="button" id="ws-show-charts" value="<?= wfMsg("wikistats_showcharts") ?>" name="ws-show-charts" /></li>-->
 			<li><input type="submit" id="wsxlsbtn" value="<?= wfMsg("wikistats_export_xls") ?>" onclick="$('#wsxls').val('1');" /></li>
 		</ul>

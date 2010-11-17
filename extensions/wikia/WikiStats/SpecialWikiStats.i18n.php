@@ -187,6 +187,7 @@ $messages['en'] = array(
 	"wikistats_generate_XLS_file_title" => "Generate XLS file for download",
 	"wikistats_language_stats" => "Language stats",
 	"wikistats_main_statistics_legend" => "Main statistics",
+	"wikistats_ns_statistics_legend" => "Namespaces",
 	"wikistats_other_statistics_legend" => "Other statistics",
 	"wikistats_statistics_legend" => "Columns definitions",
 	"wikistats_date_of_generate" => "Generated on $1",
@@ -234,7 +235,13 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 	"wikistats_language_toplist" => "de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh",
 	"wikistats_recordspager" => "Showing '''$1''' to '''$2''' of '''$3''' records.",
 	"wikistats_title" => "Title",
-	"wikistats_summary_data" => "Summary data"
+	"wikistats_summary_data" => "Summary data",
+	'wikistats_namespaces_talk' => 'Talk (include comments)',
+	'wikistats_namespaces_top10list' => 'Top 10 list',
+	'wikistats_namespaces_blog' => 'Blogs (include blog and blog comments)',
+	'wikistats_namespaces_user' => 'User (include User talk)',
+	'wikistats_namespaces_maintenance' => 'Maintenance (Mediawiki, Template, Project)',
+	'wikistats_namespace_top' => 'Predefined namespaces',
 );
 
 /** Message documentation (Message documentation)

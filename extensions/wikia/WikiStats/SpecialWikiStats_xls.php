@@ -1422,5 +1422,68 @@ class WikiStatsXLS {
 		}
 							
 		$this->setXLSFileEnd();
-	}	
+	}
+	
+	public function makeNamespaceStats($tableTitle) {
+		global $wgUser, $wgLang, $wgContLang;
+
+		#----
+		$this->setXLSHeader();
+		#----
+		$this->setXLSFileBegin();
+		$this->writeXLSLabel(1,1,wfMsg('wikistats_ns_statistics_legend'));
+		$this->mergeXLSColsRows(1, 1, 1, count($tableTitle));
+		/*
+		 * table header
+		 */
+		$this->writeXLSLabel( 3 /*row*/, 1 /*column*/, wfMsg('wikistats_date') );
+		$this->mergeXLSColsRows( 3, 1, 4, 1 );
+		$i = 2;
+		foreach ( $tableTitle as $ns => $value ) {
+			$this->writeXLSLabel( 3 /*row*/, $i /*column*/, $value );
+			$this->mergeXLSColsRows( 3, $i, 3, $i+2 );
+			$i = $i+3;
+		}
+
+		$i = 2;
+		foreach ( $tableTitle as $ns => $value ) {
+			$this->writeXLSLabel( 4 /*row*/, $i /*column*/, wfMsg('wikistats_total') );
+			$i++;
+			$this->writeXLSLabel( 4 /*row*/, $i /*column*/, str_replace('<br />', ' ', wfMsg('wikistats_new_per_day')) );
+			$i++;
+			$this->writeXLSLabel( 4 /*row*/, $i /*column*/, wfMsg('wikistats_edits') );
+			$i++;
+		}
+
+		$k = 5;
+		foreach ($this->mData as $date => $columns) { 
+			$i = 1;
+			$stamp = mktime(23, 59, 59, substr($date, 4, 2), 1, substr($date, 0, 4));
+			$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+
+			$this->writeXLSLabel( $k /*row*/, $i /*column*/, $out );
+
+			foreach ( $tableTitle as $ns => $value ) {
+				if ( !isset( $columns[$ns] ) ) {
+					foreach ( array('A','B','C') as $c ) {
+						$columns[$ns][$c] = 0;
+					}
+				}
+				foreach ( $columns[$ns] as $column => $out ) {
+					if ( $column == 'date' ) continue;
+					$i++;
+					if (empty($out) || ($out === 0)) {
+						$out = "";
+					} else {
+						$out = $wgContLang->formatNum($out);
+					}
+					$cols[] = $column;
+					$this->writeXLSLabel( $k /*row*/, $i /*column*/, $out );
+				}
+			}
+			$k++;
+		}
+
+		$this->setXLSFileEnd();
+	}
 }
