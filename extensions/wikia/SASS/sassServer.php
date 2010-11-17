@@ -148,10 +148,10 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 
 	$sassResult = `$commandLine`;
 	if($sassResult != ""){
-		// On the first failure, check if this is because /tmp/sass doesn't exist anymore (it will go away on reboot, etc.).
+		// On the first failure, check if this is because /var/tmp/sass doesn't exist anymore (it will go away on reboot, etc.).
 		global $TMP_DIR;
 		if(!is_dir($TMP_DIR)){
-			if(!mkdir($TMP_DIR, 0755, true)){
+			if(!mkdir($TMP_DIR, 0775, true)){
 				$cantCreateErr = "Sass server's tmp dir didn't exist and could not be created: \"$TMP_DIR\"";
 				$errorStr .= $cantCreateErr;
 				Wikia::log( __METHOD__, "", $cantCreateErr);
