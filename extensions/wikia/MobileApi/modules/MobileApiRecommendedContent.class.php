@@ -32,7 +32,7 @@ class MobileApiRecommendedContent extends MobileApiBase {
 					
 					$ret[] = Array(
 						'name' => ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName,
-						'font' => ( !empty( $wikiThemeSettings[ 'wordmark-font' ] ) ) ? $wikiThemeSettings[ 'wordmark-font' ] : null,
+						//'font' => ( !empty( $wikiThemeSettings[ 'wordmark-font' ] ) ) ? $wikiThemeSettings[ 'wordmark-font' ] : null,
 						'color' => ( !empty( $wikiThemeSettings[ 'wordmark-color' ] ) ) ? $wikiThemeSettings[ 'wordmark-color' ] : '#0049C6',
 						'backgroundColor' => ( !empty( $wikiThemeSettings[ 'color-page' ] ) ) ? $wikiThemeSettings[ 'color-page' ] : '#FFFFFF',
 						'homeUrl' => $wikiUrl,
@@ -42,7 +42,7 @@ class MobileApiRecommendedContent extends MobileApiBase {
 				}
 			}
 			
-			$this->setResponseContentType('application/json; charset=utf-8');
+			$this->setResponseContentType( 'application/json; charset=utf-8' );
 			$this->setResponseContent( Wikia::json_encode( $ret ) );
 		//}
 		
