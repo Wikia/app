@@ -23,7 +23,7 @@ body {
 	top: 0;
 	z-index: 1002;
 	zoom: 1;	// IE7 hack
-	display: inline;
+	*display: inline;
 	-moz-border-radius-bottomleft: 10px;
 	-moz-border-radius-bottomright: 10px;
 }
