@@ -136,7 +136,7 @@ RTE.templateEditor = {
 			lineBreakInTail = true;
 		}
 
-		// parse and update each part
+		// parse and update each part (handle existing params)
 		$.each(wikitextParts, function(i, part) {
 			var parsedPart = part.match(/([^=]+)( *\= *)(.*)(\n?)/); //RTE.log(parsedPart);
 
