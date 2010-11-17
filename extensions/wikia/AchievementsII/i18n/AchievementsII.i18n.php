@@ -39,6 +39,8 @@ Please try another one!',
 	'achievements-you-must' => 'You need to $1 to earn this badge.',
 	'leaderboard-button' => 'Achievements leaderboard',
  	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|points}}</small>',
+	'achievements-profile-title-no' => 'This user has no achievements',
+	'achievements-no-badges' => 'This user is blocked, their badges are hidden.',
 
 	/*
 	 * Track names
