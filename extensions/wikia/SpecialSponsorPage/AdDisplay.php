@@ -24,6 +24,11 @@ class AdDisplay {
 	public static function OutputAdvertisementOutputHook( &$out, &$text ){
 		global $wgUser;
 
+		// SponsoredLinksModule is used to render HTML in Oasis (RT #97127)
+		if (Wikia::isOasis()) {
+			return true;
+		}
+
 		if ( empty($_GET['showads']) && is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ) {
 			return true;
 		}

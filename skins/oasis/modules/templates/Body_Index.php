@@ -47,22 +47,24 @@
 		?>
 		<div id="WikiaArticle" class="WikiaArticle">
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD')) ?>
-			
-			
+
+
 			<?php
 			// for InfoBox-Testing
 			if ($wgEnableInfoBoxTest) {
 				echo wfRenderModule('ArticleInfoBox');
 			}
-			
+
 			if ($wgEnableCorporatePageExt) {
 				echo wfRenderModule('CorporateSite', 'Slider');
 			} ?>
 
 			<?= $bodytext ?>
-		</div>
 
-		<?= wfRenderModule('RelatedPages'); ?>
+			<?= wfRenderModule('RelatedPages'); ?>
+
+			<?= wfRenderModule('SponsoredLinks'); ?>
+		</div>
 
 		<?php
 		if (empty($wgSuppressArticleCategories)) {
