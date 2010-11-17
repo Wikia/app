@@ -1,5 +1,5 @@
 <?php if( $display ): ?>
-	<section class="FormCornerModule">
+	<section class="FormCornerModule module">
 		<p><?php echo wfMsg('plb-special-form-box-caption', array($layoutName)); ?></p>
 		<?php echo $layoutDesc; ?>
 		<ul>
