@@ -144,7 +144,7 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 	wfProfileIn( __METHOD__ );
 
 	// Pass the values from the query-string into the sass script (results will go in a tmp file).
-	$commandLine = escapeshellcmd("$FULL_SASS_PATH $IP/$inputFile $tmpFile --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams 2>&1");
+	$commandLine = escapeshellcmd("$FULL_SASS_PATH $IP/$inputFile $tmpFile --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams")." 2>&1";
 
 	$sassResult = `$commandLine`;
 	if($sassResult != ""){
@@ -278,6 +278,11 @@ function outputHeadersAndCss($cssContent, $errorStr=""){
 		print "\n/*\n   sassServer ERROR: $errorStr */\n";
 		// TODO: Should we also output some really subtle marking in CSS (a red dot somewhere?) to indicate to us when we're browsing that we should look at the css code to see the error (like the thin-red-line on Pedlr).
 		// NOTE: If we wanted to, we could output this data above only when on devel environments (is the var called $wgDevelEnvironment?)
+		
+		// On devel environments at least, we output something if xdebug is enabled.  In case that happens, we need to wrap the trigger-error in comments.
+		print "/* error logged to php error-log --------------------------------------------------------\n";
+		trigger_error($errorStr, E_USER_WARNING);
+		print " ---------------------------------------------------------------------------------------- */\n";
 	}
 
 	print "\n".$timeToGenerate; // Print the server and how long it took to serve this file.
