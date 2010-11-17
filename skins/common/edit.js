@@ -168,5 +168,7 @@ function scrollEditBox() {
 		} );
 	}
 }
-hookEvent( 'load', scrollEditBox );
-hookEvent( 'load', mwSetupToolbar );
+/* Wikia change - Begin - this is safer than calling hookEvent since sometimes onload has already run */
+addOnloadHook( scrollEditBox );
+addOnloadHook( mwSetupToolbar );
+/* Wikia change - End */
