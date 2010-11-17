@@ -210,10 +210,7 @@ class WidgetFramework {
 	}
 
 	protected function load($name) {
-		global $wgOut, $wgScriptPath;
-		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.js')) {
-			$wgOut->addScriptFile($wgScriptPath . '/extensions/wikia/WidgetFramework' . '/Widgets/' . $name . '/' . $name . '.js');
-		}
+
 		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.php')) {
 			require_once(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.php');
 			return true;
@@ -235,6 +232,19 @@ class WidgetFramework {
 			}
 		}
 		return $params;
+	}
+
+	protected function getJavascript($widget) {
+		global $wgJsMimeType, $wgExtensionsPath;
+		$name = $widget['type'];
+		$jsOut = "";
+		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.js')) {
+			$jsOut = "\n<script type=\"$wgJsMimeType\">
+			wgAfterContentAndJS.push(function() {
+				$.getScript(wgExtensionsPath + '/wikia/WidgetFramework/Widgets/$name/$name.js?' + wgStyleVersion);
+			});</script>\n";
+		}
+		return $jsOut;
 	}
 
 	protected function wrap($widget, $widgetOut, $skin = null) {
@@ -290,6 +300,11 @@ class WidgetFramework {
 			}
 		}
 
+		// Close and Edit buttons make no sense for tags
+		if (!empty($widget['widgetTag'])) {
+			$closeable = $editable = false;
+		}
+
 		if($body == '') {
 			return '';
 		}
@@ -301,8 +316,8 @@ class WidgetFramework {
 
 		if($this->skinname == 'monaco' || $this->skinname=='oasis') {
 			global $wgBlankImgUrl;
-			$closeButton = ($closeable) ? "<img src=\"$wgBlankImgUrl\" id=\"{$widget['id']}_close\" class=\"sprite-small close\" />" : '';
-			$editButton  = ($editable) ? "<img src=\"$wgBlankImgUrl\" id=\"{$widget['id']}_edit\" class=\"sprite-small settings\" />" : '';
+			$closeButton = ($closeable) ? "<img src=\"$wgBlankImgUrl\" id=\"{$widget['id']}_close\" class=\"sprite-small close\" />" : '&nbsp;';
+			$editButton  = ($editable) ? "<img src=\"$wgBlankImgUrl\" id=\"{$widget['id']}_edit\" class=\"sprite-small settings\" />" : '&nbsp;';
 			$editForm  = ($editable) ? "<dd style=\"display: none;\" class=\"shadow widget_contents\" id=\"{$widget['id']}_editform\"></dd>" : '';
 			return "<dl class=\"widget {$widget['type']}\" id=\"{$widget['id']}\"><dt class=\"color1 widget_title\" id=\"{$widget['id']}_header\"><span class=\"widgetToolbox\">{$closeButton}{$editButton}</span>{$title}</dt><dd class=\"shadow widget_contents\" id=\"{$widget['id']}_content\">{$body}</dd>{$editForm}</dl>";
 		} else if($this->skinname == 'quartz') {
@@ -332,6 +347,7 @@ class WidgetFramework {
 		$params['skinname'] = $this->skinname;
 
 		$widgetOut = $wgWidgets[$widget['type']]['callback']('widget_' . $widget['id'], $params);
+		$widgetOut .= $this->getJavascript($widget);
 		if($wrap) {
 			return $this->wrap($widget, $widgetOut);
 		} else {
