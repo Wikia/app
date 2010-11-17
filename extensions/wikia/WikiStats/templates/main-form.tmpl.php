@@ -4,6 +4,7 @@ $tabs = array(
 );
 
 if ( $userIsSpecial ) {
+	$tabs['namespaces']		= array('url' => sprintf( "%s/namespaces", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_ns_statistics_legend') );
 	$tabs['breakdown'] 		= array('url' => sprintf( "%s/breakdown", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_breakdown_editors') );
 	$tabs['anonbreakdown'] 	= array('url' => sprintf( "%s/anonbreakdown", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_breakdown_anons') );
 	$tabs['latestview']		= array('url' => sprintf( "%s/latestview", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_latest_pageviews') );

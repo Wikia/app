@@ -26,6 +26,7 @@ class WikiStats {
     var $mMonthDiffs;
     var $mLang;
     var $mHub;
+    var $mPageNS;
     
     var $mExcludedWikis;
     var $mAllStats;
@@ -53,6 +54,7 @@ class WikiStats {
 		wfLoadExtensionMessages("WikiStats");
 		$this->mCityId = $mCityId;
 		$this->mAllStats = ( $this->mCityId === 0 );
+				
 		$this->__load();
 	}
 
@@ -85,6 +87,8 @@ class WikiStats {
     public function setMonthDiffs($value)	{ $this->mMonthDiffs = $value; }
     public function setHub($value)			{ $this->mHub = $value; }
     public function setLang($value)			{ $this->mLang = $value; }
+    public function setPageNS($value)		{ $this->mPageNS = $value; }
+    public function setPageNSList($value)	{ $this->mPageNSList = $value; }
 
 	public function getLocalStats() 		{ return $this->mLocalStats; }
     public function getRangeColumns() 		{ return $this->mRange; }
@@ -94,6 +98,35 @@ class WikiStats {
     public function getMonthDiffs()			{ return $this->mMonthDiffs; }
     public function getHub()				{ return $this->mHub; }
     public function getLang()				{ return $this->mLang; }
+    public function getPageNS()				{ return $this->mPageNS; }
+    public function getPageNSList()			{ 
+		if ( empty($this->mPageNSList) ) {
+			global $wgEnableTopListsExt, $wgEnableBlogArticles; 		
+			$this->mPageNSList = array(
+				-1001 => array(
+					'name' => wfMsg('wikistats_namespaces_talk'),
+					'value' => 'page_ns % 2 = 1'
+				),
+				-1002 => array(
+					'name' => wfMsg('wikistats_namespaces_top10list'),
+					'value' => ( !empty($wgEnableTopListsExt) ) ? sprintf ('page_ns = %d', NS_TOPLIST) : null,
+				),
+				-1003 => array(
+					'name' => wfMsg('wikistats_namespaces_blog'),
+					'value' => ( !empty($wgEnableBlogArticles) ) ? sprintf (' (page_ns = %d or page_ns = %d) ', NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK) : null,
+				),
+				-1004 => array(
+					'name' => wfMsg('wikistats_namespaces_user'),
+					'value' => sprintf (' (page_ns = %d or page_ns = %d) ', NS_USER, NS_USER_TALK)
+				),
+				-1005 => array(
+					'name' => wfMsg('wikistats_namespaces_maintenance'),
+					'value' => sprintf (' (page_ns = %d or page_ns = %d or page_ns = %d) ', NS_MEDIAWIKI, NS_TEMPLATE, NS_PROJECT)
+				)
+			);
+		}
+		return $this->mPageNSList; 
+	}
 
 	private function getSkin() {
 		if ( !isset( $this->mSkin ) ) {
@@ -294,7 +327,7 @@ class WikiStats {
 		krsort($this->mMonthDiffs, SORT_NUMERIC);
 		return $this->mMonthDiffs;
 	}
-
+		
 	/**
 	 * getBasicInformation
 	 * 
@@ -599,6 +632,167 @@ class WikiStats {
 		#---
 		wfProfileOut( __METHOD__ );
 		return $this->mMainStats;
+	}
+	
+	/**
+	 * namespaceStatsFromDB
+	 * 
+	 * Namespace statistics
+	 * @access public
+	 * 
+	 */
+	public function namespaceStatsFromDB() {
+    	global $wgMemc, $wgStatsDB;
+    	#---
+		wfProfileIn( __METHOD__ );
+		#---
+		$result = array();
+		#---
+		if ( !isset($this->mCityId) || ( $this->mCityId < 0 ) ) {
+			wfProfileOut( __METHOD__ );
+			Wikia::log( __METHOD__, false, wfMsg('wikistats_nostats_found') );
+			return false;
+		} 
+		
+		if ( !isset($this->mPageNSList) ) {
+			$this->getPageNSList();
+		}
+
+		if ( empty($this->mPageNS) ) {
+			wfProfileOut( __METHOD__ );
+			Wikia::log( __METHOD__, false, wfMsg('wikistats_nostats_found') );
+			return false;			
+		}
+		#---
+		if ( !isset($this->mStatsDate) || 
+			( 
+				empty( $this->mStatsDate['fromMonth'] ) ||  
+				empty( $this->mStatsDate['fromYear'] ) ||  
+				empty( $this->mStatsDate['toMonth'] ) ||  
+				empty( $this->mStatsDate['toYear'] ) 
+			) 
+		) {
+			wfProfileOut( __METHOD__ );
+			Wikia::log( _METHOD__, false, wfMsg('wikistats_invalid_date') );
+			return false;
+		} 
+
+		$ns_key = @implode("|", $this->mPageNS);
+		$memkey = md5($this->mCityId . implode("-", array_values($this->mStatsDate)) . $this->mLocalStats . $this->mLang . $this->mHub . $ns_key );
+    	$memkey = __METHOD__ . "_" . $memkey;
+    	#---
+		$columns = array();
+		$result = ( self::USE_MEMC ) ? $wgMemc->get($memkey) : array();
+    	if ( empty($result) ) {
+			#--- database instance - DB_SLAVE
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$result = array();
+			
+			foreach ( $this->mPageNS as $ns ) {
+				if ( empty($ns) ) continue;
+				$db_fields = array(
+					'date' => "stats_date",
+					'A'	=> ( $this->mAllStats || $this->mLang || $this->mHub ) ? 'sum(pages_all)' : 'pages_all',
+					'B'	=> ( $this->mAllStats || $this->mLang || $this->mHub ) ? 'sum(pages_daily)' : 'pages_daily',
+					'C'	=> ( $this->mAllStats || $this->mLang || $this->mHub ) ? 'sum(pages_edits)' : 'pages_edits'
+				);
+				
+				array_walk($db_fields, create_function('&$v,$k', '$v = $v . " as " . $k;'));
+
+				$where = array();
+				$options = array( 
+					'ORDER BY' => 'stats_date' 
+				);
+				if ( $this->mAllStats || $this->mLang || $this->mHub ) {
+					$options['GROUP BY'] = 'stats_date';
+				}
+				# set city_id 
+				if ( !empty( $this->mCityId ) ) {
+					$where['wiki_id'] = $this->mCityId;
+				} else {
+					if ( !empty($this->mHub) && !empty($this->mLang) ) {
+						$where['wiki_cat_id'] = $this->mHub;
+						$where['wiki_lang_id'] = WikiFactory::LangCodeToId($this->mLang);
+					} elseif ( !empty($this->mHub) ) {
+						$where['wiki_cat_id'] = $this->mHub;
+					} elseif ( !empty($this->mLang) ) {
+						$where['wiki_lang_id'] = WikiFactory::LangCodeToId($this->mLang);
+					}
+				}
+				
+				# page_ns
+				if ( $ns < 0 ) {
+					if ( isset( $this->mPageNSList[$ns] ) && isset($this->mPageNSList[$ns]['value']) ) {
+						$where[] = $this->mPageNSList[$ns]['value'];
+					} else {
+						# shouldn't return any values 
+						$where[] = 'page_ns < 0'; 
+					}
+				} else {
+					$where['page_ns'] = $ns;
+				}
+				
+				# to new per month
+				$toYear = $this->mStatsDate['toYear'];
+				$toMonth = $this->mStatsDate['toMonth'];
+				$fromYear = $this->mStatsDate['fromYear'];
+				$fromMonth = $this->mStatsDate['fromMonth'];
+				if ( $fromMonth == 1 ) {
+					$fromMonth = 12;
+					$fromYear--;				
+				} else {
+					$fromMonth--;
+				}
+
+				$startDate = sprintf("%04d%02d", $this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth']);
+				$endDate = sprintf("%04d%02d", $this->mStatsDate['toYear'], $this->mStatsDate['toMonth']);
+				# set date range
+				$where[] = sprintf( " stats_date between '%04d%02d' and '%04d%02d' ", $fromYear, $fromMonth, $toYear, $toMonth );
+
+				$oRes = $dbr->select(
+					array( 'namespace_monthly_stats' ),
+					array( implode(", ", array_values( $db_fields ) ) ),
+					$where,
+					__METHOD__,
+					$options
+				);
+				$prevArticles = null;
+				while( $oRow = $dbr->fetchObject( $oRes ) ) {
+					if ( 
+						!isset($result[$oRow->date]) && 
+						( $startDate <= $oRow->date && $oRow->date <= $endDate )
+					) {
+						$result[$oRow->date] = array();
+					}
+					
+					if ( $startDate <= $oRow->date && $oRow->date <= $endDate ) {
+						foreach ( $oRow as $field => $value ) {
+							if ( $field == 'B' ) {
+								$year = substr($oRow->date, 0, 4);
+								$month = substr($oRow->date, 4, 2);							
+								$nbr_days = date("t", strtotime($year . "-" . $month . "-01"));
+								$value = sprintf("%0.2f", $value/$nbr_days);
+							}
+							# init value
+							if ( !isset($result[$oRow->date][$field]) ) {
+								$result[$oRow->date][$ns][$field] = 0;
+							} 
+							$result[$oRow->date][$ns][$field] += $value;
+						}
+					}
+				}
+				$dbr->freeResult( $oRes );
+			}
+			
+			if ( !empty($result) ) {
+				krsort($result);
+			}
+			$wgMemc->set( $memkey, $result, 60*60 );
+		}
+		
+		#---
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 
 	/**
@@ -1136,6 +1330,28 @@ class WikiStats {
 		return $date;
 	}
 	
+	public function getLatestNSStats() {
+		global $wgStatsDB;
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		#---
+		$oRow = $dbr->selectRow( 
+			'namespace_monthly_stats',
+			array( 'unix_timestamp(ts) as lastdate' ),
+			array( 
+				'wiki_id' => $this->mCityId,
+				'stats_date' => date('Ym')
+			), 
+			__METHOD__
+		);
+		if ( isset($oRow) && isset($oRow->lastdate) ) {
+			$date = $oRow->lastdate;
+		} else {
+			$date = time();
+		}
+		
+		return $date;
+	}
+		
 	/*
 	 * Wikis activity (per language, category and date)
 	 * 

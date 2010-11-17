@@ -28,6 +28,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mCityDomain;
     var $mLang;
     var $mHub;
+    var $mNS;
     var $mAction;
     var $mActiveTab;
     var $mXLS;
@@ -48,7 +49,7 @@ class WikiStatsPage extends IncludableSpecialPage
     }
 
     public function execute( $subpage ) {
-        global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname;
+        global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname, $wgLang;
 
 		wfLoadExtensionMessages("WikiStats");
 
@@ -80,8 +81,11 @@ class WikiStatsPage extends IncludableSpecialPage
 		if ( $this->userIsSpecial ) {		
 			$this->mLang 		= $wgRequest->getVal("wslang", "");
 			$this->mHub 		= $wgRequest->getVal("wscat", "");
+			$this->mNS 			= $wgRequest->getIntArray("wsns", "");
 			$domain 			= $wgRequest->getVal( "wswiki", "" );
 			$all 				= $wgRequest->getVal( "wsall", 0 );
+			$this->mNamespaces  = $wgLang->getNamespaces();
+			$this->mPredefinedNamespaces = $this->mStats->getPageNSList();   		
 		}
 		
 		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
@@ -143,7 +147,7 @@ class WikiStatsPage extends IncludableSpecialPage
             $skinname = get_class( $this->mSkin );
             $skinname = strtolower(str_replace("Skin","", $skinname));
             $this->mSkinName = $skinname;
-        }
+        }     
 
 		$this->setHeaders();
 		$this->showForm();	
@@ -202,7 +206,7 @@ class WikiStatsPage extends IncludableSpecialPage
         return 1;
 	}
 	
-	private function showMenu($subpage = '') {
+	private function showMenu($subpage = '', $namespaces = false) {
 		global $wgOut, $wgDBname;
         wfProfileIn( __METHOD__ );
 
@@ -223,7 +227,7 @@ class WikiStatsPage extends IncludableSpecialPage
 
 		# main page
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
+        $params = array(
         	"mTitle"			=> $this->mTitle,
         	"wgCityId"			=> $this->mCityId,
         	"domain"			=> $this->mCityDomain,
@@ -240,7 +244,18 @@ class WikiStatsPage extends IncludableSpecialPage
 			"mLang"				=> $this->mLang,
 			"mAllWikis"			=> $this->mAllWikis,
 			"mAction"			=> $this->mAction
-        ));
+        );
+		
+		#- additional menu for namespaces;
+		if ( $namespaces ) {
+			$params['mNS'] = $this->mNS;
+						
+			$params['namespaces'] = $this->mNamespaces;
+			$params['definedNamespaces'] = $this->mPredefinedNamespaces;
+			$params['mNS'] = $this->mNS;
+		}
+        
+        $oTmpl->set_vars( $params );
         
         if ( $this->userIsSpecial == 1 && $wgDBname == WIKISTATS_CENTRAL_ID ) {
 			$res = $oTmpl->execute("select");
@@ -428,10 +443,49 @@ class WikiStatsPage extends IncludableSpecialPage
 		wfProfileOut( __METHOD__ );
 	}
 			
-	private function showMonth() {
-        wfProfileIn( __METHOD__ );
-        echo __METHOD__ ;
-        wfProfileOut( __METHOD__ );
+	private function showNamespaces() {
+        global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
+		#---
+		$selectedNamespace = array();
+		if ( isset($this->mNS) && isset($this->mNamespaces) && isset($this->mPredefinedNamespaces) ) {
+			foreach ( $this->mNS as $ns ) {
+				$selectedNamespace[$ns] = @$this->mNamespaces[$ns];
+				if ( empty($selectedNamespace[$ns]) ) {
+					$selectedNamespace[$ns] = @$this->mPredefinedNamespaces[$ns]['name'];				
+				}
+			}
+		}
+		
+		$this->mStats->setPageNS($this->mNS);
+			
+		if ( empty($this->mXLS) ) {
+			wfProfileIn( __METHOD__ );
+			$menu = $this->showMenu('', 1);
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"data"			=> $this->mStats->namespaceStatsFromDB(),
+				"today" 		=> date("Ym"),
+				"today_day"     => $this->mStats->getLatestNSStats(),
+				"user"			=> $wgUser,
+				"cityId"		=> $this->mCityId,
+				"wgContLang" 	=> $wgContLang,
+				"wgLang"		=> $wgLang,
+				"mStats"		=> $this->mStats,
+				"userIsSpecial" => $this->userIsSpecial,
+				"tableTitle"	=> $selectedNamespace
+			) );
+			$wgOut->addHTML( $menu );
+			if  ( $this->mFromDate <= $this->mToDate ) {
+				$wgOut->addHTML( $oTmpl->execute("ns-table-stats") ); 
+			}
+			wfProfileOut( __METHOD__ );
+		} else {
+			$data = $this->mStats->namespaceStatsFromDB();
+			$XLSObj = new WikiStatsXLS( $this->mStats, $data, wfMsg('wikistats_ns_statistics_legend'));
+			$XLSObj->makeNamespaceStats($selectedNamespace);
+		}
+        #---
+        return 1; 
 	}
 
 	private function showCurrent() {
