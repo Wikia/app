@@ -87,8 +87,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				"fr" => "frstarter",
 				"nl" => "nlstarter",
 				"es" => "esstarter",
-				"pl" => "plstarter",
-				"zh" => "zhstarter"
+				"pl" => "plstarter"
 			),
 			"answers" => array(
 				"*"  => "genericstarteranswers",
