@@ -38,6 +38,9 @@ window.RTE = {
 	// CK loading time
 	loadTime: false,
 
+	// reference to #RTEStuff node
+	stuffNode: false,
+
 	// list of our RTE custom plugins (stored in js/plugins) to be loaded on editor init
 	plugins: [
 		'comment',
@@ -130,7 +133,7 @@ window.RTE = {
 		RTE.loadPlugins();
 
 		// add and position wrapper for extra RTE stuff
-		$('<div id="RTEStuff" />').appendTo('body');
+		RTE.stuffNode = $('<div>', {id: 'RTEStuff'}).appendTo('body');
 
 		// make textarea wysiwygable and store editor instance object
 		RTE.instance = CKEDITOR.replace('wpTextbox1', RTE.config);
@@ -314,12 +317,12 @@ window.RTE = {
 
 	// reposition #RTEStuff div
 	repositionRTEStuff: function() {
-		$('#RTEStuff').css({left:0,top:0});
-		var bodyPadding = $('#RTEStuff').offset();
+		RTE.stuffNode.css({left:0,top:0});
 
+		var bodyPadding = RTE.stuffNode.offset();
 		var editorPosition = $('#cke_contents_wpTextbox1').offset();
 
-		$('#RTEStuff').css({
+		RTE.stuffNode.css({
 			'left': parseInt(editorPosition.left - bodyPadding.left) + 'px',
 			'top': parseInt(editorPosition.top - bodyPadding.top) + 'px'
 		});
