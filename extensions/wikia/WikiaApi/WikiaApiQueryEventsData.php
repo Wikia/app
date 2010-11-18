@@ -556,7 +556,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 	
 	private function _make_links($content, $oTitle) {
-		global $wgParser;
 		$links = array(
 			'image' => 0,
 			'video' => 0			
