@@ -56,9 +56,6 @@
 		font-size: 22px;
 		margin-right: 90px;
 	}
-	h3 {
-		display: none;
-    }
 	.WikiaBlogListingPost {
 		border-bottom: 1px solid $color-page-border;
 	}
@@ -95,6 +92,9 @@
 	}
 	&:last-child {
 		border: none;
+	}
+	blockquote {
+		margin: 0;
 	}
 }
 
