@@ -160,6 +160,7 @@ class AchAwardingService {
 	}
 
 	private function saveBadges() {
+		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		if(count($this->mNewBadges) > 0) {
@@ -188,6 +189,8 @@ class AchAwardingService {
 				if($badge !== null) {
 					Wikia::log(__METHOD__, "", "BADGE FOUND! About to run hooks...", $wgWikiaForceAIAFdebug);
 					wfRunHooks('AchievementEarned', array($this->mUser, $badge));
+					$mcKey = wfMemcKey( "AchUserProfileService::loadOwnerBadges",  $this->mUser->getId());
+					$wgMemc->set($mcKey, null);
 					Wikia::log(__METHOD__, "", "Done running 'AchievementEarned' hooks.", $wgWikiaForceAIAFdebug);
 				}
 			}
