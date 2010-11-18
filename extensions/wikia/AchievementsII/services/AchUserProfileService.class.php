@@ -246,9 +246,18 @@ class AchUserProfileService {
 	}
 
 	private function loadOwnerBadges() {
+		global $wgMemc, $wgCityId, $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 
-		global $wgCityId, $wgExternalSharedDB;
+		$mcKey = wfMemcKey( "AchUserProfileService::loadOwnerBadges",  $this->mUserOwner->getId());
+		$out = $wgMemc->get($mcKey);
+
+		if( !empty($out) ) {
+			$this->mOwnerBadgesSimple = $out['simple'];
+			$this->mOwnerBadgesExtended = $out['extended'];
+			wfProfileOut( __METHOD__ );
+			return;
+		}
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
@@ -307,7 +316,12 @@ class AchUserProfileService {
 
 		}
 
+		$out = array();
+		$out['simple'] = $this->mOwnerBadgesSimple;
+		$out['extended'] = $this->mOwnerBadgesExtended;
+		$wgMemc->set($mcKey, $out, 60*60);
 		wfProfileOut(__METHOD__);
+		
 	}
 
 }
