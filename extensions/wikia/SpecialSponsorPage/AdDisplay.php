@@ -97,9 +97,9 @@ class AdDisplay {
 	 * assumes using MediaWiki:Mainpage for name of main page
 	 *
 	 * @return bool
-	 * @private
+	 * @public
 	 */
-	private static function ArticleCanShowAd(){
+	public static function ArticleCanShowAd(){
 		global $wgTitle;
 		if(!isset($wgTitle)) return false;
 		$page = $wgTitle->getText();
