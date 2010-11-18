@@ -93,8 +93,6 @@ class imageServing{
 				__METHOD__
 			);
 
-
-
 			/* build list of images to get info about it */
 			while ($row =  $db->fetchRow( $res ) ) {
 				$props = unserialize( $row['props'] );
@@ -113,34 +111,53 @@ class imageServing{
 				return $cache_return;
 			}
 
-			$res = $db->select(
-			    array( 'imagelinks LEFT JOIN image on il_to = img_name ' ),
-			    array(	'count(*) cnt',
-					'il_to',
-					'img_width',
-					'img_height',
-					'img_minor_mime'
-				 ),
-					array(),
-				__METHOD__,
-			    array(
-				"GROUP BY" => "il_to",
-				"HAVING" => implode(' and ',array(
-						"il_to in(".implode( ",", $images_name ).")",
-						"cnt < ".$this->maxCount,
-						"img_height > ".$this->minSize,
-						"img_width > ".$this->minSize
-					))
-			    )
-			);
-
+			# get image names from imagelinks table
+			$stime = time();
 			$db_out = array();
-
-			while ($row =  $db->fetchRow( $res ) ) {
-				if(!in_array($row['img_minor_mime'], array( "svg+xml","svg"))) {
-					$db_out[$row['il_to']] = $row;
+			if ( !empty($images_name) ) {
+				foreach ( $images_name as $img_name ) {
+					$oRow = $db->selectRow(
+						array( 'imagelinks' ),
+						array( 'count(il_to) as cnt' ),
+						array( 
+							'il_to' => $img_name
+						),
+						__METHOD__						
+					);
+					
+					if ( $oRow->cnt > $this->maxCount ) continue;
+						
+					# check image table 
+					$oRowImg = $db->selectRow(
+						array( 'image' ),
+						array( 'img_name', 'img_height', 'img_width', 'img_minor_mime' ),
+						array(
+							'img_name' => $img_name
+						),
+						__METHOD__
+					);
+						
+					if ( is_null ( $oRowImg ) ) {
+						continue;
+					}
+						
+					if ( $oRowImg->img_height > $this->minSize && $oRowImg->img_width > $this->minSize ) {
+						if ( !in_array( $oRowImg->img_minor_mime, array( "svg+xml","svg") ) ) {
+							$db_out[ $oRowImg->img_name ] = array(
+								'cnt'            => $oRow->cnt,
+								'il_to'          => $oRowImg->img_name,
+								'img_width'      => $oRowImg->img_width,
+								'img_height'     => $oRowImg->img_height,
+								'img_minor_mime' => $oRowImg->img_minor_mime
+							);
+						}
+					} 
 				}
 			}
+
+			$etime = time();
+			
+			Wikia::log( __METHOD__, false, sprintf("get images: %0d s", $etime-$stime), true );
 
 			if (count($db_out) == 0) {
 				wfProfileOut(__METHOD__);
