@@ -1252,9 +1252,14 @@ class EditPage {
 					}
 				} else {
 					/* Wikia change begin - @author: Uberfuzzy */
-					# rt75168, confusing "there is no wikia" message
 					$CssJsSubSkin = $wgTitle->getSkinFromCssJsSubpage();
-					if( $CssJsSubSkin != 'wikia' ) {
+					if( $CssJsSubSkin == 'wikia' ) {
+						# rt75168, confusing "there is no wikia" message
+					} elseif( $CssJsSubSkin == 'global') {
+						# confusing "there is no global" message
+						#TODO: draft a message about what global css/js is, maybe link to help page if we still have one
+					} else {
+						#all the rest of the non-existant skins (like normal)
 						$wgOut->addWikiMsg( 'userinvalidcssjstitle', $CssJsSubSkin );
 					}
 					/* Wikia change end */
