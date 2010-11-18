@@ -9,10 +9,16 @@ class NeueWebsite extends SpecialPage
 
   function execute($par) 
   {
-    global $wgRequest, $wgOut;
+    global $wgRequest, $wgOut, $wgUser;
 
 	if ( wfReadOnly() ) {
 		$wgOut->readOnlyPage();
+		return;
+	}
+
+	if ( $wgUser->isBlocked() ) {
+		$wgOut->blockedPage( false );
+		return;
 	}
 
 	wfLoadExtensionMessages( 'Newsite' );

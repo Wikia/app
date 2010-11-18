@@ -73,6 +73,10 @@ function efPhalanxInit() {
 
 	// former TextRegex (TYPE_WIKI_CREATION)
 	$wgHooks['AutoCreateWiki::checkBadWords'][] = 'WikiCreationBlock::isAllowedText';
+
+	// Websitewiki filter
+	// @see exntesions/wikia/newsite
+	$wgHooks['NewsiteCreationFilter'][] = 'TitleBlock::genericTitleCheck';
 }
 
 

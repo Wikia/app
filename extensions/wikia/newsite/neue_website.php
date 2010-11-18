@@ -60,6 +60,11 @@ function neue_website( $nws ) {
 		return;
 	}
 
+	if ( $wgUser->isBlockedFrom( $title ) || !wfRunHooks( 'NewsiteCreationFilter', array( $title ) ) ) {
+		$output = wfMsg( 'newsite-error-invalid', $newdom );
+		return;
+	}
+
 	if( $title->exists( ) ) {
 		$output = wfMsg( 'newsite-error-exists', $title->getText(), $title->getFullUrl() );
 		return $output;
