@@ -56,11 +56,4 @@ function wfUserProfilePageInit() {
 	 * ajax
 	 */
 	$wgAjaxExportList[] = 'UserProfilePageHelper::doAction';
-
-	// extension css and js - not an ideal solution putting it here, just for now.. :>
-	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
-
-
-	$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 }
