@@ -5,7 +5,7 @@ class UserProfilePageHelper {
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
-		global $wgRequest, $wgEnableUserProfilePagesExt;
+		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn(__METHOD__);
 
 		$ns = $skin->mTitle->getNamespace();
@@ -47,6 +47,10 @@ class UserProfilePageHelper {
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
+
+		// load extension css and js
+		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 
 		if( $ns == NS_USER_TALK || $isBlogPage ) {
 			// don't replace page content for talk and blog pege (RT: #98342, #88757)
