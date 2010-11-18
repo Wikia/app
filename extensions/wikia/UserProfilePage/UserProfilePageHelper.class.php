@@ -27,13 +27,7 @@ class UserProfilePageHelper {
 		// Return without any changes if this isn't in the user namespace OR
 		// if the user is doing something besides viewing or purging this page
 		$action = $wgRequest->getVal('action', 'view');
-		if ( !in_array( $ns, $allowedNamespaces ) || ($action != 'view' && $action != 'purge') ) {
-			$wgEnableUserProfilePagesExt = false;
-			return true;
-		}
-
-		// Skip on subpages except for blogs
-		if( $skin->mTitle->isSubpage() && !$isBlogPage ) {
+		if ( !in_array( $ns, $allowedNamespaces ) || ($action != 'view' && $action != 'purge') || $skin->mTitle->isSubpage() ) {
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
