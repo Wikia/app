@@ -19,6 +19,8 @@
 	</ul>
 <? endif ;?>
 <h1><?= $data['displayTitle'] != "" ? $data['title'] : htmlspecialchars($data['title']) ?></h1>
+<?= wfRenderModule('CommentsLikes', 'Index', array( 'comments' => ( isset($data['comments']) ? $data['comments'] : null ), 'likes' => $data['likes'] )); ?>
+
 <?php
 	// render edit button / dropdown menu
 	if (!empty($data['actionButton'])) {
@@ -38,7 +40,6 @@
 	}
 ?>
 
-<?= wfRenderModule('CommentsLikes', 'Index', array( 'comments' => ( isset($data['comments']) ? $data['comments'] : null ), 'likes' => $data['likes'] )); ?>
 <? if (!empty($data['stats'])) :?>
 	<div class="edits-info">
 		<span class="count"><?= $data['stats']['edits']; ?></span>
