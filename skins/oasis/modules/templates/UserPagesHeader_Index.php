@@ -52,61 +52,7 @@
 	?>
 <?php } else { ?>
 	<!-- UserProfilePage Extension /BEGIN -->
-	<div class="wikia-avatar">
-		<a href="<?= htmlspecialchars($userPage) ?>" class="avatar-link"><?= $avatar ?></a>
-		<? if (!empty($avatarMenu)) :?>
-			<div class="avatar-menu">
-				<? foreach( $avatarMenu as $item ) :?>
-					<span>
-						<img class="sprite edit-pencil" src="<?= wfBlankImgUrl() ;?>"/>
-						<?= $item ?>
-					</span>
-				<? endforeach ;?>
-			</div>
-		<? endif ;?>
-	</div>
-	<? if(!empty($userRights)) :?>
-                <ul class="user-groups">
-			<? foreach ( $userRights as $rightName ) :?>
-				<li><a title="<?= wfMsg("userprofilepage-user-group-{$rightName}-tooltip") ;?>"><?= wfMsg('userprofilepage-user-group-' . $rightName) ;?></a></li>
-			<? endforeach ;?>
-		</ul>
-	<? endif ;?>
-	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
-	<?php
-		// render edit button / dropdown menu
-		if (!empty($actionButton)) {
-			echo wfRenderModule('MenuButton', 'Index', array(
-				'action' => $actionButton,
-				'image' => $actionImage,
-				'name' => $actionName,
-			));
-		}
-		else if (!empty($actionMenu)) {
-			echo wfRenderModule('MenuButton', 'Index', array(
-				'action' => $actionMenu['action'],
-				'image' => $actionImage,
-				'dropdown' => $actionMenu['dropdown'],
-				'name' => $actionName,
-			));
-		}
-	?>
-
-
-<?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
-	<? if (!empty($stats)) :?>
-		<div class="edits-info">
-			<span class="count"><?= $stats['edits']; ?></span>
-			<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $stats['date'] ) ;?></span>
-		</div>
-		<?php if( count($lastActionData) ): ?>
-			<div class="last-action">
-				<img src="<?= wfBlankImgUrl() ;?>" class="sprite <?= $lastActionData['changeicon'] ?>" height="20" width="20">
-				<span class="last-action-title"><?= $lastActionData['changemessage']; ?></span>
-				<span class="last-action-snippet"><i><?= $lastActionData['intro']; ?></i></span>
-			</div>
-		<?php endif; ?>
-	<? endif ;?>
+	<?= wfRenderModule( 'UserProfilePage', 'Masthead', array( 'userName' => $userName, 'userPage' => $userPage, 'avatarMenu' => $avatarMenu, 'displayTitle' => $displaytitle, 'title' => $title, 'actionButton' => $actionButton, 'actionImage' => $actionImage, 'actionName' => $actionName, 'actionMenu' => $actionMenu, 'likes' => $likes, 'stats' => $stats ) ); ?>
 	<!-- UserProfilePage Extension /END -->
 <?php } // isUserProfilePageExt ?>
 

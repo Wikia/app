@@ -8,10 +8,32 @@ class UserProfilePageHelper {
 		global $wgRequest, $wgEnableUserProfilePagesExt;
 		wfProfileIn(__METHOD__);
 
+		$ns = $skin->mTitle->getNamespace();
+
+		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
+		if( defined( 'NS_BLOG_ARTICLE' ) ) {
+			$allowedNamespaces[] = NS_BLOG_ARTICLE;
+			if( $ns == NS_BLOG_ARTICLE ) {
+				$isBlogPage = true;
+			}
+			else {
+				$isBlogPage = false;
+			}
+		}
+		else {
+			$isBlogPage = false;
+		}
+
 		// Return without any changes if this isn't in the user namespace OR
 		// if the user is doing something besides viewing or purging this page
 		$action = $wgRequest->getVal('action', 'view');
-		if ( !in_array( $skin->mTitle->getNamespace(), array( NS_USER, NS_USER_TALK ) ) || ($action != 'view' && $action != 'purge') || $skin->mTitle->isSubpage()) {
+		if ( !in_array( $ns, $allowedNamespaces ) || ($action != 'view' && $action != 'purge') ) {
+			$wgEnableUserProfilePagesExt = false;
+			return true;
+		}
+
+		// Skip on subpages except for blogs
+		if( $skin->mTitle->isSubpage() && !$isBlogPage ) {
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
@@ -32,8 +54,8 @@ class UserProfilePageHelper {
 			return true;
 		}
 
-		if( $skin->mTitle->getNamespace() == NS_USER_TALK ) {
-			// don't replace page content for talk pege (RT: #98342)
+		if( $ns == NS_USER_TALK || $isBlogPage ) {
+			// don't replace page content for talk and blog pege (RT: #98342, #88757)
 			wfProfileOut(__METHOD__);
 			return true;
 		}
