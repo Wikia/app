@@ -299,11 +299,7 @@ class UserPagesHeaderModule extends Module {
 	 */
 	public function executeBlogPost() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgLang, $wgEnableUserProfilePagesExt;
-
-		if ( !empty( $wgEnableUserProfilePagesExt ) ) {
-			$this->isUserProfilePageExt = true;
-		}
+		global $wgTitle, $wgLang;
 
 		// remove User_blog:xxx from title
 		$titleParts = explode('/', $wgTitle->getText());
