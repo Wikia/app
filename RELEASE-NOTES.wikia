@@ -1,6 +1,7 @@
 == Changes since 20101115 ==
 * rt#68485: MyTools now has MyContributions (TOR)
 * rt#73293: Two Achievements messages missing (TOR)
+* rt#97127: Move Sponsored Links to the bottom of the page (macbre)
 
 == Changes since 201011.1 ==
 * rt#85526: Security problem: hijacking sessionid (Marooned)
