@@ -132,11 +132,12 @@ window.RTE.tools = {
 	},
 
 	// get theme colors from .color1 CSS class
+	// TODO: use SASS settings echo'ed by PHP to JS variable(s)
 	getThemeColors: function() {
 		// create or use existing color picker div
 		var colorPicker = $('#RTEColorPicker');
 		if ( !colorPicker.exists() ) {
-			colorPicker = $('<div id="RTEColorPicker">').addClass('color1').appendTo('#RTEStuff').hide();
+			colorPicker = $('<div id="RTEColorPicker">').addClass('color1').appendTo(RTE.stuffNode).hide();
 		}
 
 		// get colors and update CK config
@@ -158,30 +159,15 @@ window.RTE.tools = {
 
 	// get position of given placeholder in coordinates of browser window
 	getPlaceholderPosition: function(placeholder) {
-		var position = placeholder.position();
+		var position = placeholder.position(),
+			scrollTop;
 
-		var scrollTop;
-		var scrollTopPage = $(window).scrollTop();
-		var scrollTopEditor = RTE.instance.document.$.documentElement.scrollTop;
-
-		if (CKEDITOR.env.ie) {
-			// IE: ignore page scroll, use editarea scroll
-			scrollTop = scrollTopEditor;
+		if (CKEDITOR.env.webkit) {
+			// RT #46408: use different property for Safari to get v-scroll offset
+			scrollTop = RTE.instance.document.$.body.scrollTop;
 		}
-		else
-		{
-			if (CKEDITOR.env.webkit) {
-				// RT #46408: use different property for Safari to get v-scroll offset
-				scrollTopEditor = RTE.instance.document.$.body.scrollTop;
-			}
-
-			// use both page and editarea scroll
-			scrollTop = scrollTopPage + scrollTopEditor;
-
-			// keep value of position.top constant (not depending on scrollTop of editarea)
-			if (scrollTopPage > 0) {
-				position.top += scrollTopEditor;
-			}
+		else {
+			scrollTop = RTE.instance.document.$.documentElement.scrollTop;
 		}
 
 		return {
