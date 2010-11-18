@@ -1044,6 +1044,12 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 		$sassParams = SassUtil::getSassParams();
 	}
 
+	// Wikia change for AB test -- safe to remove after 11-25-2010
+	$headers = apache_request_headers();
+	if (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "widepage=1") {
+		$wgOasisHD = true;
+	}
+
 	if ($wgOasisHD) {
 		$sassParams .= "&hd=1";
 	}
