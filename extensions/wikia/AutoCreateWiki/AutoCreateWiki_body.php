@@ -1761,7 +1761,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * determine if exists
 		 */
 		try {
-			$dbr = wfGetDB( DB_MASTER, array(), $dbStarter );
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbStarter );
 			/**
 			 * read info about connection
 			 */
