@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
-import java.net.MalformedURLException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -28,14 +27,12 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 
-import java.util.Map;
-
 /**
  * Base class for all tests in Selenium Grid Java examples.
  */
 public class BaseTest {
 
-	public static final String TIMEOUT = "120000";
+	public static final String TIMEOUT = "60000";
 	private String webSite;
 	private XMLConfiguration testConfig;
 	
@@ -75,8 +72,13 @@ public class BaseTest {
 		session().type("wpName2Ajax", username);
 		session().type("wpPassword2Ajax", password);
 		session().click("wpLoginattempt");
-		waitForElement("//body");
-		waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
+		session().waitForPageToLoad(TIMEOUT);
+		if(isOasis()) {
+			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
+		} else {
+			waitForElement("//*[@id=\"header_username\"]/a[text() = \"" + username + "\"]");
+		}
+		
 	}
 
 	protected void login() throws Exception {
@@ -284,6 +286,29 @@ public class BaseTest {
 		session().uncheck("wpWatch");
 		session().click("wpConfirmB");
 		session().waitForPageToLoad(TIMEOUT);
+	}
+	
+	/**
+	 * Deletes the current page if the user is allowed to do so.  If not allowed,
+	 * does not throw an error and just continues on quietly.  This is for use when
+	 * it would be nice to delete an article, but it isn't necessary.
+	 */
+	protected void doDeleteIfAllowed(String reasonGroup, String reason) throws Exception {
+		String xpath;
+		if (isOasis()) {
+			xpath = "//a[@data-id='delete']";
+		} else {
+			xpath = "ca-delete";
+		}
+		if(session().isElementPresent(xpath)){
+			session().click(xpath);
+			session().waitForPageToLoad(TIMEOUT);
+			session().select("wpDeleteReasonList", reasonGroup);
+			session().type("wpReason", reason);
+			session().uncheck("wpWatch");
+			session().click("wpConfirmB");
+			session().waitForPageToLoad(TIMEOUT);
+		}
 	}
 
 	protected void undeleteArticle(String articleName, String reason) throws Exception {
