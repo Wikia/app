@@ -675,3 +675,9 @@ $wgGoogleSiteVerificationAlwaysValid = false;
  * @see includes/wikia/LBFactory_Multi.php
  */
 $smwgUseExternalDB = false;
+
+/**
+ * Show the performance-stats from 'loadtime' cookie in the footer-toolbar
+ * in the new skin for Staff.
+ */
+$wgEnableShowPerformanceStatsExt = true;
