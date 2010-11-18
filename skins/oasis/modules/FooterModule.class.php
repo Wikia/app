@@ -125,7 +125,7 @@ class FooterModule extends Module {
 		// If this user is a member of staff, display the 'loadtime' stats in the footer bar.
 		$this->showLoadTime = false;
 		if(!empty($wgEnableShowPerformanceStatsExt)){
-			if(in_array('staff', $wgUser->getRights())){
+			if($wgUser->isAllowed('staff')){
 				$this->showLoadTime = true;
 				$this->loadTimeStats = wfGetPerformanceStats();
 			}
