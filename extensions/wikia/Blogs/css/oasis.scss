@@ -6,18 +6,10 @@
 .WikiaBlogPostHeader {
 	background: none;
 	border-bottom: 1px solid $color-page-border;
-	margin-left: 10px;
-	padding-left: 0;
-	padding-right: 90px;
 	.commentslikes {
 		bottom: 10px;
 		position: absolute;
 		right: 0;
-	}
-	.wikia-menu-button {
-		position: absolute;
-		right: 0;
-		top: 0;
 	}
 	details {
 		@include clearfix;

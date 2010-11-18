@@ -1,7 +1,6 @@
 <div id="WikiaUserPagesHeader" class="WikiaUserPagesHeader WikiaBlogPostHeader">
 	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 
-	<h1><?= htmlspecialchars($title) ?></h1>
 <?php
 	if (!empty($actionMenu['action'])) {
 		echo wfRenderModule('MenuButton', 'Index', array(
@@ -11,6 +10,8 @@
 		));
 	}
 ?>
+
+	<h1><?= htmlspecialchars($title) ?></h1>
 
 	<details>
 		<?= $avatar ?>
