@@ -556,14 +556,17 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 	
 	private function _make_links($content, $oTitle) {
+		global $wgParser;
 		$links = array(
 			'image' => 0,
 			'video' => 0			
 		);
-
+			
 		$oArticle = Article::newFromId($this->mPageId);
 		if ( $oArticle instanceof Article ) {
-			$content = str_replace("{{", "", $content);
+			$content = str_replace("{{", "", $content);	
+			global $wgParser;		
+			$wgParser->clearTagHooks();	
 			$editInfo = $oArticle->prepareTextForEdit( $content, $this->mRevId );
 			$images = $editInfo->output->getImages();
 			if ( !empty($images) ) {
