@@ -12,8 +12,6 @@ var LazyLoadAds = {
 		threshhold : 200
 	},
 
-	lazyLoadAdTops : null,
-
 	init : function() {
 		LazyLoadAds.update();
 		$(window).scroll(LazyLoadAds.update);
@@ -23,7 +21,6 @@ var LazyLoadAds = {
 
 		if(!LazyLoadAds.allAds) {
 			LazyLoadAds.w = $(window);
-			LazyLoadAds.lazyLoadAdTops = [];
 			LazyLoadAds.allAds = [];
 			$(".LazyLoadAd").each(function(i, el) {
 				LazyLoadAds.allAds.push($(el));
