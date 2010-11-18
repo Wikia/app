@@ -15,52 +15,37 @@ var LazyLoadAds = {
 	lazyLoadAdTops : null,
 
 	init : function() {
-
-//		LazyLoadAds.log("init");
-
-		$(function() {
-
-//			LazyLoadAds.log("real init");
-
-			LazyLoadAds.update();
-			$(window).scroll(LazyLoadAds.update);
-		});
-	},
-
-	calculateSlotsOffsets: function() {
-
-		//LazyLoadAds.log("calculateSlotsOffsets");
-
-		LazyLoadAds.lazyLoadAdTops = {};
-
-		$(".LazyLoadAd").each(function() {
-			LazyLoadAds.lazyLoadAdTops[$(this).attr("id")] = $(this).offset().top;
-		});
+		LazyLoadAds.update();
+		$(window).scroll(LazyLoadAds.update);
 	},
 
 	update : function() {
 
-		//LazyLoadAds.log("update");
+		if(!LazyLoadAds.allAds) {
+			LazyLoadAds.w = $(window);
+			LazyLoadAds.lazyLoadAdTops = [];
+			LazyLoadAds.allAds = [];
+			$(".LazyLoadAd").each(function(i, el) {
+				LazyLoadAds.allAds.push($(el));
+			});
+			LazyLoadAds.num = LazyLoadAds.allAds.length;
+		}
 
-		LazyLoadAds.calculateSlotsOffsets();
-
-		var fold = $(window).height() + $(window).scrollTop();
-
-		$.each(LazyLoadAds.lazyLoadAdTops, function(elemId, topVal) {
-
-			if(!$("#"+elemId).hasClass('AdLazyLoaded')) {
-				if(topVal > 0 && topVal < (fold + LazyLoadAds.settings.threshhold)) {
-
-//					LazyLoadAds.log("About to fill: " + elemId);
-
+		var fold = LazyLoadAds.w.height() + LazyLoadAds.w.scrollTop();
+		
+		for(i = 0; i < LazyLoadAds.num; i++) {
+			if(LazyLoadAds.allAds[i]) {
+				var top = LazyLoadAds.allAds[i].offset().top;
+				if(top > 0 && top < (fold + LazyLoadAds.settings.threshhold) ) {
+					var elemId = LazyLoadAds.allAds[i].attr("id");
 					var adslot = elemId;
-
+	
 					if($('#'+elemId).get(0).nodeName == 'IFRAME') {
 						var fillFunction = "fillIframe_" + adslot.replace("_iframe", "");
 					} else {
 						var fillFunction = "fillElem_" + adslot;
 					}
-
+	
 					if (typeof(window[fillFunction]) !== 'undefined') {
 						window[fillFunction]();
 						window[fillFunction] = null;
@@ -68,11 +53,10 @@ var LazyLoadAds = {
 					else {
 						LazyLoadAds.log("Warning! " + fillFunction + " does not exist.");
 					}
-
-					$("#"+elemId).addClass('AdLazyLoaded');
+	
+					LazyLoadAds.allAds[i] = false;
 				}
 			}
-
-		});
+		}
 	}
 };
