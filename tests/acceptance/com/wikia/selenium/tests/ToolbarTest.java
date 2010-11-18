@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 
 public class ToolbarTest extends BaseTest {
 
-	@Test(groups={"oasis"})
-	public void testToolbar() throws Exception {
+	@Test(groups="oasis")
+	public void testEnsuresThatToolbarIsPresent() throws Exception {
 		session().open("index.php");
 		session().waitForPageToLoad(TIMEOUT);
 		assertTrue(session().isElementPresent("WikiaFooter"));
