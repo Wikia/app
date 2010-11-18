@@ -143,11 +143,8 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 
 function Ach_UploadVerification($destName, $tempPath, &$error) {
 	global $wgUser;
-	
-	if(
-		( strlen($destName) > strlen( ACHIEVEMENTS_BADGE_PREFIX ) && stripos($destName, ACHIEVEMENTS_BADGE_PREFIX) === 0 ) ||
-		( strlen($destName) > strlen( ACHIEVEMENTS_HOVER_PREFIX ) && stripos($destName, ACHIEVEMENTS_HOVER_PREFIX) === 0 && !$wgUser->isAllowed( 'sponsored-achievements' ) )
-	) {
+
+	if (Ach_isBadgeImage($destName, true /* check user right to upload sponsored badge */ )) {
 		wfLoadExtensionMessages( 'AchievementsII' );
 		$error = wfMsgExt('achievements-upload-not-allowed', array('parse'));
 		return false;
@@ -341,4 +338,25 @@ function AchTest() {
 	$dbw->commit();
 	exit('exit');
 	*/
+}
+
+/**
+ * Checks whether provided image name matches badge naming schema (RT #90607)
+ *
+ * @author Macbre
+ */
+function Ach_isBadgeImage($imageName, $checkUserRights = false) {
+	global $wgUser;
+
+	$isBadge = strlen($destName) > strlen( ACHIEVEMENTS_BADGE_PREFIX ) && stripos($destName, ACHIEVEMENTS_BADGE_PREFIX) === 0;
+	$isSponsoredBadge = strlen($destName) > strlen( ACHIEVEMENTS_HOVER_PREFIX ) && stripos($destName, ACHIEVEMENTS_HOVER_PREFIX) === 0;
+
+	if ($checkUserRights) {
+		$matches = $isBadge || ($isSponsoredBadge && !$wgUser->isAllowed('sponsored-achievements'));
+	}
+	else {
+		$matches = $isBadge || $isSponsoredBadge;
+	}
+
+	return $matches;
 }
