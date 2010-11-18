@@ -87,7 +87,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				"fr" => "frstarter",
 				"nl" => "nlstarter",
 				"es" => "esstarter",
-				"pl" => "plstarter"
+				"pl" => "plstarter",
+				"zh" => "zhstarter"
 			),
 			"answers" => array(
 				"*"  => "genericstarteranswers",
@@ -1761,7 +1762,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * determine if exists
 		 */
 		try {
-			$dbr = wfGetDB( DB_SLAVE, array(), $dbStarter );
+			$dbr = wfGetDB( DB_MASTER, array(), $dbStarter );
 			/**
 			 * read info about connection
 			 */
