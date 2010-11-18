@@ -10,6 +10,8 @@ class FooterModule extends Module {
 	var $follow;
 	var $showToolbar;
 	var $showNotifications;
+	var $showLoadTime;
+	var $loadTimeStats;
 
 	var $wgSingleH1;
 
@@ -119,6 +121,14 @@ class FooterModule extends Module {
 		if($wgUser->isAnon()) {
 			$this->showMyTools = false;
 		}
-	}
 
+		// If this user is a member of staff, display the 'loadtime' stats in the footer bar.
+		$this->showLoadTime = false;
+		if(!empty($wgEnableShowPerformanceStatsExt)){
+			if(in_array('staff', $wgUser->getRights())){
+				$this->showLoadTime = true;
+				$this->loadTimeStats = wfGetPerformanceStats();
+			}
+		}
+	}
 }
