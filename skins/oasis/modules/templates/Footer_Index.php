@@ -32,6 +32,11 @@
 				<a href="#"><?= wfMsg('oasis-like') ?></a>
 			</li>
 <?php } ?>
+<?php if($showLoadTime) { ?>
+			<li class="loadtime">
+				<?= $loadTimeStats ?>
+			</li>
+<?php } ?>
 
 		</ul>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
