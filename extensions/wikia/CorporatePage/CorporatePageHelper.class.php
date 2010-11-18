@@ -158,7 +158,7 @@ class CorporatePageHelper{
 
 		wfProfileIn( __METHOD__ );
 
-		$message = wfMsgForContent($msg);
+		$message = wfMsg($msg);
 		$lines = explode("\n",$message);
 		$out = array();
 		foreach($lines as $v){
