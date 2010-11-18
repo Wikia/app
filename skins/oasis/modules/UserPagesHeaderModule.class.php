@@ -29,8 +29,6 @@ class UserPagesHeaderModule extends Module {
 	var $userName;
 	var $userPage;
 	var $isUserProfilePageExt = false;
-	var $lastActionData = null;
-	var $userRights = null;
 
 	/**
 	 * Checks whether given user name is the current user
@@ -171,42 +169,11 @@ class UserPagesHeaderModule extends Module {
 
 		if ( !empty( $wgEnableUserProfilePagesExt ) ) {
 			$this->isUserProfilePageExt = true;
-
-			// render bigger avatar (200x200) when UserProfilePage extension is enabled
-			$this->avatar = AvatarService::renderAvatar($this->userName, 200, true);
-
-			$this->lastActionData = UserProfilePage::getInstance()->getUserLastAction();
-			if( count($this->lastActionData) ) {
-				$this->lastActionData['changemessage'] = UserProfilePageHelper::formatLastActionMessage( $this->lastActionData );
-				$this->lastActionData['changeicon'] = $this->lastActionData['type'];
-				if( empty( $this->lastActionData['intro'] ) ) {
-					// try to get article text snippet if there's no intro section from rc_data
-					$lastTitle = Title::newFromText( $this->lastActionData['title'], $this->lastActionData['ns'] );
-					$articleId = $lastTitle->getArticleId();
-					if( !empty( $articleId ) ) {
-						$articleService = new ArticleService( $articleId );
-						$this->lastActionData['intro'] = $articleService->getTextSnippet( 100 );
-					}
-					else {
-						$this->lastActionData['intro'] = '';
-					}
-				}
-			}
-
-			$this->userRights = array_intersect( UserProfilePage::getInstance()->getUserRights(), array(
-				'sysop',
-				'bot',
-				'staff',
-				'helper',
-				'bureaucrat',
-				'vstf'
-			));
 		}
-		else {
-			// render avatar (100x100)
-			$this->avatar = AvatarService::renderAvatar($this->userName, 100);
-			$this->lastActionData = array();
-		}
+
+		// render avatar (100x100)
+		$this->avatar = AvatarService::renderAvatar($this->userName, 100);
+		$this->lastActionData = array();
 
 		// show "Unregistered contributor" + IP for anon accounts
 		if (User::isIP($this->userName)) {
@@ -332,7 +299,11 @@ class UserPagesHeaderModule extends Module {
 	 */
 	public function executeBlogPost() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgLang;
+		global $wgTitle, $wgLang, $wgEnableUserProfilePagesExt;
+
+		if ( !empty( $wgEnableUserProfilePagesExt ) ) {
+			$this->isUserProfilePageExt = true;
+		}
 
 		// remove User_blog:xxx from title
 		$titleParts = explode('/', $wgTitle->getText());
