@@ -56,7 +56,6 @@
 <script type="text/javascript">
 	$(function() {
 		if($("#wpDiff").length > 0) {
-			$('#wpDiff').addClass('secondary');
 			$('.editHelp').prepend(' | ');
 		}
 	});
