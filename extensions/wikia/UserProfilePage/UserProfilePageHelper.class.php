@@ -1,18 +1,18 @@
 <?php
 class UserProfilePageHelper {
-
+	public static $allowedNamespaces = array( NS_USER, NS_USER_TALK );
+	
 	/**
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
-		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$ns = $skin->mTitle->getNamespace();
 
-		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
 		if( defined( 'NS_BLOG_ARTICLE' ) ) {
-			$allowedNamespaces[] = NS_BLOG_ARTICLE;
+			self::$allowedNamespaces[] = NS_BLOG_ARTICLE;
 			if( $ns == NS_BLOG_ARTICLE ) {
 				$isBlogPage = true;
 			}
@@ -23,27 +23,28 @@ class UserProfilePageHelper {
 		else {
 			$isBlogPage = false;
 		}
-
+		
 		// Return without any changes if this isn't in the user namespace OR
 		// if the user is doing something besides viewing or purging this page
 		$action = $wgRequest->getVal('action', 'view');
-		if ( !in_array( $ns, $allowedNamespaces ) || ($action != 'view' && $action != 'purge') || $skin->mTitle->isSubpage() ) {
+		if ( ( !in_array( $ns, self::$allowedNamespaces ) && $ns != NS_SPECIAL ) || ($action != 'view' && $action != 'purge') || ( $ns != NS_SPECIAL && $skin->mTitle->isSubpage() ) ) {
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
-
+		
+		
 		$user = self::getUserFromTitle( $skin->mTitle );
-
+		$userName = null;
+		
 		// sanity check
-		if ( !is_object( $user ) ) {
-			$wgEnableUserProfilePagesExt = false;
-			return true;
+		if ( is_object( $user ) ) {
+			$user->load();
+			$userName = $user->getName();
 		}
-		$user->load();
 
 		// fallback for non-existent users
-		if( $user->getId() == 0 ) {
-			$template->data['bodytext'] = wfMsg( 'userprofilepage-user-doesnt-exists', array( $user->getName() ) );
+		if( !is_object( $user ) || $user->getId() == 0 ) {
+			$template->data['bodytext'] = wfMsg( 'userprofilepage-user-doesnt-exists', array( $userName ) );
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
@@ -52,7 +53,7 @@ class UserProfilePageHelper {
 		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 
-		if( $ns == NS_USER_TALK || $isBlogPage ) {
+		if( $ns == NS_USER_TALK || $ns == NS_SPECIAL || $isBlogPage ) {
 			// don't replace page content for talk and blog pege (RT: #98342, #88757)
 			wfProfileOut(__METHOD__);
 			return true;
@@ -102,13 +103,13 @@ class UserProfilePageHelper {
 		return $response;
 	}
 
-	public static function getUserFromTitle( Title $title) {
-		$userName = '';
-
-		$parts = explode( '/', $title->getText() );
-		$userName = $parts[0];
-
-		return User::newFromName( $userName );
+	public static function getUserFromTitle( Title $title ) {
+		if( $title->isSpecial( 'Following' ) ) {
+			global $wgUser;
+			return $wgUser;
+		} else {
+			return User::newFromName( UserPagesHeaderModule::getUserName($title, self::$allowedNamespaces , false ) );
+		}
 	}
 
 	/**

@@ -41,16 +41,18 @@ class UserPagesHeaderModule extends Module {
 	/**
 	 * Get name of the user this page referrs to
 	 */
-	private static function getUserName() {
+	public static function getUserName(Title $title, $namespaces, $fallbackToGlobal = true) {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgRequest;
+		global $wgUser, $wgRequest;
+		
+		$userName = null;
 
-		if (in_array($wgTitle->getNamespace(), BodyModule::getUserPagesNamespaces())) {
+		if (in_array($title->getNamespace(), $namespaces)) {
 			// get "owner" of this user / user talk / blog page
-			$parts = explode('/', $wgTitle->getText());
+			$parts = explode('/', $title->getText());
 		}
-		else if ($wgTitle->getNamespace() == NS_SPECIAL) {
-			if ($wgTitle->isSpecial( 'Following' ) || $wgTitle->isSpecial( 'Contributions' )) {
+		else if ($title->getNamespace() == NS_SPECIAL) {
+			if ($title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' )) {
 				$target = $wgRequest->getText('target');
 				if ($target != '') {
 					// /wiki/Special:Contributions?target=FooBar (RT #68323)
@@ -69,7 +71,7 @@ class UserPagesHeaderModule extends Module {
 		if (isset($parts[0]) && $parts[0] != '') {
 			$userName = str_replace('_', ' ', urldecode($parts[0]) );
 		}
-		else {
+		elseif ( $fallbackToGlobal ) {
 			// fallback value
 			$userName = $wgUser->getName();
 		}
@@ -165,7 +167,7 @@ class UserPagesHeaderModule extends Module {
 		$namespace = $wgTitle->getNamespace();
 
 		// get user name to display in header
-		$this->userName = self::getUserName();
+		$this->userName = self::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
 
 		if ( !empty( $wgEnableUserProfilePagesExt ) ) {
 			$this->isUserProfilePageExt = true;
@@ -307,7 +309,7 @@ class UserPagesHeaderModule extends Module {
 		$this->title = implode('/', $titleParts);
 
 		// get user name to display in header
-		$this->userName = self::getUserName();
+		$this->userName = self::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
 
 		// render avatar (48x48)
 		$this->avatar = AvatarService::renderAvatar($this->userName, 48);
