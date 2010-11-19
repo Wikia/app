@@ -141,7 +141,7 @@ class PageStatsService extends Service {
 		$category = strtolower($category);
 
 		foreach($blacklist as $word) {
-			$word = trim( strtolower($word), '* ' );
+			$word = str_replace( ' ', '_', trim( strtolower($word), '* ' ) );
 			if (strpos($category, $word) !== false) {
 				wfProfileOut(__METHOD__);
 				return true;
