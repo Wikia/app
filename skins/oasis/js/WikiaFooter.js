@@ -14,8 +14,10 @@ WikiaFooterApp = {
 
 		//Variables
 		var footer = $("#WikiaFooter");
-		if(footer.exists()) {
-			var toolbar = footer.children(".toolbar");
+		var toolbar = footer.children(".toolbar");
+
+		// avoid stack overflow in IE (RT #98938)
+		if (toolbar.exists()) {
 			var windowObj = $(window);
 			var originalWidth = toolbar.width();
 
@@ -48,7 +50,7 @@ WikiaFooterApp = {
 					toolbar.removeClass('small');
 				}
 				windowObj.resolvePosition();
-			}
+			};
 
 			windowObj.resolvePosition();
 			windowObj.centerBar();
