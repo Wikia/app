@@ -1,5 +1,7 @@
 <fieldset class="panel">
-<?php echo $navigationBar; ?>
+<p><b><? echo wfMsgHtml( 'adss-your-balance' ); ?></b> <?php echo wfMsgHtml( 'adss-amount', $balance ); ?><br />
+<b><? echo wfMsgHtml( 'adss-your-billing-agreement' ); ?></b> <?php echo $baid; ?></p>
+
 <?php echo $billing; ?>
 <?php echo $navigationBar; ?>
 </fieldset>
