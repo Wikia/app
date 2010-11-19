@@ -266,6 +266,7 @@ class SpecialAdminAds extends SpecialPage {
 					}
 				}
 				//we could trap for some other statuses here... worry about that later
+				wfRunHooks( "PayPalInstantPaymentNotification", array( &$wgRequest ) );
 			} else if (strcmp ($result, "INVALID") == 0) { 
 			// If 'INVALID', send an email. TODO: Log for manual investigation. 
 				mail($this->emergencyEmail, "Invalid PayPal Payment IPN Verfication", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req); 
