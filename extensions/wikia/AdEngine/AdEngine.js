@@ -159,3 +159,16 @@ AdEngine.getMinuteTargeting = function (){
 	var myDate = new Date();
 	return myDate.getMinutes() % 15;
 }; 
+
+AdEngine.hiddenSlotOnShortPage = function (slotname) {
+	if(slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD' || slotname == 'LEFT_SKYSCRAPER_2' || slotname == 'LEFT_SKYSCRAPER_3') {
+		if($(document).height() >= 1680) {
+			$('#' +  slotname).css("display", "block")
+			return false;
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
+}

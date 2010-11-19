@@ -397,6 +397,7 @@ EOT;
 		// RT #65988: must clone iframe, set src then append to parentNode. Setting src on original iframe creates unnecessary entry in browser history
 		$out = '<script type="text/javascript">' .
 		$function_name . ' = function() { ' .
+			'if(AdEngine.hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; }' .
 		'var url = "'.addslashes($this->getUrl($slotname, $slot)).'"; ' . "\n" .	// url is actually a template with tokens to replace
 		'if (typeof(QuantcastSegments) !== "undefined") { ' .
 		'var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues(); ' . "\n" .	// wlee: Quantcast Segments
