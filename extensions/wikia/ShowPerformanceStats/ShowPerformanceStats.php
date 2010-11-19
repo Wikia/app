@@ -19,6 +19,10 @@
  */
 
 $wgExtensionMessagesFiles['ShowPerformanceStats'] = dirname(__FILE__) . '/ShowPerformanceStats.i18n.php';
+
+$wgAvailableRights[] = 'performancestats';
+$wgGroupPermissions['*']['performancestats'] = false;
+$wgGroupPermissions['staff']['performancestats'] = true;
  
 function wfGetPerformanceStats(){
 	wfProfileIn( __METHOD__ );
