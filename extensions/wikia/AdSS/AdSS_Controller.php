@@ -79,8 +79,12 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'adForm', $adForm );
 		$tmpl->set( 'currentShare', intval( $currentShare * 100 ) );
 
-		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
+		if( isset( $_GET['b'] ) ) {
+			$wgOut->addHTML( $tmpl->render( 'adForm-b' ) );
+		} else {
+			$wgOut->addHTML( $tmpl->render( 'adForm' ) );
+			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
+		}
 	}
 
 	function save( $adForm ) {
