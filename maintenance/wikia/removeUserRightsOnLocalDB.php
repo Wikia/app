@@ -47,6 +47,9 @@ while ($row = $dbr->fetchObject($res)) {
 $dbr->freeResult($res);
 
 foreach ($databases as $city_id => $database) {
+	if (!$quiet) {
+		echo "Connecting to wiki (ID:$city_id, dbname:$database)\n";
+	}
 	$dbw = wfGetDB(DB_MASTER, array(), $database);
 	$dbw->delete('user_groups',
 		$conds,
