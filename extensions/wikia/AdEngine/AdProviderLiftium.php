@@ -97,6 +97,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
                     // FIXME get rid of c&p
                     $out .= '<script type="text/javascript">' .
                             'function ' . $function_name . '() { ' .
+				'if(AdEngine.hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; }' .
                             'window.setTimeout(\'' .
                             'LiftiumOptions.placement = "' . $slotname . '";' .
                             'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) .
@@ -107,6 +108,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
                 else {
                     $out .= '<script type="text/javascript">' .
                             'function ' . $function_name . '() { ' .
+				'if(AdEngine.hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; }' .
                             'LiftiumOptions.placement = "' . $slotname . '";' . "\n" .
                             'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) .
                             '", document.getElementById("' . addslashes($slotname) .'_iframe")); }</script>';

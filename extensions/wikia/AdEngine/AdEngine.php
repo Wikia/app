@@ -512,7 +512,12 @@ class AdEngine {
 			}
 		}
 
-		return '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">' .
+		$style = '';
+		if($slotname == 'PREFOOTER_LEFT_BOXAD' || $slotname == 'PREFOOTER_RIGHT_BOXAD' || $slotname == 'LEFT_SKYSCRAPER_2' || $slotname == 'LEFT_SKYSCRAPER_3') {
+			$style = ' style="display:none;"';
+		}
+
+		return '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint"'.$style.'>' .
 			'<div id="' . htmlspecialchars($slotdiv) . '">' .
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' .
 			'id="' . htmlspecialchars($slotname) . '_iframe" class="' . $slotiframe_class . '" ' .
