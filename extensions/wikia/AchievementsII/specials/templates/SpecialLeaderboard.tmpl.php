@@ -45,7 +45,7 @@
 	?>
 		<tr>
 			<td class="rank">
-				<span><?=++$rank;?></span>
+				<span><?= $rankedUser->getCurrentRanking();?></span>
 			</td>
 			<td class="user">
 				<img src="<?=$rankedUser->getAvatarUrl();?>" width="35" height="35">
