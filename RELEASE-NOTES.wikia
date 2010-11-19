@@ -8,6 +8,7 @@
 * rt#88878: Long blog post titles flow under "edit this page" button (macbre)
 * rt#98938: JavaScript error on edit article page (IE7 only) (macbre)
 * rt#98523: Special:Preferences tabs not loading as js (macbre)
+* rt#87661: Mediawiki:Categoryblacklist is not working (TOR)
 
 == Changes since 201011.1 ==
 * rt#85526: Security problem: hijacking sessionid (Marooned)
