@@ -34,9 +34,16 @@ class MyToolsModule extends Module {
 				$page = SpecialPage::getPageByAlias($tool);
 				if(is_object($page)) {
 					$href = $page->getTitle()->getLocalUrl();
-					if($tool == 'RecentChangesLinked') {
-						global $wgTitle;
-						$href .= '/'.$wgTitle->getPartialUrl();
+
+					switch ( $tool ) {
+						case 'RecentChangesLinked':
+							global $wgTitle;
+							$href .= '/' . $wgTitle->getPartialUrl();
+							break;
+
+						case 'Contributions':
+							$href .= '/' . $wgUser->getTitleKey();
+							break;
 					}
 					$out[] = array(
 						'text' => $page->getDescription(),
@@ -237,8 +244,7 @@ class MyToolsModule extends Module {
 			'CreatePage',
 			'Preferences',
 			'Random',
-			'WikiActivity',
-			'MyContributions',
+			'WikiActivity'
 		);
 	}
 }
