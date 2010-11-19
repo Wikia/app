@@ -20,13 +20,21 @@ class AchRankingService {
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$res = $dbr->select('ach_user_score', 'user_id, score', array('wiki_id' => $wgCityId), __METHOD__, $rules);
 		$rankingSnapshot = ($compareToSnapshot) ? $this->loadFromSnapshot() : null;
-		$positionCounter = 0;
-		
+		$positionCounter = 1;
+		$prevScore = -1;
+		$prevPosition = -1;
 		while($row = $dbr->fetchObject($res)) {
 		    $user = User::newFromId($row->user_id);
 
 		    if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
-			$ranking[] = new AchRankedUser($user, $row->score, $positionCounter++, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
+				// If this user has the same score as previous user, give them the same (lower) rank (RT#67874).
+				$position = (($prevScore == $row->score) && ($prevPosition != -1))? $prevPosition : $positionCounter;
+
+				$ranking[] = new AchRankedUser($user, $row->score, $position, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
+
+				$prevPosition = $position;
+				$prevScore = $row->score;
+				$positionCounter++;
 		    }
 
 		    if($limit > 0 && $positionCounter == $limit) break;
@@ -44,7 +52,8 @@ class AchRankingService {
 
 		if (! isset($user_id)) return 0;
 
-		$sql = "select count(*) as rank from ach_user_score where wiki_id = $wgCityId and score >= (select score as s from ach_user_score where user_id = $user_id and wiki_id = $wgCityId)";
+		// If three people are tied for 3rd place, they all will have a rank of 3 (RT#67874).
+		$sql = "select count(*)+1 as rank from ach_user_score where wiki_id = $wgCityId and score > (select score as s from ach_user_score where user_id = $user_id and wiki_id = $wgCityId)";
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$res = $dbr->query( $sql, __METHOD__ );
