@@ -80,10 +80,10 @@ function wfMakeGlobalVariablesScript($vars) {
 	}
 
 	// is anon editing disabled?
-	if ( $wgDisableAnonymousEditig || $wgGroupPermissions['user']['edit'] === false ) {
-		$vars['wgDisableAnonymousEditig'] = true;
+	if ( $wgDisableAnonymousEditing || $wgGroupPermissions['user']['edit'] === false ) {
+		$vars['wgDisableAnonymousEditing'] = true;
 	} else {
-		$vars['wgDisableAnonymousEditig'] = false;
+		$vars['wgDisableAnonymousEditing'] = false;
 	}
 
 	// make direct requests to sassServer?
