@@ -13,17 +13,18 @@ class LatestActivityModule extends Module {
 
 		$maxElements = 4;
 
-		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgSingleH1, $wgOut, $wgTitle, $wgEnableUserProfilePagesExt;
+		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgSingleH1, $wgOut, $wgTitle, $wgEnableUserProfilePagesExt, $wgUserProfilePagesNamespaces;
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestActivity.js"></script>');
 		wfLoadExtensionMessages('MyHome');
 
 		$this->moduleHeader = wfMsg('oasis-activity-header');
-
-		if( !empty( $wgEnableUserProfilePagesExt ) && in_array($wgTitle->getNamespace(), array(NS_USER, NS_USER_TALK)) ) {
-			$user = UserProfilePageHelper::getExistingUserFromTitle( $wgTitle );
-			if( !empty( $user ) ) {
-				$this->userName = $user->getName();
-				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
+		if( !empty( $wgEnableUserProfilePagesExt ) ) {
+			if( in_array($wgTitle->getNamespace(), $wgUserProfilePagesNamespaces) ) {
+				$user = UserProfilePageHelper::getExistingUserFromTitle( $wgTitle );
+				if( !empty( $user ) ) {
+					$this->userName = $user->getName();
+					$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
+				}
 			}
 		}
 
