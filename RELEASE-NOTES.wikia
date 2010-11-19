@@ -3,6 +3,9 @@
 * rt#73293: Two Achievements messages missing (TOR)
 * rt#97127: Move Sponsored Links to the bottom of the page (macbre)
 * rt#73166: Special:NewWebsite does not respect any blocks (TOR)
+* rt#90607: Slideshow shows achievement badges in showrecentuploads mode (macbre)
+* rt#88788: Monaco blog list css showing in Oasis (macbre)
+* rt#88878: Long blog post titles flow under "edit this page" button (macbre)
 
 == Changes since 201011.1 ==
 * rt#85526: Security problem: hijacking sessionid (Marooned)
