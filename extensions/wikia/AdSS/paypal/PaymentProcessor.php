@@ -66,6 +66,32 @@ class PaymentProcessor {
 		}
 	}
 
+	static function newFromBillingAgreement( $baid, $payerId=null ) {
+		global $wgAdSS_DBname;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$tables = array( 'pp_tokens', 'pp_agreements' );
+		$conds = array(
+				'ppa_token = ppt_token',
+				'ppa_baid' => $baid,
+			      );
+		if( $payerId ) {
+			$tables[] = 'pp_details';
+			$conds = array_merge( $conds, array(
+						'ppd_token = ppt_token',
+						'ppd_payerid' => $payerId,
+						) );
+		}
+		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__ );
+		if( $row ) {
+			$pp = new self( $row->ppt_token );
+			$pp->userId = $row->ppt_user_id;
+			return $pp;
+		} else {
+			return null;
+		}
+	}
+
 	function getToken() {
 		return $this->token;
 	}

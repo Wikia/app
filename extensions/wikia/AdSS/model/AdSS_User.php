@@ -146,4 +146,16 @@ class AdSS_User {
 		return "{$this->email} (ID={$this->id})";
 	}
 
+	function getAds() {
+		global $wgAdSS_DBname;
+
+		$ads = array();
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$res = $dbr->select( 'ads', '*', array( 'ad_user_id' => $this->id ), __METHOD__ );
+		foreach( $res as $row ) {
+			$ads[] = AdSS_AdFactory::newFromRow( $row );
+		}
+		return $ads;
+	}
 }

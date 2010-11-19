@@ -40,6 +40,7 @@ $wgAutoloadClasses['AdSS_Publisher'] = $dir . 'AdSS_Publisher.php';
 $wgAutoloadClasses['AdSS_Util'] = $dir . 'AdSS_Util.php';
 $wgAutoloadClasses['PaymentProcessor'] = $dir . 'paypal/PaymentProcessor.php';
 $wgAutoloadClasses['PayflowAPI'] = $dir . 'paypal/PayflowAPI.php';
+$wgAutoloadClasses['IPNListener'] = $dir . 'paypal/IPNListener.php';
 
 $wgSpecialPages['AdSS'] = 'AdSS_Controller';
 $wgSpecialPages['Sponsor'] = 'AdSS_Controller';
@@ -53,6 +54,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariables
 //$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
 $wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
 $wgHooks['ArticlePurge'][] = 'AdSS_Publisher::onArticlePurge';
+$wgHooks['PayPalInstantPaymentNotification'][] = 'IPNListener::notify';
 
 $wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
 $wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
