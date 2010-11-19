@@ -107,9 +107,6 @@ EditEnhancementsLoad = function() {
 		// fix left margin of "minor" checkbox
 		toolbarItems.filter('.minor').
 			css('marginLeft', $('#wpSummaryLabel').width() + 5);
-
-		// changes for "Show changes" button
-		$('#wpDiff').addClass('secondary');
 	}
 }
 
