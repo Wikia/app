@@ -25,7 +25,7 @@ if (isset($options['help'])) {
 $quiet = isset($options['quiet']);
 
 $conds = array(
-	'ug_group' => 'helper',
+	'ug_group' => 'checkuser',
 	'ug_user' => array('874612', '826221', '126681', '35784')	//see RT#67513
 );
 
@@ -47,15 +47,20 @@ while ($row = $dbr->fetchObject($res)) {
 $dbr->freeResult($res);
 
 foreach ($databases as $city_id => $database) {
+  if( in_array( $city_id, array( 177 ) ) ) {
+      continue;
+  }
+
 	if (!$quiet) {
 		echo "Connecting to wiki (ID:$city_id, dbname:$database)\n";
 	}
 	$dbw = wfGetDB(DB_MASTER, array(), $database);
-	$dbw->delete('user_groups',
+	$dbw->delete(
+	        'user_groups',
 		$conds,
 		__FUNCTION__
 	);
-
+	$dbw->close();
 	if (!$quiet) {
 		echo "Removed rights for wiki (ID:$city_id, dbname:$database)\n";
 	}
