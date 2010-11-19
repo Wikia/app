@@ -209,5 +209,8 @@ function updateTimezoneSelection(force_offset) {
 	}
 }
 
-hookEvent("load", unhidetzbutton);
-hookEvent("load", initprefs);
+/* Wikia change begin - @author: Macbre */
+/* RT #98523 */
+addOnloadHook(unhidetzbutton);
+addOnloadHook(initprefs);
+/* Wikia change end */
