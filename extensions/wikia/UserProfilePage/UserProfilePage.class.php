@@ -245,8 +245,6 @@ class UserProfilePage {
 				return array();
 			}
 			
-			print_pre($this->getUser()->getName());
-			
 			$maxElements = 1;
 			$includeNamespaces = implode('|', $wgContentNamespaces);
 			$parameters = array(
