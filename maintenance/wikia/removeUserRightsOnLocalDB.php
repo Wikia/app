@@ -41,7 +41,7 @@ $res = $dbr->select(
 	array('city_public' => 1, 'city_useshared' => 1),
 	__FUNCTION__
 );
-while ($row = $dbw->fetchObject($res)) {
+while ($row = $dbr->fetchObject($res)) {
 	$databases[$row->city_id] = $row->city_dbname;
 }
 $dbr->freeResult($res);
