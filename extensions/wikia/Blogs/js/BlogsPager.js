@@ -14,6 +14,7 @@ function wkBlogShowPage(offset) {
 			function(data) {
 				if(data) {
 					if(skin == 'oasis') {
+						$(".wk_blogs_pager").remove();
 						$(".WikiaBlogListing").empty().append(data);
 					} else {
 						$("#wk_blogs_article").empty().append(data);
