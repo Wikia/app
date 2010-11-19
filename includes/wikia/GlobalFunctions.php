@@ -1237,7 +1237,7 @@ function wfDeleteWikiaPageProp($type, $pageID) {
 function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
 	global $wgApacheTimerString;
 	if ($wgApacheTimerString == false) {
-		$headers = apache_request_headers();  // seems like we can't re-read the header after setting it so do it once
+		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();  // seems like we can't re-read the header after setting it so do it once
 		if (isset($headers['X-Timer'])) {
 			$wgApacheTimerString = $headers['X-Timer'];
 		}
