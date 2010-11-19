@@ -231,18 +231,22 @@ class UserProfilePage {
 	 * @return array
 	 */
 	public function getUserLastAction() {
+		
 		global $wgMemc, $wgContentNamespaces, $wgLang;
 
 		$mKey = $this->getUserLastActionCacheKey();
 		$cachedData = $wgMemc->get($mKey);
 		if (empty($cachedData)) {
-
+			
 			//prevent from API calls for non-existent accounts
 			$userId = $this->getUser()->idForName();
+			
 			if( empty( $userId ) ) {
 				return array();
 			}
-
+			
+			print_pre($this->getUser()->getName());
+			
 			$maxElements = 1;
 			$includeNamespaces = implode('|', $wgContentNamespaces);
 			$parameters = array(
