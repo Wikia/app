@@ -151,7 +151,9 @@ class UserProfilePageHelper {
 	static public function onGetRailModuleList(&$modules) {
 		global $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces, $wgTitle;
 		
-		if( in_array( $wgTitle->getNamespace(), $wgUserProfilePagesNamespaces ) ){
+		$isBlogPost = (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && $wgTitle->isSubpage());
+		
+		if( in_array( $wgTitle->getNamespace(), $wgUserProfilePagesNamespaces ) && !$isBlogPost ){
 			foreach( $modules as $weight => $module ) {
 				if( $wgEnableAchievementsExt && $module[0] == 'Achievements' ) {
 					$modules[ $weight ] = array('Achievements', 'UserProfilePagesModule', null);
