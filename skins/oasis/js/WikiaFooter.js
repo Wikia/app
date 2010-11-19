@@ -14,11 +14,11 @@ WikiaFooterApp = {
 
 		//Variables
 		var footer = $("#WikiaFooter");
-		if(footer) {	
+		if(footer.exists()) {
 			var toolbar = footer.children(".toolbar");
 			var windowObj = $(window);
 			var originalWidth = toolbar.width();
-	
+
 			//Scroll Detection
 			windowObj.resolvePosition = function() {
 				var scroll = windowObj.scrollTop() + windowObj.height();
@@ -26,7 +26,7 @@ WikiaFooterApp = {
 				if(footer.offset()){
 					line = footer.offset().top + toolbar.outerHeight();
 				}
-				
+
 				if (scroll > line && toolbar.hasClass("float")) {
 					toolbar.removeClass("float");
 					windowObj.centerBar();
@@ -49,9 +49,9 @@ WikiaFooterApp = {
 				}
 				windowObj.resolvePosition();
 			}
-			
+
 			windowObj.resolvePosition();
-			windowObj.centerBar();		
+			windowObj.centerBar();
 			windowObj.scroll(windowObj.resolvePosition);
 			windowObj.resize(windowObj.centerBar);
 		}
