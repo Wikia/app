@@ -23,8 +23,10 @@ $wgExtensionCredits['specialpage'][] = array(
  */
 $wgExtensionFunctions[] = 'wfUserProfilePageInit';
 
+$wgUserProfilePagesNamespaces = array();
+
 function wfUserProfilePageInit() {
-	global $wgHooks, $wgExtensionMessagesFiles, $wgAutoloadClasses, $wgAjaxExportList;
+	global $wgHooks, $wgExtensionMessagesFiles, $wgAutoloadClasses, $wgAjaxExportList, $wgUserProfilePagesNamespaces;
 
 	$dir = dirname(__FILE__) . '/';
 
@@ -33,6 +35,7 @@ function wfUserProfilePageInit() {
 	 */
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHelper::onSkinTemplateOutputPageBeforeExec';
 	$wgHooks[ 'AlternateEdit' ][] = 'UserProfilePageHelper::onAlternateEdit';
+	$wgHooks[ 'GetRailModuleList' ][] = 'UserProfilePageHelper::onGetRailModuleList';
 
 	/**
 	 * messages file
@@ -56,4 +59,11 @@ function wfUserProfilePageInit() {
 	 * ajax
 	 */
 	$wgAjaxExportList[] = 'UserProfilePageHelper::doAction';
+	
+	$wgUserProfilePagesNamespaces[] = NS_USER_TALK;
+	$wgUserProfilePagesNamespaces[] = NS_USER;
+
+	if( defined( 'NS_BLOG_ARTICLE' ) ) {
+		$wgUserProfilePagesNamespaces[] = NS_BLOG_ARTICLE;
+	}
 }

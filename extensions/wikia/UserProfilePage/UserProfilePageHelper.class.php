@@ -1,18 +1,15 @@
 <?php
 class UserProfilePageHelper {
-	public static $allowedNamespaces = array( NS_USER, NS_USER_TALK );
-	
 	/**
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
-		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser;
+		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgUserProfilePagesNamespaces;
 		wfProfileIn(__METHOD__);
 
 		$ns = $skin->mTitle->getNamespace();
 
 		if( defined( 'NS_BLOG_ARTICLE' ) ) {
-			self::$allowedNamespaces[] = NS_BLOG_ARTICLE;
 			if( $ns == NS_BLOG_ARTICLE ) {
 				$isBlogPage = true;
 			}
@@ -27,7 +24,7 @@ class UserProfilePageHelper {
 		// Return without any changes if this isn't in the user namespace OR
 		// if the user is doing something besides viewing or purging this page
 		$action = $wgRequest->getVal('action', 'view');
-		if ( ( !in_array( $ns, self::$allowedNamespaces ) && $ns != NS_SPECIAL ) || ($action != 'view' && $action != 'purge') || ( $ns != NS_SPECIAL && $skin->mTitle->isSubpage() ) ) {
+		if ( ( !in_array( $ns, $wgUserProfilePagesNamespaces ) && $ns != NS_SPECIAL ) || ($action != 'view' && $action != 'purge') || ( $ns != NS_SPECIAL && $skin->mTitle->isSubpage() ) ) {
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
@@ -104,11 +101,12 @@ class UserProfilePageHelper {
 	}
 
 	public static function getUserFromTitle( Title $title ) {
+		global $wgUserProfilePagesNamespaces, $wgUser;
+		
 		if( $title->isSpecial( 'Following' ) ) {
-			global $wgUser;
 			return $wgUser;
 		} else {
-			return User::newFromName( UserPagesHeaderModule::getUserName($title, self::$allowedNamespaces , false ) );
+			return User::newFromName( UserPagesHeaderModule::getUserName($title, $wgUserProfilePagesNamespaces , false ) );
 		}
 	}
 
@@ -149,5 +147,28 @@ class UserProfilePageHelper {
 		}
 		return true;
 	}
-
+	
+	static public function onGetRailModuleList(&$modules) {
+		global $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces, $wgTitle;
+		
+		if( in_array( $wgTitle->getNamespace(), $wgUserProfilePagesNamespaces ) ){
+			foreach( $modules as $weight => $module ) {
+				if( $wgEnableAchievementsExt && $module[0] == 'Achievements' ) {
+					$modules[ $weight ] = array('Achievements', 'UserProfilePagesModule', null);
+					continue;
+				}
+				
+				if( in_array( $module[0], array( 'LatestPhotos', 'LatestActivity', 'PagesOnWiki' ) ) ) {
+					unset( $modules[ $weight ] );
+				}
+			}
+			
+			
+			$modules[1499] = array('UserProfileRail', 'TopWikis', null);
+			$modules[1498] = array('LatestActivity', 'Index', null);
+			$modules[1497] = array('UserProfileRail', 'TopPages', null);
+		}
+		
+		return true;
+	}
 }
