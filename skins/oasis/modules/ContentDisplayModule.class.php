@@ -68,8 +68,10 @@ class ContentDisplayModule extends Module {
 		#print_pre(htmlspecialchars($this->bodytext));
 		
 		// RT#84733 - prompt to login if the user is an anon and can't edit right now (protected pages and wgDisableAnonEditing wikis).
-		$promptLogin = ( !$wgTitle->userCanEdit() && $wgUser->isAnon() );
-		$extraClass = ($promptLogin?" loginToEditProtectedPage":"");
+		$extraClass = "";
+		if ( !$wgTitle->userCanEdit() && $wgUser->isAnon() ) {
+			$extraClass = " loginToEditProtectedPage";
+		}
 
 		// replace section edit links with buttons and change order of HTML nodes
 		// TODO: consider moving to Parser / Linker
