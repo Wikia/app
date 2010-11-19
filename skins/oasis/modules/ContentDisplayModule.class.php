@@ -61,18 +61,22 @@ class ContentDisplayModule extends Module {
 	}
 
 	public function executeIndex() {
-		global $wgBlankImgUrl;
+		global $wgBlankImgUrl, $wgTitle, $wgUser;
 
 		wfProfileIn(__METHOD__);
 
 		#print_pre(htmlspecialchars($this->bodytext));
+		
+		// RT#84733 - prompt to login if the user is an anon and can't edit right now (protected pages and wgDisableAnonEditing wikis).
+		$promptLogin = ( !$wgTitle->userCanEdit() && $wgUser->isAnon() );
+		$extraClass = ($promptLogin?" loginToEditProtectedPage":"");
 
 		// replace section edit links with buttons and change order of HTML nodes
 		// TODO: consider moving to Parser / Linker
 		// TODO: use DoEditSectionLink hook (?)
 		$this->bodytext = preg_replace(
 			'#<span class="editsection">\[<a([^>]+)>[^>]+</a>\]</span>(.*)</h#',
-			'$2<span class="editsection"><a $1><img alt="'.wfMsg('oasis-section-edit-alt').'" src="' . $wgBlankImgUrl . '" class="sprite edit-pencil"></a> <a $1>'.wfMsg('oasis-section-edit').'</a></span></h',
+			'$2<span class="editsection'.$extraClass.'"><a $1><img alt="'.wfMsg('oasis-section-edit-alt').'" src="' . $wgBlankImgUrl . '" class="sprite edit-pencil"></a> <a $1>'.wfMsg('oasis-section-edit').'</a></span></h',
 			$this->bodytext);
 
 		#print_pre(htmlspecialchars($this->bodytext));
