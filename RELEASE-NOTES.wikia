@@ -6,6 +6,7 @@
 * rt#90607: Slideshow shows achievement badges in showrecentuploads mode (macbre)
 * rt#88788: Monaco blog list css showing in Oasis (macbre)
 * rt#88878: Long blog post titles flow under "edit this page" button (macbre)
+* rt#98938: JavaScript error on edit article page (IE7 only) (macbre)
 
 == Changes since 201011.1 ==
 * rt#85526: Security problem: hijacking sessionid (Marooned)
