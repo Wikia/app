@@ -29,13 +29,13 @@ $conds = array(
 	'ug_user' => array('874612', '826221', '126681', '35784')	//see RT#67513
 );
 
-$dbw = WikiFactory::db(DB_MASTER);
+$dbr = WikiFactory::db(DB_MASTER);
 
 /**
  * get active databases from city_list
  */
 $databases = array();
-$res = $dbw->select(
+$res = $dbr->select(
 	WikiFactory::table('city_list'),
 	array('city_dbname', 'city_id'),
 	array('city_public' => 1, 'city_useshared' => 1),
@@ -44,10 +44,10 @@ $res = $dbw->select(
 while ($row = $dbw->fetchObject($res)) {
 	$databases[$row->city_id] = $row->city_dbname;
 }
-$dbw->freeResult($res);
+$dbr->freeResult($res);
 
 foreach ($databases as $city_id => $database) {
-	$dbw->selectDB($database);
+	$dbw = wfGetDB(DB_MASTER, array(), $database);
 	$dbw->delete('user_groups',
 		$conds,
 		__FUNCTION__
