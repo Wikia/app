@@ -897,6 +897,7 @@ class WikiaPhotoGalleryHelper {
 	 * Get list of recently uploaded files
 	 */
 	static public function getRecentlyUploaded($limit) {
+		global $wgEnableAchievementsExt;
 		wfProfileIn(__METHOD__);
 
 		$ret = false;
@@ -922,10 +923,15 @@ class WikiaPhotoGalleryHelper {
 
 			if (!empty($res['query']['logevents'])) {
 				foreach($res['query']['logevents'] as $entry) {
-					// ignore Video:foo entries from VET
+					// ignore Video:foo entries from VideoEmbedTool
 					if ($entry['ns'] == NS_IMAGE) {
 						$image = Title::newFromText($entry['title']);
 						if (!empty($image)) {
+							// skip badges upload (RT #90607)
+							if (!empty($wgEnableAchievementsExt) && Ach_isBadgeImage($image->getText())) {
+								continue;
+							}
+
 							// use keys to remove duplicates
 							$ret[$image->getDBkey()] = $image;
 

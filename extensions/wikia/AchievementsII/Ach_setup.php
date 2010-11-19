@@ -345,7 +345,7 @@ function AchTest() {
  *
  * @author Macbre
  */
-function Ach_isBadgeImage($imageName, $checkUserRights = false) {
+function Ach_isBadgeImage($destName, $checkUserRights = false) {
 	global $wgUser;
 
 	$isBadge = strlen($destName) > strlen( ACHIEVEMENTS_BADGE_PREFIX ) && stripos($destName, ACHIEVEMENTS_BADGE_PREFIX) === 0;
