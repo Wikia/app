@@ -129,6 +129,7 @@ class AdSS_Util {
 		if( $sessionToken != $token ) {
 			wfDebug( __METHOD__ . ": broken session data\n" );
 		}
+		unset( $_SESSION['wsAdSSToken'] );
 		return $sessionToken == $token;
 	}
 
