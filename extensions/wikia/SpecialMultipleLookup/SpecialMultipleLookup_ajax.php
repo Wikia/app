@@ -17,7 +17,7 @@ class MultiLookupAjax {
 	function __construct() { /* not used */ }
 
 	function axData() {
-		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgLang;
+		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgLang, $wgDevelEnvironment;
 		
         wfProfileIn( __METHOD__ );
 	
@@ -60,12 +60,21 @@ class MultiLookupAjax {
 				$data = array_slice($activity, $offset, $limit);
 				$loop = 1;
 				foreach ( $data as $row ) {
+					$usernames = "";
+					if (empty($wgDevelEnvironment)) { 
+						// do not run this section on the dev environment because the db's dont exist
+						$oML->setDBname($row[0]);
+						$user_data = $oML->fetchContribs();
+						if (!empty($user_data) && is_array($user_data)) {
+							$usernames = implode(' , ', array_keys($user_data));
+						}
+					}
 					$rows[] = array(
 						$loop + $offset, // wiki Id
 						$row[0], // wiki dbname
 						$row[1], //wiki title
 						$row[2], // wiki url 
-						'' //options
+						$usernames // $username field
 					);			
 					$loop++;				
 				}
