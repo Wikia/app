@@ -397,7 +397,11 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$dbs = WikiFactory::db( DB_SLAVE );
-
+		
+		if(empty($city_array)) {
+			return array("value" => array(), "age" => time());	
+		}
+		
 		$res = $dbs->select(
 				array( "city_list"),
 				array( "city_id,
