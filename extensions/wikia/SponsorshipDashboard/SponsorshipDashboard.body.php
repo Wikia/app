@@ -4,7 +4,7 @@
  * @package MediaWiki
  * @subpackage SpecialPage
  * @author Jakub Kurcek
- * 
+ *
  */
 
 class SponsorshipDashboard extends SpecialPage {
@@ -27,14 +27,14 @@ class SponsorshipDashboard extends SpecialPage {
 	private $allowedSubpages = array('main', 'error');
 	// private $allowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
 	// private $TEST = 0;
-	
+
 	function  __construct() {
 
 
 		global $wgUser;
 
 		$listed = ( in_array('staff', $wgUser->getEffectiveGroups()) );
-			
+
 		parent::__construct( "SponsorshipDashboard" , '', $listed /*restriction*/);
 		wfLoadExtensionMessages("SponsorshipDashboard");
 	}
@@ -56,15 +56,15 @@ class SponsorshipDashboard extends SpecialPage {
 			$this->HTMLerror();
 		}
 	}
- 
+
 	/**
 	 * HTMLgapi - displays Google Api subpage - not used.
 	 */
 
 	private function HTMLgapi(){
-	
+
 		global $wgHTTPProxy, $wgWikiaGAPassword, $wgWikiaGALogin;
-	
+
 		$ga = new gapi($wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
 		$ga->requestAccountData();
 		foreach($ga->getResults() as $result)
@@ -80,27 +80,27 @@ class SponsorshipDashboard extends SpecialPage {
 	private function HTMLmain(){
 
 		global $wgOut, $wgJsMimeType, $wgStyleVersion, $wgHTTPProxy;
-		
+
 		wfProfileIn( __METHOD__ );
 
 		$fromWikiStats = $this->loadDataFromWikiStats();
 		$tagPosition = $this->loadTagPosition();
-	
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(
 			array(
 				"datasets"		=> $fromWikiStats['serie'],
 				"ticks"			=> $fromWikiStats['ticks'],
 				"tagPosition"		=> $tagPosition
-			) 
+			)
 		);
-		
+
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$wgOut->addScript("<!--[if IE]><script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/excanvas.min.js?{$wgStyleVersion}\"></script><![endif]-->\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.selection.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addHTML( $oTmpl->execute( "chart" ) );
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -126,23 +126,15 @@ class SponsorshipDashboard extends SpecialPage {
 
 		global $wgTitle, $wgCityId, $wgHubsPages, $wgStatsDB;
 
-		$wikiFactoryTags = new WikiFactoryTags($wgCityId);
-
 		// Cache check
 		$cachedData = $this->getFromCache( 'rankingByHub' );
 		if ( !empty($cachedData) ){
 			return $cachedData;
 		}
 
-		// gets cityId tags and compares them with HubsPages
-		$cityTags = $wikiFactoryTags->getTags();
-		$popularCityHubs = array();
-		foreach( $wgHubsPages['en'] as $hubs_key=>$hubsPages ){
-			foreach( $cityTags as $key => $val ){
-				if ( $hubsPages == $val ){
-					$popularCityHubs[$val] = $key;
-				}
-			}
+		$popularCityHubs = $this->getPopularHubs();
+		if ( empty( $popularCityHubs ) ){
+			return false;
 		}
 
 		// checkes for number of views of current cityId
@@ -167,8 +159,12 @@ class SponsorshipDashboard extends SpecialPage {
 		// using yesterdays data to be sure we have complete daily view
 
 		$tmpArray = $this->getDailyHigherPageViewsForHubs( $currentCityViews, date( "Ymd", time()-86400 ), $popularCityHubs );
+
 		// sorts data into hub lists
-		
+		if ( empty( $tmpArray ) ){
+			return false;
+		}
+
 		$aPosition = array();
 		foreach( $tmpArray as $key=>$val ){
 			$aPosition[$key]['position'] = count( $tmpArray[$key] ) + 1;
@@ -179,7 +175,7 @@ class SponsorshipDashboard extends SpecialPage {
 		}
 		return $aPosition;
 	}
-	
+
 	/**
 	 * getDailyHigherPageViewsForHubs - returns an array with current wikia position in specific hubs ( by page views ).
 	 * @param $currentCityViews int
@@ -189,6 +185,10 @@ class SponsorshipDashboard extends SpecialPage {
 	 */
 
 	private function getDailyHigherPageViewsForHubs( $currentCityViews, $date, $popularCityHubs ){
+
+		if ( empty( $popularCityHubs ) || empty( $currentCityViews ) ){
+			return array();
+		}
 
 		global $wgStatsDB;
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
@@ -202,9 +202,7 @@ class SponsorshipDashboard extends SpecialPage {
 			    "tag_id IN (".implode(',', $popularCityHubs).")"
 			),
 			__METHOD__,
-			array(
-			    'ORDER BY pv_views DESC'
-			)
+			array()
 		);
 
 		$tmpArray = array();
@@ -213,6 +211,32 @@ class SponsorshipDashboard extends SpecialPage {
 		}
 
 		return $tmpArray;
+	}
+
+	/**
+	 * getPopularHubs - gets cityId tags and compares them with HubsPages.
+	 * @return array
+	 */
+
+	private function getPopularHubs(){
+
+		global $wgHubsPages, $wgCityId;
+
+		$wikiFactoryTags = new WikiFactoryTags($wgCityId);
+		$cityTags = $wikiFactoryTags->getTags();
+		if ( empty($cityTags) ){
+			return array();
+		}
+		$popularCityHubs = array();
+		foreach( $wgHubsPages['en'] as $hubs_key=>$hubsPages ){
+			foreach( $cityTags as $key => $val ){
+				if ( $hubsPages == $val ){
+					$popularCityHubs[$val] = $key;
+				}
+			}
+		}
+
+		return $popularCityHubs;
 	}
 
 	/**
@@ -227,7 +251,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		// Cache check
 		// Cache disabled for this element for now
-		// 
+		//
 		// $cachedData = $this->getFromCache( 'WikiStats' );
 		// if ( !empty($cachedData) ){
 		// 	return $cachedData;
@@ -281,7 +305,7 @@ class SponsorshipDashboard extends SpecialPage {
 		}
 
 		$outData = $this->prepareToDisplay( $outData );
-		
+
 		// $this->saveToCache( 'WikiStats', $outData );
 		return $outData;
 	}
@@ -325,9 +349,9 @@ class SponsorshipDashboard extends SpecialPage {
 	 * @param $data array
 	 * @return array
 	 */
-	
+
 	private function prepareToDisplay( $data ){
-		
+
 		$i = 0;
 		foreach(array_reverse($data) as $collumns){
 			$result['data'][$i] = "[{$i}, {$collumns['A']}]";
@@ -363,7 +387,7 @@ class SponsorshipDashboard extends SpecialPage {
 			'L' => $this->createSerie( wfMsg('serie-12'), $result11['data'])
 		);
 		$sSerie = $this->createJSobj($aSerie);
-		
+
 		$ticks = "[".implode(', ',$result['date'])."]";
 		return array( 'serie' => $sSerie, 'ticks' => $ticks );
 	}
@@ -406,7 +430,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 
 	// other methods
-	
+
 	private function get_previous_month( $date = false ) {
 
 		if ( empty( $date ) ){
@@ -425,7 +449,7 @@ class SponsorshipDashboard extends SpecialPage {
 		return(( $var%5 ) == 0);
 	}
 
-	
+
 }
 
 

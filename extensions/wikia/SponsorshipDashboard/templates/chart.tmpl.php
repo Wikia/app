@@ -1,6 +1,8 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- MAIN-PAGE -->
 
+
+	<? if( !empty($tagPosition) ){ ?>
 	<p id="hubposition" >
 	<?
 		echo wfMsg('pv-ranking').' ';
@@ -11,7 +13,7 @@
 		echo implode ( ', ', $tmpArray );
 	?>
 	</p>
-
+	<? } ?>
 	<div id="placeholder" ></div>
 	<div id="overview" ></div>
 	<h3 id="show" ><? echo wfMsg('show'); ?></h3><p id="choices"></p>

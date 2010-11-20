@@ -26,10 +26,11 @@ $messages['en'] = array(
 	'serie-11' => 'Total number of embeded video on content namespaces articles',
 	'serie-12' => 'Total number of uploaded videos',
 	'not-allowed' => "Sorry. You don't have permission to view this page ",
-	'pv-ranking' => "ranked by pageviews:",
+	'pv-ranking' => 'ranked by pageviews:',
 	'show' => 'Show:',
 	'hub-position' => '<strong>$1</strong> on <strong>$2</strong> hub',
     	'no-hub-position' => 'No data about page position - sorry',
+	'sponsorshipdashboard' => 'Sponsorship Dashboard'
 
 );
 
