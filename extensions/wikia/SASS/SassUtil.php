@@ -61,7 +61,14 @@ class SassUtil {
 		if (isset($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
 			$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
 		}
+		
+		// ABTests
+		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
+		if (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "leftrail=1") {
+			$oasisSettings["leftrail"] = "true";
+		}
 
+		// RTL
 		if($wgContLang && $wgContLang->isRTL()){
 			$oasisSettings['rtl'] = 'true';
 		}

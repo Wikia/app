@@ -1,0 +1,11 @@
+$leftrail: get_command_line_param("leftrail", false);
+@if $leftrail {
+
+	.WikiaRail {
+		float: left;
+	}
+	.WikiaMainContent {
+		float: right;
+	}
+
+}
