@@ -289,7 +289,7 @@ var AjaxLogin = {
 	},
 	removeMailMyPassword: function(el){
 		AjaxLogin.form.log('AjaxLogin: removeMailMyPassword().  Reinitializing form.');
-		$('#wpMailmypassword').remove();
+		//$('#wpMailmypassword').remove();
 		AjaxLogin.action = 'login';
 	},
 	mailNewPassword: function(el) {
