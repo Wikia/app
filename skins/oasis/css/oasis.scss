@@ -48,3 +48,6 @@
 @import "../../../extensions/wikia/RelatedPages/RelatedPages.scss";
 @import "/extensions/wikia/ShareFeature/css/ShareFeature.css"; // Plain CSS imports are relative to the base directory (where sassServer.php runs).
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
+
+// ABTests
+@import "abtest/leftrail.scss";
