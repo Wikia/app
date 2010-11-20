@@ -66,7 +66,7 @@ class MultiLookupAjax {
 						$oML->setDBname($row[0]);
 						$user_data = $oML->fetchContribs();
 						if (!empty($user_data) && is_array($user_data)) {
-							$usernames = implode(' , ', array_keys($user_data));
+							$usernames = implode(',', array_keys($user_data));
 						}
 					}
 					$rows[] = array(
