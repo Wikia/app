@@ -50,19 +50,17 @@ $(document).ready(function() {
 		],
 		"aoColumnDefs": [ 
 			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 1 ], "bSortable" : false },
+			{ "fnRender": function ( oObj ) {
+				var row = '<a href="'+ window.location.pathname + "?target="+ username +'&wiki=' + oObj.aData[1] + '">' + oObj.aData[1] + '</a>';
+				return row;
+			},
+				"bUseRendered": false,
+				"aTargets": [ 1 ],
+				"bSortable" : false
+			},
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false, "sClass": "ml-datetime" },
 			{ "bVisible": true,  "aTargets": [ 3 ], "bSortable" : false, "sClass": "ml-datetime" },
-			{
-				"fnRender": function ( oObj ) {
-					var row = '<div style="white-space:nowrap">';					
-					row += '(<a href="javascript:void(0)" onclick="mlShowDetails(\'' + oObj.aData[1] + '\');"><?=wfMsg('multilookupdetails')?></a>)';
-					row += '</div>';
-					return row;
-				},
-				"aTargets": [ 4 ],
-				"bSortable" : false 
-			}
+			{ "bVisible": true,  "aTargets": [ 4 ], "bSortable" : false, "sClass": "ml-datetime" },
 		],		
 		"bProcessing": true,
 		"bServerSide": true,
