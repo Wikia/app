@@ -96,7 +96,7 @@ class AchUserProfileService {
 			$conds = array();
 			$conds['wiki_id'] = $wgCityId;
 			$conds[] = "user_id IN (" . implode(',', $user_ids) . ")";
-			$conts[] = "date = (SELECT max(date) from ach_user_badges a1 where wiki_id = $wgCityId and user_id = a1.user_id) ";
+			$conds[] = "date = (SELECT max(date) from ach_user_badges a1 where wiki_id = $wgCityId and user_id = a1.user_id) ";
 
 			$res = $dbr->select(
 				'ach_user_badges',

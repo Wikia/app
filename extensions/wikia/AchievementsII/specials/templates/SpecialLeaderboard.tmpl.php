@@ -40,6 +40,7 @@
 		$curRanking = $rankedUser->getCurrentRanking();
 		$prevRanking = $rankedUser->getPreviousRanking();
 		*/
+		if (!isset($topUserBadges[$rankedUser->getID()])) continue;
 		$badge = $topUserBadges[$rankedUser->getID()];
 		
 	?>
