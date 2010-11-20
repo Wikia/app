@@ -64,11 +64,6 @@
 		vertical-align: super;
 	}
 
-	sub {
-		font-size: 11px;
-		vertical-align: sub;
-	}
-
 	ul, ol {
 		margin: 0.4em 0 0.5em 2.5em;
 	}
@@ -102,7 +97,7 @@
 	small {
 		font-size: .78em;
 	}
-
+	
 	blockquote {
 		margin: 12px 40px;
 	}
@@ -302,16 +297,40 @@
 		- remove line wrapping for all td and th, set background color
 		- restore line wrapping for the last two table cells (description and size)
 	*/
-	.TablePager_nav a { text-decoration: none; }
-	.TablePager { border-collapse: collapse; }
-	.TablePager, .TablePager td, .TablePager th {
-		border: 1px solid #aaaaaa;
-			padding: 0 0.15em 0 0.15em;
-	}
-	.TablePager th { background-color: #eeeeff; color: #000 }
-	.TablePager td { background-color: #ffffff; color: #000 }
-	.TablePager tr:hover td { background-color: #eeeeff }
 
+	@if lightness($color-page) < 35 {
+
+		.TablePager_nav a { text-decoration: none; }
+		.TablePager { border-collapse: collapse; }
+		.TablePager, .TablePager td, .TablePager th {
+			border: 1px solid $color-page;
+			padding: 0 0.15em 0 0.15em;
+		}
+		.TablePager th {
+			background-color: darken($color-page, 5%);
+			color: #FFF
+		}
+		.TablePager td { background-color: $color-page; color: $color-text }
+		.TablePager td.highlited { background-color: lighten( $color-page, 5% ) }
+		.TablePager tr:hover td { background-color: lighten($color-page, 15%) }
+		
+	} @else {
+
+		.TablePager_nav a { text-decoration: none; }
+		.TablePager { border-collapse: collapse; }
+		.TablePager, .TablePager td, .TablePager th {
+			border: 1px solid #aaaaaa;
+			padding: 0 0.15em 0 0.15em;
+		}
+		.TablePager th {
+			background-color: darken($color-page, 10%); 
+			color: darken($color-text, 10%)
+		}
+		.TablePager td { background-color: lighten( $color-page, 10% ); color: darken( $color-text, 5% ) }
+		.TablePager td.highlited { background-color: darken( $color-page, 5% ) }
+		.TablePager tr:hover td { background-color: darken( $color-page, 15% ) }
+		
+	}
 
 	.wikia-infobox {
 		$cell-width: 225px;
@@ -461,24 +480,3 @@ table.wikitable {
 		}
 	}
 }
-
-// /** Exitstitial Links **/
-#exitstitalInfoboxWrapper {
-	h1 {
-		margin-right: 5px;
-		p {
-			font-size: 12px;
-			color: $color-text;
-			padding-top: 5px;
-		}
-	}
-
-	.close {
-		display: none;
-	}
-
-	.wikia-button {
-		float: right;
-	}
-}
-
