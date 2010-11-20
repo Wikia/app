@@ -46,7 +46,16 @@
 			}
 		?>
 		<div id="WikiaArticle" class="WikiaArticle">
-			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD')) ?>
+			<?php 
+				// A/B test
+				$headers = function_exists('apache_request_headers') ? apache_request_headers() : array(); 
+				if (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1") { 
+					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD')); 
+				} 
+				else { 
+					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+				}
+			?>
 
 
 			<?php

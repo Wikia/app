@@ -225,6 +225,10 @@ class BodyModule extends Module {
 			$this->displayComments = false;
 		}
 
+		// A/B test
+		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
+		$useTestBoxad = (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1");
+
 		// Corporate Skin
 		if ($wgEnableCorporatePageExt) {
 			$railModuleList = array (
@@ -235,7 +239,12 @@ class BodyModule extends Module {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
-				$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
+				if ($useTestBoxad) {
+					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
+				} 
+				else {
+					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
+				}
 				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
 			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
 				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
@@ -262,7 +271,12 @@ class BodyModule extends Module {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
+		if ($useTestBoxad) {
+			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
+		}
+		else {
+			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
+		}
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
 		$railModuleList[1050] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3'));
 		

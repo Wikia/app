@@ -18,6 +18,7 @@ class AdModule extends Module {
 			if (BodyModule::isHubPage()) {
 				self::$config['CORP_TOP_LEADERBOARD'] = true;
 				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
+				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['INVISIBLE_1'] = true;
 				self::$config['INVISIBLE_2'] = true;
 				if(!empty($wgEnableAdInvisibleTop)) {
@@ -41,12 +42,14 @@ class AdModule extends Module {
 			}
 			if($wgEnableFAST_HOME2) {
 				self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
+				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 			}
 		} else {
 			if(in_array($namespace, $wgContentNamespaces)) {
 				// content page
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
+				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['INVISIBLE_1'] = true;
 				self::$config['INVISIBLE_2'] = true;
 				self::$config['LEFT_SKYSCRAPER_2'] = true;
@@ -63,15 +66,18 @@ class AdModule extends Module {
 				// search results page
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
+				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 			} else if($namespace == NS_CATEGORY) {
 				// category page
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
+				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['LEFT_SKYSCRAPER_2'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 			} else if( BodyModule::isBlogPost() ) {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
+				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 			}
 		}
 	}
