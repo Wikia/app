@@ -507,6 +507,11 @@ class SkinChooser {
 		if ($userSkin == 'answers' && empty($wgEnableAnswers)) {
 			$userSkin = 'monaco';
 		}
+		
+		// RT#97655
+		if($userSkin == 'monaco' && !$allowMonacoSelection) {
+			$userSkin = 'oasis';			
+		}
 
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
