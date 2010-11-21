@@ -223,6 +223,7 @@ $.loadYUI = function(callback) {
 			$().log('loaded', 'YUI');
 
 			for (var i = 0; i < loadYUICallBackFIFO.length; i++ ){
+				loadYUICallBackFIFO[i].caller = $.loadYUI;
 				loadYUICallBackFIFO[i]();
 			}
 			loadYUICallBackFIFO = null;
