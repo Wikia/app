@@ -34,7 +34,7 @@ See the [[Special:Stafflog|Staff log]] for logs.',
 	'userrenametool-error-request' => 'There was a problem with receiving the request.
 Please go back and try again.',
 	'userrenametool-error-same-user' => 'You cannot rename a user to the same name.',
-	'userrenametool-error-extension-abort' => 'Some of the installed extension prevented the rename process.',
+	'userrenametool-error-extension-abort' => 'An extension prevented the rename process.',
 	'userrenametool-error-cannot-rename-account' => 'Renaming the user account on the shared global database failed.',
 	'userrenametool-error-cannot-create-block' => 'Creation of a log in block failed.',
 	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
