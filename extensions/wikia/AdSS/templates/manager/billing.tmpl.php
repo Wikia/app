@@ -7,6 +7,29 @@
 </fieldset>
 
 <script type="text/javascript">/*<![CDATA[*/
-$('td.TablePager_col_description').mouseover( function() { $(this).find('div').show(); } );
-$('td.TablePager_col_description').mouseout( function() { $(this).find('div').hide(); } );
+$(function() {
+	var changeTooltipPosition = function(event) {
+		var tooltipX = event.pageX - 8;
+		var tooltipY = event.pageY + 8;
+		$('div.tooltip').css({top: tooltipY, left: tooltipX});
+	};
+
+	var showTooltip = function(event) {
+		$('div.tooltip').remove();
+		$('<div class="tooltip"></div>')
+		.append( $(this).find("div").html() )
+		.appendTo('body');
+		changeTooltipPosition(event);
+	};
+
+	var hideTooltip = function() {
+		$('div.tooltip').remove();
+	};
+
+	$('td.TablePager_col_description').bind({
+		mousemove: changeTooltipPosition,
+		mouseenter: showTooltip,
+		mouseleave: hideTooltip
+	});
+} );
 </script>

@@ -1,5 +1,6 @@
+@import "../../../../skins/oasis/css/core/color";
 fieldset.panel {
-	border: 1px solid #D9D9D9;
+	border: 1px solid $color-page-border;
 	margin: 5px;
 	padding: 10px;
 }
@@ -26,4 +27,14 @@ td.TablePager_col_fee, td.TablePager_col_paid {
 
 .rejected {
 	color: red;
+}
+
+.tooltip {
+	background-color: $color-page;
+	border: 3px solid $color-page-border;
+	font-weight: bold;
+	padding: 5px;
+	position: absolute;
+	top: 0; left: 0;
+	z-index: 10;
 }
