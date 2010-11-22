@@ -5,6 +5,7 @@ import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStor
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.startSeleniumSession;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -107,6 +108,27 @@ public class BaseTest {
 		session().waitForPageToLoad(TIMEOUT);
 		assertTrue(session().isTextPresent("You have been logged out."));
 		assertTrue(session().isElementPresent("//a[@class='ajaxLogin']"));
+	}
+
+	protected void waitForAttributeNotEquals(String elementId, String value, int timeOut) throws Exception {
+		long startTimestamp = (new Date()).getTime();
+		while (true) {
+			long curTimestamp = (new Date()).getTime();
+			if (curTimestamp-startTimestamp > timeOut) {
+				assertFalse(session().getAttribute(elementId).equals(value));
+				break;
+			}
+
+			try{
+				if(!session().getAttribute(elementId).equals(value)) {
+					break;
+				}
+			} catch( SeleniumException e ) {}
+			Thread.sleep(1000);
+		}
+	}
+	protected void waitForAttributeNotEquals(String elementId, String value, String timeOut) throws Exception {
+		waitForAttributeNotEquals(elementId, value, Integer.parseInt(TIMEOUT));
 	}
 
 	protected void waitForElement(String elementId, int timeOut)
