@@ -3,6 +3,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 	var $button_url;
 	var $loggedIn;
 	var $logInClass;
+	var $destCityId = 80433; // this page will always redirect to this wiki
 	
 	
 	function __construct() {
@@ -11,8 +12,18 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 	}
 
 	function execute($par ) {
-		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgStyleVersion, $wgTitle, $wgUser, $wgRequest;
+		global $wgOut, $wgCityId, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgStyleVersion, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
+
+		// redirect to www.wikia.com
+		if ( $wgCityID !== $this->destCityId ) {
+			$destServer = unserialize(WikiFactory::getVarByName('wgServer', $this->destCityId)->cv_value);
+			$destArticlePath = unserialize(WikiFactory::getVarByName('wgArticlePath', $this->destCityId)->cv_value);
+
+			$wgOut->redirect( $destServer . str_replace( '$1', 'Special:LandingPage', $destArticlePath ) );
+			return;
+		}
+
 		$this->setHeaders();
 		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/LandingPage/css/LandingPage.scss'));
 
