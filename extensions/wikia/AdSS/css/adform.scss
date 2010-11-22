@@ -51,12 +51,11 @@
 
 	fieldset {
 		@include clearfix;
-		border: none;
 		float: left;
-		padding: 0;
 		width: 460px;
 
 		&.preview {
+			border: none;
 			float: right;
 		}
 
