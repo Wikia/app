@@ -22,6 +22,9 @@
 	<div class="plb-article-form-space separator" ></div>
 <?php endif; ?>
 
+
+<input type="hidden" id="wpPlbId" name="wpPlbId" value="<?php echo $plbId; ?>" />
+
 <form name="plbForm" id="plbForm" action="<?php echo $url ?>" method="post" >
 	<div class="plb-article-form-space" ></div>
 	<?php if(!$editmode): ?>

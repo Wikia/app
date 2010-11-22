@@ -111,4 +111,10 @@ $messages['en'] = array (
 	'plb-property-editor-save' => 'Save',
 	'plb-property-editor-cancel' => 'Cancel',
 	'plb-mytools-link' => 'Layout builder',
+	'plb-parser-gallery-size-not-int' => 'plb-parser-gallery-size-not-int',
+	'plb-parser-gallery-size-too-small' => 'plb-parser-gallery-size-too-small',
+	'plb-parser-gallery-size-too-big' => 'plb-parser-gallery-size-too-big',
+	'plb-parser-gallery-incorrect-spacing' => 'plb-parser-gallery-incorrect-spacing',
+  	'plb-parser-gallery-incorrect-align' => 'plb-parser-gallery-incorrect-align',
+	'plb-parser-image-incorrect-frame' => 'plb-parser-image-incorrect-frame', 
 );

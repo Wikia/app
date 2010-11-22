@@ -24,8 +24,8 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$data['isform'] = true;
 		$data['isempty'] = false;
 		$data['username'] = wfMsg('plb-parser-preview-image-username');
-		$data['width'] = $this->getAttrVal( 'size', true );
-		$data['size'] = $this->getAttrVal( 'size', true );
+		$data['size'] =185;
+		$data['width'] = $data['size'];
 		$data['id'] = 'plb_'.$this->getAttrVal('id', true);
 		$data['img'] = "";
 		$data['value'] = $this->getValue();
@@ -138,7 +138,9 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 
 	private function renderForPreviewAndForm($data) {
 		$data['instructions'] = $this->getAttrVal( 'instructions', true );
-
+		$data['id'] = $this->getAttrVal( 'id', true );
+		$data['type'] = "image";
+		
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates" );
 		$oTmpl->set_vars(array(
 				"data" => $data
@@ -207,7 +209,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		return true;
 	}
 
-	private function getAlign($inAlign = "") {
+	protected function getAlign($inAlign = "") {
 		$inAlign = empty($inAlign) ? $this->getAttrVal( 'align', true):$inAlign;
 		if( $this->getAttrVal( 'type', true ) == 'frameless' ) {
 			$align =  'float' . $inAlign;

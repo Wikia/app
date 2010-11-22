@@ -12,6 +12,7 @@ $(function() {
 	$("#plbForm").submit(function() {
 		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
 	});
+	WikiaPhotoGalleryView.initGalleries();
 });
 
 PageLayoutBuilder.uploadImage = function (size, name) {
@@ -223,5 +224,75 @@ $(function() {
 	    }
 	});
 });
-// * select * //
+// * end select * //
+
+//* gallery *//
+PageLayoutBuilder.uploadGallery = function(element_id) {
+	WikiaPhotoGalleryView.loadEditorJS(function() {
+		PageLayoutBuilder.showGalleryForPLB(element_id);
+	});
+}
+
+PageLayoutBuilder.showGalleryForPLB = function(element_id) {
+	var text = $('#plb_' + element_id ).val();
+	
+	$.ajax({
+		url: wgScript + '?action=ajax&rs=LayoutWidgetGallery::getGalleryDataAjax',
+		data: {
+			element_id : element_id,
+			text :text,
+			plb_id: $("#wpPlbId").val(),
+		},
+		type: "POST",
+		dataType: "json",
+		success: function(data) {
+			WikiaPhotoGallery.showEditor({
+				from: 'view',
+				element_id: element_id,
+				gallery: data,
+				target: $("body") //.closest('.wikia-gallery')
+			}); 
+	}});
+} 
+$(function() {
+	$('body').bind('beforeSaveGalleryData', function(e, element_id, gallery, modal) {
+		var data = { 
+				plb_id: $("#wpPlbId").val(), 
+				gallery: WikiaPhotoGallery.JSONtoWikiTextInner(gallery), 
+				element_id:element_id};
+		
+		$().log(data, 'beforeSaveGalleryData' );
+		$('#plb_' + element_id).val(WikiaPhotoGallery.JSONtoWikiTextInner(gallery) )
+		$.ajax({
+			url: wgScript + '?action=ajax&rs=LayoutWidgetGallery::renderForFormAjax',
+			data: data,
+			type: "POST",
+			success: function(data) {
+				gallery_element = $('#imageboxmaindiv_' + element_id);
+				if(gallery_element.length > 0) {
+					$('#instructionsdiv_' + element_id).replaceWith(' ');
+				} else {
+					gallery_element = $('#gallery-plb_' + element_id);
+				}
+				gallery_element.replaceWith(data);
+				WikiaPhotoGalleryView.initGalleries();
+				modal.hideModal();
+			}
+		});
+		return false;
+	});
+	
+	$('body').bind('beforeGalleryShow', function(e, button) {
+		WikiaPhotoGalleryView.loadEditorJS(function() {
+			var element_id = parseInt($(button).closest('.wikia-gallery').attr('id').replace('gallery-plb_', ''));
+			PageLayoutBuilder.showGalleryForPLB(element_id);
+		});
+		return false;
+	});
+	
+});
+
+
+//* end gallery * //
+
 
