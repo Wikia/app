@@ -6,7 +6,7 @@ class AdModule extends Module {
 	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2'  );
 
 	private function configure() {
-		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt;
+		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgEnableAdTopRightButton;
 
 		self::$config = array();
 
@@ -44,6 +44,9 @@ class AdModule extends Module {
 				self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 			}
+			if(!empty($wgEnableAdTopRightButton)) {
+				self::$config['HOME_TOP_RIGHT_BUTTON'] = true;
+			}
 		} else {
 			if(in_array($namespace, $wgContentNamespaces)) {
 				// content page
@@ -58,6 +61,9 @@ class AdModule extends Module {
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				if(!empty($wgEnableAdInvisibleTop)) {
 					self::$config['INVISIBLE_TOP'] = true;
+				}
+				if(!empty($wgEnableAdTopRightButton)) {
+					self::$config['TOP_RIGHT_BUTTON'] = true;
 				}
 			} else if($namespace == NS_FILE) {
 				// file/image page
