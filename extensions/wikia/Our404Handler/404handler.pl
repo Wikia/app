@@ -330,7 +330,7 @@ while( $request->Accept() >= 0 || $test ) {
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
 		$origname =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $use_http;
-		if( index( $last, $origname ) == -1 ) {
+		if( index( $last, $origname ) == -1 && index( $thumbnail, "/archive/" ) != -1 ) {
 			$last_status = 404;
 			say STDERR "$origname not found in $last" if $debug;
 		}
