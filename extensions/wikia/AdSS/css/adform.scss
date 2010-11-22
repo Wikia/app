@@ -31,6 +31,7 @@
 		width: 300px;
 
 		&.selected {
+			background-color: $color-menu-highlight;
 			@include linear-gradient(false, top, $color-menu-highlight, 60%, $color-module-shadow, 100%);
 			border: 3px solid $color-page-border;
 			height: 300px;
