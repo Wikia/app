@@ -11,7 +11,7 @@ class HistoryDropdownModule extends Module {
 
 	var $content_actions;
 
-	var $revisions;
+	var $revisions = array();
 
 	/**
 	 * Render history dropdown
