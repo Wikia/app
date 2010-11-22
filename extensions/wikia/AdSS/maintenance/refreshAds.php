@@ -22,14 +22,23 @@ $res = $dbw->select(
 	       );
 foreach( $res as $row ) {
 	$ad = AdSS_AdFactory::createFromRow( $row );
-	echo "{$ad->wikiId} | {$ad->id} | {$ad->userEmail} | {$ad->url} | ".wfTimestamp( TS_DB, $ad->expires )." | ";
+	echo "{$ad->wikiId} | {$ad->id} | {$ad->userEmail} (ID={$ad->userId}) | {$ad->url} | ".wfTimestamp( TS_DB, $ad->expires )." | ";
 
-	$billing = new AdSS_Billing();
-	if( $billing->addCharge( $ad ) ) {
-		$ad->refresh();
-		echo "REFRESHED! (".wfTimestamp( TS_DB, $ad->expires).")\n";
+	$pp = PaymentProcessor::newFromUserId( $ad->userId );
+	$baid = '';
+	if( $pp ) {
+		$baid = $pp->getBillingAgreement();
+	}
+	if( $baid ) {
+		$billing = new AdSS_Billing();
+		if( $billing->addCharge( $ad ) ) {
+			$ad->refresh();
+			echo "REFRESHED! (".wfTimestamp( TS_DB, $ad->expires).")\n";
+		} else {
+			echo "failed...\n";
+		}
 	} else {
-		echo "failed...\n";
+		echo "No BAID (skipping)...\n";
 	}
 }
 $dbw->freeResult( $res );
