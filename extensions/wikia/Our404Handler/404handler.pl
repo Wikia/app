@@ -200,6 +200,7 @@ my @tests = qw(
 	/d/desencyclopedie/images/thumb/5/51/Uri.svg/120px-Uri.svg.png
 	/m/muppet/images/thumb/0/0f/Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg/55px-Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg
 	/w/wikiality/images/thumb/300px-Kool-Aid2.jpg
+	/s/sartrans/ru/images/thumb/3/3e/%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg/82px-155%2C900%2C0%2C744-%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg.png
 );
 use warnings;
 my @done = ();
