@@ -121,6 +121,7 @@ $wgHooks[ 'CreatePage::FetchOptions' ][] = 'TopListHelper::onCreatePageFetchOpti
 $wgHooks[ 'ComposeCommonSubjectMail' ][] = 'TopListHelper::onComposeCommonSubjectMail';
 $wgHooks[ 'ComposeCommonBodyMail' ][] = 'TopListHelper::onComposeCommonBodyMail';
 $wgHooks[ 'BeforePageDisplay' ][] = 'TopListHelper::onBeforePageDisplay';
+$wgHooks[ 'ArticleSaveComplete' ][] = 'TopListHelper::onArticleSaveComplete';
 $wgHooks[ 'ArticleDeleteComplete' ][] = 'TopListHelper::onArticleDeleteComplete';
 $wgHooks[ 'ArticleRevisionUndeleted' ][] = 'TopListHelper::onArticleRevisionUndeleted';
 $wgHooks[ 'TitleMoveComplete' ][] = 'TopListHelper::onTitleMoveComplete';
@@ -136,8 +137,3 @@ define( 'TOPLIST_ATTRIBUTE_PICTURE', 'picture');
 define( 'TOPLIST_ATTRIBUTE_LASTUPDATE', 'lastupdate');
 
 $wgHooks['ParserFirstCallInit'][] = "TopListParser::onParserFirstCallInit";
-
-//init extension
-/*global $wgExtensionFunctions;
-
-$wgExtensionFunctions[] = 'TopListHelper::setup';*/
