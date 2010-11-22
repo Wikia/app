@@ -419,12 +419,20 @@ class SolrResult extends SearchResult {
 	}
 
 	private function getWikiHeading() {
-		$sitename = WikiFactory::getVarValueByName( 'wgSitename', $this->mWikiId );
-		$wikititle = trim($this->getWikiTitle());
-		if(strlen($wikititle) > 90) {
-			$wikititle = substr($wikititle, 0 ,90) . '...';
-		}
+		global $wgCityId, $wgSitename;
+
 		if($this->crossWikiaResult) {
+			if ($this->mWikiId != $wgCityId) {
+				$sitename = WikiFactory::getVarValueByName( 'wgSitename', $this->mWikiId );
+			}
+			else {
+				$sitename = $wgSitename;
+			}
+			$wikititle = trim($this->getWikiTitle());
+			if(strlen($wikititle) > 90) {
+				$wikititle = substr($wikititle, 0 ,90) . '...';
+			}
+
 			$wikiname = !empty($wikititle) ? ' - ' . $wikititle : ( !empty($sitename) ? ' - ' . $sitename : '' );
 		}
 		else {
