@@ -1,3 +1,4 @@
+<a name="form"></a>
 <section class="SponsoredLinkDesc">
 	<?php echo $adForm->error( 'wpType' ); ?>
 	<div class="chooseheader"><?php echo wfMsgHtml( 'adss-form-pick-plan' ); ?></div>
@@ -22,7 +23,7 @@
 			<a class="wikia-button" id="wpSelectBanner" href="#form"><?php echo wfMsgHtml( 'adss-button-select' ); ?></a>
 		</section>
 </section>
-<a name="form"></a>
+
 <section class="SponsoredLinkForm">
 	<form method="post" enctype="multipart/form-data" action="<?php echo $action; ?>">
 		<input name="wpToken" type="hidden" value="<?php echo $token; ?>" />
@@ -102,6 +103,9 @@ $(function() {
 	else if( $("#wpType").val() == "banner" ) {
 		$("#wpSelectPage").parent().addClass("selected");
 		$("#wpText").parent().hide();
+	}
+	if( location.href.indexOf("#") == -1 ) {
+		location.href = location.href + "#form";
 	}
 } );
 $("#wpSelectSite").click( function() {

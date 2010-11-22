@@ -3,27 +3,27 @@
 class AdSS_Util {
 
 	static function getSitePricing() {
-		global $wgAdSS_pricingConf;
-		return $wgAdSS_pricingConf['site'];
+		global $wgAdSS_pricingConf, $wgAdSS_pricingLevel;
+		return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['site'];
 	}
 
 	static function getBannerPricing() {
-		global $wgAdSS_pricingConf;
-		return $wgAdSS_pricingConf['banner'];
+		global $wgAdSS_pricingConf, $wgAdSS_pricingLevel;
+		return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['banner'];
 	}
 
 	static function getPagePricing( $title=null ) {
-		global $wgAdSS_pricingConf;
+		global $wgAdSS_pricingConf, $wgAdSS_pricingLevel;
 
 		if( $title ) {
-			if( isset( $wgAdSS_pricingConf['page'][$title->getText()] ) ) {
-				return $wgAdSS_pricingConf['page'][$title->getText()];
-			} elseif( isset( $wgAdSS_pricingConf['page']['#mainpage#'] )
+			if( isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page'][$title->getText()] ) ) {
+				return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page'][$title->getText()];
+			} elseif( isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page']['#mainpage#'] )
 					&& $title->equals( Title::newMainPage() ) ) {
-				return $wgAdSS_pricingConf['page']['#mainpage#'];
+				return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page']['#mainpage#'];
 			} 
 		}
-		return $wgAdSS_pricingConf['page']['#default#'];
+		return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page']['#default#'];
 	}
 
 	static function formatPrice( $priceConf, $shares=1 ) {
