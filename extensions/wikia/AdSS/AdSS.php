@@ -66,15 +66,13 @@ $wgAdSS_DBname = 'adss';
 $wgAdSS_BannerUploadDirectory = $wgUploadDirectory . '/adss';
 $wgAdSS_BannerUploadPath = $wgUploadPath . '/adss';
 
-// override in your LocalSettings.php
-$wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
-$wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
-$wgPayflowProCredentials = array(); 
-$wgAdSS_pricingConf = array(
+$wgAdSS_pricingLevel = 'low';
+$wgAdSS_pricingConf = array();
+$wgAdSS_pricingConf['high'] = array(
 		'site' => array(
 			'price'     => '5.00',
 			'period'    => 'd', //daily
-			'max-share' => '0.25',
+			'max-share' => '0.20',
 			),
 		'page' => array(
 			'#default#' => array(
@@ -87,4 +85,43 @@ $wgAdSS_pricingConf = array(
 			'period' => 'd', //daily
 			),
 		);
+$wgAdSS_pricingConf['medium'] = array(
+		'site' => array(
+			'price'     => '5.00',
+			'period'    => 'w', //daily
+			'max-share' => '0.20',
+			),
+		'page' => array(
+			'#default#' => array(
+				'price'   => '5.00',
+				'period'  => 'm', //monthly
+				),
+			),
+		'banner' => array(
+			'price'  => '20.00',
+			'period' => 'w', //daily
+			),
+		);
+$wgAdSS_pricingConf['low'] = array(
+		'site' => array(
+			'price'     => '5.00',
+			'period'    => 'm', //daily
+			'max-share' => '0.20',
+			),
+		'page' => array(
+			'#default#' => array(
+				'price'   => '1.00',
+				'period'  => 'm', //monthly
+				),
+			),
+		'banner' => array(
+			'price'  => '20.00',
+			'period' => 'm', //daily
+			),
+		);
 $wgAdSSBillingThreshold = 50;
+
+// override in your LocalSettings.php
+$wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
+$wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
+$wgPayflowProCredentials = array(); 
