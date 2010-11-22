@@ -37,6 +37,8 @@ class UserProfileRailModule extends Module {
 				$this->maxEdits = $wikiData[ 'editCount' ];
 			}
 		}
+		
+		if( $this->maxEdits <= 0 ) $this->maxEdits = 1;
 
 		wfProfileOut( __METHOD__ );
 	}
