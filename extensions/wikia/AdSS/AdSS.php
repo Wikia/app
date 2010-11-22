@@ -68,16 +68,16 @@ $wgAdSS_BannerUploadPath = $wgUploadPath . '/adss';
 
 $wgAdSS_pricingConf = array();
 $wgAdSS_pricingConf['high'] = array(
-		'site' => array(
-			'price'     => '5.00',
-			'period'    => 'd', //daily
-			'max-share' => '0.20',
-			),
 		'page' => array(
 			'#default#' => array(
 				'price'   => '5.00',
 				'period'  => 'm', //monthly
 				),
+			),
+		'site' => array(
+			'price'     => '5.00',
+			'period'    => 'd', //daily
+			'max-share' => '0.20',
 			),
 		'banner' => array(
 			'price'  => '20.00',
@@ -85,37 +85,37 @@ $wgAdSS_pricingConf['high'] = array(
 			),
 		);
 $wgAdSS_pricingConf['medium'] = array(
-		'site' => array(
-			'price'     => '5.00',
-			'period'    => 'w', //daily
-			'max-share' => '0.20',
-			),
 		'page' => array(
 			'#default#' => array(
 				'price'   => '5.00',
 				'period'  => 'm', //monthly
 				),
 			),
+		'site' => array(
+			'price'     => '1.00',
+			'period'    => 'd', //daily
+			'max-share' => '0.20',
+			),
 		'banner' => array(
-			'price'  => '20.00',
-			'period' => 'w', //daily
+			'price'  => '4.00',
+			'period' => 'd', //daily
 			),
 		);
 $wgAdSS_pricingConf['low'] = array(
-		'site' => array(
-			'price'     => '5.00',
-			'period'    => 'm', //daily
-			'max-share' => '0.20',
-			),
 		'page' => array(
 			'#default#' => array(
 				'price'   => '1.00',
 				'period'  => 'm', //monthly
 				),
 			),
+		'site' => array(
+			'price'     => '5.00',
+			'period'    => 'm', //monthly
+			'max-share' => '0.20',
+			),
 		'banner' => array(
 			'price'  => '20.00',
-			'period' => 'm', //daily
+			'period' => 'm', //monthly
 			),
 		);
 if( !isset( $wgAdSS_pricingLevel ) || !isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel] ) ) {

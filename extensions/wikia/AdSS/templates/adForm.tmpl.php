@@ -66,15 +66,19 @@
 			<?php echo $adForm->error( 'wpEmail' ); ?>
 			<input type="text" name="wpEmail" value="<?php $adForm->output( 'wpEmail' ); ?>" />
 
+			<?php if( !$isAdmin ): ?>
 			<p id="adssLoginAction"><?php echo wfMsgHtml( 'adss-form-login-desc', '<a href="#">'.wfMsgHtml( 'adss-form-login-link' ).'</a>' ); ?></p>
 			<div style="display:none">
+			<?php endif; ?>
 			<label for="wpPassword"><?php echo wfMsgHtml( 'adss-form-password' ); ?></label>
 			<input type="password" name="wpPassword" id="wpPassword" value="<?php $adForm->output( 'wpPassword' ); ?>" />
 			<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $login; ?>" />
+			<?php if( !$isAdmin ): ?>
 			<p><?php echo wfMsgHtml( 'adss-form-or' ); ?></p>
 			</div>
 
 			<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $submit; ?>" />
+			<?php endif; ?>
 		</fieldset>
 
 		<fieldset class="preview">
@@ -101,8 +105,9 @@ $(function() {
 		$("#wpBanner").parent().hide();
 	}
 	else if( $("#wpType").val() == "banner" ) {
-		$("#wpSelectPage").parent().addClass("selected");
+		$("#wpSelectBanner").parent().addClass("selected");
 		$("#wpText").parent().hide();
+		$("fieldset.preview").hide();
 	}
 	if( location.href.indexOf("#") == -1 ) {
 		location.href = location.href + "#form";
@@ -132,7 +137,7 @@ $("#wpSelectBanner").click( function() {
 	$("#wpType").val("banner");
 	$("#wpBanner").parent().show();
 	$("#wpText").parent().hide();
-	$("#wpWeight").parent().hide();
+	$("#wpWeight").val("1").removeAttr("disabled").parent().show();
 	$("fieldset.preview").hide();
 } );
 $("#adssLoginAction > a").click( function(e) {

@@ -43,8 +43,9 @@ abstract class AdSS_Ad {
 		}
 		switch( $f->get( 'wpType' ) ) {
 			case 'banner':
-				$this->weight = 1;
+				$this->weight = $f->get( 'wpWeight' );
 				$this->price = AdSS_Util::getBannerPricing();
+				$this->price['price'] = $this->weight * $this->price['price'];
 				break;
 			case 'site-premium':
 				$this->weight = 4;

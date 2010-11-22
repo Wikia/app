@@ -20,7 +20,7 @@ $messages['en'] = array(
 	'adss-form-additionaltext' => 'Text to be displayed under your link:',
 	'adss-form-type' => 'Sponsorship type:',
 	'adss-form-page' => 'Page to sponsor:',
-	'adss-form-banner' => 'Your banner:',
+	'adss-form-banner' => 'Upload your banner here:',
 	'adss-form-price' => 'Sponsorship amount:',
 	'adss-form-shares' => 'Number of shares:',
 	'adss-form-email' => 'Your e-mail address:',
@@ -33,24 +33,25 @@ $messages['en'] = array(
 	'adss-form-auth-errormsg' => 'Either your e-mail address or password is incorrect.',
 	'adss-form-field-empty-errormsg' => 'This field must not be empty',
 	'adss-form-non-existent-title-errormsg' => 'This page does not exist',
+	'adss-form-banner-upload-errormsg' => 'You must select an image to upload',
 	'adss-form-pick-plan-errormsg' => 'You must select a plan',
-	'adss-form-pick-plan' => 'Choose your plan',
-	'adss-form-site-plan-header' => 'Buy a link across the whole wiki',
-	'adss-form-site-plan-description' => 'Get your links running across the whole wiki for one low price.
+	'adss-form-pick-plan' => 'Choose an ad package',
+	'adss-form-site-plan-header' => 'Buy a Sponsored Link across the whole wiki',
+	'adss-form-site-plan-description' => 'Get Sponsored Links on {{SITENAME}} for one low price.
 
 1 share is currently equal to $1% of {{SITENAME}} sponsored links and only costs $2. You can cancel at any time.',
 	'adss-form-site-plan-price' => '$1 for one share',
-	'adss-form-site-premium-plan-header' => 'Buy a premium link across the whole wiki',
-	'adss-form-site-premium-plan-description' => 'Get your links running across the whole wiki for one low price and get even more exposure by buying more shares.
+	'adss-form-site-premium-plan-header' => 'Buy 4 Sponsored Links for the price of 3',
+	'adss-form-site-premium-plan-description' => 'Get Sponsored Links on {{SITENAME}} and get even more exposure by buying in bulk.
 
 1 share is currently equal to $1% of {{SITENAME}} sponsored links. With this option you are buying four shares at the price of three! You can cancel at any time.',
 	'adss-form-site-premium-plan-price' => 'Only $1 for four shares!',
 	'adss-form-page-plan-header' => 'Buy a link on just this page',
 	'adss-form-page-plan-description' => 'This let you target a custom message to the best page for your product at only $1, and you can cancel at any time.',
 	'adss-form-page-plan-price' => '$1 for one link',
-	'adss-form-banner-plan-header' => 'Buy a banner on top of every page',
-	'adss-form-banner-plan-description' => 'Get your banner running across the whole wiki for one low price.',
-	'adss-form-banner-plan-price' => '$1 for one banner',
+	'adss-form-banner-plan-header' => 'Buy a 728x90 graphical banner at the top of every page',
+	'adss-form-banner-plan-description' => 'Get a share of the banners running across the site for one low price.',
+	'adss-form-banner-plan-price' => '$1 for one share of the banners',
 	'adss-form-or' => '- or -',
 	'adss-form-thanks' => "Thank you for your sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
 
@@ -62,6 +63,7 @@ $messages['en'] = array(
 	'adss-button-save-pay' => 'Save & pay',
 	'adss-button-pay-paypal' => 'Pay with PayPal',
 	'adss-button-select' => 'Select',
+	'adss-button-buy-now' => 'Buy NOW',
 	'adss-preview-header' => 'Preview',
 	'adss-preview-prompt' => 'Here is what your sponsorship will look like - click "{{int:adss-button-edit}}" to go back and make changes, or "{{int:adss-button-save-pay}}" to save it and go to PayPal.',
 	'adss-click-here' => 'Click here', // FIXME: Merge in 'adss-paypal-redirect'. Bad i18n.

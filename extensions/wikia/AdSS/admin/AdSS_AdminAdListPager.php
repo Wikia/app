@@ -86,6 +86,10 @@ class AdSS_AdminAdListPager extends TablePager {
 		return "ad_created";
 	}
 
+	function getDefaultDirections() {
+		return true;
+	}
+
 	function getFieldNames() {
 		return array(
 				'ad_id'      => 'Ad ID',
@@ -106,30 +110,31 @@ class AdSS_AdminAdListPager extends TablePager {
 		$qi = array(
 				'tables' => array( 'ads' ),
 				'fields' => array( '*' ),
+				'conds'  => array( 'ad_user_id > 0' ),
 			    );
 		switch( $this->mFilter ) {
 			case 'active':
-				$qi['conds'] = array(
+				$qi['conds'] = array_merge( $qi['conds'], array(
 						'ad_closed IS NULL',
 						'ad_expires > NOW()',
-						);
+						) );
 				break;
 			case 'pending':
-				$qi['conds'] = array(
+				$qi['conds'] = array_merge( $qi['conds'], array(
 						'ad_closed IS NULL',
 						'ad_expires IS NULL',
-						);
+						) );
 				break;
 			case 'expired':
-				$qi['conds'] = array(
+				$qi['conds'] = array_merge( $qi['conds'], array(
 						'ad_closed IS NULL',
 						'ad_expires <= NOW()',
-						);
+						) );
 				break;
 			case 'closed':
-				$qi['conds'] = array(
+				$qi['conds'] = array_merge( $qi['conds'], array(
 						'ad_closed IS NOT NULL',
-						);
+						) );
 				break;
 		}
 		return $qi;
