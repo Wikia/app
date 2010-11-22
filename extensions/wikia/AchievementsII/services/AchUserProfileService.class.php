@@ -93,18 +93,12 @@ class AchUserProfileService {
 		if (is_array($user_ids) && count($user_ids) > 0) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
-			$conds = array();
-			$conds['wiki_id'] = $wgCityId;
-			$conds[] = "user_id IN (" . implode(',', $user_ids) . ")";
-			$conds[] = "date = (SELECT max(date) from ach_user_badges a1 where wiki_id = $wgCityId and user_id = a1.user_id) ";
+			$sql = "SELECT user_id, badge_type_id, badge_lap FROM `ach_user_badges` a1
+					WHERE wiki_id='$wgCityId'
+					AND user_id IN (" . implode(',', $user_ids) . ")
+					AND date = (SELECT max(date) from ach_user_badges a2 where wiki_id = $wgCityId and a1.user_id = a2.user_id) ";
 
-			$res = $dbr->select(
-				'ach_user_badges',
-				'user_id, badge_type_id, badge_lap',
-				$conds,
-				__METHOD__,
-				array('ORDER BY' => 'date DESC')
-			);
+			$res = $dbr->query( $sql, __METHOD__ );
 			while($row = $dbr->fetchObject($res)) {
 				$badges[$row->user_id] = new AchBadge($row->badge_type_id, $row->badge_lap);
 			}
