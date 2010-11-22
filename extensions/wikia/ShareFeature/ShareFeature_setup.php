@@ -35,7 +35,7 @@ $wgShareFeatureSites = array(
 	array(
 		'name'	=>	'Facebook',
 		'id'	=>	1,
-		'url' 	=>	'http://www.facebook.com/sharer.php?u=$1?t=$2'
+		'url' 	=>	'http://www.facebook.com/sharer.php?u=$1&t=$2'
 	),
 	array(
 		'name'	=>	'Twitter',
