@@ -1732,3 +1732,8 @@ function find(){
  * 
  * Load Order will be  #adfunctions; #adcall-1; #mylibs 
  */
+
+ /* wlee: merely including this library prevents window.onload from firing.
+  * line below to trigger window.onload 
+  */
+ghostwriter.flushloadhandlers();
