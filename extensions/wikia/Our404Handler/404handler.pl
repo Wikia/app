@@ -180,7 +180,6 @@ my @tests = qw(
 	/c/carnivores/images/thumb/5/59/Padlock.svg/120px-Padlock.svg.png
 	/y/yugioh/images/thumb/a/ae/Flag_of_the_United_Kingdom.svg/700px-Flag_of_the_United_Kingdom.svg.png
 	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
-	/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG
 	/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png
 	/c/central/images/thumb/e/e9/CP_c17i4°.svg/250px-CP_c17i4°.svg.png
 	/c/central/images/thumb/b/bf/Wiki_wide.png/155px-Wiki_wide.png
@@ -201,6 +200,7 @@ my @tests = qw(
 	/m/muppet/images/thumb/0/0f/Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg/55px-Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg
 	/w/wikiality/images/thumb/300px-Kool-Aid2.jpg
 	/s/sartrans/ru/images/thumb/3/3e/%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg/82px-155%2C900%2C0%2C744-%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg.png
+	/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG
 );
 use warnings;
 my @done = ();
@@ -330,7 +330,7 @@ while( $request->Accept() >= 0 || $test ) {
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
 		$origname =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $use_http;
-		if( index( $last, $origname ) == -1 && index( $thumbnail, "/archive/" ) != -1 ) {
+		if( index( $last, $origname ) == -1 && index( $thumbnail, "/archive/" ) == -1 ) {
 			$last_status = 404;
 			say STDERR "$origname not found in $last (thumbnail: $thumbnail)" if $debug;
 		}
