@@ -19,7 +19,7 @@ class UserProfilePageHelper {
 		$isBlogPost = ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && $title->isSubpage() );
 		
 		$action = $wgRequest->getVal('action', 'view');
-		$isAllowedAction = ( empty( $action ) || $action == 'view' || $action == 'purge' );
+		$isAllowedAction = ( $action == 'view' || $action == 'purge' );
 		
 		return $isAllowedPage && !$isBlogPost && $isAllowedAction;
 	}
