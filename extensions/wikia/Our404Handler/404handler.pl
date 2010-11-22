@@ -484,6 +484,9 @@ while( $request->Accept() >= 0 || $test ) {
 						undef $rsvg;
 						undef $xmlp;
 					}
+					else {
+						say STDERR "Thumbnail requested for SVG $original is not PNG file" if $debug;
+					}
 				}
 				elsif( $mimetype =~ m!application/ogg! ) {
 					#
