@@ -16,8 +16,6 @@ class PageLayoutBuilderJob extends Job {
 
 	const WELCOMEUSER = "Wikia";
 	const PBLAYOUT = "PageLayoutBuilder";
-	const NS_LAYOUT = 902;
-
 	/**
 	 * Construct a job
 	 *
@@ -140,7 +138,7 @@ class PageLayoutBuilderJob extends Job {
 				$revision->setTitle( $Title );
 			}
 
-			if ( is_object($Title) && ( NS_LAYOUT == $Title->getNamespace() )  ) {	
+			if ( is_object($Title) && ( NS_PLB_LAYOUT == $Title->getNamespace() )  ) {	
 				Wikia::log( __METHOD__, "pblayout", $Title->getDBkey() );
 				$pbLayoutJob = new PageLayoutBuilderJob(
 					$Title,

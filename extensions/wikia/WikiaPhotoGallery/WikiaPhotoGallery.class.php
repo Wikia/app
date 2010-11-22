@@ -190,12 +190,16 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 		}
 
+		if( isset($params['id']) ) {
+			$this->mData['id'] = $params['id']; 
+		}
+		
 		// generic parameters
 
 		// hide "Add photo" button
 		if (isset($params['hideaddbutton']) && $params['hideaddbutton'] == 'true') {
 			$this->mShowAddButton = false;
-		}
+ 		}
 
 		// rss feed parameter
 		if (!empty($params['rssfeed'])) {
@@ -412,8 +416,11 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		// store ID of gallery
-		$this->mData['id'] = self::$galleriesCounter++;
-
+		
+		if(empty($this->mData['id'] )) {
+			$this->mData['id'] = self::$galleriesCounter++;
+		}
+		
 		wfProfileOut(__METHOD__);
 	}
 
@@ -736,6 +743,9 @@ class WikiaPhotoGallery extends ImageGallery {
 					$fileObject->getHandler()->parserTransformHook($this->mParser, $fileObject);
 				}
 			}
+			
+			wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
+			
 			$html .= Xml::openElement('div',
 				array(
 				'class' => 'gallery-image-wrapper'.

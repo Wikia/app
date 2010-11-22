@@ -101,7 +101,7 @@ class PageLayoutBuilderParser extends Parser {
 		$value = (isset($attributes['id']) && isset($self->formValues[$attributes['id']])) ? $self->formValues[$attributes['id']]:"";
 		$error = (isset($attributes['id']) && isset($self->errorsList[$attributes['id']]));
 
-		$oWidget = LayoutWidgetBase::getNewWidget($self->mCurrentTagName, $attributes, $value, $error);
+		$oWidget = LayoutWidgetBase::getNewWidget($self->mCurrentTagName, $attributes, $value, $error, $self);
 
 		if(empty($self->mPlbFormElements)) {
 			$self->mPlbFormElements = array();
@@ -254,14 +254,21 @@ class PageLayoutBuilderParser extends Parser {
 
 	public function extractFormValues($attributes) {
 		wfProfileIn(__METHOD__);
-		/* save for use in form */
+		
+		/* save for use in form */		
 		$this->formValues = array();
 		foreach ( $attributes as $key => $value) {
 			if( strpos($key, "val_") === 0 ) {
 				$key = (int) str_replace("val_", "" , $key);
 				$this->formValues[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
+				$this->formValues[$key] = strtr( $this->formValues[$key], array(
+					'&#10;' => "\n",
+					'&#13;' => "\r",
+					'&#9;' => "\t",
+				));
 			}
 		}
+				
 		wfProfileOut(__METHOD__);
 		return $this->formValues;
 	}

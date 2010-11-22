@@ -481,6 +481,12 @@ var WikiaPhotoGallery = {
 
 					case 'view':
 						hideModal = false;
+						var event = jQuery.Event("beforeSaveGalleryData");
+						var element_id = this.editor.allparams.element_id || 0;
+						$("body").trigger(event, [element_id, gallery, $('#WikiaPhotoGalleryEditor')]);
+						if ( event.isDefaultPrevented() ) {
+						    return false;
+						}
 						WikiaPhotoGallery.ajax('saveGalleryData', {hash:gallery.hash, wikitext:gallery.wikitext, title:wgPageName, starttime:gallery.starttime}, function(data) {
 							if (data.info == 'ok') {
 								$('#WikiaPhotoGalleryEditor').hideModal();
@@ -630,6 +636,7 @@ var WikiaPhotoGallery = {
 					this.log(params.gallery);
 
 					this.editor.gallery = params.gallery;
+					this.editor.allparams = params;
 
 					if (this.isSlideshow()) {
 						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
@@ -643,7 +650,8 @@ var WikiaPhotoGallery = {
 				break;
 		}
 		this.editor.from = params.from;
-
+		this.target = params.target;
+		$().log(this.target);
 		// setup upload / find page
 		$('#WikiaPhotoGallerySearchForm').
 			unbind('.find').
@@ -900,7 +908,7 @@ var WikiaPhotoGallery = {
 						linktext: '',
 						name: imageName
 					};
-
+					$().log(self.editor.gallery.images);
 					self.editor.gallery.images.push(data);
 				});
 
@@ -1269,7 +1277,7 @@ var WikiaPhotoGallery = {
 		// send JSON-encoded gallery data to backend to render HTML for it
 		var galleryJSON = $.toJSON({
 			images: gallery.images,
-			externalImages: gallery.externalImages,
+			externalImages: gallery.externalImages || {},
 			params: gallery.params
 		});
 
@@ -1961,7 +1969,8 @@ var WikiaPhotoGallery = {
 				}
 			}
 		});
-
+		 
+		
 		// set slider initial value
 		var initialValue = parseInt(params[paramName]) || values['default'];
 
@@ -2305,6 +2314,7 @@ var WikiaPhotoGallery = {
 
 	// fetch and show gallery editor -- this is an entry point
 	showEditor: function(params) {
+		$().log(params, "showEdit params");
 		var self = WikiaPhotoGallery;
 
 		// for anons show ComboAjaxLogin
@@ -2692,6 +2702,35 @@ var WikiaPhotoGallery = {
 		});
 	},
 
+	JSONtoWikiTextInner: function(data) {
+		HTML = '';
+		if ((typeof data.params.rssfeed == 'undefined' || data.params.rssfeed == '') &&
+				(typeof data.params.showrecentuploads == 'undefined' || data.params.showrecentuploads != 'true')) {
+				// add images
+				for (img in data.images) {
+					var imageData = data.images[img];
+
+					// skip images "generated" by showrecentuploads
+					if (imageData.recentlyUploaded) {
+						continue;
+					}
+
+					HTML += imageData.name;
+					if (imageData.caption != '') {
+						HTML += '|' + imageData.caption;
+					}
+					if (imageData.link != '') {
+						HTML += '|link=' + imageData.link;
+					}
+					if (this.isSlideshow() && imageData.linktext != '') {
+						HTML += '|linktext=' + imageData.linktext;
+					}
+					HTML += '\n';
+				}
+		}
+		return HTML;
+	},
+	
 	// create wikitext from JSON data
 	JSONtoWikiText: function(data) {
 		var HTML = '<gallery';
@@ -2738,34 +2777,11 @@ var WikiaPhotoGallery = {
 			}
 		});
 
+		
 		HTML += '>\n';
-
-		if ((typeof data.params.rssfeed == 'undefined' || data.params.rssfeed == '') &&
-			(typeof data.params.showrecentuploads == 'undefined' || data.params.showrecentuploads != 'true')) {
-			// add images
-			for (img in data.images) {
-				var imageData = data.images[img];
-
-				// skip images "generated" by showrecentuploads
-				if (imageData.recentlyUploaded) {
-					continue;
-				}
-
-				HTML += imageData.name;
-				if (imageData.caption != '') {
-					HTML += '|' + imageData.caption;
-				}
-				if (imageData.link != '') {
-					HTML += '|link=' + imageData.link;
-				}
-				if (this.isSlideshow() && imageData.linktext != '') {
-					HTML += '|linktext=' + imageData.linktext;
-				}
-				HTML += '\n';
-			}
-		}
-
+		HTML += this.JSONtoWikiTextInner(data);
 		HTML += '</gallery>';
+		
 		return HTML;
 	},
 

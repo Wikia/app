@@ -25,14 +25,16 @@ abstract class LayoutWidgetBase {
 	/*
 	 * @return layoutWidgetBase
 	 */
-	public static final function getNewWidget($tag, $attributes = array(), $value = null, $error = 0) {
+	public static final function getNewWidget($tag, $attributes = array(), $value = null, $error = 0, $parser = null) {
 		global $wgPLBwidgets;
+		
 		if(empty($wgPLBwidgets[$tag])) {
 			return null;
 		}
 
 		$class = new $wgPLBwidgets[$tag]($attributes, $value, $error);
 		if($class->getName() == $tag) {
+			$class->parser = $parser;
 			return $class;
 		}
 

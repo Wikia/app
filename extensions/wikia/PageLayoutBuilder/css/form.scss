@@ -107,3 +107,21 @@ ul.plb-form-actions {
 		}
 	}
 }
+
+.WikiaArticle a.wikia-button:visited {
+	color: $color-button-text;
+}
+
+#WikiaPhotoGalleryOptionsTabs {
+	display: none;
+}
+
+#WikiaPhotoGalleryEditorCheckboxes {
+	display:none;
+}
+
+.WikiaPhotoGalleryEditorPage {
+	h1{
+		display: none;
+	}
+}

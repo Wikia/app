@@ -54,14 +54,15 @@ var WikiaPhotoGalleryView = {
 		var self = this;
 
 		// find galleries in article content
-		var galleries = this.getArticle().find('.wikia-gallery').not('.template');
+		var galleries = this.getArticle().find('.wikia-gallery').not('.template').not('.inited');
 		if (galleries.exists()) {
 			this.log('found ' + galleries.length + ' galleries');
+			$().log(galleries, "List of galleris")
 		}
 
 		var addButtonSelector = (window.skin == 'oasis') ? '.wikia-photogallery-add' : '.wikia-gallery-add';
 
-		galleries.
+		galleries.addClass("inited").
 			children(addButtonSelector).
 				// show "Add a picture to this gallery" button
 				show().
@@ -69,11 +70,15 @@ var WikiaPhotoGalleryView = {
 					// show editor after click on a link
 					click(function(ev) {
 						ev.preventDefault();
-
+						var event = jQuery.Event( "beforeGalleryShow" );
+						$("body").trigger(event, [$(ev.target)]);
+						if ( event.isDefaultPrevented() ) {
+						    return false;
+						}
+						
 						var gallery = $(this).closest('.wikia-gallery');
 						var hash = gallery.attr('hash');
 						var id = gallery.attr('id');
-						self.log(gallery);
 
 						var gallery = $().find('.wikia-gallery');
 
@@ -84,9 +89,12 @@ var WikiaPhotoGalleryView = {
 							WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
 								if (data && data.info == 'ok') {
 									data.gallery.id = id;
+									$().log('data');
+									$().log(data.gallery);
 									WikiaPhotoGallery.showEditor({
 										from: 'view',
-										gallery: data.gallery
+										gallery: data.gallery,
+										target: $(ev.target).closest('.wikia-gallery')
 									});
 								} else {
 									WikiaPhotoGallery.showAlert(
@@ -200,7 +208,7 @@ var WikiaPhotoGalleryView = {
 			slideshow.find('.wikia-slideshow-images').find('a').click(onPopOutClickFn);
 
 			// handle clicks on "Add Image"
-			slideshow.find('.wikia-slideshow-addimage').click(function() {
+			slideshow.find('.wikia-slideshow-addimage').click(function(e) {
 				self.loadEditorJS(function() {
 					// tracking
 					self.track('/slideshow/basic/addImage');
@@ -208,9 +216,11 @@ var WikiaPhotoGalleryView = {
 					WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
 						if (data && data.info == 'ok') {
 							data.gallery.id = id;
+							$().log(data.gallery);
 							WikiaPhotoGallery.showEditor({
 								from: 'view',
-								gallery: data.gallery
+								gallery: data.gallery,
+								target: $(e.target).closest('.wikia-slideshow')
 							});
 						} else {
 							WikiaPhotoGallery.showAlert(

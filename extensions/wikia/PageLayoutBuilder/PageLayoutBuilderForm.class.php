@@ -30,6 +30,8 @@ class PageLayoutBuilderForm extends SpecialPage {
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) );
 		$wgOut->addStyle( wfGetSassUrl( 'skins/oasis/css/core/_EditPage.scss' ) );
 		
+		
+//		$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js");
 		$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
 		
 		if($this->pageId > 0) {
@@ -92,6 +94,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 				"iserror" => !empty($this->formErrors),
 				"editmode" => $this->formValues['pageId'] > 0,
 				"layout" => $html,
+				"plbId" => $this->formValues['plbId'],
 				"url" => $wgRequest->getFullRequestURL(),
 				"ispreview" => !empty($this->isPreview) && $this->isPreview,
 				"previewdata" => !empty($this->previewData) ? $this->previewData:"",

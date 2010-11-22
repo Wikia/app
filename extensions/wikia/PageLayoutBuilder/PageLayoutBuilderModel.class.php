@@ -161,7 +161,27 @@ class PageLayoutBuilderModel {
 
 		return $out;
 	}
-
+//TODO: memc
+	public static function getElement( $layout_id, $element_id, $is_delete = 0) {
+		$db = wfGetDB(DB_SLAVE, array());
+		$res = $db->select(
+				'plb_field',
+				array(
+					'plb_f_prop',
+					'plb_f_element_id' ),
+				array( 
+					'plb_f_element_id' => (int) $element_id,
+					'plb_f_layout_id' => (int) $layout_id ),
+				__METHOD__
+		);
+		
+		$out = null;
+		while($row = $db->fetchRow($res)) {
+			$out = unserialize($row['plb_f_prop']);
+		}
+		
+		return $out;
+	}
 //TODO: memec
 	public static function articleIsFromPLB($page_id) {
 		$db = wfGetDB(DB_SLAVE, array());

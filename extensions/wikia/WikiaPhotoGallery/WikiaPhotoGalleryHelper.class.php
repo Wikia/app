@@ -22,6 +22,7 @@ class WikiaPhotoGalleryHelper {
 	// used when parsing and getting gallery data
 	private static $mGalleryHash;
 	private static $mGalleryData;
+	public static $lastGalleryData;
 
 	/**
 	 * Creates instance of object to be used to render an image gallery by MW parser
@@ -1209,17 +1210,21 @@ class WikiaPhotoGalleryHelper {
 		return $result;
 	}
 
+	static public function initParserHook() {
+		global $wgHooks;
+		//overwrite previous hooks returning `false`
+		$wgHooks['BeforeParserrenderImageGallery'] = array('WikiaPhotoGalleryHelper::beforeParserrenderImageGallery');		
+	}
+
 	/**
 	 * AJAX helper called from view mode to get gallery data
 	 * @author Marooned
 	 */
 	static public function getGalleryDataByHash($hash, $revisionId = 0, $type = WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
-		global $wgHooks, $wgTitle, $wgUser, $wgOut;
-
+		global $wgTitle, $wgUser, $wgOut;
 		wfProfileIn(__METHOD__);
-
-		//overwrite previous hooks returning `false`
-		$wgHooks['BeforeParserrenderImageGallery'] = array('WikiaPhotoGalleryHelper::beforeParserrenderImageGallery');
+		
+		self::initParserHook();
 		self::$mGalleryHash = $hash;
 
 		$parser = new Parser();
@@ -1267,6 +1272,8 @@ class WikiaPhotoGalleryHelper {
 		if ($data['hash'] == self::$mGalleryHash) {
 			self::$mGalleryData = $data;
 		}
+
+		self::$lastGalleryData = $data;
 
 		wfProfileOut(__METHOD__);
 
