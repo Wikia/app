@@ -112,7 +112,22 @@ class TopListHelper {
 
 		return true;
 	}
-
+	
+	/**
+	 * @author Federico "Lox" Lucignano
+	 * 
+	 * Callback for the ArticleSaveComplete hook
+	 */
+	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId ) {
+		$title = $article->getTitle();
+		
+		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
+			self::fixCategorySortKey( $title );
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * callback for UnwatchArticleComplete hook
 	 *
@@ -296,14 +311,16 @@ class TopListHelper {
 	public static function onTitleMoveComplete( &$title, &$nt, &$user, $pageId, $redirId ) {
 		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
 			$title->moveSubpages( $nt, false );
+			self::fixCategorySortKey( $title );
+			self::fixCategorySortKey( $nt );
 		}
 		return true;
 	}
 
-	public static function onAddPage( &$title, &$titletext, &$sortkey ){
+	public static function onAddPage( &$categoryPage, &$title, &$titletext, &$sortkey ){
 		if( $title->getNamespace() == NS_TOPLIST )
 		{
-			$sortkey = $titletext = $title->getText();
+			$titletext = $title->getText();
 		}
 
 		return true;
@@ -648,6 +665,21 @@ class TopListHelper {
 		$response->setContentType( 'application/json; charset=utf-8' );
 
 		return $response;
+	}
+	
+	static public function fixCategorySortKey( Title $title ) {
+		
+		if( $title->exists() ) {
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->update(
+				'categorylinks',
+				array(
+					'cl_sortkey' => $title->getText()
+				),
+				array( 'cl_from' => $title->getArticleID() ),
+				__METHOD__
+			);
+		}
 	}
 }
 
