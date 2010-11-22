@@ -390,7 +390,8 @@ AdDriverDelayedLoader.callDART = function() {
 		{
 			insertType: "append",
 			script: { src: AdDriverDelayedLoader.currentAd.dartUrl },
-			done: function() { 
+			one: function() { 
+				ghostwriter.flushloadhandlers();
 				var callbackAdProvider = AdDriver.callDARTCallback(AdDriverDelayedLoader.currentAd.slotname); 
 				if (callbackAdProvider == 'Liftium') { 
 					var liftiumCall = new AdDriverCall(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, ''); 
@@ -416,7 +417,8 @@ AdDriverDelayedLoader.callLiftium = function() {
 			{
 				insertType: "append",
 				script: { text: "Liftium.callAd(\""+size+"\");" },
-				done: function() { 
+				done: function() {
+					ghostwriter.flushloadhandlers();
 					AdDriver.postProcessSlot(slotname);
 					AdDriverDelayedLoader.loadNext();
 				}
