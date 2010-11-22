@@ -22,7 +22,7 @@ public class WikiActivityTest extends BaseTest {
 		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
 
 		// check presence of myhome feed (still has this name in WikiActivity)
-		assertTrue(session().isElementPresent("myhome-main"));
+		assertTrue(session().isElementPresent("myhome-activityfeed"));
 	}
 
 	@Test(groups={"oasis","CI"})

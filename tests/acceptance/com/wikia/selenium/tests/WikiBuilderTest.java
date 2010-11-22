@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 public class WikiBuilderTest extends BaseTest {
 
-	@Test(groups="oasis")
+	@Test(groups={"oasis","CI"})
 	public void testWikiBuilderTest() throws Exception {
 		String rand = Long.toString(Math.abs(new Random().nextLong()), 36).toUpperCase();
 		loginAsStaff();
