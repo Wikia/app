@@ -33,7 +33,7 @@ $messages['en'] = array(
         'userprofilepage-user-group-staff-tooltip' => 'This user is a Wikia Staff member',
         'userprofilepage-user-group-bot-tooltip' => 'This user is a Bot',
         'userprofilepage-user-group-bureaucrat-tooltip' => 'This user is a Bureaucrat on this wiki',
-        'userprofilepage-user-group-helper-tooltip' => 'This user is an Helper on this wiki',
+        'userprofilepage-user-group-helper-tooltip' => 'This user is an Helper',
 	'userprofilepage-user-group-vstf-tooltip' => 'This user is a member of the Spam Task Force',
 
 	//Top Wikis
