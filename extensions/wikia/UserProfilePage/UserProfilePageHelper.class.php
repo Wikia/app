@@ -173,7 +173,7 @@ class UserProfilePageHelper {
 	static public function onGetRailModuleList(&$modules) {
 		global $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces, $wgTitle;
 		
-		if ( self::isAllowed( $wgTitle ) && $wgTitle->getNamespace() != NS_SPECIAL ) {//no right rail in special pages
+		if ( $wgTitle->getNamespace() != NS_SPECIAL && self::isAllowed( $wgTitle ) ) {//no right rail in special pages
 			foreach( $modules as $weight => $module ) {
 				if( $wgEnableAchievementsExt && $module[0] == 'Achievements' ) {
 					$modules[ $weight ] = array('Achievements', 'UserProfilePagesModule', null);
