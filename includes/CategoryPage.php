@@ -193,7 +193,7 @@ class CategoryViewer {
 		$titletext = $wgContLang->convert( $title->getPrefixedText() );
 
 		/*Wikia changes start*/
-		wfRunHooks('CategoryPage::AddPage', array(&$title, &$titletext, &$sortkey));
+		wfRunHooks('CategoryPage::AddPage', array(&$this, &$title, &$titletext, &$sortkey));
 		/*Wikia changes end*/
 
 		$this->articles[] = $isRedirect
