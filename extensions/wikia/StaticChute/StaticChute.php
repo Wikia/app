@@ -114,7 +114,7 @@ class StaticChute {
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+			//'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 		);
 	}
 
@@ -157,10 +157,10 @@ class StaticChute {
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+			//'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
-			'../extensions/wikia/AdEngine/AdDriver.js',
+			//'../extensions/wikia/AdEngine/AdDriver.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
@@ -198,10 +198,10 @@ class StaticChute {
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+			//'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
-			'../extensions/wikia/AdEngine/AdDriver.js',
+			//'../extensions/wikia/AdEngine/AdDriver.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
@@ -237,10 +237,10 @@ class StaticChute {
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+			//'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
-			'../extensions/wikia/AdEngine/AdDriver.js',
+			//'../extensions/wikia/AdEngine/AdDriver.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
@@ -326,10 +326,10 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+			//'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
-			'../extensions/wikia/AdEngine/AdDriver.js',
+			//'../extensions/wikia/AdEngine/AdDriver.js',
 			'../extensions/wikia/Interstitial/Exitstitial.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
@@ -368,10 +368,10 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+			//'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
-			'../extensions/wikia/AdEngine/AdDriver.js',
+			//'../extensions/wikia/AdEngine/AdDriver.js',
 		);
 		$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
 
