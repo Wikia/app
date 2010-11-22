@@ -1,36 +1,42 @@
 <?php
 class UserProfilePageHelper {
+	
+	/**
+	 * @author Federico "Lox" Lucignano
+	 * 
+	 * @param Title $title
+	 * @return bool 
+	 */
+	static public function isAllowed( Title $title ) {
+		global $wgUserProfilePagesNamespaces, $wgRequest;
+		
+		$isAllowedPage = (
+			in_array( $title->getNamespace(), $wgUserProfilePagesNamespaces ) ||
+			$title->isSpecial( 'Following' ) ||
+			$title->isSpecial( 'Contributions' )
+		);
+		
+		$isBlogPost = ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && $title->isSubpage() );
+		
+		$action = $wgRequest->getVal('action', 'view');
+		$isAllowedAction = ( empty( $action ) || $action == 'view' || $action == 'purge' );
+		
+		return $isAllowedPage && !$isBlogPost && $isAllowedAction;
+	}
+	
 	/**
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
 		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgUserProfilePagesNamespaces;
 		wfProfileIn(__METHOD__);
-
-		$ns = $skin->mTitle->getNamespace();
-
-		if( defined( 'NS_BLOG_ARTICLE' ) ) {
-			if( $ns == NS_BLOG_ARTICLE ) {
-				$isBlogPage = true;
-			}
-			else {
-				$isBlogPage = false;
-			}
-		}
-		else {
-			$isBlogPage = false;
-		}
 		
-		// Return without any changes if this isn't in the user namespace OR
-		// if the user is doing something besides viewing or purging this page
-		$action = $wgRequest->getVal('action', 'view');
-		if ( ( !in_array( $ns, $wgUserProfilePagesNamespaces ) && $ns != NS_SPECIAL ) || ($action != 'view' && $action != 'purge') || ( $ns != NS_SPECIAL && $skin->mTitle->isSubpage() ) ) {
+		if ( !self::isAllowed( $skin->mTitle ) ) {
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
 		
-		
-		$user = self::getUserFromTitle( $skin->mTitle );
+		$user = ( $skin->mTitle->isSpecial( 'Contributions' ) || $skin->mTitle->isSpecial( 'Following' ) ) ? $wgUser : self::getUserFromTitle( $skin->mTitle );
 		$userName = null;
 		
 		// sanity check
@@ -49,9 +55,25 @@ class UserProfilePageHelper {
 		// load extension css and js
 		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
-
-		if( $ns == NS_USER_TALK || $ns == NS_SPECIAL || $isBlogPage ) {
-			// don't replace page content for talk and blog pege (RT: #98342, #88757)
+		
+		$ns = $skin->mTitle->getNamespace();
+		
+		if( defined( 'NS_BLOG_ARTICLE' ) ) {
+			if( $ns == NS_BLOG_ARTICLE ) {
+				$isBlogPage = true;
+			}
+			else {
+				$isBlogPage = false;
+			}
+		}
+		else {
+			$isBlogPage = false;
+		}
+		
+		$isUserSubpage = ( $ns == NS_USER && $skin->mTitle->isSubpage() );
+		
+		if( $isUserSubpage || $ns == NS_USER_TALK || $isBlogPage || $ns == NS_SPECIAL  ) {
+			// don't replace page content for talk and blog page (RT: #98342, #88757) and special pages
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -151,21 +173,19 @@ class UserProfilePageHelper {
 	static public function onGetRailModuleList(&$modules) {
 		global $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces, $wgTitle;
 		
-		$isBlogPost = (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && $wgTitle->isSubpage());
-		
-		if( in_array( $wgTitle->getNamespace(), $wgUserProfilePagesNamespaces ) && !$isBlogPost ){
+		if ( self::isAllowed( $wgTitle ) && $wgTitle->getNamespace() != NS_SPECIAL ) {//no right rail in special pages
 			foreach( $modules as $weight => $module ) {
 				if( $wgEnableAchievementsExt && $module[0] == 'Achievements' ) {
 					$modules[ $weight ] = array('Achievements', 'UserProfilePagesModule', null);
 					continue;
 				}
-				
+
 				if( in_array( $module[0], array( 'LatestPhotos', 'LatestActivity', 'PagesOnWiki' ) ) ) {
 					unset( $modules[ $weight ] );
 				}
 			}
-			
-			
+
+
 			$modules[1499] = array('UserProfileRail', 'TopWikis', null);
 			$modules[1498] = array('LatestActivity', 'Index', null);
 			$modules[1497] = array('UserProfileRail', 'TopPages', null);
