@@ -66,7 +66,6 @@ $wgAdSS_DBname = 'adss';
 $wgAdSS_BannerUploadDirectory = $wgUploadDirectory . '/adss';
 $wgAdSS_BannerUploadPath = $wgUploadPath . '/adss';
 
-$wgAdSS_pricingLevel = 'low';
 $wgAdSS_pricingConf = array();
 $wgAdSS_pricingConf['high'] = array(
 		'site' => array(
@@ -119,6 +118,10 @@ $wgAdSS_pricingConf['low'] = array(
 			'period' => 'm', //daily
 			),
 		);
+if( !isset( $wgAdSS_pricingLevel ) || !isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel] ) ) {
+	$wgAdSS_pricingLevel = 'low';
+}
+
 $wgAdSSBillingThreshold = 50;
 
 // override in your LocalSettings.php
