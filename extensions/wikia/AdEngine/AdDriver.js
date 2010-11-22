@@ -390,7 +390,7 @@ AdDriverDelayedLoader.callDART = function() {
 		{
 			insertType: "append",
 			script: { src: AdDriverDelayedLoader.currentAd.dartUrl },
-			one: function() { 
+			done: function() { 
 				ghostwriter.flushloadhandlers();
 				var callbackAdProvider = AdDriver.callDARTCallback(AdDriverDelayedLoader.currentAd.slotname); 
 				if (callbackAdProvider == 'Liftium') { 
