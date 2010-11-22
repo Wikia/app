@@ -410,74 +410,80 @@ while( $request->Accept() >= 0 || $test ) {
 				#
 				# some svg are completely broken so we check extension file as well
 				#
-				my ( $filext ) = $original =~ /\.(\w+)$/;
+				my ( $filext ) = $original =~ /\.(\w+)$/; # extension of original file
+				my ( $thbext ) = $thumbnail =~ /\.(\w+)$/; # extension of requested thumbnail
 				$filext = lc( $filext );
 				if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! || $filext eq "svg" ) {
 					#
-					# read width & height of SVG file
+					# for svg files only png thumbnails are valid
 					#
-					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					my $xmlp = XMLin( $content );
-					my $origw = $xmlp->{ 'width' };
-					my $origh = $xmlp->{ 'height' };
-					$origw = to_float( $origw ) unless is_float( $origw );
-					$origh = to_float( $origh ) unless is_float( $origh );
+					if( lc( $thbext ) eq 'png' ) {
+						#
+						# read width & height of SVG file
+						#
+						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+						my $xmlp = XMLin( $content );
+						my $origw = $xmlp->{ 'width' };
+						my $origh = $xmlp->{ 'height' };
+						$origw = to_float( $origw ) unless is_float( $origw );
+						$origh = to_float( $origh ) unless is_float( $origh );
 
-					unless( $origw && $origh ) {
-						#
-						# http://www.w3.org/TR/SVG/coords.html#ViewBoxAttribute
-						#
-						say STDERR "There's no width and height defined for SVG file, checking viewbox" if $debug > 2;
-						my $viewBox = $xmlp->{ "viewBox" };
-						if( $viewBox && $viewBox =~/\d+[\s|,]*\d+[\s|,]*(\d+)[\s|,]*(\d+)/ ) {
-							$origw = $1;
-							$origh = $2;
+						unless( $origw && $origh ) {
+							#
+							# http://www.w3.org/TR/SVG/coords.html#ViewBoxAttribute
+							#
+							say STDERR "There's no width and height defined for SVG file, checking viewbox" if $debug > 2;
+							my $viewBox = $xmlp->{ "viewBox" };
+							if( $viewBox && $viewBox =~/\d+[\s|,]*\d+[\s|,]*(\d+)[\s|,]*(\d+)/ ) {
+								$origw = $1;
+								$origh = $2;
+							}
 						}
-					}
 
-					my $height = scaleHeight( $origw, $origh, $width, $test );
-					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					say STDERR "reading svg as xml (for size checking) $origw x $origh, time: $t_elapsed" if $debug > 2;
-
-					#
-					# RSVG thumbnailer
-					#
-					my $rsvg = new Image::LibRSVG;
-
-					#
-					# there is stupid bug (typo) in Image::LibRSVG so we have to
-					# define hash with dimension and dimesion
-					#
-
-					my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
-					$rsvg->loadImageFromString( $content, 0, $args );
-					$transformed = 1;
-					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
-
-					use bytes;
-					my $output = $rsvg->getImageBitmap();
-					my $output_length = length( $output );
-
-					if( $output_length ) {
-						print "HTTP/1.1 200 OK\r\n";
-						print "Cache-control: max-age=30\r\n";
-						print "Content-Length: $output_length\r\n";
-						print "Last-Modified: $last_modified\r\n";
-						print "Connection: keep-alive\r\n";
-						print "Content-type: image/png\r\n\r\n";
-						print $output unless $test;
+						my $height = scaleHeight( $origw, $origh, $width, $test );
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
+						say STDERR "reading svg as xml (for size checking) $origw x $origh, time: $t_elapsed" if $debug > 2;
+
+						#
+						# RSVG thumbnailer
+						#
+						my $rsvg = new Image::LibRSVG;
+
+						#
+						# there is stupid bug (typo) in Image::LibRSVG so we have to
+						# define hash with dimension and dimesion
+						#
+
+						my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
+						$rsvg->loadImageFromString( $content, 0, $args );
 						$transformed = 1;
-					}
-					else {
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						say STDERR "SVG conversion from $original to $thumbnail failed, time: $t_elapsed" if $debug;
+						say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
+
+						use bytes;
+						my $output = $rsvg->getImageBitmap();
+						my $output_length = length( $output );
+
+						if( $output_length ) {
+							print "HTTP/1.1 200 OK\r\n";
+							print "Cache-control: max-age=30\r\n";
+							print "Content-Length: $output_length\r\n";
+							print "Last-Modified: $last_modified\r\n";
+							print "Connection: keep-alive\r\n";
+							print "Content-type: image/png\r\n\r\n";
+							print $output unless $test;
+							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+							say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
+							$transformed = 1;
+						}
+						else {
+							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+							say STDERR "SVG conversion from $original to $thumbnail failed, time: $t_elapsed" if $debug;
+						}
+						no bytes;
+						undef $rsvg;
+						undef $xmlp;
 					}
-					no bytes;
-					undef $rsvg;
-					undef $xmlp;
 				}
 				elsif( $mimetype =~ m!application/ogg! ) {
 					#
