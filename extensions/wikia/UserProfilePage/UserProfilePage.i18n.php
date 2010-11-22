@@ -37,7 +37,7 @@ $messages['en'] = array(
 	'userprofilepage-user-group-vstf-tooltip' => 'This user is a member of the Spam Task Force',
 
 	//Top Wikis
-	'userprofilepage-top-wikis-title' => '$1\'s Top wiki\'s',
+	'userprofilepage-top-wikis-title' => '$1\'s Top wikis',
 	'userprofilepage-top-wikis-edit-count' => 'Number of edits',
 	'userprofilepage-top-wikis-hidden-see-more' => 'You have hidden {{PLURAL:$1|$1 wiki|$1 wikis}}',
 	'userprofilepage-top-wikis-unhide-label' => 'unhide',
