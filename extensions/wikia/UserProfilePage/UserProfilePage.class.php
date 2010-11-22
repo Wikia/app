@@ -16,16 +16,11 @@ class UserProfilePage {
 	 * @return UserProfilePage
 	 */
 	static public function getInstance( User $user = null ) {
-		global $wgTitle, $wgUser;
+		global $wgTitle;
 		if ( empty( self::$mInstance ) ) {
 			if (! ($user instanceof User) ) {
 				$user = UserProfilePageHelper::getUserFromTitle( $wgTitle );
 			}
-			
-			if (! ($user instanceof User) ) {
-				$user = $wgUser;
-			}
-			
 			self::$mInstance = new self( $user );
 		}
 

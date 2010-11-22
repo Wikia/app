@@ -18,12 +18,13 @@ class LatestActivityModule extends Module {
 		wfLoadExtensionMessages('MyHome');
 
 		$this->moduleHeader = wfMsg('oasis-activity-header');
-		
-		if( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePageHelper::isAllowed( $wgTitle ) ) {
-			$user = UserProfilePageHelper::getExistingUserFromTitle( $wgTitle );
-			if( !empty( $user ) ) {
-				$this->userName = $user->getName();
-				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
+		if( !empty( $wgEnableUserProfilePagesExt ) ) {
+			if( in_array($wgTitle->getNamespace(), $wgUserProfilePagesNamespaces) ) {
+				$user = UserProfilePageHelper::getExistingUserFromTitle( $wgTitle );
+				if( !empty( $user ) ) {
+					$this->userName = $user->getName();
+					$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
+				}
 			}
 		}
 
