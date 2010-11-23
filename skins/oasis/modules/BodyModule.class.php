@@ -12,6 +12,7 @@ class BodyModule extends Module {
 	var $wgSuppressFooter;
 	var $wgSuppressArticleCategories;
 	var $wgEnableCorporatePageExt;
+	var $wgABTests;
 
 	// skin vars
 	var $content;
@@ -124,164 +125,168 @@ class BodyModule extends Module {
 
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail, $wgEnableUserProfilePagesExt;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail, $wgEnableUserProfilePagesExt, $wgABTests;
 
 		$railModuleList = array();
+		
+		if(!in_array('fullmonty', $wgABTests)) {
 
-		$spotlightsParams = array('mode'=>'RAIL', 'adslots'=> array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule', 'adGroupName'=>'SPOTLIGHT_RAIL');
-
-		$namespace = $wgTitle->getNamespace();
-		$subjectNamespace = MWNamespace::getSubject($namespace);
-
-		if($namespace == NS_SPECIAL) {
-			if ($wgTitle->isSpecial('Search')) {
-				$railModuleList = array();
-			} else if ($wgTitle->isSpecial('Leaderboard')) {
+			$spotlightsParams = array('mode'=>'RAIL', 'adslots'=> array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule', 'adGroupName'=>'SPOTLIGHT_RAIL');
+	
+			$namespace = $wgTitle->getNamespace();
+			$subjectNamespace = MWNamespace::getSubject($namespace);
+	
+			if($namespace == NS_SPECIAL) {
+				if ($wgTitle->isSpecial('Search')) {
+					$railModuleList = array();
+				} else if ($wgTitle->isSpecial('Leaderboard')) {
+					$railModuleList = array (
+						1500 => array('Search', 'Index', null),
+						1300 => array('LatestActivity', 'Index', null),
+						1290 => array('LatestEarnedBadges', 'Index', null)
+					);
+				} else if ($wgTitle->isSpecial('WikiActivity')) {
+					$railModuleList = array (
+						1500 => array('Search', 'Index', null),
+						1300 => array('HotSpots', 'Index', null),
+						1290 => array('CommunityCorner', 'Index', null),
+					);
+				} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
+					// intentional nothing here
+				} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
+					$railModuleList = array (
+						1500 => array('Search', 'Index', null),
+						1450 => array('PagesOnWiki', 'Index', null),
+						1300 => array('LatestActivity', 'Index', null),
+						1250 => array('LatestPhotos', 'Index', null),
+					);
+					if($wgEnableSpotlightsV2_Rail) {
+						$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+					}
+				} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
+						$railModuleList = array (
+							1501 => array('Search', 'Index', null),
+							1500 => array('PageLayoutBuilderForm', 'Index', null)
+						);
+				}
+				else {
+					// don't show any module for MW core special pages
+					$railModuleList = array();
+	
+					wfProfileOut(__METHOD__);
+					return;
+				}
+			}
+			else {
+				// search module appears on all pages except search results, where it is added to the body (by BodyModule)
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
-					1300 => array('LatestActivity', 'Index', null),
-					1290 => array('LatestEarnedBadges', 'Index', null)
 				);
-			} else if ($wgTitle->isSpecial('WikiActivity')) {
-				$railModuleList = array (
-					1500 => array('Search', 'Index', null),
-					1300 => array('HotSpots', 'Index', null),
-					1290 => array('CommunityCorner', 'Index', null),
-				);
-			} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
-				// intentional nothing here
-			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
-				$railModuleList = array (
-					1500 => array('Search', 'Index', null),
-					1450 => array('PagesOnWiki', 'Index', null),
-					1300 => array('LatestActivity', 'Index', null),
-					1250 => array('LatestPhotos', 'Index', null),
-				);
+			}
+	
+			// Content, category and forum namespaces
+			if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT)) ||
+				in_array($subjectNamespace, $wgContentNamespaces) ||
+				array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
+				// add any content page related rail modules here
+				
+				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+				$railModuleList[1300] = array('LatestActivity', 'Index', null);
+				$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+				
 				if($wgEnableSpotlightsV2_Rail) {
 					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 				}
-			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
-					$railModuleList = array (
-						1501 => array('Search', 'Index', null),
-						1500 => array('PageLayoutBuilderForm', 'Index', null)
-					);
+			}
+	
+			// User page namespaces
+			if(in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces())) {
+				$page_owner = User::newFromName($wgTitle->getText());
+	
+				if($page_owner) {
+					if( !$page_owner->getOption('hidefollowedpages') && empty( $wgEnableUserProfilePagesExt ) ) {
+						$railModuleList[1200] = array('FollowedPages', 'Index', null);
+					}
+	
+					if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
+						$railModuleList[1350] = array('Achievements', 'Index', null);
+					}
+				}
+			}
+	
+			if (self::isBlogPost() || self::isBlogListing()) {
+				$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
+				if($wgEnableSpotlightsV2_Rail) {
+					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+				}
+			}
+			
+			// Display comments on content and blog pages
+			if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
+				$this->displayComments = true;
+			} else {
+				$this->displayComments = false;
+			}
+	
+			// A/B test
+			$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
+			$useTestBoxad = (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1");
+	
+			// Corporate Skin
+			if ($wgEnableCorporatePageExt) {
+				$railModuleList = array (
+					1500 => array('Search', 'Index', null),
+				);
+				// No rail on main page or edit page for corporate skin
+				if ( in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
+					$railModuleList = array();
+				}
+				else if (self::isHubPage()) {
+					if ($useTestBoxad) {
+						$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
+					} 
+					else {
+						$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
+					}
+					$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
+				//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
+					$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
+				} else {  // content pages
+					$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
+				}
+				if ($wgTitle->isSpecial('Search')) $railModuleList = array();
+				wfProfileOut(__METHOD__);
+				return $railModuleList;
+			}
+			// we don't want any modules on these namespaces including talk namespaces (even ad modules) and on edit pages and main pages
+			if (in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage()) {
+				wfProfileOut(__METHOD__);
+				return array();
+			}
+			// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
+			if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal) && !in_array($subjectNamespace, $wgContentNamespaces)) {
+				wfProfileOut(__METHOD__);
+				return array();
+			}
+			// If the entire page is non readable due to permissions, don't display the rail either RT#75600
+			if (!$wgTitle->userCanRead()) {
+				wfProfileOut(__METHOD__);
+				return array();
+			}
+	
+			if ($useTestBoxad) {
+				$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
 			}
 			else {
-				// don't show any module for MW core special pages
-				$railModuleList = array();
-
-				wfProfileOut(__METHOD__);
-				return;
+				$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
 			}
-		}
-		else {
-			// search module appears on all pages except search results, where it is added to the body (by BodyModule)
-			$railModuleList = array (
-				1500 => array('Search', 'Index', null),
-			);
-		}
-
-		// Content, category and forum namespaces
-		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT)) ||
-			in_array($subjectNamespace, $wgContentNamespaces) ||
-			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
-			// add any content page related rail modules here
+			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
+			$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
+			$railModuleList[1050] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3'));
 			
-			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-			$railModuleList[1300] = array('LatestActivity', 'Index', null);
-			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+			wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 			
-			if($wgEnableSpotlightsV2_Rail) {
-				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
-			}
 		}
-
-		// User page namespaces
-		if(in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces())) {
-			$page_owner = User::newFromName($wgTitle->getText());
-
-			if($page_owner) {
-				if( !$page_owner->getOption('hidefollowedpages') && empty( $wgEnableUserProfilePagesExt ) ) {
-					$railModuleList[1200] = array('FollowedPages', 'Index', null);
-				}
-
-				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
-					$railModuleList[1350] = array('Achievements', 'Index', null);
-				}
-			}
-		}
-
-		if (self::isBlogPost() || self::isBlogListing()) {
-			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
-			if($wgEnableSpotlightsV2_Rail) {
-				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
-			}
-		}
-		
-		// Display comments on content and blog pages
-		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
-			$this->displayComments = true;
-		} else {
-			$this->displayComments = false;
-		}
-
-		// A/B test
-		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
-		$useTestBoxad = (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1");
-
-		// Corporate Skin
-		if ($wgEnableCorporatePageExt) {
-			$railModuleList = array (
-				1500 => array('Search', 'Index', null),
-			);
-			// No rail on main page or edit page for corporate skin
-			if ( in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
-				$railModuleList = array();
-			}
-			else if (self::isHubPage()) {
-				if ($useTestBoxad) {
-					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
-				} 
-				else {
-					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
-				}
-				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
-			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
-				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
-			} else {  // content pages
-				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
-			}
-			if ($wgTitle->isSpecial('Search')) $railModuleList = array();
-			wfProfileOut(__METHOD__);
-			return $railModuleList;
-		}
-		// we don't want any modules on these namespaces including talk namespaces (even ad modules) and on edit pages and main pages
-		if (in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage()) {
-			wfProfileOut(__METHOD__);
-			return array();
-		}
-		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
-		if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal) && !in_array($subjectNamespace, $wgContentNamespaces)) {
-			wfProfileOut(__METHOD__);
-			return array();
-		}
-		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
-		if (!$wgTitle->userCanRead()) {
-			wfProfileOut(__METHOD__);
-			return array();
-		}
-
-		if ($useTestBoxad) {
-			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
-		}
-		else {
-			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
-		}
-		$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
-		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
-		$railModuleList[1050] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3'));
-		
-		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 		
 		wfProfileOut(__METHOD__);
 
