@@ -283,10 +283,6 @@ else {
 	$request    = FCGI::Request();
 }
 
-if( $use_devel ) {
-	use Data::Dump;
-}
-
 my $flm            = new File::LibMagic;
 my $maxwidth       = 3000;
 my $transformed    = 0;
@@ -512,10 +508,11 @@ while( $request->Accept() >= 0 || $test ) {
 						if( is_int( $x1 ) && is_int( $x2 ) && is_int( $y1 ) && is_int( $y2 ) ) {
 							#
 							# cut rectangle from original, preserve aspect ratio
+							# @todo put into white background when thumbnail size is smaller than requested
 							#
 
 							#
-							# first create default bitmap from svg file
+							# first create default size bitmap from svg file
 							#
 							my $w = SVG_DEFAULT_WIDTH;
 							my $h = $w / $aspect;
@@ -561,7 +558,7 @@ while( $request->Accept() >= 0 || $test ) {
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 							say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
 
-							$output = $rsvg->getImageBitmap( 'png' );
+							$output = $rsvg->getImageBitmap( "png" );
 						}
 						use bytes;
 						my $output_length = length( $output );
