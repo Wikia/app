@@ -199,13 +199,16 @@ class SpecialAdminAds extends SpecialPage {
 	//use the full URL, fully expanded with index.php?title=Special:AdminAds 
 	//when registering with Paypal
 	private function HandlePayPal(){
-		global $wgRequest, $wgHTTPProxy;
+		global $wgRequest, $wgHTTPProxy, $wgDevelEnvironment;
 
 		//NOTE: sending to https may require further configuration
 		//an empty $result variable may be an indicator of this problem
 		//may need to do other stuff to enable https
-		//$url = "http://www.sandbox.paypal.com/cgi-bin/webscr";
-		$url = "http://www.paypal.com/cgi-bin/webscr";
+		if( empty( $wgDevelEnvironment ) ) {
+			$url = "http://www.paypal.com/cgi-bin/webscr";
+		} else {
+			$url = "http://www.sandbox.paypal.com/cgi-bin/webscr";
+		}
 
 		if(is_array($_POST) && isset($_POST['payment_status'])!=''){
 			if(get_magic_quotes_gpc()) {
