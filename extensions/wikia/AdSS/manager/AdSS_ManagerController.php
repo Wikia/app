@@ -192,6 +192,7 @@ class AdSS_ManagerController {
 		if( $token ) {
 			$pp = new PaymentProcessor( $token );
 			if( AdSS_Util::matchToken( $token ) ) {
+				$pp->fetchPayerId();
 				$baid = $pp->createBillingAgreement();
 			} else {
 				list( $host, $lag ) = wfGetLB( $wgAdSS_DBname )->getMaxLag();
