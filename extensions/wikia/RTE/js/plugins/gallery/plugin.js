@@ -41,7 +41,7 @@ CKEDITOR.plugins.add('rte-gallery',
 	setupGallery: function(gallery) {
 		gallery.
 			unbind('.gallery').
-			bind('edit.gallery', function(ev) {
+			bind('click.gallery', function(ev) {
 				var gallery = $(this);
 
 				// call editor

@@ -7,7 +7,7 @@ DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate 
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r30045 build 20101118',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r30192 build 20101123',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -5329,7 +5329,7 @@ $.cookies.set('RTENoticeDismissed',1,{hoursToLive:24*365*10,domain:window.RTECoo
 var cookieValue=$.cookies.get('RTENoticeDismissed');if(cookieValue==1){RTE.log('first run notice - cookie set');return true;}
 return false;},init:function(editor){var self=this;editor.on('instanceReady',function(){if(self.isDismissed()){return;}
 var notice=$('#RTEFirstRunNotice');notice.children('#RTEFirstRunNoticeClose').bind('click',self.dismiss);notice.slideDown();setTimeout(RTE.repositionRTEStuff,1000);RTE.log('first run notice - show');RTE.track('firstRunNotice','init');});}});CKEDITOR.plugins.add('rte-gallery',{init:function(editor){var self=this;editor.on('wysiwygModeReady',function(){var gallery=RTE.getEditor().find('.image-gallery');self.setupGallery(gallery);});if(typeof window.WikiaPhotoGallery!='undefined'){editor.addCommand('addphotogallery',{exec:function(editor){WikiaPhotoGallery.showEditor({from:'wysiwyg'});}});editor.ui.addButton('Gallery',{title:editor.lang.photoGallery.add,className:'RTEGalleryButton',command:'addphotogallery'});RTE.tools.blockCommandInHeader('addphotogallery');}
-else{RTE.log('WikiaPhotoGallery is not enabled here - disabling "Gallery" button');return;}},setupGallery:function(gallery){gallery.unbind('.gallery').bind('edit.gallery',function(ev){var gallery=$(this);WikiaPhotoGallery.showEditor({from:'wysiwyg',gallery:gallery});}).attr('title',function(){var data=$(this).getData();var key=(data.type==1)?'tooltip':'tooltipSlideshow';return RTE.instance.lang.photoGallery[key];});}});(function()
+else{RTE.log('WikiaPhotoGallery is not enabled here - disabling "Gallery" button');return;}},setupGallery:function(gallery){gallery.unbind('.gallery').bind('click.gallery',function(ev){var gallery=$(this);WikiaPhotoGallery.showEditor({from:'wysiwyg',gallery:gallery});}).attr('title',function(){var data=$(this).getData();var key=(data.type==1)?'tooltip':'tooltipSlideshow';return RTE.instance.lang.photoGallery[key];});}});(function()
 {var alignRemoveRegex=/(-moz-|-webkit-|start|auto)/i;function getState(editor,path)
 {var firstBlock=path.block||path.blockLimit;var alignableElements=(typeof editor.config.alignableElements=='object')?editor.config.alignableElements:[];if(!firstBlock||(alignableElements.length>1&&alignableElements.indexOf(firstBlock.getName())==-1)){return CKEDITOR.TRISTATE_DISABLED;}
 var currentAlign=firstBlock.getComputedStyle('text-align').replace(alignRemoveRegex,'');if((!currentAlign&&this.isDefaultAlign)||currentAlign==this.value){return CKEDITOR.TRISTATE_ON;}
