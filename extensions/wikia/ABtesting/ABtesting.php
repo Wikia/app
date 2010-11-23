@@ -12,13 +12,14 @@ $wgExtensionCredits['other'][] = array(
 // longer then 60 days, otherwise after 60 days user can get different version of test then had before
 $wgABexpirationTime = 60*60*24*60;
 
+$wgABtests = array();
+
 /* CONFIGURATION - BEGIN */
 
 // This is configuration of example test
 // 10% of user will get version 1st (getABtest return 0)
 // 30% of user will get version 2nd (getABtest return 1)
 // 60% of user will get version 3rd (getABtest return 2)
-global $wgABtests;
 $wgABtests['exampleTest'] = array('variants' => array(1, 3, 6));
 
 /* CONFIGURATION - END */
