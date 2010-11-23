@@ -210,7 +210,7 @@ class SpecialAdminAds extends SpecialPage {
 			$url = "http://www.sandbox.paypal.com/cgi-bin/webscr";
 		}
 
-		if(is_array($_POST) && isset($_POST['payment_status'])!=''){
+		if( is_array($_POST) && isset( $_POST['txn_type'] ) ) {
 			if(get_magic_quotes_gpc()) {
 				foreach($_POST as $key=>$value){
 					$_POST[$key]=$value;
@@ -234,41 +234,43 @@ class SpecialAdminAds extends SpecialPage {
 			curl_close($ch); 
 
 			if (strcmp ($result, "VERIFIED") == 0) { 
-				// TODO: 
-				// Check the payment_status is Completed 
-				// Check that txn_id has not been previously processed (necessary?)
-				// Check that receiver_email is your Primary PayPal email 
+				if( isset( $_POST['payment_status'] ) ) {
+					// TODO: 
+					// Check the payment_status is Completed 
+					// Check that txn_id has not been previously processed (necessary?)
+					// Check that receiver_email is your Primary PayPal email 
 
-				//mail($defaultemail, "Live-VERIFIED IPN x", print_r($_POST,1) . "\n\n" . $req); 
-				//post the payment info to the database - should be local database
-				global $wgExternalSharedDB;
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-				$adID = $wgRequest->getText('item_number');
-				$email = $wgRequest->getText('payer_email');
-				$amt = $wgRequest->getText('payment_gross');
-				$type = $wgRequest->getText('txn_type');
-				$status = $wgRequest->getText('payment_status');
-				$saveAry = array('ad_id'=>$adID,
-					'payer_email'=>$email,
-					'pay_amt'=>$amt,
-					'pay_type'=>$type,
-					'pay_status'=>$status,
-					'pay_conf_msg'=>$result."\n\n".print_r($_POST,1));
-				$dbw->Insert('advert_pmts',$saveAry);
-				//check the payment amount and currency
-				//TODO:  Check that the pay_status is "Completed"
-				if($wgRequest->getText('payment_status') == 'Completed'){
-					$ad = new Advertisement();
-					$ad->LoadFromDB($adID);
-					if($wgRequest->getText('mc_currency') == 'USD' && $amt == $ad->ad_price){
-						$ad->last_pay_date = date('Y-m-d');
-						$ad->user_email = $email;
-						$ad->Save();
-					}else{
-						mail($this->emergencyEmail, "Invalid Payment Amount or Currency", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req);
+					//mail($defaultemail, "Live-VERIFIED IPN x", print_r($_POST,1) . "\n\n" . $req); 
+					//post the payment info to the database - should be local database
+					global $wgExternalSharedDB;
+					$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+					$adID = $wgRequest->getText('item_number');
+					$email = $wgRequest->getText('payer_email');
+					$amt = $wgRequest->getText('payment_gross');
+					$type = $wgRequest->getText('txn_type');
+					$status = $wgRequest->getText('payment_status');
+					$saveAry = array('ad_id'=>$adID,
+							'payer_email'=>$email,
+							'pay_amt'=>$amt,
+							'pay_type'=>$type,
+							'pay_status'=>$status,
+							'pay_conf_msg'=>$result."\n\n".print_r($_POST,1));
+					$dbw->Insert('advert_pmts',$saveAry);
+					//check the payment amount and currency
+					//TODO:  Check that the pay_status is "Completed"
+					if($wgRequest->getText('payment_status') == 'Completed'){
+						$ad = new Advertisement();
+						$ad->LoadFromDB($adID);
+						if($wgRequest->getText('mc_currency') == 'USD' && $amt == $ad->ad_price){
+							$ad->last_pay_date = date('Y-m-d');
+							$ad->user_email = $email;
+							$ad->Save();
+						}else{
+							mail($this->emergencyEmail, "Invalid Payment Amount or Currency", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req);
+						}
 					}
+					//we could trap for some other statuses here... worry about that later
 				}
-				//we could trap for some other statuses here... worry about that later
 				wfRunHooks( "PayPalInstantPaymentNotification", array( &$wgRequest ) );
 			} else if (strcmp ($result, "INVALID") == 0) { 
 			// If 'INVALID', send an email. TODO: Log for manual investigation. 
