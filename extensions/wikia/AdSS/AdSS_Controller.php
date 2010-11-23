@@ -6,7 +6,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function execute( $sub ) {
-		global $wgRequest, $wgUser, $wgOut;
+		global $wgRequest, $wgUser, $wgOut, $wgAdSS_OnlyAdmin;
 
 		wfLoadExtensionMessages( 'AdSS' );
 		$this->setHeaders();
@@ -19,6 +19,14 @@ class AdSS_Controller extends SpecialPage {
 			$adminController->execute( $sub );
 			return;
 		}
+		if( !empty( $wgAdSS_OnlyAdmin ) ) {
+			$wgOut->setArticleRelated( false );
+			$wgOut->setRobotPolicy( 'noindex,nofollow' );
+			$wgOut->setStatusCode( 404 );
+			$wgOut->showErrorPage( 'nosuchspecialpage', 'nospecialpagetext' );
+			return;
+		}
+
 		if( $sub[0] == 'manager' ) {
 			$managerController = new AdSS_ManagerController( $this );
 			$managerController->execute( $sub );
