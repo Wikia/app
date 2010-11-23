@@ -21,6 +21,7 @@ use FCGI;
 use FCGI::ProcManager;
 use Imager;
 use Image::LibRSVG;
+use Image::Info qw(image_info);
 use File::LibMagic;
 use File::Basename;
 use File::Path;
@@ -42,6 +43,9 @@ use Try::Tiny;
 #
 use constant FFMPEG   => "/usr/bin/ffmpeg";
 use constant OGGTHUMB => "/usr/bin/oggThumb";
+use constant SVG_DEFAULT_WIDTH => 512;
+use constant SVG_DEFAULT_HEIGHT => 512;
+
 
 
 sub real404 {
@@ -101,6 +105,39 @@ sub scaleHeight {
 	return $dstHeight;
 }
 
+#
+# taken from ImageFunctions.php
+#
+sub scaleSVGUnit {
+	my( $size ) = @_;
+
+	my %units = (
+		"px" => 1.0,
+		"pt" => 1.25,
+		"pc" => 15.0,
+		"mm" => 3.543307,
+		"cm" => 35.43307,
+		"in" => 90.0,
+		"em" => 16.0, # fake it?
+		"ex" => 12.0, # fake it?
+	);
+
+	if( $size =~ /^\s*(\d+(?:\.\d+)?)(em|ex|px|pt|pc|cm|mm|in|%|)\s*$/ ) {
+		$size = to_float( $1 );
+		my $u = $2;
+
+		if( $u eq "%" ) {
+			$size = $size * 0.01 * SVG_DEFAULT_WIDTH;
+		}
+		elsif( exists( $units{ $u } ) ) {
+			$size = $size * $units{ $u };
+		}
+	}
+
+	$size = to_float( $size );
+
+	return $size;
+}
 
 #
 # video thumbnail, by default oggThumb will be used.
@@ -199,9 +236,10 @@ my @tests = qw(
 	/d/desencyclopedie/images/thumb/5/51/Uri.svg/120px-Uri.svg.png
 	/m/muppet/images/thumb/0/0f/Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg/55px-Sesamstrasse-Bibo-(Wolfgang-Draeger).jpg
 	/w/wikiality/images/thumb/300px-Kool-Aid2.jpg
-	/s/sartrans/ru/images/thumb/3/3e/%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg/82px-155%2C900%2C0%2C744-%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg.png
 	/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG
 	/b/blazblue/images/thumb/c/cf/MakotoChibi.png/82px-0%2C182%2C0%2C182-MakotoChibi.png
+	/l/lfn/images/thumb/b/b6/Flag_of_Lingua_Franca_Nova.svg/82px-1,514,0,512-Flag_of_Lingua_Franca_Nova.svg.png
+	/s/sartrans/ru/images/thumb/3/3e/%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg/82px-155,900,0,744-%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg.png
 );
 use warnings;
 my @done = ();
@@ -243,6 +281,10 @@ unless( $test ) {
 }
 else {
 	$request    = FCGI::Request();
+}
+
+if( $use_devel ) {
+	use Data::Dump;
 }
 
 my $flm            = new File::LibMagic;
@@ -402,7 +444,7 @@ while( $request->Accept() >= 0 || $test ) {
 				$mimetype = $flm->checktype_contents( $content );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-				print STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed\n" if $debug;
+				say STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed" if $debug;
 
 				#
 				# read original file, thumbnail it, store on disc
@@ -420,25 +462,40 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					if( lc( $thbext ) eq 'png' ) {
 						#
+						# default aspect ratio
+						#
+						my $aspect = 1.0;
+
+						#
 						# read width & height of SVG file
 						#
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						my $xmlp = XMLin( $content );
-						my $origw = $xmlp->{ 'width' };
-						my $origh = $xmlp->{ 'height' };
-						$origw = to_float( $origw ) unless is_float( $origw );
-						$origh = to_float( $origh ) unless is_float( $origh );
-
+						my $info = image_info( \$content );
+						my $origw = scaleSVGUnit( $info->{ 'width' } );
+						my $origh = scaleSVGUnit( $info->{ 'height' } );
 						unless( $origw && $origh ) {
 							#
 							# http://www.w3.org/TR/SVG/coords.html#ViewBoxAttribute
 							#
+							my $xmlp = XMLin( $content );
 							say STDERR "There's no width and height defined for SVG file, checking viewbox" if $debug > 2;
 							my $viewBox = $xmlp->{ "viewBox" };
 							if( $viewBox && $viewBox =~/\d+[\s|,]*\d+[\s|,]*(\d+)[\s|,]*(\d+)/ ) {
 								$origw = $1;
 								$origh = $2;
+								$aspect = $origw / $origh if $origh;
 							}
+						}
+						else {
+							$aspect = $origw / $origh if $origh;
+						}
+
+						#
+						# still don't have it? use defaults
+						#
+						unless( $origw && $origh ) {
+							$origw = SVG_DEFAULT_WIDTH;
+							$origh = $origw / $aspect;
 						}
 
 						my $height = scaleHeight( $origw, $origh, $width, $test );
@@ -449,20 +506,64 @@ while( $request->Accept() >= 0 || $test ) {
 						# RSVG thumbnailer
 						#
 						my $rsvg = new Image::LibRSVG;
+						my $output = undef;
 
-						#
-						# there is stupid bug (typo) in Image::LibRSVG so we have to
-						# define hash with dimension and dimesion
-						#
+						my $cropped = 0;
+						if( is_int( $x1 ) && is_int( $x2 ) && is_int( $y1 ) && is_int( $y2 ) ) {
+							#
+							# cut rectangle from original, preserve aspect ratio
+							#
 
-						my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
-						$rsvg->loadImageFromString( $content, 0, $args );
-						$transformed = 1;
-						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
+							#
+							# first create default bitmap from svg file
+							#
+							my $w = SVG_DEFAULT_WIDTH;
+							my $h = $w / $aspect;
+							my $args = { "dimension" => [$w, $h], "dimesion" => [$w, $h] };
+							$rsvg->loadImageFromString( $content, 0, $args );
+							my $content = $rsvg->getImageBitmap( "png" );
 
+							#
+							# transfer bitmap to Imager
+							#
+							my $image = Imager->new;
+							$image->read( data => $content, type => "png" );
+
+							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+							say STDERR "Creating $w x $h preview from svg file for cropping, time: $t_elapsed" if $debug > 1;
+
+							$w = $x2 - $x1;
+							$h = $y2 - $y1;
+
+							if( $w > 0 && $h > 0 ) {
+								$image = $image->crop( left => $x1, top => $y1, right => $x2, bottom => $y2  );
+								$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+								say STDERR "Cropping into $x1 $x2 x $y1 $y2, time: $t_elapsed" if $debug > 1;
+								$cropped = 1;
+							}
+
+							#
+							# always write png
+							#
+							$image = $image->scale( xpixels => $width, ypixels => $height, qtype => 'mixing' );
+							$image->write( data => \$output, type => "png" );
+							$transformed = 1;
+						}
+						else {
+
+							#
+							# there is stupid bug (typo) in Image::LibRSVG so we have to
+							# define hash with dimension and dimesion
+							#
+							my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
+							$rsvg->loadImageFromString( $content, 0, $args );
+							$transformed = 1;
+							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+							say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
+
+							$output = $rsvg->getImageBitmap( 'png' );
+						}
 						use bytes;
-						my $output = $rsvg->getImageBitmap( 'png' );
 						my $output_length = length( $output );
 
 						if( $output_length ) {
@@ -483,7 +584,7 @@ while( $request->Accept() >= 0 || $test ) {
 						}
 						no bytes;
 						undef $rsvg;
-						undef $xmlp;
+						undef $info;
 					}
 					else {
 						say STDERR "Thumbnail requested for SVG $original is not PNG file" if $debug;
@@ -607,7 +708,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print $output unless $test;
 
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say "File $thumbnail served, time: $t_elapsed" if $debug;
+							say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
 							$transformed  = 1;
 						}
 						no bytes;
