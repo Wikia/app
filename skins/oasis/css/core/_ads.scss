@@ -34,8 +34,10 @@
 
 
 /** Box ads **/
-#HOME_TOP_RIGHT_BOXAD {
+.home-top-right-ads {
 	float: right;
+}
+#HOME_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	position: relative;
 	z-index: 100;
@@ -43,6 +45,9 @@
 #TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
+}
+#HOME_TOP_RIGHT_BUTTON {
+	margin-bottom: 10px;
 }
 
 

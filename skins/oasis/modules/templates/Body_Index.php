@@ -49,6 +49,7 @@
 			}
 		?>
 		<div id="WikiaArticle" class="WikiaArticle">
+			<div class="home-top-right-ads">
 			<?php 
 				// A/B test
 				$headers = function_exists('apache_request_headers') ? apache_request_headers() : array(); 
@@ -63,6 +64,7 @@
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
 				}
 			?>
+			</div>
 
 
 			<?php

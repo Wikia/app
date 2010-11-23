@@ -13,6 +13,7 @@ class BodyModule extends Module {
 	var $wgSuppressArticleCategories;
 	var $wgEnableCorporatePageExt;
 	var $wgABTests;
+	var $wgEnableAdTopRightButton;
 
 	// skin vars
 	var $content;
