@@ -36,7 +36,7 @@ class SassUtil {
 	 *  - theme chosen using usetheme URL param
 	 */
 	private static function getOasisSettings() {
-		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang;
+		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang, $wgABTests;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
@@ -63,9 +63,11 @@ class SassUtil {
 		}
 		
 		// ABTests
-		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
-		if (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "leftrail=1") {
+		if (in_array('leftrail', $wgABTests)) {
 			$oasisSettings["leftrail"] = "true";
+		}
+		if (in_array('fullmonty', $wgABTests)) {
+			$oasisSettings["fullmonty"] = "true";
 		}
 
 		// RTL

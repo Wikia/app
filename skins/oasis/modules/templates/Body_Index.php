@@ -21,16 +21,19 @@
 	if ($isMainPage) {
 		echo '<div class="WikiaMainPageBanner">';
 	}
-	if ($wgEnableCorporatePageExt) {
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
-	} else {
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
+	if (!in_array('fullmonty', $wgABTests)) {
+		if ($wgEnableCorporatePageExt) {
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
+		} else {
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
+		}
 	}
 	if ($isMainPage) {
 		echo '</div>';
 	}
 	?>
+	
 
 	<?php
 		if (empty($wgSuppressWikiHeader)) {
