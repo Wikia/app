@@ -32,7 +32,8 @@ foreach( $res as $row ) {
 	}
 
 	$baid = $pp->getBillingAgreement();
-	$pmt_id = $pp->collectPayment( $baid, $amount );
+	$respArr = array();
+	$pmt_id = $pp->collectPayment( $baid, $amount, $respArr );
 	if( $pmt_id ) {
 		$billing = new AdSS_Billing();
 		if( $billing->addPayment( $user->id, $pmt_id, $amount ) ) {
@@ -41,7 +42,13 @@ foreach( $res as $row ) {
 			echo "ERROR: collected but not stored!\n";
 		}
 	} else {
-		echo "failed...\n";
+		if( $respArr['RESULT'] == 12 && $respArr['RESPMSG'] == 'Declined: 10201-Agreement was canceled' ) {
+			echo "billing agreement canceled";
+			$pp->cancelBillingAgreement( $baid );
+			echo "...\n";
+		} else {
+			echo "failed...\n";
+		}
 	}
 }
 $dbw->freeResult( $res );
