@@ -462,7 +462,7 @@ while( $request->Accept() >= 0 || $test ) {
 						say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
 
 						use bytes;
-						my $output = $rsvg->getImageBitmap();
+						my $output = $rsvg->getImageBitmap( 'png' );
 						my $output_length = length( $output );
 
 						if( $output_length ) {
