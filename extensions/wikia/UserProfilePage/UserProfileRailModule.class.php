@@ -22,23 +22,27 @@ class UserProfileRailModule extends Module {
 		wfProfileIn( __METHOD__ );
 
 		$userProfilePage = UserProfilePage::getInstance();
-		$user = $userProfilePage->getUser();
-		$this->topWikis = $userProfilePage->getTopWikis( $this->maxTopWikis );
-		$this->hiddenTopWikis = $this->populateHiddenTopWikis( $userProfilePage->getHiddenTopWikis() );
-		$this->userIsOwner = $userProfilePage->userIsOwner();
-		$this->userName =  $user->getName();
-		$title = Title::newFromText($this->userName, NS_USER);
-		$this->userPageUrl = $title->getLocalUrl();
-		$this->maxEdits = 0;
-		$this->currentWikiId = $wgCityId;
-
-		foreach ( $this->topWikis as $wikiId => $wikiData ) {
-			if ( $wikiData[ 'editCount' ] > $this->maxEdits ) {
-				$this->maxEdits = $wikiData[ 'editCount' ];
-			}
-		}
+		$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
+		$userId = !empty( $user ) ? $user->idForName() : 0;
 		
-		if( $this->maxEdits <= 0 ) $this->maxEdits = 1;
+		if( !empty( $user ) && !empty( $userId ) ) {
+			$this->topWikis = $userProfilePage->getTopWikis( $this->maxTopWikis );
+			$this->hiddenTopWikis = $this->populateHiddenTopWikis( $userProfilePage->getHiddenTopWikis() );
+			$this->userIsOwner = $userProfilePage->userIsOwner();
+			$this->userName =  $user->getName();
+			$title = Title::newFromText($this->userName, NS_USER);
+			$this->userPageUrl = $title->getLocalUrl();
+			$this->maxEdits = 0;
+			$this->currentWikiId = $wgCityId;
+
+			foreach ( $this->topWikis as $wikiId => $wikiData ) {
+				if ( $wikiData[ 'editCount' ] > $this->maxEdits ) {
+					$this->maxEdits = $wikiData[ 'editCount' ];
+				}
+			}
+
+			if( $this->maxEdits <= 0 ) $this->maxEdits = 1;
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -47,20 +51,25 @@ class UserProfileRailModule extends Module {
 		wfProfileIn( __METHOD__ );
 		global $wgCityId;
 
-		$userTopPages = UserProfilePage::getInstance();
-		$this->topPages = $userTopPages->getTopPages( $this->maxTopPages );
-		$this->hiddenTopPages = $this->populateHiddenTopPages( $userTopPages->getHiddenTopPages() );
-		$this->userName = $userTopPages->getUser()->getName();
-		$this->userIsOwner = $userTopPages->userIsOwner();
-		$this->wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
+		$userProfilePage = UserProfilePage::getInstance();
+		$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
+		$userId = !empty( $user ) ? $user->idForName() : 0;
+		
+		if( !empty( $user ) && !empty( $userId ) ) {
+			$this->topPages = $userProfilePage->getTopPages( $this->maxTopPages );
+			$this->hiddenTopPages = $this->populateHiddenTopPages( $userProfilePage->getHiddenTopPages() );
+			$this->userName = $userProfilePage->getUser()->getName();
+			$this->userIsOwner = $userProfilePage->userIsOwner();
+			$this->wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
 
-		$specialPageTitle = Title::newFromText( 'Random', NS_SPECIAL );
-		$this->specialRandomLink = $specialPageTitle->getFullUrl();
+			$specialPageTitle = Title::newFromText( 'Random', NS_SPECIAL );
+			$this->specialRandomLink = $specialPageTitle->getFullUrl();
 
-		if( class_exists('imageServing') ) {
-			// ImageServing extension enabled, get images
-			$imageServing = new imageServing( array_keys( $this->topPages ), 70, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
-			$this->topPageImages = $imageServing->getImages(1); // get just one image per article
+			if( class_exists('imageServing') ) {
+				// ImageServing extension enabled, get images
+				$imageServing = new imageServing( array_keys( $this->topPages ), 70, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
+				$this->topPageImages = $imageServing->getImages(1); // get just one image per article
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -109,26 +118,4 @@ class UserProfileRailModule extends Module {
 
 		return $wikis;
 	}
-
-	/**
-	 * adds the hook for own JavaScript variables in the document
-	 */
-	/*public function __construct() {
-		global $wgHooks;
-		$wgHooks['MakeGlobalVariablesScript'][] = 'UserProfileTopWikisModule::addAchievementsJSVariables';
-	}*/
-
-
-	/**
-	 * adds JavaScript variables inside the page source, cl
-	 *
-	 * @param mixed $vars the main vars for the JavaScript printout
-	 *
-	 */
-	/*static function addAchievementsJSVariables (&$vars) {
-		$lang_view_all = wfMsg('achievements-viewall-oasis');
-		$lang_view_less = wfMsg('achievements-viewless');
-		$vars['wgAchievementsMoreButton'] = array($lang_view_all, $lang_view_less);
-		return true;
-	}*/
 }

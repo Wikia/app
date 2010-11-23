@@ -15,8 +15,9 @@ $messages['en'] = array(
 	'userprofilepage-edit-permision-denied-info' => 'You do not have permissions to edit somebody\'s user page or subpage',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Everyone on this wiki would love to know more about you!</div><a href="$1">Edit this section</a> to add more about yourself and tell us about the things you love.',
 	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 hasn\'t added any information yet.</div>You can <a href="$2">leave them a message</a> instead',
-	'userprofilepage-user-doesnt-exists' => 'User $1 doesn\'t exists',
-
+	'userprofilepage-user-doesnt-exists' => 'The user $1 doesn\'t exist on Wikia. Check out [[Special:WikiActivity|Wiki Activity]] to see who\'s active on this wiki.',
+	'userprofilepage-user-anon' => 'This user hasn\'t registered on Wikia yet. [[Special:Signup|Sign up]] to register an account and claim edit points, badges and appreciation from your fellow editors!',
+	
 	// Masthead
 	'userprofilepage-leave-message' => 'Leave message',
 	'userprofilepage-edits-since' => 'Edits since joining this wiki<br />$1',
@@ -38,7 +39,7 @@ $messages['en'] = array(
 
 	//Top Wikis
 	'userprofilepage-top-wikis-title' => '$1\'s Top wikis',
-	'userprofilepage-top-wikis-edit-count' => 'Number of edits',
+	'userprofilepage-top-wikis-edit-count' => 'Number of Edits',
 	'userprofilepage-top-wikis-hidden-see-more' => 'You have hidden {{PLURAL:$1|$1 wiki|$1 wikis}}',
 	'userprofilepage-top-wikis-unhide-label' => 'unhide',
 	'userprofilepage-top-wikis-hide-label' => 'hide',
@@ -54,10 +55,10 @@ $messages['en'] = array(
 	'userprofilepage-activity-delete'  => 'deleted the $1 page',
 	'userprofilepage-activity-talk'    => 'left a message on $1\'s talk page',
 	'userprofilepage-recent-activity-default' => '$1 has joined Wikia',
-	'userprofilepage-top-recent-activity-see-more' => 'See all',
+	'userprofilepage-top-recent-activity-see-more' => 'See all &gt;',
 
 	//Top pages
-	'userprofilepage-top-pages-title' => '$1\'s Top $2 pages',
+	'userprofilepage-top-pages-title' => '$1\'s Top $2 Pages',
 	'userprofilepage-top-page-unhide-label' => 'unhide',
 	'userprofilepage-top-pages-hidden-see-more' => 'You have hidden {{PLURAL:$1|$1 page|$1 pages}}',
 	'userprofilepage-top-pages-default' => 'You do not have any top pages yet. Why not check out some <a href="$1">random pages</a> on the wiki?',

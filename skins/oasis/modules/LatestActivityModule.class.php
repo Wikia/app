@@ -19,9 +19,12 @@ class LatestActivityModule extends Module {
 
 		$this->moduleHeader = wfMsg('oasis-activity-header');
 		
-		if( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePageHelper::isAllowed( $wgTitle ) ) {
-			$user = UserProfilePageHelper::getExistingUserFromTitle( $wgTitle );
-			if( !empty( $user ) ) {
+		if( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() ) {
+			$userPage = UserProfilePage::getInstance( $wgTitle );
+			$user = ( !empty( $userPage ) ) ? $userPage->getUser() : null;
+			$userId = ( !empty( $user ) ) ? $user->getId() : 0;
+			
+			if( !empty( $userId ) ) {
 				$this->userName = $user->getName();
 				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
 			}

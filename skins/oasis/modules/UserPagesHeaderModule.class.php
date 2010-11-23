@@ -168,10 +168,7 @@ class UserPagesHeaderModule extends Module {
 
 		// get user name to display in header
 		$this->userName = self::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
-
-		if ( !empty( $wgEnableUserProfilePagesExt ) ) {
-			$this->isUserProfilePageExt = true;
-		}
+		$this->isUserProfilePageExt = ( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() );
 
 		// render avatar (100x100)
 		$this->avatar = AvatarService::renderAvatar($this->userName, 100);
@@ -223,11 +220,10 @@ class UserPagesHeaderModule extends Module {
 			}
 			else {
 				// UserProfilePage extension stuff
-				if(!self::isItMe($this->userName)) {
-					$user = User::newFromName( $this->userName );
-
+				if( !self::isItMe( $this->userName ) ) {
+					$title = Title::newFromText( $this->userName, NS_USER_TALK );
 					$this->actionMenu['action'] = array(
-						'href' => $user->getTalkPage()->getLocalUrl( 'action=edit' ),
+						'href' => $title->getLocalUrl( 'action=edit' ),
 						'text' => wfMsg('userprofilepage-leave-message'),
 					);
 

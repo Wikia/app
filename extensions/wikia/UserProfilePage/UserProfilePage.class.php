@@ -15,27 +15,67 @@ class UserProfilePage {
 	 * @param User $user
 	 * @return UserProfilePage
 	 */
-	static public function getInstance( User $user = null ) {
-		global $wgTitle, $wgUser;
-		if ( empty( self::$mInstance ) ) {
-			if (! ($user instanceof User) ) {
+	static public function getInstance( $user = null ) {
+		global $wgTitle;
+		if ( self::$mInstance === null ) {
+			if( $user instanceof Title ) {
+				$user = UserProfilePageHelper::getUserFromTitle( $user );
+			}
+			
+			if ( !( $user instanceof User ) ) {
 				$user = UserProfilePageHelper::getUserFromTitle( $wgTitle );
 			}
 			
-			if (! ($user instanceof User) ) {
-				$user = $wgUser;
-			}
-			
-			self::$mInstance = new self( $user );
+			self::$mInstance =  ( $user instanceof User ) ? new self( $user ) : false;
 		}
-
+		
 		return self::$mInstance;
+	}
+	
+	/**
+	 * @author Federico "Lox" Lucignano
+	 * 
+	 * @param Title $title
+	 * @return bool 
+	 */
+	static public function isAllowedSpecialPage( Title $title = null ) {
+		global $wgTitle;
+		
+		if( empty( $title ) ) $title = $wgTitle;
+		
+		$isAllowedSpecialPage = ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) );
+		
+		return $isAllowedSpecialPage;
+	}
+	
+	/**
+	 * @author Federico "Lox" Lucignano
+	 * 
+	 * @param Title $title
+	 * @return bool 
+	 */
+	static public function isAllowed( Title $title = null ) {
+		global $wgUserProfilePagesNamespaces, $wgRequest, $wgTitle;
+		
+		if( empty( $title ) ) $title = $wgTitle;
+		
+		$isAllowedPage = ( in_array( $title->getNamespace(), $wgUserProfilePagesNamespaces ) || self::isAllowedSpecialPage( $title ) );
+		
+		$isBlogPost = ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && $title->isSubpage() );
+		
+		$action = $wgRequest->getVal('action', 'view');
+		$isAllowedAction = ( $action == 'view' || $action == 'purge' );
+		
+		return $isAllowedPage && !$isBlogPost && $isAllowedAction;
 	}
 
 	private function __construct( User $user ) {
-		global $wgSitename;
-
 		$this->user = $user;
+	}
+	
+	private function initTemplate() {
+		global $wgSitename;
+		
 		$this->templateEngine = new EasyTemplate( dirname(__FILE__) . "/templates/" );
 
 		// set "global" template variables
@@ -50,7 +90,8 @@ class UserProfilePage {
 		//$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 
 		$userContribsProvider = new UserContribsProviderService;
-
+		
+		$this->initTemplate();
 		$this->templateEngine->set_vars(
 			array(
 				'userName'         => $this->user->getName(),
