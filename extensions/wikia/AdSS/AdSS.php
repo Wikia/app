@@ -42,25 +42,29 @@ $wgAutoloadClasses['PaymentProcessor'] = $dir . 'paypal/PaymentProcessor.php';
 $wgAutoloadClasses['PayflowAPI'] = $dir . 'paypal/PayflowAPI.php';
 $wgAutoloadClasses['IPNListener'] = $dir . 'paypal/IPNListener.php';
 
-$wgSpecialPages['AdSS'] = 'AdSS_Controller';
-$wgSpecialPages['Sponsor'] = 'AdSS_Controller';
-
 $wgAvailableRights[] = 'adss-admin';
 $wgGroupPermissions['*']['adss-admin'] = false;
 $wgGroupPermissions['staff']['adss-admin'] = true;
 
-$wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
-$wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';
-//$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
-$wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
-$wgHooks['ArticlePurge'][] = 'AdSS_Publisher::onArticlePurge';
+$wgSpecialPages['AdSS'] = 'AdSS_Controller';
+$wgSpecialPages['Sponsor'] = 'AdSS_Controller';
+
 $wgHooks['PayPalInstantPaymentNotification'][] = 'IPNListener::notify';
 
-$wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
-$wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::acceptAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
-$wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
+
+if( empty( $wgAdSS_OnlyAdmin ) ) {
+	$wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';
+	//$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
+	$wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
+	$wgHooks['ArticlePurge'][] = 'AdSS_Publisher::onArticlePurge';
+
+	$wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
+	$wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
+	$wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
+}
 
 $wgAdSS_DBname = 'adss';
 $wgAdSS_BannerUploadDirectory = $wgUploadDirectory . '/adss';
