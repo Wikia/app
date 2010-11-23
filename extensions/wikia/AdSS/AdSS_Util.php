@@ -109,9 +109,9 @@ class AdSS_Util {
 			$wikiId = wfWikiID();
 		}
 		if( $pageId ) {
-			return "$wikiId:adss:2:pageads:$pageId";
+			return "$wikiId:adss:2.1:pageads:$pageId";
 		} else {
-			return "$wikiId:adss:2:siteads";
+			return "$wikiId:adss:2.1:siteads";
 		}
 	}
 
