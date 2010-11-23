@@ -681,3 +681,9 @@ $smwgUseExternalDB = false;
  * in the new skin for Staff.
  */
 $wgEnableShowPerformanceStatsExt = true;
+
+/**
+ * @name $wgABtests
+ * @see extensions/wikia/ABtesting.php
+ */
+$wgABtests = array();
