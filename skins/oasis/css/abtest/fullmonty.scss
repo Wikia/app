@@ -1,0 +1,85 @@
+/* ABTest #6 */
+$fullmonty: get_command_line_param("fullmonty", false);
+@if $fullmonty {
+	
+	$fullmonty-width: 1100px;
+	@if $oasisHD == 1 {
+		$fullmonty-width: 1200px;
+	}
+	
+	.WikiaHeader {
+		background: none;
+		border: 0;
+		height: 30px;
+		width: $fullmonty-width + 10px;
+		.AccountNavigation {
+			>li {
+				height: auto;
+				padding: 0;
+				>a {
+					border: 0;
+					height: 22px;
+					padding: 3px 10px;
+					@if lightness($color-page) > 50 {
+						color: black;
+					}
+				}
+				
+				&:hover {
+					background: none;
+					a {
+						text-decoration: underline;
+					}
+				}
+			}
+			.subnav {
+				&.show {
+					top: 26px;
+				}
+			}
+		}
+	}
+	#fbconnect a {
+		position: relative;
+		top: 5px;
+	}
+	
+	.WikiaPage {
+		margin-top: -30px;
+		padding-top: 30px;
+		width: $fullmonty-width;
+		.WikiHeader {
+			margin: 0;
+			padding-top: 0;
+			h1:before,
+			.headline-div:before,
+			.shadow-mask {
+				display: none;
+			}
+		}
+		.WikiaMainContent {
+			float: none;
+			width: auto;
+			.WikiaPageHeader {
+				border-bottom: 1px solid $color-page-border;
+				padding-bottom: 3px;
+			}
+		}
+	}
+	
+	.WikiaFooter .toolbar {
+		width: $fullmonty-width + 10px;
+	}
+
+	.oasis-one-column .WikiaPageHeader {
+		
+	}
+	
+	body {
+		padding-top: 0;
+	}
+	
+	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
+		padding: 0;
+	}
+}
