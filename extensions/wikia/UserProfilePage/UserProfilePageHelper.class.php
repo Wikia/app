@@ -2,97 +2,76 @@
 class UserProfilePageHelper {
 	
 	/**
-	 * @author Federico "Lox" Lucignano
-	 * 
-	 * @param Title $title
-	 * @return bool 
-	 */
-	static public function isAllowed( Title $title ) {
-		global $wgUserProfilePagesNamespaces, $wgRequest;
-		
-		$isAllowedPage = (
-			in_array( $title->getNamespace(), $wgUserProfilePagesNamespaces ) ||
-			$title->isSpecial( 'Following' ) ||
-			$title->isSpecial( 'Contributions' )
-		);
-		
-		$isBlogPost = ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && $title->isSubpage() );
-		
-		$action = $wgRequest->getVal('action', 'view');
-		$isAllowedAction = ( $action == 'view' || $action == 'purge' );
-		
-		return $isAllowedPage && !$isBlogPost && $isAllowedAction;
-	}
-	
-	/**
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
 		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgUserProfilePagesNamespaces;
 		wfProfileIn(__METHOD__);
 		
-		if ( !self::isAllowed( $skin->mTitle ) ) {
+		//is the extension allowed to run for the current page?
+		if ( !UserProfilePage::isAllowed( $skin->mTitle ) ) {
 			$wgEnableUserProfilePagesExt = false;
 			return true;
 		}
 		
-		$user = ( $skin->mTitle->isSpecial( 'Contributions' ) || $skin->mTitle->isSpecial( 'Following' ) ) ? $wgUser : self::getUserFromTitle( $skin->mTitle );
-		$userName = null;
-		
-		// sanity check
-		if ( is_object( $user ) ) {
-			$user->load();
-			$userName = $user->getName();
-		}
-
-		// fallback for non-existent users
-		if( !is_object( $user ) || $user->getId() == 0 ) {
-			$template->data['bodytext'] = wfMsg( 'userprofilepage-user-doesnt-exists', array( $userName ) );
-			$wgEnableUserProfilePagesExt = false;
-			return true;
-		}
-
-		// load extension css and js
-		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
-		
+		//the extension is allowed, try to get an instance of the main UPP class
+		$profilePage = UserProfilePage::getInstance( $skin->mTitle );
+		$user = !empty( $profilePage ) ? $profilePage->getUser() : null;
+		$userId = !empty( $user ) ? $user->idForName() : 0;
 		$ns = $skin->mTitle->getNamespace();
 		
-		if( defined( 'NS_BLOG_ARTICLE' ) ) {
-			if( $ns == NS_BLOG_ARTICLE ) {
-				$isBlogPage = true;
+		if( ( empty( $profilePage ) || empty( $userId) ) && ( $ns == NS_USER || $ns = NS_USER_TALK ) && !UserProfilePage::isAllowedSpecialPage( $skin->mTitle ) ) {
+			//// fallback for non-existent users profile/talk pages
+			$msg = null;
+			$userName = $skin->mTitle->getText();
+			$isAnon = User::isIP( $userName );
+			
+			if ( $isAnon && $ns != NS_USER_TALK ) {//anon profile page
+				$msg = wfMsgExt( 'userprofilepage-user-anon', array('parse', 'content'), array( $userName ) );
+			} elseif( !$isAnon ) {//non-existing user
+				$msg = wfMsgExt( 'userprofilepage-user-doesnt-exists', array('parse', 'content'), array( $userName ) );
+			}
+			
+			if( $msg !== null) $template->data['bodytext'] = $msg;
+		} else {
+			$ns = $skin->mTitle->getNamespace();
+
+			if( defined( 'NS_BLOG_ARTICLE' ) ) {
+				if( $ns == NS_BLOG_ARTICLE ) {
+					$isBlogPage = true;
+				}
+				else {
+					$isBlogPage = false;
+				}
 			}
 			else {
 				$isBlogPage = false;
 			}
-		}
-		else {
-			$isBlogPage = false;
-		}
-		
-		$isUserSubpage = ( $ns == NS_USER && $skin->mTitle->isSubpage() );
-		
-		if( $isUserSubpage || $ns == NS_USER_TALK || $isBlogPage || $ns == NS_SPECIAL  ) {
-			// don't replace page content for talk and blog page (RT: #98342, #88757) and special pages
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-		else {
-			// NS_USER namespace
-			$profilePage = UserProfilePage::getInstance( $user );
-			$article = Article::newFromID( $template->data['articleid'] );
-			if( is_null( $article ) ) {
-				if( $profilePage->userIsOwner() ) {
-					$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-my-about-me-section', array( $skin->mTitle->getLocalUrl( 'action=edit' ) ) ) );
+
+			$isUserSubpage = ( $ns == NS_USER && $skin->mTitle->isSubpage() );
+
+			if(
+				$profilePage instanceof UserProfilePage &&
+				!( $isUserSubpage || $isBlogPage || $ns == NS_SPECIAL || $ns == NS_USER_TALK )// don't replace page content for talk and blog page (RT: #98342, #88757) and special pages
+			) {
+				$article = Article::newFromID( $template->data['articleid'] );
+				if( is_null( $article ) ) {
+					if( $profilePage->userIsOwner() ) {
+						$template->data['bodytext'] = $profilePage->get( wfMsgForContent( 'userprofilepage-empty-my-about-me-section', array( $skin->mTitle->getLocalUrl( 'action=edit' ) ) ) );
+					}
+					else {
+						$template->data['bodytext'] = $profilePage->get( wfMsgForContent( 'userprofilepage-empty-somebodys-about-me-section', array( $profilePage->getUser()->getName(), $profilePage->getUser()->getTalkPage()->getLocalUrl( 'action=edit' ) ) ) );
+					}
 				}
 				else {
-					$template->data['bodytext'] = $profilePage->get( wfMsg( 'userprofilepage-empty-somebodys-about-me-section', array( $profilePage->getUser()->getName(), $profilePage->getUser()->getTalkPage()->getLocalUrl( 'action=edit' ) ) ) );
+					$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
 				}
 			}
-			else {
-				$template->data['bodytext'] = $profilePage->get( $template->data['bodytext'] );
-			}
 		}
+		
+		// load extension css and js
+		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -125,28 +104,12 @@ class UserProfilePageHelper {
 	public static function getUserFromTitle( Title $title ) {
 		global $wgUserProfilePagesNamespaces, $wgUser;
 		
-		if( $title->isSpecial( 'Following' ) ) {
-			return $wgUser;
-		} else {
-			return User::newFromName( UserPagesHeaderModule::getUserName($title, $wgUserProfilePagesNamespaces , false ) );
-		}
-	}
-
-	/**
-	 * same as getUserFromTitle() but return false when user account doesn't exists
-	 * @param Title $title page title
-	 */
-	public static function getExistingUserFromTitle( Title $title ) {
-		$user = self::getUserFromTitle( $title );
-		if($user instanceof User) {
-			$userId = $user->idForName();
-			if( !empty( $userId ) ) {
-				return $user;
-			}
-		}
-		return false;
-	}
-
+		$fallbackOnGlobal = ( $title->isSpecial( 'Contributions' ) || $title->isSpecial( 'Following' ) );
+		$userName = UserPagesHeaderModule::getUserName($title, $wgUserProfilePagesNamespaces , $fallbackOnGlobal );
+		
+		return ( !empty( $userName ) ) ? User::newFromName( $userName ) : false;
+	}	
+	
 	public static function formatLastActionMessage( $actionData ) {
 		if( count($actionData) ) {
 			return wfMsg( 'userprofilepage-user-last-action-' . $actionData['type'], array( wfTimeFormatAgoOnlyRecent($actionData['timestamp']), $actionData['url'], $actionData['title'] ) );
@@ -171,24 +134,33 @@ class UserProfilePageHelper {
 	}
 	
 	static public function onGetRailModuleList(&$modules) {
-		global $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces, $wgTitle;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces,
+			$wgEnableUserProfilePagesExt, $wgUser, $wgEnableSpotlightsV2_Rail;
 		
-		if ( $wgTitle->getNamespace() != NS_SPECIAL && self::isAllowed( $wgTitle ) ) {//no right rail in special pages
+		if ( !empty( $wgEnableUserProfilePagesExt ) && $wgTitle->getNamespace() != NS_SPECIAL && UserProfilePage::isAllowed() ) {//no broken right rail in special pages
 			foreach( $modules as $weight => $module ) {
-				if( $wgEnableAchievementsExt && $module[0] == 'Achievements' ) {
-					$modules[ $weight ] = array('Achievements', 'UserProfilePagesModule', null);
-					continue;
-				}
-
 				if( in_array( $module[0], array( 'LatestPhotos', 'LatestActivity', 'PagesOnWiki' ) ) ) {
 					unset( $modules[ $weight ] );
 				}
 			}
-
-
-			$modules[1499] = array('UserProfileRail', 'TopWikis', null);
-			$modules[1498] = array('LatestActivity', 'Index', null);
-			$modules[1497] = array('UserProfileRail', 'TopPages', null);
+			
+			$userProfilePage = UserProfilePage::getInstance();
+			$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
+			$userId = !empty( $user ) ? $user->idForName() : 0;
+			
+			if( !empty( $userId) ) {
+				$modules[1499] = array('UserProfileRail', 'TopWikis', null);
+				$modules[1498] = array('LatestActivity', 'Index', null);
+				$modules[1497] = array('UserProfileRail', 'TopPages', null);
+				
+				if( !$user->getOption('hidefollowedpages') ) {
+					$railModuleList[1200] = array('FollowedPages', 'Index', null);
+				}
+				
+				if($wgEnableAchievementsExt && !(($wgUser->idForName() == $user->idForName()) && $user->getOption('hidepersonalachievements'))){
+					$modules[1350] = array('Achievements', 'UserProfilePagesModule', null);
+				}
+			}
 		}
 		
 		return true;

@@ -126,7 +126,10 @@ class BodyModule extends Module {
 
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal, $wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail, $wgEnableUserProfilePagesExt, $wgABTests;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
+			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
+			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
+			$wgEnableUserProfilePagesExt, $wgABTests;
 
 		$railModuleList = array();
 		
@@ -201,11 +204,11 @@ class BodyModule extends Module {
 			}
 	
 			// User page namespaces
-			if(in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces())) {
+			if( empty( $wgEnableUserProfilePagesExt ) && in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces() ) ) {
 				$page_owner = User::newFromName($wgTitle->getText());
 	
 				if($page_owner) {
-					if( !$page_owner->getOption('hidefollowedpages') && empty( $wgEnableUserProfilePagesExt ) ) {
+					if( !$page_owner->getOption('hidefollowedpages') ) {
 						$railModuleList[1200] = array('FollowedPages', 'Index', null);
 					}
 	
