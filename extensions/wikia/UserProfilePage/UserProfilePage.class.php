@@ -132,9 +132,8 @@ class UserProfilePage {
 		global $wgOut;
 		wfProfileIn( __METHOD__ );
 		$result = false;
-		$userId = $this->getUser()->getId();
 		
-		if ( !empty( $userId ) ) {
+		if ( !$this->getUser()->isAnon() ) {
 			$sTitle = $this->user->getUserPage()->getText() . '/' . wfMsg( 'userprofilepage-about-article-title' );
 			$oTitle = Title::newFromText( $sTitle, NS_USER );
 			$oArticle = new Article($oTitle, 0);
@@ -284,16 +283,14 @@ class UserProfilePage {
 	 */
 	private function getHiddenFromDb( $dbHandler ) {
 		wfProfileIn( __METHOD__ );
-		
-		$userId = $this->getUser()->getId();
 		$result = false;
 		
-		if ( !empty( $userId ) ) {
+		if ( !$this->getUser()->isAnon() ) {
 		
 			$row = $dbHandler->selectRow(
 				array( 'page_wikia_props' ),
 				array( 'props' ),
-				array( 'page_id' => $userId , 'propname' => 10 ),
+				array( 'page_id' => $this->getUser()->getId() , 'propname' => 10 ),
 				__METHOD__,
 				array()
 			);
@@ -385,12 +382,10 @@ class UserProfilePage {
 	public function getTopWikis( $limit = 5 ) {
 		wfProfileIn( __METHOD__ );
 		global $wgStatsDB, $wgDevelEnvironment, $wgCityId;
-		
-		$userId = $this->getUser()->getId();
 		$wikis = false;
 		
-		if ( !empty( $userId ) ) {
-			$where = array( 'user_id' => $userId );
+		if ( !$this->getUser()->isAnon() ) {
+			$where = array( 'user_id' => $this->getUser()->getId() );
 			$hiddenTopWikis = $this->getHiddenTopWikis();
 			
 			if ( count( $hiddenTopWikis ) ) {
@@ -496,15 +491,13 @@ class UserProfilePage {
 	public function getTopPages( $limit = 6 ) {
 		global $wgMemc, $wgStatsDB, $wgCityId, $wgContentNamespaces, $wgDevelEnvironment;
 		wfProfileIn(__METHOD__);
-		
-		$userId = $this->getUser()->getId();
 		$pages = false;
 		
-		if ( !empty( $userId ) ) {
+		if ( !$this->getUser()->isAnon() ) {
 			//select page_id, count(page_id) from stats.events where wiki_id = N and user_id = N and event_type in (1,2) group by 1 order by 2 desc limit 10;
 			$where = array(
 				'wiki_id' => $wgCityId,
-				'user_id' => $userId,
+				'user_id' => $this->getUser()->getId(),
 				'event_type IN (1,2)',
 				'page_ns IN (' . join( ',', $wgContentNamespaces ) . ')'
 			);
@@ -574,11 +567,9 @@ class UserProfilePage {
 	public function getTopCommentedPages() {
 		global $wgMemc, $wgArticleCommentsNamespaces, $wgEnableArticleCommentsExt;
 		wfProfileIn(__METHOD__);
-		
-		$userId = $this->getUser()->getId();
 		$pages = false;
 		
-		if ( !empty( $userId ) ) {
+		if ( !$this->getUser()->isAnon() ) {
 			$talkNamespaces = array();
 
 			if( is_array($wgArticleCommentsNamespaces) ) {
@@ -594,7 +585,7 @@ class UserProfilePage {
 
 			$where = array(
 					'page_id=rev_page',
-					'rev_user' => $userId,
+					'rev_user' => $this->getUser()->getId(),
 					'page_namespace IN (' . join( ',', $talkNamespaces ) . ')',
 			);
 			

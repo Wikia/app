@@ -18,18 +18,18 @@ class UserProfilePageHelper {
 		//the extension is allowed, try to get an instance of the main UPP class
 		$profilePage = UserProfilePage::getInstance( $skin->mTitle );
 		$user = !empty( $profilePage ) ? $profilePage->getUser() : null;
-		$userId = !empty( $user ) ? $user->idForName() : 0;
+		$isAnon = !empty( $user ) ? $user->isAnon() : true;
 		$ns = $skin->mTitle->getNamespace();
 		
-		if( ( empty( $profilePage ) || empty( $userId) ) && ( $ns == NS_USER || $ns = NS_USER_TALK ) && !UserProfilePage::isAllowedSpecialPage( $skin->mTitle ) ) {
+		if( ( empty( $profilePage ) || $isAnon ) && ( $ns == NS_USER || $ns = NS_USER_TALK ) && !UserProfilePage::isAllowedSpecialPage( $skin->mTitle ) ) {
 			//// fallback for non-existent users profile/talk pages
 			$msg = null;
 			$userName = $skin->mTitle->getText();
-			$isAnon = User::isIP( $userName );
+			$notExisting = !User::isIP( $userName );
 			
-			if ( $isAnon && $ns != NS_USER_TALK ) {//anon profile page
+			if ( !$notExisting && $ns != NS_USER_TALK ) {//anon profile page
 				$msg = wfMsgExt( 'userprofilepage-user-anon', array('parse', 'content'), array( $userName ) );
-			} elseif( !$isAnon ) {//non-existing user
+			} elseif( $notExisting ) {//non-existing user
 				$msg = wfMsgExt( 'userprofilepage-user-doesnt-exists', array('parse', 'content'), array( $userName ) );
 			}
 			
@@ -90,7 +90,7 @@ class UserProfilePageHelper {
 		$type = $wgRequest->getVal( 'type' );
 		$value = $wgRequest->getVal( 'value' );
 
-		if( is_object( $wgUser ) && $wgUser->getId() && !empty( $name ) && !empty( $type ) && !empty( $value ) ) {
+		if( is_object( $wgUser ) && !$wgUser->isAnon() && !empty( $name ) && !empty( $type ) && !empty( $value ) ) {
 			$profilePage = UserProfilePage::getInstance( $wgUser );
 			$result['type'] = $type;
 			$result['html'] = $profilePage->doAction( $name, $type, $value );
@@ -163,9 +163,9 @@ class UserProfilePageHelper {
 			
 			$userProfilePage = UserProfilePage::getInstance();
 			$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
-			$userId = !empty( $user ) ? $user->idForName() : 0;
+			$isAnon = !empty( $user ) ? $user->isAnon() : true;
 			
-			if( !empty( $userId) ) {//no sidebar modules for anons and non-existing users
+			if( !$isAnon ) {//no sidebar modules for anons and non-existing users
 				$modules[1499] = array('UserProfileRail', 'TopWikis', null);
 				$modules[1498] = array('LatestActivity', 'Index', null);
 				$modules[1497] = array('UserProfileRail', 'TopPages', null);
