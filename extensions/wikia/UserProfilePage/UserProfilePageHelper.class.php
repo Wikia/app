@@ -11,6 +11,7 @@ class UserProfilePageHelper {
 		//is the extension allowed to run for the current page?
 		if ( !UserProfilePage::isAllowed( $skin->mTitle ) ) {
 			$wgEnableUserProfilePagesExt = false;
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		
@@ -78,6 +79,7 @@ class UserProfilePageHelper {
 	}
 
 	public static function doAction() {
+		wfProfileIn(__METHOD__);
 		global $wgUser, $wgRequest;
 
 		$result = array(
@@ -97,47 +99,62 @@ class UserProfilePageHelper {
 		$json = Wikia::json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
-
+		
+		wfProfileOut(__METHOD__);
 		return $response;
 	}
 
 	public static function getUserFromTitle( Title $title ) {
+		wfProfileIn(__METHOD__);
 		global $wgUserProfilePagesNamespaces, $wgUser;
 		
 		$fallbackOnGlobal = ( $title->isSpecial( 'Contributions' ) || $title->isSpecial( 'Following' ) );
 		$userName = UserPagesHeaderModule::getUserName($title, $wgUserProfilePagesNamespaces , $fallbackOnGlobal );
 		
-		return ( !empty( $userName ) ) ? User::newFromName( $userName ) : false;
+		$out = ( !empty( $userName ) ) ? User::newFromName( $userName ) : false;
+		
+		wfProfileOut(__METHOD__);
+		return $out;
 	}	
 	
 	public static function formatLastActionMessage( $actionData ) {
-		if( count($actionData) ) {
-			return wfMsg( 'userprofilepage-user-last-action-' . $actionData['type'], array( wfTimeFormatAgoOnlyRecent($actionData['timestamp']), $actionData['url'], $actionData['title'] ) );
+		wfProfileIn(__METHOD__);
+		$out = null;
+		
+		if( !empty( $actionData ) ) {
+			$out = wfMsg( 'userprofilepage-user-last-action-' . $actionData['type'], array( wfTimeFormatAgoOnlyRecent($actionData['timestamp']), $actionData['url'], $actionData['title'] ) );
 		}
-		else {
-			return '';
-		}
+		
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	public static function onAlternateEdit( &$oEditPage ) {
+		wfProfileIn(__METHOD__);
 		global $wgOut, $wgUser;
 		$title = $oEditPage->mTitle;
+		$result = true;
+		
 		if( $title->getNamespace() == NS_USER ) {
 			$user = self::getUserFromTitle( $title );
+			
 			if( !empty( $user ) && strcmp( $user->getName(), $wgUser->getName() ) != 0 ) {
 				$wgOut->clearHTML();
 				$wgOut->showErrorPage( 'userprofilepage-edit-permision-denied', 'userprofilepage-edit-permision-denied-info' );
-				return false;
+				$result = false;
 			}
 		}
-		return true;
+		
+		wfProfileOut(__METHOD__);
+		return $result;
 	}
 	
 	static public function onGetRailModuleList(&$modules) {
+		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces,
 			$wgEnableUserProfilePagesExt, $wgUser, $wgEnableSpotlightsV2_Rail;
 		
-		if ( !empty( $wgEnableUserProfilePagesExt ) && $wgTitle->getNamespace() != NS_SPECIAL && UserProfilePage::isAllowed() ) {//no broken right rail in special pages
+		if ( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() && !UserProfilePage::isAllowedSpecialPage()) {//no broken right rail in special pages
 			foreach( $modules as $weight => $module ) {
 				if( in_array( $module[0], array( 'LatestPhotos', 'LatestActivity', 'PagesOnWiki' ) ) ) {
 					unset( $modules[ $weight ] );
@@ -148,7 +165,7 @@ class UserProfilePageHelper {
 			$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
 			$userId = !empty( $user ) ? $user->idForName() : 0;
 			
-			if( !empty( $userId) ) {
+			if( !empty( $userId) ) {//no sidebar modules for anons and non-existing users
 				$modules[1499] = array('UserProfileRail', 'TopWikis', null);
 				$modules[1498] = array('LatestActivity', 'Index', null);
 				$modules[1497] = array('UserProfileRail', 'TopPages', null);
@@ -163,6 +180,7 @@ class UserProfilePageHelper {
 			}
 		}
 		
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 }

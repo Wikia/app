@@ -34,10 +34,12 @@ class UserProfileRailModule extends Module {
 			$this->userPageUrl = $title->getLocalUrl();
 			$this->maxEdits = 0;
 			$this->currentWikiId = $wgCityId;
-
-			foreach ( $this->topWikis as $wikiId => $wikiData ) {
-				if ( $wikiData[ 'editCount' ] > $this->maxEdits ) {
-					$this->maxEdits = $wikiData[ 'editCount' ];
+			
+			if( !empty( $this->topWikis ) ) {
+				foreach ( $this->topWikis as $wikiId => $wikiData ) {
+					if ( $wikiData[ 'editCount' ] > $this->maxEdits ) {
+						$this->maxEdits = $wikiData[ 'editCount' ];
+					}
 				}
 			}
 
@@ -65,7 +67,7 @@ class UserProfileRailModule extends Module {
 			$specialPageTitle = Title::newFromText( 'Random', NS_SPECIAL );
 			$this->specialRandomLink = $specialPageTitle->getFullUrl();
 
-			if( class_exists('imageServing') ) {
+			if( !empty( $this->topPages ) && class_exists( 'imageServing' ) ) {
 				// ImageServing extension enabled, get images
 				$imageServing = new imageServing( array_keys( $this->topPages ), 70, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
 				$this->topPageImages = $imageServing->getImages(1); // get just one image per article
@@ -76,25 +78,28 @@ class UserProfileRailModule extends Module {
 	}
 
 	private function populateHiddenTopPages( $hiddenPages ) {
+		wfProfileIn( __METHOD__ );
 		// create title objects for hidden pages, so we can get a valid urls
 		$pages = array();
 
 		foreach($hiddenPages as $pageId) {
-				$title = Title::newFromID( $pageId );
-				if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
-					$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => 0 );
-				}
-				else {
-					unset( $pages[ $pageId ] );
-				}
+			$title = Title::newFromID( $pageId );
+			if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
+				$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => 0 );
 			}
-
+			else {
+				unset( $pages[ $pageId ] );
+			}
+		}
+			
+		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
 
 	private function populateHiddenTopWikis( $hiddenWikis ) {
+		wfProfileIn( __METHOD__ );
 		$wikis = array();
-
+		
 		foreach( $hiddenWikis as $wikiId ) {
 			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
@@ -115,7 +120,8 @@ class UserProfileRailModule extends Module {
 
 			$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => 0);
 		}
-
+		
+		wfProfileOut( __METHOD__ );
 		return $wikis;
 	}
 }

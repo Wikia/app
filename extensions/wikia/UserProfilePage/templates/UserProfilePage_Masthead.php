@@ -45,7 +45,7 @@
 		<span class="count"><?= $data['stats']['edits']; ?></span>
 		<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $data['stats']['date'] ) ;?></span>
 	</div>
-	<?php if( count($lastActionData) ): ?>
+	<?php if( !empty( $lastActionData ) ): ?>
 		<div class="last-action">
 			<img src="<?= wfBlankImgUrl() ;?>" class="sprite <?= $lastActionData['changeicon'] ?>" height="20" width="20">
 			<span class="last-action-title"><?= $lastActionData['changemessage']; ?></span>
