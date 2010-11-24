@@ -1,0 +1,66 @@
+#siteNotice { 
+	display: none; 
+}
+.editsection {
+	display: none;
+}
+.iOS-header {
+	background: #3A5766;
+	padding: 0.2em;
+}
+.iOS-header >img {
+	-webkit-transform: translateY(-0.1em) scale(0.8);
+}
+.iOS-header >a.wikia-button,
+.iOS-header form {
+	position: relative;
+}
+.iOS-header >a.wikia-button {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.35, #E8E8E8), color-stop(0.65, whiteSmoke)) #F2F2F2;
+	border: 1px solid #A5CBE3;
+	border-radius: 4px;
+	color: black;
+	float: right;
+	font-size: 60%;
+	padding: 0.2em 0.4em;
+	text-decoration: none;
+	top: 0.4em;
+}
+.iOS-header form {
+	display: block;
+	float: right;
+	top: 0.1em;
+}
+body .iOS-header form input {
+	border: none;
+	height: 1.5em;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	-webkit-appearance: none;
+}
+.iOS-header input {
+	border-radius: 0;
+}
+.iOS-header input[type=image] {
+	border-left: 1px solid #A5CBE3;
+	right: -0.2em;
+	padding: 0.28em 0.3em;
+	top: -0.09em;
+	-webkit-transform: scale(0.725);
+}
+.iOS-header input[type=text] {
+	padding-left: 0.3em;
+	right: -1em;
+	top: -0.1em;
+}
+.iOS-wikiname {
+	border-bottom: 1px solid #D9D9D9;
+	color: #006CB0;
+	font-size: 188%;
+}
+h1 {
+	border-bottom: none;
+	margin: 0;
+	padding: 0;
+}
