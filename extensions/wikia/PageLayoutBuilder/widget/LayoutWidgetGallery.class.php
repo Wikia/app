@@ -22,7 +22,7 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 		$data['isform'] = true;
 		$data['isempty'] = false;
 		$data['username'] = wfMsg('plb-parser-preview-image-username');
-		$data['size'] =185;
+		$data['size'] =150;
 		$data['width'] = $data['size'];
 		$data['id'] = $this->getAttrVal('id', true);
 		$data['img'] = "";

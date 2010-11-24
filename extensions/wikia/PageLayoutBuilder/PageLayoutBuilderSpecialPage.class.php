@@ -59,6 +59,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 		
 		$wgOut->addScriptFile( $wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/editor.js" );
+		$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
 
 		if($wgRequest->wasPosted() && ($wgRequest->getVal("action") == "submit") ) {
 			if($this->parseForm()) {

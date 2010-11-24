@@ -16,7 +16,7 @@ class LayoutWidgetInput extends LayoutWidgetBase {
 								'name' => 'plb_'.$this->getAttrVal('id', true),
 								'type' => 'text',
 								'value' => empty($this->value) ? $this->getAttrVal('instructions', true):$this->value,
-								'class' => "plb-input ".(empty($this->value) ? "plb-empty-input":""),
+								'class' => "plb-input-instructions plb-input ".(empty($this->value) ? "plb-empty-input":""),
 								'style' => $style,
 							),
 							"",

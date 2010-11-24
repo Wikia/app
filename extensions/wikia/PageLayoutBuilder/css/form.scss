@@ -60,16 +60,33 @@ ul.plb-form-actions {
 	color:gray;
 }
 
+.plb-empty-select {
+	color:gray;
+	option{
+		&.normal {
+			color: $color-text;
+		}
+	}
+}
+
 .plb-mlinput-textarea {
 	height: 200px;
 	width: 670px;
 }
 
+.plb-pe-window-preview .plb-mlinput-textarea {
+	height: 100px;
+}
+
+
 .WikiaArticle{
 	p.plb-form-caption-p {
-			margin: 0;
-			font-weight: bold;
-		}
+		margin: 0;
+		font-weight: bold;
+	}
+	&.plb-pe-window-preview {
+		min-height: 0px;
+	}
 }
 
 .plb-input {

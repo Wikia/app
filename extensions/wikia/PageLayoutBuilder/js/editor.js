@@ -110,15 +110,17 @@
 				return;
 			}
 			
+			$().log("edit", "PLB");
 			var type = this.getType();
-			var values = this.getProperties();
+			var values = this.getProperties();	
+		
 			this.ed.fire('widgetbeforeedit',this,type,values);
 			
 			this.editing = true;
 			var pe = PLB.PropertyEditor.create(type,values);
 			pe.on('save',$.proxy(this.onEditorSave,this));
 			pe.on('dismiss',$.proxy(this.onEditorDismiss,this));
-			pe.show(this.onSave,this.onDismiss);
+			pe.show(this.onSave,this.onDismiss, values);
 		},
 		
 		remove: function () {
@@ -140,7 +142,6 @@
 		},
 		
 		extSetProperties: function () {}
-		
 	});
 	
 	PLB.Widgets = {};
@@ -1007,7 +1008,8 @@
 			return this.values;
 		},
 		
-		show: function() {
+		show: function(onSave, doDismiss, value) {
+			
 			// Create form 
 			this.form = $(this.editorHtml);
 			
@@ -1023,14 +1025,17 @@
 			// Write all current values to the form
 			this.writeValues();
 			// Bind to change events and invoke it once
-			$('[name],',this.form).change($.proxy(this.onChange,this));
-			$('[name],',this.form).blur($.proxy(this.onChange,this));
-			$('input[name], textare[name]',this.form).keyup($.proxy(this.onChange,this));
+			
+			var form = $('form', this.form);
+			form.find('[name],',this.form).change($.proxy(this.onChange,this));;
+			form.find('[name],',this.form).blur($.proxy(this.onChange,this));
+			form.find('input[name], textarea[name]',this.form).keyup($.proxy(this.onChange,this));
+			
 			$('.helpicon',this.form).each(function(i,el){
 				new PLB.Tooltip(el);
 			});
+		
 			this.onChange();
-
 			// Show modal box
 			var mopts = {
 				onClose: $.proxy(this.doDismiss,this),
@@ -1038,6 +1043,36 @@
 				width: this.width
 			};
 			this.wrapper = this.form.makeModal(mopts);
+			
+			//init preview
+			this.refreshPreview(value);
+			$('.plb-pe-window-preview').find('input[name], textarea[name]')
+				.focus($.proxy(this.focusPreviewInput,this))
+				.blur($.proxy(this.blurPreviewInput,this));
+			$('.plb-pe-window-preview button').attr("onclick", "");
+		},
+		
+		focusPreviewInput: function(e) {
+			$(e.target).val("").removeClass('plb-empty-input');
+		},
+		
+		blurPreviewInput: function(e) {
+			this.refreshPreview(this.values);
+			$(e.target).addClass('plb-empty-input');
+		},
+		
+		refreshPreview: function(values) {
+			$().log("refreshPreview", "PLB")
+			if( typeof(values.caption) != 'undefined' ) {
+				$('.plb-pe-window-preview .plb-form-caption-p').html(values.caption);
+			}
+
+			if(typeof(values.instructions) != 'undefined') {
+				$('.plb-pe-window-preview .plb-input-instructions').val(values.instructions);
+				$('.plb-pe-window-preview .plb-span-instructions').html(values.instructions);
+			}
+			
+			this.extRefreshPreview(values);
 		},
 		
 		setupForm: function() {
@@ -1137,6 +1172,7 @@
 		
 		onChange: function(ev) {
 			this.updateValues();
+			this.refreshPreview(this.values);
 			this.extFormChange(ev);
 			this.validate();
 		},
@@ -1166,8 +1202,10 @@
 		extFormSetValue: function() {},
 		extFormValidate: function() {},
 		extFormChange: function() {},
-		extShowFieldValidation: function() {}
-		
+		extShowFieldValidation: function() {},
+		extRefreshPreview: function () {
+			$().log('extRefreshPreview',"EXT");
+		}
 	});
 	
 	PLB.PropertyEditors = {};
@@ -1207,8 +1245,11 @@
 			if (name == 'type') {
 				this.showFieldValidation('x-type',state.value);
 			}
+		}, 
+		
+		extRefreshPreview : function(values) {
+			$().log(values, 'PLB image');
 		}
-	
 	});
 
 	PLB.PropertyEditors['plb_sinput'] = $.createClass(PLB.PropertyEditor,{
@@ -1234,6 +1275,7 @@
 				});
 				  
 				state.value = ll.join('|');
+				return state;
 			}
 		},
 		
@@ -1253,9 +1295,28 @@
 			if (name == 'options') {
 				this.showFieldValidation('x-options',state.value);
 			}
+		},
+		
+		extRefreshPreview : function(values) {
+			var value = this.extFormGetValue('options', {}); 
+			var l = String(value.value).split('|');
+			var element = $('.plb-pe-window-preview select');
+			element.empty();
+			if (typeof(values.instructions) != 'undefined') {
+				$(element).append($("<option/>").text(values.instructions).val(""));	
+			} 
+			if(l.length > 0) {
+				$.each(l,function(i,v){
+					if (v != '') {
+						v = v.replace("&#124;", "|");
+						$(element).append($("<option/>").text(v).val(i).addClass('normal'));
+					}
+				});
+			}
+			PageLayoutBuilder.initSelect();
 		}
-	
 	});
+	
 	
 	PLB.PropertyEditor.create = function ( type, values ) {
 		if (typeof PLB.PropertyEditors[type] == 'undefined') {

@@ -8,4 +8,12 @@
 			<input class="plb-pe-button-cancel" type="button" value="<?php echo wfMsg('plb-property-editor-cancel'); ?>">
 		</div>
 	</form>
+	
+	<h2>
+		<?php echo wfMsg('plb-editor-preview'); ?>
+	</h2>
+		
+	<div class="plb-pe-window-preview WikiaArticle" >
+		<?php echo $preview; ?>
+	</div>
 </div>
