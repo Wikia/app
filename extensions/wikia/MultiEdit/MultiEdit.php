@@ -405,9 +405,9 @@ END
 	
 	$script .= "\n<script type='text/javascript'>\n";
 	$script .= "initMultiEdit = function() { eval('multiSave();'); return true; } \n";
-	$script .= "YAHOO.util.Event.addListener(\"wpSave\", \"click\", initMultiEdit);";
-	$script .= "YAHOO.util.Event.addListener(\"wpDiff\", \"click\", initMultiEdit);";
-	$script .= "YAHOO.util.Event.addListener(\"wpPreview\", \"click\", initMultiEdit);";
+	$script .= "$('#wpSave').bind('click', initMultiEdit); \n";
+	$script .= "$('#wpDiff').bind('click', initMultiEdit); \n";
+	$script .= "$('#wpPreview').bind('click', initMultiEdit); \n";
 	$script .= "</script>";
 	
 	$wgOut->addHTML( $script );
