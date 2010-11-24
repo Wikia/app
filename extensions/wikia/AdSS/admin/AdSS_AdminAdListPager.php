@@ -7,6 +7,7 @@ class AdSS_AdminAdListPager extends TablePager {
 	private $mFiltersShown = array(
 			'all'     => 'All',
 			'active'  => 'In rotation (accepted & not expired)',
+			'banners' => 'Banners (in rotation)',
 			'pending' => 'Pending acceptance',
 			'expired' => 'Expired (not closed)',
 			'closed'  => 'Closed',
@@ -118,6 +119,13 @@ class AdSS_AdminAdListPager extends TablePager {
 				$qi['conds'] = array_merge( $qi['conds'], array(
 						'ad_closed IS NULL',
 						'ad_expires > NOW()',
+						) );
+				break;
+			case 'banners':
+				$qi['conds'] = array_merge( $qi['conds'], array(
+						'ad_closed IS NULL',
+						'ad_expires > NOW()',
+						'ad_type' => 'b',
 						) );
 				break;
 			case 'pending':
