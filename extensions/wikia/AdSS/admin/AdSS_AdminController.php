@@ -13,6 +13,13 @@ class AdSS_AdminController {
 			return;
 		}
 
+		if( isset( $sub[1] ) && ( $sub[1] == 'download' ) &&
+		    isset( $sub[2] ) && ( is_numeric( $sub[2] ) ) ) {
+			if( $this->downloadAd( $sub[2] ) ) {
+				return;
+			}
+		}
+
 		if( isset( $sub[1] ) && in_array( $sub[1], $this->tabs ) ) {
 			$this->selectedTab = $sub[1];
 		}
@@ -111,6 +118,31 @@ class AdSS_AdminController {
 
 		$wgOut->addHTML( $tmpl->render( 'reports' ) );
 
+	}
+
+	function downloadAd( $adId ) {
+		global $wgAdSS_BannerUploadDirectory, $wgOut;
+
+		$ad = AdSS_AdFactory::createFromId( $adId );
+		if( $ad && ( $ad->type == 'b' ) ) {
+			$magic = MimeMagic::singleton();
+			$mime = $magic->guessMimeType( $wgAdSS_BannerUploadDirectory . "/" . $ad->id, false );
+			wfDebug( "MIME for " . $wgAdSS_BannerUploadDirectory . "/" . $ad->id . " is $mime\n" );
+			if( $mime ) {
+				$ext = explode( ' ', $magic->getExtensionsForType( $mime ) );
+				$filename = "adss-banner-{$ad->id}.{$ext[0]}";
+
+				$wgOut->disable();
+				wfResetOutputBuffers();
+				header( "Content-Disposition: attachment;filename={$filename}" );
+				header( "Content-Type: $mime" );
+				header( "Content-Length: " . filesize( $wgAdSS_BannerUploadDirectory . "/" . $ad->id ) );
+				readfile( $wgAdSS_BannerUploadDirectory . "/" . $ad->id );
+
+				return true;
+			}
+		}
+		return false;
 	}
 
 	static function acceptAdAjax( $id, $token ) {
