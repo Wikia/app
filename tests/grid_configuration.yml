@@ -1,7 +1,7 @@
 hub:
    port: 4444
-   remoteControlPollingIntervalInSeconds: 180
-   sessionMaxIdleTimeInSeconds: 300
+   remoteControlPollingIntervalInSeconds: 120
+   sessionMaxIdleTimeInSeconds: 120
    newSessionMaxWaitTimeInSeconds: 120
    environments:
        - name:    "Firefox 3.5 on Windows XP"
