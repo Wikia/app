@@ -18,7 +18,6 @@ class AdModule extends Module {
 			if (BodyModule::isHubPage()) {
 				self::$config['CORP_TOP_LEADERBOARD'] = true;
 				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
-				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['INVISIBLE_1'] = true;
 				self::$config['INVISIBLE_2'] = true;
 				if(!empty($wgEnableAdInvisibleTop)) {
@@ -42,7 +41,7 @@ class AdModule extends Module {
 			}
 			if($wgEnableFAST_HOME2) {
 				self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
-				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
+				self::$config['TEST_HOME_TOP_RIGHT_BOXAD'] = true;
 			}
 			if(!empty($wgEnableAdTopRightButton)) {
 				self::$config['HOME_TOP_RIGHT_BUTTON'] = true;
