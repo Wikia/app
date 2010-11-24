@@ -240,6 +240,7 @@ my @tests = qw(
 	/b/blazblue/images/thumb/c/cf/MakotoChibi.png/82px-0%2C182%2C0%2C182-MakotoChibi.png
 	/l/lfn/images/thumb/b/b6/Flag_of_Lingua_Franca_Nova.svg/82px-1,514,0,512-Flag_of_Lingua_Franca_Nova.svg.png
 	/s/sartrans/ru/images/thumb/3/3e/%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg/82px-155,900,0,744-%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg.png
+	/k/kuroshitsuji/images/thumb/c/c8/Snake_Revealed.png/82px-0%2C459%2C0%2C459-Snake_Revealed.png
 );
 use warnings;
 my @done = ();
