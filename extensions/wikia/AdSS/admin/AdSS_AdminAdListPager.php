@@ -52,6 +52,7 @@ class AdSS_AdminAdListPager extends TablePager {
 				return $tmpl->render( 'actionLink' );
 			case 'ad_text':
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
+				$tmpl->set( 'downloadUrl', Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$this->ad->id )->getLocalURL() );
 				return $this->ad->render( $tmpl );
 			case 'ad_page_id':
 				if( $this->ad->pageId > 0 ) {
