@@ -51,7 +51,14 @@
 		<div id="WikiaArticle" class="WikiaArticle">
 			<div class="home-top-right-ads">
 			<?php 
-				echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+				// A/B test
+				$headers = function_exists('apache_request_headers') ? apache_request_headers() : array(); 
+				if (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1") {
+					echo wfRenderModule('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
+				}
+				else {
+					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+				}
 
 				if(!empty($wgEnableAdTopRightButton)) {
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
