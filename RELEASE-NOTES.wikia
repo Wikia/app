@@ -11,6 +11,7 @@
 * rt#87661: Mediawiki:Categoryblacklist is not working (TOR)
 * rt#98523: Special:Preferences tabs not loading as js (macbre)
 * rt#104335: Fix 'share' link format for facebook (sean)
+* rt#73354: User Rename Tool: Change Attribution of Moves (TOR)
 
 == Changes since 201011.1 ==
 * rt#85526: Security problem: hijacking sessionid (Marooned)
