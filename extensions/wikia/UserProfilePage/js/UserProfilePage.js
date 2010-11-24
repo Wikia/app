@@ -17,7 +17,6 @@ var UserProfilePage = {
 		UserProfilePage._hiddenTopPagesWrapper = $('#profile-top-pages-hidden');
 		UserProfilePage.attachEvents();
 		UserProfilePage.enrichAboutSection();
-		$().log(UserProfilePage._aboutSection);
 	},
 	
 	doAction: function(name, type, value) {
@@ -56,7 +55,6 @@ var UserProfilePage = {
 	attachEvents: function() {
 		//handle click outside hidden elements popup menu
 		UserProfilePage._topWikisWrapper.find('a.more').live( 'click', function() {
-			$().log('asd');
 			if(!UserProfilePage._hiddenWikisWrapper.hasClass('user-profile-box')){
 				UserProfilePage._hiddenWikisWrapper.addClass('user-profile-box');
 
@@ -70,7 +68,6 @@ var UserProfilePage = {
 
 		//handle click outside hidden elements popup menu
 		UserProfilePage._topPagesWrapper.find('a.more').live( 'click', function() {
-			$().log('dsa');
 			if(!UserProfilePage._hiddenTopPagesWrapper.hasClass('user-profile-box')){
 				UserProfilePage._hiddenTopPagesWrapper.addClass('user-profile-box');
 

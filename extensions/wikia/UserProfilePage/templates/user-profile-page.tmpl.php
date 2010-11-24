@@ -1,5 +1,5 @@
 <div id='profile-content'>
-	<? if( !$hideAboutSection ) :?>
+	<? if( !$hideAboutSection && !empty( $aboutSection ) ) :?>
 		<div class="user-about-section" data-generic-avatar="<?= $extensionsPath ;?>/wikia/UserProfilePage/img/mic.jpg" data-user-avatar="<?= AvatarService::getAvatarUrl( $userName, 22 ) ;?>">
 			<h2>
 				<? $sectionName = wfMsg( 'userprofilepage-about-section-title', array( $wikiName ) ) ;?>

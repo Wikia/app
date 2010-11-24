@@ -4,14 +4,16 @@ class UserProfilePageModule extends Module {
 	public $data = null;
 
 	public function executeMasthead( $data ) {
+		wfProfileIn(__METHOD__);
 		// render bigger avatar (200x200) when UserProfilePage extension is enabled
 		$this->avatar = AvatarService::renderAvatar($data['userName'], 200, true);
 
 		$userProfilePage = UserProfilePage::getInstance();
 		
-		if( $userProfilePage ) {
+		if( !empty( $userProfilePage ) ) {
 			$this->lastActionData = $userProfilePage->getUserLastAction();
-			if( count($this->lastActionData) ) {
+			
+			if( !empty( $this->lastActionData ) ) {
 				$this->lastActionData['changemessage'] = UserProfilePageHelper::formatLastActionMessage( $this->lastActionData );
 				$this->lastActionData['changeicon'] = $this->lastActionData['type'];
 				if( empty( $this->lastActionData['intro'] ) ) {
@@ -28,7 +30,7 @@ class UserProfilePageModule extends Module {
 				}
 			}
 
-			$this->userRights = array_intersect( $userProfilePage->getUserRights(), array(
+			$this->userRights = array_intersect( $userProfilePage->getUser()->getRights(), array(
 				'sysop',
 				'bot',
 				'staff',
@@ -39,5 +41,6 @@ class UserProfilePageModule extends Module {
 		}
 
 		$this->data = $data;
+		wfProfileOut(__METHOD__);
 	}
 }
