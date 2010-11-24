@@ -16,7 +16,7 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 								'name' => 'plb_'.$this->getAttrVal("id"),
 								'type' => 'text',
 								'style' => $style,
-								'class' => 'plb-mlinput-textarea '.(empty($this->value) ? "plb-empty-input":""),
+								'class' => 'plb-mlinput-textarea plb-input-instructions '.(empty($this->value) ? "plb-empty-input":""),
 							),
 							empty($this->value) ? $this->getAttrVal('instructions', true) : $this->value,
 							false );

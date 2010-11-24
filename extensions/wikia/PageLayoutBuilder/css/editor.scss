@@ -324,7 +324,11 @@ $plb-window-items-margin: 6px;
 	input[type=checkbox] {
 		border-width: 2px;
 	}
-	
+	h2 {
+		font-size:23px;
+		margin-bottom:17px;
+		margin-top:17px;
+	}
 	.plb-pe-buttons {
 	
 		text-align: center;
@@ -338,7 +342,14 @@ $plb-window-items-margin: 6px;
 		}
 		
 	}
-	
+	.plb-pe-preview-title {
+		@include linear-gradient(#cfe1ed, top, #cfe1ed, 0%, #a6c4dc, 100%);
+		border-bottom: 1px solid #999;
+		bottom: 0;
+		height: 45px;
+		position: absolute;
+		width: 100%;
+	}
 }
 
 .plb-preview-div {
@@ -358,7 +369,6 @@ $plb-window-items-margin: 6px;
 		}
 	}
 }
-
 
 #plbLayoutList {
 	margin-bottom:10px;

@@ -11,17 +11,13 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 			$style .= "border-color: red; border-style: solid;";
 		}
 
-		if( empty($this->value) ) {
-			$style .= "color:gray;";
-		}
-
 		$out = XML::openElement('select',
 							array(
 								'name' => 'plb_'.$this->getAttrVal('id', true),
 								'type' => 'text',
 								'value' => $this->value,
 								'style' => $style,
-								'class' => empty($this->value) ? "plb-select-empty":""
+								'class' => empty($this->value) ? "plb-empty-select":""
 							));
 
 
@@ -34,6 +30,7 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 			$attr  = array("value" => $value);
 			if($this->value == $value) {
 				$attr['selected'] = 'selected';
+				$attr['option'] = 'normal';
 			}
 			$out .= XML::element("option", $attr, $value);
 		}

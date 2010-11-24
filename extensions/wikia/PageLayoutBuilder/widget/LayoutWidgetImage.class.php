@@ -24,7 +24,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$data['isform'] = true;
 		$data['isempty'] = false;
 		$data['username'] = wfMsg('plb-parser-preview-image-username');
-		$data['size'] =185;
+		$data['size'] = 150;
 		$data['width'] = $data['size'];
 		$data['id'] = 'plb_'.$this->getAttrVal('id', true);
 		$data['img'] = "";

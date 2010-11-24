@@ -23,8 +23,11 @@
 			$widgets = array();
 			$messages = array();
 			foreach ($widgetNames as $widgetName) {
+				$widgetInstance = new $wgPLBwidgets[$widgetName];
+				
 				$template->set_vars(array(
 					'widgetName' => $widgetName,
+					'preview' => $widgetInstance->renderForFormCaption().$widgetInstance->renderForForm()
 				));
 				$widgetForm = Wikia::json_encode($template->render("pe-form-wrapper"));
 
@@ -36,7 +39,6 @@
 					}
 				}
 
-				$widgetInstance = new $wgPLBwidgets[$widgetName];
 				$widgets[$widgetName] = array(
 					'form' => $widgetForm,
 					'editor_menu_item_html' => Wikia::json_encode($widgetInstance->renderEditorMenuItem()),

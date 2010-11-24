@@ -99,7 +99,7 @@ class imageServing{
 				foreach( $props as $key => $value ) {
 					if( empty($image_list[$value][$row['page_id']]) ) {
 						if( empty($image_list[$value]) ) {
-							$images_name[] = $db->addQuotes( $value );
+							$images_name[] = $value;
 						}
 						$image_list[$value][$row['page_id']] = $key;
 					}
@@ -137,7 +137,7 @@ class imageServing{
 						__METHOD__
 					);
 						
-					if ( is_null ( $oRowImg ) ) {
+					if ( empty ( $oRowImg ) ) {
 						continue;
 					}
 						
@@ -204,20 +204,30 @@ class imageServing{
 		
 		if( !empty( $fileNames ) ) {
 			foreach ( $fileNames as $fileName ) {
-				$title = Title::newFromText( $fileName, NS_FILE );
+				if(!($fileName instanceof LocalFile)) {
+					$title = Title::newFromText( $fileName, NS_FILE );	
+				} else {
+					$img = $fileName;
+				}
+				
 				$mcKey = $this->_makeKey( uniqid('asd') );
 				$mcOut = $wgMemc->get( $mcKey, null );
 				
 				if( $mcOut != null ) {
 					$ret[ $fileName ] = $mcOut;
-				} elseif ( $img = wfFindFile( $title ) ) {
+				} elseif ( !empty($img) || $img = wfFindFile( $title ) ) {
 					$imageInfo = getimagesize( $img->getPath() );
-					
-					$ret[ $fileName ] =  array(
-						'name' => $title->getText(),
-						'url' => wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $imageInfo[ 0 ], $imageInfo[ 1 ]) . "-" . $img->getName() ) )
-					);
+					$fileName = $img->getTitle()->getDBkey();
+					$issvg = false;
+					$mime = strtolower($img->getMimeType());
+					if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+						$issvg = true;	
+					}
 
+					$ret[ $fileName ] =  array(
+						'name' => $img->getTitle()->getText(),
+						'url' => wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $img->getWidth(), $img->getHeight(), "center", $issvg) . "-" . $img->getName().($issvg ? ".png":"") ) )
+					);
 					$wgMemc->set( $mcKey, $ret[ $fileName ], 60*60 );
 				}
 			}
@@ -271,7 +281,13 @@ class imageServing{
 	 * @return \string prefix for thumb image
 	 */
 
-	public function getCut( $width, $height, $align = "center" ) {
+	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
+		//rescal of png always use width 512;
+		if($issvg) {
+			$height = round((512 * $height) / $width);
+			$width = 512;
+		} 
+		
 		$pHeight = round(($width)*($this->proportion['h']/$this->proportion['w']));
 
 		if($pHeight >= $height) {

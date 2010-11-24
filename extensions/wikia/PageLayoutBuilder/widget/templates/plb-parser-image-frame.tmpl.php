@@ -29,5 +29,5 @@
 <?php endif; ?>
 
 <?php if($data['isform']): ?>
-	<span class="plb-empty-input" ><?php echo $data['instructions']; ?> </span>
+	<span class="plb-span-instructions plb-empty-input" ><?php echo $data['instructions']; ?> </span>
 <?php endif; ?>

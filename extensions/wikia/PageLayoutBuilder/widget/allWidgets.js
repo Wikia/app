@@ -212,17 +212,22 @@ $(function() {
 
 //* select *//
 
-$(function() {
-	$(".plb-select-empty").mousedown(function(e) { 
-	    $(e.target).attr("style","") 
-	});
-	
-	$(".plb-select-empty").change(function(e) {
+
+PageLayoutBuilder.initSelect = function() {
+	var select = $(".plb-empty-select");
+	select.find("option:first").attr("class", "plb-empty-select");
+	select.unbind().change(function(e) {
 	    var element = $(e.target);
-	    if( $(e.target).val() == "") {
-	        $(e.target).css("color", "gray");
+	    if( element.val() == "") {
+	    	element.attr("class", "plb-empty-select");
+	    } else {
+	    	element.attr("class", "");
 	    }
 	});
+}
+
+$(function() {
+	PageLayoutBuilder.initSelect();
 });
 // * end select * //
 

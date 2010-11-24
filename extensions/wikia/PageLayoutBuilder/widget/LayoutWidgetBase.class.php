@@ -59,6 +59,7 @@ abstract class LayoutWidgetBase {
 				}
 
 			}
+
 			if($class->isParagraph()) {
 				//TODO: solution to the problem of dressed in p more sophisticated way
 				return RTEParser::markEntities(Xml::element($data["__plb_type"], $params))."\n";
@@ -105,7 +106,7 @@ abstract class LayoutWidgetBase {
 	}
 
 	public function renderForFormCaption() {
-		return XML::element('p', array('class' => 'plb-form-caption-p'), $this->getAttrVal( "caption" ));
+		return XML::element('p', array('class' => 'plb-form-caption-p'), $this->getAttrVal( "caption", true ));
 	}
 
 	protected function validateAllowedVal($name, $vals = array() ) {
@@ -209,10 +210,11 @@ abstract class LayoutWidgetBase {
 
 	public function getAllAttrs() {
 		//param name => default value
+		wfLoadExtensionMessages( 'PageLayoutBuilder' );
 		return array(
 				'id' => '',
-				'caption'  => '',
-				'instructions' => '',
+				'caption'  => wfMsg('plb-parser-default-caption'),
+				'instructions' => wfMsg('plb-parser-default-instructions'),
 				'required' => 0,
 		);
 	}

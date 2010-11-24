@@ -27,7 +27,7 @@ class LatestPhotosModule extends Module {
 
 		// Pull the list of images from memcache first
 		// FIXME: create and use service (see RT #79288)
-		$this->thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
+		//$this->thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
 		if (empty($this->thumbUrls)) {
 			// api service
 			$params = array(
@@ -81,10 +81,11 @@ class LatestPhotosModule extends Module {
 		if (! isset($element['file'])) return array();
 
 		$file = $element['file'];
-
 		// crop the images correctly using extension:imageservice
 		$is = new imageServing(array(), 82);
-		$thumb_url = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height)."-".$file->name));
+		$thumb_url = $is->getThumbnails(array($file)); 
+		$thumb_url = array_pop($thumb_url); 
+		$thumb_url = $thumb_url['url'];
 		$userName = $file->user_text;
 
 		$retval = array (
