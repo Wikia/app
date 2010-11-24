@@ -112,7 +112,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, "vslow" );
 		$res = $dbr->select(
 			'page',
 			array( 'page_namespace' ),
@@ -241,7 +241,7 @@ class SitemapPage extends UnlistedSpecialPage {
 	private function generateNamespace() {
 		global $wgServer, $wgOut, $wgMemc;
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, "vslow" );
 
 		$wgOut->disable();
 
