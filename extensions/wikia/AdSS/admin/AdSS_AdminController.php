@@ -74,11 +74,12 @@ class AdSS_AdminController {
 			$d[] = $row->income;
 			$xl0[] = $row->billing_date;
 		}
+		$maxY = ceil( max( $d ) / 100 ) * 100;
 		
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
-		$tmpl->set( 'w', 600 );
+		$tmpl->set( 'w', 500 );
 		$tmpl->set( 'h', 300 );
-		$tmpl->set( 'maxY', 500 );
+		$tmpl->set( 'maxY', $maxY );
 		$tmpl->set( 'd', implode( ',', array_reverse( $d ) ) );
 		$tmpl->set( 'xl0', implode( '|', array_reverse( $xl0 ) ) );
 
