@@ -747,9 +747,12 @@ class RenameUserProcess {
 	 * @param $cityId int Wiki ID
 	 */
 	public function updateLocal(){
-		global $wgCityId;
+		global $wgCityId, $wgUser;
 		
 		wfProfileIn(__METHOD__);
+
+		$wgOldUser = $wgUser;
+		$wgUser = User::newFromName( 'Wikia' );
 
 		$cityDb = WikiFactory::IDtoDB($wgCityId);
 		$this->addLog("Processing wiki database: {$cityDb}.");
@@ -839,6 +842,8 @@ class RenameUserProcess {
 		
 		$this->addMainLog("log",RenameUserLogFormatter::wiki($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
 			!empty($this->warnings) || !empty($this->errors) ));
+
+		$wgUser = $wgOldUser;
 
 		wfProfileOut(__METHOD__);
 	}
