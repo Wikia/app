@@ -235,15 +235,19 @@ public class BaseTest {
 
 	protected String getWordFromCaptchaId(String captchaId)
 			throws NoSuchAlgorithmException, IOException {
+		if (webSite.endsWith("/")) {
+			webSite = webSite.substring(0, webSite.length() - 1);
+		}
 		URL url = new URL(webSite
-				+ "index.php?title=Special:Captcha/image&wpCaptchaId="
+				+ "/index.php?title=Special:Captcha/image&wpCaptchaId="
 				+ captchaId);
 		String md5 = md5(url.openStream());
 		if (md5 == null) {
 			assertTrue(session().isTextPresent("Requested bogus captcha image"));
 		}
 
-		BufferedReader in = new BufferedReader(new FileReader("captcha.txt"));
+		File file = new File(System.getenv("TESTSCONFIG"));
+		BufferedReader in = new BufferedReader(new FileReader(file.getParentFile() + "/fixtures/captcha.txt"));
 		String strLine;
 		while ((strLine = in.readLine()) != null) {
 			String[] field = strLine.split("\t");
@@ -298,8 +302,7 @@ public class BaseTest {
 	protected void doDelete(String reasonGroup, String reason) throws Exception {
 		if (isOasis()) {
 			session().click("//a[@data-id='delete']");
-		}
-		else {
+		} else {
 			session().click("ca-delete");
 		}
 		session().waitForPageToLoad(TIMEOUT);
