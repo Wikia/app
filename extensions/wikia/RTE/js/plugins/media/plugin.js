@@ -309,7 +309,7 @@ CKEDITOR.plugins.add('rte-media',
 		// setup image / video placeholder separatelly
 		var images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.instance.lang.imagePlaceholder.tooltip);
-		images.bind('click.placeholder', function(ev) {
+		images.bind('click.placeholder edit.placeholder', function(ev) {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			RTE.tools.callFunction(window.WMU_show,$(this), {isPlaceholder: true});
 		});

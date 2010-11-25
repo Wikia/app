@@ -39,9 +39,10 @@ CKEDITOR.plugins.add('rte-gallery',
 	},
 
 	setupGallery: function(gallery) {
+		// show gallery editor when [edit] in hover menu or placeholder is clicked
 		gallery.
 			unbind('.gallery').
-			bind('click.gallery', function(ev) {
+			bind('click.gallery edit.gallery', function(ev) {
 				var gallery = $(this);
 
 				// call editor
