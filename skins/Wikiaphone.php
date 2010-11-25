@@ -40,6 +40,8 @@ class SkinWikiaphone extends SkinTemplate {
 			$out->addMeta("viewport", "width=320");
 			$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
 			$out->addStyle( 'wikiaphone/iOS.css', 'screen,handheld');
+			$out->addScriptFile( '../common/jquery/jquery-1.4.4.min.js' );
+			$out->addScriptFile( '../wikiaphone/iOS.js' );
 		} else {
 			$out->addMeta("viewport", "width=device-width");
 			$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
@@ -48,14 +50,13 @@ class SkinWikiaphone extends SkinTemplate {
 			$out->addStyle( 'wikiaphone/IE50Fixes.css', 'screen,handheld', 'lt IE 5.5000' );
 			$out->addStyle( 'wikiaphone/IE55Fixes.css', 'screen,handheld', 'IE 5.5000' );
 			$out->addStyle( 'wikiaphone/IE60Fixes.css', 'screen,handheld', 'IE 6' );
+			$out->addScript(AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW));
+			$out->addScript(AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()));
+			global $wgCityId;
+			$out->addScript(AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)));
+			$out->addScript(AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco')));
+			$out->addScriptFile( '../wikiaphone/main.js' );
 		}
-
-		$out->addScript(AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW));
-		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()));
-		global $wgCityId;
-		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)));
-		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco')));
-		$out->addScriptFile( '../wikiaphone/main.js' );
 	}
 
 	function printTopHtml() {
@@ -72,7 +73,7 @@ class SkinWikiaphone extends SkinTemplate {
 			<div class="iOS-header">
 				<img src="/skins/oasis/images/wikia_logo.png">
 				<form action="index.php?title=Special:Search" method="get">
-					<input type="text" name="search" placeholder="<?= wfMsg('Tooltip-search', $wgSitename) ?>" accesskey="f" size="15">
+					<input type="text" name="search" placeholder="<?= wfMsg('Tooltip-search', $wgSitename) ?>" accesskey="f" size="13">
 					<input type="image" src="/skins/oasis/images/search_icon.png">
 				</form>
 				<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
