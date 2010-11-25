@@ -4,7 +4,7 @@ $(function() {
 
 var SC = {
 	init: function() {
-		$("#mw-data-after-content, #content .printfooter, #column-one, #footer, #siteSub, #contentSub, #jump-to-nav, #content div.picture-attribution").remove();
+		$("#mw-data-after-content, #content .printfooter, #column-one, #footer, #siteSub, #contentSub, #jump-to-nav, #content div.picture-attribution, #content .toc").remove();
 		
 		SC.c = $("#bodyContent");
 		SC.h = SC.c.find(">h2");
