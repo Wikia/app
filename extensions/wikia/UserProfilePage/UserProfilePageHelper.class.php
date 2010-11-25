@@ -108,7 +108,7 @@ class UserProfilePageHelper {
 		wfProfileIn(__METHOD__);
 		global $wgUserProfilePagesNamespaces, $wgUser;
 		
-		$fallbackOnGlobal = ( $title->isSpecial( 'Contributions' ) || $title->isSpecial( 'Following' ) );
+		$fallbackOnGlobal = UserProfilePage::isAllowedSpecialPage( $title );
 		$userName = UserPagesHeaderModule::getUserName($title, $wgUserProfilePagesNamespaces , $fallbackOnGlobal );
 		
 		$out = ( !empty( $userName ) ) ? User::newFromName( $userName ) : false;
