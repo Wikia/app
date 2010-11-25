@@ -1564,7 +1564,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgLanguageCode'            => $this->mWikiData[ "language" ],
 			'wgServer'                  => rtrim( $this->mWikiData[ "url" ], "/" ),
 			'wgFavicon'                 => '$wgUploadPath/6/64/Favicon.ico',
-			'wgEnableNewParser'         => true,
 			'wgEnableEditEnhancements'  => true,
 			'wgEnableSectionEdit'	    => true,
 		);
