@@ -326,6 +326,7 @@ $wgSkipSkins = array(
 		'smartphone',
 		'efmonaco',
 		'answers',
+		'mobile',
 );
 /**
  * @name wgSkipOldSkins

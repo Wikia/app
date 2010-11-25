@@ -15,7 +15,8 @@
 .iOS-header form {
 	position: relative;
 }
-.iOS-header >a.wikia-button {
+.iOS-header >a.wikia-button,
+.showbutton {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.35, #E8E8E8), color-stop(0.65, whiteSmoke)) #F2F2F2;
 	border: 1px solid #A5CBE3;
 	border-radius: 4px;
@@ -26,6 +27,10 @@
 	text-decoration: none;
 	top: 0.4em;
 }
+.showbutton {
+	float: left;
+	margin-right: 0.2em;
+}
 .iOS-header form {
 	display: block;
 	float: right;
@@ -33,6 +38,7 @@
 }
 body .iOS-header form input {
 	border: none;
+	font-size: 0.7em;
 	height: 1.5em;
 	margin: 0;
 	padding: 0;
@@ -56,11 +62,30 @@ body .iOS-header form input {
 }
 .iOS-wikiname {
 	border-bottom: 1px solid #D9D9D9;
-	color: #006CB0;
 	font-size: 188%;
+}
+.iOS-wikiname a {
+	color: #006CB0;
+	text-decoration: none;
 }
 h1 {
 	border-bottom: none;
 	margin: 0;
 	padding: 0;
+}
+.wikia-gallery {
+	font-size: 50%;
+	zoom: 250%;
+}
+.wikia-gallery .wikia-gallery-item {
+	display: inline-block;
+	text-align: left;
+	vertical-align: top;
+	width: auto !important;
+}
+.wikia-gallery .wikia-gallery-item .lightbox-caption {
+	padding-left: 0.5em;
+}
+.wikia-gallery .thumb {
+	margin-left: 0;
 }
