@@ -4,7 +4,7 @@
  * Class to serving list of top 5 images for article
  */
 class imageServing{
-	private $maxCount = 20;
+	private $maxCount = 10;
 	private $minSize = 75;
 	private $articles = array();
 	private $width;
