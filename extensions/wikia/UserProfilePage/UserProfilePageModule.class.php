@@ -39,8 +39,10 @@ class UserProfilePageModule extends Module {
 				'vstf'
 			));
 		}
-
+		
 		$this->data = $data;
+		//#108811, get correct username from User namespace subpages
+		$this->data['title'] = $userProfilePage->getUser()->getName();
 		wfProfileOut(__METHOD__);
 	}
 }
