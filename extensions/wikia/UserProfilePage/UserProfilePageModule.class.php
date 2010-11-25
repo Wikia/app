@@ -9,10 +9,10 @@ class UserProfilePageModule extends Module {
 		$this->avatar = AvatarService::renderAvatar($data['userName'], 200, true);
 
 		$userProfilePage = UserProfilePage::getInstance();
-		
+
 		if( !empty( $userProfilePage ) ) {
 			$this->lastActionData = $userProfilePage->getUserLastAction();
-			
+
 			if( !empty( $this->lastActionData ) ) {
 				$this->lastActionData['changemessage'] = UserProfilePageHelper::formatLastActionMessage( $this->lastActionData );
 				$this->lastActionData['changeicon'] = $this->lastActionData['type'];
@@ -38,11 +38,12 @@ class UserProfilePageModule extends Module {
 				'bureaucrat',
 				'vstf'
 			));
+
+			//#108811, get correct username from User namespace subpages
+			$data['title'] = $userProfilePage->getUser()->getName();
 		}
-		
+
 		$this->data = $data;
-		//#108811, get correct username from User namespace subpages
-		$this->data['title'] = $userProfilePage->getUser()->getName();
 		wfProfileOut(__METHOD__);
 	}
 }
