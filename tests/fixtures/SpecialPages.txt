@@ -11,15 +11,12 @@ DoubleRedirects,The following data
 Editcount,User:
 FewestRevisions,Pages with the fewest revisions
 ImageList,This special page shows all uploaded files.
-InviteSpecialPage,Choose from your existing contacts:
 ListRedirects,redirects
 ListUsers,Display users starting at
 Log,Combined display of
 LonelyPages,The following pages are not linked from or transcluded into other pages in
 LongPages,Long pages
-NewImages,Gallery of new files
 NewPages,Namespace
-ProblemReports,Total number of reports
 ProtectedTitles,Namespace
 RecentChanges,Recent changes
 RecentChangesLinked,Related changes
