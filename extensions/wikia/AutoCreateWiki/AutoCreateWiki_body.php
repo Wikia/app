@@ -1555,7 +1555,6 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$WFSettingsVars = array(
 			'wgSitename'                => $this->mWikiData[ "title" ],
-			'wgArticlePath'             => '/wiki/$1',
 			'wgLogo'                    => '$wgUploadPath/b/bc/Wiki.png',
 			'wgUploadPath'              => $this->mWikiData[ "images_url" ],
 			'wgUploadDirectory'         => $this->mWikiData[ "images_dir" ],
