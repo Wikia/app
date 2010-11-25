@@ -170,7 +170,7 @@ class ApiQuery extends ApiBase {
 	function getModules() {
 		return array_merge($this->mQueryPropModules, $this->mQueryListModules, $this->mQueryMetaModules);
 	}
-	
+
 	public function getCustomPrinter() {
 		// If &exportnowrap is set, use the raw formatter
 		if ($this->getParameter('export') &&
@@ -217,7 +217,7 @@ class ApiQuery extends ApiBase {
 		if ( isset ( $this->params['generator'] ) ) {
 			$generator = $this->newGenerator( $this->params['generator'] );
 			$params = $generator->extractRequestParams();
-			$cacheMode = $this->mergeCacheMode( $cacheMode, 
+			$cacheMode = $this->mergeCacheMode( $cacheMode,
 				$generator->getCacheMode( $params ) );
 			$this->executeGeneratorModule( $generator, $modules );
 		} else {
@@ -236,7 +236,7 @@ class ApiQuery extends ApiBase {
 		//
 		foreach ($modules as $module) {
 			$params = $module->extractRequestParams();
-			$cacheMode = $this->mergeCacheMode( 
+			$cacheMode = $this->mergeCacheMode(
 				$cacheMode, $module->getCacheMode( $params ) );
 			$module->profileIn();
 			$module->execute();
@@ -250,7 +250,7 @@ class ApiQuery extends ApiBase {
 
 	/**
 	 * Update a cache mode string, applying the cache mode of a new module to it.
-	 * The cache mode may increase in the level of privacy, but public modules 
+	 * The cache mode may increase in the level of privacy, but public modules
 	 * added to private data do not decrease the level of privacy.
 	 */
 	protected function mergeCacheMode( $cacheMode, $modCacheMode ) {
@@ -288,9 +288,13 @@ class ApiQuery extends ApiBase {
 	 */
 	private function InstantiateModules(&$modules, $param, $moduleList) {
 		$list = @$this->params[$param];
-		if (!is_null ($list))
-			foreach ($list as $moduleName)
-				$modules[] = new $moduleList[$moduleName] ($this, $moduleName);
+		if (!is_null ($list)) {
+			foreach ($list as $moduleName) {
+				if (isset($moduleList[$moduleName])) {
+					$modules[] = new $moduleList[$moduleName] ($this, $moduleName);
+				}
+			}
+		}
 	}
 
 	/**
@@ -406,7 +410,7 @@ class ApiQuery extends ApiBase {
 			}
 
 			$result->setIndexedTagName($pages, 'page');
-			$result->addValue('query', 'pages', $pages);			
+			$result->addValue('query', 'pages', $pages);
 		}
 		if ($this->params['export']) {
 			$exporter = new WikiExporter($this->getDB());
