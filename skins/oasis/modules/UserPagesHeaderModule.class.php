@@ -69,7 +69,7 @@ class UserPagesHeaderModule extends Module {
 		}
 
 		if (isset($parts[0]) && $parts[0] != '') {
-			$userName = str_replace('_', ' ', urldecode($parts[0]) );
+			$userName = str_replace('_', ' ', /*urldecode(*/$parts[0]/*)*/ );//RT #107278, user profile pages with '+' symbols get 'non-existing' message
 		}
 		elseif ( $fallbackToGlobal ) {
 			// fallback value
