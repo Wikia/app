@@ -541,23 +541,36 @@ class UserProfilePage {
 					$pages[ $pageId ] = $commentPoints;
 				}
 			}
-
-			arsort( $pages );
-
-			$articleService = new ArticleService();
 			
-			foreach($pages as $pageId => $editCount) {
+			$titles = array();
+			
+			foreach ( $pages as $pageId => $editCount ) {
 				$title = Title::newFromID( $pageId );
-				if( ( $title instanceof Title ) && ( $title->getArticleID() != 0 ) ) {
-					$articleService->setArticleById( $title->getArticleID() );
-					$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount, 'textSnippet' => $articleService->getTextSnippet( 100 ) );
+				
+				if( ( $title instanceof Title ) && $title->exists() ) {
+					$titles[ $pageId ] = $title;
 				}
 				else {
 					unset( $pages[ $pageId ] );
 				}
 			}
 			
-			if ( count( $pages ) > $limit ) $pages = array_slice( $pages, 0, $limit );
+			arsort( $pages );
+			
+			if ( count( $pages ) > $limit ) {
+				$pages = array_slice( $pages, 0, $limit, true );
+			}
+			
+			if( count( $pages ) ) {
+				$articleService = new ArticleService();
+				
+				foreach( $pages as $pageId => $editCount ) {
+					$title = $titles[ $pageId ];
+					$articleService->setArticleById( $title->getArticleID() );
+					$snippet = $articleService->getTextSnippet( 100 );
+					$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount, 'textSnippet' => $snippet );
+				}
+			}
 		}
 		
 		wfProfileOut(__METHOD__);
@@ -571,7 +584,7 @@ class UserProfilePage {
 		
 		if ( !$this->getUser()->isAnon() ) {
 			$talkNamespaces = array();
-
+			
 			if( is_array($wgArticleCommentsNamespaces) ) {
 				foreach( $wgArticleCommentsNamespaces as $ns ) {
 					$talkNamespaces[] = MWNamespace::getTalk( $ns );

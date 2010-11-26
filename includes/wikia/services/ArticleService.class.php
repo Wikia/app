@@ -50,7 +50,7 @@ class ArticleService extends Service {
 			$content = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#', '', $content);
 
 			$tmpParser = new Parser();
-			$content = $tmpParser->parse( $content, $wgTitle, new ParserOptions )->getText();
+			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
 
 			// remove <script> tags (RT #46350)
 			$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
