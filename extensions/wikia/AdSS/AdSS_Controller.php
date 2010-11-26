@@ -68,11 +68,7 @@ class AdSS_Controller extends SpecialPage {
 		$sitePricing = AdSS_Util::getSitePricing();
 
 		$adsCount = count( AdSS_Publisher::getSiteAds() );
-		if( $adsCount > 0 ) {
-			$currentShare = min( $sitePricing['max-share'], 1/$adsCount );
-		} else {
-			$currentShare = $sitePricing['max-share'];
-		}
+		$currentShare = 1 / max( $sitePricing['min-slots'], $adsCount );
 
 		$ad = AdSS_AdFactory::createFromForm( $adForm );
 

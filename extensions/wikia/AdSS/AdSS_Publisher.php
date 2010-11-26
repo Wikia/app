@@ -21,6 +21,16 @@ class AdSS_Publisher {
 				$minExpire = $ad->expires;
 			}
 		}
+
+		// fill slots with empty ads up to min-slots
+		$adsCount = count( $adsRendered );
+		$sitePricing = AdSS_Util::getSitePricing();
+		if( $adsCount < $sitePricing['min-slots'] ) {
+			for( $i = $adsCount; $i < $sitePricing['min-slots']; $i++ ) {
+				$adsRendered[] = array( 'id' => 0, 'html' => '' );
+			}
+		}
+		
 		$response->addText( Wikia::json_encode( $adsRendered ) );
 		$response->setCacheDuration( $minExpire - time() );
 

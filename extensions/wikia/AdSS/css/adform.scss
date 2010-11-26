@@ -52,6 +52,7 @@
 
 	fieldset {
 		@include clearfix;
+		border: 1px solid $color-page-border;
 		float: left;
 		width: 460px;
 
@@ -99,22 +100,6 @@
 
 .WikiaPageHeader h2 {
 	display: none;
-}
-
-// monaco fixes
-.wikiaSkinMonaco .SponsoredLinkForm {
-	.box {
-		width: 45%;
-	}
-
-	fieldset {
-		section.box {
-			height: 220px;
-		}
-		input[type="text"], textarea {
-			width: 80%;
-		}
-	}
 }
 
 .error {
