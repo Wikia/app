@@ -11,9 +11,14 @@ if( !defined( 'MEDIAWIKI' ) )
 /** */
 require_once( dirname(__FILE__) . '/MonoBook.php' );
 
-global $wgHooks;
+global $wgHooks, $wgEnableArticleCommentsExt;
+
+$wgEnableArticleCommentsExt = false;
+
 $wgHooks['MakeGlobalVariablesScript'][] = 'SkinMobile::onMakeGlobalVariablesScript';
 $wgHooks['WikiaIOSInsertHeader'][] = 'SkinMobile::insertHeader';
+$wgHooks['SkinAfterContent'][] = 'SkinMobile::onSkinAfterContent';
+
 
 /**
  * @todo document
@@ -21,12 +26,16 @@ $wgHooks['WikiaIOSInsertHeader'][] = 'SkinMobile::insertHeader';
  */
 class SkinMobile extends SkinTemplate {
 	function initPage( OutputPage $out ) {
+		global $wgHooks;
 		SkinTemplate::initPage( $out );
 		$this->skinname  = 'mobile';
 		$this->stylename = 'mobile';
 		$this->template  = 'MonoBookTemplate';
 	}
-
+	public function onSkinAfterContent(&$data) {
+		$data = null;
+		return true;
+	}
 	function setupSkinUserCss( OutputPage $out ){
 		global $wgRequest;
 		parent::setupSkinUserCss( $out );
