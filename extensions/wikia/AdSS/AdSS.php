@@ -81,7 +81,7 @@ $wgAdSS_pricingConf['high'] = array(
 		'site' => array(
 			'price'     => '5.00',
 			'period'    => 'd', //daily
-			'max-share' => '0.20',
+			'min-slots' => 5,
 			),
 		'banner' => array(
 			'price'  => '20.00',
@@ -98,7 +98,7 @@ $wgAdSS_pricingConf['medium'] = array(
 		'site' => array(
 			'price'     => '1.00',
 			'period'    => 'd', //daily
-			'max-share' => '0.20',
+			'min-slots' => 5,
 			),
 		'banner' => array(
 			'price'  => '4.00',
@@ -115,7 +115,7 @@ $wgAdSS_pricingConf['low'] = array(
 		'site' => array(
 			'price'     => '5.00',
 			'period'    => 'm', //monthly
-			'max-share' => '0.20',
+			'min-slots' => 5,
 			),
 		'banner' => array(
 			'price'  => '20.00',
