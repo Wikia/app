@@ -40,6 +40,7 @@ class AdSS_AdminBillingPager extends TablePager {
 					$r = wfMsgHtml( 'adss-adss-fee' ) . " (ID=" . $this->bl->adId . ")";
 					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 					$ad = AdSS_AdFactory::createFromId( $this->bl->adId );
+					$tmpl->set( 'downloadUrl', Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$ad->id )->getLocalURL() );
 					$r .= "<div style=\"display:none\"><ul><li>".$ad->render( $tmpl )."</li></ul></div>";
 					return $r;
 				} else {
