@@ -37,7 +37,12 @@ class AdSS_AdminBillingPager extends TablePager {
 				if( $this->bl->paymentId ) {
 					return wfMsgHtml( 'adss-paypal-payment' ) . " (ID=" . $this->bl->paymentId . ")";
 				} elseif( $this->bl->adId ) {
-					$r = wfMsgHtml( 'adss-adss-fee' ) . " (ID=" . $this->bl->adId . ")";
+					if( $this->bl->amount > 0 ) {
+						$r = wfMsgHtml( 'adss-adss-refund' );
+					} else {
+						$r = wfMsgHtml( 'adss-adss-fee' );
+					}
+					$r .= " (ID=" . $this->bl->adId . ")";
 					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 					$ad = AdSS_AdFactory::createFromId( $this->bl->adId );
 					$tmpl->set( 'downloadUrl', Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$ad->id )->getLocalURL() );
@@ -47,9 +52,9 @@ class AdSS_AdminBillingPager extends TablePager {
 					return '';
 				}
 			case 'fee':
-				return $this->bl->amount < 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( -$this->bl->amount ) ) : '';
+				return $this->bl->adId > 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( -$this->bl->amount ) ) : '';
 			case 'paid':
-				return $this->bl->amount > 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( (float) $this->bl->amount ) ) : '';
+				return $this->bl->adId==0 && $this->bl->amount > 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( (float) $this->bl->amount ) ) : '';
 			default:
 				return $value;
 		}
