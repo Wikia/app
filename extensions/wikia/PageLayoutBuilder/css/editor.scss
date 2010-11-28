@@ -253,6 +253,7 @@ td.plb-toolbox {
 	
 $plb-window-width: 400px;
 $plb-window-items-margin: 6px;
+$plb-window-items-space: 2px;
 .plb-pe-window {
 	width: $plb-window-width;
 	height: auto;
@@ -263,11 +264,11 @@ $plb-window-items-margin: 6px;
 	}
 	
 	.plb-pe-left-column {
-		width: $plb-window-width / 2 - $plb-window-items-margin;
+		width: $plb-window-width / 2 - $plb-window-items-margin - $plb-window-items-space;
 		padding-right: $plb-window-items-margin;
 	}
 	.plb-pe-right-column {
-		width: $plb-window-width / 2 - $plb-window-items-margin;
+		width: $plb-window-width / 2 - $plb-window-items-margin - $plb-window-items-space;
 		padding-left: $plb-window-items-margin;
 	}
 	

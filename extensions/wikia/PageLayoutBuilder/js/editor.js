@@ -979,7 +979,7 @@
 	
 	PLB.PropertyEditor = $.createClass(Observable,{
 		
-		width: 400,
+		width: 425,
 		editorHtml: null,
 		attributes: null,
 		requiredAttributes: null,

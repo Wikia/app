@@ -213,8 +213,8 @@ abstract class LayoutWidgetBase {
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
 		return array(
 				'id' => '',
-				'caption'  => wfMsg('plb-parser-default-caption'),
-				'instructions' => wfMsg('plb-parser-default-instructions'),
+				'caption'  => '',//wfMsg('plb-parser-default-caption'),
+				'instructions' => '',//wfMsg('plb-parser-default-instructions'),
 				'required' => 0,
 		);
 	}
