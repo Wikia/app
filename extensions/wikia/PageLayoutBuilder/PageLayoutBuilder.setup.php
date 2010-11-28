@@ -52,12 +52,12 @@ $wgPLBwidgets['plb_mlinput'] = 'LayoutWidgetMultiLineInput';
 
 $wgPLBwidgets['plb_sinput'] = 'LayoutWidgetSelectInput';
 $wgAutoloadClasses['LayoutWidgetSelectInput'] = $dir . "widget/LayoutWidgetSelectInput.class.php";
-/*
+
 $wgPLBwidgets['plb_gallery'] = 'LayoutWidgetGallery';
 $wgAutoloadClasses['LayoutWidgetGallery'] = $dir . "widget/LayoutWidgetGallery.class.php";
 $wgAjaxExportList[] = 'LayoutWidgetGallery::renderForFormAjax';
 $wgAjaxExportList[] = 'LayoutWidgetGallery::getGalleryDataAjax';
-*/
+
 /* parser and revers parser */
 
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
