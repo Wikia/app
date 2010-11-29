@@ -60,6 +60,8 @@ class SkinMonoBook extends WikiaSkinMonoBook {
 class MonoBookTemplate extends QuickTemplate {
 
 	var $skin;
+	
+	
 
 	function wideSkyscraper() {
 		global $wgDBname;
@@ -185,74 +187,76 @@ class MonoBookTemplate extends QuickTemplate {
 
 	</div>
 		</div>
-		<div id="column-one">
-	<div id="p-cactions" class="portlet">
-		<h5><?php $this->msg('views') ?></h5>
-		<div class="pBody">
-			<ul>
-	<?php		foreach($this->data['content_actions'] as $key => $tab) {
-					echo '
-				 <li id="' . Sanitizer::escapeId( "ca-$key" ) . '"';
-					if( $tab['class'] ) {
-						echo ' class="'.htmlspecialchars($tab['class']).'"';
-					}
-					echo'><a href="'.htmlspecialchars($tab['href']).'"';
-					# We don't want to give the watch tab an accesskey if the
-					# page is being edited, because that conflicts with the
-					# accesskey on the watch checkbox.  We also don't want to
-					# give the edit tab an accesskey, because that's fairly su-
-					# perfluous and conflicts with an accesskey (Ctrl-E) often
-					# used for editing in Safari.
-				 	if( in_array( $action, array( 'edit', 'submit' ) )
-				 	&& in_array( $key, array( 'edit', 'watch', 'unwatch' ))) {
-				 		echo $skin->tooltip( "ca-$key" );
-				 	} else {
-				 		echo $skin->tooltipAndAccesskey( "ca-$key" );
-				 	}
-				 	echo '>'.htmlspecialchars($tab['text']).'</a></li>';
-				} ?>
-			</ul>
+	<?if ( empty( $this->data['skipColumnOne'] ) ) :?>
+			<div id="column-one">
+		<div id="p-cactions" class="portlet">
+			<h5><?php $this->msg('views') ?></h5>
+			<div class="pBody">
+				<ul>
+		<?php		foreach($this->data['content_actions'] as $key => $tab) {
+						echo '
+					 <li id="' . Sanitizer::escapeId( "ca-$key" ) . '"';
+						if( $tab['class'] ) {
+							echo ' class="'.htmlspecialchars($tab['class']).'"';
+						}
+						echo'><a href="'.htmlspecialchars($tab['href']).'"';
+						# We don't want to give the watch tab an accesskey if the
+						# page is being edited, because that conflicts with the
+						# accesskey on the watch checkbox.  We also don't want to
+						# give the edit tab an accesskey, because that's fairly su-
+						# perfluous and conflicts with an accesskey (Ctrl-E) often
+						# used for editing in Safari.
+						if( in_array( $action, array( 'edit', 'submit' ) )
+						&& in_array( $key, array( 'edit', 'watch', 'unwatch' ))) {
+							echo $skin->tooltip( "ca-$key" );
+						} else {
+							echo $skin->tooltipAndAccesskey( "ca-$key" );
+						}
+						echo '>'.htmlspecialchars($tab['text']).'</a></li>';
+					} ?>
+				</ul>
+			</div>
 		</div>
-	</div>
-	<div class="portlet" id="p-personal">
-		<h5><?php $this->msg('personaltools') ?></h5>
-		<div class="pBody">
-			<ul>
-<?php 			foreach($this->data['personal_urls'] as $key => $item) { ?>
-				<li id="<?php echo Sanitizer::escapeId( "pt-$key" ) ?>"<?php
-					if ($item['active']) { ?> class="active"<?php } ?>><a href="<?php
-				echo htmlspecialchars($item['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-'.$key) ?><?php
-				if(!empty($item['class'])) { ?> class="<?php
-				echo htmlspecialchars($item['class']) ?>"<?php } ?>><?php
-				echo htmlspecialchars($item['text']) ?></a></li>
-<?php			} ?>
-			</ul>
+		<div class="portlet" id="p-personal">
+			<h5><?php $this->msg('personaltools') ?></h5>
+			<div class="pBody">
+				<ul>
+		<?php	foreach($this->data['personal_urls'] as $key => $item) { ?>
+					<li id="<?php echo Sanitizer::escapeId( "pt-$key" ) ?>"<?php
+						if ($item['active']) { ?> class="active"<?php } ?>><a href="<?php
+					echo htmlspecialchars($item['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-'.$key) ?><?php
+					if(!empty($item['class'])) { ?> class="<?php
+					echo htmlspecialchars($item['class']) ?>"<?php } ?>><?php
+					echo htmlspecialchars($item['text']) ?></a></li>
+		<?php	} ?>
+				</ul>
+			</div>
 		</div>
-	</div>
-	<div class="portlet" id="p-logo">
-		<a style="background-image: url(<?php $this->text('logopath') ?>);" <?php
-			?>href="<?php echo htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>"<?php
-			echo $skin->tooltipAndAccesskey('p-logo') ?>></a>
-	</div>
-	<script type="<?php $this->text('jsmimetype') ?>"> if (window.isMSIE55) fixalpha(); </script>
-<?php
-		$sidebar = $this->data['sidebar'];
-		if ( !isset( $sidebar['SEARCH'] ) ) $sidebar['SEARCH'] = true;
-		if ( !isset( $sidebar['TOOLBOX'] ) ) $sidebar['TOOLBOX'] = true;
-		if ( !isset( $sidebar['LANGUAGES'] ) ) $sidebar['LANGUAGES'] = true;
-		foreach ($sidebar as $boxName => $cont) {
-			if ( $boxName == 'SEARCH' ) {
-				$this->searchBox();
-			} elseif ( $boxName == 'TOOLBOX' ) {
-				$this->toolbox();
-			} elseif ( $boxName == 'LANGUAGES' ) {
-				$this->languageBox();
-			} else {
-				$this->customBox( $boxName, $cont );
+		<div class="portlet" id="p-logo">
+			<a style="background-image: url(<?php $this->text('logopath') ?>);" <?php
+				?>href="<?php echo htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>"<?php
+				echo $skin->tooltipAndAccesskey('p-logo') ?>></a>
+		</div>
+		<script type="<?php $this->text('jsmimetype') ?>"> if (window.isMSIE55) fixalpha(); </script>
+		<?php
+			$sidebar = $this->data['sidebar'];
+			if ( !isset( $sidebar['SEARCH'] ) ) $sidebar['SEARCH'] = true;
+			if ( !isset( $sidebar['TOOLBOX'] ) ) $sidebar['TOOLBOX'] = true;
+			if ( !isset( $sidebar['LANGUAGES'] ) ) $sidebar['LANGUAGES'] = true;
+			foreach ($sidebar as $boxName => $cont) {
+				if ( $boxName == 'SEARCH' ) {
+					$this->searchBox();
+				} elseif ( $boxName == 'TOOLBOX' ) {
+					$this->toolbox();
+				} elseif ( $boxName == 'LANGUAGES' ) {
+					$this->languageBox();
+				} else {
+					$this->customBox( $boxName, $cont );
+				}
 			}
-		}
-?>
+		?>
 		</div><!-- end of the left (by default at least) column -->
+	<? endif; ?>
 		</div><!-- macbre: fixes strange footer bug in IE6 (#2068) -->
 <div class="visualClear"></div>
 		<?php
@@ -261,10 +265,15 @@ class MonoBookTemplate extends QuickTemplate {
 if ( !$this->isSkyscraper() ) {
     $this->html('ads_columngoogle');
 }
+
+if( empty ($this->data['skipFooter'] ) ) {
 ?>
 			<div id="footer">
 <?php $this->footer(); ?>
 		</div>
+<?php 
+}
+?>
 <?php $this->html('ads_bottomjs'); ?>
 <?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
 <?php $this->html('reporttime') ?>
