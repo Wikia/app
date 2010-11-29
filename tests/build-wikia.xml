@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Wikia QA" default="all" basedir=".">
+    <description>Wikia QA Tests</description>
+    <property file="build.properties"/>
+    <property name="name" value="Wikia QA Tests"/>
+
+    <property name="testsdir" value="${basedir}" />
+    <property name="testsconfig" value="${testsdir}/config.xml" />
+
+    <property name="build.src" location="${basedir}" />
+    <property name="build.bin" location="${basedir}/build/bin" />
+    <property name="build.logs" location="${basedir}/build/logs" />
+    <property name="build.reports" location="${basedir}/build/reports" />
+
+    <property name="webSite" value="" />
+    <property name="seleniumHost" value="localhost" />
+    <property name="seleniumPort" value="4444" />
+    <property name="browser" value="*firefox" />
+
+    <property name="groups" value="CI" />
+    <property name="threadCount" value="1" />
+    <property name="timeout" value="120000" />
+
+    <path id="compile.classpath">
+        <fileset dir="${basedir}/lib">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <path id="runtime.classpath">
+        <path refid="compile.classpath" />
+        <pathelement path="${build.bin}/" />
+        <pathelement path="${basedir}" />
+    </path>
+
+    <taskdef resource="testngtasks" classpath="${basedir}/lib/testng-5.10-jdk15.jar" />
+
+    <target name="compile" description="compile the source ">
+        <mkdir dir="${build.bin}" />
+        <javac srcdir="${build.src}"
+               destdir="${build.bin}"
+               debug="true"
+               source="1.5"
+               target="1.5">
+            <classpath refid="compile.classpath" />
+        </javac>
+    </target>
+
+    <target name="testng-run-broken" depends="compile" description="Run all broken Selenium tests">
+        <testng classpathref="runtime.classpath"
+                outputdir="${build.logs}"
+                suitename="Wikia QA Broken Test Suite"
+                listeners="org.uncommons.reportng.JUnitXMLReporter"
+                parallel="methods"
+                threadCount="${threadCount}"
+                groups="broken"
+                failureProperty="test.failed" >
+            <classfileset dir="${build.bin}/com/wikia/selenium/tests" includes="*.class" />
+            <sysproperty key="java.security.policy" file="testng.policy"/>
+            <sysproperty key="webSite" value="${webSite}" />
+            <sysproperty key="seleniumHost" value="${seleniumHost}" />
+            <sysproperty key="seleniumPort" value="${seleniumPort}" />
+            <sysproperty key="browser" value="${browser}" />
+            <sysproperty key="threadCount" value="${threadCount}" />
+            <sysproperty key="timeout" value="${timeout}" />
+            <env key="TESTSCONFIG" value="${testsconfig}" />
+        </testng>
+    </target>
+
+    <target name="testng-run-all" depends="compile" description="Run all Selenium tests">
+        <testng classpathref="runtime.classpath"
+                outputdir="${build.logs}"
+                suitename="Selenium tests - first run"
+                listeners="org.uncommons.reportng.JUnitXMLReporter"
+                parallel="methods"
+                threadCount="${threadCount}"
+                groups="${groups}"
+                excludedgroups="broken,answers,central,RTE"
+                failureProperty="test.failed">
+            <classfileset dir="${build.bin}/com/wikia/selenium/tests" includes="*.class" />
+            <sysproperty key="java.security.policy" file="${testsdir}/testng.policy"/>
+            <sysproperty key="webSite" value="${webSite}" />
+            <sysproperty key="seleniumHost" value="${seleniumHost}" />
+            <sysproperty key="seleniumPort" value="${seleniumPort}" />
+            <sysproperty key="browser" value="${browser}" />
+            <sysproperty key="threadCount" value="${threadCount}" />
+            <sysproperty key="timeout" value="${timeout}" />
+            <env key="TESTSCONFIG" value="${testsconfig}" />
+        </testng>
+    </target>
+
+    <target name="testng-run-failed" depends="testng-run-all" if="test.failed" description="Run failed Selenium tests">
+        <testng classpathref="runtime.classpath"
+                outputdir="${build.logs}"
+                suitename="Selenium tests - second run"
+                listeners="org.uncommons.reportng.JUnitXMLReporter"
+                failureProperty="retest.failed" >
+            <xmlfileset file="${build.logs}/testng-failed.xml" />
+            <sysproperty key="java.security.policy" file="testng.policy"/>
+            <sysproperty key="webSite" value="${webSite}" />
+            <sysproperty key="seleniumHost" value="${seleniumHost}" />
+            <sysproperty key="seleniumPort" value="${seleniumPort}" />
+            <sysproperty key="browser" value="${browser}" />
+            <sysproperty key="threadCount" value="${threadCount}" />
+            <sysproperty key="timeout" value="${timeout}" />
+            <env key="TESTSCONFIG" value="${testsconfig}" />
+        </testng>
+    </target>
+
+    <target name="testng-run" depends="testng-run-failed" description="Run all tests and automatically rerun failed ones" >
+        <junitreport todir="${build.logs}">
+            <fileset dir="${build.logs}/xml">
+                <include name="*.xml" />
+            </fileset>
+            <report format="frames" todir="${build.reports}" />
+        </junitreport>
+        <fail if="retest.failed" />
+    </target>
+
+    <target name="testng-run-single" depends="compile" description="Run a single Selenium test">
+        <testng classpathref="runtime.classpath"
+                outputdir="${build.logs}"
+                suitename="Wikia QA Single Test"
+                listeners="org.uncommons.reportng.JUnitXMLReporter"
+                parallel="methods"
+                threadCount="${threadCount}"
+                failureProperty="test.failed" >
+            <classfileset file="${build.bin}/com/wikia/selenium/tests/${testClass}.class" />
+            <sysproperty key="java.security.policy" file="${testsdir}/testng.policy"/>
+            <sysproperty key="webSite" value="${webSite}" />
+            <sysproperty key="seleniumHost" value="${seleniumHost}" />
+            <sysproperty key="seleniumPort" value="${seleniumPort}" />
+            <sysproperty key="browser" value="${browser}" />
+            <sysproperty key="threadCount" value="${threadCount}" />
+            <sysproperty key="timeout" value="${timeout}" />
+            <env key="TESTSCONFIG" value="${testsconfig}" />
+        </testng>
+        <junitreport todir="${build.logs}">
+            <fileset dir="${build.logs}/xml">
+                <include name="*.xml" />
+            </fileset>
+            <report format="frames" todir="${build.reports}" />
+        </junitreport>
+        <fail if="test.failed" />
+    </target>
+
+    <target name="start-server" >
+        <java jar="lib/selenium-server.jar" fork="true" spawn="true" />
+    </target>
+
+    <target name="stop-server" >
+        <get taskname="selenium-shutdown"
+             src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"
+             dest="result.txt"
+             ignoreerrors="true" />
+        <echo taskname="selenium-shutdown" message="DGF Errors during shutdown are expected" />
+    </target>
+
+</project>
