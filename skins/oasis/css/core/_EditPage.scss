@@ -305,13 +305,13 @@
 // /** faking a text link **/
 .editButtons {
 	#wpDiff {
-		border: none;
+		background-color: transparent;
 		background-image: none;
-		background-color: #fff;
+		border: none;
 		color: $color-links;
-		padding: 0px;
-		font-size: 13px;
 		font-family: Helvetica, Arial, sans-serif;
+		font-size: 13px;
+		padding: 0px;
 		&:hover {
 			text-decoration: underline;
 		}
