@@ -89,85 +89,89 @@ class FBConnectHooks {
 	 * Injects some important CSS and Javascript into the <head> of the page.
 	 */
 	public static function BeforePageDisplay( &$out, &$sk ) {
-		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript, $fbIncludeJquery,
-				$fbScriptEnableLocales, $wgJsMimeType, $wgStyleVersion, $wgScriptPath;
+		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript,
+			$fbIncludeJquery, $fbScriptEnableLocales, $wgJsMimeType,
+			$wgStyleVersion, $wgScriptPath, $wgUser;
 
-		// If the user's language is different from the default language, use the correctly localized facebook code.
-		// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
-		if($fbScriptEnableLocales){
-			global $fbScriptLangCode, $wgLang;
-			wfProfileIn(__METHOD__ . "::fb-locale-by-mediawiki-lang");
-			if($wgLang->getCode() !== $fbScriptLangCode){
-				// Attempt to find a matching facebook locale.
-				$defaultLocale = FBConnectLanguage::getFbLocaleForLangCode($fbScriptLangCode);
-				$locale = FBConnectLanguage::getFbLocaleForLangCode($wgLang->getCode());
-				if($defaultLocale != $locale){
-					global $fbScriptByLocale;
-					$fbScript = str_replace(FBCONNECT_LOCALE, $locale, $fbScriptByLocale);
+		if( get_class( $wgUser->getSkin() ) !== 'SkinMobile' ){
+			// If the user's language is different from the default language, use the correctly localized facebook code.
+			// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
+			if($fbScriptEnableLocales){
+				global $fbScriptLangCode, $wgLang;
+				wfProfileIn(__METHOD__ . "::fb-locale-by-mediawiki-lang");
+				if($wgLang->getCode() !== $fbScriptLangCode){
+					// Attempt to find a matching facebook locale.
+					$defaultLocale = FBConnectLanguage::getFbLocaleForLangCode($fbScriptLangCode);
+					$locale = FBConnectLanguage::getFbLocaleForLangCode($wgLang->getCode());
+					if($defaultLocale != $locale){
+						global $fbScriptByLocale;
+						$fbScript = str_replace(FBCONNECT_LOCALE, $locale, $fbScriptByLocale);
+					}
 				}
+				wfProfileOut(__METHOD__ . "::fb-locale-by-mediawiki-lang");
 			}
-			wfProfileOut(__METHOD__ . "::fb-locale-by-mediawiki-lang");
-		}
 
-		// Asynchronously load the Facebook Connect JavaScript SDK before the page's content
-		global $wgNoExternals; # macbre (per Artur's request)
-		if(!empty($fbScript) && empty($wgNoExternals)){
-			$out->prependHTML('
-				<div id="fb-root"></div>
-				<script>
-					(function(){var e=document.createElement("script");e.type="' .
-					$wgJsMimeType . '";e.src="' . $fbScript .
-					'";document.getElementById("fb-root").appendChild(e)})();
-				</script>' . "\n"
-			);
-		}
+			// Asynchronously load the Facebook Connect JavaScript SDK before the page's content
+			global $wgNoExternals; # macbre (per Artur's request)
+			if(!empty($fbScript) && empty($wgNoExternals)){
+				$out->prependHTML('
+					<div id="fb-root"></div>
+					<script>
+						(function(){var e=document.createElement("script");e.type="' .
+						$wgJsMimeType . '";e.src="' . $fbScript .
+						'";document.getElementById("fb-root").appendChild(e)})();
+					</script>' . "\n"
+				);
+			}
 
-		// Inserts list of global JavaScript variables if necessary
-		if (self::MGVS_hack( $mgvs_script )) {
-			$out->addInlineScript( $mgvs_script );
-		}
+			// Inserts list of global JavaScript variables if necessary
+			if (self::MGVS_hack( $mgvs_script )) {
+				$out->addInlineScript( $mgvs_script );
+			}
 
-		// Add a Facebook logo to the class .mw-fblink
-		$style = empty($fbLogo) ? '' : <<<STYLE
-		/* Add a pretty logo to Facebook links */
-		.mw-fblink {
-			background: url($fbLogo) top left no-repeat !important;
-			padding-left: 17px !important;
-		}
+			// Add a Facebook logo to the class .mw-fblink
+			$style = empty($fbLogo) ? '' : <<<STYLE
+			/* Add a pretty logo to Facebook links */
+			.mw-fblink {
+				background: url($fbLogo) top left no-repeat !important;
+				padding-left: 17px !important;
+			}
 STYLE;
 
-		// Things get a little simpler in 1.16...
-		if (version_compare($wgVersion, '1.16', '>=')) {
-			// Add a pretty Facebook logo if $fbLogo is set
-			if ($fbLogo) {
-				$out->addInlineStyle($style);
-			}
+			// Things get a little simpler in 1.16...
+			if (version_compare($wgVersion, '1.16', '>=')) {
+				// Add a pretty Facebook logo if $fbLogo is set
+				if ($fbLogo) {
+					$out->addInlineStyle($style);
+				}
 
-			// Don't include jQuery if it's already in use on the site
-			#$out->includeJQuery();
-			// Temporary workaround until until MW is bundled with jQuery 1.4.2:
-			$out->addScriptFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+				// Don't include jQuery if it's already in use on the site
+				#$out->includeJQuery();
+				// Temporary workaround until until MW is bundled with jQuery 1.4.2:
+				$out->addScriptFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 
-			// Add the script file specified by $url
-			if(!empty($fbExtensionScript)){
-				$out->addScriptFile($fbExtensionScript);
-			}
-		} else {
-			// Add a pretty Facebook logo if $fbLogo is set
-			if ($fbLogo) {
-				$out->addScript('<style type="text/css">' . $style . '</style>');
-			}
+				// Add the script file specified by $url
+				if(!empty($fbExtensionScript)){
+					$out->addScriptFile($fbExtensionScript);
+				}
+			} else {
+				// Add a pretty Facebook logo if $fbLogo is set
+				if ($fbLogo) {
+					$out->addScript('<style type="text/css">' . $style . '</style>');
+				}
 
-			// Don't include jQuery if it's already in use on the site
-			if (!empty($fbIncludeJquery)){
-				$out->addScriptFile("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
-			}
+				// Don't include jQuery if it's already in use on the site
+				if (!empty($fbIncludeJquery)){
+					$out->addScriptFile("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+				}
 
-			// Add the script file specified by $url
-			if(!empty($fbExtensionScript)){
-				$out->addScript("<script type=\"$wgJsMimeType\" src=\"$fbExtensionScript?$wgStyleVersion\"></script>\n");
+				// Add the script file specified by $url
+				if(!empty($fbExtensionScript)){
+					$out->addScript("<script type=\"$wgJsMimeType\" src=\"$fbExtensionScript?$wgStyleVersion\"></script>\n");
+				}
 			}
 		}
+		
 		return true;
 	}
 
