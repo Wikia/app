@@ -14,17 +14,23 @@ require_once( dirname(__FILE__) . '/MonoBook.php' );
 global $wgHooks, $wgEnableArticleCommentsExt;
 
 $wgEnableArticleCommentsExt = false;
+$wgEnableFacebookConnectExt = false;
+$wgEnableFacebookConnectPushing = false;
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'SkinMobile::onMakeGlobalVariablesScript';
-$wgHooks['WikiaIOSInsertHeader'][] = 'SkinMobile::insertHeader';
 $wgHooks['SkinAfterContent'][] = 'SkinMobile::onSkinAfterContent';
-
+$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SkinMobile::onSkinTemplateOutputPageBeforeExec';
 
 /**
  * @todo document
  * @ingroup Skins
  */
 class SkinMobile extends SkinTemplate {
+	function __construct() {
+		parent::__construct();
+		$this->mRenderColumnOne = false;
+	}
+	
 	function initPage( OutputPage $out ) {
 		global $wgHooks;
 		SkinTemplate::initPage( $out );
@@ -32,18 +38,26 @@ class SkinMobile extends SkinTemplate {
 		$this->stylename = 'mobile';
 		$this->template  = 'MonoBookTemplate';
 	}
-	public function onSkinAfterContent(&$data) {
+	
+	public static function onSkinAfterContent( &$data ) {
 		$data = null;
 		return true;
 	}
+	
+	public static function onSkinTemplateOutputPageBeforeExec( &$obj, &$tpl ){
+		$tpl->set('skipColumnOne', true);
+		$tpl->set('skipFooter', true);
+		return true;
+	}
+	
 	function setupSkinUserCss( OutputPage $out ){
 		global $wgRequest;
 		parent::setupSkinUserCss( $out );
 		$out->addMeta("viewport", "width=320");
-		$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
-		$out->addStyle( 'wikiaphone/iOS.css', 'screen,handheld');
-		$out->addScriptFile( '../common/jquery/jquery-1.4.4.min.js' );
-		$out->addScriptFile( '../wikiaphone/iOS.js' );
+		$out->addStyle( 'mobile/main.css', 'screen,handheld' );
+		$out->addStyle( 'mobile/skin.css', 'screen,handheld' );
+		$out->addScriptFile( '../common/zepto/zepto-0.1.1.min.js' );
+		$out->addScriptFile( '../mobile/main.js' );
 	}
 
 	function printTopHtml() {
