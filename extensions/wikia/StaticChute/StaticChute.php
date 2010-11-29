@@ -75,6 +75,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
+			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 		);
 
@@ -101,6 +102,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
+			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 
 			'common/wikibits.js',
@@ -127,6 +129,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
+			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
@@ -170,6 +173,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
+			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
@@ -211,6 +215,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
+			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
@@ -287,6 +292,7 @@ class StaticChute {
 		$this->config['oasis_jquery'] = array(
 			"common/jquery/jquery-1.4.4.js",
 			"common/jquery/jquery.json-1.3.js",
+			'common/jquery/jquery.getcss.js',
 			"common/jquery/jquery.wikia.js",
 			"common/jquery/jquery.cookies.2.1.0.js", // needed by geo.js
 			'common/jquery/jquery.timeago.js',
@@ -404,6 +410,7 @@ class StaticChute {
 		//JS
 		$this->config['corporate_page_js'] = array(
 			'common/jquery/jquery-1.4.1.min.js',
+			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/wikibits.js',
 			'corporate/js/main.js',
@@ -418,6 +425,7 @@ class StaticChute {
 
 		$this->config['corporate_specialpage_js'] = array(
 			'common/jquery/jquery-1.4.1.min.js',
+			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/wikibits.js',
 			'corporate/js/main.js',

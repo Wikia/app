@@ -720,4 +720,43 @@ $.extend(Timer,{
 		return timer;
 	}
 
-})
+});
+
+/**
+ * Fetches given list of JS/CSS files and then fires callback (RT #70163)
+ *
+ * @author macbre
+ */
+jQuery.getResources = function(resources, callback) {
+	var isJs = /.js(\?(.*))?$/,
+		isCss = /.css(\?(.*))?$/,
+		remaining = resources.length;
+
+	var complete = function() {
+		remaining--;
+
+		// all files have been downloaded
+		if (remaining == 0) {
+			if (typeof callback == 'function') {
+				callback();
+			}
+		}
+	};
+
+	// download files
+	for (var n=0; n<resources.length; n++) {
+		var resource = resources[n];
+
+		// "loader" function: $.loadYUI, $.loadJQueryUI
+		if (typeof resource == 'function') {
+			resource.call(jQuery, complete);
+		}
+		// CSS/JS files
+		else if (isJs.test(resource)) {
+			$.getScript(resource, complete);
+		}
+		else if (isCss.test(resource)) {
+			$.getCSS(resource, complete);
+		}
+	}
+};

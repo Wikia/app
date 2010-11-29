@@ -1,0 +1,195 @@
+#wikiaPhotoGallery-slider #wikiaPhotoGallery-slider-0 .description{
+  display: block;
+}
+
+#wikiaPhotoGallery-slider #wikiaPhotoGallery-slider-0 .description-background{
+  display: block;
+}
+
+#wikiaPhotoGallery-slider {
+	position: relative;
+	height: 410px;
+	width: 673px;
+	overflow: hidden;
+}
+#wikiaPhotoGallery-slider ul{
+	margin-left: 0;
+}
+#wikiaPhotoGallery-slider .nav img {
+	cursor: pointer;
+	opacity: .8;
+	filter: alpha(opacity = 80);
+	border: 1px solid #555;
+}
+#wikiaPhotoGallery-slider .selected {
+	/* background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px; */
+}
+#wikiaPhotoGallery-slider .selected img {
+	opacity: 1;
+	border: 1px solid #FFF;
+}
+#wikiaPhotoGallery-slider .wikiaPhotoGallery-slider {
+	position: absolute;
+	top: 0;
+}
+#wikiaPhotoGallery-slider .wikiaPhotoGallery-slider {
+	left: 0;
+}
+
+#wikiaPhotoGallery-slider .horizontal .description {
+	bottom: 0px;
+	color: #FFF;
+	display: none;
+	padding: 0 10px 15px;
+	position: absolute;
+	width: 673px;
+	height: 70px;
+	z-index: 99;
+	filter: alpha(opacity = 100);
+	opacity: 1;
+	
+}
+
+#wikiaPhotoGallery-slider .horizontal .description-background {
+	bottom: 0px;
+	display: none;
+	padding: 10px;
+	position: absolute;
+	width: 673px;
+	height: 70px;
+	z-index: 98;
+	background-color: #000;
+	filter: alpha(opacity = 50);
+	opacity: .5;
+	
+}
+.horizontal #wikiaPhotoGallery-slider-0 .nav {
+	left: 265px;
+}
+.horizontal #wikiaPhotoGallery-slider-1 .wikiaPhotoGallery-slider {
+	left: 673px;
+}
+.horizontal #wikiaPhotoGallery-slider-1 .nav {
+	left: 365px;
+}
+.horizontal #wikiaPhotoGallery-slider-2 .wikiaPhotoGallery-slider {
+	left: 1346px;
+}
+.horizontal #wikiaPhotoGallery-slider-2 .nav {
+	left: 465px;
+}
+.horizontal #wikiaPhotoGallery-slider-3 .wikiaPhotoGallery-slider {
+	left: 2019px;
+}
+.horizontal #wikiaPhotoGallery-slider-3 .nav {
+	left: 565px;
+}
+
+#wikiaPhotoGallery-slider .horizontal .nav {
+	padding: 16px 5px 0;
+	position: absolute;
+	top: 310px !important;/*previous value 244px*/
+	z-index: 100;
+}
+#wikiaPhotoGallery-slider .horizontal .description h2 {
+	border: 0;
+	display: block;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: normal;
+	margin: 0;
+	text-shadow: 0 1px 1px #000;
+	opacity: 1;
+	filter: alpha(opacity = 100);
+	overflow: hidden;
+	height: 26px;
+	width: 250px;
+}
+#wikiaPhotoGallery-slider .horizontal .description p {
+	font-size: 12px;
+	line-height: 14px;
+	margin: 0 0 .3em;
+	opacity: 1;
+	filter: alpha(opacity = 100);
+	width: 250px;
+	height: 28px;
+	overflow: hidden;
+}
+
+#wikiaPhotoGallery-slider .vertical .nav {
+	padding: 16px 5px 0;
+	position: absolute;
+	left: 547px !important;/*previous value 244px*/
+	z-index: 100;
+}
+.vertical #wikiaPhotoGallery-slider-0 .nav {
+	top: 110px;
+}
+.vertical #wikiaPhotoGallery-slider-1 .wikiaPhotoGallery-slider {
+	left: 673px;
+}
+.vertical #wikiaPhotoGallery-slider-1 .nav {
+	top: 180px;
+}
+.vertical #wikiaPhotoGallery-slider-2 .wikiaPhotoGallery-slider {
+	left: 1346px;
+}
+.vertical #wikiaPhotoGallery-slider-2 .nav {
+	top: 250px;
+}
+.vertical #wikiaPhotoGallery-slider-3 .wikiaPhotoGallery-slider {
+	left: 2019px;
+}
+.vertical #wikiaPhotoGallery-slider-3 .nav {
+	top: 320px;
+}
+#wikiaPhotoGallery-slider .vertical .description h2 {
+	border: 0;
+	display: block;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: normal;
+	margin: 0;
+	text-shadow: 0 1px 1px #000;
+	opacity: 1;
+	filter: alpha(opacity = 100);
+	overflow: hidden;
+	height: 26px;
+	width: 110px;
+}
+#wikiaPhotoGallery-slider .vertical  .description p {
+	font-size: 12px;
+	line-height: 16px;
+	margin: 0 0 .3em;
+	opacity: 1;
+	filter: alpha(opacity = 100);
+	width: 110px;
+	height: 64px;
+	overflow: hidden;
+}
+#wikiaPhotoGallery-slider .vertical  .description {
+	color: #FFF;
+	display: none;
+	padding: 10px;
+	position: absolute;
+	width: 110px;
+	height: 410px;
+	z-index: 99;
+	opacity: 1;
+	filter: alpha(opacity = 100);
+	right: 0;
+	top: 0;
+}
+#wikiaPhotoGallery-slider .vertical  .description-background {
+	display: none;
+	padding: 10px;
+	position: absolute;
+	width: 110px;
+	height: 410px;
+	z-index: 98;
+	background-color: #000;
+	filter: alpha(opacity = 50);
+	opacity: .5;
+	right: 0;
+	top: 0;
+}

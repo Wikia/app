@@ -54,7 +54,7 @@ class WikiaPhotoGalleryAjax {
 	 * Return HTML and messages for gallery editor
 	 */
 	static public function getEditorDialog() {
-		global $wgExtensionMessagesFiles, $wgTitle;
+		global $wgExtensionMessagesFiles, $wgTitle, $wgRequest;
 
 		wfProfileIn(__METHOD__);
 
@@ -123,18 +123,15 @@ class WikiaPhotoGalleryAjax {
 
 		if (!empty($results)) {
 			$html = WikiaPhotoGalleryHelper::renderImagesList('results', $results);
-			$msg = wfMsgExt( 'wikiaPhotoGallery-upload-filestitle-post', array( 'parsemag' ), count($results) );
 		}
 		else {
 			$html = false;
-			$msg = wfMsgExt( 'wikiaPhotoGallery-upload-filestitle-post', array( 'parsemag' ), 0 );
 		}
 
 		wfProfileOut(__METHOD__);
 
 		return array(
 			'html' => $html,
-			'msg' => $msg,
 		);
 	}
 
@@ -194,6 +191,24 @@ class WikiaPhotoGalleryAjax {
 		} else {
 			$html = WikiaPhotoGalleryHelper::renderFeedSlideshowPreview($gallery);
 		}
+
+		wfProfileOut(__METHOD__);
+		return array(
+			'html' => $html,
+		);
+	}
+
+	/**
+	 * Render slider preview
+	 */
+	static public function renderSliderPreview() {
+		global $wgRequest;
+		wfProfileIn(__METHOD__);
+
+		// decode JSON-encoded slideshow data
+		$gallery = Wikia::json_decode($wgRequest->getVal('gallery'), true);
+
+		$html = WikiaPhotoGalleryHelper::renderSliderPreview($gallery);
 
 		wfProfileOut(__METHOD__);
 		return array(
