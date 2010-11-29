@@ -750,7 +750,7 @@ var WikiaPhotoGallery = {
 						self.log( response );
 						var data = $.secureEvalJSON(response);
 						self.log('upload done');
-						
+
 						// tracking
 						var trackerSuffix = self.getPageTrackerSuffix();
 						self.track('/dialog/' + trackerSuffix + '/upload/success');
@@ -761,7 +761,7 @@ var WikiaPhotoGallery = {
 						if ( ( data.success || data.conflict ) && self.isSlider() && ( data.size.width != self.GALLERY_SLIDER_WIDTH || data.size.height != self.GALLERY_SLIDER_HEIGHT ) ){
 
 							self.log('Image size not valid!');
-								
+
 								// clear upload form
 								$('#WikiaPhotoGalleryImageUpload').val('');
 								$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'block');
@@ -1138,8 +1138,9 @@ var WikiaPhotoGallery = {
 			// render results
 			if (data.html) {
 				results.append(data.html);
-				self.setupSearchResults(self.RESULTS_SEARCH);
 			}
+
+			self.setupSearchResults(self.RESULTS_SEARCH);
 		});
 
 		// tracking
@@ -2100,8 +2101,8 @@ var WikiaPhotoGallery = {
 				}
 			}
 		});
-		 
-		
+
+
 
 		// set slider initial value
 		var initialValue = parseInt(params[paramName]) || values['default'];
@@ -2913,7 +2914,7 @@ var WikiaPhotoGallery = {
 		HTML += '>\n';
 		HTML += this.JSONtoWikiTextInner(data);
 		HTML += '</gallery>';
-		
+
 		return HTML;
 	},
 
