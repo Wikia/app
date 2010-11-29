@@ -113,7 +113,7 @@ $.fn.extend({
 			});
 
 			//add close button
-			wrapper.prepend('<button class="close wikia-chiclet-button"><img src="/skins/oasis/images/icon_close.png"></button>');
+			wrapper.prepend('<button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button>');
 
 		} else {
 			wrapper
@@ -199,7 +199,7 @@ $.fn.extend({
 				if (!closeOnBlackoutClick) {
 					return;
 				}
-				
+
 				if (onClose) {
 					// let extension decide what to do
 					// close can be prevented by onClose() returning false
@@ -207,7 +207,7 @@ $.fn.extend({
 						return;
 					}
 				}
-				
+
 				if (persistent) {
 					wrapper.hideModal();
 				} else {
@@ -222,7 +222,7 @@ $.fn.extend({
 		}
 
 		wrapper.data('blackout', blackout);
-		
+
 		return wrapper;
 	},
 
