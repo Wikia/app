@@ -185,6 +185,62 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"})
+	public void testImageSearch() throws Exception {
+		loginAsStaff();
+
+		// go to edit page
+		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=mediawiki");
+		session().waitForPageToLoad(TIMEOUT);
+
+		// clear wikitext
+		session().type("wpTextbox1", "");
+
+		// check if button in toolbar exists
+		assertTrue(session().isElementPresent("//img[@id='mw-editbutton-wpg']"));
+
+		// open slideshow editor
+		session().click("//img[@id='mw-editbutton-wpg']");
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+
+		// let's use gallery flow
+		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='1']");
+		waitForElementVisible("//div[@id='WikiaPhotoGalleryEditorPreview']");
+		waitForElementVisible("//span[contains(@class,'WikiaPhotoGalleryPreviewItem')]");
+
+		// add new image
+		session().click("WikiaPhotoGalleryAddImage");
+		waitForElementVisible("WikiaPhotoGallerySearchResults");
+
+		// search for images on wiki's main page
+		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", session().getEval("window.wgMainpage"));
+        session().click("//form[@id='WikiaPhotoGallerySearch']//button");
+		waitForElementVisible("//ul[@type='results']//li");
+
+		// select first image
+		session().click("//ul[@type='results']//li//label");
+		session().click("WikiaPhotoGallerySearchResultsSelect");
+
+		// add caption and link
+		session().type("WikiaPhotoGalleryEditorCaption", "Test caption");
+		session().type("WikiaPhotoGalleryLink", "Image search test");
+		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
+		waitForElementVisible("//div[@id='WikiaPhotoGalleryEditorPreview']");
+
+		// let's save this gallery
+		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
+
+		// let's save edit page
+		session().click("wpSave");
+		session().waitForPageToLoad(TIMEOUT);
+
+		// verify edit from view mode
+		assertTrue(session().isElementPresent("//div[@class='wikia-gallery-item']"));
+
+		// check for image added from view mode
+		assertTrue(session().isElementPresent("//div[2 and @class='wikia-gallery-item']//img[contains(@title,'Image search test')]"));
+	}
+
+	@Test(groups={"CI"})
 	public void testEditInRTE() throws Exception {
 		loginAsStaff();
 
