@@ -81,27 +81,33 @@ class WikiaPhotoGalleryUpload {
 						$extensionName
 					),
 					'tempId' => $tempId,
+					'size' => array(
+					    'height' => $file->height,
+					    'width' => $file->width
+					),
 					'thumbnail' => array(
 						'height' => $thumbnail->height,
 						'url' => $thumbnail->url,
 						'width' => $thumbnail->width,
 					),
 				);
-			}
-			else {
+			} else {
 				// use regular MW upload
 				self::log(__METHOD__, "image '{$imageName}' is new one - uploading as MW file");
 
 				$result = self::uploadIntoMW($imagePath, $imageName);
 				self::log(__METHOD__, $result ? 'upload successful' : 'upload failed');
-
+				$oImage = wfFindFile( $imageName );
 				$ret = array(
 					'success' => $result,
 					'name' => $imageName,
+					'size' => array(
+					    'height' => $oImage->getHeight(),
+					    'width' => $oImage->getWidth()
+					),
 				);
 			}
-		}
-		else {
+		} else {
 			$reason = $nameValidation | $contentValidation;
 
 			self::log(__METHOD__, "upload failed - file name is not valid (error #{$reason})");

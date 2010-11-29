@@ -43,8 +43,8 @@ class FBPush_OnAddBlogPost extends FBConnectPushEvent {
 		if ( !( $flags & EDIT_NEW ) ) {
 			return true;
 		}
-
-		if( $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE ) {
+		
+		if( defined( 'NS_BLOG_ARTICLE' ) && $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE ) {
 			$params = array(
 				'$WIKINAME' => $wgSitename,
 				'$BLOG_POST_URL' => $article->getTitle()->getFullURL("ref=fbfeed&fbtype=blogpost"),

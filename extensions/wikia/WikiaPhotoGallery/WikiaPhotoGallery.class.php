@@ -18,6 +18,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	const WIKIA_PHOTO_GALLERY = 1;
 	const WIKIA_PHOTO_SLIDESHOW = 2;
+	const WIKIA_PHOTO_SLIDER = 3;
 
 	const RESULTS_RECENT_UPLOADS = 0;
 	const RESULTS_IMAGES_FROM_THIS_PAGE = 1;
@@ -115,7 +116,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			'spacing' => array('medium', 'large', 'small'),
 			'buckets' => false,
 			'rowdivider' => false,
-			'hideoverflow' => false
+			'hideoverflow' => false,
+			'sliderbar' => array('bottom','left')
 		);
 	}
 
@@ -211,6 +213,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		// parse parameters supported by each type
 		// default value will be used when set method is called with "false"
 		if (!empty($params['type']) && $params['type'] == 'slideshow') {
+
 			$this->mType = self::WIKIA_PHOTO_SLIDESHOW;
 
 			// crop parameter is parsed only for slideshow
@@ -235,6 +238,17 @@ class WikiaPhotoGallery extends ImageGallery {
 			} else {
 				$this->setParam('position', 'right');
 			}
+
+		} elseif ( !empty($params['type']) && $params['type'] == 'slider' ) {
+
+			$this->mType = self::WIKIA_PHOTO_SLIDER;
+						// choose slideshow alignment
+			if (isset($params['orientation']) && in_array($params['orientation'], array('bottom', 'right'))) {
+				$this->setParam('orientation', $params['orientation']);
+			} else {
+				$this->setParam('orientation', 'bottom');
+			}
+
 		} else {
 			$this->mType = self::WIKIA_PHOTO_GALLERY;
 
@@ -455,7 +469,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function addRecentlyUploaded($limit) {
 		wfProfileIn(__METHOD__);
 
-		$uploadedImages = WikiaPhotoGalleryHelper::getRecentlyUploaded($limit);
+		$uploadedImages = ImagesService::getRecentlyUploaded($limit);
 
 		// remove images already added to slideshow
 		$this->mImages = array();
@@ -496,6 +510,9 @@ class WikiaPhotoGallery extends ImageGallery {
 			if ($this->mType == self::WIKIA_PHOTO_GALLERY) {
 				// gallery: 185x185px placeholder
 				$width = $height = 185;
+			} elseif( $this->mType == self::WIKIA_PHOTO_SLIDER ){
+				$width = WikiaPhotoGalleryHelper::STRICT_IMG_WIDTH;
+				$height = WikiaPhotoGalleryHelper::STRICT_IMG_HEIGHT;
 			} else {
 				// slideshow: use user specified size
 				$width = $this->mWidths;
@@ -523,6 +540,10 @@ class WikiaPhotoGallery extends ImageGallery {
 				} else {
 					$out = $this->renderSlideshow();
 				}
+				break;
+
+			case self::WIKIA_PHOTO_SLIDER:
+					$out = $this->renderSlider();
 				break;
 		}
 
@@ -1119,7 +1140,7 @@ wgAfterContentAndJS.push(function() {
 				item.removeAttr('title');
 			}
 		};
-		
+
 		var item = slideshow.find('li').first();
 		if (item.attr('title')!='')item.css('backgroundImage', 'url(' + item.attr('title') + ')');
 		item.removeAttr('title');
@@ -1144,6 +1165,87 @@ JS;
 
 		wfProfileOut(__METHOD__);
 		return $s;
+	}
+
+	/**
+ 	 * Return a HTML representation of the image slider
+	 *
+	 * Just a draft. Will be turned to XML::
+	 * @author Jakub Kurcek
+	 */
+	
+	private function renderSlider() {
+		global $wgLang, $wgBlankImgUrl, $wgStylePath, $wgScriptPath, $wgStyleVersion;
+
+		wfProfileIn(__METHOD__);
+
+		$html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}\"></script>";
+		if ( $this->getParam('orientation') == 'right' ){
+			$class = ' class="vertical" ';
+			$thumbDimensions = array( "w" => 110, "h" => 60 );
+		} else {
+			$class = ' class="horizontal" ';
+			$thumbDimensions = array( "w" => 90, "h" => 70 );
+		}
+
+		$html .= '<div id="wikiaPhotoGallery-slider" style="display: none; overflow: hidden; width:673px; height: 410px;"><div '.$class.' ><ul>';
+		$key = 0;
+		foreach ( $this->mImages as $p => $pair ) {
+
+			$nt = $pair[0];
+			$text = $pair[1];
+			$link = $pair[2];
+			$linkText = $this->mData['images'][$p]['linktext'];
+			$time = $descQuery = false;
+
+			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+			$img = wfFindFile( $nt, $time );
+			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
+
+				$pageId = $nt->getArticleID();
+				$imageServing = new imageServing( array( $pageId ), $thumbDimensions['w'] ,$thumbDimensions );
+				$imageSrc = wfReplaceImageServer(
+					$img->getThumbUrl(
+						$imageServing->getCut( $img->getWidth(), $img->getHeight() )."-".$img->getName()
+					)
+				);
+				wfLoadExtensionMessages('WikiaPhotoGallery');
+				$msg = wfMsg( 'galery-slider-read-more' );
+				$pictureURL = $img->getThumbnail($img->getWidth(), $img->getHeight())->url;
+				$html .= '<li id="wikiaPhotoGallery-slider-'.$key.'">';
+				if (!empty( $link )){
+					$html .= "<a href='{$link}'>";
+				}
+				$html .= "<img width='{$img->getWidth()}' height='{$img->getHeight()}' src='{$pictureURL}' class='wikiaPhotoGallery-slider'>";
+				if (!empty( $link )){
+					$html .= '</a>';
+				}
+				$html .= '<div class="description-background"></div>';
+				$html .= '<div class="description">';
+				$html .= "<h2>{$text}</h2>";
+				$html .= "<p>$linkText</p>";
+				if (!empty( $link )){
+					$html .= "<a href='{$link}' class='wikia-button secondary'>";
+					$html .= "<span>{$msg}</span>";
+					$html .= "</a>";
+				}
+				$html .= "</div>";
+				$html .= "<p class='nav'>";
+				$html .= "<img width='".$thumbDimensions['w']."' height='".$thumbDimensions['h']."' alt='' src='{$imageSrc}'>";
+				$html .= "</p>";
+				$html .= "</li>";
+
+			}
+			if ( $key++ == 3 ) {
+				break;
+			}
+		}
+
+		$html .= '</ul></div></div>';
+		
+		wfProfileOut(__METHOD__);
+		return $html;
+
 	}
 
 
