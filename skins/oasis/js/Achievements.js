@@ -8,7 +8,7 @@ var AchievementsThing = {
 		$(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".view-all").click(AchievementsThing.seeAllClick);
 
 		//Show badge description when hovering over the badge
-		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.badges li > img, .badges .sponsored-link').hover(function() {
+		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").hover(function() {
 			var badge = $(this);
 			var hover = badge.prevAll(".profile-hover");
 			var badgeWidth = 0;
