@@ -480,26 +480,3 @@ table.wikitable {
 		}
 	}
 }
-
-
-// /** WikiaWideTables **/
-.WikiaWideTablesWrapper {
-	position: relative;
-	&.border {
-		border-right: 1px dashed $color-page-border;
-	}
-	>.table {
-		overflow: hidden;
-	}
-	>.popout {
-		cursor: pointer;
-		position: absolute;
-		right: -12px;
-		top: 0;
-		&.float {
-			position: fixed;
-			left: 50%;
-			right: auto;
-		}
-	}
-}

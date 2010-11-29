@@ -62,6 +62,16 @@ $.fn.extend({
 
 			zIndex = Math.max(20000001, zIndex + 1); //close to the highest possible z-index value
 		}
+		/*
+		function getModalTop() {
+			var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
+			if (modalTop < $(window).scrollTop() + 20) {
+				return $(window).scrollTop() + 20;
+			} else {
+			return modalTop;
+			}
+		}
+		*/
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
@@ -91,16 +101,16 @@ $.fn.extend({
 
 			// or use width provided
 			if (typeof options.width != 'undefined') {
-				modalWidth = options.width;
+				modalWidth = options.width + 30 /* padding */;
 			}
 
-			//position modal. width must be set before calculating negative left margin
 			wrapper.css({
 				left: "50%",
+				marginLeft: -modalWidth/2,
 				top: $(window).scrollTop() + 50,
 				width: modalWidth,
 				zIndex: zIndex + 1
-			}).css("margin-left", -wrapper.outerWidth()/2);
+			});
 
 			//add close button
 			wrapper.prepend('<button class="close wikia-chiclet-button"><img src="/skins/oasis/images/icon_close.png"></button>');
