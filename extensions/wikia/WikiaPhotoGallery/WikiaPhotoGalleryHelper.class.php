@@ -14,6 +14,13 @@ class WikiaPhotoGalleryHelper {
 	const thumbnailMaxWidth = 200;
 	const thumbnailMaxHeight = 200;
 
+	// dimensions for strict sized images
+	const STRICT_IMG_WIDTH = 673;
+	const STRICT_IMG_HEIGHT = 410;
+
+	const STRICT_IMG_WIDTH_PREV = 320;
+	const STRICT_IMG_HEIGHT_PREV = 157;
+
 	/**
 	 * Used to store wikitext between calls to useDefaultRTEPlaceholder and renderGalleryPlaceholder
 	 */
@@ -114,7 +121,7 @@ class WikiaPhotoGalleryHelper {
 		$data = $gallery->getData();
 		$class = 'media-placeholder image-gallery';
 
-		if ($data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW) {
+		if ( $data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW ) {
 			$class .= ' image-slideshow';
 
 			// support "position" attribute (slideshow alignment)
@@ -129,6 +136,10 @@ class WikiaPhotoGalleryHelper {
 					$class .= ' alignRight';
 					break;
 			}
+		}
+
+		if ( $data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDER ) {
+			$class .= ' image-gallery-slider';
 		}
 
 		global $wgBlankImgUrl;
@@ -314,7 +325,7 @@ class WikiaPhotoGalleryHelper {
 	 * @author Macbre, Lox
 	 */
 	static public function renderGalleryPreview($gallery) {
-		global $wgTitle, $wgParser, $wgCdnStylePath, $wgExtensionsPath;
+		global $wgTitle, $wgParser, $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		//wfDebug(__METHOD__ . "\n" . print_r($gallery, true));
@@ -445,7 +456,7 @@ class WikiaPhotoGalleryHelper {
 				'placeholder' => true,
 				'height' => $height,
 				'width' => $thumbSize,
-				'thumbnail' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/WikiaPhotoGallery/images/gallery_addimage.png",
+				'thumbnail' => "{$wgExtensionsPath}/wikia/WikiaPhotoGallery/images/gallery_addimage.png",
 				'caption' => wfMsg('wikiaPhotoGallery-preview-placeholder-caption'),
 				'heightCompensation' => false,
 			);
@@ -515,7 +526,7 @@ class WikiaPhotoGalleryHelper {
 
 		if (!empty($slideshow['params']['showrecentuploads'])) {
 			// add recently uploaded images only
-			$uploadedImages = WikiaPhotoGalleryHelper::getRecentlyUploaded(WikiaPhotoGallery::RECENT_UPLOADS_IMAGES);
+			$uploadedImages = ImagesService::getRecentlyUploaded(WikiaPhotoGallery::RECENT_UPLOADS_IMAGES);
 
 			$slideshow['images'] = array();
 
@@ -534,8 +545,7 @@ class WikiaPhotoGalleryHelper {
 					'recentlyUploaded' => true,
 				);
 			}
-		}
-		else {
+		} else {
 			// render slideshow images
 			foreach($slideshow['images'] as &$image) {
 				// don't render recently uploaded images now, render them after "regular" images
@@ -585,12 +595,65 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
+	 * Render slider preview
+	 *
+	 * @author Jakub Kurcek
+	 */
+
+	static public function renderSliderPreview($slider) {
+		global $wgTitle, $wgParser;
+		wfProfileIn(__METHOD__);
+
+		// use global instance of parser (RT #44689 / RT #44712)
+		$parserOptions = new ParserOptions();
+
+		wfDebug(__METHOD__ . "\n" . print_r($slider, true));
+
+		// render slider images
+		foreach($slider['images'] as &$image) {
+			$imageTitle = Title::newFromText($image['name'], NS_FILE);
+			$img = wfFindFile($imageTitle);
+
+			if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
+				// render thumbnail
+				$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, self::STRICT_IMG_WIDTH_PREV, self::STRICT_IMG_HEIGHT_PREV);
+			} else {
+				$image[ 'pageTitle' ] = $imageTitle->getText();
+			}
+
+			//need to use parse() - see RT#44270
+			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
+
+			// remove <p> tags from parser caption
+			if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
+				$image['caption'] = $m[1];
+			}
+		}
+
+		wfDebug(__METHOD__.'::after' . "\n" . print_r($slider, true));
+
+		// render gallery HTML preview
+		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+		$template->set_vars(array(
+			'height' => self::STRICT_IMG_HEIGHT_PREV,
+			'slider' => $slider,
+			'width' => self::STRICT_IMG_WIDTH_PREV,
+		));
+		$html = $template->render('sliderPreview');
+
+		wfProfileOut(__METHOD__);
+		return $html;
+	}
+
+
+
+	/**
 	 * Render gallery preview for feed
 	 *
 	 * @author Marooned
 	 */
 	static public function renderFeedGalleryPreview($gallery) {
-		global $wgTitle, $wgParser, $wgCdnStylePath, $wgExtensionsPath;
+		global $wgTitle, $wgParser, $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		$data = WikiaPhotoGalleryRSS::parseFeed($gallery['params']['rssfeed']);
@@ -895,69 +958,6 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
-	 * Get list of recently uploaded files
-	 */
-	static public function getRecentlyUploaded($limit) {
-		global $wgEnableAchievementsExt;
-		wfProfileIn(__METHOD__);
-
-		$ret = false;
-
-		// get list of recent log entries (type = 'upload')
-		// limit*2 because of possible duplicates in log caused by image reuploads
-		$params = array(
-			'action' => 'query',
-			'list' => 'logevents',
-			'letype' => 'upload',
-			'leprop' => 'title',
-			'lelimit' => $limit * 2,
-		);
-
-		try {
-			wfProfileIn(__METHOD__ . '::apiCall');
-
-			$api = new ApiMain(new FauxRequest($params));
-			$api->execute();
-			$res = $api->getResultData();
-
-			wfProfileOut(__METHOD__ . '::apiCall');
-
-			if (!empty($res['query']['logevents'])) {
-				foreach($res['query']['logevents'] as $entry) {
-					// ignore Video:foo entries from VideoEmbedTool
-					if ($entry['ns'] == NS_IMAGE) {
-						$image = Title::newFromText($entry['title']);
-						if (!empty($image)) {
-							// skip badges upload (RT #90607)
-							if (!empty($wgEnableAchievementsExt) && Ach_isBadgeImage($image->getText())) {
-								continue;
-							}
-
-							// use keys to remove duplicates
-							$ret[$image->getDBkey()] = $image;
-
-							// limit number of results
-							if (count($ret) == $limit) {
-								break;
-							}
-						}
-					}
-				}
-
-				// use numeric keys
-				$ret = array_values($ret);
-				$count = count($ret);
-
-				wfDebug(__METHOD__ . ": {$count} results\n");
-			}
-		}
-		catch(Exception $e) {};
-
-		wfProfileOut(__METHOD__);
-		return $ret;
-	}
-
-	/**
 	 * Get thumbs of recently uploaded files
 	 */
 	static public function getRecentlyUploadedThumbs($limit = 50) {
@@ -965,16 +965,17 @@ class WikiaPhotoGalleryHelper {
 		$ret = array();
 
 		// get list of recenlty uploaded images
-		$uploadedImages = self::getRecentlyUploaded($limit);
-
+		$uploadedImages = ImagesService::getRecentlyUploaded($limit);
 		if(is_array($uploadedImages)) {
 			foreach($uploadedImages as $image) {
+
 				$thumb = self::getResultsThumbnailUrl($image);
 				if ($thumb) {
 					// use keys to remove duplicates
 					$ret[] = array(
 						'name' => $image->getText(),
 						'thumb' => $thumb,
+						'strict' => self::isImageStrict( $image )
 					);
 				}
 			}
@@ -982,6 +983,22 @@ class WikiaPhotoGalleryHelper {
 
 		wfProfileOut(__METHOD__);
 		return $ret;
+	}
+
+	/**
+	 * Check if image has width and height that fits slider
+	 */
+	static public function isImageStrict( $image ){
+
+		$oImage = wfFindFile($image);
+		if ( !empty($oImage ) ){
+			$isStrict = (	( $oImage->getWidth() == self::STRICT_IMG_WIDTH ) &&
+					( $oImage->getHeight() == self::STRICT_IMG_HEIGHT ) );
+		} else {
+			$isStrict = false;
+		}
+
+		return $isStrict ? 1 : 0;
 	}
 
 	/**
@@ -993,122 +1010,49 @@ class WikiaPhotoGalleryHelper {
 		$ret = array();
 
 		// get list of images linked with given article
-		$params = array(
-			'action' => 'query',
-			'prop' => 'images',
-			'titles' => $title->getText(),
-			'imlimit' => $limit,
-		);
+		$images = ImagesService::getFromArticle($title, $limit);
 
-		try {
-			wfProfileIn(__METHOD__ . '::apiCall');
+		foreach($images as $entry) {
 
-			$api = new ApiMain(new FauxRequest($params));
-			$api->execute();
-			$res = $api->getResultData();
-
-			wfProfileOut(__METHOD__ . '::apiCall');
-
-			if (!empty($res['query']['pages'])) {
-				$data = array_pop($res['query']['pages']);
-
-				if (!empty($data['images'])) {
-					foreach($data['images'] as $entry) {
-						// ignore Video:foo entries from VET
-						if ($entry['ns'] == NS_IMAGE) {
-							$image = Title::newFromText($entry['title']);
-
-							$thumb = self::getResultsThumbnailUrl($image);
-							if ($thumb) {
-								// use keys to remove duplicates
-								$ret[$image->getDBkey()] = array(
-									'name' => $image->getText(),
-									'thumb' => $thumb,
-								);
-							}
-						}
-					}
-
-					// use numeric keys
-					$ret = array_values($ret);
-					$count = count($ret);
-
-					wfDebug(__METHOD__ . ": {$count} results\n");
-				}
+			$image = Title::newFromText($entry);
+			$thumb = self::getResultsThumbnailUrl($image);
+			if ($thumb) {
+				$ret[] = array(
+					'name' => $image->getText(),
+					'thumb' => $thumb,
+					'strict' =>self:: isImageStrict( $image )
+				);
 			}
 		}
-		catch(Exception $e) {};
 
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
-
 	/**
 	 * Return thumbs of images search result
 	 */
-	static public function getSearchResultThumbs($query) {
+	static public function getSearchResultThumbs($query, $limit = 50) {
 		wfProfileIn(__METHOD__);
-		global $wgRequest, $wgContentNamespaces;
-
 		$images = array();
 
 		if(!empty($query)) {
-			$query_select = "SELECT il_to FROM imagelinks JOIN page ON page_id=il_from WHERE page_title = '%s' and page_namespace = %s";
-			$query_glue = ' UNION DISTINCT ';
-			$articles = $query_arr = array();
+			$results = ImagesService::search($query, $limit);
 
-			//get search result from API
-			$oFauxRequest = new FauxRequest(
-				array(
-					'action' => 'query',
-					'list' => 'search',
-					'srnamespace' => implode('|', array_merge($wgContentNamespaces, array(NS_FILE))),
-					'srlimit' => '20',
-					'srsearch' => $query,
-				)
-			);
-			$oApi = new ApiMain($oFauxRequest);
-			$oApi->execute();
-			$aResult =& $oApi->GetResultData();
-
-			$dbr = wfGetDB(DB_SLAVE);
-
-			if (count($aResult['query']['search']) > 0) {
-				if (!empty($aResult['query']['search'])) {
-					foreach ($aResult['query']['search'] as $aResult) {
-						$query_arr[] = sprintf($query_select, $dbr->strencode(str_replace(' ', '_', $aResult['title'])), $aResult['ns']);
-					}
-				}
-			}
-
-			if (count($query_arr)) {
-				$query_sql = implode($query_glue, $query_arr);
-				$res = $dbr->query($query_sql, __METHOD__);
-
-				if($res->numRows() > 0) {
-					while( $row = $res->fetchObject() ) {
-						$articles[] = $row->il_to;
-					}
-					$dbr->freeResult($res);
-
-					foreach($articles as $title) {
-						$oImageTitle = Title::makeTitleSafe(NS_FILE, $title);
-
-						$thumb = self::getResultsThumbnailUrl($oImageTitle);
-						if ($thumb) {
-							$images[] = array(
-								'name' => $oImageTitle->getText(),
-								'thumb' => $thumb,
-							);
-						}
-					}
+			foreach($results as $title) {
+				$image = Title::newFromText($title, NS_FILE);
+				$thumb = self::getResultsThumbnailUrl($image);
+				if ($thumb) {
+					$images[] = array(
+						'name' => $image->getText(),
+						'thumb' => $thumb,
+						'strict' => self::isImageStrict($image),
+					);
 				}
 			}
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return $images;
 	}
 
@@ -1223,7 +1167,7 @@ class WikiaPhotoGalleryHelper {
 	static public function getGalleryDataByHash($hash, $revisionId = 0, $type = WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
 		global $wgTitle, $wgUser, $wgOut;
 		wfProfileIn(__METHOD__);
-		
+
 		self::initParserHook();
 		self::$mGalleryHash = $hash;
 
