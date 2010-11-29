@@ -26,7 +26,7 @@ var AdSS = {
 		}
 
 		// fetch a site ad
-		$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax'}, AdSS.onGetSiteAds );
+		$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'2.2'}, AdSS.onGetSiteAds );
 	},
 
 	onGetSiteAds: function(response) {
