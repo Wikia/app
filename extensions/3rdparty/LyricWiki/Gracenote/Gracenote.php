@@ -155,9 +155,23 @@ function gracenote_disableEdit(&$out, &$sk){
 // copy-protection requirements of the Gracenote integration.
 ////
 function gracenote_installCopyProtection(&$out, &$sk){
+	wfProfileIn( __METHOD__ );
+
 #	Uncomment this for local testing -- Wikia already loads jquery
 #	$out->addScript("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></script>");
-	
+
+	global $wgTitle, $wgUser;
+	// Lyrics protections are unneeded JS on pages which aren't even in the right namespace for being lyrics pages.
+	if(($wgTitle->getNamespace() != NS_MAIN) && ($wgTitle->getNamespace() != NS_GRACENOTE)){
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+	// If this is a logged-in user on community pages, we don't need the protections since they're trusted.
+	if($wgUser->isLoggedIn() && ($wgTitle->getNamespace() != NS_GRACENOTE)){
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
 	// Disable text-selection in the lyricsbox divs (this only needs to be done once between both the lyrics and gracenotelyrics extensions.
 	$DISABLE_TEXT_SELECTION_FUNCTIONS = "
 		function preventHighlighting(element){
@@ -222,7 +236,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 		});
 	";
 
-	// TODO: If acceptable, make the DISABLE_RIGHT_CLICK_CODE and DISABLE_SELECT_ALL only apply to Gracenote pages and lyrics pages (what is the Gracenote namespace number?).
+	// TODO: If acceptable, make the DISABLE_RIGHT_CLICK_CODE and DISABLE_SELECT_ALL only apply to Gracenote pages and lyrics pages (Gracenote namespace is: NS_GRACENOTE).
 
 	// Add the various chunks of javascript that need to be run after the page is loaded.
 	$out->addScript("<script type=\"text/javascript\">
@@ -237,8 +251,9 @@ function gracenote_installCopyProtection(&$out, &$sk){
 			// Select all should be disabled on pages that have lyrics (even if they're 'edit' pages).
 			if((wgNamespaceNumber == 220) || (wgNamespaceNumber == 0)){
 				$DISABLE_SELECT_ALL
-			}
-
+			}"./*
+			// Not used right now. Comment out to not be a waste of synchronously-loaded JS.
+			
 			var ns = wgNamespaceNumber;
 			if(wgNamespaceNumber == 220){
 				// Code that should only be on Gracenote pages.
@@ -259,7 +274,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 					
 					
 				}
-			}
+			}*/"
 
 			if($('.lyricbox').size() > 0){
 				$DISABLE_RIGHT_CLICK_CODE
@@ -270,6 +285,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 	/* ]]> */
 	</script>");
 
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
