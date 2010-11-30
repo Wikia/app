@@ -116,8 +116,9 @@ h1 {
 .wikia-gallery .thumb {
 	margin-left: 0;
 }
-a {
-	color: #006CB0;
+a,
+a:visited {
+	color: #0148c2;
 	text-decoration: none;
 }
 #content {
