@@ -1,3 +1,6 @@
+== Changes since 20101129 ==
+* rt#126782: Slideshow: arrows not working in pop out (macbre)
+
 == Changes since 20101115 ==
 * rt#68485: MyTools now has MyContributions (TOR)
 * rt#73293: Two Achievements messages missing (TOR)
