@@ -2,6 +2,11 @@
 
 /**
  * Switch cookie used for development and/or staging servers.
+ *
+ * TODO: if this becomes anything other than a hacky internal tool, do the following:
+ *	- i18n
+ *	- Move CSS into external file
+ *	- Move HTML into template files
  */
 
 $wgSpecialPages['DevCookie'] = 'SpecialDevCookie';
