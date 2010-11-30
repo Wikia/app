@@ -194,7 +194,7 @@ class UserProfilePageHelper {
 
 	public static function invalidateTopPagesCacheKey( User $user ) {
 		global $wgMemc;
-		$wgMemc->delete( $this->getTopPagesCacheKey( $user ) );
+		$wgMemc->delete( self::getTopPagesCacheKey( $user ) );
 	}
 
 	public static function invalidateTopWikisCacheKey( User $user ) {
