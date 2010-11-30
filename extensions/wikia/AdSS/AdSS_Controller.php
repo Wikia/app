@@ -74,7 +74,7 @@ class AdSS_Controller extends SpecialPage {
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 		$tmpl->set( 'ad', $ad->render( $tmpl ) );
-		$tmpl->set( 'action', $this->getTitle()->getLocalUrl() );
+		$tmpl->set( 'action', $this->getTitle()->getLocalUrl( isset( $_GET['b'] ) ? 'b' : '' ) );
 		if( $wgUser->isAllowed( 'adss-admin' ) ) {
 			$tmpl->set( 'login', wfMsgHtml( 'adss-button-buy-now' ) );
 			$tmpl->set( 'isAdmin', true );
@@ -84,13 +84,18 @@ class AdSS_Controller extends SpecialPage {
 		}
 		$tmpl->set( 'submit', wfMsgHtml( 'adss-button-pay-paypal' ) );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
+		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing() );
 		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'bannerPricing', AdSS_Util::getBannerPricing() );
 		$tmpl->set( 'adForm', $adForm );
 		$tmpl->set( 'currentShare', intval( $currentShare * 100 ) );
 
-		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
+		if( isset( $_GET['b'] ) ) {
+			$wgOut->addHTML( $tmpl->render( 'adForm-b' ) );
+		} else {
+			$wgOut->addHTML( $tmpl->render( 'adForm' ) );
+			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
+		}
 	}
 
 	function save( $adForm ) {

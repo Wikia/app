@@ -5,13 +5,6 @@ var AdSS = {
 	init: function() {
 		AdSS.sponsormsg = $("div.sponsormsg > ul");
 		AdSS.sponsormsg.css( { "position": "relative" } );
-		AdSS.sponsormsg.bind("mouseenter mouseleave", function(e) {
-			if(e.type=="mouseenter") {
-				$("div.prevnext").animate({opacity:1});
-			} else {
-				$("div.prevnext").animate({opacity:0});
-			}
-		});
 
 		// display page ads
 		if(typeof(wgAdSS_pageAds) !== 'undefined') {
@@ -73,7 +66,7 @@ var AdSS = {
 			nextIdx = 0;
 
 		var prevnext = $('<div class="prevnext"><a href="#" class="prev" rel="'+prevIdx+'">&lt;</a>&nbsp;<a href="#" class="next" rel="'+nextIdx+'">&gt;</a></div>');
-		prevnext.css( { "position":"absolute", "right":"0px", "top":"0px", "opacity":"0" } );
+		prevnext.css( { "position":"absolute", "right":"0px", "top":"0px", "font-size":"80%" } );
 		prevnext.find("a").css( { "border":"1px solid", "padding":"1px" } ).click( function(e) {
 			e.preventDefault();
 			AdSS.showSiteAd( parseInt( $(this).attr("rel") ) );
