@@ -95,7 +95,7 @@
 	height: 73px;
 	position: absolute;
 	width: 37px;
-	z-index: 100;
+	z-index: 10000;
 }
 
 .wikia-slideshow-popout-prev {
