@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'userprofilepage-edit-permision-denied-info' => 'You do not have permissions to edit somebody\'s user page or subpage',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Everyone on this wiki would love to know more about you!</div><a href="$1">Edit this section</a> to add more about yourself and tell us about the things you love.',
 	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 hasn\'t added any information yet.</div>You can <a href="$2">leave them a message</a> instead',
-	'userprofilepage-user-doesnt-exists' => 'The user $1 doesn\'t exist on Wikia. Check out [[Special:WikiActivity|Wiki Activity]] to see who\'s active on this wiki.',
+	'userprofilepage-user-doesnt-exists' => 'The user $1 does not exist on Wikia. Check out [[Special:WikiActivity|Wiki Activity]] to see who is active on this wiki.',
 	'userprofilepage-user-anon' => 'This user hasn\'t registered on Wikia yet. [[Special:Signup|Sign up]] to register an account and claim edit points, badges and appreciation from your fellow editors!',
 	
 	// Masthead
