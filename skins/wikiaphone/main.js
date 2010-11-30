@@ -26,9 +26,10 @@ var MobileSkin = {
 			var elm = $(this);
 			var href = $(this).attr('href');
 			
-			if(href.indexOf(CategoryNamespaceMessage) !== -1) MobileSkin.trackClick('categorylink');
-			else if(href.indexOf(SpecialNamespaceMessage) === -1) MobileSkin.trackClick('contentlink');
+			if(href && href.indexOf(CategoryNamespaceMessage) !== -1) MobileSkin.trackClick('categorylink');
+			else if(href && href.indexOf(SpecialNamespaceMessage) === -1) MobileSkin.trackClick('contentlink');
 			else if(elm.attr('data-id') === 'randompage') MobileSkin.trackClick('randompage');
+			else if(elm.hasClass('showbutton')) MobileSkin.trackClick('showhide');
 		});
 	},
 	
