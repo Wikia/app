@@ -788,6 +788,13 @@ p.SliderLink {
 	margin: 6px;
 }
 
+#WikiaPhotoGalleryImageUploadSize {
+	display: none;
+	font-weight: bold;
+	float: right;
+	margin: 6px;
+}
+
 .WikiaPhotoGallerySliderItemNumber {
 	position: absolute;
 	padding: 8px;
