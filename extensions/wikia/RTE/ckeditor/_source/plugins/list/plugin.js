@@ -457,7 +457,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			var doc = editor.document,
 				selection = editor.getSelection(),
-				ranges = selection && selection.getRanges( true );
+				ranges = selection && selection.getRanges( /*true*/ CKEDITOR.ONLY_FORMATTABLES );
 
 			// There should be at least one selected range.
 			if ( !ranges || ranges.length < 1 )

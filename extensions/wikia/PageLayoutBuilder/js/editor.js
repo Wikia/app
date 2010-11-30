@@ -6,6 +6,7 @@
 
 	$.extend(PLB,{
 		Util: {},
+		HTML_PARAM_TYPE: 'data-plb-type',
 		PARAM_TYPE: '__plb_type',
 		PARAM_PREFIX: '__plb_param_',
 		PARAM_ID: '__plb_param_id',
@@ -35,6 +36,7 @@
 		ed: null,
 		el: null,
 		
+		type: null,
 		md: null,
 		
 		onSave: null,
@@ -44,7 +46,12 @@
 			PLB.Widget.superclass.constructor.call(this);
 			this.ed = editor;
 			this.el = $(el);
-			this.md = PLB.Library[this.el.attr('type')];
+			this.type = this.el.attr(PLB.HTML_PARAM_TYPE);
+			if ( !this.type ) {
+				this.type = PLB.Widget.getType();
+				this.el.attr(PLB.HTML_PARAM_TYPE,this.type);
+			}
+			this.md = PLB.Library[this.type];
 		},
 		
 		getElement : function () {
@@ -52,7 +59,7 @@
 		},
 		
 		getType : function () {
-			return this.el.attr(PLB.PARAM_TYPE);
+			return this.el.attr(PLB.HTML_PARAM_TYPE);
 		},
 		
 		getId : function () {
@@ -62,6 +69,7 @@
 		
 		setId : function (id) {
 			this.el.setData(PLB.PARAM_ID,id);
+			$().log(this.el[0],'PLB - assigning ID '+id);
 		},
 		
 		getCaption : function () {
@@ -171,9 +179,13 @@
 	
 	});
 	
+	PLB.Widget.getType = function ( el ) {
+		el = $(el);
+		return el.attr(PLB.HTML_PARAM_TYPE) || el.getData()[PLB.PARAM_TYPE];
+	};
 	
 	PLB.Widget.create = function ( editor, el ) {
-		var type = $(el).attr(PLB.PARAM_TYPE)
+		var type = PLB.Widget.getType(el);
 		if (typeof PLB.Widgets[type] == 'undefined') {
 			PLB.Widgets[type] = PLB.Widget;
 		}
@@ -203,7 +215,8 @@
 			window.wgAction = 'edit';
 		},
 		
-		getBody: function() {
+		getBody: function( fresh ) {
+			if (fresh) this.body = this.rte.getEditor();
 			return this.body;
 		},
 		
@@ -247,6 +260,7 @@
 			this.instance.on('beforeCreateUndoSnapshot',$.proxy(this.onRTEBeforeCreateUndoSnapshot,this));
 			this.instance.on('afterCreateUndoSnapshot',$.proxy(this.onRTEAfterCreateUndoSnapshot,this));
 			this.instance.on('afterPaste', $.proxy(this.onRTEAfterPaste,this));
+			this.instance.on('droppedElements', $.proxy(this.onRTEDroppedElements,this));
 			this.fire('ready',this);
 		},
 		
@@ -335,6 +349,10 @@
 		
 		onRTEAfterCreateUndoSnapshot: function( event ) {
 			this.fire('aftersnapshot',this,event.data,event);
+		},
+		
+		onRTEDroppedElements: function( event ) {
+			this.fire('droppedelements',this,event.data,event);
 		}
 		
 	});
@@ -393,6 +411,9 @@
 				
 				beforepaste: this.onRTEBeforePaste,
 				afterpaste: this.onRTEAfterPaste,
+				
+				droppedelements: this.onRTEDroppedElements,
+				
 				scope: this
 			});
 			
@@ -413,7 +434,14 @@
 		},
 		
 		onRTEAfterPaste: function() {
-			this.fixPaste(); 
+			//$().log('RTE: event = AfterPaste');
+			this.fixPaste();
+			/*
+			this.rte.instance.on( 'dataReady', $.proxy(function( evt ) {
+				evt.removeListener();
+				this.fixPaste();
+			},this) );
+			*/
 		},
 
 		fixPasteCollision: function ( list ) {
@@ -441,7 +469,8 @@
 			for (var i=0;i<list.length;i++) {
 				var el = list[i];
 				var e = el.getElement();
-				if (!e.attr('_rte_instance')) {
+				var type = el.getType();
+				if ( !type || !PLB.Library[type] ) {
 					delete list[i];
 					e.remove();
 				} else {
@@ -454,6 +483,28 @@
 				if (sorted[i].length > 1) {
 					this.fixPasteCollision(sorted[i]);
 				}
+			}
+		},
+		
+		onRTEDroppedElements: function (rte,els,event) {
+			els.each($.proxy(this.fixDraggedElement,this));
+		},
+		
+		fixDraggedElement: function (i,el) {
+			el = $(el).closest('.plb-rte-widget');
+			if (el.length > 0) {
+				var range = new CKEDITOR.dom.range();
+				var ckel = new CKEDITOR.dom.element(el[0]);
+				range.setStartAt(ckel,CKEDITOR.POSITION_AFTER_START);
+				range.collapse(true);
+				range.fixBlock(true,'p');
+				/*
+				var parent = el.parent();
+				if (parent.is('body') && el.is('span')) {
+					var wrapped = $('<p>').append(el.clone());
+					el.replaceWith(wrapped);
+				}
+				*/
 			}
 		},
 		
@@ -795,7 +846,7 @@
 			// ... by adding the items representing all widget types
 			$.each(PLB.Library,function(i,v){
 				$(v.menuItemHtml)
-					.attr(PLB.PARAM_TYPE,i)
+					.attr(PLB.HTML_PARAM_TYPE,i)
 					.addClass('plb-add-menu-item-'+i)
 					.appendTo(addMenu);
 			});

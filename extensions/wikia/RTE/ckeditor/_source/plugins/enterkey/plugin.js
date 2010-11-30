@@ -24,14 +24,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// Get the range for the current selection.
 			range = range || getRange( editor );
 
-			// Wikia - start
-			var xStartPath = new CKEDITOR.dom.elementPath( range.startContainer ),
-				xEndPath = new CKEDITOR.dom.elementPath( range.endContainer );
-			if (!xStartPath.isContentEditable() || !xEndPath.isContentEditable()) {
-				return;
-			}
-			// Wikia - end
-
 			var doc = range.document;
 
 			// Exit the list when we're inside an empty list item block. (#5376)
@@ -126,10 +118,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						// Otherwise, duplicate the previous block.
 						newBlock = previousBlock.clone();
 					}
+					
+					if ( previousBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}
-				else if ( nextBlock )
+				else if ( nextBlock ) {
 					newBlock = nextBlock.clone();
-
+					
+					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
+				}
+				
 				if ( !newBlock )
 					newBlock = doc.createElement( blockTag );
 				// Force the enter block unless we're talking of a list item.
@@ -410,6 +407,26 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		// Get the selection ranges.
 		var ranges = editor.getSelection().getRanges( true );
+		
+		// Wikia - start
+		if (ranges.length == 0) {
+			ranges = editor.getSelection().getRanges( false );
+			var range = ranges[0];
+			var xStartPath = new CKEDITOR.dom.elementPath( range.startContainer ),
+				xEndPath = new CKEDITOR.dom.elementPath( range.endContainer );
+			if (!xStartPath.isContentEditable() || !xEndPath.isContentEditable()) {
+				var notEditableParent = range.endContainer.isReadOnly();
+				if (notEditableParent.is( 'p', 'div' )) {
+					range.setEndAt(notEditableParent,CKEDITOR.POSITION_BEFORE_END);
+				} else {
+					range.setEndAfter(notEditableParent);
+				}
+				range.collapse(false);
+			}
+			editor.getSelection().selectRanges(new CKEDITOR.dom.rangeList([range]));
+			ranges = editor.getSelection().getRanges( false );
+		}
+		// Wikia - end
 
 		// Delete the contents of all ranges except the first one.
 		for ( var i = ranges.length - 1 ; i > 0 ; i-- )

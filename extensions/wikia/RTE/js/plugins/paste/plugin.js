@@ -36,6 +36,8 @@ CKEDITOR.plugins.add('rte-paste',
 	// get pasted HTML
 	handlePaste: function(editor) {
 		RTE.log('paste detected');
+		
+		var afterPasteScheduled = false;
 
 		// get HTML after paste
 		var newHTML = this.getHtml();
@@ -83,14 +85,19 @@ CKEDITOR.plugins.add('rte-paste',
 
 				// let's replace single linebreaks with HTML <br />
 				var html = diff['new'].replace(/([^>])<br>([^<])/g, '$1<br data-rte-washtml="1" />$2');
-				editor.setData(html);
+				editor.setData(html,function(){
+					editor.fire('afterPaste');
+				});
+				afterPasteScheduled = true; 
 			}
 		}
 
 		// regenerate content after paste
-		setTimeout(function() {
-			editor.fire('afterPaste');
-		}, 250);
+		if (!afterPasteScheduled) {
+			setTimeout(function() {
+				editor.fire('afterPaste');
+			}, 250);
+		}
 	},
 
 	// performs quick diff between two strings (original and one with pasted content)
