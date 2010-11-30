@@ -608,7 +608,7 @@ class WikiaPhotoGalleryHelper {
 		$parserOptions = new ParserOptions();
 
 		wfDebug(__METHOD__ . "\n" . print_r($slider, true));
-
+		
 		// render slider images
 		foreach($slider['images'] as &$image) {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
@@ -968,7 +968,7 @@ class WikiaPhotoGalleryHelper {
 		$uploadedImages = ImagesService::getRecentlyUploaded($limit);
 		if(is_array($uploadedImages)) {
 			foreach($uploadedImages as $image) {
-
+				
 				$thumb = self::getResultsThumbnailUrl($image);
 				if ($thumb) {
 					// use keys to remove duplicates
@@ -1040,13 +1040,13 @@ class WikiaPhotoGalleryHelper {
 			$results = ImagesService::search($query, $limit);
 
 			foreach($results as $title) {
-				$image = Title::newFromText($title, NS_FILE);
-				$thumb = self::getResultsThumbnailUrl($image);
+				$oImageTitle = Title::newFromText($title, NS_FILE);
+
+				$thumb = self::getResultsThumbnailUrl($oImageTitle);
 				if ($thumb) {
 					$images[] = array(
-						'name' => $image->getText(),
+						'name' => $oImageTitle->getText(),
 						'thumb' => $thumb,
-						'strict' => self::isImageStrict($image),
 					);
 				}
 			}
@@ -1167,7 +1167,7 @@ class WikiaPhotoGalleryHelper {
 	static public function getGalleryDataByHash($hash, $revisionId = 0, $type = WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
 		global $wgTitle, $wgUser, $wgOut;
 		wfProfileIn(__METHOD__);
-
+		
 		self::initParserHook();
 		self::$mGalleryHash = $hash;
 

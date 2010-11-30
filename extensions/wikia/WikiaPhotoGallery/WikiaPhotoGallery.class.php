@@ -1170,7 +1170,6 @@ JS;
 	/**
  	 * Return a HTML representation of the image slider
 	 *
-	 * Just a draft. Will be turned to XML::
 	 * @author Jakub Kurcek
 	 */
 	
@@ -1179,17 +1178,29 @@ JS;
 
 		wfProfileIn(__METHOD__);
 
-		$html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}\"></script>";
-		if ( $this->getParam('orientation') == 'right' ){
-			$class = ' class="vertical" ';
-			$thumbDimensions = array( "w" => 110, "h" => 60 );
-		} else {
-			$class = ' class="horizontal" ';
-			$thumbDimensions = array( "w" => 90, "h" => 70 );
+		// adds script on first slider occurence on page
+
+		$tmpArr = array();
+		for ( $i = 0; $i <= $this->mData["id"]; $i++ ){
+
+			$tmpArr[] = $i;
+		}
+		$slidersOnPage = implode( ', ', $tmpArr );
+		$html = "<script> var allSliders = [ ".$slidersOnPage." ] </script>";
+
+		if ( $this->mData["id"] == 0 ){
+			$html .= "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}\"></script>";
 		}
 
-		$html .= '<div id="wikiaPhotoGallery-slider" style="display: none; overflow: hidden; width:673px; height: 410px;"><div '.$class.' ><ul>';
-		$key = 0;
+		if ( $this->getParam('orientation') == 'right' ){
+			$sliderClass = 'vertical';
+			$thumbDimensions = array( "w" => 110, "h" => 60 );
+		} else {
+			$sliderClass = 'horizontal';
+			$thumbDimensions = array( "w" => 90, "h" => 70 );
+		}
+		
+		$out = array();
 		foreach ( $this->mImages as $p => $pair ) {
 
 			$nt = $pair[0];
@@ -1200,49 +1211,42 @@ JS;
 
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 			$img = wfFindFile( $nt, $time );
-			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
-
+			if (	is_object($img) && ($nt->getNamespace() == NS_FILE) &&
+				$img->getHeight() == WikiaPhotoGalleryHelper::STRICT_IMG_HEIGHT &&
+				$img->getWidth() == WikiaPhotoGalleryHelper::STRICT_IMG_WIDTH
+			) {
 				$pageId = $nt->getArticleID();
 				$imageServing = new imageServing( array( $pageId ), $thumbDimensions['w'] ,$thumbDimensions );
-				$imageSrc = wfReplaceImageServer(
+				$thumbUrl = wfReplaceImageServer(
 					$img->getThumbUrl(
 						$imageServing->getCut( $img->getWidth(), $img->getHeight() )."-".$img->getName()
 					)
 				);
-				wfLoadExtensionMessages('WikiaPhotoGallery');
-				$msg = wfMsg( 'galery-slider-read-more' );
 				$pictureURL = $img->getThumbnail($img->getWidth(), $img->getHeight())->url;
-				$html .= '<li id="wikiaPhotoGallery-slider-'.$key.'">';
-				if (!empty( $link )){
-					$html .= "<a href='{$link}'>";
-				}
-				$html .= "<img width='{$img->getWidth()}' height='{$img->getHeight()}' src='{$pictureURL}' class='wikiaPhotoGallery-slider'>";
-				if (!empty( $link )){
-					$html .= '</a>';
-				}
-				$html .= '<div class="description-background"></div>';
-				$html .= '<div class="description">';
-				$html .= "<h2>{$text}</h2>";
-				$html .= "<p>$linkText</p>";
-				if (!empty( $link )){
-					$html .= "<a href='{$link}' class='wikia-button secondary'>";
-					$html .= "<span>{$msg}</span>";
-					$html .= "</a>";
-				}
-				$html .= "</div>";
-				$html .= "<p class='nav'>";
-				$html .= "<img width='".$thumbDimensions['w']."' height='".$thumbDimensions['h']."' alt='' src='{$imageSrc}'>";
-				$html .= "</p>";
-				$html .= "</li>";
 
+				$out[] = array(
+				    'imageUrl' => $pictureURL,
+				    'imageTitle' => $text,
+				    'imageLink' => $link,
+				    'imageDescription' => $linkText,
+				    'imageThumbnail' => $thumbUrl
+				);
 			}
-			if ( $key++ == 3 ) {
+
+			if ( count( $out ) >= 4 ) {
 				break;
 			}
 		}
 
-		$html .= '</ul></div></div>';
-		
+		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+		$template->set_vars(array(
+			'sliderClass' => $sliderClass,
+			'images' => $out,
+			'thumbDimensions' => $thumbDimensions,
+			'sliderId' => $this->mData["id"]
+		));
+
+		$html .= $template->render('renderSlider');
 		wfProfileOut(__METHOD__);
 		return $html;
 
