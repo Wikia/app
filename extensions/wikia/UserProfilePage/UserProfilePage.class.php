@@ -178,7 +178,7 @@ class UserProfilePage {
 		if( !$this->isTopPageHidden( $pageId) ) {
 			$this->hiddenPages[] = $pageId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
-			UserProfilePageHelper::invalidateTopPagesCacheKey( $this->getUser() );
+			UserProfilePageHelper::invalidateTopPagesCache( $this->getUser() );
 		}
 
 		$out = $this->renderTopSection( 'TopPages' );
@@ -199,7 +199,7 @@ class UserProfilePage {
 			}
 
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
-			UserProfilePageHelper::invalidateTopPagesCacheKey( $this->getUser() );
+			UserProfilePageHelper::invalidateTopPagesCache( $this->getUser() );
 		}
 
 		$out = $this->renderTopSection( 'TopPages' );
@@ -252,7 +252,7 @@ class UserProfilePage {
 		if( !$this->isTopWikiHidden( $wikiId ) ) {
 			$this->hiddenWikis[] = $wikiId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
-			UserProfilePageHelper::invalidateTopWikisCacheKey( $this->getUser() );
+			UserProfilePageHelper::invalidateTopWikisCache( $this->getUser() );
 		}
 
 		$out = $this->renderTopSection( 'TopWikis' );
@@ -274,7 +274,7 @@ class UserProfilePage {
 			}
 
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
-			UserProfilePageHelper::invalidateTopWikisCacheKey( $this->getUser() );
+			UserProfilePageHelper::invalidateTopWikisCache( $this->getUser() );
 		}
 
 		wfProfileOut( __METHOD__ );
