@@ -1,4 +1,5 @@
 <fieldset class="panel">
+<p><a class="wikia-button" href="<?php echo $buyUrl; ?>"><?php echo wfMsgHtml('adss-buy-another'); ?></a></p>
 <?php echo $adList; ?>
 </fieldset>
 

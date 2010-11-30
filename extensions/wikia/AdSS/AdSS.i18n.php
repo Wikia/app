@@ -46,10 +46,10 @@ $messages['en'] = array(
 
 1 share is currently equal to $1% of {{SITENAME}} sponsored links. With this option you are buying four shares at the price of three! You can cancel at any time.',
 	'adss-form-site-premium-plan-price' => 'Only $1 for four shares!',
-	'adss-form-page-plan-header' => 'Buy a link on just this page',
+	'adss-form-page-plan-header' => 'Buy a link on just one page',
 	'adss-form-page-plan-description' => 'This let you target a custom message to the best page for your product at only $1, and you can cancel at any time.',
 	'adss-form-page-plan-price' => '$1 for one link',
-	'adss-form-banner-plan-header' => 'Buy a 728x90 graphical banner at the top of every page',
+	'adss-form-banner-plan-header' => 'Buy a share of the 728x90 graphical banners at the top of the wiki',
 	'adss-form-banner-plan-description' => 'Get a share of the banners running across the site for one low price.',
 	'adss-form-banner-plan-price' => '$1 for one share of the banners',
 	'adss-form-or' => '- or -',
@@ -64,6 +64,7 @@ $messages['en'] = array(
 	'adss-button-pay-paypal' => 'Pay with PayPal',
 	'adss-button-select' => 'Select',
 	'adss-button-buy-now' => 'Buy NOW',
+	'adss-buy-another' => 'Buy another ad!',
 	'adss-preview-header' => 'Preview',
 	'adss-preview-prompt' => 'Here is what your sponsorship will look like - click "{{int:adss-button-edit}}" to go back and make changes, or "{{int:adss-button-save-pay}}" to save it and go to PayPal.',
 	'adss-click-here' => 'Click here', // FIXME: Merge in 'adss-paypal-redirect'. Bad i18n.

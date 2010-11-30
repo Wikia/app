@@ -37,11 +37,12 @@
 }
 
 .SponsoredLinkForm fieldset.preview {
+	border: none;
 	float: right;
 }
 
 .SponsoredLinkForm legend {
-	font-size: 150%;
+	font-size: 120%;
 	font-weight: bold;
 }
 
@@ -56,6 +57,10 @@
 .SponsoredLinkForm input#wpUrl {
 	width: 337px;
 }
+
+.error {
+	color: red;
+}
 </style>
 
 <form method="post" enctype="multipart/form-data" action="<?php echo $action; ?>">
@@ -68,21 +73,31 @@
 	<table>
 	<tr>
 		<td class="radio">
+			<input type="radio" name="wpType" value="page" />
+		</td>
+		<td class="header">
+			<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing ) ); ?></div>
+		</td>
+		<td rowspan="4" class="accent desc">
+			<div id="adss-form-page-plan-description" class="desc"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', $currentShare, AdSS_Util::formatPrice( $pagePricing ) ); ?></div>
+			<div id="adss-form-site-plan-description" class="desc"><?php echo wfMsgWikiHtml( 'adss-form-site-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing ) ); ?></div>
+			<div id="adss-form-site-premium-plan-description" class="desc"><?php echo wfMsgWikiHtml( 'adss-form-site-premium-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing, 3 ) ); ?></div>
+			<div id="adss-form-banner-plan-description" class="desc"><?php echo wfMsgWikiHtml( 'adss-form-banner-plan-description', AdSS_Util::formatPrice( $bannerPricing ) ); ?></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="radio">
 			<input type="radio" name="wpType" value="site" />
 		</td>
 		<td class="header">
 			<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
 			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-site-plan-price', AdSS_Util::formatPrice( $sitePricing ) ); ?></div>
 		</td>
-		<td rowspan="3" class="accent desc">
-			<div id="adss-form-site-plan-description" class="desc" style="display:none"><?php echo wfMsgWikiHtml( 'adss-form-site-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing ) ); ?></div>
-			<div id="adss-form-site-premium-plan-description" class="desc"><?php echo wfMsgWikiHtml( 'adss-form-site-premium-plan-description', $currentShare, AdSS_Util::formatPrice( $sitePricing, 3 ) ); ?></div>
-			<div id="adss-form-banner-plan-description" class="desc" style="display:none"><?php echo wfMsgWikiHtml( 'adss-form-banner-plan-description', AdSS_Util::formatPrice( $bannerPricing ) ); ?></div>
-		</td>
 	</tr>
-	<tr class="accent">
+	<tr>
 		<td>
-			<input type="radio" name="wpType" value="site-premium" checked />
+			<input type="radio" name="wpType" value="site-premium" />
 		</td>
 		<td>
 			<h3><?php echo wfMsgHtml( 'adss-form-site-premium-plan-header' ); ?></h3>
@@ -104,6 +119,12 @@
 <section class="SponsoredLinkForm">
 		<fieldset class="form">
 			<legend><?php echo wfMsgHtml( 'adss-form-header' ); ?></legend>
+
+			<div>
+			<label for="wpPage"><?php echo wfMsgHtml( 'adss-form-page' ); ?></label>
+			<?php echo $adForm->error( 'wpPage' ); ?>
+			<input type="text" name="wpPage" id="wpPage" value="<?php $adForm->output( 'wpPage' ); ?>" />
+			</div>
 
 			<label for="wpUrl"><?php echo wfMsgHtml( 'adss-form-url' ); ?></label>
 			<?php echo $adForm->error( 'wpUrl' ); ?>
@@ -164,39 +185,55 @@
 </form>
 
 <script type="text/javascript">/*<![CDATA[*/
-$(".SponsoredLinkDesc input[type='radio']").click( function() {
+var AdSS_updateForm = function() {
 	$(".SponsoredLinkDesc tr").removeClass("accent");
 	$(".SponsoredLinkDesc tr > td > div.desc").hide();
 	$(this).closest("tr").addClass("accent");
 	switch ($(this).val()) {
+		case 'page':
+			$("#adss-form-page-plan-description").show();
+			$("#wpPage").parent().show("slow");
+			$("#wpBanner").parent().hide("slow");
+			$("#wpText").parent().show("slow");
+			$("#wpWeight").parent().hide("slow");
+			$("fieldset.preview").show();
+			break;
 		case 'site':
 			$("#adss-form-site-plan-description").show();
-			$("#wpBanner").parent().hide();
-			$("#wpText").parent().show();
-			$("#wpWeight").val("1").removeAttr("disabled").parent().show();
+			$("#wpPage").parent().hide("slow");
+			$("#wpBanner").parent().hide("slow");
+			$("#wpText").parent().show("slow");
+			$("#wpWeight").val("1").removeAttr("disabled").parent().show("slow");
 			$("fieldset.preview").show();
 			break;
 		case 'site-premium':
 			$("#adss-form-site-premium-plan-description").show();
-			$("#wpBanner").parent().hide();
-			$("#wpText").parent().show();
-			$("#wpWeight").val("4").attr("disabled", true).parent().show();
+			$("#wpPage").parent().hide("slow");
+			$("#wpBanner").parent().hide("slow");
+			$("#wpText").parent().show("slow");
+			$("#wpWeight").val("4").attr("disabled", true).parent().show("slow");
 			$("fieldset.preview").show();
 			break;
 		case 'banner':
 			$("#adss-form-banner-plan-description").show();
-			$("#wpBanner").parent().show();
-			$("#wpText").parent().hide();
-			$("#wpWeight").parent().hide();
+			$("#wpPage").parent().hide("slow");
+			$("#wpBanner").parent().show("slow");
+			$("#wpText").parent().hide("slow");
+			$("#wpWeight").parent().hide("slow");
 			$("fieldset.preview").hide();
 			break;
 	}
-} );
+};
+
+$(".SponsoredLinkDesc input:radio[name='wpType']").click(AdSS_updateForm);
+$(".SponsoredLinkDesc input:radio[name='wpType']").filter("[value='site-premium']").click();
+
 $("#adssLoginAction > a").click( function(e) {
 	e.preventDefault();
-	$("#adssLoginAction").hide();
-	$("#wpPassword").parent().show();
+	$("#adssLoginAction").hide("slow");
+	$("#wpPassword").parent().show("slow");
 } );
+
 $("#wpUrl").keyup( function() {
 	$("div.sponsormsg > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );
 } );
