@@ -34,23 +34,26 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
 		$out .= <<<EOT
 		dartUrl = "$url";
+		if (typeof(QuantcastSegments) == "undefined" || typeof(Geo) == "undefined") {
+			if (typeof(readCookie) == "undefined") {
+				readCookie = function(name) { 
+					var nameEQ = name + "=";
+					var ca = document.cookie.split(';');
+					for(var i=0;i < ca.length;i++) {
+						var c = ca[i];
+						while (c.charAt(0)==' ') c = c.substring(1,c.length);
+						if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+					}
+					return null;
+				}
+			}
+		}
+
 		if (typeof(QuantcastSegments) !== "undefined") {
 			dartUrl = dartUrl.replace("qcseg=N;", QuantcastSegments.getQcsegAsDARTKeyValues());	
 		}
 		else {
     		if (typeof(wgIntegrateQuantcastSegments) !== 'undefined' && wgIntegrateQuantcastSegments) {
-				if (typeof(readCookie) == "undefined") {
-					readCookie = function(name) { 
-						var nameEQ = name + "=";
-						var ca = document.cookie.split(';');
-						for(var i=0;i < ca.length;i++) {
-							var c = ca[i];
-							while (c.charAt(0)==' ') c = c.substring(1,c.length);
-							if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-						}
-						return null;
-					}
-				}
 				if (typeof(getQuantcastSegmentKV) == 'undefined') {
 					getQuantcastSegmentKV = function() {
     					var kv = '';
@@ -72,8 +75,26 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 		var nofooter = "";
 		if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } 
 		dartUrl = dartUrl.replace("nofooter=N;", nofooter); 
+EOT;
+		if (strpos($slotname, 'TOP_RIGHT_BUTTON') !== FALSE) {
+			$out .= <<<EOT
+		if (typeof(Geo) != "undefined") {
+			var geoData = Geo.getGeoData();
+		}
+		else {
+			var geoCookie = readCookie('Geo');
+			var geoData = eval("(" + unescape(geoCookie) + ")"); 
+		}
+		if (geoData['country'] == 'US') {
+			document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
+		}
+EOT;
+		}
+		else {
+			$out .= <<<EOT
 		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
+		}
 		$out .= "/*]]>*/</script>\n";
 
 		return $out;
