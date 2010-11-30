@@ -14,7 +14,10 @@
 	padding: 0.2em;
 }
 .iOS-header >img {
-	-webkit-transform: translateY(-0.1em) scale(0.8);
+	background: url(/skins/mobile/sprite.png) no-repeat 0 0;
+	height: 18px;
+	margin: 0.1em 0 0.2em 0.3em;
+	width: 72px;
 }
 .iOS-header >a.wikia-button,
 .iOS-header form {
@@ -33,8 +36,11 @@
 	top: 0.4em;
 }
 .showbutton {
-	float: left;
-	margin-right: 0.2em;
+	float: none;
+	font-weight: normal;
+	margin-left: 0.5em;
+	position: relative;
+	top: -0.2em;
 }
 .iOS-header form {
 	display: block;
@@ -54,24 +60,30 @@ body .iOS-header form input {
 	border-radius: 0;
 }
 .iOS-header input[type=image] {
+	background: url(/skins/mobile/sprite.png) no-repeat -75px -1px white;
 	border-left: 1px solid #A5CBE3;
-	right: -0.2em;
-	padding: 0.28em 0.3em;
+	height: 12px;
+	padding: 0.2em 0;
 	top: -0.09em;
-	-webkit-transform: scale(0.725);
+	width: 19px;
 }
 .iOS-header input[type=text] {
 	padding-left: 0.3em;
-	right: -1em;
+	right: -0.4em;
 	top: -0.1em;
 }
 .iOS-wikiname {
 	border-bottom: 1px solid #D9D9D9;
 	font-size: 188%;
+	font-weight: bold;
+	padding-left: 0.2em;
 }
 .iOS-wikiname a {
 	color: #006CB0;
 	text-decoration: none;
+}
+#content {
+	padding-left: 0.6em;
 }
 h1 {
 	border-bottom: none;
@@ -97,4 +109,26 @@ h1 {
 a {
 	color: #006CB0;
 	text-decoration: none;
+}
+#content {
+	zoom: 37%;
+}
+#bodyContent .infobox {
+	width: 10em !important; /* explicit overwrite */
+	zoom: 50%;
+}
+#bodyContent h2 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+#catlinks {
+	margin-top: 0.5em;
+}
+div.floatright, 
+table.floatright,
+div.tright {
+	margin-left: 0.5em;
+}
+#bodyContent .wikia-gallery{
+	zoom: 130%;
 }
