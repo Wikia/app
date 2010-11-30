@@ -18,60 +18,60 @@ class UserProfilePage {
 	static public function getInstance( $user = null ) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( self::$mInstance === null ) {
 			if( $user instanceof Title ) {
 				$user = UserProfilePageHelper::getUserFromTitle( $user );
 			}
-			
+
 			if ( !( $user instanceof User ) ) {
 				$user = UserProfilePageHelper::getUserFromTitle( $wgTitle );
 			}
-			
+
 			self::$mInstance =  ( $user instanceof User ) ? new self( $user ) : false;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return self::$mInstance;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
-	 * 
+	 *
 	 * @param Title $title
-	 * @return bool 
+	 * @return bool
 	 */
 	static public function isAllowedSpecialPage( Title $title = null ) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
-		
+
 		if( empty( $title ) ) $title = $wgTitle;
-		
+
 		$isAllowedSpecialPage = ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $isAllowedSpecialPage;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
-	 * 
+	 *
 	 * @param Title $title
-	 * @return bool 
+	 * @return bool
 	 */
 	static public function isAllowed( Title $title = null ) {
 		global $wgUserProfilePagesNamespaces, $wgRequest, $wgTitle;
 		wfProfileIn( __METHOD__ );
-		
+
 		if( empty( $title ) ) $title = $wgTitle;
-		
+
 		$isAllowedPage = ( in_array( $title->getNamespace(), $wgUserProfilePagesNamespaces ) || self::isAllowedSpecialPage( $title ) );
-		
+
 		$isBlogPost = ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && $title->isSubpage() );
-		
+
 		$action = $wgRequest->getVal('action', 'view');
 		$isAllowedAction = ( $action == 'view' || $action == 'purge' );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $isAllowedPage && !$isBlogPost && $isAllowedAction;
 	}
@@ -79,27 +79,27 @@ class UserProfilePage {
 	private function __construct( User $user ) {
 		$this->user = $user;
 	}
-	
+
 	private function initTemplate() {
 		global $wgSitename;
 		wfProfileIn( __METHOD__ );
-		
+
 		$this->templateEngine = new EasyTemplate( dirname(__FILE__) . "/templates/" );
 
 		// set "global" template variables
 		$this->templateEngine->set( 'isOwner', $this->userIsOwner() );
 		$this->templateEngine->set( 'userPageUrl', $this->user->getUserPage()->getLocalUrl() );
 		$this->templateEngine->set( 'wikiName', $wgSitename );
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
 	public function get( $pageBody ) {
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUserProfilePagesHideInterviewSection;
 		wfProfileIn( __METHOD__ );
-		
+
 		$userContribsProvider = new UserContribsProviderService;
-		
+
 		$this->initTemplate();
 		$this->templateEngine->set_vars(
 			array(
@@ -110,9 +110,9 @@ class UserProfilePage {
 				'extensionsPath'   => $wgExtensionsPath
 			)
 		);
-		
+
 		$out = $this->templateEngine->render( 'user-profile-page' );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -132,7 +132,7 @@ class UserProfilePage {
 		global $wgOut;
 		wfProfileIn( __METHOD__ );
 		$result = false;
-		
+
 		if ( !$this->getUser()->isAnon() ) {
 			$sTitle = $this->user->getUserPage()->getText() . '/' . wfMsg( 'userprofilepage-about-article-title' );
 			$oTitle = Title::newFromText( $sTitle, NS_USER );
@@ -151,7 +151,7 @@ class UserProfilePage {
 
 			$result = array( 'body' => $sArticleBody, 'articleEditUrl' => $sArticleEditUrl );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -174,21 +174,22 @@ class UserProfilePage {
 
 	private function hidePage( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if( !$this->isTopPageHidden( $pageId) ) {
 			$this->hiddenPages[] = $pageId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
+			UserProfilePageHelper::invalidateTopPagesCacheKey( $this->getUser() );
 		}
-		
+
 		$out = $this->renderTopSection( 'TopPages' );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
 	private function unhidePage( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if( $this->isTopPageHidden( $pageId ) ) {
 			for( $i = 0; $i < count( $this->hiddenPages ); $i++ ) {
 				if( $this->hiddenPages[ $i ] == $pageId ) {
@@ -196,15 +197,16 @@ class UserProfilePage {
 					$this->hiddenPages = array_values( $this->hiddenPages );
 				}
 			}
-			
+
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER ), $this->hiddenPages );
+			UserProfilePageHelper::invalidateTopPagesCacheKey( $this->getUser() );
 		}
-		
+
 		$out = $this->renderTopSection( 'TopPages' );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $out;
-		
+
 	}
 
 	/**
@@ -227,18 +229,18 @@ class UserProfilePage {
 
 	public function isTopPageHidden( $pageId) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$out = ( in_array( $pageId, $this->getHiddenTopPages() ) ? true : false );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
 	public function isTopWikiHidden( $wikiId ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$out = ( in_array( $wikiId, $this->getHiddenTopWikis() ) ? true : false );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -251,9 +253,9 @@ class UserProfilePage {
 			$this->hiddenWikis[] = $wikiId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
 		}
-		
+
 		$out = $this->renderTopSection( 'TopWikis' );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -269,10 +271,10 @@ class UserProfilePage {
 					$this->hiddenWikis = array_values( $this->hiddenWikis );
 				}
 			}
-			
+
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $this->renderTopSection( 'TopWikis' );
 	}
@@ -284,9 +286,9 @@ class UserProfilePage {
 	private function getHiddenFromDb( $dbHandler ) {
 		wfProfileIn( __METHOD__ );
 		$result = false;
-		
+
 		if ( !$this->getUser()->isAnon() ) {
-		
+
 			$row = $dbHandler->selectRow(
 				array( 'page_wikia_props' ),
 				array( 'props' ),
@@ -298,10 +300,10 @@ class UserProfilePage {
 			if( !empty($row) ) {
 				$result = unserialize( $row->props );
 			}
-			
+
 			$result = empty($result) ? array() : $result;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -317,7 +319,7 @@ class UserProfilePage {
 	}
 
 	public function getUserLastActionCacheKey() {
-		return wfMemcKey( __CLASS__, 'userLastAction', $this->getUser()->getName() );
+		return wfMemcKey( __CLASS__, 'userLastAction', $this->getUser()->getId() );
 	}
 
 	/**
@@ -327,7 +329,7 @@ class UserProfilePage {
 	 */
 	public function getUserLastAction() {
 		global $wgMemc, $wgContentNamespaces, $wgLang;
-		
+
 		wfProfileIn( __METHOD__ );
 		//prevent from API calls for non-existent accounts
 		$userId = $this->getUser()->idForName();
@@ -336,10 +338,10 @@ class UserProfilePage {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		$mKey = $this->getUserLastActionCacheKey();
 		$cachedData = $wgMemc->get($mKey);
-		
+
 		if (empty($cachedData)) {
 			$maxElements = 1;
 			$includeNamespaces = implode('|', $wgContentNamespaces);
@@ -362,10 +364,10 @@ class UserProfilePage {
 			if( empty( $cachedData ) ) {
 				$cachedData = array();
 			}
-			
+
 			$this->setUserLastActionToCache( $cachedData );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $cachedData;
 	}
@@ -378,16 +380,16 @@ class UserProfilePage {
 		global $wgMemc;
 		$wgMemc->set( $this->getUserLastActionCacheKey(), $actionData, 3600 );
 	}
-	
+
 	public function getTopWikis( $limit = 5 ) {
 		wfProfileIn( __METHOD__ );
 		global $wgStatsDB, $wgDevelEnvironment, $wgCityId;
 		$wikis = false;
-		
+
 		if ( !$this->getUser()->isAnon() ) {
 			$where = array( 'user_id' => $this->getUser()->getId() );
 			$hiddenTopWikis = $this->getHiddenTopWikis();
-			
+
 			if ( count( $hiddenTopWikis ) ) {
 				$where[] = 'wiki_id NOT IN (' . join( ',', $hiddenTopWikis ) . ')';
 			}
@@ -421,7 +423,7 @@ class UserProfilePage {
 						$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 						//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 						$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
-						
+
 						if ( isset( $themeSettings[ 'wordmark-image-url' ] ) ) {
 							$wikiLogo = $themeSettings['wordmark-image-url'];
 							$wordmarkText = '';
@@ -448,7 +450,7 @@ class UserProfilePage {
 					$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
 					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 					$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
-					
+
 					if ( isset( $themeSettings[ 'wordmark-image-url' ] ) ) {
 						$wikiLogo = $themeSettings[ 'wordmark-image-url' ];
 						$wordmarkText = '';
@@ -464,7 +466,7 @@ class UserProfilePage {
 				}
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $wikis;
 	}
@@ -492,8 +494,14 @@ class UserProfilePage {
 		global $wgMemc, $wgStatsDB, $wgCityId, $wgContentNamespaces, $wgDevelEnvironment;
 		wfProfileIn(__METHOD__);
 		$pages = false;
-		
+
 		if ( !$this->getUser()->isAnon() ) {
+			$cachedData = $wgMemc->get( UserProfilePageHelper::getTopPagesCacheKey( $this->getUser() ) );
+			if( !empty( $cachedData) ) {
+				wfProfileOut(__METHOD__);
+				return $cachedData;
+			}
+
 			//select page_id, count(page_id) from stats.events where wiki_id = N and user_id = N and event_type in (1,2) group by 1 order by 2 desc limit 10;
 			$where = array(
 				'wiki_id' => $wgCityId,
@@ -503,7 +511,7 @@ class UserProfilePage {
 			);
 
 			$hiddenTopPages = $this->getHiddenTopPages();
-			
+
 			if(count($hiddenTopPages)) {
 				$where[] = 'page_id NOT IN (' . join( ',', $hiddenTopPages ) . ')';
 			}
@@ -520,9 +528,9 @@ class UserProfilePage {
 					'LIMIT' => $limit
 				)
 			);
-			
+
 			$pages = array();
-			
+
 			//if( $wgDevelEnvironment ) { //DevBox test
 			//	$pages = array( 4 => 28, 1883 => 16, 1122 => 14, 31374 => 11, 2335 => 8, 78622 => 3 ); // test data
 			//} else {
@@ -532,7 +540,7 @@ class UserProfilePage {
 			//}
 
 			// get top commented pages and merge
-			foreach( $this->getTopCommentedPages() as $pageId => $commentCount ) {
+			foreach( $this->getTopCommentedPages( $limit ) as $pageId => $commentCount ) {
 				$commentPoints = round( $commentCount * $this->commentToEditRatio );
 				if( isset( $pages[ $pageId ] ) ) {
 					$pages[ $pageId ] += $commentPoints;
@@ -541,12 +549,12 @@ class UserProfilePage {
 					$pages[ $pageId ] = $commentPoints;
 				}
 			}
-			
+
 			$titles = array();
-			
+
 			foreach ( $pages as $pageId => $editCount ) {
 				$title = Title::newFromID( $pageId );
-				
+
 				if( ( $title instanceof Title ) && $title->exists() ) {
 					$titles[ $pageId ] = $title;
 				}
@@ -554,37 +562,39 @@ class UserProfilePage {
 					unset( $pages[ $pageId ] );
 				}
 			}
-			
+
 			arsort( $pages );
-			
+
 			if ( count( $pages ) > $limit ) {
 				$pages = array_slice( $pages, 0, $limit, true );
 			}
-			
+
 			if( count( $pages ) ) {
 				$articleService = new ArticleService();
-				
+
 				foreach( $pages as $pageId => $editCount ) {
 					$title = $titles[ $pageId ];
 					$articleService->setArticleById( $title->getArticleID() );
 					$snippet = $articleService->getTextSnippet( 100 );
 					$pages[ $pageId ] = array( 'id' => $pageId, 'url' => $title->getFullUrl(), 'title' => $title->getText(), 'imgUrl' => null, 'editCount' => $editCount, 'textSnippet' => $snippet );
 				}
+
+				$wgMemc->set( UserProfilePageHelper::getTopPagesCacheKey( $this->getUser() ), $pages, 28800 ); // 12h
 			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $pages;
 	}
 
-	public function getTopCommentedPages() {
-		global $wgMemc, $wgArticleCommentsNamespaces, $wgEnableArticleCommentsExt;
+	public function getTopCommentedPages( $limit = 6 ) {
+		global $wgArticleCommentsNamespaces, $wgEnableArticleCommentsExt;
 		wfProfileIn(__METHOD__);
 		$pages = false;
-		
+
 		if ( !$this->getUser()->isAnon() ) {
 			$talkNamespaces = array();
-			
+
 			if( is_array($wgArticleCommentsNamespaces) ) {
 				foreach( $wgArticleCommentsNamespaces as $ns ) {
 					$talkNamespaces[] = MWNamespace::getTalk( $ns );
@@ -601,9 +611,9 @@ class UserProfilePage {
 					'rev_user' => $this->getUser()->getId(),
 					'page_namespace IN (' . join( ',', $talkNamespaces ) . ')',
 			);
-			
+
 			$hiddenTopPages = $this->getHiddenTopPages();
-			
+
 			if(count($hiddenTopPages)) {
 				$where[] = 'page_id NOT IN (' . join( ',', $hiddenTopPages ) . ')';
 			}
@@ -618,12 +628,12 @@ class UserProfilePage {
 			);
 
 			$pages = array();
-			
+
 			while($row = $dbr->fetchObject($res)) {
 				if( strpos( $row->page_title, '@comment') !== false ) {
 					$commentData = ArticleComment::explode( $row->page_title );
 					if( !empty( $commentData ) ) {
-						$title = Title::newFromText( $commentData['title'], MWNamespace::getSubject( $row->page_namespace )   );
+						$title = Title::newFromText( $commentData['title'], MWNamespace::getSubject( $row->page_namespace ) );
 						if( isset( $pages[$title->getArticleId()] ) ) {
 							$pages[$title->getArticleId()]++;
 						}
@@ -633,12 +643,12 @@ class UserProfilePage {
 					}
 				}
 			}
-			
-			arsort(  $pages );
+
+			arsort( $pages );
 		}
-		
+
 		wfProfileOut(__METHOD__);
-		return $pages;
+		return array_slice( $pages, 0, $limit, true );
 	}
 
 	public function getHiddenTopPages() {

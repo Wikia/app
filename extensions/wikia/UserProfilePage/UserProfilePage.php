@@ -33,9 +33,12 @@ function wfUserProfilePageInit() {
 	/**
 	 * hooks
 	 */
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHelper::onSkinTemplateOutputPageBeforeExec';
+	$wgHooks[ 'SkinTemplateOutputPageBeforeExec' ][] = 'UserProfilePageHelper::onSkinTemplateOutputPageBeforeExec';
 	$wgHooks[ 'AlternateEdit' ][] = 'UserProfilePageHelper::onAlternateEdit';
 	$wgHooks[ 'GetRailModuleList' ][] = 'UserProfilePageHelper::onGetRailModuleList';
+	$wgHooks[ 'ArticleSaveComplete' ][] = 'UserProfilePageHelper::onArticleSaveComplete';
+	$wgHooks[ 'ArticleDeleteComplete' ][] = 'UserProfilePageHelper::onArticleDeleteComplete';
+	$wgHooks[ 'SpecialMovepageAfterMove' ][] = 'UserProfilePageHelper::onSpecialMovepageAfterMove';
 
 	/**
 	 * messages file
@@ -59,7 +62,7 @@ function wfUserProfilePageInit() {
 	 * ajax
 	 */
 	$wgAjaxExportList[] = 'UserProfilePageHelper::doAction';
-	
+
 	$wgUserProfilePagesNamespaces[] = NS_USER_TALK;
 	$wgUserProfilePagesNamespaces[] = NS_USER;
 

@@ -1,38 +1,38 @@
 <?php
 class UserProfilePageHelper {
-	
+
 	/**
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
 		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgUserProfilePagesNamespaces;
 		wfProfileIn(__METHOD__);
-		
+
 		//is the extension allowed to run for the current page?
 		if ( !UserProfilePage::isAllowed( $skin->mTitle ) ) {
 			$wgEnableUserProfilePagesExt = false;
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-		
+
 		//the extension is allowed, try to get an instance of the main UPP class
 		$profilePage = UserProfilePage::getInstance( $skin->mTitle );
 		$user = !empty( $profilePage ) ? $profilePage->getUser() : null;
 		$isAnon = !empty( $user ) ? $user->isAnon() : true;
 		$ns = $skin->mTitle->getNamespace();
-		
+
 		if( ( empty( $profilePage ) || $isAnon ) && ( $ns == NS_USER || $ns = NS_USER_TALK ) && !UserProfilePage::isAllowedSpecialPage( $skin->mTitle ) ) {
 			//// fallback for non-existent users profile/talk pages
 			$msg = null;
 			$userName = $skin->mTitle->getText();
 			$notExisting = !User::isIP( $userName );
-			
+
 			if ( !$notExisting && $ns != NS_USER_TALK ) {//anon profile page
 				$msg = wfMsgExt( 'userprofilepage-user-anon', array('parse', 'content'), array( $userName ) );
 			} elseif( $notExisting ) {//non-existing user
 				$msg = wfMsgExt( 'userprofilepage-user-doesnt-exists', array('parse', 'content'), array( $userName ) );
 			}
-			
+
 			if( $msg !== null) $template->data['bodytext'] = $msg;
 		} else {
 			$ns = $skin->mTitle->getNamespace();
@@ -69,7 +69,7 @@ class UserProfilePageHelper {
 				}
 			}
 		}
-		
+
 		// load extension css and js
 		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
@@ -99,7 +99,7 @@ class UserProfilePageHelper {
 		$json = Wikia::json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
-		
+
 		wfProfileOut(__METHOD__);
 		return $response;
 	}
@@ -107,24 +107,24 @@ class UserProfilePageHelper {
 	public static function getUserFromTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
 		global $wgUserProfilePagesNamespaces, $wgUser;
-		
+
 		$fallbackOnGlobal = UserProfilePage::isAllowedSpecialPage( $title );
 		$userName = UserPagesHeaderModule::getUserName($title, $wgUserProfilePagesNamespaces , $fallbackOnGlobal );
-		
+
 		$out = ( !empty( $userName ) ) ? User::newFromName( $userName ) : false;
-		
+
 		wfProfileOut(__METHOD__);
 		return $out;
-	}	
-	
+	}
+
 	public static function formatLastActionMessage( $actionData ) {
 		wfProfileIn(__METHOD__);
 		$out = null;
-		
+
 		if( !empty( $actionData ) ) {
 			$out = wfMsg( 'userprofilepage-user-last-action-' . $actionData['type'], array( wfTimeFormatAgoOnlyRecent($actionData['timestamp']), $actionData['url'], $actionData['title'] ) );
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
@@ -134,53 +134,79 @@ class UserProfilePageHelper {
 		global $wgOut, $wgUser;
 		$title = $oEditPage->mTitle;
 		$result = true;
-		
+
 		if( $title->getNamespace() == NS_USER ) {
 			$user = self::getUserFromTitle( $title );
-			
+
 			if( !empty( $user ) && strcmp( $user->getName(), $wgUser->getName() ) != 0 ) {
 				$wgOut->clearHTML();
 				$wgOut->showErrorPage( 'userprofilepage-edit-permision-denied', 'userprofilepage-edit-permision-denied-info' );
 				$result = false;
 			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
-	
+
 	static public function onGetRailModuleList(&$modules) {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgUserProfilePagesNamespaces,
 			$wgEnableUserProfilePagesExt, $wgUser, $wgEnableSpotlightsV2_Rail;
-		
+
 		if ( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() && !UserProfilePage::isAllowedSpecialPage()) {//no broken right rail in special pages
 			foreach( $modules as $weight => $module ) {
 				if( in_array( $module[0], array( 'LatestPhotos', 'LatestActivity', 'PagesOnWiki' ) ) ) {
 					unset( $modules[ $weight ] );
 				}
 			}
-			
+
 			$userProfilePage = UserProfilePage::getInstance();
 			$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
 			$isAnon = !empty( $user ) ? $user->isAnon() : true;
-			
+
 			if( !$isAnon ) {//no sidebar modules for anons and non-existing users
 				$modules[1499] = array('UserProfileRail', 'TopWikis', null);
 				$modules[1498] = array('LatestActivity', 'Index', null);
 				$modules[1497] = array('UserProfileRail', 'TopPages', null);
-				
+
 				if( !$user->getOption('hidefollowedpages') ) {
 					$railModuleList[1200] = array('FollowedPages', 'Index', null);
 				}
-				
+
 				if($wgEnableAchievementsExt && !(($wgUser->idForName() == $user->idForName()) && $user->getOption('hidepersonalachievements'))){
 					$modules[1350] = array('Achievements', 'UserProfilePagesModule', null);
 				}
 			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
+	public static function getTopPagesCacheKey( User $user ) {
+		return wfMemcKey( __CLASS__, 'topPages', $user->getId() );
+	}
+
+	public static function invalidateTopPagesCacheKey( User $user ) {
+		global $wgMemc;
+		$wgMemc->delete( $this->getTopPagesCacheKey( $user ) );
+	}
+
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		UserProfilePageHelper::invalidateTopPagesCacheKey( $user );
+		return true;
+	}
+
+	static function onArticleDeleteComplete( &$article, &$user, $reason, $id ) {
+		UserProfilePageHelper::invalidateTopPagesCacheKey( $user );
+		return true;
+	}
+
+	static function onSpecialMovepageAfterMove( &$form, &$ot , &$nt ) {
+		global $wgUser;
+		UserProfilePageHelper::invalidateTopPagesCacheKey( $wgUser );
+		return true;
+	}
+
 }
