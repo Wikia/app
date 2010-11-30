@@ -94,6 +94,7 @@ div.magnify, .sprite, .sprite-small, #bodyContent > div.main-page-tag-rcs {
 }
 #content {
 	padding-left: 0.6em;
+	padding-right: 0.6em;
 }
 h1 {
 	border-bottom: none;
