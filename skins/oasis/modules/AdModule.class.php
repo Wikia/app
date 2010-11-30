@@ -3,7 +3,7 @@
 class AdModule extends Module {
 
 	private static $config;
-	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2'  );
+	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
 
 	private function configure() {
 		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgEnableAdTopRightButton;
