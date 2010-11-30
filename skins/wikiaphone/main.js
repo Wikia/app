@@ -1,37 +1,86 @@
-_uacct = "UA-2871474-1";
-username = wgUserName == null ? 'anon' : 'user';
-urchinTracker('/1_wikiaphone/' + username + '/view');
-if(wgPrivateTracker) {
-	urchinTracker('/1_wikiaphone/' + wgDB + '/' + username + '/view');
-}
+$(document).ready(function(){
+	MobileSkin.init();
+	MobileSkin.initTracking();
+});
 
-document.onclick = function(event){
-	//IE doesn't pass in the event object
-	event = event || window.event;
-
-	//IE uses srcElement as the target
-	var target = event.target || event.srcElement;
+var MobileSkin = {
+	uacct: "UA-2871474-1",
+	username: (wgUserName == null) ? 'anon' : 'user',
+	ct: {},
+	c: null,
+	h: null,
+	b: null,
 	
-	switch(target.id){
-		case 'searchGoButton':
-		case 'mw-searchButton':
-			urchinTracker('/1_wikiaphone/anon/click/search');
-			break;
-		default:
-			if(target.nodeName === 'A'){
-				if(target.href.indexOf(CategoryNamespaceMessage) !== -1) urchinTracker('/1_wikiaphone/anon/click/categorylink');
-				else if(target.href.indexOf(SpecialNamespaceMessage) === -1) urchinTracker('/1_wikiaphone/anon/click/contentlink');
-			}
+	initTracking: function(){
+		MobileSkin.trackEvent(MobileSkin.username + '/view');
+		
+		if(wgPrivateTracker) {
+			MobileSkin.trackEvent(wgDB + '/' + MobileSkin.username + '/view');
+		}
+		
+		$('#mobile-search-btn').bind('click', function(event){
+			MobileSkin.trackClick('search');
+		});
+		
+		$('a').bind('click', function(event){
+			var elm = $(this);
+			var href = $(this).attr('href');
 			
-			if(target.parentNode){
-				switch(target.parentNode.id){
-					case 'ca-edit':
-						urchinTracker('/1_wikiaphone/anon/click/edit');
-						break;
-					case 'n-randompage':
-						urchinTracker('/1_wikiaphone/anon/click/randompage');
-						break;
+			if(href.indexOf(CategoryNamespaceMessage) !== -1) MobileSkin.trackClick('categorylink');
+			else if(href.indexOf(SpecialNamespaceMessage) === -1) MobileSkin.trackClick('contentlink');
+			else if(elm.attr('data-id') === 'randompage') MobileSkin.trackClick('randompage');
+		});
+	},
+	
+	trackClick: function(eventName){
+		MobileSkin.trackEvent('anon/click/' + eventName);
+	},
+	
+	trackEvent: function(eventName) {
+		var eventToTrack = '/1_mobile/' + eventName;
+		
+		if(typeof urchinTracker !== 'undefined') urchinTracker(eventToTrack);
+		if(typeof console !== 'undefined' && typeof console.log !== 'undefined') console.log('MobileSkin::trackEvent', eventToTrack);
+	},
+	
+	init: function(){
+		MobileSkin.c = $("#bodyContent");
+		MobileSkin.h = MobileSkin.c.find(">h2");
+		
+		var cindex = -1;
+		MobileSkin.c.contents().each(function(i, el) {
+			if (this) {
+				if (this.nodeName == 'H2') {
+					$(this).append('<a class="showbutton">Show</a>');
+					cindex++;
+					MobileSkin.ct["c"+cindex] = [];
+				} else if (this.id != 'catlinks' && cindex > -1) {
+					MobileSkin.ct["c"+cindex].push(this);
+					$(this).remove();
 				}
 			}
+		});
+		
+		MobileSkin.b = MobileSkin.h.find(".showbutton");
+		
+		MobileSkin.b.each(function(i, el) {
+			$(el).data("c", "c" + i);
+		});
+		
+		MobileSkin.b.click(MobileSkin.toggle);
+	},
+	
+	toggle: function(e) {
+		e.preventDefault();
+		
+		if($(this).data("s")) {
+			$(MobileSkin.ct[$(this).data("c")]).remove();
+			$(this).data("s", false);
+			$(this).text("Show");
+		} else {
+			$(this).closest("h2").after($(MobileSkin.ct[$(this).data("c")]));
+			$(this).data("s", true);
+			$(this).text("Hide");
+		}
 	}
 };
