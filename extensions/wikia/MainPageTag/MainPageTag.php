@@ -23,7 +23,7 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
 	if(!$wfMainPageTag_lcs_called) {
 		$wfMainPageTag_rcs_called = true;
 	}
-	$html = '<div style="position: relative; width: 300px; float: right; clear: right;"><div>';
+	$html = '<div class="main-page-tag-rcs" style="position: relative; width: 300px; float: right; clear: right;"><div>';
 	return $html;
 }
 
@@ -36,12 +36,14 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	}
 
 	$args['gutter'] = str_replace('px', '', $args['gutter']);
-
+	
+	$tagClass = 'class="main-page-tag-lcs"';
+	
 	if($wfMainPageTag_rcs_called) {
-		$html = '<div style="overflow: hidden; height: 1%; padding-right: '. $args['gutter'] .'px"><div>';
+		$html = '<div ' . $tagClass . ' style="overflow: hidden; height: 1%; padding-right: '. $args['gutter'] .'px"><div>';
 	} else {
 		$gutter = 300 + $args['gutter'];
-		$html = '<div style="float: left; margin-right: -'. $gutter .'px; width: 100%; position: relative;"><div style="margin-right: '. $gutter .'px;">';
+		$html = '<div ' . $tagClass . ' style="float: left; margin-right: -'. $gutter .'px; width: 100%; position: relative;"><div style="margin-right: '. $gutter .'px;">';
 	}
 	return $html;
 }
