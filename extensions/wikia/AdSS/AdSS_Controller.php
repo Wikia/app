@@ -63,7 +63,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function displayForm( $adForm ) {
-		global $wgOut, $wgAdSS_templatesDir, $wgUser;
+		global $wgOut, $wgAdSS_templatesDir, $wgUser, $wgRequest;
 
 		$sitePricing = AdSS_Util::getSitePricing();
 
@@ -89,6 +89,15 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'bannerPricing', AdSS_Util::getBannerPricing() );
 		$tmpl->set( 'adForm', $adForm );
 		$tmpl->set( 'currentShare', intval( $currentShare * 100 ) );
+		if( $wgRequest->getSessionData( "AdSS_userId" ) === null ) {
+			$tmpl->set( 'isUser', false );
+		} else {
+			$tmpl->set( 'isUser', true );
+			if( $adForm->get( "wpEmail" ) == '' ) {
+				$user = AdSS_User::newFromId( $wgRequest->getSessionData( "AdSS_userId" ) );
+				$adForm->set( "wpEmail", $user->email );
+			}
+		}
 
 		if( isset( $_GET['b'] ) ) {
 			$wgOut->addHTML( $tmpl->render( 'adForm-b' ) );

@@ -66,6 +66,7 @@
 <form method="post" enctype="multipart/form-data" action="<?php echo $action; ?>">
 <input name="wpToken" type="hidden" value="<?php echo $token; ?>" />
 
+<a name="form"></a>
 <section class="SponsoredLinkDesc">
 	<?php echo $adForm->error( 'wpType' ); ?>
 	<div class="chooseheader"><?php echo wfMsgHtml( 'adss-form-pick-plan' ); ?></div>
@@ -115,7 +116,7 @@
 	</tr>
 	</table>
 </section>
-<a name="form"></a>
+
 <section class="SponsoredLinkForm">
 		<fieldset class="form">
 			<legend><?php echo wfMsgHtml( 'adss-form-header' ); ?></legend>
@@ -160,15 +161,21 @@
 			<?php echo $adForm->error( 'wpEmail' ); ?>
 			<input type="text" name="wpEmail" value="<?php $adForm->output( 'wpEmail' ); ?>" />
 
+			<?php if( !$isAdmin && !$isUser ): ?>
 			<p id="adssLoginAction"><?php echo wfMsgHtml( 'adss-form-login-desc', '<a href="#">'.wfMsgHtml( 'adss-form-login-link' ).'</a>' ); ?></p>
 			<div style="display:none">
+			<?php endif; ?>
 			<label for="wpPassword"><?php echo wfMsgHtml( 'adss-form-password' ); ?></label>
 			<input type="password" name="wpPassword" id="wpPassword" value="<?php $adForm->output( 'wpPassword' ); ?>" />
 			<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $login; ?>" />
+			<?php if( !$isAdmin ): ?>
 			<p><?php echo wfMsgHtml( 'adss-form-or' ); ?></p>
+			<?php if( !$isUser ): ?>
 			</div>
+			<?php endif; ?>
 
 			<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $submit; ?>" />
+			<?php endif; ?>
 		</fieldset>
 
 		<fieldset class="preview">
@@ -185,6 +192,12 @@
 </form>
 
 <script type="text/javascript">/*<![CDATA[*/
+$(function() {
+	if( location.href.indexOf("#") == -1 ) {
+		location.href = location.href + "#form";
+	}
+} );
+
 var AdSS_updateForm = function() {
 	$(".SponsoredLinkDesc tr").removeClass("accent");
 	$(".SponsoredLinkDesc tr > td > div.desc").hide();
@@ -227,6 +240,7 @@ var AdSS_updateForm = function() {
 
 $(".SponsoredLinkDesc input:radio[name='wpType']").click(AdSS_updateForm);
 $(".SponsoredLinkDesc input:radio[name='wpType']").filter("[value='site-premium']").click();
+
 
 $("#adssLoginAction > a").click( function(e) {
 	e.preventDefault();
