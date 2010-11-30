@@ -252,6 +252,7 @@ class UserProfilePage {
 		if( !$this->isTopWikiHidden( $wikiId ) ) {
 			$this->hiddenWikis[] = $wikiId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
+			UserProfilePageHelper::invalidateTopWikisCacheKey( $this->getUser() );
 		}
 
 		$out = $this->renderTopSection( 'TopWikis' );
@@ -273,6 +274,7 @@ class UserProfilePage {
 			}
 
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ), $this->hiddenWikis );
+			UserProfilePageHelper::invalidateTopWikisCacheKey( $this->getUser() );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -382,11 +384,18 @@ class UserProfilePage {
 	}
 
 	public function getTopWikis( $limit = 5 ) {
+		global $wgMemc, $wgStatsDB, $wgDevelEnvironment, $wgCityId;
 		wfProfileIn( __METHOD__ );
-		global $wgStatsDB, $wgDevelEnvironment, $wgCityId;
 		$wikis = false;
 
 		if ( !$this->getUser()->isAnon() ) {
+			$cachedData = $wgMemc->get( UserProfilePageHelper::getTopWikisCacheKey( $this->getUser() ) );
+			if( !empty( $cachedData) ) {
+				wfProfileOut(__METHOD__);
+				return $cachedData;
+			}
+
+
 			$where = array( 'user_id' => $this->getUser()->getId() );
 			$hiddenTopWikis = $this->getHiddenTopWikis();
 
@@ -466,6 +475,8 @@ class UserProfilePage {
 				}
 			}
 		}
+
+		$wgMemc->set( UserProfilePageHelper::getTopWikisCacheKey( $this->getUser() ), $wikis, 10800 ); // 3h
 
 		wfProfileOut( __METHOD__ );
 		return $wikis;
