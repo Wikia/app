@@ -95,7 +95,7 @@ class SearchNearMatch {
 		wfProfileIn(__METHOD__);
 
 		$word = strtolower(str_replace(" ", "_", $term));
-		$memkey = wfMemcKey( "searchnearmatch", $word );
+		$memkey = wfMemcKey( "searchnearmatch", md5($word) );
 		$searchTitleId = $wgMemc->get( $memkey );
 
 		if (empty($searchTitleId)) {
