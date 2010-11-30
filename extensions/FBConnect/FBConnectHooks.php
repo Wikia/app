@@ -93,7 +93,7 @@ class FBConnectHooks {
 			$fbIncludeJquery, $fbScriptEnableLocales, $wgJsMimeType,
 			$wgStyleVersion, $wgScriptPath, $wgUser;
 
-		if( get_class( $wgUser->getSkin() ) !== 'SkinMobile' ){
+		if( get_class( $wgUser->getSkin() ) !== 'SkinWikiaphone' ){
 			// If the user's language is different from the default language, use the correctly localized facebook code.
 			// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
 			if($fbScriptEnableLocales){

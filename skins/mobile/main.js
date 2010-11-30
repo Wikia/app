@@ -1,14 +1,15 @@
 $(document).ready(function(){
-	MobileSkin.initTracking();
 	MobileSkin.init();
+	MobileSkin.initTracking();
 });
 
 var MobileSkin = {
 	uacct: "UA-2871474-1",
 	username: (wgUserName == null) ? 'anon' : 'user',
-	ct: [],
-	dataC: [],
-	dataS: [],
+	ct: {},
+	c: null,
+	h: null,
+	b: null,
 	
 	initTracking: function(){
 		MobileSkin.trackEvent(MobileSkin.username + '/view');
@@ -17,7 +18,7 @@ var MobileSkin = {
 			MobileSkin.trackEvent(wgDB + '/' + MobileSkin.username + '/view');
 		}
 		
-		$('#searchGoButton, #mw-searchButton').bind('click', function(event){
+		$('#mobile-search-btn').bind('click', function(event){
 			MobileSkin.trackClick('search');
 		});
 		
@@ -37,60 +38,49 @@ var MobileSkin = {
 	
 	trackEvent: function(eventName) {
 		var eventToTrack = '/1_mobile/' + eventName;
-		//TODO: implement ga.js or put back in place old urchintracker
-		try{
-			console.log('MobileSkin::trackEvent', eventToTrack);
-		}catch(err){}
+		
+		if(typeof urchinTracker !== 'undefined') urchinTracker(eventToTrack);
+		if(typeof console !== 'undefined' && typeof console.log !== 'undefined') console.log('MobileSkin::trackEvent', eventToTrack);
 	},
 	
 	init: function(){
 		MobileSkin.c = $("#bodyContent");
-		MobileSkin.h = $("#bodyContent > h2");
+		MobileSkin.h = MobileSkin.c.find(">h2");
 		
-		var results  = MobileSkin.h.get();
-		MobileSkin.f = $(results[0]);
-		MobileSkin.l = $(results[results.length - 1]);
-		
-		var counter = -1;
-		
-		MobileSkin.c.find('*').each(function(elm) {
-			elm = $(elm);
-			
-			if (elm.is('h2')){
-				elm.before('<div style="clear:both">');
-				elm.append('<a class="showbutton">Show</a>');
-				counter++;
-				MobileSkin.ct["c" + counter] = [];
-			} else if (elm.attr('id') !== 'catlinks' && counter > -1) {
-				MobileSkin.ct["c" + counter].push(elm);
-				elm.remove();
+		var cindex = -1;
+		MobileSkin.c.contents().each(function(i, el) {
+			if (this) {
+				if (this.nodeName == 'H2') {
+					$(this).append('<a class="showbutton">Show</a>');
+					cindex++;
+					MobileSkin.ct["c"+cindex] = [];
+				} else if (this.id != 'catlinks' && cindex > -1) {
+					MobileSkin.ct["c"+cindex].push(this);
+					$(this).remove();
+				}
 			}
 		});
 		
 		MobileSkin.b = MobileSkin.h.find(".showbutton");
-		counter = 0;
 		
-		MobileSkin.b.each(function(elm) {
-			elm = $(elm);
-			elm.attr('data-c', 'c' + counter);
-			$(elm).bind('click', MobileSkin.toggle);
-			counter++;
+		MobileSkin.b.each(function(i, el) {
+			$(el).data("c", "c" + i);
 		});
+		
+		MobileSkin.b.click(MobileSkin.toggle);
 	},
 	
-	toggle: function(event) {
-		var elm = $(this);
+	toggle: function(e) {
+		e.preventDefault();
 		
-		if(elm.attr('data-s')) {
-			$(MobileSkin.ct[elm.attr('data-c')]).remove();
-			elm.attr('data-s', false);
-			elm.html("Show");
+		if($(this).data("s")) {
+			$(MobileSkin.ct[$(this).data("c")]).remove();
+			$(this).data("s", false);
+			$(this).text("Show");
 		} else {
-			elm.closest("h2").after($(MobileSkin.ct[elm.attr('data-c')]));
-			elm.attr('data-s', true);
-			elm.html("Hide");
+			$(this).closest("h2").after($(MobileSkin.ct[$(this).data("c")]));
+			$(this).data("s", true);
+			$(this).text("Hide");
 		}
-		
-		return false;
 	}
 };

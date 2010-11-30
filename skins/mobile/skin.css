@@ -1,6 +1,16 @@
-#content .printfooter, #column-one, #footer, #siteSub, #contentSub,
-#jump-to-nav, div.picture-attribution, #content .toc {
+body.mainpage h1#firstHeading, #content .printfooter, #column-one, #footer,
+#siteSub, #contentSub, #jump-to-nav, div.picture-attribution, #content .toc,
+div.magnify, .sprite, .sprite-small, #bodyContent > div.main-page-tag-rcs {
 	display: none;
+}
+
+#bodyContent > div.main-page-tag-lcs{
+	float: none !important;
+	margin-right: 0 !important;
+}
+
+#bodyContent > div.main-page-tag-lcs > div {
+	margin-right: 0 !important;
 }
 
 #siteNotice { 
@@ -9,22 +19,22 @@
 .editsection {
 	display: none;
 }
-.iOS-header {
+#column-content .mobile-header {
 	background: #3A5766;
 	padding: 0.2em;
 }
-.iOS-header >img {
-	background: url(/skins/mobile/sprite.png) no-repeat 0 0;
+#column-content .mobile-header >img {
+	background: url(/skins/wikiaphone/sprite.png) no-repeat 0 0;
 	height: 18px;
 	margin: 0.1em 0 0.2em 0.3em;
 	width: 72px;
 }
-.iOS-header >a.wikia-button,
-.iOS-header form {
+#column-content .mobile-header >a.wikia-button,
+#column-content .mobile-header form {
 	position: relative;
 }
-.iOS-header >a.wikia-button,
-.showbutton {
+#column-content .mobile-header >a.wikia-button,
+#bodyContent .showbutton {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.35, #E8E8E8), color-stop(0.65, whiteSmoke)) #F2F2F2;
 	border: 1px solid #A5CBE3;
 	border-radius: 4px;
@@ -35,19 +45,19 @@
 	text-decoration: none;
 	top: 0.4em;
 }
-.showbutton {
+#bodyContent .showbutton {
 	float: none;
 	font-weight: normal;
 	margin-left: 0.5em;
 	position: relative;
 	top: -0.2em;
 }
-.iOS-header form {
+#column-content .mobile-header form {
 	display: block;
 	float: right;
 	top: 0.1em;
 }
-body .iOS-header form input {
+#column-content .mobile-header form input {
 	border: none;
 	font-size: 0.7em;
 	height: 1.5em;
@@ -56,29 +66,29 @@ body .iOS-header form input {
 	position: relative;
 	-webkit-appearance: none;
 }
-.iOS-header input {
+#column-content .mobile-header input {
 	border-radius: 0;
 }
-.iOS-header input[type=image] {
-	background: url(/skins/mobile/sprite.png) no-repeat -75px -1px white;
+#column-content .mobile-header input[type=image] {
+	background: url(/skins/wikiaphone/sprite.png) no-repeat -75px -1px white;
 	border-left: 1px solid #A5CBE3;
 	height: 12px;
 	padding: 0.2em 0;
 	top: -0.09em;
 	width: 19px;
 }
-.iOS-header input[type=text] {
+#column-content .mobile-header input[type=text] {
 	padding-left: 0.3em;
 	right: -0.4em;
 	top: -0.1em;
 }
-.iOS-wikiname {
+#column-content .mobile-wikiname {
 	border-bottom: 1px solid #D9D9D9;
 	font-size: 188%;
 	font-weight: bold;
 	padding-left: 0.2em;
 }
-.iOS-wikiname a {
+#column-content .mobile-wikiname a {
 	color: #006CB0;
 	text-decoration: none;
 }

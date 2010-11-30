@@ -324,10 +324,9 @@ $wgSkipSkins = array(
 		'quartz',
 		'monaco_old',
 		'wikiaphone',
-		'smartphone',
+		'wikiaphoneold',
 		'efmonaco',
-		'answers',
-		'mobile',
+		'answers'
 );
 /**
  * @name wgSkipOldSkins
