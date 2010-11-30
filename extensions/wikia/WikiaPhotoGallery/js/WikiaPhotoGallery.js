@@ -601,7 +601,7 @@ var WikiaPhotoGallery = {
 	// setup gallery editor content (select proper page, register event handlers)
 	setupEditor: function(params) {
 		// remove lock
-		delete this.lock;
+		delete this.lockEditor;
 
 		var self = this;
 
@@ -2459,12 +2459,12 @@ var WikiaPhotoGallery = {
 		}
 
 		// check lock to catch double-clicks on toolbar button
-		if (self.lock) {
+		if (self.lockEditor) {
 			self.log('lock detected - please wait for dialog to load');
 			return;
 		}
 
-		self.lock = true;
+		self.lockEditor = true;
 
 		// make params always be an object
 		params = params || {};
@@ -2572,6 +2572,14 @@ var WikiaPhotoGallery = {
 	// fetch and show pop out dialog for given slideshow
 	showSlideshowPopOut: function(slideshowId, hash, index, isPageView, isFromFeed) {
 		var self = this;
+
+		// check lock to catch double-clicks on toolbar button
+		if (self.lockPopOut) {
+			self.log('lock detected - please wait for popout to load');
+			return;
+		}
+
+		self.lockPopOut = true;
 
 		self.log('opening slideshow pop-out');
 
@@ -2770,6 +2778,9 @@ var WikiaPhotoGallery = {
 							});
 
 						self.log('slideshow pop out initialized');
+
+						// remove lock
+						delete self.lockPopOut;
 
 						// setup clicks on carousel
 						carouselItems.not('.wikia-slideshow-popout-carousel-current').

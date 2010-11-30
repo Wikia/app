@@ -19,9 +19,11 @@ var WikiaPhotoGalleryView = {
 	// load jQuery UI + editor JS (if not loaded yet) and fire callback
 	loadEditorJS: function(callback) {
 		if (typeof WikiaPhotoGallery == 'undefined') {
-			$.getScript(wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js?' + wgStyleVersion, function() {
-				$.loadJQueryUI(callback);
-			});
+			$.getResources([
+				wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
+				$.loadJQueryUI
+			],
+			callback);
 		} else {
 			callback();
 		}
@@ -75,7 +77,7 @@ var WikiaPhotoGalleryView = {
 						if ( event.isDefaultPrevented() ) {
 						    return false;
 						}
-						
+
 						var gallery = $(this).closest('.wikia-gallery');
 						var hash = gallery.attr('hash');
 						var id = gallery.attr('id');
