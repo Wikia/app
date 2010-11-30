@@ -66,7 +66,7 @@
 			<?php echo $adForm->error( 'wpEmail' ); ?>
 			<input type="text" name="wpEmail" value="<?php $adForm->output( 'wpEmail' ); ?>" />
 
-			<?php if( !$isAdmin ): ?>
+			<?php if( !$isAdmin && !$isUser ): ?>
 			<p id="adssLoginAction"><?php echo wfMsgHtml( 'adss-form-login-desc', '<a href="#">'.wfMsgHtml( 'adss-form-login-link' ).'</a>' ); ?></p>
 			<div style="display:none">
 			<?php endif; ?>
@@ -75,7 +75,9 @@
 			<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $login; ?>" />
 			<?php if( !$isAdmin ): ?>
 			<p><?php echo wfMsgHtml( 'adss-form-or' ); ?></p>
+			<?php if( !$isUser ): ?>
 			</div>
+			<?php endif; ?>
 
 			<input class="wikia-button" type="submit" name="wpSubmit" value="<?php echo $submit; ?>" />
 			<?php endif; ?>
