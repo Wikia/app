@@ -15,6 +15,8 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 			RTE.log('dropped element:');
 			RTE.log(droppedElement);
+			
+			RTE.instance.fire('droppedElements',droppedElement);
 
 			RTE.instance.fire('saveSnapshot');
 
@@ -97,7 +99,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				//
 				bind('dragstart.dnd', self.onDrag).
 
-				bind('drop', self.onDrop).
+				bind('drop.dnd', self.onDrop).
 
 				// for old Fx (3.0-)
 				//

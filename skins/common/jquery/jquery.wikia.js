@@ -650,9 +650,9 @@ GlobalTriggers = (function(){
 			this.fired = {};
 		},
 
-		bind: function(e,cb) {
+		bind: function(e,cb,scope) {
 			GlobalTriggersClass.superclass.bind.apply(this,arguments);
-			if (typeof e == 'object') {
+			if (typeof e == 'object' || $.isArray(cb)) {
 				return;
 			}
 
@@ -660,7 +660,7 @@ GlobalTriggers = (function(){
 				var a = this.fired[e].slice(0);
 				setTimeout(function(){
 					for (i=0;i<a.length;i++) {
-						cb.apply(window,a[i]);
+						cb.apply(scope||window,a[i]);
 					}
 				},10);
 			}
