@@ -1623,8 +1623,9 @@ EOD;
 		$provider = $wgWikiaVideoProviders[$this->mProvider];
 		$purl = $this->getProviderUrl();
 		$ratio = $this->getTextRatio();
+		// @todo FIXME: Bad i18n. Message should be something like "$1 ($2 pixel, provider $3)"
 		$s = '<div id="VideoPageInfo"><a href="' . $url . '">' . $this->mTitle->getText() . ' </a> (' . $ratio . wfMsg( 'wikiavideo-pixel' );
-		$s .= ', provider: <a href="' . $purl . '" class="external" target="_blank">' . $provider . '</a>)</div>' ;
+		$s .= ', provider: <a href="' . $purl . '" class="external" target="_blank">' . $provider . '</a>)</div>';
 		$wgOut->addHTML( $s );
 	}
 }
