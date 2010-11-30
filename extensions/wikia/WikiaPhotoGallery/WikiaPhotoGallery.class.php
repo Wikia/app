@@ -511,7 +511,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				// gallery: 185x185px placeholder
 				$width = $height = 185;
 			} elseif( $this->mType == self::WIKIA_PHOTO_SLIDER ){
-				$width = WikiaPhotoGalleryHelper::STRICT_IMG_WIDTH;
+				$width = 640;
 				$height = WikiaPhotoGalleryHelper::STRICT_IMG_HEIGHT;
 			} else {
 				// slideshow: use user specified size

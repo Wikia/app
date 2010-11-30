@@ -69,10 +69,10 @@
 			<input id="WikiaPhotoGalleryImageUploadButton" type="submit" value="<?= wfMsg('wikiaPhotoGallery-upload-uploadbutton') ?>" />
 			<img id="WikiaPhotoGalleryUploadProgress" class="WikiaPhotoGalleryProgress" src="<?= $wgStylePath ?>/common/images/ajax.gif" width="16" height="16" alt="" />
 			<div id="WikiaPhotoGalleryImageUploadSizeError" style="display:none"><?= wfMsg('wikiaPhotoGallery-upload-image-size-error'); ?></div>
+			<div id="WikiaPhotoGalleryImageUploadSize" style="display:none"><?= wfMsg('wikiaPhotoGallery-upload-image-size'); ?></div>
 		</form>
 <?php
-	}
-	else {
+	}else {
 ?>
 		<?= wfMsgExt('wikiaPhotoGallery-upload-uploadtext', array('parse')) ?>
 		<p><?= wfMsg('uploaddisabledtext') ?></p>
@@ -148,7 +148,7 @@
 		<p><?= wfMsg('wikiaPhotoGallery-photooptions-captionsub') ?></p>
 		<div class="WikiaPhotoGalleryEditorCaptionWrapper">
 			<div id="WikiaPhotoGalleryEditorCaptionToolbar"></div>
-			<input id="WikiaPhotoGalleryEditorCaption" type="text" />
+			<input id="WikiaPhotoGalleryEditorCaption" type="text" maxlength="50" />
 		</div>
 
 		<!-- Link editor for galleries -->
@@ -176,7 +176,7 @@
 		<div id="WikiaPhotoSliderLinkEditor">
 			<p><?= wfMsg('wikiaPhotoGallery-photooptions-description') ?></p>
 			<div class="WikiaPhotoGalleryEditorCaptionWrapper">
-				<input id="WikiaPhotoSliderLinkText" type="text" />
+				<input id="WikiaPhotoSliderLinkText" type="text" maxlength="120" />
 			</div>
 			<h1><?= wfMsg('wikiaPhotoGallery-photooptions-linktitle') ?></h1>
 

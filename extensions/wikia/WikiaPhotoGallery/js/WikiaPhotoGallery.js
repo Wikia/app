@@ -137,6 +137,7 @@ var WikiaPhotoGallery = {
 	selectPage: function(selectedPage, params) {
 		params = params || {};
 		$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
+		$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block')
 		// store current and previous page
 		params.source = this.editor.currentPage;
 		this.editor.currentPage = selectedPage;
@@ -720,6 +721,7 @@ var WikiaPhotoGallery = {
 				var trackerSuffix = self.getPageTrackerSuffix();
 				self.track('/dialog/' + trackerSuffix + '/upload/button');
 				$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
+				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
 			});
 
 		// upload form submittion
@@ -765,6 +767,7 @@ var WikiaPhotoGallery = {
 								// clear upload form
 								$('#WikiaPhotoGalleryImageUpload').val('');
 								$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'block');
+								$('#WikiaPhotoGalleryImageUploadSize').css('display', 'none');
 
 						} else {
 
@@ -1148,6 +1151,7 @@ var WikiaPhotoGallery = {
 		if (query != '') {
 			this.track('/dialog/upload/find/find/' + query.replace(/[^A-Za-z0-9]/g, '_'));
 			$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
+			$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
 		}
 	},
 

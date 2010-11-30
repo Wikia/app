@@ -5,7 +5,7 @@
 	foreach ($slider['images'] as $i => $image) {
 			
 ?>
-	<span class="WikiaPhotoGalleryPreviewItem<?= $extraClass ?>" imageid="<?= $i ?>" style="width: <?= $width?>px; height: <?= ( $height + 100 ) ?>px">
+	<span class="WikiaPhotoGalleryPreviewItem<?= $extraClass ?>" imageid="<?= $i ?>" style="width: <?= $width?>px; ">
 
 		<span class="WikiaPhotoGalleryPreviewItemMenu color1">
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-modify') ?></a>
