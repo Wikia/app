@@ -244,7 +244,7 @@ table.small { font-size: 100% }
 
 #content {
 	border: 0 !important;
-	padding: 10px !important;
+	padding: 10px;
 	zoom: 30%;
 	font-size: 250%;
 }

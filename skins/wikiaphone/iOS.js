@@ -16,8 +16,7 @@ var SC = {
 		SC.c.contents().each(function(i, el) {
 			if (this) {
 				if (this.nodeName == 'H2') {
-					$(this).before('<div style="clear:both">');
-					$(this).append('<a class="showbutton">Show</a>');
+					$(this).html( $(this).html() + '<a class="showbutton">Show</a>');
 					cindex++;
 					SC.ct["c"+cindex] = [];
 				}

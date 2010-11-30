@@ -56,12 +56,14 @@ class SkinMobile extends SkinTemplate {
 		$out->addMeta("viewport", "width=320");
 		$out->addStyle( 'mobile/main.css', 'screen,handheld' );
 		$out->addStyle( 'mobile/skin.css', 'screen,handheld' );
-		$out->addScriptFile( '../common/zepto/zepto-0.1.1.min.js' );
-		$out->addScriptFile( '../mobile/main.js' );
+		//$out->addScriptFile( '../common/zepto/zepto-0.1.1.js' );
+		//$out->addScriptFile( '../mobile/main.js' );
+		$out->addScriptFile( '../common/jquery/jquery-1.4.4.min.js' );
+		$out->addScriptFile( '../wikiaphone/iOS.js' );
 	}
 
 	function printTopHtml() {
-		global $wgRequest, $wgBlankImgUrl, $wgSitename;
+		global $wgRequest, $wgBlankImgUrl, $wgSitename, $wgBlankImgUrl;
 		echo AdEngine::getInstance()->getAd('MOBILE_TOP_LEADERBOARD');
 
 		$themeSettings = new ThemeSettings();
@@ -73,10 +75,10 @@ class SkinMobile extends SkinTemplate {
 		echo AdEngine::getInstance()->getAd('MOBILE_TOP_LEADERBOARD');
 ?>
 			<div class="iOS-header">
-				<img src="/skins/oasis/images/wikia_logo.png">
+				<img src="<?= $wgBlankImgUrl ?>">
 				<form action="index.php?title=Special:Search" method="get">
 					<input type="text" name="search" placeholder="<?= wfMsg('Tooltip-search', $wgSitename) ?>" accesskey="f" size="13">
-					<input type="image" src="/skins/oasis/images/search_icon.png">
+					<input type="image" src="<?= $wgBlankImgUrl ?>">
 				</form>
 				<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
 			</div>
