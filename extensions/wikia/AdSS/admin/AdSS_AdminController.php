@@ -102,7 +102,7 @@ class AdSS_AdminController {
 				__METHOD__,
 				array(
 					'GROUP BY' => 'billing_user_id',
-					'HAVING'   => 'billing_balance > 0',
+					'HAVING'   => 'billing_balance <> 0',
 					'ORDER BY' => 'billing_user_id',
 					)
 				);
