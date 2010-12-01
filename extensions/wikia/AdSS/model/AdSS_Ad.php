@@ -42,6 +42,14 @@ abstract class AdSS_Ad {
 			$this->url = mb_substr( $this->url, 7 );
 		}
 		switch( $f->get( 'wpType' ) ) {
+			case 'page':
+				$title = Title::newFromText( $f->get( 'wpPage' ) );
+				if( $title && $title->exists() ) {
+					$this->pageId = $title->getArticleId();
+					$this->weight = 1;
+					$this->price = AdSS_Util::getPagePricing( $title );
+				}
+				break;
 			case 'banner':
 				$this->weight = $f->get( 'wpWeight' );
 				$this->price = AdSS_Util::getBannerPricing();

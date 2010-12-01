@@ -60,6 +60,17 @@ class AdSS_AdForm {
 					$this->errors[$f] = wfMsgHtml( 'adss-form-field-empty-errormsg' );
 				}
 			}
+
+			if( $this->fields['wpType'] == 'page' ) {
+				if( empty( $this->fields['wpPage'] ) ) {
+					$this->errors['wpPage'] = wfMsgHtml( 'adss-form-field-empty-errormsg' );
+				} else {
+					$title = Title::newFromText( $this->fields['wpPage'] );
+					if( !$title || !$title->exists() ) {
+						$this->errors['wpPage'] = wfMsgHtml( 'adss-form-non-existent-title-errormsg' );
+					}
+				}
+			}
 		}
 			
 		return ( count( $this->errors ) == 0 );

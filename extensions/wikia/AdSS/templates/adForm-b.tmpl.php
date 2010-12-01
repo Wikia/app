@@ -61,6 +61,20 @@
 .error {
 	color: red;
 }
+
+#wpPageContainer {
+	position: relative;
+}
+
+#wpPageContainer .autocomplete {
+	background: white;
+	border: 1px solid;
+}
+
+#wpPageContainer .autocomplete .selected {
+	background: #849FC5;
+}
+
 </style>
 
 <form method="post" enctype="multipart/form-data" action="<?php echo $action; ?>">
@@ -74,7 +88,7 @@
 	<table>
 	<tr>
 		<td class="radio">
-			<input type="radio" name="wpType" value="page" />
+			<input type="radio" name="wpType" value="page" <?php if($adForm->get('wpType')=='page') echo 'checked'; ?>/>
 		</td>
 		<td class="header">
 			<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
@@ -89,7 +103,7 @@
 	</tr>
 	<tr>
 		<td class="radio">
-			<input type="radio" name="wpType" value="site" />
+			<input type="radio" name="wpType" value="site" <?php if($adForm->get('wpType')=='site') echo 'checked'; ?>/>
 		</td>
 		<td class="header">
 			<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
@@ -98,7 +112,7 @@
 	</tr>
 	<tr>
 		<td>
-			<input type="radio" name="wpType" value="site-premium" />
+			<input type="radio" name="wpType" value="site-premium" <?php if($adForm->get('wpType')=='site-premium') echo 'checked'; ?>/>
 		</td>
 		<td>
 			<h3><?php echo wfMsgHtml( 'adss-form-site-premium-plan-header' ); ?></h3>
@@ -107,7 +121,7 @@
 	</tr>
 	<tr>
 		<td>
-			<input type="radio" name="wpType" value="banner" />
+			<input type="radio" name="wpType" value="banner" <?php if($adForm->get('wpType')=='banner') echo 'checked'; ?>/>
 		</td>
 		<td>
 			<h3><?php echo wfMsgHtml( 'adss-form-banner-plan-header' ); ?></h3>
@@ -121,7 +135,7 @@
 		<fieldset class="form">
 			<legend><?php echo wfMsgHtml( 'adss-form-header' ); ?></legend>
 
-			<div>
+			<div id="wpPageContainer">
 			<label for="wpPage"><?php echo wfMsgHtml( 'adss-form-page' ); ?></label>
 			<?php echo $adForm->error( 'wpPage' ); ?>
 			<input type="text" name="wpPage" id="wpPage" value="<?php $adForm->output( 'wpPage' ); ?>" />
@@ -196,9 +210,9 @@ $(function() {
 	if( location.href.indexOf("#") == -1 ) {
 		location.href = location.href + "#form";
 	}
-} );
+});
 
-var AdSS_updateForm = function() {
+$(".SponsoredLinkDesc input:radio[name='wpType']").click(function() {
 	$(".SponsoredLinkDesc tr").removeClass("accent");
 	$(".SponsoredLinkDesc tr > td > div.desc").hide();
 	$(this).closest("tr").addClass("accent");
@@ -236,25 +250,39 @@ var AdSS_updateForm = function() {
 			$("fieldset.preview").hide();
 			break;
 	}
-};
+});
 
-$(".SponsoredLinkDesc input:radio[name='wpType']").click(AdSS_updateForm);
-$(".SponsoredLinkDesc input:radio[name='wpType']").filter("[value='site-premium']").click();
+$(".SponsoredLinkDesc input:radio[name='wpType'][checked]").click();
 
 
-$("#adssLoginAction > a").click( function(e) {
+$("#wpPage").one('focus', function() {
+	$.loadJQueryAutocomplete(function() {
+		$("#wpPage").autocomplete({
+			serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+			deferRequestBy: 250,
+			maxHeight: 1000,
+			width: 375,
+			appendTo: '#wpPageContainer'
+		});
+	});
+});
+
+$("#wpUrl").keyup(function() {
+	$("div.sponsormsg > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );
+});
+
+$("#wpText").keyup(function() {
+	$("div.sponsormsg > ul > li > a").html( $("#wpText").val() );
+});
+
+$("#wpDesc").keyup(function() {
+	$("div.sponsormsg > ul > li > p").html( $("#wpDesc").val() );
+});
+
+$("#adssLoginAction > a").click(function(e) {
 	e.preventDefault();
 	$("#adssLoginAction").hide("slow");
 	$("#wpPassword").parent().show("slow");
-} );
+});
 
-$("#wpUrl").keyup( function() {
-	$("div.sponsormsg > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );
-} );
-$("#wpText").keyup( function() {
-	$("div.sponsormsg > ul > li > a").html( $("#wpText").val() );
-} );
-$("#wpDesc").keyup( function() {
-	$("div.sponsormsg > ul > li > p").html( $("#wpDesc").val() );
-} );
 </script>
