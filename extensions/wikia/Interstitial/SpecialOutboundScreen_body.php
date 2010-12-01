@@ -51,10 +51,10 @@ class Outbound extends UnlistedSpecialPage {
 			}
 
 			$adSlots = array(
-			'INVISIBLE' => AdEngine::getInstance()->getAd('EXIT_STITIAL_INVISIBLE'),
-			'BOXAD_1' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_1'),
+			'INVISIBLE' => AdEngine::getInstance()->getAd('EXIT_STITIAL_INVISIBLE', array('ghostwriter'=>true)),
+			'BOXAD_1' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_1', array('ghostwriter'=>true)),
 			//'BOXAD_1' => AdEngine::getInstance()->getAd('TOP_RIGHT_BOXAD'), // for dev testing
-			'BOXAD_2' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_2')
+			'BOXAD_2' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_2', array('ghostwriter'=>true))
 			//'BOXAD_2' => AdEngine::getInstance()->getAd('TOP_RIGHT_BOXAD') // for dev testing
 			);
 
@@ -76,6 +76,9 @@ class Outbound extends UnlistedSpecialPage {
 					break;
 				case 'V4':
 					$adTemplate = 'adLayoutV4';
+					break;
+				case 'V5':
+					$adTemplate = 'adLayoutV5';
 					break;
 				case 'CLASSIC':
 				default:

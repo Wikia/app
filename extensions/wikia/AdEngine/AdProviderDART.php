@@ -7,7 +7,7 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 
 	protected static $instance = false;
 
-	protected function __construct(){
+	protected function __construct() {
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 	}
 
@@ -18,17 +18,18 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 		return self::$instance;
 	}
 
-        private $slotsToCall = array();
-        public function addSlotToCall($slotname){
-                $this->slotsToCall[]=$slotname;
-        }
+	private $slotsToCall = array();
+	public function addSlotToCall($slotname) {
+		$this->slotsToCall[]=$slotname;
+	}
 
-        public function batchCallAllowed(){ return false; }
-        public function getSetupHtml(){ return false; }
-        public function getBatchCallHtml(){ return false; }
+  public function batchCallAllowed(){ return false; }
+  public function getSetupHtml(){ return false; }
+  public function getBatchCallHtml(){ return false; }
 
-	public function getAd($slotname, $slot, $params = null){
+	public function getAd($slotname, $slot, $params = null) {
 		$url = $this->getUrl($slotname, $slot);
+		
 		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
 		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
@@ -74,32 +75,45 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 		}
 		var nofooter = "";
 		if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } 
-		dartUrl = dartUrl.replace("nofooter=N;", nofooter); 
+		dartUrl = dartUrl.replace("nofooter=N;", nofooter);
 EOT;
-		if (strpos($slotname, 'TOP_RIGHT_BUTTON') !== FALSE) {
+		if ($params['ghostwriter']) {
 			$out .= <<<EOT
-		if (typeof(Geo) != "undefined") {
-			var geoData = Geo.getGeoData();
-		}
-		else {
-			var geoCookie = readCookie('Geo');
-			var geoData = eval("(" + unescape(geoCookie) + ")"); 
-		}
-		if (geoData['country'] == 'US') {
-			document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
-		}
+			ghostwriter(
+				document.getElementById('$slotname'),
+				{
+					insertType: "append",
+					script: { src: dartUrl },
+					done: function() { 
+						ghostwriter.flushloadhandlers();
+					}
+				}
+			);
 EOT;
-		}
-		else {
-			$out .= <<<EOT
-		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
+		} else {
+			if (strpos($slotname, 'TOP_RIGHT_BUTTON') !== FALSE) {
+				$out .= <<<EOT
+				if (typeof(Geo) != "undefined") {
+					var geoData = Geo.getGeoData();
+				}
+				else {
+					var geoCookie = readCookie('Geo');
+					var geoData = eval("(" + unescape(geoCookie) + ")"); 
+				}
+				if (geoData['country'] == 'US') {
+					document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
+				}
 EOT;
+			} else {
+				$out .= <<<EOT
+				document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
+EOT;
+			}
 		}
 		$out .= "/*]]>*/</script>\n";
-
 		return $out;
 	}
-
+	
 	public function getUrl($slotname, $slot){
 
 		// Manipulate DART sizes for values it expects

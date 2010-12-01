@@ -1,69 +1,66 @@
 $(window).load(function() {
-	Exitstital.init();
+	Exitstitial.init();
 });
 
-var Exitstital = {
-	destinationURL: '',
-	adUrl: '',
+var Exitstitial = {
+
+	settings: {
+		destinationURL: '',
+		adUrl: '',
+	},
 
 	init: function() {
-		Exitstital.attachEventListeners();
+		Exitstitial.attachEventListeners();
 	},
 	
 	attachEventListeners: function() {
 		var externalLinks = $('.WikiaArticle a.external');
 
 		$(externalLinks).click(function () { 
-			Exitstital.destinationURL = $(this).attr("href");
-			Exitstital.adUrl = $(this).attr("ref");
+			Exitstitial.settings.destinationURL = $(this).attr("href");
+			Exitstitial.settings.adUrl = $(this).attr("ref");
 
-			Exitstital.showInfobox();
+			Exitstitial.showInfobox();
 			return false;
 		});
 	},
 	
 	showInfobox: function() {
 		var header = wgExitstitialTitle;
-		header += "<a class='wikia-button close-exitstitial-ad'>" + wgExitstitialButton + "</a>";
-		header += "<p>" + wgExitstitialRegister + "</p>";
+		body = "<div class='wikia-ad'></div>";
 		
-		body = "<div class='wikia-ad'>" + Exitstital.loadAd() + "</div>";
-		
-		html = '<div id="exitstitalInfobox" title="' + header + '"><div>' + body + '</div></div>';
+		html = '<div id="ExitstitialInfobox" title="' + header + '"><div>' + body + '</div></div>';
 		$("body").append(html);
-		$("#exitstitalInfobox").makeModal({width: 600, height: 400});
-		$("#exitstitalInfobox .wikia-ad").css('visibility', 'visible');
-	
-		Exitstital.resizeInfobox();
-		Exitstital.addCloseEventListener();
-	},
-	
-	addCloseEventListener: function() {
-		if ($('#exitstitalInfoboxWrapper a.wikia-button').exists()) {
-			$('#exitstitalInfoboxWrapper a.wikia-button').click(Exitstital.closeInfobox);
-		}
-	},
-	
-	// @TODO: add click tracking
-	closeInfobox: function() {
-		$('.modalWrapper').closeModal();
-		window.location.href = Exitstital.destinationURL;
-	},
-	
-	//** Wills magical ad creation will go in here
-	loadAd: function() {	
-		var ad = '<iframe id="EXITSTITIALIFRAMEAD" scrolling="no" height="250" frameborder="0" width="300" style="border: medium none;" marginwidth="0" marginheight="0" src="' + Exitstital.adUrl + '" noresize="true"></iframe>';
-		return ad;
-	},
-	
-	resizeInfobox: function() {
-		$('#EXITSTITIALIFRAMEAD').load(function() {
-			var iframeHeight = $(this).contents().find("body").height();
-			//$('#exitstitalInfoboxWrapper .wikia-ad').css('height', iframeHeight);
-			
-			$('#exitstitalInfoboxWrapper .wikia-ad').animate({ 
-				height: iframeHeight
-			}, 200 );
+		$("#ExitstitialInfobox").makeModal({width: $(window).width() - 100, height: $(window).height() - 100});
+		
+		/*** Make some changes to the modal ***/
+		//Remove close button
+		$('#ExitstitialInfoboxWrapper').find(".close").hide();
+		//Add 'skip ad' button
+		$('#ExitstitialInfoboxWrapper').prepend('<a href="' + Exitstitial.settings.destinationURL + '" class="wikia-button close-exitstitial-ad" id="skip_ad">' + wgExitstitialButton + '</a>');
+		//Add intro paragraph
+		$('#ExitstitialInfoboxWrapper').find("h1:first").after('<p class="exitstitial-intro">' + wgExitstitialRegister + '</p>');
+		//Make login and register links in the intro paragraph open the login and register modal dialogs
+		$('.exitstitial-intro a').click(function(event) {
+			event.preventDefault();
+			$('#ExitstitialInfoboxWrapper .close').click();
+			if ($(this).hasClass("register")) {
+				openRegister();
+			} else if ($(this).hasClass("login")) {
+				openLogin();
+			}
 		});
-	}
+
+		//Show ad
+		$("#ExitstitialInfobox .wikia-ad").css('visibility', 'visible');
+	
+		Exitstitial.ajaxLoadAd();
+	},
+	
+	ajaxLoadAd: function() {
+		$.get(Exitstitial.settings.adUrl, function(data) {
+			$("#ExitstitialInfobox").html(data);
+		});
+	},
+		
 }

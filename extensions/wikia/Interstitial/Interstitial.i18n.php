@@ -21,7 +21,7 @@ $messages['en'] = array(
 	
 	// oasis Exitstitial
 	"exitstitial-title" => "Leaving ",
-	"exitstitial-register" => "Register or Login to skip ads.",
+	"exitstitial-register" => "<a href=\"#\" class=\"register\">Register</a> or <a href=\"#\" class=\"login\">Login</a> to skip ads.",
 	"exitstitial-button" => "Skip This Ad"
 );
 
