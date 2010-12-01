@@ -24,7 +24,7 @@ div.magnify, .sprite, .sprite-small, #bodyContent > div.main-page-tag-rcs {
 	padding: 0.2em;
 }
 #column-content .mobile-header >img {
-	background: url(/skins/wikiaphone/sprite.png) no-repeat 0 0;
+	background: url(sprite.png) no-repeat 0 0;
 	height: 18px;
 	margin: 0.1em 0 0.2em 0.3em;
 	width: 72px;
@@ -70,7 +70,7 @@ div.magnify, .sprite, .sprite-small, #bodyContent > div.main-page-tag-rcs {
 	border-radius: 0;
 }
 #column-content .mobile-header input[type=image] {
-	background: url(/skins/wikiaphone/sprite.png) no-repeat -75px -1px white;
+	background: url(sprite.png) no-repeat -75px -1px white;
 	border-left: 1px solid #A5CBE3;
 	height: 12px;
 	padding: 0.2em 0;
