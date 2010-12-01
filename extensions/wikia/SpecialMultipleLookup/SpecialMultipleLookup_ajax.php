@@ -66,7 +66,13 @@ class MultiLookupAjax {
 						$oML->setDBname($row[0]);
 						$user_data = $oML->fetchContribs();
 						if (!empty($user_data) && is_array($user_data)) {
-							$usernames = implode(',', array_keys($user_data));
+							$names = array_keys($user_data); #get
+							foreach($names as &$name)
+							{
+								$uname = urlencode( str_replace(' ','_', $name) ); #encode
+								$name = "<a href=\"{$row[2]}index.php?title=Special:Contributions&target={$uname}\">{$name}</a>"; #wrap
+							}
+							$usernames = implode(', ', $names); #compress
 						}
 					}
 					$rows[] = array(
