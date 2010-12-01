@@ -6,13 +6,7 @@
 		@include wordmark;
 		color: $color-links;
 		&.graphic {
-			height: 65px;
 			overflow: hidden;
-			a {
-				display: block;
-				height: 65px;
-				text-indent: -1000px;
-			}
 		}
 	}
 	h1:before,

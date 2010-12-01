@@ -39,7 +39,7 @@ $messages['en'] = array(
 	'themedesigner-size' => 'size',
 	'themedesigner-button-save' => 'Save',
 	'themedesigner-upload-a-graphic' => 'upload a graphic',
-	'themedesigner-rules-wordmark' => '250x65 pixels (only .png files)',
+	'themedesigner-rules-wordmark' => 'up to 250x65 pixels (only .png files)',
 	'themedesigner-dont-use-a-graphic' => 'Don\'t use a graphic',
 	'themedesigner-history-item' => '$1 by $2',
 	'themedesigner-button-change-text' => 'Change text',
@@ -539,7 +539,7 @@ $messages['nl'] = array(
 	'themedesigner-button-change-text' => 'Tekst wijzigen',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
