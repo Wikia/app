@@ -56,7 +56,7 @@ QuantcastSegments.getQcsegAsDARTKeyValues = function () {
 	if (typeof(wgIntegrateQuantcastSegments) === 'undefined' || !wgIntegrateQuantcastSegments) {
 		return segs;
 	}
-	if (typeof(segmentsCookie) != 'undefined') {
+	if (segmentsCookie && typeof(segmentsCookie.segments) != 'undefined') {
 		for (var i=0; i<segmentsCookie.segments.length; i++) {
 			segs += 'qcseg=' + segmentsCookie.segments[i].id + ';';
 		}
