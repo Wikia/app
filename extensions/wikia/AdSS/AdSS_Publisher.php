@@ -11,7 +11,7 @@ class AdSS_Publisher {
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 
 		$adsRendered = array();
-		$minExpire = 60*60 + time();
+		$minExpire = 30*60 + time();
 		foreach( $ads as $ad ) {
 			$adsRendered[] = array(
 					'id'   => $ad->id,
