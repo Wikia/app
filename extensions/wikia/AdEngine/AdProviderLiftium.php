@@ -84,8 +84,28 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		$out = $this->getSetupHtml();
 		$out .= '<script type="text/javascript">' . "\n" .
 			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" . 
-			'LiftiumDART.placement = "' . $slotname . '";' . "\n" . 
-			'Liftium.callAd("' . $slot['size'] . '");</script>' . "\n";
+			'LiftiumDART.placement = "' . $slotname . '";' . "\n";
+		if ($params['ghostwriter']) {
+		$out .= <<<EOT
+		var slot = document.getElementById('$slotname');
+		ghostwriter(
+			slot,
+			{
+				insertType: "append",
+				script: { text: "Liftium.callAd(\"{$slot['size']}\");" },
+				done: function() {
+					ghostwriter.flushloadhandlers();
+				}
+			}
+		);
+EOT;
+		}
+		else {
+			$out .= 'Liftium.callAd("' . $slot['size'] . '");';
+		}	
+		
+		$out .= '</script>' . "\n";
+			
 		return $out;
         }
 
