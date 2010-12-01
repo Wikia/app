@@ -135,7 +135,7 @@ function wfSoapFailures(){
 			$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 
 			print wfMsg('soapfailures-intro');
-			
+
 			print "This page is cached every 2 hours - \n";
 			print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
 			$queryString = "SELECT * FROM lw_soap_failures ORDER BY numRequests DESC LIMIT $MAX_RESULTS";
@@ -143,7 +143,7 @@ function wfSoapFailures(){
 			if($result = mysql_query($queryString,$db)){
 				if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 					print "<table class='soapfailures'>\n";
-					print "<tr><th nowrap='nowrap'>Requests</th><th>Artist</th><th>Song</th><th>Titles looked for</th></tr>\n";
+					print "<tr><th nowrap='nowrap'>Requests</th><th>Artist</th><th>Song</th><th>Titles looked for</th><th>Fixed</th></tr>\n";
 					$REQUEST_URI = $_SERVER['REQUEST_URI'];
 					for($cnt=0; $cnt<$numRows; $cnt++){
 						$artist = mysql_result($result, $cnt, "request_artist");
@@ -166,7 +166,18 @@ function wfSoapFailures(){
 							}
 						}
 						print "</td>";
-						print "<td>$lookedFor</td></tr>";
+						print "<td>$lookedFor</td>";
+						print "<td>";
+						// TODO: NEED TO REWRITE THIS CODE TO PUT JUST THE DATA IN MEMCACHED AND THEN TO USE wgOut->addWikiText OR wgOut->addHTML PER LINE.
+						/*
+							print "<form action='' method='POST'>\n";
+								print "<input type='hidden' name='artist' value='$artist'/>\n";
+								print "<input type='hidden' name='song' value='$song'/>\n";
+								print "<input type='submit' name='fixed' value='".wfMsg('soapfailures-fixed')."'/>\n";
+							print "</form>\n";
+						*/
+						print "</td>";
+						print "</tr>\n";
 					}
 					print "</table>\n";
 					print "<br/>Total of <strong>$totFailures</strong> requests in the top $MAX_RESULTS.  This number will increase slightly over time, but we should fight to keep it as low as possible!";
@@ -176,7 +187,7 @@ function wfSoapFailures(){
 			} else {
 				print "<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".mysql_error($db);
 			}
-			
+
 			// Display some hit-rate stats.
 			include "soap_stats.php"; // for tracking success/failure
 			print "<br/><br/><br/><table border='1px' cellpadding='5px'>\n";
