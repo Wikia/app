@@ -179,6 +179,13 @@ function wfShareFeatureAjaxUpdateStats( ) {
 		$res = $dbw->query( $query, __METHOD__ );
 
 		$dbw->commit();
+
+		$articleID = $wgRequest->getInt('articleid');
+		$sharerID = $id;
+		$sharerIP = wfGetIP();
+
+		$awardingService = new AchAwardingService();
+		$awardingService->processSharing($articleID, $sharerID, $sharerIP);
 	}
 	// todo number of rows affected
 
@@ -189,23 +196,36 @@ function wfShareFeatureAjaxUpdateStats( ) {
 
 // return dialog for the extension
 function wfShareFeatureAjaxGetDialog() {
-	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath, $wgRequest;
+	global $wgUser, $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath, $wgRequest, $wgBitLyLogin, $wgBitLyKey, $wgEnableAchievementsForSharing;
+
+	$urlToShare = $wgTitle->getFullUrl();
+
+	if(!empty($wgEnableAchievementsForSharing) && $wgUser->isLoggedIn()) {
+		if($wgTitle->exists()) {
+			$specialPage = SpecialPage::getPageByAlias('AchievementsSharing');
+			if(is_object($specialPage)) {
+				$urlToShare = $specialPage->getTitle()->getFullURL('articleid='.$wgTitle->getArticleID().'&userid='.$wgUser->getID());
+				$shortUrlToShare = Http::get('http://api.bit.ly/v3/shorten?login='.$wgBitLyLogin.'&apiKey='.$wgBitLyKey.'&uri='.urlencode($urlToShare).'&format=txt');
+				if(trim($shortUrlToShare) != '') {
+					$urlToShare = $shortUrlToShare;
+				}
+			}
+		}
+	}
 
 	$footer = $wgRequest->getVal( 'footer' );
 	$title = htmlspecialchars( $wgTitle->getText() );
-	$wiki = $wgTitle->getFullUrl();
 
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 	$tpl->set_vars( array(
 		'title' => $title,
-		'wiki' 	=> $wiki,
+		'wiki' 	=> $urlToShare,
 		'footer' => $footer,
-		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites, $wiki, $title ),
+		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites, $urlToShare, $title ),
 	));
 
 	$text = $tpl->execute('dialog');
 	$response = new AjaxResponse( $text );
-	//$response->setCacheDuration( 60 * 2 );
 	$response->setContentType('text/plain; charset=utf-8');
 
 	return $response;

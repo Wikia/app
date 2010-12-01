@@ -24,6 +24,7 @@ define('BADGE_CATEGORY', -10);
 define('BADGE_BLOGPOST', -11);
 define('BADGE_BLOGCOMMENT', -12);
 define('BADGE_LOVE', -13);
+define('BADGE_SHARING', -14);
 
 define('BADGE_TYPE_INTRACKEDITPLUSCATEGORY', 1); // EDIT+CATEGORY
 define('BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM', 2); // COMMUNITY CUSTOM
@@ -43,6 +44,7 @@ $dir = dirname(__FILE__).'/';
 $wgSpecialPages['Platinum'] = 'SpecialPlatinum';
 $wgSpecialPages['Leaderboard'] = 'SpecialLeaderboard';
 $wgSpecialPages['AchievementsCustomize'] = 'SpecialAchievementsCustomize';
+$wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
 
 $wgExtensionAliasesFiles ['AchievementsII'] = $dir.'AchievementsII.alias.php' ;
 
@@ -65,6 +67,7 @@ $wgAutoloadClasses['AchConfig'] = $dir.'AchConfig.class.php';
 $wgAutoloadClasses['SpecialPlatinum'] = $dir.'specials/SpecialPlatinum.class.php';
 $wgAutoloadClasses['SpecialLeaderboard'] = $dir.'specials/SpecialLeaderboard.class.php';
 $wgAutoloadClasses['SpecialAchievementsCustomize'] = $dir.'specials/SpecialAchievementsCustomize.class.php';
+$wgAutoloadClasses['SpecialAchievementsSharing'] = $dir.'specials/SpecialAchievementsSharing.class.php';
 
 // services
 $wgAutoloadClasses['AchAwardingService'] = $dir.'services/AchAwardingService.class.php';

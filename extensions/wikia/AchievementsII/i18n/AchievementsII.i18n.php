@@ -51,6 +51,7 @@ Please try another one!',
 	'achievements-track-name-blogpost' => 'Blog Post track',
 	'achievements-track-name-blogcomment' => 'Blog Comment track',
 	'achievements-track-name-love' => 'Wiki Love track',
+	'achievements-track-name-sharing' => 'Sharing track',
 
 	/*
 	 * User notifications
@@ -239,6 +240,13 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-badge-name-love-5' => 'A Wiki life',
 	'achievements-badge-name-love-6' => 'Wiki Hero!',
 
+	// sharing track
+	'achievements-badge-name-sharing-0' => 'Sharer',
+	'achievements-badge-name-sharing-1' => 'Bring it back',
+	'achievements-badge-name-sharing-2' => 'Speaker',
+	'achievements-badge-name-sharing-3' => 'Announcer',
+	'achievements-badge-name-sharing-4' => 'Evangelist',
+
 	// not in track
 	'achievements-badge-name-welcome' => 'Welcome to the Wiki',
 	'achievements-badge-name-introduction' => 'Introduction',
@@ -251,6 +259,7 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	/*
 	 * Badges' details for challenges list on user profile
 	 */
+	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|share link|get {{PLURAL:$1|one person|$1 people}} clicked on link you shared}}',
 	'achievements-badge-to-get-edit' => 'make $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}',
 	'achievements-badge-to-get-edit-plus-category' => 'make {{PLURAL:$1|one edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}',
 	'achievements-badge-to-get-picture' => 'add $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}',
@@ -269,6 +278,7 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	/*
 	 * Badges' details for challenges list hovers on user profile
 	 */
+	'achievements-badge-to-get-sharing-details' => 'Share links and get others to click on them!',
 	'achievements-badge-to-get-edit-details' => 'Is something missing?
 Is there a mistake?
 Don\'t be shy.
@@ -305,6 +315,7 @@ Keep editing!',
 	/*
 	 * Badges' details for badges list hovers on user profile
 	 */
+	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
 	'achievements-badge-hover-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />
 on {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />
@@ -331,6 +342,7 @@ on someone else\'s talk page!',
 	/*
 	 * Badges' details for info in notification
 	 */
+	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
 	'achievements-badge-your-desc-edit' => 'for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-your-desc-edit-plus-category' => 'for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
 	'achievements-badge-your-desc-picture' => 'for adding {{PLURAL:$1|your first picture|$1 pictures}} to {{PLURAL:$1|a page|pages}}!',
@@ -349,6 +361,7 @@ on someone else\'s talk page!',
 	/*
 	 * Badges' details for recent badges list on leaderboard
 	 */
+	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
 	'achievements-badge-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
 	'achievements-badge-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}!',
