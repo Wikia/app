@@ -31,6 +31,30 @@
             <wikia>
                 <PageLayoutBuilder>
                 </PageLayoutBuilder>
+                <Phalanx>
+                    <BlackList>
+                        <website>
+                            <url>http://adultchat.bgallogeo.com</url>
+                        </website>
+                    </BlackList>
+                    <WhiteList>
+                        <internalWebsite>
+                            <url>http://wikibooks.org</url>
+                        </internalWebsite>
+                        <externalWebsite>
+                            <url>http://www.wp.pl</url>
+                        </externalWebsite>
+                        <internalImage>
+                            <url>http://images.wikia.com/central/images/5/59/Cdcar.jpg</url>
+                        </internalImage>
+                        <externalImage>
+                            <url>http://edukacjapl.pl/images/etoile.png</url>
+                        </externalImage>
+                    </WhiteList>
+                </Phalanx>
+                <WhatIsMyIP>
+                    <ip>127.0.0.1</ip>
+                </WhatIsMyIP>
             </wikia>
         </extension>
     </ci>
