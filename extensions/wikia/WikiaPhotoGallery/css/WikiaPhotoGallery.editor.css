@@ -406,6 +406,7 @@ img.WikiaPhotoGalleryProgress {
 .WikiaPhotoGalleryEditorPageInner .preview {
 	border: solid 1px #aaa;
 	height: 240px;
+	min-height: 0;
 	position: relative;
 }
 
