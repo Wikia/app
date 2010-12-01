@@ -561,6 +561,12 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		wfProfileIn(__METHOD__);
 
+		// do not render empty gallery
+		if (empty($this->mImages)) {
+			wfProfileOut(__METHOD__);
+			return '';
+		}
+		
 		$sk = $this->getSkin();
 		$thumbSize = $this->mWidths;
 		$orientation = $this->getParam('orientation');
@@ -896,7 +902,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$html .= Xml::closeElement('div');
-
+		
 		wfProfileOut(__METHOD__);
 		return $html;
 	}
@@ -1174,24 +1180,26 @@ JS;
 	 */
 	
 	private function renderSlider() {
-		global $wgLang, $wgBlankImgUrl, $wgStylePath, $wgScriptPath, $wgStyleVersion;
+		global $wgLang, $wgBlankImgUrl, $wgStylePath, $wgExtensionsPath, $wgStyleVersion;
 
 		wfProfileIn(__METHOD__);
 
-		// adds script on first slider occurence on page
+		// do not render empty sliderss
+		if (empty($this->mImages)) {
+			wfProfileOut(__METHOD__);
+			return '';
+		}
 
+		// adds script on first slider occurence on page
 		$tmpArr = array();
 		for ( $i = 0; $i <= $this->mData["id"]; $i++ ){
 
 			$tmpArr[] = $i;
 		}
 		$slidersOnPage = implode( ', ', $tmpArr );
-		$html = "<script> var allSliders = [ ".$slidersOnPage." ] </script>";
-
-		if ( $this->mData["id"] == 0 ){
-			$html .= "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}\"></script>";
-		}
-
+		$html = "<script> if(!allSliders){ var allSliders = new Array(); }; allSliders.push(".$this->mData['id']."); </script>";
+		$html .= "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}\"></script>";
+		
 		if ( $this->getParam('orientation') == 'right' ){
 			$sliderClass = 'vertical';
 			$thumbDimensions = array( "w" => 110, "h" => 60 );
@@ -1263,6 +1271,12 @@ JS;
 		global $wgLang, $wgBlankImgUrl;
 
 		wfProfileIn(__METHOD__);
+
+		// do not render empty gallery
+		if (empty($this->mExternalImages)) {
+			wfProfileOut(__METHOD__);
+			return '';
+		}
 
 		$sk = $this->getSkin();
 		$thumbSize = $this->mWidths;
