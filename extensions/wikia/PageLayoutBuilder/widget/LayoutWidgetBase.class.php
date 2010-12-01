@@ -185,7 +185,7 @@ abstract class LayoutWidgetBase {
 
 	public function renderEditorMenuItem() {
 		global $wgExtensionsPath;
-		return array( 'caption' => wfMsg('plb-widget-name-'.$this->getName()), 'plb_type' => $this->getName(), 'html' => "<img class='plb-editor-element-list' src='$wgExtensionsPath/wikia/PageLayoutBuilder/widget/images/widget-icon-{$this->getName()}.png'><span class='plb-editor-element-list'>".wfMsg('plb-widget-name-'.$this->getName())."</span>");
+		return "<li __plb_type=\"{$this->getName()}\"><img src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/widget/images/widget-icon-{$this->getName()}.png\" alt=\"\">".wfMsg('plb-widget-name-'.$this->getName())."</li>";
 	}
 
 	public function renderEditorListItem() {
