@@ -59,7 +59,7 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
     					var kv = '';
 						if (qcCookie = readCookie('qcseg')) {
         					var qc = eval("(" + unescape(qcCookie) + ")");
-        					if (qc.segments) {
+        					if (qc && qc.segments) {
             					for (var i in qc.segments) {
                 					kv += 'qcseg=' + qc.segments[i].id + ';';
             					}
