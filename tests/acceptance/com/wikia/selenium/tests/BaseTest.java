@@ -104,6 +104,7 @@ public class BaseTest {
 
 	protected void logout() throws Exception {
 		session().open("index.php?useskin=oasis");
+		session().waitForPageToLoad(TIMEOUT);
 		session().click("link=Log out");
 		session().waitForPageToLoad(TIMEOUT);
 		assertTrue(session().isTextPresent("You have been logged out."));
@@ -129,6 +130,34 @@ public class BaseTest {
 	}
 	protected void waitForAttributeNotEquals(String elementId, String value, String timeOut) throws Exception {
 		waitForAttributeNotEquals(elementId, value, Integer.parseInt(TIMEOUT));
+	}
+
+	protected void waitForElementNotPresent(String elementId, int timeOut)
+			throws Exception {
+		long startTimestamp = (new Date()).getTime();
+		while (true) {
+			long curTimestamp = (new Date()).getTime();
+			if (curTimestamp-startTimestamp > timeOut) {
+				assertFalse(session().isElementPresent(elementId));
+				break;
+			}
+
+			try{
+				if(!session().isElementPresent(elementId)) {
+					break;
+				}
+			} catch( SeleniumException e ) {}
+			Thread.sleep(1000);
+		}
+	}
+
+	protected void waitForElementNotPresent(String elementId, String timeOut)
+			throws Exception {
+		waitForElementNotPresent(elementId, Integer.parseInt(timeOut));
+	}
+
+	protected void waitForElementNotPresent(String elementId) throws Exception {
+		waitForElementNotPresent(elementId, TIMEOUT);
 	}
 
 	protected void waitForElement(String elementId, int timeOut)
@@ -356,6 +385,13 @@ public class BaseTest {
 		session().uncheck("watch");
 
 		clickAndWait("wpMove");
+		
+		if (session().isElementPresent("wpConfirm")) {
+			session().uncheck("wpLeaveRedirect");
+			session().uncheck("watch");
+			session().check("wpConfirm");
+			clickAndWait("wpDeleteAndMove");
+		}
 	}
 
 	//set summary as '' to use default MW message
