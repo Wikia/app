@@ -21,7 +21,8 @@ class AchConfig {
 		BADGE_CATEGORY => 'category',
 		BADGE_BLOGPOST => 'blogpost',
 		BADGE_BLOGCOMMENT => 'blogcomment',
-		BADGE_LOVE => 'love'
+		BADGE_LOVE => 'love',
+		BADGE_SHARING => 'sharing',
 	);
 
 	private static $mSpecialBadges = array(
@@ -129,7 +130,17 @@ class AchConfig {
 					array('level' => BADGE_LEVEL_PLATINUM, 'events' => 365)
 				),
 				'infinite' => false
-			)
+			),
+			BADGE_SHARING => array(
+				'laps' => array(
+					array('level' => BADGE_LEVEL_BRONZE, 'events' => 0),
+					array('level' => BADGE_LEVEL_BRONZE, 'events' => 1),
+					array('level' => BADGE_LEVEL_BRONZE, 'events' => 5),
+					array('level' => BADGE_LEVEL_SILVER, 'events' => 10),
+					array('level' => BADGE_LEVEL_SILVER, 'events' => 50),
+				),
+				'infinite' => true
+			)			
 		);
 	}
 	private function reset() {

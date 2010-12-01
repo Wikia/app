@@ -6,7 +6,8 @@ ShareFeature.ajax = function( provider ) {
 			{
 		   		'action':'ajax',
 		   		'rs':'wfShareFeatureAjaxUpdateStats',
-		   		'provider': provider
+		   		'provider': provider,
+		   		'articleid': wgArticleId
 			},
 			function() {
 				 $('.modalWrapper').closeModal();

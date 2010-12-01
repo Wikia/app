@@ -53,6 +53,79 @@ class AchAwardingService {
 		wfProfileOut(__METHOD__);
 	}
 
+	
+	public function processSharing($articleID, $sharerID, $IP) {
+		global $wgEnableAchievementsForSharing;
+		
+		if(empty($wgEnableAchievementsForSharing)) {
+			return;
+		}
+		
+		wfProfileIn(__METHOD__);
+
+		$this->mUser = User::newFromID($sharerID);
+		
+		if(!$this->mUser->isLoggedIn()) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
+		
+		$this->mUserCountersService = new AchUserCountersService($this->mUser->getID());
+		$this->mCounters = $this->mUserCountersService->getCounters();
+		$this->loadUserBadges();
+
+		/*
+		 * BADGE_SHARING
+		 * 
+		 * Here is the structure of counter array for sharing badge
+		 * 
+		 * This method is called from two different places:
+		 * - from sharing feature
+		 * -- creates empty array assigned to article_id which will be used then to store IPs of visitors to specific article
+		 * -- add user IP to IPs array
+		 * 
+		 * - from special page to which shared link lead to
+		 * -- add user IP to IPs array of specific article_id, if this IP is not there yet and if it's not in IPs array as well
+		 * 
+		 * [
+		 * 	ips: [<ip>, <ip>]
+		 * 	article_ids: [
+		 * 		<article_id> : [<ip>],
+		 *		<article_id> : [<ip>, <ip>],
+		 *  ]
+		 * ]
+		 */
+		if(empty($this->mCounters[BADGE_SHARING])) {
+			$this->mCounters[BADGE_SHARING] = array('ips' => array(), 'article_ids' => array());
+		}
+
+		if(isset($this->mCounters[BADGE_SHARING]['article_ids'][$articleID])) {
+			// called from special page to which shared link lead to
+			if(!in_array($IP, $this->mCounters[BADGE_SHARING]['ips'])) {
+				if(!in_array($IP, $this->mCounters[BADGE_SHARING]['article_ids'][$articleID])) {
+					$this->mCounters[BADGE_SHARING]['article_ids'][$articleID][] = $IP;
+				}
+			}
+		} else {
+			// called from sharing feature
+			$this->mCounters[BADGE_SHARING]['article_ids'][$articleID] = array();
+			if(!in_array($IP, $this->mCounters[BADGE_SHARING]['ips'])) {
+				$this->mCounters[BADGE_SHARING]['ips'][] = $IP;
+			}
+		}
+
+		$this->mUserCountersService->setCounters($this->mCounters);
+		$this->mUserCountersService->save();
+		$this->processCountersForInTrack();
+		$this->saveBadges();
+		
+		if(count($this->mNewBadges) > 0) {
+			$this->calculateAndSaveScore();
+		}
+
+		wfProfileOut(__METHOD__);
+	}
+	
 	public function processSaveComplete($article, $user, $revision, $status) {
 		wfProfileIn(__METHOD__);
 
@@ -160,7 +233,6 @@ class AchAwardingService {
 	}
 
 	private function saveBadges() {
-		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		if(count($this->mNewBadges) > 0) {
@@ -187,11 +259,7 @@ class AchAwardingService {
 				$achNotificationService = new AchNotificationService();
 				$badge = $achNotificationService->getBadgeToNotify($this->mUser->getId(), false);
 				if($badge !== null) {
-					Wikia::log(__METHOD__, "", "BADGE FOUND! About to run hooks...", $wgWikiaForceAIAFdebug);
 					wfRunHooks('AchievementEarned', array($this->mUser, $badge));
-					$mcKey = wfMemcKey( "AchUserProfileService::loadOwnerBadges",  $this->mUser->getId());
-					$wgMemc->set($mcKey, null);
-					Wikia::log(__METHOD__, "", "Done running 'AchievementEarned' hooks.", $wgWikiaForceAIAFdebug);
 				}
 			}
 			
@@ -217,6 +285,14 @@ class AchAwardingService {
 					$eventsCounter = $badge_counter[COUNTERS_COUNTER];
 				} else if($badge_type_id == BADGE_BLOGCOMMENT) {
 					$eventsCounter = count($badge_counter);
+				} else if($badge_type_id == BADGE_SHARING) {
+					$eventsCounter = -1;
+					if(isset($badge_counter['article_ids'])) {
+						$eventsCounter = 0;
+						foreach($badge_counter['article_ids'] as $article_id => $ips) {
+							$eventsCounter += count($ips);
+						}						
+					}
 				} else {
 					$eventsCounter = $badge_counter;
 				}

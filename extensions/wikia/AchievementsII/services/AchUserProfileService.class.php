@@ -160,9 +160,12 @@ class AchUserProfileService {
 				$challenges[$badge_type_id] = AchConfig::getInstance()->isInTrack($badge_type_id) ? 0 : null;
     		}
     	}
+    	
+    	global $wgEnableAchievementsForSharing;
 
     	foreach($challenges as $badge_type_id => $badge_lap) {
-   			$badge = new AchBadge($badge_type_id, $badge_lap);
+
+    		$badge = new AchBadge($badge_type_id, $badge_lap);
 
     		if($badge_lap === null) {
     			$to_get = $badge->getToGet();
@@ -179,7 +182,11 @@ class AchUserProfileService {
 
 				$requiredEvents = AchConfig::getInstance()->getRequiredEvents($badge_type_id, $badge_lap);
 				$to_get = $badge->getToGet($requiredEvents);
-				$to_get .= " ({$eventsCounter}/{$requiredEvents})";
+				if($badge_type_id != BADGE_SHARING) {
+					$to_get .= " ({$eventsCounter}/{$requiredEvents})";
+				} else if(empty($wgEnableAchievementsForSharing)){
+					continue;					
+				}
     		}
 
     		$this->mChallengesBadges[] = array('badge' => $badge, 'to_get' => $to_get);
@@ -241,18 +248,8 @@ class AchUserProfileService {
 	}
 
 	private function loadOwnerBadges() {
-		global $wgMemc, $wgCityId, $wgExternalSharedDB;
+		global $wgCityId, $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
-
-		$mcKey = wfMemcKey( "AchUserProfileService::loadOwnerBadges",  $this->mUserOwner->getId());
-		$out = $wgMemc->get($mcKey);
-
-		if( !empty($out) ) {
-			$this->mOwnerBadgesSimple = $out['simple'];
-			$this->mOwnerBadgesExtended = $out['extended'];
-			wfProfileOut( __METHOD__ );
-			return;
-		}
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
@@ -310,13 +307,7 @@ class AchUserProfileService {
 			$this->mOwnerBadgesSimple[] = array('badge' => $badge, 'to_get' => $to_get);
 
 		}
-
-		$out = array();
-		$out['simple'] = $this->mOwnerBadgesSimple;
-		$out['extended'] = $this->mOwnerBadgesExtended;
-		$wgMemc->set($mcKey, $out, 60*60);
 		wfProfileOut(__METHOD__);
-		
 	}
 
 }
