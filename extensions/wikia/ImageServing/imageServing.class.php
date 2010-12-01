@@ -199,7 +199,6 @@ class imageServing{
 	public function getThumbnails( $fileNames = null ) {
 		wfProfileIn( __METHOD__ );
 
-		global $wgMemc;
 		$ret = array();
 		
 		if( !empty( $fileNames ) ) {
@@ -210,12 +209,7 @@ class imageServing{
 					$img = $fileName;
 				}
 				
-				$mcKey = $this->_makeKey( uniqid('asd') );
-				$mcOut = $wgMemc->get( $mcKey, null );
-				
-				if( $mcOut != null ) {
-					$ret[ $fileName ] = $mcOut;
-				} elseif ( !empty($img) || $img = wfFindFile( $title ) ) {
+				if ( !empty($img) || $img = wfFindFile( $title ) ) {
 					$fileName = $img->getTitle()->getDBkey();
 					$issvg = false;
 					$mime = strtolower($img->getMimeType());
@@ -227,7 +221,6 @@ class imageServing{
 						'name' => $img->getTitle()->getText(),
 						'url' => wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $img->getWidth(), $img->getHeight(), "center", $issvg) . "-" . $img->getName().($issvg ? ".png":"") ) )
 					);
-					$wgMemc->set( $mcKey, $ret[ $fileName ], 60*60 );
 				}
 			}
 		}
