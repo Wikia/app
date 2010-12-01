@@ -137,7 +137,7 @@ var WikiaPhotoGallery = {
 	selectPage: function(selectedPage, params) {
 		params = params || {};
 		$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
-		$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block')
+
 		// store current and previous page
 		params.source = this.editor.currentPage;
 		this.editor.currentPage = selectedPage;
@@ -233,6 +233,8 @@ var WikiaPhotoGallery = {
 
 			// Slider preview page
 			case this.SLIDER_PREVIEW_PAGE:
+				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block')
+		
 				title = msg['wikiaPhotoGallery-sliderpreview-title'];
 
 				saveButton.show().text(msg['wikiaPhotoGallery-finish']);
@@ -721,7 +723,9 @@ var WikiaPhotoGallery = {
 				var trackerSuffix = self.getPageTrackerSuffix();
 				self.track('/dialog/' + trackerSuffix + '/upload/button');
 				$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
-				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+				if ( self.isSlider() ) {
+					$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+				}
 			});
 
 		// upload form submittion
@@ -1151,7 +1155,9 @@ var WikiaPhotoGallery = {
 		if (query != '') {
 			this.track('/dialog/upload/find/find/' + query.replace(/[^A-Za-z0-9]/g, '_'));
 			$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
-			$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+			if (self.isSlider()){
+				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+			}
 		}
 	},
 
