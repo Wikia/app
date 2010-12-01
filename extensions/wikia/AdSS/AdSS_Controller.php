@@ -101,6 +101,7 @@ class AdSS_Controller extends SpecialPage {
 
 		if( isset( $_GET['b'] ) ) {
 			$wgOut->addHTML( $tmpl->render( 'adForm-b' ) );
+			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform-b.scss' ) );
 		} else {
 			$wgOut->addHTML( $tmpl->render( 'adForm' ) );
 			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );

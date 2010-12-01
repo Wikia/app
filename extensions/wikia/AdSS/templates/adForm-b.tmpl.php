@@ -1,82 +1,3 @@
-<style type="text/css">
-.WikiaPageHeader h2 {
-	display: none;
-}
-
-.SponsoredLinkDesc .chooseheader {
-	font-size: 150%;
-	font-weight: bold;
-	padding: 0px 0px 10px;
-}
-
-.SponsoredLinkDesc table {
-	border-spacing: 0;
-}
-	
-.SponsoredLinkDesc .desc div {
-	padding: 0px 1em 1em;
-}
-
-.SponsoredLinkDesc td.radio {
-	width: 30px;
-}
-
-.SponsoredLinkDesc td.header {
-	vertical-align: top;
-	width: 460px;
-}
-
-.SponsoredLinkDesc td.desc {
-	vertical-align: top;
-	width: 460px;
-}
-
-.SponsoredLinkForm fieldset {
-	float: left;
-	width: 460px;
-}
-
-.SponsoredLinkForm fieldset.preview {
-	border: none;
-	float: right;
-}
-
-.SponsoredLinkForm legend {
-	font-size: 120%;
-	font-weight: bold;
-}
-
-.SponsoredLinkForm label {
-	display: block;
-}
-
-.SponsoredLinkForm input[type="text"], input[type="password"], textarea {
-	width: 375px;
-}
-
-.SponsoredLinkForm input#wpUrl {
-	width: 337px;
-}
-
-.error {
-	color: red;
-}
-
-#wpPageContainer {
-	position: relative;
-}
-
-#wpPageContainer .autocomplete {
-	background: white;
-	border: 1px solid;
-}
-
-#wpPageContainer .autocomplete .selected {
-	background: #849FC5;
-}
-
-</style>
-
 <form method="post" enctype="multipart/form-data" action="<?php echo $action; ?>">
 <input name="wpToken" type="hidden" value="<?php echo $token; ?>" />
 
@@ -281,8 +202,8 @@ $("#wpDesc").keyup(function() {
 
 $("#adssLoginAction > a").click(function(e) {
 	e.preventDefault();
-	$("#adssLoginAction").hide("slow");
-	$("#wpPassword").parent().show("slow");
+	$("#adssLoginAction").hide();
+	$("#wpPassword").parent().show();
 });
 
 </script>
