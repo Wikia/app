@@ -5,7 +5,13 @@
 	</div>
 	<? } else { ?>
 	<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?>" <?= $wordmarkStyle ?>>
-		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>"><?= htmlspecialchars($wordmarkText) ?></a>
+		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>">
+			<? if (!empty($wordmarkUrl)) { ?>
+				<img src="<?= $wordmarkUrl ?>" alt="<?= htmlspecialchars($wordmarkText) ?>">
+			<? } else { ?>
+				<?= htmlspecialchars($wordmarkText) ?>
+			<? } ?>
+		</a>
 	</h1>
 	<? } ?>
 	<nav>
