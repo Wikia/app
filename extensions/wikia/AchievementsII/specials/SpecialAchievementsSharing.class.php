@@ -26,8 +26,13 @@ class SpecialAchievementsSharing extends SpecialPage {
 		} else {
 			$title = Title::newMainPage();
 		}
-		
-		$wgOut->redirect($title->getLocalURL(), 303);
+
+		// this works only for Wikia and only in current varnish configuration
+		if (!headers_sent()) {
+			header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
+		}
+
+		$wgOut->redirect($title->getLocalURL());
 
 		wfProfileOut(__METHOD__);
 	}
