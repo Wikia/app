@@ -362,7 +362,7 @@
 			<button id="WikiaPhotoGalleryAddImage" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-addphoto') ?></button>
 		</p>
 
-		<div id="WikiaPhotoGalleryEditorPreview" class="preview"></div>
+		<div id="WikiaPhotoGalleryEditorPreview" class="preview WikiaArticle"></div>
 
 		<p id="WikiaPhotoGalleryEditorCheckboxes">
 			<?= WikiaPhotoGalleryHelper::renderOptionCheckbox('WikiaPhotoGalleryFeedInUse', 'wikiaPhotoGallery-preview-feed-label') ?><input id="WikiaPhotoGalleryFeedUrl" type="text" maxlength="255" size="60" />
