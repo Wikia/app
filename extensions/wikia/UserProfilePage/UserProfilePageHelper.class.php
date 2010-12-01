@@ -192,32 +192,32 @@ class UserProfilePageHelper {
 		return wfMemcKey( __CLASS__, 'topWikis', $user->getId() );
 	}
 
-	public static function invalidateTopPagesCacheKey( User $user ) {
+	public static function invalidateTopPagesCache( User $user ) {
 		global $wgMemc;
 		$wgMemc->delete( self::getTopPagesCacheKey( $user ) );
 	}
 
-	public static function invalidateTopWikisCacheKey( User $user ) {
+	public static function invalidateTopWikisCache( User $user ) {
 		global $wgMemc;
 		$wgMemc->delete( self::getTopWikisCacheKey( $user ) );
 	}
 
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		self::invalidateTopPagesCacheKey( $user );
-		self::invalidateTopWikisCacheKey( $user );
+		self::invalidateTopPagesCache( $user );
+		self::invalidateTopWikisCache( $user );
 		return true;
 	}
 
 	static function onArticleDeleteComplete( &$article, &$user, $reason, $id ) {
-		self::invalidateTopPagesCacheKey( $user );
-		self::invalidateTopWikisCacheKey( $user );
+		self::invalidateTopPagesCache( $user );
+		self::invalidateTopWikisCache( $user );
 		return true;
 	}
 
 	static function onSpecialMovepageAfterMove( &$form, &$ot , &$nt ) {
 		global $wgUser;
-		self::invalidateTopPagesCacheKey( $wgUser );
-		self::invalidateTopWikisCacheKey( $wgUser );
+		self::invalidateTopPagesCache( $wgUser );
+		self::invalidateTopWikisCache( $wgUser );
 		return true;
 	}
 
