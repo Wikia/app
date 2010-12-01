@@ -1,9 +1,9 @@
 <?php
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Lightbox',
-	'version' => '1.14',
+	'version' => '1.2',
 	'description' => 'Add lightbox preview for images within article',
-	'author' => 'Maciej Brencz',
+	'author' => array('Maciej Brencz', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 );
 
 // register extension class
@@ -19,11 +19,27 @@ $wgExtensionMessagesFiles['ImageLightbox'] = $dir.'/ImageLightbox.i18n.php';
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ImageLightboxAjax';
 function ImageLightboxAjax() {
-	$data = ImageLightbox::ajax();
-	$json = Wikia::json_encode($data);
+	global $wgRequest;
+	$method = $wgRequest->getVal('method', false);
 
-	$response = new AjaxResponse($json);
-	$response->setContentType('application/json; charset=utf-8');
+	if (method_exists('ImageLightbox', $method)) {
+		wfProfileIn(__METHOD__);
 
-	return $response;
+		$data = ImageLightbox::$method();
+
+		if (is_array($data)) {
+			// send array as JSON
+			$json = Wikia::json_encode($data);
+			$response = new AjaxResponse($json);
+			$response->setContentType('application/json; charset=utf-8');
+		}
+		else {
+			// send text as text/html
+			$response = new AjaxResponse($data);
+			$response->setContentType('text/html; charset=utf-8');
+		}
+
+		wfProfileOut(__METHOD__);
+		return $response;
+	}
 }
