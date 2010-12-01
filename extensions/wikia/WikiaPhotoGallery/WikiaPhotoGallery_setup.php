@@ -8,9 +8,11 @@
  *
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Jakub Kurcek <jakub at wikia-inc.com>
  * @date 2010-03-08
  * @copyright Copyright (C) 2010 Maciej Brencz, Wikia Inc.
  * @copyright Copyright (C) 2010 Maciej Błaszkowski, Wikia Inc.
+ * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
  *
