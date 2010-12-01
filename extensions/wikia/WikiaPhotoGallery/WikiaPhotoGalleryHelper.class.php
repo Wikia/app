@@ -608,7 +608,7 @@ class WikiaPhotoGalleryHelper {
 		$parserOptions = new ParserOptions();
 
 		wfDebug(__METHOD__ . "\n" . print_r($slider, true));
-		
+
 		// render slider images
 		foreach($slider['images'] as &$image) {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
@@ -968,7 +968,7 @@ class WikiaPhotoGalleryHelper {
 		$uploadedImages = ImagesService::getRecentlyUploaded($limit);
 		if(is_array($uploadedImages)) {
 			foreach($uploadedImages as $image) {
-				
+
 				$thumb = self::getResultsThumbnailUrl($image);
 				if ($thumb) {
 					// use keys to remove duplicates
@@ -1157,7 +1157,7 @@ class WikiaPhotoGalleryHelper {
 	static public function initParserHook() {
 		global $wgHooks;
 		//overwrite previous hooks returning `false`
-		$wgHooks['BeforeParserrenderImageGallery'] = array('WikiaPhotoGalleryHelper::beforeParserrenderImageGallery');		
+		$wgHooks['BeforeParserrenderImageGallery'] = array('WikiaPhotoGalleryHelper::beforeParserrenderImageGallery');
 	}
 
 	/**
@@ -1167,7 +1167,7 @@ class WikiaPhotoGalleryHelper {
 	static public function getGalleryDataByHash($hash, $revisionId = 0, $type = WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
 		global $wgTitle, $wgUser, $wgOut;
 		wfProfileIn(__METHOD__);
-		
+
 		self::initParserHook();
 		self::$mGalleryHash = $hash;
 
@@ -1221,7 +1221,8 @@ class WikiaPhotoGalleryHelper {
 
 		wfProfileOut(__METHOD__);
 
-		return true;
+		// by returning false we're telling MW parser to return gallery's HTML immediatelly
+		return false;
 	}
 
 	/**
