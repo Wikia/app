@@ -28,7 +28,7 @@ else {
 	/**
 	 * iterate through city_list
 	 */
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = WikiFactory::db( DB_SLAVE );
 
 	$res = $dbr->select(
 		WikiFactory::table( "city_list" ),
