@@ -163,6 +163,12 @@ class ThumbnailImage extends MediaTransformOutput {
 			$linkAttribs = array( 'href' => $title->getLinkUrl(), 'title' => $title->getFullText() );
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( $title, $query );
+			/* Wikia change begin - @author: Marooned */
+			/* Images SEO project */
+			$linkAttribs['data-image-name'] = $this->file->getTitle()->getText();
+			if (!empty($options['id'])) $linkAttribs['id'] = $options['id'];
+			$linkAttribs['href'] = $this->file->getFullUrl();
+			/* Wikia change end */
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = array( 'href' => wfReplaceImageServer( $this->file->getURL(), $this->file->getTimestamp() ) );
 		} else {
