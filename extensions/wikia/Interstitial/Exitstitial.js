@@ -12,11 +12,11 @@ var Exitstitial = {
 	init: function() {
 		Exitstitial.attachEventListeners();
 	},
-	
+
 	attachEventListeners: function() {
 		var externalLinks = $('.WikiaArticle a.external');
 
-		$(externalLinks).click(function () { 
+		$(externalLinks).click(function () {
 			Exitstitial.settings.destinationURL = $(this).attr("href");
 			Exitstitial.settings.adUrl = $(this).attr("ref");
 
@@ -24,15 +24,17 @@ var Exitstitial = {
 			return false;
 		});
 	},
-	
+
 	showInfobox: function() {
-		var header = wgExitstitialTitle;
-		body = "<div class='wikia-ad'></div>";
-		
-		html = '<div id="ExitstitialInfobox" title="' + header + '"><div>' + body + '</div></div>';
-		$("body").append(html);
-		$("#ExitstitialInfobox").makeModal({width: $(window).width() - 100, height: $(window).height() - 100});
-		
+		var header = wgExitstitialTitle,
+			body = "<div id='ExitstitialInfobox'><div class='wikia-ad'></div></div>";
+
+		$.showModal(header, body, {
+			id: 'ExitstitialInfoboxWrapper',
+			width: $(window).width() - 200,
+			height: $(window).height() - 200
+		});
+
 		/*** Make some changes to the modal ***/
 		//Remove close button
 		$('#ExitstitialInfoboxWrapper').find(".close").hide();
@@ -43,7 +45,7 @@ var Exitstitial = {
 		//Make login and register links in the intro paragraph open the login and register modal dialogs
 		$('.exitstitial-intro a').click(function(event) {
 			event.preventDefault();
-			$('#ExitstitialInfoboxWrapper .close').click();
+			$('#ExitstitialInfoboxWrapper').closeModal();
 			if ($(this).hasClass("register")) {
 				openRegister();
 			} else if ($(this).hasClass("login")) {
@@ -53,14 +55,14 @@ var Exitstitial = {
 
 		//Show ad
 		$("#ExitstitialInfobox .wikia-ad").css('visibility', 'visible');
-	
+
 		Exitstitial.ajaxLoadAd();
 	},
-	
+
 	ajaxLoadAd: function() {
 		$.get(Exitstitial.settings.adUrl, function(data) {
 			$("#ExitstitialInfobox").html(data);
 		});
 	},
-		
+
 }
