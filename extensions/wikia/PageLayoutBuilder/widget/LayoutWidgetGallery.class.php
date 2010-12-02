@@ -187,24 +187,22 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 
 		$tagOptions = array();
 		$align = $this->getAttrVal('align');
-		if ($align == 'left') {
-			$tagOptions['style'] = 'float: left; clear: left;';
-		} else {
-			$tagOptions['style'] = 'float: right; clear: right;';
-		}
+		$width = $this->getAttrVal('size',150);
+		$tagOptions['style'] = "width: {$width}px;";
 
 		return
-			XML::openElement('span',
+			XML::openElement('div',
 				$tagOptions
 				+ array(
-					"class" => "plb-rte-widget plb-rte-widget-plb_image" )
+					"class" => "plb-rte-widget plb-rte-widget-plb_image plb-rte-widget-align-{$align}" )
 				+ $this->getBaseParamForRTE())
-			."<span contenteditable=\"false\" class=\"plb-rte-widget-caption\">"
+			."<span class=\"plb-rte-widget-caption\">"
 				.htmlspecialchars(empty($caption) ? wfMsg("plb-editor-enter-caption") : $caption)
 				."</span>"
-			."<img contenteditable=\"false\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: 185px\" alt=\"".htmlspecialchars($caption)."\">"
+			."<span class=\"plb-rte-widget-cover\">&nbsp;</span>"
+			."<img src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/images/picture-placeholder.png\" style=\"width: {$width}px\" alt=\"".htmlspecialchars($caption)."\">"
 			.$this->getRTEUIMarkup()
-			.XML::closeElement('span');
+			.XML::closeElement('div');
 	}
 
 	public function validateAttribute(array &$elements) {
