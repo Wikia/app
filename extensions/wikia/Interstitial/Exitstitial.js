@@ -6,7 +6,7 @@ var Exitstitial = {
 
 	settings: {
 		destinationURL: '',
-		adUrl: '',
+		adUrl: ''
 	},
 
 	init: function() {
@@ -63,6 +63,5 @@ var Exitstitial = {
 		$.get(Exitstitial.settings.adUrl, function(data) {
 			$("#ExitstitialInfobox").html(data);
 		});
-	},
-
+	}
 }
