@@ -118,15 +118,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						// Otherwise, duplicate the previous block.
 						newBlock = previousBlock.clone();
 					}
-					
+
 					if ( previousBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}
 				else if ( nextBlock ) {
 					newBlock = nextBlock.clone();
-					
+
 					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}
-				
+
 				if ( !newBlock )
 					newBlock = doc.createElement( blockTag );
 				// Force the enter block unless we're talking of a list item.
@@ -299,6 +299,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					// Wikia -- start
 					lineBreak.setAttribute('data-rte-shift-enter', true);
 					// Wikia -- end
+
+					// Wikia -- start
+					// don't allow line breaks in headings (RT #75625)
+					if (headerTagRegex.test(startBlockTag)) {
+						return;
+					}
+					// Wikia -- end
 				}
 
 				range.deleteContents();
@@ -407,7 +414,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		// Get the selection ranges.
 		var ranges = editor.getSelection().getRanges( true );
-		
+
 		// Wikia - start
 		if (ranges.length == 0) {
 			ranges = editor.getSelection().getRanges( false );

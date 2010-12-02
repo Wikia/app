@@ -7,7 +7,7 @@ DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate 
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r30409 build 20101130',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r30474 build 20101202',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -2277,7 +2277,7 @@ if(!forceMode&&isEndOfBlock&&headerTagRegex.test(startBlockTag))
 doc.createText('').insertAfter(startBlock);range.setStartAt(startBlock.getNext(),CKEDITOR.env.ie?CKEDITOR.POSITION_BEFORE_START:CKEDITOR.POSITION_AFTER_START);}
 else
 {var lineBreak;isPre=(startBlockTag=='pre');if(isPre&&!CKEDITOR.env.gecko)
-lineBreak=doc.createText(CKEDITOR.env.ie?'\r':'\n');else{lineBreak=doc.createElement('br');lineBreak.setAttribute('data-rte-shift-enter',true);}
+lineBreak=doc.createText(CKEDITOR.env.ie?'\r':'\n');else{lineBreak=doc.createElement('br');lineBreak.setAttribute('data-rte-shift-enter',true);if(headerTagRegex.test(startBlockTag)){return;}}
 range.deleteContents();range.insertNode(lineBreak);if(!CKEDITOR.env.ie)
 doc.createText('\ufeff').insertAfter(lineBreak);if(isEndOfBlock&&!CKEDITOR.env.ie)
 lineBreak.getParent().appendBogus();if(!CKEDITOR.env.ie)
