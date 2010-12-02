@@ -340,20 +340,22 @@ class AutomaticWikiAdoptionHelper {
 		wfProfileIn(__METHOD__);
 		global $wgUser, $wgCityId, $wgExternalDatawareDB;
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
-		$dbw->insert('user_flags',
-			array(
-				'city_id' => $wgCityId,
-				'user_id' => $wgUser->getID(),
-				'type' => self::USER_FLAGS_AUTOMATIC_WIKI_ADOPTION,
-				'timestamp' => wfTimestamp(TS_DB)
-			),
-			__METHOD__,
-			'IGNORE'
-		);
+		if (!wfReadOnly()) {
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
+			$dbw->insert('user_flags',
+				array(
+					'city_id' => $wgCityId,
+					'user_id' => $wgUser->getID(),
+					'type' => self::USER_FLAGS_AUTOMATIC_WIKI_ADOPTION,
+					'timestamp' => wfTimestamp(TS_DB)
+				),
+				__METHOD__,
+				'IGNORE'
+			);
 
-		// fix for AJAX calls
-		$dbw->commit();
+			// fix for AJAX calls
+			$dbw->commit();
+		}
 
 		wfProfileOut(__METHOD__);
 	}

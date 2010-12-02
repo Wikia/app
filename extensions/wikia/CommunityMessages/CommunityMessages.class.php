@@ -150,7 +150,7 @@ class CommunityMessages {
 		if ($wgUser->isLoggedIn()) {
 			$userTimestamp = self::getUserTimestamp($wgUser);
 			//we have newer message - update user's timestamp
-			if ($userTimestamp === false || $communityMessagesTimestamp > $userTimestamp) {
+			if (($userTimestamp === false || $communityMessagesTimestamp > $userTimestamp) && !wfReadOnly()) {
 				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 				$dbw->replace('user_flags', null /*not used*/,
 					array(
