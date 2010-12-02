@@ -4,22 +4,25 @@ var AdSS = {
 
 	init: function() {
 		AdSS.sponsormsg = $("div.sponsormsg > ul");
-		AdSS.sponsormsg.css( { "position": "relative" } );
+		if(AdSS.sponsormsg.length) {
+			// if div exists
+			AdSS.sponsormsg.css( { "position": "relative" } );
 
-		// display page ads
-		if(typeof(wgAdSS_pageAds) !== 'undefined') {
-			$.each( wgAdSS_pageAds, function(i,v) { AdSS.sponsormsg.append(v); } );
+			// display page ads
+			if(typeof(wgAdSS_pageAds) !== 'undefined') {
+				$.each( wgAdSS_pageAds, function(i,v) { AdSS.sponsormsg.append(v); } );
+			}
+
+			// display a self ads
+			if(typeof(wgAdSS_selfAd) !== 'undefined') {
+				$(wgAdSS_selfAd).appendTo(AdSS.sponsormsg)
+					.find("a").bind( "click", { adId: 0 }, AdSS.onClick );
+				$.tracker.byStr( "adss/publisher/view/0" );
+			}
+
+			// fetch a site ad
+			$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'2.2'}, AdSS.onGetSiteAds );
 		}
-
-		// display a self ads
-		if(typeof(wgAdSS_selfAd) !== 'undefined') {
-			$(wgAdSS_selfAd).appendTo(AdSS.sponsormsg)
-			.find("a").bind( "click", { adId: 0 }, AdSS.onClick );
-			$.tracker.byStr( "adss/publisher/view/0" );
-		}
-
-		// fetch a site ad
-		$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'2.2'}, AdSS.onGetSiteAds );
 	},
 
 	onGetSiteAds: function(response) {

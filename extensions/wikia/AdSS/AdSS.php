@@ -55,7 +55,7 @@ $wgAjaxExportList[] = 'AdSS_AdminController::acceptAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
 
 if( empty( $wgAdSS_OnlyAdmin ) ) {
-	$wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
+	//$wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';
 	//$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
 	$wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
