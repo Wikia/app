@@ -13,6 +13,7 @@ $wgHooks['ParserFirstCallInit'][] = 'efHideTagsSetup';
 function efHideTagsSetup(&$parser) {
 	$parser->setHook( 'vote', 'efHideTags' );
 	$parser->setHook( 'comments', 'efHideTags' );
+	$parser->setHook( 'rhtml', 'efHideTags' );
 	/* copy above line and change tag name to hide additional tags */
 
 	$parser->setHook( 'loggedin', 'efJustPrintTags' );
