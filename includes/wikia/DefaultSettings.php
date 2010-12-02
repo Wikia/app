@@ -151,7 +151,7 @@ require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
  * API classes
  */
 
-$wgAutoloadClasses["WikiaApiQuery"] = "extensions/wikia/WikioaApi/WikiaApiQuery.php";
+$wgAutoloadClasses["WikiaApiQuery"] = "extensions/wikia/WikiaApi/WikiaApiQuery.php";
 $wgAutoloadClasses["WikiaApiQueryConfGroups"] = "extensions/wikia/WikiaApi/WikiaApiQueryConfGroups.php";
 $wgAutoloadClasses["WikiaApiQueryDomains"] = "extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
 $wgAutoloadClasses["WikiaApiQueryPopularPages"]  = "extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
