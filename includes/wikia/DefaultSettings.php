@@ -320,6 +320,7 @@ $wgSkipSkins = array(
 		'monaco_old',
 		'wikiaphone',
 		'wikiaphoneold',
+		'smartphone',
 		'efmonaco',
 		'answers'
 );

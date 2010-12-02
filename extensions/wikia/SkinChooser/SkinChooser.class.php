@@ -512,6 +512,11 @@ class SkinChooser {
 		if($userSkin == 'monaco' && !$allowMonacoSelection) {
 			$userSkin = 'oasis';			
 		}
+		
+		//Fix RT#133364 and makes crazy mobile users get the correct one
+		if( $userSkin == 'smartphone' ){
+			$userSkin = 'wikiaphone';
+		}
 
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
