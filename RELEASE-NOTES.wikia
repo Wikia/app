@@ -5,6 +5,7 @@
 * rt#132151: VET/WMU: performance issue (macbre)
 * rt#133387: No "Around Wikia's network" ads on Special:LandingPage, IE7 (macbre)
 * rt#133407: Exitstitials are not working (macbre)
+* rt#105921: Make WikiBuilder redirect to Main Page instead of talk page (sean)
 
 == Changes since 20101115 ==
 * rt#68485: MyTools now has MyContributions (TOR)
