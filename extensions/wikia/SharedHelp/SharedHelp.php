@@ -114,7 +114,7 @@ function SharedHelpHook(&$out, &$text) {
 		return true;
 	}
 
-	if($wgTitle->getNamespace() == 12) { # Process only for pages in namespace Help (12)
+	if($wgTitle->getNamespace() == NS_HELP) {
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
@@ -123,6 +123,17 @@ function SharedHelpHook(&$out, &$text) {
 		$sharedServer = unserialize(WikiFactory::getVarByName('wgServer', $wgHelpWikiId)->cv_value);
 		$sharedScript = unserialize(WikiFactory::getVarByName('wgScript', $wgHelpWikiId)->cv_value);
 		$sharedArticlePath = unserialize(WikiFactory::getVarByName('wgArticlePath', $wgHelpWikiId)->cv_value);
+
+		// get defaults
+		// in case anybody's curious: no, we can't use $wgScript cause that may be overridden locally :/
+		// @TODO pull this from somewhere instead of hardcoding
+		if ( empty( $sharedArticlePath ) ) {
+			$sharedArticlePath = '/wiki/$1';
+		}
+		if ( empty( $sharedScript ) ) {
+			$sharedScript = '/index.php';
+		}
+
 		$sharedArticlePathClean = str_replace('$1', '', $sharedArticlePath);
 		$localArticlePathClean = str_replace('$1', '', $wgArticlePath);
 
