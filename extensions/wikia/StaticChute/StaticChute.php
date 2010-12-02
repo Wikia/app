@@ -164,6 +164,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
+			'../extensions/wikia/AdSS/adss.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
@@ -206,6 +207,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
+			'../extensions/wikia/AdSS/adss.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
@@ -246,6 +248,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
+			'../extensions/wikia/AdSS/adss.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
@@ -336,6 +339,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
+			'../extensions/wikia/AdSS/adss.js',
 			'../extensions/wikia/Interstitial/Exitstitial.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
@@ -378,6 +382,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
+			'../extensions/wikia/AdSS/adss.js',
 		);
 		$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
 
