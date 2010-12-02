@@ -1203,7 +1203,7 @@ JS;
 		}
 		$slidersOnPage = implode( ', ', $tmpArr );
 		$html = "<script> if(!allSliders){ var allSliders = new Array(); }; allSliders.push(".$this->mData['id']."); </script>";
-		$html .= "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}\"></script>";
+		$html .= "<script> wgAfterContentAndJS.push(function() { $.getScript('{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}'); }); </script>";
 		
 		if ( $this->getParam('orientation') == 'right' ){
 			$sliderClass = 'vertical';
