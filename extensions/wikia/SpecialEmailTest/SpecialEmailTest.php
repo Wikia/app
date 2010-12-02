@@ -9,8 +9,6 @@
  */
 
 $wgSpecialPages['EmailTest'] = 'SpecialEmailTest';
-$wgGroupPermissions['*']['emailtest'] = false;
-$wgGroupPermissions['staff']['emailtest'] = true;
 
 class SpecialEmailTest extends UnlistedSpecialPage {
 
@@ -25,37 +23,34 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 		parent::__construct( 'EmailTest', 'emailtest' );
 
 		$this->mChallengeToken = $wgEmailTestSecretToken;
-		$this->mConfirmToken = time()."_emailtest"
+		$this->mConfirmToken = time()."_emailtest";
 		$this->mText = "The quick brown fox jumps over the lazy dog";
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgUser, $wgMessageCache;
-
-		$wgMessageCache->addMessages( array( 'emailtest' => 'EmailTest' ), 'en' );
+		global $wgRequest;
 
 		wfProfileIn( __METHOD__ );
-
-		$this->setHeaders();
-
-		if ($this->isRestricted() && !$this->userCanExecute( $wgUser )) {
-			$this->displayRestrictionError();
-			return;
-		}
 		
-		// Keep this separate from the above check in the event we want ever want
-		// to handle this differently
+		// Don't allow just anybody to use this
 		if ($this->mChallengeToken != $wgRequest->getVal('challenge')) {
-			$this->displayRestrictionError();
-			return;
+			header("Status: 400");
+			header("Content-type: text/plain");
+			print("Challenge incorrect");
+			
+			wfProfileOut( __METHOD__ );
+			exit;
 		}
 		
 		// Make sure we get an email address
 		$this->mAccount = $wgRequest->getVal('account');
 		if (!$this->mAccount) {
-			$wgOut->setStatusCode(400);
-			$wgOut->addHTML("Parameter 'account' required");
-			return;
+			header("Status: 400");
+			header("Content-type: text/plain");
+			print("Parameter 'account' required");
+			
+			wfProfileOut( __METHOD__ );
+			exit;
 		}
 		
 		# These two both have defaults
@@ -70,10 +65,12 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 						  null,
 						  $this->mConfirmToken
 						);
-
-		$wgOut->setStatusCode(200);
-		$wgOut->addHTML($this->mConfirmToken);
-
+						
+		header("Status: 200");
+		header("Content-type: text/plain");
+		print($this->mConfirmToken);
+		
 		wfProfileOut( __METHOD__ );
+		exit;
 	}
 }
