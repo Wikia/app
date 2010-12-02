@@ -31,8 +31,8 @@ var Exitstitial = {
 
 		$.showModal(header, body, {
 			id: 'ExitstitialInfoboxWrapper',
-			width: $(window).width() - 200,
-			height: $(window).height() - 200
+			width: $(window).width() - 250,
+			height: $(window).height() - 250
 		});
 
 		/*** Make some changes to the modal ***/
