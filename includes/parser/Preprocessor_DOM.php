@@ -1004,8 +1004,17 @@ class PPFrame_DOM implements PPFrame {
 		$outStack = array( '', '' );
 		$iteratorStack = array( false, $root );
 		$indexStack = array( 0, 0 );
+		
+		$RTEext_1 = false;
+		$RTEext_2 = false;
 
 		while ( count( $iteratorStack ) > 1 ) {
+			
+			if($RTEext_1) {
+				$RTEext_1 = false;
+				$RTEext_2 = true;
+			}
+			
 			$level = count( $outStack ) - 1;
 			$iteratorNode =& $iteratorStack[ $level ];
 			$out =& $outStack[$level];
@@ -1050,6 +1059,13 @@ class PPFrame_DOM implements PPFrame {
 				$newIterator = $contextNode;
 			} elseif ( $contextNode instanceof DOMNode ) {
 				if ( $contextNode->nodeType == XML_TEXT_NODE ) {
+					
+					if($RTEext_2) {
+						if(strpos($contextNode->nodeValue, 'table') !== false) {
+							RTE::$edgeCases[] = 'COMPLEX.11';
+						}						
+					}
+					
 					$out .= $contextNode->nodeValue;
 				} elseif ( $contextNode->nodeName == 'template' ) {
 
@@ -1173,6 +1189,7 @@ class PPFrame_DOM implements PPFrame {
 						'close' => $closes->length > 0 ? new PPNode_DOM( $closes->item( 0 ) ) : null,
 					);
 					$out .= $this->parser->extensionSubstitution( $params, $this );
+					$RTEext_1 = true;
 				} elseif ( $contextNode->nodeName == 'h' ) {
 					# Heading
 					$s = $this->expand( $contextNode->childNodes, $flags );
@@ -1220,6 +1237,7 @@ class PPFrame_DOM implements PPFrame {
 					$level--;
 				}
 			}
+			$RTEext_2 = false;
 		}
 		--$expansionDepth;
 		wfProfileOut( __METHOD__ );

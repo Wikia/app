@@ -3529,6 +3529,8 @@ class Parser
 		# @author: Inez Korczyński
 		global $wgRTEParserEnabled;
 		if(!empty($wgRTEParserEnabled)) {
+
+			
 			$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXT_WIKITEXT, $content);
 
 			# Allow parser extensions to generate their own placeholders (instead of default one from RTE)
