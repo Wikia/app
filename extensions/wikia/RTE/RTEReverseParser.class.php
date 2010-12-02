@@ -382,6 +382,9 @@ class RTEReverseParser {
 				break;
 		}
 
+		// protect HTML entities (RT #38844)
+		$out = RTEParser::markEntities($out);
+
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
