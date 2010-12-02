@@ -14,7 +14,7 @@ $1
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Share',
 	'lightbox-share-button-embed' => 'Embed',
-	'lightbox-share-email-label' => 'Email this image to a friends (comma separated addresses)',
+	'lightbox-share-email-label' => 'Email this photo to a friend:',
 	'lightbox-share-email-ok-caption' => 'Confirmation',
 	'lightbox-share-email-ok-content' => 'E-mails have been sent.',
 	'lightbox-share-email-error-caption' => 'Error',
