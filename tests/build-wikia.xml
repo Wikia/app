@@ -17,7 +17,8 @@
     <property name="seleniumPort" value="4444" />
     <property name="browser" value="*firefox" />
 
-    <property name="groups" value="CI" />
+    <property name="groups" value="" />
+    <property name="excludegroups" value="destructive" />
     <property name="threadCount" value="1" />
     <property name="timeout" value="120000" />
 
@@ -46,27 +47,6 @@
         </javac>
     </target>
 
-    <target name="testng-run-broken" depends="compile" description="Run all broken Selenium tests">
-        <testng classpathref="runtime.classpath"
-                outputdir="${build.logs}"
-                suitename="Wikia QA Broken Test Suite"
-                listeners="org.uncommons.reportng.JUnitXMLReporter"
-                parallel="methods"
-                threadCount="${threadCount}"
-                groups="broken"
-                failureProperty="test.failed" >
-            <classfileset dir="${build.bin}/com/wikia/selenium/tests" includes="*.class" />
-            <sysproperty key="java.security.policy" file="testng.policy"/>
-            <sysproperty key="webSite" value="${webSite}" />
-            <sysproperty key="seleniumHost" value="${seleniumHost}" />
-            <sysproperty key="seleniumPort" value="${seleniumPort}" />
-            <sysproperty key="browser" value="${browser}" />
-            <sysproperty key="threadCount" value="${threadCount}" />
-            <sysproperty key="timeout" value="${timeout}" />
-            <env key="TESTSCONFIG" value="${testsconfig}" />
-        </testng>
-    </target>
-
     <target name="testng-run-all" depends="compile" description="Run all Selenium tests">
         <testng classpathref="runtime.classpath"
                 outputdir="${build.logs}"
@@ -75,7 +55,7 @@
                 parallel="methods"
                 threadCount="${threadCount}"
                 groups="${groups}"
-                excludedgroups="broken,answers,central,RTE"
+                excludedgroups="${excludegroups}"
                 failureProperty="test.failed">
             <classfileset dir="${build.bin}/com/wikia/selenium/tests" includes="*.class" />
             <sysproperty key="java.security.policy" file="${testsdir}/testng.policy"/>
@@ -123,7 +103,6 @@
                 suitename="Wikia QA Single Test"
                 listeners="org.uncommons.reportng.JUnitXMLReporter"
                 parallel="methods"
-                threadCount="${threadCount}"
                 failureProperty="test.failed" >
             <classfileset file="${build.bin}/com/wikia/selenium/tests/${testClass}.class" />
             <sysproperty key="java.security.policy" file="${testsdir}/testng.policy"/>
@@ -131,7 +110,6 @@
             <sysproperty key="seleniumHost" value="${seleniumHost}" />
             <sysproperty key="seleniumPort" value="${seleniumPort}" />
             <sysproperty key="browser" value="${browser}" />
-            <sysproperty key="threadCount" value="${threadCount}" />
             <sysproperty key="timeout" value="${timeout}" />
             <env key="TESTSCONFIG" value="${testsconfig}" />
         </testng>
@@ -145,7 +123,9 @@
     </target>
 
     <target name="start-server" >
-        <java jar="lib/selenium-server.jar" fork="true" spawn="true" />
+        <java jar="lib/selenium-server.jar" fork="true" spawn="true">
+            <arg value="-avoidProxy -ensureCleanSession" />
+        </java>
     </target>
 
     <target name="stop-server" >
@@ -154,6 +134,9 @@
              dest="result.txt"
              ignoreerrors="true" />
         <echo taskname="selenium-shutdown" message="DGF Errors during shutdown are expected" />
+    </target>
+    
+    <target name="all" depends="testng-run">
     </target>
 
 </project>
