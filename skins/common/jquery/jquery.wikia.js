@@ -1,14 +1,24 @@
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
 
-// replace stock function for getting rid of response-speed related issues
+// replace stock function for getting rid of response-speed related issues in Firefox
+// @see http://stackoverflow.com/questions/1130921/is-the-callback-on-jquerys-getscript-unreliable-or-am-i-doing-something-wrong
 jQuery.getScript = function(url, callback) {
 	jQuery.ajax({
-		async: false,
 		type: "GET",
 		url: url,
-		data: null,
-		success: callback,
+		success: function(xhr) {
+			if (typeof callback == 'function') {
+				try {
+					callback();
+				}
+				catch(e) {
+					eval(xhr);
+					callback();
+					$().log('eval() fallback applied for ' + url, 'getScript');
+				}
+			}
+		},
 		dataType: 'script'
 	});
 }
