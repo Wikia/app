@@ -23,7 +23,7 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 		parent::__construct( 'EmailTest', 'emailtest' );
 
 		$this->mChallengeToken = $wgEmailTestSecretToken;
-		$this->mConfirmToken = time()."_emailtest";
+		$this->mConfirmToken = time().'-'.rand(10000, 99999).'_emailtest';
 		$this->mText = "The quick brown fox jumps over the lazy dog";
 	}
 
