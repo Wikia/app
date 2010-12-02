@@ -49,10 +49,6 @@ $wgAkamaiLocalVersion = $wgAkamaiGlobalVersion;
  */
 $wgCityId = null;
 
-/**
- * production wikis use tokyotyrant for sessions
- */
-$wgSessionsInTokyoTyrant = false;
 
 
 /**
@@ -155,7 +151,7 @@ require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
  * API classes
  */
 
-$wgAutoloadClasses["WikiaApiQuery"] = "extensions/wikia/WikiaApi/WikiaApiQuery.php";
+$wgAutoloadClasses["WikiaApiQuery"] = "extensions/wikia/WikioaApi/WikiaApiQuery.php";
 $wgAutoloadClasses["WikiaApiQueryConfGroups"] = "extensions/wikia/WikiaApi/WikiaApiQueryConfGroups.php";
 $wgAutoloadClasses["WikiaApiQueryDomains"] = "extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
 $wgAutoloadClasses["WikiaApiQueryPopularPages"]  = "extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
@@ -175,7 +171,6 @@ $wgAutoloadClasses["WikiaApiQueryPageinfo"] = "extensions/wikia/WikiaApi/WikiaAp
 $wgAutoloadClasses[ "ApiImageThumb"                ] = "{$IP}/extensions/wikia/Our404Handler/ApiImageThumb.php";
 $wgAutoloadClasses[ "WikiaApiReportEmail"          ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail" ] = "{$IP}/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
-$wgAutoloadClasses[ "TokyoTyrantSession"           ] = "{$IP}/includes/wikia/TokyoTyrantSessions.php";
 $wgAutoloadClasses[ "WikiFactoryTags"              ] = "{$IP}/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryEventsData"      ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
 $wgAutoloadClasses[ "WikiaApiQueryEventInfo"       ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventInfo.php";
@@ -509,13 +504,6 @@ $IPA = "/usr/wikia/source/answers";
  */
 $wgNoExternals = false;
 
-/**
- * cache in TT
- * class: TokyoTyrantCache
- */
-define( 'CACHE_TT', 666 );
-$wgTTCache = null;
-include_once("{$IP}/includes/wikia/TokyoTyrantSessions.php");
 
 /**
  * Style path for resources on the CDN.
