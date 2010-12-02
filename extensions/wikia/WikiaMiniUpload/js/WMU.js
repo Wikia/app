@@ -150,14 +150,17 @@ function WMU_moveBackButton(selector) {
  */
 if(mwCustomEditButtons) {
 	if ( $("#siteSub").length == 0 ) {
-		mwCustomEditButtons[mwCustomEditButtons.length] = {
-			"imageFile": stylepath + '/../extensions/wikia/WikiaMiniUpload/images/button_wmu.png',
+		mwCustomEditButtons.push({
+			"imageFile": wgExtensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
 			"speedTip": wmu_imagebutton,
 			"tagOpen": "",
 			"tagClose": "",
 			"sampleText": "",
-			"imageId": "mw-editbutton-wmu"
-		};
+			"imageId": "mw-editbutton-wmu",
+			'onclick': function(ev) {
+				WMU_show(ev);
+			}
+		});
 	}
 }
 
@@ -174,13 +177,8 @@ $(function() {
 });
 
 function WMU_addHandler() {
-	// FIXME
-	if(!$('#mw-editbutton-wmu').exists()) {
-		setTimeout(WMU_addHandler, 250);
-		return;
-	}
 	$.loadYUI(function(){
-		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', 'mw-editbutton-wmu'], 'click',  WMU_show);
+		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink'], 'click',  WMU_show);
 	});
 }
 
