@@ -163,6 +163,7 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 	'wikiaPhotoGallery-sliderpreview-choosetype-bottom-tooltip' => 'Horizontal thumbnails',
 	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => 'Vertical thumbnails',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Add a photo',
+	'wikiaPhotoGallery-sliderpreview-title' => 'Slider builder',
 
 	'wikiaPhotoGallery-upload-title-slideshow' => 'Slideshow builder - Find and upload photo',
 	'wikiaPhotoGallery-upload-title-gallery' => 'Gallery builder - Find and upload photo',

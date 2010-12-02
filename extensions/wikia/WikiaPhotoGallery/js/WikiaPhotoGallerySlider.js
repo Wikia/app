@@ -1,7 +1,6 @@
 
 if ( scriptAlreadyLoaded != 'SliderGallery' ){
 	var scriptAlreadyLoaded = 'SliderGallery'
-	wgAfterContentAndJS.push(function() {
 
 	importStylesheetURI(wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.css?' + wgStyleVersion);
 
@@ -77,6 +76,4 @@ if ( scriptAlreadyLoaded != 'SliderGallery' ){
 	}
 
 	wikiaPhotoGallerySlider_setup();
-
-	});
 }
