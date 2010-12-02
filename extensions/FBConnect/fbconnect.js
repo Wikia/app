@@ -139,7 +139,6 @@ function sendToConnectOnLoginForSpecificForm(formName){
 			if(data.status == "ok") {
 				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + wgPageName + '&returntoquery=' + wgPageQuery,  "#fbConnectModal", {
 			        id: "fbConnectModalWrapper",
-			        width: "600px",
 			        callback: function() {
 						$('#fbConnectModalWrapper .close').click(function(){
 							WET.byStr( 'FBconnect/ChooseName/X' );
