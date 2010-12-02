@@ -183,13 +183,17 @@ function VET_moveBackButton(selector) {
  */
 if(mwCustomEditButtons) {
 	if ( $("#siteSub").length == 0 ) {
-		mwCustomEditButtons[mwCustomEditButtons.length] = {
-			"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet.png',
+		mwCustomEditButtons.push({
+			"imageFile": wgExtensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
 			"speedTip": vet_imagebutton,
 			"tagOpen": "",
 			"tagClose": "",
 			"sampleText": "",
-			"imageId": "mw-editbutton-vet"};
+			"imageId": "mw-editbutton-vet",
+			'onclick': function(ev) {
+				VET_show(ev);
+			}
+		});
 	}
 }
 
@@ -225,12 +229,7 @@ function VET_showReplace(e) {
 }
 
 function VET_addHandler() {
-	// FIXME
-	if(!$('#mw-editbutton-vet').exists()) {
- 		setTimeout(VET_addHandler, 250);
-  		return;
-  	}
-  	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink', 'mw-editbutton-vet'], 'click',  VET_show);
+  	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink'], 'click',  VET_show);
 }
 
 function VET_toggleSizing( enable ) {
