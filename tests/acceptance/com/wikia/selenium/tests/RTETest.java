@@ -160,6 +160,7 @@ public class RTETest extends BaseTest {
 				"[a]\n[[a]\n[[[a]\n[[[[a]\n[[[[[a]\n[[[[[[a]\n[[[[[[[a]\n[a]]\n[a]]]\n[a]]]]\n[a]]]]]\n[a]]]]]]\n[a]]]]]]]\n[a]\n[[a]]\n[[[a]]]\n[[[[a]]]]\n[[[[[a]]]]]\n[[[[[[a]]]]]]\n[[[[[[[a]]]]]]]\n[[[[[[[[a]]]]]]]]\n[[[[[[[[[a]]]]]]]]]",
 				"[[Sideshow_Bob_Roberts[[Sideshow_Bob_Roberts[[Sideshow_Bob_Roberts]]]]]][[Sideshow Bob Roberts[[Sideshow Bob Roberts[[Sideshow Bob Roberts]]]]]]",
 				"<te&st>a&b&c</te<&>st> &amp; &nbsp; &lt; &gt; : &#58; &#123; - 123 &#x5f;",
+				"<noinclude>&#91;brackets&#93;&nbsp;&amp;&nbsp;non-breaking&nbsp;spaces</noinclude>\n\n<noinclude>[brackets] & non-breaking spaces</noinclude>",
 				"« foo",
 				"ÀàĄąÒòỪừỲỳŹź",
 				"(義) (誠) (涅 ネム) foo",
