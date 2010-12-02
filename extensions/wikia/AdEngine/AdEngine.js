@@ -160,6 +160,9 @@ AdEngine.getMinuteTargeting = function (){
 	return myDate.getMinutes() % 15;
 }; 
 
+/* Note: this function is duplicated in AdEngine::getDelayedIframeLoadingCode.
+ * If you make a change here, make sure to change AdEngine::getDelayedIframeLoadingCode
+ */
 AdEngine.hiddenSlotOnShortPage = function (slotname) {
 	if(slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD' || slotname == 'LEFT_SKYSCRAPER_2' || slotname == 'LEFT_SKYSCRAPER_3') {
 		if($(document).height() >= 1680) {
