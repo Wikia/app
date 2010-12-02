@@ -184,8 +184,10 @@ function wfShareFeatureAjaxUpdateStats( ) {
 		$sharerID = $id;
 		$sharerIP = wfGetIP();
 
-		$awardingService = new AchAwardingService();
-		$awardingService->processSharing($articleID, $sharerID, $sharerIP);
+		if(class_exists('AchAwardingService')) {
+			$awardingService = new AchAwardingService();
+			$awardingService->processSharing($articleID, $sharerID, $sharerIP);
+		}
 	}
 	// todo number of rows affected
 
