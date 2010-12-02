@@ -3,6 +3,8 @@
 * rt#75625: RTE: headings leave orphan == (macbre)
 * rt#107831: RTE eats HTML entities inside tags (macbre)
 * rt#132151: VET/WMU: performance issue (macbre)
+* rt#133387: No "Around Wikia's network" ads on Special:LandingPage, IE7 (macbre)
+* rt#133407: Exitstitials are not working (macbre)
 
 == Changes since 20101115 ==
 * rt#68485: MyTools now has MyContributions (TOR)
