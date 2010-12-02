@@ -44,7 +44,7 @@ class UserPagesHeaderModule extends Module {
 	public static function getUserName(Title $title, $namespaces, $fallbackToGlobal = true) {
 		wfProfileIn(__METHOD__);
 		global $wgUser, $wgRequest;
-		
+
 		$userName = null;
 
 		if (in_array($title->getNamespace(), $namespaces)) {
@@ -230,6 +230,15 @@ class UserPagesHeaderModule extends Module {
 
 					$this->actionImage = MenuButtonModule::MESSAGE_ICON;
 					$this->actionName = 'leavemessage';
+				}
+				else {
+					$this->actionMenu['action'] = array(
+						'href' => $this->content_actions['edit']['href'],
+						'text' => wfMsg('oasis-page-header-edit-profile'),
+					);
+
+					$this->actionImage = MenuButtonModule::EDIT_ICON;
+					$this->actionName = 'editprofile';
 				}
 			}
 		}
