@@ -79,7 +79,7 @@
 </section>
 <script>
 	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
-	var redirect = window.wgArticlePath.replace(/\$1/, window.wgMainpage);
+	var redirect = window.wgArticlePath.replace(/\$1/, window.wgMainpage.replace(/ /g, '_') );
 	var language = "<?= $wgLanguageCode ?>";
 	var messages = {"<?= $wgLanguageCode . '": ' . json_encode($OWBmessages[$wgLanguageCode]) . "};"?>
 </script>
