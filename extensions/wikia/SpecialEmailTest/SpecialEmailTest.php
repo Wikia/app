@@ -60,7 +60,7 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 		UserMailer::send( new MailAddress($this->mAccount),
 						  new MailAddress('test@wikia-inc.com'),
 						  "EmailTest - End to end test",
-						  $this->mText,
+						  $this->mConfirmToken."\n".$this->mText,
 						  null,
 						  null,
 						  $this->mConfirmToken
