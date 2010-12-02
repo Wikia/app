@@ -169,7 +169,7 @@ function getForcedWikiValue(){
  */
 function getDevBoxOverrideDatabases($db){
 
-	$IGNORE_DBS = array('information_schema', 'mysql', '#mysql50#lost+found', 'messaging', 'help', 'devbox', 'wikicities_c2');
+	$IGNORE_DBS = array('information_schema', 'mysql', '#mysql50#lost+found', 'messaging', 'devbox', 'wikicities_c2');
 	$retval = array();
 
 	$info = $db->getLBInfo();
