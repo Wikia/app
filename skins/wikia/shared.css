@@ -233,6 +233,14 @@
 	display: none;
 }
 
+/* hide new blog listing box on Monobook */
+body.skin-monobook .WikiaBlogListingBox {
+	display: none;
+}
+body.skin-monobook .WikiaBlogListing {
+	display: none;
+}
+
 /* show on Monaco and Oasis */
 body.skin-oasis .wikia-slideshow-images .wikia-slideshow-image,
 body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
