@@ -1198,6 +1198,9 @@ class RTEReverseParser {
 
 		$textContent = self::addSpaces($node, $textContent);
 
+		// RT #75625
+		$textContent = trim($textContent, "\n");
+
 		if ($textContent != '') {
 			$out = "{$level}{$textContent}{$level}\n";
 
