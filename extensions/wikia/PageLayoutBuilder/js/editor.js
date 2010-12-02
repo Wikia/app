@@ -179,6 +179,8 @@
 	
 	});
 	
+	PLB.Widgets['plb_gallery'] = PLB.Widgets['plb_image'];
+	
 	PLB.Widget.getType = function ( el ) {
 		el = $(el);
 		return el.attr(PLB.HTML_PARAM_TYPE) || el.getData()[PLB.PARAM_TYPE];
@@ -1300,6 +1302,27 @@
 		
 		extRefreshPreview : function(values) {
 			$().log(values, 'PLB image');
+		}
+	});
+	
+	
+	PLB.PropertyEditors['plb_gallery'] = $.createClass(PLB.PropertyEditor,{
+		
+		constructor: function() {
+			PLB.PropertyEditors['plb_gallery'].superclass.constructor.apply(this,arguments);
+		},
+		
+		extFormValidate: function(state) {
+			if (this.values['size'] != '') {
+				var e = parseInt(this.values['size']);
+				if (e < 1) {
+					state.status['size'].push(PLB.Lang['plb-parser-image-size-not-int']);
+					state.valid = false;
+				} else if (e > 1000) {
+					state.status['size'].push(PLB.Lang['plb-parser-image-size-too-big']);
+					state.valid = false;
+				}
+			}
 		}
 	});
 

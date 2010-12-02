@@ -186,7 +186,8 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 		$caption = $this->getAttrVal('caption',''); // is not default value is error message for RTE
 
 		$tagOptions = array();
-		$align = $this->getAttrVal('align');
+		$align = $this->getAttrVal('align',true);
+
 		$width = $this->getAttrVal('size',150);
 		$tagOptions['style'] = "width: {$width}px;";
 
