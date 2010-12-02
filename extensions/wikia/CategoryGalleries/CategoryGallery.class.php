@@ -79,6 +79,12 @@
 		protected $data = false;
 
 		/**
+		 * Stores cache result / getArticles() result
+		 * @var array
+		 */
+		protected $articles = false;
+
+		/**
 		 * Creates new CategoryGallery object
 		 * @param $categoryPage CategoryPage The category page object
 		 */
@@ -129,7 +135,7 @@
 		 * Builds and returns the memcached key
 		 */
 		protected function getMemcKey() {
-			return wfMemcKey('category-gallery',$this->categoryPage->mTitle->getDBkey(),$this->configHash);
+			return wfMemcKey('category-gallery-articles',$this->categoryPage->mTitle->getDBkey(),$this->configHash);
 		}
 
 		/**
@@ -237,7 +243,6 @@
 					}
 					$entry['image_url'] = $image['url'];
 				} else {
-//					$entry['title'] .= ' asdaasd asdasdasd as dasdasd asdas dadas dad asdad';
 					$entry['snippet'] = $this->getArticleSnippet($id,100);
 				}
 				$data[$id] = $entry;
@@ -254,14 +259,15 @@
 			global $wgMemc;
 
 			$cacheKey = $this->getMemcKey();
-			$this->data = $wgMemc->get($cacheKey);
-			if (!is_array($this->data)) {
+			$this->articles = $wgMemc->get($cacheKey);
+			if (!is_array($this->articles)) {
 				$articles = $this->getArticles();
-				$images = $this->findImages($articles);
-				$this->data = $this->merge($articles,$images);
-				$wgMemc->set($cacheKey,$this->data,self::CACHE_TTL);
+				$wgMemc->set($cacheKey,$this->data,self::CACHE_TTL);	
 			}
-			return $this->data;
+			$images = $this->findImages($articles);
+			$this->articles = $this->merge($articles,$images);
+			
+			return $this->articles;
 		}
 
 		/**
