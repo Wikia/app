@@ -79,7 +79,7 @@
 </section>
 <script>
 	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
-	var redirect = window.wgMainpage; // RT#105921 switch back to mainpage instead of '/wiki/User_talk:' + wgUserName;
+	var redirect = window.wgArticlePath.replace(/\$1/, window.wgMainpage);
 	var language = "<?= $wgLanguageCode ?>";
 	var messages = {"<?= $wgLanguageCode . '": ' . json_encode($OWBmessages[$wgLanguageCode]) . "};"?>
 </script>
