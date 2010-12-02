@@ -1,7 +1,7 @@
 <?php
 /**
  * OutboundScreen - redirects external links to special page
- * 
+ *
  * Do not be alarmed if this file is included even on
  * wikis where the extension is disabled.
  * In order for cached pages (with their links rewritten to go through
@@ -76,7 +76,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 		// Devboxes run on different domains than just what is in WikiFactory.
 		global $wgDevelEnvironment;
 		if($wgDevelEnvironment){
-			array_unshift($whiteList, $_SERVER['SERVER_NAME']);             
+			array_unshift($whiteList, $_SERVER['SERVER_NAME']);
 		}
 
 		$isWhitelisted = false;
@@ -96,7 +96,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 			global $wgTitle;
 			if( $special instanceof Title && $wgTitle instanceof Title ) {
 				// RT #19167
-				$href = $special->getFullURL('f='.urlencode($wgTitle->getPrefixedDBkey()).'&u=' . urlencode($url));
+				$href = $special->getLocalURL('f='.urlencode($wgTitle->getPrefixedDBkey()).'&u=' . urlencode($url));
 				$link = Xml::tags('a', array(
 					'class' => 'external',
 					'rel' => 'nofollow',
