@@ -1,4 +1,7 @@
+
 var CategoryExhibition = {
+
+	lockTable: new Array(),
 
 	init: function() {
 
@@ -98,6 +101,13 @@ var CategoryExhibition = {
 
 	paginatorClick : function(pageSection, axMethod, clickedObj, name ){
 
+		$().log('categoryGallery',clickedObj.attr('data-page') + ' || ' + CategoryExhibition.lockTable[ name ]);
+		if ( CategoryExhibition.lockTable[ name ] == clickedObj.attr('data-page') ){
+		 	return false;
+		}
+		
+		CategoryExhibition.lockTable[ name ] = clickedObj.attr('data-page');
+
 		// tracking;
 		if ( clickedObj.hasClass('paginator-next') ){
 			CategoryExhibition.track(name + '/pagination/next');
@@ -149,7 +159,7 @@ var CategoryExhibition = {
 				});
 			}
 		});
-
+		
 		return false;
 	},
 
