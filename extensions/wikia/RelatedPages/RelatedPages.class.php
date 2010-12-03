@@ -119,6 +119,7 @@ class RelatedPages {
 
 				// get more pages (some can be filtered out - RT #72703)
 				if (count($pageIds) >= $limit * 2) {
+					$pageIds = array_slice( $pageIds, 0, ( $limit * 2 ), true );
 					break;
 				}
 			}
