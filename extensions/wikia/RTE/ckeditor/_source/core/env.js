@@ -175,6 +175,11 @@ if ( !CKEDITOR.env )
 			var geckoRelease = agent.match( /rv:([\d\.]+)/ );
 			if ( geckoRelease )
 			{
+				// Wikia -- start
+				// store full version on Firefox (RT #69635)
+				env.geckoRelease = geckoRelease[1];
+				// Wikia -- end
+
 				geckoRelease = geckoRelease[1].split( '.' );
 				version = geckoRelease[0] * 10000 + ( geckoRelease[1] || 0 ) * 100 + ( geckoRelease[2] || 0 ) * 1;
 			}

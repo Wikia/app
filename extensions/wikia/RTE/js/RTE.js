@@ -123,7 +123,7 @@ window.RTE = {
 		RTE.config.startupMode = mode;
 
 		// RT #69635: disable media drag&drop in Firefox 3.6.9+ (fixed in Firefox 3.6.11)
-		RTE.config.disableDragDrop = (CKEDITOR.env.gecko && CKEDITOR.env.version > 10900 && CKEDITOR.env.version < 10902);
+		RTE.config.disableDragDrop = (CKEDITOR.env.gecko && (CKEDITOR.env.geckoRelease == "1.9.2.9" || CKEDITOR.env.geckoRelease == "1.9.2.10"));
 
 		if (RTE.config.disableDragDrop) {
 			RTE.log('media drag&drop disabled');
