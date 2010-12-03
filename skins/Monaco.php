@@ -1601,11 +1601,11 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	// Sometimes we need an ad delivered at the very top of the page (like for a skin)
 	// This sucks to have a blocking call at the top of the page, but they promised
 	// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
-	global $wgEnableAdInvisibleTop, $wgEnableAdInvisibleHomeTop, $wgOut;
-	if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
+	global $wgOut;
+	if (ArticleAdLogic::isMainPage()){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 		echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
-	} else if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+	} else if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
 	}

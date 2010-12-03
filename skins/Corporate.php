@@ -52,8 +52,8 @@ class CorporateTemplate extends CorporateBaseTemplate {
  class="<?php echo $this->data['body_class_attribute'] ?>">
 
 <?php
-	global $wgEnableAdInvisibleTop, $wgOut;
-	if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle()){
+	global $wgOut;
+	if ($wgOut->isArticle()){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
 	}

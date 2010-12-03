@@ -76,7 +76,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testAdModule() {
-		global $wgTitle, $wgEnableAdInvisibleHomeTop, $wgEnableFAST_HOME2;
+		global $wgTitle, $wgEnableFAST_HOME2;
 
 		// Main page
 		$wgTitle = Title::newMainPage();
@@ -85,10 +85,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('HOME_TOP_LEADERBOARD', $moduleData['conf']);
 		$this->assertContains('INVISIBLE_1', $moduleData['conf']);
 		$this->assertContains('INVISIBLE_2', $moduleData['conf']);
-
-		if(!empty($wgEnableAdInvisibleHomeTop)) {
-			$this->assertContains('HOME_INVISIBLE_TOP', $moduleData['conf']);
-		}
+		$this->assertContains('HOME_INVISIBLE_TOP', $moduleData['conf']);
 
 		if($wgEnableFAST_HOME2) {
 			$this->assertContains('HOME_TOP_RIGHT_BOXAD', $moduleData['conf']);

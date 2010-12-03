@@ -6,7 +6,7 @@ class AdModule extends Module {
 	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
 
 	private function configure() {
-		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgEnableAdTopRightButton;
+		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgEnableAdTopRightButton;
 
 		self::$config = array();
 
@@ -20,9 +20,7 @@ class AdModule extends Module {
 				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
 				self::$config['INVISIBLE_1'] = true;
 				self::$config['INVISIBLE_2'] = true;
-				if(!empty($wgEnableAdInvisibleTop)) {
-					self::$config['INVISIBLE_TOP'] = true;
-				}
+				self::$config['INVISIBLE_TOP'] = true;
 			}
 			return;
 		}
@@ -36,9 +34,7 @@ class AdModule extends Module {
 			self::$config['INVISIBLE_2'] = true;
 			self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 			self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
-			if(!empty($wgEnableAdInvisibleHomeTop)) {
-				self::$config['HOME_INVISIBLE_TOP'] = true;
-			}
+			self::$config['HOME_INVISIBLE_TOP'] = true;
 			if($wgEnableFAST_HOME2) {
 				self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_HOME_TOP_RIGHT_BOXAD'] = true;
@@ -58,9 +54,7 @@ class AdModule extends Module {
 				self::$config['LEFT_SKYSCRAPER_3'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
-				if(!empty($wgEnableAdInvisibleTop)) {
-					self::$config['INVISIBLE_TOP'] = true;
-				}
+				self::$config['INVISIBLE_TOP'] = true;
 				if(!empty($wgEnableAdTopRightButton)) {
 					self::$config['TOP_RIGHT_BUTTON'] = true;
 				}
