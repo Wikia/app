@@ -8,6 +8,7 @@
 * rt#105921: Make WikiBuilder redirect to Main Page instead of talk page (sean)
 * rt#92457: Bring back styling for FBConnect chooseName dialog in the new look (sean)
 * rt#75307: Border option for images is ignored (macbre)
+* rt#100013: section edits in oasis are generating bad html (TOR)
 
 == Changes since 20101115 ==
 * rt#68485: MyTools now has MyContributions (TOR)
