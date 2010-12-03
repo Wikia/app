@@ -175,7 +175,7 @@ class AdSS_ManagerController {
 						$body .= "ID: {$ad->id}\n";
 						$body .= "Created by: {$ad->getUser()->toString()}\n";
 						$body .= "Ad URL: http://{$ad->url}\n";
-						$body .= "Banner: {$ad->getBannerURL()}\n";
+						$body .= "Banner: ".Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$ad->id )->getFullURL()."\n";
 						UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
 					}
 				}
