@@ -33,7 +33,7 @@ class PayflowAPI {
 		$nvpReqArr["PAYMENTTYPE"] = "any";
 		$nvpReqArr["RETURNURL"]   = $returnUrl;
 		$nvpReqArr["CANCELURL"]   = $cancelUrl;
-		$nvpReqArr["BA_DESC"]     = "Wikia AdSS subscription";
+		$nvpReqArr["BA_DESC"]     = "Wikia+AdSS+subscription";
 
 		return $this->query( $headers, $nvpReqArr, $opts );
 	}
@@ -120,8 +120,18 @@ class PayflowAPI {
 
 		$nvpReqArr["TRXTYPE"] = "S";
 		$nvpReqArr["ACTION"]  = "D";
-		$nvpReqArr["AMT"]     = $amount;
+		$nvpReqArr["AMT"]     = sprintf("%01.2f", $amount);
 		$nvpReqArr["BAID"]    = $baid;
+
+		/* line items not supported yet
+		$nvpReqArr["L_NAME0"] = "Ad1";
+		$nvpReqArr["L_COST0"] = "10.00";
+		$nvpReqArr["L_QTY0"]  =  1;
+		$nvpReqArr["L_NAME1"] = "Ad2";
+		$nvpReqArr["L_COST1"] = sprintf("%01.2f", $amount - 10);
+		$nvpReqArr["L_QTY1"]  =  1;
+		$nvpReqArr["ITEMAMT"] = sprintf("%01.2f", $amount);
+		*/
 
 		return $this->query( $headers, $nvpReqArr, $opts );
 	}
@@ -138,7 +148,7 @@ class PayflowAPI {
 
 		$nvpReqArr["TRXTYPE"] = "A";
 		$nvpReqArr["ACTION"]  = "D";
-		$nvpReqArr["AMT"]     = $amount;
+		$nvpReqArr["AMT"]     = sprintf("%01.2f", $amount);
 		$nvpReqArr["BAID"]    = $baid;
 
 		return $this->query( $headers, $nvpReqArr, $opts );
