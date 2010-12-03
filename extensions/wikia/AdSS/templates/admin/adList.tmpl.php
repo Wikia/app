@@ -27,6 +27,19 @@ $("a.accept").click( function(e) {
 	}
 } );
 
+$("a.edit").click( function(e) {
+	e.preventDefault();
+	var id = $(this).parent().attr("id");
+	$.getJSON( wgScript, {
+		'action': 'ajax',
+		'rs': 'AdSS_AdminController::getAdAjax',
+		'rsargs[0]': id,
+		}, function( response ) {
+			alert(response);
+		}
+	);
+} );
+
 $("a.close").click( function(e) {
 	e.preventDefault();
 	if( confirm( 'Are you sure you want to delete this ad?' ) ) {
