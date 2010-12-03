@@ -122,6 +122,7 @@ class UserBlock {
 			$user->mBlock->mExpiry = is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
 			$user->mBlock->mTimestamp = $blockData['timestamp'];
 			$user->mBlock->mAddress = $address;
+			$user->mBlock->mBlockEmail = true;
 
 			// account creation check goes through the same hook...
 			if ($isBlockIP) {
@@ -130,5 +131,14 @@ class UserBlock {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/*
+	 * Hook handler
+	 * @author Marooned
+	 */
+	public static function onUserCanSendEmail(&$user, &$canSend) {
+		$canSend = self::blockCheck($user);
+		return true;
 	}
 }
