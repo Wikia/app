@@ -77,6 +77,9 @@ function efPhalanxInit() {
 	// Websitewiki filter
 	// @see exntesions/wikia/newsite
 	$wgHooks['NewsiteCreationFilter'][] = 'TitleBlock::genericTitleCheck';
+
+	// RT#93196 - prevent use of user2user email
+	$wgHooks['UserCanSendEmail'][] = 'UserBlock::onUserCanSendEmail';
 }
 
 

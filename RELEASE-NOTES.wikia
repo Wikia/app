@@ -1,4 +1,5 @@
 == Changes since 20101129 ==
+* rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
 * rt#126782: Slideshow: arrows not working in pop out (macbre)
 * rt#75625: RTE: headings leave orphan == (macbre)
 * rt#107831: RTE eats HTML entities inside tags (macbre)
