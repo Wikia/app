@@ -57,11 +57,13 @@ $wgShareFeatureSites = array(
 		'id'	=>	5,
 		'url'	=>	'http://www.technorati.com/faves/?add=$1'
 	),
+	/*
 	array(
 		'name'	=>	'Slashdot',
 		'id'	=>	6,
 		'url'	=>	'http://slashdot.org/bookmark.pl?url=$1&title=$2'
 	),
+	*/
 	array(
 		'name'	=>	'MySpace',
 		'id'	=>	7,
