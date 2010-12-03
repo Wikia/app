@@ -38,10 +38,12 @@ If you prefer to use regular email or have attachments, you can contact us at [m
 		'contactccme' => 'Send me a copy of this message',
 		'contactccdisabled' => 'DISABLED: Please validate your email address to use this function',
 		'contactnotyou' => 'Not you?',
-		
+		'contactcaptchainfo' => 'Please enter the text in the image.',
+		'contactcaptchatitle' => 'Blurry Word',
+		'contactformtitle' => 'Contact Wikia Support Staff',
 		/* errors */
 		'contactnomessage' => 'Please fill in a message',
-		
+		'contactcaptchafail' =>	'Incorrect or missing confirmation code.', 
 		/* email */
 		'contactmailsub' => 'Wikia Contact Mail',
 		'contactmailsubcc' => 'Copy of Wikia Contact Mail',

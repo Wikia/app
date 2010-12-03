@@ -8,7 +8,7 @@ class ContactForm extends SpecialPage {
 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
-	var $err;
+	var $err, $errInputs;
 
 	function  __construct() {
 		parent::__construct( "Contact" , '' /*restriction*/);
@@ -18,8 +18,9 @@ class ContactForm extends SpecialPage {
 	function execute() {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
-
+		
+		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/SpecialContact/SpecialContact.scss' ) );
 		$this->mName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
@@ -32,6 +33,11 @@ class ContactForm extends SpecialPage {
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
 		if( $this->mPosted && ('submit' == $this->mAction ) ) {
+			
+			$captchaObj = new FancyCaptcha();
+			$captchaObj->retrieveCaptcha();
+			$info = $captchaObj->retrieveCaptcha();
+			
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
 			$this->mName = $wgRequest->getText( 'wpName' );
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
@@ -41,14 +47,22 @@ class ContactForm extends SpecialPage {
 
 			#malformed email?
 			if (!User::isValidEmailAddr($this->mEmail)) {
-				$this->err .= "\n" . wfMsg('invalidemailaddress');
+				$this->err[].= wfMsg('invalidemailaddress');
+				$this->errInputs['wpEmail'] = true;
 			}
 
 			#empty message text?
-			if( empty($this->err) && empty($this->mProblemDesc) ) {
-				$this->err .= "\n" . wfMsg('contactnomessage');
+			if( empty($this->mProblemDesc) ) {
+				$this->err[].= wfMsg('contactnomessage');
+				$this->errInputs['wpContactDesc'] = true;
 			}
-
+			
+			#captcha
+			if(!( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
+				$this->err[].= wfMsg('contactcaptchafail');
+				$this->errInputs['wpCaptchaWord'] = true; 
+			}
+			
 			#no errors?
 			if( empty($this->err) )
 			{
@@ -126,7 +140,8 @@ class ContactForm extends SpecialPage {
 		}
 
 		if ( !empty($errors) ) {
-			$wgOut->addHTML( Wikia::errorbox($errors) );
+			$this->addError( $this->err );
+			//$wgOut->addHTML( Wikia::errorbox($errors) );
 		}
 
 		/********************************************************/
@@ -140,7 +155,6 @@ class ContactForm extends SpecialPage {
 
 		return;
 	}
-
 	/**
 	 * @access private
 	 */
@@ -153,6 +167,12 @@ class ContactForm extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
+		$captchaObj = new FancyCaptcha();
+		$captcha = $captchaObj->pickImage();
+		$captchaIndex = $captchaObj->storeCaptcha( $captcha );
+		$titleObj = SpecialPage::getTitleFor( 'Captcha/image' );
+		$captchaUrl = $titleObj->getLocalUrl( 'wpCaptchaId=' . urlencode( $captchaIndex ) );
+		
 		if( $wgUser->isAnon() == false ) {
 			//user mode
 
@@ -196,7 +216,7 @@ class ContactForm extends SpecialPage {
 		$q = 'action=submit';
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Contact' );
-		$action = $titleObj->escapeLocalUrl( $q );
+		$action = $titleObj->escapeLocalUrl( $q ) . "#contactform";
 
 		$encName = htmlspecialchars( $this->mName );
 		$encEmail = htmlspecialchars( $this->mEmail );
@@ -204,110 +224,79 @@ class ContactForm extends SpecialPage {
 		$encProblem = htmlspecialchars( $this->mProblem );
 		$encProblemDesc = htmlspecialchars( $this->mProblemDesc );
 
-		if ( !empty($this->err) ) {
-			$wgOut->addHTML( Wikia::errorbox( $this->err ) );
-		}
+
 
 		// add intro text
 		$wgOut->addWikiText( wfMsg( 'contactintro' ) );
 
 		$tabindex = 1;
 		//setup form and javascript
-		$wgOut->addHTML( "<hr/>
-		<form name=\"contactform\" id=\"contactform\" method=\"post\" action=\"{$action}\">\n" );
+		$wgOut->addHTML("<form name=\"contactform\" id=\"contactform\" method=\"post\" action=\"{$action}\">\n" );
+		$wgOut->addHTML( "<h1>". wfMsg( 'contactformtitle' ) ."</h1>");
+		
+		if ( !empty($this->err) ) {
+			$this->addError( $this->err );
+			//$wgOut->addHTML( Wikia::errorbox( $this->err ) );
+		}
 
 		global $wgSpecialContactUnlockURL;
-		$wgOut->addHTML( "
-			<table border='0'>
-				<tr>
-					<td align='right'>" . wfMsg( 'contactwikiname' ) . ":</td>
-					<td align='left'>" . ( ( !empty($wgSpecialContactUnlockURL) )
-					?("<input tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactWikiName\" value=\"{$wgServer}\" size='40' />")
-					:("{$wgServer} <input type=\"hidden\" name=\"wpContactWikiName\" value=\"{$wgServer}\" />")
-					) . "</td>
-				</tr>\n" );
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'contactwikiname' ) . '</p>' 
+					. ( ( !empty($wgSpecialContactUnlockURL) ) ? 
+						("<input ".$this->getClass('wpContactWikiName')." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactWikiName\" value=\"{$wgServer}\" size='40' />")
+						:("{$wgServer} <input type=\"hidden\" name=\"wpContactWikiName\" value=\"{$wgServer}\" />")
+					));
 
 
-		$wgOut->addHTML( "
-				<tr>
-					<td align='right'>". wfMsg( 'contactusername' ) .":</td>
-					<td align='left'>" . ( ( empty($user_readonly) )
-					?("<input tabindex='" . ($tabindex++) . "' type='text' name=\"wpName\" value=\"{$encName}\" size='40' />")
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'contactusername' ) . '</p>'
+					. ( ( empty($user_readonly) ) ?
+						("<input ".$this->getClass('wpName')."  tabindex='" . ($tabindex++) . "' type='text' name=\"wpName\" value=\"{$encName}\" size='40' />")
 					:("{$encName} <input type=\"hidden\" name=\"wpName\" value=\"{$encName}\" />".
 					" &nbsp;<span style=\"\" id='contact-not-me'><i><a href=\"/index.php?title=Special:UserLogout&amp;returnto=Special:Contact\">(". wfMsg( 'contactnotyou', $this->mName ) .")</a></i></span>")
-					) . "</td>
-				</tr>" );
+					));
 
-		$wgOut->addHTML( "
-				<tr>
-					<td align='right'>". wfMsg( 'contactrealname' ) .":</td>
-					<td align='left'>" . ( ( empty($name_readonly) )
-					?("<input tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactRealName\" value=\"{$encRealName}\" size='40' />")
-					:("{$encRealName} <input type=\"hidden\" name=\"wpContactRealName\" value=\"{$encRealName}\" />")
-					) . "</td>
-				</tr>" );
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'contactrealname' ) . '</p>'
+						. ( ( empty($name_readonly) )
+					? ("<input ".$this->getClass('wpContactRealName')." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactRealName\" value=\"{$encRealName}\" size='40' />")
+					:("{$encRealName} <input  type=\"hidden\" name=\"wpContactRealName\" value=\"{$encRealName}\" />")
+					) );
 
-		$wgOut->addHTML( "
-				<tr>
-					<td align='right'>". wfMsg( 'contactyourmail' ) .":</td>
-					<td align='left'>" . ( ( empty($mail_readonly) )
-					?("<input tabindex='" . ($tabindex++) . "' type='text' name=\"wpEmail\" value=\"{$encEmail}\" size='40' />")
-					:("{$encEmail} <input type=\"hidden\" name=\"wpEmail\" value=\"{$encEmail}\" />")
-					) . "</td>
-				</tr>" );
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'contactyourmail' ) . '</p>'
+					. ( ( empty($mail_readonly) )
+						? ("<input ".$this->getClass('wpEmail')." tabindex='" . ($tabindex++) . "' type='text' name=\"wpEmail\" value=\"{$encEmail}\" size='40' />")
+						:("{$encEmail} <input  type=\"hidden\" name=\"wpEmail\" value=\"{$encEmail}\" />")
+					));
 
-		$wgOut->addHTML( "
-				<tr>
-					<td align='right'>". wfMsg( 'contactproblem' ) .":</td>
-					<td align='left'>".
-						"<input tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactSubject\" value=\"{$encProblem}\" size='80' />".
-					"</td>
-				</tr>" );
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'contactproblem' ) . '</p>' 
+							."<input ".$this->getClass('wpContactSubject')." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactSubject\" value=\"{$encProblem}\" size='80' />" );
 
-		$wgOut->addHTML( "
-				<tr>
-					<td align='right' valign='top'>".  wfMsg( 'contactproblemdesc' ) . ":</td>
-					<td align='left'>".
-						"<textarea tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>".
-					"</td>
-				</tr>" );
-
-		$wgOut->addHTML( "
-				<tr>
-					<td></td>
-					<td align='left'>".
-						"<input tabindex='" . ($tabindex++) . "' type='submit' value=\"". wfMsg( 'contactmail' ) ."\" />".
-					"</td>
-				</tr>\n" );
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'contactproblemdesc' ) . '</p>' .
+						"<textarea ".$this->getClass('wpContactDesc')." tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>" );
+		
+		$wgOut->addHTML('<p class="contactformcaption">'  . wfMsg( 'contactcaptchatitle' ) . '</p>' . 
+						"<div class='contactCaptch' >
+							<input ".$this->getClass('wpCaptchaWord')." type='text' id='wpCaptchaWord' name='wpCaptchaWord' value='' />
+							<span class='captchDesc'>".wfMsg('contactcaptchainfo')."</span>
+						</div>
+						<img class='contactCaptch' width=150 height=70 src='".$captchaUrl."' />
+						<input type='hidden' value='".$captchaIndex."' id='wpCaptchaId' name='wpCaptchaId'> " );
+		
+		$wgOut->addHTML( "<p><input tabindex='" . ($tabindex++) . "' type='submit' value=\"". wfMsg( 'contactmail' ) ."\" /></p>" );
 
 		if( !$wgUser->isAnon() && $wgUser->getEmail() != '') {
 			//is user, has email, but is verified?
 			if( $wgUser->isEmailConfirmed() ) {
 				//yes!
-				$wgOut->addHtml("
-				<tr>
-					<td></td>
-					<td align='left'>".
-						"<input tabindex='" . ($tabindex++) . "' type='checkbox' name=\"wgCC\" value=\"1\" />" . wfMsg('contactccme') .
-					"</td>
-				</tr>\n");
+				$wgOut->addHtml("<input tabindex='" . ($tabindex++) . "' type='checkbox' name=\"wgCC\" value=\"1\" />" . wfMsg('contactccme') );
 			}
 			else
 			{
 				//not
-				$wgOut->addHtml("
-				<tr>
-					<td></td>
-					<td align='left'>".
-						"<s><i>" . wfMsg('contactccme') . "</i></s><br/> ". wfMsg('contactccdisabled') .
-					"</td>
-				</tr>\n");
+				$wgOut->addHtml("<p><s><i>" . wfMsg('contactccme') . "</i></s><br/> ". wfMsg('contactccdisabled') ."</p>");
 			}
 		}
 
 		#we prefil the browser info in from PHP var
 		$wgOut->addHtml("
-			</table>
 			<input type=\"hidden\" id=\"wpBrowser\" name=\"wpBrowser\" value=\"{$_SERVER['HTTP_USER_AGENT']}\" />
 		</form>\n");
 
@@ -321,6 +310,25 @@ class ContactForm extends SpecialPage {
 
 		return;
 	}
-
+	
+	function addError($err) {
+		global $wgOut;
+		if(is_array($err)) { 
+			$wgOut->addHTML('<div class="errorbox">');
+				foreach($err as $value) {
+					$wgOut->addHTML( $value . "<br>");
+				}
+			$wgOut->addHTML('</div><br style="clear: both;">');
+		} else {
+			$wgOut->addHTML( Wikia::errorbox( $err ) );	
+		}
+		
+	}
+	
+	function getClass($id) {
+		if(empty($this->errInputs[$id])) {
+			return "";
+		}
+		return "class='error'";
+	}
 }
-

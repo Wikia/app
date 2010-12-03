@@ -21,3 +21,19 @@ display: inline;
 margin: 0 .5em 0 0;
 border: none;
 }
+div.contactCaptch {
+	float:left;
+	width:160px;
+}
+img.contactCaptch {
+	background-color:#EEEEEE;
+	border:1px solid #AAAAAA;
+	height:55px;
+	margin-left:6px;
+	padding:4px;
+	width:112px;
+}
+
+#contactform .contactformcaption {
+	font-weight:bold;
+}
