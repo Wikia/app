@@ -399,7 +399,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testBodyModule() {
-		global $wgTitle;
+		global $wgTitle, $wgEnableUserProfilePagesExt;
 
 		//Special pages should have no modules
 		$wgTitle = Title::newFromText('Special:SpecialPages');
@@ -420,7 +420,10 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
 		$this->assertEquals($railList[1200][0], 'FollowedPages');
-		$this->assertEquals($railList[1350][0], 'Achievements');
+
+		if (!empty($wgEnableUserProfilePagesExt)) {
+			$this->assertEquals($railList[1350][0], 'Achievements');
+		}
 
 		// Content page check
 		$wgTitle = Title::newFromText('Foo');
