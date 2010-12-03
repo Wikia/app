@@ -31,7 +31,7 @@ class LatestActivityModule extends Module {
 		}
 
 		if( empty($this->userName) ) {
-			$mKey = wfMemcKey('mOasisLatestActivity', $wgLang->getCode());
+			$mKey = wfMemcKey('mOasisLatestActivity');
 			$feedData = $wgMemc->get($mKey);
 		}
 
@@ -119,7 +119,7 @@ class LatestActivityModule extends Module {
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc, $wgLang;
-		$wgMemc->delete(wfMemcKey('mOasisLatestActivity', $wgLang->getCode()));
+		$wgMemc->delete(wfMemcKey('mOasisLatestActivity'));
 		$wgMemc->delete(wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode()));
 		return true;
 	}
