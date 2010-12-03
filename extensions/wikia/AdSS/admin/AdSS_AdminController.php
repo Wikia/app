@@ -198,7 +198,9 @@ class AdSS_AdminController {
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
-		if( !$wgUser->isAllowed( 'adss-admin' ) && ( $token == AdSS_Util::getToken() ) ) {
+		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
+		} elseif( $token != AdSS_Util::getToken() ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'token mismatch' );
 		} else {
 			$ad = AdSS_AdFactory::createFromId( $id );
@@ -211,6 +213,27 @@ class AdSS_AdminController {
 						'result' => 'success',
 						'id'     => $id,
 					  );
+			} else {
+				$r = array( 'result' => 'error', 'respmsg' => 'wrong id' );
+			}
+		}
+		$response->addText( Wikia::json_encode( $r ) );
+
+		return $response;
+	}
+
+	static function getAdAjax( $id ) {
+		global $wgUser;
+
+		$response = new AjaxResponse();
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => 'Permission error' );
+		} else {
+			$ad = AdSS_AdFactory::createFromId( $id );
+			if( $id == $ad->id ) {
+				$r = array( 'result' => 'success', 'ad' => $ad );
 			} else {
 				$r = array( 'result' => 'error', 'respmsg' => 'wrong id' );
 			}
