@@ -11,52 +11,18 @@ class imageServingTest extends PHPUnit_Framework_TestCase {
 
 	function testSize() {
 		global $IP;
-		$this->assertEquals( '100px-925,1075,0,150', $this->is->getCut( 2000, 150 ) );
-		$this->assertEquals( '100px-0,150,0,150', $this->is->getCut( 150, 2000 ) );
-	}
 	
-	function testFilter() {
-		$out = $this->is->getImages(5);
-		$this->assertEquals( $out[1][0]['name'], 'Test2.jpg' ); 
-	}
-}
-
-
-/* fake data class */
-
-class DBfakeImageServingTest {
-	public function addQuotes($in) {
-		return $in;
-	}
-	public function select($in) {
-		if($in[0] == 'page_wikia_props' ) {
-			return $props = array(array(
-				'page_id' => 1,
-				'props' => serialize(
-					array( 
-					"Test1.jpg",
-					"Test2.jpg",
-					"Test3.jpg"
-				)) 
-			));	
-		}
-
-		return array(
-			array(
-				'cnt' => 1,
-				'il_to' => 'Test2.jpg',
-				'img_width' => 750,
-				'img_height' => 100,
-				'img_minor_mime' => "png"
-			)
-			
-		);
+		$this->assertEquals( '100px-56,237,0,180', $this->is->getCut( 290, 180 ) );
+		$this->assertEquals( '100px-68,285,0,216', $this->is->getCut( 350, 216 ) );
 		
-	}
+		$this->assertEquals( '270px-0,428,57,200', $this->is->getCut( 800, 533 ) );
+		$this->assertEquals( '270px-0,669,119,342', $this->is->getCut( 669, 593 ) );
+		
+		$this->assertEquals( '200px-0,314,65,222', $this->is->getCut( 314, 654 ) );
+		$this->assertEquals( '200px-0,572,36,322', $this->is->getCut( 276, 163 ) );
 	
-	public function fetchRow(&$stack) {
-		return array_pop($stack);
 	}
 }
+
 
 ?>
