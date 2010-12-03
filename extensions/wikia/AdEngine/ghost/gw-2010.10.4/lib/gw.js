@@ -1736,4 +1736,4 @@ function find(){
  /* wlee: merely including this library prevents window.onload from firing.
   * line below to trigger window.onload 
   */
-ghostwriter.flushloadhandlers();
+if (typeof(ghostwriter) != 'undefined') ghostwriter.flushloadhandlers();
