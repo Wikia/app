@@ -22,8 +22,8 @@ $messages['en'] = array(
 	"wikistats_pviews_notfound" => "No page views found",
 	"wikistats_invalid_date" => "Invalid range of dates",
 	"wikistats_distrib_article" => "Editor activity distribution",
-	"wikistats_breakdown_editors" => "Editor activity breakdown",
-	"wikistats_breakdown_anons" => "Anon. activity breakdown",
+	"wikistats_breakdown_editors" => "Editor activity",
+	"wikistats_breakdown_anons" => "Anon. activity",
 	"wikistats_active_absent_wikians" => "Registered editor activity breakdown",
 	"wikistats_anon_wikians" => "Anonymous editor activity breakdown",
 	"wikistats_anon_wikians_count" => "$1 anonymous users found",
@@ -31,7 +31,7 @@ $messages['en'] = array(
 	"wikistats_unreg_wikians_count" => "$1 register $2 found",
 	"wikistats_latest_pageviews" => "Latest visited pages",
 	"wikistats_latest_userviews" => "Active users (page views)",
-	"wikistats_active_useredits" => "Activity (per language)",
+	"wikistats_active_useredits" => "Language activity",
 	"wikistats_latest_userviews_pages" => "$1 visited pages",
 	"wikistats_latest_userviews_list" => "List of users who have visited Wiki in the last hour (order by latest visit)",
 	"wikistats_latest_pageviews_subtitle" => "in the last $1 minutes",
@@ -100,6 +100,7 @@ $messages['en'] = array(
 	"wikistats_interwiki" => "interwiki",
 	"wikistats_image" => "image",
 	"wikistats_external" => "external",
+	"wikistats_rollups" => "Rollups",
 	"wikistats_namespaces" => "namespaces",
 	"wikistats_redirects" => "redirects",
 	"wikistats_edited_in_namespace" => "edited in namespace",
@@ -2478,7 +2479,7 @@ U moet aangemeld zijn om de Wikia-statistieken in te zien.
 	'wikistats_month' => 'Maandelijkse statistieken',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */

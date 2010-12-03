@@ -87,7 +87,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			$this->mNamespaces  = $wgLang->getNamespaces();
 			$this->mPredefinedNamespaces = $this->mStats->getPageNSList();   		
 		}
-		
+
 		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
 		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
 		
@@ -307,6 +307,28 @@ class WikiStatsPage extends IncludableSpecialPage
 		}
         #---
         return 1; 
+	}
+	
+	private function showRollup($subpage = '') {
+		global $wgOut, $wgCityId, $wgDBname, $wgRequest;
+
+		$period = $wgRequest->getVal("wsperiod", "monthly");
+		$wiki_id = $this->mCityId ? $this->mCityId : $wgCityId;
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+				'data' => $this->mStats->rollupStats($wiki_id, $period == "monthly", $period != "monthly"),
+				'wiki_name'	  => $this->mCityDomain,
+				'wiki_select' => ( $this->userIsSpecial == 1 && $wgDBname == WIKISTATS_CENTRAL_ID ),
+				'mTitle'	  => $this->mTitle,
+	        	'mAction'	  => $this->mAction,
+	        	'wsperiod'    => $period
+			) );
+		
+		$wgOut->addHTML( $oTmpl->execute("rollup") );
+		
+		
+		return 1;
 	}
 	
 	private function showBreakdown($subpage = '') {

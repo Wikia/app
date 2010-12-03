@@ -795,6 +795,54 @@ class WikiStats {
 		return $result;
 	}
 
+	public function rollupStats($wiki_id, $by_month=null, $by_day=null) {
+		global $wgStatsDB;
+
+		$date_ranges = array();
+		if ($by_month) {
+			$date_ranges[] = array(date('Y-m-01'),
+							       date('Y-m-01', strtotime('1 months')));
+			foreach (range(1, 12) as $month) {
+				$date_ranges[] = array(date('Y-m-01', strtotime('-'.$month.' months')),
+								       date('Y-m-01', strtotime('-'.($month-1).' months'))
+								 );
+			}
+		} else if ($by_day) {
+			$date_ranges[] = array(date('Y-m-d'),
+							       date('Y-m-d', strtotime('1 days')));
+			foreach (range(1, 30) as $day) {
+				$date_ranges[] = array(date('Y-m-d', strtotime('-'.$day.' days')),
+								       date('Y-m-d', strtotime('-'.($day-1).' days'))
+								 );
+			}
+		}
+
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		
+		$data = array();
+		foreach ($date_ranges as $period) {
+			$start_date = $period[0];
+			$end_date   = $period[1];
+
+			$oRes = $dbr->select(
+					array( 'events' ),
+					array( 'page_ns', 'event_type', 'count(*) as cnt' ),
+					array( "rev_timestamp >= '$start_date 00:00:00'",
+					       "rev_timestamp < '$end_date 00:00:00'",
+					       "wiki_id = $wiki_id" ),
+					__METHOD__,
+					array( 'GROUP BY' => "page_ns, event_type",
+					       'ORDER BY' => "null")
+				);
+
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$data[$start_date][$oRow->page_ns][$oRow->event_type] = $oRow->cnt;
+			}
+		}
+		
+		return $data;
+	}
+
 	/**
 	 * loadMonthlyDiffs
 	 * 
