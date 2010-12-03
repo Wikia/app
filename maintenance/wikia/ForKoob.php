@@ -86,13 +86,13 @@ foreach($cityIds as $cityId) {
 
 		if($cityId == $row->pv_city_id) {
 			$oneHundredIs = $row->c;
-			echo "Data for wiki: ".$city_url."\n\n";
+			echo "\n\nData for wiki: ".$city_url."\n";
 		} else {
-			echo round((100 * $row->c) / $oneHundredIs) . "%\t";
+			echo ceil((100 * $row->c) / $oneHundredIs) . "%\t";
 			echo $city_url."\n";
 		}
 	}
 	
-	echo "\n\n";
+	//echo "\n\n";
 	
 }	
