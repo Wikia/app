@@ -344,9 +344,9 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		// assertions
 		$this->assertTrue(in_array('testCssClass', $moduleData['bodyClasses']));
-		$this->assertRegExp('/^<link href=/', $moduleData['printableCss']);
+		$this->assertRegExp('/cssReferences/', $moduleData['printableCss']);
+		$this->assertRegExp('/jsReferences/', $moduleData['jsFiles']);
 		$this->assertType('string', $moduleData['body']);
-		$this->assertType('string', $moduleData['headscripts']);
 		$this->assertType('string', $moduleData['csslinks']);
 		$this->assertType('string', $moduleData['headlinks']);
 		$this->assertType('string', $moduleData['globalVariablesScript']);
@@ -467,13 +467,13 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertType ('string', $moduleData['bodytext']);
 
 		// picture attribution
-		$html = 'TESTTESTTESTTEST';
+		$html = 'TEST<!-- picture-attribution -->TESTTESTTEST';
 		$file = wfFindFile('Wiki.png');
 		$addedBy = str_replace(' ', '_', $file->getUser());
 
 		ContentDisplayModule::renderPictureAttribution(false, false, $file, false, false, $html);
 
-		$this->assertRegExp('/^TEST<div class="picture-attribution"><img src/', $html);
+		$this->assertRegExp('/^TEST<aside class="picture-attribution"><img src/', $html);
 		$this->assertRegExp('/User:' . $addedBy . '/', $html);
 	}
 
@@ -563,7 +563,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('PageHeader')->getData();
 
 		$this->assertRegExp('/Talk:/', $moduleData['title']);
-		$this->assertRegExp('/Foo" title="Foo"/', $moduleData['subtitle']);
+		$this->assertRegExp('/Foo" title="Foo"/', $moduleData['pageTalkSubject']);
 
 		// category page
 		$wgTitle = Title::newFromText('Stubs', NS_CATEGORY);
@@ -571,7 +571,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('PageHeader')->getData();
 
 		$this->assertEquals('Stubs', $moduleData['title']);
-		$this->assertEquals('Category page', $moduleData['subtitle']);
+		$this->assertEquals('Category page', $moduleData['pageType']);
 		$this->assertFalse($moduleData['categories']);
 		$this->assertFalse($moduleData['revisions']);
 
@@ -580,7 +580,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$moduleData = Module::get('PageHeader')->getData();
 
-		$this->assertRegExp('/href="(.*)Special:RecentChanges"/', $moduleData['subtitle']);
+		$this->assertRegExp('/Special page/', $moduleData['pageSubtitle']);
 
 		// forum page
 		$wgTitle = Title::newFromText('Foo', NS_FORUM);
@@ -737,7 +737,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		BlogListingModule::renderBlogListing($html, $posts, $aOptions);
 
-		$this->assertRegExp('/^foo<section class="WikiaBlogListingBox bar"/', $html);
+		$this->assertRegExp('/^foo<section class="WikiaBlogListingBox module  bar"/', $html);
 		$this->assertRegExp('/User_blog:My_blog_post/', $html);
 		$this->assertRegExp('/User:WikiaStaff">WikiaStaff<\/a>/', $html);
 	}
@@ -756,6 +756,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	function testFooterModule() {
 		global $wgSuppressToolbar, $wgShowMyToolsOnly, $wgTitle;
 
+		$wgSuppressToolbar = false;
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertTrue($moduleData['showMyTools']);
 		$this->assertTrue($moduleData['showToolbar']);
@@ -847,7 +848,6 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($settings["wordmark-text"], $moduleData['wordmarkText']);
 		$this->assertEquals($settings["wordmark-type"], $moduleData['wordmarkType']);
 		$this->assertEquals($settings["wordmark-font-size"], $moduleData['wordmarkSize']);
-		$this->assertEquals($settings["wordmark-font"], $moduleData['wordmarkFont']);
 
 		$this->assertArrayHasKey('editURL', $moduleData);
 	}
