@@ -87,6 +87,7 @@ class RelatedPages {
 			}
 
 			$categories = $this->getCategoriesByRank( $categories );
+
 			if( count( $categories ) > $this->categoriesLimit ) {
 				// limit the number of categories to look for
 				$categories = array_slice( $categories, 0, $this->categoriesLimit );
@@ -94,34 +95,36 @@ class RelatedPages {
 
 			$pagesPerCategory = array();
 			$allPages = array();
-			$counters = array();
 
 			foreach( $categories as $category ) {
 				$pages = $this->getPagesForCategory( $category );
-				$pagesPerCategory[$category] = $pages;
+				//$pagesPerCategory[$category] = $pages;
+				$pagesPerCategory[] = $pages;
 				$allPages = array_merge( $allPages, $pages );
 			}
 			$allPages = array_unique( $allPages );
-			unset( $allPages[array_search($articleId, $allPages)] );
-			sort( $allPages );
 
-			$pageCounters = array();
-			for( $i = 0; $i < count( $allPages); $i++ ) {
-				foreach( $pagesPerCategory as $categoryPages ) {
-					if( in_array($allPages[$i], $categoryPages) ) {
-						if( isset($pageCounters[$allPages[$i]]) ) {
-							$pageCounters[$allPages[$i]]++;
-						}
-						else {
-							$pageCounters[$allPages[$i]] = 1;
-						}
-					}
+			unset( $allPages[array_search($articleId, $allPages)] );
+			//sort( $allPages );
+
+			$pageIds = array();
+			for( $i = count($pagesPerCategory); $i > 0; $i-- ) {
+				$intersectArrays = array( $allPages );
+				for( $catIdx = 0; $catIdx < $i; $catIdx++ ) {
+					$intersectArrays[] = $pagesPerCategory[$catIdx];
+				}
+				$intersectPages = call_user_func_array( 'array_intersect', $intersectArrays );
+				shuffle( $intersectPages ); // add some random factor if too many pages..
+				$pageIds = array_merge( $pageIds, $intersectPages );
+
+				// get more pages (some can be filtered out - RT #72703)
+				if (count($pageIds) >= $limit * 2) {
+					break;
 				}
 			}
-			arsort($pageCounters);
 
 			$pages = array();
-			foreach ( array_keys( $pageCounters ) as $pageId ) {
+			foreach ( $pageIds as $pageId ) {
 				$title = Title::newFromId( $pageId );
 
 				// filter out redirect pages (RT #72662)
@@ -134,11 +137,6 @@ class RelatedPages {
 					);
 
 					wfDebug(__METHOD__ . ": adding page '{$prefixedTitle}' (#{$pageId})\n");
-				}
-
-				// get more pages (some can be filtered out - RT #72703)
-				if (count($pages) >= $limit * 2) {
-					break;
 				}
 			}
 
