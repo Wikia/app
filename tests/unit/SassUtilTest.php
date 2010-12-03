@@ -5,12 +5,8 @@ class SassUtilTest extends PHPUnit_Framework_TestCase {
 	function testSassUtil() {
 		$sassParams = SassUtil::getSassParams();
 
-		// we're assuming that this wiki uses default theme
 		$this->assertType('string', $sassParams);
-		$this->assertRegExp('/&color-page=%23FFFFFF&/i', $sassParams);
-		$this->assertFalse(SassUtil::isThemeDark());
+		$this->assertRegExp('/&color-page=%23[A-F0-9]{6}&/i', $sassParams);
 	}
 
 }
-
-?>
