@@ -171,8 +171,8 @@ class AdSS_AdminController {
 					$billing = new AdSS_Billing();
 					if( $billing->addCharge( $ad ) ) {
 						$ad->refresh();
-						AdSS_Util::commitAjaxChanges();
 						AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
+						AdSS_Util::commitAjaxChanges();
 						$r = array(
 							'result'  => 'success',
 							'id'      => $ad->id,

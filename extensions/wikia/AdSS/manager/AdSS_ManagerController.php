@@ -160,6 +160,24 @@ class AdSS_ManagerController {
 							'id'     => $id,
 							'closed' => wfTimestamp( TS_DB, $ad->closed ),
 						  );
+
+					global $wgAdSS_contactEmail, $wgNoReplyAddress;
+					if( $ad->type == 'b' && !empty( $wgAdSS_contactEmail ) ) {
+						$to = array();
+						foreach( $wgAdSS_contactEmail as $a ) {
+							$to[] = new MailAddress( $a );
+						}
+						//FIXME move it to a template
+						$subject = '[AdSS] banner ad canceled';
+
+						$body = "The banner ad has been just canceled by user.\n";
+						$body .= "\n";
+						$body .= "ID: {$ad->id}\n";
+						$body .= "Created by: {$ad->getUser()->toString()}\n";
+						$body .= "Ad URL: http://{$ad->url}\n";
+						$body .= "Banner: {$ad->getBannerURL()}\n";
+						UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
+					}
 				}
 			}
 		}
