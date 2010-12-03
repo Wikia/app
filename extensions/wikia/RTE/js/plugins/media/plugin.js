@@ -112,7 +112,7 @@ CKEDITOR.plugins.add('rte-media',
 					var msg = RTE.instance.lang[type].confirmDelete;
 
 					RTE.tools.confirm(title, msg, function() {
-						RTE.tools.removeElement(image);
+						RTE.tools.removeElement(node);
 					});
 
 					// tracking
