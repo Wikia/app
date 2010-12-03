@@ -239,24 +239,6 @@ class ScribeeventsPage {
 
         wfProfileIn( __METHOD__ );
 
-		// Define labels for the main namespaces
-		$main_ns[NS_MAIN] = 'Main';
-		$main_ns[NS_TALK] = 'Talk';
-		$main_ns[NS_USER] = 'User';
-		$main_ns[NS_USER_TALK] = 'User Talk';
-		$main_ns[NS_PROJECT] = 'Project';
-		$main_ns[NS_PROJECT_TALK] = 'Project Talk';
-		$main_ns[NS_FILE] = 'File';
-		$main_ns[NS_FILE_TALK] = 'File Talk';
-		$main_ns[NS_MEDIAWIKI] = 'Mediawiki';
-		$main_ns[NS_MEDIAWIKI_TALK] = 'Mediawiki Talk';
-		$main_ns[NS_TEMPLATE] = 'Template';
-		$main_ns[NS_TEMPLATE_TALK] = 'Template Talk';
-		$main_ns[NS_HELP] = 'Help';
-		$main_ns[NS_HELP_TALK] = 'Help Talk';
-		$main_ns[NS_CATEGORY] = 'Category';
-		$main_ns[NS_CATEGORY_TALK] = 'Category Talk';
-
 		$num = 0;		
 		$html = array();
 		if ( $this->mShow ) {
@@ -328,14 +310,9 @@ class ScribeeventsPage {
 					}
 					$addInfo[] = "user is bot: $user_is_bot";
 
-					if ($page_ns <= 100) {
-						$ns_label = array_key_exists($page_ns, $main_ns) ? $main_ns[$page_ns] : 'NS Name Unknown';
-					} else {
-						global $wgExtraNamespaces;
-						$ns_label = array_key_exists($page_ns, $wgExtraNamespaces) ? $wgExtraNamespaces[$page_ns] : 'NS Name Unknown';
-					}
-
+					$ns_label = MWNamespace::getCanonicalName($page_ns);
 					$addInfo[] = "Page NS: $ns_label ($page_ns)";
+					
 					$addInfo[] = "page is content: $is_content";
 					$addInfo[] = "page is redirect: $is_redirect";
 					$addInfo[] = "user IP: $ip"; 
