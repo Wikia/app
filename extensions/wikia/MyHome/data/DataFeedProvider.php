@@ -318,7 +318,7 @@ class DataFeedProvider {
 				if (isset($res['rc_params']['summary'])) {
 					$item['comment'] = $res['rc_params']['summary'];
 				}
-			} else if ($res['comment'] != '' && (defined('NS_TOPLIST') && $res['ns'] != NS_TOPLIST) ) {
+			} else if ($res['comment'] != '' && (defined('NS_TOPLIST') ? $res['ns'] != NS_TOPLIST : true) ) {
 				$item['comment'] = $res['comment'];
 			}
 
