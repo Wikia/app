@@ -53,7 +53,7 @@
 			<?php 
 				// A/B test
 				$headers = function_exists('apache_request_headers') ? apache_request_headers() : array(); 
-				if (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1") {
+				if (false && isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1") {
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
 				}
 				else {
