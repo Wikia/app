@@ -235,7 +235,7 @@ class BodyModule extends Module {
 			// A/B test
 			$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 			$useTestBoxad = (isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1");
-	
+			$useTestBoxad = false;
 			// Corporate Skin
 			if ($wgEnableCorporatePageExt) {
 				$railModuleList = array (
