@@ -115,7 +115,7 @@ function print_pre($param, $return = 0)
  * @return String -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
-	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion, $wgDevBoxImageServerOverride, $wgDBname;
+	global $wgImagesServers, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion, $wgDevBoxImageServerOverride, $wgDBname;
 
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
@@ -153,7 +153,8 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			}
 
 			// NOTE: This should be the only use of the cache-buster which does not use $wgCdnStylePath.
-			$cb = ($timestamp!='') ? "__cb{$timestamp}/" : '';
+			// RT#98969 if the url already has a cb value, don't add another one...
+			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
 
 			if (!empty($wgDevBoxImageServerOverride)) {
 				// Dev boxes
