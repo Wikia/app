@@ -1,6 +1,6 @@
 <?php
 
-class SpecialAchievementsSharing extends SpecialPage {
+class SpecialAchievementsSharing extends UnlistedSpecialPage {
 
 	function __construct() {
 		wfLoadExtensionMessages('AchievementsII');
@@ -16,7 +16,7 @@ class SpecialAchievementsSharing extends SpecialPage {
 		
 		$title = Title::newFromID($articleID);
 		
-		if($title->exists()) {
+		if( !is_null( $title ) && $title->exists()) {
 			if(strpos($_SERVER['HTTP_USER_AGENT'], 'facebook') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false) {		
 				$sharerID = $wgRequest->getInt('userid');
 				$viewerIP = wfGetIP();
