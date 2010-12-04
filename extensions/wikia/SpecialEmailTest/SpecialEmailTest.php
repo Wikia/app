@@ -28,7 +28,7 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgRequest;
+		global $wgRequest, $wgForceSendgridEmail, $wgForceSchwartzEmail;
 
 		wfProfileIn( __METHOD__ );
 		
@@ -56,6 +56,9 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 		# These two both have defaults
 		$this->mText = $wgRequest->getVal('text', $this->mText);
 		$this->mConfirmToken = $wgRequest->getVal('token', $this->mConfirmToken);
+
+		$wgForceSendgridEmail = ($wgRequest->getVal('force') == 'sendgrid');
+		$wgForceSchwartzEmail = ($wgRequest->getVal('force') == 'schwartz');
 		
 		UserMailer::send( new MailAddress($this->mAccount),
 						  new MailAddress('test@wikia-inc.com'),
