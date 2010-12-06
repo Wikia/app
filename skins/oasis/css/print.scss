@@ -1,6 +1,12 @@
 @import "/skins/common/commonPrint.css";
 
 // Oasis specific printable CSS
+
+//fixes firefox printing cutoff
+* {
+	overflow: visible !important;
+}
+
 html {
 	background: #fff;
 }
