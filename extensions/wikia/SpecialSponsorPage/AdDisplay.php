@@ -28,6 +28,7 @@ class AdDisplay {
 			return true;
 		}
 
+		if(!$out->isArticle()) return true;
 		if(!self::ArticleCanShowAd()) return true;
 		wfLoadExtensionMessages( 'SponsorPage' );
 
