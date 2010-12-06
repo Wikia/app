@@ -204,8 +204,8 @@ function wkLCshowDetails(dbname, limit, offset, nspace) {
 <? $loop = 0; foreach ($userActivity as $id => $row) { $loop++; ?>
 <li>
 <div>
-	<span class="lc-row"><a href="<?=$row['url']?>" target="new"><?=$row['url']?></a></span>
-	<span class="lc-row">(<a href="<?=$row['url']?>index.php?title=Special:Contributions/<?=urlencode($username) ?>" target="new"><?=wfMsg('lookupcontribscontribs')?></a>)</span>
+	<span class="lc-row"><a href="<?=$row['url']?>"><?=$row['url']?></a></span>
+	<span class="lc-row">(<a href="<?=$row['url']?>index.php?title=Special:Contributions/<?=urlencode($username) ?>"><?=wfMsg('lookupcontribscontribs')?></a>)</span>
 	<span class="lc-row"><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$row['dbname']?>" class="small">
 		<option value="normal"><?=wfMsg('lookupcontribsselectmodenormal')?></option>
 		<option value="final"><?=wfMsg('lookupcontribsselectmodefinal')?>
