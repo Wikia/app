@@ -8,7 +8,10 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Recipes Template',
-	'author' => 'Maciej Brencz',
+	'author' => array(
+		'Maciej Brencz',
+		"[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
+	),
 	'description' => 'Adds forms to help people add recipes and ingredients pages to Recipes wikis'
 );
 
@@ -27,7 +30,15 @@ $wgSpecialPages['CreateRecipe'] = 'SpecialCreateRecipe';
 $wgSpecialPages['CreateFromTemplate'] = 'SpecialCreateFromTemplate';
 
 // hooks
-$wgHooks['EditPage::showEditForm:initial'][] = 'RecipesTemplate::showCreatePageToggle';
+if ( !empty( $wgEnableRecipesTemplateExt ) ) {
+	/*
+	 * this extension is used in two contexts:
+	 * 1. stand-alone, displaying at Special:CreatePage
+	 * 2. by user profile extensions
+	 * in the second case, the toggle should not be displayed
+	 */
+	$wgHooks['EditPage::showEditForm:initial'][] = 'RecipesTemplate::showCreatePageToggle';
+}
 
 // i18n
 $wgExtensionMessagesFiles['RecipesTemplate'] = $dir . 'RecipesTemplate.i18n.php';
