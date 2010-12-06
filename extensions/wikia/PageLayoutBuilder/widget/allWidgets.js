@@ -9,9 +9,10 @@ PageLayoutBuilder.inputEmpty = function (e) {
 $(function() {
 	$('.plb-empty-input').focus(PageLayoutBuilder.inputEmpty);
 
-	$("#plbForm").submit(function() {
+	$("#plbForm,#editform").submit(function() {
 		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
 	});
+	
 	WikiaPhotoGalleryView.initGalleries();
 });
 
@@ -36,7 +37,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 						$("#imagediv_" + name).css("width", data.size.width + "px")
 						.css("line-height", data.size.height + "px")
 						.css('background-image', 'url("' +  data.url +'")');
-						$("#" + name).val( $("#ImageUploadMWname").val()  + " | " + $("#ImageUploadCaption").val() );
+						$("#plb_" + name).val( $("#ImageUploadMWname").val()  + " | " + $("#ImageUploadCaption").val() );
 						$("#thumbcaption").val($("#ImageUploadCaption").val());
 					}
 					WMU_close();
