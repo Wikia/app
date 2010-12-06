@@ -29,6 +29,7 @@ $wgAutoloadClasses['AdSS_AdminController'] = $dir . 'admin/AdSS_AdminController.
 $wgAutoloadClasses['AdSS_AdminAdListPager'] = $dir . 'admin/AdSS_AdminAdListPager.php';
 $wgAutoloadClasses['AdSS_AdminBillingPager'] = $dir . 'admin/AdSS_AdminBillingPager.php';
 $wgAutoloadClasses['AdSS_Ad'] = $dir . 'model/AdSS_Ad.php';
+$wgAutoloadClasses['AdSS_AdChange'] = $dir . 'model/AdSS_AdChange.php';
 $wgAutoloadClasses['AdSS_BannerAd'] = $dir . 'model/AdSS_BannerAd.php';
 $wgAutoloadClasses['AdSS_TextAd'] = $dir . 'model/AdSS_TextAd.php';
 $wgAutoloadClasses['AdSS_AdFactory'] = $dir . 'model/AdSS_AdFactory.php';
@@ -66,6 +67,8 @@ if( empty( $wgAdSS_OnlyAdmin ) ) {
 	$wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
 	$wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
 	$wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
+	$wgAjaxExportList[] = 'AdSS_ManagerController::editAdAjax';
+	$wgAjaxExportList[] = 'AdSS_ManagerController::getAdAjax';
 }
 
 $wgAdSS_DBname = 'adss';

@@ -65,6 +65,7 @@ $messages['en'] = array(
 	'adss-button-select' => 'Select',
 	'adss-button-buy-now' => 'Buy NOW',
 	'adss-buy-another' => 'Buy another ad!',
+	'adss-edit-thanks' => 'Your ad changes have been saved and will go live after manual approval (within 48 hours).',
 	'adss-preview-header' => 'Preview',
 	'adss-preview-prompt' => 'Here is what your sponsorship will look like - click "{{int:adss-button-edit}}" to go back and make changes, or "{{int:adss-button-save-pay}}" to save it and go to PayPal.',
 	'adss-click-here' => 'Click here', // FIXME: Merge in 'adss-paypal-redirect'. Bad i18n.
