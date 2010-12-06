@@ -179,7 +179,7 @@ class ImageLightbox {
 				$to = new MailAddress($address);
 
 				//TODO: support sendHTML
-				UserMailer::send(
+				$result = UserMailer::send(
 					$to,
 					$sender,
 					wfMsg('lightbox-share-email-subject'),
@@ -188,12 +188,19 @@ class ImageLightbox {
 					null,
 					'ImageLightboxShare'
 				);
+				if (WikiError::isError($result)) {
+					$res = array(
+						'result' => 0,
+						'info-caption' => wfMsg('lightbox-share-email-error-caption'),
+						'info-content' => wfMsg('lightbox-share-email-error-content', $result->toString())
+					);
+				}
 			}
 		} else {
 			$res = array(
 				'result' => 0,
 				'info-caption' => wfMsg('lightbox-share-email-error-caption'),
-				'info-content' => wfMsg('lightbox-share-email-error-content')
+				'info-content' => wfMsg('lightbox-share-email-error-content', wfMsg('lightbox-share-email-error-noaddress'))
 			);
 		}
 

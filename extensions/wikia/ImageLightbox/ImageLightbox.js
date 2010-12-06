@@ -217,9 +217,9 @@ var ImageLightbox = {
 					self.log(source);
 					$(this).closest('#lightbox-share').find('.lightbox-share-area').each(function() {
 						if (source == $(this).attr('data-func')) {
-							$(this).show();
+							$(this).slideDown();
 						} else {
-							$(this).hide();
+							$(this).slideUp();
 						}
 					});
 					if (source == 'embed') {
