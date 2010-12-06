@@ -84,7 +84,7 @@ class ImageLightbox {
 		$imageTitle = $wgTitle->getText();
 		$imageParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($imageTitle));
 		$linkStd = $currentTitle->getFullURL("image=$imageParam");
-		$linkWWW = "<a href=\"$linkStd\"><img src=\"$thumbUrl\"/></a>";
+		$linkWWW = "<a href=\"$linkStd\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
 		$linkBBcode = "[url=$linkStd][img]{$thumbUrl}[/img][/url]";
 
 		//double encode - JSON is decoding it
@@ -148,7 +148,7 @@ class ImageLightbox {
 	 * @author Marooned
 	 */
 	static function sendMail() {
-		global $wgRequest, $wgTitle;
+		global $wgRequest, $wgTitle, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);
 
 		wfLoadExtensionMessages('ImageLightbox');
@@ -173,7 +173,7 @@ class ImageLightbox {
 			$linkStd = $currentTitle->getFullURL("image=$imageParam");
 
 			//send mails
-			$sender = new MailAddress('community@wikia-inc.com', 'Wikia');	//TODO: use some standard variable?
+			$sender = new MailAddress($wgNoReplyAddress, 'Wikia');	//TODO: use some standard variable for 'Wikia'?
 			$addresses = explode(',', $addresses);
 			foreach ($addresses as $address) {
 				$to = new MailAddress($address);
