@@ -30,13 +30,13 @@ class ContentDisplayModule extends Module {
 		$avatar = AvatarService::renderAvatar($userName, 16);
 		$link = AvatarService::renderLink($userName);
 
-		$html = Xml::openElement('aside', array('class' => 'picture-attribution')) .
+		$html = Xml::openElement('div', array('class' => 'picture-attribution')) .
 			$avatar .
 			wfMsg('oasis-content-picture-added-by', $link) .
-			Xml::closeElement('aside');
+			Xml::closeElement('div');
 
-		// replace placeholder
-		$s = str_replace('<!-- picture-attribution -->', $html, $s);
+		// add it after the caption
+		$s = substr($s, 0, -12) . $html . '</div></div>';
 
 		#print_pre($html); print_pre(htmlspecialchars($s));
 
