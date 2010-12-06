@@ -22,7 +22,11 @@ class AdDisplay {
 
 	//use this one
 	public static function OutputAdvertisementOutputHook( &$out, &$text ){
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgShowAds;
+
+		if( empty( $wgShowAds ) ) {
+			return true;
+		}
 
 		if ( empty($_GET['showads']) && is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ) {
 			return true;
