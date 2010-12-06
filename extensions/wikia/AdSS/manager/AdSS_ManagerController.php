@@ -134,6 +134,49 @@ class AdSS_ManagerController {
 		}
 	}
 
+	function processPayPalRedirect( $token ) {
+		global $wgOut, $wgPayPalUrl;
+
+		if( AdSS_Util::matchToken( $token ) ) {
+			$selfUrl = Title::makeTitle( NS_SPECIAL, "AdSS/manager" )->getFullURL();
+			$returnUrl = $selfUrl . '/paypal/return';
+			$cancelUrl = $selfUrl . '/paypal/cancel';
+			$pp = new PaymentProcessor();
+			if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
+				$_SESSION['wsAdSSToken'] = $pp->getToken();
+				$pp->setUserId( $this->userId );
+				// redirect to PayPal
+				$wgOut->addMeta( 'http:Refresh', '0;URL=' . $wgPayPalUrl . $pp->getToken() );
+				$wgOut->addHTML( wfMsgHtml( 'adss-paypal-redirect', Xml::element( 'a', array( 'href' => $wgPayPalUrl . $pp->getToken() ), wfMsg( 'adss-click-here' ) ) ) );
+				return;
+			}
+		}
+		$this->displayPanel();
+	}
+
+	function processPayPalReturn( $token ) {
+		global $wgOut, $wgAdSS_DBname;
+		if( $token ) {
+			$pp = new PaymentProcessor( $token );
+			if( AdSS_Util::matchToken( $token ) ) {
+				$pp->fetchPayerId();
+				$baid = $pp->createBillingAgreement();
+			} else {
+				list( $host, $lag ) = wfGetLB( $wgAdSS_DBname )->getMaxLag();
+				sleep( $lag );
+				$baid = $pp->getBillingAgreement();
+			}
+			if( $baid ) {
+				$wgOut->addHTML( wfMsgWikiHtml( 'adss-billing-agreement-created', $baid ) );
+				return;
+			} else {
+				$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
+				return;
+			}
+		}
+		$this->displayPanel();
+	}
+
 	static function closeAdAjax( $id ) {
 		global $wgRequest;
 
@@ -186,46 +229,69 @@ class AdSS_ManagerController {
 		return $response;
 	}
 
-	function processPayPalRedirect( $token ) {
-		global $wgOut, $wgPayPalUrl;
+	static function getAdAjax( $id ) {
+		global $wgUser;
 
-		if( AdSS_Util::matchToken( $token ) ) {
-			$selfUrl = Title::makeTitle( NS_SPECIAL, "AdSS/manager" )->getFullURL();
-			$returnUrl = $selfUrl . '/paypal/return';
-			$cancelUrl = $selfUrl . '/paypal/cancel';
-			$pp = new PaymentProcessor();
-			if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
-				$_SESSION['wsAdSSToken'] = $pp->getToken();
-				$pp->setUserId( $this->userId );
-				// redirect to PayPal
-				$wgOut->addMeta( 'http:Refresh', '0;URL=' . $wgPayPalUrl . $pp->getToken() );
-				$wgOut->addHTML( wfMsgHtml( 'adss-paypal-redirect', Xml::element( 'a', array( 'href' => $wgPayPalUrl . $pp->getToken() ), wfMsg( 'adss-click-here' ) ) ) );
-				return;
+		$response = new AjaxResponse();
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		$userId = $wgRequest->getSessionData( "AdSS_userId" );
+		if( !$userId ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-not-logged-in' ) );
+		} else {
+			$ad = AdSS_AdFactory::createFromId( $id );
+			if( $id != $ad->id ) {
+				$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-wrong-id' ) );
+			} else {
+				if( $userId != $ad->userId ) {
+					$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-no-permission' ) );
+				} else {
+					$r = array( 'result' => 'success', 'ad' => $ad );
+				}
 			}
 		}
-		$this->displayPanel();
+		$response->addText( Wikia::json_encode( $r ) );
+
+		return $response;
 	}
 
-	function processPayPalReturn( $token ) {
-		global $wgOut, $wgAdSS_DBname;
-		if( $token ) {
-			$pp = new PaymentProcessor( $token );
-			if( AdSS_Util::matchToken( $token ) ) {
-				$pp->fetchPayerId();
-				$baid = $pp->createBillingAgreement();
+	static function editAdAjax( $id, $url, $text, $desc ) {
+		global $wgUser;
+
+		$response = new AjaxResponse();
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		$userId = $wgRequest->getSessionData( "AdSS_userId" );
+		if( !$userId ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-not-logged-in' ) );
+		} else {
+			$ad = AdSS_AdFactory::createFromId( $id );
+			if( $id != $ad->id ) {
+				$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-wrong-id' ) );
 			} else {
-				list( $host, $lag ) = wfGetLB( $wgAdSS_DBname )->getMaxLag();
-				sleep( $lag );
-				$baid = $pp->getBillingAgreement();
-			}
-			if( $baid ) {
-				$wgOut->addHTML( wfMsgWikiHtml( 'adss-billing-agreement-created', $baid ) );
-				return;
-			} else {
-				$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
-				return;
+				if( $userId != $ad->userId ) {
+					$r = array( 'result' => 'error', 'respmsg' => wfMsgHtml( 'adss-no-permission' ) );
+				} elseif( $ad->type != 't' ) {
+					$r = array( 'result' => 'error', 'respmsg' => 'you can edit only text ads' );
+				} else {
+					$adc = new AdSS_AdChange( $ad );
+					$adc->url = $url;
+					$adc->text = $text;
+					$adc->desc = $desc;
+					$adc->save();
+
+					AdSS_Util::commitAjaxChanges();
+
+					$r = array(
+						'result'  => 'success',
+						'id'      => $id,
+						'respmsg' => wfMsgHtml( 'adss-edit-thanks' ),
+					);
+				}
 			}
 		}
-		$this->displayPanel();
+		$response->addText( Wikia::json_encode( $r ) );
+
+		return $response;
 	}
 }
