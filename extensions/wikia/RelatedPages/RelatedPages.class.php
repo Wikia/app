@@ -338,7 +338,8 @@ class RelatedPages {
 	}
 
 	public static function onOutputPageBeforeHTML( &$out, &$text ) {
-		if( $out->isArticle() ) {
+		global $wgRequest;
+		if( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null ) {
 			$text .= wfRenderModule('RelatedPages');
 		}
 		return true;
