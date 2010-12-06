@@ -7,8 +7,8 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class WikiaLogoTest extends BaseTest {
 
-	@Test(groups={"oasis"})
-	public void testEnsuraThatWikiaLogoLeadsToSpecialLandingPage() throws Exception {
+	@Test(groups={"oasis","envProduction"})
+	public void testEnsureThatWikiaLogoLeadsToSpecialLandingPage() throws Exception {
 		session().open("/");
 		session().click("//li[@class='WikiaLogo']/a");
 		session().waitForPageToLoad(TIMEOUT);
