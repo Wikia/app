@@ -86,7 +86,7 @@
 		<fieldset class="preview">
 			<legend><?php echo wfMsgHtml( 'adss-preview-header' ); ?></legend>
 			<?php echo wfMsgWikiHtml( 'adss-ad-header' ); ?>
-			<div class="sponsormsg">
+			<div class="sponsormsg-preview">
 			<ul>
 			  <?php echo $ad ?>
 			</ul>
@@ -148,12 +148,12 @@ $("#adssLoginAction > a").click( function(e) {
 	$("#wpPassword").parent().show();
 } );
 $("#wpUrl").keyup( function() {
-	$("div.sponsormsg > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );
+	$("div.sponsormsg-preview > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );
 } );
 $("#wpText").keyup( function() {
-	$("div.sponsormsg > ul > li > a").html( $("#wpText").val() );
+	$("div.sponsormsg-preview > ul > li > a").html( $("#wpText").val() );
 } );
 $("#wpDesc").keyup( function() {
-	$("div.sponsormsg > ul > li > p").html( $("#wpDesc").val() );
+	$("div.sponsormsg-preview > ul > li > p").html( $("#wpDesc").val() );
 } );
 </script>

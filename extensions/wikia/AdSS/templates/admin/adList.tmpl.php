@@ -7,8 +7,8 @@ var token = <?php echo Xml::encodeJsVar( $token ); ?>;
 
 $("a.accept").click( function(e) {
 	e.preventDefault();
-	if( confirm( 'Are you sure you want to accept this ad?' ) ) {
-		var id = $(this).parent().attr("id");
+	var id = $(this).parent().attr("id");
+	$.confirm( {content:'Are you sure you want to accept this ad?', width:300, onOk:function() {
 		$.getJSON( wgScript, {
 			'action': 'ajax',
 			'rs': 'AdSS_AdminController::acceptAdAjax',
@@ -24,7 +24,7 @@ $("a.accept").click( function(e) {
 				}
 			}
 		);
-	}
+	} } );
 } );
 
 $("a.edit").click( function(e) {
@@ -42,8 +42,8 @@ $("a.edit").click( function(e) {
 
 $("a.close").click( function(e) {
 	e.preventDefault();
-	if( confirm( 'Are you sure you want to delete this ad?' ) ) {
-		var id = $(this).parent().attr("id");
+	var id = $(this).parent().attr("id");
+	$.confirm( {content:'Are you sure you want to delete this ad?', width:300, onOk:function() {
 		$.getJSON( wgScript, {
 			'action': 'ajax',
 			'rs': 'AdSS_AdminController::closeAdAjax',
@@ -58,7 +58,7 @@ $("a.close").click( function(e) {
 				}
 			}
 		);
-	}
+	} } );
 } );
 
 </script>
