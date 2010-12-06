@@ -133,7 +133,7 @@ class BodyModule extends Module {
 
 		$railModuleList = array();
 		
-		if(!in_array('fullmonty', $wgABTests)) {
+		if(!(in_array('fullmonty', $wgABTests) || in_array('minimonty1', $wgABTests) || in_array('minimonty2', $wgABTests))) {
 
 			$spotlightsParams = array('mode'=>'RAIL', 'adslots'=> array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule', 'adGroupName'=>'SPOTLIGHT_RAIL');
 	

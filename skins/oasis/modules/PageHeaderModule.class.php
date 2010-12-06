@@ -122,7 +122,7 @@ class PageHeaderModule extends Module {
 		
 		$revisions = array();
 		
-		if (!in_array('fullmonty', $wgABTests)) {
+		if (!(in_array('fullmonty', $wgABTests) || in_array('minimonty1', $wgABTests) || in_array('minimonty2', $wgABTests) || in_array('minimonty3', $wgABTests) )) {
 
 			// use service to get data
 			$service = new PageStatsService($wgTitle->getArticleId());
@@ -208,7 +208,7 @@ class PageHeaderModule extends Module {
 			// NOTE: Skip getMostLinkedCategories() on Lyrics and Marvel because we're not sure yet that it's fast enough.
 			$LYRICS_CITY_ID = "43339";
 			$MARVEL_CITY_ID = "2233";
-			if(!in_array('fullmonty', $wgABTests) && ($wgCityId != $LYRICS_CITY_ID)  && ($wgCityId != $MARVEL_CITY_ID)){
+			if(!(in_array('fullmonty', $wgABTests) || in_array('minimonty1', $wgABTests) || in_array('minimonty2', $wgABTests) || in_array('minimonty3', $wgABTests)) && ($wgCityId != $LYRICS_CITY_ID)  && ($wgCityId != $MARVEL_CITY_ID)){
 				$categories = $service->getMostLinkedCategories();
 			}
 

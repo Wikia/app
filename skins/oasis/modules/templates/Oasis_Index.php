@@ -77,7 +77,7 @@
 		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 	}
 ?>
-<?//= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
+<?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 
 <!-- quantServe -->
 <?= $quantServe ?>
