@@ -58,11 +58,13 @@ $wgAjaxExportList[] = 'AdSS_AdminController::editAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::getAdAjax';
 
 if( empty( $wgAdSS_OnlyAdmin ) ) {
-	//$wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
-	$wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';
-	//$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
-	$wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
-	$wgHooks['ArticlePurge'][] = 'AdSS_Publisher::onArticlePurge';
+	if( !empty( $wgShowAds ) ) {
+		//$wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
+		$wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';
+		//$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
+		$wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
+		$wgHooks['ArticlePurge'][] = 'AdSS_Publisher::onArticlePurge';
+	}
 
 	$wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
 	$wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
