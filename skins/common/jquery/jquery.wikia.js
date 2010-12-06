@@ -287,6 +287,21 @@ $.loadJQueryAutocomplete = function(callback) {
 	}
 }
 
+$.loadWikiaTooltip = function(callback) {
+	if (typeof $().wikiaTooltip === 'undefined') {
+		$().log('loading', 'Wikia Tooltip');
+
+		$.getScript(stylepath + '/common/jquery/jquery.wikia.tooltip.js?' + wgStyleVersion, function() {
+			$().log('loaded', 'Wikia Tooltip');
+
+			if(typeof callback === 'function') callback();
+		});
+	}
+	else {
+		if(typeof callback === 'function') callback();
+	}
+}
+
 $.loadJQueryAIM = function(callback) {
 	if (typeof jQuery.AIM === 'undefined') {
 		$().log('loading', 'jQuery AIM');
