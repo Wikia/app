@@ -14,6 +14,8 @@ if ( !defined('MEDIAWIKI') ) {
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SponsorshipDashboard']	= $dir . 'SponsorshipDashboard.body.php';
+$wgAutoloadClasses['SponsorshipDashboardService'] = $dir . 'service/SponsorshipDashboardService.class.php';
+$wgAutoloadClasses['gapi'] = $dir . '../../../lib/gapi/gapi.class.php';
 
 $wgExtensionMessagesFiles['SponsorshipDashboard'] = $dir . 'SponsorshipDashboard.i18n.php';
 

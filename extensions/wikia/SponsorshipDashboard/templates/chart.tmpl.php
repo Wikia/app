@@ -58,12 +58,12 @@ $(function () {
 				},
 				legend: { show: false }
 			}
-			
+
 	$.each(datasets, function(key, val) {
 		val.color = i;
 		++i;
 	});
-    
+
 	// insert checkboxes
 	var choiceContainer = $("#choices");
 	$.each(datasets, function(key, val) {
@@ -101,7 +101,8 @@ $(function () {
 			color: '#000',
 			padding: '2px',
 			'background-color': '#fff',
-			opacity: 0.80
+			opacity: 0.80,
+			'z-index': 999
 		}).appendTo("body").fadeIn(200);
 	}
 
