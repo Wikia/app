@@ -22,13 +22,13 @@ class AdDisplay {
 
 	//use this one
 	public static function OutputAdvertisementOutputHook( &$out, &$text ){
-		global $wgUser;
+		global $wgUser, $wgRequest;
 
 		if ( empty($_GET['showads']) && is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ) {
 			return true;
 		}
 
-		if(!$out->isArticle()) return true;
+		if(!$out->isArticle() || $wgRequest->getVal('diff')) return true;
 		if(!self::ArticleCanShowAd()) return true;
 		wfLoadExtensionMessages( 'SponsorPage' );
 
