@@ -103,6 +103,7 @@
                 suitename="Wikia QA Single Test"
                 listeners="org.uncommons.reportng.JUnitXMLReporter"
                 parallel="methods"
+                threadCount="1"
                 failureProperty="test.failed" >
             <classfileset file="${build.bin}/com/wikia/selenium/tests/${testClass}.class" />
             <sysproperty key="java.security.policy" file="${testsdir}/testng.policy"/>
