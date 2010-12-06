@@ -111,6 +111,7 @@ Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-timestamp' => 'Timestamp',
 	'adss-description' => 'Description',
 	'adss-amount' => '$$1',
+	'adss-cancel-confirmation' => 'Are you sure you want to delete this ad?',
 	'adss-welcome-subject' => '[AdSS] Thank you for your sponsorship!',
 	'adss-welcome-body' => 'Hi,
 

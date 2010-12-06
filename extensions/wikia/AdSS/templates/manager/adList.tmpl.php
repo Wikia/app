@@ -10,8 +10,8 @@ $("#adssBuyAnother").click(function() {
 
 $("a.close").click( function(e) {
 	e.preventDefault();
-	if( confirm( 'Are you sure you want to delete this ad?' ) ) {
-		var id = $(this).parent().attr("id");
+	var id = $(this).parent().attr("id");
+	$.confirm( {content:'<?php echo wfMsg('adss-cancel-confirmation'); ?>', width:300, onOk:function() {
 		$.getJSON( wgScript, {
 			'action': 'ajax',
 			'rs': 'AdSS_ManagerController::closeAdAjax',
@@ -25,7 +25,7 @@ $("a.close").click( function(e) {
 				}
 			}
 		);
-	}
+	} } );
 } );
 
 </script>
