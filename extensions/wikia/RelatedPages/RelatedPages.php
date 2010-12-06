@@ -20,8 +20,7 @@ $dir = dirname(__FILE__) . '/';
 
 // hooks
 $wgHooks['OutputPageMakeCategoryLinks'][] = 'RelatedPages::onOutputPageMakeCategoryLinks';
-// tmp turned off
-//$wgHooks['OutputPageBeforeHTML'][] = 'RelatedPages::onOutputPageBeforeHTML';
+array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedPages::onOutputPageBeforeHTML' );
 $wgHooks['ArticleSaveComplete'][] = 'RelatedPagesModule::onArticleSaveComplete';
 
 // classes

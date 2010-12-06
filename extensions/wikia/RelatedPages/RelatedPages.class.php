@@ -338,24 +338,7 @@ class RelatedPages {
 	}
 
 	public static function onOutputPageBeforeHTML( &$out, &$text ) {
-		if ( class_exists( 'ArticleAdLogic' ) && $out->isArticle() && ArticleAdLogic::isContentPage() && ArticleAdLogic::isLongArticle($text)) {
-			// long article, inject Related Pages module after x section
-			$relatedPages = RelatedPages::getInstance();
-
-			$sections = preg_split( '/<h2>/i', $text, -1, PREG_SPLIT_OFFSET_CAPTURE );
-
-			if( !empty( $sections[$relatedPages->getPageSectionNo()] ) ) {
-				// we have enough sections, proceed
-				$sectionPos = $sections[$relatedPages->getPageSectionNo()][1];
-
-				$first = substr( $text, 0, $sectionPos - 4 );
-				$last = substr( $text, $sectionPos - 4);
-
-				$text = $first . wfRenderModule('RelatedPages') . $last;
-
-				$relatedPages->setRendered( true );
-			}
-		}
+		$text .= wfRenderModule('RelatedPages');
 		return true;
 	}
 
