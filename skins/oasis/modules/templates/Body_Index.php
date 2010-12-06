@@ -79,9 +79,6 @@
 
 			<?= $bodytext ?>
 
-			<?= wfRenderModule('RelatedPages'); ?>
-
-			<?= wfRenderModule('SponsoredLinks'); ?>
 		</div>
 
 		<?php
