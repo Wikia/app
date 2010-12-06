@@ -1,5 +1,5 @@
 <header id="WikiaHeader" class="WikiaHeader">
-	<? if (!in_array('fullmonty', $wgABTests)) { ?>
+	<? if (!(in_array('fullmonty', $wgABTests) || in_array('minimonty1', $wgABTests) || in_array('minimonty3', $wgABTests))) { ?>
 	<nav>
 		<? if (!$wgSingleH1) { ?>
 		<h1>Wikia Navigation</h1>

@@ -21,7 +21,7 @@
 	if ($isMainPage) {
 		echo '<div class="WikiaMainPageBanner">';
 	}
-	if (!in_array('fullmonty', $wgABTests)) {
+	if (!(in_array('fullmonty', $wgABTests) || in_array('minimonty2', $wgABTests) || in_array('minimonty3', $wgABTests))) {
 		if ($wgEnableCorporatePageExt) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
 		} else {

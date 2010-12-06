@@ -69,6 +69,15 @@ class SassUtil {
 		if (in_array('fullmonty', $wgABTests)) {
 			$oasisSettings["fullmonty"] = "true";
 		}
+		if (in_array('minimonty1', $wgABTests)) {
+			$oasisSettings["minimonty1"] = "true";
+		}
+		if (in_array('minimonty2', $wgABTests)) {
+			$oasisSettings["minimonty2"] = "true";
+		}
+		if (in_array('minimonty3', $wgABTests)) {
+			$oasisSettings["minimonty3"] = "true";
+		}
 
 		// RTL
 		if($wgContLang && $wgContLang->isRTL()){
