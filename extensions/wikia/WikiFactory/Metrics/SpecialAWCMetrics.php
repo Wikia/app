@@ -19,17 +19,17 @@ class WikiMetrics {
 	private $mLanguages;
 	private $mTopLanguages;
 	private $mSort;
-	private $mOrderDesc;
 	private $mLimit;
 	private $mOffset;
 	private $cityIds;
+	private $mPageViews;
 	/* const */
 	const START_DATE 		= '2009-04-02';
 	const DEF_DAYS_PVIEWS 	= 90;
 	const DEF_MONTH_EDITS 	= 1;
 	const LIMIT 			= 25;
 	const ORDER 			= "created";
-	const DESC 				= 1;
+	const DESC 				= 'ASC';
 	const TIME_DELTA		= 120;
 	/* ajax params */
 	private $axAction;
@@ -58,7 +58,7 @@ class WikiMetrics {
 	 * constructor
 	 */
 	function __construct() {
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, "CloseWiki" );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiFactory/metrics" );
 		$this->mPeriods = array( 
 			0 => "all", 
 			1 => "one-week", 
@@ -75,20 +75,21 @@ class WikiMetrics {
 			"created" 			=> "city_id",
 			"title" 			=> "city_title",
 			"lang"				=> "city_lang",
-			"founderEmail"		=> "city_founding_email",
 			"url"				=> "city_url",
-			"title"				=> "city_title",
-			"founder"			=> "city_founding_user"
+			"founder"			=> "city_founding_email",
+			"users"				=> "all_users",
+			"regusers"			=> "content_users",
+			"articles"			=> "articles",
+			"edits"				=> "edits",
+			"images"			=> "images"
 		);
-		$this->mOrder = array(
-			1 => 'DESC',
-			-1 => 'ASC',
-		);
-		wfLoadExtensionMessages("WikiFactory");
 	}
 	
-	public function show( ) {
+	public function show( $subtitle = "" ) {
 		global $wgUser, $wgOut, $wgRequest;
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
+
+		wfLoadExtensionMessages("WikiFactory");
 
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -111,14 +112,46 @@ class WikiMetrics {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiFactory/Metrics/css/table.css?{$wgStyleVersion}");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+		
 		/**
 		 * show form
 		 */
+		@list(, $this->mAction) = explode("/", $subtitle);
+		
 		$this->showForm();
+		
+		$this->mAction = empty($this->mAction) ? 'main' : $this->mAction;
+
+		if ( $this->mAction == 'main' ) {
+			$this->showMainForm();
+		} elseif ( $this->mAction == 'monthly' ) {
+			$this->showMonthlyForm();
+		} elseif ( $this->mAction == 'daily' ) {
+			$this->showDailyForm();
+		}
 	}
 
 	/* draws the form itself  */
 	function showForm ($error = "") {
+		global $wgOut, $wgContLang, $wgStyleVersion, $wgStylePath;
+        wfProfileIn( __METHOD__ );
+		
+		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
+				
+        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+        $oTmpl->set_vars( array(
+			"error"				=> $error,
+			"mAction"			=> $this->mAction,
+            "mTitle"			=> $this->mTitle,
+        ));
+        $wgOut->addHTML( $oTmpl->execute("tabs") );
+        wfProfileOut( __METHOD__ );
+	}
+	
+	/* draws the form itself  */
+	function showMainForm ($error = "") {
 		global $wgOut, $wgContLang;
 		global $wgExtensionsPath, $wgRequest;
         wfProfileIn( __METHOD__ );
@@ -153,6 +186,46 @@ class WikiMetrics {
         wfProfileOut( __METHOD__ );
 	}
 	
+	/* draws the form itself  */
+	function showMonthlyForm ($error = "") {
+		global $wgOut, $wgContLang;
+		global $wgExtensionsPath, $wgRequest;
+        wfProfileIn( __METHOD__ );
+		#---
+		$hubs = WikiFactoryHub::getInstance();
+		$aCategories = $hubs->getCategories();
+        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+        $oTmpl->set_vars( array(
+			"error"				=> $error,
+            "wgContLang"		=> $wgContLang,
+            "wgExtensionsPath" 	=> $wgExtensionsPath, 
+			"aCategories"		=> $aCategories,
+			"obj"				=> $this,
+        ));
+        $wgOut->addHTML( $oTmpl->execute("metrics-monthly-form") );
+        wfProfileOut( __METHOD__ );
+	}
+	
+	/* draws the form itself  */
+	function showDailyForm ($error = "") {
+		global $wgOut, $wgContLang;
+		global $wgExtensionsPath, $wgRequest;
+        wfProfileIn( __METHOD__ );
+		#---
+		$hubs = WikiFactoryHub::getInstance();
+		$aCategories = $hubs->getCategories();
+        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+        $oTmpl->set_vars( array(
+			"error"				=> $error,
+            "wgContLang"		=> $wgContLang,
+            "wgExtensionsPath" 	=> $wgExtensionsPath, 
+			"aCategories"		=> $aCategories,
+			"obj"				=> $this,
+        ));
+        $wgOut->addHTML( $oTmpl->execute("metrics-daily-form") );
+        wfProfileOut( __METHOD__ );
+	}
+		
 	/* get languages */
 	private function getLangs() {
 		$this->mTopLanguages = explode(',', wfMsg('awc-metrics-language-top-list'));
@@ -206,76 +279,18 @@ class WikiMetrics {
 		
 		$res = array();
 		wfProfileIn( __METHOD__ );
+		
 		#---
-		list ($AWCCities, $AWCCitiesCount) = $this->getWikis();
+		list ($AWCCities, $AWCCitiesCount) = $this->getNewWikis();
+		
 		if ( !empty( $AWCCities ) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
-			$wikiList = implode( ",", array_keys( $AWCCities ) );
-
-			#--- stats 
-			$table = "city_stats_full";
-			$db_fields[] = "round(avg(cw_users_all_reg_main_ns), 1) as users_edits";
-			$db_fields[] = "max(cw_users_all_reg) as users_reg";
-			$db_fields[] = "max(cw_images_uploaded) as images";
-			$db_fields[] = "max(cw_db_size) as db_size";
-			$db_fields[] = "round(avg(cw_db_edits), 1) as edits";
-			$db_fields[] = "round(avg(cw_article_mean_size),1) as mean_size";
-			$db_fields[] = "round(avg(cw_article_mean_nbr_revision),1) as mean_nbr_revision";
-			$db_fields[] = "round(avg(cw_article_new_per_day),1) as articles_per_day";
-			$db_fields[] = "max(cw_article_count_link) as articles";
-			$db_fields[] = "max(cw_wikians_total) as wikians";
-
-			$where = array( 'cw_city_id in (' . $wikiList . ')' );
-			$options = array( 'GROUP BY' => 'cw_city_id' );
-
-			$oRes = $dbs->select( 
-				$table, 
-				array( 'cw_city_id,' . implode( ",", $db_fields ) ),
-				$where,
-				__METHOD__,
-				$options
-			);
-			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
-				$db_size = array_reduce (
-					array (" B", " KB", " MB", " GB"), create_function (
-						'$a,$b', 'return is_numeric($a)?($a>=1024?$a/1024:number_format($a,1).$b):$a;'
-					), $oRow->db_size
-				);
-				
-				$art_size = array_reduce (
-					array (" B", " KB", " MB", " GB"), create_function (
-						'$a,$b', 'return is_numeric($a)?($a>=1024?$a/1024:number_format($a,1).$b):$a;'
-					), $oRow->mean_size
-				);
-				
-				$_tmp = array(
-					'wikians' 			=> $oRow->wikians,
-					'articles' 			=> $oRow->articles,
-					'articles_per_day'	=> sprintf("%0.1f", $oRow->articles_per_day),
-					'mean_nbr_revision'	=> sprintf("%0.1f", $oRow->mean_nbr_revision),
-					'mean_size_txt'		=> $art_size,
-					'mean_size'			=> $oRow->mean_size,
-					'edits'				=> $oRow->edits,
-					'db_size_txt'		=> $db_size,
-					'db_size'			=> $oRow->db_size,
-					'images'			=> $oRow->images,
-					'users_reg'			=> $oRow->users_reg,
-					'users_edits'		=> $oRow->users_edits,
-					'pageviews'			=> 0,
-					'pageviews_txt'		=> "0",
-				);
-				$AWCCities[ $oRow->cw_city_id ] = array_merge( $AWCCities[ $oRow->cw_city_id ], $_tmp );
-			}
-			$dbs->freeResult( $oRes );
-			
 			#--- page views 
+			$wikiList = array_keys( $AWCCities );
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$table = "page_views";
-			$where = array( 'pv_city_id in (' . $wikiList . ')' );
 			$oRes = $db->select( 
-				$table, 
+				array( 'page_views' ), 
 				array( 'pv_city_id, sum(pv_views) as cnt' ),
-				$where,
+				array( 'pv_city_id' => $wikiList ),
 				__METHOD__,
 				array( 'GROUP BY' => 'pv_city_id' )
 			);
@@ -290,31 +305,11 @@ class WikiMetrics {
 				$AWCCities[ $oRow->pv_city_id ][ "pageviews_txt" ] = $page_views;
 			}
 			$db->freeResult( $oRes );
-			
-			#--- order data
-			if ( !in_array( $this->mSort, array_keys($this->mSortList)) && !in_array( $this->mSort, array_values($this->mSortList)) ) {
-				#--- sort manually
-				$_tmp = array();
-				foreach ($AWCCities as $iCity => $aRow) {
-					$_tmp[ $iCity ] = ( isset( $aRow[$this->mSort] ) ) ? $aRow[$this->mSort] : 0;
-				}
-				if ( !empty( $_tmp ) ) {
-					( $this->mOrderDesc == 'DESC' ) ? arsort($_tmp) : asort($_tmp);
-					$AWCCitiesCount = count($_tmp);
-					$_fixArray = array_slice( $_tmp, $this->mOffset, $this->mLimit, true );
-					if ( !empty($_fixArray) ) {
-						foreach ($_fixArray as $iCity => $sortValue) {
-							$res[ $iCity ] = $AWCCities[ $iCity ];
-						}			
-					}
-				}
-			} else {
-				$res = $AWCCities;
-			}
 		}
+		
 		#---
 		wfProfileOut( __METHOD__ );
-		return array($res, $AWCCitiesCount);
+		return array($AWCCities, $AWCCitiesCount);
 	}
 
 	/*
@@ -346,15 +341,18 @@ class WikiMetrics {
 		$city_id = ( !empty($prefix) ) ? "{$prefix}.city_id" : "city_id";
 
 		if ( !empty($this->axCreated) && in_array( $this->axCreated, array_keys($this->mPeriods) ) ) {
-			$sCreated = ($this->axCreated > 100) ? intval($this->axCreated - 100) . ' MONTH' : intval($this->axCreated) . ' WEEK';
-			$where[] = 'city_created >= DATE_SUB(NOW(), INTERVAL ' . $sCreated . ')';
+			$sCreated = ($this->axCreated > 100) ? intval($this->axCreated - 100) . ' months' : intval($this->axCreated) . ' weeks';
+			$date_diff = date( 'Y-m-d 00:00:00', strtotime('-' . $sCreated) ) . "\n";
+			$where[] = 'city_created >= ' . $dbr->addQuotes($date_diff);
 		}
 		$m = array();
 		if ( !empty($this->axFrom) && preg_match('/((19|20)[0-9]{2})\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])/', $this->axFrom, $m) !== false ) {
-			$where[] = 'DATE_FORMAT(city_created, \'%Y/%m/%d\') >= ' . $dbr->addQuotes($this->axFrom);
+			$from = sprintf( "%s 00:00:00", str_replace('/', '-', $this->axFrom) );
+			$where[] = 'city_created >= ' . $dbr->addQuotes($from);
 		}
 		if ( !empty($this->axTo) && preg_match('/((19|20)[0-9]{2})\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])/', $this->axTo, $m) !== false ) {
-			$where[] = 'DATE_FORMAT(city_created, \'%Y/%m/%d\') <= ' . $dbr->addQuotes($this->axTo);
+			$to = sprintf( "%s 23:59:59", str_replace('/', '-', $this->axTo) );
+			$where[] = 'city_created <= ' . $dbr->addQuotes($to);
 		}
 		if ( !empty($this->axLanguage) ) {
 			$countLangs = $this->getLangs();
@@ -409,18 +407,22 @@ class WikiMetrics {
 		#- check order - if order is for city_list - we can use limit and order by in SQL query
 		#----
 		$this->mLimit = ( !empty($this->axLimit) ) ? intval($this->axLimit) : self::LIMIT;
-		$this->mOffset = ( !empty($this->axOffset) ) ? intval($this->axOffset * $this->axLimit) : 0;
-		$this->mSort = $this->mSortList[self::ORDER]; 
-		if ( !empty($this->axOrder) && in_array( $this->axOrder, array_keys( $this->mSortList ) ) ) {
-			$this->mSort = $this->mSortList[$this->axOrder];
+		$this->mOffset = ( !empty($this->axOffset) ) ? intval($this->axOffset) : 0;
+	
+		$order = array();
+		if ( !empty($this->axOrder) ) {
+			$list = explode("|", $this->axOrder);
+			if ( !empty($list) ) {
+				foreach ( $list as $sort ) {
+					list ( $o, $d ) = explode(":", $sort);
+					$order[] = $this->mSortList[$o] . " " . $d;
+				}
+			}
 		} else {
-			$this->mSort = $this->axOrder;
-		}
-		#---
-		$this->mOrderDesc = $this->mOrder[self::DESC]; 
-		if ( !empty($this->axDesc) && in_array( $this->axDesc, array_keys($this->mOrder) ) ) {
-			$this->mOrderDesc = $this->mOrder[$this->axDesc];
-		}
+			$order = array( $this->mSortList[WikiMetrics::ORDER] . " " . WikiMetrics::DESC );
+		}		
+		
+		$this->mSort = implode(", ", $order);
 
 		wfProfileOut( __METHOD__ );
 		return $where;
@@ -433,8 +435,8 @@ class WikiMetrics {
 	 * @return array
 	 *
 	 */
-	private function getWikis( $all = false ) {
-		global $wgExternalSharedDB;
+	private function getNewWikis( $all = false ) {
+		global $wgStatsDB;
 		wfProfileIn( __METHOD__ );
 		$res = array();
 
@@ -446,52 +448,80 @@ class WikiMetrics {
 				$this->cityIds = array(0);
 			}
 		}
-		if ( !empty($this->axNbrPageviews) ) {
-			$this->cityIds = $this->getWikisByNbrPageviews();
-			if ( empty($this->cityIds) ) {
-				$this->cityIds = array(0);
-			}
-		}
 		if ( !empty($this->axNbrArticles) ) { 
 			$this->cityIds = $this->getWikisByNbrArticles();
 			if ( empty($this->cityIds) ) {
 				$this->cityIds = array(0);
 			}
 		}
+		if ( !empty($this->axNbrPageviews) ) {
+			$this->cityIds = $this->getWikisByNbrPageviews();
+			if ( empty($this->cityIds) ) {
+				$this->cityIds = array(0);
+			}
+		}
 
 		/* db */
-		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
 		/* check params */
 		$where = $this->buildQueryOptions($dbr);
-		$options = array();
 		
-		if ( $all === false ) {
-			$options = array('SQL_CALC_FOUND_ROWS');
-			if ( $this->mSort != $this->axOrder ) {
-				$options['LIMIT'] = $this->mLimit;
-				$options['OFFSET'] = $this->mOffset;
-				$options['ORDER BY'] = $this->mSort . " " . $this->mOrderDesc;
+		/* number records */
+		
+		
+		$options = array();
+
+		$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); #, "stats.page_views");
+		$fields = array(
+			"city_id", 
+			"city_dbname", 
+			"city_url", 
+			"city_created", 
+			"city_founding_user", 
+			"city_title", 
+			"city_founding_email", 
+			"city_lang", 
+			"city_public",
+			"ifnull(round(avg(users_all), 1), 0) as all_users",
+			"ifnull(round(avg(users_content_ns), 1),0) as content_users",
+			"ifnull(round(avg(articles_edits), 1), 0) as edits",
+			"ifnull(max(articles),0) as articles",
+			"ifnull(max(images_uploaded),0) as images",
+			//"ifnull(avg(pv_views),0) as pviews"
+		);
+		
+		$join = array(
+			'stats.wikia_monthly_stats' => array( 'LEFT JOIN', 'wiki_id = city_id'),
+			//'stats.page_views' => array('LEFT JOIN', 'pv_city_id = city_id')
+		);
+		
+		$AWCCitiesCount = 0;
+		if ( $all == false ) {
+			$oRow = $dbr->selectRow( "wikicities.city_list", "COUNT(*) as cnt", $where, __METHOD__ );
+			if ( is_object($oRow) ) {
+				$AWCCitiesCount = $oRow->cnt;
 			}
+			#if ( $this->mSort != $this->axOrder ) {
+			$options['LIMIT'] = $this->mLimit;
+			$options['OFFSET'] = $this->mOffset;
+			$options['GROUP BY'] = 'city_id';
+			$options['ORDER BY'] = $this->mSort;
+			#}
 		} else {
-			$options['ORDER BY'] = $this->mSort . " " . $this->mOrderDesc;
+			$options['GROUP BY'] = 'city_id';
+			$options['ORDER BY'] = $this->mSort;
+			$AWCCitiesCount = 0; 
 		}
 
 		#----
 		$oRes = $dbr->select( 
-			"city_list", 
-			array( "city_id, city_dbname, city_url, city_created, city_founding_user, city_title, city_founding_email, city_lang, city_public" ),
+			$tables, 
+			$fields,
 			$where,
 			__METHOD__,
-			$options
+			$options,
+			$join	
 		);
-		
-		$AWCCitiesCount = 0;
-		if ( ($this->mSort != $this->axOrder) && ( $all === false ) )  {
-			$oResCnt = $dbr->query('SELECT FOUND_ROWS() as rowsCount');
-			$oRowCnt = $dbr->fetchObject ( $oResCnt );
-			$AWCCitiesCount = $oRowCnt->rowsCount;
-			$dbr->freeResult( $oResCnt );
-		}
 
 		$AWCMetrics = array();
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -502,7 +532,7 @@ class WikiMetrics {
 					$sk = $oFounder->getSkin();
 					$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
 					$sFounderName = $oFounder->getName();
-				}
+				}		
 				$AWCMetrics[ $oRow->city_id ] = array(
 					'id' 				=> $oRow->city_id,
 					'db' 				=> $oRow->city_dbname,
@@ -516,18 +546,12 @@ class WikiMetrics {
 					'founderEmail'		=> $oRow->city_founding_email,
 					'public'			=> $oRow->city_public,
 					#-- stats 
-					'wikians' 			=> 0,
-					'articles' 			=> 0,
-					'articles_per_day'	=> 0,
-					'mean_nbr_revision'	=> 0,
-					'mean_size'			=> 0,
-					'mean_size_txt'		=> "",
-					'edits'				=> 0,
-					'db_size'			=> 0,
-					'db_size_txt'		=> "",
-					'images'			=> 0,
-					'users_reg'			=> 0,
-					'users_edits'		=> 0,
+					'articles' 			=> $oRow->articles,
+					'edits'				=> $oRow->edits,
+					'images'			=> $oRow->images,
+					'all_users'			=> $oRow->all_users,
+					'content_users'		=> $oRow->content_users,
+					//'avg_pviews'		=> $oRow->pviews,
 					'pageviews'			=> 0,
 					'pageviews_txt'		=> 0,
 				);
@@ -540,8 +564,8 @@ class WikiMetrics {
 
 		wfProfileOut( __METHOD__ );
 		return array($AWCMetrics, $AWCCitiesCount);
-	}
-
+	}	
+	
 	/*
 	 * get # wikis per hubs per month
 	 *
@@ -554,58 +578,93 @@ class WikiMetrics {
 		/* db */
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		/* check params */
-		$where = $this->buildQueryOptions($dbr, 'cl');
+		$this->mLimit = ( !empty($this->axLimit) ) ? intval($this->axLimit) : self::LIMIT;
+		$this->mOffset = ( !empty($this->axOffset) ) ? intval($this->axOffset) : 0;
 		#----
-		if ( empty($where) ) {
-			$where = array();
-		}
-		
-		#----
-		$where[] = "ccm.city_id = cl.city_id";
+		$where = array("ccm.city_id = cl.city_id");
 		$what = "IFNULL(date_format(cl.city_created, '%Y-%m'), '0000-00')";
 		if ( !empty($this->axDaily) ) {
 			$what = "IFNULL(date_format(cl.city_created, '%Y-%m-%d'), '0000-00-00')";
 		}
 			
-		$oRes = $dbr->select( 
-			"city_cat_mapping as ccm, city_list as cl", 
-			array( "ccm.cat_id, $what as row_date, count(*) as cnt" ),
-			$where,
-			__METHOD__,
-			array(
-				'GROUP BY' => 'cat_id, row_date', 
-				'ORDER BY' => 'row_date',
-			)
-		);
-
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
-
-		$AWCMetrics = array(); $AWCCitiesCount = 0;
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			if ( empty($this->axDaily) ) {
-				$sDate = ($oRow->row_date == '0000-00') ? '1970-01' : $oRow->row_date;
-				$dateArr = explode('-', $sDate);
-				$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
-				$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
-			} else {
-				$sDate = ($oRow->row_date == '0000-00-00') ? '1970-01-01' : $oRow->row_date;
-				$dateArr = explode('-', $sDate);
-				$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
-				$out = $wgLang->date( wfTimestamp( TS_MW, $stamp ), true );
-			}
-
-			$AWCMetrics[$out][$oRow->cat_id] = array(
-				'month' 	=> $sDate,
-				'monthTxt' 	=> $out,
-				'catId' 	=> $oRow->cat_id,
-				'catName' 	=> (isset($aCategories[$oRow->cat_id])) ? $aCategories[$oRow->cat_id]['name'] : "Undefined",
-				'count'		=> $oRow->cnt
-			);
-			$AWCCitiesCount += $oRow->cnt;
+			
+		$AWCMetrics = array();
+		$AWCCitiesCount = 0;
+		$oRow = $dbr->selectRow( 
+			"( select distinct($what) from city_list cl ) as c", 
+			array( " count(*) as cnt " ),
+			array(),
+			__METHOD__
+		);
+		if ( $oRow ) {
+			$AWCCitiesCount = $oRow->cnt;
 		}
-		$dbr->freeResult( $oRes );
-
+			
+		if ( $AWCCitiesCount > 0 ) {
+			
+			$oRes = $dbr->select( 
+				"city_cat_mapping as ccm, city_list as cl", 
+				array( "$what as row_date, count(*) as cnt" ),
+				$where,
+				__METHOD__,
+				array(
+					'GROUP BY' => 'row_date', 
+					'ORDER BY' => 'row_date DESC',
+					'LIMIT' => $this->mLimit,
+					'OFFSET' => $this->mOffset
+				)
+			);
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {	
+				$firstDate = $lastDate = '';
+				if ( empty($this->axDaily) ) {
+					$sDate = ($oRow->row_date == '0000-00') ? '1970-01' : $oRow->row_date;
+					$dateArr = explode('-', $sDate);
+					$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+					$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+					$firstDate = sprintf("%s-01 00:00:00", $sDate);
+					$lastDate = sprintf("%s 23:59:59 \n\n", date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime($dateArr[0].'-'.$dateArr[1].'-01 00:00:00')))));
+				} else {
+					$sDate = ($oRow->row_date == '0000-00-00') ? '1970-01-01' : $oRow->row_date;
+					$dateArr = explode('-', $sDate);
+					$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
+					$out = $wgLang->date( wfTimestamp( TS_MW, $stamp ), true );
+					$firstDate = sprintf("%s 00:00:00", $sDate);
+					$lastDate = sprintf("%s 23:59:59", $sDate);
+				}
+				
+				$AWCMetrics[$out] = array('count' => $oRow->cnt, 'hubs' => array(), 'start' => $firstDate, 'end' => $lastDate );
+			}			
+			$dbr->freeResult( $oRes );
+			
+			if ( !empty($AWCMetrics) ) {
+				foreach ( $AWCMetrics as $date => $records ) {
+					$where = array(
+						"ccm.city_id = cl.city_id",
+						"cl.city_created between '". $records['start'] . "' and '" . $records['end'] . "'"
+					);
+					
+					$oRes = $dbr->select( 
+						"city_cat_mapping as ccm, city_list as cl", 
+						array( "ccm.cat_id, count(*) as cnt" ),
+						$where,
+						__METHOD__,
+						array(
+							'GROUP BY' => 'cat_id', 
+						)
+					);
+					while ( $oRow = $dbr->fetchObject( $oRes ) ) {	
+						$AWCMetrics[$date]['hubs'][$oRow->cat_id] = array(
+							'catName' 	=> (isset($aCategories[$oRow->cat_id])) ? $aCategories[$oRow->cat_id]['name'] : "Undefined",
+							'count'		=> $oRow->cnt						
+						);
+					}			
+					$dbr->freeResult( $oRes );
+				}
+			}
+		}
+				
 		wfProfileOut( __METHOD__ );
 		return array($AWCMetrics, $AWCCitiesCount, $aCategories);
 	}
@@ -674,7 +733,7 @@ class WikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByNbrPageviews() {
-		global $wgExternalStatsDB, $wgMemc, $wgStatsDB;
+		global $wgMemc, $wgStatsDB;
 		
 		$pageViews = $this->axNbrPageviews;
 		$pageViewsDays = $this->axNbrPageviewsDays;
@@ -682,11 +741,13 @@ class WikiMetrics {
 			$pageViewsDays = self::DEF_DAYS_PVIEWS;
 		}
 
-		$where = array( 'DATE_SUB(CURDATE(),INTERVAL '.intval($pageViewsDays).' DAY) <= pv_timestamp' );
+		$days_ago = date('Ymd', strtotime('-90 days'));
+
+		$where = array( 'pv_use_date >= ' . $days_ago );
 		$cityList = "";
 		if ( !empty($this->cityIds) ) {
 			$cityList = implode(",", $this->cityIds);
-			$where[] = " cw_city_id in (" . $cityList . ") ";
+			$where[] = " pv_city_id in (" . $cityList . ") ";
 		}
 
 		$memkey = __METHOD__ . "v:" . $pageViews . "vd:" . $pageViewsDays . "vc:" . md5($cityList);
@@ -702,6 +763,7 @@ class WikiMetrics {
 			);
 			$cities = array();
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$this->mPageViews[$oRow->pv_city_id] = $oRow->cnt;
 				$cities[] = $oRow->pv_city_id;
 			}
 			$dbs->freeResult( $oRes );
@@ -718,34 +780,37 @@ class WikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByNbrEdits( ) {
-		global $wgExternalStatsDB, $wgMemc;
+		global $wgStatsDB, $wgMemc;
 		
 		$nbrEdits = $this->axNbrEdits;
 		$nbrEditsDays = $this->axNbrEditsDays;
 		if ( empty($nbrEditsDays) ) {
 			$nbrEditsDays = self::DEF_MONTH_EDITS;
 		}
-		$where = array( 'date_format(DATE_SUB(CURDATE(),INTERVAL '.intval($nbrEditsDays).' MONTH), \'%Y%m00000000\') <= cw_stats_date' );
+		
+		$date_sub = date('Ym', strtotime('-'.intval($nbrEditsDays).' months'));
+		
+		$where = array( 'stats_date >= ' . $date_sub );
 		$cityList = "";
 		if ( !empty($this->cityIds) ) {
 			$cityList = implode(",", $this->cityIds);
-			$where[] = " cw_city_id in (" . $cityList . ") ";
+			$where[] = " wiki_id in (" . $cityList . ") ";
 		}
 				
 		$memkey = __METHOD__ . "e:" . $nbrEdits . "ed:" . $nbrEditsDays . "ids:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
 		if ( empty($cities) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $dbs->select( 
-				"city_stats_full", 
-				array( 'cw_city_id', 'sum(cw_db_edits) as cnt' ),
+				"wikia_monthly_stats", 
+				array( 'wiki_id', 'sum(articles_edits) as cnt' ),
 				$where,
 				__METHOD__,
-				array( 'GROUP BY' => 'cw_city_id', 'HAVING' => 'cnt < '. intval($nbrEdits) )
+				array( 'GROUP BY' => 'wiki_id', 'HAVING' => 'cnt < '. intval($nbrEdits) )
 			);
 			$cities = array();
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
-				$cities[] = $oRow->cw_city_id;
+				$cities[] = $oRow->wiki_id;
 			}
 			$dbs->freeResult( $oRes );
 			$wgMemc->set( $memkey, $cities, 3600 );
@@ -761,7 +826,7 @@ class WikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByNbrArticles() {
-		global $wgExternalStatsDB, $wgMemc;
+		global $wgStatsDB, $wgMemc;
 		
 		$nbrArticles = $this->axNbrArticles;
 		#----
@@ -769,20 +834,20 @@ class WikiMetrics {
 		$cityList = "";
 		if ( !empty($this->cityIds) ) {
 			$cityList = implode(",", $this->cityIds);
-			$where[] = " cw_city_id in (" . $cityList . ") ";
+			$where[] = " wiki_id in (" . $cityList . ") ";
 		}
 		$options = array( 
-			'GROUP BY' => 'cw_city_id', 
-			'HAVING' => '(select c1.cw_article_count_link from city_stats_full c1 where c1.cw_stats_date = max(c2.cw_stats_date) and c1.cw_city_id = c2.cw_city_id) <= ' . intval($nbrArticles)
+			'GROUP BY' => 'wiki_id', 
+			'HAVING' => '(select c1.articles from wikia_monthly_stats c1 where c1.stats_date = max(c2.stats_date) and c1.wiki_id = c2.wiki_id) <= ' . intval($nbrArticles)
 		);
 				
 		$memkey = __METHOD__ . "a:" . $nbrArticles . "ids:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
 		if ( empty($cities) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $dbs->select( 
-				"`city_stats_full` as c2", 
-				array( 'c2.cw_city_id', 'max(c2.cw_stats_date) as m' ),
+				"wikia_monthly_stats as c2", 
+				array( 'c2.wiki_id', 'max(c2.stats_date) as m' ),
 				$where,
 				__METHOD__,
 				$options

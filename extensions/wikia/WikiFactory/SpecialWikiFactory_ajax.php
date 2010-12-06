@@ -749,28 +749,52 @@ function axAWCMetrics() {
 	if( $wgUser->isBlocked() ) {
 		return "";
 	}
-
+		
 	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
-	$page = $wgRequest->getVal('awc-offset', 0);
-	$order = $wgRequest->getVal('awc-order', WikiMetrics::ORDER);
-	$desc = $wgRequest->getVal('awc-desc', WikiMetrics::DESC);
-	$aResponse = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
+	$offset = $wgRequest->getVal('awc-offset', 0);
+	$loop = $wgRequest->getVal('awc-loop', 1);	
+	
+	$aResponse = array();
+	#'nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
 
 	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
 	list ($res, $count) = $OAWCMetrics->getMainStatsRecords();
-
+	
+	$result = array(
+		'sEcho' => intval($loop),
+		'iTotalRecords' => count($res), 
+		'iTotalDisplayRecords' => $count, 
+		'sColumns' => 'id,active,wikiid,title,url,db,lang,created,founder,users,regusers,articles,edits,images,pviews,close'
+	);
+	$rows = array();			
+	$loop = 1;
 	if ( !empty($res) ) {
-		$aResponse['data'] = $res;
-		$aResponse['nbr_records'] = $count;
+		foreach ( $res as $row ) {
+			$rows[] = array(
+				$loop + $offset, // Id
+				$row['public'],
+				$row['id'],
+				$row['title'],				
+				$row['url'], //url
+				$row['db'], //dbname
+				$row['lang'], // lang,
+				$row['created'], // created,
+				$row['founderUrl'] . "<br />" . $row['founderEmail'], //founder,
+				intval($row['all_users']),
+				intval($row['content_users']),
+				intval($row['articles']),
+				intval($row['edits']),
+				intval($row['images']),
+				$row['pageviews_txt'],
+				$row['id']
+			);			
+			$loop++;	
+		}			
 	}
+	$result['aaData'] = $rows;	
 
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+	return Wikia::json_encode($result);
 }
 
 /**
@@ -798,27 +822,38 @@ function axAWCMetricsCategory() {
 		return "";
 	}
 
-	$aResponse = array('nbr_records' => 0, 'data' => '', 'cats' => array());
-
+	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
+	$offset = $wgRequest->getVal('awc-offset', 0);
+	$loop = $wgRequest->getVal('awc-loop', 1);	
+	
 	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
-	if ( !$OAWCMetrics->getFrom() ) {
-		$OAWCMetrics->setFrom( date('Y/m/d', time() - WikiMetrics::TIME_DELTA * 60 * 60 * 24 ) );
-	}
 	list ($res, $count, $categories) = $OAWCMetrics->getCategoriesRecords();
-
+	
+	$result = array(
+		'sEcho' => intval($loop),
+		'iTotalRecords' => count($res), 
+		'iTotalDisplayRecords' => $count
+	);
+	$rows = array();			
+	$loop = 1;
 	if ( !empty($res) ) {
-		$aResponse['data'] = $res;
-		$aResponse['nbr_records'] = $count;
-		$aResponse['cats'] = $categories;
+		foreach ( $res as $date => $row ) {
+			$record = array( $date );
+			
+			foreach ( $categories as $id => $cat_name ) {
+				$record[] = isset($row['hubs'][$id]['count']) ? intval($row['hubs'][$id]['count']) : 0;
+			}
+			
+			$record[] = $row['count'];
+			
+			$rows[] = $record;
+			$loop++;	
+		}			
 	}
+	$result['aaData'] = $rows;	
 
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+	return Wikia::json_encode($result);
 }
 
 /**

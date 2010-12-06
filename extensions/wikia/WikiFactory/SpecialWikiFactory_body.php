@@ -80,9 +80,9 @@ class WikiFactoryPage extends SpecialPage {
 			));
 			$wgOut->addHTML( $oTmpl->execute("changelog") );
 		}
-		elseif ( strtolower($subpage) === "metrics" ) {
+		elseif ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
 			$oAWCMetrics = new WikiMetrics();
-			$oAWCMetrics->show();
+			$oAWCMetrics->show( $subpage );
 		}
 		elseif ( $subpage === "short.stats" ) {
 			$wgOut->addHTML( $this->shortStats() );
