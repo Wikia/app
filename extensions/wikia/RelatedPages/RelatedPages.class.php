@@ -338,7 +338,9 @@ class RelatedPages {
 	}
 
 	public static function onOutputPageBeforeHTML( &$out, &$text ) {
-		$text .= wfRenderModule('RelatedPages');
+		if( $out->isArticle() ) {
+			$text .= wfRenderModule('RelatedPages');
+		}
 		return true;
 	}
 
