@@ -3,6 +3,8 @@
 @import "/skins/wikia/shared.css";
 //@import "/skins/common/sprite.css";
 
+@import "core/layout";
+
 // Mixins (http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#mixins) These files are in oasis/css/mixins/_(name).scss //
 @import "mixins/border-radius";
 @import "mixins/box-shadow";
