@@ -221,7 +221,7 @@ class RelatedPages {
 		$res = $dbr->select(
 			$tables,
 			array( "cl_from AS page_id" ),
-			array( "cl_to" => $category ),
+			array( "cl_to" => $dbr->addQuotes( $category ) ),
 			__METHOD__,
 			array(),
 			$joinSql
@@ -267,7 +267,7 @@ class RelatedPages {
 						? "page_namespace = " . intval(reset($wgContentNamespaces)) . ")"
 						: "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " ))";
 			}
-			$sql .= " WHERE cl_to = '$category' ";
+			$sql .= " WHERE cl_to = '" . $dbr->addQuotes( $category ) . "' ";
 		}
 		$sql .= ") a WHERE page_id != $articleId group by page_id order by c desc limit $limit";
 
