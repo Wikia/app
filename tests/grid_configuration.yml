@@ -2,13 +2,19 @@ hub:
    port: 4444
    remoteControlPollingIntervalInSeconds: 60
    sessionMaxIdleTimeInSeconds: 240
-   newSessionMaxWaitTimeInSeconds: 240
+   newSessionMaxWaitTimeInSeconds: 900
    environments:
        - name:    "Firefox 3.5 on Windows XP"
          browser: "*firefox"
        - name:    "Firefox 3.6 on Windows XP"
          browser: "*firefox"
        - name:    "Chrome 6 on Windows XP"
+         browser: "*googlechrome"
+       - name:    "Chrome 7 on Windows XP"
+         browser: "*googlechrome"
+       - name:    "Chrome 8 on Windows XP"
+         browser: "*googlechrome"
+       - name:    "Chrome 9 on Windows XP"
          browser: "*googlechrome"
        - name:    "IE7 on Windows XP"
          browser: "*piiexplore"
@@ -27,6 +33,8 @@ hub:
          browser: "*firefox"
        - name:    "IE on Windows"
          browser: "*iehta"
+       - name:    "Chrome on Windows XP"
+         browser: "*googlechrome"
        - name:    "Safari on OS X"
          browser: "*safari"
 
