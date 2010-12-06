@@ -773,14 +773,10 @@ class WikiaPhotoGallery extends ImageGallery {
 			
 			wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
 			
-			//see Image SEO project
-			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($image['linkTitle']));
-
 			$html .= Xml::openElement('div',
 				array(
 				'class' => 'gallery-image-wrapper'.
 					((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
-				'id' => $wrapperId,
 				'style' => 'position: relative;'.
 					($useBuckets ? " width: {$itemWrapperWidth}px; border-style: none;"
 								 : " height:{$image['height']}px; width:{$image['width']}px;").
@@ -831,7 +827,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				'a',
 				array(
 					'class' => $image['classes'],
-					'data-image-name' => $image['linkTitle'],
 					'href' => $image['link'],
 					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$sk->formatSize($image['bytes']).')':"")
 				)
@@ -1273,7 +1268,7 @@ JS;
 	 * @author Marooned
 	 */
 	private function renderFeedGallery() {
-		global $wgLang, $wgBlankImgUrl, $wgParser;
+		global $wgLang, $wgBlankImgUrl;
 
 		wfProfileIn(__METHOD__);
 
@@ -1406,13 +1401,9 @@ JS;
 			$image['linkTitle'] = $linkAttribs['title'];
 			$image['classes'] = $linkAttribs['class'] . ' lightbox';	//parseLink mark it as external - add lightbox class
 
-			//see Image SEO project
-			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($wgParser->mStripState->unstripBoth($image['linkTitle'])));
-
 			$html .= Xml::openElement('div', array(
 				'class' => 'gallery-image-wrapper'.
 					((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
-				'id' => $wrapperId,
 				'style' => 'position: relative;'.
 					'visibility: hidden;'. // RT #69622
 					($useBuckets ? " width: {$itemWrapperWidth}px; border-style: none;"
@@ -1426,7 +1417,6 @@ JS;
 				'a',
 				array(
 					'class' => $image['classes'],
-					'data-image-name' => $image['linkTitle'],
 					'href' => $image['link'],
 					'title' => $image['linkTitle'],
 					//'style' => "line-height: {$image['height']}px", # commented out by macbre (this one is done via JS code)
