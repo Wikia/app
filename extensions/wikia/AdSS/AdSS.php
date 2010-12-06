@@ -53,6 +53,7 @@ $wgHooks['PayPalInstantPaymentNotification'][] = 'IPNListener::notify';
 
 $wgAjaxExportList[] = 'AdSS_AdminController::acceptAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
+$wgAjaxExportList[] = 'AdSS_AdminController::editAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::getAdAjax';
 
 if( empty( $wgAdSS_OnlyAdmin ) ) {
