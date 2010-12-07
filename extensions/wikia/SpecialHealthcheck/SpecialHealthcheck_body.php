@@ -30,7 +30,7 @@ class HealthCheck extends UnlistedSpecialPage {
 	 */
 	public function execute( $par ) {
 		global $wgOut, $wgRequest;
-		
+
 		// Set page title and other stuff
 		$this->setHeaders();
 		$wgOut->setPageTitle( 'Special:Healthcheck' );
@@ -44,7 +44,7 @@ class HealthCheck extends UnlistedSpecialPage {
 		$cpuCount = rtrim( shell_exec('cat /proc/cpuinfo | grep processor | wc -l') );
 		$load = sys_getloadavg();
 
-		
+
 		if ( $cpuRatio = $wgRequest->getVal('cpuratio') ) {
 		    $maxLoad = $cpuCount * $cpuRatio;
 		}
@@ -52,14 +52,13 @@ class HealthCheck extends UnlistedSpecialPage {
 		$wgRequest->response()->header("Cpu-Count: $cpuCount");
 		$wgRequest->response()->header("Load: " . implode(", ", $load));
 		$wgRequest->response()->header("Max-Load: $maxLoad");
-		
+
 		if ( $maxLoad ) {
 		    if ( $load[0] > $maxLoad ||
 			 $load[1] > $maxLoad ||
 			 $load[2] > $maxLoad ) {
-			
-			$statusCode = 503;
-			$statusMsg = "Server status is: NOT OK - load ($load[0] $load[1] $load[2]) > $maxLoad (cpu = $cpuCount)";
+				$statusCode = 503;
+				$statusMsg = "Server status is: NOT OK - load ($load[0] $load[1] $load[2]) > $maxLoad (cpu = $cpuCount)";
 		    }
 		}
 
