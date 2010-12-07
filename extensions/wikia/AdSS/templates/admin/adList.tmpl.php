@@ -37,16 +37,12 @@ $("a.edit").click( function(e) {
 		}, function( response ) {
 			var json = response.ad;
 			var dialog = $(".ad-edit-form").clone().show().makeModal({persistent: false, width:600});
-			var dataTable = dialog.find(".data-table tbody");
 			var url = dialog.find("input[name='url']");
 			var text = dialog.find("input[name='text']");
 			var desc = dialog.find("input[name='desc']");
 			url.val(json["url"]);
 			text.val(json["text"]);
 			desc.val(json["desc"]);
-			for (var key in json) {
-				//dataTable.append("<tr><td>" + key + "</td><td>" + json[key] + "</td></tr>");
-			}
 			
 			dialog.find(".save").click(function(evt){
 				$.post(wgScript, {
@@ -60,7 +56,7 @@ $("a.edit").click( function(e) {
 						);
 						dialog.closeModal();
 					} else {
-						// error out
+						alert(res.respmsg);
 					}
 				});
 			});
@@ -80,6 +76,64 @@ $("a.close").click( function(e) {
 			'rs': 'AdSS_AdminController::closeAdAjax',
 			'rsargs[0]': id,
 			'rsargs[1]': token
+			}, function( response ) {
+				if( response.result == "success" ) {
+					var cur = $('span#'+response.id);
+					cur.closest("tr").remove();
+				} else {
+					alert(response.respmsg);
+				}
+			}
+		);
+	} } );
+} );
+
+$("a.approve").click( function(e) {
+	e.preventDefault();
+	var id = $(this).parent().attr("id");
+	$.getJSON( wgScript, {
+		'action': 'ajax',
+		'rs': 'AdSS_AdminController::getAdChangeAjax',
+		'rsargs[0]': id,
+		}, function( response ) {
+			var json = response.adc;
+			var dialog = $(".ad-edit-form").clone().show().makeModal({persistent: false, width:600});
+			var url = dialog.find("input[name='url']");
+			var text = dialog.find("input[name='text']");
+			var desc = dialog.find("input[name='desc']");
+			url.val(json["url"]);
+			text.val(json["text"]);
+			desc.val(json["desc"]);
+
+			dialog.find(".save").click(function(evt){
+				$.post(wgScript, {
+					'action': 'ajax',
+					'rs': 'AdSS_AdminController::approveAdChangeAjax',
+					rsargs: [json["id"], url.val(), text.val(), desc.val()]
+				}, function(res) {
+					if(res && res.result == "success") {
+						$("#" + id).closest("tr").remove();
+						dialog.closeModal();
+					} else {
+						alert(res.respmsg);
+					}
+				});
+			});
+			dialog.find(".cancel").click(function(evt){
+				dialog.closeModal();
+			});
+		}
+	);
+} );
+
+$("a.reject").click( function(e) {
+	e.preventDefault();
+	var id = $(this).parent().attr("id");
+	$.confirm( {content:'Are you sure you want to reject this change?', width:300, onOk:function() {
+		$.getJSON( wgScript, {
+			'action': 'ajax',
+			'rs': 'AdSS_AdminController::rejectAdChangeAjax',
+			'rsargs[0]': id
 			}, function( response ) {
 				if( response.result == "success" ) {
 					var cur = $('span#'+response.id);
