@@ -83,20 +83,19 @@ $("a.edit").click( function(e) {
 			<tbody>
 			</tbody>
 		</table>
-		<label for="url">URL</label>
+		<label for="url"><?php echo wfMsgHtml( 'adss-form-url' ); ?></label>
 		<input name="url" type="text" value="">
-		<label for="text">Link Text:</label>
+		<label for="text"><?php echo wfMsgHtml( 'adss-form-linktext' ); ?></label>
 		<input name="text" type="text" value="">
-		<label for="desc">Description Text:</label>
+		<label for="desc"><?php echo wfMsgHtml( 'adss-form-additionaltext' ); ?></label>
 		<input name="desc" type="text" value="">
 		<div class="buttons">
-			<input type="button" value="Save" class="save">
-			<input type="button" value="Cancel" class="cancel">
+			<input type="button" value="<?php echo wfMsgHtml( 'adss-button-save' ); ?>" class="save">
+			<input type="button" value="<?php echo wfMsgHtml( 'adss-button-cancel' ); ?>" class="cancel">
 		</div>
 	</div>
 	<div class="step-2">
 		<div class="message">
-			Your change will go live after manual approval (within 48 hours)
 		</div>
 		<input type="button" value="Ok" class="ok">
 	</div>
