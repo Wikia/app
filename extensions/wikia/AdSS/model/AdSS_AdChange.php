@@ -11,6 +11,26 @@ class AdSS_AdChange {
 		$this->id = $ad->id;
 	}
 
+	function loadFromRow( $row ) {
+		$this->url = $row->adc_url;
+		$this->text = $row->adc_text;
+		$this->desc = $row->adc_desc;
+	}
+
+	function loadFromDB() {
+		global $wgAdSS_DBname;
+
+		$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
+		$row = $dbr->selectRow( 'ad_changes', '*', array( 'adc_ad_id' => $this->id ), __METHOD__ );
+		if( $row === false ) {
+			// invalid id
+			return null;
+		} else {
+			$this->loadFromRow( $row );
+			return $this;
+		}
+	}
+
 	function save() {
 		global $wgAdSS_DBname;
 

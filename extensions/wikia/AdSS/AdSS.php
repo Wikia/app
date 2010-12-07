@@ -56,6 +56,8 @@ $wgAjaxExportList[] = 'AdSS_AdminController::acceptAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::editAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::getAdAjax';
+$wgAjaxExportList[] = 'AdSS_AdminController::getAdChangeAjax';
+$wgAjaxExportList[] = 'AdSS_AdminController::rejectAdChangeAjax';
 
 if( empty( $wgAdSS_OnlyAdmin ) ) {
 	if( !empty( $wgShowAds ) ) {
