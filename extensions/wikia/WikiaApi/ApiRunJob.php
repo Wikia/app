@@ -82,7 +82,7 @@ class ApiRunJob extends ApiBase {
 			}
 			else {
 				// refreshlinks2 has precedence
-				$job = Job::pop( "refreshLinks2" );
+				$job = Job::pop_type( "refreshLinks2" );
 				if( !$job ) {
 					// any job
 					$job = Job::pop();
