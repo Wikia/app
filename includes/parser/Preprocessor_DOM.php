@@ -1065,8 +1065,7 @@ class PPFrame_DOM implements PPFrame {
 					if(!empty($wgRTEParserEnabled)) {
 						if($RTEext_2) {
 							if(strpos($contextNode->nodeValue, 'table') !== false) {
-									RTE::$edgeCases[] = 'COMPLEX.11';
-								}
+								RTE::$edgeCases[] = 'COMPLEX.11';
 							}
 						}
 					}
