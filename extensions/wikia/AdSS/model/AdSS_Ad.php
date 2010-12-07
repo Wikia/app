@@ -113,6 +113,8 @@ abstract class AdSS_Ad {
 	function close() {
 		$this->closed = wfTimestampNow( TS_DB );
 		$this->save();
+		$adc = new AdSS_AdChange( $this );
+		$adc->delete();
 	}
 
 	function getUser() {
