@@ -77,7 +77,17 @@ class ApiRunJob extends ApiBase {
 
 		$result = array();
 		foreach( range( 0, $this->maxJobs ) as $counter ) {
-			$job = ( isset( $params[ "type" ] ) ) ? Job::pop_type( $params[ "type" ] ) : Job::pop();
+			if( isset( $params[ "type" ] ) ) {
+				$job = Job::pop_type( $params[ "type" ] );
+			}
+			else {
+				// refreshlinks2 has precedence
+				$job = Job::pop( "refreshLinks2" );
+				if( !$job ) {
+					// any job
+					$job = Job::pop();
+				}
+			}
 			if( $job ) {
 				$status = $job->run();
 				$result[ "job" ][] = array(
