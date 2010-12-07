@@ -221,7 +221,7 @@ class RelatedPages {
 		$res = $dbr->select(
 			$tables,
 			array( "cl_from AS page_id" ),
-			array( "cl_to" => $dbr->addQuotes( $category ) ),
+			array( "cl_to" => $category ),
 			__METHOD__,
 			array(),
 			$joinSql
