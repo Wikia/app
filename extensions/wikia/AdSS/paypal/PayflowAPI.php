@@ -33,7 +33,7 @@ class PayflowAPI {
 		$nvpReqArr["PAYMENTTYPE"] = "any";
 		$nvpReqArr["RETURNURL"]   = $returnUrl;
 		$nvpReqArr["CANCELURL"]   = $cancelUrl;
-		$nvpReqArr["BA_DESC"]     = "Wikia+AdSS+subscription";
+		$nvpReqArr["BA_DESC"]     = "Wikia+subscription";
 
 		return $this->query( $headers, $nvpReqArr, $opts );
 	}
