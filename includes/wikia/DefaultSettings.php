@@ -677,3 +677,9 @@ $wgEnableShowPerformanceStatsExt = true;
  */
 
 $wgABTests = array();
+
+/**
+ * default numbers of jobs done in ApiRunJob
+ * @see extensions/wikia/WikiaApi/ApiRunJob.php
+ */
+$wgApiRunJobsPerRequest = 10;

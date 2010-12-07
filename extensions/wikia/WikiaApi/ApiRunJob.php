@@ -50,7 +50,7 @@ class ApiRunJob extends ApiBase {
 	 * @access public
 	 */
 	public function execute() {
-		global $wgUser;
+		global $wgUser, $wgApiRunJobsPerRequest;
 
 
 		ini_set( "memory_limit", -1 );
@@ -61,7 +61,14 @@ class ApiRunJob extends ApiBase {
 			$this->dieUsageMsg( array( "cantrunjobs" ) );
 		}
 
-		if( isset( $params[ "max" ] ) ) {
+		if( empty( $wgApiRunJobsPerRequest ) &&
+			is_numeric(  $wgApiRunJobsPerRequest  ) &&
+			$wgApiRunJobsPerRequest > 0 &&
+			$wgApiRunJobsPerRequest <= 100
+		) {
+			$this->maxJobs =  $wgApiRunJobsPerRequest;
+		}
+		elseif( isset( $params[ "max" ] ) ) {
 			$max = $params[ "max" ];
 			if( is_numeric( $max ) && $max > 0 && $max <= 100 )  {
 				$this->maxJobs = $max;
