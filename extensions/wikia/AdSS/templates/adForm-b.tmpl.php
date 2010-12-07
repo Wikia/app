@@ -167,7 +167,7 @@ $(".SponsoredLinkDesc input:radio[name='wpType']").click(function() {
 			$("#wpPage").parent().hide("slow");
 			$("#wpBanner").parent().show("slow");
 			$("#wpText").parent().hide("slow");
-			$("#wpWeight").parent().hide("slow");
+			$("#wpWeight").val("1").removeAttr("disabled").parent().show("slow");
 			$("fieldset.preview").hide();
 			break;
 	}
