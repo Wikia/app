@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `groupstats` (
-	`gs_group` varchar( 255 ),
+	`gs_group` int( 9 ),
 	`gs_lang` varchar( 10 ),
 	`gs_total` int( 9 ),
 	`gs_translated` int( 9 ),
