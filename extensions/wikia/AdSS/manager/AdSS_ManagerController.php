@@ -232,7 +232,7 @@ class AdSS_ManagerController {
 	}
 
 	static function getAdAjax( $id ) {
-		global $wgUser;
+		global $wgUser, $wgRequest;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
