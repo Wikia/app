@@ -137,7 +137,7 @@ var WikiaPhotoGallery = {
 	selectPage: function(selectedPage, params) {
 		params = params || {};
 		$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
-
+		
 		// store current and previous page
 		params.source = this.editor.currentPage;
 		this.editor.currentPage = selectedPage;
@@ -234,7 +234,7 @@ var WikiaPhotoGallery = {
 			// Slider preview page
 			case this.SLIDER_PREVIEW_PAGE:
 				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block')
-		
+
 				title = msg['wikiaPhotoGallery-sliderpreview-title'];
 
 				saveButton.show().text(msg['wikiaPhotoGallery-finish']);
@@ -1900,7 +1900,7 @@ var WikiaPhotoGallery = {
 				// render preview
 				if (self.isSlideshow()) {
 					self.renderSlideshowPreview();
-				} else if (self.isSlider){
+				} else if (self.isSlider()){
 					self.renderSliderPreview();
 				} else {
 					self.renderGalleryPreview();
