@@ -286,6 +286,42 @@ class AdSS_ManagerController {
 					$adc->desc = $desc;
 					$adc->save();
 
+					global $wgNoReplyAddress, $wgAdSS_contactEmail;
+					if( !empty( $wgAdSS_contactEmail ) ) {
+						$to = array();
+						foreach( $wgAdSS_contactEmail as $a ) {
+							$to[] = new MailAddress( $a );
+						}
+
+						//FIXME move it to a template
+						$subject = '[AdSS] ad change request';
+
+						$body = "User {$ad->getUser()->toString()} requested a change in the ad:\n";
+						$body .= "\n";
+						if( $ad->url != $adc->url ) {
+							$body .= "Old Ad URL: http://{$ad->url}\n";
+							$body .= "*New Ad URL: http://{$adc->url}\n";
+						} else {
+							$body .= "Ad URL: http://{$ad->url}\n";
+						}
+						if( $ad->text != $adc->text ) {
+							$body .= "\nOld Ad link text: {$ad->text}\n";
+							$body .= "*New Ad link text: {$adc->text}\n";
+						} else {
+							$body .= "\nAd link text: {$ad->text}\n";
+						}
+						if( $ad->desc != $adc->desc ) {
+							$body .= "\nOld Ad description: {$ad->desc}\n";
+							$body .= "*New Ad description: {$adc->desc}\n";
+						} else {
+							$body .= "\nAd description: {$ad->desc}\n";
+						}
+						$body .= "\nYou can approve or reject these changes here:\n";
+						$body .= SpecialPage::getTitleFor( 'AdSS/admin/adList' )->getFullURL( 'filter=changes' );
+
+						UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
+					}
+
 					AdSS_Util::commitAjaxChanges();
 
 					$r = array(
