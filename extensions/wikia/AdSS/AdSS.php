@@ -74,6 +74,7 @@ if( empty( $wgAdSS_OnlyAdmin ) ) {
 
 	$wgAjaxExportList[] = 'AdSS_Publisher::getSiteAdsAjax';
 	$wgAjaxExportList[] = 'AdSS_Util::formatPriceAjax';
+
 	$wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
 	$wgAjaxExportList[] = 'AdSS_ManagerController::editAdAjax';
 	$wgAjaxExportList[] = 'AdSS_ManagerController::getAdAjax';

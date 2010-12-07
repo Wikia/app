@@ -33,21 +33,17 @@ $("a.edit").click( function(e) {
 	var id = $(this).parent().attr("id");
 	$.getJSON( wgScript, {
 		'action': 'ajax',
-		'rs': 'AdSS_AdminController::getAdAjax',
+		'rs': 'AdSS_ManagerController::getAdAjax',
 		'rsargs[0]': id,
 		}, function( response ) {
 			var json = response.ad;
 			var dialog = $(".ad-edit-form").clone().show().makeModal({persistent: false, width:600});
-			var dataTable = dialog.find(".data-table tbody");
 			var url = dialog.find("input[name='url']");
 			var text = dialog.find("input[name='text']");
 			var desc = dialog.find("input[name='desc']");
 			url.val(json["url"]);
 			text.val(json["text"]);
 			desc.val(json["desc"]);
-			for (var key in json) {
-				//dataTable.append("<tr><td>" + key + "</td><td>" + json[key] + "</td></tr>");
-			}
 			
 			dialog.find(".save").click(function(evt){
 				$.post(wgScript, {
@@ -62,7 +58,7 @@ $("a.edit").click( function(e) {
 							s.show(400);
 						});
 					} else {
-						// error out
+						alert(res.respmsg);
 					}
 				});
 			});
