@@ -93,57 +93,51 @@ class RelatedPages {
 				$categories = array_slice( $categories, 0, $this->categoriesLimit );
 			}
 
-			if( !empty( $wgEnableRelatedPagesUnionSelectQueries ) ) {
-				// limit * 2 - get more pages (some can be filtered out - RT #72703)
-				$pages = $this->getPagesForCategories($articleId, $limit * 2, $categories);
+			$pagesPerCategory = array();
+			$allPages = array();
+
+			foreach( $categories as $category ) {
+				$pages = $this->getPagesForCategory( $category );
+				//$pagesPerCategory[$category] = $pages;
+				$pagesPerCategory[] = $pages;
+				$allPages = array_merge( $allPages, $pages );
 			}
-			else {
-				$pagesPerCategory = array();
-				$allPages = array();
+			$allPages = array_unique( $allPages );
 
-				foreach( $categories as $category ) {
-					$pages = $this->getPagesForCategory( $category );
-					//$pagesPerCategory[$category] = $pages;
-					$pagesPerCategory[] = $pages;
-					$allPages = array_merge( $allPages, $pages );
+			unset( $allPages[array_search($articleId, $allPages)] );
+			//sort( $allPages );
+
+			$pageIds = array();
+			for( $i = count($pagesPerCategory); $i > 0; $i-- ) {
+				$intersectArrays = array( $allPages );
+				for( $catIdx = 0; $catIdx < $i; $catIdx++ ) {
+					$intersectArrays[] = $pagesPerCategory[$catIdx];
 				}
-				$allPages = array_unique( $allPages );
+				$intersectPages = call_user_func_array( 'array_intersect', $intersectArrays );
+				shuffle( $intersectPages ); // add some random factor if too many pages..
+				$pageIds = array_merge( $pageIds, $intersectPages );
 
-				unset( $allPages[array_search($articleId, $allPages)] );
-				//sort( $allPages );
-
-				$pageIds = array();
-				for( $i = count($pagesPerCategory); $i > 0; $i-- ) {
-					$intersectArrays = array( $allPages );
-					for( $catIdx = 0; $catIdx < $i; $catIdx++ ) {
-						$intersectArrays[] = $pagesPerCategory[$catIdx];
-					}
-					$intersectPages = call_user_func_array( 'array_intersect', $intersectArrays );
-					shuffle( $intersectPages ); // add some random factor if too many pages..
-					$pageIds = array_merge( $pageIds, $intersectPages );
-
-					// get more pages (some can be filtered out - RT #72703)
-					if (count($pageIds) >= $limit * 2) {
-						$pageIds = array_slice( $pageIds, 0, ( $limit * 2 ), true );
-						break;
-					}
+				// get more pages (some can be filtered out - RT #72703)
+				if (count($pageIds) >= $limit * 2) {
+					$pageIds = array_slice( $pageIds, 0, ( $limit * 2 ), true );
+					break;
 				}
+			}
 
-				$pages = array();
-				foreach ( $pageIds as $pageId ) {
-					$title = Title::newFromId( $pageId );
+			$pages = array();
+			foreach ( $pageIds as $pageId ) {
+				$title = Title::newFromId( $pageId );
 
-					// filter out redirect pages (RT #72662)
-					if(!empty($title) && $title->exists() && !$title->isRedirect()) {
-						$prefixedTitle = $title->getPrefixedText();
+				// filter out redirect pages (RT #72662)
+				if(!empty($title) && $title->exists() && !$title->isRedirect()) {
+					$prefixedTitle = $title->getPrefixedText();
 
-						$pages[$pageId] = array(
-							'url' => $title->getLocalUrl(),
-							'title' => $prefixedTitle,
-						);
+					$pages[$pageId] = array(
+						'url' => $title->getLocalUrl(),
+						'title' => $prefixedTitle,
+					);
 
-						wfDebug(__METHOD__ . ": adding page '{$prefixedTitle}' (#{$pageId})\n");
-					}
+					wfDebug(__METHOD__ . ": adding page '{$prefixedTitle}' (#{$pageId})\n");
 				}
 			}
 
@@ -229,62 +223,6 @@ class RelatedPages {
 
 		while( $row = $dbr->fetchObject($res) ) {
 			$pages[] = $row->page_id;
-		}
-
-		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
-
-		wfProfileOut( __METHOD__ );
-		return $pages;
-	}
-
-
-	/**
-	 * get pages that belong to a list of categories
-	 * @author Owen
-	 */
-	private function getPagesForCategories( $articleId, $limit, Array $categories ) {
-		global $wgMemc, $wgContentNamespaces;
-
-		wfProfileIn( __METHOD__ );
-		$cacheKey = wfMemcKey( __METHOD__, $articleId );
-		$cache = $wgMemc->get( $cacheKey );
-		if( is_array($cache) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$pages = array();
-
-		$sql = "SELECT page_id, count(*) c FROM ( ";
-		foreach ($categories as $index => $category) {
-			if ($index != 0) $sql .= " UNION ALL ";
-
-			$sql .= " SELECT cl_from AS page_id FROM categorylinks ";
-			if (count($wgContentNamespaces) > 0) {
-				$sql .= "JOIN page ON (page_id = cl_from AND ";
-				$sql .= ( count($wgContentNamespaces) == 1)
-						? "page_namespace = " . intval(reset($wgContentNamespaces)) . ")"
-						: "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " ))";
-			}
-			$sql .= " WHERE cl_to = " . $dbr->addQuotes( $category ) . " ";
-		}
-		$sql .= ") a WHERE page_id != $articleId group by page_id order by c desc limit $limit";
-
-		$res = $dbr->query($sql, __METHOD__);
-		while( $row = $dbr->fetchObject($res) ) {
-			$pageId = $row->page_id;
-			$title = Title::newFromId( $pageId );
-
-			// filter out redirect pages (RT #72662)
-			if(!empty($title) && $title->exists() && !$title->isRedirect()) {
-				$prefixedTitle = $title->getPrefixedText();
-
-				$pages[$pageId] = array(
-					'url' => $title->getLocalUrl(),
-					'title' => $prefixedTitle,
-				);
-			}
 		}
 
 		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
