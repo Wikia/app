@@ -56,13 +56,17 @@ $wgAjaxExportList[] = 'AdSS_AdminController::acceptAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::closeAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::editAdAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::getAdAjax';
+
+$wgAjaxExportList[] = 'AdSS_AdminController::approveAdChangeAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::getAdChangeAjax';
 $wgAjaxExportList[] = 'AdSS_AdminController::rejectAdChangeAjax';
 
 if( empty( $wgAdSS_OnlyAdmin ) ) {
 	if( !empty( $wgShowAds ) ) {
+		// moved to static chute
 		//$wgHooks['AjaxAddScript'][] = 'AdSS_Publisher::onAjaxAddScript';
 		$wgHooks['MakeGlobalVariablesScript'][] = 'AdSS_Publisher::onMakeGlobalVariablesScript';
+		// pending V1->V2 migration
 		//$wgHooks['OutputPageBeforeHTML'][] = 'AdSS_Publisher::onOutputPageBeforeHTML';
 		$wgHooks['OutputPageCheckLastModified'][] = 'AdSS_Publisher::onOutputPageCheckLastModified';
 		$wgHooks['ArticlePurge'][] = 'AdSS_Publisher::onArticlePurge';

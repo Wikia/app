@@ -314,6 +314,42 @@ class AdSS_AdminController {
 		return $response;
 	}
 
+	static function approveAdChangeAjax( $id, $url, $text, $desc ) {
+		global $wgUser;
+
+		wfLoadExtensionMessages( 'AdSS' );
+
+		$response = new AjaxResponse();
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
+		} else {
+			$ad = AdSS_AdFactory::createFromId( $id );
+			if( $id == $ad->id ) {
+				$ad->url = $url;
+				$ad->text = $text;
+				$ad->desc = $desc;
+				$ad->save();
+
+				$adc = new AdSS_AdChange( $ad );
+				$adc->delete();
+
+				AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
+				AdSS_Util::commitAjaxChanges();
+				$r = array(
+						'result' => 'success',
+						'id'     => $id,
+					  );
+			} else {
+				$r = array( 'result' => 'error', 'respmsg' => 'wrong id' );
+			}
+		}
+		$response->addText( Wikia::json_encode( $r ) );
+
+		return $response;
+	}
+
 	static function rejectAdChangeAjax( $id ) {
 		global $wgUser;
 
