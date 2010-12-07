@@ -11,5 +11,5 @@ $aliases = array();
  * @author Jon Harald Søby
  */
 $aliases['en'] = array(
-    'UserRenameTool' => array( 'UserRenameTool' ),
+    'UserRenameTool' => array( 'UserRenameTool', 'RenameUserTool' ),
 );
