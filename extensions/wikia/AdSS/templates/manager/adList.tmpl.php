@@ -37,7 +37,7 @@ $("a.edit").click( function(e) {
 		'rsargs[0]': id,
 		}, function( response ) {
 			var json = response.ad;
-			var dialog = $($(".ad-edit-form").clone().show()).makeModal({persistent: false, width:600});
+			var dialog = $(".ad-edit-form").clone().show().makeModal({persistent: false, width:600});
 			var dataTable = dialog.find(".data-table tbody");
 			var url = dialog.find("input[name='url']");
 			var text = dialog.find("input[name='text']");
@@ -76,7 +76,7 @@ $("a.edit").click( function(e) {
 
 </script>
 
-<div class="ad-edit-form">
+<div class="ad-edit-form" style="display:none">
 	<h1>Edit Ad</h1>
 	<div class="step-1">
 		<table class="data-table">
