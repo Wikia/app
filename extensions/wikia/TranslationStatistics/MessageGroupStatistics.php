@@ -29,11 +29,11 @@ class MessageGroupStatistics {
 		return $stats;
   	}
  
-	public static function forGroup( $group ) {
+	public static function forGroup( $id ) {
 		# Fetch from database
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $group ) );
+		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $id ) );
 
 		while ( $row = $dbr->fetchArray( $res ) ) {
 			$stats[ $rew->gs_lang ] = $row;
@@ -45,19 +45,19 @@ class MessageGroupStatistics {
 				continue;
 			}
 
-			$stats[$lang] = self::forItem( $group, $lang );
+			$stats[$lang] = self::forItem( $id, $lang );
 		}
 
 		return $stats;
 	}
  
 	// Used by the two function above to fill missing entries
-	public static function forItem( $group, $code ) {
+	public static function forItem( $groupId, $code ) {
 		# Check again if already in db ( to avoid overload in big clusters )
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $group, 'gs_lang' => $code ) );
+		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $groupId, 'gs_lang' => $code ) );
 
 		if ( $row = $dbr->fetchArray( $res ) ) {
 			// convert to array
@@ -65,7 +65,7 @@ class MessageGroupStatistics {
 		}
 
 		// get group object
-		$g = MessageGroups::getGroup( $group );
+		$g = MessageGroups::getGroup( $groupId );
 
 		# Calculate if missing and store in the db
 		$collection = $g->initCollection( $code );
@@ -86,7 +86,7 @@ class MessageGroupStatistics {
 		$translated = count( $collection );
 
 		$data = array(
-				'gs_group' => $group,
+				'gs_group' => $groupId,
 				'gs_lang' => $lang,
 				'gs_total' => $total,
 				'gs_translated' => $translated,
@@ -106,16 +106,22 @@ class MessageGroupStatistics {
 
 	// attaches to ArticleSaveComplete
 	public static function invalidateCache( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {	
+
+		// we only care about namespace MediaWiki
 		if ( $article->mTitle->getNamespace() !== NS_MEDIAWIKI ) {
 			return true;
 		}
 
 		$name = $article->mTitle->getName();
 
-		// match message to group
+		// match message to group here
+		if ( false ) {
+			// message does not belong to any recognized group
+			return true;
+		}
 
 		$conds = array(
-			'gs_grop' => $group,
+			'gs_grop' => $groupId,
 			'gs_lang' => $lang,
 		);
 
