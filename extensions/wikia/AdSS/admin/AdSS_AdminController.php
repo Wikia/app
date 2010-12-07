@@ -148,6 +148,8 @@ class AdSS_AdminController {
 	static function acceptAdAjax( $id, $token ) {
 		global $wgUser, $wgAdSS_DBname;
 
+		wfLoadExtensionMessages( 'AdSS' );
+
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -195,6 +197,8 @@ class AdSS_AdminController {
 	static function closeAdAjax( $id, $token ) {
 		global $wgUser;
 
+		wfLoadExtensionMessages( 'AdSS' );
+
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -225,6 +229,8 @@ class AdSS_AdminController {
 	static function getAdAjax( $id ) {
 		global $wgUser;
 
+		wfLoadExtensionMessages( 'AdSS' );
+
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -245,6 +251,8 @@ class AdSS_AdminController {
 
 	static function editAdAjax( $id, $url, $text, $desc ) {
 		global $wgUser;
+
+		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
