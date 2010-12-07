@@ -2,13 +2,14 @@
 
 class AdSS_AdminAdListPager extends TablePager {
 
-	private $mTitle, $ad;
+	private $mTitle, $ad, $adc;
 	private $mFilter = 'pending';
 	private $mFiltersShown = array(
 			'all'     => 'All',
 			'active'  => 'In rotation (accepted & not expired)',
 			'banners' => 'Banners (in rotation)',
 			'pending' => 'Pending acceptance',
+			'changes' => 'Pending changes',
 			'expired' => 'Expired (not closed)',
 			'closed'  => 'Closed',
 			);
@@ -37,6 +38,12 @@ class AdSS_AdminAdListPager extends TablePager {
 
 	function formatRow( $row ) {
 		$this->ad = AdSS_AdFactory::createFromRow( $row );
+		if( isset( $row->adc_ad_id ) ) {
+			$this->adc = new AdSS_AdChange( $this->ad );
+			$this->adc->loadFromRow( $row );
+		} else {
+			$this->adc = null;
+		}
 		return parent::formatRow( $row );
 	}
 
@@ -47,14 +54,45 @@ class AdSS_AdminAdListPager extends TablePager {
 				$wiki = WikiFactory::getWikiByID( $value );
 				return $wiki->city_title;
 			case 'ad_action':
+				// no action for closed ads
 				if( $this->ad->closed ) return '';
+
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 				$tmpl->set( 'ad', $this->ad );
-				return $tmpl->render( 'actionLink' );
+
+				if( $this->adc ) {
+					// pending changes filter
+					return $tmpl->render( 'actionApproveReject' );
+				} elseif( $this->ad->expires == null ) {
+					// ads that need approval
+					if( $this->ad->type =='t' ) {
+						// text ads (editable)
+						return $tmpl->render( 'actionAcceptCloseEdit' );
+					} else {
+						// banner ads (non-editable)
+						return $tmpl->render( 'actionAcceptClose' );
+					}
+				} else {
+					// ads in rotation
+					if( $this->ad->type =='t' ) {
+						// text ads (editable)
+						return $tmpl->render( 'actionCloseEdit' );
+					} else {
+						// banner ads (non-editable)
+						return $tmpl->render( 'actionClose' );
+					}
+				}
 			case 'ad_text':
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
-				$tmpl->set( 'downloadUrl', Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$this->ad->id )->getLocalURL() );
-				return $this->ad->render( $tmpl );
+				if( $this->adc ) {
+					// pending changes filter
+					$tmpl->set( 'ad', $this->ad );
+					$tmpl->set( 'adc', $this->adc );
+					return $tmpl->render( 'adChange' );
+				} else {
+					$tmpl->set( 'downloadUrl', Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$this->ad->id )->getLocalURL() );
+					return $this->ad->render( $tmpl );
+				}
 			case 'ad_page_id':
 				if( $this->ad->pageId > 0 ) {
 					global $wgCityId;
@@ -133,6 +171,13 @@ class AdSS_AdminAdListPager extends TablePager {
 						'ad_closed IS NULL',
 						'ad_expires IS NULL',
 						) );
+				break;
+			case 'changes':
+				$qi = array(
+						'tables' => array( 'ads', 'ad_changes' ),
+						'fields' => array( '*' ),
+						'conds'  => array( 'ad_id = adc_ad_id' ),
+					   );
 				break;
 			case 'expired':
 				$qi['conds'] = array_merge( $qi['conds'], array(

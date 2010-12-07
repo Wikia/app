@@ -285,4 +285,62 @@ class AdSS_AdminController {
 
 		return $response;
 	}
+
+	static function getAdChangeAjax( $id ) {
+		global $wgUser;
+
+		wfLoadExtensionMessages( 'AdSS' );
+
+		$response = new AjaxResponse();
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => 'Permission error' );
+		} else {
+			$ad = AdSS_AdFactory::createFromId( $id );
+			if( $id == $ad->id ) {
+				$adc = new AdSS_AdChange( $ad );
+				if( $adc->loadFromDB() ) {
+					$r = array( 'result' => 'success', 'adc' => $adc );
+				} else {
+					$r = array( 'result' => 'error', 'respmsg' => 'wrong id' );
+				}
+			} else {
+				$r = array( 'result' => 'error', 'respmsg' => 'wrong id' );
+			}
+		}
+		$response->addText( Wikia::json_encode( $r ) );
+
+		return $response;
+	}
+
+	static function rejectAdChangeAjax( $id ) {
+		global $wgUser;
+
+		wfLoadExtensionMessages( 'AdSS' );
+
+		$response = new AjaxResponse();
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
+		} else {
+			$ad = AdSS_AdFactory::createFromId( $id );
+			if( $id == $ad->id ) {
+				$adc = new AdSS_AdChange( $ad );
+				$adc->delete();
+				AdSS_Util::commitAjaxChanges();
+				$r = array(
+						'result' => 'success',
+						'id'     => $id,
+					  );
+			} else {
+				$r = array( 'result' => 'error', 'respmsg' => 'wrong id' );
+			}
+		}
+		$response->addText( Wikia::json_encode( $r ) );
+
+		return $response;
+	}
+
 }
