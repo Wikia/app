@@ -4,7 +4,8 @@ $(document).ready(function(){
 });
 
 var MobileSkin = {
-	uacct: "UA-2871474-1",
+	pvuacct: "UA-288915-1",
+	cuacct: "UA-2871474-1",
 	username: (wgUserName == null) ? 'anon' : 'user',
 	ct: {},
 	c: null,
@@ -12,6 +13,8 @@ var MobileSkin = {
 	b: null,
 	
 	initTracking: function(){
+		_uff = 0;
+		_uacct = MobileSkin.pvuacct;
 		MobileSkin.trackEvent(MobileSkin.username + '/view');
 		
 		if(wgPrivateTracker) {
@@ -34,14 +37,17 @@ var MobileSkin = {
 	},
 	
 	trackClick: function(eventName){
+		_uff = 0;
+		_uacct = MobileSkin.cuacct;
 		MobileSkin.trackEvent('anon/click/' + eventName);
 	},
 	
 	trackEvent: function(eventName) {
 		var eventToTrack = '/1_mobile/' + eventName;
 		
-		if(typeof urchinTracker !== 'undefined') urchinTracker(eventToTrack);
-		if(typeof console !== 'undefined' && typeof console.log !== 'undefined') console.log('MobileSkin::trackEvent', eventToTrack);
+		if(typeof urchinTracker !== 'undefined') {
+			urchinTracker(eventToTrack);
+		}
 	},
 	
 	init: function(){
