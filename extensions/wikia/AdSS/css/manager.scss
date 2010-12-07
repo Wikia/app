@@ -42,3 +42,20 @@ td.TablePager_col_fee, td.TablePager_col_paid {
 .error {
 	color: $color-error;
 }
+
+.ad-edit-form {
+	display: none;
+	label {
+		display: block;
+		margin-top: 10px;
+	}
+	input[type=text] {
+		width: 400px;
+	}
+	.buttons {
+		margin-top: 10px;
+	}
+	.step-2 {
+		display: none;
+	}
+}

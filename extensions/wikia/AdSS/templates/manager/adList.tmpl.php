@@ -28,5 +28,76 @@ $("a.close").click( function(e) {
 	} } );
 } );
 
+$("a.edit").click( function(e) {
+	e.preventDefault();
+	var id = $(this).parent().attr("id");
+	$.getJSON( wgScript, {
+		'action': 'ajax',
+		'rs': 'AdSS_AdminController::getAdAjax',
+		'rsargs[0]': id,
+		}, function( response ) {
+			var json = response.ad;
+			var dialog = $($(".ad-edit-form").clone().show()).makeModal({persistent: false, width:600});
+			var dataTable = dialog.find(".data-table tbody");
+			var url = dialog.find("input[name='url']");
+			var text = dialog.find("input[name='text']");
+			var desc = dialog.find("input[name='desc']");
+			url.val(json["url"]);
+			text.val(json["text"]);
+			desc.val(json["desc"]);
+			for (var key in json) {
+				//dataTable.append("<tr><td>" + key + "</td><td>" + json[key] + "</td></tr>");
+			}
+			
+			dialog.find(".save").click(function(evt){
+				$.post(wgScript, {
+					'action': 'ajax',
+					'rs': 'AdSS_ManagerController::editAdAjax',
+					rsargs: [json["id"], url.val(), text.val(), desc.val()]
+				}, function(res) {
+					if(res && res.result == "success") {
+						var s = dialog.find(".step-2");
+						s.find(".message").html(res.respmsg);
+						dialog.find(".step-1").hide(400, function() {
+							s.show(400);
+						});
+					} else {
+						// error out
+					}
+				});
+			});
+			dialog.find(".cancel, .ok").click(function(evt){
+				dialog.closeModal();
+			});
+		}
+	);
+} );
+
+
 </script>
 
+<div class="ad-edit-form">
+	<h1>Edit Ad</h1>
+	<div class="step-1">
+		<table class="data-table">
+			<tbody>
+			</tbody>
+		</table>
+		<label for="url">URL</label>
+		<input name="url" type="text" value="">
+		<label for="text">Link Text:</label>
+		<input name="text" type="text" value="">
+		<label for="desc">Description Text:</label>
+		<input name="desc" type="text" value="">
+		<div class="buttons">
+			<input type="button" value="Save" class="save">
+			<input type="button" value="Cancel" class="cancel">
+		</div>
+	</div>
+	<div class="step-2">
+		<div class="message">
+			Your change will go live after manual approval (within 48 hours)
+		</div>
+		<input type="button" value="Ok" class="ok">
+	</div>
+</div>

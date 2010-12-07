@@ -38,3 +38,17 @@ td.TablePager_col_fee, td.TablePager_col_paid {
 	top: 0; left: 0;
 	z-index: 10;
 }
+
+.ad-edit-form {
+	display: none;
+	label {
+		display: block;
+		margin-top: 10px;
+	}
+	input[type=text] {
+		width: 400px;
+	}
+	.buttons {
+		margin-top: 10px;
+	}
+}
