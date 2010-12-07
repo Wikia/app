@@ -256,7 +256,7 @@ class AdSS_ManagerController {
 	}
 
 	static function editAdAjax( $id, $url, $text, $desc ) {
-		global $wgUser;
+		global $wgUser, $wgRequest;
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
