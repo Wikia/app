@@ -1004,17 +1004,17 @@ class PPFrame_DOM implements PPFrame {
 		$outStack = array( '', '' );
 		$iteratorStack = array( false, $root );
 		$indexStack = array( 0, 0 );
-		
+
 		$RTEext_1 = false;
 		$RTEext_2 = false;
 
 		while ( count( $iteratorStack ) > 1 ) {
-			
+
 			if($RTEext_1) {
 				$RTEext_1 = false;
 				$RTEext_2 = true;
 			}
-			
+
 			$level = count( $outStack ) - 1;
 			$iteratorNode =& $iteratorStack[ $level ];
 			$out =& $outStack[$level];
@@ -1059,13 +1059,19 @@ class PPFrame_DOM implements PPFrame {
 				$newIterator = $contextNode;
 			} elseif ( $contextNode instanceof DOMNode ) {
 				if ( $contextNode->nodeType == XML_TEXT_NODE ) {
-					
-					if($RTEext_2) {
-						if(strpos($contextNode->nodeValue, 'table') !== false) {
-							RTE::$edgeCases[] = 'COMPLEX.11';
-						}						
+
+					# RTE (Rich Text Editor) - begin
+					global $wgRTEParserEnabled;
+					if(!empty($wgRTEParserEnabled)) {
+						if($RTEext_2) {
+							if(strpos($contextNode->nodeValue, 'table') !== false) {
+									RTE::$edgeCases[] = 'COMPLEX.11';
+								}
+							}
+						}
 					}
-					
+					# RTE - end
+
 					$out .= $contextNode->nodeValue;
 				} elseif ( $contextNode->nodeName == 'template' ) {
 
