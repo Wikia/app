@@ -117,11 +117,9 @@ class imageServing{
 			if ( !empty($images_name) ) {
 				foreach ( $images_name as $img_name ) {
 					$oRow = $db->selectRow(
-						array( 'imagelinks' ),
+						"( SELECT il_to  FROM `imagelinks`  WHERE il_to = " . $db->addQuotes($img_name) . "  LIMIT " . ($this->maxCount + 1) . " ) as t1 ",
 						array( 'count(il_to) as cnt' ),
-						array( 
-							'il_to' => $img_name
-						),
+						array( ),
 						__METHOD__						
 					);
 					
