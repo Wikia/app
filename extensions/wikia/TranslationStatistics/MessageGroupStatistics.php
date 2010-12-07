@@ -35,8 +35,8 @@ class MessageGroupStatistics {
 
 		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $group ) );
 
-		while ( $row = $dbr->fetchRow( $res ) ) {
-			$stats[ $rew->gs_lang ] = array();
+		while ( $row = $dbr->fetchArray( $res ) ) {
+			$stats[ $rew->gs_lang ] = $row;
 		}
 
 		# Go over each language filling missing entries
@@ -102,5 +102,27 @@ class MessageGroupStatistics {
 			    );
 
 		return $data;
+	}
+
+	// attaches to ArticleSaveComplete
+	public static function invalidateCache( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {	
+		if ( $article->mTitle->getNamespace() !== NS_MEDIAWIKI ) {
+			return true;
+		}
+
+		$name = $article->mTitle->getName();
+
+		// match message to group
+
+		$conds = array(
+			'gs_grop' => $group,
+			'gs_lang' => $lang,
+		);
+
+		$dbw = wfGetDB( DB_MASTER );
+
+		$dbw->delete( 'groupstats', $conds );
+
+		return true;
 	}
 }
