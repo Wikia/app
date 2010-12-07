@@ -262,3 +262,8 @@ body.ajax * {
 	padding-right: 125px;
 	background-color: transparent;
 }
+
+/* Hide features - #139478, #139477 */
+.RelatedPagesModule, .category-gallery {
+	display: none;
+}

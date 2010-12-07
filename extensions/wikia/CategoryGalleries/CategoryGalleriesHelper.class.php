@@ -28,6 +28,16 @@
 		 */
 		static private $categoryProcessed = false;
 
+		static protected function checkEnabled() {
+			global $wgUser;
+			
+			// Enable in Oasis
+			if (get_class($wgUser->getSkin()) == 'SkinOasis')
+				return true;
+			
+			return false;
+		}
+
 		/**
 		 * Send CSS and JS to the browser if have not been sent yet
 		 */
@@ -67,8 +77,13 @@
 		 * Hook entry for catching the actual category page beeing shown
 		 */
 		static public function onCategoryPageView( $categoryPage ) {
-			self::$categoryPage = $categoryPage;
-			self::$categoryProcessed = false;
+			if (self::checkEnabled()) {
+				self::$categoryPage = $categoryPage;
+				self::$categoryProcessed = false;
+			} else {
+				self::$categoryPage = null;
+				self::$categoryProcessed = false;
+			}
 			return true;
 		}
 
