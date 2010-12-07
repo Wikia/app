@@ -2,9 +2,41 @@
  * @author Federico "Lox" Lucignano
  * 
  * Features
- *	- Can be safely called multiple times on the same element to change/update tooltip content
- *	- supports a callback (accepts a reference to the target element and must return a value),
- *	a jQuery object reference or a scalar value as the tooltip content
+ *	- Can be safely called multiple times on the same element to
+ *	change/update tooltip content
+
+ *	- supports a callback (accepts a reference to the target element
+ *	and must return a value), a jQuery object reference or a scalar value
+ *	as the tooltip content
+ *	
+ *	- supports different positioning options
+ *
+ *Examples
+ *	//passing a string
+ *	$('#test').tooltip('this is a tooltip');
+ *	
+ *	//passing a jQuery object
+ *	<div class="wikia-tooltip" id="test-tooltip">This is a tooltip</div>
+ *	$('#test').tooltip($('#test-tooltip'));
+ *	
+ *	//passing a callback returning a string
+ *	$('#test').tooltip(function(elm){return elm.id + Math.random();});
+ *	
+ *	//passing a callback returning a jQuery object
+ *	$('#test').tooltip(function(elm){return $('#' + elm.id + '-tooltip');});
+ *	
+ *	//customizing options
+ *	$('#test').tooltip('this is a tooltip', {position: 'relative', top: -15, left: 20});
+ *	
+ *	//change tooltip on the fly
+ *	$('#test').tooltip('this is a tooltip aligned top-left');
+ *	$('#test').tooltip('and this is a tooltip aligned bottom-right', {side: 'bottom', align: 'right'});
+ *	
+ *	//loading asynchronously the script
+ *	$.loadWikiaTooltip(function(){$('#test').tooltip('this is a tooltip');});
+ *	
+ *	//loading asynchronously the script and the required stylesheet
+ *	$.getResources([$.loadWikiaTooltip, wfGetSassUrl("skins/oasis/css/modules/WikiaTooltip.scss")], function(){$('#test').tooltip('this is a tooltip');});
  */
 
 if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
@@ -12,13 +44,40 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 		if(typeof tooltip !== 'undefined'){
 			var defaultOptions = jQuery.extend(
 				{
-					includeMargin: false,
+					//include margins in size calculations
+					includeMargin: true,
+					//suppress native title tooltip
 					suppressNative: true,
+					//if suppressNative is true this will
+					//make it recursive
 					suppressNativeRecursive: false,
+					//class name to assign to the tooltip
+					//element
 					className: 'wikia-tooltip',
+					//positioning rule,
+					//auto/relative/absolute(to document's body)
 					position: 'auto',
+					//On which side of the target element
+					//the tooltip should appear, used only
+					//if position is auto or relative
 					side: 'top',
-					align: 'center'
+					//The alignment of the tooltip element
+					//relative to the target element, used
+					//only if position is auto or relative
+					align: 'left',
+					//top position for the tooltip element,
+					//used only if position is absolute or
+					//relative, left/center/right for top
+					//and bottom sides, top/middle/bottom
+					//for left and right sides
+					top: 0,
+					//left position for the tooltip element,
+					//used only if position is absolute or
+					//relative
+					left: 0,
+					//disntance of the tooltip element's nearest side from the target element side specified in the side option,
+					//used only if position is auto
+					distance: 0
 				},
 				options
 			);
@@ -40,97 +99,143 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 			requestor.data('tooltip-options', defaultOptions);
 			requestor.data('tooltip-value', tooltip);
 			
-			if(defaultOptions.suppressNative) requestor.removeAttr('title');
-			if(defaultOptions.suppressNativeRecursive) requestor.find('[title]').removeAttr('title');
+			if(defaultOptions.suppressNative){
+				requestor.removeAttr('title');
+				if(defaultOptions.suppressNativeRecursive) requestor.find('[title]').removeAttr('title');
+			}
 			
-			requestor.unbind('mouseenter mouseleave').hover(
-				function(event){
-					var elm = $(this);
-					var options = elm.data('tooltip-options');
-					var tooltip = elm.data('tooltip-cached');
-
-					if(typeof tooltip === 'undefined'){
-						tooltip = elm.data('tooltip-value');
-
-						switch(typeof tooltip){
-							case 'object':
-								break;
-							case 'function':
-								$().log('Running tooltip creation callback', 'tooltip-value');
-								tooltip = tooltip(elm);
-
-								if(typeof tooltip === 'object') break;
-							default:
-								$().log('Creating tooltip element', 'tooltip-value');
-								tooltip = $('<div>' + tooltip.toString() + '</div>');
-								$('body').prepend(tooltip);
-								break;
-						}
-
-						$().log('Setting up tooltip element', 'tooltip-value');
-						if(!tooltip.hasClass(options.className)) tooltip.addClass(options.className);
-
-						//TODO: move to SASS file
-						tooltip.css({
-							'display': 'none',
-							'position': 'absolute',
-							'z-index': '200000',
-							'background-color': 'red',
-							'color': 'white'
-						});
-
-						elm.data('tooltip-cached', tooltip);
-						elm.removeData('tooltip-cached-position');
-					} else {
-						$().log('Using cached tooltip element', 'tooltip-value');
-					}
-					
-					var globalPosition = elm.offset();
-					var cachedPosition = elm.data('tooltip-cached-position');
-					
-					if(typeof cachedPosition === 'undefined' ||
-						((typeof cachedPosition !== 'undefined') &&
-							(globalPosition.top != cachedPosition.top || globalPosition.left != cachedPosition.left )
-						)
-					){
-						$().log('Calculating tooltip element position', 'tooltip-value');
-						var position = {};
-
-						switch(options.side){
-							default:
-							case 'top':
-								position.top = globalPosition.top - tooltip.outerHeight(options.includeMargin);
-								position.left = globalPosition.left;
-								break;
-							case 'bottom':
-								position.top = globalPosition.top + elm.outerHeight(options.includeMargin);
-								position.left = globalPosition.left;
-								break;
-							case 'left':
-								position.left = globalPosition.left - tooltip.outerWidth(options.includeMargin);
-								position.top = globalPosition.top;
-								break;
-							case 'right':
-								position.left = globalPosition.left + elm.outerWidth(options.includeMargin);
-								position.top = globalPosition.top;
-								break;
-						}
-						
-						elm.data('tooltip-cached-position', globalPosition);
-						tooltip.offset(position);
-					} else {
-						$().log('Using previously calculated tooltip element position', 'tooltip-value');
-					}
-					
-
-					$().log('Show', 'tooltip-value');
-					tooltip.show();
-				},
-				function(){
-					$().log('Hide', 'tooltip-value');
-					$(this).data('tooltip-cached').hide();
-				}
-			);
+			requestor.unbind('mouseenter.wikiaTooltip').bind('mouseenter.wikiaTooltip', jQuery.__wikiaTooltipOnMouseEnter);
+			requestor.unbind('mouseleave.wikiaTooltip').bind('mouseleave.wikiaTooltip', jQuery.__wikiaTooltipOnMouseLeave);
 		}
+	}
+	
+	/*
+	 * shared callback for mouseenter event
+	 */
+	jQuery.__wikiaTooltipOnMouseEnter = function(){
+		var elm = $(this);
+		var options = elm.data('tooltip-options');
+		var tooltip = elm.data('tooltip-cached');
+
+		if(typeof tooltip === 'undefined'){
+			tooltip = elm.data('tooltip-value');
+
+			switch(typeof tooltip){
+				case 'object':
+					break;
+				case 'function':
+					tooltip = tooltip(elm);
+
+					if(typeof tooltip === 'object') break;
+				default:
+					//could use HTML5 details tag, but support for Monobook is preferred
+					tooltip = $('<div>' + tooltip.toString() + '</div>');
+					$('body').append(tooltip);
+					break;
+			}
+
+			if(!tooltip.hasClass(options.className)) tooltip.addClass(options.className);
+
+			elm.data('tooltip-cached', tooltip);
+			elm.removeData('tooltip-cached-position');
+		}
+
+		var globalPosition = elm.offset();
+		var cachedPosition = elm.data('tooltip-cached-position');
+
+		if(typeof cachedPosition === 'undefined' ||
+			((typeof cachedPosition !== 'undefined') &&
+				(globalPosition.top != cachedPosition.top || globalPosition.left != cachedPosition.left ) &&
+				options.position !== 'absolute'
+			)
+		){
+			var position = {};
+			
+			switch(options.position){
+				default:
+				case 'auto':
+				case 'relative':
+					switch(options.side){
+						default:
+						case 'top':
+							position.top = globalPosition.top - tooltip.outerHeight(options.includeMargin);
+							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+							break;
+						case 'bottom':
+							position.top = globalPosition.top + elm.outerHeight(options.includeMargin);
+							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+							break;
+						case 'left':
+							position.left = globalPosition.left - tooltip.outerWidth(options.includeMargin);
+							position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+							break;
+						case 'right':
+							position.left = globalPosition.left + elm.outerWidth(options.includeMargin);
+							position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+							break;
+					}
+					
+					break;
+				case 'absolute':
+					position.top = options.top;
+					position.left = options.left;
+					break;
+			}
+			
+			if(options.position === 'relative'){
+				position.top += options.top;
+				position.left += options.left;
+			}
+			
+			elm.data('tooltip-cached-position', globalPosition);
+			
+			tooltip.css(position);
+		}
+		
+		tooltip.show();
+	}
+	
+	/*
+	 * shared callback for mouseleave event
+	 */
+	jQuery.__wikiaTooltipOnMouseLeave = function(){
+		$(this).data('tooltip-cached').hide();
+	}
+	
+	/*
+	 * Utility method to calculate tooltip element aligned position
+	 */
+	jQuery.__wikiaTooltipGetAlignedPosition = function(options, globalPosition, elm, tooltip){
+		var pos = undefined;
+		
+		if(options.side === 'top' || options.side === 'bottom'){
+			switch(options.align){
+				default:
+				case 'left':
+					pos = globalPosition.left;
+					break;
+				case 'center':
+					pos = globalPosition.left + ((elm.outerWidth(options.includeMargin) - tooltip.outerWidth(options.includeMargin)) / 2);
+					break;
+				case 'right':
+					pos = globalPosition.left + elm.outerWidth(options.includeMargin) - tooltip.outerWidth(options.includeMargin);
+					break;
+			}
+		}else if(options.side === 'left' || options.side === 'right'){
+			switch(options.align){
+				default:
+				case 'top':
+					pos = globalPosition.top;
+					break;
+				case 'middle':
+					pos = globalPosition.top +  ((elm.outerHeight(options.includeMargin) - tooltip.outerHeight(options.includeMargin)) / 2);
+					break;
+				case 'bottom':
+					pos = globalPosition.top + elm.outerHeight(options.includeMargin) - tooltip.outerHeight(options.includeMargin);
+					break;
+			}
+		}
+		
+		return pos;
 	}
 }
