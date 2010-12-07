@@ -94,16 +94,23 @@ class WikiaPhotoGalleryUpload {
 			} else {
 				// use regular MW upload
 				self::log(__METHOD__, "image '{$imageName}' is new one - uploading as MW file");
+				self::log(__METHOD__, "uploading '{$imagePath}' as File:{$imageName}");
 
-				$result = self::uploadIntoMW($imagePath, $imageName);
-				self::log(__METHOD__, $result ? 'upload successful' : 'upload failed');
-				$oImage = wfFindFile( $imageName );
+				// create title and file objects for MW image to create
+				$imageTitle = Title::newFromText( $imageName, NS_FILE );
+				$imageFile = new LocalFile( $imageTitle, RepoGroup::singleton()->getLocalRepo() );
+
+				// perform upload
+				$result = $imageFile->upload( $imagePath, '' /* comment */, '' /* page text */);
+
+				self::log( __METHOD__, !empty( $result->ok ) ? 'upload successful' : 'upload failed' );
+				
 				$ret = array(
-					'success' => $result,
+					'success' => !empty( $result->ok ),
 					'name' => $imageName,
 					'size' => array(
-					    'height' => $oImage->getHeight(),
-					    'width' => $oImage->getWidth()
+					    'height' => ( !empty( $result->ok ) ) ? $imageFile->getHeight() : 0,
+					    'width' => ( !empty( $result->ok ) ) ? $imageFile->getWidth() : 0
 					),
 				);
 			}
