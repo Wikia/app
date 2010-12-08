@@ -37,6 +37,7 @@
 .modalContent {
 	@include clearfix;
 	border: 1px solid $color-page-border;
+	display: block;
 	padding: 10px;
 }
 

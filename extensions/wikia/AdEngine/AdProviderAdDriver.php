@@ -14,18 +14,47 @@ class AdProviderAdDriver implements iAdProvider {
 	}
 
 	public function getAd($slotname, $slot, $params = null) {
-		$out = '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">';
+		$out = '';
+		if (strpos($slotname, 'EXIT_STITIAL') === FALSE) {
+			$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">';
+		}
+
 		$dartUrl = AdProviderDART::getInstance()->getUrl($slotname, $slot);
 		$out .= <<<EOT
 <script type="text/javascript">
+EOT;
+		if (strpos($slotname, 'EXIT_STITIAL') !== FALSE) {
+			$out .= <<<EOT
+	if (typeof(AdDriverDelayedLoader) != 'undefined') {
+		if (AdDriverDelayedLoader.started && !AdDriverDelayedLoader.isRunning()) {
+			AdDriverDelayedLoader.reset();
+			var loadExitstitial = true;
+		}
+		AdDriverDelayedLoader.appendCall(new AdDriverCall("$slotname", "{$slot['size']}",  "$dartUrl"));
+		if (typeof loadExitstitial != 'undefined' && loadExitstitial) {
+			AdDriverDelayedLoader.load();
+		}
+	}
+EOT;
+		
+		}
+		else {
+			$out .= <<<EOT
 	wgAfterContentAndJS.push(function() {
 		if (typeof(AdDriverDelayedLoader) != 'undefined') {
 			AdDriverDelayedLoader.appendCall(new AdDriverCall("$slotname", "{$slot['size']}",  "$dartUrl"));
 		}
 	});
+EOT;
+		}
+
+		$out .= <<<EOT
 </script>
 EOT;
-		$out .= '</div>';
+		if (strpos($slotname, 'EXIT_STITIAL') === FALSE) {
+			$out .= '</div>';
+		}
+
 		$out .= $this->getSetupHtml();
 		$out .= AdProviderLiftium::getInstance()->getSetupHtml();
 
