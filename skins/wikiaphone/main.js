@@ -4,8 +4,7 @@ $(document).ready(function(){
 });
 
 var MobileSkin = {
-	pvuacct: "UA-288915-1",
-	cuacct: "UA-2871474-1",
+	uacct: "UA-2871474-1",
 	username: (wgUserName == null) ? 'anon' : 'user',
 	ct: {},
 	c: null,
@@ -13,8 +12,6 @@ var MobileSkin = {
 	b: null,
 	
 	initTracking: function(){
-		_uff = 0;
-		_uacct = MobileSkin.pvuacct;
 		MobileSkin.trackEvent(MobileSkin.username + '/view');
 		
 		$('#mobile-search-btn').bind('click', function(event){
@@ -33,8 +30,6 @@ var MobileSkin = {
 	},
 	
 	trackClick: function(eventName){
-		_uff = 0;
-		_uacct = MobileSkin.cuacct;
 		MobileSkin.trackEvent(MobileSkin.username + '/click/' + eventName);
 	},
 	
@@ -42,6 +37,8 @@ var MobileSkin = {
 		var eventToTrack = '/1_mobile/' + eventName;
 		
 		if(typeof urchinTracker !== 'undefined') {
+			_uff = 0;
+			_uacct = MobileSkin.uacct;
 			urchinTracker(eventToTrack);
 			if(wgPrivateTracker) {
 				eventToTrack = '/1_mobile/' + wgDB + '/' + eventName;
