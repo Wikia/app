@@ -635,7 +635,7 @@ class AdEngine {
 <script type="text/javascript">
 var hiddenSlotOnShortPage = function (slotname) {
 	if(slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD' || slotname == 'LEFT_SKYSCRAPER_2' || slotname == 'LEFT_SKYSCRAPER_3') {
-		if(document.body.offsetHeight >= 1680) {
+		if(document.body.offsetHeight >= 2400) {
 			document.getElementById(slotname).style.display = 'block';
 			return false;
 		} else {
