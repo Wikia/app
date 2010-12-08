@@ -57,22 +57,26 @@ class AdDisplay {
 	//Note that some hooks may or may not render wikitext, so plan accordingly
 	public static function OutputAdvertisement() {
 		global $wgParser;
-		global $wgTitle, $wgSponsorAdsLimit;
-
-		$ads = Advertisement::GetAdsForCurrentPage();
-		$adtext = wfMsg('sponsor-header');
-		$adtext .= '<div class="sponsormsg">';
-		$adtext .= '<ul>';
-		if(is_array($ads)){
-			foreach($ads as $ad){
-				$adtext .= $ad->OutPutWikiText();
+		global $wgTitle, $wgSponsorAdsLimit, $wgUser;
+		
+		$adtext = "";
+		$skin = isset($wgUser->mSkin) ? get_class($wgUser->mSkin) : false;
+		if ((!empty($skin) ? $skin != 'SkinWikiaphone' : true)) {
+			$ads = Advertisement::GetAdsForCurrentPage();
+			$adtext = wfMsg('sponsor-header');
+			$adtext .= '<div class="sponsormsg">';
+			$adtext .= '<ul>';
+			if(is_array($ads)){
+				foreach($ads as $ad){
+					$adtext .= $ad->OutPutWikiText();
+				}
 			}
+			$adtext .= '</ul>';
+	
+	
+	
+			$adtext .= '</div>';
 		}
-		$adtext .= '</ul>';
-
-
-
-		$adtext .= '</div>';
 		return $adtext;
 	}
 
