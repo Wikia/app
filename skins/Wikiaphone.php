@@ -35,11 +35,13 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 	
 	function initPage( OutputPage $out ) {
-		global $wgHooks;
+		global $wgHooks, $wgUseSiteCss;
 		SkinTemplate::initPage( $out );
 		$this->skinname  = 'wikiaphone';
 		$this->stylename = 'wikiaphone';
+		$this->themename = 'wikiaphone';
 		$this->template  = 'MonoBookTemplate';
+		$wgUseSiteCss = false;
 	}
 	
 	public static function onSkinAfterContent( &$data ) {
@@ -55,7 +57,6 @@ class SkinWikiaphone extends SkinTemplate {
 	
 	function setupSkinUserCss( OutputPage $out ){
 		global $wgRequest;
-		parent::setupSkinUserCss( $out );
 		$out->addMeta("viewport", "width=320");
 		$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
 		$out->addStyle( 'wikiaphone/skin.css', 'screen,handheld' );
