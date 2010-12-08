@@ -6,7 +6,8 @@ WikiaWideTables = {
 	
 	settings: {
 		article: $("#WikiaArticle"),
-		tables: new Array()
+		tables: new Array(),
+		popouts: null
 	},
 	
 	init: function() {	
@@ -80,8 +81,8 @@ WikiaWideTables = {
 			});
 			
 			//Add scroll magic to popout buttons
-			$(window).scroll(WikiaWideTables.popoutScrolling);
-			
+			WikiaWideTables.settings.popouts = $(".WikiaWideTablesWrapper > .popout");
+			$(window).scroll(WikiaWideTables.popoutScrolling);			
 		}
 	},
 	
@@ -92,6 +93,11 @@ WikiaWideTables = {
 			//Is table wider than article area?
 			if (table.width() > WikiaWideTables.settings.article.width()) {
 				table.attr("data-overflow", "true");
+			}
+			
+			//If the table isn't very wide, ignore it
+			if (table.width() < (WikiaWideTables.settings.article.width() - 100)) {
+				return;
 			}
 			
 			WikiaWideTables.settings.tables.push(table);
@@ -114,7 +120,7 @@ WikiaWideTables = {
 	},
 	
 	popoutScrolling: function() {
-		$(".WikiaWideTablesWrapper > .popout").each(function() {
+		WikiaWideTables.settings.popouts.each(function() {
 			var popout = $(this);
 			var wrapper = popout.parent();
 			var tableTop = wrapper.offset().top;
