@@ -58,7 +58,7 @@ var MobileSkin = {
 					$(this).append('<a class="showbutton">Show</a>');
 					cindex++;
 					MobileSkin.ct["c"+cindex] = [];
-				} else if (this.id != 'catlinks' && cindex > -1) {
+				} else if (this.id != 'catlinks' && this.id != 'mw-data-after-content' && cindex > -1) {
 					MobileSkin.ct["c"+cindex].push(this);
 					$(this).remove();
 				}
@@ -72,6 +72,12 @@ var MobileSkin = {
 		});
 		
 		MobileSkin.b.click(MobileSkin.toggle);
+		
+		$("#fullsite a").click(function(e){
+			e.preventDefault();
+			document.cookie = 'mobilefullsite=true';
+			location.reload();
+		});
 	},
 	
 	toggle: function(e) {
