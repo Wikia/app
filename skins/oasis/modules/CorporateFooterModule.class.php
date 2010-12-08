@@ -23,13 +23,16 @@ class CorporateFooterModule extends Module {
 	 */
 	 private function getWikiaFooterLinks() {
 		wfProfileIn( __METHOD__ );
-		global $wgCat;
+
+		global $wgCityId;
+		$hub = WikiFactoryHub::getInstance();
+		$catId = $hub->getCategoryId($wgCityId);
 
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
 				
-		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
+		if(!isset($catId) || null == ($lines = getMessageAsArray($message_key.'-'.$catId))) {
+			wfDebugLog('monaco', $message_key.'-'.$catId . ' - seems to be empty');
 			if(null == ($lines = getMessageAsArray($message_key))) {
 				wfDebugLog('monaco', $message_key . ' - seems to be empty');
 				wfProfileOut( __METHOD__ );
