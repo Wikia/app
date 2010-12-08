@@ -1,4 +1,5 @@
 /* requires jquery */
+/* requires AdEngine.js */
 /* requires Liftium.js */
 /* requires extensions/wikia/Geo/geo.js */
 /* requires extensions/wikia/QuantcastSegments/qcs.js */
@@ -119,18 +120,23 @@ AdDriver.isHighValue = function(slotname) {
 			return false;
 	}
 
-	switch (AdDriver.geoData['country']) {
-		case 'CA':
-		case 'DE':
-		case 'ES':
-		case 'FR':
-		case 'IT':
-		case 'UK':
-		case 'US':
-			// continue processing after switch
-			break;
-		default:
-			return false;
+	if (typeof AdDriver.geoData != 'undefined' && AdDriver.geoData) {
+		switch (AdDriver.geoData['country']) {
+			case 'CA':
+			case 'DE':
+			case 'ES':
+			case 'FR':
+			case 'IT':
+			case 'UK':
+			case 'US':
+				// continue processing after switch
+				break;
+			default:
+				return false;
+		}
+	}
+	else {
+		return false;
 	}
 
 	return true;
@@ -296,12 +302,6 @@ AdDriver.callDARTCallback = function(slotname) {
 	else {
 		AdDriver.setLastDARTCallNoAd(slotname, window.wgNow.getTime());
 		AdDriver.log(slotname + ' was not filled by DART');
-		switch (slotname) {	// do not call Liftium for certain slots
-			case 'INVISIBLE_TOP':
-			case 'INVISIBLE_1':
-				return;
-				break;
-		}
 		return 'Liftium';
 	}
 }
@@ -369,6 +369,7 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 
 var AdDriverDelayedLoader = {
 	adDriverCalls : new Array(),
+	adNum : 0,
 	currentAd : null
 }
 
@@ -403,20 +404,37 @@ AdDriverDelayedLoader.callDART = function() {
 	);
 }
 
+AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
+	var dims = size.split('x');
+	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
+}
+
 AdDriverDelayedLoader.callLiftium = function() {
 	var slotname = AdDriverDelayedLoader.currentAd.slotname;
+
+	// do not call Liftium for certain slots
+	switch (slotname) {	
+		case 'INVISIBLE_TOP':
+		case 'INVISIBLE_1':
+			AdDriverDelayedLoader.loadNext();
+			return;
+			break;
+	}
+
 	AdDriver.log(slotname + ': calling Liftium...');
+
 	var size = AdDriverDelayedLoader.currentAd.size;
 	LiftiumOptions.placement = slotname;
-	LiftiumDART.placement = slotname; 
 	
 	try {
 		var slot = document.getElementById(slotname);
+		var script = AdDriverDelayedLoader.getPlaceHolderIframeScript(slotname, size);
+		script += 'Liftium.callInjectedIframeAd("'+size+'", document.getElementById("'+escape(slotname)+'_iframe"));';
 		ghostwriter(
 			slot,
 			{
 				insertType: "append",
-				script: { text: "Liftium.callAd(\""+size+"\");" },
+				script: { text: script },
 				done: function() {
 					ghostwriter.flushloadhandlers();
 					AdDriver.postProcessSlot(slotname);
@@ -434,13 +452,17 @@ AdDriverDelayedLoader.callLiftium = function() {
 AdDriverDelayedLoader.loadNext = function() {
 	if (AdDriverDelayedLoader.adDriverCalls.length) {
 		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverCalls.shift();
-
-		var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.dartUrl);
-		if (adProvider == 'DART') {
-			AdDriverDelayedLoader.callDART();
-		}
-		else if (adProvider == 'Liftium') {
-			AdDriverDelayedLoader.callLiftium();
+		if (AdEngine.isSlotDisplayableOnCurrentPage(AdDriverDelayedLoader.currentAd.slotname)) {
+			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.dartUrl);
+			if (adProvider == 'DART') {
+				AdDriverDelayedLoader.callDART();
+			}
+			else if (adProvider == 'Liftium') {
+				AdDriverDelayedLoader.callLiftium();
+			}
+			else {
+				AdDriverDelayedLoader.loadNext();
+			}
 		}
 		else {
 			AdDriverDelayedLoader.loadNext();

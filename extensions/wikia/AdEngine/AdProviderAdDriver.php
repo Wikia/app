@@ -26,13 +26,15 @@ class AdProviderAdDriver implements iAdProvider {
 </script>
 EOT;
 		$out .= '</div>';
-		//$out = $this->getSetupHtml();
+		$out .= $this->getSetupHtml();
 		$out .= AdProviderLiftium::getInstance()->getSetupHtml();
 
 		return $out;
 	}
 
 	public function getSetupHtml() {
+		global $wgCityId;
+
 		static $called = false;
 		if ($called) {
 			return false;
@@ -45,6 +47,7 @@ EOT;
 	var dartOrd = Math.random()*10000000000000000;
 </script>
 EOT;
+		$out .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
 
 		return $out;
 	}

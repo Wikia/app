@@ -6,7 +6,9 @@ var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use
 
 var AdEngine = {
 	bodyWrapper : 'bodyContent',
-	adColorsContent : []
+	adColorsContent : [],
+	hidableSlots: ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
+	revealHiddenSlotMinDocHeight: 1680
 };
 
 /**
@@ -160,18 +162,37 @@ AdEngine.getMinuteTargeting = function (){
 	return myDate.getMinutes() % 15;
 }; 
 
-/* Note: this function is duplicated in AdEngine::getDelayedIframeLoadingCode.
- * If you make a change here, make sure to change AdEngine::getDelayedIframeLoadingCode
+/* Note: the logic of the following three functions is duplicated in 
+ * AdEngine::getDelayedIframeLoadingCode. If you make a change here, 
+ * make sure to change AdEngine::getDelayedIframeLoadingCode
  */
-AdEngine.hiddenSlotOnShortPage = function (slotname) {
-	if(slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD' || slotname == 'LEFT_SKYSCRAPER_2' || slotname == 'LEFT_SKYSCRAPER_3') {
-		if($(document).height() >= 1680) {
-			$('#' +  slotname).css("display", "block")
-			return false;
-		} else {
+AdEngine.isSlotHidable = function(slotname) {
+	return $.inArray(slotname, AdEngine.hidableSlots) != -1;
+};
+
+AdEngine.isSlotDisplayableOnCurrentPage = function(slotname) {
+	if (AdEngine.isSlotHidable(slotname)) {
+		if($(document).height() >= AdEngine.revealHiddenSlotMinDocHeight) {
 			return true;
 		}
-	} else {
-		return false;
+		else {
+			return false;
+		}
 	}
-}
+
+	return true;
+};
+
+AdEngine.hiddenSlotOnShortPage = function(slotname) {
+	if (AdEngine.isSlotHidable(slotname)) {
+		if (AdEngine.isSlotDisplayableOnCurrentPage(slotname)) {
+			$('#' +  slotname).css("display", "block")
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	return false;
+};
