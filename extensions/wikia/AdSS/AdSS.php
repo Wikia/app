@@ -40,7 +40,6 @@ $wgAutoloadClasses['AdSS_ManagerLoginForm'] = $dir . 'forms/AdSS_ManagerLoginFor
 $wgAutoloadClasses['AdSS_Publisher'] = $dir . 'AdSS_Publisher.php';
 $wgAutoloadClasses['AdSS_Util'] = $dir . 'AdSS_Util.php';
 $wgAutoloadClasses['PaymentProcessor'] = $dir . 'paypal/PaymentProcessor.php';
-$wgAutoloadClasses['PayflowAPI'] = $dir . 'paypal/PayflowAPI.php';
 $wgAutoloadClasses['IPNListener'] = $dir . 'paypal/IPNListener.php';
 
 $wgAvailableRights[] = 'adss-admin';
@@ -145,4 +144,4 @@ $wgAdSSBillingThreshold = 50;
 // override in your LocalSettings.php
 $wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
 $wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
-$wgPayflowProCredentials = array(); 
+$wgPayflowProCredentials = array();
