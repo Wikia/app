@@ -30,8 +30,8 @@ class SpecialForceDownloadIndex extends UnlistedSpecialPage {
 			$tmp = WikiFactory::IDtoDB($wgCityId);
 			
 			sleep(10);
-			$wgOut->disable();
-			echo "result: $tmp - " . $wgRequest->getText('input_value', 'No value posted');
+			//$wgOut->disable();
+			$wgOut->addHTML("<strong>result: $tmp - " . $wgRequest->getText('input_value', 'No value posted') . "</strong>");
 		} else {
 			$wgOut->addHTML('<em>Input requested!</em>');
 		}
