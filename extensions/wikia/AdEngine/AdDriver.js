@@ -369,10 +369,19 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 }
 
 var AdDriverDelayedLoader = {
-	adDriverCalls : new Array(),
-	adNum : 0,
-	currentAd : null
+	adDriverCalls: null,
+	adNum: 0,
+	currentAd: null,
+	started: false,
+	init: function() {
+		AdDriverDelayedLoader.adDriverCalls = new Array();
+		AdDriverDelayedLoader.adNum = 0;
+		AdDriverDelayedLoader.currentAd = null;
+		AdDriverDelayedLoader.started = false;
+	}
 }
+
+AdDriverDelayedLoader.init();
 
 AdDriverDelayedLoader.appendCall = function(adDriverCall) {
 	AdDriverDelayedLoader.adDriverCalls.push(adDriverCall);
@@ -472,6 +481,8 @@ AdDriverDelayedLoader.loadNext = function() {
 }
 
 AdDriverDelayedLoader.load = function() {
+	AdDriverDelayedLoader.started = true;
+
 	if (AdDriver.isNoAdWiki()) {
 		return;
 	}
@@ -479,3 +490,10 @@ AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.loadNext();
 }
 
+AdDriverDelayedLoader.reset = function() {
+	AdDriverDelayedLoader.init();
+}
+
+AdDriverDelayedLoader.isRunning = function() {
+	return AdDriverDelayedLoader.started && AdDriverDelayedLoader.adDriverCalls.length;
+}
