@@ -174,8 +174,8 @@ function wfSoapFailures(){
 						$row['numRequests'] = mysql_result($result, $cnt, "numRequests");
 						$row['lookedFor'] = mysql_result($result, $cnt, "lookedFor");
 						$row['lookedFor'] = formatLookedFor($row['lookedFor']);
+						$data[] = $row;
 					}
-					$data[] = $row;
 				}
 			} else {
 				$wgOut->addHTML("<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".mysql_error($db));
