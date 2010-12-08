@@ -114,6 +114,7 @@ AdDriver.isHighValue = function(slotname) {
 		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_TOP':	// skin
 		case 'INVISIBLE_1':		// footer
+		case 'EXIT_STITIAL_BOXAD_1':
 			// continue processing after switch
 			break;
 		default:
