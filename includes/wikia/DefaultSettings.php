@@ -81,6 +81,7 @@ $wgAutoloadClasses["WikiFactoryHub"] = "$IP/extensions/wikia/WikiFactory/Hubs/Wi
 $wgAutoloadClasses['AnalyticsEngine'] = "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 $wgAutoloadClasses['SimplePie'] = "$IP/lib/SimplePie/simplepie.inc";
 $wgAutoloadClasses['FakeLocalFile'] = "$IP/includes/wikia/FakeLocalFile.class.php";
+$wgAutoloadClasses['PayflowAPI'] = "$IP/includes/wikia/PayflowAPI.php";
 
 //AutomaticWikiAdoption
 $wgAutoloadClasses['AutomaticWikiAdoptionGatherData']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php';
