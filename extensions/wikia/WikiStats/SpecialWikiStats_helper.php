@@ -1433,6 +1433,13 @@ class WikiStats {
 		$offset =( isset( $params['offset'])  ) ? intval($params['offset']) : 0;
 		$summary=( isset( $params['summary']) ) ? intval($params['summary']) : 0;
 		
+		$lang_id = WikiFactory::LangCodeToId($lang);
+		
+		if ( empty($lang_id) ) {
+			Wikia::log( __METHOD__, false, "invalid language code: $lang");
+			return false;			
+		}
+		
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
 				
 		# order 
@@ -1462,57 +1469,72 @@ class WikiStats {
 			}
 		}
 				
-		# tables		
-		$tables = array( 
-			'wikia_monthly_stats', 
-			'wikicities.city_list AS cl', 
-			'wikicities.city_cat_mapping AS ccm' 
-		);
-				
+		# tables
+		if ( $summary ) {
+			$tables = array( 'lang_monthly_stats' ) ;
+		} else {	
+			$tables = array( 
+				'wikia_monthly_stats', 
+				'wikicities.city_list AS cl', 
+				'wikicities.city_cat_mapping AS ccm' 
+			);
+		}
+		
 		#conditions
-		$conditions = array(
-			'stats_date' => sprintf("%04d%02d", $year, $month),
-			'city_public' => 1
-		);
-		
-		if ( !empty($lang) ) {
-			$conditions['cl.city_lang'] = $lang;
+		$conditions = $join = array();
+		if ( $summary ) {
+			$conditions = array(
+				'stats_date' => sprintf("%04d%02d", $year, $month),
+				'wiki_lang_id' => $lang_id
+			);
+		} else {
+			$conditions = array(
+				'stats_date' => sprintf("%04d%02d", $year, $month),
+				'city_public' => 1
+			);
+			
+			if ( !empty($lang) ) {
+				$conditions['cl.city_lang'] = $lang;
+			}
+			
+			if ( !empty($cat) ) {
+				$conditions['ccm.cat_id'] = $cat;
+			}
+			# join
+			$join = array(
+				'wikicities.city_list AS cl' => array( 
+					'JOIN', 
+					'cl.city_id = wiki_id' 
+				),
+				'wikicities.city_cat_mapping AS ccm' => array( 
+					'JOIN', 
+					'ccm.city_id = wiki_id' 
+				),
+			);
 		}
-		
-		if ( !empty($cat) ) {
-			$conditions['ccm.cat_id'] = $cat;
-		}
-		
-		# join
-		$join = array(
-			'wikicities.city_list AS cl' => array( 
-				'JOIN', 
-				'cl.city_id = wiki_id' 
-			),
-			'wikicities.city_cat_mapping AS ccm' => array( 
-				'JOIN', 
-				'ccm.city_id = wiki_id' 
-			),
-		);
 		
     	$memkey = sprintf( "count_%s_%s_%s_%d", __METHOD__, implode('_', array_keys($conditions)), implode('_', array_values($conditions)), $xls );
 		$data['cnt'] = $wgMemc->get( $memkey );
 				
 		/* number of records */
-		if ( empty($data['cnt']) ) {
-			$oRow = $dbr->selectRow(
-				$tables,
-				array ( 'count(0) as cnt' ),
-				$conditions,
-				__METHOD__,
-				'',
-				$join
-			);
-			
-			if ( is_object($oRow) ) {
-				$data['cnt'] = $oRow->cnt;
+		if ( $summary ) {
+			$data['cnt'] = 1;
+		} else {
+			if ( empty($data['cnt']) ) {
+				$oRow = $dbr->selectRow(
+					$tables,
+					array ( 'count(0) as cnt' ),
+					$conditions,
+					__METHOD__,
+					'',
+					$join
+				);
+				
+				if ( is_object($oRow) ) {
+					$data['cnt'] = $oRow->cnt;
+				}
+				$wgMemc->set($memkey, $data['cnt'], 60 * 60 * 3);
 			}
-			$wgMemc->set($memkey, $data['cnt'], 60 * 60 * 3);
 		}
 		
 		if ( $data['cnt'] > 0 ) {
@@ -1531,23 +1553,44 @@ class WikiStats {
 					'OFFSET'	=> $offset
 				);
 						
-				$oRes = $dbr->select ( 
-					$tables,
-					array( 
-						($summary) ? '0 as city_id'        : 'cl.city_id', 
-						($summary) ? '\'\' as city_dbname' : 'city_dbname', 
-						($summary) ? '\'\' as city_title'  : 'city_title', 
-						($summary) ? '\'\' as city_url'    : 'city_url', 
-						($summary) ? 'sum(users_all) as users_all'           : 'users_all', 
-						($summary) ? 'sum(articles) as articles'             : 'articles', 
-						($summary) ? 'sum(articles_edits) as articles_edits' : 'articles_edits', 
-						($summary) ? '\'\' as ts'          : 'city_last_timestamp as ts' 
-					),
-					$conditions,
-					__METHOD__,
-					$order,
-					$join
-				);	
+				if ( $summary ) {
+					$oRes = $dbr->select ( 
+						$tables,
+						array( 
+							'0 as city_id', 
+							'\'\' as city_dbname', 
+							'\'\' as city_title', 
+							'\'\' as city_url', 
+							'users_all' , 
+							'articles', 
+							'articles_edits', 
+							'ts'
+						),
+						$conditions,
+						__METHOD__
+					);	
+										
+				} else {
+			
+					$oRes = $dbr->select ( 
+						$tables,
+						array( 
+							'cl.city_id', 
+							'city_dbname', 
+							'city_title', 
+							'city_url', 
+							'users_all', 
+							'articles', 
+							'articles_edits', 
+							'city_last_timestamp as ts' 
+						),
+						$conditions,
+						__METHOD__,
+						$order,
+						$join
+					);	
+		
+				}
 
 				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 					$data['res'][( $summary ) ? 0 : $oRow->city_id] = array(
@@ -1564,8 +1607,8 @@ class WikiStats {
 						0  # prev # articles
 					);
 				}
-				$dbr->freeResult( $oRes );		
-				
+				$dbr->freeResult( $oRes );			
+					
 				if ( !empty($data['res']) && $xls == 0 ) {
 					$prev_year = $year;
 					$prev_month = $month - 1;
@@ -1579,14 +1622,12 @@ class WikiStats {
 							$tables,
 							array( 
 								'0 as wiki_id',
-								'sum(users_all) as users_all', 
-								'sum(articles) as articles', 
-								'sum(articles_edits) as articles_edits'
+								'users_all', 
+								'articles', 
+								'articles_edits'
 							),
 							$conditions,
-							__METHOD__,
-							$order,
-							$join
+							__METHOD__
 						);							
 					} else {
 						$where = array(
