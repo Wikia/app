@@ -241,8 +241,8 @@ function wfSoapFailures(){
 					$wgOut->addWikiText("$lookedFor");
 					$wgOut->addHTML("</td><td>");
 					$wgOut->addHTML("<form action='' method='POST'>
-							<input type='hidden' name='artist' value='$artist'/>
-							<input type='hidden' name='song' value='$song'/>
+							<input type='hidden' name='artist' value=\"$artist\"/>
+							<input type='hidden' name='song' value=\"$song\"/>
 							<input type='submit' name='fixed' value='".wfMsg('soapfailures-fixed')."'/>
 						</form>\n");
 					$wgOut->addHTML("</td>");
