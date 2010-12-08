@@ -10,6 +10,7 @@
 * rt#92457: Bring back styling for FBConnect chooseName dialog in the new look (sean)
 * rt#75307: Border option for images is ignored (macbre)
 * rt#100013: section edits in oasis are generating bad html (TOR)
+* rt#133899: Updated Special:Soapfailures to have "Fixed" button & to memcache just data, not output (sean)
 
 == Changes since 20101115 ==
 * rt#68485: MyTools now has MyContributions (TOR)
