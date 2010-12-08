@@ -45,7 +45,12 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 	
 	public static function onSkinAfterContent( &$data ) {
-		$data = null;
+		global $wgCityId;
+		// load Google Analytics code
+		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+
+		// onewiki GA
+		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 		return true;
 	}
 	
