@@ -30,8 +30,8 @@ $FULL_SASS_PATH = "/var/lib/gems/1.8/bin/sass";
 $TMP_DIR = "/var/tmp/sass";
 $MEMC_KEY_PREFIX = "sassServer";
 $CHECK_BACK_LATER_MESSAGE = "/* processing */";
-$CHECK_BACK_CACHE_DURATION = 30; // nice & short.  If it can't generate in this time, it's likely that something went wrong.
-$CHECK_BACK_IN_MICROSECONDS = 200000; // 1,000,000 per second.
+$CHECK_BACK_CACHE_DURATION = 30; // (in seconds) nice & short.  If it can't generate in this time, it's likely that something went wrong.
+$CHECK_BACK_IN_MICROSECONDS = 200000; // 1,000,000 microseconds per second.
 $CHECK_BACK_MAX_RETRIES = (1000000 / $CHECK_BACK_IN_MICROSECONDS) * ($CHECK_BACK_CACHE_DURATION + 1); // if we don't get a response in this time, we'll stop waiting.
 $CSS_CACHE_DURATION = 60 * 60 * 12; // how long to cache the computed CSS in memcache
 
@@ -97,7 +97,9 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 				} else if($cachedResult == $CHECK_BACK_LATER_MESSAGE){
 					if($numRetries >= $CHECK_BACK_MAX_RETRIES){
 						// For now, assume that the processing was too intense and just give up.
-						$errorStr .= "Timout: Hit max-retries while waiting for another process to generate the CSS.\n";
+						$errorStr .= "Timeout: Hit max-retries while waiting for another request to generate the CSS.\n";
+						$errorStr .= "The locking using memcached - waited ".round((($numRetries * $CHECK_BACK_IN_MICROSECONDS) / 1000), 2)." miliseconds for a result.\n";
+						$errorStr .= "The sass params were ".print_r($sassParams, true)."\n";
 					}
 				} else {
 					$cssContent = $cachedResult;
