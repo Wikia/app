@@ -130,4 +130,12 @@ abstract class AdSS_Ad {
 		$this->userEmail = $user->email;
 	}
 
+	function hash() {
+		return md5(
+			$this->type .
+			$this->url .
+			$this->userId
+			);
+	}
+
 }
