@@ -264,7 +264,8 @@ class AdSS_Controller extends SpecialPage {
 					$body .= "Ad description: {$ad->desc}\n";
 					break;
 				case 'b':
-					$body .= "Banner: {$ad->getBannerURL}\n";
+					$downloadUrl = Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$ad->id )->getFullURL();
+					$body .= "Banner: {$downloadUrl}\n";
 					break;
 			}
 
