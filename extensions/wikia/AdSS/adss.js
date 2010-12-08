@@ -4,10 +4,8 @@ var AdSS = {
 
 	init: function() {
 		AdSS.sponsormsg = $("div.sponsormsg > ul");
+		// if div exists
 		if(AdSS.sponsormsg.length) {
-			// if div exists
-			AdSS.sponsormsg.css( { "position": "relative" } );
-
 			// display page ads
 			if(typeof(wgAdSS_pageAds) !== 'undefined') {
 				$.each( wgAdSS_pageAds, function(i,v) { AdSS.sponsormsg.append(v); } );
@@ -20,42 +18,54 @@ var AdSS = {
 				$.tracker.byStr( "adss/publisher/view/0" );
 			}
 
-			// fetch a site ad
-			$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'2.2'}, AdSS.onGetSiteAds );
+			// fetch site ads
+			$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'3'}, AdSS.onGetSiteAds );
 		}
 	},
 
 	onGetSiteAds: function(response) {
-		var rand_no = Math.random() * response.length;
-		rand_no = Math.floor(rand_no+1);
-		if( response[rand_no-1].id > 0 ) {
-			var adIdx;
-			var i;
-			for( i=0; i<response.length; i++ ) {
-				if( response[i].id > 0 ) {
-					if( AdSS.siteAds.length == 0 
-							|| AdSS.siteAds[ AdSS.siteAds.length-1 ].id != response[i].id ) {
-						if( response[i].id == response[rand_no-1].id ) {
-							adIdx = AdSS.siteAds.length;
-						}
-						AdSS.siteAds.push( response[i] );
-					}
+		// create a flat array for prev/next navigation
+		var i;
+		for (i=0; i<response.length; i++) {
+			// only add real ads
+			if (response[i].id > 0) {
+				// ignore weight
+				if (AdSS.siteAds.length == 0 
+				 || AdSS.siteAds[AdSS.siteAds.length-1].id != response[i].id) {
+					AdSS.siteAds.push(response[i]);
 				}
+				// add a back reference
+				response[i].idx = AdSS.siteAds.length-1;
 			}
+		}
 
-			AdSS.sponsormsg.find("li").last().before("<li></li>");
-			AdSS.showSiteAd( adIdx );
+		var slot;
+		var showedAds = [];
+		for (slot=1; slot < response.length/50 + 1; slot++) {
+			var rand_no = Math.random() * response.length;
+			rand_no = Math.floor(rand_no+1);
+			var rand_ad = response[rand_no-1];
+
+			if (rand_ad.id > 0 // only real ads
+			   && $.inArray(rand_ad.hash, showedAds) == -1) { // and only these that were not showed yet
+				showedAds.push(rand_ad.hash);
+				AdSS.replaceAd(
+					$("<li></li>").insertBefore( AdSS.sponsormsg.find("li").last() ),
+					rand_ad.idx
+				);
+			}
 		}
 	},
 
-	showSiteAd: function(idx) {
-		var adId = AdSS.siteAds[idx].id;
-		var ad = $(AdSS.siteAds[idx].html);
+	replaceAd: function(oldAd, adIdx) {
+		var adId = AdSS.siteAds[adIdx].id;
+		var ad = $(AdSS.siteAds[adIdx].html);
 
 		ad.find("a").bind( "click", {adId: adId}, AdSS.onClick );
-		ad.append(AdSS.getPrevNext(idx));
+		ad.css({"position": "relative"});
+		ad.append(AdSS.getPrevNext(adIdx));
 
-		AdSS.sponsormsg.find("li").last().prev().replaceWith(ad);
+		oldAd.replaceWith(ad);
 		
 		$.tracker.byStr( "adss/publisher/view/"+adId );
 	},
@@ -69,10 +79,10 @@ var AdSS = {
 			nextIdx = 0;
 
 		var prevnext = $('<div class="prevnext"><a href="#" class="prev" rel="'+prevIdx+'">&lt;</a>&nbsp;<a href="#" class="next" rel="'+nextIdx+'">&gt;</a></div>');
-		prevnext.css( { "position":"absolute", "right":"0px", "top":"0px", "font-size":"80%" } );
-		prevnext.find("a").css( { "border":"1px solid", "padding":"1px" } ).click( function(e) {
+		prevnext.css({"position":"absolute", "right":"0px", "top":"0px", "font-size":"80%"});
+		prevnext.find("a").css({"border":"1px solid", "padding":"1px"}).click( function(e) {
 			e.preventDefault();
-			AdSS.showSiteAd( parseInt( $(this).attr("rel") ) );
+			AdSS.replaceAd( $(this).closest("li"), parseInt($(this).attr("rel")) );
 		} );
 
 		return prevnext;

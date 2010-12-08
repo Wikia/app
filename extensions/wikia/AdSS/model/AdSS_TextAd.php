@@ -80,4 +80,13 @@ class AdSS_TextAd extends AdSS_Ad {
 		return $tmpl->render( 'textAd' );
 	}
 
+	function hash() {
+		return md5(
+			$this->type .
+			$this->url .
+			$this->text .
+			$this->desc .
+			$this->userId
+			);
+	}
 }

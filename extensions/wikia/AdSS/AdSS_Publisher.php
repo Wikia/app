@@ -16,6 +16,7 @@ class AdSS_Publisher {
 			$adsRendered[] = array(
 					'id'   => $ad->id,
 					'html' => $ad->render( $tmpl ),
+					'hash' => $ad->hash(),
 					);
 			if( $minExpire > $ad->expires ) {
 				$minExpire = $ad->expires;
