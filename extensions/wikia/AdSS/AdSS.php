@@ -140,8 +140,3 @@ if( !isset( $wgAdSS_pricingLevel ) || !isset( $wgAdSS_pricingConf[$wgAdSS_pricin
 }
 
 $wgAdSSBillingThreshold = 50;
-
-// override in your LocalSettings.php
-$wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
-$wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
-$wgPayflowProCredentials = array();

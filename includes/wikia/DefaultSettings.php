@@ -684,3 +684,12 @@ $wgABTests = array();
  * @see extensions/wikia/WikiaApi/ApiRunJob.php
  */
 $wgApiRunJobsPerRequest = 10;
+
+/**
+ * default configuration for paypal payments
+ *
+ */
+$wgPayPalPaymentDBName = 'paypal';
+$wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
+$wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
+$wgPayflowProCredentials = array();
