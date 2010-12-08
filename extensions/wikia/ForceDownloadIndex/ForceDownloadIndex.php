@@ -24,14 +24,22 @@ extAddSpecialPage( $dir . 'SpecialForceDownloadIndex.body.php', 'ForceDownloadIn
 
 $wgSpecialPageGroups['Contact'] = 'wikia';
 
-//$wgHooks['ArticleSave'][] = 'forceDownloadIndexOnArticleSave';
+$wgHooks['ArticleSave'][] = 'forceDownloadIndexOnArticleSave';
 
 function forceDownloadIndexOnArticleSave( &$article, &$user, &$text, &$summary,
  $minor, &$watchthis, $sectionanchor, &$flags, &$status ) {
 	global $wgOut;
 	
 	$wgOut->disable();
-
-	header("Content-type: application/octet-stream");
+	/* here the following are triggering the same behaviour
+	 * - setting it to application/octet-stream
+	 * - setting it with an empty value
+	 * - setting a malformed content type header
+	 * Beware that all this are valid only for Firefox, Chrome is still able
+	 * to show a blank page for no header and empty value
+	 */
+	
+	header("Content-type: ");
+	
 	return true;
 }
