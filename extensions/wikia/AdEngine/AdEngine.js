@@ -8,7 +8,7 @@ var AdEngine = {
 	bodyWrapper : 'bodyContent',
 	adColorsContent : [],
 	hidableSlots: ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
-	revealHiddenSlotMinDocHeight: 2400
+	revealHiddenSlotMinDocHeight: 2400	// If you make a change here, make sure to change AdEngine::getDelayedIframeLoadingCode
 };
 
 /**
