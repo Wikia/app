@@ -46,6 +46,11 @@ class SkinWikiaphone extends SkinTemplate {
 	
 	public static function onSkinAfterContent( &$data ) {
 		global $wgCityId;
+		
+		$data .= <<< FOOTER
+			<div id="fullsite"><a href="#">View full site</a></div>
+FOOTER;
+		
 		// load Google Analytics code
 		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 
