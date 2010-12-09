@@ -5,7 +5,8 @@ $(function() {
 WikiaFooterApp = {
 
 	settings: {
-		delay: 350,
+		mouseoverdelay: 300,
+		mouseoutdelay: 350,
 		float: false
 	},
 
@@ -62,19 +63,24 @@ WikiaFooterApp = {
 	myToolsSetup: function() {
 
 		var timer = null;
+		var showtimer = null;
 
-		//share bar click
-		$("#WikiaFooter").find(".mytools").children("a, img").click(function(event) {
+		//my tools hover
+		$("#WikiaFooter").find(".mytools").children("a, img").hover(function(event) {
 			event.preventDefault();
-			$("#my-tools-menu").toggle();
+			clearTimeout(timer);
+			showtimer = setTimeout(function() {
+				$("#my-tools-menu").show();
+			}, WikiaFooterApp.settings.mouseoverdelay);
 		});
 
 		$('#WikiaFooter').children(".toolbar").hover(function() {
 			clearTimeout(timer);
 		}, function() {
+			clearTimeout(showtimer);
 			timer = setTimeout(function() {
 				$("#my-tools-menu").hide();
-			}, WikiaFooterApp.settings.delay);
+			}, WikiaFooterApp.settings.mouseoutdelay);
 		});
 
 	}
