@@ -15,12 +15,12 @@ class MessageGroupStatistics {
 		$groups = MessageGroup::getGroups();
 
 		foreach ( $groups as $group ) {
-			$name = $group->getName();
-			if ( !empty( $stats[$name] ) ) {
+			$id = $group->getId();
+			if ( !empty( $stats[$id] ) ) {
 				continue;
 			}
 
-			$stats[$name] = self::forItem( $name, $code );
+			$stats[$name] = self::forItem( $id, $code );
 		}
 
 		# Go over aggregate message groups filling missing entries
@@ -112,7 +112,15 @@ class MessageGroupStatistics {
 			return true;
 		}
 
-		$name = $article->mTitle->getName();
+		$name = $article->mTitle->getText();
+
+		// check if this is a valid language variant
+		$parts = explode( $name, 2 );
+		$lang = empty( $parts[1] ) ? false : $parts[1];
+		if ( $lang && true ) {
+			// no language part or language part is not a valid lang code
+			return true;
+		}
 
 		// match message to group here
 		if ( false ) {
