@@ -53,15 +53,23 @@ class GlobalTitle {
 	 * static constructor, Create new Title from id of page 
 	 */
 	public static function newFromId( $id, $city_id, $dbname = "" ) {
+		global $wgMemc;
 		$title = null;
-		$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
-		$row = $dbr->selectRow( 'page', 
-			array( 'page_namespace', 'page_title' ),
-			array( 'page_id' => $id ), 
-			__METHOD__ 
-		);
-		if ( $row !== false ) {
-			$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $city_id );
+		
+		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
+		$res = $wgMemc->get( $memkey ); 
+		if ( empty($res) ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
+			$row = $dbr->selectRow( 'page', 
+				array( 'page_namespace', 'page_title' ),
+				array( 'page_id' => $id ), 
+				__METHOD__ 
+			);
+			$res = array( 'title' => $row->page_title, 'namespace' => $row->page_namespace );
+			$wgMemc->set($memkey, $res, 60 * 60);
+		}
+		if ( isset( $res['title'] ) && isset($res['namespace']) ) {
+			$title = GlobalTitle::newFromText( $res['title'], $res['namespace'], $city_id );
 		} else {
 			$title = NULL;
 		}
