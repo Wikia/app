@@ -117,9 +117,9 @@ class WikiaStatsAutoHubsConsumer {
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
 								# global title 
-								$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id, $lang['db'] );
+								$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id, $info['db'] );
 								if ( !is_object($oGTitle) ) {
-									Wikia::log ( __METHOD__, "GlobalTitle not found: " . $oRow->page_id . ", ". $city_id . ", " . $lang['db'] );
+									Wikia::log ( __METHOD__, "GlobalTitle not found: " . $oRow->page_id . ", ". $city_id . ", " . $info['db'] );
 									continue;
 								}
 				
