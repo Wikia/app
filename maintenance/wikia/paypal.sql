@@ -7,9 +7,7 @@ CREATE TABLE pp_tokens (
   ppt_respmsg varchar(255) DEFAULT NULL,
   ppt_correlationid char(13) DEFAULT NULL,
   ppt_responded timestamp NULL DEFAULT NULL,
-  ppt_token char(20) DEFAULT NULL,
-  ppt_ad_id int unsigned DEFAULT NULL,
-  ppt_user_id int unsigned DEFAULT NULL
+  ppt_token char(20) DEFAULT NULL
 ) ENGINE=InnoDB;
 CREATE UNIQUE INDEX ppt_token ON pp_tokens (ppt_token);
 
