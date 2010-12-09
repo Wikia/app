@@ -864,22 +864,38 @@ function getSong($artist, $song="", $doHyphens=true){
 					lw_soapStats_logHit($resultFound);
 				}
 
+				$allowFullLyrics = false;
+
+				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.
+				// NOTE: The value of the fullApiAuth param for the request must be the md5 hash of the concatenation of wgFullLyricWikiApiToken, the artist, and the song.
+				global $wgRequest;
+				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
+				if(!empty($fullApiAuth)){
+				global $wgFullLyricWikiApiToken;
+					$expectedSig = md5($wgFullLyricWikiApiToken . "$artist$song");
+					if($expectedSig == $fullApiAuth){
+						$allowFullLyrics = true;
+					}
+				}
+
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
-				if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
-					$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
-					$lyrics = $retVal['lyrics'];
+				if(!$allowFullLyrics){
+					if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
+						$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
+						$lyrics = $retVal['lyrics'];
 
-					if(strlen($lyrics) < 50){
-						$lyrics = "";
-					} else {
-						$lyrics = mb_substr($lyrics, 0, max(0, round(strlen($lyrics) / 7)), 'UTF-8') . "[...]";
+						if(strlen($lyrics) < 50){
+							$lyrics = "";
+						} else {
+							$lyrics = mb_substr($lyrics, 0, max(0, round(strlen($lyrics) / 7)), 'UTF-8') . "[...]";
+						}
+						//$lyrics .= "\n\n\n\n$TRUNCATION_NOTICE".$retVal['url']."$urlLink"; // we'll let apps decide how to handle this.
+
+						// We now return the truncated version instead of just a flat-out denial.
+						$retVal['lyrics'] = $lyrics;
+						//$retVal['lyrics'] = $DENIED_NOTICE . $retVal['url'] . $urlLink . $DENIED_NOTICE_SUFFIX;
 					}
-					//$lyrics .= "\n\n\n\n$TRUNCATION_NOTICE".$retVal['url']."$urlLink"; // we'll let apps decide how to handle this.
-
-					// We now return the truncated version instead of just a flat-out denial.
-					$retVal['lyrics'] = $lyrics;
-					//$retVal['lyrics'] = $DENIED_NOTICE . $retVal['url'] . $urlLink . $DENIED_NOTICE_SUFFIX;
 				}
 
 				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded..
