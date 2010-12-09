@@ -149,3 +149,6 @@ div.tright {
 	margin-top: 0.5em;
 	text-align: center;
 }
+.main-page-tag-lcs .tabber {
+	display: block;
+}
