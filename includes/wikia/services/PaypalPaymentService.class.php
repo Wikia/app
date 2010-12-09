@@ -77,6 +77,10 @@ class PaypalPaymentService extends Service {
 		return $this->token;
 	}
 
+	public function setToken( $token ) {
+		$this->token = $token;
+	}
+
 	private function getPaypalDBName() {
 		if( $this->paypalDBName == null ) {
 			global $wgPayPalPaymentDBName;
