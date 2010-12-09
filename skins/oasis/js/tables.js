@@ -100,6 +100,12 @@ WikiaWideTables = {
 				return;
 			}
 			
+			//If the table is being used as a generic container, ignore it
+			var columnCount = table.find("tr:first").children("td, th").length;
+			if (columnCount < 3) {
+				return;
+			}
+			
 			WikiaWideTables.settings.tables.push(table);
 			
 		});
