@@ -150,6 +150,11 @@ $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/Theme
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
 /**
+ * i18n support for jquery.timeago.js (used in History Dropdown)
+ */
+include_once( "$IP/extensions/wikia/TimeAgoMessaging/TimeAgoMessaging_setup.php" );
+
+/**
  * API classes
  */
 
