@@ -146,4 +146,12 @@
   // fix for IE6 suckage
   document.createElement("abbr");
   document.createElement("time");
+
+  // Wikia - start
+  // RT #69946
+  if (typeof wgTimeAgoi18n != 'undefined') {
+    $.extend($.timeago.settings.strings, wgTimeAgoi18n);
+	$.timeago.settings.strings.suffixAgo = '';
+  }
+  // Wikia - end
 })(jQuery);
