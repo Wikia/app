@@ -105,6 +105,7 @@ $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisServic
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
 $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
+$wgAutoloadClasses['PaypalPaymentService'] = $IP.'/includes/wikia/services/PaypalPaymentService.class.php';
 
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';

@@ -6,26 +6,69 @@ class PayflowAPI {
 	private $vendor;
 	private $user;
 	private $password;
+	private $APIUrl;
+	private $HTTPProxy;
+	private $headers = array();
+	private $nvpReqArr = array();
+	private $curlOptions = array();
 
-	function __construct() {
-		global $wgPayflowProCredentials;
-		$this->partner = $wgPayflowProCredentials['partner'];
-		$this->vendor = $wgPayflowProCredentials['vendor'];
-		$this->user = $wgPayflowProCredentials['user'];
-		$this->password = $wgPayflowProCredentials['password'];
+	public function __construct( Array $payflowOptions ) {
+		$this->setPayflowOptions( $payflowOptions );
 	}
 
-	function setExpressCheckout( $returnUrl, $cancelUrl ) {
-		$headers = array();
-		$this->setHeaders( $headers );
-		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
+	public function setPayflowOptions( Array $payflowOptions ) {
+		$this->partner = $payflowOptions['partner'];
+		$this->vendor = $payflowOptions['vendor'];
+		$this->user = $payflowOptions['user'];
+		$this->password = $payflowOptions['password'];
+		$this->APIUrl = $payflowOptions['APIUrl'];
+		$this->HTTPProxy = $payflowOptions['HTTPProxy'];
+	}
 
+	private function resetHeaders() {
+			$this->headers = array( "Content-Type: text/namevalue" );
+			return $this;
+	}
+
+	private function resetNvpReqArr() {
+		$this->nvpReqArr = array( "PARTNER" => $this->partner );
+		$this->nvpReqArr["VENDOR"] = $this->vendor;
+		$this->nvpReqArr["PWD"] = $this->password;
+		$this->nvpReqArr["USER"] = $this->user;
+		$this->nvpReqArr["TENDER"] = "P";
+		return $this;
+	}
+
+	private function appendNvpReqArr( Array $params ) {
+		$this->nvpReqArr = array_merge( $this->nvpReqArr, $params );
+		return $this;
+	}
+
+	private function appendHeaders( Array $params ) {
+		$this->headers = array_merge( $this->headers, $params );
+		return $this;
+	}
+
+	private function resetCurlOptions() {
+		$this->curlOptions = array( CURLOPT_URL => $this->APIUrl );
+		$this->curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
+		$this->curlOptions[CURLOPT_SSL_VERIFYHOST] = false;
+		$this->curlOptions[CURLOPT_RETURNTRANSFER] = 1;
+		$this->curlOptions[CURLOPT_POST] = 1;
+
+		if( !empty( $this->HTTPProxy ) ) {
+			$this->curlOptions[CURLOPT_PROXY] = $this->HTTPProxy;
+		}
+		$this->curlOptions[CURLOPT_TIMEOUT] = 45;
+
+		return $this;
+	}
+
+	public function setExpressCheckout( $returnUrl, $cancelUrl ) {
 		// not required
-		//$headers[] = "X-VPS-Request-ID: 1";
+		// $this->headers[] = "X-VPS-Request-ID: 1";
 
+		$nvpReqArr = array();
 		$nvpReqArr["TRXTYPE"]     = "A";
 		$nvpReqArr["ACTION"]      = "S";
 		$nvpReqArr["AMT"]         = "0.00";
@@ -35,173 +78,133 @@ class PayflowAPI {
 		$nvpReqArr["CANCELURL"]   = $cancelUrl;
 		$nvpReqArr["BA_DESC"]     = "Wikia+subscription";
 
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
 	}
 
 	function getExpressCheckoutDetails( $token ) {
-		$headers = array();
-		$this->setHeaders( $headers );
-		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
-
 		// not required
 		//$headers[] = "X-VPS-Request-ID: 1";
 
+		$nvpReqArr = array();
 		$nvpReqArr["TRXTYPE"] = "A";
 		$nvpReqArr["ACTION"]  = "G";
 		$nvpReqArr["TOKEN"]   = $token;
 
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
 	}
 
 	function createCustomerBillingAgreement( $req_id, $token ) {
-		$headers = array();
-		$this->setHeaders( $headers );
 		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
-
-		$headers[] = "X-VPS-Request-ID: X$req_id";
-
 		$nvpReqArr["TRXTYPE"] = "A";
 		$nvpReqArr["ACTION"]  = "X";
 		$nvpReqArr["TOKEN"]   = $token;
 
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->appendHeaders( array( "X-VPS-Request-ID: X$req_id" ) )
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
 	}
 
 	function cancelCustomerBillingAgreement( $baid ) {
-		$headers = array();
-		$this->setHeaders( $headers );
 		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
-
-		// not required
-		//$headers[] = "X-VPS-Request-ID: X$req_id";
-
 		$nvpReqArr["ACTION"]    = "U";
 		$nvpReqArr["BAID"]      = $baid;
 		$nvpReqArr["BA_STATUS"] = "cancel";
 
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
 	}
 
 	function checkCustomerBillingAgreement( $baid ) {
-		$headers = array();
-		$this->setHeaders( $headers );
-		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
-
 		// not required
 		//$headers[] = "X-VPS-Request-ID: X$req_id";
-
+		$nvpReqArr = array();
 		$nvpReqArr["ACTION"]    = "U";
 		$nvpReqArr["BAID"]      = $baid;
 
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
+
 	}
 
 	function doExpressCheckoutPayment( $req_id, $baid, $amount ) {
-		$headers = array();
-		$this->setHeaders( $headers );
 		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
-
-		$headers[] = "X-VPS-Request-ID: D$req_id";
-
 		$nvpReqArr["TRXTYPE"] = "S";
 		$nvpReqArr["ACTION"]  = "D";
 		$nvpReqArr["AMT"]     = sprintf("%01.2f", $amount);
 		$nvpReqArr["BAID"]    = $baid;
 
-		/* line items not supported yet
-		$nvpReqArr["L_NAME0"] = "Ad1";
-		$nvpReqArr["L_COST0"] = "10.00";
-		$nvpReqArr["L_QTY0"]  =  1;
-		$nvpReqArr["L_NAME1"] = "Ad2";
-		$nvpReqArr["L_COST1"] = sprintf("%01.2f", $amount - 10);
-		$nvpReqArr["L_QTY1"]  =  1;
-		$nvpReqArr["ITEMAMT"] = sprintf("%01.2f", $amount);
-		*/
-
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->appendHeaders( array( "X-VPS-Request-ID: D$req_id" ) )
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
 	}
 
 	function doExpressCheckoutAuthorization( $req_id, $baid, $amount ) {
-		$headers = array();
-		$this->setHeaders( $headers );
 		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
-
-		$headers[] = "X-VPS-Request-ID: A$req_id";
-
 		$nvpReqArr["TRXTYPE"] = "A";
 		$nvpReqArr["ACTION"]  = "D";
 		$nvpReqArr["AMT"]     = sprintf("%01.2f", $amount);
 		$nvpReqArr["BAID"]    = $baid;
 
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->appendHeaders( array( "X-VPS-Request-ID: A$req_id" ) )
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
 	}
 
 	function doExpressCheckoutVoid( $req_id, $orig_id ) {
-		$headers = array();
-		$this->setHeaders( $headers );
 		$nvpReqArr = array();
-		$this->setNvpReqArr( $nvpReqArr );
-		$opts = array();
-		$this->setOptions( $opts );
-
-		$headers[] = "X-VPS-Request-ID: V$req_id";
-
 		$nvpReqArr["TRXTYPE"] = "V";
 		$nvpReqArr["ORIGID"]  = $orig_id;
 
-		return $this->query( $headers, $nvpReqArr, $opts );
+		return $this->resetHeaders()
+		            ->appendHeaders( array( "X-VPS-Request-ID: V$req_id" ) )
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
 	}
 
-	private function query( $headers, $nvpReqArr, $opts ) {
-		$opts[CURLOPT_HTTPHEADER] = $headers;
-		$opts[CURLOPT_POSTFIELDS] = $this->formatNvpReqArr( $nvpReqArr );
-		wfDebug( "curl opts = " . print_r( $opts, true ), "\n" );
+	private function query() {
+		$this->curlOptions[CURLOPT_HTTPHEADER] = $this->headers;
+		$this->curlOptions[CURLOPT_POSTFIELDS] = $this->formatNvpReqArr( $this->nvpReqArr );
+		wfDebug( "curl opts = " . print_r( $this->curlOptions, true ), "\n" );
 
-		$ch = curl_init();
-		curl_setopt_array( $ch, $opts );
+		$curl = curl_init();
+		curl_setopt_array( $curl, $this->curlOptions );
 
-		$httpResponse = curl_exec( $ch );
+		$httpResponse = curl_exec( $curl );
 		if( !$httpResponse ) {
-			throw new Exception( "API call failed: [".curl_errno($ch)."] ".curl_error($ch) );
+			throw new Exception( "API call failed: [".curl_errno( $curl )."] ".curl_error( $curl ) );
 		}
 
 		$nvpRespArr = $this->parseNvpRespStr( $httpResponse );
-		curl_close( $ch );
+		curl_close( $curl );
 
 		wfDebug( "curl response = " . print_r( $nvpRespArr, true ) . "\n" );
 
-		return $nvpRespArr;
-	}
-
-	private function setHeaders( &$headers ) {
-		$headers[] = "Content-Type: text/namevalue";
-	}
-
-	private function setNvpReqArr( &$nvpReqArr ) {
-		$nvpReqArr["PARTNER"] = $this->partner;
-		$nvpReqArr["VENDOR"]  = $this->vendor;
-		$nvpReqArr["PWD"]     = $this->password;
-		$nvpReqArr["USER"]    = $this->user;
-
-		$nvpReqArr["TENDER"]  = "P";
+		return $this->nvpRespArr;
 	}
 
 	private function formatNvpReqArr( $nvpReqArr ) {
@@ -229,19 +232,5 @@ class PayflowAPI {
 		return $parsedRespArr;
 	}
 
-	private function setOptions( &$opts ) {
-		global $wgPayflowProAPIUrl, $wgHTTPProxy;
-
-		$opts[CURLOPT_URL]            = $wgPayflowProAPIUrl;
-		$opts[CURLOPT_SSL_VERIFYPEER] = false;
-		$opts[CURLOPT_SSL_VERIFYHOST] = false;
-		$opts[CURLOPT_RETURNTRANSFER] = 1;
-		$opts[CURLOPT_POST]           = 1;
-
-		if( $wgHTTPProxy ) {
-			$opts[CURLOPT_PROXY]  = $wgHTTPProxy;
-		}
-		$opts[CURLOPT_TIMEOUT]        = 45;
-	}
 
 }
