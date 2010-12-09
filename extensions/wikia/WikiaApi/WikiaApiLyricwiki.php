@@ -242,7 +242,7 @@ class WikiaApiLyricwiki extends ApiBase {
 					)
 				);
 				print utf8_decode( htmlspecialchars( $result['song'], ENT_QUOTES, "UTF-8" ) );
-				Xml::closeElement( 'a' );
+				print Xml::closeElement( 'a' );
 				print ' by ';
 				print Xml::openElement( 'a',
 					array(
