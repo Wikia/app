@@ -2724,7 +2724,7 @@ class User {
 
 		// Give a chance for extensions to modify the hash, if they have
 		// extra options or other effects on the parser cache.
-		wfRunHooks( 'PageRenderingHash', array( &$confstr ) );
+		wfRunHooks( 'PageRenderingHash', array( &$confstr/*Wikia change start*/, &$this/*Wikia change end*/ ) );
 
 		// Make it a valid memcached key fragment
 		$confstr = str_replace( ' ', '_', $confstr );
