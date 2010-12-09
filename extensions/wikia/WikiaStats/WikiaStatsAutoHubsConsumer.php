@@ -61,6 +61,7 @@ class WikiaStatsAutoHubsConsumer {
 
 				Wikia::log( __METHOD__, 'events', 'Read ' . $loop . ' events (for ' . count($result). ' Wikis) successfully. Next timestamp: ' . $this->mDate );				
 		
+				$records = count($result);
 				if ( !empty($result) ) {
 					$producerDB = new WikiaStatsAutoHubsConsumerDB(DB_MASTER);
 					$data = array(
@@ -68,9 +69,11 @@ class WikiaStatsAutoHubsConsumer {
 						'articles' 	=> array(),
 						'user'		=> array()
 					);
+					$loop = 0;
 					foreach ( $result as $city_id => $rows) {
 						$start = time();
-						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processing: ' . count($rows) . ' rows' );
+						$loop++;
+						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' (' . $loop . '/' . $records . ') processing: ' . count($rows) . ' rows' );
 				
 						$memkey = sprintf("%s:wikia:%d", __METHOD__, $city_id);
 						$info = $wgMemc->get($memkey);
