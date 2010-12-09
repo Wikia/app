@@ -68,7 +68,7 @@ class AdSS_Controller extends SpecialPage {
 		$sitePricing = AdSS_Util::getSitePricing();
 
 		$adsCount = count( AdSS_Publisher::getSiteAds() );
-		$currentShare = 1 / max( $sitePricing['min-slots'], $adsCount );
+		$currentShare = round( 100 / max( $sitePricing['min-slots'], $adsCount ) * intval($adsCount/100+1) );
 
 		$ad = AdSS_AdFactory::createFromForm( $adForm );
 
@@ -88,7 +88,7 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'sitePricing', $sitePricing );
 		$tmpl->set( 'bannerPricing', AdSS_Util::getBannerPricing() );
 		$tmpl->set( 'adForm', $adForm );
-		$tmpl->set( 'currentShare', sprintf( "%01.1f", $currentShare * 100 ) );
+		$tmpl->set( 'currentShare', $currentShare );
 		if( $wgRequest->getSessionData( "AdSS_userId" ) === null ) {
 			$tmpl->set( 'isUser', false );
 		} else {
