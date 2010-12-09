@@ -9,6 +9,19 @@
  * @package MediaWiki
  */
 
+if (!defined('MEDIAWIKI')) {
+	echo "This is MediaWiki extension named TimeAgo Messaging.\n";
+	exit(1) ;
+}
+
+$wgExtensionCredits['other'][] = array(
+	'author' => array('Maciej Brencz'),
+	'description' => 'Provides i18n for jquery.timeago.js plugin',
+	'description-msg' => 'timeago-desc',
+	'name' => 'TimeAgo Messaging',
+	'version' => '1.0',
+);
+
 $dir = dirname(__FILE__);
 
 // i18n
