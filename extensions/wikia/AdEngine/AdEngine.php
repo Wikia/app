@@ -244,7 +244,8 @@ class AdEngine {
 			}
 			if (!empty($dart_key_values)) {
 			 foreach($this->slots as $slotname => $slot) {
-			 	if($slot['provider_id'] == /* dart */ 1){
+			 	if($slot['provider_id'] == /* dart */ 1
+				|| $slot['provider_id'] == /* AdDriver */ 10){
 					$this->slots[$slotname]['provider_values'] = $dart_key_values;
 			 	}
 			 }
