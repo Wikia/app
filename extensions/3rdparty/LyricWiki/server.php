@@ -871,7 +871,7 @@ function getSong($artist, $song="", $doHyphens=true){
 				global $wgRequest;
 				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
 				if(!empty($fullApiAuth)){
-				global $wgFullLyricWikiApiToken;
+					global $wgFullLyricWikiApiToken;
 					$expectedSig = md5($wgFullLyricWikiApiToken . "$artist$song");
 					if($expectedSig == $fullApiAuth){
 						$allowFullLyrics = true;
