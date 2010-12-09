@@ -190,7 +190,6 @@ class PayflowAPI {
 		$this->curlOptions[CURLOPT_HTTPHEADER] = $this->headers;
 		$this->curlOptions[CURLOPT_POSTFIELDS] = $this->formatNvpReqArr( $this->nvpReqArr );
 		wfDebug( "curl opts = " . print_r( $this->curlOptions, true ), "\n" );
-print_r($this->curlOptions);
 
 		$curl = curl_init();
 		curl_setopt_array( $curl, $this->curlOptions );
