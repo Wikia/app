@@ -249,10 +249,10 @@ class WikiaApiLyricwiki extends ApiBase {
 						'href' => $this->root.$this->linkEncode( $result['artist'] )
 					)
 				);
-				print utf8_decode( htmlspecialchars( $result['artist'] ), ENT_QUOTES, "UTF-8" );
+				print utf8_decode( htmlspecialchars( $result['artist'] , ENT_QUOTES, "UTF-8" ));
 				print Xml::closeElement( 'a' );
 				print Xml::closeElement( 'h3' );
-				print '\n';
+				print "\n";
 
 				print Xml::openElement( 'pre' );
 				print "\n";
@@ -296,7 +296,7 @@ class WikiaApiLyricwiki extends ApiBase {
 					}
 					print Xml::closeElement( 'ul' )."\n";
 				}
-				print Xml::closeElement( 'body' ).'\n'.Xml::closeElement( 'html' ).'\n';
+				print Xml::closeElement( 'body' )."\n".Xml::closeElement( 'html' )."\n";
 				break;
 			}
 		}
