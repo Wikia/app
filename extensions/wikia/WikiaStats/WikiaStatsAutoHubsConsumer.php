@@ -13,7 +13,7 @@
  */
 class WikiaStatsAutoHubsConsumer {
 	const defaultTS = 3600;
-	const sleepTime = 60;
+	const sleepTime = 10;
 	var $mDate = null;
 	/**
 	 * constructor
@@ -54,7 +54,7 @@ class WikiaStatsAutoHubsConsumer {
 					if ( $oRow->rev_timestamp > $this->mDate ) {
 						$this->mDate = $oRow->rev_timestamp;
 					}
-					$result[$oRow->wiki_id][] = $oRow;
+					$result[$oRow->wiki_id][$oRow->page_id] = $oRow;
 					$loop++;
 				}
 				$dbr->freeResult( $oRes );			
@@ -71,36 +71,50 @@ class WikiaStatsAutoHubsConsumer {
 					foreach ( $result as $city_id => $rows) {
 						$start = time();
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processing: ' . count($rows) . ' rows' );
+				
+						$memkey = sprintf("%s:wikia:%d", __METHOD__, $city_id);
+						$info = $wgMemc->get($memkey);
+						if ( empty($info) ) { 
+							# wikia
+							$oWikia = WikiFactory::getWikiByID($city_id);
+							if ( !is_object($oWikia) ) {
+								Wikia::log ( __METHOD__, "Wikia not found: " . $city_id );
+								continue;
+							}							
+							# server
+							$server = WikiFactory::getVarValueByName( "wgServer", $city_id );
+							$info = array( 
+								'lang'		=> $oWikia->city_lang,
+								'db'		=> $oWikia->city_dbname,
+								'sitename'	=> $oWikia->city_title,
+								'server'	=> $server 
+							);
+							$wgMemc->set( $memkey, $info, 60*60*2 );
+						} 
 						
+						if ( !isset( $info['db'] ) && !isset( $info['sitename'] ) && !isset( $info['lang'] ) && !isset( $info['server'] ) ) {
+							Wikia::log ( __METHOD__, "Wikia not found: " . $city_id );
+							continue;							
+						}
+						
+						# initial table
+						$lang = $info['lang'];
+						if ( !isset($data['blogs'][$lang]) ) {
+							$data['blogs'][$lang] = array();
+						}
+						if ( !isset($data['articles'][$lang]) ) {
+							$data['articles'][$lang] = array();
+						}
+						if ( !isset($data['user'][$lang]) ) {
+							$data['user'][$lang] = array();
+						}							
+											
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
-								# wikia
-								$oWikia = WikiFactory::getWikiByID($city_id);
-								if ( !is_object($oWikia) ) {
-									Wikia::log ( __METHOD__, "Wikia not found: " . $city_id );
-									continue;
-								}
-								# server
-								$server = WikiFactory::getVarValueByName( "wgServer", $city_id );
-								# language
-								$lang = $oWikia->city_lang;
-								# sitename
-								$sitename = $oWikia->city_title;
-								# initial table
-								if ( !isset($data['blogs'][$lang]) ) {
-									$data['blogs'][$lang] = array();
-								}
-								if ( !isset($data['articles'][$lang]) ) {
-									$data['articles'][$lang] = array();
-								}
-								if ( !isset($data['user'][$lang]) ) {
-									$data['user'][$lang] = array();
-								}										
-								
 								# global title 
-								$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id );
+								$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id, $lang['db'] );
 								if ( !is_object($oGTitle) ) {
-									Wikia::log ( __METHOD__, "GlobalTitle not found: " . $oRow->page_id . ", ". $city_id);
+									Wikia::log ( __METHOD__, "GlobalTitle not found: " . $oRow->page_id . ", ". $city_id . ", " . $lang['db'] );
 									continue;
 								}
 								
@@ -122,18 +136,29 @@ class WikiaStatsAutoHubsConsumer {
 											'tb_city_lang'	=> $lang,
 											'tb_page_name'	=> addslashes($oGTitle->mUrlform),
 											'tb_page_url'	=> addslashes($oGTitle->getFullURL()),
-											'tb_wikiname' 	=> addslashes($sitename),
-											'tb_wikiurl'	=> addslashes($server),
+											'tb_wikiname' 	=> addslashes( $info['sitename'] ),
+											'tb_wikiurl'	=> addslashes( $info['server'] ),
 											'tb_count'		=> 1										
 										);
 									}
-								} else {																	
-									$oUser = User::newFromId( $oRow->user_id );
-									if ( !is_object($oUser) ) {
+								} else {		
+									$memkey = sprintf( "%s:user:%d", __METHOD__, $oRow->user_id );	
+									$user = $wgMemc->get($memkey);	
+									if ( empty($user) ) {
+										$oUser = User::newFromId( $oRow->user_id );
+										if ( !is_object($oUser) ) {
+											continue;
+										}
+										$groups = $oUser->getGroups();	
+										$user_groups = implode(";", $groups);
+										
+										$user = array( 'name' => $oUser->getName(), 'groups' => $user_groups );
+										$wgMemc->set( $memkey, $user, 60*60*2 );
+									} 
+									
+									if ( !isset($user['name']) ) {
 										continue;
 									}
-									$groups = $oUser->getGroups();	
-									$user_groups = implode(";", $groups);		
 				
 									foreach( $tags as $id => $val ) {
 										$date = date("Y-m-d");
@@ -158,8 +183,8 @@ class WikiaStatsAutoHubsConsumer {
 											'ta_city_lang' 	=> $lang,
 											'ta_page_name'	=> addslashes($oGTitle->mUrlform),
 											'ta_page_url'	=> addslashes($oGTitle->getFullURL()),
-											'ta_wikiname'	=> $sitename,
-											'ta_wikiurl'	=> $server,
+											'ta_wikiname'	=> $info['sitename'],
+											'ta_wikiurl'	=> $info['server'],
 											'ta_count'		=> 1
 										);	
 										
@@ -167,8 +192,8 @@ class WikiaStatsAutoHubsConsumer {
 											'tu_user_id'	=> $oRow->user_id, 
 											'tu_tag_id'		=> $id, 
 											'tu_date'		=> $date,
-											'tu_groups'		=> $user_groups,
-											'tu_username'	=> addslashes($oUser->getName()), 
+											'tu_groups'		=> $user['groups'],
+											'tu_username'	=> addslashes($user['name']), 
 											'tu_city_lang'	=> $lang,
 											'tu_count'		=> 1										
 										);		
