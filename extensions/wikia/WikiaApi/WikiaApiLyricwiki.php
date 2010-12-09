@@ -235,29 +235,68 @@ class WikiaApiLyricwiki extends ApiBase {
 				$result = getSong($artist, $songName);
 
 				$this->htmlHead($result['artist']." ".$result['song']." lyrics");
-				print "<h3><a href='$this->root".$this->linkEncode($result['artist'].":".$result['song'])."'>".utf8_decode($result['song'])."</a> by <a href='$this->root".$this->linkEncode($result['artist'])."'>".utf8_decode($result['artist'])."</a></h3>\n";
-				print "<pre>\n";
-				print utf8_decode($result['lyrics']);
-				print "</pre>";
+				print Xml::openElement( 'h3' );
+				print Xml::openElement( 'a',
+					array(
+						'href' => $this->root.$this->linkEncode( $result['artist'].":".$result['song'] )
+					)
+				);
+				print utf8_decode( htmlspecialchars( $result['song'], ENT_QUOTES, "UTF-8" ) );
+				Xml::closeElement( 'a' );
+				print ' by ';
+				print Xml::openElement( 'a',
+					array(
+						'href' => $this->root.$this->linkEncode( $result['artist'] )
+					)
+				);
+				print utf8_decode( htmlspecialchars( $result['artist'] ), ENT_QUOTES, "UTF-8" );
+				print Xml::closeElement( 'a' );
+				print Xml::closeElement( 'h3' );
+				print '\n';
+
+				print Xml::openElement( 'pre' );
+				print "\n";
+				print utf8_decode(htmlspecialchars( $result['lyrics'], ENT_QUOTES, "UTF-8" ));
+				print Xml::closeElement( 'pre' );
 
 				// Make it extensible by displaying any extra data in a UL.
 				unset($result['artist']);
 				unset($result['song']);
 				unset($result['lyrics']);
-				if(count($result) > 0){
-					print "<hr/>Additional Info:\n";
-					print "<ul>\n";
+				if( count($result) > 0 ){
+					print "<hr/> Additional Info:\n";
+					print Xml::openElement('ul');
+					print "\n";
 					foreach($result as $keyName=>$val){
 						if(0 < preg_match("/^http:\/\//", $val)){
-							$val = "<a href='$val' title='$keyName'>".utf8_decode($val)."</a>\n";
-							print "<li><strong>$keyName: </strong>$val</li>\n";
+							print Xml::openElement( 'a',
+								array(
+									'href' => $val,
+									'title' => $keyName
+								)
+							);
+							print utf8_decode( htmlspecialchars( $val, ENT_QUOTES, "UTF-8" ) );
+							print Xml::closeElement( 'a' );
+							print "\n";
+							print Xml::openElement( 'li' );
+							print Xml::openElement( 'strong' );
+							print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
+							print Xml::closeElement( 'strong' );
+							print htmlspecialchars( $val, ENT_QUOTES, "UTF-8" );
+							print Xml::closeElement( 'li');
 						} else {
-							print "<li><strong>$keyName: </strong>".utf8_decode($val)."</li>\n";
+							print Xml::openElement( 'li');
+							print Xml::openElement( 'strong' );
+							print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
+							print Xml::closeElement( 'strong' );
+							print utf8_decode( htmlspecialchars( $val, ENT_QUOTES, "UTF-8" ) );
+							print Xml::closeElement( 'li' );
+							print "\n";
 						}
 					}
-					print "</ul>\n";
+					print Xml::closeElement( 'ul' )."\n";
 				}
-				print "</body>\n</html>\n";
+				print Xml::closeElement( 'body' ).'\n'.Xml::closeElement( 'html' ).'\n';
 				break;
 			}
 		}
