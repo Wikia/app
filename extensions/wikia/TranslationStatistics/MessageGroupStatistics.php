@@ -113,12 +113,11 @@ class MessageGroupStatistics {
 		}
 
 		$name = $article->mTitle->getText();
+                $parts = explode( $name, 2 );
+                $lang = empty( $parts[1] ) ? false : $parts[1];
 
 		// check if this is a valid language variant
-		$parts = explode( $name, 2 );
-		$lang = empty( $parts[1] ) ? false : $parts[1];
-		if ( $lang && true ) {
-			// no language part or language part is not a valid lang code
+		if ( empty( Language::getLanguageName( $code ) ) ) {
 			return true;
 		}
 
