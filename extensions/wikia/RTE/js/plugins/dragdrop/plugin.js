@@ -15,7 +15,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 			RTE.log('dropped element:');
 			RTE.log(droppedElement);
-			
+
 			RTE.instance.fire('droppedElements',droppedElement);
 
 			RTE.instance.fire('saveSnapshot');
@@ -55,7 +55,9 @@ CKEDITOR.plugins.add('rte-dragdrop',
 		target.trigger('dragged');
 
 		// fix for Chrome
-		RTE.instance.fire('wysiwygModeReady');
+		if (CKEDITOR.env.webkit) {
+			RTE.instance.fire('wysiwygModeReady');
+		}
 	},
 
 	onDuringDragDrop: function(ev) {
@@ -138,8 +140,9 @@ CKEDITOR.plugins.add('rte-dragdrop',
 			// for IE
 			if (CKEDITOR.env.ie) {
 				RTE.getEditor().
-					bind('drop',self.onDrop).
-					bind('dragover', self.onDuringDragDrop);
+					unbind('.dnd').
+					bind('drop.dnd',self.onDrop).
+					bind('dragover.dnd', self.onDuringDragDrop);
 			}
 		});
 	}
