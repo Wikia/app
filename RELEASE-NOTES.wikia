@@ -13,6 +13,7 @@
 * rt#133899: Updated Special:Soapfailures to have "Fixed" button & to memcache just data, not output (sean)
 * rt#69946: Time in History Dropdown shows up in English (macbre)
 * rt#72870: Create JavaScript i18n solution (macbre)
+* rt#139810: RTE: drag&drop performance issue in IE8 (macbre)
 
 == Changes since 20101115 ==
 * rt#68485: MyTools now has MyContributions (TOR)
