@@ -107,7 +107,12 @@ class WikiaStatsAutoHubsConsumer {
 						}
 						if ( !isset($data['user'][$lang]) ) {
 							$data['user'][$lang] = array();
-						}							
+						}				
+						
+						# tags
+						$oWFTags = new WikiFactoryTags($city_id);
+						$tags = $oWFTags->getAllTags();
+						$tags = ( isset($tags['byid']) ) ? $tags['byid'] : $tags;			
 											
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
@@ -117,11 +122,7 @@ class WikiaStatsAutoHubsConsumer {
 									Wikia::log ( __METHOD__, "GlobalTitle not found: " . $oRow->page_id . ", ". $city_id . ", " . $lang['db'] );
 									continue;
 								}
-								
-								# tags
-								$oWFTags = new WikiFactoryTags($city_id);
-								$tags = $oWFTags->getAllTags();
-								$tags = ( isset($tags['byid']) ) ? $tags['byid'] : $tags;
+				
 								if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
 									foreach( $tags as $id => $val ) {
 										if ( !isset($data['blogs'][$lang][$id]) ) {
