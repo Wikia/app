@@ -29,12 +29,12 @@ global $wgHooks;
 $wgHooks[ 'PageRenderingHash' ][] = 'perSkinParserCache_onPageRenderingHash';
 
 function perSkinParserCache_onPageRenderingHash( &$hash, &$user ){
-	$skinClass = get_class($user->getSkin());
+	$skinClass = get_class( $user->getSkin() );
 	
-	if($skinClass != 'SkinOasis'){
-		$hash .= '!' . get_class($user->getSkin());
+	if ( $skinClass != 'SkinOasis' ){
+		$hash .= '!' . $skinClass;
 	}
 	
-	wfDebug("PER_SKIN_PARSER_CACHE_HASH: $hash");
+	wfDebug( "PER_SKIN_PARSER_CACHE_HASH: $hash" );
 	return true;
 }
