@@ -25,8 +25,7 @@ class CorporateFooterModule extends Module {
 		wfProfileIn( __METHOD__ );
 
 		global $wgCityId;
-		$hub = WikiFactoryHub::getInstance();
-		$catId = $hub->getCategoryId($wgCityId);
+		$catId = WikiFactoryHub::getInstance()->getCategoryId($wgCityId);
 
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
