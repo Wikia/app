@@ -212,6 +212,7 @@ class WikiaStatsAutoHubsConsumer {
 					$producerDB->insertUserEdit($data['user']);	
 					// clear old data 
 					$producerDB->deleteOld();			
+					unset($data);
 				} else {
 					Wikia::log ( __METHOD__, "No data found in events table. Last timestamp: " . $this->mDate );
 				}
