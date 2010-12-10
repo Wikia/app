@@ -2,7 +2,6 @@
 class SpotlightsModule extends Module {
 
 	var $wgBlankImgUrl;
-	var $wgSingleH1;
 	var $wgNoExternals;
 	var $wgEnableOpenXSPC;
 	var $wgEnableSpotlightsV2_Footer;

@@ -2,11 +2,7 @@
 <? if ($mode == 'FOOTER') { ?>
 <section<? if (!empty($sectionId)) { ?> id="<?= $sectionId ?>"<? } ?>>
 	<header>
-		<? if ($wgSingleH1) { ?>
-		<div class="headline-div"><?= wfMsg($titleMsg) ?></div>
-		<? } else { ?>
 		<h1><?= wfMsg($titleMsg) ?></h1>
-		<? } ?>
 		<?= wfRenderModule('RandomWiki') ?>
 	</header>
 	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?><?= $mode == 'RAIL' ? ($wgEnableSpotlightsV2_Rail ? ' SPOTLIGHT_RAIL' : '') : ($wgEnableSpotlightsV2_Footer ? ' SPOTLIGHT_FOOTER' : '') ?>"<? } } ?>>
@@ -27,11 +23,7 @@
 
 <section <?= (!empty($sectionId) ? 'id="'.$sectionId.'"' : '') ?> class="module">
 	<header>
-		<? if ($wgSingleH1) { ?>
-			<div class="headline-div"><?= wfMsg($titleMsg) ?><img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61"></div>
-		<? } else { ?>
-			<h1><?= wfMsg($titleMsg) ?><img src="<?= $wgBlankImgUrl ?>" height="15" width="61" class="sprite logo"></h1>
-		<? } ?>
+		<h1><?= wfMsg($titleMsg) ?><img src="<?= $wgBlankImgUrl ?>" height="15" width="61" class="sprite logo"></h1>
 		<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left" height="0" width="0">
 		<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-right chevron" height="0" width="0">
 	</header>

@@ -16,8 +16,6 @@ class WikiHeaderModule extends Module {
 	var $wordmarkStyle;
 	var $wordmarkUrl;
 
-	var $wgSingleH1;
-
 	public function executeIndex() {
 		global $wgOut, $wgCityId, $wgUser, $wgMemc;
 

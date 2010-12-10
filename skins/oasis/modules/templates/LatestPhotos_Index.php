@@ -1,8 +1,5 @@
-<section class="LatestPhotosModule module">
-	
-	<? if (!$wgSingleH1) { ?>
+<section class="LatestPhotosModule module">	
 	<h1>Latest Photos</h1>
-	<? } ?>
 	<?= View::specialPageLink('Upload', 'oasis-add-photo', (!$wgUser->isLoggedIn() ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo'); ?>
 	<details class="tally counter">
 		<?= wfMsgExt('oasis-latest-photos-header', array( 'parsemag' ), $total, ($total < 100000 ? 'fixedwidth' : '') ) ?>

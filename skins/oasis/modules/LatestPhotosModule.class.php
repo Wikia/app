@@ -9,12 +9,11 @@ class LatestPhotosModule extends Module {
 	var $enableEmptyGallery;
 	var $total;
 
-	var $wgSingleH1;
 	var $wgStylePath;
 	var $wgUser;
 
 	public function executeIndex() {
-		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgMemc, $wgSingleH1;
+		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgMemc;
 
 		// Moved to oasis.scss (to be less requests)
 		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));

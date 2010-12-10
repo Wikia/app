@@ -13,10 +13,8 @@ class FooterModule extends Module {
 	var $showLoadTime;
 	var $loadTimeStats;
 
-	var $wgSingleH1;
-
 	public function executeIndex() {
-		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgSingleH1, $wgEnableShowPerformanceStatsExt;
+		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgEnableShowPerformanceStatsExt;
 
 		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
 		$this->showToolbar = empty($wgSuppressToolbar);
