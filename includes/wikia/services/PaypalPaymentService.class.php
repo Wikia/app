@@ -285,27 +285,27 @@ class PaypalPaymentService extends Service {
 		return $req_id;
 	}
 
-	public function createRecurringPayment( $baid, $profileName, $amount, $startDate, $term = 0, $payPeriod = "MONT", $initialFee = true, $description = "", &$respArr = array() ) {
+	public function createRecurringPayment( $baid, $profileName, $amount, $startDate, $term = 0, $payPeriod = "MONT", $retryNumDays = 3, $initialFee = true, $description = "", &$respArr = array() ) {
 		// save request in the DB
 		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
-		$dbw->insert( 'pp_profiles', array( 'ppp_baid' => $baid, 'ppp_amount' => $amount, 'ppp_startdate' => $startDate, 'ppp_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
+		$dbw->insert( 'pp_profiles', array( 'pppr_baid' => $baid, 'pppr_amount' => $amount, 'pppr_retrynumdays' => $retryNumDays, 'pppr_startdate' => $startDate, 'pppr_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
 		$req_id = $dbw->insertId();
 
 		// make request to Payflow
-		$respArr = $this->getPayflowAPI()->createRecurringProfile( $req_id, $baid, $profileName, $amount, $startDate, $term, $payPeriod, $initialFee, $description );
+		$respArr = $this->getPayflowAPI()->createRecurringProfile( $req_id, $baid, $profileName, $amount, $startDate, $term, $payPeriod, $retryNumDays, $initialFee, $description );
 
 		// save response in the DB
 		$dbw->update( 'pp_profiles',
-				array( 'ppp_responded'     => wfTimestampNow( TS_DB ) ) + $this->mapRespArr( array(
-					'ppp_result'        => 'RESULT',
-					'ppp_respmsg'       => 'RESPMSG',
-					'ppp_profileid'     => 'PROFILEID',
-					'ppp_rpref'         => 'RPREF',
-					'ppp_trxpnref'      => 'TXPNREF',
-					'ppp_trxresult'     => 'FEEAMT',
-					'ppp_trxrespmsg'    => 'TRXRESPMSG',
+				array( 'pppr_responded'     => wfTimestampNow( TS_DB ) ) + $this->mapRespArr( array(
+					'pppr_result'        => 'RESULT',
+					'pppr_respmsg'       => 'RESPMSG',
+					'pppr_profileid'     => 'PROFILEID',
+					'pppr_rpref'         => 'RPREF',
+					'pppr_trxpnref'      => 'TRXPNREF',
+					'pppr_trxresult'     => 'TRXRESULT',
+					'pppr_trxrespmsg'    => 'TRXRESPMSG',
 				), $respArr ),
-				array( 'ppp_id' => $req_id ),
+				array( 'pppr_id' => $req_id ),
 				__METHOD__
 			);
 
