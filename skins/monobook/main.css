@@ -436,13 +436,13 @@ div.floatleft, table.floatleft {
 }
 div.floatleft p { font-style: italic; }
 /* thumbnails */
-div.thumb {
+figure.thumb, div.thumb {
 	margin-bottom: .5em;
 	border-style: solid;
 	border-color: white;
 	width: auto;
 }
-div.thumbinner {
+figure.thumbinner, div.thumbinner {
 	border: 1px solid #ccc;
 	padding: 3px !important;
 	background-color: #f9f9f9;
@@ -477,12 +477,24 @@ div.tright, iframe.tright {
 	float: right;
 	border-width: .5em 0 .8em 1.4em;
 }
+
 div.tleft, iframe.tleft {
 	float: left;
 	clear: left;
 	margin-right: .5em;
 	border-width: .5em 1.4em .8em 0;
 }
+
+figure.tright {
+	clear: right;
+	float: right;
+}
+
+figure.tleft {
+	float: left;
+	clear: left;
+}
+
 img.thumbborder {
 	border: 1px solid #dddddd;
 }

@@ -826,6 +826,11 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				'title' => $fp['title'],
 				'valign' => isset( $fp['valign'] ) ? $fp['valign'] : false ,
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false );
+			/* Wikia change begin - @author: Marooned */
+			/* Images SEO project */
+			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
+			$params['id'] = $wrapperId;
+			/* Wikia change end */
 			if ( !empty( $fp['link-url'] ) ) {
 				$params['custom-url-link'] = $fp['link-url'];
 			} elseif ( !empty( $fp['link-title'] ) ) {
@@ -862,7 +867,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	}
 
 	function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" ) {
-		global $wgStylePath, $wgContLang;
+		global $wgStylePath, $wgContLang/*Wiki change start, author: Federico "Lox" Lucignano*/, $wgUser/*Wikia change end*/;
 		$exists = $file && $file->exists();
 
 		# Shortcuts
@@ -926,7 +931,11 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 
 		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
 
-		$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
+		/* Wikia change begin - @author: Marooned */
+		/* Images SEO project */
+		$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
+		$s = "<figure class=\"thumb t{$fp['align']} thumbinner\" style=\"width:{$outerWidth}px;\">";
+		/* Wikia change end */
 		if( !$exists ) {
 			$s .= $this->makeBrokenImageLinkObj( $title, '', '', '', '', $time==true );
 			$zoomicon = '';
@@ -937,6 +946,10 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			$s .= $thumb->toHtml( array(
 				'alt' => $fp['alt'],
 				'title' => $fp['title'],
+				/* Wikia change begin - @author: Marooned */
+				/* Images SEO project */
+				'id' => $wrapperId,
+				/* Wikia change end */
 				'img-class' => 'thumbimage',
 				'desc-link' => true,
 				'desc-query' => $query ) );
@@ -946,14 +959,19 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				/* Wikia change begin - @author: christian, Marooned */
 				/* Change img src from magnify-clip.png to blank.gif. Image is set via CSS Background */
 				global $wgBlankImgUrl;
-				$zoomicon =  '<div class="magnify">'.
-					'<a href="'.$url.'" class="internal" title="'.$more.'">'.
-					'<img src="'.$wgBlankImgUrl.'" class="sprite details" ' .
-					'width="16" height="16" alt="" /></a></div>';
+				$zoomicon =  '<a href="'.$url.'" class="internal sprite details magnify" title="'.$more.'"></a>';
 				/* Wikia change end */
 			}
 		}
-		$s .= '  <div class="thumbcaption">'.$zoomicon.$fp['caption']."</div></div></div>";
+		/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
+		/* Images SEO project */
+		$s .= $zoomicon;
+		
+		if( !empty( $fp[ 'caption' ] ) ) $s .= '<figcaption class="thumbcaption">' . $fp['caption'] . '</figcaption>';
+		if( get_class( $wgUser->getSkin() ) == 'SkinOasis' ) $s .= '<!-- picture-attribution -->';
+		
+		$s .= '</figure>';
+		/* Wikia change end */
 
 		/* Wikia change begin - @author: macbre */
 		/* Give extensions ability to add HTML to thumbed / framed images */
