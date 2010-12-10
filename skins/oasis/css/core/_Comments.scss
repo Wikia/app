@@ -54,6 +54,14 @@
 	#article-comm-info { // /** error message container **/
 		display: none;
 	}
+
+	.throbber {
+		visibility: hidden;
+		margin-right: 6px;
+		margin-top: 3px;
+		float: right;
+	}
+
 	#article-comments {
 		margin-top: 7px;
 		border-top: 1px solid $color-page-border;
@@ -222,8 +230,8 @@
 		color: $color-text;
 	}
 
-	.throbber {
-		display: none!important;
+	.article-comm-input-text input {
+		float: right;
 	}
 
 	.tools {

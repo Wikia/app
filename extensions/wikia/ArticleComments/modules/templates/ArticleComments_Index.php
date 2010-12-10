@@ -45,6 +45,7 @@
 			<? if (!$isReadOnly) { ?>
 				<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('article-comments-post') ?>" />
 			<? } ?>
+			<img src="<?= $wgStylePath ?>/common/images/ajax.gif" class="throbber" />
 		</form>
 	<?php
 	} else {

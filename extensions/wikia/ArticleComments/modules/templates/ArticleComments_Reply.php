@@ -1,5 +1,4 @@
-<!-- s:<?= __FILE__ ?> -->
-<div class="clearfix"> 
+<div class="clearfix">
 	<div class="article-comm-input reset clearfix">
 	<form action="#" method="post" id="article-comm-form-<?= $commentId ?>">
 		<input type="hidden" name="wpParentId" value="<?= $commentId ?>" />
@@ -10,4 +9,3 @@
 		</div>
 	</form>
 </div>
-<!-- e:<?= __FILE__ ?> -->

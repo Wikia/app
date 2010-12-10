@@ -178,7 +178,19 @@ var ArticleComments = {
 			if (!json.error) {
 				//remove zero comments div
 				$('#article-comments-zero').remove();
-				$('#article-comments-ul').replaceWith(json.text);
+				
+				var topE = $('#' + $(json.text).find('li:first').attr('id'));
+				if(!topE.exists()) {
+					$(json.text).find('li:first').prependTo('#article-comments-ul');					
+				} else {
+					if(topE.next().hasClass('sub-comments')) {
+						topE.next().append($(json.text).find('li:last'));
+						topE.replaceWith($(json.text).find('li:first'));
+					} else {
+						topE.replaceWith($(json.text).children());
+					}				
+				}
+
 				//pagination
 				if (json.pagination != '') {
 					$('#article-comments-pagination').show().html('<div>' + json.pagination + '</div>');

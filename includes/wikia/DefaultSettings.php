@@ -128,7 +128,6 @@ $wgAutoloadClasses['RailModule'] = $IP.'/skins/oasis/modules/RailModule.class.ph
 $wgAutoloadClasses['AdModule'] = $IP.'/skins/oasis/modules/AdModule.class.php';
 $wgAutoloadClasses['FollowedPagesModule'] = $IP.'/skins/oasis/modules/FollowedPagesModule.class.php';
 $wgAutoloadClasses['MyToolsModule'] = $IP.'/skins/oasis/modules/MyToolsModule.class.php';
-$wgAutoloadClasses['ArticleCommentsModule'] = $IP.'/skins/oasis/modules/ArticleCommentsModule.class.php';
 $wgAutoloadClasses['UserPagesHeaderModule'] = $IP.'/skins/oasis/modules/UserPagesHeaderModule.class.php';
 $wgAutoloadClasses['SpotlightsModule'] = $IP.'/skins/oasis/modules/SpotlightsModule.class.php';
 $wgAutoloadClasses['MenuButtonModule'] = $IP.'/skins/oasis/modules/MenuButtonModule.class.php';
