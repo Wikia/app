@@ -156,4 +156,5 @@ $("#wpText").keyup( function() {
 $("#wpDesc").keyup( function() {
 	$("div.sponsormsg-preview > ul > li > p").html( $("#wpDesc").val() );
 } );
+/*]]>*/
 </script>

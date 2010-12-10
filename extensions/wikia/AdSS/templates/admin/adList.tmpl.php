@@ -146,6 +146,7 @@ $("a.reject").click( function(e) {
 	} } );
 } );
 
+/*]]>*/
 </script>
 
 <div class="ad-edit-form" style="display:none">

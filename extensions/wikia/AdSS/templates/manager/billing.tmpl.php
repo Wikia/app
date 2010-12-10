@@ -32,4 +32,5 @@ $(function() {
 		mouseleave: hideTooltip
 	});
 } );
+/*]]>*/
 </script>

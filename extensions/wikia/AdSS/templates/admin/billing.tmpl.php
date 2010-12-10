@@ -30,4 +30,5 @@ $(function() {
 		mouseleave: hideTooltip
 	});
 } );
+/*]]>*/
 </script>
