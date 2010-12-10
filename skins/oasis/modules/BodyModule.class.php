@@ -222,13 +222,6 @@ class BodyModule extends Module {
 					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 				}
 			}
-			
-			// Display comments on content and blog pages
-			if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
-				$this->displayComments = true;
-			} else {
-				$this->displayComments = false;
-			}
 	
 			// A/B test
 			$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
@@ -364,6 +357,13 @@ class BodyModule extends Module {
 			$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
 			$this->bodytext = wfRenderModule('Search') . $this->bodytext;
+		}
+		
+		// Display comments on content and blog pages
+		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
+			$this->displayComments = true;
+		} else {
+			$this->displayComments = false;
 		}
 
 		// load CSS for Special:Preferences
