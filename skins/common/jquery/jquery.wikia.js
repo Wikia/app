@@ -273,7 +273,7 @@ $.loadJQueryUI = function(callback) {
 }
 
 $.loadJQueryAutocomplete = function(callback) {
-	if (typeof $().autocomplete === 'undefined') {
+	if (typeof $.fn.autocomplete === 'undefined') {
 		$().log('loading', 'jQuery Autocomplete');
 
 		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion, function() {
@@ -288,7 +288,7 @@ $.loadJQueryAutocomplete = function(callback) {
 }
 
 $.loadWikiaTooltip = function(callback) {
-	if (typeof $().wikiaTooltip === 'undefined') {
+	if (typeof $.fn.wikiaTooltip === 'undefined') {
 		$().log('loading', 'Wikia Tooltip');
 
 		$.getScript(stylepath + '/common/jquery/jquery.wikia.tooltip.js?' + wgStyleVersion, function() {
