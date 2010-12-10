@@ -19,7 +19,7 @@ You can use your watchlist to keep track of the latest changes to pages that you
 Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-hot-spots-newest' => 'New pages on the wiki',
 	'myhome-hot-spots-brandnew' => 'This is a brand-new wiki. Click on [[Special:CreatePage|New page]] to start writing!',
-	'tog-myhomedisableredirect' => 'Disable my redirect to My Home',
+	'tog-myhomedisableredirect' => 'Disable my redirect to Wiki Activity',
 
 	'myhome-feed-newpage' => 'new page',
 	'myhome-feed-edit' => 'edit',
