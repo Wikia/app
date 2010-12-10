@@ -36,7 +36,7 @@ var ImageLightbox = {
 			});
 	},
 
-	// get caption node for given target node
+	// get caption html for given target node
 	getCaption: function(target) {
 		var caption = false;
 
@@ -50,10 +50,7 @@ var ImageLightbox = {
 		}
 		else if (target.hasClass('image')) {
 			// image thumbs
-			var captionNode = target.next('.thumbcaption').clone();
-			captionNode.children('.magnify').remove();
-
-			caption = captionNode.html();
+			caption = target.nextAll('.thumbcaption').html();
 		}
 
 		return caption;
@@ -114,8 +111,12 @@ var ImageLightbox = {
 		// get name of an image
 		var imageName = false;
 
+		// data-image-name="Foo.jpg"
+		if (target.attr('data-image-name')) {
+			imageName = 'File:' + target.attr('data-image-name');
+		}
 		// ref="File:Foo.jpg"
-		if (target.attr('ref')) {
+		else if (target.attr('ref')) {
 			imageName = target.attr('ref');
 		}
 		// href="/wiki/File:Foo.jpg"
@@ -135,7 +136,8 @@ var ImageLightbox = {
 
 			// find caption node and use it in lightbox popup
 			var caption = this.getCaption(target);
-			this.fetchLightbox(imageName, caption);
+			var showShareTools = target.hasParent('#WikiaArticle') ? 1 : 0;
+			this.fetchLightbox(imageName, caption, showShareTools);
 
 			// don't follow href
 			ev.preventDefault();
@@ -143,7 +145,7 @@ var ImageLightbox = {
 	},
 
 	// fetch data and show lightbox
-	fetchLightbox: function(imageName, caption) {
+	fetchLightbox: function(imageName, caption, showShareTools) {
 		var self = this;
 		this.log(imageName);
 
@@ -154,6 +156,7 @@ var ImageLightbox = {
 		}
 
 		this.lock = true;
+		this.imageName = imageName;
 
 		// tracking
 		this.track('/init');
@@ -171,10 +174,16 @@ var ImageLightbox = {
 		$.getJSON(wgScript + '?action=ajax&rs=ImageLightboxAjax', {
 			'maxheight': maxHeight,
 			'maxwidth': maxWidth,
+			'method': 'ajax',
+			'pageName': wgPageName,
+			'share': showShareTools,
 			'title': imageName
 		}, function(res) {
 			if (res && res.html) {
 				self.showLightbox(res.title, res.html, caption, res.width);
+			} else {
+				// remove lock
+				delete self.lock;
 			}
 		});
 	},
@@ -203,10 +212,59 @@ var ImageLightbox = {
 					self.track('/details');
 				});
 
+				$('#lightbox-share-buttons').find('a').click(function() {
+					var source = $(this).attr('data-func');
+					self.log(source);
+					$(this).closest('#lightbox-share').find('.lightbox-share-area').each(function() {
+						if (source == $(this).attr('data-func')) {
+							$(this).slideDown();
+						} else {
+							$(this).slideUp();
+						}
+					});
+					if (source == 'embed') {
+						$('#lightbox-share-embed-standard').select();
+					}
+					self.track('/share/' + source);
+				});
+
+				$('#lightbox-share-email-button').click(function() {
+					self.track('/share/email/send');
+					var addresses = $('#lightbox-share-email-text').val();
+					//TODO: add simple validation for e-mails
+					var throbber = $(this).next('.throbber');
+					throbber.show();
+					//send e-mail via AJAX
+					$.postJSON(wgScript + '?action=ajax&rs=ImageLightboxAjax', {
+						'addresses': addresses,
+						'method': 'sendMail',
+						'pageName': wgPageName,
+						'title': self.imageName
+					}, function(res) {
+						throbber.hide();
+						$.showModal(res['info-caption'], res['info-content']);
+					});
+				});
+
+				$('#lightbox-share').find('.share-links').find('a').click(function() {
+					var source = $(this).attr('data-func');
+					self.track('/share/www/' + source);
+				});
+
+				$('#lightbox-share').find('.share-code').find('input').click(function() {
+					var source = $(this).select().attr('data-func');
+					self.track('/share/embed/' + source);
+				});
+
 				$('#lightbox-caption-content').html(caption);
 
 				// resize lightbox (used mostly for external images)
 				lightbox.resizeModal(lightbox.width());
+
+				// init FB like button
+				if (typeof FB != 'undefined') {
+					 FB.XFBML.parse(lightbox.get(0));
+				}
 
 				// RT #69824
 				if (window.skin == 'oasis') {
@@ -229,5 +287,10 @@ var ImageLightbox = {
 if ( (typeof window.skin != 'undefined') && (window.skin == 'monaco' || window.skin == 'oasis') ) {
 	$(function() {
 		ImageLightbox.init.call(ImageLightbox);
+		var image = $('#' + $.getUrlVar('image'));
+		if (image.exists()) {
+			$(window).scrollTop(image.offset().top + image.height()/2 - $.getViewportHeight()/2);
+			image.find('img').click();
+		}
 	});
 }
