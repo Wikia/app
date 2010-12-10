@@ -97,9 +97,10 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				}
 			}
 			
-			requestor
-				.data('tooltip-options', defaultOptions)
-				.data('tooltip-value', tooltip);
+			requestor.data({
+				'tooltip-options': defaultOptions,
+				'tooltip-value': tooltip
+			});
 			
 			if(defaultOptions.suppressNative){
 				requestor.removeAttr('title');
