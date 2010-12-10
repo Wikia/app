@@ -14,6 +14,7 @@ $wgAutoloadClasses['Curl']  =  $IP.'/includes/wikia/Curl.php';
  * cURL wrapper test
  *
  * @category Wikia
+ * @package  Wikia_Test
  * @see Curl
  * @author Wojciech Szela <wojtek@wikia-inc.com>
  */

@@ -6,9 +6,6 @@
  * @version $Id:$
  */
 
-global $wgAutoloadClasses, $IP;
-$wgAutoloadClasses['WikiaException']  =  $IP.'/includes/wikia/WikiaException.php';
-
 /**
  * cURL wrapper
  *

@@ -11,6 +11,7 @@ class PayflowAPI {
 	private $headers = array();
 	private $nvpReqArr = array();
 	private $curlOptions = array();
+	private $curl;
 
 	public function __construct( Array $payflowOptions=null ) {
 		if( is_null( $payflowOptions ) ) {
@@ -128,7 +129,7 @@ class PayflowAPI {
 		$nvpReqArr["TENDER"]  = "P";
 		$nvpReqArr["PROFILENAME"]  = $profileName;
 		$nvpReqArr["BAID"]  = $baid;
-		$nvpReqArr["AMT"] = sprintf( "%01.2f", $amount );
+		$nvpReqArr["AMT"] = sprintf( "%01.2f", abs($amount) );
 		$nvpReqArr["START"] = date( 'mdY', strtotime( $startDate ) );
 		$nvpReqArr["TERM"] = $term;
 		$nvpReqArr["PAYPERIOD"] = $payPeriod;
@@ -137,7 +138,7 @@ class PayflowAPI {
 
 		if( $initialFee ) {
 			$nvpReqArr["OPTIONALTRX"] = "S";
-			$nvpReqArr["OPTIONALTRXAMT"] = sprintf( "%01.2f", $amount );
+			$nvpReqArr["OPTIONALTRXAMT"] = sprintf( "%01.2f", abs($amount) );
 		}
 
 		return $this->resetHeaders()
@@ -180,7 +181,7 @@ class PayflowAPI {
 		$nvpReqArr = array();
 		$nvpReqArr["TRXTYPE"] = "S";
 		$nvpReqArr["ACTION"]  = "D";
-		$nvpReqArr["AMT"]     = sprintf("%01.2f", $amount);
+		$nvpReqArr["AMT"]     = sprintf("%01.2f", abs($amount));
 		$nvpReqArr["BAID"]    = $baid;
 
 		return $this->resetHeaders()
@@ -195,7 +196,7 @@ class PayflowAPI {
 		$nvpReqArr = array();
 		$nvpReqArr["TRXTYPE"] = "A";
 		$nvpReqArr["ACTION"]  = "D";
-		$nvpReqArr["AMT"]     = sprintf("%01.2f", $amount);
+		$nvpReqArr["AMT"]     = sprintf("%01.2f", abs($amount));
 		$nvpReqArr["BAID"]    = $baid;
 
 		return $this->resetHeaders()
@@ -224,16 +225,19 @@ class PayflowAPI {
 		$this->curlOptions[CURLOPT_POSTFIELDS] = $this->formatNvpReqArr( $this->nvpReqArr );
 		wfDebug( "curl opts = " . print_r( $this->curlOptions, true ), "\n" );
 
-		$curl = curl_init();
-		curl_setopt_array( $curl, $this->curlOptions );
+		$this->getCurl()->init();
+		$this->getCurl()->setopt_array($this->curlOptions );
 
-		$httpResponse = curl_exec( $curl );
+		$httpResponse = $this->getCurl()->exec();
 		if( !$httpResponse ) {
-			throw new Exception( "API call failed: [".curl_errno( $curl )."] ".curl_error( $curl ) );
+			$errno = $this->getCurl()->errno();
+			$error = $this->getCurl()->error();
+			$this->getCurl()->close();
+			throw new Exception( "API call failed: [".$errno."] ".$error );
 		}
 
 		$nvpRespArr = $this->parseNvpRespStr( $httpResponse );
-		curl_close( $curl );
+		$this->getCurl()->close();
 
 		wfDebug( "curl response = " . print_r( $nvpRespArr, true ) . "\n" );
 
@@ -265,5 +269,16 @@ class PayflowAPI {
 		return $parsedRespArr;
 	}
 
-
+	private function getCurl() {
+		if (null === $this->curl) {
+			$this->curl = new Curl();
+		}
+		
+		return $this->curl;
+	}
+	
+	public function setCurl(Curl $curl) {
+		$this->curl = $curl;
+		return $this;
+	}
 }
