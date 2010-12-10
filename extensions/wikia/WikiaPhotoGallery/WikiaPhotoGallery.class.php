@@ -193,9 +193,9 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		if( isset($params['id']) ) {
-			$this->mData['id'] = $params['id']; 
+			$this->mData['id'] = $params['id'];
 		}
-		
+
 		// generic parameters
 
 		// hide "Add photo" button
@@ -332,8 +332,10 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @param $link  String: value of link= parameter
 	 */
 	function add($title, $html='', $link='') {
-		$this->mImages[] = array($title, $html, $link);
-		wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
+		if ($title instanceof Title) {
+			$this->mImages[] = array($title, $html, $link);
+			wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
+		}
 	}
 
 	/**
@@ -430,11 +432,11 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		// store ID of gallery
-		
+
 		if(empty($this->mData['id'] )) {
 			$this->mData['id'] = self::$galleriesCounter++;
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -566,7 +568,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
-		
+
 		$sk = $this->getSkin();
 		$thumbSize = $this->mWidths;
 		$orientation = $this->getParam('orientation');
@@ -770,9 +772,9 @@ class WikiaPhotoGallery extends ImageGallery {
 					$fileObject->getHandler()->parserTransformHook($this->mParser, $fileObject);
 				}
 			}
-			
+
 			wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
-			
+
 			$html .= Xml::openElement('div',
 				array(
 				'class' => 'gallery-image-wrapper'.
@@ -902,7 +904,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$html .= Xml::closeElement('div');
-		
+
 		wfProfileOut(__METHOD__);
 		return $html;
 	}
@@ -1178,7 +1180,7 @@ JS;
 	 *
 	 * @author Jakub Kurcek
 	 */
-	
+
 	private function renderSlider() {
 		global $wgLang, $wgBlankImgUrl, $wgStylePath, $wgExtensionsPath, $wgStyleVersion;
 
@@ -1199,7 +1201,7 @@ JS;
 		$slidersOnPage = implode( ', ', $tmpArr );
 		$html = "<script> if(!allSliders){ var allSliders = new Array(); }; allSliders.push(".$this->mData['id']."); </script>";
 		$html .= "<script> wgAfterContentAndJS.push(function() { $.getScript('{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}'); }); </script>";
-		
+
 		if ( $this->getParam('orientation') == 'right' ){
 			$sliderClass = 'vertical';
 			$thumbDimensions = array( "w" => 110, "h" => 60 );
@@ -1207,7 +1209,7 @@ JS;
 			$sliderClass = 'horizontal';
 			$thumbDimensions = array( "w" => 90, "h" => 70 );
 		}
-		
+
 		$out = array();
 		foreach ( $this->mImages as $p => $pair ) {
 
