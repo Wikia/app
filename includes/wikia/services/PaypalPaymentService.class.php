@@ -20,7 +20,7 @@ class PaypalPaymentService extends Service {
 		$this->paypalDBName = $name;
 	}
 
-	static function newFromPayerId( $payerId, $email = null ) {
+	static function newFromPayerId( $payerId ) {
 		$dbr = wfGetDB( DB_SLAVE, array(), $this->getPaypalDBName() );
 		$tables = array( 'pp_details', 'pp_tokens', 'pp_agreements' );
 		$conds = array(
@@ -30,19 +30,9 @@ class PaypalPaymentService extends Service {
 				'pp_tokens' => array( 'JOIN', 'ppd_token = ppt_token' ),
 				'pp_agreements' => array( 'LEFT JOIN', 'ppd_token=ppa_token' ),
 				);
-		if( $email ) {
-			$tables[] = 'users';
-			$conds = array_merge( $conds, array(
-						'user_email' => $email,
-						) );
-			$join_conds = array_merge( $join_conds, array(
-						'users' => array( 'JOIN', 'ppt_user_id = user_id' ),
-						) );
-		}
-		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppt_user_id DESC, ppa_canceled is not null, ppa_responded DESC' ), $join_conds );
+		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__, array( 'ORDER BY' => 'ppa_canceled is not null, ppa_responded DESC' ), $join_conds );
 		if( $row ) {
 			$pp = new self( $row->ppt_token );
-			$pp->userId = $row->ppt_user_id;
 			return $pp;
 		} else {
 			return null;
@@ -66,7 +56,6 @@ class PaypalPaymentService extends Service {
 		$row = $dbr->selectRow( $tables, '*', $conds, __METHOD__ );
 		if( $row ) {
 			$pp = new self( $row->ppt_token );
-			$pp->userId = $row->ppt_user_id;
 			return $pp;
 		} else {
 			return null;
