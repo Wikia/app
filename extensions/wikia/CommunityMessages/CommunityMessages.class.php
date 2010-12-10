@@ -157,7 +157,7 @@ class CommunityMessages {
 						'city_id' => $wgCityId,
 						'user_id' => $wgUser->getID(),
 						'type' => self::USER_FLAGS_COMMUNITY_MESSAGES,
-						'timestamp' => wfTimestamp(TS_DB, $communityMessagesTimestamp)
+						'data' => wfTimestamp(TS_DB, $communityMessagesTimestamp)
 					),
 					__METHOD__
 				);
@@ -187,7 +187,7 @@ class CommunityMessages {
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 		$userTimestamp = $dbr->selectField(
 			'user_flags',
-			'timestamp',
+			'data',
 			array('city_id' => $wgCityId, 'user_id' => $user->getID(), 'type' => self::USER_FLAGS_COMMUNITY_MESSAGES),
 			__METHOD__
 		);

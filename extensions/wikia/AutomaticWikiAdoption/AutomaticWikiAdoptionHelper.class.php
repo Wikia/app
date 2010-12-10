@@ -347,7 +347,7 @@ class AutomaticWikiAdoptionHelper {
 					'city_id' => $wgCityId,
 					'user_id' => $wgUser->getID(),
 					'type' => self::USER_FLAGS_AUTOMATIC_WIKI_ADOPTION,
-					'timestamp' => wfTimestamp(TS_DB)
+					'data' => wfTimestamp(TS_DB)
 				),
 				__METHOD__,
 				'IGNORE'
@@ -370,7 +370,7 @@ class AutomaticWikiAdoptionHelper {
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 		$dismissed = $dbr->selectField(
 			'user_flags',
-			'timestamp',
+			'data',
 			array('city_id' => $wgCityId, 'user_id' => $user->getID(), 'type' => self::USER_FLAGS_AUTOMATIC_WIKI_ADOPTION),
 			__METHOD__
 		);
