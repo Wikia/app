@@ -143,7 +143,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'registeredUser' => $isRegisteredUser,
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
 			'unsubscribeUrl' => Title::newFromText( 'Preferences', NS_SPECIAL )->getFullUrl( 'ctc=' . $ctcUnsubscribe ),
-			'myHomeUrl' => Title::newFromText( 'MyHome', NS_SPECIAL )->getFullUrl( 'ctc=FE20' )
+			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl( 'ctc=FE20' )
 		);
 
 		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
