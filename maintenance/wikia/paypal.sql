@@ -89,18 +89,19 @@ CREATE INDEX ppp_baid ON pp_payments (ppp_baid);
 -- PayPal Create Recurring Profile
 -- action=A
 CREATE TABLE pp_profiles (
-  ppp_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  ppp_baid char(19) NOT NULL,
-  ppp_amount decimal(5,2) NOT NULL,
-  ppp_startdate date,
-  ppp_requested timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  ppp_result smallint signed DEFAULT NULL,
-  ppp_respmsg varchar(255) DEFAULT NULL,
-  ppp_profileid char(13) DEFAULT NULL,
-  ppp_responded timestamp NULL DEFAULT NULL,
-  ppp_rpref char(12) DEFAULT NULL,
-  ppp_trxpnref char(12) DEFAULT NULL,
-  ppp_trxresult smallint signed DEFAULT NULL,
-  ppp_trxrespmsg varchar(255) DEFAULT NULL
+  pppr_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pppr_baid char(19) NOT NULL,
+  pppr_amount decimal(5,2) NOT NULL,
+  pppr_retrynumdays smallint signed DEFAULT 0,
+  pppr_startdate date,
+  pppr_requested timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  pppr_result smallint signed DEFAULT NULL,
+  pppr_respmsg varchar(255) DEFAULT NULL,
+  pppr_profileid char(13) DEFAULT NULL,
+  pppr_responded timestamp NULL DEFAULT NULL,
+  pppr_rpref char(12) DEFAULT NULL,
+  pppr_trxpnref char(12) DEFAULT NULL,
+  pppr_trxresult smallint signed DEFAULT NULL,
+  pppr_trxrespmsg varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB;
-CREATE INDEX ppp_baid ON pp_profiles (ppp_baid);
+CREATE INDEX pppr_baid ON pp_profiles (pppr_baid);
