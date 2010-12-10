@@ -85,10 +85,11 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 			var requestor = $(this);
 			
 			if(typeof requestor.data('tooltip-options') !== 'undefined'){
-				requestor.removeData('tooltip-options');
-				requestor.removeData('tooltip-value');
-				requestor.removeData('tooltip-cached-position');
-				requestor.removeData('tooltip-native');
+				requestor
+					.removeData('tooltip-options')
+					.removeData('tooltip-value')
+					.removeData('tooltip-cached-position')
+					.removeData('tooltip-native');
 				
 				if(typeof requestor.data('tooltip-cached') !== 'undefined'){
 					requestor.data('tooltip-cached').remove();
@@ -96,16 +97,21 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				}
 			}
 			
-			requestor.data('tooltip-options', defaultOptions);
-			requestor.data('tooltip-value', tooltip);
+			requestor
+				.data('tooltip-options', defaultOptions)
+				.data('tooltip-value', tooltip);
 			
 			if(defaultOptions.suppressNative){
 				requestor.removeAttr('title');
 				if(defaultOptions.suppressNativeRecursive) requestor.find('[title]').removeAttr('title');
 			}
 			
-			requestor.unbind('mouseenter.wikiaTooltip').bind('mouseenter.wikiaTooltip', jQuery.__wikiaTooltipOnMouseEnter);
-			requestor.unbind('mouseleave.wikiaTooltip').bind('mouseleave.wikiaTooltip', jQuery.__wikiaTooltipOnMouseLeave);
+			requestor
+				.unbind('mouseenter.wikiaTooltip mouseleave.wikiaTooltip')
+				.bind({
+					'mouseenter.wikiaTooltip': jQuery.__wikiaTooltipOnMouseEnter,
+					'mouseleave.wikiaTooltip': jQuery.__wikiaTooltipOnMouseLeave
+				});
 		}
 	}
 	
@@ -136,8 +142,9 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 
 			if(!tooltip.hasClass(options.className)) tooltip.addClass(options.className);
 
-			elm.data('tooltip-cached', tooltip);
-			elm.removeData('tooltip-cached-position');
+			elm
+				.data('tooltip-cached', tooltip)
+				.removeData('tooltip-cached-position');
 		}
 
 		var globalPosition = elm.offset();
@@ -188,7 +195,6 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 			}
 			
 			elm.data('tooltip-cached-position', globalPosition);
-			
 			tooltip.css(position);
 		}
 		
