@@ -82,6 +82,8 @@ $wgAutoloadClasses['AnalyticsEngine'] = "$IP/extensions/wikia/AnalyticsEngine/An
 $wgAutoloadClasses['SimplePie'] = "$IP/lib/SimplePie/simplepie.inc";
 $wgAutoloadClasses['FakeLocalFile'] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses['PayflowAPI'] = "$IP/includes/wikia/PayflowAPI.php";
+$wgAutoloadClasses['Curl'] = "$IP/includes/wikia/Curl.php";
+$wgAutoloadClasses['WikiaException'] = "$IP/includes/wikia/WikiaException.php";
 
 //AutomaticWikiAdoption
 $wgAutoloadClasses['AutomaticWikiAdoptionGatherData']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php';
