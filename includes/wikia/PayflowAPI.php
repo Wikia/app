@@ -12,7 +12,13 @@ class PayflowAPI {
 	private $nvpReqArr = array();
 	private $curlOptions = array();
 
-	public function __construct( Array $payflowOptions ) {
+	public function __construct( Array $payflowOptions=null ) {
+		if( is_null( $payflowOptions ) ) {
+			global $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy;
+			$payflowOptions = $wgPayflowProCredentials;
+			$payflowOptions['APIUrl'] = $wgPayflowProAPIUrl;
+			$payflowOptions['HTTPProxy'] = $wgHTTPProxy;
+		}
 		$this->setPayflowOptions( $payflowOptions );
 	}
 
