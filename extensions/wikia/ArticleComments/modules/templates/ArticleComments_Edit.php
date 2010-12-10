@@ -1,4 +1,3 @@
-<!-- s:<?= __FILE__ ?> -->
 <div class="article-comments clearfix">
 <?php
 if ( $canEdit ) {
@@ -20,4 +19,3 @@ if ( $canEdit ) {
 	echo $comment;
 }
 ?>
-<!-- e:<?= __FILE__ ?> -->

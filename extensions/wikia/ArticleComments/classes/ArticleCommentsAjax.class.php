@@ -128,27 +128,22 @@ class ArticleCommentsAjax {
 
 		$commentId = $wgRequest->getVal( 'id', false );
 		$result = array('id' => $commentId);
+		wfLoadExtensionMessages('ArticleComments');
 
 		if (wfReadOnly()) {
 			$result['error'] = 1;
 			$result['msg'] = wfMsg('readonlytext');
 		} elseif (!$wgUser->isAllowed('edit')) {
-			wfLoadExtensionMessages('ArticleComments');
 			$result['error'] = 2;
 			$result['msg'] = wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl('returnto=' . $wgTitle->getPrefixedUrl()));
 		} else {
 			$articleId = $wgRequest->getVal( 'article', false );
 
-			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-			$template->set_vars(
-				array(
-					'commentId' => $commentId,
-					'stylePath' => $wgStylePath
-				)
+			$vars = array (
+				'commentId' => $commentId,
+				'stylePath' => $wgStylePath
 			);
-			wfLoadExtensionMessages('ArticleComments');
-			$text = $template->execute( 'comment-reply' );
-			$result['html'] = $text;
+			$result['html'] = wfRenderPartial('ArticleComments', 'Reply', $vars);
 		}
 
 		return $result;
@@ -206,7 +201,34 @@ class ArticleCommentsAjax {
 			ArticleComment::doAfterPost($status, $article);
 
 			$listing = ArticleCommentList::newFromTitle($title);
-			$comments = $listing->getCommentPages(true, false);
+
+			// old code
+			// $comments = $listing->getCommentPages(true, false);
+			
+			// new code
+			global $wgMemc;
+			
+			$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getArticleId(), 'v1' ), null);
+			
+			$addedComment = ArticleComment::newFromArticle($response[1]);
+			
+			$parts = ArticleComment::explode($addedComment->getTitle()->getDBkey());
+			
+			if(count($parts['partsOriginal']) == 1) {
+				// level1 comment
+				$comments = array($response[1]->getID() => array('level1' => $addedComment));
+			} else {
+				// level2 comment
+				$tmp = array_slice(explode('/', $addedComment->getTitle()->getDBkey()), 0, 2);
+				$tmp = implode('/', $tmp);
+
+				$title = Title::newFromText($tmp, NS_TALK);
+				
+				$addedCommentParent = ArticleComment::newFromId($title->getArticleID());
+
+				$comments = array($title->getArticleID() => array('level1' => $addedCommentParent, 'level2' => array($response[1]->getID() => $addedComment)));
+			}
+
 			$countComments = count($comments);
 			$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
 			if ($showall != 1 || $listing->getCountAllNested() > 200 /*see RT#64641*/) {
@@ -225,7 +247,7 @@ class ArticleCommentsAjax {
 				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $count)
 				);
 			} else {
-				$commentsHTML = ArticleCommentList::formatList($comments);
+				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
 				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
 			}
 
@@ -258,11 +280,7 @@ class ArticleCommentsAjax {
 			wfLoadExtensionMessages('ArticleComments');
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
-			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
-			} else {
-				$text = ArticleCommentList::formatList($comments);
-			}
+			$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
 			$pagination = ArticleCommentList::doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
 		}
 

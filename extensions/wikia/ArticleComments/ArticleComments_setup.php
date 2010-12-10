@@ -33,10 +33,11 @@ define('ARTICLECOMMENT_PREFIX', '@comment-');
 $dir = dirname(__FILE__);
 
 // autoloaded classes
-$wgAutoloadClasses['ArticleCommentInit'] = "$dir/ArticleComments.class.php";
-$wgAutoloadClasses['ArticleComment'] = "$dir/ArticleComments.class.php";
-$wgAutoloadClasses['ArticleCommentList'] = "$dir/ArticleComments.class.php";
-$wgAutoloadClasses['ArticleCommentsAjax'] = "$dir/ArticleCommentsAjax.class.php";
+$wgAutoloadClasses['ArticleCommentInit'] = "$dir/classes/ArticleCommentInit.class.php";
+$wgAutoloadClasses['ArticleComment'] = "$dir/classes/ArticleComment.class.php";
+$wgAutoloadClasses['ArticleCommentList'] = "$dir/classes/ArticleCommentList.class.php";
+$wgAutoloadClasses['ArticleCommentsAjax'] = "$dir/classes/ArticleCommentsAjax.class.php";
+$wgAutoloadClasses['ArticleCommentsModule'] = "$dir/modules/ArticleCommentsModule.class.php";
 
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
 
