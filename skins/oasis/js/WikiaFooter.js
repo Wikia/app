@@ -66,7 +66,7 @@ WikiaFooterApp = {
 		var showtimer = null;
 
 		//my tools hover
-		$("#WikiaFooter").find(".mytools").children("a, img").hover(function(event) {
+		$("#WikiaFooter").find(".mytools").children("a, img").click(function(evt){evt.preventDefault()}).hover(function(event) {
 			event.preventDefault();
 			clearTimeout(timer);
 			showtimer = setTimeout(function() {
