@@ -121,6 +121,32 @@ class PayflowAPI {
 		            ->query();
 	}
 
+	public function createRecurringProfile( $req_id, $baid, $profileName, $amount, $startDate, $term = 0, $payPeriod = "MONT", $initialFee = true, $description = "" ) {
+		$nvpReqArr = array();
+		$nvpReqArr["TRXTYPE"] = "R";
+		$nvpReqArr["ACTION"]  = "A";
+		$nvpReqArr["TENDER"]  = "P";
+		$nvpReqArr["PROFILENAME"]  = $profileName;
+		$nvpReqArr["BAID"]  = $baid;
+		$nvpReqArr["AMT"] = sprintf( "%01.2f", $amount );
+		$nvpReqArr["START"] = date( 'mdY', strtotime( $startDate ) );
+		$nvpReqArr["TERM"] = $term;
+		$nvpReqArr["PAYPERIOD"] = $payPeriod;
+		$nvpReqArr["DESC"] = $description;
+
+		if( $initialFee ) {
+			$nvpReqArr["OPTIONALTRX"] = "S";
+			$nvpReqArr["OPTIONALTRXAMT"] = sprintf( "%01.2f", $amount );
+		}
+
+		return $this->resetHeaders()
+		            ->appendHeaders( array( "X-VPS-Request-ID: X$req_id" ) )
+		            ->resetNvpReqArr()
+		            ->resetCurlOptions()
+		            ->appendNvpReqArr( $nvpReqArr )
+		            ->query();
+	}
+
 	function cancelCustomerBillingAgreement( $baid ) {
 		$nvpReqArr = array();
 		$nvpReqArr["ACTION"]    = "U";

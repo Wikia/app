@@ -277,7 +277,37 @@ class PaypalPaymentService extends Service {
 				     ), $respArr ),
 				array( 'ppp_id' => $req_id ),
 				__METHOD__
-			    );
+			);
+
+		if( !isset( $respArr['RESULT'] ) || $respArr['RESULT'] != 0 ) {
+			return 0;
+		}
+		return $req_id;
+	}
+
+	public function createRecurringPayment( $baid, $profileName, $amount, $startDate, $term = 0, $payPeriod = "MONT", $initialFee = true, $description = "", &$respArr = array() ) {
+		// save request in the DB
+		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
+		$dbw->insert( 'pp_profiles', array( 'ppp_baid' => $baid, 'ppp_amount' => $amount, 'ppp_startdate' => $startDate, 'ppp_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
+		$req_id = $dbw->insertId();
+
+		// make request to Payflow
+		$respArr = $this->getPayflowAPI()->createRecurringProfile( $req_id, $baid, $profileName, $amount, $startDate, $term, $payPeriod, $initialFee, $description );
+
+		// save response in the DB
+		$dbw->update( 'pp_profiles',
+				array( 'ppp_responded'     => wfTimestampNow( TS_DB ) ) + $this->mapRespArr( array(
+					'ppp_result'        => 'RESULT',
+					'ppp_respmsg'       => 'RESPMSG',
+					'ppp_profileid'     => 'PROFILEID',
+					'ppp_rpref'         => 'RPREF',
+					'ppp_trxpnref'      => 'TXPNREF',
+					'ppp_trxresult'     => 'FEEAMT',
+					'ppp_trxrespmsg'    => 'TRXRESPMSG',
+				), $respArr ),
+				array( 'ppp_id' => $req_id ),
+				__METHOD__
+			);
 
 		if( !isset( $respArr['RESULT'] ) || $respArr['RESULT'] != 0 ) {
 			return 0;
