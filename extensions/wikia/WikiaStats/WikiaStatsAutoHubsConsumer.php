@@ -67,7 +67,8 @@ class WikiaStatsAutoHubsConsumer {
 					$data = array(
 						'blogs' 	=> array(),
 						'articles' 	=> array(),
-						'user'		=> array()
+						'user'		=> array(),
+						'tags'		=> array()
 					);
 					$loop = 0;
 					foreach ( $result as $city_id => $rows) {
@@ -211,11 +212,30 @@ class WikiaStatsAutoHubsConsumer {
 					}
 					
 					// insert data to database
+					# blogs 
+					$start = time(); 
+					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['blogs']) . 'blogs' );
 					$producerDB->insertBlogComment($data['blogs']);
+					$end = time();
+					$time = Wikia::timeDuration($end - $start);
+					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
+					
+					# articles
+					$start = time(); 
+					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['articles']) . 'articles' );
 					$producerDB->insertArticleEdit($data['articles']);
+					$end = time();
+					$time = Wikia::timeDuration($end - $start);
+					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );					
+					
+					$start = time(); 					
+					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['user']) . 'users' );
 					$producerDB->insertUserEdit($data['user']);	
-					// clear old data 
-					$producerDB->deleteOld();			
+					$end = time();
+					$time = Wikia::timeDuration($end - $start);
+					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
+
+					// unset data		
 					unset($data);
 				} else {
 					Wikia::log ( __METHOD__, "No data found in events table. Last timestamp: " . $this->mDate );
