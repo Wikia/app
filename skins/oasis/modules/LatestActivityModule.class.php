@@ -3,7 +3,6 @@ class LatestActivityModule extends Module {
 
 	var $changeList;
 
-	var $wgSingleH1;
 	var $wgBlankImgUrl;
 	var $moduleHeader;
 	var $userName = '';
@@ -13,7 +12,7 @@ class LatestActivityModule extends Module {
 
 		$maxElements = 4;
 
-		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgSingleH1, $wgOut, $wgTitle, $wgEnableUserProfilePagesExt, $wgUserProfilePagesNamespaces;
+		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgOut, $wgTitle, $wgEnableUserProfilePagesExt, $wgUserProfilePagesNamespaces;
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestActivity.js"></script>');
 		wfLoadExtensionMessages('MyHome');
 

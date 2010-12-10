@@ -1,7 +1,6 @@
 <?php
 class PagesOnWikiModule extends Module {
 
-	var $wgSingleH1;
 	var $wgSitename;
 	var $total;
 

@@ -89,7 +89,7 @@
 			font-weight: normal;
 		}
 	
-		h1, .headline-div {
+		h1 {
 			font: {
 				size: 17px;
 				weight: bold;
@@ -236,8 +236,7 @@
 		padding: 3px 0 0 0;
 		position: absolute;
 		width: auto;
-		h1,
-		.headline-div {
+		h1 {
 			@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 100%);
 			border-bottom: 2px solid $color-page;
 			border-top: 1px solid $color-page;

@@ -31,8 +31,6 @@ class BodyModule extends Module {
 
 	var $isMainPage;
 
-	var $wgSingleH1;
-
 	private static $onEditPage;
 
 	/**
@@ -299,7 +297,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgSingleH1, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest;
 
 		// InfoBox - Testing
 		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;

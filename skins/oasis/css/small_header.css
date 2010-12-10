@@ -73,7 +73,6 @@ body {
 }
 
 .WikiHeader h1:before, 
-.WikiHeader .headline-div:before, 
 .WikiHeader .shadow-mask {
 	display: none;
 }

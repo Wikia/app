@@ -1,9 +1,5 @@
 <section class="WikiaActivityModule module <?= !empty( $userName ) ? 'UserProfileRailModule_RecentActivity' : ''; ?>">
-	<? if (!$wgSingleH1) { ?>
-		<h1 class="activity-heading"><?= $moduleHeader ?></h1>
-	<? } else { ?>
-		<div class="headline-div activity-heading"><?= $moduleHeader ?></div>
-	<? } ?>
+	<h1 class="activity-heading"><?= $moduleHeader ?></h1>
 	<ul>
 <?php
 	if(!empty($changeList)){

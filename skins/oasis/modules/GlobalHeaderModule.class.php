@@ -5,7 +5,6 @@ class GlobalHeaderModule extends Module {
 	var $wgBlankImgUrl;
 	var $wgStylePath;
 	var $wgCdnStylePath;
-	var $wgSingleH1;
 	var $wgEnableSpotlightsV2_GlobalNav;
 	var $wgABTests;
 

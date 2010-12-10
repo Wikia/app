@@ -10,7 +10,6 @@
 		}
 	}
 	h1:before,
-	.headline-div:before,
 	.shadow-mask {
 		bottom: 0;
 		height: 8px;
@@ -18,8 +17,7 @@
 		right: 0;
 		width: 1000px;
 	}
-	h1:before,
-	.headline-div:before {
+	h1:before {
 		background: url(/skins/oasis/images/sprite.png) 0 -34px no-repeat; /* $wgCdnStylePath */
 		content: " ";
 		z-index: 1;
