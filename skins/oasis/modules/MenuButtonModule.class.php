@@ -25,7 +25,7 @@ class MenuButtonModule extends Module {
 	var $iconBefore;
 	var $loginURL;
 	var $loginTitle;
-	
+
 	var $wgOut;
 	var $wgUser;
 
@@ -33,7 +33,7 @@ class MenuButtonModule extends Module {
 		global $wgTitle, $wgUser;
 
 		wfProfileIn(__METHOD__);
-	
+
 		$this->loginURL = $this->createLoginURL();
 
 		if (isset($data['action'])) {
@@ -51,7 +51,7 @@ class MenuButtonModule extends Module {
 		$this->actionAccessKey = MenuButtonModule::accessKey($this->actionName);
 
 		// prompt for login to edit?
-		$this->promptLogin = ( !$wgTitle->userCanEdit() && $wgUser->isAnon() );
+		$this->promptLogin = ( !$wgTitle->userCan( 'edit' ) && $wgUser->isAnon() );
 
 		// default CSS class
 		$this->class = 'wikia-button';
@@ -129,24 +129,24 @@ class MenuButtonModule extends Module {
 		#print_pre($this);
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	public function createLoginURL() {
 		global $wgUser, $wgTitle;
-		
+
 		/** create login URL **/
 		$skin = $wgUser->getSkin();
 		$returnto = "returnto={$skin->thisurl}";
 		if( $skin->thisquery != '' ) {
 			$returnto .= "&returntoquery={$skin->thisquery}";
 		}
-		
+
 		//$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
 		$signUpHref = $returnto;
 		$signUpHref .= "&type=login";
 		//$this->loginTitle = Skin::makeSpecialUrl('Signup'); // the linker just expects a page-name here.
 		return $signUpHref;
 	}
-	
+
 	private static function accessKey($key) {
 		$accesskey = false;
 		switch($key) {
