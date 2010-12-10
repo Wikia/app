@@ -52,9 +52,9 @@ class AdSS_AdminBillingPager extends TablePager {
 					return '';
 				}
 			case 'fee':
-				return $this->bl->adId > 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( -$this->bl->amount ) ) : '';
+				return $this->bl->paymentId == 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( -$this->bl->amount ) ) : '';
 			case 'paid':
-				return $this->bl->adId==0 && $this->bl->amount > 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( (float) $this->bl->amount ) ) : '';
+				return $this->bl->paymentId > 0 ? wfMsg( 'adss-amount', $wgLang->formatNum( (float) $this->bl->amount ) ) : '';
 			default:
 				return $value;
 		}

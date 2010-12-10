@@ -27,6 +27,9 @@ class AdSS_ManagerController {
 							$this->processPayPalReturn( $wgRequest->getText( "token" ) );
 							return;
 						case 'cancel':
+							$this->processPayPalCancel( $wgRequest->getText( "wpToken" ) );
+							return;
+						case 'error':
 							$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 							return;
 					}
@@ -81,16 +84,20 @@ class AdSS_ManagerController {
 		$baid = null;
 		$pp = PaymentProcessor::newFromUserId( $this->userId );
 		if( $pp ) $baid = $pp->getBillingAgreement();
-		if( !$baid ) {
+		if( $baid ) {
+			$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/cancel" )->getLocalURL() );
+			$tmpl->set( 'token', AdSS_Util::getToken() );
+			$baid .= $tmpl->render( 'cancelBA' );
+		} else {
+			// no BAID
 			$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/redirect" )->getLocalURL() );
 			$tmpl->set( 'token', AdSS_Util::getToken() );
 			$tmpl->set( 'button', $tmpl->render( 'createBA' ) );
 			$baid = $tmpl->render( 'noBA' );
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
-		$balance = $dbr->selectField( 'billing', 'sum(billing_amount)', array( 'billing_user_id' => $this->userId ), __METHOD__ );
-		$balance = - $wgLang->formatNum( $balance );
+		$user = AdSS_User::newFromId( $this->userId );
+		$balance = - $wgLang->formatNum( $user->getBillingBalance() );
 
 		$tmpl->set( 'navigationBar', $pager->getNavigationBar() );
 		$tmpl->set( 'billing', $pager->getBody() );
@@ -140,7 +147,7 @@ class AdSS_ManagerController {
 		if( AdSS_Util::matchToken( $token ) ) {
 			$selfUrl = Title::makeTitle( NS_SPECIAL, "AdSS/manager" )->getFullURL();
 			$returnUrl = $selfUrl . '/paypal/return';
-			$cancelUrl = $selfUrl . '/paypal/cancel';
+			$cancelUrl = $selfUrl . '/paypal/error';
 			$pp = new PaymentProcessor();
 			if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
 				$_SESSION['wsAdSSToken'] = $pp->getToken();
@@ -172,6 +179,40 @@ class AdSS_ManagerController {
 			} else {
 				$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 				return;
+			}
+		}
+		$this->displayPanel();
+	}
+
+	function processPayPalCancel( $token ) {
+		global $wgOut;
+		if( AdSS_Util::matchToken( $token ) ) {
+			$baid = null;
+			$pp = PaymentProcessor::newFromUserId( $this->userId );
+			if( $pp ) $baid = $pp->getBillingAgreement();
+			if( $baid ) {
+				// first check if a user owes us anything
+				$user = AdSS_User::newFromId( $this->userId );
+				$balance = $user->getBillingBalance();
+				if( $balance < 0 ) {
+					// try to clear his balance
+					$pmt_id = $pp->collectPayment( $baid, -$balance );
+					if( $pmt_id ) {
+						$billing = new AdSS_Billing();
+						$billing->addPayment( $user->id, $pmt_id, -$balance );
+					} else {
+						$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
+						return;
+					}
+				}
+				// now we can cancel the billing agreement
+				if( $pp->cancelBillingAgreement( $baid ) ) {
+					$wgOut->addHTML( wfMsgWikiHtml( 'adss-billing-agreement-canceled' ) );
+					return;
+				} else {
+					$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
+					return;
+				}
 			}
 		}
 		$this->displayPanel();

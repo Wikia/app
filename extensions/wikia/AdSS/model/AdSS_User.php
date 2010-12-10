@@ -158,4 +158,10 @@ class AdSS_User {
 		}
 		return $ads;
 	}
+
+	function getBillingBalance() {
+		global $wgAdSS_DBname;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		return $dbr->selectField( 'billing', 'sum(billing_amount)', array( 'billing_user_id' => $this->id ), __METHOD__ );
+	}
 }

@@ -206,4 +206,5 @@ $("#adssLoginAction > a").click(function(e) {
 	$("#wpPassword").parent().show();
 });
 
+/*]]>*/
 </script>
