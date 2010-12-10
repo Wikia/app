@@ -191,14 +191,14 @@ class MyHome {
 		$wgTitle = Title::newMainPage();
 
 		// do not redirect for skins different then monaco
-		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+		if(get_class($wgUser->getSkin()) != 'SkinOasis') {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
 
 		// user must be logged in and have redirect enabled
 		if ($wgUser->isLoggedIn() && ($wgUser->getOption('myhomedisableredirect') != true) ) {
-			$title = Title::newFromText('MyHome', NS_SPECIAL);
+			$title = Title::newFromText('WikiActivity', NS_SPECIAL);
 		}
 
 		wfProfileOut(__METHOD__);
