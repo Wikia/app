@@ -89,27 +89,19 @@ WikiaWideTables = {
 	getTables: function() {
 		WikiaWideTables.settings.article.find("table").each(function() {
 			table = $(this);
+
+			//If the table isn't very wide and doesn't have class="popout", ignore it
+			if (table.width() <= WikiaWideTables.settings.article.width() && !table.hasClass('popout')) {
+				return;
+			}
 			
 			//Is table wider than article area?
 			if (table.width() > WikiaWideTables.settings.article.width()) {
 				table.attr("data-overflow", "true");
 			}
-			
-			//If the table isn't very wide, ignore it
-			if (table.width() < (WikiaWideTables.settings.article.width() - 100)) {
-				return;
-			}
-			
-			//If the table is being used as a generic container, ignore it
-			var columnCount = table.find("tr:first").children("td, th").length;
-			if (columnCount < 3) {
-				return;
-			}
-			
+					
 			WikiaWideTables.settings.tables.push(table);
-			
 		});
-	
 	},
 	
 	//This function is called by the "expand" button
@@ -117,7 +109,7 @@ WikiaWideTables = {
 		table = $(event.currentTarget).next(".table").children("table:first");
 		table.clone().makeModal({
 			id: "ModalTable",
-			width: $(window).width() - 100
+			width: $(window).width() - 100,
 		});
 		$("#ModalTable .modalContent").css({
 			overflow: "auto",
