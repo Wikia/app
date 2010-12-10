@@ -121,7 +121,7 @@ class PayflowAPI {
 		            ->query();
 	}
 
-	public function createRecurringProfile( $req_id, $baid, $profileName, $amount, $startDate, $term = 0, $payPeriod = "MONT", $initialFee = true, $description = "" ) {
+	public function createRecurringProfile( $req_id, $baid, $profileName, $amount, $startDate, $term = 0, $payPeriod = "MONT", $retryNumDays = 0, $initialFee = true, $description = "" ) {
 		$nvpReqArr = array();
 		$nvpReqArr["TRXTYPE"] = "R";
 		$nvpReqArr["ACTION"]  = "A";
@@ -132,6 +132,7 @@ class PayflowAPI {
 		$nvpReqArr["START"] = date( 'mdY', strtotime( $startDate ) );
 		$nvpReqArr["TERM"] = $term;
 		$nvpReqArr["PAYPERIOD"] = $payPeriod;
+		$nvpReqArr["RETRYNUMDAYS"] = $retryNumDays;
 		$nvpReqArr["DESC"] = $description;
 
 		if( $initialFee ) {
