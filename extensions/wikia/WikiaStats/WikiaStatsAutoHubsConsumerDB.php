@@ -66,7 +66,7 @@ class WikiaStatsAutoHubsConsumerDB {
 					if ( $sql ) {
 						$this->dbs->query($sql, __METHOD__);
 					}
-					$this->rebuildMemc($tag_id,$lang,"blog");
+					// moli $this->rebuildMemc($tag_id,$lang,"blog");
 				}
 			}
 		}
@@ -96,7 +96,8 @@ class WikiaStatsAutoHubsConsumerDB {
 					if ( $sql ) {
 						$this->dbs->query($sql, __METHOD__);
 					}
-					$this->rebuildMemc($tag_id,$lang,"article");
+					Wikia::log( __METHOD__, 'events', 'Rebuild article data in memcache for tag: ' . $tag_id . ', lang: ' . $lang );
+					// moli $this->rebuildMemc($tag_id,$lang,"article");
 				}
 			}
 		}
@@ -126,7 +127,7 @@ class WikiaStatsAutoHubsConsumerDB {
 					if ( $sql ) {
 						$this->dbs->query($sql, __METHOD__);
 					}
-					$this->rebuildMemc($tag_id,$lang,"article");
+					// moli $this->rebuildMemc($tag_id,$lang,"article");
 				}
 			}
 		}
@@ -183,29 +184,20 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 		$tag_id = (int) $tag_id;
-		$conditions = array( "tb_tag_id = $tag_id and tb_city_lang = '$lang'" );
+		$conditions = array( 'tag_id' => $tag_id, 'city_lang' => $lang );
 		// CorporatePage extension needs to get a list of staff blogs, and only has a list of page_ids
 		if (is_array($page_ids) && !empty($page_ids)) {
-			$conditions = array(" tb_page_id in (" . implode(",", $page_ids) . ")");
+			$conditions = array( 'page_id' => $page_ids );
 		}
 		$res = $this->dbs->select(
-				array( 'tags_top_blogs' ),
-				array( 'tb_city_id as city_id,
-						tb_page_id as page_id,
-						tb_tag_id as tag_id,
-						tb_date as date,
-						tb_page_name as page_name,
-						tb_page_url as page_url,
-						tb_wikiname as wikiname,
-						tb_wikiurl as wikiurl,
-						sum(tb_count) as all_count' ),
-				$conditions,
-				__METHOD__,
-				array(
-					'GROUP BY' 	=> 'tb_city_id, tb_page_id',
-					'ORDER BY' 	=> 'all_count desc',
-					'LIMIT'		=> 100
-				)
+			array( 'specials.summary_tags_top_blogs' ),
+			array( 'city_id, page_id, tag_id, page_name, page_url, wikiname, wikiurl, all_count' ),
+			$conditions,
+			__METHOD__,
+			array(
+				'ORDER BY' 	=> 'all_count desc',
+				'LIMIT'		=> 100
+			)
 		);
 
 		$out = $this->filterArticleBlog($res,$tag_id,$limit,$per_wiki,'blog',$show_hide);
@@ -255,25 +247,18 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$tag_id = (int) $tag_id;
-		$conditions = array( "ta_tag_id = $tag_id and ta_city_lang = '$lang'" );
 		$res = $this->dbs->select(
-				array( 'tags_top_articles' ),
-				array( 'ta_city_id as city_id,
-						ta_page_id as page_id,
-						ta_tag_id as tag_id,
-						ta_date as date,
-						ta_page_name as page_name,
-						ta_page_url as page_url,
-						ta_wikiname as wikiname,
-						ta_wikiurl as wikiurl,
-						sum(ta_count) as all_count' ),
-				$conditions,
-				__METHOD__,
-				array(
-					'GROUP BY' 	=> 'ta_city_id, ta_page_id',
-					'ORDER BY' 	=> 'all_count desc',
-					'LIMIT'		=> 100
-				)
+			array( 'specials.summary_tags_top_articles' ),
+			array( 'city_id, page_id, tag_id, page_name, page_url, wikiname, wikiurl, all_count' ),
+			array( 
+				'tag_id' => $tag_id, 
+				'city_lang' => $lang 
+			),
+			__METHOD__,
+			array( 
+				'ORDER BY' 	=> 'all_count desc',
+				'LIMIT'		=> 100
+			)
 		);
 
 		$out = $this->filterArticleBlog($res,$tag_id,$limit,$per_wiki,'article',$show_hide);
@@ -328,33 +313,31 @@ class WikiaStatsAutoHubsConsumerDB {
 		);
 
 		$res = $this->dbs->select(
-				array( 'specials.page_views_summary_tags' ),
-				array( 'tag_id as tag_id,
-						city_id as city_id,
-						pv_views as count ' ),
-				$conditions,
-				__METHOD__,
-				array(
-					'ORDER BY' 	=> 'count DESC',
-					'LIMIT'		=> $limit
-				)
+			array( 'specials.page_views_summary_tags' ),
+			array( 'tag_id as tag_id, city_id as city_id, pv_views as count '),
+			$conditions,
+			__METHOD__,
+			array(
+				'ORDER BY' 	=> 'count DESC',
+				'LIMIT'		=> $limit
+			)
 		);
 		
 		if ( $this->dbs->numRows( $res ) == 0 && !empty($wgDotDisplay) ) {
 			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
 			$conditions[] = "use_date > $date";
 			$res = $this->dbs->select(
-					array( '`stats`.`page_views_tags` use key(tag_lang) ' ),
-					array( 'tag_id as tag_id,
-							city_id as city_id,
-							sum(pv_views) as count ' ),
-					$conditions,
-					__METHOD__,
-					array(
-						'GROUP BY' 	=> ' tag_id,city_id ',
-						'ORDER BY' 	=> ' count DESC ',
-						'LIMIT'		=> $limit
-					)
+				array( '`stats`.`page_views_tags` use key(tag_lang) ' ),
+				array( 'tag_id as tag_id,
+						city_id as city_id,
+						sum(pv_views) as count ' ),
+				$conditions,
+				__METHOD__,
+				array(
+					'GROUP BY' 	=> ' tag_id,city_id ',
+					'ORDER BY' 	=> ' count DESC ',
+					'LIMIT'		=> $limit
+				)
 			);
 		}
 
@@ -398,21 +381,17 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		$dbs = WikiFactory::db( DB_SLAVE );
 		
-		if(empty($city_array)) {
+		if ( empty($city_array) ) {
 			return array("value" => array(), "age" => time());	
 		}
 		
 		$res = $dbs->select(
-				array( "city_list"),
-				array( "city_id,
-						city_description as city_description,
-						city_sitename,
-						city_url,
-						city_title" ),
-				array(
-					"city_id" => array_keys($city_array)
-				),
-				__METHOD__
+			array( "city_list"),
+			array( "city_id, city_description, city_sitename, city_url, city_title" ),
+			array(
+				"city_id" => array_keys($city_array)
+			),
+			__METHOD__
 		);
 
 		while ( $value = $dbs->fetchRow($res) ) {
@@ -443,22 +422,18 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$tag_id = (int) $tag_id;
-		$conditions = array( "tu_tag_id = $tag_id and tu_city_lang = '$lang'" );
 		$res = $this->dbs->select(
-				array( 'tags_top_users' ),
-				array( 'tu_user_id as user_id,
-						tu_tag_id as tag_id,
-						tu_date as date,
-						tu_username as username,
-						tu_groups as groups,
-						sum(tu_count) as all_count' ),
-				$conditions,
-				__METHOD__,
-				array(
-					'GROUP BY' 	=> 'tu_user_id',
-					'ORDER BY' 	=> 'all_count desc',
-					'LIMIT'		=> 100
-				)
+			array( 'specials.summary_tags_top_users' ),
+			array( 'user_id, tag_id, username, groups, all_count' ),
+			array( 
+				'tag_id' => $tag_id,
+				'city_lang' => $lang
+			),
+			__METHOD__,
+			array(
+				'ORDER BY' 	=> 'all_count desc',
+				'LIMIT'		=> 100
+			)
 		);
 		$out = array();
 		$count = 0;
@@ -511,25 +486,25 @@ class WikiaStatsAutoHubsConsumerDB {
 			return false;
 		}
 
-		$oRes = $dbw->select(
-			array( 'user_summary' ),
-			array( 'edit_count', 'city_id' ),
+		$oRes = $this->dbs->select(
+			array( 'specials.events_local_users' ),
+			array( 'edits', 'wiki_id' ),
 			array( 'user_id' => $user_id ),
 			__METHOD__,
 			array(
-				'ORDER BY' 	=> 'edit_count desc',
+				'ORDER BY' 	=> 'edits desc',
 				'LIMIT'		=> 11
 			)
 		);
 		$city_id = 0; while ( $oRow = $dbw->fetchObject( $oRes ) ) {
-			if ( $oRow->city_id > 0 ) {
+			if ( $oRow->wiki_id > 0 ) {
 				$oRowPage = $dbw->selectRow(
 					array( 'pages' ),
 					array( 'page_wikia_id' ),
 					array(
 						'page_title'     => $oUser->getName(),
 						'page_namespace' => NS_USER,
-						'page_wikia_id'  => $oRow->city_id
+						'page_wikia_id'  => $oRow->wiki_id
 					),
 					__METHOD__
 				);
