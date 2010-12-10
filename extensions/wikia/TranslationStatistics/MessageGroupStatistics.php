@@ -117,7 +117,7 @@ class MessageGroupStatistics {
                 $lang = empty( $parts[1] ) ? false : $parts[1];
 
 		// check if this is a valid language variant
-		if ( empty( Language::getLanguageName( $code ) ) ) {
+		if ( Language::getLanguageName( $code ) == ''  ) {
 			return true;
 		}
 
