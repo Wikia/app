@@ -306,6 +306,13 @@ class BodyModule extends Module {
 
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = array ('showSearchBox' => false);
+		
+		// Display comments on content and blog pages
+		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
+			$this->displayComments = true;
+		} else {
+			$this->displayComments = false;
+		}
 
 		// show user pages header on this page?
 		if (self::showUserPagesHeader()) {
@@ -357,13 +364,6 @@ class BodyModule extends Module {
 			$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
 			$this->bodytext = wfRenderModule('Search') . $this->bodytext;
-		}
-		
-		// Display comments on content and blog pages
-		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
-			$this->displayComments = true;
-		} else {
-			$this->displayComments = false;
 		}
 
 		// load CSS for Special:Preferences
