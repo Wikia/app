@@ -7,7 +7,7 @@
 	}
 	var redirectDelay = <?=$redirectDelay?>;
 	if (redirectDelay > 0) {
-		//setTimeout(doRedirect, redirectDelay * 1000);
+		setTimeout(doRedirect, redirectDelay * 1000);
 	}
 /*]]>*/</script>
 <?php print (empty($athenaInitStuff)?"":$athenaInitStuff); ?>
