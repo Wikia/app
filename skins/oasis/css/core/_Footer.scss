@@ -123,15 +123,46 @@
 
 
 .CorporateFooter  {
+	@include clearfix;
 	clear: both;
-	text-align: center;
+	padding-bottom: 10px;
 	nav {
 		margin-top: 15px;
 		>h1 {
 			display: none;
 		}
 	}
+	.WikiaHubBranding {
+		background: black;
+		float: left;
+		height: 22px;
+		margin-left: 15px;
+		padding: 1px;
+		.wordmark {
+			float: left;
+			padding: 0 5px;
+			position: relative;
+			width: 55px;
+			img {
+				filter:progid:DXImageTransform.Microsoft.Matrix(Dx=0, Dy=0, M11=0.6, M12=0, M21=0, M22=0.6);
+				-moz-transform: matrix(0.6, 0, 0, 0.6, -19px, -5px);
+				-webkit-transform: matrix(0.6, 0, 0, 0.6, -19, -5);
+				margin-top: 3px;
+			}
+		}
+		.hub {
+			background: $color-page;
+			float: left;
+			height: 12px;
+			line-height: 14px;
+			padding: 5px;
+			a {
+				color: $color-text;
+			}
+		}
+	}
 	ul {
+		float: right;
 		list-style: none outside none;
 		margin: {
 			top: 5px;
