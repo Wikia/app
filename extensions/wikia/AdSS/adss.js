@@ -61,10 +61,9 @@ var AdSS = {
 		var adId = AdSS.siteAds[adIdx].id;
 		var ad = $(AdSS.siteAds[adIdx].html);
 
-		ad.find("a").bind( "click", {adId: adId}, AdSS.onClick );
+		ad.find("a").bind( "click", {adId: adId}, AdSS.onClick ).before(AdSS.getPrevNext(adIdx));
 		ad.css({"position": "relative"});
-		ad.append(AdSS.getPrevNext(adIdx));
-
+		
 		oldAd.replaceWith(ad);
 		
 		$.tracker.byStr( "adss/publisher/view/"+adId );
@@ -79,7 +78,7 @@ var AdSS = {
 			nextIdx = 0;
 
 		var prevnext = $('<div class="prevnext"><a href="#" class="prev" rel="'+prevIdx+'">&lt;</a>&nbsp;<a href="#" class="next" rel="'+nextIdx+'">&gt;</a></div>');
-		prevnext.css({"position":"absolute", "right":"0px", "top":"0px", "font-size":"80%"});
+		prevnext.css({"float":"right", "font-size":"80%"});
 		prevnext.find("a").css({"border":"1px solid", "padding":"1px"}).click( function(e) {
 			e.preventDefault();
 			AdSS.replaceAd( $(this).closest("li"), parseInt($(this).attr("rel")) );
