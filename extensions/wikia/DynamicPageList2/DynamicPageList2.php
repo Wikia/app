@@ -2721,6 +2721,7 @@ class ExtDynamicPageList2
 							."Query text is:<br>\n<tt>".$sSqlSelectFrom . $sSqlWhere."</tt>\n\n"
 							."Error message is:<br>\n<tt>".$dbr->lastError()."</tt>\n\n";
 				}
+				$wgMessageCache->unlock($__cacheKey);
 				return $result;
 			}
 
@@ -2729,6 +2730,7 @@ class ExtDynamicPageList2
 				if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsFooter));
 				if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(DPL2_i18n::WARN_NORESULTS);
 				$dbr->freeResult( $res );
+				$wgMessageCache->unlock($__cacheKey);
 				return $output;
 			}
 
