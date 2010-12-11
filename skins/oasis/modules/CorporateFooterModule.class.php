@@ -1,9 +1,12 @@
 <?php
 
 class CorporateFooterModule extends Module {
+	var $wgBlankImgUrl;
+
 	var $footer_links;
 	var $copyright;
-
+	var $hub;
+	
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
 		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode());
@@ -13,8 +16,22 @@ class CorporateFooterModule extends Module {
 			$wgMemc->set($mKey, $this->footer_links, 86400);
 		}
 		$this->replaceLicense();
+		$this->hub = $this->getHub();
 	}
 	
+	private function getHub() {
+		wfProfileIn( __METHOD__ );
+		global $wgCityId;
+
+		$catInfo = WikiFactory::getCategory($wgCityId);
+		if (empty($catInfo) || ($catInfo->cat_id != 2 && $catInfo->cat_id != 3)) {
+			//Use Recipes Wiki cityID to force Lifestyle hub
+			$catInfo = WikiFactory::getCategory(3355);
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $catInfo;
+	}
 	
 	/**
 	 * @author Inez Korczynski <inez@wikia.com>
@@ -43,6 +60,8 @@ class CorporateFooterModule extends Module {
 				$nodes[] = parseItem($line);
 			}
 		}
+		
+		
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
