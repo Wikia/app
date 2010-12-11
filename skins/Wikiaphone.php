@@ -48,7 +48,7 @@ class SkinWikiaphone extends SkinTemplate {
 		global $wgCityId;
 		
 		$data .= <<< FOOTER
-			<div id="fullsite"><a href="#">View full site</a></div>
+			<div id="fullsite"><a href="#" class="fullsite">View full site</a></div>
 FOOTER;
 		
 		// load Google Analytics code

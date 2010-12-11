@@ -26,6 +26,7 @@ var MobileSkin = {
 			else if(href && href.indexOf(SpecialNamespaceMessage) === -1) MobileSkin.trackClick('contentlink');
 			else if(elm.attr('data-id') === 'randompage') MobileSkin.trackClick('randompage');
 			else if(elm.hasClass('showbutton')) MobileSkin.trackClick('showhide');
+			else if(elm.hasClass('fullsite')) MobileSkin.trackClick('desktop');
 		});
 	},
 	
