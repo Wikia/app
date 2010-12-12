@@ -44,8 +44,15 @@ class AdSS_User {
 			if( $user->password == $user->cryptPassword( $password ) ) {
 				$dbr->freeResult( $res );
 				return $user;
+			} elseif( $user->newpassword == $user->cryptPassword( $password ) ) {
+				$dbr->freeResult( $res );
+				$user->password = $user->newpassword;
+				$user->newpassword = '';
+				$user->save();
+				return $user;
 			}
 		}
+		$dbr->freeResult( $res );
 		return false;
 	}
 
