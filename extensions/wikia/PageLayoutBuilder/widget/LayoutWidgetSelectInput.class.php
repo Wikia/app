@@ -22,7 +22,7 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 
 
 		if( empty($this->value) ) {
-			$out .= XML::element("option", array("value" => "", "class" => "plb-empty-input"), $this->getAttrVal("instructions", true));
+			$out .= XML::element("option", array("value" => "", "class" => "plb-empty-input"), '');
 		}
 
 		$options = explode("|", $this->getAttrVal("options"));
@@ -35,7 +35,7 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 			$out .= XML::element("option", $attr, $value);
 		}
 		$out .= XML::closeElement('select');
-		return $out;
+		return '<em class="plb-span-instructions" >'.$this->getAttrVal("instructions", true).'</em><br>'.$out;
 	}
 
 	public function renderForResult() {

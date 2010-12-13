@@ -128,7 +128,7 @@
 			var pe = PLB.PropertyEditor.create(type,values);
 			pe.on('save',$.proxy(this.onEditorSave,this));
 			pe.on('dismiss',$.proxy(this.onEditorDismiss,this));
-			pe.show(this.onSave,this.onDismiss, values);
+			pe.show();
 		},
 		
 		remove: function () {
@@ -202,6 +202,7 @@
 		
 		document: null,
 		body: null,
+		rawBody: null,
 		
 		onRTEDocumentCallbacks: null,
 		modeReadyFired: false,
@@ -218,7 +219,11 @@
 		},
 		
 		getBody: function( fresh ) {
-			if (fresh) this.body = this.rte.getEditor();
+			var rawBody = this.instance && this.instance.document && this.instance.document.$ && this.instance.document.$.body;
+			if (rawBody != this.rawBody) {
+				this.rawBody = rawBody;
+				this.body = this.rawBody ? $(this.rawBody) : null;
+			}
 			return this.body;
 		},
 		
@@ -261,7 +266,9 @@
 			this.instance.on('afterInsertContent',$.proxy(this.onRTEAfterInsertContent,this));
 			this.instance.on('beforeCreateUndoSnapshot',$.proxy(this.onRTEBeforeCreateUndoSnapshot,this));
 			this.instance.on('afterCreateUndoSnapshot',$.proxy(this.onRTEAfterCreateUndoSnapshot,this));
-			this.instance.on('afterPaste', $.proxy(this.onRTEAfterPaste,this));
+			this.instance.on('afterPaste', this.onRTEEventProxy(this ,'afterpaste')  );
+			this.instance.on('droppedElements', $.proxy(this.onRTEDroppedElements,this));
+			this.instance.on('selectionChange', $.proxy(this.onRTESelectionChange,this));
 			this.instance.on('droppedElements', $.proxy(this.onRTEDroppedElements,this));
 			this.fire('ready',this);
 		},
@@ -276,7 +283,7 @@
 				this.onRTEDocumentCallbacks = {};
 				this.onRTEDocumentCallbacks['applyStyle'] = { type : "document", "callback": $.proxy(this.onRTEBeforeApplyStyle,this) };
 				this.onRTEDocumentCallbacks['afterApplyStyle'] = { type : "document", "callback": $.proxy(this.onRTEAfterApplyStyle,this) }; 
-				this.onRTEDocumentCallbacks['beforepaste'] = { type : "body", "callback":  $.proxy(this.onRTEBeforePaste,this) };
+				this.onRTEDocumentCallbacks['beforepaste'] = { type : "body", "callback":  this.onRTEEventProxy(this ,'beforepaste') };
 			}
 			
 			this.document = this.instance.document;
@@ -300,13 +307,11 @@
 			this.fire('rebind',this);
 		},
 		
-		onRTEBeforePaste: function( event ) {
-			this.fire('beforepaste',this,event.data,event);
+		onRTEEventProxy : function(self, eventname) {
+			return function(event) {
+				self.fire(eventname, self, event.data ,event);
+			};
 		},
-		
-		onRTEAfterPaste: function( event ) {
-			this.fire('afterpaste',this,event.data,event);
-		},		
 		
 		onRTEBeforeApplyStyle: function( event ) {
 			this.fire('beforestyle',this,event.data,event);
@@ -336,21 +341,29 @@
 			this.fire('aftercommand',this,event.data,event);
 		},
 		
-		onRTERequestCSS: function(css) {
-			this.fire('requestcss',this,css);
-		},
-		
-		onRTEModeSwitched: function() {
-			this.modeReadyFired = false;
-			this.fire('modeswitch',this,this.instance.mode);
-		},
-		
 		onRTEBeforeCreateUndoSnapshot: function( event ) {
 			this.fire('beforesnapshot',this,event.data,event);
 		},
 		
 		onRTEAfterCreateUndoSnapshot: function( event ) {
 			this.fire('aftersnapshot',this,event.data,event);
+		},
+		
+		onRTEDroppedElements: function( event ) {
+			this.fire('droppedelements',this,event.data,event);
+		},
+	
+		onRTERequestCSS: function(css) {
+			this.fire('requestcss',this,css);
+		},
+	
+		onRTEModeSwitched: function() {
+			this.modeReadyFired = false;
+			this.fire('modeswitch',this,this.instance.mode);
+		},
+		
+		onRTESelectionChange: function( event ) {
+			this.fire('selectionchange',this,event.data.event);
 		},
 		
 		onRTEDroppedElements: function( event ) {
@@ -416,13 +429,68 @@
 				
 				droppedelements: this.onRTEDroppedElements,
 				
+				selectionchange: this.onRTESelectionChange,
+				
 				scope: this
 			});
 			
 			// Fetch PLB editor data through Ajax call
 			var dataLoadedCallback = $.proxy(this.onDataLoaded,this);
 			$(function(){
-				$.getScript(window.wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
+				$("body").bind('RTE_beforeToolbarRender', function(e, config) {
+					config[0] = {
+							name: PageLayoutBuilder.Lang["plb-editor-toolbar-formatting"],
+							data: [
+							{
+									msg: '<span class="plbtoolbar" >' + PageLayoutBuilder.Lang["plb-editor-toolbar-caption"] + '</span>',
+									groups: [
+									         ['Plbelement']
+									]
+							},
+							{
+								msg: 'textAppearance',
+								groups: [
+									['Format'],
+									['Bold','Italic','Underline','Strike'],
+									['BulletedList','NumberedList'],
+									['Link','Unlink'],
+									['Outdent','Indent'],
+									['JustifyLeft','JustifyCenter','JustifyRight']
+								]
+							},
+							{
+								msg: 'controls',
+								groups: [
+									['Undo','Redo'],
+									(window.skin == 'oasis' ? false : ['Widescreen']), // temp hack
+									['Source']
+								]
+							}
+						]};
+					config[1] = {
+							name: PageLayoutBuilder.Lang["plb-editor-toolbar-static"],
+							data: [
+							{
+								msg: 'insert',
+								groups: [
+									['Image', 'Gallery', 'Video'],
+									['Table'],
+									['Template'],
+									['Signature']
+								]
+							},
+							{
+								msg: 'textAppearance',
+								groups: [
+									['Bold','Italic','Underline','Strike'],
+									['JustifyLeft','JustifyCenter','JustifyRight']
+								]
+							}
+						]};
+				});
+				
+				time = new Date(); 
+				$.getScript(window.wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=' + window.wgUserLanguage + '&cb=' + time.getTime(), 
 						dataLoadedCallback);
 			});
 		},
@@ -495,11 +563,14 @@
 		fixDraggedElement: function (i,el) {
 			el = $(el).closest('.plb-rte-widget');
 			if (el.length > 0) {
-				var range = new CKEDITOR.dom.range();
-				var ckel = new CKEDITOR.dom.element(el[0]);
-				range.setStartAt(ckel,CKEDITOR.POSITION_AFTER_START);
-				range.collapse(true);
-				range.fixBlock(true,'p');
+				var parent = el.parent();
+				if (parent.is('body') && el.is('span')) {
+					var ckel = new CKEDITOR.dom.element(el[0]);
+					var range = new CKEDITOR.dom.range(ckel.getDocument());
+					range.setStartAt(ckel,CKEDITOR.POSITION_AFTER_START);
+					range.collapse(true);
+					range.fixBlock(true,'p');
+				}
 				/*
 				var parent = el.parent();
 				if (parent.is('body') && el.is('span')) {
@@ -520,6 +591,8 @@
 		onDataLoaded : function() {
 			this.isDataReady = true;
 			this.onCheckReady();
+			var pe = new PageLayoutBuilder.WidgetCreator();
+			var helpbox = new PageLayoutBuilder.HelpBox();
 		},
 		
 		// Check if all requirements are met to initialize PLB editor
@@ -696,11 +769,60 @@
 			data.selection.selectRanges(data.ranges);
 		},
 		
-		onRTEModeSwitch: function (rte,mode) {
-			if (this.ui) {
-				this.ui[mode=='source'?'hide':'show']();
+		fixReadOnlySelection: function() {
+			/*
+			var selection = this.rte.instance && this.rte.instance.getSelection(),
+				ranges = selection && selection.getRanges(),
+				goodAncestor = ranges && ranges[0].startContainer.findFormattableAncestor();
+			if (goodAncestor) {
+				ranges[0].setStartAfter(goodAncestor);
+				ranges[0].collapse(true);
+				selection.selectRanges( new CKEDITOR.dom.rangeList( [ranges[0]] ) );
+			}
+			*/
+			var editor = this.rte.instance;
+			// Get the selection ranges.
+			var ranges = this.rte.instance.getSelection().getRanges( true );
+			// Wikia - start
+			if (ranges.length == 0) {
+				ranges = this.rte.instance.getSelection().getRanges( false );
+				var range = ranges[0];
+				var xStartPath = new CKEDITOR.dom.elementPath( range.startContainer ),
+					xEndPath = new CKEDITOR.dom.elementPath( range.endContainer );
+				if ( !xEndPath.isContentEditable() ) {
+					var notEditableParent = range.endContainer.isReadOnly();
+					if (notEditableParent.is( 'p', 'div' )) {
+						range.setEndAt(notEditableParent,CKEDITOR.POSITION_BEFORE_END);
+					} else {
+						range.setEndAfter(notEditableParent);
+					}
+					range.collapse(false);
+				} else {
+					range.collapse(false);
+				}
+				ranges = new CKEDITOR.dom.rangeList([range]);
+				this.rte.instance.getSelection().selectRanges(ranges);
+				if ( ! CKEDITOR.env.ie ) {
+					ranges = this.rte.instance.getSelection().getRanges( false );
+				} else {
+					// IE selection is so stupid!!!
+					this.rte.instance.getSelection()._.cache.ranges = ranges;
+				}	
 			}
 		},
+		
+		onRTEModeSwitch: function (rte,mode) {
+			if (this.ui) {
+				this.ui[mode == 'source' ? 'hide':'show']();
+			}
+			
+			
+		},
+		
+		onRTESelectionChange: function (rte,data,event) {
+			this.fire('selectionchange',this,data);
+		},
+		
 		
 		getWidgetElements : function () {
 			return $('.plb-rte-widget',this.rte.getBody());
@@ -764,7 +886,10 @@
 			if (this.adding) {
 				var el = this.adding.getElement();
 				this.rte.instance.focus();
+				this.fixReadOnlySelection();
 				this.rte.insertElement(el);
+				this.fixDraggedElement(0,$(el[0]));
+				this.rte.instance.focus();
 				this.adding = null;
 			}
 			this.rte.instance.fire('saveSnapshot');
@@ -812,18 +937,23 @@
 		refreshTimerDelay: 500,
 		rebindOverlaysTimer: null,
 		rebindOverlaysTimerDelay: 500,
+		refreshSelectionTimer: null,
+		refreshSelectionTimerDelay: 100,
+		
 		
 		constructor: function( editor ) {
 			PLB.UI.superclass.constructor.call(this);
 			
 			this.refreshTimer = Timer.create($.proxy(this.refresh,this),this.refreshTimerDelay);
 			this.rebindOverlaysTimer = Timer.create($.proxy(this.rebindOverlays,this),this.rebindOverlaysTimerDelay);
+			this.refreshSelectionTimer = Timer.create($.proxy(this.refreshSelection,this),this.refreshSelectionTimerDelay);
 			
 			this.ed = editor;
 			this.ed.bind({
 				rebind: this.rebind,
 				changed: [ this.rebindOverlays, this.refresh ],
 //				placeholdersremoved: [ this.delayedRebindOverlays, this.delayedRefresh ],
+				selectionchange: this.delayedRefreshSelection,
 				scope: this
 			});
 			this.rte = this.ed.rte;
@@ -832,6 +962,8 @@
 			
 			this.setup();
 			this.rebind();
+			//lazy  load of catselect 
+			initCatSelectForEdit();
 		},
 		
 		setup: function () {
@@ -842,28 +974,7 @@
 				.empty()
 				.addClass('plb-toolbox')
 				.append(PLB.Data.toolboxHtml);
-			// Prepare the menu "Add element"
-			this.addButton = $('.plb-add-element',this.el);
-			var addMenu = $('ul',this.addButton);
-			// ... by adding the items representing all widget types
-			$.each(PLB.Library,function(i,v){
-				$(v.menuItemHtml)
-					.attr(PLB.HTML_PARAM_TYPE,i)
-					.addClass('plb-add-menu-item-'+i)
-					.appendTo(addMenu);
-			});
-			$('li',addMenu)
-				.css('cursor','pointer')
-				.bind({
-					click: $.proxy(this.onAddElementClick,this)
-				})
-				.hover(
-					$.proxy(this.onMouseEnter,this),
-					$.proxy(this.onMouseLeave,this)
-				);
-			WikiaButtons.add(this.addButton,{
-				click:WikiaButtons.clickToggle
-			});
+
 			this.widgetsManager = $('.plb-manager',this.el);
 			this.widgetsTutorial = $('.plb-widgets-tutorial',this.el);
 			this.widgetsTutorial.css('max-height',(this.el.innerHeight() - this.widgetsManager.outerHeight()) + 'px');
@@ -892,15 +1003,14 @@
 		
 		rebindOverlays: function() {
 			this.rebindOverlaysTimer.stop();
-			// XXX: temporary
+			
+			var wels = this.ed.getWidgetElements();
+			wels.unbind('.plb-clickable')
+				.bind('click.plb-clickable',$.proxy(this.onWidgetEdgeClickCheck,this));
+			var cels = $('.plb-rte-widget-clickable',wels);
+			cels.unbind('.plb-clickable')
+				.bind('click.plb-clickable',$.proxy(this.onWidgetEdgeClickCheck,this));			
 			return;
-			var widgets = this.ed.getWidgetElements();
-			$().log(widgets,'PLB-overlay refresh');
-			this.rte.getRTE().overlay.add(widgets, [{
-				label: PLB.Lang['plb-editor-overlay-edit'],
-				'class': 'RTEMediaOverlayEdit',
-				callback: $.proxy(this.onOverlayEditClick,this)
-			}]);
 		},
 		
 		hide: function() {
@@ -918,6 +1028,11 @@
 		// Searches the editor DOM for all PLB widgets and refreshes the list in toolbox
 		refresh : function () {
 			this.refreshTimer.stop();
+			
+			if ( !this.rte.getBody() ) {
+				this.refreshTimer.start();
+				return;
+			} 
 			
 			$().log('refreshing wigdets list...','PLB');
 			// Find all PLB widgets in the editor
@@ -970,13 +1085,62 @@
 		onMouseEnter : function (e) {
 			var el = $(e.target).closest('li');
 			el.addClass('hover');
-//			$().log(el[0],'mouseenter');
 		},
 		
 		onMouseLeave : function (e) {
 			var el = $(e.target).closest('li');
 			el.removeClass('hover');
-//			$().log(el[0],'mouseleave');
+		},
+		
+		delayedRefreshSelection : function () {
+			this.refreshSelectionTimer.start();
+		},
+		
+		// Searches the editor DOM for all PLB widgets and refreshes the list in toolbox
+		refreshSelection : function () {
+			this.refreshSelectionTimer.stop();
+
+			var sel = this.rte.instance.getSelection(),
+				element = sel && sel.getStartElement();
+			
+			var current = false;
+			if (element && element.$) {
+				var el = element.findFormattableAncestor();
+				if (el) current = $(el.$);
+			}
+			
+			if (this.previousSelection && this.previousSelection != current) {
+				this.previousSelection.removeClass('selected');
+				this.previousSelection = false;
+			}
+			
+			if (current && this.previousSelection != current) {
+				this.previousSelection = current;
+				this.previousSelection.addClass('selected');
+			}
+		},
+		
+		onWidgetEdgeClickCheck : function(e) {
+			var el = $(e.target), wel = el.closest('.plb-rte-widget');
+			var pos_l = e.pageX - wel.offset().left, pos_r = wel.innerWidth() - pos_l;
+			$().log('onWIdgetEdgeClickCheck: pos_l = '+pos_l+' pos_r = '+pos_r,'PLB');
+			if ( pos_l < 20 ) {
+				this.setCursorNearWidget(wel,false);
+				return false;
+			} else if ( pos_r < 20 ) {
+				this.setCursorNearWidget(wel,true);
+				return false;
+			}
+		},
+		
+		setCursorNearWidget : function( widget, atEnd ) {
+			widget = $(widget);
+			var element = new CKEDITOR.dom.element(widget[0]);
+			var range = new CKEDITOR.dom.range(element.getDocument());
+			range[atEnd?'setStartAfter':'setStartBefore'](element);
+			range.collapse(true);
+			var selection = this.rte.instance.getSelection();
+			selection.selectRanges(new CKEDITOR.dom.rangeList([range]));
 		},
 		
 		// Handle click on edit button in the widgets list
@@ -996,10 +1160,11 @@
 		},
 
 		// Handle click on add element button
-		onAddElementClick : function (e) {
-			var el = $(e.target).closest('li');
-			this.addButton.removeClass('hover');
-			this.fire('create',el.attr(PLB.PARAM_TYPE));
+		onAddElementClick : function (value) {
+			if(typeof value == 'object') {
+				var value = $(value.target).closest('li').attr('__plb_type');
+			}
+			this.fire('create',value);
 			return false;
 		},
 		
@@ -1061,8 +1226,7 @@
 			return this.values;
 		},
 		
-		show: function(onSave, doDismiss, value) {
-			
+		show: function() {
 			// Create form 
 			this.form = $(this.editorHtml);
 			
@@ -1098,7 +1262,7 @@
 			this.wrapper = this.form.makeModal(mopts);
 			
 			//init preview
-			this.refreshPreview(value);
+			this.refreshPreview(this.getValues());
 			$('.plb-pe-window-preview').find('input[name], textarea[name]')
 				.focus($.proxy(this.focusPreviewInput,this))
 				.blur($.proxy(this.blurPreviewInput,this));
@@ -1117,12 +1281,12 @@
 		refreshPreview: function(values) {
 			$().log("refreshPreview", "PLB")
 			if( typeof(values.caption) != 'undefined' ) {
-				$('.plb-pe-window-preview .plb-form-caption-p').html(values.caption);
+				$('.plb-pe-window-preview .plb-form-caption-p').html($.htmlentities(values.caption));
 			}
 
 			if(typeof(values.instructions) != 'undefined') {
-				$('.plb-pe-window-preview .plb-input-instructions').val(values.instructions);
-				$('.plb-pe-window-preview .plb-span-instructions').html(values.instructions);
+				$('.plb-pe-window-preview .plb-input-instructions').val($.htmlentities(values.instructions));
+				$('.plb-pe-window-preview .plb-span-instructions').html($.htmlentities(values.instructions));
 			}
 			
 			this.extRefreshPreview(values);
@@ -1374,10 +1538,11 @@
 		extRefreshPreview : function(values) {
 			var value = this.extFormGetValue('options', {}); 
 			var l = String(value.value).split('|');
+
 			var element = $('.plb-pe-window-preview select');
 			element.empty();
 			if (typeof(values.instructions) != 'undefined') {
-				$(element).append($("<option/>").text(values.instructions).val(""));	
+			//	$(element).append($("<option/>").text(values.instructions).val(""));	
 			} 
 			if(l.length > 0) {
 				$.each(l,function(i,v){
@@ -1436,6 +1601,116 @@
 		
 	});
 	
+	PLB.WidgetCreator = $.createClass(Observable,{
+		constructor: function() {
+			var addButton = $('.plb-add-element');
+			var addMenu = $('ul', addButton);
+			$.each(PageLayoutBuilder.Library,function(i,v){
+				$( "<li>" +  v.menuItemHtml.html + "</li>")
+					.attr(PLB.HTML_PARAM_TYPE,i)
+					.addClass('plb-add-menu-item-'+i)
+					.appendTo(addMenu);
+			});
+
+			$('li',addMenu)
+				.css('cursor','pointer')
+				.bind({
+					click: $.proxy(this.onAddElementClick,this)
+				})
+				.hover(
+					$.proxy(this.onMouseEnter,this),
+					$.proxy(this.onMouseLeave,this)
+				);
+			
+			WikiaButtons.add(addButton, {
+				click:WikiaButtons.clickToggle
+			});
+		},
+		onMouseEnter: function(e) {
+			var el = $(e.target).closest('li');
+			el.addClass('hover');
+		},
+		onMouseLeave: function(e) {
+			var el = $(e.target).closest('li');
+			el.removeClass('hover');
+		},
+		onAddElementClick: function(type) {
+			var text;
+			if(typeof RTE == 'undefined') {
+				text = $('#wpTextbox1').val();
+			} else {
+				text = $('#cke_contents_wpTextbox1 > textarea').val();
+			}
+			var elements = $(text).filter('[id]');
+			var newID = 0;
+			$.each(elements,function(i,v) {
+			    var oldID = parseInt($(v).attr('id'));
+			    if(newID <  oldID) {
+			        newID = oldID;
+			    }
+			});
+			newID++;
+			var pe = PageLayoutBuilder.PropertyEditor.create($(type.target).closest('li').attr(PLB.HTML_PARAM_TYPE), {id:newID});
+			pe.on('save',function() {
+			    var props = pe.getValues();
+			    var attr = '';
+			    $.each(props, function(i,v){   
+			    	attr += ' ' + i + '="' + $.htmlentities(v) + '"' + ' ';
+			    });			
+			    insertTags('<' + pe.type + ' ' + attr + ' />','','');
+			});
+			pe.show();
+		}
+	});
+
+	PLB.HelpBox = $.createClass(Observable,{
+		constructor: function() {
+			
+			if( $.getUrlVar('action') == 'submit' ) {
+				return true;
+			}
+		
+			if(PageLayoutBuilder.helpbox.show == 0) {
+				return true;
+			} 
+		
+			var helpbox = $(PageLayoutBuilder.helpbox.html);
+			
+			var mopts = {
+				onClose: function() {},
+				closeOnBlackoutClick: false,
+				width: 960
+			};
+			
+			this.wrapper = helpbox.makeModal(mopts);
+			this.wrapper.showModal();
+			
+			$('#getStarted2, #getStarted1').click($.proxy(this.buttonClick, this));
+			
+			$('#getStartedBlock1, #getStartedBlock2').click($.proxy(this.checkboxClick, this));
+		},
+		buttonClick: function(e){
+			this.wrapper.closeModal();
+			return false;
+		},
+		
+		checkboxClick: function(e) {
+			$('#getStartedBlock1, #getStartedBlock2').attr('checked',  $(e.target).attr('checked'));
+			$.ajax({
+				url: wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::closeHelpbox&val=' + $(e.target).attr('checked'),
+				dataType: "json",
+				method: "post",
+				success: function(data) {
+					$().log("button click", "PLB");
+				}
+			});
+		}
+	});
+	
 	window.plb = new PLB.Editor();	
 	
+	GlobalTriggers.on("beforeMWToolbarRender",function(toolbar){
+		$("#sourceModeInsertElement").prependTo(toolbar).show();
+	});
+
 })();

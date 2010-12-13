@@ -353,8 +353,7 @@ function CategorySelectChangeFormat($categories, $from, $to) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectAddFormFields($editPage, $wgOut) {
-	global $wgCategorySelectMetaData;
-	$categories = '';
+	global $wgCategorySelectMetaData, $wgOut;
 	if (!empty($wgCategorySelectMetaData)) {
 		$categories = htmlspecialchars(CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'json'));
 	}
@@ -503,6 +502,25 @@ JS
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
+
+
+function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
+	$result = '
+		<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
+		<div id="csMainContainer"> ' . $text . '
+			<div id="csSuggestContainer">
+				<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
+			</div>
+			<div id="csItemsContainer">
+				<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
+			</div>
+			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
+			<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1" rel="nofollow">' . wfMsg('categoryselect-code-view') . '</a></div>
+			<div class="clearfix"></div>
+		</div>';
+	return $result;
+}
+
 function CategorySelectGenerateHTMLforEdit($formId = '') {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
 
@@ -523,23 +541,9 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	$text = "";
 	wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) ) ;
+	
 
-	$result = '
-	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
-	<div id="csMainContainer"> ' . $text . '
-		<div id="csSuggestContainer">
-			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
-		</div>
-		<div id="csItemsContainer">
-			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
-		</div>
-		<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
-		<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1" rel="nofollow">' . wfMsg('categoryselect-code-view') . '</a></div>
-		<div class="clearfix"></div>
-	</div>
-	';
-
-	return $result;
+	return CategorySelectGenerateHTMLforEditRaw($categories, $text);
 }
 
 /**

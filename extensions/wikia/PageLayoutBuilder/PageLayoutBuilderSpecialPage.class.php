@@ -67,7 +67,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 					case 'save':
 						if($this->save()) {
 							PageLayoutBuilderModel::layoutUnMarkAsNoPublish($this->mArticle->getId());
-							$wgOut->redirect( Title::newFromText( "PageLayoutBuilder", NS_SPECIAL )->getFullUrl("action=list") );
+							$wgOut->redirect( Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list") );
 							return true;
 						}
 					break;
@@ -80,7 +80,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 					case 'draft':
 						if(self::isDraft($this->mArticle) && $this->save()) {
 							PageLayoutBuilderModel::layoutMarkAsNoPublish($this->mArticle->getId());
-							$wgOut->redirect( Title::newFromText( "PageLayoutBuilder", NS_SPECIAL )->getFullUrl("action=list") );
+							$wgOut->redirect( Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list") );
 							return true;
 						}
 					break;
@@ -124,7 +124,6 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		foreach ($jsMsg as $key => $value) {
 			$script .= "var ".$key." = ".Xml::encodeJsVar($value).";\n";
 		}
-
 		$wgOut->addScript("<script 'type' = 'text/javascript'>".$script."</script>" );
 
 		if($wgRequest->wasPosted()) {
@@ -140,10 +139,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$out = PageLayoutBuilderModel::getListOfLayout();
 		}
 
-
-		$wgOut->setPageTitle( wfMsg("plb-list-title", array("$1" => count($out) ) ) );
-
-		$title = Title::newFromText('PageLayoutBuilder', NS_SPECIAL);
+		$button = XML::element("a",array(
+			"id" => "plbNewButton",
+			"class" => "wikia-button",
+			"href" => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL() ),
+			wfMsg('plb-special-form-new')
+		);
+		$msg = wfMsg("plb-list-title", array("$1" => count($out) ) );
+		$wgOut->setPageTitle( $msg . $button);
+		$wgOut->setHTMLTitle( $msg );
+		$title = Title::newFromText('LayoutBuilder', NS_SPECIAL);
 		foreach( $out as $key => $value ) {
 			$out[$key]['page_actions']['edit'] = array(
 				"link" => $title->getFullURL('plbId='.$value['page_id'] ),
@@ -162,7 +167,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			}
 			
 			$out[$key]['page_actions']['create'] = array(
-				"link" => Title::newFromText('PageLayoutBuilderForm', NS_SPECIAL)->getFullURL("plbId=".$value['page_id']),
+				"link" => Title::newFromText('LayoutBuilderForm', NS_SPECIAL)->getFullURL("plbId=".$value['page_id']),
 				"name" => wfMsg("plb-list-action-create"),
 				"class" => "create",
 				"separator" => 1,
@@ -186,7 +191,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
 		    "data" => $out,
-			"newlink" => Title::newFromText( "PageLayoutBuilder", NS_SPECIAL )->getFullURL()
+			"newlink" => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL()
 		));
 		$wgOut->addHTML( $oTmpl->render("plb-list") );
 		return true;
@@ -224,6 +229,10 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$wgOut->mPageLinkTitle = true;
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 
+		$this->mFormData['emptytitle'] = empty($this->mFormData['title']);
+		$this->mFormData['emptydesc'] = empty($this->mFormData['desc']);
+		$this->mFormData['title'] = $this->mFormData['emptytitle'] ? wfMsg("plb-form-title-instructions"):$this->mFormData['title'];
+		$this->mFormData['desc'] = $this->mFormData['emptydesc']  ? wfMsg("plb-form-desc-instructions"):$this->mFormData['desc'];
 		
 		$oTmpl->set_vars( array(
 		    "data" => $this->mFormData,
@@ -239,15 +248,21 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 	private function renderPreview($type = 'form' ) {
 		global  $wgOut, $wgExtensionsPath, $wgScriptPath;
-		
-		if($type == "form") {
-			$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
-		}
-		
+
 		$title = $this->mArticle->getTitle();
 		$parser = new PageLayoutBuilderParser();
 		$parserOut = $parser->parseForLayoutPreview( $this->mEditPage->textbox1, $title, $type);
 		$this->previewOut =  $parserOut->getText();
+		
+		if($type == "form") {
+			$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
+			if(strlen(trim($this->previewOut)) == 0) {
+				$this->previewOut = XML::element("div",array(
+					"class" => "plb-form-errorbox" ),
+					wfMsg('plb-special-form-emptyformpreview')
+				);
+			}		
+		}
 	}
 
 	private function renderCreatePage() {
@@ -428,8 +443,18 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 		$buttons_out = array();
 
-		$buttons_out['save'] = $buttons['save'];
-
+		$buttons_out['save'] = XML::element(
+				"input",
+				array(
+					"id" => "wpSave",
+					"name" => "wpSave",
+					"type" => "submit",
+					"tabindex" => 5,
+					"value" => wfMsg('plb-create-button-layout'),
+					"title" => wfMsg('plb-create-button-draft-layout')
+				)
+			);
+		
 		if(PageLayoutBuilderSpecialPage::isDraft($self->mArticle)) {
 			$buttons_out['draft'] = XML::element(
 				"input",
@@ -484,7 +509,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
-		    "post_url" => Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL("action=createfromarticle"),
+		    "post_url" => Title::newFromText('LayoutBuilder', NS_SPECIAL)->getFullURL("action=createfromarticle"),
 		));
 
 		$wgOut->addHTML( $oTmpl->render("article-button") );
@@ -506,7 +531,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 
 		if($oEditPage->mTitle->getNamespace() == NS_PLB_LAYOUT) {
-			$oSpecialPageTitle = Title::newFromText('PageLayoutBuilder', NS_SPECIAL);
+			$oSpecialPageTitle = Title::newFromText('LayoutBuilder', NS_SPECIAL);
 			if($oEditPage->mTitle->getArticleId() == 0) {
 				$wgOut->redirect($oSpecialPageTitle->getFullUrl("default=".$oEditPage->mTitle->getText()."&plbId=" . $oEditPage->mTitle->getArticleId() ));
 				return true;
@@ -516,7 +541,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true; 
 	}
 
-	public static function getUserPermissionsErrors( &$title, &$user, &$action, &$result ) {
+	public static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		if( $title->getNamespace() == NS_PLB_LAYOUT ) {
 			$result = array();
 			if( $user->isAllowed( 'plbmanager' )  && ($action == 'create' || $action == 'edit') ) {
@@ -559,7 +584,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 					'desc' => $value['desc'],
 					'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
 					'trackingId' => 'blankpage',
-					'submitUrl' => Title::newFromText( "PageLayoutBuilderForm", NS_SPECIAL )->getFullUrl("plbId=".$value['page_id']."&default=$1&action=edit")
+					'submitUrl' => Title::newFromText( "LayoutBuilderForm", NS_SPECIAL )->getFullUrl("plbId=".$value['page_id']."&default=$1&action=edit")
 				);
 			}
 		}
@@ -592,7 +617,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$list[] = array(
 				'text' => wfMsg( 'plb-mytools-link' ), 
 				'name' => 'plbmanager',
-				'href' => Title::newFromText( "PageLayoutBuilder", NS_SPECIAL )->getFullUrl("action=list")
+				'href' => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list")
 			);
 		}
 		

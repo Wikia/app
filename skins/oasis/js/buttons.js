@@ -18,15 +18,17 @@ var WikiaButtons = {
 	},
 	
 	add: function( e, opts ) {
-		var defaults = {
-			click: WikiaButtons.click	
-		};
-		var s = opts ? $.extend(defaults,opts) : defaults;
-		e	.one("mouseover", WikiaButtons.setup)
-			.hover(WikiaButtons.mouseover, WikiaButtons.mouseout)
-			.click(s.click);
+		 var defaults = {
+		  click: WikiaButtons.click 
+		 };
+		 var s = $.extend({},defaults,opts||{});
+		 e .unbind('.wikiabutton')
+		  .one("mouseover.wikiabutton", WikiaButtons.setup)
+		  .bind('mouseenter.wikiabutton',WikiaButtons.mouseover)
+		  .bind('mouseleave.wikiabutton',WikiaButtons.mouseout)
+		  .bind('click.wikiabutton',s.click);
 	},
-
+	
 	setup: function() {
 		//This function is run only once per button
 		$(this).data('menu', $(this).find("ul"));
@@ -45,8 +47,10 @@ var WikiaButtons = {
 
 					menu.css("min-width", width);
 				}
-
+				$().log(this);
+				
 				$(this).toggleClass("active");
+				$().log(this);
 			}
 		}
 		else{

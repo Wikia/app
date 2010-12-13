@@ -196,7 +196,10 @@ class imageServing{
 	 */
 	public function getThumbnails( $fileNames = null ) {
 		wfProfileIn( __METHOD__ );
+<<<<<<< .working
 
+=======
+>>>>>>> .merge-right.r31210
 		$ret = array();
 		
 		if( !empty( $fileNames ) ) {
@@ -206,8 +209,9 @@ class imageServing{
 				} else {
 					$img = $fileName;
 				}
-				
-				if ( !empty($img) || $img = wfFindFile( $title ) ) {
+						
+				if( !empty($img) || $img = wfFindFile( $title ) ) {
+					$imageInfo = getimagesize( $img->getPath() );
 					$fileName = $img->getTitle()->getDBkey();
 					$issvg = false;
 					$mime = strtolower($img->getMimeType());
@@ -224,7 +228,6 @@ class imageServing{
 		}
 
 		wfProfileOut( __METHOD__ );
-		
 		return $ret;
 	}
 	

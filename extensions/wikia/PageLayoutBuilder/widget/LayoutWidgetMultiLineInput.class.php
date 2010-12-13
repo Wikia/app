@@ -11,14 +11,21 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 			$style = "border-color: red; border-style: solid;";
 		}
 
+		$instructions = strtr( $this->getAttrVal('instructions', true), array(
+			'&#10;' => "\n",
+			'&#13;' => "\r",
+			'&#9;' => "\t",
+		));
+		
 		return XML::element('textarea',
 							array(
 								'name' => 'plb_'.$this->getAttrVal("id"),
 								'type' => 'text',
+								'data-instructions' => $instructions,
 								'style' => $style,
 								'class' => 'plb-mlinput-textarea plb-input-instructions '.(empty($this->value) ? "plb-empty-input":""),
 							),
-							empty($this->value) ? $this->getAttrVal('instructions', true) : $this->value,
+							empty($this->value) ? $instructions : $this->value,
 							false );
 	}
 
@@ -28,7 +35,7 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 	}
 
 	public function renderForResult() {
-		return "<p>".$this->value."</p>";
+		return "<p>\n".$this->value."\n</p>";
 	}
 
 	public function renderForResultEmpty($url) {

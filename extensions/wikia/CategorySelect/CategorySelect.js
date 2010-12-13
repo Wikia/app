@@ -369,6 +369,7 @@ function inputKeyPress(e) {
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
+		$('#csWikitext').attr('value', generateWikitextForCategories());
 		//hide input and show button when [enter] pressed with empty input
 		if (category == '') {
 			csTrack('enterCategoryEmpty');
@@ -533,16 +534,22 @@ function csCancel() {
 	$('#csAddCategorySwitch').show();
 }
 
+initCatSelectForEdit = function() {
+	// ensure YUI is loaded
+	$.loadYUI(function() {
+		initHandlers();
+		initAutoComplete();
+		initializeDragAndDrop();
+		initializeCategories();
+		//show switch after loading categories
+		$('#csSwitchViewContainer').show();
+		$().log("Catselect init");
+	}); 	
+}
+
+
 wgAfterContentAndJS.push(function() {
-	if (csType == 'edit') {
-		// ensure YUI is loaded
-		$.loadYUI(function() {
-			initHandlers();
-			initAutoComplete();
-			initializeDragAndDrop();
-			initializeCategories();
-			//show switch after loading categories
-			$('#csSwitchViewContainer').show();
-		});
+	if (csType == 'edit' && (wgCanonicalSpecialPageName !=  "PageLayoutBuilder" || typeof(RTE) == "undefined") ) {
+		initCatSelectForEdit();
 	}
 });

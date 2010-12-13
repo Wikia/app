@@ -3,7 +3,7 @@
 		<p><?php echo wfMsg('plb-special-form-box-caption', array($layoutName)); ?></p>
 		<?php echo $layoutDesc; ?>
 		<ul>
-			<li>
+			<li class="first" >
 				<?php echo wfMsg('plb-special-form-box-create'); ?>
 			</li>
 			<li>

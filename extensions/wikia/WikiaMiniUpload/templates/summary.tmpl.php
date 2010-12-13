@@ -5,5 +5,6 @@
         <input onclick="WMU_close(event);" type="button" value="<?= wfMsg( 'wmu-return' ) ?>" />
         <div id="ImageUploadCode" style="display: none;" ><?= $code ?></div>
         <input type="hidden" id="ImageUploadTag" value="<?= htmlspecialchars( $tag ) ?>" />
+		<input type="hidden" id="ImageUploadFileName" value="<?= htmlspecialchars( $filename ) ?>" />
 </div>
 

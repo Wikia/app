@@ -728,6 +728,7 @@ class WikiaMiniUpload {
 		                $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		                $tmpl->set_vars(array(
                                         'tag' => $tag,
+		                				'filename' => $ns_img . ':'.$title->getDBkey(),
                                         'message' => $message,
                                         'code' => isset($embed_code) ? $embed_code : '',
                                      ));

@@ -581,6 +581,7 @@ Observable = $.createClass(Object,{
 
 	bind: function(e,cb,scope) {
 		if (typeof e == 'object') {
+			scope = cb;
 			for (var i in e) {
 				if (i !== 'scope') {
 					this.bind(i,e[i],e.scope||scope);
@@ -603,6 +604,7 @@ Observable = $.createClass(Object,{
 
 	unbind: function(e,cb,scope) {
 		if (typeof e == 'object') {
+			scope = cb;
 			var ret = false;
 			for (var i in e) {
 				if (i !== 'scope') {

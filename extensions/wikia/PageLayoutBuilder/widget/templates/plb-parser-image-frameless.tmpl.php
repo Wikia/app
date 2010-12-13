@@ -1,3 +1,6 @@
+<?php if($data['isform']): ?>
+	<em id="instructionsdiv_<?php echo $data['id'] ?>" class="plb-span-instructions" ><?php echo $data['instructions']; ?> </em> <br>
+<?php endif; ?>
 <?php if($data['align'] == "floatnone"): ?>
 	<div class="center">
 <?php endif; ?>
@@ -24,8 +27,4 @@
 		</div>
 <?php if($data['align'] == "tnone"): ?>
 	</div>
-<?php endif; ?>
-
-<?php if($data['isform']): ?>
-	<span id="instructionsdiv_<?php echo $data['id'] ?>" class="plb-span-instructions plb-empty-input" ><?php echo $data['instructions']; ?> </span>
 <?php endif; ?>

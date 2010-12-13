@@ -60,12 +60,16 @@ $wgAjaxExportList[] = 'LayoutWidgetGallery::getGalleryDataAjax';
 
 /* parser and revers parser */
 
+$wgAjaxExportList[] = 'PageLayoutBuilderEditor::closeHelpbox';
+
+
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'PageLayoutBuilderParser::init';
 } else {
 	$wgExtensionFunctions[] = 'PageLayoutBuilderParser::init';
 }
 
+$wgHooks[ 'WikiFactoryChanged' ][] = 'PageLayoutBuilderHelper::wikiFactoryChanged';
 
 $wgHooks['AlternateEdit'][] = 'PageLayoutBuilderSpecialPage::alternateEditHook';
 $wgHooks['AlternateEdit'][] = 'PageLayoutBuilderForm::alternateEditHook';

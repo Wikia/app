@@ -61,9 +61,15 @@ function mwSetupToolbar() {
 	for (var i = 0; i < mwEditButtons.length; i++) {
 		mwInsertEditButton(toolbar, mwEditButtons[i]);
 	}
+	
 	for (var i = 0; i < mwCustomEditButtons.length; i++) {
 		mwInsertEditButton(toolbar, mwCustomEditButtons[i]);
 	}
+
+	if(typeof GlobalTriggers != 'undefined') {
+		GlobalTriggers.fire("beforeMWToolbarRender",toolbar);	
+	}
+	
 	return true;
 }
 

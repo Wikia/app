@@ -42,8 +42,8 @@ PageLayoutBuilder.list.initList = function() {
 		PageLayoutBuilder.list.doAction(e, "delete");
 	});
 
-	var button = $("#plbNewButton").clone().attr("id", "").css("margin-left", "100px");
-	$("#WikiaPageHeader h1").append(button);
+//	var button = $("#plbNewButton").clone().attr("id", "").css("margin-left", "100px");
+//	$("#WikiaPageHeader h1").append(button);
 	return false;
 }
 

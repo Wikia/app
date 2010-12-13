@@ -168,7 +168,7 @@ class PageLayoutBuilderParser extends Parser {
 		if(empty($self->plbMarkers)) {
 			$self->plbMarkers = array();
 		}
-
+		
 		$layoutTitle = Title::newFromID($attributes['layout_id']);
 
 		$oArticle = new Article( $layoutTitle );
@@ -214,8 +214,12 @@ class PageLayoutBuilderParser extends Parser {
 			$marker = $self->uniqPrefix() . "-LAYOUT_PLB-{".time()."}-\x7f";
 			return self::parserReturnMarker($self, $marker, $dom->__toString());
 		}
+		
+		if(!empty($attributes['cswikitext'])) {
+			$cat = $attributes['cswikitext'];	
+		}
 
-		return $self->recursiveTagParse( self::removeGalleryAndIP($dom->__toString()) );
+		return $self->recursiveTagParse( self::removeGalleryAndIP($dom->__toString()).$cat );
 	}
 	/*
 	 * load values for form form existing article
@@ -258,8 +262,8 @@ class PageLayoutBuilderParser extends Parser {
 		/* save for use in form */		
 		$this->formValues = array();
 		foreach ( $attributes as $key => $value) {
-			if( strpos($key, "val_") === 0 ) {
-				$key = (int) str_replace("val_", "" , $key);
+			if(( strpos($key, "val_") === 0 ) || ($key == 'cswikitext')){
+				$key = $key == 'cswikitext' ? 'cswikitext':((int) str_replace("val_", "" , $key));
 				$this->formValues[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
 				$this->formValues[$key] = strtr( $this->formValues[$key], array(
 					'&#10;' => "\n",

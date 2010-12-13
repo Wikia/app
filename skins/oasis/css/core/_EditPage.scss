@@ -7,14 +7,38 @@
 @import "../mixins/yui-suggest";
 
 .skin-oasis {
+	.cke_browser_gecko{
+		#cke_top_wpTextbox1 {
+			#mw-toolbar {
+				top: 35px;
+			}
+		}
+	}
+	 
 	#cke_top_wpTextbox1 {
 		@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
 		border: 1px solid $color-page-border;
 		height: 65px;
 		#mw-toolbar {
-			top: 35px;
+			top: 25px;
 		}
 	}
+	
+	.cke_toolbar_tab_tabs{
+		span {
+			border: 1px solid $color-page-border;
+			border-left: none;
+			background-color:$color-module-shadow;
+			&.first {
+				border-left: 1px solid $color-page-border;
+			}
+			&.selected {
+				background-color: $color-page;
+				border-bottom-color: $color-page;
+			}
+		}	
+	}
+	
 	.cke_skin_wikia .cke_contents {
 		border-color: $color-page-border;
 		border-top: none;

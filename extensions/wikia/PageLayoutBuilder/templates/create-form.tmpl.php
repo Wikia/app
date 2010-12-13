@@ -27,12 +27,22 @@
 
 <?php if($showtitle): ?>
 	<p class="plb-form-caption-p"><?php echo wfMsg("plb-form-title") ?></p>
-	<input type="text" class="plb-editor-title" id="wgTitle" name="wgTitle" size="60" maxlength="255" value="<?php echo $data['title'] ?>" /> <br>
+	<input data-instructions="<?php echo wfMsg("plb-form-title-instructions"); ?>" type="text" class="plb-editor-title <?php if($data['emptytitle']) { ?>  plb-empty-input <?php }?>" id="wgTitle" name="wgTitle" size="60" maxlength="255" value="<?php echo $data['title'] ?>" /> <br>
 <?php endif; ?>
 
 
 <p class="plb-form-caption-p"><?php echo wfMsg("plb-form-desc") ?></p>
-<textarea class="plb-editor-desc" type="text" id="wgDesc" name="wgDesc" size="60" maxlength="255"><?php echo $data['desc'] ?></textarea>
+<textarea data-instructions="<?php echo wfMsg("plb-form-desc-instructions"); ?>" class="plb-editor-desc  <?php if($data['emptydesc']) { ?>  plb-empty-input <?php }?>" type="text" id="wgDesc" name="wgDesc" size="60" maxlength="255"><?php echo $data['desc'] ?></textarea>
 
 <br/>
-
+<?php global $wgBlankImgUrl; ?>
+<ul id="sourceModeInsertElement" style="display:none" class="plb-add-element wikia-menu-button wikia-menu-button-no-auto">
+	<li>
+		<span>
+		<img height="16" width="22" src="<?php echo $wgBlankImgUrl; ?>" class="osprite icon-edit" alt="">
+		<?php echo wfMsg('plb-editor-add-element'); ?></span>
+		<img src="<?php echo $wgBlankImgUrl; ?>" class="chevron">
+		<ul>
+		</ul>
+	</li>
+</ul>

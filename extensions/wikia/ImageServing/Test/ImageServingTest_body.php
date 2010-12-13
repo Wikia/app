@@ -103,7 +103,7 @@ class MostvisitedpagesPageIS extends MostvisitedpagesPage {
 						$result->title .= $value2['name']."<br>";
 					}
 				};
-				$result->title .= Xml::element("a", array("href" => $wgTitle->getLocalURL("option=".$wgRequest->getVal("option", 1)."article=".$article_name)), wfMsg("imageserving-showall") )."<br>" ;
+				$result->title .= Xml::element("a", array("href" => $wgTitle->getLocalURL("option=".$wgRequest->getVal("option", 1)."&article=".$article_name)), wfMsg("imageserving-showall") )."<br>" ;
 				$result->title .= "</div>";
 			} 
 			$res = wfSpecialList( $result->title, $result->value );

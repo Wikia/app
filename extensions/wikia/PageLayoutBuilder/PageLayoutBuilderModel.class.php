@@ -70,8 +70,7 @@ class PageLayoutBuilderModel {
 
 		return $out;
 	}
-
-
+	
 	public static function saveArticle(Article $article, $body, $summary = "" ) {
 		global $wgOut, $wgUser, $wgContLang, $wgRequest, $wgCaptchaTriggers;
 
@@ -79,7 +78,7 @@ class PageLayoutBuilderModel {
 		$editPage->textbox1 = $body;
 		$editPage->watchthis = true;
 		$editPage->minoredit = false;
-		
+		$editPage->recreate = true;
 		$editPage->summary = $summary;
 		
 		if(empty($summary)) {
@@ -88,6 +87,7 @@ class PageLayoutBuilderModel {
 
 		$result = false;
 		$wgCaptchaTriggers = array();
+		
 		$status = $editPage->internalAttemptSave( $result, false );
 		return $status;
 	}
@@ -184,6 +184,10 @@ class PageLayoutBuilderModel {
 	}
 //TODO: memec
 	public static function articleIsFromPLB($page_id) {
+		if($page_id == 0) {
+			return false;
+		}
+		
 		$db = wfGetDB(DB_SLAVE, array());
 		$res = $db->select('plb_page',
 			array('plb_p_layout_id'),
