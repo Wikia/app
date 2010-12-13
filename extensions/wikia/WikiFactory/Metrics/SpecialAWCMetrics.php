@@ -42,8 +42,8 @@ class WikiMetrics {
     private $axDomain;
     private $axExactDomain;
     private $axTitle;
-    private $axFounder;
-    private $axFounderEmail;
+    private $axUser;
+    private $axEmail;
     private $axLimit;
     private $axOffset;
     private $axOrder;
@@ -377,14 +377,14 @@ class WikiMetrics {
 				$where[] = "{$city_id} = 0";
 			}
 		}
-		if ( !empty($this->axFounder) ) {
-			$oFounder = User::newFromName( $this->axFounder );
+		if ( !empty($this->axUser) ) {
+			$oFounder = User::newFromName( $this->axUser );
 			if ( $oFounder instanceof User ) {
 				$where[] = 'city_founding_user = ' . $oFounder->getId();
 			}
 		}
-		if ( !empty($this->axFounderEmail) ) {
-			$where[] = 'city_founding_email LIKE "%' . $dbr->escapeLike( str_replace(' ', '_', $this->axFounderEmail) ) . '%"';
+		if ( !empty($this->axEmail) ) {
+			$where[] = 'city_founding_email LIKE "%' . $dbr->escapeLike( str_replace(' ', '_', $this->axEmail) ) . '%"';
 		}
 		$city_public = array( );
 		if ( !empty($this->axActive) ) {
@@ -467,8 +467,6 @@ class WikiMetrics {
 		$where = $this->buildQueryOptions($dbr);
 		
 		/* number records */
-		
-		
 		$options = array();
 
 		$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); #, "stats.page_views");
