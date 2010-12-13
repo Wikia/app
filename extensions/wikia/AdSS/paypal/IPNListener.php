@@ -6,7 +6,7 @@ class IPNListener {
 		    $r->getText( 'mp_status' ) == '1' ) {
 			// mark BillingAgreement as canceled
 			$payerId = $r->getText( 'payer_id' );
-			$user = AdSS_User::newFromPayerId( $payer_id );
+			$user = AdSS_User::newFromPayerId( $payerId );
 			$user->baid = null;
 			$user->save();
 		}
