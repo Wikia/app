@@ -143,7 +143,7 @@
 		 * @return array
 		 */
 		protected function getArticles() {
-			$service = new CategoryService($this->categoryPage->mTitle->getDBkey());
+			$service = new CategoryService($this->categoryPage->mTitle);
 			return $service->getTopArticles($this->confMaxArticles);
 		}
 
@@ -168,54 +168,8 @@
 		 * @return string
 		 */
 		protected function getArticleSnippet( $articleId, $length = 150 ) {
-			global $wgTitle, $wgParser;
-
-			$article = Article::newFromID( $articleId );
-
-			if (empty($article)) {
-				return '';
-			}
-
-			$content = $article->getContent();
-
-			// Perl magic will happen! Beware! Perl 5.10 required!
-			$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#i';
-
-			// remove {{..}} tags
-			$re = strtr( $re_magic, array( 'S' => "\\{", 'E' => "\\}", 'X' => '' ));
-			$content = preg_replace($re, '', $content);
-
-			// remove [[Image:...]] and [[File:...]] tags
-			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|File):" ));
-			$content = preg_replace($re, '', $content);
-
-			// skip "edit" sections
-			$content .= "\n__NOEDITSECTION__ __NOTOC__";
-
-			$tmpParser = new Parser();
-			$content = $tmpParser->parse( $content, $wgTitle, new ParserOptions )->getText();
-
-			// remove <script> tags (RT #46350)
-			$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
-
-			// experimental: remove <th> tags with content
-			$content = preg_replace('#<th[^>]*>(.*?)<\/th>#s', '', $content);
-
-			// experimental: remove <hX> tags with content
-			$content = preg_replace('#<h(?<D>\d)[^>]*>(.*?)<\/h\g{D}>#s', '', $content);
-
-			// remove HTML tags
-			$content = trim(strip_tags($content));
-
-			// compress white characters
-			$content = mb_substr($content, 0, $length + 200);
-			$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&'));
-			$content = preg_replace('/\s+/',' ',$content);
-
-			// store first 150 characters of parsed content
-			$content = mb_substr($content, 0, $length);
-
-			return $content;
+			$articleService = new ArticleService( $articleId );
+			return $articleService->getTextSnippet( $length );
 		}
 
 		/**
