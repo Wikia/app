@@ -24,7 +24,7 @@ class CorporateFooterModule extends Module {
 		global $wgCityId;
 
 		$catInfo = WikiFactory::getCategory($wgCityId);
-		if (empty($catInfo) || ($catInfo->cat_id != 2 && $catInfo->cat_id != 3 && $catInfo->cat_id != 4)) {
+		if (empty($catInfo) || ($catInfo->cat_id != 2 && $catInfo->cat_id != 3 && $catInfo->cat_id != 4)) {	// 2: Gaming. 3: Entertainment. 4: Corporate
 			//Use Recipes Wiki cityID to force Lifestyle hub
 			$catInfo = WikiFactory::getCategory(3355);
 		}
