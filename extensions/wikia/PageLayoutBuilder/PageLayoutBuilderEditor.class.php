@@ -72,6 +72,9 @@
 			}
 
 			$helpbox = array('db' => $wgUser->getOption("plbhidehelpbox"), 'show' => 0);
+				$wgUser->setOption("plbhidehelpbox", 1 );
+				$wgUser->saveSettings();	
+				
 			if( !$wgUser->getOption("plbhidehelpbox") ) {
 				$response = new AjaxResponse();				
 				$helpboxTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
