@@ -4,12 +4,12 @@ class IPNListener {
 	static function notify( &$r ) {
 		if( $r->getText( 'txn_type' ) == 'mp_cancel' &&
 		    $r->getText( 'mp_status' ) == '1' ) {
-			$baid = $r->getText( 'mp_id' );
 			// mark BillingAgreement as canceled
-			$pp = PaymentProcessor::newFromBillingAgreement( $baid );
-			$pp->cancelBillingAgreement( $baid );
+			$payerId = $r->getText( 'payer_id' );
+			$user = AdSS_User::newFromPayerId( $payer_id );
+			$user->baid = null;
+			$user->save();
 		}
-		wfDebug( "IPN payload = " . print_r( $r, true ) . "\n" );
 		return true;
 	}
 }

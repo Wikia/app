@@ -339,4 +339,15 @@ class PaypalPaymentService extends Service {
 		return $retArr;
 	}
 
+	static function onInstantPaymentNotification( &$req ) {
+		if( $req->getText( 'txn_type' ) == 'mp_cancel' &&
+		    $req->getText( 'mp_status' ) == '1' ) {
+			$baid = $req->getText( 'mp_id' );
+			// mark BillingAgreement as canceled
+			$pp = self::newFromBillingAgreement( $baid );
+			$pp->cancelBillingAgreement( $baid );
+		}
+		wfDebug( "IPN payload = " . print_r( $req, true ) . "\n" );
+		return true;
+	}
 }
