@@ -24,12 +24,8 @@ foreach( $res as $row ) {
 	$ad = AdSS_AdFactory::createFromRow( $row );
 	echo "{$ad->wikiId} | {$ad->id} | {$ad->userEmail} (ID={$ad->userId}) | {$ad->url} | ".wfTimestamp( TS_DB, $ad->expires )." | ";
 
-	$pp = PaymentProcessor::newFromUserId( $ad->userId );
-	$baid = '';
-	if( $pp ) {
-		$baid = $pp->getBillingAgreement();
-	}
-	if( $baid ) {
+	$user = AdSS_User::newFromId( $ad->userId );
+	if( $user->baid ) {
 		$billing = new AdSS_Billing();
 		if( $billing->addCharge( $ad ) ) {
 			$ad->refresh();

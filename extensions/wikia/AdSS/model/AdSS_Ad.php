@@ -15,6 +15,7 @@ abstract class AdSS_Ad {
 	public $expires;
 	public $weight;
 	public $price;
+	public $pp_token;
 
 	protected $user;
 
@@ -32,6 +33,7 @@ abstract class AdSS_Ad {
 		$this->expires = null;
 		$this->weight = 1;
 		$this->price = 0;
+		$this->pp_token = null;
 		$this->user = null;
 	}
 
@@ -86,6 +88,7 @@ abstract class AdSS_Ad {
 				'price'  => $row->ad_price,
 				'period' => $row->ad_price_period,
 				);
+		$this->pp_token = $row->ad_pp_token;
 	}
 
 	abstract function save();

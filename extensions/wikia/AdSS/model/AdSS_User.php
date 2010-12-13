@@ -7,6 +7,8 @@ class AdSS_User {
 	public $email;
 	public $password;
 	public $newpassword;
+	public $pp_payerId;
+	public $baid;
 
 	function __construct() {
 		$this->id = 0;
@@ -14,6 +16,8 @@ class AdSS_User {
 		$this->email = '';
 		$this->password = '';
 		$this->newpassword = '';
+		$this->pp_payerId = null;
+		$this->baid = null;
 	}
 
 	static function newFromId( $id ) {
@@ -24,6 +28,20 @@ class AdSS_User {
 		if( $row ) {
 			$user = self::newFromRow( $row );
 			if( $user->id == $id ) {
+				return $user;
+			}
+		}
+		return false;
+	}
+
+	static function newFromPayerId( $payerId ) {
+		global $wgAdSS_DBname;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$row = $dbr->selectRow( 'users', '*', array( 'user_pp_payerid' => $payerId ), __METHOD__ );
+		if( $row ) {
+			$user = self::newFromRow( $row );
+			if( $user->pp_payerid == $payerId ) {
 				return $user;
 			}
 		}
@@ -86,6 +104,8 @@ class AdSS_User {
 		$this->email = $row->user_email;
 		$this->password = $row->user_password;
 		$this->newpassword = $row->user_newpassword;
+		$this->pp_payerid = $row->user_pp_payerid;
+		$this->baid = $row->user_pp_baid;
 	}
 
 	function save() {
@@ -99,6 +119,8 @@ class AdSS_User {
 						'user_email'       => $this->email,
 						'user_password'    => $this->password,
 						'user_newpassword' => $this->newpassword,
+						'user_pp_payerid'  => $this->pp_payerid,
+						'user_pp_baid'     => $this->baid,
 					     ),
 					__METHOD__
 				    );
@@ -109,6 +131,8 @@ class AdSS_User {
 						'user_email'       => $this->email,
 						'user_password'    => $this->password,
 						'user_newpassword' => $this->newpassword,
+						'user_pp_payerid'  => $this->pp_payerid,
+						'user_pp_baid'     => $this->baid,
 					     ),
 					array(
 						'user_id' => $this->id

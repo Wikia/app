@@ -39,7 +39,6 @@ $wgAutoloadClasses['AdSS_AdForm'] = $dir . 'forms/AdSS_AdForm.php';
 $wgAutoloadClasses['AdSS_ManagerLoginForm'] = $dir . 'forms/AdSS_ManagerLoginForm.php';
 $wgAutoloadClasses['AdSS_Publisher'] = $dir . 'AdSS_Publisher.php';
 $wgAutoloadClasses['AdSS_Util'] = $dir . 'AdSS_Util.php';
-$wgAutoloadClasses['PaymentProcessor'] = $dir . 'paypal/PaymentProcessor.php';
 $wgAutoloadClasses['IPNListener'] = $dir . 'paypal/IPNListener.php';
 
 $wgAvailableRights[] = 'adss-admin';

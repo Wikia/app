@@ -45,6 +45,7 @@ class AdSS_TextAd extends AdSS_Ad {
 						'ad_weight'       => $this->weight,
 						'ad_price'        => $this->price['price'],
 						'ad_price_period' => $this->price['period'],
+						'ad_pp_token'     => $this->pp_token,
 					     ),
 					__METHOD__
 				    );
@@ -66,6 +67,7 @@ class AdSS_TextAd extends AdSS_Ad {
 						'ad_weight'       => $this->weight,
 						'ad_price'        => $this->price['price'],
 						'ad_price_period' => $this->price['period'],
+						'ad_pp_token'     => $this->pp_token,
 					     ),
 					array(
 						'ad_id' => $this->id
