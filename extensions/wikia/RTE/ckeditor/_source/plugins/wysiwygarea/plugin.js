@@ -18,13 +18,27 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	var notWhitespaceEval = CKEDITOR.dom.walker.whitespaces( true );
 
-	function checkReadOnly( selection )
+	// Wikia - start
+	function checkReadOnly( selection, editor )
 	{
+		var result;
+		// Wikia - start "return" => "result ="
 		if ( selection.getType() == CKEDITOR.SELECTION_ELEMENT )
-			return selection.getSelectedElement().isReadOnly();
+			result = selection.getSelectedElement().isReadOnly();
 		else
-			return selection.getCommonAncestor().isReadOnly();
+			result = selection.getCommonAncestor().isReadOnly();
+		// Wikia - end "return" => "result ="
+		if (editor && result) {
+			var data = {
+				result: result,
+				selection: selection
+			};
+			editor.fire( 'forbiddenInsertContent', data );
+			result = data.result;
+		}
+		return result;
 	}
+	// Wikia - end
 
 	function onInsertHtml( evt )
 	{
@@ -33,7 +47,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			this.focus();
 
 			var selection = this.getSelection();
-			if ( checkReadOnly( selection ) )
+			if ( checkReadOnly( selection, this ) )
 				return;
 
 			var data = evt.data;
@@ -122,8 +136,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			this.focus();
 
 			var selection = this.getSelection();
-			if ( checkReadOnly( selection ) )
+			if ( checkReadOnly( selection, this ) ) {
+				/*
+				// Wikia - start
+				if ( CKEDITOR.env.ie ) {
+					var selRanges = selection.getRanges();
+					if ( selRanges[0].collapsed )
+				}
+				// Wikia - end
+				*/
 				return;
+			}
 
 			this.fire( 'saveSnapshot' );
 
@@ -152,6 +175,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			for ( var i = ranges.length - 1 ; i >= 0 ; i-- )
 			{
 				range = ranges[ i ];
+				
+				range.enlargeFormattables();
 
 				// Remove the original contents.
 				range.deleteContents();
@@ -559,6 +584,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 						domWindow	= editor.window	= new CKEDITOR.dom.window( domWindow );
 						domDocument	= editor.document	= new CKEDITOR.dom.document( domDocument );
+						
+						//http://dev.ckeditor.com/attachment/ticket/4208/disable_object_resizing_ie.patch
+                        // For IE, disable object resizing by stopping the resizestart event 
+                        if ( CKEDITOR.env.ie && editor.config.disableObjectResizing) 
+                        { 
+                                domDocument.on( 'mousedown', function(ev)  
+                                        { 
+                                            ev.data.getTarget().on( 'resizestart', function( ev2 )  
+                                                { 
+                                                        ev2.data.preventDefault(); 
+                                                }); 
+                                }); 
+                        } 
 
 						domDocument.on( 'dblclick', function( evt )
 						{

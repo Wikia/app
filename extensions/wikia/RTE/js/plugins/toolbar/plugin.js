@@ -3,84 +3,133 @@ CKEDITOR.plugins.add('rte-toolbar',
 	editorContainer: false,
 	updateToolbarLock: false,
 
+	renderToolbar: function(event, n, config, editor, messages) {
+
+		if (window.skin == 'oasis') {
+			var colorClass = '';
+		}
+		else {
+			var colorClass= ' color1';
+		}
+		
+		var style = "";
+		if( n > 1) {
+			style = 'style = "display: none" ' ; 
+		}
+		
+		var output = [ '<table ' + style + 'class="cke_toolbar_tab" id="cke_toolbar' + n + '"><tr>' ];
+		for(var b = 0; b < config.length; b++)
+		{
+			var bucket = config[b];
+			var msg = bucket.msg;
+			if (typeof messages[bucket.msg]  != 'undefined') {
+					msg = messages[bucket.msg];
+			}
+			
+			output.push( '<td><span class="headline' + colorClass + '">' + msg + '</span>' );
+			output.push( '<div class="bucket_buttons' + colorClass + '"><div class="' + colorClass + '">' );
+			for(var g = 0; g < bucket.groups.length; g++)
+			{
+				var items = bucket.groups[g];
+				var itemsCount = items.length;
+	
+				// don't render empty buttons group
+				if (items == false) {
+					continue;
+				}
+	
+				output.push( '<span class="cke_buttons_group cke_buttons_group_' + b + '">' );
+	
+				for(var i = 0; i < itemsCount; i++) {
+					var itemName = items[i];
+					var item = editor.ui.create(itemName);
+					if(item)
+					{
+						// add extra CSS classes for button wrapping <span>
+						item.wrapperClassName = '';
+	
+						// first / last item
+						if (i == 0) {
+							item.wrapperClassName += 'cke_button_first ';
+						}
+	
+						if (i == itemsCount - 1) {
+							item.wrapperClassName += 'cke_button_last ';
+						}
+	
+						// state classes: cke_on/cke_off/cke_disabled
+						var itemObj = item.render(editor, output);
+					}
+				}
+	
+				output.push( '</span>' );
+			}
+			output.push( '</div></div><span class="tagline' + colorClass + '"></span></td>' );
+		}
+	
+		output.push( '</tr></table>' );
+	
+		// add placeholder for source mode toolbar
+		output.push('<div id="mw-toolbar"></div>');
+	
+		event.data.html += output.join( '' );
+
+	},
+	
 	init: function(editor) {
 		var self = this;
-
+		editor.on( 'mode', function() {
+			if(editor.mode == "source") {
+				$('.cke_toolbar_tab_tabs').hide();
+			} else {
+				$('.cke_toolbar_tab_tabs').show();
+			}
+		});
+		
 		editor.on( 'themeSpace', function( event ) {
 			if ( event.data.space == 'top')
-			{
+			{ 
 				var config = editor.config['toolbar_' + editor.config.toolbar];
+                $("body").trigger(jQuery.Event("RTE_beforeToolbarRender"), [ config ]); 
+                
 				var messages = RTE.instance.lang.bucket;
-
-				var output = [ '<table id="cke_toolbar"><tr>' ];
-
-				if (window.skin == 'oasis') {
-					var colorClass = '';
-				}
-				else {
-					var colorClass= ' color1';
-				}
-
-				for(var b = 0; b < config.length; b++)
-				{
-					var bucket = config[b];
-					output.push( '<td><span class="headline' + colorClass + '">' + messages[bucket.msg] + '</span>' );
-					output.push( '<div class="bucket_buttons' + colorClass + '"><div class="' + colorClass + '">' );
-					for(var g = 0; g < bucket.groups.length; g++)
-					{
-						var items = bucket.groups[g];
-						var itemsCount = items.length;
-
-						// don't render empty buttons group
-						if (items == false) {
-							continue;
+			
+				event.data.html += '<div style="display:none" class="cke_toolbar_tab_tabs" >';
+				if( config.length > 1 ) {
+					var classname = "";
+					for(var i = 0; i < config.length; i++ ) {
+						classname = "";
+						if(i == 0) {
+							classname = 'class="first selected"';
 						}
-
-						output.push( '<span class="cke_buttons_group">' );
-
-						for(var i = 0; i < itemsCount; i++) {
-							var itemName = items[i];
-							var item = editor.ui.create(itemName);
-							if(item)
-							{
-								// add extra CSS classes for button wrapping <span>
-								item.wrapperClassName = '';
-
-								// first / last item
-								if (i == 0) {
-									item.wrapperClassName += 'cke_button_first ';
-								}
-
-								if (i == itemsCount - 1) {
-									item.wrapperClassName += 'cke_button_last ';
-								}
-
-								// state classes: cke_on/cke_off/cke_disabled
-								var itemObj = item.render(editor, output);
-							}
-						}
-
-						output.push( '</span>' );
+						event.data.html += '<span ' + classname + ' data-order="' + (i + 1) +'" >' + config[i].name + '</span>';
 					}
-					output.push( '</div></div><span class="tagline' + colorClass + '"></span></td>' );
 				}
-
-				output.push( '</tr></table>' );
-
-				// add placeholder for source mode toolbar
-				output.push('<div id="mw-toolbar"></div>');
-
-				event.data.html += output.join( '' );
-
+				event.data.html += '</div>';
+				
+				for(var i = 0; i < config.length; i++ ) {
+					self.renderToolbar(event, i + 1,  config[i].data, editor, messages);	
+				}
+				
 				// try to resize toolbar a bit earlier (RT #40132)
 				setTimeout(function() {
+					$('.cke_toolbar_tab_tabs span').click(function(e){
+					    element = $(e.target);
+					    $('.cke_toolbar_tab').hide();
+					    $('#cke_toolbar' + element.attr('data-order') ).show();
+					    $('.cke_toolbar_tab_tabs span').removeClass('selected');
+					    element.addClass('selected');
+					});
+					
 					self.updateToolbar.apply(self);
 				}, 50);
+				
+				
 			}
 		});
 
 		editor.on('instanceReady', function() {
-			var toolbar = $('#cke_toolbar');
+			var toolbar = $('#cke_toolbar1');
 
 			// setup toolbar
 			RTE.tools.getThemeColors();
@@ -131,7 +180,7 @@ CKEDITOR.plugins.add('rte-toolbar',
 			});
 
 			// toolbar is ready!
-			editor.fire('toolbarReady', $('#cke_toolbar'));
+			editor.fire('toolbarReady', $('#cke_toolbar1'));
 
 			// reference to editor container (wrapping element for iframe / textarea)
 			self.editorContainer = $(RTE.instance.container.$).find('.cke_contents');
@@ -248,7 +297,7 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 		//check each bucket for hidden buttons
 		var anyhidden = false;
-		$('#cke_toolbar').find('td').each(function() {
+		$('#cke_toolbar1').find('td').each(function() {
 			var hidden = 0;
 			var cell = $(this);
 
@@ -285,15 +334,15 @@ CKEDITOR.plugins.add('rte-toolbar',
 			}
 		});
 		if (anyhidden) {
-			$('#cke_toolbar').addClass('more');
+			$('#cke_toolbar1').addClass('more');
 		} else {
-			$('#cke_toolbar').removeClass('more');
+			$('#cke_toolbar1').removeClass('more');
 		}
 
 		// resize #toolbarWrapper
 		var wrapperHeight = 200;
 
-		$('#cke_toolbar').find('td').each(function() {
+		$('#cke_toolbar1').find('td').each(function() {
 			var cell = $(this);
 
 			// calculate height of each bucket (when collapsed)
@@ -361,6 +410,10 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 			for (i = 0; i < mwCustomEditButtons.length; i++) {
 				mwInsertEditButton(toolbarNode, mwCustomEditButtons[i]);
+			}
+
+			if(typeof GlobalTriggers != 'undefined') {
+				GlobalTriggers.fire("beforeMWToolbarRender",MWtoolbar[0]);	
 			}
 
 			RTE.log('loading source mode toolbar');

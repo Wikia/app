@@ -94,7 +94,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				node = range.endContainer;
 
-				if ( range.endOffset > 0 )
+				if ( range.endOffset > 0 /* Wikia -> */ && node.getChild )
 				{
 					node = node.getChild( range.endOffset - 1 );
 					if ( guard( node ) === false )
@@ -107,7 +107,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			else
 			{
 				node = range.startContainer;
-				node = node.getChild( range.startOffset );
+				if ( node.getChild ) { // <- Wikia
+					node = node.getChild( range.startOffset );
+				}
 
 				if ( node )
 				{

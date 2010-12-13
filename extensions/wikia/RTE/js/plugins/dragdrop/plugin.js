@@ -15,6 +15,8 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 			RTE.log('dropped element:');
 			RTE.log(droppedElement);
+			
+			RTE.instance.fire('droppedElements',droppedElement);
 
 			RTE.instance.fire('droppedElements',droppedElement);
 
