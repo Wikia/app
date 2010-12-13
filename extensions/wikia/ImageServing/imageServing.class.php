@@ -208,7 +208,6 @@ class imageServing{
 				}
 						
 				if( !empty($img) || $img = wfFindFile( $title ) ) {
-					$imageInfo = getimagesize( $img->getPath() );
 					$fileName = $img->getTitle()->getDBkey();
 					$issvg = false;
 					$mime = strtolower($img->getMimeType());
