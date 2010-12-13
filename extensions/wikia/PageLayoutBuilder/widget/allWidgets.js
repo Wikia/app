@@ -28,7 +28,6 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 	$.loadYUI( function() {
 		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css?'+wgStyleVersion );
 		$.getScript(wgExtensionsPath+ '/wikia/WikiaMiniUpload/js/WMU.js?'+wgStyleVersion, function() {
-			$("body").unbind('imageUploadSummary').bind( 'imageUploadSummary', PageLayoutBuilder.WMU_insertImage);
 			WMU_show();
 			
 			WMU_Event_OnLoadDetails = function() {
@@ -54,6 +53,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 				});
 				return false;
 			}
+			$("body").unbind('imageUploadSummary').bind( 'imageUploadSummary', PageLayoutBuilder.WMU_insertImage);
 		});
 	});
 	return false;

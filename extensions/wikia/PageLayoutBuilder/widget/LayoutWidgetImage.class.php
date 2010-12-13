@@ -62,10 +62,16 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$caption = $this->getCaption();
 		$caption = str_replace( array('|', ']', '[') , array('&#124;', '&#93;', '&#91;'), $caption);
 
-		if($this->getAttrVal('type', true) == 'frameless') {
-			return "[[ Image:".$this->getValue()." | frameless | " . $this->getAttrVal("align", true) . " | " . $this->getAttrVal("size", true) . "px | " . $caption . " ]]";
+		if(strpos($this->getValue(), ":" ) > 0 ) {
+			$value = $this->getValue();	
 		} else {
-			return "[[ Image:".$this->getValue()." | thumb |" . $this->getAttrVal("align", true) . " | " . $this->getAttrVal("size", true) . "px | " . $caption . " ]]";
+			$value = "Image:".$this->getValue();
+		}
+		
+		if($this->getAttrVal('type', true) == 'frameless') {
+			return "[[ ".$value." | frameless | " . $this->getAttrVal("align", true) . " | " . $this->getAttrVal("size", true) . "px | " . $caption . " ]]";
+		} else {
+			return "[[ ".$value." | thumb |" . $this->getAttrVal("align", true) . " | " . $this->getAttrVal("size", true) . "px | " . $caption . " ]]";
 		}
 	}
 
