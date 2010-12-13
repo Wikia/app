@@ -25,15 +25,14 @@ foreach( $res as $row ) {
 	$amount = -$row->billing_balance;
 	echo "{$user->toString()} | $amount | {$row->last_billed} | ";
 
-	$pp = PaymentProcessor::newFromUserId( $user->id );
-	if( !$pp ) {
+	if( !$user->baid ) {
 		echo "failed - no billing agreement!\n";
 		continue;
 	}
 
-	$baid = $pp->getBillingAgreement();
+	$pp = new PaypalPaymentService();
 	$respArr = array();
-	$pmt_id = $pp->collectPayment( $baid, $amount, $respArr );
+	$pmt_id = $pp->collectPayment( $user->baid, $amount, $respArr );
 	if( $pmt_id ) {
 		$billing = new AdSS_Billing();
 		if( $billing->addPayment( $user->id, $pmt_id, $amount ) ) {
@@ -44,7 +43,9 @@ foreach( $res as $row ) {
 	} else {
 		if( $respArr['RESULT'] == 12 && $respArr['RESPMSG'] == 'Declined: 10201-Agreement was canceled' ) {
 			echo "billing agreement canceled";
-			$pp->cancelBillingAgreement( $baid );
+			$pp->cancelBillingAgreement( $user->baid );
+			$user->baid = null;
+			$user->save();
 			echo "...\n";
 		} else {
 			echo "failed...\n";

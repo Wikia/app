@@ -25,6 +25,19 @@ class AdSS_AdFactory {
 		}
 	}
 
+	static function createFromToken( $token ) {
+		global $wgAdSS_DBname;
+
+		$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
+		$row = $dbr->selectRow( 'ads', '*', array( 'ad_pp_token' => $token ), __METHOD__ );
+		if( $row === false ) {
+			// invalid token
+			return null;
+		} else {
+			return self::createFromRow( $row );
+		}
+	}
+
 	static function createFromRow( $row ) {
 		if( $row->ad_type == 'b' ) {
 			$ad = new AdSS_BannerAd();

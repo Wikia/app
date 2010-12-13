@@ -132,8 +132,7 @@ class AdSS_Controller extends SpecialPage {
 					$this->saveAdInternal( AdSS_AdFactory::createFromForm( $adForm ), $user, "adss/form/save" );
 					return;
 				}
-				$pp = PaymentProcessor::newFromUserId( $user->id );
-				if( $pp && $pp->getBillingAgreement() ) {
+				if( $user->baid ) {
 					$this->saveAdInternal( AdSS_AdFactory::createFromForm( $adForm ), $user, "adss/form/save" );
 					return;
 				}
@@ -147,12 +146,12 @@ class AdSS_Controller extends SpecialPage {
 		$selfUrl = $this->getTitle()->getFullURL();
 		$returnUrl = $selfUrl . '/paypal/return';
 		$cancelUrl = $selfUrl . '/paypal/cancel';
-		$pp = new PaymentProcessor();
+		$pp = new PaypalPaymentService();
 		if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
 			$ad = AdSS_AdFactory::createFromForm( $adForm );
+			$ad->pp_token = $pp->getToken();
 			$ad->save();
 			if( $ad->id > 0 ) {
-				$pp->setAdId( $ad->id );
 				// redirect to PayPal
 				$wgOut->addMeta( 'http:Refresh', '0;URL=' . $wgPayPalUrl . $pp->getToken() );
 				$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/redirect/ok") } )' );
@@ -172,30 +171,24 @@ class AdSS_Controller extends SpecialPage {
 	function processPayPalReturn( $token ) {
 		global $wgAdSS_templatesDir, $wgOut, $wgAdSS_contactEmail, $wgUser;
 
-		$pp_new = new PaymentProcessor( $token );
-
-		$ad = null;
-		$adId = $pp_new->getAdId();
-		if( $adId ) {
-			$ad = AdSS_AdFactory::createFromId( $adId );
-		}
+		$ad = AdSS_AdFactory::createFromToken( $token );
 		if( $ad === null ) {
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/return/error") } )' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-token-error' ) );
 			return;
 		}
 
-		$payerId = $pp_new->fetchPayerId();
+		$pp = new PaypalPaymentService( $wg, $token );
+
+		$payerId = $pp->fetchPayerId();
 		if( $payerId === false ) {
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/return/error") } )' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 			return;
 		}
 
-		$baid = false;
-		$pp_existing = PaymentProcessor::newFromPayerId( $payerId, $ad->userEmail );
-		if( $pp_existing ) {
-			$user = AdSS_User::newFromId( $pp_existing->getUserId() );
+		$user = AdSS_User::newFromPayerId( $payerId );
+		if( $user ) {
 			wfDebug( "AdSS: got existing user: {$user->toString()})\n" );
 			if( $user->password == '' ) {
 				// generate a new password
@@ -204,23 +197,25 @@ class AdSS_Controller extends SpecialPage {
 				$user->save();
 				$user->sendWelcomeMessage( $password );
 			}
-
-			$baid = $pp_existing->getBillingAgreement();
-			if( $baid ) wfDebug( "AdSS: got existing BAID: $baid\n" );
 		} else {
 			$user = AdSS_User::register( $ad->userEmail );
 			wfDebug( "AdSS: created new user: {$user->toString()})\n" );
 		}
-		$pp_new->setUserId( $user->id );
 
-		if( $baid === false ) {
-			$baid = $pp_new->createBillingAgreement();
-			wfDebug( "AdSS: created new BAID: $baid\n" );
-		}
-		if( $baid === false ) {
-			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/return/error") } )' );
-			$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
-			return;
+		if( $user->baid ) {
+			wfDebug( "AdSS: got existing BAID: {$user->baid}\n" );
+		} else {
+			$user->pp_payerid = $payerId;
+			$user->baid = $pp->createBillingAgreement();
+
+			if( $user->baid ) {
+				$user->save();
+				wfDebug( "AdSS: created new BAID: {$user->baid}\n" );
+			} else {
+				$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/paypal/return/error") } )' );
+				$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
+				return;
+			}
 		}
 
 		$this->saveAdInternal( $ad, $user, "adss/form/paypal/return" );
