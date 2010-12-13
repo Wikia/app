@@ -28,7 +28,7 @@ class SponsorshipDashboardService extends Service {
 		}
 
 		// loads cache data
-		$cachedData = $this->getFromCache( 'RelatedWikiaStats'.$currentHub );
+		$cachedData = $this->getFromCache( 'RelatedWikiaStats:'.$currentHub );
 		if ( !empty($cachedData) ){
 			return $cachedData;
 		}
@@ -66,22 +66,37 @@ class SponsorshipDashboardService extends Service {
 		$res = $dbr->query( $sql, __METHOD__ );
 		$all = array();
 		$titles = array();
+		$heckValue = array();
+		$weeks = array();
+		
 		while ($row = $res->fetchObject($res)) {
 			if (	isset( $cityUniqueUsers[ $row->week ] ) &&
 				!empty( $cityUniqueUsers[ $row->week ] ) &&
 				( ( !isset( $all[ $row->week ] ) ) || ( count( $all[ $row->week ] ) <= 10 ) )
 			){
 				$familiarity = round( ( $row->citycommonusers / $cityUniqueUsers[ $row->week ] * 100 ) , 2 );
-				if ( $familiarity > 5 ) {
-					$all[ $row->week ]['date'] = $row->week;
-					$all[ $row->week ][ $row->cityId ] = $familiarity;
-					$titles[ $row->cityId ] = $row->city_title;
+
+				if ( !isset( $heckValue[ $row->cityId ] ) ) $heckValue[ $row->cityId ] = false;
+				$heckValue[ $row->cityId ] = ( $heckValue[ $row->cityId ] || ( $familiarity > 5 ) );
+
+				$all[ $row->week ]['date'] = $row->week;
+				$all[ $row->week ][ $row->cityId ] = $familiarity;
+				$titles[ $row->cityId ] = $row->city_title;
+				$weeks[] = $row->week;
+			}
+		}
+
+		foreach ($heckValue as $key => $cleanup){
+			if( !$cleanup ){
+				foreach( $weeks as $week ){
+					unset( $all[$week][$key] );
 				}
 			}
 		}
+		
 		$returnData = $this->simplePrepareToDisplay( $all , $titles );
 
-		$this->saveToCache( 'RelatedWikiaStats'.$currentHub , $returnData );
+		$this->saveToCache( 'RelatedWikiaStats:'.$currentHub , $returnData );
 
 		return $returnData;
 
@@ -121,12 +136,15 @@ class SponsorshipDashboardService extends Service {
 			$aKeys = array_keys( $this->aCityHubs );
 			$currentHub = $this->aCityHubs[ $aKeys[0] ];
 		}
-
+		
 		// never use current data. use data from last week.
-		$sWeek = ( (int)date('W') > 0 ) ? date('W') : '51';
-		$sYear = ( (int)date('W') > 0 ) ? date('Y') : ((int)date('Y') - 1);
-
-		$currentYearWeek = $sYear.$sWeek;
+		$currentYearWeek = date('YW');
+		if ( (int)date('W') > 0 ){
+			$currentYearWeek = $currentYearWeek - 1;
+		} else {
+			$currentYearWeek = $currentYearWeek - 49;
+		}
+		
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 
 		// get common users for current wikia and TOP 10 others + current
@@ -162,7 +180,7 @@ class SponsorshipDashboardService extends Service {
 			
 			// calculate familiarity
 			$familiarity = round( $row->citycommonusers / $cityUniqueUsers * 100 , 2);
-			$titles[ 'c'.$row->cityId ] = $row->city_title.' - <i>'.$familiarity.'% user match</i>';
+			$titles[ 'c'.$row->cityId ] = wfMsg('sponsorship-dashboard-cityname-and-familiarity', $row->city_title, $familiarity);;
 			$sortBy[] =  $row->cityId;
 
 			$all = array_merge_recursive (
@@ -346,6 +364,11 @@ class SponsorshipDashboardService extends Service {
 			$i++;
 		};
 
+
+		if ( empty( $results ) ){
+			return false;
+		}
+		
 		$aSerie = array();
 		foreach ( $results as $key => $val ) {
 			$aSerie[$key] =
