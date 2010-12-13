@@ -23,3 +23,4 @@ PageLayoutBuilder.Data = <?php echo $data; ?>;
 PageLayoutBuilder.Lang = <?php echo $messages; ?>;
 PageLayoutBuilder.editorcss = "<?php echo $cssfile; ?>";
 PageLayoutBuilder.helpbox = <?php echo $helpbox; ?>;
+GlobalTriggers.fire('plbdataloaded');

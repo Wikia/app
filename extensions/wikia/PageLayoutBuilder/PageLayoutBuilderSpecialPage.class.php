@@ -26,7 +26,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
     }
 
     function execute($article_id = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScriptPath;
+		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScriptPath, $wgScript, $wgLang;
 
 		if( !$wgUser->isLoggedIn() ) {
 			$wgOut->showErrorPage( 'plb-special-no-login', 'plb-login-required', array(wfGetReturntoParam()));
@@ -59,7 +59,9 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 		
 		$wgOut->addScriptFile( $wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/editor.js" );
-		$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
+		$wgOut->addScriptFile( $wgScript . "?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=" . $wgLang->getCode()
+			. "&cb=" . time() );
+		$wgOut->addScriptFile( $wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js" );
 
 		if($wgRequest->wasPosted() && ($wgRequest->getVal("action") == "submit") ) {
 			if($this->parseForm()) {
