@@ -7,7 +7,7 @@ DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate 
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r31211 build 20101213',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r31223 build 20101213',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -2249,7 +2249,6 @@ else
 {newBlock=previousBlock.clone();}
 if(previousBlock.isReadOnly())newBlock=null;}
 else if(nextBlock){newBlock=nextBlock.clone();if(nextBlock.isReadOnly())newBlock=null;}
-if(nextBlock.isReadOnly())newBlock=null;}
 if(!newBlock)
 newBlock=doc.createElement(blockTag);else if(forceMode&&!newBlock.is('li'))
 newBlock.renameNode(blockTag);if(newBlock.is('dl')){newBlock=new CKEDITOR.dom.element('p');}
