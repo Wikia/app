@@ -196,10 +196,7 @@ class imageServing{
 	 */
 	public function getThumbnails( $fileNames = null ) {
 		wfProfileIn( __METHOD__ );
-<<<<<<< .working
 
-=======
->>>>>>> .merge-right.r31210
 		$ret = array();
 		
 		if( !empty( $fileNames ) ) {
