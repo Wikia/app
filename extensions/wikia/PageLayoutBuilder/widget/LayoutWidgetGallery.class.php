@@ -109,27 +109,6 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 		return XML::element('gallery', $params, $this->getValue(), false );
 	}
 
-	public function renderForResultEmpty($url) {
-		global $wgExtensionsPath, $wgTitle;
-
-		wfLoadExtensionMessages( 'PageLayoutBuilder' );
-		$data['error'] = "";
-		$data['id'] = "";
-		$data['isform'] = true;
-		$data['isempty'] = true;
-		$data['editurl'] = $url;
-		$data['img'] = "";
-		$data['avatar'] = $wgExtensionsPath.'/wikia/PageLayoutBuilder/widget/images/user.jpg';
-		$data['caption'] = $this->getAttrVal( 'caption');
-		$data['width'] = $this->getAttrVal( 'size', true );
-		$data['divwidth'] =  $data['width'] + 4;
-		$data['height'] = round($data['width']/4)*3;
-		$data['align'] =  $this->getAlign();
-		$data['username'] = wfMsg('plb-parser-preview-image-username');
-
-		return $this->renderForPreviewAndForm($data);
-	}
-
 	private function getValue() {
 		if(empty($this->value)) {
 			return "";

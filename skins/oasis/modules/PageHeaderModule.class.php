@@ -322,6 +322,7 @@ class PageHeaderModule extends Module {
 
 				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
 				if($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
+					$this->displaytitle = true;
 					$this->pageType = "";
 				}
 				if($wgTitle->isSpecial('Newimages')) {

@@ -106,7 +106,11 @@ abstract class LayoutWidgetBase {
 	}
 
 	public function renderForFormCaption() {
-		return XML::element('p', array('class' => 'plb-form-caption-p'), $this->getAttrVal( "caption", true ));
+		$caption =  $this->getAttrVal( "caption", true );
+		if($this->getAttrVal('required')) {
+			$caption = $caption.'*';
+		} 
+		return XML::element('p', array('class' => 'plb-form-caption-p'), $caption);
 	}
 
 	protected function validateAllowedVal($name, $vals = array() ) {
@@ -135,13 +139,17 @@ abstract class LayoutWidgetBase {
 
 	public function getAttrVal($name, $default = false) {
 		/* set daefult values */
-		$params = $this->getAllAttrs();
+		$attrs = $this->getAllAttrs();
 		if($default) {
 			if(!empty($this->attributes[$name])){
 				return $this->attributes[$name];
 			}
-			if(!empty($params[$name])){
-				return $params[$name];
+			if(!empty($attrs[$name])){
+				if($this->isSeftAttr($name)) {
+					return htmlspecialchars($attrs[$name]);
+				} else {
+					return $attrs[$name];	
+				}
 			} else {
 				return "";
 			}
@@ -185,7 +193,7 @@ abstract class LayoutWidgetBase {
 
 	public function renderEditorMenuItem() {
 		global $wgExtensionsPath;
-		return "<li __plb_type=\"{$this->getName()}\"><img src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/widget/images/widget-icon-{$this->getName()}.png\" alt=\"\">".wfMsg('plb-widget-name-'.$this->getName())."</li>";
+		return array( 'caption' => wfMsg('plb-widget-name-'.$this->getName()), 'plb_type' => $this->getName(), 'html' => "<img class='plb-editor-element-list' src='$wgExtensionsPath/wikia/PageLayoutBuilder/widget/images/widget-icon-{$this->getName()}.png'><span class='plb-editor-element-list'>".wfMsg('plb-widget-name-'.$this->getName())."</span>");
 	}
 
 	public function renderEditorListItem() {
@@ -200,6 +208,17 @@ abstract class LayoutWidgetBase {
 			."[\$BUTTONS]</li>";
 	}
 
+	protected function isSeftAttr($name) {
+		return in_array($name, $this->safeAttr());
+	}
+	
+	protected function safeAttr() {
+		return array(
+				'caption',
+				'instructions'	
+		);
+	}
+	
 	public function getRequiredAttrs() {
 		return array(
 				'id',
@@ -212,7 +231,7 @@ abstract class LayoutWidgetBase {
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
 		return array(
 				'id' => '',
-				'caption'  => '',//wfMsg('plb-parser-default-caption'),
+				'caption'  => '',// wfMsg('plb-parser-default-caption'),
 				'instructions' => '',//wfMsg('plb-parser-default-instructions'),
 				'required' => 0,
 		);
@@ -248,7 +267,10 @@ abstract class LayoutWidgetBase {
 			."<span class=\"plb-rte-widget-horiz-line plb-rte-widget-top-line\">$content</span>"
 			."<span class=\"plb-rte-widget-horiz-line plb-rte-widget-bottom-line\">$content</span>"
 			."<span class=\"plb-rte-widget-edit-button-placer\">"
-				."<button class=\"plb-rte-widget-edit-button wikia-button secondary\">".htmlspecialchars(wfMsg('plb-editor-edit'))."</button></span>";
+				."<button class=\"plb-rte-widget-edit-button wikia-button secondary\">".htmlspecialchars(wfMsg('plb-editor-edit'))."</button></span>"
+			."<span class=\"plb-rte-widget-clickable plb-rte-widget-clickable-left\">$content</span>"
+			."<span class=\"plb-rte-widget-clickable plb-rte-widget-clickable-right\">$content</span>";
+				
 	}
 
 }

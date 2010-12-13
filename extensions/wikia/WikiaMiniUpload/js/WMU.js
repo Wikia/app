@@ -1016,7 +1016,12 @@ function WMU_insertImage(e, type) {
 					$G('ImageUploadBack').style.display = 'none';
 					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
 
-
+					var event = jQuery.Event("imageUploadSummary");
+					$("body").trigger(event, [$G('ImageUpload' + WMU_curScreen)]);
+					if ( event.isDefaultPrevented() ) {
+					    return false;
+					}
+					
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );

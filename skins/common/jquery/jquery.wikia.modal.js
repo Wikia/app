@@ -77,6 +77,8 @@ $.fn.extend({
 				headline = $('<h1>').html($(this).attr('title'));
 			}
 
+			
+			$().log(headline);
 			// add headline
 			headline.prependTo(wrapper);
 

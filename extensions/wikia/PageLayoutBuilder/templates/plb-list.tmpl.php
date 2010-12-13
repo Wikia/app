@@ -57,5 +57,3 @@
 	<input  type="hidden" name="plbId" id="plbId" value="" />
 	<input  type="hidden" name="subaction" id="subaction" value="" />
 </form>
-
-<a id="plbNewButton" class="wikia-button" href="<?php echo $newlink; ?>" ><?php echo wfMsg('plb-special-form-new'); ?> <a/>

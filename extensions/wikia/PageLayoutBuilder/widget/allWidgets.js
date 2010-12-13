@@ -2,13 +2,21 @@
 
 window.PageLayoutBuilder = window.PageLayoutBuilder || {};
 
-PageLayoutBuilder.inputEmpty = function (e) {
-	$(e.target).unbind('focus', PageLayoutBuilder.inputEmpty).val("").removeClass("plb-empty-input");
+PageLayoutBuilder.inputEnter = function (e) {
+	$(e.target).val("").removeClass("plb-empty-input");
+}
+
+PageLayoutBuilder.inputExit = function (e) {
+	var value = $(e.target).attr('data-instructions');
+	if($(e.target).val() == "") {
+		$(e.target).val(value).addClass("plb-empty-input");	
+	}
 }
 
 $(function() {
-	$('.plb-empty-input').focus(PageLayoutBuilder.inputEmpty);
-
+	$('.plb-empty-input').focus(PageLayoutBuilder.inputEnter)
+						 .blur(PageLayoutBuilder.inputExit);
+	
 	$("#plbForm,#editform").submit(function() {
 		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
 	});
@@ -20,15 +28,16 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 	$.loadYUI( function() {
 		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css?'+wgStyleVersion );
 		$.getScript(wgExtensionsPath+ '/wikia/WikiaMiniUpload/js/WMU.js?'+wgStyleVersion, function() {
+			$("body").unbind('imageUploadSummary').bind( 'imageUploadSummary', PageLayoutBuilder.WMU_insertImage);
 			WMU_show();
 			
 			WMU_Event_OnLoadDetails = function() {
 				$('#ImageColumnRow,#ImageSizeRow,#ImageWidthRow,#ImageLayoutRow').hide();
 			};			
 
-			WMU_insertImage = function() {
+			PageLayoutBuilder.WMU_insertImage = function(event,body) {
 				$.ajax({
-				  url: wgScript + '?action=ajax&rs=LayoutWidgetImage::getUrlImageAjax&name=' + $("#ImageUploadMWname").val() + "&size=" + size,
+				  url: wgScript + '?action=ajax&rs=LayoutWidgetImage::getUrlImageAjax&name=' + $("#ImageUploadFileName").val() + "&size=" + size,
 				  dataType: "json",
 				  method: "get",
 				  success: function(data) {
@@ -37,12 +46,13 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 						$("#imagediv_" + name).css("width", data.size.width + "px")
 						.css("line-height", data.size.height + "px")
 						.css('background-image', 'url("' +  data.url +'")');
-						$("#plb_" + name).val( $("#ImageUploadMWname").val()  + " | " + $("#ImageUploadCaption").val() );
+						$("#plb_" + name).val( $("#ImageUploadFileName").val()  + " | " + $("#ImageUploadCaption").val() );
 						$("#thumbcaption").val($("#ImageUploadCaption").val());
 					}
 					WMU_close();
 				  }
 				});
+				return false;
 			}
 		});
 	});
@@ -59,22 +69,11 @@ PageLayoutBuilder.setupTextarea = function(node) {
 	var toolbar = $('<div>').
 		addClass('plb-form-template-toolbar').
 		insertBefore(node).
-		hide();
+		css('top', parseInt($(node).position().top ) + "px" );
 	
 	// show toolbar on focus / hide on blur
 	var toolbarHideTimeout = false;
-
-	node.unbind('.editor').
-		bind('focus.editor', function(ev) {
-			clearTimeout(toolbarHideTimeout);
-			toolbar.show().css('top', parseInt($(ev.target).position().top - 25) + "px" );
-		}).
-		bind('blur.editor', function(ev) {
-			toolbarHideTimeout = setTimeout(function() {
-				toolbar.hide();
-			}, 250);
-		});
-
+		
 	// toolbar buttons
 	var toolbarButtons = [
 		{

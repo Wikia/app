@@ -4,9 +4,13 @@
 
 		static protected $extraMessages = array(
 			'plb-editor-edit',
+			'plb-editor-rte-caption',
 			'plb-editor-overlay-edit',
 			'plb-parser-image-size-not-int',
 			'plb-parser-image-size-too-big',
+			'plb-editor-toolbar-caption',
+			'plb-editor-toolbar-formatting',
+			'plb-editor-toolbar-static',
 			'plb-property-editor-value-required',
 		);
 
@@ -16,7 +20,7 @@
 		 * @return string
 		 */
 		static public function getData() {
-			global $wgPLBwidgets;
+			global $wgPLBwidgets, $wgExtensionsPath, $wgUser;
 			$widgetNames = array_keys($wgPLBwidgets);
 
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/widget/templates/' );
@@ -38,7 +42,7 @@
 						$widgetLogic = "";
 					}
 				}
-
+				
 				$widgets[$widgetName] = array(
 					'form' => $widgetForm,
 					'editor_menu_item_html' => Wikia::json_encode($widgetInstance->renderEditorMenuItem()),
@@ -67,15 +71,46 @@
 				$messages[$message] = wfMsg($message);
 			}
 
+			$helpbox = array('db' => $wgUser->getOption("plbhidehelpbox"), 'show' => 0);
+			if( !$wgUser->getOption("plbhidehelpbox") ) {
+				$response = new AjaxResponse();				
+				$helpboxTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+				
+				$helpboxTmpl->set_vars(array( 
+					's1' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/s1.png",
+					's2' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/s2.png",
+					's3' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/s3.png",
+					'arrow' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/arrow.png"
+				));	
+				
+				$helpbox['html'] = $helpboxTmpl->render("helpbox");		
+				$helpbox['show'] = 1; 			
+			}
+				
 			$template->set_vars(array(
 				'widgets' => $widgets,
+				'helpbox' => Wikia::json_encode($helpbox),
 				'data' => Wikia::json_encode($data),
 				'messages' => Wikia::json_encode($messages),
+				'cssfile' => wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/editor.scss' ) 
 			));
 
 			return $template->render("plb-editor-data-js");
 		}
-
+		
+		static public function closeHelpbox() {
+			global $wgUser, $wgRequest;
+			$response = new AjaxResponse();
+			if($wgUser->getID() > 0) {
+				$wgUser->setOption("plbhidehelpbox", ($wgRequest->getVal("val") == "true") );
+				$wgUser->saveSettings();	
+				$response->addText( Wikia::json_encode(array("status" => "ok")));
+			} else {		
+				$response->addText(Wikia::json_encode(array("status" => "error")));	
+			}
+			return $response;
+		}
+		
 		static public function getPLBEditorData() {
 			wfLoadExtensionMessages('PageLayoutBuilder');
 

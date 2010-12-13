@@ -1,7 +1,8 @@
 <?php
 $aliases = array();
- 
+
 /** English */
 $aliases['en'] = array(
-    'ImageServingTest' => array( 'ImageServingTest' ),
+	'PageLayoutBuilder' => array( 'LayoutBuilder', 'PageLayoutBuilder' ),
+	'PageLayoutBuilderForm' => array( 'LayoutBuilderForm', 'PageLayoutBuilderForm' ),
 );
