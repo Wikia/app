@@ -4,7 +4,6 @@ $messages = array();
 
 $messages['en'] = array (
 	'plb-special-form-article-name' => 'What will this article be called?',
-	'plb-desc' => ' ',
 	'plb-special-form-title-empty' => 'Please enter in a title for this page.',
 	'plb-special-form-invalid-title-error' => 'The title you have entered for this page is invalid.',
 	'plb-special-form-already-exists' => 'A page with this title already exists.',
@@ -23,10 +22,11 @@ $messages['en'] = array (
 	'plb-special-form-error-info' => 'Please correct the following errors:',
 	'plb-special-form-new' => 'New layout',
 	'plb-special-no-layout' => 'No layout specified.',
-	'plb-special-no-layout-body' => 'It looks like you are trying to create a new page using a layout, but we canÕt tell which layout to use. Sorry about this!',
+	'plb-special-no-layout-body' => 'It looks like you are trying to create a new page using a layout, but we canï¿½ tell which layout to use. Sorry about this!',
 	'plb-special-no-article' => 'plb-special-no-article',
 	'plb-special-no-article-body' => 'plb-special-no-article-body',
 	'plb-create-summary-updated' => 'plb-create-summary-updated',
+	'plb-create-updated-summary' => 'New layout created',
 	'plb-special-no-login' => 'Please log in to use the layout builder.',
 	'plb-login-required' => 'You need to [[Special:Signup|log in]] to use the Layout Builder.',
 	'plb-empty-page' => 'plb-empty-page',
@@ -56,13 +56,13 @@ $messages['en'] = array (
 	'plb-special-form-submit-button' => 'Save page',
 	'plb-special-form-preview-button' => 'Preview page',
 	'plb-special-form-summary' => 'Summary:',
-
+	
 	'plb-form-title' => 'Title:',
 	'plb-form-desc' => 'Description:',
-
+	
 	'plb-form-title-instructions' => 'Please enter title',
 	'plb-form-desc-instructions' => 'Please enter description',
-
+	
 	'plb-list-confirm-delete' => 'Are you sure you want to delete this layout?',
 	'plb-list-confirm-publish' => 'Are you sure you want to publish this layout?',
 	'plb-list-name' => 'Name',
@@ -75,10 +75,11 @@ $messages['en'] = array (
 	'plb-list-action-publish' => "Publish",
 	'plb-list-action-create' => "Create page",
 	'plb-list-title' => 'Layouts ($1)',
+	
 	'plb-parser-enter-caption' => 'You need to set a form question.',
 	'plb-parser-id-not-int' => 'The ID option in your Layout Builder tags needs to be an integer. Check the help page for the correct options.',
-	'plb-parser-image-size-not-int' => 'Your image size needs to be an integer. Check the help page for the correct options.',
-	'plb-parser-image-size-too-big' => 'Your image size is too big. Check the help page for the correct options.',
+	'plb-parser-image-size-not-int' => 'Your photo size needs to be an integer. Check the help page for the correct options.',
+	'plb-parser-image-size-too-big' => 'Your photo size is too big. Check the help page for the correct options.',
 	'plb-parser-image-incorrect-align' => 'Incorrect value for align. Choose left, center or right.',
 	'plb-parser-image-incorrect-frame' => 'Incorrect value for align. Choose type or frameless.',
 	'plb-parser-id-not-unique' => 'The ID option in your Layout Builder tags need to each be unique. Check the help page for the correct options.',
@@ -87,7 +88,7 @@ $messages['en'] = array (
 	'plb-parser-empty-value' => 'Edit this section to complete this page.',
 	'plb-parser-default-caption' => 'Form question',
 	'plb-parser-default-instructions' => 'Instructions',
-	'plb-parser-empty-value-image' => 'Add image',
+	'plb-parser-empty-value-image' => 'Add photo',
 	'plb-parser-preview-image-user' => 'Added by <b>$1</b>',
 	'plb-parser-preview-image-username' => "Username",
 	'plb-parser-preview-image-caption' => 'Form question',
@@ -96,11 +97,14 @@ $messages['en'] = array (
 	'plb-parser-preview-mlinput' => 'This is a multi-line item. When a user fills in the form to create new pages based on this layout, they will see a big input box, and when they fill it in to generate a page, that text will appear in this block on your layout. Combining this with other variables means you can create beautiful and complete layouts, but all users need to do is fill in a form - so you can get lots of amazing pages generated as quickly as possible.',
 	'plb-parser-preview-sinput' => 'The user\'s choice will appear here.',
 	'plb-special-form-none-value' => 'plb-special-form-none-value',
+	
 	'plb-create-from-article-new' => '<span style="color:red">New!</span> Layout Builder',
 	'plb-create-from-article-button' => 'Make a Layout from this page',
 	'plb-create-from-article-button-title' => 'Make a Layout from this page',
 	'plb-create-from-article-button-desc' => 'Use this page as the basis for a Layout. <a href="#">Learn more ></a>',
+	
 	'plb-layout-usercant' => "Sorry, you don't have access to Layout Builder. Check with an administrator on this wiki to help you out.",
+	
 	'plb-editor-elements-in-the-editor' => '<span>ITEMS</span> IN THE EDITOR FORM',
 	'plb-editor-add-element' => 'Add item',
 	'plb-editor-edit' => 'Edit',
@@ -112,15 +116,17 @@ $messages['en'] = array (
 	'plb-editor-overlay-edit' => 'edit',
 	'plb-editor-enter-caption' => 'Enter form question.',
 	'plb-editor-left-sidebar-tutorial' => '<br /><b>Welcome to the Layout Builder!</b><br /><br />To start adding items, click the <em>Add item</em> button above and choose the desired type.<br /><br />As you add items, new questions will be added new page will be automatically generated based on all items you put into the layout.',
+	
 	'plb-widget-name-plb_input' => 'Input Box',
 	'plb-widget-name-plb_mlinput' => 'Paragraph',
 	'plb-widget-name-plb_image' => 'Image',
 	'plb-widget-name-plb_sinput' => 'Drop down list',
+	
 	'plb-widget-name-plb_gallery' => 'Gallery',
 	'plb-property-editor-width' => 'Width',
 	'plb-property-editor-spacing' => 'Spacing',
 	'plb-property-editor-spacing-small' => 'Small',
- 	'plb-property-editor-spacing-medium' => 'Medium',
+	'plb-property-editor-spacing-medium' => 'Medium',
 	'plb-property-editor-spacing-large' => 'Large', 
 	'plb-property-editor-value-required' => 'This field is required',
 	'plb-property-editor-caption' => 'Form question:',
@@ -135,15 +141,16 @@ $messages['en'] = array (
 	'plb-property-editor-choices' => 'Choices (one item per line)',
 	'plb-property-editor-save' => 'Save',
 	'plb-property-editor-cancel' => 'Cancel',
+	
 	'plb-mytools-link' => 'Layout builder',
+	
 	'plb-parser-gallery-size-not-int' => 'The gallery size needs to be an integer. Check the help page for the correct options.',
 	'plb-parser-gallery-size-too-small' => 'The gallery size is too small. Check the help page for the correct options.',
 	'plb-parser-gallery-size-too-big' => 'The gallery size is too big. Check the help page for the correct options.',
 	'plb-parser-gallery-incorrect-spacing' => 'The gallery spacing parameter is not correct. Check the help page for the correct options.',
 	'plb-parser-gallery-incorrect-align' => 'The gallery alignment is not set correctly. Check the help page for the correct options.',
 	'plb-parser-image-incorrect-frame' => 'The image frame setting is not correct. Check the help page for the correct options.',
-
-	// NEW MESSAGES =========
+	
 	// from the RTE popup help icons
 	'plb-property-editor-help-caption' => 'When users create a page from your layout, this is the title on the input box for this item.',
 	'plb-property-editor-help-instructions' => 'When users create a page from your layout, this will appear inside the input box for this item.',
@@ -154,14 +161,25 @@ $messages['en'] = array (
 	'plb-property-editor-help-thumbnail' => 'This determines whether an image in the final page is a thumbnail or not.',
 	// in combobox item only
 	'plb-property-editor-help-choices' => 'When users create a page from your layout, this is the list of choices presented for this item.',
-
-
-	//HELP BOX
+	// in gallery item only
+	'plb-property-editor-help-spacing' => 'This determines the spacing between photos in the gallery.',
+	
+	// TUTORIAL PAGE ========
 	'plb-helpbox-title' => 'What are Wiki Layouts?',
 	'plb-helpbox-desc' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultrices ligula pellentesque eros facilisis rutrum. Sed vel felis nisl, vitae interdum odio. Cras sapien orci, varius non dictum ut, vulputate quis odio. Vestibulum tincidunt cursus luctus. Duis sollicitudin mollis consequat. Donec hendrerit nulla vel ligula elementum ullamcorper.',
 	'plb-helpbox-makesense' => 'Make sense to me! <br> Continue to the Layout Builder',
-	'plb-helpbox-getstarted' => 'Get Started', 
-	'plb-helpbox-dontshow' => "Don't show this tutorial again. "  
-
-
+	'plb-helpbox-getstarted' => 'Get Started',
+	'plb-helpbox-dontshow' => "Don't show this tutorial again. "
+	'plb-helpbox-bigimage-title' => 'The big picture',
+	'plb-helpbox-bigimage-desc' => 'The wiki layout tool gives you the ability to create a pre-defined page layout that editors can use while creating new pages. Layouts help you and editors on your wiki quickly and easily create new pages that look consistent.',
+	'plb-helpbox-buttton-head1' => 'Makes sense to me!',
+	'plb-helpbox-buttton-head2' => 'Continue to the Layout Builder.',
+	'plb-helpbox-checkboxinfo1' => 'Don\'t show this tutorial again.',
+	'plb-helpbox-box1' => 'Admin Creation<br />As an admin you have the ability to create new layouts for your wiki. Start the layout creation tool and place items like text boxes, image boxes, and more on a page, style them, and arrange their layout.',
+	'plb-helpbox-box2' => 'Editor Form<br />When your layout is finished it will appear as an option when an editor creates a new page. The layout will appear as a form for the editor to fill out. All they need to do is complete the form to create a new page.',
+	'plb-helpbox-box3' => 'Page View<br />When the editor has finished creating a new page readers on your wiki will see the completed page in the layout you specified.',
+	'plb-helpbox-help-button-head3' => 'Ready to try the layout builder?',
+	'plb-helpbox-checkboxinfo2' => 'Don\'t show this tutorial again.',
+	'plb-helpbox-help-desc' => 'Still have questions?',
+	'plb-helpbox-help-link' => 'Read the layout builder guide.',
 );
