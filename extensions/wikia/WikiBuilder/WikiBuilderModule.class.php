@@ -7,17 +7,17 @@ class WikiBuilderModule extends Module {
 	var $wgLanguageCode;
 	var $wgOasisThemes;
 	var $wgStylePath;
+	var $wgWikiPaymentAdsFreePrice;
 
 	public function executeIndex() {
 		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds;
 		wfProfileIn( __METHOD__ );
-		
+
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = true;
 		$wgSuppressAds = true;
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-
 }
