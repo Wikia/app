@@ -93,7 +93,7 @@ class AdSS_ManagerController {
 		if( $user->baid ) {
 			$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/cancel" )->getLocalURL() );
 			$tmpl->set( 'token', AdSS_Util::getToken() );
-			$baid .= $tmpl->render( 'cancelBA' );
+			$baid = $user->baid . $tmpl->render( 'cancelBA' );
 		} else {
 			// no BAID
 			$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/redirect" )->getLocalURL() );
