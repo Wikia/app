@@ -193,12 +193,16 @@ var WikiBuilder = {
 		$.getJSON(wgScript,
 			{
 				'action': 'ajax',
-				'rs': 'SpecialWikiPayment::fetchPaypalToken'
+				'rs': 'SpecialWikiBuilder::upgradeToPlus'
 			},
-			function(response) {
+			function(res) {
 				throbber.hide();
-				if (response.url !== false) {
-					location.href = response.url;
+				if (res.status == 'ok') {
+					if (res.data.url !== false) {
+						location.href = res.data.url;
+					}
+				} else {
+					$.showModal(res.caption, res.content);
 				}
 			}
 		);

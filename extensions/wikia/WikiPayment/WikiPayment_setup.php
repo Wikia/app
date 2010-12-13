@@ -34,7 +34,7 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__).'/';
 
-if( empty( $wgWikiPaymentAdsFreePrice ) ) {
+if ( empty( $wgWikiPaymentAdsFreePrice ) ) {
 	$wgWikiPaymentAdsFreePrice = 4.99;
 }
 
@@ -49,6 +49,3 @@ $wgExtensionMessagesFiles['WikiPayment'] = $dir . 'WikiPayment.i18n.php';
 
 // messages
 $wgExtensionMessagesFiles['WikiPayment'] = $dir . 'WikiPayment.i18n.php';
-
-// ajax
-$wgAjaxExportList[] = 'SpecialWikiPayment::fetchPaypalToken';

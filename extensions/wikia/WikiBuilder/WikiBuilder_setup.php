@@ -27,3 +27,6 @@ $wgGroupPermissions['staff']['wikibuilder'] = true;
 
 $wgAutoloadClasses['ApiCreateMultiplePages'] = dirname(__FILE__).'/../NewWikiBuilder/ApiCreateMultiplePages.php';
 $wgAPIModules['createmultiplepages'] = 'ApiCreateMultiplePages';
+
+// ajax
+$wgAjaxExportList[] = 'SpecialWikiBuilder::upgradeToPlus';

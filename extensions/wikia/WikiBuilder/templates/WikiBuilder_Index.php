@@ -103,7 +103,7 @@
 					<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 				</header>
 				<details>
-					<?= wfMsg('owb-step4-plus-price') ?>
+					<?= wfMsg('owb-step4-plus-price', $wgWikiPaymentAdsFreePrice) ?>
 				</details>
 				<div class="details">
 				<?= wfMsg('owb-step4-plus-details') ?>
