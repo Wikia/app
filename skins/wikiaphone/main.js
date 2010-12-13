@@ -25,7 +25,13 @@ var MobileSkin = {
 			if(href && href.indexOf(CategoryNamespaceMessage) !== -1) MobileSkin.trackClick('categorylink');
 			else if(href && href.indexOf(SpecialNamespaceMessage) === -1) MobileSkin.trackClick('contentlink');
 			else if(elm.attr('data-id') === 'randompage') MobileSkin.trackClick('randompage');
-			else if(elm.hasClass('showbutton')) MobileSkin.trackClick('showhide');
+			else if(elm.hasClass('showbutton')) { 
+				if(elm.data("s")) {
+					MobileSkin.trackClick('show'); 
+				} else {
+					MobileSkin.trackClick('hide'); 
+				}
+			}
 			else if(elm.hasClass('fullsite')) MobileSkin.trackClick('desktop');
 		});
 	},
