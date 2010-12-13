@@ -30,7 +30,7 @@ foreach( $res as $row ) {
 		continue;
 	}
 
-	$pp = new PaypalPaymentService();
+	$pp = new PaypalPaymentService( array_merge( $wgPayflowProCredentials, array( 'APIUrl' => $wgPayflowProAPIUrl, 'HTTPProxy' => $wgHTTPProxy ) ) );
 	$respArr = array();
 	$pmt_id = $pp->collectPayment( $user->baid, $amount, $respArr );
 	if( $pmt_id ) {

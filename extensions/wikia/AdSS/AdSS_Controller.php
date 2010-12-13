@@ -1,7 +1,13 @@
 <?php
 class AdSS_Controller extends SpecialPage {
 
+	private $paypalOptions;
+
 	function __construct() {
+		global $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy;
+		$this->paypalOptions = $wgPayflowProCredentials;
+		$this->paypalOptions['APIUrl'] = $wgPayflowProAPIUrl;
+		$this->paypalOptions['HTTPProxy'] = $wgHTTPProxy;
 		parent::__construct("AdSS");
 	}
 
@@ -146,7 +152,7 @@ class AdSS_Controller extends SpecialPage {
 		$selfUrl = $this->getTitle()->getFullURL();
 		$returnUrl = $selfUrl . '/paypal/return';
 		$cancelUrl = $selfUrl . '/paypal/cancel';
-		$pp = new PaypalPaymentService();
+		$pp = new PaypalPaymentService( $this->paypalOptions );
 		if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
 			$ad = AdSS_AdFactory::createFromForm( $adForm );
 			$ad->pp_token = $pp->getToken();
@@ -178,7 +184,7 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
-		$pp = new PaypalPaymentService( $wg, $token );
+		$pp = new PaypalPaymentService( $this->paypalOptions, $token );
 
 		$payerId = $pp->fetchPayerId();
 		if( $payerId === false ) {

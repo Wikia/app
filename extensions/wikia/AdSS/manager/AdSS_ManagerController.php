@@ -5,6 +5,14 @@ class AdSS_ManagerController {
 	private $tabs = array( 'adList', 'billing' );
 	private $selectedTab = 'adList';
 	private $userId;
+	private $paypalOptions;
+
+	function __construct() {
+		global $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy;
+		$this->paypalOptions = $wgPayflowProCredentials;
+		$this->paypalOptions['APIUrl'] = $wgPayflowProAPIUrl;
+		$this->paypalOptions['HTTPProxy'] = $wgHTTPProxy;
+	}
 
 	function execute( $sub ) {
 		global $wgRequest, $wgOut;
@@ -145,7 +153,7 @@ class AdSS_ManagerController {
 			$selfUrl = Title::makeTitle( NS_SPECIAL, "AdSS/manager" )->getFullURL();
 			$returnUrl = $selfUrl . '/paypal/return';
 			$cancelUrl = $selfUrl . '/paypal/error';
-			$pp = new PaypalPaymentService();
+			$pp = new PaypalPaymentService( $this->paypalOptions );
 			if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
 				$_SESSION['wsAdSSToken'] = $pp->getToken();
 				// redirect to PayPal
@@ -160,7 +168,7 @@ class AdSS_ManagerController {
 	function processPayPalReturn( $token ) {
 		global $wgOut, $wgAdSS_DBname;
 		if( $token ) {
-			$pp = new PaypalPaymentService( $token );
+			$pp = new PaypalPaymentService( $this->paypalOptions, $token );
 			if( AdSS_Util::matchToken( $token ) ) {
 				$payerId = $pp->fetchPayerId();
 				$baid = $pp->createBillingAgreement();
@@ -190,7 +198,7 @@ class AdSS_ManagerController {
 		if( AdSS_Util::matchToken( $token ) ) {
 			$user = AdSS_User::newFromId( $this->userId );
 			if( $user->baid ) {
-				$pp = new PaypalPaymentService();
+				$pp = new PaypalPaymentService( $this->paypalOptions );
 				// first check if a user owes us anything
 				$balance = $user->getBillingBalance();
 				if( $balance < 0 ) {
