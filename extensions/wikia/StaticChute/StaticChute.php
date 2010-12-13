@@ -112,7 +112,6 @@ class StaticChute {
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'common/contributed.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
@@ -156,7 +155,6 @@ class StaticChute {
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
@@ -199,7 +197,6 @@ class StaticChute {
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
@@ -240,7 +237,6 @@ class StaticChute {
 			'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
@@ -393,7 +389,7 @@ class StaticChute {
 		//$this->config['oasis_anon_everything_else_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_everything_else_js']);
 		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
 		$this->config['oasis_anon_everything_else_js'] = $this->config['oasis_anon_article_js'];
-		
+
 		// Sometimes we load StaticChute from outside of the MediaWiki stack (eg: /static/404handler), but fortunately
 		// during those times, we don't need the oasis_print_css, so just skip it.
 		if(function_exists('wfGetSassUrl')){
@@ -424,7 +420,6 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 
@@ -441,7 +436,6 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		//CSS
