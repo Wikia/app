@@ -1562,6 +1562,9 @@ CKEDITOR.dom.range = function( document )
 
 			this.collapse( isStart );
 
+			// Wikia - start
+			this.enlargeFormattables();
+			// Wikia - end
 			this.enlarge( CKEDITOR.ENLARGE_BLOCK_CONTENTS );
 
 			this.extractContents().appendTo( fixedBlock );

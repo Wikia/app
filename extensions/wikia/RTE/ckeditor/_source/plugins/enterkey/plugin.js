@@ -123,7 +123,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				}
 				else if ( nextBlock ) {
 					newBlock = nextBlock.clone();
-
+					
+					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
+				}
+				
 					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}
 
@@ -414,6 +417,33 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		// Get the selection ranges.
 		var ranges = editor.getSelection().getRanges( true );
+		
+		// Wikia - start
+		if (ranges.length == 0) {
+			ranges = editor.getSelection().getRanges( false );
+			var range = ranges[0];
+			var xStartPath = new CKEDITOR.dom.elementPath( range.startContainer ),
+				xEndPath = new CKEDITOR.dom.elementPath( range.endContainer );
+			if ( !xEndPath.isContentEditable() ) {
+				var notEditableParent = range.endContainer.isReadOnly();
+				if (notEditableParent.is( 'p', 'div' )) {
+					range.setEndAt(notEditableParent,CKEDITOR.POSITION_BEFORE_END);
+				} else {
+					range.setEndAfter(notEditableParent);
+				}
+				range.collapse(false);
+			} else {
+				range.collapse(false);
+			}
+			ranges = new CKEDITOR.dom.rangeList([range]);
+			editor.getSelection().selectRanges(ranges);
+			editor.getSelection().reset();
+			if ( ! CKEDITOR.env.ie ) {
+				// Selection in IE is so stupid!!!
+				ranges = editor.getSelection().getRanges( false );
+			}
+		}
+		// Wikia - end
 
 		// Wikia - start
 		if (ranges.length == 0) {

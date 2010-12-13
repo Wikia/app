@@ -59,6 +59,7 @@ window.RTE = {
 		'paste',
 		'placeholder',
 		'signature',
+		'plbelement',
 		'template',
 		'temporary-save',
 		'toolbar',
@@ -464,33 +465,37 @@ CKEDITOR.config.baseColor = '#000';
 CKEDITOR.config.toolbar_Wikia =
 [
 	{
-		msg: 'textAppearance',
-		groups: [
-			['Format'],
-			['Bold','Italic','Underline','Strike'],
-			['BulletedList','NumberedList'],
-			['Link','Unlink'],
-			['Outdent','Indent'],
-			['JustifyLeft','JustifyCenter','JustifyRight']
-		]
-	},
-	{
-		msg: 'insert',
-		groups: [
-			['Image', 'Gallery', 'Video'],
-			['Table'],
-			['Template'],
-			['Signature']
-		]
-	},
-	{
-		msg: 'controls',
-		groups: [
-			['Undo','Redo'],
-			(window.skin == 'oasis' ? false : ['Widescreen']), // temp hack
-			['Source']
-		]
-	}
+		name: "",
+		data: [
+		{
+			msg: 'textAppearance',
+			groups: [
+				['Format'],
+				['Bold','Italic','Underline','Strike'],
+				['BulletedList','NumberedList'],
+				['Link','Unlink'],
+				['Outdent','Indent'],
+				['JustifyLeft','JustifyCenter','JustifyRight']
+			]
+		},
+		{
+			msg: 'insert',
+			groups: [
+				['Image', 'Gallery', 'Video'],
+				['Table'],
+				['Template'],
+				['Signature']
+			]
+		},
+		{
+			msg: 'controls',
+			groups: [
+				['Undo','Redo'],
+				(window.skin == 'oasis' ? false : ['Widescreen']), // temp hack
+				['Source']
+			]
+		}
+	]}
 ];
 
 //
