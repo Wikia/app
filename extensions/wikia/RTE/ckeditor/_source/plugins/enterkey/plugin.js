@@ -126,9 +126,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					
 					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}
-				
-					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
-				}
 
 				if ( !newBlock )
 					newBlock = doc.createElement( blockTag );
