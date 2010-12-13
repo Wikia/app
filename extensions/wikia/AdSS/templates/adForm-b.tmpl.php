@@ -193,11 +193,11 @@ $("#wpUrl").keyup(function() {
 });
 
 $("#wpText").keyup(function() {
-	$("div.sponsormsg-preview > ul > li > a").html( $("#wpText").val() );
+	$("div.sponsormsg-preview > ul > li > a").text( $("#wpText").val() );
 });
 
 $("#wpDesc").keyup(function() {
-	$("div.sponsormsg-preview > ul > li > p").html( $("#wpDesc").val() );
+	$("div.sponsormsg-preview > ul > li > p").text( $("#wpDesc").val() );
 });
 
 $("#adssLoginAction > a").click(function(e) {
