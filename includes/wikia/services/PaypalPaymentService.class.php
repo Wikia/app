@@ -28,7 +28,7 @@ class PaypalPaymentService extends Service {
 		$this->token = $token;
 	}
 
-	private function getPaypalDBName() {
+	public function getPaypalDBName() {
 		if( $this->paypalDBName == null ) {
 			global $wgPayPalPaymentDBName;
 			$this->paypalDBName = $wgPayPalPaymentDBName;
@@ -41,6 +41,10 @@ class PaypalPaymentService extends Service {
 			$this->payflowAPI = new PayflowAPI( $this->getPaypalOptions() );
 		}
 		return $this->payflowAPI;
+	}
+
+	public function setPayflowAPI( PayflowAPI $payflowAPI ) {
+		$this->payflowAPI = $payflowAPI;
 	}
 
 	public function getPaypalOptions() {
