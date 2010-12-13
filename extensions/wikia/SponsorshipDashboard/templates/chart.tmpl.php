@@ -15,17 +15,20 @@
 	</p>
 	<? } ?>
 	<div id="placeholder" ></div>
-	<div id="overview" ></div>
+	<div id="overviewWrapper">
+		<div id="overviewLabel"><? echo wfMsg('sponsorship-dashboard-overwiev-label'); ?></div>
+		<div id="overview" ></div>
+	</div>
 	<h3 id="show" ><? echo wfMsg('show'); ?></h3><p id="choices"></p>
 	
 <!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.pack.js"></script><![endif]-->
 <script id="source" language="javascript" type="text/javascript">
 $(function () {
-
+	var hiddenSeries = <?=$hiddenSeries ?>;
 	var datasets = <?=$datasets ?>;
-	var predefinedColors = [	"#edc240", "#afd8f8", "#cb4b4b", "#4da74d", "#9440ed",
-					"#C29F34", "#8FB1CB", "#953737", "#387938", "#512381",
-					"#F7E3A8", "#E2F1FC", "#F1CECE", "#BEDFBE", "#D8BAF8" ];
+	var predefinedColors = [	"#edc240", "#afd8f8", "#cb4b4b", "#4da74d", "#9440ed", "#BEBE5D", "#FF00CC", "#0099FF",
+					"#C29F34", "#8FB1CB", "#953737", "#387938", "#512381", "#999900", "#8B006F", "#006FB9",
+					"#F7E3A8", "#E2F1FC", "#F1CECE", "#BEDFBE", "#D8BAF8", "#ECECD1", "#FF8BE8", "#D1ECFF"  ];
 	// hard-code color indices to prevent them from shifting as
 	// countries are turned on/off
 	var i = 0;
@@ -37,6 +40,7 @@ $(function () {
 				colors: predefinedColors,
 				yaxis: { min: 0 },
 				xaxis: { ticks: <?=$ticks; ?> },
+				y2axis: { min: 0, max: 100, tickFormatter: function (v, axis) { return v.toFixed(axis.tickDecimals) +"%" } },
 				grid: { backgroundColor: '#FFFFFF',
 					hoverable: true },
 				series: {
@@ -49,6 +53,7 @@ $(function () {
 	var overviewOptions = {
 				colors: predefinedColors,
 				yaxis: { ticks: [], min: 0, autoscaleMargin: 0.1 },
+				y2axis: { min: 0, max: 100 },
 				xaxis: { ticks: [] },
 				grid: { backgroundColor: '#FFFFFF' },
 				selection: { mode: "x" },
@@ -67,10 +72,13 @@ $(function () {
 	// insert checkboxes
 	var choiceContainer = $("#choices");
 	$.each(datasets, function(key, val) {
-		choiceContainer.append('<div class="colorHolder" style="background-color: ' + predefinedColors[val.color] +'"><input type="checkbox" name="' + key +
-                               '" checked="checked" id="id' + key + '"></div>' +
-			       '<label for="id' + key + '"> '
-                                + val.label + '</label><br/>');
+		var tmpText = '<div class="colorHolder" style="background-color: ' + predefinedColors[val.color] +'"><input type="checkbox" name="' + key + '" ';
+		if ( jQuery.inArray( key, hiddenSeries ) == -1 ){
+			tmpText = tmpText +' checked="checked"';
+		}
+		tmpText = tmpText +' id="id' + key + '"></div><label for="id' + key + '"> ' + val.label + '</label><br/>';
+
+		choiceContainer.append(tmpText);
 	});
 	choiceContainer.find("input").click( plotAccordingToChoices );
  
@@ -94,7 +102,7 @@ $(function () {
 
 	function showTooltip(x, y, contents) {
 		$('<div id="tooltip">' + contents + '</div>').css( {
-		    top: y + 5,
+			top: y + 5,
 			left: x + 25,
 			position: 'absolute',
 			display: 'none',
@@ -118,7 +126,7 @@ $(function () {
 			    var x = item.datapoint[0].toFixed(2),
 				y = item.datapoint[1].toFixed(2);
 
-			    showTooltip(item.pageX, item.pageY, y);
+			    showTooltip( item.pageX, item.pageY, y + ' - ' + item.series.label );
 			}
 		} else {
 			$("#tooltip").remove();

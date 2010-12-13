@@ -1,21 +1,33 @@
-#placeholder {
+@import "../../../../skins/oasis/css//core/color";
 
+#placeholder {
 	width:930px;
 	height:400px;
 	margin-left: 20px;
 }
 
-#overview {
+#overviewWrapper {
 
 	float:right;
 	margin-right:30px;
 	margin-top:10px;
-	width:300px;
-	height:50px;
+
+	
+	#overview {
+
+		width:300px;
+		height:50px;
+		cursor:col-resize;
+	}
+
+	#overviewLabel {
+		
+		margin-left: 10px;
+		width:300px;
+		height:20px;
+	}
 }
-
 .colorHolder {
-
 	width: 20px;
 	display: inline-block;
 	margin-top:2px;
@@ -34,7 +46,6 @@
 #hubposition {
 	text-align: right;
 	margin-right: 40px;
-	
 }
 
 #choices {
@@ -43,6 +54,27 @@
 
 #show {
 	margin-left: 20px;
+}
+
+div.sponsorship-dashboard-form-text {
+	display: inline;
+	vertical-align:text-top;
+	line-height: 5px;
+	margin-left: 20px;
+}
+
+div.tabs-container {
+	margin-bottom: 20px;
+}
+
+div.tickLabels {
+	div {
+		color: $color-text;
+	}
+}
+
+#sponsorship-dashboard-nodata {
+	text-align: center;
 }
 
 /* end of FF3.0 hack */
