@@ -15,7 +15,7 @@ $wgAutoloadClasses['SpecialWikiBuilder'] = $dir.'SpecialWikiBuilder.class.php';
 // special pages
 $wgSpecialPages['WikiBuilder'] = 'SpecialWikiBuilder';
 
-// i18n 
+// i18n
 $wgExtensionMessagesFiles['WikiBuilder'] = $dir.'WikiBuilder.i18n.php';
 
 // TODO: Permissions

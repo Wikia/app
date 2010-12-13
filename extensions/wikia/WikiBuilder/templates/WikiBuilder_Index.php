@@ -1,6 +1,6 @@
 <section id="WikiBuilder">
 	<h1><?= wfMsg('owb-headline') ?></h1>
-	
+
 	<ol class="steps">
 		<li class="step1 current-step">
 			<span class="step-name"><?= wfMsg('owb-step1') ?></span>
@@ -15,8 +15,12 @@
 			<span class="step-name"><?= wfMsg('owb-step3') ?></span>
 			<span class="step-label"><?= wfMsg('owb-step3-label-formatted') ?></span>
 		</li>
+		<li class="step4">
+			<span class="step-name"><?= wfMsg('owb-step4') ?></span>
+			<span class="step-label"><?= wfMsg('owb-step4-label-formatted') ?></span>
+		</li>
 	</ol>
-	
+
 	<div class="dialog">
 		<div class="step1" >
 			<h2><?= wfMsg('owb-step1') ?>: <?= wfMsg('owb-step1-label') ?></h2>
@@ -66,16 +70,54 @@
 				<input type="text">
 				<nav>
 					<input type="button" value="<?= wfMsg('owb-button-skip') ?>" class="skip secondary">
-					<input type="button" value="<?= wfMsg('owb-button-done') ?>" class="save">
+					<input type="button" value="<?= wfMsg('owb-button-save-pages') ?>" class="save">
 					<div class="status"></div>
 				</nav>
-			</form>	
+			</form>
+		</div>
+		<div class="step4" style="display:none">
+			<h2><?= wfMsg('owb-step4') ?>: <?= wfMsg('owb-step4-label') ?></h2>
+			<p><?= wfMsg('owb-step4-instruction') ?></p>
+			<div class="basic box">
+				<header>
+					<h1>
+						<img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61">
+						<span>Basic</span>
+					</h1>
+					<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+				</header>
+				<details>
+					<?= wfMsg('owb-step4-basic-price') ?>
+				</details>
+				<div class="details">
+				<?= wfMsg('owb-step4-basic-details') ?>
+				</div>
+				<input type="button" value="<?= wfMsg('owb-button-done') ?>" class="basic">
+			</div>
+			<div class="plus box">
+				<header>
+					<h1>
+						<img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61">
+						<span><em>+</em>Plus!</span>
+					</h1>
+					<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+				</header>
+				<details>
+					<?= wfMsg('owb-step4-plus-price') ?>
+				</details>
+				<div class="details">
+				<?= wfMsg('owb-step4-plus-details') ?>
+				</div>
+				<input type="button" value="<?= wfMsg('owb-button-plus') ?>" class="plus">
+				<img src="<?= $wgStylePath ?>/common/images/ajax.gif" class="throbber">
+			</div>
+			<div class="status"></div>
 		</div>
 	</div>
-	
-	<img src="/extensions/wikia/WikiBuilder/images/new_wiki_builder_1.png" class="collage1">
-	<img src="/extensions/wikia/WikiBuilder/images/new_wiki_builder_2.png" class="collage2">
-	
+
+	<img src="<?= $wgExtensionsPath ?>/wikia/WikiBuilder/images/new_wiki_builder_1.png" class="collage1">
+	<img src="<?= $wgExtensionsPath ?>/wikia/WikiBuilder/images/new_wiki_builder_2.png" class="collage2">
+
 </section>
 <script>
 	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
