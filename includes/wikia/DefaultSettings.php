@@ -327,6 +327,7 @@ $wgSkipSkins = array(
 		'lostbook',
 		'quartz',
 		'monaco_old',
+		'wikiaapp',
 		'wikiaphone',
 		'wikiaphoneold',
 		'smartphone',
