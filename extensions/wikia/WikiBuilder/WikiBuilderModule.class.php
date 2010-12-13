@@ -1,11 +1,12 @@
 <?php
 class WikiBuilderModule extends Module {
 
-	var $wgExtensionsPath;
-	var $wgOasisThemes;
-	var $wgBlankImgUrl;
-	var $wgLanguageCode;
 	var $OWBmessages;
+	var $wgBlankImgUrl;
+	var $wgExtensionsPath;
+	var $wgLanguageCode;
+	var $wgOasisThemes;
+	var $wgStylePath;
 
 	public function executeIndex() {
 		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds;
