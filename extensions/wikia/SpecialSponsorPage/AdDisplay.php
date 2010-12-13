@@ -61,7 +61,8 @@ class AdDisplay {
 		
 		$adtext = "";
 		$skin = isset($wgUser->mSkin) ? get_class($wgUser->mSkin) : false;
-		if ((!empty($skin) ? $skin != 'SkinWikiaphone' : true)) {
+		
+		if ( ( !empty( $skin ) ? ( !in_array( $skin, array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ) : true)) {
 			$ads = Advertisement::GetAdsForCurrentPage();
 			$adtext = wfMsg('sponsor-header');
 			$adtext .= '<div class="sponsormsg">';

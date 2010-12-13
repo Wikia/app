@@ -346,7 +346,7 @@ class SkinChooser {
 	public static function getSkin($user) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
-		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgOasis2010111;
+		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgOasis2010111, $wgDevelEnvironment;
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
 		wfProfileIn(__METHOD__);
@@ -515,6 +515,11 @@ class SkinChooser {
 		
 		//Fix RT#133364 and makes crazy mobile users get the correct one
 		if( $userSkin == 'smartphone' ){
+			$userSkin = 'wikiaphone';
+		}
+		
+		//WikiaApp skin is ment to be available only on DevBoxes ATM
+		if( $userSkin == 'wikiaapp' && !$wgDevelEnvironment ){
 			$userSkin = 'wikiaphone';
 		}
 
