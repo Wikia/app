@@ -45,5 +45,6 @@ $messages['en'] = array(
     	'newVisits' => '% New visits',
     	'newVisitsTimeOnSite' => 'Hours spent by new visitors',
 	'sponsorship-dashboard-overwiev-label' => 'select area to zoom in',
-	'sponsorship-dashboard-empty-chart' => 'Sorry. No data for this chart.'
+	'sponsorship-dashboard-empty-chart' => 'Sorry. No data for this chart.',
+	'sponsorship-dashboard-cityname-and-familiarity' => '$1 - <i>$2 % user match</i>',
 );
