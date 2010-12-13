@@ -30,7 +30,7 @@
 		 */
 		public function __construct($title) {
 			if (!$title instanceof Title) {
-				$title = Title::newFromText($title,NS_CATEGORY);
+				$title = Title::makeTitle(NS_CATEGORY,$title);
 			}
 			$this->title = $title;
 			$this->dbkey = $this->title->getDBkey();
@@ -285,7 +285,7 @@
 			$views = self::getPageViews($id);
 
 			foreach ($added as $one) {
-				$catTitle = Title::newFromText($one,NS_CATEGORY);
+				$catTitle = Title::makeTitle(NS_CATEGORY,$one);
 				$catDBkey = $catTitle->getDBKey();
 
 				$key = self::getTopArticlesKey($catDBkey, $ns);
@@ -300,7 +300,7 @@
 			}
 
 			foreach ($deleted as $one) {
-				$catTitle = Title::newFromText($one,NS_CATEGORY);
+				$catTitle = Title::makeTitle(NS_CATEGORY,$one);
 				$catDBkey = $catTitle->getDBKey();
 
 				$key = self::getTopArticlesKey($catDBkey, $ns);
@@ -340,7 +340,7 @@
 			}
 
 			foreach ($categories as $one) {
-				$catTitle = Title::newFromText($one,NS_CATEGORY);
+				$catTitle = Title::makeTitle(NS_CATEGORY,$one);
 				$catDBkey = $catTitle->getDBKey();
 
 				$key = self::getTopArticlesKey($catDBkey, $ns);
