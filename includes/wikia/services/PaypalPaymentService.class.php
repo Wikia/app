@@ -4,7 +4,6 @@ class PaypalPaymentService extends Service {
 
 	private $token;
 	private $paypalOptions = array();
-	private $paypalDBName = null;
 	private $payflowAPI = null;
 
 	public function __construct( Array $paypalOptions, $token = null ) {
@@ -16,12 +15,9 @@ class PaypalPaymentService extends Service {
 		$this->paypalOptions = $paypalOptions;
 	}
 
-	public function setPaypalDBName( $name ) {
-		$this->paypalDBName = $name;
-	}
-
 	static function newFromPayerId( $payerId ) {
-		$dbr = wfGetDB( DB_SLAVE, array(), $this->getPaypalDBName() );
+		global $wgPayPalPaymentDBName;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgPayPalPaymentDBName );
 		$tables = array( 'pp_details', 'pp_tokens', 'pp_agreements' );
 		$conds = array(
 				'ppd_payerid' => $payerId,
@@ -40,7 +36,8 @@ class PaypalPaymentService extends Service {
 	}
 
 	static function newFromBillingAgreement( $baid, $payerId=null ) {
-		$dbr = wfGetDB( DB_SLAVE, array(), $this->getPaypalDBName() );
+		global $wgPayPalPaymentDBName;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgPayPalPaymentDBName );
 		$tables = array( 'pp_tokens', 'pp_agreements' );
 		$conds = array(
 				'ppa_token = ppt_token',
@@ -70,14 +67,6 @@ class PaypalPaymentService extends Service {
 		$this->token = $token;
 	}
 
-	private function getPaypalDBName() {
-		if( $this->paypalDBName == null ) {
-			global $wgPayPalPaymentDBName;
-			$this->paypalDBName = $wgPayPalPaymentDBName;
-		}
-		return $this->paypalDBName;
-	}
-
 	private function getPayflowAPI() {
 		if( $this->payflowAPI == null ) {
 			$this->payflowAPI = new PayflowAPI( $this->getPaypalOptions() );
@@ -90,8 +79,9 @@ class PaypalPaymentService extends Service {
 	}
 
 	public function fetchToken( $returnUrl, $cancelUrl ) {
+		global $wgPayPalPaymentDBName;
 		// save request in the DB
-		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgPayPalPaymentDBName );
 		$dbw->insert( 'pp_tokens', array( 'ppt_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
 		$req_id = $dbw->insertId();
 
@@ -123,15 +113,16 @@ class PaypalPaymentService extends Service {
 			return false;
 		}
 
+		global $wgPayPalPaymentDBName;
 		// check if the request was already made
-		$dbr = wfGetDB( DB_SLAVE, array(), $this->getPaypalDBName() );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgPayPalPaymentDBName );
 		$payerId = $dbr->selectField( 'pp_details', 'ppd_payerid', array( 'ppd_token' => $this->token ), __METHOD__ );
 		if( $payerId !== false ) {
 			return $payerId;
 		}
 
 		// save a new request in the DB
-		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgPayPalPaymentDBName );
 		$dbw->insert( 'pp_details', array( 'ppd_token' => $this->token, 'ppd_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
 		$req_id = $dbw->insertId();
 
@@ -182,13 +173,15 @@ class PaypalPaymentService extends Service {
 	}
 
 	public function getBillingAgreement() {
-		$dbr = wfGetDB( DB_SLAVE, array(), $this->getPaypalDBName() );
+		global $wgPayPalPaymentDBName;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgPayPalPaymentDBName );
 		return $dbr->selectField( 'pp_agreements', 'ppa_baid', array( 'ppa_token' => $this->token, 'ppa_canceled' => null ), __METHOD__ );
 	}
 
 	public function createBillingAgreement() {
+		global $wgPayPalPaymentDBName;
 		// save request in the DB
-		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgPayPalPaymentDBName );
 		$dbw->insert( 'pp_agreements', array( 'ppa_token' => $this->token, 'ppa_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
 		$req_id = $dbw->insertId();
 
@@ -215,6 +208,7 @@ class PaypalPaymentService extends Service {
 	}
 
 	public function cancelBillingAgreement( $baid ) {
+		global $wgPayPalPaymentDBName;
 		// make request to Payflow
 		$respArr = $this->getPayflowAPI()->cancelCustomerBillingAgreement( $baid );
 
@@ -224,7 +218,7 @@ class PaypalPaymentService extends Service {
 				)
 		  ) {
 			// save response in the DB
-			$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName());
+			$dbw = wfGetDB( DB_MASTER, array(), $wgPayPalPaymentDBName );
 			$dbw->update( 'pp_agreements', array( 'ppa_canceled' => wfTimestampNow( TS_DB ) ), array( 'ppa_baid' => $baid ), __METHOD__ );
 			return true;
 		} else {
@@ -244,8 +238,9 @@ class PaypalPaymentService extends Service {
 	}
 
 	public function collectPayment( $baid, $amount, &$respArr = array() ) {
+		global $wgPayPalPaymentDBName;
 		// save request in the DB
-		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgPayPalPaymentDBName );
 		$dbw->insert( 'pp_payments', array( 'ppp_baid' => $baid, 'ppp_amount' => $amount, 'ppp_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
 		$req_id = $dbw->insertId();
 
@@ -275,8 +270,9 @@ class PaypalPaymentService extends Service {
 	}
 
 	public function createRecurringPayment( $baid, $profileName, $amount, $startDate, $term = 0, $payPeriod = "MONT", $retryNumDays = 3, $initialFee = true, $description = "", &$respArr = array() ) {
+		global $wgPayPalPaymentDBName;
 		// save request in the DB
-		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgPayPalPaymentDBName );
 		$dbw->insert( 'pp_profiles', array( 'pppr_baid' => $baid, 'pppr_amount' => $amount, 'pppr_retrynumdays' => $retryNumDays, 'pppr_startdate' => $startDate, 'pppr_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
 		$req_id = $dbw->insertId();
 
@@ -305,11 +301,12 @@ class PaypalPaymentService extends Service {
 	}
 
 	public function retryPayment( $req_id, $baid, $amount, &$respArr = array() ) {
+		global $wgPayPalPaymentDBName;
 		// make request to Payflow
 		$respArr = $this->getPayflowAPI()->doExpressCheckoutPayment( $req_id, $baid, $amount );
 
 		// save response in the DB
-		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgPayPalPaymentDBName );
 		$dbw->update( 'pp_payments',
 				array( 'ppp_responded'     => wfTimestampNow( TS_DB ) ) + $this->mapRespArr( array(
 					'ppp_result'        => 'RESULT',
