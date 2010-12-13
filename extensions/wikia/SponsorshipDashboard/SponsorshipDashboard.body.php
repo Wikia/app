@@ -29,11 +29,14 @@ class SponsorshipDashboard extends SpecialPage {
 
 	function execute( $subpage = 'report2' ) {
 
-		global $wgSupressPageSubtitle, $wgUser, $wgRequest;
+		global $wgSupressPageSubtitle, $wgUser, $wgRequest, $wgSponsorshipDashboardAllowAdmins;
 
 		$wgSupressPageSubtitle = true;
 
-		if ( in_array('staff', $wgUser->getEffectiveGroups()) || in_array('admin', $wgUser->getEffectiveGroups()) ){
+		if (	in_array( 'staff', $wgUser->getEffectiveGroups() ) ||
+			( in_array('admin', $wgUser->getEffectiveGroups()) && !empty( $wgSponsorshipDashboardAllowAdmins ))
+		){
+			
 			if ( in_array( $subpage, $this->allowedSubpages ) ){
 				$function = 'HTML'.$subpage;
 				$this->$function();
