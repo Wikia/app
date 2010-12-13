@@ -489,9 +489,12 @@
 						]};
 				});
 				
+				/*
 				time = new Date(); 
 				$.getScript(window.wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=' + window.wgUserLanguage + '&cb=' + time.getTime(), 
 						dataLoadedCallback);
+				*/
+				GlobalTriggers.on('plbdataloaded',dataLoadedCallback);
 			});
 		},
 		
