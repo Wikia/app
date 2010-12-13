@@ -72,7 +72,7 @@
 			}
 
 			$helpbox = array('db' => $wgUser->getOption("plbhidehelpbox"), 'show' => 0);
-				$wgUser->setOption("plbhidehelpbox", 1 );
+				$wgUser->setOption("plbhidehelpbox", 0 );
 				$wgUser->saveSettings();	
 				
 			if( !$wgUser->getOption("plbhidehelpbox") ) {
