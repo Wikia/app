@@ -41,6 +41,10 @@ require $dir . "/../extensions/wikia/StaticChute/StaticChute.php";
 if(count($data) < $MIN_NUM_PARAMS){
 	// Not enough parameters.  Return an error (but don't cache it).
 	header('HTTP/1.0 400 Bad Request');
+	
+	$params["type"] = (isset($data[0])?$data[0]:'js');
+	$StaticChute = new StaticChute($params['type']);
+
 	echo $StaticChute->comment("Wrong number of parameters found.  Found " . count($data). " but expected at least " . $MIN_NUM_PARAMS);
 	exit;
 } else {
