@@ -229,7 +229,9 @@ function VET_showReplace(e) {
 }
 
 function VET_addHandler() {
-  	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink'], 'click',  VET_show);
+	$.loadYUI(function(){
+		YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink'], 'click',  VET_show);
+	});
 }
 
 function VET_toggleSizing( enable ) {
