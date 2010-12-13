@@ -1,3 +1,6 @@
+== Changes since 20101213 ==
+* rt#140425: IE: Facebook JS library causes events to be fired twice (macbre)
+
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
 * rt#126782: Slideshow: arrows not working in pop out (macbre)
