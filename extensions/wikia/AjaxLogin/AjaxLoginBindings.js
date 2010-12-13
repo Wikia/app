@@ -98,7 +98,8 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 						}
 
 						if(typeof FB != 'undefined'){
-							window.fbAsyncInit(); // re-initialize FB JS SDK - will parse and activate the FBML login button.
+							// parse FBXML login button
+							FB.XFBML.parse();
 						}
 
 						if((typeof showLoginRequiredMessage != 'undefined') && (showLoginRequiredMessage)){
@@ -137,10 +138,10 @@ $(function() {
 
 	$('.ajaxLogin').click(openLogin);
 	$('.ajaxRegister').click(openRegister);
-	
+
 	if ($('.ajaxLoginRequest').exists()) { // ref function in links
 		$('.ajaxLoginRequest').click(openLogin);
-		wpAjaxLoginParam = $('.ajaxLoginRequest').attr('ref');	
+		wpAjaxLoginParam = $('.ajaxLoginRequest').attr('ref');
 	}
 
 	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {

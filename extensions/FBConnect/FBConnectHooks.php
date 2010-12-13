@@ -112,17 +112,7 @@ class FBConnectHooks {
 			}
 
 			// Asynchronously load the Facebook Connect JavaScript SDK before the page's content
-			global $wgNoExternals; # macbre (per Artur's request)
-			if(!empty($fbScript) && empty($wgNoExternals)){
-				$out->prependHTML('
-					<div id="fb-root"></div>
-					<script>
-						(function(){var e=document.createElement("script");e.type="' .
-						$wgJsMimeType . '";e.src="' . $fbScript .
-						'";document.getElementById("fb-root").appendChild(e)})();
-					</script>' . "\n"
-				);
-			}
+			// macbre: moved to SkinAfterBottomScripts method (RT #140425)
 
 			// Inserts list of global JavaScript variables if necessary
 			if (self::MGVS_hack( $mgvs_script )) {
@@ -171,7 +161,34 @@ STYLE;
 				}
 			}
 		}
-		
+
+		return true;
+	}
+
+	/**
+	 * Add Facebook SDK loading code at the bottom of the page
+	 *
+	 * Fixes IE issue (RT #140425)
+	 */
+	static function SkinAfterBottomScripts(&$skin, &$scripts) {
+		global $wgJsMimeType, $fbScript, $wgNoExternals;
+		wfProfileIn(__METHOD__);
+
+		if(!empty($fbScript) && empty($wgNoExternals)){
+			$js = <<<JS
+
+<!-- Facebook integration -->
+<div id="fb-root"></div>
+<script type="$wgJsMimeType">
+	$.getScript("$fbScript", window.onFBloaded);
+</script>
+
+JS;
+
+			$scripts .= $js;
+		}
+
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -212,7 +229,7 @@ STYLE;
 	 * to retain backward compatability.
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
-		global $wgTitle, $fbAppId, $fbUseMarkup, $fbLogo, $wgRequest;
+		global $wgTitle, $fbAppId, $fbUseMarkup, $fbLogo, $wgRequest, $wgLang;
 
 		$thisurl = $wgTitle->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
@@ -222,11 +239,14 @@ STYLE;
 
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl('Userlogout',
 						$wgTitle->isSpecial('Preferences') ? '' : "returnto={$thisurl}");
-		
+
 		$vals = $wgRequest->getValues();
 		if(!empty($vals) && !empty($vals['title'])) {
 			$vars['fbReturnToTitle'] = $vals['title'];
 		}
+
+		// macbre: needed for channelUrl
+		$vars['fbScriptLangCode'] = FBConnectLanguage::getFbLocaleForLangCode($wgLang->getCode());
 
 		return true;
 	}
