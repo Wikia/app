@@ -171,10 +171,10 @@ STYLE;
 	 * Fixes IE issue (RT #140425)
 	 */
 	static function SkinAfterBottomScripts(&$skin, &$scripts) {
-		global $wgJsMimeType, $fbScript, $wgNoExternals;
+		global $wgJsMimeType, $fbScript, $wgNoExternals, $wgUser;
 		wfProfileIn(__METHOD__);
 
-		if(!empty($fbScript) && empty($wgNoExternals)){
+		if( !empty($fbScript) && empty($wgNoExternals) && ( !in_array( $skin->getSkinName(), array( 'wikiaphone', 'wikiaapp' ) ) ) ){
 			$js = <<<JS
 
 <!-- Facebook integration -->
