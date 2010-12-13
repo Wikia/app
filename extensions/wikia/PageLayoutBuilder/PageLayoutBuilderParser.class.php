@@ -215,6 +215,7 @@ class PageLayoutBuilderParser extends Parser {
 			return self::parserReturnMarker($self, $marker, $dom->__toString());
 		}
 		
+		$cat = "";
 		if(!empty($attributes['cswikitext'])) {
 			$cat = $attributes['cswikitext'];	
 		}
