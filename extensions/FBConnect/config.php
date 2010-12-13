@@ -61,7 +61,7 @@ $fbUseMarkup = true;
  * $wgAllowExternalImages with the added benefit that all photos are screened
  * against Facebook's Code of Conduct <http://www.facebook.com/codeofconduct.php>
  * and subject to dynamic privacy. To disable just <fb:photo> tags, set this to false.
- * 
+ *
  * Disabled until the alpha JS SDK supports <fb:photo> tags.
  */
 #$fbAllowFacebookImages = true;
@@ -69,11 +69,11 @@ $fbUseMarkup = true;
 /**
  * For easier wiki rights management, create a group on Facebook and place the
  * group ID here. Three new implicit groups will be created:
- * 
+ *
  *     fb-groupie    A member of the specified group
  *     fb-officer    A group member with an officer title
  *     fb-admin      An administrator of the Facebook group
- * 
+ *
  * By default, they map to User, Bureaucrat and Sysop privileges, respectively.
  * Users will automatically be promoted or demoted when their membership, title
  * or admin status is modified from the group page within Facebook.
@@ -86,7 +86,7 @@ $fbUserRightsFromGroup = false;  # Or a group ID
 
 /**
  * Options regarding the personal toolbar (in the upper right).
- * 
+ *
  * == Key ==              == Effect ==
  * hide_connect_button    Hides the "Log in with Facebook Connect" button.
  * hide_convert_button    Hides "Connect this account with Facebook" for non-
@@ -99,7 +99,7 @@ $fbUserRightsFromGroup = false;  # Or a group ID
  * remove_user_talk_link  Remove link to user's talk page
  * use_real_name_from_fb  $fbUserName to show the real name for auto-usernames,
  *                        true to show the real name for all Connected users
- * 
+ *
  * Additionally, use $wgShowIPinHeader to hide the IP and its talk link.
  * For more information, see <http://www.mediawiki.org/wiki/Manual:$wgShowIPinHeader>.
  */
@@ -125,14 +125,15 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  * use FBConnect on your production website, you may wish to insulate yourself
  * from these changes to the alpha library by downloading and hosting your own
  * copy of the library.
- * 
+ *
  * For more info, see <http://github.com/facebook/connect-js>.
  */
 //$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
-global $wgCdnStylePath, $wgStyleVersion;
-$fbScript = "$wgCdnStylePath/extensions/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
-//$fbScript = ''; // NOTE: This is in StaticChute now, so don't use any URL here. (NOTE: Didn't work in StaticChute.  The re-compression broke it and
-// also, we can't use StaticChute while fbScriptEnableLocales is true, that could lead to double-inclusion).
+#global $wgCdnStylePath, $wgStyleVersion;
+#$fbScript = "$wgCdnStylePath/extensions/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
+
+// macbre: fetch FB SDK from facebook's servers
+$fbScript = 'http://connect.facebook.net/en_US/all.js';
 
 /**
  * If this is set to true, and the user's language is anything other than fbScriptLangCode, then
@@ -198,7 +199,7 @@ global $wgEnableFacebookConnectPushing;
 $fbEnablePushToFacebook = (!empty($wgEnableFacebookConnectPushing));
 if(!empty($fbEnablePushToFacebook)){
 	$fbPushDir = dirname(__FILE__) . '/pushEvents/';
-	
+
 	// Convenience loop for push event classes in the fbPushDir directory
 	// whose file-name corresponds to the class-name.  To add a push event
 	// which does not meet these criteria, just explicitly add it below.

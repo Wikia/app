@@ -40,16 +40,26 @@
  */
 
 /**
- * After the Facebook Connect JavaScript SDK has been asynchronously loaded,
- * it looks for the global fbAsyncInit and executes the function when found.
+ * This function is called when FB SDK is loaded using $.getScript (inline bottom script)
+ *
+ * @author macbre
  */
-window.fbAsyncInit = function() {
+window.onFBloaded = function() {
+	$().log('onFBloaded', 'FB');
+
+	// macbre: fix IE issue (RT #140425)
+	// @see http://threebrothers.org/brendan/blog/facebook-connect-ie-fb_xd_fragment-iframe/
+	var channelUrl = window.location.protocol + '//' +
+		window.location.host + window.wgScriptPath +
+		'/extensions/FBConnect/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
+
 	// Initialize the library with the API key
 	FB.init({
 		appId : window.fbAppId,
 		status : true, // Check login status
 		cookie : true, // Enable cookies to allow the server to access the session
-		xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+		xfbml  : window.fbUseMarkup, // Whether XFBML should be automatically parsed
+		channelUrl: channelUrl
 	});
 
 	// NOTE: Auth.login doesn't appear to work anymore.  The onlogin attribute of the fb:login-buttons is being used instead.
@@ -66,6 +76,8 @@ window.fbAsyncInit = function() {
 			window.location = window.wgArticlePath.replace(/\$1/, "Special:Connect");
 		}
 	});
+
+	$(window).trigger('fbinit');
 };
 
 /**
@@ -107,12 +119,11 @@ $(document).ready(function() {
 /**
  * check for api is init (FB.init)
  * @return bool
- */
-
+ *
 function isFbApiInit() {
 	return !(typeof FB._apiKey == 'undefined' ||  FB._apiKey == null);
 }
-
+*/
 
 /**
  * An optional handler to use in fbOnLoginJsOverride for when a user logs in via facebook connect.
@@ -155,10 +166,12 @@ function sendToConnectOnLoginForSpecificForm(formName){
 
 
 function openFbLogin() {
+/*
 	if (!isFbApiInit()) {
 		setTimeout(openFbLogin,300);
 		return true;
 	}
+*/
 	FB.login(FB.bind(sendToConnectOnLogin, null), { perms : "publish_stream" });
 }
 
@@ -166,9 +179,11 @@ function openFbLogin() {
  * only for user header button
  */
 function loginByFBConnect() {
+/*
 	if (!isFbApiInit()) {
 		window.fbAsyncInit();
 	}
+*/
 	openFbLogin();
 	return false;
 }
@@ -286,7 +301,7 @@ window.wgAjaxLoginOnInit = function() {
 /**
  * When the page is loaded, always init the FB code if it has not been initialized.  This
  * will allow FBML tags in content (if configured to do this).
- */
+ *
 $(document).ready(function(){
 	initFbWhenReady();
 });
@@ -299,3 +314,4 @@ function initFbWhenReady(){
 		window.fbAsyncInit();
 	}
 }
+*/
