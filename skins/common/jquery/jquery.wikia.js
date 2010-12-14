@@ -241,16 +241,7 @@ $.loadYUI = function(callback) {
 		};
 		$().log('rq start', 'YUI');
 
-		//getScript() is not async
-		jQuery.ajax({
-			async: false,
-			type: "GET",
-			url: wgYUIPackageURL,
-			data: null,
-			success: YUIloadingCallBack,
-			dataType: 'script'
-		});
-
+		$.getScript(wgYUIPackageURL, YUIloadingCallBack);
 	} else {
 		$().log('already loaded', 'YUI');
 		callback();
