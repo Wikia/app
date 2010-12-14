@@ -94,6 +94,7 @@ function wfSoapFailures(){
 		}
 
 		if(($songResult['lyrics'] == $failedLyrics) || ($songResult['lyrics'] == "")){
+			print "<html><head><title>Error</title></head><body>\n"; // TODO: i18n
 			print "<div style='background-color:#fcc'>Sorry, but $artist:$song song still failed.</div>\n";
 			print_r($songResult);
 		} else {
@@ -101,7 +102,8 @@ function wfSoapFailures(){
 			$song = str_replace("'", "\\'", $song);
 
 			$db = &wfGetDB(DB_MASTER)->getProperty('mConn');
-			
+
+			print "<html><head><title>Success</title></head><body>\n"; // TODO: i18n
 			print "Deleting record... ";
 			if(mysql_query("DELETE FROM lw_soap_failures WHERE request_artist='$artist' AND request_song='$song'", $db)){
 				print "Deleted.";
@@ -120,6 +122,7 @@ function wfSoapFailures(){
 		}
 		global $wgScriptPath;
 		print "<br/>Back to <a href='$wgScriptPath/Special:Soapfailures'>SOAP Failures</a>\n";
+		print "</body></html>";
 		exit; // wiki system throws database-connection errors if the page is allowed to display itself.
 	} else {
 		$wgOut->addHTML("<style type='text/css'>
@@ -251,7 +254,7 @@ function wfSoapFailures(){
 					$rowIndex++;
 				}
 				$wgOut->addHTML("</table>\n");
-				$wgOut->addHTML("<br/>Total of <strong>$totFailures</strong> requests in the top $MAX_RESULTS.  This number will increase slightly over time, but we should fight to keep it as low as possible!");
+				$wgOut->addHTML("<br/>Total of <strong id='lw_numFailures'>$totFailures</strong> requests in the top $MAX_RESULTS.  This number will increase slightly over time, but we should fight to keep it as low as possible!");
 			} else {
 				$wgOut->addHTML("<em>No results found.</em>\n");
 			}
