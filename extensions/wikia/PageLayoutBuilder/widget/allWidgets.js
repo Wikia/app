@@ -3,14 +3,16 @@
 window.PageLayoutBuilder = window.PageLayoutBuilder || {};
 
 PageLayoutBuilder.inputEnter = function (e) {
-	$(e.target).val("").removeClass("plb-empty-input");
+	if($(e.target).hasClass('plb-empty-input')) {
+		$(e.target).val("").removeClass("plb-empty-input");
+	}
 }
 
 PageLayoutBuilder.inputExit = function (e) {
 	var value = $(e.target).attr('data-instructions');
 	if($(e.target).val() == "") {
 		$(e.target).val(value).addClass("plb-empty-input");	
-	}
+	}		
 }
 
 $(function() {
@@ -68,8 +70,7 @@ PageLayoutBuilder.setupTextarea = function(node) {
 	// add textarea toolbar node
 	var toolbar = $('<div>').
 		addClass('plb-form-template-toolbar').
-		insertBefore(node).
-		css('top', parseInt($(node).position().top ) + "px" );
+		insertBefore(node);
 	
 	// show toolbar on focus / hide on blur
 	var toolbarHideTimeout = false;

@@ -72,7 +72,7 @@ ul.plb-form-actions {
 .plb-mlinput-textarea {
 	height: 200px;
 	width: 670px;
-	margin-top:25px;
+	margin-top:-1px;
 }
 
 .plb-pe-window-preview .plb-mlinput-textarea {
@@ -109,7 +109,6 @@ ul.plb-form-actions {
 }
 
 .plb-form-template-toolbar {
-	position: absolute;
 	top: -24px;
 	img {
 		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/toolbar_sprite.png); /* $--wgCdnStylePath */
