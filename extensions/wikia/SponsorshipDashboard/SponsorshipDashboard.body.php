@@ -80,7 +80,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 	private function HTMLreport2(){
 
-		global $wgOut;
+		global $wgOut, $wgSponsorshipDashboardAllowRanking;
 
 		wfProfileIn( __METHOD__ );
 
@@ -90,7 +90,9 @@ class SponsorshipDashboard extends SpecialPage {
 		$hiddenSeries = array('A' , 'B', 'C', 'D', 'E', 'G', 'I', 'K', 'L', 'X', 'Y');
 
 		$this->displayHeader( 1 );
-		$this->displayRanking( $sponsorshipDashboardService->loadTagPosition() );
+		if ( !empty( $wgSponsorshipDashboardAllowRanking ) ){
+			$this->displayRanking( $sponsorshipDashboardService->loadTagPosition() );
+		}
 		$this->displayChart( $fromWikiStats['serie'], $fromWikiStats['ticks'], $hiddenSeries );
 
 		wfProfileOut( __METHOD__ );
