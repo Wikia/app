@@ -21,7 +21,7 @@ public class CreateWikiTest extends BaseTest {
 	}
 
 	@Test(groups={"envProduction"})
-	public void testCreateWikiAsLoggedInUserTest() throws Exception {
+	public void testCreateWikiAsLoggedInUser() throws Exception {
 		loginAsStaff();
 		session().open("");
 		session().waitForPageToLoad(TIMEOUT);
@@ -40,8 +40,46 @@ public class CreateWikiTest extends BaseTest {
 		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
 	}
 	
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedInUserTest"})
-	public void testDeleteWiki() throws Exception {
+	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedInUser"})
+	public void cleanupTestCreateWikiAsLoggedInUser() throws Exception {
+		deleteWiki();
+	}
+
+	@Test(groups={"envProduction"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedInUser"})
+	public void testCreateWikiAsLoggedOutUser() throws Exception {
+		session().open("");
+		session().waitForPageToLoad(TIMEOUT);
+		clickAndWait("link=Start a wiki");
+		
+		session().type("wiki-name", getWikiName());
+		session().type("wiki-domain", getWikiName());
+		session().select("wiki-category", "label=regexp:^.*Other");
+		session().select("wiki-language", "label=regexp:^.*Polski");
+		
+		session().click("AWClogin");
+		waitForElement("AjaxLoginBox");
+		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
+		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
+		session().click("wpLoginattempt");
+		session().waitForPageToLoad(TIMEOUT);
+
+		assertEquals(session().getValue("wiki-name"), getWikiName());
+		assertEquals(session().getValue("wiki-domain"), getWikiName());
+		
+		clickAndWait("wiki-submit");
+		waitForTextPresent("Your wiki has been created!");
+		
+		clickAndWait("//div[@class='awc-domain']/a");
+		
+		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
+	}
+	
+	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUser"})
+	public void cleanupTestCreateWikiAsLoggedOutUser() throws Exception {
+		deleteWiki();
+	}
+	
+	public void deleteWiki() throws Exception {
 		loginAsStaff();
 		session().open("http://community.wikia.com/wiki/Special:WikiFactory");
 		session().waitForPageToLoad(TIMEOUT);
@@ -59,5 +97,7 @@ public class CreateWikiTest extends BaseTest {
 		
 		clickAndWait("close_saveBtn");
 		assertTrue(session().isTextPresent("was closed"));
+		
+		wikiName = null;
 	}
 }
