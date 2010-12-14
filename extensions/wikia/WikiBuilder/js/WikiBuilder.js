@@ -198,9 +198,7 @@ var WikiBuilder = {
 			function(res) {
 				throbber.hide();
 				if (res.status == 'ok') {
-					if (res.data.url !== false) {
-						location.href = res.data.url;
-					}
+					location.href = res.data.url;
 				} else {
 					$.showModal(res.caption, res.content);
 				}

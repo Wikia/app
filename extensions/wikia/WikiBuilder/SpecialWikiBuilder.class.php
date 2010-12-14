@@ -39,17 +39,24 @@ class SpecialWikiBuilder extends UnlistedSpecialPage {
 			wfProfileIn(__METHOD__);
 
 			$data = SpecialWikiPayment::fetchPaypalToken();
-			$result = array(
-				'status' => 'ok',
-				'data' => $data
-			);
-
+			if (empty($data['url'])) {
+				$result = array(
+					'status' => 'error',
+					'caption' => wfMsg('owb-step4-error-caption'),
+					'content' => wfMsg('owb-step4-error-token-content')
+				);
+			} else {
+				$result = array(
+					'status' => 'ok',
+					'data' => $data
+				);
+			}
 		} else {
 			wfLoadExtensionMessages('WikiBuilder');
 			$result = array(
 				'status' => 'error',
 				'caption' => wfMsg('owb-step4-error-caption'),
-				'content' => wfMsg('owb-step4-error-content')
+				'content' => wfMsg('owb-step4-error-upgrade-content')
 			);
 		}
 
