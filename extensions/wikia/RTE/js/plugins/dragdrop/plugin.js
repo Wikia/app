@@ -45,6 +45,12 @@ CKEDITOR.plugins.add('rte-dragdrop',
 	},
 
 	onDrag: function(ev) {
+		
+		//hack for ie problem with scroll (for ie scroll bar is element ?) 
+		if(typeof(ev.target.tagName) == 'undefined') {
+			return true;
+		}
+		
 		// create undo point (RT #36064)
 		RTE.instance.fire('saveSnapshot');
 		RTE.log('drag&drop: undo point');
