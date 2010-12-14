@@ -21,14 +21,15 @@ function wfOasisSetup() {
 	$wgHooks['ArticleSaveComplete'][] = 'UserStatsService::onArticleSaveComplete';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingModule::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingModule::renderBlogListing';
+	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayModule::onDoEditSectionLink';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyModule::onEditPageRender';
+	$wgHooks['EditPage::showEditForm:initial'][] = 'EditPageModule::onShowEditFormInitial';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'PageHeaderModule::modifyEditPage';
 	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosModule::onImageDelete';
 	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayModule::onShowEditLink';
 	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
-	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayModule::onDoEditSectionLink';
 
 	// confirmations
 	$wgHooks['PreferencesMainPrefsForm'][] = 'NotificationsModule::addPreferencesConfirmation';
