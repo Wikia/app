@@ -28,7 +28,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		}	
 		$keys = array_keys( $data[0] );
 
-		$sql = 'INSERT %s INTO %s (%s) VALUES %s %s';
+		$sql = 'INSERT `noreptemp`.`%s` INTO %s (%s) VALUES %s %s';
 
 		$first = true;
 		$records = "";
@@ -156,7 +156,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		foreach ($table_to_clear as $table => $date_col) {
 			$delete_date = date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d") - $date_col['exp'], date("Y")));
 			$col = $date_col['col'];
-			$this->dbs->delete( $table, array(  "$col = '$delete_date'" ) );
+			$this->dbs->delete( "`noreptemp`.`{$table}`", array(  "$col = '$delete_date'" ) );
 		}
 
 		wfProfileOut( __METHOD__ );
