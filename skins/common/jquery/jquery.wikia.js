@@ -248,63 +248,60 @@ $.loadYUI = function(callback) {
 	}
 }
 
-// load jQuery UI library if not yet loaded
+// load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
-	if (typeof jQuery.ui === 'undefined') {
-		$().log('loading', 'jQuery UI');
-
-		$.getScript(stylepath + '/common/jquery/jquery-ui-1.7.2.custom.js?' + wgStyleVersion, function() {
-			$().log('loaded', 'jQuery UI');
-			if(typeof callback === 'function') callback();
-		});
-	}
-	else {
-		if(typeof callback === 'function') callback();
-	}
+	$.loadLibrary('jQueryUI',
+		stylepath + '/common/jquery/jquery-ui-1.7.2.custom.js?' + wgStyleVersion,
+		typeof jQuery.ui,
+		callback
+	);
 }
 
 $.loadJQueryAutocomplete = function(callback) {
-	if (typeof $.fn.autocomplete === 'undefined') {
-		$().log('loading', 'jQuery Autocomplete');
-
-		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion, function() {
-			$().log('loaded', 'jQuery Autocomplete');
-
-			if(typeof callback === 'function') callback();
-		});
-	}
-	else {
-		if(typeof callback === 'function') callback();
-	}
+	$.loadLibrary('jQuery Autocomplete',
+		stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion,
+		typeof jQuery.fn.autocomplete,
+		callback
+	);
 }
 
 $.loadWikiaTooltip = function(callback) {
-	if (typeof $.fn.wikiaTooltip === 'undefined') {
-		$().log('loading', 'Wikia Tooltip');
-
-		$.getScript(stylepath + '/common/jquery/jquery.wikia.tooltip.js?' + wgStyleVersion, function() {
-			$().log('loaded', 'Wikia Tooltip');
-
-			if(typeof callback === 'function') callback();
-		});
-	}
-	else {
-		if(typeof callback === 'function') callback();
-	}
+	$.loadLibrary('Wikia Tooltip',
+		stylepath + '/common/jquery/jquery.wikia.tooltip.js?' + wgStyleVersion,
+		typeof jQuery.fn.wikiaTooltip,
+		callback
+	);
 }
 
 $.loadJQueryAIM = function(callback) {
-	if (typeof jQuery.AIM === 'undefined') {
-		$().log('loading', 'jQuery AIM');
+	$.loadLibrary('jQuery AIM',
+		stylepath + '/common/jquery/jquery.aim.js?' + wgStyleVersion,
+		typeof jQuery.AIM,
+		callback
+	);
+}
 
-		$.getScript(stylepath + '/common/jquery/jquery.aim.js?' + wgStyleVersion, function() {
-			$().log('loaded', 'jQuery AIM');
+/**
+ * Loads library file if it's not already loaded and fires callback
+ */
+$.loadLibrary = function(name, file, typeCheck, callback) {
+	if (typeof callback != 'function') {
+		callback = function() {};
+	}
 
-			if(typeof callback === 'function') callback();
+	if (typeCheck === 'undefined') {
+		$().log('loading ' + name, 'loadLibrary');
+
+		$.getScript(file, function() {
+			$().log(name + ' loaded', 'loadLibrary');
+
+			callback();
 		});
 	}
 	else {
-		if(typeof callback === 'function') callback();
+		$().log(name + ' already loaded', 'loadLibrary');
+
+		callback();
 	}
 }
 
