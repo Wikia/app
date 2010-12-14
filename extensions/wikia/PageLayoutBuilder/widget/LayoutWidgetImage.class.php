@@ -143,7 +143,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 	}
 
 	private function renderForPreviewAndForm($data) {
-		$data['instructions'] = $this->getAttrVal( 'instructions', true );
+		$data['instructions'] = htmlspecialchars($this->getAttrVal( 'instructions', true ));
 		$data['id'] = $this->getAttrVal( 'id', true );
 		$data['type'] = "image";
 		

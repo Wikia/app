@@ -292,6 +292,14 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 					me._.on = 0;
 					me.setState( CKEDITOR.TRISTATE_OFF );
 				};
+				
+			// Wikia - start
+			editor.on( 'toolbartabswitch', function() {
+				if (me._.on) {
+					panel.hide();
+				}
+			});
+			// Wikia - end
 
 			if ( this.init )
 				this.init();

@@ -1043,7 +1043,7 @@
 			// Clear list in the toolbox
 			this.widgetsList.empty();
 			// Prepare buttons overlay for list items
-			var bs = "<span class=\"buttons\"><button class=\"wikia-button secondary edit\">"+PLB.Lang['plb-editor-edit']+"</button>"
+			var bs = "<span class=\"buttons\"><input type=\"button\" class=\"wikia-button secondary edit\" value=\""+$.htmlentities(PLB.Lang['plb-editor-edit'])+"\" />"
 				+"<a href=\"#\" class=\"sprite trash delete\"></a></span>";
 			// For each widget found do ...
 			$.each(l,$.proxy(function(i,e){

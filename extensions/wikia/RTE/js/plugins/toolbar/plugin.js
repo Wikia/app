@@ -115,6 +115,10 @@ CKEDITOR.plugins.add('rte-toolbar',
 				setTimeout(function() {
 					$('.cke_toolbar_tab_tabs span').click(function(e){
 					    element = $(e.target);
+					    if (element.hasClass('selected')) {
+					    	return;
+					    }
+					    editor.fire('toolbartabswitch');
 					    $('.cke_toolbar_tab').hide();
 					    $('#cke_toolbar' + element.attr('data-order') ).show();
 					    $('.cke_toolbar_tab_tabs span').removeClass('selected');
