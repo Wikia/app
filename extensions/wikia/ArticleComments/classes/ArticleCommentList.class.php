@@ -335,14 +335,13 @@ class ArticleCommentList {
 	 * render -- return HTML code for displaying comments
 	 *
 	 * @access public
-	 * @deprecated - not used in Oasis
+	 * @deprecated don't use it for Oasis, still needed for non-Oasis skins
 	 *
 	 * @return String HTML text with rendered comments section
 	 */
 
-	/*
+	
 	public function render() {
-
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
 		$template->set_vars( $this->getData() );
 
@@ -350,7 +349,7 @@ class ArticleCommentList {
 
 		return $text;
 	}
-	 */
+	
 
 	/**
 	 * doPagination -- return HTML code for pagination
@@ -757,17 +756,15 @@ class ArticleCommentList {
 	 *
 	 * @return String - HTML
 	 */
-	/*
+	
 	static function formatList($comments) {
-		print_pre(debug_backtrace());
-		exit();
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
 		$template->set_vars( array(
 			'comments'  => $comments
 		) );
 		return $template->render( 'comment-list' );
 	}
-	*/
+	
 
 	/**
 	 * Hook
