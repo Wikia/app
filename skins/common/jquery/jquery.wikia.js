@@ -285,23 +285,19 @@ $.loadJQueryAIM = function(callback) {
  * Loads library file if it's not already loaded and fires callback
  */
 $.loadLibrary = function(name, file, typeCheck, callback) {
-	if (typeof callback != 'function') {
-		callback = function() {};
-	}
-
 	if (typeCheck === 'undefined') {
 		$().log('loading ' + name, 'loadLibrary');
 
 		$.getScript(file, function() {
 			$().log(name + ' loaded', 'loadLibrary');
 
-			callback();
+			if (typeof callback == 'function') callback();
 		});
 	}
 	else {
 		$().log(name + ' already loaded', 'loadLibrary');
 
-		callback();
+		if (typeof callback == 'function') callback();
 	}
 }
 
