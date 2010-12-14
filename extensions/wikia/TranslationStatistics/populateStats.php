@@ -1,10 +1,8 @@
 <?php
 
-include( '/usr/wikia/source/wiki/maintenance/commandLine.inc' );
-include( 'TranStatsEngine.php' );
+include( '../../../maintenance/commandLine.inc' );
+include( $IP . '/extensions/Translate/MessageGroups.php' );
 
-$stats = new TransStatsEngine;
+$gs = new MessageGroupStatistics();
 
-$stats->buildMsgs();
-$stats->calculateState();
-
+$gs->populateStats();
