@@ -28,7 +28,10 @@ class CorporateFooterModule extends Module {
 			//Use Recipes Wiki cityID to force Lifestyle hub
 			$catInfo = WikiFactory::getCategory(3355);
 		}
-
+		
+		//i18n
+		$catInfo->cat_name = wfMsg('hub-'. $catInfo->cat_name);
+		
 		wfProfileOut( __METHOD__ );
 		return $catInfo;
 	}
