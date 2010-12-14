@@ -257,7 +257,6 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$this->previewOut =  $parserOut->getText();
 		
 		if($type == "form") {
-			$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
 			if(strlen(trim($this->previewOut)) == 0) {
 				$this->previewOut = XML::element("div",array(
 					"class" => "plb-form-errorbox" ),
