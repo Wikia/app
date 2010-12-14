@@ -8,10 +8,10 @@
 class EditPageModule extends Module {
 
 	/**
-	 * Disables edit form when in read-only mode (RT #85688) and loads YUI on edit pages
+	 * Disables edit form when in read-only mode (RT #85688)
 	 */
 	public static function onAlternateEdit($editPage) {
-		global $wgOut, $wgTitle, $wgJsMimeType;
+		global $wgOut, $wgTitle;
 		wfProfileIn(__METHOD__);
 
 		// disable edit form when in read-only mode
@@ -27,13 +27,23 @@ class EditPageModule extends Module {
 			return false;
 		}
 
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Loads YUI on edit pages
+	 */
+	public static function onShowEditFormInitial($editPage) {
+		global $wgOut, $wgJsMimeType;
+		wfProfileIn(__METHOD__);
+
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
 		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
-		$StaticChute = new StaticChute('js');
-		$StaticChute->useLocalChuteUrl();
-		$yui = $StaticChute->getChuteUrlForPackage('yui');
+		$staticChute = new StaticChute('js');
+		$staticChute->useLocalChuteUrl();
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$yui}\"></script>");
+		$wgOut->addScript($staticChute->getChuteHtmlForPackage('yui'));
 
 		wfProfileOut(__METHOD__);
 		return true;
