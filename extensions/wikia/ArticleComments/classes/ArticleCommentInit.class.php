@@ -24,12 +24,6 @@ class ArticleCommentInit {
 			if ($action != 'view' && $action != 'purge') {
 				self::$enable = false;
 			}
-			
-			//Comments are implemented only by Oasis and MonoBook and this function is
-			//used out of this extension's code
-			if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinOasis', 'SkinMonoBook' ) ) ){
-				self::$enable = false;
-			}
 		}
 		wfProfileOut( __METHOD__ );
 		return self::$enable;
@@ -106,7 +100,13 @@ class ArticleCommentInit {
 		//use this hook only for skins other than Monaco
 		//update: it's actually only MonoBook since Oasis uses its own
 		//logic and mobile skins do not show comments-related stuff
-		if ( get_class( $wgUser->getSkin() ) != 'SkinMonoBook' ) {
+		if ( in_array( get_class( $wgUser->getSkin() ), array(
+			'SkinMonaco',
+			'SkinAnswers',
+			'SkinOasis',
+			'SkinWikiaphone',
+			'SkinWikiaApp'
+		) ) ) {
 			return true;
 		}
 		
