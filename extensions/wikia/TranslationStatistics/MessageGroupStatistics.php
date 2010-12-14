@@ -1,26 +1,32 @@
 <?php
 
 class MessageGroupStatistics {
-	public static function forLanguage( $code ) {
+	public static function forLanguage( $code, $mode = null ) {
                 # Fetch from database
                 $dbr = wfGetDB( DB_SLAVE );
 
-                $res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $group ) );
+                $conds = array( 'gs_lang' => $code );
+                if ( !empty( $mode ) ) {
+			$conds[] = self::getModeCondition( $mode );
+                }
+
+                $res = $dbr->select( 'groupstats', '*', $conds );
 
                 while ( $row = $dbr->fetchRow( $res ) ) {
-                        $stats[ $row->gs_group ] = array();
+                        $stats[ $row['gs_group'] ] = array();
                 }
 
 		# Go over non-aggregate message groups filling missing entries
-		$groups = MessageGroup::getGroups();
+		$groups = MessageGroups::singleton()->getGroups();
 
 		foreach ( $groups as $group ) {
 			$id = $group->getId();
 			if ( !empty( $stats[$id] ) ) {
 				continue;
 			}
-
-			$stats[$name] = self::forItem( $id, $code );
+			if ( empty ( $mode ) ) {
+				$stats[$id] = self::forItem( $id, $code, $mode );
+			}
 		}
 
 		# Go over aggregate message groups filling missing entries
@@ -29,18 +35,23 @@ class MessageGroupStatistics {
 		return $stats;
   	}
  
-	public static function forGroup( $id ) {
+	public static function forGroup( $id, $mode = null ) {
 		# Fetch from database
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $id ) );
+                $conds = array( 'gs_group' => $id );
+                if ( !empty( $mode ) ) {
+                        $conds[] = self::getModeCondition( $mode );
+                }
 
-		while ( $row = $dbr->fetchArray( $res ) ) {
-			$stats[ $rew->gs_lang ] = $row;
+		$res = $dbr->select( 'groupstats', '*', $conds );
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			$stats[ $row['gs_lang'] ] = $row;
 		}
 
 		# Go over each language filling missing entries
-		foreach ( Language::getNames() as $lang => $name ) {
+		foreach ( Language::getLanguageNames() as $lang => $name ) {
 			if ( !empty( $stats[$lang] ) ) {
 				continue;
 			}
@@ -52,14 +63,19 @@ class MessageGroupStatistics {
 	}
  
 	// Used by the two function above to fill missing entries
-	public static function forItem( $groupId, $code ) {
+	public static function forItem( $groupId, $code, $mode = null ) {
 		# Check again if already in db ( to avoid overload in big clusters )
 
 		$dbr = wfGetDB( DB_SLAVE );
 
+		$conds = array( 'gs_group' => $groupId, 'gs_lang' => $code );
+		if ( !empty( $mode ) ) {
+			$conds[] = self::getModeCondition( $mode );
+		}
+
 		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $groupId, 'gs_lang' => $code ) );
 
-		if ( $row = $dbr->fetchArray( $res ) ) {
+		if ( $row = $dbr->fetchRow( $res ) ) {
 			// convert to array
 			return $row;
 		}
@@ -74,9 +90,6 @@ class MessageGroupStatistics {
 		// Store the count of real messages for later calculation.
 		$total = count( $collection );
 
-		// Fill translations in for counting
-		$g->fillCollection( $collection );
-
 		// Count fuzzy first
 		$collection->filter( 'fuzzy' );
 		$fuzzy = $total - count( $collection );
@@ -87,7 +100,7 @@ class MessageGroupStatistics {
 
 		$data = array(
 				'gs_group' => $groupId,
-				'gs_lang' => $lang,
+				'gs_lang' => $code,
 				'gs_total' => $total,
 				'gs_translated' => $translated,
 				'gs_fuzzy' => $fuzzy,
@@ -104,6 +117,25 @@ class MessageGroupStatistics {
 		return $data;
 	}
 
+
+	// this is used to completely rebuild statistics
+	public static function populateStats() {
+
+		// remove all records
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->delete( 'groupstats', '*' );
+
+		$groups = MessageGroups::singleton()->getGroups();
+
+		// iterate over all groups
+		foreach ( $groups as $g ) {
+			echo "Populating " . $g->getId() . "...\n";
+			self::forGroup( $g->getId() );
+		}
+
+		echo "Done!\n";
+	}
+
 	// attaches to ArticleSaveComplete
 	public static function invalidateCache( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {	
 
@@ -117,7 +149,7 @@ class MessageGroupStatistics {
                 $lang = empty( $parts[1] ) ? false : $parts[1];
 
 		// check if this is a valid language variant
-		if ( Language::getLanguageName( $code ) == ''  ) {
+		if ( Language::getLanguageName( $lang ) == ''  ) {
 			return true;
 		}
 
@@ -128,7 +160,7 @@ class MessageGroupStatistics {
 		}
 
 		$conds = array(
-			'gs_grop' => $groupId,
+			'gs_group' => $groupId,
 			'gs_lang' => $lang,
 		);
 
@@ -137,5 +169,19 @@ class MessageGroupStatistics {
 		$dbw->delete( 'groupstats', $conds );
 
 		return true;
+	}
+
+	static function getModeCondition( $mode ) {
+		switch ( $mode ) {
+			case 1:
+				return 'gs_translated != 0';
+				break;
+			case 2:
+				return 'gs_translated = 0';
+				break;
+			case 3:
+				return 'gs_translated = gs_total';
+				break;
+		}
 	}
 }

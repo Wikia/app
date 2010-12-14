@@ -16,12 +16,16 @@ $dir = dirname( __FILE__ ) . '/';
 // The core
 $wgAutoloadClasses['MessageGroupStatistics'] = $dir . 'MessageGroupStatistics.php';
 $wgAutoloadClasses['SpecialTranslationCount'] = $dir . 'SpecialTranslationCount.body.php';
+$wgAutoloadClasses['SpecialNewLanguageStats'] = $dir . 'SpecialLanguageStats.php';
+$wgAutoloadClasses['SpecialGroupStats'] = $dir . 'SpecialGroupStats.body.php';
 
 // Attach hooks
 $wgHooks['ArticleSaveComplete'][] = 'MessageGroupStats::invalidateStats';
 
 // i18n
-$wgExtensionMessagesFile['TranslationStatistics'] = $dir . 'TranslationStatistics.i18n.php';
+$wgExtensionMessagesFiles['TranslationStatistics'] = $dir . 'TranslationStatistics.i18n.php';
 
 // Special pages
 $wgSpecialPages['TranslationCount'] = 'SpecialTranslationCount';
+$wgSpecialPages['NewLanguageStats'] = 'SpecialNewLanguageStats';
+$wgSpecialPages['GroupStats'] = 'SpecialGroupStats';

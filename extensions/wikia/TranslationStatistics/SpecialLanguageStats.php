@@ -15,9 +15,9 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-class SpecialLanguageStats extends IncludableSpecialPage {
+class SpecialNewLanguageStats extends IncludableSpecialPage {
 	function __construct() {
-		parent::__construct( 'LanguageStats' );
+		parent::__construct( 'NewLanguageStats' );
 	}
 
 	function execute( $par ) {
@@ -197,9 +197,9 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 
 		# Get statistics for the message groups
 		foreach ( $stats as $id => $group ) {
-			$total = $group['total'];
-			$fuzzy = $group['fuzzy'];
-			$translated = $group['translated'];	
+			$total = $group['gs_total'];
+			$fuzzy = $group['gs_fuzzy'];
+			$translated = $group['gs_translated'];	
 
 			// Skip if $suppressEmpty and no translations
 			if ( $suppressEmpty && empty( $translated ) ) {
@@ -216,11 +216,11 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 
 			$translateTitle = SpecialPage::getTitleFor( 'Translate' );
 			$pageParameters = "group=" . $id . "&language=" . $code;
-			$g = MessageGroup::getGroup( $id );
+			$g = MessageGroups::getGroup( $id );
 			$translateGroupLink = $wgUser->getSkin()->makeKnownLinkObj( $translateTitle, $g->getLabel(), $pageParameters );
 
 			$out .= $this->blockstart();
-//			$out .= $this->element( $translateGroupLink );
+			$out .= $this->element( $translateGroupLink );
 			$out .= $this->element( $total );
 			$out .= $this->element( $total - $translated );
 			$out .= $this->element( $translatedPercentage, false, $this->getBackgroundColour( $translated, $total ) );
