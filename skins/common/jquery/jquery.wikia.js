@@ -230,10 +230,6 @@ $.loadYUI = function(callback) {
 		$().log('loading on-demand', 'YUI');
 
 		var YUIloadingCallBack = function(){
-			if (typeof YAHOO == 'undefined') { 
-				setTimeout(YUIloadingCallBack, 100);
-				return ;
-			}
 			$().log('loaded', 'YUI');
 
 			for (var i = 0; i < loadYUICallBackFIFO.length; i++ ){
@@ -241,20 +237,19 @@ $.loadYUI = function(callback) {
 				loadYUICallBackFIFO[i]();
 			}
 			loadYUICallBackFIFO = null;
-			isYUIloading = false; 
+			isYUIloading = false;
 		};
 		$().log('rq start', 'YUI');
 
-		$.getScript(wgYUIPackageURL, YUIloadingCallBack);
 		//getScript() is not async
-/*		jQuery.ajax({
+		jQuery.ajax({
 			async: false,
 			type: "GET",
 			url: wgYUIPackageURL,
 			data: null,
 			success: YUIloadingCallBack,
 			dataType: 'script'
-		}); */
+		});
 
 	} else {
 		$().log('already loaded', 'YUI');
