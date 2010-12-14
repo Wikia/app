@@ -1,7 +1,7 @@
 <?php if($data['isform']): ?>
 	<em id="instructionsdiv_<?php echo $data['id'] ?>" class="plb-span-instructions" ><?php echo $data['instructions']; ?> </em> <br>
 <?php endif; ?>
-<?php if($data['align'] == "floatnone"): ?>
+<?php if($data['align'] == "tnone"): ?>
 	<div class="center">
 <?php endif; ?>
 		<div id="imageboxmaindiv_<?php echo $data['id'] ?>" class="<?php echo $data['align'] ?> thumbinner" style="padding: 0;<?php echo $data['error']; ?>">
@@ -21,7 +21,7 @@
 				</div>
 			<?php else: ?>
 				<a class="image" href="#">
-					<img border="0" width="<?php echo $data['width'] ?>" height="<?php echo $data['height'] ?>" class="thumbimage" src="<?php echo $data['img'] ?>"/>
+					<img border="0" width="<?php echo $data['width'] ?>" height="<?php echo $data['height'] ?>" class="thumbimage" src="<?php echo $data['img'] ?>" />
 				</a>
 			<?php endif; ?>
 		</div>

@@ -150,7 +150,7 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 	}
 
 	private function renderForPreviewAndForm($data) {
-		$data['instructions'] = $this->getAttrVal( 'instructions', true );
+		$data['instructions'] = htmlspecialchars($this->getAttrVal( 'instructions', true ));
 		$data['type'] = "gallery";
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates" );
 		$oTmpl->set_vars(array(

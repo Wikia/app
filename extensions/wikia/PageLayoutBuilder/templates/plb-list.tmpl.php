@@ -19,7 +19,7 @@
 		<?php foreach($data as $value): ?>
 			<tr>
 				<td class="name" >
-					<p class="layout-name" ><?php echo $value['page_title'] ?></p>
+					<p class="layout-name" ><?php echo $value['page_title_escaped'] ?></p>
 					<p>
 						<?php foreach ($value['page_actions'] as $action): ?>
 							<a href="<?php echo $action['link'] ?>" class="PLBActionLink <?php echo $action['class'] ?>" ><? echo $action['name']; ?></a>

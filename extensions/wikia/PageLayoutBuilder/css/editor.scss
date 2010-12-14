@@ -86,7 +86,7 @@ td.plb-toolbox {
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
-			button {
+			input[type=button] {
 				&.wikia-button {
 					color:$color-button-text;
 				}
@@ -134,7 +134,7 @@ td.plb-toolbox {
 				height: 22px;
 				line-height: 22px;
 				
-				>button, >a {
+				>input[type=button], >a {
 					float: left;
 					display: block;
 					cursor: pointer;

@@ -35,7 +35,7 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 			$out .= XML::element("option", $attr, $value);
 		}
 		$out .= XML::closeElement('select');
-		return '<em class="plb-span-instructions" >'.$this->getAttrVal("instructions", true).'</em><br>'.$out;
+		return '<em class="plb-span-instructions" >'.htmlspecialchars($this->getAttrVal("instructions", true)).'</em><br>'.$out;
 	}
 
 	public function renderForResult() {

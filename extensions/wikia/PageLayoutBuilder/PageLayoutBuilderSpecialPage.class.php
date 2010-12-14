@@ -152,6 +152,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$wgOut->setHTMLTitle( $msg );
 		$title = Title::newFromText('LayoutBuilder', NS_SPECIAL);
 		foreach( $out as $key => $value ) {
+			$out[$key]['page_title_escaped'] = htmlspecialchars($out[$key]['page_title']);
 			$out[$key]['page_actions']['edit'] = array(
 				"link" => $title->getFullURL('plbId='.$value['page_id'] ),
 				"name" => wfMsg("plb-list-action-edit"), //XML::element("img",array("src" => $wgBlankImgUrl)).

@@ -45,7 +45,7 @@ CKEDITOR.plugins.add('rte-track',
 			var me = ev.data.me;
 			//RTE.log(me);
 
-			var id = me.className.split('_').pop();
+			var id = me.trackingName || me.className.split('_').pop();
 
 			// track combo panel open
 			RTE.track('toolbar', id + 'Menu', 'open');
@@ -55,7 +55,7 @@ CKEDITOR.plugins.add('rte-track',
 			var value = ev.data.value;
 			//RTE.log([me, value]);
 
-			var id = me.className.split('_').pop();
+			var id = me.trackingName || me.className.split('_').pop();
 
 			// for templates dropdown
 			if (id == 'template') {

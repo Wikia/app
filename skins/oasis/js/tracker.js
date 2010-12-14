@@ -465,6 +465,11 @@ var initTracker = function() {
 		if (!node.is('a')) {
 			return;
 		}
+		
+		// do not track links inside RTE editor
+		if (node.closest('.cke_editor').length > 0) {
+			return;
+		}
 
 		// redlinks
 		if (node.hasClass('new')) {

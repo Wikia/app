@@ -5,9 +5,15 @@ CKEDITOR.plugins.add('rte-plbelement',
 		if(typeof PageLayoutBuilder == 'undefined') {
 			return false;
 		}
-		
+
 		$.each(PageLayoutBuilder.Library,function(i,v) {
-			$(v.menuItemHtml.html);
+			var re = /<img[^>]*src="([^>"]*)"/i.exec(v.menuItemHtml.html);
+			if (re) {
+				$().log('preloading image '+re[1]);
+				var img = new Image(64,64);
+				img.src = re[1];
+			}
+//			$(v.menuItemHtml.html).appendTo(itemsContainer);
 		});
 		
 		// register template dropdown list
@@ -15,13 +21,14 @@ CKEDITOR.plugins.add('rte-plbelement',
 			label : PageLayoutBuilder.Lang['plb-editor-rte-caption'],
 			title: PageLayoutBuilder.Lang['plb-editor-rte-caption'],
 			className : 'cke_template',
+			trackingName : 'plbAddItem',
 			multiSelect : false,
 			panel : {
 				css : [ PageLayoutBuilder.editorcss, CKEDITOR.getUrl( editor.skinPath + 'editor.css' ) ] . concat( editor.config.contentsCss )
 			},
 
 			init : function() {
-				$().log(self);
+//				$().log(self);
 				this.addButton = $('.plb-add-element',this.el);
 				var addMenu = $('ul',this.addButton);
 				// ... by adding the items representing all widget types
