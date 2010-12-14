@@ -1,14 +1,11 @@
 <?php
 
 class MessageGroupStatistics {
-	public static function forLanguage( $code, $mode = null ) {
+	public static function forLanguage( $code, $mode ) {
                 # Fetch from database
                 $dbr = wfGetDB( DB_SLAVE );
 
                 $conds = array( 'gs_lang' => $code );
-                if ( !empty( $mode ) ) {
-			$conds[] = self::getModeCondition( $mode );
-                }
 
                 $res = $dbr->select( 'groupstats', '*', $conds );
 
@@ -35,14 +32,11 @@ class MessageGroupStatistics {
 		return $stats;
   	}
  
-	public static function forGroup( $id, $mode = null ) {
+	public static function forGroup( $id ) {
 		# Fetch from database
 		$dbr = wfGetDB( DB_SLAVE );
 
                 $conds = array( 'gs_group' => $id );
-                if ( !empty( $mode ) ) {
-                        $conds[] = self::getModeCondition( $mode );
-                }
 
 		$res = $dbr->select( 'groupstats', '*', $conds );
 
@@ -63,15 +57,10 @@ class MessageGroupStatistics {
 	}
  
 	// Used by the two function above to fill missing entries
-	public static function forItem( $groupId, $code, $mode = null ) {
+	public static function forItem( $groupId, $code ) {
 		# Check again if already in db ( to avoid overload in big clusters )
 
 		$dbr = wfGetDB( DB_SLAVE );
-
-		$conds = array( 'gs_group' => $groupId, 'gs_lang' => $code );
-		if ( !empty( $mode ) ) {
-			$conds[] = self::getModeCondition( $mode );
-		}
 
 		$res = $dbr->select( 'groupstats', '*', array( 'gs_group' => $groupId, 'gs_lang' => $code ) );
 
@@ -169,19 +158,5 @@ class MessageGroupStatistics {
 		$dbw->delete( 'groupstats', $conds );
 
 		return true;
-	}
-
-	static function getModeCondition( $mode ) {
-		switch ( $mode ) {
-			case 1:
-				return 'gs_translated != 0';
-				break;
-			case 2:
-				return 'gs_translated = 0';
-				break;
-			case 3:
-				return 'gs_translated = gs_total';
-				break;
-		}
 	}
 }
