@@ -132,6 +132,34 @@ public class BaseTest {
 		waitForAttributeNotEquals(elementId, value, Integer.parseInt(TIMEOUT));
 	}
 
+	protected void waitForTextPresent(String text, int timeOut)
+			throws Exception {
+		long startTimestamp = (new Date()).getTime();
+		while (true) {
+			long curTimestamp = (new Date()).getTime();
+			if (curTimestamp-startTimestamp > timeOut) {
+				assertTrue(session().isTextPresent(text));
+				break;
+			}
+
+			try{
+				if(session().isTextPresent(text)) {
+					break;
+				}
+			} catch( SeleniumException e ) {}
+			Thread.sleep(1000);
+		}
+	}
+
+	protected void waitForTextPresent(String text, String timeOut)
+			throws Exception {
+		waitForTextPresent(text, Integer.parseInt(timeOut));
+	}
+
+	protected void waitForTextPresent(String text) throws Exception {
+		waitForTextPresent(text, TIMEOUT);
+	}
+
 	protected void waitForElementNotPresent(String elementId, int timeOut)
 			throws Exception {
 		long startTimestamp = (new Date()).getTime();
