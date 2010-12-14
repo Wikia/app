@@ -16,7 +16,18 @@
  * @author Wojciech Szela <wojtek@wikia-inc.com>
  */
 class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
-	const TEST_TOKEN = 'EC-00000001';
+	const TEST_TOKEN         = 'EC-00000001';
+	const TEST_REQID         = 'REQ-0000001';
+	const TEST_BAID          = 'BA-00000001';
+	const TEST_AMT           = 4.99;
+	const TEST_RESPMSG       = 'TEST RESPMSG';
+	const TEST_CORRID        = 'TEST CORRID';
+	const TEST_PNREF         = 'TEST PNREF';
+	const TEST_PPREF         = 'TEST PPREF';
+	const TEST_FEEAMT        = 0.99;
+	const TEST_PAYMENTTYPE   = 'TEST PT';
+	const TEST_PENDINGREASON = 'TEST PR';
+
 	private $paypalService;
 
 	protected function setUp() {
@@ -32,9 +43,10 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 	public function dbCleanup() {
 		$dbw = wfGetDB( DB_MASTER, array(), $this->paypalService->getPaypalDBName() );
 		$dbw->delete( 'pp_tokens', array( 'ppt_token' => self::TEST_TOKEN ), __METHOD__ );
+		$dbw->delete( 'pp_payments', array( 'ppp_baid' => self::TEST_BAID ), __METHOD__ );
 	}
 
-	public function testFetchTokenIsStoredInDBDataProvider() {
+	public function testDataProvider() {
 		return array (
 			array( true, true, 0 ),
 			array( false, true, 1 ),
@@ -43,18 +55,13 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @dataProvider testFetchTokenIsStoredInDBDataProvider
-	 * @param unknown_type $expectedResult
-	 * @param unknown_type $hasResult
-	 * @param unknown_type $resuyltValue
+	 * @dataProvider testDataProvider
 	 */
 	public function testFetchTokenIsStoredInDB( $expectedResult, $hasResult, $resultValue ) {
 		$returnUrl = 'http://return.url';
 		$cancelUrl = 'http://cancel.url';
-		$testRESPMSG = 'testRESPMSG';
-		$testCORRELATIONID = 'testCID';
 
-		$returnValue = array( 'RESULT' => $resultValue, 'TOKEN' => self::TEST_TOKEN, 'RESPMSG' => $testRESPMSG, 'CORRELATIONID' => $testCORRELATIONID);
+		$returnValue = array( 'RESULT' => $resultValue, 'TOKEN' => self::TEST_TOKEN, 'RESPMSG' => self::TEST_RESPMSG, 'CORRELATIONID' => self::TEST_CORRID);
 		if( !$hasResult ) {
 			unset($returnValue['RESULT']);
 		}
@@ -78,9 +85,76 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 		$dbw = wfGetDB( DB_MASTER, array(), $this->paypalService->getPaypalDBName() );
 
 		$dbTestRESPMSG = $dbw->selectField( 'pp_tokens', 'ppt_respmsg', array( 'ppt_token' => self::TEST_TOKEN ), __METHOD__ );
-		$this->assertEquals( $testRESPMSG, $dbTestRESPMSG );
+		$this->assertEquals( self::TEST_RESPMSG, $dbTestRESPMSG );
 
 		$dbTestCORRELATIONID = $dbw->selectField( 'pp_tokens', 'ppt_correlationid', array( 'ppt_token' => self::TEST_TOKEN ), __METHOD__ );
-		$this->assertEquals( $testCORRELATIONID, $dbTestCORRELATIONID );
+		$this->assertEquals( self::TEST_CORRID, $dbTestCORRELATIONID );
+	}
+
+	/**
+	 * @dataProvider testDataProvider
+	 */
+	public function testCollectingPayment( $expectedResult, $hasResult, $resultValue ) {
+		$returnValue = array(
+			'RESULT' => $resultValue,
+			'RESPMSG' => self::TEST_RESPMSG,
+			'CORRELATIONID' => self::TEST_CORRID,
+			'PNREF' => self::TEST_PNREF,
+			'PPREF' => self::TEST_PPREF,
+			'FEEAMT' => self::TEST_FEEAMT,
+			'PAYMENTTYPE' => self::TEST_PAYMENTTYPE,
+			'PENDINGREASON' => self::TEST_PENDINGREASON
+		);
+
+		$payflowAPI = $this->getMock( 'PayflowAPI' );
+		$payflowAPI->expects($this->once())
+		           ->method('doExpressCheckoutPayment')
+		           ->with($this->anything(), $this->equalTo( self::TEST_BAID ), $this->equalTo( self::TEST_AMT ) )
+		           ->will($this->returnValue( $returnValue ));
+
+		$this->paypalService->setPayflowAPI( $payflowAPI );
+
+		$requestId = $this->paypalService->collectPayment( self::TEST_BAID, self::TEST_AMT );
+
+		if( $expectedResult ) {
+			$this->assertGreaterThan( 0, $requestId );
+
+			$dbw = wfGetDB( DB_MASTER, array(), $this->paypalService->getPaypalDBName() );
+
+			$dbBAId = $dbw->selectField( 'pp_payments', 'ppp_baid', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_BAID, $dbBAId );
+
+			$dbAmount = $dbw->selectField( 'pp_payments', 'ppp_amount', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_AMT, $dbAmount );
+
+			$dbResult = $dbw->selectField( 'pp_payments', 'ppp_result', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( $resultValue, $dbResult );
+
+			$dbRespmsg = $dbw->selectField( 'pp_payments', 'ppp_respmsg', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_RESPMSG, $dbRespmsg );
+
+			$dbCorrId = $dbw->selectField( 'pp_payments', 'ppp_correlationid', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_CORRID, $dbCorrId );
+
+			$dbPnref = $dbw->selectField( 'pp_payments', 'ppp_pnref', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_PNREF, $dbPnref );
+
+			$dbPpref = $dbw->selectField( 'pp_payments', 'ppp_ppref', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_PPREF, $dbPpref );
+
+			$dbFeeamt = $dbw->selectField( 'pp_payments', 'ppp_feeamt', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_FEEAMT, $dbFeeamt );
+
+			$dbPaymenttype = $dbw->selectField( 'pp_payments', 'ppp_paymenttype', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_PAYMENTTYPE, $dbPaymenttype );
+
+			$dbPendingreason = $dbw->selectField( 'pp_payments', 'ppp_pendingreason', array( 'ppp_id' => $requestId ), __METHOD__ );
+			$this->assertEquals( self::TEST_PENDINGREASON, $dbPendingreason );
+
+		}
+		else {
+			$this->assertEquals( 0, $requestId );
+		}
+
 	}
 }
