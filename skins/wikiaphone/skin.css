@@ -1,6 +1,18 @@
-body.mainpage h1#firstHeading, #content .printfooter, #column-one, #footer,
-#siteSub, #contentSub, #jump-to-nav, div.picture-attribution, #content .toc,
-div.magnify, .sprite, .sprite-small, #bodyContent > div.main-page-tag-rcs {
+body.mainpage h1#firstHeading,
+#content .printfooter,
+#column-one,
+#footer,
+#siteSub,
+#contentSub,
+#jump-to-nav,
+div.picture-attribution,
+#content .toc,
+div.magnify,
+.sprite,
+.sprite-small,
+#bodyContent > div.main-page-tag-rcs,
+#siteNotice,
+.editsection {
 	display: none;
 }
 
@@ -13,12 +25,6 @@ div.magnify, .sprite, .sprite-small, #bodyContent > div.main-page-tag-rcs {
 	margin-right: 0 !important;
 }
 
-#siteNotice { 
-	display: none; 
-}
-.editsection {
-	display: none;
-}
 #column-content .mobile-header {
 	background: #3A5766;
 	padding: 0.2em;

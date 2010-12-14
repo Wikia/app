@@ -84,6 +84,7 @@ class StaticChute {
 		$this->generateConfigSkinMonaco($widgetsAssets);
 		$this->generateConfigSkinOasis();
 		$this->generateConfigSkinCorporate();
+		$this->generateConfigSkinWikiaApp();
 	}
 
 	private function generateConfigSkinMonobook() {
@@ -449,6 +450,14 @@ class StaticChute {
 			'../extensions/FBConnect/css/fbModal.css',
 		);
 
+	}
+	
+	private function generateConfigSkinWikiaApp() {
+		// JS for monobook (both anons/logged-in)
+		$this->config['wikiaapp_css'] = array(
+			'wikiaapp/main.css',
+			'wikiaapp/skin.css'
+		);
 	}
 
 	/* message function that will print the message appropriately based on the format */
