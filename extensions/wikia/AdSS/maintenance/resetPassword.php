@@ -9,6 +9,11 @@ $optionsWithArgs = array( 'uid' );
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
+if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+	echo "Read-only mode - exiting.";
+	exit( 1 );
+}
+
 if( isset( $options['uid'] ) ) {
 	$uid = intval( $options['uid'] );
 	if( $uid > 0 ) {

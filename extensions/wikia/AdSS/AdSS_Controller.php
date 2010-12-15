@@ -12,7 +12,7 @@ class AdSS_Controller extends SpecialPage {
 	}
 
 	function execute( $sub ) {
-		global $wgRequest, $wgUser, $wgOut, $wgAdSS_OnlyAdmin;
+		global $wgRequest, $wgUser, $wgOut, $wgAdSS_OnlyAdmin, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 		$this->setHeaders();
@@ -38,6 +38,13 @@ class AdSS_Controller extends SpecialPage {
 			$managerController->execute( $sub );
 			return;
 		}
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$wgOut->readOnlyPage();
+			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/readonly") } )' );
+			return;
+		}
+
 		if( $sub[0] == 'paypal' ) {
 			if( isset( $sub[1] ) ) {
 				if( $sub[1] == 'return' ) {
@@ -49,12 +56,6 @@ class AdSS_Controller extends SpecialPage {
 					return;
 				}
 			}
-		}
-
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/readonly") } )' );
-			return;
 		}
 
 		$adForm = new AdSS_AdForm();

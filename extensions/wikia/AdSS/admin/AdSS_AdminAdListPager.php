@@ -48,7 +48,7 @@ class AdSS_AdminAdListPager extends TablePager {
 	}
 
 	function formatValue( $name, $value ) {
-		global $wgAdSS_templatesDir;
+		global $wgAdSS_templatesDir, $wgAdSS_ReadOnly;
 		switch( $name ) {
 			case 'ad_wiki_id':
 				$wiki = WikiFactory::getWikiByID( $value );
@@ -56,6 +56,11 @@ class AdSS_AdminAdListPager extends TablePager {
 			case 'ad_action':
 				// no action for closed ads
 				if( $this->ad->closed ) return '';
+
+				// no action if in read-only mode
+				if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+					return '';
+				}
 
 				$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 				$tmpl->set( 'ad', $this->ad );
