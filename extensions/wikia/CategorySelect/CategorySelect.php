@@ -354,6 +354,7 @@ function CategorySelectChangeFormat($categories, $from, $to) {
  */
 function CategorySelectAddFormFields($editPage, $wgOut) {
 	global $wgCategorySelectMetaData, $wgOut;
+	$categories = '';
 	if (!empty($wgCategorySelectMetaData)) {
 		$categories = htmlspecialchars(CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'json'));
 	}
