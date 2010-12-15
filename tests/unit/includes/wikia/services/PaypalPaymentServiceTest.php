@@ -44,9 +44,10 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 		$dbw = wfGetDB( DB_MASTER, array(), $this->paypalService->getPaypalDBName() );
 		$dbw->delete( 'pp_tokens', array( 'ppt_token' => self::TEST_TOKEN ), __METHOD__ );
 		$dbw->delete( 'pp_payments', array( 'ppp_baid' => self::TEST_BAID ), __METHOD__ );
+		$dbw->delete( 'pp_agreements', array( 'ppa_baid' => self::TEST_BAID ), __METHOD__ );
 	}
 
-	public function testDataProvider() {
+	public function universalDataProvider() {
 		return array (
 			array( true, true, 0 ),
 			array( false, true, 1 ),
@@ -55,7 +56,7 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @dataProvider testDataProvider
+	 * @dataProvider universalDataProvider
 	 */
 	public function testFetchTokenIsStoredInDB( $expectedResult, $hasResult, $resultValue ) {
 		$returnUrl = 'http://return.url';
@@ -92,7 +93,7 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @dataProvider testDataProvider
+	 * @dataProvider universalDataProvider
 	 */
 	public function testCollectingPayment( $expectedResult, $hasResult, $resultValue ) {
 		$returnValue = array(
@@ -105,6 +106,10 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 			'PAYMENTTYPE' => self::TEST_PAYMENTTYPE,
 			'PENDINGREASON' => self::TEST_PENDINGREASON
 		);
+
+		if( !$hasResult ) {
+			unset( $returnValue['RESULT'] );
+		}
 
 		$payflowAPI = $this->getMock( 'PayflowAPI' );
 		$payflowAPI->expects($this->once())
@@ -150,11 +155,62 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 
 			$dbPendingreason = $dbw->selectField( 'pp_payments', 'ppp_pendingreason', array( 'ppp_id' => $requestId ), __METHOD__ );
 			$this->assertEquals( self::TEST_PENDINGREASON, $dbPendingreason );
-
 		}
 		else {
 			$this->assertEquals( 0, $requestId );
 		}
+
+
+	}
+
+	/**
+	 * @dataProvider universalDataProvider
+	 */
+	public function testCreateBillingAgreement( $expectedResult, $hasResult, $resultValue ) {
+		$this->paypalService->setToken( self::TEST_TOKEN );
+
+		$returnValue = array(
+			'RESULT' => $resultValue,
+			'RESPMSG' => self::TEST_RESPMSG,
+			'CORRELATIONID' => self::TEST_CORRID,
+			'PNREF' => self::TEST_PNREF,
+			'BAID' => self::TEST_BAID
+		);
+
+		if( !$hasResult ) {
+			unset( $returnValue['RESULT'] );
+		}
+
+		$payflowAPI = $this->getMock( 'PayflowAPI' );
+		$payflowAPI->expects($this->once())
+		           ->method('createCustomerBillingAgreement')
+		           ->with($this->anything(), $this->equalTo( self::TEST_TOKEN ) )
+		           ->will($this->returnValue( $returnValue ));
+
+		$this->paypalService->setPayflowAPI( $payflowAPI );
+
+		$BAId = $this->paypalService->createBillingAgreement();
+
+		if( $expectedResult) {
+			$this->assertEquals( self::TEST_BAID, $BAId );
+		}
+		else {
+			$this->assertFalse( $BAId );
+		}
+
+		$dbw = wfGetDB( DB_MASTER, array(), $this->paypalService->getPaypalDBName() );
+
+		$dbResult = $dbw->selectField( 'pp_agreements', 'ppa_result', array( 'ppa_baid' => self::TEST_BAID ), __METHOD__ );
+		$this->assertEquals( $resultValue, $dbResult );
+
+		$dbRespmsg = $dbw->selectField( 'pp_agreements', 'ppa_respmsg', array( 'ppa_baid' => self::TEST_BAID ), __METHOD__ );
+		$this->assertEquals( self::TEST_RESPMSG, $dbRespmsg );
+
+		$dbCorrId = $dbw->selectField( 'pp_agreements', 'ppa_correlationid', array( 'ppa_baid' => self::TEST_BAID ), __METHOD__ );
+		$this->assertEquals( self::TEST_CORRID, $dbCorrId );
+
+		$dbPnref = $dbw->selectField( 'pp_agreements', 'ppa_pnref', array( 'ppa_baid' => self::TEST_BAID ), __METHOD__ );
+		$this->assertEquals( self::TEST_PNREF, $dbPnref );
 
 	}
 }
