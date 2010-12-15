@@ -213,4 +213,31 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( self::TEST_PNREF, $dbPnref );
 
 	}
+
+	/**
+	 * @dataProvider universalDataProvider
+	 */
+	public function testCheckBillingAgreement( $expectedResult, $hasResult, $resultValue ) {
+		if( $hasResult ) {
+			$returnValue = array( 'RESULT' => $resultValue );
+		}
+		else {
+			$returnValue = array();
+		}
+
+		$payflowAPI = $this->getMock( 'PayflowAPI' );
+		$payflowAPI->expects($this->once())
+		           ->method('checkCustomerBillingAgreement')
+		           ->with($this->equalTo( self::TEST_BAID ) )
+		           ->will($this->returnValue( $returnValue ));
+
+		$this->paypalService->setPayflowAPI( $payflowAPI );
+
+		$result = $this->paypalService->checkBillingAgreement( self::TEST_BAID );
+
+		if( $expectedResult ) {
+			$this->assertTrue( $result );
+		}
+	}
+
 }
