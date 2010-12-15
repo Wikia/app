@@ -267,3 +267,8 @@ body.ajax * {
 .RelatedPagesModule, .category-gallery {
 	display: none;
 }
+
+/* hide comments reply button #140755 */
+.comments .buttons {
+	display: none;
+}
