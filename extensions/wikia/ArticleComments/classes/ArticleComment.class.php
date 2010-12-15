@@ -72,12 +72,13 @@ class ArticleComment {
 			 */
 			$title = Title::newFromID( $id, GAID_FOR_UPDATE );
 
+			if (empty($title)) {
+				return false;
+			}
+
 			//RT#86385 Why do we get an ID of 0 here sometimes?  Just set it!
 			if ($title->getArticleID() == 0) {
 				$title->mArticleID = $id;
-			}
-			if ( ! $title ) {
-				return false;
 			}
 		}
 		return new ArticleComment( $title );
@@ -390,7 +391,7 @@ class ArticleComment {
 				'comment'		=> $this->mLastRevision->getText(),
 				'isReadOnly'	=> wfReadOnly(),
 				'stylePath'		=> $wgStylePath,
-				'title'			=> $this->mTitle				
+				'title'			=> $this->mTitle
 			);
 			$text = wfRenderPartial('ArticleComments', 'Edit', $vars);
 		}
