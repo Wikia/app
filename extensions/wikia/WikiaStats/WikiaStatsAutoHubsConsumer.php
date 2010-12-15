@@ -120,13 +120,6 @@ class WikiaStatsAutoHubsConsumer {
 											
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
-								# global title 
-								$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id, $info['db'] );
-								if ( !is_object($oGTitle) ) {
-									Wikia::log ( __METHOD__, "GlobalTitle not found: " . $oRow->page_id . ", ". $city_id . ", " . $info['db'] );
-									continue;
-								}
-				
 								if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
 									foreach( $tags as $id => $val ) {
 										if ( !isset($data['blogs'][$lang][$id]) ) {
@@ -139,10 +132,6 @@ class WikiaStatsAutoHubsConsumer {
 											'tb_tag_id'		=> $id, 
 											'tb_date'		=> date("Y-m-d"),
 											'tb_city_lang'	=> $lang,
-											'tb_page_name'	=> addslashes($oGTitle->mUrlform),
-											'tb_page_url'	=> addslashes($oGTitle->getFullURL()),
-											'tb_wikiname' 	=> addslashes( $info['sitename'] ),
-											'tb_wikiurl'	=> addslashes( $info['server'] ),
 											'tb_count'		=> 1										
 										);
 									}
@@ -186,10 +175,6 @@ class WikiaStatsAutoHubsConsumer {
 											'ta_tag_id' 	=> $id, 
 											'ta_date'		=> $date,
 											'ta_city_lang' 	=> $lang,
-											'ta_page_name'	=> addslashes($oGTitle->mUrlform),
-											'ta_page_url'	=> addslashes($oGTitle->getFullURL()),
-											'ta_wikiname'	=> $info['sitename'],
-											'ta_wikiurl'	=> $info['server'],
 											'ta_count'		=> 1
 										);	
 										
