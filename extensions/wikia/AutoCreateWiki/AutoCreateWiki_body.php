@@ -1398,7 +1398,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		if( !empty( $match ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
+		if( ( !empty( $match ) || $type == 'universal' ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
 			$this->log("Found '$match' in $type settings array.");
 
 			/**
