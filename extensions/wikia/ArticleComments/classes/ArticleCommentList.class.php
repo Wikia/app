@@ -737,17 +737,13 @@ class ArticleCommentList {
 	 *
 	 * @return String - HTML
 	 */
-	/*
 	static function formatList($comments) {
-		print_pre(debug_backtrace());
-		exit();
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
 		$template->set_vars( array(
 			'comments'  => $comments
 		) );
 		return $template->render( 'comment-list' );
 	}
-	*/
 
 	/**
 	 * Hook
