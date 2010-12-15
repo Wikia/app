@@ -61,10 +61,10 @@ class ApiRunJob extends ApiBase {
 			$this->dieUsageMsg( array( "cantrunjobs" ) );
 		}
 
-		if( empty( $wgApiRunJobsPerRequest ) &&
-			is_numeric(  $wgApiRunJobsPerRequest  ) &&
-			$wgApiRunJobsPerRequest > 0 &&
-			$wgApiRunJobsPerRequest <= 100
+		if( !empty( $wgApiRunJobsPerRequest )
+			&& is_numeric(  $wgApiRunJobsPerRequest  )
+			&& $wgApiRunJobsPerRequest > 0
+			&& $wgApiRunJobsPerRequest <= 100
 		) {
 			$this->maxJobs =  $wgApiRunJobsPerRequest;
 		}
