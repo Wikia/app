@@ -35,6 +35,6 @@ function perSkinParserCache_onPageRenderingHash( &$hash, &$user ){
 		$hash .= '!' . $skinClass;
 	}
 	
-	wfDebug( "PER_SKIN_PARSER_CACHE_HASH: $hash" );
+	//wfDebug( "PER_SKIN_PARSER_CACHE_HASH: $hash" );
 	return true;
 }
