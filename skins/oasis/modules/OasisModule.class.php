@@ -3,7 +3,6 @@
 class OasisModule extends Module {
 
 	private static $extraBodyClasses = array();
-	private static $extraBottomScripts = array();
 
 	private $printStyles;
 
@@ -76,10 +75,6 @@ class OasisModule extends Module {
 		if(!empty($skin->themename)) {
 			$this->bodyClasses[] = "oasis-{$skin->themename}";
 		}
-
-		// bottom scripts
-		$this->extraBottomScripts[] = '<script type="text/javascript">if (typeof(AdDriverDelayedLoader)!="undefined") { AdDriverDelayedLoader.load(); }</script>';
-		$this->bottomscripts .= implode('', $this->extraBottomScripts);
 
 		$this->setupStaticChute();
 
