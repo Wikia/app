@@ -1,4 +1,4 @@
-<?php if($data['isform']): ?>
+<?php if($data['isform'] && $data['instructions']): ?>
 	<em id="instructionsdiv_<?php echo $data['id'] ?>" class="plb-span-instructions" ><?php echo $data['instructions']; ?> </em> <br>
 <?php endif; ?>
 <?php if($data['align'] == "tnone"): ?>

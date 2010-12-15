@@ -28,9 +28,9 @@
 	<div class="plb-article-form-space" ></div>
 	<?php if(!$editmode): ?>
 		<p>
-			<span class="plb-article-title"><?php echo wfMsg('plb-special-form-article-name'); ?></span>
+			<span class="plb-article-title"><?php echo wfMsg('plb-special-form-article-name'); ?></span><br />
+			<input class="plb-article-title plb-input" <?php echo ($title_error ? "style='border-color: red; border-style: solid;'":""); ?> type="text" name="wgArticleName" id="wgArticleName" value="<?php echo $data['articleName'] ?>" />
 		</p>
-		<input class="plb-article-title plb-input" <?php echo ($title_error ? "style='border-color: red; border-style: solid;'":""); ?> type="text" name="wgArticleName" id="wgArticleName" value="<?php echo $data['articleName'] ?>" />
 	<?php endif; ?>
 	<?php echo $layout; ?>
 	<div class="plb-article-form-end" ><?php echo wfMsg('plb-special-form-required'); ?></div>
