@@ -9,4 +9,20 @@
          stopOnFailure="false"
          syntaxCheck="true"
          processIsolation="false">
+         <filter>
+             <blacklist>
+                 <directory>../bin</directory>
+                 <directory>../config</directory>
+                 <directory>../docs</directory>
+                 <directory>../images</directory>
+                 <directory>../languages</directory>
+                 <directory>../lib</directory>
+                 <directory>../maintenance</directory>
+                 <directory>../math</directory>
+                 <directory>../serialized</directory>
+                 <directory>../static</directory>
+                 <directory>../t</directory>
+                 <directory>../tests</directory>
+             </blacklist>
+         </filter>
 </phpunit>
