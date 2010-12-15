@@ -185,7 +185,6 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 		global $wgRequest, $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy, $wgPayPalUrl;
 		wfProfileIn( __METHOD__ );
 
-		//wfLoadExtensionMessages( 'WikiPayment' );
 		$result = array( 'url' => false );
 
 		$paypalService = new PaypalPaymentService( array_merge( $wgPayflowProCredentials, array( 'APIUrl' => $wgPayflowProAPIUrl, 'HTTPProxy' => $wgHTTPProxy ) ) );
@@ -197,11 +196,7 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 			$result['url'] = $wgPayPalUrl . $paypalService->getToken() . "&useraction=commit";
 		}
 
-		$json = Wikia::json_encode( $result );
-		$response = new AjaxResponse( $json );
-		$response->setContentType( 'application/json; charset=utf-8' );
-
 		wfProfileOut( __METHOD__ );
-		return $response;
+		return $result;
 	}
 }
