@@ -105,8 +105,7 @@ class ArticleCommentInit {
 			'SkinAnswers',
 			'SkinOasis',
 			'SkinWikiaphone',
-			'SkinWikiaApp',
-			'SkinMonobook'
+			'SkinWikiaApp'
 		) ) ) {
 			return true;
 		}
@@ -115,8 +114,8 @@ class ArticleCommentInit {
 
 		if (self::ArticleCommentCheck()) {
 			wfLoadExtensionMessages('ArticleComments');
-			//$page = ArticleCommentList::newFromTitle($wgTitle);
-			//$data = $page->render();
+			$page = ArticleCommentList::newFromTitle($wgTitle);
+			$data = $page->render();
 		}
 		
 		wfProfileOut( __METHOD__ );
@@ -128,11 +127,15 @@ class ArticleCommentInit {
 		wfProfileIn( __METHOD__ );
 
 		if (self::ArticleCommentCheck()) {
-			//Moved to StaticChute
-			//$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
-			/** preventing Oasis from adding this CSS-file **/
 			global $wgUser;
-			if( get_class($wgUser->getSkin()) != 'SkinOasis' ) {
+			if ( !in_array( get_class( $wgUser->getSkin() ), array(
+				'SkinMonaco',
+				'SkinAnswers',
+				'SkinOasis',
+				'SkinWikiaphone',
+				'SkinWikiaApp'
+			) ) ) {
+				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
 				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
 			}
 		}

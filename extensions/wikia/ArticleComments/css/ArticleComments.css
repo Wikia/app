@@ -6,6 +6,14 @@
 	margin-top: 30px;
 }
 
+#article-comments img.throbber{
+	display: none;
+}
+
+#article-comm-form {
+	margin-bottom: 10px;
+}
+
 #article-comments-wrapper h2 {
 	border-top: 1px solid #AAA;
 	margin-bottom: 20px;
@@ -22,10 +30,14 @@
 	margin-right: 10px;
 }
 
-#article-comments-ul {
+#article-comments-ul, #article-comments-ul ul.sub-comments {
 	list-style: none;
 	margin: 0;
 	padding: 0 10px;
+}
+
+#article-comments-ul ul.sub-comments {
+	margin-left: 54px;
 }
 
 #article-comments .article-comments-li {
@@ -33,6 +45,19 @@
 	border-top: 1px solid #AAA;
 	margin-bottom: 5px;
 	padding: 12px 0;
+}
+
+#article-comments .comment-avatar {
+	float: left;
+}
+
+#article-comments blockquote {
+	margin-top: 0px;
+	margin-left: 65px;
+}
+
+#article-comments blockquote .buttons{
+	margin-top: 10px;
 }
 
 #article-comments .article-comment-first,
