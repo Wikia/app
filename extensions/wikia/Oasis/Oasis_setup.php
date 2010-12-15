@@ -50,7 +50,7 @@ function wfOasisSetup() {
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
-	$wgNoExternals = $wgRequest->getBool('noexternals');
+	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
 	// messages
 	wfLoadExtensionMessages('Oasis');
