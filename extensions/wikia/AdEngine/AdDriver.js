@@ -483,6 +483,11 @@ AdDriverDelayedLoader.loadNext = function() {
 AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
+	if (typeof wgNow != 'undefined') {
+		var loadTime = (new Date()).getTime() - wgNow.getTime();
+		$().log('AdDriver started loading after ' + loadTime + ' ms');
+	}
+
 	if (AdDriver.isNoAdWiki()) {
 		return;
 	}
@@ -497,3 +502,7 @@ AdDriverDelayedLoader.reset = function() {
 AdDriverDelayedLoader.isRunning = function() {
 	return AdDriverDelayedLoader.started && AdDriverDelayedLoader.adDriverCalls.length;
 }
+
+$(window).bind('load', function() {
+	AdDriverDelayedLoader.load();
+});
