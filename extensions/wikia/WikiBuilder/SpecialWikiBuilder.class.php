@@ -18,6 +18,9 @@ class SpecialWikiBuilder extends UnlistedSpecialPage {
 			return;
 		}
 
+		wfLoadExtensionMessages('WikiBuilder');
+
+		$wgOut->setPageTitle(wfMsg('owb-title'));
 		$wgOut->addHtml(wfRenderModule('WikiBuilder'));
 		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/WikiBuilder/css/WikiBuilder.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/JavascriptAPI/Mediawiki.js"></script>');
@@ -52,7 +55,6 @@ class SpecialWikiBuilder extends UnlistedSpecialPage {
 				);
 			}
 		} else {
-			wfLoadExtensionMessages('WikiBuilder');
 			$result = array(
 				'status' => 'error',
 				'caption' => wfMsg('owb-step4-error-caption'),
@@ -60,11 +62,7 @@ class SpecialWikiBuilder extends UnlistedSpecialPage {
 			);
 		}
 
-		$json = Wikia::json_encode( $result );
-		$response = new AjaxResponse( $json );
-		$response->setContentType( 'application/json; charset=utf-8' );
-
 		wfProfileOut( __METHOD__ );
-		return $response;
+		return $result;
 	}
 }
