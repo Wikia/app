@@ -11,7 +11,14 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 			$style .= "border-color: red; border-style: solid;";
 		}
 
-		$out = XML::openElement('select',
+		$out = '';
+		
+		$instructions = $this->getAttrVal("instructions", true);
+		if ($instructions) {
+			$out .= '<em class="plb-span-instructions" >'.htmlspecialchars($instructions).'</em><br>';
+		}
+		
+		$out .= XML::openElement('select',
 							array(
 								'name' => 'plb_'.$this->getAttrVal('id', true),
 								'type' => 'text',
@@ -35,7 +42,8 @@ class LayoutWidgetSelectInput extends LayoutWidgetBase {
 			$out .= XML::element("option", $attr, $value);
 		}
 		$out .= XML::closeElement('select');
-		return '<em class="plb-span-instructions" >'.htmlspecialchars($this->getAttrVal("instructions", true)).'</em><br>'.$out;
+		
+		return $out;
 	}
 
 	public function renderForResult() {
