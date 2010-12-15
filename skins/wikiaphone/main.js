@@ -62,7 +62,7 @@ var MobileSkin = {
 		MobileSkin.c.contents().each(function(i, el) {
 			if (this) {
 				if (this.nodeName == 'H2') {
-					$(this).append('<a class="showbutton">Show</a>');
+					$(this).append('<a class="showbutton">' + MobileSkinData["showtext"] + '</a>');
 					cindex++;
 					MobileSkin.ct["c"+cindex] = [];
 				} else if (this.id != 'catlinks' && this.id != 'mw-data-after-content' && cindex > -1) {
@@ -93,11 +93,11 @@ var MobileSkin = {
 		if($(this).data("s")) {
 			$(MobileSkin.ct[$(this).data("c")]).remove();
 			$(this).data("s", false);
-			$(this).text("Show");
+			$(this).text(MobileSkinData["showtext"]);
 		} else {
 			$(this).closest("h2").after($(MobileSkin.ct[$(this).data("c")]));
 			$(this).data("s", true);
-			$(this).text("Hide");
+			$(this).text(MobileSkinData["hidetext"]);
 		}
 	}
 };
