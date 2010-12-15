@@ -142,6 +142,22 @@ class PageLayoutBuilderForm extends SpecialPage {
 			}
 			
 			$wgOut->wrapWikiMsg( "<div id=\"editpage-copywarn\">\n$1\n</div>", $copywarnMsg );
+			
+			$sk = $wgUser->getSkin();
+			$cancel = "";
+			if(isset($this->pageTitle) && $this->pageTitle->getText()) {
+				$cancel = $sk->makeKnownLink( $this->pageTitle->getPrefixedText(),
+					wfMsgExt('cancel', array('parseinline')),
+					'', '', '',
+					'id="wpCancel"').wfMsgExt( 'pipe-separator' , 'escapenoentities' );
+			}
+
+			$edithelpurl = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'edithelppage' ));
+			$edithelp = '<a target="helpwindow" href="'.$edithelpurl.'" id="wpEdithelp">'.
+			htmlspecialchars( wfMsg( 'edithelp' ) ).'</a> ';				
+
+			$wgOut->addHTML( $cancel.$edithelp );
+				
 		} else {
 			$this->executeIsNolayout();
 			return true;
