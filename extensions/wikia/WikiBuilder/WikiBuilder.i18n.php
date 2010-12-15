@@ -4,6 +4,7 @@ global $wgSitename;
 $messages = array();
 
 $messages['en'] = array(
+	'owb-title' => 'WikiBuilder',
 	'owb-headline' => 'Hi, '.$wgSitename,
 	'owb-button-skip' => 'Skip',
 	'owb-button-save-intro' => 'Save Intro',

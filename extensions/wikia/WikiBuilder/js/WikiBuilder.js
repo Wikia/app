@@ -193,7 +193,8 @@ var WikiBuilder = {
 		$.getJSON(wgScript,
 			{
 				'action': 'ajax',
-				'rs': 'SpecialWikiBuilder::upgradeToPlus'
+				'rs': 'WikiBuilderAjax',
+				'method': 'upgradeToPlus'
 			},
 			function(res) {
 				throbber.hide();

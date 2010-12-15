@@ -28,5 +28,30 @@ $wgGroupPermissions['staff']['wikibuilder'] = true;
 $wgAutoloadClasses['ApiCreateMultiplePages'] = dirname(__FILE__).'/../NewWikiBuilder/ApiCreateMultiplePages.php';
 $wgAPIModules['createmultiplepages'] = 'ApiCreateMultiplePages';
 
-// ajax
-$wgAjaxExportList[] = 'SpecialWikiBuilder::upgradeToPlus';
+// Ajax dispatcher
+$wgAjaxExportList[] = 'WikiBuilderAjax';
+function WikiBuilderAjax() {
+	global $wgUser, $wgRequest;
+	$method = $wgRequest->getVal('method', false);
+
+	if (method_exists('SpecialWikiBuilder', $method)) {
+		wfProfileIn(__METHOD__);
+
+		wfLoadExtensionMessages('WikiBuilder');
+		$data = SpecialWikiBuilder::$method();
+
+		if (is_array($data)) {
+			// send array as JSON
+			$json = Wikia::json_encode($data);
+			$response = new AjaxResponse($json);
+			$response->setContentType('application/json; charset=utf-8');
+		} else {
+			// send text as text/html
+			$response = new AjaxResponse($data);
+			$response->setContentType('text/html; charset=utf-8');
+		}
+
+		wfProfileOut(__METHOD__);
+		return $response;
+	}
+}
