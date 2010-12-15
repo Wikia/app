@@ -8,7 +8,7 @@
 		<?php echo wfMsg( 'plb-helpbox-buttton-head1' ); ?> <br>
 		<?php echo wfMsg( 'plb-helpbox-buttton-head2' ); ?><br>
 		<input type="button" id="getStarted1" value="<?php echo wfMsg( 'plb-helpbox-getstarted' ); ?>" /> <br>
-		<input type="checkbox" id="getStartedBlock1" /> <span class='checkboxinfo' > <?php echo wfMsg('plb-helpbox-checkboxinfo1'); ?> <span/>
+		<input type="checkbox" id="getStartedBlock1" /> <span class='checkboxinfo' > <?php echo wfMsg('plb-helpbox-checkboxinfo1'); ?> </span>
 	</div>
 	
 	<div class="infoAdmin" >
