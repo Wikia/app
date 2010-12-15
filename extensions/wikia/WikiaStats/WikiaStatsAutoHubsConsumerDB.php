@@ -28,7 +28,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		}	
 		$keys = array_keys( $data[0] );
 
-		$sql = 'INSERT `noreptemp`.`%s` INTO %s (%s) VALUES %s %s';
+		$sql = 'INSERT INTO `noreptemp`.`%s` (%s) VALUES %s %s';
 
 		$first = true;
 		$records = "";
