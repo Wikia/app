@@ -240,4 +240,38 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	public function cancelBAIdDataProvider() {
+		return array(
+			array( true, true, 0 ),
+			array( true, true, 12 ),
+			array( false, true, 1 ),
+			array( false, false, null )
+		);
+	}
+
+	/**
+	 * @dataProvider cancelBAIdDataProvider
+	 */
+	public function testCancelBillingAgreement( $expectedResult, $hasResult, $resultValue ) {
+		if( $hasResult ) {
+			$returnValue = array( 'RESULT' => $resultValue, 'RESPMSG' => 'Declined: 10201-Billing Agreement was cancelled' );
+		}
+		else {
+			$returnValue = array();
+		}
+
+		$payflowAPI = $this->getMock( 'PayflowAPI' );
+		$payflowAPI->expects($this->once())
+		           ->method('cancelCustomerBillingAgreement')
+		           ->with($this->equalTo( self::TEST_BAID ) )
+		           ->will($this->returnValue( $returnValue ));
+
+		$this->paypalService->setPayflowAPI( $payflowAPI );
+
+		$result = $this->paypalService->cancelBillingAgreement( self::TEST_BAID );
+
+		if( $expectedResult ) {
+			$this->assertTrue( $result );
+		}
+	}
 }
