@@ -283,12 +283,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$defultContent = $wgRequest->getVal('defaultPageId', '');
 		$defultContentTitle = Title::newFromID($defultContent);
 
-		if(($defultContentTitle instanceof  Title) && ($defultContentTitle->getNamespace() == NS_PLB_LAYOUT) ) {
+		if(($defultContentTitle instanceof Title) && ($defultContentTitle->getNamespace() == NS_PLB_LAYOUT) ) {
 			$this->mArticle = new Article( $this->mTitle );
 			$defultContent = $this->mArticle->getContent();
 		}
 
-		$this->mTitle = Title::makeTitle( NS_PLB_LAYOUT,  $default == '' ? wfMsg("plb-empty-page"):$default );
+		$this->mTitle = Title::makeTitle( NS_PLB_LAYOUT, $default == '' ? wfMsg("plb-empty-page") : $default );
 		$this->mArticle = new Article( $this->mTitle );
 		$this->mEditPage = new EditPage($this->mArticle);
 
@@ -407,7 +407,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		$result = false;
 		$bot = $wgUser->isAllowed('bot') && $wgRequest->getBool( 'bot', true );
-		$this->mEditPage->summary = empty($this->mFormData['summary']) ? wfMsgForContent('plb-create-updated-summary'):$this->mFormData['summary'];
+		$this->mEditPage->summary = empty($this->mFormData['summary']) ? '' : $this->mFormData['summary'];
 		$status = $this->mEditPage->internalAttemptSave( $result, $bot );
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:

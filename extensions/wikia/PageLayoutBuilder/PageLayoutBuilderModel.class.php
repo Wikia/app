@@ -81,10 +81,6 @@ class PageLayoutBuilderModel {
 		$editPage->recreate = true;
 		$editPage->summary = $summary;
 		
-		if(empty($summary)) {
-			$editPage->summary =  wfMsgForContent('plb-create-summary-updated');
-		}
-
 		$result = false;
 		$wgCaptchaTriggers = array();
 		
