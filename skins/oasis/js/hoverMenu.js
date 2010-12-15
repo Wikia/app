@@ -106,7 +106,9 @@ HoverMenu.prototype.mouseout = function(event) {
 		//Start mouseoutTimer
 		this.mouseoutTimer = setTimeout(function() {
 			$(event.currentTarget).children("ul").removeClass("show");
-			//self.ads.css("visibility", "visible");
+			self.ads.each(function(i, el){
+				$(el).children().show();
+			});
 		}, this.settings.mouseoutDelay);
 
 	} else {
@@ -114,7 +116,9 @@ HoverMenu.prototype.mouseout = function(event) {
 
 		//Hide nav immediately
 		$(event.currentTarget).children("ul").removeClass("show");
-		//self.ads.css("visibility", "visible");
+		self.ads.each(function(i, el){
+			$(el).children().show();
+		});
 	}
 
 };
@@ -124,7 +128,9 @@ HoverMenu.prototype.showNav = function(parent) {
 
 	if (nav.exists()) {
 		nav.addClass("show");
-		this.ads.css("display", "none");
+		this.ads.each(function(i, el){
+			$(el).height($(el).height()).children().hide();
+		});
 
 		// tracking
 		switch(this.selector) {
