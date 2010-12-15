@@ -21,7 +21,6 @@ $wgEnableMWSuggest = false;
 $wgAjaxWatch = false;
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'SkinWikiaphone::onMakeGlobalVariablesScript';
-$wgHooks['SkinAfterContent'][] = 'SkinWikiaphone::onSkinAfterContent';
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SkinWikiaphone::onSkinTemplateOutputPageBeforeExec';
 
 /**
@@ -42,21 +41,6 @@ class SkinWikiaphone extends SkinTemplate {
 		$this->themename = 'wikiaphone';
 		$this->template  = 'MonoBookTemplate';
 		$wgUseSiteCss = false;
-	}
-	
-	public static function onSkinAfterContent( &$data ) {
-		global $wgCityId;
-		
-		$data .= <<< FOOTER
-			<div id="fullsite"><a href="#" class="fullsite">View full site</a></div>
-FOOTER;
-		
-		// load Google Analytics code
-		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
-		// onewiki GA
-		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-		return true;
 	}
 	
 	public static function onSkinTemplateOutputPageBeforeExec( &$obj, &$tpl ){
@@ -110,6 +94,24 @@ FOOTER;
 		$vars['SpecialNamespaceMessage'] = $wgContLang->getNsText(NS_SPECIAL);
 		
 		return true;
+	}
+	
+	protected function afterContentHook () {
+		global $wgCityId, $wgRightsUrl;
+		
+		$data = '';
+		
+		$data .= '<div id="mw-data-after-content"><div id="fullsite"><a href="#" class="fullsite">'.wfMsg('mobile-full-site').'</a> | '.$this->getCopyright().'</div>';
+		
+		$data .= '<script>var MobileSkinData = {showtext: "'.wfMsg("mobile-show").'", hidetext:"'.wfMsg("mobile-hide").'"};</script>';
+		
+		// load Google Analytics code
+		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+
+		// onewiki GA
+		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+		
+		return $data;
 	}
 
 }
