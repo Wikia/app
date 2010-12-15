@@ -53,6 +53,15 @@ class BlogListingModule extends Module {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgStylePath;
 
+		// macbre: prevent PHP warnings and try to find the reason of them
+		if (!is_array($posts)) {
+			$url = wfGetCurrentUrl();
+			Wikia::log(__METHOD__, false, "\$posts is not an array - {$url['url']}", true);
+
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		$additionalClass = '';
 		if (!empty($aOptions['class'])) {
 			$additionalClass = ' '.$aOptions['class'];
