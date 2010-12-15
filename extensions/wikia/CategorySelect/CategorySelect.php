@@ -353,7 +353,7 @@ function CategorySelectChangeFormat($categories, $from, $to) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectAddFormFields($editPage, $wgOut) {
-	global $wgCategorySelectMetaData, $wgOut;
+	global $wgCategorySelectMetaData;
 	$categories = '';
 	if (!empty($wgCategorySelectMetaData)) {
 		$categories = htmlspecialchars(CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'json'));
