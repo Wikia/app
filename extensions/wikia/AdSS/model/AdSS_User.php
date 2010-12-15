@@ -41,7 +41,7 @@ class AdSS_User {
 		$row = $dbr->selectRow( 'users', '*', array( 'user_pp_payerid' => $payerId ), __METHOD__ );
 		if( $row ) {
 			$user = self::newFromRow( $row );
-			if( $user->pp_payerid == $payerId ) {
+			if( $user->pp_payerId == $payerId ) {
 				return $user;
 			}
 		}
@@ -104,7 +104,7 @@ class AdSS_User {
 		$this->email = $row->user_email;
 		$this->password = $row->user_password;
 		$this->newpassword = $row->user_newpassword;
-		$this->pp_payerid = $row->user_pp_payerid;
+		$this->pp_payerId = $row->user_pp_payerid;
 		$this->baid = $row->user_pp_baid;
 	}
 
@@ -119,7 +119,7 @@ class AdSS_User {
 						'user_email'       => $this->email,
 						'user_password'    => $this->password,
 						'user_newpassword' => $this->newpassword,
-						'user_pp_payerid'  => $this->pp_payerid,
+						'user_pp_payerid'  => $this->pp_payerId,
 						'user_pp_baid'     => $this->baid,
 					     ),
 					__METHOD__
@@ -131,7 +131,7 @@ class AdSS_User {
 						'user_email'       => $this->email,
 						'user_password'    => $this->password,
 						'user_newpassword' => $this->newpassword,
-						'user_pp_payerid'  => $this->pp_payerid,
+						'user_pp_payerid'  => $this->pp_payerId,
 						'user_pp_baid'     => $this->baid,
 					     ),
 					array(

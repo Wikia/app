@@ -211,7 +211,7 @@ class AdSS_Controller extends SpecialPage {
 		if( $user->baid ) {
 			wfDebug( "AdSS: got existing BAID: {$user->baid}\n" );
 		} else {
-			$user->pp_payerid = $payerId;
+			$user->pp_payerId = $payerId;
 			$user->baid = $pp->createBillingAgreement();
 
 			if( $user->baid ) {
