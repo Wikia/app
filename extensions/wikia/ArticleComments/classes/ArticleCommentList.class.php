@@ -744,6 +744,18 @@ class ArticleCommentList {
 		) );
 		return $template->render( 'comment-list' );
 	}
+	
+	/*
+	 * @access public 
+	 * @deprecated don't use it for Oasis, still needed for non-Oasis skins 
+	 * @deprecated - not used in Oasis 
+	 * 
+	 * @return String HTML text with rendered comments section 
+	 */ 
+
+	public function render() { 
+		return wfRenderModule('ArticleComments', 'Index'); 
+ 	} 
 
 	/**
 	 * Hook
