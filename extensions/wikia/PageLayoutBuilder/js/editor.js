@@ -258,6 +258,7 @@
 		onRTEReady: function(instance) {
 			this.rte = RTE;
 			this.instance = instance;
+			this.instance.on('key',$.proxy(this.onRTEKey,this));
 			this.instance.on('wysiwygModeReady',$.proxy(this.onRTEWysiwygModeReady,this));
 			this.instance.on('mode',$.proxy(this.onRTEModeSwitched,this));
 			this.instance.on('beforeCommandExec',$.proxy(this.onRTEBeforeCommandExec,this));
@@ -368,6 +369,10 @@
 		
 		onRTEDroppedElements: function( event ) {
 			this.fire('droppedelements',this,event.data,event);
+		},
+		
+		onRTEKey: function( event ) {
+			this.fire('key',this,event.data,event);
 		}
 		
 	});
@@ -430,6 +435,8 @@
 				droppedelements: this.onRTEDroppedElements,
 				
 				selectionchange: this.onRTESelectionChange,
+				
+				key: this.onRTEKey,
 				
 				scope: this
 			});
@@ -629,6 +636,10 @@
 			}
 		},
 		
+		onRTEKey: function (rte,data,event) {
+			this.fire('rtekey',rte,data,event);
+		},
+		
 		onRTEBeforeCreateUndoSnapshot: function(rte,data,e) {
 			if (!rte.isFullWysiwyg()) {
 				return;
@@ -818,8 +829,6 @@
 			if (this.ui) {
 				this.ui[mode == 'source' ? 'hide':'show']();
 			}
-			
-			
 		},
 		
 		onRTESelectionChange: function (rte,data,event) {
@@ -930,6 +939,8 @@
 		el: null,
 		rte: null,
 		
+		state: true,
+		
 		addButton: null,
 		widgetsManager: null,
 		widgetsTutorial: null,
@@ -957,6 +968,7 @@
 				changed: [ this.rebindOverlays, this.refresh ],
 //				placeholdersremoved: [ this.delayedRebindOverlays, this.delayedRefresh ],
 				selectionchange: this.delayedRefreshSelection,
+				rtekey: this.delayedRefresh,
 				scope: this
 			});
 			this.rte = this.ed.rte;
@@ -988,12 +1000,14 @@
 		},
 
 		rebind: function () {
+			/*
 			if (this.rte.getBody()) {
 				this.rte.getBody().unbind('keyup.plb');
 				this.rte.getBody().bind('keyup.plb',$.proxy(this.delayedRefresh,this));
 			} else {
 				$().log('UI::rebind() - cannot find RTE.getEditor()','PLB');
 			}
+			*/
 			
 			this.rebindOverlays();
 			
@@ -1018,10 +1032,12 @@
 		
 		hide: function() {
 			$('>*',this.el).css('display','none');
+			this.state = false;
 		},
 		
 		show: function() {
 			$('>*',this.el).css('display','');
+			this.state = true;
 		},
 		
 		delayedRefresh : function () {
@@ -1032,10 +1048,15 @@
 		refresh : function () {
 			this.refreshTimer.stop();
 			
+			if ( !this.state ) {
+				this.refreshTimer.start(1000);
+				return;
+			}
+			
 			if ( !this.rte.getBody() ) {
 				this.refreshTimer.start();
 				return;
-			} 
+			}
 			
 			$().log('refreshing wigdets list...','PLB');
 			// Find all PLB widgets in the editor
