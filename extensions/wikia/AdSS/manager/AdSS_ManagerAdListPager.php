@@ -28,7 +28,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 	}
 
 	function formatValue( $name, $value ) {
-		global $wgAdSS_templatesDir;
+		global $wgAdSS_templatesDir, $wgAdSS_ReadOnly;
 		switch( $name ) {
 			case 'ad_wiki_id':
 				$wiki = WikiFactory::getWikiByID( $value );
@@ -91,7 +91,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 			case 'ad_price':
 				return AdSS_Util::formatPrice( $this->ad->price );
 			case 'ad_action':
-				if( !$this->ad->closed ) {
+				if( !$this->ad->closed && !wfReadOnly() && empty( $wgAdSS_ReadOnly ) ) {
 					$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
 					$tmpl->set( 'ad', $this->ad );
 					return $tmpl->render( 'actionClose' );

@@ -146,12 +146,18 @@ class AdSS_AdminController {
 	}
 
 	static function acceptAdAjax( $id, $token ) {
-		global $wgUser, $wgAdSS_DBname;
+		global $wgUser, $wgAdSS_DBname, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
@@ -195,12 +201,18 @@ class AdSS_AdminController {
 	}
 
 	static function closeAdAjax( $id, $token ) {
-		global $wgUser;
+		global $wgUser, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
@@ -250,12 +262,18 @@ class AdSS_AdminController {
 	}
 
 	static function editAdAjax( $id, $url, $text, $desc ) {
-		global $wgUser;
+		global $wgUser, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
@@ -315,12 +333,18 @@ class AdSS_AdminController {
 	}
 
 	static function approveAdChangeAjax( $id, $url, $text, $desc ) {
-		global $wgUser;
+		global $wgUser, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );
@@ -351,12 +375,18 @@ class AdSS_AdminController {
 	}
 
 	static function rejectAdChangeAjax( $id ) {
-		global $wgUser;
+		global $wgUser, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
 			$r = array( 'result' => 'error', 'respmsg' => 'no permission' );

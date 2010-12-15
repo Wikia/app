@@ -15,7 +15,7 @@ class AdSS_ManagerController {
 	}
 
 	function execute( $sub ) {
-		global $wgRequest, $wgOut;
+		global $wgRequest, $wgOut, $wgAdSS_ReadOnly;
 
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/manager.scss' ) );
 
@@ -26,6 +26,11 @@ class AdSS_ManagerController {
 
 		if( $this->userId ) {
 			if( isset( $sub[1] ) && ( $sub[1] == 'paypal' ) ) {
+				if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+					$wgOut->readOnlyPage();
+					$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/readonly") } )' );
+					return;
+				}
 				if( isset( $sub[2] ) ) {
 					switch( $sub[2] ) {
 						case 'redirect':
@@ -83,23 +88,30 @@ class AdSS_ManagerController {
 	}
 
 	function displayBilling() {
-		global $wgOut, $wgAdSS_templatesDir, $wgJsMimeType, $wgAdSS_DBname, $wgLang;
+		global $wgOut, $wgAdSS_templatesDir, $wgJsMimeType, $wgAdSS_DBname, $wgLang, $wgAdSS_ReadOnly;
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
-
 		$pager = new AdSS_ManagerBillingPager( $this->userId );
-
 		$user = AdSS_User::newFromId( $this->userId );
+
 		if( $user->baid ) {
-			$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/cancel" )->getLocalURL() );
-			$tmpl->set( 'token', AdSS_Util::getToken() );
-			$baid = $user->baid . $tmpl->render( 'cancelBA' );
+			if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+				$baid = $user->baid;
+			} else {
+				$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/cancel" )->getLocalURL() );
+				$tmpl->set( 'token', AdSS_Util::getToken() );
+				$baid = $user->baid . $tmpl->render( 'cancelBA' );
+			}
 		} else {
 			// no BAID
-			$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/redirect" )->getLocalURL() );
-			$tmpl->set( 'token', AdSS_Util::getToken() );
-			$tmpl->set( 'button', $tmpl->render( 'createBA' ) );
-			$baid = $tmpl->render( 'noBA' );
+			if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+				$baid = '';
+			} else {
+				$tmpl->set( 'action', Title::makeTitle( NS_SPECIAL, "AdSS/manager/paypal/redirect" )->getLocalURL() );
+				$tmpl->set( 'token', AdSS_Util::getToken() );
+				$tmpl->set( 'button', $tmpl->render( 'createBA' ) );
+				$baid = $tmpl->render( 'noBA' );
+			}
 		}
 
 		$balance = - $wgLang->formatNum( $user->getBillingBalance() );
@@ -228,12 +240,18 @@ class AdSS_ManagerController {
 	}
 
 	static function closeAdAjax( $id ) {
-		global $wgRequest;
+		global $wgRequest, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
 
 		$userId = $wgRequest->getSessionData( "AdSS_userId" );
 		if( !$userId ) {
@@ -310,12 +328,18 @@ class AdSS_ManagerController {
 	}
 
 	static function editAdAjax( $id, $url, $text, $desc ) {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgAdSS_ReadOnly;
 
 		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
 
 		$userId = $wgRequest->getSessionData( "AdSS_userId" );
 		if( !$userId ) {

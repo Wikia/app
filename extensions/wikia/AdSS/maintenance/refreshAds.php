@@ -8,6 +8,11 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
+if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+	echo "Read-only mode - exiting.";
+	exit( 1 );
+}
+
 echo "Checking for ads that have expired or are expiring within next 25 hours\n";
 //FIXME refactor this piece into another data class
 $dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );

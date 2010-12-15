@@ -8,6 +8,11 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
+if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+	echo "Read-only mode - exiting.";
+	exit( 1 );
+}
+
 echo "Checking for users that owe us $".$wgAdSSBillingThreshold." or more OR haven't been billed in last month OR owe us anything but have no more ads in rotation\n";
 $dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 $res = $dbw->select(
