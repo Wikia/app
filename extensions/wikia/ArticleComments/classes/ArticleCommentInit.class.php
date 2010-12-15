@@ -105,7 +105,8 @@ class ArticleCommentInit {
 			'SkinAnswers',
 			'SkinOasis',
 			'SkinWikiaphone',
-			'SkinWikiaApp'
+			'SkinWikiaApp',
+			'SkinMonobook'
 		) ) ) {
 			return true;
 		}
@@ -114,8 +115,8 @@ class ArticleCommentInit {
 
 		if (self::ArticleCommentCheck()) {
 			wfLoadExtensionMessages('ArticleComments');
-			$page = ArticleCommentList::newFromTitle($wgTitle);
-			$data = $page->render();
+			//$page = ArticleCommentList::newFromTitle($wgTitle);
+			//$data = $page->render();
 		}
 		
 		wfProfileOut( __METHOD__ );

@@ -331,28 +331,6 @@ class ArticleCommentList {
 
 		return $retVal;
 	}
-	/**
-	 * render -- return HTML code for displaying comments
-	 *
-	 * @access public
-	 * @deprecated - not used in Oasis
-	 *
-	 * @return String HTML text with rendered comments section
-	 */
-	public function render() {
-		return wfRenderModule('ArticleComments', 'Index');
-
-		/*
-
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
-		$template->set_vars( $this->getData() );
-
-		$text = $template->render( 'comment-main' );
-
-		return $text;
-
-		*/
-	}
 
 	/**
 	 * doPagination -- return HTML code for pagination
