@@ -193,7 +193,7 @@ class RelatedPages {
 	private function getPagesForCategories($articleId, $limit, Array $categories) {
 		global $wgMemc, $wgContentNamespaces;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);	
 		$cacheKey = wfMemcKey(__METHOD__, $articleId);
 		$cache = $wgMemc->get($cacheKey);
 		if (is_array($cache)) {
@@ -203,6 +203,11 @@ class RelatedPages {
 
 		$dbr = wfGetDB(DB_SLAVE);
 		$pages = array();
+		
+		if ( empty($categories) ) {
+			wfProfileOut(__METHOD__);
+			return $pages;
+		}
 
 		$tables = array( "categorylinks" );
 		$joinSql = $this->getPageJoinSql( $dbr, $tables );
