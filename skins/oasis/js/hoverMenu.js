@@ -24,7 +24,7 @@ HoverMenu = function(selector) {
 
 	//Variables
 	this.selector = selector;
-	this.ads = $(".wikia-ad:first", "#WikiaPage").add(".wikia-ad:first", "#WikiaRail");
+	this.ads = $("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad");
 
 	//Events
 	$(selector).children("li").hover($.proxy(this.mouseover, this), $.proxy(this.mouseout, this));
@@ -124,7 +124,7 @@ HoverMenu.prototype.showNav = function(parent) {
 
 	if (nav.exists()) {
 		nav.addClass("show");
-		//this.ads.css("visibility", "hidden");
+		this.ads.css("display", "none");
 
 		// tracking
 		switch(this.selector) {
