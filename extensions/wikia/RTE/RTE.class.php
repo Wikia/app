@@ -40,36 +40,7 @@ class RTE {
 				} else {
 					$form->textbox1 = $form->getContent();
 				}
-				if(!empty($wgRC2UDPEnabled) && !empty($wgRequest->data['wpSave'])) {
-					$wgHooks['ArticleSaveComplete'][] = 'RTE::notifySave';
-				}
 			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return true;
-	}
-
-	public static function notifySave(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision) {
-		global $wgTitle;
-
-		wfProfileIn(__METHOD__);
-
-		if(is_object($revision) && is_object($wgTitle)) {
-			global $wgSitename;
-
-			$data = array('title' => $wgSitename, 'description' => '<a href="'.$wgTitle->getFullURL('diff=' . $revision->getId()).'">diff</a>');
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-			curl_setopt($ch, CURLOPT_URL, "http://fp026.sjc.wikia-inc.com/inez/test.php");
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_exec($ch);
-			curl_close($ch);
 		}
 
 		wfProfileOut(__METHOD__);
