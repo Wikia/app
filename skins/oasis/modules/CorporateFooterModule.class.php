@@ -6,7 +6,7 @@ class CorporateFooterModule extends Module {
 	var $footer_links;
 	var $copyright;
 	var $hub;
-	
+
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
 		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode());
@@ -18,7 +18,7 @@ class CorporateFooterModule extends Module {
 		$this->replaceLicense();
 		$this->hub = $this->getHub();
 	}
-	
+
 	private function getHub() {
 		wfProfileIn( __METHOD__ );
 		global $wgCityId;
@@ -28,14 +28,16 @@ class CorporateFooterModule extends Module {
 			//Use Recipes Wiki cityID to force Lifestyle hub
 			$catInfo = WikiFactory::getCategory(3355);
 		}
-		
+
 		//i18n
-		$catInfo->cat_name = wfMsg('hub-'. $catInfo->cat_name);
-		
+		if (!empty($catInfo)) {
+			$catInfo->cat_name = wfMsg('hub-'. $catInfo->cat_name);
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $catInfo;
 	}
-	
+
 	/**
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
@@ -47,7 +49,7 @@ class CorporateFooterModule extends Module {
 
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
-				
+
 		if(!isset($catId) || null == ($lines = getMessageAsArray($message_key.'-'.$catId))) {
 			wfDebugLog('monaco', $message_key.'-'.$catId . ' - seems to be empty');
 			if(null == ($lines = getMessageAsArray($message_key))) {
@@ -63,12 +65,12 @@ class CorporateFooterModule extends Module {
 				$nodes[] = parseItem($line);
 			}
 		}
-		
-		
+
+
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
-	
+
 	private function replaceLicense() {
 		for ($i=0; $i < count($this->footer_links); $i++) {
 			if ($this->footer_links[$i]["text"] == 'GFDL' || $this->footer_links[$i]["text"] == '_LICENSE_') {
