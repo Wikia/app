@@ -28,7 +28,8 @@ if( !isset( $options['skip-compat-checks'] ) ) {
 
 # Attempt to connect to the database as a privileged user
 # This will vomit up an error if there are permissions problems
-$wgDatabase = wfGetDB( DB_MASTER );
+//$wgDatabase = wfGetDB( DB_MASTER );
+$wgDatabase = new DatabaseMysql( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $wgDBname, 1 );
 
 print "Going to run database updates for ".wfWikiID()."\n";
 print "Depending on the size of your database this may take a while!\n";
