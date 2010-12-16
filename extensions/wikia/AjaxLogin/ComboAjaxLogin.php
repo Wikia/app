@@ -407,7 +407,7 @@ class AjaxLoginForm extends LoginForm {
 
 	function mainLoginForm( $msg, $msgtype = 'error' ) {
 		global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
-		global $wgCookiePrefix, $wgLoginLanguageSelector;
+		global $wgCookiePrefix, $wgLoginLanguageSelector, $wgRequest;
 		global $wgAuth, $wgEmailConfirmToEdit, $wgCookieExpiration, $wgEnableCOPPA;
 
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
@@ -481,7 +481,16 @@ class AjaxLoginForm extends LoginForm {
 		$template->set( 'createToken', self::getCreateaccountToken() );
 
 		// Give authentication and captcha plugins a chance to modify the form
-		$wgAuth->modifyUITemplate( $template );
+		
+		$type = $wgRequest->getVal('type', '');
+
+		if ( strtolower( $type ) == 'login' ){
+			$type = 'login';
+		} else {
+			$type = 'signup';
+		}
+
+		$wgAuth->modifyUITemplate( $template, $type );
 
 		wfRunHooks( 'UserCreateForm', array( &$template ) );
 
