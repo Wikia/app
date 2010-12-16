@@ -111,6 +111,8 @@ AdDriver.isHighValue = function(slotname) {
 		case 'CORP_TOP_RIGHT_BOXAD':
 		case 'HOME_TOP_RIGHT_BOXAD':
 		case 'TOP_RIGHT_BOXAD':
+		case 'HOME_TOP_RIGHT_BUTTON':
+		case 'TOP_RIGHT_BUTTON':
 		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_TOP':	// skin
 		case 'INVISIBLE_1':		// footer
@@ -296,6 +298,9 @@ AdDriver.postProcessSlot = function(slotname) {
 
 AdDriver.canCallLiftium = function(slotname) {
 	switch (slotname) {	
+		case 'HOME_TOP_RIGHT_BUTTON':
+		case 'TOP_RIGHT_BUTTON':
+		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_TOP':
 		case 'INVISIBLE_1':
 			return false;
