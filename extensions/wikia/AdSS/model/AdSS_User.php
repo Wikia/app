@@ -55,7 +55,7 @@ class AdSS_User {
 		$row = $dbr->selectRow( 'users', '*', array( 'user_pp_baid' => $baid ), __METHOD__ );
 		if( $row ) {
 			$user = self::newFromRow( $row );
-			if( $user->pp_baid == $baid ) {
+			if( $user->baid == $baid ) {
 				return $user;
 			}
 		}
