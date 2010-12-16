@@ -72,7 +72,7 @@ CREATE TABLE globaluser (
 
   -- If true, this account should be hidden from most public user lists.
   -- Used for "deleting" accounts without breaking referential integrity.
-  gu_hidden bool not null default 0,
+  gu_hidden varbinary(255) not null default '',
 
   -- Registration time
   gu_registration varchar(14) binary,
@@ -86,7 +86,10 @@ CREATE TABLE globaluser (
 
   primary key (gu_id),
   unique key (gu_name),
-  key (gu_email)
+  key (gu_email),
+  
+  key gu_locked( gu_name(255), gu_locked ),
+  key gu_hidden( gu_name(255), gu_hidden(255) )
 ) /*$wgDBTableOptions*/;
 
 --

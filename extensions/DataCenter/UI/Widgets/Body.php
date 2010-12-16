@@ -50,9 +50,7 @@ class DataCenterWidgetBody extends DataCenterWidget {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets defaults
 		$parameters = array_merge( self::$defaultParameters, $parameters );
 		// Begins widget
@@ -76,7 +74,7 @@ class DataCenterWidgetBody extends DataCenterWidget {
 					'body', $parameters['message'], $parameters['subject']
 				);
 			// Checks if a type was given
-			} else if ( $parameters['type'] !== null ) {
+			} elseif ( $parameters['type'] !== null ) {
 				// Uses type-based message
 				$message = DataCenterUI::message(
 					'body',
@@ -95,7 +93,7 @@ class DataCenterWidgetBody extends DataCenterWidget {
 				DataCenterXml::div( $message )
 			);
 		// Checks if text was given
-		} else if (
+		} elseif (
 			// Required parameters
 			isset( $parameters['text'] ) &&
 			// Required styles

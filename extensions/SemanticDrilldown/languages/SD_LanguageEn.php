@@ -19,7 +19,9 @@ class SD_LanguageEn extends SD_Language {
 	SD_SP_USES_TIME_PERIOD => 'Uses time period',
 	SD_SP_HAS_INPUT_TYPE => 'Has input type',
 	SD_SP_REQUIRES_FILTER => 'Requires filter',
-	SD_SP_HAS_LABEL  => 'Has label'
+	SD_SP_HAS_LABEL  => 'Has label',
+	// display properties
+	SD_SP_HAS_DISPLAY_PARAMETERS => 'Has display parameters',
 );
 
 var $m_Namespaces = array(

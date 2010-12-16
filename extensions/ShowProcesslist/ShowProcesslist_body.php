@@ -16,7 +16,7 @@ class SpecialShowProcesslist extends UnlistedSpecialPage {
 			return;
 		}
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->query( 'SHOW FULL PROCESSLIST' );
 		$output = array();
 		$output = '<table border="1" cellspacing="0">'."\n";

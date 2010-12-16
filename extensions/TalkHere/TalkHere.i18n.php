@@ -39,6 +39,22 @@ $messages['qqq'] = array(
 	'talkhere-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'talkhere-desc' => 'Voeg die besprekingsblad in hierdie bladsy',
+	'talkhere-foottext' => 'Bogenoemde opmerkings is moontlik deur besoekers gelaat. 
+
+Die administrateurs van hierdie webwerf neem geen verantwoordelikheid vir die inhoud van hierdie opmerkings nie.',
+	'talkhere-talkpage' => 'besprekingsblad',
+	'talkhere-notalk' => "''(nog geen opmerkings nie)''",
+	'talkhere-addcomment' => 'voeg opmerking by',
+	'talkhere-beforeinput' => 'Voeg u kommentaar hieronder by',
+	'talkhere-loading' => 'Besig om die wysigingsvenster te laai...',
+	'talkhere-collapse' => 'versteek wysigingsvenster',
+);
+
 /** Amharic (አማርኛ)
  * @author Codex Sinaiticus
  */
@@ -142,6 +158,32 @@ $messages['bg'] = array(
 	'talkhere-collapse' => 'скриване на редактора',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'talkhere-talkpage' => 'আলাপ পাতা',
+	'talkhere-notalk' => "''(এখনও কোনো মন্তব্য নাই)''",
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'talkhere-desc' => 'Lakaat ar bajenn gaozeal e-barzh ar bajenn',
+	'talkhere-foottext' => "Gant sellerien eo bet lezet an evezhiadennoù a-us moarvat.
+
+N'eo ket atebek an dud e-karg eus al lec'hienn eus ar pezh a c'hall bezañ bet skrivet.",
+	'talkhere-talkpage' => 'pajenn kaozeal',
+	'talkhere-notalk' => '"(addispleg ebet evit poent)"',
+	'talkhere-addcomment' => 'Ouzhpennañ un evezhiadenn',
+	'talkhere-beforeinput' => "Un notenn a c'hallit skrivañ a-is",
+	'talkhere-loading' => 'o kargañ an aozer...',
+	'talkhere-collapse' => 'kuzhat an aozer',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -228,8 +270,10 @@ Awtory toś togo sedła njamógu pśewześ žednu zagronitosć za wopśimjeśe t
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'talkhere-desc' => 'Βάζει τη σελίδα συζήτησης στην σελίδα',
 	'talkhere-foottext' => 'Τα παραπάνω σχόλια μπορεί να γράφτηκαν από επισκέπτες.
 
 Οι χειριστές αυτής της περιοχής δεν μπορούν να πάρουν την ευθύνη για το περιεχόμενο αυτών των σχολίων.',
@@ -237,6 +281,8 @@ $messages['el'] = array(
 	'talkhere-notalk' => "''(δεν υπάρχουν ακόμη σχόλια)''",
 	'talkhere-addcomment' => 'προσθέστε σχόλιο',
 	'talkhere-beforeinput' => 'Μπορείτε να προσθέσετε ένα σχόλιο παρακάτω',
+	'talkhere-loading' => 'φόρτωση επεξεργαστή...',
+	'talkhere-collapse' => 'απόκρυψη επεξεργαστή',
 );
 
 /** Esperanto (Esperanto)
@@ -271,6 +317,16 @@ El operador de este sitio no puede tener responsabilidad por el contenido de tal
 	'talkhere-beforeinput' => 'Usted puede agregar un comentario debajo',
 	'talkhere-loading' => 'Cargando editor...',
 	'talkhere-collapse' => 'ocultar editor',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'talkhere-talkpage' => 'aruteluleht',
+	'talkhere-notalk' => "''(kommentaare veel ei ole)''",
+	'talkhere-addcomment' => 'lisa kommentaar',
+	'talkhere-beforeinput' => 'Võid lisada alla kommentaari',
 );
 
 /** Basque (Euskara)
@@ -335,6 +391,15 @@ Le gestionnaire du site n’est pas responsable de leur contenu.',
 	'talkhere-collapse' => 'cacher l’éditeur',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'talkhere-talkpage' => 'pâge de discussion',
+	'talkhere-addcomment' => 'apondre un comentèro',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -387,8 +452,10 @@ $messages['he'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dnik
+ * @author Mnalis
  */
 $messages['hr'] = array(
+	'talkhere-desc' => 'Ubaci stranicu za razgovor na ovu stranicu',
 	'talkhere-foottext' => 'Gornje komentare su vjerojatno ostavili posjetitelji.
 
 Operatori ovih stranica ne mogu preuzeti odgovornost za sadržaj takvih komentara.',
@@ -414,6 +481,22 @@ Wothladowarjo tutoho websydła njemóža zamołwitosć za wobsah tajkich komenta
 	'talkhere-beforeinput' => 'Móžeš deleka komentar přidać.',
 	'talkhere-loading' => 'Editor so startuje...',
 	'talkhere-collapse' => 'Editor schować',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'talkhere-desc' => 'Vitalapot helyez a lapok aljára',
+	'talkhere-foottext' => 'A fenti hozzászólásokat lehet hogy látogatók írták.
+
+Ennek az oldalnak az üzemeltetői nem vállalnak felelősséget az ilyen hozzászólások tartalmáért.',
+	'talkhere-talkpage' => 'vitalap',
+	'talkhere-notalk' => "''(még nincsenek megjegyzések)''",
+	'talkhere-addcomment' => 'megjegyzés hozzáadása',
+	'talkhere-beforeinput' => 'Alább hozzáfűzheted a megjegyzésed',
+	'talkhere-loading' => 'szerkesztő betöltése…',
+	'talkhere-collapse' => 'szerkesztő elrejtése',
 );
 
 /** Interlingua (Interlingua)
@@ -446,6 +529,29 @@ Operator situs ini tidak bertanggung jawab atas isi komentar-komentar tersebut.'
 	'talkhere-beforeinput' => 'Anda dapat menambahkan komentar di bawah ini',
 	'talkhere-loading' => 'memuat editor…',
 	'talkhere-collapse' => 'sembunyikan editor',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'talkhere-talkpage' => 'ihü okwu',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'talkhere-desc' => 'Mette la pagina di discussione nella pagina',
+	'talkhere-foottext' => 'I commenti precedenti potrebbero essere stati lasciati da ospiti.
+
+I gestori del sito non possono assumersi la responsabilità per il contenuto di tali commenti.',
+	'talkhere-talkpage' => 'pagina di discussione',
+	'talkhere-notalk' => "''(nessun commento finora)''",
+	'talkhere-addcomment' => 'aggiungi commento',
+	'talkhere-beforeinput' => 'È possibile aggiungere un commento qui sotto',
+	'talkhere-loading' => 'caricamento editor…',
+	'talkhere-collapse' => 'nascondi editor',
 );
 
 /** Japanese (日本語)
@@ -575,6 +681,22 @@ Déi Responsabel vum Site kënne keng Verantwortung fir den Inhalt vun esou Bemi
 	'talkhere-collapse' => 'Editeur verstoppen',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'talkhere-desc' => 'Ја става страницата за разговор во страницата',
+	'talkhere-foottext' => 'Коментарите погоре може да се напишани од посетители.
+
+Раководителите на оваа веб-страна немаат одговорност за содржината на тие коментари.',
+	'talkhere-talkpage' => 'страница за разговор',
+	'talkhere-notalk' => "''(сè уште нема коментари)''",
+	'talkhere-addcomment' => 'додај коментар',
+	'talkhere-beforeinput' => 'Подолу можете да додадете коментар',
+	'talkhere-loading' => 'го вчитувам уредувачот...',
+	'talkhere-collapse' => 'сокриј уредувач',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
@@ -664,15 +786,23 @@ Sidens operatører kan ikke ta ansvar for innholdet i slike kommentarer.',
  */
 $messages['oc'] = array(
 	'talkhere-desc' => 'Met la pagina de discussion dins la pagina',
-	'talkhere-foottext' => 'Los comentaris çaisús son estats daissats per de vesitaires.
+	'talkhere-foottext' => 'Los comentaris çaisús son estats daissats per de visitaires.
 
-Lo gestionari del sit es pas responsable de lor contengut.',
+Lo gestionari del site es pas responsable de lor contengut.',
 	'talkhere-talkpage' => 'pagina de dscussion',
 	'talkhere-notalk' => "''(cap de comentari actualament)''",
 	'talkhere-addcomment' => 'apondre un comentari',
 	'talkhere-beforeinput' => 'Podètz apondre un comentari çaijós.',
 	'talkhere-loading' => 'cargament de l’editor...',
 	'talkhere-collapse' => 'amagar l’editor',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'talkhere-talkpage' => 'Gschwetz-Blatt',
+	'talkhere-addcomment' => 'Anmaerricking dezue duh',
 );
 
 /** Polish (Polski)
@@ -694,8 +824,10 @@ Administratorzy tej strony nie mogą brać odpowiedzialności za zawartość tak
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'talkhere-desc' => 'A buta la pàgina dle ciaciarade ant la pàgina',
 	'talkhere-foottext' => "Ij coment ambelessì dzora a podrìo esse stàit lassà da dij visitator.
 
 J'operator d'ës sit-sì a peulo nen pijesse la responsabilità dël contnù dë sti coment.",
@@ -717,6 +849,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author Waldir
@@ -729,7 +862,7 @@ Os responsáveis por este site não podem ser responsabilizados pelo conteúdo d
 	'talkhere-talkpage' => 'discussão',
 	'talkhere-notalk' => "''(sem comentários de momento)''",
 	'talkhere-addcomment' => 'adicionar comentário',
-	'talkhere-beforeinput' => 'Pode adicionar uma comentário abaixo',
+	'talkhere-beforeinput' => 'Pode adicionar um comentário abaixo',
 	'talkhere-loading' => 'carregando editor...',
 	'talkhere-collapse' => 'esconder editor',
 );
@@ -751,11 +884,22 @@ Os responsáveis por este site não podem ser responsabilizados pelo conteúdo d
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'talkhere-talkpage' => 'padina de discuţii',
 	'talkhere-notalk' => "''(încă nici un comentariu)''",
 	'talkhere-addcomment' => 'adaugă comentariu',
+	'talkhere-loading' => 'încărcare editor...',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'talkhere-notalk' => "''(angore nisciune commente)''",
+	'talkhere-collapse' => "scunne 'u cangiatore",
 );
 
 /** Russian (Русский)
@@ -789,6 +933,38 @@ Prevádzkovatelia tejto stránky nepreberajú zodpovednosť za obsah takýchto k
 	'talkhere-beforeinput' => 'Dolu môžete pridať komentár',
 	'talkhere-loading' => 'načítava sa editor...',
 	'talkhere-collapse' => 'skryť editor',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'talkhere-desc' => 'Убацује страну за разговор у чланак',
+	'talkhere-foottext' => 'Коментари изнад су можда оставили посетиоци сајта.
+
+Оператори сајта не могу бити сматрани одговорним за садржај ових коментара.',
+	'talkhere-talkpage' => 'страна за разговор',
+	'talkhere-notalk' => "''(тренутно без коментара)''",
+	'talkhere-addcomment' => 'додајте коментар',
+	'talkhere-beforeinput' => 'Можете да додате коментар испод',
+	'talkhere-loading' => 'учитавање едитора…',
+	'talkhere-collapse' => 'сакриј едитор',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'talkhere-desc' => 'Ubacuje stranu za razgovor u članak',
+	'talkhere-foottext' => 'Komentari iznad su možda ostavili posetioci sajta.
+
+Operatori sajta ne mogu biti smatrani odgovornim za sadržaj ovih komentara.',
+	'talkhere-talkpage' => 'strana za razgovor',
+	'talkhere-notalk' => "''(trenutno bez komentara)''",
+	'talkhere-addcomment' => 'dodajte komentar',
+	'talkhere-beforeinput' => 'Možete da dodate komentar ispod',
+	'talkhere-loading' => 'učitavanje editora…',
+	'talkhere-collapse' => 'sakrij editor',
 );
 
 /** Seeltersk (Seeltersk)
@@ -849,6 +1025,21 @@ $messages['tg-cyrl'] = array(
 	'talkhere-collapse' => 'пинҳон кардани вироишгар',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'talkhere-foottext' => "Tavzehoti dar bolo ovarda şuda az tarafi taşrifovardagon cop şudaand.
+
+Şaxsoni muttasadiji somona bar dūşi xud mas'ulijat baroi mūhtavoi cunin tavzehot girifta nametavonand.",
+	'talkhere-talkpage' => 'sahifai bahs',
+	'talkhere-notalk' => "''(hanūz tavzehot nest)''",
+	'talkhere-addcomment' => 'ilova kardani tavzehot',
+	'talkhere-beforeinput' => 'Şumo metavoned dar zer jak tavzeh ilova kuned',
+	'talkhere-loading' => 'dar holi borgiriji viroişgar…',
+	'talkhere-collapse' => 'pinhon kardani viroişgar',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -867,16 +1058,34 @@ Hindi maaaring angkinin ng mga nagpapaandar/nagpapatakbo ng sayt/sityong ito ang
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
-	'talkhere-talkpage' => 'Tartışma sayfası',
-	'talkhere-addcomment' => 'Yorumu ekle',
+	'talkhere-talkpage' => 'tartışma sayfası',
+	'talkhere-addcomment' => 'yorum ekle',
+	'talkhere-beforeinput' => 'Aşağıya bir yorum ekleyebilirsiniz',
+	'talkhere-loading' => 'editör yükleniyor...',
+	'talkhere-collapse' => 'editörü gizle',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Sahran
+ */
+$messages['ug-arab'] = array(
+	'talkhere-talkpage' => 'مۇنازىرە بېتى',
+	'talkhere-notalk' => "''(تېخى تەكلىپ يوق)''",
+	'talkhere-addcomment' => 'تەكلىپ قوش',
+	'talkhere-beforeinput' => 'تۆۋەندە تەكلىپ قوشالايسىز',
+	'talkhere-loading' => 'تەھرىرلىگۈچ يۈكلەۋاتىدۇ…',
+	'talkhere-collapse' => 'تەھرىرلىگۈچ يوشۇر',
 );
 
 /** Ukrainian (Українська)
  * @author Aleksandrit
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'talkhere-desc' => 'Розташовує сторінку обговорення на сторінці',
 	'talkhere-foottext' => 'Ви можете залишити свої коментарі до цієї статті в нижній частині сторінки. 
 
 Адміністратори цього сайту не несуть відповідальність за зміст коментарів до статей, що розташовані на сайті.',
@@ -886,6 +1095,15 @@ $messages['uk'] = array(
 	'talkhere-beforeinput' => 'Додайте ваш коментар нижче.',
 	'talkhere-loading' => 'Завантаження модуля редагування…',
 	'talkhere-collapse' => 'Приховати модуль редагування',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'talkhere-talkpage' => "lodulehtpol'",
+	'talkhere-addcomment' => 'ližata kommentarii',
+	'talkhere-collapse' => 'peitta redaktor',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -924,9 +1142,19 @@ Guvans bevüresodatopäda at no gididons demü ninäd küpetas at.',
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
 	'talkhere-desc' => '把讨论页内容转移至页面',
+	'talkhere-foottext' => '此上方可能有讨论留言
+
+在此的留言不代表本站立场，站长对站内之留言不负任何责任',
+	'talkhere-talkpage' => '对话页',
+	'talkhere-notalk' => "''（还没有评论）''",
+	'talkhere-addcomment' => '添加评论',
+	'talkhere-beforeinput' => '你可以在下面添加一个评论',
+	'talkhere-loading' => '正在载入编辑器……',
+	'talkhere-collapse' => '隐藏编辑器',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -938,8 +1166,8 @@ $messages['zh-hant'] = array(
 	'talkhere-foottext' => '此上方可能有討論留言
 
 在此的留言不代表本站立場，站長對站內之留言不負任何責任',
-	'talkhere-talkpage' => '討論頁面(talk page)',
-	'talkhere-notalk' => "''(尚未有討論留言)''",
+	'talkhere-talkpage' => '討論頁面（talk page）',
+	'talkhere-notalk' => "''（尚未有討論留言）''",
 	'talkhere-addcomment' => '留言討論',
 	'talkhere-beforeinput' => '您可於下方留言討論',
 	'talkhere-loading' => '載入編輯器...',

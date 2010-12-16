@@ -45,12 +45,17 @@
  * Add extension information to Special:Version
  */
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'LDAP Authentication Plugin',
 	'version' => '1.2b (alpha)',
 	'author' => 'Ryan Lane',
 	'description' => 'LDAP Authentication plugin with support for multiple LDAP authentication methods',
+	'descriptionmsg' => 'ldapauthentication-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:LDAP_Authentication',
-	);
+);
+
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['LdapAuthentication'] = $dir . 'LdapAuthentication.i18n.php';
 
 //constants for search base
 define("GROUPDN", 0);
@@ -1721,6 +1726,7 @@ function AutoAuthSetup() {
 	global $wgLDAPSmartcardDomain;
 	global $wgHooks;
 	global $wgAuth;
+	global $wgVersion;
 
 	$wgAuth = new LdapAuthenticationPlugin();
 
@@ -1739,7 +1745,11 @@ function AutoAuthSetup() {
 	if( $wgLDAPAutoAuthUsername != null ) {
 		$wgAuth->printDebug( "wgLDAPAutoAuthUsername is not null, adding hooks.", NONSENSITIVE );
 		if ( version_compare( $wgVersion, '1.14.0', '<' ) ) {
-			$wgHooks['UserLoadFromSession'][] = 'LdapAutoAuthentication::Authenticate';
+			if ( version_compare( $wgVersion, '1.13.0', '<' ) ) {
+				$wgHooks['AutoAuthenticate'][] = 'LdapAutoAuthentication::Authenticate';
+			} else {
+				$wgHooks['UserLoadFromSession'][] = 'LdapAutoAuthentication::Authenticate';
+			}
 		} else {
 			$wgHooks['UserLoadAfterLoadFromSession'][] = 'LdapAutoAuthentication::Authenticate';
 		}

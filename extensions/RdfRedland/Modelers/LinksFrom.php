@@ -38,7 +38,7 @@ class MwRdf_LinksFrom_Modeler extends MwRdf_Modeler {
 		$dcterms = MwRdf::Vocabulary( 'dcterms' );
 		$model = MwRdf::Model();
 		$tr = $this->Agent->titleResource();
-		$dbr =& wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$res = $dbr->select( 'pagelinks',
 			array('pl_namespace', 'pl_title'),
 			array('pl_from = ' . $this->Agent->getTitle()->getArticleID()),

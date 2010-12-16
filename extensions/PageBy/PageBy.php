@@ -15,9 +15,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'PageBy',
-	'svn-date' => '$LastChangedDate: 2008-05-06 13:59:58 +0200 (wto, 06 maj 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
 	'author' => 'Daniel Kinzler, brightbyte.de',
 	'url' => 'http://mediawiki.org/wiki/Extension:PageBy',
 	'description' => 'Shows contributors inline on a wiki page using the tag <nowiki><pageby></nowiki>',

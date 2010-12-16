@@ -20,6 +20,22 @@ $messages['qqq'] = array(
 	'absenteelandlord-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'absenteelandlord-reason' => 'Die databasis is outomaties gesluit omdat die administrateurs nie aktief is nie.',
+	'absenteelandlord-desc' => "Sluit die wiki outomaties as die administrateurs vir 'n geruime tyd nie aktief is nie",
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Bresta
+ */
+$messages['aln'] = array(
+	'absenteelandlord-reason' => 'Baza e të dhânave âsht bllokue automatikisht për shkak të mosaktivitetit të administruesve.',
+	'absenteelandlord-desc' => 'E vetë-bllokon bazën e të dhânave nëse administruesit janë joaktiv për nji kohë të caktueme.',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  * @author OsamaK
@@ -46,6 +62,14 @@ $messages['ast'] = array(
 	'absenteelandlord-desc' => 'Autobloquea la base de datos wiki si los alministradores tán toos inactivos dalgún tiempu',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'absenteelandlord-reason' => 'De Datnbank is automatisch gspead woan, weu ka Administrator aktiv is.',
+	'absenteelandlord-desc' => "Automatische Sperre vu da Datnbank, wãnn d'Administratoan fia a gwisse Zeid inaktiv han",
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  * @author Red Winged Duck
@@ -61,6 +85,14 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'absenteelandlord-reason' => 'Базата от данни беше автоматично заключена поради неактивност на администраторите.',
 	'absenteelandlord-desc' => 'Автоматично заключва базата от данни ако всички администратори са неактивни за известен период от време',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'absenteelandlord-reason' => 'Prennet eo bet ar bank roadennoù ent emgefre rak chomet dioberiant e oa ar verourien.',
+	'absenteelandlord-desc' => 'Prennañ ar bank roadennoù ent emgefre ma chom dioberiant ar verourien e-pad ur frapad bennak',
 );
 
 /** Bosnian (Bosanski)
@@ -165,6 +197,14 @@ $messages['fr'] = array(
 	'absenteelandlord-desc' => 'Verrouille automatiquement la base de données si tous les administrateurs sont inactifs depuis un certain temps',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'absenteelandlord-reason' => 'La bâsa de balyês at étâ vèrrolyê a côsa de l’inactivitât des administrators.',
+	'absenteelandlord-desc' => 'Vèrrolye ôtomaticament la bâsa de balyês se tôs los administrators font ren du tot dês quârque temps.',
+);
+
 /** Western Frisian (Frysk)
  * @author Pyt
  */
@@ -223,7 +263,7 @@ $messages['hif-latn'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
- * @author Suradnik13
+ * @author Ex13
  */
 $messages['hr'] = array(
 	'absenteelandlord-reason' => 'Baza je automatski zaključana uslijed neaktivnosti administratora.',
@@ -352,6 +392,22 @@ $messages['lmo'] = array(
 	'absenteelandlord-desc' => 'Auto-bloca la basa de data deò wiki se cas che i administradour i en inativ per vargun temp',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Matasg
+ */
+$messages['lt'] = array(
+	'absenteelandlord-reason' => 'Ši duomenų bazė buvo automatiškai užrakinta dėl administratorių neaktyvumo.',
+	'absenteelandlord-desc' => 'Automatiškai užrakina wiki duomenų bazę jei administratoriai yra tam tikrą laiką neaktyvūs',
+);
+
+/** Latvian (Latviešu)
+ * @author Dark Eagle
+ */
+$messages['lv'] = array(
+	'absenteelandlord-reason' => 'Datu bāze tika automātiski bloķēta, administratoru neaktivitātes dēļ.',
+	'absenteelandlord-desc' => 'Automātiski bloķē wiki-projekta datu bāzi, ja visi administratori kādu laiku ir neaktīvi',
+);
+
 /** Macedonian (Македонски)
  * @author Brest
  */
@@ -361,11 +417,12 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
+ * @author Sadik Khalid
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'absenteelandlord-reason' => 'സിസോപ്പുകള്‍ നിഷ്ക്രിയരായിരുന്നതു മൂലം ഡാറ്റാബേസ് യാന്ത്രികമായി ബന്ധിക്കപ്പെട്ടിരിക്കുന്നു.',
-	'absenteelandlord-desc' => 'സിസോപ്പുമാര്‍ ഒരു നിശ്ചിത സമയ പരിധിയില്‍ കൂടുതല്‍ നിഷ്ക്രിയരായിരുന്നാല്‍ ഡാറ്റാബേസ് യാന്ത്രികമായി ബന്ധിക്കപ്പെടുന്നു.',
+	'absenteelandlord-reason' => 'കാര്യനിര്‍വാഹകര്‍ നിഷ്ക്രിയരായിരുന്നതു മൂലം വിവരശേഖരം സ്വയം ബന്ധിക്കപ്പെട്ടിരിക്കുന്നു.',
+	'absenteelandlord-desc' => 'എല്ലാ കാര്യനിര്‍വാഹകരും നിശ്ചിത സമയ പരിധിയില്‍ കൂടുതല്‍ നിഷ്ക്രിയരായിരുന്നാല്‍ വിക്കി വിവരശേഖരം സ്വയം ബന്ധിക്കപ്പെടുന്നു.',
 );
 
 /** Marathi (मराठी)
@@ -390,6 +447,22 @@ $messages['ms'] = array(
 $messages['mt'] = array(
 	'absenteelandlord-reason' => 'Id-Database ġie awtomatikament disattivat minħabba l-inattivata tal-amministraturi.',
 	'absenteelandlord-desc' => 'Blokkar awtomatiku tad-database tal-wiki jekk l-amministraturi huma kollha inattivi għal ċertu żmien',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'absenteelandlord-reason' => 'De databanke is autematisch of-esleuten vanwegen inactiviteit van de beheerders.',
+	'absenteelandlord-desc' => 'Sluut de databanke autematisch as de beheerders allemaole inactief bin in een bepaolde tied',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'absenteelandlord-reason' => 'प्रवन्धकहरुको निश्कृयताले गर्दा  डेटावेस स्वत:  ताला मारिएको छ',
+	'absenteelandlord-desc' => 'विकि डेटावेस स्वत: ताला मारिने गरिन्छ यदि  सिस्टम अपरेटरहरु केही समय  निस्कृय रहे भने ।',
 );
 
 /** Dutch (Nederlands)
@@ -433,12 +506,29 @@ $messages['pl'] = array(
 	'absenteelandlord-desc' => 'Automatyczna blokada bazy danych wiki, jeśli wszyscy administratorzy będą nieaktywni przez określony czas',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'absenteelandlord-reason' => "Ël database a l'é stàit automaticament blocà a causa dl'inatività dj'aministrador.",
+	'absenteelandlord-desc' => "Blòca automaticament ël database dla wiki se j'aministrador a son tùit inativ për cheich temp",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'absenteelandlord-reason' => 'د پازوالانو د غيرفعاليت له کبله ډاټابېز په اتوماتيک ډول تړل شوی دی.',
+	'absenteelandlord-desc' => 'که چېرته ټول پازوالان د يو څه وخت له پاره غير فعاله وي نو په اتوماتيک ډول ډاټابېز تړل کېږي',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'absenteelandlord-reason' => 'A base de dados foi automaticamente bloqueada devido a inactividade dos sysops.',
-	'absenteelandlord-desc' => 'Bloqueia a base dados do wiki automaticamente se todos os sysops estiverem inactivos por algum tempo',
+	'absenteelandlord-desc' => 'Bloqueia a base dados da wiki automaticamente se todos os administradores estiverem inactivos durante algum tempo',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -447,6 +537,14 @@ $messages['pt'] = array(
 $messages['pt-br'] = array(
 	'absenteelandlord-reason' => 'A base de dados foi automaticamente bloqueada devido à inatividade dos sysops.',
 	'absenteelandlord-desc' => 'Bloqueia a base dados do wiki automaticamente se todos os sysops estiverem inativos por algum tempo',
+);
+
+/** Tarifit (Tarifit)
+ * @author Aryaz
+ */
+$messages['rif'] = array(
+	'absenteelandlord-reason' => 'Taffa n isfka ttwaqqn s twurmanit minzi indbaln ur qqimn d urmidn.',
+	'absenteelandlord-desc' => 'Itqqn taffa n isfka n wiki s twurmanit malla marra "sysops" ur llin d urmidn di ca n wakud',
 );
 
 /** Romanian (Română)
@@ -498,6 +596,22 @@ $messages['sk'] = array(
 	'absenteelandlord-desc' => 'Automaticky zamyká wiki databázu ak sú všetci správcovia po určitú dobu neaktívni',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'absenteelandlord-reason' => 'База подтака је била аутоматски закључана због неактивности администратора.',
+	'absenteelandlord-desc' => 'Аутоматски закључава Вики базу података уколико су сви администратори неактивни неко време.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'absenteelandlord-reason' => 'Baza podtaka je bila automatski zaključana zbog neaktivnosti administratora.',
+	'absenteelandlord-desc' => 'Automatski zaključava Viki bazu podataka ukoliko su svi administratori neaktivni neko vreme.',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -523,6 +637,22 @@ $messages['sv'] = array(
 	'absenteelandlord-desc' => 'Låser automatiskt wikins databas om alla administratörer är frånvarande under en viss tid',
 );
 
+/** Telugu (తెలుగు)
+ * @author Kiranmayee
+ */
+$messages['te'] = array(
+	'absenteelandlord-reason' => 'అధికారుల నుంచి ఎటువంటి పని జరగనందువల్ల డేటాబేసుకి దాని అంతట అదే తాళము పడినది.',
+	'absenteelandlord-desc' => 'అధికారులందరూ అచేతనముగా వున్నప్పుడు వికి డాటాబేసుకి దాని అంతట అదే తాళము పడుతుంది.',
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'absenteelandlord-reason' => 'ฐานข้อมูลถูกล็อกโดยอัตโนมัติ เนื่องจากไม่มีความเคลื่อนไหวจากผู้ดูแลระบบ',
+	'absenteelandlord-desc' => 'ล็อกฐานข้อมูลวิกิโดยอัตโนมัติ ถ้าผู้ดูแลระบบทั้งหมดไม่มีความเคลื่อนไหวเป็นระยะเวลาหนึ่ง',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -533,10 +663,11 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Joseph
+ * @author Karduelis
  */
 $messages['tr'] = array(
 	'absenteelandlord-reason' => 'Bu veritabanı sysoplardaki durgunluk nedeniyle otomatik olarak kilitlenmiştir.',
-	'absenteelandlord-desc' => 'Eğer bütün sysoplar bir süre etkin değilse, viki veritabanını otomatik olarak kilitler',
+	'absenteelandlord-desc' => 'Eğer bütün hizmetliler bir süre etkin değilse, viki veritabanını otomatik olarak kilitler',
 );
 
 /** Ukrainian (Українська)
@@ -553,6 +684,14 @@ $messages['uk'] = array(
 $messages['vec'] = array(
 	'absenteelandlord-reason' => 'El database el xe stà blocà automaticamente visto che i aministradori no i xera ativi.',
 	'absenteelandlord-desc' => 'Bloca automaticamente el database de la wiki se i aministradori i resta tuti inativi par un çerto periodo',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'absenteelandlord-reason' => 'Andmižbad blokiruidihe avtomatižikš administratoriden aktivižusetomuden tagut.',
+	'absenteelandlord-desc' => 'Brokiruib wikiprojektan andmižbaz avtomatižešti, ku niken administratorišpäi ei ozuta aktivižust pordon aigad',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -588,9 +727,11 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Alexsh
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'absenteelandlord-reason' => '由於管理員不活躍，數據庫已經被自動鎖定。',
+	'absenteelandlord-desc' => '若所有的管理人員在一段時間內不活躍，維基數據庫將被自動鎖定',
 );
 

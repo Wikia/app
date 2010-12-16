@@ -69,21 +69,20 @@ $messages = array(
 'subcategories'         => 'Dalaþkunjos',
 'category-media-header' => 'Medja inn kunja "$1"',
 
-'about'          => 'Iubair',
-'article'        => 'saþssiedo',
-'newwindow'      => '(andhuljiþ inn niuja áugadaúro)',
-'cancel'         => 'Halts',
+'about'         => 'Iubair',
+'article'       => 'saþssiedo',
+'newwindow'     => '(andhuljiþ inn niuja áugadaúro)',
+'cancel'        => 'Halts',
+'moredotdotdot' => 'Máis...',
+'mypage'        => '𐌼𐌴𐌹𐌽 𐍃𐌴𐌹𐌳𐍉',
+'mytalk'        => '𐌼𐌴𐌹𐌽𐌰 𐌼𐌰𐌸𐌻𐌴𐌹',
+'and'           => '&#32;jah',
+
+# Cologne Blue skin
 'qbfind'         => 'Sokeiþ',
 'qbedit'         => 'Máidjan',
 'qbmyoptions'    => 'Meina seidos',
 'qbspecialpages' => '𐌿𐍃𐍃𐌹𐌽𐌳𐍃𐌴𐌹𐌳𐍉𐍃',
-'moredotdotdot'  => 'Máis...',
-'mypage'         => '𐌼𐌴𐌹𐌽 𐍃𐌴𐌹𐌳𐍉',
-'mytalk'         => '𐌼𐌴𐌹𐌽𐌰 𐌼𐌰𐌸𐌻𐌴𐌹',
-'and'            => '&#32;jah',
-
-# Metadata in edit box
-'metadata_help' => 'Ufardata:',
 
 'errorpagetitle'    => 'Faírina dwalis',
 'returnto'          => 'Gawandjan at $1.',
@@ -217,7 +216,7 @@ $messages = array(
 # History pages
 'currentrev'          => 'Nu máideins',
 'revisionasof'        => 'Gamelido us $1',
-'revision-info'       => 'Máideins fram $1 bi $2', # Additionally available: $3: revision id
+'revision-info'       => 'Máideins fram $1 bi $2',
 'previousrevision'    => '←Áiris Máideins',
 'nextrevision'        => 'Iftuma máideins→',
 'currentrevisionlink' => 'Numáideins',
@@ -230,7 +229,7 @@ $messages = array(
 'histlast'            => 'Spedumists',
 
 # Revision feed
-'history-feed-item-nocomment' => '$1 at $2', # user at time
+'history-feed-item-nocomment' => '$1 at $2',
 
 # Diffs
 'history-title' => 'Árismáideins af "$1"',
@@ -238,16 +237,16 @@ $messages = array(
 'editundo'      => 'niuskapjan',
 
 # Search results
-'prevn'          => 'aftuma $1',
-'nextn'          => 'iftuma $1',
-'viewprevnext'   => 'Siuneis ($1) ($2) ($3)',
+'prevn'          => 'aftuma {{PLURAL:$1|$1}}',
+'nextn'          => 'iftuma {{PLURAL:$1|$1}}',
+'viewprevnext'   => 'Siuneis ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url' => 'Hilpa:Háubidaseido',
 'powersearch'    => 'Sokeiþ',
 
 # Preferences page
 'preferences'       => 'Meinos brukjamaideineis',
 'mypreferences'     => '𐌼𐌴𐌹𐌽𐍉𐍃 𐌱𐍂𐌿𐌺𐌾𐌰',
-'skin'              => 'Seidofill',
+'prefs-skin'        => 'Seidofill',
 'skin-preview'      => 'Faúrsaiƕa',
 'saveprefs'         => 'Melja',
 'searchresultshead' => 'Sokeiþ',
@@ -275,7 +274,9 @@ $messages = array(
 'boteditletter'   => 'b',
 
 # Recent changes linked
-'recentchangeslinked' => 'Máideinlieks',
+'recentchangeslinked'         => 'Máideinlieks',
+'recentchangeslinked-feed'    => 'Máideinlieks',
+'recentchangeslinked-toolbox' => 'Máideinlieks',
 
 # Upload
 'upload'          => '𐌿𐍃𐌷𐌻𐌰𐌸𐌰𐌹𐌸 𐍆𐌴𐌹𐌻𐌰𐌽𐍃',
@@ -289,6 +290,7 @@ $messages = array(
 'listfiles' => 'Feilans tala',
 
 # File description page
+'file-anchor-link'    => 'Feilans',
 'filehist'            => 'Feilans áiris',
 'filehist-current'    => 'nu',
 'filehist-datetime'   => 'Ƕeila',
@@ -313,8 +315,8 @@ $messages = array(
 # Statistics
 'statistics' => 'Seidostatistik',
 
-'brokenredirects-edit'   => '(máidjan)',
-'brokenredirects-delete' => '(taíran)',
+'brokenredirects-edit'   => 'máidjan',
+'brokenredirects-delete' => 'taíran',
 
 # Miscellaneous special pages
 'nbytes'       => '$1 {{PLURAL:$1|báit|báita}}',
@@ -382,7 +384,6 @@ $messages = array(
 # Protect
 'protectlogpage'      => 'Log af Baírgjan',
 'prot_1movedto2'      => '[[$1]] skiubiþ du [[$2]]',
-'protect-unchain'     => 'Ungalukan sa skiubanfreihals',
 'protect-level-sysop' => 'Seidofaþs áinaha',
 'protect-expiring'    => 'bláuþiþ $1 (UTC)',
 'restriction-type'    => 'Freihals:',
@@ -410,6 +411,7 @@ $messages = array(
 
 'sp-contributions-newbies-sub' => 'Faúr niujis niutandis',
 'sp-contributions-blocklog'    => 'Logboka af afdraúsjan',
+'sp-contributions-talk'        => 'Maþleiseido',
 
 # What links here
 'whatlinkshere'       => '𐍈𐌰𐍂𐌾𐌹𐍃 𐍃𐌴𐌹𐌳𐍉𐌽𐌰 𐌷𐌻𐌰𐌲𐌺𐌾𐌰𐌽𐌳 𐌷𐌹𐌳𐍂𐌴',

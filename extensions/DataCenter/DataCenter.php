@@ -18,8 +18,8 @@
 
 // Check environment
 if ( !defined( 'MEDIAWIKI' ) ) {
-	echo ( "This is a MediaWiki extension and cannot be run standalone.\n" );
-	die ( 1 );
+	echo( "This is a MediaWiki extension and cannot be run standalone.\n" );
+	die( 1 );
 }
 
 /* Configuration */
@@ -33,14 +33,13 @@ $egDataCenterGoogleMapsAPIKey =
 
 // Credits
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'DataCenter',
+	'version' => '0.1.0',
 	'author' => 'Trevor Parscal',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:DataCenter',
-	'description' => 'DataCenter Planing and Asset Tracking System',
-	'svn-date' =>
-		'$LastChangedDate: 2008-11-05 11:44:10 -0800 (Wed, 05 Nov 2008) $',
-	'svn-revision' => '$LastChangedRevision: 43233 $',
-	'description-msg' => 'datacenter-desc',
+	'description' => 'DataCenter Planning and Asset Tracking System',
+	'descriptionmsg' => 'datacenter-desc',
 );
 
 // User permissions

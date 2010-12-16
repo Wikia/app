@@ -284,7 +284,7 @@ class FLV_Util_AMFUnserialize {
                 return $this->getObject();
             break;
             case 0x05:
-                return NULL;
+                return null;
             break;
             case 0x08:
                 return $this->getEcmaArray();

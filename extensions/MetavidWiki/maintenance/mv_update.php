@@ -12,6 +12,8 @@ $dbclass = 'Database' . ucfirst( $wgDBtype ) ;
 
 $wgDatabase = new $dbclass( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $wgDBname, 1 );
 
+//first run the mv_tables.sql
+dbsource('mv_tables.sql');
 
 // do mvd_index text removal update:
 // check if mvd_index has text field
@@ -135,5 +137,4 @@ if ( $page_id_added ) {
 	$wgDatabase->query( "ALTER TABLE `mv_mvd_index` ADD PRIMARY KEY(`mv_page_id`)" );
 	print "done\n";
 }
-
 print "done with db tables update check\n";

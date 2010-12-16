@@ -33,6 +33,6 @@ public class AjaxPollTest extends BaseTest {
 		assertEquals("1", session().getText("wpPollTotal" + pollId));
 
 		// clean up
-		doDeleteIfAllowed("label=Author request", "Clean up after test");
+		doDeleteIfAllowed("label=regexp:.*Author request", "Clean up after test");
 	}
 }

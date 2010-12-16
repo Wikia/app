@@ -16,7 +16,7 @@ class ProtectedPagesForm {
 	public function showList( $msg = '' ) {
 		global $wgOut, $wgRequest;
 
-		if( "" != $msg ) {
+		if( $msg != "" ) {
 			$wgOut->setSubtitle( $msg );
 		}
 
@@ -65,7 +65,7 @@ class ProtectedPagesForm {
 			$skin = $wgUser->getSkin();
 
 		$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-		$link = $skin->makeLinkObj( $title );
+		$link = $skin->link( $title );
 
 		$description_items = array ();
 
@@ -86,7 +86,7 @@ class ProtectedPagesForm {
 			$expiry_description = wfMsg( 'protect-expiring' , $wgLang->timeanddate( $expiry ) , 
 				$wgLang->date( $expiry ) , $wgLang->time( $expiry ) );
 
-			$description_items[] = $expiry_description;
+			$description_items[] = htmlspecialchars($expiry_description);
 		}
 
 		if(!is_null($size = $row->page_len)) {
@@ -95,17 +95,31 @@ class ProtectedPagesForm {
 
 		# Show a link to the change protection form for allowed users otherwise a link to the protection log
 		if( $wgUser->isAllowed( 'protect' ) ) {
-			$changeProtection = ' (' . $skin->makeKnownLinkObj( $title, wfMsgHtml( 'protect_change' ),
-				'action=unprotect' ) . ')';
+			$changeProtection = ' (' . $skin->linkKnown(
+				$title,
+				wfMsgHtml( 'protect_change' ),
+				array(),
+				array( 'action' => 'unprotect' )
+			) . ')';
 		} else {
 			$ltitle = SpecialPage::getTitleFor( 'Log' );
-			$changeProtection = ' (' . $skin->makeKnownLinkObj( $ltitle, wfMsgHtml( 'protectlogpage' ), 
-				'type=protect&page=' . $title->getPrefixedUrl() ) . ')';
+			$changeProtection = ' (' . $skin->linkKnown(
+				$ltitle,
+				wfMsgHtml( 'protectlogpage' ),
+				array(),
+				array(
+					'type' => 'protect',
+					'page' => $title->getPrefixedText()
+				)
+			) . ')';
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return '<li>' . wfSpecialList( $link . $stxt, implode( $description_items, ', ' ) ) . $changeProtection . "</li>\n";
+		return Html::rawElement(
+			'li',
+			array(),
+			wfSpecialList( $link . $stxt, $wgLang->commaList( $description_items ) ) . $changeProtection ) . "\n";
 	}
 
 	/**
@@ -120,7 +134,7 @@ class ProtectedPagesForm {
 	 */
 	protected function showOptions( $namespace, $type='edit', $level, $sizetype, $size, $indefOnly, $cascadeOnly ) {
 		global $wgScript;
-		$title = SpecialPage::getTitleFor( 'ProtectedPages' );
+		$title = SpecialPage::getTitleFor( 'Protectedpages' );
 		return Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'protectedpages' ) ) .
@@ -128,10 +142,10 @@ class ProtectedPagesForm {
 			$this->getNamespaceMenu( $namespace ) . "&nbsp;\n" .
 			$this->getTypeMenu( $type ) . "&nbsp;\n" .
 			$this->getLevelMenu( $level ) . "&nbsp;\n" .
-			"<br/><span style='white-space: nowrap'>" .
+			"<br /><span style='white-space: nowrap'>" .
 			$this->getExpiryCheck( $indefOnly ) . "&nbsp;\n" .
 			$this->getCascadeCheck( $cascadeOnly ) . "&nbsp;\n" .
-			"</span><br/><span style='white-space: nowrap'>" .
+			"</span><br /><span style='white-space: nowrap'>" .
 			$this->getSizeLimit( $sizetype, $size ) . "&nbsp;\n" .
 			"</span>" .
 			"&nbsp;" . Xml::submitButton( wfMsg( 'allpagessubmit' ) ) . "\n" .
@@ -185,6 +199,8 @@ class ProtectedPagesForm {
 	}
 
 	/**
+	 * Creates the input label of the restriction type
+	 * @param $pr_type string Protection type
 	 * @return string Formatted HTML
 	 */
 	protected function getTypeMenu( $pr_type ) {
@@ -213,6 +229,8 @@ class ProtectedPagesForm {
 	}
 
 	/**
+	 * Creates the input label of the restriction level
+	 * @param $pr_level string Protection level
 	 * @return string Formatted HTML
 	 */
 	protected function getLevelMenu( $pr_level ) {
@@ -223,6 +241,7 @@ class ProtectedPagesForm {
 
 		// First pass to load the log names
 		foreach( $wgRestrictionLevels as $type ) {
+			// Messages used can be 'restriction-level-sysop' and 'restriction-level-autoconfirmed'
 			if( $type !='' && $type !='*') {
 				$text = wfMsg("restriction-level-$type");
 				$m[$text] = $type;
@@ -235,11 +254,11 @@ class ProtectedPagesForm {
 			$options[] = Xml::option( $text, $type, $selected );
 		}
 
-		return
-			Xml::label( wfMsg('restriction-level') , $this->IdLevel ) . '&nbsp;' .
+		return "<span style='white-space: nowrap'>" .
+			Xml::label( wfMsg( 'restriction-level' ) , $this->IdLevel ) . ' ' .
 			Xml::tags( 'select',
 				array( 'id' => $this->IdLevel, 'name' => $this->IdLevel ),
-				implode( "\n", $options ) );
+				implode( "\n", $options ) ) . "</span>";
 	}
 }
 

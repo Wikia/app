@@ -13,6 +13,7 @@
  */
  
 $wgExtensionCredits['specialpage'][] = array(
+	'path'                  => __FILE__,
         'name'			=> 'Interwiki List',
 	'version'		=> '0.3',
         'url'			=> 'http://mediawiki.org/wiki/Extension:InterwikiList',

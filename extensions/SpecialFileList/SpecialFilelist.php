@@ -12,6 +12,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionFunctions[] = 'wfSpecialFilelist';
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'File list',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SpecialFileList',
 	'description' => 'Special Page for listing uploaded files',
@@ -107,7 +108,7 @@ function wfSpecialFilelist () {
 			$where = array();
 			$searchpar = '';
 			if ( $params['match'] != '' ) {
-				$nt = Title::newFromUrl( $params['match'] );
+				$nt = Title::newFromURL( $params['match'] );
 				if($nt ) {
 					$m = $this->dbr->strencode( strtolower( $nt->getDBkey() ) );
 					$m = str_replace( '%', "\\%", $m );
@@ -381,7 +382,7 @@ function wfSpecialFilelist () {
 		 */
 		function execute( $par = null ) {
 			global $wgOut, $wgRequest, $wgUser;
-			$this->dbr =& wfGetDB( DB_SLAVE );
+			$this->dbr = wfGetDB( DB_SLAVE );
 			$this->sk = $wgUser->getSkin();
 
 			# Setting a bunch of parameters to passed or default values; also some variables which makes them easier to pass to functions
@@ -391,7 +392,7 @@ function wfSpecialFilelist () {
 			$params['until'] = $wgRequest->getVal ( 'until' , "" ) ;
 			$params['match'] = $wgRequest->getVal ( 'match' , "" ) ;
 			$params['limit'] = $wgRequest->getInt ( 'limit' , ($params['gallery']?48:50) ) ;
-			$params['user'] = urldecode ( $wgRequest->getVal ( 'user' , ($par==NULL?"":$par) ) ) ;
+			$params['user'] = urldecode ( $wgRequest->getVal ( 'user' , ($par==null?"":$par) ) ) ;
 			$params['botsql'] = $this->getHideBotSQL ( $params['hidebots'] ) ;
 			$params['imagetable'] = $this->dbr->tableName('image');
 

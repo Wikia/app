@@ -20,7 +20,11 @@ if( defined( 'MEDIAWIKI' ) ) {
 	die("This is the METIS extension");
 }
 
-require_once('commandLine.inc');
+$IP = getenv( 'MW_INSTALL_PATH' );
+if ( $IP === false )
+	$IP = dirname( __FILE__ ) . '/../..';
+
+require_once( "$IP/maintenance/commandLine.inc" );
 
 echo "Importing METIS keys from <stdin>\n";
 $dbw = wfGetDB( DB_MASTER );
@@ -36,5 +40,3 @@ while ( $line = fgets( $file ) ) {
 	}
 }
 
-
-?>

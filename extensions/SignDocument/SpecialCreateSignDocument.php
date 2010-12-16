@@ -1,9 +1,9 @@
 <?PHP
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 require_once( 'SignDocumentHelpers.php' );
 
-//TODO: Doc
+// TODO: Doc
 class SpecialCreateSignDocument extends SpecialPage {
 	/**
 	 * Constructor
@@ -12,13 +12,13 @@ class SpecialCreateSignDocument extends SpecialPage {
 		SpecialPage::SpecialPage( 'CreateSignDocument', 'createsigndocument' );
 	}
 
-	function execute($par) {
+	function execute( $par ) {
 		global $wgOut, $wgRequest, $wgUser;
 
-		wfLoadExtensionMessages('CreateSignDocument');
+		wfLoadExtensionMessages( 'CreateSignDocument' );
 
 		$this->setHeaders();
-		if ($wgUser->isAllowed( 'createsigndocument' )) {
+		if ( $wgUser->isAllowed( 'createsigndocument' ) ) {
 
 		if ( $wgRequest->wasPosted() )
 			$this->dealWithPost();
@@ -33,12 +33,12 @@ class SpecialCreateSignDocument extends SpecialPage {
 }
 
 	function buildCreateForm() {
-		global $wgOut, $wgGroupPermissions, $wgTitle;
+		global $wgOut, $wgGroupPermissions;
 
 		$wgOut->addWikiText( wfMsg( 'createsigndoc-head' ) );
 
-		$wgOut->addHTML('
-			<form action="'. $wgTitle->escapeLocalUrl() .'" method="post">
+		$wgOut->addHTML( '
+			<form action="' . $this->getTitle()->escapeLocalUrl() . '" method="post">
 			<table><tr><td>
 			<strong>' . wfMsg( 'createsigndoc-pagename' ) . '&nbsp;</strong>
 			</td><td>
@@ -47,7 +47,7 @@ class SpecialCreateSignDocument extends SpecialPage {
 			<strong>' . wfMsg( 'createsigndoc-allowedgroup' ) . '&nbsp;</strong>
 			</td><td>
 			<select id="allowedgroup" name="group" style="width: 400px;">'
-			. $this->makeComboItems( array_keys($wgGroupPermissions) ) . ' </select>
+			. $this->makeComboItems( array_keys( $wgGroupPermissions ) ) . ' </select>
 			' . $this->checkMarks( 'email' ) .
 			$this->checkMarks( 'address' ) .
 			$this->checkMarks( 'extaddress' ) .
@@ -57,7 +57,7 @@ class SpecialCreateSignDocument extends SpecialPage {
 			<strong>' . wfMsg( 'createsigndoc-minage' ) . '&nbsp;</strong>
 			</td><td><input id="minage" type="text" name="minage" style="width: 400px;"/>
 			</td></tr><tr><td valign="top">
-			<strong>' .wfMsg( 'createsigndoc-introtext' ) . '&nbsp;</strong>
+			<strong>' . wfMsg( 'createsigndoc-introtext' ) . '&nbsp;</strong>
 			</td><td><textarea id="introtext" name="introtext" wrap="soft" style="height: 300px; width: 400px;">' .
 			'</textarea>
 			</td></tr><tr><td></td><td>
@@ -67,7 +67,7 @@ class SpecialCreateSignDocument extends SpecialPage {
 			</table>
 			</form>
 
-		');
+		' );
 	}
 
 	function checkMarks( $id ) {
@@ -78,13 +78,13 @@ class SpecialCreateSignDocument extends SpecialPage {
 		            wfMsg( 'createsigndoc-hidden' ),
 					"mwCreateSignDocHidden-$id",
 					"mwCreateSignDocHidden-$id",
-					false);
+					false );
 
 		$out .=  Xml::checkLabel(
 		            wfMsg( 'createsigndoc-optional' ),
 					"mwCreateSignDocOptional-$id",
 					"mwCreateSignDocOptional-$id",
-					false);
+					false );
 		return $out;
 	}
 
@@ -93,7 +93,7 @@ class SpecialCreateSignDocument extends SpecialPage {
 		$selectedAttr = array( 'selected' => 'selected' );
 		foreach ( $arr as $a ) {
 			$ret .= Xml::element( 'option', array(
-				'value' => $a) + $selectedAttr, $a );
+				'value' => $a ) + $selectedAttr, $a );
 			$selectedAttr = array();
 		}
 		return $ret;
@@ -105,14 +105,14 @@ class SpecialCreateSignDocument extends SpecialPage {
 		try {
 			$bob = SignDocumentForm::newFromPost();
 		}
-		catch (Exception $e) {
+		catch ( Exception $e ) {
 			return $this->showError( 'generic', $e->getMessage() );
 		}
 
-		if (!$bob->loadArticleData())
+		if ( !$bob->loadArticleData() )
 			return $this->showError( 'pagenoexist', $bob->mPagename );
 
-		if (!$bob->addToDb())
+		if ( !$bob->addToDb() )
 			return $this->showError( 'alreadycreated', $bob->mPagename );
 
 		$wgOut->addWikiText( wfMsg( 'createsigndoc-success',
@@ -121,7 +121,7 @@ class SpecialCreateSignDocument extends SpecialPage {
 
 	function showError( $type, $args ) {
 		global $wgOut;
-		$wgOut->addWikiText( wfMsg("createsigndoc-error-$type", $args) );
+		$wgOut->addWikiText( wfMsg( "createsigndoc-error-$type", $args ) );
 		return;
 	}
 }

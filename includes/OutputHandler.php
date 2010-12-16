@@ -5,8 +5,8 @@
  */
 function wfOutputHandler( $s ) {
 	global $wgDisableOutputCompression, $wgValidateAllHtml;
-    $s = wfMangleFlashPolicy( $s );
-    if ( $wgValidateAllHtml ) {
+	$s = wfMangleFlashPolicy( $s );
+	if ( $wgValidateAllHtml ) {
 		$headers = apache_response_headers();
 		$isHTML = true;
 		foreach ( $headers as $name => $value ) {
@@ -37,7 +37,7 @@ function wfOutputHandler( $s ) {
  * @private
  */
 function wfRequestExtension() {
-	/// @fixme -- this sort of dupes some code in WebRequest::getRequestUrl()
+	/// @todo Fixme: this sort of dupes some code in WebRequest::getRequestUrl()
 	if( isset( $_SERVER['REQUEST_URI'] ) ) {
 		// Strip the query string...
 		list( $path ) = explode( '?', $_SERVER['REQUEST_URI'], 2 );
@@ -74,12 +74,9 @@ function wfGzipHandler( $s ) {
 		return $s;
 	}
 
-	if( isset( $_SERVER['HTTP_ACCEPT_ENCODING'] ) ) {
-		$tokens = preg_split( '/[,; ]/', $_SERVER['HTTP_ACCEPT_ENCODING'] );
-		if ( in_array( 'gzip', $tokens ) ) {
-			header( 'Content-Encoding: gzip' );
-			$s = gzencode( $s, 3 );
-		}
+	if( wfClientAcceptsGzip() ) {
+		header( 'Content-Encoding: gzip' );
+		$s = gzencode( $s, 6 );
 	}
 
 	// Set vary header if it hasn't been set already
@@ -93,7 +90,10 @@ function wfGzipHandler( $s ) {
 	}
 	if ( !$foundVary ) {
 		header( 'Vary: Accept-Encoding' );
-		//header( 'X-Vary-Options: Accept-Encoding;list-contains=gzip' );
+		global $wgUseXVO;
+		if ( $wgUseXVO ) {
+			header( 'X-Vary-Options: Accept-Encoding;list-contains=gzip' );
+		}
 	}
 	return $s;
 }
@@ -135,7 +135,7 @@ function wfHtmlValidationHandler( $s ) {
 
 	$out = <<<EOT
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr">
 <head>
 <title>HTML validation error</title>
 <style>

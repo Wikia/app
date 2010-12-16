@@ -27,10 +27,10 @@ if (!defined('MEDIAWIKI')) die();
 class MwRdf_Vocabulary_DCMES extends MwRdf_Vocabulary {
 
 	// base uri
-	const NAMESPACE = "http://purl.org/dc/elements/1.1/"; // FIXME
+	const RDF_NAMESPACE = "http://purl.org/dc/elements/1.1/"; // FIXME
 
 	public function getNS() {
-		return self::NAMESPACE;
+		return self::RDF_NAMESPACE;
 	}
 
 	// Terms

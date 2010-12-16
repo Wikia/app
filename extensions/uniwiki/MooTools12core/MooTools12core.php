@@ -7,12 +7,11 @@ if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'MooTools12core',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Adds mootools-1.2-core-yc.js to each page',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:MooTools_1.2_Core',
-	'svn-date'       => '$LastChangedDate: 2008-11-02 01:26:54 +0100 (ndz, 02 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 43051 $',
 	'descriptionmsg' => 'mootools12core-desc',
 );
 

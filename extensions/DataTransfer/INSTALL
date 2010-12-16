@@ -1,4 +1,4 @@
-[[Data Transfer 0.1.10]]
+[[Data Transfer 0.3.4]]
 
 Contents:
 * Disclaimer
@@ -7,11 +7,6 @@ Contents:
 * Contact
 
 == Disclaimer ==
-
-Data Transfer is a new extension, and there is no guarantee that
-any of it will work on your system. However, it does not make
-any modifications to the database, so it should be a low-risk
-installation.
 
 For a proper legal disclaimer, see the file "COPYING".
 

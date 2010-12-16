@@ -6,6 +6,8 @@ $wgTranslateEC = array_keys($wgTranslateAC); // All modules
 $wgTranslateFuzzyBotName = 'FuzzyBot';
 $wgGroupPermissions['Translators']['translate'] = true;
 
+Make sure you have configured $wgCacheDirectory properly.
+
 * Users have to be a member of user group 'Translators' to enable full functionality.
 
 If your extensions are located in a directory other than $IP/extensions/, you should
@@ -32,7 +34,56 @@ function customMessageGroups( $id ) {
 }
 </code>
 
+== Changes in ??? ==
+* 2010-01-24
+- Support for Apertium machine translation service
+- Fixed issue with jQuery and Vector skin
+* 2010-01-22
+- Support for using Google's translation api as a source for tm suggestions
+- Interface element for copying tm suggestion into text area
+* 2010-01-16  Translation memory suggestions are aggregated intelligently to save space
+              There is link back to the original message in tm suggestions
+              tm-export superceded dump-tm
+
+== Changes in version 12 ==
+- Page translation
+- New fuzzy system, should be faster now
+- Edit are consistently filled when starting translation
+
+== Changes in version 11 ==
+* 2009-05-09
+- Support added for OpenLayers
+- Page translation feature updated. Not backwards compatible
+* 2009-04-28   Tweaks for new preferences system
+* 2009-04-27   Updated preferences handling; only show when relevant
+* 2009-04-24   Updated preferences handling to work with MediaWiki 1.15a r49790 and up
+* 2009-04-23   Link added to message group in the source message fieldset description
+* 2009-04-15   Added class 'mw-sp-translate-[id]' to all message groups on Special:Translate
+* 2009-04-04:2 Support added for NOCC
+* 2009-04-04:1 PhpVariables Mantis header inconsistency fixed
+* 2009-03-29   Table header on Special:LanguageStats suppressed when all translations are complete
+
 == Changes in version 10 ==
+* 2009-03-24   Also 2 decimals for fuzzy in Special:LanguageStats
+* 2009-03-23   Localised number formatting in Special:LanguageStats
+* 2009-02-22
+- Intro suppressed
+- message documentation no longer show warnings
+- improved keeping track of the language that is being translated in
+* 2009-02-14   Export header for MantisBT updated
+* 2009-01-18:1 Bug in autoexport fixed. Provides realiable output again
+* 2009-01-17:2 Content translation was disabled
+* 2009-01-17:1 Headers in gettext files no longer multiply
+* 2009-01-15   Support structure for Commonist added
+* 2009-01-11:4 Export time checks for special page aliases and updated FreeCol problematic checks
+* 2009-01-11:3 Skip optionals and ignored messages in previous/next to avoid accidental translations
+* 2009-01-11:2 wgMaxShellMemory increased for sync-group.php to avoid out of memory issues
+* 2009-01-11:1 New options added to and performance improvements for autoexport.php
+* 2008-12-31   XHTML fixes in Special:LanguageStats
+* 2008-12-18   Special:TranslationStats allow passing a language parameter now and uses fontconfig if available
+* 2008-12-16   Miscellaneous problematic checks updated
+* 2008-12-15:2 Export headers for MantisBT updated
+* 2008-12-15:1 task to display untranslation optional messages was added
 * 2008-12-07   bug in export to file in web interface caused empty translations to be exported
 * 2008-11-30:1 added Special:LanguageStats for real-time translation statistics
 * 2008-11-24:2 fallback messages in the edit screen now have an edit link

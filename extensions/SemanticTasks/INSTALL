@@ -1,0 +1,9 @@
+[[Semantic Tasks 1.2]]
+
+== Installation ==
+
+(1) Extract the archive to obtain the directory "SemanticTasks"
+    that contains all relevant files. Copy this directory (or
+    extract/download it) to "[wikipath]/extensions/".
+(2) Insert the following line into the file "[wikipath]/LocalSettings.php":
+      require_once( "$IP/extensions/SemanticTasks/SemanticTasks.php" );

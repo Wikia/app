@@ -74,8 +74,8 @@ including the extension file):
    content. This is the default, but it looks quite ugly without extra CSS
    rules applied.
 ** LANGUAGE_SELECTOR_IN_TOOLBOX: inject a dropdown box at the bottom of the
-   toolbox in the sidebar. This only works with the MonoBook skin, or skins
-   explicitly supporting the MonoBookTemplateToolboxEnd hook.
+   toolbox in the sidebar. This doesn't work in all skins, mostly in skin
+   MonoBook, or skins explicitly supporting the SkinTemplateToolboxEnd hook.
 ** LANGUAGE_SELECTOR_AS_PORTLET: inject the language selector as a portlet
    in the sidebar, similar to how interlanguage-links are shown. 
    Works with MonoBook skin, may also work with some SkinTemplate-based skins.

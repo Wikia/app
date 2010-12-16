@@ -11,6 +11,7 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Random root page',
 	'version'        => '1.1',
 	'author'         => 'Hojjat (aka Huji)',

@@ -218,7 +218,7 @@ class TitleKey {
 	}
 	
 	/**
-	 * Override the default 'go' search exact match checks.
+	 * Find matching titles after the default 'go' search exact match fails.
 	 * This'll let 'mcgee' match 'McGee' etc.
 	 * @param string $term
 	 * @param Title outparam &$title

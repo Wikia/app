@@ -37,61 +37,17 @@ function efInsertIntoAssoc( $new_key, $new_value, $before, &$original_array ) {
 	$original_array = $new_assoc;
 }
 
-function efVarDump( $value ) {
-	global $wgOut;
-	ob_start();
-	var_dump( $value );
-	$tmp = ob_get_contents();
-	ob_end_clean();
-	$wgOut->addHTML( /*'<pre>' . htmlspecialchars($tmp,ENT_QUOTES) . '</pre>'*/ $tmp );
-}
+function lqtSetupParserFunctions( &$parser ) {
+	global $wgLiquidThreadsAllowUserControl;
 
-function efThreadTable( $ts ) {
-	global $wgOut;
-	$wgOut->addHTML( '<table>' );
-	foreach ( $ts as $t )
-		efThreadTableHelper( $t, 0 );
-	$wgOut->addHTML( '</table>' );
-}
+	$parser->setFunctionHook(
+		'useliquidthreads',
+		array( 'LqtParserFunctions', 'useLiquidThreads' )
+	);
 
-function efThreadTableHelper( $t, $indent ) {
-	global $wgOut;
-	$wgOut->addHTML( '<tr>' );
-	$wgOut->addHTML( '<td>' . $indent );
-	$wgOut->addHTML( '<td>' . $t->id() );
-	$wgOut->addHTML( '<td>' . $t->title()->getPrefixedText() );
-	$wgOut->addHTML( '</tr>' );
-	foreach ( $t->subthreads() as $st )
-		efThreadTableHelper( $st, $indent + 1 );
-}
-
-function wfLqtBeforeWatchlistHook( &$conds, &$tables, &$join_conds, &$fields ) {
-	global $wgOut, $wgUser;
-
-	if ( !in_array( 'page', $tables ) ) {
-		$tables[] = 'page';
-		$join_conds['page'] = array( 'LEFT JOIN', 'rc_cur_id=page_id' );
-	}
-	$conds[] = "page_namespace != " . NS_LQT_THREAD;
-
-	$talkpage_messages = NewMessages::newUserMessages( $wgUser );
-	$tn = count( $talkpage_messages );
-
-	$watch_messages = NewMessages::watchedThreadsForUser( $wgUser );
-	$wn = count( $watch_messages );
-
-	if ( $tn == 0 && $wn == 0 )
-		return true;
-
-	LqtView::addJSandCSS();
-	wfLoadExtensionMessages( 'LiquidThreads' );
-	$messages_url = SpecialPage::getPage( 'NewMessages' )->getTitle()->getFullURL();
-	$new_messages = wfMsg ( 'lqt-new-messages' );
-	$wgOut->addHTML( <<< HTML
-		<a href="$messages_url" class="lqt_watchlist_messages_notice">
-			&#x2712; {$new_messages}
-		</a>
-HTML
+	$parser->setFunctionHook(
+		'lqtpagelimit',
+		array( 'LqtParserFunctions', 'lqtPageLimit' )
 	);
 
 	return true;

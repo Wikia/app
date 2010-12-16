@@ -244,7 +244,7 @@ class SpecialContributionStatistics extends SpecialPage {
 		$factor = $numContributions > 0 ? 100.0 / $numContributions : 0;
 		
 		$list = array(
-			 wfMsg( 'contribstats-value-exactly', $wgLang->formatNum( 30 ) ) => array( 30 ),
+			 wfMsg( 'contribstats-value-exactly', $wgLang->formatNum( 35 ) ) => array( 35 ),
 			 wfMsg( 'contribstats-value-exactly', $wgLang->formatNum( 75 ) ) => array( 75 ),
 			 wfMsg( 'contribstats-value-exactly', $wgLang->formatNum( 100 ) ) => array( 100 ),
 			 wfMsg( 'contribstats-value-under', $wgLang->formatNum( 99.99 ) ) => array( 0, 99.99 ),
@@ -414,9 +414,9 @@ class SpecialContributionStatistics extends SpecialPage {
 			// Merge null and USD
 			$totals['USD'][1] += $totals[null][1];
 			$totals['USD'][2] += $totals[null][2];
-			$totals['USD'][3] = ( $totals['USD'][3] + $totals[null][3] ) / 2;
-			$totals['USD'][4] = min( $totals['USD'][4], $totals[null][4] );
-			$totals['USD'][5] = max( $totals['USD'][5], $totals[null][5] );
+			$totals['USD'][3] = ( $totals[null][3] == 0 ) ? $totals['USD'][3] : ( $totals['USD'][3] + $totals[null][3] ) / 2;  
+			$totals['USD'][4] = max( $totals['USD'][4], $totals[null][4] );
+			/* $totals['USD'][5] = min( $totals['USD'][5], $totals[null][5] ); */
 			unset( $totals[null] );
 		}
 		

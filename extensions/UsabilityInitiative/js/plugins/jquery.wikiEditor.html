@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>WikiEditor</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--[if gte IE 8]>
+		<style>
+			/* IE8 ONLY - This is how we are fixing the double-height of BR tags when they are alone in a P tag */
+			p > br  {
+				display: none;
+			}
+			p > br + br  {
+				display: block;
+			}
+		</style>
+	<![endif]--> 
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			font-family: monospace;
+			font-size: 9.5pt;
+			line-height: 1.5em;
+			overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
+			white-space: pre-wrap; /* css-3 */
+			white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+			white-space: -pre-wrap; /* Opera 4-6 */
+			white-space: -o-pre-wrap; /* Opera 7 */
+			word-wrap: break-word; /* Internet Explorer 5.5+ */
+		}
+		body.pasting {
+			white-space: normal;
+		}
+		p {
+			margin: 0;
+			padding: 0;
+		}
+		/* Wikitext that's folded away and shouldn't be displayed */
+		.wikiEditor-nodisplay {
+			display: none !important;
+		}
+		.wikiEditor-tab {
+			padding-left: 4em;
+		}
+		/* A collapsed template */
+		.wikiEditor-template-name {
+			background-color:#e8e8e8;
+			color:#333333;
+			font-family: Helvetica, sans-serif;
+			font-size: 12px;
+			padding-left:4px;
+			padding-right: 4px;
+			padding-top: 2px;
+			display: inline;
+			text-decoration:none;
+		}
+			
+		.wikiEditor-template-expanded .wikiEditor-template-name {
+			border-color:#D9D9D9 #D9D9D9 -moz-use-text-color;
+			border-style:solid solid none;
+			border-width:1px 1px medium;
+		}
+		
+		.wikiEditor-template-collapsed .wikiEditor-template-name {
+			border:1px solid #d9d9d9;
+		}
+		
+		
+		ul.wikiEditor-template-modes,
+		ul.wikiEditor-template-modes li {
+			display: inline;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		ul.wikiEditor-template-modes {
+			padding: 0 0 0 0.15em;
+		}
+		ul.wikiEditor-template-modes li {
+			border-left: 1px solid #79848e;
+			margin: 0 1px;
+			cursor: pointer;
+		}
+		ul.wikiEditor-template-modes li img {
+			vertical-align: middle;
+			cursor: pointer !important;
+		}
+		/* An expanded template */
+		
+		.wikiEditor-template-expanded {
+			display: inline;
+		}
+
+		.wikiEditor-template-text{
+			background: #f3f3f3;
+			margin-top: -3px;
+			border: solid 1px #d9d9d9;
+			padding-left: 4px;
+			display: block;
+		}
+		.wikiEditor-template-end, .wikiEditor-template-start{
+			color: blue;
+			cursor: pointer;
+		}
+		/*.wikiEditor-template-expanded {
+			background:#DDEEFF none repeat scroll 0 0;
+			border:1px inset #DDEEFF;
+			color:black;
+			margin:3px;
+			padding:0 0.25em;
+		}*/
+		/* == Header == */
+		.wikiEditor-toc-header {
+			/* Fix for Webkit Browsers resistence to give these elements an offsetTop value */
+			/*display: -webkit-box; -- presumably not needed now that this is a <p> without display: inline; */
+			/*font-weight: bold; -- not sure about this styling just yet */
+		}
+	</style>
+</head>
+<body></body>
+</html>

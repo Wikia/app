@@ -39,9 +39,10 @@ class SMWSemanticData {
 	static protected $m_propertyprefix = false;
 
 	/// SMWWikiPageValue object that is the subject of this container.
+	/// Subjects that are NULL are used to represent "internal objects" only.
 	protected $subject;
 
-	public function __construct(SMWWikiPageValue $subject, $noduplicates = true) {
+	public function __construct($subject, $noduplicates = true) {
 		$this->subject = $subject;
 		$this->m_noduplicates = $noduplicates;
 		$this->stubobject = false;
@@ -101,7 +102,28 @@ class SMWSemanticData {
 	}
 
 	/**
+	 * Generate a hash value to simplify the comparison of this data container with other
+	 * containers. The hash uses PHP's md5 implementation, which is among the fastest hash
+	 * algorithms that PHP offers.
+	 */
+	public function getHash() {
+		$ctx = hash_init('md5');
+		if ($this->subject !== null) { // here and below, use "_#_" to separate values; really not much care needed here
+			hash_update($ctx, '_#_' . $this->subject->getHash());
+		}
+		foreach ($this->getProperties() as $property) {
+			hash_update($ctx, '_#_' . $property->getHash() . '##');
+			foreach ($this->getPropertyValues($property) as $dv) {
+				hash_update($ctx, '_#_' . $dv->getHash());
+			}
+		}
+		return hash_final($ctx);
+	}
+
+	/**
 	 * Return true if there are any visible properties.
+	 * @note While called "visible" this check actually refers to the function
+	 * SMWPropertyValue::isShown(). The name is kept for compatibility.
 	 */
 	public function hasVisibleProperties() {
 		$this->unstubProperties();
@@ -111,6 +133,8 @@ class SMWSemanticData {
 	/**
 	 * Return true if there are any special properties that can
 	 * be displayed.
+	 * @note While called "visible" this check actually refers to the function
+	 * SMWPropertyValue::isShown(). The name is kept for compatibility.
 	 */
 	public function hasVisibleSpecialProperties() {
 		$this->unstubProperties();
@@ -136,7 +160,7 @@ class SMWSemanticData {
 			$this->propvals[$property->getDBkey()][] = $value;
 		}
 		if (!$property->isUserDefined()) {
-			if ($property->isVisible()) {
+			if ($property->isShown()) {
 				 $this->hasvisiblespecs = true;
 				 $this->hasvisibleprops = true;
 			}
@@ -206,14 +230,14 @@ class SMWSemanticData {
 	 * for that property might be provided, so we do not need to make a new one. It is not
 	 * checked if the object matches the property name.
 	 */
-	protected function unstubProperty($pname, $propertyobj = NULL) {
+	protected function unstubProperty($pname, $propertyobj = null) {
 		if (!array_key_exists($pname, $this->properties)) {
-			if ($propertyobj === NULL) {
+			if ($propertyobj === null) {
 				$propertyobj = SMWPropertyValue::makeProperty($pname);
 			}
 			$this->properties[$pname] = $propertyobj;
 			if (!$propertyobj->isUserDefined()) {
-				if ($propertyobj->isVisible()) {
+				if ($propertyobj->isShown()) {
 					 $this->hasvisiblespecs = true;
 					 $this->hasvisibleprops = true;
 				}

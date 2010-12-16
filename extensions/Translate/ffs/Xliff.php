@@ -59,11 +59,11 @@ class XliffFormatWriter extends SimpleFormatWriter {
 	protected function messages( XMLWriter $w, $handle, MessageCollection $collection ) {
 		$w->startElement( 'body' );
 
-		foreach ( $collection->keys() as $key ) {
+		foreach ( $collection as $key => $m ) {
 			$w->startElement( 'trans-unit' );
 			$w->writeAttribute( 'id', $key );
-			$w->writeElement( 'source', $collection[$key]->definition );
-			$translation = $collection[$key]->translation;
+			$w->writeElement( 'source', $m->definition() );
+			$translation = $m->translatiom();
 			if ( $translation !== null ) {
 				$w->writeElement( 'target',  $translation );
 			}

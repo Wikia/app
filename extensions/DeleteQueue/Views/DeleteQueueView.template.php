@@ -1,6 +1,6 @@
 <?php
 
-if (!defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die;
 }
 

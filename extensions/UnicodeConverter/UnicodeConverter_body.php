@@ -11,7 +11,7 @@ class SpecialUnicodeConverter extends SpecialPage
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgTitle;
+		global $wgRequest, $wgOut;
 
 		wfLoadExtensionMessages( 'UnicodeConverter' );
 
@@ -19,7 +19,7 @@ class SpecialUnicodeConverter extends SpecialPage
 
 		$q = $wgRequest->getText( 'q' );
 		$encQ = htmlspecialchars( $q );
-		$action = $wgTitle->escapeLocalUrl();
+		$action = $this->getTitle()->escapeLocalUrl();
 		$ok = htmlspecialchars( wfMsg( 'unicodeconverter-ok' ) );
 
 		$wgOut->addHTML( <<<END

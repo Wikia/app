@@ -128,7 +128,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
 		$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 		$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
-		$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
+		$wgHooks['EditPageGetDiffText'][] = 'CategorySelectDiffArticle';
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
@@ -194,12 +194,12 @@ function CategorySelectGetCategories($inline = false) {
 		// Cache for a day
 		$wgMemc->set($key, $out, 86400);
 	}
-	
+
 	if (!$inline) {
 		$out = new AjaxResponse($out);
 		$out->setCacheDuration(60 * 60);
 	}
-	
+
 	wfProfileOut(__METHOD__);
 
 	return $out;
@@ -414,7 +414,7 @@ function CategorySelectImportFormData($editPage, $request) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectDiffArticle($editPage, $oldtext, $newtext) {
+function CategorySelectDiffArticle($editPage, $newtext) {
 	global $wgCategorySelectCategoriesInWikitext;
 	//add categories only for whole article editing
 	if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {

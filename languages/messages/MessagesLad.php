@@ -105,27 +105,54 @@ $messages = array(
 'category-media-header'    => 'Archivos multimedia en la kategoría "$1"',
 'category-empty'           => "''La kategoría no kontiene aktualmente ningún artikolo o archivo multimedia''",
 'hidden-categories'        => '{{PLURAL:$1|Categoría escondida|Categorías escondidas}}',
-'hidden-category-category' => 'Categorías escondidas', # Name of the category where hidden categories will be listed
+'hidden-category-category' => 'Categorías escondidas',
 'category-subcat-count'    => '{{PLURAL:$2|Esta categoría contiene solamente la categoría venidera.|Esta categoría contiene {{PLURAL:$1|las categorías venideras|$1 subcategorías venideras}}, de un total de $2 subcategorías.}}',
 'category-article-count'   => '{{PLURAL:$2|Esta categoría contiene solamente la hoja venidera.|{{PLURAL:$1|La hoja venidera apartiene|Las $1 hojas venideras apartienen}} a esta categoría, de un total de $2.}}',
 'listingcontinuesabbrev'   => 'cont.',
 
-'about'          => 'Encima de',
-'article'        => 'Artícůlo',
-'newwindow'      => '(Se avre en una ventana nueva)',
-'cancel'         => 'Suprimir',
+'about'         => 'Encima de',
+'article'       => 'Artícůlo',
+'newwindow'     => '(Se avre en una ventana nueva)',
+'cancel'        => 'Suprimir',
+'moredotdotdot' => 'Mas...',
+'mypage'        => 'Mi hoja',
+'mytalk'        => 'Mi diskusyón',
+'anontalk'      => 'Diskusion para esta IP',
+'navigation'    => 'Passeo',
+'and'           => '&#32;i',
+
+# Cologne Blue skin
 'qbfind'         => 'Topa',
 'qbbrowse'       => 'Navêga',
 'qbedit'         => 'Troca',
 'qbpageoptions'  => 'Opciones de la hoja',
 'qbmyoptions'    => 'Mis opsiones',
 'qbspecialpages' => 'Pajinas espesiales',
-'moredotdotdot'  => 'Mas...',
-'mypage'         => 'Mi hoja',
-'mytalk'         => 'Mi diskusyón',
-'anontalk'       => 'Diskusion para esta IP',
-'navigation'     => 'Passeo',
-'and'            => '&#32;i',
+'faq'            => 'FAQ',
+'faqpage'        => 'Project:FAQ',
+
+# Vector skin
+'vector-action-delete'       => 'Efassa',
+'vector-action-move'         => 'Taxirea',
+'vector-action-protect'      => 'Guarda',
+'vector-namespace-category'  => 'Kateggoría',
+'vector-namespace-help'      => 'Hoja de ayudo',
+'vector-namespace-image'     => 'Dosya',
+'vector-namespace-main'      => 'Hoja',
+'vector-namespace-mediawiki' => 'Noticia',
+'vector-namespace-project'   => 'Hoja de proyecto',
+'vector-namespace-special'   => 'Hoja especial',
+'vector-namespace-talk'      => 'Diskussión',
+'vector-namespace-template'  => 'Xabblón',
+'vector-namespace-user'      => 'Hoja de empleador',
+'vector-view-create'         => 'Cria',
+'vector-view-edit'           => 'Troca',
+'vector-view-history'        => 'Ve la istoria',
+'vector-view-view'           => 'Melda',
+'vector-view-viewsource'     => 'Ve su orijjín',
+'actions'                    => 'Acciones',
+'namespaces'                 => 'Espacios de nombres',
+'variants'                   => 'Variantes',
 
 'errorpagetitle'    => 'Yerro',
 'returnto'          => 'Tornar a $1.',
@@ -174,7 +201,7 @@ $messages = array(
 'otherlanguages'    => 'En otras linguas',
 'redirectedfrom'    => '(Redirigido desde $1)',
 'redirectpagesub'   => 'Hoja redirigida',
-'lastmodifiedat'    => 'Esta hoja fue trocada por la última vez en $2, a las $1.', # $1 date, $2 time
+'lastmodifiedat'    => 'Esta hoja fue trocada por la última vez en $2, a las $1.',
 'protectedpage'     => 'Hoja guardada',
 'jumpto'            => 'Salta a:',
 'jumptonavigation'  => 'passeo',
@@ -191,13 +218,12 @@ $messages = array(
 'disclaimerpage'       => 'Project:Rēfusamiento de responsabbilitá general',
 'edithelp'             => '¿Cómodo se la troca?',
 'edithelppage'         => 'Help:Una hoja, ¿cómodo se la troca?',
-'faq'                  => 'FAQ',
-'faqpage'              => 'Project:FAQ',
 'helppage'             => 'Help:Contenidos',
 'mainpage'             => 'La Primera Hoja',
 'mainpage-description' => 'La Hoja Primera',
 'policy-url'           => 'Project:Politikas',
 'portal'               => 'Portal de la comunidad',
+'portal-url'           => 'Project:Portal de la comunidad',
 'privacy'              => 'Prencipio de particůlaridad',
 'privacypage'          => 'Project:Prencipio de particůlaridad',
 
@@ -273,10 +299,7 @@ Puede ser que contiene uno o más caracteres que no se pueden usar en los títul
 'createaccountmail'       => 'por una letra electrónica',
 'userexists'              => 'El nombre que entrates ya se usa.
 Si puede ser, escoge un otro nombre.',
-'youremail'               => 'El adderesso de tu letra electrόnica:',
-'username'                => 'Nombre de usuario:',
-'yourlanguage'            => 'Lingua:',
-'email'                   => 'Letra electrónica',
+'createaccounterror'      => 'No se pudo crear el cuento: $1',
 'mailmypassword'          => 'Embiar una nueva koddiche por e-mail',
 'emailconfirmlink'        => 'Confirma su adderesso de letra electrónica',
 'accountcreated'          => 'Cuento creado',
@@ -335,6 +358,8 @@ o [{{fullurl:{{FULLPAGENAME}}|action=edit}} trocar esta hoja]</span>.',
 'yourtext'                         => 'Tu teksto',
 'yourdiff'                         => 'Diferencias',
 'copyrightwarning'                 => "Si puede ser, observa que todas las contribuciones a {{SITENAME}} se consideran hechas públicas abaxo la $2 (ver detalyos en $1). Si no queres que la gente endereche tus tekstos escritos sin piadad i los esparta libberamente, alora no los metas aquí. También nos estás asegurando ansí que escribites este teksto tu mismo i sos el dueño de los derechos de autor, o lo copiates desde el dominio público u otra fuente libbero.'''¡QUE N0 USES TEKSTOS ESCRITOS CON COPYRIGHT SIN PERMISSIÓN!'''<br />",
+'templatesused'                    => '{{PLURAL:$1|El xabblón usado|Los xabblones usados}} en esta hoja:',
+'templatesusedpreview'             => '↓ {{PLURAL:$1|El xabblón usado|Los xabblones usados}} en esta vista:',
 'template-protected'               => '(guardada)',
 'template-semiprotected'           => '(media guardada)',
 'hiddencategories'                 => 'Esta hoja es un miembro de {{PLURAL:$1|1 kateggoría escondida|$1 kateggorías escondidas}}:',
@@ -343,7 +368,8 @@ o [{{fullurl:{{FULLPAGENAME}}|action=edit}} trocar esta hoja]</span>.',
 
 # History pages
 'viewpagelogs'           => 'Ver los registros de esta hoja',
-'revisionasof'           => 'Rêvizión de $1',
+'currentrev-asof'        => 'Versión de alcabo de $1',
+'revisionasof'           => 'Rēvisión de $1',
 'previousrevision'       => '← Rēvisión de antes',
 'nextrevision'           => 'Rêvisión venidera →',
 'currentrevisionlink'    => 'Revisión actual',
@@ -355,16 +381,23 @@ o [{{fullurl:{{FULLPAGENAME}}|action=edit}} trocar esta hoja]</span>.',
 Leyenda: (act) = diferencias con la versión actual,
 (prev) = diferencias con la versión previa, M = edición menor",
 'history-fieldset-title' => 'Buscar en la istoria',
+'history-show-deleted'   => 'Sólamente efassado',
 'histfirst'              => 'Primeras',
 'histlast'               => 'De alcabo',
 'historysize'            => '({{PLURAL:$1|1 byte|$1 bytes}})',
 'historyempty'           => '(vazío)',
 
 # Revision deletion
-'rev-delundel'      => 'mostra/esconde',
-'revdelete-log'     => 'Razón:',
-'revdel-restore'    => 'Troca la viźibbilidad',
-'revdelete-content' => 'contenido',
+'rev-delundel'               => 'mostra/esconde',
+'rev-showdeleted'            => 'mostra',
+'revdelete-show-file-submit' => 'Sí',
+'revdelete-radio-same'       => '(no troques)',
+'revdelete-radio-set'        => 'Sí',
+'revdelete-radio-unset'      => 'No',
+'revdelete-log'              => 'Razón:',
+'revdel-restore'             => 'Troca la viźibbilidad',
+'revdelete-content'          => 'contenido',
+'revdelete-reasonotherlist'  => 'Otra razón',
 
 # History merging
 'mergehistory-reason' => 'Razón:',
@@ -387,10 +420,12 @@ Leyenda: (act) = diferencias con la versión actual,
 'searchsubtitleinvalid'     => "Buscates '''$1'''",
 'notitlematches'            => 'No se pudo topar en dingún título.',
 'notextmatches'             => 'No se pudo topar en dinguna hoja.',
+'prevn'                     => '{{PLURAL:$1|$1}} de antes',
+'nextn'                     => '{{PLURAL:$1|$1}} venideras',
 'prevn-title'               => '$1 {{PLURAL:$1|resultado|resultados}} de antes',
 'nextn-title'               => 'Venideros $1 {{PLURAL:$1|resultado|resultados}}',
 'shown-title'               => 'Mostra $1 {{PLURAL:$1|resultado|resultados}} por hoja',
-'viewprevnext'              => 'Ver ($1) ($2) ($3).',
+'viewprevnext'              => 'Ver ($1 {{int:pipe-separator}} $2) ($3).',
 'searchhelp-url'            => 'Help:Ayudo',
 'searchprofile-everything'  => 'Todo',
 'searchprofile-advanced'    => 'Adelantado',
@@ -413,21 +448,30 @@ Las búsquedas producen más o munco a buscar biervos comunes como «la» o «de
 'powersearch-ns'            => 'Busca en los espacios de nombres:',
 'powersearch-redir'         => 'Mostra las redirecciones',
 'powersearch-field'         => 'Busca por',
+'powersearch-toggleall'     => 'Todos',
 'search-external'           => 'Búsqueda eksterna',
 
 # Preferences page
 'preferences'               => 'Preferencias',
 'mypreferences'             => 'Mis preferencias',
+'prefs-skin'                => 'Vista',
+'prefs-math'                => 'Fórmulas',
 'prefs-rc'                  => 'Los Trocamientos de Alcabo',
 'prefs-watchlist'           => 'Lista de los Trocamientos Preferidos',
 'prefs-watchlist-days'      => 'El número de los días a mostrar en la lista de los trocamientos preferidos:',
+'prefs-watchlist-days-max'  => '7 días a lo más muncho',
 'prefs-resetpass'           => 'Trocar la parola',
+'prefs-rendering'           => 'Vista',
 'timezoneregion-africa'     => 'África',
 'timezoneregion-america'    => 'América',
 'timezoneregion-antarctica' => 'Antárctica',
 'timezoneregion-asia'       => 'Asia',
 'timezoneregion-australia'  => 'Ostralia',
 'timezoneregion-europe'     => 'Europa',
+'youremail'                 => 'El adderesso de tu letra electrόnica:',
+'username'                  => 'Nombre de usuario:',
+'yourlanguage'              => 'Lingua:',
+'email'                     => 'Letra electrónica',
 
 # Groups
 'group-sysop' => 'Administradores',
@@ -472,6 +516,8 @@ Las búsquedas producen más o munco a buscar biervos comunes como «la» o «de
 
 # Recent changes linked
 'recentchangeslinked'         => 'Trocamientos conectados',
+'recentchangeslinked-feed'    => 'Trocamientos conectados',
+'recentchangeslinked-toolbox' => 'Trocamientos conectados',
 'recentchangeslinked-title'   => 'Los trocamientos relacionados con "$1"',
 'recentchangeslinked-summary' => "La lista dêbbaxo, es la lista de los trocamientos de alcabo, por las hojas que dan link a la hoja siñalada (o por los miembros de la kateggoría siñalada).
 Las hojas en tu [[Special:Watchlist|lista de escogidas]] son escritas '''gordas'''.",
@@ -488,17 +534,19 @@ Las hojas en tu [[Special:Watchlist|lista de escogidas]] son escritas '''gordas'
 'listfiles_user' => 'Usuario',
 
 # File description page
+'file-anchor-link'          => 'Archivo',
 'filehist'                  => 'Istoria del dosyé',
 'filehist-help'             => 'Klika encima de una data/ora para vel el arxivo de esta data.',
 'filehist-current'          => 'actual',
 'filehist-datetime'         => 'Data/Ora',
 'filehist-thumb'            => 'Miniatura',
+'filehist-thumbtext'        => 'Miniatura de la versión de $1',
 'filehist-user'             => 'Empleador',
 'filehist-dimensions'       => 'Dimensiones',
 'filehist-comment'          => 'Comentario',
 'imagelinks'                => 'Linkes al arxivo multimedia',
 'linkstoimage'              => '{{PLURAL:$1|La hoja venidera da link|Las hojas venideras dan link}} a este arxivo:',
-'sharedupload'              => 'Este arxivo es de $1 i puede ser usado por otros proyectos.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'sharedupload'              => 'Este arxivo es de $1 i puede ser usado por otros proyectos.',
 'uploadnewversion-linktext' => 'Subir una nueva versión de este arxivo',
 
 # Random page
@@ -642,6 +690,7 @@ A continuación se mostran las opciones actuales de la hoja '''$1''':",
 
 'sp-contributions-newbies'  => 'Mostrar solo las ajustamientos de los usuarios nuevos',
 'sp-contributions-blocklog' => 'registro de bloqueos',
+'sp-contributions-talk'     => 'Diścutir',
 'sp-contributions-search'   => 'Buscar ajustamientos',
 'sp-contributions-username' => 'Dirección IP o nombre de usuario:',
 'sp-contributions-submit'   => 'Buscar',
@@ -664,7 +713,7 @@ A continuación se mostran las opciones actuales de la hoja '''$1''':",
 
 # Block/unblock
 'blockip'                  => 'Bloquear usuario',
-'ipboptions'               => '2 oras:2 hours,1 día:1 day,3 días:3 days,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 año:1 year,para siempre:infinite', # display1:time1,display2:time2,...
+'ipboptions'               => '2 oras:2 hours,1 día:1 day,3 días:3 days,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 año:1 year,para siempre:infinite',
 'ipblocklist'              => 'Lista de direcciones IP y nombres de usuario bloqueadas',
 'blocklink'                => 'Bloquea',
 'unblocklink'              => 'quita el bloqueo',
@@ -699,7 +748,7 @@ En estos casos, va deber trasladar manualmente el contenido de la hoja de diskus
 'move-watch'       => 'Cudiar este artículo',
 'movepagebtn'      => 'Renombra la hoja',
 'pagemovedsub'     => 'Renombrado realizado con reuxitá',
-'movepage-moved'   => '\'\'\'"$1" fue renombrado a "$2".\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'   => '\'\'\'"$1" fue renombrado a "$2".\'\'\'',
 'articleexists'    => 'Una hoja con este nombre ya egziste, o el nombre que escogites no es valable.
 Si puede ser, escoge otro nombre.',
 'talkexists'       => 'La hoja fue renombrada con reuxito, ma la diskussión no se pudo renombrar porque ya egziste una en el título nuevo. Si puede ser, házelo manualmente.',
@@ -746,6 +795,7 @@ Si puede ser, usa el botón de prēviźualiźasyón antes de enrejjistrarla.',
 'tooltip-search-go'               => 'Si ay una hoja con este nombre egzakto, vate allá.',
 'tooltip-search-fulltext'         => 'Busca este teksto en las hojas',
 'tooltip-n-mainpage'              => 'Torna a la Hoja Primera',
+'tooltip-n-mainpage-description'  => 'Visita la Primera Hoja',
 'tooltip-n-portal'                => 'Encima del prodjekto, ¿qué se puede hazer i ánde topar todo?',
 'tooltip-n-currentevents'         => 'Topar informaciones encima de los acontecimientos actuales',
 'tooltip-n-recentchanges'         => 'La lista de los trocamientos frescos en el viki',
@@ -812,7 +862,7 @@ Los otros campos se van a guardar por defecto.
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # EXIF tags
 'exif-filesource'   => 'Manadéro de archivo',
@@ -824,7 +874,7 @@ Los otros campos se van a guardar por defecto.
 'exif-lightsource-9'  => 'Bueno tiémpo',
 'exif-lightsource-10' => 'Tiémpo nuvlozo',
 
-# Pseudotags used for GPSSpeedRef and GPSDestDistanceRef
+# Pseudotags used for GPSSpeedRef
 'exif-gpsspeed-k' => 'Kilometros por óra',
 
 # External editor support
@@ -876,10 +926,10 @@ Los otros campos se van a guardar por defecto.
 'watchlisttools-raw'  => 'Troca tu lista de escogidas en crudo',
 
 # Special:Version
-'version'                  => 'Versión', # Not used as normal message but as header for the special page itself
+'version'                  => 'Versión',
 'version-specialpages'     => 'Pajinas espesiales',
 'version-other'            => 'Otros',
-'version-version'          => 'Versión',
+'version-version'          => '(Versión $1)',
 'version-software-version' => 'Versión',
 
 # Special:FileDuplicateSearch

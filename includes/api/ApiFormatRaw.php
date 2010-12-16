@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ('ApiFormatBase.php');
+	require_once ( 'ApiFormatBase.php' );
 }
 
 /**
@@ -39,33 +39,37 @@ class ApiFormatRaw extends ApiFormatBase {
 	 * @param $main ApiMain object
 	 * @param $errorFallback Formatter object to fall back on for errors
 	 */
-	public function __construct($main, $errorFallback) {
-		parent :: __construct($main, 'raw');
+	public function __construct( $main, $errorFallback ) {
+		parent :: __construct( $main, 'raw' );
 		$this->mErrorFallback = $errorFallback;
 	}
 
 	public function getMimeType() {
 		$data = $this->getResultData();
-		if(isset($data['error']))
+
+		if ( isset( $data['error'] ) )
 			return $this->mErrorFallback->getMimeType();
-		if(!isset($data['mime']))
-			ApiBase::dieDebug(__METHOD__, "No MIME type set for raw formatter");
+
+		if ( !isset( $data['mime'] ) )
+			ApiBase::dieDebug( __METHOD__, "No MIME type set for raw formatter" );
+	
 		return $data['mime'];
 	}
 
 	public function execute() {
 		$data = $this->getResultData();
-		if(isset($data['error']))
+		if ( isset( $data['error'] ) )
 		{
 			$this->mErrorFallback->execute();
 			return;
 		}
-		if(!isset($data['text']))
-			ApiBase::dieDebug(__METHOD__, "No text given for raw formatter");
-		$this->printText($data['text']);
+		
+		if ( !isset( $data['text'] ) )
+			ApiBase::dieDebug( __METHOD__, "No text given for raw formatter" );
+		$this->printText( $data['text'] );
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatRaw.php 48629 2009-03-20 11:40:54Z catrope $';
+		return __CLASS__ . ': $Id: ApiFormatRaw.php 61437 2010-01-23 22:26:40Z reedy $';
 	}
 }

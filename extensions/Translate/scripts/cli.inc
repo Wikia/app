@@ -12,6 +12,7 @@
 
 $dir = dirname( __FILE__ ); $IP = "$dir/../../..";
 @include("$dir/../../CorePath.php"); // Allow override
+define( 'TRANSLATE_CLI', 1 );
 require_once( "$IP/maintenance/commandLine.inc" );
 
 function STDOUT( $str, $channel = null, $force = false ) {

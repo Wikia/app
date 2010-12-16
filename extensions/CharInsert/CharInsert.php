@@ -30,17 +30,12 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die();
 }
 
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'setupSpecialChars';
-} else {
-	$wgExtensionFunctions[] = 'setupSpecialChars';
-}
+$wgHooks['ParserFirstCallInit'][] = 'setupSpecialChars';
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'CharInsert',
 	'author' => 'Brion Vibber',
-	'svn-date' => '$LastChangedDate: 2008-06-16 22:54:29 +0200 (pon, 16 cze 2008) $',
-	'svn-revision' => '$LastChangedRevision: 36357 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CharInsert',
 	'description' => 'Allows creation of JavaScript box for inserting non-standard characters',
 	'descriptionmsg' => 'charinsert-desc',
@@ -49,9 +44,8 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['CharInsert'] = $dir . 'CharInsert.i18n.php';
 
-function setupSpecialChars() {
-	global $wgParser;
-	$wgParser->setHook( 'charinsert', 'charInsert' );
+function setupSpecialChars( &$parser ) {
+	$parser->setHook( 'charinsert', 'charInsert' );
 	return true;
 }
 

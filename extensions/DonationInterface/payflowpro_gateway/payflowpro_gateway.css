@@ -1,0 +1,24 @@
+.creditcard-error-msg {
+   color: #cc1100;
+}
+
+.mw-creditcard-donor {
+   width: 25px;
+}
+
+.mw-donate-submessage {
+   padding-top: 10px;
+}
+
+#mw-donate-submit-button {
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 100px;
+}
+
+#payflow-table-cc {
+}
+
+#payflow-table-donor {
+}
+

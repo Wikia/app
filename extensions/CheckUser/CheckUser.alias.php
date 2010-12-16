@@ -2,7 +2,8 @@
 /**
  * Aliases for Special:CheckUser
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $aliases = array();
@@ -11,19 +12,15 @@ $aliases = array();
  * @author Jon Harald Søby
  */
 $aliases['en'] = array(
-    'CheckUser' => array( 'CheckUser' ),
+	'CheckUser' => array( 'CheckUser' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'CheckUser' => array( 'تدقيق_مستخدم' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'CheckUser' => array( 'تدقيق_مستخدم' ),
 );
@@ -43,9 +40,7 @@ $aliases['bs'] = array(
 	'CheckUser' => array( 'ProvjeraKorisnika' ),
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
+/** German (Deutsch) */
 $aliases['de'] = array(
 	'CheckUser' => array( 'Checkuser' ),
 );
@@ -77,7 +72,12 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'CheckUser' => array( "Vérificateur d'utilisateur", "Vérificateur d'utilisateurs", 'VérificateurUtilisateur', 'VérificateurUtilisateurs', 'Vérificateur d’adresse', 'VérificateurAdresse', 'VerificateurAdresse' ),
+	'CheckUser' => array( "Vérificateur d'utilisateur", "Vérificateur d'utilisateurs", 'VérificateurUtilisateur', 'VérificateurUtilisateurs', 'Vérificateur d’adresse' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'CheckUser' => array( "Controlor d'utilisator", 'ControlorDUtilisator' ),
 );
 
 /** Galician (Galego) */
@@ -90,9 +90,12 @@ $aliases['gsw'] = array(
 	'CheckUser' => array( 'Benutzerpriefig' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'CheckUser' => array( 'સભ્યચકાસ' ),
+);
+
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'CheckUser' => array( 'בדיקת_משתמש' ),
 );
@@ -124,12 +127,12 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'CheckUser' => array( 'Pemeriksa' ),
+	'CheckUser' => array( 'Periksa pengguna', 'PeriksaPengguna', 'Pemeriksa' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'CheckUser' => array( 'チェックユーザー', 'チェックユーザ' ),
+	'CheckUser' => array( 'チェックユーザー', 'チェックユーザ', '利用者調査' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -142,6 +145,11 @@ $aliases['ko'] = array(
 	'CheckUser' => array( '체크유저' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'CheckUser' => array( 'Metmaacher Pröve', 'Metmaacher Pröfe' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'CheckUser' => array( 'Benotzerkontroll' ),
@@ -150,6 +158,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'CheckUser' => array( 'ПроверкаНаКорисник' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'CheckUser' => array( 'ചെക്ക്‌‌യൂസർ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'CheckUser' => array( 'सदस्यतपासनिस' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -172,9 +190,7 @@ $aliases['nl'] = array(
 	'CheckUser' => array( 'GebruikerControleren' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'CheckUser' => array( 'IP-sjekk' ),
 );
@@ -192,6 +208,11 @@ $aliases['ro'] = array(
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'CheckUser' => array( 'योजकपरिक्षक' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'CheckUser' => array( 'SkontrolovaťPoužívateľa' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -212,5 +233,25 @@ $aliases['tl'] = array(
 /** Turkish (Türkçe) */
 $aliases['tr'] = array(
 	'CheckUser' => array( 'Denetçi' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'CheckUser' => array( 'ControlaUtente' ),
+);
+
+/** Veps (Vepsan kel') */
+$aliases['vep'] = array(
+	'CheckUser' => array( 'KodvdaKävutajad' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'CheckUser' => array( '用户查核' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'CheckUser' => array( '用戶查核' ),
 );
 

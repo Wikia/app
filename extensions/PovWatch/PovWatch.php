@@ -15,10 +15,11 @@ require_once( "$IP/extensions/PovWatch/PovWatch.php" );
 </body>
 </html>
 <?php
-	exit(1);
+	exit( 1 );
 endif;
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'PovWatch',
 	'version'        => '1.1.1',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:PovWatch',
@@ -29,17 +30,14 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgAvailableRights[] = 'povwatch_user';
 $wgAvailableRights[] = 'povwatch_admin';
-#$wgAvailableRights[] = 'povwatch_subscriber_list';
 
 $wgGroupPermissions['sysop']['povwatch_user'] = true;
-#$wgGroupPermissions['sysop']['povwatch_subscriber_list'] = true;
 $wgGroupPermissions['povwatch'] = array(
 	'povwatch_user' => true,
 	'povwatch_admin' => true,
-#	'povwatch_subscriber_list' => true,
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['PovWatch'] = $dir . 'PovWatch.i18n.php';
 $wgExtensionAliasesFiles['PovWatch'] = $dir . 'PovWatch.alias.php';
 $wgAutoloadClasses['SpecialPovWatch'] = $dir . 'PovWatch_body.php';

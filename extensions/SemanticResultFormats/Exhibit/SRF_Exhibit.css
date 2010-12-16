@@ -1,0 +1,6 @@
+.head	{border:1px solid gray; background-color:#E0E0E0; padding:4px} 
+div.inlines { display:inline;	} 
+table.smwtable	{	background-color: #EEEEFF;	} 
+table.smwtable th{	background-color: #EEEEFF;text-align: left;}	
+table.smwtable td{	background-color: #FFFFFF;padding: 1px;padding-left: 5px;padding-right: 5px;text-align: left;vertical-align: top;	} 
+table.smwtable tr.smwfooter td	{	font-size: 90%;line-height: 1;background-color: #EEEEFF;padding: 0px;padding-left: 5px;padding-right: 5px;text-align: right;vertical-align: top;	}

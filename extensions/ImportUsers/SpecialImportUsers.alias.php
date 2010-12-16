@@ -14,16 +14,12 @@ $aliases['en'] = array(
 	'ImportUsers' => array( 'ImportUsers' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ImportUsers' => array( 'استيراد_المستخدمين' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ImportUsers' => array( 'استيراد_المستخدمين' ),
 );
@@ -53,6 +49,11 @@ $aliases['fr'] = array(
 	'ImportUsers' => array( 'Importer utilisateurs', 'ImporterUtilisateurs', 'ImporterUtilisateur' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'ImportUsers' => array( 'Importar des utilisators', 'ImportarDesUtilisators' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'ImportUsers' => array( 'Importar usuarios' ),
@@ -63,9 +64,7 @@ $aliases['gsw'] = array(
 	'ImportUsers' => array( 'Benutzer importiere' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'ImportUsers' => array( 'ייבוא_משתמשים' ),
 );
@@ -97,7 +96,12 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'ImportUsers' => array( 'Impor pengguna' ),
+	'ImportUsers' => array( 'Impor pengguna', 'ImporPengguna' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'ImportUsers' => array( 'ImportaUtenti' ),
 );
 
 /** Japanese (日本語) */
@@ -110,6 +114,16 @@ $aliases['km'] = array(
 	'ImportUsers' => array( 'នាំចូលអ្នកប្រើប្រាស់' ),
 );
 
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'ImportUsers' => array( '사용자 추가' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'ImportUsers' => array( 'Metmaacher_Empoteere', 'MetmaacherEmpoteere', 'Medmaacher_Empoteere', 'MedmaacherEmpoteere' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'ImportUsers' => array( 'Benotzer importéieren' ),
@@ -117,7 +131,17 @@ $aliases['lb'] = array(
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'ImportUsers' => array( 'УвизНаКорисници' ),
+	'ImportUsers' => array( 'УвозНаКорисници' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'ImportUsers' => array( 'ഉപയോക്തൃഇറക്കുമതി' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ImportUsers' => array( 'सदस्यआयात' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -140,16 +164,12 @@ $aliases['nl'] = array(
 	'ImportUsers' => array( 'GebruikersImporteren', 'GebruikerImporteren' ),
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
 $aliases['nn'] = array(
-	'ImportUsers' => array( 'Importer_brukarar' ),
+	'ImportUsers' => array( 'Importer brukarar' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'ImportUsers' => array( 'Importer brukere' ),
 );
@@ -159,14 +179,29 @@ $aliases['oc'] = array(
 	'ImportUsers' => array( 'Importar un utilizaire', 'ImportarUtilizaire' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'ImportUsers' => array( 'Import użytkowników' ),
+);
+
 /** Pashto (پښتو) */
 $aliases['ps'] = array(
 	'ImportUsers' => array( 'کارونکي واردول' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'ImportUsers' => array( 'Importar utilizadores' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'ImportUsers' => array( 'आयातयोजक:' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ImportUsers' => array( 'ImportPoužívateľov' ),
 );
 
 /** Albanian (Shqip) */
@@ -192,5 +227,10 @@ $aliases['th'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ImportUsers' => array( 'Mag-angkat ng mga tagagamit' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ImportUsers' => array( 'KullanıcıAktar' ),
 );
 

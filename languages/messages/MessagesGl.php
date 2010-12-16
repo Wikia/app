@@ -16,6 +16,8 @@
  * @author לערי ריינהארט
  */
 
+$fallback = 'pt';
+
 $namespaceNames = array(
 	NS_MEDIA            => 'Media',
 	NS_SPECIAL          => 'Especial',
@@ -44,6 +46,14 @@ $namespaceAliases = array(
 	'Conversa_Categoría' => NS_CATEGORY_TALK,
 );
 
+$defaultDateFormat = 'dmy';
+
+$dateFormats = array(
+	'dmy time' => 'H:i',
+	'dmy date' => 'j \d\e F \d\e Y',
+	'dmy both' => 'H:i\,\ j \d\e F \d\e Y',
+);
+
 $specialPageAliases = array(
 	'DoubleRedirects'           => array( 'Redireccións dobres' ),
 	'BrokenRedirects'           => array( 'Redireccións rotas' ),
@@ -52,13 +62,13 @@ $specialPageAliases = array(
 	'Userlogout'                => array( 'Saír ao anonimato' ),
 	'CreateAccount'             => array( 'Crear unha conta' ),
 	'Preferences'               => array( 'Preferencias' ),
-	'Watchlist'                 => array( 'Lista de vixilancia', 'Listaxe de vixilancia' ),
+	'Watchlist'                 => array( 'Lista de vixilancia' ),
 	'Recentchanges'             => array( 'Cambios recentes' ),
 	'Upload'                    => array( 'Cargar' ),
-	'Listfiles'                 => array( 'Listaxe de imaxes' ),
+	'Listfiles'                 => array( 'Lista de imaxes' ),
 	'Newimages'                 => array( 'Imaxes novas' ),
-	'Listusers'                 => array( 'Lista de usuarios', 'Listaxe de usuarios' ),
-	'Listgrouprights'           => array( 'Listaxe de dereitos segundo o grupo' ),
+	'Listusers'                 => array( 'Lista de usuarios' ),
+	'Listgrouprights'           => array( 'Lista de dereitos segundo o grupo' ),
 	'Statistics'                => array( 'Estatísticas' ),
 	'Randompage'                => array( 'Ao chou', 'Páxina aleatoria' ),
 	'Lonelypages'               => array( 'Páxinas orfas' ),
@@ -68,12 +78,12 @@ $specialPageAliases = array(
 	'Uncategorizedtemplates'    => array( 'Modelos sen categoría' ),
 	'Unusedcategories'          => array( 'Categorías sen uso' ),
 	'Unusedimages'              => array( 'Imaxes sen uso' ),
-	'Wantedpages'               => array( 'Páxinas máis buscadas', 'Ligazóns rotas' ),
-	'Wantedcategories'          => array( 'Categorías máis usadas' ),
+	'Wantedpages'               => array( 'Páxinas requiridas', 'Ligazóns rotas' ),
+	'Wantedcategories'          => array( 'Categorías requiridas' ),
 	'Wantedfiles'               => array( 'Ficheiros requiridos' ),
 	'Wantedtemplates'           => array( 'Modelos requiridos' ),
-	'Mostlinked'                => array( 'O máis enlazado' ),
-	'Mostlinkedcategories'      => array( 'Categorías máis enlazadas' ),
+	'Mostlinked'                => array( 'Páxinas máis ligadas' ),
+	'Mostlinkedcategories'      => array( 'Categorías máis ligadas' ),
 	'Mostlinkedtemplates'       => array( 'Modelos máis enlazados' ),
 	'Mostimages'                => array( 'Máis imaxes' ),
 	'Mostcategories'            => array( 'Máis categorías' ),
@@ -88,7 +98,7 @@ $specialPageAliases = array(
 	'Protectedtitles'           => array( 'Títulos protexidos' ),
 	'Allpages'                  => array( 'Todas as páxinas' ),
 	'Prefixindex'               => array( 'Índice de prefixos' ),
-	'Ipblocklist'               => array( 'Lista dos bloqueos a enderezos IP', 'Listaxe dos bloqueos a enderezos IP' ),
+	'Ipblocklist'               => array( 'Lista dos bloqueos a enderezos IP' ),
 	'Specialpages'              => array( 'Páxinas especiais' ),
 	'Contributions'             => array( 'Contribucións' ),
 	'Emailuser'                 => array( 'Correo electrónico de usuario' ),
@@ -112,15 +122,15 @@ $specialPageAliases = array(
 	'MIMEsearch'                => array( 'Procura MIME' ),
 	'FileDuplicateSearch'       => array( 'Procura de ficheiros duplicados' ),
 	'Unwatchedpages'            => array( 'Páxinas sen vixiar' ),
-	'Listredirects'             => array( 'Lista de redireccións', 'Listaxe de redireccións' ),
+	'Listredirects'             => array( 'Lista de redireccións' ),
 	'Revisiondelete'            => array( 'Revisións borradas' ),
 	'Unusedtemplates'           => array( 'Modelos non usados' ),
 	'Randomredirect'            => array( 'Redirección aleatoria' ),
 	'Mypage'                    => array( 'A miña páxina de usuario' ),
 	'Mytalk'                    => array( 'A miña conversa' ),
 	'Mycontributions'           => array( 'As miñas contribucións' ),
-	'Listadmins'                => array( 'Lista de administradores', 'Listaxe de administradores' ),
-	'Listbots'                  => array( 'Lista de bots', 'Listaxe de bots' ),
+	'Listadmins'                => array( 'Lista de administradores' ),
+	'Listbots'                  => array( 'Lista de bots' ),
 	'Popularpages'              => array( 'Páxinas populares' ),
 	'Search'                    => array( 'Procurar' ),
 	'Resetpass'                 => array( 'Cambiar contrasinal' ),
@@ -135,64 +145,56 @@ $specialPageAliases = array(
 );
 
 $magicWords = array(
-	'redirect'              => array( '0', '#REDIRECCIÓN', '#REDIRECT' ),
-	'notoc'                 => array( '0', '__SENÍNDICE__', '__NOTOC__' ),
-	'nogallery'             => array( '0', '__SENGALERÍA__', '__NOGALLERY__' ),
-	'forcetoc'              => array( '0', '__FORZAROÍNDICE__', '__FORCETOC__' ),
-	'toc'                   => array( '0', '__Índice__', '__TOC__' ),
-	'noeditsection'         => array( '0', '__SECCIÓNSNONEDITABLES__', '__NOEDITSECTION__' ),
-	'currentmonth'          => array( '1', 'MESACTUAL', 'CURRENTMONTH' ),
-	'currentmonthname'      => array( '1', 'NOMEDOMESACTUAL', 'CURRENTMONTHNAME' ),
-	'currentmonthabbrev'    => array( '1', 'ABREVIATURADOMESACTUAL', 'CURRENTMONTHABBREV' ),
-	'currentday'            => array( '1', 'DÍAACTUAL', 'CURRENTDAY' ),
-	'currentday2'           => array( '1', 'DÍAACTUAL2', 'CURRENTDAY2' ),
-	'currentdayname'        => array( '1', 'NOMEDODÍAACTUAL', 'CURRENTDAYNAME' ),
-	'currentyear'           => array( '1', 'ANOACTUAL', 'CURRENTYEAR' ),
-	'currenttime'           => array( '1', 'HORAACTUAL', 'CURRENTTIME' ),
-	'currenthour'           => array( '1', 'HORAACTUAL', 'CURRENTHOUR' ),
-	'localmonth'            => array( '1', 'MESLOCAL', 'LOCALMONTH' ),
+	'redirect'              => array( '0', '#REDIRECCIÓN', '#REDIRECIONAMENTO', '#REDIRECT' ),
+	'notoc'                 => array( '0', '__SENÍNDICE__', '__SEMTDC__', '__SEMSUMÁRIO__', '__NOTOC__' ),
+	'nogallery'             => array( '0', '__SENGALERÍA__', '__SEMGALERIA__', '__NOGALLERY__' ),
+	'forcetoc'              => array( '0', '__FORZAROÍNDICE__', '__FORCARTDC__', '__FORCARSUMARIO__', '__FORÇARTDC__', '__FORÇARSUMÁRIO__', '__FORCETOC__' ),
+	'toc'                   => array( '0', '__Índice__', '__TDC__', '__SUMÁRIO__', '__TOC__' ),
+	'noeditsection'         => array( '0', '__SECCIÓNSNONEDITABLES__', '__NÃOEDITARSEÇÃO__', '__SEMEDITARSEÇÃO__', '__NOEDITSECTION__' ),
+	'currentmonth'          => array( '1', 'MESACTUAL', 'MESATUAL', 'MESATUAL2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
+	'currentmonthname'      => array( '1', 'NOMEDOMESACTUAL', 'NOMEDOMESATUAL', 'CURRENTMONTHNAME' ),
+	'currentmonthabbrev'    => array( '1', 'ABREVIATURADOMESACTUAL', 'MESATUALABREV', 'MESATUALABREVIADO', 'ABREVIATURADOMESATUAL', 'CURRENTMONTHABBREV' ),
+	'currentday'            => array( '1', 'DÍAACTUAL', 'DIAATUAL', 'CURRENTDAY' ),
+	'currentday2'           => array( '1', 'DÍAACTUAL2', 'DIAATUAL2', 'CURRENTDAY2' ),
+	'currentdayname'        => array( '1', 'NOMEDODÍAACTUAL', 'NOMEDODIAATUAL', 'CURRENTDAYNAME' ),
+	'currentyear'           => array( '1', 'ANOACTUAL', 'ANOATUAL', 'CURRENTYEAR' ),
+	'currenthour'           => array( '1', 'HORAACTUAL', 'HORAATUAL', 'CURRENTHOUR' ),
+	'localmonth'            => array( '1', 'MESLOCAL', 'LOCALMONTH', 'LOCALMONTH2' ),
 	'localmonthname'        => array( '1', 'NOMEDOMESLOCAL', 'LOCALMONTHNAME' ),
-	'localmonthabbrev'      => array( '1', 'ABREVIATURADOMESLOCAL', 'LOCALMONTHABBREV' ),
-	'localday'              => array( '1', 'DÍALOCAL', 'LOCALDAY' ),
-	'localday2'             => array( '1', 'DÍALOCAL2', 'LOCALDAY2' ),
-	'localdayname'          => array( '1', 'NOMEDODÍALOCAL', 'LOCALDAYNAME' ),
+	'localmonthabbrev'      => array( '1', 'ABREVIATURADOMESLOCAL', 'MESLOCALABREV', 'MESLOCALABREVIADO', 'LOCALMONTHABBREV' ),
+	'localday'              => array( '1', 'DÍALOCAL', 'DIALOCAL', 'LOCALDAY' ),
+	'localday2'             => array( '1', 'DÍALOCAL2', 'DIALOCAL2', 'LOCALDAY2' ),
+	'localdayname'          => array( '1', 'NOMEDODÍALOCAL', 'NOMEDODIALOCAL', 'LOCALDAYNAME' ),
 	'localyear'             => array( '1', 'ANOLOCAL', 'LOCALYEAR' ),
-	'localtime'             => array( '1', 'HORALOCAL', 'LOCALTIME' ),
 	'localhour'             => array( '1', 'HORALOCAL', 'LOCALHOUR' ),
-	'numberofpages'         => array( '1', 'NÚMERODEPÁXINAS', 'NUMBEROFPAGES' ),
-	'numberofarticles'      => array( '1', 'NÚMERODEARTIGOS', 'NUMBEROFARTICLES' ),
-	'numberoffiles'         => array( '1', 'NÚMERODEFICHEIROS', 'NUMBEROFFILES' ),
-	'numberofusers'         => array( '1', 'NÚMERODEUSUARIOS', 'NUMBEROFUSERS' ),
-	'numberofedits'         => array( '1', 'NÚMERODEEDICIÓNS', 'NUMBEROFEDITS' ),
-	'pagename'              => array( '1', 'NOMEDAPÁXINA', 'PAGENAME' ),
-	'pagenamee'             => array( '1', 'NOMEDAPÁXINA', 'PAGENAMEE' ),
-	'namespace'             => array( '1', 'ESPAZODENOMES', 'NAMESPACE' ),
-	'namespacee'            => array( '1', 'ESPAZODENOMES', 'NAMESPACEE' ),
-	'fullpagename'          => array( '1', 'NOMECOMPLETODAPÁXINA', 'FULLPAGENAME' ),
-	'fullpagenamee'         => array( '1', 'NOMECOMPLETODAPÁXINA', 'FULLPAGENAMEE' ),
-	'subpagename'           => array( '1', 'NOMEDASUBPÁXINA', 'SUBPAGENAME' ),
-	'subpagenamee'          => array( '1', 'NOMEDASUBPÁXINA', 'SUBPAGENAMEE' ),
-	'basepagename'          => array( '1', 'NOMEDAPÁXINABASE', 'BASEPAGENAME' ),
-	'basepagenamee'         => array( '1', 'NOMEDAPÁXINABASE', 'BASEPAGENAMEE' ),
-	'talkpagename'          => array( '1', 'NOMEDAPÁXINADECONVERSA', 'TALKPAGENAME' ),
-	'talkpagenamee'         => array( '1', 'NOMEDAPÁXINADECONVERSA', 'TALKPAGENAMEE' ),
+	'numberofpages'         => array( '1', 'NÚMERODEPÁXINAS', 'NUMERODEPAGINAS', 'NÚMERODEPÁGINAS', 'NUMBEROFPAGES' ),
+	'numberofarticles'      => array( '1', 'NÚMERODEARTIGOS', 'NUMERODEARTIGOS', 'NUMBEROFARTICLES' ),
+	'numberoffiles'         => array( '1', 'NÚMERODEFICHEIROS', 'NUMERODEARQUIVOS', 'NÚMERODEARQUIVOS', 'NUMBEROFFILES' ),
+	'numberofusers'         => array( '1', 'NÚMERODEUSUARIOS', 'NUMERODEUSUARIOS', 'NÚMERODEUSUÁRIOS', 'NUMBEROFUSERS' ),
+	'numberofedits'         => array( '1', 'NÚMERODEEDICIÓNS', 'NUMERODEEDICOES', 'NÚMERODEEDIÇÕES', 'NUMBEROFEDITS' ),
+	'pagename'              => array( '1', 'NOMEDAPÁXINA', 'NOMEDAPAGINA', 'NOMEDAPÁGINA', 'PAGENAME' ),
+	'namespace'             => array( '1', 'ESPAZODENOMES', 'DOMINIO', 'DOMÍNIO', 'ESPACONOMINAL', 'ESPAÇONOMINAL', 'NAMESPACE' ),
+	'fullpagename'          => array( '1', 'NOMECOMPLETODAPÁXINA', 'NOMECOMPLETODAPAGINA', 'NOMECOMPLETODAPÁGINA', 'FULLPAGENAME' ),
+	'subpagename'           => array( '1', 'NOMEDASUBPÁXINA', 'NOMEDASUBPAGINA', 'NOMEDASUBPÁGINA', 'SUBPAGENAME' ),
+	'basepagename'          => array( '1', 'NOMEDAPÁXINABASE', 'NOMEDAPAGINABASE', 'NOMEDAPÁGINABASE', 'BASEPAGENAME' ),
+	'talkpagename'          => array( '1', 'NOMEDAPÁXINADECONVERSA', 'NOMEDAPAGINADEDISCUSSAO', 'NOMEDAPÁGINADEDISCUSSÃO', 'TALKPAGENAME' ),
 	'img_manualthumb'       => array( '1', 'miniatura=$1', 'mini=$1', 'thumbnail=$1', 'thumb=$1' ),
-	'img_right'             => array( '1', 'dereita', 'right' ),
+	'img_right'             => array( '1', 'dereita', 'direita', 'right' ),
 	'img_left'              => array( '1', 'esquerda', 'left' ),
-	'img_none'              => array( '1', 'ningún', 'none' ),
-	'img_center'            => array( '1', 'centro', 'centro', 'center', 'centre' ),
-	'img_page'              => array( '1', 'páxina=$1', 'páxina $1', 'page=$1', 'page $1' ),
-	'img_border'            => array( '1', 'borde', 'border' ),
+	'img_none'              => array( '1', 'ningún', 'nenhum', 'none' ),
+	'img_center'            => array( '1', 'centro', 'center', 'centre' ),
+	'img_page'              => array( '1', 'páxina=$1', 'páxina $1', 'página=$1', 'página $1', 'page=$1', 'page $1' ),
+	'img_border'            => array( '1', 'borde', 'borda', 'border' ),
 	'grammar'               => array( '0', 'GRAMÁTICA:', 'GRAMMAR:' ),
-	'displaytitle'          => array( '1', 'AMOSAROTÍTULO', 'DISPLAYTITLE' ),
-	'newsectionlink'        => array( '1', '__LIGAZÓNDANOVASECCIÓN__', '__NEWSECTIONLINK__' ),
-	'language'              => array( '0', '#LINGUA:', '#LANGUAGE:' ),
-	'numberofadmins'        => array( '1', 'NÚMERODEADMINISTRADORES', 'NUMBEROFADMINS' ),
+	'displaytitle'          => array( '1', 'AMOSAROTÍTULO', 'EXIBETITULO', 'EXIBETÍTULO', 'DISPLAYTITLE' ),
+	'newsectionlink'        => array( '1', '__LIGAZÓNDANOVASECCIÓN__', '__LINKDENOVASECAO__', '__LINKDENOVASEÇÃO__', '__LIGACAODENOVASECAO__', '__LIGAÇÃODENOVASEÇÃO__', '__NEWSECTIONLINK__' ),
+	'language'              => array( '0', '#LINGUA:', '#IDIOMA:', '#LANGUAGE:' ),
+	'numberofadmins'        => array( '1', 'NÚMERODEADMINISTRADORES', 'NUMERODEADMINISTRADORES', 'NUMBEROFADMINS' ),
 	'special'               => array( '0', 'especial', 'special' ),
 	'tag'                   => array( '0', 'etiqueta', 'tag' ),
-	'hiddencat'             => array( '1', '__CATEGORÍAOCULTA__', '__HIDDENCAT__' ),
-	'pagesincategory'       => array( '1', 'PÁXINASNACATEGORÍA', 'PAGESINCATEGORY', 'PAGESINCAT' ),
-	'pagesize'              => array( '1', 'TAMAÑODAPÁXINA', 'PAGESIZE' ),
+	'hiddencat'             => array( '1', '__CATEGORÍAOCULTA__', '__CATEGORIAOCULTA__', '__CATOCULTA__', '__HIDDENCAT__' ),
+	'pagesincategory'       => array( '1', 'PÁXINASNACATEGORÍA', 'PAGINASNACATEGORIA', 'PÁGINASNACATEGORIA', 'PAGINASNACAT', 'PÁGINASNACAT', 'PAGESINCATEGORY', 'PAGESINCAT' ),
+	'pagesize'              => array( '1', 'TAMAÑODAPÁXINA', 'TAMANHODAPAGINA', 'TAMANHODAPÁGINA', 'PAGESIZE' ),
 );
 
 $separatorTransformTable = array(',' => '.', '.' => ',' );
@@ -228,6 +230,7 @@ $messages = array(
 'tog-enotifminoredits'        => 'Enviádeme tamén unha mensaxe de correo electrónico cando se produzan edicións pequenas nas páxinas',
 'tog-enotifrevealaddr'        => 'Revelar o meu enderezo de correo electrónico nos correos de notificación',
 'tog-shownumberswatching'     => 'Mostrar o número de usuarios que están a vixiar',
+'tog-oldsig'                  => 'Vista previa da sinatura actual:',
 'tog-fancysig'                => 'Tratar a sinatura como se fose texto wiki (sen ligazón automática)',
 'tog-externaleditor'          => 'Usar un editor externo por omisión (só para expertos, precisa duns parámetros especiais no seu computador)',
 'tog-externaldiff'            => 'Usar diferenzas externas (dif) por omisión (só para expertos, precisa duns parámetros especiais no seu computador)',
@@ -250,6 +253,13 @@ $messages = array(
 'underline-always'  => 'Sempre',
 'underline-never'   => 'Nunca',
 'underline-default' => 'Opción do propio navegador',
+
+# Font style option in Special:Preferences
+'editfont-style'     => 'Tipo de letra da caixa de edición:',
+'editfont-default'   => 'Tipo de letra por defecto do navegador',
+'editfont-monospace' => 'Tipo de letra monoespazada',
+'editfont-sansserif' => 'Tipo de letra sans-serif',
+'editfont-serif'     => 'Tipo de letra serif',
 
 # Dates
 'sunday'        => 'Domingo',
@@ -310,7 +320,7 @@ $messages = array(
 'category-media-header'          => 'Multimedia na categoría "$1"',
 'category-empty'                 => "''Actualmente esta categoría non conta con ningunha páxina ou ficheiro multimedia.''",
 'hidden-categories'              => '{{PLURAL:$1|Categoría oculta|Categorías ocultas}}',
-'hidden-category-category'       => 'Categorías ocultas', # Name of the category where hidden categories will be listed
+'hidden-category-category'       => 'Categorías ocultas',
 'category-subcat-count'          => '{{PLURAL:$2|Esta categoría só ten a seguinte subcategoría.|Esta categoría ten {{PLURAL:$1|a seguinte subcategoría|as seguintes $1 subcategorías}}, dun total de $2.}}',
 'category-subcat-count-limited'  => 'Esta categoría ten {{PLURAL:$1|a seguinte subcategoría|as seguintes $1 subcategorías}}.',
 'category-article-count'         => '{{PLURAL:$2|Esta categoría só contén a seguinte páxina.|{{PLURAL:$1|A seguinte páxina está|As seguintes $1 páxinas están}} nesta categoría, dun total de $2.}}',
@@ -318,6 +328,8 @@ $messages = array(
 'category-file-count'            => '{{PLURAL:$2|Esta categoría só contén o seguinte ficheiro.|{{PLURAL:$1|O seguinte ficheiro está|Os seguintes $1 ficheiros están}} nesta categoría, dun total de $2.}}',
 'category-file-count-limited'    => '{{PLURAL:$1|O seguinte ficheiro está|Os seguintes $1 ficheiros están}} na categoría actual.',
 'listingcontinuesabbrev'         => 'cont.',
+'index-category'                 => 'Páxinas indexadas',
+'noindex-category'               => 'Páxinas non indexadas',
 
 'mainpagetext'      => "'''MediaWiki instalouse correctamente.'''",
 'mainpagedocfooter' => 'Consulte a [http://meta.wikimedia.org/wiki/Help:Contents Guía do usuario] para máis información sobre como usar o software wiki.
@@ -327,10 +339,18 @@ $messages = array(
 * [http://www.mediawiki.org/wiki/Manual:FAQ Preguntas frecuentes sobre MediaWiki]
 * [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Lista de correo das edicións de MediaWiki]',
 
-'about'          => 'Acerca de',
-'article'        => 'Artigo',
-'newwindow'      => '(abre unha ventá nova)',
-'cancel'         => 'Cancelar',
+'about'         => 'Acerca de',
+'article'       => 'Artigo',
+'newwindow'     => '(abre unha ventá nova)',
+'cancel'        => 'Cancelar',
+'moredotdotdot' => 'Máis...',
+'mypage'        => 'A miña páxina',
+'mytalk'        => 'A miña conversa',
+'anontalk'      => 'Conversa con este enderezo IP',
+'navigation'    => 'Navegación',
+'and'           => '&#32;e',
+
+# Cologne Blue skin
 'qbfind'         => 'Procurar',
 'qbbrowse'       => 'Navegar',
 'qbedit'         => 'Editar',
@@ -338,15 +358,35 @@ $messages = array(
 'qbpageinfo'     => 'Contexto',
 'qbmyoptions'    => 'As miñas páxinas',
 'qbspecialpages' => 'Páxinas especiais',
-'moredotdotdot'  => 'Máis...',
-'mypage'         => 'A miña páxina',
-'mytalk'         => 'A miña conversa',
-'anontalk'       => 'Conversa con este enderezo IP',
-'navigation'     => 'Navegación',
-'and'            => '&#32;e',
+'faq'            => 'PMF',
+'faqpage'        => 'Project:FAQ',
 
-# Metadata in edit box
-'metadata_help' => 'Metadatos:',
+# Vector skin
+'vector-action-addsection'   => 'Engadir un comentario',
+'vector-action-delete'       => 'Borrar',
+'vector-action-move'         => 'Mover',
+'vector-action-protect'      => 'Protexer',
+'vector-action-undelete'     => 'Restaurar',
+'vector-action-unprotect'    => 'Desprotexer',
+'vector-namespace-category'  => 'Categoría',
+'vector-namespace-help'      => 'Páxina de axuda',
+'vector-namespace-image'     => 'Ficheiro',
+'vector-namespace-main'      => 'Páxina',
+'vector-namespace-media'     => 'Páxina de multimedia',
+'vector-namespace-mediawiki' => 'Mensaxe',
+'vector-namespace-project'   => 'Páxina do proxecto',
+'vector-namespace-special'   => 'Páxina especial',
+'vector-namespace-talk'      => 'Conversa',
+'vector-namespace-template'  => 'Modelo',
+'vector-namespace-user'      => 'Páxina de usuario',
+'vector-view-create'         => 'Crear',
+'vector-view-edit'           => 'Editar',
+'vector-view-history'        => 'Ver o historial',
+'vector-view-view'           => 'Ler',
+'vector-view-viewsource'     => 'Ver o código fonte',
+'actions'                    => 'Accións',
+'namespaces'                 => 'Espazos de nomes',
+'variants'                   => 'Variantes',
 
 'errorpagetitle'    => 'Erro',
 'returnto'          => 'Volver a "$1".',
@@ -396,18 +436,22 @@ $messages = array(
 'otherlanguages'    => 'Outras linguas',
 'redirectedfrom'    => '(Redirixido desde "$1")',
 'redirectpagesub'   => 'Páxina de redirección',
-'lastmodifiedat'    => 'A última modificación desta páxina foi o $1 ás $2.', # $1 date, $2 time
+'lastmodifiedat'    => 'A última modificación desta páxina foi o $1 ás $2.',
 'viewcount'         => 'Esta páxina foi visitada {{PLURAL:$1|unha vez|$1 veces}}.',
 'protectedpage'     => 'Páxina protexida',
 'jumpto'            => 'Ir a:',
 'jumptonavigation'  => 'navegación',
 'jumptosearch'      => 'procura',
+'view-pool-error'   => 'Sentímolo, os servidores están sobrecargados nestes intres.
+Hai moitos usuarios intentando ver esta páxina.
+Por favor, agarde un anaco antes de intentar acceder á páxina de novo.
+
+$1',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Acerca de {{SITENAME}}',
 'aboutpage'            => 'Project:Acerca de',
 'copyright'            => 'Todo o texto está dispoñíbel baixo $1.',
-'copyrightpagename'    => 'Dereitos de autor de {{SITENAME}}',
 'copyrightpage'        => '{{ns:project}}:Dereitos de autor',
 'currentevents'        => 'Actualidade',
 'currentevents-url'    => 'Project:Actualidade',
@@ -415,8 +459,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:Advertencia xeral',
 'edithelp'             => 'Axuda de edición',
 'edithelppage'         => 'Help:Como editar unha páxina',
-'faq'                  => 'PMF',
-'faqpage'              => 'Project:FAQ',
 'helppage'             => 'Help:Axuda',
 'mainpage'             => 'Portada',
 'mainpage-description' => 'Portada',
@@ -496,10 +538,6 @@ A última consulta á base de datos foi:
 "$1"
 desde a función "$2".
 A base de datos devolveu o erro "$3: $4"',
-'noconnect'            => 'O wiki está experimentando algunhas dificultades técnicas e non se pode contactar co servidor da base de datos.<br />
-$1',
-'nodb'                 => 'Non se pode seleccionar a base de datos $1',
-'cachederror'          => 'Esta é unha copia gardada da páxina solicitada, polo que pode non estar ao día.',
 'laggedslavemode'      => "'''Aviso:''' a páxina pode non conter as actualizacións recentes.",
 'readonly'             => 'Base de datos fechada',
 'enterlockreason'      => 'Dea unha razón para o fechamento, incluíndo unha estimación de até cando se manterá.',
@@ -517,6 +555,8 @@ Por favor, comuníquello a un [[Special:ListUsers/sysop|administrador]] tomando 
 'readonly_lag'         => 'A base de datos bloqueouse automaticamente mentres os servidores escravos da base de datos se actualizan desde o máster',
 'internalerror'        => 'Erro interno',
 'internalerror_info'   => 'Erro interno: $1',
+'fileappenderrorread'  => 'Non foi posible ler "$1" durante a inserción.',
+'fileappenderror'      => 'Non se puido engadir "$1" a "$2".',
 'filecopyerror'        => 'Non se deu copiado o ficheiro "$1" a "$2".',
 'filerenameerror'      => 'Non se pode cambiar o nome do ficheiro "$1" a "$2".',
 'filedeleteerror'      => 'Non se deu borrado o ficheiro "$1".',
@@ -526,7 +566,7 @@ Por favor, comuníquello a un [[Special:ListUsers/sysop|administrador]] tomando 
 'unexpected'           => 'Valor inesperado: "$1"="$2".',
 'formerror'            => 'Erro: non se pode enviar o formulario',
 'badarticleerror'      => 'Non pode efectuarse esta acción nesta páxina.',
-'cannotdelete'         => 'Non se pode borrar a páxina ou imaxe especificada.
+'cannotdelete'         => 'Non se puido borrar a páxina ou imaxe "$1".
 Se cadra, xa foi borrada por alguén.',
 'badtitle'             => 'Título incorrecto',
 'badtitletext'         => 'O título da páxina pedida non era válido, estaba baleiro ou proviña dunha ligazón interlingua ou interwiki incorrecta.
@@ -563,7 +603,6 @@ A razón dada foi ''$2''.",
 'virus-unknownscanner' => 'antivirus descoñecido:',
 
 # Login and logout pages
-'logouttitle'                => 'Saída de usuario ao anonimato',
 'logouttext'                 => "'''Agora está fóra do sistema.'''
 
 Pode continuar usando {{SITENAME}} de xeito anónimo, ou pode [[Special:UserLogin|acceder de novo]] co mesmo nome de usuario ou con outro.
@@ -571,7 +610,6 @@ Teña en conta que mentres non se limpa a memoria caché do seu navegador algunh
 'welcomecreation'            => '== Reciba a nosa benvida, $1! ==
 A súa conta foi creada correctamente.
 Non esqueza personalizar as súas [[Special:Preferences|preferencias de {{SITENAME}}]].',
-'loginpagetitle'             => 'Acceso de usuario',
 'yourname'                   => 'Nome de usuario:',
 'yourpassword'               => 'Contrasinal:',
 'yourpasswordagain'          => 'Insira o seu contrasinal outra vez:',
@@ -582,6 +620,7 @@ Non esqueza personalizar as súas [[Special:Preferences|preferencias de {{SITENA
 'nav-login-createaccount'    => 'Rexistro',
 'loginprompt'                => "Debe habilitar as ''cookies'' para acceder a {{SITENAME}}.",
 'userlogin'                  => 'Rexistro',
+'userloginnocreate'          => 'Rexistro',
 'logout'                     => 'Saír ao anonimato',
 'userlogout'                 => 'Saír ao anonimato',
 'notloggedin'                => 'Non accedeu ao sistema',
@@ -594,28 +633,8 @@ Non esqueza personalizar as súas [[Special:Preferences|preferencias de {{SITENA
 'badretype'                  => 'Os contrasinais que inseriu non coinciden entre si.',
 'userexists'                 => 'O nome de usuario que pretende usar xa está en uso.
 Escolla un nome diferente.',
-'youremail'                  => 'Correo electrónico:',
-'username'                   => 'Nome de usuario:',
-'uid'                        => 'ID do usuario:',
-'prefs-memberingroups'       => 'Membro {{PLURAL:$1|do grupo|dos grupos}}:',
-'yourrealname'               => 'Nome real:',
-'yourlanguage'               => 'Lingua da interface:',
-'yourvariant'                => 'Variante de lingua:',
-'yournick'                   => 'Sinatura:',
-'badsig'                     => 'Sinatura non válida; comprobe o código HTML utilizado.',
-'badsiglength'               => 'A súa sinatura é demasiado longa.
-Ha de ter menos {{PLURAL:$1|dun carácter|de $1 caracteres}}.',
-'yourgender'                 => 'Sexo:',
-'gender-unknown'             => 'Non especificado',
-'gender-male'                => 'Masculino',
-'gender-female'              => 'Feminino',
-'prefs-help-gender'          => 'Opcional: usado para xerar correctamente o sexo por parte do software. Esta información será pública.',
-'email'                      => 'Correo electrónico',
-'prefs-help-realname'        => 'O seu nome real é opcional, pero se escolle dalo utilizarase para atribuírlle o seu traballo.',
 'loginerror'                 => 'Erro ao acceder ao sistema',
-'prefs-help-email'           => 'O enderezo de correo electrónico é opcional, pero permite que se lle envíe un contrasinal novo se se esquece del.
-Tamén pode deixar que outras persoas se poñan en contacto con vostede desde a súa páxina de usuario ou de conversa sen necesidade de revelar a súa identidade.',
-'prefs-help-email-required'  => 'Requírese o enderezo de correo electrónico.',
+'createaccounterror'         => 'Non se puido crear a conta: $1',
 'nocookiesnew'               => 'A conta de usuario foi creada, pero non accedeu ao sistema.
 {{SITENAME}} para rexistrar os usuarios.
 Vostede ten as cookies deshabilitadas.
@@ -632,12 +651,13 @@ Verifique o nome que inseriu ou [[Special:UserLogin/signup|cree unha nova conta]
 'nosuchusershort'            => 'Non existe ningún usuario chamado "<nowiki>$1</nowiki>".
 Verifique o nome que inseriu.',
 'nouserspecified'            => 'Debe especificar un nome de usuario.',
+'login-userblocked'          => 'Este usuario está bloqueado. Acceso non autorizado.',
 'wrongpassword'              => 'O contrasinal escrito é incorrecto.
 Por favor, insira outro.',
 'wrongpasswordempty'         => 'O campo do contrasinal estaba en branco.
 Por favor, inténteo de novo.',
-'passwordtooshort'           => 'O seu contrasinal é inválido ou demasiado curto.
-Debe conter como mínimo {{PLURAL:$1|1 carácter|$1 caracteres}} e ten que ser diferente do seu nome de usuario.',
+'passwordtooshort'           => 'Os contrasinais deben conter, como mínimo, {{PLURAL:$1|1 carácter|$1 caracteres}}.',
+'password-name-match'        => 'O seu contrasinal debe ser diferente do seu nome de usuario.',
 'mailmypassword'             => 'Enviádeme un contrasinal novo por correo',
 'passwordremindertitle'      => 'Novo contrasinal temporal para {{SITENAME}}',
 'passwordremindertext'       => 'Alguén (probablemente vostede, desde o enderezo IP $1) solicitou un novo
@@ -650,6 +670,7 @@ Se foi alguén diferente o que fixo esta solicitude ou se xa se lembra do seu co
 e non o quere modificar, pode ignorar esta mensaxe e
 continuar a utilizar o seu contrasinal vello.',
 'noemail'                    => 'O usuario "$1" non posúe ningún enderezo de correo electrónico rexistrado.',
+'noemailcreate'              => 'Ten que proporcionar un enderezo de correo electrónico válido',
 'passwordsent'               => 'Envióuselle un contrasinal novo ao enderezo de correo electrónico rexistrado de "$1".
 Por favor, acceda ao sistema de novo tras recibilo.',
 'blocked-mailpassword'       => 'O seu enderezo IP está bloqueado e ten restrinxida a edición de artigos. Tampouco se lle permite usar a función de recuperación do contrasinal para evitar abusos do sistema.',
@@ -673,9 +694,11 @@ Insira un enderezo cun formato válido ou baleire ese campo.',
 Debe acceder ao sistema e mudar o contrasinal agora.
 
 Pode facer caso omiso desta mensaxe se se creou esta conta por erro.',
+'usernamehasherror'          => 'O nome de usuario non pode conter cancelos ("#")',
 'login-throttled'            => 'Fixo demasiados intentos de inserir o contrasinal.
 Por favor, agarde antes de probar outra vez.',
 'loginlanguagelabel'         => 'Lingua: $1',
+'suspicious-userlogout'      => 'Rexeitouse a súa petición de saír do sistema porque semella que a enviou un navegador roto ou a caché dun proxy.',
 
 # Password reset dialog
 'resetpass'                 => 'Cambiar o contrasinal',
@@ -687,17 +710,13 @@ Por favor, agarde antes de probar outra vez.',
 'retypenew'                 => 'Insira outra vez o novo contrasinal:',
 'resetpass_submit'          => 'Poñer o contrasinal e entrar',
 'resetpass_success'         => 'O cambio do contrasinal realizouse con éxito! Agora pode entrar...',
-'resetpass_bad_temporary'   => 'O contrasinal provisorio non é válido. Isto pode deberse a que xa mudou o contrasinal con éxito ou a que solicitou un novo contrasinal provisorio.',
 'resetpass_forbidden'       => 'Os contrasinais non poden ser mudados',
 'resetpass-no-info'         => 'Debe acceder ao sistema para acceder directamente a esta páxina.',
 'resetpass-submit-loggedin' => 'Cambiar o contrasinal',
+'resetpass-submit-cancel'   => 'Cancelar',
 'resetpass-wrong-oldpass'   => 'Contrasinal temporal ou actual inválido. 
 Pode ser que xa cambiase o seu contrasinal ou que solicitase un novo contrasinal temporal.',
 'resetpass-temp-password'   => 'Contrasinal temporal:',
-'resetpass-log'             => 'Rexistro de restablecementos de contrasinais',
-'resetpass-logtext'         => 'A continuación hai un rexistro cos usuarios aos que un administrador lles restableceu o seu contrasinal.',
-'resetpass-logentry'        => 'cambiou o contrasinal de $1',
-'resetpass-comment'         => 'Motivo para o restablecemento do contrasinal:',
 
 # Edit page toolbar
 'bold_sample'     => 'Texto en negra',
@@ -774,7 +793,6 @@ Por favor, inclúa eses datos nas consultas que faga.',
 'blockededitsource'                => "O texto das '''súas edicións''' en '''$1''' móstrase a continuación:",
 'whitelistedittitle'               => 'Cómpre acceder ao sistema para poder editar',
 'whitelistedittext'                => 'Ten que $1 para poder editar páxinas.',
-'confirmedittitle'                 => 'Requírese confirmar o enderezo electrónico para editar',
 'confirmedittext'                  => 'Debe confirmar o correo electrónico antes de comezar a editar. Por favor, configure e dea validez ao correo mediante as súas [[Special:Preferences|preferencias de usuario]].',
 'nosuchsectiontitle'               => 'Non se pode atopar a sección',
 'nosuchsectiontext'                => 'Intentou editar unha sección que non existe.
@@ -795,13 +813,20 @@ Se chegou aquí por erro, simplemente prema no botón '''atrás''' do seu navega
 Pode [[Special:Search/{{PAGENAME}}|procurar polo título desta páxina]] noutras páxinas,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ollar os rexistros relacionados]
 ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} editar a páxina]</span>.',
+'noarticletext-nopermission'       => 'Actualmente non hai ningún texto nesta páxina.
+Pode [[Special:Search/{{PAGENAME}}|procurar polo título desta páxina]] noutras páxinas
+ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ollar os rexistros relacionados]</span>.',
 'userpage-userdoesnotexist'        => 'A conta do usuario "$1" non está rexistrada. Comprobe se desexa crear/editar esta páxina.',
+'userpage-userdoesnotexist-view'   => 'A conta de usuario "$1" non está rexistrada.',
+'blocked-notice-logextract'        => 'Este usuario está bloqueado.
+Velaquí está a última entrada do rexistro de bloqueos, por se quere consultala:',
 'clearyourcache'                   => "'''Nota: despois de gravar cómpre limpar a memoria caché do seu navegador para ver os cambios.'''
 '''Mozilla / Firefox / Safari:''' prema ''Maiúsculas'' á vez que en ''Recargar'', ou prema en ''Ctrl-F5'' ou ''Ctrl-R'' (''Command-R'' nos Macintosh);
 '''Konqueror:''' faga clic en ''Recargar'' ou prema en ''F5'';
 '''Opera:''' limpe a súa memoria caché en ''Ferramentas → Preferencias'';
 '''Internet Explorer:''' prema ''Ctrl'' ao tempo que fai clic en ''Refrescar'', ou prema ''Ctrl-F5''.",
-'usercssjsyoucanpreview'           => "'''Nota:''' use o botón \"Mostrar a vista previa\" para verificar o novo CSS/JS antes de gardalo.",
+'usercssyoucanpreview'             => "'''Nota:''' use o botón \"{{int:showpreview}}\" para verificar o novo CSS antes de gardalo.",
+'userjsyoucanpreview'              => "'''Nota:''' use o botón \"{{int:showpreview}}\" para verificar o novo JS antes de gardalo.",
 'usercsspreview'                   => "'''Lembre que só está vendo a vista previa do seu CSS de usuario.'''
 '''Este aínda non foi gardado!'''",
 'userjspreview'                    => "'''Lembre que só está probando/previsualizando o seu JavaScript de usuario.'''
@@ -855,13 +880,16 @@ Polo tanto, non se pode gardar.",
 Se cadra, pode cortar e pegar o texto nun ficheiro de texto e gardalo para despois.'''
 
 O administrador que a fechou deu esta explicación: $1",
-'protectedpagewarning'             => "'''ATENCIÓN: esta páxina foi fechada de xeito que só os usuarios con privilexios de administrador do sistema poden editala.'''",
-'semiprotectedpagewarning'         => "'''Nota:''' esta páxina foi bloqueada e só os usuarios rexistrados poden editala.",
+'protectedpagewarning'             => "'''Aviso: esta páxina foi protexida de xeito que só os usuarios con privilexios de administrador a poidan editar.'''
+Velaquí está a última entrada no rexistro, por se quere consultala:",
+'semiprotectedpagewarning'         => "'''Nota:''' esta páxina foi protexida de xeito que só os usuarios rexistrados a poidan editar.
+Velaquí está a última entrada no rexistro, por se quere consultala:",
 'cascadeprotectedwarning'          => "'''Aviso:''' esta páxina foi protexida de xeito que só a poden editar os usuarios con privilexios de administrador debido a que está incluída {{PLURAL:\$1|na seguinte páxina protexida|nas seguintes páxinas protexidas}} coa opción \"protección en serie\" activada:",
-'titleprotectedwarning'            => "'''AVISO: bloqueouse esta páxina para que [[Special:ListGroupRights|só algúns usuarios]] a poidan crear.'''",
-'templatesused'                    => 'Modelos usados nesta páxina:',
-'templatesusedpreview'             => 'Modelos usados nesta vista previa:',
-'templatesusedsection'             => 'Modelos usados nesta sección:',
+'titleprotectedwarning'            => "'''Aviso: esta páxina foi protexida de xeito que [[Special:ListGroupRights|só algúns usuarios]] a poidan crear.'''
+Velaquí está a última entrada no rexistro, por se quere consultala:",
+'templatesused'                    => '{{PLURAL:$1|Modelo usado|Modelos usados}} nesta páxina:',
+'templatesusedpreview'             => '{{PLURAL:$1|Modelo usado|Modelos usados}} nesta vista previa:',
+'templatesusedsection'             => '{{PLURAL:$1|Modelo usado|Modelos usados}} nesta sección:',
 'template-protected'               => '(protexido)',
 'template-semiprotected'           => '(semiprotexido)',
 'hiddencategories'                 => 'Esta páxina forma parte {{PLURAL:$1|dunha categoría oculta|de $1 categorías ocultas}}:',
@@ -870,15 +898,18 @@ O administrador que a fechou deu esta explicación: $1",
 'nocreatetext'                     => '{{SITENAME}} ten restrinxida a posibilidade de crear páxinas novas.
 Pode volver e editar unha páxina que xa existe ou, se non, [[Special:UserLogin|rexistrarse ou crear unha conta]].',
 'nocreate-loggedin'                => 'Non dispón dos permisos necesarios para crear páxinas novas.',
+'sectioneditnotsupported-title'    => 'A edición de seccións non está soportada',
+'sectioneditnotsupported-text'     => 'A edición de seccións non está soportada nesta páxina.',
 'permissionserrors'                => 'Erros de permisos',
 'permissionserrorstext'            => 'Non dispón de permiso para facelo por {{PLURAL:$1|esta razón|estas razóns}}:',
 'permissionserrorstext-withaction' => 'Non ten os permisos necesarios para $2, {{PLURAL:$1|pola seguinte razón|polas seguintes razóns}}:',
-'recreate-deleted-warn'            => "'''Atención: vai volver crear unha páxina que xa foi eliminada anteriormente.
+'recreate-moveddeleted-warn'       => "'''Atención: vai volver crear unha páxina que xa foi eliminada anteriormente.'''
 
 Debería considerar se é apropiado continuar a editar esta páxina.
-Velaquí está o rexistro de borrado desta páxina, por se quere consultalo:",
-'deleted-notice'                   => 'Esta páxina foi borrada. Embaixo pódese ver o rexistro de borrados desta páxina, por se o quere consultar.',
-'deletelog-fulllog'                => 'Ver o rexistro completo',
+Velaquí están o rexistro de borrados e mais o de traslados desta páxina, por se quere consultalos:",
+'moveddeleted-notice'              => 'Esta páxina foi borrada.
+A continuación pódese ver o rexistro de borrados e traslados desta páxina, por se quere consultalos.',
+'log-fulllog'                      => 'Ver o rexistro completo',
 'edit-hook-aborted'                => "A edición foi abortada polo ''hook''.
 Este non deu ningunha explicación.",
 'edit-gone-missing'                => 'Non se pode actualizar a páxina.
@@ -901,6 +932,7 @@ Estes argumentos serán omitidos.',
 'post-expand-template-argument-category'  => 'Páxinas que conteñen argumentos de modelo omitidos',
 'parser-template-loop-warning'            => 'Detectouse un modelo en bucle: [[$1]]',
 'parser-template-recursion-depth-warning' => 'Excedeuse o límite da profundidade do recurso do modelo ($1)',
+'language-converter-depth-warning'        => 'Excedeuse o límite de profundidade do convertedor de lingua ($1)',
 
 # "Undo" feature
 'undo-success' => 'A edición pode ser desfeita.
@@ -919,9 +951,9 @@ A razón dada por $3 foi ''$2''",
 'viewpagelogs'           => 'Ver os rexistros desta páxina',
 'nohistory'              => 'Esta páxina non posúe ningún historial de edicións.',
 'currentrev'             => 'Revisión actual',
-'currentrev-asof'        => 'Revisión actual ás $1',
-'revisionasof'           => 'Revisión como estaba ás $1',
-'revision-info'          => 'Revisión feita por $2 ás $1', # Additionally available: $3: revision id
+'currentrev-asof'        => 'Revisión actual feita o $2 ás $3',
+'revisionasof'           => 'Revisión como estaba o $2 ás $3',
+'revision-info'          => 'Revisión feita o $4 ás $5 por $2',
 'previousrevision'       => '← Revisión máis antiga',
 'nextrevision'           => 'Revisión máis nova →',
 'currentrevisionlink'    => 'Revisión actual',
@@ -933,7 +965,7 @@ A razón dada por $3 foi ''$2''",
 'histlegend'             => "Selección de diferenzas: marque as versións que queira comparar e prema no botón ao final.<br />
 Lenda: '''({{int:cur}})''' = diferenza coa versión actual, '''({{int:last}})''' = diferenza coa versión precedente, '''{{int:minoreditletter}}''' = edición pequena.",
 'history-fieldset-title' => 'Navegar polo historial',
-'deletedrev'             => '[borrado]',
+'history-show-deleted'   => 'Borrados soamente',
 'histfirst'              => 'Primeiras',
 'histlast'               => 'Últimas',
 'historysize'            => '({{PLURAL:$1|1 byte|$1 bytes}})',
@@ -942,71 +974,114 @@ Lenda: '''({{int:cur}})''' = diferenza coa versión actual, '''({{int:last}})'''
 # Revision feed
 'history-feed-title'          => 'Historial de revisións',
 'history-feed-description'    => 'Historial de revisións desta páxina no wiki',
-'history-feed-item-nocomment' => '$1 en $2', # user at time
+'history-feed-item-nocomment' => '$1 en $2',
 'history-feed-empty'          => 'A páxina solicitada non existe.
 Puido borrarse ou moverse a outro nome.
 Probe a [[Special:Search|buscar no wiki]] para atopar as páxinas relacionadas.',
 
 # Revision deletion
-'rev-deleted-comment'            => '(comentario eliminado)',
-'rev-deleted-user'               => '(nome de usuario eliminado)',
-'rev-deleted-event'              => '(rexistro de evento eliminado)',
-'rev-deleted-text-permission'    => "Esta revisión da páxina foi '''eliminada'''.
-Pode ampliar os detalles no [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].",
-'rev-deleted-text-view'          => "Esta revisión da páxina foi '''eliminada'''.
-Como administrador pode vela; pode ampliar os detalles no [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].",
-'rev-deleted-no-diff'            => "Non pode ver esta diferenza porque unha das revisións foi '''eliminada'''.
-Pode ampliar os detalles no [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].",
-'rev-deleted-unhide-diff'        => "Unha das revisións desta diferenza foi '''eliminada'''.
-Pode ampliar os detalles no [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].
+'rev-deleted-comment'         => '(comentario eliminado)',
+'rev-deleted-user'            => '(nome de usuario eliminado)',
+'rev-deleted-event'           => '(rexistro de evento eliminado)',
+'rev-deleted-user-contribs'   => '[nome de usuario ou enderezo IP eliminado; edición agochada das contribucións]',
+'rev-deleted-text-permission' => "Esta revisión da páxina foi '''borrada'''.
+Pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].",
+'rev-deleted-text-unhide'     => "Esta revisión da páxina foi '''borrada'''.
+Pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].
+Como administrador aínda podería [$1 ver esta revisión] se quixese.",
+'rev-suppressed-text-unhide'  => "Esta revisión da páxina foi '''suprimida'''.
+Pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rexistro de supresións].
+Como administrador aínda podería [$1 ver esta revisión] se quixese.",
+'rev-deleted-text-view'       => "Esta revisión da páxina foi '''borrada'''.
+Como administrador pode vela; pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].",
+'rev-suppressed-text-view'    => "Esta revisión da páxina foi '''suprimida'''.
+Como administrador pode vela; pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rexistro de supresións].",
+'rev-deleted-no-diff'         => "Non pode ver esta diferenza porque unha das revisións foi '''borrada'''.
+Pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].",
+'rev-suppressed-no-diff'      => "Non pode ver esta diferenza porque unha das revisións foi '''borrada'''.",
+'rev-deleted-unhide-diff'     => "Unha das revisións desta diferenza foi '''borrada'''.
+Pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].
 Como administrador aínda podería [$1 ver esta diferenza] se quixese.",
-'rev-delundel'                   => 'mostrar/agochar',
-'revisiondelete'                 => 'Borrar/restaurar revisións',
-'revdelete-nooldid-title'        => 'Revisión inválida',
-'revdelete-nooldid-text'         => 'Non indicou a revisión ou revisións sobre as que realizar esta
+'rev-suppressed-unhide-diff'  => "Unha das revisións desta diferenza foi '''suprimida'''.
+Pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rexistro de supresións].
+Como administrador aínda podería [$1 ver esta diferenza] se quixese.",
+'rev-deleted-diff-view'       => "Unha das revisións desta diferenza foi '''borrada'''.
+Como administrador pode vela; pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} rexistro de borrados].",
+'rev-suppressed-diff-view'    => "Unha das revisións desta diferenza foi '''suprimida'''.
+Como administrador pode vela; pode ampliar os detalles no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rexistro de supresións].",
+'rev-delundel'                => 'mostrar/agochar',
+'rev-showdeleted'             => 'mostrar',
+'revisiondelete'              => 'Borrar/restaurar revisións',
+'revdelete-nooldid-title'     => 'Revisión inválida',
+'revdelete-nooldid-text'      => 'Non indicou a revisión ou revisións sobre as que realizar esta
 función, a revisión especificada non existe ou está intentando agochar a revisión actual.',
-'revdelete-nologtype-title'      => 'Non se especificou ningún tipo de rexistro',
-'revdelete-nologtype-text'       => 'Non especificou un tipo de rexistro co que levar a cabo esta acción.',
-'revdelete-toomanytargets-title' => 'Demasiados obxectivos',
-'revdelete-toomanytargets-text'  => 'Especificou demasiados tipos de obxectivos cos que levar a cabo esta acción.',
-'revdelete-nologid-title'        => 'Entrada de rexistro inválida',
-'revdelete-nologid-text'         => 'Ou non especificou o evento rexistrado no que levar a cabo esta función ou a entrada que deu non existe.',
-'revdelete-selected'             => "'''{{PLURAL:\$2|Revisión seleccionada|Revisións seleccionadas}} de \"[[:\$1]]\":'''",
-'logdelete-selected'             => "'''{{PLURAL:$1|Rexistro de evento seleccionado|Rexistro de eventos seleccionados}}:'''",
-'revdelete-text'                 => "'''As revisións borradas seguirán aparecendo no historial da páxina e nos rexistros, pero partes do seu contido serán inaccesibles de cara ao público.'''
-
-Os demais administradores de {{SITENAME}} poderán acceder ao contido agochado e poderán restaurar a páxina de novo a través desta mesma interface, a non ser que sexa establecida unha restrición adicional.
-Por favor, confirme que esta é a súa intención, que comprende as consecuencias e que o fai de acordo [[{{MediaWiki:Policy-url}}|coas políticas]].",
-'revdelete-suppress-text'        => "A eliminación '''só''' debería ser usada nos seguintes casos:
+'revdelete-nologtype-title'   => 'Non se especificou ningún tipo de rexistro',
+'revdelete-nologtype-text'    => 'Non especificou un tipo de rexistro co que levar a cabo esta acción.',
+'revdelete-nologid-title'     => 'Entrada de rexistro inválida',
+'revdelete-nologid-text'      => 'Ou non especificou o evento rexistrado no que levar a cabo esta función ou a entrada que deu non existe.',
+'revdelete-no-file'           => 'O ficheiro especificado non existe.',
+'revdelete-show-file-confirm' => 'Está seguro de querer ver unha revisión borrada do ficheiro "<nowiki>$1</nowiki>" do día $2 ás $3?',
+'revdelete-show-file-submit'  => 'Si',
+'revdelete-selected'          => "'''{{PLURAL:\$2|Revisión seleccionada|Revisións seleccionadas}} de \"[[:\$1]]\":'''",
+'logdelete-selected'          => "'''{{PLURAL:$1|Rexistro de evento seleccionado|Rexistro de eventos seleccionados}}:'''",
+'revdelete-text'              => "'''As revisións borradas seguirán aparecendo no historial da páxina e nos rexistros, pero partes do seu contido serán inaccesibles de cara ao público.'''
+Os demais administradores de {{SITENAME}} poderán acceder ao contido agochado e poderán restaurar a páxina de novo a través desta mesma interface, a non ser que se estableza algunha restrición adicional.",
+'revdelete-confirm'           => 'Por favor, confirme que quere levar a cabo esta acción, que comprende as consecuencias e que o fai de acordo [[{{MediaWiki:Policy-url}}|coas políticas]].',
+'revdelete-suppress-text'     => "A eliminación '''só''' debería ser usada nos seguintes casos:
 * Información persoal inapropiada
 *: ''domicilios e números de teléfono, números da seguridade social, etc.''",
-'revdelete-legend'               => 'Aplicar restricións de visibilidade',
-'revdelete-hide-text'            => 'Agochar o texto da revisión',
-'revdelete-hide-name'            => 'Agochar a acción e o destino',
-'revdelete-hide-comment'         => 'Agochar o resumo de edición',
-'revdelete-hide-user'            => 'Agochar o nome de usuario ou o enderezo IP do editor',
-'revdelete-hide-restricted'      => 'Eliminar os datos da vista dos administradores así coma da doutros',
-'revdelete-suppress'             => 'Eliminar os datos da vista dos administradores así coma da doutros',
-'revdelete-hide-image'           => 'Agochar o contido do ficheiro',
-'revdelete-unsuppress'           => 'Retirar as restricións sobre as revisións restauradas',
-'revdelete-log'                  => 'Motivo:',
-'revdelete-submit'               => 'Aplicar á revisión seleccionada',
-'revdelete-logentry'             => 'mudou a visibilidade dunha revisión de "[[$1]]"',
-'logdelete-logentry'             => 'mudou a visibilidade do evento de [[$1]]',
-'revdelete-success'              => "'''Actualizouse sen problemas a visibilidade da revisión.'''",
-'logdelete-success'              => "'''Configurouse sen problemas a visibilidade do rexistro.'''",
-'revdel-restore'                 => 'cambiar a visibilidade',
-'pagehist'                       => 'Historial da páxina',
-'deletedhist'                    => 'Historial de borrado',
-'revdelete-content'              => 'o contido',
-'revdelete-summary'              => 'o resumo de edición',
-'revdelete-uname'                => 'o nome de usuario',
-'revdelete-restricted'           => 'aplicou as restricións aos administradores',
-'revdelete-unrestricted'         => 'eliminou as restricións aos administradores',
-'revdelete-hid'                  => 'agochou $1',
-'revdelete-unhid'                => 'descubriu $1',
-'revdelete-log-message'          => '$1 {{PLURAL:$2|dunha revisión|de $2 revisións}}',
-'logdelete-log-message'          => '$1 {{PLURAL:$2|dun evento|de $2 eventos}}',
+'revdelete-legend'            => 'Aplicar restricións de visibilidade',
+'revdelete-hide-text'         => 'Agochar o texto da revisión',
+'revdelete-hide-image'        => 'Agochar o contido do ficheiro',
+'revdelete-hide-name'         => 'Agochar a acción e o destino',
+'revdelete-hide-comment'      => 'Agochar o resumo de edición',
+'revdelete-hide-user'         => 'Agochar o nome de usuario ou o enderezo IP do editor',
+'revdelete-hide-restricted'   => 'Eliminar os datos da vista dos administradores así coma da doutros',
+'revdelete-radio-same'        => '(non cambiar)',
+'revdelete-radio-set'         => 'Si',
+'revdelete-radio-unset'       => 'Non',
+'revdelete-suppress'          => 'Eliminar os datos da vista dos administradores así coma da doutros',
+'revdelete-unsuppress'        => 'Retirar as restricións sobre as revisións restauradas',
+'revdelete-log'               => 'Motivo:',
+'revdelete-submit'            => 'Aplicar {{PLURAL:$1|á revisión seleccionada|ás revisións seleccionadas}}',
+'revdelete-logentry'          => 'mudou a visibilidade dunha revisión de "[[$1]]"',
+'logdelete-logentry'          => 'mudou a visibilidade do evento de [[$1]]',
+'revdelete-success'           => "'''Actualizouse sen problemas a visibilidade da revisión.'''",
+'revdelete-failure'           => "'''Non se puido actualizar a visibilidade da revisión:'''
+$1",
+'logdelete-success'           => "'''Configurouse sen problemas a visibilidade do rexistro.'''",
+'logdelete-failure'           => "'''A visibilidade do rexistro non pode ser fixada:'''
+$1",
+'revdel-restore'              => 'cambiar a visibilidade',
+'pagehist'                    => 'Historial da páxina',
+'deletedhist'                 => 'Historial de borrado',
+'revdelete-content'           => 'o contido',
+'revdelete-summary'           => 'o resumo de edición',
+'revdelete-uname'             => 'o nome de usuario',
+'revdelete-restricted'        => 'aplicou as restricións aos administradores',
+'revdelete-unrestricted'      => 'eliminou as restricións aos administradores',
+'revdelete-hid'               => 'agochou $1',
+'revdelete-unhid'             => 'descubriu $1',
+'revdelete-log-message'       => '$1 {{PLURAL:$2|dunha revisión|de $2 revisións}}',
+'logdelete-log-message'       => '$1 {{PLURAL:$2|dun evento|de $2 eventos}}',
+'revdelete-hide-current'      => 'Produciuse un erro ao agochar o elemento con data de $1 ás $2: esta é a revisión actual.
+Non pode ser agochado.',
+'revdelete-show-no-access'    => 'Produciuse un erro ao mostrar o elemento con data de $1 ás $2: este elemento marcouse como "restrinxido".
+Non ten acceso a el.',
+'revdelete-modify-no-access'  => 'Produciuse un erro ao modificar o elemento con data de $1 ás $2: este elemento marcouse como "restrinxido".
+Non ten acceso a el.',
+'revdelete-modify-missing'    => 'Produciuse un erro ao modificar o elemento con ID $1: falta na base de datos!',
+'revdelete-no-change'         => "'''Aviso:''' o elemento con data de $1 ás $2 xa ten solicitado as configuracións de visibilidade.",
+'revdelete-concurrent-change' => 'Produciuse un erro ao modificar o elemento con data de $1 ás $2: o seu estado parece ter sido cambiado por alguén mentres intentaba modificalo.
+Por favor, comprobe o rexistros.',
+'revdelete-only-restricted'   => 'Erro ao agochar o elemento con data de $1 ás $2: non pode eliminar elementos da vista dos administradores sen tamén seleccionar algunha das outras opcións de visibilidade.',
+'revdelete-reason-dropdown'   => '* Motivos frecuentes para borrar
+** Violación dos dereitos de autor
+** Información persoal inapropiada',
+'revdelete-otherreason'       => 'Outro motivo:',
+'revdelete-reasonotherlist'   => 'Outro motivo',
+'revdelete-edit-reasonlist'   => 'Editar os motivos de borrado',
+'revdelete-offender'          => 'Autor da revisión:',
 
 # Suppression log
 'suppressionlog'     => 'Rexistro de supresións',
@@ -1043,67 +1118,13 @@ Asegúrese de que esta modificación da páxina mantén a continuidade históric
 'mergelogpagetext'   => 'Embaixo hai unha lista coas fusións máis recentes do historial dunha páxina co doutra.',
 
 # Diffs
-'history-title'           => 'Historial de revisións de "$1"',
-'difference'              => '(Diferenzas entre revisións)',
-'lineno'                  => 'Liña $1:',
-'compareselectedversions' => 'Comparar as versións seleccionadas',
-'visualcomparison'        => 'Comparación visual',
-'wikicodecomparison'      => 'Comparación do texto wiki',
-'editundo'                => 'desfacer',
-'diff-multi'              => '(Non se {{PLURAL:$1|mostra unha revisión|mostran $1 revisións}} do historial.)',
-'diff-movedto'            => 'moveuse a "$1"',
-'diff-styleadded'         => 'estilo $1 engadido',
-'diff-added'              => 'engadiu $1',
-'diff-changedto'          => 'cambiou a $1',
-'diff-movedoutof'         => 'retirada de $1',
-'diff-styleremoved'       => 'estilo $1 eliminado',
-'diff-removed'            => 'eliminou $1',
-'diff-changedfrom'        => 'cambiou de $1',
-'diff-src'                => 'orixe',
-'diff-withdestination'    => 'con destino a $1',
-'diff-with'               => '&#32;con $1 $2',
-'diff-with-final'         => '&#32;e $1 $2',
-'diff-width'              => 'ancho',
-'diff-height'             => 'alto',
-'diff-p'                  => "un '''parágrafo'''",
-'diff-blockquote'         => "unha '''cita'''",
-'diff-h1'                 => "unha '''cabeceira de nivel 1'''",
-'diff-h2'                 => "unha '''cabeceira de nivel 2'''",
-'diff-h3'                 => "unha '''cabeceira de nivel 3'''",
-'diff-h4'                 => "unha '''cabeceira de nivel 4'''",
-'diff-h5'                 => "unha '''cabeceira de nivel 5'''",
-'diff-pre'                => "un '''bloque con formato previo'''",
-'diff-div'                => "unha '''división'''",
-'diff-ul'                 => "unha '''lista sen orde'''",
-'diff-ol'                 => "unha '''lista ordenada'''",
-'diff-li'                 => "unha '''lista de elementos'''",
-'diff-table'              => "unha '''táboa'''",
-'diff-tbody'              => "unha '''táboa de contido'''",
-'diff-tr'                 => "unha '''liña'''",
-'diff-td'                 => "unha '''cela'''",
-'diff-th'                 => "unha '''cabeceira'''",
-'diff-br'                 => "un '''salto de liña'''",
-'diff-hr'                 => "unha '''liña horizontal'''",
-'diff-code'               => "un '''bloque de código de ordenador'''",
-'diff-dl'                 => "unha '''lista de definicións'''",
-'diff-dt'                 => "un '''termo de definición'''",
-'diff-dd'                 => "unha '''definición'''",
-'diff-input'              => "unha '''entrada'''",
-'diff-form'               => "un '''formulario'''",
-'diff-img'                => "unha '''imaxe'''",
-'diff-span'               => "unha '''extensión'''",
-'diff-a'                  => "unha '''ligazón'''",
-'diff-i'                  => "'''cursiva'''",
-'diff-b'                  => "'''negra'''",
-'diff-strong'             => "'''negra'''",
-'diff-em'                 => "'''énfase'''",
-'diff-font'               => "'''fonte'''",
-'diff-big'                => "'''grande'''",
-'diff-del'                => "'''eliminou'''",
-'diff-tt'                 => "'''arranxou o largo'''",
-'diff-sub'                => "'''subíndice'''",
-'diff-sup'                => "'''superíndice'''",
-'diff-strike'             => "'''riscado'''",
+'history-title'            => 'Historial de revisións de "$1"',
+'difference'               => '(Diferenzas entre revisións)',
+'lineno'                   => 'Liña $1:',
+'compareselectedversions'  => 'Comparar as versións seleccionadas',
+'showhideselectedversions' => 'Mostrar/Agochar as versións seleccionadas',
+'editundo'                 => 'desfacer',
+'diff-multi'               => '(Non se {{PLURAL:$1|mostra unha revisión|mostran $1 revisións}} do historial.)',
 
 # Search results
 'searchresults'                    => 'Resultados da procura',
@@ -1111,29 +1132,25 @@ Asegúrese de que esta modificación da páxina mantén a continuidade históric
 'searchresulttext'                 => 'Para máis información sobre como realizar procuras en {{SITENAME}}, vexa [[{{MediaWiki:Helppage}}|{{int:help}}]].',
 'searchsubtitle'                   => 'A súa busca de "\'\'\'[[:$1]]\'\'\'" ([[Special:Prefixindex/$1|todas as páxinas que comezan por "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|todas as páxinas que ligan con "$1"]])',
 'searchsubtitleinvalid'            => "A súa busca de \"'''\$1'''\"",
-'noexactmatch'                     => "'''Non hai ningunha páxina titulada \"\$1\".'''
-Se quere, pode [[:\$1|creala]].",
-'noexactmatch-nocreate'            => "'''Non hai ningunha páxina titulada \"\$1\".'''",
 'toomanymatches'                   => 'Demasiadas coincidencias foron devoltas, por favor tente unha consulta diferente',
 'titlematches'                     => 'O título do artigo coincide',
 'notitlematches'                   => 'Non coincide ningún título de páxina',
 'textmatches'                      => 'O texto da páxina coincide',
 'notextmatches'                    => 'Non se atopou o texto en ningunha páxina',
-'prevn'                            => '$1 anteriores',
-'nextn'                            => '$1 seguintes',
+'prevn'                            => '{{PLURAL:$1|$1}} previas',
+'nextn'                            => '{{PLURAL:$1|$1}} seguintes',
 'prevn-title'                      => '$1 {{PLURAL:$1|resultado previo|resultados previos}}',
 'nextn-title'                      => '$1 {{PLURAL:$1|resultado seguinte|resultados seguintes}}',
 'shown-title'                      => 'Mostrar $1 {{PLURAL:$1|resultado|resultados}} por páxina',
-'viewprevnext'                     => 'Ver as ($1) ($2) ($3)',
+'viewprevnext'                     => 'Ver as ($1 {{int:pipe-separator}} $2) ($3)',
 'searchmenu-legend'                => 'Opcións de busca',
 'searchmenu-exists'                => "* Páxina \"'''[[\$1]]'''\"",
 'searchmenu-new'                   => "'''Crear a páxina \"[[:\$1]]\" neste wiki!'''",
 'searchhelp-url'                   => 'Help:Contidos',
 'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|Navegue polas páxinas que comezan coas mesmas iniciais]]',
 'searchprofile-articles'           => 'Páxinas de contido',
-'searchprofile-articles-and-proj'  => 'Páxinas de contido e do proxecto',
-'searchprofile-project'            => 'Páxinas do proxecto',
-'searchprofile-images'             => 'Ficheiros',
+'searchprofile-project'            => 'Páxinas do proxecto e de axuda',
+'searchprofile-images'             => 'Multimedia',
 'searchprofile-everything'         => 'Todo',
 'searchprofile-advanced'           => 'Avanzado',
 'searchprofile-articles-tooltip'   => 'Procurar en "$1"',
@@ -1141,8 +1158,6 @@ Se quere, pode [[:\$1|creala]].",
 'searchprofile-images-tooltip'     => 'Procurar ficheiros',
 'searchprofile-everything-tooltip' => 'Procurar en todo o contido (incluíndo páxinas de conversa)',
 'searchprofile-advanced-tooltip'   => 'Procurar nos espazos de nomes elixidos',
-'prefs-search-nsdefault'           => 'Procurar nos espazos de nomes por defecto:',
-'prefs-search-nscustom'            => 'Procurar nos espazos de nomes elixidos:',
 'search-result-size'               => '$1 ({{PLURAL:$2|1 palabra|$2 palabras}})',
 'search-result-score'              => 'Relevancia: $1%',
 'search-redirect'                  => '(redirixido desde "$1")',
@@ -1155,11 +1170,12 @@ Se quere, pode [[:\$1|creala]].",
 'search-mwsuggest-disabled'        => 'sen suxestións',
 'search-relatedarticle'            => 'Relacionado',
 'mwsuggest-disable'                => 'Deshabilitar as suxestións AJAX',
+'searcheverything-enable'          => 'Procurar en todos os espazos de nomes',
 'searchrelated'                    => 'relacionado',
 'searchall'                        => 'todo',
 'showingresults'                   => "Amósanse {{PLURAL:$1|'''1''' resultado|'''$1''' resultados}} comezando polo número '''$2'''.",
 'showingresultsnum'                => "Embaixo {{PLURAL:$3|amósase '''1''' resultado|amósanse '''$3''' resultados}}, comezando polo número '''$2'''.",
-'showingresultstotal'              => "A continuación {{PLURAL:$4|amósase o resultado '''$1''', dun total de '''$3'''|amósanse os resultados do '''$1''' ao '''$2''', dun total de '''$3'''}}",
+'showingresultsheader'             => "{{PLURAL:\$5|Resultado '''\$1''' de '''\$3'''|Resultados do '''\$1''' ao '''\$2''', dun total de '''\$3'''}} para \"'''\$4'''\"",
 'nonefound'                        => "'''Nota:''' só algúns espazos de nomes son procurados por omisión.
 Probe a fixar a súa petición con ''all:'' para procurar en todo o contido (incluíndo páxinas de conversa, modelos, etc.) ou use como prefixo o espazo de nomes desexado.",
 'search-nonefound'                 => 'Non se atopou ningún resultado que coincidise coa procura.',
@@ -1168,113 +1184,152 @@ Probe a fixar a súa petición con ''all:'' para procurar en todo o contido (inc
 'powersearch-ns'                   => 'Procurar nos espazos de nomes:',
 'powersearch-redir'                => 'Listar as redireccións',
 'powersearch-field'                => 'Procurar por',
+'powersearch-togglelabel'          => 'Seleccionar:',
+'powersearch-toggleall'            => 'Todos',
+'powersearch-togglenone'           => 'Ningún',
 'search-external'                  => 'Procura externa',
 'searchdisabled'                   => 'As procuras en {{SITENAME}} están deshabilitadas por cuestións de rendemento.
 Mentres tanto pode procurar usando o Google.
 Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados.',
 
+# Quickbar
+'qbsettings'               => 'Opcións da barra rápida',
+'qbsettings-none'          => 'Ningunha',
+'qbsettings-fixedleft'     => 'Fixa á esquerda',
+'qbsettings-fixedright'    => 'Fixa á dereita',
+'qbsettings-floatingleft'  => 'Flotante á esquerda',
+'qbsettings-floatingright' => 'Flotante á dereita',
+
 # Preferences page
-'preferences'               => 'Preferencias',
-'mypreferences'             => 'As miñas preferencias',
-'prefs-edits'               => 'Número de edicións:',
-'prefsnologin'              => 'Non accedeu ao sistema',
-'prefsnologintext'          => 'Debe <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} acceder ao sistema]</span> para modificar as preferencias de usuario.',
-'prefsreset'                => 'As preferencias foron postas cos valores orixinais.',
-'qbsettings'                => 'Opcións da barra rápida',
-'qbsettings-none'           => 'Ningunha',
-'qbsettings-fixedleft'      => 'Fixa á esquerda',
-'qbsettings-fixedright'     => 'Fixa á dereita',
-'qbsettings-floatingleft'   => 'Flotante á esquerda',
-'qbsettings-floatingright'  => 'Flotante á dereita',
-'changepassword'            => 'Cambiar o meu contrasinal',
-'skin'                      => 'Aparencia',
-'skin-preview'              => 'Vista previa',
-'math'                      => 'Fórmulas matemáticas',
-'dateformat'                => 'Formato da data',
-'datedefault'               => 'Ningunha preferencia',
-'datetime'                  => 'Data e hora',
-'math_failure'              => 'Fallou a conversión do código',
-'math_unknown_error'        => 'erro descoñecido',
-'math_unknown_function'     => 'función descoñecida',
-'math_lexing_error'         => 'erro de léxico',
-'math_syntax_error'         => 'erro de sintaxe',
-'math_image_error'          => 'Fallou a conversión a PNG; comprobe que latex, dvips, gs e convert están ben instalados',
-'math_bad_tmpdir'           => 'Non se puido crear ou escribir no directorio temporal de fórmulas',
-'math_bad_output'           => 'Non se puido crear ou escribir no directorio de saída de fórmulas',
-'math_notexvc'              => 'Falta o executable texvc. Por favor consulte math/README para configurar.',
-'prefs-personal'            => 'Información do usuario',
-'prefs-rc'                  => 'Cambios recentes',
-'prefs-watchlist'           => 'Lista de vixilancia',
-'prefs-watchlist-days'      => 'Días para amosar na lista de vixilancia:',
-'prefs-watchlist-days-max'  => '(máximo 7 días)',
-'prefs-watchlist-edits'     => 'Número de edicións para mostrar na lista de vixilancia completa:',
-'prefs-watchlist-edits-max' => '(número máximo: 1000)',
-'prefs-misc'                => 'Preferencias varias',
-'prefs-resetpass'           => 'Cambiar o contrasinal',
-'saveprefs'                 => 'Gardar as preferencias',
-'resetprefs'                => 'Eliminar os cambios non gardados',
-'restoreprefs'              => 'Restaurar todas as preferencias por defecto',
-'textboxsize'               => 'Edición',
-'prefs-edit-boxsize'        => 'Tamaño da caixa de edición.',
-'rows'                      => 'Filas:',
-'columns'                   => 'Columnas:',
-'searchresultshead'         => 'Procurar',
-'resultsperpage'            => 'Número de resultados por páxina:',
-'contextlines'              => 'Número de liñas por resultado:',
-'contextchars'              => 'Número de caracteres de contexto por liña:',
-'stub-threshold'            => 'Límite superior para o formato de <a href="#" class="stub">ligazóns de bosquexo</a> (bytes):',
-'recentchangesdays'         => 'Número de días a mostrar nos cambios recentes:',
-'recentchangesdays-max'     => '(máximo {{PLURAL:$1|un día|$1 días}})',
-'recentchangescount'        => 'Número de edicións a mostrar, por defecto, nas páxinas dos cambios recentes, historiais e rexistros:',
-'savedprefs'                => 'Gardáronse as súas preferencias.',
-'timezonelegend'            => 'Zona horaria:',
-'timezonetext'              => '¹Insira o número de horas de diferenza entre a súa hora local e a do servidor (UTC).',
-'localtime'                 => 'Hora local:',
-'timezoneselect'            => 'Zona horaria:',
-'timezoneuseserverdefault'  => 'Usar a hora do servidor por defecto',
-'timezoneuseoffset'         => 'Outra (especifique o desprazamento)',
-'timezoneoffset'            => 'Desprazamento¹:',
-'servertime'                => 'Hora do servidor:',
-'guesstimezone'             => 'Encher desde o navegador',
-'timezoneregion-africa'     => 'África',
-'timezoneregion-america'    => 'América',
-'timezoneregion-antarctica' => 'Antártida',
-'timezoneregion-arctic'     => 'Ártico',
-'timezoneregion-asia'       => 'Asia',
-'timezoneregion-atlantic'   => 'Océano Atlántico',
-'timezoneregion-australia'  => 'Australia',
-'timezoneregion-europe'     => 'Europa',
-'timezoneregion-indian'     => 'Océano Índico',
-'timezoneregion-pacific'    => 'Océano Pacífico',
-'allowemail'                => 'Admitir mensaxes de correo electrónico doutros usuarios',
-'prefs-searchoptions'       => 'Opcións de procura',
-'prefs-namespaces'          => 'Espazos de nomes',
-'defaultns'                 => 'Procurar por omisión nestes espazos de nomes:',
-'default'                   => 'predeterminado',
-'files'                     => 'Ficheiros',
-'prefs-custom-css'          => 'CSS personalizado',
-'prefs-custom-js'           => 'JS personalizado',
+'preferences'                   => 'Preferencias',
+'mypreferences'                 => 'As miñas preferencias',
+'prefs-edits'                   => 'Número de edicións:',
+'prefsnologin'                  => 'Non accedeu ao sistema',
+'prefsnologintext'              => 'Debe <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} acceder ao sistema]</span> para modificar as preferencias de usuario.',
+'changepassword'                => 'Cambiar o meu contrasinal',
+'prefs-skin'                    => 'Aparencia',
+'skin-preview'                  => 'Vista previa',
+'prefs-math'                    => 'Fórmulas matemáticas',
+'datedefault'                   => 'Ningunha preferencia',
+'prefs-datetime'                => 'Data e hora',
+'prefs-personal'                => 'Información do usuario',
+'prefs-rc'                      => 'Cambios recentes',
+'prefs-watchlist'               => 'Lista de vixilancia',
+'prefs-watchlist-days'          => 'Días para amosar na lista de vixilancia:',
+'prefs-watchlist-days-max'      => '(máximo 7 días)',
+'prefs-watchlist-edits'         => 'Número de edicións para mostrar na lista de vixilancia completa:',
+'prefs-watchlist-edits-max'     => '(número máximo: 1000)',
+'prefs-watchlist-token'         => 'Pase para a lista de vixilancia:',
+'prefs-misc'                    => 'Preferencias varias',
+'prefs-resetpass'               => 'Cambiar o contrasinal',
+'prefs-email'                   => 'Opcións de correo electrónico',
+'prefs-rendering'               => 'Aparencia',
+'saveprefs'                     => 'Gardar as preferencias',
+'resetprefs'                    => 'Eliminar os cambios non gardados',
+'restoreprefs'                  => 'Restaurar todas as preferencias por defecto',
+'prefs-editing'                 => 'Edición',
+'prefs-edit-boxsize'            => 'Tamaño da caixa de edición.',
+'rows'                          => 'Filas:',
+'columns'                       => 'Columnas:',
+'searchresultshead'             => 'Procurar',
+'resultsperpage'                => 'Número de resultados por páxina:',
+'contextlines'                  => 'Número de liñas por resultado:',
+'contextchars'                  => 'Número de caracteres de contexto por liña:',
+'stub-threshold'                => 'Límite superior para o formato de <a href="#" class="stub">ligazóns de bosquexo</a> (bytes):',
+'recentchangesdays'             => 'Número de días a mostrar nos cambios recentes:',
+'recentchangesdays-max'         => '(máximo {{PLURAL:$1|un día|$1 días}})',
+'recentchangescount'            => 'Número de edicións a mostrar por defecto:',
+'prefs-help-recentchangescount' => 'Isto inclúe os cambios recentes, os historiais e mais os rexistros.',
+'prefs-help-watchlist-token'    => 'Ao encher este campo cunha clave secreta xerarase unha fonte de novas RSS para a súa lista de vixilancia.
+Calquera que saiba esta clave poderá ler a súa lista de vixilancia, así que escolla un valor seguro.
+Velaquí un valor xerado ao chou que pode usar: $1',
+'savedprefs'                    => 'Gardáronse as súas preferencias.',
+'timezonelegend'                => 'Zona horaria:',
+'localtime'                     => 'Hora local:',
+'timezoneuseserverdefault'      => 'Usar a hora do servidor por defecto',
+'timezoneuseoffset'             => 'Outra (especifique o desprazamento)',
+'timezoneoffset'                => 'Desprazamento¹:',
+'servertime'                    => 'Hora do servidor:',
+'guesstimezone'                 => 'Encher desde o navegador',
+'timezoneregion-africa'         => 'África',
+'timezoneregion-america'        => 'América',
+'timezoneregion-antarctica'     => 'Antártida',
+'timezoneregion-arctic'         => 'Ártico',
+'timezoneregion-asia'           => 'Asia',
+'timezoneregion-atlantic'       => 'Océano Atlántico',
+'timezoneregion-australia'      => 'Australia',
+'timezoneregion-europe'         => 'Europa',
+'timezoneregion-indian'         => 'Océano Índico',
+'timezoneregion-pacific'        => 'Océano Pacífico',
+'allowemail'                    => 'Admitir mensaxes de correo electrónico doutros usuarios',
+'prefs-searchoptions'           => 'Opcións de procura',
+'prefs-namespaces'              => 'Espazos de nomes',
+'defaultns'                     => 'Se non, procurar nestes espazos de nomes:',
+'default'                       => 'predeterminado',
+'prefs-files'                   => 'Ficheiros',
+'prefs-custom-css'              => 'CSS personalizado',
+'prefs-custom-js'               => 'JS personalizado',
+'prefs-reset-intro'             => 'Pode usar esta páxina para restablecer as súas preferencias ás que veñen dadas por defecto.
+Este cambio non se poderá desfacer.',
+'prefs-emailconfirm-label'      => 'Confirmación do correo:',
+'prefs-textboxsize'             => 'Tamaño da caixa de edición',
+'youremail'                     => 'Correo electrónico:',
+'username'                      => 'Nome de usuario:',
+'uid'                           => 'ID do usuario:',
+'prefs-memberingroups'          => 'Membro {{PLURAL:$1|do grupo|dos grupos}}:',
+'prefs-registration'            => 'Data e hora de rexistro:',
+'yourrealname'                  => 'Nome real:',
+'yourlanguage'                  => 'Lingua da interface:',
+'yourvariant'                   => 'Variante de lingua:',
+'yournick'                      => 'Sinatura:',
+'prefs-help-signature'          => 'Os comentarios feitos nas páxinas de conversa deben asinarse con catro tiles ("<nowiki>~~~~</nowiki>"), que se converterán na súa sinatura con data e hora.',
+'badsig'                        => 'Sinatura non válida; comprobe o código HTML utilizado.',
+'badsiglength'                  => 'A súa sinatura é demasiado longa.
+Ha de ter menos {{PLURAL:$1|dun carácter|de $1 caracteres}}.',
+'yourgender'                    => 'Sexo:',
+'gender-unknown'                => 'Non especificado',
+'gender-male'                   => 'Masculino',
+'gender-female'                 => 'Feminino',
+'prefs-help-gender'             => 'Opcional: usado para xerar correctamente o sexo por parte do software. Esta información será pública.',
+'email'                         => 'Correo electrónico',
+'prefs-help-realname'           => 'O seu nome real é opcional, pero se escolle dalo utilizarase para atribuírlle o seu traballo.',
+'prefs-help-email'              => 'O enderezo de correo electrónico é opcional, pero permite que se lle envíe un contrasinal novo se se esquece del.
+Tamén pode deixar que outras persoas se poñan en contacto con vostede desde a súa páxina de usuario ou de conversa sen necesidade de revelar a súa identidade.',
+'prefs-help-email-required'     => 'Requírese o enderezo de correo electrónico.',
+'prefs-info'                    => 'Información básica',
+'prefs-i18n'                    => 'Internacionalización',
+'prefs-signature'               => 'Sinatura',
+'prefs-dateformat'              => 'Formato da data',
+'prefs-timeoffset'              => 'Desprazamento horario',
+'prefs-advancedediting'         => 'Opcións avanzadas',
+'prefs-advancedrc'              => 'Opcións avanzadas',
+'prefs-advancedrendering'       => 'Opcións avanzadas',
+'prefs-advancedsearchoptions'   => 'Opcións avanzadas',
+'prefs-advancedwatchlist'       => 'Opcións avanzadas',
+'prefs-display'                 => 'Opcións de visualización',
+'prefs-diffs'                   => 'Diferenzas',
 
 # User rights
-'userrights'                  => 'Xestión dos dereitos de usuario', # Not used as normal message but as header for the special page itself
-'userrights-lookup-user'      => 'Administrar os grupos do usuario',
-'userrights-user-editname'    => 'Escriba un nome de usuario:',
-'editusergroup'               => 'Editar os grupos do usuario',
-'editinguser'                 => "Mudando os dereitos do usuario '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]]{{int:pipe-separator}}[[Special:Contributions/$1|{{int:contribslink}}]])",
-'userrights-editusergroup'    => 'Editar os grupos do usuario',
-'saveusergroups'              => 'Gardar os grupos do usuario',
-'userrights-groupsmember'     => 'Membro de:',
-'userrights-groups-help'      => 'Pode cambiar os grupos aos que o usuario pertence:
+'userrights'                   => 'Xestión dos dereitos de usuario',
+'userrights-lookup-user'       => 'Administrar os grupos do usuario',
+'userrights-user-editname'     => 'Escriba un nome de usuario:',
+'editusergroup'                => 'Editar os grupos do usuario',
+'editinguser'                  => "Mudando os dereitos do usuario '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]]{{int:pipe-separator}}[[Special:Contributions/$1|{{int:contribslink}}]])",
+'userrights-editusergroup'     => 'Editar os grupos do usuario',
+'saveusergroups'               => 'Gardar os grupos do usuario',
+'userrights-groupsmember'      => 'Membro de:',
+'userrights-groupsmember-auto' => 'Membro implícito de:',
+'userrights-groups-help'       => 'Pode cambiar os grupos aos que o usuario pertence:
 * Se a caixa ten un sinal (✓) significa que o usuario pertence a ese grupo.
 * Se, pola contra, non o ten, significa que non pertence.
 * Un asterisco (*) indica que non pode eliminar o grupo unha vez que o engadiu, e viceversa.',
-'userrights-reason'           => 'Motivo:',
-'userrights-no-interwiki'     => 'Non dispón de permiso para editar dereitos de usuarios noutros wikis.',
-'userrights-nodatabase'       => 'A base de datos $1 non existe ou non é local.',
-'userrights-nologin'          => 'Debe [[Special:UserLogin|acceder ao sistema]] cunta conta de administrador para asignar dereitos de usuario.',
-'userrights-notallowed'       => 'A súa conta non dispón dos permisos necesarios para asignar dereitos de usuario.',
-'userrights-changeable-col'   => 'Os grupos que pode cambiar',
-'userrights-unchangeable-col' => 'Os grupos que non pode cambiar',
+'userrights-reason'            => 'Motivo:',
+'userrights-no-interwiki'      => 'Non dispón de permiso para editar dereitos de usuarios noutros wikis.',
+'userrights-nodatabase'        => 'A base de datos $1 non existe ou non é local.',
+'userrights-nologin'           => 'Debe [[Special:UserLogin|acceder ao sistema]] cunta conta de administrador para asignar dereitos de usuario.',
+'userrights-notallowed'        => 'A súa conta non dispón dos permisos necesarios para asignar dereitos de usuario.',
+'userrights-changeable-col'    => 'Os grupos que pode cambiar',
+'userrights-unchangeable-col'  => 'Os grupos que non pode cambiar',
 
 # Groups
 'group'               => 'Grupo:',
@@ -1327,6 +1382,7 @@ Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados
 'right-bigdelete'             => 'Borrar páxinas con historiais grandes',
 'right-deleterevision'        => 'Borrar e restaurar versións específicas de páxinas',
 'right-deletedhistory'        => 'Ver as entradas borradas do historial, sen o seu texto asociado',
+'right-deletedtext'           => 'Ver texto borrado e cambios entre revisións eliminadas',
 'right-browsearchive'         => 'Procurar páxinas borradas',
 'right-undelete'              => 'Restaurar unha páxina',
 'right-suppressrevision'      => 'Revisar e restaurar as revisións agochadas dos administradores',
@@ -1340,6 +1396,8 @@ Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados
 'right-editprotected'         => 'Editar páxinas protexidas (que non teñan protección en serie)',
 'right-editinterface'         => 'Editar a interface de usuario',
 'right-editusercssjs'         => 'Editar os ficheiros CSS e JS doutros usuarios',
+'right-editusercss'           => 'Editar os ficheiros CSS doutros usuarios',
+'right-edituserjs'            => 'Editar os ficheiros JS doutros usuarios',
 'right-rollback'              => 'Reversión rápida da edición dun usuario dunha páxina particular',
 'right-markbotedits'          => 'Marcar as edicións desfeitas como edicións dun bot',
 'right-noratelimit'           => 'Non lle afectan os límites de frecuencia',
@@ -1356,6 +1414,8 @@ Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados
 'right-siteadmin'             => 'Fechar e abrir a base de datos',
 'right-reset-passwords'       => 'Restablecer os contrasinais doutros usuarios',
 'right-override-export-depth' => 'Exportar páxinas incluíndo as páxinas ligadas ata unha profundidade de 5',
+'right-versiondetail'         => 'Mostrar a información ampliada da versión do software',
+'right-sendemail'             => 'Enviar correos electrónicos a outros usuarios',
 
 # User rights log
 'rightslog'      => 'Rexistro de dereitos de usuario',
@@ -1405,8 +1465,17 @@ Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados
 'recentchanges-legend'              => 'Opcións dos cambios',
 'recentchangestext'                 => 'Sigue, nesta páxina, as modificacións máis recentes no wiki.',
 'recentchanges-feed-description'    => 'Siga os cambios máis recentes deste wiki nesta fonte de novas.',
+'recentchanges-label-legend'        => 'Lenda: $1.',
+'recentchanges-legend-newpage'      => '$1 - nova páxina',
+'recentchanges-label-newpage'       => 'Esta edición creou unha nova páxina',
+'recentchanges-legend-minor'        => '$1 - edición pequena',
+'recentchanges-label-minor'         => 'Esta é unha edición pequena',
+'recentchanges-legend-bot'          => '$1 - edición feita por un bot',
+'recentchanges-label-bot'           => 'Esta edición foi realizada por un bot',
+'recentchanges-legend-unpatrolled'  => '$1 - edición non patrullada',
+'recentchanges-label-unpatrolled'   => 'Esta edición aínda non foi comprobada',
 'rcnote'                            => "Embaixo {{PLURAL:$1|amósase '''1''' cambio|amósanse os últimos '''$1''' cambios}} {{PLURAL:$2|no último día|nos últimos '''$2''' días}} ata as $5 do $4.",
-'rcnotefrom'                        => "Abaixo amósanse os cambios desde '''$2''' (móstranse ata '''$1''').",
+'rcnotefrom'                        => "A continuación amósanse os cambios desde as '''$4''' do '''$3''' (móstranse ata '''$1''').",
 'rclistfrom'                        => 'Mostrar os cambios novos desde as $1',
 'rcshowhideminor'                   => '$1 as edicións pequenas',
 'rcshowhidebots'                    => '$1 os bots',
@@ -1431,6 +1500,8 @@ Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados
 
 # Recent changes linked
 'recentchangeslinked'          => 'Cambios relacionados',
+'recentchangeslinked-feed'     => 'Cambios relacionados',
+'recentchangeslinked-toolbox'  => 'Cambios relacionados',
 'recentchangeslinked-title'    => 'Cambios relacionados con "$1"',
 'recentchangeslinked-noresult' => 'Non se produciron cambios nas páxinas vinculadas a esta durante o período de tempo seleccionado.',
 'recentchangeslinked-summary'  => "Esta é unha lista dos cambios que se realizaron recentemente nas páxinas vinculadas a esta (ou dos membros da categoría especificada).
@@ -1441,8 +1512,8 @@ As páxinas da súa [[Special:Watchlist|lista de vixilancia]] aparecen en '''neg
 # Upload
 'upload'                      => 'Cargar un ficheiro',
 'uploadbtn'                   => 'Cargar o ficheiro',
-'reupload'                    => 'Volver cargar',
 'reuploaddesc'                => 'Cancelar a carga e volver ao formulario de carga',
+'upload-tryagain'             => 'Enviar a descrición do ficheiro modificada',
 'uploadnologin'               => 'Non accedeu ao sistema',
 'uploadnologintext'           => 'Debe [[Special:UserLogin|acceder ao sistema]] para poder cargar ficheiros.',
 'upload_directory_missing'    => 'Falta o directorio de carga ($1) e non pode ser creado polo servidor da páxina web.',
@@ -1475,6 +1546,7 @@ Vexa a [[Special:NewFiles|galería de imaxes novas]] para unha visión máis xer
 'illegalfilename'             => 'O nome de ficheiro "$1" contén caracteres que non están permitidos nos títulos das páxinas.
 Por favor, cambie o nome do ficheiro e intente cargalo de novo.',
 'badfilename'                 => 'O nome desta imaxe cambiouse a "$1".',
+'filetype-mime-mismatch'      => 'A extensión do ficheiro non coincide co tipo MIME.',
 'filetype-badmime'            => 'Non se permite enviar ficheiros de tipo MIME "$1".',
 'filetype-bad-ie-mime'        => 'Non se pode cargar este ficheiro porque o Internet Explorer detectaríao como "$1", o cal é un tipo de ficheiro non permitido e potencialmente perigoso.',
 'filetype-unwanted-type'      => "'''\".\$1\"''' é un tipo de ficheiro non desexado.
@@ -1497,7 +1569,6 @@ Para facer que o resumo apareza alí, necesitará editar a páxina manualmente.
 * Nome do ficheiro que intenta cargar: '''<tt>[[:$1]]</tt>'''
 * Nome de ficheiro existente: '''<tt>[[:$2]]</tt>'''
 Por favor, escolla un nome diferente.",
-'fileexists-thumb'            => "<center>'''Imaxe existente'''</center>",
 'fileexists-thumbnail-yes'    => "Semella que o ficheiro é unha imaxe de tamaño reducido ''(miniatura)''.
 [[$1|thumb]]
 Por favor, comprobe o ficheiro '''<tt>[[:$1]]</tt>'''.
@@ -1514,6 +1585,7 @@ Se aínda quere cargar o seu ficheiro, volva atrás e use outro nome.
 'file-deleted-duplicate'      => 'Un ficheiro idéntico a este ("[[$1]]") foi borrado previamente. Debería comprobar o historial de borrados do ficheiro antes de proceder a cargalo de novo.',
 'successfulupload'            => 'A carga realizouse correctamente',
 'uploadwarning'               => 'Advertencia ao cargar o ficheiro',
+'uploadwarning-text'          => 'Por favor, modifique a descrición do ficheiro e inténteo de novo.',
 'savefile'                    => 'Gardar o ficheiro',
 'uploadedimage'               => 'cargou "[[$1]]"',
 'overwroteimage'              => 'enviou unha nova versión de "[[$1]]"',
@@ -1521,11 +1593,14 @@ Se aínda quere cargar o seu ficheiro, volva atrás e use outro nome.
 'uploaddisabledtext'          => 'A carga de ficheiros está desactivada.',
 'php-uploaddisabledtext'      => 'As cargas de ficheiros PHP están desactivadas. Por favor, comprobe a característica file_uploads.',
 'uploadscripted'              => 'Este ficheiro contén HTML ou código (script code) que pode producir erros ao ser interpretado polo navegador.',
-'uploadcorrupt'               => 'O ficheiro está corrompido ou ten unha extensión incorrecta. Por favor verifique o ficheiro e súbao de novo.',
 'uploadvirus'                 => 'O ficheiro contén un virus! Detalles: $1',
+'upload-source'               => 'Ficheiro de orixe',
 'sourcefilename'              => 'Nome do ficheiro a cargar:',
+'sourceurl'                   => 'URL de orixe:',
 'destfilename'                => 'Nome do ficheiro de destino:',
 'upload-maxfilesize'          => 'Tamaño máximo para o ficheiro: $1',
+'upload-description'          => 'Descrición do ficheiro',
+'upload-options'              => 'Opcións de carga',
 'watchthisupload'             => 'Vixiar este ficheiro',
 'filewasdeleted'              => 'Un ficheiro con ese nome foi cargado con anterioridade e a continuación borrado.
 Debe comprobar o $1 antes de proceder a cargalo outra vez.',
@@ -1550,15 +1625,46 @@ MGP # Pentax
 PICT # varias
  #</pre> <!-- deixe esta liña exactamente como está -->',
 
-'upload-proto-error'      => 'Protocolo erróneo',
-'upload-proto-error-text' => 'A carga remota require URLs que comecen por <code>http://</code> ou <code>ftp://</code>.',
-'upload-file-error'       => 'Erro interno',
-'upload-file-error-text'  => 'Produciuse un erro interno ao intentar crear un ficheiro temporal no servidor.
+'upload-proto-error'        => 'Protocolo erróneo',
+'upload-proto-error-text'   => 'A carga remota require URLs que comecen por <code>http://</code> ou <code>ftp://</code>.',
+'upload-file-error'         => 'Erro interno',
+'upload-file-error-text'    => 'Produciuse un erro interno ao intentar crear un ficheiro temporal no servidor.
 Por favor, contacte cun [[Special:ListUsers/sysop|administrador]] do sistema.',
-'upload-misc-error'       => 'Erro de carga descoñecido',
-'upload-misc-error-text'  => 'Ocorreu un erro descoñecido durante a carga.
+'upload-misc-error'         => 'Erro de carga descoñecido',
+'upload-misc-error-text'    => 'Ocorreu un erro descoñecido durante a carga.
 Por favor, comprobe que o enderezo URL é válido e está dispoñíbel e, despois, inténteo de novo.
 Se o problema persiste contacte cun [[Special:ListUsers/sysop|administrador]] do sistema.',
+'upload-too-many-redirects' => 'O enderezo URL contiña moitas redireccións',
+'upload-unknown-size'       => 'Tamaño descoñecido',
+'upload-http-error'         => 'Produciuse un erro HTTP: $1',
+
+# img_auth script messages
+'img-auth-accessdenied' => 'Acceso rexeitado',
+'img-auth-nopathinfo'   => 'Falta a PATH_INFO.
+O seu servidor non está configurado para pasar esta información.
+Pode ser que estea baseado en CGI e non puidese soportar img_auth.
+Olle http://www.mediawiki.org/wiki/Manual:Image_Authorization para obter máis información.',
+'img-auth-notindir'     => 'A ruta solicitada non está no directorio de carga configurado.',
+'img-auth-badtitle'     => 'Non é posible construír un título válido a partir de "$1".',
+'img-auth-nologinnWL'   => 'Non accedeu ao sistema e "$1" non está na lista de branca.',
+'img-auth-nofile'       => 'O ficheiro "$1" non existe.',
+'img-auth-isdir'        => 'Está intentando acceder ao directorio "$1".
+Só se permite o acceso ao ficheiro.',
+'img-auth-streaming'    => 'Secuenciando "$1".',
+'img-auth-public'       => 'A función de img_auth.php é para ficheiros de saída desde un wiki privado.
+Este wiki está configurado como público.
+Para unha seguridade óptima, img_auth.php está desactivado.',
+'img-auth-noread'       => 'O usuario non ten acceso á lectura de "$1".',
+
+# HTTP errors
+'http-invalid-url'      => 'URL non válido: $1',
+'http-invalid-scheme'   => 'Os enderezos URL co esquema "$1" non están soportados',
+'http-request-error'    => 'Erro descoñecido ao enviar a solicitude.',
+'http-read-error'       => 'Erro de lectura HTTP.',
+'http-timed-out'        => 'O pedido HTTP expirou.',
+'http-curl-error'       => 'Ocorreu un erro ao acceder ao URL: $1',
+'http-host-unreachable' => 'Non se puido acceder ao URL.',
+'http-bad-status'       => 'Houbo un problema durante a solicitude HTTP: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
 'upload-curl-error6'       => 'Non se logrou acceder a ese URL',
@@ -1569,6 +1675,7 @@ Por favor, comprobe que está activo, agarde un anaco e inténteo de novo.
 Tamén pode reintentalo cando haxa menos actividade.',
 
 'license'            => 'Licenza:',
+'license-header'     => 'Licenza',
 'nolicense'          => 'Ningunha (os ficheiros sen licenza serán eliminados)',
 'license-nopreview'  => '(A vista previa non está dispoñíbel)',
 'upload_source_url'  => '  (un URL válido e accesible publicamente)',
@@ -1589,6 +1696,7 @@ Premendo nunha cabeceira da columna cambia a ordenación.',
 'listfiles_count'       => 'Versións',
 
 # File description page
+'file-anchor-link'          => 'Ficheiro',
 'filehist'                  => 'Historial do ficheiro',
 'filehist-help'             => 'Faga clic nunha data/hora para ver o ficheiro tal e como estaba nese momento.',
 'filehist-deleteall'        => 'borrar todo',
@@ -1597,12 +1705,13 @@ Premendo nunha cabeceira da columna cambia a ordenación.',
 'filehist-current'          => 'actual',
 'filehist-datetime'         => 'Data/Hora',
 'filehist-thumb'            => 'Miniatura',
-'filehist-thumbtext'        => 'Miniatura da versión ás $1',
+'filehist-thumbtext'        => 'Miniatura da versión ás $3 do $2',
 'filehist-nothumb'          => 'Sen miniatura',
 'filehist-user'             => 'Usuario',
 'filehist-dimensions'       => 'Dimensións',
 'filehist-filesize'         => 'Tamaño do ficheiro',
 'filehist-comment'          => 'Comentario',
+'filehist-missing'          => 'Falta o ficheiro',
 'imagelinks'                => 'Ligazóns do ficheiro',
 'linkstoimage'              => '{{PLURAL:$1|A seguinte páxina liga|As seguintes $1 páxinas ligan}} con esta imaxe:',
 'linkstoimage-more'         => 'Máis {{PLURAL:$1|dunha páxina liga|de $1 páxinas ligan}} con este ficheiro.
@@ -1612,15 +1721,16 @@ Hai dispoñible [[Special:WhatLinksHere/$2|unha lista completa]].',
 'morelinkstoimage'          => 'Ver [[Special:WhatLinksHere/$1|máis ligazóns]] cara a este ficheiro.',
 'redirectstofile'           => '{{PLURAL:$1|O seguinte ficheiro redirixe|Os seguintes $1 ficheiros redirixen}} cara a este:',
 'duplicatesoffile'          => '{{PLURAL:$1|O seguinte ficheiro é un duplicado|Os seguintes $1 ficheiros son duplicados}} destoutro ([[Special:FileDuplicateSearch/$2|máis detalles]]):',
-'sharedupload'              => 'Este ficheiro é de $1 e pode ser usado por outros proxectos.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
-'shareduploadwiki'          => 'Por favor, vexa a $1 para máis información.',
-'shareduploadwiki-desc'     => 'A continuación móstrase a descrición que alí hai na $1.',
-'shareduploadwiki-linktext' => 'páxina de descrición do ficheiro',
-'noimage'                   => 'Non existe ningún ficheiro con ese nome, pero pode $1.',
-'noimage-linktext'          => 'cargar un',
+'sharedupload'              => 'Este ficheiro é de $1 e pode ser usado por outros proxectos.',
+'sharedupload-desc-there'   => 'Este ficheiro é de $1 e pode ser usado por outros proxectos.
+Por favor, vexa a [$2 páxina de descrición do ficheiro] para obter máis información.',
+'sharedupload-desc-here'    => 'Este ficheiro é de $1 e pode ser usado por outros proxectos.
+A descrición da [$2 páxina de descrición do ficheiro] móstrase a continuación.',
+'filepage-nofile'           => 'Non existe ningún ficheiro con este nome.',
+'filepage-nofile-link'      => 'Non existe ningún ficheiro con este nome, pero pode [$1 cargalo].',
 'uploadnewversion-linktext' => 'Cargar unha nova versión deste ficheiro',
-'shared-repo-from'          => 'de $1', # $1 is the repository name
-'shared-repo'               => 'repositorio compartido', # used when shared-repo-NAME does not exist
+'shared-repo-from'          => 'de $1',
+'shared-repo'               => 'repositorio compartido',
 
 # File reversion
 'filerevert'                => 'Desfacer $1',
@@ -1649,6 +1759,7 @@ Hai dispoñible [[Special:WhatLinksHere/$2|unha lista completa]].',
 ** Violación dos dereitos de autor
 ** Ficheiro duplicado',
 'filedelete-edit-reasonlist'  => 'Editar os motivos de borrado',
+'filedelete-maintenance'      => 'Os borrados e restauracións de ficheiros están desactivados temporalmente durante o mantemento.',
 
 # MIME search
 'mimesearch'         => 'Busca MIME',
@@ -1671,7 +1782,7 @@ Lembre verificar outras ligazóns cara aos modelos antes de borralos.',
 
 # Random page
 'randompage'         => 'Páxina aleatoria',
-'randompage-nopages' => 'Non hai páxinas no espazo de nomes "$1".',
+'randompage-nopages' => 'Non hai páxinas {{PLURAL:$2|no seguinte espazo de nomes|nos seguintes espazos de nomes}}: $1.',
 
 # Random redirect
 'randomredirect'         => 'Redirección aleatoria',
@@ -1683,6 +1794,7 @@ Lembre verificar outras ligazóns cara aos modelos antes de borralos.',
 'statistics-header-edits'      => 'Estatísticas das edicións',
 'statistics-header-views'      => 'Estatísticas das vistas',
 'statistics-header-users'      => 'Estatísticas dos usuarios',
+'statistics-header-hooks'      => 'Outras estatísticas',
 'statistics-articles'          => 'Páxinas de contido',
 'statistics-pages'             => 'Páxinas',
 'statistics-pages-desc'        => 'Todas as páxinas do wiki; isto inclúe as páxinas de conversa, redireccións, etc.',
@@ -1712,8 +1824,8 @@ As entradas <s>riscadas</s> xa foron resoltas.',
 
 'brokenredirects'        => 'Redireccións rotas',
 'brokenredirectstext'    => 'As seguintes redireccións ligan cara a páxinas que non existen:',
-'brokenredirects-edit'   => '(editar)',
-'brokenredirects-delete' => '(borrar)',
+'brokenredirects-edit'   => 'editar',
+'brokenredirects-delete' => 'borrar',
 
 'withoutinterwiki'         => 'Páxinas sen ligazóns interwiki',
 'withoutinterwiki-summary' => 'As seguintes páxinas non ligan con ningunha versión noutra lingua.',
@@ -1820,16 +1932,17 @@ Pode precisar máis a vista seleccionando o tipo de rexistro, o nome do usuario 
 
 # Special:Categories
 'categories'                    => 'Categorías',
-'categoriespagetext'            => 'As seguintes categorías conteñen páxinas ou contidos multimedia.
+'categoriespagetext'            => '{{PLURAL:$1|A seguinte categoría contén|As seguintes categorías conteñen}} páxinas ou contidos multimedia.
 Aquí non se amosan as [[Special:UnusedCategories|categorías sen uso]].
-Véxanse tamén as [[Special:WantedCategories|categorías requiridas]].',
+Olle tamén as [[Special:WantedCategories|categorías requiridas]].',
 'categoriesfrom'                => 'Mostrar as categorías que comecen por:',
 'special-categories-sort-count' => 'ordenar por número',
 'special-categories-sort-abc'   => 'ordenar alfabeticamente',
 
 # Special:DeletedContributions
-'deletedcontributions'       => 'Contribucións borradas do usuario',
-'deletedcontributions-title' => 'Contribucións borradas do usuario',
+'deletedcontributions'             => 'Contribucións borradas do usuario',
+'deletedcontributions-title'       => 'Contribucións borradas do usuario',
+'sp-deletedcontributions-contribs' => 'contribucións',
 
 # Special:LinkSearch
 'linksearch'       => 'Ligazóns externas',
@@ -1845,6 +1958,16 @@ Protocolos soportados: <tt>$1</tt>',
 'listusersfrom'      => 'Mostrar os usuarios que comecen por:',
 'listusers-submit'   => 'Mostrar',
 'listusers-noresult' => 'Non se atopou ningún usuario.',
+'listusers-blocked'  => '(bloqueado)',
+
+# Special:ActiveUsers
+'activeusers'            => 'Lista de usuarios activos',
+'activeusers-intro'      => 'Esta é unha lista cos usuarios que tiveron algún tipo de actividade {{PLURAL:$1|no último día|nos últimos $1 días}}.',
+'activeusers-count'      => '$1 {{PLURAL:$1|edición|edicións}} {{PLURAL:$3|no último día|nos últimos $3 días}}',
+'activeusers-from'       => 'Mostrar os usuarios que comecen por:',
+'activeusers-hidebots'   => 'Agochar os bots',
+'activeusers-hidesysops' => 'Agochar os administradores',
+'activeusers-noresult'   => 'Non se atopou ningún usuario.',
 
 # Special:Log/newusers
 'newuserlogpage'              => 'Rexistro de creación de usuarios',
@@ -1855,17 +1978,23 @@ Protocolos soportados: <tt>$1</tt>',
 'newuserlog-autocreate-entry' => 'Conta de usuario creada automaticamente',
 
 # Special:ListGroupRights
-'listgrouprights'                 => 'Dereitos dun usuario segundo o seu grupo',
-'listgrouprights-summary'         => 'A seguinte lista mostra os grupos de usuario definidos neste wiki, cos seus dereitos de acceso asociados.
+'listgrouprights'                      => 'Dereitos dun usuario segundo o seu grupo',
+'listgrouprights-summary'              => 'A seguinte lista mostra os grupos de usuario definidos neste wiki, cos seus dereitos de acceso asociados.
 Se quere máis información acerca dos dereitos individuais, pode atopala [[{{MediaWiki:Listgrouprights-helppage}}|aquí]].',
-'listgrouprights-group'           => 'Grupo',
-'listgrouprights-rights'          => 'Dereitos',
-'listgrouprights-helppage'        => 'Help:Dereitos do grupo',
-'listgrouprights-members'         => '(lista de membros)',
-'listgrouprights-addgroup'        => 'Pode engadir {{PLURAL:$2|o grupo|os grupos}}: $1',
-'listgrouprights-removegroup'     => 'Pode eliminar {{PLURAL:$2|o grupo|os grupos}}: $1',
-'listgrouprights-addgroup-all'    => 'Pode engadir todos os grupos',
-'listgrouprights-removegroup-all' => 'Pode eliminar todos os grupos',
+'listgrouprights-key'                  => '* <span class="listgrouprights-granted">Dereito concedido</span>
+* <span class="listgrouprights-revoked">Dereito revogado</span>',
+'listgrouprights-group'                => 'Grupo',
+'listgrouprights-rights'               => 'Dereitos',
+'listgrouprights-helppage'             => 'Help:Dereitos do grupo',
+'listgrouprights-members'              => '(lista de membros)',
+'listgrouprights-addgroup'             => 'Pode engadir {{PLURAL:$2|o grupo|os grupos}}: $1',
+'listgrouprights-removegroup'          => 'Pode eliminar {{PLURAL:$2|o grupo|os grupos}}: $1',
+'listgrouprights-addgroup-all'         => 'Pode engadir todos os grupos',
+'listgrouprights-removegroup-all'      => 'Pode eliminar todos os grupos',
+'listgrouprights-addgroup-self'        => 'Pode engadir {{PLURAL:$2|un grupo|grupos}} pola súa propia conta: $1',
+'listgrouprights-removegroup-self'     => 'Pode eliminar {{PLURAL:$2|un grupo|grupos}} pola súa propia conta: $1',
+'listgrouprights-addgroup-self-all'    => 'Pode engadir todos os grupos pola súa propia conta',
+'listgrouprights-removegroup-self-all' => 'Pode eliminar todos os grupos pola súa propia conta',
 
 # E-mail user
 'mailnologin'      => 'Non existe enderezo para o envío',
@@ -1937,9 +2066,10 @@ Os cambios futuros nesta páxina e na súa páxina de conversa asociada serán l
 'enotif_lastvisited'           => 'Vexa $1 para comprobar todos os cambios desde a súa última visita.',
 'enotif_lastdiff'              => 'Vexa $1 para visualizar esta modificación.',
 'enotif_anon_editor'           => 'usuario anónimo $1',
-'enotif_body'                  => 'Estimado $WATCHINGUSERNAME,
+'enotif_body'                  => 'Estimado $WATCHINGUSERNAME:
 
-a páxina de {{SITENAME}} "$PAGETITLE" foi $CHANGEDORCREATED o $PAGEEDITDATE por $PAGEEDITOR, vexa $PAGETITLE_URL para comprobar a versión actual.
+
+A páxina de {{SITENAME}} "$PAGETITLE" foi $CHANGEDORCREATED o $PAGEEDITDATE por $PAGEEDITOR, olle $PAGETITLE_URL para comprobar a versión actual.
 
 $NEWPAGE
 
@@ -1949,13 +2079,17 @@ Pode contactar co editor:
 por correo electrónico: $PAGEEDITOR_EMAIL
 no wiki: $PAGEEDITOR_WIKI
 
-Non se producirán novas notificacións cando haxa novos cambios ata que vostede visite a páxina. Pode borrar os indicadores de aviso de notificación para o conxunto das páxinas marcadas na súa lista de vixilancia.
+Non se producirán novas notificacións cando haxa novos cambios ata que vostede visite a páxina.
+Pode borrar os indicadores de aviso de notificación para o conxunto das páxinas marcadas na súa lista de vixilancia.
 
              O sistema de aviso de {{SITENAME}}
 
 --
 Para cambiar a súa lista de vixilancia, visite
-{{fullurl:{{ns:special}}:Watchlist/edit}}
+{{fullurl:{{#special:Watchlist}}/edit}}
+
+Para borrar a páxina da súa lista de vixilancia, visite
+$UNWATCHURL
 
 Axuda:
 {{fullurl:{{MediaWiki:Helppage}}}}',
@@ -1969,10 +2103,11 @@ Axuda:
 'exblank'                => 'a páxina estaba baleira',
 'delete-confirm'         => 'Borrar "$1"',
 'delete-legend'          => 'Borrar',
-'historywarning'         => 'Atención: a páxina que vai borrar ten un historial:',
+'historywarning'         => "'''Atención:''' a páxina que está a piques de borrar ten un historial con aproximadamente $1 {{PLURAL:$1|revisión|revisións}}:",
 'confirmdeletetext'      => 'Está a piques de borrar de xeito permanente unha páxina ou imaxe con todo o seu historial na base de datos.
 Por favor, confirme que é realmente a súa intención, que comprende as consecuencias e que está obrando de acordo coas regras [[{{MediaWiki:Policy-url}}|da política e normas]].',
 'actioncomplete'         => 'A acción foi completada',
+'actionfailed'           => 'Fallou a acción',
 'deletedtext'            => 'Borrouse a páxina "<nowiki>$1</nowiki>".
 No $2 pode ver unha lista cos borrados máis recentes.',
 'deletedarticle'         => 'borrou "[[$1]]"',
@@ -1996,19 +2131,20 @@ Ao eliminala pódense provocar problemas de funcionamento nas operacións da bas
 proceda con coidado.',
 
 # Rollback
-'rollback'         => 'Reverter as edicións',
-'rollback_short'   => 'Reverter',
-'rollbacklink'     => 'reverter',
-'rollbackfailed'   => 'Houbo un fallo ao reverter as edicións',
-'cantrollback'     => 'Non se pode desfacer a edición; o último colaborador é o único autor desta páxina.',
-'alreadyrolled'    => 'Non se pode desfacer a edición en "[[:$1]]" feita por [[User:$2|$2]] ([[User talk:$2|conversa]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]); alguén máis editou ou desfixo os cambios desta páxina.
+'rollback'          => 'Reverter as edicións',
+'rollback_short'    => 'Reverter',
+'rollbacklink'      => 'reverter',
+'rollbackfailed'    => 'Houbo un fallo ao reverter as edicións',
+'cantrollback'      => 'Non se pode desfacer a edición; o último colaborador é o único autor desta páxina.',
+'alreadyrolled'     => 'Non se pode desfacer a edición en "[[:$1]]" feita por [[User:$2|$2]] ([[User talk:$2|conversa]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]); alguén máis editou ou desfixo os cambios desta páxina.
 
 A última edición fíxoa [[User:$3|$3]] ([[User talk:$3|conversa]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]).',
-'editcomment'      => "O resumo de edición era: \"''\$1''\".", # only shown if there is an edit comment
-'revertpage'       => 'Desfixéronse as edicións de [[Special:Contributions/$2|$2]] ([[User talk:$2|conversa]]); cambiado á última versión feita por [[User:$1|$1]]', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
-'rollback-success' => 'Desfixéronse as edicións de $1;
+'editcomment'       => "O resumo de edición era: \"''\$1''\".",
+'revertpage'        => 'Desfixéronse as edicións de [[Special:Contributions/$2|$2]] ([[User talk:$2|conversa]]); cambiado á última versión feita por [[User:$1|$1]]',
+'revertpage-nouser' => 'Desfixéronse as edicións de (nome eliminado); cambiado á última versión feita por [[User:$1|$1]]',
+'rollback-success'  => 'Desfixéronse as edicións de $1;
 volveuse á última edición, feita por $2.',
-'sessionfailure'   => 'Parece que hai un problema co rexistro da súa sesión;
+'sessionfailure'    => 'Parece que hai un problema co rexistro da súa sesión;
 esta acción cancelouse como precaución fronte ao secuestro de sesións.
 Prema no botón "atrás", volva cargar a páxina da que proviña e inténteo de novo.',
 
@@ -2027,7 +2163,7 @@ Vexa a [[Special:ProtectedPages|lista de páxinas protexidas]] se quere obter a 
 'protectexpiry'               => 'Caducidade:',
 'protect_expiry_invalid'      => 'O tempo de duración da protección non e válido.',
 'protect_expiry_old'          => 'O momento de remate da protección corresponde ao pasado.',
-'protect-unchain'             => 'Desbloquear os permisos de traslado',
+'protect-unchain-permissions' => 'Desbloquear as opcións de protección adicionais',
 'protect-text'                => "Aquí é onde pode ver e cambiar os niveis de protección da páxina chamada \"'''<nowiki>\$1</nowiki>'''\".",
 'protect-locked-blocked'      => "Non pode modificar os niveis de protección mentres exista un bloqueo. Velaquí a configuración actual da páxina  '''$1''':",
 'protect-locked-dblock'       => "Os niveis de protección non se poden modificar debido a un bloqueo da base de datos activa.
@@ -2056,7 +2192,7 @@ Pode mudar o nivel de protección da páxina pero iso non afectará á protecci�
 ** Guerra de edicións
 ** Páxina moi visitada',
 'protect-edit-reasonlist'     => 'Editar os motivos de protección',
-'protect-expiry-options'      => '1 hora:1 hour,1 día:1 day,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,para sempre:infinite', # display1:time1,display2:time2,...
+'protect-expiry-options'      => '1 hora:1 hour,1 día:1 day,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,para sempre:infinite',
 'restriction-type'            => 'Permiso:',
 'restriction-level'           => 'Nivel de protección:',
 'minimum-size'                => 'Tamaño mínimo',
@@ -2098,6 +2234,7 @@ O texto destas revisións eliminadas só está á disposición dos administrador
 'undelete-nodiff'              => 'Non se atopou ningunha revisión anterior.',
 'undeletebtn'                  => 'Restaurar',
 'undeletelink'                 => 'ver/restaurar',
+'undeleteviewlink'             => 'ver',
 'undeletereset'                => 'Limpar',
 'undeleteinvert'               => 'Inverter a selección',
 'undeletecomment'              => 'Motivo:',
@@ -2135,19 +2272,23 @@ $1',
 'contributions-title' => 'Contribucións de $1',
 'mycontris'           => 'As miñas contribucións',
 'contribsub2'         => 'De $1 ($2)',
-'nocontribs'          => 'Non se deron atopado cambios con eses criterios.', # Optional parameter: $1 is the user name
+'nocontribs'          => 'Non se deron atopado cambios con eses criterios.',
 'uctop'               => '(última revisión)',
 'month'               => 'Desde o mes de (e anteriores):',
 'year'                => 'Desde o ano (e anteriores):',
 
-'sp-contributions-newbies'       => 'Mostrar só as contribucións das contas de usuario novas',
-'sp-contributions-newbies-sub'   => 'Contribucións dos usuarios novos',
-'sp-contributions-newbies-title' => 'Contribucións dos usuarios novos',
-'sp-contributions-blocklog'      => 'rexistro de bloqueos',
-'sp-contributions-logs'          => 'rexistros',
-'sp-contributions-search'        => 'Busca de contribucións',
-'sp-contributions-username'      => 'Enderezo IP ou nome de usuario:',
-'sp-contributions-submit'        => 'Procurar',
+'sp-contributions-newbies'        => 'Mostrar só as contribucións das contas de usuario novas',
+'sp-contributions-newbies-sub'    => 'Contribucións dos usuarios novos',
+'sp-contributions-newbies-title'  => 'Contribucións dos usuarios novos',
+'sp-contributions-blocklog'       => 'rexistro de bloqueos',
+'sp-contributions-deleted'        => 'contribucións borradas do usuario',
+'sp-contributions-logs'           => 'rexistros',
+'sp-contributions-talk'           => 'conversa',
+'sp-contributions-userrights'     => 'xestión dos dereitos de usuario',
+'sp-contributions-blocked-notice' => 'Este usuario está bloqueado. Velaquí está a última entrada do rexistro de bloqueos, por se quere consultala:',
+'sp-contributions-search'         => 'Busca de contribucións',
+'sp-contributions-username'       => 'Enderezo IP ou nome de usuario:',
+'sp-contributions-submit'         => 'Procurar',
 
 # What links here
 'whatlinkshere'            => 'Páxinas que ligan con esta',
@@ -2170,6 +2311,7 @@ $1',
 
 # Block/unblock
 'blockip'                         => 'Bloquear este usuario',
+'blockip-title'                   => 'Bloquear un usuario',
 'blockip-legend'                  => 'Bloquear un usuario',
 'blockiptext'                     => 'Use o seguinte formulario para bloquear o acceso de escritura desde un enderezo IP ou para bloquear un usuario específico.
 Isto debería facerse só para previr vandalismo, e de acordo coa [[{{MediaWiki:Policy-url}}|política e normas]] vixentes.
@@ -2193,7 +2335,7 @@ Explique a razón específica do bloqueo (por exemplo, citando as páxinas concr
 'ipbenableautoblock'              => 'Bloquear automaticamente o último enderezo IP utilizado por este usuario, e calquera outro enderezo desde o que intente editar',
 'ipbsubmit'                       => 'Bloquear este usuario',
 'ipbother'                        => 'Outro período de tempo:',
-'ipboptions'                      => '2 horas:2 hours,1 día:1 day,3 días:3 days,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,para sempre:infinite', # display1:time1,display2:time2,...
+'ipboptions'                      => '2 horas:2 hours,1 día:1 day,3 días:3 days,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,para sempre:infinite',
 'ipbotheroption'                  => 'outra',
 'ipbotherreason'                  => 'Outro motivo:',
 'ipbhidename'                     => 'Agochar o nome de usuario nas edicións e listas',
@@ -2222,9 +2364,11 @@ Olle a [[Special:IPBlockList|lista de enderezos IP e usuarios bloqueados]] para 
 'ipblocklist-sh-tempblocks'       => '$1 os bloqueos temporais',
 'ipblocklist-sh-addressblocks'    => '$1 os bloqueos únicos a enderezos IP',
 'ipblocklist-submit'              => 'Procurar',
+'ipblocklist-localblock'          => 'Bloqueo local',
+'ipblocklist-otherblocks'         => '{{PLURAL:$1|Outro bloqueo|Outros bloqueos}}',
 'blocklistline'                   => '$1, $2 bloqueou a "$3" ($4)',
 'infiniteblock'                   => 'para sempre',
-'expiringblock'                   => 'remata $1',
+'expiringblock'                   => 'remata o $1 ás $2',
 'anononlyblock'                   => 'só anón.',
 'noautoblockblock'                => 'autobloqueo desactivado',
 'createaccountblock'              => 'bloqueada a creación de contas',
@@ -2239,7 +2383,8 @@ Olle a [[Special:IPBlockList|lista de enderezos IP e usuarios bloqueados]] para 
 'autoblocker'                     => 'Foi autobloqueado porque "[[User:$1|$1]]" usou recentemente o seu  mesmo enderezo IP.
 O motivo do bloqueo de $1 é: "$2"',
 'blocklogpage'                    => 'Rexistro de bloqueos',
-'blocklog-fulllog'                => 'Rexistro de bloqueos totais',
+'blocklog-showlog'                => 'Este usuario xa foi bloqueado con anterioridade. Velaquí está o rexistro de bloqueos por se quere consultalo:',
+'blocklog-showsuppresslog'        => 'Este usuario xa foi bloqueado e agochado con anterioridade. Velaquí está o rexistro de supresións por se quere consultalo:',
 'blocklogentry'                   => 'bloqueou a "[[$1]]" cun tempo de duración de $2 $3',
 'reblock-logentry'                => 'cambiou as configuracións do bloqueo de "[[$1]]" cunha caducidade de $2 $3',
 'blocklogtext'                    => 'Este é o rexistro das accións de bloqueo e desbloqueo de usuarios.
@@ -2260,9 +2405,11 @@ Olle a [[Special:IPBlockList|lista de enderezos IP e usuarios bloqueados]] se qu
 'ipb_already_blocked'             => '"$1" xa está bloqueado',
 'ipb-needreblock'                 => '== Xa está bloqueado ==
 "$1" xa está bloqueado. Quere cambiar as configuracións?',
+'ipb-otherblocks-header'          => '{{PLURAL:$1|Outro bloqueo|Outros bloqueos}}',
 'ipb_cant_unblock'                => 'Erro: Non se atopa o Block ID $1. Posiblemente xa foi desbloqueado.',
 'ipb_blocked_as_range'            => 'Erro: O enderezo IP $1 non está bloqueado directamente e non se pode desbloquear. Porén, está bloqueado por estar no rango $2, que si se pode desbloquear.',
 'ip_range_invalid'                => 'Rango IP non válido.',
+'ip_range_toolarge'               => 'Non están permitidos os rangos de bloqueo maiores que /$1.',
 'blockme'                         => 'Bloquearme',
 'proxyblocker'                    => 'Bloqueador de proxy',
 'proxyblocker-disabled'           => 'Esta función está desactivada.',
@@ -2273,6 +2420,7 @@ Por favor, contacte co seu fornecedor de acceso á Internet ou co seu soporte t�
 'sorbs_create_account_reason'     => "O seu enderezo IP está rexistrado como un ''proxy'' aberto na lista DNSBL usada por {{SITENAME}}.
 Polo tanto, non pode crear unha conta",
 'cant-block-while-blocked'        => 'Non pode bloquear outros usuarios mentres vostede estea bloqueado.',
+'cant-see-hidden-user'            => 'O usuario que intenta bloquear xa foi bloqueado e agochado. Dado que non ten o dereito necesario para agochar usuarios, non pode ver ou editar o bloqueo do usuario.',
 
 # Developer tools
 'lockdb'              => 'Fechar base de datos',
@@ -2316,6 +2464,7 @@ por favor, asegúrese de que entende as consecuencias disto antes de proseguir."
 
 Nestes casos, terá que mover ou mesturar a páxina manualmente se o desexa.",
 'movearticle'                  => 'Mover esta páxina:',
+'moveuserpage-warning'         => "'''Aviso:''' está a piques de mover unha páxina de usuario. Por favor, teña en conta que só se trasladará a páxina e que o usuario '''non''' será renomeado.",
 'movenologin'                  => 'Non accedeu ao sistema',
 'movenologintext'              => 'Debe ser un usuario rexistrado e [[Special:UserLogin|acceder ao sistema]] para mover unha páxina.',
 'movenotallowed'               => 'Non ten os permisos necesarios para mover páxinas.',
@@ -2326,7 +2475,7 @@ Nestes casos, terá que mover ou mesturar a páxina manualmente se o desexa.",
 'move-watch'                   => 'Vixiar esta páxina',
 'movepagebtn'                  => 'Mover a páxina',
 'pagemovedsub'                 => 'O movemento foi un éxito',
-'movepage-moved'               => '\'\'\'A páxina "$1" foi movida a "$2"\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'               => '\'\'\'A páxina "$1" foi movida a "$2"\'\'\'',
 'movepage-moved-redirect'      => 'Creouse unha redirección da primeira cara á segunda.',
 'movepage-moved-noredirect'    => 'A creación da redirección da primeira cara á segunda foi cancelada.',
 'articleexists'                => 'Xa existe unha páxina con ese nome, ou o nome que escolleu non é válido.
@@ -2368,6 +2517,14 @@ Quérea eliminar para facer sitio para mover?',
 'imageinvalidfilename'         => 'O nome da imaxe é inválido',
 'fix-double-redirects'         => 'Actualizar calquera redirección que apunte cara ao título orixinal',
 'move-leave-redirect'          => 'Deixar unha redirección detrás',
+'protectedpagemovewarning'     => "'''Aviso:''' esta páxina foi protexida de xeito que só os usuarios con privilexios de administrador a poidan mover.
+Velaquí está a última entrada no rexistro, por se quere consultala:",
+'semiprotectedpagemovewarning' => "'''Nota:''' esta páxina foi protexida de xeito que só os usuarios rexistrados a poidan mover.
+Velaquí está a última entrada no rexistro, por se quere consultala:",
+'move-over-sharedrepo'         => '== O ficheiro xa existe ==
+"[[:$1]]" xa existe nun repositorio compartido. Ao mover un ficheiro a este título sobrescribirase o ficheiro compartido.',
+'file-exists-sharedrepo'       => 'O nome que elixiu para o ficheiro xa está en uso nun repositorio compartido.
+Por favor, escolla outro nome.',
 
 # Export
 'export'            => 'Exportar páxinas',
@@ -2389,15 +2546,21 @@ No último caso, pode usar tamén unha ligazón, por exemplo [[{{#Special:Export
 'export-pagelinks'  => 'Engadir as páxinas ligadas a unha profundidade de:',
 
 # Namespace 8 related
-'allmessages'               => 'Todas as mensaxes do sistema',
-'allmessagesname'           => 'Nome',
-'allmessagesdefault'        => 'Texto predeterminado',
-'allmessagescurrent'        => 'Texto actual',
-'allmessagestext'           => 'Esta é unha lista de todas as mensaxes dispoñibles no espazo de nomes MediaWiki.
+'allmessages'                   => 'Todas as mensaxes do sistema',
+'allmessagesname'               => 'Nome',
+'allmessagesdefault'            => 'Texto predeterminado',
+'allmessagescurrent'            => 'Texto actual',
+'allmessagestext'               => 'Esta é unha lista de todas as mensaxes dispoñibles no espazo de nomes MediaWiki.
 Por favor, visite a [http://www.mediawiki.org/wiki/Localisation localización MediaWiki] e [http://translatewiki.net translatewiki.net] se quere contribuír á localización xenérica de MediaWiki.',
-'allmessagesnotsupportedDB' => "'''{{ns:special}}:Allmessages''' non está dispoñíbel porque '''\$wgUseDatabaseMessages''' está desactivado.",
-'allmessagesfilter'         => 'Filtrar polo nome da mensaxe:',
-'allmessagesmodified'       => 'Amosar só as modificadas',
+'allmessagesnotsupportedDB'     => "'''{{ns:special}}:Allmessages''' non está dispoñíbel porque '''\$wgUseDatabaseMessages''' está desactivado.",
+'allmessages-filter-legend'     => 'Filtrar',
+'allmessages-filter'            => 'Filtrar por estado de personalización:',
+'allmessages-filter-unmodified' => 'Inalteradas',
+'allmessages-filter-all'        => 'Todas',
+'allmessages-filter-modified'   => 'Modificadas',
+'allmessages-prefix'            => 'Filtrar por prefixo:',
+'allmessages-language'          => 'Lingua:',
+'allmessages-filter-submit'     => 'Mostrar',
 
 # Thumbnails
 'thumbnail-more'           => 'Ampliar',
@@ -2407,6 +2570,9 @@ Por favor, visite a [http://www.mediawiki.org/wiki/Localisation localización Me
 'djvu_no_xml'              => 'Foi imposíbel obter o XML para o ficheiro DjVu',
 'thumbnail_invalid_params' => 'Parámetros de miniatura non válidos',
 'thumbnail_dest_directory' => 'Foi imposíbel crear un directorio de destino',
+'thumbnail_image-type'     => 'Tipo de imaxe non soportado',
+'thumbnail_gd-library'     => 'Configuración da libraría GD incompleta: falta a función $1',
+'thumbnail_image-missing'  => 'Parece que falta o ficheiro: $1',
 
 # Special:Import
 'import'                     => 'Importar páxinas',
@@ -2471,6 +2637,7 @@ Gárdeo no seu disco duro e cárgueo aquí.',
 'tooltip-ca-viewsource'           => 'Esta páxina está protexida. Pode ver o código fonte.',
 'tooltip-ca-history'              => 'Versións anteriores desta páxina',
 'tooltip-ca-protect'              => 'Protexer esta páxina',
+'tooltip-ca-unprotect'            => 'Desprotexer esta páxina',
 'tooltip-ca-delete'               => 'Eliminar esta páxina',
 'tooltip-ca-undelete'             => 'Restaurar as edicións feitas nesta páxina antes de que fose eliminada',
 'tooltip-ca-move'                 => 'Mover esta páxina',
@@ -2481,6 +2648,7 @@ Gárdeo no seu disco duro e cárgueo aquí.',
 'tooltip-search-fulltext'         => 'Procurar este texto nas páxinas',
 'tooltip-p-logo'                  => 'Portada',
 'tooltip-n-mainpage'              => 'Visitar a Portada',
+'tooltip-n-mainpage-description'  => 'Visitar a Portada',
 'tooltip-n-portal'                => 'Acerca do proxecto, o que vostede pode facer, onde atopar cousas',
 'tooltip-n-currentevents'         => 'Atopar documentación acerca de acontecementos de actualidade',
 'tooltip-n-recentchanges'         => 'A lista de modificacións recentes no wiki.',
@@ -2533,10 +2701,12 @@ Gárdeo no seu disco duro e cárgueo aquí.',
 # Attribution
 'anonymous'        => '{{PLURAL:$1|Usuario anónimo|Usuarios anónimos}} de {{SITENAME}}',
 'siteuser'         => '$1 de {{SITENAME}}',
-'lastmodifiedatby' => 'A última modificación desta páxina foi o $1 ás $2 por $3.', # $1 date, $2 time, $3 user
+'anonuser'         => 'o usuario anónimo $1 de {{SITENAME}}',
+'lastmodifiedatby' => 'A última modificación desta páxina foi o $1 ás $2 por $3.',
 'othercontribs'    => 'Baseado no traballo feito por $1.',
 'others'           => 'outros',
 'siteusers'        => '{{PLURAL:$2|$1}} de {{SITENAME}}',
+'anonusers'        => '{{PLURAL:$2|o usuario anónimo|os usuarios anónimos}} $1 de {{SITENAME}}',
 'creditspage'      => 'Páxina de créditos',
 'nocredits'        => 'Non hai información de créditos dispoñíbel para esta páxina.',
 
@@ -2575,11 +2745,22 @@ Isto, probabelmente, se debe a unha ligazón cara a un sitio externo que está n
 'mw_math_modern' => 'Recomendado para as versións recentes dos navegadores',
 'mw_math_mathml' => 'MathML se é posible (experimental)',
 
+# Math errors
+'math_failure'          => 'Fallou a conversión do código',
+'math_unknown_error'    => 'erro descoñecido',
+'math_unknown_function' => 'función descoñecida',
+'math_lexing_error'     => 'erro de léxico',
+'math_syntax_error'     => 'erro de sintaxe',
+'math_image_error'      => 'Fallou a conversión a PNG; comprobe que latex, dvips, gs e convert están ben instalados',
+'math_bad_tmpdir'       => 'Non se puido crear ou escribir no directorio temporal de fórmulas',
+'math_bad_output'       => 'Non se puido crear ou escribir no directorio de saída de fórmulas',
+'math_notexvc'          => 'Falta o executable texvc. Por favor consulte math/README para configurar.',
+
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como revisada',
 'markaspatrolledtext'                 => 'Marcar esta páxina como revisada',
 'markedaspatrolled'                   => 'Marcar coma revisado',
-'markedaspatrolledtext'               => 'A revisión seleccionada foi marcada como revisada.',
+'markedaspatrolledtext'               => 'A revisión seleccionada de "[[:$1]]" foi marcada como revisada.',
 'rcpatroldisabled'                    => 'A patrulla dos cambios recentes está desactivada',
 'rcpatroldisabledtext'                => 'A funcionalidade da patrulla dos cambios recentes está actualmente desactivada.',
 'markedaspatrollederror'              => 'Non se pode marcar coma revisada',
@@ -2609,13 +2790,10 @@ $1',
 'previousdiff' => '← Edición máis vella',
 'nextdiff'     => 'Edición máis nova →',
 
-# Visual comparison
-'visual-comparison' => 'Comparación visual',
-
 # Media information
 'mediawarning'         => "'''Aviso:''' este tipo de ficheiro pode conter código malicioso.
 O seu sistema pode quedar comprometido se o executa.",
-'imagemaxsize'         => 'Limitar as imaxes nas páxinas de descrición de ficheiros a:',
+'imagemaxsize'         => "Límite de tamaño das imaxes:<br />''(nas páxinas de descrición de ficheiros)''",
 'thumbsize'            => 'Tamaño da miniatura:',
 'widthheightpage'      => '$1×$2, $3 {{PLURAL:$3|páxina|páxinas}}',
 'file-info'            => 'Tamaño do ficheiro: $1, tipo MIME: $2',
@@ -2624,6 +2802,8 @@ O seu sistema pode quedar comprometido se o executa.",
 'svg-long-desc'        => '(ficheiro SVG, nominalmente $1 × $2 píxeles, tamaño do ficheiro: $3)',
 'show-big-image'       => 'Imaxe na máxima resolución',
 'show-big-image-thumb' => '<small>Tamaño desta presentación da imaxe: $1 × $2 píxeles</small>',
+'file-info-gif-looped' => 'en bucle',
+'file-info-gif-frames' => '$1 {{PLURAL:$1|fotograma|fotogramas}}',
 
 # Special:NewFiles
 'newimages'             => 'Galería de imaxes novas',
@@ -2660,7 +2840,7 @@ Os demais agocharanse por omisión.
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # EXIF tags
 'exif-imagewidth'                  => 'Ancho',
@@ -2787,14 +2967,14 @@ Os demais agocharanse por omisión.
 
 'exif-unknowndate' => 'Data descoñecida',
 
-'exif-orientation-1' => 'Normal', # 0th row: top; 0th column: left
-'exif-orientation-2' => 'Volteada horizontalmente', # 0th row: top; 0th column: right
-'exif-orientation-3' => 'Rotada 180°', # 0th row: bottom; 0th column: right
-'exif-orientation-4' => 'Volteada verticalmente', # 0th row: bottom; 0th column: left
-'exif-orientation-5' => 'Rotada 90° CCW e volteada verticalmente', # 0th row: left; 0th column: top
-'exif-orientation-6' => 'Rotada 90° CW', # 0th row: right; 0th column: top
-'exif-orientation-7' => 'Rotada 90° CW e volteada verticalmente', # 0th row: right; 0th column: bottom
-'exif-orientation-8' => 'Rotada 90° CCW', # 0th row: left; 0th column: bottom
+'exif-orientation-1' => 'Normal',
+'exif-orientation-2' => 'Volteada horizontalmente',
+'exif-orientation-3' => 'Rotada 180°',
+'exif-orientation-4' => 'Volteada verticalmente',
+'exif-orientation-5' => 'Rotada 90° CCW e volteada verticalmente',
+'exif-orientation-6' => 'Rotada 90° CW',
+'exif-orientation-7' => 'Rotada 90° CW e volteada verticalmente',
+'exif-orientation-8' => 'Rotada 90° CCW',
 
 'exif-planarconfiguration-1' => 'Formato de paquete de píxeles',
 'exif-planarconfiguration-2' => 'Formato de planos',
@@ -2916,7 +3096,7 @@ Os demais agocharanse por omisión.
 'exif-gpsmeasuremode-2' => 'Medida bidimensional',
 'exif-gpsmeasuremode-3' => 'Medida tridimensional',
 
-# Pseudotags used for GPSSpeedRef and GPSDestDistanceRef
+# Pseudotags used for GPSSpeedRef
 'exif-gpsspeed-k' => 'Quilómetros por hora',
 'exif-gpsspeed-m' => 'Millas por hora',
 'exif-gpsspeed-n' => 'Nós',
@@ -2935,6 +3115,7 @@ Os demais agocharanse por omisión.
 'watchlistall2'    => 'todo',
 'namespacesall'    => 'todos',
 'monthsall'        => 'todos',
+'limitall'         => 'todas',
 
 # E-mail address confirmation
 'confirmemail'             => 'Confirmar o enderezo de correo electrónico',
@@ -2972,7 +3153,7 @@ para cancelar a confirmación do enderezo de correo electrónico:
 
 $5
 
-Este código de confirmación caducará ás $4.',
+Este código de confirmación caducará o $6 ás $7.',
 'confirmemail_invalidated' => 'A confirmación do enderezo de correo electrónico foi cancelada',
 'invalidateemail'          => 'Cancelar a confirmación do correo electrónico',
 
@@ -3065,7 +3246,7 @@ Tamén pode [[Special:Watchlist/edit|empregar o editor normal]].',
 'duplicate-defaultsort' => 'Aviso: a clave de ordenación por defecto "$2" anula a clave de ordenación anterior por defecto "$1".',
 
 # Special:Version
-'version'                          => 'Versión', # Not used as normal message but as header for the special page itself
+'version'                          => 'Versión',
 'version-extensions'               => 'Extensións instaladas',
 'version-specialpages'             => 'Páxinas especiais',
 'version-parserhooks'              => 'Asociadores analíticos',
@@ -3079,7 +3260,7 @@ Tamén pode [[Special:Watchlist/edit|empregar o editor normal]].',
 'version-skin-extension-functions' => 'Funcións da extensión da aparencia',
 'version-hook-name'                => 'Nome do hook',
 'version-hook-subscribedby'        => 'Subscrito por',
-'version-version'                  => 'Versión',
+'version-version'                  => '(Versión $1)',
 'version-license'                  => 'Licenza',
 'version-software'                 => 'Software instalado',
 'version-software-product'         => 'Produto',
@@ -3159,5 +3340,16 @@ Introduza o nome do ficheiro sen o prefixo "{{ns:file}}:".',
 'dberr-usegoogle'   => 'Mentres tanto, pode probar a buscar co Google.',
 'dberr-outofdate'   => 'Teña en conta que os índices de Google do noso contido poden non estar actualizados.',
 'dberr-cachederror' => 'O seguinte contido é unha copia da memoria caché da páxina solicitada, polo que pode non estar actualizada.',
+
+# HTML forms
+'htmlform-invalid-input'       => 'Hai algún problema con partes do texto que inseriu',
+'htmlform-select-badoption'    => 'O valor que especificou non é unha opción válida.',
+'htmlform-int-invalid'         => 'O valor que especificou non é un número enteiro.',
+'htmlform-float-invalid'       => 'O valor que especificou non é un número.',
+'htmlform-int-toolow'          => 'O valor que especificou está por baixo do mínimo de $1',
+'htmlform-int-toohigh'         => 'O valor que especificou está por riba do máximo de $1',
+'htmlform-submit'              => 'Enviar',
+'htmlform-reset'               => 'Desfacer os cambios',
+'htmlform-selectorother-other' => 'Outra',
 
 );

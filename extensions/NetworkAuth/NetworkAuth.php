@@ -12,6 +12,7 @@ if (!defined('MEDIAWIKI')) {
 $wgNetworkAuthUsers[] = array();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'NetworkAuth',
 	'version'        => '1.0',
 	'author'         => 'Tim Laqua',

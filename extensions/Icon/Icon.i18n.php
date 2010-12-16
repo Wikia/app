@@ -6,6 +6,8 @@
  * @addtogroup Extensions
 */
 
+require_once( dirname(__FILE__) . '/Icon.i18n.magic.php' );
+
 $messages = array();
 
 $messages['en'] = array(
@@ -21,11 +23,13 @@ $messages['qqq'] = array(
 	'icon-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
  */
-$messages['vep'] = array(
-	'icon-badimage' => 'Hond kuva',
+$messages['af'] = array(
+	'icon-badimage' => 'Slegte beeld',
+	'icon-badwidth' => 'Onjuiste breedte',
+	'icon-desc' => 'Maak dit moontlik om beelde as ikone en ikoon-skakels te gebruik',
 );
 
 /** Arabic (العربية)
@@ -55,6 +59,16 @@ $messages['avk'] = array(
 	'icon-badwidth' => 'Lumaj',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'icon-badimage' => 'Няслушная выява',
+	'icon-badwidth' => 'Няслушная шырыня',
+	'icon-desc' => 'Дазваляе Вам выкарыстоўваць выявы як значкі і значкі са спасылкамі',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -65,6 +79,15 @@ $messages['bg'] = array(
 	'icon-desc' => 'Позволява да се използват картинките като икони и като иконни препратки',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'icon-badimage' => 'Skeudenn fall',
+	'icon-badwidth' => 'Ledander faziek',
+	'icon-desc' => "Aotren a ra ac'hanoc'h da implijout skeudennoù evel arlunioù pe liammoù e stumm arlunioù",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -72,6 +95,15 @@ $messages['bs'] = array(
 	'icon-badimage' => 'Loša slika',
 	'icon-badwidth' => 'Loša širina',
 	'icon-desc' => 'Omogućuje upotrebu slika kao ikona i linkova ikona',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'icon-badimage' => 'Imatge incorrecta',
+	'icon-badwidth' => 'Amplada incorrecta',
+	'icon-desc' => "Et permet usar les imatges com a icones i com a enllaços d'icones",
 );
 
 /** Czech (Česky)
@@ -92,6 +124,15 @@ $messages['cy'] = array(
 	'icon-desc' => 'Yn defnyddio delweddau fel eiconau a chysylltiadau ar ffurf eicon',
 );
 
+/** Danish (Dansk)
+ * @author BabelFrode
+ */
+$messages['da'] = array(
+	'icon-badimage' => 'Ubrugeligt billede',
+	'icon-badwidth' => 'Ubrugelig bredde',
+	'icon-desc' => 'Lader dig bruge billeder som ikoner og ikon-links',
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
  * @author Raimond Spekking
@@ -109,6 +150,15 @@ $messages['dsb'] = array(
 	'icon-badimage' => 'Špatny wobraz',
 	'icon-badwidth' => 'Špatna šyrokosć',
 	'icon-desc' => 'Dowólujo wobraze ako symbole a symbolowe wótkaze wužywaś',
+);
+
+/** Greek (Ελληνικά)
+ * @author Consta
+ */
+$messages['el'] = array(
+	'icon-badimage' => 'Κακή εικόνα',
+	'icon-badwidth' => 'Κακό πλάτος',
+	'icon-desc' => 'Επιτρέπει τη χρήση εικόνων ως εικονίδια και ως εικονίδια σύνδεσμων',
 );
 
 /** Esperanto (Esperanto)
@@ -207,7 +257,7 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dnik
- * @author Suradnik13
+ * @author Ex13
  */
 $messages['hr'] = array(
 	'icon-badimage' => 'Loša slika',
@@ -227,10 +277,12 @@ $messages['hsb'] = array(
 /** Hungarian (Magyar)
  * @author Dani
  * @author Dorgan
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'icon-badimage' => 'Rossz kép',
 	'icon-badwidth' => 'Érvénytelen szélesség',
+	'icon-desc' => 'Lehetővé teszi, hogy képeket ikonként és ikonhivatkozásként használjunk',
 );
 
 /** Interlingua (Interlingua)
@@ -240,6 +292,15 @@ $messages['ia'] = array(
 	'icon-badimage' => 'Mal imagine',
 	'icon-badwidth' => 'Latitude invalide',
 	'icon-desc' => 'Permitte usar imagines como icones e ligamines in forma de icone',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'icon-badimage' => 'Gambar salah',
+	'icon-badwidth' => 'Lebar salah',
+	'icon-desc' => 'Mengijinkan Anda untuk menggunakan gambar sebagai ikon dan pranala ikon',
 );
 
 /** Ido (Ido)
@@ -327,10 +388,21 @@ $messages['lt'] = array(
 	'icon-badwidth' => 'Blogas plotis',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'icon-badimage' => 'Лоша слика',
+	'icon-badwidth' => 'Лоша широчина',
+	'icon-desc' => 'Дозволува употреба на слики како икони и врски-икони',
+);
+
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
+	'icon-badimage' => 'മോശം ചിത്രം',
 	'icon-badwidth' => 'അസാധുവായ വീതി',
 );
 
@@ -412,6 +484,15 @@ $messages['pl'] = array(
 	'icon-desc' => 'Pozwala używać grafiki jako ikony oraz jako ikony z linkami',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'icon-badimage' => 'Figura pa bon-a',
+	'icon-badwidth' => 'Larghëssa pa bon-a',
+	'icon-desc' => "At përmëtt ëd dovré le figure com icon-e e anliure d'icon-e",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -439,9 +520,11 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'icon-badimage' => 'Imagine coruptă',
 	'icon-badwidth' => 'Lăţime incorectă',
 );
 
@@ -450,6 +533,8 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'icon-badimage' => 'Immaggine cattiva',
+	'icon-badwidth' => 'Larghezze sbagliate',
+	'icon-desc' => 'Te permette de ausà immaggine cumme icone e collegaminde a icone',
 );
 
 /** Russian (Русский)
@@ -467,7 +552,25 @@ $messages['ru'] = array(
 $messages['sk'] = array(
 	'icon-badimage' => 'Zlý obrázok',
 	'icon-badwidth' => 'Zlá šírka',
-	'icon-desc' => 'Umožnuje použíť obrázky ako ikony a ikony odkazov',
+	'icon-desc' => 'Umožnuje použiť obrázky ako ikony a ikony odkazov',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'icon-badimage' => 'Неисправна слика',
+	'icon-badwidth' => 'Лоша ширина',
+	'icon-desc' => 'Омогућује коришћење слика као икона и њихових спољашњих веза',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'icon-badimage' => 'Neispravna slika',
+	'icon-badwidth' => 'Loša širina',
+	'icon-desc' => 'Omogućuje korišćenje slika kao ikona i njihovih spoljašnjih veza',
 );
 
 /** Seeltersk (Seeltersk)
@@ -516,6 +619,14 @@ $messages['tg-cyrl'] = array(
 	'icon-badwidth' => 'Васеъии номуносиб',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'icon-badimage' => 'Aksi nomunosib',
+	'icon-badwidth' => "Vase'iji nomunosib",
+);
+
 /** Thai (ไทย)
  * @author Passawuth
  */
@@ -534,9 +645,21 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'icon-badimage' => 'Kötü resim',
+	'icon-badwidth' => 'Uygunsuz genişlik',
+	'icon-desc' => 'Resimleri simge ve simge bağlantısı olarak kullanmanızı sağlar',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'icon-badimage' => 'Помилкове зображення',
+	'icon-badwidth' => 'Помилкова ширина',
+	'icon-desc' => 'Дозволяє використовувати зображення в якості іконок та посилань',
 );
 
 /** Vèneto (Vèneto)
@@ -546,6 +669,15 @@ $messages['vec'] = array(
 	'icon-badimage' => 'Imagine mia valida',
 	'icon-badwidth' => 'Larghessa mia valida',
 	'icon-desc' => 'Permete de doparar le imagini come icone e icone con colegamento',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'icon-badimage' => 'Hond kuva',
+	'icon-badwidth' => 'Hond leveduz',
+	'icon-desc' => 'Laskeb kävutada kuvad ikonoin da kosketisin',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -567,16 +699,22 @@ $messages['vo'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ * @author PhiLiP
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'icon-badimage' => '损坏的图像',
+	'icon-badwidth' => '宽度错误',
+	'icon-desc' => '允许将图像用作图标或图标链接',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
 $messages['zh-hant'] = array(
-	'icon-badimage' => '圖像錯誤',
+	'icon-badimage' => '圖片錯誤',
 	'icon-badwidth' => '寬度錯誤',
-	'icon-desc' => '增加icon參數以產生於圖像上的連結',
+	'icon-desc' => '增加icon參數以產生於圖片上的連結',
 );
 

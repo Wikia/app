@@ -39,6 +39,14 @@ $messages['arz'] = array(
 	'minnamelength-desc' => 'يجبر على طول أدنى لاسم اليوزر',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'minnamelength-error' => "Da Benutzanãm is z'kuaz. D'Mindestläng is $1 Zeichn.",
+	'minnamelength-desc' => 'A Mindestläng vum Benutzanãm eazwinga',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Filipinayzd
  */
@@ -64,6 +72,14 @@ $messages['bg'] = array(
 	'minnamelength-desc' => 'Налагане на ограничение за минимална дължина на потребителското име',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'minnamelength-error' => "Re verr eo hoc'h anv implijer. $1 eo an niver a arouezennoù bihanañ.",
+	'minnamelength-desc' => 'Termeniñ a ra un hed bihanañ evit un anv implijer',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -74,9 +90,19 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author SMP
+ * @author Solde
  */
 $messages['ca'] = array(
 	'minnamelength-error' => "El vostre nom d'usuari és massa curt. La longitud mínima és de $1.",
+	'minnamelength-desc' => "Fer complir una longitud mínima del nom d'usuari",
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'minnamelength-error' => "Mae'ch enw defnyddiwr yn rhy fyr. Rhaid iddo fod yn $1 neu'n hwy.",
+	'minnamelength-desc' => 'Pennu hyd isaf ar gyfer enwau defnyddwyr',
 );
 
 /** German (Deutsch)
@@ -85,6 +111,13 @@ $messages['ca'] = array(
 $messages['de'] = array(
 	'minnamelength-error' => 'Der Benutzername ist zu kurz. Die Mindestlänge beträgt $1 Zeichen.',
 	'minnamelength-desc' => 'Erzwinge eine Mindestlänge des Benutzernamens',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'minnamelength-error' => 'Ihr Benutzername ist zu kurz. Die Mindestlänge beträgt $1 Zeichen.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -97,9 +130,11 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
 	'minnamelength-error' => 'Το όνομα χρήστη σας είναι πολύ μικρό. Το ελάχιστο όριο είναι $1.',
+	'minnamelength-desc' => 'Επιβολή ενός ελαχίστου μήκους ονόματος χρήστη',
 );
 
 /** Esperanto (Esperanto)
@@ -117,6 +152,22 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'minnamelength-error' => 'Su nombre de usuario es demasiado corto. El largo mínimo es $1.',
 	'minnamelength-desc' => 'Exige una longitud mínima para el nombre de usuario',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'minnamelength-error' => 'Sinu kasutajanimi on liiga lühike. Alammääraline pikkus on $1.',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'minnamelength-error' => 'Zure lankide izena laburregia da. Luzera minimoa $1 da.',
+	'minnamelength-desc' => 'Lankide izenaren luzera minimoa ezarri',
 );
 
 /** Finnish (Suomi)
@@ -173,7 +224,7 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dnik
- * @author Suradnik13
+ * @author Ex13
  */
 $messages['hr'] = array(
 	'minnamelength-error' => 'Vaše suradničko ime je prekratko. Duljina mora biti bar $1.',
@@ -205,10 +256,12 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author IvanLanin
  */
 $messages['id'] = array(
-	'minnamelength-error' => 'Nama pengguna Anda terlalu pendek. Panjang minimum adalah $1.',
+	'minnamelength-error' => 'Nama pengguna Anda terlalu pendek. Panjangnya minimal $1.',
+	'minnamelength-desc' => 'Gunakan panjang minimal untuk nama pengguna',
 );
 
 /** Italian (Italiano)
@@ -280,11 +333,19 @@ $messages['lb'] = array(
 	'minnamelength-desc' => 'Eng Mindestlängt vum Benotzrnumm verlaangen',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'minnamelength-error' => 'Вашето корисничко име е прекратко. Минималната должина е $1.',
+	'minnamelength-desc' => 'Наложи минимална должина на корисничко име',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'minnamelength-error' => 'നിങ്ങള്‍ തിരഞ്ഞെടുത്ത ഉപയോക്തൃനാമം തീരെ ചെറുതാണ്‌. ഉപയോക്തൃനാമത്തിനു നാമത്തിനു വേണ്ട ഏറ്റവും കുറഞ്ഞ വലിപ്പം $1 ആണ്‌.',
+	'minnamelength-error' => 'താങ്കള്‍ തിരഞ്ഞെടുത്ത ഉപയോക്തൃനാമം തീരെ ചെറുതാണ്‌. ഉപയോക്തൃനാമത്തിനു നാമത്തിനു വേണ്ട ഏറ്റവും കുറഞ്ഞ വലിപ്പം $1 ആണ്‌.',
 );
 
 /** Marathi (मराठी)
@@ -340,9 +401,11 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'minnamelength-error' => "Sò stranòm a l'é tròp curt. A venta ch'al sia longh almanch $1 caràter.",
+	'minnamelength-desc' => 'Òbliga na lunghëssa mìnima dlë stranòm',
 );
 
 /** Pashto (پښتو)
@@ -400,6 +463,22 @@ $messages['sk'] = array(
 	'minnamelength-desc' => 'Vynútiť minimálnu dĺžku používateľského mena',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'minnamelength-error' => 'Ваше корисничко име је прекратко. Минимална дужина је $1.',
+	'minnamelength-desc' => 'Одређује минималну дужину корисничког имена',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'minnamelength-error' => 'Vaše korisničko ime je prekratko. Minimalna dužina je $1.',
+	'minnamelength-desc' => 'Određuje minimalnu dužinu korisničkog imena',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -408,10 +487,12 @@ $messages['stq'] = array(
 );
 
 /** Sundanese (Basa Sunda)
+ * @author Irwangatot
  * @author Kandar
  */
 $messages['su'] = array(
 	'minnamelength-error' => 'Landihan anjeun pondok teuing. Paling henteu kudu $1.',
+	'minnamelength-desc' => 'Paké panjang saeutikna pikeun ngaran pamaké',
 );
 
 /** Swedish (Svenska)
@@ -437,12 +518,27 @@ $messages['tg-cyrl'] = array(
 	'minnamelength-error' => 'Номи корбарии шумо хеле кӯтоҳ аст. Дарозии он дасти кам $1 бошад.',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'minnamelength-error' => 'Nomi korbariji şumo xele kūtoh ast. Daroziji on dasti kam $1 boşad.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
 	'minnamelength-error' => 'Napakaikli ng iyong pangalan ng tagagamit. Ang pinakamababang haba ay $1.',
 	'minnamelength-desc' => 'Magpairal ng isang pinakamababang haba ng pangalan ng tagagamit',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'minnamelength-error' => 'Kullanıcı adınız çok kısa. Asgari uzunluk: $1.',
+	'minnamelength-desc' => 'Kullanıcı adı asgari uzunluğu uygular',
 );
 
 /** Vèneto (Vèneto)

@@ -23,13 +23,13 @@ class WhatIsMyIP extends SpecialPage {
 	 *
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
-	public function execute( $par ){
+	public function execute( $par ) {
 		global $wgOut;
 
 		wfLoadExtensionMessages( 'WhatIsMyIP' );
 
 		$wgOut->setPageTitle( wfMsg( 'whatismyip' ) );
 		$ip = wfGetIP();
-		$wgOut->addWikiText( wfMsg( 'whatismyip-out' ). " $ip" );
+		$wgOut->addWikiText( wfMsg( 'whatismyip-out' ) . " $ip" );
 	}
 }

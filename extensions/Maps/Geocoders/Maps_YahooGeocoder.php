@@ -32,8 +32,8 @@ final class MapsYahooGeocoder extends MapsBaseGeocoder {
 
 		$result = self::GetResponse($requestURL);
 	
-		$lon = self::getXmlElementValue($result, "longitude");
-		$lat = self::getXmlElementValue($result, "latitude");
+		$lon = self::getXmlElementValue($result, 'longitude');
+		$lat = self::getXmlElementValue($result, 'latitude');
 
 		// In case one of the values is not found, return false
 		if (!$lon || !$lat) return false;

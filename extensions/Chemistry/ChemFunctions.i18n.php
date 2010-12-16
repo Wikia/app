@@ -48,24 +48,6 @@ $messages['qqq'] = array(
 	'chemFunctions_ListPage' => '{{Identical|Chemical sources}}',
 );
 
-/** Picard (Picard)
- * @author Geoleplubo
- */
-$messages['pcd'] = array(
-	'chemicalsources' => 'Référinches kémiques',
-	'chemicalsource-desc' => 'Ajouter el balise <nowiki><chemform></nowiki>, pou ches formules kémiques',
-	'chemFunctions_ListPage' => 'Référinches kémiques',
-	'chemFunctions_DataList' => 'Dsous il y o eune lisse aveuc ches loïens ed ches chites où os pourroème trouvoér des informachions su ches molécules kémiques qu\'os trachez.<br /><br />
-* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Compound $MIXCASNameFormula at NIST</a><br />
-* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS at the Oxford University (UK) (not searchable)</a><br />',
-	'chemFunctions_CAS' => 'Liméro CAS',
-	'chemFunctions_ATCCode' => 'Code ATC',
-	'chemFunctions_ECNumber' => 'ECLiméro',
-	'chemFunctions_Formula' => 'Formule',
-	'chemFunctions_Name' => 'Nom IUPAC',
-	'chemFunctions_ChemFormInputError' => 'Chemform: Bérlurache del intrèe!',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -73,6 +55,9 @@ $messages['af'] = array(
 	'chemicalsources' => 'Chemiese bronne',
 	'chemicalsource-desc' => "Maak 'n <nowiki><chemform></nowiki>-etiket beskikbaar vir chemiese formules",
 	'chemFunctions_ListPage' => 'Chemiese bronne',
+	'chemFunctions_DataList' => 'Hier is \'n lys van skakels na webwerwe wat inligting oor die chemiese stof wat jy soek kan gee.<br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Verbinding $MIXCASNameFormula op die NIST se webblad</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS op die webblad van die Oxford University (UK) (nie doorsoekbaar nie)</a><br />',
 	'chemFunctions_CAS' => 'CAS-nommer',
 	'chemFunctions_ATCCode' => 'ATC-kode',
 	'chemFunctions_ECNumber' => 'EC-nommer',
@@ -115,6 +100,35 @@ $messages['arz'] = array(
 	'chemFunctions_Formula' => 'الصيغة',
 	'chemFunctions_Name' => 'اسم IUPAC',
 	'chemFunctions_ChemFormInputError' => 'Chemform: خطأ إدخال!',
+);
+
+/** Azerbaijani (Azərbaycan)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'chemicalsources' => 'Kimyaya dair mənbələr',
+	'chemicalsource-desc' => 'Kimyəvi formullar üçün <nowiki><chemform></nowiki> teqini əlavə edin',
+	'chemFunctions_ListPage' => 'Kimyaya dair mənbələr',
+	'chemFunctions_Formula' => 'Formul',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'chemicalsources' => 'Крыніцы па хіміі',
+	'chemicalsource-desc' => 'Дадае тэг <nowiki><chemform></nowiki> для хімічных формулаў',
+	'chemFunctions_ListPage' => 'Крыніцы па хіміі',
+	'chemFunctions_DataList' => 'Ніжэй пададзены сьпіс спасылак на сайты, якія могуць утрымліваць інфармацыю пра хімічныя субстанцыі, якія Вас цікавяць. <br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Злучэньне $MIXCASNameFormula на сайце NIST</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS на сайце Оксфардзкага ўнівэрсытэта (Вялікабрытанія) (пошук адсутнічае)</a><br />',
+	'chemFunctions_CAS' => 'Нумар CAS',
+	'chemFunctions_ATCCode' => 'ATCCode',
+	'chemFunctions_ECNumber' => 'ECNumber',
+	'chemFunctions_Formula' => 'Формула',
+	'chemFunctions_Name' => 'Назва IUPAC',
+	'chemFunctions_ChemFormInputError' => 'Chemform: Памылка ўводу!',
 );
 
 /** Bulgarian (Български)
@@ -182,12 +196,16 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Aleator
+ * @author Paucabot
  */
 $messages['ca'] = array(
 	'chemicalsource-desc' => "Afegeix l'etiqueta <nowiki><chemform></nowiki>, per a fórmules químiques",
 	'chemFunctions_DataList' => 'A continuació disposeu d\'una llista d\'enllaços a llocs que ofereixen informació sobre les substàncies químiques que esteu cercant.<br /><br />
 * <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Compound $MIXCASNameFormula at NIST</a><br />
 * <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS a l\'Oxford University (RU) (no es pot cercar)</a><br />',
+	'chemFunctions_CAS' => 'Nombre CAS',
+	'chemFunctions_Formula' => 'Fórmula',
+	'chemFunctions_Name' => 'Nom IUPAC',
 );
 
 /** Czech (Česky)
@@ -259,10 +277,22 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
 	'chemicalsources' => 'Χημικές πηγές',
+	'chemicalsource-desc' => 'Προσθέτει την ετικέτα <nowiki><chemform></nowiki> για χημικούς τύπους',
 	'chemFunctions_ListPage' => 'Χημικές πηγές',
+	'chemFunctions_DataList' => 'Παρακάτω βρίσκεται μια λίστα συνδέσμων προς ιστοτόπους που μπορεί να παρέχουν πληροφορίες περί των χημικών ουσιών που αναζητείτε.
+
+* [http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI Composé $MIXCASNameFormula], NIST
+* [http://ptcl.chem.ox.ac.uk/MSDS/ MSDS], Πανεπιστήμιο της Οξφόρδης',
+	'chemFunctions_CAS' => 'Αριθμός CAS',
+	'chemFunctions_ATCCode' => 'Κώδικας ATC',
+	'chemFunctions_ECNumber' => 'Ονοματολογία EC',
+	'chemFunctions_Formula' => 'Τύπος',
+	'chemFunctions_Name' => 'Όνομα IUPAC',
+	'chemFunctions_ChemFormInputError' => 'Chemform: λανθασμένη εισαγωγή δεδομένων!',
 );
 
 /** Esperanto (Esperanto)
@@ -287,9 +317,15 @@ $messages['es'] = array(
 	'chemicalsources' => 'Fuentes químicas',
 	'chemicalsource-desc' => 'Agrega la etiqueta <nowiki><chemform></nowiki>, para fórmulas químicas',
 	'chemFunctions_ListPage' => 'Fuentes químicas',
+	'chemFunctions_DataList' => 'Debajo hay una lista de vínculos a sitios que pueden proveer información acerca de la sustancia química que estás buscando.<br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Componer $MIXCASNameFormula en NIST</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS en la Universidad de Oxford (UK) (no buscable)</a><br />',
 	'chemFunctions_CAS' => 'Número CAS',
+	'chemFunctions_ATCCode' => 'ATCCode',
+	'chemFunctions_ECNumber' => 'ECNumber',
 	'chemFunctions_Formula' => 'Fórmula',
 	'chemFunctions_Name' => 'Nombre IUPAC',
+	'chemFunctions_ChemFormInputError' => 'Chemform: error de entrada!',
 );
 
 /** Estonian (Eesti)
@@ -319,11 +355,18 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Str4nd
  */
 $messages['fi'] = array(
+	'chemicalsources' => 'Kemialliset lähteet',
+	'chemFunctions_ListPage' => 'Kemialliset lähteet',
 	'chemFunctions_CAS' => 'CAS-numero',
+	'chemFunctions_ATCCode' => 'ATC-koodi',
+	'chemFunctions_ECNumber' => 'EC-numero',
+	'chemFunctions_Formula' => 'Kaava',
 	'chemFunctions_Name' => 'IUPAC-nimi',
+	'chemFunctions_ChemFormInputError' => 'Chemform: Syötevirhe!',
 );
 
 /** French (Français)
@@ -507,14 +550,20 @@ $messages['ia'] = array(
 	'chemFunctions_ChemFormInputError' => 'Chemform: Error de entrata!',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
 $messages['id'] = array(
 	'chemicalsources' => 'Rujukan kimia',
+	'chemicalsource-desc' => 'Menambahkan tag <nowiki><chemform></nowiki>, untuk formula kimia',
 	'chemFunctions_ListPage' => 'Rujukan kimia',
 	'chemFunctions_DataList' => 'Berikut adalah daftar pranala ke situs yang mungkin menyediakan informasi mengenai zat kimia yang Anda cari.<br /><br />
 * <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&Units=SI">Senyawa $MIXCASNameFormula di NIST</a><br />
 * <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS di Oxford University (UK) (tanpa fasilitas pencarian)</a><br />',
 	'chemFunctions_CAS' => 'Nomor CAS',
+	'chemFunctions_ATCCode' => 'ATCCode',
+	'chemFunctions_ECNumber' => 'ECNumber',
+	'chemFunctions_Formula' => 'Formula',
 	'chemFunctions_Name' => 'Nama IUPAC',
 	'chemFunctions_ChemFormInputError' => 'Chemform: Kesalahan pada masukan!',
 );
@@ -545,16 +594,17 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author JtFuruhata
  */
 $messages['ja'] = array(
 	'chemicalsources' => '化学関連の検索',
 	'chemicalsource-desc' => '化学式のためのタグ <nowiki><chemform></nowiki> を追加する',
 	'chemFunctions_ListPage' => '化学関連の検索',
-	'chemFunctions_DataList' => '以下のリストは、あなたが検索した化学物質に関する情報を提供しているサイトです。
+	'chemFunctions_DataList' => '以下の一覧は、あなたが検索した化学物質に関する情報を提供している可能性の高いサイトです。
 
-* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">$MIXCASNameFormula 化合物（アメリカ国立標準技術研究所）</a><br />
-* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">化学物質安全性データシート（英オックスフォード大学、検索できません）</a><br />',
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">$MIXCASNameFormula 化合物 (アメリカ国立標準技術研究所)</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">化学物質安全性データシート (英オックスフォード大学、検索できません)</a><br />',
 	'chemFunctions_CAS' => 'CAS登録番号',
 	'chemFunctions_ATCCode' => 'ATC分類',
 	'chemFunctions_ECNumber' => 'EC番号',
@@ -625,7 +675,7 @@ $messages['ksh'] = array(
 	'chemFunctions_ChemFormInputError' => "'''Chemform:''' Fähler em enjejovve Tex!",
 );
 
-/** Kurdish (Latin) (Kurdî / كوردی (Latin))
+/** Kurdish (Latin) (Kurdî (Latin))
  * @author Bangin
  */
 $messages['ku-latn'] = array(
@@ -645,6 +695,32 @@ $messages['lb'] = array(
 	'chemFunctions_Formula' => 'Formel',
 	'chemFunctions_Name' => 'IUPAC Numm',
 	'chemFunctions_ChemFormInputError' => 'Chemform, Feeler bei der Saisie!',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'chemicalsources' => 'Fototra momba ny Simia',
+	'chemFunctions_ListPage' => 'fototra momba ny simia',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'chemicalsources' => 'Хемиски извори',
+	'chemicalsource-desc' => 'Ја додава ознаката <nowiki><chemform></nowiki>, за хемиски формули',
+	'chemFunctions_ListPage' => 'Хемиски извори',
+	'chemFunctions_DataList' => 'Еве листа на врски кон страници кои може да ви дадат информации за хемиската материја која ја барате.<br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Сложена $MIXCASNameFormula на НИСТ</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">МСДС на Оксфордскиот универзитет (нема пребарување)</a><br />',
+	'chemFunctions_CAS' => 'CAS број',
+	'chemFunctions_ATCCode' => 'ATCCode',
+	'chemFunctions_ECNumber' => 'ECNumber',
+	'chemFunctions_Formula' => 'Формула',
+	'chemFunctions_Name' => 'IUPAC назив',
+	'chemFunctions_ChemFormInputError' => 'Хемформ: Грешка во внесеното!',
 );
 
 /** Malayalam (മലയാളം)
@@ -678,9 +754,17 @@ $messages['mr'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Diagramma Della Verita
+ * @author Zamwan
  */
 $messages['ms'] = array(
+	'chemicalsources' => 'Sumber-sumber kimia',
+	'chemicalsource-desc' => 'Tambah tag <nowiki><chemform></nowiki>, untuk formula kimia',
+	'chemFunctions_ListPage' => 'Sumber-sumber kimia',
+	'chemFunctions_CAS' => 'Nombor CAS',
+	'chemFunctions_ATCCode' => 'Kod ATC',
+	'chemFunctions_ECNumber' => 'Nombor EC',
 	'chemFunctions_Formula' => 'Formula',
+	'chemFunctions_Name' => 'Nama IUPAC',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -765,13 +849,31 @@ $messages['oc'] = array(
 	'chemicalsources' => 'Fonts per la quimia',
 	'chemicalsource-desc' => 'Apond la balisa <nowiki><chemform></nowiki>, per las formulas quimicas',
 	'chemFunctions_ListPage' => 'Fonts per la quimia',
-	'chemFunctions_DataList' => 'Seguís una lista de ligams cap a de sits que pòdon aportar d\'entresenhas a prepaus de las substàncias quimicas que recercatz. * [http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI Compausat $MIXCASNameFormula], NIST * [http://ptcl.chem.ox.ac.uk/MSDS/ MSDS], Universitat d\'Oxford',
+	'chemFunctions_DataList' => 'Seguís una lista de ligams cap a de sites que pòdon aportar d\'entresenhas a prepaus de las substàncias quimicas que recercatz. * [http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI Compausat $MIXCASNameFormula], NIST * [http://ptcl.chem.ox.ac.uk/MSDS/ MSDS], Universitat d\'Oxford',
 	'chemFunctions_CAS' => 'Numèro CAS',
 	'chemFunctions_ATCCode' => 'Còde ATC',
 	'chemFunctions_ECNumber' => 'Nomenclatura EC',
 	'chemFunctions_Formula' => 'Formula',
 	'chemFunctions_Name' => 'Nom UICPA',
 	'chemFunctions_ChemFormInputError' => 'Chemform, dintrant erronèu!',
+);
+
+/** Picard (Picard)
+ * @author Geoleplubo
+ */
+$messages['pcd'] = array(
+	'chemicalsources' => 'Référinches kémiques',
+	'chemicalsource-desc' => 'Ajouter el balise <nowiki><chemform></nowiki>, pou ches formules kémiques',
+	'chemFunctions_ListPage' => 'Référinches kémiques',
+	'chemFunctions_DataList' => 'Dsous il y o eune lisse aveuc chés loïens éd chés chites où os pourroème trouvoér des informachons su chés molétchules kémiques qu\'os trachez.<br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Compound $MIXCASNameFormula at NIST</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS at the Oxford University (UK) (not searchable)</a><br />',
+	'chemFunctions_CAS' => 'Liméro CAS',
+	'chemFunctions_ATCCode' => 'Code ATC',
+	'chemFunctions_ECNumber' => 'ECLiméro',
+	'chemFunctions_Formula' => 'Formule',
+	'chemFunctions_Name' => 'Nom IUPAC',
+	'chemFunctions_ChemFormInputError' => 'Chemform: Bérlurache del intrèe!',
 );
 
 /** Polish (Polski)
@@ -795,14 +897,18 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'chemicalsources' => 'Sorgiss Chìmiche',
+	'chemicalsource-desc' => 'A gionta ël tag <nowiki><chemform></nowiki>, për fórmule chìmiche',
 	'chemFunctions_ListPage' => 'Sorgiss Chìmiche',
 	'chemFunctions_DataList' => 'Di seguito viene presentato un elenco di collegamenti a siti presso i quali si possono referire informazioni sui composti chimici cercati.<br /><br />
 * <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&Units=SI">Scheda del composto $MIXCASNameFormula presso il NIST</a><br />
 * <a href="http://ptcl.chem.ox.ac.uk/MSDS/">Scheda di sicurezza MSDS presso la Oxford University (UK) (ricerca non attiva)</a><br />',
 	'chemFunctions_CAS' => 'Nùmer dël CAS',
+	'chemFunctions_ATCCode' => 'Còdes ATC',
+	'chemFunctions_ECNumber' => 'Nùmer EC',
 	'chemFunctions_Formula' => 'Fòrmula',
 	'chemFunctions_Name' => 'Nòm IUPAC',
 	'chemFunctions_ChemFormInputError' => 'Chemform: eror ant ij dat!',
@@ -915,6 +1021,24 @@ $messages['ru'] = array(
 	'chemFunctions_ChemFormInputError' => 'Chemform: ошибка ввода!',
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'chemicalsources' => 'Химияҕа источниктар',
+	'chemicalsource-desc' => 'Химия формулаларыгар <nowiki><chemform></nowiki> тиэги эбэр',
+	'chemFunctions_ListPage' => 'Химия источниктара',
+	'chemFunctions_DataList' => 'Манна көрдөрүллүбүт саайтарга сэргиир бэссэстибэҥ туһунан баар буолуон сөп.<br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">NIST саайка холбонуу $MIXCASNameFormula</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS Оксфорд универститетын саайтыгар (Великобритания) (көрдөөһүнэ суох)</a><br />',
+	'chemFunctions_CAS' => 'CAS-чыыһыла',
+	'chemFunctions_ATCCode' => 'ATCCode',
+	'chemFunctions_ECNumber' => 'ECNumber',
+	'chemFunctions_Formula' => 'Фуормула',
+	'chemFunctions_Name' => 'ИЮПАК (IUPAC) аат',
+	'chemFunctions_ChemFormInputError' => 'Chemform: киллэрии алҕаһа!',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -933,26 +1057,34 @@ $messages['sk'] = array(
 	'chemFunctions_ChemFormInputError' => 'Chemform: Chybný vstup!',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица) */
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
 $messages['sr-ec'] = array(
 	'chemicalsources' => 'Хемијски извори',
+	'chemicalsource-desc' => 'Додаје таг <nowiki><chemform></nowiki>, за хемијске формуле',
 	'chemFunctions_ListPage' => 'Хемијски извори',
 	'chemFunctions_DataList' => 'Овде се налази списак веза ка сајтовима који прожају информације о хемојском једињењу коју тражите.
 
 * <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Једињење $MIXCASNameFormula на NIST</a><br />
 * <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS на Оксфордском универзитету (УК) (немогућа претрага)</a><br />',
 	'chemFunctions_CAS' => 'CAS број',
+	'chemFunctions_Formula' => 'Формула',
 	'chemFunctions_ChemFormInputError' => 'ХемФормула: грешка!',
 );
 
-/** latinica (latinica) */
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
 $messages['sr-el'] = array(
 	'chemicalsources' => 'Hemijski izvori',
+	'chemicalsource-desc' => 'Dodaje tag <nowiki><chemform></nowiki>, za hemijske formule',
 	'chemFunctions_ListPage' => 'Hemijski izvori',
 	'chemFunctions_DataList' => 'Ovde se nalazi spisak veza ka sajtovima koji prožaju informacije o hemojskom jedinjenju koju tražite.<br /><br />
 * <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Jedinjenje $MIXCASNameFormula na NIST</a><br />
 * <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS na Oksfordskom univerzitetu (UK) (nemoguća pretraga)</a><br />',
 	'chemFunctions_CAS' => 'CAS broj',
+	'chemFunctions_Formula' => 'Formula',
 	'chemFunctions_ChemFormInputError' => 'HemFormula: greška!',
 );
 
@@ -1036,6 +1168,19 @@ $messages['tg-cyrl'] = array(
 	'chemFunctions_Formula' => 'Қоида',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'chemicalsources' => 'Sarcaşmahoi kimjoī',
+	'chemicalsource-desc' => 'Barcasbi <nowiki><chemform></nowiki>-ro baroi qoidahoi kimjoī ilova mekunad',
+	'chemFunctions_ListPage' => 'Sarcaşmahoi kimjoī',
+	'chemFunctions_DataList' => 'Dar zer fehristi pajvandho ba somonahoe, ki ehtimolan metavonand baroi şumo ittilooti çustuçū karda istodaaton oidi moddai kimjoī peşkaş kunand.<br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">Compound $MIXCASNameFormula dar NIST</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS dar Donişgohi Oksford (Ingliston) (qobili çustuçū nest)</a><br />',
+	'chemFunctions_Formula' => 'Qoida',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -1107,6 +1252,24 @@ $messages['vec'] = array(
 	'chemFunctions_Formula' => 'Formula',
 	'chemFunctions_Name' => 'Nome IUPAC',
 	'chemFunctions_ChemFormInputError' => 'Chemform: Input mìa giusto!',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'chemicalsources' => 'Himižed purtked',
+	'chemicalsource-desc' => 'Ližadab <nowiki><chemform></nowiki>-virgan himižiden formuliden täht',
+	'chemFunctions_ListPage' => 'Himižed purtked',
+	'chemFunctions_DataList' => 'Alemba oma anttud kosketused saitoile, kudambišpäi voib löuta informacijad ectüd substancijas.<br /><br />
+* <a href="http://webbook.nist.gov/cgi/cbook.cgi?ID=$MIXCASNameFormula&amp;Units=SI">$MIXCASNameFormula-ühtnend NIST-saital</a><br />
+* <a href="http://ptcl.chem.ox.ac.uk/MSDS/">MSDS Oksfordan universitetan saital (Sur\' Britanii) (ei ole ecindad)</a><br />',
+	'chemFunctions_CAS' => 'CAS-nomer',
+	'chemFunctions_ATCCode' => 'ATCKod',
+	'chemFunctions_ECNumber' => 'ECNumber',
+	'chemFunctions_Formula' => 'Formul',
+	'chemFunctions_Name' => 'IUPAC-nimi',
+	'chemFunctions_ChemFormInputError' => 'Chemform: anttud andmusiden petuz!',
 );
 
 /** Vietnamese (Tiếng Việt)

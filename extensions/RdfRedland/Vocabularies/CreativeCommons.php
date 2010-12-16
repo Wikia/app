@@ -34,10 +34,10 @@ if (!defined('MEDIAWIKI')) die();
 class MwRdf_Vocabulary_CreativeCommons extends MwRdf_Vocabulary {
 
 	// base uri
-	const NAMESPACE = "http://web.resource.org/cc/";
+	const RDF_NAMESPACE = "http://web.resource.org/cc/";
 
 	public function getNS() {
-		return self::NAMESPACE;
+		return self::RDF_NAMESPACE;
 	}
 
 	// Terms

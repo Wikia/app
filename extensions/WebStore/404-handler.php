@@ -216,6 +216,7 @@ EOT;
 				$tmpUnlinkDone = true;
 			}
 
+			header( "HTTP/1.1 200 OK" );
 			// Stream it ourselves
 			$this->streamFile( $tmpFile, $post->contentType );
 		} while (false);

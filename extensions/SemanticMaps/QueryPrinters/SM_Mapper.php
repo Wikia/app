@@ -21,6 +21,7 @@ final class SMMapper {
 		global $egMapsDefaultServices, $egMapsServices;	
 		
 		// TODO: allow service parameter to override the default
+		// Note: if this is allowed, then the getParameters should only return the base parameters.
 		if ($format == 'map') $format = $egMapsDefaultServices['qp'];
 		
 		$service = MapsMapper::getValidService($format, 'qp'); 
@@ -50,6 +51,14 @@ final class SMMapper {
 	
 	protected function getResultText($res, $outputmode) {
 		return $this->queryPrinter->getResultText($res, $outputmode);
+	}
+	
+	public function getParameters() {
+		return $this->queryPrinter->getParameters();
+	}
+	
+	public function getMimeType($res) {
+		return $this->queryPrinter->getMimeType($res);
 	}
 	
 }

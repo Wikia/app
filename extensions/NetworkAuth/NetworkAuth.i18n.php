@@ -47,6 +47,13 @@ $messages['be-tarask'] = array(
 	'networkauth-desc' => 'Дазваляе Вам аўтэнтыфікаваць удзельнікаў з дапамогай інфармацыі з сеткі',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'networkauth-desc' => "Talvezout a ra da wiriekaat an implijerien oc'h en em ziazezañ war titouroù zo er rouedad",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -66,6 +73,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'networkauth-desc' => 'Dowólujo awtentifcěrowanje wužywarjow na zakłaźe seśowych informacijow',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'networkauth-desc' => 'Σας επιτρέπει την πιστοποίηση χρηστών βάσει πληροφοριών δικτύου',
 );
 
 /** Esperanto (Esperanto)
@@ -126,11 +140,25 @@ $messages['he'] = array(
 	'networkauth-desc' => 'אפשרות להזדהות של משתמשים בהתבסס על נתוני הרשת שלהם',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'networkauth-desc' => 'Nagapasugot sa imo sa pagpahimatuod sang mga user base sa impormasyon sang mga network',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
 	'networkauth-desc' => 'Dowola ći wužiwarjow na zakładźe syćowych informacijow awtentifikować',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'networkauth-desc' => 'Lehetővé teszi a szerkesztők hálózati információk alapján történő hitelesítését',
 );
 
 /** Interlingua (Interlingua)
@@ -140,6 +168,13 @@ $messages['ia'] = array(
 	'networkauth-desc' => 'Te permitte authenticar usatores a base de informationes del rete',
 	'networkauth-name' => 'NetworkAuth',
 	'networkauth-purltext' => 'NetworkAuth [$1@$2]',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'networkauth-desc' => 'Mengijinkan Anda untuk melakukan otentifikasi pengguna berdasarkan informasi jaringan',
 );
 
 /** Italian (Italiano)
@@ -169,6 +204,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'networkauth-desc' => "Erlaabt iech et Benotzer op Basis vun Informatiounen aus Dem Reseau z'erkennen",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'networkauth-desc' => 'Овозможува да потврдувате корисници врз основа на мрежните информации',
 );
 
 /** Low German (Plattdüütsch)
@@ -208,6 +250,20 @@ $messages['oc'] = array(
 	'networkauth-desc' => "Vos permet d’autentificar los utilizaires, basat sus d'entresenhas en ret",
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'networkauth-desc' => 'Pozwala na uwierzytelnianie użytkowników w oparciu o informacje sieciowe',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'networkauth-desc' => "At përmëtt d'autentiché dj'utent basà an sle anformassion ëd la rèj",
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -229,6 +285,13 @@ $messages['roa-tara'] = array(
 	'networkauth-desc' => "Permettete de autenticà l'utinde basannete sus a le 'mbormaziune de rete",
 );
 
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'networkauth-desc' => 'Позволяет аутентифицировать участников, основываясь на сетевой информации',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -243,6 +306,20 @@ $messages['sq'] = array(
 	'networkauth-desc' => 'Lejon gjetjen e vendit të përdoruesit bazuar në të dhënat e rrjetit',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'networkauth-desc' => 'Омогућава ауторизацију корисника према информацијама у мрежи',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'networkauth-desc' => 'Omogućava autorizaciju korisnika prema informacijama u mreži',
+);
+
 /** Swedish (Svenska)
  * @author Boivie
  */
@@ -255,6 +332,13 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'networkauth-desc' => "Nagpapahintulot sa iyong mapatotohanan ang mga tagagamit batay sa kabatiran ng kalambatan (''network'')",
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'networkauth-desc' => 'Ağ bilgilerini temel alarak kullanıcıların kimliklerini doğrulamanızı sağlar',
 );
 
 /** Vèneto (Vèneto)

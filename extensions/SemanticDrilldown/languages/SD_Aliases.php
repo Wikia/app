@@ -15,18 +15,14 @@ $aliases['en'] = array(
 	'Filters' => array( 'Filters' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'BrowseData' => array( 'تصفح_بيانات' ),
 	'CreateFilter' => array( 'إنشاء_فلتر' ),
 	'Filters' => array( 'فلاتر' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'BrowseData' => array( 'تصفح_بيانات' ),
 	'CreateFilter' => array( 'إنشاء_فلتر' ),
@@ -52,6 +48,8 @@ $aliases['de'] = array(
 
 /** Lower Sorbian (Dolnoserbski) */
 $aliases['dsb'] = array(
+	'BrowseData' => array( 'Daty pśepytaś' ),
+	'CreateFilter' => array( 'Filter napóraś' ),
 	'Filters' => array( 'Filtry' ),
 );
 
@@ -74,6 +72,13 @@ $aliases['fr'] = array(
 	'Filters' => array( 'Filtres' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'BrowseData' => array( 'Chèrchiér les balyês', 'ChèrchiérLesBalyês' ),
+	'CreateFilter' => array( 'Fâre un filtro', 'FâreUnFiltro' ),
+	'Filters' => array( 'Filtros' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'CreateFilter' => array( 'Crear un filtro' ),
@@ -82,7 +87,6 @@ $aliases['gl'] = array(
 
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
-	'BrowseData' => array( 'BrowseData' ),
 	'CreateFilter' => array( 'Filter aalege' ),
 	'Filters' => array( 'Filter' ),
 );
@@ -94,6 +98,8 @@ $aliases['he'] = array(
 
 /** Upper Sorbian (Hornjoserbsce) */
 $aliases['hsb'] = array(
+	'BrowseData' => array( 'Daty přepytać' ),
+	'CreateFilter' => array( 'Filter wutworić' ),
 	'Filters' => array( 'Filtry' ),
 );
 
@@ -111,11 +117,25 @@ $aliases['ia'] = array(
 	'Filters' => array( 'Filtros' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'BrowseData' => array( 'Jelajahi data', 'JelajahiData' ),
+	'CreateFilter' => array( 'Buat filter', 'BuatFilter' ),
+	'Filters' => array( 'Filter' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'BrowseData' => array( 'EsploraDati' ),
+	'CreateFilter' => array( 'CreaFiltro' ),
+	'Filters' => array( 'Filtri' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'BrowseData' => array( 'データ閲覧' ),
-	'CreateFilter' => array( 'フィルター作成' ),
-	'Filters' => array( 'フィルター一覧' ),
+	'CreateFilter' => array( 'フィルター作成', 'フィルタ作成' ),
+	'Filters' => array( 'フィルター一覧', 'フィルタ一覧' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -123,6 +143,13 @@ $aliases['km'] = array(
 	'BrowseData' => array( 'រាវរកទិន្នន័យ' ),
 	'CreateFilter' => array( 'បង្កើត​តម្រង' ),
 	'Filters' => array( 'តម្រង' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'BrowseData' => array( 'Bläddere en de' ),
+	'CreateFilter' => array( 'Felter opsäze', 'Söke opsäze' ),
+	'Filters' => array( 'Feltere', 'Fenge' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -133,8 +160,21 @@ $aliases['lb'] = array(
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'CreateFilter' => array( 'КреирајФилтер' ),
+	'CreateFilter' => array( 'СоздајФилтер' ),
 	'Filters' => array( 'Филтри' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'CreateFilter' => array( 'അരിപ്പസൃഷ്ടിക്കുക' ),
+	'Filters' => array( 'അരിപ്പകൾ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'BrowseData' => array( 'विदान्याहाळा' ),
+	'CreateFilter' => array( 'चाळणीनिर्मितकरा' ),
+	'Filters' => array( 'चाळण्या' ),
 );
 
 /** Maltese (Malti) */
@@ -152,7 +192,6 @@ $aliases['nds-nl'] = array(
 $aliases['nl'] = array(
 	'BrowseData' => array( 'GegevensBekijken' ),
 	'CreateFilter' => array( 'FilterAanmaken' ),
-	'Filters' => array( 'Filters' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
@@ -163,6 +202,7 @@ $aliases['no'] = array(
 
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
+	'CreateFilter' => array( 'CrearFiltre', 'Crear filtre' ),
 	'Filters' => array( 'Filtres' ),
 );
 
@@ -172,8 +212,21 @@ $aliases['ps'] = array(
 	'Filters' => array( 'چاڼګرونه' ),
 );
 
+/** Brazilian Portuguese (Português do Brasil) */
+$aliases['pt-br'] = array(
+	'CreateFilter' => array( 'Criar filtro' ),
+	'Filters' => array( 'Filtros' ),
+);
+
 /** Romanian (Română) */
 $aliases['ro'] = array(
+	'Filters' => array( 'Filtre' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'BrowseData' => array( 'PrehliadaťDáta' ),
+	'CreateFilter' => array( 'VytvoriťFilter' ),
 	'Filters' => array( 'Filtre' ),
 );
 
@@ -200,6 +253,12 @@ $aliases['tl'] = array(
 	'BrowseData' => array( 'Tumingin-tingin sa dato' ),
 	'CreateFilter' => array( 'Likhain ang pansala' ),
 	'Filters' => array( 'Mga pansala' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'CreateFilter' => array( 'FiltreOluştur' ),
+	'Filters' => array( 'Filtreler' ),
 );
 
 /** Vèneto (Vèneto) */

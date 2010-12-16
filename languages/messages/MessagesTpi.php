@@ -78,13 +78,15 @@ $messages = array(
 'category-media-header' => 'Ol media (olsem piksa) insait long grup "$1"',
 'category-empty'        => "''Dispela grup i no gat wanpela pes o media (olsem piksa) insait long en nau.''",
 
-'newwindow'      => '(bai kamap long nupela windo)',
-'cancel'         => 'Toromwe senis',
+'newwindow'  => '(bai kamap long nupela windo)',
+'cancel'     => 'Toromwe senis',
+'mytalk'     => 'Toktok bilong mi',
+'navigation' => 'Ol bikpela pes',
+
+# Cologne Blue skin
 'qbfind'         => 'Painim',
 'qbedit'         => 'Senisim',
 'qbspecialpages' => 'Ol sipesol pes',
-'mytalk'         => 'Toktok bilong mi',
-'navigation'     => 'Ol bikpela pes',
 
 'help'             => 'Halivim mi',
 'search'           => 'Painim',
@@ -156,7 +158,9 @@ Na tu yu tok tru nau olsem yu raitim dispela yu yet, o yu kisim long wanpela hap
 'rc_categories_any' => 'Olgeta',
 
 # Recent changes linked
-'recentchangeslinked' => 'Ol senis klostu',
+'recentchangeslinked'         => 'Ol senis klostu',
+'recentchangeslinked-feed'    => 'Ol senis klostu',
+'recentchangeslinked-toolbox' => 'Ol senis klostu',
 
 # Upload
 'upload' => 'Salim media fail',
@@ -221,6 +225,8 @@ Sapos yu laik rausim dispela pes long lukautbuk bilong yu bihain, paitim \"Pinis
 # Contributions
 'contributions' => 'Ol senis yusa i wokim',
 'mycontris'     => 'Ol senis mi wokim',
+
+'sp-contributions-talk' => 'Toktok',
 
 # What links here
 'whatlinkshere' => 'Ol link ikam long hia',

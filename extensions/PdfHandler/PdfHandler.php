@@ -26,11 +26,10 @@ if (!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['media'][] = array(
+	'path' => __FILE__,
 	'name' => 'PDF Handler',
-	'svn-date' => '$LastChangedDate: 2008-12-25 01:29:44 +0100 (czw, 25 gru 2008) $',
-	'svn-revision' => '$LastChangedRevision: 45011 $',
-	'author' =>' Xarax',
+	'author' => 'Xarax',
 	'description' => 'Handler for viewing PDF files in image mode',
 	'descriptionmsg' => 'pdf-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:PdfHandler',
@@ -40,6 +39,7 @@ $wgExtensionCredits['other'][] = array(
 $wgPdfProcessor     = 'gs';
 $wgPdfPostProcessor = 'convert';
 $wgPdfInfo          = 'pdfinfo';
+$wgPdftoText        = 'pdftotext';
 
 $wgPdfOutputExtension = "jpg";
 $wgPdfHandlerDpi = 150;

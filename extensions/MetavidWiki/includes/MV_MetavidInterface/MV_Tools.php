@@ -152,7 +152,7 @@
 				if ( $prev_time_start < 0 )$prev_time_start = 0;
 				$prev_time_end = $mvTitle->getEndTimeSeconds() - $mvDefaultStreamViewLength;
 				if ( $prev_time_end < $mvDefaultStreamViewLength )$prev_time_end = $mvDefaultStreamViewLength;
-				$newTitle = Title::MakeTitle( MV_NS_STREAM, $mvTitle->getStreamName() . '/' . seconds2ntp( $prev_time_start ) . '/' . seconds2ntp( $prev_time_end ) );
+				$newTitle = Title::MakeTitle( MV_NS_STREAM, $mvTitle->getStreamName() . '/' . seconds2npt( $prev_time_start ) . '/' . seconds2npt( $prev_time_end ) );
 				$prev_link = $sk->makeKnownLinkObj( $newTitle,
 								 '<img style="index:5" border="0" src="' . htmlspecialchars( $mvgScriptPath ) . '/skins/images/results_previous.png">',
 								$this->getStateReq() );
@@ -164,7 +164,7 @@
 				$next_time_end = $mvTitle->getEndTimeSeconds() + $mvDefaultStreamViewLength;
 				if ( $next_time_end >  $mvTitle->getDuration() )
 					$next_time_end = $mvTitle->getDuration();
-				$newTitle = Title::MakeTitle( MV_NS_STREAM, $mvTitle->getStreamName() . '/' . seconds2ntp( $next_time_start ) . '/' . seconds2ntp( $next_time_end ) );
+				$newTitle = Title::MakeTitle( MV_NS_STREAM, $mvTitle->getStreamName() . '/' . seconds2npt( $next_time_start ) . '/' . seconds2npt( $next_time_end ) );
 				$next_link = $sk->makeKnownLinkObj( $newTitle,
 									'<img style="index:5" border="0" src="' . htmlspecialchars( $mvgScriptPath ) . '/skins/images/results_next.png">',
 									$this->getStateReq() );

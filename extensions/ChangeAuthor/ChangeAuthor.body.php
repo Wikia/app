@@ -30,7 +30,7 @@ class ChangeAuthor extends SpecialPage {
 	/**
 	 * Constructor
 	 */
-	public function __construct(){
+	public function __construct() {
 		global $wgUser;
 		wfLoadExtensionMessages( 'ChangeAuthor' );
 		parent::__construct( 'ChangeAuthor'/* class */, 'changeauthor'/* restriction */ );
@@ -43,43 +43,45 @@ class ChangeAuthor extends SpecialPage {
 	 *
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
-	public function execute( $par ){
+	public function execute( $par ) {
 		global $wgRequest, $wgOut, $wgContLang, $wgUser;
+
 		$this->setHeaders();
 
 		// Check permissions
-		if( !$this->userCanExecute( $wgUser ) ){
+		if( !$this->userCanExecute( $wgUser ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
 
 		$wgOut->setPageTitle( wfMsg( 'changeauthor-title' ) );
 
-		if( !is_null( $par ) ){
+		if( !is_null( $par ) ) {
 			$obj = $this->parseTitleOrRevID( $par );
-			if( $obj instanceof Title ){
-				if( $obj->exists() )
+			if( $obj instanceof Title ) {
+				if( $obj->exists() ) {
 					$wgOut->addHTML( $this->buildRevisionList( $obj ) );
-				else
+				} else {
 					$wgOut->addHTML( $this->buildInitialForm( wfMsg( 'changeauthor-nosuchtitle', $obj->getPrefixedText() ) ) );
+				}
 				return;
-			} else if( $obj instanceof Revision ){
+			} elseif( $obj instanceof Revision ) {
 				$wgOut->addHTML( $this->buildOneRevForm( $obj ) );
 				return;
 			}
 		}
 
 		$action = $wgRequest->getVal( 'action' );
-		if( $wgRequest->wasPosted() && $action == 'change' ){		
+		if( $wgRequest->wasPosted() && $action == 'change' ) {
 			$arr = $this->parseChangeRequest();
-			if( !is_array( $arr ) ){
+			if( !is_array( $arr ) ) {
 				$targetPage = $wgRequest->getVal( 'targetpage' );
-				if( !is_null( $targetPage ) ){
+				if( !is_null( $targetPage ) ) {
 					$wgOut->addHTML( $this->buildRevisionList( Title::newFromURL( $targetPage ), $arr ) );
 					return;
 				}
 				$targetRev = $wgRequest->getVal( 'targetrev' );
-				if( !is_null( $targetRev ) ){
+				if( !is_null( $targetRev ) ) {
 					$wgOut->addHTML( $this->buildOneRevForm( Revision::newFromId( $targetRev ), $arr ) );
 					return;
 				}
@@ -90,14 +92,15 @@ class ChangeAuthor extends SpecialPage {
 			}
 			return;
 		}
-		if( $wgRequest->wasPosted() && $action == 'list' ){
+		if( $wgRequest->wasPosted() && $action == 'list' ) {
 			$obj = $this->parseTitleOrRevID( $wgRequest->getVal( 'pagename-revid' ) );
-			if( $obj instanceof Title ){
-				if( $obj->exists() )
+			if( $obj instanceof Title ) {
+				if( $obj->exists() ) {
 					$wgOut->addHTML( $this->buildRevisionList( $obj ) );
-				else
+				} else {
 					$wgOut->addHTML( $this->buildInitialForm( wfMsg( 'changeauthor-nosuchtitle', $obj->getPrefixedText() ) ) );
-			} else if( $obj instanceof Revision ){
+				}
+			} elseif( $obj instanceof Revision ) {
 				$wgOut->addHTML( $this->buildOneRevForm( $obj ) );
 			}
 			return;
@@ -110,12 +113,14 @@ class ChangeAuthor extends SpecialPage {
 	 * @param $str Mixed: revision ID or an article name
 	 * @return Title or Revision object, or NULL
 	 */
-	private function parseTitleOrRevID( $str ){
+	private function parseTitleOrRevID( $str ) {
 		$retval = false;
-		if( is_numeric( $str ) )
+		if( is_numeric( $str ) ) {
 			$retval = Revision::newFromID( $str );
-		if( !$retval )
+		}
+		if( !$retval ) {
 			$retval = Title::newFromURL( $str );
+		}
 		return $retval;
 	}
 
@@ -124,7 +129,7 @@ class ChangeAuthor extends SpecialPage {
 	 * @param $errMsg String: Error message
 	 * @return HTML
 	 */
-	private function buildInitialForm( $errMsg = '' ){
+	private function buildInitialForm( $errMsg = '' ) {
 		global $wgScript;
 		$retval = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgScript ) );
 		$retval .= Xml::hidden( 'title', $this->selfTitle->getPrefixedDBkey() );
@@ -134,7 +139,7 @@ class ChangeAuthor extends SpecialPage {
 		$retval .= Xml::inputLabel( wfMsg( 'changeauthor-pagename-or-revid' ),
 				'pagename-revid', 'pagename-revid' );
 		$retval .= Xml::submitButton( wfMsg( 'changeauthor-pagenameform-go' ) );
-		if( $errMsg != '' ){
+		if( $errMsg != '' ) {
 			$retval .= Xml::openElement( 'p' ) . Xml::openElement( 'b' );
 			$retval .= Xml::element( 'font', array( 'color' => 'red' ), $errMsg );
 			$retval .= Xml::closeElement( 'b' ) . Xml::closeElement( 'p' );
@@ -154,43 +159,48 @@ class ChangeAuthor extends SpecialPage {
 	 * @param $isLast Boolean: set to true if $rev is the last revision
 	 * @return HTML
 	 */
-	private function buildRevisionLine( $rev, $title, $isFirst = false, $isLast = false ){
+	private function buildRevisionLine( $rev, $title, $isFirst = false, $isLast = false ) {
 		// Build curlink
-		if( $isFirst )
+		if( $isFirst ) {
 			$curLink = wfMsgExt( 'cur', 'escape' );
-		else
+		} else {
 			$curLink = $this->skin->makeKnownLinkObj( $title,
 					wfMsgExt( 'cur', 'escape' ),
 					"oldid={$rev->getId()}&diff=cur" );
+		}
 
-		if( $isLast )
+		if( $isLast ) {
 			$lastLink = wfMsgExt( 'last', 'escape' );
-		else
+		} else {
 			$lastLink = $this->skin->makeKnownLinkObj( $title,
 					wfMsgExt( 'last', 'escape' ),
 					"oldid=prev&diff={$rev->getId()}" );
+		}
 
 		// Build oldid link
 		global $wgLang;
 		$date = $wgLang->timeanddate( wfTimestamp( TS_MW, $rev->getTimestamp() ), true );
-		if( $rev->userCan( Revision::DELETED_TEXT ) )
+		if( $rev->userCan( Revision::DELETED_TEXT ) ) {
 			$link = $this->skin->makeKnownLinkObj( $title, $date, "oldid={$rev->getId()}" );
-		else
+		} else {
 			$link = $date;
+		}
 
 		// Build user textbox
 		global $wgRequest;
 		$userBox = Xml::input( "user-new-{$rev->getId()}", 50, $wgRequest->getVal( "user-{$rev->getId()}", $rev->getUserText() ) );
 		$userText = Xml::hidden( "user-old-{$rev->getId()}", $rev->getUserText() ) . $rev->getUserText();
 
-		if( !is_null( $size = $rev->getSize() ) ){
-			if( $size == 0 )
+		if( !is_null( $size = $rev->getSize() ) ) {
+			if( $size == 0 ) {
 				$stxt = wfMsgHtml( 'historyempty' );
-			else
+			} else {
 				$stxt = wfMsgHtml( 'historysize', $wgLang->formatNum( $size ) );
-		} else
+			}
+		} else {
 			$stxt = ''; // Stop PHP from whining about unset variables
-			$comment = $this->skin->commentBlock( $rev->getComment(), $title );
+		}
+		$comment = $this->skin->commentBlock( $rev->getComment(), $title );
 
 		// Now put it all together
 		return "<li>($curLink) ($lastLink) $link . . $userBox ($userText) $stxt $comment</li>\n";
@@ -202,7 +212,7 @@ class ChangeAuthor extends SpecialPage {
 	 * @param $errMsg String: error message
 	 * @return HTML
 	 */
-	private function buildRevisionList( $title, $errMsg = '' ){
+	private function buildRevisionList( $title, $errMsg = '' ) {
 		global $wgScript;
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
@@ -213,23 +223,28 @@ class ChangeAuthor extends SpecialPage {
 			array( 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 50 )
 		);
 		$revs = array();
-		while( ( $r = $dbr->fetchObject($res ) ) )
+		while( ( $r = $dbr->fetchObject( $res ) ) ) {
 			$revs[] = new Revision( $r );
-		if( empty( $revs ) )
+		}
+		if( empty( $revs ) ) {
 			// That's *very* weird
 			return wfMsg( 'changeauthor-weirderror' );
+		}
 
-		$retval = Xml::openElement('form', array( 'method' => 'post', 'action' => $wgScript ) );
+		$retval = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgScript ) );
 		$retval .= Xml::hidden( 'title', $this->selfTitle->getPrefixedDBkey() );
 		$retval .= Xml::hidden( 'action', 'change' );
 		$retval .= Xml::hidden( 'targetpage', $title->getPrefixedDBkey() );
 		$retval .= Xml::openElement( 'fieldset' );
-		$retval .= Xml::element( 'p', array(), wfMsg('changeauthor-explanation-multi'));
+		$retval .= Xml::element( 'p', array(), wfMsg( 'changeauthor-explanation-multi' ) );
 		$retval .= Xml::inputLabel( wfMsg( 'changeauthor-comment'), 'comment', 'comment', 50);
 		$retval .= Xml::submitButton(
-					wfMsgExt( 'changeauthor-changeauthors-multi', array( 'parsemag', 'escape' ),
-						count( $revs ) ) );
-		if( $errMsg != '' ){
+			wfMsgExt( 'changeauthor-changeauthors-multi',
+				array( 'parsemag', 'escape' ),
+				count( $revs )
+			)
+		);
+		if( $errMsg != '' ) {
 			$retval .= Xml::openElement( 'p' ) . Xml::openElement( 'b' );
 			$retval .= Xml::element( 'font', array( 'color' => 'red' ), $errMsg );
 			$retval .= Xml::closeElement( 'b' ) . Xml::closeElement( 'p' );
@@ -237,12 +252,13 @@ class ChangeAuthor extends SpecialPage {
 		$retval .= Xml::element( 'h2', array(), $title->getPrefixedText() );
 		$retval .= Xml::openElement( 'ul' );
 		$count = count( $revs );
-		foreach( $revs as $i => $rev )
-			$retval .= $this->buildRevisionLine( $rev, $title, ($i == 0), ($i == $count - 1) );
+		foreach( $revs as $i => $rev ) {
+			$retval .= $this->buildRevisionLine( $rev, $title, ( $i == 0 ), ( $i == $count - 1 ) );
+		}
 		$retval .= Xml::closeElement( 'ul' );
 		$retval .= Xml::closeElement( 'fieldset' );
 		$retval .= Xml::closeElement( 'form' );
-		return $retval;		
+		return $retval;
 	}
 
 	/**
@@ -251,7 +267,7 @@ class ChangeAuthor extends SpecialPage {
 	 * @param $errMsg String: error message
 	 * @return HTML
 	 */
-	private function buildOneRevForm( $rev, $errMsg = '' ){
+	private function buildOneRevForm( $rev, $errMsg = '' ) {
 		global $wgScript;
 		$retval = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgScript ) );
 		$retval .= Xml::hidden( 'title', $this->selfTitle->getPrefixedDBkey() );
@@ -261,7 +277,7 @@ class ChangeAuthor extends SpecialPage {
 		$retval .= Xml::element( 'p', array(), wfMsg( 'changeauthor-explanation-single' ) );
 		$retval .= Xml::inputLabel( wfMsg( 'changeauthor-comment' ), 'comment', 'comment' );
 		$retval .= Xml::submitButton( wfMsg( 'changeauthor-changeauthors-single' ) );
-		if( $errMsg != '' ){
+		if( $errMsg != '' ) {
 			$retval .= Xml::openElement( 'p' ) . Xml::openElement( 'b' );
 			$retval .= Xml::element( 'font', array( 'color' => 'red' ), $errMsg );
 			$retval .= Xml::closeElement( 'b' ) . Xml::closeElement( 'p' );
@@ -279,27 +295,33 @@ class ChangeAuthor extends SpecialPage {
 	 * Extracts an array needed by changeRevAuthors() from $wgRequest
 	 * @return array
 	 */
-	private function parseChangeRequest(){
+	private function parseChangeRequest() {
 		global $wgRequest;
 		$vals = $wgRequest->getValues();
 		$retval = array();
-		foreach( $vals as $name => $val ){
-			if( substr( $name, 0, 9 ) != 'user-new-' )
+		foreach( $vals as $name => $val ) {
+			if( substr( $name, 0, 9 ) != 'user-new-' ) {
 				continue;
+			}
 			$revid = substr( $name, 9 );
-			if( !is_numeric( $revid ) )
+			if( !is_numeric( $revid ) ) {
 				continue;
+			}
 
 			$new = User::newFromName( $val, false );
-			if( !$new ) // Can this even happen?
+			if( !$new ) { // Can this even happen?
 				return wfMsg( 'changeauthor-invalid-username', $val );
-			if( $new->getId() == 0 && $val != 'MediaWiki default' && !User::isIP( $new->getName() ) )
+			}
+			if( $new->getId() == 0 && $val != 'MediaWiki default' && !User::isIP( $new->getName() ) ) {
 				return wfMsg( 'changeauthor-nosuchuser', $val );
+			}
 			$old = User::newFromName( $wgRequest->getVal( "user-old-$revid" ), false );
-			if( !$old->getName() )
+			if( !$old->getName() ) {
 				return wfMsg( 'changeauthor-invalidform' );
-			if( $old->getName() != $new->getName() )
+			}
+			if( $old->getName() != $new->getName() ) {
 				$retval[$revid] = array( $old, $new );
+			}
 		}
 		return $retval;
 	}
@@ -309,13 +331,14 @@ class ChangeAuthor extends SpecialPage {
 	 * @param $authors Array: key=revid value=array(User from, User to)
 	 * @param $comment Mixed: log comment
 	 */
-	private function changeRevAuthors( $authors, $comment ){
+	private function changeRevAuthors( $authors, $comment ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$editcounts = array(); // Array to keep track of EC mutations; key=userid, value=mutation
 		$log = new LogPage( 'changeauth' );
-		foreach( $authors as $id => $users ){
-			$dbw->update( 'revision',
+		foreach( $authors as $id => $users ) {
+			$dbw->update(
+				'revision',
 				/* SET */array(
 					'rev_user' => $users[1]->getId(),
 					'rev_user_text' => $users[1]->getName()
@@ -324,22 +347,33 @@ class ChangeAuthor extends SpecialPage {
 				__METHOD__
 			);
 			$rev = Revision::newFromId( $id );
-			$log->addEntry( 'changeauth', $rev->getTitle(), $comment, array(
-							wfMsg( 'changeauthor-rev', $id ), $users[0]->getName(), $users[1]->getName() ) );
+			$log->addEntry(
+				'changeauth',
+				$rev->getTitle(),
+				$comment,
+				array(
+					wfMsg( 'changeauthor-rev', $id ),
+					$users[0]->getName(),
+					$users[1]->getName()
+				)
+			);
 			$editcounts[$users[1]->getId()]++;
 			$editcounts[$users[0]->getId()]--;
 		}
-		foreach( $editcounts as $userid => $mutation ){
-			if( $mutation == 0 || $userid == 0 )
+		foreach( $editcounts as $userid => $mutation ) {
+			if( $mutation == 0 || $userid == 0 ) {
 				continue;
-			if( $mutation > 0 )
+			}
+			if( $mutation > 0 ) {
 				$mutation = "+$mutation";
-			$dbw->update( 'user',
+			}
+			$dbw->update(
+				'user',
 				array( "user_editcount=user_editcount$mutation" ),
 				array( 'user_id' => $userid ),
 				__METHOD__
 			);
-			if( $dbw->affectedRows() == 0 ){
+			if( $dbw->affectedRows() == 0 ) {
 				// Let's have mercy on those who don't have a proper DB server
 				// (but not enough to spare their master)
 				$count = $dbw->selectField(
@@ -348,7 +382,8 @@ class ChangeAuthor extends SpecialPage {
 					array( 'rev_user' => $userid ),
 					__METHOD__
 				);
-				$dbw->update( 'user',
+				$dbw->update(
+					'user',
 					array( 'user_editcount' => $count ),
 					array( 'user_id' => $userid ),
 					__METHOD__

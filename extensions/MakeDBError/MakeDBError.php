@@ -4,6 +4,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'MakeDBError',
 	'description' => 'makes a database error with an invalid query'
 );

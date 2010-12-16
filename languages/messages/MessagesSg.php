@@ -8,6 +8,8 @@
  * @author sg.wikipedia.org sysops
  */
 
+$fallback = 'fr';
+
 $messages = array(
 # User preference toggles
 'tog-underline'       => 'Gbënëngö-gbegbê',
@@ -39,7 +41,6 @@ $messages = array(
 'userlogin'    => 'Linda / Yeke nyîmbâ',
 'logout'       => 'Woza',
 'userlogout'   => 'Woza',
-'yournick'     => 'Nyîmbâ:',
 
 # Edit pages
 'watchthis'       => 'bâa lo ânde sô lêmbëtï',
@@ -50,6 +51,7 @@ $messages = array(
 # Preferences page
 'mypreferences' => 'tandä tî mbï',
 'prefs-rc'      => 'Tanga ti yé so a gbion ya ni',
+'yournick'      => 'Nyîmbâ:',
 
 # User rights
 'editinguser' => "Mo fa na mbi nyîmbâ '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]] | [[Special:Contributions/$1|{{int:contribslink}}]])",
@@ -60,7 +62,7 @@ $messages = array(
 # Upload
 'watchthisupload' => 'bâa lo ânde sô lêmbëtï',
 
-'brokenredirects-edit' => '(fa na mbi)',
+'brokenredirects-edit' => 'fa na mbi',
 
 # Watchlist
 'watchlist'     => 'bâa lo ânde tî mbï',

@@ -119,9 +119,9 @@ HEADER
 	 */
 	protected function exportMessages( $handle, MessageCollection $collection ) {
 		$mangler = $this->group->getMangler();
-		foreach ( $collection->keys() as $item ) {
-			$key = $mangler->unmangle( $item );
-			$value = str_replace( TRANSLATE_FUZZY, '', $collection[$item]->translation );
+		foreach ( $collection as $key => $item ) {
+			$key = $mangler->unmangle( $key );
+			$value = str_replace( TRANSLATE_FUZZY, '', $item->translation() );
 
 			# Make sure we don't slip newlines trough... it would be fatal
 			$value = str_replace( "\n", '\\n', $value );

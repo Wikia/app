@@ -2,7 +2,8 @@
 /**
  * Aliases for Special:Interwiki
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $aliases = array();
@@ -11,21 +12,27 @@ $aliases = array();
  * @author Jon Harald Søby
  */
 $aliases['en'] = array(
-	'Interwiki' => array('Interwiki'),
+	'Interwiki' => array( 'Interwiki' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Interwiki' => array( 'إنترويكي' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Interwiki' => array( 'إنترويكى' ),
+);
+
+/** Bulgarian (Български) */
+$aliases['bg'] = array(
+	'Interwiki' => array( 'Междууикита' ),
+);
+
+/** Breton (Brezhoneg) */
+$aliases['br'] = array(
+	'Interwiki' => array( 'Etrewiki' ),
 );
 
 /** Bosnian (Bosanski) */
@@ -33,39 +40,19 @@ $aliases['bs'] = array(
 	'Interwiki' => array( 'Medjuwiki' ),
 );
 
-/** German (Deutsch) */
-$aliases['de'] = array(
-	'Interwiki' => array( 'Interwiki' ),
-);
-
-/** Basque (Euskara) */
-$aliases['eu'] = array(
-	'Interwiki' => array( 'Interwiki' ),
-);
-
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'Interwiki' => array( 'میان‌ویکی' ),
 );
 
-/** Galician (Galego) */
-$aliases['gl'] = array(
-	'Interwiki' => array( 'Interwiki' ),
-);
-
-/** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
-	'Interwiki' => array( 'Interwiki' ),
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Interwiki' => array( 'Entèrvouiqui' ),
 );
 
 /** Hebrew (עברית) */
 $aliases['he'] = array(
 	'Interwiki' => array( 'בינוויקי' ),
-);
-
-/** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'Interwiki' => array( 'Interwiki' ),
 );
 
 /** Hungarian (Magyar) */
@@ -88,14 +75,14 @@ $aliases['ko'] = array(
 	'Interwiki' => array( '인터위키' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Interwiki' => array( 'EngerWiki', 'Engerwiki' ),
+);
+
 /** Latin (Latina) */
 $aliases['la'] = array(
 	'Interwiki' => array( 'Intervici' ),
-);
-
-/** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'Interwiki' => array( 'Interwiki' ),
 );
 
 /** Macedonian (Македонски) */
@@ -103,21 +90,19 @@ $aliases['mk'] = array(
 	'Interwiki' => array( 'Интервики' ),
 );
 
-/** Maltese (Malti) */
-$aliases['mt'] = array(
-	'Interwiki' => array( 'Interwiki' ),
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Interwiki' => array( 'അന്തര്‍‌വിക്കി' ),
 );
 
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'Interwiki' => array( 'Interwiki' ),
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Interwiki' => array( 'आंतरविकि' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$aliases['no'] = array(
-	'Interwiki' => array( 'Interwiki' ),
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'Interwiki' => array( 'Interwikis' ),
 );
 
 /** Sanskrit (संस्कृत) */
@@ -133,5 +118,10 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Interwiki' => array( 'Kawing-wiki' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Interwiki' => array( 'İnterviki' ),
 );
 

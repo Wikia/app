@@ -31,6 +31,16 @@ Do not translate or change tag names, or link anchors.',
 	'searchbox-namespaces' => '{{Identical|Namespaces}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'searchbox-desc' => 'Maak die insluiting van soek-vorms moontlik',
+	'searchbox-search' => 'Soek',
+	'searchbox-go' => 'OK',
+	'searchbox-namespaces' => 'Naamruimtes:',
+);
+
 /** Amharic (አማርኛ)
  * @author Codex Sinaiticus
  */
@@ -58,6 +68,15 @@ $messages['ar'] = array(
 	'searchbox-namespaces' => 'النطاقات:',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'searchbox-search' => 'ܒܨܝ',
+	'searchbox-go' => 'ܙܠ',
+	'searchbox-namespaces' => 'ܚܩܠܬ̈ܐ:',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -66,6 +85,16 @@ $messages['arz'] = array(
 	'searchbox-search' => 'بحث',
 	'searchbox-go' => 'اذهب',
 	'searchbox-namespaces' => 'النطاقات:',
+);
+
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'searchbox-desc' => "Ealaubt s'Eibindn vu am Suachfoamular",
+	'searchbox-search' => 'Suacha',
+	'searchbox-go' => 'Passd',
+	'searchbox-namespaces' => 'Nãmensräim:',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -88,6 +117,14 @@ $messages['bg'] = array(
 	'searchbox-namespaces' => 'Именни пространства:',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'searchbox-search' => 'অনুসন্ধান',
+	'searchbox-go' => 'যাও',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -106,6 +143,13 @@ $messages['bs'] = array(
 	'searchbox-search' => 'Traži',
 	'searchbox-go' => 'Idi',
 	'searchbox-namespaces' => 'Imenski prostori:',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'searchbox-go' => 'Vés-hi',
 );
 
 /** Czech (Česky)
@@ -145,6 +189,18 @@ $messages['dsb'] = array(
 	'searchbox-namespaces' => 'Mjenjowe rumy:',
 );
 
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'searchbox-desc' => 'Να επιτρέπεται η συμπερίληψη φορμών αναζήτησης',
+	'searchbox-search' => 'Αναζήτηση',
+	'searchbox-go' => 'Πήγαινε',
+	'searchbox-namespaces' => 'Περιοχές ονομάτων:',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -170,8 +226,10 @@ $messages['es'] = array(
  * @author Kobazulo
  */
 $messages['eu'] = array(
+	'searchbox-desc' => 'Bilaketetan inklusioak baimendu',
 	'searchbox-search' => 'Bilatu',
 	'searchbox-go' => 'Joan',
+	'searchbox-namespaces' => 'Izen-tarteak:',
 );
 
 /** Fulah (Fulfulde)
@@ -203,6 +261,16 @@ $messages['fr'] = array(
 	'searchbox-namespaces' => 'Espaces de nom :',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'searchbox-search' => 'Rechèrchiér',
+	'searchbox-go' => 'Lanciér',
+	'searchbox-namespaces' => 'Èspâços de noms :',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -215,9 +283,40 @@ $messages['gl'] = array(
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'searchbox-search' => 'Ζητεῖν',
+	'searchbox-go' => 'Ἰέναι',
 	'searchbox-namespaces' => 'Ὀνοματεῖα:',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'searchbox-desc' => 'Macht s Yybinde vun eme Suechformular megli',
+	'searchbox-search' => 'Sueche',
+	'searchbox-go' => 'Gang',
+	'searchbox-namespaces' => 'Namensryym:',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
+ */
+$messages['gu'] = array(
+	'searchbox-desc' => 'શોધ રૂપે સમાવેશ કરવાની અનુમતિ આપો',
+	'searchbox-search' => 'શોધો',
+	'searchbox-go' => 'જાઓ',
+	'searchbox-namespaces' => 'નામાવકાશ:',
+);
+
+/** Manx (Gaelg)
+ * @author MacTire02
+ */
+$messages['gv'] = array(
+	'searchbox-search' => 'Ronsaghey',
+	'searchbox-go' => 'Gow',
 );
 
 /** Hawaiian (Hawai`i)
@@ -239,7 +338,7 @@ $messages['he'] = array(
 );
 
 /** Croatian (Hrvatski)
- * @author Suradnik13
+ * @author Ex13
  */
 $messages['hr'] = array(
 	'searchbox-search' => 'Traži',
@@ -277,6 +376,26 @@ $messages['ia'] = array(
 	'searchbox-namespaces' => 'Spatios de nomines:',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'searchbox-desc' => 'Mengijinkan formulir pencarian disertakan',
+	'searchbox-search' => 'Cari',
+	'searchbox-go' => 'Tuju ke',
+	'searchbox-namespaces' => 'Ruang nama:',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'searchbox-desc' => "Consente l'inserimento di moduli di ricerca",
+	'searchbox-search' => 'Ricerca',
+	'searchbox-go' => 'Vai',
+	'searchbox-namespaces' => 'Namespace:',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Mizusumashi
@@ -289,9 +408,11 @@ $messages['ja'] = array(
 );
 
 /** Georgian (ქართული)
+ * @author Alsandro
  * @author Sopho
  */
 $messages['ka'] = array(
+	'searchbox-desc' => 'ძიების ფორმების ჩასმის ნებართვა',
 	'searchbox-search' => 'ძიება',
 	'searchbox-go' => 'გადასვლა',
 	'searchbox-namespaces' => 'სახელთა სივრცეები:',
@@ -299,11 +420,19 @@ $messages['ka'] = array(
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
 	'searchbox-search' => 'ស្វែងរក',
 	'searchbox-go' => 'ទៅ',
-	'searchbox-namespaces' => 'លំហឈ្មោះ៖',
+	'searchbox-namespaces' => 'ប្រភេទ៖',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'searchbox-go' => 'ಹೋಗು',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -314,6 +443,13 @@ $messages['ksh'] = array(
 	'searchbox-search' => 'Söke',
 	'searchbox-go' => 'Loß Jonn!',
 	'searchbox-namespaces' => 'Appachtemengs:',
+);
+
+/** Latin (Latina)
+ * @author UV
+ */
+$messages['la'] = array(
+	'searchbox-namespaces' => 'Spatia nominalia:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -334,12 +470,22 @@ $messages['lfn'] = array(
 );
 
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
+	'searchbox-desc' => 'Дозволи вклучување на форми на пребарување',
 	'searchbox-search' => 'Барај',
 	'searchbox-go' => 'Оди',
 	'searchbox-namespaces' => 'Именски простори:',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'searchbox-search' => 'Хайлт',
+	'searchbox-namespaces' => 'Нэрний зайнууд:',
 );
 
 /** Malay (Bahasa Melayu)
@@ -351,6 +497,13 @@ $messages['ms'] = array(
 	'searchbox-search' => 'Cari',
 	'searchbox-go' => 'Pergi',
 	'searchbox-namespaces' => 'Ruang nama:',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'searchbox-go' => 'Адя',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -416,19 +569,46 @@ $messages['os'] = array(
 	'searchbox-search' => 'Агур',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'searchbox-search' => 'Guck uff',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'searchbox-desc' => 'Pozwala na wstawienie formularza wyszukiwania',
 	'searchbox-search' => 'Szukaj',
 	'searchbox-go' => 'Idź',
 	'searchbox-namespaces' => 'Przestrzenie nazw',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'searchbox-desc' => "Përmëtt anseriment ëd forme d'arserca",
+	'searchbox-search' => 'Serca',
+	'searchbox-go' => 'Va',
+	'searchbox-namespaces' => 'Spassi nominaj:',
+);
+
+/** Pontic (Ποντιακά)
+ * @author Consta
+ */
+$messages['pnt'] = array(
+	'searchbox-search' => 'Αράεμαν',
 );
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'searchbox-search' => 'پلټل',
+	'searchbox-go' => 'ورځه',
 	'searchbox-namespaces' => 'نوم-تشيالونه:',
 );
 
@@ -454,10 +634,13 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'searchbox-namespaces' => 'Spaţiu de nume:',
+	'searchbox-search' => 'Căutare',
+	'searchbox-go' => 'Mergeţi',
+	'searchbox-namespaces' => 'Spaţii de nume:',
 );
 
 /** Tarandíne (Tarandíne)
@@ -471,11 +654,15 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ferrer
+ * @author Innv
  * @author Rubin
  */
 $messages['ru'] = array(
+	'searchbox-desc' => 'Позволяет включение поисковых форм',
 	'searchbox-search' => 'Поиск',
 	'searchbox-go' => 'Перейти',
+	'searchbox-namespaces' => 'Пространства имён:',
 );
 
 /** Slovak (Slovenčina)
@@ -486,6 +673,20 @@ $messages['sk'] = array(
 	'searchbox-search' => 'Hľadať',
 	'searchbox-go' => 'Vykonať',
 	'searchbox-namespaces' => 'Menné priestory:',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'searchbox-namespaces' => 'Именски простори:',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'searchbox-namespaces' => 'Imenski prostori:',
 );
 
 /** Seeltersk (Seeltersk)
@@ -514,6 +715,24 @@ $messages['sv'] = array(
 $messages['te'] = array(
 	'searchbox-search' => 'వెతుకు',
 	'searchbox-go' => 'వెళ్ళు',
+	'searchbox-namespaces' => 'పేరుబరులు:',
+);
+
+/** Thai (ไทย)
+ * @author Mopza
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'searchbox-search' => 'สืบค้น',
+	'searchbox-go' => 'ไป',
+	'searchbox-namespaces' => 'เนมสเปซ:',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'searchbox-go' => 'Git',
 );
 
 /** Tagalog (Tagalog)
@@ -537,6 +756,13 @@ $messages['tr'] = array(
 	'searchbox-namespaces' => 'Alan adları:',
 );
 
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'searchbox-go' => 'كۆچۈش',
+);
+
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
  * @author Jose77
  */
@@ -552,6 +778,16 @@ $messages['vec'] = array(
 	'searchbox-search' => 'Serca',
 	'searchbox-go' => 'Và',
 	'searchbox-namespaces' => 'Namespace:',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'searchbox-desc' => 'Laskeb avaita ecindformad',
+	'searchbox-search' => 'Ectä',
+	'searchbox-go' => 'Mända',
+	'searchbox-namespaces' => 'Nimiavaruded:',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -574,6 +810,13 @@ $messages['vo'] = array(
 	'searchbox-namespaces' => 'Nemaspads:',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'searchbox-search' => 'זוכן',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
  * @author Gzdavidwong
@@ -586,9 +829,13 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'searchbox-desc' => '允許列入搜索形式',
 	'searchbox-search' => '搜尋',
+	'searchbox-go' => '搜',
+	'searchbox-namespaces' => '名稱空間：',
 );
 

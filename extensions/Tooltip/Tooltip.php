@@ -3,6 +3,7 @@
 $wgExtensionFunctions[]             = "wfToolTipExtension";
 $wgHooks['LanguageGetMagic'][]      = 'wfTooltipParserFunction_Magic';
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'ToolTip',
 	'author'         => 'Paul Grinberg',
 	'description'    => 'adds <nowiki><tooltip></nowiki> and <nowiki>{{#tooltip:}}</nowiki>tag',

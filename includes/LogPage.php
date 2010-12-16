@@ -33,7 +33,10 @@ class LogPage {
 	const DELETED_ACTION = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
-    const DELETED_RESTRICTED = 8;
+	const DELETED_RESTRICTED = 8;
+	// Convenience fields
+	const SUPPRESSED_USER = 12;
+	const SUPPRESSED_ACTION = 9;
 	/* @access private */
 	var $type, $action, $comment, $params, $target, $doer;
 	/* @acess public */
@@ -57,7 +60,7 @@ class LogPage {
 		global $wgLogRestrictions;
 
 		$dbw = wfGetDB( DB_MASTER );
-		$log_id = $dbw->nextSequenceValue( 'log_log_id_seq' );
+		$log_id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
 
 		$this->timestamp = $now = wfTimestampNow();
 		$data = array(
@@ -66,8 +69,10 @@ class LogPage {
 			'log_action' => $this->action,
 			'log_timestamp' => $dbw->timestamp( $now ),
 			'log_user' => $this->doer->getId(),
+			'log_user_text' => $this->doer->getName(),
 			'log_namespace' => $this->target->getNamespace(),
 			'log_title' => $this->target->getDBkey(),
+			'log_page' => $this->target->getArticleId(),
 			'log_comment' => $this->comment,
 			'log_params' => $this->params
 		);
@@ -91,7 +96,7 @@ class LogPage {
 				$this->type, $this->action, $this->target, $this->comment, $this->params, $newId );
 			$rc->notifyRC2UDP();
 		}
-		return true;
+		return $newId;
 	}
 
 	/**
@@ -99,7 +104,7 @@ class LogPage {
 	 */
 	public function getRcComment() {
 		$rcComment = $this->actionText;
-		if( '' != $this->comment ) {
+		if( $this->comment != '' ) {
 			if ($rcComment == '')
 				$rcComment = $this->comment;
 			else
@@ -132,6 +137,7 @@ class LogPage {
 
 	/**
 	 * @static
+	 * @param string $type logtype
 	 */
 	public static function logName( $type ) {
 		global $wgLogNames, $wgMessageCache;
@@ -160,7 +166,7 @@ class LogPage {
 	 * @static
 	 * @return HTML string
 	 */
-	public static function actionText( $type, $action, $title = NULL, $skin = NULL, 
+	public static function actionText( $type, $action, $title = null, $skin = null, 
 		$params = array(), $filterWikilinks = false ) 
 	{
 		global $wgLang, $wgContLang, $wgLogActions, $wgMessageCache;
@@ -178,7 +184,7 @@ class LogPage {
 		}
 		if( isset( $wgLogActions[$key] ) ) {
 			if( is_null( $title ) ) {
-				$rv = wfMsg( $wgLogActions[$key] );
+				$rv = wfMsgHtml( $wgLogActions[$key] );
 			} else {
 				$titleLink = self::getTitleLink( $type, $skin, $title, $params );
 				if( $key == 'rights/rights' ) {
@@ -199,13 +205,14 @@ class LogPage {
 				}
 				if( count( $params ) == 0 ) {
 					if ( $skin ) {
-						$rv = wfMsg( $wgLogActions[$key], $titleLink );
+						$rv = wfMsgHtml( $wgLogActions[$key], $titleLink );
 					} else {
-						$rv = wfMsgForContent( $wgLogActions[$key], $titleLink );
+						$rv = wfMsgExt( $wgLogActions[$key], array( 'parsemag', 'escape', 'replaceafter', 'content' ), $titleLink );
 					}
 				} else {
 					$details = '';
 					array_unshift( $params, $titleLink );
+					// User suppression
 					if ( preg_match( '/^(block|suppress)\/(block|reblock)$/', $key ) ) {
 						if ( $skin ) {
 							$params[1] = '<span title="' . htmlspecialchars( $params[1] ). '">' . 
@@ -215,8 +222,15 @@ class LogPage {
 						}
 						$params[2] = isset( $params[2] ) ? 
 							self::formatBlockFlags( $params[2], is_null( $skin ) ) : '';
+					// Page protections
 					} else if ( $type == 'protect' && count($params) == 3 ) {
-						$details .= " {$params[1]}"; // restrictions and expiries
+						// Restrictions and expiries
+						if( $skin ) {
+							$details .= htmlspecialchars( " {$params[1]}" );
+						} else {
+							$details .= " {$params[1]}";
+						}
+						// Cascading flag...
 						if( $params[2] ) {
 							if ( $skin ) {
 								$details .= ' ['.wfMsg('protect-summary-cascade').']';
@@ -224,6 +238,7 @@ class LogPage {
 								$details .= ' ['.wfMsgForContent('protect-summary-cascade').']';
 							}
 						}
+					// Page moves
 					} else if ( $type == 'move' && count( $params ) == 3 ) {
 						if( $params[2] ) {
 							if ( $skin ) {
@@ -232,8 +247,24 @@ class LogPage {
 								$details .= ' [' . wfMsgForContent( 'move-redirect-suppressed' ) . ']';
 							}
 						}
+					// Revision deletion
+					} else if ( preg_match( '/^(delete|suppress)\/revision$/', $key ) && count( $params ) == 5 ) {
+						$count = substr_count( $params[2], ',' ) + 1; // revisions
+						$ofield = intval( substr( $params[3], 7 ) ); // <ofield=x>
+						$nfield = intval( substr( $params[4], 7 ) ); // <nfield=x>
+						$details .= ': '.RevisionDeleter::getLogMessage( $count, $nfield, $ofield, false );
+					// Log deletion
+					} else if ( preg_match( '/^(delete|suppress)\/event$/', $key ) && count( $params ) == 4 ) {
+						$count = substr_count( $params[1], ',' ) + 1; // log items
+						$ofield = intval( substr( $params[2], 7 ) ); // <ofield=x>
+						$nfield = intval( substr( $params[3], 7 ) ); // <nfield=x>
+						$details .= ': '.RevisionDeleter::getLogMessage( $count, $nfield, $ofield, true );
 					}
-					$rv = wfMsgReal( $wgLogActions[$key], $params, true, !$skin ) . $details;
+					if ( $skin ) {
+						$rv = wfMsgHtml( $wgLogActions[$key], $params ) . $details;
+					} else {
+						$rv = wfMsgExt( $wgLogActions[$key], array( 'parsemag', 'escape', 'replaceafter', 'content' ), $params ) . $details;
+					}
 				}
 			}
 		} else {
@@ -265,20 +296,27 @@ class LogPage {
 	}
 	
 	protected static function getTitleLink( $type, $skin, $title, &$params ) {
-		global $wgLang, $wgContLang;
+		global $wgLang, $wgContLang, $wgUserrightsInterwikiDelimiter;
 		if( !$skin ) {
 			return $title->getPrefixedText();
 		}
 		switch( $type ) {
 			case 'move':
-				$titleLink = $skin->makeLinkObj( $title, 
-					htmlspecialchars( $title->getPrefixedText() ), 'redirect=no' );
+				$titleLink = $skin->link(
+					$title, 
+					htmlspecialchars( $title->getPrefixedText() ),
+					array(),
+					array( 'redirect' => 'no' )
+				);
 				$targetTitle = Title::newFromText( $params[0] );
 				if ( !$targetTitle ) {
 					# Workaround for broken database
 					$params[0] = htmlspecialchars( $params[0] );
 				} else {
-					$params[0] = $skin->makeLinkObj( $targetTitle, htmlspecialchars( $params[0] ) );
+					$params[0] = $skin->link(
+						$targetTitle,
+						htmlspecialchars( $params[0] )
+					);
 				}
 				break;
 			case 'block':
@@ -294,24 +332,39 @@ class LogPage {
 				break;
 			case 'rights':
 				$text = $wgContLang->ucfirst( $title->getText() );
-				$titleLink = $skin->makeLinkObj( Title::makeTitle( NS_USER, $text ) );
+				$parts = explode( $wgUserrightsInterwikiDelimiter, $text, 2 );
+				if ( count( $parts ) == 2 ) {
+					$titleLink = WikiMap::foreignUserLink( $parts[1], $parts[0],
+						htmlspecialchars( $title->getPrefixedText() ) );
+					if ( $titleLink !== false )
+						break;
+				}
+				$titleLink = $skin->link( Title::makeTitle( NS_USER, $text ) );
 				break;
 			case 'merge':
-				$titleLink = $skin->makeLinkObj( $title, $title->getPrefixedText(), 'redirect=no' );
-				$params[0] = $skin->makeLinkObj( Title::newFromText( $params[0] ), htmlspecialchars( $params[0] ) );
+				$titleLink = $skin->link(
+					$title,
+					$title->getPrefixedText(),
+					array(),
+					array( 'redirect' => 'no' )
+				);
+				$params[0] = $skin->link(
+					Title::newFromText( $params[0] ),
+					htmlspecialchars( $params[0] )
+				);
 				$params[1] = $wgLang->timeanddate( $params[1] );
 				break;
 			default:
 				if( $title->getNamespace() == NS_SPECIAL ) {
-					list( $name, $par ) = SpecialPage::resolveAliasWithSubpage( $title->getDBKey() );
+					list( $name, $par ) = SpecialPage::resolveAliasWithSubpage( $title->getDBkey() );
 					# Use the language name for log titles, rather than Log/X
 					if( $name == 'Log' ) {
-						$titleLink = '('.$skin->makeLinkObj( $title, LogPage::logName( $par ) ).')';
+						$titleLink = '('.$skin->link( $title, LogPage::logName( $par ) ).')';
 					} else {
-						$titleLink = $skin->makeLinkObj( $title );
+						$titleLink = $skin->link( $title );
 					}
 				} else {
-					$titleLink = $skin->makeLinkObj( $title );
+					$titleLink = $skin->link( $title );
 				}
 		}
 		return $titleLink;
@@ -330,6 +383,8 @@ class LogPage {
 			$params = array( $params );
 		}
 
+		if ( $comment === null ) $comment = "";
+
 		$this->action = $action;
 		$this->target = $target;
 		$this->comment = $comment;
@@ -344,9 +399,25 @@ class LogPage {
 		
 		$this->doer = $doer;
 
-		$this->actionText = LogPage::actionText( $this->type, $action, $target, NULL, $params );
+		$this->actionText = LogPage::actionText( $this->type, $action, $target, null, $params );
 
 		return $this->saveContent();
+	}
+	
+	/**
+	 * Add relations to log_search table
+	 * @static
+	 */
+	public function addRelations( $field, $values, $logid ) {
+		if( !strlen($field) || empty($values) )
+			return false; // nothing
+		$data = array();
+		foreach( $values as $value ) {
+			$data[] = array('ls_field' => $field,'ls_value' => $value,'ls_log_id' => $logid);
+		}
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->insert( 'log_search', $data, __METHOD__, 'IGNORE' );
+		return true;
 	}
 
 	/**

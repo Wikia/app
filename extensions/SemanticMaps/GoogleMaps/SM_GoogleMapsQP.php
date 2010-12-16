@@ -3,7 +3,7 @@
  * A query printer for maps using the Google Maps API
  *
  * @file SM_GoogleMaps.php
- * @ingroup SemanticMaps
+ * @ingroup SMGoogleMaps
  *
  * @author Robert Buzink
  * @author Yaron Koren
@@ -16,20 +16,30 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 final class SMGoogleMapsQP extends SMMapPrinter {
 	
-	public $serviceName = MapsGoogleMapsUtils::SERVICE_NAME;
+	public $serviceName = MapsGoogleMaps::SERVICE_NAME;
+	
+	protected $spesificParameters;
 	
 	/**
 	 * @see SMMapPrinter::setQueryPrinterSettings()
 	 *
 	 */
 	protected function setQueryPrinterSettings() {
-		global $egMapsGoogleMapsZoom, $egMapsGoogleMapsPrefix;
+		global $egMapsGoogleMapsZoom, $egMapsGoogleMapsPrefix, $egMapsGMapOverlays;
 		
 		$this->elementNamePrefix = $egMapsGoogleMapsPrefix;
 
 		$this->defaultZoom = $egMapsGoogleMapsZoom;
 		
-		$this->defaultParams = MapsGoogleMapsUtils::getDefaultParams();
+		$this->spesificParameters = array(
+			'overlays' => array(
+				'type' => array('string', 'list'),
+				'criteria' => array(
+					'is_google_overlay' => array()
+					),	
+				'default' => $egMapsGMapOverlays,	
+				),
+		);			
 	}	
 	
 	/**
@@ -41,7 +51,7 @@ final class SMGoogleMapsQP extends SMMapPrinter {
 
 		if (empty($egGoogleMapsOnThisPage)) {
 			$egGoogleMapsOnThisPage = 0;
-			MapsGoogleMapsUtils::addGMapDependencies($this->output);
+			MapsGoogleMaps::addGMapDependencies($this->output);
 		}
 		
 		$egGoogleMapsOnThisPage++;	
@@ -55,15 +65,8 @@ final class SMGoogleMapsQP extends SMMapPrinter {
 	 */
 	protected function addSpecificMapHTML() {
 		global $wgJsMimeType;
-				
-		$enableEarth = MapsGoogleMapsUtils::getEarthValue($this->earth);
-		
-		// Get the Google Maps names for the control and map types
-		$this->type = MapsGoogleMapsUtils::getGMapType($this->type, true);
-		
-		$this->controls = MapsGoogleMapsUtils::createControlsString($this->controls);
 
-		$this->autozoom = MapsGoogleMapsUtils::getAutozoomJSValue($this->autozoom);
+		$onloadFunctions = MapsGoogleMaps::addOverlayOutput($this->output, $this->mapName, $this->overlays, $this->controls);
 		
 		$markerItems = array();
 		
@@ -79,22 +82,48 @@ final class SMGoogleMapsQP extends SMMapPrinter {
 		// Create a string containing the marker JS 
 		$markersString = implode(',', $markerItems);		
 		
-		$this->types = explode(",", $this->types);
-		
-		$typesString = MapsGoogleMapsUtils::createTypesString($this->types, $enableEarth);		
-		
 		$this->output .= <<<END
 <div id="$this->mapName" class="$this->class" style="$this->style" ></div>
 <script type="$wgJsMimeType"> /*<![CDATA[*/
 addOnloadHook(
-	initializeGoogleMap('$this->mapName', $this->width, $this->height, $this->centre_lat, $this->centre_lon, $this->zoom, $this->type, [$typesString], [$this->controls], $this->autozoom, [$markersString])
+	initializeGoogleMap('$this->mapName', 
+		{
+		width: $this->width,
+		height: $this->height,
+		lat: $this->centre_lat,
+		lon: $this->centre_lon,
+		zoom: $this->zoom,
+		type: $this->type,
+		types: [$this->types],
+		controls: [$this->controls],
+		scrollWheelZoom: $this->autozoom
+		},
+		[$markersString]	
+	)
 );
 /*]]>*/ </script>
 
 END;
 	
+		$this->output .= $onloadFunctions;	
 	}
 	
-
+	/**
+	 * Returns type info, descriptions and allowed values for this QP's parameters after adding the spesific ones to the list.
+	 */
+    public function getParameters() {
+        $params = parent::getParameters();
+        
+        $allowedTypes = MapsGoogleMaps::getTypeNames();
+        
+        $params[] = array('name' => 'controls', 'type' => 'enum-list', 'description' => wfMsg('semanticmaps_paramdesc_controls'), 'values' => MapsGoogleMaps::getControlNames());
+        $params[] = array('name' => 'types', 'type' => 'enum-list', 'description' => wfMsg('semanticmaps_paramdesc_types'), 'values' => $allowedTypes);
+        $params[] = array('name' => 'type', 'type' => 'enumeration', 'description' => wfMsg('semanticmaps_paramdesc_type'), 'values' => $allowedTypes);
+        $params[] = array('name' => 'overlays', 'type' => 'enum-list', 'description' => wfMsg('semanticmaps_paramdesc_overlays'), 'values' => MapsGoogleMaps::getOverlayNames());
+        $params[] = array('name' => 'autozoom', 'type' => 'enumeration', 'description' => wfMsg('semanticmaps_paramdesc_autozoom'), 'values' => array('on', 'off'));
+        
+        return $params;
+    }
+	
 }
 

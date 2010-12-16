@@ -9,7 +9,7 @@
  * @file
  */
 
-$optionsWithArgs = array( 'top', 'days' );
+$optionsWithArgs = array( 'top', 'days', 'bots', 'ns' );
 require( dirname( __FILE__ ) . '/cli.inc' );
 
 function showUsage() {
@@ -22,6 +22,8 @@ Usage: php languageeditstats.php [options...]
 Options:
   --top       Show given number of language codes (default: 10)
   --days      Calculate for given number of days (default: 7)
+  --bots      Include bot edits (default: false)
+  --ns        Comma separated list of Namespace IDs (default: all)
 
 EOT
 );
@@ -30,17 +32,38 @@ EOT
 
 /** Process command line parameters
  */
-if ( isset( $options['help'] ) ) showUsage();
+if ( isset( $options['help'] ) ) {
+	showUsage();
+}
 
-if ( isset( $options['days'] ) )
-	$hours = $options['days'] * 24; // no day change cutoff
-else
+if ( isset( $options['days'] ) ) {
+	$hours = intval( $options['days'] ) * 24; // no day change cutoff
+} else {
 	$hours = 7 * 24;
+}
 
-if ( isset( $options['top'] ) )
-	$top = $options['top'];
-else
+if ( isset( $options['top'] ) ) {
+	$top = intval( $options['top'] );
+} else {
 	$top = 10;
+}
+
+if ( isset( $options['bots'] ) ) {
+	$bots = true;
+} else {
+	$bots = false;
+}
+
+$namespaces = array();
+if ( isset( $options['ns'] ) ) {
+	$input = explode( ',', $options['ns'] );
+
+	foreach ( $input as $namespace ) {
+		if ( is_numeric( $namespace ) ) {
+			array_push( $namespaces, $namespace );
+		}
+	}
+}
 
 function figureMessage( $text ) {
 	$pos = strrpos( $text, '/' );
@@ -51,7 +74,7 @@ function figureMessage( $text ) {
 
 /** Select set of edits to report on
  */
-$rows = TranslateUtils::translationChanges( $hours );
+$rows = TranslateUtils::translationChanges( $hours, $bots, $namespaces );
 
 /** Get counts for edits per language code after filtering out edits by
  *  $wgTranslateFuzzyBotName

@@ -116,6 +116,9 @@
 		// all looks good return: 		
 		return $mvLocalVideoLoc . $this->_parent_stream->getStreamName();
 	}
+	function getDuration(){
+		return $this->duration;
+	}
  	/*
  	 * returns the path with {sn} replaced with stream name if present
  	 */
@@ -137,4 +140,3 @@
  		return wfMsg( $this->file_desc_msg );
  	}
  }
-?>

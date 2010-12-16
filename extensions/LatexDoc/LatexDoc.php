@@ -5,6 +5,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'        => __FILE__,
 	'version'     => '0.2',
 	'name'        => 'LatexDoc',
 	'author'      => 'Tim Starling',

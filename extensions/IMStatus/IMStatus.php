@@ -38,6 +38,7 @@ if (!defined('MEDIAWIKI')) die('This file is part of MediaWiki. It is not a vali
 $wgExtensionMessagesFiles['IMStatus'] = dirname( __FILE__ ) . "/IMStatus.i18n.php";
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'IM Status',
 	'version' => '1.3',
 	'author' => array( 'PatheticCockroach', 'various MediaWiki contributors' ),
@@ -364,8 +365,8 @@ function RenderSkype( $input, $argv )
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;skype style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Skype") .']&lt;/skype&gt;</span>';
 		$output .= '<ul><li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'. '. wfMsg("imstatus_possible_val") .': "add","chat","call","sendfile","userinfo","voicemail","balloon","bigclassic","smallclassic","smallicon","mediumicon".</li>';
 		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$action_default.'. '. wfMsg("imstatus_possible_val") .': "add","chat","call","sendfile","userinfo","voicemail".</li></ul>';
-		$output .= wfMsg("imstatus_details_saa", '<a href="http://www.skype.com/share/buttons/wizard.html">Skype button wizard</a>'). '<br/>';
-		$output .= wfMsg("imstatus_skype_nbstyle") .'<br/>';
+		$output .= wfMsg("imstatus_details_saa", '<a href="http://www.skype.com/share/buttons/wizard.html">Skype button wizard</a>'). '<br />';
+		$output .= wfMsg("imstatus_skype_nbstyle") .'<br />';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;skype style="mediumicon" action="chat"&gt;PatheticCockroach&lt;/skype&gt;</span></div>';
 	}
 	else
@@ -460,7 +461,7 @@ function RenderXfire( $input, $argv )
 		$output .= '<ul><li>size: '. wfMsg("imstatus_xfire_size", "0", "4") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$size_default.'.</li>';
 		$output .= '<li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'. '. wfMsg("imstatus_possible_val") .': "bg","sh","co","sf","os","wow".</li>';
 		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$action_default.'. '. wfMsg("imstatus_possible_val") .': "add","profile".</li></ul>';
-		$output .= wfMsg("imstatus_details_saa", '<a href="http://www.xfire.com/miniprofile/">Xfire - Miniprofile Instructions</a>') .'<br/>';
+		$output .= wfMsg("imstatus_details_saa", '<a href="http://www.xfire.com/miniprofile/">Xfire - Miniprofile Instructions</a>') .'<br />';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;xfire size="3" style="bg" action="add"&gt;PatheticCockroach&lt;/xfire&gt;</span></div>';
 	}
 	else $output = '<a href="'.$link_url.'">'.$image.'</a>';
@@ -548,7 +549,7 @@ function RenderYahoo( $input, $argv )
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;yahoo style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Yahoo") .']&lt;/xfire&gt;</span>';
 		$output .= '<ul><li>style: '. wfMsg("imstatus_yahoo_style", "0", "2", "3", "4") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.</li>';
 		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$action_default.'. '. wfMsg("imstatus_possible_val") .': "addfriend","call","sendim".</li></ul>';
-		$output .= wfMsg("imstatus_details_saa", '<a href="http://geocities.yahoo.com/v/ao/pre.html">Yahoo! Presence</a>') .'<br/>';
+		$output .= wfMsg("imstatus_details_saa", '<a href="http://geocities.yahoo.com/v/ao/pre.html">Yahoo! Presence</a>') .'<br />';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;yahoo style="2" action="sendim"&gt;PatheticCockroach&lt;/yahoo&gt;</span></div>';
 	}
 	else $output = '<a href="ymsgr:'.$action.'?'.$input.'">'.$image.'</a>';

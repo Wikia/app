@@ -24,7 +24,7 @@
 
 $optionsWithArgs = array( 'report' );
 
-require_once( 'commandLine.inc' );
+require_once( dirname(__FILE__) . '/commandLine.inc' );
 
 /**
  * @ingroup Maintenance
@@ -115,10 +115,19 @@ class BackupReader {
 	}
 
 	function importFromFile( $filename ) {
+		$t = true;
 		if( preg_match( '/\.gz$/', $filename ) ) {
 			$filename = 'compress.zlib://' . $filename;
 		}
-		$file = fopen( $filename, 'rt' );
+		elseif( preg_match( '/\.bz2$/', $filename ) ) {
+			$filename = 'compress.bzip2://' . $filename;
+		}
+		elseif( preg_match( '/\.7z$/', $filename ) ) {
+			$filename = 'mediawiki.compress.7z://' . $filename;
+			$t = false;
+		}
+
+		$file = fopen( $filename, $t ? 'rt' : 't' ); //our 7zip wrapper uses popen, which seems not to like two-letter modes
 		return $this->importFromHandle( $file );
 	}
 

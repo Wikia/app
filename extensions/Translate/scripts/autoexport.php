@@ -39,7 +39,7 @@ if ( isset( $options['format'] ) ) {
 }
 
 if ( isset( $options['hours'] ) ) {
-	$hours = intval($options['hours']);
+	$hours = intval( $options['hours'] );
 	if ( !$hours ) {
 		STDERR( "Invalid duration given, defaulting to 24 hours" );
 		$hours = 24;
@@ -72,31 +72,29 @@ if ( isset( $options['groups'] ) ) {
 	$groupsFilter = array();
 }
 
-if ( isset( $options['threshold'] ) ) {
+if ( isset( $options['threshold'] ) && intval( $options['threshold'] ) ) {
 	$threshold = $options['threshold'];
 } else {
 	$threshold = false;
 }
 
 
-$rows = TranslateUtils::translationChanges( $hours );
-$index = TranslateUtils::messageIndex();
+$rows = TranslateUtils::translationChanges( $hours, true );
 $exports = array();
 foreach ( $rows as $row ) {
 	$group = false;
 	$code = false;
 
+	// TODO: fixme
 	list( $pieces, ) = explode( '/', $wgContLang->lcfirst( $row->rc_title ), 2 );
 
-	$key = strtolower( $row->rc_namespace . ':' . $pieces );
-
-	$mg = @$index[$key];
+	$mg = TranslateUtils::messageKeyToGroup(  $row->rc_namespace, $pieces );
 	if ( !is_null( $mg ) ) $group = $mg;
 
 	if ( strpos( $row->rc_title, '/' ) !== false ) {
 		$code = $row->lang;
 	}
-	if ( $group && ( !count($groupsFilter) || in_array( $group, $groupsFilter ) ) ) {
+	if ( $group && ( !count( $groupsFilter ) || in_array( $group, $groupsFilter ) ) ) {
 		if ( $code && !in_array( $code, $skip ) ) {
 			$exports[$group][$code] = true;
 		}
@@ -110,6 +108,8 @@ foreach ( $exports as $group => $languages ) {
 	$languages = array_keys( $languages );
 	sort( $languages );
 	$languages = checkThreshold( $group, $languages, $threshold );
+
+	if ( !count( $languages ) ) continue;
 
 	$languagelist = implode( ', ', $languages );
 	STDOUT( str_replace(
@@ -132,24 +132,18 @@ function checkThreshold( $group, $languages, $threshold ) {
 	$qualify = array();
 
 	$g = MessageGroups::singleton()->getGroup( $group );
+	$collection = $g->initCollection( 'en' );
 	foreach ( $languages as $code ) {
+		$collection->resetForNewLanguage( $code );
 		// Initialise messages
-		$collection = $g->initCollection( $code );
+		$collection->filter( 'ignored' );
 		$collection->filter( 'optional' );
 		// Store the count of real messages for later calculation.
 		$total = count( $collection );
-
-		// Fill translations in for counting
-		$g->fillCollection( $collection );
-
-		// Count fuzzy first
-		$collection->filter( 'fuzzy' );
-
-		// Count the completion percent
 		$collection->filter( 'translated', false );
 		$translated = count( $collection );
 
-		if ( $translated/$total > $threshold/100 ) $qualify[] = $code;
+		if ( $translated / $total > $threshold / 100 ) $qualify[] = $code;
 	}
 	return $qualify;
 

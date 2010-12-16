@@ -158,7 +158,7 @@ EOT
 				$authenticated = wfMsg( 'lookupuser-not-authenticated' );
 			}
 			$optionsString = '';
-			foreach ( $user->mOptions as $name => $value ) {
+			foreach ( $user->getOptions() as $name => $value ) {
 				$optionsString .= "$name = $value <br />";
 			}
 			$name = $user->getName();

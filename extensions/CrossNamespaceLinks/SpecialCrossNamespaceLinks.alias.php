@@ -14,16 +14,12 @@ $aliases['en'] = array(
     'CrossNamespaceLinks' => array( 'CrossNamespaceLinks' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'CrossNamespaceLinks' => array( 'وصلات_عبر_النطاقات' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'CrossNamespaceLinks' => array( 'وصلات_عبر_النطاقات' ),
 );
@@ -38,9 +34,7 @@ $aliases['ca'] = array(
 	'CrossNamespaceLinks' => array( 'Enllaços entre espais de noms' ),
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
+/** German (Deutsch) */
 $aliases['de'] = array(
 	'CrossNamespaceLinks' => array( 'Seiten mit Links in andere Namensräume' ),
 );
@@ -48,6 +42,11 @@ $aliases['de'] = array(
 /** Lower Sorbian (Dolnoserbski) */
 $aliases['dsb'] = array(
 	'CrossNamespaceLinks' => array( 'Wótkaze do drugich mjenjowych rumow' ),
+);
+
+/** Estonian (Eesti) */
+$aliases['et'] = array(
+	'CrossNamespaceLinks' => array( 'Lingid_teise_nimeruumi' ),
 );
 
 /** Finnish (Suomi) */
@@ -60,9 +59,7 @@ $aliases['gsw'] = array(
 	'CrossNamespaceLinks' => array( 'Syte mit Gleicher in andri Namensryym' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'CrossNamespaceLinks' => array( 'קישורים מדפי תוכן למרחבי שם אחרים' ),
 );
@@ -92,9 +89,24 @@ $aliases['ia'] = array(
 	'CrossNamespaceLinks' => array( 'Ligamines trans spatios de nomines' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'CrossNamespaceLinks' => array( 'Pranala antar ruang nama', 'PranalaAntarRuangNama' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'CrossNamespaceLinks' => array( '名前空間をまたぐリンク' ),
+);
+
+/** Khmer (ភាសាខ្មែរ) */
+$aliases['km'] = array(
+	'CrossNamespaceLinks' => array( 'តំណភ្ជាប់ឆ្លងលំហឈ្មោះ' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'CrossNamespaceLinks' => array( 'Lengks en ander Appachtemangs' ),
 );
 
 /** Latin (Latina) */
@@ -109,7 +121,17 @@ $aliases['lb'] = array(
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'CrossNamespaceLinks' => array( 'МеѓуИменскиВрски' ),
+	'CrossNamespaceLinks' => array( 'МеѓуименскиВрски' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'CrossNamespaceLinks' => array( 'അന്തർനാമമേഖലാകണ്ണികൾ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'CrossNamespaceLinks' => array( 'आंतरनाम्विशवदुवे' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -119,7 +141,7 @@ $aliases['ms'] = array(
 
 /** Maltese (Malti) */
 $aliases['mt'] = array(
-	'CrossNamespaceLinks' => array( 'ĦoloqSpazjiTal-Isem' ),
+	'CrossNamespaceLinks' => array( 'ĦoloqSpazjiTal-Isem', 'ĦoloqSpazjiIsem' ),
 );
 
 /** Low German (Plattdüütsch) */
@@ -137,9 +159,7 @@ $aliases['nl'] = array(
 	'CrossNamespaceLinks' => array( 'VerwijzingenTussenNaamruimten' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'CrossNamespaceLinks' => array( 'Lenker mellom navnerom' ),
 );
@@ -151,7 +171,7 @@ $aliases['pl'] = array(
 
 /** Portuguese (Português) */
 $aliases['pt'] = array(
-	'CrossNamespaceLinks' => array( 'Links espalhados em diversos espaços nominais', 'Links espalhados em diversos domínios' ),
+	'CrossNamespaceLinks' => array( 'Ligações entre espaços nominais' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
@@ -164,6 +184,16 @@ $aliases['sa'] = array(
 	'CrossNamespaceLinks' => array( 'आन्तरनामविश्वसम्बद्ध:' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'CrossNamespaceLinks' => array( 'OdkazyMedziMennýmiPriestormi' ),
+);
+
+/** Swedish (Svenska) */
+$aliases['sv'] = array(
+	'CrossNamespaceLinks' => array( 'Länkar mellan namnrymder' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'CrossNamespaceLinks' => array( 'Mga kawing ng pagtawid ng espasyo ng pangalan' ),
@@ -171,6 +201,6 @@ $aliases['tl'] = array(
 
 /** Turkish (Türkçe) */
 $aliases['tr'] = array(
-	'CrossNamespaceLinks' => array( 'AlanlarArasıBağlantılar' ),
+	'CrossNamespaceLinks' => array( 'İsimAlanlarıArasıBağlantılar' ),
 );
 

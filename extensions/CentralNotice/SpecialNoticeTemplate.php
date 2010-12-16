@@ -114,7 +114,7 @@ class SpecialNoticeTemplate extends UnlistedSpecialPage {
 	}
 
 	function showList() {
-		global $wgOut, $wgTitle, $wgUser, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest;
 
 		$sk = $wgUser->getSkin();
 
@@ -207,7 +207,7 @@ class SpecialNoticeTemplate extends UnlistedSpecialPage {
 	}
 
 	function showAdd() {
-		global $wgOut, $wgTitle, $wgUser;
+		global $wgOut, $wgUser;
 
 		// Build HTML
 		$htmlOut = Xml::openElement( 'form', array( 'method' => 'post' ) );
@@ -281,9 +281,10 @@ class SpecialNoticeTemplate extends UnlistedSpecialPage {
 		$languages = Language::getLanguageNames();
 		$htmlOut .= Xml::element( 'th', array( 'width' => '40%' ), $languages[$wpUserLang] );
 
-                // Pull text and respect any inc: markup
-                $bodyPage = Title::newFromText( "Centralnotice-template-{$currentTemplate}", NS_MEDIAWIKI );
-		$body = Revision::newFromTitle( $bodyPage )->getText();
+		// Pull text and respect any inc: markup
+		$bodyPage = Title::newFromText( "Centralnotice-template-{$currentTemplate}", NS_MEDIAWIKI );
+		$curRev = Revision::newFromTitle( $bodyPage );
+		$body = $curRev ? $curRev->getText() : '';
     
 		$fields = array();
 		preg_match_all( '/\{\{\{([A-Za-z0-9\_\-}]+)\}\}\}/', $body, $fields );

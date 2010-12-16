@@ -142,11 +142,11 @@ class SpecialImport extends SpecialPage {
 	}
 
 	private function showForm() {
-		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgImportSources, $wgExportMaxLinkDepth;
+		global $wgUser, $wgOut, $wgRequest, $wgImportSources, $wgExportMaxLinkDepth;
 		if( !$wgUser->isAllowed( 'import' ) && !$wgUser->isAllowed( 'importupload' ) )
 			return $wgOut->permissionRequired( 'import' );
 
-		$action = $wgTitle->getLocalUrl( 'action=submit' );
+		$action = $this->getTitle()->getLocalUrl( array( 'action' => 'submit' ) );
 
 		if( $wgUser->isAllowed( 'importupload' ) ) {
 			$wgOut->addWikiMsg( "importtext" );
@@ -283,7 +283,7 @@ class SpecialImport extends SpecialPage {
  * @ingroup SpecialPage
  */
 class ImportReporter {
-      private $reason=false;
+	private $reason=false;
 
 	function __construct( $importer, $upload, $interwiki , $reason=false ) {
 		$importer->setPageOutCallback( array( $this, 'reportPage' ) );
@@ -309,7 +309,7 @@ class ImportReporter {
 		$contentCount = $wgContLang->formatNum( $successCount );
 
 		if( $successCount > 0 ) {
-			$wgOut->addHTML( "<li>" . $skin->makeKnownLinkObj( $title ) . " " .
+			$wgOut->addHTML( "<li>" . $skin->linkKnown( $title ) . " " .
 				wfMsgExt( 'import-revision-count', array( 'parsemag', 'escape' ), $localCount ) .
 				"</li>\n"
 			);
@@ -319,7 +319,7 @@ class ImportReporter {
 				$detail = wfMsgExt( 'import-logentry-upload-detail', array( 'content', 'parsemag' ),
 					$contentCount );
 				if ( $this->reason ) {
-			                $detail .=  wfMsgForContent( 'colon-separator' ) . $this->reason;
+					$detail .=  wfMsgForContent( 'colon-separator' ) . $this->reason;
 				}
 				$log->addEntry( 'upload', $title, $detail );
 			} else {
@@ -328,7 +328,7 @@ class ImportReporter {
 				$detail = wfMsgExt( 'import-logentry-interwiki-detail', array( 'content', 'parsemag' ),
 					$contentCount, $interwiki );
 				if ( $this->reason ) {
-			                $detail .=  wfMsgForContent( 'colon-separator' ) . $this->reason;
+					$detail .=  wfMsgForContent( 'colon-separator' ) . $this->reason;
 				}
 				$log->addEntry( 'interwiki', $title, $detail );
 			}
@@ -345,7 +345,8 @@ class ImportReporter {
 				wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, $latest, $wgUser) );
 			}
 		} else {
-			$wgOut->addHTML( '<li>' . wfMsgHtml( 'import-nonewrevisions' ) . '</li>' );
+			$wgOut->addHTML( "<li>" . $skin->linkKnown( $title ) . " " .
+				wfMsgHtml( 'import-nonewrevisions' ) . "</li>\n" );
 		}
 	}
 

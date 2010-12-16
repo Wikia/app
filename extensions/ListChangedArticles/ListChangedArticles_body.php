@@ -25,7 +25,7 @@ class ListChangedArticles extends UnlistedSpecialPage
 		$rowlimit = 30000 ; # The maximum number of results
 
 		$ret = "" ;
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$since = $dbr->timestamp ( $since ) ;
 		$sql = "SELECT page_namespace,page_title FROM page WHERE page_touched >= \"{$since}\" LIMIT {$rowlimit}" ;
 		$res = $dbr->query ( $sql , $fname ) ;

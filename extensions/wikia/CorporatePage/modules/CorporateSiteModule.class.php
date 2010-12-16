@@ -129,7 +129,7 @@ class CorporateSiteModule extends Module {
 		} else {
 			$temp = $datafeeds->getTopBlogs("staff", $wgContLanguageCode, 4, 4, false, false, $page_ids);
 		}
-
+		$posts = array();
 		foreach ($temp['value'] as $value) {
 			// get additional data for the blog
 			$post = array();

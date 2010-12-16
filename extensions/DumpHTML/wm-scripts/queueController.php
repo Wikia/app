@@ -232,5 +232,3 @@ function startWiki( $wiki ) {
 	$lang = str_replace( 'wiki', '', $wiki );
 	print "Starting language $lang\n";
 }
-
-?>

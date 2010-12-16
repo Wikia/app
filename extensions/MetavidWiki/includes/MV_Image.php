@@ -15,4 +15,3 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
  class MV_Image extends Image {
  	
  }
-?>

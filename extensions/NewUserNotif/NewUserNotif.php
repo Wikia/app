@@ -12,6 +12,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name'           => 'New User Email Notification',
 	'version'        => '1.5.1',
 	'author'         => 'Rob Church',

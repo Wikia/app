@@ -8,7 +8,12 @@ class TranslateToolbox {
 	 * actually is a translatable/translated message.
 	 */
 	static function toolboxAllTranslations( &$skin ) {
-		global $wgTitle;
+		global $wgTitle, $wgTranslateMessageNamespaces;
+
+		$ns = $wgTitle->getNamespace();
+		if ( !in_array( $ns, $wgTranslateMessageNamespaces ) ) {
+			return true;
+		}
 
 		$inMessageGroup = TranslateUtils::messageKeyToGroup( $wgTitle->getNamespace(), $wgTitle->getBaseText() );
 

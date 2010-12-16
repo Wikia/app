@@ -44,7 +44,8 @@ function wfSpecialNewimages( $par, $specialPage ) {
 	if ($hidebotsql) {
 		$sql .= "$hidebotsql WHERE ug_group IS NULL";
 	}
-	$sql .= ' ORDER BY img_timestamp DESC LIMIT 1';
+	$sql .= ' ORDER BY img_timestamp DESC';
+	$sql = $dbr->limitResult($sql, 1, false);
 	$res = $dbr->query( $sql, __FUNCTION__ );
 	$row = $dbr->fetchRow( $res );
 	if( $row !== false ) {
@@ -68,13 +69,12 @@ function wfSpecialNewimages( $par, $specialPage ) {
 	}
 
 	$where = array();
-	$searchpar = '';
+	$searchpar = array();
 	if ( $wpIlMatch != '' && !$wgMiserMode) {
-		$nt = Title::newFromUrl( $wpIlMatch );
+		$nt = Title::newFromURL( $wpIlMatch );
 		if( $nt ) {
-			$m = $dbr->escapeLike( strtolower( $nt->getDBkey() ) );
-			$where[] = "LOWER(img_name) LIKE '%{$m}%'";
-			$searchpar = '&wpIlMatch=' . urlencode( $wpIlMatch );
+			$where[] = 'LOWER(img_name) ' .  $dbr->buildLike( $dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );
+			$searchpar['wpIlMatch'] = $wpIlMatch;
 		}
 	}
 
@@ -101,7 +101,7 @@ function wfSpecialNewimages( $par, $specialPage ) {
 		$sql .= ' WHERE ' . $dbr->makeList( $where, LIST_AND );
 	}
 	$sql.=' ORDER BY img_timestamp '. ( $invertSort ? '' : ' DESC' );
-	$sql.=' LIMIT ' . ( $limit + 1 );
+	$sql = $dbr->limitResult($sql, ( $limit + 1 ), false);
 	$res = $dbr->query( $sql, __FUNCTION__ );
 
 	/**
@@ -133,9 +133,9 @@ function wfSpecialNewimages( $par, $specialPage ) {
 		$ut = $s->img_user_text;
 
 		$nt = Title::newFromText( $name, NS_FILE );
-		$ul = $sk->makeLinkObj( Title::makeTitle( NS_USER, $ut ), $ut );
+		$ul = $sk->link( Title::makeTitle( NS_USER, $ut ), $ut );
 
-		$gallery->add( $nt, "$ul<br />\n<i>".$wgLang->timeanddate( $s->img_timestamp, true )."</i><br />\n" );
+		$gallery->add( $nt, "$ul<br />\n<i>".htmlspecialchars($wgLang->timeanddate( $s->img_timestamp, true ))."</i><br />\n" );
 
 		$timestamp = wfTimestamp( TS_MW, $s->img_timestamp );
 		if( empty( $firstTimestamp ) ) {
@@ -172,31 +172,71 @@ function wfSpecialNewimages( $par, $specialPage ) {
 
 	# If we change bot visibility, this needs to be carried along.
 	if( !$hidebots ) {
-		$botpar = '&hidebots=0';
+		$botpar = array( 'hidebots' => 0 );
 	} else {
-		$botpar = '';
+		$botpar = array();
 	}
 	$now = wfTimestampNow();
 	$d = $wgLang->date( $now, true );
 	$t = $wgLang->time( $now, true );
-	$dateLink = $sk->makeKnownLinkObj( $titleObj, wfMsgHtml( 'sp-newimages-showfrom', $d, $t ),
-		'from='.$now.$botpar.$searchpar );
+	$query = array_merge(
+		array( 'from' => $now ),
+		$botpar,
+		$searchpar
+	);
+	$dateLink = $sk->linkKnown(
+		$titleObj,
+		htmlspecialchars( wfMsg( 'sp-newimages-showfrom', $d, $t ) ),
+		array(),
+		$query
+	);
 
-	$botLink = $sk->makeKnownLinkObj($titleObj, wfMsgHtml( 'showhidebots',
-		($hidebots ? wfMsgHtml('show') : wfMsgHtml('hide'))),'hidebots='.($hidebots ? '0' : '1').$searchpar);
+	$query = array_merge(
+		array( 'hidebots' => ( $hidebots ? 0 : 1 ) ),
+		$searchpar
+	);
 
+	$showhide = $hidebots ? wfMsg( 'show' ) : wfMsg( 'hide' );
+
+	$botLink = $sk->linkKnown(
+		$titleObj,
+		htmlspecialchars( wfMsg( 'showhidebots', $showhide ) ),
+		array(),
+		$query
+	);
 
 	$opts = array( 'parsemag', 'escapenoentities' );
 	$prevLink = wfMsgExt( 'pager-newer-n', $opts, $wgLang->formatNum( $limit ) );
 	if( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
-		$wmu['prev'] = $firstTimestamp;
-		$prevLink = $sk->makeKnownLinkObj( $titleObj, $prevLink, 'from=' . $firstTimestamp . $botpar . $searchpar );
+		$query = array_merge(
+			array( 'from' => $firstTimestamp ),
+			$botpar,
+			$searchpar
+		);
+
+		$prevLink = $sk->linkKnown(
+			$titleObj,
+			$prevLink,
+			array(),
+			$query
+		);
 	}
 
 	$nextLink = wfMsgExt( 'pager-older-n', $opts, $wgLang->formatNum( $limit ) );
 	if( $shownImages > $limit && $lastTimestamp ) {
-		$wmu['next'] = $lastTimestamp;
-		$nextLink = $sk->makeKnownLinkObj( $titleObj, $nextLink, 'until=' . $lastTimestamp.$botpar.$searchpar );
+		$query = array_merge(
+			array( 'until' => $lastTimestamp ),
+			$botpar,
+			$searchpar
+		);
+
+		$nextLink = $sk->linkKnown(
+			$titleObj,
+			$nextLink,
+			array(),
+			$query
+		);
+
 	}
 
 	$prevnext = '<p>' . $botLink . ' '. wfMsgHtml( 'viewprevnext', $prevLink, $nextLink, $dateLink ) .'</p>';

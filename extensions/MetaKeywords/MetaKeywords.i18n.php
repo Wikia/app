@@ -72,11 +72,25 @@ $messages['bg'] = array(
 	'metakeywords-desc' => 'Позволява конфигурирането на етикетите <tt><nowiki><meta "keywords"></nowiki></tt> и <tt><nowiki><meta "description"></nowiki></tt> за всяко именно пространство',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'metakeywords-desc' => 'Talvezout a ra da gefluniañ balizennoù <tt><nowiki><meta "keywords"></nowiki></tt> ha <tt><nowiki><meta "description"></nowiki></tt> dre esaouenn anv',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'metakeywords-desc' => 'Omogućava postavke ključnih riječi (<tt><nowiki><meta "keywords"></nowiki></tt>) i opisa (<tt><nowiki><meta "description"></nowiki></tt>)',
+);
+
+/** Catalan (Català)
+ * @author Aleator
+ */
+$messages['ca'] = array(
+	'metakeywords-desc' => 'Permet la configuració de les etiquetes <tt><nowiki><meta "keywords"></nowiki></tt> i <tt><nowiki><meta "description"></nowiki></tt> per espai de noms',
 );
 
 /** Czech (Česky)
@@ -103,6 +117,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'metakeywords-desc' => 'Dowólujo konfiguraćiju toflickowu <tt><nowiki><meta "keywords"></nowiki></tt> a <tt><nowiki><meta "description"></nowiki></tt> na mjenjowy rum',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'metakeywords-desc' => 'Επιτρέπει την διαμόρφωση των ετικετών <tt><nowiki><meta "keywords"></nowiki></tt> και <tt><nowiki><meta "description"></nowiki></tt> ανά περιοχή ονομάτων',
 );
 
 /** Spanish (Español)
@@ -147,11 +168,25 @@ $messages['he'] = array(
 	'metakeywords-desc' => 'מתן האפשרות להגדרת תגיות <tt><nowiki><meta "keywords"></nowiki></tt> ו־<tt><nowiki><meta "description"></nowiki></tt> לכל מרחב שם בנפרד',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'metakeywords-desc' => 'nagapasugot sang konpigurasyon sang <tt><nowiki><meta "keywords"></nowiki></tt> kag <tt><nowiki><meta "description"></nowiki></tt> tags kada ngalanespasyo',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
 	'metakeywords-desc' => 'Dowola konfiguraciju tafličkow <tt><nowiki><meta "keywords"></nowiki></tt> a <tt><nowiki><meta "description"></nowiki></tt> na mjenowy rum',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'metakeywords-desc' => 'Lehetővé teszi a <tt><nowiki><meta "keywords"></nowiki></tt> és <tt><nowiki><meta "description"></nowiki></tt> tagek névterenkénti beállítását',
 );
 
 /** Interlingua (Interlingua)
@@ -166,14 +201,28 @@ $messages['ia'] = array(
  # Omne occurrentias de $1 essera reimplaciate per le titulo del pagina actual.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'metakeywords-desc' => 'Mengijinkan konfigurasi tag <tt><nowiki><meta "keywords"></nowiki></tt> dan <tt><nowiki><meta "description"></nowiki></tt> per ruang nama',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'metakeywords-desc' => 'Consente la configurazione dei tag <tt><nowiki><meta "keywords"></nowiki></tt> e <tt><nowiki><meta "description"></nowiki></tt> per ogni namespace',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
 $messages['ja'] = array(
 	'metakeywords-desc' => '名前空間ごとに <tt><nowiki><meta "keywords"></nowiki></tt> および <tt><nowiki><meta "description"></nowiki></tt> タグの設定を可能にする',
-	'metakeywords' => ' # このページに "namespace|comma separated,keywords,to,add" という形式で行を追加します
+	'metakeywords' => ' # このページに「名前空間|追加する,コンマ,区切りの,キーワード」という形式で行を追加します
  # 名前空間識別子 (all) と (main) はそれぞれ、全名前空間と標準名前空間のデフォルトを指定します。',
-	'metadescription' => ' # このページに "namespace|description tag to set" という形式で行を追加します
+	'metadescription' => ' # このページに「名前空間|設定する説明」という形式で行を追加します
  # 名前空間識別子 (all) と (main) はそれぞれ、全名前空間と標準名前空間のデフォルトを指定します。
  # $1 は現在のページの名前に置換されます。',
 );
@@ -198,6 +247,20 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'metakeywords-desc' => 'Erlaabt d\'Konfiguratioun vun <tt><nowiki><meta "keywords"></nowiki></tt> a <tt><nowiki><meta "description"></nowiki></tt> Tagen pro Nummraum',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'metakeywords-desc' => 'Овозможува конфигурирање на ознаките <tt><nowiki><meta "keywords"></nowiki></tt> и <tt><nowiki><meta "description"></nowiki></tt> по именски простор',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Zamwan
+ */
+$messages['ms'] = array(
+	'metakeywords-desc' => 'Benarkan konfigurasi tag <tt><nowiki><meta "keywords"></nowiki></tt> and <tt><nowiki><meta "description"></nowiki></tt> bagi setiap ruang nama',
 );
 
 /** Low German (Plattdüütsch)
@@ -238,6 +301,25 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'metakeywords-desc' => 'Permet la configuracion de las balisas <tt><nowiki><meta "keywords"></nowiki></tt> e <tt><nowiki><meta "description"></nowiki></tt> per espaci de nom',
+	'metakeywords' => '  # Apondètz de linhas a aquesta pagina jos la forma "espaciDeNoms|lista,de,mots,separats per de virgulas,a,apondre"
+  # Los identificators d’espacis de noms (all) e (main) indican respectivament la valor per defaut per totes los espacis de noms e per l’espaci principal numèro 0.',
+	'metadescription' => '  # Apondètz de linhas a aquesta pagina jos la forma "espaciDeNoms|Libellat de descripcion de definir"
+  # Los identificators d’espacis de noms (all) e (main) indican respectivament la valor per defaut per totes los espacis de noms e per l’espaci principal numèro 0.
+  # Totas las occurréncias de $1 seràn remplaçadas pel títol de la pagina actuala.',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'metakeywords-desc' => 'Pozwala na konfigurację znaczników <tt><nowiki><meta "keywords"></nowiki></tt> oraz <tt><nowiki><meta "description"></nowiki></tt> dla przestrzeni nazw',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'metakeywords-desc' => 'A përmëtt la configurassion ëd <tt><nowiki><meta "keywords"></nowiki></tt> e ël tag <tt><nowiki><meta "description"></nowiki></tt> për namespace',
 );
 
 /** Portuguese (Português)
@@ -261,6 +343,13 @@ $messages['roa-tara'] = array(
 	'metakeywords-desc' => 'Permette \'a configurazione de le tag <tt><nowiki><meta "keywords"></nowiki></tt> e <tt><nowiki><meta "description"></nowiki></tt> pe namespace',
 );
 
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'metakeywords-desc' => 'Позволяет настройку тегов <nowiki><meta "keywords"></nowiki> и <nowiki><meta "description"></nowiki> для каждого пространства имён в отдельности',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -268,11 +357,32 @@ $messages['sk'] = array(
 	'metakeywords-desc' => 'Umožňuje konfiguráciu značiek <tt><nowiki><meta "keywords"></nowiki></tt> a <tt><nowiki><meta "description"></nowiki></tt> v závislosti od menného priestoru',
 );
 
+/** Lower Silesian (Schläsch)
+ * @author Jonny84
+ */
+$messages['sli'] = array(
+	'metakeywords-desc' => 'Erlaubt de Konfiguration vn <tt><nowiki><meta "keywords"></nowiki></tt>- und <tt><nowiki><meta "description"></nowiki></tt>-Tags pro Namensraum',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'metakeywords-desc' => 'Lejon konfigurimin e kodeve <tt><nowiki><meta "keywords"></nowiki></tt> dhe <tt><nowiki><meta "description"></nowiki></tt> për çdo hapësirë',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'metakeywords-desc' => 'Омогућује конфигурацију <tt><nowiki><meta "keywords"></nowiki></tt> и <tt><nowiki><meta "description"></nowiki></tt> тагова по именском простору',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'metakeywords-desc' => 'Omogućuje konfiguraciju <tt><nowiki><meta "keywords"></nowiki></tt> i <tt><nowiki><meta "description"></nowiki></tt> tagova po imenskom prostoru',
 );
 
 /** Swedish (Svenska)
@@ -287,6 +397,20 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'metakeywords-desc' => 'Nagpapahintulot ng pagsasaayos ng mga tatak na <tt><nowiki><meta "keywords"></nowiki></tt> at <tt><nowiki><meta "description"></nowiki></tt> sa bawat espasyo ng pangalan',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'metakeywords-desc' => 'Alan adına göre <tt><nowiki><meta "anahtar kelimeleri"></nowiki></tt> ve <tt><nowiki><meta "tanımı"></nowiki></tt> konfigürasyonunu mümkün kılar',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'metakeywords-desc' => 'Дозволяє конфігурацію тегів <tt><nowiki><meta "keywords"></nowiki></tt> та <tt><nowiki><meta "description"></nowiki></tt> для кожного простору назв окремо',
 );
 
 /** Vietnamese (Tiếng Việt)

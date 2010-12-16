@@ -1,7 +1,25 @@
+#!/usr/bin/python
+# -*- coding: utf-8  -*-
 # @author Philip
-# You should run this script UNDER python 3000.
 import tarfile, zipfile
-import os, re, shutil, urllib.request
+import os, re, shutil, sys, platform
+
+pyversion = platform.python_version()
+islinux = platform.system().lower() == 'linux' or False
+
+if pyversion[:3] in ['2.5', '2.6', '2.7']:
+    import urllib as urllib_request
+    import codecs
+    uniopen = codecs.open
+    def unichr2(i):
+        if sys.maxunicode >= 0x10000 or i < 0x10000:
+            return unichr(i)
+        else:
+            return unichr(0xD7C0+(i>>10)) + unichr(0xDC00+(i&0x3FF))
+elif pyversion[:2] == '3.':
+    import urllib.request as urllib_request
+    uniopen = open
+    unichr2 = chr
 
 # DEFINE
 SF_MIRROR = 'easynews'
@@ -14,14 +32,23 @@ def GetFileFromURL( url, dest ):
     if os.path.isfile(dest):
         print( 'File %s up to date.' % dest )
         return
-    print( 'Downloading from [%s] ...' % url )
-    urllib.request.urlretrieve( url, dest )
-    print( 'Download complete.\n' )
+    global islinux
+    if islinux:
+        # we use wget instead urlretrieve under Linux, 
+        # because wget will display details like download progress
+        os.system('wget %s' % url)
+    else:
+        print( 'Downloading from [%s] ...' % url )
+        urllib_request.urlretrieve( url, dest )
+        print( 'Download complete.\n' )
     return
 
-def GetFileFromZip( path ):
+def GetFileFromUnihan( path ):
     print( 'Extracting files from %s ...' % path )
-    zipfile.ZipFile(path).extractall()
+    text = zipfile.ZipFile(path).read('Unihan_Variants.txt')
+    uhfile = uniopen('Unihan_Variants.txt', 'w')
+    uhfile.write(text)
+    uhfile.close()
     return
 
 def GetFileFromTar( path, member, rename ):
@@ -34,25 +61,25 @@ def GetFileFromTar( path, member, rename ):
 
 def ReadBIG5File( dest ):
     print( 'Reading and decoding %s ...' % dest )
-    f1 = open( dest, 'r', encoding='big5hkscs', errors='replace' )
+    f1 = uniopen( dest, 'r', encoding='big5hkscs', errors='replace' )
     text = f1.read()
     text = text.replace( '\ufffd', '\n' )
     f1.close()
-    f2 = open( dest, 'w', encoding='utf8' )
+    f2 = uniopen( dest, 'w', encoding='utf8' )
     f2.write(text)
     f2.close()
     return text
 
 def ReadFile( dest ):
     print( 'Reading and decoding %s ...' % dest )
-    f = open( dest, 'r', encoding='utf8' )
+    f = uniopen( dest, 'r', encoding='utf8' )
     ret = f.read()
     f.close()
     return ret
 
 def ReadUnihanFile( dest ):
     print( 'Reading and decoding %s ...' % dest )
-    f = open( dest, 'r', encoding='utf8' )
+    f = uniopen( dest, 'r', encoding='utf8' )
     t2s_code = []
     s2t_code = []
     while True:
@@ -82,7 +109,7 @@ def RemoveOneCharConv( text ):
 
 def ConvertToChar( code ):
     code = code.split('<')[0]
-    return chr( int( code[2:], 16 ) )
+    return unichr2( int( code[2:], 16 ) )
 
 def GetDefaultTable( code_table ):
     char_table = {}
@@ -101,8 +128,8 @@ def GetManualTable( dest ):
         elem = elem.strip('|')
         if elem:
             temp2 = elem.split( '|', 1 )
-            from_char = chr( int( temp2[0][2:7], 16 ) )
-            to_chars = [chr( int( code[2:7], 16 ) ) for code in temp2[1].split('|')]
+            from_char = unichr2( int( temp2[0][2:7], 16 ) )
+            to_chars = [unichr2( int( code[2:7], 16 ) ) for code in temp2[1].split('|')]
             char_table[from_char] = to_chars
     return char_table
 
@@ -222,24 +249,26 @@ def GetManualWordsTable( src_wordlist, conv_table ):
 def CustomRules( dest ):
     text = ReadFile( dest )
     temp = text.split()
-    ret = {temp[i]: temp[i + 1] for i in range( 0, len( temp ), 2 )}
+    ret = dict()
+    for i in range( 0, len( temp ), 2 ):
+        ret[temp[i]] = temp[i + 1]
     return ret
 
 def GetPHPArray( table ):
-    lines = ['\'%s\' => \'%s\',' % (f, t) for (f, t) in table]
+    lines = ['\'%s\' => \'%s\',' % (f, t) for (f, t) in table if f and t]
     #lines = ['"%s"=>"%s",' % (f, t) for (f, t) in table]
     return '\n'.join(lines)
 
 def RemoveSameChar( src_table ):
     dst_table = {}
     for f, t in src_table.items():
-        if not f == t:
+        if f != t:
             dst_table[f] = t
     return dst_table
 
 def main():
     #Get Unihan.zip:
-    url  = 'ftp://ftp.unicode.org/Public/UNIDATA/Unihan.zip'
+    url  = 'http://www.unicode.org/Public/UNIDATA/Unihan.zip'
     han_dest = 'Unihan.zip'
     GetFileFromURL( url, han_dest )
     
@@ -261,7 +290,7 @@ def main():
     # Extract the file from a comressed files
     
     # Unihan.txt Simp. & Trad
-    GetFileFromZip( han_dest )
+    GetFileFromUnihan( han_dest )
     
     # Make word lists
     t_wordlist = []
@@ -341,7 +370,7 @@ def main():
     
     # Make char to char convertion table
     # Unihan.txt, dict t2s_code, s2t_code = { 'U+XXXX': 'U+YYYY( U+ZZZZ) ... ', ... }
-    ( t2s_code, s2t_code ) = ReadUnihanFile( 'Unihan.txt' )
+    ( t2s_code, s2t_code ) = ReadUnihanFile( 'Unihan_Variants.txt' )
     # dict t2s_1tomany = { '\uXXXX': '\uYYYY\uZZZZ ... ', ... }
     t2s_1tomany = {}
     t2s_1tomany.update( GetDefaultTable( t2s_code ) )
@@ -429,10 +458,20 @@ $zh2Hant = array(\n'''
     php += GetPHPArray( toSG )
     php += '\n);'
     
-    f = open( 'ZhConversion.php', 'w', encoding = 'utf8' )
+    f = uniopen( 'ZhConversion.php', 'w', encoding = 'utf8' )
     print ('Writing ZhConversion.php ... ')
     f.write( php )
     f.close()
+    
+    #Remove temp files
+    print ('Deleting temp files ... ')
+    os.remove('EZ.txt.in')
+    os.remove('phrase_lib.txt')
+    os.remove('tsi.src')
+    os.remove('Unihan_Variants.txt')
+    os.remove('Wubi.txt.in')
+    os.remove('Ziranma.txt.in')
+    
 
 if __name__ == '__main__':
     main()

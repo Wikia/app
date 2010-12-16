@@ -34,7 +34,7 @@ function cleanupArticle( $rev, $regexes, $match ) {
 			$rev = false;
 		}
 	}
-	$dbw =& wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER );
 	$dbw->immediateBegin();
 	if ( !$rev ) {
 		// Didn't find a non-spammy revision, delete the page
@@ -85,7 +85,7 @@ $wgUser = User::newFromName( $username );
 if ( $wgUser->idForName() == 0 ) {
 	// Create the user
 	$wgUser->addToDatabase();
-	$dbw =& wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER );
 	$dbw->update( 'user', array( 'user_password' => 'nologin' ), 
 		array( 'user_name' => $username ), $username );
 }
@@ -106,7 +106,7 @@ if ( !$regexes ) {
 	exit(1);
 }
 
-$dbr =& wfGetDB( DB_SLAVE );
+$dbr = wfGetDB( DB_SLAVE );
 $maxID = $dbr->selectField( 'page', 'MAX(page_id)' );
 $reportingInterval = 100;
 

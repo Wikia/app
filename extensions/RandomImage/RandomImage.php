@@ -13,17 +13,16 @@ if( defined( 'MEDIAWIKI' ) ) {
 
 	$wgAutoloadClasses['RandomImage'] = dirname( __FILE__ ) . '/RandomImage.class.php';
 	$wgExtensionCredits['parserhook'][] = array(
+		'path'           => __FILE__,
 		'name'           => 'RandomImage',
 		'author'         => 'Rob Church',
 		'url'            => 'http://www.mediawiki.org/wiki/Extension:RandomImage',
-	'svn-date' => '$LastChangedDate: 2008-11-30 04:15:22 +0100 (ndz, 30 lis 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
 		'description'    => 'Provides a random media picker using <tt>&lt;randomimage /&gt;</tt>',
 		'descriptionmsg' => 'randomimage-desc',
 	);
 	$wgExtensionMessagesFiles['RandomImage'] = dirname(__FILE__) . '/RandomImage.i18n.php';
 	$wgHooks['ParserAfterStrip'][] = 'RandomImage::stripHook';
-	$wgExtensionFunctions[] = 'efRandomImageSetup';
+	$wgHooks['ParserFirstCallInit'][] = 'efRandomImage';
 
 	/**
 	 * Set this to true to disable the parser cache for pages which
@@ -39,18 +38,9 @@ if( defined( 'MEDIAWIKI' ) ) {
 	$wgRandomImageStrict = !$wgMiserMode;
 
 	/**
-	 * Extension initialisation function
+	 * Hook setup
 	 */
-	function efRandomImageSetup() {
-		if(defined('MW_SUPPORTS_PARSERFIRSTCALLINIT')) {
-			global $wgHooks;
-			$wgHooks['ParserFirstCallInit'][] = 'efRandomImage';
-		} else {
-			global $wgParser;
-			efRandomImage($wgParser);
-		}
-	}
-	function efRandomImage($parser) {
+	function efRandomImage(&$parser) {
 		$parser->setHook( 'randomimage', 'RandomImage::renderHook' );
 		return true;
 	}

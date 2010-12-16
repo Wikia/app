@@ -47,8 +47,11 @@ $messages['niu'] = array(
  */
 $messages['af'] = array(
 	'nuke' => 'Massa verwyder',
-	'nuke-submit-user' => 'Gaan',
+	'nuke-nopages' => 'Geen nuwe bladsye [[Special:Contributions/$1|$1]] in onlangse wysigings.',
+	'nuke-defaultreason' => 'Massa verwydering van bladsye van $1',
+	'nuke-submit-user' => 'Laat waai',
 	'nuke-submit-delete' => 'Skrap geselekteerde',
+	'right-nuke' => 'Massa verwydering van bladsye',
 );
 
 /** Aragonese (Aragonés)
@@ -83,6 +86,13 @@ $messages['ar'] = array(
 	'right-nuke' => 'حذف الصفحات كميا',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'nuke-submit-user' => 'ܙܠ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  * @author Ramsis II
@@ -94,7 +104,7 @@ $messages['arz'] = array(
 	'nuke-list' => 'الصفحات دى اتعملها انشاء قريب عى طريق [[Special:Contributions/$1|$1]];
 اكتب تعليق و دوس على الزرار علشان تمسحهم.',
 	'nuke-defaultreason' => 'مسح كبير للصفحات اللى ضافها $1',
-	'nuke-tools' => 'الطريقة دى بتسمحلك تعمل مسح كبير للصفحات اللى اتضافت قريب عن طريق واحد من اليوزرز او الأى بي.
+	'nuke-tools' => 'الطريقة دى بتسمحلك تعمل مسح كبير للصفحات اللى اتضافت قريب عن طريق واحد من اليوزرز او الأى بى.
 دخل اسم اليوزر او عنوان الاى بى علشان تطلعلك لستة بالصفحات اللى ح تتمسح.',
 	'nuke-submit-user' => 'روح',
 	'nuke-submit-delete' => 'امسح اللى اخترته',
@@ -203,9 +213,15 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'nuke' => "Diverkañ a-vloc'h",
+	'nuke-desc' => "Reiñ a ra an tu d'ar verourien da [[Special:Nuke|ziverkañ pajennoù a-vras]]",
 	'nuke-nopages' => "Pajenn nevez ebet bet krouet gant [[Special:Contributions/$1|$1]] er c'hemmoù diwezhañ.",
+	'nuke-list' => "Nevez zo eo bet krouet ar pajennoù da-heul gant [[Special:Contributions/$1|$1]];
+Merkañ un tamm notenn ha klikañ war ar bouton d'o diverkañ.",
+	'nuke-defaultreason' => 'Diverkañ a-vras ar pajennoù bet ouzhpennet gant $1',
+	'nuke-tools' => "Talvezout a ra an ostilh-mañ da ziverkañ a-vras pajennoù bet ouzhpennet nevez zo gant un implijer enrollet pe gant ur chomlec'h IP. Merkañ ar c'homlec'h IP pe anv an implijer a-benn kaout roll ar pajennoù da ziverkañ :",
 	'nuke-submit-user' => 'Mont',
 	'nuke-submit-delete' => 'Diverkañ diuzet',
+	'right-nuke' => 'Diverkañ pajennoù a-vras',
 );
 
 /** Bosnian (Bosanski)
@@ -254,6 +270,7 @@ $messages['ch'] = array(
  * @author Danny B.
  * @author Li-sung
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'nuke' => 'Hromadné mazání',
@@ -261,10 +278,27 @@ $messages['cs'] = array(
 	'nuke-nopages' => 'V posledních změnách nejsou žádné nové stránky od uživatele [[Special:Contributions/$1|$1]].',
 	'nuke-list' => 'Následující stránky nedávno vytvořil uživatel [[Special:Contributions/$1|$1]]; vyplňte komentář a všechny smažte kliknutím na tlačítko.',
 	'nuke-defaultreason' => 'Hromadné odstranění stránek, které vytvořil $1',
-	'nuke-tools' => 'Tento nástroj umožňuje hromadné smazání stránek nedávno vytvořených zadaným uživatelem na IP adresou. Zadejte uživatelské jméno nebo IP adresu, jejichž seznam stránek ke smazání chcete zobrazit:',
+	'nuke-tools' => 'Tento nástroj umožňuje hromadné smazání stránek nedávno vytvořených zadaným uživatelem nebo IP adresou.
+Zadejte uživatelské jméno nebo IP adresu, zobrazí se seznam stránek ke smazání.',
 	'nuke-submit-user' => 'Provést',
 	'nuke-submit-delete' => 'Smazat vybrané',
 	'right-nuke' => 'Hromadné mazání stránek',
+);
+
+/** Danish (Dansk)
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'nuke' => 'Massesletning',
+	'nuke-desc' => 'Giver administratorer mulighed for at [[Special:Nuke|masseslette]] sider',
+	'nuke-nopages' => 'Der er ingen nye sider af [[Special:Contributions/$1|$1]] i seneste ændringer.',
+	'nuke-list' => 'Følgende sider er oprettet for nylig af [[Special:Contributions/$1|$1]]; skriv en kommentar og tryk på knappen for at slette dem.',
+	'nuke-defaultreason' => 'Massesletting af sider som er oprettet af $1',
+	'nuke-tools' => 'Dette værktøj muliggør massesletting af sider som for nylig er oprettet af en bestemt bruger eller IP.
+Skriv et brugernavn eller en IP for at få en liste over sider at slette.',
+	'nuke-submit-user' => 'Udfør',
+	'nuke-submit-delete' => 'Slet valgte',
+	'right-nuke' => 'masseslette sider',
 );
 
 /** German (Deutsch)
@@ -290,6 +324,22 @@ $messages['de-formal'] = array(
 	'nuke-list' => 'Die folgenden Seiten wurden von [[Special:Contributions/$1|$1]] erzeugt;
 geben Sie einen Kommentar ein und drücken Sie auf den Löschknopf.',
 	'nuke-tools' => 'Dieses Werkzeug ermöglicht die Massenlöschung von Seiten, die von einer IP-Adresse oder einem Benutzer angelegt wurden. Geben Sie die IP-Adresse/den Benutzernamen ein, um eine Liste zu erhalten:',
+);
+
+/** Zazaki (Zazaki)
+ * @author Aspar
+ */
+$messages['diq'] = array(
+	'nuke' => 'pêropiya hewnakeno..',
+	'nuke-desc' => 'Hizmetlilere, sayfaları [[Special:Nuke|kitlesel silme]] yeteneği verir',
+	'nuke-nopages' => 'vuriyayişê ke hetê ıney ra [[Special:Contributions/$1|$1]] biye tede çı pelê neweyi çini .',
+	'nuke-list' => 'pelê ke cêr de yê hetê ıney ra [[Special:Contributions/$1|$1]]  yew tarixo nızdi de  vıraziyayi; mışore bıkerê u qey hewnakerdışi yew tuş bıtıknê.',
+	'nuke-defaultreason' => 'Mass removal of pages added by $1',
+	'nuke-tools' => 'Bu araç, bir kullanıcı ya da IP tarafından yakın zamanda eklenen sayfaların kitlesel silinmelerine izin verir.
+Silinecek sayfaların listesini almak için kullanıcı adını ya da IPyi girin.',
+	'nuke-submit-user' => 'şo',
+	'nuke-submit-delete' => 'nişanbiyayeyi hewnaker',
+	'right-nuke' => 'pelan yew hew de hewnaker',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -350,6 +400,7 @@ Enigu la salutnomon aŭ IP-adreson por akiri liston de paĝoj forigi:',
 
 /** Spanish (Español)
  * @author Aleator
+ * @author Dferg
  * @author Jatrobat
  * @author Remember the dot
  * @author Sanbec
@@ -361,11 +412,27 @@ $messages['es'] = array(
 	'nuke-list' => '[[Special:Contributions/$1|$1]] creó recientemente las siguientes páginas;
 escriba un comentario y haga clic en el botón para borrarlas.',
 	'nuke-defaultreason' => 'Eliminación en masa de páginas añadidas por $1',
-	'nuke-tools' => 'Esta herramienta permite borrados masivos de páginas creadas recientemente por un usuario o una IP
-Introduzca el nombre de usuario o la IP para obtener la lista de páginas a borrar.',
+	'nuke-tools' => 'Esta herramienta permite borrados masivos de páginas creadas recientemente por un usuario o una dirección IP.
+Introduzca el nombre de usuario o la dirección IP para obtener la lista de páginas a borrar.',
 	'nuke-submit-user' => 'Ir',
-	'nuke-submit-delete' => 'Borrado seleccionado',
+	'nuke-submit-delete' => 'Borrar lo seleccionado',
 	'right-nuke' => 'Borrar páginas masivamente',
+);
+
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'nuke' => 'Lauskustutamine',
+	'nuke-desc' => 'Võimaldab ülematel lehekülgede [[Special:Nuke|lauskustutamist]].',
+	'nuke-nopages' => 'Viimaste muudatuste all pole uusi kasutaja [[Special:Contributions/$1|$1]] loodud lehekülgi.',
+	'nuke-list' => 'Kasutaja [[Special:Contributions/$1|$1]] on hiljuti loonud järgnevad leheküljed. Enne kustutamist sisesta kommentaar.',
+	'nuke-defaultreason' => 'Kasutaja $1 lisatud lehekülgede lauseemaldamine',
+	'nuke-tools' => 'See tööriist võimaldab ülesantud kasutaja või IP-aadressi lisatud leheküljed lauskustutada.
+Kustutatavate lehekülgede nimekirja näitamiseks sisesta kasutajanimi või IP-aadress.',
+	'nuke-submit-user' => 'Mine',
+	'nuke-submit-delete' => 'Kustuta väljavalitud',
+	'right-nuke' => 'Lehekülgi lauskustutada',
 );
 
 /** Basque (Euskara)
@@ -415,6 +482,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author Jean-Frédéric
  * @author Louperivois
  * @author Sherbrooke
  * @author Zetud
@@ -427,7 +495,7 @@ $messages['fr'] = array(
 	'nuke-defaultreason' => 'Suppression en masse des pages ajoutées par $1',
 	'nuke-tools' => 'Cet outil autorise les suppressions en masse des pages ajoutées récemment par un utilisateur enregistré ou par une adresse IP. Indiquer l’adresse IP afin d’obtenir la liste des pages à supprimer :',
 	'nuke-submit-user' => 'Valider',
-	'nuke-submit-delete' => 'Suppression sélectionnée',
+	'nuke-submit-delete' => 'Supprimer la sélection',
 	'right-nuke' => 'Supprimer des pages en masse',
 );
 
@@ -437,12 +505,15 @@ $messages['fr'] = array(
 $messages['frp'] = array(
 	'nuke' => 'Suprèssion en massa',
 	'nuke-desc' => 'Balye la possibilitât ux administrators de [[Special:Nuke|suprimar en massa]] des pâges.',
-	'nuke-nopages' => 'Niona novèla pâge crèâ per [[Special:Contributions/$1|$1]] dens la lista des dèrriérs changements.',
-	'nuke-list' => 'Les pâges siuventes ont étâ crèâs dèrriérement per [[Special:Contributions/$1|$1]] ; endicâd un comentèro et pués clicâd sur lo boton por les suprimar.',
+	'nuke-nopages' => 'Gins de pâge novèla fêta per [[Special:Contributions/$1|$1]] dens la lista des dèrriérs changements.',
+	'nuke-list' => 'Cetes pâges ont étâ fêtes dèrriérement per [[Special:Contributions/$1|$1]] ;
+buchiéd un comentèro et pués clicâd sur lo boton por les suprimar.',
 	'nuke-defaultreason' => 'Suprèssion en massa de les pâges apondues per $1',
-	'nuke-tools' => 'Ceti outil ôtorise les suprèssions en massa de les pâges apondues dèrriérement per un utilisator enregistrâ ou per una adrèce IP. Endicâd l’adrèce IP por obtegnir la lista de les pâges a suprimar :',
+	'nuke-tools' => 'Ceti outil ôtorise les suprèssions en massa de les pâges apondues dèrriérement per un utilisator encartâ ou ben per una adrèce IP.
+Buchiéd lo nom d’utilisator ou ben l’adrèce IP por avêr la lista de les pâges a suprimar :',
 	'nuke-submit-user' => 'Validar',
-	'nuke-submit-delete' => 'Suprèssion sèlèccionâ',
+	'nuke-submit-delete' => 'Suprèssion chouèsia',
+	'right-nuke' => 'Suprimar des pâges en massa',
 );
 
 /** Friulian (Furlan)
@@ -617,6 +688,7 @@ Entra le nomine de usator o adresse IP pro obtener un lista de paginas a deler:'
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author IvanLanin
  * @author Rex
  */
@@ -627,7 +699,7 @@ $messages['id'] = array(
 	'nuke-list' => 'Halaman berikut baru saja dibuat oleh [[Special:Contributions/$1|$1]]; masukkan suatu komentar dan tekan tombol untuk menghapus halaman-halaman tersebut.',
 	'nuke-defaultreason' => 'Penghapusan massal halaman-halaman yang dibuat oleh $1',
 	'nuke-tools' => 'Perkakas ini memungkinkan penghapusan massal halaman-halaman yang baru saja dibuat oleh seorang pengguna atau IP. Masukkan nama pengguna atau IP untuk mendapat daftar halaman yang dapat dihapus:',
-	'nuke-submit-user' => 'Cari',
+	'nuke-submit-user' => 'Tuju ke',
 	'nuke-submit-delete' => 'Hapus yang terpilih',
 	'right-nuke' => 'Melakukan penghapusan masal halaman',
 );
@@ -668,14 +740,15 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Aotake
  * @author Fievarsty
+ * @author Hosiryuhosi
  * @author JtFuruhata
  * @author Muttley
  */
 $messages['ja'] = array(
 	'nuke' => 'まとめて削除',
 	'nuke-desc' => '{{int:group-sysop}}がページを[[Special:Nuke|まとめて削除]]できるようにする',
-	'nuke-nopages' => '[[Special:Contributions/$1|$1]] が最近更新したページはありません。',
-	'nuke-list' => '以下は、[[Special:Contributions/$1|$1]] によって最近作成されたページの一覧です。要約欄へ記入しボタンを押すと、一気に消えて無くなります。',
+	'nuke-nopages' => '最近の更新ページに[[Special:Contributions/$1|$1]]が新規作成したページはありません。',
+	'nuke-list' => '以下は、[[Special:Contributions/$1|$1]] によって最近作成されたページの一覧です。理由を記入しボタンを押すと、一気に削除されます。',
 	'nuke-defaultreason' => '$1 によって加えられたページを一括して削除',
 	'nuke-tools' => 'このツールを使うと、指定した利用者またはIPから最近追加されたページを、まとめて削除することができます。削除対象ページ一覧を取得する利用者名またはIPアドレスを入力してください:',
 	'nuke-submit-user' => '一覧取得',
@@ -715,10 +788,15 @@ Lebokna jeneng panganggo utawa alamat IP kanggo olèh daftar kaca-kaca sing bisa
 );
 
 /** Georgian (ქართული)
+ * @author BRUTE
  * @author Sopho
  */
 $messages['ka'] = array(
+	'nuke-nopages' => 'ბოლო ცვლილებებში არ არის ახალი გვერდები [[Special:Contributions/$1|$1]]-ის მიერ.',
+	'nuke-list' => 'ეს გვერდები შეიქმნა [[Special:Contributions/$1|$1]]-ის მიერ;
+შეიყვანეთ კომენტარი და დააჭირეთ ღილაკს მათ წასაშლელად.',
 	'nuke-submit-user' => 'გადასვლა',
+	'nuke-submit-delete' => 'არჩეულის წაშლა',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -736,20 +814,30 @@ $messages['km'] = array(
 	'nuke-submit-delete' => 'លុបចេញ ជម្រើសយក',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'nuke-submit-user' => 'ಹೋಗು',
+);
+
 /** Korean (한국어)
+ * @author Albamhandae
+ * @author Klutzy
  * @author Kwj2772
+ * @author ToePeu
  */
 $messages['ko'] = array(
 	'nuke' => '문서 대량 삭제',
-	'nuke-desc' => '관리자에게 [[Special:Nuke|문서를 대량 삭제]]할 수 있는 권한을 줌',
-	'nuke-nopages' => '최근 바뀜에 [[Special:Contributions/$1|$1]] 사용자가 만든 문서가 없습니다.',
-	'nuke-list' => '다음 문서들은 [[Special:Contributions/$1|$1]]이 최근에 생성한 문서입니다.
-삭제하시려면 이유를 입력하고 아래 버튼을 클릭해주세요.',
-	'nuke-defaultreason' => '$1이 작성한 문서를 대량으로 삭제함',
-	'nuke-tools' => '이 기능은 특정 사용자나 IP 사용자가 생성한 문서를 대량 삭제할 수 있도록 할 수 있습니다.
-삭제할 문서의 목록을 만들기 위해 사용자 이름이나 IP를 입력하십시오.',
+	'nuke-desc' => '관리자가 문서를 [[Special:Nuke|대량 삭제]]할 수 있는 기능을 추가합니다.',
+	'nuke-nopages' => '최근에 [[Special:Contributions/$1|$1]] 사용자가 만든 문서가 없습니다.',
+	'nuke-list' => '다음은 [[Special:Contributions/$1|$1]]이(가) 최근에 만든 문서입니다.
+삭제에 대한 이유를 입력한 다음 아래 버튼을 클릭해주세요.',
+	'nuke-defaultreason' => '$1이(가) 작성한 문서를 대량 삭제함',
+	'nuke-tools' => '특정 사용자나 IP 사용자가 최근 생성한 문서를 대량으로 삭제할 수 있습니다.
+아래에 이름을 입력하면 삭제할 문서 목록을 가져옵니다.',
 	'nuke-submit-user' => '계속',
-	'nuke-submit-delete' => '선택한 문서를 삭제',
+	'nuke-submit-delete' => '선택한 문서 삭제',
 	'right-nuke' => '문서 대량 삭제',
 );
 
@@ -789,13 +877,14 @@ Jif dä Metmaacher-Name udder de IP-Address dofun aan,
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
 	'nuke' => 'Masse-Läschung',
 	'nuke-desc' => "Gëtt Administrateuren d'Méiglechkeet fir [[Special:Nuke|vill Säite mateneen ze läschen]]",
 	'nuke-nopages' => 'Et gëtt bei de läschten Ännerunge keng nei Säite vum [[Special:Contributions/$1|$1]].',
-	'nuke-list' => 'Dës Säite goufe viru kuerzem vum [[Special:Contributions/$1|$1]] nei ugeluecht; gitt w.e.g. eng Bemierkung an an dréckt op de Kneppche Läschen.',
+	'nuke-list' => 'Dës Säite goufe viru kuerzem vum [[Special:Contributions/$1|$1]] nei ugeluecht; gitt w.e.g. eng Bemierkung an, an dréckt op de Knäppche Läschen.',
 	'nuke-defaultreason' => 'Masse-Läschung vu Säiten, déi vum $1 ugefaang goufen',
 	'nuke-tools' => "Dësen tool erlaabt masse-Läschunge vu Säiten déi vun engem Benotzer oder vun enger IP-Adresse ugeluecht goufen. Gitt w.e.g. d'IP-Adress respektiv de Benotzer un fir eng Lescht ze kréien:",
 	'nuke-submit-user' => 'Lass',
@@ -804,33 +893,42 @@ $messages['lb'] = array(
 );
 
 /** Limburgish (Limburgs)
+ * @author Aelske
  * @author Matthias
  * @author Ooswesthoesbes
+ * @author Pahles
  */
 $messages['li'] = array(
-	'nuke' => 'Massaal verwijdere',
-	'nuke-desc' => "Geeft beheerders de mogelijkheid om [[Special:Nuke|massaal pagina's te verwijdere]]",
-	'nuke-nopages' => "Gein nuje pagina's van [[special:Contributions/$1|$1]] in de recente wijziginge.",
+	'nuke' => 'Massaal weggoeje',
+	'nuke-desc' => "Geuf beheerdersj de meugelikheid óm [[Special:Nuke|massaal pagina's weg te goeje]]",
+	'nuke-nopages' => "Gein nuuj pagina's van [[special:Contributions/$1|$1]] in de recente wieziginge.",
 	'nuke-list' => "De onderstaonde pagina's zien recentelijk aangemaakt door [[Special:Contributions/$1|$1]]; voer 'n rede in en klik op de knop om ze te verwijdere/",
-	'nuke-defaultreason' => "Massaal verwijdere van pagina's van $1",
-	'nuke-tools' => "Dit hulpmiddel maakt 't meugelik massaal pagina's te wisse die recentelijk zien aangemaakt door 'n gebroeker of IP-adres. Voer de gebroekersnaam of 't IP-adres in veur 'n lijst van te wisse pagina's:",
-	'nuke-submit-user' => 'Gao',
+	'nuke-defaultreason' => "Massaal weggoeje van pagina's van $1",
+	'nuke-tools' => "Dit hölpmiddel maak 't meugelik massaal pagina's te wisse die recentelijk zin aangemaak door 'n gebroeker of IP-adres. Veur de gebroekersnaam of 't IP-adres in veur 'n liees van te wisse pagina's:",
+	'nuke-submit-user' => 'Gank',
 	'nuke-submit-delete' => 'Geslecteerd wisse',
-	'right-nuke' => "Massaal pagina's verwi'jdere",
+	'right-nuke' => "Massaal pagina's weggoeje",
 );
 
 /** Lithuanian (Lietuvių)
+ * @author Homo
  * @author Matasg
  */
 $messages['lt'] = array(
 	'nuke' => 'Masinis trynimas',
 	'nuke-desc' => 'Suteikia administratoriams galimybę [[Special:Nuke|masiškai trinti]] puslapius',
 	'nuke-nopages' => 'Nėra naujų puslapių, sukurtų [[Special:Contributions/$1|$1]] naujausiuose keitimuose.',
+	'nuke-list' => 'Šiuos puslapius neseniai sukūrė [[Special:Contributions/$1|$1]];
+įrašykite komentarą ir paspauskite mygtuką, kad jie būtų ištrinti.',
+	'nuke-defaultreason' => 'Masinis pašalinimas puslapių, kuriuos sukūrė $1',
+	'nuke-tools' => 'Šis įrankis leidžia masiškai ištrinti puslapius, neseniai sukurtus nurodyto naudotojo ar IP.
+Įrašykite naudotojo vardą ar IP adresą, kad gautumėte trintinų puslapių sąrašą.',
 	'nuke-submit-user' => 'Išsiųsti',
 	'nuke-submit-delete' => 'Ištrinti pasirinktus(ą)',
+	'right-nuke' => 'Masinis puslapių trynėjas',
 );
 
-/** Classical Chinese (文言) */
+/** Literary Chinese (文言) */
 $messages['lzh'] = array(
 	'nuke' => '量刪',
 	'nuke-nopages' => '近易無示[[Special:Contributions/$1|$1]]之新頁。',
@@ -842,7 +940,32 @@ $messages['lzh'] = array(
 	'right-nuke' => '量刪頁',
 );
 
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'right-nuke' => 'Mamafa pejy maro',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'nuke' => 'Групно бришење',
+	'nuke-desc' => 'Им дава можност на администраторите да вршат [[Special:Nuke|групно бришење]] на страници',
+	'nuke-nopages' => 'Нема нови страници од [[Special:Contributions/$1|$1]] во скорешните промени.',
+	'nuke-list' => 'Следниве страници биле неодамна создадени од [[Special:Contributions/$1|$1]];
+вметнете коментар и притиснете на копчето за да ги избришете',
+	'nuke-defaultreason' => 'Групно отстранување на страници додадени од $1',
+	'nuke-tools' => 'Оваа алатка овозможува групни бришења на страници неодамна додадени од извесен корисник или IP адреса.
+Внесете го корисничкото име или IP адреса за да ја добиете листата на страниците за бришење.',
+	'nuke-submit-user' => 'Изврши',
+	'nuke-submit-delete' => 'Избриши ги избраните',
+	'right-nuke' => 'Групно бришење на страници',
+);
+
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
@@ -852,9 +975,10 @@ $messages['ml'] = array(
 	'nuke-list' => 'താഴെ പ്രദര്‍ശിപ്പിച്ചിരിക്കുന്ന താളുകള്‍ [[Special:Contributions/$1|$1]] സമീപ കാലത്ത് സൃഷ്ടിച്ചവ ആണ്‌;
 ഇവ മായ്ക്കുവാന്‍ അഭിപ്രായം രേഖപ്പെടുത്തിയതിനു ശേഷം ബട്ടണ്‍ അമര്‍ത്തുക.',
 	'nuke-defaultreason' => '$1 ചേര്‍ത്ത താളുകള്‍ മൊത്തമായി മായ്ക്കുന്നതിനുള്ള സം‌വിധാനം',
-	'nuke-tools' => 'ഏതെങ്കിലും ഒരു ഉപയോക്താവോ ഐപിയോ സമീപകാലത്തു സൃഷ്ടിച്ച താളുകള്‍ കൂട്ടമായി മായ്ക്കാനുള്ള സൗകര്യം ഈ സം‌വിധാനം നല്‍കുന്നു. താളുകള്‍ മായ്കപ്പെടേണ്ട ഉപയോക്തൃനാമമോ ഐപി വിലാസമോ ഇവിടെ കൊടുക്കുക:',
+	'nuke-tools' => 'ഏതെങ്കിലും ഒരു ഉപയോക്താവ് അല്ലെങ്കിൽ ഐ.പി. സമീപകാലത്തു സൃഷ്ടിച്ച താളുകള്‍ കൂട്ടമായി മായ്ക്കാനുള്ള സൗകര്യം ഈ സം‌വിധാനം നല്‍കുന്നു. ഉപയോക്തൃനാമം അല്ലെങ്കിൽ ഐ.പി. ഇവിടെ നൽകിയാൽ മായ്ക്കേണ്ട താളുകളുടെ പട്ടിക ലഭ്യമാകുന്നതാണ്.',
 	'nuke-submit-user' => 'പോകൂ',
 	'nuke-submit-delete' => 'തിരഞ്ഞെടുത്തവ മായ്ക്കുക',
+	'right-nuke' => 'താളുകൾ കൂട്ടത്തോടെ മായ്ക്കുക',
 );
 
 /** Marathi (मराठी)
@@ -887,6 +1011,13 @@ $messages['ms'] = array(
 	'right-nuke' => 'Menghapuskan laman secara pukal',
 );
 
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'nuke-submit-user' => 'Адя',
+);
+
 /** Nahuatl (Nāhuatl)
  * @author Fluence
  */
@@ -908,6 +1039,17 @@ $messages['nds'] = array(
 	'nuke-submit-user' => 'List kriegen',
 	'nuke-submit-delete' => 'Utmesten',
 	'right-nuke' => 'Groten Hümpel Sieden wegsmieten',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'nuke' => 'Massaal vortdoon',
+	'nuke-desc' => "Hiermee kunnen beheerders [[Special:Nuke|massaal pagina's vortdoon]]",
+	'nuke-nopages' => "Gien nieje pagina's van [[Special:Contributions/$1|$1]] in de leste wiezigingen.",
+	'nuke-defaultreason' => "Massaal pagina's van $1 vortdoon",
+	'right-nuke' => "Massaal pagina's vortdoon",
 );
 
 /** Dutch (Nederlands)
@@ -936,11 +1078,11 @@ $messages['nn'] = array(
 	'nuke-nopages' => 'Ingen nye sider av [[Special:Contributions/$1|$1]] i siste endringar.',
 	'nuke-list' => 'Følgjande sider blei nyleg oppretta av [[Special:Contributions/$1|$1]]. 
 Skriv inn ei sletteårsak og trykk på knappen for å sletta alle sidene.',
-	'nuke-defaultreason' => 'Massesletting av sider lagt inn av $1',
-	'nuke-tools' => 'Dette verktøyet mogleggjer massesletting av sider som nyleg er lagt inn av ein viss brukar eller ei viss IP-adressa. 
-Skriv inn eit brukarnamn eller ei IP-adressa for å få ei lista over sider som kan bli sletta.',
+	'nuke-defaultreason' => 'Massesletting av sider lagde inn av $1',
+	'nuke-tools' => 'Dette verktøyet mogleggjer massesletting av sider som nyleg er lagde inn av ein viss brukar eller ei viss IP-adressa. 
+Skriv inn eit brukarnamn eller ei IP-adressa for å få ei lista over sider som ein kan sletta her.',
 	'nuke-submit-user' => 'Gå',
-	'nuke-submit-delete' => 'Slett valte',
+	'nuke-submit-delete' => 'Slett valde',
 	'right-nuke' => 'Masseslett sider',
 );
 
@@ -1008,13 +1150,18 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'nuke' => "Scancelament d'amblé",
+	'nuke-desc' => "A dà a j'aministrador l'abilitassion a [[Special:Nuke|scanselé a baron]] le pàgine",
 	'nuke-nopages' => "Gnun-a pàgine faite da [[Special:Contributions/$1|$1]] ant j'ùltim cambiament.",
 	'nuke-list' => "Ste pàgine-sì a son staite faite ant j'ùltim temp da [[Special:Contributions/$1|$1]]; ch'a lassa un coment e ch'a-i daga 'n colp ansima al boton për gaveje via tute d'amblé.",
 	'nuke-defaultreason' => "Scancelament d'amblé dle pàgine faite da $1",
 	'nuke-tools' => "St'utiss-sì a lassa scancelé d'amblé le pàgine gionta ant j'ùltim temp da un chèich utent ò da 'nt na chèich adrëssa IP. Ch'a buta lë stranòm ò l'adrëssa IP për tiré giù na lista dle pàgine da scancelé:",
+	'nuke-submit-user' => 'Va',
+	'nuke-submit-delete' => 'Scansela le selessionà',
+	'right-nuke' => 'Scansela le pàgine a baron',
 );
 
 /** Pashto (پښتو)
@@ -1027,11 +1174,12 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author 555
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'nuke' => 'Eliminação em massa',
-	'nuke-desc' => 'Dá aos sysops a possibilidade de [[Special:Nuke|apagar páginas em massa]]',
+	'nuke-desc' => '[[Special:Nuke|Página especial]] que permite a administradores apagar páginas em massa',
 	'nuke-nopages' => 'Não há páginas criadas por [[Special:Contributions/$1|$1]] nas mudanças recentes.',
 	'nuke-list' => 'As páginas a seguir foram criadas recentemente por [[Special:Contributions/$1|$1]]; forneça uma justificativa e pressione o botão a seguir para eliminá-las.',
 	'nuke-defaultreason' => 'Eliminação em massa de páginas criadas por $1',
@@ -1076,6 +1224,40 @@ $messages['qu'] = array(
  */
 $messages['rif'] = array(
 	'nuke-submit-user' => 'Raḥ ɣa',
+);
+
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ * @author Mihai
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'nuke' => 'Ştergere în masă',
+	'nuke-desc' => 'Oferă administratorilor abilitatea de [[Special:Nuke|a şterge în masă]] pagini',
+	'nuke-nopages' => 'Nicio nouă pagină de către [[Special:Contributions/$1|$1]] în schimbările recente.',
+	'nuke-defaultreason' => 'Eliminatorul în masă al paginilor adăugat de $1',
+	'nuke-tools' => 'Această unealtă permite ştergeri în masă a paginilor recent adăugate de către un utilizator dat sau IP.
+Introduceţi numele de utilizator sau IP-ul pentru a primi o listă de paginii de şters.',
+	'nuke-submit-user' => 'Du-te',
+	'nuke-submit-delete' => 'Şterge ce e marcat',
+	'right-nuke' => 'şterge pagini în masă',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'nuke' => 'Scangellazione de masse',
+	'nuke-desc' => "Dà a l'amministrature l'abbilità de [[Special:Nuke|scangellà massivamende]] le pàggene",
+	'nuke-nopages' => "Nisciuna pàgena nove da [[Special:Contributions/$1|$1]] jndr'à l'urteme cangiaminde.",
+	'nuke-list' => "Le pàggene seguende onne state ccrejate recendemende da [[Special:Contributions/$1|$1]];
+mitte 'nu commende e cazze sus a 'u buttone pe scangellarle.",
+	'nuke-defaultreason' => 'Scangellazzione de masse de le pàggene aggiunde da $1',
+	'nuke-tools' => "Stu strumende permette le scangellazziune de masse de le pàggene aggiunde de recende da 'nu certe utende o IP.<br />
+Mitte 'u nome de l'utende o l'indirizze IP pe avè 'n'elenghe de le pàggene de scangellà.",
+	'nuke-submit-user' => 'Veje',
+	'nuke-submit-delete' => "Scangelle 'a selezione",
+	'right-nuke' => 'Scangellazione de masse de le pàggene',
 );
 
 /** Russian (Русский)
@@ -1147,7 +1329,7 @@ $messages['sk'] = array(
 	'right-nuke' => 'Hromadné mazanie stránok',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Millosh
  */
 $messages['sr-ec'] = array(
@@ -1160,6 +1342,21 @@ $messages['sr-ec'] = array(
 	'nuke-submit-user' => 'Иди',
 	'nuke-submit-delete' => 'Обриши обележено',
 	'right-nuke' => 'Масовно брисање страна.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'nuke' => 'Masovno brisanje',
+	'nuke-desc' => 'Daje sispu mogućnost da [[Special:Nuke|masovno briše]] strane.',
+	'nuke-nopages' => 'Nema novih strana od strane saradnika [[Special:Contributions/$1|$1]] u skorašnjim izmenama.',
+	'nuke-list' => 'Sledeće strane je skoro napravio saradnik [[Special:Contributions/$1|$1]]; komentariši i pritisni dugme za njihovo brisanje.',
+	'nuke-defaultreason' => 'Masovno brisanje strana koje je napravio saradnik $1.',
+	'nuke-tools' => 'Ovo oruđe omogućava masovno brisanje strana koje je skoro dodao određeni saradnik (registrovan ili ne). Unesi saradničko ime ili IP adresu za dobijanje spiska strana za brisanje.',
+	'nuke-submit-user' => 'Idi',
+	'nuke-submit-delete' => 'Obriši obeleženo',
+	'right-nuke' => 'Masovno brisanje strana.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1247,6 +1444,33 @@ $messages['tg-cyrl'] = array(
 	'right-nuke' => 'Ҳазфи дастаҷамъии саҳифаҳо',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'nuke' => "Hazfi dastaçam'ī",
+	'nuke-desc' => "Ba  mudiron imkoni [[Special:Nuke|hazfi dastaçam'ii]] sahifahoro medihad",
+	'nuke-nopages' => 'Sahifai çadide az [[Special:Contributions/$1|$1]] dar taƣjiroti oxirin vuçud nadorad.',
+	'nuke-list' => 'Sahifahoi zerin ba tozagī tavassuti [[Special:Contributions/$1|$1]] eçod şudaand; tavzehero guzored va tugmaero fişor bidihed to in sahifaho hazf şavand.',
+	'nuke-defaultreason' => "Hazfi dastiçam'iji sahifahoe, ki tavassuti $1 eçod şudaand",
+	'nuke-tools' => "In abzor imkoni hazfi dastiçam'iji sahifahoe, ki ba tozagī tavassuti jak korbar jo  nişoniji internetī IP izofaşudaro faroham mekunad. Nomi korbar jo nişoniji IP vurud kuned, fehristi sahifahoi baroi hazfro dastras kuned:",
+	'nuke-submit-user' => 'Birav',
+	'nuke-submit-delete' => 'Intixobşudagon hazf şavand',
+	'right-nuke' => "Hazfi dastaçam'iji sahifaho",
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'nuke' => 'Köpçülikleýin öçür',
+	'nuke-desc' => 'Administratorlara sahypalary [[Special:Nuke|köpçülikleýin öçürme]] ukybyny berýär',
+	'nuke-defaultreason' => '$1 tarapyndan sahypalaryň köpçülikleýin aýrylmagy goşuldy',
+	'nuke-submit-user' => 'Git',
+	'nuke-submit-delete' => 'Saýlanylanlary öçür',
+	'right-nuke' => 'Sahypalary köpçülikleýin öçür',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -1281,6 +1505,13 @@ Silinecek sayfaların listesini almak için kullanıcı adını ya da IPyi girin
 	'nuke-submit-user' => 'Git',
 	'nuke-submit-delete' => 'Seçileni sil',
 	'right-nuke' => 'Sayfaları kitlesel olarak sil',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'nuke-submit-user' => 'كۆچۈش',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -1322,6 +1553,15 @@ $messages['vec'] = array(
 	'right-nuke' => 'Scancelassion de massa de le pagine',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'nuke' => 'Massine heitmine',
+	'nuke-submit-user' => 'Mäne',
+	'nuke-submit-delete' => 'Čuta valitud',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -1332,9 +1572,10 @@ $messages['vi'] = array(
 	'nuke-nopages' => 'Không có trang mới do [[Special:Contributions/$1|$1]] tạo ra trong thay đổi gần đây.',
 	'nuke-list' => 'Các trang sau do [[Special:Contributions/$1|$1]] tạo ra gần đây; hãy ghi lý do và nhấn nút để xóa tất cả những trang này.',
 	'nuke-defaultreason' => 'Xóa hàng loạt các trang do $1 tạo ra',
-	'nuke-tools' => 'Công cụ này để xóa hàng lạt các trang do một người dùng tạo ra gần đây. Hãy cung cấp tên hiệu của thành viên hay địa chỉ IP của người dùng để tìm kiếm những trang để xóa:',
+	'nuke-tools' => 'Công cụ này để xóa hàng loạt các trang do một người dùng hoặc IP nào đó tạo ra gần đây.
+Hãy nhập tên người dùng hoặc địa chỉ IP  để lấy danh sách các trang sẽ xóa.',
 	'nuke-submit-user' => 'Tìm kiếm',
-	'nuke-submit-delete' => 'Xóa lựa chọn',
+	'nuke-submit-delete' => 'Xóa các trang đã chọn',
 	'right-nuke' => 'Xóa trang hàng loạt',
 );
 

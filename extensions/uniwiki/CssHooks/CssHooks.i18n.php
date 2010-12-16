@@ -14,11 +14,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'csshooks-desc' => 'Short description of the extension, shown in [[Special:Version]].',
+	'csshooks-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -50,11 +51,26 @@ $messages['bg'] = array(
 	'csshooks-desc' => 'Добавя CSS към HTML-изходния код на страниците са по-добро оформление',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'csshooks-desc' => 'Ouzhpennañ a ra CSS da ginnig HTML ar pajennoù evit gwellaat ar stil',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'csshooks-desc' => 'Dodaje CSS u HTML izlaz stranice za bolje stiliziranje',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'csshooks-desc' => 'Afegeix CSS a la presentació HTML de les pàgines per un millor estil',
 );
 
 /** Czech (Česky)
@@ -76,6 +92,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'csshooks-desc' => 'Pśidawa CSS k HTML-wudaśeju bokow za lěpše wugótowanje',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'csshooks-desc' => 'Προσθέτει CSS στην απόδοση HTML των σελίδων για καλύτερο style',
 );
 
 /** Esperanto (Esperanto)
@@ -138,6 +161,13 @@ $messages['he'] = array(
 	'csshooks-desc' => 'הוספת CSS לפלט ה־HTML של הדפים כדי לאפשר מראה טוב יותר',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'csshooks-desc' => 'Nagadugang CSS sa HTML ouput nga gikan sa mga pahina para mangin maayo ang estilo',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -145,11 +175,32 @@ $messages['hsb'] = array(
 	'csshooks-desc' => 'Přidawa CSS k wudaću HTML stronow za lěpši stil',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'csshooks-desc' => 'CSS-t ad a lapok HTML-kimenetéhez a stílusosabb megjelenéshez',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'csshooks-desc' => 'Adde CSS al output HTML de paginas pro meliorar le disposition typographic',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'csshooks-desc' => 'Menambahkan CSS ke output halaman HTML agar tampak lebih bagus',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'csshooks-desc' => "Aggiunge CSS all'output HTML delle pagine per un migliore stile",
 );
 
 /** Japanese (日本語)
@@ -161,9 +212,10 @@ $messages['ja'] = array(
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Thearith
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
-	'csshooks-desc' => 'បន្ថែម CSS ទៅ​ក្នុង​ទិន្នផល HTML នៃ​ទំព័រ​សម្រាប់​រចនាប័ទ្ម​ប្រសើរ​ជាង​នេះ',
+	'csshooks-desc' => 'បន្ថែម CSS ទៅ​ក្នុង​ទិន្នផល HTML នៃ​ទំព័រ​សម្រាប់​រចនាបទ​​ប្រសើរ​ជាង​នេះ',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -229,6 +281,13 @@ $messages['pl'] = array(
 	'csshooks-desc' => 'Dodaje CSS do stron HTML dla lepszego wyglądu',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'csshooks-desc' => "A gionta ij CSS a l'output HTML dle pàgine për në stil pì bel",
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -257,11 +316,32 @@ $messages['ru'] = array(
 	'csshooks-desc' => 'Добавляет CSS в HTML-вывод страниц, чтобы улучшить стили',
 );
 
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'csshooks-desc' => 'වඩා හොඳ විපාසයක් සඳහා පිටුවල HTML ප්‍රතිදානයන්ට CSS එකතු කරයි',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'csshooks-desc' => 'Pridáva CSS do HTML výstupu stránok na zlepšenie štýlu',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'csshooks-desc' => 'Додаје CSS на HTML излаз страна зарад бољег стилизовања',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'csshooks-desc' => 'Dodaje CSS na HTML izlaz strana zarad boljeg stilizovanja',
 );
 
 /** Seeltersk (Seeltersk)
@@ -285,11 +365,39 @@ $messages['sv'] = array(
 	'csshooks-desc' => 'Lägger till CSS till en sidas HTML för bättre utseende',
 );
 
+/** Telugu (తెలుగు)
+ * @author Kiranmayee
+ */
+$messages['te'] = array(
+	'csshooks-desc' => 'ఇంకా మంచి స్టైలింగ్ కోసము  పేజీల హెచ్టిఏమెల్ ఔట్పుట్ కి సీఎసేస్ ని కలుపుతుంది',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
 	'csshooks-desc' => 'Nagdaragdag ng CSS sa inilalabas na produktong HTML ng mga pahina para sa mas mainam na pag-iistilo.',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'csshooks-desc' => 'Daha iyi biçem için sayfaların HTML çıktısına CSS ekler',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'csshooks-desc' => 'Додає CSS у HTML-вивід сторінок для покращення стилів',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'csshooks-desc' => 'Ližadab CSS-t lehtpoliden HTML-näghu, miše paremboita stilid',
 );
 
 /** Vietnamese (Tiếng Việt)

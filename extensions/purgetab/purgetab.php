@@ -17,25 +17,26 @@
  */
 
 $wgExtensionCredits['other'][] = array(
-       'name' => 'Purge Tab 1.0',
-       'author' =>'Jonathan Tse and Joe Beaudoin Jr.',
-       'url' => 'http://www.mediawiki.org/wiki/Extension:Purgetab',
-       'description' => 'An extension to add the purge tab to all pages without the use of JavaScript.'
-       );
+	'path' => __FILE__,
+	'name' => 'Purge Tab',
+	'author' =>'Jonathan Tse and Joe Beaudoin Jr.',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:Purgetab',
+	'description' => 'An extension to add the purge tab to all pages without the use of JavaScript.',
+	'version' => '1.0',
+);
 
 $wgHooks['SkinTemplateContentActions'][] = 'purgetab_ReplaceTabs';
 
-function purgetab_ReplaceTabs ($content_actions) {
+function purgetab_ReplaceTabs( $content_actions ) {
 	global $wgTitle;
 
-	if ($wgTitle->getNamespace() != NS_SPECIAL)
-	{
+	if ( $wgTitle->getNamespace() != NS_SPECIAL ) {
 		$purge_action['purge'] = array(
 			'class' => false, 
 			'text' => 'Purge',
-			'href' => $wgTitle->getFullURL('action=purge')
+			'href' => $wgTitle->getFullURL( 'action=purge' )
 		);
-		$content_actions = array_merge($content_actions,$purge_action);
+		$content_actions = array_merge( $content_actions, $purge_action );
 	}
 	return true;  
 }

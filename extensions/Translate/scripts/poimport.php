@@ -81,7 +81,8 @@ class PoImporter {
 		$group = MessageGroups::getGroup( $id );
 
 		$messages = $group->initCollection( $code );
-		$group->fillCollection( $messages );
+		$messages->setInfile( $group->load( $code ) );
+		$messages->loadTranslations();
 
 		return $messages;
 	}
@@ -102,7 +103,7 @@ class PoImporter {
 			return false;
 		}
 
-		if ( preg_match( '/X-Message-Group:\s+([a-zA-Z0-9-._]+)/', $data, $matches ) ) {
+		if ( preg_match( '/X-Message-Group:\s+([a-zA-Z0-9-._\|]+)/', $data, $matches ) ) {
 			$groupId = $matches[1];
 			STDOUT( "Detected message group as $groupId" );
 		} else {
@@ -144,11 +145,17 @@ class PoImporter {
 				$translation = TRANSLATE_FUZZY . $translation;
 			}
 
-			if ( $translation !== (string) $contents[$key]->translation ) {
+			$oldtranslation = (string) $contents[$key]->translation();
+
+			if ( $translation !== $oldtranslation ) {
 				if ( $translation === '' ) {
 					STDOUT( "Skipping empty translation in the po file for $key!" );
 				} else {
-					STDOUT( "Translation of $key differs:\n$translation\n" );
+					if ( $oldtranslation === '' ) {
+						STDOUT( "New translation for $key" );
+					} else {
+						STDOUT( "Translation of $key differs:\n$translation\n" );
+					}
 					$changes["$key/$code"] = $translation;
 				}
 			}
@@ -162,10 +169,9 @@ class PoImporter {
 }
 
 /**
- * Import changes to MediaWiki namespace as given user
+ * Import changes to wiki as given user
  */
 class WikiWriter {
-
 	private $changes = array();
 	private $dryrun = true;
 	private $allclear = false;
@@ -192,7 +198,6 @@ class WikiWriter {
 		}
 
 		$this->allclear = true;
-
 	}
 
 	/**
@@ -206,12 +211,11 @@ class WikiWriter {
 		$count = count( $this->changes );
 		STDOUT( "Going to update $count pages." );
 
-		$ns = $this->group->namespaces[0];
+		$ns = $this->group->getNamespace();
 
 		foreach ( $this->changes as $title => $text ) {
 			$this->updateMessage( $ns, $title, $text );
 		}
-
 	}
 
 	/**

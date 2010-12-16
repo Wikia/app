@@ -27,6 +27,11 @@
 	background-color: #F2F200;
 }
 
+.mw-sp-translate-table .untranslated {
+	background-color: #a2f290;
+}
+
+
 .mw-sp-translate-table td {
 	vertical-align: top;
 }
@@ -44,26 +49,65 @@
 	font-weight: bold;
 }
 
+/* Edit page */
+
 .mw-sp-translate-edit-fields fieldset {
 	line-height: normal;
+	margin: 0px;
 }
+
+.mw-translate-edit-extra {
+	border-bottom: 1px solid black;
+}
+
+.ltr .mw-translate-legend {
+	float: right;
+	border-left: 1px solid black;
+	font-weight: bold;
+	margin-left: 5pt;
+	padding-left: 5pt;
+}
+
+.rtl .mw-translate-legend {
+	float: left;
+	border-left: 1px solid black;
+	font-weight: bold;
+	margin-right: 5pt;
+	padding-right: 5pt;
+}
+
+.mw-translate-sep {
+	margin-bottom:1ex;
+	margin-top:0.5ex;
+}
+
+.mw-translate-edit-deftext {
+	font-family: monospace;
+}
+
+.mw-translate-edit-area {
+	padding: 0;
+}
+
+/* End edit page */
+
 
 .mw-sp-translate-group {
 	border: 0;
-	margin: 0 3em 3em 3em;
+	margin: 0 2em 2em 2em;
 }
 
 .mw-sp-translate-group .description {
 	position: relative;
-	padding: 0.5em 1em 1em 1em;
+	padding: 0.5em 0.5em 0.5em 0.5em;
  	border: 1px dotted black;
 	background-color: #C8D8FF;
-	margin-bottom: 2em;
+	margin-bottom: 1em;
 }
 
 .mw-sp-translate-target {
 	border: 0;
-	margin: 0 0 0 3em;
+	margin: 0 0 0 2em;
  }
 
 .mw-sp-translate-target h3 {
@@ -89,4 +133,50 @@
 	font-family: monospace;
 	background-color: #F3F3FF;
 	border: 1px solid black;
+}
+
+.mw-pt-languages table {
+	border: 1px solid rgb(170, 170, 170);
+	background: rgb(246, 249, 237) none repeat scroll 0% 0%;
+	border-collapse: collapse;
+	line-height: 1.2;
+	width: 100%;
+}
+
+.mw-pt-languages-label {
+	border-right: 1px solid rgb(170, 170, 170);
+	padding: 0.5em;
+	background: rgb(238, 243, 226) none repeat scroll 0% 0%;
+	width: 200px;
+}
+
+.mw-pt-languages-list {
+	padding: 0.5em;
+}
+
+.mw-tpt-sp-legend {
+	font-weight: bold;
+}
+
+.mw-tpt-sp-content {
+	font-size: small;
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-bottom: 2ex;
+}
+
+/* First Steps '*/
+#translate-fs-signup {
+	display: block;
+	margin: 1em;
+	font-weight: bold;
+	font-size: 200%;
+}
+
+#translate-fs-signup a {
+	border: 2px dotted gray;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	background-color: #D1E231 !important;
 }

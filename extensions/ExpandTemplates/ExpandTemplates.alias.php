@@ -14,18 +14,19 @@ $aliases['en'] = array(
 	'ExpandTemplates' => array( 'ExpandTemplates' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ExpandTemplates' => array( 'فرد_القوالب' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ExpandTemplates' => array( 'فرد_القوالب' ),
+);
+
+/** Bulgarian (Български) */
+$aliases['bg'] = array(
+	'ExpandTemplates' => array( 'Разгръщане на шаблони' ),
 );
 
 /** Bosnian (Bosanski) */
@@ -38,9 +39,12 @@ $aliases['ca'] = array(
 	'ExpandTemplates' => array( 'Expansió de plantilles' ),
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
+/** Czech (Česky) */
+$aliases['cs'] = array(
+	'ExpandTemplates' => array( 'Testy šablon' ),
+);
+
+/** German (Deutsch) */
 $aliases['de'] = array(
 	'ExpandTemplates' => array( 'Vorlagen expandieren' ),
 );
@@ -60,9 +64,24 @@ $aliases['es'] = array(
 	'ExpandTemplates' => array( 'Sustituir_plantillas', 'Sustituidor_de_plantillas', 'Expandir_plantillas' ),
 );
 
+/** Estonian (Eesti) */
+$aliases['et'] = array(
+	'ExpandTemplates' => array( 'Mallide_lahendamine' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'ExpandTemplates' => array( 'Mallineiden laajennus' ),
+);
+
+/** French (Français) */
+$aliases['fr'] = array(
+	'ExpandTemplates' => array( 'ExpansionDesModèles' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'ExpandTemplates' => array( 'Èxpension des modèlos', 'ÈxpensionDesModèlos' ),
 );
 
 /** Galician (Galego) */
@@ -75,9 +94,12 @@ $aliases['gsw'] = array(
 	'ExpandTemplates' => array( 'Vorlage expandiere' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'ExpandTemplates' => array( 'શ્રેણીવિસ્તારો' ),
+);
+
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'ExpandTemplates' => array( 'פריסת_תבניות' ),
 );
@@ -109,7 +131,7 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'ExpandTemplates' => array( 'Kembangkan templat' ),
+	'ExpandTemplates' => array( 'Kembangkan templat', 'KembangkanTemplat' ),
 );
 
 /** Italian (Italiano) */
@@ -127,6 +149,11 @@ $aliases['ko'] = array(
 	'ExpandTemplates' => array( '틀전개' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'ExpandTemplates' => array( 'Schabloone Oplööse', 'Schabloone Expandeere' ),
+);
+
 /** Latin (Latina) */
 $aliases['la'] = array(
 	'ExpandTemplates' => array( 'Formulas resolvere' ),
@@ -140,6 +167,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'ExpandTemplates' => array( 'ПрошириШаблони' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'ExpandTemplates' => array( 'ഫലകങ്ങൾ വികസിപ്പിക്കുക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ExpandTemplates' => array( 'साचेविस्तारकरा' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -159,7 +196,7 @@ $aliases['myv'] = array(
 
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
-	'ExpandTemplates' => array( 'Sjablonen_substitueren' ),
+	'ExpandTemplates' => array( 'Mallen_substitueren' ),
 );
 
 /** Dutch (Nederlands) */
@@ -167,11 +204,14 @@ $aliases['nl'] = array(
 	'ExpandTemplates' => array( 'SjablonenSubstitueren' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'ExpandTemplates' => array( 'Utvid maler' ),
+);
+
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'ExpandTemplates' => array( 'EspandimentDelsModèls' ),
 );
 
 /** Polish (Polski) */
@@ -184,14 +224,24 @@ $aliases['ps'] = array(
 	'ExpandTemplates' => array( 'کينډۍ غځول' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'ExpandTemplates' => array( 'Expandir predefinições' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'ExpandTemplates' => array( 'बिंबधरविस्तारकरोसि' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ExpandTemplates' => array( 'RozbalenieŠablón' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
-	'ExpandTemplates' => array( 'Utöka mallar' ),
+	'ExpandTemplates' => array( 'Expandera mallar', 'Utöka mallar' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -202,5 +252,25 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ExpandTemplates' => array( 'Palawakin ang mga suleras' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ExpandTemplates' => array( 'ŞablonlarıGenişlet' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'ExpandTemplates' => array( 'EspandiModèi' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'ExpandTemplates' => array( '展开模板' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'ExpandTemplates' => array( '展開模板' ),
 );
 

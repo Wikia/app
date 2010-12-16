@@ -5,7 +5,7 @@ $messages = array();
 $messages['en'] = array(
 	'viewapc'      => 'APC information',
 	'viewapc-desc' => '[[Special:ViewAPC|View and manage APC cache]] with MediaWiki',
-	'right-apc'    => 'Use all features in [[Special:ViewAPC]]',
+	'right-apc'    => 'Use all features in [[Special:ViewAPC|ViewAPC]]',
 
 	'viewapc-apc-not-available' => 'No cache info available.
 APC does not appear to be running.',
@@ -129,6 +129,7 @@ Newer version $2 is available at http://pecl.php.net/package/APC/$2',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Meno25
@@ -150,6 +151,7 @@ $messages['qqq'] = array(
 * $2 is size of fragmentation in Xbytes
 * $3 is amount of free memory in Xbytes
 * $4 is the number of fragments',
+	'viewapc-display-attribute' => '{{Identical|Attribute}}',
 	'viewapc-display-value' => '{{Identical|Value}}',
 	'viewapc-display-filename' => '{{Identical|Filename}}',
 	'viewapc-display-info' => '{{Identical|Name}}',
@@ -200,23 +202,109 @@ $messages['niu'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
+	'viewapc' => 'APC-inligting',
+	'viewapc-desc' => 'Die [[Special:ViewAPC|APC-kas monitor en bestuur]] vanuit MediaWiki',
+	'right-apc' => 'Gebruik al die funksies van [[Special:ViewAPC|ViewAPC]]',
+	'viewapc-apc-not-available' => 'Daar is geen inligting aangaande die kas beskikbaar nie.
+Dit lyk of APC nie loop nie.',
+	'viewapc-clear-confirm' => 'Wil u die kas leegmaak?',
+	'viewapc-clear-user-cache' => 'Ruim gebruikerkas op',
+	'viewapc-clear-code-cache' => 'Ruim die opkode-kas op',
+	'viewapc-mode-stats' => 'Wys bediener se statistieke',
+	'viewapc-mode-system-cache' => 'Inskrywings in stelselkas',
+	'viewapc-mode-system-cache-dir' => 'Per-gids inskrywings',
+	'viewapc-mode-user-cache' => 'Inskrywings in gebruikerskas',
+	'viewapc-mode-version-check' => 'Kontroleer weergawe',
 	'viewapc-info-general' => 'Algemene inligting',
-	'viewapc-apc-version' => 'APC weergawe',
-	'viewapc-php-version' => 'PHP weergawe',
+	'viewapc-apc-version' => 'APC-weergawe',
+	'viewapc-php-version' => 'PHP-weergawe',
+	'viewapc-shared-memory' => 'Gedeelde geheue',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segment van $2|$1 segmente $2 elk}}.<br />
+($3 geheue, $4 locking)',
+	'viewapc-start-time' => 'Begintyd',
+	'viewapc-uptime' => 'Optyd',
+	'viewapc-upload-support' => 'Ondersteun oplaai van lêers',
+	'viewapc-filecache-info' => 'Inligting oor lêer-kas',
+	'viewapc-usercache-info' => 'Inligting oor gebruikers-kas',
+	'viewapc-cached-files' => 'Lêers in kas',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|lêer|lêers}} ($2)',
+	'viewapc-hits' => 'Trefslae',
+	'viewapc-misses' => 'Gemis',
+	'viewapc-requests' => 'Versoek-tempo',
+	'viewapc-hitrate' => 'Tref-tempo',
+	'viewapc-missrate' => 'Mis-tempo',
+	'viewapc-insertrate' => 'Invoeg-tempo',
+	'viewapc-cachefull' => 'Aantal kere dat kas vol was',
+	'viewapc-rps' => '$1 versoeke per sekonde',
+	'viewapc-info-runtime' => 'Looptyd-inligting',
+	'viewapc-info-memory' => 'Status-diagramme van bediener',
+	'viewapc-memory-usage-detailed' => 'Geheuegebruik<br />
+(verskeie dele dui op fragmentasie)',
+	'viewapc-memory-usage' => 'Geheuegebruik',
+	'viewapc-cache-efficiency' => 'Tref- en misslae',
+	'viewapc-memory-free' => 'Vry: $1 ($2)',
+	'viewapc-memory-used' => 'Gebruik: $1 ($2)',
+	'viewapc-memory-hits' => 'Trefslae: $1 ($2)',
+	'viewapc-memory-miss' => 'Gemis: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Details oor geheuegebruik en fragmentasie',
+	'viewapc-fragmentation-info' => 'Fragmentasie: $1 ($2 van $3 in $4 {{PLURAL:$4|fragment|fragmente}})',
+	'viewapc-fragmentation-none' => 'Fragmentasie: daar is geen fragmentasie nie',
+	'viewapc-display-attribute' => 'Eienskap',
 	'viewapc-display-value' => 'Waarde',
 	'viewapc-display-filename' => 'Lêernaam',
+	'viewapc-display-device' => 'Toestel',
 	'viewapc-display-info' => 'Naam',
+	'viewapc-display-ttl' => 'Vervaltyd',
+	'viewapc-display-inode' => 'Inode',
 	'viewapc-display-type' => 'Tipe',
+	'viewapc-display-type-file' => 'Gekasde lêer',
+	'viewapc-display-type-user' => 'Applikasiedata in kas',
+	'viewapc-display-num_hits' => 'Trefslae',
+	'viewapc-display-mtime' => 'Aangepas',
+	'viewapc-display-creation_time' => 'Geskep',
+	'viewapc-display-deletion_time' => 'Geskrap',
+	'viewapc-display-no-delete' => 'Nie verwyder nie',
+	'viewapc-display-access_time' => 'Gebruik',
+	'viewapc-display-ref_count' => 'Aantal verwysings',
 	'viewapc-display-mem_size' => 'Grootte',
+	'viewapc-display-stored-value' => 'Gestoorde waarde',
+	'viewapc-display-too-big' => "''Die inhoud is te groot om te wys.''",
 	'viewapc-ls-options-legend' => 'Opsies',
-	'viewapc-ls-submit' => 'Gaan!',
+	'viewapc-ls-options' => 'Omvang: $1 Sortering: $2 $3 $4 Soek: $5 $6',
+	'viewapc-ls-submit' => 'Laat waai!',
 	'viewapc-ls-header-name' => 'Naam',
+	'viewapc-ls-header-hits' => 'Trefslae',
 	'viewapc-ls-header-size' => 'Grootte',
+	'viewapc-ls-header-accessed' => 'Laas gebruik',
+	'viewapc-ls-header-modified' => 'Laas gewysig',
 	'viewapc-ls-header-created' => 'Geskep',
+	'viewapc-ls-header-deleted' => 'Geskrap',
+	'viewapc-ls-header-timeout' => 'Time-out',
+	'viewapc-ls-delete' => '[Verwyder nou]',
+	'viewapc-ls-scope-active' => 'Aktief',
+	'viewapc-ls-scope-deleted' => 'Geskrap',
+	'viewapc-ls-scope-both' => 'Beide',
+	'viewapc-ls-sort-hits' => 'Trefslae',
 	'viewapc-ls-sort-size' => 'Grootte',
 	'viewapc-ls-sort-name' => 'Naam',
+	'viewapc-ls-sort-accessed' => 'Laas gebruik',
+	'viewapc-ls-sort-modified' => 'Laas gewysig',
 	'viewapc-ls-sort-created' => 'Geskep',
+	'viewapc-ls-sort-deleted' => 'Geskrap',
+	'viewapc-ls-sort-timeout' => 'Time-out',
 	'viewapc-ls-limit-none' => 'Alles',
+	'viewapc-ls-more' => "''Daar {{PLURAL:$1|is nog 1 ander objek|is nog $1 ander objekte}}''",
+	'viewapc-ls-nodata' => "''Geen data gevind nie''",
+	'viewapc-delete-ok' => 'Die kas-objek <nowiki>$1</nowiki> is geskrap.',
+	'viewapc-delete-failed' => 'Die kas-objek <nowiki>$1</nowiki> kon nie verwyder word nie.',
+	'viewapc-version-info' => 'Weergawe-inligting',
+	'viewapc-version-changelog' => 'Wysigings',
+	'viewapc-version-failed' => 'Nie in staat om weergawe-inligting te kry nie.',
+	'viewapc-version-ok' => 'U werk met die nuutste weergawe van APC ($1)',
+	'viewapc-version-old' => "U werk met 'n ouer weergawe van APC ($1).
+Die nuutste weergawe $2 is beskikbaar by http://pecl.php.net/package/APC/$2",
+	'viewapc-filecache-cleared' => "'''''Lêerkas is opgeruim.'''''",
+	'viewapc-usercache-cleared' => "'''''Applikasiekas is opgeruim.'''''",
 );
 
 /** Amharic (አማርኛ)
@@ -249,7 +337,7 @@ $messages['an'] = array(
 $messages['ar'] = array(
 	'viewapc' => 'معلومات إيه بي سي',
 	'viewapc-desc' => '[[Special:ViewAPC|عرض والتحكم بكاش الإيه بي سي]] مع ميدياويكي',
-	'right-apc' => 'استخدام كل الخواص في [[Special:ViewAPC]]',
+	'right-apc' => 'استخدام كل الخواص في [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'لا معلومات اختزان متوفرة.
 يبدو أن APC لا يعمل.',
 	'viewapc-clear-confirm' => 'هل تريد إفراغ الكاش؟',
@@ -359,7 +447,7 @@ $messages['ar'] = array(
 $messages['arz'] = array(
 	'viewapc' => 'معلومات إيه بى سي',
 	'viewapc-desc' => '[[Special:ViewAPC|عرض والتحكم بكاش الإيه بى سي]] مع ميدياويكي',
-	'right-apc' => 'استخدام كل الخواص فى [[Special:ViewAPC]]',
+	'right-apc' => 'استخدام كل الخواص فى [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'لا معلومات اختزان متوفرة.
 يبدو أن APC لا يعمل.',
 	'viewapc-clear-confirm' => 'هل تريد إفراغ الكاش؟',
@@ -464,10 +552,112 @@ $messages['arz'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'viewapc' => 'Інфармацыя пра APC',
+	'viewapc-desc' => '[[Special:ViewAPC|Прагляд і кіраваньне кэшам APC]] у MediaWiki',
+	'right-apc' => 'выкарыстаньне ўсіх магчымасьцяў [[Special:ViewAPC|ViewAPC]]',
+	'viewapc-apc-not-available' => 'Няма інфармацыі пра кэш.
+Верагодна APC не запушчаны.',
+	'viewapc-clear-confirm' => 'Вы жадаеце ачысьціць кэш?',
+	'viewapc-clear-user-cache' => 'Ачысьціць кэш ўдзельніка',
+	'viewapc-clear-code-cache' => 'Ачысьціць кэш opcode',
+	'viewapc-mode-stats' => 'Паказаць статыстыку сэрвэра',
+	'viewapc-mode-system-cache' => 'Запісы сыстэмнага кэша',
+	'viewapc-mode-system-cache-dir' => 'Запісы па дырэкторыям',
+	'viewapc-mode-user-cache' => 'Запісы кэша ўдзельніка',
+	'viewapc-mode-version-check' => 'Праверыць вэрсію',
+	'viewapc-info-general' => 'Агульная інфармацыя',
+	'viewapc-apc-version' => 'Вэрсія APC',
+	'viewapc-php-version' => 'Вэрсія PHP',
+	'viewapc-shared-memory' => 'Агульная памяць',
+	'viewapc-shared-memory-details' => '$1 {{PLURAL:$1|сэгмэнт|$1 сэгмэнты|$1 сэгмэнтаў}} памерам па $2 кожны.<br />
+($3 памяць, $4 блякаваньне)',
+	'viewapc-start-time' => 'Час пачатку',
+	'viewapc-uptime' => 'Час працы',
+	'viewapc-upload-support' => 'Падтрымка загрузкі файлаў',
+	'viewapc-filecache-info' => 'Інфармацыя пра кэш файлаў',
+	'viewapc-usercache-info' => 'Інфармацыя пра кэш удзельніка',
+	'viewapc-cached-files' => 'Кэшаваныя файлы',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|файл|файлы|файлаў}} ($2)',
+	'viewapc-hits' => 'Трапляньняў',
+	'viewapc-misses' => 'Промахаў',
+	'viewapc-requests' => 'Інтэнсіўнасьць запытаў',
+	'viewapc-hitrate' => 'Інтэнсіўнасьць трапляньняў',
+	'viewapc-missrate' => 'Інтэнсіўнасьць промахаў',
+	'viewapc-insertrate' => 'Інтэнсіўнасьць уставак',
+	'viewapc-cachefull' => 'Поўны памер кэша',
+	'viewapc-rps' => '$1 запытаў у сэкунду',
+	'viewapc-info-runtime' => 'Інфармацыя пра працу',
+	'viewapc-info-memory' => 'Дыяграмы статусу сэрвэра',
+	'viewapc-memory-usage-detailed' => 'Выкарыстаньне памяці<br />
+ (сэктары абазначаюць фрагмэнты памяці)',
+	'viewapc-memory-usage' => 'Выкарыстаньне памяці',
+	'viewapc-cache-efficiency' => 'Трапляньні і промахі',
+	'viewapc-memory-free' => 'Вольна: $1 ($2)',
+	'viewapc-memory-used' => 'Выкарыстана: $1 ($2)',
+	'viewapc-memory-hits' => 'Трапляньняў: $1 ($2)',
+	'viewapc-memory-miss' => 'Промахаў: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Падрабязнасьці пра выкарыстаньне і фрагмэнтацыю памяці',
+	'viewapc-fragmentation-info' => 'Фрагмэнтацыя: $1 ($2 з $3 у $4 {{PLURAL:$4|фрагмэнце|фрагмэнтах|фрагмэнтах}})',
+	'viewapc-fragmentation-none' => 'Фрагмэнтацыя: няма фрагмэнтацыі',
+	'viewapc-display-attribute' => 'Атрыбут',
 	'viewapc-display-value' => 'Значэньне',
+	'viewapc-display-filename' => 'Назва файла',
+	'viewapc-display-device' => 'Прылада',
+	'viewapc-display-info' => 'Назва',
+	'viewapc-display-ttl' => 'Тэрмін дзеяньня',
+	'viewapc-display-inode' => 'Inode',
 	'viewapc-display-type' => 'Тып',
+	'viewapc-display-type-file' => 'Файл з кэша',
+	'viewapc-display-type-user' => 'Кэшаваныя зьвесткі дастасаваньняў',
+	'viewapc-display-num_hits' => 'Трапляньняў',
+	'viewapc-display-mtime' => 'Зьменены',
+	'viewapc-display-creation_time' => 'Створаны',
+	'viewapc-display-deletion_time' => 'Выдалены',
+	'viewapc-display-no-delete' => 'Не выдалены',
+	'viewapc-display-access_time' => 'Доступ',
+	'viewapc-display-ref_count' => 'Колькасьць спасылак',
+	'viewapc-display-mem_size' => 'Памер',
+	'viewapc-display-stored-value' => 'Захаванае значэньне',
+	'viewapc-display-too-big' => "''Зьмест занадта вялікі для паказу.''",
+	'viewapc-ls-options-legend' => 'Устаноўкі',
+	'viewapc-ls-options' => 'Фільтар: $1 Сартыроўка: $2$3$4 Пошук: $5 $6',
+	'viewapc-ls-submit' => 'Выканаць!',
+	'viewapc-ls-header-name' => 'Назва',
+	'viewapc-ls-header-hits' => 'Трапляньняў',
+	'viewapc-ls-header-size' => 'Памер',
+	'viewapc-ls-header-accessed' => 'Апошні доступ',
+	'viewapc-ls-header-modified' => 'Апошняя зьмена',
+	'viewapc-ls-header-created' => 'Створана',
+	'viewapc-ls-header-deleted' => 'Выдалена',
+	'viewapc-ls-header-timeout' => 'Тайм-аўт',
+	'viewapc-ls-delete' => '[Выдаліць]',
+	'viewapc-ls-scope-active' => 'Актыўна',
+	'viewapc-ls-scope-deleted' => 'Выдалена',
+	'viewapc-ls-scope-both' => 'Абодва',
+	'viewapc-ls-sort-hits' => 'Трапляньняў',
+	'viewapc-ls-sort-size' => 'Памер',
+	'viewapc-ls-sort-name' => 'Назва',
+	'viewapc-ls-sort-accessed' => 'Апошні доступ',
+	'viewapc-ls-sort-modified' => 'Апошняя зьмена',
+	'viewapc-ls-sort-created' => 'Створана',
+	'viewapc-ls-sort-deleted' => 'Выдалена',
+	'viewapc-ls-sort-timeout' => 'Тайм-аўт',
+	'viewapc-ls-limit-none' => 'Усе',
+	'viewapc-ls-more' => "''Ёсьць яшчэ $1 {{PLURAL:$1|запіс|запісы|запісаў}}''",
+	'viewapc-ls-nodata' => "''Няма адпаведных зьвестак''",
+	'viewapc-delete-ok' => 'Запіс кэша <nowiki>$1</nowiki> выдалены.',
+	'viewapc-delete-failed' => 'Немагчыма выдаліць запіс кэша <nowiki>$1</nowiki>.',
+	'viewapc-version-info' => 'Інфармацыя пра вэрсію',
+	'viewapc-version-changelog' => 'Журнал зьменаў',
+	'viewapc-version-failed' => 'Немагчыма атрымаць інфармацыю пра вэрсію.',
+	'viewapc-version-ok' => 'Вы выкарыстоўвайце апошнюю вэрсію APC ($1)',
+	'viewapc-version-old' => 'Вы выкарыстоўвайце састарэлую вэрсію APC ($1).
+Новая вэрсія $2 даступная на http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Файлавы кэш ачышчаны.'''''",
+	'viewapc-usercache-cleared' => "'''''Кэш дастасаваньня ачышчаны.'''''",
 );
 
 /** Bulgarian (Български)
@@ -523,21 +713,115 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Fulup
+ * @author Gwenn-Ael
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'viewapc' => 'Titouroù APC',
+	'viewapc-desc' => '[[Special:ViewAPC|Gwelet ha merañ ar grubuilh APC]] gant MediaWiki',
+	'right-apc' => "Implijout holl arc'hweladurioù [[Special:ViewAPC|ViewAPC]]",
+	'viewapc-apc-not-available' => "Ne c'haller kaout titour ebet war ar grubuilh.
+Seblantout a ra ned a ket APC en-dro.",
+	'viewapc-clear-confirm' => "Riñsañ ar grubuilh a fell deoc'h ober ?",
+	'viewapc-clear-user-cache' => 'Dilemel ar grubuilh implijer',
+	'viewapc-clear-code-cache' => "Dilemel krubuilh ar c'hodoù oberiadurioù",
+	'viewapc-mode-stats' => 'Gwelet stadegoù ar servijer',
+	'viewapc-mode-system-cache' => 'Monedoù ar grubuilh reizhiad',
+	'viewapc-mode-system-cache-dir' => "Monedoù dre gavlec'h",
+	'viewapc-mode-user-cache' => 'Monedoù ar grubuilh implijer',
+	'viewapc-mode-version-check' => 'Gwiriañ ar stumm',
+	'viewapc-info-general' => 'Titouroù hollek',
+	'viewapc-apc-version' => 'Stumm APC',
+	'viewapc-php-version' => 'Stumm PHP',
+	'viewapc-shared-memory' => 'Memor rannet',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 bruzunenn eus $2|$1 bruzunenn eus $2 pep hini}}.<br />
+($3 memor, $4 prennañ)',
 	'viewapc-start-time' => "Eur loc'hañ",
+	'viewapc-uptime' => 'Amzer mont en-dro',
+	'viewapc-upload-support' => 'Skor pellgargañ restroù',
+	'viewapc-filecache-info' => 'Titouroù diwar-benn krubuilh ar restroù',
+	'viewapc-usercache-info' => 'Titouroù diwar-benn ar grubuilh implijer',
+	'viewapc-cached-files' => 'Restroù kuzhet',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|restr|restr}} ($2)',
+	'viewapc-hits' => '',
 	'viewapc-misses' => 'Mankoù',
+	'viewapc-requests' => 'Feur rekedoù',
+	'viewapc-hitrate' => 'Feur berzh',
+	'viewapc-missrate' => 'Feur diouer',
+	'viewapc-insertrate' => "Feur ensoc'hañ",
+	'viewapc-cachefull' => 'Konter krubuilh leun',
+	'viewapc-rps' => '$1 reked dre eilenn',
+	'viewapc-info-runtime' => 'Titrouroù mont en-dro',
+	'viewapc-info-memory' => 'Diagrammoù statud ar servijer',
+	'viewapc-memory-usage-detailed' => 'Implijout ar memor <br />
+(bruzunennoù a vez diskouezet gant an tammoù liesseurt)',
+	'viewapc-memory-usage' => 'Implij ar memor',
+	'viewapc-cache-efficiency' => 'Taolioù berzh ha mankoù',
+	'viewapc-memory-free' => 'Dieub : $1 ($2)',
+	'viewapc-memory-used' => 'Implijet : $1 ($2)',
+	'viewapc-memory-hits' => 'Taolioù berzh : $1 ($2)',
+	'viewapc-memory-miss' => 'Mankoù : $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Implij eus ar memor dre ar munud ha divruzunañ',
+	'viewapc-fragmentation-info' => 'Divruzunañ : $1 ($2 diwar $3 e$4 bruzunenn{{PLURAL:$4||s}})',
+	'viewapc-fragmentation-none' => 'Bruzunañ : bruzunadur ebet',
+	'viewapc-display-attribute' => 'Doareenn',
+	'viewapc-display-value' => 'Talvoud',
+	'viewapc-display-filename' => 'Anv ar restr',
+	'viewapc-display-device' => 'Trobarzhell',
 	'viewapc-display-info' => 'Anv',
+	'viewapc-display-ttl' => 'Amzer termen',
+	'viewapc-display-inode' => 'Inod',
+	'viewapc-display-type' => 'Doare',
+	'viewapc-display-type-file' => 'Restr kuzhet',
+	'viewapc-display-type-user' => 'Roadennoù kuzhet un arload',
+	'viewapc-display-num_hits' => 'Taolioù berzh',
+	'viewapc-display-mtime' => 'Kemmet',
+	'viewapc-display-creation_time' => 'Krouet',
+	'viewapc-display-deletion_time' => 'Dilamet',
+	'viewapc-display-no-delete' => "N'eo ket dilamet",
+	'viewapc-display-access_time' => 'Sellet',
+	'viewapc-display-ref_count' => 'Kontañ daveennoù',
 	'viewapc-display-mem_size' => 'Ment',
+	'viewapc-display-stored-value' => 'Talvoud stoket',
+	'viewapc-display-too-big' => "''Re vras eo an endac'h da ziskouez.\"",
+	'viewapc-ls-options-legend' => 'Dibarzhioù',
+	'viewapc-ls-options' => 'Doug: $1 Tri : $2$3$4 Klask: $5 $6',
+	'viewapc-ls-submit' => 'Mont !',
+	'viewapc-ls-header-name' => 'Anv',
+	'viewapc-ls-header-hits' => 'Rekedoù',
+	'viewapc-ls-header-size' => 'Ment',
+	'viewapc-ls-header-accessed' => 'Sellet da ziwezhañ',
+	'viewapc-ls-header-modified' => 'Kemm diwezhañ',
+	'viewapc-ls-header-created' => 'Krouet',
+	'viewapc-ls-header-deleted' => 'Dilamet',
+	'viewapc-ls-header-timeout' => 'Termen klozañ',
+	'viewapc-ls-delete' => '[Dilemel bremañ]',
+	'viewapc-ls-scope-active' => 'Oberiant',
 	'viewapc-ls-scope-deleted' => 'Diverket',
+	'viewapc-ls-scope-both' => 'An daou',
+	'viewapc-ls-sort-hits' => 'Rekedoù',
+	'viewapc-ls-sort-size' => 'Ment',
+	'viewapc-ls-sort-name' => 'Anv',
+	'viewapc-ls-sort-accessed' => 'Sellet da ziwezhañ',
+	'viewapc-ls-sort-modified' => 'Kemmet da ziwezhañ',
 	'viewapc-ls-sort-created' => 'Krouet',
 	'viewapc-ls-sort-deleted' => 'Diverket',
 	'viewapc-ls-sort-timeout' => 'Termen echuiñ',
 	'viewapc-ls-limit-none' => 'An holl',
 	'viewapc-ls-more' => "''$1 {{PLURAL:$1|moned|moned}}'' all zo",
 	'viewapc-ls-nodata' => "''Roadenn ebet ne glot''",
+	'viewapc-delete-ok' => 'Dilamet eo moned "nowiki>$1</nowiki> ar grubuilh.',
+	'viewapc-delete-failed' => "N'eus ket bet tu da zilemel moned <nowiki>$1</nowiki> ar grubuilh.",
+	'viewapc-version-info' => 'Titouroù ar stumm',
+	'viewapc-version-changelog' => "Marilh ar c'hemmoù",
+	'viewapc-version-failed' => "Ne c'haller ket adkavout titouroù ar stumm.",
+	'viewapc-version-ok' => "Ar stumm diwezhañ eus APC emaoc'h oc'h implijout ($1)",
+	'viewapc-version-old' => "Ur stumm kozh eus APC ($1) emaoc'h oc'h implijout.
+Ur stumm nevez $2 a c'haller kaout war http://pecl.php.net/package/APC/$2",
+	'viewapc-filecache-cleared' => "'''''Krubuilh ar restroù dilamet'''''",
+	'viewapc-usercache-cleared' => "'''''Krubuilh an arload dilamet'''''",
 );
 
 /** Bosnian (Bosanski)
@@ -546,7 +830,7 @@ $messages['br'] = array(
 $messages['bs'] = array(
 	'viewapc' => 'APC informacije',
 	'viewapc-desc' => '[[Special:ViewAPC|Pregledaj i uredi APC keš]] sa MediaWiki',
-	'right-apc' => 'Korištenje svih mogućnosti u [[Special:ViewAPC]]',
+	'right-apc' => 'Korištenje svih mogućnosti u [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Podaci o kešu nisu dostupni.
 Izgleda da APC ne radi.',
 	'viewapc-clear-confirm' => 'Da li želite očistiti keš?',
@@ -564,6 +848,7 @@ Izgleda da APC ne radi.',
 	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segment od $2|$1 segmenta $2 svaki|$1 segmenata $2 svaki}}.<br />
 ($3 memorija, $4 zaključavanje)',
 	'viewapc-start-time' => 'Vrijeme početka',
+	'viewapc-uptime' => 'Vrijeme izvršavanja',
 	'viewapc-upload-support' => 'Podrška postavljanju datoteke',
 	'viewapc-filecache-info' => 'Informacije o kešu datoteke',
 	'viewapc-usercache-info' => 'Informacije o korisničkom kešu',
@@ -577,6 +862,7 @@ Izgleda da APC ne radi.',
 	'viewapc-insertrate' => 'Brzina ubacivanja',
 	'viewapc-cachefull' => 'Broj punjenja keša',
 	'viewapc-rps' => '$1 zahtjeva u sekundi',
+	'viewapc-info-runtime' => 'Informacija o izvršavanju',
 	'viewapc-info-memory' => 'Dijagrami statusa domaćina',
 	'viewapc-memory-usage-detailed' => 'Iskorištenje memorije<br />
 (višestruki slojevi pokazuju fragmente)',
@@ -595,6 +881,7 @@ Izgleda da APC ne radi.',
 	'viewapc-display-device' => 'Uređaj',
 	'viewapc-display-info' => 'Ime',
 	'viewapc-display-ttl' => 'Vrijeme isticanja',
+	'viewapc-display-inode' => 'Inode',
 	'viewapc-display-type' => 'Vrsta',
 	'viewapc-display-type-file' => 'Keširana datoteka',
 	'viewapc-display-type-user' => 'Keširani aplikativni podaci',
@@ -609,6 +896,7 @@ Izgleda da APC ne radi.',
 	'viewapc-display-stored-value' => 'Spremljena vrijednost',
 	'viewapc-display-too-big' => "''Sadržaj je isuviše velik za prikaz.''",
 	'viewapc-ls-options-legend' => 'Opcije',
+	'viewapc-ls-options' => 'Filter: $1 Redanje: $2$3$4 Pretraga: $5 $6',
 	'viewapc-ls-submit' => 'Idi!',
 	'viewapc-ls-header-name' => 'Ime',
 	'viewapc-ls-header-hits' => 'Pogodci',
@@ -617,6 +905,7 @@ Izgleda da APC ne radi.',
 	'viewapc-ls-header-modified' => 'Zadnje izmijenjeno',
 	'viewapc-ls-header-created' => 'Napravljeno',
 	'viewapc-ls-header-deleted' => 'Obrisano',
+	'viewapc-ls-header-timeout' => 'Pauza',
 	'viewapc-ls-delete' => '[Obriši odmah]',
 	'viewapc-ls-scope-active' => 'Aktivno',
 	'viewapc-ls-scope-deleted' => 'Obrisano',
@@ -628,6 +917,7 @@ Izgleda da APC ne radi.',
 	'viewapc-ls-sort-modified' => 'Zadnje promijenjeno',
 	'viewapc-ls-sort-created' => 'Napravljeno',
 	'viewapc-ls-sort-deleted' => 'Obrisano',
+	'viewapc-ls-sort-timeout' => 'Pauza',
 	'viewapc-ls-limit-none' => 'Sve',
 	'viewapc-ls-more' => "''Ima još $1 {{PLURAL:$1|unos|unosa}}''",
 	'viewapc-ls-nodata' => "''Nema odgovarajućih podataka''",
@@ -635,7 +925,10 @@ Izgleda da APC ne radi.',
 	'viewapc-delete-failed' => 'Neuspješno brisanje stavke keša <nowiki>$1</nowiki>.',
 	'viewapc-version-info' => 'Informacije o verziji',
 	'viewapc-version-changelog' => 'Zapisnik promjena',
+	'viewapc-version-failed' => 'Nije moguće preuzeti informacije o verziji',
 	'viewapc-version-ok' => 'Koristite posljednju verziju APC ($1)',
+	'viewapc-version-old' => 'Koristite stariju verziju APC-a ($1).
+Novija verzija $2 je dostupna na http://pecl.php.net/package/APC/$2',
 	'viewapc-filecache-cleared' => "'''''Keš datoteke očišćen.'''''",
 	'viewapc-usercache-cleared' => "'''''Keš aplikacije očišćen.'''''",
 );
@@ -643,6 +936,7 @@ Izgleda da APC ne radi.',
 /** Catalan (Català)
  * @author Aleator
  * @author Jordi Roqué
+ * @author Solde
  */
 $messages['ca'] = array(
 	'viewapc-clear-confirm' => 'Voleu esborrar la memòria cau?',
@@ -653,14 +947,19 @@ $messages['ca'] = array(
 	'viewapc-info-runtime' => "Informació de temps d'execució",
 	'viewapc-info-memory' => "Diagrames d'estat de l'ordinador central",
 	'viewapc-fragmentation-none' => 'Fragmentació: no fragmentat',
+	'viewapc-display-value' => 'Valor',
+	'viewapc-display-info' => 'Nom',
 	'viewapc-display-mem_size' => 'Mida',
 	'viewapc-display-too-big' => "''El contingut és massa gran per a mostrar-lo''",
 	'viewapc-ls-options-legend' => 'Opcions',
+	'viewapc-ls-submit' => 'Vés-hi!',
 	'viewapc-ls-header-name' => 'Nom',
 	'viewapc-ls-header-size' => 'Mida',
 	'viewapc-ls-header-accessed' => 'Darrer accés',
 	'viewapc-ls-header-modified' => 'Darrera modificació',
 	'viewapc-ls-sort-size' => 'Mida',
+	'viewapc-ls-sort-name' => 'Nom',
+	'viewapc-ls-limit-none' => 'Tot',
 	'viewapc-ls-nodata' => "''No hi ha dades coincidents''",
 	'viewapc-version-info' => 'Informació de la versió',
 );
@@ -673,7 +972,7 @@ $messages['ca'] = array(
 $messages['cs'] = array(
 	'viewapc' => 'Informace o APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Zobrazit a spravovat vyrovnávací paměť APC]] pomocí MediaWiki',
-	'right-apc' => 'Použít všechny funkce na [[Special:ViewAPC]].',
+	'right-apc' => 'Použít všechny funkce na [[Special:ViewAPC|ViewAPC]].',
 	'viewapc-apc-not-available' => 'Nejsou dostupné žádné informace o vyrovnávací paměti.
 Zdá se, že APC neběží.',
 	'viewapc-clear-confirm' => 'Opravdu chcete vyčistit vyrovnávací paměť?',
@@ -783,11 +1082,12 @@ Novější verze $2 je dostupná na http://pecl.php.net/package/APC/$2.',
  * @author Purodha
  * @author Raimond Spekking
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'viewapc' => 'APC-Informationen',
 	'viewapc-desc' => 'APC-Cache mit MediaWiki [[Special:ViewAPC|einsehen und bearbeiten]]',
-	'right-apc' => 'Kann alle Funktionen von [[Special:ViewAPC]] verwenden',
+	'right-apc' => 'Alle Funktionen von [[Special:ViewAPC|ViewAPC]] verwenden',
 	'viewapc-apc-not-available' => 'Keine Cache-Informationen verfügbar.
 APC wird scheinbar nicht ausgeführt.',
 	'viewapc-clear-confirm' => 'Möchtest du den Cache leeren?',
@@ -897,13 +1197,23 @@ $messages['de-formal'] = array(
 	'viewapc-clear-confirm' => 'Möchten Sie den Cache leeren?',
 );
 
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'viewapc-display-filename' => 'Namey dosya',
+	'viewapc-display-info' => 'Name',
+	'viewapc-ls-submit' => 'Şo!',
+	'viewapc-ls-sort-name' => 'Name',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
 	'viewapc' => 'Informacije wó APC',
 	'viewapc-desc' => 'APC-cache z MediaWiki [[Special:ViewAPC|se woglědaś a wobźěłaś]]',
-	'right-apc' => 'Wše funkcije w [[Special:ViewAPC]] wužywaś',
+	'right-apc' => 'Wše funkcije w [[Special:ViewAPC|ViewAPC]] wužywaś',
 	'viewapc-apc-not-available' => 'Žedne informacije wó cache k dispoziciji.
 Zda se, až APC se njewuwjedujo.',
 	'viewapc-clear-confirm' => 'Coš cache wuprozniś?',
@@ -1008,13 +1318,95 @@ Nowša wersija $2 stoj na http://pecl.php.net/package/APC/$2 k dispoziciji.',
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'viewapc' => 'Πληροφορίες APC',
+	'viewapc-clear-confirm' => 'Θέλετε να εκκαθαρίσετε τη λανθάνουσα μνήμη;',
+	'viewapc-clear-user-cache' => 'Εκκαθάριση λανθάνουσας μνήμης χρήστη',
+	'viewapc-mode-stats' => 'Εμφάνιση στατιστικών φιλοξενίας',
+	'viewapc-mode-user-cache' => 'Καταχωρήσεις λανθάνουσας μνήμης χρήστη',
+	'viewapc-mode-version-check' => 'Έλεγχος έκδοσης',
+	'viewapc-info-general' => 'Γενικές πληροφορίες',
+	'viewapc-apc-version' => 'Έκδοση APC',
+	'viewapc-php-version' => 'Έκδοση PHP',
+	'viewapc-shared-memory' => 'Διαμοιραζόμενη μνήμη',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 τμήμα του $2|$1 τμήματα του $2 το καθένα}}.<br />
+($3 μνήμη, $4 κλείδωμα)',
+	'viewapc-start-time' => 'Χρόνος εκκίνησης',
+	'viewapc-uptime' => 'Uptime',
+	'viewapc-upload-support' => 'Υποστήριξη φόρτωσης αρχείου',
+	'viewapc-filecache-info' => 'Πληροφορίες λανθάνουσας μνήμης αρχείου',
+	'viewapc-usercache-info' => 'Πληροφορίες λανθάνουσας μνήμης χρήστη',
+	'viewapc-cached-files' => 'Λανθάνοντα αρχεία',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|αρχείο|αρχεία}} ($2)',
+	'viewapc-hits' => 'Χτυπήματα',
+	'viewapc-misses' => 'Αστοχίες',
+	'viewapc-requests' => 'Βαθμός αίτησης',
+	'viewapc-hitrate' => 'Βαθμός χτυπήματος',
+	'viewapc-missrate' => 'Βαθμός αστοχίας',
+	'viewapc-insertrate' => 'Βαθμός εισαγωγής',
+	'viewapc-cachefull' => 'Καταμέτρηση πλήρους λανθάνουσας μνήμης',
+	'viewapc-rps' => '$1 αιτήσεις ανά δευτερόλεπτο',
+	'viewapc-info-runtime' => 'Πληροφορίες χρόνου δουλειάς',
+	'viewapc-info-memory' => 'Διαγράμματα κατάστασης φιλοξενίας',
+	'viewapc-memory-usage' => 'Χρήση μνήμης',
+	'viewapc-cache-efficiency' => 'Χτυπήματα και αστοχίες',
+	'viewapc-memory-free' => 'Ελεύθερο: $1 ($2)',
+	'viewapc-memory-used' => 'Χρησιμοποιημένη: $1 ($2)',
+	'viewapc-memory-hits' => 'Χτυπήματα: $1 ($2)',
+	'viewapc-memory-miss' => 'Αστοχίες: $1 ($2)',
+	'viewapc-fragmentation-none' => 'Κερμάτωση: όχι κερμάτωση',
+	'viewapc-display-attribute' => 'Ιδιότητες',
+	'viewapc-display-value' => 'Αξία',
+	'viewapc-display-filename' => 'Όνομα αρχείου',
+	'viewapc-display-device' => 'Συσκευή',
+	'viewapc-display-info' => 'Όνομα',
+	'viewapc-display-ttl' => 'Χρόνος λήξης',
+	'viewapc-display-inode' => 'Inode',
+	'viewapc-display-type' => 'Τύπος',
+	'viewapc-display-type-file' => 'Λανθάνοντα αρχεία',
+	'viewapc-display-num_hits' => 'Χτυπήματα',
+	'viewapc-display-mtime' => 'Τροποποιημένο',
+	'viewapc-display-creation_time' => 'Δημιουργημένος',
+	'viewapc-display-deletion_time' => 'Διαγραμμένος',
+	'viewapc-display-no-delete' => 'Μη διεγραμμένο',
+	'viewapc-display-access_time' => 'Με πρόσβαση',
+	'viewapc-display-ref_count' => 'Καταμέτρηση παραπομπών',
 	'viewapc-display-mem_size' => 'Μέγεθος',
+	'viewapc-display-stored-value' => 'Αποθηκευμένη αξία',
+	'viewapc-display-too-big' => "''Το περιεχόμενο είναι πολύ μεγάλο για εμφάνιση.''",
+	'viewapc-ls-options-legend' => 'Επιλογές',
+	'viewapc-ls-submit' => 'Πήγαινε!',
 	'viewapc-ls-header-name' => 'Όνομα',
+	'viewapc-ls-header-hits' => 'Χτυπήματα',
 	'viewapc-ls-header-size' => 'Μέγεθος',
+	'viewapc-ls-header-accessed' => 'Τελευταία πρόσβαση',
+	'viewapc-ls-header-modified' => 'Τελευταία τροποποίηση',
+	'viewapc-ls-header-created' => 'Δημιουργημένος',
+	'viewapc-ls-header-deleted' => 'Διαγραμμένος',
+	'viewapc-ls-header-timeout' => 'Διάλειμμα',
+	'viewapc-ls-delete' => '[Διαγραφή τώρα]',
+	'viewapc-ls-scope-active' => 'Ενεργός',
+	'viewapc-ls-scope-deleted' => 'Διαγραμμένος',
+	'viewapc-ls-scope-both' => 'Και τα δύο',
+	'viewapc-ls-sort-hits' => 'Χτυπήματα',
 	'viewapc-ls-sort-size' => 'Μέγεθος',
 	'viewapc-ls-sort-name' => 'Όνομα',
+	'viewapc-ls-sort-accessed' => 'Τελευταία πρόσβαση',
+	'viewapc-ls-sort-modified' => 'Τελευταία τροποποίηση',
+	'viewapc-ls-sort-created' => 'Δημιουργημένος',
+	'viewapc-ls-sort-deleted' => 'Διαγραμμένος',
+	'viewapc-ls-sort-timeout' => 'Διάλειμμα',
+	'viewapc-ls-limit-none' => 'Όλα',
+	'viewapc-ls-more' => "''Υπάρχουν $1 ακόμα {{PLURAL:$1|καταχώρηση|καταχωρήσεις}}''",
+	'viewapc-ls-nodata' => "''Καθόλου δεδομένα αντιστοιχίας''",
+	'viewapc-version-info' => 'Πληροφορίες έκδοσης',
+	'viewapc-version-changelog' => 'Αρχείοαλλαγών',
+	'viewapc-filecache-cleared' => "'''''Εκκαθαρίστηκε η λανθάνουσα μνήμη του αρχείου.'''''",
+	'viewapc-usercache-cleared' => "'''''Η λανθάνουσα της εφαρμογής καθαρίστηκε.'''''",
 );
 
 /** Esperanto (Esperanto)
@@ -1055,7 +1447,7 @@ APC verŝajne ne funkcias.',
 	'viewapc-fragmentation-info' => 'Fragmentiĝo: $1 ($2 el $3 en $4 {{PLURAL:$4|fragmento|fragmentoj}})',
 	'viewapc-fragmentation-none' => 'Fragmentiĝo: neniom da fragmentiĝo',
 	'viewapc-display-attribute' => 'Atribuo',
-	'viewapc-display-value' => 'Valuto',
+	'viewapc-display-value' => 'Valoro',
 	'viewapc-display-filename' => 'Dosiernomo',
 	'viewapc-display-device' => 'Aparato',
 	'viewapc-display-info' => 'Nomo',
@@ -1064,6 +1456,7 @@ APC verŝajne ne funkcias.',
 	'viewapc-display-type' => 'Speco',
 	'viewapc-display-type-file' => 'Dosiero en kaŝmemoro',
 	'viewapc-display-type-user' => 'Kaŝmemoritaj datenoj de etendilo',
+	'viewapc-display-num_hits' => 'Pafoj',
 	'viewapc-display-mtime' => 'Modifita',
 	'viewapc-display-creation_time' => 'Kreita',
 	'viewapc-display-deletion_time' => 'Forigita',
@@ -1076,9 +1469,11 @@ APC verŝajne ne funkcias.',
 	'viewapc-ls-header-name' => 'Nomo',
 	'viewapc-ls-header-hits' => 'Trafoj',
 	'viewapc-ls-header-size' => 'Pezo',
+	'viewapc-ls-header-accessed' => 'Laste atingita',
 	'viewapc-ls-header-modified' => 'Laste modifita',
 	'viewapc-ls-header-created' => 'Kreita',
 	'viewapc-ls-header-deleted' => 'Forigita',
+	'viewapc-ls-header-timeout' => 'Tempolimo',
 	'viewapc-ls-delete' => '[Forigi nun]',
 	'viewapc-ls-scope-active' => 'Aktiva',
 	'viewapc-ls-scope-deleted' => 'Forigita',
@@ -1090,6 +1485,7 @@ APC verŝajne ne funkcias.',
 	'viewapc-ls-sort-modified' => 'Laste modifita',
 	'viewapc-ls-sort-created' => 'Kreita',
 	'viewapc-ls-sort-deleted' => 'Forigita',
+	'viewapc-ls-sort-timeout' => 'Tempolimo',
 	'viewapc-ls-limit-none' => 'Ĉiu',
 	'viewapc-ls-nodata' => "''Nenia dateno trafas''",
 	'viewapc-delete-ok' => 'Ero de kaŝmemoro <nowiki>$1</nowiki> estas forigita.',
@@ -1104,17 +1500,22 @@ APC verŝajne ne funkcias.',
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Imre
+ * @author Omnipaedista
  * @author Sanbec
+ * @author Translationista
  */
 $messages['es'] = array(
 	'viewapc' => 'Información APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Ver y administrar APC cache]] con MediaWiki',
-	'right-apc' => 'Use todas las caractrísticas en [[Special:ViewAPC]]',
+	'right-apc' => 'Use todas las caractrísticas en [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Sin información de cache disponible.
 APC no parece estar ejecutándose.',
 	'viewapc-clear-confirm' => 'Desea limpiar el cache?',
 	'viewapc-clear-user-cache' => 'Limpiar cache de usuario',
+	'viewapc-clear-code-cache' => 'Limpiar caché de opcode',
+	'viewapc-mode-stats' => 'Ver estadísticas de host',
 	'viewapc-mode-system-cache' => 'Entradas de cache del sistema',
+	'viewapc-mode-system-cache-dir' => 'Ingresos por directorio',
 	'viewapc-mode-user-cache' => 'Entradas de cache de usuario',
 	'viewapc-mode-version-check' => 'Verificar versión',
 	'viewapc-info-general' => 'Información general',
@@ -1124,17 +1525,32 @@ APC no parece estar ejecutándose.',
 	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segmento de $2|cada uno de los $1 segmentos $2}}.<br />
 ($3 memoria, $4 bloqueando)',
 	'viewapc-start-time' => 'Tiempo de comienzo',
+	'viewapc-uptime' => 'Uptime',
 	'viewapc-upload-support' => 'Archivar ayuda de carga',
 	'viewapc-filecache-info' => 'Archivar información de cache',
 	'viewapc-usercache-info' => 'Información de cache de usuario',
+	'viewapc-cached-files' => 'Archivos en cache',
 	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|archivo|archivos}} ($2)',
+	'viewapc-hits' => 'Apariciónes',
+	'viewapc-misses' => 'Fallas',
+	'viewapc-requests' => 'Velocidad de solicitud',
+	'viewapc-hitrate' => 'Velocidad de aciertos',
+	'viewapc-missrate' => 'Velocidad de errores',
+	'viewapc-insertrate' => 'Velocidad de inserción',
+	'viewapc-cachefull' => 'Conteo completo de caché',
 	'viewapc-rps' => '$1 solicitudes por segundo',
+	'viewapc-info-runtime' => 'Información acerca de tiempo de ejecución',
+	'viewapc-info-memory' => 'Diagramas de estado del host',
 	'viewapc-memory-usage-detailed' => 'Uso de memoria<br />
 (múltiples porciones indican fragmentos)',
 	'viewapc-memory-usage' => 'Uso de memoria',
+	'viewapc-cache-efficiency' => 'Aciertos y errores',
 	'viewapc-memory-free' => 'Libre: $1 ($2)',
 	'viewapc-memory-used' => 'Usado: $1 ($2)',
+	'viewapc-memory-hits' => 'Resultados: $1 ($2)',
+	'viewapc-memory-miss' => 'Fallas: $1 ($2)',
 	'viewapc-memoryfragmentation' => 'Uso de memoria detallado y fragmentación',
+	'viewapc-fragmentation-info' => 'Fragmentación: $1 ($2 de $3 en $4 {{PLURAL:$4|fragmento|fragmentos}})',
 	'viewapc-fragmentation-none' => 'Fragmentación: sin fragmentación',
 	'viewapc-display-attribute' => 'Atributo',
 	'viewapc-display-value' => 'Valor',
@@ -1142,7 +1558,11 @@ APC no parece estar ejecutándose.',
 	'viewapc-display-device' => 'Dispositivo',
 	'viewapc-display-info' => 'Nombre',
 	'viewapc-display-ttl' => 'Tiempo de expiración',
+	'viewapc-display-inode' => 'Inodo',
 	'viewapc-display-type' => 'Tipo',
+	'viewapc-display-type-file' => 'archivo en cache',
+	'viewapc-display-type-user' => 'Datos de aplicación cachados',
+	'viewapc-display-num_hits' => 'Resultados',
 	'viewapc-display-mtime' => 'Modificado',
 	'viewapc-display-creation_time' => 'Creado',
 	'viewapc-display-deletion_time' => 'Borrado',
@@ -1153,32 +1573,130 @@ APC no parece estar ejecutándose.',
 	'viewapc-display-stored-value' => 'Valor almacenado',
 	'viewapc-display-too-big' => "''Contenido es demasiado grande para mostrar.''",
 	'viewapc-ls-options-legend' => 'Opciones',
+	'viewapc-ls-options' => 'Ámbito: $1 Organizando: $2$3$4 Buscar: $5 $6',
 	'viewapc-ls-submit' => 'Ir!',
 	'viewapc-ls-header-name' => 'Nombre',
+	'viewapc-ls-header-hits' => 'Resultados',
 	'viewapc-ls-header-size' => 'Tamaño',
 	'viewapc-ls-header-accessed' => 'Último accesado',
 	'viewapc-ls-header-modified' => 'Último modificado',
 	'viewapc-ls-header-created' => 'Creado',
 	'viewapc-ls-header-deleted' => 'Borrado',
+	'viewapc-ls-header-timeout' => 'Timeout',
 	'viewapc-ls-delete' => '[Borrar ahora]',
 	'viewapc-ls-scope-active' => 'Activo',
 	'viewapc-ls-scope-deleted' => 'Borrado',
 	'viewapc-ls-scope-both' => 'Ambos',
+	'viewapc-ls-sort-hits' => 'Resultados',
 	'viewapc-ls-sort-size' => 'Tamaño',
 	'viewapc-ls-sort-name' => 'Nombre',
 	'viewapc-ls-sort-accessed' => 'Último accesado',
 	'viewapc-ls-sort-modified' => 'Último modificado',
 	'viewapc-ls-sort-created' => 'Creado',
 	'viewapc-ls-sort-deleted' => 'Borrado',
+	'viewapc-ls-sort-timeout' => 'Timeout',
 	'viewapc-ls-limit-none' => 'Todos',
 	'viewapc-ls-more' => "''Hay $1 más {{PLURAL:$1|entrada|entradas}}''",
 	'viewapc-ls-nodata' => "''Sin datos coincidentes''",
 	'viewapc-delete-ok' => 'Entrada cache <nowiki>$1</nowiki> está borrada.',
 	'viewapc-delete-failed' => 'Fracasó en borrar la entrada cache cache <nowiki>$1</nowiki>.',
 	'viewapc-version-info' => 'Información de versión',
+	'viewapc-version-changelog' => 'Log de cambios',
+	'viewapc-version-failed' => 'No se ha podido recuperar la información de la versión.',
 	'viewapc-version-ok' => 'Usted está corriendo la última versión de APC ($1)',
 	'viewapc-version-old' => 'Usted está corriendo una versión más antigua de APC ($1).
 Versión más nueva $2 está disponible en http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Cache de archivo limpiado.'''''",
+	'viewapc-usercache-cleared' => "'''''Cache de aplicación limpiado.'''''",
+);
+
+/** Estonian (Eesti)
+ * @author Silvar
+ */
+$messages['et'] = array(
+	'viewapc' => 'APC informatsioon',
+	'viewapc-desc' => 'MediaWiki abil [[Special:ViewAPC|APC puhvri vaatamine ja juhtimine]]',
+	'right-apc' => 'Kasutada kõiki [[Special:ViewAPC|ViewAPC]] võimalusi',
+	'viewapc-apc-not-available' => 'Puhhvri infot ei leidnud.
+Näib, et APC ei tööta.',
+	'viewapc-clear-confirm' => 'Kas sa tahad puhvrit tühjendada?',
+	'viewapc-clear-user-cache' => 'Puhasta kasutaja puhver',
+	'viewapc-clear-code-cache' => 'Puhasta opkoodi puhver',
+	'viewapc-mode-stats' => 'Vaata hosti statistikat',
+	'viewapc-mode-system-cache' => 'Süsteemi puhvri kirjed',
+	'viewapc-mode-user-cache' => 'Kasutaja puhvri kirjed',
+	'viewapc-mode-version-check' => 'Kontrolli versiooni',
+	'viewapc-info-general' => 'Üld informatsioon',
+	'viewapc-apc-version' => 'APC versioon',
+	'viewapc-php-version' => 'PHP versioon',
+	'viewapc-shared-memory' => 'Jagatud mälu',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segment $2|$1 segmenti, iga üks $2}}.<br />
+($3 mälu ja $4 lukustamine)',
+	'viewapc-start-time' => 'Käivitamise aeg',
+	'viewapc-uptime' => 'Töötamise aega',
+	'viewapc-upload-support' => 'Faili üleslaadimise tugi',
+	'viewapc-filecache-info' => 'Faili puhvri informatsioon',
+	'viewapc-usercache-info' => 'Kasutaja puhvri informatsioon',
+	'viewapc-cached-files' => 'Puhverdatud faile',
+	'viewapc-hits' => 'Tabamisi',
+	'viewapc-misses' => 'Mitte tabamisi',
+	'viewapc-requests' => 'Päringute reiting',
+	'viewapc-hitrate' => 'Tabamiste reiting',
+	'viewapc-missrate' => 'Mitte tabamiste reiting',
+	'viewapc-rps' => '$1 päringut sekundis',
+	'viewapc-info-runtime' => 'Käitusaegne informatsioon',
+	'viewapc-info-memory' => 'Hosti seisundi diagrammid',
+	'viewapc-memory-usage-detailed' => 'Mälu kasutus<br />
+(mitu lõiku väljendavad fragmente)',
+	'viewapc-memory-usage' => 'Mälu kasutus',
+	'viewapc-cache-efficiency' => 'Tabamisi ja mitte tabamisi',
+	'viewapc-memory-free' => 'Vaba: $1 ($2)',
+	'viewapc-memory-used' => 'Kasutusel: $1 ($2)',
+	'viewapc-memory-hits' => 'Tabamisi: $1 ($2)',
+	'viewapc-memory-miss' => 'Mitte tabamisi: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Detailne mälu kasutus ja fragmentatsioon',
+	'viewapc-fragmentation-info' => 'Fragmentatsioon: $1 ($3-st on jagunenud $2 $4 {{PLURAL:$4|fragmendile|fragmendiks}})',
+	'viewapc-fragmentation-none' => 'Fragmentatsioon: fragmentatsioon puudub',
+	'viewapc-display-attribute' => 'Atribuut',
+	'viewapc-display-value' => 'Väärtus',
+	'viewapc-display-filename' => 'Faili nimi',
+	'viewapc-display-info' => 'Nimi',
+	'viewapc-display-type' => 'Tüüp',
+	'viewapc-display-type-file' => 'Puhverdatud fail',
+	'viewapc-display-creation_time' => 'Loodud',
+	'viewapc-display-deletion_time' => 'Kustutatud',
+	'viewapc-display-no-delete' => 'Mitte kustutatud',
+	'viewapc-display-access_time' => 'Kasutatud',
+	'viewapc-display-mem_size' => 'Suurus',
+	'viewapc-display-stored-value' => 'Salvestatud väärtus',
+	'viewapc-display-too-big' => "''Sisu on näitamiseks liiga suur.''",
+	'viewapc-ls-header-name' => 'Nimi',
+	'viewapc-ls-header-hits' => 'Tabamisi',
+	'viewapc-ls-header-size' => 'Suurus',
+	'viewapc-ls-header-accessed' => 'Viimati kasutatud',
+	'viewapc-ls-header-modified' => 'Viimati muudetud',
+	'viewapc-ls-header-deleted' => 'Kustutatud',
+	'viewapc-ls-scope-deleted' => 'Kustutatud',
+	'viewapc-ls-scope-both' => 'Mõlemad',
+	'viewapc-ls-sort-hits' => 'Tabamisi',
+	'viewapc-ls-sort-size' => 'Suurus',
+	'viewapc-ls-sort-name' => 'Nimi',
+	'viewapc-ls-sort-accessed' => 'Viimati kasutatud',
+	'viewapc-ls-sort-modified' => 'Viimati muudetud',
+	'viewapc-ls-sort-created' => 'Loodud',
+	'viewapc-ls-sort-deleted' => 'Kustutatud',
+	'viewapc-ls-limit-none' => 'Kõik',
+	'viewapc-ls-more' => "''Seal on veel $1 {{PLURAL:$1|kirje|kirjet}}''",
+	'viewapc-ls-nodata' => "''Selliseid andmeid pole''",
+	'viewapc-delete-ok' => 'Puhvri kirje <nowiki>$1</nowiki> on kustutatud.',
+	'viewapc-delete-failed' => 'Puhvri kirje <nowiki>$1</nowiki> kustutamine ebaõnnestus.',
+	'viewapc-version-info' => 'Versiooni informatsioon',
+	'viewapc-version-changelog' => 'Muudatuste logi',
+	'viewapc-version-ok' => 'Sa kasutad APC viimast vesiooni ($1)',
+	'viewapc-version-old' => 'Sa kasutad APC vanemat vesiooni ($1).
+Uuem versioon $2 on saadav lehelt: http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Faili puhver puhastatud.'''''",
+	'viewapc-usercache-cleared' => "'''''Rakenduse puhver puhastatud.'''''",
 );
 
 /** Basque (Euskara)
@@ -1188,8 +1706,11 @@ Versión más nueva $2 está disponible en http://pecl.php.net/package/APC/$2',
 $messages['eu'] = array(
 	'viewapc-clear-confirm' => 'Katxea ezabatu nahi al duzu?',
 	'viewapc-clear-user-cache' => 'Lankidearen katxea ezabatu',
+	'viewapc-info-general' => 'Informazio orokorra',
 	'viewapc-apc-version' => 'APC bertsioa',
 	'viewapc-php-version' => 'PHP bertsioa',
+	'viewapc-shared-memory' => 'Partekatutako memoria',
+	'viewapc-start-time' => 'Hasiera denbora',
 	'viewapc-cached-files-d' => '{{PLURAL:$1|Fitxategi bat|$1 fitxategi}} ($2)',
 	'viewapc-memory-usage' => 'Memoria erabilpena',
 	'viewapc-display-value' => 'Balioa',
@@ -1197,8 +1718,19 @@ $messages['eu'] = array(
 	'viewapc-display-device' => 'Gailua',
 	'viewapc-display-info' => 'Izena',
 	'viewapc-display-type' => 'Mota',
+	'viewapc-display-mtime' => 'Aldatua',
+	'viewapc-display-creation_time' => 'Sortua',
+	'viewapc-display-deletion_time' => 'Ezabatua',
+	'viewapc-display-mem_size' => 'Tamaina',
+	'viewapc-ls-options-legend' => 'Aukerak',
 	'viewapc-ls-submit' => 'Joan!',
 	'viewapc-ls-header-name' => 'Izena',
+	'viewapc-ls-header-size' => 'Tamaina',
+	'viewapc-ls-header-created' => 'Sortua',
+	'viewapc-ls-header-deleted' => 'Ezabatua',
+	'viewapc-ls-delete' => '[Orain ezabatu]',
+	'viewapc-ls-scope-deleted' => 'Ezabatua',
+	'viewapc-ls-sort-size' => 'Tamaina',
 	'viewapc-ls-sort-name' => 'Izena',
 	'viewapc-ls-sort-accessed' => 'Azken sarrera',
 	'viewapc-ls-sort-modified' => 'Azken aldaketa',
@@ -1224,11 +1756,12 @@ $messages['fa'] = array(
  * @author Crt
  * @author Jaakonam
  * @author Nike
+ * @author Str4nd
  */
 $messages['fi'] = array(
 	'viewapc' => 'APC-tiedot',
-	'viewapc-desc' => '[[Special:ViewAPC|Tarkastella ja hallita APC-muistia]] MediaWikillä',
-	'right-apc' => 'Käyttää kaikkia ominaisuuksia sivulla [[Special:ViewAPC]]',
+	'viewapc-desc' => '[[Special:ViewAPC|Tarkastele ja hallitse APC-muistia]] MediaWikillä.',
+	'right-apc' => 'Käyttää kaikkia ominaisuuksia sivulla [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Tietoja ei saatavilla.
 APC ei näytä olevan käytössä.',
 	'viewapc-clear-confirm' => 'Haluatko tyhjentää muistin?',
@@ -1332,15 +1865,18 @@ Uudempi versio ($2) on saatavilla osoitteesta http://pecl.php.net/package/APC/$2
 );
 
 /** French (Français)
+ * @author Crochet.david
+ * @author Damouns
  * @author Grondin
  * @author IAlex
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'viewapc' => 'Informations APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Voir et gérer le cache APC]] avec MediaWiki',
-	'right-apc' => 'Utiliser toutes les fonctionnalités de [[Special:ViewAPC]]',
-	'viewapc-apc-not-available' => "Aucune information sur le cache n'est disponible.
-APC semble ne pas fonctionner.",
+	'right-apc' => 'Utiliser toutes les fonctionnalités de [[Special:ViewAPC|ViewAPC]]',
+	'viewapc-apc-not-available' => 'Aucune information sur le cache n’est disponible.
+APC semble ne pas fonctionner.',
 	'viewapc-clear-confirm' => 'Voulez-vous supprimer le cache ?',
 	'viewapc-clear-user-cache' => 'Supprimer le cache utilisateur',
 	'viewapc-clear-code-cache' => 'Supprimer le cache des codes opérations',
@@ -1355,23 +1891,23 @@ APC semble ne pas fonctionner.",
 	'viewapc-shared-memory' => 'Mémoire partagée',
 	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segment de $2|$1 segments de $2 chacun}}.<br />
 (mémoire $3, verrouillage $4)',
-	'viewapc-start-time' => 'Heure du début',
+	'viewapc-start-time' => 'Heure de démarrage',
 	'viewapc-uptime' => 'Temps de fonctionnement',
-	'viewapc-upload-support' => 'Support de téléchargement de fichiers',
+	'viewapc-upload-support' => 'Support du téléversement de fichiers',
 	'viewapc-filecache-info' => 'Informations du cache des fichiers',
 	'viewapc-usercache-info' => 'Informations du cache utilisateur',
 	'viewapc-cached-files' => 'Fichiers cachés',
-	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|fichier|fichiers}} ($2)',
+	'viewapc-cached-files-d' => '$1 fichier{{PLURAL:$1||s}} ($2)',
 	'viewapc-hits' => 'Succès',
-	'viewapc-misses' => 'Manqués',
+	'viewapc-misses' => 'Manques',
 	'viewapc-requests' => 'Taux de requêtes',
 	'viewapc-hitrate' => 'Taux de succès',
 	'viewapc-missrate' => 'Taux de manque',
-	'viewapc-insertrate' => "Taux d'insertion",
-	'viewapc-cachefull' => 'Compte de cache plein',
+	'viewapc-insertrate' => 'Taux d’insertion',
+	'viewapc-cachefull' => 'Compteur de cache plein',
 	'viewapc-rps' => '$1 requêtes par seconde',
 	'viewapc-info-runtime' => 'Informations de fonctionnement',
-	'viewapc-info-memory' => 'Diagrammes du statut du serveur',
+	'viewapc-info-memory' => 'Diagrammes de statut du serveur',
 	'viewapc-memory-usage-detailed' => 'Utilisation de la mémoire<br />
 (les diverses tranches indiquent des fragments)',
 	'viewapc-memory-usage' => 'Utilisation de la mémoire',
@@ -1379,16 +1915,16 @@ APC semble ne pas fonctionner.",
 	'viewapc-memory-free' => 'Libre : $1 ($2)',
 	'viewapc-memory-used' => 'Utilisée : $1 ($2)',
 	'viewapc-memory-hits' => 'Succès : $1 ($2)',
-	'viewapc-memory-miss' => 'Manqués : $1 ($2)',
+	'viewapc-memory-miss' => 'Manques : $1 ($2)',
 	'viewapc-memoryfragmentation' => 'Utilisation détaillée de la mémoire et fragmentation',
-	'viewapc-fragmentation-info' => 'Fragmentation : $1 ($2 sur $3 dans $4 {{PLURAL:$4|fragment|fragments}})',
+	'viewapc-fragmentation-info' => 'Fragmentation : $1 ($2 sur $3 dans $4 fragment{{PLURAL:$4||s}})',
 	'viewapc-fragmentation-none' => 'Fragmentation : aucune fragmentation',
 	'viewapc-display-attribute' => 'Attribut',
 	'viewapc-display-value' => 'Valeur',
 	'viewapc-display-filename' => 'Nom du fichier',
 	'viewapc-display-device' => 'Périphérique',
 	'viewapc-display-info' => 'Nom',
-	'viewapc-display-ttl' => 'temps d’expiration',
+	'viewapc-display-ttl' => 'Temps d’expiration',
 	'viewapc-display-inode' => 'Inode',
 	'viewapc-display-type' => 'Type',
 	'viewapc-display-type-file' => 'Fichier caché',
@@ -1404,8 +1940,8 @@ APC semble ne pas fonctionner.",
 	'viewapc-display-stored-value' => 'Valeur stockée',
 	'viewapc-display-too-big' => "''Le contenu est trop grand pour être affiché.''",
 	'viewapc-ls-options-legend' => 'Options',
-	'viewapc-ls-options' => 'Portée: $1 Tri: $2$3$4 Recherche: $5 $6',
-	'viewapc-ls-submit' => 'Afficher !',
+	'viewapc-ls-options' => 'Portée : $1 Tri : $2$3$4 Recherche : $5 $6',
+	'viewapc-ls-submit' => 'Lister !',
 	'viewapc-ls-header-name' => 'Nom',
 	'viewapc-ls-header-hits' => 'Requêtes',
 	'viewapc-ls-header-size' => 'Taille',
@@ -1427,10 +1963,10 @@ APC semble ne pas fonctionner.",
 	'viewapc-ls-sort-deleted' => 'Supprimé',
 	'viewapc-ls-sort-timeout' => 'Expiration',
 	'viewapc-ls-limit-none' => 'Tous',
-	'viewapc-ls-more' => "''Il y a $1 autres {{PLURAL:$1|entrée|entrées}}''",
+	'viewapc-ls-more' => "''Il y a $1 {{PLURAL:$1|autre entrée|autres entrées}}''",
 	'viewapc-ls-nodata' => "''Aucune donnée ne correspond''",
-	'viewapc-delete-ok' => "L'entrée <nowiki>$1</nowiki> du cache est supprimée.",
-	'viewapc-delete-failed' => 'L’entrée <nowiki>$1</nowiki> du cache n’a pas pu être supprimée',
+	'viewapc-delete-ok' => 'L’entrée <nowiki>$1</nowiki> du cache est supprimée.',
+	'viewapc-delete-failed' => 'L’entrée <nowiki>$1</nowiki> du cache n’a pas pu être supprimée.',
 	'viewapc-version-info' => 'Information de version',
 	'viewapc-version-changelog' => 'Journal des modifications',
 	'viewapc-version-failed' => 'Impossible de retrouver les informations de version.',
@@ -1455,7 +1991,7 @@ $messages['fy'] = array(
 $messages['gl'] = array(
 	'viewapc' => 'Información ACP',
 	'viewapc-desc' => '[[Special:ViewAPC|Ver e xestionar a caché APC]] con MediaWiki',
-	'right-apc' => 'Usar todas as características en [[Special:ViewAPC]]',
+	'right-apc' => 'Usar todas as características de [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'A información da memoria caché non está dispoñible.
 Parece que APC non funciona.',
 	'viewapc-clear-confirm' => 'Desexa borrar a memoria caché?',
@@ -1566,15 +2102,22 @@ $messages['grc'] = array(
 	'viewapc-display-value' => 'Τιμή',
 	'viewapc-display-device' => 'Σκεῦος',
 	'viewapc-display-info' => 'Ὄνομα',
+	'viewapc-display-inode' => 'Inode',
 	'viewapc-display-type' => 'Τύπος',
 	'viewapc-display-mtime' => 'Τετροποποιημένη',
+	'viewapc-display-creation_time' => 'Κτιστός',
 	'viewapc-display-deletion_time' => 'Διεγραμμένη',
+	'viewapc-display-mem_size' => 'Μέγεθος',
 	'viewapc-ls-options-legend' => 'Ἐπιλογαί',
 	'viewapc-ls-submit' => 'Ἱέναι!',
 	'viewapc-ls-header-name' => 'Ὄνομα',
+	'viewapc-ls-header-size' => 'Μέγεθος',
+	'viewapc-ls-header-created' => 'Κτιστός',
 	'viewapc-ls-header-deleted' => 'Διεγραμμένη',
 	'viewapc-ls-scope-deleted' => 'Διεγραμμένη',
+	'viewapc-ls-sort-size' => 'Μέγεθος',
 	'viewapc-ls-sort-name' => 'Ὄνομα',
+	'viewapc-ls-sort-created' => 'Κτιστός',
 	'viewapc-ls-sort-deleted' => 'Διεγραμμένη',
 	'viewapc-ls-limit-none' => 'Ἅπασαι',
 );
@@ -1585,7 +2128,7 @@ $messages['grc'] = array(
 $messages['gsw'] = array(
 	'viewapc' => 'APC-Informatione',
 	'viewapc-desc' => 'APC-Cache mit MediaWiki [[Special:ViewAPC|aaluege un bearbeite]]',
-	'right-apc' => 'Cha alli Funktione vu [[Special:ViewAPC]] verwände',
+	'right-apc' => 'Cha alli Funktione vu [[Special:ViewAPC|ViewAPC]] verwände',
 	'viewapc-apc-not-available' => 'Kei Cache-Informatione verfiegbar.
 APC wird schyyns nit uusgfiert.',
 	'viewapc-clear-confirm' => 'Mechtsch dr Cache lääre?',
@@ -1706,7 +2249,7 @@ $messages['haw'] = array(
 $messages['he'] = array(
 	'viewapc' => 'נתוני APC',
 	'viewapc-desc' => '[[Special:ViewAPC|צפייה וניהול מטמון ה־ APC]] באמצעות מדיה־ויקי',
-	'right-apc' => 'שימוש בכל התכונות של [[Special:ViewAPC]]',
+	'right-apc' => 'שימוש בכל התכונות של [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'אין נתוני מטמון זמינים.
 נראה שה־APC אינו פעיל.',
 	'viewapc-clear-confirm' => 'האם ברצונכם לרוקן את המטמון?',
@@ -1757,6 +2300,7 @@ $messages['he'] = array(
 	'viewapc-display-device' => 'התקן',
 	'viewapc-display-info' => 'שם',
 	'viewapc-display-ttl' => 'זמן פקיעה',
+	'viewapc-display-inode' => 'מספר Inode',
 	'viewapc-display-type' => 'סוג',
 	'viewapc-display-type-file' => 'קובץ במטמון',
 	'viewapc-display-type-user' => 'נתוני יישום במטמון',
@@ -1810,11 +2354,13 @@ $messages['he'] = array(
 
 /** Hindi (हिन्दी)
  * @author Kaustubh
+ * @author Kiranmayee
+ * @author आलोक
  */
 $messages['hi'] = array(
 	'viewapc' => 'APC ज़ानकारी',
 	'viewapc-desc' => 'मीडियाविकि के साथ [[Special:ViewAPC|APC कैशे देखें तथा व्यवस्थापन]] करें',
-	'right-apc' => 'Special:ViewAPC के सभी फीचर्स देखें',
+	'right-apc' => '[[Special:ViewAPC|देखयेपिसी]] के सभी फीचर्स उपयोगित करो',
 	'viewapc-apc-not-available' => 'कैशे ज़ानकारी उपलब्ध नहीं हैं।
 शायद APC चल नहीं रहा हैं।',
 	'viewapc-clear-confirm' => 'क्या आप कैशे मेमरी खाली करना चाहतें हैं?',
@@ -1833,8 +2379,8 @@ $messages['hi'] = array(
 ($3 मेमरी, $4 लॉकिंग)',
 	'viewapc-start-time' => 'शुरुवात का समय',
 	'viewapc-uptime' => 'अपटाइम',
-	'viewapc-upload-support' => 'फ़ाइल अपलोड सहायता',
-	'viewapc-filecache-info' => 'फ़ाइल कैशे ज़ानकारी',
+	'viewapc-upload-support' => 'संचिका चढ़ाने संबंधी मदद',
+	'viewapc-filecache-info' => 'संचिका के संचय संबंधी जानकारी',
 	'viewapc-usercache-info' => 'सदस्य कैशे ज़ानकारी',
 	'viewapc-cached-files' => 'कैशे मेमरी में रखी फ़ाइलें',
 	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|फ़ाईल|फ़ाईलें}} ($2)',
@@ -1878,6 +2424,7 @@ $messages['hi'] = array(
 	'viewapc-display-ref_count' => 'संदर्भ गिनती',
 	'viewapc-display-mem_size' => 'आकार',
 	'viewapc-display-stored-value' => 'जताई हुई किमत',
+	'viewapc-display-too-big' => "''दिखाने के लिए समाहार बहुत ज्यादा हैं|''",
 	'viewapc-ls-options-legend' => 'ओप्शन्स',
 	'viewapc-ls-options' => 'स्कोप: $1 सॉर्टिंग: $2$3$4 खोज: $5 $6',
 	'viewapc-ls-submit' => 'जायें!',
@@ -1929,7 +2476,7 @@ $messages['hil'] = array(
 $messages['hr'] = array(
 	'viewapc' => 'APC priopćenje',
 	'viewapc-desc' => '[[Special:ViewAPC|Vidi i uredi APC priručnu memoriju]] s MediaWiki',
-	'right-apc' => 'Korištenje svih mogućnosti u [[Special:ViewAPC]]',
+	'right-apc' => 'Korištenje svih mogućnosti u [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Nema dostupnog priopćenja o priručnoj memoriji.
 APC izgleda nije prisutan.',
 	'viewapc-clear-confirm' => 'Želite očistiti priručnu memoriju?',
@@ -1944,7 +2491,7 @@ APC izgleda nije prisutan.',
 $messages['hsb'] = array(
 	'viewapc' => 'APC informacije',
 	'viewapc-desc' => 'Z MediaWiki [[Special:ViewAPC|APC pufrowak zwobraznić a zrjadować]]',
-	'right-apc' => 'Wšě funkcije w [[Special:ViewAPC]] wužiwać',
+	'right-apc' => 'Wšě funkcije w [[Special:ViewAPC|ViewAPC]] wužiwać',
 	'viewapc-apc-not-available' => 'Žane informacije wo pufrowaku k dispoziciji.
 Zda so, zo APC njeběži.',
 	'viewapc-clear-confirm' => 'Chceš pufrowak wuprózdnić?',
@@ -2049,13 +2596,28 @@ Nowša wersija $2 steji na http://pecl.php.net/package/APC/$2 k dispoziciji.',
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'viewapc' => 'APC-információ',
+	'viewapc-desc' => "[[Special:ViewAPC|APC gyorstótár megtekintése és beállítása]] ''MediaWiki''vel",
 	'right-apc' => 'a Special:ViewAPC összes funkciójának használata',
+	'viewapc-apc-not-available' => 'A gyorítótárinformációk nem elérhetőek.
+Úgy tűnik, hogy az APC nem fut.',
+	'viewapc-clear-confirm' => 'Szeretnéd kiüríteni a gyorsítótárat?',
+	'viewapc-clear-user-cache' => 'Felhasználói gyorsítótár kiürítése',
+	'viewapc-clear-code-cache' => 'Műveleti kód gyorsítótár kiürítése',
+	'viewapc-mode-stats' => 'Host statisztikák megjelenítése',
+	'viewapc-mode-system-cache' => 'Rendszer-gyorsítótár bejegyzések',
+	'viewapc-mode-system-cache-dir' => 'Könyvtárankénti bejegyzések',
+	'viewapc-mode-user-cache' => 'Felhasználói gyorsítótár bejegyzések',
+	'viewapc-mode-version-check' => 'Verzió ellenőrzése',
 	'viewapc-info-general' => 'Általános információk',
 	'viewapc-apc-version' => 'APC-verzió',
 	'viewapc-php-version' => 'PHP-verzió',
 	'viewapc-shared-memory' => 'Megosztott memória',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|egy|$1}} $2 méretű szegmens.<br />
+($3 memória, $4 zárolás)',
 	'viewapc-start-time' => 'Futtatás kezdete',
 	'viewapc-uptime' => 'Futási idő',
 	'viewapc-upload-support' => 'Fájlfeltöltés támogatása',
@@ -2068,11 +2630,14 @@ $messages['hu'] = array(
 	'viewapc-requests' => 'Kérési sebesség',
 	'viewapc-hitrate' => 'Találati sebesség',
 	'viewapc-missrate' => 'Hibázási sebesség',
+	'viewapc-insertrate' => 'Bekerülési ráta',
+	'viewapc-cachefull' => 'Hányszor volt teli a gyorsítótár',
 	'viewapc-rps' => '$1 kérés másodpercenként',
 	'viewapc-info-runtime' => 'Információk: futási idő',
 	'viewapc-info-memory' => 'Állapotdiagramok: kiszolgáló',
 	'viewapc-memory-usage-detailed' => 'Memóriahasználat<br />
 (több szelet a töredezettséget jelzi)',
+	'viewapc-memory-usage' => 'Memóriahasználat',
 	'viewapc-cache-efficiency' => 'Találatok és hibázások',
 	'viewapc-memory-free' => 'Szabad: $1 ($2)',
 	'viewapc-memory-used' => 'Használt: $1 ($2)',
@@ -2081,6 +2646,62 @@ $messages['hu'] = array(
 	'viewapc-memoryfragmentation' => 'Részletes memóriahasználat és töredezettség',
 	'viewapc-fragmentation-info' => 'Töredezettség: $1 ($2 a $3 bájtból {{PLURAL:$4|egy|$4}} darabban)',
 	'viewapc-fragmentation-none' => 'Töredezettség: nincs töredezettség',
+	'viewapc-display-attribute' => 'Attribútum',
+	'viewapc-display-value' => 'Érték',
+	'viewapc-display-filename' => 'Fájlnév',
+	'viewapc-display-device' => 'Eszköz',
+	'viewapc-display-info' => 'Név',
+	'viewapc-display-ttl' => 'Lejárat ideje',
+	'viewapc-display-inode' => 'Inode',
+	'viewapc-display-type' => 'Típus',
+	'viewapc-display-type-file' => 'Gyorstárazott fájl',
+	'viewapc-display-type-user' => 'Gyorstárazott programadatok',
+	'viewapc-display-num_hits' => 'Találatok',
+	'viewapc-display-mtime' => 'Módosítva',
+	'viewapc-display-creation_time' => 'Létrehozva',
+	'viewapc-display-deletion_time' => 'Törölve',
+	'viewapc-display-no-delete' => 'Nincs törölve',
+	'viewapc-display-access_time' => 'Elérve',
+	'viewapc-display-ref_count' => 'Hivatkozások száma',
+	'viewapc-display-mem_size' => 'Méret',
+	'viewapc-display-stored-value' => 'Tárolt érték',
+	'viewapc-display-too-big' => "''A tartalom túl nagy, nem lehet megjeleníteni.''",
+	'viewapc-ls-options-legend' => 'Beállítások',
+	'viewapc-ls-options' => 'Hatókör: $1 Rendezés: $2$3$4 Keresés: $5 $6',
+	'viewapc-ls-submit' => 'Menj!',
+	'viewapc-ls-header-name' => 'Név',
+	'viewapc-ls-header-hits' => 'Találatok',
+	'viewapc-ls-header-size' => 'Méret',
+	'viewapc-ls-header-accessed' => 'Utoljára elérve',
+	'viewapc-ls-header-modified' => 'Utoljára módosítva',
+	'viewapc-ls-header-created' => 'Létrehozva',
+	'viewapc-ls-header-deleted' => 'Törölve',
+	'viewapc-ls-header-timeout' => 'Időtúllépés',
+	'viewapc-ls-delete' => '[Törlés most]',
+	'viewapc-ls-scope-active' => 'Aktív',
+	'viewapc-ls-scope-deleted' => 'Törölt',
+	'viewapc-ls-scope-both' => 'Mindkettő',
+	'viewapc-ls-sort-hits' => 'Találatok',
+	'viewapc-ls-sort-size' => 'Méret',
+	'viewapc-ls-sort-name' => 'Név',
+	'viewapc-ls-sort-accessed' => 'Utolsó hozzáférés',
+	'viewapc-ls-sort-modified' => 'Utoljára módosítva',
+	'viewapc-ls-sort-created' => 'Létrehozva',
+	'viewapc-ls-sort-deleted' => 'Törölve',
+	'viewapc-ls-sort-timeout' => 'Időtúllépés',
+	'viewapc-ls-limit-none' => 'Mind',
+	'viewapc-ls-more' => "''Még {{PLURAL:$1|egy|$1}} bejegyzés van''",
+	'viewapc-ls-nodata' => "''Nincs egyező adat''",
+	'viewapc-delete-ok' => 'A(z) <nowiki>$1</nowiki> gyorsítótár-bejegyzés törölve.',
+	'viewapc-delete-failed' => 'Nem sikerült a következő gyorsítótár-bejegyzést törölni: <nowiki>$1</nowiki>.',
+	'viewapc-version-info' => 'Verzióinformáció',
+	'viewapc-version-changelog' => 'Változások listája',
+	'viewapc-version-failed' => 'Nem sikerült lekérdezni a verzióinformációt.',
+	'viewapc-version-ok' => 'A legfrissebb verziójú APC-t használod ($1)',
+	'viewapc-version-old' => 'Az APC egy régebbi verzióját használod ($1).
+A $2 verzió elérhető a következő címen: http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Fájl gyorsítótár törölve.'''''",
+	'viewapc-usercache-cleared' => "'''''Alkalmazás gyorsítótár törölve.'''''",
 );
 
 /** Armenian (Հայերեն)
@@ -2096,7 +2717,7 @@ $messages['hy'] = array(
 $messages['ia'] = array(
 	'viewapc' => 'Informationes APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Vider e gerer le cache APC]] con MediaWiki',
-	'right-apc' => 'Usar tote le functionalitate de [[Special:ViewAPC]]',
+	'right-apc' => 'Usar tote le functionalitate de [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Nulle information de cache disponibile.
 APC non pare esser active.',
 	'viewapc-clear-confirm' => 'Vole tu rader le cache?',
@@ -2200,13 +2821,15 @@ Un nove version $2 es disponibile a http://pecl.php.net/package/APC/$2',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
+ * @author IvanLanin
  * @author Rex
  */
 $messages['id'] = array(
 	'viewapc' => 'Informasi APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Menampilkan dan mengelola tembolok APC]] dengan MediaWiki',
-	'right-apc' => 'Menggunakan semua fitur di [[Special:ViewAPC]]',
+	'right-apc' => 'Menggunakan semua fitur di [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Informasi tembolok tidak tersedia.
 APC kemungkinan tidak berjalan saat ini.',
 	'viewapc-clear-confirm' => 'Apakah Anda yakin untuk menghapus tembolok?',
@@ -2234,6 +2857,7 @@ APC kemungkinan tidak berjalan saat ini.',
 	'viewapc-misses' => 'Kehilangan',
 	'viewapc-requests' => 'Tingkat permintaan',
 	'viewapc-hitrate' => 'Tingkat akses',
+	'viewapc-missrate' => 'Tingkat kegagalan',
 	'viewapc-insertrate' => 'Tingkat penyisipan',
 	'viewapc-cachefull' => 'Jumlah total tembolok',
 	'viewapc-rps' => '$1 permintaan per detik',
@@ -2244,11 +2868,81 @@ APC kemungkinan tidak berjalan saat ini.',
 	'viewapc-memory-usage' => 'Penggunaan memori',
 	'viewapc-cache-efficiency' => 'Jumlah pengaksesan dan kegagalan akses',
 	'viewapc-memory-free' => 'Bebas: $1 ($2)',
+	'viewapc-memory-used' => 'Digunakan: $1 ($2)',
+	'viewapc-memory-hits' => 'Akses: $1 ($2)',
+	'viewapc-memory-miss' => 'Gagal: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Detail penggunaan memori dan fragmentasi',
+	'viewapc-fragmentation-info' => 'Fragmentasi:$1 ($2 dari $3 dalam $4 {{PLURAL:$4|fragmen|fragmen}})',
+	'viewapc-fragmentation-none' => 'Fragmentasi: nihil',
+	'viewapc-display-attribute' => 'Atribut',
+	'viewapc-display-value' => 'Nilai',
+	'viewapc-display-filename' => 'Nama berkas',
+	'viewapc-display-device' => 'Peranti',
 	'viewapc-display-info' => 'Nama',
+	'viewapc-display-ttl' => 'Waktu kadaluwarsa',
+	'viewapc-display-inode' => 'Inoda',
+	'viewapc-display-type' => 'Tipe',
+	'viewapc-display-type-file' => 'Berkas tersimpan',
+	'viewapc-display-type-user' => 'Data aplikasi tersimpan',
+	'viewapc-display-num_hits' => 'Akses',
+	'viewapc-display-mtime' => 'Diubah',
+	'viewapc-display-creation_time' => 'Telah dibuat',
+	'viewapc-display-deletion_time' => 'Dihapus',
+	'viewapc-display-no-delete' => 'Tidak dihapus',
+	'viewapc-display-access_time' => 'Diakses',
+	'viewapc-display-ref_count' => 'Nilai referensi',
+	'viewapc-display-mem_size' => 'Ukuran',
+	'viewapc-display-stored-value' => 'Nilai tersimpan',
+	'viewapc-display-too-big' => "''Isi terlalu besar untuk di tampilkan.''",
 	'viewapc-ls-options-legend' => 'Pilihan',
+	'viewapc-ls-options' => 'Lingkup: $1 Urutan: $2$3$4 Pencarian: $5 $6',
+	'viewapc-ls-submit' => 'Kirim!',
 	'viewapc-ls-header-name' => 'Nama',
+	'viewapc-ls-header-hits' => 'Akses',
+	'viewapc-ls-header-size' => 'Ukuran',
+	'viewapc-ls-header-accessed' => 'Terakhir diakses',
+	'viewapc-ls-header-modified' => 'Terakhir diubah',
+	'viewapc-ls-header-created' => 'Telah dibuat',
+	'viewapc-ls-header-deleted' => 'Dihapus',
+	'viewapc-ls-header-timeout' => 'Jeda',
+	'viewapc-ls-delete' => '[Hapus sekarang]',
+	'viewapc-ls-scope-active' => 'Aktif',
+	'viewapc-ls-scope-deleted' => 'Dihapus',
+	'viewapc-ls-scope-both' => 'Keduanya',
+	'viewapc-ls-sort-hits' => 'Akses',
+	'viewapc-ls-sort-size' => 'Ukuran',
 	'viewapc-ls-sort-name' => 'Nama',
+	'viewapc-ls-sort-accessed' => 'Terakhir diakses',
+	'viewapc-ls-sort-modified' => 'Terakhir diubah',
+	'viewapc-ls-sort-created' => 'Telah dibuat',
+	'viewapc-ls-sort-deleted' => 'Dihapus',
+	'viewapc-ls-sort-timeout' => 'Jeda',
 	'viewapc-ls-limit-none' => 'Semua',
+	'viewapc-ls-more' => "''Ada $1 {{PLURAL:$1|entri|entri}} lagi''",
+	'viewapc-ls-nodata' => "''Tak ada data yang sesuai''",
+	'viewapc-delete-ok' => 'Entri tersimpan <nowiki>$1</nowiki> dihapus.',
+	'viewapc-delete-failed' => 'Gagal menghapus entri tersimpan <nowiki>$1</nowiki>.',
+	'viewapc-version-info' => 'Informasi versi',
+	'viewapc-version-changelog' => 'Log perubahan',
+	'viewapc-version-failed' => 'Tidak berhasil mengambil informasi versi.',
+	'viewapc-version-ok' => 'Anda menjalankan versi terakhir APC ($1)',
+	'viewapc-version-old' => 'Anda menjalankan versi lama APC ($1).
+Versi lebih baru $2 tersedia di http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Simpanan berkas dikosongkan.'''''",
+	'viewapc-usercache-cleared' => "'''''Simpanan aplikasi dikosongkan.'''''",
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'viewapc-display-value' => 'Onuogụgụ',
+	'viewapc-display-info' => 'Áhà',
+	'viewapc-ls-submit' => 'Gá!',
+	'viewapc-ls-sort-size' => 'Ivụ',
+	'viewapc-ls-sort-name' => 'Áhà',
+	'viewapc-ls-sort-timeout' => 'Ogẹ afüolé',
+	'viewapc-ls-limit-none' => 'Nke níle',
 );
 
 /** Ido (Ido)
@@ -2263,12 +2957,13 @@ $messages['io'] = array(
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Melos
  * @author Pietrodn
  */
 $messages['it'] = array(
 	'viewapc' => 'informazioni APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Visualizza e gestisce la cache APC]] con MediaWiki',
-	'right-apc' => 'Utilizza tutte le funzioni di [[Special:ViewAPC]]',
+	'right-apc' => 'Utilizza tutte le funzioni di [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => "Non è disponibile nessun'informazione sulla cache.
 APC non sembra essere in esecuzione.",
 	'viewapc-clear-confirm' => 'Vuoi pulire la cache?',
@@ -2302,6 +2997,7 @@ APC non sembra essere in esecuzione.",
 	'viewapc-memory-usage' => 'Uso della memoria',
 	'viewapc-memory-free' => 'Libera: $1 ($2)',
 	'viewapc-memory-used' => 'Usata: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Uso dettagliato della memoria e frammentazione',
 	'viewapc-display-value' => 'Valore',
 	'viewapc-display-info' => 'Nome',
 	'viewapc-ls-options-legend' => 'Opzioni',
@@ -2311,21 +3007,22 @@ APC non sembra essere in esecuzione.",
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
 	'viewapc' => 'APC情報',
 	'viewapc-desc' => 'MediaWiki で[[Special:ViewAPC|APCキャッシュを表示および管理する]]',
-	'right-apc' => '[[Special:ViewAPC]]の全機能の使用',
+	'right-apc' => '[[Special:ViewAPC|APC情報]]の全機能の使用',
 	'viewapc-apc-not-available' => 'キャッシュ情報は利用できません。APCが動作していないようです。',
-	'viewapc-clear-confirm' => 'キャッシュをクリアしたいのですか?',
+	'viewapc-clear-confirm' => 'キャッシュをクリアしますか？',
 	'viewapc-clear-user-cache' => 'ユーザーキャッシュをクリアする',
 	'viewapc-clear-code-cache' => '実行コードのキャッシュをクリアする',
 	'viewapc-mode-stats' => 'ホスト統計を閲覧する',
 	'viewapc-mode-system-cache' => 'システムキャッシュエントリ',
 	'viewapc-mode-system-cache-dir' => 'ディレクトリあたりのエントリ',
-	'viewapc-mode-user-cache' => 'ユーザキャッシュエントリ',
+	'viewapc-mode-user-cache' => 'ユーザーキャッシュエントリ',
 	'viewapc-mode-version-check' => 'バージョンチェック',
 	'viewapc-info-general' => '一般的な情報',
 	'viewapc-apc-version' => 'APC バージョン',
@@ -2339,7 +3036,7 @@ $messages['ja'] = array(
 	'viewapc-filecache-info' => 'ファイルキャッシュ情報',
 	'viewapc-usercache-info' => 'ユーザーキャッシュ情報',
 	'viewapc-cached-files' => 'キャッシュされたファイル',
-	'viewapc-cached-files-d' => '$1個 ($2)',
+	'viewapc-cached-files-d' => '$1{{PLURAL:$1|ファイル}} ($2)',
 	'viewapc-hits' => 'ヒット',
 	'viewapc-misses' => 'ミス',
 	'viewapc-requests' => 'リクエスト率',
@@ -2359,7 +3056,7 @@ $messages['ja'] = array(
 	'viewapc-memory-hits' => 'ヒット: $1 ($2)',
 	'viewapc-memory-miss' => 'ミス: $1 ($2)',
 	'viewapc-memoryfragmentation' => 'メモリ使用および断片化の詳細',
-	'viewapc-fragmentation-info' => '断片化: $1 ($3中 $2が$4個の領域に断片化)',
+	'viewapc-fragmentation-info' => '断片化: $1 ($3中 $2が$4個の{{PLURAL:$4|領域}}に断片化)',
 	'viewapc-fragmentation-none' => '断片化: 断片化なし',
 	'viewapc-display-attribute' => '属性',
 	'viewapc-display-value' => '値',
@@ -2405,7 +3102,7 @@ $messages['ja'] = array(
 	'viewapc-ls-sort-deleted' => '削除時刻',
 	'viewapc-ls-sort-timeout' => 'タイムアウト',
 	'viewapc-ls-limit-none' => 'すべて',
-	'viewapc-ls-more' => "''さらに $1 個のエントリがあります''",
+	'viewapc-ls-more' => "''さらに $1 個の{{PLURAL:$1|エントリ}}があります''",
 	'viewapc-ls-nodata' => "''マッチするデータなし''",
 	'viewapc-delete-ok' => 'キャッシュエントリ <nowiki>$1</nowiki> は削除されました。',
 	'viewapc-delete-failed' => 'キャッシュエントリ <nowiki>$1</nowiki> の削除に失敗しました。',
@@ -2420,11 +3117,12 @@ $messages['ja'] = array(
 
 /** Javanese (Basa Jawa)
  * @author Meursault2004
+ * @author Pras
  */
 $messages['jv'] = array(
 	'viewapc' => 'Informasi APC',
 	'viewapc-desc' => "[[Special:ViewAPC|Ndeleng lan ngurusi ''cache'' APC]] karo MediaWiki",
-	'right-apc' => 'Nganggo kabèh fitur ing Special:APC',
+	'right-apc' => 'Nganggo kabèh fitur ing [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => "Ora ana info ''cache'' sing kacepakaké.
 APC katoné ora mlaku.",
 	'viewapc-clear-confirm' => 'Panjenengan kepéngin ngosongaké cache?',
@@ -2519,11 +3217,12 @@ $messages['ka'] = array(
  * @author Lovekhmer
  * @author Thearith
  * @author គីមស៊្រុន
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
 	'viewapc' => 'ព័ត៌មាន APC',
 	'viewapc-desc' => '[[Special:ViewAPC|មើល និង​គ្រប់គ្រង​ឃ្លាំងសម្ងាត់ APC]] ជាមួយ​មេឌាវិគី',
-	'right-apc' => 'ប្រើប្រាស់​លក្ខណៈពិសេស​ទាំងអស់​នៅក្នុង [[Special:ViewAPC]]',
+	'right-apc' => 'ប្រើប្រាស់​លក្ខណៈពិសេស​ទាំងអស់​នៅក្នុង [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-clear-confirm' => 'តើ​អ្នក​ពិតជា​ចង់​សំអាត​ឃ្លាំងសម្ងាត់​មែន​ឬ​?',
 	'viewapc-clear-user-cache' => 'សំអាត​ឃ្លាំងសម្ងាត់​អ្នកប្រើប្រាស់',
 	'viewapc-mode-version-check' => 'ពិនិត្យ​កំណែ',
@@ -2531,6 +3230,7 @@ $messages['km'] = array(
 	'viewapc-apc-version' => 'កំណែ APC',
 	'viewapc-php-version' => 'កំណែ PHP',
 	'viewapc-shared-memory' => 'អង្គចងចាំដែលត្រូវបានប្រើរួមគ្នា',
+	'viewapc-start-time' => 'ពេលចាប់ផ្តើម',
 	'viewapc-usercache-info' => 'ព័ត៌មាន​ឃ្លាំងសម្ងាត់​អ្នកប្រើប្រាស់',
 	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|ឯកសារ|ឯកសារ}} ($2)',
 	'viewapc-rps' => '$1សំណើសុំក្នុងមួយវិនាទី',
@@ -2539,6 +3239,7 @@ $messages['km'] = array(
 	'viewapc-memory-used' => 'ត្រូវបានប្រើប្រាស់៖ $1 ($2)',
 	'viewapc-display-value' => 'តម្លៃ',
 	'viewapc-display-filename' => 'ឈ្មោះឯកសារ',
+	'viewapc-display-device' => 'ឧបករណ៍​',
 	'viewapc-display-info' => 'ឈ្មោះ',
 	'viewapc-display-ttl' => 'ពេលវេលាផុតកំណត់',
 	'viewapc-display-type' => 'ប្រភេទ',
@@ -2547,6 +3248,7 @@ $messages['km'] = array(
 	'viewapc-display-deletion_time' => 'ត្រូវបានលុបចោល',
 	'viewapc-display-no-delete' => 'មិនត្រូវបានលុបចោល',
 	'viewapc-display-access_time' => 'ត្រូវបានចូលមើល',
+	'viewapc-display-ref_count' => 'ចំនួន​ឯកសារយោង',
 	'viewapc-display-mem_size' => 'ទំហំ',
 	'viewapc-display-stored-value' => 'តម្លៃដែលបានស្ដុកទុក',
 	'viewapc-ls-options-legend' => 'ជម្រើសនានា',
@@ -2577,6 +3279,16 @@ $messages['km'] = array(
 កំណែ​ថ្មី $2 អាចរកបាន​នៅ http://pecl.php.net/package/APC/$2',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'viewapc-display-info' => 'ಹೆಸರು',
+	'viewapc-ls-submit' => 'ಹೋಗು!',
+	'viewapc-ls-header-name' => 'ಹೆಸರು',
+	'viewapc-ls-sort-name' => 'ಹೆಸರು',
+);
+
 /** Korean (한국어)
  * @author Albamhandae
  * @author Kwj2772
@@ -2599,7 +3311,7 @@ $messages['kri'] = array(
 $messages['ksh'] = array(
 	'viewapc' => 'Enfomazjohne vum APC',
 	'viewapc-desc' => 'Der <i lang="en">APC cache</i> [[Special:ViewAPC|enstelle un beloore]] em MediaWiki.',
-	'right-apc' => 'All de Müjjeleschkeite fun de Söndersigg [[Special:ViewAPC]] notze',
+	'right-apc' => 'All de Müjjeleschkeite fun de Söndersigg [[Special:ViewAPC|ViewAPC]] notze',
 	'viewapc-apc-not-available' => 'Kein <i lang="en">cache</i>-Daate ze fenge.
 Der APC es wall nit am Loufe.',
 	'viewapc-clear-confirm' => 'Wells De dä <i lang="en">cache</i> leddisch maache?',
@@ -2702,21 +3414,29 @@ En neuer Version ($2) steiht ald parat op http://pecl.php.net/package/APC/$2',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
 	'viewapc' => 'Informatiounen iwwer APC',
-	'viewapc-desc' => '[[Special:ViewAPC|Den APC-Cache]] matt MediaWiki kucken a geréieren',
-	'right-apc' => 'Benotz all Fonctionalitéite vu [[Special:ViewAPC]]',
+	'viewapc-desc' => '[[Special:ViewAPC|Den APC-Cache]] mat MediaWiki kucken a geréieren',
+	'right-apc' => 'Benotzt all Fonctionalitéite vu [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-clear-confirm' => 'Wëllt Dir de Cache eidel maachen?',
 	'viewapc-clear-user-cache' => 'Benotzer Cache eidel maachen',
 	'viewapc-mode-stats' => "D'Statistike vum Server weisen",
+	'viewapc-mode-system-cache' => 'Aschreiwungen an der System-Cache',
+	'viewapc-mode-system-cache-dir' => 'Aschreiwunge pro Repertoire',
+	'viewapc-mode-user-cache' => 'Aschreiwungen an der Benotzer-Cache',
 	'viewapc-mode-version-check' => 'Versioun nokucken',
 	'viewapc-info-general' => 'Allgemeng Informatiounen',
 	'viewapc-apc-version' => 'APC Versioun',
 	'viewapc-php-version' => 'PHP Versioun',
+	'viewapc-shared-memory' => 'Gedeelte Memoire',
 	'viewapc-start-time' => 'Ufankszäit',
-	'viewapc-upload-support' => "Ënnerstetzung fir d'Eropluede vu Fichieren",
+	'viewapc-uptime' => 'Betriebszäit (Uptime)',
+	'viewapc-upload-support' => "Ënnerstëtzung fir d'Eropluede vu Fichieren",
+	'viewapc-usercache-info' => 'Informatiounen vum Benotzer-Cache',
+	'viewapc-cached-files' => 'Tëschegespäichert Fichieren',
 	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|Fichier|Fichieren}} ($2)',
 	'viewapc-hits' => 'Treffer',
 	'viewapc-rps' => '$1 Ufroe pro Sekonn',
@@ -2725,20 +3445,27 @@ $messages['lb'] = array(
 	'viewapc-memory-free' => 'Fräi: $1 ($2)',
 	'viewapc-memory-used' => 'Benotzt: $1 ($2)',
 	'viewapc-memory-hits' => 'Treffer: $1 ($2)',
+	'viewapc-memory-miss' => 'Verfeelt: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Detailer vum Späichergebrauch a -fragmentatioun',
 	'viewapc-fragmentation-info' => 'Fragmentatioun: $1 ($2 vun $3 an $4 {{PLURAL:$4|Fragment|Fragmenter}})',
 	'viewapc-fragmentation-none' => 'Fragmentatioun: keng Fragmentatioun',
+	'viewapc-display-attribute' => 'Eegeschaft',
 	'viewapc-display-value' => 'Wert',
 	'viewapc-display-filename' => 'Numm vum Fichier',
 	'viewapc-display-device' => 'Apparat',
 	'viewapc-display-info' => 'Numm',
 	'viewapc-display-ttl' => 'Verfallsdatum',
+	'viewapc-display-inode' => 'Inode',
 	'viewapc-display-type' => 'Typ',
+	'viewapc-display-type-file' => 'tëschegespäicherte Fichier',
+	'viewapc-display-type-user' => 'Tëschegespäichert Donnéeë vun der Applicatioun',
 	'viewapc-display-num_hits' => 'Treffer',
 	'viewapc-display-mtime' => 'Geännert',
 	'viewapc-display-creation_time' => 'Gemaach',
 	'viewapc-display-deletion_time' => 'Geläscht',
 	'viewapc-display-no-delete' => 'Net geläscht',
 	'viewapc-display-access_time' => 'Zougegraff',
+	'viewapc-display-ref_count' => 'Referenzecompteur',
 	'viewapc-display-mem_size' => 'Gréisst',
 	'viewapc-display-stored-value' => 'Gespäicherte Wert',
 	'viewapc-display-too-big' => "''Den Inhalt ass ze grouss fir ën ze weisen.''",
@@ -2765,9 +3492,11 @@ $messages['lb'] = array(
 	'viewapc-ls-sort-deleted' => 'Geläscht',
 	'viewapc-ls-sort-timeout' => 'Timeout',
 	'viewapc-ls-limit-none' => 'Alleguer',
+	'viewapc-ls-nodata' => "''Keng Donnée trëfft zou''",
+	'viewapc-delete-failed' => "D'Entrée <nowiki>$1</nowiki> vum Tëschespäicher (Cache) konnt net geläscht ginn",
 	'viewapc-version-info' => "Informatiounen iwwert d'Versioun",
 	'viewapc-version-changelog' => 'Lëscht vun den Ännerungen',
-	'viewapc-version-failed' => "Et as net mégilech d'Informatioune vun der Versioun ze fannen.",
+	'viewapc-version-failed' => "Et ass net mégilech d'Informatioune vun der Versioun ze fannen.",
 	'viewapc-version-ok' => 'Dir benotzt déi neiste Versioun vun APC ($1)',
 	'viewapc-version-old' => 'Dir benotzt eng al Versioun vun APC ($1).
 Eng méi nei Versioun $2 ass op http://pecl.php.net/package/APC/$2 disponibel.',
@@ -2783,12 +3512,77 @@ $messages['lfn'] = array(
 
 /** Limburgish (Limburgs)
  * @author Ooswesthoesbes
+ * @author Pahles
  */
 $messages['li'] = array(
+	'viewapc' => 'APC-infermasie',
+	'viewapc-desc' => '[[Special:ViewAPC|De APC-cache betrachte en behere]] vanoet MediaWiki',
+	'right-apc' => 'Alle mäögelikhede van [[Special:ViewAPC|ViewAPC]] gebroeke',
+	'viewapc-apc-not-available' => 'Dao is gein infermasie euver de cache besjikbaar.
+APC liek neet gesjtart te zeen.',
+	'viewapc-clear-confirm' => 'Wils doe de cache laegmake?',
+	'viewapc-clear-user-cache' => 'Gebroekerscache laegmake',
+	'viewapc-clear-code-cache' => 'Opcodecache laegmake',
+	'viewapc-mode-stats' => 'Hostsjtattestieke betrachte',
+	'viewapc-mode-system-cache' => 'Systeemcache',
+	'viewapc-mode-system-cache-dir' => 'Per-directory cache',
+	'viewapc-mode-user-cache' => 'Gebroekerscache',
+	'viewapc-mode-version-check' => 'Versiekóntrol',
+	'viewapc-info-general' => 'Algemein infermasie',
+	'viewapc-apc-version' => 'APC-versie',
+	'viewapc-php-version' => 'PHP-versie',
+	'viewapc-shared-memory' => 'Gedeild geheuge',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segment van $2|$1 segmente $2 jeder}}.<br />
+($3 geheuge, $4 locking)',
+	'viewapc-start-time' => 'Sjtarttied',
+	'viewapc-uptime' => 'Uptime',
+	'viewapc-upload-support' => 'Ongersjteuning veur besjtandjsuploads',
+	'viewapc-filecache-info' => 'Infermasie euver besjtandjscache',
+	'viewapc-usercache-info' => 'Infermasie euver gebroekerscache',
+	'viewapc-cached-files' => 'Besjtandje in cache',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|besjtandj|besjtandje}} ($2)',
+	'viewapc-hits' => 'Hits',
+	'viewapc-misses' => 'Gemis',
+	'viewapc-requests' => 'Verzeukratio',
+	'viewapc-hitrate' => 'Hitratio',
+	'viewapc-missrate' => 'Misratio',
+	'viewapc-insertrate' => 'Toevoeginge',
+	'viewapc-cachefull' => 'Aantal kier cache vol',
+	'viewapc-rps' => '$1 verzeuke per second',
+	'viewapc-info-runtime' => 'Runtime-infermasie',
+	'viewapc-info-memory' => 'Hoststatusdiagramme',
+	'viewapc-memory-usage-detailed' => 'Geheugegebroek<br />
+(mierdere deile beduujt fragmentatie)',
+	'viewapc-memory-usage' => 'Geheugegebroek',
+	'viewapc-cache-efficiency' => 'Hits en misses',
 	'viewapc-memory-free' => 'Vrie: $1 ($2)',
 	'viewapc-memory-used' => 'Gebroek: $1 ($2)',
-	'viewapc-memory-hits' => 'Geraak: $1 ($2)',
+	'viewapc-memory-hits' => 'Hits: $1 ($2)',
 	'viewapc-memory-miss' => 'Gemis: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Details geheugegebroek en fragmentatie',
+	'viewapc-fragmentation-info' => 'Fragmentatie: $1 ($2 van $3 in $4 {{PLURAL:$4|fragment|fragmente}})',
+	'viewapc-fragmentation-none' => "Fragmentatie: d'r is gein fragmentatie",
+	'viewapc-display-attribute' => 'Eigesjap',
+	'viewapc-display-value' => 'Waerd',
+	'viewapc-display-filename' => 'Besjtandjsnaam',
+	'viewapc-display-device' => 'Apperaat',
+	'viewapc-display-info' => 'Naam',
+	'viewapc-display-ttl' => 'Vervaltied',
+	'viewapc-display-inode' => 'Inode',
+	'viewapc-display-type' => 'Type',
+	'viewapc-display-type-file' => 'Gecached besjtandj',
+	'viewapc-display-type-user' => 'Applicatiegegaeves in cache',
+	'viewapc-display-num_hits' => 'Hits',
+	'viewapc-display-mtime' => 'Aangepas',
+	'viewapc-display-creation_time' => 'Aangemaak',
+	'viewapc-display-deletion_time' => 'Eweggesjaf',
+	'viewapc-display-no-delete' => 'Neet eweggesjaf',
+	'viewapc-display-access_time' => 'Gebroek',
+	'viewapc-display-ref_count' => 'Aantal rifferensies',
+	'viewapc-display-mem_size' => 'Gruutde',
+	'viewapc-display-stored-value' => 'Opgesjlage waerd',
+	'viewapc-display-too-big' => "''De inhaud is te groet om waer te geve.''",
+	'viewapc-ls-options-legend' => 'Opties',
 );
 
 /** Lithuanian (Lietuvių)
@@ -2798,6 +3592,122 @@ $messages['lt'] = array(
 	'viewapc-mode-version-check' => 'Tikrinti versiją',
 	'viewapc-apc-version' => 'APC versija',
 	'viewapc-php-version' => 'PHP versija',
+);
+
+/** Eastern Mari (Олык Марий)
+ * @author Сай
+ */
+$messages['mhr'] = array(
+	'viewapc-ls-limit-none' => 'Чыла',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'viewapc' => 'Информации за APC',
+	'viewapc-desc' => '[[Special:ViewAPC|Преглед и раководење со APC кеш]] со МедијаВики',
+	'right-apc' => 'Користење на сите можности во [[Special:ViewAPC|ViewAPC]]',
+	'viewapc-apc-not-available' => 'Нема информации за кешот.
+Изгледа дека APC не работи.',
+	'viewapc-clear-confirm' => 'Дали сакате да го исчистите кешот?',
+	'viewapc-clear-user-cache' => 'Исчисти кориснички кеш',
+	'viewapc-clear-code-cache' => 'Исчисти opcode кеш',
+	'viewapc-mode-stats' => 'Види статистики за домаќинот',
+	'viewapc-mode-system-cache' => 'Записи од системскиот кеш',
+	'viewapc-mode-system-cache-dir' => 'Записи по директориум',
+	'viewapc-mode-user-cache' => 'Записи од корисничкиот кеш',
+	'viewapc-mode-version-check' => 'Провери верзија',
+	'viewapc-info-general' => 'Општи информации',
+	'viewapc-apc-version' => 'APC верзија',
+	'viewapc-php-version' => 'PHP верзија',
+	'viewapc-shared-memory' => 'Заедничка меморија',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 сегмент од $2|$1 сегменти, секој по $2}}.<br />
+($3 меморија, $4 заклучување)',
+	'viewapc-start-time' => 'Време на почеток',
+	'viewapc-uptime' => 'Време на работа',
+	'viewapc-upload-support' => 'Поддршка за подигање податотеки',
+	'viewapc-filecache-info' => 'Информации за податотечниот кеш',
+	'viewapc-usercache-info' => 'Информации за корисничкиот кеш',
+	'viewapc-cached-files' => 'Кеширани податотеки',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|податотека|податотеки}} ($2)',
+	'viewapc-hits' => 'Погодоци',
+	'viewapc-misses' => 'Промашувања',
+	'viewapc-requests' => 'Стапка на барања',
+	'viewapc-hitrate' => 'Стапка на погодување',
+	'viewapc-missrate' => 'Стапка на промашување',
+	'viewapc-insertrate' => 'Стапка на полнење',
+	'viewapc-cachefull' => 'Полн износ на кешот',
+	'viewapc-rps' => '$1 барања во секунда',
+	'viewapc-info-runtime' => 'Информации за работењето',
+	'viewapc-info-memory' => 'Дијаграми за статусот на домаќинот',
+	'viewapc-memory-usage-detailed' => 'Искористеност на меморијата<br />
+(засеците означуваат фрагменти)',
+	'viewapc-memory-usage' => 'Искористување на меморија',
+	'viewapc-cache-efficiency' => 'Погодоци и промашувања',
+	'viewapc-memory-free' => 'Слободно: $1 ($2)',
+	'viewapc-memory-used' => 'Искористено: $1 ($2)',
+	'viewapc-memory-hits' => 'Погодоци: $1 ($2)',
+	'viewapc-memory-miss' => 'Промашувања: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Подробно за искористеноста на меморијата и фрагментацијата',
+	'viewapc-fragmentation-info' => 'Фрагментација: $1 ($2 од $3 во $4 {{PLURAL:$4|фрагмент|фрагменти}})',
+	'viewapc-fragmentation-none' => 'Фрагментација: нема фрагментација',
+	'viewapc-display-attribute' => 'Атрибут',
+	'viewapc-display-value' => 'Вредност',
+	'viewapc-display-filename' => 'Име на податотеката',
+	'viewapc-display-device' => 'Уред',
+	'viewapc-display-info' => 'Име',
+	'viewapc-display-ttl' => 'Истекува',
+	'viewapc-display-inode' => 'Inode',
+	'viewapc-display-type' => 'Тип',
+	'viewapc-display-type-file' => 'Кеширана податотека',
+	'viewapc-display-type-user' => 'Кеширани податоци од програмот',
+	'viewapc-display-num_hits' => 'Погодоци',
+	'viewapc-display-mtime' => 'Изменето',
+	'viewapc-display-creation_time' => 'Создадено',
+	'viewapc-display-deletion_time' => 'Избришано',
+	'viewapc-display-no-delete' => 'Неизбришано',
+	'viewapc-display-access_time' => 'Пристапено',
+	'viewapc-display-ref_count' => 'Број на наводи',
+	'viewapc-display-mem_size' => 'Големина',
+	'viewapc-display-stored-value' => 'Складирана вредност',
+	'viewapc-display-too-big' => "''Содржината е преголема за да може да се прикаже.''",
+	'viewapc-ls-options-legend' => 'Нагодувања',
+	'viewapc-ls-options' => 'Опсег: $1 Сортирање: $2$3$4 Пребарување: $5 $6',
+	'viewapc-ls-submit' => 'Оди!',
+	'viewapc-ls-header-name' => 'Име',
+	'viewapc-ls-header-hits' => 'Погодоци',
+	'viewapc-ls-header-size' => 'Големина',
+	'viewapc-ls-header-accessed' => 'Последен пристап',
+	'viewapc-ls-header-modified' => 'Последна измена',
+	'viewapc-ls-header-created' => 'Создадено',
+	'viewapc-ls-header-deleted' => 'Избришано',
+	'viewapc-ls-header-timeout' => 'Истечено',
+	'viewapc-ls-delete' => '[Избриши сега]',
+	'viewapc-ls-scope-active' => 'Активно',
+	'viewapc-ls-scope-deleted' => 'Избришано',
+	'viewapc-ls-scope-both' => 'Обете',
+	'viewapc-ls-sort-hits' => 'Погодоци',
+	'viewapc-ls-sort-size' => 'Големина',
+	'viewapc-ls-sort-name' => 'Име',
+	'viewapc-ls-sort-accessed' => 'Последен достап',
+	'viewapc-ls-sort-modified' => 'Последна измена',
+	'viewapc-ls-sort-created' => 'Создадено',
+	'viewapc-ls-sort-deleted' => 'Избришано',
+	'viewapc-ls-sort-timeout' => 'Истечено',
+	'viewapc-ls-limit-none' => 'Сите',
+	'viewapc-ls-more' => "''Има уште $1 {{PLURAL:$1|запис|записи}}''",
+	'viewapc-ls-nodata' => "''Нема совпаѓачки податоци''",
+	'viewapc-delete-ok' => 'Записот <nowiki>$1</nowiki> во кешот е избришан.',
+	'viewapc-delete-failed' => 'Не можев да го избришам записот <nowiki>$1</nowiki> во кешот.',
+	'viewapc-version-info' => 'Информации за верзијата',
+	'viewapc-version-changelog' => 'Дневник на измени',
+	'viewapc-version-failed' => 'Не можам да добијам информации за верзијата.',
+	'viewapc-version-ok' => 'Ја користите најновата верзија на APC ($1)',
+	'viewapc-version-old' => 'Користите постара верзија на APC ($1).
+Поновата верзија $2 ќе ја најдете на http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Податотечниот кеш е исчистен.'''''",
+	'viewapc-usercache-cleared' => "'''''Кешот на програмот е исчистен.'''''",
 );
 
 /** Malayalam (മലയാളം)
@@ -2980,9 +3890,20 @@ $messages['mr'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Emrrans
+ * @author Zamwan
  */
 $messages['ms'] = array(
 	'viewapc' => 'Maklumat APC',
+	'viewapc-apc-version' => 'Versi APC',
+	'viewapc-php-version' => 'Versi PHP',
+	'viewapc-display-info' => 'Nama',
+	'viewapc-ls-header-name' => 'Nama',
+	'viewapc-ls-header-size' => 'Saiz',
+	'viewapc-ls-scope-active' => 'Aktif',
+	'viewapc-ls-scope-deleted' => 'Dihapuskan',
+	'viewapc-ls-sort-size' => 'Saiz',
+	'viewapc-ls-sort-name' => 'Nama',
+	'viewapc-version-info' => 'Maklumat versi',
 );
 
 /** Maltese (Malti)
@@ -3004,6 +3925,7 @@ $messages['myv'] = array(
 	'viewapc-display-creation_time' => 'Шказь-теезь',
 	'viewapc-display-deletion_time' => 'Нардазь',
 	'viewapc-display-mem_size' => 'Покшолмазо',
+	'viewapc-ls-submit' => 'Адя!',
 	'viewapc-ls-header-name' => 'Лемезэ',
 	'viewapc-ls-header-size' => 'Покшолмазо',
 	'viewapc-ls-header-created' => 'Шказь-теезь',
@@ -3078,7 +4000,7 @@ $messages['nds'] = array(
 $messages['nl'] = array(
 	'viewapc' => 'APC-informatie',
 	'viewapc-desc' => '[[Special:ViewAPC|De APC-cache bekijken en beheren]] vanuit MediaWiki',
-	'right-apc' => 'Alle mogelijkheden van [[Special:ViewAPC]] gebruiken',
+	'right-apc' => 'Alle mogelijkheden van [[Special:ViewAPC|ViewAPC]] gebruiken',
 	'viewapc-apc-not-available' => 'Er is geen informatie over de cache beschikbaar.
 APC lijkt niet gestart te zijn.',
 	'viewapc-clear-confirm' => 'Wilt u de cache leegmaken?',
@@ -3187,7 +4109,7 @@ De nieuwere versie $2 is beschikbaar op http://pecl.php.net/package/APC/$2',
 $messages['nn'] = array(
 	'viewapc' => 'APC-informasjon',
 	'viewapc-desc' => '[[Special:ViewAPC|Vis og handsam APC-mellomlageret]] med MediaWiki',
-	'right-apc' => 'Nytt alle funksjonar i [[Special:ViewAPC]]',
+	'right-apc' => 'Nytt alle funksjonar i [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Ingen infomasjon om mellomlageret er tilgjengeleg.
 APC ser ikkje ut til å fungera.',
 	'viewapc-clear-confirm' => 'Vil du tømma mellomlageret?',
@@ -3298,7 +4220,7 @@ Den nyaste versjonen ($2) finst på http://pecl.php.net/package/APC/$2',
 $messages['no'] = array(
 	'viewapc' => 'APC-informasjon',
 	'viewapc-desc' => '[[Special:ViewAPC|Vis og behandle APC-mellomlageret]] med MediaWiki',
-	'right-apc' => 'Bruke alle funksjoner i [[Special:ViewAPC]]',
+	'right-apc' => 'Bruke alle funksjoner i [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Ingen infomasjon om mellomlageret er tilgjengelig.
 APC ser ikke ut til å fungere.',
 	'viewapc-clear-confirm' => 'Vil du tømme mellomlageret?',
@@ -3407,7 +4329,7 @@ Den nyeste versjonen ($2) finnes tilgjengelig på http://pecl.php.net/package/AP
 $messages['oc'] = array(
 	'viewapc' => 'Entresenhas APC',
 	'viewapc-desc' => "[[Special:ViewAPC|Veire e gerir l'amagatal APC]] amb MediaWiki",
-	'right-apc' => 'Utilizar totas las foncionalitats de [[Special:ViewAPC]]',
+	'right-apc' => 'Utilizar totas las foncionalitats de [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => "Cap d'entresenha sus l'amagatal es pas disponibla.
 Sembla que APC fonciona pas.",
 	'viewapc-clear-confirm' => "Volètz suprimir l'amagatal ?",
@@ -3520,13 +4442,25 @@ $messages['os'] = array(
 	'viewapc-ls-sort-deleted' => 'Аппæрст',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'viewapc-display-mem_size' => 'Grees',
+	'viewapc-ls-header-name' => 'Naame',
+	'viewapc-ls-header-size' => 'Grees',
+	'viewapc-ls-sort-size' => 'Grees',
+	'viewapc-ls-sort-name' => 'Naame',
+	'viewapc-ls-limit-none' => 'All',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'viewapc' => 'Informacje o APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Podgląd oraz zarządzanie pamięcią APC]] z użyciem MediaWiki',
-	'right-apc' => 'Używanie pełnej funkcjonalności [[Special:ViewAPC]]',
+	'right-apc' => 'Używanie pełnej funkcjonalności [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Brak informacji o pamięci podręcznej.
 Możliwe, że APC nie jest uruchomione.',
 	'viewapc-clear-confirm' => 'Czy chcesz wyczyścić pamięć podręczną?',
@@ -3629,48 +4563,176 @@ Nowa wersja $2 dostępna jest na stronie http://pecl.php.net/package/APC/$2',
 	'viewapc-usercache-cleared' => "'''''Pamięć podręczna aplikacji została wyczyszczona.'''''",
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'viewapc' => 'Anformassion APC',
+	'viewapc-desc' => '[[Special:ViewAPC|Vëdde e gestì la memòria local APC]] con MediaWiki',
+	'right-apc' => 'Dovré tute le possibilità ëd [[Special:ViewAPC|ViewAPC]]',
+	'viewapc-apc-not-available' => 'Pa gnun-e anformassion ëd la memòria local disponìbij.
+A smija che APC a marcia pa.',
+	'viewapc-clear-confirm' => 'Veul-lo scancelé la memòria local?',
+	'viewapc-clear-user-cache' => "Scancelé la memòria local dl'utent",
+	'viewapc-clear-code-cache' => "Scancelé la memòria local dij còdes dj'operassion",
+	'viewapc-mode-stats' => 'Varda le statìstiche dël servent',
+	'viewapc-mode-system-cache' => 'Vos ëd la memòria local dël sistema',
+	'viewapc-mode-system-cache-dir' => 'Vos për repertòri',
+	'viewapc-mode-user-cache' => "Vos ëd la memòria local d'utent",
+	'viewapc-mode-version-check' => 'Controlé la version',
+	'viewapc-info-general' => 'Anformassion generaj',
+	'viewapc-apc-version' => 'Version APC',
+	'viewapc-php-version' => 'Version PHP',
+	'viewapc-shared-memory' => 'Memòria partagià',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segment ëd $2|$1 segment ëd $2 mincadun}}.<br />
+($3 memòria, $4 saradura)',
+	'viewapc-start-time' => "Ora d'inissi",
+	'viewapc-uptime' => "temp d'ativassion",
+	'viewapc-upload-support' => "Sostegn për carié d'archivi",
+	'viewapc-filecache-info' => "Anformassion dla memòria local dj'archivi",
+	'viewapc-usercache-info' => "Anformassion dla memòria local d'utent",
+	'viewapc-cached-files' => 'Archivi an memòria local',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|archivi|archivi}} ($2)',
+	'viewapc-hits' => 'Colp',
+	'viewapc-misses' => 'Mancanse',
+	'viewapc-requests' => "Frequensa dj'arceste",
+	'viewapc-hitrate' => 'Frequensa dij colp',
+	'viewapc-missrate' => 'Frequensa dle mancanse',
+	'viewapc-insertrate' => "Frequensa dj'anseriment",
+	'viewapc-cachefull' => 'Cont complet ëd la memòria local',
+	'viewapc-rps' => '$1 arceste al second',
+	'viewapc-info-runtime' => 'Anformassion ëd fonsionament',
+	'viewapc-info-memory' => 'Diagrama dë stat dël servent',
+	'viewapc-memory-usage-detailed' => 'Usagi dla memòria<br />
+(le vàire fëtte a ìndico dij frament)',
+	'viewapc-memory-usage' => 'Usagi dla memòria',
+	'viewapc-cache-efficiency' => 'Colp e mancanse',
+	'viewapc-memory-free' => 'Lìber: $1 ($2)',
+	'viewapc-memory-used' => 'Dovrà: $1 ($2)',
+	'viewapc-memory-hits' => 'Colp: $1 ($2)',
+	'viewapc-memory-miss' => 'Mancanse: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Usagi detajà dla memòria e framentassion',
+	'viewapc-fragmentation-info' => 'Framentassion: $1 ($2 su $3 an $4 {{PLURAL:$4|frament|frament}})',
+	'viewapc-fragmentation-none' => 'Framentassion: gnun-a framentassion',
+	'viewapc-display-attribute' => 'Atribù',
+	'viewapc-display-value' => 'Valor',
+	'viewapc-display-filename' => "Nòm dl'archivi",
+	'viewapc-display-device' => 'Dispositiv',
+	'viewapc-display-info' => 'Nòm',
+	'viewapc-display-ttl' => 'Temp ëd fin',
+	'viewapc-display-inode' => 'Inode',
+	'viewapc-display-type' => 'Sòrt',
+	'viewapc-display-type-file' => 'Archivi an memòria local',
+	'viewapc-display-type-user' => "Dat d'aplicassion an memòria local",
+	'viewapc-display-num_hits' => 'Colp',
+	'viewapc-display-mtime' => 'Modificà',
+	'viewapc-display-creation_time' => 'Creà',
+	'viewapc-display-deletion_time' => 'Scancelà',
+	'viewapc-display-no-delete' => 'Pa scancelà',
+	'viewapc-display-access_time' => 'Pontà',
+	'viewapc-display-ref_count' => "Cont d'arferiment",
+	'viewapc-display-mem_size' => 'Grandëssa',
+	'viewapc-display-stored-value' => 'Valor memorisà',
+	'viewapc-display-too-big' => "''Ël contnù a l'é tròp gròss da smon-e.''",
+	'viewapc-ls-options-legend' => 'Opsion',
+	'viewapc-ls-options' => 'Portà: $1 Ordinand: $2$3$4 Serca: $5 $6',
+	'viewapc-ls-submit' => 'Va!',
+	'viewapc-ls-header-name' => 'Nòm',
+	'viewapc-ls-header-hits' => 'Colp',
+	'viewapc-ls-header-size' => 'Grandëssa',
+	'viewapc-ls-header-accessed' => 'Ùltima consultassion',
+	'viewapc-ls-header-modified' => 'Ùltima modìfica',
+	'viewapc-ls-header-created' => 'Creà',
+	'viewapc-ls-header-deleted' => 'Scancelà',
+	'viewapc-ls-header-timeout' => 'Scadensa',
+	'viewapc-ls-delete' => '[Scancelé adess]',
+	'viewapc-ls-scope-active' => 'Ativ',
+	'viewapc-ls-scope-deleted' => 'Scancelà',
+	'viewapc-ls-scope-both' => 'Tùit doi',
+	'viewapc-ls-sort-hits' => 'Colp',
+	'viewapc-ls-sort-size' => 'Grandëssa',
+	'viewapc-ls-sort-name' => 'Nòm',
+	'viewapc-ls-sort-accessed' => 'Ùltima consultassion',
+	'viewapc-ls-sort-modified' => 'Ùltima modìfica',
+	'viewapc-ls-sort-created' => 'Creà',
+	'viewapc-ls-sort-deleted' => 'Scancelà',
+	'viewapc-ls-sort-timeout' => 'Scadensa',
+	'viewapc-ls-limit-none' => 'Tùit',
+	'viewapc-ls-more' => "''A-i é ancor {{PLURAL:$1|vos|vos}}''",
+	'viewapc-ls-nodata' => "''Pa gnun dat corespondent''",
+	'viewapc-delete-ok' => "La vos dla memòria local <nowiki>$1</nowiki> a l'é scancelà.",
+	'viewapc-delete-failed' => "La vos dla memòria local <nowiki>$1</nowiki> a l'ha podusse scancelé.",
+	'viewapc-version-info' => 'Anformassion ëd version',
+	'viewapc-version-changelog' => 'Registr dij cangiament',
+	'viewapc-version-failed' => "As peulo pa trovesse j'anformassion ëd version.",
+	'viewapc-version-ok' => "A deuvra l'ùltima version d'APC ($1)",
+	'viewapc-version-old' => "A l'é an camin ch'a deuvra na veja version d'APC ($1).
+Na version pi neuva $2 a l'é disponìbil a http://pecl.php.net/package/APC/$2",
+	'viewapc-filecache-cleared' => "'''''Memòria local dj'archivi scancelà.'''''",
+	'viewapc-usercache-cleared' => "'''''Memòria local dl'aplicassion scancelà.'''''",
+);
+
+/** Pontic (Ποντιακά)
+ * @author Omnipaedista
+ */
+$messages['pnt'] = array(
+	'viewapc-display-inode' => 'Inode',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'viewapc-info-general' => 'ټولګړي مالومات',
+	'viewapc-apc-version' => 'د APC بڼه',
+	'viewapc-php-version' => 'د PHP بڼه',
+	'viewapc-start-time' => 'د پيل وخت',
 	'viewapc-memory-usage' => 'د حافظې کارېدنه',
 	'viewapc-memory-free' => 'تش: $1 ($2)',
 	'viewapc-memory-used' => 'ډک: $1 ($2)',
 	'viewapc-display-value' => 'ارزښت',
 	'viewapc-display-filename' => 'د دوتنې نوم',
 	'viewapc-display-info' => 'نوم',
+	'viewapc-display-ttl' => 'د پای وخت',
 	'viewapc-display-type' => 'ډول',
 	'viewapc-display-creation_time' => 'جوړ شو',
 	'viewapc-display-deletion_time' => 'ړنګ شو',
 	'viewapc-display-no-delete' => 'ړنګ نه شو',
+	'viewapc-display-mem_size' => 'کچه',
+	'viewapc-ls-options-legend' => 'خوښنې',
 	'viewapc-ls-submit' => 'ورځه!',
 	'viewapc-ls-header-name' => 'نوم',
 	'viewapc-ls-header-created' => 'جوړ شو',
 	'viewapc-ls-header-deleted' => 'ړنګ شو',
+	'viewapc-ls-delete' => '[همدا اوس ړنګول]',
 	'viewapc-ls-scope-deleted' => 'ړنګ شو',
 	'viewapc-ls-scope-both' => 'دواړه',
+	'viewapc-ls-sort-size' => 'کچه',
 	'viewapc-ls-sort-name' => 'نوم',
 	'viewapc-ls-sort-created' => 'جوړ شو',
 	'viewapc-ls-sort-deleted' => 'ړنګ شو',
 	'viewapc-ls-limit-none' => 'ټول',
+	'viewapc-version-info' => 'د بڼې مالومات',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'viewapc' => 'Informação da APC',
-	'viewapc-desc' => '[[Special:ViewAPC|Veja e gira a cache APC]] com o MediaWiki',
-	'right-apc' => 'Usar todas as funcionalidades em [[Special:ViewAPC]]',
-	'viewapc-apc-not-available' => 'Informação de cache não disponível.
-A APC não aparenta estar a correr.',
-	'viewapc-clear-confirm' => 'Deseja limpar a cache?',
-	'viewapc-clear-user-cache' => 'Limpar cache de utilizadores',
-	'viewapc-clear-code-cache' => 'Limpar cache de opcode',
-	'viewapc-mode-stats' => 'Ver estatísticas do anfitrião',
-	'viewapc-mode-system-cache' => 'Entradas da cache de sistema',
-	'viewapc-mode-system-cache-dir' => 'Entradas por directoria',
-	'viewapc-mode-user-cache' => 'Entradas da cache de utilizadores',
+	'viewapc-desc' => "[[Special:ViewAPC|Visualização e gestão da ''cache'' APC]] ''(Alternative PHP Cache)'' com o MediaWiki",
+	'right-apc' => 'Usar todas as funcionalidades da extensão [[Special:ViewAPC|ViewAPC]]',
+	'viewapc-apc-not-available' => "Não há informação disponível sobre a ''cache''.
+A APC não parece estar a correr.",
+	'viewapc-clear-confirm' => "Deseja limpar a ''cache''?",
+	'viewapc-clear-user-cache' => "Limpar a ''cache'' de utilizadores",
+	'viewapc-clear-code-cache' => "Limpar a ''cache'' de ''opcodes''",
+	'viewapc-mode-stats' => 'Ver estatísticas do servidor',
+	'viewapc-mode-system-cache' => "Entradas da ''cache'' de sistema",
+	'viewapc-mode-system-cache-dir' => 'Entradas por directório',
+	'viewapc-mode-user-cache' => "Entradas da ''cache'' de utilizadores",
 	'viewapc-mode-version-check' => 'Verificar versão',
 	'viewapc-info-general' => 'Informação geral',
 	'viewapc-apc-version' => 'Versão da APC',
@@ -3678,12 +4740,12 @@ A APC não aparenta estar a correr.',
 	'viewapc-shared-memory' => 'Memória partilhada',
 	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segmento de $2|$1 segmentos com $2 cada}}.<br />
 (memória $3, bloqueio $4)',
-	'viewapc-start-time' => 'Hora início',
+	'viewapc-start-time' => 'Início de operação',
 	'viewapc-uptime' => 'Tempo de operação',
-	'viewapc-upload-support' => 'Suporte para carregamento de ficheiros',
-	'viewapc-filecache-info' => 'Informação da cache de ficheiros',
-	'viewapc-usercache-info' => 'Informação da cache de utilizadores',
-	'viewapc-cached-files' => 'Ficheiros em cache',
+	'viewapc-upload-support' => 'Suporte ao carregamento de ficheiros',
+	'viewapc-filecache-info' => "Informação da ''cache'' de ficheiros",
+	'viewapc-usercache-info' => "Informação da ''cache'' de utilizadores",
+	'viewapc-cached-files' => "Ficheiros em ''cache''",
 	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|ficheiro|ficheiros}} ($2)',
 	'viewapc-hits' => 'Acertos',
 	'viewapc-misses' => 'Faltas',
@@ -3691,19 +4753,19 @@ A APC não aparenta estar a correr.',
 	'viewapc-hitrate' => 'Cadência de acertos',
 	'viewapc-missrate' => 'Cadência de faltas',
 	'viewapc-insertrate' => 'Cadência de inserção',
-	'viewapc-cachefull' => 'Contagem total da cache',
+	'viewapc-cachefull' => "Contagem de esgotamentos da ''cache''",
 	'viewapc-rps' => '$1 pedidos por segundo',
-	'viewapc-info-runtime' => 'Informação de tempo de execução',
-	'viewapc-info-memory' => 'Diagramas do estado do anfitrião',
-	'viewapc-memory-usage-detailed' => 'Utilização de memória<br />
-(múltiplas fatias indicam fragmentos)',
+	'viewapc-info-runtime' => 'Informação do tempo de execução',
+	'viewapc-info-memory' => 'Diagramas de estado do servidor',
+	'viewapc-memory-usage-detailed' => 'Utilização da memória<br />
+(fatias múltiplas indicam fragmentos)',
 	'viewapc-memory-usage' => 'Utilização de memória',
-	'viewapc-cache-efficiency' => 'Acertos e faltas',
+	'viewapc-cache-efficiency' => 'Taxas de acerto e falta',
 	'viewapc-memory-free' => 'Livre: $1 ($2)',
 	'viewapc-memory-used' => 'Usada: $1 ($2)',
 	'viewapc-memory-hits' => 'Acertos: $1 ($2)',
 	'viewapc-memory-miss' => 'Faltas: $1 ($2)',
-	'viewapc-memoryfragmentation' => 'Detalhes de utilização e fragmentação de memória',
+	'viewapc-memoryfragmentation' => 'Detalhes de utilização e fragmentação da memória',
 	'viewapc-fragmentation-info' => 'Fragmentação: $1 ($2 de $3 em $4 {{PLURAL:$4|fragmento|fragmentos}})',
 	'viewapc-fragmentation-none' => 'Fragmentação: sem fragmentação',
 	'viewapc-display-attribute' => 'Atributo',
@@ -3714,8 +4776,8 @@ A APC não aparenta estar a correr.',
 	'viewapc-display-ttl' => 'Validade',
 	'viewapc-display-inode' => 'Inode',
 	'viewapc-display-type' => 'Tipo',
-	'viewapc-display-type-file' => 'Ficheiro em cache',
-	'viewapc-display-type-user' => 'Dados de aplicação em cache',
+	'viewapc-display-type-file' => "Ficheiro em ''cache''",
+	'viewapc-display-type-user' => "Dados da aplicação em ''cache''",
 	'viewapc-display-num_hits' => 'Acertos',
 	'viewapc-display-mtime' => 'Modificado',
 	'viewapc-display-creation_time' => 'Criado',
@@ -3752,51 +4814,126 @@ A APC não aparenta estar a correr.',
 	'viewapc-ls-limit-none' => 'Todos',
 	'viewapc-ls-more' => "''Há mais $1 {{PLURAL:$1|entrada|entradas}}''",
 	'viewapc-ls-nodata' => "''Não há dados com correspondência''",
-	'viewapc-delete-ok' => 'A entrada de cache <nowiki>$1</nowiki> foi apagada.',
-	'viewapc-delete-failed' => 'Falha ao eliminar a entrada de cache <nowiki>$1</nowiki>.',
-	'viewapc-version-info' => 'Informação de versão',
+	'viewapc-delete-ok' => "A entrada da ''cache'' <nowiki>$1</nowiki> foi apagada.",
+	'viewapc-delete-failed' => "Falha ao eliminar a entrada da ''cache'' <nowiki>$1</nowiki>.",
+	'viewapc-version-info' => 'Informação da versão',
 	'viewapc-version-changelog' => 'Registo de alterações',
-	'viewapc-version-failed' => 'Não foi possível obter informação de versão.',
-	'viewapc-version-ok' => 'Você está a executar a última versão da APC ($1)',
-	'viewapc-version-old' => 'Você está a executar uma versão antiga da APC ($1).
+	'viewapc-version-failed' => 'Não foi possível obter a informação da versão.',
+	'viewapc-version-ok' => 'Está a executar a última versão da APC ($1)',
+	'viewapc-version-old' => 'Está a executar uma versão antiga da APC ($1).
 A versão mais recente $2 está disponível em http://pecl.php.net/package/APC/$2',
-	'viewapc-filecache-cleared' => "'''''Cache de ficheiros limpa.'''''",
-	'viewapc-usercache-cleared' => "'''''Cache de aplicação limpa.'''''",
+	'viewapc-filecache-cleared' => "'''Cache'' de ficheiros limpa.'''''",
+	'viewapc-usercache-cleared' => "'''Cache'' da aplicação limpa.'''''",
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
  * @author Heldergeovane
  */
 $messages['pt-br'] = array(
 	'viewapc' => 'Informação de cache PHP alternativo (APC)',
 	'viewapc-desc' => '[[Special:ViewAPC|Ver e gerenciar o cache PHP alternativo (APC)]] com o MediaWiki',
-	'right-apc' => 'Usar todos os recursos em [[Special:ViewAPC]]',
+	'right-apc' => 'Usar todos os recursos em [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Nenhuma informação disponível sobre o cache.
 APC parece não estar sendo executado.',
 	'viewapc-clear-confirm' => 'Você quer limpar o cache?',
 	'viewapc-clear-user-cache' => 'Limpar cache do usuário',
 	'viewapc-clear-code-cache' => 'Limpar cache opcode',
+	'viewapc-mode-stats' => 'Ver estatísticas do servidor',
 	'viewapc-mode-system-cache' => 'Entradas do cache do sistema',
 	'viewapc-mode-system-cache-dir' => 'Entradas por diretório',
 	'viewapc-mode-user-cache' => 'Entradas de cache de usuário',
+	'viewapc-mode-version-check' => 'Verificar versão',
 	'viewapc-info-general' => 'Informação geral',
 	'viewapc-apc-version' => 'Versão APC',
 	'viewapc-php-version' => 'Versão PHP',
 	'viewapc-shared-memory' => 'Memória compartilhada',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|1 segmento de $2|$1 segmentos com $2 cada}}.<br />
+(memória $3, bloqueio $4)',
 	'viewapc-start-time' => 'Hora de início',
+	'viewapc-uptime' => 'Tempo de operação',
 	'viewapc-upload-support' => 'Suporte ao carregamento de arquivos',
 	'viewapc-filecache-info' => 'Informação do cache de arquivos',
 	'viewapc-usercache-info' => 'Informação sobre o cache de usuário',
+	'viewapc-cached-files' => 'Arquivos em cache',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|arquivo|arquivos}} ($2)',
+	'viewapc-hits' => 'Acertos',
+	'viewapc-misses' => 'Faltas',
+	'viewapc-requests' => 'Cadência de pedidos',
+	'viewapc-hitrate' => 'Cadência de acertos',
+	'viewapc-missrate' => 'Cadência de faltas',
+	'viewapc-insertrate' => 'Cadência de inserção',
+	'viewapc-cachefull' => 'Contagem total da cache',
+	'viewapc-rps' => '$1 pedidos por segundo',
 	'viewapc-info-runtime' => 'Informação sobre tempo de execução',
 	'viewapc-info-memory' => 'Diagramas de status do servidor',
 	'viewapc-memory-usage-detailed' => 'Uso de memória<br />
 (fatias múltiplas indicam fragmentos)',
+	'viewapc-memory-usage' => 'Utilização de memória',
+	'viewapc-cache-efficiency' => 'Acertos e faltas',
 	'viewapc-memory-free' => 'Livre: $1 ($2)',
 	'viewapc-memory-used' => 'Usada: $1 ($2)',
+	'viewapc-memory-hits' => 'Acertos: $1 ($2)',
+	'viewapc-memory-miss' => 'Faltas: $1 ($2)',
 	'viewapc-memoryfragmentation' => 'Detalhes sobre o uso de memória e fragmentação',
+	'viewapc-fragmentation-info' => 'Fragmentação: $1 ($2 de $3 em $4 {{PLURAL:$4|fragmento|fragmentos}})',
+	'viewapc-fragmentation-none' => 'Fragmentação: sem fragmentação',
 	'viewapc-display-attribute' => 'Atributo',
 	'viewapc-display-value' => 'Valor',
 	'viewapc-display-filename' => 'Nome de arquivo',
+	'viewapc-display-device' => 'Dispositivo',
+	'viewapc-display-info' => 'Nome',
+	'viewapc-display-ttl' => 'Validade',
+	'viewapc-display-inode' => 'Inode',
+	'viewapc-display-type' => 'Tipo',
+	'viewapc-display-type-file' => 'Arquivo em cache',
+	'viewapc-display-type-user' => 'Dados de aplicação em cache',
+	'viewapc-display-num_hits' => 'Acertos',
+	'viewapc-display-mtime' => 'Modificado',
+	'viewapc-display-creation_time' => 'Criado',
+	'viewapc-display-deletion_time' => 'Eliminado',
+	'viewapc-display-no-delete' => 'Não eliminado',
+	'viewapc-display-access_time' => 'Acessado',
+	'viewapc-display-ref_count' => 'Contagem de referências',
+	'viewapc-display-mem_size' => 'Tamanho',
+	'viewapc-display-stored-value' => 'Valor armazenado',
+	'viewapc-display-too-big' => "''O conteúdo é grande demais para ser mostrado.''",
+	'viewapc-ls-options-legend' => 'Opções',
+	'viewapc-ls-options' => 'Âmbito: $1 Ordenação: $2$3$4 Pesquisa: $5 $6',
+	'viewapc-ls-submit' => 'Ir!',
+	'viewapc-ls-header-name' => 'Nome',
+	'viewapc-ls-header-hits' => 'Acertos',
+	'viewapc-ls-header-size' => 'Tamanho',
+	'viewapc-ls-header-accessed' => 'Último acesso',
+	'viewapc-ls-header-modified' => 'Última modificação',
+	'viewapc-ls-header-created' => 'Criado',
+	'viewapc-ls-header-deleted' => 'Eliminado',
+	'viewapc-ls-header-timeout' => 'Limite de tempo',
+	'viewapc-ls-delete' => '[Eliminar agora]',
+	'viewapc-ls-scope-active' => 'Ativo',
+	'viewapc-ls-scope-deleted' => 'Eliminado',
+	'viewapc-ls-scope-both' => 'Ambos',
+	'viewapc-ls-sort-hits' => 'Acertos',
+	'viewapc-ls-sort-size' => 'Tamanho',
+	'viewapc-ls-sort-name' => 'Nome',
+	'viewapc-ls-sort-accessed' => 'Último acesso',
+	'viewapc-ls-sort-modified' => 'Última modificação',
+	'viewapc-ls-sort-created' => 'Criado',
+	'viewapc-ls-sort-deleted' => 'Eliminado',
+	'viewapc-ls-sort-timeout' => 'Limite de tempo',
+	'viewapc-ls-limit-none' => 'Todos',
+	'viewapc-ls-more' => "''Há mais $1 {{PLURAL:$1|entrada|entradas}}''",
+	'viewapc-ls-nodata' => "''Não há dados com correspondência''",
+	'viewapc-delete-ok' => 'A entrada de cache <nowiki>$1</nowiki> foi apagada.',
+	'viewapc-delete-failed' => 'Falha ao eliminar a entrada de cache <nowiki>$1</nowiki>.',
+	'viewapc-version-info' => 'Informação de versão',
+	'viewapc-version-changelog' => 'Registro de alterações',
+	'viewapc-version-failed' => 'Não foi possível obter informação de versão.',
+	'viewapc-version-ok' => 'Você está executando a última versão da APC ($1)',
+	'viewapc-version-old' => 'Você está executando uma versão antiga da APC ($1).
+A versão mais recente $2 está disponível em http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Cache de arquivos limpa.'''''",
+	'viewapc-usercache-cleared' => "'''''Cache de aplicação limpa.'''''",
 );
 
 /** Tarifit (Tarifit)
@@ -3880,25 +5017,39 @@ O versiune mai nouă $2 este disponibilă la http://pecl.php.net/package/APC/$2'
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'viewapc-memory-free' => 'Libbere: $1 ($2)',
+	'viewapc-memory-used' => 'Ausate: $1 ($2)',
+	'viewapc-display-attribute' => 'Attribbute',
+	'viewapc-display-value' => 'Valore',
+	'viewapc-display-filename' => "Nome d'u file",
+	'viewapc-display-info' => 'Nome',
+	'viewapc-display-type' => 'Tipe',
+	'viewapc-display-mtime' => 'Cangiate',
+	'viewapc-display-creation_time' => 'Ccrejate',
+	'viewapc-display-deletion_time' => 'Scangellate',
 	'viewapc-display-mem_size' => 'Dimenzione',
 	'viewapc-ls-submit' => 'Veje!',
+	'viewapc-ls-header-name' => 'Nome',
 	'viewapc-ls-header-modified' => 'Urteme cangiamende',
 	'viewapc-ls-header-created' => 'Ccrejete',
 	'viewapc-ls-header-deleted' => 'Scangellete',
+	'viewapc-ls-sort-size' => 'Dimenzione',
+	'viewapc-ls-sort-name' => 'Nome',
 	'viewapc-ls-limit-none' => 'Tutte',
 );
 
 /** Russian (Русский)
  * @author Ahonc
+ * @author Putnik
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'viewapc' => 'Сведения об APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Просмотр и управление кэшем APC]] в MediaWiki',
-	'right-apc' => 'использование всех возможностей [[Special:ViewAPC]]',
+	'right-apc' => 'использование всех возможностей [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Нет сведений о кэше.
 По видимому, APC не работает.',
-	'viewapc-clear-confirm' => 'Вы желаете очистить кэш?',
+	'viewapc-clear-confirm' => 'Вы желаете очистить кеш?',
 	'viewapc-clear-user-cache' => 'Очистка пользовательского кэша',
 	'viewapc-clear-code-cache' => 'Очистка кэша opcode',
 	'viewapc-mode-stats' => 'Просмотр статистики узла',
@@ -3994,8 +5145,35 @@ $messages['ru'] = array(
 	'viewapc-version-ok' => 'Вы используете последнюю версию APC ($1)',
 	'viewapc-version-old' => 'Вы используете старую версию APC ($1).
 Новая версия ($2) доступна по адресу http://pecl.php.net/package/APC/$2',
-	'viewapc-filecache-cleared' => "'''''Файловый кэш очищен.'''''",
-	'viewapc-usercache-cleared' => "'''''Кэш приложений очищен.'''''",
+	'viewapc-filecache-cleared' => "'''''Файловый кеш очищен.'''''",
+	'viewapc-usercache-cleared' => "'''''Кеш приложений очищен.'''''",
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'viewapc' => 'APC туһунан',
+	'viewapc-desc' => 'MediaWiki-га [[Special:ViewAPC|APC кээһин көрүү уонна кинини салайыы]]',
+	'right-apc' => '[[Special:ViewAPC|ViewAPC]] туох баар кыахтарын толору туһаныы',
+	'viewapc-apc-not-available' => 'Кээс туһунан туох да суруллубатах.
+Арааһа үлэлээбэт быһыылаах.',
+	'viewapc-clear-confirm' => 'Кээһи ыраастаары гынаҕын дуо?',
+	'viewapc-clear-user-cache' => 'Кээһи ыраастааһын',
+	'viewapc-clear-code-cache' => 'Opcode кээһин ыраастааһын',
+	'viewapc-mode-stats' => 'Статистикатын көрүү',
+);
+
+/** Sicilian (Sicilianu)
+ * @author Melos
+ */
+$messages['scn'] = array(
+	'viewapc-start-time' => "Ora d'avviu",
+	'viewapc-uptime' => "Tempu d'esecuzioni",
+	'viewapc-upload-support' => 'Supportu pi lu caricamentu dô file',
+	'viewapc-filecache-info' => 'Nformazioni supra la cache dô file',
+	'viewapc-usercache-info' => 'Nformazioni supra la cache utenti',
+	'viewapc-cached-files' => 'File in cache',
 );
 
 /** Slovak (Slovenčina)
@@ -4004,7 +5182,7 @@ $messages['ru'] = array(
 $messages['sk'] = array(
 	'viewapc' => 'Informácie o APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Zobraziť a spravovať vyrovnávaciu pamäť APC]] pomocou MediaWiki',
-	'right-apc' => 'Použiť všetky vlastnosti na [[Special:ViewAPC]]',
+	'right-apc' => 'Použiť všetky vlastnosti na [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Nie sú dostupné informácie o vyrovnávacej pamäti.
 Zdá sa, že APC nebeží.',
 	'viewapc-clear-confirm' => 'Želáte si vyčistiť vyrovnávaciu pamäť?',
@@ -4107,13 +5285,197 @@ Novšia verzia $2 je dostupná na http://pecl.php.net/package/APC/$2',
 	'viewapc-usercache-cleared' => "'''''Vyrovnávacia pamäť aplikácie bola vyčistená.'''''",
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'viewapc-apc-not-available' => 'Нема информација о кешу.
+Изгледа да APC на ради.',
+	'viewapc-clear-confirm' => 'Да ли желите да очистите кеш?',
+	'viewapc-clear-user-cache' => 'Очисти кориснички кеш',
+	'viewapc-clear-code-cache' => 'Очисто opcode кеш',
+	'viewapc-mode-stats' => 'Погледај статистике хоста',
+	'viewapc-mode-system-cache' => 'Системски кеш уноси',
+	'viewapc-mode-system-cache-dir' => 'Уноси по директоријуму',
+	'viewapc-mode-user-cache' => 'Уноси корисничког кеша',
+	'viewapc-mode-version-check' => 'Провери верзију',
+	'viewapc-info-general' => 'Опште информације',
+	'viewapc-apc-version' => 'Верзија APC',
+	'viewapc-php-version' => 'Верзија PHP',
+	'viewapc-shared-memory' => 'Дељена меморија',
+	'viewapc-start-time' => 'Почетно време',
+	'viewapc-upload-support' => 'Подршка за слање фајлова',
+	'viewapc-filecache-info' => 'Информације о кешу фајлова',
+	'viewapc-usercache-info' => 'Информације о корисничком кешу',
+	'viewapc-cached-files' => 'Кеширани фајлови',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|фајл|фајлова}} ($2)',
+	'viewapc-hits' => 'Погоци',
+	'viewapc-misses' => 'Промашаји',
+	'viewapc-requests' => 'Учесталост захтева',
+	'viewapc-hitrate' => 'Учесталост погодака',
+	'viewapc-missrate' => 'Учесталост промашаја',
+	'viewapc-insertrate' => 'Учесталост уноса',
+	'viewapc-rps' => '$1 захтева по секунди',
+	'viewapc-memory-usage-detailed' => 'Коришћење меморије<br />
+(више делова изначава фрагменте)',
+	'viewapc-memory-usage' => 'Коришћење меморије',
+	'viewapc-cache-efficiency' => 'Погоци и промашаји',
+	'viewapc-memory-free' => 'Слободно: $1 ($2)',
+	'viewapc-memory-used' => 'Користи се: $1 ($2)',
+	'viewapc-memory-hits' => 'Погоци: $1 ($2)',
+	'viewapc-memory-miss' => 'Промашаји: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Детаљан преглед коришћења меморије и фрагментације',
+	'viewapc-fragmentation-info' => 'Фрагментација: $1 ($2 од $3 у $4 {{PLURAL:$4|фрагменту|фрагмената}})',
+	'viewapc-fragmentation-none' => 'Фрагментација: нема је',
+	'viewapc-display-attribute' => 'Атрибут',
+	'viewapc-display-value' => 'Вредност',
+	'viewapc-display-filename' => 'Назив фајла',
+	'viewapc-display-device' => 'Уређај',
+	'viewapc-display-info' => 'Име',
+	'viewapc-display-ttl' => 'Време истека',
+	'viewapc-display-type' => 'Тип',
+	'viewapc-display-type-file' => 'Кеширани фајл',
+	'viewapc-display-type-user' => 'Кеширани подаци програма',
+	'viewapc-display-num_hits' => 'Погоци',
+	'viewapc-display-mtime' => 'Измењено',
+	'viewapc-display-creation_time' => 'Направљено',
+	'viewapc-display-deletion_time' => 'Обрисано',
+	'viewapc-display-no-delete' => 'Неизбрисано',
+	'viewapc-display-access_time' => 'Приступљено',
+	'viewapc-display-mem_size' => 'Величина',
+	'viewapc-display-stored-value' => 'Смештена вредност',
+	'viewapc-display-too-big' => "''Садржај је превелик да би био приказан.''",
+	'viewapc-ls-options-legend' => 'Опције',
+	'viewapc-ls-submit' => 'Иди!',
+	'viewapc-ls-header-name' => 'Име',
+	'viewapc-ls-header-hits' => 'Погоци',
+	'viewapc-ls-header-size' => 'Величина',
+	'viewapc-ls-header-accessed' => 'Задњи приступ',
+	'viewapc-ls-header-modified' => 'Задња измена',
+	'viewapc-ls-header-created' => 'Направљено',
+	'viewapc-ls-header-deleted' => 'Обрисано',
+	'viewapc-ls-header-timeout' => 'Тајмаут',
+	'viewapc-ls-delete' => '[Обриши сад]',
+	'viewapc-ls-scope-active' => 'Активно',
+	'viewapc-ls-scope-deleted' => 'Обрисано',
+	'viewapc-ls-scope-both' => 'Оба',
+	'viewapc-ls-sort-hits' => 'Погоци',
+	'viewapc-ls-sort-size' => 'Величина',
+	'viewapc-ls-sort-name' => 'Име',
+	'viewapc-ls-sort-accessed' => 'Задњи приступ',
+	'viewapc-ls-sort-modified' => 'Задња измена',
+	'viewapc-ls-sort-created' => 'Направљено',
+	'viewapc-ls-sort-deleted' => 'Обрисано',
+	'viewapc-ls-sort-timeout' => 'Тајмаут',
+	'viewapc-ls-limit-none' => 'Све',
+	'viewapc-version-info' => 'Информације о верзији',
+	'viewapc-version-changelog' => 'Историја измена',
+	'viewapc-version-ok' => 'Ви користите последњу верзију APC ($1)',
+	'viewapc-version-old' => 'Ви користите старију верзију APC ($1).
+Новија верзија $2 је доступна на http://pecl.php.net/package/APC/$2',
+	'viewapc-filecache-cleared' => "'''''Кеш фајлова је очишћен.'''''",
+	'viewapc-usercache-cleared' => "'''''Кеш програма је очишћен.'''''",
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'viewapc-apc-not-available' => 'Nema informacija o kešu.
+Izgleda da APC na radi.',
+	'viewapc-clear-confirm' => 'Da li želite da očistite keš?',
+	'viewapc-clear-user-cache' => 'Očisti korisnički keš',
+	'viewapc-clear-code-cache' => 'Očisto opcode keš',
+	'viewapc-mode-stats' => 'Pogledaj statistike hosta',
+	'viewapc-mode-system-cache' => 'Sistemski keš unosi',
+	'viewapc-mode-system-cache-dir' => 'Unosi po direktorijumu',
+	'viewapc-mode-user-cache' => 'Unosi korisničkog keša',
+	'viewapc-mode-version-check' => 'Proveri verziju',
+	'viewapc-info-general' => 'Opšte informacije',
+	'viewapc-apc-version' => 'Verzija APC',
+	'viewapc-php-version' => 'Verzija PHP',
+	'viewapc-shared-memory' => 'Deljena memorija',
+	'viewapc-start-time' => 'Početno vreme',
+	'viewapc-upload-support' => 'Podrška za slanje fajlova',
+	'viewapc-filecache-info' => 'Informacije o kešu fajlova',
+	'viewapc-usercache-info' => 'Informacije o korisničkom kešu',
+	'viewapc-cached-files' => 'Keširani fajlovi',
+	'viewapc-cached-files-d' => '$1 {{PLURAL:$1|fajl|fajlova}} ($2)',
+	'viewapc-hits' => 'Pogoci',
+	'viewapc-misses' => 'Promašaji',
+	'viewapc-requests' => 'Učestalost zahteva',
+	'viewapc-hitrate' => 'Učestalost pogodaka',
+	'viewapc-missrate' => 'Učestalost promašaja',
+	'viewapc-insertrate' => 'Učestalost unosa',
+	'viewapc-rps' => '$1 zahteva po sekundi',
+	'viewapc-memory-usage-detailed' => 'Korišćenje memorije<br />
+(više delova iznačava fragmente)',
+	'viewapc-memory-usage' => 'Korišćenje memorije',
+	'viewapc-cache-efficiency' => 'Pogoci i promašaji',
+	'viewapc-memory-free' => 'Slobodno: $1 ($2)',
+	'viewapc-memory-used' => 'Koristi se: $1 ($2)',
+	'viewapc-memory-hits' => 'Pogoci: $1 ($2)',
+	'viewapc-memory-miss' => 'Promašaji: $1 ($2)',
+	'viewapc-memoryfragmentation' => 'Detaljan pregled korišćenja memorije i fragmentacije',
+	'viewapc-fragmentation-info' => 'Fragmentacija: $1 ($2 od $3 u $4 {{PLURAL:$4|fragmentu|fragmenata}})',
+	'viewapc-fragmentation-none' => 'Fragmentacija: nema je',
+	'viewapc-display-attribute' => 'Atribut',
+	'viewapc-display-value' => 'Vrednost',
+	'viewapc-display-filename' => 'Naziv fajla',
+	'viewapc-display-device' => 'Uređaj',
+	'viewapc-display-info' => 'Ime',
+	'viewapc-display-ttl' => 'Vreme isteka',
+	'viewapc-display-type' => 'Tip',
+	'viewapc-display-type-file' => 'Keširani fajl',
+	'viewapc-display-type-user' => 'Keširani podaci programa',
+	'viewapc-display-num_hits' => 'Pogoci',
+	'viewapc-display-mtime' => 'Izmenjeno',
+	'viewapc-display-creation_time' => 'Napravljeno',
+	'viewapc-display-deletion_time' => 'Obrisano',
+	'viewapc-display-no-delete' => 'Neizbrisano',
+	'viewapc-display-access_time' => 'Pristupljeno',
+	'viewapc-display-mem_size' => 'Veličina',
+	'viewapc-display-stored-value' => 'Smeštena vrednost',
+	'viewapc-display-too-big' => "''Sadržaj je prevelik da bi bio prikazan.''",
+	'viewapc-ls-options-legend' => 'Opcije',
+	'viewapc-ls-submit' => 'Idi!',
+	'viewapc-ls-header-name' => 'Ime',
+	'viewapc-ls-header-hits' => 'Pogoci',
+	'viewapc-ls-header-size' => 'Veličina',
+	'viewapc-ls-header-accessed' => 'Zadnji pristup',
+	'viewapc-ls-header-modified' => 'Zadnja izmena',
+	'viewapc-ls-header-created' => 'Napravljeno',
+	'viewapc-ls-header-deleted' => 'Obrisano',
+	'viewapc-ls-header-timeout' => 'Tajmaut',
+	'viewapc-ls-delete' => '[Obriši sad]',
+	'viewapc-ls-scope-active' => 'Aktivno',
+	'viewapc-ls-scope-deleted' => 'Obrisano',
+	'viewapc-ls-scope-both' => 'Oba',
+	'viewapc-ls-sort-hits' => 'Pogoci',
+	'viewapc-ls-sort-size' => 'Veličina',
+	'viewapc-ls-sort-name' => 'Ime',
+	'viewapc-ls-sort-accessed' => 'Zadnji pristup',
+	'viewapc-ls-sort-modified' => 'Zadnja izmena',
+	'viewapc-ls-sort-created' => 'Napravljeno',
+	'viewapc-ls-sort-deleted' => 'Obrisano',
+	'viewapc-ls-sort-timeout' => 'Tajmaut',
+	'viewapc-ls-limit-none' => 'Sve',
+	'viewapc-version-info' => 'Informacije o verziji',
+	'viewapc-version-changelog' => 'Istorija izmena',
+	'viewapc-version-ok' => 'Vi koristite poslednju verziju APC ($1)',
+	'viewapc-version-old' => 'Vi koristite stariju verziju APC ($1).
+Novija verzija $2 je dostupna na <a href="http://pecl.php.net/package/APC/$2">http://pecl.php.net/package/APC/$2</a>',
+	'viewapc-filecache-cleared' => "'''''Keš fajlova je očišćen.'''''",
+	'viewapc-usercache-cleared' => "'''''Keš programa je očišćen.'''''",
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
 $messages['stq'] = array(
 	'viewapc' => 'APC-Informatione',
 	'viewapc-desc' => 'APC-Cache mäd MediaWiki [[Special:ViewAPC|ienkiekje un beoarbaidje]]',
-	'right-apc' => 'Kon aal Funktione fon [[Special:ViewAPC]] ferweende',
+	'right-apc' => 'Kon aal Funktione fon [[Special:ViewAPC|ViewAPC]] ferweende',
 	'viewapc-apc-not-available' => 'Neen Cache-Informatione ferföichboar.
 APC wäd schienboar nit uutfierd.',
 	'viewapc-clear-confirm' => 'Moatest du dän Cache loosmoakje?',
@@ -4259,7 +5621,7 @@ APC hanteu katingali jalan.',
 $messages['sv'] = array(
 	'viewapc' => 'APC-information',
 	'viewapc-desc' => '[[Special:ViewAPC|Visa och hantera APC-cachen]] med MediaWiki',
-	'right-apc' => 'Använda alla funktioner i [[Special:ViewAPC]]',
+	'right-apc' => 'Använda alla funktioner i [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Ingen information för cachen är tillgänglig.
 APC verkar inte fungera.',
 	'viewapc-clear-confirm' => 'Vill du rensa cachen?',
@@ -4405,11 +5767,29 @@ $messages['tg-cyrl'] = array(
 	'viewapc-display-value' => 'Қимат',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'viewapc-display-value' => 'Qimat',
+);
+
 /** Thai (ไทย)
  * @author Octahedron80
  */
 $messages['th'] = array(
 	'viewapc-ls-limit-none' => 'ทั้งหมด',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'viewapc-display-info' => 'At',
+	'viewapc-ls-submit' => 'Git!',
+	'viewapc-ls-header-name' => 'At',
+	'viewapc-ls-sort-name' => 'At',
+	'viewapc-ls-limit-none' => 'Ählisi',
 );
 
 /** Tagalog (Tagalog)
@@ -4418,7 +5798,7 @@ $messages['th'] = array(
 $messages['tl'] = array(
 	'viewapc' => 'Kabatirang APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Tingnan at pamahalaan ang taguan ng APC]] na may MediaWiki',
-	'right-apc' => 'Gamitin ang lahat ng mga kasangkapang-katangiang nasa [[Special:ViewAPC]]',
+	'right-apc' => 'Gamitin ang lahat ng mga kasangkapang-katangiang nasa [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Walang makuhang kabatiran ng taguan.
 Tila hindi gumagana ang APC.',
 	'viewapc-clear-confirm' => 'Nais mo bang linisin ang taguan?',
@@ -4524,24 +5904,31 @@ Makakakuha ng mas bagong bersyong $2 mula sa http://pecl.php.net/package/APC/$2'
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Karduelis
+ * @author Srhat
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'viewapc' => 'APC bilgisi',
 	'viewapc-desc' => 'MedyaViki ile [[Special:ViewAPC|APC önbelleğini görüntüleyip yönetin]]',
-	'right-apc' => "[[Special:ViewAPC]]'da tüm özellikleri kullan",
+	'right-apc' => "[[Special:ViewAPC|ViewAPC]]'da tüm özellikleri kullan",
 	'viewapc-apc-not-available' => 'Önbellek bilgisi yok.
 APC çalışıyor gibi görünmüyor.',
 	'viewapc-clear-confirm' => 'Önbelleği temizlemek istiyor musunuz?',
 	'viewapc-clear-user-cache' => 'Kullanıcı önbelleğini temizle',
 	'viewapc-clear-code-cache' => 'İşlem kodu önbelleğini temizle',
+	'viewapc-mode-stats' => 'Sunucu istatistiklerini incele',
 	'viewapc-mode-system-cache' => 'Sistem önbellek girişleri',
+	'viewapc-mode-system-cache-dir' => 'Dizin başına girdiler',
 	'viewapc-mode-user-cache' => 'Kullanıcı önbellek girişleri',
 	'viewapc-mode-version-check' => 'Sürümü kontrol et',
 	'viewapc-info-general' => 'Genel bilgi',
 	'viewapc-apc-version' => 'APC sürümü',
 	'viewapc-php-version' => 'PHP sürümü',
 	'viewapc-shared-memory' => 'Paylaşılan hafıza',
+	'viewapc-shared-memory-details' => '{{PLURAL:$1|$2 boyutunda 1 bölüt|Her birinin boyutu $2 olan toplam $1 bölüt}}.<br />
+(bellek: $3, kilitleme: $4)',
 	'viewapc-start-time' => 'Başlangıç zamanı',
+	'viewapc-uptime' => 'Çalışma süresi',
 	'viewapc-upload-support' => 'Dosya yükleme desteği',
 	'viewapc-filecache-info' => 'Dosya önbelleği bilgisi',
 	'viewapc-usercache-info' => 'Kullanıcı önbelleği bilgisi',
@@ -4553,7 +5940,10 @@ APC çalışıyor gibi görünmüyor.',
 	'viewapc-hitrate' => 'İsabet oranı',
 	'viewapc-missrate' => 'Iska oranı',
 	'viewapc-insertrate' => 'Ekleme oranı',
+	'viewapc-cachefull' => '"Bellek tam dolu" sayısı',
 	'viewapc-rps' => 'Saniyede $1 istek',
+	'viewapc-info-runtime' => 'Çalışma zamanı bilgisi',
+	'viewapc-info-memory' => 'Sunucu durumu diyagramları',
 	'viewapc-memory-usage-detailed' => 'Hafıza kullanımı<br />
 (çoklu dilimler bölümleri belirtir)',
 	'viewapc-memory-usage' => 'Bellek kullanımı',
@@ -4571,6 +5961,7 @@ APC çalışıyor gibi görünmüyor.',
 	'viewapc-display-device' => 'Cihaz',
 	'viewapc-display-info' => 'Ad',
 	'viewapc-display-ttl' => 'Bitiş zamanı',
+	'viewapc-display-inode' => 'Dosya numarası',
 	'viewapc-display-type' => 'Tip',
 	'viewapc-display-type-file' => 'Önbellekteki dosya',
 	'viewapc-display-type-user' => 'Önbellekteki uygulama verisi',
@@ -4622,6 +6013,13 @@ Yeni versiyon $2 http://pecl.php.net/package/APC/$2 adresinde mevcut",
 	'viewapc-usercache-cleared' => "'''''Uygulama önbelleği temizlendi.'''''",
 );
 
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'viewapc-ls-submit' => 'كۆچۈش!',
+);
+
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
  * @author Jose77
  */
@@ -4631,11 +6029,12 @@ $messages['ug-latn'] = array(
 
 /** Ukrainian (Українська)
  * @author AS
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'viewapc' => 'Відомості про APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Перегляд та керування кешем APC]] в MediaWiki',
-	'right-apc' => 'використання всіх можливостей [[Special:ViewAPC]]',
+	'right-apc' => 'використання всіх можливостей [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Немає відомостей про кеш.
 Очевидно, APC не працює.',
 	'viewapc-clear-confirm' => 'Ви хочете очистити кеш?',
@@ -4676,6 +6075,27 @@ $messages['uk'] = array(
 	'viewapc-memory-miss' => 'Промахів: $1 ($2)',
 	'viewapc-memoryfragmentation' => "Детальніше про використання пам'яті і фрагментацію",
 	'viewapc-fragmentation-info' => 'Фрагментація: $1 ($2 з $3 в $4 {{PLURAL:$4|фрагменті|фрагментах|фрагментах}})',
+	'viewapc-display-filename' => 'Назва файлу',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'viewapc-display-info' => 'Nimi',
+	'viewapc-display-type' => 'Tip',
+	'viewapc-display-creation_time' => 'Sätud',
+	'viewapc-display-deletion_time' => 'Heittud',
+	'viewapc-display-mem_size' => 'Suruz',
+	'viewapc-ls-header-name' => 'Nimi',
+	'viewapc-ls-header-size' => 'Suruz',
+	'viewapc-ls-header-created' => 'Sätud',
+	'viewapc-ls-header-deleted' => 'Heittud',
+	'viewapc-ls-sort-size' => 'Suruz',
+	'viewapc-ls-sort-name' => 'Nimi',
+	'viewapc-ls-sort-created' => 'Sätud',
+	'viewapc-ls-sort-deleted' => 'Heittud',
+	'viewapc-ls-limit-none' => 'Kaik',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -4685,7 +6105,7 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'viewapc' => 'Thông tin APC',
 	'viewapc-desc' => '[[Special:ViewAPC|Xem và quản lý bộ đệm APC]] bằng MediaWiki',
-	'right-apc' => 'Sử dụng tất cả các tính năng trong [[Special:ViewAPC]]',
+	'right-apc' => 'Sử dụng tất cả các tính năng trong [[Special:ViewAPC|ViewAPC]]',
 	'viewapc-apc-not-available' => 'Không có thông tin về bộ nhớ đệm.
 Dường như APC đang tắt.',
 	'viewapc-clear-confirm' => 'Bạn có muốn xóa bộ nhớ đệm?',
@@ -4829,6 +6249,17 @@ $messages['vo'] = array(
 	'viewapc-version-failed' => 'No eplöpos ad dagetön fomamanünis.',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'viewapc-display-info' => 'נאָמען',
+	'viewapc-ls-header-name' => 'נאָמען',
+	'viewapc-ls-sort-name' => 'נאָמען',
+	'viewapc-ls-limit-none' => 'אלע',
+	'viewapc-version-changelog' => 'ענדערונג־לאג',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Chenzw
  * @author Gzdavidwong
@@ -4847,6 +6278,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -4855,6 +6287,7 @@ $messages['zh-hant'] = array(
 	'viewapc-php-version' => 'PHP版本',
 	'viewapc-upload-support' => '檔案上載支援',
 	'viewapc-display-filename' => '檔名',
+	'viewapc-ls-options-legend' => '選項',
 	'viewapc-ls-sort-modified' => '最近更改',
 	'viewapc-version-info' => '版本資料',
 );

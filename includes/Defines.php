@@ -18,6 +18,7 @@ define( 'DBO_IGNORE', 4 );
 define( 'DBO_TRX', 8 );
 define( 'DBO_DEFAULT', 16 );
 define( 'DBO_PERSISTENT', 32 );
+define( 'DBO_SYSDBA', 64 ); //for oracle maintenance
 /**#@-*/
 
 # Valid database indexes
@@ -102,7 +103,7 @@ define( 'CACHE_ANYTHING', -1 );  // Use anything, as long as it works
 define( 'CACHE_NONE', 0 );       // Do not cache
 define( 'CACHE_DB', 1 );         // Store cache objects in the DB
 define( 'CACHE_MEMCACHED', 2 );  // MemCached, must specify servers in $wgMemCacheServers
-define( 'CACHE_ACCEL', 3 );      // eAccelerator or Turck, whichever is available
+define( 'CACHE_ACCEL', 3 );      // eAccelerator
 define( 'CACHE_DBA', 4 );        // Use PHP's DBA extension to store in a DBM-style database
 /**#@-*/
 
@@ -200,6 +201,7 @@ require_once dirname(__FILE__).'/normal/UtfNormalDefines.php';
 # Hook support constants
 define( 'MW_SUPPORTS_EDITFILTERMERGED', 1 );
 define( 'MW_SUPPORTS_PARSERFIRSTCALLINIT', 1 );
+define( 'MW_SUPPORTS_LOCALISATIONCACHE', 1 );
 
 # Allowed values for Parser::$mOutputType
 # Parameter to Parser::startExternalParse().
@@ -227,3 +229,4 @@ define( 'APCOND_INGROUPS', 4 );
 define( 'APCOND_ISIP', 5 );
 define( 'APCOND_IPINRANGE', 6 );
 define( 'APCOND_AGE_FROM_EDIT', 7 );
+define( 'APCOND_BLOCKED', 8 );

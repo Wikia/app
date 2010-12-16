@@ -41,9 +41,7 @@ class DataCenterWidgetModel extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets Defaults
 		$parameters = array_merge( self::$defaultParameters, $parameters );
 		// Begins widget
@@ -82,17 +80,13 @@ class DataCenterWidgetModel extends DataCenterWidget {
 
 	/* Private Static Functions */
 
-	private static function renderModel(
-		$parameters,
-		$structure,
-		$level = 0
-	) {
+	private static function renderModel( $parameters, $structure, $level = 0 ) {
 		$xmlOutput = '';
 		foreach ( $structure as $model ) {
 			$modelLink = DataCenterDB::getModelLink( $model->get( 'link' ) );
 			if ( !DataCenterPage::userCan( 'change' ) ) {
 				$rowAttributes = array();
-			} else if ( $level == 0 && count( $parameters['link'] ) > 0 ) {
+			} elseif ( $level == 0 && count( $parameters['link'] ) > 0 ) {
 				$rowAttributes = array_merge(
 					array( 'class' => 'link' ),
 					DataCenterXml::buildLink( $parameters['link'], $model )

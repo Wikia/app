@@ -1,6 +1,48 @@
 For a documentation of all features, see
 http://semantic-mediawiki.org/wiki/Semantic_Result_Formats
 
+== SRF 1.5 ==
+
+Released on ?
+
+Changes in this version:
+* the functions getName() and getParameters() were added to most formats, for
+  use in Special:Ask
+* a 'lang' parameter was added to the 'calendar' format
+
+== SRF 1.4.5 ==
+
+Released on June 3 2009.
+
+New formats in this version are:
+* outline (written by Yaron Koren)
+
+Other changes:
+* the 'ploticus' format was disabled, due to a security hole
+* the 'calendar' format no longer requires disabling of caching
+* imagemap links were fixed for the 'graph' format
+* handling was added for the Admin Links extension
+
+== SRF 1.4.4 ==
+
+Released on April 16 2009.
+
+* improvements in 'exhibit' result format:
+** required scripts, styles, images largely included (no remote server access needed)
+** fixes for Timeline
+** Usage of Google Maps now requires to set a Google Maps key (as obtained from Google)
+   in LocalSettings.php:
+   $wgGoogleMapsKey = 'yourkey';
+   If this is not set, the "maps" view will be disabled.
+** many formatting improvements
+** improved compatibility with Internet Explorer (esp. IE8)
+** only Timeline and Map will access a remote server now
+
+* other changes:
+** a getName() method was added to many of the formats
+** SRF_ParserFunctions.php file added, holding parser functions for use by
+'calendar' format.
+
 == SRF 1.4.3 ==
 
 Released on March 2 2009.

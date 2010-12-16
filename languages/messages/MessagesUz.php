@@ -116,15 +116,17 @@ $messages = array(
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki haqida ko'p so'raladigan savollar]
 * [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki yangi versiyasi chiqqanda xabar berish ro'yxati]",
 
-'about'          => 'Haqida',
-'newwindow'      => '(yangi oynada ochiladi)',
-'cancel'         => 'Voz kechish',
+'about'      => 'Haqida',
+'newwindow'  => '(yangi oynada ochiladi)',
+'cancel'     => 'Voz kechish',
+'mytalk'     => 'Suhbatim',
+'anontalk'   => 'Bu IP uchun suhbat',
+'navigation' => 'Saytda harakatlanish',
+'and'        => '&#32;va',
+
+# Cologne Blue skin
 'qbedit'         => 'Tahrirlash',
 'qbspecialpages' => 'Maxsus sahifalar',
-'mytalk'         => 'Suhbatim',
-'anontalk'       => 'Bu IP uchun suhbat',
-'navigation'     => 'Saytda harakatlanish',
-'and'            => '&#32;va',
 
 'errorpagetitle'   => 'Xato',
 'returnto'         => '$1 sahifasiga qaytish.',
@@ -156,7 +158,7 @@ $messages = array(
 'otherlanguages'   => 'Boshqa tillarda',
 'redirectedfrom'   => '($1dan yoʻnaltirildi)',
 'redirectpagesub'  => 'Yoʻnaltiruvchi sahifa',
-'lastmodifiedat'   => 'Bu sahifa oxirgi marta $2, $1 sanasida tahrirlangan.', # $1 date, $2 time
+'lastmodifiedat'   => 'Bu sahifa oxirgi marta $2, $1 sanasida tahrirlangan.',
 'viewcount'        => 'Bu sahifaga {{PLURAL:$1|bir marta|$1 marta}} murojaat qilingan.',
 'jumpto'           => 'Oʻtish:',
 'jumptonavigation' => 'foydalanish',
@@ -230,7 +232,6 @@ Shuni e'tiborga olingki, ayrim sahifalar siz brauzeringiz keshini tozalamaguning
 'createaccount'           => 'Hisob yaratish',
 'gotaccount'              => "Hisobingiz bormi? '''$1'''.",
 'gotaccountlink'          => 'Kirish',
-'yourrealname'            => 'Haqiqiy ism *:',
 'loginsuccesstitle'       => 'Kirish muvaffaqiyatli amalga oshdi',
 'loginsuccess'            => "'''{{SITENAME}}ga \"\$1\" foydalanuvchi nomi bilan kirdingiz.'''",
 'wrongpassword'           => 'Kiritgan mahfiy soʻzingiz notoʻgʻri. Iltimos, qaytadan kiritib koʻring.',
@@ -255,15 +256,15 @@ Shuni e'tiborga olingki, ayrim sahifalar siz brauzeringiz keshini tozalamaguning
 'sig_tip'         => 'Imzoingiz va sana',
 
 # Edit pages
-'summary'                => 'Qisqa izoh:',
-'minoredit'              => 'Bu kichik tahrir',
-'watchthis'              => 'Sahifani kuzatish',
-'savearticle'            => 'Saqlash',
-'preview'                => "Ko'rib chiqish",
-'showpreview'            => "Ko'rib chiqish",
-'showdiff'               => "O'zgarishlarni ko'rsatish",
-'anoneditwarning'        => "'''Diqqat:''' Siz tizimga kirmagansiz. Ushbu sahifa tarixida Sizning IP manzilingiz yozib qolinadi.",
-'blockedtext'            => "'''Siz (foydalanuvchi ismingiz yoki IP manzilingiz) tahrir qilishdan chetlashtirildingiz.'''
+'summary'                    => 'Qisqa izoh:',
+'minoredit'                  => 'Bu kichik tahrir',
+'watchthis'                  => 'Sahifani kuzatish',
+'savearticle'                => 'Saqlash',
+'preview'                    => "Ko'rib chiqish",
+'showpreview'                => "Ko'rib chiqish",
+'showdiff'                   => "O'zgarishlarni ko'rsatish",
+'anoneditwarning'            => "'''Diqqat:''' Siz tizimga kirmagansiz. Ushbu sahifa tarixida Sizning IP manzilingiz yozib qolinadi.",
+'blockedtext'                => "'''Siz (foydalanuvchi ismingiz yoki IP manzilingiz) tahrir qilishdan chetlashtirildingiz.'''
 
 Sizni $1 chetlashtirdi. Bunga sabab: ''$2''.
 
@@ -272,31 +273,31 @@ Sizni $1 chetlashtirdi. Bunga sabab: ''$2''.
 
 Siz $1 yoki boshqa [[{{MediaWiki:Grouppage-sysop}}|administrator]] bilan bogʻlanib, arz qilishingiz mumkin.
 Sizning hozirgi IP manzilingiz - $3, chetlashtirish raqamingiz - #$5. Arizaga bularni ilova qilishingiz mumkin.",
-'newarticle'             => '(Yangi)',
-'newarticletext'         => "Bu sahifa hali mavjud emas.
+'newarticle'                 => '(Yangi)',
+'newarticletext'             => "Bu sahifa hali mavjud emas.
 Sahifani yaratish uchun quyida matn kiritishingiz mumkin (qo'shimcha axborot uchun [[{{MediaWiki:Helppage}}|yordam sahifasini]] ko'ring).
 Agar bu sahifaga xatolik sabab kelgan bo'lsangiz brauzeringizning '''orqaga''' tugmasini bosing.",
-'noarticletext'          => 'Bu sahifada hozircha hech qanday matn yoʻq. Siz bu sarlavhani boshqa sahifalardan [[Special:Search/{{PAGENAME}}|qidirishingiz]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tegishli loglarga qarashingiz] yoki bu sahifani [{{fullurl:{{FULLPAGENAME}}|action=edit}} tahrirlashingiz]</span> mumkin.',
-'clearyourcache'         => "'''Etibor bering:''' O'zgartirishlaringiz ko'rish uchun, yangi moslamalaringizning saqlashdan keyin, brauser keshini tozalash kerak:<br />
+'noarticletext'              => 'Bu sahifada hozircha hech qanday matn yoʻq. Siz bu sarlavhani boshqa sahifalardan [[Special:Search/{{PAGENAME}}|qidirishingiz]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tegishli loglarga qarashingiz] yoki bu sahifani [{{fullurl:{{FULLPAGENAME}}|action=edit}} tahrirlashingiz]</span> mumkin.',
+'clearyourcache'             => "'''Etibor bering:''' O'zgartirishlaringiz ko'rish uchun, yangi moslamalaringizning saqlashdan keyin, brauser keshini tozalash kerak:<br />
 '''Mozilla / Firefox:''' ''Ctrl+Shift+R'', '''IE:''' ''Ctrl+F5'', '''Safari:''' ''Cmd+Shift+R'', '''Konqueror:''' ''F5'', '''Opera:''' ''Tools → Preferences'' orqali keshni tozalang.",
-'previewnote'            => "'''Bu shunchaki ko'rib chiqish. O'zgarishlar hali saqlangani yo'q!'''",
-'editing'                => '$1 tahrirlanmoqda',
-'editingsection'         => '$1 (boʻlim) tahrirlanmoqda',
-'copyrightwarning'       => "Iltimos, {{SITENAME}}ga yuklangan har qanday axborot $2 ostida tarqatilishiga diqqat qiling (batafsil ma'lumot uchun $1ni ko'ring).
+'previewnote'                => "'''Bu shunchaki ko'rib chiqish. O'zgarishlar hali saqlangani yo'q!'''",
+'editing'                    => '$1 tahrirlanmoqda',
+'editingsection'             => '$1 (boʻlim) tahrirlanmoqda',
+'copyrightwarning'           => "Iltimos, {{SITENAME}}ga yuklangan har qanday axborot $2 ostida tarqatilishiga diqqat qiling (batafsil ma'lumot uchun $1ni ko'ring).
 Agar yozganlaringiz keyinchalik tahrir qilinishi va qayta tarqatilishiga rozi bo'lmasangiz, u holda bu yerga yozmang.<br />
 Siz shuningdek bu yozganlaringiz sizniki yoki erkin litsenziya ostida ekanligini va'da qilmoqdasiz.
 '''MUALLIFLIK HUQUQLARI BILAN HIMOYALANGAN ISHLARNI ZINHOR BERUXSAT YUBORMANG!'''",
-'copyrightwarning2'      => "Iltimos, shuni esda tutingki, {{SITENAME}} sahifalaridagi barcha matnlar boshqa foydalanuvchilar tomonidan tahrirlanishi, almashtirilishi yoki o'chirilishi mumkin. Agar siz yozgan ma'lumotlaringizni bunday tartibda tahrirlanishiga rozi bo'lmasangiz, unda uni bu yerga joylashtirmang.<br />
+'copyrightwarning2'          => "Iltimos, shuni esda tutingki, {{SITENAME}} sahifalaridagi barcha matnlar boshqa foydalanuvchilar tomonidan tahrirlanishi, almashtirilishi yoki o'chirilishi mumkin. Agar siz yozgan ma'lumotlaringizni bunday tartibda tahrirlanishiga rozi bo'lmasangiz, unda uni bu yerga joylashtirmang.<br />
 Bundan tashqari, siz ushbu ma'lumotlarni o'zingiz yozgan bo'lishingiz yoki ruxsat berilgan internet manzilidan yoki shu kabi erkin resursdan nusxa olgan bo'lishingiz lozim (Qo'shimcha ma'lumotlar ushun $1 sahifasiga murojaat qiling).
 '''MUALLIFLIK HUQUQI QO'YILGAN ISHLARNI RUXSATSIZ BU YERGA JOYLASHTIRMANG!'''",
-'longpagewarning'        => "'''DIQQAT: Ushbu sahifa hajmi $1 kilobaytdir; ayrim browser'lar 32 kb dan oshiq hajmli sahifalarni tahrirlashda muammolarga duch kelishi mumkin.
+'longpagewarning'            => "'''DIQQAT: Ushbu sahifa hajmi $1 kilobaytdir; ayrim browser'lar 32 kb dan oshiq hajmli sahifalarni tahrirlashda muammolarga duch kelishi mumkin.
 Agar sizda shunday muammolar yuzaga kelsa, iltimos, sahifani butunlay emas, qismlab tahrirlang.'''",
-'templatesused'          => 'Ushbu sahifada ishlatilgan andozalar:',
-'template-protected'     => '(himoyalangan)',
-'template-semiprotected' => '(yarim-himoyalangan)',
-'nocreatetext'           => 'Ushbu sayt yangi sahifa yaratishni taqiqlagan.
+'templatesused'              => 'Ushbu sahifada ishlatilgan andozalar:',
+'template-protected'         => '(himoyalangan)',
+'template-semiprotected'     => '(yarim-himoyalangan)',
+'nocreatetext'               => 'Ushbu sayt yangi sahifa yaratishni taqiqlagan.
 Ortga qaytib, mavjud sahifani tahrirlashingiz yoki [[Special:UserLogin|tizimga kirishingiz]] mumkin.',
-'recreate-deleted-warn'  => "'''Diqqat: Siz avval yoʻqotilgan sahifani yana yaratmoqchisiz.'''
+'recreate-moveddeleted-warn' => "'''Diqqat: Siz avval yoʻqotilgan sahifani yana yaratmoqchisiz.'''
 
 Bu sahifani yaratishda davom etishdan avval uning nega avval yoʻqotilgani bilan qiziqib koʻring.
 Qulaylik uchun quyida yoʻqotilish qaydlari keltirilgan:",
@@ -334,13 +335,11 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 'searchresulttext'         => "{{SITENAME}}da qidirish haqida qo'shimcha ma'lumotga ega bo'lishini xoxlasangiz, [[{{MediaWiki:Helppage}}|{{SITENAME}}da qidiruv]] sahifasini o'qing.",
 'searchsubtitle'           => '\'\'\'[[:$1]]\'\'\'ni qidirdingiz ([[Special:Prefixindex/$1|"$1" bilan boshlanadigan sahifalar]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|"$1"ga bogʻlangan sahifalar]])',
 'searchsubtitleinvalid'    => "'''$1'''ni qidirdingiz",
-'noexactmatch'             => "'''\"\$1\" nomli birorta ham sahifa yo'q.''' Bu sahifani [[:\$1|yaratishingiz]] mumkin.",
-'noexactmatch-nocreate'    => "'''\"\$1\" sarlavhali sahifa yoʻq.'''",
 'notitlematches'           => 'Bunday sarlavha topilmadi',
 'notextmatches'            => 'Bunday matn topilmadi',
 'prevn'                    => 'oldingi $1',
-'nextn'                    => 'keyingi $1',
-'viewprevnext'             => "Ko'rish ($1) ($2) ($3).",
+'nextn'                    => 'keyingi {{PLURAL:$1|$1}}',
+'viewprevnext'             => "Ko'rish ($1 {{int:pipe-separator}} $2) ($3).",
 'searchhelp-url'           => 'Help:Mundarija',
 'search-result-size'       => '$1 ({{PLURAL:$2|1 soʻz|$2 soʻz}})',
 'search-redirect'          => '(yoʻnaltirish $1)',
@@ -348,7 +347,6 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 'search-suggest'           => 'Balki buni nazarda tutgandirsiz: $1',
 'search-interwiki-default' => '$1 natijalar:',
 'showingresults'           => "#<b>$2</b> boshlanayotgan <b>$1</b> natijalar ko'rsatilyapti.",
-'showingresultstotal'      => "Quyida {{PLURAL:$4|'''$3'''dan '''$1''' natija|'''$3'''dan '''$1 - $2''' natijalar}} koʻrsatilgan",
 'powersearch'              => 'Qidiruv',
 'powersearch-ns'           => 'Bu nom-fazolarda izla:',
 'powersearch-redir'        => 'Yoʻnaltirishlarni koʻrsat',
@@ -357,18 +355,19 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 # Preferences page
 'preferences'       => 'Moslamalar',
 'mypreferences'     => 'Moslamalarim',
-'skin'              => "Tashqi ko'rinish",
-'math'              => 'Formulalar',
-'datetime'          => 'Sana va vaqt',
+'prefs-skin'        => "Tashqi ko'rinish",
+'prefs-math'        => 'Formulalar',
+'prefs-datetime'    => 'Sana va vaqt',
 'prefs-personal'    => "Shaxsiy ma'lumotlar",
 'prefs-rc'          => "Yangi o'zgartirishlar",
 'prefs-watchlist'   => "Kuzatuv ro'yxati",
 'prefs-misc'        => 'Boshqa moslamalar',
 'saveprefs'         => 'Saqlash',
 'resetprefs'        => 'Bekor qilish',
-'textboxsize'       => 'Tahrirlash',
+'prefs-editing'     => 'Tahrirlash',
 'searchresultshead' => 'Qidiruv natijalari',
-'files'             => 'Fayllar',
+'prefs-files'       => 'Fayllar',
+'yourrealname'      => 'Haqiqiy ism *:',
 
 # Groups
 'group-sysop' => 'Administratorlar',
@@ -410,6 +409,7 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 'listfiles' => 'Fayllar roʻyxati',
 
 # File description page
+'file-anchor-link'          => 'Fayl',
 'filehist'                  => 'Fayl tarixi',
 'filehist-help'             => 'Faylning biror paytdagi holatini koʻrish uchun tegishli sana/vaqtga bosingiz.',
 'filehist-current'          => 'joriy',
@@ -421,8 +421,7 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 'imagelinks'                => 'Fayllarga ishoratlar',
 'linkstoimage'              => 'Bu faylga quyidagi {{PLURAL:$1|sahifa|$1 sahifalar}} bogʻlangan:',
 'nolinkstoimage'            => 'Bu faylga bogʻlangan sahifalar yoʻq.',
-'sharedupload'              => 'Ushbu fayl umumiy joyga yuklangandir va boshqa loyihalarda ishlatilishi mumkin.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
-'shareduploadwiki-linktext' => 'fayl haqida sahifa',
+'sharedupload'              => 'Ushbu fayl umumiy joyga yuklangandir va boshqa loyihalarda ishlatilishi mumkin.',
 'uploadnewversion-linktext' => 'Bu faylning yangi versiyasini yukla',
 
 # Unused templates
@@ -514,7 +513,7 @@ Yaqinda sodir etilgan yoʻqotishlar uchun $2ni koʻring.',
 # Protect
 'protectlogpage'         => 'Himoyalash qaydlari',
 'protect-level-sysop'    => 'Faqat administratorlar uchun',
-'protect-expiry-options' => '2 soat:2 hours,1 kun:1 day,1 hafta:1 week,2 hafta:2 weeks,1 oy:1 month,3 oy:3 months,6 oy:6 months,1 yil:1 year,cheksiz:infinite', # display1:time1,display2:time2,...
+'protect-expiry-options' => '2 soat:2 hours,1 kun:1 day,1 hafta:1 week,2 hafta:2 weeks,1 oy:1 month,3 oy:3 months,6 oy:6 months,1 yil:1 year,cheksiz:infinite',
 
 # Restrictions (nouns)
 'restriction-edit' => 'Tahrirlash',
@@ -534,6 +533,7 @@ Yaqinda sodir etilgan yoʻqotishlar uchun $2ni koʻring.',
 
 'sp-contributions-newbies'  => 'Faqatgina yangi foydalanuvchilarning hissalarini koʻrsat',
 'sp-contributions-blocklog' => 'Chetlashtirish qaydlari',
+'sp-contributions-talk'     => 'Munozara',
 'sp-contributions-search'   => 'Hissalarni qidir',
 'sp-contributions-username' => 'IP manzil yoki foydalanuvchi ismi:',
 'sp-contributions-submit'   => 'Qidir',
@@ -549,7 +549,7 @@ Yaqinda sodir etilgan yoʻqotishlar uchun $2ni koʻring.',
 
 # Block/unblock
 'blockip'      => 'Foydalanuvchini chetlashtir',
-'ipboptions'   => '2 soat:2 hours,1 kun:1 day,3 kun:3 days,1 hafta:1 week,2 hafta:2 weeks,1 oy:1 month,3 oy:3 months,6 oy:6 months,1 yil:1 year,cheksiz:infinite', # display1:time1,display2:time2,...
+'ipboptions'   => '2 soat:2 hours,1 kun:1 day,3 kun:3 days,1 hafta:1 week,2 hafta:2 weeks,1 oy:1 month,3 oy:3 months,6 oy:6 months,1 yil:1 year,cheksiz:infinite',
 'ipblocklist'  => 'Chetlashtirilgan IP manzillari va foydalanuvchilar',
 'blocklink'    => 'chetlashtir',
 'contribslink' => 'hissasi',
@@ -559,7 +559,7 @@ Yaqinda sodir etilgan yoʻqotishlar uchun $2ni koʻring.',
 'movearticle'    => "Sahifani ko'chirish",
 'movepagebtn'    => 'Sahifani koʻchir',
 'pagemovedsub'   => 'Koʻchirildi',
-'movepage-moved' => '\'\'\'"$1" nomli sahifa "$2" nomli sahifaga koʻchirildi\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved' => '\'\'\'"$1" nomli sahifa "$2" nomli sahifaga koʻchirildi\'\'\'',
 '1movedto2'      => "[[$1]] [[$2]]ga ko'chirildi",
 'movelogpage'    => 'Koʻchirish qaydlari',
 'movereason'     => 'Sabab:',

@@ -129,6 +129,8 @@ sub parse_sql {
 		}
 		elsif (m{^CREATE (?:UNIQUE )?(?:FULLTEXT )?INDEX /\*i\*/(\w+) ON /\*_\*/(\w+) \((.+?)\);}) {
 		}
+		elsif (m{^\s*PRIMARY KEY \([\w,]+\)}) {
+		}
 		else {
 			die "Cannot parse line $. of $oldfile:\n$_\n";
 		}
@@ -258,6 +260,9 @@ while (<$newfh>) {
 		}
 		$lastcomma = $3 ? 1 : 0;
 	}
+	elsif (m{^\s*PRIMARY KEY \([\w,]+\)}) {
+		$lastcomma = 0;
+	}
 	else {
 		die "Cannot parse line $. of $new:\n$_\n";
 	}
@@ -302,7 +307,8 @@ ar_comment      tinyblob       TEXT
 fa_description  tinyblob       TEXT
 img_description tinyblob       TEXT
 ipb_reason      tinyblob       TEXT
-log_action      varbinary(10)  TEXT
+log_action      varbinary(32)  TEXT
+log_type        varbinary(32)  TEXT
 oi_description  tinyblob       TEXT
 rev_comment     tinyblob       TEXT
 rc_log_action   varbinary(255) TEXT
@@ -318,12 +324,17 @@ ipb_address       tinyblob       TEXT # IP address or username
 ipb_range_end     tinyblob       TEXT # hexadecimal
 ipb_range_start   tinyblob       TEXT # hexadecimal
 img_minor_mime    varbinary(32)  TEXT
+lc_lang           varbinary(32)  TEXT
+lc_value          varbinary(32)  TEXT
+
 img_sha1          varbinary(32)  TEXT
 job_cmd           varbinary(60)  TEXT # Should we limit to 60 as well?
 keyname           varbinary(255) TEXT # No tablename prefix (objectcache)
 ll_lang           varbinary(20)  TEXT # Language code
+lc_value          mediumblob     TEXT
 log_params        blob           TEXT # LF separated list of args
 log_type          varbinary(10)  TEXT
+ls_field          varbinary(32)  TEXT
 oi_minor_mime     varbinary(32)  TEXT
 oi_sha1           varbinary(32)  TEXT
 old_flags         tinyblob       TEXT
@@ -343,6 +354,8 @@ rc_params         blob           TEXT
 rlc_to_blob       blob           TEXT
 ts_tags           blob           TEXT
 ug_group          varbinary(16)  TEXT
+up_property       varbinary(32)  TEXT
+up_value          blob           TEXT
 user_email_token  binary(32)     TEXT
 user_ip           varbinary(40)  TEXT
 user_newpassword  tinyblob       TEXT

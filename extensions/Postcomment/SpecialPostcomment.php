@@ -18,6 +18,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionFunctions[] = 'wfPostComment';
 
 $wgExtensionCredits['other'][] = array(
+    'path' => __FILE__,
     'name' => 'PostComment',
     'author' => 'Travis Derouin, Siebrand Mazeland',
     'description' => 'Allows users to post comments directly to discussion pages.',
@@ -43,7 +44,7 @@ function wfPostcommentForm() {
 	if (!$wgTitle->isTalkPage() || $action != '')
 		return;
 
-    if (!$wgTitle->userCanEdit()) {
+    if (!$wgTitle->userCan( 'edit', true ) ) {
 		echo  wfMsg('postcomment_discussionprotected');
 		return;
 	}
@@ -86,7 +87,7 @@ function wfPostcommentForm() {
 
 function wfSpecialPostcomment( $par )
 {
-	global $wgUser, $wgOut, $wgLang, $wgTitle, $wgMemc, $wgDBname;
+	global $wgUser, $wgOut, $wgLang, $wgMemc, $wgDBname;
 	global $wgRequest, $wgSitename, $wgLanguageCode;
 	global $wgFeedClasses, $wgFilterCallback, $wgWhitelistEdit;
 
@@ -183,7 +184,7 @@ function wfSpecialPostcomment( $par )
            return;
         }
 
-	if ( !$t->userCanEdit()) {
+	if ( !$t->userCan( 'edit', true ) ) {
        $wgOut->errorpage( "postcomment", "postcomment_discussionprotected");
 	   return;
 	}

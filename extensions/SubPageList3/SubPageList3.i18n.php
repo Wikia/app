@@ -81,6 +81,15 @@ $messages['bg'] = array(
 	'spl3_nosubpages' => '$1 не съдържа подстраници, които да бъдат показани.',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'spl3-desc' => 'Sevel a ra ent emgefre roll ispajennoù ur bajenn en ur ober gant ar valizenn <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Talvoudenn dianav evit an dibarzh $1',
+	'spl3_nosubpages' => "N'eus ispajenn ebet da rollañ evit $1",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -126,12 +135,23 @@ $messages['dsb'] = array(
 	'spl3_nosubpages' => '$1 njama pódboki za lisćinu.',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'spl3-desc' => 'Δημιουργεί αυτόματα μία λίστα υποσελίδων μίας σελίδας χρησιμοποιώντας την ετικέτα <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Άγνωστη αξία για την επιλογή $1.',
+	'spl3_nosubpages' => 'Η $1 δεν έχει υποσελίδες για καταγραφή.',
+);
+
 /** Esperanto (Esperanto)
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'spl3-desc' => 'Aŭtomate kreas liston de la subpaĝoj de paĝo uzante la etikedon <code><nowiki><splist /></nowiki></code>',
-	'spl3_debug' => 'Nekonata valuto por opcio $1.',
+	'spl3_debug' => 'Nekonata valoro por opcio $1.',
 	'spl3_nosubpages' => '$1 havas neniujn subpaĝojn por listigi.',
 );
 
@@ -144,14 +164,24 @@ $messages['es'] = array(
 	'spl3_nosubpages' => '$1 no tiene subpáginas a listar.',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'spl3_debug' => 'Tuntematon arvo valinnassa $1.',
+	'spl3_nosubpages' => 'Sivulla $1 ei ole alasivuja.',
+);
+
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author Urhixidur
  */
 $messages['fr'] = array(
 	'spl3-desc' => 'Crée automatiquement une liste de sous-pages d’une page utilisant la balise <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => 'Valeur pour l’option $1 inconnue.',
-	'spl3_nosubpages' => "$1 n'a pas de sous-pages à énumérer.",
+	'spl3_nosubpages' => '$1 n’a pas de sous-pages à énumérer.',
 );
 
 /** Galician (Galego)
@@ -191,6 +221,16 @@ $messages['hsb'] = array(
 	'spl3_nosubpages' => '$1 nima podstrony za lisćinu.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'spl3-desc' => 'Automatikusan listát készít egy lap allapjairól az <code><nowiki><splist /></nowiki></code> tag használatával',
+	'spl3_debug' => 'Ismeretlen érték a(z) $1 beállításhoz.',
+	'spl3_nosubpages' => 'A(z) $1 című lapnak nincsenek allapjai.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -198,6 +238,15 @@ $messages['ia'] = array(
 	'spl3-desc' => 'Crea automaticamente un lista del subpaginas de unpagina con le etiquetta <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => 'Valor incognite pro le option $1.',
 	'spl3_nosubpages' => '$1 non ha subpaginas a listar.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'spl3-desc' => 'Membuat secara otomatis daftar upa halaman menggunakan tag <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Nilai paramater yang tidak diketahui untuk $1.',
+	'spl3_nosubpages' => '$1 tidak memiliki upa halaman untuk didaftarkan.',
 );
 
 /** Italian (Italiano)
@@ -210,12 +259,13 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author Mizusumashi
  */
 $messages['ja'] = array(
-	'spl3-desc' => '<code><nowiki><splist /></nowiki></code>タグを使って、あるページのサブページのリストを自動生成',
+	'spl3-desc' => '<code><nowiki><splist /></nowiki></code>タグを使っているページのサブページ一覧を自動生成する',
 	'spl3_debug' => '$1オプションの値が不明。',
-	'spl3_nosubpages' => '$1にはリストすべきサブページがありません。',
+	'spl3_nosubpages' => '$1には一覧すべきサブページがありません。',
 );
 
 /** Javanese (Basa Jawa)
@@ -248,9 +298,18 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'spl3-desc' => 'Mécht automatesch eng Lëscht vun Ënnersäiten vun enger SàIt mat Hellëf vum Tag <code><nowiki><splist /></nowiki></code>',
+	'spl3-desc' => 'Mécht automatesch eng Lëscht vun Ënnersäite vun enger Säit mat Hëllef vum Tag <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => "Onbekannte Wert fir d'Optioun $1",
 	'spl3_nosubpages' => '$1 huet keng Ënnersäite fir ze weisen',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'spl3-desc' => 'Автоматски создава листа на потстраници на страница која ја користи ознаката <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Непозната вредност за параметарот $1.',
+	'spl3_nosubpages' => '$1 нема потстраници за наведување.',
 );
 
 /** Marathi (मराठी)
@@ -293,7 +352,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'spl3-desc' => 'Crea automaticament una lista de sospaginas d’una pagina utilizant la balisa <code><nowiki><splist /></nowiki></code>',
+	'spl3-desc' => "Crèa automaticament una lista de sospaginas d’una pagina qu'utiliza la balisa <code><nowiki><splist /></nowiki></code>",
 	'spl3_debug' => 'Valor per l’opcion $1 desconeguda.',
 	'spl3_nosubpages' => "$1 a pas de sospaginas d'enumerar.",
 );
@@ -305,6 +364,15 @@ $messages['pl'] = array(
 	'spl3-desc' => 'Automatycznie tworzy listę podstron za pomocą znacznika <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => 'Nieznana wartość opcji $1.',
 	'spl3_nosubpages' => 'Nie można wyświetlić podstron strony $1.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'spl3-desc' => 'A crea automaticament na lista dle sotpàgine ëd na pàgina an dovrand ël tag <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => "Valor pa conossù për l'opsion $1.",
+	'spl3_nosubpages' => "$1 a l'ha pa ëd sotpàgine da listé.",
 );
 
 /** Portuguese (Português)
@@ -333,6 +401,15 @@ $messages['ro'] = array(
 	'spl3_nosubpages' => '$1 nu are subpagini pentru afişat.',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'spl3-desc' => "Automaticamende ccreje 'n'elenghe de sottopàggene de 'na pàgene ausanne 'u tag <code><nowiki><splist /></nowiki></code>",
+	'spl3_debug' => "Valore scanusciute pe l'opzione $1.",
+	'spl3_nosubpages' => '$1 non ge tène sottopàggene da elengà.',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -349,6 +426,24 @@ $messages['sk'] = array(
 	'spl3-desc' => 'Automatická tvorba zoznamu podstránok stránky pomocou značky <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => 'Neznáma hodnota voľby $1.',
 	'spl3_nosubpages' => '$1 nemá zobraziteľné podstránky.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'spl3-desc' => 'Аутоматски прави списак подстрана неке стране преко тага <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Непозната вредност за опцију $1.',
+	'spl3_nosubpages' => '$1 нема подстрана.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'spl3-desc' => 'Automatski pravi spisak podstrana neke strane preko taga <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Nepoznata vrednost za opciju $1.',
+	'spl3_nosubpages' => '$1 nema podstrana.',
 );
 
 /** Swedish (Svenska)
@@ -376,6 +471,15 @@ $messages['tg-cyrl'] = array(
 	'spl3_nosubpages' => '$1 дорои ҳеҷ зерсаҳифаҳое барои феҳристкунӣ нест.',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'spl3-desc' => 'Bo rohi xudkor fehristi zersahifahoi sahifai barcasbi <code><nowiki><splist /></nowiki></code> istifodaburdaro eçod mekunad',
+	'spl3_debug' => 'Qimati noşinos baroi ixtijori $1.',
+	'spl3_nosubpages' => '$1 doroi heç zersahifahoe baroi fehristkunī nest.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -383,6 +487,15 @@ $messages['tl'] = array(
 	'spl3-desc' => 'Kusang lumilikha ng isang talaan ng kabahaging mga pahina ng isang pahina na gumagamit ng tatak na <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => 'Hindi nalalamang halaga para sa pagpipiliang $1.',
 	'spl3_nosubpages' => 'Walang maitatalang kabahaging mga pahina ang $1.',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'spl3-desc' => '<code><nowiki><splist /></nowiki></code> etiketi kullanılarak otomatik olarak bir sayfaya ait altsayfaların listesini oluşturur',
+	'spl3_debug' => '$1 seçeneği için bilinmeyen değer.',
+	'spl3_nosubpages' => '$1, listelenecek altsayfalara sahip değil.',
 );
 
 /** Vèneto (Vèneto)
@@ -412,15 +525,19 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
 	'spl3_debug' => '未知的选项$1的数值',
+	'spl3_nosubpages' => '$1没有子页面来显示',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'spl3_debug' => '不明的選項$1的設定值',
+	'spl3_nosubpages' => '$1沒有子頁面來顯示',
 );
 

@@ -11,7 +11,7 @@ class CorporatePageHelper{
 	* Hook for clear parsed message cache
 	*/
 	static function clearMessageCache(&$article){
-		global $wgTTCache;
+		global $wgMemc;
 		
 		$title = strtolower($article->getTitle()); 
 		if (! (strpos($title, "mediawiki:") === 0 )){
@@ -34,7 +34,7 @@ class CorporatePageHelper{
 
 		foreach ($CorporatePageMessageList as $value) {
 			$value = wfMemcKey( "hp_msg_parser", strtolower(  $value  ) ) ;
-			$wgTTCache->set( $value, "-1" );
+			$wgMemc->set( $value, "-1" );
 		}
 		return true;
 	}
@@ -87,9 +87,9 @@ class CorporatePageHelper{
 	 */
 	
 	static public function parseMsg($msg,$isFavicon = false){
-		global $wgTTCache, $wgArticlePath;
+		global $wgMemc, $wgArticlePath;
 		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
-		$out = $wgTTCache->get( $mcKey, -1 );
+		$out = $wgMemc->get( $mcKey );
 		if ( is_array($out) ){
 			return $out;
 		}
@@ -136,7 +136,7 @@ class CorporatePageHelper{
 			$out[0]['isfirst'] = true;
 			$out[count($out)-1]['islast'] = true;
 		}
-		$wgTTCache->set( $mcKey, $out, 60*60*12);
+		$wgMemc->set( $mcKey, $out, 60*60*12);
         wfProfileOut( __METHOD__ );     
 		return $out;
 	}
@@ -148,10 +148,12 @@ class CorporatePageHelper{
 	 * @author Tomek
 	 */
 	
-	static public function parseMsgImg($msg,$descThumb = false){
-		global $wgTTCache;
-		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
-		$out = $wgTTCache->get( $mcKey, -1 );
+	static public function parseMsgImg($msg, $descThumb = false){
+		global $wgMemc, $wgLang;
+
+		$lang = $wgLang->getCode();
+		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ), $lang );
+		$out = $wgMemc->get( $mcKey );
 		if ( is_array( $out ) ){
 			return $out;
 		}
@@ -188,7 +190,7 @@ class CorporatePageHelper{
 				}
 			}
 		}
-		$wgTTCache->set( $mcKey, $out, 60*60*12);
+		$wgMemc->set( $mcKey, $out, 60*60*12);
 
 		wfProfileOut( __METHOD__ );         
 		return $out;

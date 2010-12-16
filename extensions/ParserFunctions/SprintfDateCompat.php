@@ -141,6 +141,15 @@ class SprintfDateCompat {
 					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
 					$num = $unix;
 					break;
+				case 'B':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = date( 'B', $unix );
+					break;
+				case 'S':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = date( 'S', $unix );
+					break;
+				
 				case '\\':
 					# Backslash escaping
 					if ( $p < strlen( $format ) - 1 ) {

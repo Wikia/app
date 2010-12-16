@@ -86,7 +86,7 @@ class CrossNamespaceLinksPage extends QueryPage {
 	 * whitelist.
 	 */
 	function getSQL() {
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		extract( $dbr->tableNames( 'page', 'pagelinks' ) );
 		$namespaces = implode( ',', $this->namespaces );
 		return

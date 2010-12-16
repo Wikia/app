@@ -92,10 +92,9 @@ $wgNoticeCounterSource = "http://donate.wikimedia.org/counter.php";
 $wgExtensionFunctions[] = 'efCentralNoticeSetup';
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CentralNotice',
 	'author'         => 'Brion Vibber',
-	'svn-date'       => '$LastChangedDate: 2008-12-18 10:15:51 +0100 (czw, 18 gru 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44759 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:CentralNotice',
 	'description'    => 'Adds a central sitenotice',
 	'descriptionmsg' => 'centralnotice-desc',
@@ -114,16 +113,17 @@ $wgGroupPermissions['sysop']['centralnotice-translate'] = true; // Only sysops c
 function efCentralNoticeSetup() {
 	global $wgHooks, $wgNoticeInfrastructure, $wgAutoloadClasses, $wgSpecialPages;
 	global $wgCentralNoticeLoader;
-	
+
 	$dir = dirname( __FILE__ ) . '/';
-	
+
 	if( $wgCentralNoticeLoader ) {
 		$wgHooks['BeforePageDisplay'][] = 'efCentralNoticeLoader';
 		$wgHooks['SiteNoticeAfter'][] = 'efCentralNoticeDisplay';
+		$wgHooks['MakeGlobalVariablesScript'][] = 'efCentralNoticeDefaults';
 	}
-	
+
 	$wgAutoloadClasses['NoticePage'] = $dir . 'NoticePage.php';
-	
+
 	if ( $wgNoticeInfrastructure ) {
 		$wgSpecialPages['CentralNotice'] = 'CentralNotice';
 		$wgSpecialPageGroups['CentralNotice'] = 'wiki'; // Wiki data and tools"
@@ -134,7 +134,7 @@ function efCentralNoticeSetup() {
 
 		$wgSpecialPages['NoticeTemplate'] = 'SpecialNoticeTemplate';
 		$wgAutoloadClasses['SpecialNoticeTemplate'] = $dir . 'SpecialNoticeTemplate.php';
-                $wgAutoloadClasses['CentralNoticeDB'] = $dir. 'CentralNotice.db.php';
+		$wgAutoloadClasses['CentralNoticeDB'] = $dir. 'CentralNotice.db.php';
 	}
 }
 
@@ -142,10 +142,10 @@ function efCentralNoticeLoader( $out, $skin ) {
 	global $wgScript, $wgUser, $wgOut, $wgLang;
 	global $wgStyleVersion, $wgJsMimeType;
 	global $wgNoticeProject;
-	
+
 	global $wgNoticeCentralPath;
 	global $wgNoticeLocalPath;
-	
+
 	$lang = $wgLang->getCode();
 	$centralNotice = "$wgNoticeProject/$lang/centralnotice.js";
 	/*
@@ -154,7 +154,7 @@ function efCentralNoticeLoader( $out, $skin ) {
 		: 'anonnotice.js';
 	*/
 
-	
+
 	if ( $wgNoticeCentralPath === false ) {
 		$centralLoader = SpecialPage::getTitleFor( 'NoticeText', $centralNotice )->getLocalUrl();
 	} else {
@@ -172,9 +172,16 @@ function efCentralNoticeLoader( $out, $skin ) {
 	*/
 
 	// Load the notice text from <head>
-	$wgOut->addInlineScript( "var wgNotice='';var wgNoticeLocal='';" );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$encCentralLoader?$wgStyleVersion\"></script>\n" );
-	
+
+	return true;
+}
+
+function efCentralNoticeDefaults( &$vars ) {
+	// Initialize these variables to empty, so if the notice script fails
+	// we don't have any surprises.
+	$vars['wgNotice'] = '';
+	$vars['wgNoticeLocal'] = '';
 	return true;
 }
 

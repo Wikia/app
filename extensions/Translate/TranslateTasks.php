@@ -72,7 +72,15 @@ abstract class TranslateTask {
 	}
 
 	protected $process = array();
-	abstract protected function setProcess();
+
+	protected function setProcess() {
+		$this->process = array(
+			array( $this, 'preinit' ),
+			array( $this, 'doPaging' ),
+			array( $this, 'postinit' ),
+		);
+	}
+
 	abstract protected function output();
 
 	public final function execute() {
@@ -85,13 +93,11 @@ abstract class TranslateTask {
 
 	protected function doPaging() {
 		$total = count( $this->collection );
-
 		$this->collection->slice(
 			$this->options->getOffset(),
 			$this->options->getLimit()
 		);
-
-		$left = count( $this->collection );
+		$left  = count( $this->collection );
 
 		$callback = $this->options->getPagingCB();
 		call_user_func( $callback, $this->options->getOffset(), $left, $total );
@@ -101,65 +107,66 @@ abstract class TranslateTask {
 class ViewMessagesTask extends TranslateTask {
 	protected $id = 'view';
 
-	protected function setProcess() {
-		$this->process = array(
-			array( $this, 'preinit' ),
-			array( $this, 'filterOptional' ),
-			array( $this, 'doPaging' ),
-			array( $this, 'postinit' ),
-		);
-	}
-
 	protected function preinit() {
 		$code = $this->options->getLanguage();
 		$this->collection = $this->group->initCollection( $code );
-	}
-
-	protected function filterOptional() {
+		$this->collection->setInfile( $this->group->load( $code ) );
+		$this->collection->filter( 'ignored' );
 		$this->collection->filter( 'optional' );
 	}
 
 	protected function postinit() {
-		$this->group->fillCollection( $this->collection );
+		$this->collection->loadTranslations();
 	}
 
 	protected function output() {
-		$tableheader = TranslateUtils::tableHeader( $this->group->getLabel() );
-		$tablefooter = Xml::closeElement( 'table' );
-
-		return
-			$tableheader .
-			TranslateUtils::makeListing(
-				$this->collection,
-				$this->group->getId(),
-				false,
-				$this->group->namespaces
-			) .
-			$tablefooter;
+		$table = new MessageTable( $this->collection, $this->group );
+		$table->appendEditLinkParams( 'loadtask', $this->getId() );
+		return $table->fullTable();
 	}
 
 }
 
-class ViewUntranslatedTask extends ViewMessagesTask {
-	protected $id = 'untranslated';
+class ReviewMessagesTask extends ViewMessagesTask {
+	protected $id = 'review';
 
-	protected function setProcess() {
-		$this->process = array(
-			array( $this, 'preinit' ),
-			array( $this, 'filterOptional' ),
-			array( $this, 'postinit' ),
-			array( $this, 'filterTranslated' ),
-			array( $this, 'doPaging' ),
-		);
+	protected function preinit() {
+		$code = $this->options->getLanguage();
+		$this->collection = $this->group->initCollection( $code );
+		$this->collection->setInfile( $this->group->load( $code ) );
+		$this->collection->filter( 'ignored' );
+		$this->collection->filter( 'hastranslation', false );
+		$this->collection->filter( 'changed', false );
 	}
 
-	/**
-	 * Filters all translated messages. Fuzzy messages are not considered to be
-	 * translated, because they need attention from translators. Also optional
-	 * messages can not have identical translations.
-	 */
-	protected function filterTranslated() {
+	protected function output() {
+		$table = new MessageTable( $this->collection, $this->group );
+		$table->appendEditLinkParams( 'loadtask', $this->getId() );
+		$table->setReviewMode();
+
+		return $table->fullTable();
+	}
+
+}
+
+class ViewUntranslatedTask extends ReviewMessagesTask {
+	protected $id = 'untranslated';
+
+	protected function preinit() {
+		$code = $this->options->getLanguage();
+		$this->collection = $this->group->initCollection( $code );
+		$this->collection->setInfile( $this->group->load( $code ) );
+		$this->collection->filter( 'ignored' );
+		$this->collection->filter( 'optional' );
+
+		// Update the cache while we are at it
+		$total = count( $this->collection );
 		$this->collection->filter( 'translated' );
+		$translated = $total - count( $this->collection );
+		$fuzzy = count( $this->collection->getTags( 'fuzzy' ) );
+		
+		$cache = new ArrayMemoryCache( 'groupstats' );
+		$cache->set( $this->group->getID(), $code, array( $fuzzy, $translated, $total ) );
 	}
 
 }
@@ -170,13 +177,16 @@ class ViewOptionalTask extends ViewMessagesTask {
 	protected function setProcess() {
 		$this->process = array(
 			array( $this, 'preinit' ),
-			array( $this, 'filterNonOptional' ),
 			array( $this, 'doPaging' ),
 			array( $this, 'postinit' ),
 		);
 	}
 
-	protected function filterNonOptional() {
+	protected function preinit() {
+		$code = $this->options->getLanguage();
+		$this->collection = $this->group->initCollection( $code );
+		$this->collection->setInfile( $this->group->load( $code ) );
+		$this->collection->filter( 'ignored' );
 		$this->collection->filter( 'optional', false );
 	}
 
@@ -188,81 +198,19 @@ class ViewUntranslatedOptionalTask extends ViewOptionalTask {
 	protected function setProcess() {
 		$this->process = array(
 			array( $this, 'preinit' ),
-			array( $this, 'filterNonOptional' ),
-			array( $this, 'postinit' ),
-			array( $this, 'filterTranslated' ),
 			array( $this, 'doPaging' ),
+			array( $this, 'postinit' ),
 		);
 	}
 
-	protected function filterTranslated() {
+	protected function preinit() {
+		$code = $this->options->getLanguage();
+		$this->collection = $this->group->initCollection( $code );
+		$this->collection->setInfile( $this->group->load( $code ) );
+		$this->collection->filter( 'ignored' );
+		$this->collection->filter( 'optional', false );
 		$this->collection->filter( 'translated' );
 	}
-
-}
-
-class ViewProblematicTask extends ReviewMessagesTask {
-	protected $id = 'problematic';
-
-	protected function setProcess() {
-		$this->process = array(
-			array( $this, 'preinit' ),
-			array( $this, 'postinit' ),
-			array( $this, 'filterNonProblematic' ),
-			array( $this, 'doPaging' ),
-		);
-	}
-
-	protected function filterNonProblematic() {
-		$code = $this->options->getLanguage();
-		$problematic = $this->group->getProblematic( $code );
-		$checker = MessageChecks::getInstance();
-		$type = $this->group->getType();
-
-		foreach ( $this->collection->keys() as $key ) {
-			$item = $this->collection[$key];
-			if ( in_array( $key, $problematic ) ) {
-			 if ( $checker->doFastChecks( $item, $type, $code ) ) continue;
-			}
-
-			unset( $this->collection[$key] );
-		}
-	}
-
-}
-
-
-class ReviewMessagesTask extends ViewMessagesTask {
-	protected $id = 'review';
-
-	protected function setProcess() {
-		$this->process = array(
-			array( $this, 'preinit' ),
-			array( $this, 'postinit' ),
-			array( $this, 'filterUnchanged' ),
-			array( $this, 'doPaging' ),
-		);
-	}
-
-	protected function filterUnchanged() {
-		$this->collection->filter( 'changed', false );
-	}
-
-	protected function output() {
-		$tableheader = TranslateUtils::tableHeader( $this->group->getLabel() );
-		$tablefooter = Xml::closeElement( 'table' );
-
-		return
-			$tableheader .
-			TranslateUtils::makeListing(
-				$this->collection,
-				$this->group->getId(),
-				true, /* Review mode */
-				$this->group->namespaces
-			) .
-			$tablefooter;
-	}
-
 }
 
 class ReviewAllMessagesTask extends ReviewMessagesTask {
@@ -271,14 +219,17 @@ class ReviewAllMessagesTask extends ReviewMessagesTask {
 	protected function setProcess() {
 		$this->process = array(
 			array( $this, 'preinit' ),
-			array( $this, 'postinit' ),
-			array( $this, 'filterUntranslated' ),
 			array( $this, 'doPaging' ),
+			array( $this, 'postinit' ),
 		);
 	}
 
-	protected function filterUntranslated() {
-		$this->collection->filter( 'translated', false );
+	protected function preinit() {
+		$code = $this->options->getLanguage();
+		$this->collection = $this->group->initCollection( $code );
+		$this->collection->setInfile( $this->group->load( $code ) );
+		$this->collection->filter( 'ignored' );
+		$this->collection->filter( 'hastranslation', false );
 	}
 
 }
@@ -295,8 +246,13 @@ class ExportMessagesTask extends ViewMessagesTask {
 
 
 	public function output() {
-		$writer = $this->group->getWriter();
-		$data = $writer->webExport( $this->collection );
+		if ( $this->group instanceof FileBasedMessageGroup ) {
+			$ffs = $this->group->getFFS();
+			$data = $ffs->writeIntoVariable( $this->collection );
+		} else {
+			$writer = $this->group->getWriter();
+			$data = $writer->webExport( $this->collection );
+		}
 		
 		return Xml::openElement( 'textarea', array( 'id' => 'wpTextbox1', 'rows' => '50' ) ) .
 			$data .
@@ -312,9 +268,15 @@ class ExportToFileMessagesTask extends ExportMessagesTask {
 	}
 
 	public function output() {
-		$writer = $this->group->getWriter();
-		$this->collection->filter( 'translation', null );
-		return $writer->webExport( $this->collection );
+		$this->collection->filter( 'translated', false );
+		if ( $this->group instanceof FileBasedMessageGroup ) {
+			$ffs = $this->group->getFFS();
+			$data = $ffs->writeIntoVariable( $this->collection );
+		} else {
+			$writer = $this->group->getWriter();
+			$data = $writer->webExport( $this->collection );
+		}
+		return $data;
 	}
 }
 
@@ -349,7 +311,7 @@ class ExportAsPoMessagesTask extends ExportMessagesTask {
 		header( "Content-Disposition: attachment; filename=\"$filename\"" );
 
 		$headers = array();
-		$headers['Project-Id-Version'] = 'MediaWiki ' . SpecialVersion::getVersion();
+		$headers['Project-Id-Version'] = 'MediaWiki ' . SpecialVersion::getVersion( 'nodb' );
 		// TODO: make this customisable or something
 		$headers['Report-Msgid-Bugs-To'] = $wgServer;
 		// TODO: sprintfDate doesn't support any time zone flags
@@ -372,12 +334,12 @@ class ExportAsPoMessagesTask extends ExportMessagesTask {
 		foreach ( $this->collection as $key => $m ) {
 			$flags = array();
 
-			$translation = $m->translation;
+			$translation = $m->translation();
 			# CASE2: no translation
 			if ( $translation === null ) $translation = '';
 
 			# CASE3: optional messages; accept only if different
-			if ( $m->optional ) $flags[] = 'optional';
+			if ( $m->hasTag( 'optional' ) ) $flags[] = 'optional';
 
 			# Remove fuzzy markings before export
 			if ( strpos( $translation, TRANSLATE_FUZZY ) !== false ) {
@@ -392,7 +354,7 @@ class ExportAsPoMessagesTask extends ExportMessagesTask {
 			}
 
 			$out .= self::formatcomments( $comments, $flags );
-			$out .= self::formatmsg( $m->definition, $translation, $key, $flags );
+			$out .= self::formatmsg( $m->definition(), $translation, $key, $flags );
 
 		}
 

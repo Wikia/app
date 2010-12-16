@@ -16,24 +16,19 @@ $mvgIP = $IP . '/extensions/MetavidWiki';
 
 define( 'SEQUENCE_TAG', 'sequence_hlrd' );
 
-// include the global functions & register the extension 
+// include the global functions & register the extension
 include_once( 'MV_GlobalFunctions.php' );
 
 
-//greatly affects site performance (turn to false to avoid costly parent lookups on all search results) : 
+//greatly affects site performance (turn to false to avoid costly parent lookups on all search results) :
 $mvGetParentMeta = true;
 
 
-//script loader settings: 
-$mvgJSDebug=false;
-$wgEnableScriptLoader = true; //if the script loader is on at all
-$wgEnableScriptLoaderJsFile = true; //if you can use the script loader with js files (rather than only js classes) 
-$wgEnableScriptMinify = true;
-
+//script loader settings:
 
 
 // if the search portlet should autoComplete
-// (causes the inclution of jquery into every page.. can slow things down a bit)   
+// (causes the inclution of jquery into every page.. can slow things down a bit)
 $mvEnableAutoComplete = true;
 
 
@@ -45,9 +40,9 @@ $mvEnableJSMVDrewrite = true;
 # semanticWiki integration options
 # #########################
 // @@todo we should clean this up!... into a semantic maping array or object
-// if you want to include spoken by relation in search results:  
+// if you want to include spoken by relation in search results:
 
-// enable dissable varius digest data collection 
+// enable dissable varius digest data collection
 $mvEnableSearchDigest = true;
 $mvEnableClipViewDigest = true;
 // keeps track of popular pages in given categories over time
@@ -57,7 +52,7 @@ $mvDigestCategories = array( 'Interst_Group', 'Bill', 'Person' );
 // 'property'=>category for auto_complete (ALL LOWER CASE)
 $mvMetaDataHelpers = array( 'anno_en' => array( 'speech_by' => 'person', 'bill' => 'bill' ) );
 
-// by default categories are handled differently enable or disable below: 
+// by default categories are handled differently enable or disable below:
 $mvMetaCategoryHelper = true;
 
 
@@ -69,41 +64,41 @@ $mvBillInSearchResult = true;
 
 
 # ########################
-# metavid paths 
+# metavid paths
 # @@todo clean up with internal handlers for annodex and images
-# use the mediaWiki defaults for storage of media  
+# use the mediaWiki defaults for storage of media
 # #########################
 
 // define the image location:
 // $mvImageWebLoc ='http://metavid.org/image_media/';
 
-// if we should load images from an external server:  
+// if we should load images from an external server:
 $mvExternalImages = false;
-// path to metavidWiki install that is serving images: 
-$mvExternalImgServerPath = 'http://mvprime.cse.ucsc.edu/wiki/index.php';
+// path to metavidWiki install that is serving images:
+$mvExternalImgServerPath = 'http://metavid.org/w/index.php';
 
 $mvWebImgLoc = $mvgScriptPath . '/stream_images';
-// full local path for images (if hosted locally) 
+// full local path for images (if hosted locally)
 $mvLocalImgLoc = $mvgIP . '/stream_images';
 
 // if mediaWiki should serve up redirects to image file path or have php send the image via GD
 // if served directly its one less round trip to the server but may tax the server
-// a bit more than having apache serving the file 
+// a bit more than having apache serving the file
 $mvServeImageRedirect = false;
 
 // the time in seconds of between image frames generated from movie clips.
-// (set pretty high for the metavid context where we load the images via scripts 
+// (set pretty high for the metavid context where we load the images via scripts
 // (early on we did less frequent image grabs)
-// normally you would want a lower value like 5 seconds or so  
+// normally you would want a lower value like 5 seconds or so
 $mvImageGranularityRate = '600';
 // the ffmpeg command to generate thumbnail (to disable generating images set to '')
 $mvShellOggFrameGrab = '';
- 
-# define the video media locations based on path/server names 
+
+# define the video media locations based on path/server names
 $mvVideoArchivePaths['cap1'] = 'http://metavidstorage01.ucsc.edu/media/';
 $mvVideoArchivePaths['mvbox2'] = 'http://mvbox2.cse.ucsc.edu/media/';
 
-// stream msgKeys that support ?t=start_time/end_time temporal url media serving: 
+// stream msgKeys that support ?t=start_time/end_time temporal url media serving:
 $mvDefaultVideoQualityKey 	= 'mv_ogg_low_quality';
 $mvDefaultFlashQualityKey 	= 'mv_flash_low_quality';
 $mvDefaultVideoHighQualityKey = 'mv_ogg_high_quality';
@@ -140,11 +135,11 @@ $mvDefaultVideoIconSize = '80x60';
 //if to display the ROE resource link
 $mvDispROEicon=false;
 
-//The text Embed a metavid Stream inline in the wiki 
+//The text Embed a metavid Stream inline in the wiki
 $mvEmbedKey = 'Embed';
 
 //wars people of archive inacuracys (given its a wiki and the source is close caption feed)
-$mvEnableStreamNotice=true;
+$mvEnableStreamNotice = false;
 
 /*
  * All Available meta data layers
@@ -162,6 +157,9 @@ $mvMVDTypeAllAvailable = array( 'ht_en', 'anno_en', 'thomas_en' );
 */
 $mvMVDTypeDefaultDisp = array( 'ht_en', 'anno_en' );
 
+//if we should show the layer controls:
+$mvgShowLayerControls = false;
+
 # ##################
 # Special Pages with Interface functions
 # ##################
@@ -177,12 +175,12 @@ $mvDo_SQL_CALC_FOUND_ROWS = true;
 # @@todo should really integrate "streams" with "media"
 # here you can control what rights 'sysop', 'bot', 'user', 'anonymous',  have in
 # adding streams
-# note: all streams are treated equally once added to the system 
+# note: all streams are treated equally once added to the system
 # (this only control import types)
 #
 # type: 	[metavid_file] -- used for pointing to an existing file on the server
-#			[metavid_live] -- used for the setting up the scripts for a live stream. 
-#			[upload_file]	-- used video file uploads 
+#			[metavid_live] -- used for the setting up the scripts for a live stream.
+#			[upload_file]	-- used video file uploads
 #			[external_file] -- used to add external files via http urls (such as a file from archive.org)
 $mvStreamTypePermission['metavid_file'] = array( 'sysop', 'bot' );
 $mvStreamTypePermission['metavid_live'] = array();
@@ -205,7 +203,7 @@ $mvMsgContentTypeLookup = array(
 
 		'mv_archive_org_mp4'	=> 'video/h264',
  		'mv_flash_low_quality'	=> 'video/x-flv',
- 		'mv_ogg_high_quality'	=> 'video/ogg',		
+ 		'mv_ogg_high_quality'	=> 'video/ogg',
  		'mv_ogg_low_quality'	=> 'video/ogg'
  	);
 
@@ -214,12 +212,10 @@ $mvMsgContentTypeLookup = array(
 # $mvNamespaceIndex = ???; in your config before including the settings
 # should be larger than 100 and if you put in a default value
 # if your using semantic wiki just init the semantic wiki namespace
-# and metavid will take subsequent NS values accordingly. 
-# # 
+# and metavid will take subsequent NS values accordingly.
+# #
 if ( !isset( $mvNamespaceIndex ) ) {
 	mvInitNamespaces( 100 );
 } else {
 	mvInitNamespaces();
 }
-
-?>

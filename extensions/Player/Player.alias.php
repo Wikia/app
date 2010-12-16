@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'Player' => array( 'Player' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Player' => array( 'لاعب' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Player' => array( 'لاعب' ),
 );
@@ -40,6 +36,16 @@ $aliases['bs'] = array(
 /** Lower Sorbian (Dolnoserbski) */
 $aliases['dsb'] = array(
 	'Player' => array( 'Wótegrawak' ),
+);
+
+/** French (Français) */
+$aliases['fr'] = array(
+	'Player' => array( 'Lecteur' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Player' => array( 'Liésor' ),
 );
 
 /** Galician (Galego) */
@@ -62,9 +68,29 @@ $aliases['ia'] = array(
 	'Player' => array( 'Reproductor' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Player' => array( 'Pemutar' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Player' => array( 'プレイヤー', 'プレーヤー' ),
+	'Player' => array( 'プレーヤー', 'プレイヤー', 'プレーヤ', 'プレイヤ' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Player' => array( '재생기' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Player' => array( 'പ്ലേയർ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Player' => array( 'खेळाडू' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -82,6 +108,11 @@ $aliases['no'] = array(
 	'Player' => array( 'Medieavspiller' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'Player' => array( 'Lector' ),
+);
+
 /** Pashto (پښتو) */
 $aliases['ps'] = array(
 	'Player' => array( 'غږونکی' ),
@@ -92,6 +123,11 @@ $aliases['sa'] = array(
 	'Player' => array( 'खेळाडू' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Player' => array( 'Hráč' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Player' => array( 'Spelare' ),
@@ -100,5 +136,10 @@ $aliases['sv'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Player' => array( 'Manlalaro' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Player' => array( 'Oyuncu' ),
 );
 

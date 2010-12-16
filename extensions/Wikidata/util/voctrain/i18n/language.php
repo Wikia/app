@@ -1,7 +1,7 @@
 <?php
 
-class LocalisationException extends Exception {};
-class NoSuchMessageFileException extends LocalisationException {};
+class LocalisationException extends Exception { } ;
+class NoSuchMessageFileException extends LocalisationException { } ;
 
 /**loosely inspired on class of same name from mediawiki.
 * (mediawiki version is overkill for our purposes though)
@@ -9,17 +9,17 @@ class NoSuchMessageFileException extends LocalisationException {};
 */
 class Language {
 
-	private $code; #language code, mostly for debugging purposes
+	private $code; # language code, mostly for debugging purposes
 	private $messages; # assoc array of translations
-	private $fallback=false; #a different Language object to fall back to
+	private $fallback = false; # a different Language object to fall back to
 				 # if we can't find a particular entry in $messages
-	private $direction="ltr";
+	private $direction = "ltr";
 
-	public function __construct($code="Default") {
-		if (!$code) 
-			$code="Default";
-		$this->code=$code;
-		$this->loadMessages($code);
+	public function __construct( $code = "Default" ) {
+		if ( !$code )
+			$code = "Default";
+		$this->code = $code;
+		$this->loadMessages( $code );
 
 
 	}
@@ -29,34 +29,34 @@ class Language {
 		return $this->direction;
 	}
 
-	public function loadMessages($code="Default") {
-		if ($code==="Default") {
-			$code="en";
+	public function loadMessages( $code = "Default" ) {
+		if ( $code === "Default" ) {
+			$code = "en";
 		}
 
-		include("language.i18n.php");	
-		if (array_key_exists($code, $messages)) {
-			foreach ($messages[$code] as $key=>$message) {
-				$this->messages[$key]=$message; #messages is from the included file
+		include( "language.i18n.php" );
+		if ( array_key_exists( $code, $messages ) ) {
+			foreach ( $messages[$code] as $key => $message ) {
+				$this->messages[$key] = $message; # messages is from the included file
 			}
 		} else {
-			throw new LocalisationException("messages problem, there's no messages for $code");
+			throw new LocalisationException( "messages problem, there's no messages for $code" );
 		}
 			
-		if (array_key_exists($code,$fallback)) {
-			if ($fallback[$code]===false) {
-				$this->fallback=false;
+		if ( array_key_exists( $code, $fallback ) ) {
+			if ( $fallback[$code] === false ) {
+				$this->fallback = false;
 			} else {
-				$this->fallback=new Language($fallback[$code]);
+				$this->fallback = new Language( $fallback[$code] );
 			}
 		}
 
-		if (array_key_exists($code,$direction)) {
-			$this->direction=$direction[$code];
+		if ( array_key_exists( $code, $direction ) ) {
+			$this->direction = $direction[$code];
 		}
 
 
-		$this->code=$code;
+		$this->code = $code;
 	}
 
 
@@ -64,15 +64,15 @@ class Language {
 	 * betawiki (http://translatewiki.net/) will translate my i18n for me
 	 * if I do this. So it's a fair trade.
 	 */
-	public static function safe($string) {
-		if (substr_count($string,"voctrain_")==0) {
-			$string="voctrain_".$string;
+	public static function safe( $string ) {
+		if ( substr_count( $string, "voctrain_" ) == 0 ) {
+			$string = "voctrain_" . $string;
 		}
-		$string=preg_replace("|[^A-Za-z0-9_]|","_",$string);
-		$compare="";
-		while($compare!=$string) {
-			$compare=$string;
-			$string=str_replace("__","_",$string);
+		$string = preg_replace( "|[^A-Za-z0-9_]|", "_", $string );
+		$compare = "";
+		while ( $compare != $string ) {
+			$compare = $string;
+			$string = str_replace( "__", "_", $string );
 		}
 
 		return $string;
@@ -82,8 +82,8 @@ class Language {
 	/** safeMatch two strings, after safe()-ing them.
 	 * @return true if safe($one)==safe($two)
 	*/
-	public static function safeMatch($one, $two) {
-		return Language::safe($one)==Language::safe($two);
+	public static function safeMatch( $one, $two ) {
+		return Language::safe( $one ) == Language::safe( $two );
 	}
 
 	
@@ -91,34 +91,34 @@ class Language {
 	 * Get language names available for i18n, indexed by code.
 	 */
 	public static function getI18NLanguageNames() {
-		include("language.i18n.php");	
-		include("Names.php");
-		$keys= array_keys($messages);
-		$names=array();
-		foreach ($keys as $key) {
-			if (array_key_exists($key,$languageNames)) {
-				$names[$key]=$languageNames[$key];
+		include( "language.i18n.php" );
+		include( "Names.php" );
+		$keys = array_keys( $messages );
+		$names = array();
+		foreach ( $keys as $key ) {
+			if ( array_key_exists( $key, $languageNames ) ) {
+				$names[$key] = $languageNames[$key];
 			}
 		}
 
 		return $names;
 	}
 
-	public function translation_exists($phrase) {
-		if ($this->messages) {
-			return array_key_exists(Language::safe($phrase), $this->messages);
+	public function translation_exists( $phrase ) {
+		if ( $this->messages ) {
+			return array_key_exists( Language::safe( $phrase ), $this->messages );
 		} else {
-			throw new Exception("not initialized, code ".$this->code);
+			throw new Exception( "not initialized, code " . $this->code );
 		}
 	}
 
 	/** translate the phrase, but doesn't do any substitutions. 
 	 * Use printf,sprintf, or vsprintf etc...  for subsitutions */
-	public function translate($phrase) {
-		if ($this->translation_exists($phrase)) {
-			return $this->messages[Language::safe($phrase)];
-		} elseif ($this->fallback && $this->fallback->translation_exists($phrase)) {
-			return $this->fallback->translate($phrase);
+	public function translate( $phrase ) {
+		if ( $this->translation_exists( $phrase ) ) {
+			return $this->messages[Language::safe( $phrase )];
+		} elseif ( $this->fallback && $this->fallback->translation_exists( $phrase ) ) {
+			return $this->fallback->translate( $phrase );
 		} else {
 			return "{untranslated: '$phrase'}";
 		}
@@ -131,36 +131,36 @@ class Language {
 	/** i18nsprint is a simpler way to go about things, will do i18n replacement
 	on antyhing enclosed in <|  |>, any %signs in these substrings
 	    will be substituted with items from the array*/
-	public function i18nsprint($string, $replacements=array()) {
-		$callback=new I18Ncallback();
-		$callback->replacements=$replacements;
-		$callback->language=$this;
-		return preg_replace_callback("#(?U)(<\|.*\|>)#", array($callback,"replace"), $string);
+	public function i18nsprint( $string, $replacements = array() ) {
+		$callback = new I18Ncallback();
+		$callback->replacements = $replacements;
+		$callback->language = $this;
+		return preg_replace_callback( "#(?U)(<\|.*\|>)#", array( $callback, "replace" ), $string );
 	}
 
 	/* like i18nsprint, but prints directly to output*/
-	public function i18nprint($string, $replacements=array()) {
-		print $this->i18nsprint($string, $replacements);
+	public function i18nprint( $string, $replacements = array() ) {
+		print $this->i18nsprint( $string, $replacements );
 	}
 
 
 	# internationalized printf
-	public function printf($phrase) {
-		$args=func_get_args();
-		$str=$this->vsprintf($phrase, $args);
+	public function printf( $phrase ) {
+		$args = func_get_args();
+		$str = $this->vsprintf( $phrase, $args );
 		print $str;
-		return strlen($str);
+		return strlen( $str );
 	}
 
 	# internationalized sprintf
-	public function sprintf($phrase) {
-		$args=func_get_args();
-		return $this->vsprintf($phrase, $args);
+	public function sprintf( $phrase ) {
+		$args = func_get_args();
+		return $this->vsprintf( $phrase, $args );
 	}
 
 	# internationalized vprintf
-	public function vsprintf($phrase, $array) {
-		return vsprintf($this->translate($phrase),$array);
+	public function vsprintf( $phrase, $array ) {
+		return vsprintf( $this->translate( $phrase ), $array );
 	}
 
 	/** assoc variant of vsprintf,
@@ -169,12 +169,12 @@ class Language {
 	 * original apparently  Copyright © 2001-2008 The PHP Group, copied here
 	 * on condition that copyright notice is retained. )
 	 */
-	function vsprintf2($phrase='', $vars=array(), $char='%') {
-		$str=$this->translate($phrase);
-		if (!$str) return '';
-		if (count($vars) > 0) {
-			foreach ($vars as $k => $v) {
-				$str = str_replace($char . $k, $v, $str);
+	function vsprintf2( $phrase = '', $vars = array(), $char = '%' ) {
+		$str = $this->translate( $phrase );
+		if ( !$str ) return '';
+		if ( count( $vars ) > 0 ) {
+			foreach ( $vars as $k => $v ) {
+				$str = str_replace( $char . $k, $v, $str );
 			}
 		}
 
@@ -190,7 +190,7 @@ class Language {
 	
 	/** @return all possible languages indexed by code */
 	public static function getAllLanguageNames() {
-		include("Names.php");
+		include( "Names.php" );
 		return $languageNames;
 	}
 
@@ -201,10 +201,10 @@ class Language {
 class I18Ncallback {
 	public $language;
 	public $replacements;
-	public function replace($matches) {
-		$match=substr($matches[0],2,-2);
+	public function replace( $matches ) {
+		$match = substr( $matches[0], 2, - 2 );
 
-		return $this->language->vsprintf2($match,$this->replacements);
+		return $this->language->vsprintf2( $match, $this->replacements );
 	}
 }
 

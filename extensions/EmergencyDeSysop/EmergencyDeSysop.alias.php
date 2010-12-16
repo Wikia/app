@@ -31,9 +31,19 @@ $aliases['dsb'] = array(
 	'EmergencyDeSysop' => array( 'Zajmjeśe administratorowych pšawach w nuznem paźe' ),
 );
 
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'EmergencyDeSysop' => array( 'Ylläpitäjyyden_hätäpoisto' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
-	'EmergencyDeSysop' => array( 'DesysopageUrgent', 'DésysopageUrgent', 'DéSysopageUrgent', 'DeSysopageUrgent' ),
+	'EmergencyDeSysop' => array( 'Désysoppage d’urgence', 'DeSysopageUrgent' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'EmergencyDeSysop' => array( "DèSisopâjo d'urgence", 'DèSisopâjoDUrgence', "Dèsisopâjo d'urgence", 'DèsisopâjoDUrgence' ),
 );
 
 /** Galician (Galego) */
@@ -56,14 +66,34 @@ $aliases['ia'] = array(
 	'EmergencyDeSysop' => array( 'Disadmin de urgentia' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'EmergencyDeSysop' => array( 'Demutasi opsis darurat', 'DemutasiOpsisDarurat' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'EmergencyDeSysop' => array( '緊急管理者解任' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'EmergencyDeSysop' => array( 'Kamikaze' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'EmergencyDeSysop' => array( 'Noutprozedur fir Administrateurrechter ewechzehuelen' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'EmergencyDeSysop' => array( 'ИтноОдземањеНаСисопПрава' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'EmergencyDeSysop' => array( 'तातडीनेप्रचालकरद्दीकरण' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -76,6 +106,11 @@ $aliases['nl'] = array(
 	'EmergencyDeSysop' => array( 'NoodgreepBeheerdersrechtenVerwijderen' ),
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+$aliases['no'] = array(
+	'EmergencyDeSysop' => array( 'Nødrettighetsfjerning' ),
+);
+
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
 	'EmergencyDeSysop' => array( 'DesysopatgeUrgent', 'DesisopatgeUrgent', 'DeSysopatgeUrgent', 'DeSisopatgeUrgent' ),
@@ -86,8 +121,18 @@ $aliases['sa'] = array(
 	'EmergencyDeSysop' => array( 'आपत्कालप्रचालकनिष्कासन' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'EmergencyDeSysop' => array( 'NúdzovéZbavenieSprávcu' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'EmergencyDeSysop' => array( 'Biglaang pagtanggal bilang tagapagpatakbo ng sistema' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'EmergencyDeSysop' => array( 'AcilHizmetlilikAlma' ),
 );
 

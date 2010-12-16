@@ -13,18 +13,18 @@ class CommandLineOption {
 	protected $isRequired;
 	protected $possibleValues;
 	
-	public function __construct($name, $isRequired, $possibleValues = null) {
+	public function __construct( $name, $isRequired, $possibleValues = null ) {
 		$this->name = $name;
 		$this->isRequired = $isRequired;
 		$this->possibleValues = $possibleValues;
 	}
 	
-	public static function getOptionWithName(array &$options, $option) {
+	public static function getOptionWithName( array &$options, $option ) {
 		$result = null;
 		$i = 0;
 		
-		while ($result == null && i < count($options))
-			if ($options[$i]->name == $option)
+		while ( $result == null && i < count( $options ) )
+			if ( $options[$i]->name == $option )
 				$result = $options[$i];
 			else
 				$i++;
@@ -44,8 +44,8 @@ class CommandLineOption {
 		return $this->possibleValues;
 	}
 	
-	public function valueIsValid($value) {
-		return $this->possibleValues == null || in_array($value, $this->possibleValues); 
+	public function valueIsValid( $value ) {
+		return $this->possibleValues == null || in_array( $value, $this->possibleValues );
 	}
 }
 
@@ -57,29 +57,29 @@ class CommandLineOption {
  * the application stops.
  */
 
-function parseCommandLine(array $options) {
+function parseCommandLine( array $options ) {
 	global
 		$argv;
 	
 	$result = array();
 	$allValid = true;
 	
-	foreach ($argv as $arg) {
-		if (substr($arg, 0, 2) == '--') {
-			$arg = substr($arg, 2);
-			$equalsPosition = strpos($arg, "=");
+	foreach ( $argv as $arg ) {
+		if ( substr( $arg, 0, 2 ) == '--' ) {
+			$arg = substr( $arg, 2 );
+			$equalsPosition = strpos( $arg, "=" );
 			
-			if ($equalsPosition !== false) {
-				$option = substr($arg, 0, $equalsPosition);
-				$value = substr($arg, $equalsPosition + 1);
+			if ( $equalsPosition !== false ) {
+				$option = substr( $arg, 0, $equalsPosition );
+				$value = substr( $arg, $equalsPosition + 1 );
 				
-				$commandLineOption = CommandLineOption::getOptionWithName($options, $option);
+				$commandLineOption = CommandLineOption::getOptionWithName( $options, $option );
 				
-				if ($commandLineOption != null) {
+				if ( $commandLineOption != null ) {
 					$result[$option] = $value;
 					
-					if (!$commandLineOption->valueIsValid($value)) {
-						$allValid = false;					
+					if ( !$commandLineOption->valueIsValid( $value ) ) {
+						$allValid = false;
 						echo "Invalid value for option \"" . $option . "\": " . $value . "\n";
 					}
 				}
@@ -93,13 +93,13 @@ function parseCommandLine(array $options) {
 		}
 	}
 	
-	foreach ($options as $option)
-		if ($option->isRequired() && !array_key_exists($option->getName(), $result)) {
+	foreach ( $options as $option )
+		if ( $option->isRequired() && !array_key_exists( $option->getName(), $result ) ) {
 			$allValid = false;
 			echo "Missing option: " . $option->getName() . "\n";
 		}
 	
-	if (!$allValid)
+	if ( !$allValid )
 		die();
 	
 	return $result;

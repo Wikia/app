@@ -56,7 +56,7 @@ class Xml {
 
 	/**
 	 * Format an XML element as with self::element(), but run text through the
-	 * UtfNormal::cleanUp() validator first to ensure that no invalid UTF-8
+	 * $wgContLang->normalize() validator first to ensure that no invalid UTF-8
 	 * is passed.
 	 *
 	 * @param $element String:
@@ -65,12 +65,13 @@ class Xml {
 	 * @return string
 	 */
 	public static function elementClean( $element, $attribs = array(), $contents = '') {
+		global $wgContLang;
 		if( $attribs ) {
 			$attribs = array_map( array( 'UtfNormal', 'cleanUp' ), $attribs );
 		}
 		if( $contents ) {
 			wfProfileIn( __METHOD__ . '-norm' );
-			$contents = UtfNormal::cleanUp( $contents );
+			$contents = $wgContLang->normalize( $contents );
 			wfProfileOut( __METHOD__ . '-norm' );
 		}
 		return self::element( $element, $attribs, $contents );
@@ -162,12 +163,12 @@ class Xml {
 	public static function monthSelector( $selected = '', $allmonths = null, $id = 'month' ) {
 		global $wgLang;
 		$options = array();
-	    if( is_null( $selected ) )
+		if( is_null( $selected ) )
 			$selected = '';
-	    if( !is_null( $allmonths ) )
+		if( !is_null( $allmonths ) )
 			$options[] = self::option( wfMsg( 'monthsall' ), $allmonths, $selected === $allmonths );
 		for( $i = 1; $i < 13; $i++ )
-				$options[] = self::option( $wgLang->getMonthName( $i ), $i, $selected === $i );
+			$options[] = self::option( $wgLang->getMonthName( $i ), $i, $selected === $i );
 		return self::openElement( 'select', array( 'id' => $id, 'name' => 'month', 'class' => 'mw-month-selector' ) )
 			. implode( "\n", $options )
 			. self::closeElement( 'select' );
@@ -394,21 +395,14 @@ class Xml {
 	 * @return string HTML
 	 */
 	public static function submitButton( $value, $attribs=array() ) {
-		return self::element( 'input', array( 'type' => 'submit', 'value' => $value ) + $attribs );
+		return Html::element( 'input', array( 'type' => 'submit', 'value' => $value ) + $attribs );
 	}
 
 	/**
-	 * Convenience function to build an HTML hidden form field.
-	 * @param $name String: name attribute for the field
-	 * @param $value String: value for the hidden field
-	 * @param $attribs Array: optional custom attributes
-	 * @return string HTML
+	 * @deprecated Synonymous to Html::hidden()
 	 */
-	public static function hidden( $name, $value, $attribs=array() ) {
-		return self::element( 'input', array(
-			'name' => $name,
-			'type' => 'hidden',
-			'value' => $value ) + $attribs );
+	public static function hidden( $name, $value, $attribs = array() ) {
+		return Html::hidden( $name, $value, $attribs );
 	}
 
 	/**
@@ -695,9 +689,9 @@ class Xml {
 	
 	/**
 	 * Build a table of data
-	 * @param array $rows An array of arrays of strings, each to be a row in a table
-	 * @param array $attribs Attributes to apply to the table tag [optional]
-	 * @param array $headers An array of strings to use as table headers [optional]
+	 * @param $rows An array of arrays of strings, each to be a row in a table
+	 * @param $attribs An array of attributes to apply to the table tag [optional]
+	 * @param $headers An array of strings to use as table headers [optional]
 	 * @return string
 	 */
 	public static function buildTable( $rows, $attribs = array(), $headers = null ) {
@@ -720,7 +714,8 @@ class Xml {
 	
 	/**
 	 * Build a row for a table
-	 * @param array $cells An array of strings to put in <td>
+	 * @param $attribs An array of attributes to apply to the tr tag
+	 * @param $cells An array of strings to put in <td>
 	 * @return string
 	 */
 	public static function buildTableRow( $attribs, $cells ) {
@@ -754,10 +749,42 @@ class XmlSelect {
 		$this->attributes[$name] = $value;
 	}
 
+	public function getAttribute( $name ) {
+		if ( isset($this->attributes[$name]) ) {
+			return $this->attributes[$name];
+		} else {
+			return null;
+		}
+	}
+
 	public function addOption( $name, $value = false ) {
 		// Stab stab stab
 		$value = ($value !== false) ? $value : $name;
 		$this->options[] = Xml::option( $name, $value, $value === $this->default );
+	}
+	
+	// This accepts an array of form
+	// label => value
+	// label => ( label => value, label => value )
+	public function addOptions( $options ) {
+		$this->options[] = trim(self::formatOptions( $options, $this->default ));
+	}
+
+	// This accepts an array of form
+	// label => value
+	// label => ( label => value, label => value )	
+	static function formatOptions( $options, $default = false ) {
+		$data = '';
+		foreach( $options as $label => $value ) {
+			if ( is_array( $value ) ) {
+				$contents = self::formatOptions( $value, $default );
+				$data .= Xml::tags( 'optgroup', array( 'label' => $label ), $contents ) . "\n";
+			} else {
+				$data .= Xml::option( $label, $value, $value === $default ) . "\n";
+			}
+		}
+		
+		return $data;
 	}
 
 	public function getHTML() {

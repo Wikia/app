@@ -22,36 +22,36 @@ $wgQueryPages = array(
 	array( 'DisambiguationsPage',           'Disambiguations'               ),
 	array( 'DoubleRedirectsPage',           'DoubleRedirects'               ),
 	array( 'LinkSearchPage',                'LinkSearch'                    ),
-	array( 'ListredirectsPage',             'Listredirects'					),
+	array( 'ListredirectsPage',             'Listredirects'                 ),
 	array( 'LonelyPagesPage',               'Lonelypages'                   ),
 	array( 'LongPagesPage',                 'Longpages'                     ),
 	array( 'MostcategoriesPage',            'Mostcategories'                ),
 	array( 'MostimagesPage',                'Mostimages'                    ),
 	array( 'MostlinkedCategoriesPage',      'Mostlinkedcategories'          ),
-	array( 'SpecialMostlinkedtemplates',	'Mostlinkedtemplates'			),
+	array( 'SpecialMostlinkedtemplates',    'Mostlinkedtemplates'           ),
 	array( 'MostlinkedPage',                'Mostlinked'                    ),
 	array( 'MostrevisionsPage',             'Mostrevisions'                 ),
 	array( 'FewestrevisionsPage',           'Fewestrevisions'               ),
 	array( 'ShortPagesPage',                'Shortpages'                    ),
 	array( 'UncategorizedCategoriesPage',   'Uncategorizedcategories'       ),
 	array( 'UncategorizedPagesPage',        'Uncategorizedpages'            ),
-	array( 'UncategorizedImagesPage',       'Uncategorizedimages' 			),
-	array( 'UncategorizedTemplatesPage',	'Uncategorizedtemplates'		),
+	array( 'UncategorizedImagesPage',       'Uncategorizedimages'           ),
+	array( 'UncategorizedTemplatesPage',    'Uncategorizedtemplates'        ),
 	array( 'UnusedCategoriesPage',          'Unusedcategories'              ),
 	array( 'UnusedimagesPage',              'Unusedimages'                  ),
 	array( 'WantedCategoriesPage',          'Wantedcategories'              ),
 	array( 'WantedFilesPage',               'Wantedfiles'                   ),
 	array( 'WantedPagesPage',               'Wantedpages'                   ),
-	array( 'WantedTemplatesPage',          'Wantedtemplates'              ),
+	array( 'WantedTemplatesPage',           'Wantedtemplates'               ),
 	array( 'UnwatchedPagesPage',            'Unwatchedpages'                ),
-	array( 'UnusedtemplatesPage',           'Unusedtemplates' 				),
-	array( 'WithoutInterwikiPage',			'Withoutinterwiki'				),
+	array( 'UnusedtemplatesPage',           'Unusedtemplates'               ),
+	array( 'WithoutInterwikiPage',          'Withoutinterwiki'              ),
 );
 wfRunHooks( 'wgQueryPages', array( &$wgQueryPages ) );
 
 global $wgDisableCounters;
 if ( !$wgDisableCounters )
-	$wgQueryPages[] = array( 'PopularPagesPage',		'Popularpages'		);
+	$wgQueryPages[] = array( 'PopularPagesPage', 'Popularpages'             );
 
 
 /**
@@ -79,7 +79,7 @@ class QueryPage {
 	/**
 	 * A mutator for $this->listoutput;
 	 *
-	 * @param bool $bool
+	 * @param $bool Boolean
 	 */
 	function setListoutput( $bool ) {
 		$this->listoutput = $bool;
@@ -89,6 +89,8 @@ class QueryPage {
 	 * Subclasses return their name here. Make sure the name is also
 	 * specified in SpecialPage.php and in Language.php as a language message
 	 * param.
+	 *
+	 * @return String
 	 */
 	function getName() {
 		return '';
@@ -124,6 +126,8 @@ class QueryPage {
 
 	/**
 	 * Override to sort by increasing values
+	 *
+	 * @return Boolean
 	 */
 	function sortDescending() {
 		return true;
@@ -138,8 +142,10 @@ class QueryPage {
 	 * Is this query expensive (for some definition of expensive)? Then we
 	 * don't let it run in miser mode. $wgDisableQueryPages causes all query
 	 * pages to be declared expensive. Some query pages are always expensive.
+	 *
+	 * @return Boolean
 	 */
-	function isExpensive( ) {
+	function isExpensive() {
 		global $wgDisableQueryPages;
 		return $wgDisableQueryPages;
 	}
@@ -148,7 +154,7 @@ class QueryPage {
 	 * Whether or not the output of the page in question is retrived from
 	 * the database cache.
 	 *
-	 * @return bool
+	 * @return Boolean
 	 */
 	function isCached() {
 		global $wgMiserMode;
@@ -158,6 +164,8 @@ class QueryPage {
 
 	/**
 	 * Sometime we dont want to build rss / atom feeds.
+	 *
+	 * @return Boolean
 	 */
 	function isSyndicated() {
 		return true;
@@ -168,6 +176,9 @@ class QueryPage {
 	 * skin; you can use it for making links. The result is a single row of
 	 * result data. You should be able to grab SQL results off of it.
 	 * If the function return "false", the line output will be skipped.
+	 *
+	 * @param $skin Skin object
+	 * @param $result Object: database row
 	 */
 	function formatResult( $skin, $result ) {
 		return '';
@@ -175,8 +186,10 @@ class QueryPage {
 
 	/**
 	 * The content returned by this function will be output before any result
+	 *
+	 * @return String
 	 */
-	function getPageHeader( ) {
+	function getPageHeader() {
 		return '';
 	}
 
@@ -184,7 +197,8 @@ class QueryPage {
 	 * If using extra form wheely-dealies, return a set of parameters here
 	 * as an associative array. They will be encoded and added to the paging
 	 * links (prev/next/lengths).
-	 * @return array
+	 *
+	 * @return Array
 	 */
 	function linkParameters() {
 		return array();
@@ -196,17 +210,20 @@ class QueryPage {
 	 * Setting this to return true, will call one more time wfFormatResult to
 	 * be sure that the very last result is formatted and shown.
 	 */
-	function tryLastResult( ) {
+	function tryLastResult() {
 		return false;
 	}
 
 	/**
 	 * Clear the cache and save new results
+	 *
+	 * @param $limit Integer: limit for SQL statement
+	 * @param $ignoreErrors Boolean: whether to ignore database errors
 	 */
 	function recache( $limit, $ignoreErrors = true ) {
 		$fname = get_class( $this ) . '::recache';
 		$dbw = wfGetDB( DB_MASTER );
-		$dbr = wfGetDB( DB_SLAVE, array( $this->getName(), 'QueryPage::recache', 'vslow' ) );
+		$dbr = wfGetDB( DB_SLAVE, array( $this->getName(), __METHOD__, 'vslow' ) );
 		if ( !$dbw || !$dbr ) {
 			return false;
 		}
@@ -229,30 +246,23 @@ class QueryPage {
 		if ( $res ) {
 			$num = $dbr->numRows( $res );
 			# Fetch results
-			$insertSql = "INSERT INTO $querycache (qc_type,qc_namespace,qc_title,qc_value) VALUES ";
-			$first = true;
+			$vals = array();
 			while ( $res && $row = $dbr->fetchObject( $res ) ) {
-				if ( $first ) {
-					$first = false;
-				} else {
-					$insertSql .= ',';
-				}
 				if ( isset( $row->value ) ) {
 					$value = intval( $row->value ); // @bug 14414
 				} else {
 					$value = 0;
 				}
-
-				$insertSql .= '(' .
-					$dbw->addQuotes( $row->type ) . ',' .
-					$dbw->addQuotes( $row->namespace ) . ',' .
-					$dbw->addQuotes( $row->title ) . ',' .
-					$dbw->addQuotes( $value ) . ')';
+				
+				$vals[] = array('qc_type' => $row->type,
+						'qc_namespace' => $row->namespace,
+						'qc_title' => $row->title,
+						'qc_value' => $value);
 			}
 
 			# Save results into the querycache table on the master
-			if ( !$first ) {
-				if ( !$dbw->query( $insertSql, $fname ) ) {
+			if ( count( $vals ) ) {
+				if ( !$dbw->insert( 'querycache', $vals, __METHOD__ ) ) {
 					// Set result to false to indicate error
 					$dbr->freeResult( $res );
 					$res = false;
@@ -311,10 +321,12 @@ class QueryPage {
 				$tRow = $dbr->fetchObject( $tRes );
 
 				if( $tRow ) {
-					$updated = $wgLang->timeAndDate( $tRow->qci_timestamp, true, true );
+					$updated = $wgLang->timeanddate( $tRow->qci_timestamp, true, true );
+					$updateddate = $wgLang->date( $tRow->qci_timestamp, true, true );
+					$updatedtime = $wgLang->time( $tRow->qci_timestamp, true, true );
 					$wgOut->addMeta( 'Data-Cache-Time', $tRow->qci_timestamp );
 					$wgOut->addInlineScript( "var dataCacheTime = '{$tRow->qci_timestamp}';" );
-					$wgOut->addWikiMsg( 'perfcachedts', $updated );
+					$wgOut->addWikiMsg( 'perfcachedts', $updated, $updateddate, $updatedtime );
 				} else {
 					$wgOut->addWikiMsg( 'perfcached' );
 				}
@@ -381,12 +393,12 @@ class QueryPage {
 	 * Format and output report results using the given information plus
 	 * OutputPage
 	 *
-	 * @param OutputPage $out OutputPage to print to
-	 * @param Skin $skin User skin to use
-	 * @param Database $dbr Database (read) connection to use
-	 * @param int $res Result pointer
-	 * @param int $num Number of available result rows
-	 * @param int $offset Paging offset
+	 * @param $out OutputPage to print to
+	 * @param $skin Skin: user skin to use
+	 * @param $dbr Database (read) connection to use
+	 * @param $res Integer: result pointer
+	 * @param $num Integer: number of available result rows
+	 * @param $offset Integer: paging offset
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		global $wgContLang;
@@ -508,7 +520,7 @@ class QueryPage {
 	 */
 	function feedResult( $row ) {
 		if( !isset( $row->title ) ) {
-			return NULL;
+			return null;
 		}
 		$title = Title::MakeTitle( intval( $row->namespace ), $row->title );
 		if( $title ) {
@@ -527,7 +539,7 @@ class QueryPage {
 				$this->feedItemAuthor( $row ),
 				$comments);
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 
@@ -553,5 +565,87 @@ class QueryPage {
 	function feedUrl() {
 		$title = SpecialPage::getTitleFor( $this->getName() );
 		return $title->getFullURL();
+	}
+}
+
+/**
+ * Class definition for a wanted query page like
+ * WantedPages, WantedTemplates, etc
+ */
+abstract class WantedQueryPage extends QueryPage {
+
+	function isExpensive() {
+		return true;
+	}
+
+	function isSyndicated() {
+		return false;
+	}
+
+	/**
+	 * Cache page existence for performance
+	 */
+	function preprocessResults( $db, $res ) {
+		$batch = new LinkBatch;
+		while ( $row = $db->fetchObject( $res ) )
+			$batch->add( $row->namespace, $row->title );
+		$batch->execute();
+
+		// Back to start for display
+		if ( $db->numRows( $res ) > 0 )
+			// If there are no rows we get an error seeking.
+			$db->dataSeek( $res, 0 );
+	}
+	
+	/**
+	 * Format an individual result
+	 *
+	 * @param $skin Skin to use for UI elements
+	 * @param $result Result row
+	 * @return string
+	 */
+	public function formatResult( $skin, $result ) {
+		$title = Title::makeTitleSafe( $result->namespace, $result->title );
+		if( $title instanceof Title ) {
+			if( $this->isCached() ) {
+				$pageLink = $title->exists()
+					? '<s>' . $skin->link( $title ) . '</s>'
+					: $skin->link(
+						$title,
+						null,
+						array(),
+						array(),
+						array( 'broken' )
+					);
+			} else {
+				$pageLink = $skin->link(
+					$title,
+					null,
+					array(),
+					array(),
+					array( 'broken' )
+				);
+			}
+			return wfSpecialList( $pageLink, $this->makeWlhLink( $title, $skin, $result ) );
+		} else {
+			$tsafe = htmlspecialchars( $result->title );
+			return wfMsgHtml( 'wantedpages-badtitle', $tsafe );
+		}
+	}
+	
+	/**
+	 * Make a "what links here" link for a given title
+	 *
+	 * @param $title Title to make the link for
+	 * @param $skin Skin object to use
+	 * @param $result Object: result row
+	 * @return string
+	 */
+	private function makeWlhLink( $title, $skin, $result ) {
+		global $wgLang;
+		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere' );
+		$label = wfMsgExt( 'nlinks', array( 'parsemag', 'escape' ),
+		$wgLang->formatNum( $result->value ) );
+		return $skin->link( $wlh, $label, array(), array( 'target' => $title->getPrefixedText() ) );
 	}
 }

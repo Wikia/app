@@ -3,7 +3,7 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 /**
@@ -11,13 +11,13 @@ if( !defined( 'MEDIAWIKI' ) )
  *
  * For more info about SocialProfile, please see the README file that was included with SocialProfile.
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // Internationalization files
 $wgExtensionMessagesFiles['SocialProfileUserBoard'] = $dir . 'UserBoard/UserBoard.i18n.php';
 $wgExtensionMessagesFiles['SocialProfileUserProfile'] = $dir . 'UserProfile/UserProfile.i18n.php';
 $wgExtensionMessagesFiles['SocialProfileUserRelationship'] = $dir . 'UserRelationship/UserRelationship.i18n.php';
-$wgExtensionMessagesFiles['SocialProfileUserStats'] = $dir. 'UserStats/UserStats.i18n.php';
+$wgExtensionMessagesFiles['SocialProfileUserStats'] = $dir . 'UserStats/UserStats.i18n.php';
 
 $wgExtensionAliasesFiles['SocialProfile'] = $dir . 'SocialProfile.alias.php';
 
@@ -42,9 +42,10 @@ $wgAutoloadClasses['UserRelationship'] = $dir . 'UserRelationship/UserRelationsh
 $wgAutoloadClasses['UserLevel'] = $dir . 'UserStats/UserStatsClass.php';
 $wgAutoloadClasses['UserStats'] = $dir . 'UserStats/UserStatsClass.php';
 $wgAutoloadClasses['UserStatsTrack'] = $dir . 'UserStats/UserStatsClass.php';
-$wgAutoloadClasses['TopFansByStat'] = $dir. 'UserStats/TopFansByStat.php';
+$wgAutoloadClasses['UserSystemMessage'] = $dir . 'UserSystemMessages/UserSystemMessagesClass.php';
+$wgAutoloadClasses['TopFansByStat'] = $dir . 'UserStats/TopFansByStat.php';
 $wgAutoloadClasses['TopFansRecent'] = $dir . 'UserStats/TopFansRecent.php';
-$wgAutoloadClasses['TopUsersPoints'] = $dir. 'UserStats/TopUsers.php';
+$wgAutoloadClasses['TopUsersPoints'] = $dir . 'UserStats/TopUsers.php';
 $wgAutoloadClasses['wAvatar'] = $dir . 'UserProfile/AvatarClass.php';
 
 // New special pages
@@ -73,8 +74,8 @@ $wgSpecialPageGroups['ViewRelationshipRequests'] = 'users';
 $wgSpecialPageGroups['ViewRelationships'] = 'users';
 
 // Necessary AJAX functions
-require_once("$IP/extensions/SocialProfile/UserBoard/UserBoard_AjaxFunctions.php");
-require_once("$IP/extensions/SocialProfile/UserRelationship/Relationship_AjaxFunctions.php");
+require_once( "$IP/extensions/SocialProfile/UserBoard/UserBoard_AjaxFunctions.php" );
+require_once( "$IP/extensions/SocialProfile/UserRelationship/Relationship_AjaxFunctions.php" );
 
 // What to display on social profile pages by default?
 $wgUserProfileDisplay['board'] = true;
@@ -89,79 +90,92 @@ $wgFriendingEnabled = true;
 
 // Extension credits that show up on Special:Version
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'SocialProfile',
-	'author' => 'Wikia, Inc. (Aaron Wright, David Pean)',
-	'version' => '1.3',
+	'author' => array( 'Aaron Wright', 'David Pean', 'Jack Phoenix' ),
+	'version' => '1.4',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A set of Social Tools for MediaWiki',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'TopUsers',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'Adds a special page for viewing the list of users with the most points.',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'UploadAvatar',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page for uploading Avatars',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'RemoveAvatar',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page for removing users\' avatars',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'PopulateExistingUsersProfiles',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page for initializing social profiles for existing wikis',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'ToggleUserPage',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page for updating a user\'s userpage preference',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'UpdateProfile',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page to allow users to update their social profile',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'SendBoardBlast',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => ' A special page to allow users to send a mass board message by selecting from a list of their friends and foes',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'UserBoard',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'Display User Board messages for a user',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'AddRelationship',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page for adding friends/foe requests for existing users in the wiki',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'RemoveRelationship',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page for removing existing friends/foes for the current logged in user',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'ViewRelationshipRequests',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A special page for viewing open relationship requests for the current logged in user',
 );
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'ViewRelationships',
 	'author' => 'David Pean',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
@@ -176,7 +190,30 @@ $wgUserProfileScripts = "$wgScriptPath/extensions/SocialProfile/UserProfile";
 $wgUserRelationshipScripts = "$wgScriptPath/extensions/SocialProfile/UserRelationship";
 
 // Loader files
-require_once("$IP/extensions/SocialProfile/YUI/YUI.php"); // YUI stand-alone library
-require_once("{$wgUserProfileDirectory}/UserProfile.php"); // Profile page configuration loader file
-require_once("$IP/extensions/SocialProfile/UserGifts/Gifts.php"); // UserGifts (user-to-user gifting functionality) loader file
-require_once("$IP/extensions/SocialProfile/SystemGifts/SystemGifts.php"); // SystemGifts (awards functionality) loader file
+require_once( "$IP/extensions/SocialProfile/YUI/YUI.php" ); // YUI stand-alone library
+require_once( "{$wgUserProfileDirectory}/UserProfile.php" ); // Profile page configuration loader file
+require_once( "$IP/extensions/SocialProfile/UserGifts/Gifts.php" ); // UserGifts (user-to-user gifting functionality) loader file
+require_once( "$IP/extensions/SocialProfile/SystemGifts/SystemGifts.php" ); // SystemGifts (awards functionality) loader file
+require_once( "$IP/extensions/SocialProfile/UserActivity/UserActivity.php" ); // UserActivity - recent social changes
+
+# Schema changes
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'efSocialProfileSchemaUpdates';
+
+function efSocialProfileSchemaUpdates() {
+	global $wgExtNewTables, $wgDBtype;
+	$dir = dirname( __FILE__ );
+	if( $wgDBtype == 'mysql' ) {
+		// Initial install tables
+		$wgExtNewTables[] = array( 'user_board', "$dir/UserBoard/user_board.sql" );
+		$wgExtNewTables[] = array( 'user_profile', "$dir/UserProfile/user_profile.sql" );
+		$wgExtNewTables[] = array( 'user_stats', "$dir/UserStats/user_stats.sql" );
+		$wgExtNewTables[] = array( 'user_relationship',	"$dir/UserRelationship/user_relationship.sql" );
+		$wgExtNewTables[] = array( 'user_relationship_request', "$dir/UserRelationship/user_relationship.sql" );
+		$wgExtNewTables[] = array( 'user_system_gift', "$dir/SystemGifts/systemgifts.sql" );
+		$wgExtNewTables[] = array( 'system_gift', "$dir/SystemGifts/systemgifts.sql" );
+		$wgExtNewTables[] = array( 'user_gift', "$dir/UserGifts/usergifts.sql" );
+		$wgExtNewTables[] = array( 'gift', "$dir/UserGifts/usergifts.sql" );
+		$wgExtNewTables[] = array( 'user_system_messages', "$dir/UserSystemMessages/user_system_messages.sql" );
+	}
+	return true;
+}

@@ -17,6 +17,13 @@ $messages['en'] = array(
 	'redirect-userlogoutcomplete' => '', # do not translate or duplicate this message to other languages
 );
 
+/** Message documentation (Message documentation)
+ * @author Umherirrender
+ */
+$messages['qqq'] = array(
+	'redirect-desc' => '{{desc}}',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -38,6 +45,13 @@ $messages['be-tarask'] = array(
 	'redirect-desc' => 'Дазваляе лёгка канфігураваць перанакіраваньне на [[MediaWiki:Redirect-addnewaccount|стварэньне рахунку]] і [[MediaWiki:Redirect-userlogoutcomplete|выйсьце]]',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'redirect-desc' => 'Aotren a ra kefluniañ aes adkasoù pa vez [[MediaWiki:Redirect-addnewaccount|krouet ur gont]] hag [[MediaWiki:Redirect-userlogoutcomplete|emzilugañ]]',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -55,6 +69,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'redirect-desc' => 'Zmóžnja lažku konfiguraciju dalejpósrědnjenjow pśi [[MediaWiki:Redirect-addnewaccount|załoženju konta]] a  [[MediaWiki:Redirect-userlogoutcomplete|wótzjawjenju]]',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'redirect-desc' => 'Επιτρέπει την εύκολη διαμόρφωση ανακατευθύνσεων κατά τη [[MediaWiki:Redirect-addnewaccount|δημιουργία λογαριασμού]] και την [[MediaWiki:Redirect-userlogoutcomplete|αποσύνδεση]]',
 );
 
 /** Spanish (Español)
@@ -78,11 +99,19 @@ $messages['fa'] = array(
 	'redirect-desc' => 'دادن اجازه پیکربندی سادهٔ تغییرمسیرها روی [[MediaWiki:Redirect-addnewaccount|ایجاد حساب‌ کاربری]] و [[MediaWiki:Redirect-userlogoutcomplete|خروج]]',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'redirect-desc' => 'Mahdollistaa helpon ohjauksien kokoonpanon [[MediaWiki:Redirect-addnewaccount|tilin luonnin]] ja [[MediaWiki:Redirect-userlogoutcomplete|uloskirjautumisen]] yhteydessä.',
+);
+
 /** French (Français)
+ * @author Crochet.david
  * @author IAlex
  */
 $messages['fr'] = array(
-	'redirect-desc' => "Permet de configurer facilement des redirections lors d'une [[MediaWiki:Redirect-addnewaccount|création de compte]] et une [[MediaWiki:Redirect-userlogoutcomplete|déconnexion]]",
+	'redirect-desc' => 'Permet de configurer facilement des redirections lors d’une [[MediaWiki:Redirect-addnewaccount|création de compte]] et une [[MediaWiki:Redirect-userlogoutcomplete|déconnexion]]',
 );
 
 /** Galician (Galego)
@@ -106,6 +135,13 @@ $messages['he'] = array(
 	'redirect-desc' => 'מתן האפשרות להגדרה קלה של הפניות ב[[MediaWiki:Redirect-addnewaccount|יצירת חשבון]] וב[[MediaWiki:Redirect-userlogoutcomplete|יציאה מחשבון]]',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'redirect-desc' => 'nagapasugot sang hapos nga konfigurasyon sang gin-redirek sa [[MediaWiki:Redirect-addnewaccount|account creation]] kag [[MediaWiki:Redirect-userlogoutcomplete|logout]]',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -113,11 +149,32 @@ $messages['hsb'] = array(
 	'redirect-desc' => 'Zmóžnja lochku konfiguraciju daleposrědkowanjow při [[MediaWiki:Redirect-addnewaccount|załoženju kontow]] a [[MediaWiki:Redirect-userlogoutcomplete|wotzjewjenju]]',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'redirect-desc' => 'Könnyű átirányítás-konfigurációt tesz lehetővé [[MediaWiki:Redirect-addnewaccount|felhasználói fiók létrehozásánál]] és [[MediaWiki:Redirect-userlogoutcomplete|kijelentkezésnél]]',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'redirect-desc' => 'Permitte le configuration facile del redirectiones al puncto del [[MediaWiki:Redirect-addnewaccount|creation de un conto]] e del [[MediaWiki:Redirect-userlogoutcomplete|clausura del session]]',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'redirect-desc' => 'Mempermudah konfigurasi pengalihan pada [[MediaWiki:Redirect-addnewaccount|pembuatan akun]] dan [[MediaWiki:Redirect-userlogoutcomplete|keluar log]]',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'redirect-desc' => 'Consente una facile configurazione di redirect nella [[MediaWiki:Redirect-addnewaccount|creazione di account]] e nel [[MediaWiki:Redirect-userlogoutcomplete|logout]]',
 );
 
 /** Japanese (日本語)
@@ -135,10 +192,11 @@ $messages['ksh'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
-	'redirect-desc' => 'Erlaabt et Viruleedungen beim [[MediaWiki:Redirect-addnewaccount|Benotzerkont opmaachen]] an [[MediaWiki:Redirect-userlogoutcomplete|Ausloggen ]] einfach ze configuréieren.',
+	'redirect-desc' => 'Erlaabt et Viruleedungen beim [[MediaWiki:Redirect-addnewaccount|Opmaache vum Benotzerkont]] a beim [[MediaWiki:Redirect-userlogoutcomplete|Ausloggen]] einfach ze configuréieren.',
 );
 
 /** Limburgish (Limburgs)
@@ -146,6 +204,13 @@ $messages['lb'] = array(
  */
 $messages['li'] = array(
 	'redirect-desc' => 'Einvawdige instelling ven redireks bie [[MdiaWiki:Redirect-addnewaccount|gebroeker aanmake]] en [[MediaWiki:Redirect-userlogoutcomplete|aafmelje]]',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'redirect-desc' => 'Овозможува лесна конфигурација на пренасочувањата при [[MediaWiki:Redirect-addnewaccount|создавањето на сметки]] и [[MediaWiki:Redirect-userlogoutcomplete|одјавување]]',
 );
 
 /** Low German (Plattdüütsch)
@@ -170,11 +235,32 @@ $messages['nn'] = array(
 	'redirect-desc' => 'Tillèt enkel konfigurering av omdirigeringar ved [[MediaWiki:Redirect-addnewaccount|kontooppretting]] og [[MediaWiki:Redirect-userlogoutcomplete|utlogging]]',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'redirect-desc' => 'Tillater enkel konfigurering av omdirigeringer ved [[MediaWiki:Redirect-addnewaccount|kontooppretting]] og [[MediaWiki:Redirect-userlogoutcomplete|utlogging]]',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'redirect-desc' => "Permet de configurar aisidament de redireccions al moment d'una [[MediaWiki:Redirect-addnewaccount|creacion de compte]] e una [[MediaWiki:Redirect-userlogoutcomplete|desconnexion]]",
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'redirect-desc' => 'Umożliwia łatwą konfigurację przekierowań na [[MediaWiki:Redirect-addnewaccount|utworzenie konta]] i [[MediaWiki:Redirect-userlogoutcomplete|wylogowanie]]',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'redirect-desc' => 'A përmëtt na configurassion bel fé dle rediression an [[MediaWiki:Redirect-addnewaccount|creassion dij cont]] e an [[MediaWiki:Redirect-userlogoutcomplete|logout]]',
 );
 
 /** Portuguese (Português)
@@ -196,6 +282,13 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'redirect-desc' => "Permitte 'a configurazione facile de le redireziunaminde sus a [[MediaWiki:Redirect-addnewaccount|ccreazione d'u cunde utende]] e [[MediaWiki:Redirect-userlogoutcomplete|ìsse fore]]",
+);
+
+/** Russian (Русский)
+ * @author Ferrer
+ */
+$messages['ru'] = array(
+	'redirect-desc' => 'Позволяет простую настройку перенаправлений на [[MediaWiki:Redirect-addnewaccount|создание учётных записей]] и [[MediaWiki:Redirect-userlogoutcomplete|завершение сеанса]]',
 );
 
 /** Slovak (Slovenčina)
@@ -238,6 +331,20 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'redirect-desc' => 'Nagpapahintulot ng maginhawang pagsasaayos ng mga panturo sa [[MediaWiki:Redirect-addnewaccount|paglikha ng akawnt]] at [[MediaWiki:Redirect-userlogoutcomplete|pag-alis sa pagkakalagda]]',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'redirect-desc' => '[[MediaWiki:Redirect-addnewaccount|Hesap oluşturma]] ve [[MediaWiki:Redirect-userlogoutcomplete|oturum kapamada]] yönlendirmelerin kolay konfigüre edilmesini sağlar',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'redirect-desc' => 'Дозволяє зручне налаштування перенаправлень на [[MediaWiki:Redirect-addnewaccount|створення облікових записів]] та [[MediaWiki:Redirect-userlogoutcomplete|вихід з системи]]',
 );
 
 /** Vietnamese (Tiếng Việt)

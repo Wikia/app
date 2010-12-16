@@ -25,9 +25,14 @@ $aliases['arz'] = array(
 	'RegexBlock' => array( 'منع_ريجيكس' ),
 );
 
+/** Bulgarian (Български) */
+$aliases['bg'] = array(
+	'RegexBlock' => array( 'Блокиране по регулярни изрази' ),
+);
+
 /** German (Deutsch) */
 $aliases['de'] = array(
-	'RegexBlock' => array( 'Reguläre Ausrücke Sperrung' ),
+	'RegexBlock' => array( 'Reguläre Ausdrücke-Sperrung' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
@@ -45,6 +50,11 @@ $aliases['ia'] = array(
 	'RegexBlock' => array( 'Blocar con regex' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'RegexBlock' => array( 'Blokir regex', 'BlokirRegex' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'RegexBlock' => array( '正規表現ブロック' ),
@@ -55,9 +65,24 @@ $aliases['lb'] = array(
 	'RegexBlock' => array( 'Regex Spär' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'RegexBlock' => array( 'Regexblokkering' ),
+);
+
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'RegexBlock' => array( 'RegexBlokkade' ),
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+$aliases['no'] = array(
+	'RegexBlock' => array( 'Regex-blokkering' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'RegexBlock' => array( 'BlokovanieRegVýrazom' ),
 );
 
 /** Tagalog (Tagalog) */

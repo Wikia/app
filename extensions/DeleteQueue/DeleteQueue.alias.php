@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'DeleteQueue' => array( 'DeleteQueue' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'DeleteQueue' => array( 'طابور_الحذف' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'DeleteQueue' => array( 'طابور_الحذف' ),
 );
@@ -62,9 +58,24 @@ $aliases['ia'] = array(
 	'DeleteQueue' => array( 'Deler cauda' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'DeleteQueue' => array( 'Hapus antrean', 'HapusAntrean' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'DeleteQueue' => array( 'CodaCancellazioni' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'DeleteQueue' => array( '削除キュー' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'DeleteQueue' => array( 'Fottschmiißleß' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -74,7 +85,12 @@ $aliases['lb'] = array(
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'DeleteQueue' => array( 'БришиРедица' ),
+	'DeleteQueue' => array( 'ИзбришиРедица' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'DeleteQueue' => array( 'क्यूवगळा' ),
 );
 
 /** Erzya (Эрзянь) */
@@ -97,9 +113,19 @@ $aliases['no'] = array(
 	'DeleteQueue' => array( 'Slettingskø' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'DeleteQueue' => array( 'Apagar fila' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'DeleteQueue' => array( 'अनुपङ्क्तिपरित्याग' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'DeleteQueue' => array( 'ZmazanieFrontu' ),
 );
 
 /** Swedish (Svenska) */
@@ -110,5 +136,10 @@ $aliases['sv'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'DeleteQueue' => array( 'Burahin ang pila' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'DeleteQueue' => array( 'GrupSil' ),
 );
 

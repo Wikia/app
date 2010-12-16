@@ -22,6 +22,11 @@ class ArticleService extends Service {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgParser;
 
+		// it may sometimes happen that the aricle is just not there
+		if ( is_null( $this->mArticle ) ) {
+			return '';
+		}
+
 		$content = $this->mArticle->getContent();
 
 		if( !empty( $content) ) {
@@ -38,6 +43,7 @@ class ArticleService extends Service {
 			$content = preg_replace($re, '', $content);
 
 			// remove [[Image:...]] and [[File:...]] tags
+			// @FIXME this has hardcoded namespace names and no i18n (yes, NS names are internationalized too)
 			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|File):" ));
 			$content = preg_replace($re, '', $content);
 

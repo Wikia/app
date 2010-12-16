@@ -10,12 +10,10 @@ class DataCenterViewFacilities extends DataCenterView {
 
 	/* Functions */
 
-	public function history(
-		$path
-	) {
+	public function history( $path ) {
 		if ( $path['type'] == 'location' ) {
 			$facility = DataCenterDB::getLocation( $path['id'] );
-		} else if ( $path['type'] == 'space' ) {
+		} elseif ( $path['type'] == 'space' ) {
 			$facility = DataCenterDB::getSpace( $path['id'] );
 		} else {
 			return null;

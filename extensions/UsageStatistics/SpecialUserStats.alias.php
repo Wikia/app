@@ -10,19 +10,15 @@ $aliases = array();
  * @author Paul Grinberg
  */
 $aliases['en'] = array(
-	'SpecialUserStats'          => array( 'UserStats', 'SpecialUserStats' ),
+	'SpecialUserStats' => array( 'UserStats', 'SpecialUserStats' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'SpecialUserStats' => array( 'إحصاءات_المستخدم', 'خاص_إحصاءات_المستخدم' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'SpecialUserStats' => array( 'إحصاءات_المستخدم', 'خاص_إحصاءات_المستخدم' ),
 );
@@ -57,6 +53,11 @@ $aliases['fr'] = array(
 	'SpecialUserStats' => array( 'StatistiquesUtilisateur' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'SpecialUserStats' => array( 'Statistiques utilisator', 'StatistiquesUtilisator' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'SpecialUserStats' => array( 'Estatísticas do usuario' ),
@@ -84,7 +85,12 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'SpecialUserStats' => array( 'Statistik pengguna' ),
+	'SpecialUserStats' => array( 'Statistik pengguna', 'StatistikPengguna' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'SpecialUserStats' => array( 'StatisticheUtente' ),
 );
 
 /** Japanese (日本語) */
@@ -102,9 +108,19 @@ $aliases['lb'] = array(
 	'SpecialUserStats' => array( 'Benotzerstistiken' ),
 );
 
+/** Lumbaart (Lumbaart) */
+$aliases['lmo'] = array(
+	'SpecialUserStats' => array( 'StatistichDupradur' ),
+);
+
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'SpecialUserStats' => array( 'СтатистикиЗаКорисник', 'СпецијалниСтатистикиЗаКорисник' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'SpecialUserStats' => array( 'सदस्यसांख्य्की', 'विशेषसदस्यसांख्य्की' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -112,9 +128,7 @@ $aliases['nds-nl'] = array(
 	'SpecialUserStats' => array( 'Gebrukersgegevens' ),
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
+/** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'SpecialUserStats' => array( 'Gebruikersgegevens', 'Gebruikersstatistieken' ),
 );
@@ -129,9 +143,19 @@ $aliases['oc'] = array(
 	'SpecialUserStats' => array( 'EstatisticasUtilizaire' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'SpecialUserStats' => array( 'Estatísticas de utilizadores' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'SpecialUserStats' => array( 'सदस्यसांख्यिकी' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'SpecialUserStats' => array( 'ŠtatistikyPoužívateľov' ),
 );
 
 /** Swedish (Svenska) */
@@ -144,8 +168,23 @@ $aliases['sw'] = array(
 	'SpecialUserStats' => array( 'TakwimuzaMtumiaji', 'TakwimumaalumzaMtumiaji' ),
 );
 
+/** Thai (ไทย) */
+$aliases['th'] = array(
+	'SpecialUserStats' => array( 'สถิติผู้ใช้' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'SpecialUserStats' => array( 'Mga estadistika ng tagagamit', 'Mga estadistika ng natatanging tagagamit' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'SpecialUserStats' => array( 'Kullanıcıİstatistikleri', 'ÖzelKullanıcıİstatistikleri' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'SpecialUserStats' => array( 'StatìstegheUtente' ),
 );
 

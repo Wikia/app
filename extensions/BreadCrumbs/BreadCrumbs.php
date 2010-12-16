@@ -19,31 +19,30 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgBreadCrumbsDelimiter = ' &gt; ';
 # $wgBreadCrumbsCount - number of breadcrumbs to use
 $wgBreadCrumbsCount = 5;
+# Whether to provide the links also for anonymous users
+$wgBreadCrumbsShowAnons = true;
 
 $wgExtensionMessagesFiles['Breadcrumbs'] = dirname(__FILE__) . '/BreadCrumbs.i18n.php';
 
-## Register extension setup hook and credits:
-$wgExtensionFunctions[] = 'fnBreadCrumbs';
+## Register extension credits:
 $wgExtensionCredits['parserhook'][] = array(
-  'name'          => 'BreadCrumbs',
-  'author'        => 'Manuel Schneider',
-  'url'           => 'http://www.mediawiki.org/wiki/Extension:BreadCrumbs',
-  'description'   => 'Shows a breadcrumb navigation.',
+  'path'           => __FILE__,
+  'name'           => 'BreadCrumbs',
+  'author'         => 'Manuel Schneider',
+  'url'            => 'http://www.mediawiki.org/wiki/Extension:BreadCrumbs',
+  'description'    => 'Shows a breadcrumb navigation.',
   'descriptionmsg' => 'breadcrumbs-desc',
 );
                                 
 ## Set Hook:
-function fnBreadCrumbs() {
-  global $wgHooks;
 
-  ## Showing and updating the breadcrumbs trail
-  # Hook when viewing article header:
-  $wgHooks['ArticleViewHeader'][] = 'fnBreadCrumbsShowHook';
+## Showing and updating the breadcrumbs trail
+# Hook when viewing article header:
+$wgHooks['ArticleViewHeader'][] = 'fnBreadCrumbsShowHook';
 
-  ## Infrastructure
-  # Hook our own CSS:
-  $wgHooks['OutputPageParserOutput'][] = 'fnBreadCrumbsOutputHook';
-}
+## Infrastructure
+# Hook our own CSS:
+$wgHooks['OutputPageParserOutput'][] = 'fnBreadCrumbsOutputHook';
 
 ## Load the file containing the hook functions:
 require_once( 'BreadCrumbsFunctions.php' );

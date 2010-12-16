@@ -15,9 +15,8 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionFunctions[] = 'efCommentSpammer';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'CommentSpammer',
-	'svn-date' => '$LastChangedDate: 2009-01-25 13:24:02 +0100 (ndz, 25 sty 2009) $',
-	'svn-revision' => '$LastChangedRevision: 46195 $',
 	'author' => 'Nick Jenkins',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CommentSpammer',
 	'description' => 'Rejects edits from suspected comment spammers on a DNS blacklist.',

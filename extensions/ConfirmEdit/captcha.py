@@ -26,16 +26,23 @@
 # 2008-01-06: Add regex check to skip words containing other than a-z
 
 import random
-import Image
-import ImageFont
-import ImageDraw
-import ImageEnhance
-import ImageOps
-import math, string, md5
-import getopt
+import math
+import hashlib
+from optparse import OptionParser
 import os
 import sys
 import re
+
+try:
+	import Image
+	import ImageFont
+	import ImageDraw
+	import ImageEnhance
+	import ImageOps
+except:
+	sys.exit("This script requires the Python Imaging Library - http://www.pythonware.com/products/pil/")
+
+nonalpha = re.compile('[^a-z]') # regex to test for suitability of words
 
 # Does X-axis wobbly copy, sandwiched between two rotates
 def wobbly_copy(src, wob, col, scale, ang):
@@ -48,7 +55,6 @@ def wobbly_copy(src, wob, col, scale, ang):
 	# Do a cheap bounding-box op here to try to limit work below
 	bbx = rot.getbbox()
 	if bbx == None:
-		print "whoops"
 		return src
 	else:
 		l, t, r, b= bbx
@@ -102,13 +108,13 @@ def gen_captcha(text, fontname, fontsize, file_name):
 	# save the image, in format determined from filename
 	im.save(file_name)
 
-def gen_subdir(basedir, hash, levels):
+def gen_subdir(basedir, md5hash, levels):
 	"""Generate a subdirectory path out of the first _levels_
 	characters of _hash_, and ensure the directories exist
 	under _basedir_."""
 	subdir = None
 	for i in range(0, levels):
-		char = hash[i]
+		char = md5hash[i]
 		if subdir:
 			subdir = os.path.join(subdir, char)
 		else:
@@ -124,9 +130,9 @@ def try_pick_word(words, blacklist, verbose):
 	word = word1+word2
 	if verbose:
 		print "word is %s" % word
-	r = re.compile('[^a-z]');
-	if r.search(word):
-		print "skipping word pair '%s' because it contains non-alphabetic characters" % word
+	if nonalpha.search(word):
+		if verbose:
+			print "skipping word pair '%s' because it contains non-alphabetic characters" % word
 		return None
 
 	for naughty in blacklist:
@@ -137,13 +143,14 @@ def try_pick_word(words, blacklist, verbose):
 	return word
 
 def pick_word(words, blacklist, verbose):
-	while True:
+	for x in range(1000): # If we can't find a valid combination in 1000 tries, just give up
 		word = try_pick_word(words, blacklist, verbose)
 		if word:
 			return word
+	sys.exit("Unable to find valid word combinations")
 
 def read_wordlist(filename):
-	return [string.lower(x.strip()) for x in open(wordlist).readlines()]
+	return [x.strip().lower() for x in open(wordlist).readlines()]
 
 if __name__ == '__main__':
 	"""This grabs random words from the dictionary 'words' (one
@@ -153,47 +160,51 @@ if __name__ == '__main__':
 	To check a reply, hash it in the same way with the same salt and
 	secret key, then compare with the hash value given.
 	"""
-	font = "VeraBd.ttf"
-	wordlist = "awordlist.txt"
-	blacklistfile = None
-	key = "CHANGE_THIS_SECRET!"
-	output = "."
-	count = 20
-	fill = 0
-	dirs = 0
-	verbose = False
+	parser = OptionParser()
+	parser.add_option("--wordlist", help="A list of words (required)", metavar="WORDS.txt")
+	parser.add_option("--key", help="The passphrase set as $wgCaptchaSecret (required)", metavar="KEY")
+	parser.add_option("--output", help="The directory to put the images in - $wgCaptchaDirectory (required)", metavar="DIR")
+	parser.add_option("--font", help="The font to use (required)", metavar="FONT.ttf")
+	parser.add_option("--font-size", help="The font size (default 40)", metavar="N", type='int', default=40)
+	parser.add_option("--count", help="The maximum number of images to make (default 20)", metavar="N", type='int', default=20)
+	parser.add_option("--blacklist", help="A blacklist of words that should not be used", metavar="FILE")
+	parser.add_option("--fill", help="Fill the output directory to contain N files, overrides count, cannot be used with --dirs", metavar="N", type='int')
+	parser.add_option("--dirs", help="Put the images into subdirectories N levels deep - $wgCaptchaDirectoryLevels", metavar="N", type='int')
+	parser.add_option("--verbose", "-v", help="Show debugging information", action='store_true')	
 	
-	opts, args = getopt.getopt(sys.argv[1:], "", ["font=", "wordlist=", "blacklist=", "key=", "output=", "count=", "fill=", "dirs=", "verbose"])
-	for o, a in opts:
-		if o == "--font":
-			font = a
-		if o == "--wordlist":
-			wordlist = a
-		if o == "--blacklist":
-			blacklistfile = a
-		if o == "--key":
-			key = a
-		if o == "--output":
-			output = a
-		if o == "--count":
-			count = int(a)
-		if o == "--fill":
-			fill = int(a)
-		if o == "--dirs":
-			dirs = int(a)
-		if o == "--verbose":
-			verbose = True
+	opts, args = parser.parse_args()
+
+	if opts.wordlist:
+		wordlist = opts.wordlist
+	else:
+		sys.exit("Need to specify a wordlist")
+	if opts.key:
+		key = opts.key
+	else:
+		sys.exit("Need to specify a key")
+	if opts.output:
+		output = opts.output
+	else:
+		sys.exit("Need to specify an output directory")
+	if opts.font and os.path.exists(opts.font):
+		font = opts.font
+	else:
+		sys.exit("Need to specify the location of a font")
+	
+	blacklistfile = opts.blacklist
+	count = opts.count
+	fill = opts.fill
+	dirs = opts.dirs
+	verbose = opts.verbose
+	fontsize = opts.font_size
 	
 	if fill:
-		# Option processing order is not guaranteed, so count the output
-		# files after...
 		count = max(0, fill - len(os.listdir(output)))
 	
 	words = read_wordlist(wordlist)
 	words = [x for x in words
-		if len(x) <= 5 and len(x) >= 4 and x[0] != "f"
-		and x[0] != x[1] and x[-1] != x[-2]
-		and (not "'" in x)]
+		if len(x) in (4,5) and x[0] != "f"
+		and x[0] != x[1] and x[-1] != x[-2]]
 	
 	if blacklistfile:
 		blacklist = read_wordlist(blacklistfile)
@@ -204,11 +215,12 @@ if __name__ == '__main__':
 		word = pick_word(words, blacklist, verbose)
 		salt = "%08x" % random.randrange(2**32)
 		# 64 bits of hash is plenty for this purpose
-		hash = md5.new(key+salt+word+key+salt).hexdigest()[:16]
-		filename = "image_%s_%s.png" % (salt, hash)
+		md5hash = hashlib.md5(key+salt+word+key+salt).hexdigest()[:16]
+		filename = "image_%s_%s.png" % (salt, md5hash)
 		if dirs:
-			subdir = gen_subdir(output, hash, dirs)
+			subdir = gen_subdir(output, md5hash, dirs)
 			filename = os.path.join(subdir, filename)
 		if verbose:
 			print filename
-		gen_captcha(word, font, 40, os.path.join(output, filename))
+		gen_captcha(word, font, fontsize, os.path.join(output, filename))
+

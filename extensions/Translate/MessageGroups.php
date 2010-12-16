@@ -1,6 +1,6 @@
 <?php
 
-abstract class MessageGroup {
+abstract class MessageGroupOld implements MessageGroup {
 	/**
 	 * Human-readable name of this group
 	 */
@@ -30,22 +30,6 @@ abstract class MessageGroup {
 	public function getIgnored() { return $this->ignored; }
 	public function setIgnored( $value ) { $this->ignored = $value; }
 
-	protected $problematic = null;
-	public function getProblematic( $code ) {
-		if ( $this->problematic === null ) {
-			$this->problematic = array();
-			$file = TRANSLATE_CHECKFILE . '-' . $this->id;
-			if ( file_exists( $file ) ) {
-				$problematic = unserialize( file_get_contents( $file ) );
-				if ( isset( $problematic[$code] ) ) {
-					$this->problematic = $problematic[$code];
-				}
-			}
-		}
-		return $this->problematic;
-	}
-
-	public function setProblematic( $value ) { $this->problematic = $value ; }
 	/**
 	 * Returns a list of optional and ignored messages in 2-d array.
 	 */
@@ -74,10 +58,19 @@ abstract class MessageGroup {
 
 	/**
 	 * To avoid key conflicts between groups or separated changed messages between
-	 * brances one can set a message key mangler.
+	 * branches one can set a message key mangler.
 	 */
 	protected $mangler = null;
-	public function getMangler() { return $this->mangler; }
+	public function getMangler() {
+		$mangler = $this->mangler;
+
+		if ( !$mangler ) {
+			$mangler = StringMatcher::emptyMatcher();
+		}
+
+		return $mangler;
+	}
+
 	public function setMangler( $value ) { $this->mangler = $value; }
 
 	protected $type = 'undefined';
@@ -98,8 +91,10 @@ abstract class MessageGroup {
 	public function load( $code ) {
 		$reader = $this->getReader( $code );
 		if ( $reader ) {
-			return $reader->parseMessages( $this->mangler );
+			$messages = $reader->parseMessages( $this->mangler );
+			return $messages ? $messages : array();
 		}
+		return array();
 	}
 
 	/**
@@ -157,21 +152,6 @@ abstract class MessageGroup {
 	private $messages = array();
 
 	/**
-	 * In this function message group should add translations from the stored file
-	 * for language code $code and it's fallback language, if used.
-	 *
-	 * @param $messages MessageCollection
-	 */
-	function fill( MessageCollection $messages ) {
-		$cache = $this->load( $messages->code );
-		foreach ( $messages->keys() as $key ) {
-			if ( isset( $cache[$key] ) ) {
-				$messages[$key]->infile = $cache[$key];
-			}
-		}
-	}
-
-	/**
 	 * Returns path to the file where translation of language code $code are.
 	 *
 	 * @return Path to the file or false if not applicable.
@@ -184,7 +164,9 @@ abstract class MessageGroup {
 		if ( !$path || !$file ) return false;
 		return "$path/$file";
 	}
-
+	public function getSourceFilePath( $code ) {
+		return $this->getMessageFileWithPath( $code );
+	}
 
 	/**
 	 * Creates a new MessageCollection for this group.
@@ -194,7 +176,6 @@ abstract class MessageGroup {
 	 *                group only.
 	 */
 	public function initCollection( $code, $unique = false ) {
-		$collection = new MessageCollection( $code );
 
 		if ( !$unique ) {
 			$definitions = $this->getDefinitions();
@@ -202,29 +183,14 @@ abstract class MessageGroup {
 			$definitions = $this->getUniqueDefinitions();
 		}
 
-		foreach ( $definitions as $key => $definition ) {
-			$collection->add( new TMessage( $key, $definition ) );
-		}
+		$defs = new MessageDefinitions( $this->namespaces[0], $definitions );
+		$collection = MessageCollection::newFromDefinitions( $defs, $code );
 
 		$bools = $this->getBools();
-		foreach ( $bools['optional'] as $key ) {
-			if ( isset( $collection[$key] ) ) {
-				$collection[$key]->optional = true;
-			}
-		}
-
-		foreach ( $bools['ignored'] as $key ) {
-			if ( isset( $collection[$key] ) ) {
-				unset( $collection[$key] );
-			}
-		}
+		$collection->setTags( 'ignored',  $bools['ignored']  );
+		$collection->setTags( 'optional', $bools['optional'] );
 
 		return $collection;
-	}
-
-	public function fillCollection( MessageCollection $collection ) {
-		TranslateUtils::fillContents( $collection, $this->namespaces );
-		$this->fill( $collection );
 	}
 
 	public function __construct() {
@@ -234,12 +200,32 @@ abstract class MessageGroup {
 	public static function factory( $label, $id ) {
 		return null;
 	}
+
+	// Can be overwritten to retun false if something is wrong
+	public function exists() {
+		return true;
+	}
+
+	public function getChecker() {
+		return null;
+	}
+
+	public function setConfiguration( $conf ) { }
+	public function getConfiguration() { }
+	public function getNamespace() { return $this->namespaces[0]; }
+	public function getFFS() { return null; }
+	public function getTags( $type = null ) {
+		$tags = $this->getBools();
+		if ( !$type ) return $tags;
+		return isset( $tags[$type] ) ? $tags[$type] : array();
+	}
 }
 
-class CoreMessageGroup extends MessageGroup {
-	protected $label = 'MediaWiki messages';
-	protected $id    = 'core';
-	protected $type  = 'mediawiki';
+class CoreMessageGroup extends MessageGroupOld {
+	protected $label       = 'MediaWiki';
+	protected $id          = 'core';
+	protected $type        = 'mediawiki';
+	protected $description = '{{int:translate-group-desc-mediawikicore}}';
 
 	public function __construct() {
 		parent::__construct();
@@ -321,15 +307,43 @@ class CoreMessageGroup extends MessageGroup {
 
 		return $messages;
 	}
+
+	public function getChecker() {
+		$checker = new MediaWikiMessageChecker( $this );
+		$checker->setChecks( array(
+			array( $checker, 'pluralCheck' ),
+			array( $checker, 'wikiParameterCheck' ),
+			array( $checker, 'wikiLinksCheck' ),
+			array( $checker, 'XhtmlCheck' ),
+			array( $checker, 'braceBalanceCheck' ),
+			array( $checker, 'pagenameMessagesCheck' ),
+			array( $checker, 'miscMWChecks' )
+		) );
+		return $checker;
+	}
 }
 
-class ExtensionMessageGroup extends MessageGroup {
+class ExtensionMessageGroup extends MessageGroupOld {
+	protected $magicFile, $aliasFile;
+
 	/**
 	 * Name of the array where all messages are stored, if applicable.
 	 */
 	protected $arrName      = 'messages';
+
+	/**
+	 * Name of the array where all special page aliases are stored, if applicable.
+	 * Only used in class SpecialPageAliasesCM
+	 */
+	protected $arrAlias      = 'aliases';
+
+	protected $path         = null;
+
 	public function getVariableName() { return $this->arrName; }
 	public function setVariableName( $value ) { $this->arrName = $value; }
+
+	public function getVariableNameAlias() { return $this->arrAlias; }
+	public function setVariableNameAlias( $value ) { $this->arrAlias = $value; }
 
 	/**
 	 * Path to the file where array or function is defined, relative to extensions
@@ -339,11 +353,7 @@ class ExtensionMessageGroup extends MessageGroup {
 	public function getMessageFile( $code ) { return $this->messageFile; }
 	public function setMessageFile( $value ) { $this->messageFile = $value; }
 
-	public function getMessageFilePath( $code ) {
-		return $wgTranslateExtensionDirectory;
-	}
-
-	public function setDescriptionMsg( $key ) {
+	public function setDescriptionMsg( $key, $url ) {
 		global $wgLang;
 
 		$desc = $this->getMessage( $key, $wgLang->getCode() );
@@ -351,6 +361,9 @@ class ExtensionMessageGroup extends MessageGroup {
 			$desc = $this->getMessage( $key, 'en' );
 		if ( $desc !== null )
 			$this->description = $desc;
+
+		if ( $url )
+			$this->description .= wfMsgNoTrans( 'translate-ext-url', $url );
 	}
 
 	public static function factory( $label, $id ) {
@@ -375,13 +388,20 @@ class ExtensionMessageGroup extends MessageGroup {
 		if ( isset( $cache[$code] ) ) {
 			return $cache[$code];
 		} else {
-			return null;
+			return array();
 		}
 	}
 
 	public function getPath() {
-		global $wgTranslateExtensionDirectory;
-		return $wgTranslateExtensionDirectory;
+		if ( $this->path === null ) {
+			global $wgTranslateExtensionDirectory;
+			return $wgTranslateExtensionDirectory; // BC
+		}
+		return $this->path;
+	}
+
+	public function setPath( $path ) {
+		$this->path = $path;
 	}
 
 	public function getReader( $code ) {
@@ -395,31 +415,73 @@ class ExtensionMessageGroup extends MessageGroup {
 		$writer->variableName = $this->getVariableName();
 		return $writer;
 	}
+
+	public function exists() {
+		return is_readable( $this->getMessageFileWithPath( 'en' ) );
+	}
+
+	public function getChecker() {
+		$checker = new MediaWikiMessageChecker( $this );
+		$checker->setChecks( array(
+			array( $checker, 'pluralCheck' ),
+			array( $checker, 'wikiParameterCheck' ),
+			array( $checker, 'wikiLinksCheck' ),
+			array( $checker, 'XhtmlCheck' ),
+			array( $checker, 'braceBalanceCheck' ),
+			array( $checker, 'pagenameMessagesCheck' ),
+			array( $checker, 'miscMWChecks' )
+		) );
+		return $checker;
+	}
+
+	public function getAliasFile() { return $this->aliasFile; }
+	public function setAliasFile( $file ) { $this->aliasFile = $file; }
+
+	public function getMagicFile() { return $this->magicFile; }
+	public function setMagicFile( $file ) { $this->magicFile = $file; }
+
 }
 
 class AliasMessageGroup extends ExtensionMessageGroup {
+	protected $dataSource;
 
-	public function fillCollection( MessageCollection $collection ) {
-		$this->fill( $collection );
-		$this->fillContents( $collection );
+	public function setDataSource( $page ) {
+		$this->dataSource = $page;
 	}
 
+	public function initCollection( $code, $unique = false ) {
+		$collection = parent::initCollection( $code, $unique );
+
+		$defs = $this->load( 'en' );
+		foreach ( $defs as $key => $value ) {
+			$collection[$key] = new FatMessage( $key, implode( ", ", $value ) );
+		}
+
+		$this->fill( $collection );
+		$this->fillContents( $collection );
+
+		foreach ( array_keys( $collection->keys() ) as $key ) {
+			if ( $collection[$key]->translation() === null ) unset( $collection[$key] );
+		}
+
+		return $collection;
+	}
 
 	function fill( MessageCollection $messages ) {
 		$cache = $this->load( $messages->code );
-		foreach ( $messages->keys() as $key ) {
+		foreach ( array_keys( $messages->keys() ) as $key ) {
 			if ( isset( $cache[$key] ) ) {
 				if ( is_array( $cache[$key] ) ) {
-					$messages[$key]->infile = implode( ',', $cache[$key] );
+					$messages[$key]->setInfile( implode( ',', $cache[$key] ) );
 				} else {
-					$messages[$key]->infile = $cache[$key];
+					$messages[$key]->setInfile( $cache[$key] );
 				}
 			}
 		}
 	}
 
 	public function fillContents( MessageCollection $collection ) {
-		$data = TranslateUtils::getMessageContent( 'sp-translate-data-SpecialPageAliases', $collection->code );
+		$data = TranslateUtils::getMessageContent( $this->dataSource, $collection->code );
 
 		if ( !$data ) return;
 
@@ -433,10 +495,9 @@ class AliasMessageGroup extends ExtensionMessageGroup {
 			if ( $name === '' || $values === '' ) continue;
 
 			if ( isset( $collection[$name] ) ) {
-				$collection[$name]->database = $values;
+				$collection[$name]->setTranslation( $values );
 			}
 		}
-
 	}
 
 	public function getWriter() {
@@ -445,21 +506,21 @@ class AliasMessageGroup extends ExtensionMessageGroup {
 		$writer->commaToArray = true;
 		return $writer;
 	}
-
 }
 
 class CoreMostUsedMessageGroup extends CoreMessageGroup {
-	protected $label = 'MediaWiki messages (most used)';
-	protected $id    = 'core-mostused';
+	protected $label = 'MediaWiki (most used)';
+	protected $id    = 'core-0-mostused';
 	protected $meta  = true;
 
-	protected $description = 'This is a list of about 500 most often displayed messages. The list has been build from data gathered from a profiling run on all Wikimedia wikis.';
+	protected $description = '{{int:translate-group-desc-mediawikimostused}}';
 
 	public function export( MessageCollection $messages ) { return 'Not supported'; }
 	public function exportToFile( MessageCollection $messages, $authors ) { return 'Not supported'; }
 
 	function getDefinitions() {
 		$data = file_get_contents( dirname( __FILE__ ) . '/wikimedia-mostused-2009.txt' );
+		$data = str_replace( "\r", '', $data );
 		$messages = explode( "\n", $data );
 		$contents = Language::getMessagesFor( 'en' );
 		$definitions = array();
@@ -472,7 +533,7 @@ class CoreMostUsedMessageGroup extends CoreMessageGroup {
 	}
 }
 
-class GettextMessageGroup extends MessageGroup {
+class GettextMessageGroup extends MessageGroupOld {
 	protected $type = 'gettext';
 	/**
 	 * Name of the array where all messages are stored, if applicable.
@@ -482,6 +543,9 @@ class GettextMessageGroup extends MessageGroup {
 	public function setPotFile( $value ) { $this->potFile = $value; }
 
 	protected $codeMap = array();
+	public function setCodeMap( $map ) {
+		$this->codeMap = $map;
+	}
 
 	protected $path = '';
 	public function getPath() { return $this->path; }
@@ -529,7 +593,7 @@ class GettextMessageGroup extends MessageGroup {
 	}
 }
 
-class WikiMessageGroup extends MessageGroup {
+class WikiMessageGroup extends MessageGroupOld {
 	protected $source = null;
 
 	/**
@@ -542,10 +606,6 @@ class WikiMessageGroup extends MessageGroup {
 		parent::__construct();
 		$this->id = $id;
 		$this->source = $source;
-	}
-
-	public function fill( MessageCollection $messages ) {
-		return; // no-op
 	}
 
 	/* Fetch definitions from database */
@@ -582,8 +642,9 @@ class WikiMessageGroup extends MessageGroup {
 	}
 }
 
-
 class WikiPageMessageGroup extends WikiMessageGroup {
+	protected $type = 'mediawiki';
+
 	public $title;
 
 	public function __construct( $id, $source ) {
@@ -593,16 +654,36 @@ class WikiPageMessageGroup extends WikiMessageGroup {
 			throw new MWException( 'Invalid title' );
 		}
 		$this->title = $title;
-		$this->namespaces = array( $title->getNamespace(), $title->getNamespace() + 1 );
-		
+		$this->namespaces = array( NS_TRANSLATIONS, NS_TRANSLATIONS_TALK );
+
 	}
 
 	public function getDefinitions() {
-		return TranslateTag::parseSectionDefinitions( $this->title, $this->namespaces );
+		$dbr = wfGetDB( DB_SLAVE );
+		$tables = 'translate_sections';
+		$vars = array( 'trs_key', 'trs_text' );
+		$conds = array( 'trs_page' => $this->title->getArticleId() );
+		$res = $dbr->select( $tables, $vars, $conds, __METHOD__ );
+
+		$defs = array();
+		$prefix = $this->title->getPrefixedDBKey() . '/';
+		$re = '~<tvar\|([^>]+)>(.*?)</>~u';
+		foreach ( $res as $r ) {
+			// TODO: use getTextForTrans?
+			$text = $r->trs_text;
+			$text = preg_replace( $re, '$\1', $text );
+			$defs[$r->trs_key] = $text;
+		}
+		// Some hacks to get nice order for the messages
+		ksort( $defs );
+		$new_defs = array();
+		foreach ( $defs as $k => $v ) $new_defs[$prefix . $k] = $v;
+		return $new_defs;
 	}
 
 	public function load( $code ) {
 		if ( $code === 'en' ) return $this->getDefinitions();
+		else return array();
 	}
 
 	/**
@@ -616,6 +697,10 @@ class WikiPageMessageGroup extends WikiMessageGroup {
 	public function getMessage( $key, $code ) {
 		if ( $code === 'en' ) {
 			$stuff = $this->load( 'en' );
+			// FIXME: throws PHP Notice:  Undefined index:  <key>
+			// when keys are added, but createMessageIndex.php is
+			// not run (like when a translatable page from page
+			// translation was added)
 			return $stuff[$key];
 		}
 		$title = Title::makeTitleSafe( $this->namespaces[0], "$key/$code" );
@@ -624,13 +709,26 @@ class WikiPageMessageGroup extends WikiMessageGroup {
 		return $rev->getText();
 	}
 
+	public function getChecker() {
+		$checker = new MediaWikiMessageChecker( $this );
+		$checker->setChecks( array(
+			array( $checker, 'pluralCheck' ),
+			array( $checker, 'wikiParameterCheck' ),
+			array( $checker, 'wikiLinksCheck' ),
+			array( $checker, 'XhtmlCheck' ),
+			array( $checker, 'braceBalanceCheck' ),
+			array( $checker, 'pagenameMessagesCheck' ),
+			array( $checker, 'miscMWChecks' )
+		) );
+		return $checker;
+	}
 }
-
 
 class MessageGroups {
 	public static function init() {
 		static $loaded = false;
 		if ( $loaded ) return;
+		wfDebug( __METHOD__ . "\n" );
 
 		global $wgTranslateAddMWExtensionGroups;
 		if ( $wgTranslateAddMWExtensionGroups ) {
@@ -638,21 +736,44 @@ class MessageGroups {
 			$a->addAll();
 		}
 
-		global $wgTranslateCategory, $wgTranslateCC;
-/*		wfLoadExtensionMessages( 'Translate' );
-		$cat = Category::newFromName( wfMsgForContent( 'translate-tag-category' ) );
-		$titles = $cat->getMembers();
-		foreach ( $titles as $t ) {
-			$title = $t->getPrefixedText();
-			$id = "page|$title";
-			$wgTranslateCC[$id] = new WikiPageMessageGroup( $id, $title );
-			$wgTranslateCC[$id]->setLabel( $title );
-			$wgTranslateCC[$id]->setDescription( wfMsgNoTrans( 'translate-tag-page-desc', $title ) );
-
-		}*/
-
 		global $wgTranslateCC;
+
+		global $wgEnablePageTranslation;
+		if ( $wgEnablePageTranslation ) {
+			$dbr = wfGetDB( DB_SLAVE );
+
+			$tables = array( 'page', 'revtag', 'revtag_type' );
+			$vars   = array( 'page_id', 'page_namespace', 'page_title', );
+			$conds  = array( 'page_id=rt_page', 'rtt_id=rt_type', 'rtt_name' => 'tp:mark' );
+			$options = array( 'GROUP BY' => 'page_id' );
+			$res = $dbr->select( $tables, $vars, $conds, __METHOD__, $options );
+			foreach ( $res as $r ) {
+				$title = Title::makeTitle( $r->page_namespace, $r->page_title )->getPrefixedText();
+				$id = "page|$title";
+				$wgTranslateCC[$id] = new WikiPageMessageGroup( $id, $title );
+				$wgTranslateCC[$id]->setLabel( $title );
+				$wgTranslateCC[$id]->setDescription( wfMsgNoTrans( 'translate-tag-page-desc', $title ) );
+			}
+		}
+
+
 		wfRunHooks( 'TranslatePostInitGroups', array( &$wgTranslateCC ) );
+
+		global $wgTranslateGroupFiles, $wgAutoloadClasses;
+		foreach ( $wgTranslateGroupFiles as $file ) {
+			wfDebug( $file . "\n" );
+			$conf = TranslateSpyc::load( $file );
+			if ( !empty( $conf['AUTOLOAD'] ) && is_array( $conf['AUTOLOAD'] ) ) {
+				$dir = dirname( $file );
+				foreach ( $conf['AUTOLOAD'] as $class => $file ) {
+					$wgAutoloadClasses[$class] = "$dir/$file";
+				}
+			}
+
+			$group = MessageGroupBase::factory( $conf );
+			$wgTranslateCC[$group->getId()] = $group;
+		}
+
 		$loaded = true;
 	}
 
@@ -687,7 +808,6 @@ class MessageGroups {
 	private function __construct() {
 		self::init();
 		global $wgTranslateEC, $wgTranslateCC;
-
 		$all = array_merge( $wgTranslateEC, array_keys( $wgTranslateCC ) );
 		sort( $all );
 		foreach ( $all as $id ) {

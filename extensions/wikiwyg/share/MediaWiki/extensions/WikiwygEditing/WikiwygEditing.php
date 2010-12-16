@@ -7,6 +7,7 @@ $wgHooks['EditPage::AfterEdit:Form'][] = 'WikiwygEditTagCloud';
 
 $wgExtensionFunctions[] = 'registerWikiwygEditing';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'WikiwygEditing',
 	'author' => 'Bartek Łapiński',
 	'version' => '1.0',
@@ -53,7 +54,7 @@ function WikiwygAlternateEdit ($epage) {
         $wgWikiwygImagePath = "$wgWikiwygPath/share/MediaWiki/images";
     }
 
-    $wgOut->addScript("<style type=\"text/css\" media=\"screen,projection\">/*<![CDATA[*/ @import \"$wgWikiwygCssPath/MediaWikiwyg.css\"; /*]]>*/</style>\n");
+    $wgOut->addScript("<style type=\"text/css\" media=\"screen\">/*<![CDATA[*/ @import \"$wgWikiwygCssPath/MediaWikiwyg.css\"; /*]]>*/</style>\n");
     $wgOut->addScript("<script type=\"text/javascript\" src=\"$wgWikiwygJsPath/extensions/WikiwygEditing/js/editpage.js?$wgStyleVersion\"></script>\n");
 
     if (! isset($wgEnableAjaxLogin) || ($wgEnableAjaxLogin == false)) {

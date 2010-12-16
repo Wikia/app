@@ -140,7 +140,7 @@ class SpecialNuke extends SpecialPage {
 
 	function doDelete( $pages, $reason ) {
 		foreach( $pages as $page ) {
-			$title = Title::newFromUrl( $page );
+			$title = Title::newFromURL( $page );
 			$file = $title->getNamespace() == NS_IMAGE ? wfLocalFile( $title ) : false;
 			if ( $file ) {
 				$oldimage = null; // Must be passed by reference

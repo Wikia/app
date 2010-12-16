@@ -32,6 +32,16 @@
 	border:none;
 	border: 1px solid #FFFFFF;
 }
+.even{
+	background:#EEE;	
+}
+.odd{
+	background:#DDD;	
+}
+.anno_en{
+	background:#CCF;	
+}
+
 .mv_video_time_hr{
  	position:absolute;
  	top:10px;
@@ -214,7 +224,7 @@ div.autocomplete ul li {
 }
 #videoSideBar {
 display:inline;
-float:left;
+float:right;
 width:495px;
 }
 #videoContent #videoMeta p.options span.download {

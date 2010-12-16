@@ -7,6 +7,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $oggDir = dirname(__FILE__);
 $wgAutoloadClasses['OggHandler'] = "$oggDir/OggHandler_body.php";
+
 $wgMediaHandlers['application/ogg'] = 'OggHandler';
 if ( !in_array( 'ogg', $wgFileExtensions ) ) {
 	$wgFileExtensions[] = 'ogg';
@@ -17,22 +18,22 @@ if ( !in_array( 'ogv', $wgFileExtensions ) ) {
 if ( !in_array( 'oga', $wgFileExtensions ) ) {
 	$wgFileExtensions[] = 'oga';
 }
-ini_set( 'include_path', 
+ini_set( 'include_path',
 	"$oggDir/PEAR/File_Ogg" .
 	PATH_SEPARATOR .
 	ini_get( 'include_path' ) );
 
 // Bump this when updating OggPlayer.js to help update caches
-$wgOggScriptVersion = '9';
+$wgOggScriptVersion = '11';
 
 $wgExtensionMessagesFiles['OggHandler'] = "$oggDir/OggHandler.i18n.php";
+$wgExtensionMessagesFiles['OggHandlerMagic'] = "$oggDir/OggHandler.i18n.magic.php";
 $wgParserOutputHooks['OggHandler'] = array( 'OggHandler', 'outputHook' );
-$wgHooks['LanguageGetMagic'][] = 'OggHandler::registerMagicWords';
+
 $wgExtensionCredits['media'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'OggHandler',
 	'author'         => 'Tim Starling',
-	'svn-date' => '$LastChangedDate: 2009-03-17 04:26:50 +0100 (wto, 17 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48478 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:OggHandler',
 	'description'    => 'Handler for Ogg Theora and Vorbis files, with JavaScript player.',
 	'descriptionmsg' => 'ogg-desc',
@@ -40,11 +41,12 @@ $wgExtensionCredits['media'][] = array(
 
 /******************* CONFIGURATION STARTS HERE **********************/
 
-//if wgPlayerStats collection is enabled or not 
-$wgPlayerStatsCollection=false;
+// Set the supported ogg codecs:
+$wgOggVideoTypes = array( 'Theora' );
+$wgOggAudioTypes = array( 'Vorbis', 'Speex', 'FLAC' );
 
 // Location of the FFmpeg binary
-$wgFFmpegLocation = 'ffmpeg';
+$wgFFmpegLocation = '/usr/bin/ffmpeg';
 
 // Filename or URL path to the Cortado Java player applet.
 //
@@ -58,4 +60,7 @@ $wgFFmpegLocation = 'ffmpeg';
 // as the uploaded media files or Java security rules will
 // prevent the applet from loading them.
 //
-$wgCortadoJarFile = "cortado-ovt-stripped-wm_r38710.jar";
+$wgCortadoJarFile = "cortado-ovt-stripped-0.5.1.jar";
+
+/******************* CONFIGURATION ENDS HERE **********************/
+

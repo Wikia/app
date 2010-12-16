@@ -8,7 +8,7 @@
 $options = array( 'list', 'nowarn', 'quiet', 'usage', 'dry' );
 $optionsWithArgs = array( 'old', 'new' );
 
-require_once( 'commandLine.inc' );
+require_once( dirname(__FILE__) . '/commandLine.inc' );
 
 /**
  * @ingroup Maintenance
@@ -246,13 +246,7 @@ Users with option <$this->mAnOption> = '$this->mOldValue' will be made to use '$
 
 Abort with control-c in the next five seconds....
 WARN;
-		require('counter.php');
-		for ($i=6;$i>=1;) {
-			print_c($i, --$i);
-			sleep(1);
-		}
-		print "\n";
-
+		wfCountDown( 5 );
 		return true;
 	}
 

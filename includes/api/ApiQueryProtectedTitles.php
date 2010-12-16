@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ('ApiQueryBase.php');
+	require_once ( 'ApiQueryBase.php' );
 }
 
 /**
@@ -35,91 +35,104 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiQueryProtectedTitles extends ApiQueryGeneratorBase {
 
-	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName, 'pt');
+	public function __construct( $query, $moduleName ) {
+		parent :: __construct( $query, $moduleName, 'pt' );
 	}
 
 	public function execute() {
 		$this->run();
 	}
 
-	public function executeGenerator($resultPageSet) {
-		$this->run($resultPageSet);
+	public function executeGenerator( $resultPageSet ) {
+		$this->run( $resultPageSet );
 	}
 
-	private function run($resultPageSet = null) {
+	private function run( $resultPageSet = null ) {
 		$db = $this->getDB();
 		$params = $this->extractRequestParams();
 
-		$this->addTables('protected_titles');
-		$this->addFields(array('pt_namespace', 'pt_title', 'pt_timestamp'));
+		$this->addTables( 'protected_titles' );
+		$this->addFields( array( 'pt_namespace', 'pt_title', 'pt_timestamp' ) );
 
-		$prop = array_flip($params['prop']);
-		$this->addFieldsIf('pt_user', isset($prop['user']));
-		$this->addFieldsIf('pt_reason', isset($prop['comment']));
-		$this->addFieldsIf('pt_expiry', isset($prop['expiry']));
-		$this->addFieldsIf('pt_create_perm', isset($prop['level']));
+		$prop = array_flip( $params['prop'] );
+		$this->addFieldsIf( 'pt_user', isset( $prop['user'] ) );
+		$this->addFieldsIf( 'pt_reason', isset( $prop['comment'] ) || isset( $prop['parsedcomment'] ) );
+		$this->addFieldsIf( 'pt_expiry', isset( $prop['expiry'] ) );
+		$this->addFieldsIf( 'pt_create_perm', isset( $prop['level'] ) );
 
-		$this->addWhereRange('pt_timestamp', $params['dir'], $params['start'], $params['end']);
-		$this->addWhereFld('pt_namespace', $params['namespace']);
-		$this->addWhereFld('pt_create_perm', $params['level']);
+		$this->addWhereRange( 'pt_timestamp', $params['dir'], $params['start'], $params['end'] );
+		$this->addWhereFld( 'pt_namespace', $params['namespace'] );
+		$this->addWhereFld( 'pt_create_perm', $params['level'] );
 		
-		if(isset($prop['user']))
+		if ( isset( $prop['user'] ) )
 		{
-			$this->addTables('user');
-			$this->addFields('user_name');
-			$this->addJoinConds(array('user' => array('LEFT JOIN',
+			$this->addTables( 'user' );
+			$this->addFields( 'user_name' );
+			$this->addJoinConds( array( 'user' => array( 'LEFT JOIN',
 				'user_id=pt_user'
-			)));
+			) ) );
 		}
 
-		$this->addOption('LIMIT', $params['limit'] + 1);
-		$res = $this->select(__METHOD__);
+		$this->addOption( 'LIMIT', $params['limit'] + 1 );
+		$res = $this->select( __METHOD__ );
 
 		$count = 0;
 		$result = $this->getResult();
-		while ($row = $db->fetchObject($res)) {
-			if (++ $count > $params['limit']) {
+		while ( $row = $db->fetchObject( $res ) ) {
+			if ( ++ $count > $params['limit'] ) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
-				$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->pt_timestamp));
+				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->pt_timestamp ) );
 				break;
 			}
 
-			$title = Title::makeTitle($row->pt_namespace, $row->pt_title);
-			if (is_null($resultPageSet)) {
+			$title = Title::makeTitle( $row->pt_namespace, $row->pt_title );
+			if ( is_null( $resultPageSet ) ) {
 				$vals = array();
-				ApiQueryBase::addTitleInfo($vals, $title);
-				if(isset($prop['timestamp']))
-					$vals['timestamp'] = wfTimestamp(TS_ISO_8601, $row->pt_timestamp);
-				if(isset($prop['user']) && !is_null($row->user_name))
+				ApiQueryBase::addTitleInfo( $vals, $title );
+				if ( isset( $prop['timestamp'] ) )
+					$vals['timestamp'] = wfTimestamp( TS_ISO_8601, $row->pt_timestamp );
+					
+				if ( isset( $prop['user'] ) && !is_null( $row->user_name ) )
 					$vals['user'] = $row->user_name;
-				if(isset($prop['comment']))
+					
+				if ( isset( $prop['comment'] ) )
 					$vals['comment'] = $row->pt_reason;
-				if(isset($prop['expiry']))
-					$vals['expiry'] = Block::decodeExpiry($row->pt_expiry, TS_ISO_8601);
-				if(isset($prop['level']))
+					
+				if ( isset( $prop['parsedcomment'] ) ) {
+					global $wgUser;
+					$vals['parsedcomment'] = $wgUser->getSkin()->formatComment( $row->pt_reason, $title );
+				}
+					
+				if ( isset( $prop['expiry'] ) )
+					$vals['expiry'] = Block::decodeExpiry( $row->pt_expiry, TS_ISO_8601 );
+					
+				if ( isset( $prop['level'] ) )
 					$vals['level'] = $row->pt_create_perm;
 				
-				$fit = $result->addValue(array('query', $this->getModuleName()), null, $vals);
-				if(!$fit)
-				{
-					$this->setContinueEnumParameter('start',
-						wfTimestamp(TS_ISO_8601, $row->pt_timestamp));
+				$fit = $result->addValue( array( 'query', $this->getModuleName() ), null, $vals );
+				if ( !$fit ) {
+					$this->setContinueEnumParameter( 'start',
+						wfTimestamp( TS_ISO_8601, $row->pt_timestamp ) );
 					break;
 				}
 			} else {
 				$titles[] = $title;
 			}
 		}
-		$db->freeResult($res);
-		if(is_null($resultPageSet))
-			$result->setIndexedTagName_internal(array('query', $this->getModuleName()), $this->getModulePrefix());
+		$db->freeResult( $res );
+		if ( is_null( $resultPageSet ) )
+			$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), $this->getModulePrefix() );
 		else
-			$resultPageSet->populateFromTitles($titles);
+			$resultPageSet->populateFromTitles( $titles );
 	}
 
 	public function getCacheMode( $params ) {
-		return 'public';
+		if ( !is_null( $params['prop'] ) && in_array( 'parsedcomment', $params['prop'] ) ) {
+			// formatComment() calls wfMsg() among other things
+			return 'anon-public-user-private';
+		} else {
+			return 'public';
+		}
 	}
 
 	public function getAllowedParams() {
@@ -131,7 +144,7 @@ class ApiQueryProtectedTitles extends ApiQueryGeneratorBase {
 			),
 			'level' => array(
 				ApiBase :: PARAM_ISMULTI => true,
-				ApiBase :: PARAM_TYPE => array_diff($wgRestrictionLevels, array(''))
+				ApiBase :: PARAM_TYPE => array_diff( $wgRestrictionLevels, array( '' ) )
 			),
 			'limit' => array (
 				ApiBase :: PARAM_DFLT => 10,
@@ -160,6 +173,7 @@ class ApiQueryProtectedTitles extends ApiQueryGeneratorBase {
 					'timestamp',
 					'user',
 					'comment',
+					'parsedcomment',
 					'expiry',
 					'level'
 				)
@@ -190,6 +204,6 @@ class ApiQueryProtectedTitles extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryProtectedTitles.php 69986 2010-07-27 03:57:39Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryProtectedTitles.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

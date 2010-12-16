@@ -81,7 +81,7 @@ class Player {
 			$mime = MimeMagic::singleton();
 			$ext = preg_replace('!^.*\.([^.]+)$!', '\1', $image->getName());
 			$this->mimetype = $mime->guessTypesForExtension($ext);
-			$this->mediatype = $mime->getMediaType(NULL, $this->mimetype);
+			$this->mediatype = $mime->getMediaType(null, $this->mimetype);
 		}
 
 		if ( preg_match('!/(x-)?ogg$!', $this->mimetype) ) {
@@ -100,8 +100,8 @@ class Player {
 		if ($height) $height = (int)$height;
 		if ($width) $width = (int)$width;
 
-		if ($height<=0) $height = NULL;
-		if ($width<=0) $width = NULL;
+		if ($height<=0) $height = null;
+		if ($width<=0) $width = null;
 
 		if ( $this->mediatype == MEDIATYPE_AUDIO ) {
 			//HACK! this actually depends on the player used, and thus on the mime type.
@@ -176,7 +176,7 @@ class Player {
 		$this->height = $height;
 	}
 
-	static function detectVideoResolution( $image, $mimetype = NULL ) {
+	static function detectVideoResolution( $image, $mimetype = null ) {
 		global $wgPlayerVideoResolutionDetector;
 		if (!$wgPlayerVideoResolutionDetector) return false;
 
@@ -377,7 +377,7 @@ class Player {
 		$blank = "<img src=\"$wgPlayerExtensionPath/blank.gif\" width=\"{$this->width}\" height=\"{$this->height}\" border=\"0\" alt=\"$alt\" class=\"thumbimage\" style=\"width:{$this->width} ! important; height:{$this->height} ! important;\"/>";
 
 		$thumbstyle = '';
-		$thumbimg = NULL;
+		$thumbimg = null;
 		$thumbname = @$attributes['thumb'];
 		if ($thumbname) $thumbimg = wfFindFile( $thumbname );
 
@@ -397,11 +397,11 @@ class Player {
 		return "<div style='position:relative; width:{$this->width}; height:{$this->height};'>$placeholder $overlay</div>";
 	}
 
-	function getThumbnailHTML( $attributes, $deferred = NULL ) {
+	function getThumbnailHTML( $attributes, $deferred = null ) {
 		global $wgUser, $wgPlayerExtensionPath;
 		$sk = $wgUser->getSkin();
 
-		if ($deferred === NULL) {
+		if ($deferred === null) {
 			if ( $this->mediatype == MEDIATYPE_BITMAP
 			   || $this->mediatype == MEDIATYPE_DRAWING ) $deferred = false;
 			else $deferred = true;

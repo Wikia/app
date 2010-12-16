@@ -36,11 +36,14 @@ $4",
 	'todo-new-item'         => 'New item',
 	'todo-issue-summary'    => 'Issue summary:',
 	'todo-form-details'     => 'Details:',
-	'todo-form-email'       => 'To receive notification by e-mail when the item is closed, type your address here:',
+	'todo-form-email'       => 'To receive notification by e-mail when the item is closed, provide your address:',
 	'todo-form-submit'      => 'Submit query',
+	'right-todo'            => 'Have todo list',
+	'right-todosubmit'      => 'Restrict user\'s todo list right',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
@@ -55,9 +58,12 @@ $messages['qqq'] = array(
 * $3 is a timestamp
 * $4 is a reason (free text)',
 	'todo-list-for' => '{{Identical|Todo list for}}',
+	'todo-list-change' => '{{Identical|Change}}',
 	'todo-list-cancel' => '{{Identical|Cancel}}',
 	'todo-form-details' => '{{Identical|Details}}',
 	'todo-form-submit' => '{{Identical|Submit query}}',
+	'right-todo' => '{{doc-right|todo}}',
+	'right-todosubmit' => '{{doc-right|todosubmit}}',
 );
 
 /** Faeag Rotuma (Faeag Rotuma)
@@ -81,11 +87,11 @@ $messages['niu'] = array(
 	'todo-list-cancel' => 'Tiaki',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
+/** Laz (Laz)
+ * @author Bombola
  */
-$messages['vep'] = array(
-	'todo-form-details' => 'Detalid:',
+$messages['lzz'] = array(
+	'todo-new-queue' => 'ağani',
 );
 
 /** Afrikaans (Afrikaans)
@@ -94,6 +100,7 @@ $messages['vep'] = array(
  */
 $messages['af'] = array(
 	'todo-new-queue' => 'nuut',
+	'todo-list-change' => 'Wysig',
 	'todo-list-cancel' => 'Kanselleer',
 	'todo-form-details' => 'Details:',
 );
@@ -107,6 +114,7 @@ $messages['am'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'todo' => 'قائمة للعمل',
@@ -131,13 +139,22 @@ $4',
 	'todo-add-queue' => 'أضف الطابور...',
 	'todo-move-queue' => 'انقل إلى الطابور...',
 	'todo-list-for' => 'قائمة للعمل ل $1',
-	'todo-list-change' => 'تغيير',
-	'todo-list-cancel' => 'إلغاء',
+	'todo-list-change' => 'غيّر',
+	'todo-list-cancel' => 'ألغِ',
 	'todo-new-item' => 'مدخلة جديدة',
 	'todo-issue-summary' => 'ملخص القضية:',
 	'todo-form-details' => 'التفاصيل:',
 	'todo-form-email' => 'لاستقبال إخطار بواسطة البريد الإلكتروني عندما يتم إغلاق المدخلة، اكتب عنوانك هنا:',
 	'todo-form-submit' => 'تنفيذ الاستعلام',
+	'right-todo' => 'امتلاك قائمة للعمل',
+	'right-todosubmit' => 'تحديد صلاحية قائمة للعمل للمستخدم',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'todo-new-queue' => 'ܚܕܬܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -211,6 +228,8 @@ $4',
 	'todo-form-details' => 'Падрабязнасьці:',
 	'todo-form-email' => 'Каб атрымліваць паведамленьні пра выкананьні заданьняў па электроннай пошце, упішыце сюды свой адрас электроннай пошты:',
 	'todo-form-submit' => 'Запытаць',
+	'right-todo' => 'сьпіс заданьняў',
+	'right-todosubmit' => 'абмежаваньне правоў іншых удзельнікаў для сьпісаў заданьняў',
 );
 
 /** Bulgarian (Български)
@@ -231,15 +250,53 @@ $messages['bg'] = array(
 	'todo-form-submit' => 'Изпращане на заявка',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'todo' => 'করণীয় তালিকা',
+	'todo-tab' => 'করণীয়',
+	'todo-new-queue' => 'নতুন',
+	'todo-form-details' => 'বিস্তারিত:',
+);
+
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
+	'todo' => 'Roll traoù da ober',
+	'todo-desc' => "Astenn arnod evit ur [[Special:Todo|roll hiniennel eus an traoù d'ober]]",
+	'todo-tab' => "d'ober",
+	'todo-new-queue' => 'nevez',
+	'todo-mail-subject' => "Graet eo bet an elfenn e roll an traoù d'ober eus $1",
+	'todo-mail-body' => "Goulennet ho peus resevout ur postel kemenn pa 'vo echuet gant un elfenn ho peus lakaet e roll an traoù d'ober a zo da $1.
+
+Elfenn : $2
+Kaset : $3
+
+Merket eo bet an elfenn-mañ evel echuet, gant an evezhiadenn-mañ :
+$4",
+	'todo-invalid-item' => 'Elfenn diank pe direizh',
+	'todo-update-else-item' => 'Ho klask hizivaat elfennoù unan all',
+	'todo-unrecognize-type' => "Seurt n'eo ket bet anavezet",
+	'todo-user-invalide' => "N'eo ket mat an dra d'ober o peus lakaet pe ez eus un diouer outi pe n'en deus ket an implijer e roll eus an traoù d'ober.",
+	'todo-item-list' => "Hoc'h elfennoù",
+	'todo-no-item' => "N'eus elfenn ebet d'ober.",
+	'todo-invalid-owner' => "Perc'henn fall eus an elfenn-mañ",
+	'todo-add-queue' => "Ouzhpennañ d'al listenn gortoz...",
+	'todo-move-queue' => "Dilec'hiañ davet al listenn gortoz...",
+	'todo-list-for' => "Roll traoù d'ober gant $1",
 	'todo-list-change' => 'Kemmañ',
 	'todo-list-cancel' => 'Nullañ',
 	'todo-new-item' => 'Elfenn nevez',
 	'todo-issue-summary' => 'Diverrañ eus ar gudenn :',
 	'todo-form-details' => 'Munudoù :',
+	'todo-form-email' => "Evit resevout ur postel kemenn pa 'vo serret an elfenn, roit ho postel er framm da heul :",
+	'todo-form-submit' => 'Kas ar reked',
+	'right-todo' => 'Kaout ur roll "traoù d\'ober".',
+	'right-todosubmit' => "Bevenniñ gwirioù rolloù an traoù d'ober eus an implijerien",
 );
 
 /** Bosnian (Bosanski)
@@ -248,17 +305,65 @@ $messages['br'] = array(
 $messages['bs'] = array(
 	'todo' => 'Spisak za uraditi',
 	'todo-desc' => 'Probno proširenje ličnog [[Special:Todo|spiska za uraditi]]',
+	'todo-tab' => 'zadaci',
 	'todo-new-queue' => 'novi',
 	'todo-mail-subject' => 'Završena stavka na spisku za uraditi korisnika $1',
+	'todo-mail-body' => 'Tražili ste e-mail potvrdu o završetku svake stavke koju ste poslali online na spisku zadataka za korisnika $1.
+
+Stavka: $2
+Poslano: $3
+
+Ova stavka je označena završenom, sa slijedećim komentarom:
+$4',
 	'todo-invalid-item' => 'Nedostajuća ili nevaljana stavka',
+	'todo-update-else-item' => 'Pokušavate ažurirati stavke nekog drugog',
 	'todo-unrecognize-type' => 'Neprepoznati tip',
+	'todo-user-invalide' => 'Zadatku pripojen nevaljan, nepostojeći ili korisnik kojem se ne može dodijeliti zadatak.',
 	'todo-item-list' => 'Vaše stavke',
 	'todo-no-item' => 'Nema stavki za uraditi.',
+	'todo-invalid-owner' => 'Nevaljan vlasnik ove stavke',
+	'todo-add-queue' => 'Dodaj red…',
+	'todo-move-queue' => 'Premjesti u red…',
 	'todo-list-for' => 'Spisak za uraditi za $1',
 	'todo-list-change' => 'Izmjena',
 	'todo-list-cancel' => 'Odustani',
 	'todo-new-item' => 'Nova stavka',
+	'todo-issue-summary' => 'Sažetak zadatka:',
 	'todo-form-details' => 'Detalji:',
+	'todo-form-email' => 'Da bi ste dobili obavještenje putem e-maila kada je stavka zatvorena, unesite Vašu adresu ovdje:',
+	'todo-form-submit' => 'Pošalji upit',
+	'right-todo' => 'Imati spisak zadataka za uraditi',
+	'right-todosubmit' => 'Onemogućiti pravo korisnika na spisak zadataka',
+);
+
+/** Catalan (Català)
+ * @author Aleator
+ * @author Paucabot
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'todo' => 'Llista de feines per fer',
+	'todo-desc' => 'Extensió de [[Special:Todo|llista de tasques]] personal i experimental',
+	'todo-tab' => 'per fer',
+	'todo-new-queue' => 'nou',
+	'todo-item-list' => 'Els teus ítems',
+	'todo-no-item' => 'No hi ha ítems a la llista de tasques.',
+	'todo-add-queue' => 'Afegeix a la coa...',
+	'todo-move-queue' => 'Mou a la coa...',
+	'todo-list-change' => 'Canvia',
+	'todo-list-cancel' => 'Cancel·la',
+	'todo-new-item' => 'Nou ítem',
+	'todo-form-submit' => 'Tramet una consulta',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'todo-new-queue' => 'نوێ',
+	'todo-list-change' => 'گۆڕان',
+	'todo-list-cancel' => 'هەڵوەشاندنەوە',
+	'todo-form-details' => 'وردەکاریەکان:',
 );
 
 /** Czech (Česky)
@@ -307,6 +412,7 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author ChrisiPK
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'todo' => 'Aufgabenliste',
@@ -338,6 +444,8 @@ $4',
 	'todo-form-details' => 'Details:',
 	'todo-form-email' => 'Gib deine E-Mail-Adresse ein, um eine Benachrichtigung zu erhalten, wenn der Eintrag geschlossen wurde:',
 	'todo-form-submit' => 'Anfrage übergeben',
+	'right-todo' => 'Aufgabenliste haben',
+	'right-todosubmit' => 'Benutzerrechte auf Aufgabenliste beschränken',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -389,17 +497,37 @@ $4',
 	'todo-form-details' => 'Drobnostki:',
 	'todo-form-email' => 'Zapiš swóju e-mailowu adresu, aby dostał powěsć, gaž zapisk se zacynja',
 	'todo-form-submit' => 'Napšašanje wótpósłaś',
+	'right-todo' => 'Lisćina nadawkow',
+	'right-todosubmit' => 'Pšawo wužywarskeje lisćiny nadawkow wobgranicowaś',
 );
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author K sal 15
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'todo' => 'Λίστα εργασιών',
+	'todo-tab' => 'τα πρακτέα',
+	'todo-new-queue' => 'Νέο',
+	'todo-mail-subject' => 'Ολοκληρώθηκε το αντικείμενο στην todo λίστα της $1',
+	'todo-invalid-item' => 'Χαμένο ή άκυρο στοιχείο',
+	'todo-update-else-item' => 'Προσπάθεια ενημέρωσης αντικειμένων κάποιου άλλου',
+	'todo-unrecognize-type' => 'Μη αναγνωρισμένος τύπος',
 	'todo-item-list' => 'Τα αντικείμενα σας',
+	'todo-no-item' => 'Κανένα αντικείμενο προς υλοποίηση.',
+	'todo-invalid-owner' => 'Άκυρος ιδιοκτήτης αυτού του αντικειμένου',
+	'todo-add-queue' => 'Προσθήκη ουράς…',
+	'todo-move-queue' => 'Μετακίνηση στην ουρά...',
+	'todo-list-for' => 'Λίστα πρακτέων για $1',
 	'todo-list-change' => 'Αλλαγή',
 	'todo-list-cancel' => 'Έξοδος',
 	'todo-new-item' => 'Νέο αντικείμενο',
+	'todo-issue-summary' => 'Σύνοψη τεύχους:',
 	'todo-form-details' => 'Λεπτομέρειες:',
+	'todo-form-submit' => 'Καταχώρηση αιτήματος',
+	'right-todo' => 'Λίστα πρακτέων',
 );
 
 /** Esperanto (Esperanto)
@@ -426,6 +554,7 @@ $messages['eo'] = array(
 	'todo-issue-summary' => 'Enmeti resumon:',
 	'todo-form-details' => 'Detaloj:',
 	'todo-form-submit' => 'Enigi serĉomendon',
+	'right-todo' => 'Havi taskliston',
 );
 
 /** Spanish (Español)
@@ -434,11 +563,21 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'todo' => 'Lista de quehaceres',
+	'todo-desc' => 'Extensión de [[Special:Todo|Lista de quehaceres]] personal experimental',
 	'todo-tab' => 'quehaceres',
 	'todo-new-queue' => 'nuevo',
+	'todo-mail-subject' => 'Item completado en la lista de quehaceres de $1',
+	'todo-mail-body' => 'Solicitaste confirmación de correo electrónico acerca lo completado de un item que has enviado a la lista de quehaceres en línea de $1.
+
+Item: $2
+Enviado: $3
+
+Este item ha sido marcado como completo, con este comentario:
+$4',
 	'todo-invalid-item' => 'Item perdido o inválido',
 	'todo-update-else-item' => 'Tratando de actualizar items de alguien más',
 	'todo-unrecognize-type' => 'Tipo no reconocido',
+	'todo-user-invalide' => 'Quehaceres dados inválidos, perdidos, o usuario que no puede realizar quehaceres.',
 	'todo-item-list' => 'Sus items',
 	'todo-no-item' => 'Sin items de quehaceres.',
 	'todo-invalid-owner' => 'Propietario inválido en este item',
@@ -452,6 +591,8 @@ $messages['es'] = array(
 	'todo-form-details' => 'Detalles:',
 	'todo-form-email' => 'Para recibir notificación por correo electrónico cuando el item está cerrado, escriba su dirección aquí:',
 	'todo-form-submit' => 'enviar pregunta',
+	'right-todo' => 'Tener lista de quehaceres',
+	'right-todosubmit' => 'Restringir derecho de lista de quehaceres de usuario',
 );
 
 /** Basque (Euskara)
@@ -459,6 +600,7 @@ $messages['es'] = array(
  * @author Kobazulo
  */
 $messages['eu'] = array(
+	'todo' => 'Egitekoen zerrenda',
 	'todo-new-queue' => 'berria',
 	'todo-add-queue' => 'Ilarara gehitu...',
 	'todo-move-queue' => 'Ilarara mugitu...',
@@ -469,7 +611,50 @@ $messages['eu'] = array(
 	'todo-form-submit' => 'Galdeketa bidali',
 );
 
+/** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
+ * @author Silvonen
+ * @author Str4nd
+ * @author ZeiP
+ */
+$messages['fi'] = array(
+	'todo' => 'Tehtävälista',
+	'todo-desc' => 'Kokeellinen laajennus henkilökohtaisille [[Special:Todo|tehtävälistoille]]',
+	'todo-tab' => 'tehtävät',
+	'todo-new-queue' => 'uusi',
+	'todo-mail-subject' => 'Suoritettu tehtävä $1:n muistilistalta',
+	'todo-mail-body' => 'Pyysit sähköpostivahvistusta käyttäjän $1 tehtävämuistilistalle lisäämäsi tehtävän suorittamisesta.
+
+Tehtävä: $2
+Lisätty: $3
+
+Tämä tehtävä on merkitty suoritetuksi kommentilla:
+$4',
+	'todo-invalid-item' => 'Puuttuva tai virheellinen tehtävä',
+	'todo-update-else-item' => 'Yritetään päivittää jonkin muun tehtävää',
+	'todo-unrecognize-type' => 'Tunnistamaton tyyppi',
+	'todo-user-invalide' => 'Annettu tehtävä on kelvoton tai puuttuva, tai käyttäjä on sopimaton.',
+	'todo-item-list' => 'Tehtäväsi',
+	'todo-no-item' => 'Ei tehtäviä.',
+	'todo-invalid-owner' => 'Tässä tehtävässä on virheellinen omistaja',
+	'todo-add-queue' => 'Lisää jonoon…',
+	'todo-move-queue' => 'Siirrä jonoon…',
+	'todo-list-for' => 'Tehtävälista käyttäjälle $1',
+	'todo-list-change' => 'Muuta',
+	'todo-list-cancel' => 'Peruuta',
+	'todo-new-item' => 'Uusi tehtävä',
+	'todo-issue-summary' => 'Tehtävän yhteenveto',
+	'todo-form-details' => 'Tiedot',
+	'todo-form-email' => 'Saadaksesi ilmoituksen sähköpostitse kun tämä merkintä on suljettu, syötä sähköpostiosoitteesi:',
+	'todo-form-submit' => 'Lähetä kysely',
+	'right-todo' => 'Käyttää tehtäväluetteloa',
+	'right-todosubmit' => 'Rajoittaa käyttäjien tehtäväluettelojen oikeuksia',
+);
+
 /** French (Français)
+ * @author Crochet.david
+ * @author IAlex
  * @author McDutchie
  * @author PieRRoMaN
  * @author Urhixidur
@@ -480,30 +665,52 @@ $messages['fr'] = array(
 	'todo-tab' => 'à faire',
 	'todo-new-queue' => 'Nouveau',
 	'todo-mail-subject' => 'Élément achevé dans la liste des choses à faire de $1',
-	'todo-mail-body' => "Vous avez demandé à être notifié par courriel lors de l'achèvement d'un élément que vous inscrit dans la liste des choses à faire de $1.
+	'todo-mail-body' => 'Vous avez demandé à être notifié par courriel lors de l’achèvement d’un élément que vous inscrit dans la liste des choses à faire de $1.
 
 Élément : $2
 Soumis : $3
 
 Cet élément a été marqué comme terminé, avec le commentaire suivant :
-$4",
+$4',
 	'todo-invalid-item' => 'Élément manquant ou invalide',
-	'todo-update-else-item' => "Tentative de mise à jour des éléments de quelqu'un d'autre",
+	'todo-update-else-item' => 'Tentative de mise à jour des éléments de quelqu’un d’autre',
 	'todo-unrecognize-type' => 'Type non reconnu',
-	'todo-user-invalide' => "La chose à faire spécifiée est invalide, manquante, ou l'utilisateur n'a pas de liste de choses à faire.",
+	'todo-user-invalide' => 'La chose à faire spécifiée est invalide, manquante, ou l’utilisateur n’a pas de liste de choses à faire.',
 	'todo-item-list' => 'Vos éléments',
 	'todo-no-item' => 'Aucun élément à accomplir.',
 	'todo-invalid-owner' => 'Propriétaire de cet élément invalide',
-	'todo-add-queue' => "Ajouter à la liste d'attente…",
-	'todo-move-queue' => "Déplacer vers la liste d'attente…",
+	'todo-add-queue' => 'Ajouter à la liste d’attente…',
+	'todo-move-queue' => 'Déplacer vers la liste d’attente…',
 	'todo-list-for' => 'Liste des choses à faire pour $1',
 	'todo-list-change' => 'Modifier',
 	'todo-list-cancel' => 'Annuler',
 	'todo-new-item' => 'Nouvel élément',
 	'todo-issue-summary' => 'Résumé du problème :',
 	'todo-form-details' => 'Précisions :',
-	'todo-form-email' => "Pour recevoir un courriel de notification lorsque l'élément sera fermé, inscrivez votre adresse dans le cadre ci-dessous :",
+	'todo-form-email' => 'Pour recevoir un courriel de notification lorsque l’élément sera fermé, inscrivez votre adresse dans le cadre ci-dessous :',
 	'todo-form-submit' => 'Soumettre la requête',
+	'right-todo' => 'Avoir une liste de choses à faire',
+	'right-todosubmit' => 'Restreindre les droits des listes personnelles de choses à faire',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'todo-new-queue' => 'Novél',
+	'todo-list-change' => 'Changiér',
+	'todo-list-cancel' => 'Anular',
+	'todo-new-item' => 'Novél èlèment',
+	'todo-issue-summary' => 'Rèsumâ du problèmo :',
+	'todo-form-details' => 'Dètalys :',
+);
+
+/** Western Frisian (Frysk)
+ * @author SK-luuut
+ */
+$messages['fy'] = array(
+	'todo-list-cancel' => 'Ofbrekke',
 );
 
 /** Galician (Galego)
@@ -532,7 +739,7 @@ $4',
 	'todo-invalid-owner' => 'Propietario inválido deste elemento',
 	'todo-add-queue' => 'Engadir cola…',
 	'todo-move-queue' => 'Mover á cola…',
-	'todo-list-for' => 'Lista de tarefas pendentes para $1',
+	'todo-list-for' => 'Lista de tarefas pendentes de $1',
 	'todo-list-change' => 'Cambiar',
 	'todo-list-cancel' => 'Cancelar',
 	'todo-new-item' => 'Novo artigo',
@@ -540,6 +747,8 @@ $4',
 	'todo-form-details' => 'Detalles:',
 	'todo-form-email' => 'Para recibir unha notificación por correo electrónico cando o artigo esté pechado, teclee o seu enderezo aquí:',
 	'todo-form-submit' => 'Enviar a consulta',
+	'right-todo' => 'Ter unha lista coas tarefas pendentes por facer',
+	'right-todosubmit' => 'Restrinxir o dereito de usuario de ter unha lista coas tarefas pendentes',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -548,7 +757,9 @@ $4',
  */
 $messages['grc'] = array(
 	'todo-new-queue' => 'νέα',
+	'todo-add-queue' => 'Προσθήκη οὐρᾶς…',
 	'todo-list-cancel' => 'Ἀκυροῦν',
+	'todo-issue-summary' => 'Σύνοψις τεύχους:',
 	'todo-form-details' => 'Λεπτομέρειαι:',
 );
 
@@ -586,6 +797,8 @@ $4',
 	'todo-form-details' => 'Detail:',
 	'todo-form-email' => 'Gib Dyy E-Mail-Adräss yy go ne Benochrichtigung iberchu, wänn dr Yytrag zuegmacht woren isch:',
 	'todo-form-submit' => 'Aafrog ibergee',
+	'right-todo' => 'Ufgabe-Lischt haa',
+	'right-todosubmit' => 'S Rächt vum e Benutzer yyschränke, e Ufgabe-Lischt z haa',
 );
 
 /** Hebrew (עברית)
@@ -622,6 +835,8 @@ $4',
 	'todo-form-details' => 'פרטים:',
 	'todo-form-email' => 'על מנת לקבל התראה בדוא"ל אודות סגירת פריט, הזינו את כתובת הדוא"ל שלכם כאן:',
 	'todo-form-submit' => 'שליחת השאילתה',
+	'right-todo' => 'החזקת רשימת מטלות',
+	'right-todosubmit' => 'הגבלת ההרשאות לרשימת המטלות של המשתמש',
 );
 
 /** Hindi (हिन्दी)
@@ -672,13 +887,46 @@ $4',
 	'todo-form-details' => 'Podrobnosće',
 	'todo-form-email' => 'Zo by zdźělenje z e-mejlu dóstał, hdyž so nadawk kónči, zapodaj tu swoju adresu:',
 	'todo-form-submit' => 'Naprašowanje wotesłać',
+	'right-todo' => 'Lisćina nadawkow',
+	'right-todosubmit' => 'Prawo wužiwarskeje lisćiny nadawkow wobmjezować',
 );
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'todo' => 'Tennivalók listája',
+	'todo-desc' => 'Kísérleti személyes [[Special:Todo|feladatlista]] kiterjesztés',
+	'todo-tab' => 'tennivalók',
 	'todo-new-queue' => 'új',
+	'todo-mail-subject' => 'Elvégzett feladat $1 teendőlistáján',
+	'todo-mail-body' => 'E-mail értesítést kértél $1 online feladatlistájára küldött teendő elvégzéséről.
+
+Feladat: $2
+Elküldve: $3
+
+Ezt a feladatot késznek jelölték, a következő megjegyzéssel:
+$4',
+	'todo-invalid-item' => 'Hiányzó vagy érvénytelen feladat',
+	'todo-update-else-item' => 'Valaki másnak a teendőit próbálod frissíteni',
+	'todo-unrecognize-type' => 'Ismeretlen típus',
+	'todo-user-invalide' => 'A feladatot érvénytelen, nem létező vagy feladatlistával nem rendelkező felhasználó kapta.',
+	'todo-item-list' => 'Saját feladataid',
+	'todo-no-item' => 'Nincsenek feladatok.',
+	'todo-invalid-owner' => 'Érvénytelen tulajdonos ennél a feladatnál',
+	'todo-add-queue' => 'Várakozási sor hozzáadása…',
+	'todo-move-queue' => 'Áthelyezés várakozási sorba…',
+	'todo-list-for' => '$1 feladatlistája',
+	'todo-list-change' => 'Változtatás',
+	'todo-list-cancel' => 'Mégse',
+	'todo-new-item' => 'Új teendő',
+	'todo-issue-summary' => 'Ügy összefoglalója:',
+	'todo-form-details' => 'Részletek:',
+	'todo-form-email' => 'Ha szeretnél értesítést kapni e-mailben a feladat lezárásakor, add meg a címedet:',
+	'todo-form-submit' => 'Lekérdezés elküldése',
+	'right-todo' => 'van feladatlistája',
+	'right-todosubmit' => 'feladatlista jogosultsága korlátozva',
 );
 
 /** Interlingua (Interlingua)
@@ -714,39 +962,74 @@ $4',
 	'todo-form-details' => 'Detalios:',
 	'todo-form-email' => 'Pro reciper notification per e-mail quando le carga es claudite, entra tu adresse hic:',
 	'todo-form-submit' => 'Submitter requesta',
+	'right-todo' => 'Haber un lista de cosas a facer',
+	'right-todosubmit' => 'Restringer le derectos de usatores al lista de cosas a facer',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
+ * @author IvanLanin
  */
 $messages['id'] = array(
+	'todo' => 'Daftar tugas',
+	'todo-desc' => 'Ekstensi [[Special:Todo|daftar tugas]] pribadi eksperimental',
+	'todo-tab' => 'tugas',
+	'todo-new-queue' => 'baru',
+	'todo-mail-subject' => 'Butir yang terselesaikan pada daftar tugas $1',
+	'todo-mail-body' => 'Anda meminta konfirmasi surel tentang penyelesaian suatu tugas yang Anda kirimkan pada daftar tugas daring milik $1.
+
+Tugas: $2
+Dikirim: $3
+
+Tugas ini telah ditandai selesai dengan komentar berikut:
+$4',
+	'todo-invalid-item' => 'Tugas tidak ditemukan atau tidak valid',
+	'todo-update-else-item' => 'Mencoba untuk memperbarui tugas orang lain',
+	'todo-unrecognize-type' => 'Tipe tak dikenal',
+	'todo-user-invalide' => 'Tugas yang diberikan tidak valid, tidak ditemukan, atau pengguna tidak dapat ditugasi',
+	'todo-item-list' => 'Tugas Anda',
+	'todo-no-item' => 'Tidak ada tugas.',
+	'todo-invalid-owner' => 'Pemilik tidak valid dari tugas ini',
+	'todo-add-queue' => 'Menambahkan antrean...',
+	'todo-move-queue' => 'Pindahkan ke antrean...',
+	'todo-list-for' => 'Daftar tugas untuk $1',
+	'todo-list-change' => 'Berubah',
 	'todo-list-cancel' => 'Batalkan',
+	'todo-new-item' => 'Butir baru',
+	'todo-issue-summary' => 'Ringkasan isu:',
 	'todo-form-details' => 'Rincian:',
+	'todo-form-email' => 'Untuk menerima pemberitahuan melalui surel ketika tugas tersebut ditutup, masukkan alamat Anda:',
+	'todo-form-submit' => 'Kirim kueri',
+	'right-todo' => 'Memiliki daftar tugas',
+	'right-todosubmit' => 'Membatasi hak daftar tugas pengguna',
 );
 
 /** Italian (Italiano)
  * @author Darth Kule
  */
 $messages['it'] = array(
+	'todo-list-cancel' => 'Annulla',
 	'todo-form-details' => 'Dettagli:',
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'todo' => 'やることリスト',
-	'todo-desc' => '個人用の[[Special:Todo|やることリスト]]を実現する実験的な拡張機能',
+	'todo' => 'ToDo一覧',
+	'todo-desc' => '個人用の[[Special:Todo|ToDo一覧]]を実現する実験的な拡張機能',
 	'todo-tab' => 'やること',
 	'todo-new-queue' => '新規',
-	'todo-mail-subject' => '$1 のやることリスト上の項目が完了しました',
-	'todo-mail-body' => 'あなたは、$1 のやることリストに提出した項目の完了について、確認メールを希望されました。
+	'todo-mail-subject' => '$1 のToDoリスト上の項目が完了しました',
+	'todo-mail-body' => 'ご依頼にそって、あなたが $1 のToDo一覧に登録した項目の完了をメールにて通知いたしました。
 
 項目: $2
-提出: $3
+登録日時: $3
 
-この項目は完了済みとマークされました。以下コメント:
+この項目は以下のコメントを添えて、完了済みとされました。
 $4',
 	'todo-invalid-item' => '項目が見当たらないか、不正です',
 	'todo-update-else-item' => '他の誰かの項目を更新しようとしています',
@@ -757,7 +1040,7 @@ $4',
 	'todo-invalid-owner' => 'この項目の担当者が無効です',
 	'todo-add-queue' => 'キューに追加…',
 	'todo-move-queue' => 'キューに移動…',
-	'todo-list-for' => '$1 のやることリスト',
+	'todo-list-for' => '$1 のToDo一覧',
 	'todo-list-change' => '変更',
 	'todo-list-cancel' => '中止',
 	'todo-new-item' => '新規項目',
@@ -765,6 +1048,8 @@ $4',
 	'todo-form-details' => '詳細:',
 	'todo-form-email' => '項目が完了した際に電子メールで通知を希望するなら、あなたのアドレスをここに入力してください:',
 	'todo-form-submit' => '送信',
+	'right-todo' => 'ToDo一覧をもつ',
+	'right-todosubmit' => '利用者のToDo一覧に関する権限を制限する',
 );
 
 /** Javanese (Basa Jawa)
@@ -793,6 +1078,7 @@ $messages['jv'] = array(
  * @author Chhorran
  * @author Thearith
  * @author គីមស៊្រុន
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
 	'todo' => 'បញ្ជីកិច្ចការ​ត្រូវ​ធ្វើ',
@@ -801,9 +1087,11 @@ $messages['km'] = array(
 	'todo-unrecognize-type' => 'ប្រភេទមិនស្គាល់',
 	'todo-item-list' => 'ធាតុ​របស់​អ្នក',
 	'todo-add-queue' => 'បន្ថែម ជួររង់ចាំ...',
+	'todo-list-for' => 'បញ្ជី​កិច្ចការ​ដែល​ត្រូវ​ធ្វើ​ សម្រាប់​ $1',
 	'todo-list-change' => 'ផ្លាស់ប្តូរ',
 	'todo-list-cancel' => 'បោះបង់',
 	'todo-new-item' => 'របស់ថ្មី',
+	'todo-issue-summary' => 'សេចក្ដី​សង្ខេប​នៃ​បញ្ហា​៖',
 	'todo-form-details' => 'លំអិត ៖',
 );
 
@@ -818,37 +1106,39 @@ $messages['krj'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'todo' => 'Opjaveliss',
-	'todo-desc' => 'Ene Zosatz för en persönliche [[Special:Todo|Opjaveliss]] för zem Ußprobeere.',
-	'todo-tab' => 'Opjav',
+	'todo' => 'Aufjabeleß',
+	'todo-desc' => 'Ene Zosatz för en persönliche [[Special:Todo|Aufjabeleß]] för zem Ußprobeere.',
+	'todo-tab' => 'Aufjab',
 	'todo-new-queue' => 'neu',
-	'todo-mail-subject' => 'Erledichte Opjav en däm $1 sing Opjaveliss',
-	'todo-mail-body' => 'Do häs Der en E-Mail jewönsch, wann en Opjav erledich wöhr, die De em $1 en sing Opjaveliss jedonn häs. He is se:
+	'todo-mail-subject' => 'Erledichte Aufjab en {{GENDER:$1|däm $1 sing|däm $1 sing|däm Metmaacher $1 sing|däm $1 sing|dä $1 ier}} Aufjabeleß',
+	'todo-mail-body' => 'Do häs Der en <i lang="en">e-Mail</i> jewönsch, wann en Aufjab erledich wöhr, die De {{GENDER:$1|dem $1 en sing|em $1 en sing|däm Metmaacher $1 en de|däm $1 en sing|dä $1 en ier}} Aufjabeleß jedonn häs. He is se:
 
-De Opjav: $2
+De Aufjab: $2
 Enjedrage: $3
 
 Se wood als erledich makeet mit dä Bemerkung:
 $4
 
 Ene schone Jroß.',
-	'todo-invalid-item' => 'Die Opjav fäält, odder se es kapott',
-	'todo-update-else-item' => 'Enem andere Metmaacher sing Opjave ändere',
-	'todo-unrecognize-type' => 'Di Aat Opjaav kenne mer nit',
-	'todo-user-invalide' => 'Die Opjav es kapott, nit doh, odder dä Medmaacher kann jaa kein Opjave han.',
-	'todo-item-list' => 'Ding Opjave',
-	'todo-no-item' => 'Kein Opjave en de Liss.',
-	'todo-invalid-owner' => 'Dä Medmaacher för die Opjaav is nit müjjelisch',
+	'todo-invalid-item' => 'Die Aufjab fäält, odder se es kapott',
+	'todo-update-else-item' => 'Enem andere Metmaacher sing Aufjabe ändere',
+	'todo-unrecognize-type' => 'Di Aat Aufjab kenne mer nit',
+	'todo-user-invalide' => 'Die Aufjab es kapott, odder se es nit doh, odder dä Medmaacher kann jaa kein Aufjabe han.',
+	'todo-item-list' => 'Ding Aufjabe',
+	'todo-no-item' => 'Kein Aufjabe en de Leß.',
+	'todo-invalid-owner' => 'Dä Medmaacher för di Aufjab is nit müjjelisch',
 	'todo-add-queue' => 'En Schlang dobei donn&nbsp;…',
 	'todo-move-queue' => 'En de Schlang donn&nbsp;…',
-	'todo-list-for' => 'Opjaveliss för $1',
+	'todo-list-for' => '{{GENDER:$1|Dämm $1 sing|Em $1 sing|Däm Metmaacher $1 de|Däm $1 sing|Dä $1 ier}} Aufjabeleß',
 	'todo-list-change' => 'Ändere',
 	'todo-list-cancel' => 'Draanjevve',
-	'todo-new-item' => 'En neu Opjav',
+	'todo-new-item' => 'En neu Aufjab',
 	'todo-issue-summary' => 'Zosammefassung:',
 	'todo-form-details' => 'Einzelheite:',
-	'todo-form-email' => 'Öm en E-Mail ze krijje, wann di Opjav avjeschlosse weed, jiv Ding E-Mai Adress hee en:',
+	'todo-form-email' => 'Öm en <i lang="en">e-mail</i> ze krijje, wann di Aufjab afjeschlosse weed, jif Ding Adress för de <i lang="en">e-mail</i> hee en:',
 	'todo-form-submit' => 'Loß Jonn!',
+	'right-todo' => 'En Aufjabeleß han künne',
+	'right-todosubmit' => 'Anderlücks Rääsch an un op en Aufjabeleß beschrängke',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -878,6 +1168,43 @@ $messages['lb'] = array(
  */
 $messages['mhr'] = array(
 	'todo-list-cancel' => 'Чараш',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'todo' => 'Листа на задачи',
+	'todo-desc' => 'Експериментално проширување за лична [[Special:Todo|листа на задачи]]',
+	'todo-tab' => 'задачи',
+	'todo-new-queue' => 'нова',
+	'todo-mail-subject' => 'Завршена задача на листата на задачи на $1',
+	'todo-mail-body' => 'Побаравте потврда по е-пошта за завршувањето на задача која сте ја поставиле на листата на задачи на $1.
+
+Задача: $2
+Поставено: $3
+
+Оваа задача е означена како завршена, заедно со следниов коментар:
+$4',
+	'todo-invalid-item' => 'Изгубена или неважечка задача',
+	'todo-update-else-item' => 'Обид за ажурирање на туѓи задачи',
+	'todo-unrecognize-type' => 'Непризнаен тип',
+	'todo-user-invalide' => 'На задачите им е зададен погрешен или отсутен корисник, или пак корисник кој нема надлежност за задачата.',
+	'todo-item-list' => 'Ваши задачи',
+	'todo-no-item' => 'Нема задачи.',
+	'todo-invalid-owner' => 'Погрешен сопственик за оваа задача',
+	'todo-add-queue' => 'Додај редица...',
+	'todo-move-queue' => 'Премести во редот на чекање...',
+	'todo-list-for' => 'Листа на задачи за $1',
+	'todo-list-change' => 'Смени',
+	'todo-list-cancel' => 'Откажи',
+	'todo-new-item' => 'Нова задача',
+	'todo-issue-summary' => 'Преглед на проблемот:',
+	'todo-form-details' => 'Детали:',
+	'todo-form-email' => 'За да добивате известување по е-пошта кога некоја задача е затворена, внесете ја вашата адреса:',
+	'todo-form-submit' => 'Постави барање',
+	'right-todo' => 'Имање на листа на задачи',
+	'right-todosubmit' => 'Ограничување на правото на листата на задачи на еден корисник',
 );
 
 /** Malayalam (മലയാളം)
@@ -1002,6 +1329,8 @@ $4',
 	'todo-form-details' => 'Details:',
 	'todo-form-email' => 'Voer hier uw e-mailadres in om een melding te krijgen als dit onderwerp wordt gesloten:',
 	'todo-form-submit' => 'Zoekopdracht uitvoeren',
+	'right-todo' => 'Todo-lijst hebben',
+	'right-todosubmit' => 'Gebruikersrechten op todo-lijst beperken',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -1042,6 +1371,7 @@ $4',
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'todo' => 'Oppgaveliste',
@@ -1073,6 +1403,8 @@ $4',
 	'todo-form-details' => 'Detaljer:',
 	'todo-form-email' => 'Skriv inn e-postadressen din her for å mottå beskjed på e-post når oppgaven er fullført:',
 	'todo-form-submit' => 'Utfør',
+	'right-todo' => 'Ha en å gjøre-liste',
+	'right-todosubmit' => 'Begrens en brukers å gjøre-listerettigheter',
 );
 
 /** Occitan (Occitan)
@@ -1102,6 +1434,8 @@ $messages['oc'] = array(
 	'todo-form-details' => 'Precisions :',
 	'todo-form-email' => 'Per recebre las notificacions per corrièr electronic un còp l’article clausurat, inscrivètz vòstra adreça dins lo quadre çaijós :',
 	'todo-form-submit' => 'Sometre la requèsta',
+	'right-todo' => 'Aver una lista de causas de far',
+	'right-todosubmit' => 'Restrénher los dreches de las listas personalas de causas de far',
 );
 
 /** Ossetic (Иронау)
@@ -1109,6 +1443,13 @@ $messages['oc'] = array(
  */
 $messages['os'] = array(
 	'todo-list-cancel' => 'Нæ бæззы',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'todo-new-queue' => 'Nei',
 );
 
 /** Polish (Polski)
@@ -1146,6 +1487,46 @@ $4',
 	'todo-form-details' => 'Szczegóły:',
 	'todo-form-email' => 'Jeśli chcesz otrzymać powiadomienie pocztą elektroniczna po zamknięciu tej pozycji, wpisz w polu poniżej swój adres e‐mail:',
 	'todo-form-submit' => 'Wyślij zapytanie',
+	'right-todo' => 'Posiada listę zadań',
+	'right-todosubmit' => 'Ograniczanie dostępu użytkowników do listy zadań',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'todo' => 'lista da fé',
+	'todo-desc' => 'Estension përsonal sperimental [[Special:Todo|lista da fé]]',
+	'todo-tab' => 'da fé',
+	'todo-new-queue' => 'neuv',
+	'todo-mail-subject' => 'Element completà an sla lista da fé ëd $1',
+	'todo-mail-body' => "Ti it l'has ciamà la conferma për pòsta eletrònica dël completament ëd n'element ch'it l'has butà an sla lista an linia da fé ëd $1.
+
+Element: $2
+Butà: $3
+
+Sto element-sì a l'é stàit marcà com completà, con sto coment-sì:
+$4",
+	'todo-invalid-item' => 'Element mancant o pa bon',
+	'todo-update-else-item' => "Tentativ d'agiorné j'element ëd cheidun d'àutr",
+	'todo-unrecognize-type' => 'Sòrt pa arconossùa',
+	'todo-user-invalide' => "Ròba da fé pa bon-a, mancanta o l'utent a l'ha pa na lista ëd ròbe da fé.",
+	'todo-item-list' => 'Tò element',
+	'todo-no-item' => 'Pa gnun element da fé.',
+	'todo-invalid-owner' => 'Assignatari pa bon dzora sto element-sì',
+	'todo-add-queue' => 'Gionta coa ...',
+	'todo-move-queue' => 'Tramuda a la coa ...',
+	'todo-list-for' => 'Lista da fé për $1',
+	'todo-list-change' => 'Cambia',
+	'todo-list-cancel' => 'Scancela',
+	'todo-new-item' => 'Element neuv',
+	'todo-issue-summary' => 'Resumé dël problema:',
+	'todo-form-details' => 'Detaj',
+	'todo-form-email' => "Për arsèive notìfiche për pòsta eletrònica quand che l'element a l'é sarà, dà toa adrëssa:",
+	'todo-form-submit' => 'Anseriss la query',
+	'right-todo' => 'Oten la lista da fé',
+	'right-todosubmit' => "Strenz ij drit ëd la lista da fé ëd l'utent",
 );
 
 /** Pashto (پښتو)
@@ -1156,6 +1537,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  */
@@ -1164,21 +1546,21 @@ $messages['pt'] = array(
 	'todo-desc' => 'Extensão experimental de [[Special:Todo|lista pessoal de tarefas]]',
 	'todo-tab' => 'tarefas',
 	'todo-new-queue' => 'novo',
-	'todo-mail-subject' => 'Itens completos na lista de tarefas de $1',
-	'todo-mail-body' => 'Você pediu um e-mail de confirmação sobre a finalização de um item que você submeteu para a lista de tarefas online de $1.
+	'todo-mail-subject' => 'Tarefa finalizada na lista de tarefas de $1',
+	'todo-mail-body' => "Pediu confirmação da finalização de uma tarefa que inseriu na lista de tarefas ''online'' de $1.
 
-Item: $2
-Submetido em: $3
+Tarefa: $2
+Submetida a: $3
 
-Este item foi marcado como completo, com este comentário:
-$4',
-	'todo-invalid-item' => 'Item em falta ou inválido',
-	'todo-update-else-item' => 'A tentar atualizar os itens de outra pessoa',
+Esta tarefa foi marcada como completa, com este comentário:
+$4",
+	'todo-invalid-item' => 'Tarefa inexistente ou inválida',
+	'todo-update-else-item' => 'A tentar actualizar as tarefas de outra pessoa',
 	'todo-unrecognize-type' => 'Tipo não reconhecido',
-	'todo-user-invalide' => 'Tarefa fornecida inválida, em falta, ou utilizador sem possibilidade de tarefas',
-	'todo-item-list' => 'Seus itens',
+	'todo-user-invalide' => 'Tarefa atribuída a utilizador inválido, inexistente ou sem lista de tarefas',
+	'todo-item-list' => 'As suas tarefas',
 	'todo-no-item' => 'Sem tarefas.',
-	'todo-invalid-owner' => 'Proprietário inválido neste item',
+	'todo-invalid-owner' => 'Proprietário inválido nesta tarefa',
 	'todo-add-queue' => 'Adicionar fila…',
 	'todo-move-queue' => 'Mover para fila…',
 	'todo-list-for' => 'Lista de tarefas de $1',
@@ -1187,8 +1569,10 @@ $4',
 	'todo-new-item' => 'Novo item',
 	'todo-issue-summary' => 'Sumário do problema:',
 	'todo-form-details' => 'Detalhes:',
-	'todo-form-email' => 'Para receber uma notificação por e-mail quando este item for fechado, escreva o seu endereço aqui:',
+	'todo-form-email' => 'Para receber uma notificação por correio electrónico quando esta tarefa for finalizada, escreva o seu endereço aqui:',
 	'todo-form-submit' => 'Submeter pesquisa',
+	'right-todo' => 'Possuir lista de tarefas',
+	'right-todosubmit' => 'Restringir o privilégio de possuir uma lista de tarefas',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1224,6 +1608,8 @@ $4',
 	'todo-form-details' => 'Detalhes:',
 	'todo-form-email' => 'Para receber uma notificação por e-mail quando este item for fechado, escreva o seu endereço aqui:',
 	'todo-form-submit' => 'Submeter pesquisa',
+	'right-todo' => 'Possuir lista de afazeres',
+	'right-todosubmit' => 'Restringir o privilégio de lista de afazeres de utilizadores',
 );
 
 /** Tarifit (Tarifit)
@@ -1234,12 +1620,21 @@ $messages['rif'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'todo' => 'Listă de făcut',
+	'todo-tab' => 'de făcut',
+	'todo-new-queue' => 'nou',
 	'todo-unrecognize-type' => 'Tip nerecunoscut',
+	'todo-item-list' => 'Elementele dumneavoastră',
+	'todo-add-queue' => 'Adaugă coadă...',
+	'todo-list-change' => 'Modifică',
 	'todo-list-cancel' => 'Anulează',
+	'todo-new-item' => 'Element nou',
 	'todo-form-details' => 'Detalii:',
+	'todo-form-submit' => 'Trimiteţi interogare',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1290,6 +1685,8 @@ $4',
 	'todo-form-details' => 'Подробности:',
 	'todo-form-email' => 'Укажите адрес эл. почты, чтобы получить уведомление о выполнении задания.',
 	'todo-form-submit' => 'Отправить запрос',
+	'right-todo' => 'возможность вести перечень задач',
+	'right-todosubmit' => 'ограничивать права участников на ведение перечня задач',
 );
 
 /** Slovak (Slovenčina)
@@ -1325,6 +1722,46 @@ $4',
 	'todo-form-details' => 'Podrobnosti:',
 	'todo-form-email' => 'Dostať upozornenie emailom, keď bude úloha uzatvorená. Napíšte svoju adresu:',
 	'todo-form-submit' => 'Poslať požiadavku',
+	'right-todo' => 'Zoznam čo treba spraviť',
+	'right-todosubmit' => 'Obmedziť právo používateľa na zoznam čo treba spraviť',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'todo' => 'Списак ствари за урадити',
+	'todo-desc' => 'Екстензија за експерименталан лични [[Special:Todo|списак ствари за урадити]]',
+	'todo-tab' => 'за урадити',
+	'todo-new-queue' => 'ново',
+	'todo-unrecognize-type' => 'Непознат тип',
+	'todo-no-item' => 'Нема ствари за урадити.',
+	'todo-add-queue' => 'Додај ред…',
+	'todo-move-queue' => 'Премести у ред…',
+	'todo-list-for' => 'Списак ствари за урадити, за $1',
+	'todo-list-change' => 'Промени',
+	'todo-list-cancel' => 'Поништи',
+	'todo-form-details' => 'Детаљи:',
+	'todo-form-submit' => 'Пошањи упит',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'todo' => 'Spisak stvari za uraditi',
+	'todo-desc' => 'Ekstenzija za eksperimentalan lični [[Special:Todo|spisak stvari za uraditi]]',
+	'todo-tab' => 'za uraditi',
+	'todo-new-queue' => 'novo',
+	'todo-unrecognize-type' => 'Nepoznat tip',
+	'todo-no-item' => 'Nema stvari za uraditi.',
+	'todo-add-queue' => 'Dodaj red…',
+	'todo-move-queue' => 'Premesti u red…',
+	'todo-list-for' => 'Spisak stvari za uraditi, za $1',
+	'todo-list-change' => 'Promeni',
+	'todo-list-cancel' => 'Poništi',
+	'todo-form-details' => 'Detalji:',
+	'todo-form-submit' => 'Pošanji upit',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1365,6 +1802,7 @@ $4',
 /** Swedish (Svenska)
  * @author Lejonel
  * @author M.M.S.
+ * @author Najami
  */
 $messages['sv'] = array(
 	'todo' => 'Uppgiftslista',
@@ -1396,6 +1834,8 @@ $4',
 	'todo-form-details' => 'Detaljer:',
 	'todo-form-email' => 'Skriv in din e-postadress här för att motta meddelanden på e-post när uppgiften är slutförd:',
 	'todo-form-submit' => 'Utför',
+	'right-todo' => 'Ha en att göra-lista',
+	'right-todosubmit' => 'Begränsa användares att göra-listrättigheter',
 );
 
 /** Telugu (తెలుగు)
@@ -1403,6 +1843,7 @@ $4',
  */
 $messages['te'] = array(
 	'todo' => 'చేయాల్సిన జాబితా',
+	'todo-desc' => 'ప్రయోగాత్మక వ్యక్తిగత [[Special:Todo|పనుల జాబితా]] పొడగింత',
 	'todo-new-queue' => 'కొత్తది',
 	'todo-unrecognize-type' => 'గుర్తుతెలియని రకం',
 	'todo-item-list' => 'మీ అంశాలు',
@@ -1431,6 +1872,18 @@ $messages['tg-cyrl'] = array(
 	'todo-list-cancel' => 'Лағв',
 	'todo-new-item' => 'Маводи ҷадид',
 	'todo-issue-summary' => 'Хулосаи амал:',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'todo-new-queue' => 'nav',
+	'todo-unrecognize-type' => "Nav'i noşinos",
+	'todo-list-change' => 'Taƣjir',
+	'todo-list-cancel' => 'Laƣv',
+	'todo-new-item' => 'Mavodi çadid',
+	'todo-issue-summary' => 'Xulosai amal:',
 );
 
 /** Thai (ไทย)
@@ -1479,15 +1932,35 @@ $4',
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'todo' => 'Yapılacaklar listesi',
 	'todo-tab' => 'yapılacaklar',
 	'todo-new-queue' => 'yeni',
+	'todo-invalid-item' => 'Eksik veya geçersiz öğe',
 	'todo-item-list' => 'Sizin öğeniz',
+	'todo-invalid-owner' => 'Bu öğede geçersiz sahip',
+	'todo-add-queue' => 'Kuyruk ekle...',
+	'todo-list-change' => 'Değiştir',
 	'todo-list-cancel' => 'İptal',
 	'todo-new-item' => 'Yeni öğe',
 	'todo-form-details' => 'Detaylar:',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'todo' => 'Radoiden nimikirjutez',
+	'todo-tab' => 'radod',
+	'todo-new-queue' => "uz'",
+	'todo-unrecognize-type' => 'Tundištamatoi tip',
+	'todo-list-change' => 'Vajehtada',
+	'todo-list-cancel' => 'Heitta pätand',
+	'todo-new-item' => "Uz' kirjutez",
+	'todo-issue-summary' => 'Lühüd ümbrikirjutamine:',
+	'todo-form-details' => 'Detalid:',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1499,9 +1972,12 @@ $messages['vi'] = array(
 	'todo-tab' => 'cần làm',
 	'todo-new-queue' => 'mới',
 	'todo-no-item' => 'Không có việc cần làm.',
+	'todo-add-queue' => 'Thêm hàng đợi…',
+	'todo-move-queue' => 'Chuyển qua hàng đợi…',
 	'todo-list-for' => 'Danh sách việc cần làm của $1',
 	'todo-list-change' => 'Thay đổi',
-	'todo-list-cancel' => 'Bãi bỏ',
+	'todo-list-cancel' => 'Hủy bỏ',
+	'todo-issue-summary' => 'Tóm lược vấn đề:',
 	'todo-form-details' => 'Chi tiết:',
 );
 
@@ -1518,17 +1994,24 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'todo-new-queue' => '新',
+	'todo-list-change' => '更改',
 	'todo-list-cancel' => '取消',
+	'todo-form-submit' => '递交查询',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'todo-new-queue' => '新',
+	'todo-list-change' => '更改',
 	'todo-list-cancel' => '取消',
+	'todo-form-submit' => '遞交查詢',
 );
 

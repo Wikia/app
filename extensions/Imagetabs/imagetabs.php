@@ -18,6 +18,7 @@
 
 $wgExtensionFunctions[] = 'createImageTabs_setup';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Imagetabs',
 	'author' => array('Joe Beaudoin Jr.', 'Roan Kattouw'),
 	'description' => 'Adds tabs with interwiki links above Image: pages',

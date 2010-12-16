@@ -190,7 +190,7 @@ class MyHome {
 		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
 		$wgTitle = Title::newMainPage();
 
-		// do not redirect for skins different then Oasis
+		// do not redirect for skins different then monaco
 		if(get_class($wgUser->getSkin()) != 'SkinOasis') {
 			wfProfileOut(__METHOD__);
 			return true;

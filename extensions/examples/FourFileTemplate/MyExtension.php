@@ -9,6 +9,7 @@ EOT;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'MyExtensionName',
 	'version' => '0.1',
 	'author' => 'MyExtensionAuthor',

@@ -25,6 +25,10 @@ class SRFGooglePie extends SMWResultPrinter {
 		}
 	}
 
+	public function getName() {
+		return wfMsg('srf_printername_googlepie');
+	}
+
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber;
 		$this->isHTML = true;
@@ -53,6 +57,14 @@ class SRFGooglePie extends SMWResultPrinter {
 			}
 		}
 		return 	'<img src="http://chart.apis.google.com/chart?cht=p3&chs=' . $this->m_width . 'x' . $this->m_height . '&chds=0,' . $max . '&chd=t:' . $t . '&chl=' . $n . '" width="' . $this->m_width . '" height="' . $this->m_height . '"  />';
+	}
+
+	public function getParameters() {
+		return array(
+			array('name' => 'limit', 'type' => 'int', 'description' => wfMsg('smw_paramdesc_limit')),
+			array('name' => 'height', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_chartheight')),
+			array('name' => 'width', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_chartwidth')),
+		);
 	}
 
 }

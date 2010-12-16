@@ -17,11 +17,15 @@ class PagerWhosOnline extends IndexPager {
 	}
 
 	function getQueryInfo() {
+		global $wgWhosOnlineShowAnons;
+
 		return array (
 			'tables'  => array('online'),
 			'fields'  => array('username'),
 			'options' => array('ORDER BY' => 'timestamp DESC'),
-			'conds'   => array('userid != 0')
+			'conds'   => $wgWhosOnlineShowAnons
+					? array()
+					: array('userid != 0')
 		);
 	}
 

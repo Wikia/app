@@ -27,6 +27,7 @@ $wgExtensionMessagesFiles['FramedVideo'] = $dir . 'FramedVideo.i18n.php';
 $wgExtensionFunctions[] = 'wfFramedVideo';
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'FramedVideo',
 	'description'    => 'Allows embedding videos from various websites',
 	'descriptionmsg' => 'framedvideo-desc',

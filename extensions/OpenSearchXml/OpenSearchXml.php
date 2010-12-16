@@ -21,9 +21,8 @@
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'OpenSearchXml',
-	'svn-date'       => '$LastChangedDate: 2008-11-30 04:15:22 +0100 (ndz, 30 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44056 $',
 	'description'    => 'OpenSearch XML interface provides for text extracts',
 	'descriptionmsg' => 'opensearchxml-desc',
 	'author'         => 'Brion Vibber',

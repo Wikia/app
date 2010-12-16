@@ -18,7 +18,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 function fnSelectCategoryShowHook( $m_isUpload = false, &$m_pageObj ) {
 
   # check if we should do anything or sleep
-  if ( fnSelectCategoryCheckConditions( $m_isUpload, &$m_pageObj ) ) {
+  if ( fnSelectCategoryCheckConditions( $m_isUpload, $m_pageObj ) ) {
     # Register CSS file for our select box:
     global $wgOut, $wgScriptPath;
     $wgOut->addLink(
@@ -100,7 +100,7 @@ function fnSelectCategorySaveHook( $m_isUpload, &$m_pageObj ) {
   global $wgTitle;
 
   # check if we should do anything or sleep
-  if ( fnSelectCategoryCheckConditions( $m_isUpload, &$m_pageObj ) ) {
+  if ( fnSelectCategoryCheckConditions( $m_isUpload, $m_pageObj ) ) {
 
     # Get localised namespace string:
     $m_catString = $wgContLang->getNsText( NS_CATEGORY );
@@ -154,7 +154,7 @@ function fnSelectCategoryGetAllCategories() {
     $m_allCats = array();
 
     # Get a database object:
-    $m_dbObj =& wfGetDB( DB_SLAVE );
+    $m_dbObj = wfGetDB( DB_SLAVE );
     # Get table names to access them in SQL query:
     $m_tblCatLink = $m_dbObj->tableName( 'categorylinks' );
     $m_tblPage = $m_dbObj->tableName( 'page' );
@@ -185,7 +185,7 @@ function fnSelectCategoryGetChildren( $m_root, $m_depth = 1 ) {
   $m_allCats = array();
 
   # Get a database object:
-  $m_dbObj =& wfGetDB( DB_SLAVE );
+  $m_dbObj = wfGetDB( DB_SLAVE );
   # Get table names to access them in SQL query:
   $m_tblCatLink = $m_dbObj->tableName( 'categorylinks' );
   $m_tblPage = $m_dbObj->tableName( 'page' );

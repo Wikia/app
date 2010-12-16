@@ -76,7 +76,7 @@ include($mw_root."/maintenance/commandLine.inc");
 global $wgDBserver, $wgDBname, $wgDBuser, $wgDBprefix, $wgCreateRevisionIndex;
 
 // Source the update scripts
-require($mw_root."/extensions/Trust/TrustUpdateScripts.inc");
+require($mw_root."/extensions/WikiTrust/includes/TrustUpdateScripts.inc");
 
 // If this is set, create an index on the revision table.
 if ($wgCreateRevisionIndex){
@@ -86,7 +86,7 @@ if ($wgCreateRevisionIndex){
  }
 
 // Create the needed tables, if neccesary.
-$dbr =& wfGetDB( DB_SLAVE );
+$dbr = wfGetDB( DB_SLAVE );
 
 // First check to see what tables have already been created.
 $res = $dbr->query("show tables");

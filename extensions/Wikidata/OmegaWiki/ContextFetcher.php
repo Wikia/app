@@ -11,7 +11,7 @@
  */
 
 interface ContextFetcher {
-	public function fetch($keyPath);	
+	public function fetch( $keyPath );
 }
 
 /** 
@@ -23,21 +23,21 @@ class DefaultContextFetcher implements ContextFetcher {
 	protected $levelsToLookUp;
 	protected $attribute;
 	
-	public function __construct($levelsToLookUp, $attribute) {
+	public function __construct( $levelsToLookUp, $attribute ) {
 		$this->levelsToLookUp = $levelsToLookUp;
 		$this->attribute = $attribute;
 	}
 
-	public function fetch($keyPath) {
-		if ($keyPath->peek($this->levelsToLookUp)->getStructure()->supportsAttribute($this->attribute))
-			return $keyPath->peek($this->levelsToLookUp)->getAttributeValue($this->attribute); 
+	public function fetch( $keyPath ) {
+		if ( $keyPath->peek( $this->levelsToLookUp )->getStructure()->supportsAttribute( $this->attribute ) )
+			return $keyPath->peek( $this->levelsToLookUp )->getAttributeValue( $this->attribute );
 		else
 			return null; # FIXME: Should not happen, check should leave	when the reason of the attribute not being support by the record is determined 		
-	}	
+	}
 }
 
 class ObjectIdFetcher extends DefaultContextFetcher {
-	function __tostring(){
+	function __tostring() {
 		$levelsToLookUp = $this->attributeLevel;
 		$attribute = $this->attribute;
 		
@@ -46,16 +46,16 @@ class ObjectIdFetcher extends DefaultContextFetcher {
 }
 
 class DefinitionObjectIdFetcher extends DefaultContextFetcher {
-	public function fetch($keyPath) {
-		$definedMeaningId = $keyPath->peek($this->levelsToLookUp)->getAttributeValue($this->attribute);
-		return getDefinedMeaningDefinitionId($definedMeaningId);
-	}	
+	public function fetch( $keyPath ) {
+		$definedMeaningId = $keyPath->peek( $this->levelsToLookUp )->getAttributeValue( $this->attribute );
+		return getDefinedMeaningDefinitionId( $definedMeaningId );
+	}
 
-	function __tostring(){
+	function __tostring() {
 		$levelsToLookUp = $this->attributeLevel;
 		$attribute = $this->attribute;
 		return "DefinitionObjectIdFetcher($levelsToLookUp, $attribute)";
 	}
-} 
+}
 
 

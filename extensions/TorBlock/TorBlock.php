@@ -16,10 +16,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 $dir = dirname(__FILE__);
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'TorBlock',
 	'author'         => 'Andrew Garrett',
-	'svn-date'       => '$LastChangedDate: 2009-03-05 03:43:05 +0100 (czw, 05 mar 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 48042 $',
 	'description'    => 'Prevents Tor exit nodes from editing a wiki',
 	'descriptionmsg' => 'torblock-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:TorBlock',
@@ -37,6 +36,8 @@ $wgHooks['RecentChange_save'][] = 'TorBlock::onRecentChangeSave';
 $wgHooks['ListDefinedTags'][] = 'TorBlock::onListDefinedTags';
 $wgHooks['AbuseFilter-filterAction'][] = 'TorBlock::onAbuseFilterFilterAction';
 $wgHooks['AbuseFilter-builder'][] = 'TorBlock::onAbuseFilterBuilder';
+$wgHooks['EmailUserPermissionsErrors'][] = 'TorBlock::onEmailUserPermissionsErrors';
+$wgHooks['OtherBlockLogLink'][] = 'TorBlock::getTorBlockStatus';
 
 // Define new autopromote condition
 define('APCOND_TOR', 'tor'); // Numbers won't work, we'll get collisions

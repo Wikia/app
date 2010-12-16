@@ -4,7 +4,7 @@
  * Class for handling the display_map parser function with Yahoo! Maps
  *
  * @file Maps_YahooMapsDispMap.php
- * @ingroup Maps
+ * @ingroup MapsYahooMaps
  *
  * @author Jeroen De Dauw
  */
@@ -15,7 +15,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 class MapsYahooMapsDispMap extends MapsBaseMap {
 	
-	public $serviceName = MapsYahooMapsUtils::SERVICE_NAME;		
+	public $serviceName = MapsYahooMaps::SERVICE_NAME;		
 	
 	/**
 	 * @see MapsBaseMap::setFormInputSettings()
@@ -23,8 +23,6 @@ class MapsYahooMapsDispMap extends MapsBaseMap {
 	 */	
 	protected function setMapSettings() {
 		global $egMapsYahooMapsZoom, $egMapsYahooMapsPrefix;
-		
-		$this->defaultParams = MapsYahooMapsUtils::getDefaultParams();
 		
 		$this->elementNamePrefix = $egMapsYahooMapsPrefix;
 		$this->defaultZoom = $egMapsYahooMapsZoom;
@@ -37,7 +35,7 @@ class MapsYahooMapsDispMap extends MapsBaseMap {
 	protected function doMapServiceLoad() {
 		global $egYahooMapsOnThisPage;
 		
-		MapsYahooMapsUtils::addYMapDependencies($this->output);	
+		MapsYahooMaps::addYMapDependencies($this->output);	
 		$egYahooMapsOnThisPage++;
 		
 		$this->elementNr = $egYahooMapsOnThisPage;
@@ -50,22 +48,12 @@ class MapsYahooMapsDispMap extends MapsBaseMap {
 	public function addSpecificMapHTML() {
 		global $wgJsMimeType;
 		
-		$this->type = MapsYahooMapsUtils::getYMapType($this->type, true);
-		
-		$this->controls = MapsYahooMapsUtils::createControlsString($this->controls);
-
-		$this->autozoom = MapsYahooMapsUtils::getAutozoomJSValue($this->autozoom);
-
-		$this->types = explode(",", $this->types);
-		
-		$typesString = MapsYahooMapsUtils::createTypesString($this->types);		
-		
 		$this->output .= <<<END
 		<div id="$this->mapName" style="width: {$this->width}px; height: {$this->height}px;"></div>  
 		
 		<script type="$wgJsMimeType">/*<![CDATA[*/
 		addOnloadHook(
-			initializeYahooMap('$this->mapName', $this->centre_lat, $this->centre_lon, $this->zoom, $this->type, [$typesString], [$this->controls], $this->autozoom, [])
+			initializeYahooMap('$this->mapName', $this->centre_lat, $this->centre_lon, $this->zoom, $this->type, [$this->types], [$this->controls], $this->autozoom, [], $this->height)
 		);
 			/*]]>*/</script>
 END;

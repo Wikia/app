@@ -21,8 +21,8 @@ class Linker {
 	/**
 	 * @deprecated
 	 */
-	function postParseLinkColour( $s = NULL ) {
-		return NULL;
+	function postParseLinkColour( $s = null ) {
+		return null;
 	}
 
 	/** @todo document */
@@ -229,7 +229,7 @@ class Linker {
 			} else {
 				$threshold = $wgUser->getOption('stubthreshold') ;
 				if ( $threshold > 0 ) {
-					$dbr =& wfGetDB( DB_SLAVE );
+					$dbr = wfGetDB( DB_SLAVE );
 					$s = $dbr->selectRow(
 						array( 'page' ),
 						array( 'page_len',
@@ -864,7 +864,7 @@ class Linker {
 	 * @param mixed $title Title object (to generate link to the section in autocomment) or null
 	 * @param bool $local Whether section links should refer to local page
 	 */
-	function formatComment($comment, $title = NULL, $local = false) {
+	function formatComment($comment, $title = null, $local = false) {
 		wfProfileIn( __METHOD__ );
 
 		global $wgContLang;
@@ -910,7 +910,7 @@ class Linker {
 
 		# format regular and media links - all other wiki formatting
 		# is ignored
-		$medians = '(?:' . preg_quote( Namespace::getCanonicalName( NS_MEDIA ), '/' ) . '|';
+		$medians = '(?:' . preg_quote( MWNamespace::getCanonicalName( NS_MEDIA ), '/' ) . '|';
 		$medians .= preg_quote( $wgContLang->getNsText( NS_MEDIA ), '/' ) . '):';
 		while(preg_match('/\[\[:?(.*?)(\|(.*?))*\]\](.*)$/',$comment,$match)) {
 			# Handle link renaming [[foo|text]] will show link as "text"
@@ -952,7 +952,7 @@ class Linker {
 	 *
 	 * @return string
 	 */
-	function commentBlock( $comment, $title = NULL, $local = false ) {
+	function commentBlock( $comment, $title = null, $local = false ) {
 		// '*' used to be the comment inserted by the software way back
 		// in antiquity in case none was provided, here for backwards
 		// compatability, acc. to brion -ævar

@@ -9,10 +9,9 @@ EOT;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'          => __FILE__,
 	'author'	=> 'SQL',
 	'name'		=> 'EmergencyDeSysop',
-	'svn-date'    => '$LastChangedDate$',
-	'svn-revision'    => '$LastChangedRevision$',
 	'url' 		=> 'http://www.mediawiki.org/wiki/Extension:EmergencyDeSysop',
 	'description'	=> 'Allows a Sysop to sacrifice their own bit, in order to desysop another',
 	'descriptionmsg' => 'emergencydesysop-desc',
@@ -33,14 +32,14 @@ $wgAvailableRights[] = 'emergencydesysop';
 $wgGroupPermissions['sysop']['emergencydesysop'    ] = true;
 
 //Load Defaults
-$wgEmDesysop = array('Requestor' => NULL, 'Target' => NULL);
+$wgEmDesysop = array('Requestor' => null, 'Target' => null);
 
 function EmergencyDeSysopLocalizedPageName(&$specialPageArray, $code) {
 	wfLoadExtensionMessages('EmergencyDeSysop');
 	$text = wfMsg('emergencydesysop');
  
 	$title = Title::newFromText($text);
-	$specialPageArray['emergencydesysop']['emergencydesysop'] = $title->getDBKey();
+	$specialPageArray['emergencydesysop']['emergencydesysop'] = $title->getDBkey();
 	return true;
 }
 

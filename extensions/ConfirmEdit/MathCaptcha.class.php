@@ -7,26 +7,26 @@ class MathCaptcha extends SimpleCaptcha {
 		return (int)$answer == (int)$info['answer'];
 	}
 
-	function addCaptchaAPI(&$resultArr) {
+	function addCaptchaAPI( &$resultArr ) {
 		list( $sum, $answer ) = $this->pickSum();
-		$index = $this->storeCaptcha( array('answer' => $answer ) );
+		$index = $this->storeCaptcha( array( 'answer' => $answer ) );
 		$resultArr['captcha']['type'] = 'math';
 		$resultArr['captcha']['mime'] = 'text/tex';
 		$resultArr['captcha']['id'] = $index;
 		$resultArr['captcha']['question'] = $sum;
 	}
-	
+
 	/** Produce a nice little form */
 	function getForm() {
 		list( $sum, $answer ) = $this->pickSum();
 		$index = $this->storeCaptcha( array( 'answer' => $answer ) );
-		
+
 		$form = '<table><tr><td>' . $this->fetchMath( $sum ) . '</td>';
 		$form .= '<td>' . Xml::input( 'wpCaptchaWord', false, false ) . '</td></tr></table>';
 		$form .= Xml::hidden( 'wpCaptchaId', $index );
 		return $form;
 	}
-	
+
 	/** Pick a random sum */
 	function pickSum() {
 		$a = mt_rand( 0, 100 );
@@ -36,7 +36,7 @@ class MathCaptcha extends SimpleCaptcha {
 		$ans = $op == '+' ? ( $a + $b ) : ( $a - $b );
 		return array( $sum, $ans );
 	}
-	
+
 	/** Fetch the math */
 	function fetchMath( $sum ) {
 		$math = new MathRenderer( $sum );
@@ -44,6 +44,4 @@ class MathCaptcha extends SimpleCaptcha {
 		$html = $math->render();
 		return preg_replace( '/alt=".*?"/', '', $html );
 	}
-
 }
-?>

@@ -19,6 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Redirect',
 	'version' => '1.0',
 	'author' => array( 'Marcel Minke', 'Siebrand Mazeland' ),

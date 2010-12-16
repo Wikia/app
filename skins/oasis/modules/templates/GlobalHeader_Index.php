@@ -1,5 +1,4 @@
 <header id="WikiaHeader" class="WikiaHeader">
-	<? if (!(in_array('fullmonty', $wgABTests) || in_array('minimonty1', $wgABTests) || in_array('minimonty3', $wgABTests))) { ?>
 	<nav>
 		<h1>Wikia Navigation</h1>
 		<ul>
@@ -53,9 +52,4 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 	<?= wfRenderModule('AccountNavigation') ?>
 	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
 	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
-	<? } else { ?>
-	
-	<?= wfRenderModule('AccountNavigation') ?>
-	
-	<? } //end ABTest ?>
 </header>

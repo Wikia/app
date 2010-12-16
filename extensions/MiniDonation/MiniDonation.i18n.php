@@ -67,12 +67,38 @@ $messages['bg'] = array(
 	'donationform-submit' => 'Направете дарение чрез PayPal',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'donationform-desc' => 'Ouzhpennañ a ra ur valizenn <tt>&lt;donateform&gt;</tt> evit gellout kas roadoù gant PayPal',
+	'donationform-submit' => 'Ober ur prof gant PayPal',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'donationform-desc' => 'Dodaje oznaku <tt>&lt;donateform&gt;</tt> za podršku donacijama putem PayPal',
 	'donationform-submit' => 'Donirajte putem PayPal',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'donationform-desc' => 'Afegiu una etiqueta <tt>&lt;donateform&gt;</tt> per fer donatius via PayPal',
+	'donationform-submit' => 'Donació via PayPal',
+);
+
+/** Czech (Česky)
+ * @author Mercy
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'donationform-desc' => 'Přidává značku <tt>&lt;donateform&gt;</tt> pro možnost přispívání prostřednictvím PayPalu',
+	'donationform-submit' => 'Darovat prostřednictvím služby PayPal',
 );
 
 /** Welsh (Cymraeg)
@@ -101,8 +127,10 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
+	'donationform-desc' => 'Προσθέτει το tag <tt>&lt;donateform&gt;</tt> για την υποστήριξη δωρεών μέσω PayPal',
 	'donationform-submit' => 'Δωρίστε μέσω PayPal',
 );
 
@@ -128,6 +156,13 @@ $messages['es'] = array(
  */
 $messages['et'] = array(
 	'donationform-submit' => "Anneta läbi PayPal'i",
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'donationform-submit' => 'Dohaintza egin PayPalen bidez',
 );
 
 /** Extremaduran (Estremeñu)
@@ -209,9 +244,12 @@ $messages['ia'] = array(
 	'donationform-submit' => 'Donar per PayPal',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
 $messages['id'] = array(
-	'donationform-submit' => 'Donasi melalui PayPal',
+	'donationform-desc' => 'Tambahkan sebuah tag <tt>&lt;donateform&gt;</tt> untuk menyokong sumbangan lewat PayPal',
+	'donationform-submit' => 'Sumbangkan melalui PayPal',
 );
 
 /** Italian (Italiano)
@@ -281,6 +319,14 @@ $messages['lt'] = array(
 	'donationform-submit' => 'Aukoti per PayPal',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'donationform-desc' => 'Додава ознака <tt>&lt;donateform&gt;</tt> за поддршка на донации преку PayPal',
+	'donationform-submit' => 'Донирајте преку PayPal',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
@@ -338,8 +384,10 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'donationform-desc' => 'Gionta un tag <tt>&lt;donateform&gt;</tt> për sostnì le donassion via PayPal',
 	'donationform-submit' => 'Fé na donassion con PayPal',
 );
 
@@ -374,10 +422,19 @@ $messages['ro'] = array(
 	'donationform-submit' => 'Donează via PayPal',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'donationform-desc' => "Aggiunge 'u tag <tt>&lt;donateform&gt;</tt> pe supportà le donazziune ausanne PayPal",
+	'donationform-submit' => 'Dduene ausanne PayPal',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'donationform-desc' => 'Добавляет тег <tt>&lt;donateform&gt;</tt> для возможности пожертвований через PayPal',
 	'donationform-submit' => 'Пожертвовать через PayPal',
 );
 
@@ -396,13 +453,19 @@ $messages['sk'] = array(
 	'donationform-submit' => 'Darujte pomocou PayPal',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица) */
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
 $messages['sr-ec'] = array(
+	'donationform-desc' => 'Додаје таг <tt>&lt;donateform&gt;</tt> као подршку прилозима преко PayPal-а',
 	'donationform-submit' => 'Донирајте преко PayPal',
 );
 
-/** latinica (latinica) */
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
 $messages['sr-el'] = array(
+	'donationform-desc' => 'Dodaje tag <tt>&amp;lt;donateform&amp;gt;</tt> kao podršku prilozima preko PayPal-a',
 	'donationform-submit' => 'Donirajte PayPal',
 );
 
@@ -437,6 +500,13 @@ $messages['tg-cyrl'] = array(
 	'donationform-submit' => 'Ҳадя тавассути PayPal',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'donationform-submit' => 'Hadja tavassuti PayPal',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -445,12 +515,27 @@ $messages['tl'] = array(
 	'donationform-submit' => 'Mag-ambag sa pamamagitan ng PayPal',
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'donationform-desc' => 'PayPal üzerinden bağış desteği için bir <tt>&lt;donateform&gt;</tt> etiketi ekler',
+	'donationform-submit' => 'PayPal üzerinden bağış yap',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
 $messages['vec'] = array(
 	'donationform-desc' => 'Zonta un tag <tt>&lt;donateform&gt;</tt> par sostegner le donassion atraverso PayPal',
 	'donationform-submit' => 'Dona tramite PayPal',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'donationform-submit' => "Lahjoita PayPal-an kal't",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -475,8 +560,11 @@ $messages['zh-hans'] = array(
 	'donationform-submit' => '经PayPal捐款',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
 $messages['zh-hant'] = array(
+	'donationform-desc' => '加入<tt>&lt;donateform&gt;</tt>標籤以支持使用PayPal的捐贈',
 	'donationform-submit' => '經PayPal捐款',
 );
 

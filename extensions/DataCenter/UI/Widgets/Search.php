@@ -83,9 +83,7 @@ class DataCenterWidgetSearch extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $wgUser;
 		// Gets current path
 		$path = DataCenterPage::getPath();
@@ -151,9 +149,7 @@ class DataCenterWidgetSearch extends DataCenterWidget {
 		return $xmlOutput;
 	}
 
-	public static function redirect(
-		$data
-	) {
+	public static function redirect( $data ) {
 		global $wgOut;
 		$path = DataCenterPage::getPath();
 		if ( isset( $data['meta']['query'] ) ) {

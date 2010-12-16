@@ -15,6 +15,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 $wgExtensionFunctions[] = 'wfBlockTitles';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'BlockTitles',
 	'author' => 'Travis Derouin',
 	'description' => 'Provides a basic way of preventing articles with certain titles from being saved or created',

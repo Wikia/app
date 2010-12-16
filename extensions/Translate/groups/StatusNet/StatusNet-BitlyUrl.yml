@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-bitlyurl
+  label: StatusNet - BitlyUrl
+  description: "{{int:bw-desc-statusnet-plugin-bitlyurl}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/bitlyurl
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/BitlyUrl/locale/%CODE%/LC_MESSAGES/BitlyUrl.po
+  targetPattern: plugins/BitlyUrl/locale/%CODE%/LC_MESSAGES/BitlyUrl.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: bitlyurl-
+  patterns:
+    - "*"

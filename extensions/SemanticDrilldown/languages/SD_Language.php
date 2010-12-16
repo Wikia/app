@@ -27,7 +27,9 @@ abstract class SD_Language {
 		'Uses time period' => SD_SP_USES_TIME_PERIOD,
 		'Has input type' => SD_SP_HAS_INPUT_TYPE,
 		'Requires filter' => SD_SP_REQUIRES_FILTER,
-		'Has label' => SD_SP_HAS_LABEL
+		'Has label' => SD_SP_HAS_LABEL,
+		// display properties
+		'Has display parameters' => SD_SP_HAS_DISPLAY_PARAMETERS,
 	);
 
 	protected $m_NamespaceAliases = array(

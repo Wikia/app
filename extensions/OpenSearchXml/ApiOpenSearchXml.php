@@ -243,7 +243,7 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		// Others will take Image:Foo.jpg or Foo.jpg
 		$title = Title::newFromText( $arg, NS_IMAGE );
 		if( $title && $title->getNamespace() == NS_IMAGE ) {
-			return $title->getDBKey();
+			return $title->getDBkey();
 		}
 		return false;
 	}

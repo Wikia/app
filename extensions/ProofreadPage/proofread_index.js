@@ -14,7 +14,7 @@ function findparam(str2, param_name) {
 function proofreadpage_index_init() {
 
 	var toolbar = document.getElementById("toolbar"); 
-	toolbar.parentNode.removeChild(toolbar);
+	if(toolbar) toolbar.parentNode.removeChild(toolbar);
 
 	var text = document.getElementById("wpTextbox1"); 
 	if(!text) return;
@@ -45,6 +45,9 @@ function proofreadpage_index_init() {
 		value = findparam(params,param_name);
 		value = value.replace(/\{\{!\}\}/g,'|');
 
+		if( (m[0]=="Header") && (value=="") ) value = prp_default_header;
+		if( (m[0]=="Footer") && (value=="") ) value = prp_default_footer;
+
 		if(m[2]) size=m[2]; else size="1";
 		if(size=="1") {
 			str = str + '<td><input	name="'+param_name+'" size=60 value="'+value+'"/></td></tr>'; 
@@ -52,7 +55,6 @@ function proofreadpage_index_init() {
 		else{
 			str = str +'<td><textarea name="'+param_name+'" cols=60 rows='+size+'>'+value+'</textarea></td></tr>';
 		}
-
 	}
 	str = str +'</table>';
 	container.innerHTML = str;
@@ -108,7 +110,6 @@ function proofreadpage_fill_index() {
 	}
 	result = result + "\n}}";
 	form.elements["wpTextbox1"].value = result;
-	form.elements["wpSummary"].value="/* new index */ ";
 }
 
 

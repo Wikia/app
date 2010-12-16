@@ -84,7 +84,7 @@ class SqlQueryForm {
 	}
 
 	function doSubmit() {
-		global $wgOut, $wgUser, $wgServer, $wgScript, $wgArticlePath, $wgLang, $wgContLang;
+		global $wgOut, $wgUser, $wgServer, $wgScript, $wgLang, $wgContLang;
 		global $wgDBserver, $wgDBsqluser, $wgDBsqlpassword, $wgDBname, $wgSqlTimeout;
 
 		# Use a limit, folks!

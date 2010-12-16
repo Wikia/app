@@ -10,9 +10,7 @@ class DataCenterViewPlansPlan extends DataCenterView {
 
 	/* Functions */
 
-	public function view(
-		$path
-	) {
+	public function view( $path ) {
 		// Checks if the user did not provide enough information
 		if ( !$path['id'] ) {
 			// Returns error message
@@ -202,9 +200,7 @@ class DataCenterViewPlansPlan extends DataCenterView {
 		);
 	}
 
-	public function remove(
-		$path
-	) {
+	public function remove( $path ) {
 		// Gets link from database
 		$plan = DataCenterDB::getPlan( $path['id'] );
 		// Gets links to plan
@@ -277,15 +273,11 @@ class DataCenterViewPlansPlan extends DataCenterView {
 		);
 	}
 
-	public function add(
-		$path
-	) {
+	public function add( $path ) {
 		return $this->configure( $path );
 	}
 
-	public function configure(
-		$path
-	) {
+	public function configure( $path ) {
 		// Detects mode
 		if ( !$path['id'] ) {
 			if (

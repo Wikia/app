@@ -5,7 +5,7 @@ class RemoveAvatar extends SpecialPage {
 	/**
 	 * Constructor
 	 */
-	function __construct(){
+	public function __construct() {
 		parent::__construct( 'RemoveAvatar'/*class*/, 'avatarremove'/*restriction*/ );
 	}
 
@@ -14,7 +14,7 @@ class RemoveAvatar extends SpecialPage {
 	 *
 	 * @param $user Mixed: parameter passed to the page or null
 	 */
-	public function execute( $user ){
+	public function execute( $user ) {
 		global $wgUser, $wgOut, $wgRequest, $wgUploadAvatarInRecentChanges;
 		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
 
@@ -46,12 +46,12 @@ class RemoveAvatar extends SpecialPage {
 
 		$wgOut->setPageTitle( wfMsg( 'avatarupload-removeavatar' ) );
 
-		if( $wgRequest->getVal( 'user' ) != '' ){
+		if ( $wgRequest->getVal( 'user' ) != '' ) {
 			$wgOut->redirect( $this->title->getFullURL() . '/' . $wgRequest->getVal( 'user' ) );
 		}
 
 		// If the request was POSTed, then delete the avatar
-		if( $wgRequest->wasPosted() ) {
+		if ( $wgRequest->wasPosted() ) {
 			$user_id = $wgRequest->getVal( 'user_id' );
 			$user_deleted = User::newFromId( $user_id );
 			$user_deleted->loadFromDatabase();
@@ -62,7 +62,7 @@ class RemoveAvatar extends SpecialPage {
 			$this->deleteImage( $user_id, 'ml' );
 
 			$log = new LogPage( wfMsgForContent( 'user-profile-picture-log' ) );
-			if( !$wgUploadAvatarInRecentChanges ){
+			if ( !$wgUploadAvatarInRecentChanges ) {
 				$log->updateRecentChanges = false;
 			}
 			$log->addEntry(
@@ -73,7 +73,7 @@ class RemoveAvatar extends SpecialPage {
 			$wgOut->addHTML( '<div>' . wfMsg( 'avatarupload-removesuccess' ) . '</div>' );
 			$wgOut->addHTML( '<div><a href="' . $this->title->escapeFullURL() . '">' . wfMsg( 'avatarupload-removeanother' ) . '</a></div>' );
 		} else {
-			if( $user ){
+			if ( $user ) {
 				$wgOut->addHTML( $this->showUserAvatar( $user ) );
 			} else {
 				$wgOut->addHTML( $this->showUserForm() );
@@ -84,9 +84,10 @@ class RemoveAvatar extends SpecialPage {
 	/**
 	 * Show the form for retrieving a user's current avatar
 	 */
-	function showUserForm(){
-		$output = '<form method="get" name="avatar" action="">
-				<b>' . wfMsg( 'username' ) . '</b>
+	function showUserForm() {
+		$output = '<form method="get" name="avatar" action="">'
+				. Xml::hidden( 'title', $this->getTitle() ) .
+				'<b>' . wfMsg( 'username' ) . '</b>
 				<input type="text" name="user" />
 				<input type="submit" value="' . wfMsg( 'search' ) . '" />
 			</form>';
@@ -96,16 +97,16 @@ class RemoveAvatar extends SpecialPage {
 	/**
 	 * Shows the requested user's current avatar and the button for deleting it
 	 */
-	function showUserAvatar( $user_name ){
+	function showUserAvatar( $user_name ) {
 		$user_name = str_replace( '_', ' ', $user_name ); // replace underscores with spaces
 		$user_id = User::idFromName( $user_name );
 
 		$avatar = new wAvatar( $user_id, 'l' );
 
-		$output = '<div><b>' . wfMsg( 'avatarupload-currentavatar', $user_name ). '</b></div>';
+		$output = '<div><b>' . wfMsg( 'avatarupload-currentavatar', $user_name ) . '</b></div>';
 		$output .= "<div>{$avatar->getAvatarURL()}</div>";
 		$output .= '<div><form method="post" name="avatar" action="">
-				<input type="hidden" name="user_id" value="'. $user_id .'" />
+				<input type="hidden" name="user_id" value="' . $user_id . '" />
 				<br />
 				<input type="submit" value="' . wfMsg( 'delete' ) . '" />
 			</form></div>';
@@ -119,13 +120,13 @@ class RemoveAvatar extends SpecialPage {
 	 * @param $size Int: size of the avatar image to delete (small, medium or large).
 	 * 			Doesn't really matter since we're just going to blast 'em all.
 	 */
-	function deleteImage( $id, $size ){
+	function deleteImage( $id, $size ) {
 		global $wgUploadDirectory, $wgDBname, $wgMemc;
 		$avatar = new wAvatar( $id, $size );
 		$files = glob( $wgUploadDirectory . '/avatars/' . $wgDBname . '_' . $id .  '_' . $size . "*" );
 		$img = basename( $files[0] );
-		if( $img && $img[0] ){
-			unlink( $wgUploadDirectory . '/avatars/' .  $img );
+		if ( $img && $img[0] ) {
+			unlink( $wgUploadDirectory . '/avatars/' . $img );
 		}
 
 		// clear cache

@@ -14,16 +14,12 @@ $aliases['en'] = array(
 	'Watchers' => array( 'Watchers' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Watchers' => array( 'مراقبون' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Watchers' => array( 'مراقبون' ),
 );
@@ -48,9 +44,19 @@ $aliases['fa'] = array(
 	'Watchers' => array( 'پی‌گیری‌کنندگان' ),
 );
 
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'Watchers' => array( 'Sivun tarkkailijat' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'Watchers' => array( 'Suiveurs', 'Suiveur' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Watchers' => array( 'Siuvors' ),
 );
 
 /** Galician (Galego) */
@@ -61,6 +67,11 @@ $aliases['gl'] = array(
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'Watchers' => array( 'Beobachter' ),
+);
+
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'Watchers' => array( 'દર્શકો' ),
 );
 
 /** Hebrew (עברית) */
@@ -83,6 +94,16 @@ $aliases['ia'] = array(
 	'Watchers' => array( 'Observatores' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Watchers' => array( 'Pemantau' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'Watchers' => array( 'Osservatori' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'Watchers' => array( 'ウォッチしている利用者' ),
@@ -98,9 +119,19 @@ $aliases['ksh'] = array(
 	'Watchers' => array( 'Oppassere' ),
 );
 
+/** Cornish (Kernewek) */
+$aliases['kw'] = array(
+	'Watchers' => array( 'Golyoryon' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'Watchers' => array( 'Iwwerwaacher' ),
+);
+
+/** Lithuanian (Lietuvių) */
+$aliases['lt'] = array(
+	'Watchers' => array( 'Stebėtojai' ),
 );
 
 /** Macedonian (Македонски) */
@@ -108,9 +139,17 @@ $aliases['mk'] = array(
 	'Watchers' => array( 'Набљудувачи' ),
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Watchers' => array( 'ശ്രദ്ധിക്കുന്നവർ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Watchers' => array( 'प्रेक्षक' ),
+);
+
+/** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'Watchers' => array( 'Volgers' ),
 );
@@ -135,14 +174,29 @@ $aliases['sa'] = array(
 	'Watchers' => array( 'पश्यक्‌' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Watchers' => array( 'Sledujúci' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Watchers' => array( 'Waangalizi' ),
 );
 
+/** Telugu (తెలుగు) */
+$aliases['te'] = array(
+	'Watchers' => array( 'వీక్షకులు' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Watchers' => array( 'Mga tagapagbantay' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Watchers' => array( 'İzleyenler' ),
 );
 
 /** Vèneto (Vèneto) */

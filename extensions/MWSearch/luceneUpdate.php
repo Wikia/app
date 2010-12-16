@@ -115,14 +115,14 @@ if( WikiError::isError( $status ) ) {
 
 class LuceneBuilder {
 	function LuceneBuilder() {
-		$this->db       =& wfGetDB( DB_SLAVE );
+		$this->db       = wfGetDB( DB_SLAVE );
 		$this->dbstream =& $this->streamingSlave( $this->db );
 		$this->offset = 0;
 	}
 	
 	function &streamingSlave( $db ) {
 		global $wgDBname;
-		$stream = new Database( $db->mServer, $db->mUser, $db->mPassword, $wgDBname );
+		$stream = new DatabaseMysql( $db->mServer, $db->mUser, $db->mPassword, $wgDBname );
 		$stream->bufferResults( false );
 		
 		$timeout = 3600 * 24;

@@ -7,6 +7,7 @@ class CheckLanguageCLI {
 	protected $code  = null;
 	protected $level = 2;
 	protected $doLinks = false;
+	protected $linksPrefix = '';
 	protected $wikiCode = 'en';
 	protected $checkAll = false;
 	protected $output = 'plain';
@@ -24,7 +25,7 @@ class CheckLanguageCLI {
 	public function __construct( Array $options ) {
 		if ( isset( $options['help'] ) ) {
 			echo $this->help();
-			exit();
+			exit(1);
 		}
 
 		if ( isset( $options['lang'] ) ) {
@@ -41,6 +42,10 @@ class CheckLanguageCLI {
 		$this->doLinks = isset( $options['links'] );
 		$this->includeExif = !isset( $options['noexif'] );
 		$this->checkAll = isset( $options['all'] );
+
+		if ( isset( $options['prefix'] ) ) {
+			$this->linksPrefix = $options['prefix'];
+		}
 
 		if ( isset( $options['wikilang'] ) ) {
 			$this->wikiCode = $options['wikilang'];
@@ -190,6 +195,7 @@ Parameters:
 	* help: Show this help.
 	* level: Show the following display level (default: 2).
 	* links: Link the message values (default off).
+	* prefix: prefix to add to links.
 	* wikilang: For the links, what is the content language of the wiki to display the output in (default en).
 	* whitelist: Do only the following checks (form: code,code).
 	* blacklist: Don't do the following checks (form: code,code).
@@ -292,7 +298,7 @@ ENDS;
 		foreach ( $this->checks as $check ) {
 			if ( isset( $checkBlacklist[$code] ) &&
 				in_array( $check, $checkBlacklist[$code] ) ) {
-				$result[$check] = array();
+				$results[$check] = array();
 				continue;
 			}
 
@@ -316,9 +322,9 @@ ENDS;
 		if ( $this->doLinks ) {
 			$displayKey = ucfirst( $key );
 			if ( $code == $this->wikiCode ) {
-				return "[[MediaWiki:$displayKey|$key]]";
+				return "[[{$this->linksPrefix}MediaWiki:$displayKey|$key]]";
 			} else {
-				return "[[MediaWiki:$displayKey/$code|$key]]";
+				return "[[{$this->linksPrefix}MediaWiki:$displayKey/$code|$key]]";
 			}
 		} else {
 			return $key;
@@ -378,7 +384,7 @@ ENDS;
 	function outputWiki() {
 		global $wgContLang, $IP;
 		$detailText = '';
-		$rows[] = '! Language !! Code !! Total !! ' . implode( ' !! ', $this->checks );
+		$rows[] = '! Language !! Code !! Total !! ' . implode( ' !! ', array_diff( $this->checks, $this->nonMessageChecks() ) );
 		foreach ( $this->results as $code => $results ) {
 			$detailTextForLang = "==$code==\n";
 			$numbers = array();
@@ -418,7 +424,7 @@ ENDS;
 
 		$tableRows = implode( "\n|-\n", $rows );
 
-		$version = SpecialVersion::getVersion( $IP );
+		$version = SpecialVersion::getVersion( 'nodb' );
 		echo <<<EOL
 '''Check results are for:''' <code>$version</code>
 
@@ -459,7 +465,7 @@ class CheckExtensionsCLI extends CheckLanguageCLI {
 	public function __construct( Array $options, $extension ) {
 		if ( isset( $options['help'] ) ) {
 			echo $this->help();
-			exit();
+			exit(1);
 		}
 
 		if ( isset( $options['lang'] ) ) {
@@ -587,7 +593,7 @@ Check codes (ideally, all of them should result 0; all the checks are executed b
 	* untranslated: Messages which are required to translate, but are not translated.
 	* duplicate: Messages which translation equal to fallback
 	* obsolete: Messages which are untranslatable, but translated.
-	* variables: Messages without variables which should be used, or with variables which shouldn't be used.
+	* variables: Messages without variables which should be used, or with variables which should not be used.
 	* empty: Empty messages.
 	* whitespace: Messages which have trailing whitespace.
 	* xhtml: Messages which are not well-formed XHTML (checks only few common errors).
@@ -645,25 +651,40 @@ ENDS;
 # Blacklist some checks for some languages
 $checkBlacklist = array(
 #'code'        => array( 'check1', 'check2' ... )
+'az'           => array( 'plural' ),
+'bo'           => array( 'plural' ),
+'dz'           => array( 'plural' ),
+'id'           => array( 'plural' ),
+'fa'           => array( 'plural' ),
 'gan'          => array( 'plural' ),
+'gan-hans'     => array( 'plural' ),
+'gan-hant'     => array( 'plural' ),
 'gn'           => array( 'plural' ),
 'hak'          => array( 'plural' ),
 'hu'           => array( 'plural' ),
 'ja'           => array( 'plural' ), // Does not use plural
+'jv'           => array( 'plural' ),
 'ka'           => array( 'plural' ),
 'kk-arab'      => array( 'plural' ),
 'kk-cyrl'      => array( 'plural' ),
 'kk-latn'      => array( 'plural' ),
+'km'           => array( 'plural' ),
+'kn'           => array( 'plural' ),
 'ko'           => array( 'plural' ),
+'lzh'          => array( 'plural' ),
 'mn'           => array( 'plural' ),
 'ms'           => array( 'plural' ),
-'my'           => array( 'chars' ),  // Uses a lot zwnj
+'my'           => array( 'plural', 'chars' ),  // Uses a lot zwnj
 'sah'          => array( 'plural' ),
 'sq'           => array( 'plural' ),
 'tet'          => array( 'plural' ),
 'th'           => array( 'plural' ),
+'to'           => array( 'plural' ),
+'tr'           => array( 'plural' ),
+'vi'           => array( 'plural' ),
 'wuu'          => array( 'plural' ),
 'xmf'          => array( 'plural' ),
+'yo'           => array( 'plural' ),
 'yue'          => array( 'plural' ),
 'zh'           => array( 'plural' ),
 'zh-classical' => array( 'plural' ),

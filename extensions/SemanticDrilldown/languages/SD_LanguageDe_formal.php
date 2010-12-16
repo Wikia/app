@@ -18,7 +18,10 @@ class SD_LanguageDe_formal extends SD_Language {
 	SD_SP_GETS_VALUES_FROM_CATEGORY => 'Erhält Werte aus der Kategorie',
 	SD_SP_USES_TIME_PERIOD => 'Verwendet Zeitangabe',
 	SD_SP_REQUIRES_FILTER => 'Benötigt Filter',
+	SD_SP_HAS_INPUT_TYPE  => 'Hat Eingabetyp',
 	SD_SP_HAS_LABEL  => 'Hat Bezeichnung',
+	// display properties
+	SD_SP_HAS_DISPLAY_PARAMETERS => 'Hat Anzeigeparameter',
 );
 
 var $m_Namespaces = array(

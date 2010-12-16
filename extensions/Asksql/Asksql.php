@@ -1,5 +1,5 @@
 <?php
-/* $Id: Asksql.php 45091 2008-12-27 13:38:02Z siebrand $ */
+/* $Id: Asksql.php 49890 2009-04-26 05:22:33Z shinjiman $ */
 
 /**
  * If enabled through $wgAllowSysopQueries = true, this class
@@ -15,9 +15,8 @@ if (!defined('MEDIAWIKI'))
 	exit;
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Ask SQL',
-	'svn-date' => '$LastChangedDate: 2008-12-27 14:38:02 +0100 (sob, 27 gru 2008) $',
-	'svn-revision' => '$LastChangedRevision: 45091 $',
 	'description' => 'Do SQL queries through a [[Special:Asksql|special page]]',
 	'descriptionmsg' => 'asksql-desc',
 	'author' => 'Brion Vibber',

@@ -121,10 +121,10 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávy',
 		'Wikipedia'   => 'Wikipedie',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroje',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzita',
 		'Wiktionary'  => 'Wikislovník',
-		'Wikcionář'   => 'Wikislovník', # old Wiktionary translation
 	),
 	'2sg' => array(
 		'uživatel'    => 'uživatele',
@@ -132,6 +132,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizpráv',
 		'Wikipedia'   => 'Wikipedie',
 		'Wikiquote'   => 'Wikicitátů',
+		'Wikisource'  => 'Wikizdrojů',
 		'Wikispecies' => 'Wikidruhů',
 		'Wikiversity' => 'Wikiverzity',
 		'Wiktionary'  => 'Wikislovníku',
@@ -140,8 +141,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikiknihy'   => 'Wikiknih',
 		'Wikislovník' => 'Wikislovníku',
 		'Wikiverzita' => 'Wikiverzity',
+		'Wikizdroje'  => 'Wikizdrojů',
 		'Wikizprávy'  => 'Wikizpráv',
-		'Wikcionář'   => 'Wikislovníku',
 	),
 	'3sg' => array(
 		'uživatel'    => 'uživateli',
@@ -149,6 +150,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávám',
 		'Wikipedia'   => 'Wikipedii',
 		'Wikiquote'   => 'Wikicitátům',
+		'Wikisource'  => 'Wikizdrojům',
 		'Wikispecies' => 'Wikidruhům',
 		'Wikiversity' => 'Wikiverzitě',
 		'Wiktionary'  => 'Wikislovníku',
@@ -158,8 +160,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikipedie'   => 'Wikipedii',
 		'Wikislovník' => 'Wikislovníku',
 		'Wikiverzita' => 'Wikiverzitě',
+		'Wikizdroje'  => 'Wikizdrojům',
 		'Wikizprávy'  => 'Wikizprávám',
-		'Wikcionář'   => 'Wikislovníku',
 	),
 	'4sg' => array(
 		'uživatel'    => 'uživatele',
@@ -167,12 +169,12 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávy',
 		'Wikipedia'   => 'Wikipedii',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroje',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzitu',
 		'Wiktionary'  => 'Wikislovník',
 		'Wikipedie'   => 'Wikipedii',
 		'Wikiverzita' => 'Wikiverzitu',
-		'Wikcionář'   => 'Wikislovník',
 	),
 	'5sg' => array(
 		'uživatel'    => 'uživateli',
@@ -180,12 +182,12 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávy',
 		'Wikipedia'   => 'Wikipedie',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroje',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzito',
 		'Wiktionary'  => 'Wikislovníku',
 		'Wikislovník' => 'Wikislovníku',
 		'Wikiverzita' => 'Wikiverzito',
-		'Wikcionář'   => 'Wikislovníku',
 	),
 	'6sg' => array(
 		'uživatel'    => 'uživateli',
@@ -193,6 +195,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávách',
 		'Wikipedia'   => 'Wikipedii',
 		'Wikiquote'   => 'Wikicitátech',
+		'Wikisource'  => 'Wikizdrojích',
 		'Wikispecies' => 'Wikidruzích',
 		'Wikiversity' => 'Wikiverzitě',
 		'Wiktionary'  => 'Wikislovníku',
@@ -202,8 +205,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikipedie'   => 'Wikipedii',
 		'Wikislovník' => 'Wikislovníku',
 		'Wikiverzita' => 'Wikiverzitě',
+		'Wikizdroje'  => 'Wikizdrojích',
 		'Wikizprávy'  => 'Wikizprávách',
-		'Wikcionář'   => 'Wikislovníku',
 	),
 	'7sg' => array(
 		'uživatel'    => 'uživatelem',
@@ -211,6 +214,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávami',
 		'Wikipedia'   => 'Wikipedií',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroji',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzitou',
 		'Wiktionary'  => 'Wikislovníkem',
@@ -218,8 +222,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikipedie'   => 'Wikipedií',
 		'Wikislovník' => 'Wikislovníkem',
 		'Wikiverzita' => 'Wikiverzitou',
+		'Wikizdroje'  => 'Wikizdroji',
 		'Wikizprávy'  => 'Wikizprávami',
-		'Wikcionář'   => 'Wikislovníkem',
 	),
 	'1pl' => array(
 		'uživatel'    => 'uživatelé',
@@ -227,12 +231,12 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávy',
 		'Wikipedia'   => 'Wikipedie',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroje',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzity',
 		'Wiktionary'  => 'Wikislovníky',
 		'Wikislovník' => 'Wikislovníky',
 		'Wikiverzita' => 'Wikiverzity',
-		'Wikcionář'   => 'Wikislovníky',
 	),
 	'2pl' => array(
 		'uživatel'    => 'uživatelů',
@@ -240,6 +244,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizpráv',
 		'Wikipedia'   => 'Wikipedií',
 		'Wikiquote'   => 'Wikicitátů',
+		'Wikisource'  => 'Wikizdrojů',
 		'Wikispecies' => 'Wikidruhů',
 		'Wikiversity' => 'Wikiverzit',
 		'Wiktionary'  => 'Wikislovníků',
@@ -249,8 +254,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikipedie'   => 'Wikipedií',
 		'Wikislovník' => 'Wikislovníků',
 		'Wikiverzita' => 'Wikiverzit',
+		'Wikizdroje'  => 'Wikizdrojů',
 		'Wikizprávy'  => 'Wikizpráv',
-		'Wikcionář'   => 'Wikislovníků',
 	),
 	'3pl' => array(
 		'uživatel'    => 'uživatelům',
@@ -258,6 +263,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávám',
 		'Wikipedia'   => 'Wikipediím',
 		'Wikiquote'   => 'Wikicitátům',
+		'Wikisource'  => 'Wikizdrojům',
 		'Wikispecies' => 'Wikidruhům',
 		'Wikiversity' => 'Wikiverzitám',
 		'Wiktionary'  => 'Wikislovníkům',
@@ -267,8 +273,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikipedie'   => 'Wikipediím',
 		'Wikislovník' => 'Wikislovníkům',
 		'Wikiverzita' => 'Wikiverzitám',
+		'Wikizdroje'  => 'Wikizdrojům',
 		'Wikizprávy'  => 'Wikizprávám',
-		'Wikcionář'   => 'Wikislovníkům',
 	),
 	'4pl' => array(
 		'uživatel'    => 'uživatele',
@@ -276,12 +282,12 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávy',
 		'Wikipedia'   => 'Wikipedie',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroje',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzity',
 		'Wiktionary'  => 'Wikislovníky',
 		'Wikislovník' => 'Wikislovníky',
 		'Wikiverzita' => 'Wikiverzity',
-		'Wikcionář'   => 'Wikislovníky',
 	),
 	'5pl' => array(
 		'uživatel'    => 'uživatelé',
@@ -289,12 +295,12 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávy',
 		'Wikipedia'   => 'Wikipedie',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroje',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzity',
 		'Wiktionary'  => 'Wikislovníky',
 		'Wikislovník' => 'Wikislovníky',
 		'Wikiverzita' => 'Wikiverzity',
-		'Wikcionář'   => 'Wikislovníky',
 	),
 	'6pl' => array(
 		'uživatel'    => 'uživatelích',
@@ -302,6 +308,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávách',
 		'Wikipedia'   => 'Wikipediích',
 		'Wikiquote'   => 'Wikicitátech',
+		'Wikisource'  => 'Wikizdrojích',
 		'Wikispecies' => 'Wikidruzích',
 		'Wikiversity' => 'Wikiverzitách',
 		'Wiktionary'  => 'Wikislovnících',
@@ -311,8 +318,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikipedie'   => 'Wikipediích',
 		'Wikislovník' => 'Wikislovnících',
 		'Wikiverzita' => 'Wikiverzitách',
+		'Wikizdroje'  => 'Wikizdrojích',
 		'Wikizprávy'  => 'Wikizprávách',
-		'Wikcionář'   => 'Wikislovnících',
 	),
 	'7pl' => array(
 		'uživatel'    => 'uživateli',
@@ -320,6 +327,7 @@ $wgGrammarForms['cs'] = array(
 		'Wikinews'    => 'Wikizprávami',
 		'Wikipedia'   => 'Wikipediemi',
 		'Wikiquote'   => 'Wikicitáty',
+		'Wikisource'  => 'Wikizdroji',
 		'Wikispecies' => 'Wikidruhy',
 		'Wikiversity' => 'Wikiverzitami',
 		'Wiktionary'  => 'Wikislovníky',
@@ -327,7 +335,8 @@ $wgGrammarForms['cs'] = array(
 		'Wikipedie'   => 'Wikipediemi',
 		'Wikislovník' => 'Wikislovníky',
 		'Wikiverzita' => 'Wikiverzitami',
-		'Wikcionář'   => 'Wikislovníky',
+		'Wikizdroje'  => 'Wikizdroji',
+		'Wikizprávy'  => 'Wikizprávami',
 	),
 ); # cs
 
@@ -375,26 +384,68 @@ $wgGrammarForms['dsb'] = array(
 	),
 ); # dsb
 
+$wgGrammarForms['et'] = array(
+	'genitive' => array(
+		'Vikisõnastik'  => 'Vikisõnastiku',
+		'Vikitekstid'   => 'Vikitekstide',
+		'Vikitsitaadid' => 'Vikitsitaatide',
+		'Vikiõpikud'    => 'Vikiõpikute',
+	),
+	'partitive' => array(
+		'Vikipeedia'    => 'Vikipeediat',
+		'Vikisõnastik'  => 'Vikisõnastikku',
+		'Vikitekstid'   => 'Vikitekste',
+		'Vikitsitaadid' => 'Vikitsitaate',
+		'Vikiõpikud'    => 'Vikiõpikuid',
+	),
+	'illative' => array(
+		'Vikipeedia'    => 'Vikipeediasse',
+		'Vikisõnastik'  => 'Vikisõnastikku',
+		'Vikitekstid'   => 'Vikitekstidesse',
+		'Vikitsitaadid' => 'Vikitsitaatidesse',
+		'Vikiõpikud'    => 'Vikiõpikutesse',
+	),
+	'inessive' => array(
+		'Vikipeedia'    => 'Vikipeedias',
+		'Vikisõnastik'  => 'Vikisõnastikus',
+		'Vikitekstid'   => 'Vikitekstides',
+		'Vikitsitaadid' => 'Vikitsitaatides',
+		'Vikiõpikud'    => 'Vikiõpikutes',
+	),
+	'elative' => array(
+		'Vikipeedia'    => 'Vikipeediast',
+		'Vikisõnastik'  => 'Vikisõnastikust',
+		'Vikitekstid'   => 'Vikitekstidest',
+		'Vikitsitaadid' => 'Vikitsitaatidest',
+		'Vikiõpikud'    => 'Vikiõpikutest',
+	),
+); # et
+
 $wgGrammarForms['fi'] = array(
 	'genitive' => array(
 		'Wikiuutiset' => 'Wikiuutisten',
 		'Wikisitaatit' => 'Wikisitaattien',
+		'Wikimedia Suomi' => 'Wikimedia Suomen',
 	),
 	'partitive' => array(
 		'Wikiuutiset' => 'Wikiuutisia',
 		'Wikisitaatit' => 'Wikisitaatteja',
+		'Wikimedia Suomi' => 'Wikimedia Suomea',
 	),
 	'elative' => array(
 		'Wikiuutiset' => 'Wikiuutisista',
 		'Wikisitaatit' => 'Wikisitaateista',
+		'Wikimedia Suomi' => 'Wikimedia Suomesta',
 	),
 	'inessive' => array(
 		'Wikiuutiset' => 'Wikiuutisissa',
 		'Wikisitaatit' => 'Wikisitaateissa',
+		'Wikimedia Suomi' => 'Wikimedia Suomessa',
 	),
 	'illative' => array(
 		'Wikiuutiset' => 'Wikiuutisiin',
 		'Wikisitaatit' => 'Wikisitaatteihin',
+		'Wikimedia Suomi' => 'Wikimedia Suomeen',
 	),
 ); # fi
 
@@ -759,3 +810,60 @@ $wgGrammarForms['sl'] = array(
 		'Wikislovar'  => 'z Wikislovarjem',
 	),
 ); # sl
+
+$wgGrammarForms['uk'] = array(
+	# genitive
+	'genitive' => array(
+		'Вікіпедія' => 'Вікіпедії',
+		'Вікісловник' => 'Вікісловника',
+		'Вікіпідручник' => 'Вікіпідручника',
+		'Вікіцитати' => 'Вікіцитат',
+		'Вікіджерела' => 'Вікіджерел',
+		'Вікіновини' => 'Вікіновин',
+	),
+	# dative
+	'dative' => array(
+		'Вікіпедія' => 'Вікіпедії',
+		'Вікісловник' => 'Вікісловнику',
+		'Вікіпідручник' => 'Вікіпідручнику',
+		'Вікіцитати' => 'Вікіцитатам',
+		'Вікіджерела' => 'Вікіджерелам',
+		'Вікіновини' => 'Вікіновинам',
+	),
+	# accusative
+	'accusative' => array(
+		'Вікіпедія' => 'Вікіпедію',
+		'Вікісловник' => 'Вікісловник',
+		'Вікіпідручник' => 'Вікіпідручник',
+		'Вікіцитати' => 'Вікіцитати',
+		'Вікіджерела' => 'Вікіджерела',
+		'Вікіновини' => 'Вікіновини',
+	),
+	# instrumental
+	'instrumental' => array(
+		'Вікіпедія' => 'Вікіпедією',
+		'Вікісловник' => 'Вікісловником',
+		'Вікіпідручник' => 'Вікіпідручником',
+		'Вікіцитати' => 'Вікіцитатами',
+		'Вікіджерела' => 'Вікіджерелами',
+		'Вікіновини' => 'Вікіновинами',
+	),
+	# locative
+	'locative' => array(
+		'Вікіпедія' => 'у Вікіпедії',
+		'Вікісловник' => 'у Вікісловнику',
+		'Вікіпідручник' => 'у Вікіпідручнику',
+		'Вікіцитати' => 'у Вікіцитатах',
+		'Вікіджерела' => 'у Вікіджерелах',
+		'Вікіновини' => 'у Вікіновинах',
+	),
+	# vocative
+	'vocative' => array(
+		'Вікіпедія' => 'Вікіпедіє',
+		'Вікісловник' => 'Вікісловнику',
+		'Вікіпідручник' => 'Вікіпідручнику',
+		'Вікіцитати' => 'Вікіцитати',
+		'Вікіджерела' => 'у Вікіджерела',
+		'Вікіновини' => 'у Вікіновини',
+	),
+); # uk

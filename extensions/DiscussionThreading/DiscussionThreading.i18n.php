@@ -24,15 +24,19 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'discussionthreading-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'discussionthreading-replysection' => '{{Identical|Reply}}',
 	'discussionthreading-threadnewsection' => '{{Identical|New}}',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
  */
-$messages['vep'] = array(
-	'discussionthreading-threadnewsection' => "uz'",
-	'discussionthreading-threadnewsectionhint' => "Augotada uz' barb",
+$messages['af'] = array(
+	'discussionthreading-desc' => 'Voeg "threading" by vir besprekingsbladsye',
+	'discussionthreading-replysection' => 'antwoord',
+	'discussionthreading-replysectionhint' => 'Beantwoord hierdie opmerking',
+	'discussionthreading-threadnewsection' => 'nuut',
+	'discussionthreading-threadnewsectionhint' => "Begin 'n nuwe onderwerp",
 );
 
 /** Old English (Anglo-Saxon)
@@ -65,11 +69,34 @@ $messages['arz'] = array(
 	'discussionthreading-threadnewsectionhint' => 'بدء مجموعة رسائل جديدة',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'discussionthreading-desc' => 'Даданьне галінаў у старонкі абмеркаваньня',
+	'discussionthreading-replysection' => 'адказ',
+	'discussionthreading-replysectionhint' => 'Адказаць на гэта паведамленьне',
+	'discussionthreading-threadnewsection' => 'новае',
+	'discussionthreading-threadnewsectionhint' => 'Пачаць новую галіну',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'discussionthreading-replysection' => 'отговаряне',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'discussionthreading-desc' => "Ouzhpennañ a ra an neudennoù d'ar bajenn gaozeal",
+	'discussionthreading-replysection' => 'Respont',
+	'discussionthreading-replysectionhint' => "Respont d'ar gemennadenn-mañ",
+	'discussionthreading-threadnewsection' => 'nevez',
+	'discussionthreading-threadnewsectionhint' => 'Sevel ur gaoz nevez',
 );
 
 /** Bosnian (Bosanski)
@@ -81,6 +108,18 @@ $messages['bs'] = array(
 	'discussionthreading-replysectionhint' => 'Odgovori na ovaj post',
 	'discussionthreading-threadnewsection' => 'novo',
 	'discussionthreading-threadnewsectionhint' => 'Započni novu temu',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'discussionthreading-desc' => 'Afegeix fils a les pàgines de discussió',
+	'discussionthreading-replysection' => 'respon',
+	'discussionthreading-replysectionhint' => 'Respon aquest missatge',
+	'discussionthreading-threadnewsection' => 'nou',
+	'discussionthreading-threadnewsectionhint' => 'Comença un nou fil',
 );
 
 /** Czech (Česky)
@@ -118,9 +157,14 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Konsnos
+ * @author Omnipaedista
  */
 $messages['el'] = array(
+	'discussionthreading-desc' => 'Προσθήκη τμημάτων στις σελίδες συζήτησης',
 	'discussionthreading-replysection' => 'απάντηση',
+	'discussionthreading-replysectionhint' => 'Απάντηση σε αυτό το ποστ',
+	'discussionthreading-threadnewsection' => 'νέο',
+	'discussionthreading-threadnewsectionhint' => 'Προσθήκη νέου τμήματος',
 );
 
 /** Esperanto (Esperanto)
@@ -142,6 +186,16 @@ $messages['es'] = array(
 	'discussionthreading-replysectionhint' => 'Respuesta a este tema',
 	'discussionthreading-threadnewsection' => 'nuevo',
 	'discussionthreading-threadnewsectionhint' => 'Empezar un nuevo tema',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'discussionthreading-replysection' => 'vasta',
+	'discussionthreading-replysectionhint' => 'Vasta sellele sõnumile',
+	'discussionthreading-threadnewsection' => 'uus',
 );
 
 /** Basque (Euskara)
@@ -178,6 +232,13 @@ $messages['fr'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Commencer un nouveau fil de discussion',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'discussionthreading-threadnewsection' => 'novél',
+);
+
 /** Irish (Gaeilge)
  * @author Alison
  */
@@ -204,7 +265,11 @@ $messages['gl'] = array(
  * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'discussionthreading-desc' => 'Προστιθέναι τμήματα εἰς τὰς δέλτους διαλέξεως',
+	'discussionthreading-replysection' => 'ἀποκρίνεσθαι',
+	'discussionthreading-replysectionhint' => 'Ἀποκρίνεσθαι τῷδε',
 	'discussionthreading-threadnewsection' => 'νέα',
+	'discussionthreading-threadnewsectionhint' => 'Ἄρχειν νέον τμῆμα',
 );
 
 /** Swiss German (Alemannisch)
@@ -216,6 +281,17 @@ $messages['gsw'] = array(
 	'discussionthreading-replysectionhint' => 'Zue däm Yytrag e Antwort gee',
 	'discussionthreading-threadnewsection' => 'nej',
 	'discussionthreading-threadnewsectionhint' => 'E neje Diskussionsstrang aalege',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Dineshjk
+ */
+$messages['gu'] = array(
+	'discussionthreading-desc' => 'ચર્ચા પાનાં પર આ થ્રેડ ઉમેરો.',
+	'discussionthreading-replysection' => 'જવાબ આપો',
+	'discussionthreading-replysectionhint' => 'આ પોસ્ટીંગનો જવાબ આપો.',
+	'discussionthreading-threadnewsection' => 'નવું',
+	'discussionthreading-threadnewsectionhint' => 'નવો થ્રેડ ચાલુ કરો.',
 );
 
 /** Hebrew (עברית)
@@ -241,6 +317,17 @@ $messages['hsb'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Nowu nitku startować',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'discussionthreading-desc' => 'Témakezelés a vitalapokhoz',
+	'discussionthreading-replysection' => 'válasz',
+	'discussionthreading-replysectionhint' => 'Válasz erre az üzenetre',
+	'discussionthreading-threadnewsection' => 'új',
+	'discussionthreading-threadnewsectionhint' => 'Új téma indítása',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -250,6 +337,17 @@ $messages['ia'] = array(
 	'discussionthreading-replysectionhint' => 'Responder a iste commento',
 	'discussionthreading-threadnewsection' => 'nove',
 	'discussionthreading-threadnewsectionhint' => 'Initiar un nove filo',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'discussionthreading-desc' => 'Tambahkan kemampuan "thread" di halaman pembicaraan',
+	'discussionthreading-replysection' => 'balas',
+	'discussionthreading-replysectionhint' => 'Balas posting ini',
+	'discussionthreading-threadnewsection' => 'baru',
+	'discussionthreading-threadnewsectionhint' => 'Mulai sebuah topik baru',
 );
 
 /** Italian (Italiano)
@@ -294,7 +392,7 @@ $messages['ksh'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Ene neue Fäddem aanfange',
 );
 
-/** Cornish (Kernewek)
+/** Cornish (Kernowek)
  * @author Kw-Moon
  */
 $messages['kw'] = array(
@@ -310,6 +408,17 @@ $messages['lb'] = array(
 	'discussionthreading-replysectionhint' => 'Op dës Bemierkung äntwerten',
 	'discussionthreading-threadnewsection' => 'nei',
 	'discussionthreading-threadnewsectionhint' => 'Eng nei Bemierkung derbäisetzen',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'discussionthreading-desc' => 'Додава ниски на страници за разговор',
+	'discussionthreading-replysection' => 'одговор',
+	'discussionthreading-replysectionhint' => 'Одговори на оваа порака',
+	'discussionthreading-threadnewsection' => 'нови',
+	'discussionthreading-threadnewsectionhint' => 'Започни нова нишка',
 );
 
 /** Erzya (Эрзянь)
@@ -343,8 +452,10 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'discussionthreading-desc' => 'Legg til tråding på diskusjonssider',
 	'discussionthreading-replysection' => 'svar',
 	'discussionthreading-replysectionhint' => 'Svar på denne posten',
 	'discussionthreading-threadnewsection' => 'ny',
@@ -362,6 +473,13 @@ $messages['oc'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Començar una discussion novèla',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'discussionthreading-threadnewsection' => 'nei',
+);
+
 /** Polish (Polski)
  * @author Holek
  * @author Leinad
@@ -374,6 +492,17 @@ $messages['pl'] = array(
 	'discussionthreading-replysectionhint' => 'Odpowiedz na tę wiadomość',
 	'discussionthreading-threadnewsection' => 'nowy',
 	'discussionthreading-threadnewsectionhint' => 'Zacznij nowy wątek',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'discussionthreading-desc' => 'Gionta ël threading a le pàgine ëd discussion',
+	'discussionthreading-replysection' => 'arspond',
+	'discussionthreading-replysectionhint' => 'Arspond a sto messagi-sì',
+	'discussionthreading-threadnewsection' => 'neuv',
+	'discussionthreading-threadnewsectionhint' => 'Fa parte un neuv thread',
 );
 
 /** Portuguese (Português)
@@ -399,11 +528,23 @@ $messages['pt-br'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Iniciar um novo tópico',
 );
 
+/** Romanian (Română)
+ * @author Firilacroco
+ */
+$messages['ro'] = array(
+	'discussionthreading-replysection' => 'răspuns',
+	'discussionthreading-threadnewsection' => 'nou',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'discussionthreading-desc' => "Aggiunge le thread jndr'à le pàggene de le 'ngazzaminde",
 	'discussionthreading-replysection' => 'respunne',
+	'discussionthreading-replysectionhint' => 'Responne a stu messagge',
+	'discussionthreading-threadnewsection' => 'nuève',
+	'discussionthreading-threadnewsectionhint' => "Accuminze 'nu thread nuève",
 );
 
 /** Russian (Русский)
@@ -411,6 +552,7 @@ $messages['roa-tara'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'discussionthreading-desc' => 'Добавляет ветви обсуждений на страницы обсуждений',
 	'discussionthreading-replysection' => 'ответ',
 	'discussionthreading-replysectionhint' => 'Ответить на это сообщение',
 	'discussionthreading-threadnewsection' => 'новые',
@@ -446,6 +588,17 @@ $messages['te'] = array(
 	'discussionthreading-replysection' => 'స్పందించండి',
 );
 
+/** Thai (ไทย)
+ * @author Harley Hartwell
+ */
+$messages['th'] = array(
+	'discussionthreading-desc' => 'เริ่มหัวข้อใหม่ในหน้าพูดคุย',
+	'discussionthreading-replysection' => 'ตอบ',
+	'discussionthreading-replysectionhint' => 'ตอบหัวข้อพูดคุยนี้',
+	'discussionthreading-threadnewsection' => 'ใหม่',
+	'discussionthreading-threadnewsectionhint' => 'เริ่มหัวข้อใหม่',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -459,9 +612,36 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Mach
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'discussionthreading-desc' => 'Tartışma sayfalarına başlık sistemi ekle',
+	'discussionthreading-replysection' => 'cevap',
+	'discussionthreading-replysectionhint' => 'Bu gönderiye cevap ver',
 	'discussionthreading-threadnewsection' => 'yeni',
+	'discussionthreading-threadnewsectionhint' => 'Yeni bir başlık başlat',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'discussionthreading-desc' => 'Додає гілки обговорень на сторінки обговорень',
+	'discussionthreading-replysection' => 'відповідь',
+	'discussionthreading-replysectionhint' => 'Відповісти на це повідомлення',
+	'discussionthreading-threadnewsection' => 'нові',
+	'discussionthreading-threadnewsectionhint' => 'Створити нову тему',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'discussionthreading-desc' => 'Ližadab lodubarboid lodulehtpolile',
+	'discussionthreading-replysection' => 'vastuz',
+	'discussionthreading-replysectionhint' => 'Antta vastust neche tedotushe',
+	'discussionthreading-threadnewsection' => "uz'",
+	'discussionthreading-threadnewsectionhint' => "Augotada uz' barb",
 );
 
 /** Vietnamese (Tiếng Việt)

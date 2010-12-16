@@ -38,6 +38,14 @@ $messages['arz'] = array(
 	'othersites-desc' => 'ينقل وصلات الإنترويكى غير وصلات اللغة إلى مكانها الخاص',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'othersites' => 'ãndare Seitn',
+	'othersites-desc' => "Vaschiabt Intawiki-Links in a eigene Box, wãun's kane Språchn-Links san",
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
@@ -51,6 +59,14 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'othersites' => 'Други сайтове',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'othersites' => "Lec'hiennoù all",
+	'othersites-desc' => "Dilec'hiañ a ra al liammoù etrewiki all estreget al liammoù yezh en o boest etrefas dezho o-unan",
 );
 
 /** Bosnian (Bosanski)
@@ -93,6 +109,15 @@ $messages['dsb'] = array(
 	'othersites-desc' => 'Pśesuwa wótkaze interwiki, kótarež njejsu rěcne wótkaze, do jich swójskego wobcerka',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'othersites' => 'Άλλοι ιστότοποι',
+	'othersites-desc' => 'Μετακινεί τους συνδέσμους ιντερβίκι, πλην συνδέσμων γλώσσας, στις δικές τους συνιστώσες διεπαφής',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -107,6 +132,13 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'othersites' => 'Otros sitios',
 	'othersites-desc' => 'Mueve los enlaces interwiki que no sean de idioma a una caja separada',
+);
+
+/** Estonian (Eesti)
+ * @author Silvar
+ */
+$messages['et'] = array(
+	'othersites' => 'Teised saidid',
 );
 
 /** Basque (Euskara)
@@ -131,12 +163,13 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author Zetud
  */
 $messages['fr'] = array(
 	'othersites' => 'autres sites',
-	'othersites-desc' => "Déplace les liens interwiki autres que les liens liés à la langue vers leurs propres composants d'interface.",
+	'othersites-desc' => 'Déplace les liens interwiki autres que les liens liés à la langue vers leurs propres composants d’interface.',
 );
 
 /** Galician (Galego)
@@ -153,6 +186,14 @@ $messages['gl'] = array(
 $messages['gsw'] = array(
 	'othersites' => 'Anderi Syte',
 	'othersites-desc' => 'Verschiebt Interwikigleicher in e eigene Chaschte, wänn si kei Sprochgleicher sin',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
+ */
+$messages['gu'] = array(
+	'othersites' => 'અન્ય સાઇટો',
+	'othersites-desc' => 'પોતાનાં પોર્ટલેટમાં ભાષાકડીઓ સિવાયની અન્ય આંતરવિકિ કડીઓ ખસેડો',
 );
 
 /** Hebrew (עברית)
@@ -186,6 +227,14 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'othersites' => 'Altere sitos',
 	'othersites-desc' => 'Displacia le ligamines interwiki altere que ligamines inter linguas verso un quadro separate',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'othersites' => 'Situs lain',
+	'othersites-desc' => 'Pindahkan pranala interwiki selain pranala bahasa ke modul tersendiri',
 );
 
 /** Italian (Italiano)
@@ -227,6 +276,21 @@ $messages['lb'] = array(
 	'othersites-desc' => 'Réckelt interwiki-Linken déi keng Sproochlinke sinn an hir eege Këscht',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'othersites' => 'Други интернет-страници',
+	'othersites-desc' => 'Ги преместува интервики врските, кои не се јазични врски, во посебни места',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Zamwan
+ */
+$messages['ms'] = array(
+	'othersites' => 'Tapak-tapak lain',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -255,7 +319,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'othersites' => 'autres sits',
+	'othersites' => 'autres sites',
 	'othersites-desc' => "Deplaça los ligams interwiki autres que los ligams ligats a la lenga de lors compausants d'interfàcia pròpris.",
 );
 
@@ -265,6 +329,14 @@ $messages['oc'] = array(
 $messages['pl'] = array(
 	'othersites' => 'Inne witryny',
 	'othersites-desc' => 'Przesuwa linki interwiki inne niż łącza językowe do ich własnych portletów',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'othersites' => 'Àutri sit',
+	'othersites-desc' => 'A tramuda le anliure anterwiki e le anliure dla lenga an toa portlet',
 );
 
 /** Portuguese (Português)
@@ -301,9 +373,11 @@ $messages['roa-tara'] = array(
 
 /** Russian (Русский)
  * @author Ferrer
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'othersites' => 'Другие сайты',
+	'othersites-desc' => 'Перемещает интервики-ссылки, не являющиеся языковыми ссылками, в отдельный блок',
 );
 
 /** Slovak (Slovenčina)
@@ -314,11 +388,33 @@ $messages['sk'] = array(
 	'othersites-desc' => 'Presunie interwiki odkazy okrem odkazov na iné jazyky do ich vlastných portletov.',
 );
 
+/** Lower Silesian (Schläsch)
+ * @author Piotron
+ */
+$messages['sli'] = array(
+	'othersites' => 'andere Seita',
+	'othersites-desc' => 'Verschiebt Interwikilinks ei anne eegene Box, falls se kääne Sproachlinks doarstella',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'othersites' => 'Faqet tjera',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'othersites' => 'Други сајтови',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'othersites' => 'Drugi sajtovi',
 );
 
 /** Seeltersk (Seeltersk)
@@ -355,9 +451,11 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'othersites' => 'Diğer siteler',
+	'othersites-desc' => 'Dil bağlantıları dışındaki interviki bağlantılarını kendi portletine taşır',
 );
 
 /** Vèneto (Vèneto)
@@ -365,6 +463,14 @@ $messages['tr'] = array(
  */
 $messages['vec'] = array(
 	'othersites' => 'Altri siti',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'othersites' => 'Toižed saitad',
+	'othersites-desc' => "Sirdab interwiki-kosketused, kudambad ei olgoi kel'kosketused, erigoittud blokha.",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -387,5 +493,12 @@ $messages['vo'] = array(
  */
 $messages['zh-hans'] = array(
 	'othersites' => '其他网站',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
+$messages['zh-hant'] = array(
+	'othersites' => '其他網站',
 );
 

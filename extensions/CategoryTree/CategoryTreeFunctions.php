@@ -120,7 +120,7 @@ class CategoryTree {
 	* Perhaps make this a global function in MediaWiki proper
 	*/
 	static function decodeBoolean( $value ) {
-		if ( is_null( $value ) ) return NULL;
+		if ( is_null( $value ) ) return null;
 		if ( is_bool( $value ) ) return $value;
 		if ( is_int( $value ) ) return ( $value > 0 );
 
@@ -129,7 +129,7 @@ class CategoryTree {
 
 		if ( $value == 'yes' || $value == 'y' || $value == 'true' || $value == 't' || $value == 'on' ) return true;
 		else if ( $value == 'no' || $value == 'n' || $value == 'false' || $value == 'f' || $value == 'off' ) return false;
-		else if ( $value == 'null' || $value == 'default' || $value == 'none' || $value == 'x' ) return NULL;
+		else if ( $value == 'null' || $value == 'default' || $value == 'none' || $value == 'x' ) return null;
 		else return false;
 	}
 
@@ -216,7 +216,7 @@ class CategoryTree {
 	}
 
 	static function getJsonCodec() {
-		static $json = NULL;
+		static $json = null;
 
 		if (!$json) {
 			$json = new Services_JSON(); #recycle API's JSON codec implementation
@@ -263,7 +263,7 @@ class CategoryTree {
 		return $opt;
 	}
 
-	function getOptionsAsCacheKey( $depth = NULL ) {
+	function getOptionsAsCacheKey( $depth = null ) {
 		$key = "";
 
 		foreach ( $this->mOptions as $k => $v ) {
@@ -275,7 +275,7 @@ class CategoryTree {
 		return $key;
 	}
 
-	function getOptionsAsJsStructure( $depth = NULL ) {
+	function getOptionsAsJsStructure( $depth = null ) {
 		if ( !is_null( $depth ) ) {
 			$opt = $this->mOptions;
 			$opt['depth'] = $depth;
@@ -314,7 +314,7 @@ class CategoryTree {
 
 		# Retrieve page_touched for the category
 		$dbkey = $title->getDBkey();
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$touched = $dbr->selectField( 'page', 'page_touched',
 			array(
 				'page_namespace' => NS_CATEGORY,
@@ -362,7 +362,7 @@ class CategoryTree {
 		}
 		$title = self::makeTitle( $category );
 
-		if ( $title === false || $title === NULL ) return false;
+		if ( $title === false || $title === null ) return false;
 
 		if ( isset( $attr['class'] ) ) $attr['class'] .= ' CategoryTreeTag';
 		else $attr['class'] = ' CategoryTreeTag';
@@ -374,7 +374,11 @@ class CategoryTree {
 
 		if ( !$allowMissing && !$title->getArticleID() ) {
 			$html .= Xml::openElement( 'span', array( 'class' => 'CategoryTreeNotice' ) );
-			$html .= wfMsgExt( 'categorytree-not-found', 'parseinline', htmlspecialchars( $category ) );
+			if( $parser ) {
+				$html .= $parser->recursiveTagParse( wfMsgNoTrans( 'categorytree-not-found', $category ) );
+			} else {
+				$html .= wfMsgExt( 'categorytree-not-found', 'parseinline', htmlspecialchars( $category ) );
+			}
 			$html .= Xml::closeElement( 'span' );
 			}
 		else {
@@ -408,7 +412,7 @@ class CategoryTree {
 			return '';
 		}
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$inverse = $this->isInverse();
 		$mode = $this->getOption('mode');
@@ -470,9 +474,9 @@ class CategoryTree {
 				$nsmatch
 				"./*AND cat.page_is_redirect = 0*/"
 				$transWhere
-				ORDER BY cl_sortkey
-				LIMIT " . (int)$wgCategoryTreeMaxChildren;
-
+				ORDER BY cl_sortkey";
+		$sql = $dbr->limitResult($sql, (int)$wgCategoryTreeMaxChildren);
+		
 		$res = $dbr->query( $sql, __METHOD__ );
 
 		#collect categories separately from other pages
@@ -482,7 +486,7 @@ class CategoryTree {
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			#NOTE: in inverse mode, the page record may be null, because we use a right join.
 			#      happens for categories with no category page (red cat links)
-			if ( $inverse && $row->page_title === NULL ) {
+			if ( $inverse && $row->page_title === null ) {
 				$t = Title::makeTitle( NS_CATEGORY, $row->cl_to );
 			}
 			else {
@@ -490,7 +494,7 @@ class CategoryTree {
 				$t = Title::newFromRow( $row );
 			}
 
-			$cat = NULL;
+			$cat = null;
 
 			if ( $doCount && $row->page_namespace == NS_CATEGORY ) {
 				$cat = Category::newFromRow( $row, $t );
@@ -515,7 +519,7 @@ class CategoryTree {
 	function renderParents( &$title ) {
 		global $wgCategoryTreeMaxChildren;
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		#additional stuff to be used if "transaltion" by interwiki-links is desired
 		$transFields = '';
@@ -529,8 +533,8 @@ class CategoryTree {
 				$transJoin
 				WHERE cl_from = " . $title->getArticleID() . "
 				$transWhere
-				ORDER BY cl_to
-				LIMIT " . (int)$wgCategoryTreeMaxChildren;
+				ORDER BY cl_to";
+		$sql = $dbr->limitResult($sql, (int)$wgCategoryTreeMaxChildren);
 
 		$res = $dbr->query( $sql, __METHOD__ );
 
@@ -753,8 +757,8 @@ class CategoryTree {
 
 		$title = trim($title);
 
-		if ( $title === NULL || $title === '' || $title === false ) {
-			return NULL;
+		if ( $title === null || $title === '' || $title === false ) {
+			return null;
 		}
 
 		# The title must be in the category namespace

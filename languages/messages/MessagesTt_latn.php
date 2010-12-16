@@ -12,24 +12,29 @@
  */
 
 $namespaceNames = array(
-        NS_MEDIA            => 'Media',
-        NS_SPECIAL          => 'Maxsus',
-        NS_MAIN             => '',
-        NS_TALK             => 'Bäxäs',
-        NS_USER             => 'Äğzä',
-        NS_USER_TALK        => "Äğzä_bäxäse",
-        # NS_PROJECT set by $wgMetaNamespace
-        NS_PROJECT_TALK     => '$1_bäxäse',
-        NS_FILE             => "Räsem",
-        NS_FILE_TALK        => "Räsem_bäxäse",
-        NS_MEDIAWIKI        => "MediaWiki",
-        NS_MEDIAWIKI_TALK   => "MediaWiki_bäxäse",
-        NS_TEMPLATE         => "Ürnäk",
-        NS_TEMPLATE_TALK    => "Ürnäk_bäxäse",
-        NS_HELP             => "Yärdäm",
-        NS_HELP_TALK        => "Yärdäm_bäxäse",
-        NS_CATEGORY         => "Törkem",
-        NS_CATEGORY_TALK    => "Törkem_bäxäse",
+	NS_MEDIA            => 'Media',
+	NS_SPECIAL          => 'Maxsus',
+	NS_TALK             => 'Bäxäs',
+	NS_USER             => 'Qullanuçı',
+	NS_USER_TALK        => 'Qullanuçı_bäxäse',
+	NS_PROJECT_TALK     => '$1_bäxäse',
+	NS_FILE             => 'Fayl',
+	NS_FILE_TALK        => 'Fayl_bäxäse',
+	NS_MEDIAWIKI        => 'MediaWiki',
+	NS_MEDIAWIKI_TALK   => 'MediaWiki_bäxäse',
+	NS_TEMPLATE         => 'Ürnäk',
+	NS_TEMPLATE_TALK    => 'Ürnäk_bäxäse',
+	NS_HELP             => 'Yärdäm',
+	NS_HELP_TALK        => 'Yärdäm_bäxäse',
+	NS_CATEGORY         => 'Törkem',
+	NS_CATEGORY_TALK    => 'Törkem_bäxäse',
+);
+
+$namespaceAliases = array(
+	'Äğzä'             => NS_USER,
+	'Äğzä_bäxäse'      => NS_USER_TALK,
+	'Räsem'            => NS_FILE,
+	'Räsem_bäxäse'     => NS_FILE_TALK,
 );
 
 $datePreferences = false;
@@ -41,8 +46,8 @@ $dateFormats = array(
         'mdy date' => 'M j, Y',
         'mdy both' => 'H:i, M j, Y',
         'dmy time' => 'H:i',
-        'dmy date' => 'j. M Y',
-        'dmy both' => 'j. M Y, H:i',
+        'dmy date' => 'j M Y',
+        'dmy both' => 'j M Y, H:i',
         'ymd time' => 'H:i',
         'ymd date' => 'Y M j',
         'ymd both' => 'H:i, Y M j',
@@ -52,31 +57,30 @@ $dateFormats = array(
 );
 
 $magicWords = array(
-#       ID                                 CASE  SYNONYMS
-        'redirect'               => array( 0,    '#yünältü',                '#REDIRECT'),
-        'notoc'                  => array( 0,    '__ETYUQ__',              '__NOTOC__'),
-        'forcetoc'               => array( 0,    '__ETTIQ__',              '__FORCETOC__'),
-        'toc'                    => array( 0,    '__ET__',                 '__TOC__'),
-        'noeditsection'          => array( 0,    '__BÜLEMTÖZÄTÜYUQ__',     '__NOEDITSECTION__'),
-        'currentmonth'           => array( 1,    'AĞIMDAĞI_AY',            'CURRENTMONTH'),
-        'currentmonthname'       => array( 1,    'AĞIMDAĞI_AY_İSEME',      'CURRENTMONTHNAME'),
-        'currentday'             => array( 1,    'AĞIMDAĞI_KÖN',           'CURRENTDAY'),
-        'currentdayname'         => array( 1,    'AĞIMDAĞI_KÖN_İSEME',     'CURRENTDAYNAME'),
-        'currentyear'            => array( 1,    'AĞIMDAĞI_YIL',           'CURRENTYEAR'),
-        'currenttime'            => array( 1,    'AĞIMDAĞI_WAQIT',         'CURRENTTIME'),
-        'numberofarticles'       => array( 1,    'MÄQÄLÄ_SANI',            'NUMBEROFARTICLES'),
-        'currentmonthnamegen'    => array( 1,    'AĞIMDAĞI_AY_İSEME_GEN',  'CURRENTMONTHNAMEGEN'),
-        'pagename'               => array( 1,    'BİTİSEME',               'PAGENAME'),
-        'namespace'              => array( 1,    'İSEMARA',                'NAMESPACE'),
-        'subst'                  => array( 0,    'TÖPÇEK:',                'SUBST:'),
-        'img_right'              => array( 1,    'uñda',                   'right'),
-        'img_left'               => array( 1,    'sulda',                  'left'),
-        'img_none'               => array( 1,    'yuq',                    'none'),
-        'int'                    => array( 0,    'EÇKE:',                   'INT:'),
-        'sitename'               => array( 1,    'SÄXİFÄİSEME',            'SITENAME'),
-        'ns'                     => array( 0,    'İA:',                    'NS:'),
-        'localurl'               => array( 0,    'URINLIURL:',              'LOCALURL:'),
-        'localurle'              => array( 0,    'URINLIURLE:',             'LOCALURLE:'),
+	'redirect'              => array( '0', '#yünältü', '#REDIRECT' ),
+	'notoc'                 => array( '0', '__ETYUQ__', '__NOTOC__' ),
+	'forcetoc'              => array( '0', '__ETTIQ__', '__FORCETOC__' ),
+	'toc'                   => array( '0', '__ET__', '__TOC__' ),
+	'noeditsection'         => array( '0', '__BÜLEMTÖZÄTÜYUQ__', '__NOEDITSECTION__' ),
+	'currentmonth'          => array( '1', 'AĞIMDAĞI_AY', 'CURRENTMONTH', 'CURRENTMONTH2' ),
+	'currentmonthname'      => array( '1', 'AĞIMDAĞI_AY_İSEME', 'CURRENTMONTHNAME' ),
+	'currentmonthnamegen'   => array( '1', 'AĞIMDAĞI_AY_İSEME_GEN', 'CURRENTMONTHNAMEGEN' ),
+	'currentday'            => array( '1', 'AĞIMDAĞI_KÖN', 'CURRENTDAY' ),
+	'currentdayname'        => array( '1', 'AĞIMDAĞI_KÖN_İSEME', 'CURRENTDAYNAME' ),
+	'currentyear'           => array( '1', 'AĞIMDAĞI_YIL', 'CURRENTYEAR' ),
+	'currenttime'           => array( '1', 'AĞIMDAĞI_WAQIT', 'CURRENTTIME' ),
+	'numberofarticles'      => array( '1', 'MÄQÄLÄ_SANI', 'NUMBEROFARTICLES' ),
+	'pagename'              => array( '1', 'BİTİSEME', 'PAGENAME' ),
+	'namespace'             => array( '1', 'İSEMARA', 'NAMESPACE' ),
+	'subst'                 => array( '0', 'TÖPÇEK:', 'SUBST:' ),
+	'img_right'             => array( '1', 'uñda', 'right' ),
+	'img_left'              => array( '1', 'sulda', 'left' ),
+	'img_none'              => array( '1', 'yuq', 'none' ),
+	'int'                   => array( '0', 'EÇKE:', 'INT:' ),
+	'sitename'              => array( '1', 'SÄXİFÄİSEME', 'SITENAME' ),
+	'ns'                    => array( '0', 'İA:', 'NS:' ),
+	'localurl'              => array( '0', 'URINLIURL:', 'LOCALURL:' ),
+	'localurle'             => array( '0', 'URINLIURLE:', 'LOCALURLE:' ),
 );
 
 $fallback8bitEncoding = "windows-1254";
@@ -125,10 +129,18 @@ $messages = array(
 
 'linkprefix' => '/^(.*?)([a-zäçğıñöşüA-ZÄÇĞİÑÖŞÜ«„]+)$/sDu',
 
-'about'          => 'Turında',
-'article'        => 'Eçtälek bite',
-'newwindow'      => '(yaña täräzädä açılır)',
-'cancel'         => 'Kiräkmi',
+'about'         => 'Turında',
+'article'       => 'Eçtälek bite',
+'newwindow'     => '(yaña täräzädä açılır)',
+'cancel'        => 'Kiräkmi',
+'moredotdotdot' => 'Kübräk...',
+'mypage'        => 'Bitem',
+'mytalk'        => 'Bäxäsem',
+'anontalk'      => 'Bu IP turında bäxäs',
+'navigation'    => 'Küçü',
+'and'           => '&#32;wä',
+
+# Cologne Blue skin
 'qbfind'         => 'Tap',
 'qbbrowse'       => 'Qaraw',
 'qbedit'         => 'Üzgärtü',
@@ -136,12 +148,8 @@ $messages = array(
 'qbpageinfo'     => 'Eçtälek',
 'qbmyoptions'    => 'Bitlärem',
 'qbspecialpages' => 'Maxsus bitlär',
-'moredotdotdot'  => 'Kübräk...',
-'mypage'         => 'Bitem',
-'mytalk'         => 'Bäxäsem',
-'anontalk'       => 'Bu IP turında bäxäs',
-'navigation'     => 'Küçü',
-'and'            => '&#32;wä',
+'faq'            => 'YBS',
+'faqpage'        => 'Project:YBS',
 
 'errorpagetitle'    => 'Xata',
 'returnto'          => '«$1» bitenä qaytu.',
@@ -178,7 +186,7 @@ $messages = array(
 'viewtalkpage'      => 'Bäxäsen qaraw',
 'otherlanguages'    => 'Başqa tellärdä',
 'redirectedfrom'    => '(«$1» bitennän yünältelde)',
-'lastmodifiedat'    => 'Betniñ soñğı özgerişi $2, $1 bolğan.', # $1 date, $2 time
+'lastmodifiedat'    => 'Betniñ soñğı özgerişi $2, $1 bolğan.',
 'protectedpage'     => 'Yaqlanğan bit',
 'jumpto'            => 'Küç:',
 'jumptosearch'      => 'ezläw',
@@ -187,14 +195,11 @@ $messages = array(
 'aboutsite'            => '{{SITENAME}} Turında',
 'aboutpage'            => 'Project:Turında',
 'copyright'            => 'Eçtälek $1 buyınça ireşüle.',
-'copyrightpagename'    => '{{SITENAME}} qälämxaqı',
 'copyrightpage'        => '{{ns:project}}:Qälämxaq',
 'currentevents'        => 'Xäzerge waqíğalar',
 'currentevents-url'    => 'Project:Xäzerge waqíğalar',
 'edithelp'             => 'Üzgärtü xaqında',
 'edithelppage'         => 'Help:Üzgärtü',
-'faq'                  => 'YBS',
-'faqpage'              => 'Project:YBS',
 'helppage'             => 'Help:Eçtälek',
 'mainpage'             => 'Başbit',
 'mainpage-description' => 'Başbit',
@@ -243,11 +248,9 @@ $messages = array(
 'viewsource'      => 'Mäqälä çığanağı',
 
 # Login and logout pages
-'logouttitle'           => 'Äğzä çığuı',
 'welcomecreation'       => "== Räxim it, $1! ==
 
 Sineñ xísabıñ yasaldı. {{SITENAME}}'dağı köyläwläreñne dä üzgärtergä onıtma.",
-'loginpagetitle'        => 'Atama belän kerü',
 'yourname'              => 'İreşü isemeñ',
 'yourpassword'          => 'Sersüzeñ',
 'yourpasswordagain'     => 'Sersüz qabat',
@@ -261,9 +264,6 @@ Sineñ xísabıñ yasaldı. {{SITENAME}}'dağı köyläwläreñne dä üzgärter
 'createaccountmail'     => 'email buyınça',
 'badretype'             => 'Kertelgän sersüzeñ kileşmi.',
 'userexists'            => 'Äle genä kertkäneñ äğzä iseme qullanıla inde. Başqa isem sayla zínhar.',
-'youremail'             => "Email'ıñ*",
-'yourrealname'          => 'Çın isemeñ*',
-'yournick'              => 'Atamañ:',
 'loginerror'            => 'Kerü xatası',
 'loginsuccesstitle'     => 'Uñışlı kergänbez',
 'loginsuccess'          => "Sin {{SITENAME}}'ğa «$1» atama belän kergän buldıñ.",
@@ -345,44 +345,43 @@ Zínhar, bu bitneñ wağraq kisäklärgä bülü turında uylap qara.",
 'titlematches'   => 'Mäqälä başlığı kileşä',
 'notitlematches' => 'Kileşkän bit başlığı yuq',
 'notextmatches'  => 'Kileşkän bit mätene yuq',
-'prevn'          => 'uzğan $1',
-'nextn'          => 'kiläse $1',
-'viewprevnext'   => 'Kürsätäse: ($1) ($2) ($3)',
+'prevn'          => 'uzğan {{PLURAL:$1|$1}}',
+'nextn'          => 'kiläse {{PLURAL:$1|$1}}',
+'viewprevnext'   => 'Kürsätäse: ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url' => 'Help:Eçtälek',
 'powersearch'    => 'Ezläw',
 
+# Quickbar
+'qbsettings' => 'Tiztirä caylawı',
+
 # Preferences page
-'preferences'           => 'Köyläwem',
-'mypreferences'         => 'Köyläwem',
-'prefsnologin'          => 'Kermägänseñ',
-'qbsettings'            => 'Tiztirä caylawı',
-'changepassword'        => 'Sersüz üzgärtü',
-'skin'                  => 'Tışlaw',
-'skin-preview'          => 'Küzläw',
-'dateformat'            => 'Waqıt qalıbı',
-'math_failure'          => 'Uqí almadım',
-'math_unknown_error'    => 'tanılmağan xata',
-'math_unknown_function' => 'tanılmağan funksí',
-'math_lexing_error'     => 'nöhü xatası',
-'math_syntax_error'     => 'nöhü xatası',
-'prefs-misc'            => 'Başqa köyläwlär',
-'saveprefs'             => 'Saqla köyläwlärne',
-'resetprefs'            => 'Awdar köyläwne',
-'textboxsize'           => 'Mätenqır ülçäme',
-'rows'                  => 'Yul:',
-'columns'               => 'Buy:',
-'searchresultshead'     => 'Ezläw',
-'resultsperpage'        => 'Bit sayın näticä sanı',
-'recentchangescount'    => 'Soñğı üzgärtmä tezmäsendä başlıq sanı',
-'savedprefs'            => 'Köyläwläreñ saqlandı.',
-'timezonelegend'        => 'Waqıt quşağı',
-'localtime'             => 'Cirle waqıt belän kürsätäse',
-'timezoneoffset'        => 'Çigenü',
-'servertime'            => 'Serverda xäzerge waqıt',
-'guesstimezone'         => 'Browserdan alası',
-'defaultns'             => 'Ğädättä bu isemarada ezlise:',
-'default'               => 'töpcay',
-'files'                 => 'Fayllar',
+'preferences'        => 'Köyläwem',
+'mypreferences'      => 'Köyläwem',
+'prefsnologin'       => 'Kermägänseñ',
+'changepassword'     => 'Sersüz üzgärtü',
+'prefs-skin'         => 'Tışlaw',
+'skin-preview'       => 'Küzläw',
+'prefs-misc'         => 'Başqa köyläwlär',
+'saveprefs'          => 'Saqla köyläwlärne',
+'resetprefs'         => 'Awdar köyläwne',
+'prefs-editing'      => 'Mätenqır ülçäme',
+'rows'               => 'Yul:',
+'columns'            => 'Buy:',
+'searchresultshead'  => 'Ezläw',
+'resultsperpage'     => 'Bit sayın näticä sanı',
+'recentchangescount' => 'Soñğı üzgärtmä tezmäsendä başlıq sanı',
+'savedprefs'         => 'Köyläwläreñ saqlandı.',
+'timezonelegend'     => 'Waqıt quşağı',
+'localtime'          => 'Cirle waqıt belän kürsätäse',
+'timezoneoffset'     => 'Çigenü',
+'servertime'         => 'Serverda xäzerge waqıt',
+'guesstimezone'      => 'Browserdan alası',
+'defaultns'          => 'Ğädättä bu isemarada ezlise:',
+'default'            => 'töpcay',
+'prefs-files'        => 'Fayllar',
+'youremail'          => "Email'ıñ*",
+'yourrealname'       => 'Çın isemeñ*',
+'yournick'           => 'Atamañ:',
 
 # Recent changes
 'recentchanges'     => 'Soñğı üzgärtmälär',
@@ -403,13 +402,14 @@ Zínhar, bu bitneñ wağraq kisäklärgä bülü turında uylap qara.",
 'newpageletter'     => 'Y',
 
 # Recent changes linked
-'recentchangeslinked'       => 'Bäyle üzgärmä',
-'recentchangeslinked-title' => '$1 belän bäyle üzgärmä',
+'recentchangeslinked'         => 'Bäyle üzgärmä',
+'recentchangeslinked-feed'    => 'Bäyle üzgärmä',
+'recentchangeslinked-toolbox' => 'Bäyle üzgärmä',
+'recentchangeslinked-title'   => '$1 belän bäyle üzgärmä',
 
 # Upload
 'upload'            => 'Birem yökläw',
 'uploadbtn'         => 'Yöklä biremne',
-'reupload'          => 'Qabat yökläw',
 'reuploaddesc'      => 'Yökläw bitenä qaytu.',
 'uploadnologin'     => 'Kermädeñ',
 'uploadnologintext' => 'Birem yökläw öçen, säxifägä isem belän [[Special:UserLogin|keräse]].',
@@ -430,13 +430,13 @@ Zínhar, bu bitneñ wağraq kisäklärgä bülü turında uylap qara.",
 'savefile'          => 'Saqla biremne',
 'uploadedimage'     => 'yöklände "$1"',
 'uploaddisabled'    => 'Ğafu it, yökläw sünderelgän kileş tora.',
-'uploadcorrupt'     => 'Bu birem yä üze watıq, yä quşımtası yaraqsız. Birem tikşerüdän soñ qabat yöklä zínhar.',
 
 # Special:ListFiles
 'imgfile'   => 'fayl',
 'listfiles' => 'Räsem tezmäse',
 
 # File description page
+'file-anchor-link'    => 'Räsem',
 'filehist-dimensions' => 'Zurlıq',
 'filehist-comment'    => 'Açıqlama',
 'imagelinks'          => 'Räsem läñkerläre',
@@ -467,8 +467,8 @@ Zínhar, bu bitneñ wağraq kisäklärgä bülü turında uylap qara.",
 
 'brokenredirects'        => 'Watıq Yünältülär',
 'brokenredirectstext'    => 'Kiläse yünältülär bulmağan bitlärgä qarílar.',
-'brokenredirects-edit'   => '(özgertiw)',
-'brokenredirects-delete' => '(bitir)',
+'brokenredirects-edit'   => 'üzgärtü',
+'brokenredirects-delete' => 'beter',
 
 # Miscellaneous special pages
 'lonelypages'             => 'Yätim bitlär',
@@ -560,7 +560,7 @@ Soñğı beterülär $2 bitendä terkälenä.',
 ** Buzıp yörüçi eşe',
 
 # Rollback
-'editcomment' => "Bu üzgärtü taswírı: \"''\$1''\".", # only shown if there is an edit comment
+'editcomment' => "Bu üzgärtü taswírı: \"''\$1''\".",
 
 # Protect
 'protectlogpage'     => 'Yaqlaw_köndälege',
@@ -587,6 +587,8 @@ Soñğı beterülär $2 bitendä terkälenä.',
 'mycontris'     => 'Qatnaşuım',
 'contribsub2'   => '$1 ($2) öçen',
 'uctop'         => ' (soñ)',
+
+'sp-contributions-talk' => 'bäxäs',
 
 # What links here
 'whatlinkshere' => 'Kem bäyle moña',
@@ -641,7 +643,6 @@ yä isä saylanğan isem yaraqsız buldı. Başqa isem sayla zínhar.',
 'allmessagesdefault' => 'Töpcay yazma',
 'allmessagescurrent' => 'Eligi yazma',
 'allmessagestext'    => 'Bu säxifäneñ MediaWiki: atarasında bulğan yazmalar tezmäse.',
-'allmessagesfilter'  => 'Yazma atalışına sözgiç:',
 
 # Thumbnails
 'thumbnail-more' => 'Zuraytası',
@@ -700,6 +701,13 @@ yä isä saylanğan isem yaraqsız buldı. Başqa isem sayla zínhar.',
 # Info page
 'infosubtitle' => 'Bit turında',
 
+# Math errors
+'math_failure'          => 'Uqí almadım',
+'math_unknown_error'    => 'tanılmağan xata',
+'math_unknown_function' => 'tanılmağan funksí',
+'math_lexing_error'     => 'nöhü xatası',
+'math_syntax_error'     => 'nöhü xatası',
+
 # Media information
 'show-big-image' => 'Tulı zurlığı',
 
@@ -725,7 +733,7 @@ yä isä saylanğan isem yaraqsız buldı. Başqa isem sayla zínhar.',
 'autosumm-new' => 'Yeni bet: $1',
 
 # Special:Version
-'version' => 'Yurama', # Not used as normal message but as header for the special page itself
+'version' => 'Yurama',
 
 # Special:SpecialPages
 'specialpages' => 'Maxsus bitlär',

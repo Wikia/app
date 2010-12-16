@@ -5,6 +5,7 @@ var wgOggPlayer = {
 	'safari' : false,
 	'opera' : false,
 	'mozilla': false,
+	'safariControlsBug': false,
 
 	// List of players in order of preference
 	// Downpreffed VLC because it crashes my browser all the damn time -- TS
@@ -71,7 +72,7 @@ var wgOggPlayer = {
 			}
 		}
 
-		if ( !this.clientSupports[player] )  {
+		if ( !this.clientSupports[player] ) {
 			player = false;
 		}
 
@@ -139,6 +140,17 @@ var wgOggPlayer = {
 		//alert(s);
 	},
 
+	// Search for a plugin in navigator.plugins
+	'hasPlugin': function( mimeType ) {
+		for ( var i = 0; i < navigator.plugins.length; i++ ) {
+			var plugin = navigator.plugins[i];
+			if ( typeof plugin[mimeType] != "undefined" ) {
+				return true;
+			}
+		}
+		return false;
+	},
+
 	// Detect client capabilities
 	'detect': function() {
 		if (this.detectionDone) {
@@ -166,9 +178,17 @@ var wgOggPlayer = {
 		}
 
 		if ( this.konqueror ) {
-			// Bugged as of 3.5.9
+			// Java is bugged as of 3.5.9
 			// Applet freezes shortly after starting
 			javaEnabled = false;
+		}
+
+		if ( this.safari ) {
+			// Detect https://bugs.webkit.org/show_bug.cgi?id=25575
+			var match = /AppleWebKit\/([0-9]+)/.exec( navigator.userAgent );
+			if ( match && parseInt( match[1] ) < 531 ) {
+				this.safariControlsBug = true;
+			}
 		}
 
 		// ActiveX plugins
@@ -189,20 +209,22 @@ var wgOggPlayer = {
 		if ( typeof HTMLVideoElement == 'object' // Firefox, Safari
 				|| typeof HTMLVideoElement == 'function' ) // Opera
 		{
-			//do another test for safari: 
-			if( wgOggPlayer.safari ){
-				try{
-					var dummyvid = document.createElement("video");
-					if (dummyvid.canPlayType("video/ogg;codecs=\"theora,vorbis\"") == "probably")
+			// Safari does not support Theora by default, but later versions implement canPlayType()
+			if ( this.safari ) {
+				try {
+					var video = document.createElement( 'video' );
+					if ( video.canPlayType 
+						&& video.canPlayType( 'video/ogg;codecs="theora,vorbis"' ) == 'probably' )
 					{
 						this.clientSupports['videoElement'] = true;
+					} else if ( this.supportedMimeType( 'video/ogg' ) ) {
+						// On older versions, XiphQT registers a plugin type and also handles <video>
+						this.clientSupports['videoElement'] = true;
 					} else {
-						/* could add some user nagging to install the xiph qt */
+						// TODO: prompt for XiphQT install
 					}
-				}catch(e){
-					//could not use canPlayType
-				}
-			}else{
+				} catch ( e ) {}
+			} else {
 				this.clientSupports['videoElement'] = true;
 			}
 		}
@@ -260,7 +282,9 @@ var wgOggPlayer = {
 				// Note: Totem and KMPlayer also use this pluginName, which is 
 				// why we check for them first
 				player = 'quicktime-mozilla';
-			} else if ( pluginName.toLowerCase() == 'vlc multimedia plugin' ) {
+			} else if ( (pluginName.toLowerCase() == 'vlc multimedia plugin') 
+					|| (pluginName.toLowerCase() == 'vlc multimedia plug-in') ) 
+			{
 				player = 'vlc-mozilla';
 			} else if ( type == 'application/ogg' ) {
 				player = 'oggPlugin';
@@ -531,22 +555,26 @@ var wgOggPlayer = {
 
 	'embedVideoElement': function ( elt, params ) {
 		var id = elt.id + "_obj";
-		elt.innerHTML =
-			'<div><video' + 
+		var tagName = params.isVideo ? 'video' : 'audio';
+		var html =
+			'<div><' + tagName +
 				' id=' + this.hq( id ) + 
 				' width=' + this.hq( params.width ) + 
-				' height=' + this.hq( params.height ) + 
+				' height=' + this.hq( (params.height>0)?params.height:this.controlsHeightGuess ) + 
 				' src=' + this.hq( params.videoUrl ) +
-				' autoplay="1"' +
-				' controls="1"' +
-				' /></div>';
+				' autoplay';
+		if ( !this.safariControlsBug ) {
+			html += ' controls';
+		}
+		html += ' ></' + tagName + '></div>';
+		elt.innerHTML = html;
 	},
 
 	'embedOggPlugin': function ( elt, params, player ) {
 		var id = elt.id + "_obj";
 		elt.innerHTML += 
 			"<div><object id=" + this.hq( id ) + 
-			" type='" + this.mimeTypes[player] + "'" +
+			" type=" + this.hq( this.mimeTypes[player] ) +
 			" width=" + this.hq( params.width ) + 
 			" height=" + this.hq( params.height + this.controlsHeightGuess ) + 
 			" data=" + this.hq( params.videoUrl ) + "></object></div>";
@@ -556,7 +584,7 @@ var wgOggPlayer = {
 		var id = elt.id + "_obj";
 		elt.innerHTML += 	
 			"<div><object id=" + this.hq( id ) + 
-			" type='" + this.mimeTypes['vlc-mozilla'] + "'" +
+			" type=" + this.hq( this.mimeTypes['vlc-mozilla'] ) +
 			" width=" + this.hq( params.width ) + 
 			" height=" + this.hq( params.height ) + 
 			" data=" + this.hq( params.videoUrl ) + "></object></div>";

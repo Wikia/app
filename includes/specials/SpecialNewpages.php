@@ -89,7 +89,7 @@ class SpecialNewpages extends SpecialPage {
 	 * @return string
 	 */
 	public function execute( $par ) {
-		global $wgLang, $wgUser, $wgOut;
+		global $wgLang, $wgOut;
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -165,6 +165,7 @@ class SpecialNewpages extends SpecialPage {
 		$this->opts->consumeValue( 'offset' ); // don't carry offset, DWIW
 		$namespace = $this->opts->consumeValue( 'namespace' );
 		$username = $this->opts->consumeValue( 'username' );
+		$tagFilterVal = $this->opts->consumeValue( 'tagfilter' );
 
 		// Check username input validity
 		$ut = Title::makeTitleSafe( NS_USER, $username );
@@ -177,7 +178,7 @@ class SpecialNewpages extends SpecialPage {
 		}
 		$hidden = implode( "\n", $hidden );
 
-		$tagFilter = ChangeTags::buildTagFilterSelector( $this->opts['tagfilter'] );
+		$tagFilter = ChangeTags::buildTagFilterSelector( $tagFilterVal );
 		if ($tagFilter)
 			list( $tagFilterLabel, $tagFilterSelector ) = $tagFilter;
 
@@ -231,12 +232,8 @@ class SpecialNewpages extends SpecialPage {
 
 	protected function setSyndicated() {
 		global $wgOut;
-		$queryParams = array(
-			'namespace' => $this->opts->getValue( 'namespace' ),
-			'username' => $this->opts->getValue( 'username' )
-		);
 		$wgOut->setSyndicated( true );
-		$wgOut->setFeedAppendQuery( wfArrayToCGI( $queryParams ) );
+		$wgOut->setFeedAppendQuery( wfArrayToCGI( $this->opts->getAllValues() ) );
 	}
 
 	/**
@@ -247,17 +244,32 @@ class SpecialNewpages extends SpecialPage {
 	 * @return string
 	 */
 	public function formatRow( $result ) {
-		global $wgLang, $wgContLang, $wgUser;
+		global $wgLang, $wgContLang;
 
 		$classes = array();
 		
 		$dm = $wgContLang->getDirMark();
 
 		$title = Title::makeTitleSafe( $result->rc_namespace, $result->rc_title );
-		$time = $wgLang->timeAndDate( $result->rc_timestamp, true );
-		$query = $this->patrollable( $result ) ? "rcid={$result->rc_id}&redirect=no" : 'redirect=no';
-		$plink = $this->skin->makeKnownLinkObj( $title, '', $query );
-		$hist = $this->skin->makeKnownLinkObj( $title, wfMsgHtml( 'hist' ), 'action=history' );
+		$time = htmlspecialchars( $wgLang->timeAndDate( $result->rc_timestamp, true ) );
+
+		$query = array( 'redirect' => 'no' );
+
+		if( $this->patrollable( $result ) )
+			$query['rcid'] = $result->rc_id;
+
+		$plink = $this->skin->linkKnown(
+			$title,
+			null,
+			array(),
+			$query
+		);
+		$hist = $this->skin->linkKnown(
+			$title,
+			wfMsgHtml( 'hist' ),
+			array(),
+			array( 'action' => 'history' )
+		);
 		$length = wfMsgExt( 'nbytes', array( 'parsemag', 'escape' ),
 			$wgLang->formatNum( $result->length ) );
 		$ulink = $this->skin->userLink( $result->rc_user, $result->rc_user_text ) . ' ' .
@@ -345,7 +357,7 @@ class SpecialNewpages extends SpecialPage {
 				$this->feedItemAuthor( $row ),
 				$comments);
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 

@@ -1,9 +1,8 @@
 <?php
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'DismissableSiteNotice',
-	'svn-date' => '$LastChangedDate: 2008-11-03 03:01:13 +0100 (pon, 03 lis 2008) $',
-	'svn-revision' => '$LastChangedRevision: 43109 $',
 	'author' => 'Brion Vibber',
 	'description' => 'Allows users to close the sitenotice.',
 	'descriptionmsg' => 'sitenotice-desc',

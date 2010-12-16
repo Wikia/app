@@ -25,7 +25,7 @@ class ProfileMonitor extends SpecialPage {
 		$wgOut->addHTML( $this->makeSearchForm( $process, $wild ) );
 
 		if( $wgRequest->getCheck( 'submit' ) ) {
-			$dbr =& wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->query( $this->makeSql( $dbr, $process, $wild ), __METHOD__ );
 			if( $res && $dbr->numRows( $res ) > 0 ) {
 				while( $row = $dbr->fetchObject( $res ) )

@@ -9,7 +9,7 @@
  * @file
  */
 
-$optionsWithArgs = array( 'lang', 'target', 'group' );
+$optionsWithArgs = array( 'lang', 'target', 'group', 'threshold' );
 require( dirname( __FILE__ ) . '/cli.inc' );
 
 function showUsage() {
@@ -21,7 +21,8 @@ Usage: php export.php [options...]
 Options:
   --target      Target directory for exported files
   --lang        Comma separated list of language codes or *
-  --group       Group id
+  --group       Group ID
+  --threshold   Do not export under this percentage translated
 EOT
 );
 	exit( 1 );
@@ -35,17 +36,25 @@ if ( !isset( $options['target'] ) ) {
 	STDERR( "You need to specify target directory" );
 	exit( 1 );
 }
+
 if ( !isset( $options['lang'] ) ) {
 	STDERR( "You need to specify languages to export" );
 	exit( 1 );
 }
+
 if ( !isset( $options['group'] ) ) {
 	STDERR( "You need to specify group" );
 	exit( 1 );
 }
+
 if ( !is_writable( $options['target'] ) ) {
 	STDERR( "Target directory is not writable" );
 	exit( 1 );
+}
+if ( isset( $options['threshold'] ) && intval( $options['threshold'] ) ) {
+	$threshold = $options['threshold'];
+} else {
+	$threshold = false;
 }
 
 $langs = Cli::parseLanguageCodes( $options['lang'] );
@@ -57,5 +66,25 @@ if ( !$group instanceof MessageGroup ) {
 	exit( 1 );
 }
 
-$writer = $group->getWriter();
-$writer->fileExport( $langs, $options['target'] );
+if ( $threshold ) {
+	$langs = TranslationStats::getPercentageTranslated(
+		$options['group'],
+		$langs,
+		$threshold,
+		true
+	);
+}
+
+if ( $group instanceof FileBasedMessageGroup ) {
+	$ffs = $group->getFFS();
+	$ffs->setWritePath( $options['target'] );
+	$collection = $group->initCollection( 'en' );
+
+	foreach ( $langs as $lang ) {
+		$collection->resetForNewLanguage( $lang );
+		$ffs->write( $collection );
+	}
+} else {
+	$writer = $group->getWriter();
+	$writer->fileExport( $langs, $options['target'] );
+}

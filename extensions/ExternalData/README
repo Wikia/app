@@ -1,7 +1,7 @@
 External Data extension
 
-        Version 0.5.2
-        Yaron Koren and Michael Dale
+        Version 0.9.2
+        Yaron Koren, Michael Dale and David Macdonald
 
 This is free software licensed under the GNU General Public License. Please
 see http://www.gnu.org/copyleft/gpl.html for further details, including the
@@ -10,13 +10,20 @@ full text and terms of the license.
 == Overview ==
 
 External Data is an extension to MediaWiki that allows for retrieving data
-in CSV, JSON and XML formats from both external URLs and local wiki pages.
+from various sources: external URLs and local wiki pages (in CSV, JSON and
+XML formats), database tables, and LDAP servers
 
-The extension defines three parser functions, #get_external_data,
-#external_value and #for_external_table:
+The extension defines five parser functions - #get_external_data,
+#get_db_data, #get_ldap_data, #external_value and #for_external_table:
 
 #get_external_data retrieves the data from a URL that holds XML, CSV or
 JSON, and assigns it to local variables or arrays.
+
+#get_db_data retrieves data from a database, using a SQL query, and assigns
+it to local variables or arrays.
+
+#get_ldap_data retrieves data from an LDAP server and assigns it to
+local variables.
 
 #external_value displays the value of any retrieved variable, or the
 first value if it's an array.
@@ -41,7 +48,7 @@ To install the extension, place the entire 'ExternalData' directory
 within your MediaWiki 'extensions' directory, then add the following
 line to your 'LocalSettings.php' file:
 
-     require_once( "$IP/extensions/ExternalData/ED_Settings.php" );
+     require_once( "$IP/extensions/ExternalData/ExternalData.php" );
 
 To cache the data from the URLs being accessed, you can call the contents
 of ExternalData.sql in your database, then add the following to
@@ -49,10 +56,26 @@ LocalSettings.php:
 
      $edgCacheTable = 'ed_url_cache';
 
-Finally, you can also set for string replacements to be done on the URLs you
-call, for instance to hide API keys:
+You should also add a line like the following, to set the expiration time
+of the cache, in seconds; this line will cache data for a week:
+
+     $edgCacheExpireTime = 7 * 24 * 60 * 60; 
+
+You can also set for string replacements to be done on the URLs you call,
+for instance to hide API keys:
 
      $edgStringReplacements['MY_API_KEY'] = 'abcd1324';
+
+You can create a "whitelist" to allow retrieval of data only from trusted
+sites, in the manner of MediaWiki's $wgAllowExternalImagesFrom - if you
+are hiding API keys, it is very much recommended to create such a
+whitelist, to prevent users from being able to discover theire values:
+
+     $edgAllowExternalDataFrom = array('http://example.com/api');
+
+Finally, to use the database or LDAP retrieval capabilities, you need to
+set connection settings as well - see the online documentation for more
+information.
 
 == Contact ==
 

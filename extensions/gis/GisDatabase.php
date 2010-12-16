@@ -36,7 +36,7 @@ class GisDatabase {
 
 	function GisDatabase()
 	{
-		$this->db =& wfGetDB( DB_MASTER );
+		$this->db = wfGetDB( DB_MASTER );
 
 		global $wgVersion;
 		$this->version = explode('.',$wgVersion);

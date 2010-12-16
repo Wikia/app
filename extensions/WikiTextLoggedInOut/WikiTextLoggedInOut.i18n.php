@@ -1,18 +1,25 @@
 <?php
-#Internationalization file fo Wiki Text Logged In Out extenstion
+/**
+ * Internationalization file for WikiTextLoggedInOut extension.
+ *
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
+/** English */
 $messages['en'] = array(
 	'wikitextloggedinout-desc' => 'Two parser hooks, <tt>&lt;loggedin&gt;</tt> and <tt>&lt;loggedout&gt;</tt> to show different text depending on the users\' login state',
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikitextloggedinout-desc' => 'Short description of the Wikitextloggedinout extension, shown in [[Special:Version]].{{doc-important|Do not translate or change links.}}',
+	'wikitextloggedinout-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -51,6 +58,13 @@ $messages['bg'] = array(
 	'wikitextloggedinout-desc' => 'Добавя две куки в парсета, <tt>&lt;loggedin&gt;</tt> и <tt>&lt;loggedout&gt;</tt>, чрез които се показва различен текст в зависимост дали потребителят е влязъл или не',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'wikitextloggedinout-desc' => 'Div diketenn an dielfenner ereadurezh, <tt>&lt;loggedin&gt;</tt> ha <tt>&lt;loggedout&gt;</tt> a-benn diskouez un destenn disheñvel, diouzh statud kevreañ an implijerien',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -67,9 +81,10 @@ $messages['ca'] = array(
 
 /** Czech (Česky)
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
-	'wikitextloggedinout-desc' => 'Přidává dva přípojné body sytaktického analyzátoru, <tt>&lt;loggedin&gt;</tt> a <tt>&lt;loggedout&gt;</tt> pro zobrazení odlišného textu v závislosti na stavu přihlášeného uživatele',
+	'wikitextloggedinout-desc' => 'Přidává dva přípojné body syntaktického analyzátoru, <tt>&lt;loggedin&gt;</tt> a <tt>&lt;loggedout&gt;</tt>, které slouží k zobrazení textu lišícího se podle toho, zda je uživatel přihlášen',
 );
 
 /** German (Deutsch)
@@ -84,6 +99,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'wikitextloggedinout-desc' => 'Dwě parserowej kokulce, <tt>&lt;loggedin&gt;</tt> and <tt>&lt;loggedout&gt;</tt>, aby se drugi tekst we wotwisnosći pśizjawjeńskego statusa wužywarja pokazał',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'wikitextloggedinout-desc' => 'Δύο άγγιστρα λεξιαναλυτή, <tt>&lt;loggedin&gt;</tt> και <tt>&lt;loggedout&gt;</tt>, για να προβάλλουν διαφορετικό κείμενο ανάλογα με την κατάσταση σύνδεσης των χρηστών',
 );
 
 /** Spanish (Español)
@@ -129,6 +151,13 @@ $messages['he'] = array(
 	'wikitextloggedinout-desc' => 'שתי תגיות, <tt>&lt;loggedin&gt;</tt> ו־<tt>&lt;loggedout&gt;</tt>, המציגות טקסט שונה למשתמשים אנונימיים ולמשתמשים רשומים',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'wikitextloggedinout-desc' => "Duwa ka parser hooks, <tt>&lt;loggedin&gt;</tt> kag <tt>&lt;loggedout&gt;</tt> para makit-an ang sari-sari nga teksto depende sa mga users' login estado",
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -168,7 +197,7 @@ $messages['it'] = array(
  * @author Fryed-peach
  */
 $messages['ja'] = array(
-	'wikitextloggedinout-desc' => '利用者のログイン状態によって異なる文章を表示するための2つのパーサーフック <tt>&lt;loggedin&gt;</tt> と <tt>&lt;loggedout&gt;</tt> を追加します',
+	'wikitextloggedinout-desc' => '利用者のログイン状態によって異なる文章を表示するための2つのパーサーフック <tt>&lt;loggedin&gt;</tt> と <tt>&lt;loggedout&gt;</tt> を追加する',
 );
 
 /** Javanese (Basa Jawa)
@@ -190,6 +219,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'wikitextloggedinout-desc' => 'Zwou Parser_Klameren <tt>&lt;loggedin&gt;</tt> a <tt>&lt;loggedout&gt;</tt> fir jeweils en aneren Text ze weisen je nodeem ob de Benotzer ageloggt ass oder net.',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'wikitextloggedinout-desc' => 'Две варијанти на парсирање, <tt>&lt;loggedin&gt;</tt> и <tt>&lt;loggedout&gt;</tt> за приказ на различен текст зависно од тоа дали е најавен корисникот',
 );
 
 /** Nedersaksisch (Nedersaksisch)
@@ -224,7 +260,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'wikitextloggedinout-desc' => "Dos croquets de parser, <tt>&lt;loggedin&gt;</tt> e <tt>&lt;loggedout&gt;</tt>, per mostrar un tèxt diferent en foncion de l'estatut de connexion de l’utilizaire",
+	'wikitextloggedinout-desc' => "Dos croquets de parser, <tt>&lt;loggedin&gt;</tt> e <tt>&lt;loggedout&gt;</tt>, per far veire un tèxte diferent en foncion de l'estatut de connexion de l’utilizaire",
 );
 
 /** Polish (Polski)
@@ -232,6 +268,13 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'wikitextloggedinout-desc' => 'Dodaje dwa haki parsera <tt>&lt;loggedin&gt;</tt> oraz <tt>&lt;loggedout&gt;</tt> pozwalające wyświetlać różne teksty w zależności od statusu zalogowania się użytkownika',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikitextloggedinout-desc' => 'Doi "hook" dël parser, <tt>&lt;loggedin&gt;</tt> e <tt>&lt;loggedout&gt;</tt> për mosté test diferent basandse an slë stat ëd login dl\'utent',
 );
 
 /** Portuguese (Português)
@@ -269,11 +312,39 @@ $messages['scn'] = array(
 	'wikitextloggedinout-desc' => "Dui hook dû parser, <tt>&lt;loggedin&gt;</tt> e <tt>&lt;loggedout&gt;</tt> p'ammustrari testi diffirenti a sècunnu dû statu di login di l'utenti",
 );
 
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'wikitextloggedinout-desc' => 'වෙනස් පෙළ පරිශීලකයාගේ ප්‍රවිෂ්ට  තත්වය මත රඳා පවතින බව පෙන්වීමට  parser ‍දොරටු දෙකක්,<tt>&lt;loggedin&gt;</tt> සහ <tt>&lt;loggedout&gt;</tt>.',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'wikitextloggedinout-desc' => 'Dva prípojné body syntaktického analyzátora, <tt>&lt;loggedin&gt;</tt> a <tt>&lt;loggedout&gt;</tt> na zobrazenie odlišného textu v závslosti na stave prihlásenia používateľa',
+);
+
+/** Lower Silesian (Schläsch)
+ * @author Jonny84
+ */
+$messages['sli'] = array(
+	'wikitextloggedinout-desc' => 'Zwei Parser-Hooks, <tt>&lt;loggedin&gt;</tt> und <tt>&lt;loggedout&gt;</tt>, um unterschiedlichen Text für an- bzw. abgemeldete Benutzer anzuzeigen',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'wikitextloggedinout-desc' => 'Додаје парсеру две куке, <tt>&lt;loggedin&gt;</tt> и <tt>&lt;loggedout&gt;</tt>, које приказују различити текст у зависности од тога да ли је корисник улогован, односно излогован.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'wikitextloggedinout-desc' => 'Dodaje parseru dve kuke, <tt>&lt;loggedin&gt;</tt> i <tt>&lt;loggedout&gt;</tt>, koje prikazuju različiti tekst u zavisnosti od toga da li je korisnik ulogovan, odnosno izlogovan.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -304,6 +375,14 @@ $messages['szl'] = array(
 	'wikitextloggedinout-desc' => 'Dodowo dwa haki parsera <tt>&lt;loggedin&gt;</tt> a tyż <tt>&lt;loggedout&gt;</tt> kere dozwalajům wyśwjetlać roztůmajte teksty zależńy uod statusa zalugwańo śe użytkowńika',
 );
 
+/** Telugu (తెలుగు)
+ * @author Kiranmayee
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikitextloggedinout-desc' => 'వాడుకరి యొక్క ప్రవేశపు స్థితిని అనుసరించి వేర్వేరు సందేశాలని చూపించుటకు రెండు పార్సర్ కొక్కేలు, <tt>&lt;loggedin&gt;</tt> మరియు <tt>&lt;loggedout&gt;</tt>',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -311,11 +390,19 @@ $messages['tl'] = array(
 	'wikitextloggedinout-desc' => "Mga pangawit na may dalawang banghay (''parser''), <tt>&lt;nakalagda&gt;</tt> at <tt>&lt;hindinakalagda&gt;</tt> para makapagpakita ng ibang teksto na nakasalalay sa kalagayan ng paglagda ng mga tagagamit",
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'wikitextloggedinout-desc' => 'Kullanıcıların oturum açma durumuna bağlı olarak farklı metin göstermesi için <tt>&lt;loggedin&gt;</tt> ve <tt>&lt;loggedout&gt;</tt> olmak üzere iki ayırıcı çengel',
+);
+
 /** Ukrainian (Українська)
  * @author AS
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
-	'wikitextloggedinout-desc' => 'Дві парсерні „пастки“, <tt>&lt;loggedin&gt;</tt> та <tt>&lt;loggedout&gt;</tt>, які показуються різний текст в залежності від стану авторизації користувача',
+	'wikitextloggedinout-desc' => 'Дві парсерні „пастки“, <tt>&lt;loggedin&gt;</tt> та <tt>&lt;loggedout&gt;</tt>, які показують різний текст в залежності від стану авторизації користувача',
 );
 
 /** Vèneto (Vèneto)
@@ -323,6 +410,13 @@ $messages['uk'] = array(
  */
 $messages['vec'] = array(
 	'wikitextloggedinout-desc' => "Dó hook del parser, <tt>&lt;loggedin&gt;</tt> e <tt>&lt;loggedout&gt;</tt> par far védar testi difarenti a seconda del stato de login de l'utente",
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'wikitextloggedinout-desc' => "Kaks' parseran petläd (<tt>&lt;loggedin&gt;</tt> da <tt>&lt;loggedout&gt;</tt>), miše ozutada erazvuittušt tekstad; se rippui sišpäi, om-ik kävutai tulnu sistemha",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -337,5 +431,12 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'wikitextloggedinout-desc' => '使用<tt>&lt;loggedin&gt;</tt> 与 <tt>&lt;loggedout&gt;</tt>这两个解析挂钩，就可以根据用户登录的状态显示不同的文字',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Alexsh
+ */
+$messages['zh-hant'] = array(
+	'wikitextloggedinout-desc' => '使用<tt>&lt;loggedin&gt;</tt> 與 <tt>&lt;loggedout&gt;</tt>這兩個解析掛鉤，就可以根據用戶登錄的狀態顯示不同的文字',
 );
 

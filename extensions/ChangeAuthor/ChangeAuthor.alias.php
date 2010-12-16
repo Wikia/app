@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'ChangeAuthor' => array( 'ChangeAuthor' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ChangeAuthor' => array( 'تغيير_المؤلف' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ChangeAuthor' => array( 'تغيير_المؤلف' ),
 );
@@ -47,9 +43,19 @@ $aliases['dsb'] = array(
 	'ChangeAuthor' => array( 'Awtora změniś' ),
 );
 
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'ChangeAuthor' => array( 'Vaihda_tekijänimi' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'ChangeAuthor' => array( "Modifier l'auteur", 'ModifierAuteur', 'Changer auteur', 'ChangerAuteur' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'ChangeAuthor' => array( "Changiér l'ôtor", 'ChangiérLÔtor' ),
 );
 
 /** Galician (Galego) */
@@ -60,6 +66,11 @@ $aliases['gl'] = array(
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'ChangeAuthor' => array( 'Autor ändere' ),
+);
+
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'ChangeAuthor' => array( 'લેખકબદલો' ),
 );
 
 /** Hebrew (עברית) */
@@ -87,6 +98,11 @@ $aliases['ia'] = array(
 	'ChangeAuthor' => array( 'Cambiar autor' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'ChangeAuthor' => array( 'Ganti penulis pertama', 'GantiPenulisPertama' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'ChangeAuthor' => array( '著者変更' ),
@@ -97,6 +113,16 @@ $aliases['km'] = array(
 	'ChangeAuthor' => array( 'ផ្លាស់ប្ដូរអ្នកនិពន្ធ' ),
 );
 
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'ChangeAuthor' => array( '저작자변경' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'ChangeAuthor' => array( 'Schriiver ußtuusche' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'ChangeAuthor' => array( 'Auteur änneren' ),
@@ -105,6 +131,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'ChangeAuthor' => array( 'ПроменаНаАвтор' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'ChangeAuthor' => array( 'രചയിതാവിനെ മാറ്റുക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ChangeAuthor' => array( 'लेखकबदला' ),
 );
 
 /** Maltese (Malti) */
@@ -147,9 +183,24 @@ $aliases['pl'] = array(
 	'ChangeAuthor' => array( 'Zmiana autora' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'ChangeAuthor' => array( 'Alterar autor' ),
+);
+
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'ChangeAuthor' => array( 'Schimbă autor' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'ChangeAuthor' => array( 'सम्पादकपरिवर्तयति' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ChangeAuthor' => array( 'ZmeniťAutora' ),
 );
 
 /** Albanian (Shqip) */
@@ -167,8 +218,18 @@ $aliases['tl'] = array(
 	'ChangeAuthor' => array( 'Baguhin ang may-akda' ),
 );
 
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ChangeAuthor' => array( 'YazarDeğiştir' ),
+);
+
 /** Vèneto (Vèneto) */
 $aliases['vec'] = array(
 	'ChangeAuthor' => array( 'CanbiaAutor' ),
+);
+
+/** Veps (Vepsan kel') */
+$aliases['vep'] = array(
+	'ChangeAuthor' => array( 'VajehtadaAvtorad' ),
 );
 

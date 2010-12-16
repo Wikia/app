@@ -292,10 +292,10 @@ class HTTP_WebDAV_Server
      *
      * @abstract
      * @param array &$params array of input and output parameters
-     * <br><b>input</b><ul>
+     * <br /><b>input</b><ul>
      * <li> path -
      * </ul>
-     * <br><b>output</b><ul>
+     * <br /><b>output</b><ul>
      * <li> size -
      * </ul>
      * @returns int HTTP-Statuscode

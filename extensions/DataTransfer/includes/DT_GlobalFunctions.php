@@ -7,18 +7,19 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('DT_VERSION','0.1.10');
+define('DT_VERSION','0.3.4');
 
 // constants for special properties
 define('DT_SP_HAS_XML_GROUPING', 1);
 define('DT_SP_IS_EXCLUDED_FROM_XML', 2);
 
 $wgExtensionCredits['specialpage'][]= array(
+	'path'           => __FILE__,
 	'name'           => 'Data Transfer',
 	'version'        => DT_VERSION,
 	'author'         => 'Yaron Koren',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Data_Transfer',
-	'description'    => 'Exports wiki pages as XML, using template calls as the data structure',
+	'description'    => 'Allows for importing and exporting data contained in template calls',
 	'descriptionmsg' => 'dt-desc',
 );
 
@@ -27,6 +28,15 @@ $dtgIP = $IP . '/extensions/DataTransfer';
 // register all special pages and other classes
 $wgSpecialPages['ViewXML'] = 'DTViewXML';
 $wgAutoloadClasses['DTViewXML'] = $dtgIP . '/specials/DT_ViewXML.php';
+$wgSpecialPages['ImportXML'] = 'DTImportXML';
+$wgAutoloadClasses['DTImportXML'] = $dtgIP . '/specials/DT_ImportXML.php';
+$wgSpecialPages['ImportCSV'] = 'DTImportCSV';
+$wgAutoloadClasses['DTImportCSV'] = $dtgIP . '/specials/DT_ImportCSV.php';
+$wgJobClasses['dtImport'] = 'DTImportJob';
+$wgAutoloadClasses['DTImportJob'] = $dtgIP . '/includes/DT_ImportJob.php';
+$wgAutoloadClasses['DTXMLParser'] = $dtgIP . '/includes/DT_XMLParser.php';
+$wgHooks['AdminLinks'][] = 'dtfAddToAdminLinks';
+$wgHooks['smwInitProperties'][] = 'dtfInitProperties';
 
 require_once($dtgIP . '/languages/DT_Language.php');
 $wgExtensionMessagesFiles['DataTransfer'] = $dtgIP . '/languages/DT_Messages.php';
@@ -90,3 +100,25 @@ function dtfInitUserLanguage($langcode) {
 /**********************************************/
 /***** other global helpers               *****/
 /**********************************************/
+
+function dtfInitProperties() {
+	global $dtgContLang;
+	$dt_props = $dtgContLang->getPropertyLabels();
+	SMWPropertyValue::registerProperty('_DT_XG', '_str', $dt_props[DT_SP_HAS_XML_GROUPING], true);
+	// TODO - this should set a "backup" English value as well,
+	// so that the phrase "Has XML grouping" works in all languages
+	return true;
+}
+
+/**
+ * Add links to the 'AdminLinks' special page, defined by the Admin Links
+ * extension
+ */
+function dtfAddToAdminLinks($admin_links_tree) {
+	$import_export_section = $admin_links_tree->getSection(wfMsg('adminlinks_importexport'));
+	$main_row = $import_export_section->getRow('main');
+	$main_row->addItem(ALItem::newFromSpecialPage('ViewXML'));
+	$main_row->addItem(ALItem::newFromSpecialPage('ImportXML'));
+	$main_row->addItem(ALItem::newFromSpecialPage('ImportCSV'));
+	return true;
+}

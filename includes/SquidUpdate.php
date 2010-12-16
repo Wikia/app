@@ -26,8 +26,7 @@ class SquidUpdate {
 	}
 
 	static function newFromLinksTo( &$title ) {
-		$fname = 'SquidUpdate::newFromLinksTo';
-		wfProfileIn( $fname );
+		wfProfileIn( __METHOD__ );
 
 		# Get a list of URLs linking to this page
 		$dbr = wfGetDB( DB_SLAVE );
@@ -37,7 +36,7 @@ class SquidUpdate {
 				'pl_namespace' => $title->getNamespace(),
 				'pl_title'     => $title->getDBkey(),
 				'pl_from=page_id' ),
-			$fname );
+			__METHOD__ );
 		$blurlArr = $title->getSquidURLs();
 		if ( $dbr->numRows( $res ) <= $this->mMaxTitles ) {
 			while ( $BL = $dbr->fetchObject ( $res ) )
@@ -48,7 +47,7 @@ class SquidUpdate {
 		}
 		$dbr->freeResult ( $res ) ;
 
-		wfProfileOut( $fname );
+		wfProfileOut( __METHOD__ );
 		return new SquidUpdate( $blurlArr );
 	}
 
@@ -90,135 +89,49 @@ class SquidUpdate {
 			return;
 		}*/
 
-		if( empty( $urlArr ) ) {
+		if( !$urlArr ) {
 			return;
 		}
 
-		if( $wgPurgeSquidViaStomp ) {
-			SquidUpdate::StompPurge( $urlArr );
-		}
 
 		if( $wgPurgeSquidViaScribe ) {
 			SquidUpdate::ScribePurge( $urlArr );
-		}
-
-		if ($wgPurgeSquidViaStomp || $wgPurgeSquidViaScribe) {
 			return true;
 		}
+
 
 		if ( $wgHTCPMulticastAddress && $wgHTCPPort ) {
 			return SquidUpdate::HTCPPurge( $urlArr );
 		}
 
-		$fname = 'SquidUpdate::purge';
-		wfProfileIn( $fname );
+		wfProfileIn( __METHOD__ );
 
-		$maxsocketspersquid = 8; //  socket cap per Squid
-		$urlspersocket = 400; // 400 seems to be a good tradeoff, opening a socket takes a while
-		$firsturl = SquidUpdate::expand( $urlArr[0] );
-		unset($urlArr[0]);
-		$urlArr = array_values($urlArr);
-		$sockspersq =  max(ceil(count($urlArr) / $urlspersocket ),1);
-		if ($sockspersq == 1) {
-			/* the most common case */
-			$urlspersocket = count($urlArr);
-		} else if ($sockspersq > $maxsocketspersquid ) {
-			$urlspersocket = ceil(count($urlArr) / $maxsocketspersquid);
-			$sockspersq = $maxsocketspersquid;
+		$maxSocketsPerSquid = 8; //  socket cap per Squid
+		$urlsPerSocket = 400; // 400 seems to be a good tradeoff, opening a socket takes a while
+		$socketsPerSquid = ceil( count( $urlArr ) / $urlsPerSocket );
+		if ( $socketsPerSquid > $maxSocketsPerSquid ) {
+			$socketsPerSquid = $maxSocketsPerSquid;
 		}
-		$totalsockets = count($wgSquidServers) * $sockspersq;
-		$sockets = Array();
 
-		/* this sets up the sockets and tests the first socket for each server. */
-		for ($ss=0;$ss < count($wgSquidServers);$ss++) {
-			$failed = false;
-			$so = 0;
-			while ($so < $sockspersq && !$failed) {
-				if ($so == 0) {
-					/* first socket for this server, do the tests */
-					@list($server, $port) = explode(':', $wgSquidServers[$ss]);
-					if(!isset($port)) $port = 80;
-					#$this->debug("Opening socket to $server:$port");
-					$error = $errstr = false;
-					$socket = @fsockopen($server, $port, $error, $errstr, 3);
-					#$this->debug("\n");
-					if (!$socket) {
-						$failed = true;
-						$totalsockets -= $sockspersq;
-					} else {
-						$msg = 'PURGE ' . $firsturl . " HTTP/1.0\r\n".
-						"Connection: Keep-Alive\r\n\r\n";
-						#$this->debug($msg);
-						@fputs($socket,$msg);
-						#$this->debug("...");
-						$res = @fread($socket,512);
-						#$this->debug("\n");
-						/* Squid only returns http headers with 200 or 404 status,
-						if there's more returned something's wrong */
-						if (strlen($res) > 250) {
-							fclose($socket);
-							$failed = true;
-							$totalsockets -= $sockspersq;
-						} else {
-							@stream_set_blocking($socket,false);
-							$sockets[] = $socket;
-						}
-					}
-				} else {
-					/* open the remaining sockets for this server */
-					list($server, $port) = explode(':', $wgSquidServers[$ss]);
-					if(!isset($port)) $port = 80;
-					$socket = @fsockopen($server, $port, $error, $errstr, 2);
-					@stream_set_blocking($socket,false);
-					$sockets[] = $socket;
+		$pool = new SquidPurgeClientPool;
+		$chunks = array_chunk( $urlArr, ceil( count( $urlArr ) / $socketsPerSquid ) );
+		foreach ( $wgSquidServers as $server ) {
+			foreach ( $chunks as $chunk ) {
+				$client = new SquidPurgeClient( $server );
+				foreach ( $chunk as $url ) {
+					$client->queuePurge( $url );
 				}
-				$so++;
+				$pool->addClient( $client );
 			}
 		}
+		$pool->run();
 
-		if ($urlspersocket > 0) {
-			/* now do the heavy lifting. The fread() relies on Squid returning only the headers */
-			for ($r=0;$r < $urlspersocket;$r++) {
-				for ($s=0;$s < $totalsockets;$s++) {
-					if($r != 0) {
-						$res = '';
-						$esc = 0;
-						while (strlen($res) < 100 && $esc < 200  ) {
-							$res .= @fread($sockets[$s],512);
-							$esc++;
-							usleep(20);
-						}
-					}
-					$urindex = $r + $urlspersocket * ($s - $sockspersq * floor($s / $sockspersq));
-					$url = SquidUpdate::expand( $urlArr[$urindex] );
-					$msg = 'PURGE ' . $url . " HTTP/1.0\r\n".
-					"Connection: Keep-Alive\r\n\r\n";
-					#$this->debug($msg);
-					@fputs($sockets[$s],$msg);
-					#$this->debug("\n");
-				}
-			}
-		}
-		#$this->debug("Reading response...");
-		foreach ($sockets as $socket) {
-			$res = '';
-			$esc = 0;
-			while (strlen($res) < 100 && $esc < 200  ) {
-				$res .= @fread($socket,1024);
-				$esc++;
-				usleep(20);
-			}
-
-			@fclose($socket);
-		}
-		#$this->debug("\n");
-		wfProfileOut( $fname );
+		wfProfileOut( __METHOD__ );
 	}
 
 	static function HTCPPurge( $urlArr ) {
 		global $wgHTCPMulticastAddress, $wgHTCPMulticastTTL, $wgHTCPPort;
-		$fname = 'SquidUpdate::HTCPPurge';
-		wfProfileIn( $fname );
+		wfProfileIn( __METHOD__ );
 
 		$htcpOpCLR = 4;                 // HTCP CLR
 
@@ -230,7 +143,7 @@ class SquidUpdate {
 		}
 
 		// pfsockopen doesn't work because we need set_sock_opt
-	        $conn = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
+		$conn = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
 		if ( $conn ) {
 			// Set socket options
 			socket_set_option( $conn, IPPROTO_IP, IP_MULTICAST_LOOP, 0 );
@@ -270,54 +183,27 @@ class SquidUpdate {
 			}
 		} else {
 			$errstr = socket_strerror( socket_last_error() );
-			wfDebug( "SquidUpdate::HTCPPurge(): Error opening UDP socket: $errstr\n" );
+			wfDebug( __METHOD__ . "(): Error opening UDP socket: $errstr\n" );
 		}
-		wfProfileOut( $fname );
+		wfProfileOut( __METHOD__ );
 	}
 
-	static function StompPurge( $urlArr ) {
-		global $wgStompServer, $wgStompUser, $wgStompPassword;
-		$fname = __METHOD__;
-		wfProfileIn( $fname );
-
-		try {
-			$stomp = new Stomp( $wgStompServer );
-			$stomp->connect( $wgStompUser, $wgStompPassword );
-			$stomp->sync = false;
-			foreach ( $urlArr as $url ) {
-				if( !is_string( $url ) ) {
-					throw new MWException( 'Bad purge URL' );
-				}
-				$url = SquidUpdate::expand( $url );
-
-				wfDebug( "Purging URL $url via Stomp\n" );
-				$key = 'wikia.purges';
-				$stomp->send( $key,
-					Wikia::json_encode( array(
-						'key' => $key,
-						'url' => $url,
-                                                'time' => time(),
-					) ),
-					array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
-				);
-			}
-		}
-		catch( StompException $e ) {
-			Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
-		}
-		wfProfileOut( $fname );
-	}
-
+	/**
+	 * wikia function
+	 * @
+	 * @access public
+	 * @static
+	 */
 	static function ScribePurge( $urlArr ) {
 		global $wgEnableScribeReport;
 		wfProfileIn( __METHOD__ );
 		$key = 'varnish_purges';
-		
+
 		if ( empty($wgEnableScribeReport) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
+
 		try {
 			foreach ( $urlArr as $url ) {
 				if ( !is_string( $url ) ) {
@@ -336,15 +222,8 @@ class SquidUpdate {
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
-		
-		wfProfileOut( __METHOD__ );
-	}
 
-	function debug( $text ) {
-		global $wgDebugSquid;
-		if ( $wgDebugSquid ) {
-			wfDebug( $text );
-		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

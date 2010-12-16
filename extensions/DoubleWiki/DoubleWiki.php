@@ -24,11 +24,10 @@
 $wgHooks['OutputPageBeforeHTML'][] = 'addMatchedText' ;
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'DoubleWiki',
 	'author' => 'ThomasV',
 	'url' => 'http://wikisource.org/wiki/Wikisource:DoubleWiki_Extension',
-	'svn-date' => '$LastChangedDate: 2009-02-16 23:40:45 +0100 (pon, 16 lut 2009) $',
-	'svn-revision' => '$LastChangedRevision: 47341 $',
 	'description'    => 'Displays a page and its translation from another wiki on two columns of the same page',
 	'descriptionmsg' => 'doublewiki-desc',
 );
@@ -93,7 +92,7 @@ function addMatchedText ( &$parserOutput , &$text ) {
 
 				#do the job
 				$text = matchColumns ( $text, $myLanguage, $myURL , 
-						       $translation, $languageName, $url );
+						       $translation, $languageName, $url, $wgContLanguageCode, $match_request );
 			}
 			return true;
 		}
@@ -107,7 +106,7 @@ function addMatchedText ( &$parserOutput , &$text ) {
  * Text is split into slices based on title tags
  */
 
-function matchColumns( $left_text, $left_title, $left_url, $right_text, $right_title, $right_url ){
+function matchColumns( $left_text, $left_title, $left_url, $right_text, $right_title, $right_url, $left_lang_code, $right_lang_code ){
 
 	# note about emdedding: 
 	# text is split only at a single level. 
@@ -252,12 +251,12 @@ function matchColumns( $left_text, $left_title, $left_url, $right_text, $right_t
 				if( ( ($left_nesting == $left_splitlevel) 
 				      && ($right_nesting == $right_splitlevel) ) || $the_end)  {
 					$body .= 
-					"<tr><td valign=\"top\" style=\"padding-right: 0.5em\">"
+					"<tr><td valign=\"top\" style=\"padding-right: 0.5em\" lang=\"{$left_lang_code}\">"
 					."<div style=\"width:35em; margin:0px auto\">\n"
 					.$left_prefix.$left_bits[$l].$left_suffix
 					."</div>"
 
-					."</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\">"
+					."</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" lang=\"{$right_lang_code}\">"
 					."<div style=\"width:35em; margin:0px auto\">\n"
 					.$right_prefix.$right_bits[$l].$right_suffix
 					."</div>"
@@ -287,9 +286,9 @@ function matchColumns( $left_text, $left_title, $left_url, $right_text, $right_t
 	$head = 
 "<table width=\"100%\" border=\"0\" bgcolor=\"white\" rules=\"cols\" cellpadding=\"0\">
 <colgroup><col width=\"50%\"/><col width=\"50%\"/></colgroup><thead>
-<tr><td bgcolor=\"#cfcfff\" align=\"center\">
+<tr><td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$left_lang_code}\">
 <a href=\"{$left_url}\">{$left_title}</a></td>
-<td bgcolor=\"#cfcfff\" align=\"center\">
+<td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$right_lang_code}\">
 <a href=\"{$right_url}\" class='extiw'>{$right_title}</a>
 </td></tr></thead>\n";
 	return $head.$body."</table>" ;

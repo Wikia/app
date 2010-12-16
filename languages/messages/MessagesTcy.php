@@ -116,7 +116,7 @@ $messages = array(
 'category-media-header'          => '"$1" ವರ್ಗಡುಪ್ಪುನಂಚಿನ ಚಿತ್ರ/ಶಬ್ಧ ಫೈಲ್’ಲು',
 'category-empty'                 => "''ಈ ವರ್ಗೊಡು ಸದ್ಯಗ್ ಓವುಲ ಪುಟೊಲಾವಡ್ ಅತ್ತ್’ನ್ಡ ಚಿತ್ರೊಲಾವಡ್ ಇಜ್ಜಿ.''",
 'hidden-categories'              => '{{PLURAL:$1|ದೆಂಗಾದ್ ದೀತಿನ ವರ್ಗ|ದೆಂಗಾದ್ ದೀತಿನ ವರ್ಗೊಲು}}',
-'hidden-category-category'       => 'ದೆಂಗಾದ್ ದೀತಿನ ವರ್ಗೊಲು', # Name of the category where hidden categories will be listed
+'hidden-category-category'       => 'ದೆಂಗಾದ್ ದೀತಿನ ವರ್ಗೊಲು',
 'category-subcat-count'          => '{{PLURAL:$2|ಈ ವರ್ಗೊಡು ಈ ತಿರ್ತ್’ದ ಉಪವರ್ಗ ಉಂಡು.|ಈ ವರ್ಗೊಡು ಈ ತಿರ್ತ್’ದ {{PLURAL:$1|ಉಪವರ್ಗೊನು|$1 ಉಪವರ್ಗೊಲೆನ್}} ಸೇರಾದ್, ಒಟ್ಟಿಗೆ $2 ಉಂಡು.}}',
 'category-subcat-count-limited'  => 'ಈ ವರ್ಗೊಡು ತಿರ್ತ್ ತೊಜ್ಪಾದಿನ {{PLURAL:$1|ಉಪವರ್ಗ|$1 ಉಪವರ್ಗೊಲು}} ಉಂಡು.',
 'category-article-count'         => '{{PLURAL:$2|ಈ ವರ್ಗೊಡು ಈ ತಿರ್ತ್’ದ ಖಾಲಿ ಒಂಜಿ ಪುಟ ಉಂಡು.|ಈ ವರ್ಗೊಡು ಈ ತಿರ್ತ್’ದ {{PLURAL:$1|ಪುಟೊನು|$1 ಪುಟೊಲೆನ್}} ಸೇರ್ಪಾದ್, ಒಟ್ಟಿಗೆ $2 ಪುಟೊಲು ಉಂಡು.}}',
@@ -134,10 +134,18 @@ $messages = array(
 * [http://www.mediawiki.org/wiki/Manual:FAQ ಮೀಡಿಯವಿಕಿ FAQ]
 * [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]',
 
-'about'          => 'ಎಂಕ್ಲೆನ ಬಗ್ಗೆ',
-'article'        => 'ಲೇಖನ ಪುಟ',
-'newwindow'      => '(ಪೊಸ ಕಂಡಿನ್ ಓಪನ್ ಮಲ್ಪುಂಡು)',
-'cancel'         => 'ವಜಾ ಮನ್ಪುಲೆ',
+'about'         => 'ಎಂಕ್ಲೆನ ಬಗ್ಗೆ',
+'article'       => 'ಲೇಖನ ಪುಟ',
+'newwindow'     => '(ಪೊಸ ಕಂಡಿನ್ ಓಪನ್ ಮಲ್ಪುಂಡು)',
+'cancel'        => 'ವಜಾ ಮನ್ಪುಲೆ',
+'moredotdotdot' => 'ನನಲ...',
+'mypage'        => 'ಎನ್ನ ಪುಟ',
+'mytalk'        => 'ಎನ್ನ ಚರ್ಚೆ',
+'anontalk'      => 'ಈ ಐ.ಪಿ ಗ್ ಪಾತೆರ್’ಲೆ',
+'navigation'    => 'ಸಂಚಾರ',
+'and'           => '&#32;ಬೊಕ್ಕ',
+
+# Cologne Blue skin
 'qbfind'         => 'ನಾಡ್’ಲೆ',
 'qbbrowse'       => 'ಬ್ರೌಸ್',
 'qbedit'         => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
@@ -145,15 +153,8 @@ $messages = array(
 'qbpageinfo'     => 'ಸನ್ನಿವೇಶ',
 'qbmyoptions'    => 'ಎನ್ನ ಪುಟೊಲು',
 'qbspecialpages' => 'ವಿಶೇಷ ಪುಟೊಲು',
-'moredotdotdot'  => 'ನನಲ...',
-'mypage'         => 'ಎನ್ನ ಪುಟ',
-'mytalk'         => 'ಎನ್ನ ಚರ್ಚೆ',
-'anontalk'       => 'ಈ ಐ.ಪಿ ಗ್ ಪಾತೆರ್’ಲೆ',
-'navigation'     => 'ಸಂಚಾರ',
-'and'            => '&#32;ಬೊಕ್ಕ',
-
-# Metadata in edit box
-'metadata_help' => 'ಮೂಲಮಾಹಿತಿ:',
+'faq'            => 'ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
+'faqpage'        => 'Project:ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
 
 'errorpagetitle'    => 'ದೋಷ',
 'returnto'          => '$1 ಗ್ ಪಿರ ಪೋಲೆ.',
@@ -203,7 +204,7 @@ $messages = array(
 'otherlanguages'    => 'ಬೇತೆ ಭಾಷೆಲೆಡ್',
 'redirectedfrom'    => '($1 ರ್ದ್ ಪುನರ್ನಿರ್ದೇಶಿತ)',
 'redirectpagesub'   => 'ಪುನರ್ನಿರ್ದೇಶನ ಪುಟ',
-'lastmodifiedat'    => 'ಈ ಪುಟ ಇಂದೆತ ದುಂಬು $2, $1 ಕ್ ಬದಲಾತ್’ನ್ಡ್.', # $1 date, $2 time
+'lastmodifiedat'    => 'ಈ ಪುಟ ಇಂದೆತ ದುಂಬು $2, $1 ಕ್ ಬದಲಾತ್’ನ್ಡ್.',
 'viewcount'         => 'ಈ ಪುಟೊನು {{PLURAL:$1|1 ಸರಿ|$1 ಸರಿ}} ತೂತೆರ್.',
 'protectedpage'     => 'ಸಂರಕ್ಷಿತ ಪುಟ',
 'jumpto'            => 'ಇಡೆ ಪೋಲೆ:',
@@ -214,7 +215,6 @@ $messages = array(
 'aboutsite'            => '{{SITENAME}} ದ ಬಗ್ಗೆ',
 'aboutpage'            => 'Project:ನಮ್ಮ ಬಗ್ಗೆ',
 'copyright'            => 'ಉಂದು ಈ ಕಾಪಿರೈಟ್‌ಡ್ ಲಭ್ಯವುಂಡು $1.',
-'copyrightpagename'    => '{{SITENAME}} ಕಾಪಿರೈಟ್',
 'copyrightpage'        => '{{ns:project}}:ಕೃತಿಸ್ವಾಮ್ಯತೆಲು',
 'currentevents'        => 'ಇತ್ತೆದ ಸಂಗತಿಲು',
 'currentevents-url'    => 'Project:ಇತ್ತೆದ ಸಂಗತಿಲು',
@@ -222,8 +222,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:ಸಾಮಾನ್ಯ ಅಬಾಧ್ಯತೆಲು',
 'edithelp'             => 'ಸಂಪಾದನೆ(ಎಡಿಟ್) ಮಲ್ಪೆರೆ ಸಹಾಯ',
 'edithelppage'         => 'Help:ಸಂಪಾದನೆ',
-'faq'                  => 'ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
-'faqpage'              => 'Project:ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
 'helppage'             => 'Help:ಪರಿವಿಡಿ',
 'mainpage'             => 'ಮುಖ್ಯ ಪುಟ',
 'mainpage-description' => 'ಮುಖ್ಯ ಪುಟ',
@@ -294,9 +292,6 @@ $messages = array(
 # General errors
 'error'                => 'ದೋಷ',
 'databaseerror'        => 'ಡೇಟಾಬೇಸ್ ದೋಷ',
-'noconnect'            => 'ವಿಕಿ ಡ್ ಕೆಲವು ತಾ೦ತ್ರಿಕ ದೋಶೊಲು ತೋಜೊ೦ದು೦ಡು ಬುಕ ಡಾಟಾಬೇಸ್ ಸರ್ವರ್ ನ್ ಸ೦ಪರ್ಕ ಮಲ್ಪೆರ್ ಆವೊ೦ದಿಜ್ಜಿ.<br />
-$1',
-'nodb'                 => 'ಡಾಟಾಬೇಸ್ $1 ನ್ ಆಯ್ಕೆ ಮಲ್ತೊನೆರೆ ಆಯಿಜಿ',
 'readonly'             => 'ಡಾಟಾಬೇಸ್ ಲಾಕ್ ಆತ್೦ಡ್',
 'missing-article'      => '"$1" $2 ಪುದರ್’ದ ಪುಟ ದೇಟಬೇಸ್’ಡ್ ಇಜ್ಜಿ.
 
@@ -386,7 +381,7 @@ $1',
 'template-semiprotected'           => '(ಅರೆ-ಸಂರಕ್ಷಿತ)',
 'hiddencategories'                 => 'ಈ ಪುಟ {{PLURAL:$1|೧ ಗುಪ್ತ ವರ್ಗಗ್|$1 ಗುಪ್ತ ವರ್ಗೊಲೆಗ್}} ಸೇರ್ದ್’ನ್ಡ್:',
 'permissionserrorstext-withaction' => '$2 ಗ್ ಇರೆಗ್ ಅನುಮತಿ ಇಜ್ಜಿ, ಐಕ್ {{PLURAL:$1|ಕಾರಣ|ಕಾರಣೊಲು}}:',
-'deleted-notice'                   => 'ಈ ಪೇಜ್ ಅಸ್ತಿತ್ವಡ್ ಇಜ್ಜಿ.
+'moveddeleted-notice'              => 'ಈ ಪೇಜ್ ಅಸ್ತಿತ್ವಡ್ ಇಜ್ಜಿ.
 ಪೂಟೊತ ಡಿಲೀಶನ್ ಲಾಗ್’ನ್ ತಿರ್ತ್ ಕೊರ್ತುಂಡು.',
 
 # History pages
@@ -422,14 +417,11 @@ $1',
 'searchresulttext'          => '{{SITENAME}} ಡ್ ನಾಡಟ ಮಲ್ಪುನ ಬಗ್ಗೆ ಜಾಸ್ತಿ ಮಾಹಿತಿಗ್ [[{{MediaWiki:Helppage}}|{{int:help}}]] ನ್ ತೂಲೆ.',
 'searchsubtitle'            => 'ಈರ್ \'\'\'[[:$1]]\'\'\' ನ್ ನಾಡಿಯರ್ ([[Special:Prefixindex/$1|"$1" ರ್ದ್ ಶುರುವಾಪುನ ಪೂರ ಪುಟೊಲು]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|"$1" ಗ್ ಲಿಂಕ್ ಕೊರ್ಪುನ ಪೂರ ಪುಟೊಲು]])',
 'searchsubtitleinvalid'     => "'''$1''' ನ್ ಈರ್ ನಾಡಿಯರ್.",
-'noexactmatch'              => "'''\"\$1\". ಅ೦ಚಿನ ವಾ ಪುಟಲಾ ಇಜ್ಜಿ. '''
-ಈರ್ [[:\$1| ಐನ್ ಸುರು ಮಲ್ಪೊಲಿ]].",
-'noexactmatch-nocreate'     => "'''\"\$1\" ಪುದರ್ದ ವಾ ಪುಟೊಲಾ ಇಜ್ಜಿ.'''",
 'notitlematches'            => 'ವಾ ಪುಟೊತ ಶಿರ್ಷಿಕೆಲಾ ಹೊಂದಿಕೆ ಆವೊಂದಿಜ್ಜಿ',
 'notextmatches'             => 'ವಾ ಪುಟೊತ ಪಠ್ಯೊಡುಲಾ ಹೋಲಿಕೆ ಇಜ್ಜಿ',
-'prevn'                     => 'ದುಂಬುದ $1',
-'nextn'                     => 'ಬೊಕ್ಕದ $1',
-'viewprevnext'              => 'ತೂಲೆ ($1) ($2) ($3)',
+'prevn'                     => 'ದುಂಬುದ {{PLURAL:$1|$1}}',
+'nextn'                     => 'ಬೊಕ್ಕದ {{PLURAL:$1|$1}}',
+'viewprevnext'              => 'ತೂಲೆ ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url'            => 'Help:ಪರಿವಿಡಿ',
 'search-result-size'        => '$1 ({{PLURAL:$2|೧ ಪದ|$2 ಪದೊಲು}})',
 'search-redirect'           => '(ಪುನರ್ನಿರ್ದೇಶನ $1)',
@@ -440,7 +432,6 @@ $1',
 'search-interwiki-more'     => '(ಮಸ್ತ್)',
 'search-mwsuggest-enabled'  => 'ಸಲಹೆದೊಟ್ಟಿಗೆ',
 'search-mwsuggest-disabled' => 'ಓವು ಸಲಹೆಲಾ ಇಜ್ಜಿ',
-'showingresultstotal'       => "ಒಟ್ಟು '''$3''' ನಾಡಟದ ಫಲಿತಾಂಶೊಲೆಡ್ '''$1 - $2''' ತಿರ್ತ್ ತೋಜಾದ್’ನ್ಡ್",
 'powersearch'               => 'ನಾಡ್’ಲೆ',
 'powersearch-legend'        => 'ಅಡ್ವಾನ್ಸ್’ಡ್ ಸರ್ಚ್',
 'powersearch-ns'            => 'ನೇಮ್-ಸ್ಪೇಸ್’ಲೆಡ್ ನಾಡ್ಲೆ',
@@ -486,6 +477,8 @@ $1',
 
 # Recent changes linked
 'recentchangeslinked'          => 'ಸಂಬಂಧ ಉಪ್ಪುನಂಚಿನ ಬದಲಾವಣೆಲು',
+'recentchangeslinked-feed'     => 'ಸಂಬಂಧ ಉಪ್ಪುನಂಚಿನ ಬದಲಾವಣೆಲು',
+'recentchangeslinked-toolbox'  => 'ಸಂಬಂಧ ಉಪ್ಪುನಂಚಿನ ಬದಲಾವಣೆಲು',
 'recentchangeslinked-title'    => '"$1" ಪುಟೊಟು ಆತಿನ ಬದಲಾವಣೆಲು',
 'recentchangeslinked-noresult' => 'ಕೊರ್ತಿನ ಸಮಯೊಡು ಲಿಂಕ್ ಉಪ್ಪುನ ಪುಟೊಲೆಡ್ ಓವುಲಾ ಬದಲಾವಣೆಲು ಆತಿಜಿ.',
 'recentchangeslinked-summary'  => "ಒಂಜಿ ನಿರ್ದಿಷ್ಟ ಪುಟೊರ್ದು (ಅತ್ತ್’ನ್ಡ ನಿರ್ದಿಷ್ಟ ವರ್ಗೊಗು ಸೇರ್ದಿನ ಪುಟೊಲೆರ್ದ್) ಸಂಪರ್ಕ ಉಪ್ಪುನ ಪುಟೊಲೆಡ್ ಇಂಚಿಪ ಮಲ್ತಿನಂಚಿನ ಬದಲಾವಣೆಲೆನ್ ತಿರ್ತ್ ಪಟ್ಟಿ ಮಲ್ಪೆರಾತ್’ನ್ಡ್. 
@@ -499,21 +492,20 @@ $1',
 'uploadedimage' => '"[[$1]]" ಅಪ್ಲೋಡ್ ಆಂಡ್',
 
 # File description page
-'filehist'                  => 'ಫೈಲ್’ದ ಇತಿಹಾಸ',
-'filehist-help'             => 'ಫೈಲ್ ಆ ದಿನೊಟು ಎಂಚ ಇತ್ತ್’ನ್ಡ್’ನ್ದ್ ತೂಯೆರೆ ಆ ದಿನ/ಪೊರ್ತುದ ಮಿತ್ತ್ ಕ್ಲಿಕ್ ಮಲ್ಪುಲೆ.',
-'filehist-current'          => 'ಪ್ರಸಕ್ತ',
-'filehist-datetime'         => 'ದಿನ/ಪೊರ್ತು',
-'filehist-thumb'            => 'ಥಂಬ್-ನೈಲ್',
-'filehist-thumbtext'        => '$1 ತ ಲೆಕ್ಕ ಆವೃತ್ತಿದ ತಂಬ್-ನೈಲ್',
-'filehist-user'             => 'ಸದಸ್ಯೆ',
-'filehist-dimensions'       => 'ಆಯಾಮೊಲು',
-'filehist-filesize'         => 'ಫೈಲ್’ದ ಗಾತ್ರ',
-'filehist-comment'          => 'ಕಮೆಂಟ್',
-'imagelinks'                => 'ಫೈಲ್ ಲಿಂಕ್’ಲು',
-'linkstoimage'              => 'ಈ ಫೈಲ್’ಗ್ ತಿರ್ತ್’ದ ಈ {{PLURAL:$1|ಪುಟ|$1 ಪುಟೊಲು}} ಲಿಂಕ್ ಕೊರ್ಪುಂಡು.',
-'sharedupload'              => 'ಈ ಫೈಲ್’ನ್ ಮಸ್ತ್ ಜನ ಪಟ್ಟ್’ದುಲ್ಲೆರ್ ಅಂಚೆನೆ ಉಂದು ಮಸ್ತ್ ಪ್ರೊಜೆಕ್ಟ್’ಲೆಡ್ ಉಪಯೋಗಡುಪ್ಪು.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
-'shareduploadwiki-desc'     => '$1 ಡ್ ಉಪ್ಪುನ ವಿವರೊಲೆನ್ ತಿರ್ತ್ ತೊಜ್ಪಾದ್’ನ್ಡ್.',
-'shareduploadwiki-linktext' => 'ಫೈಲ್’ದ ಮಾಹಿತಿ ಪುಟ',
+'file-anchor-link'    => 'ಫೈಲ್',
+'filehist'            => 'ಫೈಲ್’ದ ಇತಿಹಾಸ',
+'filehist-help'       => 'ಫೈಲ್ ಆ ದಿನೊಟು ಎಂಚ ಇತ್ತ್’ನ್ಡ್’ನ್ದ್ ತೂಯೆರೆ ಆ ದಿನ/ಪೊರ್ತುದ ಮಿತ್ತ್ ಕ್ಲಿಕ್ ಮಲ್ಪುಲೆ.',
+'filehist-current'    => 'ಪ್ರಸಕ್ತ',
+'filehist-datetime'   => 'ದಿನ/ಪೊರ್ತು',
+'filehist-thumb'      => 'ಥಂಬ್-ನೈಲ್',
+'filehist-thumbtext'  => '$1 ತ ಲೆಕ್ಕ ಆವೃತ್ತಿದ ತಂಬ್-ನೈಲ್',
+'filehist-user'       => 'ಸದಸ್ಯೆ',
+'filehist-dimensions' => 'ಆಯಾಮೊಲು',
+'filehist-filesize'   => 'ಫೈಲ್’ದ ಗಾತ್ರ',
+'filehist-comment'    => 'ಕಮೆಂಟ್',
+'imagelinks'          => 'ಫೈಲ್ ಲಿಂಕ್’ಲು',
+'linkstoimage'        => 'ಈ ಫೈಲ್’ಗ್ ತಿರ್ತ್’ದ ಈ {{PLURAL:$1|ಪುಟ|$1 ಪುಟೊಲು}} ಲಿಂಕ್ ಕೊರ್ಪುಂಡು.',
+'sharedupload'        => 'ಈ ಫೈಲ್’ನ್ ಮಸ್ತ್ ಜನ ಪಟ್ಟ್’ದುಲ್ಲೆರ್ ಅಂಚೆನೆ ಉಂದು ಮಸ್ತ್ ಪ್ರೊಜೆಕ್ಟ್’ಲೆಡ್ ಉಪಯೋಗಡುಪ್ಪು.',
 
 # Random page
 'randompage' => 'ಯಾದೃಚ್ಛಿಕ ಪುಟ',
@@ -603,6 +595,7 @@ $1',
 
 'sp-contributions-newbies'  => 'ಪೊಸ ಖಾತೆಲೆದ ಕಾಣಿಕೆಲೆನ್ ಮಾತ್ರ ತೊಜ್ಪಾವು',
 'sp-contributions-blocklog' => 'ತಡೆಪತ್ತುನ ದಾಖಲೆ',
+'sp-contributions-talk'     => 'ಪಾತೆರ',
 'sp-contributions-search'   => 'ಕಾಣಿಕೆಲೆನ್ ನಾಡ್ಲೆ',
 'sp-contributions-username' => 'ಐ.ಪಿ ವಿಳಾಸ ಅತ್ತ್’ನ್ಡ ಬಳಕೆದ ಪುದರ್:',
 'sp-contributions-submit'   => 'ನಾಡ್',
@@ -626,7 +619,7 @@ $1',
 
 # Block/unblock
 'blockip'                  => 'ಈ ಸದಸ್ಯೆರೆನ್ ಬ್ಲಾಕ್ ಮಲ್ಪುಲೆ',
-'ipboptions'               => '2 ಗಂಟೆಲು:2 hours,1 ದಿನ:1 day,3 ದಿನೊಲು:3 days,1 ವಾರ:1 week,2 ವಾರೊಲು:2 weeks,1 ತಿಂಗೊಲು:1 month,3 ತಿಂಗೊಲು:3 months,6 ತಿಂಗೊಲು:6 months,1 ವರ್ಷ:1 year,ಅನಿರ್ಧಿಷ್ಟ:infinite', # display1:time1,display2:time2,...
+'ipboptions'               => '2 ಗಂಟೆಲು:2 hours,1 ದಿನ:1 day,3 ದಿನೊಲು:3 days,1 ವಾರ:1 week,2 ವಾರೊಲು:2 weeks,1 ತಿಂಗೊಲು:1 month,3 ತಿಂಗೊಲು:3 months,6 ತಿಂಗೊಲು:6 months,1 ವರ್ಷ:1 year,ಅನಿರ್ಧಿಷ್ಟ:infinite',
 'ipblocklist'              => 'ತಡೆಪತ್ತ್’ದಿನ ಐ.ಪಿ ವಿಳಾಸೊಲು ಅಂಚೆನೆ ಬಳಕೆದ ಪುದರ್’ಲು',
 'blocklink'                => 'ಅಡ್ಡ ಪತ್ತ್’ಲೆ',
 'unblocklink'              => 'ಅಡ್ಡನ್ ದೆಪ್ಪುಲೆ',
@@ -736,7 +729,7 @@ $1',
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # External editor support
 'edit-externally'      => 'ಬಾಹ್ಯ(ಪಿದಯಿದ) ತಂತ್ರಾಶೊನು ಉಪಯೋಗ ಮಲ್ತ್’ದ್ ಇಂದೆನ್ ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',

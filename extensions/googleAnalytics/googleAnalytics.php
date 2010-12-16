@@ -4,8 +4,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Google Analytics Integration',
-	'version'        => '2.0.1',
+	'version'        => '2.0.2',
 	'author'         => 'Tim Laqua',
 	'description'    => 'Inserts Google Analytics script (ga.js) in to MediaWiki pages for tracking.',
 	'descriptionurl' => 'googleanalytics-desc',
@@ -15,10 +16,22 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['googleAnalytics'] = dirname(__FILE__) . '/googleAnalytics.i18n.php';
 
 $wgHooks['SkinAfterBottomScripts'][]  = 'efGoogleAnalyticsHookText';
+$wgHooks['ParserAfterTidy'][] = 'efGoogleAnalyticsASAC';
 
 $wgGoogleAnalyticsAccount = "";
+$wgGoogleAnalyticsAddASAC = false;
 $wgGoogleAnalyticsIgnoreSysops = true;
 $wgGoogleAnalyticsIgnoreBots = true;
+
+function efGoogleAnalyticsASAC( &$parser, &$text ) {
+	global $wgOut, $wgGoogleAnalyticsAccount, $wgGoogleAnalyticsAddASAC;
+
+	if( !empty($wgGoogleAnalyticsAccount) && $wgGoogleAnalyticsAddASAC ) {
+		$wgOut->addScript('<script type="text/javascript">window.google_analytics_uacct = "' . $wgGoogleAnalyticsAccount . '";</script>');
+	}
+
+	return true;
+}
 
 function efGoogleAnalyticsHookText(&$skin, &$text='') {
 	$text .= efAddGoogleAnalytics();

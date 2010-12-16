@@ -14,6 +14,7 @@ if (!defined('MEDIAWIKI')) die();
 
 // Extension credits
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'GlobalUserrights',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:GlobalUserrights',
 	'version'        => '1.0.2',
@@ -58,19 +59,19 @@ function efGURgetGroups( $user ) {
 		$uid = $user;
 	}
 
-	$dbw = wfGetDB( DB_MASTER );
+	$dbr = wfGetDB( DB_MASTER );
 	$groups = array();
 
-	$res = $dbw->select( 'global_user_groups',
+	$res = $dbr->select( 'global_user_groups',
 		array( 'gug_group' ),
 		array( 'gug_user' => $uid )
 	);
 
-	while( $row = $dbw->fetchObject( $res ) ) {
+	while( $row = $dbr->fetchObject( $res ) ) {
 		$groups[] = $row->gug_group;
 	}
 
-	$dbw->freeResult( $res );
+	$dbr->freeResult( $res );
 
 	return $groups;
 

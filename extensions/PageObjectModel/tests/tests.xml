@@ -1,0 +1,5 @@
+<phpunit>
+  <testsuite name="PageObjectModel">
+    <directory suffix=".php">tests</directory>
+  </testsuite>
+</phpunit>

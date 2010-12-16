@@ -42,10 +42,12 @@ $messages = array(
 'december-gen'  => 'Eyo Mnga',
 'may'           => 'EkaCanzibe',
 
-'article'        => 'Inqaku',
+'article' => 'Inqaku',
+'mypage'  => 'Inqaku yam',
+'mytalk'  => 'Inthetho yam',
+
+# Cologne Blue skin
 'qbspecialpages' => 'Amaphepha Abalulekileyo',
-'mypage'         => 'Inqaku yam',
-'mytalk'         => 'Inthetho yam',
 
 'help'             => 'Uncedo',
 'search'           => 'Khangela',
@@ -85,7 +87,6 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 'yourpasswordagain'  => 'Faka kwakhona igama elifihlakeleyo:',
 'remembermypassword' => 'Khumbula igama lam elifihlakeleyo kule Khompyutha',
 'createaccount'      => 'Vula I Account',
-'username'           => 'Igama lelungu:',
 'loginlanguagelabel' => 'Ulwimi: $1',
 
 # Edit pages
@@ -102,13 +103,16 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 # Preferences page
 'mypreferences'     => 'Ezithandwa ndim',
 'searchresultshead' => 'Khangela',
+'username'          => 'Igama lelungu:',
 
 # Recent changes
 'recentchanges'   => 'Utshitsho olusandokwenziwa',
 'minoreditletter' => 'nc',
 
 # Recent changes linked
-'recentchangeslinked' => 'Utsitsho olufana nolu',
+'recentchangeslinked'         => 'Utsitsho olufana nolu',
+'recentchangeslinked-feed'    => 'Utsitsho olufana nolu',
+'recentchangeslinked-toolbox' => 'Utsitsho olufana nolu',
 
 # Upload
 'upload'          => 'Faka Ifile',
@@ -136,6 +140,7 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 'contributions' => 'Imisebenzi ye lungu',
 'mycontris'     => 'Inkxaso yam',
 
+'sp-contributions-talk'   => 'Inthetho',
 'sp-contributions-submit' => 'Khangela',
 
 # Block/unblock

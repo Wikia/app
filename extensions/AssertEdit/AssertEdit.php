@@ -18,9 +18,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'AssertEdit',
-	'svn-date' => '$LastChangedDate: 2008-07-23 21:33:28 +0200 (śro, 23 lip 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37971 $',
 	'author' => 'Steve Sanbeg',
 	'description' => 'Adds edit assertions for use by bots',
 	'descriptionmsg' => 'assert_edit_desc',
@@ -33,7 +32,7 @@ $wgAutoloadClasses['AssertEdit'] = $dir . 'AssertEdit_body.php';
 $wgHooks['AlternateEdit'][] = 'efAssertEditHook';
 $wgHooks['APIEditBeforeSave'][] = 'efAssertApiEditHook';
 
-function efAssertEditHook( &$editpage ) {
+function efAssertEditHook( $editpage ) {
 	global $wgOut, $wgRequest;
 
 	$assertName = $wgRequest->getVal( 'assert' );
@@ -71,7 +70,7 @@ function efAssertEditHook( &$editpage ) {
 		return false;
 	}
 }
-function efAssertApiEditHook( &$editPage, $textBox, &$result ) {
+function efAssertApiEditHook( $editPage, $textBox, &$result ) {
 	global $wgOut, $wgRequest;
 
 	$assertName = $wgRequest->getVal( 'assert' );

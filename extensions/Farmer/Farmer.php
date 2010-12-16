@@ -8,25 +8,28 @@
  *
  * @todo Extension management on per-wiki basis
  * @todo Upload prefix
- * @todo Use MediaWiki messages
  *
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Farmer',
-	'author' => 'Gregory Szorc <gregory.szorc@case.edu>',
+	'author' => array( 'Gregory Szorc <gregory.szorc@case.edu>', 'Alexandre Emsenhuber' ),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Farmer',
 	'description' => 'Manage a MediaWiki farm',
 	'descriptionmsg' => 'farmer-desc',
-	'version' => '0.0.4'
+	'version' => '0.0.8',
 );
 
 /**
  * Extension's configuration
  */
 $wgFarmerSettings = array(
-	//Path to the directory that holds settings for wikis
+	// Path to the directory that holds settings for wikis
 	'configDirectory'           =>  realpath( dirname( __FILE__ ) ) . '/configs/',
+
+	// Or use a database
+	'databaseName'              => null,
 
 	// Default wiki
 	'defaultWiki'               =>  '',
@@ -42,8 +45,12 @@ $wgFarmerSettings = array(
 	// If onUnknownWiki calls MediaWikiFarmer::_redirectTo (default), url to redirect to
 	'redirectToURL'             =>  '',
 
-	// Wheter to use $wgConf to get some settings
+	// Whether to use $wgConf to get some settings
 	'useWgConf'                 => false,
+
+	// Callback function that is called when a wiki is initialized and will
+	// recieve the MediaWikiFarmer_Wiki object in first parameter
+	'initCallback'              => null,
 
 	// File used to create tables for new wikis
 	'newDbSourceFile'           =>  "$IP/maintenance/tables.sql",
@@ -88,3 +95,10 @@ $wgGroupPermissions['*']['farmeradmin'] = false;
 $wgGroupPermissions['sysop']['farmeradmin'] = true;
 $wgGroupPermissions['*']['createwiki'] = false;
 $wgGroupPermissions['sysop']['createwiki'] = true;
+
+# New log
+$wgLogTypes[] = 'farmer';
+$wgLogNames['farmer'] = 'farmer-log-name';
+$wgLogHeaders['farmer'] = 'farmer-log-header';
+$wgLogActions['farmer/create'] = 'farmer-log-create';
+$wgLogActions['farmer/delete'] = 'farmer-log-delete';

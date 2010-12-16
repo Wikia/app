@@ -22,9 +22,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ("ApiBase.php");
+	require_once ( "ApiBase.php" );
 }
 
 
@@ -40,12 +40,12 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiQueryDisabled extends ApiQueryBase {
 
-	public function __construct($main, $action) {
-		parent :: __construct($main, $action);
+	public function __construct( $main, $action ) {
+		parent :: __construct( $main, $action );
 	}
 
 	public function execute() {
-		$this->setWarning("The ``{$this->getModuleName()}'' module has been disabled.");
+		$this->setWarning( "The ``{$this->getModuleName()}'' module has been disabled." );
 	}
 
 	public function getAllowedParams() {
@@ -67,6 +67,6 @@ class ApiQueryDisabled extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryDisabled.php 41268 2008-09-25 20:50:50Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryDisabled.php 60930 2010-01-11 15:55:52Z simetrical $';
 	}
 }

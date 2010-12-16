@@ -35,4 +35,3 @@ class MV_EditSequencePage extends EditPage {
  		$wgOut->addHTML('</div>');
 	}
 }
-?>

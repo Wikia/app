@@ -1,0 +1,216 @@
+/* wikiEditor toc module */
+.wikiEditor-ui-toc {
+	/* height and width are set dynamically */
+	/*float: right;*/
+	padding: 0;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.wikiEditor-ui-toc {
+	border-left: solid silver 1px;
+}
+body.rtl .wikiEditor-ui-toc {
+	border-right: solid silver 1px;
+	border-left: none;
+}
+.wikiEditor-ui-toc ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	/* IE needs to be told in great detail how to act, or it misbehaves */
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	width: 100%;
+}
+.tab-toc {
+	/* Should match the toolbar */
+	background-image: url(../images/wikiEditor/toolbar/base.png);
+	background-position: left top;
+	background-repeat: repeat-x;
+	height: 26px;
+	padding: 3px 0;
+	line-height: 26px;
+	padding-left: 1em;
+	border-bottom: solid 1px silver;
+	white-space: nowrap;
+	overflow: hidden;
+}
+body.rtl .tab-toc {
+	background-position: right top;
+	padding-right: 2em;
+}
+.tab-toc a {
+	outline: none;
+}
+.wikiEditor-ui-toc li {
+	padding: 0;
+	margin: 0;
+}
+.wikiEditor-ui-toc ul ul {
+	padding: 0;
+	margin: 0;
+	margin-bottom: 0 !important;
+	margin-top: 0 !important;
+	list-style: none;
+	background-image: none;
+}
+.wikiEditor-ui-toc ul li div {
+	display: block;
+	font-size: 0.9em;
+	cursor: pointer;
+	color: #0645ad;
+}
+.wikiEditor-ui-toc ul li div {
+	padding: 0.125em;
+	padding-left: 1em;
+}
+body.rtl .wikiEditor-ui-toc ul li div {
+	padding-right: 1em;
+	padding-left: 0;
+}
+.wikiEditor-ui-toc ul ul li div {
+	padding-left: 2em;
+}
+body.rtl .wikiEditor-ui-toc ul ul li div {
+	padding-right: 2em;
+	padding-left: 0;
+}
+.wikiEditor-ui-toc ul ul ul li div {
+	padding-left: 3em;
+}
+body.rtl .wikiEditor-ui-toc ul ul ul li div {
+	padding-right: 3em;
+	padding-left: 0;
+}
+.wikiEditor-ui-toc ul ul ul ul li div {
+	padding-left: 4em;
+}
+body.rtl .wikiEditor-ui-toc ul ul ul ul li div {
+	padding-right: 4em;
+	padding-left: 0;
+}
+.wikiEditor-ui-toc ul ul ul ul ul li div {
+	padding-left: 5em;
+}
+body.rtl .wikiEditor-ui-toc ul ul ul ul ul li div {
+	padding-right: 5em;
+	padding-left: 0;
+}
+.wikiEditor-ui-toc ul ul ul ul ul ul li div {
+	padding-left: 6em;
+}
+body.rtl wikiEditor-ui-toc ul ul ul ul ul ul li div {
+	padding-right: 6em;
+	padding-left: 0;
+}
+.wikiEditor-ui-toc ul li div.current {
+	background-color: #FAFAFA;
+	color: #333333;
+}
+.wikiEditor-ui-toc ul li div.section-0 {
+	font-size: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	border-bottom: solid 1px #DDDDDD;
+}
+
+/* Collapsing changes */
+
+.wikiEditor-ui-toc {
+	overflow-y: hidden;
+	position: relative;
+}
+.wikiEditor-ui-toc ul {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 100%;
+	margin-bottom: 0 !important;
+	
+}
+
+.wikiEditor-ui-toc ul ul {
+	float: none;
+	height: auto;
+}
+#wikiEditor-ui-toc-collapse {
+	height: 100%;
+	width: 18px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.wikiEditor-ui-toc-collapse-open {
+	background: #f3f3f3 url(../images/wikiEditor/toc/close.png) 4px 50% no-repeat;
+	border-left: 1px solid #DDDDDD;
+}
+.wikiEditor-ui-toc-collapse-closed {
+	background: #f3f3f3 url(../images/wikiEditor/toc/open.png) 4px 50% no-repeat;
+}
+
+/* Resizing Changes */
+.wikiEditor-ui-toc-resize-vertical,
+.ui-resizable-w {
+	width: 4px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	cursor: ew-resize;
+}
+.wikiEditor-ui .wikiEditor-ui-right {
+	overflow: visible;
+}
+.wikiEditor-ui-right .ui-resizable-w {
+	left: 0px !important;
+}
+
+.wikiEditor-ui-right .wikiEditor-ui-toc-resize-grip {
+	width: 5px;
+	height: 12px;
+	padding: 3px;
+	position: absolute;
+	top: 7px;
+	left: -12px !important;
+	cursor: ew-resize;
+	background: url(../images/wikiEditor/toc/grip.png) 50% 50% no-repeat;
+	z-index: 0;
+}
+body.rtl .wikiEditor-ui-right .wikiEditor-ui-toc-resize-grip {
+	right: 2px !important;
+}
+.wikiEditor-ui-toolbar .tab-toc {
+	float: right;
+	margin: 3px 16px 3px 3px;
+	line-height: 26px;
+}
+.wikiEditor-ui-toc-expandControl {
+	position: absolute;
+	z-index: 2;
+	top: 0px;
+	right: 10px;
+	height: 26px;
+	padding: 3px 0;
+	line-height: 26px;
+	padding-right: 1em;
+	white-space: nowrap;
+	overflow: hidden;
+}
+body.rtl .wikiEditor-ui-toc-expandControl {
+	padding-left: 1em;
+	padding-right: 0;
+	left: 10px;
+	right: auto;
+}
+.wikiEditor-ui-text textarea {
+	resize: none;
+}
+.wikiEditor-ui-text textarea:focus {
+	outline: none;
+}
+
+/* Self Clearing for the wikiText view */
+.wikiEditor-ui-view-wikiText {
+	overflow: auto;
+	width: 100%;
+}

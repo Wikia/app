@@ -4,12 +4,12 @@
  *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
  */
-  
+
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 
@@ -24,7 +24,7 @@ class MV_SpecialListStreams extends SpecialPage {
 	public function __construct() {
 		parent::__construct( 'Mv_List_Streams' );
 	}
-	function execute() {
+	function execute( $par ) {
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new MV_SpecialQueryStreams();
 		return $rep->doQuery( $offset, $limit );
@@ -46,7 +46,7 @@ class MV_SpecialQueryStreams extends QueryPage {
 		return '<p>' . wfMsg( 'mv_list_streams_docu' ) . "</p><br />\n";
 	}
 	function getSQL() {
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		// $relations = $dbr->tableName( 'smw_relations' );
 		// $NSrel = SMW_NS_RELATION;
 		# QueryPage uses the value from this SQL in an ORDER clause.
@@ -58,8 +58,8 @@ class MV_SpecialQueryStreams extends QueryPage {
 					FROM $relations
 					GROUP BY relation_title";*/
 		/* @@todo replace with query that displays more info
-		 * such as 
-		 * date modified 
+		 * such as
+		 * date modified
 		 * stream length
 		 * formats available
 		 * number of associative metadata chunks */
@@ -68,7 +68,7 @@ class MV_SpecialQueryStreams extends QueryPage {
 				`name` as title,
 				`name` as value " .
 				"FROM " . $dbr->tableName( 'mv_streams' );
-				
+
 	}
 	function getOrder() {
 		return ' ORDER BY `mv_streams`.`date_start_time` DESC ';
@@ -80,14 +80,14 @@ class MV_SpecialQueryStreams extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		global $wgUser, $wgLang, $mvImageArchive;
-		
-		# make sure the first letter is upper case (makeTitle() should do that)		
+
+		# make sure the first letter is upper case (makeTitle() should do that)
 		$result->title = strtoupper( $result->title[0] ) . substr( $result->title, 1 );
 		$img_url = $mvImageArchive . $result->title . '?size=icon&time=0:00:00';
 		$img_url = MV_StreamImage::getStreamImageURL( $result->stream_id, '0:00:10', 'icon', true );
 		$img_html = '<img src="' . htmlspecialchars( $img_url ) . '" width="80" height="60">';
-		
-				
+
+
 		$title = Title::makeTitle( MV_NS_STREAM, $result->title  );
 		$rlink = $skin->makeLinkObj( $title,  $img_html . ' ' . $title->getText()  );
 		// if admin expose an edit link

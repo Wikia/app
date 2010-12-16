@@ -5,49 +5,55 @@
  *
  * @file
  * @ingroup Extensions
- * @author Wikia, Inc.
- * @version 1.0
+ * @author David Pean <david.pean@gmail.com>
+ * @author Jack Phoenix <jack@countervandalism.net>
+ * @version 1.2
  * @link http://www.mediawiki.org/wiki/Extension:UserWelcome Documentation
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-// Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfWelcomeUser';
-} else {
-	$wgExtensionFunctions[] = 'wfWelcomeUser';
+if( !defined( 'MEDIAWIKI' ) ) {
+	die( "This is not a valid entry point.\n" );
 }
 
 // Extension credits that show up on Special:Version
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'UserWelcome',
-	'version' => '1.1',
-	'author' => 'Wikia New York Team',
+	'version' => '1.2',
+	'author' => array( 'David Pean', 'Jack Phoenix' ),
 	'description' => 'Adds <tt>&lt;welcomeUser&gt;</tt> tag to display user-specific social info to logged-in users',
-	'description-msg' => 'userwelcome-desc',
+	'descriptionmsg' => 'userwelcome-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:UserWelcome',
 );
 
-function wfWelcomeUser() {
-	global $wgParser, $wgOut, $wgScriptPath;
-	$wgParser->setHook( 'welcomeUser', 'getWelcomeUser' );
-	$wgOut->addStyle( $wgScriptPath . '/extensions/SocialProfile/UserWelcome/UserWelcome.css' );
+$wgHooks['ParserFirstCallInit'][] = 'wfWelcomeUser';
+/**
+ * Register <welcomeUser /> tag with the parser
+ * @param $parser Object: instance of Parser
+ * @return true
+ */
+function wfWelcomeUser( &$parser ) {
+	$parser->setHook( 'welcomeUser', 'getWelcomeUser' );
 	return true;
 }
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['UserWelcome'] = $dir . 'UserWelcome.i18n.php';
 
-function getWelcomeUser( $input, $args, $parser ){
+function getWelcomeUser( $input, $args, $parser ) {
 	$parser->disableCache();
 	$output = getWelcome();
 
 	return $output;
 }
 
-function getWelcome(){
-	global $wgUser, $wgUploadPath;
+function getWelcome() {
+	global $wgUser, $wgOut, $wgScriptPath, $wgUploadPath;
 	wfLoadExtensionMessages( 'UserWelcome' );
+
+	// Add CSS
+	$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/SocialProfile/UserWelcome/UserWelcome.css' );
 
 	// Get stats and user level
 	$stats = new UserStats( $wgUser->getID(), $wgUser->getName() );
@@ -64,22 +70,22 @@ function getWelcome(){
 
 	// Profile top images/points
 	$output = '<div class="mp-welcome-logged-in">
-	<h2>'.wfMsg( 'mp-welcome-logged-in', $wgUser->getName() ).'</h2>
+	<h2>' . wfMsg( 'mp-welcome-logged-in', $wgUser->getName() ) . '</h2>
 	<div class="mp-welcome-image">
-	<a href="'. $wgUser->getUserPage()->escapeFullURL(). '" rel="nofollow"><img src="'.$wgUploadPath.'/avatars/' . $avatar->getAvatarImage() . '" alt="" border="0"/></a>';
-	if( strpos( $avatar->getAvatarImage(), 'default_' ) !== false ) {
-		$output .= '<div><a href="'.$avatar_link->escapeFullURL().'" rel="nofollow">'.wfMsg( 'mp-welcome-upload' ).'</a></div>';
+	<a href="' . $wgUser->getUserPage()->escapeFullURL() . '" rel="nofollow"><img src="' . $wgUploadPath . '/avatars/' . $avatar->getAvatarImage() . '" alt="" border="0"/></a>';
+	if ( strpos( $avatar->getAvatarImage(), 'default_' ) !== false ) {
+		$output .= '<div><a href="' . $avatar_link->escapeFullURL() . '" rel="nofollow">' . wfMsg( 'mp-welcome-upload' ) . '</a></div>';
 	} else {
-		$output .= '<div><a href="'.$avatar_link->escapeFullURL().'" rel="nofollow">'.wfMsg( 'mp-welcome-edit' ).'</a></div>';
+		$output .= '<div><a href="' . $avatar_link->escapeFullURL() . '" rel="nofollow">' . wfMsg( 'mp-welcome-edit' ) . '</a></div>';
 	}
 	$output .= '</div>';
 
 	global $wgUserLevels;
-	if( $wgUserLevels ){
+	if ( $wgUserLevels ) {
 		$output .= '<div class="mp-welcome-points">
 			<div class="points-and-level">
-				<div class="total-points">'.wfMsgExt( 'mp-welcome-points', 'parsemag', $stats_data['points'] ).'</div>
-				<div class="honorific-level"><a href="'.$level_link->escapeFullURL().'">('.$user_level->getLevelName().')</a></div>
+				<div class="total-points">' . wfMsgExt( 'mp-welcome-points', 'parsemag', $stats_data['points'] ) . '</div>
+				<div class="honorific-level"><a href="' . $level_link->escapeFullURL() . '">(' . $user_level->getLevelName() . ')</a></div>
 			</div>
 			<div class="cleared"></div>
 			<div class="needed-points">
@@ -97,18 +103,18 @@ function getWelcome(){
 	return $output;
 }
 
-function getRequests(){
+function getRequests() {
 	wfLoadExtensionMessages( 'UserWelcome' );
 
 	// Get requests
 	$requests = getNewMessagesLink() . getRelationshipRequestLink() . getNewGiftLink() . getNewSystemGiftLink();
 
 	$output = '';
-	if( $requests ){
+	if ( $requests ) {
 		$output .= '<div class="mp-requests">
-			<h3>'.wfMsg( 'mp-requests-title' ).'</h3>
+			<h3>' . wfMsg( 'mp-requests-title' ) . '</h3>
 			<div class="mp-requests-message">
-				'.wfMsg( 'mp-requests-message' )."
+				' . wfMsg( 'mp-requests-message' ) . "
 			</div>
 			$requests
 		</div>";
@@ -117,7 +123,7 @@ function getRequests(){
 	return $output;
 }
 
-function getRelationshipRequestLink(){
+function getRelationshipRequestLink() {
 	global $wgUser, $wgScriptPath;
 	wfLoadExtensionMessages( 'UserWelcome' );
 	$friend_request_count = UserRelationship::getOpenRequestCount( $wgUser->getID(), 1 );
@@ -127,67 +133,67 @@ function getRelationshipRequestLink(){
 	$rel_title = SpecialPage::getTitleFor( 'ViewRelationshipRequests' );
 	$output = '';
 
-	if( $friend_request_count ){
+	if ( $friend_request_count ) {
 		$output .= '<p>
-			<img src="'.$wgScriptPath.'/extensions/SocialProfile/images/addedFriendIcon.png" alt="" border="0" />
-			<a href="'.$relationship_request_link->escapeFullURL().'" rel="nofollow">'
-			.wfMsgExt( 'mp-request-new-friend', 'parsemag', $friend_request_count ).'</a>
+			<img src="' . $wgScriptPath . '/extensions/SocialProfile/images/addedFriendIcon.png" alt="" border="0" />
+			<a href="' . $relationship_request_link->escapeFullURL() . '" rel="nofollow">'
+			. wfMsgExt( 'mp-request-new-friend', 'parsemag', $friend_request_count ) . '</a>
 		</p>';
 	}
 
-	if( $foe_request_count ){
+	if ( $foe_request_count ) {
 		  $output .= '<p>
-			<img src="'.$wgScriptPath.'/extensions/SocialProfile/images/addedFoeIcon.png" alt="" border="0" />
-			<a href="'.$relationship_request_link->escapeFullURL().'" rel="nofollow">'
-			.wfMsgExt( 'mp-request-new-foe', 'parsemag', $foe_request_count ).'</a>
+			<img src="' . $wgScriptPath . '/extensions/SocialProfile/images/addedFoeIcon.png" alt="" border="0" />
+			<a href="' . $relationship_request_link->escapeFullURL() . '" rel="nofollow">'
+			. wfMsgExt( 'mp-request-new-foe', 'parsemag', $foe_request_count ) . '</a>
 		</p>';
 	}
 
 	return $output;
 }
 
-function getNewGiftLink(){
+function getNewGiftLink() {
 	global $wgUser, $wgScriptPath;
 	wfLoadExtensionMessages( 'UserWelcome' );
 	$gift_count = UserGifts::getNewGiftCount( $wgUser->getID() );
 	$gifts_title = SpecialPage::getTitleFor( 'ViewGifts' );
 	$output = '';
-	if( $gift_count ){
+	if ( $gift_count ) {
 		$output .= '<p>
-			<img src="'.$wgScriptPath.'/extensions/SocialProfile/images/icon_package_get.gif" alt="" border="0" />
-			<a href="'.$gifts_title->escapeFullURL().'" rel="nofollow">'.wfMsgExt( 'mp-request-new-gift', 'parsemag', $gift_count ).'</a>
+			<img src="' . $wgScriptPath . '/extensions/SocialProfile/images/icon_package_get.gif" alt="" border="0" />
+			<a href="' . $gifts_title->escapeFullURL() . '" rel="nofollow">' . wfMsgExt( 'mp-request-new-gift', 'parsemag', $gift_count ) . '</a>
 		</p>';
 	}
 	return $output;
 }
 
-function getNewSystemGiftLink(){
+function getNewSystemGiftLink() {
 	global $wgUser, $wgScriptPath;
 	wfLoadExtensionMessages( 'UserWelcome' );
 	$gift_count = UserSystemGifts::getNewSystemGiftCount( $wgUser->getID() );
 	$gifts_title = SpecialPage::getTitleFor( 'ViewSystemGifts' );
 	$output = '';
 
-	if( $gift_count ){
+	if ( $gift_count ) {
 		$output .= '<p>
-			<img src="'.$wgScriptPath.'/extensions/SocialProfile/images/awardIcon.png" alt="" border="0" />
-			<a href="'.$gifts_title->escapeFullURL().'" rel="nofollow">'.wfMsgExt( 'mp-request-new-award', 'parsemag', $gift_count ).'</a>
+			<img src="' . $wgScriptPath . '/extensions/SocialProfile/images/awardIcon.png" alt="" border="0" />
+			<a href="' . $gifts_title->escapeFullURL() . '" rel="nofollow">' . wfMsgExt( 'mp-request-new-award', 'parsemag', $gift_count ) . '</a>
 		</p>';
 	}
 
 	return $output;
 }
 
-function getNewMessagesLink(){
+function getNewMessagesLink() {
 	global $wgUser, $wgScriptPath;
 	wfLoadExtensionMessages( 'UserWelcome' );
 	$new_messages = UserBoard::getNewMessageCount( $wgUser->getID() );
 	$output = '';
-	if( $new_messages ){
+	if ( $new_messages ) {
 		$board_link = SpecialPage::getTitleFor( 'UserBoard' );
 		$output .= '<p>
-			<img src="'.$wgScriptPath.'/extensions/SocialProfile/images/emailIcon.gif" alt="email icon" border="" />
-			<a href="'.$board_link->escapeFullURL().'" rel="nofollow">'.wfMsg( 'mp-request-new-message' ).'</a>
+			<img src="' . $wgScriptPath . '/extensions/SocialProfile/images/emailIcon.gif" alt="email icon" border="" />
+			<a href="' . $board_link->escapeFullURL() . '" rel="nofollow">' . wfMsg( 'mp-request-new-message' ) . '</a>
 		</p>';
 	}
 	return $output;

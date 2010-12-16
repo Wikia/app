@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'authorprotect-failure'    => 'Protection unsuccessful',
 	'protect-level-author'     => 'Protect from non-authors',
 	'restriction-level-author' => 'Author-protected',
+	'right-authorprotect'      => 'Protect authored pages',
 );
 
 /** Message documentation (Message documentation)
@@ -32,6 +33,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'authorprotect-desc' => 'Extension description displayed on [[Special:Version]].',
 	'authorprotect-reason' => '{{Identical|Reason}}',
+	'right-authorprotect' => '{{doc-right|authorprotect}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -52,6 +54,7 @@ $messages['af'] = array(
 	'authorprotect-failure' => 'Beskerming het nie geslaag nie',
 	'protect-level-author' => 'Beskerm teen nie-outeurs',
 	'restriction-level-author' => 'Kan slegs deur outeurs gewysig word',
+	'right-authorprotect' => 'Beveilig self opgedateerde bladsye',
 );
 
 /** Amharic (አማርኛ)
@@ -81,6 +84,7 @@ $messages['ar'] = array(
 	'authorprotect-failure' => 'فشلت الحماية',
 	'protect-level-author' => 'احمي من غير المؤلفين',
 	'restriction-level-author' => 'حماية المؤلف',
+	'right-authorprotect' => 'حماية الصفحات المؤلفة',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -121,11 +125,45 @@ $messages['avk'] = array(
 	'restriction-level-author' => 'Sutesikafa nendara',
 );
 
+/** Azerbaijani (Azərbaycan)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'authorprotect' => 'Səhifənin qeyri-müəlliflərdən mühafizəsi',
+	'authorprotect-desc' => 'Müəllifə səhifəni digər istifadəçilərin redaktəsindən mühafizə etmək imkanı verir',
+	'authorprotect-notauthor' => 'Siz bu səhifənin müəllifi deyilsiniz',
+	'authorprotect-confirm' => 'Mühafizə səviyyələrini dəyişdir',
+	'authorprotect-edit' => 'Yalnız müəlliflər redaktə edə bilərlər',
+	'authorprotect-move' => 'Yalnız müəlliflər adını dəyişdirə bilərlər',
+	'authorprotect-expiry' => 'Mühafizə müddəti',
+	'authorprotect-reason' => 'Səbəb',
+	'authorprotect-intro' => 'Səhifəni onun müəllifi olmayan istifadəçilərin redaktələrindən mühafizə etmək üçün bu formadan istifadə edin',
+	'authorprotect-success' => 'Mühafizə olundu!',
+	'authorprotect-failure' => 'Mühafizə etmək mümkün deyil',
+	'protect-level-author' => 'Qeyri-müəlliflərdən mühafizə',
+	'restriction-level-author' => 'Müəllif mühafizəsi',
+	'right-authorprotect' => 'Müəllif səhifələrinin mühafizəsi',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'authorprotect' => 'Абарона старонак ад не-аўтараў',
+	'authorprotect-desc' => 'Дазваляе аўтару старонкі абараняць яе ад іншых удзельнікаў',
+	'authorprotect-notauthor' => 'Вы не зьяўляецеся аўтарам гэтай старонкі',
+	'authorprotect-confirm' => 'Зьмяніць узроўні абароны',
+	'authorprotect-edit' => 'Дазволіць рэдагаваньне толькі аўтарам',
+	'authorprotect-move' => 'Дазволіць перанос толькі аўтарам',
+	'authorprotect-expiry' => 'Тэрмін',
 	'authorprotect-reason' => 'Прычына',
+	'authorprotect-intro' => 'Выкарыстоўвайце гэтую формы для абароны гэтай старонкі ад не-аўтараў',
+	'authorprotect-success' => 'Старонка абароненая!',
+	'authorprotect-failure' => 'Старонка не абароненая',
+	'protect-level-author' => 'Абарона ад не-аўтараў',
+	'restriction-level-author' => 'Аўтарская абарона',
+	'right-authorprotect' => 'абарона аўтарскіх старонак',
 );
 
 /** Bulgarian (Български)
@@ -139,6 +177,26 @@ $messages['bg'] = array(
 	'authorprotect-reason' => 'Причина',
 	'authorprotect-success' => 'Защитата беше успешна!',
 	'authorprotect-failure' => 'Защитата беше неуспешна',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'authorprotect' => "Gwareziñ ar bajenn diouzh ar re n'int ket aozerien anezhi",
+	'authorprotect-desc' => "Aotren a ra aozer ur bajenn d'he gwareziñ diouzh an implijerien all",
+	'authorprotect-notauthor' => "N'oc'h ket c'hwi aozer ar bajenn-mañ",
+	'authorprotect-confirm' => 'Kemmañ al liveoù gwareziñ',
+	'authorprotect-edit' => "Strishaat ar gwir kemmañ d'an aozerien hepken",
+	'authorprotect-move' => "Strishaat ar gwir adenvel d'an aozerien hepken",
+	'authorprotect-expiry' => 'Deiziad termen',
+	'authorprotect-reason' => 'Abeg',
+	'authorprotect-intro' => "Ober gant ar furmskrid-mañ evit prennañ ar bajenn-mañ d'ar re n'int ket aozerien",
+	'authorprotect-success' => 'Gwareziñ sevenet !',
+	'authorprotect-failure' => "C'hwitet ar gwareziñ !",
+	'protect-level-author' => "Gwareziñ diouzh ar re n'int ket aozerien",
+	'restriction-level-author' => 'Aozer-gwarezet',
+	'right-authorprotect' => 'Gwareziñ pajenn an aozerien',
 );
 
 /** Bosnian (Bosanski)
@@ -159,10 +217,12 @@ $messages['bs'] = array(
 	'authorprotect-failure' => 'Zaštita nije uspjela.',
 	'protect-level-author' => 'Zaštiti od ne-autora.',
 	'restriction-level-author' => 'Autorska zaštita.',
+	'right-authorprotect' => 'Stavljanje zaštite na autorizirane stranice',
 );
 
 /** Catalan (Català)
  * @author Jordi Roqué
+ * @author Solde
  */
 $messages['ca'] = array(
 	'authorprotect' => 'Protegir pàgina de no-autors',
@@ -172,12 +232,13 @@ $messages['ca'] = array(
 	'authorprotect-edit' => "Restricció d'edició als autors",
 	'authorprotect-move' => 'Restricció de reanomenament als autors',
 	'authorprotect-expiry' => 'Data de caducitat',
-	'authorprotect-reason' => 'Raó',
+	'authorprotect-reason' => 'Motiu',
 	'authorprotect-intro' => 'Useu aquesta pantalla per a blocar aquesta pàgina als no-autors',
 	'authorprotect-success' => 'Protegida!',
 	'authorprotect-failure' => 'Desprotegida!',
 	'protect-level-author' => 'Protecció dels no-autors',
 	'restriction-level-author' => "Restringida a l'autor",
+	'right-authorprotect' => "Pàgines d'autor protegides",
 );
 
 /** Czech (Česky)
@@ -199,8 +260,29 @@ $messages['cs'] = array(
 	'restriction-level-author' => 'Jen pro autory',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'authorprotect' => 'Diogeler y dudalen rhag ei newid gan neb ond ei hawduron',
+	'authorprotect-desc' => "Yn galluogi awdur tudalen i'w diogelu rhag defnyddwyr eraill",
+	'authorprotect-notauthor' => 'Nid chi yw awdur y dudalen hon',
+	'authorprotect-confirm' => 'Newid lefelau diogelu',
+	'authorprotect-edit' => "Cyfyngu'r gallu i olygu i'r awduron",
+	'authorprotect-move' => "Cyfyngu'r gallu i symud tudalen i'r awduron",
+	'authorprotect-expiry' => 'Cyfnod',
+	'authorprotect-reason' => 'Rheswm',
+	'authorprotect-intro' => "Defnyddiwch y ffurflen hon i gloi'r dudalen hon rhag neb ond ei hawduron",
+	'authorprotect-success' => 'Llwyddodd y diogelu!',
+	'authorprotect-failure' => 'Ni lwyddodd y diogelu',
+	'protect-level-author' => 'Diogeler rhag cael ei newid gan neb ond ei hawduron',
+	'restriction-level-author' => 'Cyfyngedig-i-awduron',
+	'right-authorprotect' => "Gallu awdur i ddiogelu tudalennau o'i waith ei hun",
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'authorprotect' => 'Seitenbearbeitung auf Autoren beschränken',
@@ -211,11 +293,26 @@ $messages['de'] = array(
 	'authorprotect-move' => 'Beschränke Verschiebung auf Autoren',
 	'authorprotect-expiry' => 'Sperrdauer',
 	'authorprotect-reason' => 'Grund',
-	'authorprotect-intro' => 'Mit diesem Formular kannst du die Seitenbearbeitung auf Autoren beschränken.',
+	'authorprotect-intro' => 'Mit diesem Formular kann die Seitenbearbeitung auf Autoren beschränkt werden.',
 	'authorprotect-success' => 'Seite wurde geschützt!',
 	'authorprotect-failure' => 'Seite konnte nicht geschützt werden!',
 	'protect-level-author' => 'Seitenbearbeitung auf Autoren beschränken',
 	'restriction-level-author' => 'Autor-geschützt',
+	'right-authorprotect' => 'Auf Autorenbearbeitung beschränkte Seiten bearbeiten',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Umherirrender
+ */
+$messages['de-formal'] = array(
+	'authorprotect-notauthor' => 'Sie sind nicht der Autor dieser Seite',
+);
+
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'authorprotect-reason' => 'Sebeb',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -235,16 +332,33 @@ $messages['dsb'] = array(
 	'authorprotect-failure' => 'Šćit njewuspěšny',
 	'protect-level-author' => 'Pśed njeawtorami šćitaś',
 	'restriction-level-author' => 'Za awtorow šćitany',
+	'right-authorprotect' => 'Boki awtorow šćitaś',
 );
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'authorprotect' => 'Προστασία σελίδων από μη-συγγραφείς',
+	'authorprotect-desc' => 'Επιτρέπει στον συγγραφέα μιας σελίδας να την προστατέψει από άλλους χρήστες',
+	'authorprotect-notauthor' => 'Δεν είστε ο συγγραφέας αυτής της σελίδας',
+	'authorprotect-confirm' => 'Αλλαγή επιπέδων προστασίας',
+	'authorprotect-edit' => 'Περιορισμός επεξεργασιών σε συγγραφείς',
+	'authorprotect-move' => 'Περιορισμός μετακίνησης στους συγγραφείς',
+	'authorprotect-expiry' => 'Χρόνος λήξης',
 	'authorprotect-reason' => 'Λόγος',
+	'authorprotect-intro' => 'Χρησιμοποιείστε αυτή τη φόρμα για να κλειδώσετε τη σελίδα από μη-συγγραφείς',
+	'authorprotect-success' => 'Επιτυχής προστασία!',
+	'authorprotect-failure' => 'Ανεπιτυχής προστασία',
+	'protect-level-author' => 'Προστασία από μη-συγγραφείς',
+	'restriction-level-author' => 'Συγγραφικά-προστατευμένο',
+	'right-authorprotect' => 'Συγγραφικά προστατευμένες σελίδες',
 );
 
 /** Esperanto (Esperanto)
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
@@ -261,11 +375,13 @@ $messages['eo'] = array(
 	'authorprotect-failure' => 'Protektado malsukcesis',
 	'protect-level-author' => 'Protekti kontraŭ ne-aŭtoroj',
 	'restriction-level-author' => 'Protektita per aŭtoro',
+	'right-authorprotect' => 'Protekti aŭtorajn paĝojn',
 );
 
 /** Spanish (Español)
  * @author Academo
  * @author Crazymadlover
+ * @author Dferg
  * @author Drini
  * @author Imre
  * @author Sanbec
@@ -280,10 +396,11 @@ $messages['es'] = array(
 	'authorprotect-expiry' => 'Tiempo de caducidad',
 	'authorprotect-reason' => 'Motivo',
 	'authorprotect-intro' => 'Usar este formulario para bloquear la página a no-autores.',
-	'authorprotect-success' => 'Protección exitosa!',
+	'authorprotect-success' => '¡Protección exitosa!',
 	'authorprotect-failure' => 'Protección no exitosa',
 	'protect-level-author' => 'Proteger de no-autores.',
 	'restriction-level-author' => 'Protegido por autor',
+	'right-authorprotect' => 'proteger las páginas con autor',
 );
 
 /** Estonian (Eesti)
@@ -297,6 +414,7 @@ $messages['et'] = array(
 /** Basque (Euskara)
  * @author Kobazulo
  * @author Pi
+ * @author Theklan
  */
 $messages['eu'] = array(
 	'authorprotect' => 'Babestu orria ez-egileetatik',
@@ -312,6 +430,7 @@ $messages['eu'] = array(
 	'authorprotect-failure' => 'Babestea ez da behar bezala egin',
 	'protect-level-author' => 'Babestu ez-egileetatik',
 	'restriction-level-author' => 'Auto-babesturik',
+	'right-authorprotect' => 'Autore orrialdeak babestu',
 );
 
 /** Persian (فارسی)
@@ -331,6 +450,7 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Jaakonam
  * @author Nike
+ * @author Str4nd
  * @author Vililikku
  */
 $messages['fi'] = array(
@@ -338,12 +458,17 @@ $messages['fi'] = array(
 	'authorprotect-desc' => 'Mahdollistaa sivun tekijän suojata se muilta käyttäjiltä.',
 	'authorprotect-notauthor' => 'Et ole tämän sivun luoja.',
 	'authorprotect-confirm' => 'Vaihda suojauksen tasoa',
+	'authorprotect-edit' => 'Rajoita muokkaus tekijöille',
+	'authorprotect-move' => 'Rajoita siirtäminen tekijöille',
+	'authorprotect-expiry' => 'Vanhenemisaika',
 	'authorprotect-reason' => 'Syy',
 	'authorprotect-success' => 'Suojaus onnistui!',
 	'authorprotect-failure' => 'Suojaus ei onnistunut',
+	'protect-level-author' => 'Suojaa ei-tekijöiltä',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  */
 $messages['fr'] = array(
@@ -360,6 +485,27 @@ $messages['fr'] = array(
 	'authorprotect-failure' => 'Échec de la protection',
 	'protect-level-author' => 'Protéger des non-auteurs',
 	'restriction-level-author' => 'Auteur-protégé',
+	'right-authorprotect' => 'Protéger la page des auteurs',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'authorprotect' => 'Protègiér la pâge des nan-ôtors',
+	'authorprotect-desc' => 'Pèrmèt a l’ôtor d’una pâge de la protègiér des ôtros utilisators.',
+	'authorprotect-notauthor' => 'Vos éte pas l’ôtor de cela pâge',
+	'authorprotect-confirm' => 'Changiér lo nivél de protèccion',
+	'authorprotect-edit' => 'Rètrendre l’èdicion ux ôtors',
+	'authorprotect-move' => 'Rètrendre lo changement de nom ux ôtors',
+	'authorprotect-expiry' => 'Temps d’èxpiracion',
+	'authorprotect-reason' => 'Rêson',
+	'authorprotect-intro' => 'Utilisâd ceti formulèro por vèrrolyér cela pâge des nan-ôtors.',
+	'authorprotect-success' => 'Protèccion reussia !',
+	'authorprotect-failure' => 'Falyita de la protèccion',
+	'protect-level-author' => 'Protègiér des nan-ôtors',
+	'restriction-level-author' => 'Ôtor-protègiê',
+	'right-authorprotect' => 'Protègiér les pâges des ôtors',
 );
 
 /** Galician (Galego)
@@ -379,12 +525,14 @@ $messages['gl'] = array(
 	'authorprotect-failure' => 'A protección non se puido levar a cabo',
 	'protect-level-author' => 'Protexer fronte á edición dos que non son os seus autores',
 	'restriction-level-author' => 'Protexido polo autor',
+	'right-authorprotect' => 'Protexer as páxinas de autores',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'authorprotect-expiry' => 'Χρόνος λήξεως',
 	'authorprotect-reason' => 'Αἰτία',
 );
 
@@ -405,6 +553,7 @@ $messages['gsw'] = array(
 	'authorprotect-failure' => 'Syte het nit chenne gschitzt wäre!',
 	'protect-level-author' => 'Sytebearbeitig uf Autore bschränke',
 	'restriction-level-author' => 'Autor-gschitzt',
+	'right-authorprotect' => 'Autorisierti Syte schitze',
 );
 
 /** Manx (Gaelg)
@@ -434,6 +583,7 @@ $messages['he'] = array(
 	'authorprotect-failure' => 'הפעלת ההגנה נכשלה',
 	'protect-level-author' => 'הגנה מפני לא־יוצרים',
 	'restriction-level-author' => 'מוגן ליוצר',
+	'right-authorprotect' => 'הגנה על דפים שנכתבו על ידי אותו המשתמש',
 );
 
 /** Hindi (हिन्दी)
@@ -457,7 +607,7 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
- * @author Suradnik13
+ * @author Ex13
  */
 $messages['hr'] = array(
 	'authorprotect' => 'Zaštiti stranicu od ne-autora',
@@ -473,6 +623,7 @@ $messages['hr'] = array(
 	'authorprotect-failure' => 'Zaštićivanje neuspješno',
 	'protect-level-author' => 'Zaštiti za ne-autore',
 	'restriction-level-author' => 'Samo za autore',
+	'right-authorprotect' => 'Zaštićivanje autoriziranih stranica',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -492,10 +643,12 @@ $messages['hsb'] = array(
 	'authorprotect-failure' => 'Škitanje njeje so poradźiło!',
 	'protect-level-author' => 'Přećiwo wužiwarjam škitać, kotřiž awtorojo njejsu',
 	'restriction-level-author' => 'Za awtorow škitane',
+	'right-authorprotect' => 'Strony awtora škitać',
 );
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'authorprotect' => 'Lap védelme a nem-szerzőkkel szemben',
@@ -509,8 +662,9 @@ $messages['hu'] = array(
 	'authorprotect-intro' => 'Az űrlap használatával lezárhatod a lapot azon szerkesztők elől, akik nem szerzői annak',
 	'authorprotect-success' => 'Levédés sikeres!',
 	'authorprotect-failure' => 'Levédés sikertelen',
-	'protect-level-author' => 'Levédés nem szerzőkkel szemben',
+	'protect-level-author' => 'Csak a szerző',
 	'restriction-level-author' => 'Szerző-védett',
+	'right-authorprotect' => 'szerzői lapok védelme',
 );
 
 /** Interlingua (Interlingua)
@@ -530,25 +684,28 @@ $messages['ia'] = array(
 	'authorprotect-failure' => 'Protection non succedite',
 	'protect-level-author' => 'Proteger contra non-autores',
 	'restriction-level-author' => 'Protegite per le autor',
+	'right-authorprotect' => 'Proteger paginas scribite per autores',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Rex
  */
 $messages['id'] = array(
-	'authorprotect' => 'Melindungi halaman dari non-penulis',
-	'authorprotect-desc' => 'Mengizinkan penulis suatu halaman untuk melindunginya dari pengguna lain',
-	'authorprotect-notauthor' => 'Anda bukan penulis halaman ini',
+	'authorprotect' => 'Melindungi halaman dari non-penulis pertama',
+	'authorprotect-desc' => 'Mengizinkan penulis pertama suatu halaman untuk melindunginya dari pengguna lain',
+	'authorprotect-notauthor' => 'Anda bukan penulis pertama halaman ini',
 	'authorprotect-confirm' => 'Mengganti tingkat perlindungan',
-	'authorprotect-edit' => 'Membatasi penyuntingan hanya untuk penulis',
-	'authorprotect-move' => 'Membatasi perpindahan ke penulis',
+	'authorprotect-edit' => 'Membatasi penyuntingan hanya untuk penulis pertama',
+	'authorprotect-move' => 'Membatasi pemindahan hanya untuk penulis pertama',
 	'authorprotect-expiry' => 'Waktu kadaluwarsa',
 	'authorprotect-reason' => 'Alasan',
-	'authorprotect-intro' => 'Gunakan formulir berikut untuk mengunci halaman ini dari non-penulis',
+	'authorprotect-intro' => 'Gunakan formulir berikut untuk mengunci halaman ini dari non-penulis pertama',
 	'authorprotect-success' => 'Perlindungan berhasil!',
 	'authorprotect-failure' => 'Perlindungan tidak berhasil',
-	'protect-level-author' => 'Melindungi dari non-penulis',
-	'restriction-level-author' => 'Khusus-penulis',
+	'protect-level-author' => 'Melindungi dari non-penulis pertama',
+	'restriction-level-author' => 'Dilindungi penulis pertama',
+	'right-authorprotect' => 'Lindungi halaman dengan penulis pertama',
 );
 
 /** Ido (Ido)
@@ -580,6 +737,7 @@ $messages['is'] = array(
 
 /** Italian (Italiano)
  * @author BrokenArrow
+ * @author Darth Kule
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -596,6 +754,7 @@ $messages['it'] = array(
 	'authorprotect-failure' => 'Protezione fallita',
 	'protect-level-author' => 'Protetta dai non-autori',
 	'restriction-level-author' => "Protetta dall'autore",
+	'right-authorprotect' => 'Protegge le pagine con autori',
 );
 
 /** Japanese (日本語)
@@ -611,10 +770,11 @@ $messages['ja'] = array(
 	'authorprotect-expiry' => '期限',
 	'authorprotect-reason' => '理由',
 	'authorprotect-intro' => 'このページを非作成者から保護するのにこのフォームを使ってください',
-	'authorprotect-success' => '保護成功!',
+	'authorprotect-success' => '保護成功！',
 	'authorprotect-failure' => '保護失敗',
 	'protect-level-author' => '非作成者から保護',
 	'restriction-level-author' => '作成者保護',
+	'right-authorprotect' => '作成したページを保護する',
 );
 
 /** Javanese (Basa Jawa)
@@ -664,11 +824,33 @@ $messages['km'] = array(
 	'restriction-level-author' => 'ត្រូវបានការពារដោយអ្នកនិពន្ឋ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'authorprotect-reason' => 'ಕಾರಣ',
+);
+
 /** Korean (한국어)
+ * @author Klutzy
  * @author Kwj2772
+ * @author Yknok29
  */
 $messages['ko'] = array(
+	'authorprotect' => '저자가 아닌 사람의 편집을 보호',
+	'authorprotect-desc' => '문서의 저자에게 문서 보호 기능 제공',
+	'authorprotect-notauthor' => '이 문서의 저자가 아닙니다',
+	'authorprotect-confirm' => '보호 수준 변경',
+	'authorprotect-edit' => '저자의 편집 제한하기',
+	'authorprotect-move' => '저자의 이동 제한',
+	'authorprotect-expiry' => '만료 시간',
 	'authorprotect-reason' => '이유',
+	'authorprotect-intro' => '이 양식을 이용해 저자가 아닌 사람의 조작을 제한합니다',
+	'authorprotect-success' => '보호 완료!',
+	'authorprotect-failure' => '보호 실패',
+	'protect-level-author' => '저자가 아닌 사용자로부터 보호',
+	'restriction-level-author' => '저자보호',
+	'right-authorprotect' => '작성한 문서를 보호하기',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -688,16 +870,18 @@ $messages['ksh'] = array(
 	'authorprotect-failure' => 'Di Sigg kunnt nit jeschötz wäde',
 	'protect-level-author' => 'Schötze jähje Nit-Met-Schriiver aan dä Sigg',
 	'restriction-level-author' => 'Metschriiver-jeschötz',
+	'right-authorprotect' => 'Sigg jäje Anderlüx Änderunge schötze, die nit draan metjeschrevve han',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
 	'authorprotect' => "Ännere vun der Säit op d'Auteure limitéieren",
-	'authorprotect-desc' => "Erlaabt dem Auteur vun enger Säit fir dës fir d'Verännerung dovun fir aner Benotzer ze spären",
+	'authorprotect-desc' => "Erlaabt et dem Auteur vun enger Säit fir dës fir d'Verännerung dovun fir aner Benotzer ze spären",
 	'authorprotect-notauthor' => 'Dir sidd net den Auteur vun dëser Säit',
-	'authorprotect-confirm' => "D'Niveaue vunder Protectioun änneren",
+	'authorprotect-confirm' => "D'Niveaue vun der Protectioun änneren",
 	'authorprotect-edit' => 'Ännerungen nëmmen fir Auteure méiglech maachen',
 	'authorprotect-move' => 'Récklen nëmme fir Auteure méiglech maachen',
 	'authorprotect-expiry' => 'Dauer vun der Spär',
@@ -707,6 +891,7 @@ $messages['lb'] = array(
 	'authorprotect-failure' => "D'Säit konnt net protegéiert ginn",
 	'protect-level-author' => "Protegéiert viru ''Net-Auteuren''",
 	'restriction-level-author' => 'Auteur-protegéiert',
+	'right-authorprotect' => 'Säite mat engem Auteur schützen',
 );
 
 /** Limburgish (Limburgs)
@@ -743,14 +928,35 @@ $messages['mhr'] = array(
 	'authorprotect-reason' => 'Амал',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'authorprotect' => 'Заштити ја страницата од неавтори',
+	'authorprotect-desc' => 'Му овозможува на авторот на една страница да ја заштити од други корисници',
+	'authorprotect-notauthor' => 'Не сте автор на оваа страница',
+	'authorprotect-confirm' => 'Промени го нивото на заштита',
+	'authorprotect-edit' => 'Само автори можат да уредуваат',
+	'authorprotect-move' => 'Само автори можат да преместуваат',
+	'authorprotect-expiry' => 'Истекува',
+	'authorprotect-reason' => 'Причина',
+	'authorprotect-intro' => 'Користете го овој образец за да ја заклучите страницата од неавтори',
+	'authorprotect-success' => 'Заштитувањето успеа',
+	'authorprotect-failure' => 'Заштитувањето не успеа',
+	'protect-level-author' => 'Заштити од неавтори',
+	'restriction-level-author' => 'Авторска заштита',
+	'right-authorprotect' => 'Заштити авторски страници',
+);
+
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'authorprotect' => 'ലേഖകരല്ലാത്തവരില്‍ നിന്നും ഈ താള്‍ സം‌രക്ഷിക്കുക',
-	'authorprotect-desc' => 'ഒരു താളിന്റെ സൃഷ്ടാവിനു പ്രസ്തുത താള്‍ മറ്റുള്ളവര്‍ തിരുത്തുന്നതു തടയാനുള്ള അനുമതി നല്‍കുന്നു',
-	'authorprotect-notauthor' => 'താങ്കള്‍ ഈ താളിന്റെ സൃഷ്ടാവല്ല',
-	'authorprotect-confirm' => 'സം‌രക്ഷിക്കുക',
+	'authorprotect-desc' => 'ഒരു താളിന്റെ സ്രഷ്ടാവിനു പ്രസ്തുത താള്‍ മറ്റുള്ളവര്‍ തിരുത്തുന്നതു തടയാനുള്ള അനുമതി നല്‍കുന്നു',
+	'authorprotect-notauthor' => 'താങ്കള്‍ ഈ താളിന്റെ സ്രഷ്ടാവല്ല',
+	'authorprotect-confirm' => 'സംരക്ഷണ മാനത്തിൽ മാറ്റം വരുത്തുക',
 	'authorprotect-edit' => 'തിരുത്താനുള്ള അവകാശം ലേഖകര്‍ക്കു മാത്രമായി പരിമിതപ്പെടുത്തുന്നു.',
 	'authorprotect-move' => 'തലക്കെട്ടു മാറ്റാനുള്ള അവകാശം ലേഖകര്‍ക്കു മാത്രമായി പരിമിതപ്പെടുത്തുന്നു.',
 	'authorprotect-expiry' => 'കാലാവധി',
@@ -779,6 +985,19 @@ $messages['mr'] = array(
 	'authorprotect-failure' => 'सुरक्षित करू शकलेलो नाही',
 	'protect-level-author' => 'लेखक नसणार्‍यांपासून सुरक्षित करा',
 	'restriction-level-author' => 'लेखक-सुरक्षित',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Zamwan
+ */
+$messages['ms'] = array(
+	'authorprotect-notauthor' => 'Anda bukan seorang penulis laman ini',
+	'authorprotect-confirm' => 'Ubah tahap perlindungan',
+	'authorprotect-expiry' => 'Tempoh tamat',
+	'authorprotect-reason' => 'Alasan',
+	'authorprotect-success' => 'Perlindungan berjaya!',
+	'authorprotect-failure' => 'Perlindungan tidak berjaya',
+	'restriction-level-author' => 'Dilindungi oleh penulis',
 );
 
 /** Erzya (Эрзянь)
@@ -813,9 +1032,11 @@ $messages['nl'] = array(
 	'authorprotect-failure' => 'Beveiliging niet ingesteld',
 	'protect-level-author' => 'Beveiligen voor niet-auteurs',
 	'restriction-level-author' => 'Alleen te bewerken door auteurs',
+	'right-authorprotect' => "Zelf bewerkte pagina's beveiligen",
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Gunnernett
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -832,10 +1053,12 @@ $messages['nn'] = array(
 	'authorprotect-failure' => 'Kunne ikkje verna sida',
 	'protect-level-author' => 'Vern for andre enn forfattarar',
 	'restriction-level-author' => 'Forfattarverna',
+	'right-authorprotect' => 'Vern forfatta sider',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'authorprotect' => 'Beskytt siden for andre enn forfatteren',
@@ -851,6 +1074,7 @@ $messages['no'] = array(
 	'authorprotect-failure' => 'Beskytting mislyktes',
 	'protect-level-author' => 'Beskytt for andre enn forfattere',
 	'restriction-level-author' => 'Beskyttet for forfattere',
+	'right-authorprotect' => 'Beskytt forfattede sider',
 );
 
 /** Novial (Novial)
@@ -877,6 +1101,7 @@ $messages['oc'] = array(
 	'authorprotect-failure' => 'Fracàs de la proteccion',
 	'protect-level-author' => 'Protegir de non-autors',
 	'restriction-level-author' => 'Autor protegit',
+	'right-authorprotect' => 'Protegir la pagina dels autors',
 );
 
 /** Ossetic (Иронау)
@@ -885,6 +1110,13 @@ $messages['oc'] = array(
 $messages['os'] = array(
 	'authorprotect-notauthor' => 'Ды ацы фарсы автор нæ дæ',
 	'authorprotect-reason' => 'Аххос',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'authorprotect-reason' => 'Grund',
 );
 
 /** Polish (Polski)
@@ -906,6 +1138,27 @@ $messages['pl'] = array(
 	'authorprotect-failure' => 'Zabezpieczenie nie powiodło się',
 	'protect-level-author' => 'Zabezpieczenie przed wszystkimi poza autorami',
 	'restriction-level-author' => 'Tylko autorzy',
+	'right-authorprotect' => 'Zabezpieczanie stron autorskich',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'authorprotect' => 'Protegg la pàgina dai nen-autor',
+	'authorprotect-desc' => "A përmëtt a l'autor ëd na pàgina ëd protegg-la da àutr utent",
+	'authorprotect-notauthor' => "It ses pa l'autor dë sta pàgina-sì",
+	'authorprotect-confirm' => 'Cambia ël livel ëd protession',
+	'authorprotect-edit' => "Strenz le modìfiche a j'autor",
+	'authorprotect-move' => "Strenz jë spostament a j'autor",
+	'authorprotect-expiry' => 'Scadensa',
+	'authorprotect-reason' => 'Rason',
+	'authorprotect-intro' => 'Dòvra sta forma-sì për bloché sta pàgina-sì dai nen-autor',
+	'authorprotect-success' => 'Protession a pòst!',
+	'authorprotect-failure' => 'Protession pa a pòst',
+	'protect-level-author' => 'Protegg dai nen-autor',
+	'restriction-level-author' => "Protegiùa da l'autor",
+	'right-authorprotect' => 'Protegg le pàgine con autor',
 );
 
 /** Pashto (پښتو)
@@ -927,6 +1180,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author 555
+ * @author Giro720
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -943,6 +1197,7 @@ $messages['pt'] = array(
 	'authorprotect-failure' => 'Protecção sem sucesso',
 	'protect-level-author' => 'Proteger de não-autores',
 	'restriction-level-author' => 'Protegida pelo autor',
+	'right-authorprotect' => 'Proteger páginas com autor',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -962,6 +1217,7 @@ $messages['pt-br'] = array(
 	'authorprotect-failure' => 'Proteção sem sucesso',
 	'protect-level-author' => 'Proteger de não-autores',
 	'restriction-level-author' => 'Protegida pelo autor',
+	'right-authorprotect' => 'Proteger páginas de autoria própria',
 );
 
 /** Romanian (Română)
@@ -980,8 +1236,9 @@ $messages['ro'] = array(
 	'authorprotect-intro' => 'Utilizaţi acest formular pentru a proteja această pagină de non-autori',
 	'authorprotect-success' => 'Protejare cu succes!',
 	'authorprotect-failure' => 'Protejare fără succes',
-	'protect-level-author' => 'Potejează de non-autori',
-	'restriction-level-author' => 'Protejat de autor',
+	'protect-level-author' => 'Protejare de non-autori',
+	'restriction-level-author' => 'Autor-protejat',
+	'right-authorprotect' => 'Protejare pagini de autor',
 );
 
 /** Tarandíne (Tarandíne)
@@ -992,6 +1249,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ferrer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -1008,6 +1266,27 @@ $messages['ru'] = array(
 	'authorprotect-failure' => 'Установить защиту не удалось',
 	'protect-level-author' => 'Защита от не-авторов',
 	'restriction-level-author' => 'Авторская защита',
+	'right-authorprotect' => 'защита авторских страниц',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'authorprotect' => 'Ааптар буолбатах дьонтон сирэйи көмүскээһин',
+	'authorprotect-desc' => 'Сирэй ааптара сирэйи атын кыттааччылартан көмүскүүрүн хааччыйар',
+	'authorprotect-notauthor' => 'Эн бу сирэй аапатара буолбатаххын',
+	'authorprotect-confirm' => 'Көмүскэл таһымын уларытыы',
+	'authorprotect-edit' => 'Ааптардар эрэ көннөрөр кыахтаахтар',
+	'authorprotect-move' => 'Ааптардар эрэ аатын уларытар кыахтаахтар',
+	'authorprotect-expiry' => 'Көмүскэл болдьоҕо',
+	'authorprotect-reason' => 'Төрүөтэ',
+	'authorprotect-intro' => 'Бу форманы туһанан ааптар буолбатах кыттааччылартан сирэйи көмүскээ',
+	'authorprotect-success' => 'Көмүскэл турда!',
+	'authorprotect-failure' => 'Көмүскэли туруорар табыллыбата',
+	'protect-level-author' => 'Ааптар буолбатах дьонтон көмүскэл',
+	'restriction-level-author' => 'Ааптар көмүскэлэ',
+	'right-authorprotect' => 'Ааптар суруйуутун көмүскээһин',
 );
 
 /** Slovak (Slovenčina)
@@ -1027,6 +1306,48 @@ $messages['sk'] = array(
 	'authorprotect-failure' => 'Ochrana neprebehla úspešne',
 	'protect-level-author' => 'Ochrániť pred neautorskými úpravami',
 	'restriction-level-author' => 'Len pre autorov',
+	'right-authorprotect' => 'Chrániť autorské stránky',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'authorprotect' => 'Заштити чланак од не-аутора',
+	'authorprotect-desc' => 'Омогућава аутору чланка да га заштити од других корисника',
+	'authorprotect-notauthor' => 'Ви нисте аутор овог чланка',
+	'authorprotect-confirm' => 'Промени нивое заштите',
+	'authorprotect-edit' => 'Ограничи право измене на ауторе',
+	'authorprotect-move' => 'Ограничи право премештања само на ауторе',
+	'authorprotect-expiry' => 'Време истека',
+	'authorprotect-reason' => 'Разлог',
+	'authorprotect-intro' => 'Користите ову форму да бисте закључали овај чланак за не-ауторе',
+	'authorprotect-success' => 'Заштита успешна!',
+	'authorprotect-failure' => 'Заштита неуспешна',
+	'protect-level-author' => 'Заштити од не-аутора',
+	'restriction-level-author' => 'Кориснички заштићено',
+	'right-authorprotect' => 'Заштита страна од стране аутора',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Liangent
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'authorprotect' => 'Zaštiti članak od ne-autora',
+	'authorprotect-desc' => 'Omogućava autoru članka da ga zaštiti od drugih korisnika',
+	'authorprotect-notauthor' => 'Vi niste autor ovog članka',
+	'authorprotect-confirm' => 'Promeni nivoe zaštite',
+	'authorprotect-edit' => 'Ograniči pravo izmene na autore',
+	'authorprotect-move' => 'Ograniči pravo premeštanja samo na autore',
+	'authorprotect-expiry' => 'Vreme isteka',
+	'authorprotect-reason' => 'Razlog',
+	'authorprotect-intro' => 'Koristite ovu formu da biste zaključali ovaj članak za ne-autore',
+	'authorprotect-success' => 'Zaštita uspešna!',
+	'authorprotect-failure' => 'Zaštita neuspešna',
+	'protect-level-author' => 'Zaštiti od ne-autora',
+	'restriction-level-author' => 'Korisnički zaštićeno',
+	'right-authorprotect' => 'Zaštita strana od strane autora',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1058,6 +1379,7 @@ $messages['su'] = array(
 /** Swedish (Svenska)
  * @author Lejonel
  * @author M.M.S.
+ * @author Najami
  */
 $messages['sv'] = array(
 	'authorprotect' => 'Skydda sidan från andra än författaren',
@@ -1073,6 +1395,7 @@ $messages['sv'] = array(
 	'authorprotect-failure' => 'Beskyddning misslyckades',
 	'protect-level-author' => 'Skydda från andra än författaren',
 	'restriction-level-author' => 'författarskyddad',
+	'right-authorprotect' => 'Skydda författade sidor',
 );
 
 /** Telugu (తెలుగు)
@@ -1096,6 +1419,13 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'authorprotect-reason' => 'Motivu',
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'authorprotect-reason' => 'เหตุผล',
 );
 
 /** Tagalog (Tagalog)
@@ -1135,11 +1465,13 @@ $messages['tr'] = array(
 	'authorprotect-failure' => 'Koruma başarısız',
 	'protect-level-author' => 'Yazar-olmayanlardan koru',
 	'restriction-level-author' => 'Yazar-korumalı',
+	'right-authorprotect' => 'Yazarlı sayfaları koru',
 );
 
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'authorprotect' => 'Захист сторінок від не-авторів',
@@ -1155,6 +1487,7 @@ $messages['uk'] = array(
 	'authorprotect-failure' => 'Встановити захист не вдалося',
 	'protect-level-author' => 'Захист від не-авторів',
 	'restriction-level-author' => 'Авторський захист',
+	'right-authorprotect' => 'Захист авторських сторінок',
 );
 
 /** Vèneto (Vèneto)
@@ -1174,9 +1507,18 @@ $messages['vec'] = array(
 	'authorprotect-failure' => 'Protession mìa riussìa',
 	'protect-level-author' => 'Protèzi dai non-autori',
 	'restriction-level-author' => "Proteto da l'autor",
+	'right-authorprotect' => 'Protegere le pagine con autori',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'authorprotect-reason' => 'Sü',
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
@@ -1193,6 +1535,7 @@ $messages['vi'] = array(
 	'authorprotect-failure' => 'Không khóa được',
 	'protect-level-author' => 'Khóa đối với những người không phải tác giả',
 	'restriction-level-author' => 'Khóa cho mức tác giả',
+	'right-authorprotect' => 'Khóa trang do mình viết',
 );
 
 /** Volapük (Volapük)
@@ -1215,10 +1558,20 @@ $messages['vo'] = array(
 	'restriction-level-author' => 'Redakamadäl te lautane',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'authorprotect-reason' => 'אורזאַך',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author PhiLiP
  */
 $messages['zh-hans'] = array(
+	'authorprotect' => '防止非作者编辑页面',
+	'authorprotect-desc' => '允许页面的作者禁止其他用户编辑',
 	'authorprotect-notauthor' => '您并非本页面的原作者',
 	'authorprotect-confirm' => '更改保护级别',
 	'authorprotect-expiry' => '终止时间',
@@ -1229,9 +1582,12 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'authorprotect' => '防止非作者編輯頁面',
+	'authorprotect-desc' => '允許頁面的作者禁止其他用戶編輯',
 	'authorprotect-notauthor' => '您並非本頁面的原作者',
 	'authorprotect-confirm' => '更改保護等級',
 	'authorprotect-expiry' => '終止時間',

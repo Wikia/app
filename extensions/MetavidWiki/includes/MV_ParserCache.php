@@ -32,4 +32,3 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
  		return parent::getKey( $article, $user ) . $this->extraKeyOpt . $this->addToKey;
  	}
  }
-?>

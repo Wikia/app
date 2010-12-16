@@ -154,7 +154,7 @@ function efGPManagerCustomTabs(&$ca) {
 	return $res; //if one of the extensions returned false, then we return false
 }
 
-function efGPManagerGetSkin(&$skin, $ca) {
+function efGPManagerGetSkin($skin, $ca) {
 	global $egSkinObj;
 	$egSkinObj = $skin;
 	return true;

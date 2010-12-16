@@ -23,6 +23,13 @@ $messages['qqq'] = array(
 	'localisationupdate-desc' => '{{desc}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'localisationupdate-desc' => 'Hou die gelokaliseerde boodskappe so op datum as moontlik',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -44,6 +51,13 @@ $messages['be-tarask'] = array(
 	'localisationupdate-desc' => 'Сынхранізуе перакладзеныя сыстэмныя паведамленьні як мага даўжэй',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'localisationupdate-desc' => 'স্থানীয়করণকৃত বার্তাসমূহ যথাসম্ভব হালনাগাদ রাখে',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -63,6 +77,13 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'localisationupdate-desc' => 'Manté els missatges localitzats tan actualitzats com sigui possible',
+);
+
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'localisationupdate-desc' => 'Udržuje lokalizovaná hlášení co možná nejaktuálnější',
 );
 
 /** Welsh (Cymraeg)
@@ -93,11 +114,25 @@ $messages['el'] = array(
 	'localisationupdate-desc' => 'Διατηρεί τις μεταφράσεις μηνυμάτων όσο πιο ενημερωμένες γίνεται',
 );
 
+/** Esperanto (Esperanto)
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'localisationupdate-desc' => 'Ĝisdatigas la asimilitajn mesaĝojn tiom eble',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
-	'localisationupdate-desc' => 'Mantener los mensajes localizados tan actualizados como sean posibles',
+	'localisationupdate-desc' => 'Mantiene los mensajes localizados tan actualizados como sea posible',
+);
+
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'localisationupdate-desc' => 'Hoiab lokaliseeritud sõnumid nii ajakohased kui võimalik.',
 );
 
 /** Basque (Euskara)
@@ -198,6 +233,13 @@ $messages['km'] = array(
 	'localisationupdate-desc' => 'រក្សា​សារ​ដែលបាន​ប្រែសម្រួល​ទាំងឡាយ អោយនៅ​ទាន់សម័យ​តាមដែលអាចធ្វើទៅបាន​',
 );
 
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'localisationupdate-desc' => '번역된 시스템 메시지를 가능한 한 최신으로 유지',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -217,6 +259,13 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'localisationupdate-desc' => 'Ги одржува локализираните пораки колку што е можно пообновени и повеќе во тек со настаните',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'localisationupdate-desc' => 'പ്രാദേശികഭാഷയിലാക്കിയ സന്ദേശങ്ങൾ കഴിയുന്നത്ര വേഗം ചേർക്കാൻ ഉപയോഗിക്കുന്നു',
 );
 
 /** Dutch (Nederlands)
@@ -262,10 +311,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'localisationupdate-desc' => 'Mantém as mensagens localizadas tão atualizadas quanto possível',
+	'localisationupdate-desc' => 'Mantém as mensagens localizadas tão actualizadas quanto possível',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -301,6 +351,48 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'localisationupdate-desc' => 'Udržiava lokalizované správy čo najaktuálnejšie',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'localisationupdate-desc' => 'Ажурира локализоване поруке колико је то могуће',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Liangent
+ */
+$messages['sr-el'] = array(
+	'localisationupdate-desc' => 'Ažurira lokalizovane poruke koliko je to moguće',
+);
+
+/** Swedish (Svenska)
+ * @author Boivie
+ */
+$messages['sv'] = array(
+	'localisationupdate-desc' => 'Håller de lokaliserade meddelandena så uppdaterade som möjligt',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'localisationupdate-desc' => 'స్ధానికీకరించిన సందేశాలను సాధ్యమైనంత తాజాగా ఉంచుతుంది',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'localisationupdate-desc' => 'Yerelleştirilen mesajları mümkün olabildiğince güncel tutar',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'localisationupdate-desc' => 'Забезпечує оновлення локалізованих повідомлень у міру можливості',
 );
 
 /** Veps (Vepsan kel')

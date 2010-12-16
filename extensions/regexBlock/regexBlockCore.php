@@ -629,7 +629,7 @@ class RegexBlock {
 			wfLoadExtensionMessages( 'RegexBlock' );
 			$links[] = $wgUser->getSkin()->makeKnownLinkObj(
 				SpecialPage::getTitleFor( 'RegexBlock' ),
-				wfMsgHtml( 'regexblock' ),
+				wfMsgHtml( 'regexblock-link' ),
 				'&ip=' . urlencode( $nt->getText() )
 			);
 		}

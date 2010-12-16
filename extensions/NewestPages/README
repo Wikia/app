@@ -1,7 +1,7 @@
 NEWEST PAGES EXTENSION
 
-	Version 1.7
-	© 2006 Rob Church
+	Version 1.9
+	© 2006-2009 Rob Church
 
 This is free software licensed under the GNU General Public Licence. Please
 see http://www.gnu.org/copyleft/gpl.html for further details, including the
@@ -19,10 +19,10 @@ full text and terms of the licence.
 
 == 1. Introduction ==
 
-The Newest Pages extension adds an includable special page to MediaWiki which
-produces an ordered list of the newest pages in the wiki, up to a specified
-limit. The page can be accessed as a regular special page, or included within
-other pages as a form of dynamic list.
+The Newest Pages extension adds an includable special page to MediaWiki version
+1.12 and up which produces an ordered list of the newest pages in the wiki, up
+to a specified limit. The page can be accessed as a regular special page, or
+included within other pages as a form of dynamic list.
 
 == 2. Installing the extension ==
 
@@ -30,7 +30,7 @@ To install the Newest Pages extension, first upload/copy the extension files
 NewestPages.php and NewestPages.i18n.php into your MediaWiki extensions directory.
 Then edit your LocalSettings.php file and add the following line:
 
-	require_once( 'extensions/NewestPages.php' );
+	require_once( 'extensions/NewestPages/NewestPages.php' );
 
 Save the file to complete the installation.
 

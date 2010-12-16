@@ -63,6 +63,7 @@ window.onload = function()
 	// Activate the "OK" button.
 	window.parent.SetOkButton( true ) ;
 	window.parent.SetAutoSize( true ) ;
+	GetE('xRefText').focus();
 }
 
 function LoadSelection()
@@ -81,7 +82,7 @@ function Ok()
 		oRef = FCK.EditorDocument.createElement( 'SPAN' ) ;
 		oRef.className = 'fck_mw_ref' ;
 	}
-	
+
 	var refData = FCKTools.HTMLEncode( GetE('xRefText').value ).Trim().replace( /"/g, '&quot;' ) ;
 	oRef.innerHTML = refData ;
 	SetAttribute( oRef, "name", GetE('xRefName').value ) ;
@@ -103,7 +104,7 @@ function Ok()
 		<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
 			<tr>
 				<td>
-					<span>Reference text (Wikitext)</span>
+					<span fcklang="wikiRef">Reference text (Wikitext)</span>
 				</td>
 			</tr>
 			<tr>
@@ -114,7 +115,7 @@ function Ok()
 			</tr>
 			<tr>
 				<td>
-					Reference name (optional)<br />
+					<span fcklang="wikiRefName">Reference name (optional)</span><br />
 					<input id="xRefName" type="text" size="15" />
 				</td>
 			</tr>

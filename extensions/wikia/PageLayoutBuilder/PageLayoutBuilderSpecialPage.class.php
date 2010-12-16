@@ -1,8 +1,13 @@
 <?php
+/*
+ * Author: Tomek Odrobny
+ * The party responsible for building the layout and management of it 
+ */
 
 class PageLayoutBuilderSpecialPage extends SpecialPage {
 	private $isFromDb = false;
-    function __construct() {
+
+	function __construct() {
 	    wfLoadExtensionMessages( 'PageLayoutBuilder' );
 		$this->mFormData = array();
 		$this->mFormErrors = array();
@@ -25,6 +30,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	    parent::__construct( 'PageLayoutBuilder', 'PageLayoutBuilder' );
     }
 
+    /**
+	 * execute - rendering of editor
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+    
     function execute($article_id = null, $limit = "", $offset = "", $show = true) {
 		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScriptPath, $wgScript, $wgLang;
 
@@ -114,6 +128,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true;
     }
 
+    /**
+	 * execute - View a list of layouts
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+    
 	function executeList() {
 		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgBlankImgUrl, $wgContLang;
 
@@ -199,17 +222,44 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->render("plb-list") );
 		return true;
 	}
-
+    
+	 /**
+	 * executeListDelete - mark the layout as removed
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	function executeListDelete($request) {
 		$plbId = (int) $request->getVal('plbId');
 		PageLayoutBuilderModel::layoutMarkAsDelete($plbId);
 	}
 
+	 /**
+	 * executeListpublish - mark the layout as publish
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	function executeListpublish($request) {
 		$plbId = (int) $request->getVal('plbId');
 		PageLayoutBuilderModel::layoutUnMarkAsNoPublish($plbId);
 	}
 
+	/**
+	 * renderFormHeader - mark the layout as publish
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public function renderFormHeader() {
 		global $wgOut, $wgScriptPath;
 
@@ -248,6 +298,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		) );
 		$wgOut->addHTML( $oTmpl->render("create-form") );
 	}
+	
+	/**
+	 * renderPreview - render Preview of the layout
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
 
 	private function renderPreview($type = 'form' ) {
 		global  $wgOut, $wgExtensionsPath, $wgScriptPath;
@@ -266,7 +325,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			}		
 		}
 	}
-
+	
+	/**
+	 * renderPreview - render create page for layout
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	private function renderCreatePage() {
 		if( $this->isCategorySelect() ) {
 			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
@@ -274,6 +342,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
 	}
 
+		
+	/**
+	 * getEmptyArticle - render create page for layout
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	private function getEmptyArticle() {
 		global $wgRequest;
 
@@ -298,6 +376,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 	}
 
+	/**
+	 * loadFromDB - load layout from DB
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	private function loadFromDB(Title $title) {
 		$this->mArticle = new Article( $title );
 		$this->mEditPage = new EditPage($this->mArticle);
@@ -312,6 +399,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$this->isFromDb = true;
 	}
 
+	/**
+	 * getPostType - read action type from request
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	private function getPostType() {
 		global $wgRequest;
 
@@ -329,6 +425,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			}
 		}
 	}
+
+	
+	/**
+	 * parseForm - Validation of request params  
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
 
 	private function parseForm() {
 		global $wgUser, $wgRequest, $wgOut;
@@ -401,7 +507,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		return true;
 	}
-
+	
+	/**
+	 * save - just do it !
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	private function save() {
 		global $wgUser, $wgParser, $wgRequest;
 
@@ -438,6 +553,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 				break;
 		}
 	}
+	
+	/**
+	 * parseForm - Validation of request params  
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
 
 	static public function addFormButton(&$self, &$buttons, &$tabindex) {
 		if($self->mTitle->getNamespace() != NS_PLB_LAYOUT) {
@@ -496,6 +620,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$buttons = $buttons_out;
 		return true;
 	}
+	
+	/**
+	 * addNewButtonForArtilce - adding button allows you to make a layout of the article  
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
 
 	public static function addNewButtonForArtilce($cat) {
 		global $wgUser, $wgOut, $wgTitle, $wgContentNamespaces;
@@ -518,10 +651,28 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true;
 	}
 
+	/**
+	 * isDraft - checks whether this layout is a draft   
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public static function isDraft($article) {
 		return ($article->getId() == 0 || PageLayoutBuilderModel::layoutIsNoPublish($article->getId()));
 	}
 
+	/**
+	 * alternateEditHook - redirect to edit  LayoutBuilder if article is in layout namespace
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public static function alternateEditHook(&$oEditPage) {
 		global $wgOut, $wgRequest;
 		if(empty($oEditPage->mTitle) || empty($oEditPage)) {
@@ -543,6 +694,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true; 
 	}
 
+	
+	/**
+	 * getUserPermissionsErrors -  control access to articles in the namespace layout
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		if( $title->getNamespace() == NS_PLB_LAYOUT ) {
 			$result = array();
@@ -558,12 +719,30 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$result = null;
 		return true;
 	}
+	
+	/**
+	 * beforeCategoryData - hide layout namespace from category page 
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
 
 	public static function beforeCategoryData(&$userCon) {
 		$userCon = "not page_namespace = ".NS_PLB_LAYOUT;
 		return true;
 	}
 
+	/**
+	 * beforeCategorySelect - edit page hook adding info between edit page and cat select  
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public static function beforeCategorySelect(&$text) {
 		global $wgTitle;
 
@@ -575,6 +754,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true;
 	}
 
+	
+	/**
+	 * createPageOptions - There are prepared for lists of bytes  
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public static function createPageOptions(&$options, &$listtype) {
 		global $wgCdnStylePath, $wgScript;
 		$listtype = "long";
@@ -593,6 +782,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true;
 	}
 
+		
+	/**
+	 * rollbackHook 
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public function rollbackHook($self, $wgUser, $target, $current){
 		if($target->getTitle()->getNamespace() != NS_PLB_LAYOUT) {
 			return true;
@@ -603,6 +802,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true;
 	}
 
+	/**
+	 * isCategorySelect check for catselect  
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access private
+	 *
+	 */
+	
 	private function isCategorySelect() {
 		if(function_exists('CategorySelectInitializeHooks')) {
 			return true;
@@ -610,6 +818,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return false;
 	}
 
+	/**
+	 * myTools add link to mytools   
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	public static function myTools(&$list) {
 		global $wgUser;
 		
@@ -625,6 +842,15 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		
 		return true;
 	}
+
+	/**
+	 * myTools add link to mytools   
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
 	
 	private function getTextFromRTEHTML($text) {
 		global $wgEnableRTEExt, $wgRequest;
@@ -634,6 +860,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return $text;
 	}
 
+	
+	/**
+	 * fixRTE runhook to rever parse article    
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
 	private function fixRTE() {
 		global $wgEnableRTEExt, $wgRequest;
 		if (!empty($wgEnableRTEExt)) {

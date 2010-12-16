@@ -19,6 +19,10 @@ class SRFGoogleBar extends SMWResultPrinter {
 		}
 	}
 
+	public function getName() {
+		return wfMsg('srf_printername_googlebar');
+	}
+
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber;
 		$this->isHTML = true;
@@ -53,6 +57,14 @@ class SRFGoogleBar extends SMWResultPrinter {
 		$height = $count* ($barwidth + $bardistance) + 15; // calculates the height of the image
 		return 	'<img src="http://chart.apis.google.com/chart?cht=bhs&chbh=' . $barwidth . ',' . $bardistance . '&chs=' . $this->m_width . 'x' . $height . '&chds=0,' . $max . '&chd=t:' . $t . '&chxt=y&chxl=0:|' . $n . '" width="' . $this->m_width . '" height="' . $height . '" />';
 		
+	}
+
+	public function getParameters() {
+		return array(
+			array('name' => 'limit', 'type' => 'int', 'description' => wfMsg('smw_paramdesc_limit')),
+			array('name' => 'height', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_chartheight')),
+			array('name' => 'width', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_chartwidth')),
+		);
 	}
 
 }

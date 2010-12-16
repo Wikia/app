@@ -13,8 +13,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Newest Pages',
-	'version'        => '1.7',
+	'version'        => '1.9',
 	'author'         => 'Rob Church',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Newest_Pages',
 	'description'    => 'Shows the [[Special:Newestpages|last X pages]] added to the wiki',
@@ -27,4 +28,4 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['NewestPages'] = $dir . 'NewestPages.i18n.php';
 $wgExtensionAliasesFiles['NewestPages'] = $dir . 'NewestPages.alias.php';
 $wgAutoloadClasses['NewestPages'] = $dir . 'NewestPages.page.php';
-$wgSpecialPages['Newestpages'] = 'NewestPages';
+$wgSpecialPages['NewestPages'] = 'NewestPages';

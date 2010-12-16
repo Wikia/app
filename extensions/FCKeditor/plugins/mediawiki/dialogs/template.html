@@ -43,8 +43,8 @@ document.write( '<script src="' + FCKConfig.BasePath + 'dialog/common/fck_dialog
 //#### Dialog Tabs
 
 // Set the dialog tabs.
-window.parent.AddTab( 'Edit', 'Edit' ) ;
-window.parent.AddTab( 'Manual', 'Manual' ) ;
+window.parent.AddTab( 'Edit', FCKLang.wikiTabEdit || 'Edit' ) ;
+window.parent.AddTab( 'Manual', FCKLang.wikiTabManual || 'Manual' ) ;
 
 function OnDialogTabChange( tabCode )
 {
@@ -75,6 +75,7 @@ window.onload = function()
 	// Activate the "OK" button.
 	window.parent.SetOkButton( true ) ;
 	window.parent.SetAutoSize( true ) ;
+	GetE('xTemplateRaw').focus();
 }
 
 function LoadSearchResults( result )
@@ -95,18 +96,19 @@ function LoadSelection()
 	var empty = '';
 	oEditor.window.parent.sajax_request_type = 'GET' ;
 	oEditor.window.parent.sajax_do_call( 'wfSajaxSearchTemplateFCKeditor',[empty], LoadSearchResults ) ;
-	
+
 	if ( !oTemplateSpan ) return ;
 
 	var inputText = FCKTools.HTMLDecode(oTemplateSpan.innerHTML);
-	if (inputText.length>0 && inputText.indexOf('{{#')<0 && inputText.indexOf('{{:')<0 ) 
+	inputText = FCKConfig.ProtectedSource.Revert(inputText, 0);		//#2509
+	if (inputText.length>0 && inputText.indexOf('{{#')<0 && inputText.indexOf('{{:')<0 )
 	{
 		var templateName = inputText.substring(2,inputText.indexOf('fckLR'));
-		if (inputText.indexOf('fckLR')<1) 
+		if (inputText.indexOf('fckLR')<1)
 			templateName = inputText.substring(2,inputText.indexOf('|'));
-		if (inputText.indexOf('|')<1) 
+		if (inputText.indexOf('|')<1)
 			templateName = inputText.substring(2,inputText.indexOf('}}'));
-			
+
 		SetUrl(templateName.charAt(0).toUpperCase() + templateName.substr(1));
 	}
 	GetE('xTemplateRaw').value = inputText.replace(/fckLR/g,'\r\n').replace( /&quot;/g, '"' );
@@ -127,15 +129,16 @@ function Ok()
 		oTemplateSpan = FCK.EditorDocument.createElement( 'SPAN' ) ;
 		oTemplateSpan.className = 'fck_mw_template' ;
 	}
-	
-	var templateData = FCKTools.HTMLEncode(GetE('xTemplateRaw').value.Trim().replace(/(\r\n|\n)/g, 'fckLR')).replace( /"/g, '&quot;' ) ;
-	
+
+	var protectedValue = FCKConfig.ProtectedSource.Protect(GetE('xTemplateRaw').value);
+	var templateData = FCKTools.HTMLEncode(protectedValue.toString().Trim().replace(/(\r\n|\n)/g, 'fckLR')).replace( /"/g, '&quot;' ) ;
+
 	if ( !( /^{{[\s\S]+}}$/.test( templateData ) ) )
 	{
-		alert( 'Templates must start with {{ and end with }}. Please check it.' ) ;
+		alert( FCKLang.wikiTmplEmpty || 'Templates must start with {{ and end with }}. Please check it.' ) ;
 		return false ;
 	}
-	
+
 	oTemplateSpan.innerHTML = templateData ;
 
 	if ( !oFakeImage )
@@ -156,7 +159,7 @@ function Ok()
 		<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
 			<tr>
 				<td>
-					<span>Template raw definition (from {{ to }})</span><br />
+					<span fcklang="wikiTmpl">Template raw definition (from {{ to }})</span><br />
 				</td>
 			</tr>
 			<tr>
@@ -176,7 +179,7 @@ function Ok()
 		<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
 			<tr>
 				<select id="xWikiResults" style="width: 100%;" onchange="SetUrl( this.value );">
-				<option value="">&lt;Pick up a template manual here&gt;</option>
+				<option fcklang="wikiTmpsel" value="">&lt;Pick up a template manual here&gt;</option>
 				</select>
 			</tr>
 			<tr>

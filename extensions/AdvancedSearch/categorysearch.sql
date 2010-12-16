@@ -7,7 +7,7 @@
 CREATE TABLE /*$wgDBprefix*/categorysearch (
   -- Key to page_id
   cs_page int unsigned NOT NULL,
-  
+
   -- Munged version of categories
   -- E.g.: "Foo Living_people Bar"
   cs_categories mediumtext NOT NULL,

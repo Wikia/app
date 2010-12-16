@@ -13,18 +13,10 @@
  * @copyright Copyright © 2005, Ævar Arnfjörð Bjarmason
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-class WantedCategoriesPage extends QueryPage {
+class WantedCategoriesPage extends WantedQueryPage {
 
 	function getName() {
 		return 'Wantedcategories';
-	}
-
-	function isExpensive() {
-		return true;
-	}
-
-	function isSyndicated() {
-		return false;
 	}
 
 	function getSQL() {
@@ -45,32 +37,21 @@ class WantedCategoriesPage extends QueryPage {
 			";
 	}
 
-	function sortDescending() { return true; }
-
-	/**
-	 * Fetch user page links and cache their existence
-	 */
-	function preprocessResults( $db, $res ) {
-		$batch = new LinkBatch;
-		while ( $row = $db->fetchObject( $res ) )
-			$batch->add( $row->namespace, $row->title );
-		$batch->execute();
-
-		// Back to start for display
-		if ( $db->numRows( $res ) > 0 )
-			// If there are no rows we get an error seeking.
-			$db->dataSeek( $res, 0 );
-	}
-
 	function formatResult( $skin, $result ) {
 		global $wgLang, $wgContLang;
 
 		$nt = Title::makeTitle( $result->namespace, $result->title );
-		$text = $wgContLang->convert( $nt->getText() );
+		$text = htmlspecialchars( $wgContLang->convert( $nt->getText() ) );
 
 		$plink = $this->isCached() ?
-			$skin->makeLinkObj( $nt, htmlspecialchars( $text ) ) :
-			$skin->makeBrokenLinkObj( $nt, htmlspecialchars( $text ) );
+			$skin->link( $nt, $text ) :
+			$skin->link(
+				$nt,
+				$text,
+				array(),
+				array(),
+				array( 'broken' )
+			);
 
 		$nlinks = wfMsgExt( 'nmembers', array( 'parsemag', 'escape'),
 			$wgLang->formatNum( $result->value ) );

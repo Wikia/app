@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -25,25 +25,80 @@ var FCKBlockQuoteCommand = function()
 {
 }
 
-FCKBlockQuoteCommand.prototype = 
+FCKBlockQuoteCommand.prototype =
 {
 	Execute : function()
 	{
 		FCKUndo.SaveUndoStep() ;
 
 		var state = this.GetState() ;
+
 		var range = new FCKDomRange( FCK.EditorWindow ) ;
 		range.MoveToSelection() ;
+
 		var bookmark = range.CreateBookmark() ;
+
+		// Kludge for #1592: if the bookmark nodes are in the beginning of
+		// blockquote, then move them to the nearest block element in the
+		// blockquote.
+		if ( FCKBrowserInfo.IsIE )
+		{
+			var bStart	= range.GetBookmarkNode( bookmark, true ) ;
+			var bEnd	= range.GetBookmarkNode( bookmark, false ) ;
+
+			var cursor ;
+
+			if ( bStart
+					&& bStart.parentNode.nodeName.IEquals( 'blockquote' )
+					&& !bStart.previousSibling )
+			{
+				cursor = bStart ;
+				while ( ( cursor = cursor.nextSibling ) )
+				{
+					if ( FCKListsLib.BlockElements[ cursor.nodeName.toLowerCase() ] )
+						FCKDomTools.MoveNode( bStart, cursor, true ) ;
+				}
+			}
+
+			if ( bEnd
+					&& bEnd.parentNode.nodeName.IEquals( 'blockquote' )
+					&& !bEnd.previousSibling )
+			{
+				cursor = bEnd ;
+				while ( ( cursor = cursor.nextSibling ) )
+				{
+					if ( FCKListsLib.BlockElements[ cursor.nodeName.toLowerCase() ] )
+					{
+						if ( cursor.firstChild == bStart )
+							FCKDomTools.InsertAfterNode( bStart, bEnd ) ;
+						else
+							FCKDomTools.MoveNode( bEnd, cursor, true ) ;
+					}
+				}
+			}
+		}
+
 		var iterator = new FCKDomRangeIterator( range ) ;
 		var block ;
 
 		if ( state == FCK_TRISTATE_OFF )
 		{
-			iterator.EnforceRealBlocks = true ;
 			var paragraphs = [] ;
 			while ( ( block = iterator.GetNextParagraph() ) )
 				paragraphs.push( block ) ;
+
+			// If no paragraphs, create one from the current selection position.
+			if ( paragraphs.length < 1 )
+			{
+				para = range.Window.document.createElement( FCKConfig.EnterMode.IEquals( 'p' ) ? 'p' : 'div' ) ;
+				range.InsertNode( para ) ;
+				para.appendChild( range.Window.document.createTextNode( '\ufeff' ) ) ;
+				range.MoveToBookmark( bookmark ) ;
+				range.MoveToNodeContents( para ) ;
+				range.Collapse( true ) ;
+				bookmark = range.CreateBookmark() ;
+				paragraphs.push( para ) ;
+			}
 
 			// Make sure all paragraphs have the same parent.
 			var commonParent = paragraphs[0].parentNode ;
@@ -53,6 +108,13 @@ FCKBlockQuoteCommand.prototype =
 				block = paragraphs[i] ;
 				commonParent = FCKDomTools.GetCommonParents( block.parentNode, commonParent ).pop() ;
 			}
+
+			// The common parent must not be the following tags: table, tbody, tr, ol, ul.
+			while ( commonParent.nodeName.IEquals( 'table', 'tbody', 'tr', 'ol', 'ul' ) )
+				commonParent = commonParent.parentNode ;
+
+			// Reconstruct the block list to be processed such that all resulting blocks
+			// satisfy parentNode == commonParent.
 			var lastBlock = null ;
 			while ( paragraphs.length > 0 )
 			{
@@ -70,7 +132,7 @@ FCKBlockQuoteCommand.prototype =
 				block = tmp.shift() ;
 				if ( block.nodeName.IEquals( 'blockquote' ) )
 				{
-					var docFrag = block.ownerDocument.createDocumentFragment() ;
+					var docFrag = FCKTools.GetElementDocument( block ).createDocumentFragment() ;
 					while ( block.firstChild )
 					{
 						docFrag.appendChild( block.removeChild( block.firstChild ) ) ;
@@ -94,6 +156,7 @@ FCKBlockQuoteCommand.prototype =
 		else if ( state == FCK_TRISTATE_ON )
 		{
 			var moveOutNodes = [] ;
+			var elementMarkers = {} ;
 			while ( ( block = iterator.GetNextParagraph() ) )
 			{
 				var bqParent = null ;
@@ -109,11 +172,27 @@ FCKBlockQuoteCommand.prototype =
 					block = block.parentNode ;
 				}
 
-				if ( bqParent && bqChild )
+				// Remember the blocks that were recorded down in the moveOutNodes array
+				// to prevent duplicates.
+				if ( bqParent && bqChild && !bqChild._fckblockquotemoveout )
+				{
 					moveOutNodes.push( bqChild ) ;
+					FCKDomTools.SetElementMarker( elementMarkers, bqChild, '_fckblockquotemoveout', true ) ;
+				}
 			}
+			FCKDomTools.ClearAllMarkers( elementMarkers ) ;
 
 			var movedNodes = [] ;
+			var processedBlockquoteBlocks = [], elementMarkers = {} ;
+			var noBlockLeft = function( bqBlock )
+			{
+				for ( var i = 0 ; i < bqBlock.childNodes.length ; i++ )
+				{
+					if ( FCKListsLib.BlockElements[ bqBlock.childNodes[i].nodeName.toLowerCase() ] )
+						return false ;
+				}
+				return true ;
+			} ;
 			while ( moveOutNodes.length > 0 )
 			{
 				var node = moveOutNodes.shift() ;
@@ -122,22 +201,30 @@ FCKBlockQuoteCommand.prototype =
 				// If the node is located at the beginning or the end, just take it out without splitting.
 				// Otherwise, split the blockquote node and move the paragraph in between the two blockquote nodes.
 				if ( node == node.parentNode.firstChild )
-				{
 					bqBlock.parentNode.insertBefore( bqBlock.removeChild( node ), bqBlock ) ;
-					if ( ! bqBlock.firstChild )
-						bqBlock.parentNode.removeChild( bqBlock ) ;
-				}
 				else if ( node == node.parentNode.lastChild )
-				{
 					bqBlock.parentNode.insertBefore( bqBlock.removeChild( node ), bqBlock.nextSibling ) ;
-					if ( ! bqBlock.firstChild )
-						bqBlock.parentNode.removeChild( bqBlock ) ;
-				}
 				else
 					FCKDomTools.BreakParent( node, node.parentNode, range ) ;
 
+				// Remember the blockquote node so we can clear it later (if it becomes empty).
+				if ( !bqBlock._fckbqprocessed )
+				{
+					processedBlockquoteBlocks.push( bqBlock ) ;
+					FCKDomTools.SetElementMarker( elementMarkers, bqBlock, '_fckbqprocessed', true );
+				}
+
 				movedNodes.push( node ) ;
 			}
+
+			// Clear blockquote nodes that have become empty.
+			for ( var i = processedBlockquoteBlocks.length - 1 ; i >= 0 ; i-- )
+			{
+				var bqBlock = processedBlockquoteBlocks[i] ;
+				if ( noBlockLeft( bqBlock ) )
+					FCKDomTools.RemoveNode( bqBlock ) ;
+			}
+			FCKDomTools.ClearAllMarkers( elementMarkers ) ;
 
 			if ( FCKConfig.EnterMode.IEquals( 'br' ) )
 			{
@@ -147,17 +234,17 @@ FCKBlockQuoteCommand.prototype =
 					var firstTime = true ;
 					if ( node.nodeName.IEquals( 'div' ) )
 					{
-						var docFrag = node.ownerDocument.createDocumentFragment() ;
-						var needBeginBr = firstTime && node.previousSibling && 
+						var docFrag = FCKTools.GetElementDocument( node ).createDocumentFragment() ;
+						var needBeginBr = firstTime && node.previousSibling &&
 							!FCKListsLib.BlockBoundaries[node.previousSibling.nodeName.toLowerCase()] ;
 						if ( firstTime && needBeginBr )
-							docFrag.appendChild( node.ownerDocument.createElement( 'br' ) ) ;
-						var needEndBr = node.nextSibling && 
+							docFrag.appendChild( FCKTools.GetElementDocument( node ).createElement( 'br' ) ) ;
+						var needEndBr = node.nextSibling &&
 							!FCKListsLib.BlockBoundaries[node.nextSibling.nodeName.toLowerCase()] ;
 						while ( node.firstChild )
 							docFrag.appendChild( node.removeChild( node.firstChild ) ) ;
 						if ( needEndBr )
-							docFrag.appendChild( node.ownerDocument.createElement( 'br' ) ) ;
+							docFrag.appendChild( FCKTools.GetElementDocument( node ).createElement( 'br' ) ) ;
 						node.parentNode.replaceChild( docFrag, node ) ;
 						firstTime = false ;
 					}

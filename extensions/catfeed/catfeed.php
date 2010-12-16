@@ -28,9 +28,8 @@
 
 $wgExtensionFunctions[] = 'setupCatRSSExtension';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Category Feed',
-	'svn-date' => '$LastChangedDate: 2009-02-13 20:13:48 +0100 (ptk, 13 lut 2009) $',
-	'svn-revision' => '$LastChangedRevision: 47224 $',
 	'author' => 'Gabriel Wicke',
 	'description' => 'Uses bits from recentchanges feeds. Create in-page version, especially useful for wikinews',
 	'descriptionmsg' => 'catfeed-desc',
@@ -87,7 +86,7 @@ function setupCatRSSExtension() {
 			$fname = __CLASS__ . '::' . __FUNCTION__;
 			$this->mMaxTimeStamp = 0;
 			
-			$dbr =& wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$set = implode( ',', array_map(
 				array( &$dbr, 'addQuotes' ),
 				$this->mTitleStrings ) );
@@ -295,7 +294,7 @@ function viewCatNewslist( $input ) {
 	
 	# Add only valid title objects
 	foreach ( $iptitles as $title ) {
-		$addtitle = Title::newFromUrl($title);
+		$addtitle = Title::newFromURL($title);
 		if(get_class($addtitle)=="title") {
 			$dbtitles[] = $addtitle;
 		}

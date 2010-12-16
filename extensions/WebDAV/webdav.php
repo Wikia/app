@@ -59,4 +59,3 @@ $mediaWiki->doUpdates( $wgPostCommitUpdateList );
 
 $mediaWiki->restInPeace( $wgLoadBalancer );
 */
-?>

@@ -1,0 +1,36 @@
+---
+BASIC:
+  id: out-osm-potlatch
+  label: OpenStreetMap - Potlatch
+  description: "{{int:bw-desc-osm-potlatch}}"
+  namespace: NS_OSM
+  display: out/osm/potlatch
+  class: FileBasedMessageGroup
+
+FILES:
+  class: YamlFFS
+  sourcePattern: %GROUPROOT%/osm/potlatch/%CODE%.yml
+  codeAsRoot: 1
+  targetPattern: %CODE%.yml
+  codeMap:
+    be-tarask: be-TARASK
+    pt-br: pt-BR
+    sr-ec: sr-EC
+    zh-cn: zh-CN
+    zh-tw: zh-TW
+    zh-hant: zh-HANT
+
+TAGS:
+  optional:
+    - help_html
+    - inspector_way
+    - inspector_way_name
+    - microblog_name_identica
+    - microblog_name_twitter
+    - option_layer_digitalglobe_haiti
+    - option_layer_geoeye_gravitystorm_haiti
+    - option_layer_geoeye_haiti
+    - option_layer_geoeye_nypl_haiti
+    - option_layer_mapnik
+    - option_layer_osmarender
+    - option_layer_yahoo

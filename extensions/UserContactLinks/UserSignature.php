@@ -19,12 +19,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 global $wgHooks, $wgOut;
 $wgHooks['ParserAfterStrip'][]      = 'parseUserSignatures';
 $wgExtensionCredits['parserhook'][] = array(
+	'path'        => __FILE__,
 	'version'     => '0.4.1',
 	'name'        => 'UserSignature',
 	'author'      => 'Paul Grinberg',
 	'email'       => 'gri6507 at yahoo dot com',
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:User_Contact_Links',
-	'description' => 'provides the ability to simply and consistantly add other user names using ^^^user^^^ syntax',
+	'description' => 'Provides the ability to simply and consistently add other user names using ^^^user^^^ syntax',
 	'descriptionmsg' => 'usercontactlink-desc',
 );
 

@@ -20,7 +20,7 @@ INSTALLATION:
    edit it first, and replace the /*$wgDBprefix*/ and /*$wgDBTableOptions*/
    strings with the corresponding settings.
 3. Add this line to the end of your LocalSettings.php:
-   require_once('extensions/LiquidThreads/LiquidThreads.php');
+   require_once( "$IP/extensions/LiquidThreads/LiquidThreads.php" );
 
 Liquid Threads uses namespace numbers 90, 91, 92, and 93. If you are using
 another extension which uses any of these numbers, you should have Liquid

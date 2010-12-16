@@ -10,9 +10,9 @@
  * @licence GNU General Public Licence 2.0
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
-$wgAutoloadClasses['MathCaptcha'] = dirname( __FILE__ ) . '/MathCaptcha.class.php';
 
+$wgAutoloadClasses['MathCaptcha'] = dirname( __FILE__ ) . '/MathCaptcha.class.php';

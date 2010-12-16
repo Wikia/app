@@ -107,7 +107,7 @@ HoverMenu.prototype.mouseout = function(event) {
 		this.mouseoutTimer = setTimeout(function() {
 			$(event.currentTarget).children("ul").removeClass("show");
 			self.ads.each(function(i, el){
-				$(el).children().show();
+				$(el).children().css("margin-left","auto");
 			});
 		}, this.settings.mouseoutDelay);
 
@@ -117,7 +117,7 @@ HoverMenu.prototype.mouseout = function(event) {
 		//Hide nav immediately
 		$(event.currentTarget).children("ul").removeClass("show");
 		self.ads.each(function(i, el){
-			$(el).children().show();
+			$(el).children().css("margin-left","auto");
 		});
 	}
 
@@ -129,7 +129,7 @@ HoverMenu.prototype.showNav = function(parent) {
 	if (nav.exists()) {
 		nav.addClass("show");
 		this.ads.each(function(i, el){
-			$(el).height($(el).height()).children().hide();
+			$(el).children().css("margin-left", "-9999px");
 		});
 
 		// tracking

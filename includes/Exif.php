@@ -558,7 +558,7 @@ class Exif {
 	 * @param $fname String:
 	 * @param $action Mixed: , default NULL.
 	 */
-	function debug( $in, $fname, $action = NULL ) {
+	function debug( $in, $fname, $action = null ) {
 		if ( !$this->log ) {
 			return;
 		}
@@ -1043,6 +1043,14 @@ class FormatExif {
 					$this->formatNum( $val ) );
 				break;
 
+			// Do not transform fields with pure text.
+			// For some languages the formatNum() conversion results to wrong output like
+			// foo,bar@example,com or foo٫bar@example٫com
+			case 'ImageDescription':
+			case 'Artist':
+			case 'Copyright':
+				$tags[$tag] = htmlspecialchars( $val );
+				break;
 			default:
 				$tags[$tag] = $this->formatNum( $val );
 				break;
@@ -1080,11 +1088,13 @@ class FormatExif {
 	 * @return mixed A floating point number or whatever we were fed
 	 */
 	function formatNum( $num ) {
+		global $wgLang;
+
 		$m = array();
 		if ( preg_match( '/^(\d+)\/(\d+)$/', $num, $m ) )
-			return $m[2] != 0 ? $m[1] / $m[2] : $num;
+			return $wgLang->formatNum( $m[2] != 0 ? $m[1] / $m[2] : $num );
 		else
-			return $num;
+			return $wgLang->formatNum( $num );
 	}
 
 	/**
@@ -1103,7 +1113,7 @@ class FormatExif {
 			$gcd = $this->gcd( $numerator, $denominator );
 			if( $gcd != 0 ) {
 				// 0 shouldn't happen! ;)
-				return $numerator / $gcd . '/' . $denominator / $gcd;
+				return $this->formatNum( $numerator / $gcd ) . '/' . $this->formatNum( $denominator / $gcd );
 			}
 		}
 		return $this->formatNum( $num );

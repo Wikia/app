@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -33,8 +33,11 @@ FCKTools._AppendStyleSheet = function( documentElement, cssFileUrl )
 }
 
 // Appends a CSS style string to a document.
-FCKTools._AppendStyleString = function( documentElement, cssStyles )
+FCKTools.AppendStyleString = function( documentElement, cssStyles )
 {
+	if ( !cssStyles )
+		return null ;
+
 	var s = documentElement.createStyleSheet( "" ) ;
 	s.cssText = cssStyles ;
 	return s ;
@@ -71,6 +74,10 @@ FCKTools.CreateXmlObject = function( object )
 	switch ( object )
 	{
 		case 'XmlHttp' :
+			// Try the native XMLHttpRequest introduced with IE7.
+			if ( document.location.protocol != 'file:' )
+				try { return new XMLHttpRequest() ; } catch (e) {}
+
 			aObjs = [ 'MSXML2.XmlHttp', 'Microsoft.XmlHttp' ] ;
 			break ;
 
@@ -149,6 +156,8 @@ FCKTools.AddEventListenerEx = function( sourceObject, eventName, listener, param
 	o.Params = paramsArray || [] ;	// Memory leak if we have DOM objects here.
 	o.Listener = function( ev )
 	{
+		if ( !ev )							// Assertion // @Packager.RemoveLine
+			throw( 'ev is undefined' ) ;	// Assertion // @Packager.RemoveLine
 		return listener.apply( o.Source, [ ev ].concat( o.Params ) ) ;
 	}
 

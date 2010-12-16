@@ -22,10 +22,9 @@ if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CloseWikis',
 	'author'         => 'Victor Vasiliev',
-	'svn-date'       => '$LastChangedDate: 2008-10-25 22:23:17 +0200 (sob, 25 paź 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 42571 $',
 	'description'    => 'Allows to close wiki sites',
 	'descriptionmsg' => 'closewikis-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:CloseWikis',

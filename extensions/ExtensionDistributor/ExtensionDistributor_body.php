@@ -118,7 +118,7 @@ class ExtensionDistributorPage extends SpecialPage {
 				'action' => $this->getTitle()->getLocalUrl(),
 				'method' => 'POST' ) ) .
 			"<select name=\"extdist_extension\">\n" .
-			"<option value=''></option\n"
+			"<option value=''></option>\n"
 		);
 
 		foreach ( $extensions['trunk'] as $extension ) {
@@ -225,7 +225,7 @@ class ExtensionDistributorPage extends SpecialPage {
 		// Show a message
 		$wgOut->addWikiMsg( 'extdist-created', $extension, "r$rev", 
 			$this->getBranchName( $version ), $url, $tarName );
-		$wgOut->addHTML( '<p><br/><big>' .
+		$wgOut->addHTML( '<p><br /><big>' .
 			'<a href="' . $this->getTitle()->escapeLocalUrl() . '">' . 
 			htmlspecialchars( wfMsg( 'extdist-want-more' ) ) . '</a></big></p>' );
 

@@ -10,9 +10,7 @@ class DataCenterControllerOverview extends DataCenterController {
 
 	/* Functions */
 
-	public function __construct(
-		array $path
-	) {
+	public function __construct( array $path ) {
 		// Actions
 	}
 }

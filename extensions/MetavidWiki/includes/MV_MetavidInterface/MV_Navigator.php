@@ -10,7 +10,7 @@
  		global $wgUser;
  		$o = '';
  		$sk = $wgUser->getSkin();
- 		$dbr =& wfGetDB( DB_SLAVE );
+ 		$dbr = wfGetDB( DB_SLAVE );
  		
  		//if in overview mode don't print out the navigator:
  		global $wgRequest;
@@ -39,7 +39,7 @@
 				$qend = $duration_sec;
 				$orderby = 'start_time ASC';
 			}
-			// print "Qstart looking for $pntype:$qstart:  ".seconds2ntp($qstart) ." Qend:$qend : " . seconds2ntp($qend) . " \n";
+			// print "Qstart looking for $pntype:$qstart:  ".seconds2npt($qstart) ." Qend:$qend : " . seconds2npt($qend) . " \n";
 	 		$mvd_rows = MV_Index::getMVDInRange(
 	 								$stream_id,
 	 								$qstart,
@@ -57,7 +57,7 @@
 	 		if ( count( $mvd_rows ) != 0 ) {
 	 			$row = current( $mvd_rows );
 	 			// $prev_end = $row->end_time;	 		
-	 			$stime_req = seconds2ntp( $row->start_time ) . '/' . seconds2ntp( $row->end_time );
+	 			$stime_req = seconds2npt( $row->start_time ) . '/' . seconds2npt( $row->end_time );
 	 			$streamTitle = Title::newFromText( $stream_name . '/' . $stime_req, MV_NS_STREAM );
 	 			$tool_tip = '';
 	 			// print_r($row);

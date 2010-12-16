@@ -1,12 +1,12 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 global $wgHooks;
 
-$wgHooks['MonoBookTemplateToolboxEnd'][]='wfFundHook';
+$wgHooks['SkinTemplateToolboxEnd'][] = 'wfFundHook';
 
 function wfFundHook() {
-	$msg=<<<ENDHTML
+	$msg = <<<ENDHTML
 
 <hr style="height:1px;color:black;" noshade>
 
@@ -29,7 +29,7 @@ src="http://www.paypal.com/images/x-click-but04.gif" border="0" name=
 <a href="http://openprogress.org/Donations%2C_putting_your_money_where_your_mouth_is">More information</A>
   
 ENDHTML;
-	echo($msg);
-	return true;  
+	echo( $msg );
+	return true;
 }
 ?>

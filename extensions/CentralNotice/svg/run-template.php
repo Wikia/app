@@ -144,5 +144,3 @@ foreach( $i18n as $lang => $messages ) {
 
 }
 echo "done.\n";
-
-?>

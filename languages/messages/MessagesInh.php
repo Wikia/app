@@ -113,10 +113,17 @@ $messages = array(
 'category-media-header' => '"$1" категори медиа',
 'category-empty'        => "''Укх категори хьанзарчоа цхьаккха е оагIонаш, е медиа яц.''",
 
-'about'          => 'Описани',
-'article'        => 'ОагIув',
-'newwindow'      => '(кердача курогIa хьаделла)',
-'cancel'         => 'Юхавал',
+'about'         => 'Описани',
+'article'       => 'ОагIув',
+'newwindow'     => '(кердача курогIa хьаделла)',
+'cancel'        => 'Юхавал',
+'moredotdotdot' => 'ДукхагIа ха...',
+'mypage'        => 'Са оагIув',
+'mytalk'        => 'Са къамаьл',
+'anontalk'      => 'Цу IP ца къамаьл де',
+'navigation'    => 'Навигаци',
+
+# Cologne Blue skin
 'qbfind'         => 'Хьакораде',
 'qbbrowse'       => 'Хьокха',
 'qbedit'         => 'Хувца',
@@ -124,11 +131,8 @@ $messages = array(
 'qbpageinfo'     => 'Укхо чу фу да',
 'qbmyoptions'    => 'Са оагIонаш',
 'qbspecialpages' => 'ЛаьрххIа оагIувнаш',
-'moredotdotdot'  => 'ДукхагIа ха...',
-'mypage'         => 'Са оагIув',
-'mytalk'         => 'Са къамаьл',
-'anontalk'       => 'Цу IP ца къамаьл де',
-'navigation'     => 'Навигаци',
+'faq'            => 'КХХ (Каста Хоатташ доа Хамаж)',
+'faqpage'        => 'Project:КХХ (Каста Хоатташ доа Хамаж)',
 
 'errorpagetitle'    => 'ГIалат',
 'returnto'          => '$1 оагIувте юхавал',
@@ -176,7 +180,7 @@ $messages = array(
 'otherlanguages'    => 'Вокхо меттала',
 'redirectedfrom'    => '($1 тIера хьайахьийта)',
 'redirectpagesub'   => 'Йука меттиге йахьийта оагIув',
-'lastmodifiedat'    => 'Тiехьара хувцам у оагIувна: $2, $1.', # $1 date, $2 time
+'lastmodifiedat'    => 'Тiехьара хувцам у оагIувна: $2, $1.',
 'viewcount'         => 'Ер оагIув $1 хьо йай.',
 'protectedpage'     => 'Лораеж йоа оагIув',
 'jumpto'            => 'Уккуз дехьадала:',
@@ -190,8 +194,6 @@ $messages = array(
 'currentevents-url'    => 'Project:Хьанзар доалара хама',
 'edithelp'             => 'Хувцамаш йие гIо',
 'edithelppage'         => 'Help:Хувцамаш йие гIо',
-'faq'                  => 'КХХ (Каста Хоатташ доа Хамаж)',
-'faqpage'              => 'Project:КХХ (Каста Хоатташ доа Хамаж)',
 'helppage'             => 'Help:Хьехар',
 'mainpage'             => 'Кертера оагIув',
 'mainpage-description' => 'Кертера оагIув',
@@ -218,5 +220,7 @@ $messages = array(
 
 # Special:Categories
 'categories' => 'Категореш',
+
+'sp-contributions-talk' => 'Къамьал',
 
 );

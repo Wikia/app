@@ -44,6 +44,7 @@ class SMWQuery {
 	protected $m_inline; // query used inline? (required for finding right default parameters)
 	protected $m_concept; // query used in concept? (required for finding right default parameters)
 	protected $m_extraprintouts = array(); // SMWPrintoutRequest objects supplied outside querystring
+	protected $m_distance = 5; // default is 5 miles
 
 	/**
 	 * Constructor.
@@ -53,7 +54,7 @@ class SMWQuery {
 	 * @param $concept bool stating whether this query belongs to a concept; used to determine
 	 * proper default parameters (concepts usually have less restrictions)
 	 */
-	public function __construct($description = NULL, $inline = false, $concept = false) {
+	public function __construct($description = null, $inline = false, $concept = false) {
 		global $smwgQMaxLimit, $smwgQMaxInlineLimit;
 		if ($inline) {
 			$this->m_limit = $smwgQMaxInlineLimit;
@@ -80,7 +81,7 @@ class SMWQuery {
 
 	public function setExtraPrintouts($extraprintouts) {
 		$this->m_extraprintouts = $extraprintouts;
-		if ($this->m_description !== NULL) {
+		if ($this->m_description !== null) {
 			foreach ($extraprintouts as $printout) {
 				$this->m_description->addPrintRequest($printout);
 			}
@@ -106,7 +107,7 @@ class SMWQuery {
 	public function getQueryString() {
 		if ($this->m_querystring !== false) {
 			return $this->m_querystring;
-		} elseif ($this->m_description !== NULL) {
+		} elseif ($this->m_description !== null) {
 			return $this->m_description->getQueryString();
 		} else {
 			return '';
@@ -154,12 +155,21 @@ class SMWQuery {
 		return $this->m_limit;
 	}
 
+	public function setDistance($distance) {
+		$this->m_distance = $distance;
+		return $this->m_distance;
+	}
+
+	public function getDistance() {
+		return $this->m_distance;
+	}
+
 	/**
 	 * Apply structural restrictions to the current description.
 	 */
 	public function applyRestrictions() {
 		global $smwgQMaxSize, $smwgQMaxDepth, $smwgQConceptMaxSize, $smwgQConceptMaxDepth;
-		if ($this->m_description !== NULL) {
+		if ($this->m_description !== null) {
 			if ($this->m_concept) {
 				$maxsize = $smwgQConceptMaxSize;
 				$maxdepth = $smwgQConceptMaxDepth;

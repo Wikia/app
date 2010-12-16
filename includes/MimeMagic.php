@@ -118,19 +118,19 @@ class MimeMagic {
 	* Mapping of media types to arrays of mime types.
 	* This is used by findMediaType and getMediaType, respectively
 	*/
-	var $mMediaTypes= NULL;
+	var $mMediaTypes= null;
 
 	/** Map of mime type aliases
 	*/
-	var $mMimeTypeAliases= NULL;
+	var $mMimeTypeAliases= null;
 
 	/** map of mime types to file extensions (as a space seprarated list)
 	*/
-	var $mMimeToExt= NULL;
+	var $mMimeToExt= null;
 
 	/** map of file extensions types to mime types (as a space seprarated list)
 	*/
-	var $mExtToMime= NULL;
+	var $mExtToMime= null;
 
 	/** IEContentAnalyzer instance
 	 */
@@ -328,7 +328,7 @@ class MimeMagic {
 	*/
 	function guessTypesForExtension( $ext ) {
 		$m = $this->getTypesForExtension( $ext );
-		if ( is_null( $m ) ) return NULL;
+		if ( is_null( $m ) ) return null;
 
 		$m = trim( $m );
 		$m = preg_replace( '/\s.*$/', '', $m );
@@ -345,7 +345,7 @@ class MimeMagic {
 		$ext = $this->getExtensionsForType( $mime );
 
 		if ( !$ext ) {
-			return NULL;  //unknown
+			return null;  //unknown
 		}
 
 		$ext = explode( ' ', $ext );
@@ -471,16 +471,18 @@ class MimeMagic {
 
 
 		/*
-		 * look for PHP
-		 * Check for this before HTML/XML...
-		 * Warning: this is a heuristic, and won't match a file with a lot of non-PHP before.
-		 * It will also match text files which could be PHP. :)
+		 * Look for PHP.  Check for this before HTML/XML...  Warning: this is a
+		 * heuristic, and won't match a file with a lot of non-PHP before.  It
+		 * will also match text files which could be PHP. :)
+		 *
+		 * FIXME: For this reason, the check is probably useless -- an attacker
+		 * could almost certainly just pad the file with a lot of nonsense to
+		 * circumvent the check in any case where it would be a security
+		 * problem.  On the other hand, it causes harmful false positives (bug
+		 * 16583).  The heuristic has been cut down to exclude three-character
+		 * strings like "<? ", but should it be axed completely?
 		 */
 		if( ( strpos( $head, '<?php' ) !== false ) ||
-		    ( strpos( $head, '<? ' ) !== false ) ||
-		    ( strpos( $head, "<?\n" ) !== false ) ||
-		    ( strpos( $head, "<?\t" ) !== false ) ||
-		    ( strpos( $head, "<?=" ) !== false ) ||
 
 		    ( strpos( $head, "<\x00?\x00p\x00h\x00p" ) !== false ) ||
 		    ( strpos( $head, "<\x00?\x00 " ) !== false ) ||
@@ -508,7 +510,7 @@ class MimeMagic {
 		/*
 		 * look for shell scripts
 		 */
-		$script_type = NULL;
+		$script_type = null;
 
 		# detect by shebang
 		if ( substr( $head, 0, 2) == "#!" ) {
@@ -631,7 +633,7 @@ class MimeMagic {
 	function detectMimeType( $file, $ext = true ) {
 		global $wgMimeDetectorCommand;
 
-		$m = NULL;
+		$m = null;
 		if ( $wgMimeDetectorCommand ) {
 			$fn = wfEscapeShellArg( $file );
 			$m = `$wgMimeDetectorCommand $fn`;
@@ -678,7 +680,7 @@ class MimeMagic {
 			$m = strtolower( $m );
 
 			if ( strpos( $m, 'unknown' ) !== false ) {
-				$m = NULL;
+				$m = null;
 			} else {
 				wfDebug( __METHOD__.": magic mime type of $file: $m\n" );
 				return $m;
@@ -723,7 +725,7 @@ class MimeMagic {
 	*
 	* @return (int?string?) a value to be used with the MEDIATYPE_xxx constants.
 	*/
-	function getMediaType( $path = NULL, $mime = NULL ) {
+	function getMediaType( $path = null, $mime = null ) {
 		if( !$mime && !$path ) return MEDIATYPE_UNKNOWN;
 
 		# If mime type is unknown, guess it
@@ -756,7 +758,7 @@ class MimeMagic {
 		}
 
 		# Check for entry for file extension
-		$e = NULL;
+		$e = null;
 		if ( $path ) {
 			$i = strrpos( $path, '.' );
 			$e = strtolower( $i ? substr( $path, $i + 1 ) : '' );

@@ -4,7 +4,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ). '/../maintenance/commandLine.inc' );
+require_once( dirname(__FILE__) . '/commandLine.inc' );
 
 $wgHooks['BeforeParserFetchTemplateAndtitle'][] = 'PPFuzzTester::templateHook';
 
@@ -102,7 +102,8 @@ class PPFuzzTester {
 		// This resolves a few differences between the old preprocessor and the 
 		// XML-based one, which doesn't like illegals and converts line endings.
 		// It's done by the MW UI, so it's a reasonably legitimate thing to do.
-		$s = UtfNormal::cleanUp( $s );
+		global $wgContLang;
+		$s = $wgContLang->normalize( $s );
 		return $s;
 	}
 

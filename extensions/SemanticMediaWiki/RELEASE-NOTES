@@ -1,5 +1,61 @@
 For a documentation of all features, see http://semantic-mediawiki.org
 
+== SMW 1.5.? ==
+
+* The "like" comparator ~ in inline queries is now enabled by default. To use
+  the former setting, use $smwgQComparators = '<|>|!'; in your LocalSettings.php.
+* A new datatype, "Telephone number", has been introduced for validating phone
+  numbers based on RFC 3966. Only global phone numbers are accepted, and no
+  vanity numbers (those containing letters) are allowed. Use Type:String if
+  you want to store more general strings as telephone numbers.
+* Support for additional parameters for ?printouts in inline queries, specified
+  by |+parameter=value after the printout. Currently supported are
+  *  limit: set the maximum number of values for this printout
+  *	 order: order values ascending or descending
+  *  align: right/center/left alignment for printouts in tables
+  *  index: directly address one value of a multi-valued (n-ary) property
+* Support for inverse properties: use "-" in front of property names anywhere to
+  refer to the inverse direction of a property. Works in browsing interfaces,
+  queries, and query output directives. In queries only for properties of Type:Page.
+* Compatibility with new MediaWiki skin "Vector"
+* Removed support for backwards compatibility to SMW <1.0 ($smwgSMWBetaCompatible).
+* The page Special:Ask was overhauled to include inputs for entering values
+  for the selected format's parameters, and to use Ajax where possible
+* To that end, each format's query printer now includes a getParameters()
+  function that supplies the name and attributes of each the format's parameters
+* "before" and "after" hooks for updateData() and deleteSubject() were added
+* A hook was added for deleteSemanticData() as well
+
+== SMW 1.4.3 ==
+
+See http://semantic-mediawiki.org/wiki/SMW_1.4.3
+
+* A new query format, 'category', that displays values in the style of a
+  MediaWiki category page
+* A new 'columns' parameter for the 'ol' and 'ul' formats
+* The 'csv' format now prints a header row by default
+* The "::~" comparator in queries can now also be used for properties of type
+  Geographical coordinate, to find points within a certain distance
+* Using "-" as an output format for query printouts, or leaving the formatting
+  string empty now leads to printout values being returned as plain, unformatted
+  values. Recall that the general format for printouts in #ask is as follows:
+   ?propertyname # format = label
+* New special property "Has improper value for" can be used to track input errors
+  (links pages where error happened to properties for which improper data was given).
+* New configuration parameter $smwgMaxNonExpNumber to set the maximal number that
+  SMW will normally display without using scientific exp notation. Defaults to
+  1000000000000000.
+* New configuration parameter $smwgMaxPropertyValues to control number of values
+  that are shown for each page in the listing on Property pages. Defaults to 3.
+* Now a set of stores can be added, e.g. virtual stores, and then the new #ask
+  parameter "source" is used to rout to a specific store.
+* Labels for inverse properties can be used to improve the output of the Browse
+  special page.
+* The #ask parameter "headers" can now be given the value "plain" to get query
+  results that show the printout label (e.g. property name) but without a link.
+* Special:PageProperty now shows all values of a property when omitting the subject.
+* Numerous bugfixes
+
 == SMW 1.4.2 ==
 
 See http://semantic-mediawiki.org/wiki/SMW_1.4.2

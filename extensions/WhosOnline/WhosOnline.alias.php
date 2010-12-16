@@ -10,23 +10,24 @@ $aliases['en'] = array(
 	'WhosOnline' => array( 'WhosOnline' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
-$aliases['ar'] = array(
-	'WhosOnline' => array( 'من_موجود' ),
+/** Afrikaans (Afrikaans) */
+$aliases['af'] = array(
+	'WhosOnline' => array( 'WieIsAanlyn' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Arabic (العربية) */
+$aliases['ar'] = array(
+	'WhosOnline' => array( 'من_متصل' ),
+);
+
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'WhosOnline' => array( 'من_موجود' ),
 );
 
 /** Bosnian (Bosanski) */
 $aliases['bs'] = array(
-	'WhosOnline' => array( 'TkoJeNaMrezi' ),
+	'WhosOnline' => array( 'KoJeNaMreži' ),
 );
 
 /** German (Deutsch) */
@@ -51,12 +52,22 @@ $aliases['es'] = array(
 
 /** Persian (فارسی) */
 $aliases['fa'] = array(
-	'WhosOnline' => array( 'چه_کسی_بر_خط_است' ),
+	'WhosOnline' => array( 'چه_کسی_برخط_است' ),
+);
+
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'WhosOnline' => array( 'Ketä_paikalla' ),
 );
 
 /** French (Français) */
 $aliases['fr'] = array(
 	'WhosOnline' => array( 'Qui est en ligne', 'QuiEstEnLigne' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'WhosOnline' => array( 'Qui est en legne', 'QuiEstEnLegne' ),
 );
 
 /** Galician (Galego) */
@@ -89,9 +100,14 @@ $aliases['ia'] = array(
 	'WhosOnline' => array( 'Qui es in linea' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'WhosOnline' => array( 'Siapa yang daring', 'SiapaDaring' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'WhosOnline' => array( 'オンラインの利用者' ),
+	'WhosOnline' => array( 'オンラインの利用者', 'オンライン利用者' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -104,14 +120,34 @@ $aliases['ksh'] = array(
 	'WhosOnline' => array( 'Wä es online' ),
 );
 
+/** Cornish (Kernewek) */
+$aliases['kw'] = array(
+	'WhosOnline' => array( 'PiwYwWarlinen' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'WhosOnline' => array( 'Wien ass online' ),
 );
 
+/** Lithuanian (Lietuvių) */
+$aliases['lt'] = array(
+	'WhosOnline' => array( 'Kas prisijungę' ),
+);
+
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'WhosOnline' => array( 'КојЕОнлајн' ),
+	'WhosOnline' => array( 'КојЕНаЛинија' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'WhosOnline' => array( 'ആരൊക്കെ ഓൺലൈൻ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'WhosOnline' => array( 'कोणकोणआलंय' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -154,14 +190,34 @@ $aliases['qu'] = array(
 	'WhosOnline' => array( 'PitaqYaykusqa' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'WhosOnline' => array( 'Cine e online' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'WhosOnline' => array( 'अन्यकतम्‌सद्यस्क' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'WhosOnline' => array( 'KtoJePrihlásený' ),
+);
+
+/** Slovenian (Slovenščina) */
+$aliases['sl'] = array(
+	'WhosOnline' => array( 'KdoJePrijavljen' ),
+);
+
 /** Sundanese (Basa Sunda) */
 $aliases['su'] = array(
 	'WhosOnline' => array( 'SahaNuManco' ),
+);
+
+/** Swedish (Svenska) */
+$aliases['sv'] = array(
+	'WhosOnline' => array( 'Vem är online?' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -171,11 +227,16 @@ $aliases['sw'] = array(
 
 /** Thai (ไทย) */
 $aliases['th'] = array(
-	'WhosOnline' => array( 'ใครออนไลน์อยู่' ),
+	'WhosOnline' => array( 'ผู้ที่กำลังออนไลน์' ),
 );
 
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'WhosOnline' => array( 'Sino ang nasa internet' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'WhosOnline' => array( 'KimÇevrimiçi' ),
 );
 

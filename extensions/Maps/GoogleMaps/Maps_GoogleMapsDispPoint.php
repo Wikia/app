@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Class for handling the display_point(s) parser functions with Google Maps
+ * File holding the MapsGoogleMapsDispPoint class.
  *
  * @file Maps_GoogleMapsDispPoint.php
- * @ingroup Maps
+ * @ingroup MapsGoogleMaps
  *
  * @author Jeroen De Dauw
  */
@@ -13,21 +13,38 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
+/**
+ * Class for handling the display_point(s) parser functions with Google Maps.
+ *
+ * @ingroup MapsGoogleMaps
+ *
+ * @author Jeroen De Dauw
+ */
 final class MapsGoogleMapsDispPoint extends MapsBasePointMap {
 	
-	public $serviceName = MapsGoogleMapsUtils::SERVICE_NAME;
+	public $serviceName = MapsGoogleMaps::SERVICE_NAME;
 
 	/**
 	 * @see MapsBaseMap::setMapSettings()
 	 *
 	 */	
 	protected function setMapSettings() {
-		global $egMapsGoogleMapsZoom, $egMapsGoogleMapsPrefix;
-		
-		$this->defaultParams = MapsGoogleMapsUtils::getDefaultParams();
+		global $egMapsGoogleMapsZoom, $egMapsGoogleMapsPrefix, $egMapsGMapOverlays;
 		
 		$this->elementNamePrefix = $egMapsGoogleMapsPrefix;
 		$this->defaultZoom = $egMapsGoogleMapsZoom;
+		
+		$this->markerStringFormat = 'getGMarkerData(lat, lon, \'title\', \'label\', "icon")';
+		
+		$this->spesificParameters = array(
+			'overlays' => array(
+				'type' => array('string', 'list'),
+				'criteria' => array(
+					'is_google_overlay' => array()
+					),	
+				'default' => $egMapsGMapOverlays,		
+				),
+		);		
 	}
 	
 	/**
@@ -37,7 +54,7 @@ final class MapsGoogleMapsDispPoint extends MapsBasePointMap {
 	protected function doMapServiceLoad() {
 		global $egGoogleMapsOnThisPage;
 		
-		MapsGoogleMapsUtils::addGMapDependencies($this->output);
+		MapsGoogleMaps::addGMapDependencies($this->output);
 		$egGoogleMapsOnThisPage++;
 		
 		$this->elementNr = $egGoogleMapsOnThisPage;
@@ -50,47 +67,33 @@ final class MapsGoogleMapsDispPoint extends MapsBasePointMap {
 	public function addSpecificMapHTML() {
 		global $wgJsMimeType;
 		
-		$enableEarth = MapsGoogleMapsUtils::getEarthValue($this->earth);
-		
-		$this->type = MapsGoogleMapsUtils::getGMapType($this->type, true);
-		
-		$this->controls = MapsGoogleMapsUtils::createControlsString($this->controls);	
-		
-		$this->autozoom = MapsGoogleMapsUtils::getAutozoomJSValue($this->autozoom);
-		
-		$markerItems = array();		
-		
-		// TODO: Refactor up
-		foreach ($this->markerData as $markerData) {
-			$lat = $markerData['lat'];
-			$lon = $markerData['lon'];		
-			
-			$title = array_key_exists('title', $markerData) ? $markerData['title'] : $this->title;
-			$label = array_key_exists('label', $markerData) ? $markerData['label'] : $this->label;
-			
-			$title = str_replace("'", "\'", $title);
-			$label = str_replace("'", "\'", $label);	
-						
-			$icon = array_key_exists('icon', $markerData) ? $markerData['icon'] : '';
-			$markerItems[] = "getGMarkerData($lat, $lon, '$title', '$label', '$icon')";
-		}		
-		
-		$markersString = implode(',', $markerItems);	
-		
-		$this->types = explode(",", $this->types);
-		
-		$typesString = MapsGoogleMapsUtils::createTypesString($this->types, $enableEarth);
+		$onloadFunctions = MapsGoogleMaps::addOverlayOutput($this->output, $this->mapName, $this->overlays, $this->controls);	
 		
 		$this->output .=<<<END
-
+			
 <div id="$this->mapName" class="$this->class" style="$this->style" ></div>
 <script type="$wgJsMimeType"> /*<![CDATA[*/
 addOnloadHook(
-	initializeGoogleMap('$this->mapName', $this->width, $this->height, $this->centre_lat, $this->centre_lon, $this->zoom, $this->type, [$typesString], [$this->controls], $this->autozoom, [$markersString])
+	initializeGoogleMap('$this->mapName', 
+		{
+		width: $this->width,
+		height: $this->height,
+		lat: $this->centre_lat,
+		lon: $this->centre_lon,
+		zoom: $this->zoom,
+		type: $this->type,
+		types: [$this->types],
+		controls: [$this->controls],
+		scrollWheelZoom: $this->autozoom
+		},
+		[$this->markerString]
+	)
 );
 /*]]>*/ </script>
 
 END;
+
+	$this->output .= $onloadFunctions;
 
 	}
 	

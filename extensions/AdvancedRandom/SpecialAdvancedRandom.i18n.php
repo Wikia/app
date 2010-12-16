@@ -9,7 +9,8 @@ $messages = array();
 
 $messages['en'] = array(
 	'advancedrandom'      => 'Advanced random',
-	'advancedrandom-desc' => 'Get a random page from whos talk or subjectpage links to a given page, can be used like [[Special:AdvancedRandom/Template:Featured/Talk]] to get a random featured article or like [[Special:AdvancedRandom/Template:GFDL/Image]] to get a random GFDL file',
+	'advancedrandom-desc' => 'Get a random page from any namespace, the talk or subjectpage of which links to a given page.
+Can be used like [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] to get a random featured article talk, or like [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] to get a random GFDL file',
 );
 
 /** Message documentation (Message documentation)
@@ -19,12 +20,31 @@ $messages['qqq'] = array(
 	'advancedrandom-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'advancedrandom' => 'Willekeurige bladsy (gevorderd)',
+	'advancedrandom-desc' => "Kry 'n lukrake besprekingsblad of bladsy uit die hoofnaamruimte wat skakel na 'n opgegewe bladsy.
+Kan gebruik word as [[{{#special:advancedrandom}}/{{ns:template}}:Uitgelig/{{ns:talk}}]] om 'n lukrake geselshoekie-artikel weer te gee of as [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] om 'n lukrake GFDL-gelisensieerde lêer weer te gee",
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Bresta
+ */
+$messages['aln'] = array(
+	'advancedrandom' => 'Kërkim i detajshëm i rastësishëm',
+	'advancedrandom-desc' => 'Gjej nji faqe të rastësishme prej çfarëdo hapësine, diskutimi apo tema e të cilit lidhet me faqen e dhânë.
+Mundet me u përdorë si [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] për me gjetë nji artikull të rastit të diskutimit, apo si [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] për me gjetë nji skedë GFDL',
+);
+
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'advancedrandom' => 'عشوائي متقدم',
-	'advancedrandom-desc' => 'احصل على صفحة عشوائية من نقاش أو صفحة موضوع موصولة لصفحة معطاة، يمكن استخدامها مثل [[Special:AdvancedRandom/Template:Featured/Talk]] للحصول على مقالة مختارة عشوائية أو مثل [[Special:AdvancedRandom/Template:GFDL/Image]] للحصول على ملف عشوائي مرخص برخصة جنو للوثائق الحرة',
+	'advancedrandom-desc' => 'احصل على صفحة عشوائية من نقاش أو صفحة موضوع موصولة لصفحة معطاة، يمكن استخدامها مثل [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] للحصول على نقاش مقالة مختارة عشوائي أو مثل [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] للحصول على ملف عشوائي مرخص برخصة جنو للوثائق الحرة',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -33,7 +53,7 @@ $messages['ar'] = array(
  */
 $messages['arz'] = array(
 	'advancedrandom' => 'عشوائى متقدم',
-	'advancedrandom-desc' => 'احصل على صفحة عشوائية من نقاش أو صفحة موضوع موصولة لصفحة معطاة، يمكن استخدامها مثل [[Special:AdvancedRandom/Template:Featured/Talk]] للحصول على مقالة مختارة عشوائية أو مثل [[Special:AdvancedRandom/Template:GFDL/Image]] للحصول على ملف عشوائى مرخص برخصة جنو للوثائق الحرة',
+	'advancedrandom-desc' => 'احصل على صفحة عشوائية من نقاش أو صفحة موضوع موصولة لصفحة معطاة، يمكن استخدامها مثل [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] للحصول على مقالة مختارة عشوائية أو مثل [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] للحصول على ملف عشوائى مرخص برخصة جنو للوثائق الحرة',
 );
 
 /** Asturian (Asturianu)
@@ -55,6 +75,16 @@ $messages['avk'] = array(
  */
 $messages['be-tarask'] = array(
 	'advancedrandom' => 'Палепшаная выпадковая старонка',
+	'advancedrandom-desc' => 'Вяртае выпадковую старонку з любой прасторы назваў, на старонцы ці падстаронцы абмеркаваньня якой існуе спасылка на пададзеную старонку. Можа выкарыстоўвацца па прыкладу [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], каб атрымаць старонку абмеркаваньня выпадковага выбранага артыкула альбо [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], каб атрымаць выпадковы файл з ліцэнзіяй GFDL',
+);
+
+/** Bulgarian (Български)
+ * @author Spiritia
+ */
+$messages['bg'] = array(
+	'advancedrandom' => 'Случайна страница плюс',
+	'advancedrandom-desc' => 'Извлича случайна страница от произволно именно пространство или прилежащото му дискусионно пространство, което съдържа препратка към дадена страница.
+Инструментът може да се използва като [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] за извличаве на беседа към случайна избрана статия featured article или като [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] за извличане на случаен файл, лицензиран под условията на GFDL.',
 );
 
 /** Bengali (বাংলা)
@@ -62,7 +92,7 @@ $messages['be-tarask'] = array(
  */
 $messages['bn'] = array(
 	'advancedrandom' => 'উন্নততর অনির্ধারিত',
-	'advancedrandom-desc' => 'এমন একটি অনির্দিষ্ট পাতা নিয়ে আসুন যার আলোচনা বা বিষয়বস্তু পাতা থেকে কোন একটি প্রদত্ত পাতায় সংযোগগুলি [[Special:AdvancedRandom/Template:Featured/Talk]]-এর মত কোন অনির্দিষ্ট নির্বাচিত নিবন্ধ কিংবা [[Special:AdvancedRandom/Template:GFDL/Image]]-এর মত কোন অজানা জিএফডিএল ফাইল আনতে ব্যবহার করা যাবে।',
+	'advancedrandom-desc' => 'এমন একটি অনির্দিষ্ট পাতা নিয়ে আসুন যার আলোচনা বা বিষয়বস্তু পাতা থেকে কোন একটি প্রদত্ত পাতায় সংযোগগুলি [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]]-এর মত কোন অনির্দিষ্ট নির্বাচিত নিবন্ধ কিংবা [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]-এর মত কোন অজানা জিএফডিএল ফাইল আনতে ব্যবহার করা যাবে।',
 );
 
 /** Breton (Brezhoneg)
@@ -70,7 +100,7 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'advancedrandom' => 'Moned dargouezhek araokaet',
-	'advancedrandom-desc' => 'Tapout a ra ur bajenn dre zegouezh diwar ur gaoz pe ul liamm danvezel bennak war-du ur bajenn lakaet. Gallout a ra bezañ implijet evel [[Special:AdvancedRandom/Template:Featured/Talk]] evit tapout ur pennad termenet dre zegouezh pe evel [[Special:AdvancedRandom/Template:GFDL/Image]] a-benn tapout ur restr dindan aotre GFDL',
+	'advancedrandom-desc' => 'Tapout a ra ur bajenn dre zegouezh diwar ur gaoz pe ul liamm danvezel bennak war-du ur bajenn lakaet. Gallout a ra bezañ implijet evel [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] evit tapout ur pennad termenet dre zegouezh pe evel [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] a-benn tapout ur restr dindan aotre GFDL',
 );
 
 /** Bosnian (Bosanski)
@@ -78,16 +108,27 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'advancedrandom' => 'Napredna slučajna stranica',
-	'advancedrandom-desc' => 'Prikazuje slučajnu stranicu na čijoj stranici za razgovor ili linkovima o predmetu stranice, može biti korišteno poput [[Special:AdvancedRandom/Template:Featured/Talk]] za dobivanje slučajnog odabranog članka ili [[Special:AdvancedRandom/Template:GFDL/Image]] za dobivanje slučajne GFDL datoteke',
+	'advancedrandom-desc' => 'Prikazuje slučajnu stranicu na čijoj stranici za razgovor ili linkovima o predmetu stranice, može biti korišteno poput [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] za dobivanje slučajnog odabranog članka ili [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] za dobivanje slučajne GFDL datoteke',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ * @author Ssola
+ */
+$messages['ca'] = array(
+	'advancedrandom' => 'Aleatori avançat',
+	'advancedrandom-desc' => "Obtenir una pàgina a l'atzar d'entre qualsevol de l'espai de noms que enllaci (pàgina o discussió) a una pàgina donada.
+Es pot utilitzar com a <tt><nowiki>[[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]]</nowiki></tt> per obtenir la pàgina de discussió d'un article de qualitat aleatoriament, o com a <tt><nowiki>[[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]</nowiki></tt> per obtenir a l'atzar un fitxer sota la Llicència de documentació lliure GNU (GFDL).",
 );
 
 /** Czech (Česky)
  * @author Li-sung
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'advancedrandom' => 'Pokročilý náhodný výběr',
-	'advancedrandom-desc' => 'Vrátí náhodnou stránku, která sama nebo jí příslušná diskuse odkazuje na zadanou stránku. Je možné ho použít na získání náhodného nejlepšího článku ve tvaru [[{{ns:Special}}:AdvancedRandom/Šablona:Nejlepší článek/Diskuse]] nebo na získání náhodného GFDL souboru ve tvaru [[{{ns:Special}}:AdvancedRandom/Šablona:GFDL/Soubor]]',
+	'advancedrandom-desc' => 'Vrátí náhodnou stránku, která sama nebo jí příslušná diskuse odkazuje na zadanou stránku. Je možné ho použít na získání náhodného nejlepšího článku ve tvaru [[{{#special:advancedrandom}}/{{ns:template}}:Nejlepší článek/{{ns:talk}}]] nebo na získání náhodného GFDL souboru ve tvaru [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]',
 );
 
 /** Welsh (Cymraeg)
@@ -95,7 +136,7 @@ $messages['cs'] = array(
  */
 $messages['cy'] = array(
 	'advancedrandom' => 'Ar hap o fewn ystod',
-	'advancedrandom-desc' => "Cael gafael ar dudalen ar hap, lle bo'r dudalen neu ei thudalen sgwrs yn cysylltu a rhyw dudalen arbennig. Gellir defnyddio hwn yn yr un modd â [[Special:AdvancedRandom/Template:Featured/Talk]] sy'n cael gafael ar erthygl ddethol ar hap, neu [[Special:AdvancedRandom/Template:GFDL/Image]] sy'n cael gafael ar ffeil GFDL ar hap.",
+	'advancedrandom-desc' => "Cael gafael ar dudalen ar hap, lle bo'r dudalen neu ei thudalen sgwrs yn cysylltu a rhyw dudalen arbennig. Gellir defnyddio hwn yn yr un modd â [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] sy'n cael gafael ar erthygl ddethol ar hap, neu [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] sy'n cael gafael ar ffeil GFDL ar hap.",
 );
 
 /** Danish (Dansk)
@@ -103,7 +144,7 @@ $messages['cy'] = array(
  */
 $messages['da'] = array(
 	'advancedrandom' => 'Avanceret tilfældig side',
-	'advancedrandom-desc' => 'Find en tilfældig side som linker til en bestemt side, kan bruges som [[Special:AdvancedRandom/Template:Featured/Talk]] til at få en tilfældig fremragende artikel eller [[Special:AdvancedRandom/Template:GFDL/Image]] for at få en tilfældig GFDL fil',
+	'advancedrandom-desc' => 'Find en tilfældig side som linker til en bestemt side, kan bruges som [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] til at få en tilfældig fremragende artikel eller [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] for at få en tilfældig GFDL fil',
 );
 
 /** German (Deutsch)
@@ -111,7 +152,7 @@ $messages['da'] = array(
  */
 $messages['de'] = array(
 	'advancedrandom' => 'Zufällige Seite (erweitert)',
-	'advancedrandom-desc' => 'Hole eine zufällige Seite, z. B. mit [[Special:AdvancedRandom/Template:Featured/Talk]], um eine zufällige Diskussionsseite zu einen exzellenten Artikel oder mit [[Special:AdvancedRandom/Template:GFDL/Image]], um eine zufällige Datei anzuzeigen, die als GFDL lizenziert ist.',
+	'advancedrandom-desc' => 'Hole eine zufällige Seite, z. B. mit [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], um eine zufällige Diskussionsseite zu einen exzellenten Artikel oder mit [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], um eine zufällige Datei anzuzeigen, die als GFDL lizenziert ist.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -119,14 +160,17 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'advancedrandom' => 'Rozšyrjony pśipadny bok',
-	'advancedrandom-desc' => 'Wotwołaj pśipadny bok, na kótaremž (abo na jogo diskusijnem boku) jo wótkaz na dany bok. Dajo se wužywaś kaž [[Special:AdvancedRandom/Template:Featured/Talk]], aby se pśipadny wuběrny nastawk zwobraznił abo kaž [[Special:AdvancedRandom/Template:GFDL/Image]], aby se pśipadna dataja GDFL zwobrazniła.',
+	'advancedrandom-desc' => 'Wotwołaj pśipadny bok wót mjenjowego ruma, na kótaremž (abo na jogo diskusijnem boku) jo wótkaz na dany bok. Dajo se wužywaś kaž [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], aby se pśipadny wuběrny nastawk zwobraznił abo kaž [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], aby se pśipadna dataja GDFL zwobrazniła.',
 );
 
 /** Greek (Ελληνικά)
  * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
 	'advancedrandom' => 'Προχωρημένη τυχαία πρόσβαση',
+	'advancedrandom-desc' => 'Πάρτε μια τυχαία σελίδα από μια οποιαδήποτε περιοχή, και συζητήστε ή δημιουργήστε σελίδες θεμάτων που συνδέει σε μια δωσμένη σελίδα.
+Μπορεί να χρησιμοποιηθεί σαν [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] για να πάρετε μια τυχαία συζήτηση ενός επιλεγμένου άρθρου, ή σαν το [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] για να πάρετε ένα τυχαίο αρχείο GFDL',
 );
 
 /** Esperanto (Esperanto)
@@ -141,7 +185,7 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'advancedrandom' => 'Acceso aleatorio avanzado',
-	'advancedrandom-desc' => 'Obtener una página al azar a partir de una discusión o de un enlace de una página de asunto a una página dada. Puede ser usado como en [[Special:AdvancedRandom/Template:Featured/Talk]] para obtener un artículo destacado al azar o como [[Special:AdvancedRandom/Template:GFDL/Image]] para obtener un archivo GFDL al azar',
+	'advancedrandom-desc' => 'Obtener una página al azar a partir de una discusión o de un enlace de una página de asunto a una página dada. Puede ser usado como en [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] para obtener un artículo destacado al azar o como [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] para obtener un archivo GFDL al azar',
 );
 
 /** Basque (Euskara)
@@ -156,17 +200,19 @@ $messages['eu'] = array(
  */
 $messages['fi'] = array(
 	'advancedrandom' => 'Ehdollinen satunnainen sivu',
-	'advancedrandom-desc' => 'Hae satunnainen sivu, joka tai jonka keskustelusivu linkittää tietylle sivulle. Tätä voidaan käyttää satunnaisen suositellun sivun valitsemiseen ([[Special:AdvancedRandom/Template:Featured/Talk]]) tai satunnaisen GFDL-lisensoidun tiedoston hakemiseen ([[Special:AdvancedRandom/Template:GFDL/Image]]).',
+	'advancedrandom-desc' => 'Hae satunnainen sivu, joka tai jonka keskustelusivu linkittää tietylle sivulle. Tätä voidaan käyttää satunnaisen suositellun sivun valitsemiseen ([[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]]) tai satunnaisen GFDL-lisensoidun tiedoston hakemiseen ([[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]).',
 );
 
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author PieRRoMaN
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'advancedrandom' => 'Accès aléatoire avancé',
-	'advancedrandom-desc' => 'Obtient une page au hasard à partir d’une discussion ou d’un lien d’un sujet vers une page donnée. Peut être utilisé comme [[Special:AdvancedRandom/Template:Featured/Talk]] pour obtenir une page déterminée au hasard ou comme [[Special:AdvancedRandom/Template:GFDL/Image]] pour obtenir un fichier sous licence GFDL',
+	'advancedrandom-desc' => 'Obtient une page au hasard dans n’importe quel espace de noms dont la page de sujet ou de discussion est liée à une page donnée. Peut être utilisé comme <tt><nowiki>[[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]]</nowiki></tt> pour obtenir aléatoirement la page de discussion d’un article de qualité, ou comme <tt><nowiki>[[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]</nowiki></tt> pour obtenir un fichier sous Licence de documentation libre GNU (GFDL).',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -174,7 +220,8 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'advancedrandom' => 'Accès a l’hasârd avanciê',
-	'advancedrandom-desc' => 'Obtint una pâge a l’hasârd dês una discussion ou un lim d’un sujèt vers una pâge balyê. Pôt étre utilisâ coment [[Special:AdvancedRandom/Template:Featured/Talk]] por obtegnir un articllo de qualitât a l’hasârd ou ben coment [[Special:AdvancedRandom/Template:GFDL/Image]] por obtegnir un fichiér desot licence GFDL a l’hasârd.',
+	'advancedrandom-desc' => 'At una pâge a l’hasârd dens un èspâço de noms quint que seye que la pâge de sujèt ou ben de discussion est liyê a una pâge balyê.
+Pôt étre utilisâ coment [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] por avêr per hasârd la pâge de discussion d’un articllo de qualitât, ou ben coment [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] por avêr un fichiér desot licence de documentacion abada GNU (GFDL).',
 );
 
 /** Galician (Galego)
@@ -182,7 +229,8 @@ $messages['frp'] = array(
  */
 $messages['gl'] = array(
 	'advancedrandom' => 'Acceso aleatorio avanzado',
-	'advancedrandom-desc' => 'Obter unha páxina ao chou a partir dunha conversa ou dunha ligazón dunha páxina de asunto á páxina dada. Pode ser usado como [[Special:AdvancedRandom/Template:Featured/Talk]] para obter un artigo destacado ao chou ou como [[Special:AdvancedRandom/Template:GFDL/Image]] para obter un ficeiro GFDL ao chou',
+	'advancedrandom-desc' => 'Obter unha páxina ao chou de calquera espazo de nomes que ligue ela mesma ou a súa conversa cunha páxina dada.
+Pode usarse [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] para obter unha  conversa ao chou dun artigo destacado ou [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] para obter un ficeiro GFDL ao chou',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -190,7 +238,8 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'advancedrandom' => 'Προοδευμένη τυχοῦσα',
-	'advancedrandom-desc' => 'Ἐπικτῆσαι τυχαίαν δέλτον τινὰ ἐκκινούμενος ἐκ μίας διαλέξεως ἢ συνδέσμῶν τινῶν δέλτου ἐγχειρήματός τινος πρὸς μίαν δεδομένην δέλτον. Ἔξεστί σοι χρῆσαι ταύτην ὡς [[Special:AdvancedRandom/Template:Featured/Talk]] ἵνα λάβῃς ἐξαἰρετον δέλτον τινὰ ἢ ὡς [[Special:AdvancedRandom/Template:GFDL/Image]] ἵνα λάβῃς τυχαῖον ἀρχεῖον GFDL (ἔχον Ἄδειαν Ἐλευθέρας Τεκμηριώσεως GNU) τί.',
+	'advancedrandom-desc' => 'Ἐπικτῆσαι τυχαίαν δέλτον τινὰ ἐκκινούμενος ἐκ μίας διαλέξεως ἢ συνδέσμῶν τινῶν δέλτου ἐγχειρήματός τινος πρὸς μίαν δεδομένην δέλτον.
+Ἔξεστί σοι χρῆσαι ταύτην ὡς [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] ἵνα λάβῃς ἐξαἰρετον δέλτον τινὰ ἢ ὡς [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] ἵνα λάβῃς τυχαῖον τι ἀρχεῖον GFDL (ἔχον Ἄδειαν Ἐλευθέρας Τεκμηριώσεως GNU).',
 );
 
 /** Swiss German (Alemannisch)
@@ -198,7 +247,7 @@ $messages['grc'] = array(
  */
 $messages['gsw'] = array(
 	'advancedrandom' => 'Zuefälligi Syte',
-	'advancedrandom-desc' => 'Hol e zuefälligi Syte, z. B. mit [[Special:AdvancedRandom/Template:Featured/Talk]], zum e zuefälligi Diskussionssyte zue me exzellänten Artikel oder mit [[Special:AdvancedRandom/Template:GFDL/Image]], zum e zuefälligi Datei aazzeige, wu as GFDL lizänziert isch.',
+	'advancedrandom-desc' => 'Hol e zuefälligi Syte, z. B. mit [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], zum e zuefälligi Diskussionssyte zue me exzellänten Artikel oder mit [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], zum e zuefälligi Datei aazzeige, wu as GFDL lizänziert isch.',
 );
 
 /** Hebrew (עברית)
@@ -206,7 +255,7 @@ $messages['gsw'] = array(
  */
 $messages['he'] = array(
 	'advancedrandom' => 'אקראי מתקדם',
-	'advancedrandom-desc' => 'קבלת דף אקראי שהוא או דף השיחה שלו מקשר לדף נתון. ניתן לשימוש באופן [[Special:AdvancedRandom/Template:Featured/Talk]] לקבלת ערך מומלץ אקראי, או באופן [[Special:AdvancedRandom/Template:GFDL/Image]] לקבלת קובץ GFDL אקראי',
+	'advancedrandom-desc' => 'קבלת דף אקראי שהוא או דף השיחה שלו מקשר לדף נתון. ניתן לשימוש באופן [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] לקבלת ערך מומלץ אקראי, או באופן [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] לקבלת קובץ GFDL אקראי',
 );
 
 /** Hindi (हिन्दी)
@@ -214,7 +263,7 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'advancedrandom' => 'एडवान्स्ड रॅन्डम',
-	'advancedrandom-desc' => 'ऐसा एक अविशिष्ट पान खोजें कि जिसका वार्ता अथवा विषयपान दिये हुए पन्ने से जुडता हैं, जैसे कि अविशिष्ट विशेष लेख खोजनेके लिये [[Special:AdvancedRandom/Template:Featured/Talk]] का इस्तेमाल हो सकता हैं अथवा अविशिष्ट जीएफडीएल (GFDL) फ़ाईल खोजेने के लिये [[Special:AdvancedRandom/Template:GFDL/Image]] का इस्तेमाल हो सकता हैं',
+	'advancedrandom-desc' => 'ऐसा एक अविशिष्ट पान खोजें कि जिसका वार्ता अथवा विषयपान दिये हुए पन्ने से जुडता हैं, जैसे कि अविशिष्ट विशेष लेख खोजनेके लिये [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] का इस्तेमाल हो सकता हैं अथवा अविशिष्ट जीएफडीएल (GFDL) फ़ाईल खोजेने के लिये [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] का इस्तेमाल हो सकता हैं',
 );
 
 /** Croatian (Hrvatski)
@@ -222,7 +271,7 @@ $messages['hi'] = array(
  */
 $messages['hr'] = array(
 	'advancedrandom' => 'Napredne slučajne stranice',
-	'advancedrandom-desc' => 'Nađi slučajnu stranicu s čije stranice za razgovor ili s nje same postoje poveznice koje mogu biti uporabljene poput ove: [[Special:AdvancedRandom/Template:Featured/Talk]] da bi se dobio slučajni izabrani članak ili npr. [[Special:AdvancedRandom/Template:GFDL/Image]] da bi se dobila slučajna GFDL datoteka',
+	'advancedrandom-desc' => 'Nađi slučajnu stranicu s čije stranice za razgovor ili s nje same postoje poveznice koje mogu biti uporabljene poput ove: [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] da bi se dobio slučajni izabrani članak ili npr. [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] da bi se dobila slučajna GFDL datoteka',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -231,14 +280,16 @@ $messages['hr'] = array(
 $messages['hsb'] = array(
 	'advancedrandom' => 'Rozšěrjena připadna strona',
 	'advancedrandom-desc' => 'Wobstaraj připadnu stronu, na kotrejž (abo na jeje diskusijnej stronje) je wotkaz k datej stronje. Da so wužiwać kaž
-[[Special:AdvancedRandom/Template:Featured/Talk]], zo by so připadny wuběrny nastawk zwobraznił abo kaž [[Special:AdvancedRandom/Template:GFDL/Image]], zo by so připadna dataja zwobrazniła, kotraž pod licencu GFDL steji.',
+[[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], zo by so připadny wuběrny nastawk zwobraznił abo kaž [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], zo by so připadna dataja zwobrazniła, kotraž pod licencu GFDL steji.',
 );
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
-	'advancedrandom-desc' => 'Megjelenít egy véletlen lapot, amely vagy amelynek vitalapja egy megadott oldalra, például a [[Special:AdvancedRandom/Template:Kiemelt/Vita]] mutat egy véletlen kiemelt szócikket vagy a [[Special:AdvancedRandom/Template:GFDL/Kép]] mutat egy véletlen GFDL fájlt.',
+	'advancedrandom' => 'Véletlen lap (fejlettebb)',
+	'advancedrandom-desc' => 'Megjelenít egy véletlen lapot, amely vagy amelynek vitalapja egy megadott oldalra, például a[[{{#special:advancedrandom}}/{{ns:template}}:Kiemelt/{{ns:talk}}]] mutat egy véletlen kiemelt szócikket vagy a [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] mutat egy véletlen GFDL fájlt.',
 );
 
 /** Interlingua (Interlingua)
@@ -246,7 +297,16 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'advancedrandom' => 'Accesso aleatori avantiate',
-	'advancedrandom-desc' => 'Obtene un pagina aleatori a partir de un pagina de discussion o ligamines de paginas de subjectos verso un pagina date. Pote esser usate como [[Special:AdvancedRandom/Template:Featured/Talk]] pro obtener un articulo eminente aleatori o como [[Special:AdvancedRandom/Template:GFDL/Image]] pro obtener un file aleatori sub licentia GFDL',
+	'advancedrandom-desc' => 'Obtene un pagina aleatori ab qualcunque spatio de nomines cuje pagina de discussion o de subjecto liga verso un pagina date. Pote esser usate como [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] pro obtener le discussion de un articulo eminente aleatori, o como [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] pro obtener un file aleatori sub licentia GFDL',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Kandar
+ */
+$messages['id'] = array(
+	'advancedrandom' => 'Sembarang lanjutan',
+	'advancedrandom-desc' => 'Dapatkan halaman sembarang dari ruang nama apapun, halaman artikel atau pembicaraan yang terhubung ke halaman yang diminta.
+Dapat digunakan seperti [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] untuk mendapatkan pembicaraan sembarang artikel pilihan, atau seperti [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] untuk mendapatkan sembarang berkas GFDL.',
 );
 
 /** Italian (Italiano)
@@ -258,11 +318,12 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'advancedrandom' => 'おまかせ表示（ページ指定）',
-	'advancedrandom-desc' => '指定ページにリンクしているノートページおよび主題ページの中からランダムに表示する。例えば [[Special:AdvancedRandom/Template:Featured/Talk]] とすれば秀逸な記事をおまかせ表示、 [[Special:AdvancedRandom/Template:GFDL/Image]] とすればGFDLファイルをおまかせ表示する',
+	'advancedrandom' => 'おまかせ表示(ページ指定)',
+	'advancedrandom-desc' => '指定ページにリンクしているノートページおよび主題ページの中からランダムに表示する。例えば [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] とすれば秀逸な記事をおまかせ表示、[[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] とすればGFDLファイルをおまかせ表示する',
 );
 
 /** Javanese (Basa Jawa)
@@ -283,9 +344,14 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Klutzy
+ * @author Kwj2772
+ * @author Yknok29
  */
 $messages['ko'] = array(
 	'advancedrandom' => '향상된 임의 문서',
+	'advancedrandom-desc' => '모든 이름공간에서 특정 문서를 가리키는 문서로 이동합니다.
+예를 들어 임의의 알찬 글 토론 문서로 이동하려면 [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]]를,
+임의의 GFDL 파일로 이동하려면 [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]의 형식으로 사용할 수 있습니다.',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -293,7 +359,7 @@ $messages['ko'] = array(
  */
 $messages['ksh'] = array(
 	'advancedrandom' => 'Zofällijje Sigg (Met Extra Müjjeleschkeite )',
-	'advancedrandom-desc' => 'Deit en zosäzlijje Müjjelischkeit för zofällije Sigge en et Wikki, esu dat [[Special:AdvancedRandom/Template:Dach/Atikkel]] ene zofällije DaresAtikkel brenge kann, udder [[Special:AdvancedRandom/Template:GFDL/Beld]] e zofällesch Beld unger de GFDL.',
+	'advancedrandom-desc' => 'Deit en zosäzlijje Müjjelischkeit för zofällije Sigge en et Wikki, esu dat [[Special:AdvancedRandom/Template:Dach/Atikkel|{{#special:AdvancedRandom}}/Template:Dach/Atikkel]] ene zofällije DaresAtikkel brenge kann, udder [[Special:AdvancedRandom/Template:GFDL/Beld|{{#special:AdvancedRandom}}/Template:GFDL/Beld]] e zofällesch Beld unger de GFDL.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -301,7 +367,7 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'advancedrandom' => 'Zoufälleg Säit (erweidert)',
-	'advancedrandom-desc' => 'Eng zoufälleg Säit weisen, z. B. mat [[Special:AdvancedRandom/Template:Featured/Talk]], fir eng zoufälleg Diskussiounssäit vun enger exzellenter Säit oder mat [[Special:AdvancedRandom/Template:GFDL/Image]], fir een zoufällege Fichier ze weisen, den als GFDL lizenzéiert ass.',
+	'advancedrandom-desc' => 'Eng zoufälleg Säit weisen, z. B. mat [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], fir eng zoufälleg Diskussiounssäit vun enger exzellenter Säit oder mat [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], fir een zoufällege Fichier ze weisen, den als GFDL lizenzéiert ass.',
 );
 
 /** Limburgish (Limburgs)
@@ -311,7 +377,32 @@ $messages['lb'] = array(
 $messages['li'] = array(
 	'advancedrandom' => 'Willekäörige pagina (geavanceerd)',
 	'advancedrandom-desc' => "Vraog 'n willekeurige euverlekpagina of pagina oet de hoofnaamruumte op die verwies nao 'n opgegaeve pagina.
-Kan gebroek waere es [[Special:AdvancedRandom/Template:Featured/Talk]] om 'n willekeurig etalage-artikel weer te gaeve of es [[Special:AdvancedRandom/Template:GFDL/Image]] om 'n willekeurig GFDL gelicenseerd bestandj weer te gaeve",
+Kan gebroek waere es [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] om 'n willekeurig etalage-artikel weer te gaeve of es [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] om 'n willekeurig GFDL gelicenseerd bestandj weer te gaeve",
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Matasg
+ */
+$messages['lt'] = array(
+	'advancedrandom' => 'Išplėstas atsitiktinis puslapis',
+	'advancedrandom-desc' => 'Gaukite atsitiktinį puslapį iš bet kurios vardų srities, aptarimą ar sub-puslapį, kuris nurodo į duotą puslapį.
+Gali būti naudojamas kaip [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] norint gauti atsitiktinį pavyzdinio straipsnio aptarimą, ar kaip [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] norint gauti atsitiktinį GFDL failą',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'advancedrandom' => "Antsipirihan'ny kisendra",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'advancedrandom' => 'Случајна-напредно',
+	'advancedrandom-desc' => 'Добивање на случајна страница за било кој именски простор, чија страница за разговор или потстраница има врска до дадена страница.
+Може да се користи како [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] за добивање на случајна страница за разговор на некоја избрана статија, или пак како [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] за добивање на случајна GFDL податотека',
 );
 
 /** Marathi (मराठी)
@@ -320,7 +411,7 @@ Kan gebroek waere es [[Special:AdvancedRandom/Template:Featured/Talk]] om 'n wil
  */
 $messages['mr'] = array(
 	'advancedrandom' => 'प्रगत अविशीष्ट',
-	'advancedrandom-desc' => 'असे एक अविशिष्ट पान मिळवा की ज्याचे चर्चा अथवा विषयपान दिलेल्या पानाशी जोडलेले आहे, जसे की अविशिष्ट विशेष लेख मिळविण्यासाठी [[Special:AdvancedRandom/Template:Featured/Talk]] हे वापरता येईल अथवा अविशिष्ट जीएफडीएल (GFDL) संचिका मिळविण्यासाठी [[Special:AdvancedRandom/Template:GFDL/Image]] हे वापरता येईल',
+	'advancedrandom-desc' => 'असे एक अविशिष्ट पान मिळवा की ज्याचे चर्चा अथवा विषयपान दिलेल्या पानाशी जोडलेले आहे, जसे की अविशिष्ट विशेष लेख मिळविण्यासाठी [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] हे वापरता येईल अथवा अविशिष्ट जीएफडीएल (GFDL) संचिका मिळविण्यासाठी [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] हे वापरता येईल',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -337,13 +428,31 @@ $messages['nds'] = array(
 	'advancedrandom' => 'Tofällige Sied (verbetert)',
 );
 
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'advancedrandom' => 'Willekeurige pagina (evorderd)',
+	'advancedrandom-desc' => 'Vraag een willekeurige overlegpagina of pagina uut de heufnaamruumte op dee verwies naor een op-egeven pagina.
+Kan gebruuk wönnen as [[{{#special:advancedrandom}}/{{ns:template}}:Uut-eloch/{{ns:talk}}]] um een willekeurig etelazie-artikel weer te geven of as [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] um een willekeurig GFDL-elicenseerd bestaand te bekieken',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'advancedrandom' => 'उन्नत र्‌यान्डम',
+	'advancedrandom-desc' => 'कुनै पनि नेमस्पेसबाट वार्तालाप वा विषय पृष्ठ जो यो पृष्ठ सँग जोडिएको छ पाउनको लागि ।
+ [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] कुनै पनि फिचर पृष्ठ पाउनको लागि, or like [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] कुनै पनि  GFDL फाइल पानको लागि , यस रुपमा प्रयोग गर्न सकिन्छ ।',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'advancedrandom' => 'Willekeurige pagina (geavanceerd)',
 	'advancedrandom-desc' => 'Vraag een willekeurige overlegpagina of pagina uit de hoofdnaamruimte op die verwijst naar een opgegeven pagina.
-Kan gebruikt worden als [[Special:AdvancedRandom/Template:Featured/Talk]] om een willekeurig etalage-artikel weer te geven of als [[Special:AdvancedRandom/Template:GFDL/Image]] om een willekeurig GFDL gelicenseerd bestand weer te geven',
+Kan gebruikt worden als [[{{#special:advancedrandom}}/{{ns:template}}:Uitgelicht/{{ns:talk}}]] om een willekeurig etalage-artikel weer te geven of als [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] om een willekeurig GFDL-gelicenseerd bestand weer te geven',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -351,16 +460,17 @@ Kan gebruikt worden als [[Special:AdvancedRandom/Template:Featured/Talk]] om een
  */
 $messages['nn'] = array(
 	'advancedrandom' => 'Avansert tilfeldig side',
-	'advancedrandom-desc' => 'Finn ei tilfeldig side der det på sjølve sida eller diskusjonssida vert lenka til ei oppgjeve side, kan brukast til dømes med [[Special:AdvancedRandom/Mal:Utvald side/Diskusjon]] for å få ei tilfeldig utvald side eller med [[Special:AdvancedRandom/Mal:GFDL/Fil]] for å få ei tilfeldig GFDL-fil.',
+	'advancedrandom-desc' => 'Finn ei tilfeldig side der det på sjølve sida eller diskusjonssida vert lenka til ei oppgjeve side, kan brukast til dømes med [[{{#special:advancedrandom}}/{{ns:template}}:Utvald side/{{ns:talk}}]] for å få ei tilfeldig utvald side eller med [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] for å få ei tilfeldig GFDL-fil.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author EivindJ
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'advancedrandom' => 'Avansert tilfeldig side',
-	'advancedrandom-desc' => 'Finn en tilfeldig side der det på selve siden eller diskusjonssiden blir lenket til en angitt side, kan for eksempel brukes med [[Special:AdvancedRandom/Template:Utmerket artikkel/Diskusjon]] for å få en tilfeldig utmerket artikkel, eller som [[Special:AdvancedRandom/Template:GFDL/Bilde]] for å få en tilfeldig GFDL-fil.',
+	'advancedrandom-desc' => 'Finn en tilfeldig side der det på selve siden eller diskusjonssiden blir lenket til en angitt side, kan for eksempel brukes med [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] for å få en tilfeldig utmerket artikkel, eller som [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] for å få en tilfeldig GFDL-fil.',
 );
 
 /** Occitan (Occitan)
@@ -368,7 +478,7 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'advancedrandom' => 'Accès aleatòri avançat',
-	'advancedrandom-desc' => "Obten una pagina a l'azard a partir d’una discussion o d’un ligam d’un subjècte cap a una pagina donada. Pòt èsser utilizada coma [[Special:AdvancedRandom/Template:Featured/Talk]] per obténer un article determinat a l' azard o coma [[Special:AdvancedRandom/Template:GFDL/Image]] per obténer un fichièr jos licéncia GFDL",
+	'advancedrandom-desc' => "Obten una pagina a l'azard un espaci de noms quin que siá, que liga, ela o sa pagina de discussion, cap a una pagina donada. Pòt èsser utilizat coma [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] per obténer aleatòriament la pagina de discussion d'un article de qualitat, o coma [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] per obténer un fichièr jos licéncia de documentacion liura GNU (GFDL)",
 );
 
 /** Polish (Polski)
@@ -377,7 +487,17 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'advancedrandom' => 'Losowa strona (zaawansowane)',
-	'advancedrandom-desc' => 'Wyświetla losową stronę, na której (lub na jej stronie dyskusji) znajduje się link do danej strony. Funkcje można wywołać na przykład jako [[Special:AdvancedRandom/Template:Featured/Talk]], co wylosuje artykuł medalowy, lub [[Special:AdvancedRandom/Template:GFDL/Image]], co wylosuje dowolny plik opatrzony licencją GFDL.',
+	'advancedrandom-desc' => 'Wyświetla losową stronę, na której (lub na jej stronie dyskusji) znajduje się link do danej strony.
+Funkcje można wywołać na przykład jako [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], co wylosuje artykuł medalowy, lub [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], co wylosuje dowolny plik opatrzony licencją GFDL.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'advancedrandom' => 'Random avansà',
+	'advancedrandom-desc' => "Pija ma pàgina random da minca namespace, discussion o sotpàgina ch'a pòrta a na pàgina dàita.
+It peule dovré com [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] për pijé na discussion ëd n'artìcol a cas, o com [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]  për pijé un file GDFL a cas",
 );
 
 /** Pashto (پښتو)
@@ -392,7 +512,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'advancedrandom' => 'Acesso aleatório avançado',
-	'advancedrandom-desc' => 'Obtém uma página aleatória a partir de uma página de discussão ou de ligações de uma página de assunto para uma dada página. Pode ser usado como [[Special:AdvancedRandom/Template:Featured/Talk]] para obter um artigo em destaque aleatório ou como [[Special:AdvancedRandom/Template:GFDL/Image]] para obter um ficheiro GFDL aleatório',
+	'advancedrandom-desc' => 'Obtém uma página aleatória a partir de uma página de discussão ou de ligações de uma página de assunto para uma dada página. Pode ser usado como [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] para obter um artigo em destaque aleatório ou como [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] para obter um ficheiro GFDL aleatório',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -400,7 +520,7 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'advancedrandom' => 'Acesso aleatório avançado',
-	'advancedrandom-desc' => 'Obtém uma página aleatória a partir de uma página de discussão ou de ligações de uma página de assunto para uma dada página. Pode ser usado como [[Special:AdvancedRandom/Template:Featured/Talk]] para obter um artigo em destaque aleatório ou como [[Special:AdvancedRandom/Template:GFDL/Image]] para obter um arquivo GFDL aleatório',
+	'advancedrandom-desc' => 'Obtém uma página aleatória a partir de uma página de discussão ou de ligações de uma página de assunto para uma dada página. Pode ser usado como [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] para obter um artigo em destaque aleatório ou como [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] para obter um arquivo GFDL aleatório',
 );
 
 /** Romanian (Română)
@@ -408,7 +528,8 @@ $messages['pt-br'] = array(
  */
 $messages['ro'] = array(
 	'advancedrandom' => 'Întâmplător avansat',
-	'advancedrandom-desc' => 'Alege o pagină aleatoriu a cărei discuţie sau al cărei subiect duce la o pagină dată, poate fi folosită ca [[Special:AdvancedRandom/Template:Featured/Talk]] pentru a obţine aleatoriu un articol de calitate sau ca [[Special:AdvancedRandom/Template:GFDL/Image]] pentru a obţine un aleatoriu un fişier GFDL',
+	'advancedrandom-desc' => 'Alege aleatoriu o pagină a cărei discuţie sau al cărei subiect duce la o pagină dată.
+Poate fi folosită ca [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] pentru a obţine aleatoriu un articol de calitate sau ca [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] pentru a obţine un fişier GFDL aleatoriu.',
 );
 
 /** Tarandíne (Tarandíne)
@@ -416,23 +537,27 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'advancedrandom' => 'A uecchie avanzete',
-	'advancedrandom-desc' => "Pigghije 'na pàgene a uecchje da le 'ngazzaminde o 'na pàgena oggette ca colleghe 'a pàgena date, pò essere ausete cumme [[Special:AdvancedRandom/Template:Featured/Talk]] pe pigghjà 'nu dettaglie de 'n'artichele a uecchje o cumme [[Special:AdvancedRandom/Template:GFDL/Image]] pe pigghjà 'nu file GFDL a uecchje",
+	'advancedrandom-desc' => "Pigghije 'na pàgene a uecchje da 'u namespace ca vuè tu, da le 'ngazzaminde o 'na pàgena oggette ca colleghe 'a pàgena date. Pò essere ausete cumme [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] pe pigghjà 'nu dettaglie de 'n'artichele a uecchje o cumme [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] pe pigghjà 'nu file GFDL a uecchje",
 );
 
 /** Russian (Русский)
  * @author Ahonc
+ * @author Ferrer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'advancedrandom' => 'Продвинутая случайная',
-	'advancedrandom-desc' => 'Выдаёт случайную страницу, с подстраницы или страницы обсуждения которой есть ссылка на указанную страницу. Может использоваться по примеру [[Special:AdvancedRandom/Template:Featured/Talk]], чтобы получить случайную избранную статью, или [[Special:AdvancedRandom/Template:GFDL/Image]], чтобы получить случайный GFDL-файл.',
+	'advancedrandom-desc' => 'Выдаёт случайную страницу из любого пространства имён, с подстраницы или страницы обсуждения которой есть ссылка на указанную страницу. Может использоваться по примеру [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], чтобы получить случайную избранную статью, или [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], чтобы получить случайный GFDL-файл.',
 );
 
 /** Sicilian (Sicilianu)
+ * @author Melos
  * @author Santu
  */
 $messages['scn'] = array(
 	'advancedrandom' => 'Random avanzatu',
+	'advancedrandom-desc' => 'Pigghia na pàggina di qualunque namespace, la talk o la pàggina soggettu dô link pi dari na pàggina.
+Pò èssiri usatu comu [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] pi pigghiari na discussioni di na pàggina di qualità, o comu [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] pi haviri na pagina casuali di nu file n GFDL',
 );
 
 /** Slovak (Slovenčina)
@@ -440,7 +565,26 @@ $messages['scn'] = array(
  */
 $messages['sk'] = array(
 	'advancedrandom' => 'Rozšírený náhodný výber',
-	'advancedrandom-desc' => 'Získa náhodný odkaz na stránku zo stránky alebo diskusnej stránky. Je možné ho použiť na získanie náhodného odporúčaného článku v tvare [[Special:AdvancedRandom/Šablóna:Odporúčané/Diskusia]] alebo na získanie náhodného GFDL súboru v tvare [[Special:AdvancedRandom/Šablóna:GFDL/Obrázok]]',
+	'advancedrandom-desc' => 'Získa náhodný odkaz na stránku zo stránky alebo diskusnej stránky.
+Je možné ho použiť na získanie náhodného odporúčaného článku v tvare [[{{#special:advancedrandom}}/{{ns:template}}:Odporúčané/{{ns:talk}}]] alebo na získanie náhodného GFDL súboru v tvare [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'advancedrandom' => 'Напредно бирање случајног чланка',
+	'advancedrandom-desc' => 'Изабире случајну страну из било ког именског простора, из садржаја или разговора о њему, на коју линкује.
+Може да се користи као [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] да би се добила страна која укључује наведени шаблон, или слично [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], итд.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'advancedrandom' => 'Napredno biranje slučajnog članka',
+	'advancedrandom-desc' => 'Izabire slučajnu stranu iz bilo kog imenskog prostora, iz sadržaja ili razgovora o njemu, na koju linkuje.
+Može da se koristi kao [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] da bi se dobila strana koja uključuje navedeni šablon, ili slično [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], itd.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -448,7 +592,7 @@ $messages['sk'] = array(
  */
 $messages['stq'] = array(
 	'advancedrandom' => 'Toufällige Siede (ferruumed)',
-	'advancedrandom-desc' => 'Hoal ne toufällige Siede, t.B. mäd [[Special:AdvancedRandom/Template:Featured/{{ns:Talk}}]], uum ne toufällige Diskussionssiede tou n excellenten Artikkel of mäd [[Special:AdvancedRandom/Template:GFDL/{{ns:Image}}]], uum ne toufällige Doatäi antouwiesen, ju der as GFDL lizenzierd is.',
+	'advancedrandom-desc' => 'Hoal ne toufällige Siede, t.B. mäd [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], uum ne toufällige Diskussionssiede tou n excellenten Artikkel of mäd [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], uum ne toufällige Doatäi antouwiesen, ju der as GFDL lizenzierd is.',
 );
 
 /** Sundanese (Basa Sunda)
@@ -456,7 +600,7 @@ $messages['stq'] = array(
  */
 $messages['su'] = array(
 	'advancedrandom' => 'Acak ronjat',
-	'advancedrandom-desc' => 'Buka kaca acak nu sawala atawa jejerna numbu ka kaca nu ditangtukeun; bisa dipaké kawas [[Special:AdvancedRandom/Template:Featured/Talk]] pikeun muka artikel petingan acak atawa kawas [[Special:AdvancedRandom/Template:GFDL/Image]] pikeun muka acak koropak GFDL.',
+	'advancedrandom-desc' => 'Buka kaca acak nu sawala atawa jejerna numbu ka kaca nu ditangtukeun; bisa dipaké kawas [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] pikeun muka artikel petingan acak atawa kawas [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] pikeun muka acak koropak GFDL.',
 );
 
 /** Swedish (Svenska)
@@ -464,14 +608,17 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'advancedrandom' => 'Avancerad slumpsida',
-	'advancedrandom-desc' => 'Väljer slumpmässigt en sida som länkar till en viss sida eller som inkluderar en viss mall. Kan användas genom [[Special:AdvancedRandom/Template:Featured/Talk]] för att slumpvis välja en utvald artikel, eller genom [[Special:AdvancedRandom/Template:GFDL/Image]] för att visa an slumvald GFDL-fil',
+	'advancedrandom-desc' => 'Väljer slumpmässigt en sida som länkar till en viss sida eller som inkluderar en viss mall. Kan användas genom [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] för att slumpvis välja en utvald artikel, eller genom [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] för att visa an slumvald GFDL-fil',
 );
 
 /** Telugu (తెలుగు)
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
 	'advancedrandom' => 'మొరుగైన యాదృచ్ఛికం',
+	'advancedrandom-desc' => 'చర్చా పేజీలు, లేదా విషయక పేజీలు లాంటి ఏ నేమ్‌స్పేస్ నుంచైనా ఒక యాధృచ్చిక పేజీని చూపించు.
+యాధృచ్చిన విశేష వ్యాసపు చర్చాపేజీని చూడడానికి [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], యాధృచ్చిక GFDL ఫైల్ చూడడానికి [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] అని వాడవచ్చు',
 );
 
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
@@ -479,7 +626,23 @@ $messages['te'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'advancedrandom' => 'Тасодуфи пешрафта',
-	'advancedrandom-desc' => 'Гирифтани саҳифаи тасодуфӣ аз пайвандҳои баҳси киҳо ё саҳифаи мавзӯъ, ки ба саҳифа дода шудаанд, метавонанд монанди [[Special:AdvancedRandom/Template:Featured/Talk]] барои дастрас кардани мақолаи барҷастаи тасодуфии барҷаста ё монанди [[Special:AdvancedRandom/Template:GFDL/Image]] барои дастрас кардани парвандаи тасодуфии GFDL истифода шаванд',
+	'advancedrandom-desc' => 'Гирифтани саҳифаи тасодуфӣ аз пайвандҳои баҳси киҳо ё саҳифаи мавзӯъ, ки ба саҳифа дода шудаанд, метавонанд монанди [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] барои дастрас кардани мақолаи барҷастаи тасодуфии барҷаста ё монанди [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] барои дастрас кардани парвандаи тасодуфии GFDL истифода шаванд',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'advancedrandom' => 'Tasodufi peşrafta',
+	'advancedrandom-desc' => "Giriftani sahifai tasodufī az pajvandhoi bahsi kiho jo sahifai mavzū', ki ba sahifa doda şudaand, metavonand monandi [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] baroi dastras kardani maqolai barçastai tasodufiji barçasta jo monandi [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] baroi dastras kardani parvandai tasodufiji GFDL istifoda şavand",
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'advancedrandom' => 'การสุ่มขั้นสูง',
+	'advancedrandom-desc' => 'เปิดหน้าที่สุ่มขึ้นจากเนมสเปซใด ๆ หน้าอภิปราย หรือหน้าโครงการ ที่มีการเชื่อมโยงไปยังหน้าที่กำหนด สามารถใช้ได้อย่างเช่น [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] เพื่อที่จะเปิดหน้าอภิปรายของบทความคัดสรรแบบสุ่ม หรือใช้ [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] เพื่อเปิดไฟล์ GFDL แบบสุ่ม',
 );
 
 /** Tagalog (Tagalog)
@@ -487,7 +650,7 @@ $messages['tg-cyrl'] = array(
  */
 $messages['tl'] = array(
 	'advancedrandom' => 'Mas masulong na pang-alinman',
-	'advancedrandom-desc' => 'Kumukuha ng isang alinmang pahina mula sa mga kawing ng pahina ng usapan ninuman o kabahaging pahina patungo sa isang ibinigay na pahina, magagamit na katulad ng [[Special:AdvancedRandom/Template:Featured/Talk]] upang makakuha ng isang alinmang napiling artikulo o katulad ng [[Special:AdvancedRandom/Template:GFDL/Image]] upang makakuha ng isang alinmang talaksang GFDL',
+	'advancedrandom-desc' => 'Kumukuha ng isang alinmang pahina mula sa mga kawing ng pahina ng usapan ninuman o kabahaging pahina patungo sa isang ibinigay na pahina, magagamit na katulad ng [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] upang makakuha ng isang alinmang napiling artikulo o katulad ng [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] upang makakuha ng isang alinmang talaksang GFDL',
 );
 
 /** Turkish (Türkçe)
@@ -496,7 +659,7 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'advancedrandom' => 'Gelişmiş rassal',
-	'advancedrandom-desc' => 'Tartışma ya da konu sayfası verilen bir sayfaya bağlantı veren birinden bir rasgele sayfa al, rasgele bir kaliteli madde almak için [[Special:AdvancedRandom/Template:Featured/Talk]] gibi ya da rasgele bir GÖBL resmi almak için [[Special:AdvancedRandom/Template:GFDL/Image]] gibi kullanılabilir',
+	'advancedrandom-desc' => 'Tartışma ya da konu sayfası verilen bir sayfaya bağlantı veren birinden bir rasgele sayfa al, rasgele bir kaliteli madde almak için [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] gibi ya da rasgele bir GÖBL resmi almak için [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] gibi kullanılabilir',
 );
 
 /** Ukrainian (Українська)
@@ -504,7 +667,14 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'advancedrandom' => 'Покращена випадкова',
-	'advancedrandom-desc' => 'Видає випадкову сторінку, з підсторінки або сторінки обговорення якої є посилання на зазначену сторінку. Може використовуватися за зразком [[Special:AdvancedRandom/Template:Featured/Talk]], щоб отримати випадкову вибрану статтю, або [[Special:AdvancedRandom/Template:GFDL/Image]], щоб отримати випадковий GFDL-файл.',
+	'advancedrandom-desc' => 'Видає випадкову сторінку, з підсторінки або сторінки обговорення якої є посилання на зазначену сторінку. Може використовуватися за зразком [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]], щоб отримати випадкову вибрану статтю, або [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]], щоб отримати випадковий GFDL-файл.',
+);
+
+/** Vèneto (Vèneto)
+ * @author Vajotwo
+ */
+$messages['vec'] = array(
+	'advancedrandom' => 'Random avansà',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -512,7 +682,8 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'advancedrandom' => 'Ngẫu nhiên nâng cao',
-	'advancedrandom-desc' => 'Lấy một trang ngẫu nhiên từ liên kết của trang thảo luận hoặc trang chính cho trước, có thể được dùng theo dạng [[Special:AdvancedRandom/Template:Featured/Talk]] để lấy một bài viết chọn lọc ngẫu nhiên hoặc như [[Special:AdvancedRandom/Template:GFDL/Image]] để lấy một tập tin GFDL ngẫu nhiên',
+	'advancedrandom-desc' => 'Lấy một trang ngẫu nhiên từ một không gian tên, trang thảo luận hoặc trang chủ đề bất kỳ có liên kết đến trang chỉ định.
+Có thể được dùng như [[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]] để lấy một thảo luận của bài viết chọn lọc ngẫu nhiên, hoặc như [[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]] để lấy một tập tin GFDL ngẫu nhiên',
 );
 
 /** Yue (粵語)
@@ -520,7 +691,7 @@ $messages['vi'] = array(
  */
 $messages['yue'] = array(
 	'advancedrandom' => '進階隨便',
-	'advancedrandom-desc' => '好似一啲[[Special:AdvancedRandom/Template:Featured/Talk]]嘅傾緊嘅或者主題頁連結可以隨便拎來睇做正文又或者好似用[[Special:AdvancedRandom/Template:GFDL/Image]]去拎一個隨便嘅GFDL檔案',
+	'advancedrandom-desc' => '好似一啲[[{{#special:advancedrandom}}/{{ns:template}}:Featured/{{ns:talk}}]]嘅傾緊嘅或者主題頁連結可以隨便拎來睇做正文又或者好似用[[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]去拎一個隨便嘅GFDL檔案',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
@@ -528,7 +699,8 @@ $messages['yue'] = array(
  */
 $messages['zh-hans'] = array(
 	'advancedrandom' => '高级随机',
-	'advancedrandom-desc' => '凡是有子页面或讨论页的，都可以用此功能来随机展示。例如按下[[Special:AdvancedRandom/Template:特色条目/讨论页]]这个连结，就可以随机展示特色条目；又或按下[[Special:AdvancedRandom/Template:GFDL/Image]]这个连结，就可以随机得到一个GFDL档案。',
+	'advancedrandom-desc' => '凡是有子页面或讨论页的，都可以用此功能来随机展示。例如按下[[{{#special:advancedrandom}}/{{ns:template}}:特色条目/{{ns:talk}}]]这个连结，就可以随机展示特色条目；
+又或按下[[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]这个连结，就可以随机得到一个GFDL档案。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -536,6 +708,7 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'advancedrandom' => '進階隨機',
-	'advancedrandom-desc' => '凡是有子頁面或討論頁的，都可以用此功能來隨機展示。例如按下[[Special:AdvancedRandom/Template:特色條目/討論頁]]這個連結，就可以隨機展示特色條目；又或按下[[Special:AdvancedRandom/Template:GFDL/Image]]這個連結，就可以隨機得到一個GFDL檔案。',
+	'advancedrandom-desc' => '凡是有子頁面或討論頁的，都可以用此功能來隨機展示。例如按下[[{{#special:advancedrandom}}/{{ns:template}}:特色條目/{{ns:talk}}]]這個連結，就可以隨機展示特色條目；
+又或按下[[{{#special:advancedrandom}}/{{ns:template}}:GFDL/{{ns:file}}]]這個連結，就可以隨機得到一個GFDL檔案。',
 );
 

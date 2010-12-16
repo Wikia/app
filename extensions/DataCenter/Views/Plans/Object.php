@@ -10,9 +10,7 @@ class DataCenterViewPlansObject extends DataCenterView {
 
 	/* Functions */
 
-	public function view(
-		$path
-	) {
+	public function view( $path ) {
 		// Checks if the user did not provide enough information
 		if ( !$path['id'] ) {
 			// Returns error message
@@ -105,9 +103,7 @@ class DataCenterViewPlansObject extends DataCenterView {
 		);
 	}
 
-	public function select(
-		$path
-	) {
+	public function select( $path ) {
 		// Checks if...
 		if (
 			// No rack asset was specified
@@ -269,9 +265,7 @@ class DataCenterViewPlansObject extends DataCenterView {
 		}
 	}
 
-	public function remove(
-		$path
-	) {
+	public function remove( $path ) {
 		// Gets link from database
 		$objectLink = DataCenterDB::getAssetLink( $path['id'] );
 		// Extracts object from link
@@ -364,15 +358,11 @@ class DataCenterViewPlansObject extends DataCenterView {
 		);
 	}
 
-	public function attach(
-		$path
-	) {
+	public function attach( $path ) {
 		return $this->configure( $path );
 	}
 
-	public function configure(
-		$path
-	) {
+	public function configure( $path ) {
 		// Checks if...
 		if (
 			// No rack asset was specified

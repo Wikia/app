@@ -22,9 +22,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ("ApiBase.php");
+	require_once ( "ApiBase.php" );
 }
 
 /**
@@ -32,58 +32,57 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiUndelete extends ApiBase {
 
-	public function __construct($main, $action) {
-		parent :: __construct($main, $action);
+	public function __construct( $main, $action ) {
+		parent :: __construct( $main, $action );
 	}
 
 	public function execute() {
 		global $wgUser;
 		$params = $this->extractRequestParams();
 
-		$titleObj = NULL;
-		if(!isset($params['title']))
-			$this->dieUsageMsg(array('missingparam', 'title'));
-		if(!isset($params['token']))
-			$this->dieUsageMsg(array('missingparam', 'token'));
+		$titleObj = null;
+		if ( !isset( $params['title'] ) )
+			$this->dieUsageMsg( array( 'missingparam', 'title' ) );
 
-		if(!$wgUser->isAllowed('undelete'))
-			$this->dieUsageMsg(array('permdenied-undelete'));
-		if($wgUser->isBlocked())
-			$this->dieUsageMsg(array('blockedtext'));
-		if(!$wgUser->matchEditToken($params['token']))
-			$this->dieUsageMsg(array('sessionfailure'));
+		if ( !$wgUser->isAllowed( 'undelete' ) )
+			$this->dieUsageMsg( array( 'permdenied-undelete' ) );
 
-		$titleObj = Title::newFromText($params['title']);
-		if(!$titleObj)
-			$this->dieUsageMsg(array('invalidtitle', $params['title']));
+		if ( $wgUser->isBlocked() )
+			$this->dieUsageMsg( array( 'blockedtext' ) );
+
+		$titleObj = Title::newFromText( $params['title'] );
+		if ( !$titleObj )
+			$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
 
 		// Convert timestamps
-		if(!isset($params['timestamps']))
+		if ( !isset( $params['timestamps'] ) )
 			$params['timestamps'] = array();
-		if(!is_array($params['timestamps']))
-			$params['timestamps'] = array($params['timestamps']);
-		foreach($params['timestamps'] as $i => $ts)
-			$params['timestamps'][$i] = wfTimestamp(TS_MW, $ts);
+		if ( !is_array( $params['timestamps'] ) )
+			$params['timestamps'] = array( $params['timestamps'] );
+		foreach ( $params['timestamps'] as $i => $ts )
+			$params['timestamps'][$i] = wfTimestamp( TS_MW, $ts );
 
-		$pa = new PageArchive($titleObj);
-		$dbw = wfGetDB(DB_MASTER);
+		$pa = new PageArchive( $titleObj );
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
-		$retval = $pa->undelete((isset($params['timestamps']) ? $params['timestamps'] : array()), $params['reason']);
-		if(!is_array($retval))
-			$this->dieUsageMsg(array('cannotundelete'));
+		$retval = $pa->undelete( ( isset( $params['timestamps'] ) ? $params['timestamps'] : array() ), $params['reason'] );
+		if ( !is_array( $retval ) )
+			$this->dieUsageMsg( array( 'cannotundelete' ) );
 
-		if($retval[1])
-			wfRunHooks( 'FileUndeleteComplete', 
-				array($titleObj, array(), $wgUser, $params['reason']) );
+		if ( $retval[1] )
+			wfRunHooks( 'FileUndeleteComplete',
+				array( $titleObj, array(), $wgUser, $params['reason'] ) );
 
 		$info['title'] = $titleObj->getPrefixedText();
-		$info['revisions'] = intval($retval[0]);
-		$info['fileversions'] = intval($retval[1]);
-		$info['reason'] = intval($retval[2]);
-		$this->getResult()->addValue(null, $this->getModuleName(), $info);
+		$info['revisions'] = intval( $retval[0] );
+		$info['fileversions'] = intval( $retval[1] );
+		$info['reason'] = intval( $retval[2] );
+		$this->getResult()->addValue( null, $this->getModuleName(), $info );
 	}
 
-	public function mustBePosted() { return true; }
+	public function mustBePosted() {
+		return true;
+	}
 
 	public function isWriteMode() {
 		return true;
@@ -115,6 +114,20 @@ class ApiUndelete extends ApiBase {
 			'retrieved through list=deletedrevs'
 		);
 	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'missingparam', 'title' ),
+			array( 'permdenied-undelete' ),
+			array( 'blockedtext' ),
+			array( 'invalidtitle', 'title' ),
+			array( 'cannotundelete' ),
+		) );
+	}
+	
+	public function getTokenSalt() {
+		return '';
+	}
 
 	protected function getExamples() {
 		return array (
@@ -124,6 +137,6 @@ class ApiUndelete extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiUndelete.php 48091 2009-03-06 13:49:44Z catrope $';
+		return __CLASS__ . ': $Id: ApiUndelete.php 62599 2010-02-16 21:59:16Z reedy $';
 	}
 }

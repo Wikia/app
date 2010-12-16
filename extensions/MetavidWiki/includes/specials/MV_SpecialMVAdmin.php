@@ -7,13 +7,13 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
- * 
- * This special page for MediaWiki provides an administrative interface 
- * that allows to execute certain functions related to the maintenance 
+ *
+ * This special page for MediaWiki provides an administrative interface
+ * that allows to execute certain functions related to the maintenance
  * of the metavid database. It is restricted to users with siteadmin status.
  *
  * Updated by
@@ -31,12 +31,12 @@ class MVAdmin extends SpecialPage {
 	 * Constructor
 	 */
 	public function __construct() {
-		global $wgMessageCache; // /TODO: should these be messages?		
+		global $wgMessageCache; // /TODO: should these be messages?
 		$wgMessageCache->addMessages( array( 'mvadmin' => 'Admin functions for MetavidWiki' ) );
 		parent::__construct( 'MVAdmin', 'delete' );
 	}
 
-	public function execute( $par = null ) {
+	public function execute( $par ) {
 		global $IP, $mvgIP;
 		// require_once($IP . '/includes/SpecialPage.php' );
 		// require_once($IP . '/includes/Title.php' );
@@ -64,8 +64,8 @@ class MVAdmin extends SpecialPage {
 				ob_start();
 				print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"  \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\" dir=\"ltr\">\n<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><title>Setting up Storage for Metavid Wiki</title></head><body>";
 				header( "Content-type: text/html; charset=UTF-8" );
-				
-				// @@TODOD broken since not valid entry points for web scripts: 
+
+				// @@TODOD broken since not valid entry points for web scripts:
 				global $botUserName, $valid_attributes, $states_ary;
 				require_once( "$mvgIP/maintenance/metavid2mvWiki.inc.php" );
 				require_once( "$mvgIP/maintenance/maintenance_util.inc.php" );
@@ -88,24 +88,24 @@ class MVAdmin extends SpecialPage {
 				return;
 			}
 		}
-	
+
 		/**** Normal output ****/
-		$html = '<p>This special page helps you during installation and upgrade of 
-					<a href="http://metavid.org/wiki/index.php/MetaVidWiki">MetaVidWiki</a>. Remember to backup valuable data before 
+		$html = '<p>This special page helps you during installation and upgrade of
+					<a href="http://metavid.org/wiki/index.php/MetaVidWiki">MetaVidWiki</a>. Remember to backup valuable data before
 					executing administrative functions.</p>' . "\n";
 		// creating tables and converting contents from older versions
 		$html .= '<form name="buildtables" action="" method="POST">' . "\n" .
 				'<input type="hidden" name="action" value="updatetables" />' . "\n";
 		$html .= '<h2>Preparing database for  MetaVidWiki</h2>' . "\n" .
-				'<p>MetaVidWiki requires some minor extensions to the MediaWiki database in 
+				'<p>MetaVidWiki requires some minor extensions to the MediaWiki database in
 				order to store the video data. The below function ensures that your database is
-				set up properly. The changes made in this step do not affect the rest of the 
+				set up properly. The changes made in this step do not affect the rest of the
 				MediaWiki database, and can easily be undone if desired. This setup function
 				can be executed multiple times without doing any harm, but it is needed only once on
 				installation or upgrade.<p/>' . "\n";
-		$html .= '<p>If the operation fails with obscure SQL errors, the database user employed 
-				by your wiki (check your LocalSettings.php) probably does not have sufficient 
-				permissions. Either grant this user additional persmissions to create and delete 
+		$html .= '<p>If the operation fails with obscure SQL errors, the database user employed
+				by your wiki (check your LocalSettings.php) probably does not have sufficient
+				permissions. Either grant this user additional persmissions to create and delete
 				tables, or temporarily enter the login of your database root in LocalSettings.php.<p/>' .
 				"\n" . '<input type="hidden" name="udsure" value="yes"/>' .
 				'<input type="submit" value="Initialise or upgrade tables"/></form>' . "\n";

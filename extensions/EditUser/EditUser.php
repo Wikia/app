@@ -19,6 +19,7 @@ if(!file_exists($dir . substr($wgVersion, 0, 4) . '/EditUser_body.php')) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'EditUser',
 	'version'        => '1.5.2',
 	'author'         => 'Ryan Schmidt',
@@ -32,7 +33,7 @@ $wgExtensionAliasesFiles['EditUser'] = $dir . 'EditUser.alias.php';
 $wgAutoloadClasses['EditUser'] = $dir . substr($wgVersion, 0, 4) . '/EditUser_body.php';
 $wgSpecialPages['EditUser'] = 'EditUser';
 $wgAvailableRights[] = 'edituser';
-$wgAvaliableRights[] = 'edituser-exempt';
+$wgAvailableRights[] = 'edituser-exempt';
 $wgSpecialPageGroups['EditUser'] = 'users';
 
 #Default group permissions

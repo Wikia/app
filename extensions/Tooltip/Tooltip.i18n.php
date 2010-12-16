@@ -37,6 +37,13 @@ $messages['arz'] = array(
 	'tooltip-desc' => 'يضيف وسم <tt><nowiki><tooltip></nowiki></tt> و <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
+/** Azerbaijani (Azərbaycan)
+ * @author Wertuose
+ */
+$messages['az'] = array(
+	'tooltip-desc' => '<tt><nowiki><tooltip></nowiki></tt> və <tt><nowiki>{{#tooltip:}}</nowiki></tt> teqlərini əlavə edir',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -49,6 +56,13 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'tooltip-desc' => 'Добавя етикетите <tt><nowiki><tooltip></nowiki></tt> и <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'tooltip-desc' => 'Ouzhpennañ a ra ur valizenn <tt><nowiki><tooltip></nowiki></tt> ha <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
 /** Bosnian (Bosanski)
@@ -72,6 +86,20 @@ $messages['cs'] = array(
 	'tooltip-desc' => 'Přidává značky <tt>&lt;tooltip&gt;</tt> a <tt>{{&#35;tooltip:}}</tt>',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'tooltip-desc' => 'Yn ychwanegu tagiau <tt><nowiki><tooltip></nowiki></tt> a <tt><nowiki>{{#tooltip:}}</nowiki></tt> tag',
+);
+
+/** Danish (Dansk)
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'tooltip-desc' => 'Tilføjer taggene <tt><nowiki><tooltip></nowiki></tt> og <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  * @author Umherirrender
@@ -87,6 +115,13 @@ $messages['dsb'] = array(
 	'tooltip-desc' => 'Pśidawa toflicku <tt><nowiki><tooltip></nowiki></tt> a <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'tooltip-desc' => 'Προσθέτει τις ετικέτες <tt><nowiki><tooltip></nowiki></tt> και <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -99,6 +134,13 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'tooltip-desc' => 'Añade las etiquetas <tt><nowiki><tooltip></nowiki></tt> y <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
+/** Basque (Euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'tooltip-desc' => '<tt><nowiki><tooltip></nowiki></tt> eta <tt><nowiki>{{#tooltip:}}</nowiki></tt> etiketan gehitzen ditu',
 );
 
 /** Finnish (Suomi)
@@ -123,11 +165,25 @@ $messages['gl'] = array(
 	'tooltip-desc' => 'Engade a etiqueta <tt><nowiki><tooltip></nowiki></tt> e <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'tooltip-desc' => 'Προσθέτει τὰς πινακίδας <tt><nowiki><tooltip></nowiki></tt> καὶ <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
 /** Swiss German (Alemannisch)
  * @author Als-Holder
  */
 $messages['gsw'] = array(
 	'tooltip-desc' => 'Ergänzt d <tt><nowiki><tooltip></nowiki></tt>- un <tt><nowiki>{{#tooltip:}}</nowiki></tt>-Tag',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
+ */
+$messages['gu'] = array(
+	'tooltip-desc' => '<tt><nowiki><સાધનસૂચન></nowiki></tt> અને <tt><nowiki>{{#સાધનસૂચન:}}</nowiki></tt> ટેગ ઉમેરો',
 );
 
 /** Hebrew (עברית)
@@ -136,6 +192,13 @@ $messages['gsw'] = array(
  */
 $messages['he'] = array(
 	'tooltip-desc' => 'הוספת התגיות <tt><nowiki><tooltip></nowiki></tt> ו־<tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'tooltip-desc' => 'Nagadugang <tt><nowiki><tooltip></nowiki></tt> kag <tt><nowiki>{{#tooltip:}}</nowiki></tt> tag',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -157,6 +220,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'tooltip-desc' => 'Adde le etiquettas <tt><nowiki><tooltip></nowiki></tt> e <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'tooltip-desc' => 'Menambahkan tag <tt><nowiki><tooltip></nowiki></tt> dan <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
 /** Italian (Italiano)
@@ -202,10 +272,11 @@ $messages['lb'] = array(
 );
 
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
-	'tooltip-desc' => 'Додава <tt><nowiki><tooltip></nowiki></tt> и <tt><nowiki>{{#tooltip:}}</nowiki></tt> приврзок',
+	'tooltip-desc' => 'Додава <tt><nowiki><tooltip></nowiki></tt> и <tt><nowiki>{{#tooltip:}}</nowiki></tt> ознака',
 );
 
 /** Low German (Plattdüütsch)
@@ -251,12 +322,26 @@ $messages['oc'] = array(
 	'tooltip-desc' => 'Apond una balisa <nowiki><tooltip></nowiki> e un parser <nowiki>{{#tooltip:}}</nowiki>',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'tooltip-desc' => '<tt><nowiki><tooltip></nowiki></tt>- unn <tt><nowiki>{{#tooltip:}}</nowiki></tt>-Tags dezu duh',
+);
+
 /** Polish (Polski)
  * @author Matma Rex
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'tooltip-desc' => 'Dodaje znaczniki <tt><nowiki><tooltip></nowiki></tt> i <tt><nowiki>{{#tooltip:}}</nowiki></tt>.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'tooltip-desc' => 'A gionta ël tag <tt><nowiki><tooltip></nowiki></tt> e ël tag <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
 /** Portuguese (Português)
@@ -301,6 +386,20 @@ $messages['sq'] = array(
 	'tooltip-desc' => 'Vendosë kodet <tt><nowiki><tooltip></nowiki></tt> dhe <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'tooltip-desc' => 'Додаје <tt><nowiki><tooltip></nowiki></tt> и <tt><nowiki>{{#tooltip:}}</nowiki></tt> тагове',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'tooltip-desc' => 'Dodaje <tt><nowiki><tooltip></nowiki></tt> i <tt><nowiki>{{#tooltip:}}</nowiki></tt> tagove',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -334,6 +433,20 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'tooltip-desc' => 'Nagdaragdag ng tatak na <tt><nowiki><tooltip></nowiki></tt> at <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'tooltip-desc' => '<tt><nowiki><tooltip></nowiki></tt> ve <tt><nowiki>{{#tooltip:}}</nowiki></tt> etiketini ekler',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'tooltip-desc' => 'Додає теги <tt><nowiki><tooltip></nowiki></tt> та <tt><nowiki>{{#tooltip:}}</nowiki></tt>',
 );
 
 /** Vèneto (Vèneto)

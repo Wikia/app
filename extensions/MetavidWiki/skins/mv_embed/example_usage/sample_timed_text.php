@@ -18,7 +18,7 @@ $examples = Array();
 //set up tags for easy display:
 $roe_url = 'http://metavid.org/w/index.php?title=Special:MvExportStream&stream_name=House_proceeding_07-18-06_00&t=1:23:16/1:23:44&feed_format=roe';
 $examples[] = array(  'tag'  => '<video roe="'.$roe_url.'" ></video>',
-					  'desc' => 'Metavid based ROE file using CMML<br> <pre>' .
+					  'desc' => 'Metavid based ROE file using CMML<br /> <pre>' .
 						htmlspecialchars('<video roe="'.$roe_url.'" ></video>'). '</pre>'.
 					  	'<iframe width="600" height="250" src="'.$roe_url.'" ></iframe>'
 				);
@@ -32,7 +32,7 @@ $srt_tag = ''.
  	</text>
 </video>';
 $examples[] = array(  'tag'  => $srt_tag,
-					  'desc' => '<h4>SRT text tags with languages and categories (ogg only)</h4><br> ' .
+					  'desc' => '<h4>SRT text tags with languages and categories (ogg only)</h4><br /> ' .
 					  	'<pre>' . htmlspecialchars( $srt_tag ) . '</pre>'
 				);
 

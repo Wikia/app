@@ -1,0 +1,71 @@
+---
+BASIC:
+  id: out-osm-site
+  label: OpenStreetMap - Website
+  description: "{{int:bw-desc-osm-site}}"
+  namespace: NS_OSM
+  display: out/osm/site
+  class: FileBasedMessageGroup
+
+FILES:
+  class: RubyYamlFFS
+  sourcePattern: %GROUPROOT%/osm/site/%CODE%.yml
+  codeAsRoot: 1
+  targetPattern: %CODE%.yml
+  codeMap:
+    be-tarask: be-TARASK
+    pt-br: pt-BR
+    sr-ec: sr-EC
+    zh-cn: zh-CN
+    zh-tw: zh-TW
+
+CHECKER:
+  class: RubyMessageChecker
+  checks:
+    - RubyVariablesCheck
+
+
+AUTOLOAD:
+  RubyMessageChecker: Checker.php
+
+TAGS:
+  optional:
+    - browse.changeset_navigation.paging.all.next
+    - browse.changeset_navigation.paging.all.prev
+    - browse.changeset_navigation.paging.user.next
+    - browse.changeset_navigation.paging.user.prev
+    - browse.relation_member.entry
+    - changeset.changeset.id
+    - geocoder.search osm nominatim.prefix other
+    - geocoder.search_osm_namefinder.suffix_suburb
+    - geocoder.search_osm_nominatim.prefix_other
+    - geocoder.search_osm_twain.prefix_other
+    - html.dir
+    - javascripts.map.base.mapnik
+    - javascripts.map.base.osmarender
+    - javascripts.map.overlays.maplint
+    - layouts.intro_3_bytemark
+    - layouts.intro_3_ucl
+    - layouts.license.alt
+    - layouts.project_name.h1
+    - layouts.project_name.title
+    - printable_name.with_version
+    - site.edit.anon_edits
+    # Users may or may not want to translate the OSM wiki too
+    - layouts.help_wiki_url
+    - layouts.intro_3_partners_url
+    - layouts.shop_url
+    - notifier.gpx_notification.failure.import_failures_url
+    - notifier.signup_confirm_plain.the_wiki_url
+    - notifier.signup_confirm_plain.wiki_signup_url
+    - trace.edit.visibility_help_url
+    - trace.trace_form.help_url
+    - trace.trace_form.visibility_help_url
+    - user.account.public_editing.enabled_link
+  ignored:
+    - geocoder.search_osm_namefinder.prefix
+    - printable_name.with_id
+    - printable_name.with_name
+    - site.edit.anon_edits_link
+    - site.index.license.license_url
+    - site.index.license.project_url

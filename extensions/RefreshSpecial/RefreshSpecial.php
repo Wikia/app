@@ -4,20 +4,23 @@
  *
  * @file
  * @ingroup Extensions
+ * @version 1.2.1
  * @author Bartek Łapiński <bartek@wikia-inc.com>
- * @version 1.1
+ * @author Jack Phoenix <jack@countervandalism.net>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @link http://www.mediawiki.org/wiki/Extension:RefreshSpecial Documentation
  */
 
-if( !defined('MEDIAWIKI') )
-	die();
+if( !defined( 'MEDIAWIKI' ) ){
+	die( "This is not a valid entry point.\n" );
+}
 
 // Extension credits that will be shown on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Refresh Special',
-	'author' => 'Bartek Łapiński',
-	'version' => '1.2',
+	'author' => array( 'Bartek Łapiński', 'Jack Phoenix' ),
+	'version' => '1.2.1',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:RefreshSpecial',
 	'description' => 'Allows manual special page refresh of special pages',
 	'descriptionmsg' => 'refreshspecial-desc',

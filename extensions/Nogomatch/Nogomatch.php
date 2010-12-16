@@ -10,6 +10,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgHooks['SpecialSearchNogomatch'][] = 'wfNogomatchHook';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Nogomatch hook',
 	'author' => 'Ævar Arnfjörð Bjarmason',
 );

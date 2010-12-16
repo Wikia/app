@@ -62,7 +62,7 @@ class SpecialCountEdits extends SpecialPage {
 
 	function countEditsReal( $id, $text = false ) {
 		global $wgVersion;
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		# MediaWiki 1.9.x has a user.user_editcount column we can use,
 		# but this is not useful for older versions or anon. checks
 		if( $text === false && version_compare( $wgVersion, '1.9alpha', '>=' ) ) {
@@ -93,7 +93,7 @@ class SpecialCountEdits extends SpecialPage {
 
 	function getMostActive() {
 		global $wgUser, $wgLang;
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$rev = $dbr->tableName( 'revision' );
 		$sql  = "SELECT COUNT(*) AS count, rev_user, rev_user_text FROM $rev";
 		$groupby = "GROUP BY rev_user_text";

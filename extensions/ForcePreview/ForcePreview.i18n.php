@@ -35,9 +35,10 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
-	'forcepreview' => 'حفظ الصفحة (استخدم عرض مسبق أولا)',
+	'forcepreview' => 'احفظ الصفحة (عاين أولا)',
 	'forcepreview-desc' => 'إجبار المستخدمين غير الموثوقين على العرض المسبق',
 	'right-forcepreviewexempt' => 'يمكنه الحفظ بدون استخدام العرض المسبق',
 );
@@ -60,6 +61,41 @@ $messages['ast'] = array(
 	'right-forcepreviewexempt' => 'Poder guardar ensin amosar previsualización',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'forcepreview' => 'Seitn speichan (zeast Voaschau ãnzoang)',
+	'forcepreview-desc' => 'Voaschau fia ned privilegiade Benutza dazwinga',
+	'right-forcepreviewexempt' => 'Speichan ohne dass a Voaschau dazwunga wiad',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'forcepreview' => 'Захаваць старонку (спачатку выкарыстоўвайце папярэдні прагляд)',
+	'forcepreview-desc' => 'Вымушае выкарыстоўваць абавязковы папярэдні прагляд для звычайных удзельнікаў',
+	'right-forcepreviewexempt' => 'магчымасьць захаваньня старонак без папярэдняга прагляду',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'forcepreview' => 'পাতা সংরক্ষণ (প্রথমে প্রাকদর্শন ব্যবহার করুন)',
+	'forcepreview-desc' => 'সুবিধাবঞ্চিত ব্যবহারকারীদের জন্য জোড়পূর্বক প্রাকদর্শন',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'forcepreview' => 'Enrollañ ar bajenn (rakwelet a-raok)',
+	'forcepreview-desc' => 'Gwallañ a ra ar rakweled evit an implijerien diaotre',
+	'right-forcepreviewexempt' => "A c'hall enrollañ hep ober gant ar rakweled",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -69,6 +105,15 @@ $messages['bs'] = array(
 	'right-forcepreviewexempt' => 'Može sačuvati izmjene bez obaveznog prikaza izgleda',
 );
 
+/** Catalan (Català)
+ * @author Aleator
+ */
+$messages['ca'] = array(
+	'forcepreview' => 'Desar la pàgina (usar abans la previsualització)',
+	'forcepreview-desc' => 'Força la previsualització als usuaris sense permisos',
+	'right-forcepreviewexempt' => 'Pot desar sense utilitzar la Vista prèvia',
+);
+
 /** Czech (Česky)
  * @author Danny B.
  */
@@ -76,6 +121,15 @@ $messages['cs'] = array(
 	'forcepreview' => 'Uložit stránku (nejprve použijte náhled)',
 	'forcepreview-desc' => 'Vynucování náhledu u neprivilegovaných uživatelů',
 	'right-forcepreviewexempt' => 'Ukládání stránky bez používání náhledu',
+);
+
+/** Danish (Dansk)
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'forcepreview' => 'Gem siden (brug forhåndsvisning først)',
+	'forcepreview-desc' => 'Tvinger brugere uden privilegier til at forhåndsvise',
+	'right-forcepreviewexempt' => 'Må gemme uden at bruge forhåndsvisning',
 );
 
 /** German (Deutsch)
@@ -97,6 +151,13 @@ $messages['dsb'] = array(
 	'right-forcepreviewexempt' => 'Bźez wužywanja pśeglěda składowaś',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'forcepreview' => 'Αποθήκευση σελίδας (χρήση προεπισκόπησης πρώτα)',
+);
+
 /** Esperanto (Esperanto)
  * @author Smeira
  * @author Yekrats
@@ -114,6 +175,13 @@ $messages['es'] = array(
 	'forcepreview' => 'Grabar página (use prevista primero)',
 	'forcepreview-desc' => 'Forzar prevista para usuarios no privilegiados',
 	'right-forcepreviewexempt' => 'Puede grabar sin usar Mostrar prevista',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'forcepreview' => 'Orrialdea gorde (aurretik aurreikuspena ikusiz)',
 );
 
 /** Finnish (Suomi)
@@ -225,6 +293,16 @@ $messages['ia'] = array(
 	'forcepreview' => 'Immagazinar pagina (face primo un previsualisation)',
 	'forcepreview-desc' => 'Fortia le uso del previsualisation pro usatores non privilegiate',
 	'right-forcepreviewexempt' => 'Pote publicar sin uso de "Monstrar previsualisation"',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author IvanLanin
+ */
+$messages['id'] = array(
+	'forcepreview' => 'Simpan halaman (gunakan pratayang dulu)',
+	'forcepreview-desc' => 'Paksa pratayang untuk pengguna tanpa konfirmasi otomatis',
+	'right-forcepreviewexempt' => 'Dapat menyimpan tanpa menggunakan Lihat pratayang',
 );
 
 /** Italian (Italiano)
@@ -370,14 +448,24 @@ $messages['pl'] = array(
 	'right-forcepreviewexempt' => 'Możliwość zapisywania bez użycia „Pokaż podgląd”',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'forcepreview' => 'Salva la pàgina (fala vëdde prima)',
+	'forcepreview-desc' => "Fòrsa a fela vëdde prima për j'utent pa privilegià",
+	'right-forcepreviewexempt' => 'A peul salvé sensa dovré Fa vëdde prima',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
-	'forcepreview' => 'Gravar página (use a previsão primeiro)',
-	'forcepreview-desc' => 'Força previsão para utilizadores sem privilégios',
-	'right-forcepreviewexempt' => 'Pode salvar páginas sem mostrar a previsão antes',
+	'forcepreview' => 'Gravar página (use a antevisão primeiro)',
+	'forcepreview-desc' => 'Força antevisão para utilizadores sem privilégios',
+	'right-forcepreviewexempt' => 'Gravar páginas sem usar "Antever resultado"',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -387,6 +475,23 @@ $messages['pt-br'] = array(
 	'forcepreview' => 'Gravar página (use a previsão primeiro)',
 	'forcepreview-desc' => 'Força previsão para utilizadores sem privilégios',
 	'right-forcepreviewexempt' => 'Pode salvar páginas sem mostrar a previsão antes',
+);
+
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'forcepreview' => 'Salvează pagina (foloseşte previzualizare întâi)',
+	'forcepreview-desc' => 'Forţează previzualizare pentru utilizatori neprivilegiaţi',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'forcepreview' => "Reggistre 'a vosce (ause l'andeprime apprime)",
+	'forcepreview-desc' => "Sfuèrze l'andeprime pe l'utinde senza privilegge",
+	'right-forcepreviewexempt' => "Puè reggistrà senze ca ause ''Vide l'andeprime''",
 );
 
 /** Russian (Русский)
@@ -405,6 +510,16 @@ $messages['sk'] = array(
 	'forcepreview' => 'Uložiť stránku (najprv zobraziť náhľad)',
 	'forcepreview-desc' => 'Vynucuje náhľad u neprivilegovaných používateľov',
 	'right-forcepreviewexempt' => 'Je možné uložiť bez použitia Zobraziť náhľad',
+);
+
+/** Lower Silesian (Schläsch)
+ * @author Jonny84
+ * @author Schläsinger
+ */
+$messages['sli'] = array(
+	'forcepreview' => 'Seyte speichern (zuerst Vurschau oazeiga)',
+	'forcepreview-desc' => 'Vorschau für unprivilegierte Benutzer erzwingen',
+	'right-forcepreviewexempt' => 'Speichern ohne Erzwingung der Vorschau',
 );
 
 /** Swedish (Svenska)
@@ -431,6 +546,22 @@ $messages['tg-cyrl'] = array(
 	'forcepreview' => 'Захираи саҳифа (пешнамоишро аввал истифода баред)',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'forcepreview' => 'Zaxirai sahifa (peşnamoişro avval istifoda bared)',
+);
+
+/** Thai (ไทย)
+ * @author Harley Hartwell
+ */
+$messages['th'] = array(
+	'forcepreview' => 'บันทึก (กรุณาดูตัวอย่างก่อน)',
+	'forcepreview-desc' => 'บังคับให้ต้องดูตัวอย่างก่อนทำการแก้ไข สำหรับผู้ใช้ที่ไม่มีสิทธิ์ forcepreviewexempt',
+	'right-forcepreviewexempt' => 'สามารถเซฟหน้าได้โดยไม่ต้องกดแสดงตัวอย่างก่อน',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -438,6 +569,15 @@ $messages['tl'] = array(
 	'forcepreview' => 'Sagipin ang pahina (gamitin muna ang paunang-tingin)',
 	'forcepreview-desc' => 'Ipilit ang paunang-tingin para sa walang pribilehiyong mga tagagamit',
 	'right-forcepreviewexempt' => 'Maaaring sagipin na hindi ginagamit ang Ipakita ang paunang-tingin',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'forcepreview' => 'Sayfayı kaydet (ilk önce ön izlemeyi kullan)',
+	'forcepreview-desc' => 'Yetkisiz kullanıcılar için ön izlemeyi zorunlu kılar',
+	'right-forcepreviewexempt' => 'Ön izleme yapmadan sayfayı kaydedebilir',
 );
 
 /** Vèneto (Vèneto)

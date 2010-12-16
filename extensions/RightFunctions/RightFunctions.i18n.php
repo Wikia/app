@@ -33,6 +33,7 @@ $messages['qqq'] = array(
  */
 $messages['ar'] = array(
 	'rightfunctions-desc' => 'دوال محلل تعتمد على السماحات',
+	'rightfunctions-sep' => '،',
 	'rightfunctions-casc' => '(من مصادر مضمنة)',
 	'rightfunctions-local' => '(من صفحة محلية)',
 	'rightfunctions-ns' => '(من حماية نطاق)',
@@ -48,6 +49,15 @@ $messages['arz'] = array(
 	'rightfunctions-ns' => '(من حماية نطاق)',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'rightfunctions-casc' => '(vu ana kaskadiaradn Quöin)',
+	'rightfunctions-local' => '(vu lokale Seitn)',
+	'rightfunctions-ns' => '(vu da Nãmensraumsperrung)',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -57,6 +67,16 @@ $messages['be-tarask'] = array(
 	'rightfunctions-casc' => '(з каскаднай абароны)',
 	'rightfunctions-local' => '(з лякальнай старонкі)',
 	'rightfunctions-ns' => '(з абароны прасторы назваў)',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'rightfunctions-desc' => "Arc'hwelioù parser diazezet war aotreoù",
+	'rightfunctions-casc' => '(adalek mammennoù e sklalierad)',
+	'rightfunctions-local' => "(adalek ur bajenn lec'hel)",
+	'rightfunctions-ns' => '(adalek ar gwarez esaouennoù anv)',
 );
 
 /** Bosnian (Bosanski)
@@ -89,6 +109,17 @@ $messages['dsb'] = array(
 	'rightfunctions-ns' => '(ze šćita mjenjowego ruma)',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'rightfunctions-desc' => 'Λεξιαναλυτικές συναρτήσεις βάσει αδειών',
+	'rightfunctions-casc' => '(απο διαδοχικές πηγές)',
+	'rightfunctions-local' => '(από τοπική σελίδα)',
+	'rightfunctions-ns' => '(από την προστασία περιοχής)',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -101,9 +132,22 @@ $messages['eo'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Sanbec
  */
 $messages['es'] = array(
+	'rightfunctions-desc' => 'Funciones sintácticas basadas en permisos',
+	'rightfunctions-casc' => '(a partir de fuentes en cascada)',
 	'rightfunctions-local' => '(de página local)',
+	'rightfunctions-ns' => '(a partir de la protección del espacio de nombres)',
+);
+
+/** Finnish (Suomi)
+ * @author Str4nd
+ */
+$messages['fi'] = array(
+	'rightfunctions-desc' => 'Käyttöoikeuspohjaiset jäsenninfunktiot',
+	'rightfunctions-local' => '(paikalliselta sivulta)',
+	'rightfunctions-ns' => '(nimiavaruuden suojauksesta)',
 );
 
 /** French (Français)
@@ -129,6 +173,16 @@ $messages['gl'] = array(
 	'rightfunctions-casc' => '(desde fontes en cascada)',
 	'rightfunctions-local' => '(desde a páxina local)',
 	'rightfunctions-ns' => '(desde a protección do espazo de nomes)',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'rightfunctions-desc' => 'Erlaubnisbasierti Parser-Funktione',
+	'rightfunctions-casc' => '(vu kaskadefermige Quälle)',
+	'rightfunctions-local' => '(vu lokale Syte)',
+	'rightfunctions-ns' => '(vu Namensryymsperrige)',
 );
 
 /** Hebrew (עברית)
@@ -163,6 +217,16 @@ $messages['hsb'] = array(
 	'rightfunctions-ns' => '(ze škita mjenoweho ruma)',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'rightfunctions-desc' => 'Jogosultság-alapú elemzőfüggvények',
+	'rightfunctions-casc' => '(kaszkádolt forrásokból)',
+	'rightfunctions-local' => '(helyi lapról)',
+	'rightfunctions-ns' => '(névtérvédelemből)',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -177,11 +241,25 @@ $messages['ia'] = array(
 	'rightfunctions-ns' => '(ab le protection de spatios de nomines)',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'rightfunctions-desc' => 'Fungsi parser berdasarkan hak pengguna',
+	'rightfunctions-casc' => '(dari sumber beruntun)',
+	'rightfunctions-local' => '(dari halaman lokal)',
+	'rightfunctions-ns' => '(dari perlindungan ruang nama)',
+);
+
 /** Italian (Italiano)
+ * @author Darth Kule
  * @author Pietrodn
  */
 $messages['it'] = array(
 	'rightfunctions-desc' => 'Funzioni del parser basate sui permessi',
+	'rightfunctions-casc' => '(da fonti a cascata)',
+	'rightfunctions-local' => '(da pagina locale)',
+	'rightfunctions-ns' => '(da protezione namespace)',
 );
 
 /** Japanese (日本語)
@@ -223,6 +301,17 @@ $messages['lb'] = array(
 	'rightfunctions-ns' => '(vun der Spär vum Nummraum)',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ * @author Brest
+ */
+$messages['mk'] = array(
+	'rightfunctions-desc' => 'Парсер функции на основа на дозволи',
+	'rightfunctions-casc' => '(од каскадни извори)',
+	'rightfunctions-local' => '(од локална страница)',
+	'rightfunctions-ns' => '(од заштита на именски простор)',
+);
+
 /** Marathi (मराठी)
  * @author Kaustubh
  */
@@ -253,9 +342,13 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'rightfunctions-desc' => 'Rettighetsbaserte parserfunksjoner',
+	'rightfunctions-casc' => '(fra etterfølgende kilder)',
+	'rightfunctions-local' => '(fra lokal side)',
+	'rightfunctions-ns' => '(fra navneromsbeskyttelse)',
 );
 
 /** Occitan (Occitan)
@@ -270,9 +363,23 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
 	'rightfunctions-desc' => 'Funkcje parsera pracujące na uprawnieniach',
+	'rightfunctions-casc' => '(ze źródeł kaskadowych)',
+	'rightfunctions-local' => '(z lokalnej strony)',
+	'rightfunctions-ns' => '(z zabezpieczenia przestrzeni nazw)',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'rightfunctions-desc' => 'Funsion dël parser basà an sij përmess',
+	'rightfunctions-casc' => '(da sorziss a cascà)',
+	'rightfunctions-local' => '(da pàgina local)',
+	'rightfunctions-ns' => '(da protession namespace)',
 );
 
 /** Portuguese (Português)
@@ -295,11 +402,25 @@ $messages['pt-br'] = array(
 	'rightfunctions-ns' => '(de proteção de espaços nominais)',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'rightfunctions-desc' => 'Permesse basate sus a le funziune de analisi',
+	'rightfunctions-casc' => '(da sorgende a cascate)',
+	'rightfunctions-local' => "(da 'na pàgena locale)",
+	'rightfunctions-ns' => "(da 'nu namespace protette)",
+);
+
 /** Russian (Русский)
+ * @author Ferrer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'rightfunctions-desc' => 'Функции парсера на основе разрешений',
+	'rightfunctions-casc' => '(для каскадных источников)',
+	'rightfunctions-local' => '(для локальной страницы)',
+	'rightfunctions-ns' => '(для защиты пространства имён)',
 );
 
 /** Slovak (Slovenčina)
@@ -339,6 +460,16 @@ $messages['tl'] = array(
 	'rightfunctions-casc' => '(mula sa mga pinagmumulang baita-baitang)',
 	'rightfunctions-local' => '(mula sa pampook/lokal na pahina)',
 	'rightfunctions-ns' => '(mula sa pagsasanggalang ng espasyo ng pangalan)',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'rightfunctions-desc' => 'İzin temelli ayrıştırıcı fonksiyonlar',
+	'rightfunctions-casc' => '(kademeli kaynaklardan)',
+	'rightfunctions-local' => '(yerel sayfadan)',
+	'rightfunctions-ns' => '(isim alanı korumasından)',
 );
 
 /** Vietnamese (Tiếng Việt)

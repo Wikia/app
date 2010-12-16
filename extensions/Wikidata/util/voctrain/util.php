@@ -7,10 +7,10 @@
 class Util {
 
 	/** trim() all the strings in an array */
-	public static function array_trim($array) {
-		$trimmed=array();
-		foreach ($array as $string) {
-			$trimmed[]=trim($string);
+	public static function array_trim( $array ) {
+		$trimmed = array();
+		foreach ( $array as $string ) {
+			$trimmed[] = trim( $string );
 		}
 		return $trimmed;
 	}

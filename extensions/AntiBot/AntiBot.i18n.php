@@ -49,6 +49,13 @@ $messages['ast'] = array(
 	'antibot-desc' => "Entornu cenciellu pa les comprobaciones de bots de spam y l'activación de conteníos de descarga condicional automatizada.",
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'antibot-desc' => "Oafåchs ''Framework'' fia Spambot-Prüfungen",
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -56,11 +63,18 @@ $messages['be-tarask'] = array(
 	'antibot-desc' => 'Просты сродак абароны ад спам-робатаў і робатаў, якія выклікаюць перагрузку сэрвэра',
 );
 
+/** Bulgarian (Български)
+ * @author Stanqo
+ */
+$messages['bg'] = array(
+	'antibot-desc' => 'Инструмент за защита от спам и стартиране на скрити процеси',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
-	'antibot-desc' => "Endro gwiriañ eeun a-enep d'ar spamerioù ha d'an endalc'hadoù loc'hañ emgefre",
+	'antibot-desc' => "Endro gwiriañ eeun a-enep d'ar robotoù strobañ ha d'an endalc'hadoù loc'hañ emgefre",
 );
 
 /** Bosnian (Bosanski)
@@ -68,6 +82,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'antibot-desc' => 'Jednostavni radni okvir za provjeru spam botova',
+);
+
+/** Capiznon (Capiceño)
+ * @author Oxyzen
+ */
+$messages['cps'] = array(
+	'antibot-desc' => 'Simple nga framework para sa pag-usisa sang spambots kag kag naga-trigger payloads',
 );
 
 /** Czech (Česky)
@@ -91,11 +112,25 @@ $messages['de'] = array(
 	'antibot-desc' => 'Einfaches Framework für Spambot-Prüfungen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Xoser
+ */
+$messages['diq'] = array(
+	'antibot-desc' => 'Qe kontrolanê spambotî u payloodan rê yew çerçuveyê asanî',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
 	'antibot-desc' => 'Jadnory framework za kontrole pśeśiwo spambotam',
+);
+
+/** Greek (Ελληνικά)
+ * @author Geraki
+ */
+$messages['el'] = array(
+	'antibot-desc' => 'Απλή εφαρμογή για έλεγχο spam και ενεργοποίηση ενεργειών',
 );
 
 /** Esperanto (Esperanto)
@@ -110,6 +145,13 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'antibot-desc' => 'Entorno sencillo para las comprobaciones de bots de spam y la activación de contenidos de descarga condicional automatizada.',
+);
+
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'antibot-desc' => 'Lihtne raamistik rämpspostirobotite pidurdamiseks.',
 );
 
 /** Basque (Euskara)
@@ -161,6 +203,13 @@ $messages['gsw'] = array(
  */
 $messages['he'] = array(
 	'antibot-desc' => 'מערכת פשוטה לבדיקת בוטים של ספאם',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'antibot-desc' => 'Simple nga framework para sa spambot naga usisa kag gahatag payloads',
 );
 
 /** Croatian (Hrvatski)
@@ -219,6 +268,15 @@ $messages['jv'] = array(
 	'antibot-desc' => 'Krangka kerja prasaja kanggo mriksa spambot lan lat pamicu',
 );
 
+/** Korean (한국어)
+ * @author Klutzy
+ * @author Kwj2772
+ * @author Yknok29
+ */
+$messages['ko'] = array(
+	'antibot-desc' => '스팸봇 확인을 위한 프레임워크',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -238,6 +296,21 @@ $messages['lb'] = array(
  */
 $messages['li'] = array(
 	'antibot-desc' => 'Sumnpel framework veur controle op spambots en trigger payloads',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Homo
+ * @author Matasg
+ */
+$messages['lt'] = array(
+	'antibot-desc' => 'Nesudėtinga aplinka spamboto patikrinimams ir trigerio užkrovoms',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'antibot-desc' => 'Едноставен систем за проверување на спамботови и повлекувачки капацитети',
 );
 
 /** Malayalam (മലയാളം)
@@ -265,7 +338,14 @@ $messages['nds'] = array(
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'antibot-desc' => 'Simpel framework veur controle op spambots en trigger payload',
+	'antibot-desc' => "Eenvoudig raamwark veur 't naokieken op spambots",
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'antibot-desc' => 'साधारण भार सञ्चालन गर्ने र स्पामबोट  जाँच गर्ने फ्रेमवर्क',
 );
 
 /** Dutch (Nederlands)
@@ -318,6 +398,13 @@ $messages['pl'] = array(
 	'antibot-desc' => 'Proste mechanizmy ochrony przed spamującymi i wywołującymi przeciążenie serwera robotami',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'antibot-desc' => 'Sempiframework për verìfiche djë spambot e dij payload.',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -327,9 +414,17 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Brunoy Anastasiya Seryozhenko
+ * @author Jesielt
  */
 $messages['pt-br'] = array(
-	'antibot-desc' => 'Simples painel de controle para checagem de spambots e trigger payloads',
+	'antibot-desc' => 'Painel de controle simples para checagem de spambots e trigger payloads',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'antibot-desc' => 'Cadru simplu pentru verificări spambot şi sarcinile utile de declanşare',
 );
 
 /** Tarandíne (Tarandíne)
@@ -353,11 +448,32 @@ $messages['sah'] = array(
 	'antibot-desc' => 'Спамбуоттары тургутар уонна полезнай ноҕуруусканы холбуур судургу үнүстүрүмүөн',
 );
 
+/** Sicilian (Sicilianu)
+ * @author Melos
+ */
+$messages['scn'] = array(
+	'antibot-desc' => "Semplici framework pi li verifiche anti-spambot e l'attivazioni di specifici payload",
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'antibot-desc' => 'Jednoduchý framework na kontrolu spambotov a zachytávanie špecifických úprav',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'antibot-desc' => 'Једноставни фрејмворк за спамбот-провере и реаговање на одређене квоте активности',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'antibot-desc' => 'Jednostavni frejmvork za spambot-provere i reagovanje na određene kvote aktivnosti',
 );
 
 /** Seeltersk (Seeltersk)
@@ -388,6 +504,20 @@ $messages['te'] = array(
 	'antibot-desc' => 'స్పాంబోట్లను కనుక్కోడానికి మరియు పేలోడ్లను వదలడానికి సరళమైన ఫ్రేమువర్క్',
 );
 
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'antibot-desc' => 'ข่ายงานอย่างง่ายสำหรับตรวจสอบสแปมบอตและการยิงข้อมูล',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'antibot-desc' => 'Spambot barlaglary we trigger ýükleri üçin ýönekeý çarçuwa',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -416,6 +546,13 @@ $messages['vec'] = array(
 	'antibot-desc' => 'Un semplice framework par el controlo dei spambot e par el payload dei trigger',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'antibot-desc' => 'Järgeline avaruz spambotiden kodvdes da tarbhašt ličked ližates',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
@@ -438,10 +575,11 @@ $messages['yue'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
-	'antibot-desc' => '防垃圾机械人检查和触发的简单框架',
+	'antibot-desc' => '防止垃圾链接机器人检查并触发酬载的简单框架',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

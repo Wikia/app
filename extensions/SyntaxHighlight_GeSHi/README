@@ -4,6 +4,16 @@ for updated informations:
 
     http://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi
 
+== Requirements ==
+
+This version of the extension has been tested with GeSHi 1.0.8.6 and MediaWiki 1.16
+as of 2010-01-01. It may or may not work with earlier versions of the aforementioned
+software. To get releases of this extension compatible with earlier versions of
+MediaWiki, visit: 
+
+    http://www.mediawiki.org/wiki/Special:ExtensionDistributor/SyntaxHighlight_GeSHi
+
+
 == Installation ==
 
 If you downloaded this from MediaWiki.org, there should already be

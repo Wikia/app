@@ -34,10 +34,22 @@ class SFEditData extends SpecialPage {
 			$target_name = $queryparts[1];
 		}
 
+/*
+		global $sfgUseFormEditPage;
+		if( $sfgUseFormEditPage ) {
+			# Experimental new feature extending from the internal
+			# EditPage class
+			$article = new Article(Title::newFromText($target_name));
+			$editor = new FormEditPage( $article, $form_name );
+			$editor->submit();
+			return;
+		}
+*/
+
 		self::printEditForm($form_name, $target_name);
 	}
 
-static function printEditForm($form_name, $target_name) {
+static function printEditForm($form_name, $target_name, $content = null) {
 	global $wgOut, $wgRequest, $wgScriptPath, $sfgScriptPath, $sfgFormPrinter, $sfgYUIBase;
 
 	wfLoadExtensionMessages('SemanticForms');
@@ -75,20 +87,23 @@ static function printEditForm($form_name, $target_name) {
 		if ($wgRequest->getVal('query') == 'true') {
 			$edit_content = null;
 			$is_text_source = false;
+		} elseif ($content != null) {
+			$edit_content = $content;
+			$is_text_source = true;
 		} else {
 			$target_article = new Article($target_title);
 			$edit_content = $target_article->getContent();
 			$is_text_source = true;
 		}
 		list ($form_text, $javascript_text, $data_text, $form_page_title) =
-			$sfgFormPrinter->formHTML($form_definition, $form_submitted, $is_text_source, $edit_content, $page_title);
+			$sfgFormPrinter->formHTML($form_definition, $form_article->getID(), $form_submitted, $is_text_source, $edit_content, $page_title);
 		if ($form_submitted) {
 			$wgOut->setArticleBodyOnly( true );
 			$text = SFUtils::printRedirectForm($target_title, $data_text, $wgRequest->getVal('wpSummary'), $save_page, $preview_page, $diff_page, $wgRequest->getCheck('wpMinoredit'), $wgRequest->getCheck('wpWatchthis'), $wgRequest->getVal('wpStarttime'), $wgRequest->getVal('wpEdittime'));
 		} else {
 			// override the default title for this page if
 			// a title was specified in the form
-			if ($form_page_title != NULL) {
+			if ($form_page_title != null) {
 				$wgOut->setPageTitle("$form_page_title: {$target_title->getPrefixedText()}");
 			}
 			$text =<<<END

@@ -32,32 +32,15 @@ $smwgScriptVersion = $wgStyleVersion;
 ###
 # This is the path to your installation of Semantic MediaWiki as seen on your
 # local filesystem. Used against some PHP file path issues.
+# If needed, you can also change this path in LocalSettings.php after including
+# this file.
 ##
-$smwgIP = $IP . '/extensions/SemanticMediaWiki';
+$smwgIP = dirname(__FILE__) . '/..';
+// $smwgIP = $IP . '/extensions/SemanticMediaWiki';
 ##
 
 // load global functions
 require_once('SMW_GlobalFunctions.php');
-
-###
-# SMW has changed a lot since version 0.1 and some additional settings are
-# needed to preserve old functions on sites that have been using beta versions
-# of SMW (any version prior to 1.0). Sites still using obsolete SMW beta
-# features should set the following to "true". All others can safely keep the
-# default here.
-#
-# Setting this option to true has the following effect:
-# * The obsolete namespace "Relation" will still be created (maybe some sites
-#   have content there).
-# * Statements like [[property::*]] in queries will be interpreted as printout
-#   statements (like ?property in the current #ask query syntax).
-# This option must be set before including this file, or otherwise the old
-# Relation namespaces will not be available.
-##
-if (!isset($smwgSMWBetaCompatible)) {
-	$smwgSMWBetaCompatible = false;
-}
-##
 
 ###
 # If you already have custom namespaces on your site, insert
@@ -103,6 +86,27 @@ $smwgInlineErrors = isset( $smwgInlineErrors ) ? $smwgInlineErrors : true;
 ##
 
 ###
+# Should SMW consider MediaWiki's subcategory hierarchy in querying? If set to
+# true, subcategories will always be interpreted like subclasses. For example,
+# if A is a subcategory of B then a query for all elements of B will also yield
+# all elements of A. If this setting is disabled, then subclass relationships
+# can still be given explicitly by using the property "subcategory of" on some
+# category page. Only if the setting is false will such annotations be shown in
+# the factbox (if enabled).
+##
+$smwgUseCategoryHierarchy = true;
+##
+
+###
+# Should category pages that use some [[Category:Foo]] statement be treated as
+# elements of the category Foo? If disabled, then it is not possible to make
+# category pages elements of other catgories. See also the above setting
+# $smwgUseCategoryHierarchy.
+##
+$smwgCategoriesAsInstances = true;
+##
+
+###
 # Should SMW accept inputs like [[property::Some [[link]] in value]]? If
 # enabled, this may lead to PHP crashes (!) when very long texts are used as
 # values. This is due to limitations in the library PCRE that PHP uses for
@@ -115,27 +119,39 @@ $smwgLinksInValues = false;
 ##
 
 ###
+# Settings for recurring events, created with the #set_recurring_event parser
+# function: the default number of instances defined, if no end date is set;
+# and the maximum number that can be defined, regardless of end date.
+##
+$smwgDefaultNumRecurringEvents = 100;
+$smwgMaxNumRecurringEvents = 500;
+##
+
+###
 # Should the browse view for incoming links show the incoming links via its
 # inverses, or shall they be displayed on the other side?
 ##
 $smwgBrowseShowInverse = false;
+##
 
 ###
 # Should the browse view always show the incoming links as well, and more of
 # the incoming values?
 ##
 $smwgBrowseShowAll = true;
+##
 
 ###
-# Should the search by property special page dipslay nearby results when there
-# are only few results with the exact value? Switch this off if this page has
+# Should the search by property special page display nearby results when there
+# are only a few results with the exact value? Switch this off if this page has
 # performance problems.
 ##
 $smwgSearchByPropertyFuzzy = true;
 
 ###
 # Number results shown in the listings on pages in the namespaces Property,
-# Type, and Concept.
+# Type, and Concept. If a value of 0 is given, the respective listings are
+# hidden completely.
 ##
 $smwgTypePagingLimit = 200;    // same number as for categories
 $smwgConceptPagingLimit = 200; // same number as for categories
@@ -143,13 +159,21 @@ $smwgPropertyPagingLimit = 25; // use smaller value since property lists need mo
 ##
 
 ###
+# How many values should at most be displayed for a page on the Property page?
+##
+$smwgMaxPropertyValues = 3; // if large values are desired, consider reducing $smwgPropertyPagingLimit for better performance
+##
+
+###
 # Settings for inline queries ({{#ask:...}}) and for semantic queries in
-# general. This can especially  be used to prevent overly high server-load by
-# complex queries. The following settings affect all queries, wherever they
+# general. This can especially be used to prevent overly high server-load due
+# to complex queries. The following settings affect all queries, wherever they
 # occur.
 ##
 $smwgQEnabled = true;   // (De)activates all query related features and interfaces
 $smwgQMaxLimit = isset($smwgQMaxLimit) ? $smwgQMaxLimit : 10000; // Max number of results ever retrieved, even when using special query pages.
+$smwgIgnoreQueryErrors = true; // Should queries be executed even if some errors were detected?
+                               // A hint that points out errors is shown in any case.
 
 $smwgQSubcategoryDepth = isset($smwgQSubcategoryDepth) ? $smwgQSubcategoryDepth : 10;  // Restrict level of sub-category inclusion (steps within category hierarchy)
 $smwgQSubpropertyDepth = 10;  // Restrict level of sub-property inclusion (steps within property hierarchy)
@@ -158,15 +182,15 @@ $smwgQEqualitySupport = SMW_EQ_SOME; // Evaluate #redirects as equality between 
                                      // performance-relevant restrictions depending on the storage engine
   //$smwgQEqualitySupport = SMW_EQ_FULL; // Evaluate #redirects as equality between page names in all cases
   //$smwgQEqualitySupport = SMW_EQ_NONE; // Never evaluate #redirects as equality between page names
-$smwgQSortingSupport    = true; // (De)activate sorting of results.
+$smwgQSortingSupport     = true; // (De)activate sorting of results.
 $smwgQRandSortingSupport = true; // (De)activate random sorting of results.
-$smwgQDefaultNamespaces = NULL; // Which namespaces should be searched by default?
+$smwgQDefaultNamespaces = null; // Which namespaces should be searched by default?
                                 // (value NULL switches off default restrictions on searching -- this is faster)
                                 // Example with namespaces: $smwgQDefaultNamespaces = array(NS_MAIN, NS_IMAGE);
-$smwgQComparators = '<|>|!'; // List of comparator characters supported by queries, separated by '|'
-                             // Available entries: < (smaller than), < (greater than), ! (unequal to),
-                             //                    ~ (pattern with '*' as wildcard, only for Type:String)
-                             // If unsupported comparators are used, they are treated as part of the queried value
+$smwgQComparators = '<|>|!|~';  // List of comparator characters supported by queries, separated by '|'
+                                // Available entries: < (smaller than), < (greater than), ! (unequal to),
+                                //                    ~ (pattern with '*' as wildcard, only for Type:String)
+                                // If unsupported comparators are used, they are treated as part of the queried value
 
 ###
 # Further settings for queries. The following settings affect inline queries
@@ -237,13 +261,36 @@ $smwgResultFormats = array(
 	'ol'         => 'SMWListResultPrinter',
 	'ul'         => 'SMWListResultPrinter',
 	'broadtable' => 'SMWTableResultPrinter',
+	'category'   => 'SMWCategoryResultPrinter',
 	'embedded'   => 'SMWEmbeddedResultPrinter',
-	'template'   => 'SMWTemplateResultPrinter',
+	'template'   => 'SMWListResultPrinter',
 	'count'      => 'SMWListResultPrinter',
 	'debug'      => 'SMWListResultPrinter',
 	'rss'        => 'SMWRSSResultPrinter',
 	'csv'        => 'SMWCsvResultPrinter',
 	'json'       => 'SMWJSONResultPrinter'
+);
+##
+
+### Predefined aliases for result formats
+# Array of available aliases for result formats. Can be redefined in
+# the settings to disallow certain aliases or to register extension aliases.
+# To disable an alias, do "unset($smwgResultAliases['alias']);" Disabled
+# aliases will be treated like if the alias parameter had been omitted.
+##
+$smwgResultAliases = array();
+##
+
+### Predefined sources for queries
+# Array of available sources for answering queries. Can be redefined in
+# the settings to register new sources (usually an extension will do so
+# on installation). Unknown source will be rerouted to the local wiki.
+# Note that the basic installation comes with no additional source besides
+# the local source (which in turn cannot be disabled or set explicitly).
+# Set a new store like this: $smwgQuerySources['freebase'] = "SMWFreebaseStore";
+##
+$smwgQuerySources = array(
+//	'local'      => '',
 );
 ##
 
@@ -277,6 +324,14 @@ $smwgOWLFullExport = false; // decides, if the RDF export will export, by defaul
 // to something nice and adapt your Apache configuration appropriately. This is
 // done, e.g., on semanticweb.org, where URIs are of the form
 // http://semanticweb.org/id/FOAF
+##
+
+###
+# The maximal number that SMW will normally display without using scientific exp
+# notation. The deafult is rather large since some users have problems understanding
+# exponents. Scineitfic applications may prefer a smaller value for concise display.
+##
+$smwgMaxNonExpNumber = 1000000000000000;
 ##
 
 ###

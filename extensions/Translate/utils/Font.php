@@ -44,7 +44,7 @@ class FCFontFinder {
 
 		# trim spaces
 		$files = array_map( 'trim', explode( "\n",  $candidates ) );
-		$count = count($files);
+		$count = count( $files );
 		if ( !$count ) wfDebugLog( 'fcfont', "fc-list got zero canditates: $candidates" );
 
 		# remove the trailing ":"

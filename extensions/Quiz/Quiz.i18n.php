@@ -77,21 +77,13 @@ $2 = Perfect score",
 	'quiz_reset' => '{{Identical|Reset}}',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
-	'quiz_colorRight' => 'Oikti',
-	'quiz_colorWrong' => 'Värin',
-	'quiz_colorNA' => 'Ei ole vastust',
-	'quiz_colorError' => 'Sintaksine petuz',
-	'quiz_correction' => 'Oigeta',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
+	'quiz_desc' => 'Maak dit moontlik om toetse te skep.',
+	'quiz_addedPoints' => "{{PLURAL:$1|Punt|Punte}} bygevoeg vir 'n korrekte antwoord",
+	'quiz_cutoffPoints' => "{{PLURAL:$1|Punt|Punte}} afgetrek vir 'n verkeerde antwoord",
 	'quiz_shuffle' => 'Skommel vrae',
 	'quiz_colorRight' => 'Reg',
 	'quiz_colorWrong' => 'Verkeerd',
@@ -125,11 +117,12 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Alnokta
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'quiz_desc' => 'يسمح بإنشاء اختبارات',
-	'quiz_addedPoints' => '{{PLURAL:$1|نقطة|نقطة}} مضافة للإجابة الصحيحة',
-	'quiz_cutoffPoints' => '{{PLURAL:$1|نقطة|نقطة}} تخصم للإجابة الخاطئة',
+	'quiz_addedPoints' => 'أضيفت {{PLURAL:$1||نقطة|نقطتان|نقاط}} مقابل الإجابة الصحيحة',
+	'quiz_cutoffPoints' => 'خصمت {{PLURAL:$1||نقطة|نقطتان|نقطاط}} مقابل الإجابة الخاطئة',
 	'quiz_ignoreCoef' => 'تجاهل معاملات الأسئلة',
 	'quiz_shuffle' => 'أسئلة مختلطة',
 	'quiz_colorRight' => 'صواب',
@@ -138,7 +131,7 @@ $messages['ar'] = array(
 	'quiz_colorError' => 'خطأ صياغة',
 	'quiz_correction' => 'تنفيذ',
 	'quiz_score' => 'نتيجتك هي $1 / $2',
-	'quiz_points' => '$1 | {{PLURAL:$2|1 نقطة|$2 نقطة}}',
+	'quiz_points' => '$1 | {{PLURAL:$2||نقطة واحدة|نقطتان|$2 نقاط|$2 نقطة}}',
 	'quiz_reset' => 'إعادة ضبط',
 );
 
@@ -292,7 +285,7 @@ $messages['br'] = array(
 	'quiz_correction' => 'Kas',
 	'quiz_score' => 'Ho skor zo par da $1 / $2',
 	'quiz_points' => '$1 | {{PLURAL:$2|1 poent|$2 poent}}',
-	'quiz_reset' => 'Adweredekaat',
+	'quiz_reset' => 'Adderaouekaat',
 );
 
 /** Bosnian (Bosanski)
@@ -355,15 +348,18 @@ $messages['cs'] = array(
 );
 
 /** Danish (Dansk)
+ * @author Byrial
  * @author Jon Harald Søby
  */
 $messages['da'] = array(
+	'quiz_desc' => 'Tillader oprettelse af quizzer',
+	'quiz_addedPoints' => '{{PLURAL:$1|Point|point}} for korrekt svar',
 	'quiz_colorRight' => 'Ret',
 	'quiz_colorWrong' => 'Fejl',
 	'quiz_colorNA' => 'Ikke svared',
 	'quiz_colorError' => 'syntaksfejl',
 	'quiz_correction' => 'Send',
-	'quiz_points' => '$1 | $2 poeng',
+	'quiz_points' => '$1 | $2 {{PLURAL:$2|point|point}}',
 );
 
 /** German (Deutsch)
@@ -383,6 +379,25 @@ $messages['de'] = array(
 	'quiz_score' => 'Punkte: $1 / $2',
 	'quiz_points' => '$1 | {{PLURAL:$2|1 Punkt|$2 Punkte}}',
 	'quiz_reset' => 'Neustart',
+);
+
+/** Zazaki (Zazaki)
+ * @author Aspar
+ */
+$messages['diq'] = array(
+	'quiz_desc' => 'desturê vıraştışê quizi dano',
+	'quiz_addedPoints' => '{{PLURAL:$1|Puan|Puan}} qey cewabo raşt diyayo.',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|Puan|Puan}} qey cewabo şaş',
+	'quiz_ignoreCoef' => 'Soruların katsayısını ihmal et',
+	'quiz_shuffle' => 'persan têmiyan ker.',
+	'quiz_colorRight' => 'raşt',
+	'quiz_colorWrong' => 'şaş',
+	'quiz_colorNA' => 'cewab cı nêdiya',
+	'quiz_colorError' => 'xetaya sebtaksi',
+	'quiz_correction' => 'bışaw',
+	'quiz_score' => 'Skorê şıma $1 / $2',
+	'quiz_points' => '$1 | {{PLURAL:$2|1 puan|$2 puan}}',
+	'quiz_reset' => 'sıfır ker/reset ker',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -464,7 +479,22 @@ $messages['es'] = array(
 	'quiz_reset' => 'Empezar de nuevo',
 );
 
+/** Estonian (Eesti)
+ * @author Avjoska
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'quiz_desc' => 'Võimaldab küsitlusi korraldada.',
+	'quiz_colorRight' => 'Õige',
+	'quiz_colorWrong' => 'Vale',
+	'quiz_colorNA' => 'Vastamata',
+	'quiz_colorError' => 'Süntaksiviga',
+	'quiz_correction' => 'Saada',
+	'quiz_score' => 'Punktid: $1 / $2',
+);
+
 /** Basque (Euskara)
+ * @author An13sa
  * @author Kobazulo
  */
 $messages['eu'] = array(
@@ -475,6 +505,7 @@ $messages['eu'] = array(
 	'quiz_colorError' => 'Sintaxi-errorea',
 	'quiz_correction' => 'Bidali',
 	'quiz_score' => 'Zure kalifikazioa $1 / $2 da',
+	'quiz_points' => '$1 | {{PLURAL:$2|puntu 1|$2 puntu}}',
 	'quiz_reset' => 'Berrezarri',
 );
 
@@ -547,10 +578,10 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
-	'quiz_desc' => 'Pèrmèt la crèacion des quiz.',
-	'quiz_addedPoints' => 'Pouent(s) apondu(s) por una rèponsa justa',
-	'quiz_cutoffPoints' => 'Pouent(s) enlevâ(s) por una rèponsa fôssa',
-	'quiz_ignoreCoef' => 'Ignorar los coèficients de les quèstions',
+	'quiz_desc' => 'Pèrmèt la crèacion des quèstionèros.',
+	'quiz_addedPoints' => '{{PLURAL:$1|Pouent apondu|Pouents apondus}} por una rèponsa justa',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|Pouent enlevâ|Pouents enlevâs}} por una rèponsa fôssa',
+	'quiz_ignoreCoef' => 'Ignorar los factors de les quèstions',
 	'quiz_shuffle' => 'Mècllar les quèstions',
 	'quiz_colorRight' => 'Justo',
 	'quiz_colorWrong' => 'Fôx',
@@ -558,7 +589,7 @@ $messages['frp'] = array(
 	'quiz_colorError' => 'Èrror de sintaxa',
 	'quiz_correction' => 'Corrèccion',
 	'quiz_score' => 'Voutra mârca est $1 / $2',
-	'quiz_points' => '$1 | $2 pouent(s)',
+	'quiz_points' => '$1 | $2 pouent{{PLURAL:$2||s}}',
 	'quiz_reset' => 'Tornar inicialisar',
 );
 
@@ -591,10 +622,12 @@ $messages['gl'] = array(
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
  * @author Omnipaedista
  */
 $messages['grc'] = array(
 	'quiz_correction' => 'Ὑποβάλλειν',
+	'quiz_reset' => 'Ἀνατιθέναι',
 );
 
 /** Swiss German (Alemannisch)
@@ -720,8 +753,8 @@ $messages['ht'] = array(
  */
 $messages['hu'] = array(
 	'quiz_desc' => 'Lehetővé teszi kvízkérdések létrehozását',
-	'quiz_addedPoints' => 'Pont hozzáadva a helyes válaszért.',
-	'quiz_cutoffPoints' => 'Pont levonva a rossz válaszért.',
+	'quiz_addedPoints' => 'Helyesen válaszoltál, így {{PLURAL:$1|pontot|pontokat}} szereztél',
+	'quiz_cutoffPoints' => 'Hibásan válaszoltál, így {{PLURAL:$1|pont lett|pontok lettek}} levonva',
 	'quiz_ignoreCoef' => 'Ne vegye figyelembe a kérdések együtthatóit',
 	'quiz_shuffle' => 'Kérdések összekeverése',
 	'quiz_colorRight' => 'Jó',
@@ -750,10 +783,11 @@ $messages['ia'] = array(
 	'quiz_correction' => 'Submitter',
 	'quiz_score' => 'Punctos: $1 / $2',
 	'quiz_points' => '$1 | {{PLURAL:$2|1 puncto|$2 punctos}}',
-	'quiz_reset' => 'Reinitiar',
+	'quiz_reset' => 'Reinitialisar',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
  * @author IvanLanin
  * @author Rex
@@ -768,10 +802,23 @@ $messages['id'] = array(
 	'quiz_colorWrong' => 'Salah',
 	'quiz_colorNA' => 'Tak dijawab',
 	'quiz_colorError' => 'Kesalahan sintaks',
-	'quiz_correction' => 'Koreksi',
+	'quiz_correction' => 'Kirim',
 	'quiz_score' => 'Skor Anda adalah $1 / $2',
 	'quiz_points' => '$1 | {{PLURAL:$2|1 poin|$2 poin}}',
-	'quiz_reset' => 'Tataulang',
+	'quiz_reset' => 'Reset',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'quiz_desc' => 'Në nyé uzor I ké nlele akwúkwuó',
+	'quiz_colorRight' => 'Ézíbóté',
+	'quiz_colorWrong' => 'Í dạrạ ya',
+	'quiz_colorNA' => 'O saghị',
+	'quiz_correction' => 'Nyefwuör',
+	'quiz_score' => 'Owu gi bu $1 / $2',
+	'quiz_reset' => 'Kuwaria',
 );
 
 /** Ido (Ido)
@@ -828,8 +875,8 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'quiz_desc' => 'クイズの作成を可能にする',
-	'quiz_addedPoints' => '正解により$1点追加',
-	'quiz_cutoffPoints' => '不正解に$1点追加',
+	'quiz_addedPoints' => '正解により$1{{PLURAL:$1|点}}追加',
+	'quiz_cutoffPoints' => '不正解に$1{{PLURAL:$1|点}}',
 	'quiz_ignoreCoef' => '問題ごとの倍率を無視する',
 	'quiz_shuffle' => '問題をシャッフル',
 	'quiz_colorRight' => '正解',
@@ -837,8 +884,8 @@ $messages['ja'] = array(
 	'quiz_colorNA' => '無回答',
 	'quiz_colorError' => '構文エラー',
 	'quiz_correction' => '採点',
-	'quiz_score' => '得点：$1点（$2点満点）',
-	'quiz_points' => '$1 | $2点',
+	'quiz_score' => '得点：$1点($2点満点)',
+	'quiz_points' => '$1 | $2{{PLURAL:$2|点}}',
 	'quiz_reset' => 'リセット',
 );
 
@@ -882,11 +929,15 @@ $messages['jv'] = array(
 );
 
 /** Georgian (ქართული)
+ * @author BRUTE
  * @author Malafaya
  */
 $messages['ka'] = array(
 	'quiz_colorRight' => 'სწორი',
 	'quiz_colorWrong' => 'არასწორი',
+	'quiz_colorNA' => 'პასუხი არ არის',
+	'quiz_colorError' => 'სინტაქსური შეცდომა',
+	'quiz_correction' => 'გაგზავნა',
 	'quiz_points' => '$1 | $2 ქულა',
 );
 
@@ -912,13 +963,25 @@ $messages['km'] = array(
 	'quiz_reset' => 'ធ្វើឱ្យដូចដើមវិញ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'quiz_colorRight' => 'ಸರಿ',
+	'quiz_colorWrong' => 'ತಪ್ಪು',
+);
+
 /** Korean (한국어)
  * @author Ilovesabbath
  * @author Kwj2772
+ * @author ToePeu
+ * @author Yknok29
  */
 $messages['ko'] = array(
-	'quiz_desc' => '퀴즈 생성을 허용',
+	'quiz_desc' => '퀴즈를 만들 수 있도록 해줍니다',
 	'quiz_addedPoints' => '$1점이 정답으로 추가되었습니다.',
+	'quiz_cutoffPoints' => '틀린 답마다 $1점 감점',
+	'quiz_ignoreCoef' => '문제의 배점 무시',
 	'quiz_shuffle' => '문제 섞기',
 	'quiz_colorRight' => '정답',
 	'quiz_colorWrong' => '오답',
@@ -969,6 +1032,7 @@ $messages['lb'] = array(
 );
 
 /** Limburgish (Limburgs)
+ * @author Aelske
  * @author Matthias
  * @author Ooswesthoesbes
  */
@@ -979,7 +1043,7 @@ $messages['li'] = array(
 	'quiz_ignoreCoef' => 'De coëfficiente van de vräög negere',
 	'quiz_shuffle' => 'De vräög in willekäörige volgorde',
 	'quiz_colorRight' => 'Ramkrèk',
-	'quiz_colorWrong' => 'Ónkrèk',
+	'quiz_colorWrong' => 'Verkièrd',
 	'quiz_colorNA' => 'Neet beantjwaord',
 	'quiz_colorError' => 'Algemeine fout',
 	'quiz_correction' => 'Verbaetering',
@@ -992,8 +1056,9 @@ $messages['li'] = array(
  * @author Matasg
  */
 $messages['lt'] = array(
-	'quiz_addedPoints' => 'Taškai pridėti už teisingą atsakymą',
-	'quiz_cutoffPoints' => 'Taškai atimti už blogą atsakymą',
+	'quiz_desc' => 'Leidžia kurti klausimynus',
+	'quiz_addedPoints' => '{{PLURAL:$1|Taškas|Taškai}} {{PLURAL:$1|pridėtas|pridėti}} už teisingą atsakymą',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|Taškas|Taškai}} {{PLURAL:$1|atimtas|atimti}} už neteisingą atsakymą',
 	'quiz_ignoreCoef' => 'Nepaisyti klausimų koeficientų',
 	'quiz_shuffle' => 'Maišyti klausimus',
 	'quiz_colorRight' => 'Teisingai',
@@ -1002,34 +1067,59 @@ $messages['lt'] = array(
 	'quiz_colorError' => 'Sintaksės klaida',
 	'quiz_correction' => 'Pateikti',
 	'quiz_score' => 'Jūsų surinkti taškai yra $1 iš $2',
-	'quiz_points' => '$1 | $2 taškas(ai)',
+	'quiz_points' => '$1 | {{PLURAL:$2|1 taškas|$2 taškai}}',
 	'quiz_reset' => 'Valyti',
 );
 
 /** Latvian (Latviešu)
+ * @author Dark Eagle
  * @author Xil
+ * @author Yyy
  */
 $messages['lv'] = array(
-	'quiz_addedPoints' => 'Punkti par pareizu atbildi',
-	'quiz_cutoffPoints' => 'Punkti, kas tiek atņemti par nepareizu atbildi',
+	'quiz_desc' => 'Ļauj veidot anketas',
+	'quiz_addedPoints' => '{{PLURAL:$1|Punkts|Punkti}} par pareizu atbildi',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|Punkts|Punkti}}, kas tiek atņemti par nepareizu atbildi',
 	'quiz_ignoreCoef' => 'Neņemt vērā jautājumu koeficientus',
 	'quiz_shuffle' => 'Sajaukt jautājumus',
 	'quiz_colorRight' => 'Pareizi',
 	'quiz_colorWrong' => 'Nepareizi',
 	'quiz_colorNA' => 'Nav atbildēts',
 	'quiz_colorError' => 'Sintakses kļūda',
+	'quiz_correction' => 'Sūtīt',
 	'quiz_score' => 'Tavs rezultāts ir $1 / $2',
 	'quiz_points' => '$1 | {{PLURAL:$2|1 punkts|$2 punkti}}',
+	'quiz_reset' => 'Notīrīt',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'quiz_desc' => 'Овозможува создавање на квизови',
+	'quiz_addedPoints' => 'добивате {{PLURAL:$1|поен|поени}} за точен одговор',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|поен|поени}} за погрешен одговор',
+	'quiz_ignoreCoef' => 'Занемари ги коефициентите на прашањата',
+	'quiz_shuffle' => 'Измешај ги прашањата',
+	'quiz_colorRight' => 'Точно',
+	'quiz_colorWrong' => 'Погрешно',
+	'quiz_colorNA' => 'Неодговорено',
+	'quiz_colorError' => 'синтаксна грешка',
+	'quiz_correction' => 'Внеси',
+	'quiz_score' => 'Вашето бодовно салдо изнесува $1 / $2',
+	'quiz_points' => '$1 | {{PLURAL:$2|1 поен|$2 поени}}',
+	'quiz_reset' => 'Врати одново',
 );
 
 /** Malayalam (മലയാളം)
  * @author Jacob.jose
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'quiz_desc' => 'ക്വിസുകള്‍ സൃഷ്ടിക്കാന്‍ സഹായിക്കുന്നു',
-	'quiz_addedPoints' => 'ശരിയുത്തരത്തിനു പോയിന്റ് ചേര്‍ത്തു',
-	'quiz_cutoffPoints' => 'തെറ്റായ ഉത്തരത്തിനു പോയിന്റ് കുറച്ചു',
+	'quiz_addedPoints' => 'ശരിയുത്തരത്തിനു {{PLURAL:$1|പോയിന്റ്|പോയിന്റുകൾ}} ചേര്‍ത്തു',
+	'quiz_cutoffPoints' => 'തെറ്റായ ഉത്തരത്തിനു {{PLURAL:$1|പോയിന്റ്|പോയിന്റുകൾ}} കുറച്ചു',
 	'quiz_shuffle' => 'ചോദ്യങ്ങള്‍ കശക്കുക',
 	'quiz_colorRight' => 'ശരി',
 	'quiz_colorWrong' => 'തെറ്റ്',
@@ -1037,7 +1127,7 @@ $messages['ml'] = array(
 	'quiz_colorError' => 'സിന്റാക്സ് പിഴവ്',
 	'quiz_correction' => 'സമര്‍പ്പിക്കുക',
 	'quiz_score' => 'താങ്കളുടെ സ്കോര്‍ $1/$2',
-	'quiz_points' => '$1|$2 പോയിന്റ്',
+	'quiz_points' => '$1|{{PLURAL:$2|ഒരു പോയിന്റ്|$2 പോയിന്റുകൾ}}',
 	'quiz_reset' => 'പുനഃക്രമീകരിക്കുക',
 );
 
@@ -1080,9 +1170,11 @@ $messages['ms'] = array(
 );
 
 /** Maltese (Malti)
+ * @author Chrisportelli
  * @author Roderick Mallia
  */
 $messages['mt'] = array(
+	'quiz_score' => "L-iskor tiegħek hu ta' $1 / $2",
 	'quiz_reset' => 'Irrisettja',
 );
 
@@ -1167,8 +1259,8 @@ $messages['nn'] = array(
  */
 $messages['no'] = array(
 	'quiz_desc' => 'Tillater oppretting av quizer',
-	'quiz_addedPoints' => 'Plusspoeng for korrekt svar',
-	'quiz_cutoffPoints' => 'Minuspoeng for galt svar',
+	'quiz_addedPoints' => '{{PLURAL:$1|Plusspoeng}} for korrekt svar',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|Minuspoeng}} for galt svar',
 	'quiz_ignoreCoef' => 'Ignorer spørsmålets verdier',
 	'quiz_shuffle' => 'Stokk spørsmålene',
 	'quiz_colorRight' => 'Riktig',
@@ -1231,10 +1323,12 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
-	'quiz_addedPoints' => "Pont da dé për n'aspòsta giusta",
-	'quiz_cutoffPoints' => "Pont da gavé për n'aspòsta nen giusta",
+	'quiz_desc' => 'A përmëtt la creassion ëd quiz',
+	'quiz_addedPoints' => "{{PLURAL:$1|Pont|Pont}} da dé për n'aspòsta giusta",
+	'quiz_cutoffPoints' => "{{PLURAL:$1|Pont|Pont}} da gavé për n'aspòsta pa giusta",
 	'quiz_ignoreCoef' => 'Pa dovré ij coeficent dle domande',
 	'quiz_shuffle' => 'Mës-cé le domande',
 	'quiz_colorRight' => 'Giust',
@@ -1243,7 +1337,7 @@ $messages['pms'] = array(
 	'quiz_colorError' => 'Eror ëd sintassi',
 	'quiz_correction' => 'Manda',
 	'quiz_score' => "A l'ha pijait $1 pont ansima a $2",
-	'quiz_points' => '$1 | $2 pont',
+	'quiz_points' => '$1 | {{PLURAL:$2|1 pont|$2 pont}}',
 	'quiz_reset' => 'Aseré',
 );
 
@@ -1340,8 +1434,19 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'quiz_desc' => 'Permette de ccrejà le quiz',
+	'quiz_addedPoints' => "{{PLURAL:$1|Punde|Punde}} aggiunde pe 'na resposta corrette",
+	'quiz_cutoffPoints' => "{{PLURAL:$1|Punde|Punde}} pe 'na resposta sbagliate",
+	'quiz_ignoreCoef' => 'No scè penzanne a le coefficiende de le domande',
+	'quiz_shuffle' => 'Miscke le domande',
 	'quiz_colorRight' => 'Esatte',
 	'quiz_colorWrong' => 'Sbagliete',
+	'quiz_colorNA' => 'Nò resposte',
+	'quiz_colorError' => 'Errore de sindasse',
+	'quiz_correction' => 'Conferme',
+	'quiz_score' => "'U pundegge tue ète $1 / $2",
+	'quiz_points' => '$1 | {{PLURAL:$2|1 punde|$2 punde}}',
+	'quiz_reset' => 'Azzera',
 );
 
 /** Russian (Русский)
@@ -1370,8 +1475,8 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'quiz_desc' => 'Вопросниктары оҥорор кыаҕы биэрэр',
-	'quiz_addedPoints' => 'Очкуо сөп эппиэт иһин эбилиннэ',
-	'quiz_cutoffPoints' => 'Очкуо сыыһа эппиэт иһин көҕүрэтилиннэ',
+	'quiz_addedPoints' => '$1 очкуо сөп эппиэт иһин эбилиннэ',
+	'quiz_cutoffPoints' => '$1 очкуо сыыһа эппиэт иһин көҕүрэтилиннэ',
 	'quiz_ignoreCoef' => 'Ыйытыылар коэффициеннарын аахсыма',
 	'quiz_shuffle' => 'Ыйытыылары булкуй',
 	'quiz_colorRight' => 'Сөп',
@@ -1382,6 +1487,13 @@ $messages['sah'] = array(
 	'quiz_score' => '$2 очкуоттан $1 очкуону ыллыҥ',
 	'quiz_points' => '$1 | {{PLURAL:$2|1 очкуо|$2 очкуо}}',
 	'quiz_reset' => 'Саҥаттан',
+);
+
+/** Serbo-Croatian (Srpskohrvatski / Српскохрватски)
+ * @author OC Ripper
+ */
+$messages['sh'] = array(
+	'quiz_correction' => 'Unesi',
 );
 
 /** Slovak (Slovenčina)
@@ -1416,7 +1528,7 @@ $messages['sq'] = array(
 	'quiz_correction' => 'Dërgo',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Millosh
  * @author Sasa Stefanovic
  */
@@ -1434,6 +1546,25 @@ $messages['sr-ec'] = array(
 	'quiz_score' => 'Ваш резултат је $1 / $2',
 	'quiz_points' => '$1 | {{PLURAL:$2|1 бод|$2 бода|$2 бодова}}',
 	'quiz_reset' => 'Ресетуј',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'quiz_desc' => 'Omogući stvaranje upitnika.',
+	'quiz_addedPoints' => '{{PLURAL:$1|bod|boda|bodova}} se dodaje na tačan odgovor',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|Bod|Boda|Bodova}} za pogrešan odgovor',
+	'quiz_ignoreCoef' => 'Ignoriši koeficijente pitanja',
+	'quiz_shuffle' => 'Izmešaj pitanja',
+	'quiz_colorRight' => 'Tačno',
+	'quiz_colorWrong' => 'Pogrešno',
+	'quiz_colorNA' => 'Nije odgovoreno',
+	'quiz_colorError' => 'Greška u sintaksi',
+	'quiz_correction' => 'Postavi',
+	'quiz_score' => 'Vaš rezultat je $1 / $2',
+	'quiz_points' => '$1 | {{PLURAL:$2|1 bod|$2 boda|$2 bodova}}',
+	'quiz_reset' => 'Resetuj',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1540,12 +1671,51 @@ $messages['tg-cyrl'] = array(
 	'quiz_reset' => 'Аз нав',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'quiz_desc' => 'Eçodi ozmunhoro mumkin mesozad',
+	'quiz_ignoreCoef' => 'Nodida giriftani zaribi savolho',
+	'quiz_shuffle' => 'Bar zadani savolho',
+	'quiz_colorRight' => 'Durust',
+	'quiz_colorWrong' => 'Nodurust',
+	'quiz_colorNA' => 'Posux doda naşud',
+	'quiz_colorError' => 'Xatoi nahvī',
+	'quiz_correction' => 'Irsol',
+	'quiz_score' => 'Imtijozi şumo $1 az $2 ast',
+	'quiz_reset' => 'Az nav',
+);
+
 /** Thai (ไทย)
+ * @author Mopza
  * @author Passawuth
  */
 $messages['th'] = array(
 	'quiz_colorRight' => 'ถูกต้อง',
 	'quiz_colorWrong' => 'ผิด',
+	'quiz_correction' => 'ยืนยัน',
+	'quiz_score' => 'คุณได้คะแนน $1 จาก $2 คะแนน',
+	'quiz_reset' => 'ตั้งค่าใหม่',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'quiz_desc' => 'Soragnama döretmeklige rugsat berýär',
+	'quiz_addedPoints' => 'Dogry jogap üçin {{PLURAL:$1|utuk|utuk}} goşuldy',
+	'quiz_cutoffPoints' => 'Nädogry jogap üçin {{PLURAL:$1|utuk|utuk}}',
+	'quiz_ignoreCoef' => 'Soraglaryň koeffisientlerine üns berme',
+	'quiz_shuffle' => 'Soraglary gar',
+	'quiz_colorRight' => 'Dogry',
+	'quiz_colorWrong' => 'Ýalňyş',
+	'quiz_colorNA' => 'Jogapsyz',
+	'quiz_colorError' => 'Sintaksis säwligi',
+	'quiz_correction' => 'Tabşyr',
+	'quiz_score' => 'Utugyňyz $1 / $2',
+	'quiz_points' => '$1 | {{PLURAL:$2|1 utuk|$2 utuk}}',
+	'quiz_reset' => 'Başky ýagdaýa getir',
 );
 
 /** Tagalog (Tagalog)
@@ -1627,14 +1797,25 @@ $messages['vec'] = array(
 	'quiz_reset' => 'Azzèra',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'quiz_colorRight' => 'Oikti',
+	'quiz_colorWrong' => 'Värin',
+	'quiz_colorNA' => 'Ei ole vastust',
+	'quiz_colorError' => 'Sintaksine petuz',
+	'quiz_correction' => 'Oigeta',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'quiz_desc' => 'Tạo ra bài thi',
-	'quiz_addedPoints' => 'Số điểm cộng khi trả lời đúng',
-	'quiz_cutoffPoints' => 'Số điểm trừ khi trả lời sai',
+	'quiz_addedPoints' => '{{PLURAL:$1|Điểm|Số điểm}} cộng khi trả lời đúng',
+	'quiz_cutoffPoints' => '{{PLURAL:$1|Điểm|Số điểm}} trừ khi trả lời sai',
 	'quiz_ignoreCoef' => 'Bỏ qua hệ số của các câu hỏi',
 	'quiz_shuffle' => 'Xáo trộn các câu hỏi',
 	'quiz_colorRight' => 'Đúng',
@@ -1684,11 +1865,14 @@ $messages['yue'] = array(
 	'quiz_reset' => '重設',
 );
 
-/** Simplified Chinese (‪中文(简体)‬) */
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Gaoxuewei
+ * @author PhiLiP
+ */
 $messages['zh-hans'] = array(
 	'quiz_desc' => '容许建立小测题目',
-	'quiz_addedPoints' => '答对加上的分数',
-	'quiz_cutoffPoints' => '答错减去的分数',
+	'quiz_addedPoints' => '答对加上的{{PLURAL:$1|分数|分数}}',
+	'quiz_cutoffPoints' => '答错减去的{{PLURAL:$1|分数|分数}}',
 	'quiz_ignoreCoef' => '略过问题的系数',
 	'quiz_shuffle' => '随机问题',
 	'quiz_colorRight' => '对',
@@ -1698,14 +1882,16 @@ $messages['zh-hans'] = array(
 	'quiz_correction' => '递交',
 	'quiz_score' => '您的分数是 $1 / $2',
 	'quiz_points' => '$1 | $2 分',
-	'quiz_reset' => '重设',
+	'quiz_reset' => '重置',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Gaoxuewei
+ */
 $messages['zh-hant'] = array(
 	'quiz_desc' => '容許建立小測題目',
-	'quiz_addedPoints' => '答對加上的分數',
-	'quiz_cutoffPoints' => '答錯減去的分數',
+	'quiz_addedPoints' => '答對加上的{{PLURAL:$1|分數|分數}}',
+	'quiz_cutoffPoints' => '答錯減去的{{PLURAL:$1|分數|分數}}',
 	'quiz_ignoreCoef' => '略過問題的系數',
 	'quiz_shuffle' => '隨機問題',
 	'quiz_colorRight' => '對',

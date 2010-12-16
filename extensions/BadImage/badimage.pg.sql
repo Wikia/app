@@ -7,4 +7,3 @@ CREATE TABLE bad_images (
 );
 
 CREATE UNIQUE INDEX bil_name_unique ON bad_images (bil_name);
-

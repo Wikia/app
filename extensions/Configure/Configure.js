@@ -24,25 +24,24 @@ function setupConfigure(){
 	var sections = [];
 	var children = configform.childNodes;
 	var hid = 0;
-	var toc = document.createElement('ul');
+	var toc = document.createElement( 'ul' );
 	toc.className = 'configtoc';
 	toc.id = 'configtoc';
 	toc.subLen = {};
-	toc.confSec = 1;
 	toc.confSub = -1;
 	for( var i = 0; i < children.length; i++ ){
-		if (children[i].nodeName.toLowerCase() == 'fieldset') {
+		if ( children[i].nodeName.toLowerCase() == 'fieldset' ) {
 			children[i].id = 'config-section-' + i;
 			children[i].className = 'configsection';
 			var legends = children[i].getElementsByTagName( 'legend' );
-			if (legends[0] && legends[0].firstChild.nodeValue) {
+			if ( legends[0] && legends[0].firstChild.nodeValue ) {
 				var legend = legends[0].firstChild.nodeValue;
 			} else {
 				var legend = '# ' + seci;
 			}
 
-			var li = document.createElement('li');
-			if (i === 0) {
+			var li = document.createElement( 'li' );
+			if ( i == 0 ) {
 				li.className = 'selected';
 			}
 
@@ -50,12 +49,12 @@ function setupConfigure(){
 			var tables = getElementsByClassName( children[i], 'table', 'configure-table' );
 
 			if (headers.length > 1 && headers.length == tables.length) {
-				var a = document.createElement('a');
+				var a = document.createElement( 'a' );
 				a.onmousedown = a.onclick = configTocToggleElement;
 				a.tocId = i;
 				a.collapsed = true;
 				a.appendChild( document.createTextNode( '[+]' ) );
-				li.appendChild(a);
+				li.appendChild( a );
 			}
 
 			var a = document.createElement('a');
@@ -68,7 +67,7 @@ function setupConfigure(){
 				a.className = 'selected';
 			}
 			a.appendChild( document.createTextNode( legend ) );
-			li.appendChild(a);
+			li.appendChild( a );
 
 			if( headers.length == tables.length && headers.length > 1 ){
 				var len = headers.length;
@@ -83,7 +82,7 @@ function setupConfigure(){
 				for( var subsect = 0; subsect < len; subsect++ ){
 					headers[subsect].id = 'config-head-' + i + '-' + subsect;
 					tables[subsect].id = 'config-table-' + i + '-' + subsect;
-					var a = document.createElement('a');
+					var a = document.createElement( 'a' );
 					a.href = '#' + headers[subsect].id;
 					a.onmousedown = a.onclick = configToggle;
 					a.confSec = i;
@@ -100,6 +99,9 @@ function setupConfigure(){
 			toc.appendChild( li );
 			if( hid == 1 ){
 				children[i].style.display = 'none';
+			} else {
+				// IE wants 1, but FF and others want 0
+				toc.confSec = i;
 			}
 			hid = 1;
 		}
@@ -291,7 +293,7 @@ function doSearch( query ) {
 			var li = document.createElement( 'li' );
 
 			a.href = '#config-head-'+data.fid+'-'+data.sid;
-			addHandler( a, 'click', configToggle );
+			a.onclick = configToggle;
 			a.confSec = data.fid;
 			a.confSub = data.sid;
 			a.appendChild( document.createTextNode( data.displayDescription ) );
@@ -466,7 +468,7 @@ function summariseSetting( div, summary ) {
 			}
 		}
 
-		if (!rows) {
+		if ( !rows ) {
 			tr = document.createElement( 'tr' );
 			var td = document.createElement( 'td' );
 			td.setAttribute( 'colspan', 2 );
@@ -494,7 +496,7 @@ function createToggleCallback( id ){
 		var newLinkText;
 		var newPlaceholderText;
 
-		if (toggleLink.firstChild.nodeValue == wgConfigureBiglistShow) {
+		if ( toggleLink.firstChild.nodeValue == wgConfigureBiglistShow ) {
 			act = 'show';
 			newLinkText = wgConfigureBiglistHide;
 			content.style.display = 'block';
@@ -722,7 +724,6 @@ function fixAjaxGroupTable( table ){
  * Helper for TOC
  */
 function configToggle() {
-	var oldsecid = this.parentNode.parentNode.selectedid;
 	var confSec = this.confSec;
 	var confSub = this.confSub;
 	var toc = document.getElementById( 'configtoc' );

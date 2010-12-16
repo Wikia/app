@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Sets up the extension.
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo <<<EOT
 To install my extension, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/SignDocument/SignDocument.php.php" );
@@ -26,16 +25,16 @@ EOT;
 $wgExtensionFunctions[] = 'wfCreateSignatureLog';
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'SignDocument',
 	'author'         => 'Daniel Cannon',
+	'version'        => '0.1',
 	'description'    => 'Enables document signing',
 	'descriptionmsg' => 'signature-desc',
-	'svn-date'       => '$LastChangedDate: 2008-08-15 23:04:54 +0200 (ptk, 15 sie 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 39440 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:SignDocument',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['SignDocument'] = $dir . 'SignDocument.i18n.php';
 $wgExtensionMessagesFiles['SpecialSignDocument'] = $dir . 'SpecialSignDocument.i18n.php';
 $wgExtensionMessagesFiles['CreateSignDocument'] = $dir . 'SpecialCreateSignDocument.i18n.php';
@@ -57,7 +56,7 @@ $wgGroupPermissions['sigadmin']['createsigndocument'] = true;
  * Create the Signature log.
  */
 function wfCreateSignatureLog() {
-	wfLoadExtensionMessages('SignDocument');
+	wfLoadExtensionMessages( 'SignDocument' );
 
 	# Add a new log type
 	global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;

@@ -1,0 +1,51 @@
+/* suggestions plugin */
+
+.suggestions {
+	overflow: hidden;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 0px;
+	border: none;
+	z-index: 99;
+	padding: 0;
+	margin-top: -1px;
+}
+.suggestions-special {
+	position: relative;
+	background-color: Window;
+	font-size: 0.8em;
+	cursor: pointer;
+	border: solid 1px #aaaaaa;
+	border-top-width: 0;
+	padding: 0;
+	margin: 0;
+	display: none;
+	padding: 0.25em 0.25em;
+	line-height: 1.25em;
+}
+.suggestions-results {
+	background-color: white;
+	background-color: Window;
+	font-size: 0.8em;
+	cursor: pointer;
+	border: solid 1px #aaaaaa;
+	padding: 0;
+	margin: 0;
+}
+.suggestions-result {
+	color: black;
+	color: WindowText;
+	margin: 0;
+	width: 100%;
+}
+.suggestions-result span {
+	line-height: 1.5em;
+	padding: 0.25em 0.25em;
+}
+.suggestions-result-current {
+	background-color: #4C59A6;
+	background-color: Highlight;
+	color: white;
+	color: HighlightText;
+}

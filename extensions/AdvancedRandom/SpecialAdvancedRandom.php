@@ -19,11 +19,13 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'AdvancedRandom',
-	'description' => 'Get a random page from whos talk or subjectpage ' .
-	                 'links to a given page, can be used like ' .
+	'url' => 'http://www.mediawiki.org/wiki/Extension:AdvancedRandom',
+	'description' => 'Get a random page from any namespace, the talk or subjectpage ' .
+	                 'of which links to a given page. Can be used like ' .
 			 '[[Special:AdvancedRandom/Template:Featured/Talk]] ' .
-			 'to get a random featured article or like ' .
+			 'to get a random featured article talk, or like ' .
 			 '[[Special:AdvancedRandom/Template:GFDL/Image]] to ' .
 			 'get a random GFDL file',
 	'descriptionmsg' => 'advancedrandom-desc',
@@ -31,7 +33,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '0.2',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['AdvancedRandom'] = $dir . 'SpecialAdvancedRandom.i18n.php';
 $wgExtensionAliasesFiles['AdvancedRandom'] = $dir . 'AdvancedRandom.alias.php';
 

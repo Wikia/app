@@ -17,9 +17,7 @@ class DataCenterControllerFacilities extends DataCenterController {
 
 	/* Functions */
 
-	public function __construct(
-		array $path
-	) {
+	public function __construct( array $path ) {
 		// Actions
 		if ( $path['id'] ) {
 			if ( DataCenterPage::userCan( 'change' ) ) {
@@ -45,10 +43,7 @@ class DataCenterControllerFacilities extends DataCenterController {
 		}
 	}
 
-	public function save(
-		array $data,
-		$type
-	) {
+	public function save( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'change' ) ) {
 			return false;
 		}
@@ -73,10 +68,7 @@ class DataCenterControllerFacilities extends DataCenterController {
 		return false;
 	}
 
-	public function compareChanges(
-		array $data,
-		$type
-	) {
+	public function compareChanges( array $data, $type ) {
 		DataCenterWidgetHistory::compareChanges( $data );
 		return null;
 	}

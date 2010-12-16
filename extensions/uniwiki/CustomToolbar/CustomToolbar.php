@@ -21,6 +21,7 @@ if (!defined('MEDIAWIKI'))
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CustomToolbar',
 	'author'         => array( 'Mark Johnston', 'Adam Mckaig', 'Evan Wheeler' ),
 	'version'        => '0.1',

@@ -18,7 +18,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // Internationalization
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['YUI'] = $dir . 'yui.i18n.php';
 
 $wgExtensionFunctions[] = 'wfYUI';

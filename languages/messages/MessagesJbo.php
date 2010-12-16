@@ -70,10 +70,14 @@ $messages = array(
 'category-subcat-count'  => "$2 klesi cu vipsi le vi klesi .i $1 vipkle cu ni'a se jarco",
 'category-article-count' => "$2 kibypapri cu cmima le vi klesi .i $1 kibypapri cu ni'a se jarco",
 
+'mytalk'     => 'casnu mi',
+'navigation' => 'ckupau',
+
+# Cologne Blue skin
 'qbedit'        => 'stika',
 'qbpageoptions' => 'ti ckupau',
-'mytalk'        => 'casnu mi',
-'navigation'    => 'ckupau',
+'faq'           => 'FAQ',
+'faqpage'       => 'Project:FAQ',
 
 'errorpagetitle'   => 'fliba',
 'tagline'          => "ra'i {{SITENAME}}",
@@ -96,7 +100,7 @@ $messages = array(
 'views'            => 'Catlu',
 'toolbox'          => 'tutci',
 'otherlanguages'   => 'drata bangu',
-'lastmodifiedat'   => "le vi ckupau rore'u se galfi de'i li $2 $1", # $1 date, $2 time
+'lastmodifiedat'   => "le vi ckupau rore'u se galfi de'i li $2 $1",
 'jumpto'           => 'plipe tyobu:',
 'jumptonavigation' => 'ckupau',
 'jumptosearch'     => 'sisku',
@@ -105,7 +109,6 @@ $messages = array(
 'aboutsite'            => 'About {{SITENAME}}',
 'aboutpage'            => "Project:sera'a",
 'copyright'            => "lo selvau cu gubni ja'i la'o gy. $1 .gy.",
-'copyrightpagename'    => "{{SITENAME}} fukyzifpo'e",
 'copyrightpage'        => "{{ns:project}}:fukyzifpo'e",
 'currentevents'        => "caca'a fasnu",
 'currentevents-url'    => "Project:caca'a fasnu",
@@ -113,8 +116,6 @@ $messages = array(
 'disclaimerpage'       => "Project:kampu nunxusra be lo za'i na fuzme",
 'edithelp'             => 'stika nunsidju',
 'edithelppage'         => 'Help:Editing',
-'faq'                  => 'FAQ',
-'faqpage'              => 'Project:FAQ',
 'mainpage'             => 'Ralju Ckupau',
 'mainpage-description' => 'ralju ckupau',
 'portal'               => 'bende ckupau',
@@ -178,10 +179,11 @@ $messages = array(
 'editingcomment' => 'ca galfi le selcmene be zoi $1 (comment)',
 
 # History pages
-'cur'        => 'cab',
-'last'       => "prula'i",
-'page_first' => 'pamoi',
-'page_last'  => 'fanmo',
+'revisionasof' => "velfarvi de'i",
+'cur'          => 'cab',
+'last'         => "prula'i",
+'page_first'   => 'pamoi',
+'page_last'    => 'fanmo',
 
 # Revision deletion
 'rev-delundel' => 'jarco/mipri',
@@ -201,7 +203,7 @@ $messages = array(
 # Preferences page
 'preferences'       => 'zmaselnei',
 'mypreferences'     => 'zmaselnei liste',
-'textboxsize'       => 'ca galfi',
+'prefs-editing'     => 'ca galfi',
 'searchresultshead' => "tu'a le se sisku",
 'savedprefs'        => 'le do zmaselnei pu vreji',
 
@@ -270,6 +272,7 @@ $messages = array(
 'contributions' => 'selstika le pilno',
 'mycontris'     => 'pu selstika mi',
 
+'sp-contributions-talk'   => 'casnu',
 'sp-contributions-submit' => 'sisku',
 
 # What links here

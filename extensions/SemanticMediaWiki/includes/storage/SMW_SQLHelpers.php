@@ -29,7 +29,7 @@ class SMWSQLHelpers {
 		switch ($input) {
 			case 'id': return $wgDBtype=='postgres'?'SERIAL':'INT(8) UNSIGNED'; // like page_id in MW page table
 			case 'namespace': return $wgDBtype=='postgres'?'BIGINT':'INT(11)'; // like page_namespace in MW page table
-			case 'title': return $wgDBtype=='postgres'?'TEXT':'VARCHAR(255) binary'; // like page_title in MW page table
+			case 'title': return $wgDBtype=='postgres'?'TEXT':'VARBINARY(255)'; // like page_title in MW page table
 			case 'iw': return $wgDBtype=='postgres'?'TEXT':'VARCHAR(32) binary'; // like iw_prefix in MW interwiki table
 			case 'blob': return $wgDBtype=='postgres'?'BYTEA':'MEDIUMBLOB'; // larger blobs of character data, usually not subject to SELECT conditions
 		}
@@ -59,7 +59,7 @@ class SMWSQLHelpers {
 	 * @note The function partly ignores the order in which fields are set up.
 	 * Only if the type of some field changes will its order be adjusted explicitly.
 	 */
-	public static function setupTable($table, $fields, $db, $reportTo = NULL) {
+	public static function setupTable($table, $fields, $db, $reportTo = null) {
 		global $wgDBname, $wgDBtype;
 		$fname = 'SMWSQLHelpers::setupTable';
 
@@ -214,7 +214,7 @@ class SMWSQLHelpers {
 	 * Make sure that each of the column descriptions in the given array is indexed by *one* index
 	 * in the given DB table.
 	 */
-	public static function setupIndex($table, $columns, $db, $reportTo = NULL) {
+	public static function setupIndex($table, $columns, $db, $reportTo = null) {
 		global $wgDBtype,$verbose;
 		$table = $db->tableName($table);
 		$fname = 'SMWSQLHelpers::setupIndex';
@@ -280,8 +280,8 @@ class SMWSQLHelpers {
 	}
 
 	/// If a receiver is given, report the given message to its reportProgress method.
-	protected static function reportProgress($msg, $receiver = NULL) {
-		if ($receiver !== NULL) $receiver->reportProgress($msg);
+	protected static function reportProgress($msg, $receiver = null) {
+		if ($receiver !== null) $receiver->reportProgress($msg);
 	}
 
 }

@@ -1,0 +1,20 @@
+== Wikilog To-do list ==
+
+=== Wikilog 1.1.0. ===
+
+* Drop support for Mw1.14 and earlier.
+
+=== Wikilog 1.2.0. ===
+
+* Drop support for Mw1.15 and earlier.
+* Remove Mw1.15 compatibility boilerplate in:
+  - WikilogNavbar::getNavigationBar() (Language::getDir()).
+  - WikilogSummaryPager::getNavigationBar() (IndexPager::isNavigationBarShown()).
+  - WikilogArchivesPager::getNavigationBar() (IndexPager::isNavigationBarShown()).
+  - WikilogCommentPager::getNavigationBar() (IndexPager::isNavigationBarShown()).
+  - WikilogHooks::LanguageGetSpecialPageAliases().
+  - WikilogHooks::LanguageGetMagic().
+  - WikilogHooks::EditPageAttemptSave().
+  - WikilogTemplatePager::formatRow() (workaround bug 20431).
+  - Wikilog.i18n.php: 'wikilog-specialwikilog' message.
+* WikilogTemplatePager::formatRow(): Remove {{{pubdate}}} and {{{updated}}}.

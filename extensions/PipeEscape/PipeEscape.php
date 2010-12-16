@@ -27,6 +27,7 @@ if ( !defined( 'MEDIAWIKI' ) )
 
 $wgHooks[ 'ParserFirstCallInit' ][] = 'ExtPipeEsc::setup';
 $wgExtensionCredits[ 'parserhook' ][] = array(
+	'path'            => __FILE__,
 	'author'          => 'David M. Sledge',
 	'name'            => 'Pipe Escape',
 	'version'         => ExtPipeEsc::VERSION,
@@ -34,8 +35,6 @@ $wgExtensionCredits[ 'parserhook' ][] = array(
 			     'to be just a pipe character',
 	'url'             => 'http://www.mediawiki.org/wiki/Extension:Pipe_Escape',
 	'descriptionmsg'  => 'pipeescape-desc',
-	'svn-revision'    => '$LastChangedRevision: 48282 $',
-	'svn-date'        => '$LastChangedDate: 2009-03-10 22:14:55 +0100 (wto, 10 mar 2009) $',
 );
 
 $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR;

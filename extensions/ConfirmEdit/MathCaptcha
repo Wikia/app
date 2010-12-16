@@ -34,12 +34,12 @@ extension, if you don't have it installed) and place the files in your
 extensions/ directory, within your wiki root.
 
 Edit LocalSettings.php and add the following lines near the bottom of the
-file, above the closing ?> tag:
+file, above the closing ?> tag, if any:
 
 	require_once( 'extensions/ConfirmEdit.php' );
 	require_once( 'extensions/MathCaptcha.php' );
 	$wgCaptchaClass = 'MathCaptcha';
-	
+
 This installs ConfirmEdit and instructs it to use the MathCaptcha plugin.
 The default settings for ConfirmEdit are used. At this point, no further
 action is required to have the plugin work for user registration or edits
@@ -71,6 +71,6 @@ with the ConfirmEdit extension, please use http://bugzilla.wikimedia.org.
 == 7. References ==
 
 i. http://en.wikipedia.org/wiki/Captcha
-ii. http://meta.wikimedia.org/wiki/ConfirmEdit
-iii. http://meta.wikimedia.org/wiki/Enable_TeX
+ii. http://www.mediawiki.org/wiki/Extension:ConfirmEdit
+iii. http://www.mediawiki.org/wiki/Manual:Enable_TeX
 iv. http://www.mediawiki.org/wiki/Subversion

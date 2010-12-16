@@ -1,5 +1,5 @@
 + Add a Storage class for $wgMemc
-+ Prevent running OpenIDLogin, OpenIDFinish when you're already logged in
++ Prevent running OpenIDLogin when you're already logged in
 + Add a server mode
 + Prevent serving OpenID accounts
 + Prevent trusting the same server
@@ -8,7 +8,7 @@
 + Function to let skins tell if user is OpenID user
 + Function to let skins know user's OpenID URL
 + Interwiki login
-- drop-down for username prefixes (Yahoo, etc.)
++ drop-down for username prefixes (Yahoo, etc.)
 + server mode login
 + server mode trust form
 + server mode share fields form
@@ -24,7 +24,7 @@
 + hide openid.server for non-user pages
 - optimize trust storage
 + change trust data separators from , and | to FS and RS
-- User preferences tab for OpenID
++ User preferences tab for OpenID
 - Manage allow-to-trust settings in User preferences
 - Optionally redirect User: page to OpenID URL
 - If user logs in with OpenID, add a cookie, and auto-login next time
@@ -36,8 +36,8 @@
   like http://getopenid.com/evanprodromou or
   http://profile.typekey.com/EvanProdromou/
 + Allow specifying a FileStore
-- Allow specifying a MySQLStore
-- Allow specifying a memcached store
++ Allow specifying a MySQLStore
++ Allow specifying a memcached store
 + Fall back to FileStore if Memc is bogus
 + Unit test for MemcStore
 + for just-a-hostname OpenIDs, if the first element is not
@@ -54,7 +54,7 @@
 - deal with difference between canonical ID and "display ID" with XRIs
 + add more explanatory text to the default login instructions (copy Wikitravel text)
 - add a public-domain Help:OpenID.wiki
-- add more than one OpenID to a user account
++ add more than one OpenID to a user account
 + link to Special:OpenIDConvert if user is already logged in
 - support RP discovery
 - AJAX login, rather than klutzy JS form
@@ -62,4 +62,3 @@
 - Dynamic HTML swap in of OpenID login form on Special:Userlogin
 - warn if a user account has been used as a login before attaching an
   OpenID
-  

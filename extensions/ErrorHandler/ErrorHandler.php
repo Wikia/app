@@ -9,8 +9,7 @@ if( !defined( 'MEDIAWIKI' ) ) die();
  * @license GPLv2 or higher
  */
 $wgExtensionCredits['other'][] = array(
-	'svn-date'       => '$LastChangedDate: 2008-12-13 23:13:22 +0100 (sob, 13 gru 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44547 $',
+	'path'           => __FILE__,
 	'name'           => 'ErrorHandler',
 	'author'         => 'Alexandre Emsenhuber',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:ErrorHandler',
@@ -39,6 +38,11 @@ $wgErrorHandlerMaxStringSize = 50;
  * Always report errors, regardless of the current value of error_reporting()
  */
 $wgErrorHandlerAlwaysReport = false;
+
+/**
+ * Whether to report even after output
+ */
+$wgErrorHandlerReportAfterOutput = true;
 
 /**
  * Log errors?
@@ -70,19 +74,19 @@ $wgExtensionMessagesFiles['ErrorHandler'] = dirname( __FILE__ ) . '/ErrorHandler
 /**
  * Custom error handler
  *
- * @param integer $errType type of error
- * @param string $errMsg error message
- * @param string $errFile file where the error occured
- * @param integer $errLine line where the error occured
- * @param array $errVars hmm?
+ * @param $errType Integer: type of error
+ * @param $errMsg String: error message
+ * @param $errFile String: file where the error occured
+ * @param $errLine Integer: line where the error occured
+ * @param $errVars Array: hmm?
  */
 function efErrorHandler( $errType, $errMsg, $errFile, $errLine, $errVars ){
 	global $wgErrorHandlerErrors,        $wgErrorHandlerOutputDone,
 	       $wgErrorHandlerShowBackTrace, $wgErrorHandlerReport,
 	       $wgErrorHandlerMaxStringSize, $wgErrorHandlerAlwaysReport,
-	       $wgErrorHandlerLog;
+	       $wgErrorHandlerReportAfterOutput, $wgErrorHandlerLog;
 	global $IP, $wgCommandLineMode;
-	static $errorsMap = array (
+	static $errorsMap = array(
 		E_ERROR              => 'fatal',
 		E_WARNING            => 'warning',
 		E_PARSE              => 'parse',
@@ -188,7 +192,8 @@ function efErrorHandler( $errType, $errMsg, $errFile, $errLine, $errVars ){
 		echo $errText;
 	} else {
 		if( $wgErrorHandlerOutputDone )
-			echo efErrorGetText( $err );
+			if( $wgErrorHandlerReportAfterOutput )
+				echo efErrorGetText( $err );
 		else
 			$wgErrorHandlerErrors[] = $err;
 	}
@@ -234,8 +239,8 @@ function efErrorHandlerGetMessage(){
 
 /**
  * Get an error string from an array
- * @param $arr array
- * @param $forceText bool
+ * @param $arr Array
+ * @param $forceText Boolean
  */
 function efErrorGetText( $arr, $forceText = false ){
 	global $wgCommandLineMode;

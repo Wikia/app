@@ -7,12 +7,11 @@ if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Javascript',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Adds uniwiki.js to each page containing Javascript code shared between Uniwiki extensions',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Javascript',
-	'svn-date'       => '$LastChangedDate: 2008-11-30 15:08:15 +0100 (ndz, 30 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44070 $',
 	'descriptionmsg' => 'javascript-desc',
 );
 

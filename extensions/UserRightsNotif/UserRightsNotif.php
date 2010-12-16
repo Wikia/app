@@ -14,6 +14,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 
 	$wgExtensionFunctions[] = 'efUserRightsNotifierSetup';
 	$wgExtensionCredits['other'][] = array(
+		'path' => __FILE__,
 		'name' => 'User Rights Email Notification',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:User_Rights_Email_Notification',
 		'author' => 'Rob Church',
@@ -34,11 +35,11 @@ if( defined( 'MEDIAWIKI' ) ) {
 	}
 
 	function efUserRightsNotifier( &$user, $added, $removed ) {
-		global $wgUserRightsNotif, $wgContentLang;
+		global $wgUserRightsNotif;
 		if( $user->canReceiveEmail() ) {
 			global $wgUser, $wgSitename, $wgContLang;
-			$added = is_array( $added ) ? $wgContentLang->commaList( $added ) : '';
-			$removed = is_array( $removed ) ? $wgContentLang->commaList( $removed ) : '';
+			$added = is_array( $added ) ? $wgContLang->commaList( $added ) : '';
+			$removed = is_array( $removed ) ? $wgContLang->commaList( $removed ) : '';
 			$subject = wfMsg( 'userrightsnotifysubject', $wgSitename );
 			$message = wfMsg( 'userrightsnotifybody', $user->getName(), $wgSitename, $wgUser->getName(), $wgContLang->timeAndDate( wfTimestampNow() ), $added, $removed );
 			$user->sendMail( $subject, $message, $wgUserRightsNotif['sender'], null, 'UserRightsNotification' );

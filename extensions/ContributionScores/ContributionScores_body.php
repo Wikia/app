@@ -181,13 +181,13 @@ class ContributionScores extends IncludableSpecialPage
 			$limit = 10;
 		if ( is_null( $days ) || $days < 0 )
 			$days = 7;
-		
+
 		if ( $days > 0 ) {
-			$reportTitle = wfMsg( 'contributionscores-days', $days );
+			$reportTitle = wfMsgExt( 'contributionscores-days', 'parsemag', $days );
 		} else {
 			$reportTitle = wfMsg( 'contributionscores-allrevisions' );
 		}
-		$reportTitle .= " " . wfMsg( 'contributionscores-top', $limit );
+		$reportTitle .= " " . wfMsgExt( 'contributionscores-top', 'parsemag', $limit );
 		$title = Xml::element( 'h4', array( 'class' => 'contributionscores-title' ), $reportTitle ) . "\n";
 		$wgOut->addHTML( $this->genContributionScoreTable( $days, $limit, $title, $options ) );
 	}
@@ -206,11 +206,11 @@ class ContributionScores extends IncludableSpecialPage
 
 		foreach ( $wgContribScoreReports as $scoreReport) {
 			if ( $scoreReport[0] > 0 ) {
-				$reportTitle = wfMsg( 'contributionscores-days', $scoreReport[0] );
+				$reportTitle = wfMsgExt( 'contributionscores-days', 'parsemag', $scoreReport[0] );
 			} else {
 				$reportTitle = wfMsg( 'contributionscores-allrevisions' );
 			}
-			$reportTitle .= " " . wfMsg('contributionscores-top', $scoreReport[1] );
+			$reportTitle .= " " . wfMsgExt('contributionscores-top', 'parsemag', $scoreReport[1] );
 			$title = Xml::element( 'h2', array( 'class' => 'contributionscores-title' ), $reportTitle ) . "\n";
 			$wgOut->addHTML( $title );
 			$wgOut->addHTML( $this->genContributionScoreTable( $scoreReport[0], $scoreReport[1] ) );

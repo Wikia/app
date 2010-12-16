@@ -568,7 +568,7 @@ if ($debug)
 				"' USING utf8) AND UPPER(CONVERT(`page_title` USING utf8)) LIKE CONVERT('" . strtoupper($entry['title']) . 
 				"' USING utf8)";
 			}
-if ($debug) $wgOut->addWikiText("the SQL query is :$sql:\n<br>");
+if ($debug) $wgOut->addWikiText("the SQL query is :$sql:\n<br />");
 			$dbr->begin();
 			$res = $dbr->query( $sql, __METHOD__ );
 			$dbr->commit();

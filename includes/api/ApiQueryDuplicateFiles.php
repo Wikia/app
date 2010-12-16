@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ("ApiQueryBase.php");
+	require_once ( "ApiQueryBase.php" );
 }
 
 /**
@@ -35,8 +35,8 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 
-	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName, 'df');
+	public function __construct( $query, $moduleName ) {
+		parent :: __construct( $query, $moduleName, 'df' );
 	}
 
 	public function execute() {
@@ -47,11 +47,11 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 		return 'public';
 	}
 
-	public function executeGenerator($resultPageSet) {
-		$this->run($resultPageSet);
+	public function executeGenerator( $resultPageSet ) {
+		$this->run( $resultPageSet );
 	}
 
-	private function run($resultPageSet = null) {
+	private function run( $resultPageSet = null ) {
 		$params = $this->extractRequestParams();
 		$namespaces = $this->getPageSet()->getAllTitlesByNamespace();
 		if ( empty( $namespaces[NS_FILE] ) ) {
@@ -59,71 +59,74 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 		}
 		$images = $namespaces[NS_FILE];
 		
-		$this->addTables('image', 'i1');
-		$this->addTables('image', 'i2');
-		$this->addFields(array(
+		$this->addTables( 'image', 'i1' );
+		$this->addTables( 'image', 'i2' );
+		$this->addFields( array(
 			'i1.img_name AS orig_name',
 			'i2.img_name AS dup_name',
 			'i2.img_user_text AS dup_user_text',
 			'i2.img_timestamp AS dup_timestamp'
-		));
-		$this->addWhere(array(
-			'i1.img_name' => array_keys($images),
+		) );
+
+		$this->addWhere( array(
+			'i1.img_name' => array_keys( $images ),
 			'i1.img_sha1 = i2.img_sha1',
 			'i1.img_name != i2.img_name',
-		));
-		if(isset($params['continue']))
-		{
-			$cont = explode('|', $params['continue']);
-			if(count($cont) != 2)
-				$this->dieUsage("Invalid continue param. You should pass the " .
-					"original value returned by the previous query", "_badcontinue");
-			$orig = $this->getDB()->strencode($this->titleTokey($cont[0]));
-			$dup = $this->getDB()->strencode($this->titleToKey($cont[1]));
-			$this->addWhere("i1.img_name > '$orig' OR ".
-					"(i1.img_name = '$orig' AND ".
-					"i2.img_name >= '$dup')");
-		}
-		$this->addOption('ORDER BY', 'i1.img_name');
-		$this->addOption('LIMIT', $params['limit'] + 1);
+		) );
 
-		$res = $this->select(__METHOD__);
+		if ( isset( $params['continue'] ) )
+		{
+			$cont = explode( '|', $params['continue'] );
+			if ( count( $cont ) != 2 )
+				$this->dieUsage( "Invalid continue param. You should pass the " .
+					"original value returned by the previous query", "_badcontinue" );
+			$orig = $this->getDB()->strencode( $this->titleTokey( $cont[0] ) );
+			$dup = $this->getDB()->strencode( $this->titleToKey( $cont[1] ) );
+			$this->addWhere( "i1.img_name > '$orig' OR " .
+					"(i1.img_name = '$orig' AND " .
+					"i2.img_name >= '$dup')" );
+		}
+
+		$this->addOption( 'ORDER BY', 'i1.img_name' );
+		$this->addOption( 'LIMIT', $params['limit'] + 1 );
+
+		$res = $this->select( __METHOD__ );
 		$db = $this->getDB();
 		$count = 0;
 		$titles = array();
-		while($row = $db->fetchObject($res))
+		while ( $row = $db->fetchObject( $res ) )
 		{
-			if(++$count > $params['limit'])
+			if ( ++$count > $params['limit'] )
 			{
 				// We've reached the one extra which shows that
 				// there are additional pages to be had. Stop here...
-				$this->setContinueEnumParameter('continue',
-					$this->keyToTitle($row->orig_name) . '|' .
-					$this->keyToTitle($row->dup_name));
+				$this->setContinueEnumParameter( 'continue',
+					$this->keyToTitle( $row->orig_name ) . '|' .
+					$this->keyToTitle( $row->dup_name ) );
 				break;
 			}
-			if(!is_null($resultPageSet))
-				$titles[] = Title::makeTitle(NS_FILE, $row->dup_name);
+			if ( !is_null( $resultPageSet ) )
+				$titles[] = Title::makeTitle( NS_FILE, $row->dup_name );
 			else
 			{
 				$r = array(
 					'name' => $row->dup_name,
 					'user' => $row->dup_user_text,
-					'timestamp' => wfTimestamp(TS_ISO_8601, $row->dup_timestamp)
+					'timestamp' => wfTimestamp( TS_ISO_8601, $row->dup_timestamp )
 				);
-				$fit = $this->addPageSubItem($images[$row->orig_name], $r);
-				if(!$fit)
+				$fit = $this->addPageSubItem( $images[$row->orig_name], $r );
+				if ( !$fit )
 				{
-					$this->setContinueEnumParameter('continue',
-							$this->keyToTitle($row->orig_name) . '|' .
-							$this->keyToTitle($row->dup_name));
+					$this->setContinueEnumParameter( 'continue',
+							$this->keyToTitle( $row->orig_name ) . '|' .
+							$this->keyToTitle( $row->dup_name ) );
 					break;
 				}
 			}
 		}
-		if(!is_null($resultPageSet))
-			$resultPageSet->populateFromTitles($titles);
-		$db->freeResult($res);
+		if ( !is_null( $resultPageSet ) )
+			$resultPageSet->populateFromTitles( $titles );
+		$db->freeResult( $res );
 	}
 
 	public function getAllowedParams() {
@@ -149,6 +152,12 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 	public function getDescription() {
 		return 'List all files that are duplicates of the given file(s).';
 	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'code' => '_badcontinue', 'info' => 'Invalid continue param. You should pass the original value returned by the previous query' ),
+		) );
+	}
 
 	protected function getExamples() {
 		return array (	'api.php?action=query&titles=File:Albert_Einstein_Head.jpg&prop=duplicatefiles',
@@ -157,6 +166,6 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryDuplicateFiles.php 69986 2010-07-27 03:57:39Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryDuplicateFiles.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

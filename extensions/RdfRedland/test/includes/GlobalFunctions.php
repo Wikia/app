@@ -37,7 +37,7 @@ function wfAcceptToPrefs( $accept, $def = '*/*' ) {
  * "days=7&limit=100". Options in the first array override options in the second.
  * Options set to "" will not be output.
  */
-function wfArrayToCGI( $array1, $array2 = NULL )
+function wfArrayToCGI( $array1, $array2 = null )
 {
 	if ( !is_null( $array2 ) ) {
 		$array1 = $array1 + $array2;
@@ -231,7 +231,7 @@ function wfNegotiateType( $cprefs, $sprefs ) {
 	}
 
 	$bestq = 0;
-	$besttype = NULL;
+	$besttype = null;
 
 	foreach( array_keys( $combine ) as $type ) {
 		if( $combine[$type] > $bestq ) {
@@ -265,7 +265,7 @@ function mimeTypeMatch( $type, $avail ) {
 		} elseif( array_key_exists( '*/*', $avail ) ) {
 			return '*/*';
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 }

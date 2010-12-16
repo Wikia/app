@@ -11,6 +11,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'version'        => '0.3',
 	'name'           => 'InspectCache',
 	'author'         => array( 'Tim Starling', 'Brion Vibber' ),
@@ -23,4 +24,9 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['InspectCache'] = $dir . 'InspectCache.i18n.php';
 $wgExtensionAliasesFiles['InspectCache'] = $dir . 'InspectCache.alias.php';
 $wgAutoloadClasses['SpecialInspectCache'] = $dir . 'InspectCache_body.php';
+
 $wgSpecialPages['InspectCache'] = 'SpecialInspectCache';
+$wgSpecialPageGroups['InspectCache'] = 'wiki';
+
+$wgAvailableRights[] = 'inspectcache';
+$wgGroupPermissions['sysop']['inspectcache'] = true;

@@ -33,9 +33,9 @@ class BrokenRedirectsPage extends PageQueryPage {
 		                rd_namespace,
 		                rd_title
 		           FROM $redirect AS rd
-                   JOIN $page p1 ON (rd.rd_from=p1.page_id)
+		      JOIN $page p1 ON (rd.rd_from=p1.page_id)
 		      LEFT JOIN $page AS p2 ON (rd_namespace=p2.page_namespace AND rd_title=p2.page_title )
-			  	  WHERE rd_namespace >= 0
+				  WHERE rd_namespace >= 0
 				    AND p2.page_namespace IS NULL";
 		return $sql;
 	}
@@ -45,7 +45,7 @@ class BrokenRedirectsPage extends PageQueryPage {
 	}
 
 	function formatResult( $skin, $result ) {
-		global $wgUser, $wgContLang;
+		global $wgUser, $wgContLang, $wgLang;
 
 		$fromObj = Title::makeTitle( $result->namespace, $result->title );
 		if ( isset( $result->rd_title ) ) {
@@ -61,21 +61,43 @@ class BrokenRedirectsPage extends PageQueryPage {
 
 		// $toObj may very easily be false if the $result list is cached
 		if ( !is_object( $toObj ) ) {
-			return '<s>' . $skin->makeLinkObj( $fromObj ) . '</s>';
+			return '<s>' . $skin->link( $fromObj ) . '</s>';
 		}
 
-		$from = $skin->makeKnownLinkObj( $fromObj ,'', 'redirect=no' );
-		$edit = $skin->makeKnownLinkObj( $fromObj, wfMsgHtml( 'brokenredirects-edit' ), 'action=edit' );
-		$to   = $skin->makeBrokenLinkObj( $toObj );
+		$from = $skin->linkKnown(
+			$fromObj,
+			null,
+			array(),
+			array( 'redirect' => 'no' )
+		);
+		$links = array();
+		$links[] = $skin->linkKnown(
+			$fromObj,
+			wfMsgHtml( 'brokenredirects-edit' ),
+			array(),
+			array( 'action' => 'edit' )
+		);
+		$to   = $skin->link(
+			$toObj,
+			null,
+			array(),
+			array(),
+			array( 'broken' )
+		);
 		$arr = $wgContLang->getArrow();
 
-		$out = "{$from} {$edit}";
+		$out = $from . wfMsg( 'word-separator' );
 
 		if( $wgUser->isAllowed( 'delete' ) ) {
-			$delete = $skin->makeKnownLinkObj( $fromObj, wfMsgHtml( 'brokenredirects-delete' ), 'action=delete' );
-			$out .= " {$delete}";
+			$links[] = $skin->linkKnown(
+				$fromObj,
+				wfMsgHtml( 'brokenredirects-delete' ),
+				array(),
+				array( 'action' => 'delete' )
+			);
 		}
 
+		$out .= wfMsg( 'parentheses', $wgLang->pipeList( $links ) );
 		$out .= " {$arr} {$to}";
 		return $out;
 	}

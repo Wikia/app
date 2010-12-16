@@ -17,6 +17,7 @@ if( !defined( 'MEDIAWIKI' ) ){
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'WikiCurl',
 	'version' => '1.0',
 	'author' => array('Tomasz Klim', 'Mikołaj Musielak'),

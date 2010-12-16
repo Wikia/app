@@ -236,13 +236,13 @@ class ImageGallery
 		$i = 0;
 		foreach ( $this->mImages as $pair ) {
 			$nt = $pair[0];
-			$text = $pair[1];
+			$text = $pair[1]; # "text" means "caption" here
 
 			# Give extensions a chance to select the file revision for us
 			$time = $descQuery = false;
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
-			$img = wfFindFile( $nt, $time );
+			$img = wfFindFile( $nt, array( 'time' => $time ) );
 
 			if( $nt->getNamespace() != NS_FILE || !$img ) {
 				# We're dealing with a non-image, spit out the name and be done with it.
@@ -250,14 +250,30 @@ class ImageGallery
 					. htmlspecialchars( $nt->getText() ) . '</div>';
 			} elseif( $this->mHideBadImages && wfIsBadImage( $nt->getDBkey(), $this->getContextTitle() ) ) {
 				# The image is blacklisted, just show it as a text link.
-				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
-					. $sk->makeKnownLinkObj( $nt, htmlspecialchars( $nt->getText() ) ) . '</div>';
+				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">' .
+					$sk->link(
+						$nt,
+						htmlspecialchars( $nt->getText() ),
+						array(),
+						array(),
+						array( 'known', 'noclasses' )
+					) .
+					'</div>';
 			} elseif( !( $thumb = $img->transform( $params ) ) ) {
 				# Error generating thumbnail.
 				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
 					. htmlspecialchars( $img->getLastError() ) . '</div>';
 			} else {
 				$vpad = floor( ( 1.25*$this->mHeights - $thumb->height ) /2 ) - 2;
+				
+				$imageParameters = array(
+					'desc-link' => true,
+					'desc-query' => $descQuery
+				);
+				# In the absence of a caption, fall back on providing screen readers with the filename as alt text
+				if ( $text == '' ) {
+					$imageParameters['alt'] = $nt->getText();
+				}
 
 				$thumbhtml = "\n\t\t\t".
 					'<div class="thumb" style="padding: ' . $vpad . 'px 0; width: ' .($this->mWidths+30).'px;">'
@@ -265,7 +281,7 @@ class ImageGallery
 					# handlers since they may emit block-level elements as opposed to simple <img> tags.
 					# ref http://css-discuss.incutio.com/?page=CenteringBlockElement
 					. '<div style="margin-left: auto; margin-right: auto; width: ' .$this->mWidths.'px;">'
-					. $thumb->toHtml( array( 'desc-link' => true, 'desc-query' => $descQuery ) ) . '</div></div>';
+					. $thumb->toHtml( $imageParameters ) . '</div></div>';
 
 				// Call parser transform hook
 				if ( $this->mParser && $img->getHandler() ) {
@@ -274,7 +290,8 @@ class ImageGallery
 			}
 
 			//TODO
-			//$ul = $sk->makeLink( $wgContLang->getNsText( MWNamespace::getUser() ) . ":{$ut}", $ut );
+			// $linkTarget = Title::newFromText( $wgContLang->getNsText( MWNamespace::getUser() ) . ":{$ut}" );
+			// $ul = $sk->link( $linkTarget, $ut );
 
 			if( $this->mShowBytes ) {
 				if( $img ) {
@@ -289,7 +306,13 @@ class ImageGallery
 			}
 
 			$textlink = $this->mShowFilename ?
-				$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 20 ) ) ) . "<br />\n" :
+				$sk->link(
+					$nt,
+					htmlspecialchars( $wgLang->truncate( $nt->getText(), 20 ) ),
+					array(),
+					array(),
+					array( 'known', 'noclasses' )
+				) . "<br />\n" :
 				'' ;
 
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which

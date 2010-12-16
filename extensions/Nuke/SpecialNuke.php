@@ -9,9 +9,8 @@ $wgExtensionMessagesFiles['Nuke'] = $dir . 'SpecialNuke.i18n.php';
 $wgExtensionAliasesFiles['Nuke'] = $dir . 'SpecialNuke.alias.php';
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Nuke',
-	'svn-date'       => '$LastChangedDate: 2008-09-01 19:25:05 +0200 (pon, 01 wrz 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 40309 $',
 	'description'    => 'Gives sysops the ability to mass delete pages',
 	'descriptionmsg' => 'nuke-desc',
 	'author'         => 'Brion Vibber',

@@ -7,7 +7,7 @@ v 0.1
 mediawiki=1.6+
 Allows users to add entries to the Spam blacklist right off of a diff page
 
-This extension allows users to add URLs to the Spam Blacklist (see the Spamblacklist Extension http://meta.wikimedia.org/wiki/SpamBlacklist_extension) easily without learning how to format entries for the blacklist and copy and paste, etc. By inserting a link on each diff page, if an editor sees that a given page has been the victim of spam, they can click on "add to spam", which extracts all of the URLs the spammer has placed on the page, going back over their most recent edits on the article (similar to Rollback). Then, for each URL detected, the tool prompts the user the degree to which they want to blacklist the URL. The options are block:
+This extension allows users to add URLs to the Spam Blacklist (see the Spamblacklist Extension http://www.mediawiki.org/wiki/Extension:SpamBlacklist) easily without learning how to format entries for the blacklist and copy and paste, etc. By inserting a link on each diff page, if an editor sees that a given page has been the victim of spam, they can click on "add to spam", which extracts all of the URLs the spammer has placed on the page, going back over their most recent edits on the article (similar to Rollback). Then, for each URL detected, the tool prompts the user the degree to which they want to blacklist the URL. The options are block:
 
 # all links from the domain
 # all links from the specific subdomain

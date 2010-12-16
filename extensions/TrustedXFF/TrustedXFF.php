@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('MEDIAWIKI')) {
+	die(1);
+}
+
 /**
  * Trusted hosts file in CDB format.
  * The file can be generated using generate.php
@@ -10,14 +14,13 @@
  *
  * For details, see http://meta.wikimedia.org/wiki/XFF_project
  */
-$wgTrustedXffFile = dirname(__FILE__).'/trusted-xff.cdb';
+$wgTrustedXffFile = $IP . '/cache/trusted-xff.cdb';
 
 
 /** Registration */
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'TrustedXFF',
-	'svn-date'       => '$LastChangedDate: 2008-12-15 15:30:51 +0100 (pon, 15 gru 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44621 $',
 	'description'    => 'Handling of trusted proxy addresses (XFF)',
 	'descriptionmsg' => 'trustedxff-desc',
 	'author'         => 'Tim Starling',

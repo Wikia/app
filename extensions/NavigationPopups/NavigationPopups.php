@@ -1,6 +1,7 @@
 <?php
 
 $wgExtensionCredits['other'][] = array( 
+	'path'           => __FILE__,
 	'name'           => 'Navigation popups',
 	'version'        => '0.1',
 	'author'         => 'sanbeg',

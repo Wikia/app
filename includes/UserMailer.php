@@ -247,11 +247,12 @@ class UserMailer {
 			$headers .= "{$endl}X-Msg-Category: $category";
 			/* Wikia change end */
 
+			wfDebug( "Sending mail via internal mail() function\n" );
+			
 			$wgErrorString = '';
 			$html_errors = ini_get( 'html_errors' );
 			ini_set( 'html_errors', '0' );
 			set_error_handler( array( 'UserMailer', 'errorHandler' ) );
-			wfDebug( "Sending mail via internal mail() function\n" );
 
 			if (function_exists('mail')) {
 				if (is_array($to)) {
@@ -437,9 +438,10 @@ class UserMailer {
  *
  */
 class EmailNotification {
-	private $to, $subject, $body, $bodyHTML, $replyto, $from;
-	private $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor, $action;
-	private $mailTargets = array();
+	protected $action;
+	protected $to, $subject, $body, $replyto, $from;
+	protected $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor;
+	protected $mailTargets = array();
 
 	/**
 	 * Send emails corresponding to the user $editor editing the page $title.
@@ -708,6 +710,7 @@ class EmailNotification {
 
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
+		$keys['$UNWATCHURL']         = $this->title->getFullUrl( 'action=unwatch' );
 
 		$keys['$ACTION']             = $this->action;
 
@@ -822,6 +825,14 @@ class EmailNotification {
 		# $PAGEEDITDATE is the time and date of the page change
 		# expressed in terms of individual local time of the notification
 		# recipient, i.e. watching user
+		$body = str_replace(
+			array(	'$PAGEEDITDATEANDTIME',
+				'$PAGEEDITDATE',
+				'$PAGEEDITTIME' ),
+			array(	$wgContLang->timeanddate( $this->timestamp, true, false, $timecorrection ),
+				$wgContLang->date( $this->timestamp, true, false, $timecorrection ),
+				$wgContLang->time( $this->timestamp, true, false, $timecorrection ) ),
+			$body);
 
 		// RT #1294 Bartek 07.05.2009, use the language object with the wiki code
 		$timedate = $wgContLang->timeanddate( $this->timestamp, true, false, $timecorrection );

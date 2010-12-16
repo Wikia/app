@@ -27,16 +27,16 @@ if (!defined('MEDIAWIKI')) die();
 /*
  * A (mostly) abstract class which provides a little syntactic sugar
  * for defining vocabularies. To define a vocabulary using this
- * interface simply declare a base URI as the constant NAMESPACE, then
+ * interface simply declare a base URI as the constant RDF_NAMESPACE, then
  * add terms for each of the vocabulary's terms.  Just make sure that
  * the term name exactly matches the term text.
  */
 abstract class MwRdf_Vocabulary {
 
-	const NAMESPACE = '';
+	const RDF_NAMESPACE = '';
 
 	public function getNS() {
-		self::NAMESPACE;
+		self::RDF_NAMESPACE;
 	}
 
 	public function __construct() {

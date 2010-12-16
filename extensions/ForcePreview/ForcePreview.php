@@ -9,6 +9,7 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Force Preview',
 	'version' => '1.1',
 	'author' => 'Ryan Schmidt',

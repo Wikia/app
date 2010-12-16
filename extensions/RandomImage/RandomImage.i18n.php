@@ -18,6 +18,13 @@ $messages['qqq'] = array(
 	'randomimage-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'randomimage-desc' => "Voeg die etiket <tt>&lt;randomimage /&gt;</tt> by vir die kies van 'n lukrake medialêer",
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -38,6 +45,13 @@ $messages['arz'] = array(
  */
 $messages['be-tarask'] = array(
 	'randomimage-desc' => 'Дазваляе выпадкова выбіраць мэдыя-файлы з дапамогай тэга <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'randomimage-desc' => 'Porurchas a ra ur restr liesmedia dre zegouezh en ur ober gant <tt>&lt;randomimage /&gt;</tt>',
 );
 
 /** Bosnian (Bosanski)
@@ -66,6 +80,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'randomimage-desc' => 'Póbitujo pśipadny wuběrk multimedialnych datajow z pomocu toflicki <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'randomimage-desc' => 'Παρέχει ένα τυχαίο επιλογέα μέσου χρησιμοποιώντας το <randomimage />',
 );
 
 /** Esperanto (Esperanto)
@@ -132,6 +153,13 @@ $messages['he'] = array(
 	'randomimage-desc' => 'בחירת מדיה אקראית באמצעות <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'randomimage-desc' => 'Nagahatag sang ginpalgpat medya gapangkuha gamit ang <tt>&lt;randomimage /&gt;</tt>',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -186,6 +214,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'randomimage-desc' => 'Weist eng zoufälleg Medien-Datei a benotzt <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'randomimage-desc' => 'Дава случаен избирач на медии користејќи <tt>&lt;randomimage /&gt;</tt>',
 );
 
 /** Marathi (मराठी)
@@ -244,11 +279,19 @@ $messages['pl'] = array(
 	'randomimage-desc' => 'Zwraca losowy plik z użyciem znacznika <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'randomimage-desc' => 'A dà na cartela ëd file casuaj an dovrand <tt>&lt;randomimage /&gt;</tt>',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'randomimage-desc' => 'Providencia um selector de media aleatória usando <tt>&lt;randomimage /&gt;</tt>',
+	'randomimage-desc' => 'Fornece um selector aleatório de ficheiros multimédia usando <tt>&lt;randomimage /&gt;</tt>',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -293,6 +336,20 @@ $messages['sq'] = array(
 	'randomimage-desc' => 'Mundëson hapje të rastësishme të mediave duke përdorur <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'randomimage-desc' => 'Приказује случајно изабрану слику помоћу тага <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'randomimage-desc' => 'Prikazuje slučajno izabranu sliku pomoću taga <tt>&lt;randomimage /&gt;</tt>',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -307,11 +364,32 @@ $messages['sv'] = array(
 	'randomimage-desc' => 'Ger en tillfällig mediafil genom att använda <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Telugu (తెలుగు)
+ * @author రాకేశ్వర
+ */
+$messages['te'] = array(
+	'randomimage-desc' => 'యాదృచ్ఛిక మాధ్యమాంశము తెచ్చే పరికరాన్ని <tt>&lt;randomimage /&gt;</tt>తో అందిస్తుంది.',
+);
+
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'randomimage-desc' => 'Бо истифодаи <tt>&lt;randomimage /&gt;</tt> чинандаи расонаи тасодуфиро пешкаш мекунад',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'randomimage-desc' => 'Bo istifodai <tt>&lt;randomimage /&gt;</tt> cinandai rasonai tasodufiro peşkaş mekunad',
+);
+
+/** Thai (ไทย)
+ * @author Harley Hartwell
+ */
+$messages['th'] = array(
+	'randomimage-desc' => 'สุ่มไฟล์เพื่อแสดงผลโดยใช้ <tt>&lt;randomimage /&gt;</tt>',
 );
 
 /** Tagalog (Tagalog)

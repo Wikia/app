@@ -10,38 +10,22 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Icon',
-	'version'        => '1.5',
+	'version'        => '1.6.1',
 	'author'         => 'Tim Laqua',
 	'description'    => 'Allows you to use images as icons and icon links',
 	'descriptionmsg' => 'icon-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Icon',
 );
 
-$wgExtensionFunctions[] = 'efIcon_Setup';
-$wgHooks['LanguageGetMagic'][] = 'efIcon_LanguageGetMagic';
+$wgHooks['ParserFirstCallInit'][] = 'efIcon_Setup';
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['Icon'] = $dir . 'Icon.i18n.php';
 
-function efIcon_Setup() {
-	global $wgParser, $wgMessageCache;
-
-	#Add Messages
-	require( dirname( __FILE__ ) . '/Icon.i18n.php' );
-	foreach( $messages as $key => $value ) {
-		  $wgMessageCache->addMessages( $messages[$key], $key );
-	}
-
+function efIcon_Setup( &$parser ) {
 	# Set a function hook associating the "example" magic word with our function
-	$wgParser->setFunctionHook( 'icon', 'efIcon_Render' );
-
-	return true;
-}
-
-function efIcon_LanguageGetMagic( &$magicWords, $langCode ) {
-	# Add the magic word
-	# The first array element is case sensitive, in this case it is not case sensitive
-	# All remaining elements are synonyms for our parser function
-	$magicWords['icon'] = array( 0, 'icon' );
-	# unless we return true, other parser functions extensions won't get loaded.
+	$parser->setFunctionHook( 'icon', 'efIcon_Render' );
 	return true;
 }
 
@@ -58,7 +42,7 @@ function efIcon_Render(&$parser, $img, $alt=null, $width=null, $page=null) {
 	// check if we are dealing with an InterWiki link
 	if ( $ititle->isLocal() ) {
 		$image = wfFindFile( $img );
-		if (!$image->exists())
+		if (!$image)
 			return '[[Image:'.$img.']]';
 
 		$iURL = $image->getURL();
@@ -103,7 +87,7 @@ function efIcon_Render(&$parser, $img, $alt=null, $width=null, $page=null) {
 			if (is_object( $ptitle )) {
 				if ( $ptitle->isLocal() ) {
 					$tURL = $ptitle->getLocalUrl();
-					$aClass='iconlink';
+					$aClass='class="iconlink"';
 				} else {
 					$tURL = $ptitle->getFullURL();
 					$aClass = 'class="extiw iconlink"';

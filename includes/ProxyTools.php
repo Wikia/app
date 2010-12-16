@@ -67,22 +67,26 @@ function wfGetAgent() {
  * @return string
  */
 function wfGetIP() {
-	global $wgIP, $wgUsePrivateIPs;
+	global $wgIP, $wgUsePrivateIPs, $wgCommandLineMode;
 
 	# Return cached result
 	if ( !empty( $wgIP ) ) {
 		return $wgIP;
 	}
 
+	$ipchain = array();
+	$ip = false;
+
 	/* collect the originating ips */
 	# Client connecting to this webserver
 	if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-		$ipchain = array( IP::canonicalize( $_SERVER['REMOTE_ADDR'] ) );
-	} else {
-		# Running on CLI?
-		$ipchain = array( '127.0.0.1' );
+		$ip = IP::canonicalize( $_SERVER['REMOTE_ADDR'] );
+	} elseif( $wgCommandLineMode ) {
+		$ip = '127.0.0.1';
 	}
-	$ip = $ipchain[0];
+	if( $ip ) {
+		$ipchain[] = $ip;
+	}
 
 	# Append XFF on to $ipchain
 	$forwardedFor = wfGetForwardedFor();
@@ -117,6 +121,10 @@ function wfGetIP() {
 		Wikia::log( __METHOD__, false, "Private IP $ip from $_SERVER[REMOTE_ADDR] with $xff ($_SERVER[HTTP_USER_AGENT])", true, true );
 	}
 
+	if( !$ip ) {
+		throw new MWException( "Unable to determine IP" );
+	}
+
 	wfDebug( "IP: $ip\n" );
 	$wgIP = $ip;
 	return $ip;
@@ -126,7 +134,7 @@ function wfGetIP() {
  * Checks if an IP is a trusted proxy providor
  * Useful to tell if X-Fowarded-For data is possibly bogus
  * Squid cache servers for the site and AOL are whitelisted
- * @param string $ip
+ * @param $ip String
  * @return bool
  */
 function wfIsTrustedProxy( $ip ) {
@@ -176,7 +184,7 @@ function wfProxyCheck() {
 						escapeshellarg( $port ),
 						escapeshellarg( $url )
 						));
-			exec( "php $params &>/dev/null &" );
+			exec( "php $params >" . wfGetNull() . " 2>&1 &" );
 		}
 		# Set MemCached key
 		$wgMemc->set( $mcKey, 1, $wgProxyMemcExpiry );
@@ -197,12 +205,11 @@ function wfParseCIDR( $range ) {
  */
 function wfIsLocallyBlockedProxy( $ip ) {
 	global $wgProxyList;
-	$fname = 'wfIsLocallyBlockedProxy';
 
 	if ( !$wgProxyList ) {
 		return false;
 	}
-	wfProfileIn( $fname );
+	wfProfileIn( __METHOD__ );
 
 	if ( !is_array( $wgProxyList ) ) {
 		# Load from the specified file
@@ -219,7 +226,7 @@ function wfIsLocallyBlockedProxy( $ip ) {
 	} else {
 		$ret = false;
 	}
-	wfProfileOut( $fname );
+	wfProfileOut( __METHOD__ );
 	return $ret;
 }
 

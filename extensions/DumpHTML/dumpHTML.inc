@@ -628,6 +628,7 @@ class DumpHTML {
 		}
 
 		file_put_contents( "{$this->dest}/dumpHTML.version", self::VERSION );
+		$this->copyDirectory( "$IP/skins/vector", "{$this->dest}/skins/vector" );
 		$this->copyDirectory( "$IP/skins/monobook", "{$this->dest}/skins/monobook" );
 		$this->copyDirectory( "$IP/skins/common", "{$this->dest}/skins/common" );
 		$this->copyDirectory( "{$this->extdir}/skin", "{$this->dest}/skins/offline" );
@@ -1409,4 +1410,3 @@ function wfDumpStartTagHandler( $parser, $name, $attribs ) {
 function wfDumpEndTagHandler( $parser, $name ) {}
 
 # vim: syn=php
-?>

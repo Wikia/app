@@ -13,16 +13,17 @@ $aliases['en'] = array(
 	'WhatIsMyIP' => array( 'WhatIsMyIP' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Afrikaans (Afrikaans) */
+$aliases['af'] = array(
+	'WhatIsMyIP' => array( 'WatIsMyIP' ),
+);
+
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'WhatIsMyIP' => array( 'ما_هو_الأيبي_خاصتي' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'WhatIsMyIP' => array( 'ما_هو_الأيبى_خاصتى' ),
 );
@@ -67,6 +68,11 @@ $aliases['fr'] = array(
 	'WhatIsMyIP' => array( 'Quelle est mon IP', 'QuelleEstMonIP' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'WhatIsMyIP' => array( 'Quinta est mon adrèce IP', 'QuintaEstMonAdrèceIP' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'WhatIsMyIP' => array( 'Cal é a miña IP' ),
@@ -97,9 +103,19 @@ $aliases['ia'] = array(
 	'WhatIsMyIP' => array( 'Que es mi IP' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'WhatIsMyIP' => array( 'IP saya', 'IPSaya' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'WhatIsMyIP' => array( 'IlMioIP' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'WhatIsMyIP' => array( '自分のIPアドレス' ),
+	'WhatIsMyIP' => array( '自分のIPアドレス', '自分のＩＰアドレス' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -107,14 +123,34 @@ $aliases['ksh'] = array(
 	'WhatIsMyIP' => array( 'Ming IP Address' ),
 );
 
+/** Cornish (Kernewek) */
+$aliases['kw'] = array(
+	'WhatIsMyIP' => array( 'PythYwOwIP' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'WhatIsMyIP' => array( 'Wéi ass meng IP-Adress' ),
 );
 
+/** Lithuanian (Lietuvių) */
+$aliases['lt'] = array(
+	'WhatIsMyIP' => array( 'Koks mano IP' ),
+);
+
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'WhatIsMyIP' => array( 'КојаЕМојатаIP' ),
+	'WhatIsMyIP' => array( 'КојаЕМојатаIPАдреса' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'WhatIsMyIP' => array( 'എന്താണെൻഐപി' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'WhatIsMyIP' => array( 'माझाअंकपत्ताकाय' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -147,9 +183,19 @@ $aliases['ps'] = array(
 	'WhatIsMyIP' => array( 'زما آی پي پته څه ده' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'WhatIsMyIP' => array( 'Qual é o meu IP' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'WhatIsMyIP' => array( 'मदियअङ्कसंकेतकिमस्ती' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'WhatIsMyIP' => array( 'AkúMámIP' ),
 );
 
 /** Albanian (Shqip) */
@@ -162,6 +208,11 @@ $aliases['su'] = array(
 	'WhatIsMyIP' => array( 'NaonIPKuring' ),
 );
 
+/** Telugu (తెలుగు) */
+$aliases['te'] = array(
+	'WhatIsMyIP' => array( 'నాఐపిఏమిటి' ),
+);
+
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'WhatIsMyIP' => array( 'ไอพีของฉัน' ),
@@ -170,5 +221,15 @@ $aliases['th'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'WhatIsMyIP' => array( 'Ano ang IP ko' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'WhatIsMyIP' => array( 'IPAdresimNe' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'WhatIsMyIP' => array( 'ElMeIP' ),
 );
 

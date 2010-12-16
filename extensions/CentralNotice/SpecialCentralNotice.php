@@ -64,10 +64,10 @@ class CentralNotice extends SpecialPage {
 
 					// Set locked/unlocked flag accordingly
 					foreach ( $lockedNotices as $notice ) {
-					     $this->updateLock( $notice, '1' );
+						$this->updateLock( $notice, '1' );
 					}
 					foreach ( $unlockedNotices as $notice ) {
-					     $this->updateLock( $notice, '0' );
+						$this->updateLock( $notice, '0' );
 					}
 				}
 			}
@@ -91,7 +91,7 @@ class CentralNotice extends SpecialPage {
 					}
 				}
 			}
-                        
+
 			// Handle setting preferred
 			$preferredNotices = $wgRequest->getArray( 'preferred' );
 			if ( isset( $preferredNotices ) ) {
@@ -112,7 +112,7 @@ class CentralNotice extends SpecialPage {
 						CentralNoticeDB::updatePreferred( $notice, '0' );
 					}
 				}
-			}               
+			}
 
 			$noticeName = $wgRequest->getVal( 'notice' );
 
@@ -134,7 +134,7 @@ class CentralNotice extends SpecialPage {
 			}
 
 			// Handle updates if no post content came through
-			if ( !isset( $lockedNotices ) && $method !==  'addNotice' ) {
+			if ( !isset( $lockedNotices ) && $method !== 'addNotice' ) {
 				if ( $method == 'listNoticeDetail' ) {
 					$notice = $wgRequest->getVal ( 'notice' );
 						$this->updateLock( $notice, 0 );
@@ -146,7 +146,7 @@ class CentralNotice extends SpecialPage {
 				}
 			}
 
-			if ( !isset( $enabledNotices ) && $method !== 'addNotice'  ) {
+			if ( !isset( $enabledNotices ) && $method !== 'addNotice' ) {
 				if ( $method == 'listNoticeDetail' ) {
 					$notice = $wgRequest->getVal ( 'notice' );
 						$this->updateEnabled( $notice, 0);
@@ -158,7 +158,7 @@ class CentralNotice extends SpecialPage {
 				}
 			}
 
-			if ( !isset( $preferredNotices ) && $method !== 'addNotice'  ) {
+			if ( !isset( $preferredNotices ) && $method !== 'addNotice' ) {
 				if ( $method == 'listNoticeDetail' ) {
 					$notice = $wgRequest->getVal ( 'notice' );
 						CentralNoticeDB::updatePreferred( $notice, 0 );
@@ -195,7 +195,7 @@ class CentralNotice extends SpecialPage {
 
 		// Handle removing
 		if ( $this->editable && $method == 'removeNotice' ) {
-			$noticeName =  $wgRequest->getVal ( 'noticeName' );
+			$noticeName = $wgRequest->getVal ( 'noticeName' );
 			$this->removeNotice ( $noticeName );
 		}
 
@@ -229,11 +229,11 @@ class CentralNotice extends SpecialPage {
 
 	// Update the enabled/disabled state of notice
 	private function updateEnabled( $notice, $state ) {
-		 $dbw = wfGetDB( DB_MASTER );
-	         $dbw->begin();
-		 $res = $dbw->update( 'cn_notices',
-		 	array( 'not_enabled' => $state ),
-		 	array( 'not_name' => $notice )
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->begin();
+		$res = $dbw->update( 'cn_notices',
+			array( 'not_enabled' => $state ),
+			array( 'not_name' => $notice )
 		);
 		$dbw->commit(); 
 	}
@@ -351,7 +351,7 @@ class CentralNotice extends SpecialPage {
 	 */
 
 	function listNotices() {
-		global $wgOut, $wgRequest, $wgTitle, $wgScript, $wgUser;
+		global $wgOut, $wgRequest, $wgScript, $wgUser;
 		global $wgNoticeProject, $wgUserLang;
 
 		// Get connection
@@ -377,7 +377,7 @@ class CentralNotice extends SpecialPage {
 					'not_start',
 					'not_end',
 					'not_enabled',
-                                        'not_preferred',
+					'not_preferred',
 					'not_project',
 					'not_language',
 					'not_locked'
@@ -394,7 +394,7 @@ class CentralNotice extends SpecialPage {
 					'not_start',
 					'not_end',
 					'not_enabled',
-                                        'not_preferred',
+					'not_preferred',
 					'not_project',
 					'not_locked'
 				),
@@ -457,13 +457,13 @@ class CentralNotice extends SpecialPage {
 				}
 
 				// Date and time calculations
-				$start_timestamp = $row->not_start;
+				$start_timestamp = wfTimestamp( TS_MW, $row->not_start );
 				$start_year = substr( $start_timestamp, 0 , 4 );
 				$start_month = substr( $start_timestamp, 4, 2 );
 				$start_day = substr( $start_timestamp, 6, 2 );
 				$start_hour = substr( $start_timestamp, 8, 2 );
 				$start_min = substr( $start_timestamp, 10, 2 );
-				$end_timestamp = $row->not_end;
+				$end_timestamp = wfTimestamp( TS_MW, $row->not_end );
 				$end_year = substr( $end_timestamp, 0 , 4 );
 				$end_month = substr( $end_timestamp, 4, 2 );
 				$end_day = substr( $end_timestamp, 6, 2 );
@@ -480,11 +480,12 @@ class CentralNotice extends SpecialPage {
 					wfArrayMerge( $readonly,
 						array( 'value' => $row->not_name ) ) );
 
-                                // Preferred
-                                $fields[] =
-                                        Xml::check( 'preferred[]',  ( $row->not_preferred == '1' ),
-                                        wfArrayMerge( $readonly,
-                                                array( 'value' => $row->not_name ) ) );
+				// Preferred
+				$fields[] =
+				Xml::check( 'preferred[]', ( $row->not_preferred == '1' ),
+				wfArrayMerge( $readonly,
+				array( 'value' => $row->not_name ) ) );
+
 				// Locked
 				$fields[] =
 					Xml::check( 'locked[]', ( $row->not_locked == '1' ),
@@ -650,7 +651,7 @@ class CentralNotice extends SpecialPage {
 			$htmlOut .= Xml::element( 'p' );
 			$newPage = SpecialPage::getTitleFor( 'NoticeTemplate', 'add' );
 			$sk = $wgUser->getSkin();
-               		$htmlOut .= $sk->makeLinkObj( $newPage, wfMsgHtml( 'centralnotice-add-template' ) );
+			$htmlOut .= $sk->makeLinkObj( $newPage, wfMsgHtml( 'centralnotice-add-template' ) );
 			$htmlOut .= Xml::element( 'p' );
 		} elseif ( $output_assigned == '' ) {
 			$htmlOut .= wfMsg( 'centralnotice-no-templates-assigned' );
@@ -690,7 +691,7 @@ class CentralNotice extends SpecialPage {
 				'not_start',
 				'not_end',
 				'not_enabled',
-                                'not_preferred',
+				'not_preferred',
 				'not_project',
 				'not_language',
 				'not_locked'
@@ -703,7 +704,7 @@ class CentralNotice extends SpecialPage {
 		if ( $row ) {
 			// Build Html
 			$htmlOut  = Xml::fieldset( $notice );
-			$htmlOut .= Xml::openElement( 'table', array(  'cellpadding' => 9 ) );
+			$htmlOut .= Xml::openElement( 'table', array( 'cellpadding' => 9 ) );
 
 			// Rows
 			$table = array(
@@ -736,7 +737,7 @@ class CentralNotice extends SpecialPage {
 						wfArrayMerge( $readonly,
 							array( 'value' => $row->not_name ) ) )
 				),
-                                // Preferred
+				// Preferred
 				array(
 					wfMsgHtml( 'centralnotice-preferred' ),
 					Xml::check( 'preferred[]', ( $row->not_preferred == '1' ),
@@ -821,7 +822,7 @@ class CentralNotice extends SpecialPage {
 		// Rows
 		while ( $row = $dbr->fetchObject( $res ) ) {
 
-			$htmlOut .=  Xml::openElement( 'tr' );
+			$htmlOut .= Xml::openElement( 'tr' );
 
 			if( $this->editable ) {
 				// Remove
@@ -909,8 +910,8 @@ class CentralNotice extends SpecialPage {
 			$htmlOut .= Xml::element( 'th', array( 'align' => 'left', 'width' => '70%' ),
 				 wfMsg ( "centralnotice-templates" ) );
 	
-                       // Find dups
-                       $templatesAssigned = $this->selectTemplatesAssigned( $notice );
+			// Find dups
+			$templatesAssigned = $this->selectTemplatesAssigned( $notice );
 
 			// Build rows
 			while ( $row = $dbr->fetchObject( $res ) ) {
@@ -1054,13 +1055,13 @@ class CentralNotice extends SpecialPage {
 			$endTs = wfTimeStamp( TS_MW, "{$end['year']}:{$end['month']}:{$start['day']} {$start['hour']}:00:00" );
 
 			$res = $dbw->insert( 'cn_notices',
-			   array( 'not_name' => $noticeName,
-				  'not_enabled' => $enabled,
-				  'not_start' => $dbr->timestamp( $startTs ),
-				  'not_end' => $dbr->timestamp( $endTs ),
-				  'not_project' => $project_name,
-				  'not_language' => $project_language
-			    )
+				array( 'not_name' => $noticeName,
+					'not_enabled' => $enabled,
+					'not_start' => $dbr->timestamp( $startTs ),
+					'not_end' => $dbr->timestamp( $endTs ),
+					'not_project' => $project_name,
+					'not_language' => $project_language
+				)
 			);
 			$dbw->commit();
 			return;
@@ -1084,7 +1085,7 @@ class CentralNotice extends SpecialPage {
 			 return;
 		} else {
 			 $dbw = wfGetDB( DB_MASTER );
-	                 $dbw->begin();
+			 $dbw->begin();
 			 $noticeId = htmlspecialchars( $this->getNoticeId( $noticeName ) );
 			 $res = $dbw->delete( 'cn_assignments',  array ( 'not_id' => $noticeId ) );
 			 $res = $dbw->delete( 'cn_notices', array ( 'not_name' => $noticeName ) );
@@ -1189,13 +1190,13 @@ class CentralNotice extends SpecialPage {
 		// Overlap over a date within the same project and language
 		$startDate = $dbr->timestamp( $start );
 		$endDate = $dbr->timestamp( $end );
-	     
+
  		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$res = $dbw->update( 'cn_notices',
 			array(
-				'not_start' => $start,
-				'not_end' => $end
+				'not_start' => $startDate,
+				'not_end' => $endDate
 			),
 			array( 'not_name' => $noticeName )
 		);

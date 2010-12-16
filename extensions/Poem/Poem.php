@@ -2,7 +2,7 @@
 # MediaWiki Poem extension v1.0cis
 #
 # Based on example code from
-# http://meta.wikimedia.org/wiki/Write_your_own_MediaWiki_extension
+# http://www.mediawiki.org/wiki/Manual:Extending_wiki_markup
 #
 # All other code is copyright © 2005 Nikola Smolenski <smolensk@eunet.yu>
 # (with modified parser callback and attribute additions)
@@ -16,31 +16,26 @@
 # To use, put some text between <poem></poem> tags
 #
 # For more information see its page at
-# http://meta.wikimedia.org/wiki/Poem_Extension
+# http://www.mediawiki.org/wiki/Extension:Poem
 
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfPoemExtension';
-} else {
-	$wgExtensionFunctions[] = 'wfPoemExtension';
-}
+$wgHooks['ParserFirstCallInit'][] = 'wfPoemExtension';
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Poem',
 	'author'         => array( 'Nikola Smolenski', 'Brion Vibber', 'Steve Sanbeg' ),
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Poem',
-	'svn-date' => '$LastChangedDate: 2008-12-20 10:32:47 +0100 (sob, 20 gru 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44839 $',
 	'description'    => 'Adds <tt>&lt;poem&gt;</tt> tag for poem formatting',
 	'descriptionmsg' => 'poem-desc',
 );
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/poemParserTests.txt";
 $wgExtensionMessagesFiles['Poem'] =  dirname(__FILE__) . '/Poem.i18n.php';
 
-function wfPoemExtension() {
-	$GLOBALS['wgParser']->setHook("poem","PoemExtension");
+function wfPoemExtension( &$parser ) {
+	$parser->setHook("poem","PoemExtension");
 	return true;
 }
 
-function PoemExtension( $in, $param=array(), $parser=null ) {
+function PoemExtension( $in, $param=array(), $parser=null, $frame=false ) {
 
 	/* using newlines in the text will cause the parser to add <p> tags,
  	 * which may not be desired in some cases
@@ -54,7 +49,7 @@ function PoemExtension( $in, $param=array(), $parser=null ) {
 			array( "/^\n/", "/\n$/D", "/\n/", "/^( +)/me" ),
 			array( "", "", "$tag\n", "str_replace(' ','&nbsp;','\\1')" ),
 			$in );
-			$text = $parser->recursiveTagParse( $text );
+			$text = $parser->recursiveTagParse( $text, $frame );
 	} else {
 		$text = preg_replace(
 			array( "/^\n/", "/\n$/D", "/\n/", "/^( +)/me" ),
@@ -76,14 +71,7 @@ function PoemExtension( $in, $param=array(), $parser=null ) {
 		$text = $ret->getText();
 	}
 
-	global $wgVersion;
-	if( version_compare( $wgVersion, "1.7alpha" ) >= 0 ) {
-		// Pass HTML attributes through to the output.
-		$attribs = Sanitizer::validateTagAttributes( $param, 'div' );
-	} else {
-		// Can't guarantee safety on 1.6 or older.
-		$attribs = array();
-	}
+	$attribs = Sanitizer::validateTagAttributes( $param, 'div' );
 
 	// Wrap output in a <div> with "poem" class.
 	if( isset( $attribs['class'] ) ) {

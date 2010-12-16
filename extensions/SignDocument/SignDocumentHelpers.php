@@ -47,11 +47,11 @@ class SignDocumentForm {
 	private static $mCanRunCtor;
 
 	/**
-     * Constructs a new SignDocumentForm. Errors if the class is externally
+	 * Constructs a new SignDocumentForm. Errors if the class is externally
 	 * instatiated.
 	 */
 	function __construct() {
-		if (!self::$mCanRunCtor) throw new MWException('Finger weg!');
+		if ( !self::$mCanRunCtor ) throw new MWException( 'Finger weg!' );
 	}
 
 	/**
@@ -63,22 +63,22 @@ class SignDocumentForm {
 		self::$mCanRunCtor = false;
 
 		global $wgRequest;
-		$f->mPagename = $wgRequest->getVal('pagename');
-		$f->mAllowedGroup = $wgRequest->getVal('group');
-		$f->mMinAge = $wgRequest->getVal('minage');
-		$f->mIntrotext = $wgRequest->getVal('introtext');
+		$f->mPagename = $wgRequest->getVal( 'pagename' );
+		$f->mAllowedGroup = $wgRequest->getVal( 'group' );
+		$f->mMinAge = $wgRequest->getVal( 'minage' );
+		$f->mIntrotext = $wgRequest->getVal( 'introtext' );
 
-		$f->mEmailHidden = $wgRequest->getVal('mwCreateSignDocHidden-email');
-		$f->mAddressHidden = $wgRequest->getVal('mwCreateSignDocHidden-address');
-		$f->mExtAddressHidden = $wgRequest->getVal('mwCreateSignDocHidden-extaddress');
-		$f->mPhoneHidden = $wgRequest->getVal('mwCreateSignDocHidden-phone');
-		$f->mBdayHidden = $wgRequest->getVal('mwCreateSignDocHidden-bday');
+		$f->mEmailHidden = $wgRequest->getVal( 'mwCreateSignDocHidden-email' );
+		$f->mAddressHidden = $wgRequest->getVal( 'mwCreateSignDocHidden-address' );
+		$f->mExtAddressHidden = $wgRequest->getVal( 'mwCreateSignDocHidden-extaddress' );
+		$f->mPhoneHidden = $wgRequest->getVal( 'mwCreateSignDocHidden-phone' );
+		$f->mBdayHidden = $wgRequest->getVal( 'mwCreateSignDocHidden-bday' );
 
-		$f->mEmailOptional = $wgRequest->getVal('mwCreateSignDocOptional-email');
-		$f->mAddressOptional = $wgRequest->getVal('mwCreateSignDocOptional-address');
-		$f->mExtAddressOptional = $wgRequest->getVal('mwCreateSignDocOptional-extaddress');
-		$f->mPhoneOptional = $wgRequest->getVal('mwCreateSignDocOptional-phone');
-		$f->mBdayOptional = $wgRequest->getVal('mwCreateSignDocOptional-bday');
+		$f->mEmailOptional = $wgRequest->getVal( 'mwCreateSignDocOptional-email' );
+		$f->mAddressOptional = $wgRequest->getVal( 'mwCreateSignDocOptional-address' );
+		$f->mExtAddressOptional = $wgRequest->getVal( 'mwCreateSignDocOptional-extaddress' );
+		$f->mPhoneOptional = $wgRequest->getVal( 'mwCreateSignDocOptional-phone' );
+		$f->mBdayOptional = $wgRequest->getVal( 'mwCreateSignDocOptional-bday' );
 
 		$f->basicSanityChecking();
 
@@ -92,9 +92,9 @@ class SignDocumentForm {
 	function loadArticleData() {
 		$this->mTitle = Title::newFromText( $this->mPagename );
 
-		if (is_null($this->mTitle) || !is_object($this->mTitle))
-			throw new MWException('Something went horribly wrong. '.
-				'mTitle is null or not an object.');
+		if ( is_null( $this->mTitle ) || !is_object( $this->mTitle ) )
+			throw new MWException( 'Something went horribly wrong. ' .
+				'mTitle is null or not an object.' );
 
 		if ( !$this->mTitle->exists() )
 			return false;
@@ -112,8 +112,8 @@ class SignDocumentForm {
 	 * Checks the basics, like that minimum age is numeric.
 	 */
 	function basicSanityChecking() {
-		if ($this->mMinAge && !is_numeric($this->mMinAge))
-			throw new Exception('Invalid minimum age: "' . $this->mMinAge . '".');
+		if ( $this->mMinAge && !is_numeric( $this->mMinAge ) )
+			throw new Exception( 'Invalid minimum age: "' . $this->mMinAge . '".' );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class SignDocumentForm {
 
 		/* Make sure it don't already exist ... */
 		$res = $dbw->selectRow( 'sdoc_form', '*', array(
-			'form_pageid' => $this->mPageId));
+			'form_pageid' => $this->mPageId ) );
 		if ( !empty( $res ) ) {
 			return false;
 		}
@@ -136,7 +136,7 @@ class SignDocumentForm {
 		$this->compressFlags();
 
 		$dbw->insert( 'sdoc_form',
-	        array(
+			array(
 				'form_pageid'       => $this->mPageId,
 				'form_pagename'     => $this->mPagename,
 				'form_oldid'        => $this->mOldid,
@@ -145,7 +145,8 @@ class SignDocumentForm {
 				'form_hidden'       => $this->mHiddenFlags,
 				'form_optional'     => $this->mOptionalFlags,
 				'form_intro'        => $this->mIntrotext
-				));
+			)
+		);
 
 		$this->mInDb = true;
 
@@ -169,16 +170,16 @@ class SignDocumentForm {
 		global $wgUser;
 		$dbw = wfGetDB( DB_MASTER );
 
-		$dbrs = $dbw->select( 'sdoc_form', array('form_pagename', 'form_oldid',
-				'form_id', 'form_allowgroup', 'form_open'),
-			array());
+		$dbrs = $dbw->select( 'sdoc_form', array( 'form_pagename', 'form_oldid',
+				'form_id', 'form_allowgroup', 'form_open' ),
+			array() );
 
 		$ret = array();
-		while ( $dbr = $dbw->fetchObject($dbrs)) {
+		while ( $dbr = $dbw->fetchObject( $dbrs ) ) {
 			if ( in_array( $dbr->form_allowgroup,
 						$wgUser->getEffectiveGroups() ) )
 						$ret[$dbr->form_pagename . ' (r' . $dbr->form_oldid . (
-							(!$dbr->form_open)?' - ' . wfMsg('sign-closed'):'')
+							( !$dbr->form_open ) ? ' - ' . wfMsg( 'sign-closed' ):'' )
 							. ')'] = $dbr->form_id;
 		}
 
@@ -190,7 +191,7 @@ class SignDocumentForm {
 	 * Create a new SignDocumentForm from the db, as extracted using the provided
 	 * form_id.
 	 */
-	static function newFromDB($id) {
+	static function newFromDB( $id ) {
 		self::$mCanRunCtor = true;
 		$f = new SignDocumentForm();
 		self::$mCanRunCtor = false;
@@ -198,9 +199,9 @@ class SignDocumentForm {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$row = $dbw->selectRow( 'sdoc_form', '*',
-			array('form_id' => $id));
+			array( 'form_id' => $id ) );
 
-		if ( empty($row) ) return false;
+		if ( empty( $row ) ) return false;
 
 		$f->mInDb = true;
 
@@ -217,7 +218,7 @@ class SignDocumentForm {
 		$f->inflateFlags();
 
 		$f->mTitle = Title::newFromId( $f->mPageId );
-		$f->mArticle = new Article($f->mTitle, $f->mOldid);
+		$f->mArticle = new Article( $f->mTitle, $f->mOldid );
 
 		return $f;
 	}
@@ -229,19 +230,19 @@ class SignDocumentForm {
 	function compressFlags() {
 		$this->mHiddenFlags = 0;
 
-		if ($this->mEmailHidden)      $this->mHiddenFlags |= 1;
-		if ($this->mAddressHidden)    $this->mHiddenFlags |= 1 << 1;
-		if ($this->mExtAddressHidden) $this->mHiddenFlags |= 1 << 2;
-		if ($this->mPhoneHidden)      $this->mHiddenFlags |= 1 << 3;
-		if ($this->mBdayHidden)       $this->mHiddenFlags |= 1 << 4;
+		if ( $this->mEmailHidden )      $this->mHiddenFlags |= 1;
+		if ( $this->mAddressHidden )    $this->mHiddenFlags |= 1 << 1;
+		if ( $this->mExtAddressHidden ) $this->mHiddenFlags |= 1 << 2;
+		if ( $this->mPhoneHidden )      $this->mHiddenFlags |= 1 << 3;
+		if ( $this->mBdayHidden )       $this->mHiddenFlags |= 1 << 4;
 
 		$this->mOptionalFlags = 0;
 
-		if ($this->mEmailOptional)      $this->mOptionalFlags |= 1;
-		if ($this->mAddressOptional)    $this->mOptionalFlags |= 1 << 1;
-		if ($this->mExtAddressOptional) $this->mOptionalFlags |= 1 << 2;
-		if ($this->mPhoneOptional)      $this->mOptionalFlags |= 1 << 3;
-		if ($this->mBdayOptional)       $this->mOptionalFlags |= 1 << 4;
+		if ( $this->mEmailOptional )      $this->mOptionalFlags |= 1;
+		if ( $this->mAddressOptional )    $this->mOptionalFlags |= 1 << 1;
+		if ( $this->mExtAddressOptional ) $this->mOptionalFlags |= 1 << 2;
+		if ( $this->mPhoneOptional )      $this->mOptionalFlags |= 1 << 3;
+		if ( $this->mBdayOptional )       $this->mOptionalFlags |= 1 << 4;
 	}
 
 	/**
@@ -251,17 +252,17 @@ class SignDocumentForm {
 	 * already been set (typically read from the db).
 	 */
 	function inflateFlags() {
-		$this->mEmailHidden        = (bool) ($this->mHiddenFlags & 1);
-		$this->mAddressHidden      = (bool) ($this->mHiddenFlags & (1 << 1));
-		$this->mExtAddressHidden   = (bool) ($this->mHiddenFlags & (1 << 2));
-		$this->mPhoneHidden        = (bool) ($this->mHiddenFlags & (1 << 3));
-		$this->mBdayHidden         = (bool) ($this->mHiddenFlags & (1 << 4));
+		$this->mEmailHidden        = (bool) ( $this->mHiddenFlags & 1 );
+		$this->mAddressHidden      = (bool) ( $this->mHiddenFlags & ( 1 << 1 ) );
+		$this->mExtAddressHidden   = (bool) ( $this->mHiddenFlags & ( 1 << 2 ) );
+		$this->mPhoneHidden        = (bool) ( $this->mHiddenFlags & ( 1 << 3 ) );
+		$this->mBdayHidden         = (bool) ( $this->mHiddenFlags & ( 1 << 4 ) );
 
-		$this->mEmailOptional        = (bool) ($this->mOptionalFlags & 1);
-		$this->mAddressOptional      = (bool) ($this->mOptionalFlags & (1 << 1));
-		$this->mExtAddressOptional   = (bool) ($this->mOptionalFlags & (1 << 2));
-		$this->mPhoneOptional        = (bool) ($this->mOptionalFlags & (1 << 3));
-		$this->mBdayOptional         = (bool) ($this->mOptionalFlags & (1 << 4));
+		$this->mEmailOptional        = (bool) ( $this->mOptionalFlags & 1 );
+		$this->mAddressOptional      = (bool) ( $this->mOptionalFlags & ( 1 << 1 ) );
+		$this->mExtAddressOptional   = (bool) ( $this->mOptionalFlags & ( 1 << 2 ) );
+		$this->mPhoneOptional        = (bool) ( $this->mOptionalFlags & ( 1 << 3 ) );
+		$this->mBdayOptional         = (bool) ( $this->mOptionalFlags & ( 1 << 4 ) );
 	}
 
 	/**
@@ -281,7 +282,7 @@ class SignDocumentForm {
 	 */
 	function __toString() {
 		$ret = 'SignDocumentForm [ ';
-		$ret .= 'mPagename:'.$this->mPagename;
+		$ret .= 'mPagename:' . $this->mPagename;
 		$ret .= '; mAllowedGroup:' . $this->mAllowedGroup;
 		$ret .= '; mMinAge:' . $this->mMinAge;
 
@@ -336,7 +337,7 @@ class SignDocumentSignature {
 	private static $canRunCtor;
 
 	function __construct() {
-		if (!self::$canRunCtor) throw new MWException('Finger weg!');
+		if ( !self::$canRunCtor ) throw new MWException( 'Finger weg!' );
 	}
 
 	/**
@@ -354,8 +355,8 @@ class SignDocumentSignature {
 	 */
 	public static function newFromPost() {
 		global $wgRequest;
-		if (!$wgRequest->wasPosted())
-			throw new MWException('Page was not posted.');
+		if ( !$wgRequest->wasPosted() )
+			throw new MWException( 'Page was not posted.' );
 
 		self::$canRunCtor = true;
 		$f = new SignDocumentSignature();
@@ -445,10 +446,10 @@ class SignDocumentSignature {
 		$ret = array();
 		$dbw = wfGetDB( DB_MASTER );
 
-		$dbrs = $dbw->select('sdoc_signature', '*', $cond );
+		$dbrs = $dbw->select( 'sdoc_signature', '*', $cond );
 
-		while ( $dbr = $dbw->fetchObject($dbrs)) {
-			$ret[] = self::newFromRow($dbr);
+		while ( $dbr = $dbw->fetchObject( $dbrs ) ) {
+			$ret[] = self::newFromRow( $dbr );
 		}
 
 		return $ret;
@@ -500,13 +501,13 @@ class SignDocumentSignature {
 			'sig_form' => $this->mForm->getId(),
 			'sig_ip'   => $this->mIp ), 'LIMIT 1' );
 
-		if ( !empty($row1) ) throw new MWException( wfMsg( 'sig-error-already-signed' ) );
+		if ( !empty( $row1 ) ) throw new MWException( wfMsg( 'sig-error-already-signed' ) );
 
 		$row2 = $dbw->selectRow( 'sdoc_signature', 'sig_id', array(
 			'sig_form'  => $this->mForm->getId(),
 			'sig_email' => $this->mEmail ) );
 
-		if ($this->mEmail && !empty($row2)) throw new MWException( wfMsg( 'sig-error-already-signed' ) );
+		if ( $this->mEmail && !empty( $row2 ) ) throw new MWException( wfMsg( 'sig-error-already-signed' ) );
 	}
 
 	/**
@@ -519,20 +520,20 @@ class SignDocumentSignature {
 			'sig_form'           => $this->mForm->getId(),
 			'sig_timestamp'      => $this->mTimestamp,
 			'sig_realname'       => $this->mRealName,
-			'sig_anonymous'      => $this->isHidden('realname'),
+			'sig_anonymous'      => $this->isHidden( 'realname' ),
 			'sig_address'        => $this->mAddress,
-			'sig_hideaddress'    => $this->isHidden('address'),
+			'sig_hideaddress'    => $this->isHidden( 'address' ),
 			'sig_city'           => $this->mCity,
 			'sig_state'          => $this->mState,
 			'sig_country'        => $this->mCountry,
 			'sig_zip'            => $this->mZip,
-			'sig_hideextaddress' => $this->isHidden('extaddress'),
+			'sig_hideextaddress' => $this->isHidden( 'extaddress' ),
 			'sig_phone'          => $this->mPhone,
-			'sig_hidephone'      => $this->isHidden('phone'),
+			'sig_hidephone'      => $this->isHidden( 'phone' ),
 			'sig_bday'           => $this->mBday,
-			'sig_hidebday'       => $this->isHidden('bday'),
+			'sig_hidebday'       => $this->isHidden( 'bday' ),
 			'sig_email'          => $this->mEmail,
-			'sig_hideemail'      => $this->isHidden('email'),
+			'sig_hideemail'      => $this->isHidden( 'email' ),
 			'sig_ip'             => $this->mIp,
 			'sig_agent'          => $this->mAgent,
 			'sig_stricken'       => false
@@ -547,38 +548,38 @@ class SignDocumentSignature {
 	}
 
 	function checkSanity() {
-		if ( $this->mBday && !is_numeric($this->mBday) )
+		if ( $this->mBday && !is_numeric( $this->mBday ) )
 			$this->sanityFailure( 'age-noint', $this->mBday );
-		if ( $this->mZip && !is_numeric($this->mZip) )
+		if ( $this->mZip && !is_numeric( $this->mZip ) )
 			$this->sanityFailure( 'zip-noint', $this->mZip );
 
-		$emailregex = '/^[a-z]+[a-z0-9]*[\.|\-|_]?[a-z0-9]+'.
-			'@([a-z]+[a-z0-9]*[\.|\-]?[a-z]+[a-z0-9]*[a-z0-9]+){1,4}'.
+		$emailregex = '/^[a-z]+[a-z0-9]*[\.|\-|_]?[a-z0-9]+' .
+			'@([a-z]+[a-z0-9]*[\.|\-]?[a-z]+[a-z0-9]*[a-z0-9]+){1,4}' .
 			'\.[a-z]{2,4}$/';
-		if ( $this->mEmail && !preg_match($emailregex, $this->mEmail) )
+		if ( $this->mEmail && !preg_match( $emailregex, $this->mEmail ) )
 			$this->sanityFailure( 'bad-email', $this->mEmail );
 	}
 
 	function checkRequired() {
 		$frm = $this->mForm;
 		if ( !$this->mRealName ) $this->sanityFailure( 'req-name' );
-		if ( !($this->mForm->mAddressOptional || $this->mAddress) )
+		if ( !( $this->mForm->mAddressOptional || $this->mAddress ) )
 				$this->sanityFailure( 'req-addr' );
 		if ( !$frm->mExtAddressOptional ) {
-		    if (!$this->mCity)
+		    if ( !$this->mCity )
 				$this->sanityFailure( 'req-city' );
-			if (!$this->mState)
+			if ( !$this->mState )
 				$this->sanityFailure( 'req-state' );
-			if (!$this->mZip)
+			if ( !$this->mZip )
 				$this->sanityFailure( 'req-zip' );
-			if (!$this->mCountry)
+			if ( !$this->mCountry )
 				$this->sanityFailure( 'req-country' );
 		}
-		if ( !($frm->mPhoneOptional || $this->mPhone) )
+		if ( !( $frm->mPhoneOptional || $this->mPhone ) )
 			$this->sanityFailure( 'req-phone' );
-		if ( !($frm->mEmailOptional || $this->mEmail) )
+		if ( !( $frm->mEmailOptional || $this->mEmail ) )
 			$this->sanityFailure( 'req-email' );
-		if ( !($frm->mBdayOptional || $this->mBday) )
+		if ( !( $frm->mBdayOptional || $this->mBday ) )
 			$this->sanityFailure( 'req-bday' );
 		if ( $frm->mMinAge && $this->mMinAge <= $frm->mMinAge )
 			$this->sanityFailure( 'minage', $frm->mMinAge );
@@ -593,8 +594,8 @@ class SignDocumentSignature {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'sdoc_signature', array(
 			'sig_strickenby'     => $this->mStrickenBy,
-			'sig_strickencomment'=> $this->mStrickenComment,
-			'sig_stricken'       => $this->mStricken), array(
+			'sig_strickencomment' => $this->mStrickenComment,
+			'sig_stricken'       => $this->mStricken ), array(
 				'sig_id' => $this->mId ) );
 	}
 
@@ -615,55 +616,55 @@ class SignDocumentSignature {
 	}
 
 	public function isHidden( $val ) {
-		return !empty($this->mHiddenFields) && in_array( $val, $this->mHiddenFields );
+		return !empty( $this->mHiddenFields ) && in_array( $val, $this->mHiddenFields );
 	}
 
 	public function canView( $val ) {
-		return $this->mAllAccessible || (!$this->isHidden( $val ) || $this->isPrivileged() );
+		return $this->mAllAccessible || ( !$this->isHidden( $val ) || $this->isPrivileged() );
 	}
 
-	public function getRealName(){
-		return ($this->canView('realname'))?$this->mRealName:wfMsg( 'sig-anonymous' );
+	public function getRealName() {
+		return ( $this->canView( 'realname' ) ) ? $this->mRealName:wfMsg( 'sig-anonymous' );
 	}
 
-	public function getAddress(){
-		return ($this->canView('address'))?$this->mAddress:wfMsg( 'sig-private' );
+	public function getAddress() {
+		return ( $this->canView( 'address' ) ) ? $this->mAddress:wfMsg( 'sig-private' );
 	}
 
-	public function getCity(){
-		return ($this->canView('extaddress'))?$this->mCity:wfMsg( 'sig-private' );
+	public function getCity() {
+		return ( $this->canView( 'extaddress' ) ) ? $this->mCity:wfMsg( 'sig-private' );
 	}
 
-	public function getState(){
-		return ($this->canView('extaddress'))?$this->mState:wfMsg( 'sig-private' );
+	public function getState() {
+		return ( $this->canView( 'extaddress' ) ) ? $this->mState:wfMsg( 'sig-private' );
 	}
 
-	public function getCountry(){
-		return ($this->canView('extaddress'))?$this->mCountry:wfMsg( 'sig-private' );
+	public function getCountry() {
+		return ( $this->canView( 'extaddress' ) ) ? $this->mCountry:wfMsg( 'sig-private' );
 	}
 
-	public function getZip(){
-		return ($this->canView('extaddress'))?$this->mZip:wfMsg( 'sig-private' );
+	public function getZip() {
+		return ( $this->canView( 'extaddress' ) ) ? $this->mZip:wfMsg( 'sig-private' );
 	}
 
-	public function getPhone(){
-		return ($this->canView('phone'))?$this->mPhone:wfMsg( 'sig-private' );
+	public function getPhone() {
+		return ( $this->canView( 'phone' ) ) ? $this->mPhone:wfMsg( 'sig-private' );
 	}
 
-	public function getEmail(){
-		return ($this->canView('email'))?$this->mEmail:wfMsg( 'sig-private' );
+	public function getEmail() {
+		return ( $this->canView( 'email' ) ) ? $this->mEmail:wfMsg( 'sig-private' );
 	}
 
-	public function getBday(){
-		return ($this->canView('bday'))?$this->mBday:wfMsg( 'sig-private' );
+	public function getBday() {
+		return ( $this->canView( 'bday' ) ) ? $this->mBday:wfMsg( 'sig-private' );
 	}
 
 	public function getIp() {
-		return ($this->isPrivileged())?$this->mIp:wfMsg( 'sig-private' );
+		return ( $this->isPrivileged() ) ? $this->mIp:wfMsg( 'sig-private' );
 	}
 
 	public function getAgent() {
-		return ($this->isPrivileged())?$this->mAgent:wfMsg( 'sig-private' );
+		return ( $this->isPrivileged() ) ? $this->mAgent:wfMsg( 'sig-private' );
 	}
 
 	public function getReviewedBy() {

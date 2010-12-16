@@ -21,6 +21,11 @@
  *				will tale the raw text of "Template:Abc", replace all occurencies of 'foo' by 'bar' and save the result as a normal
  *				article named 'Xyz' in the main namespace.
  *		added a functionality to split wiki tables into calls of a template per row (cmd=convertTableToTemplateCalls)
+ * @version 0.7
+ *      empty parameters are now no longer ignored; so you can replace a symbol by "nothing" when using saveAsPage
+ *      introduced 'link1' and 'link2', label1 and label2
+ *      link replaces ",name," by ",name=value,"
+ *		link2 replaces "name" by "value" and "," by "&"
  */
 
 class Call extends SpecialPage
@@ -30,21 +35,26 @@ class Call extends SpecialPage
                 wfLoadExtensionMessages('Call');
         }
 
-
+        
 		function execute($par) {
 			global $wgParser;
 		    global $wgOut, $wgRequest, $wgRawHtml, $wgUser;
 		    $oldRawHtml = $wgRawHtml;
 		    $wgRawHtml = false;         // disable raw html if it's enabled as this could be XSS security risk
             $this->setHeaders();
-
+            		 
             global $_REQUEST;
        		$argkeys = array_keys($_REQUEST);
-
+       		
        		// find the position of "title" and count succeeding arguments until we find one that matches
        		// one of the patterns which belong to typical session cookie variables
-       		$argTitle=-1; $argCount=0; $n=0;
+       		// store link info
+       		$argTitle=-1; $argCount=0; $n=0; $link1=''; $link2=''; $label1 = 'link 1'; $label2 = 'link 2';
        		foreach ($argkeys as $argKey) {
+	       		if ($argKey=='link1') $link1=$wgRequest->getText($argKey);
+	       		if ($argKey=='label1') $label1=$wgRequest->getText($argKey);
+	       		if ($argKey=='link2') $link2=$wgRequest->getText($argKey);
+	       		if ($argKey=='label2') $label2=$wgRequest->getText($argKey);
 	       		if ($argKey=='title') $argTitle = $n;
 	       		else if ($argTitle>=0) {
 		       		if (preg_match('/(UserName|UserID|_session|Token)$/',$argKey)) break;
@@ -76,9 +86,13 @@ class Call extends SpecialPage
 	       		if (++$n > $argCount) break;
 	       		$arg = $wgRequest->getText($argKey);
 		       	if ($arg=='') {
+					$link1 = str_replace(",$argKey,",",$argKey=,",$link1);
+					$link2 = str_replace($argKey,"",$link2);
 			       	$arg = str_replace( "_", " ", $argKey );
 					$wikitext .= ( '|' . $arg );
 		       	} else {
+					$link1 = str_replace(",$argKey,",",$argKey=$arg,",$link1);
+					$link2 = str_replace($argKey,str_replace(' ','_',$arg),$link2);
 			       	$arg = str_replace( "_", " ", $arg );
 					$wikitext .= ( '|' . $argKey . '=' . $arg );
 				}
@@ -129,13 +143,14 @@ class Call extends SpecialPage
        		else if ($debug) {
 				// Called with DebuG target: dump parameter list
 		        $wgOut->addHTML("<pre>\n{{".$wikitext."}}\n</pre>");
-		        if ($saveAsPage!='') $wgOut->addHTML(wfMsg('call-save',$saveAsPageLink) );
+		        if ($saveAsPage!='') $wgOut->addHTML( wfMsg('call-save',$saveAsPageLink) );
        		}
        		else {
 	       		$parm=array();
 				foreach (split('\|',$wikitext) as $parmArg) {
 					$pp = split('=',$parmArg,2);
 					if (count($pp) == 2) $parm[$pp[0]] = $pp[1];
+					else $parm[$pp[0]] = '';
 				}
 	       		if ($cmd=='convertTableToTemplateCalls') {
 	       			// execute command
@@ -156,6 +171,9 @@ class Call extends SpecialPage
 				        $wgOut->addHTML($wgOut->parse(wfMsg('call-save-failed',$saveAsPageLink) ) );
 			        }
 			        // output the text we produced as a note to the user
+			        if ($link1!='') $wgOut->addHTML($wgOut->parse("[[Special:Call/$link1|$label1]]"));
+					$link2=str_replace(',','&',$link2);
+   			        if ($link2!='') $wgOut->addHTML($wgOut->parse("[$link2 $label2]"));
 					$wgOut->addHTML("<pre>\n$rawText\n</pre>");
 	       		}
 	       		else {

@@ -17,7 +17,7 @@
  		parent::__construct( $title );
  	}
  	public function view() {
-		global $wgRequest, $wgUser, $wgOut, $wgTitle, $wgJsMimeType, $mvgScriptPath;
+		global $wgRequest, $wgUser, $wgOut, $wgJsMimeType, $mvgScriptPath;
 			
 		// copied from CategoryPage ...
 		$diff = $wgRequest->getVal( 'diff' );
@@ -87,7 +87,7 @@
 	 * @returns MV dataPage top html
 	 */
 	function mvArticleTop() {
-		global $mvgIP, $wgTitle, $wgUser;
+		global $mvgIP, $wgUser;
 		$sk = $wgUser->getSkin();
 		
 		$streamTitle = Title::makeTitle( MV_NS_STREAM, $this->mvTitle->getStreamNameText() );

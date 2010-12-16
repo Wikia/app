@@ -34,7 +34,7 @@
  * * Add "__NOTOCNUM__" to any article.
  *
  * @author Benedikt Meuthrath
- * @version $Revision: 1.4 $
+ * @version 1.5
  */
 
 if (!defined('MEDIAWIKI')) {
@@ -42,43 +42,23 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'        => __FILE__,
 	'name'        => 'PSINoTocNum',
-	'version'     => '$Revision: 1.4 $',
+	'version'     => '1.5',
 	'author'      => 'Benedikt Meuthrath',
-        'url'         => 'http://www.mediawiki.org/wiki/Extension:PSINoTocNum',
-        'description' => 'New MagicWord "<nowiki>__NOTOCNUM__</nowiki>".',
+	'url'         => 'http://www.mediawiki.org/wiki/Extension:PSINoTocNum',
+	'description' => 'New MagicWord "<nowiki>__NOTOCNUM__</nowiki>".',
 	'descriptionmsg' => 'psinotocnum-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['PSINoTocNum'] = $dir . 'PSINoTocNum.i18n.php';
+$wgExtensionMessagesFiles['PSINoTocNumMagic'] = $dir . 'PSINoTocNum.i18n.magic.php';
 
-
-$wgHooks['MagicWordMagicWords'][] = 'PSINoTocNumMagicWordMagicWords';
-$wgHooks['MagicWordwgVariableIDs'][] = 'PSINoTocNumMagicWordwgVariableIDs';
-$wgHooks['LanguageGetMagic'][] = 'PSINoTocNumLanguageGetMagic';
 $wgHooks['ParserBeforeInternalParse'][] = 'PSINoTocNumParserBeforeInternalParse';
 
-function PSINoTocNumMagicWordMagicWords(&$magicWords) {
-	$magicWords[] = 'MAG_NOTOCNUM';
-
-	return true;
-}
-
-function PSINoTocNumMagicWordwgVariableIDs(&$wgVariableIDs) {
-	$wgVariableIDs[] = MAG_NOTOCNUM;
-
-	return true;
-}
-
-function PSINoTocNumLanguageGetMagic(&$magicWords, $langCode) {
-	$magicWords[MAG_NOTOCNUM] = array( 0, "__NOTOCNUM__" );
-
-	return true;
-}
-
 function PSINoTocNumParserBeforeInternalParse($parser, $text, $stripState) {
-	if (MagicWord::get( MAG_NOTOCNUM )->matchAndRemove( $text ) ) {
+	if (MagicWord::get( 'MAG_NOTOCNUM' )->matchAndRemove( $text ) ) {
 		global $wgOut;
 		$wgOut->addScript('
 			<style type="text/css"><!-- .tocnumber {display:none;} --></style>

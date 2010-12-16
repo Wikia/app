@@ -1,0 +1,24 @@
+---
+BASIC:
+  id: out-openlayers
+  label: OpenLayers (slippy maps)
+  description: "{{int:bw-desc-openlayers}}"
+  namespace: NS_OPENLAYERS
+  display: out/openlayers/
+  class: FileBasedMessageGroup
+
+FILES:
+  class: JavaScriptFFS
+  sourcePattern: %GROUPROOT%/Lang/%CODE%.js
+  targetPattern: %CODE%.js
+  codeMap:
+    cs:      cs-CZ
+    da:      da-DK
+    pt-br:   pt-BR
+    sv:      sv-SE
+    zh-hans: zh-CN
+    zh-tw:   zh-TW
+
+TAGS:
+  ignored:
+    - end

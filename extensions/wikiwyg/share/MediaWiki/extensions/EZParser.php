@@ -21,7 +21,7 @@ class EZParser extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser;
+		global $wgRequest, $wgOut, $wgUser;
 		
 		if (!in_array( 'ezparser', $wgUser->getRights() ) ) {
 			$wgOut->setArticleRelated( false );

@@ -9,7 +9,7 @@ class DeleteQueueViewReview extends DeleteQueueView {
 	 * @param $article Article object being reviewed
 	 */
 	public function show( $params ) {
-		global $wgOut,$wgScript,$wgUser,$wgRequest;
+		global $wgOut, $wgScript, $wgUser, $wgRequest;
 
 		list( $action, $case_id ) = $params;
 
@@ -17,7 +17,7 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		$article = $this->mArticle = $dqi->getArticle();
 		$queue = $dqi->getQueue();
 
-		if (!$queue) {
+		if ( !$queue ) {
 			// ...
 			$wgOut->addWikiMsg( 'deletequeue-notqueued' );
 			return;
@@ -28,9 +28,9 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		$nomErrors = $article->mTitle->getUserPermissionsErrors( "$queue-review",
 																	$wgUser );
 
-		if (count(array_merge($editErrors,$nomErrors))) {
+		if ( count( array_merge( $editErrors, $nomErrors ) ) ) {
 			// Permissions errors.
-			if (count($editErrors)) {
+			if ( count( $editErrors ) ) {
 				$editError = $wgOut->formatPermissionsErrorMessage( $editErrors, 'edit' );
 				$nomErrors[] = array( 'deletequeue-permissions-noedit', $editError );
 			}
@@ -39,19 +39,19 @@ class DeleteQueueViewReview extends DeleteQueueView {
 			return;
 		}
 
-		list ($enabledActions, $disabledActions) = $this->availableActions();
+		list ( $enabledActions, $disabledActions ) = $this->availableActions();
 
 		$haveRequeueOption = false;
 
 		$shownActions = array_merge( array_keys( $disabledActions ), $enabledActions );
 
-		foreach( $shownActions as $val ) {
-			if (strpos($val,'requeue') == 0) {
+		foreach ( $shownActions as $val ) {
+			if ( strpos( $val, 'requeue' ) == 0 ) {
 				$haveRequeueOption = true;
 			}
 		}
 
-		if (($error = $this->submit( $article )) === true) {
+		if ( ( $error = $this->submit( $article ) ) === true ) {
 			$wgOut->setPageTitle( wfMsg( "deletequeue-review-success-title" ) );
 			$wgOut->addWikiMsg( "deletequeue-review-success" );
 			return;
@@ -61,8 +61,8 @@ class DeleteQueueViewReview extends DeleteQueueView {
 			wfMsg( "deletequeue-review$queue-title",
 				$article->mTitle->getPrefixedText() ) );
 
-		$discussionPage = ($queue == 'deletediscuss')
-			? $dqi->getDiscussionPage()->mTitle->getPrefixedText() 
+		$discussionPage = ( $queue == 'deletediscuss' )
+			? $dqi->getDiscussionPage()->mTitle->getPrefixedText()
 			: null;
 
 		$wgOut->addWikiMsg( "deletequeue-review$queue-text",
@@ -71,20 +71,21 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		// Cautions if there's an objection
 		if ( count( $dqi->mVotesObject ) > 0 ) {
 			$wgOut->addWikiMsg( "deletequeue-review-objections",
-				count($dqi->mVotesObject) );
+				count( $dqi->mVotesObject ) );
 		}
 
-		if ($error) {
-			$wgOut->addHTML( '<p>'.$error.'</p>' );
+		if ( $error ) {
+			$wgOut->addHTML( '<p>' . $error . '</p>' );
 		}
 
 		// Details of nomination
 		$wgOut->addHTML( Xml::openElement( 'fieldset' ) .
-							Xml::element( 'legend',
-											array(),
-											wfMsg( 'deletequeue-review-original' )
-										)
-						);
+			Xml::element(
+				'legend',
+				array(),
+				wfMsg( 'deletequeue-review-original' )
+			)
+		);
 		$wgOut->addWikitext( $dqi->getReason() );
 		$wgOut->addHTML( Xml::closeElement( 'fieldset' ) );
 
@@ -93,20 +94,21 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		// Give the user options
 		$option_selection = '';
 
-		//// Action radio buttons
+		// // Action radio buttons
 		// Accept the nomination as-is
 		$accept = Xml::radioLabel(
-							wfMsg( 'deletequeue-review-delete' ),
-							'wpSpeedyAction',
-							'delete',
-							'mw-review-accept'
-						);
+			wfMsg( 'deletequeue-review-delete' ),
+			'wpSpeedyAction',
+			'delete',
+			'mw-review-accept'
+		);
+
 		$option_selection .= $this->getActionOrError(
-										'delete',
-										$accept,
-										null,
-										Xml::tags( 'li', array(), '$1' )
-									);
+			'delete',
+			$accept,
+			null,
+			Xml::tags( 'li', array(), '$1' )
+		);
 
 		// Accept nomination, but with a different reasoning.
 		$change_option = Xml::radioLabel(
@@ -120,7 +122,7 @@ class DeleteQueueViewReview extends DeleteQueueView {
 			Xml::listDropDown(
 						'wpSpeedyNewReason',
 						DeleteQueueInterface::getReasonList( $queue ),
-						wfMsg('deletequeue-delnom-otherreason')
+						wfMsg( 'deletequeue-delnom-otherreason' )
 					);
 		$change_fields['deletequeue-review-newextra'] =
 			Xml::input( 'wpSpeedyNewExtra', 45, '' );
@@ -129,21 +131,21 @@ class DeleteQueueViewReview extends DeleteQueueView {
 				$this->getActionOrError(
 					'delete',
 					$change_option,
-					wfMsgExt('deletequeue-review-change', array('parseinline') ),
+					wfMsgExt( 'deletequeue-review-change', array( 'parseinline' ) ),
 					Xml::tags( 'li', array(), '$1' )
 				);
 
 		// Reject nomination, queue into a different deletion queue.
-		if ($haveRequeueOption) {
+		if ( $haveRequeueOption ) {
 			$requeue_option = Xml::radioLabel(
 					wfMsg( 'deletequeue-review-requeue' ),
 					'wpSpeedyAction',
 					'requeue',
 					'mw-review-requeue'
 				);
-			$new_queues = array('prod', 'deletediscuss');
+			$new_queues = array( 'prod', 'deletediscuss' );
 			$requeue_queues = '';
-			foreach( $new_queues as $option ) {
+			foreach ( $new_queues as $option ) {
 				$this_queue =
 					Xml::radioLabel(
 						wfMsg( "deletequeue-queue-$option" ),
@@ -158,11 +160,12 @@ class DeleteQueueViewReview extends DeleteQueueView {
 						) );
 
 				$requeue_queues .=
-					$this->getActionOrError( "requeue-$option",
-											$this_queue,
-											$disabledMsg,
-											Xml::tags( 'li', array(), '$1' )
-										);
+					$this->getActionOrError(
+						"requeue-$option",
+						$this_queue,
+						$disabledMsg,
+						Xml::tags( 'li', array(), '$1' )
+					);
 			}
 			$requeue_option .= Xml::tags( 'ul', array(), $requeue_queues );
 
@@ -170,7 +173,7 @@ class DeleteQueueViewReview extends DeleteQueueView {
 			$requeue_fields['deletequeue-review-newreason'] =
 				Xml::listDropDown( 'wpSpeedyNewReason',
 					DeleteQueueInterface::getReasonList( 'generic' ),
-					wfMsg("deletequeue-delnom-otherreason") );
+					wfMsg( "deletequeue-delnom-otherreason" ) );
 			$requeue_fields['deletequeue-review-newextra'] =
 				Xml::input( 'wpSpeedyNewExtra', 45, '' );
 			$requeue_option .= Xml::buildForm( $requeue_fields );
@@ -192,33 +195,33 @@ class DeleteQueueViewReview extends DeleteQueueView {
 					Xml::tags( 'li', array(), '$1' )
 				);
 
-		//// Convert to a list.
+		// // Convert to a list.
 		$option_selection = Xml::tags( 'ul', array(), $option_selection );
 
 		$option_selection = Xml::fieldset(
-								wfMsg( 'deletequeue-review-action' ),
-								$option_selection
-							);
+			wfMsg( 'deletequeue-review-action' ),
+			$option_selection
+		);
 
 		$output .= $option_selection;
 
 		// Reason etc.
 		$fields = array(
-						'deletequeue-review-reason' => Xml::input( 'wpReason', 45, null )
-					);
+			'deletequeue-review-reason' => Xml::input( 'wpReason', 45, null )
+		);
 
 		$output .= Xml::buildForm( $fields, 'deletequeue-review-submit' );
 
 		// Form stuff
 		$output .= Xml::hidden( 'title',
-						$this->getTitle( "case/".$dqi->getCaseID()."/review" ) );
+						$this->getTitle( "case/" . $dqi->getCaseID() . "/review" ) );
 		$output .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
 		$output = Xml::tags( 'form',
-						array( 'action' => $article->mTitle->getLocalURL(),
-							'method' => 'POST'
-						),
-						$output
-					);
+			array( 'action' => $article->mTitle->getLocalURL(),
+				'method' => 'POST'
+			),
+			$output
+		);
 
 		$wgOut->addHTML( $output );
 	}
@@ -228,13 +231,13 @@ class DeleteQueueViewReview extends DeleteQueueView {
 	 * @param $article Article object being reviewed
 	 */
 	public function submit( ) {
-		global $wgUser,$wgOut,$wgRequest;
+		global $wgUser, $wgOut, $wgRequest;
 
 		$article = $this->mArticle;
 
 		$token = $wgRequest->getText( 'wpEditToken' );
 
-		if (!$wgUser->matchEditToken( $token )) {
+		if ( !$wgUser->matchEditToken( $token ) ) {
 			return false;
 		}
 
@@ -248,8 +251,8 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		$reason = $wgRequest->getText( 'wpReason' );
 
 		// Check the action against the list
-		list($enabledActions) = $this->availableActions();
-		if ( !in_array( $action,$enabledActions ) &&
+		list( $enabledActions ) = $this->availableActions();
+		if ( !in_array( $action, $enabledActions ) &&
 				( $action != 'requeue' ||
 					!in_array( "requeue-$newQueue", $enabledActions )
 				)
@@ -263,7 +266,7 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 
-		switch ($action) {
+		switch ( $action ) {
 			case 'delete':
 				$article->doDelete( $dqi->getQueue() );
 				$processed = true;
@@ -284,11 +287,11 @@ class DeleteQueueViewReview extends DeleteQueueView {
 					$article->mTitle,
 					$reason,
 					array(
-						wfMsgForContent("deletequeue-queue-$queue"),
+						wfMsgForContent( "deletequeue-queue-$queue" ),
 						wfMsgForContent( "deletequeue-queue-{$newQueue}" )
-						)
-					);
-				
+					)
+				);
+
 				$reason1 = $wgRequest->getText( 'wpSpeedyNewReason' );
 				$reason2 = $wgRequest->getText( 'wpSpeedyNewExtra' );
 				$newReason = DeleteQueueInterface::formatReason( $reason1, $reason2 );
@@ -299,13 +302,13 @@ class DeleteQueueViewReview extends DeleteQueueView {
 			default:
 				// Invalid action
 				$dbw->commit();
-				return wfMsg( 'deletequeue-review-badaction' );;
+				return wfMsg( 'deletequeue-review-badaction' ); ;
 		}
 
-		if ($processed) {
+		if ( $processed ) {
 			// Delete from the DB
 			$dqi->deQueue( );
-			
+
 			// Redirect to the page
 			$wgOut->redirect( $article->mTitle->getLocalURL() );
 
@@ -322,32 +325,33 @@ class DeleteQueueViewReview extends DeleteQueueView {
 
 	/** Returns the action given in enabledText, a 'disabled' message,
 	or nothing, depending on the status of the action. */
-	public function getActionOrError($action, $enabledText, $disabledMsg = null,
-										$wrapper = null) {
-		list ($enabled,$disabled) = $this->availableActions();
+	public function getActionOrError( $action, $enabledText, $disabledMsg = null,
+										$wrapper = null ) {
+		list ( $enabled, $disabled ) = $this->availableActions();
 
-		if (!$disabledMsg) {
-			$disabledMsg = wfMsgExt("deletequeue-review-$action",
-								array('parseinline')
+		if ( !$disabledMsg ) {
+			$disabledMsg = wfMsgExt( "deletequeue-review-$action",
+								array( 'parseinline' )
 							);
 		}
 
 		$data = '';
 
-		if (in_array($action,$enabled)) {
+		if ( in_array( $action, $enabled ) ) {
 			$data = $enabledText;
 		} elseif ( in_array( $action, array_keys( $disabled ) ) ) {
 			$msg = $disabled[$action];
 			$msg .= "\n";
 			$msg .= Xml::tags( 'p',
-								array( 'class' => 'mw-deletequeue-action-disabled' ),
-								$disabledMsg );
+				array( 'class' => 'mw-deletequeue-action-disabled' ),
+				$disabledMsg
+			);
 			$data = $msg;
 		} else {
 		}
 
-		if ($wrapper && $data) {
-			$data = wfMsgReplaceArgs( $wrapper, array($data) );
+		if ( $wrapper && $data ) {
+			$data = wfMsgReplaceArgs( $wrapper, array( $data ) );
 		}
 
 		return $data;
@@ -364,7 +368,7 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		$dqi = DeleteQueueItem::newFromArticle( $article );
 		$queue = $dqi->getQueue( );
 
-		if ($user === null) {
+		if ( $user === null ) {
 			global $wgUser;
 			$user = $wgUser;
 		}
@@ -374,38 +378,39 @@ class DeleteQueueViewReview extends DeleteQueueView {
 
 		$userRoles = $dqi->getUserRoles( $user );
 		$descriptiveRoles = array_map(
-								array( 'DeleteQueueItem', 'getRoleDescription' ),
-								$userRoles
-							);
+			array( 'DeleteQueueItem', 'getRoleDescription' ),
+			$userRoles
+		);
 		$descriptiveRolesText = implode( ", ", $descriptiveRoles );
 
 		$enabled[] = 'endorse';
 		$enabled[] = 'object';
 
 		// Speedy deletion
-		if ($queue == 'speedy') {
+		if ( $queue == 'speedy' ) {
 			// All are unlocked if user is authed.
 			$enabled = array(
-							'delete',
-							'requeue-prod',
-							'requeue-deletediscuss',
-							'dequeue'
-						);
-		} elseif ($queue == 'prod') {
+				'delete',
+				'requeue-prod',
+				'requeue-deletediscuss',
+				'dequeue'
+			);
+		} elseif ( $queue == 'prod' ) {
 			// Escalation by anybody
 			$enabled[] = 'requeue-deletediscuss';
 			$enabled[] = 'dequeue';
 
 			$expiry = $dqi->getExpiry();
-			$hasExpired = (time() > $expiry) ? true : false;
+			$hasExpired = ( time() > $expiry ) ? true : false;
 
 			// Handling of 'delete'
-			if (!$hasExpired) { // Hasn't expired yet, don't let them delete it.
+			if ( !$hasExpired ) { // Hasn't expired yet, don't let them delete it.
 				$disabled['delete'] =
-					wfMsgExt( 'deletequeue-actiondisabled-notexpired',
-								array( 'parseinline' )
-							);
-			} elseif (count($userRoles)) {
+					wfMsgExt(
+						'deletequeue-actiondisabled-notexpired',
+						array( 'parseinline' )
+					);
+			} elseif ( count( $userRoles ) ) {
 				// Tell them they're involved.
 				$disabled['delete'] =
 					wfMsgExt( 'deletequeue-actiondisabled-involved',
@@ -416,17 +421,17 @@ class DeleteQueueViewReview extends DeleteQueueView {
 				// Allow uninvolved admins to delete expired prods
 				$enabled[] = 'delete';
 			}
-		} elseif ($queue == 'deletediscuss') {
+		} elseif ( $queue == 'deletediscuss' ) {
 
 			$expiry = $dqi->getExpiry();
-			$hasExpired = (time() > $expiry) ? true : false;
+			$hasExpired = ( time() > $expiry ) ? true : false;
 
-			if (!$hasExpired) { // Hasn't expired yet, don't let them delete it.
+			if ( !$hasExpired ) { // Hasn't expired yet, don't let them delete it.
 				$disabled['delete'] =
 					wfMsgExt( 'deletequeue-actiondisabled-notexpired',
 						array( 'parseinline' )
 					);
-			} elseif (count($userRoles)) {
+			} elseif ( count( $userRoles ) ) {
 				// Tell them they're involved.
 				$disabled['delete'] =
 					wfMsgExt( 'deletequeue-actiondisabled-involved',

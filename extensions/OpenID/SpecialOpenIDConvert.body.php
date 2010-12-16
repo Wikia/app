@@ -22,150 +22,244 @@
  * @addtogroup Extensions
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
 class SpecialOpenIDConvert extends SpecialOpenID {
 
 	function SpecialOpenIDConvert() {
-		SpecialPage::SpecialPage("OpenIDConvert");
+		SpecialPage::SpecialPage( 'OpenIDConvert' );
 	}
 
-	function execute($par) {
-
+	function execute( $par ) {
 		global $wgRequest, $wgUser, $wgOut;
 
 		wfLoadExtensionMessages( 'OpenID' );
 
 		$this->setHeaders();
 
-		if ($wgUser->getID() == 0) {
-			$wgOut->showErrorPage('openiderror', 'notloggedin');
+		if ( $wgUser->getID() == 0 ) {
+			$wgOut->showErrorPage( 'openiderror', 'notloggedin' );
 			return;
 		}
 
-		switch ($par) {
-		 case 'Finish':
+		$this->outputHeader();
+
+		switch ( $par ) {
+		case 'Finish':
 			$this->finish();
 			break;
-		 default:
-			$openid_url = $wgRequest->getText('openid_url');
-			if (isset($openid_url) && strlen($openid_url) > 0) {
-				$this->convert($openid_url);
+		case 'Delete':
+			$this->delete();
+			break;
+		default:
+			$openid_url = $wgRequest->getText( 'openid_url' );
+			if ( isset( $openid_url ) && strlen( $openid_url ) > 0 ) {
+				$this->convert( $openid_url );
 			} else {
-				$this->Form();
+				$this->form();
 			}
 		}
 	}
 
-	function convert($openid_url) {
-
+	function convert( $openid_url ) {
 		global $wgUser, $wgOut;
 
 		# Expand Interwiki
-
-		$openid_url = $this->interwikiExpand($openid_url);
+		$openid_url = $this->interwikiExpand( $openid_url );
 
 		# Is this ID allowed to log in?
-
-		if (!$this->CanLogin($openid_url)) {
-			$wgOut->showErrorPage('openidpermission', 'openidpermissiontext');
+		if ( !$this->canLogin( $openid_url ) ) {
+			$wgOut->showErrorPage( 'openidpermission', 'openidpermissiontext' );
 			return;
 		}
 
 		# Is this ID already taken?
+		$other = $this->getUser( $openid_url );
 
-		$other = $this->getUser($openid_url);
-
-		if (isset($other)) {
-			if ($other->getId() == $wgUser->getID()) {
-				$wgOut->showErrorPage('openiderror', 'openidconvertyourstext');
+		if ( isset( $other ) ) {
+			if ( $other->getId() == $wgUser->getID() ) {
+				$wgOut->showErrorPage( 'openiderror', 'openidconvertyourstext' );
 			} else {
-				$wgOut->showErrorPage('openiderror', 'openidconvertothertext');
+				$wgOut->showErrorPage( 'openiderror', 'openidconvertothertext' );
 			}
 			return;
 		}
 
 		# If we're OK to here, let the user go log in
-
-		$this->Login($openid_url, 'OpenIDConvert/Finish');
+		$this->login( $openid_url, SpecialPage::getTitleFor( 'OpenIDConvert', 'Finish' ) );
 	}
 
 	function form() {
-		global $wgOut, $wgUser;
-		$sk = $wgUser->getSkin();
-		$url = $this->GetUserUrl($wgUser);
-		if (is_null($url)) {
-			$url = '';
+		global $wgOut, $wgUser, $wgScriptPath, $wgOpenIDShowProviderIcons;
+
+		$oidScriptPath = $wgScriptPath . '/extensions/OpenID';
+
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => 'screen',
+			'href' => $oidScriptPath . ( $wgOpenIDShowProviderIcons ? '/skin/openid.css' : '/skin/openid-plain.css' )
+		) );
+
+		$wgOut->addScript( '<script type="text/javascript" src="' . $oidScriptPath . '/skin/openid-combined-min.js"></script>' . "\n" );
+
+		$formsHTML = '';
+
+		$largeButtonsHTML = '<div id="openid_large_providers">';
+		foreach ( OpenIDProvider::getLargeProviders() as $provider ) {
+			$largeButtonsHTML .= $provider->getLargeButtonHTML();
+			$formsHTML .= $provider->getLoginFormHTML();
+		}
+		$largeButtonsHTML .= '</div>';
+
+		$smallButtonsHTML = '';
+		if ( $wgOpenIDShowProviderIcons ) {
+			$smallButtonsHTML .= '<div id="openid_small_providers_icons">';
+			foreach ( OpenIDProvider::getSmallProviders() as $provider ) {
+				$smallButtonsHTML .= $provider->getSmallButtonHTML();
+				$formsHTML .= $provider->getLoginFormHTML();
+			}
+			$smallButtonsHTML .= '</div>';
+		} else {
+			$smallButtonsHTML .= '<div id="openid_small_providers_links">';
+			$smallButtonsHTML .= '<ul class="openid_small_providers_block">';
+			$small = OpenIDProvider::getSmallProviders();
+
+			$i = 0;
+			$break = true;
+			foreach ( $small as $provider ) {
+				if ( $break && $i > count( $small ) / 2 ) {
+					$smallButtonsHTML .= '</ul><ul class="openid_small_providers_block">';
+					$break = false;
+				}
+
+				$smallButtonsHTML .= '<li>' . $provider->getSmallButtonHTML() . '</li>';
+
+				$formsHTML .= $provider->getLoginFormHTML();
+				$i++;
+			}
+			$smallButtonsHTML .= '</ul>';
+			$smallButtonsHTML .= '</div>';
 		}
 
-		$ok = wfMsg('ok');
-		$instructions = wfMsg('openidconvertinstructions');
-		$wgOut->addHTML("<p>{$instructions}</p>" .
-						'<form action="' . $sk->makeSpecialUrl('OpenIDConvert') . '" method="POST">' .
-						'<input type="text" name="openid_url" size="30" ' .
-						' style="background: url(http://www.openid.net/login-bg.gif) ' .
-						'        no-repeat; background-color: #fff; background-position: 0 50%; ' .
-						'        color: #000; padding-left: 18px;" value="' . $url . '" />' .
-						'<input type="submit" value="' . $ok . '" />' .
-						'</form>');
+		$wgOut->addHTML(
+			Xml::openElement( 'form', array( 'id' => 'openid_form', 'action' => $this->getTitle()->getLocalUrl(), 'method' => 'post', 'onsubmit' => 'openid.update()' ) ) .
+			Xml::fieldset( wfMsg( 'openidconvertoraddmoreids' ) ) .
+			Xml::openElement('p') . wfMsg( 'openidconvertinstructions' ) . Xml::closeElement( 'p' ) .
+			$largeButtonsHTML .
+			'<div id="openid_input_area">' .
+			$formsHTML .
+			'</div>' .
+			$smallButtonsHTML .
+			Xml::closeElement( 'fieldset' ) . Xml::closeElement( 'form' )
+		);
 	}
 
-	function finish() {
+	function delete() {
+		global $wgUser, $wgOut, $wgRequest, $wgOpenIDOnly;
 
-		global $wgUser, $wgOut;
+		$openid = $wgRequest->getVal( 'url' );
+		$user = self::getUser( $openid );
 
-		$consumer = $this->getConsumer();
-
-		$response = $consumer->complete($this->scriptUrl('OpenIDConvert/Finish'));
-
-		if (!isset($response)) {
-			wfDebug("OpenID: aborting in openid converter because the response was missing\n");
-			$wgOut->showErrorPage('openiderror', 'openiderrortext');
+		if ( $user->getId() == 0 || $user->getId() != $wgUser->getId() ) {
+			$wgOut->showErrorPage( 'openiderror', 'openidconvertothertext' );
 			return;
 		}
 
-		switch ($response->status) {
-		 case Auth_OpenID_CANCEL:
+		$wgOut->setPageTitle( wfMsg( 'openiddelete' ) );
+
+		# Check if the user is removing it's last OpenID url
+		$urls = self::getUserUrl( $wgUser );
+		if ( count( $urls ) == 1 ) {
+			if ( $wgUser->mPassword == '' ) {
+				$wgOut->showErrorPage( 'openiderror', 'openiddeleteerrornopassword' );
+				return;
+			} elseif( $wgOpenIDOnly ) {
+				$wgOut->showErrorPage( 'openiderror', 'openiddeleteerroropenidonly' );
+				return;
+			}
+		}
+
+		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ), $openid ) ) {
+			$ret = self::removeUserUrl( $wgUser, $openid );
+			$wgOut->addWikiMsg( $ret ? 'openiddelete-sucess' : 'openiddelete-error' );
+			return;
+		}
+
+		$wgOut->addWikiMsg( 'openiddelete-text', $openid );
+
+		$wgOut->addHtml(
+			Xml::openElement( 'form', array( 'action' => $this->getTitle( 'Delete' )->getLocalUrl(), 'method' => 'post' ) ) .
+			Xml::submitButton( wfMsg( 'openiddelete-button' ) ) . "\n" .
+			Xml::hidden( 'url', $openid ) . "\n" .
+			Xml::hidden( 'wpEditToken', $wgUser->editToken( $openid ) ) . "\n" .
+			Xml::closeElement( 'form' )
+		);
+	}
+
+	function finish() {
+		global $wgUser, $wgOut;
+
+		wfSuppressWarnings();
+		$consumer = $this->getConsumer();
+		$response = $consumer->complete( $this->scriptUrl( 'Finish' ) );
+		wfRestoreWarnings();
+
+		if ( is_null( $response ) ) {
+			wfDebug( "OpenID: aborting in openid converter because the response was missing\n" );
+			$wgOut->showErrorPage( 'openiderror', 'openiderrortext' );
+			return;
+		}
+
+		switch ( $response->status ) {
+		case Auth_OpenID_CANCEL:
 			// This means the authentication was cancelled.
-			$wgOut->showErrorPage('openidcancel', 'openidcanceltext');
+			$wgOut->showErrorPage( 'openidcancel', 'openidcanceltext' );
 			break;
-		 case Auth_OpenID_FAILURE:
-			wfDebug("OpenID: error in convert: '" . $response->message . "'\n");
-			$wgOut->showErrorPage('openidfailure', 'openidfailuretext', array($response->message));
+		case Auth_OpenID_FAILURE:
+			wfDebug( "OpenID: error in convert: '" . $response->message . "'\n" );
+			$wgOut->showErrorPage( 'openidfailure', 'openidfailuretext', array( $response->message ) );
 			break;
-		 case Auth_OpenID_SUCCESS:
+		case Auth_OpenID_SUCCESS:
 			// This means the authentication succeeded.
 			$openid_url = $response->identity_url;
 
-			if (!isset($openid_url)) {
-				wfDebug("OpenID: aborting in openid converter because the openid_url was missing\n");
-				$wgOut->showErrorPage('openiderror', 'openiderrortext');
+			if (!$this->canLogin($openid_url)) {
+				$wgOut->showErrorPage('openidpermission', 'openidpermissiontext');
+				return;
+			}
+
+			if ( !isset( $openid_url ) ) {
+				wfDebug( "OpenID: aborting in openid converter because the openid_url was missing\n" );
+				$wgOut->showErrorPage( 'openiderror', 'openiderrortext' );
 				return;
 			}
 
 			# We check again for dupes; this may be normalized or
 			# reformatted by the server.
 
-			$other = $this->getUser($openid_url);
+			$other = $this->getUser( $openid_url );
 
-			if (isset($other)) {
-				if ($other->getId() == $wgUser->getID()) {
-					$wgOut->showErrorPage('openiderror', 'openidconvertyourstext');
+			if ( isset( $other ) ) {
+				if ( $other->getId() == $wgUser->getID() ) {
+					$wgOut->showErrorPage( 'openiderror', 'openidconvertyourstext' );
 				} else {
-					$wgOut->showErrorPage('openiderror', 'openidconvertothertext');
+					$wgOut->showErrorPage( 'openiderror', 'openidconvertothertext' );
 				}
 				return;
 			}
 
-			$this->setUserUrl($wgUser, $openid_url);
+			self::addUserUrl( $wgUser, $openid_url );
+
+			$this->loginSetCookie( $openid_url );
 
 			$wgOut->setPageTitle( wfMsg( 'openidconvertsuccess' ) );
 			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$wgOut->setArticleRelated( false );
-			$wgOut->addWikiText( wfMsg( 'openidconvertsuccesstext', $openid_url ) );
-			$wgOut->returnToMain( );
+			$wgOut->addWikiMsg( 'openidconvertsuccesstext', $openid_url );
+			$wgOut->returnToMain();
 		}
 	}
 }

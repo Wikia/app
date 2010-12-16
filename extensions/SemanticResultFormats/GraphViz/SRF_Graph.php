@@ -88,7 +88,7 @@ class SRFGraph extends SMWResultPrinter {
 
 				while ( ($object = $field->getNextObject()) !== false ) {
 
-						$text = $object->getShortText($outputmode);
+					$text = $object->getShortText($outputmode);
 
 					if ($firstcol) {
 						$firstcolvalue = $object->getShortText($outputmode);
@@ -96,7 +96,10 @@ class SRFGraph extends SMWResultPrinter {
 					}
 
 					if ($this->m_graphLink==true){
-						$graphInput .= " \"$text\" [URL = \"[[$text]]\"]; ";
+						$nodeLinkTitle = Title::newFromText($text);
+						$nodeLinkURL = $nodeLinkTitle->getLocalURL();
+
+						$graphInput .= " \"$text\" [URL = \"$nodeLinkURL\"]; ";
 					}
 
 					if (!$firstcol) {
@@ -141,7 +144,7 @@ class SRFGraph extends SMWResultPrinter {
 			$result .= "<P>";
 			foreach ($this->m_labelArray as $m_label) {
 				$color = $this->m_graphColors[$arrayCount];
-				$result .= "<font color=$color>$color: $m_label </font><br>";
+				$result .= "<font color=$color>$color: $m_label </font><br />";
 				$arrayCount = $arrayCount +1;
 			}
 			$result .= "</P>";

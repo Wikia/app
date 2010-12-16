@@ -1,11 +1,15 @@
 <?php
 /** Zeeuws (Zeêuws)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
  * @author Adnergje
  * @author NJ
+ * @author Purodha
  * @author Rob Church <robchur@gmail.com>
  * @author Steinbach
  * @author Troefkaart
@@ -21,11 +25,9 @@ $fallback = 'nl';
 $namespaceNames = array(
 	NS_MEDIA            => 'Media',
 	NS_SPECIAL          => 'Speciaol',
-	NS_MAIN             => '',
 	NS_TALK             => 'Overleg',
 	NS_USER             => 'Gebruker',
 	NS_USER_TALK        => 'Overleg_gebruker',
-	# NS_PROJECT set by $wgMetaNamespace
 	NS_PROJECT_TALK     => 'Overleg_$1',
 	NS_FILE             => 'Plaetje',
 	NS_FILE_TALK        => 'Overleg_plaetje',
@@ -144,7 +146,7 @@ $messages = array(
 'category-media-header'          => 'Media in categorie "$1".',
 'category-empty'                 => "''Deêze categorie bevat hin pahina’s of media.''",
 'hidden-categories'              => 'Verborhen {{PLURAL:$1|categorie|categorieën}}',
-'hidden-category-category'       => 'Verborhen categorieën', # Name of the category where hidden categories will be listed
+'hidden-category-category'       => 'Verborhen categorieën',
 'category-subcat-count'          => '{{PLURAL:$2|Deêze categorie ei de volhende ondercategorie.|Deêze categorie ei de volhende {{PLURAL:$1|ondercategorie|$1 ondercategorieën}}, van een totaol van $2.}}',
 'category-subcat-count-limited'  => 'Deêze categorie ei de volhende {{PLURAL:$1|ondercategorie|$1 ondercategorieën}}.',
 'category-article-count'         => "{{PLURAL:$2|Deêze categorie bevat de volhende pahina.|Deêze categorie bevat de volhende {{PLURAL:$1|pahina|$1 pahina's}}, van in totaol $2.}}",
@@ -162,10 +164,18 @@ $messages = array(
 * [http://www.mediawiki.org/wiki/Manual:FAQ Veehestelde vraehen (FAQ)]
 * [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Mailienglieste voe ankondigiengen van nieuwe versies]",
 
-'about'          => 'Info',
-'article'        => 'Artikel',
-'newwindow'      => '(opent een nieuw scherm)',
-'cancel'         => 'Afbreke',
+'about'         => 'Info',
+'article'       => 'Artikel',
+'newwindow'     => '(opent een nieuw scherm)',
+'cancel'        => 'Afbreke',
+'moredotdotdot' => 'Meêr …',
+'mypage'        => 'Mien gebrukerspagina',
+'mytalk'        => 'Mien overleg',
+'anontalk'      => 'Discussie vò dit IP-adres',
+'navigation'    => 'Navigaotie',
+'and'           => '&#32;en',
+
+# Cologne Blue skin
 'qbfind'         => 'Zoeken',
 'qbbrowse'       => 'Blaeren',
 'qbedit'         => 'Bewerk',
@@ -173,15 +183,8 @@ $messages = array(
 'qbpageinfo'     => 'Pagina-informaotie',
 'qbmyoptions'    => 'Mien opties',
 'qbspecialpages' => 'Speciaole pahina’s',
-'moredotdotdot'  => 'Meêr …',
-'mypage'         => 'Mien gebrukerspagina',
-'mytalk'         => 'Mien overleg',
-'anontalk'       => 'Discussie vò dit IP-adres',
-'navigation'     => 'Navigaotie',
-'and'            => '&#32;en',
-
-# Metadata in edit box
-'metadata_help' => 'Metadata:',
+'faq'            => 'FAQ (veehestelde vraehen)',
+'faqpage'        => 'Project:Veehestelde vraehen',
 
 'errorpagetitle'    => 'Fout',
 'returnto'          => 'Trug nae $1.',
@@ -231,7 +234,7 @@ $messages = array(
 'otherlanguages'    => 'In aore taelen',
 'redirectedfrom'    => '(Deurverwezen vanaf $1)',
 'redirectpagesub'   => 'Deurverwiespagina',
-'lastmodifiedat'    => "Deêze bladzie is vò 't lèst bewerkt op $1 om $2.", # $1 date, $2 time
+'lastmodifiedat'    => "Deêze bladzie is vò 't lèst bewerkt op $1 om $2.",
 'viewcount'         => 'Deêze pagina is {{PLURAL:$1|1 keêr|$1 keêr}} bekeken.',
 'protectedpage'     => 'Beschermde bladzie',
 'jumpto'            => 'Hi nae:',
@@ -242,7 +245,6 @@ $messages = array(
 'aboutsite'            => 'Over {{SITENAME}}',
 'aboutpage'            => 'Project:Info',
 'copyright'            => 'Den inoud is beschikbaer onder de $1.',
-'copyrightpagename'    => '{{SITENAME}} auteursrechen',
 'copyrightpage'        => '{{ns:project}}:Auteursrechen',
 'currentevents'        => "In 't nieuws",
 'currentevents-url'    => "Project:In 't nieuws",
@@ -250,8 +252,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:Alhemeên voebehoud',
 'edithelp'             => "Ulpe bie't bewerken",
 'edithelppage'         => 'Help:Bewerken',
-'faq'                  => 'FAQ (veehestelde vraehen)',
-'faqpage'              => 'Project:Veehestelde vraehen',
 'helppage'             => 'Help:Inoud',
 'mainpage'             => 'Vòblad',
 'mainpage-description' => 'Vòblad',
@@ -327,10 +327,6 @@ MySQL haf de foutmeldieng “<tt>$3: $4</tt>”.",
 “$1”
 vanuut de functie “$2”.
 MySQL haf de volhende foutmeldieng: “$3: $4”",
-'noconnect'            => 'Sorry! De wiki ondervin technische moeilijkheden en kan de database nie bereiken. <br />
-$1',
-'nodb'                 => 'Kon database $1 nie selecteren',
-'cachederror'          => 'Deêze pahina is een kopie uut de cache en kan verouwerd zien.',
 'laggedslavemode'      => "Waerschuwieng: de pahina zou verouwerd kunn'n zien.",
 'readonly'             => 'Database heblokkeerd',
 'enterlockreason'      => 'Heef een reeën op voe de blokkaode en heef op wunnir a die warschijnlijk wor opeheven',
@@ -378,7 +374,6 @@ $2",
 De heheven reeën is ''$2''.",
 
 # Login and logout pages
-'logouttitle'                => 'Gebruker afmelden',
 'logouttext'                 => "'''Je bin noe ofemeld.'''
 
 Je kan {{SITENAME}} noe anoniem gebruken of wee anmelden as dezelven of een aore gebruker.
@@ -386,7 +381,6 @@ Meuhlijk worn nog een antal pagina's weereheven asof a je anemeld bin totda je d
 'welcomecreation'            => '== Welkom, $1! ==
 Jen account is anemikt.
 Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.',
-'loginpagetitle'             => 'Gebrukersnaem',
 'yourname'                   => 'Gebrukersnaem',
 'yourpassword'               => 'Wachtwoôrd',
 'yourpasswordagain'          => 'Heef je wachtwoôrd opnieuw in:',
@@ -409,19 +403,7 @@ Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.'
 'badretype'                  => 'De wachtwoôrden die-a je ingegeven typ bin nie eênder.',
 'userexists'                 => 'De hekozen gebrukersnaem is a in gebruuk.
 Kies asjeblieft een aore naem.',
-'youremail'                  => 'Jen e-mailadres:',
-'username'                   => 'Gebrukersnaem:',
-'uid'                        => 'Gebrukersnummer:',
-'yourrealname'               => 'Jen echen naam:',
-'yourlanguage'               => 'Taele:',
-'yournick'                   => 'Tekst voe onderteêkenienge:',
-'badsig'                     => 'Ongeldege andteêkenienge; kiek de [[HTML]]-expressies nae.',
-'badsiglength'               => 'Te lange naem; ie mag uut maximaol $1 {{PLURAL:$1|letter|letters}} bestae.',
-'email'                      => 'E-mail',
-'prefs-help-realname'        => 'Echen naem is opsjoneel, a je dezen opgeef kan deêze naem gebruukt worn om je erkennieng te heven voe je werk.',
 'loginerror'                 => 'Anmeldfout',
-'prefs-help-email'           => "E-mailadres is opsjoneel, mè stel aore in staet contact mie je op te neem'n via je gebrukers- of overlegpagina zonder da je jen identiteit priesheef.",
-'prefs-help-email-required'  => 'Iervoe is een e-mailadres noôdig.',
 'nocookiesnew'               => "De gebruker is anemikt mè nie anemeld.
 {{SITENAME}} gebruuk cookies voe 't anmelden van gebrukers.
 Schaokel die asjeblieft in en meld dinae an mie je nieuwe gebrukersnaem en wachtwoôrd.",
@@ -469,16 +451,15 @@ Neheer dit bericht as deêze gebruker zonder joe medeweten is anemikt.',
 'loginlanguagelabel'         => 'Taele: $1',
 
 # Password reset dialog
-'resetpass'               => "Wachtwoôrd herinstell'n",
-'resetpass_announce'      => "Je bin anemeld mie een tiedelijke code die a je per e-mail is toe-ezon'n. Voer een nieuw wachtwoôrd in om 't anmelden te voltooien:",
-'resetpass_header'        => "Wachtwoôrd herinstell'n",
-'oldpassword'             => 'Udihe wachtwoôrd:',
-'newpassword'             => 'Nieuw wachtwoôrd:',
-'retypenew'               => 'Herhaolieng nieuwe wachtwoôrd:',
-'resetpass_submit'        => "Wachtwoôrd instell'n en anmelden",
-'resetpass_success'       => 'Je wachtwoord is ewiezigd. Bezig mie anmelden ...',
-'resetpass_bad_temporary' => 'Onheldig tiedelijk wachtwoôrd. Je ei je wachtwoôrd a ewiezigd of een nieuw tiedelijk wachtwoôrd anevrogen.',
-'resetpass_forbidden'     => "Wachtwoôrden kunn'n op {{SITENAME}} nie ewiezigd worn",
+'resetpass'           => "Wachtwoôrd herinstell'n",
+'resetpass_announce'  => "Je bin anemeld mie een tiedelijke code die a je per e-mail is toe-ezon'n. Voer een nieuw wachtwoôrd in om 't anmelden te voltooien:",
+'resetpass_header'    => "Wachtwoôrd herinstell'n",
+'oldpassword'         => 'Udihe wachtwoôrd:',
+'newpassword'         => 'Nieuw wachtwoôrd:',
+'retypenew'           => 'Herhaolieng nieuwe wachtwoôrd:',
+'resetpass_submit'    => "Wachtwoôrd instell'n en anmelden",
+'resetpass_success'   => 'Je wachtwoord is ewiezigd. Bezig mie anmelden ...',
+'resetpass_forbidden' => "Wachtwoôrden kunn'n op {{SITENAME}} nie ewiezigd worn",
 
 # Edit page toolbar
 'bold_sample'     => 'Vette tekst',
@@ -501,23 +482,23 @@ Neheer dit bericht as deêze gebruker zonder joe medeweten is anemikt.',
 'hr_tip'          => 'Horizontaele lien (gebruuk spaerzaem)',
 
 # Edit pages
-'summary'                   => 'Saemenvatting:',
-'subject'                   => 'Onderwerp/kop:',
-'minoredit'                 => 'Dit is een kleine wieziging',
-'watchthis'                 => 'Volg deêze bladzie',
-'savearticle'               => 'Bewaer bladzie',
-'preview'                   => 'Naekieken',
-'showpreview'               => 'Naekieke',
-'showlivepreview'           => 'Bewerkieng ter controle bekieken',
-'showdiff'                  => 'Bekiek veranderiengen',
-'anoneditwarning'           => "'''Waerschuwienge:''' Je bin nie angemolde. Je IP-adres komt in de bewerkiengsgeschiedenisse van deêze bladzie te staen.",
-'missingsummary'            => "'''Herinnerieng:''' je ei hin saemenvattieng opeheven voe je bewerkieng. A je nog een keêr op ''Pagina opslaen'' klik wor de bewerkieng zonder saemenvattieng opeslogen.",
-'missingcommenttext'        => 'Plek jen opmerkieng asjeblieft ieronder.',
-'missingcommentheader'      => "'''Let op:''' Je ei hin onderwerp/kop voe deêze opmerkieng opeheven. A je opnieuw op \"opslaen\" klik, wor je wieziging zonder een onderwerp/kop opeslogen.",
-'summary-preview'           => 'Saemenvattieng naekieken:',
-'subject-preview'           => 'Naekieken onderwerp/kop:',
-'blockedtitle'              => 'Gebruker is geblokkeerd',
-'blockedtext'               => "'''Je gebruker of IP-adres is eblokkeerd.'''
+'summary'                    => 'Saemenvatting:',
+'subject'                    => 'Onderwerp/kop:',
+'minoredit'                  => 'Dit is een kleine wieziging',
+'watchthis'                  => 'Volg deêze bladzie',
+'savearticle'                => 'Bewaer bladzie',
+'preview'                    => 'Naekieken',
+'showpreview'                => 'Naekieke',
+'showlivepreview'            => 'Bewerkieng ter controle bekieken',
+'showdiff'                   => 'Bekiek veranderiengen',
+'anoneditwarning'            => "'''Waerschuwienge:''' Je bin nie angemolde. Je IP-adres komt in de bewerkiengsgeschiedenisse van deêze bladzie te staen.",
+'missingsummary'             => "'''Herinnerieng:''' je ei hin saemenvattieng opeheven voe je bewerkieng. A je nog een keêr op ''Pagina opslaen'' klik wor de bewerkieng zonder saemenvattieng opeslogen.",
+'missingcommenttext'         => 'Plek jen opmerkieng asjeblieft ieronder.',
+'missingcommentheader'       => "'''Let op:''' Je ei hin onderwerp/kop voe deêze opmerkieng opeheven. A je opnieuw op \"opslaen\" klik, wor je wieziging zonder een onderwerp/kop opeslogen.",
+'summary-preview'            => 'Saemenvattieng naekieken:',
+'subject-preview'            => 'Naekieken onderwerp/kop:',
+'blockedtitle'               => 'Gebruker is geblokkeerd',
+'blockedtext'                => "'''Je gebruker of IP-adres is eblokkeerd.'''
 
 De blokkaode is uutevoerd deur $1.
 De opeheven reeën is ''$2''.
@@ -529,7 +510,7 @@ De opeheven reeën is ''$2''.
 Je kan contact opnemen mie $1 of een aore [[{{MediaWiki:Grouppage-sysop}}|opzichter]] om de blokkaode te bespreken.
 Je kan hin gebruuk maeken van de functie 'e-mail deêze gebruker', tenzie a je een heldig e-mailadres ei opeheven in je [[Special:Preferences|vòkeuren]] en 't gebruuk van deêze functie nie eblokkeerd is.
 Je udihe IP-adres is $3 en 't blokkaodenummer is #$5. Vermeld beie hehevens a je erhens op deêze blokkaode wil reaheern.",
-'autoblockedtext'           => "Jen IP-adres is automaotisch eblokkeerd, omda 't is gebruukt deur een aore gebruker, die a is eblokkeerd deur $1.
+'autoblockedtext'            => "Jen IP-adres is automaotisch eblokkeerd, omda 't is gebruukt deur een aore gebruker, die a is eblokkeerd deur $1.
 De opeheven reeën is:
 
 :''$2''
@@ -541,31 +522,30 @@ Je kan deêze blokkaode bespreken mie $1 of een aore [[{{MediaWiki:Grouppage-sys
 Je kan hin gebruuk maeken van de functie 'e-mail deêze gebruker', tenzie a je een heldig e-mailadres ei opeheven in je [[Special:Preferences|vòkeuren]] en 't gebruuk van deêze functie nie is eblokkeerd.
 Je blokkaodenummer is #$5.
 Vermeld dat a je erhens over deêze blokkaode wil reaheern.",
-'blockednoreason'           => 'hin reeën opeheven',
-'blockedoriginalsource'     => "De brontekst van '''$1''' staet ieronder:",
-'blockededitsource'         => "D'n tekst van '''joen biedragen''' an '''$1''' staet ieronder:",
-'whitelistedittitle'        => 'Voe bewerken is anmelden verplicht',
-'whitelistedittext'         => "Je mò $1 om pagina's te bewerken.",
-'confirmedittitle'          => 'E-mailbevestigieng is verplicht voeda je kan bewerken',
-'confirmedittext'           => "Je mò jen e-mailadres bevestihen voe da je kan bewerken.
+'blockednoreason'            => 'hin reeën opeheven',
+'blockedoriginalsource'      => "De brontekst van '''$1''' staet ieronder:",
+'blockededitsource'          => "D'n tekst van '''joen biedragen''' an '''$1''' staet ieronder:",
+'whitelistedittitle'         => 'Voe bewerken is anmelden verplicht',
+'whitelistedittext'          => "Je mò $1 om pagina's te bewerken.",
+'confirmedittext'            => "Je mò jen e-mailadres bevestihen voe da je kan bewerken.
 Voer jen e-mailadres in en bevestig 't via [[Special:Preferences|je vòkeuren]].",
-'nosuchsectiontitle'        => 'Deêze subkop besti nie',
-'nosuchsectiontext'         => 'Je probeern een subkop te bewerken die a nie besti.',
-'loginreqtitle'             => 'Anmelden verplicht',
-'loginreqlink'              => 'anmelden',
-'loginreqpagetext'          => "$1 is verplicht om aore pagina's te kunn'n ziene.",
-'accmailtitle'              => 'Wachtwoord verstierd.',
-'accmailtext'               => "'t Wachtwoord vò $1 is nae $2 opgestierd.",
-'newarticle'                => '(Nieuw)',
-'newarticletext'            => "Deêze pagina besti nie. Typ in 't onderstaende veld om de pagina an te maeken (meêr informatie sti op de [[{{MediaWiki:Helppage}}|ulppagina]]).
+'nosuchsectiontitle'         => 'Deêze subkop besti nie',
+'nosuchsectiontext'          => 'Je probeern een subkop te bewerken die a nie besti.',
+'loginreqtitle'              => 'Anmelden verplicht',
+'loginreqlink'               => 'anmelden',
+'loginreqpagetext'           => "$1 is verplicht om aore pagina's te kunn'n ziene.",
+'accmailtitle'               => 'Wachtwoord verstierd.',
+'accmailtext'                => "'t Wachtwoord vò $1 is nae $2 opgestierd.",
+'newarticle'                 => '(Nieuw)',
+'newarticletext'             => "Deêze pagina besti nie. Typ in 't onderstaende veld om de pagina an te maeken (meêr informatie sti op de [[{{MediaWiki:Helppage}}|ulppagina]]).
 Gebruuk de knoppe '''vorige''' in je browser as je ier per ongeluk terecht bin ekomm'n.",
-'anontalkpagetext'          => "----''Dit is de overlegbladzie vò 'n anonieme gebruker die-a gin inlognaem eit of 'm nie gebruukt.
+'anontalkpagetext'           => "----''Dit is de overlegbladzie vò 'n anonieme gebruker die-a gin inlognaem eit of 'm nie gebruukt.
 Zien/eur IP-adres kan deu meêr as eên gebruker gebruukt ore.
 A je 'n bericht gekrege è dat-a dudelik nie an joe gericht is, ka je 't beste [[Special:UserLogin|jen eige anmelde]] om zukke verwarrienge in 't vervolg te vòkommen.''",
-'noarticletext'             => 'Deêze pagina bevat hin tekst.
+'noarticletext'              => 'Deêze pagina bevat hin tekst.
 Je kan [[Special:Search/{{PAGENAME}}|ni deêze term zoeken]] in aore pagina\'s of <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} deêze pagina bewerken]</span>.',
-'userpage-userdoesnotexist' => 'Je bewerk een gebrukerspagina van een gebruker die a nie besti (gebruker "$1"). Controleer of a je deêze pagina wè wil anmaeken/bewerken.',
-'clearyourcache'            => '\'\'\'Let op!\'\'\' Leeg je cache naeda je de wiezigiengen ei opeslogen.
+'userpage-userdoesnotexist'  => 'Je bewerk een gebrukerspagina van een gebruker die a nie besti (gebruker "$1"). Controleer of a je deêze pagina wè wil anmaeken/bewerken.',
+'clearyourcache'             => '\'\'\'Let op!\'\'\' Leeg je cache naeda je de wiezigiengen ei opeslogen.
 
 {| border="1" cellpadding="3" class=toccolours style="border: 1px #AAAAAA solid; border-collapse: collapse;"
 | Mozilla/Safari/Konqueror || CTRL-SHIFT-R
@@ -578,71 +558,72 @@ Je kan [[Special:Search/{{PAGENAME}}|ni deêze term zoeken]] in aore pagina\'s o
 |-
 | Konqueror || F5
 |}',
-'usercssjsyoucanpreview'    => "'''Tip:''' Gebruuk de knoppe 'Naekieken' om je nieuwe CSS/JS te tessen voe da je opsli.",
-'usercsspreview'            => "'''Dit is alleên een voeôvertonieng van je persoônlijke CSS, dezen is nog nie opeslogen!'''",
-'userjspreview'             => "'''Let op: je test noe je persoônlijke JavaScript. De pagina is nie opeslogen!'''",
-'userinvalidcssjstitle'     => "'''Waerschuwieng:''' der is hin skin \"\$1\". Let op: jen eihen .css- en .js-pagina's behunnen mie een kleine letter, buvobbeld {{ns:user}}:Naem/monobook.css in plekke van {{ns:user}}:Naem/Monobook.css.",
-'updated'                   => '(Biehewerkt)',
-'note'                      => "'''Opmerkieng:'''",
-'previewnote'               => "'''Let op: dit is een controlepagina; je tekst is nie opeslogen!'''",
-'previewconflict'           => "Deêze voevertoônieng heef an oe a de tekst in 't bovenste veld deruut zie a je die opsli.",
-'session_fail_preview'      => "'''Sorry! Je bewerkieng is nie verwerkt, omdan de sessiehehevens verloorn zien ehaen.
+'usercssyoucanpreview'       => "'''Tip:''' Gebruuk de knoppe 'Naekieken' om je nieuwe CSS te tessen voe da je opsli.",
+'userjsyoucanpreview'        => "'''Tip:''' Gebruuk de knoppe 'Naekieken' om je nieuwe JS te tessen voe da je opsli.",
+'usercsspreview'             => "'''Dit is alleên een voeôvertonieng van je persoônlijke CSS, dezen is nog nie opeslogen!'''",
+'userjspreview'              => "'''Let op: je test noe je persoônlijke JavaScript. De pagina is nie opeslogen!'''",
+'userinvalidcssjstitle'      => "'''Waerschuwieng:''' der is hin skin \"\$1\". Let op: jen eihen .css- en .js-pagina's behunnen mie een kleine letter, buvobbeld {{ns:user}}:Naem/monobook.css in plekke van {{ns:user}}:Naem/Monobook.css.",
+'updated'                    => '(Biehewerkt)',
+'note'                       => "'''Opmerkieng:'''",
+'previewnote'                => "'''Let op: dit is een controlepagina; je tekst is nie opeslogen!'''",
+'previewconflict'            => "Deêze voevertoônieng heef an oe a de tekst in 't bovenste veld deruut zie a je die opsli.",
+'session_fail_preview'       => "'''Sorry! Je bewerkieng is nie verwerkt, omdan de sessiehehevens verloorn zien ehaen.
 Probeer 't opnieuw. A 't dan nog nie luk, mel jen eihen dan of en wee an.'''",
-'session_fail_preview_html' => "'''Sorry! Je bewerkieng is nie verwerkt, omdan sessiehehevens verloren zien ehaene.'''
+'session_fail_preview_html'  => "'''Sorry! Je bewerkieng is nie verwerkt, omdan sessiehehevens verloren zien ehaene.'''
 
 ''Omda in {{SITENAME}} ruwe HTML is ineschaokeld, is een voevertoônieng nie meuhlijk as beschermieng tehen anvall'n mie JavaScript.''
 
 '''A dit een lehitieme bewerkieng is, probeer 't dan opnieuw. A 't dan nog nie luk, mel jen eihen dan of en wee an.'''",
-'token_suffix_mismatch'     => "'''Je bewerkieng is eweiherd omda je browser de leesteêkens in 't bewerkiengstoken onjuust ei behandeld.
+'token_suffix_mismatch'      => "'''Je bewerkieng is eweiherd omda je browser de leesteêkens in 't bewerkiengstoken onjuust ei behandeld.
 De bewerkieng is eweiherd om vermienkieng van de paginatekst te voorkomm'n.
 Dit gebeur soms a der een webhebaseerde proxydienst wor gebruukt die a fout'n bevat.'''",
-'editing'                   => 'Bezig mie bewerken van $1',
-'editingsection'            => 'Bezig mie bewerken van $1 (deêlpagina)',
-'editingcomment'            => 'Bezig mie bewerken van $1 (opmerkieng)',
-'editconflict'              => 'Bewerkiengsconflict: $1',
-'explainconflict'           => "Een aore gebruker ei deêze pagina bewerkt sins a je mie je bewerkieng bin behonnen.
+'editing'                    => 'Bezig mie bewerken van $1',
+'editingsection'             => 'Bezig mie bewerken van $1 (deêlpagina)',
+'editingcomment'             => 'Bezig mie bewerken van $1 (opmerkieng)',
+'editconflict'               => 'Bewerkiengsconflict: $1',
+'explainconflict'            => "Een aore gebruker ei deêze pagina bewerkt sins a je mie je bewerkieng bin behonnen.
 In 't bovenste deêl van 't venster sti de tekst van de udihe pagina.
 Je bewerkieng sti in 't onderste hedeêlte.
 Je dien je bewerkiengen in te voehen in de bestaende tekst.
 <b>Alleên</b> de tekst in 't bovenste hedeêlte wor opeslogen a je op \"Pagina opslaen\" klik.<br />",
-'yourtext'                  => 'Joe tekst',
-'storedversion'             => 'Opeslogen versie',
-'nonunicodebrowser'         => "'''WAERSCHUWIENG: Je browser kan nie hoed overwig mie unicode.
+'yourtext'                   => 'Joe tekst',
+'storedversion'              => 'Opeslogen versie',
+'nonunicodebrowser'          => "'''WAERSCHUWIENG: Je browser kan nie hoed overwig mie unicode.
 Iermie wor deur de MediaWiki-software rekenienge ehouwen zoda je toch zonder probleemn pagina's kan bewerken: nie-ASCII karakters worn in 't bewerkiengsveld weereheven as hexadecimale codes.'''",
-'editingold'                => "'''WAARSCHUWING!
+'editingold'                 => "'''WAARSCHUWING!
 Je bewerk een ouwe versie van deêze pagina.
 A je je bewerkieng opsli, haen aolle wiezigiengen die an nae deêze versie emikt zien verloorn.'''",
-'yourdiff'                  => 'Wiezigiengen',
-'copyrightwarning'          => "Opelet: Aolle biedraegen an {{SITENAME}} worn eacht te zien vrie'eheven onder de $2 (zie $1 voe details).
+'yourdiff'                   => 'Wiezigiengen',
+'copyrightwarning'           => "Opelet: Aolle biedraegen an {{SITENAME}} worn eacht te zien vrie'eheven onder de $2 (zie $1 voe details).
 A je nie wil da je tekst deur aore ni believen bewerkt en verspreid kan worn, kies dan nie voe 'Pagina Opslaen'.<br />
 Ierbie beloof je ons ok da je deêze tekst zelf eschreven ei, of overenomen uut een vrieë, openbaere bron.<br />
 '''GEBRUUK HIN MATERIAOL DAT A BESCHERMD WOR DEUR AUTEURSRECHT, TENZIE A JE DIVOE TOESTEMMIENG                   EI!'''",
-'copyrightwarning2'         => "Al je biedraehen an {{SITENAME}} kunn'n bewerkt, ewiezigd of verwiederd worn deur aore gebrukers.
+'copyrightwarning2'          => "Al je biedraehen an {{SITENAME}} kunn'n bewerkt, ewiezigd of verwiederd worn deur aore gebrukers.
 A je nie wil dan je teksen rihoreus anepast worn deur aore, plek ze ier dan nie.<br />
 Je beloof ok da je de oôrspronkelijke auteur bin van dit materiaol, of da je 't ei ekopieerd uut een bron in 't publieke domein, of een soôrthelieke vrieë bron (zie $1 voor details).
 '''GEBRUUK HIN MATERIAOL DAT A BESCHERMD WOR DEUR AUTEURSRECHT, TENZIE A JE DIVOE TOESTEMMIENG EI!'''",
-'longpagewarning'           => "'''WAERSCHUWIENG: Deêze pagina is $1 kilobyte hroôt; sommihe browsers èn probleemn mie 't bewerken van pagina's die an hrotter zien dan 32 kb. Misschien kan deêze pagina esplitst worn in kleinere deêln.'''",
-'longpageerror'             => "'''FOUT: de tekst die a je ei toe'evoegd is $1 kilobyte hroôt, wat a hrotter is dan 't maximum van $2 kilobyte.
+'longpagewarning'            => "'''WAERSCHUWIENG: Deêze pagina is $1 kilobyte hroôt; sommihe browsers èn probleemn mie 't bewerken van pagina's die an hrotter zien dan 32 kb. Misschien kan deêze pagina esplitst worn in kleinere deêln.'''",
+'longpageerror'              => "'''FOUT: de tekst die a je ei toe'evoegd is $1 kilobyte hroôt, wat a hrotter is dan 't maximum van $2 kilobyte.
 Opslaene is nie meuhlijk.'''",
-'readonlywarning'           => "'''WAERSCHUWIENG: de database is eblokkeerd voe onderoud, dus je kan dezen noe nie opslaen.
+'readonlywarning'            => "'''WAERSCHUWIENG: de database is eblokkeerd voe onderoud, dus je kan dezen noe nie opslaen.
 't Is misschien verstandig om je tekst tiedelijk in een tekstbestand op te slaene om dit te bewaeren                    ve wunnir a de blokkerieng van de database opeheven is.'''",
-'protectedpagewarning'      => "'''WAERSCHUWIENG! Deêze beveiligde pagina kan allin deur gebrukers mie beheêrdersrechten bewerkt        worn.'''",
-'semiprotectedpagewarning'  => "'''Let op:''' deêze pagina is beveiligd en kan allaen deur herehistreerde gebrukers bewerkt worn.",
-'cascadeprotectedwarning'   => "'''Waerschuwieng:''' Deêze pagina is beveiligd en kan allin deur beheêrders bewerkt worn, omda dezen is openomen in de volhende {{PLURAL:$1|pagina|pagina's}} die a beveiligd {{PLURAL:$1|is|zien}} mie de cascade-optie:",
-'titleprotectedwarning'     => "'''WAERSCHUWIENG: Deêze pagina is beveiligd zodan allaen ienkele gebrukers 't kunn'n anmaeken.'''",
-'templatesused'             => "Op deêze pagina gebruukte sjabloon'n:",
-'templatesusedpreview'      => "Sjabloon'n gebruukt in deêze voevertoônieng:",
-'templatesusedsection'      => "Sjabloon'n die an gebruukt worn in deêze subkop:",
-'template-protected'        => '(beveiligd)',
-'template-semiprotected'    => '(semi-beveiligd)',
-'hiddencategories'          => 'Deêze pagina val in de volhende verborhen {{PLURAL:$1|categorie|categorieën}}:',
-'nocreatetitle'             => "'t Anmaeken van pagina's is beperkt",
-'nocreatetext'              => "{{SITENAME}} ei de meuhlijkeid om nieuwe pagina's an te maeken beperkt.
+'protectedpagewarning'       => "'''WAERSCHUWIENG! Deêze beveiligde pagina kan allin deur gebrukers mie beheêrdersrechten bewerkt        worn.'''",
+'semiprotectedpagewarning'   => "'''Let op:''' deêze pagina is beveiligd en kan allaen deur herehistreerde gebrukers bewerkt worn.",
+'cascadeprotectedwarning'    => "'''Waerschuwieng:''' Deêze pagina is beveiligd en kan allin deur beheêrders bewerkt worn, omda dezen is openomen in de volhende {{PLURAL:$1|pagina|pagina's}} die a beveiligd {{PLURAL:$1|is|zien}} mie de cascade-optie:",
+'titleprotectedwarning'      => "'''WAERSCHUWIENG: Deêze pagina is beveiligd zodan allaen ienkele gebrukers 't kunn'n anmaeken.'''",
+'templatesused'              => "Op deêze pagina gebruukte sjabloon'n:",
+'templatesusedpreview'       => "Sjabloon'n gebruukt in deêze voevertoônieng:",
+'templatesusedsection'       => "Sjabloon'n die an gebruukt worn in deêze subkop:",
+'template-protected'         => '(beveiligd)',
+'template-semiprotected'     => '(semi-beveiligd)',
+'hiddencategories'           => 'Deêze pagina val in de volhende verborhen {{PLURAL:$1|categorie|categorieën}}:',
+'nocreatetitle'              => "'t Anmaeken van pagina's is beperkt",
+'nocreatetext'               => "{{SITENAME}} ei de meuhlijkeid om nieuwe pagina's an te maeken beperkt.
 Je kan a bestaende pagina's wiezigen, of je kan [[Special:UserLogin|jen eihen anmelden of een gebruker  anmaeken]].",
-'nocreate-loggedin'         => "Je kan hin nieuwe pagina's anmaeken.",
-'permissionserrors'         => "Fout'n in rechen",
-'permissionserrorstext'     => "Je ei hin rechen om dit te doene wehens de volhende {{PLURAL:$1|reeën|reden'n}}:",
-'recreate-deleted-warn'     => "'''Waerschuwieng: je bin bezig mie 't anmaeken van een pagina die a in 't verleeën verwiederd is.'''
+'nocreate-loggedin'          => "Je kan hin nieuwe pagina's anmaeken.",
+'permissionserrors'          => "Fout'n in rechen",
+'permissionserrorstext'      => "Je ei hin rechen om dit te doene wehens de volhende {{PLURAL:$1|reeën|reden'n}}:",
+'recreate-moveddeleted-warn' => "'''Waerschuwieng: je bin bezig mie 't anmaeken van een pagina die a in 't verleeën verwiederd is.'''
 
 Overweeg of a 't terecht is dat je vadder werk an deêze pagina. Voe je hemak sti ieronder 't verwiederiengslogboek van deêze pagina:",
 
@@ -668,7 +649,7 @@ De deur $3 opeheven reeën is ''$2''",
 'nohistory'           => 'Deêze pagina is nie bewerkt.',
 'currentrev'          => 'Udihe versie',
 'revisionasof'        => 'Versie op $1',
-'revision-info'       => 'Versie op $1 van $2', # Additionally available: $3: revision id
+'revision-info'       => 'Versie op $1 van $2',
 'previousrevision'    => '←Ouwere versie',
 'nextrevision'        => 'Nieuwere versie→',
 'currentrevisionlink' => 'Udihe versie',
@@ -679,7 +660,6 @@ De deur $3 opeheven reeën is ''$2''",
 'page_last'           => 'lèste',
 'histlegend'          => "Selectie voe diff: sillecteer de te verheliek'n versies en toets ENTER of de knoppe onderan.<br />
 Verklaerieng afkortiengen: (udig) = verschil mie udihe versie, (vorihe) = verschil mie voorhaende versie, k = kleine wiezigieng",
-'deletedrev'          => '[verwiederd]',
 'histfirst'           => 'Oussen',
 'histlast'            => 'Nieuwsen',
 'historysize'         => '({{PLURAL:$1|1 byte|$1 bytes}})',
@@ -688,7 +668,7 @@ Verklaerieng afkortiengen: (udig) = verschil mie udihe versie, (vorihe) = versch
 # Revision feed
 'history-feed-title'          => 'Bewerkiengsgeschiedenisse',
 'history-feed-description'    => 'Bewerkiengsoverzicht voe deêze pagina op de wiki',
-'history-feed-item-nocomment' => '$1 op $2', # user at time
+'history-feed-item-nocomment' => '$1 op $2',
 'history-feed-empty'          => "De evrogen pagina besti nie.
 Misschien is een verwiederd of hernoemd.
 [[Special:Search|Deurzoek de wiki]] voe rillevante pagina's.",
@@ -698,10 +678,10 @@ Misschien is een verwiederd of hernoemd.
 'rev-deleted-user'            => '(gebruker verwiederd)',
 'rev-deleted-event'           => '(logboekrehel verwiederd)',
 'rev-deleted-text-permission' => "Deêze bewerkieng van de pagina is verwiederd uut de publieke archieven.
-Der kunn'n details anwezig zien in 't [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}}verwiederiengslogboek].",
+Der kunn'n details anwezig zien in 't [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}}verwiederiengslogboek].",
 'rev-deleted-text-view'       => "Deêze bewerkieng van de pagina is verwiederd uut de publieke archieven.
 As opzichter van {{SITENAME}} kan je dezen ziene;
-der kunn'n details anwezig zien in 't [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} verwiederiengslogboek].",
+der kunn'n details anwezig zien in 't [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verwiederiengslogboek].",
 'rev-delundel'                => 'weerheven/verberhen',
 'revisiondelete'              => 'Versies verwiederen/trugplekken',
 'revdelete-nooldid-title'     => 'Hin doelversie',
@@ -713,12 +693,12 @@ der kunn'n details anwezig zien in 't [{{fullurl:Special:Log/delete|page={{FULLP
 Aore opzichters van {{SITENAME}} kunn'n de verborhen inoud benadern en de verwiederieng onedaene maeken mie de ulpe van dit scherm, tenzie an der anvull'nde beperkiengen heln die an zien inesteld deur de systeembeheêrder.",
 'revdelete-legend'            => "Zichbaereidsbeperkiengen instell'n",
 'revdelete-hide-text'         => 'De bewerkte tekst verberhen',
+'revdelete-hide-image'        => 'Bestandsinoud verberhen',
 'revdelete-hide-name'         => 'Actie en doel verberhen',
 'revdelete-hide-comment'      => 'De bewerkiengssaemenvattieng verberhen',
 'revdelete-hide-user'         => 'Gebrukersnaem/IP van de gebruker verberhen',
 'revdelete-hide-restricted'   => 'Deêze beperkiengen toepassen op opzichters en dezen interface ofsluten',
 'revdelete-suppress'          => "Hehevens voe zòwè opzichters as aore onderdrukk'n",
-'revdelete-hide-image'        => 'Bestandsinoud verberhen',
 'revdelete-unsuppress'        => 'Beperkiengen op terugezette wiezigiengen verwiederen',
 'revdelete-log'               => 'Opmerkieng in logboek:',
 'revdelete-submit'            => 'Toepassen op de hesillecteerde bewerkieng',
@@ -783,16 +763,14 @@ Zurg da je bie deêze wiezigieng de heschiedenisdeurloôpendeid van de pagina be
 'searchresulttext'      => 'Voe meêr informaotie over zoeken op {{SITENAME}}, zie [[{{MediaWiki:Helppage}}|{{int:ulpe}}]].',
 'searchsubtitle'        => "Je zoch ni '''[[:$1]]'''",
 'searchsubtitleinvalid' => 'Voe zoekopdracht "$1"',
-'noexactmatch'          => "'''Der besti hin pagina henaemd \"\$1\".''' Je kan dezen [[:\$1|anmaeken]].",
-'noexactmatch-nocreate' => "'''Der besti hin pagina genaemd \"\$1\".'''",
 'toomanymatches'        => 'Der waeren te vee resultaoten. Probeer asjeblieft een aore zoekopdracht.',
 'titlematches'          => 'Overeênkomst mie onderwerp',
 'notitlematches'        => "Hin resultaoten evon'n",
 'textmatches'           => 'Overeênkomst mie inoud',
 'notextmatches'         => "Hin pagina's evon'n",
 'prevn'                 => 'vorrege $1',
-'nextn'                 => 'volhende $1',
-'viewprevnext'          => 'Bekiek ($1) ($2) ($3).',
+'nextn'                 => 'volhende {{PLURAL:$1|$1}}',
+'viewprevnext'          => 'Bekiek ($1 {{int:pipe-separator}} $2) ($3).',
 'searchhelp-url'        => 'Help:Inoud',
 'search-result-size'    => '$1 ({{PLURAL:$2|1 woôrd|$2 woôrn}})',
 'search-result-score'   => 'Rillevantie: $1%',
@@ -802,7 +780,6 @@ Zurg da je bie deêze wiezigieng de heschiedenisdeurloôpendeid van de pagina be
 'searchall'             => 'aolle',
 'showingresults'        => "Ieronder {{PLURAL:$1|sti '''1''' resultaot|staen '''$1''' resultaoten}} vanof #'''$2'''.",
 'showingresultsnum'     => "Ieronder {{PLURAL:$3|sti '''1''' resultaot|staen '''$3''' resultaoten}} vanof #'''$2'''.",
-'showingresultstotal'   => "Ieronder worn de resultaoten '''$1 tot $2''' van '''$3''' weereheven",
 'nonefound'             => "'''Opmerkieng''': mislukte zoekopdrachten worn vaok veroôrzaekt deur zoekn ni vee voekomm'nde woôrn as \"van\" en \"de\", die an nie in de indexen worn openoom'n, of deur meêr dan eên zoekterm op te heven. Allin pagina's die an aolle zoektermen bevatt'n worn openoom'n in de resultaoten.",
 'powersearch'           => 'Uutebreid zoeken',
 'powersearch-legend'    => 'Uutebreid zoeken',
@@ -811,67 +788,69 @@ Zurg da je bie deêze wiezigieng de heschiedenisdeurloôpendeid van de pagina be
 Je kan gebruuk maeken van Google.
 De hehevens over {{SITENAME}} zien meuhlijk nie bie'ewerkt.",
 
-# Preferences page
-'preferences'              => 'Vòkeuren',
-'mypreferences'            => 'Mien vòkeuren',
-'prefs-edits'              => 'Antal bewerkiengen:',
-'prefsnologin'             => 'Nie anemeld',
-'prefsnologintext'         => 'Je mò <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} anemeld]</span> zien om je vòkeuren te kunn\'n instell\'n.',
-'prefsreset'               => 'Standardvòkeuren zien hersteld.',
+# Quickbar
 'qbsettings'               => 'Menubalke',
 'qbsettings-none'          => 'Uuteschaokeld',
 'qbsettings-fixedleft'     => 'Lienks vast',
 'qbsettings-fixedright'    => 'Rechs vast',
 'qbsettings-floatingleft'  => 'Lienks zwevend',
 'qbsettings-floatingright' => 'Rechs zwevend',
-'changepassword'           => 'Wachtwoôrd wiezigen',
-'skin'                     => 'Vurmhevieng',
-'skin-preview'             => 'Voevertoônienge',
-'math'                     => 'Formules',
-'dateformat'               => 'Datumopmaek',
-'datedefault'              => 'Hin vòkeur',
-'datetime'                 => 'Daotum en tied',
-'math_failure'             => 'Parsen mislukt',
-'math_unknown_error'       => 'onbekende fout',
-'math_unknown_function'    => 'onbekende functie',
-'math_lexing_error'        => 'lexicohraofische fout',
-'math_syntax_error'        => 'syntactische fout',
-'math_image_error'         => 'PNG-omzettieng is mislukt. Hi nae of an latex, dvips en gs correct heïnstalleerd zien en zet om',
-'math_bad_tmpdir'          => "De map voe tiedelijke bestan'n voe wiskundihe formules besti nie of kan nie emikt worn",
-'math_bad_output'          => "De map voe bestan'n mie wiskundihe formules besti nie of kan nie emikt worn.",
-'math_notexvc'             => "Kan 't prohramma texvc nie vin'n; stel aolles in volhens de beschrievieng in math/README.",
-'prefs-personal'           => 'Gebrukersprofiel',
-'prefs-rc'                 => 'Juust angepast',
-'prefs-watchlist'          => 'Volglieste',
-'prefs-watchlist-days'     => 'Daehen weer te heven in de volglieste:',
-'prefs-watchlist-edits'    => 'Maximaol antal bewerkiengen in de uutebreide volglieste:',
-'prefs-misc'               => 'Rest',
-'saveprefs'                => 'Opslaene',
-'resetprefs'               => 'Nie opeslogen wiezigiengen herstellen',
-'textboxsize'              => 'Bewerken',
-'rows'                     => 'Rehels:',
-'columns'                  => "Kolomm'n:",
-'searchresultshead'        => 'Zoek',
-'resultsperpage'           => "Resultaot'n per pagina:",
-'contextlines'             => 'Rehels per resultaot:',
-'contextchars'             => 'Context per rehel:',
-'stub-threshold'           => 'Drempel voe markerieng <a href="#" class="stub">stompje</a>:',
-'recentchangesdays'        => 'Antal daehen weer te heven in Juust angepast:',
-'recentchangescount'       => "Antal pagina's in Juust angepast:",
-'savedprefs'               => 'Je vòkeuren zien opeslogen.',
-'timezonelegend'           => 'Tiedzône',
-'timezonetext'             => "¹'t Antal uurn dat a je plaetselijke tied afwiek van de servertied (UTC).",
-'localtime'                => 'Lokaole tied',
-'timezoneoffset'           => 'Tiedsverschil¹',
-'servertime'               => 'Servertied',
-'guesstimezone'            => 'Vanuut de browser toevoehen',
-'allowemail'               => 'Laet e-mail van aore gebrukers toe.',
-'defaultns'                => "Standard in deêze naemruum'n zoeken:",
-'default'                  => 'standard',
-'files'                    => "Bestan'n",
+
+# Preferences page
+'preferences'               => 'Vòkeuren',
+'mypreferences'             => 'Mien vòkeuren',
+'prefs-edits'               => 'Antal bewerkiengen:',
+'prefsnologin'              => 'Nie anemeld',
+'prefsnologintext'          => 'Je mò <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} anemeld]</span> zien om je vòkeuren te kunn\'n instell\'n.',
+'changepassword'            => 'Wachtwoôrd wiezigen',
+'prefs-skin'                => 'Vurmhevieng',
+'skin-preview'              => 'Voevertoônienge',
+'prefs-math'                => 'Formules',
+'datedefault'               => 'Hin vòkeur',
+'prefs-datetime'            => 'Daotum en tied',
+'prefs-personal'            => 'Gebrukersprofiel',
+'prefs-rc'                  => 'Juust angepast',
+'prefs-watchlist'           => 'Volglieste',
+'prefs-watchlist-days'      => 'Daehen weer te heven in de volglieste:',
+'prefs-watchlist-edits'     => 'Maximaol antal bewerkiengen in de uutebreide volglieste:',
+'prefs-misc'                => 'Rest',
+'saveprefs'                 => 'Opslaene',
+'resetprefs'                => 'Nie opeslogen wiezigiengen herstellen',
+'prefs-editing'             => 'Bewerken',
+'rows'                      => 'Rehels:',
+'columns'                   => "Kolomm'n:",
+'searchresultshead'         => 'Zoek',
+'resultsperpage'            => "Resultaot'n per pagina:",
+'contextlines'              => 'Rehels per resultaot:',
+'contextchars'              => 'Context per rehel:',
+'stub-threshold'            => 'Drempel voe markerieng <a href="#" class="stub">stompje</a>:',
+'recentchangesdays'         => 'Antal daehen weer te heven in Juust angepast:',
+'recentchangescount'        => "Antal pagina's in Juust angepast:",
+'savedprefs'                => 'Je vòkeuren zien opeslogen.',
+'timezonelegend'            => 'Tiedzône',
+'localtime'                 => 'Lokaole tied',
+'timezoneoffset'            => 'Tiedsverschil¹',
+'servertime'                => 'Servertied',
+'guesstimezone'             => 'Vanuut de browser toevoehen',
+'allowemail'                => 'Laet e-mail van aore gebrukers toe.',
+'defaultns'                 => "Standard in deêze naemruum'n zoeken:",
+'default'                   => 'standard',
+'prefs-files'               => "Bestan'n",
+'youremail'                 => 'Jen e-mailadres:',
+'username'                  => 'Gebrukersnaem:',
+'uid'                       => 'Gebrukersnummer:',
+'yourrealname'              => 'Jen echen naam:',
+'yourlanguage'              => 'Taele:',
+'yournick'                  => 'Tekst voe onderteêkenienge:',
+'badsig'                    => 'Ongeldege andteêkenienge; kiek de [[HTML]]-expressies nae.',
+'badsiglength'              => 'Te lange naem; ie mag uut maximaol $1 {{PLURAL:$1|letter|letters}} bestae.',
+'email'                     => 'E-mail',
+'prefs-help-realname'       => 'Echen naem is opsjoneel, a je dezen opgeef kan deêze naem gebruukt worn om je erkennieng te heven voe je werk.',
+'prefs-help-email'          => "E-mailadres is opsjoneel, mè stel aore in staet contact mie je op te neem'n via je gebrukers- of overlegpagina zonder da je jen identiteit priesheef.",
+'prefs-help-email-required' => 'Iervoe is een e-mailadres noôdig.',
 
 # User rights
-'userrights'                  => 'Gebrukersrechenbeheer', # Not used as normal message but as header for the special page itself
+'userrights'                  => 'Gebrukersrechenbeheer',
 'userrights-lookup-user'      => "Gebrukershroep'n beheern",
 'userrights-user-editname'    => 'Voer een gebrukersnaem in:',
 'editusergroup'               => "Gebrukershroep'n wiezigen",
@@ -946,6 +925,8 @@ Een nie anekruusd vienkvakje beteêken da de gebruker hin lid is van de hroep.",
 
 # Recent changes linked
 'recentchangeslinked'          => 'Gerelateerde bewerkiengen',
+'recentchangeslinked-feed'     => 'Gerelateerde bewerkiengen',
+'recentchangeslinked-toolbox'  => 'Gerelateerde bewerkiengen',
 'recentchangeslinked-title'    => 'Wiezigiengen verwant an "$1"',
 'recentchangeslinked-noresult' => "Der zien hin bewerkiengen in de heheven periode ewist op de pagina's die an vanaf ier elienkt worn.",
 'recentchangeslinked-page'     => 'Paginanaem:',
@@ -954,7 +935,6 @@ Een nie anekruusd vienkvakje beteêken da de gebruker hin lid is van de hroep.",
 # Upload
 'upload'                     => 'Upload bestand',
 'uploadbtn'                  => "Bestand upload'n",
-'reupload'                   => "Opnieuw upload'n",
 'reuploaddesc'               => "Upload annuleern en teruggaene ni 't uploadformelier",
 'uploadnologin'              => 'Nie anemeld',
 'uploadnologintext'          => "Je mò [[Special:UserLogin|anemeld]] zien
@@ -988,6 +968,9 @@ De lèste lienk is bedoeld voe mediabestan'n die an hin plaetje zien.",
 'minlength1'                 => "Bestandsnaem'n mott'n minstes eên letter bevatt'n.",
 'badfilename'                => 'Bestandsnaem is veranderd nae "$1".',
 'watchthisupload'            => 'Volg deêze bladzie',
+
+# File description page
+'file-anchor-link' => 'Bestand',
 
 # Random page
 'randompage' => 'Bladzie op goed geluk',
@@ -1061,7 +1044,7 @@ A je de bladzie laeter weêr van je volglieste afaele wil, klik dan op \"nie me�
 # Rollback
 'alreadyrolled' => 'De lèste bewerkienge op [[$1]] deu [[User:$2|$2]] ([[User talk:$2|Overleggienge]]) kan nie vrommegedraoid ore; iemand aors eit de bladzie al bewerkt of ersteld.
 De lèste bewerkienge wier gedaen deu [[User:$3|$3]] ([[User talk:$3|Overleggienge]]).',
-'revertpage'    => 'Wiezigingen deur [[Special:Contributions/$2|$2]] ([[User talk:$2|Overleg]]) teruggedraoid nae de lèste versie van [[User:$1|$1]]', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'revertpage'    => 'Wiezigingen deur [[Special:Contributions/$2|$2]] ([[User talk:$2|Overleg]]) teruggedraoid nae de lèste versie van [[User:$1|$1]]',
 
 # Protect
 'protectlogpage' => 'Beschermlogboek',
@@ -1077,6 +1060,9 @@ De lèste bewerkienge wier gedaen deu [[User:$3|$3]] ([[User talk:$3|Overleggien
 # Contributions
 'contributions' => 'Biedraegen gebruker',
 'mycontris'     => 'Mien biedraegen',
+
+'sp-contributions-talk'       => 'Overleg',
+'sp-contributions-userrights' => 'Gebrukersrechenbeheer',
 
 # What links here
 'whatlinkshere' => 'Links nae deze bladzie',
@@ -1117,8 +1103,6 @@ Kiest 'n aore naem.",
 'allmessagescurrent'        => 'Tekst van noe',
 'allmessagestext'           => "Dit is 'n liest van aolle systeemteksten die-an in de MediaWiki-naemruumte stae.",
 'allmessagesnotsupportedDB' => "'''{{ns:special}}:Allmessages''' kan nie gebruukt ore om'at '''\$wgUseDatabaseMessages''' uutgeschaekeld staet.",
-'allmessagesfilter'         => 'Zoek nae systeemteksten mee...',
-'allmessagesmodified'       => 'Laet alleêne de veranderde teksten zieë',
 
 # Tooltip help for the actions
 'tooltip-pt-userpage'     => 'Mien gebrukersbladzie',
@@ -1134,6 +1118,17 @@ Kiest 'n aore naem.",
 'tooltip-n-portal'        => "Praet en overleg in't Durpsuus",
 'tooltip-n-recentchanges' => 'Bekiek wat-a juust veranderd is op deêze wiki',
 'tooltip-watch'           => 'Voeg deêze bladzie toe an de volglieste',
+
+# Math errors
+'math_failure'          => 'Parsen mislukt',
+'math_unknown_error'    => 'onbekende fout',
+'math_unknown_function' => 'onbekende functie',
+'math_lexing_error'     => 'lexicohraofische fout',
+'math_syntax_error'     => 'syntactische fout',
+'math_image_error'      => 'PNG-omzettieng is mislukt. Hi nae of an latex, dvips en gs correct heïnstalleerd zien en zet om',
+'math_bad_tmpdir'       => "De map voe tiedelijke bestan'n voe wiskundihe formules besti nie of kan nie emikt worn",
+'math_bad_output'       => "De map voe bestan'n mie wiskundihe formules besti nie of kan nie emikt worn.",
+'math_notexvc'          => "Kan 't prohramma texvc nie vin'n; stel aolles in volhens de beschrievieng in math/README.",
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'aol',

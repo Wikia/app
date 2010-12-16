@@ -810,7 +810,7 @@ class LoadBalancer {
 		foreach ( $this->mConns as $conns2 ) {
 			foreach ( $conns2 as $conns3 ) {
 				foreach ( $conns3 as $conn ) {
-					$conn->immediateCommit();
+					$conn->commit();
 				}
 			}
 		}
@@ -832,7 +832,7 @@ class LoadBalancer {
 		}
 	}
 
-	function waitTimeout( $value = NULL ) {
+	function waitTimeout( $value = null ) {
 		return wfSetVar( $this->mWaitTimeout, $value );
 	}
 
@@ -879,14 +879,18 @@ class LoadBalancer {
 	 * Get the hostname and lag time of the most-lagged slave.
 	 * This is useful for maintenance scripts that need to throttle their updates.
 	 * May attempt to open connections to slaves on the default DB.
+	 * @param $wiki string Wiki ID, or false for the default database
 	 */
-	function getMaxLag() {
+	function getMaxLag( $wiki = false ) {
 		$maxLag = -1;
 		$host = '';
 		foreach ( $this->mServers as $i => $conn ) {
-			$conn = $this->getAnyOpenConnection( $i );
+			$conn = false;
+			if ( $wiki === false ) {
+				$conn = $this->getAnyOpenConnection( $i );
+			}
 			if ( !$conn ) {
-				$conn = $this->openConnection( $i );
+				$conn = $this->openConnection( $i, $wiki );
 			}
 			if ( !$conn ) {
 				continue;
@@ -912,5 +916,12 @@ class LoadBalancer {
 		# No, send the request to the load monitor
 		$this->mLagTimes = $this->getLoadMonitor()->getLagTimes( array_keys( $this->mServers ), $wiki );
 		return $this->mLagTimes;
+	}
+
+	/**
+	 * Clear the cache for getLagTimes
+	 */
+	function clearLagTimeCache() {
+		$this->mLagTimes = null;
 	}
 }

@@ -13,6 +13,8 @@
  *   wiki values, in order to support speedy creation of datavalues in
  *   SMWDataValueFactory.
  *
+ * @todo This class has an own stubbing mechanism that is older than the
+ * current one used in SMWDataValue. It is confusing to have two.
  * @author Markus Krötzsch
  * @ingroup SMWDataValues
  */
@@ -32,7 +34,7 @@ class SMWTypesValue extends SMWDataValue {
 			$type = ltrim($type, ' [');
 			$type = rtrim($type, ' ]');
 			$ttype = Title::newFromText($type,SMW_NS_TYPE);
-			if ( ($ttype !== NULL) && ($ttype->getNamespace() == SMW_NS_TYPE) ) {
+			if ( ($ttype !== null) && ($ttype->getNamespace() == SMW_NS_TYPE) ) {
 				$this->m_typecaptions[] = $type;
 				$label = SMWDataValueFactory::findTypeLabel(SMWDataValueFactory::findTypeID($ttype->getText()));
 				$this->m_typelabels[] = $label;
@@ -46,9 +48,9 @@ class SMWTypesValue extends SMWDataValue {
 		$this->m_isalias = false;
 	}
 
-	public function getShortWikiText($linked = NULL) {
+	public function getShortWikiText($linked = null) {
 		$this->unstub();
-		if ( ($linked === NULL) || ($linked === false) || ($this->m_caption === '') ) {
+		if ( ($linked === null) || ($linked === false) || ($this->m_caption === '') ) {
 			if ($this->m_caption !== false) {
 				return $this->m_caption;
 			} else {
@@ -82,9 +84,9 @@ class SMWTypesValue extends SMWDataValue {
 		}
 	}
 
-	public function getShortHTMLText($linker = NULL) {
+	public function getShortHTMLText($linker = null) {
 		$this->unstub();
-		if ( ($linker === NULL) || ($linker === false) || ($this->m_caption === '') ) {
+		if ( ($linker === null) || ($linker === false) || ($this->m_caption === '') ) {
 			if ($this->m_caption !== false) {
 				return htmlspecialchars($this->m_caption);
 			} else {
@@ -118,9 +120,9 @@ class SMWTypesValue extends SMWDataValue {
 		}
 	}
 
-	public function getLongWikiText($linked = NULL) {
+	public function getLongWikiText($linked = null) {
 		$this->unstub();
-		if ( ($linked === NULL) || ($linked === false) ) {
+		if ( ($linked === null) || ($linked === false) ) {
 			return str_replace('_',' ',implode(', ', $this->getTypeLabels()));
 		} else {
 			global $wgContLang;
@@ -146,9 +148,9 @@ class SMWTypesValue extends SMWDataValue {
 		}
 	}
 
-	public function getLongHTMLText($linker = NULL) {
+	public function getLongHTMLText($linker = null) {
 		$this->unstub();
-		if ( ($linker === NULL) || ($linker === false) ) {
+		if ( ($linker === null) || ($linker === false) ) {
 			return str_replace('_',' ',implode(', ', $this->getTypeLabels()));
 		} else {
 			$result = '';
@@ -179,6 +181,18 @@ class SMWTypesValue extends SMWDataValue {
 		return ($this->isValid())?array($this->getDBkey()):array(false);
 	}
 
+	public function getSignature() {
+		return 't';
+	}
+
+	public function getValueIndex() {
+		return 0;
+	}
+
+	public function getLabelIndex() {
+		return 0;
+	}
+
 	public function getWikiValue() {
 		return implode('; ', $this->getTypeLabels());
 	}
@@ -190,10 +204,9 @@ class SMWTypesValue extends SMWDataValue {
 	/**
 	 * Convenience method to obtain the (single) DB key as a string (not in an array).
 	 * Provided since many callers can use this hash for type recognition and registry.
-	 *
 	 */
 	public function getDBkey() {
-		if ($this->m_xsdvalue === false) {
+		if ( $this->isvalid() && ($this->m_xsdvalue === false) ) {
 			$first = true;
 			$this->m_xsdvalue = '';
 			foreach ($this->m_typelabels as $label) {
@@ -245,11 +258,8 @@ class SMWTypesValue extends SMWDataValue {
 	 */
 	public function getTypeLabels() {
 		$this->initTypeData();
-		if ($this->m_typelabels === false) {
-			return array(); // fallback for unary callers
-		} else {
-			return $this->m_typelabels;
-		}
+		// fallback to array() for unary callers
+		return ($this->m_typelabels === false)?array():$this->m_typelabels;
 	}
 
 	/**
@@ -258,11 +268,8 @@ class SMWTypesValue extends SMWDataValue {
 	 */
 	public function getTypeCaptions() {
 		$this->initTypeData();
-		if ($this->m_typecaptions === false) {
-			return array(); // fallback for unary callers
-		} else {
-			return $this->m_typecaptions;
-		}
+		// fallback to array() for unary callers
+		return ($this->m_typecaptions === false)?array():$this->m_typecaptions;
 	}
 
 	/**

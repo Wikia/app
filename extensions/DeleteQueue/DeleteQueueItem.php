@@ -9,10 +9,10 @@ class DeleteQueueItem {
 	const CACHE_VERSION = 1;
 	const CACHE_EXPIRY = 43200; // 12 hours
 
-	protected $mQueue,$mCaseID,$mReason,$mTimestamp,$mExpiry,$mDiscussionPage,$mArticleID,$mArticle,$mRow,$mEndorsements,$mObjections;
+	protected $mQueue, $mCaseID, $mReason, $mTimestamp, $mExpiry, $mDiscussionPage, $mArticleID, $mArticle, $mRow, $mEndorsements, $mObjections;
 	var $mMainLoaded = false, $mLoadedFromMaster = false;
 
-	private function __construct() {}
+	private function __construct() { }
 
 	/**
 	 * Load the deletion queue item for a given page.
@@ -22,14 +22,14 @@ class DeleteQueueItem {
 		if ( $article instanceof Article ) {
 			// No need to do anything
 		} elseif ( $article instanceof Title ) {
-			$article = new Article($article);
+			$article = new Article( $article );
 		} elseif ( !is_object( $article ) ) {
-			$article = new Article( Title::newFromId($article) ); // WTF? Why can't we load an article without a title?
+			$article = new Article( Title::newFromId( $article ) ); // WTF? Why can't we load an article without a title?
 		} else {
-			throw new MWException( "Bad argument to DeleteQueueItem constructor (".gettype($article).")" );
+			throw new MWException( "Bad argument to DeleteQueueItem constructor (" . gettype( $article ) . ")" );
 		}
 
-		if (isset($article->mDeleteQueueItem) && $article->mDeleteQueueItem instanceof DeleteQueueItem) {
+		if ( isset( $article->mDeleteQueueItem ) && $article->mDeleteQueueItem instanceof DeleteQueueItem ) {
 			return $article->mDeleteQueueItem;
 		}
 
@@ -42,23 +42,23 @@ class DeleteQueueItem {
 
 		return $item;
 	}
-	
+
 	static function newFromId( $id ) {
 		$item = new DeleteQueueItem();
 		$dbr = wfGetDB( DB_SLAVE );
-		
+
 		$row = $dbr->selectRow( 'delete_queue',
 								'*',
 								array( 'dq_case' => $id ),
 								__METHOD__
 							);
-							
-		if (!$row) {
+
+		if ( !$row ) {
 			return null;
 		}
-		
+
 		$item->loadFromRow( $row );
-		
+
 		return $item;
 	}
 
@@ -77,7 +77,7 @@ class DeleteQueueItem {
 						),
 						__METHOD__
 					);
-		
+
 		if ( !$row ) {
 			return null;
 		}
@@ -117,13 +117,13 @@ class DeleteQueueItem {
 	 * @param $useMaster Boolean True to make a point of using the DB master (for caching)
 	 * @param $store Boolean True to cache the data if not already cached (Will load from the master)
 	 */
-	function loadData($useMaster = false, $store = true) {
-		if ($this->mMainLoaded && ($this->mLoadedFromMaster || !( $useMaster || $store ) ) ) {
+	function loadData( $useMaster = false, $store = true ) {
+		if ( $this->mMainLoaded && ( $this->mLoadedFromMaster || !( $useMaster || $store ) ) ) {
 			// Already loaded.
 			return;
 		}
 
-		if (!$useMaster) {
+		if ( !$useMaster ) {
 			global $wgMemc;
 
 			if ( is_array( $item = $wgMemc->get( $this->cacheKey() ) ) ) {
@@ -131,7 +131,7 @@ class DeleteQueueItem {
 				return;
 			}
 
-			if ( isset(self::$cache[$this->mArticleID]) ) {
+			if ( isset( self::$cache[$this->mArticleID] ) ) {
 				$this->loadFromCacheObject( self::$cache[$this->mArticleID] );
 			}
 		}
@@ -171,8 +171,8 @@ class DeleteQueueItem {
 	 * @param $item Array from storeToCacheObject()
 	 */
 	protected function loadFromCacheObject( $item ) {
-		foreach( self::$mCacheVars as $var ) {
-			if (isset( $item[$var] ))
+		foreach ( self::$mCacheVars as $var ) {
+			if ( isset( $item[$var] ) )
 				$this->$var = $item[$var];
 		}
 
@@ -190,7 +190,7 @@ class DeleteQueueItem {
 		// Reset state
 		$this->reset();
 
-		if (!$row) {
+		if ( !$row ) {
 			$this->mQueue = '';
 			$this->mMainLoaded = true;
 			wfDebugLog( 'deletequeue',
@@ -207,7 +207,7 @@ class DeleteQueueItem {
 							'dq_page' => 'mArticleID'
 						);
 
-		foreach( $loadVars as $col => $var ) {
+		foreach ( $loadVars as $col => $var ) {
 			$this->$var = $row->$col;
 		}
 
@@ -235,7 +235,7 @@ class DeleteQueueItem {
 			'mObjections'
 			);
 
-		foreach( $vars as $var ) {
+		foreach ( $vars as $var ) {
 			$this->$var = null;
 		}
 	}
@@ -248,7 +248,7 @@ class DeleteQueueItem {
 			return;
 		}
 
-		if (!$this->isQueued()) {
+		if ( !$this->isQueued() ) {
 			return;
 		}
 
@@ -261,8 +261,8 @@ class DeleteQueueItem {
 							array( 'dqr_case' => $case_id ),
 							__METHOD__ );
 
-		while ($row = $dbr->fetchObject( $res )) {
-			$users[] = array($row->dqr_user_text, $row->dqr_type);
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$users[] = array( $row->dqr_user_text, $row->dqr_type );
 		}
 
 		$this->mRelatedUsers = $users;
@@ -272,11 +272,11 @@ class DeleteQueueItem {
 	 * Load votes.
 	 */
 	function loadVotes() {
-		if( isset( $this->mVotes ) && is_array( $this->mVotes ) ) {
+		if ( isset( $this->mVotes ) && is_array( $this->mVotes ) ) {
 			return;
 		}
 
-		if (!$this->isQueued()) {
+		if ( !$this->isQueued() ) {
 			return;
 		}
 
@@ -292,7 +292,7 @@ class DeleteQueueItem {
 							array( 'ORDER BY' => 'dqv_timestamp DESC' )
 						);
 
-		while ($row = $dbr->fetchObject( $res )) {
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$this_vote = array();
 			// Load simple stuff
 			$row_mappings = array( 'dqv_user_text' => 'user',
@@ -300,7 +300,7 @@ class DeleteQueueItem {
 									'dqv_current' => 'current'
 								);
 
-			foreach( $row_mappings as $col => $field ) {
+			foreach ( $row_mappings as $col => $field ) {
 				$this_vote[$field] = $row->$col;
 			}
 
@@ -331,7 +331,7 @@ class DeleteQueueItem {
 	protected function storeToCacheObject() {
 		$this->loadAllData();
 		$item = array();
-		foreach( self::$mCacheVars as $var ) {
+		foreach ( self::$mCacheVars as $var ) {
 			if ( isset( $this->$var ) )
 				$item[$var] = $this->$var;
 		}
@@ -342,24 +342,24 @@ class DeleteQueueItem {
 	 * Stuff that needs to be done after loading new data.
 	 */
 	protected function postLoad() {
-		if (isset($this->mDiscussionPageID)) {
+		if ( isset( $this->mDiscussionPageID ) ) {
 			$this->mDiscussionPage = Article::newFromId( $this->mDiscussionPageID );
 		}
 
 		$this->mArticle = Article::newFromId( $this->mArticleID );
 
 		// Split votes.
-		if ( isset($this->mVotes) && count($this->mVotes) ) {
+		if ( isset( $this->mVotes ) && count( $this->mVotes ) ) {
 			$this->mVotesEndorse = array();
 			$this->mVotesObject = array();
 
-			foreach( $this->mVotes as $vote ) {
-				$type = ucfirst($vote['type']);
+			foreach ( $this->mVotes as $vote ) {
+				$type = ucfirst( $vote['type'] );
 				$arr_name = "mVotes$type";
 
-				$this->{$arr_name}[] = $vote;
+				$this-> { $arr_name } [] = $vote;
 			}
-		} elseif (isset($this->mVotes)) {
+		} elseif ( isset( $this->mVotes ) ) {
 			// Clear them.
 			$this->mVotesEndorse = array();
 			$this->mVotesObject = array();
@@ -371,23 +371,23 @@ class DeleteQueueItem {
 	 * @param string $role The role to set.
 	 * @param User $user The user to assign to that role. Optional.
 	 */
-	public function addRole( $role, $user=null ) {
-		if (!$this->getCaseID())
+	public function addRole( $role, $user = null ) {
+		if ( !$this->getCaseID() )
 			return; // Case doesn't exist anymore.
-			
+
 		if ( $user == null ) {
 			global $wgUser;
 			$user = $wgUser;
 		}
 
-		if (!$this->isQueued()) {
+		if ( !$this->isQueued() ) {
 			return;
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->replace( 'delete_queue_role',
 				array(
-					array('dqr_case', 'dqr_user', 'dqr_type')
+					array( 'dqr_case', 'dqr_user', 'dqr_type' )
 				),
 				array(
 					'dqr_case' => $this->getCaseID(),
@@ -397,7 +397,7 @@ class DeleteQueueItem {
 				),
 				__METHOD__
 			);
-		
+
 		$this->purge();
 	}
 
@@ -408,9 +408,9 @@ class DeleteQueueItem {
 	 * @param string $user The user who's voted (Optional)
 	 */
 	public function addVote( $action, $comments, $user = null ) {
-		if (!$this->getCaseID())
+		if ( !$this->getCaseID() )
 			return; // Case doesn't exist anymore.
-	
+
 		if ( $user == null ) {
 			global $wgUser;
 			$user = $wgUser;
@@ -437,7 +437,7 @@ class DeleteQueueItem {
 					'dqv_user' => $user->getId(),
 					'dqv_user_text' => $user->getName(),
 					'dqv_comment' => $comments,
-					'dqv_endorse' => ($action == 'endorse'),
+					'dqv_endorse' => ( $action == 'endorse' ),
 					'dqv_timestamp' => $dbw->timestamp( wfTimestampNow() )
 			), __METHOD__ );
 
@@ -445,7 +445,7 @@ class DeleteQueueItem {
 		$this->addRole( "vote-$action" );
 
 		$dbw->commit();
-		
+
 		$this->purge();
 	}
 
@@ -456,10 +456,10 @@ class DeleteQueueItem {
 	 * @param string $timestamp Timestamp in database format. Optional.
 	 */
 	public function setQueue( $queue, $reason, $timestamp = null ) {
-	
+
 		$dbw = wfGetDB( DB_MASTER );
 
-		if ($timestamp == null) {
+		if ( $timestamp == null ) {
 			$timestamp = $dbw->timestamp( wfTimestampNow( TS_MW ) );
 		}
 
@@ -467,7 +467,7 @@ class DeleteQueueItem {
 
 		$article = $this->getArticle();
 
-		if ($queue == 'deletediscuss') {
+		if ( $queue == 'deletediscuss' ) {
 			// We need to create the relevant page, etc.
 
 			// Generate new page name.
@@ -475,8 +475,8 @@ class DeleteQueueItem {
 			$articleName = $article->mTitle->getPrefixedText();
 
 			$title = Title::makeTitle( NS_DELETION, $base );
-			$i=1;
-			while ($title->exists()) {
+			$i = 1;
+			while ( $title->exists() ) {
 				$i++;
 				$title = Title::makeTitle( NS_DELETION, "$base $i" );
 			}
@@ -484,9 +484,9 @@ class DeleteQueueItem {
 			// Create the page.
 			$discusspage = new Article( $title );
 			$discusspage->doEdit(
-				wfMsgForContent('deletequeue-discusscreate-text', $base, $reason)
+				wfMsgForContent( 'deletequeue-discusscreate-text', $base, $reason )
 					. ' ~~~~',
-				wfMsgForContent('deletequeue-discusscreate-summary', $base),
+				wfMsgForContent( 'deletequeue-discusscreate-summary', $base ),
 				EDIT_NEW | EDIT_SUPPRESS_RC
 			);
 
@@ -510,9 +510,9 @@ class DeleteQueueItem {
 	/** Purge the cache of this deletion item. */
 	public function purge() {
 		// Reload new data from the master.
-		$this->loadData(true);
+		$this->loadData( true );
 
-		if ($this->getArticle()->mTitle) {
+		if ( $this->getArticle()->mTitle ) {
 			$this->getArticle()->mTitle->invalidateCache();
 			$this->getArticle()->mTitle->purgeSquid();
 		}
@@ -523,8 +523,8 @@ class DeleteQueueItem {
 	 */
 	public function deQueue(  ) {
 		$dbw = wfGetDB( DB_MASTER );
-		
-		if (!$this->getCaseID())
+
+		if ( !$this->getCaseID() )
 			return; // Case doesn't exist anymore.
 
 		$dbw->update( 'delete_queue',
@@ -540,27 +540,27 @@ class DeleteQueueItem {
 	 * Gets a user's role(s) in a case.
 	 */
 	public function getUserRoles( $user ) {
-		if (!$this->isQueued()) {
+		if ( !$this->isQueued() ) {
 			return array();
 		}
 
 		$relatedUsers = $this->getRelatedUsers();
 
-		if ($user instanceof User) {
+		if ( $user instanceof User ) {
 			$user = $user->getName();
 		}
 
 		$roles = array();
 
 		// Work through the users.
-		foreach( $relatedUsers as $data ) {
-			list ($name,$role) = $data;
-			if ($name == $user) {
+		foreach ( $relatedUsers as $data ) {
+			list ( $name, $role ) = $data;
+			if ( $name == $user ) {
 				$roles[$role] = 1;
 			}
 		}
 
-		return array_keys($roles);
+		return array_keys( $roles );
 	}
 
 	/** Lazy accessors */
@@ -591,7 +591,7 @@ class DeleteQueueItem {
 		return wfMsg( "deletequeue-role-$role" );
 	}
 
-	function getQueue() 
+	function getQueue()
 		{ return $this->lazyAccessor( 'mQueue' ); }
 	function getCaseID()
 		{ return $this->lazyAccessor( 'mCaseID' ); }
@@ -616,21 +616,21 @@ class DeleteQueueItem {
 	function getObjections()
 		{ return $this->lazyAccessor( 'mVotesObject', 'loadVotes' ); }
 	function getObjectionCount()
-		{ return count($this->getObjections()); }
+		{ return count( $this->getObjections() ); }
 	function getEndorsementCount()
-		{ return count($this->getEndorsements()); }
-		
+		{ return count( $this->getEndorsements() ); }
+
 	function formatVoteCount() {
 		return wfMsg( 'deletequeue-list-votecount',
 			$this->getActiveEndorseCount(),
 			$this->getActiveObjectCount() );
 	}
 
-	static function filterActiveVotes($votes) {
+	static function filterActiveVotes( $votes ) {
 		$return = array();
 
-		foreach( $votes as $vote ) {
-			if ($vote['current']) {
+		foreach ( $votes as $vote ) {
+			if ( $vote['current'] ) {
 				$return[] = $vote;
 			}
 		}
@@ -643,7 +643,7 @@ class DeleteQueueItem {
 	function getActiveEndorsements()
 		{ return self::filterActiveVotes( $this->getEndorsements() ); }
 	function getActiveEndorseCount()
-		{ return count($this->getActiveEndorsements()); }
+		{ return count( $this->getActiveEndorsements() ); }
 	function getActiveObjectCount()
-		{ return count($this->getActiveObjections()); }
+		{ return count( $this->getActiveObjections() ); }
 }

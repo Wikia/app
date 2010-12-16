@@ -26,7 +26,7 @@ function mwSearchUpdateDelete( $article, $user, $reason ) {
 function mwSearchUpdateMove( $from, $to, $user, $pageid, $redirid ) {
 	global $wgDBname;
 	
-	$db =& wfGetDB( DB_MASTER );
+	$db = wfGetDB( DB_MASTER );
 	$pageRevision = Revision::loadFromPageId( $db, $pageid );
 	if( !is_null( $pageRevision ) ) {
 		MWSearchUpdater::updatePage( $wgDBname, $to, $pageRevision->getText() );

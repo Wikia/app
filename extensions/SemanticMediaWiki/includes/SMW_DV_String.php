@@ -21,7 +21,7 @@ class SMWStringValue extends SMWDataValue {
 		wfLoadExtensionMessages('SemanticMediaWiki');
 		if ($value!='') {
 			$this->m_value = $value;
-			if ( (strlen($this->m_value) > 255) && ($this->m_typeid != '_txt') && ($this->m_typeid != '_cod') ) { // limit size (for DB indexing)
+			if ( ($this->m_typeid != '_txt') && ($this->m_typeid != '_cod') && (strlen($this->m_value) > 255) ) { // limit size (for DB indexing)
 				$this->addError(wfMsgForContent('smw_maxstring', mb_substr($value, 0, 42) . ' <span class="smwwarning">[&hellip;]</span> ' . mb_substr($value, mb_strlen($this->m_value) - 42)));
 			}
 		} else {
@@ -38,7 +38,7 @@ class SMWStringValue extends SMWDataValue {
 		$this->m_caption = $this->m_value; // this is our output text
 	}
 
-	public function getShortWikiText($linked = NULL) {
+	public function getShortWikiText($linked = null) {
 		$this->unstub();
 		//TODO: Support linking?
 		return $this->m_caption;
@@ -47,32 +47,44 @@ class SMWStringValue extends SMWDataValue {
 	/**
 	 * @todo Rather parse input to obtain properly formatted HTML.
 	 */
-	public function getShortHTMLText($linker = NULL) {
+	public function getShortHTMLText($linker = null) {
 		return smwfXMLContentEncode($this->getShortWikiText($linker));
 	}
 
-	public function getLongWikiText($linked = NULL) {
-		if (!$this->isValid()) {
-			return $this->getErrorText();
-		} else {
-			return $this->getAbbValue($linked,$this->m_value);
-		}
+	public function getLongWikiText($linked = null) {
+		return $this->isValid()?$this->getAbbValue($linked,$this->m_value):$this->getErrorText();
 	}
 
 	/**
 	 * @todo Rather parse input to obtain properly formatted HTML.
 	 */
-	public function getLongHTMLText($linker = NULL) {
-		if (!$this->isValid()) {
-			return $this->getErrorText();
-		} else {
-			return $this->getAbbValue($linker,smwfXMLContentEncode($this->m_value));
-		}
+	public function getLongHTMLText($linker = null) {
+		return $this->isValid()?$this->getAbbValue($linker,smwfXMLContentEncode($this->m_value)):$this->getErrorText();
 	}
 
 	public function getDBkeys() {
 		$this->unstub();
 		return array($this->m_value);
+	}
+
+	public function getSignature() {
+		return  ( ($this->m_typeid == '_txt') || ($this->m_typeid == '_cod') )?'l':'t';
+	}
+
+	/**
+	 * For perfomance reasons, long text data like _txt and _cod does not
+	 * support sorting. This class can be subclassed to change this.
+	 */
+	public function getValueIndex() {
+		return ( ($this->m_typeid == '_txt') || ($this->m_typeid == '_cod') )?-1:0;
+	}
+
+	/**
+	 * For perfomance reasons, long text data like _txt and _cod does not
+	 * support string matching. This class can be subclassed to change this.
+	 */
+	public function getLabelIndex() {
+		return ( ($this->m_typeid == '_txt') || ($this->m_typeid == '_cod') )?-1:0;
 	}
 
 	public function getWikiValue(){
@@ -84,8 +96,9 @@ class SMWStringValue extends SMWDataValue {
 		$this->unstub();
 		if ( ($this->m_typeid != '_txt') && ($this->m_typeid != '_cod') ) {
 			return SMWDataValue::getInfolinks();
+		} else {
+			return $this->m_infolinks;
 		}
-		return $this->m_infolinks;
 	}
 
 	protected function getServiceLinkParams() {
@@ -105,7 +118,7 @@ class SMWStringValue extends SMWDataValue {
 			$lit = new SMWExpLiteral(smwfHTMLtoUTF8($this->m_value), $this, 'http://www.w3.org/2001/XMLSchema#string');
 			return new SMWExpData($lit);
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 
@@ -121,7 +134,7 @@ class SMWStringValue extends SMWDataValue {
 	protected function getAbbValue($linked, $value) {
 		$len = mb_strlen($value);
 		if ( ($len > 255) && ($this->m_typeid != '_cod') ) {
-			if ( ($linked === NULL)||($linked === false) ) {
+			if ( ($linked === null)||($linked === false) ) {
 				return mb_substr($value, 0, 42) . ' <span class="smwwarning">&hellip;</span> ' . mb_substr($value, $len - 42);
 			} else {
 				SMWOutputs::requireHeadItem(SMW_HEADER_TOOLTIP);

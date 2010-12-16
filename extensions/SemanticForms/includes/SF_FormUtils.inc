@@ -244,7 +244,7 @@ END;
 	}
 
 	static function instancesJavascript($using_choosers) {
-		$remove_text = wfMsg('sf_formedit_remove');
+		$remove_text = wfMsg('sf_editdata_remove');
 		$javascript_text =<<<END
 
 var num_elements = 0;
@@ -517,7 +517,8 @@ END;
 	 * Helper function to display a simple button
 	 */
 	static function buttonHTML($values) {
-		$button_html = Xml::element('input', $values, '');
+		// for backwards-compatibility with pre-1.13 MW
+		$button_html = function_exists("Xml::element") ? Xml::element('input', $values, '') : wfElement('input', $values, '');
 		return "		$button_html\n";
 	}
 
@@ -589,11 +590,18 @@ END;
 			$label = wfMsgExt('cancel', array('parseinline'));
 		if ($wgTitle == null)
 			$cancel = '';
-		// if we're on the special 'FormEdit' page, just send the user
-		// back to the previous page they were on
-		elseif ($wgTitle->getText() == 'FormEdit'
+		// if this is the special 'AddData' or 'EditData' page, get
+		// the form name, and link to 'AddPage' with that form name
+		elseif (($wgTitle->getText() == 'AddData' || $wgTitle->getText() == 'EditData')
 			 && $wgTitle->getNamespace() == NS_SPECIAL) {
-			$cancel = '<a href="javascript:history.go(-1);">' . $label . '</a>';
+			global $wgRequest;
+			$title_components = split('/', $wgRequest->getVal('title'));
+			if (count($title_components) >= 2) {
+				$add_page_title = Title::makeTitleSafe(NS_SPECIAL, 'AddPage');
+				$cancel = $sk->makeKnownLink($add_page_title->getPrefixedText() . '/' . $title_components[1], $label);
+			} else {
+				$cancel = '';
+			}
 		} else
 			$cancel = $sk->makeKnownLink( $wgTitle->getPrefixedText(), $label);
 		$text = "		<span class='editHelp'>$cancel</span>\n";

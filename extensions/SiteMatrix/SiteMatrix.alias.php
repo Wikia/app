@@ -14,16 +14,12 @@ $aliases['en'] = array(
 	'SiteMatrix' => array( 'SiteMatrix', 'WikimediaWikis' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'SiteMatrix' => array( 'مصفوفة_الموقع', 'ويكيات_ويكيميديا' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'SiteMatrix' => array( 'مصفوفة_الموقع', 'ويكيات_ويكيميديا' ),
 );
@@ -33,9 +29,7 @@ $aliases['ca'] = array(
 	'SiteMatrix' => array( 'Projectes Wikimedia', 'Wikis Wikimedia' ),
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
+/** German (Deutsch) */
 $aliases['de'] = array(
 	'SiteMatrix' => array( 'Liste der Wikimedia-Wikis' ),
 );
@@ -55,6 +49,11 @@ $aliases['es'] = array(
 	'SiteMatrix' => array( 'Todos_los_Wikis_de_Wikimedia', 'Todos_los_wikis_de_Wikimedia' ),
 );
 
+/** Estonian (Eesti) */
+$aliases['et'] = array(
+	'SiteMatrix' => array( 'Wikimedia_vikid' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'SiteMatrix' => array( 'ماتریس_وبگاه' ),
@@ -70,6 +69,11 @@ $aliases['fr'] = array(
 	'SiteMatrix' => array( 'Matrice des sites', 'Wikis de Wikimedia' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'SiteMatrix' => array( 'Matrice des setos', 'MatriceDesSetos', 'Vouiquis de Wikimedia', 'VouiquisDeWikimedia' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'SiteMatrix' => array( 'Wikis Wikimedia' ),
@@ -80,9 +84,7 @@ $aliases['gsw'] = array(
 	'SiteMatrix' => array( 'Lischt vu dr Wikimedia-Wikis' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'SiteMatrix' => array( 'רשימת_אתרים', 'אתרי_ויקימדיה' ),
 );
@@ -114,7 +116,7 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'SiteMatrix' => array( 'Matriks situs' ),
+	'SiteMatrix' => array( 'Matriks situs', 'MatriksSitus' ),
 );
 
 /** Japanese (日本語) */
@@ -137,6 +139,16 @@ $aliases['mk'] = array(
 	'SiteMatrix' => array( 'ВикимедијаВикија', 'МатрицаНаВикија' ),
 );
 
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'SiteMatrix' => array( 'വിക്കിമീഡിയ വിക്കികൾ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'SiteMatrix' => array( 'साईटढाचा', 'विकिमीडियाविकिज' ),
+);
+
 /** Malay (Bahasa Melayu) */
 $aliases['ms'] = array(
 	'SiteMatrix' => array( 'Wiki Wikimedia' ),
@@ -157,11 +169,14 @@ $aliases['nn'] = array(
 	'SiteMatrix' => array( 'Wikimedia-wikiar' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'SiteMatrix' => array( 'Wikimedia-wikier' ),
+);
+
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'SiteMatrix' => array( 'Matritz dels sites', 'Wikis de Wikimedia' ),
 );
 
 /** Polish (Polski) */
@@ -179,6 +194,11 @@ $aliases['pt-br'] = array(
 	'SiteMatrix' => array( 'Lista de wikis da Wikimedia' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'SiteMatrix' => array( 'MaticaLokalít' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'SiteMatrix' => array( 'Lista över Wikimedias wikier' ),
@@ -187,5 +207,20 @@ $aliases['sv'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'SiteMatrix' => array( 'Matris ng sayt', 'Mga wiki ng Wikimedia' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'SiteMatrix' => array( 'SiteMatrisi' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'SiteMatrix' => array( '站点矩阵' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'SiteMatrix' => array( '站點矩陣' ),
 );
 

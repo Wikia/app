@@ -1,0 +1,4 @@
+<?php
+
+$wgExtDistWorkingCopy = '/path/to/mw-working-copy';
+

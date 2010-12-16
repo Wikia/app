@@ -244,18 +244,12 @@ class WebConfiguration extends SiteConfiguration {
 	 * @return array
 	 */
 	public function getDefaultsForWiki( $wiki ) {
-		## Hack for Wikimedia
-		static $initialiseSettingsDone = false;
-
 		wfProfileIn( __METHOD__ );
 
-		if ( !$initialiseSettingsDone ) {
-			$initialiseSettingsDone = true;
-			global $IP, $wgConf;
-			if( file_exists( "$IP/InitialiseSettings.php" ) ) {
-				require_once "$IP/InitialiseSettings.php";
-				$this->initialise( false );
-			}
+		global $wgConf;
+		if (!$wgConf->fullLoadDone) {
+			$wgConf->loadFullData();
+			$this->initialise( false );
 		}
 
 		// Hmm, a better solution would be nice!

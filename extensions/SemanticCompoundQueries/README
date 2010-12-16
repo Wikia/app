@@ -1,6 +1,6 @@
 Semantic Compound Queries Extension
 
-        Version 0.2.1
+        Version 0.2.2
         Yaron Koren
 
 This is free software licensed under the GNU General Public License. Please
@@ -18,7 +18,7 @@ instead of pipes. Elements that are common across all sub-queries, like
 'format=' and 'width=' (for maps) should be placed after all sub-queries.
 
 A sample call to #compound query, which retrieves both biographies, along
-with their subject; and fiction books, along with their author; is: 
+with their subject; and fiction books, along with their author; is:
 
 {{#compound_query:[[Category:Books]][[Has gentre::Biography]];?Covers subject=Subject
 	|[[Category:Books]][[Has genre::Fiction]];?Has author=Author

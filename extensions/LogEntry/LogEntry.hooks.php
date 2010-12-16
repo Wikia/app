@@ -12,11 +12,9 @@ class LogEntryHooks {
 	/* Functions */
 	
 	// Initialization
-	public static function register() {
-		global $wgParser;
-		
+	public static function register( &$parser ) {
 		// Register the hook with the parser
-		$wgParser->setHook( 'logentry', 'LogEntryHooks::render' );
+		$parser->setHook( 'logentry', 'LogEntryHooks::render' );
 		
 		// Continue
 		return true;

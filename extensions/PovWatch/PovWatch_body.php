@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class SpecialPovWatch extends SpecialPage {
 	public $mPosted, $mTitleText, $mSubscribe, $mUnsubscribe, $mPush;
@@ -9,9 +9,9 @@ class SpecialPovWatch extends SpecialPage {
 		SpecialPage::SpecialPage( 'PovWatch', 'povwatch_user' );
 	}
 
-	#-----------------------------------------------------------------------
+	# -----------------------------------------------------------------------
 	# UI functions
-	#-----------------------------------------------------------------------
+	# -----------------------------------------------------------------------
 
 	function execute( $subpage ) {
 		global $wgRequest, $wgUser, $wgOut;
@@ -34,14 +34,6 @@ class SpecialPovWatch extends SpecialPage {
 		$this->mToken = $wgRequest->getVal( 'token' );
 		$this->mOut =& $wgOut;
 
-		/*if ( $subpage == 'subscribers' ) {
-			if ( $wgUser->isAllowed( 'povwatch_subscriber_list' ) ) {
-				$this->showSubscriberList();
-			} else {
-				$this->error( 'not_allowed_subscribers' );
-			}
-			$this->mOut->returnToMain( false, $this->getTitle() );
-		} else*/
 		if ( $subpage == 'log' ) {
 			$this->showLog();
 		} elseif ( $subpage != '' ) {
@@ -175,7 +167,7 @@ EOT
 
 		$intro = $this->message( 'subscriber_list_intro' );
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			array( 'povwatch_subscribers', 'user' ),
 			array( 'pws_user', 'user_name' ),
@@ -200,7 +192,7 @@ EOT
 	function showLog() {
 		global $wgUser, $wgLang;
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			array( 'povwatch_log', 'user' ),
 			array( 'pwl_user', 'user_name', 'pwl_namespace', 'pwl_title', 'pwl_timestamp', 'pwl_comment' ),
@@ -231,7 +223,7 @@ EOT
 			$title = Title::makeTitle( $row->pwl_namespace, $row->pwl_title );
 			$titleLink = $skin->makeLinkObj( $title );
 			$user = Title::makeTitleSafe( NS_USER, $row->user_name );
-			$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->pwl_timestamp), true );
+			$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->pwl_timestamp ), true );
 			$userLink = $skin->makeKnownLinkObj( $user, htmlspecialchars( $row->user_name ) );
 			$comment = $skin->commentBlock( $row->pwl_comment );
 
@@ -272,9 +264,9 @@ EOT
 		);
 	}
 
-	#-------------------------------------------------------------------------
+	# -------------------------------------------------------------------------
 	# Utility functions
-	#-------------------------------------------------------------------------
+	# -------------------------------------------------------------------------
 
 	function message( $message, $arg1 = '', $arg2 = '' ) {
 		return wfMsgNoTrans( 'povwatch_' . $message, $arg1, $arg2 );
@@ -282,7 +274,7 @@ EOT
 
 	function isSubscribed( User $user ) {
 		# Use dbw because a check is done shortly after form submission
-		$dbw =& wfGetDB( DB_SLAVE );
+		$dbw = wfGetDB( DB_SLAVE );
 		return (bool)$dbw->selectField(
 			'povwatch_subscribers', '1',
 			array( 'pws_user' => $user->getID() ),
@@ -301,7 +293,7 @@ EOT
 			return false;
 		}
 
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->insert( 'povwatch_subscribers', array( 'pws_user' => $id ),
 			__METHOD__, array( 'IGNORE' ) );
 		return (bool) $dbw->affectedRows();
@@ -312,7 +304,7 @@ EOT
 		if ( !$id ) {
 			return false;
 		}
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'povwatch_subscribers', array( 'pws_user' => $id ), __METHOD__ );
 		return (bool) $dbw->affectedRows();
 	}
@@ -329,7 +321,7 @@ EOT
 		$dbk = $title->getDBkey();
 
 		# Read from master in case more users have recently been subscribed
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select( 'povwatch_subscribers', 'pws_user', false, __METHOD__ );
 		while ( $row = $dbw->fetchObject( $res ) ) {
 			$insertRows[] = array(

@@ -26,8 +26,6 @@ fit for actual use.
 		[1.1.2] It should run on all operating systems that MW supports;
 		however, it has only been tested on SuSE Linux 10.1 and Red Hat Fedora
 		Core 4.
-		[1.1.3] ExtensionFunctions.php must be installed in your extensions
-		directory. This can be downloaded from subversion.
 
 	[1.2] Verify that you have all the needed files (see |4| below) in the
 	directoy "<wikiroot>/extensions/SignDocument". If you need the extension

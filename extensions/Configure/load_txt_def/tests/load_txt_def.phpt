@@ -15,7 +15,7 @@ array(2) {
     string(12) "scalar value"
   }
   ["Arrays"]=>
-  array(4) {
+  array(5) {
     ["array"]=>
     array(2) {
       ["key1"]=>
@@ -51,6 +51,21 @@ array(2) {
       string(6) "value3"
       ["key4"]=>
       string(6) "value4"
+    }
+    ["array4"]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        ["key1"]=>
+        string(4) "val1"
+        [0]=>
+        array(2) {
+          [0]=>
+          string(4) "val2"
+          [1]=>
+          string(4) "val3"
+        }
+      }
     }
   }
 }

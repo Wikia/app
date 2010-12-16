@@ -14,6 +14,7 @@ $wgHooks['UnknownAction'][] = 'tagSearch';
 
 $wgExtensionFunctions[] = 'wfImageTagPageSetup';
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Image Tagging',
 	'author'         => 'Wikia, Inc. (Tristan Harris, Tomasz Klim)',
 	'version'        => '1.1',
@@ -79,7 +80,7 @@ function wfCheckArticleImageTags($outputPage, $text) {
 function addTag($action, $article) {
 	if($action != 'addTag') return true;
 
-	global $wgRequest, $wgTitle, $wgDBname, $wgOut, $wgUser;
+	global $wgRequest, $wgDBname, $wgOut, $wgUser;
 
 	wfProfileIn( __METHOD__ );
 
@@ -135,7 +136,7 @@ function addTag($action, $article) {
 function removeTag($action, $article) {
 	if ($action != 'removeTag') return true;
 
-	global $wgRequest, $wgTitle, $wgOut, $wgDBname, $wgUser;
+	global $wgRequest, $wgOut, $wgDBname, $wgUser;
 
 	wfProfileIn( __METHOD__ );
 
@@ -184,7 +185,7 @@ function removeTag($action, $article) {
 function tagSearch($action, $article) {
 	if($action != 'tagSearch') return true;
 
-	global $wgRequest, $wgTitle, $wgDBname, $wgOut, $wgUser;
+	global $wgRequest, $wgDBname, $wgOut, $wgUser;
 
 	wfProfileIn( __METHOD__ );
 
@@ -405,7 +406,7 @@ function wfImageTagPageSetup() {
 				$wgOut->addHTML("<input type='hidden' value='1' id='userLoggedIn'/>");
 
 			if ( $wgUser->isAllowed('edit') &&
-				 $this->mTitle->userCanEdit() &&
+				 $this->mTitle->userCan( 'edit', true ) &&
 				 ( $this->mTitle->isProtected('edit') == false || in_array( 'sysop', $wgUser->getGroups() ) ) )
 				$wgOut->addHTML("<input type='hidden' value='1' id='canEditPage'/>");
 
@@ -422,7 +423,7 @@ function wfImageTagPageSetup() {
 		}
 
 		function modifiedImagePageOpenShowImage() {
-			global $wgOut, $wgUser, $wgImageLimits, $wgRequest;
+			global $wgOut, $wgUser, $wgImageLimits, $wgRequest, $wgEnableUploads;
 
 			wfProfileIn( __METHOD__ );
 
@@ -545,11 +546,17 @@ END
 				}
 			} else {
 				# Image does not exist
-
-				$title = Title::makeTitle( NS_SPECIAL, 'Upload' );
-				$link = $sk->makeKnownLinkObj($title, wfMsgHtml('noimage-linktext'),
-					'wpDestFile=' . urlencode( $this->img->getName() ) );
-				$wgOut->addHTML( wfMsgWikiHtml( 'noimage', $link ) );
+				$nofile = wfMsgHtml( 'filepage-nofile' );
+				if ( $wgEnableUploads && $wgUser->isAllowed( 'upload' ) ) {
+					// Only show an upload link if the user can upload
+					$nofile .= ' '.$sk->makeKnownLinkObj(
+						SpecialPage::getTitleFor( 'Upload' ),
+						wfMsgHtml('filepage-nofile-link'),
+						'wpDestFile=' . urlencode( $this->displayImg->getName() )
+					);
+				}
+				$wgOut->setRobotPolicy( 'noindex,nofollow' );
+				$wgOut->addHTML( '<div id="mw-imagepage-nofile">' . $nofile . '</div>' );
 			}
 
 			wfProfileOut( __METHOD__ );

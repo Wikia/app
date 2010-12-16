@@ -34,7 +34,8 @@ protected $m_DatatypeLabels = array(
 	'_dat' => 'التاريخ',  // name of the datetime (calendar) type
 	'_ema' => 'البريد الإلكترونى',  // name of the email type
 	'_uri' => 'مسار',  // name of the URL type
-	'_anu' => 'التعليق علي معرف الموارد الموحد'  // name of the annotation URI type (OWL annotation property)
+	'_anu' => 'التعليق علي معرف الموارد الموحد',  // name of the annotation URI type (OWL annotation property)
+	'_tel' => 'Telephone number',  // name of the telephone (URI) type //TODO: translate
 );
 
 protected $m_DatatypeAliases = array(
@@ -49,11 +50,14 @@ protected $m_SpecialProperties = array(
 	'_TYPE'  => 'لديه نوع',
 	'_URI'   => 'معرف الموارد الموحد معادلة',
 	'_SUBP' => 'الخاصية الفرعية ل',
+	'_SUBC' => 'Subcategory of', // TODO: translate
 	'_UNIT' => 'عرض الوحدات',
 	'_IMPO' => 'المستوردة من',
 	'_CONV' => 'يقابل',
 	'_SERV' => 'يوفر الخدمة',
-	'_PVAL' => 'يسمح بالقيمة'
+	'_PVAL' => 'يسمح بالقيمة',
+	'_MDAT' => 'Modification date',  // TODO: translate
+	'_ERRP' => 'Has improper value for' // TODO: translate
 );
 
 protected $m_SpecialPropertyAliases = array(
@@ -61,8 +65,6 @@ protected $m_SpecialPropertyAliases = array(
 );
 
 protected $m_Namespaces = array(
-	SMW_NS_RELATION       => 'علاقة',
-	SMW_NS_RELATION_TALK  => 'نقاش_العلاقة',
 	SMW_NS_PROPERTY       => 'خاصية',
 	SMW_NS_PROPERTY_TALK  => 'نقاش_الخاصية',
 	SMW_NS_TYPE           => 'نوع',

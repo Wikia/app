@@ -10,11 +10,12 @@ $messages = array();
 
 /** English
  * @author Wikia, Inc.
+ * @author Purodha
  */
 $messages['en'] = array(
 	'boardblastlogintitle' => 'You must be logged in to send board blasts',
-	'boardblastlogintext' => 'You must be logged in to send board blasts.
-Click <a href="index.php?title=Special:UserLogin">here to login</a>',
+	'boardblastlogintext' => 'In order to send board blasts,
+you must be <a href="index.php?title=Special:UserLogin">logged in</a>.',
 	'messagesenttitle' => 'Messages sent',
 	'boardblasttitle' => 'Send board blast',
 	'boardblaststep1' => 'Step 1 - Write your message',
@@ -53,6 +54,11 @@ Click <a href="index.php?title=Special:UserLogin">here to login</a>',
 	'userboard_sendbutton' => 'send',
 	'userboard_loggedout' => 'You must be <a href="$1">logged in</a> to post messages to other users.',
 	'userboard_showingmessages' => 'Showing {{PLURAL:$4|message $3|messages $2-$3}} of {{PLURAL:$1|$1 message|$1 messages}}',
+	'right-userboard-delete' => "Delete others' board messages",
+	'userboard-time-days' => '{{PLURAL:$1|one day|$1 days}}',
+	'userboard-time-hours' => '{{PLURAL:$1|one hour|$1 hours}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|one minute|$1 minutes}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|one second|$1 seconds}}',
 	'message_received_subject' => '$1 wrote on your board on {{SITENAME}}',
 	'message_received_body' => 'Hi $1.
 
@@ -74,8 +80,12 @@ and change your settings to disable email notifications.'
  * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Translationista
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'boardblastlogintitle' => 'As I understand it, it is a sort of board tool to leave messages. Is it?
+http://www.mediawiki.org/wiki/Extension:SocialProfile#Board_Blast',
 	'userboard_delete' => '{{Identical|Delete}}',
 	'userboard_private' => '{{Identical|Private}}',
 	'userboard_nextpage' => '{{Identical|Next}}',
@@ -85,6 +95,7 @@ $messages['qqq'] = array(
 * '''$2''' is the number of the first message shown
 * '''$3''' is the number of the last message shown
 * '''$4''' is the count of messages acutally shown",
+	'right-userboard-delete' => '{{doc-right|userboard-delete}}',
 );
 
 /** Niuean (ko e vagahau Niuē)
@@ -115,25 +126,32 @@ $messages['am'] = array(
 	'userboard_nextpage' => 'ቀጥሎ',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'userboard_delete' => 'Borrar',
+);
+
 /** Arabic (العربية)
  * @author Alnokta
  * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'boardblastlogintitle' => 'أنت ينبغي أن تكون مسجل الدخول لترسل بورد بلاست',
-	'boardblastlogintext' => 'أنت يجب أن تكون مسجل الدخول لترسل بورد بلاست.
-اضغط <a href="index.php?title=Special:UserLogin">هنا لتسجيل الدخول</a>',
+	'boardblastlogintitle' => 'ينبغي أن تكون مسجلًا الدخول لترسل بورد بلاست',
+	'boardblastlogintext' => 'لإرسال بورد بلاست،
+يجب أن تكون <a href="index.php?title=Special:UserLogin">مسجل الدخول</a>.',
 	'messagesenttitle' => 'الرسائل تم إرسالها',
 	'boardblasttitle' => 'أرسل بورد بلاست',
 	'boardblaststep1' => 'خطوة 1 - اكتب رسالتك',
 	'boardblastprivatenote' => 'كل الرسائل سترسل كرسائل خاصة',
-	'boardblaststep2' => 'خطوة 2 - انتقِ الذي تود إرسال رسالتك إليه',
-	'boardlinkselectall' => 'اختيار الكل',
-	'boardlinkunselectall' => 'عكس اختيار الكل',
+	'boardblaststep2' => 'خطوة 2 - اختر الشخص الذي تود إرسال رسالتك إليه',
+	'boardlinkselectall' => 'اختر الكل',
+	'boardlinkunselectall' => 'ألغِ اختيار الكل',
 	'boardlinkselectfriends' => 'اختيار الأصدقاء',
 	'boardlinkunselectfriends' => 'عكس اختيار الأصدقاء',
-	'boardlinkselectfoes' => 'اختيار الأعداء',
+	'boardlinkselectfoes' => 'اختر الأعداء',
 	'boardlinkunselectfoes' => 'عكس اختيار الأعداء',
 	'boardsendbutton' => 'أرسل بورد بلاست',
 	'boardnofriends' => 'لا تمتلك أي أصدقاء لترسل رسالة إليهم!',
@@ -146,8 +164,8 @@ $messages['ar'] = array(
 	'userboard_owner' => 'بورد الخاص ب$1',
 	'userboard_yourboardwith' => 'مجلسك إلى مجلس مع $1',
 	'userboard_otherboardwith' => 'مجلس إلى مجلس الخاص ب$1 مع $2',
-	'userboard_backprofile' => 'رجوع إلى ملف $1',
-	'userboard_backyourprofile' => 'الرجوع إلى ملفك',
+	'userboard_backprofile' => 'ارجع إلى ملف $1',
+	'userboard_backyourprofile' => 'ارجع إلى ملفك',
 	'userboard_boardtoboard' => 'مجلس إلى مجلس',
 	'userboard_confirmdelete' => 'هل أنت متأكد أنك تريد حذف هذه الرسالة؟',
 	'userboard_sendmessage' => 'أرسل رسالة إلى $1',
@@ -160,8 +178,13 @@ $messages['ar'] = array(
 	'userboard_prevpage' => 'قبل',
 	'userboard_nomessages' => 'لا رسائل.',
 	'userboard_sendbutton' => 'إرسال',
-	'userboard_loggedout' => 'أنت يجب أن تكون <a href="$1">مسجل الدخول</a> لترسل رسائل إلى المستخدمين الآخرين.',
-	'userboard_showingmessages' => 'عرض {{PLURAL:$4|الرسالة $3|الرسائل $2-$3}} من {{PLURAL:$1|$1 رسالة|$1 رسالة}}',
+	'userboard_loggedout' => 'يجب أن تكون <a href="$1">مُسجلًا الدخول</a> لترسل رسائل إلى المستخدمين الآخرين.',
+	'userboard_showingmessages' => 'يعرض {{PLURAL:$4||الرسالة $3|الرسالتين $2-$3|الرسائل $2-$3}} من أصل {{PLURAL:$1||رسالة واحدة|رسالتين|$1 رسائل|$1 رسالة}}',
+	'right-userboard-delete' => 'حذف رسائل حائط الآخرين',
+	'userboard-time-days' => '{{PLURAL:$1||يوم واحد|يومان|$1 أيام|$1 يومًا|$1 يوم}}',
+	'userboard-time-hours' => '{{PLURAL:$1||ساعة واحد|ساعتان|$1 ساعات|$1 ساعة}}',
+	'userboard-time-minutes' => '{{PLURAL:$1||دقيقة واحدة|دقيقتان|$1 دقائق|$1 دقيقة}}',
+	'userboard-time-seconds' => '{{PLURAL:$1||ثانية واحدة|ثانيتان|$1 ثوانٍ|$1 ثانية}}',
 	'message_received_subject' => '$1 كتب على مجلسك في {{SITENAME}}',
 	'message_received_body' => 'مرحبا $1:
 
@@ -185,8 +208,8 @@ $3
  */
 $messages['arz'] = array(
 	'boardblastlogintitle' => 'أنت ينبغى أن تكون مسجل الدخول لترسل بورد بلاست',
-	'boardblastlogintext' => 'أنت يجب أن تكون مسجل الدخول لترسل بورد بلاست.
-اضغط <a href="index.php?title=Special:UserLogin">هنا لتسجيل الدخول</a>',
+	'boardblastlogintext' => 'لإرسال بورد بلاست،
+يجب أن تكون <a href="index.php?title=Special:UserLogin">مسجل الدخول</a>.',
 	'messagesenttitle' => 'الرسائل تم إرسالها',
 	'boardblasttitle' => 'أرسل بورد بلاست',
 	'boardblaststep1' => 'خطوة 1 - اكتب رسالتك',
@@ -239,7 +262,7 @@ $3
 هل تريد التوقف عن تلقى رسائل بريد إلكترونى مننا؟
 
 اضغط $4
-وغير إعداداتك لتعطيل إخطارات البريد الإلكتروني.',
+وغير إعداداتك لتعطيل إخطارات البريد الإلكترونى.',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -248,8 +271,7 @@ $3
  */
 $messages['be-tarask'] = array(
 	'boardblastlogintitle' => 'Вам неабходна ўвайсьці ў сыстэму, каб дасылаць паведамленьні на агульную дошку',
-	'boardblastlogintext' => 'Вам неабходна ўвайсьці ў сыстэму, каб дасылаць паведамленьні на агульную дошку.
-Націсьніце <a href="index.php?title=Special:UserLogin">тут, каб увайсьці ў сыстэму</a>',
+	'boardblastlogintext' => 'Вам неабходна <a href="index.php?title=Special:UserLogin">ўвайсьці ў сыстэму</a>, каб дасылаць паведамленьні на агульную дошку.',
 	'messagesenttitle' => 'Паведамленьні дасланыя',
 	'boardblasttitle' => 'Адпраўка паведамленьня на дошку',
 	'boardblaststep1' => 'Крок 1: Напішыце Вашае паведамленьне',
@@ -288,6 +310,11 @@ $messages['be-tarask'] = array(
 	'userboard_sendbutton' => 'даслаць',
 	'userboard_loggedout' => 'Вам неабходна <a href="$1">ўвайсьці ў сыстэму</a>, каб пісаць паведамленьні іншым удзельнікам.',
 	'userboard_showingmessages' => '{{PLURAL:$4|Паказанае паведамленьне $3|Паказаныя паведамленьньні $2-$3}} з $1 {{PLURAL:$1|паведамленьня|паведамленьняў|паведамленьняў}}',
+	'right-userboard-delete' => 'выдаленьне паведамленьняў іншых удзельнікаў з дошкі',
+	'userboard-time-days' => '$1 {{PLURAL:$1|дзень|дні|дзён}}',
+	'userboard-time-hours' => '$1 {{PLURAL:$1|гадзіна|гадзіны|гадзінаў}}',
+	'userboard-time-minutes' => '$1 {{PLURAL:$1|хвіліна|хвіліны|хвілінаў}}',
+	'userboard-time-seconds' => '$1 {{PLURAL:$1|сэкунда|сэкунды|сэкундаў}}',
 	'message_received_subject' => '$1 напісаў на Вашай дошцы ў {{GRAMMAR:месны|{{SITENAME}}}}',
 	'message_received_body' => 'Прывітаньне, $1.
 
@@ -364,17 +391,134 @@ $3
 );
 
 /** Bengali (বাংলা)
+ * @author Bellayet
  * @author Zaheen
  */
 $messages['bn'] = array(
+	'boardlinkselectall' => 'সমস্ত নির্বাচন করুন',
 	'userboard_delete' => 'মুছে ফেলা হোক',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'boardblastlogintitle' => "Ret eo deoc'h bezañ kevreet evit kas un darzhadenn daolenn",
+	'boardblastlogintext' => 'Evit kas tarzhadennoù taolenn
+e rankit bezañ <a href="index.php?title=Special:UserLogin">kevreet</a>.',
+	'messagesenttitle' => 'Kemennadennoù kaset',
+	'boardblasttitle' => 'Kas un darzhadenn daolenn',
+	'boardblaststep1' => 'Pazenn 1 - Skrivit ho kemennadenn',
+	'boardblastprivatenote' => "An holl gemennadennoù a vo kaset deoc'h evel kemennadennoù prevez",
+	'boardblaststep2' => "Pazenn 2 - Diuzit da biv hoc'h eus c'hoant da gas ho kemennadenn",
+	'boardlinkselectall' => 'Diuzañ pep tra',
+	'boardlinkunselectall' => 'Diziuzañ pep tra',
+	'boardlinkselectfriends' => 'Diuzañ mignoned',
+	'boardlinkunselectfriends' => 'Diziuzañ mignoned',
+	'boardlinkselectfoes' => 'Diuzañ enebourien',
+	'boardlinkunselectfoes' => 'Diziuzañ enebourien',
+	'boardsendbutton' => 'Kas un darzhadenn daolenn',
+	'boardnofriends' => "N'hoc'h eus mignon ebet da gas ar gemennadenn dezhañ !",
+	'messagesentsuccess' => 'Kaset eo bet ho kemennadenn',
+	'userboard' => 'Taolenn an implijer',
+	'userboard_board-to-board' => 'Taolenn-ouzh-taolenn',
+	'userboard_delete' => 'Dilemel',
+	'userboard_noexist' => "N'eus ket eus an implijer emaoc'h o klask gwelet.",
+	'userboard_yourboard' => 'Ho taolenn',
+	'userboard_owner' => 'Taolenn $1',
+	'userboard_yourboardwith' => 'Ho taolenn-ouzh-taolenn gant $1',
+	'userboard_otherboardwith' => 'Taolenn-ouzh-taolenn $1 gant $2',
+	'userboard_backprofile' => 'Distreiñ da brofil $1',
+	'userboard_backyourprofile' => "Distreiñ d'ho profil",
+	'userboard_boardtoboard' => 'Taolenn-ouzh-taolenn',
+	'userboard_confirmdelete' => "Ha sur oc'h hoc'h eus c'hoant da zilemel ar gemennadenn-mañ ?",
+	'userboard_sendmessage' => 'Kas ur gemennadenn da $1',
+	'userboard_myboard' => 'Ma zaolenn',
+	'userboard_posted_ago' => 'kaset $1 zo',
+	'userboard_private' => 'prevez',
+	'userboard_public' => 'foran',
+	'userboard_messagetype' => 'Seurt kemennadenn',
+	'userboard_nextpage' => 'da-heul',
+	'userboard_prevpage' => 'kent',
+	'userboard_nomessages' => 'Kemennadenn ebet',
+	'userboard_sendbutton' => 'kas',
+	'userboard_loggedout' => 'Ret eo deoc\'h bezañ <a href="$1">kevreet</a> evit kas kemennadennoù d\'an implijerien all.',
+	'userboard_showingmessages' => 'O tiskouez {{PLURAL:$4|kemennadenn$3|kemennadenn$2-$3}} diwar {{PLURAL:$1|$1 gemennadenn|$1 kemennadenn}}',
+	'right-userboard-delete' => "Dilemel ar c'hemennadennoù gant implijerien all",
+	'userboard-time-days' => '{{PLURAL:$1|un deiz|$1 deiz}}',
+	'userboard-time-hours' => '{{PLURAL:$1|un eurvezh|$1 eurvezh}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|ur vunutenn|$1 munutenn}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|un eilenn|$1 eilenn}}',
+	'message_received_subject' => '$1 en deus skrivet war ho taolenn war {{SITENAME}}',
+	'message_received_body' => "Salud deoc'h, $1.
+
+Emañ $2 o paouez skrivañ war ho taolenn war {{SITENAME}} !
+
+Klikit war al liamm amañ dindan evit gwelet ho taolenn !
+
+$3
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war $4
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dre bostel.",
 );
 
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'messagesenttitle' => 'Poruke poslane',
+	'boardblaststep1' => 'Korak 1 - Napišite Vašu poruku',
+	'boardblastprivatenote' => 'Sve poruke će biti poslane kao privatne poruke',
+	'boardblaststep2' => 'Korak 2 - Odaberite kome želite poslati Vašu poruku',
+	'boardlinkselectall' => 'Označi sve',
+	'boardlinkunselectall' => 'Ukloni sav odabir',
+	'boardlinkselectfriends' => 'Odaberi prijatelje',
+	'boardlinkselectfoes' => 'Odaberi neprijatelje',
+	'boardlinkunselectfoes' => 'Deselektiraj neprijatelje',
+	'boardnofriends' => 'Nemate prijatelja za slanje poruka!',
+	'messagesentsuccess' => 'Vaša poruka je uspješno poslana',
+	'userboard' => 'Korisnička ploča',
 	'userboard_delete' => 'Obriši',
+	'userboard_noexist' => 'Korisnik kojeg pokušavate pogledati ne postoji.',
+	'userboard_backprofile' => 'Nazad na profil korisnika $1',
+	'userboard_backyourprofile' => 'Nazad na Vaš profil',
+	'userboard_confirmdelete' => 'Da li ste sigurni da želite obrisati ovu poruku?',
+	'userboard_sendmessage' => 'Pošalji $1 poruku',
+	'userboard_myboard' => 'Moja ploča',
+	'userboard_posted_ago' => 'poslano prije $1',
+	'userboard_private' => 'privatno',
+	'userboard_public' => 'javno',
+	'userboard_messagetype' => 'Vrsta poruke',
+	'userboard_nextpage' => 'slijedeće',
+	'userboard_prevpage' => 'preth',
+	'userboard_nomessages' => 'Nema poruka.',
+	'userboard_sendbutton' => 'pošalji',
+	'userboard_loggedout' => 'Morate biti <a href="$1">prijavljeni</a> da biste mogli slati poruke drugim korisnicima.',
+	'userboard_showingmessages' => 'Prikazujem {{PLURAL:$4|poruku $3|poruke $2-$3}} od {{PLURAL:$1|$1 poruku|$1 poruke|$1 poruka}}',
+	'userboard-time-days' => '{{PLURAL:$1|jedan dan|$1 dana}}',
+	'userboard-time-hours' => '{{PLURAL:$1|jedan sat|$1 sata|$1 sati}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|jedna minuta|$1 minute|$1 minuta}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|jedna sekunda|$1 sekunde|$1 sekundi}}',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'messagesenttitle' => 'Missatges enviats',
+	'boardlinkselectall' => "Selecciona'ls tots",
+	'boardlinkselectfriends' => 'Selecciona amics',
+	'userboard_delete' => 'Elimina',
+	'userboard_private' => 'privat',
+	'userboard_public' => 'públic',
+	'userboard_nextpage' => 'següent',
+	'userboard_prevpage' => 'ant',
+	'userboard_nomessages' => 'Cap missatge.',
+	'userboard_sendbutton' => 'envia',
 );
 
 /** Czech (Česky)
@@ -458,6 +602,7 @@ $messages['da'] = array(
 
 /** German (Deutsch)
  * @author Als-Holder
+ * @author MF-Warburg
  * @author Purodha
  * @author Raimond Spekking
  * @author Tim 'Avatar' Bartel
@@ -465,8 +610,7 @@ $messages['da'] = array(
  */
 $messages['de'] = array(
 	'boardblastlogintitle' => 'Du musst angemeldet sein, um Nachrichten versenden zu können',
-	'boardblastlogintext' => 'Du musst angemeldet sein, um Nachrichten versenden zu können.
-Klicke <a href="index.php?title=Special:UserLogin">hier zum Anmelden</a>',
+	'boardblastlogintext' => 'Du musst <a href="index.php?title=Special:UserLogin">angemeldet</a> sein, um Nachrichten versenden zu können.',
 	'messagesenttitle' => 'Nachrichten verschickt',
 	'boardblasttitle' => 'Nachricht senden',
 	'boardblaststep1' => 'Schritt 1: Schreibe deine Nachricht',
@@ -505,8 +649,13 @@ Klicke <a href="index.php?title=Special:UserLogin">hier zum Anmelden</a>',
 	'userboard_sendbutton' => 'senden',
 	'userboard_loggedout' => 'Du musst <a href="$1">angemeldet sein</a>, um Nachrichten an andere Nutzer schicken zu können.',
 	'userboard_showingmessages' => 'Zeige {{PLURAL:$4|Nachricht $3|Nachrichten $2-$3}} von $1 insgesamt',
+	'right-userboard-delete' => 'Nachrichten anderer vom Board löschen',
+	'userboard-time-days' => '{{PLURAL:$1|ein Tag|$1 Tage}}',
+	'userboard-time-hours' => '{{PLURAL:$1|eine Stunde|$1 Stunden}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|eine Minute|$1 Minuten}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|eine Sekunde|$1 Sekunden}}',
 	'message_received_subject' => '$1 hat auf deine {{SITENAME}}-Pinnwand geschrieben',
-	'message_received_body' => 'Hi $1:
+	'message_received_body' => 'Hallo $1,
 
 $2 hat eben auf deine {{SITENAME}}-Pinnwand geschrieben!
 
@@ -522,13 +671,44 @@ Klicke $4
 und ändere deine Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ * @author Umherirrender
+ */
+$messages['de-formal'] = array(
+	'boardblastlogintitle' => 'Sie müssen angemeldet sein, um Nachrichten versenden zu können',
+	'boardblastlogintext' => 'Sie müssen <a href="index.php?title=Special:UserLogin">angemeldet</a> sein, um Nachrichten versenden zu können.',
+	'boardblaststep1' => 'Schritt 1: Schreiben Sie Ihre Nachricht',
+	'boardblaststep2' => 'Schritt 2: Wählen Sie aus, wem Sie die Nachrichte schicken wollen',
+	'boardnofriends' => 'Sie haben keine Freunde, denen Sie eine Nachricht senden könnten!',
+	'messagesentsuccess' => 'Ihre Nachricht wurde erfolgreich verschickt.',
+	'userboard_yourboard' => 'Ihre Pinnwand',
+	'userboard_yourboardwith' => 'Ihre Pinnwand-Diskussion mit $1',
+	'userboard_backyourprofile' => 'Zurück zu Ihrem Profil',
+	'userboard_loggedout' => 'Sie müssen <a href="$1">angemeldet sein</a>, um Nachrichten an andere Nutzer schicken zu können.',
+	'message_received_subject' => '$1 hat auf Ihre {{SITENAME}}-Pinnwand geschrieben',
+	'message_received_body' => 'Guten Tag $1,
+
+$2 hat eben auf Ihre {{SITENAME}}-Pinnwand geschrieben!
+
+Klicken Sie auf den folgenden Link um Ihre Pinnwand aufzurufen!
+
+$3
+
+---
+
+Hm, Sie wollen keine E-Mails mehr von uns bekommen?
+
+Klicken Sie $4
+und ändern Sie Ihre Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
 	'boardblastlogintitle' => 'Musyš pśizjawjony byś, aby pósłał forumowe powěsći',
-	'boardblastlogintext' => 'Musyš pśizjawjony byś, aby pósłał forumowe powěsći.
-Klikni <a href="index.php?title=Special:UserLogin">sem, aby se pśizjawił</a>',
+	'boardblastlogintext' => 'Musyš <a href="index.php?title=Special:UserLogin">pśizjawjony</a> byś, aby pósłał forumowe powěsći.',
 	'messagesenttitle' => 'Powěsći pósłane',
 	'boardblasttitle' => 'Forumowu powěsć pósłaś',
 	'boardblaststep1' => 'Kšac 1 - Napiš swóju powěsć',
@@ -567,6 +747,11 @@ Klikni <a href="index.php?title=Special:UserLogin">sem, aby se pśizjawił</a>',
 	'userboard_sendbutton' => 'pósłaś',
 	'userboard_loggedout' => 'Musyš <a href="$1">pśizjawjony</a> byś, aby pósłał powěsći drugim wužywarjam.',
 	'userboard_showingmessages' => '{{PLURAL:$4|Pokazujo se powěsć $3|Pokazujotej se powěsći $2-$3|Pokazuju se powěsći $2-$3|Pokazuju se powěsći $2-$3}} z {{PLURAL:$1|$1 powěsći|$1 powěsćowu|$1 powěsćow|$1 powěsćow}}',
+	'right-userboard-delete' => 'Powěsći z dele drugich wulašowaś',
+	'userboard-time-days' => '{{PLURAL:$1|jaden źeń|$1 dna|$1 dny|$1 dnjow}}',
+	'userboard-time-hours' => '{{PLURAL:$1|jadna góźina|$1 góźinje|$1 góźiny|$1 góźin}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|jadna minuta|$1 minuśe|$1 minuty|$1 minutow}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|jadna sekunda|$1 sekunźe|$1 sekundy|$1 sekundow}}',
 	'message_received_subject' => '$1 jo napisał na twóju delu na {{GRAMMAR:lokatiw|{{SITENAME}}}}',
 	'message_received_body' => 'Witaj $1.
 
@@ -587,10 +772,67 @@ a změń swóje nastajenja, aby znjemóžnił e-mailowe zdźělenja.',
 /** Greek (Ελληνικά)
  * @author Consta
  * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'messagesenttitle' => 'Απεσταλμένα μηνύματα',
+	'boardblasttitle' => 'Αποστολή του πίνακα σε ριπή',
+	'boardblaststep1' => 'Βήμα 1 - Γράψτε το μήνυμά σας',
+	'boardblastprivatenote' => 'Όλα τα μηνύματα θα σταλλούν ως προσωπικά μηνύματα',
+	'boardblaststep2' => 'Βήμα 2 - Επιλέξτε σε ποιον θέλετε να στείλετε το μήνυμα σας',
+	'boardlinkselectall' => 'Επιλογή όλων',
+	'boardlinkunselectall' => 'Αποεπιλογή όλων',
+	'boardlinkselectfriends' => 'Επιλογή φίλων',
+	'boardlinkunselectfriends' => 'Αποεπιλογή φίλων',
+	'boardlinkselectfoes' => 'Επιλογή εχθρών',
+	'boardlinkunselectfoes' => 'Αποεπιλογή εχθρών',
+	'boardsendbutton' => 'Αποστολή του πίνακα σε ριπή',
+	'boardnofriends' => 'Δεν έχετε φίλους για να στείλετε ένα μήνυμα!',
+	'messagesentsuccess' => 'Το μήνυμά σας στάλθηκε επιτυχώς',
+	'userboard' => 'Επιτροπή χρήστη',
+	'userboard_board-to-board' => 'Πίνακα-σε-πίνακα',
+	'userboard_delete' => 'Διαγραφή',
+	'userboard_noexist' => 'Ο χρήστης που προσπαθείτε να δείτε δεν υπάρχει.',
+	'userboard_yourboard' => 'Η επιτροπή σας',
+	'userboard_owner' => 'Ο πίνακας του $1',
+	'userboard_yourboardwith' => 'Ο πίνακας-σε-πίνακα σας με τον $1',
+	'userboard_otherboardwith' => 'Ο πίνακας-σε-πίνακα του $1 με τον $2',
+	'userboard_backprofile' => 'Πίσω στο προφίλ του $1',
+	'userboard_backyourprofile' => 'Πίσω στο προφίλ σας',
+	'userboard_boardtoboard' => 'Πίνακα-σε-πίνακα',
+	'userboard_confirmdelete' => 'Είστε σίγουρος πως θέλετε να διαγράψετε αυτό το μήνυμα;',
+	'userboard_sendmessage' => 'Αποστολή στον $1 ένα μήνυμα',
+	'userboard_myboard' => 'Η επιτροπή μου',
+	'userboard_posted_ago' => 'δημοσιεύθηκε $1 πριν',
+	'userboard_private' => 'ιδιωτικός',
+	'userboard_public' => 'δημόσιο',
 	'userboard_messagetype' => 'Τύπος Μηνύματος',
+	'userboard_nextpage' => 'επομ',
+	'userboard_prevpage' => 'προηγ',
+	'userboard_nomessages' => 'Κανένα μήνυμα.',
 	'userboard_sendbutton' => 'Αποστολή',
+	'userboard_loggedout' => 'Πρέπει να είστε <a href="$1">συνδεδεμένος</a> για να δημοσιεύσετε μηνύματα σε άλλους χρήστες.',
+	'right-userboard-delete' => 'Διαγραφή μηνυμάτων πίνακα άλλων',
+	'userboard-time-days' => '{{PLURAL:$1|μια μέρα|$1 μέρες}}',
+	'userboard-time-hours' => '{{PLURAL:$1|μια ώρα|$1 ώρες}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|ένα λεπτό|$1 λεπτά}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|ένα δευτερόλεπτο|$1 δευτερόλεπτα}}',
+	'message_received_subject' => 'Ο $1 έγραψε στο πίνακά σας στο {{SITENAME}}',
+	'message_received_body' => 'Γεια $1.
+
+Ο $2 μόλις έγραψε στον πίνακά σας στο {{SITENAME}}.
+
+Τσεκάρετε τον πίνακά σας κάνωντας κλικ εδώ!
+
+$3
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $4
+και αλλάξετε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
 );
 
 /** Esperanto (Esperanto)
@@ -626,35 +868,52 @@ $messages['eo'] = array(
 	'userboard_sendbutton' => 'sendi',
 	'userboard_loggedout' => 'Vi devas <a href="$1">ensaluti</a> por afiŝi mesaĝojn al aliaj uzantoj.',
 	'userboard_showingmessages' => 'Montrante {{PLURAL:$4|mesaĝon|mesaĝojn $2-$3}} el {{PLURAL:$1|$1 mesaĝo|$1 mesaĝoj}}',
+	'userboard-time-days' => '{{PLURAL:$1|unu tago|$1 tagoj}}',
+	'userboard-time-hours' => '{{PLURAL:$1|unu horo|$1 horoj}}',
 	'message_received_subject' => '$1 skribis en via afiŝejon en {{SITENAME}}',
 );
 
 /** Spanish (Español)
+ * @author Antur
  * @author Crazymadlover
  * @author Imre
+ * @author Locos epraix
  * @author Sanbec
+ * @author Translationista
  */
 $messages['es'] = array(
+	'boardblastlogintitle' => 'Ud. debe ingresar como usuario para enviar mensajes a otros tablones',
+	'boardblastlogintext' => 'Para enviar mensajes,
+Ud. debe <a href="index.php?title=Special:UserLogin">ingresar como usuario</a>.',
 	'messagesenttitle' => 'Mensajes enviados',
-	'boardblaststep1' => 'Paso 1 - Escribir su mensaje',
+	'boardblasttitle' => 'Enviar mensaje a otros tablones',
+	'boardblaststep1' => 'Paso 1 - Escribe tu mensaje',
 	'boardblastprivatenote' => 'Todos los mensajes serán enviados como mensajes privados',
-	'boardblaststep2' => 'Paso 2 - Seleccionar a quién desea enviar su mensaje',
+	'boardblaststep2' => 'Paso 2 - Selecciona a quién deseas enviar el mensaje',
 	'boardlinkselectall' => 'Seleccionar todo',
 	'boardlinkunselectall' => 'Deseleccionar todo',
 	'boardlinkselectfriends' => 'Seleccionar amigos',
 	'boardlinkunselectfriends' => 'Deseleccionar amigos',
 	'boardlinkselectfoes' => 'Seleccionar enemigos',
 	'boardlinkunselectfoes' => 'Deseleccionar enemigos',
-	'boardnofriends' => 'No tiene amigos a los que enviar un mensaje!',
-	'messagesentsuccess' => 'Su mensaje fue enviado exitosamente',
+	'boardsendbutton' => 'Enviar mensaje',
+	'boardnofriends' => '¡No tienes amigos a los que enviar un mensaje!',
+	'messagesentsuccess' => 'Tu mensaje fue enviado exitosamente',
+	'userboard' => 'Tablón del usuario',
+	'userboard_board-to-board' => 'Tablón a tablón',
 	'userboard_delete' => 'Borrar',
-	'userboard_noexist' => 'El usuario que trata de ver no existe.',
-	'userboard_yourboard' => 'Tu pizarrón',
+	'userboard_noexist' => 'El usuario que tratas de ver no existe.',
+	'userboard_yourboard' => 'Tu tablón',
+	'userboard_owner' => 'tablón de $1',
+	'userboard_yourboardwith' => 'Tu tablón a tablón con $1',
+	'userboard_otherboardwith' => 'Tablón de $1con $2',
 	'userboard_backprofile' => 'Regresar al perfil de $1',
-	'userboard_backyourprofile' => 'Regresar a su perfil',
-	'userboard_confirmdelete' => 'Está seguro que desea borrar este mensaje?',
+	'userboard_backyourprofile' => 'Regresar a tu perfil',
+	'userboard_boardtoboard' => 'Tablón a tablón',
+	'userboard_confirmdelete' => '¿Seguro que deseas borrar este mensaje?',
 	'userboard_sendmessage' => 'Enviar a $1 un mensaje',
-	'userboard_myboard' => 'Mi pizarrón',
+	'userboard_myboard' => 'Mi tablón',
+	'userboard_posted_ago' => 'Enviado hace $1',
 	'userboard_private' => 'privado',
 	'userboard_public' => 'público',
 	'userboard_messagetype' => 'Tipo de mensaje',
@@ -662,7 +921,48 @@ $messages['es'] = array(
 	'userboard_prevpage' => 'anterior',
 	'userboard_nomessages' => 'Sin mensajes.',
 	'userboard_sendbutton' => 'enviar',
+	'userboard_loggedout' => 'Tienes que haber <a href="$1">iniciado sesión</a> para enviar mensajes a otros usuarios.',
 	'userboard_showingmessages' => 'Mostrando {{PLURAL:$4|mensaje $3|mensajes $2-$3}} de {{PLURAL:$1|$1 mensaje|$1 mensajes}}',
+	'right-userboard-delete' => 'Borrar otros mensajes del Concejo',
+	'userboard-time-days' => '{{PLURAL:$1|un día|$1 días}}',
+	'userboard-time-hours' => '{{PLURAL:$1|una hora|$1 horas}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|un minuto|$1 minutos}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|un segundo|$1 segundos}}',
+	'message_received_subject' => '$1 escribió en tu tablón en {{SITENAME}}',
+	'message_received_body' => 'Hola, $1.
+
+$2 acaba de escribir en tu tablón en {{SITENAME}}!
+
+¡Haz click debajo para revisar tu tablón!
+
+$3
+
+---
+
+Hey, ¿deseas dejar de recibir correos electrónicos de nosotros?
+
+Haz click en $4
+y cambia tus configuraciones para deshabilitar notificaciones por correo electrónico.',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'messagesenttitle' => 'Sõnumid saadetud',
+	'boardlinkselectall' => 'Vali kõik',
+	'boardlinkselectfriends' => 'Vali sõbrad',
+	'boardlinkselectfoes' => 'Vali vaenlased',
+	'boardnofriends' => 'Sul ei ole sõpru, kellele sõnumit saata!',
+	'userboard_delete' => 'Kustuta',
+	'userboard_backyourprofile' => 'Tagasi oma profiili juurde',
+	'userboard_confirmdelete' => 'Kas Sa oled kindel, et soovid seda sõnumit kustutada?',
+	'userboard_private' => 'erasõnum',
+	'userboard_public' => 'avalik',
+	'userboard_messagetype' => 'Sõnumi tüüp',
+	'userboard_nextpage' => 'järgmine',
+	'userboard_prevpage' => 'eelmine',
 );
 
 /** Basque (Euskara)
@@ -675,6 +975,10 @@ $messages['eu'] = array(
 	'boardblaststep2' => '2. pausoa - Mezua nori bidali nahi diozun aukeratu',
 	'boardlinkselectall' => 'Guztiak hautatu',
 	'boardlinkunselectall' => 'Guztiak desautatu',
+	'boardlinkselectfriends' => 'Lagunak hautatu',
+	'boardlinkunselectfriends' => 'Lagunak deshautatu',
+	'boardlinkselectfoes' => 'Etsaiak hautatu',
+	'boardlinkunselectfoes' => 'Etsaiak deshautatu',
 	'userboard_delete' => 'Ezabatu',
 	'userboard_backprofile' => '$1-(r)en perfilera itzuli',
 	'userboard_backyourprofile' => 'Perfilera itzuli',
@@ -687,6 +991,10 @@ $messages['eu'] = array(
 	'userboard_prevpage' => 'aurreko',
 	'userboard_nomessages' => 'Ez dago mezurik.',
 	'userboard_sendbutton' => 'bidali',
+	'userboard-time-days' => '{{PLURAL:$1|egun bat|$1 egun}}',
+	'userboard-time-hours' => '{{PLURAL:$1|ordu bat|$1 ordu}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|minutu bat|$1 minutu}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|segundo bat|$1 segundo}}',
 );
 
 /** Finnish (Suomi)
@@ -697,7 +1005,7 @@ $messages['eu'] = array(
  */
 $messages['fi'] = array(
 	'boardblastlogintitle' => 'Sinun tulee olla sisäänkirjautunut lähettääksesi keskustelupläjäyksiä',
-	'boardblastlogintext' => 'Sinun tulee olla sisäänkirjautunut lähettääksesi keskustelupläjäyksiä.  Napsauta <a href="index.php?title=Special:UserLogin">tästä kirjautuaksesi sisään</a>',
+	'boardblastlogintext' => 'Sinun tulee olla <a href="index.php?title=Special:UserLogin">sisäänkirjautunut</a> lähettääksesi keskusteluja.',
 	'messagesenttitle' => 'Viestit lähetetty',
 	'boardblasttitle' => 'Lähetä keskustelupläjäys',
 	'boardblaststep1' => 'Vaihe 1 – Kirjoita viestisi',
@@ -736,19 +1044,24 @@ $messages['fi'] = array(
 	'userboard_sendbutton' => 'lähetä',
 	'userboard_loggedout' => 'Sinun tulee olla <a href="$1">kirjautunut sisään</a> lähettääksesi viestejä toisille käyttäjille.',
 	'userboard_showingmessages' => 'Näkyvillä on {{PLURAL:$4|viesti $3|viestit $2–$3}}. Yhteensä {{PLURAL:$1|$1 viesti|$1 viestiä}}.',
+	'right-userboard-delete' => 'Poistaa toisten käyttäjien keskustelualueviestejä',
+	'userboard-time-days' => '{{PLURAL:$1|päivä|$1 päivää}}',
+	'userboard-time-hours' => '{{PLURAL:$1|tunti|$1 tuntia}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|minuutti|$1 minuuttia}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|sekunti|$1 sekuntia}}',
 	'message_received_subject' => '$1 kirjoitti keskustelualueellesi {{GRAMMAR:inessive|{{SITENAME}}}}',
 	'message_received_body' => 'Hei $1:
- 
+
 $2 juuri kirjoitti keskustelualueellesi {{GRAMMAR:inessive|{{SITENAME}}}}!
- 
+
 Napsauta alapuolella olevaa linkki tarkistaaksesi keskustelualueesi!
- 
+
 $3
- 
+
 ---
- 
-Hei, etkö halua enää saada sähköposteja meiltä?  
- 
+
+Hei, etkö halua enää saada sähköposteja meiltä?
+
 Napsauta $4
 ja muuta asetuksiasi poistaaksesi sähköpostitoiminnot käytöstä.',
 );
@@ -760,7 +1073,8 @@ ja muuta asetuksiasi poistaaksesi sähköpostitoiminnot käytöstä.',
  */
 $messages['fr'] = array(
 	'boardblastlogintitle' => 'Vous devez être connecté pour envoyer le tableau en rafale',
-	'boardblastlogintext' => 'Vous devez être connecté pour envoyer le tableau en rafales. Cliquez <a href="index.php?title=Special:UserLogin">ici pour ouvrir vous connecter</a>',
+	'boardblastlogintext' => 'Pour envoyer des tableau en rafales,
+vous devez <a href="index.php?title=Special:UserLogin">être connecté</a>.',
 	'messagesenttitle' => 'Messages envoyés',
 	'boardblasttitle' => 'Envoyer le tableau en rafale',
 	'boardblaststep1' => 'Étape 1 - Écrivez votre message',
@@ -798,11 +1112,16 @@ $messages['fr'] = array(
 	'userboard_nomessages' => 'Aucun message.',
 	'userboard_sendbutton' => 'envoyé',
 	'userboard_loggedout' => 'Vous devez être <a href="$1">connecté</a> pour poster des messages à d’autres utilisateurs.',
-	'userboard_showingmessages' => 'Visionnement {{PLURAL:$4|du message $3|des messages $2-$3}} sur un total de {{PLURAL:$1|$1 message|$1 messages}}',
+	'userboard_showingmessages' => 'Visionnement {{PLURAL:$4|du message $3|des messages $2-$3}} sur un total de $1 message{{PLURAL:$1||s}}',
+	'right-userboard-delete' => 'Supprimer les messages d’autres utilisateurs',
+	'userboard-time-days' => '$1 {{PLURAL:$1|jour|jours}}',
+	'userboard-time-hours' => '$1 {{PLURAL:$1|heure|heures}}',
+	'userboard-time-minutes' => '$1 {{PLURAL:$1|minute|minutes}}',
+	'userboard-time-seconds' => '$1 {{PLURAL:$1|seconde|secondes}}',
 	'message_received_subject' => '$1 a écrit sur votre tableau sur {{SITENAME}}',
-	'message_received_body' => "Salut $1 :
+	'message_received_body' => 'Salut $1 :
 
-$2 vient juste d'écrire sur votre tableau sur {{SITENAME}} !
+$2 vient juste d’écrire sur votre tableau sur {{SITENAME}} !
 
 Cliquez sur le lien ci-dessous pour allez sur votre tableau !
 
@@ -813,7 +1132,17 @@ $3
 Hé ! Voulez-vous arrêter d’obtenir, de nous, les courriels ?
 
 Cliquer $4
-et modifiez vos paramètres pour désactiver les notifications des courriels.",
+et modifiez vos paramètres pour désactiver les notifications des courriels.',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'userboard_delete' => 'Suprimar',
+	'userboard_private' => 'privâ',
+	'userboard_public' => 'publico',
 );
 
 /** Western Frisian (Frysk)
@@ -827,11 +1156,11 @@ $messages['fy'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'boardblastlogintitle' => 'Debe acceder ao sistema para enviar o taboleiro en ráfaga',
-	'boardblastlogintext' => 'Debe acceder ao sistema para enviar o taboleiro en ráfaga.
-Prema <a href="index.php?title=Special:UserLogin">aquí para acceder</a>',
+	'boardblastlogintitle' => 'Debe acceder ao sistema para enviar un recado',
+	'boardblastlogintext' => 'Para poder enviar un recado
+debe antes ter <a href="index.php?title=Special:UserLogin">accedido ao sistema</a>.',
 	'messagesenttitle' => 'Mensaxes enviadas',
-	'boardblasttitle' => 'Enviar o taboleiro en ráfaga',
+	'boardblasttitle' => 'Enviar un recado',
 	'boardblaststep1' => 'Paso 1 - Estriba a súa mensaxe',
 	'boardblastprivatenote' => 'Todas as mensaxes serán enviadas de maneira privada',
 	'boardblaststep2' => 'Paso 2 - Escolla a quen lle quere enviar a súa mensaxe tamén',
@@ -841,7 +1170,7 @@ Prema <a href="index.php?title=Special:UserLogin">aquí para acceder</a>',
 	'boardlinkunselectfriends' => 'Deixar de seleccionar amigos',
 	'boardlinkselectfoes' => 'Seleccionar inimigos',
 	'boardlinkunselectfoes' => 'Deixar de seleccionar inimigos',
-	'boardsendbutton' => 'Enviar o taboleiro en ráfaga',
+	'boardsendbutton' => 'Enviar o recado',
 	'boardnofriends' => 'Non ten amigos para mandarlles mensaxes!',
 	'messagesentsuccess' => 'A súa mensaxe foi enviada con éxito',
 	'userboard' => 'Taboleiro do usuario',
@@ -868,6 +1197,11 @@ Prema <a href="index.php?title=Special:UserLogin">aquí para acceder</a>',
 	'userboard_sendbutton' => 'enviar',
 	'userboard_loggedout' => 'Debe <a href="$1">acceder ao sistema</a> para deixar mensaxes a outros usuarios.',
 	'userboard_showingmessages' => 'Amosando {{PLURAL:$4|ata a mensaxe $3|as mensaxes da $2 á $3}} dun total {{PLURAL:$1|dunha mensaxe|de $1 mensaxes}}',
+	'right-userboard-delete' => 'Borrar o taboleiro de mensaxes doutros',
+	'userboard-time-days' => '{{PLURAL:$1|un día|$1 días}}',
+	'userboard-time-hours' => '{{PLURAL:$1|unha hora|$1 horas}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|un minuto|$1 minutos}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|un segundo|$1 segundos}}',
 	'message_received_subject' => '$1 escribiu no seu taboleiro en {{SITENAME}}',
 	'message_received_body' => 'Ola $1:
 
@@ -885,7 +1219,7 @@ Faga clic $4
 e troque as súas configuracións para deshabilitar as notificacións por correo electrónico.',
 );
 
-/** Gothic
+/** Gothic (Gothic)
  * @author Jocke Pirat
  */
 $messages['got'] = array(
@@ -894,11 +1228,15 @@ $messages['got'] = array(
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['grc'] = array(
 	'userboard_delete' => 'Σβεννύναι',
-	'userboard_private' => 'Ἰδιωτική',
-	'userboard_nextpage' => 'Ἑπομέναι',
+	'userboard_private' => 'ἰδιωτικός',
+	'userboard_public' => 'δημόσιος',
+	'userboard_nextpage' => 'ἑπομ',
+	'userboard_prevpage' => 'προηγ',
+	'userboard_sendbutton' => 'πέμπειν',
 );
 
 /** Swiss German (Alemannisch)
@@ -906,8 +1244,8 @@ $messages['grc'] = array(
  */
 $messages['gsw'] = array(
 	'boardblastlogintitle' => 'Du muesch aagmäldet syy zum Nochrichte verschicke z chenne',
-	'boardblastlogintext' => 'Du muesch aagmäldet syy go Nochrichte chenne verschicke.
-Druck <a href="index.php?title=Special:UserLogin">doo zum Aamälde</a>',
+	'boardblastlogintext' => 'Go Nochrichte chenne verschicke,
+muesch <a href="index.php?title=Special:UserLogin">aagmäldet syy</a>',
 	'messagesenttitle' => 'Nochrichte gschickt',
 	'boardblasttitle' => 'Nochricht schicke',
 	'boardblaststep1' => 'Schritt 1: Schryb Dyyni Nochricht',
@@ -946,6 +1284,11 @@ Druck <a href="index.php?title=Special:UserLogin">doo zum Aamälde</a>',
 	'userboard_sendbutton' => 'schicke',
 	'userboard_loggedout' => 'Du muesch <a href="$1">aagmäldet syy</a> zum Nochrichte an anderi Nutzer schicke z chenne.',
 	'userboard_showingmessages' => 'Zeig {{PLURAL:$4|Nochricht $3|Nochrichte $2-$3}} vu $1 insgsamt',
+	'right-userboard-delete' => 'Nochrichte vu andere lesche',
+	'userboard-time-days' => '{{PLURAL:$1|1 Tag|$1 Täg}}',
+	'userboard-time-hours' => '{{PLURAL:$1|1 Stund|$1 Stunde}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|1 Minut|$1 Minute}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|1 Sekund|$1 Sekunde}}',
 	'message_received_subject' => '$1 het uf Dyy Schwarz Brätt uf {{SITENAME}} gschribe',
 	'message_received_body' => 'Sali $1:
 
@@ -976,8 +1319,7 @@ $messages['hak'] = array(
  */
 $messages['he'] = array(
 	'boardblastlogintitle' => 'עליכם לבצע כניסה לחשבון כדי לשלוח מסרים המוניים',
-	'boardblastlogintext' => 'עליכם לבצע כניסה לחשבון כדי לשלוח מסרים המוניים.
-לחצו <a href="index.php?title=Special:UserLogin">כאן לביצוע כניסה לחשבון</a>',
+	'boardblastlogintext' => 'עליכם <a href="index.php?title=Special:UserLogin">להיכנס לחשבון</a> כדי לשלוח מסרים המוניים.',
 	'messagesenttitle' => 'ההודעות נשלחו',
 	'boardblasttitle' => 'שליחת מסר המוני',
 	'boardblaststep1' => 'שלב 1 - כתבו את הודעתכם',
@@ -1016,6 +1358,11 @@ $messages['he'] = array(
 	'userboard_sendbutton' => 'שליחה',
 	'userboard_loggedout' => 'עליכם <a href="$1">לבצע כניסה לחשבון</a> כדי לשלוח הודעות למשתמשים אחרים.',
 	'userboard_showingmessages' => 'הצגת {{PLURAL:$4|הודעה $3|הודעות $2-$3}} מתוך {{PLURAL:$1|הודעה אחת|$1 הודעות}}',
+	'right-userboard-delete' => 'מחיקת הודעות לוח שכתבו אחרים',
+	'userboard-time-days' => '{{PLURAL:$1|יום|$1 ימים|יומיים}}',
+	'userboard-time-hours' => '{{PLURAL:$1|שעה|$1 שעות|שעתיים}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|דקה|$1 דקות}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|שנייה|$1 שניות}}',
 	'message_received_subject' => '$1 כתב בלוח שלך ב{{grammar:תחילית|{{SITENAME}}}}',
 	'message_received_body' => 'היי $1:
 
@@ -1059,8 +1406,7 @@ $messages['hr'] = array(
  */
 $messages['hsb'] = array(
 	'boardblastlogintitle' => 'Dyrbiš přizjewjeny być, zo by forumowe powěsće pósłał',
-	'boardblastlogintext' => 'Dyrbiš přizjewjeny być, zo by forumowe powěsće pósłał.
-Klikń <a href="index.php?title=Special:UserLogin">sem, zo by so přizjewił</a>',
+	'boardblastlogintext' => 'Dyrbiš <a href="index.php?title=Special:UserLogin">přizjewjeny</a> być, zo by forumowe powěsće pósłał.',
 	'messagesenttitle' => 'Powěsće pósłane',
 	'boardblasttitle' => 'Forumowu powěsć pósłać',
 	'boardblaststep1' => 'Krok 1 - Napisaj swoju powěsć',
@@ -1099,6 +1445,11 @@ Klikń <a href="index.php?title=Special:UserLogin">sem, zo by so přizjewił</a>
 	'userboard_sendbutton' => 'pósłać',
 	'userboard_loggedout' => 'Dyrbiš <a href="$1">přizjewjeny</a> być, zo by druhim wužiwarjam powěsće pósłał.',
 	'userboard_showingmessages' => '{{PLURAL:$4|Pokazuje so powěsć $3|Pokazujetej so powěsći $2-$3|Pokazuja so powěsće $2-$3|Pokazuja so powěsće $2-$3}} z {{PLURAL:$1|$1 powěsće|$1 powěsćow|$1 powěsćow|$1 powěsćow}}',
+	'right-userboard-delete' => 'Powěsće z deski druhich wušmórnyć',
+	'userboard-time-days' => '{{PLURAL:$1|jedyn dźeń|$1 dnjej|$1 dny|$1 dnjow}}',
+	'userboard-time-hours' => '{{PLURAL:$1|jedna hodźina|$1 hodźinje|$1 hodźiny|$1 hodźin}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|jedna mjeńšina|$1 mjeńšinje|$1 mjeńšiny|$1 mjeńšin}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|jedna sekunda|$1 sekundźe|$1 sekundy|$1 sekundow}}',
 	'message_received_subject' => '$1 je na twoju desku na {{GRAMMAR:lokatiw|{{SITENAME}}}} napisał',
 	'message_received_body' => 'Witaj $1.
 
@@ -1116,13 +1467,80 @@ Klikń na $4
 a změń swoje nastajenja, zo by e-mejlowe zdźělenja znjemóžnił.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'boardblastlogintitle' => 'Bejegyzés küldéséhez be kell jelentkezned.',
+	'boardblastlogintext' => 'Ahhoz hogy tudj bejegyzéseket küldeni,
+<a href="index.php?title=Special:UserLogin">be kell jelentkezned</a>.',
+	'messagesenttitle' => 'Elküldött üzenetek',
+	'boardblasttitle' => 'Bejegyzés küldése',
+	'boardblaststep1' => '1. lépés – írd meg az üzeneted',
+	'boardblastprivatenote' => 'Minden üzenet privát üzenetként lesz elküldve',
+	'boardblaststep2' => '2. lépés – válaszd ki, kinek szeretnéd elküldeni az üzenetet',
+	'boardlinkselectall' => 'Mind kijelölése',
+	'boardlinkunselectall' => 'Összes kijelölés megszüntetése',
+	'boardlinkselectfriends' => 'Barátok kijelölése',
+	'boardlinkunselectfriends' => 'Barátok kijelölésének megszüntetése',
+	'boardlinkselectfoes' => 'Ellenségek kijelölése',
+	'boardlinkunselectfoes' => 'Ellenségek kijelölésének megszüntetése',
+	'boardsendbutton' => 'Bejegyzés elküldése az üzenőfalra',
+	'boardnofriends' => 'Nincsenek barátaid, akiknek üzenetet küldhetnél!',
+	'messagesentsuccess' => 'Az üzeneted sikeresen elküldve',
+	'userboard' => 'Üzenőfal',
+	'userboard_board-to-board' => 'Üzenőfaltól-üzenőfalig',
+	'userboard_delete' => 'Törlés',
+	'userboard_noexist' => 'A megtekinteni próbált felhasználó nem létezik.',
+	'userboard_yourboard' => 'Saját üzenőfalad',
+	'userboard_owner' => '$1 üzenőfala',
+	'userboard_yourboardwith' => 'Üzenőfalak közti beszélgetésed vele: $1',
+	'userboard_otherboardwith' => '$1 üzenőfalak közti beszélgetése vele: $2',
+	'userboard_backprofile' => 'Vissza $1 profiljára',
+	'userboard_backyourprofile' => 'Vissza a profilodra',
+	'userboard_boardtoboard' => 'Üzenőfal-beszélgetés',
+	'userboard_confirmdelete' => 'Biztos vagy benne, hogy törölni szeretnéd ezt az üzenetet?',
+	'userboard_sendmessage' => 'Üzenet küldése $1 részére',
+	'userboard_myboard' => 'Saját üzenőfalam',
+	'userboard_posted_ago' => 'beküldve: $1',
+	'userboard_private' => 'privát',
+	'userboard_public' => 'nyilvános',
+	'userboard_messagetype' => 'Üzenet típusa',
+	'userboard_nextpage' => 'következő',
+	'userboard_prevpage' => 'előző',
+	'userboard_nomessages' => 'Nincsenek üzenetek.',
+	'userboard_sendbutton' => 'küldés',
+	'userboard_loggedout' => 'Ha más felhasználók számára szeretnél üzenetet küldeni, <a href="$1">be kell jelentkezned</a>.',
+	'userboard_showingmessages' => '{{PLURAL:$4|$3 üzenet|$2 – $3 üzenetek}} megjelenítése (összesen: $1)',
+	'right-userboard-delete' => 'mások üzenőfalas üzeneteinek törlése',
+	'userboard-time-days' => '{{PLURAL:$1|egy|$1}} nappal',
+	'userboard-time-hours' => '{{PLURAL:$1|egy|$1}} órával',
+	'userboard-time-minutes' => '{{PLURAL:$1|egy|$1}} perccel',
+	'userboard-time-seconds' => '{{PLURAL:$1|egy|$1}} másodperccel',
+	'message_received_subject' => '$1 írt a hirdetőfaladra a(z) {{SITENAME}} oldalon',
+	'message_received_body' => 'Szia $1!
+
+$2 írt az üzenőfaladra a(z) {{SITENAME}} wikin!
+
+Kattints alábbi hivatkozásra az üzenőfalad megtekintéséhez.
+
+$3
+
+---
+Szeretnéd ha nem zaklatnánk több e-maillel?
+
+Kattints a linkre: $4
+és tiltsd le az e-mail értesítéseket a beállításaidban',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'boardblastlogintitle' => 'Tu debe aperir un session pro poter inviar colpos de tabuliero',
-	'boardblastlogintext' => 'Tu debe identificar te pro poter inviar colpos de tabuliero.
-Clicca <a href="index.php?title=Special:UserLogin">hic pro aperir un session</a>.',
+	'boardblastlogintext' => 'Pro poter inviar colpos de tabuliero,
+tu debe <a href="index.php?title=Special:UserLogin">aperir un session</a>.',
 	'messagesenttitle' => 'Messages inviate',
 	'boardblasttitle' => 'Inviar colpo de tabuliero',
 	'boardblaststep1' => 'Passo 1 - Scribe tu message',
@@ -1161,6 +1579,11 @@ Clicca <a href="index.php?title=Special:UserLogin">hic pro aperir un session</a>
 	'userboard_sendbutton' => 'inviar',
 	'userboard_loggedout' => 'Tu debe <a href="$1">aperir un session</a> pro poter inviar messages a altere usatores.',
 	'userboard_showingmessages' => 'Presentation del {{PLURAL:$4|message $3|messages $2-$3}} de $1 {{PLURAL:$1|message|messages}}',
+	'right-userboard-delete' => 'Deler le messages de alteros del tabuliero',
+	'userboard-time-days' => '{{PLURAL:$1|un die|$1 dies}}',
+	'userboard-time-hours' => '{{PLURAL:$1|un hora|$1 horas}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|un minuta|$1 minutas}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|un secunda|$1 secundas}}',
 	'message_received_subject' => '$1 scribeva in tu tabuliero in {{SITENAME}}',
 	'message_received_body' => 'Salute $1,
 
@@ -1176,6 +1599,76 @@ Tu non vole reciper plus e-mail de nos?
 
 Clicca $4
 e disactiva in tu preferentias le notificationes per e-mail.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author Irwangatot
+ * @author IvanLanin
+ * @author Kandar
+ */
+$messages['id'] = array(
+	'boardblastlogintitle' => 'Anda harus masuk log untuk mengirim papan peledak',
+	'boardblastlogintext' => 'Jika ingin mengirim papan peledak,
+anda diharuskan untuk <a href="index.php?title=Special:UserLogin">masuk log</a>.',
+	'messagesenttitle' => 'Surat terkirim',
+	'boardblasttitle' => 'Kirim papan peledak',
+	'boardblaststep1' => 'Tahap 1 - Tulis surat anda',
+	'boardblastprivatenote' => 'Semua surat akan dikirim sebagai surat pribadi',
+	'boardblaststep2' => 'Tahap 2 - Pilih siapa yang akan anda kirimi surat',
+	'boardlinkselectall' => 'Pilih semua',
+	'boardlinkunselectall' => 'Jangan pilih semua',
+	'boardlinkselectfriends' => 'Pilih teman',
+	'boardlinkunselectfriends' => 'Batalkan teman',
+	'boardlinkselectfoes' => 'Pilih musuh',
+	'boardlinkunselectfoes' => 'Batalkan musuh',
+	'boardsendbutton' => 'Kirim papan peledak',
+	'boardnofriends' => 'Anda tidak punya teman yang bisa dikirimi surat!',
+	'messagesentsuccess' => 'Surat anda sudah terkirim',
+	'userboard' => 'Papan pengguna',
+	'userboard_board-to-board' => 'Antarpapan',
+	'userboard_delete' => 'Hapus',
+	'userboard_noexist' => 'Pengguna yang anda coba lihat tidak ada.',
+	'userboard_yourboard' => 'Papan anda',
+	'userboard_owner' => 'Papan $1',
+	'userboard_yourboardwith' => 'Antarpapan anda dengan $1',
+	'userboard_otherboardwith' => 'Antarpapan antara $1 dan $2',
+	'userboard_backprofile' => 'Kembali ke profil $1',
+	'userboard_backyourprofile' => 'Kembali ke profil anda',
+	'userboard_boardtoboard' => 'Antarpapan',
+	'userboard_confirmdelete' => 'Anda yakin ingin menghapus surat ini?',
+	'userboard_sendmessage' => 'Kirim surat ke $1',
+	'userboard_myboard' => 'Papan saya',
+	'userboard_posted_ago' => 'dikirim $1 yang lalu',
+	'userboard_private' => 'pribadi',
+	'userboard_public' => 'publik',
+	'userboard_messagetype' => 'Tipe surat',
+	'userboard_nextpage' => 'selanjutnya',
+	'userboard_prevpage' => 'sebelumnya',
+	'userboard_nomessages' => 'Tak ada surat.',
+	'userboard_sendbutton' => 'kirim',
+	'userboard_loggedout' => 'Anda harus <a href="$1">masuk log</a> untuk bisa mengirim surat ke pengguna lain.',
+	'userboard_showingmessages' => 'Menampilkan {{PLURAL:$4|surat $3|surat $2-$3}} dari {{PLURAL:$1|$1 surat|$1 surat}}',
+	'right-userboard-delete' => 'Hapus pesan orang lain di papan',
+	'userboard-time-days' => '{{PLURAL:$1|sehari|$1 hari}}',
+	'userboard-time-hours' => '{{PLURAL:$1|sejam|$1 jam}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|semenit|$1 menit}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|sedetik|$1 detik}}',
+	'message_received_subject' => '$1 menulis pada papan anda di {{SITENAME}}',
+	'message_received_body' => 'Hai $1.
+
+$2 baru menulis di papan Anda pada {{SITENAME}}!
+
+Klik di bawah untuk memeriksa papan Anda!
+
+$3
+
+---
+
+Hey, ingin berhenti menerima surel dari kami?
+
+Klik $4
+dan ubah setting anda untuk menonaktifkan notifikasi surel.',
 );
 
 /** Ido (Ido)
@@ -1201,10 +1694,9 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'boardblastlogintitle' => '一斉メッセージを送るにはログインする必要があります',
-	'boardblastlogintext' => '一斉メッセージを送るにはログインする必要があります
-ログインするには<a href="index.php?title=Special:UserLogin">ここをクリック</a>',
+	'boardblastlogintext' => '一斉メッセージを送るには<a href="index.php?title=Special:UserLogin">ログイン</a>する必要があります。',
 	'messagesenttitle' => 'メッセージを送る',
-	'boardblasttitle' => '一斉メッセージを送信',
+	'boardblasttitle' => '一斉メッセージの送信',
 	'boardblaststep1' => 'ステップ1 - メッセージを書きます',
 	'boardblastprivatenote' => 'すべてのメッセージはプライベートメッセージとして送信されます',
 	'boardblaststep2' => 'ステップ2 - メッセージを送りたい相手を選んでください',
@@ -1215,20 +1707,20 @@ $messages['ja'] = array(
 	'boardlinkselectfoes' => '敵を選択する',
 	'boardlinkunselectfoes' => '敵の選択を解除する',
 	'boardsendbutton' => '一斉メッセージを送る',
-	'boardnofriends' => 'あなたはメッセージを送信する友達がいません!',
+	'boardnofriends' => 'あなたはメッセージを送信する友達がいません！',
 	'messagesentsuccess' => 'あなたのメッセージは正常に送信されました',
-	'userboard' => '利用者の掲示板',
+	'userboard' => '利用者掲示板',
 	'userboard_board-to-board' => '掲示板連絡',
 	'userboard_delete' => '削除',
 	'userboard_noexist' => '閲覧しようとした利用者は存在していません。',
 	'userboard_yourboard' => 'あなたの掲示板',
 	'userboard_owner' => '$1 の掲示板',
-	'userboard_yourboardwith' => 'あなたの$1と掲示板',
+	'userboard_yourboardwith' => 'あなたと$1の専用掲示板',
 	'userboard_otherboardwith' => '$1の$2との連絡掲示板',
 	'userboard_backprofile' => '$1 のプロフィールへ戻る',
 	'userboard_backyourprofile' => 'あなたのプロフィールへ戻る',
-	'userboard_boardtoboard' => '掲示板',
-	'userboard_confirmdelete' => 'あなたのこのメッセージを削除しますがよろしいでしょうか？',
+	'userboard_boardtoboard' => '専用掲示板',
+	'userboard_confirmdelete' => 'このメッセージを本当に削除してよろしいですか？',
 	'userboard_sendmessage' => '$1 にメッセージを送る',
 	'userboard_myboard' => '自分の掲示板',
 	'userboard_posted_ago' => '$1前に投稿',
@@ -1238,23 +1730,27 @@ $messages['ja'] = array(
 	'userboard_nextpage' => '次',
 	'userboard_prevpage' => '前',
 	'userboard_nomessages' => 'メッセージなし',
-	'userboard_sendbutton' => '送る',
+	'userboard_sendbutton' => '送信',
 	'userboard_loggedout' => '他の利用者にメッセージを送信するには<a href="$1">ログイン</a>する必要があります。',
 	'userboard_showingmessages' => 'メッセージ$1件中{{PLURAL:$4|$3件|$2-$3件}}を表示中',
+	'right-userboard-delete' => '他人の掲示板のメッセージを削除する',
+	'userboard-time-days' => '{{PLURAL:$1|$1日}}',
+	'userboard-time-hours' => '{{PLURAL:$1|$1時間}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|$1分}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|$1秒}}',
 	'message_received_subject' => '$1が{{SITENAME}}のあなたの掲示板に書き込みました',
 	'message_received_body' => 'こんにちは、$1さん。
 
-さきほど、$2さんが{{SITENAME}}上のあなたの掲示板に書き込みをしました!
+さきほど、$2さんが{{SITENAME}}上のあなたの掲示板に書き込みをしました！
 
-以下をクリックして、掲示板を確認してください!
+以下をクリックして、掲示板を確認してください！
 
 $3
 
 ---
-
-私達からメールを受け取るのをやめますか？
-
-$4 をクリックして、メール通知を無効にするよう設定を変更してください。',
+メール受信を停止したい場合は、
+$4
+をクリックして、メール通知を無効にするよう設定変更してください。',
 );
 
 /** Javanese (Basa Jawa)
@@ -1281,6 +1777,7 @@ $messages['jv'] = array(
  * @author Lovekhmer
  * @author Thearith
  * @author គីមស៊្រុន
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
 	'messagesenttitle' => 'សារបានផ្ញើរួចហើយ',
@@ -1309,6 +1806,10 @@ $messages['km'] = array(
 	'userboard_nomessages' => 'មិនមានសារទេ។',
 	'userboard_sendbutton' => 'ផ្ញើ',
 	'userboard_loggedout' => 'ដើម្បីបញ្ជូនសារទៅកាន់អ្នកប្រើប្រាស់ផ្សេងៗទៀតបាន អ្នកចាំបាច់ត្រូវតែបាន<a href="$1">ឡុកអ៊ីនចូល</a>។',
+	'userboard-time-days' => '{{PLURAL:$1|មួយថ្ងៃ​|$1 ថ្ងៃ​}}',
+	'userboard-time-hours' => '{{PLURAL:$1|មួយម៉ោង​|$1 ម៉ោង​}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|មួយ​នាទី​|$1 នាទី​}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|មួយ​វិនាទី|$1 វិនាទី}}',
 );
 
 /** Krio (Krio)
@@ -1322,8 +1823,8 @@ $messages['kri'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'boardblastlogintitle' => 'Do moß enjelogg sin, öm Nöhreechte verschecke ze künne',
-	'boardblastlogintext' => 'Do moß enjelogg sin, öm Nöhreechte verschecke ze künne.
+	'boardblastlogintitle' => 'Do moß enjelogg sin, öm Nohreechte verschecke ze künne',
+	'boardblastlogintext' => 'Do moß enjelogg sin, öm Nohreechte verschecke ze künne.
 Donn jlich <a href="index.php?title=Special:UserLogin">enlogge</a>.',
 	'messagesenttitle' => 'Nohreechte verscheck',
 	'boardblasttitle' => 'Nohreech verschecke',
@@ -1332,7 +1833,7 @@ Donn jlich <a href="index.php?title=Special:UserLogin">enlogge</a>.',
 	'boardblaststep2' => 'Zweite Schrett — Don ußsöke, wämm De die Nohreech schecke wells',
 	'boardlinkselectall' => 'Alle ußsöke',
 	'boardlinkunselectall' => 'Nix ußsöke',
-	'boardlinkselectfriends' => 'De Fünde ußsöke',
+	'boardlinkselectfriends' => 'De Fründe ußsöke',
 	'boardlinkunselectfriends' => 'Keine Fründ ußsöke',
 	'boardlinkselectfoes' => 'Feinde ußsöke',
 	'boardlinkunselectfoes' => 'Keine Feind ußsöke',
@@ -1363,6 +1864,11 @@ Donn jlich <a href="index.php?title=Special:UserLogin">enlogge</a>.',
 	'userboard_sendbutton' => 'Schecke!',
 	'userboard_loggedout' => 'Do möß ald <a href="$1">enjelogg</a> sin, öm Nohrechte aan ander Metmaacher verschecke ze künne.',
 	'userboard_showingmessages' => 'Dat {{PLURAL:$4|es de Nohreech|sin de Nohreechte $2 beß|nix}} $3 vun {{PLURAL:$1|eine Nohrech|$1|nix}} ennsjesammp.',
+	'right-userboard-delete' => 'Donn anderlücks Nohreeschte vun dä Pennwand fottschmiiße',
+	'userboard-time-days' => '{{PLURAL:$1|eine Daach|$1 Dääsch|keine Daach}}',
+	'userboard-time-hours' => '{{PLURAL:$1|ein Shtundt|$1 Shtunde|kein Shtundt}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|ein Menutt|$1 Menutte|kein Menutt}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|ein Sekund|$1 Sekunde|kein Sekund}}',
 	'message_received_subject' => 'Dä Metmaacher $1 hät jet op Dinge Pinnwand en de {{SITENAME}} jedonn',
 	'message_received_body' => 'Hallo $1,
 
@@ -1385,7 +1891,10 @@ De e-mail jescheck kriß.',
  * @author Robby
  */
 $messages['lb'] = array(
+	'boardblastlogintitle' => 'Dir musst ageloggt si fir Messagen a grousser Zuel op Panneauen ze schécken',
+	'boardblastlogintext' => 'Fir d\'Fonctioun "board blast" ze benotze musst Dir <a href="index.php?title=Special:UserLogin">ageloggt</a> sinn.',
 	'messagesenttitle' => 'Geschéckte Messagen',
+	'boardblasttitle' => "Messagen a grousser Zuel op d'Panneaue schécken",
 	'boardblaststep1' => '1. Schrëtt: Schreiwt äre Message',
 	'boardblastprivatenote' => 'All Message ginn als privat Message verschéckt',
 	'boardblaststep2' => '2. Schrëtt: Wielt aus wien Dir äre Message schöcke wellt',
@@ -1395,18 +1904,23 @@ $messages['lb'] = array(
 	'boardlinkunselectfriends' => 'Aus der Lëscht vun de Frënn ewechhuelen',
 	'boardlinkselectfoes' => 'Géigner auswielen',
 	'boardlinkunselectfoes' => 'Géigner net auswielen',
+	'boardsendbutton' => "Messagen a grousser Zuel op d'Panneaue schécken",
 	'boardnofriends' => 'Dir hutt keng Frënn deenen dir ee Message schécke kënnt!',
 	'messagesentsuccess' => 'Äre Noriicht gouf geschéckt',
-	'userboard' => 'Benotzertafel',
+	'userboard' => 'Benotzerpanneau',
+	'userboard_board-to-board' => 'Vu Panneau-zu-Panneau',
 	'userboard_delete' => 'Läschen',
 	'userboard_noexist' => 'De Benotzer den Dir wëllt gesi gëtt et net.',
-	'userboard_yourboard' => 'Är Tafel',
-	'userboard_owner' => 'Dem $1 seng Tafel',
+	'userboard_yourboard' => 'Äre Panneau',
+	'userboard_owner' => 'Dem $1 säi Panneau',
+	'userboard_yourboardwith' => 'Är Diskussioun vu Panneau-zu-Panneau mam $1',
+	'userboard_otherboardwith' => "D'Diskusioun vu Panneau-zu-Panneau tëschent dem $1 an dem $2",
 	'userboard_backprofile' => 'Zréck op dem $1 säi Profil',
 	'userboard_backyourprofile' => 'Zréck op äre Profil',
+	'userboard_boardtoboard' => 'Vu Panneau-zu-Panneau',
 	'userboard_confirmdelete' => 'Sidd Dir sécher datt Dir dëse Message läsche wellt?',
 	'userboard_sendmessage' => 'Dem $1 ee Message schécken',
-	'userboard_myboard' => 'Meng Tafel',
+	'userboard_myboard' => 'Mäi Panneau',
 	'userboard_posted_ago' => 'viru(n) $1 geschéckt',
 	'userboard_private' => 'privat',
 	'userboard_public' => 'ëffentlech',
@@ -1415,7 +1929,28 @@ $messages['lb'] = array(
 	'userboard_prevpage' => 'vireg',
 	'userboard_nomessages' => 'Keng Messagen',
 	'userboard_sendbutton' => 'geschéckt',
+	'userboard_loggedout' => 'Dir musst <a href="$1">ageloggt si</a> fir anere Benotzer e Message ze schécken.',
 	'userboard_showingmessages' => 'Weis {{PLURAL:$4|Noriicht $3|Noriichten $2-$3}} vu(n) {{PLURAL:$1|$1 Noriicht|$1 Noriichten}}',
+	'right-userboard-delete' => 'Noriichten vun Aneren um Panneau läschen',
+	'userboard-time-days' => '{{PLURAL:$1|een Dag|$1 Deeg}}',
+	'userboard-time-hours' => '{{PLURAL:$1|eng Stonn|$1 Stonnen}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|eng Minutt|$1 Minutten}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|eng Sekonn|$1 Sekonnen}}',
+	'message_received_subject' => 'De(n) $1 huet op äre Panneau op {{SITENAME}} geschriwwen',
+	'message_received_body' => 'Salut $1.
+
+$2 huet elo grad op Äre Panneau op {{SITENAME}} geschriwwen!
+
+Klickt hei ënnendrënenr fir Ären Tableau ze kucken!
+
+$3
+
+---
+
+Wëllt Dir keng Maile méi vun eis kréien?
+
+Klickt $4
+an ännert Är Astellunge fir E-Mail-Noriichten auszeschalten.',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1432,12 +1967,79 @@ $messages['mhr'] = array(
 	'userboard_delete' => 'Шӧраш',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'boardblastlogintitle' => 'Мора да сте најавени за да испраќате изјави на таблата',
+	'boardblastlogintext' => 'За да праќате изјави на таблата,
+мора прво да бидете <a href="index.php?title=Special:UserLogin">најавени</a>.',
+	'messagesenttitle' => 'Пораките се испратени',
+	'boardblasttitle' => 'Испрати изјава на таблата',
+	'boardblaststep1' => 'Чекор 1 - Напишете ја пораката',
+	'boardblastprivatenote' => 'Сите пораки ќе бидат испратени како приватни',
+	'boardblaststep2' => 'Чекор 2 - Изберете кому сакате да ја испратите пораката',
+	'boardlinkselectall' => 'Избери сè',
+	'boardlinkunselectall' => 'Тргни избор',
+	'boardlinkselectfriends' => 'Избери пријатели',
+	'boardlinkunselectfriends' => 'Тргни избор на пријатели',
+	'boardlinkselectfoes' => 'Избери непријатели',
+	'boardlinkunselectfoes' => 'Тргни избор на непријатели',
+	'boardsendbutton' => 'Испрати изјава на таблата',
+	'boardnofriends' => 'Немате пријатели на кои можете да им испраќате пораки!',
+	'messagesentsuccess' => 'Пораката ви е успешно испратена',
+	'userboard' => 'Корисничка табла',
+	'userboard_board-to-board' => 'Од табла на табла',
+	'userboard_delete' => 'Избриши',
+	'userboard_noexist' => 'Корисникот којшто сакате да го видите не постои.',
+	'userboard_yourboard' => 'Вашата табла',
+	'userboard_owner' => 'Таблата на $1',
+	'userboard_yourboardwith' => 'Вашата од табла на табла со $1',
+	'userboard_otherboardwith' => 'Од табла на табла на $1 со $2',
+	'userboard_backprofile' => 'Назад кон профилот на $1',
+	'userboard_backyourprofile' => 'Назад кон вашиот профил',
+	'userboard_boardtoboard' => 'Од табла на табла',
+	'userboard_confirmdelete' => 'Дали сте сигурни дека сакате да ја избришете оваа порака?',
+	'userboard_sendmessage' => 'Испрати порака на $1',
+	'userboard_myboard' => 'Мојата табла',
+	'userboard_posted_ago' => 'испратена пред $1',
+	'userboard_private' => 'приватна',
+	'userboard_public' => 'јавна',
+	'userboard_messagetype' => 'Тип на порака',
+	'userboard_nextpage' => 'следни',
+	'userboard_prevpage' => 'претходни',
+	'userboard_nomessages' => 'Нема пораки.',
+	'userboard_sendbutton' => 'испрати',
+	'userboard_loggedout' => 'Мора да сте <a href="$1">најавени</a> за да можете да испраќате пораки до други корисници.',
+	'userboard_showingmessages' => 'Приказ на {{PLURAL:$4|порака $3|пораки $2-$3}} од {{PLURAL:$1|$1 порака|$1 пораки}}',
+	'right-userboard-delete' => 'Бришење на пораки на туѓи табли',
+	'userboard-time-days' => '{{PLURAL:$1|еден ден|$1 дена}}',
+	'userboard-time-hours' => '{{PLURAL:$1|еден час|$1 часа}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|една минута|$1 минути}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|една секунда|$1 секунди}}',
+	'message_received_subject' => '$1 ви пиша на вашата табла на {{SITENAME}}',
+	'message_received_body' => 'Здраво $1.
+
+$2 штотуку Ви пиша на Вашата табла на {{SITENAME}}!
+
+Кликнете подолу за да ја проверите пораката!
+
+$3
+
+---
+
+Сакате повеќе да не добивате известувања од нас?
+
+Кликнете на $4
+и во нагодувањата оневозможете известувања по е-пошта.',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'messagesenttitle' => 'സന്ദേശങ്ങള്‍ അയച്ചു',
-	'boardblaststep1' => 'ഘട്ടം 1 - നിങ്ങളുടെ സന്ദേശം എഴുതുക',
+	'boardblaststep1' => 'ഘട്ടം 1 - താങ്കളുടെ സന്ദേശം എഴുതുക',
 	'boardblastprivatenote' => 'എല്ല സന്ദേശങ്ങളും സ്വകാര്യസന്ദേശങ്ങളായി അയക്കും.',
 	'boardblaststep2' => 'ഘട്ടം 3- സന്ദേശം കിട്ടേണ്ട ആളിനെ തിരഞ്ഞെടുക്കുക',
 	'boardlinkselectall' => 'എല്ലാം തിരഞ്ഞെടുക്കുക',
@@ -1505,19 +2107,19 @@ $messages['mr'] = array(
 	'userboard_loggedout' => 'इतर सदस्यांना संदेश पाठविण्यासाठी तुम्ही <a href="$1">प्रवेश केलेला असणे</a> आवश्यक आहे.',
 	'userboard_showingmessages' => '{{PLURAL:$1|$1 संदेशापैकी|$1 संदेशांपैकी}} $2-$3 दर्शवित आहोत',
 	'message_received_subject' => '$1ने तुमच्या {{SITENAME}} वरच्या बोर्डवर संदेश लिहिलेला आहे',
-	'message_received_body' => 'नमस्कार $1 : 
+	'message_received_body' => 'नमस्कार $1 :
 
-$2 ने आत्ताच ( ( SITENAME ) )वरील तुमच्या पटलावर लिहीले आहे ! 
+$2 ने आत्ताच ( ( SITENAME ) )वरील तुमच्या पटलावर लिहीले आहे !
 
-तुमचे पटल पहाण्याकरिता खाली टिचकी मारा! 
+तुमचे पटल पहाण्याकरिता खाली टिचकी मारा!
 
-$3 
+$3
 
---- 
+---
 
-हे , तुम्हाला आमच्याकडून येणारी  विपत्रे बंद करून हवी आहेत काय ? 
+हे , तुम्हाला आमच्याकडून येणारी  विपत्रे बंद करून हवी आहेत काय ?
 
-$4 वर टिचकी मारा 
+$4 वर टिचकी मारा
 आणि विपत्र(ईमेल) सूचना अक्षम करण्याकरिता सुविधेत बदल करा.',
 );
 
@@ -1543,7 +2145,7 @@ $messages['nah'] = array(
  */
 $messages['nl'] = array(
 	'boardblastlogintitle' => 'U moet aangemeld zijn om berichten naar meerdere gebruikers te kunnen verzenden',
-	'boardblastlogintext' => 'U moet aangemeld zijn om berichten naar meerdere gebruikers te kunnen verzenden. Klik <a href="index.php?title=Special:UserLogin">hier om aan te melden</a>',
+	'boardblastlogintext' => 'U moet <a href="index.php?title=Special:UserLogin"aanmelden</a> om berichten naar meerdere gebruikers te kunnen verzenden.',
 	'messagesenttitle' => 'Berichten verstuurd',
 	'boardblasttitle' => 'Bericht aan meerdere gebruikers verzenden',
 	'boardblaststep1' => 'Stap 1: uw bericht schrijven',
@@ -1582,6 +2184,11 @@ $messages['nl'] = array(
 	'userboard_sendbutton' => 'verzenden',
 	'userboard_loggedout' => 'U moet <a href="$1">aangemeld</a> zijn om berichten naar andere gebruikers te verzenden.',
 	'userboard_showingmessages' => '{{PLURAL:$4|Bericht $3|Berichten $2 tot $3}} van {{PLURAL:$1|$1 bericht|$1 berichten}} worden weergegeven',
+	'right-userboard-delete' => 'Boardberichten van andere gebruikers verwijderen',
+	'userboard-time-days' => '{{PLURAL:$1|één dag|$1 dagen}}',
+	'userboard-time-hours' => '{{PLURAL:$1|één|$1}} uur',
+	'userboard-time-minutes' => '{{PLURAL:$1|één minuut|$1 minuten}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|één seconde|$1 seconden}}',
 	'message_received_subject' => '$1 heeft op uw board op {{SITENAME}} geschreven',
 	'message_received_body' => 'Hallo $1.
 
@@ -1605,8 +2212,7 @@ en wijzig uw instellingen om e-mailberichten uit te schakelen.',
  */
 $messages['nn'] = array(
 	'boardblastlogintitle' => 'Du må logga inn for kunna senda meldingar',
-	'boardblastlogintext' => 'Du vera innlogga inn for kunna senda meldingar. 
-Gå <a href="index.php?title=Special:UserLogin">her for å logga inn</a>',
+	'boardblastlogintext' => 'For å kunna senda meldingar, lyt du vera <a href="index.php?title=Special:UserLogin">innlogga</a>.',
 	'messagesenttitle' => 'Sendte meldingar',
 	'boardblasttitle' => 'Send melding',
 	'boardblaststep1' => 'Steg 1 &ndash; skriv meldinga di',
@@ -1645,6 +2251,7 @@ Gå <a href="index.php?title=Special:UserLogin">her for å logga inn</a>',
 	'userboard_sendbutton' => 'send',
 	'userboard_loggedout' => 'Du må vera <a href="$1">innlogga</a> for å senda meldingar til andre brukarar.',
 	'userboard_showingmessages' => 'Syner {{PLURAL:$4|melding $3|meldingane $2&ndash;$3}} av {{PLURAL:$1|éi melding|$1 meldingar}} totalt',
+	'right-userboard-delete' => 'Sletta andre sine meldingar',
 	'message_received_subject' => '$1 skreiv på diskusjonssida di på {{SITENAME}}',
 	'message_received_body' => 'Hei, $1.
 
@@ -1664,10 +2271,11 @@ Trykk $4 og endra innstillingane dine for å slå av meldingar gjennom e-post.',
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Harald Khan
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'boardblastlogintitle' => 'Du må være logget inn for å sende meldinger',
-	'boardblastlogintext' => 'Du må være logget inn for å sende meldinger. Gå <a href="index.php?title=Special:UserLogin">hit for å logge inn</a>',
+	'boardblastlogintext' => 'For å kunne sende meldinger må du være <a href="index.php?title=Special:UserLogin">logget inn</a>.',
 	'messagesenttitle' => 'Sendte beskjeder',
 	'boardblasttitle' => 'Send melding',
 	'boardblaststep1' => 'Steg 1 &ndash; skriv beskjeden din',
@@ -1705,7 +2313,12 @@ $messages['no'] = array(
 	'userboard_nomessages' => 'Ingen beskjeder.',
 	'userboard_sendbutton' => 'send',
 	'userboard_loggedout' => 'Du må være <a href="$1">logget inn</a> for å sende beskjeder til andre brukere.',
-	'userboard_showingmessages' => 'Viser $2&ndash;$3 av {{PLURAL:$1|$1 beskjed|$1 beskjeder}}',
+	'userboard_showingmessages' => 'Viser {{PLURAL:$4|melding $3|meldingene $2&ndash;$3}} av {{PLURAL:$1|$1 melding|$1 meldinger}}',
+	'right-userboard-delete' => 'Slett andres meldinger',
+	'userboard-time-days' => '{{PLURAL:$1|én dag|$1 dager}}',
+	'userboard-time-hours' => '{{PLURAL:$1|én time|$1 timer}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|ett minutt|$1 minutt}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|ett sekund|$1 sekund}}',
 	'message_received_subject' => '$1 har skrevet på diskusjonssiden din på {{SITENAME}}',
 	'message_received_body' => 'Hei, $1.
 
@@ -1727,7 +2340,8 @@ Klikk $4 og endre innstillingene dine for å slå av e-postbeskjeder.',
  */
 $messages['oc'] = array(
 	'boardblastlogintitle' => 'Vos cal èsser en sesilha per mandar lo tablèu en mitralhada',
-	'boardblastlogintext' => 'Vos cal èsser en sesilha per mandar lo tablèu en mitralhadas. Clicatz <a href="index.php?title=Special:UserLogin">aicí per dobrir una sesilha</a>',
+	'boardblastlogintext' => 'Per mandar lo tablèu en mitralhadas,
+vos cal <a href="index.php?title=Special:UserLogin">èsser connectat(ada)</a>.',
 	'messagesenttitle' => 'Messatges mandats',
 	'boardblasttitle' => 'Mandar lo tablèu en mitralhada',
 	'boardblaststep1' => 'Etapa 1 - Escrivètz vòstre messatge',
@@ -1766,8 +2380,13 @@ $messages['oc'] = array(
 	'userboard_sendbutton' => 'mandat',
 	'userboard_loggedout' => 'Vos cal èsser <a href="$1">connectat(ada)</a> per mandar de messatges a d’autres utilizaires.',
 	'userboard_showingmessages' => 'Visionament {{PLURAL:$4|del messatge $3|dels messatges $2-$3}} sus un total de {{PLURAL:$1|$1 messatge|$1 messatges}}',
+	'right-userboard-delete' => "Suprimir los messatges d'autres utilizaires",
+	'userboard-time-days' => '{{PLURAL:$1|un jorn|$1 jorns}}',
+	'userboard-time-hours' => '{{PLURAL:$1|una ora|$1 oras}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|una minuta|$1 minutas}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|una segonda|$1 segondas}}',
 	'message_received_subject' => '$1 a escrich sus vòstre tablèu sus {{SITENAME}}',
-	'message_received_body' => "Adiu $1 : 
+	'message_received_body' => "Adiu $1 :
 
 $2 ven just d'escriure sus vòstre tablèu sus {{SITENAME}} !
 
@@ -1790,13 +2409,24 @@ $messages['os'] = array(
 	'userboard_delete' => 'Аппар',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'userboard_delete' => 'Lösche',
+	'userboard_nextpage' => 'neegscht',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
  * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
+	'boardblastlogintitle' => 'Musisz się zalogować, aby pisać ogłoszenia na forum',
 	'messagesenttitle' => 'Wiadomości zostały wysłane',
+	'boardblasttitle' => 'Wyślij ogłoszenie',
 	'boardblaststep1' => 'Krok 1 – Napisz wiadomość',
 	'boardblastprivatenote' => 'Wszystkie wiadomości będą wysyłane jako prywatne',
 	'boardblaststep2' => 'Krok 2 – Wybierz, do kogo chcesz wysłać wiadomość',
@@ -1806,13 +2436,105 @@ $messages['pl'] = array(
 	'boardlinkunselectfriends' => 'Odznacz znajomych',
 	'boardlinkselectfoes' => 'Zaznacz wrogów',
 	'boardlinkunselectfoes' => 'Odznacz wrogów',
+	'boardsendbutton' => 'Wyślij ogłoszenie',
 	'boardnofriends' => 'Nie masz żadnych znajomych.',
 	'messagesentsuccess' => 'Wiadomość została wysłana',
+	'userboard' => 'Forum użytkownika',
+	'userboard_board-to-board' => 'Wspólne forum',
 	'userboard_delete' => 'Usuń',
+	'userboard_noexist' => 'Poszukiwany użytkownik nie istnieje.',
+	'userboard_yourboard' => 'Twoje forum',
+	'userboard_owner' => 'Forum użytkownika $1',
+	'userboard_yourboardwith' => 'Twoje wspólne forum z $1',
+	'userboard_otherboardwith' => 'Wspólne forum $1 oraz $2',
+	'userboard_backprofile' => 'Powrót do profilu $1',
+	'userboard_backyourprofile' => 'Powrót do Twojego profilu',
+	'userboard_boardtoboard' => 'Wspólne forum',
+	'userboard_confirmdelete' => 'Czy na pewno usunąć wiadomość?',
+	'userboard_sendmessage' => 'Wyślij wiadomość do $1',
+	'userboard_myboard' => 'Moje forum',
+	'userboard_posted_ago' => 'wysłane $1 temu',
+	'userboard_private' => 'prywatne',
+	'userboard_public' => 'publiczne',
+	'userboard_messagetype' => 'Typ wiadomości',
 	'userboard_nextpage' => 'nast.',
 	'userboard_prevpage' => 'poprz.',
 	'userboard_nomessages' => 'Brak wiadomości.',
 	'userboard_sendbutton' => 'wyślij',
+	'right-userboard-delete' => 'Usuwanie z forum ogłoszeń wstawionych przez innych',
+	'userboard-time-days' => '{{PLURAL:$1|jeden dzień|$1 dni}}',
+	'userboard-time-hours' => '{{PLURAL:$1|jedną godzinę|$1 godziny|$1 godzin}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|jedną minutę|$1 minuty|$1 minut}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|jedną sekundę|$1 sekundy|$1 sekund}}',
+	'message_received_subject' => '$1 napisał na Twoim forum na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'boardblastlogintitle' => 'A dev esse intrà ant ël sistema për mandé là tàula an ramà',
+	'boardblastlogintext' => 'Per mandé dle tàule an ramà,
+a dev esse <a href="index.php?title=Special:UserLogin">intrà ant ël sistema</a>.',
+	'messagesenttitle' => 'Mëssagi spedì',
+	'boardblasttitle' => 'Manda na tàula an ramà',
+	'boardblaststep1' => 'Pass 1 - Scriv tò mëssagi',
+	'boardblastprivatenote' => 'Tùit ij mëssagi a saran mandà com mëssagi privà',
+	'boardblaststep2' => 'Step 2 - Selession-a a chi it veule mandé tò mëssagi',
+	'boardlinkselectall' => 'Selession-a tut',
+	'boardlinkunselectall' => 'Deselession-a tut',
+	'boardlinkselectfriends' => 'Selession-a amis',
+	'boardlinkunselectfriends' => 'Deselession-a amis',
+	'boardlinkselectfoes' => 'Selession-a nemis',
+	'boardlinkunselectfoes' => 'Deselession-a nemis',
+	'boardsendbutton' => 'Manda la tàula an ramà',
+	'boardnofriends' => "It l'has pa d'amis da mandeje 'd mëssagi!",
+	'messagesentsuccess' => "Tò mëssagi a l'é stàit mandà da bin",
+	'userboard' => "Quàder ëd l'utent",
+	'userboard_board-to-board' => 'Da quàder a quàder',
+	'userboard_delete' => 'Scancela',
+	'userboard_noexist' => "L'utent ch'it ses an camin ch'it sërche ëd visualisé a esit pa.",
+	'userboard_yourboard' => 'Tò quàder',
+	'userboard_owner' => 'Quàder ëd $1',
+	'userboard_yourboardwith' => 'Tò da quàder a quàder con $1',
+	'userboard_otherboardwith' => 'Ël da quàder a quàder ëd $1 con $2',
+	'userboard_backprofile' => 'André al profil ëd $1',
+	'userboard_backyourprofile' => 'André a tò profil',
+	'userboard_boardtoboard' => 'Da quàder a quàder',
+	'userboard_confirmdelete' => 'É-lo sicur ëd vorèj scancelé sto mëssagi-sì?',
+	'userboard_sendmessage' => 'Manda un mëssagi a $1',
+	'userboard_myboard' => 'Mè quàder',
+	'userboard_posted_ago' => 'Spedì $1 fa',
+	'userboard_private' => 'privà',
+	'userboard_public' => 'Pùblich',
+	'userboard_messagetype' => 'Tipo ëd mëssagi',
+	'userboard_nextpage' => 'dapress',
+	'userboard_prevpage' => 'prima',
+	'userboard_nomessages' => 'Gnun mëssagi.',
+	'userboard_sendbutton' => 'manda',
+	'userboard_loggedout' => 'A dev esse <a href="$1">intrà ant ël sistema</a> për spedì dij mëssagi a d\'àutr utent.',
+	'userboard_showingmessages' => 'Vision {{PLURAL:$4|dël mëssagi $3|dij mëssagi $2-$3}} ëd {{PLURAL:$1|$1 mëssagi|$1 mëssagi}}',
+	'right-userboard-delete' => "Scancela ij mëssagi d'àutri utent",
+	'userboard-time-days' => '{{PLURAL:$1|un di|$1 di}}',
+	'userboard-time-hours' => '{{PLURAL:$1|one ora|$1 ore}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|na minuta|$1 minute}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|un second|$1 second}}',
+	'message_received_subject' => "$1 a l'ha scrivù su tò quàder dzora {{SITENAME}}",
+	'message_received_body' => "Cerea $1.
+
+$2 a l'ha pen-e scrivuje su sò quàder dzora {{SITENAME}}!
+
+Ch'a sgnaca sota për controlé sò quàder!
+
+$3
+
+---
+
+Ch'a scota, veul-lo pa pi arseive mëssagi an pòsta eletrònica da noi?
+
+Ch'a gnaca $4
+e ch'a cambia ij sò gust për disabilité la notìfica dij mëssagi an pòsta eletrònica.",
 );
 
 /** Pashto (پښتو)
@@ -1838,77 +2560,85 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Giro720
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author Vanessa Sabino
  * @author Waldir
  */
 $messages['pt'] = array(
-	'boardblastlogintitle' => 'Você precisa estar logado para enviar recados',
-	'boardblastlogintext' => 'Você precisa estar logado para enviar recados.
-Clique <a href="index.php?title=Special:UserLogin">aqui para logar</a>',
-	'messagesenttitle' => 'Mensagens Enviadas',
+	'boardblastlogintitle' => 'Tem de estar autenticado para enviar recados',
+	'boardblastlogintext' => 'Para enviar recados tem de
+<a href="index.php?title=Special:UserLogin">autenticar-se</a>.',
+	'messagesenttitle' => 'Mensagens enviadas',
 	'boardblasttitle' => 'Enviar recado',
 	'boardblaststep1' => 'Passo 1 - Escreva a sua mensagem',
-	'boardblastprivatenote' => 'Todas mensagens serão enviadas como mensagens privadas',
-	'boardblaststep2' => 'Passo 2 - Seleccione a quem deseja enviar a sua mensagem',
+	'boardblastprivatenote' => 'Todas as mensagens serão enviadas como mensagens privadas',
+	'boardblaststep2' => 'Passo 2 - Seleccione a quem deseja enviar a mensagem',
 	'boardlinkselectall' => 'Seleccionar tudo',
-	'boardlinkunselectall' => 'Desseleccionar tudo',
+	'boardlinkunselectall' => 'Não seleccionar nada',
 	'boardlinkselectfriends' => 'Seleccionar amigos',
-	'boardlinkunselectfriends' => 'Desseleccionar amigos',
+	'boardlinkunselectfriends' => 'Não seleccionar amigos',
 	'boardlinkselectfoes' => 'Seleccionar inimigos',
-	'boardlinkunselectfoes' => 'Desseleccionar inimigos',
+	'boardlinkunselectfoes' => 'Não seleccionar inimigos',
 	'boardsendbutton' => 'Enviar recado',
-	'boardnofriends' => 'Você não tem amigos para enviar uma mensagem!',
-	'messagesentsuccess' => 'Sua mensagem foi enviada com sucesso',
+	'boardnofriends' => 'Não tem amigos a quem enviar uma mensagem!',
+	'messagesentsuccess' => 'A sua mensagem foi enviada com sucesso',
 	'userboard' => 'Mural do utilizador',
 	'userboard_board-to-board' => 'Mural-para-mural',
 	'userboard_delete' => 'Remover',
-	'userboard_noexist' => 'O utilizador que você está tentando ver não existe.',
-	'userboard_yourboard' => 'Seu mural',
+	'userboard_noexist' => 'O utilizador que está tentando ver não existe.',
+	'userboard_yourboard' => 'O seu mural',
 	'userboard_owner' => 'Mural de $1',
-	'userboard_yourboardwith' => 'Seu mural-para-mural com $1',
+	'userboard_yourboardwith' => 'O seu mural-para-mural com $1',
 	'userboard_otherboardwith' => 'Mural-para-mural de $1 com $2',
-	'userboard_backprofile' => 'Voltar para perfil de $1',
-	'userboard_backyourprofile' => 'Voltar para seu perfil',
+	'userboard_backprofile' => 'Voltar ao perfil de $1',
+	'userboard_backyourprofile' => 'Voltar ao seu perfil',
 	'userboard_boardtoboard' => 'Mural-para-mural',
-	'userboard_confirmdelete' => 'Tem certeza de que você uqer excluir essa mensagem?',
-	'userboard_sendmessage' => 'Enviar uma mensagem para $1',
-	'userboard_myboard' => 'Meu mural',
+	'userboard_confirmdelete' => 'Tem a certeza de que quer eliminar essa mensagem?',
+	'userboard_sendmessage' => 'Enviar uma mensagem a $1',
+	'userboard_myboard' => 'O meu mural',
 	'userboard_posted_ago' => 'enviado há $1',
 	'userboard_private' => 'privado',
 	'userboard_public' => 'público',
-	'userboard_messagetype' => 'Tipo de Mensagem',
+	'userboard_messagetype' => 'Tipo de mensagem',
 	'userboard_nextpage' => 'próxima',
 	'userboard_prevpage' => 'anterior',
 	'userboard_nomessages' => 'Sem mensagens.',
 	'userboard_sendbutton' => 'enviar',
-	'userboard_loggedout' => 'Você precida estar <a href="$1">logado</a> para enviar mensagens a outros usuários.',
+	'userboard_loggedout' => 'Precisa de <a href="$1">autenticar-se</a> para enviar mensagens a outros utilizadores.',
 	'userboard_showingmessages' => 'Mostrando {{PLURAL:$4|mensagem $3|mensagens $2-$3}} de {{PLURAL:$1|$1 mensagem|$1 mensagens}}',
-	'message_received_subject' => '$1 escreveu em seu mural em {{SITENAME}}',
-	'message_received_body' => 'Oi $1:
+	'right-userboard-delete' => 'Eliminar mensagens no mural de outros',
+	'userboard-time-days' => '{{PLURAL:$1|um dia|$1 dias}}',
+	'userboard-time-hours' => '{{PLURAL:$1|uma hora|$1 horas}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|um minuto|$1 minutos}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|um segundo|$1 segundos}}',
+	'message_received_subject' => '$1 escreveu no seu mural na {{SITENAME}}',
+	'message_received_body' => 'Olá $1,
 
-$2 acabou de escrever em seu mural em {{SITENAME}}!
+$2 acabou de escrever no seu mural na {{SITENAME}}!
 
-Clique abaixo para ver seu mural!
+Clique abaixo para ver o seu mural!
 
 $3
 
 ---
 
-Ei, quer parar de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $4
-e altere suas preferênciar para desabilidar e-mails de notificação.',
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Heldergeovane
  */
 $messages['pt-br'] = array(
 	'boardblastlogintitle' => 'Você precisa estar autenticado para enviar recados',
-	'boardblastlogintext' => 'Você precisa estar autenticado para enviar recados.
-Clique <a href="index.php?title=Special:UserLogin">aqui para se autenticar</a>',
+	'boardblastlogintext' => 'Para enviar recados,
+você precisa estar <a href="index.php?title=Special:UserLogin">autenticado</a>',
 	'messagesenttitle' => 'Mensagens Enviadas',
 	'boardblasttitle' => 'Enviar recado',
 	'boardblaststep1' => 'Passo 1 - Escreva a sua mensagem',
@@ -1947,6 +2677,11 @@ Clique <a href="index.php?title=Special:UserLogin">aqui para se autenticar</a>',
 	'userboard_sendbutton' => 'enviar',
 	'userboard_loggedout' => 'Você precida estar <a href="$1">autenticado</a> para enviar mensagens a outros usuários.',
 	'userboard_showingmessages' => 'Mostrando {{PLURAL:$4|mensagem $3|mensagens $2-$3}} de {{PLURAL:$1|$1 mensagem|$1 mensagens}}',
+	'right-userboard-delete' => 'Eliminar mensagens no mural de outros',
+	'userboard-time-days' => '{{PLURAL:$1|um dia|$1 dias}}',
+	'userboard-time-hours' => '{{PLURAL:$1|uma hora|$1 horas}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|um minuto|$1 minutos}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|um segundo|$1 segundos}}',
 	'message_received_subject' => '$1 escreveu em seu mural em {{SITENAME}}',
 	'message_received_body' => 'Oi $1:
 
@@ -1972,18 +2707,31 @@ $messages['rif'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'messagesenttitle' => 'Mesaje trimise',
 	'boardblastprivatenote' => 'Toate mesajele vor fi trimise ca mesaje private',
+	'boardlinkselectall' => 'Selectaţi tot',
+	'boardlinkunselectall' => 'Deselectaţi tot',
+	'boardlinkselectfriends' => 'Selectaţi prieteni',
+	'boardlinkunselectfriends' => 'Deselectaţi prieteni',
+	'boardlinkselectfoes' => 'Selectaţi inamici',
+	'boardlinkunselectfoes' => 'Deselectaţi inamici',
 	'userboard_delete' => 'Şterge',
 	'userboard_posted_ago' => 'postat acum $1',
 	'userboard_private' => 'privat',
 	'userboard_public' => 'public',
 	'userboard_messagetype' => 'Tipul mesajului',
+	'userboard_nextpage' => 'următorul',
+	'userboard_prevpage' => 'prec',
 	'userboard_nomessages' => 'Nici un mesaj.',
 	'userboard_sendbutton' => 'trimite',
+	'userboard-time-days' => '{{PLURAL:$1|o zi|$1 zile}}',
+	'userboard-time-hours' => '{{PLURAL:$1|o oră|$1 ore}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|un minut|$1 minute}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|o secundă|$1 secunde}}',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1995,12 +2743,14 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ferrer
  * @author Flrn
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'boardblastlogintitle' => 'Нужно представиться системе',
-	'boardblastlogintext' => 'Вы должны представиться системе, чтобы отправлять высказывания на доски. Щёлкните <a href="index.php?title=Special:UserLogin">здесь, чтобы войти в систему</a>.',
+	'boardblastlogintext' => 'Чтобы отправлять высказывания на доски,
+вы должны <a href="index.php?title=Special:UserLogin">войти в систему</a>.',
 	'messagesenttitle' => 'Сообщение отправлено',
 	'boardblasttitle' => 'Отправка высказывания на доску',
 	'boardblaststep1' => 'Шаг 1 - Напишите ваше сообщение',
@@ -2029,6 +2779,7 @@ $messages['ru'] = array(
 	'userboard_confirmdelete' => 'Вы уверены, что хотите удалить это сообщение?',
 	'userboard_sendmessage' => 'Отправить сообщение $1',
 	'userboard_myboard' => 'Моя доска',
+	'userboard_posted_ago' => 'написано $1 назад',
 	'userboard_private' => 'личное',
 	'userboard_public' => 'общедоступное',
 	'userboard_messagetype' => 'Тип сообщения',
@@ -2038,6 +2789,11 @@ $messages['ru'] = array(
 	'userboard_sendbutton' => 'отправить',
 	'userboard_loggedout' => 'Вы должны быть <a href="$1">представлены системе</a>, чтобы отправлять сообщения другим участникам.',
 	'userboard_showingmessages' => 'Отображение {{PLURAL:$4|сообщения $3|сообщений $2—$3}} из $1',
+	'right-userboard-delete' => 'удаление сообщений других досок',
+	'userboard-time-days' => '{{PLURAL:$1|$1 день|$1 дня|$1 дней}}',
+	'userboard-time-hours' => '{{PLURAL:$1|$1 час|$1 часа|$1 часов}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|$1 секунда|$1 секунды|$1 секунд}}',
 	'message_received_subject' => '$1 написал(а) на вашу доску на сайте {{SITENAME}}',
 	'message_received_body' => 'Привет, $1:
 
@@ -2060,7 +2816,7 @@ $3
  */
 $messages['sk'] = array(
 	'boardblastlogintitle' => 'Musíte sa prihlásiť, aby ste mohli posielať správy fóra',
-	'boardblastlogintext' => 'Musíte sa prihlásiť, aby ste mohli posielať správy fóra. Kliknutím sem <a href="index.php?title=Special:UserLogin">sa prihlásite</a>',
+	'boardblastlogintext' => 'Musíte <a href="index.php?title=Special:UserLogin">sa prihlásiť</a>, aby ste mohli posielať správy fóra.',
 	'messagesenttitle' => 'Poslaných správ',
 	'boardblasttitle' => 'Poslať správu fóra',
 	'boardblaststep1' => 'Krok 1 - Napíšte svoju správu',
@@ -2099,6 +2855,11 @@ $messages['sk'] = array(
 	'userboard_sendbutton' => 'poslať',
 	'userboard_loggedout' => 'Musíte <a href="$1">sa prihlásiť</a>, aby ste mohli posielať správy iným používateľom.',
 	'userboard_showingmessages' => '{{PLURAL:$4|Zobrazuje sa správa $3|Zobrazujú sa správy $2-$3}} z $1 {{PLURAL:$1|správy|správ}}',
+	'right-userboard-delete' => 'Zmazať správy na fóre iných',
+	'userboard-time-days' => '{{PLURAL:$1|jeden deň|$1 dni|$1 dní}}',
+	'userboard-time-hours' => '{{PLURAL:$1|jedna hodina|$1 hodiny|$1 hodín}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|jedna minúta|$1 minúty|$1 minút}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|jedna sekunda|$1 sekundy|$1 sekúnd}}',
 	'message_received_subject' => '$1 napísal na vaše fórum na {{GRAMMAR:lokál|{{SITENAME}}}}',
 	'message_received_body' => 'Ahoj, $1:
 
@@ -2116,14 +2877,71 @@ Kliknite sem $4
 a zmeňte svoje nastavenia na vypnutie upozornení emailom.',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'boardblaststep1' => 'Први корак - Напишите Вашу поруку',
+	'boardblastprivatenote' => 'Све поруке ће бити послате као приватне поруке',
+	'boardblaststep2' => 'Корак 2 - Назначите коме желите да пожаљете поруку',
+	'boardlinkselectall' => 'Означи све',
+	'boardlinkunselectall' => 'Скини ознаке са свега',
+	'boardlinkselectfriends' => 'Означи пријатеље',
+	'boardlinkunselectfriends' => 'Скини ознаке са пријатеља',
+	'boardlinkselectfoes' => 'Означи непријатеље',
+	'boardlinkunselectfoes' => 'Скини ознаке са непријатеља',
+	'boardnofriends' => 'Немате пријатеља којима бисте послали поруку!',
+	'userboard_backprofile' => 'Повратак на профил од $1',
+	'userboard_backyourprofile' => 'Повратак на Ваш профил',
+	'userboard_sendmessage' => 'Пошаљи поруку кориснику $1',
+	'userboard_posted_ago' => 'послато пре $1',
+	'userboard_private' => 'приватан',
+	'userboard_public' => 'јаван',
+	'userboard_messagetype' => 'Тип поруке',
+	'userboard_nextpage' => 'следеће',
+	'userboard_prevpage' => 'претходно',
+	'userboard_nomessages' => 'Нема порука.',
+	'userboard_sendbutton' => 'пошаљи',
+	'userboard_loggedout' => 'Морате бити <a href="$1">улоговани</a> да бисте слали поруке другим корисницима.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'boardblaststep1' => 'Prvi korak - Napišite Vašu poruku',
+	'boardblastprivatenote' => 'Sve poruke će biti poslate kao privatne poruke',
+	'boardblaststep2' => 'Korak 2 - Naznačite kome želite da požaljete poruku',
+	'boardlinkselectall' => 'Označi sve',
+	'boardlinkunselectall' => 'Skini oznake sa svega',
+	'boardlinkselectfriends' => 'Označi prijatelje',
+	'boardlinkunselectfriends' => 'Skini oznake sa prijatelja',
+	'boardlinkselectfoes' => 'Označi neprijatelje',
+	'boardlinkunselectfoes' => 'Skini oznake sa neprijatelja',
+	'boardnofriends' => 'Nemate prijatelja kojima biste poslali poruku!',
+	'userboard_backprofile' => 'Povratak na profil od $1',
+	'userboard_backyourprofile' => 'Povratak na Vaš profil',
+	'userboard_sendmessage' => 'Pošalji poruku korisniku $1',
+	'userboard_posted_ago' => 'poslato pre $1',
+	'userboard_private' => 'privatan',
+	'userboard_public' => 'javan',
+	'userboard_messagetype' => 'Tip poruke',
+	'userboard_nextpage' => 'sledeće',
+	'userboard_prevpage' => 'prethodno',
+	'userboard_nomessages' => 'Nema poruka.',
+	'userboard_sendbutton' => 'pošalji',
+	'userboard_loggedout' => 'Morate biti <a href="$1">ulogovani</a> da biste slali poruke drugim korisnicima.',
+);
+
 /** Swedish (Svenska)
+ * @author Fluff
  * @author Jon Harald Søby
  * @author M.M.S.
  * @author Najami
  */
 $messages['sv'] = array(
 	'boardblastlogintitle' => 'Du måste vara inloggad för att sända meddelanden',
-	'boardblastlogintext' => 'Du måste vara inloggad för att sända meddelanden. Klicka <a href="index.php?title=Special:UserLogin">här för att logga in</a>',
+	'boardblastlogintext' => 'Du måste vara inloggad för att skicka meddelanden. Klicka <a href="index.php?title=Special:UserLogin">här för att logga in</a>',
 	'messagesenttitle' => 'Sända meddelanden',
 	'boardblasttitle' => 'Sänd meddelande',
 	'boardblaststep1' => 'Steg 1 - Skriv ditt meddelande',
@@ -2162,6 +2980,11 @@ $messages['sv'] = array(
 	'userboard_sendbutton' => 'sänd',
 	'userboard_loggedout' => 'Du måste vara <a href="$1">inloggad</a> för att skicka meddelanden till andra användare.',
 	'userboard_showingmessages' => 'Visar {{PLURAL:$4|meddelande $3|$2-$3}} av {{PLURAL:$1|$1 meddelande|$1 meddelanden}}',
+	'right-userboard-delete' => 'Ta bort andras meddelanden',
+	'userboard-time-days' => '{{PLURAL:$1|en dag|$1 dagar}}',
+	'userboard-time-hours' => '{{PLURAL:$1|en timme|$1 timmar}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|en minut|$1 minuter}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|en sekund|$1 sekunder}}',
 	'message_received_subject' => '$1 har skrivit på din diskussionssida på {{SITENAME}}',
 	'message_received_body' => 'Hej, $1.
 
@@ -2173,9 +2996,9 @@ $3
 
 ---
 
-Vill du inte motta mer e-post ifrån oss?
+Vill du inte ta emot fler e-postmeddelanden från oss?
 
-Klicka $4 och ändra dina inställningar för att slå av e-postbesked.',
+Klicka på $4 och ändra dina inställningar för att slå av e-postbesked.',
 );
 
 /** Telugu (తెలుగు)
@@ -2202,6 +3025,10 @@ $messages['te'] = array(
 	'userboard_prevpage' => 'క్రితం',
 	'userboard_nomessages' => 'సందేశాలు లేవు.',
 	'userboard_sendbutton' => 'పంపించు',
+	'userboard-time-days' => '{{PLURAL:$1|ఒక రోజు|$1 రోజులు}}',
+	'userboard-time-hours' => '{{PLURAL:$1|ఒక గంట|$1 గంటలు}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|ఒక నిమిషం|$1 నిమిషాలు}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|ఒక క్షణం|$1 క్షణాలు}}',
 );
 
 /** Tetum (Tetun)
@@ -2237,6 +3064,93 @@ $messages['tg-cyrl'] = array(
 	'userboard_prevpage' => 'қаблӣ',
 	'userboard_nomessages' => 'Пайғоме нест.',
 	'userboard_sendbutton' => 'фирист',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'messagesenttitle' => 'Pajomhoi firistoda şudand',
+	'boardblaststep1' => 'Qadami 1 - Pajomi xudro navised',
+	'boardblastprivatenote' => 'Hamai pajomho cun pajomhoi şaxsī firistoda xohand şud',
+	'boardblaststep2' => 'Qadami 2 - Ba şaxse, ki pajom firistodan mexohed intixob kuned',
+	'boardnofriends' => 'Şumo jagon dūste baroi firistodani pajom nadored!',
+	'messagesentsuccess' => 'Pajomi şumo bo muvaffaqijat firistoda şud',
+	'userboard' => 'Lavhai korbar',
+	'userboard_delete' => 'Hazf',
+	'userboard_noexist' => 'Korbare ki şumo kuşişi didan karda istodaed vuçud nadorad.',
+	'userboard_yourboard' => 'Lavhai Şumo',
+	'userboard_owner' => 'Lavhai $1',
+	'userboard_yourboardwith' => 'Lavha-ba-lavhai şumo bo $1',
+	'userboard_otherboardwith' => 'Lavha-ba-lavhai $1 bo $2',
+	'userboard_boardtoboard' => 'Lavha-ba-lavha',
+	'userboard_sendmessage' => 'Ba $1 pajome firist',
+	'userboard_myboard' => 'Lavhai Man',
+	'userboard_messagetype' => "Nav'i pajom",
+	'userboard_nextpage' => "ba'dī",
+	'userboard_prevpage' => 'qablī',
+	'userboard_nomessages' => 'Pajƣome nest.',
+	'userboard_sendbutton' => 'firist',
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ * @author Woraponboonkerd
+ */
+$messages['th'] = array(
+	'boardblastlogintitle' => 'คุณต้องลงชื่อเข้าใช้ก่อนที่จะกระจายข้อความ',
+	'boardblastlogintext' => 'ในการที่จะกระจายข้อความนั้น
+<br />คุณต้อง<a href="index.php?title=Special:UserLogin">ได้ลงชื่อเข้าใช้แล้ว</a>',
+	'messagesenttitle' => 'ข้อความได้ถูกส่งแล้ว',
+	'boardblasttitle' => 'กระจายข้อความ',
+	'boardblaststep1' => 'ขั้นตอนที่ 1 - เขียนข้อความ',
+	'boardblastprivatenote' => 'ข้อความทั้งหมดจะถูกส่งเป็นข้อความส่วนตัว',
+	'boardblaststep2' => 'ขั้นตอนที่ 2 - เลือกผู้ที่จะส่งข้อความไปให้',
+	'boardlinkselectall' => 'เลือกทั้งหมด',
+	'boardlinkunselectall' => 'ไม่เลือกทั้งหมด',
+	'boardlinkselectfriends' => 'เลือกเพื่อน',
+	'boardlinkunselectfriends' => 'ไม่เลือกเพื่อน',
+	'boardlinkselectfoes' => 'เลือกศัตรู',
+	'boardlinkunselectfoes' => 'ไม่เลือกศัตรู',
+	'boardsendbutton' => 'กระจายข้อความ',
+	'boardnofriends' => 'คุณไม่มีเพื่อนที่จะส่งข้อความไปหา!',
+	'messagesentsuccess' => 'ข้อความของคุณได้ถูกส่งไปเป็นที่เรียบร้อยแล้ว',
+	'userboard' => 'บอร์ดของผู้ใช้',
+	'userboard_board-to-board' => 'จากบอร์ด-ถึงบอร์ด',
+	'userboard_delete' => 'ลบ',
+	'userboard_noexist' => 'ไม่ปรากฎผู้ใช้ที่คุณกำลังพยายามดูอยู่',
+	'userboard_yourboard' => 'บอร์ดของคุณ',
+	'userboard_owner' => 'บอร์ดของ $1',
+	'userboard_yourboardwith' => 'จากบอร์ด-ถึงบอร์ดกับ $1',
+	'userboard_otherboardwith' => 'จากบอร์ด-ถึงบอร์ดของ $1 กับ $2',
+	'userboard_backprofile' => 'กลับไปยังโปรไฟล์ของ $1',
+	'userboard_backyourprofile' => 'กลับไปยังโปรไฟล์ของคุณ',
+	'userboard_boardtoboard' => 'จากบอร์ด-ถึงบอร์ด',
+	'userboard_confirmdelete' => 'คุณแน่ใจหรือไม่ที่จะลบข้อความนี้?',
+	'userboard_sendmessage' => 'ส่งข้อความให้ $1',
+	'userboard_myboard' => 'บอร์ดของฉัน',
+	'userboard_posted_ago' => 'ส่งเมื่อ $1 ที่แล้ว',
+	'userboard_private' => 'ส่วนบุคคล',
+	'userboard_public' => 'สาธารณะ',
+	'userboard_messagetype' => 'ประเภทข้อความ',
+	'userboard_nextpage' => 'ถัดไป',
+	'userboard_prevpage' => 'ก่อนหน้า',
+	'userboard_nomessages' => 'ไม่มีข้อความ',
+	'userboard_sendbutton' => 'ส่ง',
+	'userboard_loggedout' => 'คุณต้อง<a href="$1">ลงชื่อเข้าใช้</a>เพื่อส่งข้อความไปยังผู้ใช้คนอื่นๆ',
+	'userboard_showingmessages' => 'กำลังแสดง {{PLURAL:$4|ข้อความที่ $3|ข้อความที่ $2-$3}} จากทั้งหมด {{PLURAL:$1|$1 ข้อความ|$1 ข้่อความ}}',
+	'right-userboard-delete' => 'ลบข้อความของบอร์ดอื่นๆ',
+	'userboard-time-days' => '{{PLURAL:$1|1 วัน|$1 วัน}}',
+	'userboard-time-hours' => '{{PLURAL:$1|1 ชั่วโมง|$1 ชั่วโมง}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|1 นาที|$1 นาที}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|1 วินาที|$1 วินาที}}',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'userboard_delete' => 'Öçür',
 );
 
 /** Tagalog (Tagalog)
@@ -2303,12 +3217,86 @@ at baguhin ang mga katakdaan upang huwag nang paganahin ang pagpapabatid na pang
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'boardblastlogintitle' => 'Pano gönderisi için oturum açmış olmanız gerekiyor',
+	'boardblastlogintext' => 'Pano seri gönderisi göndermek için,
+<a href="index.php?title=Special:UserLogin">oturum açmış</a> olmalısınız.',
 	'messagesenttitle' => 'Mesaj gönder',
+	'boardblasttitle' => 'Pano seri gönderisi gönder',
+	'boardblaststep1' => '1. Adım - Mesajınızı yazın',
+	'boardblastprivatenote' => 'Tüm mesajlar özel mesaj olarak gönderilecek',
+	'boardblaststep2' => '2. Adım - Mesajınızı göndermek istediğiniz kişiyi seçin',
+	'boardlinkselectall' => 'Tümünü seç',
+	'boardlinkunselectall' => 'Tümünün seçimini kaldır',
+	'boardlinkselectfriends' => 'Arkadaş seç',
+	'boardlinkunselectfriends' => 'Arkadaşların seçimini kaldır',
+	'boardlinkselectfoes' => 'Düşmanları seçin',
+	'boardlinkunselectfoes' => 'Düşmanların seçimini kaldır',
+	'boardsendbutton' => 'Pano seri gönderisi gönder',
+	'boardnofriends' => 'Mesaj gönderebilecek bir arkadaşınız yok!',
+	'messagesentsuccess' => 'Mesajınız başarıyla gönderildi',
+	'userboard' => 'Kullanıcı panosu',
+	'userboard_board-to-board' => 'Panodan panoya',
 	'userboard_delete' => 'Sil',
+	'userboard_noexist' => 'Görmeye çalıştığınız kullanıcı mevcut değil.',
+	'userboard_yourboard' => 'Panonuz',
+	'userboard_owner' => '$1 adlı kullanıcının panosu',
+	'userboard_yourboardwith' => '$1 ile panodan panoya mesajlarınız',
+	'userboard_otherboardwith' => '$1 ile $2 arasındaki panodan panoya mesajlaşma',
+	'userboard_backprofile' => '$1 adlı kullanıcının profiline geri dön',
+	'userboard_backyourprofile' => 'Profilinize geri dönün',
+	'userboard_boardtoboard' => 'Panodan panoya',
+	'userboard_confirmdelete' => 'Bu mesajı silmek istediğinizden emin misiniz?',
+	'userboard_sendmessage' => '$1 adlı kullanıcıya bir mesaj gönder',
+	'userboard_myboard' => 'Panom',
+	'userboard_posted_ago' => '$1 önce gönderildi',
+	'userboard_private' => 'özel',
+	'userboard_public' => 'herkese açık',
 	'userboard_messagetype' => 'Mesaj tipi',
 	'userboard_nextpage' => 'sonraki',
+	'userboard_prevpage' => 'önceki',
+	'userboard_nomessages' => 'Mesaj yok.',
+	'userboard_sendbutton' => 'gönder',
+	'userboard_loggedout' => 'Diğer kullanıcılara mesaj göndermek için <a href="$1">oturum açmış olmanız</a> gerekmektedir.',
+	'userboard_showingmessages' => '{{PLURAL:$1|$1 mesajdan|$1 mesajdan}} {{PLURAL:$4|$3. numaralı mesaj|$2-$3 arası mesajlar}} görüntüleniyor',
+	'right-userboard-delete' => 'Diğerlerinin pano mesajlarını siler',
+	'userboard-time-days' => '{{PLURAL:$1|bir gün|$1 gün}}',
+	'userboard-time-hours' => '{{PLURAL:$1|bir saat|$1 saat}}',
+	'userboard-time-minutes' => '{{PLURAL:$1|bir dakika|$1 dakika}}',
+	'userboard-time-seconds' => '{{PLURAL:$1|bir saniye|$1 saniye}}',
+	'message_received_subject' => '$1 adlı kullanıcı {{SITENAME}} üzerinde panonuza yazı yazdı',
+	'message_received_body' => 'Merhaba $1.
+
+$2, {{SITENAME}} üzerinde panonuza yazı yazdı!
+
+Panonuzu kontrol etmek için aşağıya tıklayın!
+
+$3
+
+---
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$4 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'userboard_delete' => 'Вилучити',
+	'userboard_nextpage' => 'наступна',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'userboard_nextpage' => "jäl'ghine",
+	'userboard_prevpage' => 'edeline',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -2346,17 +3334,39 @@ $messages['vo'] = array(
 	'userboard_sendbutton' => 'sedön',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'userboard_delete' => 'אויסמעקן',
+	'userboard_private' => 'פריוואַט',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
+ * @author PhiLiP
  */
 $messages['zh-hans'] = array(
+	'boardlinkselectall' => '选择全部',
+	'boardlinkselectfriends' => '选择朋友',
+	'boardlinkselectfoes' => '选择仇敌',
 	'userboard_delete' => '删除',
+	'userboard_posted_ago' => '在$1前张贴',
+	'userboard_nomessages' => '没有信息。',
+	'userboard_sendbutton' => '发送',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'boardlinkselectall' => '選擇全部',
+	'boardlinkselectfriends' => '選擇朋友',
+	'boardlinkselectfoes' => '選擇仇敵',
 	'userboard_delete' => '刪除',
+	'userboard_posted_ago' => '在$1前張貼',
+	'userboard_nomessages' => '沒有信息。',
+	'userboard_sendbutton' => '傳送',
 );
 

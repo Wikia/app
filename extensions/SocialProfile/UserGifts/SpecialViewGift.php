@@ -5,7 +5,7 @@ class ViewGift extends UnlistedSpecialPage {
 	/**
 	 * Constructor
 	 */
-	public function __construct(){
+	public function __construct() {
 		parent::__construct( 'ViewGift' );
 	}
 
@@ -14,7 +14,7 @@ class ViewGift extends UnlistedSpecialPage {
 	 *
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
-	public function execute( $par ){
+	public function execute( $par ) {
 		global $wgUser, $wgOut, $wgRequest, $wgUploadPath, $wgUserGiftsScripts;
 		wfLoadExtensionMessages( 'UserGifts' );
 
@@ -23,13 +23,13 @@ class ViewGift extends UnlistedSpecialPage {
 		$user_name = ''; // Prevent E_NOTICE
 
 		$gift_id = $wgRequest->getVal( 'gift_id' );
-		if( !$gift_id || !is_numeric( $gift_id ) ){
+		if ( !$gift_id || !is_numeric( $gift_id ) ) {
 			$wgOut->setPageTitle( wfMsg( 'g-error-title' ) );
 			$wgOut->addHTML( wfMsg( 'g-error-message-invalid-link' ) );
 			return false;
 		}
 
-		if( !$user_name ){
+		if ( !$user_name ) {
 			$user_name = $wgUser->getName();
 		}
 		$gift = UserGifts::getUserGift( $gift_id );
@@ -40,10 +40,10 @@ class ViewGift extends UnlistedSpecialPage {
 		// DB stuff
 		$dbr = wfGetDB( DB_SLAVE );
 
-		if( $gift ) {
+		if ( $gift ) {
 
-			if( $gift['status'] == 1 ) {
-				if( $gift['user_name_to'] == $wgUser->getName() ){
+			if ( $gift['status'] == 1 ) {
+				if ( $gift['user_name_to'] == $wgUser->getName() ) {
 					$g = new UserGifts( $gift['user_name_to'] );
 					$g->clearUserGiftStatus( $gift['id'] );
 					$g->decNewGiftCount( $wgUser->getID() );
@@ -67,7 +67,7 @@ class ViewGift extends UnlistedSpecialPage {
 			$user = Title::makeTitle( NS_USER, $gift['user_name_from'] );
 			$remove_gift_link = SpecialPage::getTitleFor( 'RemoveGift' );
 			$give_gift_link = SpecialPage::getTitleFor( 'GiveGift' );
-		
+
 			$avatar = new wAvatar( $gift['user_id_from'], 's' );
 			$avatar_img = '<img src="' . $wgUploadPath . '/avatars/' . $avatar->getAvatarImage() . '" alt="" border="0" />';
 			$gift_image = '<img src="' . $wgUploadPath . '/awards/' . Gifts::getGiftImage( $gift['gift_id'], 'l' ) . '" border="0" alt="" />';
@@ -76,21 +76,21 @@ class ViewGift extends UnlistedSpecialPage {
 
 			$output .= '<div class="g-description-container">';
 
-			$gift_image = '<img src="'. $wgUploadPath .'/awards/' . Gifts::getGiftImage( $gift['gift_id'], 'l' ) . '" border="0" alt="" />';
+			$gift_image = '<img src="' . $wgUploadPath . '/awards/' . Gifts::getGiftImage( $gift['gift_id'], 'l' ) . '" border="0" alt="" />';
 
 				$output .= '<div class="g-description">'
-					. $gift_image .'
-					<div class="g-name">'. $gift['name'] .'</div>
-					<div class="g-timestamp">('. $gift['timestamp'] .')</div>
-					<div class="g-from">'. wfMsg( 'g-from', $user->escapeFullURL(), $gift['user_name_from'] ) .'</div>';
-					if( $message ){
-						$output .= '<div class="g-user-message">'. $message .'</div>';
+					. $gift_image . '
+					<div class="g-name">' . $gift['name'] . '</div>
+					<div class="g-timestamp">(' . $gift['timestamp'] . ')</div>
+					<div class="g-from">' . wfMsg( 'g-from', $user->escapeFullURL(), $gift['user_name_from'] ) . '</div>';
+					if ( $message ) {
+						$output .= '<div class="g-user-message">' . $message . '</div>';
 					}
 					$output .= '<div class="cleared"></div>
-					<div class="g-describe">'. $gift['description'] .'</div>
+					<div class="g-describe">' . $gift['description'] . '</div>
 					<div class="g-actions">
-						<a href="'.$give_gift_link->escapeFullURL('gift_id='.$gift['gift_id']).'">'. wfMsg( 'g-to-another' ) .'</a>';
-						if( $gift['user_name_to'] == $wgUser->getName() ) {
+						<a href="' . $give_gift_link->escapeFullURL( 'gift_id=' . $gift['gift_id'] ) . '">' . wfMsg( 'g-to-another' ) . '</a>';
+						if ( $gift['user_name_to'] == $wgUser->getName() ) {
 							$output .= '&nbsp';
 							$output .= wfMsgExt( 'pipe-separator' , 'escapenoentities' );
 							$output .= '&nbsp;';
@@ -100,16 +100,16 @@ class ViewGift extends UnlistedSpecialPage {
 				</div>';
 
 				$output .= '<div class="g-recent">
-					<div class="g-recent-title">'.wfMsg( 'g-recent-recipients' ).'</div>
-					<div class="g-gift-count">'.wfMsgExt( 'g-given', 'parsemag', $gift['gift_count'] ).'</div>';
+					<div class="g-recent-title">' . wfMsg( 'g-recent-recipients' ) . '</div>
+					<div class="g-gift-count">' . wfMsgExt( 'g-given', 'parsemag', $gift['gift_count'] ) . '</div>';
 
-					while( $row = $dbr->fetchObject( $res ) ) {
+					while ( $row = $dbr->fetchObject( $res ) ) {
 
 						$user_to_id = $row->ug_user_id_to;
 						$avatar = new wAvatar( $user_to_id, 'ml' );
 						$user_name_link = Title::makeTitle( NS_USER, $row->ug_user_name_to );
 
-						$output .= "<a href=\"".$user_name_link->escapeFullURL()."\">
+						$output .= "<a href=\"" . $user_name_link->escapeFullURL() . "\">
 							{$avatar->getAvatarURL()}
 						</a>";
 					}

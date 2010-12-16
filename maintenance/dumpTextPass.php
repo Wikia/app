@@ -24,77 +24,8 @@
 
 $originalDir = getcwd();
 
-require_once( 'commandLine.inc' );
+require_once( dirname(__FILE__) . '/commandLine.inc' );
 require_once( 'backup.inc' );
-
-/**
- * Stream wrapper around 7za filter program.
- * Required since we can't pass an open file resource to XMLReader->open()
- * which is used for the text prefetch.
- *
- * @ingroup Maintenance
- */
-class SevenZipStream {
-	var $stream;
-	
-	private function stripPath( $path ) {
-		$prefix = 'mediawiki.compress.7z://';
-		return substr( $path, strlen( $prefix ) );
-	}
-	
-	function stream_open( $path, $mode, $options, &$opened_path ) {
-		if( $mode{0} == 'r' ) {
-			$options = 'e -bd -so';
-		} elseif( $mode{0} == 'w' ) {
-			$options = 'a -bd -si';
-		} else {
-			return false;
-		}
-		$arg = wfEscapeShellArg( $this->stripPath( $path ) );
-		$command = "7za $options $arg";
-		if( !wfIsWindows() ) {
-			// Suppress the stupid messages on stderr
-			$command .= ' 2>/dev/null';
-		}
-		$this->stream = popen( $command, $mode );
-		return ($this->stream !== false);
-	}
-	
-	function url_stat( $path, $flags ) {
-		return stat( $this->stripPath( $path ) );
-	}
-	
-	// This is all so lame; there should be a default class we can extend
-	
-	function stream_close() {
-		return fclose( $this->stream );
-	}
-	
-	function stream_flush() {
-		return fflush( $this->stream );
-	}
-	
-	function stream_read( $count ) {
-		return fread( $this->stream, $count );
-	}
-	
-	function stream_write( $data ) {
-		return fwrite( $this->stream, $data );
-	}
-	
-	function stream_tell() {
-		return ftell( $this->stream );
-	}
-	
-	function stream_eof() {
-		return feof( $this->stream );
-	}
-	
-	function stream_seek( $offset, $whence ) {
-		return fseek( $this->stream, $offset, $whence );
-	}
-}
-stream_wrapper_register( 'mediawiki.compress.7z', 'SevenZipStream' );
 
 /**
  * @ingroup Maintenance
@@ -305,6 +236,7 @@ class TextPassDumper extends BackupDumper {
 	 * May throw a database error if, say, the server dies during query.
 	 */
 	private function getTextDb( $id ) {
+		global $wgContLang;
 		$id = intval( $id );
 		$row = $this->db->selectRow( 'text',
 			array( 'old_text', 'old_flags' ),
@@ -315,7 +247,7 @@ class TextPassDumper extends BackupDumper {
 			return false;
 		}
 		$stripped = str_replace( "\r", "", $text );
-		$normalized = UtfNormal::cleanUp( $stripped );
+		$normalized = $wgContLang->normalize( $stripped );
 		return $normalized;
 	}
 	
@@ -390,6 +322,8 @@ class TextPassDumper extends BackupDumper {
 	}
 	
 	private function getTextSpawnedOnce( $id ) {
+		global $wgContLang;
+
 		$ok = fwrite( $this->spawnWrite, "$id\n" );
 		//$this->progress( ">> $id" );
 		if( !$ok ) return false;
@@ -408,7 +342,7 @@ class TextPassDumper extends BackupDumper {
 		// Subprocess may not send everything at once, we have to loop.
 		while( $nbytes > strlen( $text ) ) {
 			$buffer = fread( $this->spawnRead, $nbytes - strlen( $text ) );
-			if( $text === false ) break;
+			if( $buffer === false ) break;
 			$text .= $buffer;
 		}
 		
@@ -420,7 +354,7 @@ class TextPassDumper extends BackupDumper {
 		
 		// Do normalization in the dump thread...
 		$stripped = str_replace( "\r", "", $text );
-		$normalized = UtfNormal::cleanUp( $stripped );
+		$normalized = $wgContLang->normalize( $stripped );
 		return $normalized;
 	}
 

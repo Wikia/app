@@ -22,7 +22,7 @@ The <b>default attributes:</b>:
 Your embed type has been detected as: <b><span id="detect_type"></span></b>
 <br />
 Here are some sample embeds:<br />
-<?
+<?php
 $sample_embed = array();
 
 $sample_embed[0]['tag'] = '<video  id="embed_vid" 
@@ -67,12 +67,12 @@ $sample_embed[6]['tag'] = '<playlist id="warplaylist" src="' . $plurl . '"/>';
 // real video sample:
 $smilURL = 'sample_smil.smil.xml';
 $sample_embed[8]['tag'] = '<playlist id="smil_pl" src="' . $smilURL . '">';
-$sample_embed[8]['desc'] = ' <br><b>Crossfading Videos</b><br/><a href="http://service.real.com/help/library/guides/realone/ProductionGuide/HTML/htmfiles/transit.htm">source</a>
+$sample_embed[8]['desc'] = ' <br /><b>Crossfading Videos</b><br /><a href="http://service.real.com/help/library/guides/realone/ProductionGuide/HTML/htmfiles/transit.htm">source</a>
 			The first video fades up from green when it starts to play, 
 			and the second video fades down to green when it ends. 
 			When the first video stops and the second video starts, 
 			though, the two videos crossfade into each other' .
-				'<br>' .
+				'<br />' .
 				'<iframe width="500" height="200" src="' . $smilURL . '">rss feed here</iframe>';
 // empty sample embed (to only do one:)
 // $sample_embed = array();
@@ -81,19 +81,19 @@ $sample_embed[8]['desc'] = ' <br><b>Crossfading Videos</b><br/><a href="http://s
 
 ?>
   <table border="1" cellpadding="6" width="600">
-  	<? foreach ( $sample_embed as $key => $aval ) {
+  	<?php foreach ( $sample_embed as $key => $aval ) {
   		// $key!=8 && $key!=3  $key != 0  && $key != 1 &&  && $key!=3
   		if ( $key!=0 && $key!=8 )continue;
   	 ?>
 	    <tr>
-	      <td valign="top"><?=$aval['tag']?></td>
-	      <td valign="top"><b>Sample Embed <?=$key?></b><br />
-	      <?=$aval['desc']?><br />
+	      <td valign="top"><?php echo $aval['tag']?></td>
+	      <td valign="top"><b>Sample Embed <?php echo $key?></b><br />
+	      <?php echo $aval['desc'] ?><br />
 	      &lt;-- code used: <br />
-	     <pre> <?= htmlentities( $aval['tag'] )?></pre>
+	     <pre> <?php echo htmlentities( $aval['tag'] )?></pre>
 	      </td>
 	    </tr>
-	    <? // oput a separator between video and playlist
+	    <?php // oput a separator between video and playlist
 	    if ( $key == 5 ) {
 	    	echo '<tr><td colspan="2"><b>Sample Playlists:</b></td></tr>';
 	    }
@@ -102,6 +102,6 @@ $sample_embed[8]['desc'] = ' <br><b>Crossfading Videos</b><br/><a href="http://s
 	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;
   </body>
 </html>
-<?
+<?php
 }
 ?>

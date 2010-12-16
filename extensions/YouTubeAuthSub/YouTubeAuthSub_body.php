@@ -17,7 +17,7 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgTitle, $wgOut, $wgMemc, $wgUser;
 		global $wgYTAS_User, $wgYTAS_Password, $wgYTAS_DeveloperId;
-		global $wgYTAS_DefaultCategory, $wgYTAS_UseClientLogin, $wgYTAS_EnableLogging, $wgYTAS_UseNamespace;
+		global $wgYTAS_DefaultCategory, $wgYTAS_UseClientLogin, $wgYTAS_EnableLogging, $wgYTAS_UseNamespace, $wgYTAS_ClientId;
 
 		wfLoadExtensionMessages( 'YouTubeAuthSub' );
 
@@ -123,7 +123,7 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 
 		if ($wgRequest->wasPosted()) {
 			$url = "http://uploads.gdata.youtube.com/feeds/api/users/{$wgYTAS_User}/uploads";
-
+			$url = "http://gdata.youtube.com/action/GetUploadToken";
 			$data = "<?xml version='1.0'?>
 	<entry xmlns='http://www.w3.org/2005/Atom'
 	  xmlns:media='http://search.yahoo.com/mrss/'
@@ -138,6 +138,8 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 	</entry>
 	";
 			$headers = array (
+					"GData-Version: 2",
+					"X-GData-Client: key={$wgYTAS_ClientId}",
 					"X-GData-Key: key={$wgYTAS_DeveloperId}",
 					"Content-Type: application/atom+xml; charset=UTF-8",
 					"Content-Length: " . strlen($data),
@@ -149,10 +151,8 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 
 			$results = wfSpecialYouTubePost($url, $data, $headers);
 
-			preg_match("/<yt:token>.*<\/yt:token>/", $results, $matches);
-			$token = strip_tags($matches[0]);
-			preg_match("/'edit-media'[^>]*href='[^']*'>/", $results, $matches);
-			$url = preg_replace("/.*href='([^']*)'>/", "$1", $matches[0]);
+			$url = preg_replace("@.*<url>(.*)</url>.*@", "$1", $results);
+			$token = preg_replace("@.*<token>(.*)</token>.*@", "$1", $results);
 
 			if ($url == "") {
 				$wgOut->addHTML("Unable to extract URL, results where <pre>{$results}</pre>");
@@ -176,10 +176,10 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 
 			$next_url = urlencode($wgTitle->getFullURL() . "?metaid={$meta_id}");
 
-			$wgOut->addHTML(wfMsg('youtubeauthsub_uploadhere') . "<br/><br/>
+			$wgOut->addHTML(wfMsg('youtubeauthsub_uploadhere') . "<br /><br />
 					 <form action='{$url}?nexturl={$next_url}' METHOD='post' enctype='multipart/form-data' name='videoupload'>
 						  <input type='file' name='file' size='50'/>
-						<input type='hidden' name='token' value='{$token}'/><br/>
+						<input type='hidden' name='token' value='{$token}'/><br />
 						<input type='submit' name='submitbtn' value='" . wfMsg('youtubeauthsub_uploadbutton') . "'/>
 						</form>
 						<center>

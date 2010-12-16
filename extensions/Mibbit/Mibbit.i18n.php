@@ -17,12 +17,13 @@ $messages['en'] = array(
 To connect simply press the "Connect" button.
 If you are logged in your nickname will have been prefilled.
 Anonymous users are given an automatically generated one, but it can be changed.',
-        'right-mibbit'  => 'Allowed to use Mibbit chat',
+	'right-mibbit'  => 'Allowed to use Mibbit chat',
 );
 
 /** Message documentation (Message documentation)
  * @author Meno25
  * @author MinuteElectron
+ * @author RobertL
  */
 $messages['qqq'] = array(
 	'mibbit' => 'Name of the Mibbit extension.',
@@ -143,6 +144,19 @@ Anonymním uživatelům se přidělí automaticky vygenerované jméno, ale je m
 	'right-mibbit' => 'Používání Mibbit chatu',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'mibbit' => 'Sgwrs Mibbit',
+	'mibbit-desc' => "Yn ychwanegu [[Special:Mibbit|tudalen arbennig]] i alluogi defnyddwyr y wici i sgwrsio a'i gilydd ar y pryd",
+	'mibbit-header' => "Mae'r dudalen arbennig hon yn eich galluogi i gydweithio gyda defnyddwyr eraill y wici ar y pryd.
+Gwasgwch y botwm \"Connect\" er mwyn cysylltu.
+Os ydych wedi mewngofnodi fe fydd eich llysenw wedi ei deipio'n barod.
+Rhoddir enw wedi ei gynhyrchu'n awtomatig i ddefnyddwyr anhysbys, ond gallant ei newid.",
+	'right-mibbit' => 'Yn gallu defnyddio Mibbit i sgwrsio',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
@@ -210,10 +224,10 @@ Los usuarios anónimos tienen un nick generado automáticamente, pero puede camb
 $messages['fr'] = array(
 	'mibbit' => 'Clavardage Mibbit',
 	'mibbit-desc' => 'Ajoute une [[Special:Mibbit|page spéciale]] permettant le clavardage en temps réel avec les autres utilisateurs du wiki',
-	'mibbit-header' => "Cette page spéciale vous permet de collaborer en temps réel avec d'autres utilisateurs du wiki.
+	'mibbit-header' => 'Cette page spéciale vous permet de collaborer en temps réel avec d’autres utilisateurs du wiki.
 Pour vous connecter, cliquez simplement sur le bouton « Connect ».
-Si vous êtes enregistré{{GENDER:||e|(e)}}, votre pseudonyme est prédéfini à l'aide de votre nom d'utilisateur.
-Pour les utilisateurs anonymes, un pseudonyme est créé automatiquement, mais celui-ci peut être modifié.",
+Si vous êtes enregistré{{GENDER:||e|(e)}}, votre pseudonyme est prédéfini à l’aide de votre nom d’utilisateur.
+Pour les utilisateurs anonymes, un pseudonyme est créé automatiquement, mais celui-ci peut être modifié.',
 	'right-mibbit' => 'Clavarder avec Mibbit',
 );
 
@@ -320,7 +334,7 @@ $messages['id'] = array(
 Tekan tombol "Connect" untuk memulai koneksi.
 Jika Anda telah masuk log, nama pengguna Anda akan dipergunakan.
 Pengguna anonim diberikan nama pengguna otomatis, yang dapat diubah sendiri.',
-	'right-mibbit' => 'Diizinkan menggunakan fasilitas chat Mibbit',
+	'right-mibbit' => 'Dapat menggunakan fasilitas chat Mibbit',
 );
 
 /** Italian (Italiano)
@@ -414,7 +428,7 @@ $messages['nl'] = array(
 Klik op de knop "Connect" om te beginnen.
 Als u aangemeld bent bij de wiki is uw gebruikersnaam ingevuld.
 Anonieme gebruikers krijgen automatisch een gebruikersnaam toegewezen die te wijzigen is.',
-	'right-mibbit' => 'Mag Mibbit-chat gebruiken',
+	'right-mibbit' => 'Mibbit-chat gebruiken',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -502,6 +516,11 @@ Utilizadores anônimos recebem um apelido gerado aleatoriamente, mas este pode s
  */
 $messages['roa-tara'] = array(
 	'mibbit' => 'Chat mibbit',
+	'mibbit-desc' => "Aggiunde 'na [[Special:Mibbit|pàgena speciale]] ausate pe ciattà cu l'otre utinde de Uicchi",
+	'mibbit-header' => "Sta pàgena speciale te permette de collabborà in timbe reale cu l'otre utinde de Uicchi.
+Pe te connettere avaste ca cazze 'u buttone \"Connette\" (Connect).
+Ce tu si collegate cu 'u nome tue allora già iesse scritte.
+A l'utinde anonime ne avène date une a uecchije, ma lore 'u ponne cangià.",
 	'right-mibbit' => "Permitte de ausà 'a chat Mibbit",
 );
 

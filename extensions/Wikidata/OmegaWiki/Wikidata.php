@@ -1,10 +1,10 @@
 <?php
 
-require_once("forms.php");
-require_once("Transaction.php");
-require_once("OmegaWikiAttributes.php");
-require_once("WikiDataAPI.php");
-require_once("Utilities.php");
+require_once( "forms.php" );
+require_once( "Transaction.php" );
+require_once( "OmegaWikiAttributes.php" );
+require_once( "WikiDataAPI.php" );
+require_once( "Utilities.php" );
 
 class DefaultWikidataApplication {
 	protected $showRecordLifeSpan;
@@ -15,27 +15,27 @@ class DefaultWikidataApplication {
 	// The following member variables control some application specific preferences
 	protected $filterLanguageId = 0;			// Filter pages on this languageId, set to 0 to show all languages
 	protected $showClassicPageTitles = true;	// Show classic page titles instead of prettier page titles
-	
-	protected $propertyToColumnFilters = array();	
+
+	protected $propertyToColumnFilters = array();
 	protected $viewInformation;
 
 	// Show a panel to select expressions from available data-sets
-	protected $showDataSetPanel=true;
+	protected $showDataSetPanel = true;
 
 	public function __construct() {
 		global
-			$wgFilterLanguageId, 
-			$wgShowClassicPageTitles, 
+			$wgFilterLanguageId,
+			$wgShowClassicPageTitles,
 			$wgPropertyToColumnFilters;
 			
-		if (isset($wgFilterLanguageId))
+		if ( isset( $wgFilterLanguageId ) )
 			$this->filterLanguageId = $wgFilterLanguageId;
 			
-		if (isset($wgShowClassicPageTitles))
+		if ( isset( $wgShowClassicPageTitles ) )
 			$this->showClassicPageTitles = $wgShowClassicPageTitles;
 			
-		if (isset($wgPropertyToColumnFilters))
-			$this->propertyToColumnFilters = $wgPropertyToColumnFilters;  
+		if ( isset( $wgPropertyToColumnFilters ) )
+			$this->propertyToColumnFilters = $wgPropertyToColumnFilters;
 	}
 
 
@@ -43,30 +43,30 @@ class DefaultWikidataApplication {
 		global
 			$wgOut;
 		
-		if($this->showDataSetPanel) 
-			$wgOut->addHTML($this->getDataSetPanel());
+		if ( $this->showDataSetPanel )
+			$wgOut->addHTML( $this->getDataSetPanel() );
 	}
 
 	protected function outputViewFooter() {
 		global
 			$wgOut;
 		
-		$wgOut->addHTML(DefaultEditor::getExpansionCss());
-		$wgOut->addHTML("<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>");
-	} 
+		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
+		$wgOut->addHTML( "<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>" );
+	}
 	
 	public function view() {
 		global
 			$wgOut, $wgTitle, $wgUser;
 
-		$wgOut->enableClientCache(false);
+		$wgOut->enableClientCache( false );
 
 		$title = $wgTitle->getPrefixedText();
 
-		if (!$this->showClassicPageTitles) 
+		if ( !$this->showClassicPageTitles )
 			$title = $this->getTitle();
 
-		$wgOut->setPageTitle($title);
+		$wgOut->setPageTitle( $title );
 		
 		$this->queryTransactionInformation = new QueryLatestTransactionInformation();
 		
@@ -74,67 +74,67 @@ class DefaultWikidataApplication {
 		$viewInformation->filterLanguageId = $this->filterLanguageId;
 		$viewInformation->showRecordLifeSpan = false;
 		$viewInformation->queryTransactionInformation = $this->queryTransactionInformation;
-		$viewInformation->setPropertyToColumnFilters($this->propertyToColumnFilters);
+		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
 		
 		$this->viewInformation = $viewInformation;
 
-		initializeOmegaWikiAttributes($viewInformation);
-		initializeObjectAttributeEditors($viewInformation);		
+		initializeOmegaWikiAttributes( $viewInformation );
+		initializeObjectAttributeEditors( $viewInformation );
 	}
 	
 	protected function getDataSetPanel() {
 		global $wgTitle, $wgUser;
-		$dc=wdGetDataSetContext();
-		$ow_datasets=wfMsgSc("datasets");
-		$html="<div class=\"dataset-panel\">";;
-		$html.="<table border=\"0\"><tr><th class=\"dataset-panel-heading\">$ow_datasets</th></tr>";
-		$dataSets=wdGetDataSets();
-		$sk=$wgUser->getSkin();
-		foreach ($dataSets as $dataset) {
-			$active=($dataset->getPrefix()==$dc->getPrefix());
-			$name=$dataset->fetchName();
-			$prefix=$dataset->getPrefix();
+		$dc = wdGetDataSetContext();
+		$ow_datasets = wfMsgSc( "datasets" );
+		$html = "<div class=\"dataset-panel\">"; ;
+		$html .= "<table border=\"0\"><tr><th class=\"dataset-panel-heading\">$ow_datasets</th></tr>";
+		$dataSets = wdGetDataSets();
+		$sk = $wgUser->getSkin();
+		foreach ( $dataSets as $dataset ) {
+			$active = ( $dataset->getPrefix() == $dc->getPrefix() );
+			$name = $dataset->fetchName();
+			$prefix = $dataset->getPrefix();
 
-			$class= $active ? 'dataset-panel-active' : 'dataset-panel-inactive';
-			$slot = $active ? "$name" : $sk->makeLinkObj($wgTitle,$name,"dataset=$prefix");
-			$html.="<tr><td class=\"$class\">$slot</td></tr>";
+			$class = $active ? 'dataset-panel-active' : 'dataset-panel-inactive';
+			$slot = $active ? "$name" : $sk->makeLinkObj( $wgTitle, $name, "dataset=$prefix" );
+			$html .= "<tr><td class=\"$class\">$slot</td></tr>";
 		}
-		$html.="</table>";
-		$html.="</div>";
+		$html .= "</table>";
+		$html .= "</div>";
 		return $html;
 	}
 
-	protected function save($referenceQueryTransactionInformation) {
+	protected function save( $referenceQueryTransactionInformation ) {
 		$viewInformation = new ViewInformation();
 		$viewInformation->filterLanguageId = $this->filterLanguageId;
-		$viewInformation->queryTransactionInformation = $referenceQueryTransactionInformation; 
-		$viewInformation->setPropertyToColumnFilters($this->propertyToColumnFilters);
+		$viewInformation->queryTransactionInformation = $referenceQueryTransactionInformation;
+		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
 		$viewInformation->viewOrEdit = "edit";
 		
 		$this->viewInformation = $viewInformation;
 
-		initializeOmegaWikiAttributes($this->viewInformation);	
-		initializeObjectAttributeEditors($this->viewInformation);
+		initializeOmegaWikiAttributes( $this->viewInformation );
+		initializeObjectAttributeEditors( $this->viewInformation );
 	}
 	
 	public function saveWithinTransaction() {
 		global
 			$wgTitle, $wgUser, $wgRequest;
 
-		$summary = $wgRequest->getText('summary');
+		$summary = $wgRequest->getText( 'summary' );
 
 		// Insert transaction information into the DB
-		startNewTransaction($wgUser->getID(), wfGetIP(), $summary);
+		startNewTransaction( $wgUser->getID(), wfGetIP(), $summary );
 
 		// Perform regular save
-		$this->save(new QueryAtTransactionInformation($wgRequest->getInt('transaction'), false));
+		$this->save( new QueryAtTransactionInformation( $wgRequest->getInt( 'transaction' ), false ) );
 
 		// Update page caches
-		Title::touchArray(array($wgTitle));
+		$wgTitle->invalidateCache();
 
 		// Add change to RC log
 		$now = wfTimestampNow();
-		RecentChange::notifyEdit($now, $wgTitle, false, $wgUser, $summary, 0, $now, false, '', 0, 0, 0);
+		RecentChange::notifyEdit( $now, $wgTitle, false, $wgUser, $summary, 0, $now, false, '', 0, 0, 0 );
 	}
 
 	/**
@@ -144,16 +144,16 @@ class DefaultWikidataApplication {
 		global
 			$wgOut, $wgRequest, $wgUser;
 			
-		$wgOut->enableClientCache(false);
+		$wgOut->enableClientCache( false );
 
-		$dc=wdGetDataSetContext();
- 		if(!$wgUser->isAllowed('editwikidata-'.$dc)) {
- 			$wgOut->addWikiText(wfMsgSc("noedit",$dc->fetchName()));
-			$wgOut->setPageTitle(wfMsgSc("noedit_title"));
+		$dc = wdGetDataSetContext();
+ 		if ( !$wgUser->isAllowed( 'editwikidata-' . $dc ) ) {
+ 			$wgOut->addWikiText( wfMsgSc( "noedit", $dc->fetchName() ) );
+			$wgOut->setPageTitle( wfMsgSc( "noedit_title" ) );
  			return false;
  		}
 
-		if ($wgRequest->getText('save') != '') 
+		if ( $wgRequest->getText( 'save' ) != '' )
 			$this->saveWithinTransaction();
 
 		$viewInformation = new ViewInformation();
@@ -161,12 +161,12 @@ class DefaultWikidataApplication {
 		$viewInformation->showRecordLifeSpan = false;
 		$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
 		$viewInformation->viewOrEdit = "edit";
-		$viewInformation->setPropertyToColumnFilters($this->propertyToColumnFilters);
+		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
 		
 		$this->viewInformation = $viewInformation;
 		
-		initializeOmegaWikiAttributes($this->viewInformation);	
-		initializeObjectAttributeEditors($this->viewInformation);
+		initializeOmegaWikiAttributes( $this->viewInformation );
+		initializeObjectAttributeEditors( $this->viewInformation );
 
 		return true;
 	}
@@ -175,51 +175,51 @@ class DefaultWikidataApplication {
 		global
 			$wgOut, $wgTitle, $wgRequest;
 			
-		$wgOut->enableClientCache(false);
+		$wgOut->enableClientCache( false );
 
 		$title = $wgTitle->getPrefixedText();
 
-		if (!$this->showClassicPageTitles) 
+		if ( !$this->showClassicPageTitles )
 			$title = $this->getTitle();
 
-		$wgOut->setPageTitle(wfMsgSc("history",$title));
+		$wgOut->setPageTitle( wfMsgSc( "history", $title ) );
 
 		# Plain filter for the lifespan info about each record
-		if (isset($_GET['show'])) {
-			$this->showRecordLifeSpan = isset($_GET["show-record-life-span"]);
+		if ( isset( $_GET['show'] ) ) {
+			$this->showRecordLifeSpan = isset( $_GET["show-record-life-span"] );
 			$this->transaction = (int) $_GET["transaction"];
-		}	
+		}
 		else {
 			$this->showRecordLifeSpan = true;
 			$this->transaction = 0;
 		}
 		
 		# Up to which transaction to view the data
-		if ($this->transaction == 0)
+		if ( $this->transaction == 0 )
 			$this->queryTransactionInformation = new QueryHistoryTransactionInformation();
 		else
-			$this->queryTransactionInformation = new QueryAtTransactionInformation($this->transaction, $this->showRecordLifeSpan);
+			$this->queryTransactionInformation = new QueryAtTransactionInformation( $this->transaction, $this->showRecordLifeSpan );
 			
-		$transactionId = $wgRequest->getInt('transaction');
+		$transactionId = $wgRequest->getInt( 'transaction' );
 
-		$wgOut->addHTML(getOptionPanel(
+		$wgOut->addHTML( getOptionPanel(
 			array(
-				wfMsg('ow_history_transaction') => getSuggest('transaction','transaction', array(), $transactionId, getTransactionLabel($transactionId), array(0, 2, 3)),
-				wfMsg('ow_history_show_life_span') => getCheckBox('show-record-life-span',$this->showRecordLifeSpan)
+				wfMsg( 'ow_history_transaction' ) => getSuggest( 'transaction', 'transaction', array(), $transactionId, getTransactionLabel( $transactionId ), array( 0, 2, 3 ) ),
+				wfMsg( 'ow_history_show_life_span' ) => getCheckBox( 'show-record-life-span', $this->showRecordLifeSpan )
 			),
 			'history'
-		));
+		) );
 
 		$viewInformation = new ViewInformation();
 		$viewInformation->filterLanguageId = $this->filterLanguageId;
 		$viewInformation->showRecordLifeSpan = $this->showRecordLifeSpan;
 		$viewInformation->queryTransactionInformation = $this->queryTransactionInformation;
-		$viewInformation->setPropertyToColumnFilters($this->propertyToColumnFilters);
+		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
 		
 		$this->viewInformation = $viewInformation;
 
-		initializeOmegaWikiAttributes($this->viewInformation);	
-		initializeObjectAttributeEditors($viewInformation);
+		initializeOmegaWikiAttributes( $this->viewInformation );
+		initializeObjectAttributeEditors( $viewInformation );
 	}
 	
 	protected function outputEditHeader() {
@@ -228,15 +228,15 @@ class DefaultWikidataApplication {
 			
 		$title = $wgTitle->getPrefixedText();
 
-		if (!$this->showClassicPageTitles) 
+		if ( !$this->showClassicPageTitles )
 			$title = $this->getTitle();
 
-		$wgOut->setPageTitle($title);
-		$wgOut->setPageTitle(wfMsg("editing",$title));
+		$wgOut->setPageTitle( $title );
+		$wgOut->setPageTitle( wfMsg( "editing", $title ) );
 
 		$wgOut->addHTML(
 			'<form method="post" action="">' .
-				'<input type="hidden" name="transaction" value="'. getLatestTransactionId() .'"/>'
+				'<input type="hidden" name="transaction" value="' . getLatestTransactionId() . '"/>'
 		);
 	}
 	
@@ -245,18 +245,18 @@ class DefaultWikidataApplication {
 			$wgOut;
 		
 		$wgOut->addHTML(
-			'<div class="option-panel">'.
+			'<div class="option-panel">' .
 				'<table cellpadding="0" cellspacing="0"><tr>' .
-					'<th>' . wfMsg("summary") . ': </th>' .
-					'<td class="option-field">' . getTextBox("summary") .'</td>' .
+					'<th>' . wfMsg( "summary" ) . ': </th>' .
+					'<td class="option-field">' . getTextBox( "summary" ) . '</td>' .
 				'</tr></table>' .
-				getSubmitButton("save", wfMsgSc("save")).
+				getSubmitButton( "save", wfMsgSc( "save" ) ) .
 			'</div>'
 		);
 		
-		$wgOut->addHTML('</form>');
-		$wgOut->addHTML(DefaultEditor::getExpansionCss());
-		$wgOut->addHTML("<script language='javascript'><!--\nexpandEditors();\n--></script>");
+		$wgOut->addHTML( '</form>' );
+		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
+		$wgOut->addHTML( "<script language='javascript'><!--\nexpandEditors();\n--></script>" );
 	}
 	
 	public function getTitle() {
@@ -271,7 +271,7 @@ class DefaultWikidataApplication {
 
 # Global context override. This is an evil hack to allow saving, basically.
 global $wdCurrentContext;
-$wdCurrentContext=null;
+$wdCurrentContext = null;
 
 /**
  * A Wikidata application can manage multiple data sets.
@@ -284,38 +284,38 @@ $wdCurrentContext=null;
 		return that value, else will find the relevant value
  * @return prefix (without underscore)
 **/
-function wdGetDataSetContext($dc=null) {
+function wdGetDataSetContext( $dc = null ) {
 	global $wgRequest, $wdDefaultViewDataSet, $wdGroupDefaultView, $wgUser,
 		$wdCurrentContext;
 
 	# overrides
-	if (!is_null($dc)) 
-		return $dc; #local override
-	if (!is_null($wdCurrentContext))
-		return $wdCurrentContext; #global override
-		
-	$datasets=wdGetDataSets();
-	$groups=$wgUser->getGroups();
-	$dbs=wfGetDB(DB_SLAVE);
-	$pref=$wgUser->getOption('ow_uipref_datasets');
+	if ( !is_null( $dc ) )
+		return $dc; # local override
+	if ( !is_null( $wdCurrentContext ) )
+		return $wdCurrentContext; # global override
 
-	$trydefault='';
-	foreach($groups as $group) {
-		if(isset($wdGroupDefaultView[$group])) {
+	$datasets = wdGetDataSets();
+	$groups = $wgUser->getGroups();
+	$dbs = wfGetDB( DB_SLAVE );
+	$pref = $wgUser->getOption( 'ow_uipref_datasets' );
+
+	$trydefault = '';
+	foreach ( $groups as $group ) {
+		if ( isset( $wdGroupDefaultView[$group] ) ) {
 			# We don't know yet if this prefix is valid.
-			$trydefault=$wdGroupDefaultView[$group];
+			$trydefault = $wdGroupDefaultView[$group];
 		}
 	}
 
 	# URL parameter takes precedence over all else
-	if( ($ds=$wgRequest->getText('dataset')) && array_key_exists($ds,$datasets) && $dbs->tableExists($ds."_transactions") ) {
+	if ( ( $ds = $wgRequest->getText( 'dataset' ) ) && array_key_exists( $ds, $datasets ) && $dbs->tableExists( $ds . "_transactions" ) ) {
 		return $datasets[$ds];
 	# User preference
-	} elseif(!empty($pref) && array_key_exists($pref,$datasets)) {
+	} elseif ( !empty( $pref ) && array_key_exists( $pref, $datasets ) ) {
 		return $datasets[$pref];
 	}
 	# Group preference
-	 elseif(!empty($trydefault) && array_key_exists($trydefault,$datasets)) {
+	 elseif ( !empty( $trydefault ) && array_key_exists( $trydefault, $datasets ) ) {
 		return $datasets[$trydefault];
 	} else {
 		return $datasets[$wdDefaultViewDataSet];
@@ -331,20 +331,20 @@ function wdGetDataSetContext($dc=null) {
 function &wdGetDataSets() {
 
 	static $datasets, $wgGroupPermissions;
-	if(empty($datasets)) {
+	if ( empty( $datasets ) ) {
 		// Load defs from the DB
-		$dbs =& wfGetDB(DB_SLAVE);
-		$res=$dbs->select('wikidata_sets', array('set_prefix'));
+		$dbs = wfGetDB( DB_SLAVE );
+		$res = $dbs->select( 'wikidata_sets', array( 'set_prefix' ) );
 
-		while($row=$dbs->fetchObject($res)) {
+		while ( $row = $dbs->fetchObject( $res ) ) {
 
-			$dc=new DataSet();
-			$dc->setPrefix($row->set_prefix);
-			if($dc->isValidPrefix()) {
-				$datasets[$row->set_prefix]=$dc;
-				wfDebug("Imported data set: ".$dc->fetchName()."\n");
+			$dc = new DataSet();
+			$dc->setPrefix( $row->set_prefix );
+			if ( $dc->isValidPrefix() ) {
+				$datasets[$row->set_prefix] = $dc;
+				wfDebug( "Imported data set: " . $dc->fetchName() . "\n" );
 			} else {
-				wfDebug($row->set_prefix . " does not appear to be a valid dataset!\n");
+				wfDebug( $row->set_prefix . " does not appear to be a valid dataset!\n" );
 			}
 		}
 	}
@@ -354,9 +354,9 @@ function &wdGetDataSets() {
 class DataSet {
 
 	private $dataSetPrefix;
-	private $isValidPrefix=false;
-	private $fallbackName='';
-	private $dmId=0; # the dmId of the dataset name
+	private $isValidPrefix = false;
+	private $fallbackName = '';
+	private $dmId = 0; # the dmId of the dataset name
 
 	public function getPrefix() {
 		return $this->dataSetPrefix;
@@ -366,42 +366,42 @@ class DataSet {
 		return $this->isValidPrefix;
 	}
 
-	public function setDefinedMeaningId($dmid) {
-		$this->dmId=$dmid;
+	public function setDefinedMeaningId( $dmid ) {
+		$this->dmId = $dmid;
 	}
 	public function getDefinedMeaningId() {
 		return $this->dmId;
 	}
 
-	public function setValidPrefix($isValid=true) {
-		$this->isValidPrefix=$isValid;
+	public function setValidPrefix( $isValid = true ) {
+		$this->isValidPrefix = $isValid;
 	}
 
-	public function setPrefix($cp) {
+	public function setPrefix( $cp ) {
 
-		$fname="DataSet::setPrefix";
+		$fname = "DataSet::setPrefix";
 
-		$dbs =& wfGetDB(DB_SLAVE);
-		$this->dataSetPrefix=$cp;
-		$sql="select * from wikidata_sets where set_prefix=".$dbs->addQuotes($cp);
-		$res=$dbs->query($sql);
-		$row=$dbs->fetchObject($res);
-		if($row->set_prefix) {
+		$dbs = wfGetDB( DB_SLAVE );
+		$this->dataSetPrefix = $cp;
+		$sql = "select * from wikidata_sets where set_prefix=" . $dbs->addQuotes( $cp );
+		$res = $dbs->query( $sql );
+		$row = $dbs->fetchObject( $res );
+		if ( $row->set_prefix ) {
 			$this->setValidPrefix();
-			$this->setDefinedMeaningId($row->set_dmid);
-			$this->setFallbackName($row->set_fallback_name);
+			$this->setDefinedMeaningId( $row->set_dmid );
+			$this->setFallbackName( $row->set_fallback_name );
 		} else {
-			$this->setValidPrefix(false);
+			$this->setValidPrefix( false );
 		}
 	}
 
 	// Fetch!
 	function fetchName() {
 		global $wgUser, $wdTermDBDataSet;
-		if($wdTermDBDataSet) {
-			$userLanguage=$wgUser->getOption('language');
-			$spelling=getSpellingForLanguage($this->dmId, $userLanguage, 'en',$wdTermDBDataSet);
-			if($spelling) return $spelling;
+		if ( $wdTermDBDataSet ) {
+			$userLanguage = $wgUser->getOption( 'language' );
+			$spelling = getSpellingForLanguage( $this->dmId, $userLanguage, 'en', $wdTermDBDataSet );
+			if ( $spelling ) return $spelling;
 		}
 		return $this->getFallbackName();
 	}
@@ -410,8 +410,8 @@ class DataSet {
 		return $this->fallbackName;
 	}
 
-	public function setFallbackName($name) {
-		$this->fallbackName=$name;
+	public function setFallbackName( $name ) {
+		$this->fallbackName = $name;
 	}
 
 	function __toString() {

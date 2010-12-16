@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Abstract class MapsBaseMap provides the scafolding for classes handling display_map
- * calls for a spesific mapping service. It inherits from MapsMapFeature and therefore
- * forces inheriting classes to implement sereveral methods.
+ * File holding class MapsBaseMap.
  *
  * @file Maps_BaseMap.php
  * @ingroup Maps
@@ -15,7 +13,16 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
-abstract class MapsBaseMap extends MapsMapFeature {
+/**
+ * Abstract class MapsBaseMap provides the scafolding for classes handling display_map
+ * calls for a spesific mapping service. It inherits from MapsMapFeature and therefore
+ * forces inheriting classes to implement sereveral methods.
+ *
+ * @ingroup Maps
+ *
+ * @author Jeroen De Dauw
+ */
+abstract class MapsBaseMap extends MapsMapFeature implements iDisplayFunction {
 	
 	/**
 	 * Handles the request from the parser hook by doing the work that's common for all
@@ -29,27 +36,21 @@ abstract class MapsBaseMap extends MapsMapFeature {
 	public final function displayMap(&$parser, array $params) {			
 		$this->setMapSettings();
 		
-		$coords = $this->manageMapProperties($params);
+		$this->featureParameters = MapsDisplayMap::$parameters;
 		
-		$this->doMapServiceLoad();
-
-		$this->setMapName();	
-		
-		$this->setZoom();
-		
-		$this->setCentre();
-		
-		$this->addSpecificMapHTML();			
-		
-		return $this->output;
-	}
+		if (parent::manageMapProperties($params, __CLASS__)) {
+			$this->doMapServiceLoad();
 	
-	/**
-	 * (non-PHPdoc)
-	 * @see smw/extensions/Maps/MapsMapFeature#manageMapProperties($mapProperties, $className)
-	 */
-	protected function manageMapProperties($params) {
-		parent::manageMapProperties($params, __CLASS__);
+			$this->setMapName();	
+			
+			$this->setZoom();
+			
+			$this->setCentre();
+			
+			$this->addSpecificMapHTML();				
+		}
+		
+		return $this->output . $this->errorList;
 	}
 	
 	/**
@@ -72,13 +73,13 @@ abstract class MapsBaseMap extends MapsMapFeature {
 			$this->centre_lon = $egMapsMapLon;	
 		} 
 		else { // If a centre value is set, geocode when needed and use it.
-			$this->coordinates = MapsParserGeocoder::attemptToGeocode($this->coordinates, $this->geoservice, $this->serviceName);
+			$this->coordinates = MapsGeocodeUtils::attemptToGeocode($this->coordinates, $this->geoservice, $this->serviceName);
 
 			// If the centre is not false, it will be a valid coordinate, which can be used to set the  latitude and longitutde.
 			if ($this->coordinates) {
 				$this->coordinates = MapsUtils::getLatLon($this->coordinates);
-				$this->centre_lat = $this->coordinates['lat'];
-				$this->centre_lon = $this->coordinates['lon'];				
+				$this->centre_lat = Xml::escapeJsString( $this->coordinates['lat'] );
+				$this->centre_lon = Xml::escapeJsString( $this->coordinates['lon'] );				
 			}
 			else { // If it's false, the coordinate was invalid, or geocoding failed. Either way, the default's should be used.
 				$this->setCentreDefaults();

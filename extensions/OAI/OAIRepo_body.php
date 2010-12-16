@@ -49,7 +49,7 @@ class SpecialOAIRepository extends UnlistedSpecialPage {
  * @param bool $contents NULL to make an open tag only
  * @return string
  */
-function oaiTag( $element, $attribs, $contents = NULL) {
+function oaiTag( $element, $attribs, $contents = null) {
 	$out = '<' . $element;
 	foreach( $attribs as $name => $val ) {
 		$out .= ' ' . $name . '="' . xmlsafe( $val ) . '"';
@@ -571,71 +571,69 @@ class OAIRepo {
 	}
 
 	function fetchRecord( $pageid ) {
-		extract( $this->_db->tableNames( 'updates', 'page', 'revision', 'text' ) );
-		$sql = "SELECT up_page,page_id,up_timestamp,up_action,up_sequence,
-			page_namespace,
-			page_title,
-			old_text,
-			old_flags,
-			rev_id,
-			rev_deleted,
-			rev_comment,
-			rev_user,
-			rev_user_text,
-			rev_timestamp,
-			page_restrictions,
-			rev_minor_edit
-			FROM $updates,$page,$revision,$text
-			WHERE up_page=" . IntVal( $pageid ) . '
-			AND page_id=up_page
-			AND page_latest=rev_id
-			AND rev_text_id=old_id
-			LIMIT 1';
+		$db = $this->_db;
+		
+		$tables = array( 'updates', 'page', 'revision', 'text' );
+		$fields = array( 'page_namespace', 'page_title', 'old_text', 'old_flags',
+				'rev_id', 'rev_deleted', 'rev_comment', 'rev_user',
+				'rev_user_text', 'rev_timestamp', 'page_restrictions',
+				'rev_minor_edit', 'page_is_redirect', 'up_sequence',
+				'page_id', 'up_timestamp', 'up_action', 'up_page',
+				'page_len', 'page_touched', 'page_counter', 'page_latest',);
+		$conds = array();
+		$options = array();
+		$join_conds = array( 'page' => array( 'LEFT JOIN', 'page_id=up_page' ),
+				'revision' => array( 'LEFT JOIN', 'page_latest=rev_id' ),
+				'text' => array( 'LEFT JOIN', 'rev_text_id=old_id' ) );
+				
+		$conds['up_page'] = $pageid;
+		
+		$options['LIMIT'] = 1;
+		
+		wfRunHooks( 'OAIFetchRecordQuery', array( &$tables, &$fields, &$conds,
+						&$options, &$join_conds ) );
 
-		return $this->_db->resultObject( $this->_db->query( $sql ) );
+		return $db->select( $tables, $fields, $conds, __METHOD__,
+					$options, $join_conds );
 	}
 
 	function fetchRows( $from, $until, $chunk, $token = null ) {
-		extract( $this->_db->tableNames( 'updates', 'page', 'revision', 'text' ) );
-		$chunk = IntVal( $chunk );
-
-		$sql = "SELECT up_page,page_id,up_timestamp,up_action,up_sequence,
-			page_namespace,
-			page_title,
-			old_text,
-			old_flags,
-			rev_id,
-			rev_deleted,
-			rev_comment,
-			rev_user,
-			rev_user_text,
-			rev_timestamp,
-			page_restrictions,
-			rev_minor_edit
-			FROM $updates
-			LEFT JOIN $page ON page_id=up_page
-			LEFT JOIN $revision ON page_latest=rev_id
-			LEFT JOIN $text ON rev_text_id=old_id ";
-
-		$where = array();
+		
+		$db = $this->_db;
+		
+		$tables = array( 'updates', 'page', 'revision', 'text' );
+		$fields = array( 'page_namespace', 'page_title', 'old_text', 'old_flags',
+				'rev_id', 'rev_deleted', 'rev_comment', 'rev_user',
+				'rev_user_text', 'rev_timestamp', 'page_restrictions',
+				'rev_minor_edit', 'page_is_redirect', 'up_sequence',
+				'page_id', 'up_timestamp', 'up_action', 'up_page',
+				'page_len', 'page_touched', 'page_counter', 'page_latest',);
+		$conds = array();
+		$options = array();
+		$join_conds = array( 'page' => array( 'LEFT JOIN', 'page_id=up_page' ),
+				'revision' => array( 'LEFT JOIN', 'page_latest=rev_id' ),
+				'text' => array( 'LEFT JOIN', 'rev_text_id=old_id' ) );
+				
 		if( $token ) {
-			$where[] = 'up_sequence >= ' . IntVal( $token );
-			$order = 'up_sequence';
+			$conds[] = 'up_sequence>=' . $db->addQuotes( $token );
+			$options['ORDER BY'] = 'up_sequence';
 		} else {
-			$order = 'up_timestamp';
+			$options['ORDER BY'] = 'up_timestamp';
 		}
 		if( $from ) {
-			$where[] = 'up_timestamp >= \'' . $this->_db->timestamp( $from ).'\'';
+			$conds[] = 'up_timestamp>='.$db->addQuotes( $db->timestamp( $from ) );
 		}
 		if( $until ) {
-			$where[] = 'up_timestamp <= \'' . $this->_db->timestamp( $until ).'\'';
+			$conds[] = 'up_timestamp<=' .$db->addQuotes( $db->timestamp( $until ) );
 		}
-		if( !empty( $where ) ) {
-			$sql .= ' WHERE ' . implode( ' AND ', $where );
-		}
-		$sql .= " ORDER BY $order LIMIT $chunk";
+		
+		$options['LIMIT'] = $chunk;
+		
+		wfRunHooks( 'OAIFetchRowsQuery', array( &$tables, &$fields, &$conds,
+						&$options, &$join_conds ) );
 
-		return $this->_db->resultObject( $this->_db->query( $sql ) );
+		return $db->select( $tables, $fields, $conds, __METHOD__,
+					$options, $join_conds );
 	}
 
 	function fetchReferenceData( $rows ) {
@@ -869,7 +867,7 @@ class WikiOAIRecord extends OAIRecord {
 
 	function renderUpload() {
 		$fname = 'WikiOAIRecord::renderUpload';
-		$db =& wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 		$imageRow = $db->selectRow( 'image',
 			array( 'img_name', 'img_size', 'img_description',
 				'img_user', 'img_user_text', 'img_timestamp' ),

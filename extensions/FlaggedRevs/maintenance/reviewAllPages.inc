@@ -21,6 +21,7 @@ function autoreview_current( $user, $db ) {
 	$blockEnd = $start + $BATCH_SIZE - 1;
 	$count = 0;
 	$changed = 0;
+	$flags = FlaggedRevs::quickTags( FR_SIGHTED ); // Assume basic level
 	while( $blockEnd <= $end ) {
 		echo "...doing page_id from $blockStart to $blockEnd\n";
 		$cond = "page_id BETWEEN $blockStart AND $blockEnd";
@@ -32,15 +33,10 @@ function autoreview_current( $user, $db ) {
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$rev = Revision::newFromId( $row->page_latest );
 			# Is it already reviewed?
-			$frev = FlaggedRevision::newFromTitle( $title, $row->page_latest, FR_FOR_UPDATE );
+			$frev = FlaggedRevision::newFromTitle( $title, $row->page_latest, FR_MASTER );
 			# Should exist, but to be safe...
-			if( !$frev && $rev && FlaggedRevs::isPageReviewable($title) ) {
+			if( !$frev && $rev && FlaggedRevs::inReviewNamespace($title) ) {
 				$text = $rev->getText();
-				# Assume basic flagging level
-				$flags = array();
-				foreach( FlaggedRevs::getDimensions() as $tag => $minQL ) {
-					$flags[$tag] = 1;
-				}
 				$article = new Article( $title );
 				FlaggedRevs::autoReviewEdit( $article, $user, $text, $rev, $flags, true );
 				$changed++;

@@ -61,6 +61,7 @@ $mwPathS = $mwPath.'skins/';
 
 /** Variable to get user input */
 $input = '';
+$exclude = '';
 
 #
 # Functions
@@ -128,8 +129,10 @@ function getSvnRevision( $dir ) {
  * @param $currentVersion String: Version number of the software
  * @param $svnstat String: path to the svnstat file
  * @param $input String: Path to analyze.
+ * @param $exclude String: Additionals path regex to exlcude 
+ *                 (LocalSettings.php, AdminSettings.php and .svn directories are always excluded)
  */
-function generateConfigFile( $doxygenTemplate, $outputDirectory, $stripFromPath, $currentVersion, $svnstat, $input ){
+function generateConfigFile( $doxygenTemplate, $outputDirectory, $stripFromPath, $currentVersion, $svnstat, $input, $exclude ){
 	global $tmpPath;
 
 	$template = file_get_contents( $doxygenTemplate );
@@ -141,6 +144,7 @@ function generateConfigFile( $doxygenTemplate, $outputDirectory, $stripFromPath,
 		'{{CURRENT_VERSION}}'  => $currentVersion,
 		'{{SVNSTAT}}'          => $svnstat,
 		'{{INPUT}}'            => $input,
+		'{{EXCLUDE}}'          => $exclude,
 	);
 	$tmpCfg = str_replace( array_keys( $replacements ), array_values( $replacements ), $template );
 	$tmpFileName = $tmpPath . 'mwdocgen'. rand() .'.tmp';
@@ -168,6 +172,7 @@ if( is_array( $argv ) && isset( $argv[1] ) ) {
 			$file = $argv[2];
 		}
 		break;
+	case '--no-extensions': $input = 6; break;
 	}
 }
 
@@ -182,6 +187,7 @@ Several documentation possibilities:
  3 : only maintenance
  4 : only skins
  5 : only a given file
+ 6 : all but the extensions directory
 OPTIONS;
 	while ( !is_numeric($input) )
 	{
@@ -203,6 +209,9 @@ case 5:
 		$file = readaline( "Enter file name $mwPath" );
 	}
 	$input = $mwPath.$file;
+case 6:
+	$input = $mwPath;
+	$exclude = 'extensions';
 }
 
 $versionNumber = getSvnRevision( $input );
@@ -213,7 +222,7 @@ if( $versionNumber === false ){ #Not using subversion ?
 	$version = "trunk (r$versionNumber)";
 }
 
-$generatedConf = generateConfigFile( $doxygenTemplate, $doxyOutput, $mwPath, $version, $svnstat, $input );
+$generatedConf = generateConfigFile( $doxygenTemplate, $doxyOutput, $mwPath, $version, $svnstat, $input, $exclude );
 $command = $doxygenBin . ' ' . $generatedConf;
 
 echo <<<TEXT
@@ -233,6 +242,6 @@ echo <<<TEXT
 Doxygen execution finished.
 Check above for possible errors.
 
-You might want to deleted the temporary file $generatedConf
+You might want to delete the temporary file $generatedConf
 
 TEXT;

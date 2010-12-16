@@ -20,6 +20,7 @@ if( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
 // Extension credits.
 $wgExtensionCredits[ 'other' ][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CategoryStepper',
 	'description'    => 'Displays a category stepper box allowing one to navigate forward and backwards alphabetically through one or more categories a page is in.',
 	'descriptionmsg' => 'categorystepper-desc',
@@ -67,7 +68,7 @@ function efCategoryStepper( $out, $text ) {
 	wfLoadExtensionMessages( 'CategoryStepper' );
 
 	// Open a database connection.
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 
 	// If $wgCategoryStepper is not an array then fallback to the MediaWiki
 	// namespace page.

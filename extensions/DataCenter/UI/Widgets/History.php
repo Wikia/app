@@ -83,9 +83,7 @@ class DataCenterWidgetHistory extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $wgUser;
 		// Gets current path
 		$path = DataCenterPage::getPath();
@@ -388,9 +386,7 @@ class DataCenterWidgetHistory extends DataCenterWidget {
 		return $xmlOutput;
 	}
 
-	public static function compareChanges(
-		$data
-	) {
+	public static function compareChanges( $data ) {
 		global $wgOut;
 		$path = DataCenterPage::getPath();
 		$path['parameter'] = array(

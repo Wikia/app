@@ -98,19 +98,23 @@ $messages = array(
 'category-media-header' => 'Manga midya sa "$1"',
 'category-empty'        => "''Wara it manga artikolo okon medya ang katergorya nga dya.''",
 
-'about'          => 'Angut sa Iwan',
-'article'        => 'Pahina kasudlan',
-'newwindow'      => "(gabokas sa bag-o nga ''window'')",
-'cancel'         => 'Kanselar',
+'about'         => 'Angut sa Iwan',
+'article'       => 'Pahina kasudlan',
+'newwindow'     => "(gabokas sa bag-o nga ''window'')",
+'cancel'        => 'Kanselar',
+'moredotdotdot' => 'Raku pa...',
+'mypage'        => 'Akun nga pahina',
+'anontalk'      => "Istoryahun ang dya nga ''IP''",
+
+# Cologne Blue skin
 'qbfind'         => 'Sagap',
 'qbbrowse'       => 'Bilid',
 'qbedit'         => 'Iislan',
 'qbpageoptions'  => 'Dya nga Pahina',
 'qbpageinfo'     => 'Konteksto',
 'qbspecialpages' => 'Manga espesyal nga pahina',
-'moredotdotdot'  => 'Raku pa...',
-'mypage'         => 'Akun nga pahina',
-'anontalk'       => "Istoryahun ang dya nga ''IP''",
+'faq'            => 'FAQ',
+'faqpage'        => 'Project:FAQ',
 
 'errorpagetitle'    => 'Sayup',
 'returnto'          => 'Balik sa $1.',
@@ -157,8 +161,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:Panginwala nga Pangtanan',
 'edithelp'             => 'Panoytoy sa Pag-ilis',
 'edithelppage'         => 'Help:Pag-ilis',
-'faq'                  => 'FAQ',
-'faqpage'              => 'Project:FAQ',
 'mainpage'             => 'Pono nga Pahina',
 'mainpage-description' => 'Pono nga Pahina',
 'privacy'              => 'Surundun sa Privacy',
@@ -197,7 +199,6 @@ Lantawa sa [[Special:Version|version kang page]].',
 # General errors
 'error'                => 'Sayup',
 'databaseerror'        => 'Sayup sa database',
-'nodb'                 => "Indi mapili ang ''database'' nga $1",
 'readonly'             => "Napintalan ang ''database''",
 'internalerror'        => 'Sayup internal',
 'internalerror_info'   => 'Sayup internal: $1',
@@ -213,8 +214,6 @@ Lantawa sa [[Special:Version|version kang page]].',
 'remembermypassword' => "Tandaan ang akun nga ''log-in'' sa dya nga ''computer''",
 'nologinlink'        => "Himo ka sangka ''account''",
 'createaccount'      => "Himo ka ''account''",
-'youremail'          => 'E-mail:',
-'email'              => 'E-mail',
 
 # Edit pages
 'preview' => 'Bilid',
@@ -222,6 +221,8 @@ Lantawa sa [[Special:Version|version kang page]].',
 # Preferences page
 'skin-preview'      => 'Bilid',
 'searchresultshead' => 'Sagap',
+'youremail'         => 'E-mail:',
+'email'             => 'E-mail',
 
 # Recent changes
 'hide' => 'Itago',
@@ -232,11 +233,14 @@ Lantawa sa [[Special:Version|version kang page]].',
 # Special:ListFiles
 'imgfile' => 'inayap',
 
+# File description page
+'file-anchor-link' => 'Inayap',
+
 # File deletion
 'filedelete-submit' => 'Para',
 
-'brokenredirects-edit'   => '(Iislan)',
-'brokenredirects-delete' => '(para)',
+'brokenredirects-edit'   => 'Iislan',
+'brokenredirects-delete' => 'para',
 
 'withoutinterwiki-submit' => 'Ipakita',
 
@@ -264,6 +268,7 @@ Lantawa sa [[Special:Version|version kang page]].',
 # Undelete
 'undelete-search-submit' => 'Sagap',
 
+'sp-contributions-talk'   => 'Wakal',
 'sp-contributions-submit' => 'Sagap',
 
 # What links here

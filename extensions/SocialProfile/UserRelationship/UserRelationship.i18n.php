@@ -230,32 +230,21 @@ $messages['niu'] = array(
 	'ur-login' => 'Hu ki loto',
 );
 
-/** Veps (Vepsan kel')
- * @author Triple-ADHD-AS
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
-	'ur-main-page' => 'Pälehtpol’',
-	'ur-add-personal-message' => 'Ližata personaline tedotuz',
-	'ur-previous' => 'edel.',
-	'ur-next' => "jäl'gh.",
-	'ur-remove' => 'Čuta poiš',
-	'ur-cancel' => 'Heitta pätand',
-	'ur-login' => 'Kirjutadas sistemha',
-	'ur-add-error-message-pending-request-title' => 'Tirpand!',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  * @author Naudefj
  */
 $messages['af'] = array(
 	'ur-main-page' => 'Tuisblad',
+	'ur-add-friend' => 'As vriend byvoeg',
+	'ur-add-foe' => 'Voeg by as teenstander',
 	'ur-previous' => 'vorige',
 	'ur-next' => 'volgende',
 	'ur-remove' => 'Skrap',
 	'ur-cancel' => 'Kanselleer',
 	'ur-login' => 'Inteken',
+	'ur-accept' => 'Aanvaar',
+	'ur-reject' => 'Verwerp',
 );
 
 /** Amharic (አማርኛ)
@@ -285,8 +274,12 @@ $messages['ar'] = array(
 	'ur-main-page' => 'الصفحة الرئيسية',
 	'ur-your-profile' => 'ملفك',
 	'ur-backlink' => '&lt; رجوع إلى ملف $1',
-	'ur-relationship-count-foes' => '$1 لديه $2 {{PLURAL:$2|عدو|عدو}}. تريد المزيد من الأعداء؟ <a href="$3">ادعهم.</a>',
-	'ur-relationship-count-friends' => '$1 لديه $2 {{PLURAL:$2|صديق|صديق}}. تريد المزيد من الأصدقاء؟ <a href="$3">ادعهم.</a>',
+	'ur-relationship-count-foes' => '{{PLURAL:$2|ليس ل$1 أي أعداء|ل$1 عدو واحد|ل$1 عدوان|ل$1 $2 أعداء|ل$1 $2 عدوًا|ل$1 $2 عدو}}.
+أتريد المزيد من الأعداء؟
+<a href="$3">ادعهم.</a>',
+	'ur-relationship-count-friends' => '{{PLURAL:$2|ليس ل$1 أي أصدقاء|ل$1 صديق واحد|ل$1 صديقان|ل$1 $2 أصدقاء|ل$1 $2 صديقًا|ل$1 $2 عدو}}.
+أتريد المزيد من الأصدقاء؟
+<a href="$3">ادعهم.</a>',
 	'ur-add-friends' => '  تريد المزيد من الأصدقاء؟ <a href="$1">أدعهم</a>',
 	'ur-add-friend' => 'أضف كصديق',
 	'ur-add-foe' => 'أضف كعدو',
@@ -313,8 +306,8 @@ $messages['ar'] = array(
 	'ur-remove-error-not-loggedin-foe' => 'يجب أن تكون مسجل الدخول لإزالة عدو.',
 	'ur-remove-error-not-loggedin-friend' => 'يجب أن تكون مسجل الدخول لإزالة صديق.',
 	'ur-remove' => 'أزل',
-	'ur-cancel' => 'إلغاء',
-	'ur-login' => 'دخول',
+	'ur-cancel' => 'ألغِ',
+	'ur-login' => 'لُج',
 	'ur-add-title-foe' => 'هل تريد إضافة $1 كعدوك؟',
 	'ur-add-title-friend' => 'هل تريد إضافة $1 كصديقك؟',
 	'ur-add-message-foe' => 'أنت على وشك إضافة $1 كعدوك.
@@ -447,6 +440,25 @@ $2 أزالك كعدو في {{SITENAME}}!
 وغير إعداداتك لتعطيل إخطارات البريد الإكتروني.',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'ur-error-page-title' => 'ܐܘܝ!',
+	'ur-main-page' => 'ܦܐܬܐ ܪܫܝܬܐ',
+	'ur-your-profile' => 'ܠܦܦܐ ܕܝܠܟ',
+	'ur-add-friend' => 'ܐܘܣܦ ܐܝܟ ܚܒܪܐ',
+	'ur-add-foe' => 'ܐܘܣܦ ܐܝܟ ܒܥܠܕܒܒܐ',
+	'ur-remove-relationship-friend' => 'ܠܚܝ ܐܝܟ ܚܒܪܐ',
+	'ur-remove-relationship-foe' => 'ܠܚܝ ܐܝܟ ܒܥܠܕܒܒܐ',
+	'ur-remove-relationship-title-confirm-foe' => 'ܠܚܐ ܐܢܬ  $1 ܐܝܟ ܒܥܠܕܒܒܟ',
+	'ur-remove-relationship-title-confirm-friend' => 'ܠܚܐ ܐܢܬ  $1 ܐܝܟ ܚܒܪܟ',
+	'ur-remove-error-message-remove-yourself' => 'ܠܐ ܡܨܐ ܐܢܬ ܠܠܚܝܐ ܕܢܦܫܟ',
+	'ur-remove' => 'ܠܚܝ',
+	'ur-cancel' => 'ܒܛܘܠ',
+	'ur-login' => 'ܥܘܠ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Ghaly
  * @author Meno25
@@ -457,7 +469,7 @@ $messages['arz'] = array(
 	'ur-already-submitted' => 'طلبك تم إرساله',
 	'ur-error-page-title' => 'آه!',
 	'ur-error-title' => 'آه، أنت أخذت منحنيا خاطئا!',
-	'ur-error-message-no-user' => 'لا يمكننا استكمال طلبك، لأنه لا يوجد مستخدم بهذا الاسم.',
+	'ur-error-message-no-user' => 'لا يمكننا استكمال طلبك، علشان مافيش يوزر بالاسم ده.',
 	'ur-main-page' => 'الصفحة الرئيسية',
 	'ur-your-profile' => 'ملفك',
 	'ur-backlink' => '&lt; رجوع إلى ملف $1',
@@ -466,7 +478,7 @@ $messages['arz'] = array(
 	'ur-add-friends' => '  تريد المزيد من الأصدقاء؟ <a href="$1">أدعهم</a>',
 	'ur-add-friend' => 'أضف كصديق',
 	'ur-add-foe' => 'أضف كعدو',
-	'ur-add-no-user' => 'لا مستخدم تم اختياره.
+	'ur-add-no-user' => 'و لا يوزر تم اختياره.
 من فضلك اطلب الأصدقاء/الأعداء من خلال الوصلة الصحيحة.',
 	'ur-add-personal-message' => 'إضافة رسالة شخصية',
 	'ur-remove-relationship-friend' => 'إزالة كصديق',
@@ -545,7 +557,7 @@ $3
 هل تريد التوقف عن تلقى رسائل بريد إلكترونى مننا؟
 
 اضغط $4
-وغير إعداداتك لتعطيل إخطارات البريد الإلكتروني.',
+وغير إعداداتك لتعطيل إخطارات البريد الإلكترونى.',
 	'foe_request_subject' => 'إنها الحرب! $1 أضافك كعدو فى {{SITENAME}}!',
 	'foe_request_body' => 'مرحبا $1:
 
@@ -562,7 +574,7 @@ $3
 هل تريد التوقف عن تلقى رسائل بريد إلكترونى مننا؟
 
 اضغط $4
-وغير إعداداتك لتعطيل إخطارات البريد الإلكتروني.',
+وغير إعداداتك لتعطيل إخطارات البريد الإلكترونى.',
 	'friend_accept_subject' => '$1 قبل طلب صداقتك فى {{SITENAME}}!',
 	'friend_accept_body' => 'مرحبا $1:
 
@@ -577,7 +589,7 @@ $2 قبل طلب صداقتك فى {{SITENAME}}!
 هل تريد التوقف عن تلقى رسائل بريد إلكترونى مننا؟
 
 اضغط $4
-وغير إعداداتك لتعطيل إخطارات البريد الإلكتروني.',
+وغير إعداداتك لتعطيل إخطارات البريد الإلكترونى.',
 	'foe_accept_subject' => 'إنه يعمل! $1 قبل طلب عداوتك فى {{SITENAME}}!',
 	'foe_accept_body' => 'مرحبا $1:
 
@@ -592,7 +604,7 @@ $2 قبل طلب عداوتك فى {{SITENAME}}!
 هل تريد التوقف عن تلقى رسائل بريد إلكترونى مننا؟
 
 اضغط $4
-وغير إعداداتك لتعطيل إخطارات البريد الإكتروني.',
+وغير إعداداتك لتعطيل إخطارات البريد الإكترونى.',
 	'friend_removed_subject' => 'كلا! أزالك $1 كصديق على {{SITENAME}}!',
 	'friend_removed_body' => 'مرحبا $1:
 
@@ -605,7 +617,7 @@ $2 أزالك كصديق فى {{SITENAME}}!
 هل تريد التوقف عن تلقى رسائل بريد إلكترونى مننا؟
 
 اضغط $4
-وغير إعداداتك لتعطيل إخطارات البريد الإلكتروني.',
+وغير إعداداتك لتعطيل إخطارات البريد الإلكترونى.',
 	'foe_removed_subject' => 'هاه! $1 أزالك كعدو فى {{SITENAME}}!',
 	'foe_removed_body' => 'مرحبا $1:
 
@@ -620,7 +632,7 @@ $2 أزالك كعدو فى {{SITENAME}}!
 هل تريد التوقف عن تلقى رسائل بريد إلكترونى مننا؟
 
 اضغط $4
-وغير إعداداتك لتعطيل إخطارات البريد الإكتروني.',
+وغير إعداداتك لتعطيل إخطارات البريد الإكترونى.',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -672,7 +684,7 @@ $messages['be-tarask'] = array(
 	'ur-add-title-friend' => 'Вы жадаеце дадаць $1 у сьпіс сяброў?',
 	'ur-add-message-foe' => 'Зараз Вы дададзіце $1 у сьпіс ворагаў.
 Мы паведамім $1, каб пацьвердзіць Вашую варожасьць.',
-	'ur-add-message-friend' => 'Зараз Вы дададзіце $1 у сьпіс сяброў. 
+	'ur-add-message-friend' => 'Зараз Вы дададзіце $1 у сьпіс сяброў.
 Мы паведамім $1, каб пацьвердзіць Вашае сяброўства.',
 	'ur-add-button-foe' => 'Дадаць у ворагі',
 	'ur-add-button-friend' => 'Дадаць у сябры',
@@ -680,7 +692,7 @@ $messages['be-tarask'] = array(
 	'ur-add-sent-title-friend' => 'Вы даслалі запыт аб сяброўстве да $1!',
 	'ur-add-sent-message-foe' => 'Ваш запыт аб варожасьці быў дасланы $1 для пацьверджаньня.
 Калі $1 пацьвердзіць Ваш запыт, Вы атрымаеце ліст па электроннай пошце',
-	'ur-add-sent-message-friend' => 'Ваш запыт аб сяброўстве быў дасланы $1 для пацьверджаньня. 
+	'ur-add-sent-message-friend' => 'Ваш запыт аб сяброўстве быў дасланы $1 для пацьверджаньня.
 Калі $1 пацьвердзіць Ваш запыт, Вы атрымаеце ліст па электроннай пошце',
 	'ur-add-error-message-no-user' => 'Удзельніка, якога Вы спрабуеце дадаць, не існуе.',
 	'ur-add-error-message-blocked' => 'Вы заблякаваныя і ня можаце дадаваць новых сяброў і ворагаў.',
@@ -690,7 +702,7 @@ $messages['be-tarask'] = array(
 	'ur-add-error-message-pending-request-title' => 'Цярплівасьць!',
 	'ur-add-error-message-pending-friend-request' => 'Ваш запыт аб сяброўстве з $1 чакае пацьверджаньня.
 Мы паведамім Вам, калі $1 пацьвердзіць Ваш запыт.',
-	'ur-add-error-message-pending-foe-request' => 'Ваш запыт аб варожасьці з $1 чакае пацьверджаньня. 
+	'ur-add-error-message-pending-foe-request' => 'Ваш запыт аб варожасьці з $1 чакае пацьверджаньня.
 Мы паведамім Вам, калі $1 пацьвердзіць Ваш запыт.',
 	'ur-add-error-message-not-loggedin-foe' => 'Вам неабходна ўвайсьці ў сыстэму, каб дадаць ворага',
 	'ur-add-error-message-not-loggedin-friend' => 'Вам неабходна ўвайсьці ў сыстэму, каб дадаць сябра',
@@ -875,7 +887,7 @@ $messages['bg'] = array(
 	'friend_request_subject' => '$1 ви добави като свой приятел в {{SITENAME}}!',
 	'friend_request_body' => 'Здравейте $1:
 
-$2 ви добави в списъка си с приятели в {{SITENAME}}. Бихме искали да се уверим, 
+$2 ви добави в списъка си с приятели в {{SITENAME}}. Бихме искали да се уверим,
 че това наистина е така и вие двамата наистина сте приятели.
 
 За потвърждаване на приятелството, щракнете върху долната препратка:
@@ -940,17 +952,279 @@ $2 ви премахна от списъка си с неприятели в {{S
 за промяна на настройките и изключване на възможността за оповестяване по е-поща.',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'ur-main-page' => 'প্রধান পাতা',
+	'ur-your-profile' => 'আপনার বৃত্তান্ত',
+	'ur-previous' => 'পূর্ববর্তী',
+	'ur-next' => 'পরবর্তী',
+	'ur-remove' => 'অপসারণ',
+	'ur-cancel' => 'বাতিল',
+	'ur-login' => 'প্রবেশ',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'viewrelationships' => 'Gwelet an darempred',
+	'viewrelationshiprequests' => 'Gwelet ar goulennoù daremprediñ',
+	'ur-already-submitted' => 'Kaset eo bet ho koulenn',
+	'ur-error-page-title' => 'Hopala !',
+	'ur-error-title' => "Hopala, kemeret hoc'h eus un hent fall !",
+	'ur-error-message-no-user' => "Ne c'hallomp ket respont d'ho koulenn rak n'eus implijer ebet en anv-mañ.",
+	'ur-main-page' => 'Pajenn degemer',
+	'ur-your-profile' => 'Ho profil',
+	'ur-backlink' => '&lt; Distreiñ da brofil $1',
+	'ur-relationship-count-foes' => '$1 en deus $2 {{PLURAL:$2|enebour|enebour}}.
+C\'hoant hoc\'h eus da gaout muioc\'h a enebourien ?
+<a href="$3">Pedit anezho.</a>',
+	'ur-relationship-count-friends' => '$1 en deus $2 {{PLURAL:$2|mignon|mignon}}.
+C\'hoant hoc\'h eus da gaout muioc\'h a vignoned ?
+<a href="$3">Pedit anezho.</a>',
+	'ur-add-friends' => 'Muioc\'h a vignoned ho po ?
+<a href="$1">Pedit anezho</a>',
+	'ur-add-friend' => 'Ouzhpennañ evel mignon',
+	'ur-add-foe' => 'Ouzhpennañ evel enebour',
+	'ur-add-no-user' => "N'eus implijer diuzet ebet.
+Goulennit mignoned pe enebourien dre al liamm reizh, mar plij.",
+	'ur-add-personal-message' => 'Ouzhpennañ ur gemennadenn bersonel',
+	'ur-remove-relationship-friend' => 'Lemel evel mignon',
+	'ur-remove-relationship-foe' => 'Lemel evel enebour',
+	'ur-give-gift' => 'Reiñ ur prof',
+	'ur-previous' => 'kent',
+	'ur-next' => 'da-heul',
+	'ur-remove-relationship-title-foe' => "Ha c'hoant hoc'h eus da lemel $1 eus hoc'h enebourien ?",
+	'ur-remove-relationship-title-confirm-foe' => "Lamet hoc'h eus $1 eus hoc'h enebourien",
+	'ur-remove-relationship-title-friend' => "Ha c'hoant hoc'h eus da lemel $1 eus ho mignoned ?",
+	'ur-remove-relationship-title-confirm-friend' => "Lamet hoc'h eus $1 eus ho mignoned",
+	'ur-remove-relationship-message-foe' => "Goulennet hoc'h eus lemel $1 eus hoc'h enebourien, pouezit war « $2 » evit kadarnaat.",
+	'ur-remove-relationship-message-confirm-foe' => "Lamet hoc'h eus $1 eus hoc'h enebourien.",
+	'ur-remove-relationship-message-friend' => "Goulennet hoc'h eus lemel $1 eus ho mignoned, pouezit war « $2 » evit kadarnaat.",
+	'ur-remove-relationship-message-confirm-friend' => "Lamet hoc'h eus $1 eus ho mignoned.",
+	'ur-remove-error-message-no-relationship' => "N'hoc'h eus darempred ebet gant $1.",
+	'ur-remove-error-message-remove-yourself' => "Ne c'hallit ket ho lemel hoc'h-unan.",
+	'ur-remove-error-message-pending-foe-request' => "Bez' hoc'h eus ur goulenn enebouriezh war c'hortoz gant $1.",
+	'ur-remove-error-message-pending-friend-request' => "Bez hoc'h eus ur goulenn mignoniezh war c'hortoz gant $1.",
+	'ur-remove-error-not-loggedin-foe' => "Ret eo deoc'h bezañ kevreet evit lemel un enebour.",
+	'ur-remove-error-not-loggedin-friend' => "Ret eo deoc'h bezañ kevreet evit lemel ur mignon.",
+	'ur-remove' => 'Lemel',
+	'ur-cancel' => 'Nullañ',
+	'ur-login' => 'Kevreañ',
+	'ur-add-title-foe' => "Ha c'hoant hoc'h eus da ouzhpennañ $1 d'hoc'h enebourien ?",
+	'ur-add-title-friend' => "Ha c'hoant hoc'h eus da ouzhpennañ $1 d'ho mignoned ?",
+	'ur-add-message-foe' => "Emaoc'h war-nes ouzhpennañ $1 d'hoc'h enebourien.
+Kemenn a raimp $1 evit kadarnaat ho troukrañs.",
+	'ur-add-message-friend' => "Emaoc'h war-nes ouzhpennañ $1 d'ho mignoned.
+Kemenn a raimp $1 evit kadarnaat ho mignoniezh.",
+	'ur-add-button-foe' => 'Ouzhpennañ evel enebour',
+	'ur-add-button-friend' => 'Ouzhpennañ evel mignon',
+	'ur-add-sent-title-foe' => 'Kaset hon eus ho koulenn enebouriezh da $1 !',
+	'ur-add-sent-title-friend' => 'Kaset hon eus ho koulenn mignoniezh da $1 !',
+	'ur-add-sent-message-foe' => 'Kaset eo bet ho koulenn enebouriezh da $1 evit bezañ kadarnaet.
+Ma kadarna $1 ho koulenn e resevot ur postel heuliañ',
+	'ur-add-sent-message-friend' => 'Kaset eo bet ho koulenn mignoniezh da $1 evit bezañ kadarnaet.
+Ma kadarna $1 ho koulenn e resevot ur postel heuliañ',
+	'ur-add-error-message-no-user' => "N'eus ket eus an implijer a glaskit ouzhpennañ.",
+	'ur-add-error-message-blocked' => "Stanket oc'h evit bremañ ha ne c'hallit ket ouzhpennañ mignoned pe enebourien.",
+	'ur-add-error-message-yourself' => "Ne c'hallit ket hoc'h ouzhpennañ hoc'h-unan evel mignon pe enebour.",
+	'ur-add-error-message-existing-relationship-foe' => "Enebour oc'h da $1 dija.",
+	'ur-add-error-message-existing-relationship-friend' => "Mignon oc'h gant $1 dija.",
+	'ur-add-error-message-pending-request-title' => 'Ho pezet pasianted !',
+	'ur-add-error-message-pending-friend-request' => "Bez' ho c'h eus ur goulenn mignoniezh war c'hortoz gant $1.
+Ho kemenn a raimp pa vo kadarnaet ho koulenn gant $1.",
+	'ur-add-error-message-pending-foe-request' => "Bez' ho c'h eus ur goulenn enebouriezh war c'hortoz gant $1.
+Ho kemenn a raimp pa vo kadarnaet ho koulenn gant $1.",
+	'ur-add-error-message-not-loggedin-foe' => "Ret eo deoc'h bezañ kevreet evit ouzhpennañ un enebour",
+	'ur-add-error-message-not-loggedin-friend' => "Ret eo deoc'h bezañ kevreet evit ouzhpennañ ur mignon",
+	'ur-requests-title' => 'Goulennoù daremprediñ',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> a fell dezhañ bezañ hoc\'h enebour.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> a fell dezhañ bezañ ho mignon.',
+	'ur-accept' => 'Asantiñ',
+	'ur-reject' => 'Disteurel',
+	'ur-no-requests-message' => "N'hoc'h eus ket goulennoù mignoniezh pe enebouriezh.
+Ma fell deoc'h kaout muioc'h a vignoned, <a href=\"\$1\">pedit anezho !</a>",
+	'ur-requests-added-message-foe' => "Ouzhpennet hoc'h eus $1 evel enebour.",
+	'ur-requests-added-message-friend' => "Ouzhpennet hoc'h eus $1 evel mignon.",
+	'ur-requests-reject-message-friend' => "Distaolet hoc'h eus $1 evel mignon.",
+	'ur-requests-reject-message-foe' => "Distaolet hoc'h eus $1 evel enebour.",
+	'ur-title-foe' => 'Roll enebourien $1',
+	'ur-title-friend' => 'Roll mignoned $1',
+	'friend_request_subject' => "$1 en deus hoc'h ouzhpennet evel mignon war {{SITENAME}} !",
+	'friend_request_body' => "Salud deoc'h, $1 :
+
+$2 en deus ho lakaet da vignon war {{SITENAME}}. C'hoant hon eus da vezañ sur ez oc'h mignoned ho-taou.
+
+Klikit war al liamm-mañ evit kadarnaat ho mignoniezh, mar plij :
+$3
+
+Trugarez deoc'h.
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war $4
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dre bostel.",
+	'foe_request_subject' => "Digor eo ar brezel ! $1 en deus hoc'h ouzhpennet d'e enebourien war {{SITENAME}}!",
+	'foe_request_body' => "Salud deoc'h, $1.
+
+Emañ $2 o paouez ho lakaat da enebour war {{SITENAME}}. C'hoant hon eus da vezañ sur ez oc'h enebourien touet.
+
+Klikit war al liamm-mañ, mar plij, evit kadarnaat hoc'h enebouriezh.
+
+$3
+
+Trugarez deoc'h
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war $4
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dre bostel.",
+	'friend_accept_subject' => "$1 en deus asantet d'ho koulenn mignoniezh war {{SITENAME}} !",
+	'friend_accept_body' => "Salud deoc'h, $1.
+
+$2 en deus asantet d'ho koulenn mignoniezh war  {{SITENAME}} !
+
+Kit da welet pajenn $2 e $3
+
+Trugarez deoc'h,
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war $4
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dre bostel.",
+	'foe_accept_subject' => "Graet eo ! $1 en deus asantet d'ho koulenn enebouriezh war {{SITENAME}} !",
+	'foe_accept_body' => "Salud deoc'h, $1.
+
+$2 en deus asantet d'ho koulenn enebouriezh war  {{SITENAME}} !
+
+Kit da welet pajenn $2 e $3
+
+Trugarez deoc'h,
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war $4
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dre bostel.",
+	'friend_removed_subject' => 'Satordallik ! $1 en deus ho lmaet eus e vignoned war {{SITENAME}} !',
+	'friend_removed_body' => "Salud deoc'h, $1.
+
+$2 en deus ho lamet eus e vignoned war  {{SITENAME}} !
+
+Trugarez deoc'h,
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war $4
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dre bostel.",
+	'foe_removed_subject' => 'You ! $1 en deus ho lamet eus e enebourien war {{SITENAME}} !',
+	'foe_removed_body' => "Salud deoc'h, $1.
+
+$2 en deus ho lamet eus e enebourien war {{SITENAME}}!
+
+Marteze e teuot da vezañ mignoned ?
+
+Trugarez deoc'h
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war $4
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dre bostel.",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'viewrelationships' => 'Pogledaj vezu',
+	'viewrelationshiprequests' => 'Pogledaj zahtjeve za vezu',
+	'ur-already-submitted' => 'Vaš zahtjev je poslan',
+	'ur-error-page-title' => 'Ups!',
+	'ur-error-title' => 'Ups, odavde ne možete dalje!',
+	'ur-error-message-no-user' => 'Ne možemo završiti Vaš zahtjev, jer ne postoji nijedan korisnik s ovim imenom.',
 	'ur-main-page' => 'Početna stranica',
 	'ur-your-profile' => 'Vaš profil',
+	'ur-backlink' => '&lt; Nazad na profil korisnika $1',
+	'ur-relationship-count-foes' => '$1 ima $2 {{PLURAL:$2|neprijatelja|neprijatelja}}.
+Želite više neprijatelja?
+<a href="$3">Pozovite ih.</a>',
+	'ur-relationship-count-friends' => '$1 ima $2 {{PLURAL:$2|prijatelja|prijatelja}}.
+Želite više prijatelja?
+<a href="$3">Pozovite ih.</a>',
+	'ur-add-friends' => '  Želite još prijatelja?
+<a href="$1">Pozovite ih</a>',
+	'ur-add-friend' => 'Dodaj kao prijatelja',
+	'ur-add-foe' => 'Dodaj kao neprijatelja',
+	'ur-add-no-user' => 'Nije odabran korisnik.
+Molimo zahtjevajte prijatelje/neprijatelje preko ispravnog linka.',
+	'ur-add-personal-message' => 'Dodaj ličnu poruku',
+	'ur-remove-relationship-friend' => 'Ukloni kao prijatelja',
+	'ur-remove-relationship-foe' => 'Ukloni kao neprijatelja',
+	'ur-give-gift' => 'Pošalji poklon',
 	'ur-previous' => 'preth',
 	'ur-next' => 'slijedeći',
+	'ur-remove-relationship-title-foe' => 'Da li želite ukloniti $1 kao Vašeg neprijatelja?',
+	'ur-remove-relationship-title-confirm-foe' => 'Ukonili ste $1 kao neprijatelja',
+	'ur-remove-relationship-title-friend' => 'Da li želite ukloniti $1 kao Vašeg prijatelja?',
+	'ur-remove-relationship-title-confirm-friend' => 'Uklonili ste $1 kao prijatelja',
+	'ur-remove-relationship-message-confirm-foe' => 'Uspješno ste uklonili $1 kao Vašeg neprijatelja.',
+	'ur-remove-error-message-no-relationship' => 'Nemate vezu sa $1.',
+	'ur-remove-error-message-remove-yourself' => 'Ne možete ukloniti samog sebe.',
+	'ur-remove-error-not-loggedin-foe' => 'Morate biti prijavljeni da biste uklonili neprijatelja.',
 	'ur-remove' => 'Ukloni',
 	'ur-cancel' => 'Odustani',
 	'ur-login' => 'Prijava',
+	'ur-add-title-foe' => 'Da li želite dodati $1 kao Vašeg neprijatelja?',
+	'ur-add-title-friend' => 'Da li želite dodati $1 kao svog prijatelja?',
+	'ur-add-button-foe' => 'Dodaj kao neprijatelja',
+	'ur-add-button-friend' => 'Dodaj kao prijatelja',
+	'ur-add-error-message-yourself' => 'Ne možete dodati sebe ni kao prijatelja ni kao neprijatelja.',
+	'ur-add-error-message-existing-relationship-foe' => 'Već ste neprijatelj sa $1.',
+	'ur-add-error-message-existing-relationship-friend' => 'Već ste prijatelj sa $1.',
+	'ur-add-error-message-pending-request-title' => 'Strpljenja!',
+	'ur-add-error-message-not-loggedin-foe' => 'Morate biti prijavljeni da biste dodali neprijatelja',
+	'ur-requests-title' => 'Zahtjevi za vezu',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> želi da bude Vaš neprijatelj.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> želi da bude Vaš prijatelj.',
+	'ur-accept' => 'Prihvati',
+	'ur-reject' => 'Odbij',
+	'ur-requests-reject-message-friend' => 'Odbili ste $1 kao Vašeg prijatelja.',
+	'ur-requests-reject-message-foe' => 'Odbili ste $1 kao Vašeg neprijatelja.',
+	'ur-title-foe' => 'Spisak neprijatelja korisnika $1',
+	'ur-title-friend' => 'Spisak prijatelja korisnika $1',
+	'foe_request_subject' => 'Rat je! $1 je dodao Vas kao neprijatelja na {{SITENAME}}!',
+	'friend_removed_subject' => 'O ne! $1 je uklonio Vas kao prijatelja na {{SITENAME}}!',
+	'foe_removed_subject' => 'Super! $1 je uklonio Vas kao neprijatelja na {{SITENAME}}!',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'ur-main-page' => 'Pàgina principal',
+	'ur-your-profile' => 'El vostre perfil',
+	'ur-add-friend' => 'Afegeix com a amic',
+	'ur-previous' => 'ant',
+	'ur-next' => 'seg',
+	'ur-remove' => 'Elimina',
+	'ur-cancel' => 'Canceŀla',
+	'ur-accept' => 'Accepta',
+	'ur-reject' => 'Rebutja',
 );
 
 /** Chamorro (Chamoru)
@@ -958,6 +1232,23 @@ $messages['bs'] = array(
  */
 $messages['ch'] = array(
 	'ur-main-page' => 'Fanhaluman',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'viewrelationships' => 'دیتنی پەیوەندی',
+	'viewrelationshiprequests' => 'دیتنی داخوازیەکانی پەیوەندی',
+	'ur-already-submitted' => 'داخوازیەکەت ناردرا',
+	'ur-main-page' => 'لاپەڕەی سەرەکی',
+	'ur-previous' => 'پێشوو',
+	'ur-next' => 'دواتر',
+	'ur-remove' => 'لابردن',
+	'ur-cancel' => 'هەڵوەشاندنەوە',
+	'ur-login' => 'چوونەژوورەوە',
+	'ur-accept' => 'پەسەند کردن',
+	'ur-reject' => 'پەسەند نەکردن',
 );
 
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -979,6 +1270,7 @@ $messages['da'] = array(
 
 /** German (Deutsch)
  * @author Als-Holder
+ * @author Imre
  * @author Melancholie
  * @author Revolus
  * @author Tim 'Avatar' Bartel
@@ -1016,11 +1308,11 @@ Bitte wähle die Freunde/Feinde durch den richtigen Link.',
 	'ur-remove-relationship-message-friend' => 'Du willst $1 aus deiner Freundesliste entfernen? Drücke „$2“ zum Bestätigen.',
 	'ur-remove-relationship-message-confirm-friend' => 'Du hast $1 erfolgreich aus deiner Freundesliste entfernt.',
 	'ur-remove-error-message-no-relationship' => '$1 steht in keiner Beziehung zu dir.',
-	'ur-remove-error-message-remove-yourself' => 'Du kannst dich nicht selbst enfernen.',
+	'ur-remove-error-message-remove-yourself' => 'Du kannst dich nicht selbst entfernen.',
 	'ur-remove-error-message-pending-foe-request' => 'Du hast eine ausstehende Feindschaftsanfrage von $1.',
 	'ur-remove-error-message-pending-friend-request' => 'Du hast eine ausstehende Freundschaftsanfrage von $1.',
-	'ur-remove-error-not-loggedin-foe' => 'Du musst eingeloggt sein, um einen Feind zu entfernen.',
-	'ur-remove-error-not-loggedin-friend' => 'Du musst eingeloggt sein, um einen Freund zu entfernen.',
+	'ur-remove-error-not-loggedin-foe' => 'Du musst angemeldet sein, um einen Feind zu entfernen.',
+	'ur-remove-error-not-loggedin-friend' => 'Du musst angemeldet sein, um einen Freund zu entfernen.',
 	'ur-remove' => 'Entfernen',
 	'ur-cancel' => 'Abbrechen',
 	'ur-login' => 'Anmelden',
@@ -1048,8 +1340,8 @@ Du wirst eine E-Mail bekommen, sobald $1 deine Anfrage bestätigt.',
 Wir werden $1 davon informieren, wenn du seine Anfrage bestätigst.',
 	'ur-add-error-message-pending-foe-request' => 'Du hast eine ausstehende Feindschaftsanfrage von $1.
 Wir werden $1 davon informieren, wenn du seine Anfrage bestätigst.',
-	'ur-add-error-message-not-loggedin-foe' => 'Du musst eingeloggt sein, um einen Feind hinzuzufügen',
-	'ur-add-error-message-not-loggedin-friend' => 'Du musst eingeloggt sein, um einen Freund hinzuzufügen',
+	'ur-add-error-message-not-loggedin-foe' => 'Du musst angemeldet sein, um einen Feind hinzuzufügen',
+	'ur-add-error-message-not-loggedin-friend' => 'Du musst angemeldet sein, um einen Freund hinzuzufügen',
 	'ur-requests-title' => 'Beziehungsanfrage',
 	'ur-requests-message-foe' => '<a href="$1">$2</a> möchte dein Feind sein.',
 	'ur-requests-message-friend' => '<a href="$1">$2</a> möchte dein Freund sein.',
@@ -1143,6 +1435,146 @@ Hm, du willst keine E-Mails mehr von uns bekommen?
 
 Klicke $4
 und ändere deine Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ * @author Umherirrender
+ */
+$messages['de-formal'] = array(
+	'ur-already-submitted' => 'Ihre Anfrage wurde gesendet',
+	'ur-your-profile' => 'Ihr Profil',
+	'ur-relationship-count-foes' => '$1 hat {{PLURAL:$2|einen Feind|$2 Feinde}}. Sie möchten mehr Feinde? <a href="$3">Laden Sie sie ein.</a>',
+	'ur-relationship-count-friends' => '$1 hat {{PLURAL:$2|einen Freund|$2 Freunde}}. Sie wollen mehr Freunde? <a href="$3">Laden Sie sie ein.</a>',
+	'ur-add-friends' => '  Sie möchten mehr Freunde haben? 
+<a href="$1">Laden Sie sie ein …</a>',
+	'ur-add-no-user' => 'Kein Benutzer ausgewählt.
+Bitte wählen Sie die Freunde/Feinde durch den richtigen Link.',
+	'ur-remove-relationship-title-foe' => 'Sie möchten $1 aus Ihrer Feindesliste löschen?',
+	'ur-remove-relationship-title-confirm-foe' => 'Sie haben $1 aus Ihrer Feindesliste gelöscht',
+	'ur-remove-relationship-title-friend' => 'Sie möchten $1 aus Ihrer Freundesliste entfernen?',
+	'ur-remove-relationship-title-confirm-friend' => 'Sie haben $1 aus Ihrer Freundesliste gelöscht',
+	'ur-remove-relationship-message-foe' => 'Sie wollen $1 aus Ihrer Feindesliste entfernen? Drücken Sie „$2“ zum Bestätigen.',
+	'ur-remove-relationship-message-confirm-foe' => 'Sie haben erfolgreich $1 aus Ihrer Feindesliste gelöscht.',
+	'ur-remove-relationship-message-friend' => 'Sie wollen $1 aus Ihrer Freundesliste entfernen? Drücken Sie „$2“ zum Bestätigen.',
+	'ur-remove-relationship-message-confirm-friend' => 'Sie haben $1 erfolgreich aus Ihrer Freundesliste entfernt.',
+	'ur-remove-error-message-no-relationship' => '$1 steht in keiner Beziehung zu Ihnen.',
+	'ur-remove-error-message-remove-yourself' => 'Sie können sich nicht selbst entfernen.',
+	'ur-remove-error-message-pending-foe-request' => 'Sie haben eine ausstehende Feindschaftsanfrage von $1.',
+	'ur-remove-error-message-pending-friend-request' => 'Sie haben eine ausstehende Freundschaftsanfrage von $1.',
+	'ur-remove-error-not-loggedin-foe' => 'Sie müssen angemeldet sein, um einen Feind zu entfernen.',
+	'ur-remove-error-not-loggedin-friend' => 'Sie müssen angemeldet sein, um einen Freund zu entfernen.',
+	'ur-add-title-foe' => 'Sie wollen $1 zu Ihrer Feindesliste hinzufügen?',
+	'ur-add-title-friend' => 'Sie wollen $1 zu Ihrer Freundesliste hinzufügen?',
+	'ur-add-message-foe' => 'Sie sind im Begriff, $1 zu Ihrer Feindesliste hinzuzufügen.
+Wir werden $1 von Ihrem Groll berichten.',
+	'ur-add-message-friend' => 'Sie sind im Begriff, $1 zu Ihrer Freundesliste hinzuzufügen.
+Wir werden eine Bestätigungen von $1 einholen.',
+	'ur-add-sent-title-foe' => 'Wir haben Ihre Feindschaftsanfrage an $1 gesendet!',
+	'ur-add-sent-title-friend' => 'Wir haben Ihre Freundschaftsanfrage an $1 gesendet!',
+	'ur-add-sent-message-foe' => 'Ihre Feindschaftsanfrage wurde an $1 zum Bestätigen weitergereicht.
+Sie werden eine E-Mail bekommen, sobald $1 Ihre Anfrage bestätigt.',
+	'ur-add-sent-message-friend' => 'Ihre Freundschaftsanfrage wurde an $1 zum Bestätigen weitergereicht.
+Sie werden eine E-Mail bekommen, sobald $1 Ihre Anfrage bestätigt.',
+	'ur-add-error-message-no-user' => 'Der Benutzer, den Sie hinzufügen möchten, existiert nicht.',
+	'ur-add-error-message-blocked' => 'Sie sind momentan gesperrt und können keine Freunde oder Feinde hinzufügen.',
+	'ur-add-error-message-yourself' => 'Sie können sich nicht selbst als Freund oder Feind hinzufügen.',
+	'ur-add-error-message-existing-relationship-foe' => 'Sie sind bereits mit $1 befeindet.',
+	'ur-add-error-message-existing-relationship-friend' => 'Sie sind bereits mit $1 befreundet.',
+	'ur-add-error-message-pending-friend-request' => 'Sie haben eine ausstehende Freundschaftsanfrage von $1.
+Wir werden $1 davon informieren, wenn Sie seine Anfrage bestätigen.',
+	'ur-add-error-message-pending-foe-request' => 'Sie haben eine ausstehende Feindschaftsanfrage von $1.
+Wir werden $1 davon informieren, wenn Sie seine Anfrage bestätigen.',
+	'ur-add-error-message-not-loggedin-foe' => 'Sie müssen angemeldet sein, um einen Feind hinzuzufügen',
+	'ur-add-error-message-not-loggedin-friend' => 'Sie müssen angemeldet sein, um einen Freund hinzuzufügen',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> möchte Ihr Feind sein.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> möchte Ihr Freund sein.',
+	'ur-no-requests-message' => 'Sie haben keine Freund- oder Feindschaftsanfragen. Wenn Sie mehr Freunde haben möchten, <a href="$1">laden Sie sie ein!</a>',
+	'ur-requests-added-message-foe' => 'Sie haben $1 zu Ihrer Feindesliste hinzugefügt.',
+	'ur-requests-added-message-friend' => 'Sie haben $1 zu Ihrer Freundesliste hinzugefügt.',
+	'ur-requests-reject-message-friend' => 'Sie haben $1 als Ihren Freund zurückgewiesen.',
+	'ur-requests-reject-message-foe' => 'Sie haben $1 als Ihren Feind zurückgewiesen.',
+	'friend_request_subject' => '{{SITENAME}}: $1 hat Sie als Freund hinzugefügt!',
+	'friend_request_body' => 'Hi $1:
+
+$2 hat Sie in {{SITENAME}} als Freund hinzugefügt. Wir wollen sicher gehen, dass Sie beide wirklich Freunde sind.
+
+Bitte klicken Sie den folgenden Link um Ihre Freundschaft zu bestätigen:
+$3
+
+---
+
+Hm, Sie wollen keine E-Mails mehr von uns bekommen?
+
+Klicken Sie $4
+und ändern Sie Ihre Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
+	'foe_request_subject' => '{{SITENAME}}: Kriegserklärung! $1 hat Sie als Feind hinzugefügt!',
+	'foe_request_body' => 'Hi $1:
+
+$2 hat Sie in {{SITENAME}} als Feind hinzugefügt. Wir wollen sicher gehen, dass Sie beide wirklich tödliche Feinde sind oder sich wenigstens ein wenig streiten.
+
+Bitte klicken Sie den folgenden Link um Ihre Feindschaft zu bestätigen:
+
+$3
+
+---
+
+Hm, Sie wollen keine E-Mails mehr von uns bekommen?
+
+Klicken Sie $4
+und ändern Sie Ihre Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
+	'friend_accept_subject' => '{{SITENAME}}: $1 hat Ihre Freundschaftsanfrage bestätigt!',
+	'friend_accept_body' => 'Hi $1:
+
+$2 hat Ihre Freundschaftsanfrage in {{SITENAME}} bestätigt!
+
+Siehe $2s Seite hier: $3
+
+Danke
+
+---
+
+Hm, Sie wollen keine E-Mails mehr von uns bekommen?
+
+Klicken Sie $4
+und ändern Sie Ihre Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
+	'foe_accept_subject' => '{{SITENAME}}: $1 hat Ihre Feind-Anfrage bestätigt!',
+	'foe_accept_body' => 'Hi $1:
+
+$2 hat Ihre Feind-Anfrage in {{SITENAME}} bestätigt!
+
+Siehe $2s Seite hier: $3
+
+---
+
+Hm, Sie wollen keine E-Mails mehr von uns bekommen?
+
+Klicken Sie $4
+und ändern Sie Ihre Einstellungen, um E-Mail-Benachrichtigungen auszuschalten.',
+	'friend_removed_subject' => '{{SITENAME}}: Oh nein! $1 hat seine Freundschaft zu Ihnen beendet!',
+	'friend_removed_body' => 'Hi $1:
+
+$2 hat seine Freundschaft zu Ihnen in {{SITENAME}} beendet!
+
+---
+
+Hm, Sie wollen keine E-Mails mehr von uns bekommen?
+
+Klicken Sie $4
+und ändern Sie Ihre Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
+	'foe_removed_subject' => '{{SITENAME}}: Hey! $1 hat seine Feindschaft zu Ihnen beendet!',
+	'foe_removed_body' => 'Hi $1:
+
+$2 hat seine Feindschaft zu Ihnen in {{SITENAME}} beendet!
+
+Vielleicht werden Sie beide ja sogar mal Freunde?
+
+---
+
+Hm, Sie wollen keine E-Mails mehr von uns bekommen?
+
+Klicken Sie $4
+und ändern Sie Ihre Einstellungen um E-Mail-Benachrichtigungen auszuschalten.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -1328,19 +1760,173 @@ a změń swóje nastajenja, aby znjemóžnił e-mailowe zdźělenja.',
 /** Greek (Ελληνικά)
  * @author Consta
  * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'viewrelationships' => 'Εμφάνιση σχέσης',
+	'viewrelationshiprequests' => 'Εμφάνιση των προτάσεων για σχέση',
+	'ur-already-submitted' => 'Η πρόταση σας έχει αποσταλλεί',
 	'ur-error-page-title' => 'Ωχ!',
+	'ur-error-title' => 'Ουπς, πήρες μια λάθος στροφή!',
+	'ur-error-message-no-user' => 'Δεν μπορούμε να συμπληρώσουμε την πρόταση σας, γιατί δεν υπάρχει χρήστης με αυτό το όνομα.',
 	'ur-main-page' => 'Κύρια σελίδα',
+	'ur-your-profile' => 'Το προφίλ σας',
+	'ur-backlink' => '&lt; Πίσω στο προφίλ του $1',
+	'ur-relationship-count-foes' => 'Ο $1 έχει $2 εχθρ{{PLURAL:$2|ό|ούς}}.
+Θέλετε περισσότερους εχθρούς;
+<a href="$3">Προσκαλέστε τους</a>',
+	'ur-relationship-count-friends' => 'Ο $1 έχει $2 φίλ{{PLURAL:$2|ο|ους}}.
+Θέλετε περισσότερους φίλους;
+<a href="$3">Προσκαλέστε τους</a>',
+	'ur-add-friends' => 'Θέλετε περισσότερους φίλους;
+<a href="$1">Προσκαλέστε τους</a>',
+	'ur-add-friend' => 'Προσθήκη σαν φίλο',
+	'ur-add-foe' => 'Προσθήκη σαν εχθρό',
+	'ur-add-no-user' => 'Κανένας χρήστης δεν έχει επιλεχθεί.
+Παρακαλώ κάντε αίτηση για εχθρούς/φίλους μέσω του σωστού συνδέσμου.',
+	'ur-add-personal-message' => 'Προσθήκη ενός προσωπικού μηνύματος',
+	'ur-remove-relationship-friend' => 'Αφαίρεση ως φίλου',
+	'ur-remove-relationship-foe' => 'Αφαίρεση ως εχθρού',
 	'ur-give-gift' => 'Δώστε ένα Δώρο',
 	'ur-previous' => 'προηγ',
 	'ur-next' => 'επομ',
+	'ur-remove-relationship-title-foe' => 'Θες να αφαιρέσεις τον $1 ως εχθρό σου;',
+	'ur-remove-relationship-title-confirm-foe' => 'Αφαίρεσες τον $1 ως εχθρό σου',
+	'ur-remove-relationship-title-friend' => 'Θες να αφαιρέσεις τον $1 ως φίλο σου;',
+	'ur-remove-relationship-title-confirm-friend' => 'Αφαίρεσες τον $1 ως φίλο σου',
+	'ur-remove-relationship-message-confirm-foe' => 'Έχετε επιτυχώς αφαιρέσει τον $1 ως εχθρό σας.',
+	'ur-remove-relationship-message-confirm-friend' => 'Έχετε επιτυχώς αφαιρέσει τον $1 ως φίλο σας.',
+	'ur-remove-error-message-no-relationship' => 'Δεν έχεις σχέση με τον $1.',
+	'ur-remove-error-message-remove-yourself' => 'Δεν μπορείς να αφαιρέσεις τον εαυτό σου',
+	'ur-remove-error-message-pending-foe-request' => 'Έχετε μια εκκρεμή αίτηση εχθρού με τον $1.',
+	'ur-remove-error-message-pending-friend-request' => 'Έχετε μια εκκρεμή αίτηση φίλου με τον $1.',
+	'ur-remove-error-not-loggedin-foe' => 'Πρέπει να είσαι συνδεδεμένος για να αφαιρέσεις έναν εχθρό.',
+	'ur-remove-error-not-loggedin-friend' => 'Πρέπει να είσαι συνδεδεμένος για να αφαιρέσεις έναν φίλο.',
 	'ur-remove' => 'Αφαίρεση',
 	'ur-cancel' => 'Ακύρωση',
 	'ur-login' => 'Σύνδεση',
+	'ur-add-title-foe' => 'Θες να προσθέσεις τον $1 ως εχθρό σου;',
+	'ur-add-title-friend' => 'Θέλετε να προσθέσετε τον $1 ως φίλο σας;',
+	'ur-add-message-foe' => 'Πρόκειται να προσθέσετε τον $1 ως εχθρό.
+Θα ειδοποιήσουμε τον $1 για να επιβεβαιώσει την έχθρα σας.',
+	'ur-add-message-friend' => 'Πρόκειται να προσθέσετε τον $1 ως φίλο. 
+Θα ειδοποιήσουμε τον $1 για να επιβεβαιώσει την φιλία σας.',
+	'ur-add-button-foe' => 'Προσθήκη ως εχθρού',
+	'ur-add-button-friend' => 'Προσθήκη ως φίλου',
+	'ur-add-sent-title-foe' => 'Στείλαμε την πρόταση εχθρού σας στον $1!',
+	'ur-add-sent-title-friend' => 'Στείλαμε την πρόταση φίλου σας στον $1!',
+	'ur-add-error-message-no-user' => 'Αυτός ο χρήστης που προσπαθείτε να προσθέσετε δεν υπάρχει.',
+	'ur-add-error-message-blocked' => 'Τώρα είσαι φραγμένος και δεν μπορείς να προσθέσεις φίλους ή εχθρούς.',
+	'ur-add-error-message-yourself' => 'Δεν μπορείς να προσθέσεις τον εαυτό σου ως ένα φίλο ή εχθρό.',
+	'ur-add-error-message-existing-relationship-foe' => 'Είσαι ήδη εχθρός με τον $1.',
+	'ur-add-error-message-existing-relationship-friend' => 'Είσαι ήδη φίλος με τον $1.',
 	'ur-add-error-message-pending-request-title' => 'Υπομονή!',
+	'ur-add-error-message-not-loggedin-foe' => 'Πρέπει να είσαι συνδεδεμένος για να προσθέσεις έναν εχθρό',
+	'ur-add-error-message-not-loggedin-friend' => 'Πρέπει να είσαι συνδεδεμένος για να προσθέσεις έναν φίλο',
+	'ur-requests-title' => 'Προτάσεις σχέσης',
+	'ur-requests-message-foe' => 'Ο <a href="$1">$2</a> θέλει να γίνει εχθρός σου.',
+	'ur-requests-message-friend' => 'Ο <a href="$1">$2</a> θέλει να γίνει φίλος σου.',
 	'ur-accept' => 'Αποδοχή',
 	'ur-reject' => 'Απόρριψη',
+	'ur-no-requests-message' => 'Δεν έχετε καμία αίτηση για προσθήκη φίλου ή εχθρού. 
+Αν θέλετε περισσότερους φίλους, <a href="$1">προσκαλέστε τους!</a>',
+	'ur-requests-added-message-foe' => 'Δέχτηκες τον $1 σαν εχθρό σου.',
+	'ur-requests-added-message-friend' => 'Δέχτηκες τον $1 σαν φίλο σου.',
+	'ur-requests-reject-message-friend' => 'Αρνήθηκες τον $1 σαν φίλο σου.',
+	'ur-requests-reject-message-foe' => 'Αρνήθηκες τον $1 σαν εχθρό σου.',
+	'ur-title-foe' => 'Η λίστα εχθρών του $1',
+	'ur-title-friend' => 'Η λίστα φίλων του $1',
+	'friend_request_subject' => 'Ο $1 σας έχει προσθέσει σαν φίλο στο {{SITENAME}}!',
+	'friend_request_body' => 'Γεια $1.
+
+Ο $2 σας πρόσθεσε σαν φίλο στο {{SITENAME}}. Θέλουμε να σιγουρευτούμε ότι είστε πράγματι φίλοι.
+
+Κάνετε κλικ στον παρακάτω σύνδεσμο για να επιβεβαιώσετε την φιλία σας:
+$3
+
+Ευχαριστούμε
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $4
+και αλλάξτε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
+	'foe_request_subject' => 'Είναι πόλεμος! Ο $1 σας πρόσθεσε ως εχθρό του στο {{SITENAME}}!',
+	'foe_request_body' => 'Γεια $1.
+
+Ο $2 σας πρόσθεσε ως εχθρό στο {{SITENAME}}. Θέλουμε να σιγουρευτούμε ότι εσείς οι δύο είστε πράγματι θανάσιμοι εχθροί ή ότι τουλάχιστον έχετε κάποια διαφωνία. 
+
+Κάντε κλικ παρακάτω για να επιβεβαιώσετε τον κακεντρεχή ανταγωνισμό.
+
+$3
+
+Ευχαριστούμε
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $4
+και αλλάξτε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
+	'friend_accept_subject' => 'Ο $1 αποδέχθηκε το αίτημα φιλίας σας στο {{SITENAME}}!',
+	'friend_accept_body' => 'Γεια $1.
+
+Ο $2 δέχτηκε την αίτηση φιλίας στο {{SITENAME}}.
+
+Τσεκάρετε την σελίδα του $2 στο $3
+
+Ευχαριστούμε,
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $4
+και αλλάξετε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
+	'foe_accept_subject' => 'Έγινε! Ο $1 αποδέχθηκε το αίτημα εχθρού σας στο {{SITENAME}}!',
+	'foe_accept_body' => 'Γεια $1.
+
+Ο $2 δέχτηκε την αίτηση έχθρας στο {{SITENAME}}.
+
+Τσεκάρετε την σελίδα του $2 στο $3
+
+Ευχαριστούμε,
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $4
+και αλλάξετε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
+	'friend_removed_subject' => 'Ω όχι! Ο $1 σας αφαίρεσε ως φίλο από το {{SITENAME}}!',
+	'friend_removed_body' => 'Γεια $1.
+
+Ο $2 σας αφαίρεσε από φίλο στο {{SITENAME}}!
+
+Ευχαριστούμε
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $4
+και αλλάξτε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
+	'foe_removed_subject' => 'Γούχου! Ο $1 σας αφαίρεσε ως εχθρό από το {{SITENAME}}!',
+	'foe_removed_body' => 'Γεια $1.
+
+Ο $2 σας αφαίρεσε από εχθρό στο {{SITENAME}}!
+
+Ίσως εσείς οι δύο είστε στην πορεία του να γίνετε φίλοι;
+
+Ευχαριστούμε
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $4
+και αλλάξτε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
 );
 
 /** Esperanto (Esperanto)
@@ -1415,6 +2001,7 @@ Se vi volas pliajn amikojn, <a href="$1">invitu ilin!</a>',
 	'friend_request_subject' => '$1 aldonis vin kiel amikon en {{SITENAME}}!',
 	'foe_request_subject' => 'Estas milito! $1 aldonis vin kiel malamikon en {{SITENAME}}!',
 	'friend_accept_subject' => '$1 akceptis vian amiko-peton en {{SITENAME}}!',
+	'friend_removed_subject' => 'Ho ve! $1 forigis vin kiel amikon en {{SITENAME}}!',
 );
 
 /** Spanish (Español)
@@ -1599,6 +2186,43 @@ Haga click en $4
 y cambie sus configuraciones para deshabilitar notificaciones por correo electrónico.',
 );
 
+/** Estonian (Eesti)
+ * @author Avjoska
+ * @author Pikne
+ * @author Silvar
+ */
+$messages['et'] = array(
+	'ur-already-submitted' => 'Sinu taotlus on saadetud',
+	'ur-error-page-title' => 'Ups!',
+	'ur-main-page' => 'Esileht',
+	'ur-your-profile' => 'Sinu profiil',
+	'ur-add-friend' => 'Lisa sõbraks',
+	'ur-add-foe' => 'Lisa vaenlaseks',
+	'ur-add-personal-message' => 'Lisa isiklik teade',
+	'ur-remove-relationship-friend' => 'Kustuta sõprade hulgast',
+	'ur-remove-relationship-foe' => 'Kustuta vaenlaste hulgast',
+	'ur-give-gift' => 'Anna kingitus',
+	'ur-previous' => 'eel',
+	'ur-next' => 'järg',
+	'ur-remove-relationship-title-foe' => 'Kas soovid eemaldada kasutaja $1 oma vaenlaste hulgast?',
+	'ur-remove-relationship-title-confirm-foe' => 'Oled eemaldanud kasutaja $1 oma vaenlaste hulgast',
+	'ur-remove-relationship-title-friend' => 'Kas soovid eemaldada kasutaja $1 oma sõprade hulgast?',
+	'ur-remove-relationship-title-confirm-friend' => 'Oled eemaldanud kasutaja $1 oma sõprade hulgast',
+	'ur-remove-relationship-message-confirm-foe' => 'Oled edukalt eemaldanud kasutaja $1 oma vaenlaste hulgast.',
+	'ur-remove-relationship-message-confirm-friend' => 'Oled edukalt eemaldanud kasutaja $1 oma sõprade hulgast.',
+	'ur-remove-error-message-remove-yourself' => 'Ennast ei saa eemaldada.',
+	'ur-remove' => 'Eemalda',
+	'ur-cancel' => 'Loobu',
+	'ur-login' => 'Logi sisse',
+	'ur-add-title-foe' => 'Kas soovid lisada kasutaja $1 oma vaenlaseks?',
+	'ur-add-title-friend' => 'Kas soovid lisada kasutaja $1 oma sõbraks?',
+	'ur-add-button-foe' => 'Lisa vaenlaseks',
+	'ur-add-button-friend' => 'Lisa sõbraks',
+	'ur-add-error-message-existing-relationship-friend' => 'Sa oled kasutajaga §1 juba sõber.',
+	'ur-add-error-message-pending-request-title' => 'Kannatust!',
+	'ur-add-error-message-not-loggedin-friend' => 'Sõbra lisamiseks pead olema sisse logitud',
+);
+
 /** Basque (Euskara)
  * @author An13sa
  * @author Kobazulo
@@ -1608,6 +2232,13 @@ $messages['eu'] = array(
 	'ur-error-message-no-user' => 'Ezin dugu zure eskaera bete, ez dago izen hori duen erabiltzailerik.',
 	'ur-main-page' => 'Azala',
 	'ur-your-profile' => 'Zure perfila',
+	'ur-backlink' => '&lt; $1(r)en profilera itzuli',
+	'ur-relationship-count-foes' => '$1(e)k {{PLURAL:$2|etsai $2 du|$2 etsai ditu}}.
+Etsai gehiagorik nahi?
+<a href="$3">Gonbida itzazu.</a>',
+	'ur-relationship-count-friends' => '$1(e)k {{PLURAL:$2|lagun $2 du|$2 lagun ditu}}.
+Lagun gehiagorik nahi?
+<a href="$3">Gonbida itzazu.</a>',
 	'ur-add-friends' => 'Lagun gehiago nahi? <a href="$1">Gonbida itzazu</a>',
 	'ur-add-friend' => 'Lagun bezala gehitu',
 	'ur-add-foe' => 'Etsai bezala gehitu',
@@ -1632,13 +2263,19 @@ $messages['eu'] = array(
 	'ur-add-error-message-existing-relationship-friend' => 'Jada $1 lankidearen laguna zara.',
 	'ur-add-error-message-pending-request-title' => 'Pazientzia!',
 	'ur-add-error-message-not-loggedin-friend' => 'Lagun bat gehitzeko saioa hasi behar duzu',
+	'ur-requests-message-foe' => '<a href="$1">$2(e)k</a> zure etsaia izan nahi du.',
+	'ur-requests-message-friend' => '<a href="$1">$2(e)k</a> zure laguna izan nahi du.',
 	'ur-accept' => 'Onartu',
 	'ur-reject' => 'Deuseztu',
+	'ur-no-requests-message' => 'Ez duzu ez lagun ez etsai eskaerarik. Lagun gehiago izan nahi badituzu, <a href="$1">gonbida itzazu!</a>',
+	'ur-requests-added-message-foe' => '$1 zure etsai bezala gehitu duzu.',
+	'ur-requests-added-message-friend' => '$1 zure lagun bezala gehitu duzu.',
+	'ur-title-foe' => '$1(r)en etsai zerrenda',
 	'ur-title-friend' => '$1-(r)en lagun zerrenda',
 );
 
 /** Finnish (Suomi)
- * @author Jack Phoenix
+ * @author Jack Phoenix <jack@countervandalism.net>
  */
 $messages['fi'] = array(
 	'viewrelationships' => 'Ystävä- ja vihollislista',
@@ -1746,7 +2383,7 @@ Kiitos
 
 ---
 
-Hei, etkö enää halua saada sähköpostia meiltä? 
+Hei, etkö enää halua saada sähköpostia meiltä?
 
 Napsauta $4 ja muuta asetuksiasi poistaaksesi sähköposti-ilmoitukset käytöstä.',
 	'friend_accept_subject' => '$1 on hyväksynyt ystävyyspyyntösi {{GRAMMAR:inessive|{{SITENAME}}}}!',
@@ -1760,7 +2397,7 @@ Kiitos
 
 ---
 
-Hei, etkö enää halua saada sähköpostia meiltä? 
+Hei, etkö enää halua saada sähköpostia meiltä?
 
 Napsauta $4
 ja muuta asetuksiasi poistaaksesi sähköposti-ilmoitukset käytöstä.',
@@ -1775,7 +2412,7 @@ Kiitos
 
 ---
 
-Hei, etkö enää halua saada sähköpostia meiltä? 
+Hei, etkö enää halua saada sähköpostia meiltä?
 
 Napsauta $4
 ja muuta asetuksiasi poistaaksesi sähköposti-ilmoitukset käytöstä.',
@@ -1788,7 +2425,7 @@ Kiitos
 
 ---
 
-Hei, etkö enää halua saada sähköpostia meiltä? 
+Hei, etkö enää halua saada sähköpostia meiltä?
 
 Napsauta $4
 ja muuta asetuksiasi poistaaksesi sähköposti-ilmoitukset käytöstä.',
@@ -1803,7 +2440,7 @@ Kiitos
 
 ---
 
-Hei, etkö enää halua saada sähköpostia meiltä? 
+Hei, etkö enää halua saada sähköpostia meiltä?
 
 Napsauta $4
 ja muuta asetuksiasi poistaaksesi sähköposti-ilmoitukset käytöstä.',
@@ -1826,8 +2463,12 @@ $messages['fr'] = array(
 	'ur-main-page' => 'Accueil',
 	'ur-your-profile' => 'Votre profile',
 	'ur-backlink' => '&lt; retour vers le profil de $1',
-	'ur-relationship-count-foes' => '$1 a $2 {{PLURAL:$2|ennemi|ennemis}}. En vouloir encore plus ? <a href="$3">Inviter les.</a>',
-	'ur-relationship-count-friends' => '$1 a $2 {{PLURAL:$2|ami|amis}}. En vouloir encore plus ? <a href="$3">Inviter les.</a>',
+	'ur-relationship-count-foes' => '$1 a $2 ennemi{{PLURAL:$2||s}}.
+En vouloir encore plus ?
+<a href="$3">Inviter les.</a>',
+	'ur-relationship-count-friends' => '$1 a $2 ami{{PLURAL:$2||s}}.
+En vouloir encore plus ?
+<a href="$3">Inviter les.</a>',
 	'ur-add-friends' => 'Vouloir plus d’amis ? <a href="$1">Inviter les</a>.',
 	'ur-add-friend' => 'Ajouter comme ami',
 	'ur-add-foe' => 'Ajouter comme ennemi',
@@ -1846,7 +2487,7 @@ $messages['fr'] = array(
 	'ur-remove-relationship-message-confirm-foe' => 'Vous avez enlevé $1 avec succès de vos ennemis.',
 	'ur-remove-relationship-message-friend' => 'Vous avez requis la suppression de $1 de vos amis, appuyer sur « $2 » pour confirmer.',
 	'ur-remove-relationship-message-confirm-friend' => 'Vous enlevé $1 avec succès de vos amis.',
-	'ur-remove-error-message-no-relationship' => "Vous n'avez aucune relation avec $1.",
+	'ur-remove-error-message-no-relationship' => 'Vous n’avez aucune relation avec $1.',
 	'ur-remove-error-message-remove-yourself' => 'Vous ne pouvez pas vous supprimer vous-même.',
 	'ur-remove-error-message-pending-foe-request' => 'Vous avez, en cours, une requête d’un ennemi avec $1.',
 	'ur-remove-error-message-pending-friend-request' => 'Vous avez, en cours, une requête d’un ami avec $1.',
@@ -1886,7 +2527,7 @@ Nous vous notifierons si $1 confirme votre requête.',
 	'ur-requests-message-friend' => '<a href="$1">$2</a> veut être votre ami.',
 	'ur-accept' => 'Accepter',
 	'ur-reject' => 'Rejeter',
-	'ur-no-requests-message' => 'Vous n’avez aucune requête en ami ou ennemi. Si vous désirez plus d\'amis, <a href="$1">invitez les !</a>',
+	'ur-no-requests-message' => 'Vous n’avez aucune requête en ami ou ennemi. Si vous désirez plus d’amis, <a href="$1">invitez les !</a>',
 	'ur-requests-added-message-foe' => 'Vous avez ajouté $1 en tant qu’ennemi.',
 	'ur-requests-added-message-friend' => 'Vous avez ajouté $1 en tant qu’ami.',
 	'ur-requests-reject-message-friend' => 'Vous avez refusé $1 en tant qu’ami.',
@@ -1909,7 +2550,7 @@ Hé ! Voulez-vous vous arrêter de recevoir des courriels de notre part ?
 
 Cliquez $4
 et modifiez vos préférences pour désactiver les notifications par courriel.',
-	'foe_request_subject' => "C'est la guerre ! $1 vous a ajouté comme ennemi sur {{SITENAME}} !",
+	'foe_request_subject' => 'C’est la guerre ! $1 vous a ajouté comme ennemi sur {{SITENAME}} !',
 	'foe_request_body' => 'Salut $1 :
 
 $2 vient juste de vous répertorier comme un ennemi sur {{SITENAME}}. Nous voulons nous assurer que vous êtes vraiment des ennemis mortel ou avoir au moins des griefs l’un envers l’autre.
@@ -1926,7 +2567,7 @@ Hé ! Voulez-vous vous arrêter de recevoir des courriels de notre part ?
 
 Cliquez $4 et modifiez vos préférences pour désactiver les notifications par courriel.',
 	'friend_accept_subject' => '$1 a accepté votre requête en amitié sur {{SITENAME}} !',
-	'friend_accept_body' => 'Salut $1 : 
+	'friend_accept_body' => 'Salut $1 :
 
 $2 a accepté votre requête en amitié sur {{SITENAME}} !
 
@@ -1940,8 +2581,8 @@ Hé ! Voulez-vous vous arrêter de recevoir des courriels de notre part ?
 
 Cliquez $4
 et modifiez vos préférences pour désactiver les notifications par courriel.',
-	'foe_accept_subject' => "C'est fait ! $1 a accepté votre déclaration de guerre sur  {{SITENAME}} !",
-	'foe_accept_body' => 'Salut $1 : 
+	'foe_accept_subject' => 'C’est fait ! $1 a accepté votre déclaration de guerre sur  {{SITENAME}} !',
+	'foe_accept_body' => 'Salut $1 :
 
 $2 a accepté votre déclaration de guerre sur  {{SITENAME}} !
 
@@ -1983,11 +2624,22 @@ Cliquez $4
 et modifiez vos préférences pour désactiver les notifications par courriel.',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'ur-remove' => 'Enlevar',
+	'ur-cancel' => 'Anular',
+	'ur-login' => 'Branchement',
+);
+
 /** Western Frisian (Frysk)
+ * @author SK-luuut
  * @author Snakesteuben
  */
 $messages['fy'] = array(
 	'ur-main-page' => 'Haadside',
+	'ur-cancel' => 'Ofbrekke',
 );
 
 /** Galician (Galego)
@@ -2166,10 +2818,11 @@ e troque as súas configuracións para deshabilitar as notificacións por correo
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author AndreasJS
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['grc'] = array(
 	'ur-main-page' => 'Κυρία Δέλτος',
-	'ur-next' => 'Ἑπομέναι',
+	'ur-next' => 'ἑπόμεναι',
 	'ur-remove' => 'Άφαιρεῖν',
 	'ur-cancel' => 'Ἀκυροῦν',
 	'ur-login' => 'Συνδεῖσθαι',
@@ -2288,7 +2941,7 @@ un ändere Dyyni Yystellige go d E-Mail-Benochrichtigunge abschalte.',
 	'friend_accept_subject' => '$1 het Dyyni Fryndschaftsaaffrog aagnuh uf {{SITENAME}}!',
 	'friend_accept_body' => 'Sali $1:
 
-$2 het Dyyni Fryndschaftsaafrog uf {{SITENAME}} bstätigt! 
+$2 het Dyyni Fryndschaftsaafrog uf {{SITENAME}} bstätigt!
 
 Lueg d Syte vu $2: $3
 
@@ -2303,7 +2956,7 @@ un ändere Dyyni Yystellige go d E-Mail-Benochrichtigunge abschalte.',
 	'foe_accept_subject' => '{{SITENAME}}: $1 het Dyyni Fyndschaftsaafrog bstätigt!',
 	'foe_accept_body' => 'Sali $1:
 
-$2 het Dyyni Fyndschaftsaafrog uf {{SITENAME}} bstätigt! 
+$2 het Dyyni Fyndschaftsaafrog uf {{SITENAME}} bstätigt!
 
 Lueg d Syte vu $2: $3
 
@@ -2740,10 +3393,175 @@ a změń swoje nastajenja, zo by e-mejlowe zdźělenja znjemóžnił.',
 
 /** Hungarian (Magyar)
  * @author Bdamokos
+ * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'viewrelationships' => 'Kapcsolat megtekintése',
+	'viewrelationshiprequests' => 'Jelölések megtekintése',
+	'ur-already-submitted' => 'A kérelmed el lett küldve',
 	'ur-error-page-title' => 'Upsz!',
+	'ur-error-title' => 'Hupsz, eltévedtél!',
+	'ur-error-message-no-user' => 'Nem tudjuk teljesíteni a kérésed, mert nem létezik ilyen nevű felhasználó.',
 	'ur-main-page' => 'Kezdőlap',
+	'ur-your-profile' => 'A profilod',
+	'ur-backlink' => '&lt; vissza $1 profiljára',
+	'ur-relationship-count-foes' => '$1 felhasználónak {{PLURAL:$2|egy|$2}} ellensége van.
+Szeretnél több ellenséget?
+<a href="$3">Hívd meg őket.</a>',
+	'ur-relationship-count-friends' => '$1 felhasználónak {{PLURAL:$2|egy|$2}} barátja van.
+Szeretnél több barátot?
+<a href="$3">Hívd meg őket.</a>',
+	'ur-add-friends' => '  Szeretnél több barátot?
+<a href="$1">Hívd meg őket</a>',
+	'ur-add-friend' => 'Hozzáadás barátként',
+	'ur-add-foe' => 'Hozzáadás ellenségként',
+	'ur-add-no-user' => 'Nincs felhasználó kiválasztva.
+Légyszíves a helyes hivatkozást használva jelölj barátokat/ellenségeket.',
+	'ur-add-personal-message' => 'Személyes üzenet hozzáadása',
+	'ur-remove-relationship-friend' => 'Eltávolítás a barátok közül',
+	'ur-remove-relationship-foe' => 'Eltávolítás az ellenségek közül',
+	'ur-give-gift' => 'Ajándék küldése',
+	'ur-previous' => 'előző',
+	'ur-next' => 'következő',
+	'ur-remove-relationship-title-foe' => 'Valóban el szeretnéd távolítani $1 felhasználót az ellenségeid közül?',
+	'ur-remove-relationship-title-confirm-foe' => 'Eltávolítottad $1 felhasználót az ellenségeid közül',
+	'ur-remove-relationship-title-friend' => 'Valóban el szeretnéd távolítani $1 felhasználót a barátaid közül?',
+	'ur-remove-relationship-title-confirm-friend' => 'Eltávolítottad $1 felhasználót a barátaid közül',
+	'ur-remove-relationship-message-foe' => 'Ha biztosan el szeretnéd $1 felhasználót távolítani az ellenségeid közül, kattints a(z) „$2” gombra a megerősítéshez.',
+	'ur-remove-relationship-message-confirm-foe' => 'Sikeresen eltávolítottad $1 felhasználót az ellenségeid listájáról.',
+	'ur-remove-relationship-message-friend' => 'Ha biztosan el szeretnéd $1 felhasználót távolítani a barátaid közül, kattints a(z) „$2” gombra a megerősítéshez.',
+	'ur-remove-relationship-message-confirm-friend' => 'Sikeresen eltávolítottad $1 felhasználót a barátaid listájáról.',
+	'ur-remove-error-message-no-relationship' => 'Nincs kapcsolatod $1 felhasználóval.',
+	'ur-remove-error-message-remove-yourself' => 'Saját magadat nem tudod eltávolítani.',
+	'ur-remove-error-message-pending-foe-request' => 'Függőben lévő ellenségnek jelölésed van $1 felhasználóval.',
+	'ur-remove-error-message-pending-friend-request' => 'Függőben lévő barátnak jelölésed van $1 felhasználóval.',
+	'ur-remove-error-not-loggedin-foe' => 'Be kell jelentkezned ellenség eltávolításához a listáról.',
+	'ur-remove-error-not-loggedin-friend' => 'Be kell jelentkezned barát eltávolításához a listáról.',
+	'ur-remove' => 'Eltávolítás',
+	'ur-cancel' => 'Mégse',
+	'ur-login' => 'Bejelentkezés',
+	'ur-add-title-foe' => 'Fel szeretnéd venni $1 felhasználót az ellenségeid listájára?',
+	'ur-add-title-friend' => 'Fel szeretnéd venni $1 felhasználót a barátaid listájára?',
+	'ur-add-message-foe' => '$1 felhasználót ellenségednek szeretnéd jelölni.
+Értesíteni fogjuk őt az ellenszenvedről.',
+	'ur-add-message-friend' => '$1 felhasználót barátodnak szeretnéd jelölni.
+Értesíteni fogjuk őt a barátságodról.',
+	'ur-add-button-foe' => 'Hozzáadás ellenségként',
+	'ur-add-button-friend' => 'Hozzáadás barátként',
+	'ur-add-sent-title-foe' => 'Elküldtük az ellenségnek jelölésedet $1 részére!',
+	'ur-add-sent-title-friend' => 'Elküldtük a barátkérődet $1 részére!',
+	'ur-add-sent-message-foe' => 'Értesítettük $1 felhasználót, hogy ellenségének jelölted.
+Ha $1 megerősíti a jelölést, értesítünk téged e-mailben.',
+	'ur-add-sent-message-friend' => 'Értesítettük $1 felhasználót, hogy barátodnak jelölted.
+Ha $1 megerősíti a jelölést, értesítünk téged e-mailben.',
+	'ur-add-error-message-no-user' => 'A felhasználó, akit hozzá akartál adni, nem létezik.',
+	'ur-add-error-message-blocked' => 'Jelenleg blokkolva vagy, így nem vehetsz fel barátokat vagy ellenségeket.',
+	'ur-add-error-message-yourself' => 'Nem lehetsz saját magad ellensége vagy barátja.',
+	'ur-add-error-message-existing-relationship-foe' => 'Már ellenségek vagytok $1 felhasználóval.',
+	'ur-add-error-message-existing-relationship-friend' => 'Már barátok vagytok $1 felhasználóval.',
+	'ur-add-error-message-pending-request-title' => 'Türelem!',
+	'ur-add-error-message-pending-friend-request' => '$1 barátodnak jelölt, amit még nem erősítettél meg.
+Értesítjük őt, amint megerősítetted a jelölést.',
+	'ur-add-error-message-pending-foe-request' => '$1 ellenségének jelölt, amit még nem erősítettél meg.
+Értesítjük őt, amint megerősítetted a jelölést.',
+	'ur-add-error-message-not-loggedin-foe' => 'Be kell jelentkezned ellenség hozzáadásához',
+	'ur-add-error-message-not-loggedin-friend' => 'Be kell jelentkezned barát hozzáadásához',
+	'ur-requests-title' => 'Függő kapcsolatok',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> az ellenséged akar lenni.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> a barátod szeretne lenni.',
+	'ur-accept' => 'Elfogadás',
+	'ur-reject' => 'Visszautasítás',
+	'ur-no-requests-message' => 'Nincsenek függő jelöléseid.
+Ha több barátot szeretnél, <a href="$1">hívd meg őket!</a>',
+	'ur-requests-added-message-foe' => '$1 felvéve az ellenségeid közé.',
+	'ur-requests-added-message-friend' => '$1 felhasználót hozzáadtad a barátaidhoz.',
+	'ur-requests-reject-message-friend' => 'Elutasítottad $1 felhasználó felvételét a barátaid közé.',
+	'ur-requests-reject-message-foe' => 'Elutasítottad $1 felhasználó felvételét az ellenségeid közé.',
+	'ur-title-foe' => '$1 ellenségeinek listája',
+	'ur-title-friend' => '$1 barátainak listája',
+	'friend_request_subject' => '$1 barátjának jelölt a(z) {{SITENAME}} wikin!',
+	'friend_request_body' => 'Szia, $1!
+
+$2 felvett barátjának a(z) {{SITENAME}} wikin. Szeretnénk biztosan tudni, hogy tényleg barátok vagytok.
+
+Kattints a következő hivatkozásra a barátság megerősítéséhez:
+$3
+
+Köszönjük
+
+---
+Szeretnéd, ha nem zaklatnánk több e-maillel?
+
+Kattints a következő hivatkozásra: $4
+és tiltsd le az e-mailes értesítéseket a beállításaidban.',
+	'foe_request_subject' => 'Háború! $1 ellenségnek jelölt a(z) {{SITENAME}} wikin!',
+	'foe_request_body' => 'Szia, $1!
+
+$2 felvett az ellenségei közé a(z) {{SITENAME}} wikin. Szeretnénk biztosan tudni, hogy tényleg halálos ellenségek vagytok, vagy legalább valami nézeteltérésetek van.
+
+Kattints a következő hivatkozásra az ellenszenv megerősítéséhez:
+$3
+
+Köszönjük
+
+---
+Szeretnéd, ha nem zaklatnánk több e-maillel?
+
+Kattints a következő hivatkozásra: $4
+és tiltsd le az e-mailes értesítéseket a beállításaidban.',
+	'friend_accept_subject' => '$1 elfogadta a barátkérődet a(z) {{SITENAME}} wikin!',
+	'friend_accept_body' => 'Szia, $1!
+
+$2 elfogadta a barátnak jelölésedet a(z) {{SITENAME}} wikin!
+
+$2 lapját itt tekintheted meg: $3
+
+Köszönjük
+
+---
+Szeretnéd, ha nem zaklatnánk több e-maillel?
+
+Kattints a következő hivatkozásra: $4
+és tiltsd le az e-mailes értesítéseket a beállításaidban.',
+	'foe_accept_subject' => '$1 elfogadta, hogy ellensége vagy a(z) {{SITENAME}} wikin!',
+	'foe_accept_body' => 'Szia, $1!
+
+$2 elfogadta az ellenségnek jelölésedet a(z) {{SITENAME}} wikin!
+
+$2 lapját itt tekintheted meg: $3
+
+Köszönjük
+
+---
+Szeretnéd, ha nem zaklatnánk több e-maillel?
+
+Kattints a következő hivatkozásra: $4
+és tiltsd le az e-mailes értesítéseket a beállításaidban.',
+	'friend_removed_subject' => 'Jaj, ne! $1 eltávolított a barátjai közül a(z) {{SITENAME}} wikin!',
+	'friend_removed_body' => 'Szia, $1!
+
+$2 eltávolított a barátai közül a(z) {{SITENAME}} wikin!
+
+Köszönjük
+
+---
+Szeretnéd, ha nem zaklatnánk több e-maillel?
+
+Kattints a következő hivatkozásra: $4
+és tiltsd le az e-mailes értesítéseket a beállításaidban.',
+	'foe_removed_subject' => 'Hurrá! $1 eltávolított az ellenségei közül a(z) {{SITENAME}} wikin!',
+	'foe_removed_body' => 'Szia, $1!
+
+$2 eltávolított az ellenségei közül a(z) {{SITENAME}} wikin!
+
+Köszönjük
+
+---
+Szeretnéd, ha nem zaklatnánk több e-maillel?
+
+Kattints a következő hivatkozásra: $4
+és tiltsd le az e-mailes értesítéseket a beállításaidban.',
 );
 
 /** Interlingua (Interlingua)
@@ -2922,10 +3740,193 @@ e disactiva in tu preferentias le notificationes per e-mail.',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author Farras
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'viewrelationships' => 'Lihat hubungan',
+	'viewrelationshiprequests' => 'Lihat permintaan hubungan',
+	'ur-already-submitted' => 'Permintaan Anda telah dikirim',
+	'ur-error-page-title' => 'Ups!',
+	'ur-error-title' => 'Ups, Anda mengambil jalan yang salah!',
+	'ur-error-message-no-user' => 'Kami tak bisa memenuhi permintaan Anda, karena tidak ada pengguna dengan nama ini.',
+	'ur-main-page' => 'Halaman utama',
+	'ur-your-profile' => 'Profil Anda',
+	'ur-backlink' => '&lt; Kembali ke profile $1',
+	'ur-relationship-count-foes' => '$1 memiliki $2 {{PLURAL:$2|musuh|musuh}}.
+Ingin lebih banyak musuh?
+<a href="$3">Undang mereka.</a>',
+	'ur-relationship-count-friends' => '$1 memiliki $2 {{PLURAL:$2|teman|teman}}.
+Ingin lebih banyak teman?
+<a href="$3">Undang mereka.</a>',
+	'ur-add-friends' => '  Ingin lebih banyak teman?
+<a href="$1">Undang mereka</a>',
+	'ur-add-friend' => 'Tambahkan teman',
+	'ur-add-foe' => 'Tambahkan musuh',
+	'ur-add-no-user' => 'Tidak ada pengguna yang dipilih.
+Minta permintaan pertemanan/permusuhan melalui pranala yang benar.',
+	'ur-add-personal-message' => 'Tambahkan pesan pribadi',
+	'ur-remove-relationship-friend' => 'Hapus sebagai teman',
+	'ur-remove-relationship-foe' => 'Hapus sebagai musuh',
+	'ur-give-gift' => 'Beri hadiah',
+	'ur-previous' => 'sebelumnya',
+	'ur-next' => 'selanjutnya',
+	'ur-remove-relationship-title-foe' => 'Apakah Anda ingin menghapus $1 sebagai musuh Anda?',
+	'ur-remove-relationship-title-confirm-foe' => 'Anda telah menghapus $1 sebagai musuh Anda',
+	'ur-remove-relationship-title-friend' => 'Apakah Anda ingin menghapus $1 sebagai teman Anda?',
+	'ur-remove-relationship-title-confirm-friend' => 'Anda telah menghapus $1 sebagai teman Anda',
+	'ur-remove-relationship-message-foe' => 'Anda telah meminta menghapus $1 sebagai musuh Anda, tekan "$2" untuk mengkonfirmasi.',
+	'ur-remove-relationship-message-confirm-foe' => 'Anda berhasil menghapus $1 sebagai musuh Anda.',
+	'ur-remove-relationship-message-friend' => 'Anda telah meminta menghapus $1 sebagai teman Anda, tekan "$2" untuk mengkonfirmasi.',
+	'ur-remove-relationship-message-confirm-friend' => 'Anda berhasil menghapus $1 sebagai teman Anda.',
+	'ur-remove-error-message-no-relationship' => 'Anda tak memiliki hubungan dengan $1.',
+	'ur-remove-error-message-remove-yourself' => 'Anda tak dapat menghapus diri sendiri.',
+	'ur-remove-error-message-pending-foe-request' => 'Anda memiliki permintaan permusuhan tertunda dengan $1.',
+	'ur-remove-error-message-pending-friend-request' => 'Anda memiliki permintaan pertemanan tertunda dengan $1.',
+	'ur-remove-error-not-loggedin-foe' => 'Anda harus masuk log untuk menghapus musuh.',
+	'ur-remove-error-not-loggedin-friend' => 'Anda harus masuk log untuk menghapus teman.',
+	'ur-remove' => 'Hapus',
 	'ur-cancel' => 'Batalkan',
+	'ur-login' => 'Masuk log',
+	'ur-add-title-foe' => 'Apakah Anda ingin menambahkan $1 sebagai musuh Anda?',
+	'ur-add-title-friend' => 'Apakah Anda ingin menambahkan $1 sebagai teman Anda?',
+	'ur-add-message-foe' => 'Anda akan menambahkan $1 sebagai musuh Anda.
+Kami akan memberitahu $1 untuk mengkonfirmasi permusuhan Anda.',
+	'ur-add-message-friend' => 'Anda akan menambahkan $1 sebagai teman Anda.
+Kami akan memberitahu $1 untuk mengkonfirmasi pertemanan Anda.',
+	'ur-add-button-foe' => 'Tambahkan sebagai musuh',
+	'ur-add-button-friend' => 'Tambahkan sebagai teman',
+	'ur-add-sent-title-foe' => 'Kami telah mengirimkan permintaan permusuhan Anda ke $1!',
+	'ur-add-sent-title-friend' => 'Kami telah mengirimkan permintaan pertemanan Anda ke $1!',
+	'ur-add-sent-message-foe' => 'Permintaan permusuhan Anda telah dikirim ke $1 untuk konfirmasi.
+Apabila $1 mengkonfirmasi permintaan Anda, Anda akan menerima surel pemberitahuan.',
+	'ur-add-sent-message-friend' => 'Permintaan pertemanan Anda telah dikirim ke $1 untuk konfirmasi.
+Apabila $1 mengkonfirmasi permintaan Anda, Anda akan menerima surel pemberitahuan.',
+	'ur-add-error-message-no-user' => 'Pengguna yang Anda tambahkan tidak ada.',
+	'ur-add-error-message-blocked' => 'Anda sedang diblokir dan tak dapat menambahkan teman atau musuh.',
+	'ur-add-error-message-yourself' => 'Anda tak dapat menambahkan diri sendiri sebagai teman atau musuh.',
+	'ur-add-error-message-existing-relationship-foe' => 'Anda telah bermusuhan dengan $1.',
+	'ur-add-error-message-existing-relationship-friend' => 'Anda telah berteman dengan $1.',
+	'ur-add-error-message-pending-request-title' => 'Bersabarlah!',
+	'ur-add-error-message-pending-friend-request' => 'Anda memiliki permintaan pertemanan tertunda dengan $1.
+Kami akan memberitahu Anda apabila $1 mengkonfirmasi permintaan Anda.',
+	'ur-add-error-message-pending-foe-request' => 'Anda memiliki permintaan permusuhan tertunda dengan $1.
+Kami akan memberitahu Anda apabila $1 mengkonfirmasi permintaan Anda.',
+	'ur-add-error-message-not-loggedin-foe' => 'Anda harus masuk log untuk menambahkan musuh',
+	'ur-add-error-message-not-loggedin-friend' => 'Anda harus masuk log untuk menambahkan teman',
+	'ur-requests-title' => 'Permintaan hubungan',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> ingin menjadi musuh Anda.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> ingin menjadi teman Anda.',
+	'ur-accept' => 'Terima',
+	'ur-reject' => 'Tolak',
+	'ur-no-requests-message' => 'Anda tidak memiliki permintaan pertemanan atau permusuhan.
+Apabila Anda ingin lebih banyak teman, <a href="$1">undang mereka!</a>',
+	'ur-requests-added-message-foe' => 'Anda telah menambahkan $1 sebagai musuh Anda.',
+	'ur-requests-added-message-friend' => 'Anda telah menambahkan $1 sebagai teman Anda.',
+	'ur-requests-reject-message-friend' => 'Anda telah menolak $1 sebagai teman Anda.',
+	'ur-requests-reject-message-foe' => 'Anda telah menolak $1 sebagai musuh Anda.',
+	'ur-title-foe' => 'Daftar musuh $1',
+	'ur-title-friend' => 'Daftar teman $1',
+	'friend_request_subject' => '$1 telah menambahkan Anda sebagai teman di {{SITENAME}}!',
+	'friend_request_body' => 'Hai $1.
+
+$2 telah menambahkan Anda sebagai teman di {{SITENAME}}. Kami ingin meyakinkan bahwa kalian berteman.
+
+Klik pranala berikut untuk mengkonfirmasi pertemanan Anda:
+$3
+
+Terima kasih
+
+---
+
+Hei, ingin berhenti menerima surel dari kami?
+
+Klik $4
+dan ubah pengaturan Anda untuk menghentikan pemberitahuan surel.',
+	'foe_request_subject' => 'Ada perang! $1 telah menambahkan Anda sebagai teman di {{SITENAME}}!',
+	'foe_request_body' => 'Hai $1.
+
+$2 telah menerima Anda sebagai musuh di {{SITENAME}}. Kami ini memastikan bahwa kalian bermusuhan.
+
+Klik pranala berikut untuk mengkonfirmasi permusuhan.
+
+$3
+
+Terima kasih
+
+---
+
+Hei, ingin berhenti menerima surel dari kami?
+
+Klik $4
+dan ubah pengaturan Anda untuk menghentikan pemberitahuan surel.',
+	'friend_accept_subject' => '$1 telah menerima permintaan pertemanan Anda di {{SITENAME}}!',
+	'friend_accept_body' => 'Hai $1.
+
+$2 telah menerima permintaan pertemanan Anda di {{SITENAME}}!
+
+Lihat halaman $2 di $3
+
+Terima kasih,
+
+---
+
+Hei, ingin berhenti menerima surel dari kami?
+
+Klik $4
+dan ubah pengaturan Anda untuk menghentikan pemberitahuan surel.',
+	'foe_accept_subject' => 'Sudah dimulai! $1 telah menerima permintaan permusuhan Anda di {{SITENAME}}!',
+	'foe_accept_body' => 'Hai $1.
+
+$2 telah menerima permintaan permusuhan Anda di {{SITENAME}}!
+
+Lihat halaman $2 di $3
+
+Terima kasih
+
+---
+
+Hei, ingin berhenti menerima surel dari kami?
+
+Klik $4
+dan ubah pengaturan Anda untuk menghentikan pemberitahuan surel.',
+	'friend_removed_subject' => 'Oh tidak! $1 telah menghapus Anda sebagai teman di {{SITENAME}}!',
+	'friend_removed_body' => 'Hai $1.
+
+$2 telah menghapus Anda sebagai teman di {{SITENAME}}!
+
+Terima kasih
+
+---
+
+Hei, ingin berhenti menerima surel dari kami?
+
+Klik $4
+dan ubah pengaturan Anda untuk menghentikan pemberitahuan surel.',
+	'foe_removed_subject' => 'Akhirnya! $1 telah menghapus Anda sebagai musuh di {{SITENAME}}!',
+	'foe_removed_body' => 'Hai $1.
+
+$2 telah menghapus Anda sebagai musuh di {{SITENAME}}!
+
+Mungkin kalian berdua akan segera berteman?
+
+Terima kasih
+
+---
+
+Hei, ingin berhenti menerima surel dari kami?
+
+Klik $4
+dan ubah pengaturan Anda untuk menghentikan pemberitahuan surel.',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'ur-error-page-title' => 'Ewóo!',
+	'foe_removed_subject' => 'O ho! $1 wefuru gi ka onye iro na {{SITENAME}}!',
 );
 
 /** Ido (Ido)
@@ -2941,24 +3942,26 @@ $messages['io'] = array(
  */
 $messages['it'] = array(
 	'ur-main-page' => 'Pagina principale',
+	'ur-cancel' => 'Annulla',
 );
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'viewrelationships' => '関係を表示',
-	'viewrelationshiprequests' => '関係申請を表示',
+	'viewrelationships' => '関係の表示',
+	'viewrelationshiprequests' => '関係申請の表示',
 	'ur-already-submitted' => '申請を送信しました',
 	'ur-error-page-title' => 'おっと！',
-	'ur-error-title' => 'おっと！悪化させましたね！',
+	'ur-error-title' => 'おっと、操作を間違えましたよ！',
 	'ur-error-message-no-user' => 'その名前の利用者は存在しないため申請を完了できません。',
 	'ur-main-page' => 'メインページ',
 	'ur-your-profile' => 'あなたのプロファイル',
 	'ur-backlink' => '&lt; $1のプロファイルに戻る',
-	'ur-relationship-count-foes' => '$1には$2人の敵がいます。敵を増やしますか？<a href="$3">招待する。</a>',
-	'ur-relationship-count-friends' => '$1には$2人の友人がいます。友人を増やしますか？<a href="$3">招待する。</a>',
+	'ur-relationship-count-foes' => '$1には$2人の{{PLURAL:$2|敵}}がいます。敵を増やしますか？<a href="$3">招待する。</a>',
+	'ur-relationship-count-friends' => '$1には$2人の{{PLURAL:$2|友人}}がいます。友人を増やしますか？<a href="$3">招待する。</a>',
 	'ur-add-friends' => '友人を増やしますか？<a href="$1">招待する。</a>',
 	'ur-add-friend' => '友人として追加',
 	'ur-add-foe' => '敵として追加',
@@ -2966,7 +3969,7 @@ $messages['ja'] = array(
 	'ur-add-personal-message' => '私的なメッセージを追加',
 	'ur-remove-relationship-friend' => '友人から除去',
 	'ur-remove-relationship-foe' => '敵から除去',
-	'ur-give-gift' => 'プレゼントを贈る',
+	'ur-give-gift' => '贈り物を贈る',
 	'ur-previous' => '前',
 	'ur-next' => '次',
 	'ur-remove-relationship-title-foe' => '$1をあなたの敵から除去しますか？',
@@ -3021,22 +4024,21 @@ $messages['ja'] = array(
 	'friend_request_subject' => '$1があなたを{{SITENAME}}での友人に追加しました！',
 	'friend_request_body' => '$1さん、こんにちは。
 
-$2 さんがあなたを {{SITENAME}} での友人に追加しました。このメールはお二人がほんとうに友人であるかを確認するものです。
+$2さんがあなたを {{SITENAME}} での友人に追加しました。このメールはお二人がほんとうに友人であるかを確認するものです。
 
 友人であることを確認するには次のリンクをクリックしてください。
-
 $3
 
 ご協力ありがとうございます。
 
 ---
-ひょっとして私たちからの電子メール受信を停止したいですか？
-
-もしそうなら、$4 をクリックして設定を変更し、電子メール通知を停止してください。',
+メール受信を停止したい場合は、
+$4
+をクリックして、メール通知を無効にするよう設定変更してください。',
 	'foe_request_subject' => '戦争です！$1があなたを {{SITENAME}} での敵に追加しました！',
 	'foe_request_body' => '$1さん、こんにちは。
 
-$2 さんがたったいまあなたを {{SITENAME}} での敵に追加しました。このメールは$2さんがほんとうにあなたにとって生かしておけない敵であるとか、あるいはちょっとしたけんか中であるとかいった状態であるかを確認するものです。
+$2さんがあなたを {{SITENAME}} での敵に追加しました。このメールは$2さんがほんとうにあなたにとって生かしておけない敵であるとか、あるいはちょっとしたけんか中であるとかいった状態であるかを確認するものです。
 
 戦闘状態を確認するには次のリンクをクリックしてください。
 
@@ -3045,63 +4047,51 @@ $3
 ご協力ありがとうございます。
 
 ---
-ひょっとして私たちからの電子メール受信を停止したいですか？
-
-もしそうなら、$4 をクリックして設定を変更し、電子メール通知を停止してください。',
+メール受信を停止したい場合は、
+$4
+をクリックして、メール通知を無効にするよう設定変更してください。',
 	'friend_accept_subject' => '$1があなたからの {{SITENAME}} での友人申請を承認しました！',
 	'friend_accept_body' => '$1さん、こんにちは。
 
 $2さんがあなたからの {{SITENAME}} での友人申請を承認しました！
 
-$3上の$2さんのページを見てみてください。
-
-それでは。
+$3 をクリックして$2さんのページをご確認ください。
 
 ---
-
-ひょっとして私たちからの電子メール受信を停止したいですか？
-
-もしそうなら、$4 をクリックして設定を変更し、電子メール通知を停止してください。',
+メール受信を停止したい場合は、
+$4
+をクリックして、メール通知を無効にするよう設定変更してください。',
 	'foe_accept_subject' => '続行中です！$1があなたからの {{SITENAME}} での敵申請を承認しました！',
 	'foe_accept_body' => '$1さん、こんにちは。
 
 $2さんがあなたからの {{SITENAME}} での敵申請を承認しました！
 
-$3上の$2さんのページを見てみてください。
-
-それでは。
+$3 をクリックして$2さんのページをご確認ください。
 
 ---
-
-ひょっとして私たちからの電子メール受信を停止したいですか？
-
-もしそうなら、$4 をクリックして設定を変更し、電子メール通知を停止してください。',
+メール受信を停止したい場合は、
+$4
+をクリックして、メール通知を無効にするよう設定変更してください。',
 	'friend_removed_subject' => 'たいへんです！$1があなたを {{SITENAME}} での友人から外しました！',
 	'friend_removed_body' => '$1さん、こんにちは。
 
 $2 さんがあなたを {{SITENAME}} での友人から除去しました！
 
-それでは。
-
---- 
-
-ひょっとして私たちからの電子メール受信を停止したいですか？
-
-もしそうなら、$4 をクリックして設定を変更し、電子メール通知を停止してください。',
+---
+メール受信を停止したい場合は、
+$4
+をクリックして、メール通知を無効にするよう設定変更してください。',
 	'foe_removed_subject' => 'やった！$1があなたを {{SITENAME}} での敵から外しました！',
 	'foe_removed_body' => '$1さん、こんにちは。
 
-$2 さんがあなたを {{SITENAME}} での敵から除去しました！
+$2さんがあなたを {{SITENAME}} での敵から除去しました！
 
 お二人の関係が改善に向かっているものと期待します。
 
-それでは。
-
---- 
-
-ひょっとして私たちからの電子メール受信を停止したいですか？
-
-もしそうなら、$4 をクリックして設定を変更し、電子メール通知を停止してください。',
+---
+メール受信を停止したい場合は、
+$4
+をクリックして、メール通知を無効にするよう設定変更してください。',
 );
 
 /** Javanese (Basa Jawa)
@@ -3196,7 +4186,7 @@ $messages['km'] = array(
 	'ur-requests-message-friend' => '<a href="$1">$2</a> ចង់​ក្លាយជា​មិត្តភ័ក្ដិ​របស់​អ្នក​។',
 	'ur-accept' => 'ព្រមទទួល',
 	'ur-reject' => 'ច្រានចោល',
-	'ur-no-requests-message' => 'អ្នក​មិនមាន​សំណើសុំ​ជា​មិត្តភ័ក្ដិ ឬ បច្ចាមិត្ត​ទេ​។ 
+	'ur-no-requests-message' => 'អ្នក​មិនមាន​សំណើសុំ​ជា​មិត្តភ័ក្ដិ ឬ បច្ចាមិត្ត​ទេ​។
 
 ប្រសិនបើ អ្នក​ត្រូវការ​មិត្តភ័ក្ដិ​បន្ថែម​ទៀត, <a href="$1">ចូរ​អញ្ជើញ​ពួកគេ!</a>',
 	'ur-requests-added-message-foe' => 'អ្នក​បាន​បន្ថែម $1 ជា​បច្ចាមិត្ត​របស់​អ្នក​ហើយ​។',
@@ -3390,7 +4380,7 @@ un Desch och uß singe Fründesleß ußjedraare, op de
 {{SITENAME}}.
 
 
-Dä, jetz weiß De dat. 
+Dä, jetz weiß De dat.
 Dankeschön.
 
 ---
@@ -3406,7 +4396,7 @@ Dä Metmaacher $2 hät Der de Feindschaff jekündesch,
 un Desch och uß singe Feindesleß ußjedraare, op de
 {{SITENAME}}.
 
-Dä, jetz weiß De dat. 
+Dä, jetz weiß De dat.
 Dankeschön.
 
 ---
@@ -3415,6 +4405,15 @@ Wells De kein e-mail fun uns han? Dann kleck
 $4
 un donn en Dinge Ennstellunge affschallde, dat
 De e-mail jescheck kriß.',
+);
+
+/** Cornish (Kernowek)
+ * @author Kernoweger
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'ur-main-page' => 'Pennfolen',
+	'ur-cancel' => 'Hedhi',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -3500,6 +4499,21 @@ Wann Dir méi Frënn wellt <a href="$1">invitéiert se!</a>',
 	'ur-title-foe' => 'Lëscht vun de Géigner vum $1',
 	'ur-title-friend' => 'Lëscht vun de Frënn vum $1',
 	'friend_request_subject' => '$1 huet iech als Frënd op {{SITENAME}} derbäigesat!',
+	'friend_request_body' => "Salut $1.
+
+De Benotzer $2 huet Iech als Frënd op {{SITENAME}} derbäigesat. Mir wëlle sécher sinn datt Dir och wierklech Frënn sidd.
+
+Klickt w.e.g. op dëse Link fir Är Frëndschaft ze confirméieren:
+$3
+
+Merci
+
+---
+
+Wëllt dir keng Maile méi vun eis kréien?
+
+Da klickt $4
+an ännert Är Astellunge fir d'E-Mail-Notificatioun auszeschalten.",
 	'foe_request_subject' => 'Et ass Krich! $1 huet iech als Géigner op {{SITENAME}} derbàigesat!',
 	'friend_accept_subject' => '$1 huet är Ufro als Frënd op {{SITENAME}} ugeholl!',
 	'foe_accept_subject' => 'Et geet lass! $1 huet Iech als Géigner op {{SITENAME}} akzeptéiert!',
@@ -3513,6 +4527,186 @@ Wann Dir méi Frënn wellt <a href="$1">invitéiert se!</a>',
 $messages['mhr'] = array(
 	'ur-main-page' => 'Тӱҥ лаштык',
 	'ur-cancel' => 'Чараш',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'viewrelationships' => 'Види однос',
+	'viewrelationshiprequests' => 'Види барања за однос',
+	'ur-already-submitted' => 'Барањето ви е испратено',
+	'ur-error-page-title' => 'Упс!',
+	'ur-error-title' => 'Упс! Свртевте на погрешно место!',
+	'ur-error-message-no-user' => 'Не можеме да го извршиме вашето барање бидејќи не постои корисник со тоа име.',
+	'ur-main-page' => 'Главна страница',
+	'ur-your-profile' => 'Вашиот профил',
+	'ur-backlink' => '&lt; Назад кон профилот на $1',
+	'ur-relationship-count-foes' => '$1 има $2 {{PLURAL:$2|непријател|непријатели}}.
+Сакате уште непријатели?
+<a href="$3">Поканете ги.</a>',
+	'ur-relationship-count-friends' => '$1 има $2 {{PLURAL:$2|пријател|пријатели}}.
+Сакате уште пријатели?
+<a href="$3">Поканете ги.</a>',
+	'ur-add-friends' => '  Сакате уште пријатели?
+<a href="$1">Поканете ги</a>',
+	'ur-add-friend' => 'Додај во пријатели',
+	'ur-add-foe' => 'Додај во непријатели',
+	'ur-add-no-user' => 'Нема избрано корисник.
+Побарувајте пријателства/непријателства преку правилната врска.',
+	'ur-add-personal-message' => 'Додај лична порака',
+	'ur-remove-relationship-friend' => 'Отстрани од пријатели',
+	'ur-remove-relationship-foe' => 'Отстрани од непријатели',
+	'ur-give-gift' => 'Подари подарок',
+	'ur-previous' => 'претходни',
+	'ur-next' => 'следни',
+	'ur-remove-relationship-title-foe' => 'Дали сакате да го отстраните $1 од листата на непријатели?',
+	'ur-remove-relationship-title-confirm-foe' => 'Го отстранивте $1 од листата на непријатели',
+	'ur-remove-relationship-title-friend' => 'Дали сакате да го отстраните $1 од листата на пријатели?',
+	'ur-remove-relationship-title-confirm-friend' => 'Го отстранивте $1 од листата на пријатели',
+	'ur-remove-relationship-message-foe' => 'Побаравте отстранување на $1 од листата на ваши непријатели; притиснете на „$2“ за да потврдите.',
+	'ur-remove-relationship-message-confirm-foe' => 'Успешно го отстранивте $1 од листата на непријатели.',
+	'ur-remove-relationship-message-friend' => 'Побаравте отстранување на $1 од листата на ваши пријатели; притиснете на „$2“ за да потврдите.',
+	'ur-remove-relationship-message-confirm-friend' => 'Успешно го отстранивте $1 од листата на пријатели.',
+	'ur-remove-error-message-no-relationship' => 'Немате воспоставено однос со $1.',
+	'ur-remove-error-message-remove-yourself' => 'Не можете да се отстраните себеси',
+	'ur-remove-error-message-pending-foe-request' => 'Имате барање за непријателство со $1 во исчекување.',
+	'ur-remove-error-message-pending-friend-request' => 'Имате барање за пријателство со $1 во исчекување.',
+	'ur-remove-error-not-loggedin-foe' => 'Морате да сте најавени за да отстраните непријател.',
+	'ur-remove-error-not-loggedin-friend' => 'Морате да сте најавени за да отстраните пријател.',
+	'ur-remove' => 'Отстрани',
+	'ur-cancel' => 'Откажи',
+	'ur-login' => 'Најава',
+	'ur-add-title-foe' => 'Дали сакате да го додадете $1 како ваш непријател?',
+	'ur-add-title-friend' => 'Дали сакате да го додадете $1 како ваш пријател?',
+	'ur-add-message-foe' => 'Го додавате $1 како непријател.
+Ќе го известиме $1 за да ја потврди вашата омраза.',
+	'ur-add-message-friend' => 'Го додавате $1 како пријател.
+Ќе го известиме $1 за да го потврди вашето пријателство.',
+	'ur-add-button-foe' => 'Додај како непријател',
+	'ur-add-button-friend' => 'Додај во приајтели',
+	'ur-add-sent-title-foe' => 'Го испративме вашето барање за непријателство на $1!',
+	'ur-add-sent-title-friend' => 'Го испративме вашето барање за пријателство на $1',
+	'ur-add-sent-message-foe' => 'Вашето барање за непријателство е испратено на $1 за да го потврди.
+Ако $1 потврди дека сте непријатели, ќе добиете известување по е-пошта.',
+	'ur-add-sent-message-friend' => 'Вашето барање за пријателство е испратено на $1 за да го потврди.
+Ако $1 потврди дека сте пријатели, ќе добиете известување по е-пошта.',
+	'ur-add-error-message-no-user' => 'Корисникот што сакате да го додадете не постои.',
+	'ur-add-error-message-blocked' => 'Моментално сте блокирани и не можете да додавате пријатели и непријатели.',
+	'ur-add-error-message-yourself' => 'Не можете да се додадете себеси како пријател или непријател.',
+	'ur-add-error-message-existing-relationship-foe' => 'Веќе сте непријатели со $1.',
+	'ur-add-error-message-existing-relationship-friend' => 'Веќе сте пријатели со $1.',
+	'ur-add-error-message-pending-request-title' => 'Трпение!',
+	'ur-add-error-message-pending-friend-request' => 'Имате барање за пријателство со $1 во исчекување.
+Ќе ве известиме кога $1 ќе го потрврди барањето.',
+	'ur-add-error-message-pending-foe-request' => 'Имате барање за непријателство со $1 во исчекување.
+Ќе ве известиме кога $1 ќе го потрврди барањето.',
+	'ur-add-error-message-not-loggedin-foe' => 'Мора да сте најавени за да додавате непријатели',
+	'ur-add-error-message-not-loggedin-friend' => 'Мора да сте најавени за да додавате пријатели',
+	'ur-requests-title' => 'Барања за однос',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> сака да бидете непријатели.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> сака да бидете пријатели.',
+	'ur-accept' => 'Прифати',
+	'ur-reject' => 'Одбиј',
+	'ur-no-requests-message' => 'Немате барања за пријателство или непријателство.
+Ако сакате уште пријатели, <a href="$1">поканете ги!</a>',
+	'ur-requests-added-message-foe' => 'Го додадовте $1 како непријател.',
+	'ur-requests-added-message-friend' => 'Го додадовте $1 како пријател.',
+	'ur-requests-reject-message-friend' => 'Одбивте да бидете пријатели со $1.',
+	'ur-requests-reject-message-foe' => 'Одбивте да бидете непријатели со $1.',
+	'ur-title-foe' => 'Листа на непријатели на $1',
+	'ur-title-friend' => 'Листа на пријатели на $1',
+	'friend_request_subject' => '$1 ве додаде како пријател на {{SITENAME}}!',
+	'friend_request_body' => 'Здраво $1.
+
+$2 во додаде во својата листа на пријатели на {{SITENAME}}. Сакаме да потврдиме дека вие двајца сте навистина пријатели.
+
+Кликнете на врската за да го потврдите пријателството:
+$3
+
+Благодариме
+
+---
+
+Сакате повеќе да не добивате известувања од нас?
+
+Кликнете на $4
+и во нагодувањата оневозможете добивање на известувања по е-пошта.',
+	'foe_request_subject' => 'Ова е војна! $1 ве додаде во непријатели на {{SITENAME}}!',
+	'foe_request_body' => 'Здраво $1.
+
+$2 штотуку ве додаде во својата листа на непријатели на {{SITENAME}}. Сакаме да ни потврдите дека навистина сте смртни непријатели, или барем дека сте скарани.
+
+Кликнете на врската за да го потврдите непријателството.
+
+$3
+
+Благодариме
+
+---
+
+Сакате повеќе да не добивате известувања од нас?
+
+Кликнете на $4
+и во нагодувањата оневозможете добивање на известувања по е-пошта.',
+	'friend_accept_subject' => '$1 го прифати вашето барање за пријателство на {{SITENAME}}!',
+	'friend_accept_body' => 'Здраво $1.
+
+$2 прифати да ви биде пријател на {{SITENAME}}!
+
+Погледајте ја страницата на $2 на $3
+
+Благодариме,
+
+---
+
+Сакате повеќе да не добивате известувања од нас?
+
+Кликнете на $4
+и во нагодувањата оневозможете добивање на известувања по е-пошта.',
+	'foe_accept_subject' => 'Ете така! $1 го прифати вашето барање за непријателство на {{SITENAME}}!',
+	'foe_accept_body' => 'Здраво $1.
+
+$2 прифати да ви биде непријател на {{SITENAME}}!
+
+Погледајте ја страницата на $2 на $3
+
+Благодариме
+
+---
+
+Сакате повеќе да не добивате известувања од нас?
+
+Кликнете на $4
+и во нагодувањата оневозможете добивање на известувања по е-пошта.',
+	'friend_removed_subject' => 'Ах, не! $1 ве отстрани од листата на пријатели на {{SITENAME}}!',
+	'friend_removed_body' => 'Здраво $1.
+
+$2 ве отстрани од листата на пријатели на {{SITENAME}}!
+
+Благодариме
+
+---
+
+Сакате повеќе да не добивате известувања од нас?
+
+Кликнете на $4
+и во нагодувањата оневозможете добивање на известувања по е-пошта.',
+	'foe_removed_subject' => 'Ура! $1 ве отстрани од непријатели на {{SITENAME}}!',
+	'foe_removed_body' => 'Здраво $1.
+
+$2 ве отстрани од листата на непријатели на {{SITENAME}}!
+
+Можеби вие сте на пат да станете пријатели?
+
+Благодариме
+
+---
+
+Сакате повеќе да не добивате известувања од нас?
+
+Кликнете на $4
+и во нагодувањата оневозможете добивање на известувања по е-пошта.',
 );
 
 /** Malayalam (മലയാളം)
@@ -3536,6 +4730,13 @@ $messages['ml'] = array(
 	'ur-title-friend' => '$1ന്റെ സുഹൃത്തുക്കളുടെ പട്ടിക',
 	'friend_request_subject' => '$1 താങ്കളെ {{SITENAME}} സം‌രംഭത്തില്‍ സുഹൃത്തായി ചേര്‍ത്തിരിക്കുന്നു!',
 	'friend_accept_subject' => '{{SITENAME}} സം‌രംഭത്തിലുള്ള താങ്കളുടെ സൗഹൃദ അഭ്യര്‍ത്ഥന $1 സ്വീകരിച്ചു!',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'ur-login' => 'Нэвтрэх',
 );
 
 /** Marathi (मराठी)
@@ -4336,7 +5537,7 @@ E ! Volètz arrestar de recebre de corrièrs de nòstra part ?
 
 Clicatz $4 e modificatz vòstras preferéncias per desactivar las notificacions per corrièr electronic.",
 	'friend_accept_subject' => '$1 a acceptat vòstra requèsta en amistat sus {{SITENAME}} !',
-	'friend_accept_body' => 'Adiu $1 : 
+	'friend_accept_body' => 'Adiu $1 :
 
 $2 a acceptat vòstra requèsta en amistat sus {{SITENAME}} !
 
@@ -4351,7 +5552,7 @@ E ! Volètz vos arrestar de recebre de corrièrs de nòstra part ?
 Clicatz $4
 e modificatz vòstras preferéncias per desactivar las notificacions per corrièr electronic.',
 	'foe_accept_subject' => 'Es fach ! $1 a acceptat vòstra declaracion de guèrra sus  {{SITENAME}} !',
-	'foe_accept_body' => 'Adiu $1 : 
+	'foe_accept_body' => 'Adiu $1 :
 
 $2 a acceptat vòstra declaracion de guèrra sus  {{SITENAME}} !
 
@@ -4409,12 +5610,22 @@ $messages['os'] = array(
 	'ur-cancel' => 'Нæ бæззы',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'ur-main-page' => 'Haaptblatt',
+	'ur-next' => 'neegscht',
+	'ur-login' => 'Kumm nei',
+);
+
 /** Polish (Polski)
  * @author Airwolf
  * @author Derbeth
  * @author Jwitos
  * @author Maikking
  * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
 	'viewrelationships' => 'Zobacz nawiązane stosunki',
@@ -4455,21 +5666,35 @@ Wybierz znajomych lub wrogów poprzez poprawny link.',
 	'ur-remove-error-message-remove-yourself' => 'Nie możesz usunąć sam siebie.',
 	'ur-remove-error-message-pending-foe-request' => 'Wysłałeś już informację, że chcesz być wrogiem dla $1.',
 	'ur-remove-error-message-pending-friend-request' => 'Wysłałeś już informację, że chcesz być znajomym dla $1.',
+	'ur-remove-error-not-loggedin-foe' => 'Musisz się zalogować, aby przestać uznawać kogoś za wroga.',
+	'ur-remove-error-not-loggedin-friend' => 'Musisz się zalogować, aby zakończyć znajomość.',
 	'ur-remove' => 'Usuń',
 	'ur-cancel' => 'Anuluj',
 	'ur-login' => 'Zaloguj się',
 	'ur-add-title-foe' => 'Czy chcesz dodać $1 do listy wrogów?',
 	'ur-add-title-friend' => 'Czy chcesz dodać $1 do listy przyjaciół?',
+	'ur-add-message-foe' => 'Zamierzasz uznać $1 za swojego wroga.
+Poprosimy $1 o potwierdzenie nieprzyjaznego stosunku.',
+	'ur-add-message-friend' => 'Zamierzasz uznać $1 za swojego znajomego.
+Poprosimy $1 o potwierdzenie nawiązania znajomości.',
 	'ur-add-button-foe' => 'Oznacz jako wroga',
 	'ur-add-button-friend' => 'Oznacz jako przyjaciela',
 	'ur-add-sent-title-foe' => 'Wysłano informację, że chcesz być wrogiem dla $1!',
 	'ur-add-sent-title-friend' => 'Wysłano informację, że chcesz być znajomym dla $1!',
+	'ur-add-sent-message-foe' => 'Prośba o ustalenie statusu wroga została wysłana do $1.
+Jeśli $1 ją potwierdzi, otrzymasz powiadomienie e-mail',
+	'ur-add-sent-message-friend' => 'Prośba o ustalenie statusu znajomego została wysłana do $1.
+Jeśli $1 ją potwierdzi, otrzymasz powiadomienie e-mail',
 	'ur-add-error-message-no-user' => 'Użytkownik, którego próbujesz dodać, nie istnieje.',
 	'ur-add-error-message-blocked' => 'Jesteś zablokowany i nie możesz dodawać nowych znajomych i wrogów.',
 	'ur-add-error-message-yourself' => 'Nie możesz dodać samego siebie jako przyjaciela lub wroga.',
 	'ur-add-error-message-existing-relationship-foe' => 'Jesteście już wrogami z $1.',
 	'ur-add-error-message-existing-relationship-friend' => 'Jesteście już przyjaciółmi z $1.',
 	'ur-add-error-message-pending-request-title' => 'Cierpliwości!',
+	'ur-add-error-message-pending-friend-request' => 'Wysłałeś prośbę o nawiązanie znajomości z $1.
+Powiadomimy Cię, jeśli $1 wyrazi zgodę.',
+	'ur-add-error-message-pending-foe-request' => 'Wysłałeś prośbę o ustalenie statusu wroga z $1.
+Powiadomimy Cię, jeśli $1 potwierdzi prośbę.',
 	'ur-add-error-message-not-loggedin-foe' => 'Żeby dodać wroga musisz być zalogowany',
 	'ur-add-error-message-not-loggedin-friend' => 'Żeby dodać przyjaciela musisz być zalogowany',
 	'ur-requests-title' => 'Nawiązanie znajomości',
@@ -4486,8 +5711,276 @@ Jeśli chcesz mieć więcej przyjaciół <a href="$1">zaproś ich!</a>',
 	'ur-title-foe' => 'Lista wrogów $1',
 	'ur-title-friend' => 'Lista przyjaciół $1',
 	'friend_request_subject' => '$1 dodał Ciebie do swoich przyjaciół na {{GRAMMAR:MS.lp|{{SITENAME}}}}!',
+	'friend_request_body' => 'Cześć $1.
+
+$2 chce nawiązać z Tobą znajomość na {{GRAMMAR:MS.lp|{{SITENAME}}}}. Chcemy się upewnić, czy rzeczywiście jesteście znajomymi.
+
+Proszę kliknąć poniżej, żeby potwierdzić znajomość:
+$3
+
+Dziękujemy
+
+---
+
+Nie chcesz już od nas maili?
+
+Kliknij $4
+i zmień swoje ustawienia, wyłączając powiadomienia e-mail.',
 	'foe_request_subject' => 'Wojna! $1 dodał Cię do wrogów na {{GRAMMAR:MS.lp|{{sitename}}}}!',
+	'foe_request_body' => 'Witaj $1.
+
+$2 oznaczył Cię jako swojego wroga na {{GRAMMAR:MS.lp|{{SITENAME}}}}. Chcemy się upewnić, czy rzeczywiście jesteście śmiertelnymi wrogami lub przynajmniej skłóceni.
+
+Proszę kliknąć poniżej, aby potwierdzić.
+
+$3
+
+Dziękujemy
+
+---
+
+Nie chcesz już od nas maili?
+
+Kliknij $4
+i zmień swoje ustawienia, wyłączając powiadomienia e-mail.',
+	'friend_accept_subject' => '$1 zaakceptował Twoją prośbę o nawiązanie znajomości na {{GRAMMAR:MS.lp|{{SITENAME}}}}!',
+	'friend_accept_body' => 'Witaj $1.
+
+$2 zaakceptował Twoją prośbę o nawiązanie znajomości na {{GRAMMAR:MS.lp|{{SITENAME}}}}!
+
+Zobacz stronę $2 na $3
+
+Dziękujemy,
+
+---
+
+Nie chcesz otrzymywać od nas maili?
+
+Kliknij $4
+i zmień ustawienia, wyłączając powiadomienia e-mail.',
+	'foe_accept_subject' => '$1 zaakceptował Twoją prośbę o status wroga na {{GRAMMAR:MS.lp|{{SITENAME}}}}!',
+	'foe_accept_body' => 'Witaj $1.
+
+$2 zaakceptował Twoją prośbę o status wroga na {{GRAMMAR:MS.lp|{{SITENAME}}}}!
+
+Zobacz stronę $2 na $3
+
+Dziękujemy
+
+---
+
+Nie chcesz otrzymywać od nas maili?
+
+Kliknij $4
+i zmień ustawienia, wyłączając powiadomienia e-mail.',
 	'friend_removed_subject' => 'Och nie! $1 usunął Cię z listy przyjaciół na {{GRAMMAR:MS.lp|{{SITENAME}}}}!',
+	'friend_removed_body' => 'Witaj $1.
+
+$2 usunął Cię z listy znajomych na {{GRAMMAR:MS.lp|{{SITENAME}}}}!
+
+Dziękujemy
+
+---
+
+Nie chcesz otrzymywać od nas maili?
+
+Kliknij $4
+i zmień ustawienia, wyłączając powiadomienia e-mail.',
+	'foe_removed_subject' => 'Hej! $1 usunął Cię z listy wrogów na {{GRAMMAR:MS.lp|{{SITENAME}}}}!',
+	'foe_removed_body' => 'Witaj $1.
+
+$2 usunął Cię z listy wrogów na {{GRAMMAR:MS.lp|{{SITENAME}}}}!
+
+Może zostaniecie przyjaciółmi?
+
+Dziękujemy
+
+---
+
+Nie chcesz otrzymywać od nas maili?
+
+Kliknij $4
+i zmień ustawienia, wyłączając powiadomienia e-mail.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'viewrelationships' => 'Visualisa relassion',
+	'viewrelationshiprequests' => 'Visualisa arceste ëd relassion',
+	'ur-already-submitted' => "Toa arcesta a l'é stàita mandà",
+	'ur-error-page-title' => 'Contacc!',
+	'ur-error-title' => "Contacc, a l'é andaje mal!",
+	'ur-error-message-no-user' => 'I podoma pa completé soa arcesta, përchè a-i é gnun utent con sto nòm-sì.',
+	'ur-main-page' => 'Intrada',
+	'ur-your-profile' => 'Tò profil',
+	'ur-backlink' => '&lt; André al profil ëd $1',
+	'ur-relationship-count-foes' => '$1 a l\'ha $2 {{PLURAL:$2|nemis|nemis}}.
+Ancor ëd pì?
+<a href="$3">Anviteje.</a>',
+	'ur-relationship-count-friends' => '$1 a l\'ha $2 {{PLURAL:$2|amis|amis}}.
+Ancor pì d\'amis?
+<a href="$3">Anviteje.</a>',
+	'ur-add-friends' => 'Veul-lo pi d\'amis?
+<a href="$1">Anviteje</a>',
+	'ur-add-friend' => "Gionta n'amis",
+	'ur-add-foe' => 'Gionta un nemis',
+	'ur-add-no-user' => "Gnun utent selessionà.
+Për piasì ch'a ciama amis/nemis con ël colegament giust.",
+	'ur-add-personal-message' => 'Gionté un mëssagi përsonal',
+	'ur-remove-relationship-friend' => "Gava n'amis",
+	'ur-remove-relationship-foe' => 'Gava un nemis',
+	'ur-give-gift' => 'Fé un cadò',
+	'ur-previous' => 'prima',
+	'ur-next' => 'dapress',
+	'ur-remove-relationship-title-foe' => 'Veus-lo gavé $1 da sò nemis?',
+	'ur-remove-relationship-title-confirm-foe' => "It l'has gavà $1 da tò nemis",
+	'ur-remove-relationship-title-friend' => 'Veul-lo gavé $1 da sò amis?',
+	'ur-remove-relationship-title-confirm-friend' => "It l'has gavà $1 da tò amis",
+	'ur-remove-relationship-message-foe' => 'A l\'ha ciamà ëd gavé $1 da sò nemis, ch\'a sgnaca "$2" për confirmé.',
+	'ur-remove-relationship-message-confirm-foe' => "It l'has gavà da bin $1 da tò nemis.",
+	'ur-remove-relationship-message-friend' => 'A l\'ha ciamà ëd gavé $1 da sò amis, ch\'a sgnaca "$2" për confirmé.',
+	'ur-remove-relationship-message-confirm-friend' => "It l'has gavà $1 da bin da tò amis.",
+	'ur-remove-error-message-no-relationship' => "It l'has pa relassion con $1.",
+	'ur-remove-error-message-remove-yourself' => 'It peule pa gavé ti midem.',
+	'ur-remove-error-message-pending-foe-request' => "A l'has n'arcesta ëd nemis an cors con $1.",
+	'ur-remove-error-message-pending-friend-request' => "It l'has n'arcesta pendenta d'amis con $1.",
+	'ur-remove-error-not-loggedin-foe' => 'A deuv intré ant ël sistema për gavé un nemis.',
+	'ur-remove-error-not-loggedin-friend' => "A deuv esse intrà ant ël sistema për gavé n'amis.",
+	'ur-remove' => 'Gava',
+	'ur-cancel' => 'Scancela',
+	'ur-login' => 'Intra',
+	'ur-add-title-foe' => 'Veul-lo gionté $1 com sò nemis?',
+	'ur-add-title-friend' => 'Veul-lo gionté $1 com sò amis?',
+	'ur-add-message-foe' => "A l'é an sël pont ëd gionté $1 com sò nemis.
+I notifichëroma a $1 për confirmé vòstra rusa.",
+	'ur-add-message-friend' => "A l'é an sël pont ëd gionté $1 com sò amis.
+I notifichëroma a $1 për confirmé vòsta amicissia.",
+	'ur-add-button-foe' => 'Gionta com nemis',
+	'ur-add-button-friend' => 'Gionta com amis',
+	'ur-add-sent-title-foe' => "I l'oma mandà toa arcesta ëd nemis a $1!",
+	'ur-add-sent-title-friend' => "I l'oma mandà toa arcesta d'amis a $1!",
+	'ur-add-sent-message-foe' => "Soa arcesta ëd nemis a l'é stàita mandà a $1 për conferma.
+Se $1 a conferma soa arcesta, chiel a arseivrà na conferma për pòsta eletrònica.",
+	'ur-add-sent-message-friend' => "Soa arcesta d'amis a l'é stàita mandà a $1 për conferma.
+Se $1 a confirmrà soa arcesta, chiel a arseivrà la comunicassion an pòsta eletrònica",
+	'ur-add-error-message-no-user' => "L'utent ch'it preuve a gionté a esist pa.",
+	'ur-add-error-message-blocked' => 'It ses blocà al moment e it peule pa gionté amis o nemis.',
+	'ur-add-error-message-yourself' => 'It peule pa gionté ti midem com amis o nemis.',
+	'ur-add-error-message-existing-relationship-foe' => 'It ses già nemis con $1.',
+	'ur-add-error-message-existing-relationship-friend' => 'It ses già amis con $1.',
+	'ur-add-error-message-pending-request-title' => 'Passiensa!',
+	'ur-add-error-message-pending-friend-request' => "A l'ha n'arcesta d'amis an cors con $1.
+I-j notifichëroma quand $1 a conferma soa arcesta.",
+	'ur-add-error-message-pending-foe-request' => "A l'ha n'arcesta ëd nemis an cors con $1.
+I-j notifichëroma quand $1 a conferma soa arcesta.",
+	'ur-add-error-message-not-loggedin-foe' => 'A deuv esse intrà ant ël sistema për gionté un nemis',
+	'ur-add-error-message-not-loggedin-friend' => "A deuv esse intrà ant ël sistema për gionté n'amis",
+	'ur-requests-title' => 'Arceste ëd relassion',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> a veul esse tò nemis.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> a veul esse tò amis.',
+	'ur-accept' => 'Aceté',
+	'ur-reject' => 'Arfuda',
+	'ur-no-requests-message' => "A l'ha gnun-e arceste d'amis o ëd nemis.
+S'a veul pi d'amis, <a href=\"\$1\">ch'a j'anvita!</a>",
+	'ur-requests-added-message-foe' => "It l'has giontà $1 com tò nemis.",
+	'ur-requests-added-message-friend' => "It l'has giontà $1 com tò amis.",
+	'ur-requests-reject-message-friend' => "It l'has arfudà $1 com tò amis.",
+	'ur-requests-reject-message-foe' => "It l'has arfudà $1 com tò nemis.",
+	'ur-title-foe' => 'Lista dij nemis ëd $1',
+	'ur-title-friend' => "Lista dj'amis ëd $1",
+	'friend_request_subject' => "$1 a l'ha giontalo tanme amis dzora a {{SITENAME}}!",
+	'friend_request_body' => "Cerea $1.
+
+$2 a l'ha giontalo com amis dzora a {{SITENAME}}. I voroma esse sigur che adess voi doi i seve amis.
+
+Për piasì ch'a sgnaca st'anliura-sì për confirmé vòsta amicissia:
+$3
+
+Mersì
+
+---
+
+Ch'a scota, veul-lo pa pi arsèive ëd mëssagi da noi?
+
+Ch'a sgnaca $4
+e ch'a cambia soe ampostassion për disabilité le notìfiche për pòsta eletrònica.",
+	'foe_request_subject' => "A l'é la guèra! $1 a l'ha giontalo com nemis ansima a {{SITENAME}}!",
+	'foe_request_body' => "Cerea $1.
+
+$2 a l'ha pen-a butalo com nemis dzora a {{SITENAME}}. I voroma esse sigur che adess voi doi i seve nemis mortaj o almanch i l'eve na rusa.
+
+Për piasì ch'a sgnaca st'anliura-sì për confirmé vòsta rusa:
+$3
+
+Mersì
+
+---
+
+Ch'a scota, veul-lo pa pi arsèive ëd mëssagi da noi?
+
+Ch'a sgnaca $4
+e ch'a cambia soe ampostassion për disabilité le notìfiche an pòsta eletrònica.",
+	'friend_accept_subject' => "$1 a l'ha acetà soa arcesta d'amis dzora a {{SITENAME}}!",
+	'friend_accept_body' => "Cerea $1.
+
+$2 a l'ha acetà soa arcesta d'amis dzora {{SITENAME}}!
+
+Ch'a contròla la pàgina ëd $2 a $3
+
+Mersì
+
+---
+
+Ch'a scota, veul-lo pa pi arsèive ëd mëssagi da noi?
+
+Ch'a sgnaca $4
+e ch'a cambia soe ampostassion për disabilité le notìfiche për pòsta eletrònica.",
+	'foe_accept_subject' => "Bele fàit! $1 a l'ha acetà soa arcesta ëd nemis dzora a {{SITENAME}}!",
+	'foe_accept_body' => "Cerea $1.
+
+$2 a l'ha acetà soa arcesta ëd nemis dzora a {{SITENAME}}!
+
+Ch'a contròla la pàgina ëd $2 a $3
+
+Mersì
+
+---
+
+Ch'a scota, veul-lo pa pi arsèive ëd mëssagi da noi?
+
+Ch'a sgnaca $4
+e ch'a cambia soe ampostassion për disabilité le notìfiche për pòsta eletrònica.",
+	'friend_removed_subject' => "Oh nò! $1 a l'ha gavalo da amis dzora a {{SITENAME}}!",
+	'friend_removed_body' => "Cerea $1.
+
+$2 a l'ha gavalo da amis dzora a {{SITENAME}}.
+
+Mersì
+
+---
+
+Ch'a scota, veul-lo pa pi arsèive ëd mëssagi da noi?
+
+Ch'a sgnaca $4
+e ch'a cambia soe ampostassion për disabilité le notìfiche për pòsta eletrònica.",
+	'foe_removed_subject' => "Contacc! $1 a l'ha gavalo da nemis dzora a {{SITENAME}}!",
+	'foe_removed_body' => "Cerea $1.
+
+$2 a l'ha gavalo da nemis dzora a {{SITENAME}}.
+
+Miraco voi doi i seve an sla stra dë vnì amis?
+
+Mersì
+
+---
+
+Ch'a scota, veul-lo pa pi arsèive e-mail da noi?
+
+Ch'a sgnaca $4
+e ch'a cambia toe ampostassion për disabilité le notìfiche an pòsta eletrònica.",
 );
 
 /** Pashto (پښتو)
@@ -4511,6 +6004,8 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author 555
+ * @author Hamilton Abreu
+ * @author Heldergeovane
  * @author Lijealso
  * @author Malafaya
  * @author Vanessa Sabino
@@ -4519,104 +6014,104 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'viewrelationships' => 'Ver relacionamentos',
 	'viewrelationshiprequests' => 'Ver pedidos de relacionamentos',
-	'ur-already-submitted' => 'Seu pedido foi enviado',
+	'ur-already-submitted' => 'O seu pedido foi enviado',
 	'ur-error-page-title' => 'Ops!',
-	'ur-error-title' => 'Ooops, você pegou um caminho errado!',
-	'ur-error-message-no-user' => 'Não podemos completar a sua requisição, não existe um utilizador com este nome.',
+	'ur-error-title' => 'Ui, virou na curva errada!',
+	'ur-error-message-no-user' => 'Não podemos processar o seu pedido, porque não existe um utilizador com esse nome.',
 	'ur-main-page' => 'Página principal',
-	'ur-your-profile' => 'Seu perfil',
+	'ur-your-profile' => 'O seu perfil',
 	'ur-backlink' => '&lt; Voltar ao perfil de $1',
 	'ur-relationship-count-foes' => '$1 tem $2 {{PLURAL:$2|inimigo|inimigos}}. Quer mais inimigos? <a href="$3">Convide-os.</a>',
 	'ur-relationship-count-friends' => '$1 tem $2 {{PLURAL:$2|amigo|amigos}}. Quer mais amigos? <a href="$3">Convide-os.</a>',
 	'ur-add-friends' => ' Quer mais amigos? <a href="$1">Convide-os</a>',
 	'ur-add-friend' => 'Adicionar como amigo',
 	'ur-add-foe' => 'Adicionar como inimigo',
-	'ur-add-no-user' => 'Nenhum utilizador selecionado.
-Por favor peça amigos/inimigos através do link correto.',
+	'ur-add-no-user' => 'Nenhum utilizador seleccionado.
+Por favor peça amigos/inimigos através da ligação correcta.',
 	'ur-add-personal-message' => 'Adicionar uma mensagem pessoal',
 	'ur-remove-relationship-friend' => 'Remover como amigo',
 	'ur-remove-relationship-foe' => 'Remover como inimigo',
-	'ur-give-gift' => 'Dar um presente',
+	'ur-give-gift' => 'Dar uma prenda',
 	'ur-previous' => 'ant',
 	'ur-next' => 'prox',
-	'ur-remove-relationship-title-foe' => 'Você quer remover $1 como seu inimigo?',
-	'ur-remove-relationship-title-confirm-foe' => 'Você removeu $1 como seu inimigo',
-	'ur-remove-relationship-title-friend' => 'Você quer remover $1 como seu amigo?',
-	'ur-remove-relationship-title-confirm-friend' => 'Você removeu $1 como seu amigo',
-	'ur-remove-relationship-message-foe' => 'Você pediu para remover $1 como seu inimigo, pressione "$2" para confirmar.',
-	'ur-remove-relationship-message-confirm-foe' => 'Você removeu $1 como seu inimigo com sucesso.',
-	'ur-remove-relationship-message-friend' => 'Você pediu para remover $1 como seu amigo, pressione "$2" para confirmar.',
-	'ur-remove-relationship-message-confirm-friend' => 'Você removeu $1 como seu amigo com sucesso.',
-	'ur-remove-error-message-no-relationship' => 'Você não possui um relacionamento com $1.',
-	'ur-remove-error-message-remove-yourself' => 'Você não pode remover a si mesmo.',
-	'ur-remove-error-message-pending-foe-request' => 'Você tem um pedido de inimizade pendente com $1.',
-	'ur-remove-error-message-pending-friend-request' => 'Você tem um pedido de amizade pendente com $1.',
-	'ur-remove-error-not-loggedin-foe' => 'Você tem que estar logado para remover um inimigo.',
-	'ur-remove-error-not-loggedin-friend' => 'Você tem que estar logado para remover um amigo.',
+	'ur-remove-relationship-title-foe' => 'Quer remover $1 como seu inimigo?',
+	'ur-remove-relationship-title-confirm-foe' => 'Removeu $1 como seu inimigo',
+	'ur-remove-relationship-title-friend' => 'Quer remover $1 como seu amigo?',
+	'ur-remove-relationship-title-confirm-friend' => 'Removeu $1 como seu amigo',
+	'ur-remove-relationship-message-foe' => 'Pediu para remover $1 como seu inimigo, pressione "$2" para confirmar.',
+	'ur-remove-relationship-message-confirm-foe' => 'Removeu $1 como seu inimigo com sucesso.',
+	'ur-remove-relationship-message-friend' => 'Pediu para remover $1 como seu amigo, pressione "$2" para confirmar.',
+	'ur-remove-relationship-message-confirm-friend' => 'Removeu $1 como seu amigo com sucesso.',
+	'ur-remove-error-message-no-relationship' => 'Não possui um relacionamento com $1.',
+	'ur-remove-error-message-remove-yourself' => 'Não se pode remover a si mesmo.',
+	'ur-remove-error-message-pending-foe-request' => 'Tem um pedido de inimizade pendente com $1.',
+	'ur-remove-error-message-pending-friend-request' => 'Tem um pedido de amizade pendente com $1.',
+	'ur-remove-error-not-loggedin-foe' => 'Tem de estar autenticado para remover um inimigo.',
+	'ur-remove-error-not-loggedin-friend' => 'Tem de estar autenticado para remover um amigo.',
 	'ur-remove' => 'Remover',
 	'ur-cancel' => 'Cancelar',
-	'ur-login' => 'Entrar',
-	'ur-add-title-foe' => 'Você quer adicionar $1 como seu inimigo?',
-	'ur-add-title-friend' => 'Você quer adicionar $1 como seu amigo?',
-	'ur-add-message-foe' => 'Você está prestes a adicionar $1 como seu inimigo.
-Nós iremos notificar $1 para confirmar seu rancor.',
-	'ur-add-message-friend' => 'Você está prestes a adicionar $1 como seu amigo.
-Nós iremos notificar $1 para confirmar sua amizade.',
+	'ur-login' => 'Autenticar-se',
+	'ur-add-title-foe' => 'Quer adicionar $1 como seu inimigo?',
+	'ur-add-title-friend' => 'Quer adicionar $1 como seu amigo?',
+	'ur-add-message-foe' => 'Está prestes a adicionar $1 como seu inimigo.
+Vamos notificar $1 para confirmar o seu rancor.',
+	'ur-add-message-friend' => 'Está prestes a adicionar $1 como seu amigo.
+Vamos notificar $1 para confirmar a sua amizade.',
 	'ur-add-button-foe' => 'Adicionar como inimigo',
 	'ur-add-button-friend' => 'Adicionar como amigo',
-	'ur-add-sent-title-foe' => 'Nós enviamos seu pedido de inimizade para $1!',
-	'ur-add-sent-title-friend' => 'Nós enviamos seu pedido de amizade para $1!',
-	'ur-add-sent-message-foe' => 'Seu pedido de inimizade foi enviado para $1 para confirmação.
-Se $1 confirmar seu pedido, você irá receber um e-mail',
-	'ur-add-sent-message-friend' => 'Seu pedido de amizade foi enviado para $1 para confirmação.
-Se $1 confirmar seu pedido, você irá receber um e-mail',
+	'ur-add-sent-title-foe' => 'Enviamos o seu pedido de inimizade para $1!',
+	'ur-add-sent-title-friend' => 'Enviamos o seu pedido de amizade para $1!',
+	'ur-add-sent-message-foe' => 'O seu pedido de inimizade foi enviado para $1 para confirmação.
+Se $1 confirmar o pedido, receberá uma notificação por correio electrónico',
+	'ur-add-sent-message-friend' => 'O seu pedido de amizade foi enviado para $1 para confirmação.
+Se $1 confirmar o pedido, receberá uma notificação por correio electrónico',
 	'ur-add-error-message-no-user' => 'O utilizador que pretende adicionar não existe.',
-	'ur-add-error-message-blocked' => 'Você está bloqueado atualmente e não pode adicionar amigos ou inimigos.',
-	'ur-add-error-message-yourself' => 'Você não pode adicionar a si mesmo como amigo ou inimigo.',
-	'ur-add-error-message-existing-relationship-foe' => 'Você já é inimigo de $1.',
-	'ur-add-error-message-existing-relationship-friend' => 'Você já é amigo de $1.',
+	'ur-add-error-message-blocked' => 'Neste momento está bloqueado e não pode adicionar amigos nem inimigos.',
+	'ur-add-error-message-yourself' => 'Não pode adicionar-se a si mesmo como amigo nem inimigo.',
+	'ur-add-error-message-existing-relationship-foe' => 'Já é inimigo de $1.',
+	'ur-add-error-message-existing-relationship-friend' => 'Já é amigo de $1.',
 	'ur-add-error-message-pending-request-title' => 'Paciência!',
-	'ur-add-error-message-pending-friend-request' => 'Você tem um pedido de amizade pendente com $1.
-Nós iremos notificar você quando $1 confirmar seu pedido.',
-	'ur-add-error-message-pending-foe-request' => 'Você tem um pedido de inimizade pendente com $1.
-Nós iremos notificar você quando $1 confirmar seu pedido.',
-	'ur-add-error-message-not-loggedin-foe' => 'Você precisa estar logado para adicionar um inimigo',
-	'ur-add-error-message-not-loggedin-friend' => 'Você precisa estar logado para adicionar um amigo',
+	'ur-add-error-message-pending-friend-request' => 'Tem um pedido de amizade pendente com $1.
+Vamos notificá-lo quando $1 confirmar o seu pedido.',
+	'ur-add-error-message-pending-foe-request' => 'Tem um pedido de inimizade pendente com $1.
+Vamos notificá-lo quando $1 confirmar o seu pedido.',
+	'ur-add-error-message-not-loggedin-foe' => 'É preciso ter-se autenticado para adicionar um inimigo',
+	'ur-add-error-message-not-loggedin-friend' => 'É preciso ter-se autenticado para adicionar um amigo',
 	'ur-requests-title' => 'Pedidos de relacionamento',
 	'ur-requests-message-foe' => '<a href="$1">$2</a> quer ser seu inimigo.',
 	'ur-requests-message-friend' => '<a href="$1">$2</a> quer ser seu amigo.',
 	'ur-accept' => 'Aceitar',
 	'ur-reject' => 'Rejeitar',
-	'ur-no-requests-message' => 'Você não ter pedidos de amizade ou inimizade.
-Se você quer mais amigos, <a href="$1">convide-os!</a>',
-	'ur-requests-added-message-foe' => 'Você adicionou $1 como seu inimigo.',
-	'ur-requests-added-message-friend' => 'Você adicionou $1 como seu amigo.',
-	'ur-requests-reject-message-friend' => 'Você rejeitou $1 como seu amigo.',
-	'ur-requests-reject-message-foe' => 'Você rejeitou $1 como seu inimigo.',
+	'ur-no-requests-message' => 'Não tem pedidos de amizade ou inimizade.
+Se quer ter mais amigos, <a href="$1">convide-os!</a>',
+	'ur-requests-added-message-foe' => 'Adicionou $1 como inimigo.',
+	'ur-requests-added-message-friend' => 'Adicionou $1 como amigo.',
+	'ur-requests-reject-message-friend' => 'Rejeitou $1 como amigo.',
+	'ur-requests-reject-message-foe' => 'Rejeitou $1 como inimigo.',
 	'ur-title-foe' => 'lista de inimigos de $1',
 	'ur-title-friend' => 'lista de amigos de $1',
-	'friend_request_subject' => '$1 adicionou você como amigo em {{SITENAME}}!',
-	'friend_request_body' => 'Oi $1:
+	'friend_request_subject' => '$1 adicionou-o como amigo na {{SITENAME}}!',
+	'friend_request_body' => 'Olá $1,
 
-$2 adicionou você como amigo em {{SITENAME}}. Queremos ter certeza de que vocês são realmente amigos.
+$2 adicionou-o como amigo na {{SITENAME}}. Queremos ter a certeza de que são realmente amigos.
 
-Por favor clique neste link para confirmar sua amizade:
+Por favor, clique nesta ligação para confirmar a vossa amizade:
 $3
 
 Obrigado
 
 ---
 
-Ei, quer parar de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $4
-e altere suas preferências para desabilitar e-mails de notificação.',
-	'foe_request_subject' => 'É guerra! $1 adicionou você como inimigo em {{SITENAME}}!',
-	'foe_request_body' => 'Hi $1:
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
+	'foe_request_subject' => 'É a guerra! $1 adicionou-o como inimigo na {{SITENAME}}!',
+	'foe_request_body' => 'Olá $1,
 
-$2 acabou de listá-lo como inimigo em {{SITENAME}}. Queremos ter certeza de que vocês realmente são inimigos mortais ou pelo menos estão tendo uma discussão.
+$2 acabou de listá-lo como inimigo na {{SITENAME}}. Queremos ter certeza de que são realmente inimigos mortais ou pelo menos que tiveram um desentendimento.
 
-Por favor clique neste link para confirmar o rancor.
+Por favor, clique nesta ligação para confirmar o rancor.
 
 $3
 
@@ -4624,14 +6119,14 @@ Obrigado
 
 ---
 
-Ei, quer parar de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $4
-e altere suas preferências para desabilitar e-mails de notificação.',
-	'friend_accept_subject' => '$1 aceitou você como amigo em {{SITENAME}}!',
-	'friend_accept_body' => 'Oi $1:
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
+	'friend_accept_subject' => '$1 aceitou-o como amigo na {{SITENAME}}!',
+	'friend_accept_body' => 'Olá $1,
 
-$2 aceitou você como amigo em {{SITENAME}}!
+$2 aceitou-o como amigo na {{SITENAME}}!
 
 Veja a página de $2 em $3
 
@@ -4639,14 +6134,14 @@ Obrigado,
 
 ---
 
-Ei, quer parar de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $4
-e altere suas preferências para desabilitar e-mails de notificação.',
-	'foe_accept_subject' => '$1 aceitou você como inimigo em {{SITENAME}}!',
-	'foe_accept_body' => 'Oi $1:
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
+	'foe_accept_subject' => '$1 aceitou-o como inimigo na {{SITENAME}}!',
+	'foe_accept_body' => 'Olá $1,
 
-$2 aceitou você como inimigo em {{SITENAME}}!
+$2 aceitou-o como inimigo na {{SITENAME}}!
 
 Veja a página de $2 em $3
 
@@ -4654,42 +6149,43 @@ Obrigado,
 
 ---
 
-Ei, quer parar de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $4
-e altere suas preferências para desabilitar e-mails de notificação',
-	'friend_removed_subject' => 'Ah não! $1 removeu você como amigo em {{SITENAME}}!',
-	'friend_removed_body' => 'Oi $1:
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
+	'friend_removed_subject' => 'Oh não! $1 removeu-o como amigo na {{SITENAME}}!',
+	'friend_removed_body' => 'Olá $1,
 
-$2 removeu você como amigo em {{SITENAME}}!
+$2 removeu-o como amigo na {{SITENAME}}!
 
 Obrigado,
 
 ---
 
-Ei, quer parar de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $4
-e altere suas preferências para desabilitar e-mails de notificação',
-	'foe_removed_subject' => 'Eba! $1 removeu você como inimigo em {{SITENAME}}!',
-	'foe_removed_body' => 'Oi $1:
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
+	'foe_removed_subject' => 'Eh pá! $1 removeu-o como inimigo na {{SITENAME}}!',
+	'foe_removed_body' => 'Olá $1,
 
-	$2 removeu você como inimigo em {{SITENAME}}!
+$2 remove-o como inimigo na {{SITENAME}}!
 
-Talvez vocês estejam no caminho de tornarem-se amigos?
+Será que estão a caminho de tornar-se amigos?
 
 Obrigado,
 
 ---
 
-Ei, quer parar de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $4
-e altere suas preferências para desabilitar e-mails de notificação',
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Heldergeovane
  */
 $messages['pt-br'] = array(
 	'viewrelationships' => 'Ver relacionamentos',
@@ -4730,7 +6226,7 @@ Por favor peça amigos/inimigos através da ligação correta.',
 	'ur-remove-error-not-loggedin-friend' => 'Você tem que estar logado para remover um amigo.',
 	'ur-remove' => 'Remover',
 	'ur-cancel' => 'Cancelar',
-	'ur-login' => 'Entrar',
+	'ur-login' => 'Autenticar-se',
 	'ur-add-title-foe' => 'Você quer adicionar $1 como seu inimigo?',
 	'ur-add-title-friend' => 'Você quer adicionar $1 como seu amigo?',
 	'ur-add-message-foe' => 'Você está prestes a adicionar $1 como seu inimigo.
@@ -4871,15 +6367,32 @@ $messages['rif'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'ur-error-page-title' => 'Ups!',
+	'ur-error-title' => 'Ups, aţi greşit pagina!',
 	'ur-main-page' => 'Pagina principală',
+	'ur-your-profile' => 'Profilul dvs.',
+	'ur-backlink' => '&lt; Înapoi la profilul lui $1',
+	'ur-add-friend' => 'Adăugaţi ca prieten',
+	'ur-add-foe' => 'Adauga ca inamic',
+	'ur-add-personal-message' => 'Adăugaţi un mesaj personal',
+	'ur-remove-relationship-friend' => 'Eliminaţi ca prieten',
+	'ur-remove-relationship-foe' => 'Eliminaţi ca inamic',
+	'ur-give-gift' => 'Daţi un cadou',
+	'ur-previous' => 'prec',
+	'ur-next' => 'următoarea',
 	'ur-remove' => 'Elimină',
 	'ur-cancel' => 'Anulează',
 	'ur-login' => 'Autentificare',
+	'ur-add-button-foe' => 'Adaugă ca duşman',
+	'ur-add-button-friend' => 'Adaugă ca prieten',
 	'ur-add-error-message-pending-request-title' => 'Răbdare!',
 	'ur-requests-title' => 'Cereri de relaţii',
+	'ur-accept' => 'Acceptare',
+	'ur-reject' => 'Revocare',
 	'ur-title-friend' => 'Lista de prieteni ai lui $1',
 );
 
@@ -4887,6 +6400,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'ur-error-page-title' => 'Cè cumbenate!',
 	'ur-main-page' => 'Pàgene Prengepàle',
 	'ur-your-profile' => "'U profile tue",
 	'ur-give-gift' => "Fa 'nu riele",
@@ -4896,6 +6410,7 @@ $messages['roa-tara'] = array(
 	'ur-cancel' => 'Scangille',
 	'ur-login' => 'Trase',
 	'ur-add-button-friend' => 'Aggiugne cumme amiche',
+	'ur-add-error-message-pending-request-title' => 'Pascenze!',
 	'ur-requests-message-friend' => '<a href="$1">$2</a> vvò ccu devende amiche tue.',
 	'ur-accept' => 'Accitte',
 	'ur-reject' => 'Scitte',
@@ -4905,6 +6420,7 @@ $messages['roa-tara'] = array(
  * @author Ferrer
  * @author Flrn
  * @author Innv
+ * @author Lockal
  * @author Rubin
  * @author Александр Сигачёв
  */
@@ -4921,15 +6437,167 @@ $messages['ru'] = array(
 	'ur-relationship-count-foes' => '$1 имеет $2 {{PLURAL:$2|недруга|недругов|недругов}}.
 Недостаточно?
 <a href="$3">Пригласите их.</a>',
-	'ur-relationship-count-friends' => '$1 имеет $2 ((PLURAL:$2|друга|друга|друзей)).
+	'ur-relationship-count-friends' => '$1 имеет $2 {{PLURAL:$2|друга|друга|друзей}}.
 Хотите больше друзей?
 <a href="$3">Пригласите их.</a>',
 	'ur-add-friends' => '  Хотите больше друзей?
 <a href="$1">Пригласите их</a>',
+	'ur-add-friend' => 'Добавить в друзья',
+	'ur-add-foe' => 'Добавить в недруги',
+	'ur-add-no-user' => 'Участник не выбран.
+Пожалуйста, подавайте запрос на добавление в друзья/недруги через исправную ссылку.',
+	'ur-add-personal-message' => 'Добавить личное сообщение',
+	'ur-remove-relationship-friend' => 'Убрать из друзей',
+	'ur-remove-relationship-foe' => 'Убрать из недругов',
+	'ur-give-gift' => 'Подарить подарок',
+	'ur-previous' => 'предыдущий',
+	'ur-next' => 'следующий',
+	'ur-remove-relationship-title-foe' => 'Вы хотите удалить $1 из списка ваших недругов?',
+	'ur-remove-relationship-title-confirm-foe' => 'Вы удалили $1 из списка ваших недругов',
+	'ur-remove-relationship-title-friend' => 'Вы хотите удалить $1 из списка ваших друзей?',
+	'ur-remove-relationship-title-confirm-friend' => 'Вы удалили $1 из списка ваших друзей',
+	'ur-remove-relationship-message-foe' => 'Вы запросили удаление $1 из списка ваших недругов, нажмите «$2» для подтверждения.',
+	'ur-remove-relationship-message-confirm-foe' => 'Вы успешно удалили $1 из списка ваших недругов.',
+	'ur-remove-relationship-message-friend' => 'Вы запросили удаление $1 из списка ваших друзей, нажмите «$2» для подтверждения.',
+	'ur-remove-relationship-message-confirm-friend' => 'Вы успешно удалили $1 из списка ваших друзей.',
+	'ur-remove-error-message-no-relationship' => 'У вас не установлено отношений с $1.',
+	'ur-remove-error-message-remove-yourself' => 'Вы не можете удалить себя.',
+	'ur-remove-error-message-pending-foe-request' => 'У вас не закрыт запрос на добавление $1 в список недругов.',
+	'ur-remove-error-message-pending-friend-request' => 'У вас не закрыт запрос на добавление $1 в список друзей.',
+	'ur-remove-error-not-loggedin-foe' => 'Вы должны войти в систему, чтобы удалять участников из списка недругов.',
+	'ur-remove-error-not-loggedin-friend' => 'Вы должны войти в систему, чтобы удалять участников из списка друзей.',
 	'ur-remove' => 'Удалить',
 	'ur-cancel' => 'Отмена',
+	'ur-login' => 'Логин',
+	'ur-add-title-foe' => 'Вы желаете добавить $1 в список ваших недругов?',
+	'ur-add-title-friend' => 'Вы желаете добавить $1 в список ваших друзей?',
+	'ur-add-message-foe' => 'Вы собираетесь добавить $1 в список ваших недругов.
+Мы запросим у $1 подтверждение вашей неприязни.',
+	'ur-add-message-friend' => 'Вы собираетесь добавить $1 в список ваших друзей.
+Мы запросим у $1 подтверждение ваших дружеских отношений.',
+	'ur-add-button-foe' => 'Добавить в недруги',
+	'ur-add-button-friend' => 'Добавить в друзья',
+	'ur-add-sent-title-foe' => 'Мы запросили у $1 подтверждение вашего статуса недруга!',
+	'ur-add-sent-title-friend' => 'Мы запросили у $1 подтверждение вашего статуса друга!',
+	'ur-add-sent-message-foe' => 'Ваш запрос на добавление в список недругов отправлен $1 для утверждения.
+Если $1 подтвердит ваш запрос, то вы получите уведомление по электронной почте.',
+	'ur-add-sent-message-friend' => 'Ваш запрос на добавление в список друзей отправлен $1 для утверждения.
+Если $1 подтвердит ваш запрос, то вы получите уведомление по электронной почте.',
+	'ur-add-error-message-no-user' => 'Участника, которого вы пытаетесь добавить, не существует.',
+	'ur-add-error-message-blocked' => 'В настоящее время вы заблокированы и не можете добавлять участников в список друзей или врагов.',
+	'ur-add-error-message-yourself' => 'Вы не можете добавлять себя в свой собственный список друзей или недругов.',
+	'ur-add-error-message-existing-relationship-foe' => 'У вас уже установлены враждебные отношения с $1.',
+	'ur-add-error-message-existing-relationship-friend' => 'У вас уже установлены дружеские отношения с $1.',
 	'ur-add-error-message-pending-request-title' => 'Терпение!',
+	'ur-add-error-message-pending-friend-request' => 'Вы ожидаете запрос друзей с $1.
+Вы будете оповещены, если $1 подтверит ваш запрос.',
+	'ur-add-error-message-pending-foe-request' => 'Вы ожидаете запрос недругов с $1.
+Вы будете оповещены, если $1 подтверит ваш запрос.',
+	'ur-add-error-message-not-loggedin-foe' => 'Вы должны представиться системе для добавления в недруги',
+	'ur-add-error-message-not-loggedin-friend' => 'Вы должны представиться системе для добавления в друзья',
+	'ur-requests-title' => 'Связанные запросы',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> хочет быть вашим недругом.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> хочет быть вашим другом.',
 	'ur-accept' => 'Принять',
+	'ur-reject' => 'Отклонить',
+	'ur-no-requests-message' => 'Вы не имеете запросов друзей или недругов.
+Если вы ищете ещё друзей, <a href="$1">приглашайте их!</a>',
+	'ur-requests-added-message-foe' => 'Вы добавили $1 как вашего недруга.',
+	'ur-requests-added-message-friend' => 'Вы добавили $1 как вашего друга.',
+	'ur-requests-reject-message-friend' => 'Вы отклонили $1 как вашего друга.',
+	'ur-requests-reject-message-foe' => 'Вы отклонили $1 как вашего недруга.',
+	'ur-title-foe' => 'Список недругов $1',
+	'ur-title-friend' => 'Список друзей $1',
+	'friend_request_subject' => '$1 добавил вас как друга на {{SITENAME}}!',
+	'friend_request_body' => 'Здравствуйте, $1.
+
+$2 добавил вас в список друзей на {{SITENAME}}. Мы хотим подтвердить, что вы действительно являетесь друзьями.
+
+Пожалуйста, перейдите по этой ссылке для подтверждения:
+$3
+
+Спасибо
+
+---
+
+Хотите остановить отправку вам электронной почты?
+
+Нажмите $4
+и измените ваши настройки, отключив отправку уведомлений по электронной почте.',
+	'foe_request_subject' => 'Это война! $1 добавил вас в недруги на {{SITENAME}}!',
+	'foe_request_body' => 'Здравствуйте, $1.
+
+$2 добавил вас в список недругов на {{SITENAME}}. Мы хотим подтвердить, что вы действительно являетесь недругами.
+
+Пожалуйста, перейдите по этой ссылке для подтверждения:
+$3
+
+Спасибо
+
+---
+
+Хотите остановить отправку вам электронной почты?
+
+Нажмите $4
+и измените ваши настройки, отключив отправку уведомлений по электронной почте.',
+	'friend_accept_subject' => '$1 принял ваш запрос на добавление в список друзей на {{SITENAME}}!',
+	'friend_accept_body' => 'Здравствуйте, $1.
+
+$2 принял ваш запрос на добавление в друзья на {{SITENAME}}!
+
+Проверьте страницу $2 на $3
+
+Спасибо,
+
+---
+
+Хотите остановить отправку вам электронной почты?
+
+Нажмите $4
+и измените ваши настройки, отключив отправку уведомлений по электронной почте.',
+	'foe_accept_subject' => 'Это так! $1 принял ваш запрос на добавление в список недругов на {{SITENAME}}!',
+	'foe_accept_body' => 'Здравствуйте, $1.
+
+$2 принял ваш запрос на добавление в список недругов на {{SITENAME}}!
+
+Проверьте страницу $2 на $3
+
+Спасибо,
+
+---
+
+Хотите остановить отправку вам электронной почты?
+
+Нажмите $4
+и измените ваши настройки, отключив отправку уведомлений по электронной почте.',
+	'friend_removed_subject' => 'О нет! $1 удалил вас из списка друзей на {{SITENAME}}!',
+	'friend_removed_body' => 'Здравствуйте, $1.
+
+$2 удалил вас из списка друзей на {{SITENAME}}!
+
+Спасибо
+
+---
+
+Хотите остановить отправку вам электронной почты?
+
+Нажмите $4
+и измените ваши настройки, отключив отправку уведомлений по электронной почте.',
+	'foe_removed_subject' => 'Ура! $1 удалил вас из списка недругов на {{SITENAME}}!',
+	'foe_removed_body' => 'Здравствуйте, $1.
+
+$2 удалил вас из списка недругов на {{SITENAME}}!
+
+Возможно, вы находитесь на пути, стать друзьями?
+
+Спасибо
+
+---
+
+Хотите остановить отправку вам электронной почты?
+
+Нажмите $4
+и измените ваши настройки, отключив отправку уведомлений по электронной почте.',
 );
 
 /** Tachelhit (Tašlḥiyt)
@@ -5129,11 +6797,109 @@ Kliknite na $4
 a vypnite upozornenia emailov vo svojich nastaveniach.',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
+	'ur-main-page' => 'Главна страна',
+	'ur-your-profile' => 'Ваш профил',
+	'ur-add-friend' => 'Додај као пријатеља',
+	'ur-add-foe' => 'Додај као непријатеља',
+	'ur-remove-relationship-friend' => 'Обриши као пријатеља',
+	'ur-remove-relationship-foe' => 'Обриши као непријатеља',
+	'ur-give-gift' => 'Пошаљи поклон',
+	'ur-previous' => 'претходни',
+	'ur-next' => 'следећи',
+	'ur-remove-relationship-title-foe' => 'Да ли желите да обришете $1 са Вашег списка непријатеља?',
+	'ur-remove-relationship-title-confirm-foe' => 'Обрисали сте $1 са Вашег списка непријатеља',
+	'ur-remove-relationship-title-friend' => 'Да ли желите да обришете $1 са Вашег списка пријатеља?',
+	'ur-remove-relationship-title-confirm-friend' => 'Обрисали сте $1 са Вашег списка пријатеља',
+	'ur-remove-relationship-message-foe' => 'Затражили сте да се $1 обрише са Вашег списка непријатеља, притисните "$2" да бисте то потврдили.',
+	'ur-remove-relationship-message-confirm-foe' => 'Успешно сте обрисали $1 са Вашег списка непријатеља.',
+	'ur-remove-relationship-message-friend' => 'Затражили сте да се $1 обрише са Вашег списка пријатеља, притисните "$2" да бисте то потврдили.',
+	'ur-remove-relationship-message-confirm-friend' => 'Успешно сте обрисали $1 са Вашег списка пријатеља.',
+	'ur-remove-error-message-no-relationship' => 'Нисте ни у каквом односу са $1.',
+	'ur-remove-error-message-remove-yourself' => 'Не можете да обришете себе.',
+	'ur-remove-error-not-loggedin-foe' => 'Морате бити улоговани да бисте уклонили некога са Вашег списка непријатеља.',
+	'ur-remove-error-not-loggedin-friend' => 'Морате бити улоговани да бисте некога обрисали са списка пријатеља.',
 	'ur-remove' => 'Уклони',
+	'ur-cancel' => 'Поништи',
+	'ur-login' => 'Логовање',
+	'ur-add-title-foe' => 'Да ли желите да означите $1 као Вашег непријатеља?',
+	'ur-add-title-friend' => 'Да ли желите да означите $1 као Вашег пријатеља?',
+	'ur-add-button-foe' => 'Означи као непријатеља',
+	'ur-add-button-friend' => 'Означи као пријатеља',
+	'ur-add-error-message-no-user' => 'Корисник кога покушавате да означите не постоји.',
+	'ur-add-error-message-blocked' => 'Тренутно сте блокирани и не можете да додајете пријатеље и непријатеље.',
+	'ur-add-error-message-yourself' => 'Не можете да означите себе као свог пријатеља или непријатеља.',
+	'ur-add-error-message-existing-relationship-foe' => '$1 је већ означен као Ваш непријатељ.',
+	'ur-add-error-message-existing-relationship-friend' => '$1 је већ означен као Ваш пријатељ.',
+	'ur-add-error-message-pending-request-title' => 'Стрпљења!',
+	'ur-add-error-message-not-loggedin-foe' => 'Морате бити улоговани да бисте некога означили као непријатеља',
+	'ur-add-error-message-not-loggedin-friend' => 'Морате бити улоговани да бисте некога означили као пријатеља',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> жели да буде Ваш непријатељ.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> жели да буде Ваш пријатељ.',
+	'ur-accept' => 'Прихвати',
+	'ur-reject' => 'Одбаци',
+	'ur-requests-added-message-foe' => '$1 је означен као Ваш непријатељ.',
+	'ur-requests-added-message-friend' => '$1 је означен као Ваш пријатељ.',
+	'ur-requests-reject-message-friend' => 'Нисте прихватили $1 као пријатеља.',
+	'ur-requests-reject-message-foe' => 'Нисте прихватили $1 као непријатеља.',
+	'ur-title-foe' => 'Списак непријатеља за $1',
+	'ur-title-friend' => 'Списак пријатеља за $1',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'ur-main-page' => 'Glavna strana',
+	'ur-your-profile' => 'Vaš profil',
+	'ur-add-friend' => 'Dodaj kao prijatelja',
+	'ur-add-foe' => 'Dodaj kao neprijatelja',
+	'ur-remove-relationship-friend' => 'Obriši kao prijatelja',
+	'ur-remove-relationship-foe' => 'Obriši kao neprijatelja',
+	'ur-give-gift' => 'Pošalji poklon',
+	'ur-previous' => 'prethodni',
+	'ur-next' => 'sledeći',
+	'ur-remove-relationship-title-foe' => 'Da li želite da obrišete $1 sa Vašeg spiska neprijatelja?',
+	'ur-remove-relationship-title-confirm-foe' => 'Obrisali ste $1 sa Vašeg spiska neprijatelja',
+	'ur-remove-relationship-title-friend' => 'Da li želite da obrišete $1 sa Vašeg spiska prijatelja?',
+	'ur-remove-relationship-title-confirm-friend' => 'Obrisali ste $1 sa Vašeg spiska prijatelja',
+	'ur-remove-relationship-message-foe' => 'Zatražili ste da se $1 obriše sa Vašeg spiska neprijatelja, pritisnite "$2" da biste to potvrdili.',
+	'ur-remove-relationship-message-confirm-foe' => 'Uspešno ste obrisali $1 sa Vašeg spiska neprijatelja.',
+	'ur-remove-relationship-message-friend' => 'Zatražili ste da se $1 obriše sa Vašeg spiska prijatelja, pritisnite "$2" da biste to potvrdili.',
+	'ur-remove-relationship-message-confirm-friend' => 'Uspešno ste obrisali $1 sa Vašeg spiska prijatelja.',
+	'ur-remove-error-message-no-relationship' => 'Niste ni u kakvom odnosu sa $1.',
+	'ur-remove-error-message-remove-yourself' => 'Ne možete da obrišete sebe.',
+	'ur-remove-error-not-loggedin-foe' => 'Morate biti ulogovani da biste uklonili nekoga sa Vašeg spiska neprijatelja.',
+	'ur-remove-error-not-loggedin-friend' => 'Morate biti ulogovani da biste nekoga obrisali sa spiska prijatelja.',
+	'ur-remove' => 'Ukloni',
+	'ur-cancel' => 'Poništi',
+	'ur-login' => 'Logovanje',
+	'ur-add-title-foe' => 'Da li želite da označite $1 kao Vašeg neprijatelja?',
+	'ur-add-title-friend' => 'Da li želite da označite $1 kao Vašeg prijatelja?',
+	'ur-add-button-foe' => 'Označi kao neprijatelja',
+	'ur-add-button-friend' => 'Označi kao prijatelja',
+	'ur-add-error-message-no-user' => 'Korisnik koga pokušavate da označite ne postoji.',
+	'ur-add-error-message-blocked' => 'Trenutno ste blokirani i ne možete da dodajete prijatelje i neprijatelje.',
+	'ur-add-error-message-yourself' => 'Ne možete da označite sebe kao svog prijatelja ili neprijatelja.',
+	'ur-add-error-message-existing-relationship-foe' => '$1 je već označen kao Vaš neprijatelj.',
+	'ur-add-error-message-existing-relationship-friend' => '$1 je već označen kao Vaš prijatelj.',
+	'ur-add-error-message-pending-request-title' => 'Strpljenja!',
+	'ur-add-error-message-not-loggedin-foe' => 'Morate biti ulogovani da biste nekoga označili kao neprijatelja',
+	'ur-add-error-message-not-loggedin-friend' => 'Morate biti ulogovani da biste nekoga označili kao prijatelja',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> želi da bude Vaš neprijatelj.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> želi da bude Vaš prijatelj.',
+	'ur-accept' => 'Prihvati',
+	'ur-reject' => 'Odbaci',
+	'ur-requests-added-message-foe' => '$1 je označen kao Vaš neprijatelj.',
+	'ur-requests-added-message-friend' => '$1 je označen kao Vaš prijatelj.',
+	'ur-requests-reject-message-friend' => 'Niste prihvatili $1 kao prijatelja.',
+	'ur-requests-reject-message-foe' => 'Niste prihvatili $1 kao neprijatelja.',
+	'ur-title-foe' => 'Spisak neprijatelja za $1',
+	'ur-title-friend' => 'Spisak prijatelja za $1',
 );
 
 /** Swati (SiSwati)
@@ -5144,8 +6910,10 @@ $messages['ss'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Gabbe.g
  * @author M.M.S.
  * @author Najami
+ * @author Per
  */
 $messages['sv'] = array(
 	'viewrelationships' => 'Visa relationer',
@@ -5194,12 +6962,22 @@ Vi kommer skicka $1 ett meddelande för att bekräfta fiendeskapet.',
 Vi kommer skicka $1 ett meddelande för att bekräfta vänskapet.',
 	'ur-add-button-foe' => 'Lägg till som fiende',
 	'ur-add-button-friend' => 'Lägg till som vän',
+	'ur-add-sent-title-foe' => 'Vi har skickat din fiendeförfrågan till $1!',
+	'ur-add-sent-title-friend' => 'Vi har skickat din vänskapsförfrågning till $1!',
+	'ur-add-sent-message-foe' => 'Din fiendeförfrågan har skickats till $1 för bekräftelse.
+Om $1 bekräftar din förfrågan kommer du att få ett e-post meddelande',
+	'ur-add-sent-message-friend' => 'Din vänskaps begäran har skickats till $1 för godkännande.
+Om $1 godkänner din begäran kommer du få ett uppföljningsmeddelande',
 	'ur-add-error-message-no-user' => 'Användaren du prövade att lägga till finns inte.',
 	'ur-add-error-message-blocked' => 'Du är blockerad, och kan inte lägga till vänner eller fiender.',
 	'ur-add-error-message-yourself' => 'Du kan inte lägga till dig själv som vän eller fiende.',
 	'ur-add-error-message-existing-relationship-foe' => 'Du är redan fiende med $1.',
 	'ur-add-error-message-existing-relationship-friend' => 'Du är redan vän med $1.',
 	'ur-add-error-message-pending-request-title' => 'Var tålmodig...',
+	'ur-add-error-message-pending-friend-request' => 'Du har en väntande vänförfrågan hos $1.
+Vi kommer ge dig ett besked när $1 bekräftar din begäran.',
+	'ur-add-error-message-pending-foe-request' => 'Du har en väntande fiendeförfrågan hos $1.
+Vi kommer ge dig besked när $1 bekräftar din begäran.',
 	'ur-add-error-message-not-loggedin-foe' => 'Du måste vara inloggad för att lägga till en fiende',
 	'ur-add-error-message-not-loggedin-friend' => 'Du måste vara inloggad för att lägga till en vän',
 	'ur-requests-title' => 'Relationsefterfrågningar',
@@ -5321,6 +7099,8 @@ $messages['te'] = array(
 	'ur-add-friend' => 'స్నేహితునిగా చేర్చు',
 	'ur-add-foe' => 'శత్రువుగా చేర్చు',
 	'ur-add-personal-message' => 'ఒక వ్యక్తిగత సందేశాన్ని చేర్చండి',
+	'ur-remove-relationship-friend' => 'స్నేహితునిగా తొలగించు',
+	'ur-remove-relationship-foe' => 'శతృవుగా తొలగించు',
 	'ur-give-gift' => 'ఒక బహుమతి ఇవ్వండి',
 	'ur-previous' => 'క్రితం',
 	'ur-next' => 'తర్వాతి',
@@ -5344,6 +7124,7 @@ $messages['te'] = array(
 	'ur-accept' => 'అంగీకరించు',
 	'ur-reject' => 'తిరస్కరించు',
 	'ur-no-requests-message' => 'మీకు మిత్రుత్వ లేదా శత్రుత్వ అభ్యర్థనలు లేవు. మీకు మరింత మంది స్నేహితులు కావాలంటే, <a href="$1">వారిని ఆహ్వానించండి!</a>',
+	'ur-requests-reject-message-friend' => 'మీరు $1ని మీ స్నేహితునిగా తిరస్కరించారు.',
 	'ur-title-foe' => '$1 యొక్క శతృవుల జాబితా',
 	'ur-title-friend' => '$1 యొక్క మిత్రుల జాబితా',
 	'friend_request_subject' => '{{SITENAME}}లో $1 మిమ్మల్ని స్నేహితునిగా చేర్చుకున్నారు!',
@@ -5474,6 +7255,129 @@ $4-ро клик кунед
 ва тарҷиҳоти худро бо ғайрифаъол кардани огоҳсозии тариқи почтаи электронӣ тағйир диҳед.',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'ur-main-page' => 'Sahifai Aslī',
+	'ur-your-profile' => 'Namojai şumo',
+	'ur-add-friends' => ' Beştar dūston mexohed? <a href="$1">Onhoro da\'vat kuned</a>',
+	'ur-add-friend' => 'Cun dūst ilova kuned',
+	'ur-add-foe' => 'Cun harif ilova kuned',
+	'ur-give-gift' => 'Hadja dihed',
+	'ur-previous' => 'qablī',
+	'ur-next' => "ba'dī",
+	'ur-remove-error-message-no-relationship' => 'Şumo munosibate bo $1 nadored.',
+	'ur-remove-error-message-remove-yourself' => 'Şumo xudro nametavoned pok kuned.',
+	'ur-remove' => 'Hazf',
+	'ur-cancel' => 'Laƣv',
+	'ur-login' => 'Vurud kuned',
+	'ur-add-error-message-no-user' => 'Korbari şumo kūşişi ilova kardani hasted vuçud nadorad.',
+	'ur-add-error-message-yourself' => 'Şumo xudro nametavoned cun dūst jo harif ilova kuned.',
+	'ur-add-error-message-pending-request-title' => 'Sabr!',
+	'ur-requests-title' => 'Darxosthoi irtibot',
+	'ur-accept' => 'Paziruftan',
+	'ur-reject' => 'Rad kardan',
+	'friend_request_subject' => '$1 şumoro cun dūstaş dar {{SITENAME}} ilova kard!',
+	'friend_request_body' => "Salom $1:
+
+$2 şumoro hamcun dūst dar {{SITENAME}} ilova kard.  Mo mexohem mutmain boşem, ki şumo dar haqiqat dūston hasted.
+
+Lutfan in pajvandro bo tasdiq kardani dūstiji xud paxş kuned:
+$3
+
+Taşakkur
+
+---
+
+Hoj, ojo şumo mexohed ba darjoft kardani nomahoi elektronī az mo xotima bidihed?
+
+$4-ro klik kuned
+va tarçihoti xudro bo ƣajrifa'ol kardani ogohsoziji tariqi poctai elektronī taƣjir dihed.",
+	'foe_request_subject' => "In nizo' ast! $1 şumoro hamcun duşmani xud dar {{SITENAME}} ilova kard!",
+	'foe_request_body' => "Salom $1:
+
+$2 şumoro hamcun duşmani xud dar {{SITENAME}} ilova kard. Mo mexohem mutmain boşem, ki şumo dar haqiqat duşmanoni aşadī hasted jo haddi aqal munozira dored.
+
+Lutfan in pajvandro bo tasdiq kardani rost naomadani munosibati dūstonaaton paxş kuned: $3
+
+$3
+
+Taşakkur
+
+---
+
+Hoj, ojo şumo mexohed ba darjoft kardani nomahoi elektronī az mo xotima bidihed?
+
+$4-ro klik kuned va tarçihoti xudro bo ƣajrifa'ol kardani ogohsoziji tariqi poctai elektronī taƣjir dihed.",
+	'friend_accept_subject' => '$1 darxosti dūstiji şumoro dar {{SITENAME}} qabul kard!',
+	'friend_accept_body' => "Salom $1:
+
+$2 darxosti dūstşaviji şumoro dar {{SITENAME}} qabul kard!
+
+Sahifai $2-ro dar $3 nigared
+
+Taşakkur,
+
+---
+
+Hoj, ojo şumo mexohed ba darjoft kardani nomahoi elektronī az mo xotima bidihed?
+
+$4-ro klik kuned
+va tarçihoti xudro bo ƣajrifa'ol kardani ogohsoziji tariqi poctai elektronī taƣjir dihed.",
+	'foe_accept_subject' => 'Ana tamom! $1 darxosti harifiji şumoro dar {{SITENAME}} qabul kard!',
+	'foe_accept_body' => "Salom $1:
+
+$2 darxosti duşmaniji şumoro dar {{SITENAME}} qabul kard!
+
+Sahifai $2-ro dar $3 nigared
+
+Taşakkur,
+
+---
+
+Hoj, ojo şumo mexohed ba darjoft kardani nomahoi elektronī az mo xotima bidihed?
+
+$4-ro klik kuned
+va tarçihoti xudro bo ƣajrifa'ol kardani ogohsoziji tariqi poctai elektronī taƣjir dihed.",
+	'friend_removed_subject' => 'Vah! $1 şumoro hamcun dūst dar {{SITENAME}} pok kard!',
+	'friend_removed_body' => "Salom $1:
+
+$2 şumoro hamcun dūst dar {{SITENAME}} pok kard!
+
+Taşakkur
+
+---
+
+Hoj, ojo şumo mexohed ba darjoft kardani nomahoi elektronī az mo xotima bidihed?
+
+$4-ro klik kuned
+va tarçihoti xudro bo ƣajrifa'ol kardani ogohsoziji tariqi poctai elektronī taƣjir dihed.",
+	'foe_removed_subject' => 'Uhu! $1 şumoro hamcun duşmani xud dar {{SITENAME}} pok kard!',
+	'foe_removed_body' => "Salom $1:
+
+$2 şumoro hamcun duşmani xud dar  {{SITENAME}} pok kard!
+
+Şojad şumo hardu dar rohi dūst şudan boşed?
+
+Taşakkur
+
+---
+
+
+Hoj, ojo şumo mexohed ba darjoft kardani nomahoi elektronī az mo xotima bidihed?
+
+$4-ro klik kuned
+va tarçihoti xudro bo ƣajrifa'ol kardani ogohsoziji tariqi poctai elektronī taƣjir dihed.",
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'ur-remove' => 'Aýyr',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -5590,7 +7494,7 @@ at baguhin ang mga katakdaan mo upang huwag gumana/umandar ang mga pagpapabatid 
 	'friend_accept_subject' => 'Tinanggap na ni $1 ang kahilingan mong maging kaibigan sa {{SITENAME}}!',
 	'friend_accept_body' => 'Kumusta ka $1:
 
-Tinanggap ka na ni $2 ang kahilingan mong pangkaibigan sa {{SITENAME}}!  
+Tinanggap ka na ni $2 ang kahilingan mong pangkaibigan sa {{SITENAME}}!
 
 Tanawin ang pahina ni $2 sa $3
 
@@ -5605,7 +7509,7 @@ at baguhin ang mga katakdaan mo upang huwag gumana/umandar ang mga pagpapabatid 
 	'foe_accept_subject' => 'Naganap na! Tinanggap na ni $1 ang kahilingan mong maging katunggali sa {{SITENAME}}!',
 	'foe_accept_body' => 'Kumusta ka $1:
 
-Tinanggap ka na ni $2 ang kahilingan mong pangkatunggali sa {{SITENAME}}!  
+Tinanggap ka na ni $2 ang kahilingan mong pangkatunggali sa {{SITENAME}}!
 
 Tanawin ang pahina ni $2 sa $3
 
@@ -5620,7 +7524,7 @@ at baguhin ang mga katakdaan mo upang huwag gumana/umandar ang mga pagpapabatid 
 	'friend_removed_subject' => 'Naku po! Tinanggal ka na ni $1 bilang isang kaibigan sa {{SITENAME}}!',
 	'friend_removed_body' => 'Kumusta ka $1:
 
-Tinanggal ka ni $2 bilang isang kaibigan sa {{SITENAME}}!  
+Tinanggal ka ni $2 bilang isang kaibigan sa {{SITENAME}}!
 
 Salamat
 
@@ -5633,7 +7537,7 @@ at baguhin ang mga katakdaan mo upang huwag gumana/umandar ang mga pagpapabatid 
 	'foe_removed_subject' => 'Hay salamat! Tinanggal ka na ni $1 bilang isang katunggali sa {{SITENAME}}!',
 	'foe_removed_body' => 'Kumusta ka $1:
 
-Tinanggal ka na ni $2 bilang isang katunggali sa {{SITENAME}}!  
+Tinanggal ka na ni $2 bilang isang katunggali sa {{SITENAME}}!
 
 Maaaring kayong dalawa ay nagiging magkaibigan na?
 
@@ -5650,16 +7554,182 @@ at baguhin ang mga katakdaan mo upang huwag gumana/umandar ang mga pagpapabatid 
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'viewrelationships' => 'İlişkiyi gör',
+	'viewrelationshiprequests' => 'İlişki isteklerini gör',
+	'ur-already-submitted' => 'İsteğiniz gönderildi',
+	'ur-error-page-title' => 'Hay Allah!',
+	'ur-error-title' => 'Hay Allah, yanlış yaptınız!',
+	'ur-error-message-no-user' => 'İsteğinizi tamamlayamıyoruz, zira bu isimde bir kullanıcı mevcut değil.',
 	'ur-main-page' => 'Ana sayfa',
 	'ur-your-profile' => 'Profiliniz',
+	'ur-backlink' => '&lt; $1 adlı kullanıcının profiline dönüş',
+	'ur-relationship-count-foes' => '$1, $2 {{PLURAL:$2|düşmana|düşmana}} sahip.
+Daha fazla düşman ister misiniz?
+<a href="$3"<Davet edin.</a>',
+	'ur-relationship-count-friends' => '$1, $2 {{PLURAL:$2|arkadaşa|arkadaşa}} sahip.
+Daha fazla arkadaş ister misiniz?
+<a href="$3"<Davet edin.</a>',
+	'ur-add-friends' => '  Daha fazla arkadaş ister misiniz?
+<a href="$1"<Davet edin.</a>',
+	'ur-add-friend' => 'Arkadaş olarak ekle',
+	'ur-add-foe' => 'Düşman olarak ekle',
+	'ur-add-no-user' => 'Hiçbir kullanıcı seçilmedi.
+Lütfen doğru bağlantı ile arkadaş/düşman talep edin.',
+	'ur-add-personal-message' => 'Kişisel bir mesaj ekle',
+	'ur-remove-relationship-friend' => 'Arkadaşlıktan çıkar',
+	'ur-remove-relationship-foe' => 'Düşmanlıktan çıkar',
+	'ur-give-gift' => 'Bir hediye ver',
 	'ur-previous' => 'önceki',
 	'ur-next' => 'sonraki',
+	'ur-remove-relationship-title-foe' => '$1 adlı kullanıcıyı düşmanlığınızdan çıkarmak istiyor musunuz?',
+	'ur-remove-relationship-title-confirm-foe' => '$1 adlı kullanıcıyı düşmanlığınızdan çıkardınız',
+	'ur-remove-relationship-title-friend' => '$1 adlı kullanıcıyı arkadaşlığınızdan çıkarmak istiyor musunuz?',
+	'ur-remove-relationship-title-confirm-friend' => '$1 adlı kullanıcıyı arkadaşlığınızdan çıkardınız',
+	'ur-remove-relationship-message-foe' => '$1 adlı kullanıcıyı düşmanlıktan çıkarma isteğinde bulundunuz, onaylamak için "$2" düğmesine basın.',
+	'ur-remove-relationship-message-confirm-foe' => '$1 adlı kullanıcıyı başarıyla düşmanlarınızdan çıkardınız.',
+	'ur-remove-relationship-message-friend' => '$1 adlı kullanıcıyı arkadaşlığınızdan çıkarma isteğinde bulundunuz, onaylamak için "$2" düğmesine basın.',
+	'ur-remove-relationship-message-confirm-friend' => '$1 adlı kullanıcıyı başarıyla arkadaşlıktan çıkardınız.',
+	'ur-remove-error-message-no-relationship' => '$1 ile bir ilişkiniz yok.',
+	'ur-remove-error-message-remove-yourself' => 'Kendinizi kaldıramazsınız.',
+	'ur-remove-error-message-pending-foe-request' => '$1 için bekleyen bir düşmanlık isteğiniz var.',
+	'ur-remove-error-message-pending-friend-request' => '$1 için bekleyen bir arkadaşlık isteğiniz var.',
+	'ur-remove-error-not-loggedin-foe' => 'Düşmanı kaldırmak için oturum açmış olmasınız.',
+	'ur-remove-error-not-loggedin-friend' => 'Arkadaşı kaldırmak için oturum açmış olmalısınız.',
 	'ur-remove' => 'Kaldır',
 	'ur-cancel' => 'İptal',
+	'ur-login' => 'Oturum aç',
+	'ur-add-title-foe' => '$1 adlı kullanıcıyı düşmanınız olarak eklemek ister misiniz?',
+	'ur-add-title-friend' => '$1 adlı kullanıcıyı arkadaşınız olarak eklemek ister misiniz?',
+	'ur-add-message-foe' => '$1 adlı kullanıcıyı düşmanınız olarak eklemek üzeresiniz.
+$1 adlı kullanıcıyı garezinizi doğrulaması için bilgilendireceğiz.',
+	'ur-add-message-friend' => '$1 adlı kullanıcıyı arkadaşınız olarak eklemek üzeresiniz.
+$1 adlı kullanıcıyı arkadaşlığınızı doğrulaması için bilgilendireceğiz.',
+	'ur-add-button-foe' => 'Düşman olarak ekle',
+	'ur-add-button-friend' => 'Arkadaş olarak ekle',
+	'ur-add-sent-title-foe' => '$1 adlı kullanıcıya düşmanlık isteğinizi gönderdik!',
+	'ur-add-sent-title-friend' => '$1 adlı kullanıcıya arkadaşlık isteğinizi gönderdik!',
+	'ur-add-sent-message-foe' => 'Düşmanlık isteğiniz, onay için $1 adlı kullanıcıya gönderildi.
+$1 adlı kullanıcının isteğinizi onaylaması halinde bir takip e-postası alacaksınız',
+	'ur-add-sent-message-friend' => 'Arkadaşlık isteğiniz, onay için $1 adlı kullanıcıya gönderildi.
+$1 adlı kullanıcının isteğinizi onaylaması halinde bir takip e-postası alacaksınız',
+	'ur-add-error-message-no-user' => 'Eklemeye çalıştığınız kullanıcı mevcut değil.',
+	'ur-add-error-message-blocked' => 'Halihazırda engellenmiş durumdasınız ve arkadaş veya düşman ekleyemezsiniz.',
+	'ur-add-error-message-yourself' => 'Kendinizi arkadaş ya da düşman olarak ekleyemezsiniz.',
+	'ur-add-error-message-existing-relationship-foe' => '$1 ile zaten düşmansınız.',
+	'ur-add-error-message-existing-relationship-friend' => '$1 ile zaten arkadaşsınız.',
+	'ur-add-error-message-pending-request-title' => 'Sabır!',
+	'ur-add-error-message-pending-friend-request' => '$1 için bekleyen bir arkadaşlık isteğiniz var.
+$1 isteğinizi doğruladığında sizi bilgilendireceğiz.',
+	'ur-add-error-message-pending-foe-request' => '$1 için bekleyen bir düşmanlık isteğiniz var.
+$1 isteğinizi doğruladığında sizi bilgilendireceğiz.',
+	'ur-add-error-message-not-loggedin-foe' => 'Düşman eklemek için oturum açmış olmasınız',
+	'ur-add-error-message-not-loggedin-friend' => 'Arkadaş eklemek için oturum açmış olmasınız',
+	'ur-requests-title' => 'İlişki istekleri',
+	'ur-requests-message-foe' => '<a href="$1">$2</a> düşmanınız olmak istiyor.',
+	'ur-requests-message-friend' => '<a href="$1">$2</a> arkadaşınız olmak istiyor.',
 	'ur-accept' => 'Onayla',
 	'ur-reject' => 'Reddet',
+	'ur-no-requests-message' => 'Arkadaşlık ya da düşmanlık isteğiniz yok.
+Daha fazla arkadaş istiyorsanız, <a href="$1">davet edin!</a>',
+	'ur-requests-added-message-foe' => '$1 adlı kullanıcıyı düşmanınız olarak eklediniz.',
+	'ur-requests-added-message-friend' => '$1 adlı kullanıcıyı arkadaşınız olarak eklediniz.',
+	'ur-requests-reject-message-friend' => '$1 adlı kullanıcının arkadaşlık isteğini reddettiniz.',
+	'ur-requests-reject-message-foe' => '$1 adlı kullanıcının düşmanlık isteğini reddettiniz.',
+	'ur-title-foe' => '$1 adlı kullanıcının düşman listesi',
+	'ur-title-friend' => '$1 adlı kullanıcının arkadaş listesi',
+	'friend_request_subject' => '$1 adlı kullanıcı {{SITENAME}} üzerinde sizi arkadaş olarak ekledi!',
+	'friend_request_body' => 'Merhaba $1.
+
+$2 sizi {{SITENAME}} üzerinde arkadaş olarak ekledi. Gerçekten arkadaş olduğunuzdan emin olmak istiyoruz.
+
+Lütfen arkadaşlığınızı onaylamak için bu bağlantıya tıklayın:
+$3
+
+Teşekkürler
+
+----
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$4 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
+	'foe_request_subject' => 'Bu savaş demek! $1 sizi {{SITENAME}} üzerinde düşman olarak ekledi!',
+	'foe_request_body' => 'Merhaba $1.
+
+$2 sizi {{SITENAME}} üzerinde düşman olarak ekledi. Gerçekten ölümüne düşman olduğunuzdan ya da en azından bir tartışma yaşadığınızdan emin olmak istiyoruz.
+
+Lütfen bu garezi onaylamak için bu bağlantıya tıklayın:
+$3
+
+Teşekkürler
+
+----
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$4 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
+	'friend_accept_subject' => '$1, {{SITENAME}} üzerinden gönderdiğiniz arkadaşlık isteğinizi kabul etti!',
+	'friend_accept_body' => 'Merhaba $1.
+
+$2 {{SITENAME}} arkadaşlık isteğinizi kabul etti!
+
+$2 adlı kullanıcının sayfasını ziyaret edin: $3
+
+Teşekkürler,
+
+----
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$4 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
+	'foe_accept_subject' => 'Haydi bakalım! $1 {{SITENAME}} üzerinde düşmanlık isteğinizi kabul etti!',
+	'foe_accept_body' => 'Merhaba $1.
+
+$2 {{SITENAME}} düşmanlık isteğinizi kabul etti!
+
+$2 adlı kullanıcının sayfasını ziyaret edin: $3
+
+Teşekkürler,
+
+----
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$4 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
+	'friend_removed_subject' => 'Ah hayır! $1 {{SITENAME}} üzerinde sizi arkadaşlıktan çıkardı!',
+	'friend_removed_body' => 'Merhaba $1.
+
+$2 {{SITENAME}} üzerinde sizi arkadaşlıktan çıkardı!
+
+Teşekkürler
+
+----
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$4 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
+	'foe_removed_subject' => 'Yaşasın! $1 {{SITENAME}} üzerinde sizi düşmanlıktan çıkardı!',
+	'foe_removed_body' => 'Merhaba $1.
+
+$2 {{SITENAME}} üzerinde sizi düşmanlıktan çıkardı!
+
+İkiniz belki de arkadaş olma yolundasınızdır?
+
+Teşekkürler
+
+----
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$4 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -5669,16 +7739,48 @@ $messages['ug-latn'] = array(
 	'ur-login' => 'Kirish',
 );
 
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'ur-next' => 'наступний',
+	'ur-remove' => 'Вилучити',
+);
+
+/** Veps (Vepsan kel')
+ * @author Triple-ADHD-AS
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'ur-main-page' => 'Pälehtpol’',
+	'ur-add-friend' => 'Ližata sebranikan',
+	'ur-add-personal-message' => 'Ližata personaline tedotuz',
+	'ur-previous' => 'edel.',
+	'ur-next' => "jäl'gh.",
+	'ur-remove' => 'Čuta poiš',
+	'ur-cancel' => 'Heitta pätand',
+	'ur-login' => 'Kirjutadas sistemha',
+	'ur-add-error-message-pending-request-title' => 'Tirpand!',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
 $messages['vi'] = array(
+	'ur-error-page-title' => 'Oái!',
 	'ur-main-page' => 'Trang Chính',
 	'ur-add-friend' => 'Thêm người bạn',
 	'ur-add-foe' => 'Thêm kẻ thù',
+	'ur-give-gift' => 'Tặng món quà',
+	'ur-previous' => 'trước',
+	'ur-next' => 'sau',
 	'ur-remove' => 'Dời',
-	'ur-cancel' => 'Bãi bỏ',
+	'ur-cancel' => 'Hủy bỏ',
 	'ur-login' => 'Đăng nhập',
+	'ur-add-error-message-pending-request-title' => 'Chịu khó nhé!',
+	'ur-accept' => 'Chấp nhận',
+	'ur-reject' => 'Từ chối',
+	'ur-title-friend' => 'Danh sách người bạn của $1',
 );
 
 /** Volapük (Volapük)
@@ -5734,19 +7836,91 @@ Begolös stadi flena/neflena medü yüm verätik.',
 	'foe_request_subject' => 'Krigö! Geban: $1 eläükon oli as neflen in {{SITENAME}}!',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'ur-login' => 'אַרײַנלאגירן',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
+ * @author PhiLiP
+ * @author Wrightbus
  */
 $messages['zh-hans'] = array(
+	'ur-already-submitted' => '您的请求经已传送',
+	'ur-main-page' => '主页',
+	'ur-your-profile' => '您的个人资料',
+	'ur-backlink' => '&lt; 回到$1的个人资料',
+	'ur-relationship-count-foes' => '$1已经有$2位仇敌了。
+想要多些仇敌吗?
+<a href="$3">邀请他们。</a>',
+	'ur-relationship-count-friends' => '$1已经有$2位朋友了。
+想要多些朋友吗?
+<a href="$3">邀请他们。</a>',
+	'ur-add-friend' => '加入成为朋友',
+	'ur-add-foe' => '加入成为仇敌',
+	'ur-remove-relationship-friend' => '从朋友清单移除',
+	'ur-remove-relationship-foe' => '从仇敌清单移除',
+	'ur-give-gift' => '送礼物',
+	'ur-remove-relationship-title-foe' => '您要把$1从仇敌清单中移除吗?',
+	'ur-remove-relationship-title-confirm-foe' => '您已把$1从仇敌清单中移除',
+	'ur-remove-relationship-title-friend' => '您要把$1从朋友清单中移除吗?',
+	'ur-remove-relationship-title-confirm-friend' => '您已把$1从朋友清单中移除',
+	'ur-remove-error-message-remove-yourself' => '您不能移除自己。',
+	'ur-remove' => '移除',
 	'ur-cancel' => '取消',
 	'ur-login' => '登录',
+	'ur-add-title-foe' => '您要把$1加入成为仇敌吗?',
+	'ur-add-title-friend' => '您要把$1加入成为朋友吗?',
+	'ur-add-button-foe' => '加入成为仇敌',
+	'ur-add-button-friend' => '加入成为朋友',
+	'ur-accept' => '接受',
+	'ur-reject' => '拒绝',
+	'ur-title-foe' => '$1的仇敌清单',
+	'ur-title-friend' => '$1的朋友清单',
+	'friend_request_subject' => '$1已在{{SITENAME}}把您加入成为朋友！',
+	'friend_removed_subject' => '哎唷！$1已在{{SITENAME}}把您从朋友清单移除了!',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'ur-already-submitted' => '您的請求經已傳送',
+	'ur-main-page' => '主頁',
+	'ur-your-profile' => '您的個人資料',
+	'ur-backlink' => '&lt; 回到$1的個人資料',
+	'ur-relationship-count-foes' => '$1已經有$2位仇敵了。
+想要多些仇敵嗎?
+<a href="$3">邀請他們。</a>',
+	'ur-relationship-count-friends' => '$1已經有$2位朋友了。
+想要多些朋友嗎?
+<a href="$3">邀請他們。</a>',
+	'ur-add-friend' => '加入成為朋友',
+	'ur-add-foe' => '加入成為仇敵',
+	'ur-remove-relationship-friend' => '從朋友清單移除',
+	'ur-remove-relationship-foe' => '從仇敵清單移除',
+	'ur-give-gift' => '送禮物',
+	'ur-remove-relationship-title-foe' => '您要把$1從仇敵清單中移除嗎?',
+	'ur-remove-relationship-title-confirm-foe' => '您已把$1從仇敵清單中移除',
+	'ur-remove-relationship-title-friend' => '您要把$1從朋友清單中移除嗎?',
+	'ur-remove-relationship-title-confirm-friend' => '您已把$1從朋友清單中移除',
+	'ur-remove-error-message-remove-yourself' => '您不能移除自己。',
+	'ur-remove' => '移除',
 	'ur-cancel' => '取消',
 	'ur-login' => '登入',
+	'ur-add-title-foe' => '您要把$1加入成為仇敵嗎?',
+	'ur-add-title-friend' => '您要把$1加入成為朋友嗎?',
+	'ur-add-button-foe' => '加入成為仇敵',
+	'ur-add-button-friend' => '加入成為朋友',
+	'ur-accept' => '接受',
+	'ur-reject' => '拒絕',
+	'ur-title-foe' => '$1的仇敵清單',
+	'ur-title-friend' => '$1的朋友清單',
+	'friend_request_subject' => '$1已在{{SITENAME}}把您加入成為朋友！',
+	'friend_removed_subject' => '哎唷！$1已在{{SITENAME}}把您從朋友清單移除了!',
 );
 

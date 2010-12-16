@@ -1,0 +1,158 @@
+/*==================================================
+ * Facet box
+ *==================================================
+ */
+div.exhibit-facet {
+    position:   relative;
+}
+
+div.exhibit-facet-header {
+    padding:        2px;
+}
+div.exhibit-facet-header-filterControl {
+    float:          right;
+    width:          2em;
+    display:        none;
+    cursor:         pointer;
+}
+div.exhibit-facet-header-filterControl img {
+    vertical-align: text-bottom;
+}
+
+span.exhibit-facet-header-title {
+    font-weight:    bold;
+}
+span.exhibit-facet-header-detail {
+    color:          #888;
+    padding-left:   0.5em;
+}
+
+div.exhibit-facet-body-frame {
+    clear:          both;
+}
+
+div.exhibit-facet-body {
+    border:         1px solid #ddd;
+    height:         10em;
+    overflow:       auto;
+}
+
+/*==================================================
+ * Facet value
+ *==================================================
+ */
+
+div.exhibit-facet-value {
+    cursor:         pointer;
+    padding:        2px 0px;
+    clear:          both;
+}
+div.exhibit-facet-value-selected {
+    font-weight:    bold;
+}
+
+div.exhibit-facet-value-count {
+    float:          left;
+    width:          2em;
+    text-align:     right;
+    color:          #aaa;
+}
+
+div.exhibit-facet-value-inner {
+    padding-left:   2.5em;
+}
+
+div.exhibit-facet-value-checkbox {
+    float:          right;
+}
+
+span.exhibit-facet-value-missingThisField {
+    color:          #888;
+}
+
+/*==================================================
+ * Flowing facet box
+ *==================================================
+ */
+div.exhibit-flowingFacet {
+    clear:          both;
+}
+
+div.exhibit-flowingFacet-header {
+    padding:        2px 0px;
+}
+
+span.exhibit-flowingFacet-header-title {
+    font-weight:    bold;
+}
+
+div.exhibit-flowingFacet-body {
+}
+
+/*==================================================
+ * Flowing facet value
+ *==================================================
+ */
+
+div.exhibit-flowingFacet-value {
+    cursor:         pointer;
+    clear:          both;
+    position:       relative;
+    padding-left:   20px;
+}
+
+div.exhibit-flowingFacet-value-selected {
+    font-weight:    bold;
+}
+
+span.exhibit-flowingFacet-value-count {
+    color:          #aaa;
+}
+
+div.exhibit-flowingFacet-value-checkbox {
+    position:       absolute;
+    left:           0px;
+    padding:        0;
+    margin:         0;
+}
+
+/*==================================================
+ * Text search facet
+ *==================================================
+ */
+div.exhibit-text-facet {
+}
+
+div.exhibit-text-facet input {
+    width: 100%;
+}
+
+/*==================================================
+ * Cloud facet
+ *==================================================
+ */
+div.exhibit-cloudFacet {
+    clear:          both;
+}
+
+div.exhibit-cloudFacet-header {
+    padding:        2px 0px;
+}
+
+span.exhibit-cloudFacet-header-title {
+    font-weight:    bold;
+}
+
+div.exhibit-cloudFacet-body {
+    padding:    0.5em;
+    border:     1px solid #aaa;
+}
+
+span.exhibit-cloudFacet-value {
+    cursor: pointer;
+}
+
+span.exhibit-cloudFacet-value-selected {
+    text-decoration: underline;
+    background:      yellow;
+}

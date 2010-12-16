@@ -12,9 +12,8 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Cross-namespace links',
-	'svn-date' => '$LastChangedDate: 2008-07-09 18:34:20 +0200 (śro, 09 lip 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37404 $',
 	'description' => 'lists links across namespaces that shouldn\'t exist on Wikimedia projects',
 	'descriptionmsg' => 'crossnamespacelinks-desc',
 	'author' => 'Ævar Arnfjörð Bjarmason',

@@ -8,6 +8,7 @@ $names = array(
 'hi' => 'Hindi',
 'it' => 'Italisht',
 'ja' => 'Japanisht',
+'nl' => 'Holandisht',
 'pt' => 'Portugeze',
 'ru' => 'Rusisht',
 'sq' => 'shqipe',

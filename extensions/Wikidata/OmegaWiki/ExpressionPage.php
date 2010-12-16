@@ -1,17 +1,17 @@
 <?php
 
-require_once('Wikidata.php');
-require_once('Transaction.php');
-require_once('WikiDataAPI.php');
-require_once('forms.php');
-require_once('Attribute.php');
-require_once('type.php');
-require_once('languages.php');
-require_once('HTMLtable.php');
-require_once('OmegaWikiRecordSets.php');
-require_once('OmegaWikiEditors.php');
-require_once('ViewInformation.php');
-require_once('WikiDataGlobals.php');
+require_once( 'Wikidata.php' );
+require_once( 'Transaction.php' );
+require_once( 'WikiDataAPI.php' );
+require_once( 'forms.php' );
+require_once( 'Attribute.php' );
+require_once( 'type.php' );
+require_once( 'languages.php' );
+require_once( 'HTMLtable.php' );
+require_once( 'OmegaWikiRecordSets.php' );
+require_once( 'OmegaWikiEditors.php' );
+require_once( 'ViewInformation.php' );
+require_once( 'WikiDataGlobals.php' );
 
 /**
  * The ExpressionPage class renders pages in the Expression: namespace of a Wikidata application.
@@ -24,45 +24,45 @@ class ExpressionPage extends DefaultWikidataApplication {
 
 		parent::view();
 		$expressionAsPageTitle = $wgTitle->getText();
-		$wgOut->setPageTitle(wfMsgSc("meaningsoftitle",$expressionAsPageTitle));
-		$wgOut->setSubtitle(wfMsgSc("meaningsofsubtitle",$wgTitle->getPrefixedText()));
-		$sets=wdGetDataSets();
-		$html='';
-		foreach($sets as $set) {
-			$html.=$this->getMeaningBox($expressionAsPageTitle, $set);
-		}		
-		$wgOut->addHTML($html);
+		$wgOut->setPageTitle( wfMsgSc( "meaningsoftitle", $expressionAsPageTitle ) );
+		$wgOut->setSubtitle( wfMsgSc( "meaningsofsubtitle", $wgTitle->getPrefixedText() ) );
+		$sets = wdGetDataSets();
+		$html = '';
+		foreach ( $sets as $set ) {
+			$html .= $this->getMeaningBox( $expressionAsPageTitle, $set );
+		}
+		$wgOut->addHTML( $html );
 	}
 
-	protected function getMeaningBox($expression, $dataset) {
+	protected function getMeaningBox( $expression, $dataset ) {
 		global $wgOut, $wgUser;
-		$name=$dataset->fetchName();
-		$exp=getExpressions($expression, $dataset);
-		$wikiMagic='';
-		if(!empty($exp)) {
-			foreach($exp as $foundExpression) {
+		$name = $dataset->fetchName();
+		$exp = getExpressions( $expression, $dataset );
+		$wikiMagic = '';
+		if ( !empty( $exp ) ) {
+			foreach ( $exp as $foundExpression ) {
 				$foundExpression->fetchMeaningIds();
-				$languageNames=getOwLanguageNames();
-				$lang=$languageNames[$foundExpression->languageId];
-				$spell=$foundExpression->spelling;
-				$wikiMagic.="{{Expression|language=$lang|spelling=$spell}}\n";
-				$defs=array();
-				foreach($foundExpression->meaningIds as $mid) {
-					$def=getDefinedMeaningDefinitionForLanguage($mid,getLanguageIdForCode($wgUser->getOption('language')), $dataset);
-					$defexrow=definingExpressionRow($mid);
-					$defex=$defexrow[1];
-					$wikiMagic.="{{Meaning|definition=$def|dmid=$mid|defined_by=$defex}}\n";					
+				$languageNames = getOwLanguageNames();
+				$lang = $languageNames[$foundExpression->languageId];
+				$spell = $foundExpression->spelling;
+				$wikiMagic .= "{{Expression|language=$lang|spelling=$spell}}\n";
+				$defs = array();
+				foreach ( $foundExpression->meaningIds as $mid ) {
+					$def = getDefinedMeaningDefinitionForLanguage( $mid, getLanguageIdForCode( $wgUser->getOption( 'language' ) ), $dataset );
+					$defexrow = definingExpressionRow( $mid );
+					$defex = $defexrow[1];
+					$wikiMagic .= "{{Meaning|definition=$def|dmid=$mid|defined_by=$defex}}\n";
 				}
-				$wikiMagic.="\n";
+				$wikiMagic .= "\n";
 				
 			}
 		} else {
-			$meaningList="No meanings found.";
+			$meaningList = "No meanings found.";
 		}
-		$templatesAsHTML=$wgOut->parse($wikiMagic);
-		$lang_select=getLanguageSelect("Language");
+		$templatesAsHTML = $wgOut->parse( $wikiMagic );
+		$lang_select = getLanguageSelect( "Language" );
 		
-	$boxhtml=<<<HTML
+	$boxhtml = <<<HTML
 <P>
 <div style="border-style:solid;border-width:1px;border-color:#666666;padding:5px;">
 <div style="float:right;"><span style="background:#eeeeee;border-style:solid;order-color:black;padding:3px;border-width:1px;"><B>$name</B></span>
@@ -91,27 +91,27 @@ HTML;
 		$spelling = $wgTitle->getText();
 
 		$wgOut->addHTML(
-			getExpressionsEditor($spelling, $this->viewInformation)->view(
-				$this->getIdStack(), 
-				getExpressionsRecordSet($spelling, $this->viewInformation)
+			getExpressionsEditor( $spelling, $this->viewInformation )->view(
+				$this->getIdStack(),
+				getExpressionsRecordSet( $spelling, $this->viewInformation )
 			)
 		);
 		
-		$wgOut->addHTML(DefaultEditor::getExpansionCss());
-		$wgOut->addHTML("<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>");
+		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
+		$wgOut->addHTML( "<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>" );
 	}
 
-	protected function save($referenceQueryTransactionInformation) {
+	protected function save( $referenceQueryTransactionInformation ) {
 		global
 			$wgTitle;
 
-		parent::save($referenceQueryTransactionInformation);
+		parent::save( $referenceQueryTransactionInformation );
 
 		$spelling = $wgTitle->getText();
 		
-		getExpressionsEditor($spelling, $this->viewInformation)->save(
-			$this->getIdStack(), 
-			getExpressionsRecordSet($spelling, $this->viewInformation)
+		getExpressionsEditor( $spelling, $this->viewInformation )->save(
+			$this->getIdStack(),
+			getExpressionsRecordSet( $spelling, $this->viewInformation )
 		);
 	}
 
@@ -119,15 +119,15 @@ HTML;
 		global
 			$wgOut, $wgTitle, $wgUser;
 
-		if(!parent::edit()) return false;
+		if ( !parent::edit() ) return false;
 		$this->outputEditHeader();
 
 		$spelling = $wgTitle->getText();
 
 		$wgOut->addHTML(
-			getExpressionsEditor($spelling, $this->viewInformation)->edit(
-				$this->getIdStack(), 
-				getExpressionsRecordSet($spelling, $this->viewInformation)
+			getExpressionsEditor( $spelling, $this->viewInformation )->edit(
+				$this->getIdStack(),
+				getExpressionsRecordSet( $spelling, $this->viewInformation )
 			)
 		);
 
@@ -138,15 +138,16 @@ HTML;
 		global
 			$wgTitle, $wgUseExpressionPageTitlePrefix;
 	
-		if ($wgUseExpressionPageTitlePrefix)
-			$prefix = wfMsg('ow_Multiple_meanings') . ' ';
+		if ( $wgUseExpressionPageTitlePrefix )
+			$title = wfMsg( 'ow_Multiple_meanings', $wgTitle->getText() );
 		else
-			$prefix	= "";
+			$title	= $wgTitle->getText();
 					
-		return $prefix . $wgTitle->getText();
+		return $title;
 	}
 	
 	protected function getIdStack() {
-		return new IdStack("expression");
+		global $wgExpression;
+		return new IdStack( $wgExpression );
 	}
 }

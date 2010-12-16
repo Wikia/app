@@ -16,9 +16,7 @@ class DataCenterControllerSettings extends DataCenterController {
 
 	/* Functions */
 
-	public function __construct(
-		array $path
-	) {
+	public function __construct( array $path ) {
 		// Actions
 		if ( $path['id'] && $path['type'] == 'field' ) {
 			if ( DataCenterPage::userCan( 'remove' ) ) {
@@ -46,10 +44,7 @@ class DataCenterControllerSettings extends DataCenterController {
 		}
 	}
 
-	public function save(
-		array $data,
-		$type
-	) {
+	public function save( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'change' ) ) {
 			return false;
 		}
@@ -62,10 +57,7 @@ class DataCenterControllerSettings extends DataCenterController {
 		return false;
 	}
 
-	public function remove(
-		array $data,
-		$type
-	) {
+	public function remove( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'remove' ) ) {
 			return false;
 		}
@@ -89,10 +81,7 @@ class DataCenterControllerSettings extends DataCenterController {
 		return false;
 	}
 
-	public function saveFieldLinks(
-		array $data,
-		$type
-	) {
+	public function saveFieldLinks( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'change' ) ) {
 			return false;
 		}

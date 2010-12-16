@@ -28,13 +28,15 @@ $messages = array(
 # Categories related messages
 'category_header' => 'Nyɛw cogoya kɔnɔ: "$1"',
 
-'article'        => 'Nyɛ',
+'article' => 'Nyɛ',
+'mypage'  => "N'ka nyɛ",
+'mytalk'  => "N'ka baronyɛ",
+'and'     => '&#32;ani',
+
+# Cologne Blue skin
 'qbfind'         => 'Nyini',
 'qbedit'         => 'Yɛlɛma',
 'qbspecialpages' => 'Nyɛw kɛrɛnkɛrɛnnen',
-'mypage'         => "N'ka nyɛ",
-'mytalk'         => "N'ka baronyɛ",
-'and'            => '&#32;ani',
 
 'help'           => 'Dɛmɛ',
 'search'         => 'Nyini',
@@ -82,10 +84,13 @@ $messages = array(
 
 # Preferences page
 'preferences' => 'Fisayali',
-'skin'        => 'Apparence',
+'prefs-skin'  => 'Apparence',
 
 # Recent changes
 'hide' => 'dogo',
+
+# File description page
+'file-anchor-link' => 'Janin',
 
 # Random page
 'randompage' => 'Nyɛ min man ni ja',

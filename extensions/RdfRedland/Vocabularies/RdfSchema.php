@@ -27,8 +27,8 @@ if (!defined('MEDIAWIKI')) die();
 class MwRdf_Vocabulary_RdfSchema extends MwRdf_Vocabulary {
 
 	//base uri
-	const NAMESPACE = "http://www.w3.org/2000/01/rdf-schema#";
-	public function getNS() { return self::NAMESPACE; }
+	const RDF_NAMESPACE = "http://www.w3.org/2000/01/rdf-schema#";
+	public function getNS() { return self::RDF_NAMESPACE; }
 
 	// Terms
 	public $Resource;

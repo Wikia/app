@@ -12,20 +12,8 @@ class BabelStatic {
 	 * Registers the parser function hook.
 	 * @return Boolean: True.
 	 */
-	public static function Setup() {
-		global $wgParser;
-		$wgParser->setFunctionHook( 'babel', array( 'BabelStatic', 'Render' ) );
-		return true;
-	}
-
-	/**
-	 * Registers the parser function magic word.
-	 * @param $magicWords Array: Magic words on the wiki.
-	 * @param $langCode String: Content language code of the wiki.
-	 * @return Boolean: True.
-	 */
-	public static function Magic( array $magicWords, $langCode ) {
-		$magicWords[ 'babel' ] = array( 0, 'babel' );
+	public static function Setup( &$parser ) {
+		$parser->setFunctionHook( 'babel', array( 'BabelStatic', 'Render' ) );
 		return true;
 	}
 
@@ -40,5 +28,4 @@ class BabelStatic {
 		$arguments = func_get_args();
 		return call_user_func_array( array( $wgBabel, 'render' ), $arguments );
 	}
-
 }

@@ -1,0 +1,50 @@
+<SecurePoll>
+<election>
+<configuration>
+<title>Radio range test 1</title>
+<ballot>radio-range</ballot>
+<tally>histogram-range</tally>
+<primaryLang>en</primaryLang>
+<startDate>2009-07-19T00:00:00Z</startDate>
+<endDate>2019-08-10T00:00:00Z</endDate>
+<id>50</id>
+<property name="admins">Tim</property>
+<message name="title" lang="en">RR1 test</message>
+<message name="intro" lang="en">Click the buttons</message>
+<message name="jump-text" lang="en">RR1 test jump text</message>
+<message name="return-text" lang="en">RR1 test return text</message>
+<auth>local</auth>
+<question>
+<property name="min-score">-1</property>
+<property name="max-score">1</property>
+<property name="column-label-msgs">yes</property>
+<property name="default-score">0</property>
+<message name="column-1" lang="en">Oppose</message>
+<message name="column0" lang="en">Abstain</message>
+<message name="column+1" lang="en">Support</message>
+<id>51</id>
+<message name="text" lang="en">RR1 test question</message>
+<option>
+<id>52</id>
+<message name="text" lang="en">AAA</message>
+<message name="text" lang="fr">AAA fr</message>
+</option>
+<option>
+<id>53</id>
+<message name="text" lang="en">B</message>
+<message name="text" lang="fr">B fr</message>
+</option>
+<option>
+<id>54</id>
+<message name="text" lang="en">C</message>
+<message name="text" lang="fr">C fr</message>
+</option>
+<option>
+<id>55</id>
+<message name="text" lang="en">D</message>
+<message name="text" lang="fr">D fr</message>
+</option>
+</question>
+</configuration>
+</election>
+</SecurePoll>

@@ -10,9 +10,7 @@ class DataCenterViewPlans extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		$plans = DataCenterDB::getPlans(
 			DataCenterDB::buildSort(
 				'meta', 'plan', array( 'space', 'tense DESC' )

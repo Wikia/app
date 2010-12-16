@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'Call' => array( 'Call' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Call' => array( 'استدعاء' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Call' => array( 'استدعاء' ),
 );
@@ -57,6 +53,11 @@ $aliases['fr'] = array(
 	'Call' => array( 'Appeler', 'Appels', 'Appel' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Call' => array( 'Apelar', 'Apèl', 'Apèls' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'Call' => array( 'Chamada' ),
@@ -82,9 +83,19 @@ $aliases['ia'] = array(
 	'Call' => array( 'Appello' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Call' => array( 'Panggil' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Call' => array( 'ページ呼び出し' ),
+	'Call' => array( 'ページ呼び出し', 'ページの呼び出し' ),
+);
+
+/** Khmer (ភាសាខ្មែរ) */
+$aliases['km'] = array(
+	'Call' => array( 'ហៅ' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -102,6 +113,16 @@ $aliases['mk'] = array(
 	'Call' => array( 'Повик' ),
 );
 
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Call' => array( 'വിളിക്കുക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Call' => array( 'कॉल' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
 	'Call' => array( 'Anroepen' ),
@@ -112,6 +133,11 @@ $aliases['nl'] = array(
 	'Call' => array( 'Aanroepen' ),
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+$aliases['no'] = array(
+	'Call' => array( 'Kall' ),
+);
+
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
 	'Call' => array( 'Ampèl', 'Ampèls', 'Apelar' ),
@@ -120,6 +146,16 @@ $aliases['oc'] = array(
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'Call' => array( 'आमन्त्र्' ),
+);
+
+/** Sinhala (සිංහල) */
+$aliases['si'] = array(
+	'Call' => array( 'ඇමතුම' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Call' => array( 'Volanie' ),
 );
 
 /** Albanian (Shqip) */
@@ -135,5 +171,15 @@ $aliases['su'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Call' => array( 'Tawagin' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Call' => array( 'Çağrı' ),
+);
+
+/** Veps (Vepsan kel') */
+$aliases['vep'] = array(
+	'Call' => array( 'SätaPagin' ),
 );
 

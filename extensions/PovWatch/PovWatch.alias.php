@@ -10,16 +10,12 @@ $aliases['en'] = array(
 	'PovWatch' => array( 'PovWatch' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'PovWatch' => array( 'مراقبة_وجهة_النظر' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'PovWatch' => array( 'مراقبة_وجهة_النظر' ),
 );
@@ -39,14 +35,14 @@ $aliases['hr'] = array(
 	'PovWatch' => array( 'Predbilježeno_praćenje' ),
 );
 
-/** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'PovWatch' => array( 'PovWatch' ),
-);
-
 /** Interlingua (Interlingua) */
 $aliases['ia'] = array(
 	'PovWatch' => array( 'Observa PdV' ),
+);
+
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'PovWatch' => array( 'Pantau sudut pandang', 'PantauSudutPandang' ),
 );
 
 /** Japanese (日本語) */
@@ -67,6 +63,11 @@ $aliases['nl'] = array(
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'PovWatch' => array( 'पक्षवृत्तीनिरिक्षा' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'PovWatch' => array( 'SledovaniePOV' ),
 );
 
 /** Swedish (Svenska) */

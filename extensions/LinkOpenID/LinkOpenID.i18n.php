@@ -65,6 +65,31 @@ $messages['arz'] = array(
 	'linkopenid-prefstext-v2url' => 'مسار الخادم للهوية المفتوحة النسخة 2:',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'linkopenid-desc' => 'Дазваляе ўдзельнікам зьвязваць іх рахункі з вонкавым OpenID',
+	'linkopenid-prefstext-pre' => 'Калі Вы маеце OpenID у вонкавым сэрвісе, Вы можаце пазначаць яго тут.
+Гэта дазволіць Вам таксама выкарыстоўваць старонку удзельніка як OpenID.',
+	'linkopenid-prefstext-openid' => 'Ваш OpenID:',
+	'linkopenid-prefstext-v1url' => 'URL-адрас сэрвэра OpenID вэрсіі 1.1:',
+	'linkopenid-prefstext-v2url' => 'URL-адрас сэрвэра OpenID вэрсіі 2:',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'linkopenid-desc' => "Talvezout a ra d'an implijerien da liammañ o c'hontoù ouzh un OpenID diavaez",
+	'linkopenid-prefstext-pre' => "Ma'z eus ganeoc'h un OpenID digant ur pourvezer diavaez e c'hallit en merkañ amañ.
+Talvezout a ra deoc'h da implijout ho pajenn implijer evel OpenID.",
+	'linkopenid-prefstext-openid' => "Hoc'h OpenID :",
+	'linkopenid-prefstext-v1url' => 'URL ar servijer evit stumm OpenID 1.1 :',
+	'linkopenid-prefstext-v2url' => 'URL ar servijer evit stumm OpenID 2 :',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -75,6 +100,14 @@ Ovo Vam omogućava da koristite Vašu korisničku stranicu kao i Vaš OpenID.',
 	'linkopenid-prefstext-openid' => 'Vaš OpenID:',
 	'linkopenid-prefstext-v1url' => 'URL servera za OpenID verziju 1.1:',
 	'linkopenid-prefstext-v2url' => 'URL servera za OpenID verziju 2:',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'linkopenid-desc' => 'Permet als usuaris enllaçar el seu compte a un OpenID extern',
+	'linkopenid-prefstext-openid' => 'El vostre OpenID:',
 );
 
 /** German (Deutsch)
@@ -108,6 +141,14 @@ To śi dowólijo swój wužywarski bok teke ako OpenID wužywaś.',
 	'linkopenid-prefstext-v2url' => 'Serwerowy URL za OpenID wersiju 2;',
 );
 
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'linkopenid-prefstext-openid' => 'Η OpenID σας:',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -124,6 +165,8 @@ $messages['es'] = array(
 	'linkopenid-prefstext-pre' => 'Si tienes un OpenID de un proveedor externo puedes especificarlo aquí.
 Esto te permite usar tu página de usuario como un OpenID también.',
 	'linkopenid-prefstext-openid' => 'Su OpenID:',
+	'linkopenid-prefstext-v1url' => 'Servidor-URL para OpenID Version 1.1:',
+	'linkopenid-prefstext-v2url' => 'Servidor-URL para OpenID Version 2:',
 );
 
 /** Finnish (Suomi)
@@ -201,6 +244,19 @@ $messages['hsb'] = array(
 	'linkopenid-prefstext-v2url' => 'Serwerowy URL za OpenID wersiju 2:',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'linkopenid-desc' => 'Lehetővé teszi a szerkesztők számára, hogy felhasználói fiókjukat egy külső OpenID-hoz csatolják',
+	'linkopenid-prefstext-pre' => 'Ha külső szolgáltatótól van OpenID-d, itt adhatod meg.
+Ez lehetővé teszi, hogy a felhasználói lapodat OpenID-ként is használd.',
+	'linkopenid-prefstext-openid' => 'A te OpenID-d:',
+	'linkopenid-prefstext-v1url' => 'Szerver URL 1.1-es verziójú OpenID-hez:',
+	'linkopenid-prefstext-v2url' => 'Szerver URL 2-es verziójú OpenID-hez:',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -212,6 +268,30 @@ Isto te permitte etiam usar tu pagina de usator como OpenID.',
 	'linkopenid-prefstext-v1url' => 'URL de servitor pro OpenID version 1.1:',
 	'linkopenid-prefstext-v2url' => 'URL de servitor pro OpenID version 2:',
 	'linkopenid-prefstext-xrdsurl' => 'XRDS-URL:',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'linkopenid-desc' => 'Mengijinkan pengguna untuk menautkan akun mereka dengan OpenID',
+	'linkopenid-prefstext-pre' => 'Jika Anda memiliki sebuah OpenID dari situs lain Anda dapat memasukkannya ke sini.
+Hal ini mengijinkan Anda untuk menggunakakn halaman pengguna Anda sebagai OpenID juga.',
+	'linkopenid-prefstext-openid' => 'OpenID Anda:',
+	'linkopenid-prefstext-v1url' => 'URL-Peladen untuk OpenID Versi 1.1:',
+	'linkopenid-prefstext-v2url' => 'URL-Peladen untuk OpenID Versi 2:',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'linkopenid-desc' => 'Consente agli utenti di collegare il proprio account a un OpenID esterno',
+	'linkopenid-prefstext-pre' => 'Se si dispone di un OpenID da un provider esterno è possibile specificarlo qui.
+Ciò consente anche di utilizzare la propria pagina utente come OpenID.',
+	'linkopenid-prefstext-openid' => 'Il tuo OpenID:',
+	'linkopenid-prefstext-v1url' => 'Server-URL per OpenID Versione 1.1:',
+	'linkopenid-prefstext-v2url' => 'Server-URL per OpenID Versione 2:',
 );
 
 /** Japanese (日本語)
@@ -258,6 +338,18 @@ Dëst erlaabt et datt Dir Är Benotzersäit och als OpenID benotze kënnt.',
 	'linkopenid-prefstext-v2url' => "Server-URL fir d'Versioun 2 vun OpenID:",
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'linkopenid-desc' => 'Овозможи корисниците да ја сврзат својата сметка со надворешен OpenID',
+	'linkopenid-prefstext-pre' => 'Доколку имате OpenID од надворешен услужител, можете да го назначите овде.
+Ова ви овозможува да ја користите и вашата корисничка страница како OpenID.',
+	'linkopenid-prefstext-openid' => 'Вашиот OpenID:',
+	'linkopenid-prefstext-v1url' => 'URL адресата на серверот за OpenID Верзија 1.1:',
+	'linkopenid-prefstext-v2url' => 'URL адресата на серверот за OpenID Верзија 2:',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -282,26 +374,63 @@ Dette lèt deg nytta brukarsida di som ein OpenID.',
 	'linkopenid-prefstext-v2url' => 'Tenar-URL for OpenID-versjon 2:',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'linkopenid-desc' => 'Gjør det mulig for brukere å lenke kontoen sin til en ekstern OpenID',
+	'linkopenid-prefstext-pre' => 'Om du har en OpenID fra en ekstern leverandør kan du oppgi det her.
+Dette lar deg bruke din brukerside som en OpenID i tillegg.',
+	'linkopenid-prefstext-openid' => 'Din OpenID:',
+	'linkopenid-prefstext-v1url' => 'Tjener-nettadresse for OpenID-versjon 1.1:',
+	'linkopenid-prefstext-v2url' => 'Tjener-nettadresse for OpenID-versjon 2:',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'linkopenid-desc' => 'Permet als utilizaires de ligar lor comptador amb un OpenID extèrn',
-	'linkopenid-prefstext-pre' => "S'avètz un OpenID d'un provesidor extèrn, o podètz especificar aicí.
-Aquò vos permet tanben d'utilizar vòstra page d'utilizaire coma OpenID.",
+	'linkopenid-desc' => 'Permet als utilizaires de ligar lor comptador amb un OpenID extèrne',
+	'linkopenid-prefstext-pre' => "S'avètz un OpenID d'un provesidor extèrne, o podètz especificar aicí.
+Aquò vos permet tanben d'utilizar vòstra pagina d'utilizaire coma OpenID.",
 	'linkopenid-prefstext-openid' => 'Vòstre OpenID :',
 	'linkopenid-prefstext-v1url' => 'URL del servidor per OpenID version 1.1 :',
 	'linkopenid-prefstext-v2url' => 'URL del servidor per OpenID version 2 :',
 	'linkopenid-prefstext-xrdsurl' => 'XRDS-URL :',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'linkopenid-desc' => 'Umożliwia użytkownikom podłączenie swojego konta do zewnętrznego OpenID',
+	'linkopenid-prefstext-pre' => 'Jeśli masz OpenID od zewnętrznego dostawcy możesz je tutaj określić.
+Możesz również jako OpenID użyć swojej strony użytkownika.',
+	'linkopenid-prefstext-openid' => 'Twoje OpenID',
+	'linkopenid-prefstext-v1url' => 'URL serwera OpenID w wersji 1.1',
+	'linkopenid-prefstext-v2url' => 'URL serwera OpenID w wersji 2',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'linkopenid-desc' => "A përmëtt a j'utent ëd coleghé ël sò cont a n'OpenID estern",
+	'linkopenid-prefstext-pre' => "S'it l'has n'OpenID da un provider estern it peule spessifielo ambelessì.
+Sòn sì at përmëtt ëd dovré toa pàgina utent com n'OpenID.",
+	'linkopenid-prefstext-openid' => 'Ël tò OpenID:',
+	'linkopenid-prefstext-v1url' => 'Server-URL për OpenID Vërsion 1.1:',
+	'linkopenid-prefstext-v2url' => 'Server-URL për OpenID Vërsion 2:',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'linkopenid-desc' => 'Permite aos utilizadores associarem a sua conta a um OpenID externo',
 	'linkopenid-prefstext-pre' => 'Se possui um OpenID de um fornecedor externo, pode especificá-lo aqui.
-Isto permite-lhe usar a sua página de utilizador como um OpenID também.',
+Isto também lhe permite usar a sua página de utilizador como um OpenID.',
 	'linkopenid-prefstext-openid' => 'O seu OpenID:',
 	'linkopenid-prefstext-v1url' => 'URL do servidor para OpenID versão 1.1:',
 	'linkopenid-prefstext-v2url' => 'URL do servidor para OpenID versão 2:',
@@ -317,6 +446,27 @@ Isto permite-lhe usar a sua página de utilizador como um OpenID também.',
 	'linkopenid-prefstext-openid' => 'O seu OpenID:',
 	'linkopenid-prefstext-v1url' => 'URL do servidor para OpenID versão 1.1:',
 	'linkopenid-prefstext-v2url' => 'URL do servidor para OpenID versão 2:',
+);
+
+/** Romanian (Română)
+ * @author Firilacroco
+ */
+$messages['ro'] = array(
+	'linkopenid-prefstext-openid' => 'OpenID-ul dumneavoastră:',
+);
+
+/** Russian (Русский)
+ * @author Ferrer
+ * @author Innv
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'linkopenid-desc' => 'Позволяет участникам связывать свою учётную запись с внешним OpenID',
+	'linkopenid-prefstext-pre' => 'Если у вас есть OpenID от внешнего провайдера, вы можете указать его здесь.
+Это позволит вам использовать страницу участника в качестве OpenID.',
+	'linkopenid-prefstext-openid' => 'Ваш OpenID:',
+	'linkopenid-prefstext-v1url' => 'URL сервера для OpenID версии 1.1:',
+	'linkopenid-prefstext-v2url' => 'URL сервера для OpenID версии 2:',
 );
 
 /** Slovak (Slovenčina)
@@ -341,6 +491,13 @@ Detta låter dig använda din användarsida som en OpenID.',
 	'linkopenid-prefstext-openid' => 'Din OpenID:',
 	'linkopenid-prefstext-v1url' => 'Server-URL för OpenID-version 1.1:',
 	'linkopenid-prefstext-v2url' => 'Server-URL för OpenID-version 2:',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'linkopenid-prefstext-openid' => 'మీ ఓపెన్ఐడీ:',
 );
 
 /** Tetum (Tetun)

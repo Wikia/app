@@ -16,15 +16,16 @@
  * require_once("$IP/extensions/WhatIsMyIP/WhatIsMyIP.php");
  */
 
-if ( !defined('MEDIAWIKI') ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named WhatIsMyIP.\n";
 	exit( 1 );
 }
 
 // Extension credits that show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'WhatIsMyIP',
-	'version' => '1.2',
+	'version' => '1.3',
 	'description' => 'Shows current user\'s IP address on [[Special:WhatIsMyIP]]',
 	'author' => 'Łukasz Galezewski',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:WhatIsMyIP',
@@ -36,10 +37,10 @@ $wgAvailableRights[] = 'whatismyip';
 $wgGroupPermissions['*']['whatismyip'] = true;
 
 // Set up the special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['WhatIsMyIP'] = $dir . 'WhatIsMyIP.i18n.php';
 $wgExtensionAliasesFiles['WhatIsMyIP'] = $dir . 'WhatIsMyIP.alias.php';
-$wgAutoloadClasses['WhatIsMyIP'] = $dir. 'WhatIsMyIP_body.php';
+$wgAutoloadClasses['WhatIsMyIP'] = $dir . 'WhatIsMyIP_body.php';
 $wgSpecialPages['WhatIsMyIP'] = 'WhatIsMyIP';
 // Special page group for MediaWiki 1.13+
 $wgSpecialPageGroups['WhatIsMyIP'] = 'users';

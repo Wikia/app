@@ -1,0 +1,5 @@
+require_once( "{{path}}/ContactPage.php" );
+
+$wgContactUser = 'WikiAdmin';
+$wgContactSender = 'apache@' . $wgServerName;
+$wgContactSenderName = 'Contact Form on ' . $wgSitename;

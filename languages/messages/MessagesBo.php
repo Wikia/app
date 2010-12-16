@@ -75,12 +75,14 @@ $messages = array(
 # Categories related messages
 'subcategories' => 'རིགས་ཕལ་བ།',
 
-'about'          => 'ཨཱབོཨུཏ་',
-'cancel'         => 'དོར་བ།',
+'about'      => 'ཨཱབོཨུཏ་',
+'cancel'     => 'དོར་བ།',
+'mytalk'     => 'ངའི་གླེང་མོལ།',
+'navigation' => 'དཀར་ཆག',
+
+# Cologne Blue skin
 'qbedit'         => 'རྩོམ་སྒྲིག',
 'qbspecialpages' => 'དམིཊ་བསལ་གྱི་བཟོ་བཅོས།',
-'mytalk'         => 'ངའི་གླེང་མོལ།',
-'navigation'     => 'དཀར་ཆག',
 
 'help'             => 'རོགས་རམ།',
 'search'           => 'འཚོལ།',
@@ -132,9 +134,6 @@ $messages = array(
 'nologinlink'        => 'ཐོ་ཞིག་འགོད་པ།',
 'createaccount'      => 'ཐོ་འགོད།',
 'gotaccountlink'     => 'ནང་འཛུལ།',
-'youremail'          => 'དྲ་འཕྲིན། *:',
-'username'           => 'དྲ་མིང་།:',
-'email'              => 'དྲ་འཕྲིན།',
 
 # Edit pages
 'summary'      => 'བསྡུས་དོན།:',
@@ -158,6 +157,9 @@ $messages = array(
 'prefsnologin'      => 'ནང་འཛུལ་བྱས་མེད།',
 'prefs-rc'          => 'ཉེ་བའི་བཟོ་བཅོས།',
 'searchresultshead' => 'འཚོལ།',
+'youremail'         => 'དྲ་འཕྲིན། *:',
+'username'          => 'དྲ་མིང་།:',
+'email'             => 'དྲ་འཕྲིན།',
 
 # Recent changes
 'recentchanges'   => 'ཉེ་བའི་བཟོ་བཅོས།',
@@ -165,7 +167,9 @@ $messages = array(
 'newpageletter'   => 'ཎེ',
 
 # Recent changes linked
-'recentchangeslinked' => 'འབྲེལ་བའི་བཟོ་བཅོས།',
+'recentchangeslinked'         => 'འབྲེལ་བའི་བཟོ་བཅོས།',
+'recentchangeslinked-feed'    => 'འབྲེལ་བའི་བཟོ་བཅོས།',
+'recentchangeslinked-toolbox' => 'འབྲེལ་བའི་བཟོ་བཅོས།',
 
 # Upload
 'upload'            => 'ཡར་འཇོག',
@@ -178,8 +182,8 @@ $messages = array(
 # Random page
 'randompage' => 'རང་མོས་ཤོག་ངོས།',
 
-'brokenredirects-edit'   => '(རྩོམ་སྒྲིག )',
-'brokenredirects-delete' => '(གསུབ་པ།)',
+'brokenredirects-edit'   => 'རྩོམ་སྒྲིག',
+'brokenredirects-delete' => 'གསུབ་པ།',
 
 # Miscellaneous special pages
 'newpages-username' => 'དྲ་མིང་།:',

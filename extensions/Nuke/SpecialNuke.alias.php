@@ -14,16 +14,12 @@ $aliases['en'] = array(
 	'Nuke' => array( 'Nuke' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Nuke' => array( 'حذف_كمي' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Nuke' => array( 'حذف_كمى' ),
 );
@@ -33,9 +29,7 @@ $aliases['be-tarask'] = array(
 	'Nuke' => array( 'Масавае_выдаленьне' ),
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
+/** German (Deutsch) */
 $aliases['de'] = array(
 	'Nuke' => array( 'Massenlöschung' ),
 );
@@ -43,6 +37,11 @@ $aliases['de'] = array(
 /** Lower Sorbian (Dolnoserbski) */
 $aliases['dsb'] = array(
 	'Nuke' => array( 'Wulašowanje z kopicami' ),
+);
+
+/** Estonian (Eesti) */
+$aliases['et'] = array(
+	'Nuke' => array( 'Lauskustutamine' ),
 );
 
 /** Persian (فارسی) */
@@ -65,9 +64,7 @@ $aliases['haw'] = array(
 	'Nuke' => array( 'Luku' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'Nuke' => array( 'מחיקה_מרובה' ),
 );
@@ -87,14 +84,39 @@ $aliases['ia'] = array(
 	'Nuke' => array( 'Deler in massa' ),
 );
 
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'Nuke' => array( 'CancellazioneMassiva' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Nuke' => array( 'まとめて削除', '一括削除' ),
+	'Nuke' => array( 'まとめて削除' ),
 );
 
 /** Korean (한국어) */
 $aliases['ko'] = array(
 	'Nuke' => array( '문서대량삭제' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Nuke' => array( 'Maßesch Sigge Fottschmiiße' ),
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$aliases['lb'] = array(
+	'Nuke' => array( 'Masseläschung' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'Nuke' => array( 'Нукирање' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Nuke' => array( 'സർവ്വനാശം' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -105,6 +127,11 @@ $aliases['nds-nl'] = array(
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'Nuke' => array( 'MassaalVerwijderen' ),
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Nuke' => array( 'Massesletting' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
@@ -122,8 +149,18 @@ $aliases['sa'] = array(
 	'Nuke' => array( 'न्यूक' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Nuke' => array( 'Zničenie' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Nuke' => array( 'Malawakang pagbura' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Nuke' => array( 'Uçur' ),
 );
 

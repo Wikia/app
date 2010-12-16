@@ -54,6 +54,12 @@ AdProviderOpenX.getUrl2 = function() {
 
 if (!wgNoExternals && wgEnableOpenXSPC) {
 	setTimeout(function() {
-		$.getScript(AdProviderOpenX.getUrl2());
+		$.getScript(AdProviderOpenX.getUrl2(), function() {
+			if (typeof window.spcCallbacks != 'undefined') {
+				for (var i=0; i<window.spcCallbacks.length; i++) {
+					window[window.spcCallbacks[i]]();
+				}
+			}
+		});
 	}, 0);
 }

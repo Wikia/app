@@ -30,13 +30,14 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'commentspammer-save-blocked' => 'عنوان الأيبي الخاص بك هو معلق سبام مشتبه، لذا لم يتم حفظ الصفحة.
 [[Special:UserLogin|ادخل أو سجل حسابا]] لتجنب هذا.',
 	'commentspammer-desc' => 'يرفض التعديلات من معلقي السبام المشتبه فيهم على قائمة DNS سوداء',
 	'commentspammer-log-msg' => 'تعديل من [[Special:Contributions/$1|$1]] ل[[:$2]].',
-	'commentspammer-log-msg-info' => 'آخر سبام منذ $1 {{PLURAL:$1|يوم|يوم}} ، مستوى التهديد هو $2، وكود الإساءة هو $3. [http://www.projecthoneypot.org/search_ip.php?ip=$4 عرض التفاصيل]، أو [[Special:Blockip/$4|منع]].',
+	'commentspammer-log-msg-info' => 'آخر سبام كان قبل| {{PLURAL:$1|أقل من يوم|يوم واحد|يومين|$1 أيام|$1 يومًا|$1 يوم}}، مستوى التهديد $2، وكود الإساءة $3. [http://www.projecthoneypot.org/search_ip.php?ip=$4 اعرض التفاصيل] أو [[Special:Blockip/$4|امنع]].',
 	'cspammerlogpagetext' => 'سجل التعديلات التي تم السماح بها أو رفضها بناء على ما إذا كان المصدر معلق سبام معروف.',
 	'cspammer-log-page' => 'سجل تعليق السبام',
 );
@@ -53,11 +54,39 @@ $messages['arz'] = array(
 	'cspammer-log-page' => 'سجل تعليق السبام',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'commentspammer-save-blocked' => 'Ваш IP-адрас падазраецца ў разьмяшчэньні спам-камэнтараў, таму старонка ня будзе захаваная.
+[[Special:UserLogin|Увайдзіце ў сыстэму]], каб пазьбегнуць гэтага.',
+	'commentspammer-desc' => 'Адхіляе рэдагаваньні ад падазроных спамэраў у камэнтатарах згодна чорнага сьпісу DNS',
+	'commentspammer-log-msg' => 'рэдагаваньне [[Special:Contributions/$1|$1]] у [[:$2]].',
+	'commentspammer-log-msg-info' => 'Апошні выпадак спаму $1 {{PLURAL:$1|дзень|дні|дзён}} таму, узровень пагрозы — $2, код парушэньня — $3.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Глядзіце падрабязнасьці] альбо [[Special:Blockip/$4|заблякуйце]].',
+	'cspammerlogpagetext' => 'Сьпіс рэдагаваньняў, якія былі дазволеныя альбо адхіленыя на аснове таго, ці была крыніца вядома як спамэр у камэнтатарах.',
+	'cspammer-log-page' => 'Журнал спамэраў у камэнтарах',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'commentspammer-log-msg' => 'редакция от [[Special:Contributions/$1|$1]] в [[:$2]].',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'commentspammer-save-blocked' => "Renablet eo ho chomlec'h IP evel hini unan a gas strob, se zo kaoz n'eo ket bet enrollet ar bajenn.
+Evit renkañ an afer [[Special:UserLogin|en em lugit pe krouit ur gont]].",
+	'commentspammer-desc' => 'Disteuler a ra ar kemmoù an implijerien zo disfiz warno da vezañ kaserien strob war ul listenn zu a zDNS',
+	'commentspammer-log-msg' => 'degasadenn a-berzh [[Special:Contributions/$1|$1]] da [[:$2]].',
+	'commentspammer-log-msg-info' => "$1 {{PLURAL:$1|deiz}} zo eo bet kaset ar strob diwezhañ, $2 eo al live diwall, ha $3 eo c'hod tagañ.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Gwelet ar munudoù], pe [[Special:Blockip/$4|ar stankadenn]].",
+	'cspammerlogpagetext' => "Marilh ar c'hemmoù degemeret pe distaolet diouzh ma teuent a-berzh ur c'haser strob anavezet.",
+	'cspammer-log-page' => 'Marilh ar gaserienn strob',
 );
 
 /** Bosnian (Bosanski)
@@ -71,6 +100,14 @@ Da bi ovo izbjegli [[Special:UserLogin|prijavite se ili napravite račun]].',
 	'commentspammer-log-msg-info' => 'Zadnji put spamiran $1 prije {{PLURAL:$1|dan|dana}}, nivo opasnosti je $2 a kod napadnosti je $3. [http://www.projecthoneypot.org/search_ip.php?ip=$4 Vidi detalje] ili [[Special:Blockip/$4|blokiraj]].',
 	'cspammerlogpagetext' => 'Prati izmjene koje su dopuštene ili onemogućene na osnovu izvora koji je označen kao spamer komentara.',
 	'cspammer-log-page' => 'Zapisnik spamerskih komentara',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ * @author Ssola
+ */
+$messages['ca'] = array(
+	'commentspammer-log-msg' => 'modificació de [[Special:Contributions/$1|$1]] a [[:$2]].',
 );
 
 /** Czech (Česky)
@@ -102,6 +139,15 @@ Die Seite wurde nicht gespeichert.
 	'cspammer-log-page' => 'Kommentar-Spammer Logbuch',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'commentspammer-save-blocked' => 'Ihre IP-Adresse stammt mutmaßlich von einem Kommentar-Spammer.
+Die Seite wurde nicht gespeichert.
+[[Special:UserLogin|Melden Sie sich an oder erstellen Sie ein Benutzerkonto]], um diese Warnung zu unterbinden.',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -113,6 +159,13 @@ $messages['dsb'] = array(
 	'commentspammer-log-msg-info' => 'Slědne spamowanje pśed $1 {{PLURAL:$1|dnjom|dnjoma|dnjami|dnjami}}, wobgrozeński stopjeń jo $2 a napadowy kod jo $3. [http://www.projecthoneypot.org/search_ip.php?ip=$4 Drobnostki se woglědaś] abo [[Special:Blockip/$4|blokěrowaś]].',
 	'cspammerlogpagetext' => 'Lisćina změnow, kótarež su se dowólili abo wótpokazali, za tym lěc žrědło jo znaty spamowaŕ komentarow było.',
 	'cspammer-log-page' => 'Protokol wó spamowarjach komentarow',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'cspammer-log-page' => 'Ημερολόγιο δημιουργών σπαμ',
 );
 
 /** Esperanto (Esperanto)
@@ -138,6 +191,9 @@ $messages['es'] = array(
 [[Special:UserLogin|Inicie sesión o cree una cuenta]] para evitar esto.',
 	'commentspammer-desc' => 'Rechaza ediciones de comentadores spammer sospechosos en una lista negra DNS',
 	'commentspammer-log-msg' => 'edición de [[Special:Contributions/$1|$1]] en [[:$2]].',
+	'commentspammer-log-msg-info' => 'Último spam enviado hace $1 {{PLURAL:$1|día|días}}, nivel de riesgo es $2, y código de ofensa es $3.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Ver detalles], o [[Special:Blockip/$4|bloquear]].',
+	'cspammerlogpagetext' => 'Registro de ediciones que han sido permitidas o denegadas basados en si la fuente fue un conocido comentador spammer.',
 	'cspammer-log-page' => 'Registro de comentadores spammer',
 );
 
@@ -149,26 +205,36 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
  * @author Nike
  * @author Vililikku
  */
 $messages['fi'] = array(
 	'commentspammer-save-blocked' => 'IP-osoitteesi epäillään olevan kommenttispämmeri, joten sivua ei ole tallennettu.
 [[Special:UserLogin|Kirjaudu sisään tai luo käyttäjätunnus]], jos haluat välttää tämän.',
+	'commentspammer-desc' => 'Hylkää muokkaukset epäillyltä DNS-mustalistan kommenttiroskapostittajilta.',
+	'commentspammer-log-msg' => 'Muokkaaja: [[Special:Contributions/$1|$1]], kohde: [[:$2]].',
+	'commentspammer-log-msg-info' => 'Lähetti roskapostia viimeksi $1 {{PLURAL:$1|päivä|päivää}} sitten, uhkataso on $2, ja rikkomuskoodi on $3.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Katso lisätietoja] tai [[Special:Blockip/$4|estä]].',
+	'cspammerlogpagetext' => 'Tietue muokkauksista, jotka on sallittu tai evätty sen perusteella onko lähde tunnettu kommenttiroskapostittaja.',
+	'cspammer-log-page' => 'Kommenttiroskapostittajaloki',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author Sherbrooke
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'commentspammer-save-blocked' => "Votre adresse IP est celle d'une personne suspectée de créer du pourriel : la page n'a donc pas été sauvegardée. Veuillez vous [[Special:UserLogin|connecter ou créer un compte]] pour contourner cette interdiction.",
-	'commentspammer-desc' => 'Rejette les modifications soupçonnées de pourriel à partir d’une liste noire figurant dans le projet HoneyPot DNS',
+	'commentspammer-save-blocked' => 'Votre adresse IP est celle d’une personne suspectée de créer du pourriel : la page n’a donc pas été sauvegardée. Veuillez [[Special:UserLogin|vous identifier ou créer un compte]] pour contourner cette interdiction.',
+	'commentspammer-desc' => 'Rejette les modifications par des auteurs soupçonnés de pourriels à partir d’une liste noire DNS',
 	'commentspammer-log-msg' => 'Modifications de [[Special:Contributions/$1|$1]] à [[:$2]].',
-	'commentspammer-log-msg-info' => "Le dernier pourriel remonte à {{PLURAL:$1|$1 jour|$1 jours}}, le niveau d'alerte est à $2 et le code d'attaque est $3. [http://www.projecthoneypot.org/search_ip.php?ip=$4 Voir détails] ou [[Special:Blockip/$4|bloquer]].",
-	'cspammerlogpagetext' => 'Journal des modifications acceptées ou rejetées selon que la source était un créateur de pourriels connu.',
-	'cspammer-log-page' => 'Journal du créateur de pourriels',
+	'commentspammer-log-msg-info' => 'Le dernier pourriel remonte à $1 jour{{PLURAL:$1||s}}, le niveau d’alerte est à $2 et le code d’attaque est $3. [http://www.projecthoneypot.org/search_ip.php?ip=$4 Voir les détails] ou [[Special:Blockip/$4|le bloquage]].',
+	'cspammerlogpagetext' => 'Journal des modifications acceptées ou rejetées selon que la source était un auteur connu de pourriels.',
+	'cspammer-log-page' => 'Journal des auteurs de pourriels',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -176,9 +242,9 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'commentspammer-save-blocked' => 'Voutra adrèce IP est cela d’una pèrsona soupçonâ de crèar de spame, la pâge at pas étâ sôvâ. Volyéd vos [[Special:UserLogin|conèctar ou crèar un compto]] por contornar ceta dèfensa.',
-	'commentspammer-log-msg' => 'Modificacions de [[Special:Contributions/$1|$1]] a [[:$2]].',
+	'commentspammer-log-msg' => 'Changements de [[Special:Contributions/$1|$1]] a [[:$2]].',
 	'commentspammer-log-msg-info' => 'Lo dèrriér spame remonte a {{PLURAL:$1|$1 jorn|$1 jorns}}, lo nivô d’alèrta est a $2 et lo code d’ataca est $3. [http://www.projecthoneypot.org/search_ip.php?ip=$4 Vêre los dètalys] ou ben [[Special:Blockip/$4|blocar]].',
-	'cspammerlogpagetext' => 'Jornal de les modificacions accèptâs ou refusâs d’aprés que la sôrsa ére un crèator de spame cognu.',
+	'cspammerlogpagetext' => 'Jornal des changements accèptâs ou ben refusâs d’aprés que la sôrsa ére un ôtor de spame cognu.',
 	'cspammer-log-page' => 'Jornal du crèator de spame',
 );
 
@@ -275,6 +341,20 @@ $messages['ia'] = array(
 	'cspammer-log-page' => 'Registro de spammatores de commentos',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'commentspammer-save-blocked' => 'Alamat IP dicurigai sebagai alamat spammer, maka halaman ini tidak disimpan.
+[[Special:UserLogin|Masuk log atau buat akun]] untuk menghindari hal ini.',
+	'commentspammer-desc' => 'Menolak suntingan dari alamat yang dicurigasi sebagai spammer atau berada di daftar hitam DNS',
+	'commentspammer-log-msg' => 'suntingan dari [[Special:Contributions/$1|$1]] ke [[:$2]].',
+	'commentspammer-log-msg-info' => 'Terakhir dispam pada $1 {{PLURAL:$1|hari|hari}} yang lalu, tingkat ancaman adalah $2, dan kode serangan adalah $3.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Lihat rincian], atau [[Special:Blockip/$4|blok]].',
+	'cspammerlogpagetext' => 'Catatan suntingan yang telah diperbolehkan atau ditolak berdasarkan sumber alamat mereka dicurigai sebagai alamat spammer atau bukan.',
+	'cspammer-log-page' => 'Log spammer',
+);
+
 /** Italian (Italiano)
  * @author BrokenArrow
  * @author Darth Kule
@@ -297,7 +377,7 @@ $messages['ja'] = array(
 	'commentspammer-save-blocked' => 'あなたのIPアドレスはスパム投稿に用いられているとの疑いがあるため、ページは保存されませんでした。[[Special:UserLogin|ログインまたはアカウントの作成]]を行ってください。',
 	'commentspammer-desc' => 'DNSブラックリストに記載されたコメントスパム投稿容疑IPアドレスからの編集を拒絶する',
 	'commentspammer-log-msg' => '利用者 [[Special:Contributions/$1|$1]] による [[:$2]] の編集',
-	'commentspammer-log-msg-info' => '最後のスパム行為は $1日前 / 脅威レベル $2 / 違反コード $3 / [http://www.projecthoneypot.org/search_ip.php?ip=$4 詳細表示] / [[{{ns:Special}}:Blockip/$4|ブロックする]]',
+	'commentspammer-log-msg-info' => '最後のスパム行為は$1{{PLURAL:$1|日前}}に行われ、脅威レベルは$2、違反コードは$3です。 [http://www.projecthoneypot.org/search_ip.php?ip=$4 詳細を確認する]か[[Special:Blockip/$4|ブロック]]してください。',
 	'cspammerlogpagetext' => 'コメントスパマーとしての登録の有無によって判定された投稿の許可/拒否状況の記録',
 	'cspammer-log-page' => 'スパム投稿ログ',
 );
@@ -337,6 +417,20 @@ $messages['lb'] = array(
 [http://www.projecthoneypot.org/search_ip.php?ip=$4 Fir d\'Detailer ze kucken], oder [[Special:Blockip/$4|fir ze spären]].',
 	'cspammerlogpagetext' => "Lëscht vun den Ännerungen déi ugeholl oder refuséiert goufen je nodeem ob d'Quell als Spammer bekannt war oder net.",
 	'cspammer-log-page' => 'Bemierkung Spammer Logbuch',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'commentspammer-save-blocked' => 'Вашата IP-адреса е осомничена како спамер на коментари, и затоа оваа страница не беше зачувана.
+[[Special:UserLogin|Најавете се или создајте сметка]] за да го избегнете ова.',
+	'commentspammer-desc' => 'Одбива уредувања од осомничени спамери на коментари кои се на DNS црната листа',
+	'commentspammer-log-msg' => 'уредување од [[Special:Contributions/$1|$1]] на [[:$2]].',
+	'commentspammer-log-msg-info' => 'Последен пат спамирано пред $1 {{PLURAL:$1|ден|дена}}, нивото на загрозеност е $2, а кодот на прекршокот е $3.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Погледајте детали], или [[Special:Blockip/$4|блокирајте]].',
+	'cspammerlogpagetext' => 'Евиденција на уредувања кои биле дозволени или одбиени зависно од тоа дали нивниот избвор бил познат како спамер на коментари.',
+	'cspammer-log-page' => 'Дневник на спамери на коментари',
 );
 
 /** Malayalam (മലയാളം)
@@ -425,6 +519,20 @@ $messages['pl'] = array(
 	'cspammer-log-page' => 'Rejestr spammerów',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'commentspammer-save-blocked' => "Toa adrëssa IP a l'é un sospet spammer ëd coment, parèj la pàgina a l'é pa stàita salvà.
+[[Special:UserLogin|Intra o crea un cont]] për evité sòn-sì.",
+	'commentspammer-desc' => "Arfuda le modìfiche dai sospet spammer ëd coment ch'a son an dzora ëd na lista nèira dël DNS",
+	'commentspammer-log-msg' => 'modìfica da [[Special:Contributions/$1|$1]] a [[:$2]].',
+	'commentspammer-log-msg-info' => "Ùltim spam $1 {{PLURAL:$1|di|di}} fa, ël livel ëd mnassa a l'é $2, e ël còdes d'atach a l'é $3.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Varda ij detaj], o [[Special:Blockip/$4|blòca]].",
+	'cspammerlogpagetext' => 'Registr ëd le modìfiche përmëttùe o vietà a second che la sorziss a fussa në spammer conossù.',
+	'cspammer-log-page' => 'Registr djë spammer ëd coment',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -470,6 +578,13 @@ $messages['ru'] = array(
 [http://www.projecthoneypot.org/search_ip.php?ip=$4 Подробности], [[Special:Blockip/$4|заблокировать]].',
 	'cspammerlogpagetext' => 'Запись правок, которые были разрешены или отклонены на основе того, был ли источник известен как спаммер комментариев.',
 	'cspammer-log-page' => 'Журнал спам-комментариев',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'cspammer-log-page' => 'Спам-комментарийдар сурунааллара',
 );
 
 /** Slovak (Slovenčina)
@@ -530,6 +645,14 @@ $messages['tg-cyrl'] = array(
 	'cspammer-log-page' => 'Гузориши Ҳаразнигорро тавзеҳ диҳед',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'commentspammer-log-msg' => 'viroiş az [[Special:Contributions/$1|$1]] ba [[:$2]].',
+	'cspammer-log-page' => 'Guzorişi Haraznigorro tavzeh dihed',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -542,6 +665,20 @@ $messages['tl'] = array(
 [http://www.projecthoneypot.org/search_ip.php?ip=$4 Tingnan ang mga detalye], o [[Special:Blockip/$4|hadlangan]].',
 	'cspammerlogpagetext' => 'Tala ng mga pagbabagong pinahintulutan o tinanggihan batay sa kung ang pinagmulan ay isang kilalang manlulusob na may kumento.',
 	'cspammer-log-page' => 'Talaan ng manlulusob na may dalang kumento',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'commentspammer-save-blocked' => 'IP adresinizin yorum reklamı için kullanılmasından şüphelenildiği için sayfa kaydedilmedi.
+Bunun önüne geçmek için [[Special:UserLogin|oturum açın ya da hesap oluşturun]].',
+	'commentspammer-desc' => 'DNS kara listesindeki şüphelenilen yorum reklamcılarının değişikliklerini reddeder',
+	'commentspammer-log-msg' => '[[Special:Contributions/$1|$1]] ile [[:$2]] arasındaki değişiklikler.',
+	'commentspammer-log-msg-info' => 'En son reklam $1 {{PLURAL:$1|gün|gün}} önce eklendi, tehdit seviyesi $2, saldırı kodu $3.
+[http://www.projecthoneypot.org/search_ip.php?ip=$4 Detayları gör] veya [[Special:Blockip/$4|engelle]].',
+	'cspammerlogpagetext' => 'Kaynağın bilinen bir yorum reklamcısı olup olmamasına dayanılarak izin verilen ya da reddedilen değişikliklerin kaydı.',
+	'cspammer-log-page' => 'Yorum reklamcısı kaydı',
 );
 
 /** Ukrainian (Українська)

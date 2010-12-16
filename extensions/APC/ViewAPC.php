@@ -10,6 +10,7 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Apc',
 	'version'        => '2008-09-04',
 	'author'         => 'Niklas Laxström',

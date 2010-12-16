@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'Patroller' => array( 'Patroller' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Patroller' => array( 'مراجع' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Patroller' => array( 'مراجع' ),
 );
@@ -42,9 +38,19 @@ $aliases['eo'] = array(
 	'Patroller' => array( 'Patrolanto' ),
 );
 
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'Patroller' => array( 'Muokkausten tarkistaja' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'Patroller' => array( 'Patrouilleur' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Patroller' => array( 'Patrolyor' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -67,14 +73,44 @@ $aliases['ia'] = array(
 	'Patroller' => array( 'Patruliator' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Patroller' => array( 'Pematroli' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Patroller' => array( 'パトローラー' ),
+	'Patroller' => array( 'パトローラー', 'パトローラ' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Patroller' => array( 'Prööfe', 'Nohloore' ),
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$aliases['lb'] = array(
+	'Patroller' => array( 'Kontroller' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'Patroller' => array( 'Патролирач' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Patroller' => array( 'റോന്തുചുറ്റുന്നവർ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Patroller' => array( 'गस्तदार' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
-	'Patroller' => array( 'Contreleren' ),
+	'Patroller' => array( 'Naokieken' ),
 );
 
 /** Dutch (Nederlands) */
@@ -82,9 +118,29 @@ $aliases['nl'] = array(
 	'Patroller' => array( 'Controleren' ),
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+$aliases['no'] = array(
+	'Patroller' => array( 'Patruljør' ),
+);
+
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'Patroller' => array( 'Patrolhaire' ),
+);
+
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'Patroller' => array( 'Patrulă' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'Patroller' => array( 'पॅटरोलर' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Patroller' => array( 'Strážca' ),
 );
 
 /** Albanian (Shqip) */
@@ -100,5 +156,10 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Patroller' => array( 'Tagapatrolya' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Patroller' => array( 'Devriye' ),
 );
 

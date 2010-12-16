@@ -45,7 +45,7 @@ class SpecialPlayerStatsGrabber extends SpecialPage {
 		}
 	}
 	function do_stats_page() {
-		global $wgOut, $wgRequest, $wgTitle;
+		global $wgOut, $wgRequest;
 		$wgOut->addWikiText( wfMsg( 'ps_stats_welcome_link' ) );
 	}
 	function do_survey_forum() {
@@ -78,7 +78,7 @@ class SpecialPlayerStatsGrabber extends SpecialPage {
 		// print "EMBED C: $embed_code \n";
 		// $q = 'action='.$this->action;
 		# if ( "no" == $redirect ) { $q .= "&redirect=no"; }
-		// $action = $wgScript.'?title='.$wgTitle->getDBKey() . '/Thanks';
+		// $action = $wgScript.'?title='.$wgTitle->getDBkey() . '/Thanks';
 		$action = $wgTitle->getLocalURL( 'action=submit' );
 		$jsUserHash = sha1( $wgUser->getName() . $wgProxyKey );
 		$enUserHash = Xml::encodeJsVar( $jsUserHash );
@@ -104,9 +104,9 @@ EOT
 		// output questions:
 		$wgOut->addHTML( wfMsg( 'ps_could_play' ) );
 		// yes no with expand
-		$wgOut->addHTML( '<br><input type="radio" name="ps_could_play"  value="yes"
+		$wgOut->addHTML( '<br /><input type="radio" name="ps_could_play"  value="yes"
 				onclick="document.getElementById(\'ps_could_not_play\').style.display = \'none\';">' .
-		wfMsg( 'ps_play_yes' ) . '<br>
+		wfMsg( 'ps_play_yes' ) . '<br />
 				<input type="radio" name="ps_could_play"  value="no" 
 				onclick="document.getElementById(\'ps_could_not_play\').style.display = \'inline\';">' .
 		wfMsg( 'ps_play_no' ) . '<p>
@@ -131,23 +131,23 @@ EOT
               <td>' . wfMsg( 'ps_no_sound' ) . '</td>              
             </tr>
           </table>		
-          ' . wfMsg( 'ps_problems_desc' ) . '<br><textarea name="ps_problems_desc" rows="2" cols="40" MAXLENGTH="300"></textarea><br>        
+          ' . wfMsg( 'ps_problems_desc' ) . '<br /><textarea name="ps_problems_desc" rows="2" cols="40" MAXLENGTH="300"></textarea><br />        
 	</div>
-	' . wfMsg( 'ps_would_install' ) . '<br>' .
-	'<input type="radio" name="ps_would_install"  value="yes">' . wfMsg( 'ps_yes_install' ) . '<br>' .
-	'<input type="radio" name="ps_would_install"  value="no">' . wfMsg( 'ps_no_install' ) . '<br>'
+	' . wfMsg( 'ps_would_install' ) . '<br />' .
+	'<input type="radio" name="ps_would_install"  value="yes">' . wfMsg( 'ps_yes_install' ) . '<br />' .
+	'<input type="radio" name="ps_would_install"  value="no">' . wfMsg( 'ps_no_install' ) . '<br />'
 		);
 		// if ie output switch check:
 		if ( preg_match( '|MSIE ([0-9].[0-9]{1,2})|', $_SERVER['HTTP_USER_AGENT'], $matched ) ) {
-			$wgOut->addHTML( '<br>' .
-			wfMsg( 'ps_would_switch' ) . '<br>' .
-		 '<input type="radio" name="ps_would_switch"  value="yes">' . wfMsg( 'ps_yes_switch' ) . '<br>' .
-		 '<input type="radio" name="ps_would_switch"  value="no">' . wfMsg( 'ps_no_install' ) . '<br>'
+			$wgOut->addHTML( '<br />' .
+			wfMsg( 'ps_would_switch' ) . '<br />' .
+		 '<input type="radio" name="ps_would_switch"  value="yes">' . wfMsg( 'ps_yes_switch' ) . '<br />' .
+		 '<input type="radio" name="ps_would_switch"  value="no">' . wfMsg( 'ps_no_install' ) . '<br />'
 		 );
 		}
-		$wgOut->addHTML( '<br>' .	wfMsg( 'ps_your_email' ) . '<br>' .
+		$wgOut->addHTML( '<br />' .	wfMsg( 'ps_your_email' ) . '<br />' .
 		'<input type="text" name="ps_your_email"  size="30" maxlength="200"><p>' .
-		wfMsg( 'ps_privacy' ) . '<br>' .
+		wfMsg( 'ps_privacy' ) . '<br />' .
 		'<input type="submit" value="' . wfMsg( 'ps_submit_survey' ) . '">'
 		);
 
@@ -160,10 +160,8 @@ EOT
 	function do_submit_player_log() {
 		global $wgRequest, $psLogEveryPlayRequestPerUser;
 		// do the insert into the userPlayerStats table:
-		$dbr =& wfGetDB( DB_READ );	
-		if ( !isset( $wgRequest->data['cs'] ) || !is_array( $wgRequest->data['cs'] ) ) {
-			$wgRequest->data['cs'] = array();
-		}
+		$dbr = wfGetDB( DB_READ );	
+		$cs = $wgRequest->getArray( 'cs', array() );
 		// set up insert array:
 		$insAry = array(
 				'user_hash'			=> $wgRequest->getVal( 'uh' ),
@@ -174,19 +172,13 @@ EOT
 				//'b_os'				=> $wgRequest->getVal( 'b_os' ),
 				'flash_version'		=> $wgRequest->getVal( 'fv' ),
 				'java_version'		=> $wgRequest->getVal( 'jv' ),
-				'html5_video_enabled' => ( in_array( 'videoElement',  $wgRequest->data['cs'] ) ) ? true:false,
-				'java_enabled'		=> ( in_array( 'cortado', $wgRequest->data['cs'] ) ) ? true:false,
-				'totem_enabled'		=> ( in_array( 'totem', $wgRequest->data['cs'] ) ) ? true:false,
-				'flash_enabled'		=> ( in_array( 'flash', $wgRequest->data['cs'] ) ) ? true:false,
-				'quicktime_enabled'	=> ( in_array( array( 'quicktime-mozilla', 'quicktime-activex' ),
-		$wgRequest->data['cs'] )
-		) ? true:false,
-				'vlc_enabled'		=> ( in_array( array( 'vlc-mozilla', 'vlc-activex' ),
-		$wgRequest->data['cs'] )
-		) ? true:false,
-				'mplayer_enabled'	=> ( in_array( 'mplayerplug-in',
-		$wgRequest->data['cs'] )
-		) ? true:false
+				'html5_video_enabled' => in_array( 'videoElement', $cs ),
+				'java_enabled'		=> in_array( 'cortado', $cs ),
+				'totem_enabled'		=> in_array( 'totem', $cs ),
+				'flash_enabled'		=> in_array( 'flash', $cs ),
+				'quicktime_enabled'	=> in_array( array( 'quicktime-mozilla', 'quicktime-activex' ), $cs ),
+				'vlc_enabled'		=> in_array( array( 'vlc-mozilla', 'vlc-activex' ), $cs ),
+				'mplayer_enabled'	=> in_array( 'mplayerplug-in', $cs ),
 		);
 		// check for user hash (don't collect multiple times for the same user)
 		// $user_hash =
@@ -195,7 +187,7 @@ EOT
 								'do_submit_player_log::Select User Hash' );
 		// if the user_hash is not already in the db or if we are logging every request do INSERT		
 		if ( !$insert_id || $psLogEveryPlayRequestPerUser ) {
-			$dbw =& wfGetDB( DB_WRITE );
+			$dbw = wfGetDB( DB_WRITE );
 			$dbw->insert( 'player_stats_log', $insAry, 'mw_push_player_stats::Insert' );
 			$insert_id = $dbw->insertId();
 			$dbw->commit();
@@ -223,7 +215,7 @@ EOT
 		}
 		
 		// print "NO VIDEO: "
-		$dbr =& wfGetDB( DB_READ );
+		$dbr = wfGetDB( DB_READ );
 		$insAry = array(
 	            'user_hash'			=> $wgRequest->getVal( 'uh' ),
 				'embed_key'			=> $wgRequest->getVal( 'embed_key' ),
@@ -252,7 +244,7 @@ EOT
 								'do_submit_survey::Select User Hash' );
 
 		if ( !$user_id || $psAllowMultipleSurveysPerUser ) {
-			$dbw =& wfGetDB( DB_WRITE );
+			$dbw = wfGetDB( DB_WRITE );
 			$dbw->insert( 'player_stats_survey', $insAry, 'do_submit_survey::Insert' );
 			$insert_id = $dbw->insertId();
 			$dbw->commit();

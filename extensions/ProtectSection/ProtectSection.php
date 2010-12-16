@@ -15,19 +15,27 @@
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
- * This is an extension that let you protect some part of a text. You just
- * have to be a member of a group with the 'protectsection' user right.
+ * This is an extension that lets you protect part of an article.  You have to be a member
+ * of a group with the 'protectsection' user right in order to add section protection.
  *
- * To protect a text, enclose use in a <protect> </protect> block.
+ * To protect a section of text, enclose it in a <protect> </protect> block.
  *
  * @addtogroup Extensions
  *
  * @author ThomasV <thomasv1@gmx.de>
  * @author Jim Hu (remove Section Edit links in protected text, bug fixes)
  * @author Siebrand Mazeland (i18n and SVN merge)
+ * @author Nephele (fix bugs, add new options)
  * @copyright Copyright © 2006, ThomasV
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
+
+# Unfixed issues as of version 1.1:
+# If nowiki'd protect tags are used on a page with real protect tags, there may be display problems
+#  (although actual protection should still be preserved), specifically section-edit-links might not be
+#  removed properly, and the nowiki'd protect tags may not appear on rendered page
+# Edit-link-removal can handle a single unpaired nowiki tag on a page, but not multiple unpaired nowiki tags (i.e.,
+#  some edit links may be removed even though they shouldn't be)
 
 if( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
@@ -35,103 +43,30 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'ProtectSection',
 	'author' => 'ThomasV',
-	'description' => 'Allows authorised users to protect parts of a text',
+	'version' => '1.1',
+	'description' => 'Allows authorised users to protect parts of an article',
 	'descriptionmsg' => 'protectsection_desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:ProtectSection'
 );
 
-$dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['ProtectSection'] = $dir . 'ProtectSection.i18n.php';
+// If set to true, text cannot be inserted before a protect tag at the start of an article
+// False by default for backwards compatibility
+$egProtectSectionNoAddAbove = false;
 
 // Two new permissions
 $wgGroupPermissions['sysop']['protectsection']         = true;
 $wgGroupPermissions['bureaucrat']['protectsection']    = true;
 $wgAvailableRights[] = 'protectsection';
-
-$wgExtensionFunctions[] = 'wfProtectSectionSetup';
+ 
+$dir = dirname(__FILE__) . '/';
+$wgAutoloadClasses['ProtectSectionClass'] = $dir . 'ProtectSection_body.php';
+$wgExtensionMessagesFiles['ProtectSection'] = $dir . 'ProtectSection.i18n.php';
 
 // Register hooks
-$wgHooks['ParserAfterTidy'][] = 'wfStripProtectTags' ;
-$wgHooks['EditFilter'][] = 'wfCheckProtectSection' ;
-
-function wfProtectSectionSetup() {
-	wfLoadExtensionMessages( 'ProtectSection' );
-}
-
-/**
- * @param &$parser The parser object
- * @param &$text The text being parsed
- * @param &$x Something not used FIXME
- */
-function wfStripProtectTags ( &$parser , &$text) {
-
-	global $wgUser;
-
-	$tmp = explode("&lt;protect&gt;",$text);
-	$sections = array();
-	$sections[] = array_shift($tmp);
-	foreach($tmp as $block){
-		$tmp = explode("&lt;/protect&gt;",$block);
-		if ( $wgUser->isAllowed( 'protectsection' ) ) {
-			$sections[] = "<span class='protected'>".$tmp[0]."</span>";
-		}else{
-			$sections[] = "<span class='protected'>".preg_replace("/<div class=\"editsection(.*?)<\/div>/i", "", $tmp[0])."</span>";
-		}
-		array_shift($tmp);
-		$sections[] = implode('',$tmp);
-	}
-	$text = implode("",$sections);
-	return true;
-}
-
-/**
- * @todo Document
- * @param $editpage
- * @param $textbox1
- * @param $section
- */
-function wfCheckProtectSection ( $editpage, $textbox1, $section )  {
-
-	# check for partial protection
-	global $wgUser,$wgParser;
-
-	if ( !$wgUser->isAllowed( 'protectsection' ) ) {
-		$modifyProtect = false;
-		$text1 = $editpage->mArticle->getContent(true);
-
-		if( $section != '' ) {
-			if( $section == 'new' ) {
-				$text1 = "";
-			} else {
-				$text1 = $wgParser->getSection( $text1, $section );
-			}
-		}
-
-		$text2 = $textbox1 ;
-
-		preg_match_all( "/<protect>(.*?)<\/protect>|<protect>(.*?)$/si", $text1, $list1, PREG_SET_ORDER );
-		preg_match_all( "/<protect>(.*?)<\/protect>|<protect>(.*?)$/si", $text2, $list2, PREG_SET_ORDER );
-
-		if( count($list1) != count($list2)) {
-			$msg = wfMsg( 'protectsection_add_remove');
-			$modifyProtect = true;
-		}
-		else for ( $i=0 ; $i < count( $list1 ); $i++ ) {
-			if( $list1[$i][0] != $list2[$i][0]) {
-				$msg = wfMsg( 'protectsection_modify' );
-				$modifyProtect = true;
-				break;
-			}
-		}
-
-		if( $modifyProtect ) {
-			global $wgOut;
-			$wgOut->setPageTitle( wfMsg( 'protectsection_forbidden' ) );
-			$wgOut->addWikiText($msg);
-			return false;
-		}
-	}
-	return true;
-}
+$wgHooks['ParserAfterTidy'][] = 'ProtectSectionClass::stripTags' ;
+$wgHooks['ParserBeforeStrip'][] = 'ProtectSectionClass::countTags' ;
+$wgHooks['EditFilterMerged'][] = 'ProtectSectionClass::checkProtectSection' ;
+$wgHooks['PageRenderingHash'][] = 'ProtectSectionClass::pageRenderingHash';

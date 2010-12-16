@@ -12,7 +12,16 @@
  * @author ZaDiak
  */
 
+$linkPrefixExtension = true;
 $fallback8bitEncoding = 'windows-1256';
+
+$rtl = true;
+$defaultUserOptionOverrides = array(
+	# Swap sidebar to right side by default
+	'quickbar' => 2,
+	# Underlines seriously harm legibility. Force off:
+	'underline' => 0,
+);
 
 $messages = array(
 # User preference toggles
@@ -28,6 +37,7 @@ $messages = array(
 'tog-enotifminoredits'       => 'صفحیاں چ چھوٹیاں موٹیاں تبدیلیاں تے وی مینوں ای میل کر دیو',
 'tog-enotifrevealaddr'       => 'میرے ای میل دے پتے نوں سندیسے آلی ای میل دے وچ وکھاؤ۔',
 'tog-shownumberswatching'    => 'ویکھن آلے لوکاں دی گنتی وکھاؤ۔',
+'tog-oldsig'                 => 'ہلے آلے دستخط وکھاؤ۔',
 'tog-fancysig'               => 'دستخط نوں وکی ٹیکسڈ ونگوں؎ ورتو(without an automatic link)',
 'tog-watchlisthideown'       => 'میری اپنی لکھائی نوں اکھ تھلیوں لکاؤ',
 'tog-watchlisthidebots'      => 'بوٹ دی لکھائی اکھ تھلیوں لکاؤ',
@@ -98,15 +108,22 @@ $messages = array(
 'category-media-header'    => 'اس "$1" کیٹاگری وچ میڈيا',
 'category-empty'           => "''اس کیٹاگری وچ کوئی صفحہ یا میڈیا موجود نہیں۔''",
 'hidden-categories'        => '{{PLURAL:$1|چھپی گٹھ|چھپی گٹھیاں}}',
-'hidden-category-category' => 'لکائیاں ٹولیاں', # Name of the category where hidden categories will be listed
+'hidden-category-category' => 'لکائیاں ٹولیاں',
 'category-subcat-count'    => '{{PLURAL:$2|اس گٹھ دی صرف اکو تھلے آلی نکی گٹھ اے|اس گٹھ دیاں $2 چوں   {{PLURAL:$1|نکی گٹھ|$1 نکی گٹھیاں}}}} نیں۔',
 'category-article-count'   => '{{PLURAL:$2|اس گٹھ چ اکو تھلے آلا صفحہ اے۔|تھلے {{PLURAL:$1|آلا صفحہ|آلے صفحے}} $2 چوں اس گٹھ دے صفحے نیں۔}}',
 'listingcontinuesabbrev'   => 'جاری',
 
-'about'          => 'بارے چ',
-'article'        => 'مضمون آلا صفحہ',
-'newwindow'      => '(نئی ونڈو چ کھولو)',
-'cancel'         => 'ختم',
+'about'         => 'بارے چ',
+'article'       => 'مضمون آلا صفحہ',
+'newwindow'     => '(نئی ونڈو چ کھولو)',
+'cancel'        => 'ختم',
+'moredotdotdot' => 'مزید۔۔۔۔',
+'mypage'        => 'میرا صفحہ',
+'mytalk'        => 'میریاں گلاں',
+'anontalk'      => 'اس آئی پی آسطے گل کرو',
+'navigation'    => 'تلاش',
+
+# Cologne Blue skin
 'qbfind'         => 'کھوج',
 'qbbrowse'       => 'لبو',
 'qbedit'         => 'لکھو',
@@ -114,14 +131,16 @@ $messages = array(
 'qbpageinfo'     => 'ماحول',
 'qbmyoptions'    => 'میرے صفحے',
 'qbspecialpages' => 'خاص صفحے',
-'moredotdotdot'  => 'مزید۔۔۔۔',
-'mypage'         => 'میرا صفحہ',
-'mytalk'         => 'میریاں گلاں',
-'anontalk'       => 'اس آئی پی آسطے گل کرو',
-'navigation'     => 'تلاش',
 
-# Metadata in edit box
-'metadata_help' => 'میٹا ڈیٹا:',
+# Vector skin
+'vector-action-delete'      => 'مکاؤ',
+'vector-action-move'        => 'ٹرو',
+'vector-action-protect'     => 'بچاؤ',
+'vector-namespace-category' => 'ونڈ',
+'vector-namespace-help'     => 'مدد آلا ورقا',
+'vector-namespace-main'     => 'ورقہ',
+'vector-namespace-media'    => ' میڈیا آلا ورقہ',
+'vector-namespace-project'  => 'بجایا ورقہ',
 
 'errorpagetitle'    => 'مسئلہ',
 'returnto'          => 'واپس $1 چلو',
@@ -170,7 +189,7 @@ $messages = array(
 'redirectedfrom'    => '(لیایا گیا $1)',
 'redirectpagesub'   => 'صفحہ ریڈائریکٹ کرو',
 'lastmodifiedat'    => 'This page was last modified on $1, at $2.
-اس صفحے نوں آخری آری $1 تریخ نوں $2 وجے بدلیا گیا۔', # $1 date, $2 time
+اس صفحے نوں آخری آری $1 تریخ نوں $2 وجے بدلیا گیا۔',
 'protectedpage'     => 'بجایا صفحہ',
 'jumpto'            => 'جاو:',
 'jumptonavigation'  => 'مدد',
@@ -255,63 +274,52 @@ $messages = array(
 'virus-unknownscanner' => 'اندیکھا اینٹیوائرس:',
 
 # Login and logout pages
-'logouttitle'               => 'ورتن آلے توں لاگ آوٹ ہو جاؤ',
-'loginpagetitle'            => 'لاگن ان',
-'yourname'                  => 'ورتن والہ:',
-'yourpassword'              => 'کنجی:',
-'yourpasswordagain'         => 'کنجی دوبارہ لکھو:',
-'remembermypassword'        => 'اس کمپیوٹر تے میرا لاگن یاد رکھو',
-'yourdomainname'            => 'تواڈا علاقہ:',
-'login'                     => 'اندر آؤ جی',
-'nav-login-createaccount'   => 'اندر آؤ / کھاتہ کھولو',
-'loginprompt'               => 'اندر آنے آستے تواڈیاں کوکیز آن ہونیاں چائیدیاں نے {{SITENAME}}.',
-'userlogin'                 => 'اندر آؤ / کھاتہ کھولو',
-'logout'                    => 'لاگ توں باہر',
-'userlogout'                => 'باہر آؤ',
-'notloggedin'               => 'لاگ ان نئیں ہوۓ او',
-'nologin'                   => "تواڈا کھاتہ نہیں اے؟ '''$1'''۔",
-'nologinlink'               => 'کھاتہ بناؤ',
-'createaccount'             => 'کھاتہ بناؤ',
-'gotaccount'                => "تواڈا پہلے توں کھاتہ ہے؟ '''$1'''",
-'gotaccountlink'            => 'اندر آؤ',
-'createaccountmail'         => 'ای میل دے نال',
-'badretype'                 => 'تواڈی کنجی صحیح نئیں۔',
-'youremail'                 => 'ای میل:',
-'username'                  => 'ورتن آلے دا ناں:',
-'yourrealname'              => 'اصلی ناں:',
-'yourlanguage'              => 'بولی:',
-'yournick'                  => 'دسخط:',
-'email'                     => 'ای میل',
-'prefs-help-realname'       => 'اصل ناں تواڈی مرزی تے اے۔<br />
-اگر تسی اینو دے دیو گۓ تے اے تواڈا کم اس ناں نال لکھیا جاۓ گا۔',
-'loginerror'                => 'لاگ ان چ مسئلا اے',
-'prefs-help-email-required' => 'ای میل پتہ چائیدا اے۔',
-'noname'                    => 'تسی کوئی پکا ورتن آلا ناں نئیں رکھ رۓ۔',
-'loginsuccesstitle'         => 'تسی لاگن ہوگۓ او',
-'loginsuccess'              => "'''ہن تسی {{SITENAME}} تے \"\$1\" دے ناں توں لاگ ان او'''",
-'nosuchuser'                => 'اس $1 ناں نال کوئی ورتن آلا نہیں۔
+'yourname'                => 'ورتن والہ:',
+'yourpassword'            => 'کنجی:',
+'yourpasswordagain'       => 'کنجی دوبارہ لکھو:',
+'remembermypassword'      => 'اس کمپیوٹر تے میرا لاگن یاد رکھو',
+'yourdomainname'          => 'تواڈا علاقہ:',
+'login'                   => 'اندر آؤ جی',
+'nav-login-createaccount' => 'اندر آؤ / کھاتہ کھولو',
+'loginprompt'             => 'اندر آنے آستے تواڈیاں کوکیز آن ہونیاں چائیدیاں نے {{SITENAME}}.',
+'userlogin'               => 'اندر آؤ / کھاتہ کھولو',
+'logout'                  => 'لاگ توں باہر',
+'userlogout'              => 'باہر آؤ',
+'notloggedin'             => 'لاگ ان نئیں ہوۓ او',
+'nologin'                 => "تواڈا کھاتہ نہیں اے؟ '''$1'''۔",
+'nologinlink'             => 'کھاتہ بناؤ',
+'createaccount'           => 'کھاتہ بناؤ',
+'gotaccount'              => "تواڈا پہلے توں کھاتہ ہے؟ '''$1'''",
+'gotaccountlink'          => 'اندر آؤ',
+'createaccountmail'       => 'ای میل دے نال',
+'badretype'               => 'تواڈی کنجی صحیح نئیں۔',
+'loginerror'              => 'لاگ ان چ مسئلا اے',
+'noname'                  => 'تسی کوئی پکا ورتن آلا ناں نئیں رکھ رۓ۔',
+'loginsuccesstitle'       => 'تسی لاگن ہوگۓ او',
+'loginsuccess'            => "'''ہن تسی {{SITENAME}} تے \"\$1\" دے ناں توں لاگ ان او'''",
+'nosuchuser'              => 'اس $1 ناں نال کوئی ورتن آلا نہیں۔
 اپنی لکھائی درست کرو یا نیا [[Special:UserLogin/signup|کھاتہ بناؤ]]۔',
-'nosuchusershort'           => 'اس "<nowiki>$1</nowiki>" ناں دا کوئی ورتن آلا نہيں اے۔ 
+'nosuchusershort'         => 'اس "<nowiki>$1</nowiki>" ناں دا کوئی ورتن آلا نہيں اے۔ 
 
 اپنی الف، بے چیک کرو۔',
-'nouserspecified'           => 'توانوں اپنا ورتن آلا ناں دسنا ہوۓ گا۔',
-'wrongpassword'             => 'تواڈی کنجی سہی نہیں۔<br />
+'nouserspecified'         => 'توانوں اپنا ورتن آلا ناں دسنا ہوۓ گا۔',
+'wrongpassword'           => 'تواڈی کنجی سہی نہیں۔<br />
 فیر سہی ٹرائی مارو۔',
-'wrongpasswordempty'        => 'تواڈی کنجی کم نہیں کر رہی۔<br />
+'wrongpasswordempty'      => 'تواڈی کنجی کم نہیں کر رہی۔<br />
 فیر ٹرائی مارو۔',
-'passwordtooshort'          => 'تواڈی کنجی ٹھیک نہیں یا بہت جھوٹی اے۔
+'passwordtooshort'        => 'تواڈی کنجی ٹھیک نہیں یا بہت جھوٹی اے۔
 ایدے چ کم از کم {{PLURAL:$1|$1|اک ھندسہ}} تے کنجی تواڈے ورتن آلے ناں تو مختلف ہونی چائیدی اے۔',
-'mailmypassword'            => 'نئی کنجی ای میل کرو',
-'passwordremindertitle'     => '{{SITENAME}} لئی نوی عارضی کنجی',
-'passwordremindertext'      => 'کسے نے (غالبن تسی $1 آئی پی پتے توں) نوی کنجی ($4){{SITENAME}} واسطے منگی۔ اک عارضی کنجی ورتن والے "$2" دے لئی بنائی گئی سی تے "$3" تے سیٹ کر دتی گئی سی۔ اگر اے تواڈا کم اے تے توانوں اندر آکے اک نوی $5 کنجی چننی پۓ گی۔
+'mailmypassword'          => 'نئی کنجی ای میل کرو',
+'passwordremindertitle'   => '{{SITENAME}} لئی نوی عارضی کنجی',
+'passwordremindertext'    => 'کسے نے (غالبن تسی $1 آئی پی پتے توں) نوی کنجی ($4){{SITENAME}} واسطے منگی۔ اک عارضی کنجی ورتن والے "$2" دے لئی بنائی گئی سی تے "$3" تے سیٹ کر دتی گئی سی۔ اگر اے تواڈا کم اے تے توانوں اندر آکے اک نوی $5 کنجی چننی پۓ گی۔
 
 اگر کسے ہور نے اے درخواست کیتی اے یا تسی اپنی پرانی کنجی لب لئی اے تے تسی اینوں بدلنا نئیں چاندے تے تسی اس سنعے نوں چھڈو تے پرانی کنجی استعمال کرو۔',
-'noemail'                   => 'اس ورتن والے "$1" دا کوئی ای میل پتہ نئیں ہے گا۔',
-'passwordsent'              => 'اک نوی کنجی اس ای میل "$1" تے پیجی جاچکی اے۔<br />
+'noemail'                 => 'اس ورتن والے "$1" دا کوئی ای میل پتہ نئیں ہے گا۔',
+'passwordsent'            => 'اک نوی کنجی اس ای میل "$1" تے پیجی جاچکی اے۔<br />
 جدوں توانوں اے ملے تسی دوبارہ لاگن ہو۔',
-'eauthentsent'              => 'اک کنفرمیشن ای میل دتے گۓ ای میل پتے تے پیج دتی گئی اے۔ اس توں پہلاں کہ کوئی دوجی ای میل کھاتے تے پیجی جاۓ، توانوں ای میل چ دتیاں ہدایات تے عمل کرنا ہوۓ گا، تا کے اے پکا ہو سکے کہ اے کھاتہ تواڈا ہی اے۔',
-'accountcreated'            => 'کھاتہ کھل گیا',
-'loginlanguagelabel'        => 'بولی: $1',
+'eauthentsent'            => 'اک کنفرمیشن ای میل دتے گۓ ای میل پتے تے پیج دتی گئی اے۔ اس توں پہلاں کہ کوئی دوجی ای میل کھاتے تے پیجی جاۓ، توانوں ای میل چ دتیاں ہدایات تے عمل کرنا ہوۓ گا، تا کے اے پکا ہو سکے کہ اے کھاتہ تواڈا ہی اے۔',
+'accountcreated'          => 'کھاتہ کھل گیا',
+'loginlanguagelabel'      => 'بولی: $1',
 
 # Password reset dialog
 'resetpass_header'    => 'کھاتے دی کنجی بدلو',
@@ -392,8 +400,8 @@ $messages = array(
 '''ایتھے او کم بغیر اجازت توں نا لکھو جیدے حق راکھویں نے '''",
 'longpagewarning'                  => "'''ہوشیار: اے صفحہ $1 کلوبائیٹ لمبا اے؛ کچھ کھوجیاں نو 32 کلوبائیٹ توں لمبے صفحے لکھنا یا پہنچنا مسئلہ ہوندا اے۔ <br />
 اس صفحہ نوں چھوٹے ٹوٹیاں چ تقسیم کرن دے بارے چ سوچ لو۔'''",
-'templatesused'                    => 'اس صفحے تے استعمال کیتے گۓ سانچے:',
-'templatesusedpreview'             => 'اس کچے کم تے استعمال ہوۓ سانچے:',
+'templatesused'                    => 'اس صفحے تے  ورتے گۓ {{PLURAL:$1|سانچے|سانچہ}}:',
+'templatesusedpreview'             => 'اس کچے کم تے ورتے گئے {{PLURAL:$1|سانچے|سانچہ}} :',
 'templatesusedsection'             => 'اس ٹوٹے چ استعمال کیتے گۓ سچے:',
 'template-protected'               => '(بچایا گیا)',
 'template-semiprotected'           => '(کج بچایا ہویا)',
@@ -404,10 +412,12 @@ $messages = array(
 'nocreate-loggedin'                => 'توانوں نواں صفحہ بنانے دی اجازت نئیں۔',
 'permissionserrors'                => 'توانوں اجازت چ کوئی مسئلا اے',
 'permissionserrorstext-withaction' => 'تواڈے کول $2 کرن دی اجازت نئیں اے۔ اس دی {{PLURAL:$1|وجہ|وجوہات}} نیں۔',
-'recreate-deleted-warn'            => "'''خبردار: تسی اک پہلاں توں مٹایا ہویا صفحہ دوبارا لکھ رہے او۔'''
+'recreate-moveddeleted-warn'       => "'''خبردار: تسی اک پہلاں توں مٹایا ہویا صفحہ دوبارا لکھ رہے او۔'''
 
 توانوں اے گل سوچنی چائیدی اے کہ اینو لکھنا کوئی عقلمنداں دا کم اے۔<div/>
 تواڈی سہولت آسطے مٹان دا لاگ ایتھے موجود اے۔",
+'moveddeleted-notice'              => 'اس صفحے نوں مٹا دتا گیا اے۔
+مٹان دا لاگ تھلے دتا گیا اے۔',
 
 # Account creation failure
 'cantcreateaccounttitle' => 'کھاتہ نئیں کھول سکدے',
@@ -418,7 +428,7 @@ $messages = array(
 'currentrev'             => 'ہن آلی تبدیلی',
 'currentrev-asof'        => '$1 ویلے دا صفحہ',
 'revisionasof'           => 'دی تبدیلیاں $1',
-'revision-info'          => '$2 نے $1 تے اے لکھیا', # Additionally available: $3: revision id
+'revision-info'          => '$2 نے $1 تے اے لکھیا',
 'previousrevision'       => '← اوس توں پچھلا کم',
 'nextrevision'           => 'نویں تبدیلی →',
 'currentrevisionlink'    => 'موجودہ حالت',
@@ -431,30 +441,30 @@ $messages = array(
 لیجنڈ: (موجودہ) = موجودہ تبدیلی نال مقابلہ، 
 (آخری) = پچھلی تبدیلی توں فرق، M = تھوڑی تبدیلی',
 'history-fieldset-title' => 'ریکارڈ ویکھو',
-'deletedrev'             => '[مٹایا جا چکیا اے]',
 'histfirst'              => 'سب توں پہلا',
 'histlast'               => 'سب توں نواں',
 'historyempty'           => '(خالی)',
 
 # Revision feed
-'history-feed-item-nocomment' => '$2 نوں $1', # user at time
+'history-feed-item-nocomment' => '$2 نوں $1',
 
 # Revision deletion
-'rev-deleted-comment'    => '(صلاع مٹ گئی)',
-'rev-deleted-user'       => '(ورتن آلا ناں مٹ گیا)',
-'rev-delundel'           => 'وکھاؤ/لکاؤ',
-'revisiondelete'         => 'ریوژن مٹاؤ یا واپس کرو',
-'revdelete-hide-text'    => 'ریوژن ٹیکسٹ لکاؤ',
-'revdelete-hide-name'    => 'کم تے نشانہ چھپاؤ',
-'revdelete-hide-comment' => 'لکھن دے بارے چ صلاع لکاؤ',
-'revdelete-hide-user'    => 'لکھن آلے دا ناں/آئی پی پتہ لکاؤ',
-'revdelete-hide-image'   => 'فائل دا مواد لکاؤ',
-'revdel-restore'         => 'وکھالا بدلو',
-'pagehist'               => 'صفحے دی تاریخ',
-'deletedhist'            => 'مٹائی گئی تاریخ',
-'revdelete-content'      => 'مواد',
-'revdelete-summary'      => 'لکھائی دا خلاصہ',
-'revdelete-uname'        => 'ورتن آلے دا ناں',
+'rev-deleted-comment'       => '(صلاع مٹ گئی)',
+'rev-deleted-user'          => '(ورتن آلا ناں مٹ گیا)',
+'rev-delundel'              => 'وکھاؤ/لکاؤ',
+'revisiondelete'            => 'ریوژن مٹاؤ یا واپس کرو',
+'revdelete-hide-text'       => 'ریوژن ٹیکسٹ لکاؤ',
+'revdelete-hide-image'      => 'فائل دا مواد لکاؤ',
+'revdelete-hide-name'       => 'کم تے نشانہ چھپاؤ',
+'revdelete-hide-comment'    => 'لکھن دے بارے چ صلاع لکاؤ',
+'revdelete-hide-user'       => 'لکھن آلے دا ناں/آئی پی پتہ لکاؤ',
+'revdel-restore'            => 'وکھالا بدلو',
+'pagehist'                  => 'صفحے دی تاریخ',
+'deletedhist'               => 'مٹائی گئی تاریخ',
+'revdelete-content'         => 'مواد',
+'revdelete-summary'         => 'لکھائی دا خلاصہ',
+'revdelete-uname'           => 'ورتن آلے دا ناں',
+'revdelete-edit-reasonlist' => 'مٹانے دی وجہ لکھو',
 
 # History merging
 'mergehistory-from' => 'ذریعے آلا صفحہ:',
@@ -477,14 +487,11 @@ $messages = array(
 'searchresulttext'          => 'وکیپیڈیا چ کھوجن دے بارے چ ہور معلومات آستے کھوجن دا صفحہ ویکھو',
 'searchsubtitle'            => "تواڈی لفظ '''[[:$1]] آستے کھوج",
 'searchsubtitleinvalid'     => "'''$1''' آستے کھوج کیتی",
-'noexactmatch'              => "'''اس \"\$1\" ناں دا کوئی صفحہ نہیں۔'''
-تسی اے [[:\$1|صفحہ لکھ سکدے او]]۔",
-'noexactmatch-nocreate'     => "'''\"\$1\" ناں دا کوئی صفحہ نئیں اے۔'''",
 'notitlematches'            => 'اے لفظ کسی صفحے دے ناں چ نئیں اے۔',
 'notextmatches'             => 'کوئی صفح نئیں لبیا',
-'prevn'                     => 'پہلا $1',
-'nextn'                     => 'اگلا $1',
-'viewprevnext'              => 'ویکھو ($1) ($2) ($3)',
+'prevn'                     => 'پہلا {{PLURAL:$1|$1}}',
+'nextn'                     => 'اگلا {{PLURAL:$1|$1}}',
+'viewprevnext'              => 'ویکھو ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url'            => 'Help:فہرست',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 لفظ|$2 الفاظ}})',
 'search-redirect'           => '($1 ریڈائریکٹ)',
@@ -498,7 +505,6 @@ $messages = array(
 'search-relatedarticle'     => 'جڑیاں',
 'searchrelated'             => 'جڑیا',
 'searchall'                 => 'سارے',
-'showingresultstotal'       => 'اس صفحے تے $1 توں $2 تک نتارے وکھاۓ جارۓ نیں۔ جدوں کہ $4 وچوں $3 نتارے تھلے نیں۔',
 'nonefound'                 => "'''صفحیاں دے ناں ڈیفالٹ تے کھوجے جاندے نیں'''
 اپنے لفظ توں پہلاں ''all:'' لا کے کھوجو۔ اس نال گلاں باتاں آلے صفحے، سچے وغیرہ سب چ تواڈا لفظ کھوجیا جاۓ گل۔",
 'powersearch'               => 'ودیا کھوج',
@@ -508,30 +514,38 @@ $messages = array(
 'powersearch-field'         => 'لئی کھوج',
 'search-external'           => 'باہر دی کھوج',
 
+# Quickbar
+'qbsettings-none' => 'کوئی نئیں',
+
 # Preferences page
-'preferences'           => 'تانگاں',
-'mypreferences'         => 'میریاں تانگاں',
-'prefs-edits'           => 'تبدیلیاں دی گنتی:',
-'prefsnologin'          => 'لاگ ان نئیں او',
-'qbsettings-none'       => 'کوئی نئیں',
-'changepassword'        => 'کنجی بدلو',
-'skin'                  => 'کھل',
-'math'                  => 'حساب کتاب',
-'datetime'              => 'تاریخ تے ویلہ',
-'math_unknown_error'    => 'انجان مسئلہ',
-'math_unknown_function' => 'انجان کم',
-'prefs-personal'        => 'ورتن آلے دا پروفائل',
-'prefs-rc'              => 'نویاں تبدیلیاں',
-'prefs-watchlist'       => 'نظر تھلے صفحے',
-'saveprefs'             => 'بچاؤ',
-'textboxsize'           => 'لکھائی',
-'rows'                  => 'قطار:',
-'columns'               => 'کالم:',
-'searchresultshead'     => 'کھوج',
-'timezonelegend'        => 'ویلے دا علاقہ',
-'localtime'             => 'مقامی ویلا:',
-'timezoneselect'        => 'ویلیاں دے علاقے:',
-'files'                 => 'فائلاں',
+'preferences'               => 'تانگاں',
+'mypreferences'             => 'میریاں تانگاں',
+'prefs-edits'               => 'تبدیلیاں دی گنتی:',
+'prefsnologin'              => 'لاگ ان نئیں او',
+'changepassword'            => 'کنجی بدلو',
+'prefs-skin'                => 'کھل',
+'prefs-math'                => 'حساب کتاب',
+'prefs-datetime'            => 'تاریخ تے ویلہ',
+'prefs-personal'            => 'ورتن آلے دا پروفائل',
+'prefs-rc'                  => 'نویاں تبدیلیاں',
+'prefs-watchlist'           => 'نظر تھلے صفحے',
+'saveprefs'                 => 'بچاؤ',
+'prefs-editing'             => 'لکھائی',
+'rows'                      => 'قطار:',
+'columns'                   => 'کالم:',
+'searchresultshead'         => 'کھوج',
+'timezonelegend'            => 'ویلے دا علاقہ',
+'localtime'                 => 'مقامی ویلا:',
+'prefs-files'               => 'فائلاں',
+'youremail'                 => 'ای میل:',
+'username'                  => 'ورتن آلے دا ناں:',
+'yourrealname'              => 'اصلی ناں:',
+'yourlanguage'              => 'بولی:',
+'yournick'                  => 'دسخط:',
+'email'                     => 'ای میل',
+'prefs-help-realname'       => 'اصل ناں تواڈی مرزی تے اے۔<br />
+اگر تسی اینو دے دیو گۓ تے اے تواڈا کم اس ناں نال لکھیا جاۓ گا۔',
+'prefs-help-email-required' => 'ای میل پتہ چائیدا اے۔',
 
 # User rights
 'userrights-groupsmember' => 'سنگی اے:',
@@ -615,6 +629,8 @@ $messages = array(
 
 # Recent changes linked
 'recentchangeslinked'          => 'ملدیاں جلدیاں تبدیلیاں',
+'recentchangeslinked-feed'     => 'ملدیاں جلدیاں تبدیلیاں',
+'recentchangeslinked-toolbox'  => 'ملدیاں جلدیاں تبدیلیاں',
 'recentchangeslinked-title'    => '"$1" نال تعلق آلیاں تبدیلیاں',
 'recentchangeslinked-noresult' => 'جڑیاں صفحیاں چ دتے ہوۓ ویلے چ کوئی تبدیلیاں نہیں۔',
 'recentchangeslinked-summary'  => "اے اوناں تبدیلیاں دی لسٹ اے جیڑیاں تھوڑا چر پہلاں بنائیاں گئیاں اوناں صفحیاں تے جیڑے خاص صفحے تے جڑدے نے یا کسی خاص کیٹاگری دے ممبراں نوں۔<br />
@@ -625,7 +641,6 @@ $messages = array(
 # Upload
 'upload'             => 'فائل چڑھاؤ',
 'uploadbtn'          => 'فائل چڑھاؤ',
-'reupload'           => 'دوبارہ چڑھاؤ',
 'reuploaddesc'       => 'فائل چڑانا چھڑو تے فائل چڑانے آلے فارم تے واپس ٹرو',
 'uploadnologin'      => 'لاگ ان نئیں ہوۓ',
 'uploaderror'        => 'فائل چڑاندیاں مسئلا ہویا اے',
@@ -668,6 +683,7 @@ $messages = array(
 'listfiles_description' => 'تفصیل',
 
 # File description page
+'file-anchor-link'          => 'فائل',
 'filehist'                  => 'پچھلی حالت',
 'filehist-help'             => 'فائل نو اس ویلے دی حالت وچ ویکھن واسطے تاریخ/ویلے تے کلک کرو۔',
 'filehist-deleteall'        => 'سب نوں مٹاؤ',
@@ -684,9 +700,7 @@ $messages = array(
 'imagelinks'                => 'کتھے کتھے جوڑ اے',
 'linkstoimage'              => 'تھلے دتے گۓ {{PLURAL:$1|$1 صفحے}} اس فائل نال جڑدے نے',
 'nolinkstoimage'            => 'اس فائل نال جڑیا کوئی صفحہ نہیں۔',
-'sharedupload'              => 'اے فائل $1 مشترکہ اپلوڈ اے تے اے دوجے منصوبے وی استعمال کر سکدے نے۔', # $1 is the repo name, $2 is shareduploadwiki(-desc)
-'noimage'                   => 'اس ناں دی کوئی فائل نہيں، مگر تسی $1 بنا سکدے او۔',
-'noimage-linktext'          => 'اک چڑھاؤ',
+'sharedupload'              => 'اے فائل $1 مشترکہ اپلوڈ اے تے اے دوجے منصوبے وی استعمال کر سکدے نے۔',
 'uploadnewversion-linktext' => 'اس فائل دا نوا ورژن چھڑھاؤ',
 
 # File reversion
@@ -734,8 +748,8 @@ $messages = array(
 'doubleredirects' => 'دوہری ریڈیرکٹس',
 
 'brokenredirects'        => 'ٹٹے ہوۓ ریڈائریکٹس',
-'brokenredirects-edit'   => '(لکھو)',
-'brokenredirects-delete' => '(مٹاؤ)',
+'brokenredirects-edit'   => 'لکھو',
+'brokenredirects-delete' => 'مٹاؤ',
 
 'withoutinterwiki'        => 'او صفحہ جناں دا دوجی بولیاں نال جوڑ نہیں',
 'withoutinterwiki-submit' => 'وکھاو',
@@ -892,7 +906,6 @@ $messages = array(
 'protectexpiry'               => 'انت ہوندا اے:',
 'protect_expiry_invalid'      => 'اکسپائری ٹیم غلط اے۔',
 'protect_expiry_old'          => 'ایدا اکسپائری ٹائم گزر چکیا اے۔',
-'protect-unchain'             => 'لے جانے دی اجازتاں دیو',
 'protect-text'                => "تسی اس صفحے دے حفاظتی درجے نوں تک تے تبدیل کر سکدے او'''<nowiki>$1</nowiki>'''.",
 'protect-locked-access'       => "تواڈا کھاتہ اجازت نہیں دیندا کہ تسی صفحے دے حفاظتی درجے نوں تبدیل کرو۔<br />
 ایتھے صفحے آسطے موجودہ ترتیب نے '''$1''':",
@@ -954,6 +967,7 @@ $messages = array(
 'sp-contributions-newbies'     => 'صرف نویں ورتن والیاں دے کم وکھاؤ',
 'sp-contributions-newbies-sub' => 'نویں کھاتیاں آستے',
 'sp-contributions-blocklog'    => 'لاگ روکو',
+'sp-contributions-talk'        => 'گل بات',
 'sp-contributions-search'      => 'حصے پان آلیاں دی تلاش',
 'sp-contributions-username'    => 'آئی پی پتہ یا ورتن آلا ناں:',
 'sp-contributions-submit'      => 'کھوجو',
@@ -988,7 +1002,7 @@ $messages = array(
 'ipbemailban'              => 'ورتن آلے نوں ای میل پیجن توں روکو',
 'ipbsubmit'                => 'اس ورتن آلے نوں روکو',
 'ipbother'                 => 'دوجے ویلے:',
-'ipboptions'               => 'دو کینٹے:2 hours,1 دن:1 day,3 دن:3 days,1 ہفتہ:1 week,2 ہفتے:2 weeks,1 مہینہ:1 month,3 مہینے:3 months,6 مہینے:6 months,1 سال:1 year,بے انت:infinite', # display1:time1,display2:time2,...
+'ipboptions'               => 'دو کینٹے:2 hours,1 دن:1 day,3 دن:3 days,1 ہفتہ:1 week,2 ہفتے:2 weeks,1 مہینہ:1 month,3 مہینے:3 months,6 مہینے:6 months,1 سال:1 year,بے انت:infinite',
 'ipbotheroption'           => 'دوجا',
 'ipbotherreason'           => 'دوجیاں ہور وجہ:',
 'badipaddress'             => 'آئی پی پتہ ٹھیک نئیں',
@@ -1049,7 +1063,7 @@ $messages = array(
 'move-watch'              => 'صفحے اکھ تھلے رکھو',
 'movepagebtn'             => 'صفحہ لے جاؤ',
 'pagemovedsub'            => 'لے جانا کامیاب ریا',
-'movepage-moved'          => '\'\'\'"$1" نوں "$2" لے جایا گیا اے\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'          => '\'\'\'"$1" نوں "$2" لے جایا گیا اے\'\'\'',
 'articleexists'           => 'اس ناں دا صفحہ یا تے پہلاں توں ہی موجود اے یا فیر جیڑا ناں تسی چنیا اے درست نہیں۔<br />
 کوئی دوجا ناں چنو۔',
 'talkexists'              => "'''اے صفحہ کامیابی دے نال ے جایا گیا مگر ایدا گلاں باتاں آلا صفحہ رنہیں لے جایا جا سکدا کیونکہ اک نیا اسی ناں نال موجود اے۔ ایناں نوں ہتھ نال ملا دیو۔'''",
@@ -1122,6 +1136,7 @@ $messages = array(
 'tooltip-search-fulltext'         => 'اس لفظ نوں صفحیاں چ لبو',
 'tooltip-p-logo'                  => 'پہلا صفہ',
 'tooltip-n-mainpage'              => 'پہلے صفحے دی سیر',
+'tooltip-n-mainpage-description'  => 'پہلے ورقے تے جاؤ',
 'tooltip-n-portal'                => 'منصوبے دے بارے وچ، توسی کی کر سکدے او تے کنج کھوج سکدے او',
 'tooltip-n-currentevents'         => 'موجودہ حالات تے پچھلیاں معلومات دیکھو',
 'tooltip-n-recentchanges'         => 'وکی تے نویاں تبدیلیاں۔',
@@ -1165,6 +1180,10 @@ $messages = array(
 'numedits'     => 'لکھائی دی گنتی (صفحہ): $1',
 'numwatchers'  => 'ویکھنے آلیاں دی گنتی: $1',
 
+# Math errors
+'math_unknown_error'    => 'انجان مسئلہ',
+'math_unknown_function' => 'انجان کم',
+
 # Browsing diffs
 'previousdiff' => '← پرانی لکھائی',
 'nextdiff'     => 'نویں لکھائی →',
@@ -1200,7 +1219,7 @@ $messages = array(
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # EXIF tags
 'exif-imagewidth'        => 'چوڑائی',
@@ -1229,7 +1248,7 @@ $messages = array(
 
 'exif-unknowndate' => 'انجان تاریخ',
 
-'exif-orientation-1' => 'عام', # 0th row: top; 0th column: left
+'exif-orientation-1' => 'عام',
 
 'exif-exposureprogram-0' => 'بیان نئیں کیتا گیا',
 'exif-exposureprogram-1' => 'طریقہ',
@@ -1277,7 +1296,7 @@ $messages = array(
 'exif-subjectdistancerange-2' => 'نیڑے دا منظر',
 'exif-subjectdistancerange-3' => 'دور دا منظر',
 
-# Pseudotags used for GPSSpeedRef and GPSDestDistanceRef
+# Pseudotags used for GPSSpeedRef
 'exif-gpsspeed-k' => 'کلومیٹر فی کینٹہ',
 'exif-gpsspeed-m' => 'میل فی کینٹہ',
 'exif-gpsspeed-n' => 'ناٹ',
@@ -1323,7 +1342,7 @@ $messages = array(
 'watchlisttools-raw'  => 'کچی اکھ تھلے رکھی ہوئی نو تبدیل کرو',
 
 # Special:Version
-'version' => 'ورژن', # Not used as normal message but as header for the special page itself
+'version' => 'ورژن',
 
 # Special:SpecialPages
 'specialpages' => 'خاص صفحے',

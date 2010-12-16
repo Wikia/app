@@ -46,7 +46,7 @@ if ( oLink )
 	FCK.Selection.SelectNode( oLink ) ;
 
 var bLinkEqualsName	= false ;
-	
+
 window.onload = function()
 {
 	// Translate the dialog box texts.
@@ -58,6 +58,7 @@ window.onload = function()
 	// Activate the "OK" button.
 	window.parent.SetOkButton( true ) ;
 	window.parent.SetAutoSize( true ) ;
+	GetE('txtUrl').focus();
 }
 
 function LoadSelection()
@@ -68,9 +69,14 @@ function LoadSelection()
 	var sHRef = oLink.getAttribute( '_fcksavedurl' ) ;
 	if ( sHRef == null )
 		sHRef = oLink.getAttribute( 'href' , 2 ) || '' ;
-		
+
+	sHRef = FCKConfig.ProtectedSource.Revert(sHRef, 0);		//#2509
+
 	if ( sHRef == oLink.innerHTML )
 		bLinkEqualsName = true ;
+
+	if ( sHRef.toLowerCase().StartsWith( 'rtecolon' ) )
+		sHRef = ":" + sHRef.substring(8) ;
 
 	GetE('txtUrl').value = sHRef ;
 }
@@ -84,22 +90,22 @@ function OnUrlChange()
 
 	if ( searchTimer )
 		window.clearTimeout( searchTimer ) ;
-		
+
 	if ( link.StartsWith( '#' ) )
 	{
-		SetSearchMessage( 'anchor link... no search for it' ) ;
+		SetSearchMessage( FCKLang.wikiLnkNoSearchAnchor || 'anchor link... no search for it' ) ;
 		return ;
-	} 
-	
+	}
+
 	if ( link.StartsWith( 'mailto:' ) )
 	{
-		SetSearchMessage( 'e-mail link... no search for it' ) ;
+		SetSearchMessage( FCKLang.wikiLnkNoSearchMail || 'e-mail link... no search for it' ) ;
 		return ;
-	} 
-	
+	}
+
 	if( /^\w+:\/\//.test( link ) )
 	{
-		SetSearchMessage( 'external link... no search for it' ) ;
+		SetSearchMessage( FCKLang.wikiLnkNoSearchExt || 'external link... no search for it' ) ;
 		return ;
 	}
 
@@ -108,13 +114,13 @@ function OnUrlChange()
 		ClearSearch() ;
 
 		if ( link.length == 0 )
-			SetSearchMessage( 'start typing in the above field' ) ;
+			SetSearchMessage( FCKLang.wikiLnkStartTyping || 'start typing in the above field' ) ;
 		else
-			SetSearchMessage( 'too short... type more' ) ;
+			SetSearchMessage( FCKLang.wikiLnkTooShort || 'too short... type more' ) ;
 		return ;
 	}
-	
-	SetSearchMessage( 'stop typing to search' ) ;
+
+	SetSearchMessage( FCKLang.wikiLnkStopTyping || 'stop typing to search' ) ;
 	searchTimer = window.setTimeout( StartSearch, 500 ) ;
 }
 
@@ -125,7 +131,7 @@ function StartSearch()
 	if ( link.length < 3  )
 		return ;
 
-	SetSearchMessage( 'searching...' ) ;
+	SetSearchMessage( FCKLang.wikiLnkSearching || 'searching...' ) ;
 
 	// Make an Ajax search for the pages.
 	oEditor.window.parent.sajax_request_type = 'GET' ;
@@ -136,19 +142,19 @@ function LoadSearchResults( result )
 {
 	var results = result.responseText.Trim().split( '\n' ) ;
 	var select = GetE( 'xWikiResults' ) ;
-	
+
 	ClearSearch() ;
 
 	if ( results.length == 0 || ( results.length == 1 && results[0].length == 0 ) )
 	{
-		SetSearchMessage( 'no articles found' ) ;
+		SetSearchMessage( FCKLang.wikiLnkSearchNothing || 'no articles found' ) ;
 	}
 	else
 	{
 		if ( results.length == 1 )
-			SetSearchMessage( 'one article found' ) ;
+			SetSearchMessage( FCKLang.wikiLnkSearch1Found || 'one article found' ) ;
 		else
-			SetSearchMessage( results.length + ' articles found' ) ;
+			SetSearchMessage( (FCKLang.wikiLnkSearchSeveral || '%1 articles found').replace( /%1/g, results.length ) ) ;
 
 		for ( var i = 0 ; i < results.length ; i++ )
 			FCKTools.AddSelectOption( select, results[i], results[i] ) ;
@@ -160,7 +166,7 @@ function ClearSearch()
 	var select = GetE( 'xWikiResults' ) ;
 
 	while ( select.options.length > 0 )
-		select.remove( 0 ) 
+		select.remove( 0 )
 }
 
 function SetSearchMessage( message )
@@ -177,22 +183,28 @@ function SetUrl( url )
 function Ok()
 {
 	var sUri = GetE('txtUrl').value ;
+	sUri  = FCKConfig.ProtectedSource.Protect(sUri);		//#2509
+	var realUri = sUri;
+	if (sUri.StartsWith( ':' ) )
+		sUri = sUri.replace(/:/, "rtecolon");
 	var sInnerHtml ;
 
 	// If no link is selected, create a new one (it may result in more than one link creation - #220).
 	var aLinks = oLink ? [ oLink ] : oEditor.FCK.CreateLink( sUri ) ;
 
 	// If no selection, no links are created, so use the uri as the link text (by dom, 2006-05-26)
+	var noTitle = false;
 	var aHasSelection = ( aLinks.length > 0 ) ;
 	if ( !aHasSelection )
 	{
-		sInnerHtml = sUri;
+		sInnerHtml = realUri;
+		noTitle = true;
 
 		var oLinkPathRegEx = new RegExp("//?([^?\"']+)([?].*)?$") ;
-		var asLinkPath = oLinkPathRegEx.exec( sUri ) ;
+		var asLinkPath = oLinkPathRegEx.exec( realUri ) ;
 		if (asLinkPath != null)
 			sInnerHtml = asLinkPath[1];  // use matched path
-		
+
 		// Create a new (empty) anchor.
 		aLinks = [ oEditor.FCK.InsertElement( 'a' ) ] ;
 	}
@@ -210,10 +222,12 @@ function Ok()
 		SetAttribute( oLink, '_fcksavedurl', sUri ) ;
 
 		if ( bLinkEqualsName )
-			oLink.innerHTML = sUri ;
+			oLink.innerHTML = realUri ;
 		else
 			oLink.innerHTML = sInnerHtml ;		// Set (or restore) the innerHTML
 
+		if ( noTitle )
+			SetAttribute( oLink, '_fcknotitle','true');
 	}
 
 	// Select the (first) link.
@@ -227,10 +241,10 @@ function Ok()
 <body scroll="no" style="overflow: hidden">
 	<div id="divInfo">
 		<div id="divLinkTypeUrl">
-			<span>Link</span><br />
+			<span fcklang="wikiLnk">Link</span><br />
 			<input id="txtUrl" style="width: 100%" type="text" onkeyup="OnUrlChange();" />
 			<br />
-			Automatic search results (<span id="xWikiSearchStatus">start typing in the above field</span>)<br />
+			<span fcklang="wikiLnkAutomatic">Automatic search results</span> (<span fcklang="wikiLnkStartTyping" id="xWikiSearchStatus">start typing in the above field</span>)<br />
 			<select id="xWikiResults" size="10" style="width: 100%; height:150px" onclick="SetUrl( this.value );">
 			</select>
 		</div>

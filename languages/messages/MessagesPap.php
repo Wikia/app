@@ -1,10 +1,14 @@
 <?php
 /** Papiamento (Papiamentu)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
  * @author Kamizu
+ * @author Sdm1985
  * @author לערי ריינהארט
  */
 
@@ -59,6 +63,10 @@ $messages = array(
 'navigation'    => 'Nabegashon',
 'and'           => '&#32;i',
 
+# Cologne Blue skin
+'faq'     => 'Preguntanan mas Puntrá',
+'faqpage' => 'Project:Preguntanan mas Puntrá',
+
 'errorpagetitle'    => 'Eror',
 'returnto'          => 'Bai bèk $1.',
 'tagline'           => 'Di {{SITENAME}}',
@@ -73,29 +81,54 @@ $messages = array(
 'protect'           => 'Protehá',
 'unprotect'         => 'stop di protehá',
 'unprotectthispage' => 'Stop di protehá e página aki',
+'talkpagelinktext'  => 'Papia',
 'specialpage'       => 'Página Spesial',
-'articlepage'       => 'Wak artíkulo',
+'personaltools'     => 'Hèrmèntnan Personal',
+'postcomment'       => 'Sekshon Nobo',
+'articlepage'       => 'Wak página di kontenido',
 'talk'              => 'Diskushon',
+'views'             => 'Kantidat di biaha mirá',
+'toolbox'           => 'Kaha di Hèrmènt',
 'userpage'          => 'Wak página di uzadó',
+'projectpage'       => 'Wak página di e proyekto',
+'imagepage'         => 'Mira página di e dokumento',
+'mediawikipage'     => 'Mira paginanan di mensahe',
+'templatepage'      => 'Mira malchi di e página',
+'viewhelppage'      => 'Mira página di yudansa',
+'categorypage'      => 'Mira e página di kategoria',
 'viewtalkpage'      => 'Wak diskushon',
 'otherlanguages'    => 'Na otro idioma',
+'redirectedfrom'    => '(Bo a yega akinan pa via di e página $1)',
+'redirectpagesub'   => 'Página ku ta sirbi komo portal',
+'lastmodifiedat'    => 'E páginá aki a wòrdu kambiá ultimo biaha riba $1, ora $2.',
+'viewcount'         => 'E paginá aki a wòrdu mirá {{PLURAL:$1|biaha|$1 biaha}}.',
+'protectedpage'     => 'Página Protehá',
+'jumpto'            => 'Bai na:',
+'jumptonavigation'  => 'Nabegashon',
+'jumptosearch'      => 'Buska',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Tokante {{SITENAME}}',
 'aboutpage'            => 'Project:Info',
+'copyright'            => 'E kontenido ta disponibel bou di $1.',
 'copyrightpage'        => '{{ns:project}}:Derechinan di outor',
 'currentevents'        => 'Eventonan aktual',
 'currentevents-url'    => 'Project:Eventonan aktual',
+'disclaimers'          => 'Deklarashon di Liberashon for di Responsabilidatnan',
+'disclaimerpage'       => 'Project:Deklarashon di Liberashon for di Responsabilidat General',
 'edithelp'             => 'Ayudo ku editamentu',
 'edithelppage'         => 'Help:Kon pa editá artíkulo',
-'faqpage'              => 'Project:FAQ',
 'helppage'             => 'Help:Kontenido',
 'mainpage'             => 'Página Prinsipal',
 'mainpage-description' => 'Página Prinsipal',
+'policy-url'           => 'Project:Pólisa',
 'portal'               => 'Portal di komunidat',
 'portal-url'           => 'Project:Portal di komunidat',
+'privacy'              => 'Pólisa di Privasidat',
+'privacypage'          => 'Project:Pólisa di Privasidat',
 
-'badaccess' => 'Eror di permiso',
+'badaccess'        => 'Eror di outorisashon',
+'badaccess-group0' => 'Bo no tin outorisashon pa ehekutá e akshon ku bo a skohe.',
 
 'youhavenewmessages'      => 'Bo tin $1 ($2).',
 'newmessageslink'         => 'mensahe nobo',
@@ -142,14 +175,6 @@ No lubidá di kambia bo [[Special:Preferences|{{SITENAME}} preferensianan]].',
 'userlogin'                  => 'Traha un kuenta nobo òf outentiká',
 'userlogout'                 => 'Terminá sesion',
 'badretype'                  => 'E kontraseñanan hinká no ta kuadra.',
-'youremail'                  => 'E-mail:',
-'username'                   => 'Nòmber di uzadó:',
-'uid'                        => 'ID di uzadó:',
-'yourrealname'               => 'Nòmber berdadero:',
-'yourlanguage'               => 'Idioma:',
-'yourvariant'                => 'Variante:',
-'yournick'                   => 'Nòmber di kariño:',
-'badsig'                     => 'Firma inválido; kontrolá e HTML uzá.',
 'wrongpassword'              => 'Kontraseña no ta korekto. Por fabor purba atrobe.',
 'wrongpasswordempty'         => 'Kontraseña tabata bashí. Por fabor purba atrobe.',
 'acct_creation_throttle_hit' => 'Bishitantenan na uzando bo IP adrès a traha $1 kuenta den e último 24 ora, lokual ta e máksimo permití den e periodo aki. Esaki ta nifiká ku hendenan uzando e IP adrès aki no por traha mas kuenta na e momentu aki.',
@@ -165,7 +190,6 @@ No lubidá di kambia bo [[Special:Preferences|{{SITENAME}} preferensianan]].',
 Bo por kambia página libremente, pero tene kuenta ku lo nota bo IP adrès den e historia di kambionan hasí na e página aki.',
 'blockedtitle'       => 'Uzadó ta blokiá',
 'whitelistedittitle' => 'Mester outentiká promé pa editá',
-'confirmedittitle'   => 'Konfirmashon di e-mail eksigí pa editá',
 'confirmedittext'    => 'Bo mester konfirmá bo e-mail adrès promé ku bo editá página. Por fabor duna i validá bo e-mail adrès via bo [[Special:Preferences|preferensianan]].',
 'accmailtitle'       => 'Kontraseña mandá.',
 'accmailtext'        => "E kontraseña pa '$1' tabata mandá pa $2.",
@@ -186,7 +210,7 @@ Bo por kambia página libremente, pero tene kuenta ku lo nota bo IP adrès den e
 'histlast'            => 'Último',
 
 # Search results
-'nextn'          => 'siguiente $1',
+'nextn'          => 'siguiente {{PLURAL:$1|$1}}',
 'searchhelp-url' => 'Help:Kontenido',
 
 # Preferences page
@@ -195,6 +219,14 @@ Bo por kambia página libremente, pero tene kuenta ku lo nota bo IP adrès den e
 'changepassword' => 'Kambia kontraseña',
 'timezonelegend' => 'Zona di tempu',
 'allowemail'     => 'Akseptá e-mail di otro uzadó',
+'youremail'      => 'E-mail:',
+'username'       => 'Nòmber di uzadó:',
+'uid'            => 'ID di uzadó:',
+'yourrealname'   => 'Nòmber berdadero:',
+'yourlanguage'   => 'Idioma:',
+'yourvariant'    => 'Variante:',
+'yournick'       => 'Nòmber di kariño:',
+'badsig'         => 'Firma inválido; kontrolá e HTML uzá.',
 
 # Recent changes
 'recentchanges'     => 'Kambionan resien',
@@ -206,6 +238,9 @@ Bo por kambia página libremente, pero tene kuenta ku lo nota bo IP adrès den e
 'rclinks'           => 'Mustra último $1 kambionan den último $2 dianan<br />$3',
 'hide'              => 'Skonde',
 'show'              => 'Mustra',
+
+# File description page
+'file-anchor-link' => 'Imagen',
 
 # Unwatched pages
 'unwatchedpages' => 'Páginanan no observá',
@@ -322,13 +357,11 @@ Por fabor skohe un otro título.',
 '1movedto2_redir' => '[[$1]] mové pa [[$2]] riba redirect',
 
 # Namespace 8 related
-'allmessages'         => 'Mensahenan di sistema',
-'allmessagesname'     => 'Nòmber',
-'allmessagesdefault'  => 'Teksto predeterminá',
-'allmessagescurrent'  => 'Teksto aktual',
-'allmessagestext'     => 'Esaki ta un lista di mensahe di sistema disponibel den e dominio di MediaWiki.',
-'allmessagesfilter'   => 'Filter pa nòmber di mensahe:',
-'allmessagesmodified' => 'Mustra solamente esnan modifiká',
+'allmessages'        => 'Mensahenan di sistema',
+'allmessagesname'    => 'Nòmber',
+'allmessagesdefault' => 'Teksto predeterminá',
+'allmessagescurrent' => 'Teksto aktual',
+'allmessagestext'    => 'Esaki ta un lista di mensahe di sistema disponibel den e dominio di MediaWiki.',
 
 # Attribution
 'anonymous' => 'Uzadó(nan) anonimo di {{SITENAME}}',

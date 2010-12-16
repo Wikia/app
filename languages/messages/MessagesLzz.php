@@ -10,6 +10,8 @@
  * @author The Evil IP address
  */
 
+$fallback = 'tr';
+
 $messages = array(
 # User preference toggles
 'tog-underline'        => "Link'iş tude kogu3’uxaçki:",
@@ -79,11 +81,13 @@ $messages = array(
 'category-media-header'         => '"$1" k\'at\'egoris media',
 'category-empty'                => "''Am k'at'egoris çkar madde varna media va uğun.''",
 'hidden-categories'             => '{{PLURAL:$1|Şinaxeri kʼatʼegori|Şinaxeri kʼatʼegorepe}}',
-'hidden-category-category'      => "Şinaxeri k'at'egorepe", # Name of the category where hidden categories will be listed
+'hidden-category-category'      => "Şinaxeri k'at'egorepe",
 'category-subcat-count'         => '{{PLURAL:$2|Am kʼatʼegoris, xvala, tude na ren kʼatʼegori uğun.|Am kʼatʼegori tʼoplamurot $2 kʼatʼegorişen {{PLURAL:$1|tudekʼatʼegori|$1 tudekʼatʼegori}}s uğun}}',
 'category-subcat-count-limited' => "Am k'at'egori tudes na dgin {{PLURAL:$1|tude k'at'egoris|$1 tude k'at'egoris}} uğun.",
 'category-article-count'        => '{{PLURAL:$2|Am kʼatʼegoris, xvala, tude na ren kʼatʼegori uğun.|Tʼoplami $2 şen, tude na ren {{PLURAL:$1|butʼkʼa|$1 butʼkʼa}} am kʼatʼegoris ren.}}',
 'listingcontinuesabbrev'        => '(naqona)',
+'index-category'                => "Indexi na uğun but'k'ape",
+'noindex-category'              => 'Indexi muşi na var uğun sayfape',
 
 'mainpagetext'      => "'''Mediawiki dido k'ai ik'idu.'''",
 'mainpagedocfooter' => "Vik'i şeni muç'o ixmarinen ya mutxanepe oguru şeni [http://meta.wikimedia.org/wiki/Help:Contents oxmaruşi rexberis] o3'k'edit.
@@ -93,20 +97,32 @@ $messages = array(
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki P'anda Na-k'itxu K'itxalape]
 * [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki e-mailepeşiş liste]",
 
-'about'          => 'Şeni',
-'newwindow'      => '(ağne penceres guin3ʼkʼen)',
-'cancel'         => 'İpʼtʼali qʼvi',
+'about'         => 'Şeni',
+'newwindow'     => '(ağne penceres guin3ʼkʼen)',
+'cancel'        => 'İpʼtʼali qʼvi',
+'moredotdotdot' => 'Çkva…',
+'mypage'        => 'Çkimi sayfa',
+'mytalk'        => 'Çkimi mesajepe',
+'anontalk'      => "Am IP'şi mesajepe",
+'navigation'    => 'Goxtima',
+'and'           => '&#32;do',
+
+# Cologne Blue skin
 'qbfind'         => 'Koz*iri',
 'qbedit'         => 'Doktiri',
 'qbpageoptions'  => 'Am sayfa',
 'qbmyoptions'    => 'Çkimi sayfape',
 'qbspecialpages' => 'Doxmeli sayfape',
-'moredotdotdot'  => 'Çkva…',
-'mypage'         => 'Çkimi sayfa',
-'mytalk'         => 'Çkimi mesajepe',
-'anontalk'       => "Am IP'şi mesajepe",
-'navigation'     => 'Goxtima',
-'and'            => '&#32;do',
+
+# Vector skin
+'vector-action-delete'       => 'Jili',
+'vector-namespace-category'  => "K'at'egori",
+'vector-namespace-help'      => "Meşvelaş t'aba",
+'vector-namespace-image'     => 'Dosya',
+'vector-namespace-mediawiki' => 'Mesaji',
+'vector-namespace-project'   => "P'rojeşi t'aba",
+'vector-namespace-special'   => 'Doxmeli sayfa',
+'vector-view-edit'           => 'Doktiri',
 
 'errorpagetitle'   => 'Çilata',
 'returnto'         => '$1 butʼkʼaşa goikti.',
@@ -139,7 +155,7 @@ $messages = array(
 'otherlanguages'   => 'Majurani nenapes',
 'redirectedfrom'   => '($1 butʼkʼaşen moxtu)',
 'redirectpagesub'  => 'Redirektʼiş butʼkʼa',
-'lastmodifiedat'   => 'Am butʼkʼa çodinurot $2, $1 tarixis iktirinu.', # $1 date, $2 time
+'lastmodifiedat'   => 'Am butʼkʼa çodinurot $2, $1 tarixis iktirinu.',
 'jumpto'           => 'İdi do:',
 'jumptonavigation' => 'ixmari',
 'jumptosearch'     => 'mgori',
@@ -148,7 +164,6 @@ $messages = array(
 'aboutsite'            => '{{SITENAME}} şeni',
 'aboutpage'            => 'Project:Ambarepe',
 'copyright'            => 'Doloxe na renanpe, $1-şi ren.',
-'copyrightpagename'    => '{{SITENAME}} copyright',
 'copyrightpage'        => '{{ns:project}}:Şinaxeri Hakʼepe',
 'disclaimers'          => 'Kʼabuli na var ixvenu ondepe',
 'disclaimerpage'       => 'Project:Mtelot kʼabuli na var ixvenu ondepe',
@@ -215,12 +230,6 @@ Dudicoxopes oxmaruşi yasaği na ren ar, varna daha dido kʼarakʼtʼeri uğun.'
 'userlogout'              => 'Siteşen Kogamaxti',
 'nologin'                 => "Hesabi va giğuni? '''$1'''",
 'nologinlink'             => 'Hesabi dokʼidi.',
-'youremail'               => 'E-maili:',
-'yourrealname'            => 'Coxo skani:',
-'yourlanguage'            => 'Nena skani:',
-'gender-male'             => "Biç'i",
-'gender-female'           => "Bozo (K'ulani)",
-'email'                   => 'E-maili',
 'mailmypassword'          => 'Ağne pʼarola-çkimi moncğoni',
 
 # Password reset dialog
@@ -273,6 +282,8 @@ paktʼiş doloxe ren (detayepe şeni $1's o3ʼkʼedi).
 Na qʼvi meşvelaşa başka makʼaturepeşkʼelen pʼatʼi mutxanepe ixvenen varna xemoşletinerot do uoçodinurot başka svapeşa niçinen, aya kʼabuli qʼvi varna am sitʼe şeni mutu mo ikip!<br />
 Edo amuş metʼi, ak mxuciş meçamu ginonna, meşvelape ti-skani kʼala oçʼaruşi re, varna ofi3ialurişa gon3ʼkʼimeri na ren ar kʼaynağişen (odudeşen) varna başka oxoşkveri kʼaynağepeşen (odudepeşen) na ezdi kʼabuli oxvenuşi re.<br />
 '''<center>DOXMELİ HAKʼEPETE NA İŞİNAXENAN XANDAPE AK MO UKʼATEPT!</center>'''",
+'templatesused'                    => 'Am butʼkʼas na ixmarinen {{PLURAL:$1|şabloni|şablonepe}}:',
+'templatesusedpreview'             => 'Am "Evvelişen i3ʼkʼedi" fonkʼsionis na ixmarinen {{PLURAL:$1|şabloni|şablonepe}}:',
 'template-protected'               => '(oçvu)',
 'template-semiprotected'           => '(gverd-oçvu)',
 'hiddencategories'                 => 'Am butʼkʼa {{PLURAL:$1|1 şinaxeri kʼatʼegori|$1 şinaxeri kʼatʼegori}}şi ren:',
@@ -280,6 +291,8 @@ Edo amuş metʼi, ak mxuciş meçamu ginonna, meşvelape ti-skani kʼala oçʼar
 
 # History pages
 'viewpagelogs'           => 'Am butʼkʼa şeni kʼayitʼepe ko3ʼiri',
+'currentrev-asof'        => '$1 itibariten butʼkʼaşi a3ʼineri xali.',
+'revisionasof'           => 'Butʼkʼaşi $1 tarixis xali muşi',
 'previousrevision'       => '← Mcveşi xali muşi',
 'nextrevision'           => 'Ağani xali-muşi →',
 'currentrevisionlink'    => 'İrişen ağne xali-muşi ko3ʼiri',
@@ -293,8 +306,10 @@ Oxo3ʼonapape: (a3ʼineri) = a3ʼineri versiyoni kʼala na ren farkʼi,
 'histlast'               => 'irişen ağani',
 
 # Revision deletion
-'rev-delundel'   => 'ko3ʼiri/doşinaxi',
-'revdel-restore' => 'Ozʼiramuşi doktiri',
+'rev-delundel'          => 'ko3ʼiri/doşinaxi',
+'revdelete-radio-set'   => 'Ho',
+'revdelete-radio-unset' => 'Var',
+'revdel-restore'        => 'Ozʼiramuşi doktiri',
 
 # Merge log
 'revertmerge' => 'Artikʼartişen okʼo3ʼkʼi',
@@ -314,7 +329,9 @@ Oxo3ʼonapape: (a3ʼineri) = a3ʼineri versiyoni kʼala na ren farkʼi,
 'searchsubtitleinvalid'     => "'''$1''' şeni mgori",
 'notitlematches'            => 'Çkar svas var iz*irinu',
 'notextmatches'             => 'Çkar butʼkʼa var iz*irinu',
-'viewprevnext'              => '($1) ($2) ($3)',
+'prevn'                     => 'ukʼuni {{PLURAL:$1|$1}}',
+'nextn'                     => 'mendi {{PLURAL:$1|$1}}',
+'viewprevnext'              => '($1 {{int:pipe-separator}} $2) ($3)',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 tkvala|$2 tkvala}})',
 'search-redirect'           => '(redirektʼi $1)',
 'search-section'            => '(burme $1)',
@@ -340,6 +357,12 @@ Ogoruşi dudis '''all:''' pʼrefiksi okʼatute doloçʼareli na ren iri şeyi (o
 'timezoneregion-antarctica' => "Antartik'a",
 'timezoneregion-asia'       => 'Asya',
 'timezoneregion-europe'     => "Avrop'a",
+'youremail'                 => 'E-maili:',
+'yourrealname'              => 'Coxo skani:',
+'yourlanguage'              => 'Nena skani:',
+'gender-male'               => "Biç'i",
+'gender-female'             => "Bozo (K'ulani)",
+'email'                     => 'E-maili',
 
 # Groups
 'group'       => 'Grubi:',
@@ -404,16 +427,20 @@ Ogoruşi dudis '''all:''' pʼrefiksi okʼatute doloçʼareli na ren iri şeyi (o
 'filehist-current'          => 'A3ʼineri',
 'filehist-datetime'         => 'Dğa/Ora',
 'filehist-thumb'            => 'Mçʼitʼa sureti',
+'filehist-thumbtext'        => '$1 tarixis na iz*iren versiyonişi mçʼitʼa na ren xali',
 'filehist-user'             => 'Maxmare',
 'filehist-dimensions'       => 'Ebatʼepe',
 'filehist-comment'          => 'Kʼommentʼi',
 'imagelinks'                => 'Dosyaşi kʼontaktʼepe',
 'linkstoimage'              => 'Am oz*ira-dosyaşa kʼontʼaktʼi na ikips {{PLURAL:$1|butʼkʼa|$1 butʼkʼa}}:',
-'sharedupload'              => 'Am dosya $1-şen moxtu do belkim majurani pʼrojepesti ixmarinen.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'sharedupload'              => 'Am dosya $1-şen moxtu do belkim majurani pʼrojepesti ixmarinen.',
 'uploadnewversion-linktext' => 'Dosyaşi ağani versiyoni doloxe kamaxvi',
 
 # Statistics
 'statistics' => 'İstatistʼiğepe',
+
+'brokenredirects-edit'   => 'doktiri',
+'brokenredirects-delete' => 'jili',
 
 # Miscellaneous special pages
 'nbytes'        => '$1 {{PLURAL:$1|byte|byte}}',
@@ -564,7 +591,7 @@ Am butʼkʼaşi oçvuşi sinori gaktirinen; ama am oktiroba, kʼademoni oçvalu�
 
 # Block/unblock
 'blockip'                  => 'Maxmares bloği qʼvi',
-'ipboptions'               => '2 saatʼi:2 hours,1 ndğa:1 day,3 ndğa:3 days,1 doloni:1 week,2 doloni:2 weeks,1 tuta:1 month,3 tuta:3 months,6 tuta:6 months,1 3ʼana:1 year,pʼanda:infinite', # display1:time1,display2:time2,...
+'ipboptions'               => '2 saatʼi:2 hours,1 ndğa:1 day,3 ndğa:3 days,1 doloni:1 week,2 doloni:2 weeks,1 tuta:1 month,3 tuta:3 months,6 tuta:6 months,1 3ʼana:1 year,pʼanda:infinite',
 'ipblocklist'              => 'Bloği xveneri na renan IP adresepe do maxmareş coxope',
 'blocklink'                => 'bloği qʼvi',
 'unblocklink'              => 'bloği kezdi',
@@ -596,7 +623,7 @@ Am situa3yonepes, butʼkʼa skanişkʼelen otiruşi ren.",
 'move-watch'       => 'Am butʼkʼa gatxozi',
 'movepagebtn'      => 'Coxo-muşi doktiri',
 'pagemovedsub'     => 'Coxo iktirinu.',
-'movepage-moved'   => '\'\'\'"$1",  "$2" butʼkʼa muşişa itirinu\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'   => '\'\'\'"$1",  "$2" butʼkʼa muşişa itirinu\'\'\'',
 'articleexists'    => 'Am coxos ar butʼkʼa koren varna na çʼari coxo mtini va ren.
 Mu iqʼven başka coxo doçʼari.',
 'talkexists'       => "'''Butʼkʼa dido kʼai itirinu, mara oğarğaluşi butʼkʼa var itirinu çunki na itirinasen coxos zate ar butʼkʼa rtʼu. Mu iqʼven butʼkʼaşi doloçʼareli nç'arape majurani butʼkʼaşa ti-skani kʼala itirini.'''",
@@ -636,6 +663,7 @@ Mu iqʼven başka coxo doçʼari.',
 'tooltip-search-go'               => 'Eger korenna, am coxos na uğun ar butʼkʼaşa idi',
 'tooltip-search-fulltext'         => 'Am nçʼara şeni butʼkʼape mgori',
 'tooltip-n-mainpage'              => 'Dudi butʼkʼaşa idi',
+'tooltip-n-mainpage-description'  => 'Dudi butʼkʼaşa idi',
 'tooltip-n-portal'                => 'Proje şeni, şeyepe so gaz*iren, mu gaxvenen',
 'tooltip-n-currentevents'         => 'Ağani oğodape şeni çodinaşi çkinape',
 'tooltip-n-recentchanges'         => 'Vikʼis na ixvenu sonni oktirobapeşi listʼe.',
@@ -699,7 +727,7 @@ Ukʼaçxe na mulunan kʼontʼaktʼepe istʼisna oqʼopinot kʼabuli ixvenen. Mes
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # External editor support
 'edit-externally'      => 'Dosyas, kʼompʼuteris na renan pʼrogramepe kʼala oktirobape doqʼvi.',

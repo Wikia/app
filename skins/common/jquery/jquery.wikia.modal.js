@@ -124,7 +124,7 @@ $.fn.extend({
 		var ads = $("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad");
 
 		ads.each(function(index, el){
-			$(el).height($(el).height()).children().hide();
+			$(el).children().css("margin-left","-9999px");
 		});
 		
 		wrapper.data("ads", ads);
@@ -241,7 +241,7 @@ $.fn.extend({
 
 		//hide ads when a modal is present
 		this.closest(".modalWrapper").data("ads").each(function(index, el){
-			$(el).children().show();
+			$(el).children().css({"margin-left":"-9999px"});
 		});
 	},
 
@@ -260,7 +260,7 @@ $.fn.extend({
 
 		//show ads again
 		this.closest(".modalWrapper").data("ads").each(function(index, el){
-			$(el).children().show();
+			$(el).children().css({"margin-left":"auto"});
 		});
 	},
 
@@ -292,7 +292,7 @@ $.fn.extend({
 			.log('showModal: #' + this.attr('id'));
 
 		this.closest(".modalWrapper").data("ads").each(function(index, el){
-			$(el).children().hide();
+			$(el).children().css({"margin-left":"auto"});
 		});
 
 		/*

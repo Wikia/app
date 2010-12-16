@@ -58,6 +58,7 @@ window.onload = function()
 
 	window.parent.SetAutoSize( true ) ;
 	window.parent.SetOkButton( true ) ;
+	GetE('txtUrl').focus();
 }
 
 function LoadSelection()
@@ -88,8 +89,10 @@ function Ok()
 		return false ;
 	}
 
-	window.parent.document.getElementById( 'btnOk' ).disabled = true ;
-	window.parent.document.getElementById( 'btnCancel' ).disabled = true ;
+	if ( oEditor.window.parent.FCKeditorAPI && oEditor.window.parent.FCKeditorAPI.Version.match( /^2\.5/ ) ) {
+		window.parent.document.getElementById( 'btnOk' ).disabled = true ;
+		window.parent.document.getElementById( 'btnCancel' ).disabled = true ;
+	}
 
 	var imgName		= GetE('txtUrl').value ;
 	var imgCaption	= GetE('txtAlt').value ;
@@ -191,13 +194,13 @@ function OnUrlChange()
 		ClearSearch() ;
 
 		if ( link.length == 0 )
-			SetSearchMessage( 'start typing in the above field' ) ;
+			SetSearchMessage( FCKLang.wikiImgStartTyping || 'start typing in the above field' ) ;
 		else
-			SetSearchMessage( 'too short... type more' ) ;
+			SetSearchMessage( FCKLang.wikiImgTooShort || 'too short... type more' ) ;
 		return ;
 	}
 
-	SetSearchMessage( 'stop typing to search' ) ;
+	SetSearchMessage( FCKLang.wikiImgStopTyping || 'stop typing to search' ) ;
 	searchTimer = window.setTimeout( StartSearch, 500 ) ;
 }
 
@@ -208,7 +211,7 @@ function StartSearch()
 	if ( link.length < 3  )
 		return ;
 
-	SetSearchMessage( 'searching...' ) ;
+	SetSearchMessage( FCKLang.wikiLnkSearching || 'searching...' ) ;
 
 	// Make an Ajax search for the pages.
 	oEditor.window.parent.sajax_request_type = 'GET' ;
@@ -224,19 +227,20 @@ function LoadSearchResults( result )
 
 	if ( results.length == 0 || ( results.length == 1 && results[0].length == 0 ) )
 	{
-		SetSearchMessage( 'no images found' ) ;
+		SetSearchMessage( FCKLang.wikiImgSearchNothing || 'no images found' ) ;
 	}
 	else
 	{
 		if ( results.length == 1 )
-			SetSearchMessage( 'one image found' ) ;
+			SetSearchMessage( FCKLang.wikiImgSearch1Found || 'one image found' ) ;
 		else
-			SetSearchMessage( results.length + ' images found' ) ;
+			SetSearchMessage( (FCKLang.wikiImgSearchSeveral || '%1 images found').replace( /%1/g, results.length ) ) ;
 
 		for ( var i = 0 ; i < results.length ; i++ )
 			FCKTools.AddSelectOption( select, results[i], results[i] ) ;
 	}
 }
+
 
 function ClearSearch()
 {
@@ -280,10 +284,10 @@ function UpdatePreview()
 		<table cellspacing="1" cellpadding="1" border="0" width="100%">
 			<tr valign="center">
 				<td>
-					<span>Image file name</span><br />
+					<span fcklang="wikiImgFileName">Image file name</span><br />
 					<input id="txtUrl" style="width: 100%" type="text" onkeyup="OnUrlChange();" />
 					<br />
-					Automatic search results (<span id="xWikiSearchStatus">start typing in the above field</span>)<br />
+					<span fcklang="wikiImgAutomatic">Automatic search results</span> <b>(<span fcklang="wikiImgStartTyping" id="xWikiSearchStatus">start typing in the above field</span>)</b><br />
 					<select id="xWikiResults" size="5" style="width: 100%; height: 70px" onclick="SetUrl( this.value );UpdatePreview();">
 					</select>
 				</td>
@@ -293,7 +297,7 @@ function UpdatePreview()
 			</tr>
 			<tr>
 				<td colspan="2">
-					<span>Caption</span><br />
+					<span fcklang="wikiImgCaption">Caption</span><br />
 					<input id="txtAlt" style="width: 100%" type="text"><br />
 				</td>
 			</tr>
@@ -302,12 +306,12 @@ function UpdatePreview()
 					<table cellspacing="0" cellpadding="0" border="0">
 						<tr>
 							<td nowrap="nowrap">
-								Special Type<br />
+								<span fcklang="wikiImgType">Special Type</span><br />
 								<select id="xType">
 									<option value="" selected="selected"></option>
-									<option value="thumb">Thumbnail</option>
-									<option value="frame">Frame</option>
-									<option value="border">Border</option>
+									<option fcklang="wikiImgTypeThumb" value="thumb">Thumbnail</option>
+									<option fcklang="wikiImgTypeFrame" value="frame">Frame</option>
+									<option fcklang="wikiImgTypeBorder" value="border">Border</option>
 								</select>
 							</td>
 							<td style="padding-left:7px;">
@@ -316,7 +320,7 @@ function UpdatePreview()
 									<option value="" selected></option>
 									<option fcklang="DlgImgAlignRight" value="right">Right</option>
 									<option fcklang="DlgImgAlignLeft" value="left">Left</option>
-									<option value="center">Center</option>
+									<option fcklang="wikiImgAlignCenter" value="center">Center</option>
 								</select>
 							</td>
 							<td style="padding-left:7px;">

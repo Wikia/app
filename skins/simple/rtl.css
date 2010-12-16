@@ -148,7 +148,6 @@ input#wpSave, input#wpDiff {
 }
 
 #userlogin {
-	float: right;
 	margin: 0 0 1em 3em;
 }
 /* Convenience links to edit block, delete and protect reasons */
@@ -174,6 +173,11 @@ table.filehistory th {
 html > body div#bodyContent ul {
 	display: table;
 }
+
+/* Special:Allpages styling */
+td.mw-allpages-nav, p.mw-allpages-nav, td.mw-allpages-alphaindexline {
+	text-align: left;
+
 /* Special:Prefixindex styling */
 td#mw-prefixindex-nav-form  {
 	text-align: left;

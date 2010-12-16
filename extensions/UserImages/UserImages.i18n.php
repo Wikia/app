@@ -75,6 +75,15 @@ $messages['avk'] = array(
 	'userimages-noimages' => 'Meka kalvajayana ewava gan $1.',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'userimages-caption' => 'vu $1 aufeglådne Büidl',
+	'userimages-noname' => "ungüitiga Benutzanãm oda s'Eingåbeföid is laa",
+	'userimages-noimages' => '$1 håd kane Büidl aufeglådn.',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
@@ -89,6 +98,7 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'userimages-desc' => 'Генериране на галерии на качените от потребителя картинки чрез <code><nowiki><userimage /></nowiki></code>',
 	'userimages-caption' => 'Файлове, качени от $1',
 	'userimages-noname' => 'Невалидно потребителско име или полето е оставено празно.',
 	'userimages-noimages' => '$1 няма качени файлове.',
@@ -103,6 +113,16 @@ $messages['bn'] = array(
 	'userimages-noimages' => '$1 কোন চিত্র আপলোড করেন নাই।',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'userimages-desc' => 'Genel a ra skeudennaouegi enporzhiet gant implijerien gant <code><nowiki><userimage /></nowiki></code>',
+	'userimages-caption' => 'Skeudennoù enporzhiet gant $1',
+	'userimages-noname' => 'Mankout a ra an anv implijer pe faziek eo',
+	'userimages-noimages' => "$1 n'en deus ket enporzhiet skeudennoù.",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -111,6 +131,23 @@ $messages['bs'] = array(
 	'userimages-caption' => 'Slike je postavio $1',
 	'userimages-noname' => 'Pogrešno korisničko ime ili nije navedeno.',
 	'userimages-noimages' => '$1 nije postavljao slike.',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'userimages-desc' => "Genera galeries de les imatges carregades per l'usuari amb <code><nowiki><userimage /></nowiki></code>",
+	'userimages-caption' => 'Imatges carregades per $1',
+	'userimages-noname' => "Nom d'usuari incorrecte o no proporcionat.",
+	'userimages-noimages' => '$1 no ha carregat imatges.',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'userimages-caption' => 'وێنەکانی بارکراو لە لایەن $1',
 );
 
 /** Czech (Česky)
@@ -146,8 +183,14 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author K sal 15
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'userimages-desc' => 'Παράγει συλλογές εικόνων επιφορτωμένων από χρήστες με το <code><nowiki><userimage /></nowiki></code>',
+	'userimages-caption' => 'Οι εικόνες φορτώθηκαν από τον $1',
+	'userimages-noname' => 'Άκυρο ή μη δοσμένο όνομα χρήστη',
 	'userimages-noimages' => 'Ο/Η $1 δεν έχει ανεβάσει εικόνες.',
 );
 
@@ -169,6 +212,15 @@ $messages['es'] = array(
 	'userimages-caption' => 'Imágenes cargadas por $1',
 	'userimages-noname' => 'Nombre de usuario inválido ninguno proveído.',
 	'userimages-noimages' => '$1 no tiene imágenes cargadas.',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'userimages-caption' => 'Pildid, mille $1 on üles laadinud',
+	'userimages-noimages' => '$1 ei ole faile üles laadinud.',
 );
 
 /** Basque (Euskara)
@@ -197,15 +249,27 @@ $messages['fa'] = array(
 	'userimages-noimages' => '$1 هیچ تصویری بارگذاری نکرده‌‌است.',
 );
 
+/** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'userimages-desc' => 'Luo käyttäjien tallentamista kuvista gallerioita koodilla <code><nowiki><userimage /></nowiki></code>.',
+	'userimages-caption' => 'Kuvat, jotka $1 on lähettänyt',
+	'userimages-noname' => 'Virheellinen käyttäjätunnus tai käyttäjätunnusta ei määritelty.',
+	'userimages-noimages' => '$1 ei ole lähettänyt kuvatiedostoja.',
+);
+
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author PieRRoMaN
  */
 $messages['fr'] = array(
-	'userimages-desc' => "Génère des galeries d'images téléversées par un utilisateur avec <code><nowiki><userimage /></nowiki></code>",
+	'userimages-desc' => 'Génère des galeries d’images téléversées par un utilisateur avec <code><nowiki><userimage /></nowiki></code>',
 	'userimages-caption' => 'Images téléversées par $1',
 	'userimages-noname' => 'Nom d’utilisateur invalide ou manquant.',
-	'userimages-noimages' => "$1 n’a pas téléversé d'image.",
+	'userimages-noimages' => '$1 n’a pas téléversé d’image.',
 );
 
 /** Galician (Galego)
@@ -228,6 +292,15 @@ $messages['gsw'] = array(
 	'userimages-caption' => 'Vu $1 uffegladeni Bilder',
 	'userimages-noname' => 'Nit giltiger Benutzername oder Yygabfäld isch läär.',
 	'userimages-noimages' => '$1 het kei Bilder uffeglade.',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
+ */
+$messages['gu'] = array(
+	'userimages-caption' => '$1 દ્વારા ચડાવેલા ચિત્રો',
+	'userimages-noname' => 'અમાન્ય અથવા ન અપાયેલું સભ્યનામ.',
+	'userimages-noimages' => '$1 એ ચિત્ર ચડાવેલ નથી.',
 );
 
 /** Hebrew (עברית)
@@ -272,15 +345,21 @@ $messages['ia'] = array(
 	'userimages-noimages' => '$1 non ha cargate alcun imagine.',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Rex
+ */
 $messages['id'] = array(
+	'userimages-desc' => 'Menciptakan galeri dari berkas-berkas yang dimuatkan oleh pengguna dengan menggunakan tag <code><nowiki><userimage /></nowiki></code>',
 	'userimages-caption' => 'Berkas yang dimuatkan oleh $1',
 	'userimages-noname' => 'Nama pengguna tidak sah atau tidak diberikan.',
 	'userimages-noimages' => '$1 tidak pernah memuatkan berkas.',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
 $messages['it'] = array(
+	'userimages-desc' => 'Crea gallerie di immagini caricate dagli utenti con <code><nowiki><userimage /></nowiki></code>',
 	'userimages-caption' => "Immagini caricate dall'utente $1",
 	'userimages-noname' => 'Nome utente errato o mancante.',
 	'userimages-noimages' => "L'utente $1 non ha caricato immagini.",
@@ -326,7 +405,7 @@ $messages['ksh'] = array(
 	'userimages-noimages' => 'Dä „$1“ hät kei Belder huhjelade.',
 );
 
-/** Kurdish (Latin) (Kurdî / كوردی (Latin))
+/** Kurdish (Latin) (Kurdî (Latin))
  * @author Bangin
  */
 $messages['ku-latn'] = array(
@@ -347,8 +426,10 @@ $messages['lb'] = array(
 
 /** Lithuanian (Lietuvių)
  * @author Hugo.arg
+ * @author Matasg
  */
 $messages['lt'] = array(
+	'userimages-desc' => 'Generuoja naudotojo įkeltų paveikslėlių galerijas su <code><nowiki><userimage /></nowiki></code>',
 	'userimages-caption' => 'Iliustracijos, įkeltos $1',
 	'userimages-noname' => 'Neteisingas naudotojo vardas arba netiekiama.',
 	'userimages-noimages' => '$1 nėra įkėlęs iliustracijų.',
@@ -358,15 +439,18 @@ $messages['lt'] = array(
  * @author Jagwar
  */
 $messages['mg'] = array(
+	'userimages-desc' => "Mamoaka gallerie-na sary nampidirin'ny mpikambana miaraka amin'ny <code><nowiki><userimage /></nowiki></code>",
 	'userimages-caption' => "Sary nampidirin'ny $1",
 	'userimages-noname' => "Tsy ampy na diso ny anaran'ny mpikambana.",
+	'userimages-noimages' => 'tsy nampiditra sary i $1',
 );
 
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
-	'userimages-desc' => 'Генерира галерии на подигнати слики од корисникот со <code><nowiki><userimage /></nowiki></code>',
+	'userimages-desc' => 'Создава галерии на подигнати слики од корисникот со <code><nowiki><userimage /></nowiki></code>',
 	'userimages-caption' => 'Слики подигнати од $1',
 	'userimages-noname' => 'Погрешно корисничко име или воопшто не е наведено.',
 	'userimages-noimages' => '$1 нема подигнато слики.',
@@ -388,6 +472,13 @@ $messages['mr'] = array(
 	'userimages-caption' => '$1 ने चढविलेली चित्रे',
 	'userimages-noname' => 'चुकीचे सदस्यनाव अथवा नाव दिलेले नाही.',
 	'userimages-noimages' => '$1 ने एकही चित्र चढविलेले नाही',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Zamwan
+ */
+$messages['ms'] = array(
+	'userimages-caption' => 'Imej dimuat naik oleh $1',
 );
 
 /** Maltese (Malti)
@@ -422,8 +513,10 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'userimages-desc' => 'Genererer gallerier av brukeropplastede bilder med <code><nowiki><userimage /></nowiki></code>',
 	'userimages-caption' => 'Bilder lastet opp av $1',
 	'userimages-noname' => 'Ugyldig brukernavn, eller intet angitt brukernavn.',
 	'userimages-noimages' => '$1 har ingen bildeopplastinger.',
@@ -452,8 +545,10 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'userimages-desc' => "Génera galarìe ëd figure carià da l'utent con <code><nowiki><userimage /></nowiki></code>",
 	'userimages-caption' => 'Figure carià da $1',
 	'userimages-noname' => "Stranòm nen bon ò ch'a-i é nen d'autut.",
 	'userimages-noimages' => "$1 a l'ha pa carià gnun-a figura.",
@@ -519,6 +614,16 @@ $messages['ru'] = array(
 	'userimages-noimages' => 'Участник $1 не загружал изображений.',
 );
 
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'userimages-desc' => '<code><nowiki><userimage /></nowiki></code> සමඟ පරිශීලක විසින් උඩුගත කළ ඡායාරූපවල ගැලරිය ජනනය කිරීම',
+	'userimages-caption' => '$1 විසින් උඩුගත කළ ඡායාරූප',
+	'userimages-noname' => 'කිසිවක් සපයා නොමැතිවීම හෝ අවලංගු පරිශීලක නාමයකි.',
+	'userimages-noimages' => '$1ට ඡායාරූප උඩුගතකිරීම් නොමැත.',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -530,10 +635,23 @@ $messages['sk'] = array(
 );
 
 /** Slovenian (Slovenščina)
+ * @author Smihael
  * @author Yerpo
  */
 $messages['sl'] = array(
+	'userimages-desc' => 'Ustvari galerije uporabnikovih naloženih slik z uporabo <nowiki><userimage /></nowiki>',
+	'userimages-caption' => 'Slike dodal $1',
 	'userimages-noname' => 'Neveljavno ali neznano uporabniško ime.',
+);
+
+/** Lower Silesian (Schläsch)
+ * @author Piotron
+ */
+$messages['sli'] = array(
+	'userimages-desc' => 'Arzeige per <code><nowiki><userimage /></nowiki></code> Galeria voo Beldern, de voo dan jeweeliga Nutzern huchgeloada wourda',
+	'userimages-caption' => 'Voo $1 huchgeloadene Belder',
+	'userimages-noname' => 'Ungieltiger Nutzernoame oder Eengoabefeld leer.',
+	'userimages-noimages' => '$1 hoot kääne huchgeloadena Belder.',
 );
 
 /** Albanian (Shqip)
@@ -551,15 +669,21 @@ $messages['sr'] = array(
 	'userimages-noimages' => '$1 нема послатих слика.',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица) */
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
 $messages['sr-ec'] = array(
+	'userimages-desc' => 'Помоћу <code><nowiki><userimage /></nowiki></code> тага генерише галерије слика, које су послали корисници.',
 	'userimages-caption' => 'Слике које је послао корисник $1',
 	'userimages-noname' => 'Погрешно корисничко име или корисник није послао ни једну слику.',
 	'userimages-noimages' => '$1 нема послатих слика.',
 );
 
-/** latinica (latinica) */
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
 $messages['sr-el'] = array(
+	'userimages-desc' => 'Pomoću <code><nowiki><userimage /></nowiki></code> taga generiše galerije slika, koje su poslali korisnici.',
 	'userimages-caption' => 'Slike koje je poslao korisnik $1',
 	'userimages-noname' => 'Pogrešno korisničko ime ili korisnik nije poslao ni jednu sliku.',
 	'userimages-noimages' => '$1 nema poslatih slika.',
@@ -619,6 +743,14 @@ $messages['tg-cyrl'] = array(
 	'userimages-noimages' => '$1 дорои боргузориҳои аксе нест.',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'userimages-caption' => 'Aksho tavassuti $1 borguzorī şudaand',
+	'userimages-noimages' => '$1 doroi borguzorihoi akse nest.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -635,9 +767,20 @@ $1: Ang pangalan ng tagagamit',
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'userimages-desc' => '<code><nowiki><userimage /></nowiki></code> ile kullanıcı tarafından yüklenen resimlerin galerini oluşturur',
+	'userimages-caption' => '$1 tarafından yüklenen resimler',
+	'userimages-noname' => 'Geçersiz ya da girilmemiş kullanıcı adı.',
 	'userimages-noimages' => '$1 resmi yüklenemedi.',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Sahran
+ */
+$messages['ug-arab'] = array(
+	'userimages-caption' => 'سۈرەت يۈكلىگۈچى $1',
 );
 
 /** Vèneto (Vèneto)
@@ -688,10 +831,11 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author KilluaZaoldyeck
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
-	'userimages-caption' => '$1上傳的圖像',
+	'userimages-caption' => '$1上傳的圖片',
 	'userimages-noname' => '無效或未有填寫帳號名稱。',
-	'userimages-noimages' => '$1沒有上傳圖像。',
+	'userimages-noimages' => '$1沒有上傳圖片。',
 );
 

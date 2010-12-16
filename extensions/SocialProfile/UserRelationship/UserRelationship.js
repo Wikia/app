@@ -1,13 +1,13 @@
-	function requestResponse(response,id){
-		var url = "index.php?action=ajax";
-		var pars = 'rs=wfRelationshipRequestResponse&rsargs[]=' + response + '&rsargs[]=' + id
-		YAHOO.widget.Effects.Hide('request_action_'+id);
-		var callback = {
-			success: function( oResponse ) {
-				$('request_action_'+id).innerHTML = oResponse.responseText;
-				YAHOO.widget.Effects.Appear('request_action_'+id,{duration:2.0} );
-			}
-		};
-		var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);
-
-	}
+/**
+ * JavaScript for UserRelationship
+ * Used on Special:ViewRelationshipRequests
+ */
+function requestResponse( response, id ) {
+	document.getElementById( 'request_action_' + id ).style.display = 'none';
+	document.getElementById( 'request_action_' + id ).style.visibility = 'hidden';
+	sajax_request_type = 'POST';
+	sajax_do_call( 'wfRelationshipRequestResponse', [ response, id ], function( request ) {
+		document.getElementById( 'request_action_' + id ).innerHTML = request.responseText;
+		YAHOO.widget.Effects.Appear( 'request_action_' + id, { duration:2.0 } );
+	} );
+}

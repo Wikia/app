@@ -34,7 +34,7 @@ class MakeBot extends SpecialPage {
 		$wgOut->addHTML( $this->makeSearchForm() );
 
 		if( $this->target != '' ) {
-			//$wgOut->addHTML( Xml::element( 'p', NULL, NULL ) );
+			//$wgOut->addHTML( Xml::element( 'p', null, null ) );
 			$user = User::newFromName( $this->target );
 			if( is_object( $user ) && !is_null( $user ) ) {
 				global $wgVersion;
@@ -167,7 +167,7 @@ class MakeBot extends SpecialPage {
 	function showLogEntries( &$user, $logtype = 'makebot' ) {
 		global $wgOut;
 		$title = $user->getUserPage();
-		$wgOut->addHTML( Xml::element( 'h2', NULL, htmlspecialchars( LogPage::logName( $logtype ) ) ) );
+		$wgOut->addHTML( Xml::element( 'h2', null, htmlspecialchars( LogPage::logName( $logtype ) ) ) );
 		$logViewer = new LogViewer( new LogReader( new FauxRequest( array( 'page' => $title->getPrefixedText(), 'type' => $logtype ) ) ) );
 		$logViewer->showList( $wgOut );
 	}

@@ -33,9 +33,9 @@ if ( isset( $options['groups'] ) ) {
 $verbose = isset( $options['verbose'] );
 
 $groups = MessageGroups::singleton()->getGroups();
-$checker = MessageChecks::getInstance();
 
 foreach ( $groups as $g ) {
+	
 	$id = $g->getId();
 
 	// Skip groups that are not requested
@@ -44,29 +44,28 @@ foreach ( $groups as $g ) {
 		continue;
 	}
 
-	$problematic = array();
-	$type = $g->getType();
-	if ( !$checker->hasChecks( $type ) ) {
+	$checker = $g->getChecker();
+	if ( !$checker ) {
 		unset( $g );
 		continue;
 	}
 
 	// Initialise messages, using unique definitions if appropriate
-	$collection_skel = $g->initCollection( 'en', true );
-	if ( !count( $collection_skel ) ) continue;
+	$collection = $g->initCollection( 'en', true );
+	if ( !count( $collection ) ) continue;
 
 	STDOUT( "Working with $id: ", $id );
 
 	foreach ( $codes as $code ) {
 		STDOUT( "$code ", $id );
 
-		$collection = clone $collection_skel;
-		$collection->code = $code;
+		$problematic = array();
 
-		$g->fillCollection( $collection );
+		$collection->resetForNewLanguage( $code );
+		$collection->loadTranslations();
 
-		foreach ( $collection->keys() as $key ) {
-			$prob = $checker->doFastChecks( $collection[$key], $type, $code );
+		foreach ( $collection as $key => $message ) {
+			$prob = $checker->checkMessageFast( $message,  $code );
 			if ( $prob ) {
 
 				if ( $verbose ) {
@@ -76,15 +75,36 @@ foreach ( $groups as $g ) {
 				}
 
 				// Add it to the array
-				$problematic[$code][] = $key;
+				$problematic[] = array( $g->namespaces[0], "$key/$code" );
 			}
 		}
-	}
 
-	// Store the results
-	$file = TRANSLATE_CHECKFILE . "-$id";
-	wfMkdirParents( dirname( $file ) );
-	file_put_contents( $file, serialize( $problematic ) );
+		tagFuzzy( $problematic );
+	}
 }
 
-unset( $checker );
+function tagFuzzy( $problematic ) {
+	if ( !count( $problematic ) ) {
+		return;
+	}
+
+	$db = wfGetDB( DB_MASTER );
+	$id = $db->selectField( 'revtag_type', 'rtt_id', array( 'rtt_name' => 'fuzzy' ), __METHOD__ );
+	foreach ( $problematic as $p ) {
+		$title = Title::makeTitleSafe( $p[0], $p[1] );
+		$titleText = $title->getDBKey();
+		$res = $db->select( 'page', array( 'page_id', 'page_latest' ),
+			array( 'page_namespace' => $p[0], 'page_title' => $titleText ), __METHOD__ );
+		
+		$inserts = array();
+		foreach ( $res as $r ) {
+			$inserts = array(
+				'rt_page' => $r->page_id,
+				'rt_revision' => $r->page_latest,
+				'rt_type' => $id
+			);
+		}
+		$db->replace( 'revtag', 'rt_type_page_revision', $inserts, __METHOD__ );
+	}
+}
+

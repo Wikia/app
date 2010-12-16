@@ -19,10 +19,10 @@ class CentralAuthHooks {
 	/**
 	 * Add a little pretty to the preferences user info section
 	 */
-	static function onPreferencesUserInformationPanel( $prefsForm, &$html ) {
+	static function onGetPreferences( $user, &$preferences ) {
 		global $wgUser, $wgLang;
 
-		if ( !$wgUser->isAllowed( 'centralauth-merge' ) ) {
+		if ( !$user->isAllowed( 'centralauth-merge' ) ) {
 			// Not allowed to merge, don't display merge information
 			return true;
 		}
@@ -46,33 +46,45 @@ class CentralAuthHooks {
 				$unattached = count( $global->listUnattached() );
 				if( $unattached ) {
 					// Migration incomplete
-					$message = '<strong>' . wfMsgHtml( 'centralauth-prefs-migration' ) . '</strong>' .
+					$message = '<strong>' . wfMsgExt( 'centralauth-prefs-migration', 'parseinline' ) . '</strong>' .
 						'<br />' .
-						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-attached', array( 'parsemag' ), $wgLang->formatNum( $attached ) ) ) .
+						wfMsgExt( 'centralauth-prefs-count-attached', array( 'parseinline' ), $wgLang->formatNum( $attached ) ) .
 						'<br />' .
-						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-unattached', array( 'parsemag' ), $wgLang->formatNum( $unattached ) ) );
+						wfMsgExt( 'centralauth-prefs-count-unattached', array( 'parseinline' ), $wgLang->formatNum( $unattached ) );
 				} else {
 					// Migration complete
-					$message = '<strong>' . wfMsgHtml( 'centralauth-prefs-complete' ) . '</strong>' .
+					$message = '<strong>' . wfMsgExt( 'centralauth-prefs-complete', 'parseinline' ) . '</strong>' .
 						'<br />' .
-						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-attached', array( 'parsemag' ), $wgLang->formatNum( $attached ) ) );
+						wfMsgExt( 'centralauth-prefs-count-attached', array( 'parseinline' ), $wgLang->formatNum( $attached ) );
 				}
 			} else {
 				// Account is in migration, but the local account is not attached
-				$message = '<strong>' . wfMsgHtml( 'centralauth-prefs-unattached' ) . '</strong>' .
+				$message = '<strong>' . wfMsgExt( 'centralauth-prefs-unattached', 'parseinline' ) . '</strong>' .
 					'<br />' .
-					wfMsgHtml( 'centralauth-prefs-detail-unattached' );
+					wfMsgExt( 'centralauth-prefs-detail-unattached', 'parseinline' );
 			}
 		} else {
 			// Not migrated.
-			$message = wfMsgHtml( 'centralauth-prefs-not-managed' );
+			$message = wfMsgExt( 'centralauth-prefs-not-managed', 'parseinline' );
 		}
 
 		$manageLink = $skin->makeKnownLinkObj( $special,
-			wfMsgHtml( 'centralauth-prefs-manage' ) );
-		$html .= $prefsForm->tableRow(
-			wfMsgHtml( 'centralauth-prefs-status' ),
-			"$message<br />($manageLink)" );
+			wfMsgExt( 'centralauth-prefs-manage', 'parseinline' ) );
+		
+		$prefInsert =
+			array( 'globalaccountstatus' =>
+				array(
+					'section' => 'personal/info',
+					'label-message' => 'centralauth-prefs-status',
+					'type' => 'info',
+					'raw' => true,
+					'default' => "$message<br />($manageLink)"
+				),
+			);
+
+		$after = array_key_exists( 'registrationdate', $preferences ) ? 'registrationdate' : 'editcount';
+		$preferences = wfArrayInsertAfter( $preferences, $prefInsert, $after );
+
 		return true;
 	}
 	
@@ -171,31 +183,63 @@ class CentralAuthHooks {
 			wfDebug( __METHOD__.": no token or session\n" );
 			return true;
 		}
-
-		$centralUser = new CentralAuthUser( $userName );
-		$localId = User::idFromName( $userName );
 		
+		// Sanity check to avoid session ID collisions, as reported on bug 19158
+		if ( !isset($_COOKIE["{$prefix}User"]) ) {
+			wfDebug( __METHOD__.": no User cookie, so unable to check for session mismatch\n" );
+			return true;
+		} elseif ( $_COOKIE["{$prefix}User"] != $userName ) {
+			wfDebug( __METHOD__.": Session ID/User mismatch. Possible session collision. ".
+					"Expected: $userName; actual: ".
+					$_COOKIE["{$prefix}User"]."\n" );
+			return true;
+		}
+
+		// Clean up username
+		$title = Title::makeTitleSafe( NS_USER, $userName );
+		if ( !$title ) {
+			wfDebug( __METHOD__.": invalid username\n" );
+		}
+		$userName = $title->getText();
+
+		// Try the central user
+		$centralUser = new CentralAuthUser( $userName );
 		if ( $centralUser->authenticateWithToken( $token ) != 'ok' ) {
 			wfDebug( __METHOD__.": token mismatch\n" );
-		} elseif ( !$centralUser->isAttached() && $localId ) {
-			wfDebug( __METHOD__.": exists, and not attached\n" );
-		} else {
-			if ( !$localId ) {
-				// User does not exist locally, attempt to create it
-				if ( !self::attemptAddUser( $user, $userName ) ) {
-					// Can't create user, give up now
-					return true;
-				}
-			} else {
-				$user->setID( $localId );
-				$user->loadFromId();
-			}
-			// Auth OK.
-			wfDebug( __METHOD__.": logged in from session\n" );
-			self::initSession( $user, $token );
-			$user->centralAuthObj = $centralUser;
-			$result = true;
+			return true;
 		}
+
+		// Try the local user from the slave DB
+		$localId = User::idFromName( $userName );
+
+		// Fetch the user ID from the master, so that we don't try to create the user 
+		// when they already exist, due to replication lag
+		if ( !$localId && wfGetLB()->getReaderIndex() != 0 ) {
+			$dbw = wfGetDB( DB_MASTER );
+			$localId = $dbw->selectField( 'user', 'user_id', 
+				array( 'user_name' => $userName ), __METHOD__ );
+		}
+
+		if ( !$centralUser->isAttached() && $localId ) {
+			wfDebug( __METHOD__.": exists, and not attached\n" );
+			return true;
+		}
+
+		if ( !$localId ) {
+			// User does not exist locally, attempt to create it
+			if ( !self::attemptAddUser( $user, $userName ) ) {
+				// Can't create user, give up now
+				return true;
+			}
+		} else {
+			$user->setID( $localId );
+			$user->loadFromId();
+		}
+		// Auth OK.
+		wfDebug( __METHOD__.": logged in from session\n" );
+		self::initSession( $user, $token );
+		$user->centralAuthObj = $centralUser;
+		$result = true;
 		
 		return true;
 	}
@@ -339,7 +383,9 @@ class CentralAuthHooks {
 		wfSetupSession();
 		if ($token != @$_SESSION['globalloggedin'] ) {
 			$_SESSION['globalloggedin'] = $token;
-			$user->invalidateCache();
+			if ( !wfReadOnly() ) {
+				$user->invalidateCache();
+			}
 			wfDebug( __METHOD__.": Initialising session for $userName with token $token.\n" );
 		} else {
 			wfDebug( __METHOD__.": Session already initialised for $userName with token $token.\n" );
@@ -397,7 +443,6 @@ class CentralAuthHooks {
 		   CentralAuthUser::setSession( $session );
 		   return false;
 	   }
-
 
 		// Checks passed, create the user
 		wfDebug( __METHOD__.": creating new user\n" );
@@ -519,6 +564,8 @@ class CentralAuthHooks {
 	}
 
 	static function onGetUserPermissionsErrorsExpensive( $title, $user, $action, &$result ) {
+		global $wgCentralAuthLockedCanEdit;
+
 		if( $action == 'read' || $user->isAnon() ) {
 			return true;
 		}
@@ -526,10 +573,37 @@ class CentralAuthHooks {
 		if( !($centralUser->exists() && $centralUser->isAttached()) ) {
 			return true;
 		}
-		if( $centralUser->isLocked() ) {
+		if( 
+			$centralUser->isOversighted() ||	// Oversighted users should *never* be able to edit
+			( $centralUser->isLocked() && !in_array( $title->getPrefixedText(), $wgCentralAuthLockedCanEdit ) )
+				) {
 			$result = 'centralauth-error-locked';
 			return false;
 		}
+		return true;
+	}
+
+	static function onSecurePoll_GetUserParams( $auth, $user, &$params ) {
+		if ( $user->isAnon() ) {
+			return true;
+		}
+		$centralUser = CentralAuthUser::getInstance( $user );
+		if( !($centralUser->exists() && $centralUser->isAttached()) ) {
+			return true;
+		}
+		$wikiID = $centralUser->getHomeWiki();
+		if ( strval( $wikiID ) === '' ) {
+			return true;
+		}
+		$wiki = WikiMap::getWiki( $wikiID );
+		$wikiUrl = $wiki->getUrl( '' );
+		$parts = explode( '/', $wikiUrl );
+		if ( isset( $parts[2] ) ) {
+			$params['properties']['ca-local-domain'] = $params['domain'];
+			$params['domain'] = $parts[2];
+		}
+		$params['properties']['ca-local-url'] = $params['url'];
+		$params['url'] = $wiki->getUrl( 'User:' . str_replace( ' ', '_', $user->getName() ) );
 		return true;
 	}
 }

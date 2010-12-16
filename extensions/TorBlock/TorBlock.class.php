@@ -52,6 +52,42 @@ class TorBlock {
 		return true;
 	}
 
+	public static function onEmailUserPermissionsErrors( $user, $editToken, &$hookError ) {
+		wfDebug( "Checking Tor status\n" );
+		
+		// Just in case we're checking another user
+		global $wgUser;
+		if ( $user->getName() != $wgUser->getName() ) {
+			return true;
+		}
+		
+		if (self::isExitNode()) {
+			wfDebug( "-User detected as editing through tor.\n" );
+
+			global $wgTorBypassPermissions;
+			foreach( $wgTorBypassPermissions as $perm) {
+				if ($user->isAllowed( $perm )) {
+					wfDebug( "-User has $perm permission. Exempting from Tor Blocks\n" );
+					return true;
+				}
+			}
+			
+			if (Block::isWhitelistedFromAutoblocks( wfGetIp() )) {
+				wfDebug( "-IP is in autoblock whitelist. Exempting from Tor blocks.\n" );
+				return true;
+			}
+
+			$ip = wfGetIp();
+			wfDebug( "-User detected as editing from Tor node. Denying email.\n" );
+			
+			wfLoadExtensionMessages( 'TorBlock' );
+			$hookError = array( 'permissionserrors', 'torblock-blocked', array( $ip ) );
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public static function onAbuseFilterFilterAction( &$vars, $title ) {
 		$vars->setVar( 'tor_exit_node', self::isExitNode() ? 1 : 0 );
 		return true;
@@ -134,7 +170,6 @@ class TorBlock {
 	}
 
 	public static function isExitNode($ip = null) {
-		#return true; ## FOR DEBUGGING
 		if ($ip == null) {
 			$ip = wfGetIp();
 		}
@@ -148,6 +183,7 @@ class TorBlock {
 		global $wgTorDisableAdminBlocks;
 		if ($wgTorDisableAdminBlocks && self::isExitNode() && $user->mBlock && !$user->mBlock->mUser) {
 			wfDebug( "User using Tor node. Disabling IP block as it was probably targetted at the tor node." );
+			
 			// Node is probably blocked for being a Tor node. Remove block.
 			$user->mBlockedby = 0;
 		}
@@ -205,6 +241,28 @@ class TorBlock {
 
 		if ($wgTorTagChanges)
 			$emptyTags[] = 'tor';
+		return true;
+	}
+
+	/**
+	 * Creates a message with the status
+	 * @param array $msg Message with the status
+	 * @param string $ip The IP address to be checked
+	 * @return boolean true
+	 */
+	public static function getTorBlockStatus( &$msg, $ip ) {
+		// IP addresses can be blocked only
+		// Fast return if IP is not an exit node
+		if ( !IP::isIPAddress( $ip ) || !self::isExitNode( $ip ) ) {
+			return true;
+		}
+
+		wfLoadExtensionMessages( 'TorBlock' );
+		$msg[] = Html::rawElement(
+			'span',
+			array( 'class' => 'mw-torblock-isexitnode' ),
+			wfMsgExt( 'torblock-isexitnode', 'parseinline', $ip )
+		);
 		return true;
 	}
 }

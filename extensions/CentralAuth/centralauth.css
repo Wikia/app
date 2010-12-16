@@ -1,0 +1,36 @@
+#mw-wikis-list {
+    margin: 1em 1em 1em 0;
+    background: #f9f9f9;
+    border: 1px #aaa solid;
+    border-collapse: collapse;
+}
+#mw-wikis-list td {
+    border: 1px #aaa solid;
+    padding: 0.2em;
+}
+#mw-wikis-list th {
+    background: #f2f2f2;
+    text-align: center;
+}
+
+.merge-method-help {
+	color: #aaa;
+	cursor: pointer;
+	font-size: 7pt;
+	padding: 3px;
+}
+
+.merge-method-help-div {
+	position: absolute;
+	z-index: 3;
+	cursor: pointer;
+
+	width: 15em;
+	border: 1px solid black;
+	background-color: #ff9;
+	padding: 0.5em;
+}
+
+.merge-method-help-name {
+	font-weight: bold;
+}

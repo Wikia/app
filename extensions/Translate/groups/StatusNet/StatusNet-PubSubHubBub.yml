@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-pubsubhubbub
+  label: StatusNet - PubSubHubBub
+  description: "{{int:bw-desc-statusnet-plugin-pubsubhubbub}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/pubsubhubbub
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/PubSubHubBub/locale/%CODE%/LC_MESSAGES/PubSubHubBub.po
+  targetPattern: plugins/PubSubHubBub/locale/%CODE%/LC_MESSAGES/PubSubHubBub.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: pubsubhubbub-
+  patterns:
+    - "*"

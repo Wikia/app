@@ -24,54 +24,64 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
- * @file
  * @author Brion Vibber <brion at pobox.com>
  * @ingroup Maintenance
  */
 
-require_once( 'commandLine.inc' );
-require_once( 'cleanupTable.inc' );
+require_once( dirname(__FILE__) . '/cleanupTable.inc' );
 
-/**
- * @ingroup Maintenance
- */
 class WatchlistCleanup extends TableCleanup {
-	function __construct( $dryrun = false ) {
-		parent::__construct( 'watchlist', $dryrun );
+	protected $defaultParams = array(
+		'table' => 'watchlist',
+		'index' => array( 'wl_user', 'wl_namespace', 'wl_title' ),
+		'conds' => array(),
+		'callback' => 'processRow'
+	);
+
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = "Script to remove broken, unparseable titles in the Watchlist";
+		$this->addOption( 'fix', 'Actually remove entries; without will only report.' );
 	}
 
-	function processPage( $row ) {
+	function execute() {
+		if ( !$this->hasOption( 'fix' ) ) {
+			$this->output( "Dry run only: use --fix to enable updates\n" );
+		}
+		parent::execute();
+	}
+
+	protected function processRow( $row ) {
+		global $wgContLang;
 		$current = Title::makeTitle( $row->wl_namespace, $row->wl_title );
 		$display = $current->getPrefixedText();
-
-		$verified = UtfNormal::cleanUp( $display );
-
+		$verified = $wgContLang->normalize( $display );
 		$title = Title::newFromText( $verified );
 
 		if( $row->wl_user == 0 || is_null( $title ) || !$title->equals( $current ) ) {
-			$this->log( "invalid watch by {$row->wl_user} for ({$row->wl_namespace}, \"{$row->wl_title}\")" );
-			$this->removeWatch( $row );
-			return $this->progress( 1 );
+			$this->output( "invalid watch by {$row->wl_user} for ({$row->wl_namespace}, \"{$row->wl_title}\")\n" );
+			$updated = $this->removeWatch( $row );
+			$this->progress( $updated );
+			return;
 		}
-
 		$this->progress( 0 );
 	}
-	
-	function removeWatch( $row ) {
-		if( !$this->dryrun ) {
+
+	private function removeWatch( $row ) {
+		if( !$this->dryrun && $this->hasOption( 'fix' ) ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->delete( 'watchlist', array(
 				'wl_user'      => $row->wl_user,
 				'wl_namespace' => $row->wl_namespace,
 				'wl_title'     => $row->wl_title ),
 			__METHOD__ );
-			$this->log( '- removed' );
+			$this->output( "- removed\n" );
+			return 1;
+		} else {
+			return 0;
 		}
 	}
 }
 
-$wgUser->setName( 'Conversion script' );
-$caps = new WatchlistCleanup( !isset( $options['fix'] ) );
-$caps->cleanup();
-
-
+$maintClass = "WatchlistCleanup";
+require_once( DO_MAINTENANCE );

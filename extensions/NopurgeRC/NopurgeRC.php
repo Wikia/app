@@ -9,6 +9,7 @@
 
 $wgHooks['ArticleEditUpdatesDeleteFromRecentchanges'][] = 'wfNopurgeRCHook';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'NopurgeRC',
 	'description' => 'A hook that prevents old recentchanges entries from being deleted',
 	'author' => 'Ævar Arnfjörð Bjarmason',

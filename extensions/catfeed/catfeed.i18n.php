@@ -6,7 +6,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'catfeed-desc' => 'Uses bits from recentchanges feeds.
-Create in-page version, especially useful for Wikinews.',
+Create in-page version, especially useful for Wikinews',
 );
 
 /** Message documentation (Message documentation)
@@ -30,6 +30,14 @@ $messages['arz'] = array(
 	'catfeed-desc' => 'يستخدم أجزاء من تلقيمات أحدث التغييرات. ينشئ نسخة فى الصفحة، مفيد خصوصا لويكى الأخبار.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'catfeed-desc' => 'Выкарыстоўвае некаторыя часткі стужкі апошніх зьменаў.
+Стварае яе вэрсію на старонцы, асабліва карысна для ВікіНавінаў.',
+);
+
 /** Bengali (বাংলা)
  * @author Zaheen
  */
@@ -50,6 +58,14 @@ $messages['br'] = array(
 $messages['bs'] = array(
 	'catfeed-desc' => 'Koristi bitove iz fida nedavnih promjena.
 Pravi verziju in-page, naročito korisna za Wikivijesti.',
+);
+
+/** Catalan (Català)
+ * @author Ssola
+ */
+$messages['ca'] = array(
+	'catfeed-desc' => 'Utilitza fragments dels canvis recents.
+Crea versions per les pàgines, especialment útil per Wikinews.',
 );
 
 /** Czech (Česky)
@@ -75,6 +91,14 @@ $messages['dsb'] = array(
 Napóraj wersiju w boku, wósebnje   wužytnu za Wikinowosće.',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'catfeed-desc' => 'Χρησιμοποιεί κομμάτια από τη ροή προσφάτων αλλαγών.
+Δημιουργία έκδοσης για εισαγωγή μέσα στις σελίδες, ιδιαίτερα χρήσιμης για τα Βικινέα',
+);
+
 /** Spanish (Español)
  * @author Sanbec
  */
@@ -89,6 +113,15 @@ Crea versiones para su uso en páginas, especialmente útil para Wikinews.',
 $messages['eu'] = array(
 	'catfeed-desc' => 'Azken aldaketen jariotik zatiak erabiltzen ditu.
 Wikinewserako bereziki erabilgarria den in-page bertsioa sortzen du.',
+);
+
+/** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'catfeed-desc' => 'Käyttää osasia tuoreet muutokset -syötteestä.
+Luo sivunsisäisen version, joka on erityisen hyödyllistä Wikinewsissä.',
 );
 
 /** French (Français)
@@ -130,11 +163,27 @@ $messages['hi'] = array(
 पन्ने के अंदर ही अवतरण बन जाते हैं, जो कि विकिन्युज के लिये विशेष उपयुक्त हैं।',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'catfeed-desc' => 'Naga-gamit sang gamay-gamay nga butang halin sa mga bag-o nga gin-islan feeds.
+Himu-an in-pahina bersiyon, labi na gid ang mga mapuslanon para sa Wikinews',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
 	'catfeed-desc' => 'Wužiwa bity z kanalow aktualnych změnow. Wutwor wersiju w stronje, kotraž je wosebje wužitna za WikiNews.',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'catfeed-desc' => 'A friss változások hírcsatornáiból használ részleteket.
+Lapon belüli változatot készít, különösen hasznos a Wikihírekhez',
 );
 
 /** Interlingua (Interlingua)
@@ -145,12 +194,36 @@ $messages['ia'] = array(
 Crea versiones pro uso in paginas, specialmente utile pro Wikinews.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'catfeed-desc' => 'Menggunakan bit dari sindikasi perubahan terbaru.
+Membuat versi halamannya, berguna terutama untuk Wikinews',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'catfeed-desc' => 'Utilizza parti dai feed delle ultime modifiche.
+Crea una versione da inserire nelle pagine, particolarmente utile per Wikinews',
+);
+
 /** Japanese (日本語)
  * @author Aotake
  * @author JtFuruhata
  */
 $messages['ja'] = array(
 	'catfeed-desc' => '最近の更新フィードから一部の情報を抽出し、ページ内バージョンを作成する。ウィキニュースで特に有用',
+);
+
+/** Korean (한국어)
+ * @author Klutzy
+ * @author Yknok29
+ */
+$messages['ko'] = array(
+	'catfeed-desc' => '최근 바뀜 피드에서 일부 정보를 빼내, 문서 내부 버전을 작성합니다. 위키뉴스에 유용한 기능입니다.',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -177,6 +250,22 @@ Maak 'n versie binne 'n pagina.
 In 't biezunjer henjig veur Wikinews",
 );
 
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'catfeed-desc' => "Mampiasa piesy avy amin'ny topa ny fanovàna farany.
+Manome fapitahana ampidirina anaty pejy, ilaina be ho an'ny Wikivao",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'catfeed-desc' => 'Кориснички делчиња од емитувања за скорешни промени.
+Создава верзија во самата страница, особено корисно за Викивести',
+);
+
 /** Marathi (मराठी)
  * @author Kaustubh
  */
@@ -190,6 +279,22 @@ $messages['mr'] = array(
 $messages['nds'] = array(
 	'catfeed-desc' => 'Bruukt Delen vun de Toletzt-Ännert-Newsfeeds.
 Maakt en inbunnen Version; besünners praktisch för Wikinews.',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'catfeed-desc' => "Gebruuk infermasie uut de leste wiezigingen.
+Maak een versie binnen een pagina, in 't biezunder hendig veur Wikiniejs",
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'catfeed-desc' => 'हालै परिवर्तन गरिएको फिडबाट बिट्सहरु प्रयोग गर्छ ।
+पृष्ठ-भित्र शृजना गर्ने , विशेषरुपमा विकिन्युजलाई प्रभावकारी',
 );
 
 /** Dutch (Nederlands)
@@ -238,6 +343,14 @@ $messages['pl'] = array(
 	'catfeed-desc' => 'Wykorzystując informacje z listy ostatnich zmian tworzy wersję umieszczaną wewnątrz treści strony. Szczególnie użyteczne dla Wikinews.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'catfeed-desc' => 'A dòvra dij "bit" da dij "feed" pen-e cambià.
+A crea vërsion anpaginà, utij dzortut për Wikinews',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -267,11 +380,35 @@ $messages['ru'] = array(
 	'catfeed-desc' => 'Использует некоторые части ленты свежих правок, создаёт её версию внутри страницы. Особенно полезно для Викиновостей.',
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'catfeed-desc' => 'Кэлиҥҥи уларытыылар сорҕолорун туһанар, сирэй иһигэр хатылыыр.
+Биики Сонуннарга ордук туһалаах.',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'catfeed-desc' => 'Používa kúsky z kanálov posledných zmien. Vytvorí verziu v rámci stránky. Obzvlášť užitočné pre Wikinews.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'catfeed-desc' => 'Користи битове из протока скорашњих измена.
+Прави верзију унутар стране, посебно корисну за Викивести.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'catfeed-desc' => 'Koristi bitove iz protoka skorašnjih izmena.
+Pravi verziju unutar strane, posebno korisnu za Vikivesti.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -303,6 +440,14 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'catfeed-desc' => "Gumagamit ng maliliit na mga piraso mula sa isinubong kamakailang mga pagbabago.
 Lumikha ng bersyong nasa loob ng pahina, partikular na magagamit para sa Wikibalita (''Wikinews'').",
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'catfeed-desc' => 'Son değişiklikler beslemelerinin parçalarını kullanır.
+Özellikle Vikihaber için yararlı olan sayfa içi sürümünü oluşturun',
 );
 
 /** Ukrainian (Українська)

@@ -20,9 +20,7 @@ class DataCenterLayoutColumns extends DataCenterLayout {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Begins layout
 		$xmlOutput = parent::begin( self::$parameters['class'] );
 		// Calculates split percentage

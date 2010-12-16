@@ -12,6 +12,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'EmailAddressImage',
 	'version'        => '1.1',
 	'author'         => 'Maarten van Dantzich',

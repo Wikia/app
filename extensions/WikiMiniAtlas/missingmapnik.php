@@ -44,4 +44,3 @@ if( substr($url,0,strlen($base)) == $base )
   }
   else echo "filename format error";
 }
-?>

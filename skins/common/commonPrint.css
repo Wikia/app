@@ -48,17 +48,17 @@ div.thumb {
     width: auto;
     overflow: hidden;
 }
-div.thumb div {
+div.thumbinner {
     border:1px solid #cccccc;
     padding: 3px !important;
     background-color:#f9f9f9;
     font-size: 94%;
     text-align: center;
 }
-div.thumb div a img {
+html .thumbimage {
     border:1px solid #cccccc;
 }
-div.thumb div div.thumbcaption {
+html .thumbcaption {
     border: none;
     padding: 0.3em 0 0.1em 0;
 }
@@ -108,7 +108,8 @@ div#f-copyrightico,
 li#viewcount,
 li#about,
 li#disclaimer,
-li#privacy {
+li#privacy,
+#mw-hidden-catlinks {
     /* Hides all the elements irrelevant for printing */
     display: none;
 }
@@ -211,33 +212,14 @@ span.texhtml { font-family: serif; }
 
 #siteNotice { display: none; }
 
-table.gallery {
-        border:  1px solid #cccccc;
-        margin:  2px;
-        padding: 2px;
-        background-color:#ffffff;
-}
-
-table.gallery tr { 
-        vertical-align:top;
-}
-
 div.gallerybox {
-        border: 1px solid #cccccc;
-        margin: 2px;
-        background-color:#f9f9f9;
-        width:  150px;
+	border: 1px solid #cccccc;
+	background-color:#f9f9f9;
+	width:  150px;
 }
-
-div.gallerybox div.thumb {
-        text-align: center;
-        border: 1px solid #cccccc;
-        margin: 2px;
-}       
 
 div.gallerytext {
-        font-size: 94%;
-        padding: 2px 4px;
+	overflow: visible;
 }       
 
 /*

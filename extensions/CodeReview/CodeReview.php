@@ -28,9 +28,8 @@ http://pecl.php.net/package/svn
 */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'CodeReview',
-	'svn-date' => '$LastChangedDate: 2009-03-18 22:14:33 +0100 (śro, 18 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48538 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CodeReview',
 	'author' => array( 'Brion Vibber', 'Aaron Schulz', 'Alexandre Emsenhuber', 'Chad Horohoe' ),
 	'descriptionmsg' => 'code-desc',
@@ -38,31 +37,43 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-$wgAutoloadClasses['ApiCodeUpdate'] = $dir . 'ApiCodeUpdate.php';
-$wgAutoloadClasses['ApiCodeDiff'] = $dir . 'ApiCodeDiff.php';
-$wgAutoloadClasses['ApiCodeComments'] = $dir . 'ApiCodeComments.php';
-$wgAutoloadClasses['CodeDiffHighlighter'] = $dir . 'DiffHighlighter.php';
-$wgAutoloadClasses['CodeRepository'] = $dir . 'CodeRepository.php';
-$wgAutoloadClasses['CodeRepoListView'] = $dir . 'CodeRepoListView.php';
-$wgAutoloadClasses['CodeRevision'] = $dir . 'CodeRevision.php';
-$wgAutoloadClasses['CodeRevisionAuthorView'] = $dir . 'CodeRevisionAuthorView.php';
-$wgAutoloadClasses['CodeRevisionAuthorLink'] = $dir . 'CodeRevisionAuthorLink.php';
-$wgAutoloadClasses['CodeRevisionListView'] = $dir . 'CodeRevisionListView.php';
-$wgAutoloadClasses['CodeRevisionCommitter'] = $dir . 'CodeRevisionCommitter.php';
-$wgAutoloadClasses['CodeRevisionStatusView'] = $dir . 'CodeRevisionStatusView.php';
-$wgAutoloadClasses['CodeRevisionTagView'] = $dir . 'CodeRevisionTagView.php';
-$wgAutoloadClasses['CodeRevisionView'] = $dir . 'CodeRevisionView.php';
-$wgAutoloadClasses['CodeAuthorListView'] = $dir . 'CodeAuthorListView.php';
-$wgAutoloadClasses['CodeStatusListView'] = $dir . 'CodeStatusListView.php';
-$wgAutoloadClasses['CodeTagListView'] = $dir . 'CodeTagListView.php';
-$wgAutoloadClasses['CodeCommentsListView'] = $dir . 'CodeCommentsListView.php';
-$wgAutoloadClasses['CodeReleaseNotes'] = $dir . 'CodeReleaseNotes.php';
-$wgAutoloadClasses['CodeComment'] = $dir . 'CodeComment.php';
-$wgAutoloadClasses['CodePropChange'] = $dir . 'CodePropChange.php';
-$wgAutoloadClasses['SpecialCode'] = $dir . 'SpecialCode.php';
-$wgAutoloadClasses['CodeView'] = $dir . 'SpecialCode.php';
-$wgAutoloadClasses['SpecialRepoAdmin'] = $dir . 'SpecialRepoAdmin.php';
-$wgAutoloadClasses['SubversionAdaptor'] = $dir . 'Subversion.php';
+$wgAutoloadClasses['ApiCodeUpdate'] = $dir . 'api/ApiCodeUpdate.php';
+$wgAutoloadClasses['ApiCodeDiff'] = $dir . 'api/ApiCodeDiff.php';
+$wgAutoloadClasses['ApiCodeComments'] = $dir . 'api/ApiCodeComments.php';
+$wgAutoloadClasses['ApiCodeTestUpload'] = $dir . 'api/ApiCodeTestUpload.php';
+
+$wgAutoloadClasses['SubversionAdaptor'] = $dir . 'backend/Subversion.php';
+$wgAutoloadClasses['CodeDiffHighlighter'] = $dir . 'backend/DiffHighlighter.php';
+
+$wgAutoloadClasses['CodeRepository'] = $dir . 'backend/CodeRepository.php';
+$wgAutoloadClasses['CodeRevision'] = $dir . 'backend/CodeRevision.php';
+$wgAutoloadClasses['CodeComment'] = $dir . 'backend/CodeComment.php';
+$wgAutoloadClasses['CodeCommentLinker'] = $dir . 'backend/CodeCommentLinker.php';
+$wgAutoloadClasses['CodeCommentLinkerHtml'] = $dir . 'backend/CodeCommentLinker.php';
+$wgAutoloadClasses['CodeCommentLinkerWiki'] = $dir . 'backend/CodeCommentLinker.php';
+$wgAutoloadClasses['CodePropChange'] = $dir . 'backend/CodePropChange.php';
+$wgAutoloadClasses['CodeTestSuite'] = $dir . 'backend/CodeTestSuite.php';
+$wgAutoloadClasses['CodeTestRun'] = $dir . 'backend/CodeTestRun.php';
+$wgAutoloadClasses['CodeTestResult'] = $dir . 'backend/CodeTestResult.php';
+
+$wgAutoloadClasses['CodeRepoListView'] = $dir . 'ui/CodeRepoListView.php';
+$wgAutoloadClasses['CodeRevisionAuthorView'] = $dir . 'ui/CodeRevisionAuthorView.php';
+$wgAutoloadClasses['CodeRevisionAuthorLink'] = $dir . 'ui/CodeRevisionAuthorLink.php';
+$wgAutoloadClasses['CodeRevisionCommitter'] = $dir . 'ui/CodeRevisionCommitter.php';
+$wgAutoloadClasses['CodeRevisionListView'] = $dir . 'ui/CodeRevisionListView.php';
+$wgAutoloadClasses['CodeRevisionStatusView'] = $dir . 'ui/CodeRevisionStatusView.php';
+$wgAutoloadClasses['CodeRevisionTagView'] = $dir . 'ui/CodeRevisionTagView.php';
+$wgAutoloadClasses['CodeRevisionView'] = $dir . 'ui/CodeRevisionView.php';
+$wgAutoloadClasses['CodeAuthorListView'] = $dir . 'ui/CodeAuthorListView.php';
+$wgAutoloadClasses['CodeStatusListView'] = $dir . 'ui/CodeStatusListView.php';
+$wgAutoloadClasses['CodeTagListView'] = $dir . 'ui/CodeTagListView.php';
+$wgAutoloadClasses['CodeCommentsListView'] = $dir . 'ui/CodeCommentsListView.php';
+$wgAutoloadClasses['CodeReleaseNotes'] = $dir . 'ui/CodeReleaseNotes.php';
+$wgAutoloadClasses['CodeStatusChangeListView'] = $dir . 'ui/CodeStatusChangeListView.php';
+$wgAutoloadClasses['SpecialCode'] = $dir . 'ui/SpecialCode.php';
+$wgAutoloadClasses['CodeView'] = $dir . 'ui/SpecialCode.php';
+$wgAutoloadClasses['SpecialRepoAdmin'] = $dir . 'ui/SpecialRepoAdmin.php';
+
 
 $wgSpecialPages['Code'] = 'SpecialCode';
 $wgSpecialPageGroups['Code'] = 'developer';
@@ -71,6 +82,7 @@ $wgSpecialPageGroups['RepoAdmin'] = 'developer';
 
 $wgAPIModules['codeupdate'] = 'ApiCodeUpdate';
 $wgAPIModules['codediff'] = 'ApiCodeDiff';
+$wgAPIModules['codetestupload'] = 'ApiCodeTestUpload';
 $wgAPIListModules['codecomments'] = 'ApiCodeComments';
 
 $wgExtensionMessagesFiles['CodeReview'] = $dir . 'CodeReview.i18n.php';
@@ -100,11 +112,20 @@ $wgGroupPermissions['steward']['repoadmin'] = true; // temp
 $wgSubversionProxy = false;
 $wgSubversionProxyTimeout = 30; // default 3 secs is too short :)
 
+// Command-line options to pass on SVN command line if SVN PECL extension
+// isn't available and we're not using the proxy.
+// Defaults here should allow working with both http: and https: repos
+// as long as authentication isn't required.
+$wgSubversionOptions = "--non-interactive --trust-server-cert";
+
+// What is the default SVN import chunk size?
+$wgCodeReviewImportBatchSize = 400;
+
 // Bump the version number every time you change a CodeReview .css/.js file
-$wgCodeReviewStyleVersion = 4;
+$wgCodeReviewStyleVersion = 5;
 
 // The name of a repo which represents the code running on this wiki, used to highlight active revisions
-$wgWikiSVN = 'MediaWiki';
+$wgWikiSVN = '';
 
 // If you are running a closed svn, fill the following two lines with the username and password
 // of a user allowed to access it. Otherwise, leave it false.
@@ -115,5 +136,37 @@ $wgSubversionPassword = false;
 // Leave this off by default until it works right
 $wgCodeReviewENotif = false;
 
+// Set this to an e-mail list to send all comments to
+$wgCodeReviewCommentWatcher = false;
+
 // What images can be used for client-side side-by-side comparisons?
 $wgCodeReviewImgRegex = '/\.(png|jpg|jpeg|gif)$/i';
+
+// Set to a secret string for HMAC validation of test run data uploads.
+// Should match test runner's $wgParserTestRemote['secret'].
+$wgCodeReviewSharedSecret = false;
+
+/**
+ * Maximum size of diff text before it is omitted from the revision view
+ */
+$wgCodeReviewMaxDiffSize = 500000;
+
+# Schema changes
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'efCodeReviewSchemaUpdates';
+
+function efCodeReviewSchemaUpdates() {
+	global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
+	$base = dirname(__FILE__);
+	if( $wgDBtype == 'mysql' ) {
+		$wgExtNewTables[] = array( 'code_rev', "$base/codereview.sql" ); // Initial install tables
+		$wgExtNewFields[] = array( 'code_rev', 'cr_diff', "$base/archives/codereview-cr_diff.sql" );
+		$wgExtNewIndexes[] = array( 'code_relations', 'repo_to_from', "$base/archives/code_relations_index.sql" );
+		//$wgExtNewFields[] = array( 'code_rev', "$base/archives/codereview-cr_status.sql" ); // FIXME FIXME this is a change to options... don't know how
+		$wgExtNewTables[] = array( 'code_bugs', "$base/archives/code_bugs.sql" );
+		$wgExtNewTables[] = array( 'code_test_suite', "$base/archives/codereview-code_tests.sql" );
+	} elseif( $wgDBtype == 'postgres' ) {
+		// TODO
+	}
+	return true;
+}
+

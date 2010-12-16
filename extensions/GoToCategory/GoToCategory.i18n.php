@@ -36,11 +36,32 @@ $messages['arz'] = array(
 	'gotocategory-desc' => "يتحقق من مدخلات البحث فى نطاق Category: لوظيفة اذهب 'اقفز إلى الصفحة'",
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'gotocategory-desc' => 'Правярае умовы пошуку ў катэгорыі: прастора назваў для функцыянальнай магчымасьці «пераход на старонку»',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'gotocategory-desc' => "Gwiriañ a ra an termenoù klask a-enep ar Rummad : esaouenn anv evit an arc'hwel 'mont d'ar bajenn'",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'gotocategory-desc' => "Provjerava traženi pojam u kategorijama: imenski prostor za funkcionalnost 'jump to page' (skoči na stranicu)",
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'gotocategory-desc' => "Comprova els termes de la cerca a l'espai de noms Categoria: per la funció 'Vés-hi'",
 );
 
 /** Welsh (Cymraeg)
@@ -64,11 +85,25 @@ $messages['dsb'] = array(
 	'gotocategory-desc' => 'Pśeglědujo pytańske zapśimjeśa pśeśiwo mjenjowemu rumoju Kategorija: za funkcionalnosć "Źi k bokoju"',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'gotocategory-desc' => 'Ελέγχει τους όρους αναζήτησης προς τον ονοματικό χώρο "Κατηγορία:" για τη λειτουργία "μετάβαση στη σελίδα"',
+);
+
 /** Spanish (Español)
  * @author Sanbec
  */
 $messages['es'] = array(
 	'gotocategory-desc' => 'Compruebas los términos de búsqueda en el espacio de nombres «Categoría:» para la función «Ir a la página»',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'gotocategory-desc' => 'Tarkistaa hakutermit luokkanimiavaruudessa "Siirry sivulle"-toiminnallisuutta varten',
 );
 
 /** French (Français)
@@ -101,6 +136,13 @@ $messages['he'] = array(
 	'gotocategory-desc' => 'בדיקת מונחי החיפוש מול מרחב הקטגוריות בעת שימוש באפשרות הישירה "לדף"',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'gotocategory-desc' => "Naga usisa sang mga termino batuk sa Kategorya: ngalanespsayo para sa Lakat 'laktod sa pahina' pagi-huan",
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -108,11 +150,26 @@ $messages['hsb'] = array(
 	'gotocategory-desc' => 'Pruwuje pytanske zapřijeća přećiwo mjenowemu rumej Kategorija: za funkcionalitu "Dźi k stronje"',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ * @author Tgr
+ */
+$messages['hu'] = array(
+	'gotocategory-desc' => "A kereső ''Menj!'' (megadott nevű lapra ugrás) funkcióját kiterjeszti a ''Kategória'' névtérre",
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'gotocategory-desc' => "Cerca parolas etiam in le spatio de nomines Categoria: a fin de possibilisar le function 'ir al pagina'",
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'gotocategory-desc' => "Mencari di ruang nama Kategori: untuk fungsionalitas Pergi 'lompat ke halaman'",
 );
 
 /** Italian (Italiano)
@@ -126,7 +183,7 @@ $messages['it'] = array(
  * @author Fryed-peach
  */
 $messages['ja'] = array(
-	'gotocategory-desc' => '「ページへ移動」機能の検索語照合を Category: 名前空間に対して行う',
+	'gotocategory-desc' => '「ページへ移動」機能において、{{ns:category}}: 名前空間に対して検索語の照合を行う',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -144,10 +201,18 @@ $messages['lb'] = array(
 );
 
 /** Limburgish (Limburgs)
+ * @author Aelske
  * @author Ooswesthoesbes
  */
 $messages['li'] = array(
-	'gotocategory-desc' => "Doorzeuk ouch de naamrummdje Category: veur zeuktèrm óm 'nao paasj gaon' meugelik tö make",
+	'gotocategory-desc' => "Doorzeuk ouch de naamruumde Category: veur zeukterm óm 'nao pagina gaon' meugelik te make",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'gotocategory-desc' => "Ја проверува Категоријата за поими за пребарување: именски простор за функционалноста на Оди 'скокни на страница'",
 );
 
 /** Marathi (मराठी)
@@ -185,6 +250,20 @@ $messages['oc'] = array(
 	'gotocategory-desc' => "Marcar los tèrmes de las recèrcas a l’endrech de la categoria : nom d'espaci per « Anar » a partir de la foncionalitat « anar a la pagina »",
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'gotocategory-desc' => 'Przeszukiwanie przestrzeni nazw Kategoria: dla funkcjonalności „Przejdź” w wyszukiwarce',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'gotocategory-desc' => 'A controla ij termo d\'arserca ant le Categorìe: namespace për "Andé" a la funsionalità "Và a la pàgina"',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -197,6 +276,13 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'gotocategory-desc' => "Verifica termos de pesquisa no espaço nominal Categoria: para a funcionalidade Ir 'saltar para página'",
+);
+
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'gotocategory-desc' => '"Katiguriya:" suti k\'itipaq maskay qillqananchakunata llanchin "p\'anqaman riy" llamk\'anapaq',
 );
 
 /** Tarandíne (Tarandíne)
@@ -241,11 +327,32 @@ $messages['sv'] = array(
 	'gotocategory-desc' => 'Checkar sökord upp mot kategorinamnrymden för "Gå"-funktionaliteten i sökboxen',
 );
 
+/** Telugu (తెలుగు)
+ * @author Kiranmayee
+ */
+$messages['te'] = array(
+	'gotocategory-desc' => 'అన్వేషణ పదాలను వర్గములో వెతుకుతుంది: "పేజీకి వెళ్ళు" యొక్క స్వభావముకు సమూహనామము',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
 	'gotocategory-desc' => "Nagsusuri ng mga salitang panghanap laban sa espasyo ng pangalang Kaurian: para sa sa katungkulang Gawin 'tumalon papunta sa pahina'",
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'gotocategory-desc' => "Git 'sayfaya atla' işlevi için Kategori: isim alanı ile aranan kelimeleri karşılaştırır",
+);
+
+/** Ukrainian (Українська)
+ * @author NickK
+ */
+$messages['uk'] = array(
+	'gotocategory-desc' => "Перевіряє умови пошуку в просторі назв «Категорія» для забезпечення функції 'перейти до сторінки'",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -260,5 +367,12 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'gotocategory-desc' => "检查的搜索字词的种类：名字空间的到'跳转到页'的功能",
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
+$messages['zh-hant'] = array(
+	'gotocategory-desc' => "檢查的搜索字詞的種類：名字空間的到'跳轉到頁'的功能",
 );
 

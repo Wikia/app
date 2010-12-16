@@ -14,6 +14,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 	$wgAutoloadClasses['Sorter'] = dirname( __FILE__ ) . '/Sort.class.php';
 	$wgExtensionFunctions[] = 'efSort';
 	$wgExtensionCredits['parserhook'][] = array(
+		'path' => __FILE__,
 		'name' => 'Sort',
 		'author' => 'Rob Church',
 		'description' => 'Create simple sorted lists using <tt>&lt;sort&gt;</tt>',

@@ -30,7 +30,7 @@
 		switch( $contextType ) {
 			case 'special':
 				$this->setupSpecialView();
-			break;		
+			break;
 			case 'sequence':
 				$this->setupSequenceView();
 			break;
@@ -49,7 +49,7 @@
 				array('mv_interface'=>&$this)
 			);
 		}
-	}*/	
+	}*/
 	function setupStreamView() {
 		global $mvgIP, $mvDefaultStreamViewLength, $wgOut, $mvgScriptPath, $wgUser, $mvDispROEicon, $mvEnableStreamNotice;
 
@@ -70,46 +70,46 @@
 		global $mvgScriptPath, $wgRequest;
 		$advs = $wgRequest->getVal( 'advs' );
 		$advSearch = ( $advs == '' || $advs == 0 ) ? '0' : '1';
-		
+
 		$wgOut->addScript( '<script type="text/javascript">/*<![CDATA[*/' . '
 			var mvTitle = \'' . htmlspecialchars( $this->article->mvTitle->getWikiTitle() ) . '\';
 			var mvTracks = \'' . htmlspecialchars( $this->components['MV_Overlay']->getMVDReqString() ) . '\';
 			var mvgScriptPath = \'' . htmlspecialchars( $mvgScriptPath ) . '\';
 		/*]]>*/</script>' );
-		
+
 		$sk = $wgUser->getSkin();
-		
+
 		global $wgTitle;
 		// also add prev next paging
 		$this->page_header = '<h1 class="videoHeader">' .
 			$this->article->mvTitle->getStreamNameDate() . ' :: ' .
 			$this->components['MV_Tools']->stream_paging_links( 'prev' ) .
-				' <span title="' . htmlspecialchars( wfMsg( 'mv_click_to_edit' ) ) . 
-				'" id="mv_stream_time">' . $this->article->mvTitle->getTimeDesc( $span_separated = true ) .' '. 
-					'</span>'.				
+				' <span title="' . htmlspecialchars( wfMsg( 'mv_click_to_edit' ) ) .
+				'" id="mv_stream_time">' . $this->article->mvTitle->getTimeDesc( $span_separated = true ) .' '.
+					'</span>'.
 				'</span>' .
-			$this->components['MV_Tools']->stream_paging_links( 'next' ) .			
-			'<br><span style="font-size:80%">' .
+			$this->components['MV_Tools']->stream_paging_links( 'next' ) .
+			'<br /><span style="font-size:80%">' .
 				wfMsg( 'mv_stream_length' ) . seconds2Description( $this->article->mvTitle->getDuration(), true ) . ' <i>'.
 			'<span style="font-size:90%">';
 		$this->page_header .= wfMsg('mv_stream_tool_heading'). ':</i></span> <span style="font-size:70%">';
 		if( $wgRequest->getVal('view') != 'overview' )
 			$this->page_header.= $sk->makeKnownLinkObj( $wgTitle, wfMsg( 'mv_stream_overview' ), 'view=overview' ) . ' | ';
-		$this->page_header.=' <a id="mv_edit_time" style="color:#2060C1;" href="#" onclick="return false;" alt=" ' . 
+		$this->page_header.=' <a id="mv_edit_time" style="color:#2060C1;" href="#" onclick="return false;" alt=" ' .
 						wfMsg('mv_edit_time'). '" >'. wfMsg('mv_edit_time') . '</a></span></h1>';
-			
+
 		if($mvEnableStreamNotice){
 			$wgOut->addWikiText( wfMsg('mv_warning_wiki'));
 			$this->page_header.=$wgOut->getHTML();
 			$wgOut->clearHTML();
 		}
-		//clear no robots flag: 
+		//clear no robots flag:
 		$wgOut->setRobotpolicy( '' );
-		
+
 		// add export roe icon:
 		if($mvDispROEicon){
 			$this->page_header .= '<span id="cmml_link"/>';
-				$sTitle = Title::makeTitle( NS_SPECIAL, 'MvExportStream' );				
+				$sTitle = Title::makeTitle( NS_SPECIAL, 'MvExportStream' );
 				$this->page_header .= $sk->makeKnownLinkObj( $sTitle,
 					'<img style="width:28px;height:28px;" src="' . htmlspecialchars( $mvgScriptPath ) . '/skins/images/Feed-icon_cmml_28x28.png">',
 					'feed_format=roe&stream_name=' . htmlspecialchars( $this->article->mvTitle->getStreamName() ) . '&t=' . htmlspecialchars( $this->article->mvTitle->getTimeRequest() ),
@@ -152,11 +152,16 @@
 		// @@todo dynamic re-size page_spacer:
 		$wgOut->addHTML( '<div id="mv_interface_container">' );
 		foreach ( $this->components as $cpKey => &$component ) {
+			if ( $cpKey == 'MV_Tools' )
+				$wgOut->addHTML( "<div style=\"clear:left\"></div>");
+
 			if ( $cpKey == 'MV_Navigator' )
 				$wgOut->addHTML( "<div id=\"videoSideBar\">" );
+
 			$component->render_full();
 			if ( $cpKey == 'MV_Overlay' )
 				$wgOut->addHTML( "</div>" );
+
 		}
 		$wgOut->addHTML( '</div>' );
 		// for now output spacers

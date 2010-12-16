@@ -12,6 +12,7 @@ Set system message "seealso_local" to use a localized version, e.g., to "sieheau
 */
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Seealso',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:See_also',
 	'author'         => 'Magnus Manske',

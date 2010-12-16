@@ -18,9 +18,7 @@ class DataCenterControllerModels extends DataCenterController {
 
 	/* Functions */
 
-	public function __construct(
-		array $path
-	) {
+	public function __construct( array $path ) {
 		// Actions
 		if ( $path['id'] && isset( $this->types[$path['type']] ) ) {
 			if ( DataCenterPage::userCan( 'change' ) ) {
@@ -46,10 +44,7 @@ class DataCenterControllerModels extends DataCenterController {
 		}
 	}
 
-	public function save(
-		array $data,
-		$type
-	) {
+	public function save( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'change' ) ) {
 			return false;
 		}
@@ -60,10 +55,7 @@ class DataCenterControllerModels extends DataCenterController {
 		return true;
 	}
 
-	public function link(
-		array $data,
-		$type
-	) {
+	public function link( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'change' ) ) {
 			return false;
 		}
@@ -76,10 +68,7 @@ class DataCenterControllerModels extends DataCenterController {
 		return true;
 	}
 
-	public function compareChanges(
-		array $data,
-		$type
-	) {
+	public function compareChanges( array $data, $type ) {
 		DataCenterWidgetHistory::compareChanges( $data );
 		return null;
 	}

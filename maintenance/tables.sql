@@ -86,6 +86,8 @@ CREATE TABLE /*_*/user (
   
   -- Newline-separated list of name=value defining the user
   -- preferences
+  -- Now obsolete in favour of user_properties table;
+  -- old values will be migrated from here transparently.
   user_options blob NOT NULL,
   
   -- This is a timestamp which is updated when a user
@@ -162,8 +164,10 @@ CREATE UNIQUE INDEX /*i*/ug_user_group ON /*_*/user_groups (ug_user,ug_group);
 CREATE INDEX /*i*/ug_group ON /*_*/user_groups (ug_group);
 
 
+--
 -- Stores notifications of user talk page changes, for the display
 -- of the "you have new messages" box
+--
 CREATE TABLE /*_*/user_newtalk (
   -- Key to user.user_id
   user_id int NOT NULL default 0,
@@ -179,6 +183,29 @@ CREATE TABLE /*_*/user_newtalk (
 CREATE INDEX /*i*/un_user_id ON /*_*/user_newtalk (user_id);
 CREATE INDEX /*i*/un_user_ip ON /*_*/user_newtalk (user_ip);
 
+
+--
+-- User preferences and perhaps other fun stuff. :)
+-- Replaces the old user.user_options blob, with a couple nice properties:
+--
+-- 1) We only store non-default settings, so changes to the defauls
+--    are now reflected for everybody, not just new accounts.
+-- 2) We can more easily do bulk lookups, statistics, or modifications of
+--    saved options since it's a sane table structure.
+--
+CREATE TABLE /*_*/user_properties (
+  -- Foreign key to user.user_id
+  up_user int NOT NULL,
+  
+  -- Name of the option being saved. This is indexed for bulk lookup.
+  up_property varbinary(32) NOT NULL,
+  
+  -- Property value as a string.
+  up_value blob
+) /*$wgDBTableOptions*/;
+
+CREATE UNIQUE INDEX /*i*/user_properties_user_property ON /*_*/user_properties (up_user,up_property);
+CREATE INDEX /*i*/user_properties_property ON /*_*/user_properties (up_property);
 
 --
 -- Core of the wiki: each page has an entry here which identifies
@@ -550,6 +577,20 @@ CREATE INDEX /*i*/el_to ON /*_*/externallinks (el_to(60), el_from);
 CREATE INDEX /*i*/el_index ON /*_*/externallinks (el_index(60));
 
 
+--
+-- Track external user accounts, if ExternalAuth is used
+--
+CREATE TABLE /*_*/external_user (
+  -- Foreign key to user_id
+  eu_local_id int unsigned NOT NULL PRIMARY KEY,
+
+  -- Some opaque identifier provided by the external database
+  eu_external_id varchar(255) binary NOT NULL
+) /*$wgDBTableOptions*/;
+
+CREATE UNIQUE INDEX /*i*/eu_external_id ON /*_*/external_user (eu_external_id);
+
+
 -- 
 -- Track interlanguage links
 --
@@ -725,7 +766,7 @@ CREATE TABLE /*_*/image (
   -- the minor parts are not required to adher to any standard
   -- but should be consistent throughout the database
   -- see http://www.iana.org/assignments/media-types/
-  img_minor_mime varbinary(32) NOT NULL default "unknown",
+  img_minor_mime varbinary(100) NOT NULL default "unknown",
   
   -- Description field as entered by the uploader.
   -- This is displayed in image upload history and logs.
@@ -777,7 +818,7 @@ CREATE TABLE /*_*/oldimage (
   oi_metadata mediumblob NOT NULL,
   oi_media_type ENUM("UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE") default NULL,
   oi_major_mime ENUM("unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart") NOT NULL default "unknown",
-  oi_minor_mime varbinary(32) NOT NULL default "unknown",
+  oi_minor_mime varbinary(100) NOT NULL default "unknown",
   oi_deleted tinyint unsigned NOT NULL default 0,
   oi_sha1 varbinary(32) NOT NULL default ''
 ) /*$wgDBTableOptions*/;
@@ -827,7 +868,7 @@ CREATE TABLE /*_*/filearchive (
   fa_bits int default 0,
   fa_media_type ENUM("UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE") default NULL,
   fa_major_mime ENUM("unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart") default "unknown",
-  fa_minor_mime varbinary(32) default "unknown",
+  fa_minor_mime varbinary(100) default "unknown",
   fa_description tinyblob,
   fa_user int unsigned default 0,
   fa_user_text varchar(255) binary,
@@ -1056,7 +1097,7 @@ CREATE INDEX /*i*/exptime ON /*_*/objectcache (exptime);
 CREATE TABLE /*_*/transcache (
   tc_url varbinary(255) NOT NULL,
   tc_contents text,
-  tc_time int NOT NULL
+  tc_time binary(14) NOT NULL
 ) /*$wgDBTableOptions*/;
 
 CREATE UNIQUE INDEX /*i*/tc_url_idx ON /*_*/transcache (tc_url);
@@ -1069,8 +1110,8 @@ CREATE TABLE /*_*/logging (
   -- Symbolic keys for the general log type and the action type
   -- within the log. The output format will be controlled by the
   -- action field, but only the type controls categorization.
-  log_type varbinary(10) NOT NULL default '',
-  log_action varbinary(10) NOT NULL default '',
+  log_type varbinary(32) NOT NULL default '',
+  log_action varbinary(32) NOT NULL default '',
   
   -- Timestamp. Duh.
   log_timestamp binary(14) NOT NULL default '19700101000000',
@@ -1078,10 +1119,14 @@ CREATE TABLE /*_*/logging (
   -- The user who performed this action; key to user_id
   log_user int unsigned NOT NULL default 0,
   
+  -- Name of the user who performed this action
+  log_user_text varchar(255) binary NOT NULL default '',
+  
   -- Key to the page affected. Where a user is the target,
   -- this will point to the user page.
   log_namespace int NOT NULL default 0,
   log_title varchar(255) binary NOT NULL default '',
+  log_page int unsigned NULL,
   
   -- Freeform text. Interpreted as edit history comments.
   log_comment varchar(255) NOT NULL default '',
@@ -1097,6 +1142,20 @@ CREATE INDEX /*i*/type_time ON /*_*/logging (log_type, log_timestamp);
 CREATE INDEX /*i*/user_time ON /*_*/logging (log_user, log_timestamp);
 CREATE INDEX /*i*/page_time ON /*_*/logging (log_namespace, log_title, log_timestamp);
 CREATE INDEX /*i*/times ON /*_*/logging (log_timestamp);
+CREATE INDEX /*i*/log_user_type_time ON /*_*/logging (log_user, log_type, log_timestamp);
+CREATE INDEX /*i*/log_page_id_time ON /*_*/logging (log_page,log_timestamp);
+
+
+CREATE TABLE /*_*/log_search (
+  -- The type of ID (rev ID, log ID, rev timestamp, username)
+  ls_field varbinary(32) NOT NULL,
+  -- The value of the ID
+  ls_value varchar(255) NOT NULL,
+  -- Key to log_id
+  ls_log_id int unsigned NOT NULL default 0
+) /*$wgDBTableOptions*/;
+CREATE UNIQUE INDEX /*i*/ls_field_val ON /*_*/log_search (ls_field,ls_value,ls_log_id);
+CREATE INDEX /*i*/ls_log_id ON /*_*/log_search (ls_log_id);
 
 
 CREATE TABLE /*_*/trackbacks (
@@ -1128,7 +1187,7 @@ CREATE TABLE /*_*/job (
   job_params blob NOT NULL
 ) /*$wgDBTableOptions*/;
 
-CREATE INDEX /*i*/job_cmd ON /*_*/job (job_cmd, job_namespace, job_title);
+CREATE INDEX /*i*/job_cmd ON /*_*/job (job_cmd, job_namespace, job_title, job_params(128));
 
 
 -- Details of updates to cached special pages
@@ -1154,7 +1213,9 @@ CREATE TABLE /*_*/redirect (
   -- and deletions may refer to different page records as time
   -- goes by.
   rd_namespace int NOT NULL default 0,
-  rd_title varchar(255) binary NOT NULL default ''
+  rd_title varchar(255) binary NOT NULL default '',
+  rd_interwiki varchar(32) default NULL,
+  rd_fragment varchar(255) binary default NULL
 ) /*$wgDBTableOptions*/;
 
 CREATE INDEX /*i*/rd_ns_title ON /*_*/redirect (rd_namespace,rd_title,rd_from);
@@ -1239,10 +1300,15 @@ CREATE TABLE /*_*/updatelog (
 
 -- A table to track tags for revisions, logs and recent changes.
 CREATE TABLE /*_*/change_tag (
+  -- RCID for the change
   ct_rc_id int NULL,
+  -- LOGID for the change
   ct_log_id int NULL,
+  -- REVID for the change
   ct_rev_id int NULL,
+  -- Tag applied
   ct_tag varchar(255) NOT NULL,
+  -- Parameters for the tag, presently unused
   ct_params blob NULL
 ) /*$wgDBTableOptions*/;
 
@@ -1253,11 +1319,16 @@ CREATE UNIQUE INDEX /*i*/change_tag_rev_tag ON /*_*/change_tag (ct_rev_id,ct_tag
 CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_id,ct_log_id);
 
 
--- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT that only works on MySQL 4.1+
+-- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT
+-- that only works on MySQL 4.1+
 CREATE TABLE /*_*/tag_summary (
+  -- RCID for the change  
   ts_rc_id int NULL,
+  -- LOGID for the change
   ts_log_id int NULL,
+  -- REVID for the change
   ts_rev_id int NULL,
+  -- Comma-separated list of tags
   ts_tags blob NOT NULL
 ) /*$wgDBTableOptions*/;
 
@@ -1270,5 +1341,15 @@ CREATE TABLE /*_*/valid_tag (
   vt_tag varchar(255) NOT NULL PRIMARY KEY
 ) /*$wgDBTableOptions*/;
 
+-- Table for storing localisation data
+CREATE TABLE /*_*/l10n_cache (
+  -- Language code
+  lc_lang varbinary(32) NOT NULL,
+  -- Cache key
+  lc_key varchar(255) NOT NULL,
+  -- Value
+  lc_value mediumblob NOT NULL
+) /*$wgDBTableOptions*/;
+CREATE INDEX /*i*/lc_lang_key ON /*_*/l10n_cache (lc_lang, lc_key);
 
 -- vim: sw=2 sts=2 et

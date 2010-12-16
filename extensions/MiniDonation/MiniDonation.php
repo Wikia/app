@@ -7,8 +7,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'http://mediawiki.org/wiki/Extension:MiniDonation',
 	'description' => 'Adds a tag <tt>&lt;donateform&gt;</tt> to support donations via PayPal',
 	'descriptionmsg' => 'donationform-desc',
-	'svn-date' => '$LastChangedDate: 2008-07-04 17:36:45 +0200 (ptk, 04 lip 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37061 $',
 );
 
 $wgExtensionFunctions[] = 'wfSetupMiniDonation';

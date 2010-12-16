@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  * A Special Page extension to display user statistics
  *
@@ -12,8 +12,9 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'UserStats',
-	'version'        => 'v1.11.4',
+	'version'        => 'v1.11.5',
 	'author'         => 'Paul Grinberg',
 	'email'          => 'gri6507 at yahoo dot com',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Usage_Statistics',
@@ -34,7 +35,7 @@ $wgGroupPermissions['*'][$wgUserStatsGlobalRight] = false;
 $wgGroupPermissions['manager'][$wgUserStatsGlobalRight] = true;
 $wgGroupPermissions['sysop'][$wgUserStatsGlobalRight] = true;
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['UserStats'] = $dir . '/SpecialUserStats.i18n.php';
 $wgExtensionAliasesFiles['UserStats'] = $dir . 'SpecialUserStats.alias.php';
 $wgAutoloadClasses['SpecialUserStats'] = $dir . '/SpecialUserStats_body.php';

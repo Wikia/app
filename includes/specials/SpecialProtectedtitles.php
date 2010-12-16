@@ -16,7 +16,7 @@ class ProtectedTitlesForm {
 	function showList( $msg = '' ) {
 		global $wgOut, $wgRequest;
 
-		if ( "" != $msg ) {
+		if ( $msg != "" ) {
 			$wgOut->setSubtitle( $msg );
 		}
 
@@ -61,7 +61,7 @@ class ProtectedTitlesForm {
 			$skin = $wgUser->getSkin();
 
 		$title = Title::makeTitleSafe( $row->pt_namespace, $row->pt_title );
-		$link = $skin->makeLinkObj( $title );
+		$link = $skin->link( $title );
 
 		$description_items = array ();
 
@@ -94,7 +94,7 @@ class ProtectedTitlesForm {
 	function showOptions( $namespace, $type='edit', $level, $sizetype, $size ) {
 		global $wgScript;
 		$action = htmlspecialchars( $wgScript );
-		$title = SpecialPage::getTitleFor( 'ProtectedTitles' );
+		$title = SpecialPage::getTitleFor( 'Protectedtitles' );
 		$special = htmlspecialchars( $title->getPrefixedDBkey() );
 		return "<form action=\"$action\" method=\"get\">\n" .
 			'<fieldset>' .

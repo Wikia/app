@@ -322,6 +322,7 @@ wfor-ip-ccache-1-vif0.telkom-ipnet.co.za
 rgm-ip-ccache-1-vif0.telkom-ipnet.co.za
 tpr-ip-ccache-1-vif0.telkom-ipnet.co.za
 tbnb-ip-ccache-1-vif0.telkom-ipnet.co.za
+wbs-ip-ccache-4-vif0.telkom-ipnet.co.za
 rrba-ip-ccache-3-vif0.telkom-ipnet.co.za
 rrba-ip-ccache-4-vif0.telkom-ipnet.co.za
 wblv-ip-rcache-3-vif0.telkom-ipnet.co.za
@@ -334,6 +335,7 @@ ndn-ip-ccache-1-vif0.telkom-ipnet.co.za
 wbs-ip-ccache-2-vif0.telkom-ipnet.co.za
 wbs-ip-ccache-3-vif0.telkom-ipnet.co.za
 rrba-ip-ccache-7-vif0.telkom-ipnet.co.za
+nngy-ip-ccache-2-vif0.telkom-ipnet.co.za
 ndn-ip-ccache-2-vif0.telkom-ipnet.co.za
 rnls-ip-ccache-1-vif0.telkom-ipnet.co.za
 rhwh-ip-ccache-1-vif0.telkom-ipnet.co.za
@@ -341,6 +343,7 @@ rrdg-ip-ccache-1-vif0.telkom-ipnet.co.za
 tvwt-ip-ccache-1-vif0.telkom-ipnet.co.za
 tprn-ip-ccache-1-vif0.telkom-ipnet.co.za
 ndnn-ip-ccache-1-vif0.telkom-ipnet.co.za
+wblv-ip-pcache-4-vif0.telkom-ipnet.co.za
 wblv-ip-pcache-1-vif0.telkom-ipnet.co.za
 wblv-ip-pcache-5-vif0.telkom-ipnet.co.za
 rrba-ip-pcache-2-vif0.telkom-ipnet.co.za
@@ -399,6 +402,16 @@ ndf-cache2-vif0.saix.net
 # Source: reverse DNS and access logs
 165.21.154.0/24
 165.21.155.0/24
+# New subnet of SingTel it seems, -- Domas, 2009/05/07
+# Confirmed with access logs -- Tim
+220.255.7.0/24
+# More proxies detected via user report and access logs -- Tim
+220.255.4.26
+220.255.4.27
+220.255.4.28
+220.255.4.29
+220.255.4.30
+
 
 # Telefonica
 80-58-55-42.proxycache.rima-tde.net
@@ -939,9 +952,16 @@ accel117.nyc.untd.com.
 
 # Opera Mini
 # Source: email
+80.84.1.10
+80.84.1.18
+80.84.1.19
+80.84.1.20
+80.84.1.21
 195.189.142.0/24
 195.189.143.0/24
 91.203.96.0/22
+94.246.126.0/23
+80.239.242.0/24
 64.255.180.0/24
 
 
@@ -1133,11 +1153,12 @@ w3cache.icm.edu.pl
 195.188.152.17
 
 # brightsparks.net.au
-202.182.65.199
-202.182.65.201
-202.182.65.204
-202.182.65.205
-202.182.65.206
+proxy1.brightsparks.net.au
+proxy2.brightsparks.net.au
+whitelist.brightsparks.net.au
+blacklist1.brightsparks.net.au
+blacklist2.brightsparks.net.au
+unfiltered.brightsparks.net.au
 
 # *.wwwcache.cam.ac.uk
 131.111.8.96
@@ -1169,4 +1190,31 @@ cache-out-1.inet.fi.
 
 # IWF proxy at kcom.com
 213.249.193.2
+
+# UAE ISP proxies (Emirates Telecommunication Corporation) -- domas -
+# 2009-08-12
+195.229.242.52
+195.229.242.53
+195.229.242.54
+195.229.242.55
+195.229.242.56
+195.229.242.57
+195.229.242.58
+
+# Proxies for Bolt Browser (via email, XFF confirmed)
+us1.boltbrowser.com
+us2.boltbrowser.com
+us3.boltbrowser.com
+us4.boltbrowser.com
+us5.boltbrowser.com
+us11.boltbrowser.com
+us12.boltbrowser.com
+us13.boltbrowser.com
+us21.boltbrowser.com
+us22.boltbrowser.com
+us23.boltbrowser.com
+
+
+# convex.com.br
+200.152.176.5
 

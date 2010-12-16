@@ -8,10 +8,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'SpamBlacklist',
 	'author'         => 'Tim Starling',
-	'svn-date'       => '$LastChangedDate: 2008-11-02 23:40:02 +0100 (ndz, 02 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 43098 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:SpamBlacklist',
 	'description'    => 'Regex-based anti-spam tool',
 	'descriptionmsg' => 'spam-blacklist-desc',
@@ -81,7 +80,7 @@ function wfSpamBlacklistFilter( &$title, $text, $section, &$hookErr, $editSummar
 /**
  * Hook function for EditFilterMerged, replaces wfSpamBlacklistFilter
  */
-function wfSpamBlacklistFilterMerged( &$editPage, $text, &$hookErr, $editSummary ) {
+function wfSpamBlacklistFilterMerged( $editPage, $text, &$hookErr, $editSummary ) {
 	global $wgTitle;
 	if( is_null( $wgTitle ) ) {
 		# API mode
@@ -100,7 +99,7 @@ function wfSpamBlacklistFilterMerged( &$editPage, $text, &$hookErr, $editSummary
 /**
  * Hook function for APIEditBeforeSave
  */
-function wfSpamBlacklistFilterAPIEditBeforeSave( &$editPage, $text, &$resultArr ) {
+function wfSpamBlacklistFilterAPIEditBeforeSave( $editPage, $text, &$resultArr ) {
 	$spamObj = wfSpamBlacklistObject();
 	$title = $editPage->mArticle->getTitle();
 	$ret = $spamObj->filter( $title, $text, '', '', $editPage );

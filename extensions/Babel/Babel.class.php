@@ -15,21 +15,6 @@ class Babel {
 		$_title, $_footer;
 
 	/**
-	 * Array: Language codes.
-	 */
-	private $mCodes;
-
-	/**
-	 * Load the language codes from an array of standards to files into the
-	 * language codes array.
-	 *
-	 * @param $file String: Files to load language codes from.
-	 */
-	public function __construct( $file = null ) {
-		$this->mCodes = new BabelLanguageCodes( $file );
-	}
-
-	/**
 	 * Render the Babel tower.
 	 *
 	 * @param $parser Object: Parser.
@@ -61,27 +46,19 @@ class Babel {
 		// Loop through each of the input parameters.
 		foreach( $parameters as $name ) {
 
-			// Check if the parameter is a valid template name, if it is then
-			// include that template.
-			if( $this->_templateExists( $name ) && $name !== '' ) {
-
+			if( $name === '' ) {
+				continue;
+			} elseif( $this->_templateExists( $name ) ) {
 				$contents .= $parser->replaceVariables( "{{{$this->_addFixes( $name,'template' )}}}" );
-
 			} elseif( $chunks = $this->mParseParameter( $name ) ) {
-
 				$contents .= $this->_generateBox(        $chunks[ 'code' ], $chunks[ 'level' ] );
 				$contents .= $this->_generateCategories( $chunks[ 'code' ], $chunks[ 'level' ] );
-
 			} elseif( $this->_validTitle( $name ) ) {
-
 				// Non-existent page and invalid parameter syntax, red link.
 				$contents .= "\n[[Template:{$this->_addFixes( $name,'template' )}]]";
-
 			} else {
-
 				// Invalid title, output raw.
 				$contents .= "\nTemplate:{$this->_addFixes( $name,'template' )}";
-
 			}
 
 		}
@@ -239,8 +216,8 @@ HEREDOC;
 		$return = array();
 
 		// Try treating the paramter as a language code (for native).
-		if( $this->mCodes->getCode( $parameter ) !== false && $this->mCodes->getCode( $parameter ) !== null ) {
-			$return[ 'code'  ] = $this->mCodes->getCode( $parameter );
+		if( BabelLanguageCodes::getCode( $parameter ) ) {
+			$return[ 'code'  ] = BabelLanguageCodes::getCode( $parameter );
 			$return[ 'level' ] = 'N';
 			return $return;
 		}
@@ -251,8 +228,8 @@ HEREDOC;
 		$level = substr( $parameter, $lastSplit + 1 );
 
 		// Validate code.
-		$return[ 'code' ] = $this->mCodes->getCode( $code );
-		if( $return[ 'code' ] === null ) return false;
+		$return[ 'code' ] = BabelLanguageCodes::getCode( $code );
+		if( !$return[ 'code' ] ) return false;
 		// Validate level.
 		$intLevel = (int) $level;
 		if( ( $intLevel < 0 || $intLevel > 5 ) && $level !== 'N' ) return false;
@@ -270,11 +247,11 @@ HEREDOC;
 	private function _generateBox( $code, $level ) {
 
 		// Get code in favoured standard.
-		$code = $this->mCodes->getCode( $code );
+		$code = BabelLanguageCodes::getCode( $code );
 
 		// Generate the text displayed on the left hand side of the
 		// box.
-		$header = "[[{$this->_addFixes( $code,'portal' )}|$code]]<span class=\"mw-babel-box-level-$level\">-$level</span>";
+		$header = "[[{$this->_addFixes( $code,'portal' )}|" . wfBCP47( $code ) . "]]<span class=\"mw-babel-box-level-$level\">-$level</span>";
 
 		// Get MediaWiki supported language codes\names.
 		$nativeNames = Language::getLanguageNames();
@@ -287,7 +264,7 @@ HEREDOC;
 		}
 
 		// Get the language names.
-		$name = $this->mCodes->getName( $code );
+		$name = BabelLanguageCodes::getName( $code );
 
 		// Generate the text displayed on the right hand side of the
 		// box.
@@ -394,7 +371,7 @@ HEREDOC;
 			// Add category wikitext to box tower.
 			$r .= "[[Category:{$this->_addFixes( $code,'category' )}|$level{$wgUser->getName()}]]";
 
-			BabelAutoCreate::create( $this->_addFixes( "$code",'category' ), $this->mCodes->getName( $code ) );
+			BabelAutoCreate::create( $this->_addFixes( "$code",'category' ), BabelLanguageCodes::getName( $code ) );
 
 		}
 
@@ -405,7 +382,7 @@ HEREDOC;
 			// Add category wikitext to box tower.
 			$r .= "[[Category:{$this->_addFixes( "$code-$level",'category' )}|{$wgUser->getName()}]]";
 
-			BabelAutoCreate::create( $this->_addFixes( "$code-$level",'category' ), $level, $this->mCodes->getName( $code ) );
+			BabelAutoCreate::create( $this->_addFixes( "$code-$level",'category' ), $level, BabelLanguageCodes::getName( $code ) );
 
 		}
 

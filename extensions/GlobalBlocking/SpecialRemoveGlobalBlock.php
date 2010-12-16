@@ -15,6 +15,7 @@ class SpecialRemoveGlobalBlock extends SpecialPage {
 		$this->loadParameters();
 
 		$wgOut->setPageTitle( wfMsg( 'globalblocking-unblock' ) );
+		$wgOut->setSubtitle( GlobalBlocking::buildSubtitleLinks( 'RemoveGlobalBlock' ) );
 		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );

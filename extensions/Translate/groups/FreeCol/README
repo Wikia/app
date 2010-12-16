@@ -1,0 +1,22 @@
+Check out writable copy:
+mkdir -p $HOME/freecol
+cd $HOME/freecol/
+svn co https://USERNAME@freecol.svn.sourceforge.net/svnroot/freecol/freecol/trunk/src/net/sf/freecol/client/gui/i18n
+
+Make an export script, like export.sh:
+EXPORTERPATH=/var/www/w/extensions/Translate/scripts
+TARGET=$HOME/freecol/i18n
+TEMP=`mktemp -p $HOME/freecol` || { echo "could not get temp file"; exit 1 }
+
+cd $EXPORTERPATH
+php autoexport.php --hours="$1" --target="$TARGET" --groups="out-freecol" --threshold=25 --skip="en" > $TEMP
+
+cat $TEMP
+sh $TEMP
+rm $TEMP
+
+To export:
+sh export.sh N, where N is number of hours to scan for changes
+cd i18n
+svn diff
+svn commit

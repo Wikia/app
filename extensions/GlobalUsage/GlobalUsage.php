@@ -1,6 +1,6 @@
 <?php
 /*
- Copyright (c) 2008 Bryan Tong Minh
+ Copyright (c) 2008 - 2009 Bryan Tong Minh
 
  Permission is hereby granted, free of charge, to any person
  obtaining a copy of this software and associated documentation
@@ -33,36 +33,46 @@ EOT;
 	exit( 1 );
 }
 
-// Defines
-define('GUIW_LOCAL', 0);
-define('GUIW_SERVER', 1);
 
-if (isset($_SERVER) && array_key_exists( 'REQUEST_METHOD', $_SERVER ) ) {
-	$dir = dirname(__FILE__) . '/';
+$dir = dirname(__FILE__) . '/';
 
-	$wgExtensionCredits['specialpage'][] = array(
-		'name' => 'Global Usage',
-		'author' => 'Bryan Tong Minh',
-		'description' => 'Special page to view global file usage',
-		'descriptionmsg' => 'globalusage-desc',
-		'url' => 'http://www.mediawiki.org/wiki/Extension:GlobalUsage',
-		'version' => '1.1',
-	);
+$wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
+	'name' => 'Global Usage',
+	'author' => 'Bryan Tong Minh',
+	'description' => 'Special page to view global file usage',
+	'descriptionmsg' => 'globalusage-desc',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:GlobalUsage',
+	'version' => '2.0',
+);
 
-	$wgExtensionMessagesFiles['GlobalUsage'] = $dir . 'GlobalUsage.i18n.php';
-	$wgAutoloadClasses['GlobalUsage'] = $dir . 'GlobalUsage_body.php';
-	$wgExtensionMessageFiles['GlobalUsage'] = $dir . 'GlobalUsage.i18n.php';
-	$wgExtensionAliasesFiles['GlobalUsage'] = $dir . 'GlobalUsage.alias.php';
-	$wgSpecialPages['GlobalUsage'] = 'GlobalUsage';
+$wgExtensionMessagesFiles['GlobalUsage'] = $dir . 'GlobalUsage.i18n.php';
+$wgAutoloadClasses['GlobalUsage'] = $dir . 'GlobalUsage_body.php';
+$wgAutoloadClasses['GlobalUsageHooks'] = $dir . 'GlobalUsageHooks.php';
+$wgAutoloadClasses['SpecialGlobalUsage'] = $dir . 'SpecialGlobalUsage.php';
+$wgAutoloadClasses['GlobalUsageQuery'] = $dir . 'GlobalUsageQuery.php';
+$wgAutoloadClasses['ApiQueryGlobalUsage'] = $dir . 'ApiQueryGlobalUsage.php';
+$wgExtensionMessageFiles['GlobalUsage'] = $dir . 'GlobalUsage.i18n.php';
+$wgExtensionAliasesFiles['GlobalUsage'] = $dir . 'GlobalUsage.alias.php';
+$wgSpecialPages['GlobalUsage'] = 'SpecialGlobalUsage';
+$wgAPIPropModules['globalusage'] = 'ApiQueryGlobalUsage';
 
-	$wgHooks['LinksUpdate'][] = array( 'GlobalUsage', 'updateLinks' );
-	$wgHooks['ArticleDeleteComplete'][] = array( 'GlobalUsage', 'articleDeleted' );
-	$wgHooks['FileDeleteComplete'][] = array( 'GlobalUsage', 'fileDeleted' );
-	$wgHooks['FileUndeleteComplete'][] = array( 'GlobalUsage', 'fileUndeleted' );
-	$wgHooks['UploadComplete'][] = array( 'GlobalUsage', 'imageUploaded' );
-	$wgHooks['SpecialMovepageAfterMove'][] = array( 'GlobalUsage', 'articleMoved' );
-}
+/* Things that can cause link updates:
+ * - Local LinksUpdate
+ * - Local article deletion (remove from table)
+ * - Local article move (update page title)
+ * - Local file upload/deletion/move (toggle is_local flag)
+ */
+$wgHooks['LinksUpdateComplete'][] = 'GlobalUsageHooks::onLinksUpdateComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'GlobalUsageHooks::onArticleDeleteComplete';
+$wgHooks['FileDeleteComplete'][] = 'GlobalUsageHooks::onFileDeleteComplete';
+$wgHooks['FileUndeleteComplete'][] = 'GlobalUsageHooks::onFileUndeleteComplete';
+$wgHooks['UploadComplete'][] = 'GlobalUsageHooks::onUploadComplete';
+$wgHooks['TitleMoveComplete'][] = 'GlobalUsageHooks::onTitleMoveComplete';
+$wgHooks['ImagePageAfterImageLinks'][] = 'SpecialGlobalUsage::onImagePageAfterImageLinks';
+$wgHooks['ImagePageShowTOC'][] = 'SpecialGlobalUsage::onImagePageShowTOC';
+$wgHooks['ParserTestTables'][] = 'GlobalUsageHooks::onParserTestTables';
 
 // If set to false, the local database contains the globalimagelinks table
 // Else set to something understandable to LBFactory
-$wgguMasterDatabase = false;
+$wgGlobalUsageDatabase = false;

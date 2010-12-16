@@ -10,16 +10,17 @@ $aliases['en'] = array(
 	'Form' => array( 'Form' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Afrikaans (Afrikaans) */
+$aliases['af'] = array(
+	'Form' => array( 'Vorm' ),
+);
+
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Form' => array( 'استمارة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Form' => array( 'استمارة' ),
 );
@@ -39,14 +40,14 @@ $aliases['fa'] = array(
 	'Form' => array( 'فرم' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Form' => array( 'Formulèro' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'Form' => array( 'Formulario' ),
-);
-
-/** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
-	'Form' => array( 'Form' ),
 );
 
 /** Hebrew (עברית) */
@@ -71,7 +72,12 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'Form' => array( 'Formulir' ),
+	'Form' => array( 'FormulirKhusus' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'Form' => array( 'Modulo' ),
 );
 
 /** Japanese (日本語) */
@@ -82,6 +88,11 @@ $aliases['ja'] = array(
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'Form' => array( 'បែបបទ' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Form' => array( '양식' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -96,7 +107,22 @@ $aliases['lb'] = array(
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'Form' => array( 'Формулар', 'Форма' ),
+	'Form' => array( 'Образец' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Form' => array( 'ഫോം' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Form' => array( 'छापीलनमूना' ),
+);
+
+/** Maltese (Malti) */
+$aliases['mt'] = array(
+	'Form' => array( 'Formola' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -119,6 +145,16 @@ $aliases['oc'] = array(
 	'Form' => array( 'Formulari' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'Form' => array( 'Formularz' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Form' => array( 'Formulár' ),
+);
+
 /** Albanian (Shqip) */
 $aliases['sq'] = array(
 	'Form' => array( 'Formë' ),
@@ -132,6 +168,11 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Form' => array( 'Fomu' ),
+);
+
+/** Thai (ไทย) */
+$aliases['th'] = array(
+	'Form' => array( 'ฟอร์ม' ),
 );
 
 /** Tagalog (Tagalog) */

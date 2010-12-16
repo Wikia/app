@@ -31,6 +31,7 @@ if( !defined( 'MEDIAWIKI' ) ) die();
 if( !defined( 'REVIEW_CSS' ) ) define('REVIEW_CSS', $wgScriptPath.'/extensions/Review/review.css' );
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Review',
 	'description' => 'The resurrected validation feature.',
 	'descriptionmsg' => 'review-desc',
@@ -78,7 +79,7 @@ function wfReviewExtensionInitMessages () {
 	$wgOut->addLink(array(
 		'rel'	=> 'stylesheet',
 		'type'	=> 'text/css',
-		'media'	=> 'screen,projection',
+		'media'	=> 'screen',
 		'href'	=> REVIEW_CSS,
 	));
 
@@ -180,7 +181,7 @@ function wfReviewExtensionGetUserRatingsForPage ( &$title , &$user , $revision =
 	if ( !$title->exists() ) return $ret ; # No such page
 
 	$fname = 'wfReviewExtensionGetUserRatingsForPage' ;
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 	$conds = array () ;
 	$conds['val_page'] = $title->getArticleID() ;
 	wfReviewExtensionSetUserCondition ( $user , $conds ) ;
@@ -241,9 +242,9 @@ function wfReviewExtensionReadLastForm ( &$ratings , $title , $merge_others = tr
 		return false ;
 
 	$fname = 'wfReviewExtensionReadLastForm' ;
-	$dbw =& wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER );
 	# Avoid user/ip tuplet unique index collisions
-	$user_ip = $wgUser->getID() == 0 ? $wgUser->getName() : NULL ;
+	$user_ip = $wgUser->getID() == 0 ? $wgUser->getName() : null ;
 
 	# Read form values
 	$oldrev = $wgRequest->getInt ( 'review_oldid' ) ;
@@ -453,7 +454,7 @@ function wfReviewExtensionFunction () {
 		function get_reviewed_revisions ( $title ) {
 			$fname = 'get_reviewed_revisions';
 			
-			$dbr =& wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 					/* FROM   */ 'validate',
 					/* SELECT */ 'DISTINCT val_revision',
@@ -480,7 +481,7 @@ function wfReviewExtensionFunction () {
 			) ;
 		
 			# Query
-			$dbr =& wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 					/* FROM   */ 'validate',
 					/* SELECT */ '*',
@@ -671,7 +672,7 @@ function wfReviewExtensionFunction () {
 		function get_list_of_pages_reviewed_by_user ( $user ) {
 			$conds = array () ;
 			wfReviewExtensionSetUserCondition ( $user , $conds ) ;
-			$dbr =& wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 					/* FROM   */ 'validate',
 					/* SELECT */ 'DISTINCT val_page',
@@ -692,7 +693,7 @@ function wfReviewExtensionFunction () {
 		 * @todo document
 		 */
 		function review_page  ( $page , $revision ) {
-			global $wgTitle, $wgUser , $wgReviewExtensionTopics, $wgArticle, $action, $wgRequest;
+			global $wgTitle, $wgUser , $wgReviewExtensionTopics, $action, $wgRequest;
 			$title = Title::newFromID ( $page ) ;
 			
 			# Do we care?
@@ -776,11 +777,11 @@ function wfReviewExtensionFunction () {
 			
 			if ( $page_id == 0 ) {
 				if( $par != ''){
-					$title = Title::newFromUrl($par);
+					$title = Title::newFromURL($par);
 					$page_id = $title->getArticleID();
 				}
 				else{
-					$title = NULL ;
+					$title = null ;
 				}
 			} else {
 				$title = Title::newFromID ( $page_id ) ;

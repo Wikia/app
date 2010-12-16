@@ -4,7 +4,7 @@
  * A class that holds static helper functions and extension hooks for the Google Maps service
  *
  * @file SM_GoogleMapsFormInput.php
- * @ingroup SemanticMaps
+ * @ingroup SMGoogleMaps
  * 
  * @author Robert Buzink
  * @author Yaron Koren
@@ -17,7 +17,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 final class SMGoogleMapsFormInput extends SMFormInput {
 
-	public $serviceName = MapsGoogleMapsUtils::SERVICE_NAME;
+	public $serviceName = MapsGoogleMaps::SERVICE_NAME;
 	
 	/**
 	 * @see MapsMapFeature::setMapSettings()
@@ -31,23 +31,22 @@ final class SMGoogleMapsFormInput extends SMFormInput {
 
 		$this->earthZoom = 1;
 		
-		$this->defaultParams = MapsGoogleMapsUtils::getDefaultParams();
-        $this->defaultZoom = $egMapsGoogleMapsZoom;		
+        $this->defaultZoom = $egMapsGoogleMapsZoom;	        
 	}
 	
 	/**
-	 * @see MapsMapFeature::addFormDependencies()
-	 *
+	 * (non-PHPdoc)
+	 * @see smw/extensions/SemanticMaps/FormInputs/SMFormInput#addFormDependencies()
 	 */
 	protected function addFormDependencies() {
 		global $wgJsMimeType;
-		global $smgScriptPath, $smgGoogleFormsOnThisPage;
+		global $smgScriptPath, $smgGoogleFormsOnThisPage, $smgStyleVersion;
 		
-		MapsGoogleMapsUtils::addGMapDependencies($this->output);
+		MapsGoogleMaps::addGMapDependencies($this->output);
 		
 		if (empty($smgGoogleFormsOnThisPage)) {
 			$smgGoogleFormsOnThisPage = 0;
-			$this->output .= "<script type='$wgJsMimeType' src='$smgScriptPath/GoogleMaps/SM_GoogleMapsFunctions.js'></script>";
+			$this->output .= "<script type='$wgJsMimeType' src='$smgScriptPath/GoogleMaps/SM_GoogleMapsFunctions.js?$smgStyleVersion'></script>";
 		}
 	}
 	
@@ -73,25 +72,36 @@ final class SMGoogleMapsFormInput extends SMFormInput {
 	protected function addSpecificMapHTML() {
 		global $wgJsMimeType;
 		
-		$enableEarth = MapsGoogleMapsUtils::getEarthValue($this->earth);
-		
-		$this->autozoom = MapsGoogleMapsUtils::getAutozoomJSValue($this->autozoom);
-		
-		$this->type = MapsGoogleMapsUtils::getGMapType($this->type, true);
-		
-		$this->controls = MapsGoogleMapsUtils::createControlsString($this->controls);		
-		
-		$this->types = explode(",", $this->types);
-		
-		$typesString = MapsGoogleMapsUtils::createTypesString($this->types, $enableEarth);
+		// Remove the overlays control in case it's present.
+		if (in_string('overlays', $this->controls)) {
+			$this->controls = str_replace(",'overlays'", '', $this->controls);
+			$this->controls = str_replace("'overlays',", '', $this->controls);
+		}
 		
 		$this->output .= "
 		<div id='".$this->mapName."' class='".$this->class."'></div>
 	
 		<script type='$wgJsMimeType'>/*<![CDATA[*/
-		addOnloadHook(makeFormInputGoogleMap('$this->mapName', '$this->coordsFieldName', $this->width, $this->height, $this->centre_lat, $this->centre_lon, $this->zoom, $this->type, [$typesString], [$this->controls], $this->autozoom, $this->marker_lat, $this->marker_lon));
-		window.unload = GUnload;
-		/*]]>*/</script>";
+		addOnloadHook(
+			makeGoogleMapFormInput(
+				'$this->mapName', 
+				'$this->coordsFieldName',
+				{
+				width: $this->width,
+				height: $this->height,
+				lat: $this->centre_lat,
+				lon: $this->centre_lon,
+				zoom: $this->zoom,
+				type: $this->type,
+				types: [$this->types],
+				controls: [$this->controls],
+				scrollWheelZoom: $this->autozoom
+				},
+				$this->marker_lat,
+				$this->marker_lon	
+			)			
+		);
+		/*]]>*/</script>";			
 	}
 	
 	/**
@@ -101,7 +111,7 @@ final class SMGoogleMapsFormInput extends SMFormInput {
 	protected function manageGeocoding() {
 		global $egGoogleMapsKey;
 		$this->enableGeocoding = strlen(trim($egGoogleMapsKey)) > 0;
-		if ($this->enableGeocoding) MapsGoogleMapsUtils::addGMapDependencies($this->output);		
+		if ($this->enableGeocoding) MapsGoogleMaps::addGMapDependencies($this->output);		
 	}	
 	
 }

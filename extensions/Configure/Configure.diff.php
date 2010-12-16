@@ -189,8 +189,6 @@ abstract class ConfigurationDiff {
 	 * @return String: XHTML
 	 */
 	function processDiffSetting( $name, $old, $new, $type ) {
-		wfLoadExtensionMessages( 'ConfigureSettings' );
-
 		$msg =  'configure-setting-' . $name;
 		$msgVal = wfMsgExt( $msg, array( 'parseinline' ) );
 		$rawVal = Xml::element( 'tt', null, "\$$name" );

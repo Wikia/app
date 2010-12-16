@@ -15,7 +15,7 @@ require_once ("$preIP/extensions/wikia/LangRedirect/LangRedirect.php") ;
  *
  * ----------
  *
- * Copyright (C) 2001-2009 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
+ * Copyright (C) 2001-2010 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
  * Tim Starling, Erik Möller, Gabriel Wicke, Ævar Arnfjörð Bjarmason,
  * Niklas Laxström, Domas Mituzas, Rob Church, Yuri Astrakhan, Aryeh Gregor,
  * Aaron Schulz and others.
@@ -58,8 +58,9 @@ if( !is_null( $maxLag ) && !$mediaWiki->checkMaxLag( $maxLag ) ) {
 $action = $wgRequest->getVal( 'action', 'view' );
 $title = $wgRequest->getVal( 'title' );
 
+# Set title from request parameters
 $wgTitle = $mediaWiki->checkInitialQueries( $title, $action );
-if( $wgTitle === NULL ) {
+if( $wgTitle === null ) {
 	unset( $wgTitle );
 }
 
@@ -114,7 +115,7 @@ $mediaWiki->setVal( 'SquidMaxage', $wgSquidMaxage );
 $mediaWiki->setVal( 'UseExternalEditor', $wgUseExternalEditor );
 $mediaWiki->setVal( 'UsePathInfo', $wgUsePathInfo );
 
-$mediaWiki->initialize( $wgTitle, $wgArticle, $wgOut, $wgUser, $wgRequest );
+$mediaWiki->performRequestForTitle( $wgTitle, $wgArticle, $wgOut, $wgUser, $wgRequest );
 $mediaWiki->finalCleanup( $wgDeferredUpdateList, $wgOut );
 
 # Not sure when $wgPostCommitUpdateList gets set, so I keep this separate from finalCleanup

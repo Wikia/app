@@ -50,7 +50,7 @@ if ( $page_count < $start ) {
 
 MwRdf::Setup();
 
-$dbr =& wfGetDB( DB_SLAVE );
+$dbr = wfGetDB( DB_SLAVE );
 $res = $dbr->query( "
 	SELECT page_id,
 	page_title,
@@ -79,7 +79,7 @@ while ( $s = $dbr->fetchObject( $res ) ) {
 fwrite( STDOUT, $start + 200 );
 
 function get_total_number_of_articles() {
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 
 	# get the total number of articles
 	$page = $dbr->tableName( 'page' );

@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'Badimages'    => array( 'BadImages', 'Badimages' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Badimages' => array( 'صور_سيئة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Badimages' => array( 'صور_سيئة' ),
 );
@@ -57,9 +53,19 @@ $aliases['fr'] = array(
 	'Badimages' => array( 'Mauvaises images', 'MauvaisesImages' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Badimages' => array( 'Crouyes émâges', 'CrouyesÉmâges' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'Badimages' => array( 'Bilder wu nit gwinscht sin' ),
+);
+
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'Badimages' => array( 'ખરાબચિત્ર' ),
 );
 
 /** Hebrew (עברית) */
@@ -84,12 +90,22 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'Badimages' => array( 'Berkas dilarang' ),
+	'Badimages' => array( 'Berkas yang buruk', 'BerkasBuruk' ),
+);
+
+/** Ido (Ido) */
+$aliases['io'] = array(
+	'Badimages' => array( 'MalaImaji' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Badimages' => array( '不良画像', '好ましくない画像' ),
+	'Badimages' => array( '好ましくない画像', '不良画像' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Badimages' => array( 'Onjewönsch Bellder' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -100,6 +116,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'Badimages' => array( 'ЛошаСлика', 'ЛошиСлики' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Badimages' => array( 'മോശംചിത്രങ്ങൾ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Badimages' => array( 'वाईटचित्रे' ),
 );
 
 /** Maltese (Malti) */
@@ -147,8 +173,38 @@ $aliases['sa'] = array(
 	'Badimages' => array( 'कुचित्र:' ),
 );
 
+/** Sinhala (සිංහල) */
+$aliases['si'] = array(
+	'Badimages' => array( 'අසත්රූප' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Badimages' => array( 'ZléObrázky' ),
+);
+
+/** Thai (ไทย) */
+$aliases['th'] = array(
+	'Badimages' => array( 'ภาพเสีย' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Badimages' => array( 'Masamang mga larawan', 'Masasamang mga larawan' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Badimages' => array( 'BozukResimler' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'Badimages' => array( '坏图像' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'Badimages' => array( '壞圖像' ),
 );
 

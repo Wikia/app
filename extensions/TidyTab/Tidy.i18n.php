@@ -21,14 +21,6 @@ $messages['qqq'] = array(
 	'tidy-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
-	'tidy' => 'Tark',
-	'untidy' => 'Čočoi',
-);
-
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -47,6 +39,14 @@ $messages['arz'] = array(
 	'untidy' => 'لا ترتيب',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'tidy' => 'Oadnen',
+	'untidy' => 'Ned oadnen',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -54,6 +54,15 @@ $messages['be-tarask'] = array(
 	'tidy-desc' => 'Дадае закладку «акуратны HTML» альбо «неакуратны HTML» (у залежнасьці ад $wgUseTidy) на старонкі, што дазваляе зьмяняць глябальную ўстаноўку «акуратнасьці HTML» для асобных старонак',
 	'tidy' => 'Акуратны HTML',
 	'untidy' => 'Неакуратны HTML',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'tidy-desc' => 'Ouzhpennañ a ra un taolennata renket pe direnket (diouzh $wgUseTidy) wa rpajennoù boutin, ar pezh a dalvez da drement hebioù d\'an arventennoù hollek HTML renket, evit un taol sell',
+	'tidy' => 'Renkañ',
+	'untidy' => 'Direnkañ',
 );
 
 /** Bosnian (Bosanski)
@@ -93,6 +102,16 @@ $messages['dsb'] = array(
 	'untidy' => 'Njepórědny',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'tidy-desc' => 'Προσθέτει μία τακτοποιημένη ή ατακτοποίητη καρτέλα (συναρτήσει του $wgUseTidy) σε κανονικές σελίδες επιτρέποντας την υπερκάλυψη των τακτοποιημένων καθολικών ρυθμίσεων HTML για μία απλή προβολή',
+	'tidy' => 'Τακτοποιημένο',
+	'untidy' => 'Ατακτοποίητο',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -106,6 +125,7 @@ $messages['eo'] = array(
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'tidy-desc' => 'Agrega una pestaña ordenada o desordenada (dependiente en $wgUseTidy) en páginas normales permitiendo eliminar configuración ordenada HTML global para una sola vista',
 	'tidy' => 'Organizado',
 	'untidy' => 'Desorganizado',
 );
@@ -116,6 +136,14 @@ $messages['es'] = array(
 $messages['eu'] = array(
 	'tidy' => 'Txukundu',
 	'untidy' => 'Narrastu',
+);
+
+/** Finnish (Suomi)
+ * @author Str4nd
+ */
+$messages['fi'] = array(
+	'tidy' => 'Puhdas',
+	'untidy' => 'Epäpuhdas',
 );
 
 /** French (Français)
@@ -166,13 +194,31 @@ $messages['hsb'] = array(
 	'untidy' => 'Njeporjadny',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'tidy-desc' => 'Tidy vagy untidy fül hozzáadása normál lapokhoz (a $wgUseTidy változótól függően), amellyel felülbírálható a globális HTML tidy beállítás egy nézethez',
+	'tidy' => 'Tidy',
+	'untidy' => 'Untidy',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'tidy-desc' => 'Adde un scheda "nettar" o "disnettar" (dependente de $wgUseTidy) in paginas normal permittente ultrapassar le configuration global del nettamento de HTML pro un singule visualisation',
+	'tidy-desc' => 'Adde un scheda "nettar" o "disnettar" (dependente de $wgUseTidy) in paginas normal permittente ignorar le configuration global del nettamento de HTML pro un singule visualisation',
 	'tidy' => 'Nettar',
 	'untidy' => 'Disnettar',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'tidy-desc' => 'Menambahkan tab "rapi" atau "takrapi" (tergantung dari $wgUseTidy) pada halaman biasa yang akan menimpa seting HTML global untuk tampilan tunggal',
+	'tidy' => 'Rapi',
+	'untidy' => 'Takrapi',
 );
 
 /** Japanese (日本語)
@@ -213,8 +259,18 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'tidy-desc' => 'Setzt en Tab klasséieren oder net klasséieren (hänkt vun $wgUseTidy of) op normal Säiten derbäi fir déi global HTML-Tidy-Astellung fir eng eenzel Siicht z\'iwwerschreiwen',
 	'tidy' => 'Klasséieren',
 	'untidy' => 'Net klasséieren',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'tidy-desc' => "Додава јазиче за избор на 'средено' или 'несредено' (зависно од \$wgUseTidy) на нормални страници, што овозможува наложување на изборот врз глобално наместената HTML 'среденост' за единечен поглед",
+	'tidy' => 'Средено',
+	'untidy' => 'Несредено',
 );
 
 /** Marathi (मराठी)
@@ -262,11 +318,22 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sp5uhe
  * @author Wpedzich
  */
 $messages['pl'] = array(
+	'tidy-desc' => 'Dodaje do normalnych stron zakładkę „Uporządkuj” lub „Anuluj uporządkowanie” (zależnie od wartości $wgUseTidy) pozwalającą nadpisać globalną HTML wartość uporządkowania dla pojedynczego widoku',
 	'tidy' => 'Uporządkuj',
 	'untidy' => 'Anuluj uporządkowanie',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'tidy-desc' => "A gionta un tab d'ordinament o ëd mancà ordinament (an dipendensa da \$wgUseTidy) an dzora a pàgine normaj për coaté l'ampostassion d'ordinament HTML global për na sola vista",
+	'tidy' => 'Órdina',
+	'untidy' => 'Órdina nen',
 );
 
 /** Portuguese (Português)
@@ -285,6 +352,23 @@ $messages['pt-br'] = array(
 	'tidy-desc' => 'Adiciona uma aba arrumada ou não (dependendo de $wgUseTidy) em páginas normais, permitindo sobrepor a configuração de arrumação de HTML global para uma vista única',
 	'tidy' => 'Arrumado',
 	'untidy' => 'Desarrumado',
+);
+
+/** Romanian (Română)
+ * @author Firilacroco
+ */
+$messages['ro'] = array(
+	'tidy' => 'Curăţă',
+	'untidy' => 'Împrăştie',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'tidy-desc' => "Aggiunge 'na scheda Mitte 'u reggitte, Live 'u reggitte (ca depende da \$wgUseTidy) sus a le vôsce normale pe permettere de sovrascrivere le 'mbostaziune globale de l'ordine de HTML pe 'na singola viste",
+	'tidy' => "Mitte 'u reggitte",
+	'untidy' => "Live 'u reggitte",
 );
 
 /** Russian (Русский)
@@ -333,6 +417,14 @@ $messages['tg-cyrl'] = array(
 	'untidy' => 'Номуратаб',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'tidy' => 'Muratab',
+	'untidy' => 'Nomuratab',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -344,10 +436,21 @@ $messages['tl'] = array(
 
 /** Ukrainian (Українська)
  * @author Aleksandrit
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'tidy-desc' => 'Додає на звичайні сторінки вкладки tidy та untidy (в залежності від $wgUseTidy), які дозволяють визначати глобальне налаштування HTML tidy для одиночного перегляду',
 	'tidy' => 'Впорядкувати',
 	'untidy' => 'Розпорядкувати',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'tidy-desc' => 'Ližadab järgeližile lehtpolile "tidy" da "untidy"-ližalehtpoled ($wgUseTidy-späi rippudes), kudambad anttas voind säta konkretižen kacmižen täht HTML tidy-n ühthižed järgendused.',
+	'tidy' => 'Tark',
+	'untidy' => 'Čočoi',
 );
 
 /** Vietnamese (Tiếng Việt)

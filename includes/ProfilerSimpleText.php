@@ -23,12 +23,18 @@ class ProfilerSimpleText extends ProfilerSimple {
 	public $invisible=false;  	/* Wikia change */
 
 	function getFunctionReport() {
+
 		/* Wikia change begin */
 		if ($this->invisible) {
 			uasort($this->mCollated,array('self','sort'));
 			return;
 		}
 		/* Wikia change end */
+
+		global $wgRequest;
+		if ( $wgRequest->getVal( 'action' ) == 'raw' ) # bug 20388
+			return;
+
 		if ($this->visible) print "<pre>";
 			else print "<!--\n";
 		uasort($this->mCollated,array('self','sort'));

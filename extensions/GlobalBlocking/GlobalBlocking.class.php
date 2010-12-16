@@ -25,33 +25,23 @@ class GlobalBlocking {
 	}
 		
 	static function getUserBlockErrors( $user, $ip ) {
-		$dbr = GlobalBlocking::getGlobalBlockingSlave();
+		static $result = null;
 		
-		$hex_ip = IP::toHex( $ip );
-		$ip_pattern = substr( $hex_ip, 0, 4 ) . '%'; // Don't bother checking blocks out of this /16.
-	
-		$conds = array( 
-			'gb_range_end>='.$dbr->addQuotes($hex_ip), // This block in the given range.
-			'gb_range_start<='.$dbr->addQuotes($hex_ip),
-			'gb_range_start like ' . $dbr->addQuotes( $ip_pattern ),
-			'gb_expiry>'.$dbr->addQuotes($dbr->timestamp(wfTimestampNow())) 
-		);
-	
-		if ( !$user->isAnon() )
-			$conds['gb_anon_only'] = 0;
-	
-		// Get the block
-		if ($block = $dbr->selectRow( 'globalblocks', '*', $conds, __METHOD__ )) {
-		
+		// Instance cache
+		if (!is_null($result)) return $result;
+
+		$block = self::getGlobalBlockingBlock( $ip, $user->isAnon() );
+		if  ( $block ) {
 			// Check for local whitelisting
 			if (GlobalBlocking::getWhitelistInfo( $block->gb_id ) ) {
 				// Block has been whitelisted.
-				return array();
+				return $result = array();
 			}
 			
-			if ( $user->isAllowed( 'ipblock-exempt' ) ) {
+			if ( $user->isAllowed( 'ipblock-exempt' ) ||
+				$user->isAllowed( 'globalblock-exempt' ) ) {
 				// User is exempt from IP blocks.
-				return array();
+				return $result = array();
 			}
 
 			$expiry = Block::formatExpiry( $block->gb_expiry );
@@ -61,11 +51,39 @@ class GlobalBlocking {
 			$display_wiki = self::getWikiName( $block->gb_by_wiki );
 			$user_display = self::maybeLinkUserpage( $block->gb_by_wiki, $block->gb_by );
 			
-			return array('globalblocking-blocked', $user_display, $display_wiki, $block->gb_reason, $expiry);
+			return $result = array('globalblocking-blocked', $user_display, $display_wiki, $block->gb_reason, $expiry);
 		}
-		return array();
+		return $result = array();
 	}
-	
+
+	/**
+	 * Get a block
+	 * @param string $ip The IP address to be checked
+	 * @param boolean $anon Get anon blocks only
+	 * @return object The block
+	 */
+	static function getGlobalBlockingBlock( $ip, $anon ) {
+		$dbr = GlobalBlocking::getGlobalBlockingSlave();
+
+		$hex_ip = IP::toHex( $ip );
+		$ip_pattern = substr( $hex_ip, 0, 4 ) . '%'; // Don't bother checking blocks out of this /16.
+
+		$conds = array( 
+			'gb_range_end>='.$dbr->addQuotes( $hex_ip ), // This block in the given range.
+			'gb_range_start<='.$dbr->addQuotes( $hex_ip ),
+			'gb_range_start like ' . $dbr->addQuotes( $ip_pattern ),
+			'gb_expiry>'.$dbr->addQuotes( $dbr->timestamp( wfTimestampNow() ) )
+		);
+
+		if ( !$anon ) {
+			$conds['gb_anon_only'] = 0;
+		}
+
+		// Get the block
+		$block = $dbr->selectRow( 'globalblocks', '*', $conds, __METHOD__ );
+		return $block;
+	}
+
 	static function getGlobalBlockingMaster() {
 		global $wgGlobalBlockingDatabase;
 		return wfGetDB( DB_MASTER, 'globalblocking', $wgGlobalBlockingDatabase );
@@ -261,5 +279,81 @@ class GlobalBlocking {
 		);
 
 		return array();
+	}
+	
+	static function onMailPassword( $name, &$error ) {
+		global $wgUser;
+		
+		if ( GlobalBlocking::getUserBlockErrors( $wgUser, wfGetIp() ) ) {
+			wfLoadExtensionMessages( 'GlobalBlocking' );
+			$error = wfMsg( 'globalblocking-blocked-nopassreset' );
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Creates a link to the global block log
+	 * @param array $msg Message with a link to the global block log
+	 * @param string $ip The IP address to be checked
+	 * @return boolean true
+	 */
+	static function getBlockLogLink( &$msg, $ip ) {
+		// Fast return if it is a username. IP addresses can be blocked only.
+		if ( !IP::isIPAddress( $ip ) ) {
+			return true;
+		}
+
+		$block = self::getGlobalBlockingBlock( $ip, true );
+		if( !$block ) {
+			// Fast return if not globally blocked
+			return true;
+		}
+
+		wfLoadExtensionMessages( 'GlobalBlocking' );
+		$msg[] = Html::rawElement(
+			'span',
+			array( 'class' => 'mw-globalblock-loglink plainlinks' ),
+			wfMsgExt( 'globalblocking-loglink', 'parseinline', $ip )
+		);
+		return true;
+	}
+	/**
+	 * Build links to other global blocking special pages, shown in the subtitle
+	 * @param string $pagetype The calling special page name
+	 * @return string links to special pages
+	 */
+	static function buildSubtitleLinks( $pagetype ) {
+		global $wgUser, $wgLang;
+
+		// Add a few useful links
+		$links = array();
+		$sk = $wgUser->getSkin();
+
+		// Don't show a link to a special page on the special page itself.
+		// Show the links only if the user has sufficient rights
+		if( $pagetype != 'GlobalBlockList' ) {
+			$title = SpecialPage::getTitleFor( 'GlobalBlockList' );
+			$links[] = $sk->linkKnown( $title, wfMsg( 'globalblocklist' ) );
+		}
+
+		if( $pagetype != 'GlobalBlock' && $wgUser->isAllowed( 'globalblock' ) ) {
+			$title = SpecialPage::getTitleFor( 'GlobalBlock' );
+			$links[] = $sk->linkKnown( $title, wfMsg( 'globalblocking-goto-block' ) );
+		}
+		if( $pagetype != 'RemoveGlobalBlock' && $wgUser->isAllowed( 'globalunblock' ) ) {
+			$title = SpecialPage::getTitleFor( 'RemoveGlobalBlock' );
+			$links[] = $sk->linkKnown( $title, wfMsg( 'globalblocking-goto-unblock' ) );
+		}
+		if( $pagetype != 'GlobalBlockStatus' && $wgUser->isAllowed( 'globalblock-whitelist' ) ) {
+			$title = SpecialPage::getTitleFor( 'GlobalBlockStatus' );
+			$links[] = $sk->linkKnown( $title, wfMsg( 'globalblocking-goto-status' ) );
+		}
+		if( $pagetype == 'GlobalBlock' && $wgUser->isAllowed( 'editinterface' ) ) {
+			$title = Title::makeTitle( NS_MEDIAWIKI, 'Globalblocking-block-reason-dropdown' );
+			$links[] = $sk->linkKnown( $title, wfMsg( 'globalblocking-block-edit-dropdown' ), array(), array( 'action' => 'edit' ) );
+		}
+		$linkItems = count( $links ) ? wfMsg( 'parentheses', $wgLang->pipeList( $links ) ) : '';
+		return $linkItems;
 	}
 }

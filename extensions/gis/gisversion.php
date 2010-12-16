@@ -40,7 +40,7 @@ class gis_version {
 		$wgOut->setPagetitle( "Version" );
 		$wgOut->addHTML( '
  <p><b><a href="http://www.mediawiki.org/">MediaWiki</a></b>
- <a href="http://meta.wikimedia.org/wiki/Gis">GIS extension</a>,
+ <a href="http://www.mediawiki.org/wiki/Extension:Gis">GIS extension</a>,
  copyright (C) 2005 by Egil Kvaleberg.</p>
 
  <p>The GIS extension is free software; you can redistribute it and/or modify

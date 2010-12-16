@@ -130,6 +130,7 @@ if (defined('MEDIAWIKI')) {
 	$wgExtensionFunctions[] = 'setupSyslog';
 	
 	$wgExtensionCredits['other'][] = array(
+		'path' => __FILE__,
 		'name' => 'Syslog',
 		'author' => 'Evan Prodromou',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Syslog',

@@ -8,6 +8,7 @@
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'HTTP redirect',
 	'description' => 'A hook to make the wiki issue HTTP redirects rather than wiki redirects',
 	'author' => 'Ævar Arnfjörð Bjarmason',

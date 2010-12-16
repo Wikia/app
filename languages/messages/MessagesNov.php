@@ -54,18 +54,20 @@ $messages = array(
 'pagecategories'  => '{{PLURAL:$1|Kategorie|Kategories}}',
 'category_header' => 'Artikles in kategorie "$1"',
 
-'about'          => 'Pri',
-'article'        => 'Pagine de kontenaje',
-'newwindow'      => '(aperta in novi fenestre)',
-'cancel'         => 'Nihilisa',
+'about'         => 'Pri',
+'article'       => 'Pagine de kontenaje',
+'newwindow'     => '(aperta in novi fenestre)',
+'cancel'        => 'Nihilisa',
+'moredotdotdot' => 'Plu...',
+'mypage'        => 'Men pagine',
+'mytalk'        => 'Men parla-pagine',
+'anontalk'      => 'Parlo por disi IP',
+'navigation'    => 'Navigatione',
+'and'           => '&#32;e',
+
+# Cologne Blue skin
 'qbedit'         => 'Modifika',
 'qbspecialpages' => 'Spesial pagines',
-'moredotdotdot'  => 'Plu...',
-'mypage'         => 'Men pagine',
-'mytalk'         => 'Men parla-pagine',
-'anontalk'       => 'Parlo por disi IP',
-'navigation'     => 'Navigatione',
-'and'            => '&#32;e',
 
 'returnto'         => 'Rivada a $1.',
 'tagline'          => 'Fro {{SITENAME}}',
@@ -97,7 +99,7 @@ $messages = array(
 'templatepage'     => 'Vida shablonal pagine',
 'categorypage'     => 'Regarda kategorial pagine',
 'otherlanguages'   => 'Altri lingues',
-'lastmodifiedat'   => 'Disi pagine blid lastim modifika: $2 ye $1.', # $1 date, $2 time
+'lastmodifiedat'   => 'Disi pagine blid lastim modifika: $2 ye $1.',
 'jumptonavigation' => 'navigatione',
 'jumptosearch'     => 'sercha',
 
@@ -140,11 +142,9 @@ $messages = array(
 'badtitletext' => 'Li pregati pagine esed non-valid, vakui, o non-korektim linkat inter-lingue o inter-wiki title. Lu povud kontena un o plusi karakteres kel on non pove usa in titles.',
 
 # Login and logout pages
-'logouttitle'                => 'Useren eksignato',
 'logouttext'                 => "'''Vu es nun eksignatat.'''
 
 Vu pove kontinua usa {{SITENAME}} anonimim, o vu pove riensignata kom li sami o altri usere.",
-'loginpagetitle'             => 'Useren ensignato',
 'yourname'                   => 'Usere-nome:',
 'yourpassword'               => 'Pasa-vorde:',
 'remembermypassword'         => 'Memora men pasa-vorde (kun kuke)',
@@ -205,9 +205,9 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'searchresulttext'      => 'Por plu multi informatione pri sercho {{SITENAME}}, vida [[{{MediaWiki:Helppage}}|{{int:help}}]].',
 'searchsubtitle'        => "Vu serchad '''[[:$1]]'''",
 'searchsubtitleinvalid' => "Vu serchad '''$1'''",
-'prevn'                 => 'lasti $1',
-'nextn'                 => 'sekuenti $1',
-'viewprevnext'          => 'Vida ($1) ($2) ($3).',
+'prevn'                 => 'lasti {{PLURAL:$1|$1}}',
+'nextn'                 => 'sekuenti {{PLURAL:$1|$1}}',
+'viewprevnext'          => 'Vida ($1 {{int:pipe-separator}} $2) ($3).',
 'searchhelp-url'        => 'Help:Kontenaje',
 'search-result-size'    => '$1 ({{PLURAL:$2|1 vorde|$2 vordes}})',
 'showingresults'        => "Montrant subu {{PLURAL:$1|'''1''' resulte|'''$1''' resultes}} amaxim komensant fro #'''$2'''.",
@@ -238,7 +238,9 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'newpageletter'   => 'N',
 
 # Recent changes linked
-'recentchangeslinked' => 'Afini chanjos',
+'recentchangeslinked'         => 'Afini chanjos',
+'recentchangeslinked-feed'    => 'Afini chanjos',
+'recentchangeslinked-toolbox' => 'Afini chanjos',
 
 # Upload
 'upload'            => 'Enporta',
@@ -263,7 +265,7 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 
 'brokenredirects'      => 'Rupteti ri-adresos',
 'brokenredirectstext'  => 'Li sekuenti ri-adresos linka a non-existanti pagines:',
-'brokenredirects-edit' => '(editja)',
+'brokenredirects-edit' => 'editja',
 
 'fewestrevisions' => 'Artikles kun minim multi revisiones',
 
@@ -342,7 +344,7 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'deletecomment'   => 'Resone:',
 
 # Rollback
-'revertpage' => 'Riverted modifikos da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); restaurad lasti versione da [[User:$1|$1]]', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'revertpage' => 'Riverted modifikos da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); restaurad lasti versione da [[User:$1|$1]]',
 
 # Protect
 'prot_1movedto2'      => '[[$1]] movat a [[$2]]',
@@ -357,6 +359,7 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'mycontris'     => 'Men kontributiones',
 
 'sp-contributions-newbies' => 'Montra kontributiones nur de novi useres',
+'sp-contributions-talk'    => 'Diskusione',
 'sp-contributions-search'  => 'Sercha kontributiones',
 'sp-contributions-submit'  => 'Sercha',
 
@@ -383,12 +386,11 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'delete_and_move_reason'  => 'Ekartat por fa spatie por movo',
 
 # Namespace 8 related
-'allmessages'         => 'Sisteme mesajes',
-'allmessagesname'     => 'Nome',
-'allmessagesdefault'  => 'Non-spesifikati texte',
-'allmessagescurrent'  => 'Nuni texte',
-'allmessagestext'     => 'Dise es liste de sistemen mesajes obtenabli in li MediaWiki nomal spatie.',
-'allmessagesmodified' => 'Montra nur modifikates',
+'allmessages'        => 'Sisteme mesajes',
+'allmessagesname'    => 'Nome',
+'allmessagesdefault' => 'Non-spesifikati texte',
+'allmessagescurrent' => 'Nuni texte',
+'allmessagestext'    => 'Dise es liste de sistemen mesajes obtenabli in li MediaWiki nomal spatie.',
 
 # Tooltip help for the actions
 'tooltip-pt-mytalk'      => 'Vun parla-pagine',
@@ -418,7 +420,7 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'autosumm-new'     => 'Novi pagine: $1',
 
 # Special:Version
-'version'                  => 'Versione', # Not used as normal message but as header for the special page itself
+'version'                  => 'Versione',
 'version-specialpages'     => 'Spesial pagines',
 'version-software-version' => 'Versione',
 

@@ -46,6 +46,7 @@ It might be easier/clearer to translate this message as if it said "process invo
  */
 $messages['af'] = array(
 	'profiling-ok' => 'OK',
+	'profiling-data-process' => 'Verwerk',
 	'profiling-data-count' => 'Aantal',
 );
 
@@ -122,6 +123,32 @@ $messages['bg'] = array(
 	'profiling-no-data' => 'Не са открити данни.',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'profiling-ok' => 'ঠিক আছে',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'profiling' => 'Roadennoù priziañ',
+	'profiling-desc' => '[[Special:Profiling|Pajenn dibar]] da glask ha da wiriañ roadennoù profil',
+	'profiling-process' => 'Neudennad an argerzh :',
+	'profiling-wildcard' => 'Ober gant un aotre digor-frank',
+	'profiling-ok' => 'Mat eo',
+	'profiling-data' => 'Roadennoù priziañ evit `$1`',
+	'profiling-data-process' => 'Argerzh',
+	'profiling-data-count' => 'Kontañ',
+	'profiling-data-time' => 'Pad (hollek)',
+	'profiling-data-average' => 'Pad (keidenn)',
+	'profiling-no-data' => "N'eus bet kavet roadenn ebet o klotañ gant se.",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -137,6 +164,13 @@ $messages['bs'] = array(
 	'profiling-data-time' => 'Vrijeme (sve)',
 	'profiling-data-average' => 'Vrijeme (prosj)',
 	'profiling-no-data' => 'Nisu pronađeni odgovarajući podaci.',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'profiling-ok' => 'OK',
 );
 
 /** Danish (Dansk)
@@ -184,6 +218,23 @@ $messages['dsb'] = array(
 	'profiling-no-data' => 'Žedne wótpowědujuce daty namakane.',
 );
 
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'profiling' => 'Δεδομένα προφίλ',
+	'profiling-process' => 'Πρόοδος σειρών:',
+	'profiling-wildcard' => 'Χρήση μπαλαντέρ',
+	'profiling-ok' => 'Εντάξει',
+	'profiling-data-process' => 'Διαδικασία',
+	'profiling-data-count' => 'Καταμέτρηση',
+	'profiling-data-time' => 'Χρόνος (όλα)',
+	'profiling-data-average' => 'Χρόνος (μ.ο.)',
+	'profiling-no-data' => 'Δεν βρέθηκαν δεδομένα αντιστοίχισης',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -204,30 +255,43 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'profiling' => 'Datos de perfil',
 	'profiling-desc' => '[[Special:Profiling|Página especial]] para buscar e inspeccionar datos de perfil',
+	'profiling-process' => 'Cadena del proceso:',
+	'profiling-wildcard' => 'Utilizar Wildcard',
 	'profiling-ok' => 'Aceptar',
 	'profiling-data' => 'Datos de perfil para `$1`',
 	'profiling-data-process' => 'Proceso',
 	'profiling-data-count' => 'Contar',
+	'profiling-data-time' => 'Tiempo (todo)',
+	'profiling-data-average' => 'Tiempo (promedio)',
 	'profiling-no-data' => 'No se enontraron datos coincidentes.',
 );
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
 	'profiling-ok' => 'Ados',
+	'profiling-data-process' => 'Prozesua',
+	'profiling-data-count' => 'Zenbaketa',
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
  * @author Str4nd
  */
 $messages['fi'] = array(
+	'profiling' => 'Profilointitiedot',
+	'profiling-wildcard' => 'Käytä jokerimerkkiä',
 	'profiling-ok' => 'OK',
+	'profiling-data-process' => 'Prosessi',
 	'profiling-data-count' => 'Määrä',
+	'profiling-data-time' => 'Aika (kaikki)',
 	'profiling-data-average' => 'Aika (keskiarvo)',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author McDutchie
  * @author Sherbrooke
@@ -239,12 +303,20 @@ $messages['fr'] = array(
 	'profiling-process' => 'Chaîne de caractères du processus :',
 	'profiling-wildcard' => 'Utiliser un passe-partout',
 	'profiling-ok' => 'Accepter',
-	'profiling-data' => "Données d'évaluation de « $1 »",
+	'profiling-data' => 'Données d’évaluation de « $1 »',
 	'profiling-data-process' => 'Processus',
 	'profiling-data-count' => 'Compter',
 	'profiling-data-time' => 'Durée (totale)',
 	'profiling-data-average' => 'Durée (moyenne)',
 	'profiling-no-data' => 'Aucune donnée correspondante trouvée',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'profiling-ok' => 'Accèptar',
 );
 
 /** Galician (Galego)
@@ -355,6 +427,23 @@ $messages['hsb'] = array(
 	'profiling-no-data' => 'Žane wotpowědne daty namakane.',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'profiling' => 'Futásidő-analizálási adatok',
+	'profiling-desc' => '[[Special:Profiling|Speciális lap]] a futásidő-analizálási adatok keresésére és vizsgálatára',
+	'profiling-process' => 'Futtatási parancs:',
+	'profiling-wildcard' => 'Helyettesítő karakterek használata',
+	'profiling-ok' => 'OK',
+	'profiling-data' => 'Futásidő-elemzési adatok erről: „$1”',
+	'profiling-data-process' => 'Folyamat',
+	'profiling-data-count' => 'Darabszám',
+	'profiling-data-time' => 'Idő (összes)',
+	'profiling-data-average' => 'Idő (átlag)',
+	'profiling-no-data' => 'Nem található egyező adat.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -373,12 +462,14 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Ivan Lanin
  */
 $messages['id'] = array(
 	'profiling' => 'Profilisasi data',
-	'profiling-process' => 'Proses data:',
-	'profiling-wildcard' => 'Gunakan wildcard',
+	'profiling-desc' => '[[Special:Profiling|Halaman istimewa]] untuk mencari dan melakukan inspeksi profilisasi data',
+	'profiling-process' => 'Baris perintah:',
+	'profiling-wildcard' => 'Gunakan "wildcard"',
 	'profiling-ok' => 'OK',
 	'profiling-data' => 'Profilisasi data untuk `$1`',
 	'profiling-data-process' => 'Proses',
@@ -386,6 +477,15 @@ $messages['id'] = array(
 	'profiling-data-time' => 'Waktu (seluruhnya)',
 	'profiling-data-average' => 'Waktu (rata-rata)',
 	'profiling-no-data' => 'Tidak ditemukan data yang cocok.',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'profiling-ok' => 'Odinma',
+	'profiling-data-count' => 'Güó',
+	'profiling-data-time' => 'Ogẹ (nke níle)',
 );
 
 /** Italian (Italiano)
@@ -475,7 +575,12 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'profiling' => 'Donnéeën evaluéieren',
+	'profiling-desc' => '[[Special:Profiling|Spezialsäit]] fir Profildaten ze sichen an auszewäerten',
+	'profiling-process' => 'Zeechekette vun der Commande:',
+	'profiling-wildcard' => 'Benotzt Wildcard',
 	'profiling-ok' => 'ok',
+	'profiling-data' => "Profildate vu(n) '$1'",
 	'profiling-data-process' => 'Verschaffen',
 	'profiling-data-count' => 'Zielen',
 	'profiling-data-time' => 'Dauer (total)',
@@ -495,6 +600,23 @@ $messages['lfn'] = array(
  */
 $messages['lt'] = array(
 	'profiling-data-count' => 'Rezultatas',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'profiling' => 'Податоци за профилирање',
+	'profiling-desc' => '[[Special:Profiling|Специјална страница]] за пребарување и преглед на податоци за профилирање',
+	'profiling-process' => 'Низа на процесот:',
+	'profiling-wildcard' => 'Користи џокер',
+	'profiling-ok' => 'ОК',
+	'profiling-data' => 'Податоци за профилирање за „$1“',
+	'profiling-data-process' => 'Процес',
+	'profiling-data-count' => 'Број',
+	'profiling-data-time' => 'Време (сè)',
+	'profiling-data-average' => 'Време (просеч.)',
+	'profiling-no-data' => 'Не беа пронајдени соодветни податоци.',
 );
 
 /** Malayalam (മലയാളം)
@@ -603,7 +725,7 @@ $messages['nso'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'profiling' => 'Donadas per evaluar',
+	'profiling' => 'Donadas per avalorar',
 	'profiling-desc' => '[[Special:Profiling|Pagina especiala]] per recercar e inspectar de donadas de perfil',
 	'profiling-process' => 'Cadena de caractèrs de tractar :',
 	'profiling-wildcard' => 'Utilizatz de « joker »',
@@ -623,18 +745,38 @@ $messages['os'] = array(
 	'profiling-ok' => 'Афтæ уæд!',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'profiling-ok' => 'OK',
+);
+
 /** Polish (Polski)
  * @author Maikking
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'profiling' => 'Optymalizacja danych',
+	'profiling-desc' => '[[Special:Profiling|Strona specjalna]] do wyszukiwania i kontroli optymalizacji danych',
+	'profiling-process' => 'Polecenie',
+	'profiling-wildcard' => 'Użyj znaków wieloznacznych',
 	'profiling-ok' => 'OK',
+	'profiling-data' => 'Dane optymalizacyjne o „$1”',
+	'profiling-data-process' => 'Proces',
+	'profiling-data-count' => 'Liczba',
+	'profiling-data-time' => 'Czas (łącznie)',
+	'profiling-data-average' => 'Czas (średni)',
+	'profiling-no-data' => 'Nie znaleziono pasujących danych.',
 );
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'profiling' => "Antramentr ch'as càlcola ël profil da 'nt ij dat",
+	'profiling-desc' => "[[Special:Profiling|Pàgina special]] për l'arserca e l'ispession dle anformassion ëd profilassion",
 	'profiling-process' => 'Espression processà:',
 	'profiling-wildcard' => 'Dovré ël ciapatut',
 	'profiling-ok' => 'Bin parej',
@@ -655,6 +797,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  */
@@ -662,14 +805,14 @@ $messages['pt'] = array(
 	'profiling' => 'Dados de perfilagem',
 	'profiling-desc' => '[[Special:Profiling|Página especial]] para pesquisar e inspeccionar dados de perfilagem',
 	'profiling-process' => 'Comando do processo:',
-	'profiling-wildcard' => 'Usar carácter universal',
+	'profiling-wildcard' => "Usar carácter de substituição ''(wildcard)''",
 	'profiling-ok' => 'OK',
 	'profiling-data' => 'A perfilar dados para `$1`',
 	'profiling-data-process' => 'Processo',
 	'profiling-data-count' => 'Contagem',
 	'profiling-data-time' => 'Tempo (todos)',
 	'profiling-data-average' => 'Tempo (média)',
-	'profiling-no-data' => 'Dados correspondentes não encontrados.',
+	'profiling-no-data' => 'Não foram encontrados dados coincidentes.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -690,9 +833,20 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'profiling-ok' => 'OK',
+	'profiling-data-process' => 'Proces',
+	'profiling-data-time' => 'Timp (total)',
+	'profiling-data-average' => 'Timp (medie)',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
 	'profiling-ok' => 'OK',
 );
 
@@ -701,6 +855,7 @@ $messages['ro'] = array(
  */
 $messages['ru'] = array(
 	'profiling' => 'Данные профилирования',
+	'profiling-desc' => '[[Special:Profiling|Служебная страница]] для поиска и проверки данных профилирования',
 	'profiling-process' => 'Строка процесса:',
 	'profiling-wildcard' => 'Использование групповых символов',
 	'profiling-ok' => 'OK',
@@ -766,11 +921,13 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
 	'profiling-ok' => 'సరే',
 	'profiling-data-process' => 'ప్రక్రియ',
+	'profiling-data-count' => 'లెక్క',
 	'profiling-data-time' => 'సమయం (అన్నీ)',
 	'profiling-data-average' => 'సమయం (సగటు)',
 	'profiling-no-data' => 'సరిపోలిన డాటా కనబడలేదు.',
@@ -810,10 +967,27 @@ $messages['tl'] = array(
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'profiling' => 'Profil verileri',
+	'profiling-desc' => 'Profil verilerini arama ve inceleme amaçlı [[Special:Profiling|özel sayfa]]',
+	'profiling-process' => 'İşlem dizgisi:',
+	'profiling-wildcard' => 'Joker kullan',
 	'profiling-ok' => 'Tamam',
+	'profiling-data' => '`$1` için profil verileri',
+	'profiling-data-process' => 'İşlem',
 	'profiling-data-count' => 'Say',
+	'profiling-data-time' => 'Süre (tümü)',
+	'profiling-data-average' => 'Süre (ort)',
+	'profiling-no-data' => 'Eşleşen veri bulunamadı',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'profiling-ok' => 'ماقۇل',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -829,6 +1003,15 @@ $messages['ug-latn'] = array(
  */
 $messages['uk'] = array(
 	'profiling-ok' => 'Гаразд',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'profiling-ok' => 'OK',
+	'profiling-data-process' => 'Process',
+	'profiling-data-count' => 'Lugemine',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -885,24 +1068,26 @@ $messages['zh-hans'] = array(
 	'profiling-data' => '正在检核`$1`的数据',
 	'profiling-data-process' => '处理',
 	'profiling-data-count' => '数量',
-	'profiling-data-time' => '时间 (全部)',
-	'profiling-data-average' => '时间 (平均)',
+	'profiling-data-time' => '时间 （全部）',
+	'profiling-data-average' => '时间 （平均）',
 	'profiling-no-data' => '找不到匹配的数据。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
 	'profiling' => '檢核資料',
+	'profiling-desc' => '[[Special:Profiling|特殊頁面]]用以查找和檢查配置信息',
 	'profiling-process' => '處理字串:',
 	'profiling-wildcard' => '使用萬用字元',
 	'profiling-ok' => '確定',
 	'profiling-data' => '正在檢核`$1`的資料',
 	'profiling-data-process' => '處理',
 	'profiling-data-count' => '數量',
-	'profiling-data-time' => '時間 (全部)',
-	'profiling-data-average' => '時間 (平均)',
+	'profiling-data-time' => '時間 （全部）',
+	'profiling-data-average' => '時間 （平均）',
 	'profiling-no-data' => '找不到對應的資料。',
 );
 

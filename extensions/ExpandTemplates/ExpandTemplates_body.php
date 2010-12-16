@@ -4,7 +4,7 @@
 wfLoadExtensionMessages( 'ExpandTemplates' );
 
 class ExpandTemplates extends SpecialPage {
-	var $generateXML, $removeComments, $isNewParser;
+	var $generateXML, $removeComments, $removeNowiki, $isNewParser;
 
 	/* 50MB allows fixing those huge pages */
 	const MAX_INCLUDE_SIZE = 50000000;
@@ -30,6 +30,7 @@ class ExpandTemplates extends SpecialPage {
 		$this->generateXML = $this->isNewParser ? $wgRequest->getBool( 'generate_xml' ) : false;
 		if ( strlen( $input ) ) {
 			$this->removeComments = $wgRequest->getBool( 'removecomments', false );
+			$this->removeNowiki = $wgRequest->getBool( 'removenowiki', false );
 			$options = new ParserOptions;
 			$options->setRemoveComments( $this->removeComments );
 			$options->setMaxIncludeSize( self::MAX_INCLUDE_SIZE );
@@ -45,6 +46,7 @@ class ExpandTemplates extends SpecialPage {
 			$output = $wgParser->preprocess( $input, $title, $options );
 		} else {
 			$this->removeComments = $wgRequest->getBool( 'removecomments', true );
+			$this->removeNowiki = $wgRequest->getBool( 'removenowiki', false );
 			$output = false;
 		}
 
@@ -55,7 +57,11 @@ class ExpandTemplates extends SpecialPage {
 			if ( $this->generateXML ) {
 				$wgOut->addHTML( $this->makeOutput( $xml, 'expand_templates_xml_output' ) );
 			}
-			$wgOut->addHTML( $this->makeOutput( $output ) );
+			$tmp = $this->makeOutput( $output );
+			if ( $this->removeNowiki ) {
+				$tmp = preg_replace( array( '_&lt;nowiki&gt;_', '_&lt;/nowiki&gt;_', '_&lt;nowiki */&gt;_' ), '', $tmp );
+			}
+			$wgOut->addHTML( $tmp );
 			$this->showHtmlPreview( $title, $output, $wgOut );
 		}
 
@@ -78,6 +84,7 @@ class ExpandTemplates extends SpecialPage {
 		$form .= htmlspecialchars( $input );
 		$form .= Xml::closeElement( 'textarea' );
 		$form .= '<p>' . Xml::checkLabel( wfMsg( 'expand_templates_remove_comments' ), 'removecomments', 'removecomments', $this->removeComments ) . '</p>';
+		$form .= '<p>' . Xml::checkLabel( wfMsg( 'expand_templates_remove_nowiki' ), 'removenowiki', 'removenowiki', $this->removeNowiki ) . '</p>';
 		if ( $this->isNewParser ) {
 			$form .= '<p>' . Xml::checkLabel( wfMsg( 'expand_templates_generate_xml' ), 'generate_xml', 'generate_xml', $this->generateXML ) . '</p>';
 		}

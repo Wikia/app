@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ('ApiQueryBase.php');
+	require_once ( 'ApiQueryBase.php' );
 }
 
 /**
@@ -36,60 +36,77 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 
-	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName, 'wl');
+	public function __construct( $query, $moduleName ) {
+		parent :: __construct( $query, $moduleName, 'wl' );
 	}
 
 	public function execute() {
 		$this->run();
 	}
 
-	public function executeGenerator($resultPageSet) {
-		$this->run($resultPageSet);
+	public function executeGenerator( $resultPageSet ) {
+		$this->run( $resultPageSet );
 	}
 
 	private $fld_ids = false, $fld_title = false, $fld_patrol = false, $fld_flags = false,
-			$fld_timestamp = false, $fld_user = false, $fld_comment = false, $fld_sizes = false;
+			$fld_timestamp = false, $fld_user = false, $fld_comment = false, $fld_parsedcomment = false, $fld_sizes = false,
+			$fld_notificationtimestamp = false;
 
-	private function run($resultPageSet = null) {
-		global $wgUser, $wgDBtype;
+	private function run( $resultPageSet = null ) {
+		global $wgUser;
 
-		$this->selectNamedDB('watchlist', DB_SLAVE, 'watchlist');
-
-		if (!$wgUser->isLoggedIn())
-			$this->dieUsage('You must be logged-in to have a watchlist', 'notloggedin');
+		$this->selectNamedDB( 'watchlist', DB_SLAVE, 'watchlist' );
 
 		$params = $this->extractRequestParams();
 
-		if (!is_null($params['prop']) && is_null($resultPageSet)) {
-
-			$prop = array_flip($params['prop']);
-
-			$this->fld_ids = isset($prop['ids']);
-			$this->fld_title = isset($prop['title']);
-			$this->fld_flags = isset($prop['flags']);
-			$this->fld_user = isset($prop['user']);
-			$this->fld_comment = isset($prop['comment']);
-			$this->fld_timestamp = isset($prop['timestamp']);
-			$this->fld_sizes = isset($prop['sizes']);
-			$this->fld_patrol = isset($prop['patrol']);
-			$this->fld_wikiamode = isset($prop['wikiamode']);
-
-			if ($this->fld_patrol) {
-				global $wgUser;
-				if (!$wgUser->useRCPatrol() && !$wgUser->useNPPatrol())
-					$this->dieUsage('patrol property is not available', 'patrol');
+		if ( !is_null( $params['owner'] ) && !is_null( $params['token'] ) ) {
+			$user = User::newFromName( $params['owner'], false );
+			if ( !$user->getId() ) {
+				$this->dieUsage( 'Specified user does not exist', 'bad_wlowner' );
 			}
+			$token = $user->getOption( 'watchlisttoken' );
+			if ( $token == '' || $token != $params['token'] ) {
+				$this->dieUsage( 'Incorrect watchlist token provided -- please set a correct token in Special:Preferences', 'bad_wltoken' );
+			}
+		} elseif ( !$wgUser->isLoggedIn() ) {
+			$this->dieUsage( 'You must be logged-in to have a watchlist', 'notloggedin' );
+		} else {
+			$user = $wgUser;
 		}
 
-		if (is_null($resultPageSet)) {
-			$this->addFields(array (
+		if ( !is_null( $params['prop'] ) && is_null( $resultPageSet ) ) {
+
+			$prop = array_flip( $params['prop'] );
+			$this->fld_wikiamode = isset($prop['wikiamode']);
+
+			$this->fld_ids = isset( $prop['ids'] );
+			$this->fld_title = isset( $prop['title'] );
+			$this->fld_flags = isset( $prop['flags'] );
+			$this->fld_user = isset( $prop['user'] );
+			$this->fld_comment = isset( $prop['comment'] );
+			$this->fld_parsedcomment = isset ( $prop['parsedcomment'] );
+			$this->fld_timestamp = isset( $prop['timestamp'] );
+			$this->fld_sizes = isset( $prop['sizes'] );
+			$this->fld_patrol = isset( $prop['patrol'] );
+			$this->fld_notificationtimestamp = isset( $prop['notificationtimestamp'] );
+
+			if ( $this->fld_patrol ) {
+				if ( !$user->useRCPatrol() && !$user->useNPPatrol() )
+					$this->dieUsage( 'patrol property is not available', 'patrol' );
+			}
+		}
+	
+		$this->addFields( array (
+			'rc_namespace',
+			'rc_title',
+			'rc_timestamp'
+		) );
+
+		if ( is_null( $resultPageSet ) ) {
+			$this->addFields( array (
 				'rc_cur_id',
-				'rc_this_oldid',
-				'rc_namespace',
-				'rc_title',
-				'rc_timestamp'
-			));
+				'rc_this_oldid'
+			) );
 
 			$this->addFieldsIf('rc_type', $this->fld_wikiamode);
 			$this->addFieldsIf('rc_params', $this->fld_wikiamode);
@@ -115,21 +132,23 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 				'rc_timestamp'
 			));
 		} else {
-			$this->addFields(array (
-				'rc_cur_id',
-				'rc_namespace',
-				'rc_title',
-				'rc_timestamp'
-			));
+			$this->addFields( 'rc_cur_id' );
 		}
 
-		$this->addTables(array (
+		$this->addTables( array (
 			'watchlist',
 			'page',
 			'recentchanges'
-		));
+		) );
 
-		$userId = $wgUser->getId();
+		$userId = $user->getId();
+		$this->addWhere( array (
+			'wl_namespace = rc_namespace',
+			'wl_title = rc_title',
+			'rc_cur_id = page_id',
+			'wl_user' => $userId,
+			'rc_deleted' => 0,
+		) );
 
 		if(!$this->fld_wikiamode) {
 			$this->addWhere(array (
@@ -154,83 +173,89 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			$this->addWhereIf('(rc_this_oldid=page_latest OR rc_type=3)', !$params['allrev']);
 		}
 
-		if (!is_null($params['show'])) {
-			$show = array_flip($params['show']);
+		if ( !is_null( $params['show'] ) ) {
+			$show = array_flip( $params['show'] );
 
 			/* Check for conflicting parameters. */
-			if ((isset ($show['minor']) && isset ($show['!minor']))
-					|| (isset ($show['bot']) && isset ($show['!bot']))
-					|| (isset ($show['anon']) && isset ($show['!anon']))
-					|| (isset ($show['patrolled']) && isset ($show['!patrolled']))) {
+			if ( ( isset ( $show['minor'] ) && isset ( $show['!minor'] ) )
+					|| ( isset ( $show['bot'] ) && isset ( $show['!bot'] ) )
+					|| ( isset ( $show['anon'] ) && isset ( $show['!anon'] ) )
+					|| ( isset ( $show['patrolled'] ) && isset ( $show['!patrolled'] ) ) ) {
 
-				$this->dieUsage("Incorrect parameter - mutually exclusive values may not be supplied", 'show');
+				$this->dieUsageMsg( array( 'show' ) );
 			}
 
-			// Check permissions
-			global $wgUser;
-			if((isset($show['patrolled']) || isset($show['!patrolled'])) && !$wgUser->useRCPatrol() && !$wgUser->useNPPatrol())
-				$this->dieUsage("You need the patrol right to request the patrolled flag", 'permissiondenied');
+			// Check permissions.
+			if ( ( isset( $show['patrolled'] ) || isset( $show['!patrolled'] ) ) && !$wgUser->useRCPatrol() && !$wgUser->useNPPatrol() )
+				$this->dieUsage( "You need the patrol right to request the patrolled flag", 'permissiondenied' );
 
 			/* Add additional conditions to query depending upon parameters. */
-			$this->addWhereIf('rc_minor = 0', isset ($show['!minor']));
-			$this->addWhereIf('rc_minor != 0', isset ($show['minor']));
-			$this->addWhereIf('rc_bot = 0', isset ($show['!bot']));
-			$this->addWhereIf('rc_bot != 0', isset ($show['bot']));
-			$this->addWhereIf('rc_user = 0', isset ($show['anon']));
-			$this->addWhereIf('rc_user != 0', isset ($show['!anon']));
-			$this->addWhereIf('rc_patrolled = 0', isset($show['!patrolled']));
-			$this->addWhereIf('rc_patrolled != 0', isset($show['patrolled']));
+			$this->addWhereIf( 'rc_minor = 0', isset ( $show['!minor'] ) );
+			$this->addWhereIf( 'rc_minor != 0', isset ( $show['minor'] ) );
+			$this->addWhereIf( 'rc_bot = 0', isset ( $show['!bot'] ) );
+			$this->addWhereIf( 'rc_bot != 0', isset ( $show['bot'] ) );
+			$this->addWhereIf( 'rc_user = 0', isset ( $show['anon'] ) );
+			$this->addWhereIf( 'rc_user != 0', isset ( $show['!anon'] ) );
+			$this->addWhereIf( 'rc_patrolled = 0', isset( $show['!patrolled'] ) );
+			$this->addWhereIf( 'rc_patrolled != 0', isset( $show['patrolled'] ) );
 		}
 
+		if ( !is_null( $params['user'] ) && !is_null( $params['excludeuser'] ) )
+			$this->dieUsage( 'user and excludeuser cannot be used together', 'user-excludeuser' );
+		if ( !is_null( $params['user'] ) )
+			$this->addWhereFld( 'rc_user_text', $params['user'] );
+		if ( !is_null( $params['excludeuser'] ) )
+			$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
 
-		# This is an index optimization for mysql, as done in the Special:Watchlist page
-		$this->addWhereIf("rc_timestamp > ''", !isset ($params['start']) && !isset ($params['end']) && $wgDBtype == 'mysql');
+		$db = $this->getDB();
+			
+		// This is an index optimization for mysql, as done in the Special:Watchlist page
+		$this->addWhereIf( "rc_timestamp > ''", !isset ( $params['start'] ) && !isset ( $params['end'] ) && $db->getType() == 'mysql' );
 
-		$this->addOption('LIMIT', $params['limit'] +1);
+		$this->addOption( 'LIMIT', $params['limit'] + 1 );
 
 		$ids = array ();
 		$count = 0;
-		$res = $this->select(__METHOD__);
+		$res = $this->select( __METHOD__ );
 
-		$db = $this->getDB();
-		while ($row = $db->fetchObject($res)) {
-			if (++ $count > $params['limit']) {
+		while ( $row = $db->fetchObject( $res ) ) {
+			if ( ++ $count > $params['limit'] ) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
-				$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->rc_timestamp));
+				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) );
 				break;
 			}
 
-			if (is_null($resultPageSet)) {
-				$vals = $this->extractRowInfo($row);
-				$fit = $this->getResult()->addValue(array('query', $this->getModuleName()), null, $vals);
-				if(!$fit)
+			if ( is_null( $resultPageSet ) ) {
+				$vals = $this->extractRowInfo( $row );
+				$fit = $this->getResult()->addValue( array( 'query', $this->getModuleName() ), null, $vals );
+				if ( !$fit )
 				{
-					$this->setContinueEnumParameter('start',
-							wfTimestamp(TS_ISO_8601, $row->rc_timestamp));
+					$this->setContinueEnumParameter( 'start',
+							wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) );
 					break;
 				}
 			} else {
-				if ($params['allrev']) {
-					$ids[] = intval($row->rc_this_oldid);
+				if ( $params['allrev'] ) {
+					$ids[] = intval( $row->rc_this_oldid );
 				} else {
-					$ids[] = intval($row->rc_cur_id);
+					$ids[] = intval( $row->rc_cur_id );
 				}
 			}
 		}
 
-		$db->freeResult($res);
+		$db->freeResult( $res );
 
-		if (is_null($resultPageSet)) {
-			$this->getResult()->setIndexedTagName_internal(array('query', $this->getModuleName()), 'item');
+		if ( is_null( $resultPageSet ) ) {
+			$this->getResult()->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'item' );
 		}
-		elseif ($params['allrev']) {
-			$resultPageSet->populateFromRevisionIDs($ids);
+		elseif ( $params['allrev'] ) {
+			$resultPageSet->populateFromRevisionIDs( $ids );
 		} else {
-			$resultPageSet->populateFromPageIDs($ids);
+			$resultPageSet->populateFromPageIDs( $ids );
 		}
 	}
 
-	private function extractRowInfo($row) {
+	private function extractRowInfo( $row ) {
 
 		$vals = array ();
 
@@ -252,42 +277,52 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			$vals['old_revid'] = $row->rc_last_oldid;
 		}
 
-		if ($this->fld_ids) {
-			$vals['pageid'] = intval($row->rc_cur_id);
-			$vals['revid'] = intval($row->rc_this_oldid);
+		if ( $this->fld_ids ) {
+			$vals['pageid'] = intval( $row->rc_cur_id );
+			$vals['revid'] = intval( $row->rc_this_oldid );
 		}
 
-		if ($this->fld_title)
-			ApiQueryBase :: addTitleInfo($vals, Title :: makeTitle($row->rc_namespace, $row->rc_title));
+		$title = Title::makeTitle( $row->rc_namespace, $row->rc_title );
 
-		if ($this->fld_user) {
+		if ( $this->fld_title )
+			ApiQueryBase::addTitleInfo( $vals, $title );
+
+		if ( $this->fld_user ) {
 			$vals['user'] = $row->rc_user_text;
-			if (!$row->rc_user)
+			if ( !$row->rc_user )
 				$vals['anon'] = '';
 		}
 
-		if ($this->fld_flags) {
-			if ($row->rc_new)
+		if ( $this->fld_flags ) {
+			if ( $row->rc_new )
 				$vals['new'] = '';
-			if ($row->rc_minor)
+			if ( $row->rc_minor )
 				$vals['minor'] = '';
-			if ($row->rc_bot)
+			if ( $row->rc_bot )
 				$vals['bot'] = '';
 		}
 
-		if ($this->fld_patrol && isset($row->rc_patrolled))
+		if ( $this->fld_patrol && isset( $row->rc_patrolled ) )
 			$vals['patrolled'] = '';
 
-		if ($this->fld_timestamp)
-			$vals['timestamp'] = wfTimestamp(TS_ISO_8601, $row->rc_timestamp);
+		if ( $this->fld_timestamp )
+			$vals['timestamp'] = wfTimestamp( TS_ISO_8601, $row->rc_timestamp );
 
-		if ($this->fld_sizes) {
-			$vals['oldlen'] = intval($row->rc_old_len);
-			$vals['newlen'] = intval($row->rc_new_len);
+		if ( $this->fld_sizes ) {
+			$vals['oldlen'] = intval( $row->rc_old_len );
+			$vals['newlen'] = intval( $row->rc_new_len );
 		}
+		
+		if ( $this->fld_notificationtimestamp )
+			$vals['notificationtimestamp'] = ( $row->wl_notificationtimestamp == null ) ? '' : wfTimestamp( TS_ISO_8601, $row->wl_notificationtimestamp );
 
-		if ($this->fld_comment && isset( $row->rc_comment ))
+		if ( $this->fld_comment && isset( $row->rc_comment ) )
 			$vals['comment'] = $row->rc_comment;
+			
+		if ( $this->fld_parsedcomment && isset( $row->rc_comment ) ) {
+			global $wgUser;
+			$vals['parsedcomment'] = $wgUser->getSkin()->formatComment( $row->rc_comment, $title );
+		}
 
 		return $vals;
 	}
@@ -304,6 +339,12 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			'namespace' => array (
 				ApiBase :: PARAM_ISMULTI => true,
 				ApiBase :: PARAM_TYPE => 'namespace'
+			),
+			'user' => array(
+				ApiBase :: PARAM_TYPE => 'user',
+			),
+			'excludeuser' => array(
+				ApiBase :: PARAM_TYPE => 'user',
 			),
 			'dir' => array (
 				ApiBase :: PARAM_DFLT => 'older',
@@ -328,10 +369,12 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 					'flags',
 					'user',
 					'comment',
+					'parsedcomment',
 					'timestamp',
 					'patrol',
 					'sizes',
-					'wikiamode'
+					'wikiamode',
+					'notificationtimestamp'
 				)
 			),
 			'show' => array (
@@ -346,6 +389,12 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 					'patrolled',
 					'!patrolled',
 				)
+			),
+			'owner' => array (
+				ApiBase :: PARAM_TYPE => 'user'
+			),
+			'token' => array (
+				ApiBase :: PARAM_TYPE => 'string'
 			)
 		);
 	}
@@ -356,18 +405,34 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			'start' => 'The timestamp to start enumerating from.',
 			'end' => 'The timestamp to end enumerating.',
 			'namespace' => 'Filter changes to only the given namespace(s).',
+			'user' => 'Only list changes by this user',
+			'excludeuser' => 'Don\'t list changes by this user',
 			'dir' => 'In which direction to enumerate pages.',
 			'limit' => 'How many total results to return per request.',
 			'prop' => 'Which additional items to get (non-generator mode only).',
 			'show' => array (
 				'Show only items that meet this criteria.',
 				'For example, to see only minor edits done by logged-in users, set show=minor|!anon'
-			)
+			),
+			'owner' => "The name of the user whose watchlist you'd like to access",
+			'token' => "Give a security token (settable in preferences) to allow access to another user's watchlist"
 		);
 	}
 
 	public function getDescription() {
 		return "Get all recent changes to pages in the logged in user's watchlist";
+	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'code' => 'bad_wlowner', 'info' => 'Specified user does not exist' ),
+			array( 'code' => 'bad_wltoken', 'info' => 'Incorrect watchlist token provided -- please set a correct token in Special:Preferences' ),
+			array( 'code' => 'notloggedin', 'info' => 'You must be logged-in to have a watchlist' ),
+			array( 'code' => 'patrol', 'info' => 'patrol property is not available' ),
+			array( 'show' ),
+			array( 'code' => 'permissiondenied', 'info' => 'You need the patrol right to request the patrolled flag' ),
+			array( 'code' => 'user-excludeuser', 'info' => 'user and excludeuser cannot be used together' ),
+		) );
 	}
 
 	protected function getExamples() {
@@ -376,11 +441,12 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			'api.php?action=query&list=watchlist&wlprop=ids|title|timestamp|user|comment',
 			'api.php?action=query&list=watchlist&wlallrev&wlprop=ids|title|timestamp|user|comment',
 			'api.php?action=query&generator=watchlist&prop=info',
-			'api.php?action=query&generator=watchlist&gwlallrev&prop=revisions&rvprop=timestamp|user'
+			'api.php?action=query&generator=watchlist&gwlallrev&prop=revisions&rvprop=timestamp|user',
+			'api.php?action=query&list=watchlist&wlowner=Bob_Smith&wltoken=d8d562e9725ea1512894cdab28e5ceebc7f20237'
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryWatchlist.php 69986 2010-07-27 03:57:39Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryWatchlist.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

@@ -28,12 +28,8 @@ class NCL extends EnhancedChangesList {
 		}
 
 		if ( $list instanceof NCL ) {
-			global $wgOut, $wgScriptPath, $wgJsMimeType, $wgStyleVersion;
-			$wgOut->addScript(
-				Xml::openElement( 'script', array( 'type' => $wgJsMimeType, 'src' =>
-				"$wgScriptPath/extensions/CleanChanges/cleanchanges.js?$wgStyleVersion" )
-				) . '</script>'
-			);
+			global $wgOut, $wgScriptPath;
+			$wgOut->addScriptFile( "$wgScriptPath/extensions/CleanChanges/cleanchanges.js" );
 		}
 
 		/* If some list was specified, stop processing */
@@ -114,10 +110,15 @@ class NCL extends EnhancedChangesList {
 	}
 
 	protected function getLogAction( $rc ) {
-		if ( $this->isDeleted($rc, LogPage::DELETED_ACTION) ) {
+		global $wgUser;
+
+		$priviledged = $wgUser->isAllowed('deleterevision');
+		$deleted = $this->isDeleted($rc, LogPage::DELETED_ACTION);
+
+		if ( $deleted && !$priviledged ) {
 			return $this->XMLwrapper( 'history-deleted', wfMsg('rev-deleted-event') );
 		} else {
-			return LogPage::actionText(
+			$action = LogPage::actionText(
 				$rc->getAttribute('rc_log_type'),
 				$rc->getAttribute('rc_log_action'),
 				$rc->getTitle(),
@@ -126,6 +127,11 @@ class NCL extends EnhancedChangesList {
 				true,
 				true
 			);
+			if ( $deleted ) {
+				$class = array( 'class' => 'history-deleted' );
+				$action = Xml::tags( 'span', $class, $action );
+			}
+			return $action;
 		}
 	}
 
@@ -176,12 +182,7 @@ class NCL extends EnhancedChangesList {
 			$rc->getAttribute( 'rc_user_text' ) );
 		$rc->_userInfo = $stuff[0];
 
-		$rc->_comment = $this->skin->commentBlock(
-			$rc->getAttribute( 'rc_comment' ), $titleObj );
-
-		if ( $logEntry ) {
-			$rc->_comment = $this->getLogAction( $rc ) . ' ' . $rc->_comment;
-		}
+		$rc->_comment = $this->getComment( $rc );
 
 		$rc->_watching = $this->numberofWatchingusers( $baseRC->numberofWatchingusers );
 
@@ -408,6 +409,26 @@ class NCL extends EnhancedChangesList {
 
 	}
 
+	public function getComment( $rc ) {
+		global $wgUser;
+		$comment = $rc->getAttribute( 'rc_comment' );
+		$action = '';
+		if ( $this->isLog($rc) ) $action = $this->getLogAction( $rc );
+
+		if ( $comment === '' ) {
+			return $action;
+		} elseif ( $this->isDeleted( $rc, LogPage::DELETED_COMMENT ) ) {
+			$priviledged = $wgUser->isAllowed('deleterevision');
+			if ( $priviledged ) {
+				return $action . ' <span class="history-deleted">' . $comment . '</span>';
+			} else {
+				return $action . ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-comment' ) . '</span>';
+			}
+		} else {
+			return $action . $this->skin->commentBlock( $comment, $rc->getTitle() );
+		}
+	}
+
 	/**
 	 * Enhanced user tool links, with javascript functionality.
 	 */
@@ -466,10 +487,13 @@ class NCL extends EnhancedChangesList {
 		if( $blockable && $wgUser->isAllowed( 'block' ) ) {
 			$items[] = $this->skin->blockLink( $userId, $userText );
 		}
-		if( $userId && $wgUser->isAllowed( 'userrights' ) ) {
-			$targetPage = SpecialPage::getTitleFor( 'Userrights', $userText );
-			$items[] = $this->skin->makeKnownLinkObj( $targetPage,
-				wfMsgHtml( 'cleanchanges-changerightslink' ) );
+		if( $userId ) {
+			$userrightsPage = new UserrightsPage();
+			if( $userrightsPage->userCanChangeRights( User::newFromId( $userId ) ) ) {
+				$targetPage = SpecialPage::getTitleFor( 'Userrights', $userText );
+				$items[] = $this->skin->makeKnownLinkObj( $targetPage,
+					wfMsgHtml( 'cleanchanges-changerightslink' ) );
+			}
 		}
 
 		if( $items ) {
@@ -512,25 +536,25 @@ class NCL extends EnhancedChangesList {
 	function getFlags( $rc, Array $overrides = null ) {
 		// TODO: we assume all characters are of equal width, which they may be not
 		$map = array(
-			# item  =>        field           class      letter
-			'new'   => array( 'rc_new',       'newpage', $this->message['newpageletter'] ),
-			'minor' => array( 'rc_minor',     'minor',   $this->message['minoreditletter'] ),
-			'bot'   => array( 'rc_bot',       'bot',     $this->message['boteditletter'] ),
+			# item  =>        field       letter-or-something
+			'new'   => array( 'rc_new',   self::flag( 'newpage' ) ),
+			'minor' => array( 'rc_minor', self::flag( 'minor' ) ),
+			'bot'   => array( 'rc_bot',   self::flag( 'bot' ) ),
 		);
 		if ( self::usePatrol() ) {
-			$map['patrol'] = array( 'rc_patrolled', 'unpatrolled', '!' );
+			$map['patrol'] = array( 'rc_patrolled', self::flag( 'unpatrolled' ) );
 		}
-
 
 		static $nothing = "\xc2\xa0";
 
 		$items = array();
 		foreach ( $map as $item => $data ) {
-			$bool = isset($overrides[$item]) ? $overrides[$item] : $rc->getAttribute( $data[0] );
-			$items[] = $this->XMLwrapper( $data[1], $bool ? $data[2] : $nothing );
+			list( $field, $flag ) = $data;
+			$bool = isset($overrides[$item]) ? $overrides[$item] : $rc->getAttribute( $field );
+			$items[] = $bool ? $flag : $nothing;
 		}
 
-		return Xml::tags( 'span', null, implode( '', $items ) );
+		return implode( '', $items );
 	}
 
 	protected function getCharacterDifference( $new, $old = null ) {

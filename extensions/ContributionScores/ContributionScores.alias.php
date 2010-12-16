@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'ContributionScores' => array( 'ContributionScores' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ContributionScores' => array( 'نتائج_المساهمة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ContributionScores' => array( 'نتايج_المساهمة' ),
 );
@@ -30,6 +26,16 @@ $aliases['arz'] = array(
 /** Bosnian (Bosanski) */
 $aliases['bs'] = array(
 	'ContributionScores' => array( 'DoprinosiBodovi' ),
+);
+
+/** Estonian (Eesti) */
+$aliases['et'] = array(
+	'ContributionScores' => array( 'Kaastööpunktid' ),
+);
+
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'ContributionScores' => array( 'Muokkauspisteet' ),
 );
 
 /** Galician (Galego) */
@@ -54,7 +60,7 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'ContributionScores' => array( 'Peringkat kontribusi' ),
+	'ContributionScores' => array( 'Skor kontribusi', 'SkorKontribusi' ),
 );
 
 /** Japanese (日本語) */
@@ -67,9 +73,29 @@ $aliases['km'] = array(
 	'ContributionScores' => array( 'ពិន្ទុអ្នករួមចំណែក' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'ContributionScores' => array( 'MetmaacherZahle' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'ContributionScores' => array( 'Score vun de Kontributiounen' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'ContributionScores' => array( 'БодувањеНаПридонесите' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'ContributionScores' => array( 'സേവനസ്കോറുകൾ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ContributionScores' => array( 'योगदानप्राविण्य' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -79,7 +105,7 @@ $aliases['nds-nl'] = array(
 
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
-	'ContributionScores' => array( 'Gebruikersstatistieken', 'Bijdragenscores' ),
+	'ContributionScores' => array( 'Gebruikersscores', 'Bijdragenscores' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
@@ -97,13 +123,28 @@ $aliases['sa'] = array(
 	'ContributionScores' => array( 'योगदानप्राप्ताङ्क' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ContributionScores' => array( 'SkórePríspevkov' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'ContributionScores' => array( 'Bidragspoäng' ),
 );
 
+/** Thai (ไทย) */
+$aliases['th'] = array(
+	'ContributionScores' => array( 'คะแนนการเขียน' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ContributionScores' => array( 'Mga puntos ng ambag' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ContributionScores' => array( 'KatkıSkorları', 'KatkıPuanları' ),
 );
 

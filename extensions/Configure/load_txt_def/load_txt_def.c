@@ -521,78 +521,94 @@ int ltd_process_array( zval *values, char *line, int line_len, char *filename, i
 }
 
 int ltd_process_entry( zval *values, char *keyval, int keyval_len, char *filename, int line_number ) {
-	char *key, *trim_key, *val, *trim_val, *col = NULL, *tmp_val;
-	int key_len, trim_key_len, val_len, trim_val_len, col_pos;
+	char *trim_keyval, *key, *trim_key, *val, *trim_val, *col = NULL, *tmp_val;
+	int trim_keyval_len, key_len, trim_key_len, val_len, trim_val_len, col_pos;
 	char *brace_open, *brace_close, *tmp_brace, *subarray;
 	int brace_len, tmp_brace_len, subarray_len;
+	int ret_val = SUCCESS;
 	zval *subvalues;
 
-	col = memchr( keyval, ':', keyval_len );
+	ltd_trim( keyval, keyval_len, &trim_keyval, &trim_keyval_len );
 
-	if ( col == NULL ) {
-		ltd_trim( keyval, keyval_len, &val, &val_len );
-		add_next_index_stringl( values, val, val_len, 1 );
+	if ( trim_keyval[0] == '{' ) {
+		trim_val = trim_keyval;
+		trim_val_len = trim_keyval_len;
 	} else {
-		col_pos = (int)( col - keyval );
+		col = memchr( trim_keyval, ':', trim_keyval_len );
 
-		key_len = col_pos;
-		key = estrndup( keyval, col_pos );
-		ltd_trim( key, key_len, &trim_key, &trim_key_len );
+		if ( col == NULL ) {
+			trim_val = trim_keyval;
+			trim_val_len = trim_keyval_len;
+		} else {
+			col_pos = (int)( col - trim_keyval );
 
-		tmp_val = keyval + col_pos + 1;
-		val_len = keyval_len - col_pos - 1;
-		val = estrndup( tmp_val, val_len );
-		ltd_trim( val, val_len, &trim_val, &trim_val_len );
+			key_len = col_pos;
+			key = estrndup( trim_keyval, col_pos );
+			ltd_trim( key, key_len, &trim_key, &trim_key_len );
 
-		brace_open = memchr( trim_val, '{', trim_val_len );
+			tmp_val = trim_keyval + col_pos + 1;
+			val_len = trim_keyval_len - col_pos - 1;
+			val = estrndup( tmp_val, val_len );
+			ltd_trim( val, val_len, &trim_val, &trim_val_len );
+		}
+	}
 
-		if ( brace_open != NULL ) {
-			brace_open++;
-			brace_len = (int)( brace_open - trim_val );
+	brace_open = memchr( trim_val, '{', trim_val_len );
 
-			brace_close = memchr( brace_open, '}', trim_val_len - brace_len );
-			if ( brace_close == NULL ) {
-				php_error( E_WARNING, "Unbalanced brace count in '%s' on line %i", filename, line_number );
-				efree( key );
-				efree( val );
-				return FAILURE;
+	if ( brace_open != NULL ) {
+		brace_open++;
+		brace_len = (int)( brace_open - trim_val );
+
+		brace_close = memchr( brace_open, '}', trim_val_len - brace_len );
+		if ( brace_close == NULL ) {
+			php_error( E_WARNING, "Unbalanced brace count in '%s' on line %i", filename, line_number );
+			ret_val = FAILURE;
+			goto out;
+		}
+
+		tmp_brace_len = (int)( brace_close - brace_open );
+		if ( memchr( brace_open, '{', tmp_brace_len ) != NULL ) {
+			if ( ltd_skip_subarrays( brace_open, trim_val_len - brace_len, &tmp_brace, filename, line_number ) == FAILURE ) {
+				ret_val = FAILURE;
+				goto out;
 			}
+			tmp_brace_len = (int)( tmp_brace - trim_val );
+			brace_close = memchr( tmp_brace, '}', trim_val_len - tmp_brace_len );
+		}
 
-			tmp_brace_len = (int)( brace_close - brace_open );
-			if ( memchr( brace_open, '{', tmp_brace_len ) != NULL ) {
-				if ( ltd_skip_subarrays( brace_open, trim_val_len - brace_len, &tmp_brace, filename, line_number ) == FAILURE ) {
-					efree( key );
-					efree( val );
-					return FAILURE;
-				}
-				tmp_brace_len = (int)( tmp_brace - trim_val );
-				brace_close = memchr( tmp_brace, '}', trim_val_len - tmp_brace_len );
-			}
+		subarray_len = (int)( brace_close - brace_open ) - 1;
+		subarray = estrndup( brace_open, subarray_len );
 
-			subarray_len = (int)( brace_close - brace_open ) - 1;
-			subarray = estrndup( brace_open, subarray_len );
+		MAKE_STD_ZVAL( subvalues );
+		array_init( subvalues );
 
-			MAKE_STD_ZVAL( subvalues );
-			array_init( subvalues );
-
-			if( ltd_process_array( subvalues, subarray, subarray_len, filename, line_number ) == FAILURE ) {
-				efree( key );
-				efree( val );
-				efree( subarray );
-				zval_dtor( subvalues );
-				return FAILURE;
-			}
-
-			add_assoc_zval_ex( values, trim_key, trim_key_len + 1, subvalues );
+		if( ltd_process_array( subvalues, subarray, subarray_len, filename, line_number ) == FAILURE ) {
 			efree( subarray );
+			zval_dtor( subvalues );
+			ret_val = FAILURE;
+			goto out;
+		}
+
+		if ( col == NULL ) {
+			add_next_index_zval( values, subvalues );
+		} else {
+			add_assoc_zval_ex( values, trim_key, trim_key_len + 1, subvalues );
+		}
+		efree( subarray );
+	} else {
+		if ( col == NULL ) {
+			add_next_index_zval( values, ltd_transform_to_zval( trim_val, trim_val_len ) );
 		} else {
 			add_assoc_zval_ex( values, trim_key, trim_key_len + 1, ltd_transform_to_zval( trim_val, trim_val_len ) );
 		}
+	}
 
+out:
+	if ( col != NULL ) {
 		efree( key );
 		efree( val );
 	}
-	return SUCCESS;
+	return ret_val;
 }
 
 zval *ltd_transform_to_zval( char *val, int val_len ) {

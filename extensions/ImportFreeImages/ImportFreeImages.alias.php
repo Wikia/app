@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'ImportFreeImages' => array( 'ImportFreeImages' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ImportFreeImages' => array( 'استيراد_صور_حرة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ImportFreeImages' => array( 'استيراد_صور_حرة' ),
 );
@@ -52,6 +48,11 @@ $aliases['fr'] = array(
 	'ImportFreeImages' => array( 'ImporterImagesLibres' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'ImportFreeImages' => array( 'Importar des émâges abades', 'ImportarDesÉmâgesAbades' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'ImportFreeImages' => array( 'Freji Bilder importiere' ),
@@ -72,9 +73,24 @@ $aliases['ia'] = array(
 	'ImportFreeImages' => array( 'Importar imagines libere' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'ImportFreeImages' => array( 'Impor gambar gratis', 'ImporGambarGratis' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'ImportFreeImages' => array( 'ImportaImmaginiLibere' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'ImportFreeImages' => array( 'フリー画像のインポート', 'フリーの画像をインポート' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'ImportFreeImages' => array( 'Frei_Bellder_Empotteere', 'FreiBellderEmpotteere' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -85,6 +101,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'ImportFreeImages' => array( 'УвозНаСлободниСлики' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'ImportFreeImages' => array( 'സ്വതന്ത്രചിത്രങ്ങളിറക്കുമതിചെയ്യുക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ImportFreeImages' => array( 'मुक्तचित्रेआयात' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -107,9 +133,19 @@ $aliases['oc'] = array(
 	'ImportFreeImages' => array( 'ImportarImatgesLiures' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'ImportFreeImages' => array( 'Importar imagens de acesso livre' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'ImportFreeImages' => array( 'आयातमुक्तछायाचित्र' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ImportFreeImages' => array( 'ImportSlobodnýchObrázkov' ),
 );
 
 /** Albanian (Shqip) */
@@ -130,5 +166,10 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ImportFreeImages' => array( 'Mag-angkat ng malayang mga larawan' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ImportFreeImages' => array( 'ÖzgürResimAktar' ),
 );
 

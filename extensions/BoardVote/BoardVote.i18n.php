@@ -55,7 +55,7 @@ The resulting encrypted version follows. It will be [[Special:BoardVote/dump|dis
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Back]]",
-	'boardvote_invalidentered' => "<p><strong>Error</strong>: candidate preference must be expressed in positive whole number only (1, 2, 3, ....), or
+	'boardvote_invalidentered' => "<p><strong>Error</strong>: candidate preference must be expressed in positive whole number only (1, 2, 3, ...), or
 left empty.</p>",
 	'boardvote_nosession' => "Your Wikimedia user ID could not be determined.
 Please log in to the wiki where you are qualified to vote, and go to <nowiki>[[Special:BoardVote]]</nowiki>.
@@ -101,6 +101,7 @@ A security warning about an unsigned certificate may be displayed.',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Jon Harald Søby
  * @author Lloffiwr
  * @author Meno25
@@ -134,8 +135,12 @@ $messages['qqq'] = array(
 	'boardvote_submit' => 'Button name
 
 {{Identical|OK}}',
-	'boardvote_strike' => 'Used during Wikimedia Board of Trustees elections via [[Special:BoardVote]]. "To strike a vote" means "to mark a vote invalid".',
-	'boardvote_unstrike' => 'Used during Wikimedia Board of Trustees elections via [[Special:BoardVote]]. "To unstrike a vote" means to mark a vote valid again after it has been marked invalid.',
+	'boardvote_strike' => 'Used during Wikimedia Board of Trustees elections via [[Special:BoardVote]]. "To strike a vote" means "to mark a vote invalid".
+
+{{Identical|Strike}}',
+	'boardvote_unstrike' => 'Used during Wikimedia Board of Trustees elections via [[Special:BoardVote]]. "To unstrike a vote" means to mark a vote valid again after it has been marked invalid.
+
+{{Identical|Unstrike}}',
 	'boardvote_needadmin' => 'Used during Wikimedia Board of Trustees elections via [[Special:BoardVote]].',
 	'boardvote_sitenotice' => 'Used during Wikimedia Board of Trustees elections via [[Special:BoardVote]].',
 	'boardvote_notstarted' => 'Used during Wikimedia Board of Trustees elections via [[Special:BoardVote]].',
@@ -735,7 +740,7 @@ $messages['be-tarask'] = array(
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Назад]]',
-	'boardvote_invalidentered' => '<p><strong>Памылка</strong>: перавага кандыдата павінная быць выяўленая станоўчым цэлым лікам (1, 2, 3, …) або пакінутая пустой.</p>',
+	'boardvote_invalidentered' => '<p><strong>Памылка</strong>: перавага кандыдата павінная быць выяўленая станоўчым цэлым лікам (1, 2, 3, ...) або пакінутая пустой.</p>',
 	'boardvote_nosession' => 'Немагчыма вызначыць Ваш ідэнтыфікатар удзельніка праектаў Вікімэдыі.
 Калі ласка, увайдзіце ў сыстэму ў тым праекце, дзе ваш рахунак задавальняе патрабаваньням, і перайдзіце на старонку <nowiki>[[Special:BoardVote]]</nowiki>.
 Вы павінныя быць зарэгістраваным удзельнікам і зрабіць ня меней $1 {{PLURAL:$1|праўкі|правак|правак}} да $2, і ня меней $3 {{PLURAL:$3|праўкі|правак|правак}} з $4 да $5.',
@@ -1082,6 +1087,7 @@ Sigurnosno upozorenje o nepotpisanom certifikatu se može prikazati.',
  * @author Aleator
  * @author Paucabot
  * @author SMP
+ * @author Solde
  */
 $messages['ca'] = array(
 	'boardvote' => "Eleccions al Consell d'Administració de la Fundació Wikimedia",
@@ -1141,7 +1147,7 @@ Necessiteu un mínim de $1 {{PLURAL:$1|contribució feta|contribucions fetes}} a
 	'boardvote_ua' => 'Agent usuari',
 	'boardvote_listintro' => '<p>Aquí hi ha la llista de tots els vots rebuts. $1 per les dades encriptades.</p>',
 	'boardvote_dumplink' => 'Cliqueu ací',
-	'boardvote_submit' => "D'acord",
+	'boardvote_submit' => 'OK',
 	'boardvote_strike' => 'Anuŀla',
 	'boardvote_unstrike' => 'Recupera',
 	'boardvote_needadmin' => 'Només els administradors electorals poden fer aquesta operació.',
@@ -1152,6 +1158,7 @@ Votació oberta fins el 22 de juny',
 	'boardvote_edits_many' => 'molts',
 	'group-boardvote' => 'Administradors electorals',
 	'group-boardvote-member' => 'Administrador electoral',
+	'grouppage-boardvote' => '{{ns:project}}:Administració dels vots del Board',
 	'boardvote_blocked' => 'Ho sentim, el vostre compte registrat ha estat blocat. Els usuaris blocats no tenen dret a vot.',
 	'boardvote_bot' => "Teniu l'estatus de bot al vostre wiki. Els comptes amb ús de bot no poden votar.",
 	'boardvote_welcome' => "Benvingut '''$1'''!",
@@ -1219,7 +1226,7 @@ $messages['cs'] = array(
 
 <p>Před hlasováním si laskavě důkladně přečtěte vyjádření kandidátů a jejich odpovědi na dotazy. Všichni kandidáti jsou respektovanými uživateli, kteří přispěli velkým množstvím času a úsilí při snaze učinit z projektů přátelské prostředí cílené na shromažďování a volné šíření znalostí lidstva.</p>
 
-<p>Seřaďte kandidáty podle svých preferencí tím, že ke každému uvedete do sousedícího rámečku číslo (1 = váš nejoblíbenější kandidát, 2 = druhý nejoblíbenější, …). Můžete stejné preferenční číslo dát několika kandidátům a některé kandidáty můžete nechat neohodnocené. Předpokládá se, že dáváte přednost všem ohodnoceným kandidátům před těmi neohodnocenými a že mezi neohodnocenými nečiníte rozdíly.</p>
+<p>Seřaďte kandidáty podle svých preferencí tím, že ke každému uvedete do sousedícího rámečku číslo (1 = váš nejoblíbenější kandidát, 2 = druhý nejoblíbenější, ...). Můžete stejné preferenční číslo dát několika kandidátům a některé kandidáty můžete nechat neohodnocené. Předpokládá se, že dáváte přednost všem ohodnoceným kandidátům před těmi neohodnocenými a že mezi neohodnocenými nečiníte rozdíly.</p>
 
 <p>Vítěz voleb bude určen pomocí Schulzeovy metody. Podrobnější informace najdete na oficiálních volebních stránkách.</p>
 
@@ -1243,7 +1250,7 @@ Výsledná šifrovaná podoba následuje. Bude veřejně dostupná v [[Special:B
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Zpět]]',
-	'boardvote_invalidentered' => '<p><strong>Chyba</strong>: Preference kandidáta musí obsahovat pouze kladné celé číslo (1, 2, 3, …), nebo zůstat nevyplněná.</p>',
+	'boardvote_invalidentered' => '<p><strong>Chyba</strong>: Preference kandidáta musí obsahovat pouze kladné celé číslo (1, 2, 3, ...), nebo zůstat nevyplněná.</p>',
 	'boardvote_nosession' => 'Nepodařilo se určit vaše uživatelské ID na serverech nadace Wikimedia. Přihlaste se na wiki, kde splňujete podmínky, a přejděte na stránku <nowiki>[[Special:BoardVote]]</nowiki>. Musíte mít učet s alespoň $1 {{PLURAL:$1|editací|editacemi}} před $2 a alespoň $3 {{PLURAL:$3|editací|editacemi}} mezi $4 a $5.',
 	'boardvote_notloggedin' => 'Nejste přihlášen(a). Pro hlasování musíte použít účet s nejméně $1 {{PLURAL:$1|editací|editacemi}} před $2 a nejméně $3 {{PLURAL:$3|editací|editacemi}} mezi $4 a $5.',
 	'boardvote_notqualified' => 'V těchto volbách nejste oprávněn(a) hlasovat. Musel(a) byste mít nejméně $1 {{PLURAL:$1|editaci|editace|editací}} před $2 a nejméně $3 {{PLURAL:$3|editaci|editace|editací}} mezi $4 a $5.',
@@ -1412,7 +1419,7 @@ Er wird neben vielen anderen Dingen über die Einnahmen und Ausgaben entscheiden
 <p>Bitte lies die Kandidatenvorstellungen und ihre Antworten auf Fragen.
 Jeder Kandidat ist ein respektierter Benutzer, der bereits beträchtliche Zeit aufgewendet hat, um den Projekten ein positives Umfeld für die freie Verbreitung menschlichen Wissens zu verschaffen.</p>
 
-<p>Bitte reihe die Kandidaten nach deinen Vorstellungen auf, indem du eine Nummer in die Kästchen eingibst (1 = Favorit, 2 = zweiter Favorit, …)
+<p>Bitte reihe die Kandidaten nach deinen Vorstellungen auf, indem du eine Nummer in die Kästchen eingibst (1 = Favorit, 2 = zweiter Favorit, ...)
 Du darfst dieselbe Rangnummer für mehrere Kandidaten verwenden und du darfst Kandidaten auslassen.
 Es wird davon ausgegangen, dass du Kandidaten mit Rangnummer denen ohne Rangnummer vorziehst, und dass du unentschlossen bist bei den Kandidaten ohne Rangnummer.</p>
 
@@ -1443,7 +1450,7 @@ Die daraus folgende, verschlüsselte Version folgt unten. Sie wird [[Special:Boa
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Zurück]]',
-	'boardvote_invalidentered' => '<p><strong>Fehler:</strong> Die Reihenfolge der Kandidaten muss in ganzen, positiven Zahlen ausgedrückt werden (1, 2, 3, …) oder lasse das/die Kästchen leer.</p>',
+	'boardvote_invalidentered' => '<p><strong>Fehler:</strong> Die Reihenfolge der Kandidaten muss in ganzen, positiven Zahlen ausgedrückt werden (1, 2, 3, ...) oder lasse das/die Kästchen leer.</p>',
 	'boardvote_nosession' => 'Deine Wikimedia-Benutzer-ID kann nicht ermittelt werden.
 Bitte melde dich in dem Wiki an, in dem du zur Wahl zugelassen bist und gehe dort nach <nowiki>[[Special:BoardVote]]</nowiki>.
 Wählen dürfen Benutzer, deren Benutzerkonto mindestens $1 {{PLURAL:$1|Bearbeitung|Bearbeitungen}} vor dem $2 aufweist, und die mindestens $3 {{PLURAL:$3|Bearbeitung|Bearbeitungen}} zwischen $4 und $5 getätigt haben.',
@@ -1811,7 +1818,7 @@ Necesitas tener {{PLURAL:$1|una edición|$1 ediciones}} antes del $2, y haber he
 	'boardvote_edits' => 'Ediciones',
 	'boardvote_days' => 'Días',
 	'boardvote_ip' => 'IP',
-	'boardvote_ua' => 'Navegador',
+	'boardvote_ua' => 'Agente de usuario',
 	'boardvote_listintro' => '<p>Esta en una lista con todos los votos que hasta ahora han sido registrados.
 $1 para los datos codificados.</p>',
 	'boardvote_dumplink' => 'Haz click aquí',
@@ -2194,7 +2201,7 @@ $1 pour les données cryptées.</p>',
 Les utilisateurs bloqués ne peuvent pas voter.',
 	'boardvote_bot' => "Désolé, vous avez le statut de ''Bot'' sur le wiki où vous êtes enregistré{{GENDER:||e|(e)}}.
 Les comptes de ''Bot'' ne sont pas autorisés à voter.",
-	'boardvote_welcome' => "Bienvenue '''$1'''!",
+	'boardvote_welcome' => "Bienvenue '''$1''' !",
 	'go_to_board_vote' => 'Élection 2008 au conseil d’administration de la Wikimedia Foundation',
 	'boardvote_redirecting' => 'Pour plus de transparence et de sécurité, le vote se déroule sur un serveur externe et indépendant.
 
@@ -2387,7 +2394,7 @@ $1 para ver os datos cifrados.</p>',
 	'boardvote_dumplink' => 'Prema aquí',
 	'boardvote_submit' => 'De acordo',
 	'boardvote_strike' => 'Riscar',
-	'boardvote_unstrike' => 'Retirar o riscado',
+	'boardvote_unstrike' => 'Retirar o risco',
 	'boardvote_needadmin' => 'Esta operación só a poden realizar os administradores das eleccións.',
 	'boardvote_sitenotice' => '<a href="{{localurle:Special:BoardVote/vote}}">Eleccións ao Consello de Administración da Wikimedia</a>:
 Votación aberta até o 22 de xuño',
@@ -2455,7 +2462,7 @@ Er wird näbe vyyle andere Sache iber d Yynahme un Uusgabe entscheide.</p>
 <p>Bitte liis d Kandidatevorstellige un ihri Antworte uf Froge.
 E jede Kandidat isch e reschpektierte Benutzer, wu scho vyyl Zyt ufgwändet het go dr Projäkt e positiv Umfäld fir di frej Verbreitig vum mänschlige Wisse z verschaffe.</p>
 
-<p>Bitte tue d Kandidate noch Dyyne Vorstellige in e Zyylete stelle. Doderzue gisch e Nummere in d Chäschtli yy (1 = Favorit, 2 = zweite Favorit, …)
+<p>Bitte tue d Kandidate noch Dyyne Vorstellige in e Zyylete stelle. Doderzue gisch e Nummere in d Chäschtli yy (1 = Favorit, 2 = zweite Favorit, ...)
 Du derfsch di nämlig Rangnummere fir mehreri Kandidate verwände un Du derfsch Kandidate usloo.
 S wird dervu usgange, ass Du d Kandidate mit ere Rangnummere vorzeihsch vor däne ohni, un ass Du nit entschlosse bisch bi dr Kandidate ohni Rangnummere.</p>
 
@@ -2486,7 +2493,7 @@ Di verschlisslet Version chunnt do unte. Si wird [[Special:BoardVote/dump|effent
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Zrugg]]',
-	'boardvote_invalidentered' => '<p><strong>Fähler:</strong> D Reihefolg vu dr Kandidate muess in ganze, positive Zahle usdruckt wäre (1, 2, 3, …) oder loss  s/d Chäschtli läär.</p>',
+	'boardvote_invalidentered' => '<p><strong>Fähler:</strong> D Reihefolg vu dr Kandidate muess in ganze, positive Zahle usdruckt wäre (1, 2, 3, ...) oder loss  s/d Chäschtli läär.</p>',
 	'boardvote_nosession' => 'Dyyni Wikimedia-Benutzer-ID cha nit usegfunde wäre.
 Bitte mäld di in däm wiki aa, wu du zue dr Wahl zuegloo bisch un gang dert uf <nowiki>[[Special:BoardVote]]</nowiki>.
 Wähle derfe Benutzer, wu s Benutzerkonto vun ene zmindescht $1 {{PLURAL:$1|Bearbeitig|Bearbeitige}} vor em $2 ufwyyst, un wu zmindescht $3 {{PLURAL:$3|Bearbeitig|Bearbeitige}} zwische $4 un $5 gmacht hän.',
@@ -2612,8 +2619,8 @@ $messages['he'] = array(
 	'boardvote_listintro' => '<p>זוהי רשימה של כל ההצבעות שנרשמו עד כה. $1 כדי להגיע לנתונים המוצפנים.</p>',
 	'boardvote_dumplink' => 'לחצו כאן',
 	'boardvote_submit' => 'הצבעה',
-	'boardvote_strike' => 'גילוי',
-	'boardvote_unstrike' => 'הסתרה',
+	'boardvote_strike' => 'מחיקה',
+	'boardvote_unstrike' => 'ביטול מחיקה',
 	'boardvote_needadmin' => 'רק מנהלי הבחירות יכולים לבצע פעולה זו.',
 	'boardvote_sitenotice' => '<a href="{{localurle:{{ns:special}}:Boardvote/vote}}">בחירות לחבר הנאמנים של ויקימדיה</a>: ההצבעה פתוחה עד 22 ביוני',
 	'boardvote_notstarted' => 'ההצבעה עדיין לא התחילה',
@@ -3799,6 +3806,7 @@ $messages['km'] = array(
  * @author Albamhandae
  * @author Ficell
  * @author Kwj2772
+ * @author Yknok29
  */
 $messages['ko'] = array(
 	'boardvote' => '위키미디어 이사회 선거',
@@ -3853,7 +3861,9 @@ $messages['ko'] = array(
 	'boardvote_time' => '시간',
 	'boardvote_user' => '사용자',
 	'boardvote_edits' => '편집',
+	'boardvote_days' => '기간',
 	'boardvote_ua' => '사용자 에이전트',
+	'boardvote_listintro' => '<p>이 것은 날짜가 기록되어있는 모든 투표 목록입니다. 암호화된 자료를 위한 $1</p>',
 	'boardvote_dumplink' => '이곳을 클릭하세요.',
 	'boardvote_submit' => '확인',
 	'boardvote_strike' => '무효 처리',
@@ -3863,6 +3873,7 @@ $messages['ko'] = array(
 선거는 6월 22일까지 열립니다.',
 	'boardvote_notstarted' => '선거가 아직 시작되지 않았습니다.',
 	'boardvote_closed' => '선거가 끝났습니다. [http://meta.wikimedia.org/wiki/Board_elections/2008/Results 선거 결과]를 확인하십시오.',
+	'boardvote_edits_many' => '다수',
 	'group-boardvote' => '보드보트 관리자',
 	'group-boardvote-member' => '보드보트 관리자',
 	'grouppage-boardvote' => '{{ns:project}}:보드보트',
@@ -3947,7 +3958,7 @@ Hee de foschlößßelte Väsjohn fun_Dinge Daate:
 <pre>$3</pre>
 
 Alle Shtemme kannß_De_Der [[Special:BoardVote/dump|hee en {{int:boardvote_dumplink}}]] aanluure.<br />Sönß [[Special:BoardVote/entry|jangk zerögk]]',
-	'boardvote_invalidentered' => '<p><strong>Verdonn!</strong> Do moß de Rëijefollsh för Ding Kandidaate met Zahle, wi 1, 2, 3, 4,&nbsp;…, un esu wigger usdrökke; odder schriif jaa nix en di Käßje erėnn!</p>',
+	'boardvote_invalidentered' => '<p><strong>Verdonn!</strong> Do moß de Rëijefollsh för Ding Kandidaate met Zahle, wi 1, 2, 3, 4,&nbsp;..., un esu wigger usdrökke; odder schriif jaa nix en di Käßje erėnn!</p>',
 	'boardvote_nosession' => 'Ding Medmaacher-Nommer (ID) en ennem Wikimedija-Wiki es nit kloh.
 Jangk en e Wiki, woh de wähle darrefß,
 un donn Dėsh doh enlogge,
@@ -3970,7 +3981,7 @@ un zwesche em $4 un em $5 {{PLURAL:$3|winnishßdenß eine Bëijdrach|winnishßde
 iih dat mer bëijem Affshtemme hee zohjelooße eß.
 Beß nit kott.
 Bëijm nääkße Mool klabb_et beshtemmp.",
-	'boardvote_novotes' => 'Noch hät Këijne hee affjeshtėmmp&nbsp;…',
+	'boardvote_novotes' => 'Noch hät Këijne hee affjeshtėmmp&nbsp;...',
 	'boardvote_time' => 'Dattum un Zigk',
 	'boardvote_user' => 'Metmaacher',
 	'boardvote_edits' => 'Bëijdrääsh',
@@ -4638,7 +4649,7 @@ Blangen velen annern Kraam schall he över de Innahmen un Utgaven mit bestimmen.
 <p>Lees man de Texten, de de Kandidaten över sik schreven hebbt, un jemehr Antwoorden op Fragen.
 Elkeen Kandidat is en respekteerten Bruker, de al veel Tied opwennt hett, dat de Projekten en positiv Ümfeld för dat fre’e Verbreden vun dat Weten vun de Minschheit hebbt.</p>
 
-<p>Stell de Kandidaten in en Reeg na dien Köör. Dorto schriffst du en Nummer in de Kassens blangen jem (1 = Favorit, 2 = tweten Favorit, …)
+<p>Stell de Kandidaten in en Reeg na dien Köör. Dorto schriffst du en Nummer in de Kassens blangen jem (1 = Favorit, 2 = tweten Favorit, ...)
 Du dröffst desülve Nummer för mehr Kandidaten bruken un du dröffst Kandidaten utlaten.
 Warrt dor vun utgahn, dat du Kandidaten mit Rangnummer beter magst as welk ahn Rangnummer un dat du bi Kandidaten ahn Rangnummer keen besünner Menen hest.</p>
 
@@ -4669,7 +4680,7 @@ Wat nu kummt, is de verslötelte Version. De is [[Special:BoardVote/dump|apen si
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Trüch]]',
-	'boardvote_invalidentered' => '<p><strong>Fehler:</strong> De Reeg vun de Kannedaten mutt in ganze positive Tallen utdrückt warrn (1, 2, 3, …) oder leddig laten warrn.</p>',
+	'boardvote_invalidentered' => '<p><strong>Fehler:</strong> De Reeg vun de Kannedaten mutt in ganze positive Tallen utdrückt warrn (1, 2, 3, ...) oder leddig laten warrn.</p>',
 	'boardvote_nosession' => 'Dien Wikimedia-Bruker-ID kunn nich rutkregen warrn.
 Mell di op dat Wiki an, bi dat du för de Wahl tolaten büst un gah dor na <nowiki>[[Special:BoardVote]]</nowiki>.
 Wählen dröfft Brukers, de opminnst $1 {{PLURAL:$1|Maal|Maal}} vör’n $2 Sieden ännert hebbt un de opminnst $3 {{PLURAL:$3|Maal|Maal}} twischen $4 un $5 Sieden ännert hebbt.',
@@ -4743,7 +4754,7 @@ Deze persoon beslist ook mede over hoe inkomsten gemaakt kunnen worden en waar h
 <p>Lees de kandidaatstelling en de antwoorden op vragen zorgvuldig voordat u stemt.
 Iedere kandidaat is een gewaardeerde gebruiker die aanzienlijke hoeveelheden tijd en moeite heeft besteed aan het bouwen van uitnodigende omgevingen die toegewijd zijn aan het nastreven en vrij verspreiden van menselijke kennis.</p>
 
-<p>Geef de kandidaten een aantal punten in het daarvoor bestemde vakje afhankelijk van uw voorkeur (1 = favoriete kandidaat, 2 = tweede keus, …).
+<p>Geef de kandidaten een aantal punten in het daarvoor bestemde vakje afhankelijk van uw voorkeur (1 = favoriete kandidaat, 2 = tweede keus, ...).
 U kunt kandidaten hetzelfe aantal punten geven, en ook kandidaten geen punten geven.
 Er wordt aangenomen dat u een voorkeur heeft voor kandidaten die u punten geeft boven kandidaten die u geen punten geeft.
 Voor kandidaten die u geen punten geeft wordt aangenomen dat u voor die groep geen voorkeursvolgorde hebt.</p>
@@ -4772,7 +4783,7 @@ Nu volgt de versleutelde versie. Deze is openbaar en [[Special:BoardVote/dump|na
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Terug]]',
-	'boardvote_invalidentered' => '<p><strong>Fout</strong>: de voorkeur voor kandidaten moet uitgedrukt worden in hele getallen (1, 2, 3, …), of leeggelaten worden.</p>',
+	'boardvote_invalidentered' => '<p><strong>Fout</strong>: de voorkeur voor kandidaten moet uitgedrukt worden in hele getallen (1, 2, 3, ...), of leeggelaten worden.</p>',
 	'boardvote_nosession' => 'Uw Wikimedia-gebruikersnummer kan niet bepaald worden.
 Meldt u zich aan in wiki waar u voldoet aan de eisen, en ga naar <nowiki>[[Special:BoardVote]]</nowiki>.
 Gebruik een gebruiker met tenminste $1 {{PLURAL:$1|bewerking|bewerkingen}} voor $2, en met tenminste $3 {{PLURAL:$3|bewerking|bewerkingen}} tussen $4 en $5.',
@@ -4854,7 +4865,7 @@ Den resulterande krypterte versjonen følgjer. Han vil bli vist [[Special:BoardV
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Attende]]',
-	'boardvote_invalidentered' => '<p><strong>Feil</strong>: ein kan berre oppgje føretrekte kandidatar med positive heiltal (1, 2, 3, …), eller la feltet stå tomt.',
+	'boardvote_invalidentered' => '<p><strong>Feil</strong>: ein kan berre oppgje føretrekte kandidatar med positive heiltal (1, 2, 3, ...), eller la feltet stå tomt.',
 	'boardvote_nosession' => 'Wikimedia-kontoen din kunne ikkje verta verifisert.
 Ver venleg og logg inn wikien der du er kvalifisert til å røysta, og gå til <nowiki>[[Special:BoardVote]]</nowiki>.
 Du må bruka ein konto med minst $1 {{PLURAL:$1|endring|endringar}} før $2, og ha gjort minst $3 {{PLURAL:$3|endring|endringar}} mellom $4 og $5.',
@@ -4934,7 +4945,7 @@ Dette resulterer i den følgende krypterte versjonen. Den vil [[Special:BoardVot
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Tilbake]]',
-	'boardvote_invalidentered' => '<p><strong>Feil</strong>: man kan kun angi foretrukne kandidater med positive heltall (1, 2, 3, …), eller la feltet være tomt.',
+	'boardvote_invalidentered' => '<p><strong>Feil</strong>: man kan kun angi foretrukne kandidater med positive heltall (1, 2, 3, ...), eller la feltet være tomt.',
 	'boardvote_nosession' => 'Vi kunne ikke verifisere Wikimedia-kontoen din.
 Logg inn på wikien der du er kvalifisert til å stemme, og gå til <nowiki>[[Special:BoardVote]]</nowiki>.
 Du må bruke en konto med minst $1 {{PLURAL:$1|redigering|redigeringer}} før $2, og ha gjort minst $3 {{PLURAL:$3|redigering|redigeringer}} mellom $4 og $5.',
@@ -5025,7 +5036,7 @@ Seguís la version criptada çaijós, que serà afichada publicament sus [[Speci
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Retorn]]",
-	'boardvote_invalidentered' => '<p><strong>Error</strong> : la preferéncia per un candidat deu èsser exprimida unicament sus de nombres positius dins lor totalitat (1, 2, 3…) o alara daissada voida.</p>',
+	'boardvote_invalidentered' => '<p><strong>Error</strong> : la preferéncia per un candidat deu èsser exprimida unicament sus de nombres positius dins lor totalitat (1, 2, 3...) o alara daissada voida.</p>',
 	'boardvote_nosession' => 'Vòstre identificant Wikimedia pòt pas èsser determinat.<br />
 Rendètz-vos sus vòstre wiki d’origina ont sètz abilitat per votar, puèi rendètz-vos sus la pagina <nowiki>[[Special:BoardVote]]</nowiki>.<br />
 Vos cal aver un compte amb al mens $1 {{PLURAL:$1|contribucion efectuada|contribucions efectuadas}} abans lo $2 e al mens $3 {{PLURAL:$3|contribucion efectuada|contribucions efectuadas}} entre lo $4 e lo $5.',
@@ -5058,7 +5069,7 @@ $1 per las donadas criptadas.</p>',
 	'boardvote_bot' => "O planhèm, avètz l'estatut de bòt sus wiki enregistrat. Los comptes de Bòt son autorizats a votar.",
 	'boardvote_welcome' => "Benvengut '''$1'''!",
 	'go_to_board_vote' => 'Eleccions 2008 al Conselh d’administracion de la Wikimèdia',
-	'boardvote_redirecting' => 'Per mai de transparéncia e de seguretat lo vòte se desenròtla sus un servidor extèrn e independent. Seretz redirigit cap a aqueste servidor extèrn en 20 segondas. [$1 Clicatz aicí] per i anar ara. Un avertiment concernent un certificat pas signat benlèu serà afichat.',
+	'boardvote_redirecting' => 'Per mai de transparéncia e de seguretat lo vòte se desenròtla sus un servidor extèrne e independent. Seretz redirigit cap a aqueste servidor extèrne en 20 segondas. [$1 Clicatz aicí] per i anar ara. Un avertiment concernent un certificat pas signat benlèu serà afichat.',
 	'right-boardvote' => 'Administrar las eleccions',
 );
 
@@ -5098,6 +5109,13 @@ $messages['pam'] = array(
 	'boardvote_edits_many' => 'dakal',
 	'boardvote_welcome' => "Malaus ka '''$1'''!",
 	'go_to_board_vote' => 'Alalan para keng Lupung (Board) ning Wikimedia king Banuang 2008',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'boardvote_user' => 'Yuuser',
 );
 
 /** Plautdietsch (Plautdietsch)
@@ -6127,7 +6145,7 @@ Ju deeruut foulgjende, ferslöätelde Version foulget hierunner. Ju wäd eepente
 <pre>$3</pre>
 
 [[Special:BoardVote/entry|Tourääch]]',
-	'boardvote_invalidentered' => '<p><strong>Failer:</strong> Ju Riegenfoulge fon do Kandidate mout in ganse, positive Taalen uutdrukt wäide (1, 2, 3, …) of läit ju Kaste/do Kasten loos.</p>',
+	'boardvote_invalidentered' => '<p><strong>Failer:</strong> Ju Riegenfoulge fon do Kandidate mout in ganse, positive Taalen uutdrukt wäide (1, 2, 3, ...) of läit ju Kaste/do Kasten loos.</p>',
 	'boardvote_nosession' => 'Dien Wikimedia-Benutser-ID kon nit fääststoald wäide. Mäld die in dän Wiki an, in dän du tou ju Woal toulät bäst un gung deer ätter <nowiki>[[Special:BoardVote]]</nowiki>. Wäälen duur wäl, dän sien Benutserkonto nit minner as $1 Beoarbaidengen foar dän $2 apwiest, ju eerste Beoarbaidenge mout foar dän $3 geböärd weese.
 
 Din Browser mout so konfigurierd weese, dät hie Cookies fon dän externe Woalcomputer
@@ -6212,9 +6230,9 @@ Vérsi nu kaénkripsi aya di handap. Éta hasil baris [[Special:BoardVote/dump|d
 	'boardvote_nosession' => 'Anjeun kudu asup log kalawan ngaran pamaké Wikimedia anu sah.
 Sumangga asup log ka wiki di mana Anjeun nyumponan sarat pikeun milih, lajeng indit ka <nowiki>[[Special:BoardVote]]</nowiki>.
 Anjeun kudu maké rekening kalawan {{PLURAL:$1|contribution|kontribusi}} saeutikna $1 saméméh $2, sarta geus ngabogaan saeutikna $3 {{PLURAL:$3|contribution|kontribusi}} antara $4 sarta $5.',
-	'boardvote_notloggedin' => 'Anjeun can asup log.<br>
+	'boardvote_notloggedin' => 'Anjeun can asup log.<br />
 Pikeun nyoara, anjeun kudu maké rekening nu sahanteuna geus boga $1 kontribusi saméméh $2, jeung sahanteuna boga $3 kontibusi antara $4 jeung $5.',
-	'boardvote_notqualified' => 'Anjeun teu nedunan sarat pikeun ngilu milih.<br>
+	'boardvote_notqualified' => 'Anjeun teu nedunan sarat pikeun ngilu milih.<br />
 Sahanteuna Anjeun kudu geus boga $1 éditan saméméh $2, sarta boga $3 kontibusi antara $4 jeung $5.',
 	'boardvote_novotes' => 'Acan aya pamilih.',
 	'boardvote_time' => 'Wanci',
@@ -6628,7 +6646,7 @@ Maaaring lumitaw ang isang babalang pangkaligtasan o pangseguridad na hinggil sa
 	'right-boardvote' => 'Mangasiwa sa mga halalan',
 );
 
-/** Tonga (faka-Tonga) */
+/** Tonga (lea faka-Tonga) */
 $messages['to'] = array(
 	'boardvote' => 'Ko e fili ʻo e kau talāsiti ki he Poate Wikimedia',
 	'boardvote_days' => 'Ngaahi ʻaho',
@@ -6727,6 +6745,13 @@ Bu dış sunucuya 20 saniye içinde yönlendirileceksiniz. Hemen gitmek için [$
 /** Tahitian (Reo Mā`ohi) */
 $messages['ty'] = array(
 	'boardvote_user' => 'Ta’ata fa’a’ohipa',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'boardvote_submit' => 'ماقۇل',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -6962,7 +6987,7 @@ $1 có dữ liệu mã hóa.</p>',
 	'boardvote_dumplink' => 'Nhấn vào đây',
 	'boardvote_submit' => 'Đồng ý',
 	'boardvote_strike' => 'Gạch bỏ',
-	'boardvote_unstrike' => 'Không gạch bỏ',
+	'boardvote_unstrike' => 'Phục hồi',
 	'boardvote_needadmin' => 'Chỉ có viên chức bầu cử mới có thể thực hiện được tác vụ này.',
 	'boardvote_sitenotice' => '<a href="{{localurle:Special:BoardVote/vote}}">Bầu cử Ban Quản trị Wikimedia</a>:
 Bỏ phiếu cho đến ngày 22 tháng 6',

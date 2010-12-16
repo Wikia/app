@@ -28,7 +28,7 @@ class SyntaxHighlight_GeSHi {
 		// Don't trim leading spaces away, just the linefeeds
 		$text = preg_replace( '/^\n+/', '', $text );
 		// Validate language
-		if( isset( $args['lang'] ) ) {
+		if( isset( $args['lang'] ) && $args['lang'] ) {
 			$lang = $args['lang'];
 		} else {
 			// language is not specified. Check if default exists, if yes, use it.

@@ -10,16 +10,11 @@ class DataCenterControllerSearch extends DataCenterController {
 
 	/* Functions */
 
-	public function __construct(
-		array $path
-	) {
+	public function __construct( array $path ) {
 		// Actions
 	}
 
-	public function search(
-		array $data,
-		$type
-	) {
+	public function search( array $data, $type ) {
 		DataCenterWidgetSearch::redirect( $data );
 		return null;
 	}

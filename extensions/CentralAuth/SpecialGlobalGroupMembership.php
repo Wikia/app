@@ -44,9 +44,9 @@ class SpecialGlobalGroupMembership extends UserrightsPage {
 			Xml::hidden( 'title',  $this->getTitle() ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'userrights-lookup-user' ) ) .
-			Xml::inputLabel( wfMsg( 'userrights-user-editname' ), 'user', 'username', 30, $this->mTarget ) . ' <br/>' .
+			Xml::inputLabel( wfMsg( 'userrights-user-editname' ), 'user', 'username', 30, $this->mTarget ) . ' <br />' .
 			Xml::label( wfMsgExt('centralauth-globalgrouppermissions-knownwiki', array('parseinline')), 'wpKnownWiki' ) .
-			$selector->getHTML() . '<br/>' .
+			$selector->getHTML() . '<br />' .
 			Xml::submitButton( wfMsg( 'editusergroup' ) ) .
 			Xml::closeElement( 'fieldset' ) .
 			Xml::closeElement( 'form' ) . "\n"
@@ -73,18 +73,17 @@ class SpecialGlobalGroupMembership extends UserrightsPage {
 	}
 	
 	function fetchUser( $username ) {
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgUser, $wgRequest;
 		
 		$knownwiki = $wgRequest->getVal('wpKnownWiki');
 		
 		$user = CentralAuthGroupMembershipProxy::newFromName( $username );
 	
 		if( !$user ) {
-			$wgOut->addWikiMsg( 'nosuchusershort', $username );
-			return null;
+			return new WikiErrorMsg( 'nosuchusershort', $username );
 		} elseif (!$wgRequest->getCheck( 'saveusergroups' ) && !$user->attachedOn($knownwiki)) {
-			$wgOut->addWikiMsg( 'centralauth-globalgroupmembership-badknownwiki', $username, $knownwiki );
-			return null;
+			return new WikiErrorMsg( 'centralauth-globalgroupmembership-badknownwiki',
+					$username, $knownwiki );
 		}
 	
 		return $user;
@@ -100,14 +99,14 @@ class SpecialGlobalGroupMembership extends UserrightsPage {
 		LogEventsList::showLogExtract( $output, 'gblrights', $pageTitle->getPrefixedText() );
 	}
 	
-	function addLogEntry( $user, $oldGroups, $newGroups ) {
+	function addLogEntry( $user, $oldGroups, $newGroups, $reason ) {
 		global $wgRequest;
 		
 		$log = new LogPage( 'gblrights' );
 
 		$log->addEntry( 'usergroups',
 			$user->getUserPage(),
-			$wgRequest->getText( 'user-reason' ),
+			$reason,
 			array(
 				$this->makeGroupNameList( $oldGroups ),
 				$this->makeGroupNameList( $newGroups )

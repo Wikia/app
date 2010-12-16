@@ -77,7 +77,7 @@ class SMWImportValue extends SMWDataValue {
 		///TODO: parser needed to do that
 // 		if(SMWParseData::getSMWData($parser) instanceof SMWSemanticData) {
 // 			$this_ns = SMWParseData::getSMWData($parser)->getSubject()->getNamespace();
-// 			$error = NULL;
+// 			$error = null;
 // 			switch ($elemtype) {
 // 				case SMW_NS_PROPERTY: case NS_CATEGORY:
 // 					if ($this_ns != $elemtype) {
@@ -93,7 +93,7 @@ class SMWImportValue extends SMWDataValue {
 // 					$error = wfMsgForContent('smw_no_importelement',$value);
 // 			}
 //
-// 			if (NULL != $error) {
+// 			if (null != $error) {
 // 				$this->addError($error);
 // 				return true;
 // 			}
@@ -126,15 +126,17 @@ class SMWImportValue extends SMWDataValue {
 		$this->m_wikilink = $this->m_value; // not as pretty as on input, don't care
 	}
 
-	public function getShortWikiText($linked = NULL) {
+	public function getShortWikiText($linked = null) {
+		$this->unstub();
 		return $this->m_caption;
 	}
 
-	public function getShortHTMLText($linker = NULL) {
+	public function getShortHTMLText($linker = null) {
+		$this->unstub();
 		return htmlspecialchars($this->m_value);
 	}
 
-	public function getLongWikiText($linked = NULL) {
+	public function getLongWikiText($linked = null) {
 		if (!$this->isValid()) {
 			return $this->getErrorText();
 		} else {
@@ -142,7 +144,7 @@ class SMWImportValue extends SMWDataValue {
 		}
 	}
 
-	public function getLongHTMLText($linker = NULL) {
+	public function getLongHTMLText($linker = null) {
 		if (!$this->isValid()) {
 			return $this->getErrorText();
 		} else {
@@ -151,22 +153,39 @@ class SMWImportValue extends SMWDataValue {
 	}
 
 	public function getDBkeys() {
+		$this->unstub();
 		return array($this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri);
 	}
 
+	public function getSignature() {
+		return 't';
+	}
+
+	public function getValueIndex() {
+		return 0;
+	}
+
+	public function getLabelIndex() {
+		return 0;
+	}
+
 	public function getWikiValue(){
+		$this->unstub();
 		return $this->m_value;
 	}
 
 	public function getNS(){
+		$this->unstub();
 		return $this->m_uri;
 	}
 
 	public function getNSID(){
+		$this->unstub();
 		return $this->m_namespace;
 	}
 
 	public function getLocalName(){
+		$this->unstub();
 		return $this->m_section;
 	}
 }

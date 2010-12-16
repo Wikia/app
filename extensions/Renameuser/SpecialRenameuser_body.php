@@ -27,7 +27,7 @@ class SpecialRenameuser extends SpecialPage {
 	 * @param mixed $par Parameter passed to the page
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgContLang, $wgLang;
+		global $wgOut, $wgUser, $wgRequest, $wgContLang, $wgLang;
 		global $wgVersion, $wgMaxNameChars, $wgCapitalLinks;
 
 		$this->setHeaders();
@@ -43,7 +43,7 @@ class SpecialRenameuser extends SpecialPage {
 		}
 
 		$showBlockLog = $wgRequest->getBool( 'submit-showBlockLog' );
-		$oldnamePar = trim( str_replace( '_', ' ', $wgRequest->getText( 'oldusername' ) ) );
+		$oldnamePar = trim( str_replace( '_', ' ', $wgRequest->getText( 'oldusername', $par ) ) );
 		$oldusername = Title::makeTitle( NS_USER, $oldnamePar );
 		// Force uppercase of newusername, otherwise wikis with wgCapitalLinks=false can create lc usernames
 		$newusername = Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $wgRequest->getText( 'newusername' ) ) );
@@ -66,7 +66,7 @@ class SpecialRenameuser extends SpecialPage {
 
 		$wgOut->addHTML( "
 			<!-- Current contributions limit is " . RENAMEUSER_CONTRIBLIMIT . " -->" .
-			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgTitle->getLocalUrl(), 'id' => 'renameuser' ) ) .
+			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalUrl(), 'id' => 'renameuser' ) ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', null, wfMsg( 'renameuser' ) ) .
 			Xml::openElement( 'table', array( 'id' => 'mw-renameuser-table' ) ) .
@@ -385,9 +385,11 @@ class RenameuserSQL {
 		if( User::edits($this->uid) > RENAMEUSER_CONTRIBJOB ) {
 			$this->tablesJob['revision'] = array('rev_user_text','rev_user','rev_timestamp');
 			$this->tablesJob['archive'] = array('ar_user_text','ar_user','ar_timestamp');
+			$this->tablesJob['logging'] = array('log_user_text','log_user','log_timestamp');
 		} else {
 			$this->tables['revision'] = array('rev_user_text','rev_user');
 			$this->tables['archive'] = array('ar_user_text','ar_user');
+			$this->tables['logging'] = array('log_user_text','log_user');
 		}
 		// Recent changes is pretty hot, deadlocks occur if done all at once
 		if( wfQueriesMustScale() ) {
@@ -395,6 +397,8 @@ class RenameuserSQL {
 		} else {
 			$this->tables['recentchanges'] = array('rc_user_text','rc_user');
 		}
+		
+		wfRunHooks( 'RenameUserSQL', array( $this ) );
 	}
 
 	/**
@@ -440,10 +444,10 @@ class RenameuserSQL {
 		$oldTitle = Title::makeTitle( NS_USER, $this->old );
 		$newTitle = Title::makeTitle( NS_USER, $this->new );
 		$dbw->update( 'logging',
-			array( 'log_title' => $newTitle->getDBKey() ),
+			array( 'log_title' => $newTitle->getDBkey() ),
 			array( 'log_type' => array( 'block', 'rights' ),
 				'log_namespace' => NS_USER,
-				'log_title' => $oldTitle->getDBKey() ),
+				'log_title' => $oldTitle->getDBkey() ),
 			__METHOD__ );
 		// Do immediate updates!
 		foreach( $this->tables as $table => $fieldSet ) {
@@ -534,6 +538,13 @@ class RenameuserSQL {
 			}
 			$dbw->freeResult( $res );
 		}
+
+		// Commit the transaction
+		$dbw->commit();
+
+		// Delete from memcached again to make sure
+		global $wgMemc;
+		$wgMemc->delete( wfMemcKey( 'user', 'id', $this->uid ) );
 
 		// Clear caches and inform authentication plugins
 		$user = User::newFromId( $this->uid );

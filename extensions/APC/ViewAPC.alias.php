@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'ViewAPC' => array( 'ViewAPC' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ViewAPC' => array( 'عرض_إيه_بي_سي' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ViewAPC' => array( 'عرض_إيه_بى_سى' ),
 );
@@ -57,6 +53,11 @@ $aliases['fr'] = array(
 	'ViewAPC' => array( 'Voir APC', 'VoirAPC' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'ViewAPC' => array( 'Vêre APC', 'VêreAPC' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'ViewAPC' => array( 'Ver APC' ),
@@ -82,9 +83,24 @@ $aliases['ia'] = array(
 	'ViewAPC' => array( 'Info APC' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'ViewAPC' => array( 'Lihat APC', 'LihatAPC' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'ViewAPC' => array( 'APC情報', 'APC表示' ),
+	'ViewAPC' => array( 'APC情報', 'APC表示', 'ＡＰＣ情報', 'ＡＰＣ表示' ),
+);
+
+/** Khmer (ភាសាខ្មែរ) */
+$aliases['km'] = array(
+	'ViewAPC' => array( 'មើលAPC' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'ViewAPC' => array( 'APC보기' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -95,6 +111,11 @@ $aliases['ksh'] = array(
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'ViewAPC' => array( 'APC weisen' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ViewAPC' => array( 'APCपहा' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -127,9 +148,29 @@ $aliases['pl'] = array(
 	'ViewAPC' => array( 'Podgląd APC' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'ViewAPC' => array( 'Ver APC' ),
+);
+
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'ViewAPC' => array( 'Vizualizare APC' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'ViewAPC' => array( 'एपीसिपश्यति' ),
+);
+
+/** Sinhala (සිංහල) */
+$aliases['si'] = array(
+	'ViewAPC' => array( 'APCනරඹන්න' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ViewAPC' => array( 'ZobraziťAPC' ),
 );
 
 /** Albanian (Shqip) */
@@ -145,5 +186,15 @@ $aliases['sv'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ViewAPC' => array( 'Tingnan ang APC' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ViewAPC' => array( 'APCGör' ),
+);
+
+/** Veps (Vepsan kel') */
+$aliases['vep'] = array(
+	'ViewAPC' => array( 'KactaAPC' ),
 );
 

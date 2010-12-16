@@ -14,16 +14,16 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'DeleteQueue',
+	'version'        => '0.1.1',
 	'author'         => 'Andrew Garrett',
-	'svn-date'       => '$LastChangedDate: 2008-06-08 20:48:19 +1000 (Sun, 08 Jun 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 36018 $',
 	'description'    => 'Creates a queue-based system for managing deletion.',
 	'descriptionmsg' => 'deletequeue-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:DeleteQueue',
 );
 
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionMessagesFiles['DeleteQueue'] = $dir . 'DeleteQueue.i18n.php';
 $wgExtensionAliasesFiles['DeleteQueue'] = $dir . 'DeleteQueue.alias.php';
@@ -32,10 +32,10 @@ $wgHooks['SkinTemplateTabs'][] = 'DeleteQueueHooks::onSkinTemplateTabs';
 $wgHooks['UnknownAction'][] = 'DeleteQueueHooks::onUnknownAction';
 $wgHooks['ArticleViewHeader'][] = 'DeleteQueueHooks::onArticleViewHeader';
 
-$wgAutoloadClasses['SpecialDeleteQueue'] = $dir.'SpecialDeleteQueue.php';
-$wgAutoloadClasses['DeleteQueueHooks'] = $dir.'DeleteQueue.hooks.php';
-$wgAutoloadClasses['DeleteQueueInterface'] = $dir.'DeleteQueueInterface.php';
-$wgAutoloadClasses['DeleteQueueItem'] = $dir."DeleteQueueItem.php";
+$wgAutoloadClasses['SpecialDeleteQueue'] = $dir . 'SpecialDeleteQueue.php';
+$wgAutoloadClasses['DeleteQueueHooks'] = $dir . 'DeleteQueue.hooks.php';
+$wgAutoloadClasses['DeleteQueueInterface'] = $dir . 'DeleteQueueInterface.php';
+$wgAutoloadClasses['DeleteQueueItem'] = $dir . "DeleteQueueItem.php";
 
 // Views
 $wgAutoloadClasses['DeleteQueueView'] = "$dir/Views/DeleteQueueView.php";
@@ -51,6 +51,7 @@ $wgAvailableRights[] = 'prod-nominate';
 $wgAvailableRights[] = 'prod-review';
 $wgAvailableRights[] = 'deletediscuss-review';
 $wgAvailableRights[] = 'deletequeue-vote';
+$wgAvailableRights[] = 'deletediscuss-nominate';
 
 $wgGroupPermissions['sysop']['speedy-review'] = true;
 $wgGroupPermissions['sysop']['deletediscuss-review'] = true;
@@ -65,11 +66,11 @@ $wgLogActions['delete/nominate'] = 'deletequeue-log-nominate';
 $wgLogActions['delete/dequeue'] = 'deletequeue-log-dequeue';
 $wgLogActions['delete/requeue'] = 'deletequeue-log-requeue';
 
-$wgDeleteQueueExpiry = array('prod' => 5*86400, 'deletediscuss' => 7*86400);
+$wgDeleteQueueExpiry = array( 'prod' => 5 * 86400, 'deletediscuss' => 7 * 86400 );
 
 $wgSpecialPages['DeleteQueue'] = 'SpecialDeleteQueue';
 
-$wgExtraNamespaces[140] = 'Deletion';
-define('NS_DELETION', 140);
+define( 'NS_DELETION', 140 );
+$wgExtraNamespaces[NS_DELETION] = 'Deletion';
 
 $wgDeleteQueueStyleVersion = 1;

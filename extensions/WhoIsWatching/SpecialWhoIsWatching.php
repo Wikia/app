@@ -10,6 +10,7 @@ EOT;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+    'path'           => __FILE__,
     'version'        => '0.9',
     'name'           => 'WhoIsWatching',
     'author'         => 'Paul Grinberg, Siebrand Mazeland',

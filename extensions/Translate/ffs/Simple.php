@@ -171,8 +171,10 @@ class SimpleFormatWriter {
 
 	protected function getMessagesForExport( MessageGroup $group, $code ) {
 		$collection = $this->group->initCollection( $code );
-		$this->group->fillCollection( $collection );
-		$collection->filter( 'translation', null );
+		$collection->setInfile( $this->group->load( $code ) );
+		$collection->filter( 'ignored' );
+		$collection->filter( 'hastranslation', false );
+		$collection->loadTranslations();
 		$this->addAuthors( $collection->getAuthors(), $code );
 		return $collection;
 	}
@@ -245,9 +247,9 @@ class SimpleFormatWriter {
 
 	protected function exportMessages( $handle, MessageCollection $collection ) {
 		$mangler = $this->group->getMangler();
-		foreach ( $collection->keys() as $item ) {
-			$key = $mangler->unMangle( $item );
-			$value = str_replace( TRANSLATE_FUZZY, '', $collection[$item]->translation );
+		foreach ( $collection as $item ) {
+			$key = $mangler->unMangle( $item->key() );
+			$value = str_replace( TRANSLATE_FUZZY, '', $item->translation() );
 			fwrite( $handle, "$key\000$value\000\n" );
 		}
 	}

@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'ReplaceText' => array( 'ReplaceText' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ReplaceText' => array( 'استبدال_نص' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ReplaceText' => array( 'استبدال_نص' ),
 );
@@ -50,6 +46,11 @@ $aliases['dv'] = array(
 /** French (Français) */
 $aliases['fr'] = array(
 	'ReplaceText' => array( 'Remplacer texte', 'RemplacerTexte' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'ReplaceText' => array( 'Remplaciér lo tèxto', 'RemplaciérLoTèxto' ),
 );
 
 /** Galician (Galego) */
@@ -87,9 +88,19 @@ $aliases['ia'] = array(
 	'ReplaceText' => array( 'Reimplaciar texto' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'ReplaceText' => array( 'Ganti teks', 'GantiTeks' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'ReplaceText' => array( 'SostituisciTesto' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'ReplaceText' => array( '文字列の置換' ),
+	'ReplaceText' => array( '文字列置換', '文字列の置換' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -110,6 +121,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'ReplaceText' => array( 'ЗамениТекст' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'ReplaceText' => array( 'പകരംഎഴുത്ത്' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ReplaceText' => array( 'मजकुरबदला' ),
 );
 
 /** Maltese (Malti) */
@@ -134,7 +155,17 @@ $aliases['no'] = array(
 
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
-	'ReplaceText' => array( 'Remplaçar tèxt', 'RemplaçarTèxt' ),
+	'ReplaceText' => array( 'Remplaçar tèxte', 'RemplaçarTèxte' ),
+);
+
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'ReplaceText' => array( 'Substituir texto' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ReplaceText' => array( 'NahradiťText' ),
 );
 
 /** Albanian (Shqip) */
@@ -150,5 +181,15 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ReplaceText' => array( 'Palitan ang teksto' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ReplaceText' => array( 'MetniDeğiştir' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'ReplaceText' => array( 'SostuituissiTesto' ),
 );
 

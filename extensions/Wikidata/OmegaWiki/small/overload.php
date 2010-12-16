@@ -4,18 +4,18 @@
 class bla {
 	protected $foo = array();
 
-	function __set($key,$value) {
-		$this->foo[$key]=$value;
+	function __set( $key, $value ) {
+		$this->foo[$key] = $value;
 	}
 	
-	function __get($key) {
+	function __get( $key ) {
 		return $this->foo[$key];
 	}
 }
 
-$b=new bla();
-$baz="bar";
-$b->$baz="hello";
+$b = new bla();
+$baz = "bar";
+$b->$baz = "hello";
 echo $b->bar;
 
 ?>

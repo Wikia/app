@@ -15,6 +15,7 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 		$this->loadParameters();
 
 		$wgOut->setPageTitle( wfMsg( 'globalblocking-whitelist' ) );
+		$wgOut->setSubtitle( GlobalBlocking::buildSubtitleLinks( 'GlobalBlockStatus' ) );
 		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );

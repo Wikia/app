@@ -19,6 +19,7 @@ $names = array(
 'bs' => 'bosenština',
 'ca' => 'katalánština',
 'co' => 'korsičtina',
+'crh' => 'krymská turečtina',
 'cs' => 'čeština',
 'cy' => 'velština',
 'da' => 'dánština',

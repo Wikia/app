@@ -15,13 +15,16 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 final class SMQueryPrinters {
 	
+	public static $parameters = array();
+	
 	/**
 	 * Initialization function for Maps query printer functionality.
 	 */
 	public static function initialize() {
-		global $smgIP, $wgAutoloadClasses, $egMapsServices;
+		global $smgDir, $wgAutoloadClasses, $egMapsServices;
+		$wgAutoloadClasses['SMMapPrinter'] 	= $smgDir . 'QueryPrinters/SM_MapPrinter.php';
 		
-		$wgAutoloadClasses['SMMapPrinter'] 	= $smgIP . '/QueryPrinters/SM_MapPrinter.php';
+		self::initializeParams();
 		
 		$hasQueryPrinters = false;
 		
@@ -43,6 +46,83 @@ final class SMQueryPrinters {
 		if ($hasQueryPrinters) self::initFormat('map', array('class' => 'SMMapper', 'file' => 'QueryPrinters/SM_Mapper.php', 'local' => true), array());
 	}
 	
+	private static function initializeParams() {
+		global $egMapsDefaultServices, $egMapsDefaultCentre, $egMapsAvailableGeoServices, $egMapsDefaultGeoService;
+		global $smgQPForceShow, $smgQPShowTitle, $smgQPTemplate;
+
+		self::$parameters = array(
+			'geoservice' => array(
+				'criteria' => array(
+					'in_array' => array_keys($egMapsAvailableGeoServices)
+					),
+				'default' => $egMapsDefaultGeoService
+				),
+			'format' => array(
+				'required' => true,
+				'default' => $egMapsDefaultServices['qp']
+				),	
+			'centre' => array(
+				'aliases' => array('center'),
+				'default' => $egMapsDefaultCentre		
+				),
+			'forceshow' => array(
+				'type' => 'boolean',
+				'aliases' => array('force show'),
+				'default' => $smgQPForceShow,
+				'output-type' => 'boolean'
+				),
+			'template' => array(
+				'criteria' => array(
+					'not_empty' => array()
+					),
+				'default' => $smgQPTemplate,					
+				),
+			'showtitle' => array(
+				'type' => 'boolean',
+				'aliases' => array('show title'),
+				'default' => $smgQPShowTitle,
+				'output-type' => 'boolean'				
+				),
+			'icon' => array(
+				'criteria' => array(
+					'not_empty' => array()
+					)					
+				),						
+			// SMW #Ask: parameters
+			'limit' => array(
+				'type' => 'integer',
+				'criteria' => array(
+					'in_range' => array(0)
+					)				
+				),
+			'offset' => array(
+				'type' => 'integer'
+				),
+			'sort' => array(),
+			'order' => array(
+				'criteria' => array(
+					'in_array' => array('ascending', 'asc', 'descending', 'desc', 'reverse')
+					)
+				),
+			'headers' => array(
+				'criteria' => array(
+					'in_array' => array('show', 'hide')
+					)
+				),
+			'mainlabel' => array(),
+			'link' => array(
+				'criteria' => array(
+					'in_array' => array('none', 'subject', 'all')
+					)
+				),
+			'default' => array(),
+			'intro' => array(),
+			'outro' => array(),
+			'searchlabel' => array(),
+			'distance' => array(),
+			);		
+	}	
+	
 	/**
 	 * Add the result format for a mapping service or alias.
 	 *
@@ -51,28 +131,26 @@ final class SMQueryPrinters {
 	 * @param array $aliases
 	 */
 	private static function initFormat($format, array $qp, array $aliases) {
-		global $wgAutoloadClasses, $smgIP, $smwgResultAliases;
-		
-		// Load the QP class when it's not loaded yet
+		global $wgAutoloadClasses, $smgDir, $smwgResultAliases;
+
+		// Load the QP class when it's not loaded yet.
 		if (! array_key_exists($qp['class'], $wgAutoloadClasses)) {
-			$file = $qp['local'] ? $smgIP . '/' . $qp['file'] : $qp['file'];
+			$file = array_key_exists('local', $qp) && $qp['local'] ? $smgDir . $qp['file'] : $qp['file'];
 			$wgAutoloadClasses[$qp['class']] = $file;
 		}
-		
-		// Add the QP to SMW
+
+		// Add the QP to SMW.
 		self::addFormatQP($format, $qp['class']);
-		
-		// If SMW supports aliasing, add the aliases to $smwgResultAliases
+
+		// If SMW supports aliasing, add the aliases to $smwgResultAliases.
 		if (isset($smwgResultAliases)) {
 			$smwgResultAliases[$format] = $aliases;
 		}
-		else { // If SMW does not support aliasing, add every alias as a format
+		else { // If SMW does not support aliasing, add every alias as a format.
 			foreach($aliases as $alias) self::addFormatQP($alias, $qp['class']);
 		}
-		
-		//if (count($smwgResultAliases) == 4) die(var_dump($smwgResultAliases));
-	}	
-	
+	}
+
 	/**
 	 * Adds a QP to SMW's $smwgResultFormats array or SMWQueryProcessor
 	 * depending on if SMW supports $smwgResultFormats.

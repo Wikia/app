@@ -86,6 +86,7 @@ $names = array(
 'cmc' => 'chamiske sprog',
 'co' => 'korsikansk',
 'cop' => 'koptisk',
+'cpe' => 'engelsk baseret kreolsk eller pidgin',
 'cpp' => 'portugisisk baseret kreolsk eller pidginsprog',
 'cr' => 'cree',
 'crh' => 'krim tyrkisk',

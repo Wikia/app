@@ -16,8 +16,11 @@ if( !defined( 'MEDIAWIKI' ) )
  * @ingroup Skins
  */
 class SkinModern extends SkinTemplate {
+	var $skinname = 'modern', $stylename = 'modern',
+		$template = 'ModernTemplate', $useHeadElement = true;
+
 	/*
-	 * We don't like the default getPoweredBy, the icon clashes with the 
+	 * We don't like the default getPoweredBy, the icon clashes with the
 	 * skin L&F.
 	 */
 	function getPoweredBy() {
@@ -25,14 +28,9 @@ class SkinModern extends SkinTemplate {
 		return "<div class='mw_poweredby'>Powered by MediaWiki $wgVersion</div>";
 	}
 
-	function initPage( OutputPage $out ) {
-		parent::initPage( $out );
-		$this->skinname  = 'modern';
-		$this->stylename = 'modern';
-		$this->template  = 'ModernTemplate';
-	}
-	
 	function setupSkinUserCss( OutputPage $out ){
+		global $wgStyleVersion, $wgJsMimeType, $wgStylePath;
+
 		// Do not call parent::setupSkinUserCss(), we have our own print style
 		$out->addStyle( 'common/shared.css', 'screen' );
 		$out->addStyle( 'modern/main.css', 'screen' );
@@ -56,53 +54,18 @@ class ModernTemplate extends QuickTemplate {
 	 * @access private
 	 */
 	function execute() {
-		global $wgRequest;
+		global $wgRequest, $wgOut;
 		$this->skin = $skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
 
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="<?php $this->text('xhtmldefaultnamespace') ?>" <?php 
-	foreach($this->data['xhtmlnamespaces'] as $tag => $ns) {
-		?>xmlns:<?php echo "{$tag}=\"{$ns}\" ";
-	} ?>xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
-	<head>
-		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
-		<?php $this->html('headlinks') ?>
-		<title><?php $this->text('pagetitle') ?></title>
-		<?php $this->html('csslinks') ?>
-		<!--[if lt IE 7]><meta http-equiv="imagetoolbar" content="no" /><![endif]-->
-		
-		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
-                
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
-		<!-- Head Scripts -->
-<?php $this->html('headscripts') ?>
-<?php	if($this->data['jsvarurl'  ]) { ?>
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"><!-- site js --></script>
-<?php	} ?>
-<?php	if($this->data['pagecss'   ]) { ?>
-		<style type="text/css"><?php $this->html('pagecss'   ) ?></style>
-<?php	}
-		if($this->data['usercss'   ]) { ?>
-		<style type="text/css"><?php $this->html('usercss'   ) ?></style>
-<?php	}
-		if($this->data['userjs'    ]) { ?>
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
-<?php	}
-		if($this->data['userjsprev']) { ?>
-		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
-<?php	}
-		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
-	</head>
-<body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
-<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>">
+		$this->html( 'headelement' );
+?>
 
 	<!-- heading -->
-	<div id="mw_header"><h1 id="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1></div>
+	<div id="mw_header"><h1 id="firstHeading"><?php $this->html('title') ?></h1></div>
 
 	<div id="mw_main">
 	<div id="mw_contentwrapper">
@@ -141,9 +104,9 @@ class ModernTemplate extends QuickTemplate {
 	<!-- contentholder does nothing by default, but it allows users to style the text inside
 	     the content area without affecting the meaning of 'em' in #mw_content, which is used
 	     for the margins -->
-	<div id="mw_contentholder">
+	<div id="mw_contentholder" <?php $this->html("specialpageattributes") ?>>
 		<div class='mw-topboxes'>
-			<div id="mw-js-message" style="display:none;"></div>
+			<div id="mw-js-message" style="display:none;"<?php $this->html('userlangattributes')?>></div>
 			<div class="mw-topbox" id="siteSub"><?php $this->msg('tagline') ?></div>
 			<?php if($this->data['newtalk'] ) {
 				?><div class="usermessage mw-topbox"><?php $this->html('newtalk')  ?></div>
@@ -153,7 +116,7 @@ class ModernTemplate extends QuickTemplate {
 			<?php } ?>
 		</div>
 
-		<div id="contentSub"><?php $this->html('subtitle') ?></div>
+		<div id="contentSub"<?php $this->html('userlangattributes') ?>><?php $this->html('subtitle') ?></div>
 
 		<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 		<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#mw_portlets"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
@@ -166,11 +129,11 @@ class ModernTemplate extends QuickTemplate {
 	</div><!-- mw_content -->
 	</div><!-- mw_contentwrapper -->
 
-	<div id="mw_portlets">
+	<div id="mw_portlets"<?php $this->html("userlangattributes") ?>>
 
 	<!-- portlets -->
-	<?php 
-		$sidebar = $this->data['sidebar'];		
+	<?php
+		$sidebar = $this->data['sidebar'];
 		if ( !isset( $sidebar['SEARCH'] ) ) $sidebar['SEARCH'] = true;
 		if ( !isset( $sidebar['TOOLBOX'] ) ) $sidebar['TOOLBOX'] = true;
 		if ( !isset( $sidebar['LANGUAGES'] ) ) $sidebar['LANGUAGES'] = true;
@@ -213,8 +176,8 @@ class ModernTemplate extends QuickTemplate {
 	</div>
 
 
-	<!-- footer --> 
-	<div id="footer">
+	<!-- footer -->
+	<div id="footer"<?php $this->html('userlangattributes') ?>>
 			<ul id="f-list">
 <?php
 		$footerlinks = array(
@@ -251,7 +214,7 @@ class ModernTemplate extends QuickTemplate {
 	<div id="p-search" class="portlet">
 		<h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
 		<div id="searchBody" class="pBody">
-			<form action="<?php $this->text('wgScript') ?>" id="searchform"><div>
+			<form action="<?php $this->text('wgScript') ?>" id="searchform">
 				<input type='hidden' name="title" value="<?php $this->text('searchtitle') ?>"/>
 				<input id="searchInput" name="search" type="text"<?php echo $this->skin->tooltipAndAccesskey('search');
 					if( isset( $this->data['search'] ) ) {
@@ -261,9 +224,9 @@ class ModernTemplate extends QuickTemplate {
 
 				<div><a href="<?php $this->text('searchaction') ?>" rel="search"><?php $this->msg('powersearch-legend') ?></a></div><?php } ?>
 
-			</div></form>
-		</div><!-- pBody -->
-	</div><!-- portlet -->
+			</form>
+		</div>
+	</div>
 <?php
 	}
 
@@ -284,7 +247,7 @@ class ModernTemplate extends QuickTemplate {
 			if( $this->data['nav_urls']['recentchangeslinked'] ) { ?>
 				<li id="t-recentchangeslinked"><a href="<?php
 				echo htmlspecialchars($this->data['nav_urls']['recentchangeslinked']['href'])
-				?>"<?php echo $this->skin->tooltipAndAccesskey('t-recentchangeslinked') ?>><?php $this->msg('recentchangeslinked') ?></a></li>
+				?>"<?php echo $this->skin->tooltipAndAccesskey('t-recentchangeslinked') ?>><?php $this->msg('recentchangeslinked-toolbox') ?></a></li>
 <?php 		}
 		}
 		if(isset($this->data['nav_urls']['trackbacklink'])) { ?>
@@ -320,18 +283,17 @@ class ModernTemplate extends QuickTemplate {
 		}
 
 		wfRunHooks( 'SkinTemplateToolboxEnd', array( &$this ) );
-?>			</ul>
-		</div><!-- pBody -->
-	</div><!-- portlet -->
+?>
+			</ul>
+		</div>
+	</div>
 <?php
 	}
 
 	/*************************************************************************************************/
 	function languageBox() {
+		if( $this->data['language_urls'] ) {
 ?>
-	<!-- languages -->
-<?php
-		if( $this->data['language_urls'] ) { ?>
 	<div id="p-lang" class="portlet">
 		<h5><?php $this->msg('otherlanguages') ?></h5>
 		<div class="pBody">
@@ -341,8 +303,8 @@ class ModernTemplate extends QuickTemplate {
 				?><a href="<?php echo htmlspecialchars($langlink['href']) ?>"><?php echo $langlink['text'] ?></a></li>
 <?php		} ?>
 			</ul>
-		</div><!-- pBody -->
-	</div><!-- portlet -->
+		</div>
+	</div>
 <?php
 		}
 	}
@@ -364,12 +326,13 @@ class ModernTemplate extends QuickTemplate {
 <?php   } else {
 			# allow raw HTML block to be defined by extensions
 			print $cont;
-		} 
+		}
 ?>
-		</div><!-- pBody -->
-	</div><!-- portlet -->
+		</div>
+	</div>
 <?php
 	}
 
 } // end of class
-?>
+
+

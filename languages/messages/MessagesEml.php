@@ -33,8 +33,10 @@ $messages = array(
 'december'  => 'Dzèmber',
 'may'       => 'Mâz',
 
+'mytalk' => 'I mê discussiòun',
+
+# Cologne Blue skin
 'qbspecialpages' => 'Pagini specièli',
-'mytalk'         => 'I mê discussiòun',
 
 'returnto'         => 'Tórna a $1.',
 'help'             => 'Per quî rivê da pôch',
@@ -68,8 +70,6 @@ Nutêv ca alcuni pàgini i putrèbber cuntinuèr a cràdder ca vueter a-sîv dis
 'logout'               => 'va fôra',
 'userlogout'           => 'Va fôra',
 'userexists'           => "Al nòmm ch'èt scélt l'è stê bèle usê: càten un èter, per piasêr.",
-'yourrealname'         => 'Al tô vér nàmm:',
-'yourlanguage'         => 'Léngua:',
 'loginsuccess'         => "'''Adèsa sèt cunês in {{SITENAME}} cun al nàmm d'utèint \"\$1\".'''",
 'wrongpassword'        => "La password ch'et méss l'è sbajèda. Pròva ancàrra.",
 'blocked-mailpassword' => "Al tô indirézz IP l'an pôl più feèr di cambiamèint, e l'en brisa abilitê par user la funziòun ed recópper ed password par evitèr di abûs.",
@@ -93,6 +93,8 @@ Nutêv ca alcuni pàgini i putrèbber cuntinuèr a cràdder ca vueter a-sîv dis
 
 # Preferences page
 'mypreferences' => 'AL mê preferèinzi',
+'yourrealname'  => 'Al tô vér nàmm:',
+'yourlanguage'  => 'Léngua:',
 
 # Recent changes
 'recentchanges' => 'Ûltem cambiamèint',
@@ -100,7 +102,9 @@ Nutêv ca alcuni pàgini i putrèbber cuntinuèr a cràdder ca vueter a-sîv dis
 'hist'          => 'stôria',
 
 # Recent changes linked
-'recentchangeslinked' => 'Mudéffic curelèdi',
+'recentchangeslinked'         => 'Mudéffic curelèdi',
+'recentchangeslinked-feed'    => 'Mudéffic curelèdi',
+'recentchangeslinked-toolbox' => 'Mudéffic curelèdi',
 
 # Upload
 'upload'            => 'Carghèr un file',

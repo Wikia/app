@@ -1,0 +1,60 @@
+# Some lines to add to LocalSettings.php to get these extensions up and running:
+
+# Vector enhancements (CollapsibleTabs, SimpleSearch, EditWarning)
+require_once( "$IP/extensions/UsabilityInitiative/Vector/Vector.php" );
+
+# Vector enhancements config
+# global: Enabled for everyone, users can't disable in preferences (FIXME this behavior should change)
+# user: Disabled by default, users can enable in preferences
+# Shown values are defaults
+$wgVectorModules = array(
+	'collapsibletabs' => array( 'global' => true, 'user' => false ), // Doesn't have a user pref
+	'editwarning' => array( 'global' => false, 'user' => true ),
+	'simplesearch' => array( 'global' => true, 'user' => false ), // Doesn't have a user pref
+);
+# To really enable SimpleSearch (FIXME)
+$wgVectorUseSimpleSearch = true;
+
+# WikiEditor (Toolbar, Toc, Preview, Highlight)
+require_once( "$IP/extensions/UsabilityInitiative/WikiEditor/WikiEditor.php" );
+
+# WikiEditor config
+$wgWikiEditorModules = array(
+	'highlight' => array( 'global' => false, 'user' => true ),
+	'preview' => array( 'global' => false, 'user' => true ),
+	'toc' => array( 'global' => false, 'user' => true ),
+	'toolbar' => array( 'global' => false, 'user' => true ),
+);
+
+# To enable something by default but still allow users to disable it in preferences, use something like:
+# FIXME this should be done more cleanly, see also above
+#$wgDefaultUserOptions['usenavigabletoc'] = 1;
+
+# A system for making it easy for users to opt-in and out of a beta, in this
+# case using vector as their skin and the enhanced toolbar
+# NOTE: This extension may not be very useful for non-WMF wikis
+require_once( "$IP/extensions/UsabilityInitiative/OptIn/OptIn.php" );
+# Always show the link to opt-in in the personal tools - without this, the link
+# to opt-out (while opted in) will still appear (it always does)
+#$wgOptInAlwaysShowPersonalLink = true;
+
+# Shows statistics on when users have started and ended using certain prefs
+require_once("$IP/extensions/UsabilityInitiative/PrefStats/PrefStats.php");
+$wgPrefStatsTrackPrefs = array( 'skin' => 'vector', 'usebetatoolbar' => 1 );
+$wgGroupPermissions['sysop']['prefstats'] = true;
+$wgPrefStatsTimeUnit = 60*60*24;
+
+# When working on these extensions' js and css files, you will want to do this,
+# otherwise, the default will always use the combined and minified versions and
+# you will have to use combine.sh every time you make a change just to see it
+#$wgUsabilityInitiativeResourceMode = 'raw';
+
+# Track users' contribution counts. ClickTracking (see below) needs this
+# NOTE: This extension may not be very useful for non-WMF wikis
+require_once( "$IP/extensions/UsabilityInitiative/UserDailyContribs/UserDailyContribs.php" );
+
+# Track users' clicks in the toolbar and the left nav bar (and possibly other places as well)
+# NOTE: This extension may not be very useful for non-WMF wikis
+require_once("$IP/extensions/UsabilityInitiative/ClickTracking/ClickTracking.php");
+# Click tracking is disabled by default. To enable it, use something like:
+#$wgClickTrackThrottle = 10; // Track 1 in every 10 clicks; set to 1 to track all clicks, -1 to disable

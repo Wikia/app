@@ -1,17 +1,20 @@
 == About ==
 
-Maps is a MediaWiki extension that provides the ability to display coordinate data 
-on maps and allows users to geocode addresses.
+Maps is the MediaWiki extension that provides the ability to visualize geographic data
+with dynamic, JavaScript based, mapping API's such as Google Maps and OpenLayers in your
+wiki pages. It has build in support for geocoding, displaying maps, displaying markers,
+adding pop-ups, and more. Maps allows extensive customization of your maps, either per
+map, or via a general setting affecting all maps on your wiki.
 
-Due to it's unique structure, it allows you to use multiple mapping services to 
-display your coordinates. These include Google Maps, Yahoo! Maps, OpenLayers, and 
-also allow you to display maps with Google Earth, OpenStreetMaps, Bing maps and others.
-Modifying the mapping service of a map is as easy as changing a single parameter!
+Due to Maps modular build, modifying the mapping service of a map is as easy as changing
+a single map property! These mapping services include Google Maps, Yahoo! Maps, OpenLayers
+and OpenStreetMap. These also allow you to display maps with Google Earth, OpenStreetMaps,
+Bing maps and others.
 
 Notes on installing Maps are found in the file INSTALL.
 
 
-== Contributors ==
+== Contributing ==
 
 If you have bug reports or requests, please add them to the Talk page [0]. You can also
 send them to Jeroen De Dauw, jeroendedauw -at- gmail.com, and Yaron Koren, at yaron57 -at-
@@ -20,6 +23,7 @@ gmail.com.
 [0] http://www.mediawiki.org/w/index.php?title=Extension_talk:Maps
 
 For more info, see http://www.mediawiki.org/wiki/Extension:Maps#Contributing_to_the_project
+
 
 == Credits to other projects ==
 

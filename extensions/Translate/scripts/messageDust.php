@@ -1,8 +1,8 @@
 <?php
-$dir = dirname( __FILE__ ); $IP = "$dir/../..";
-@include("$dir/../CorePath.php"); // Allow override
-require_once( "$IP/maintenance/commandLine.inc" );
 
+/* This scripts finds messages that are invalid or unused */
+
+require( dirname( __FILE__ ) . '/cli.inc' );
 
 $dbr = wfGetDB( DB_SLAVE );
 $rows = $dbr->select( array( 'page' ),
@@ -18,50 +18,49 @@ $keys = array();
 $codes = Language::getLanguageNames();
 $invalid = array();
 
-$index = TranslateUtils::messageIndex();
 foreach ( $rows as $row ) {
 
-	@list( $pieces, $code ) = explode('/', $wgContLang->lcfirst($row->page_title), 2);
+	list( $key, $code ) = TranslateUtils::figureMessage( $row->page_title );
 
 	if ( !$code ) $code = 'en';
 
-	$key = strtolower( $row->page_namespace . ':' . $pieces );
-
-	$mg = @$index[$key];
+	$mg = TranslateUtils::messageKeyToGroup( $row->page_namespace, $key );
 	$ns = $wgContLang->getNsText( $row->page_namespace );
-	if ( is_null($mg) ) {
-		$keys["$ns:$pieces"][] = $code;
+	if ( is_null( $mg ) ) {
+		$keys["$ns:$key"][] = $code;
 		$owner = 'xx-unknown';
 	} else {
 		$owner = $mg;
 	}
 
-	if ( !isset($codes[$code]) ) {
-		$invalid[$code][] = "[[$ns:$pieces/$code]]";
-		#echo "* [[$ns:$pieces/$code]]\n";
+	if ( !isset( $codes[$code] ) ) {
+		$invalid[$code][] = "[[$ns:$key/$code]]";
 	}
 
-	if ( !isset($owners[$owner]) ) $owners[$owner] = 0;
+	if ( !isset( $owners[$owner] ) ) $owners[$owner] = 0;
 	$owners[$owner]++;
 }
 $rows->free();
 
 ksort( $owners );
 
-echo "==Invalid language codes==\n" . implode( ', ', array_keys( $invalid ) ) . "\n";
-foreach ( $invalid as $key => $pages ) {
-	echo "# $key: " . implode( ', ', $pages ) . "\n";
-}
-echo "\n==Messages claimed==\n";
-
-
-foreach ( $owners as $o => $count ) {
-	echo "# $o: $count\n";
+if ( count( $invalid ) ) {
+	echo "==Invalid language codes==\n" . implode( ', ', array_keys( $invalid ) ) . "\n";
+	foreach ( $invalid as $key => $pages ) {
+		echo "# $key: " . implode( ', ', $pages ) . "\n";
+	}
 }
 
-echo "\n==Unclaimed messages==\n";
-
-foreach ( $keys as $page => $langs ) {
-	echo "* $page: " . implode( ', ', $langs ) . "\n";
+if ( count( $owners ) ) {
+	echo "\n==Messages claimed==\n";
+	foreach ( $owners as $o => $count ) {
+		echo "# $o: $count\n";
+	}
 }
 
+if ( count( $keys ) ) {
+	echo "\n==Unclaimed messages==\n";
+	foreach ( $keys as $page => $langs ) {
+		echo "* $page: " . implode( ', ', $langs ) . "\n";
+	}
+}

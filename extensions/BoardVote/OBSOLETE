@@ -1,0 +1,4 @@
+As of MediaWiki 1.16.0 this extension is obsoleted by the SecurePoll extension.
+It will be removed from trunk on the 1.16.0 release. You are advised to migrate
+to the SecurePoll extension - the BoardVote extension will no longer be updated
+or supported.

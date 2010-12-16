@@ -13,6 +13,11 @@ if (!defined('MEDIAWIKI')) die();
 
 class SRFMath extends SMWResultPrinter {
 
+	public function getName() {
+		wfLoadExtensionMessages('SemanticResultFormats');
+		return wfMsg('srf_printername_' . $this->mFormat);
+	}
+
 	public function getResult($results, $params, $outputmode) {
 		$this->readParameters($params, $outputmode);
 		return $this->getResultText($results, SMW_OUTPUT_HTML);
@@ -79,6 +84,12 @@ class SRFMath extends SMWResultPrinter {
 		}
 
 		return $result;
+	}
+
+        public function getParameters() {
+                return array(
+                        array('name' => 'limit', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_limit')),
+		);
 	}
 
 }

@@ -12,7 +12,16 @@ if ( !$inFile ) {
 	echo "Unable to open input file \"trusted-xff.txt\"\n";
 	exit( 1 );
 }
-$outFile = dba_open( 'trusted-xff.cdb', 'n', 'cdb' );
+
+if( isset( $args[0] ) ) {
+	$target = realpath( $args[0] );
+} elseif( isset( $wgTrustedXffFile ) ) {
+	$target = $wgTrustedXffFile;
+} else {
+	echo "TrustedXffFile extension is not enabled. Specify target output file on command line!\n";
+	exit( 1 );
+}
+$outFile = dba_open( $target, 'n', 'cdb' );
 if ( !$outFile ) {
 	echo "Unable open output file \"trusted-xff.cdb\"\n";
 	exit( 1 );

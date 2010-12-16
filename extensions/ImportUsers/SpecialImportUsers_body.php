@@ -66,7 +66,7 @@ class SpecialImportUsers extends SpecialPage {
 		foreach ($filedata as $line=>$newuserstr) {
 			$newuserarray=explode(',', trim( $newuserstr ) );
 			if (count($newuserarray)<2) {
-				$output.=sprintf(wfMsg( 'importusers-user-invalid-format' ) ,$line+1 ).'<br />';
+				$output.= wfMsg( 'importusers-user-invalid-format', $line+1 ) . '<br />';
 				continue;
 			}
 			if (!IsSet($newuserarray[2])) $newuserarray[2]='';
@@ -79,16 +79,16 @@ class SpecialImportUsers extends SpecialPage {
 				$NextUser->addToDatabase();
 				$NextUser->setPassword( $newuserarray[1] );
 				$NextUser->saveSettings();
-				$output.=sprintf(wfMsg( 'importusers-user-added' ) ,$newuserarray[0] ).'<br />';
+				$output.= wfMsg( 'importusers-user-added', $newuserarray[0] ) . '<br />';
 				$summary['added']++;
 			} else {
 				if ($replace_present) {
 					$NextUser->setPassword( $newuserarray[1] );
 					$NextUser->saveSettings();
-					$output.=sprintf( wfMsg( 'importusers-user-present-update' ) ,$newuserarray[0] ).'<br />';
+					$output.= wfMsg( 'importusers-user-present-update', $newuserarray[0] ).'<br />';
 					$summary['updated']++;
 				} else {
-					$output .= sprintf( wfMsg( 'importusers-user-present-no-update' ) ,$newuserarray[0] ) . '<br />';
+					$output .= wfMsg( 'importusers-user-present-no-update', $newuserarray[0] ) . '<br />';
 				}
 			}
 			$summary['all']++;

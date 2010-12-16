@@ -22,7 +22,7 @@ class BitmapHandler extends ImageHandler {
 		# JPEG has the handy property of allowing thumbnailing without full decompression, so we make
 		# an exception for it.
 		if ( $mimeType !== 'image/jpeg' &&
-			$srcWidth * $srcHeight > $wgMaxImageArea )
+			$this->getImageArea( $image, $srcWidth, $srcHeight ) > $wgMaxImageArea )
 		{
 			return false;
 		}
@@ -45,6 +45,13 @@ class BitmapHandler extends ImageHandler {
 
 		return true;
 	}
+	
+	
+	// Function that returns the number of pixels to be thumbnailed.
+	// Intended for animated GIFs to multiply by the number of frames.
+	function getImageArea( $image, $width, $height ) {
+		return $width * $height;
+	}
 
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
 		global $wgUseImageMagick, $wgImageMagickConvertCommand, $wgImageMagickTempDir;
@@ -59,6 +66,7 @@ class BitmapHandler extends ImageHandler {
 		$physicalHeight = $params['physicalHeight'];
 		$clientWidth = $params['width'];
 		$clientHeight = $params['height'];
+		$comment = isset( $params['descriptionUrl'] ) ? "File source: ". $params['descriptionUrl'] : '';
 		$srcWidth = $image->getWidth();
 		$srcHeight = $image->getHeight();
 		$mimeType = $image->getMimeType();
@@ -109,7 +117,7 @@ class BitmapHandler extends ImageHandler {
 
 			$quality = '';
 			$sharpen = '';
-			$frame = '';
+			$scene = false;
 			$animation = '';
 			if ( $mimeType == 'image/jpeg' ) {
 				$quality = "-quality 80"; // 80%
@@ -123,7 +131,7 @@ class BitmapHandler extends ImageHandler {
 				if( $srcWidth * $srcHeight > $wgMaxAnimatedGifArea ) {
 					// Extract initial frame only; we're so big it'll
 					// be a total drag. :P
-					$frame = '[0]';
+					$scene = 0;
 				} else {
 					// Coalesce is needed to scale animated GIFs properly (bug 1017).
 					$animation = ' -coalesce ';
@@ -145,17 +153,19 @@ class BitmapHandler extends ImageHandler {
 
 			$cmd  = 
 				$tempEnv .
-				wfEscapeShellArg($wgImageMagickConvertCommand) .
+				wfEscapeShellArg( $wgImageMagickConvertCommand ) .
 				" {$quality} -background white -size {$physicalWidth} ".
-				wfEscapeShellArg($srcPath . $frame) .
+				wfEscapeShellArg( $this->escapeMagickInput( $srcPath, $scene ) ) .
 				$animation .
 				// For the -resize option a "!" is needed to force exact size,
 				// or ImageMagick may decide your ratio is wrong and slice off
 				// a pixel.
 				" -thumbnail " . wfEscapeShellArg( "{$physicalWidth}x{$physicalHeight}!" ) .
+				// Add the source url as a comment to the thumb.	
+				" -set comment " . wfEscapeShellArg( $this->escapeMagickProperty( $comment ) ) .
 				" -depth 8 $sharpen " .
-				wfEscapeShellArg($dstPath) . " 2>&1";
-			wfDebug( __METHOD__.": running ImageMagick: $cmd\n");
+				wfEscapeShellArg( $this->escapeMagickOutput( $dstPath ) ) . " 2>&1";
+			wfDebug( __METHOD__.": running ImageMagick: $cmd\n" );
 			wfProfileIn( 'convert' );
 			$err = wfShellExec( $cmd, $retval );
 			wfProfileOut( 'convert' );
@@ -187,14 +197,23 @@ class BitmapHandler extends ImageHandler {
 			if( !isset( $typemap[$mimeType] ) ) {
 				$err = 'Image type not supported';
 				wfDebug( "$err\n" );
-				return new MediaTransformError( 'thumbnail_error', $clientWidth, $clientHeight, $err );
+				$errMsg = wfMsg ( 'thumbnail_image-type' );
+				return new MediaTransformError( 'thumbnail_error', $clientWidth, $clientHeight, $errMsg );
 			}
 			list( $loader, $colorStyle, $saveType ) = $typemap[$mimeType];
 
 			if( !function_exists( $loader ) ) {
 				$err = "Incomplete GD library configuration: missing function $loader";
 				wfDebug( "$err\n" );
-				return new MediaTransformError( 'thumbnail_error', $clientWidth, $clientHeight, $err );
+				$errMsg = wfMsg ( 'thumbnail_gd-library', $loader );
+				return new MediaTransformError( 'thumbnail_error', $clientWidth, $clientHeight, $errMsg );
+			}
+
+			if ( !file_exists( $srcPath ) ) {
+				$err = "File seems to be missing: $srcPath";
+				wfDebug( "$err\n" );
+				$errMsg = wfMsg ( 'thumbnail_image-missing', $srcPath );
+				return new MediaTransformError( 'thumbnail_error', $clientWidth, $clientHeight, $errMsg );
 			}
 
 			$src_image = call_user_func( $loader, $srcPath );
@@ -235,6 +254,90 @@ class BitmapHandler extends ImageHandler {
 		} else {
 			return new ThumbnailImage( $image, $dstUrl, $clientWidth, $clientHeight, $dstPath );
 		}
+	}
+
+	/**
+	 * Escape a string for ImageMagick's property input (e.g. -set -comment)
+	 * See InterpretImageProperties() in magick/property.c
+	 */
+	function escapeMagickProperty( $s ) {
+		// Double the backslashes
+		$s = str_replace( '\\', '\\\\', $s );
+		// Double the percents
+		$s = str_replace( '%', '%%', $s );
+		// Escape initial - or @
+		if ( strlen( $s ) > 0 && ( $s[0] === '-' || $s[0] === '@' ) ) {
+			$s = '\\' . $s;
+		}
+		return $s;
+	}
+
+	/**
+	 * Escape a string for ImageMagick's input filenames. See ExpandFilenames() 
+	 * and GetPathComponent() in magick/utility.c.
+	 *
+	 * This won't work with an initial ~ or @, so input files should be prefixed
+	 * with the directory name. 
+	 *
+	 * Glob character unescaping is broken in ImageMagick before 6.6.1-5, but
+	 * it's broken in a way that doesn't involve trying to convert every file 
+	 * in a directory, so we're better off escaping and waiting for the bugfix
+	 * to filter down to users.
+	 *
+	 * @param $path string The file path
+	 * @param $scene string The scene specification, or false if there is none
+	 */
+	function escapeMagickInput( $path, $scene = false ) {
+		# Die on initial metacharacters (caller should prepend path)
+		$firstChar = substr( $path, 0, 1 );
+		if ( $firstChar === '~' || $firstChar === '@' ) {
+			throw new MWException( __METHOD__.': cannot escape this path name' );
+		}
+
+		# Escape glob chars
+		$path = preg_replace( '/[*?\[\]{}]/', '\\\\\0', $path );
+
+		return $this->escapeMagickPath( $path, $scene );
+	}
+
+	/**
+	 * Escape a string for ImageMagick's output filename. See 
+	 * InterpretImageFilename() in magick/image.c.
+	 */
+	function escapeMagickOutput( $path, $scene = false ) {
+		$path = str_replace( '%', '%%', $path );
+		return $this->escapeMagickPath( $path, $scene );
+	}
+
+	/**
+	 * Armour a string against ImageMagick's GetPathComponent(). This is a 
+	 * helper function for escapeMagickInput() and escapeMagickOutput().
+	 *
+	 * @param $path string The file path
+	 * @param $scene string The scene specification, or false if there is none
+	 */
+	protected function escapeMagickPath( $path, $scene = false ) {
+		# Die on format specifiers (other than drive letters). The regex is
+		# meant to match all the formats you get from "convert -list format"
+		if ( preg_match( '/^([a-zA-Z0-9-]+):/', $path, $m ) ) {
+			if ( wfIsWindows() && is_dir( $m[0] ) ) {
+				// OK, it's a drive letter
+				// ImageMagick has a similar exception, see IsMagickConflict()
+			} else {
+				throw new MWException( __METHOD__.': unexpected colon character in path name' );
+			}
+		}
+
+		# If there are square brackets, add a do-nothing scene specification 
+		# to force a literal interpretation
+		if ( $scene === false ) {
+			if ( strpos( $path, '[' ) !== false ) {
+				$path .= '[0--1]';
+			}
+		} else {
+			$path .= "[$scene]";
+		}
+		return $path;
 	}
 
 	static function imageJpegWrapper( $dst_image, $thumbPath ) {

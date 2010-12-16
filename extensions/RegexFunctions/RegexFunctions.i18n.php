@@ -39,6 +39,13 @@ $messages['be-tarask'] = array(
 	'regexfunctions-desc' => 'Функцыі парсэра для працы з рэгулярнымі выразамі',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'regexfunctions-desc' => "Arc'hwelioù parser lavarennoù reoliek",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -63,6 +70,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'regexfunctions-desc' => 'Parserowe funkcije za regularne wuraze',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'regexfunctions-desc' => 'Λεξιαναλυτικές συναρτήσεις τακτικών εκφράσεων',
 );
 
 /** Spanish (Español)
@@ -115,6 +129,13 @@ $messages['he'] = array(
 	'regexfunctions-desc' => 'פונקציות פענוח לביטויים רגולריים',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'regexfunctions-desc' => 'Regular nga ekspresyon parser panksiyon',
+);
+
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
  */
@@ -129,11 +150,26 @@ $messages['hsb'] = array(
 	'regexfunctions-desc' => 'Analyzowanske funkcije za regularne wurazy',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'regexfunctions-desc' => 'Értelmezőfüggvények reguláris kifejezések használatához',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'regexfunctions-desc' => 'Functiones del analysator syntactic pro expressiones regular',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'regexfunctions-desc' => 'Fungsi parser untuk "regular expression" (regex)',
 );
 
 /** Italian (Italiano)
@@ -169,6 +205,13 @@ $messages['lb'] = array(
  */
 $messages['li'] = array(
 	'regexfunctions-desc' => 'Regelierexpressieparserfunksje',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'regexfunctions-desc' => 'Парсерски функции со регуларен израз',
 );
 
 /** Low German (Plattdüütsch)
@@ -214,6 +257,13 @@ $messages['pl'] = array(
 	'regexfunctions-desc' => 'Funkcje parsera obsługi wyrażeń regularnych',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'regexfunctions-desc' => "Fonsion ëd parser d'espression regolar",
+);
+
 /** Portuguese (Português)
  * @author Waldir
  */
@@ -242,11 +292,32 @@ $messages['roa-tara'] = array(
 	'regexfunctions-desc' => "Funziune d'u 'nderprete de le espressiune regolere",
 );
 
+/** Russian (Русский)
+ * @author Ferrer
+ */
+$messages['ru'] = array(
+	'regexfunctions-desc' => 'Функции парсера с регулярными выражениями',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'regexfunctions-desc' => 'Funkcie syntaktického analyzátora regulárnych výrazov',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'regexfunctions-desc' => 'Парсерске функције за регуларне изразе',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'regexfunctions-desc' => 'Parserske funkcije za regularne izraze',
 );
 
 /** Swedish (Svenska)
@@ -261,6 +332,13 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'regexfunctions-desc' => 'Mga tungkuling pambanghay ng pangkaraniwang pagsasaad',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'regexfunctions-desc' => 'Kurallı ifade ayrıştırıcı fonksiyonları',
 );
 
 /** Ukrainian (Українська)

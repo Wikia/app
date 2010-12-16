@@ -13,6 +13,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionFunctions[] = 'wfParserHook';
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'Parser hook',
 	'description' => 'a sample parser hook',
 	'author' => 'Ævar Arnfjörð Bjarmason'

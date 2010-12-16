@@ -21,12 +21,11 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgExtensionCredits['other'][] = array( 
-	'name'           => 'Language Selector', 
-	'author'         => 'Daniel Kinzler', 
+$wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'Language Selector',
+	'author'         => 'Daniel Kinzler',
 	'url'            => 'http://mediawiki.org/wiki/Extension:LanguageSelector',
-	'svn-date' => '$LastChangedDate: 2009-03-17 17:30:16 +0100 (wto, 17 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48491 $',
 	'description'    => 'language selector on every page, also for visitors',
 	'descriptionmsg' => 'languageselector-desc',
 );
@@ -40,16 +39,26 @@ define( 'LANGUAGE_SELECTOR_PREFER_CLIENT_LANG',  2 ); #use language most preferr
 * Possible values:
 * * LANGUAGE_SELECTOR_USE_CONTENT_LANG - use the $wgLanguageCode setting (default content language)
 * * LANGUAGE_SELECTOR_PREFER_CONTENT_LANG - use the $wgLanguageCode setting, if accepted by the client
-* * LANGUAGE_SELECTOR_USE_CONTENT_LANG - use the client's preferred language, if in $wgLanguageSelectorLanguages
+* * LANGUAGE_SELECTOR_PREFER_CLIENT_LANG - use the client's preferred language, if in $wgLanguageSelectorLanguages
 */
-$wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; 
+$wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG;
 
 /**
 * Languages to offer in the language selector. Per default, this includes all languages MediaWiki knows
 * about by virtue of $wgLanguageNames. A shorter list may be more usable, though.
 * If the Polyglot extension is installed, $wgPolyglotLanguages is used as fallback.
 */
-$wgLanguageSelectorLanguages = NULL;
+$wgLanguageSelectorLanguages = null;
+
+/**
+* Determine if language codes are shown in the selector, in addition to names;
+*/
+$wgLanguageSelectorShowCode = false;
+
+/**
+ * Show all languages defined, not only those with a language file (Language::getLanguageNames( <true/false> ))
+ */
+$wgLanguageSelectorShowAll = false;
 
 define( 'LANGUAGE_SELECTOR_MANUAL',    0 ); #don't place anywhere
 define( 'LANGUAGE_SELECTOR_AT_TOP_OF_TEXT', 1 ); #put at the top of page content
@@ -63,17 +72,20 @@ define( 'LANGUAGE_SELECTOR_INTO_CATLINKS', 14 ); #put after catlinks text
 $wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AT_TOP_OF_TEXT;
 
 ///// hook it up /////////////////////////////////////////////////////
-$wgHooks['AbortNewAccount'][] = 'wfLanguageSelectorAbortNewAccount'; //abuse hook to inject default language option //FIXME: doesn't quite work it seems :(
+$wgHooks['AddNewAccount'][] = 'wfLanguageSelectorAddNewAccount';
+$wgHooks['BeforePageDisplay'][] = 'wfLanguageSelectorBeforePageDisplay';
+$wgHooks['GetCacheVaryCookies'][] = 'wfLanguageSelectorGetCacheVaryCookies';
 
-$wgExtensionFunctions[] = "wfLanguageSelectorExtension";
+$wgExtensionFunctions[] = 'wfLanguageSelectorExtension';
 
-$wgLanguageSelectorRequestedLanguage = NULL;
+$wgLanguageSelectorRequestedLanguage = null;
 
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['LanguageSelector'] = $dir . 'LanguageSelector.i18n.php';
+$wgJSAutoloadClasses['LanguageSelector'] = 'extensions/LanguageSelector/LanguageSelector.js';
 
-function wgLanguageSelectorSetHook() {
+function wfLanguageSelectorSetHook() {
 	global $wgParser;
 	$wgParser->setHook( 'languageselector', 'wfLanguageSelectorTag' );
 	return true;
@@ -81,26 +93,23 @@ function wgLanguageSelectorSetHook() {
 
 function wfLanguageSelectorExtension() {
 	wfLoadExtensionMessages( 'LanguageSelector' );
-	global $wgLanguageSelectorLanguages, $wgLanguageSelectorDetectLanguage, $wgLanguageSelectorRequestedLanguage, $wgLanguageSelectorLocation;
+	global $wgLanguageSelectorLanguages, $wgLanguageSelectorDetectLanguage, $wgLanguageSelectorRequestedLanguage, $wgLanguageSelectorLocation, $wgLanguageSelectorShowAll;
 	global $wgUser, $wgLang, $wgRequest, $wgCookiePrefix, $wgCookiePath, $wgOut, $wgJsMimeType, $wgHooks;
 
-	if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-		$wgHooks['ParserFirstCallInit'][] = 'wgLanguageSelectorSetHook';
-	} else {
-		wgLanguageSelectorSetHook();
-	}
+	$wgHooks['ParserFirstCallInit'][] = 'wfLanguageSelectorSetHook';
 
-	if ( $wgLanguageSelectorLanguages === NULL ) {
+	if ( $wgLanguageSelectorLanguages === null ) {
 		$wgLanguageSelectorLanguages = @$GLOBALS['wgPolyglotLanguages'];
 	}
-	
-	if ( $wgLanguageSelectorLanguages === NULL ) {
-		$wgLanguageSelectorLanguages = array_keys( Language::getLanguageNames( true ) );
+
+	if ( $wgLanguageSelectorLanguages === null ) {
+		$wgLanguageSelectorLanguages = array_keys( Language::getLanguageNames( !$wgLanguageSelectorShowAll ) );
+		sort( $wgLanguageSelectorLanguages );
 	}
 
 	$setlang = $wgRequest->getVal( 'setlang' );
 	if ( $setlang && !in_array( $setlang, $wgLanguageSelectorLanguages ) )
-		$setlang = NULL; //ignore invalid
+		$setlang = null; //ignore invalid
 
 	if ( $setlang ) {
 		setcookie( $wgCookiePrefix . 'LanguageSelectorLanguage', $setlang, 0, $wgCookiePath );
@@ -109,7 +118,7 @@ function wfLanguageSelectorExtension() {
 		$wgLanguageSelectorRequestedLanguage = @$_COOKIE[$wgCookiePrefix.'LanguageSelectorLanguage'];
 	}
 
-	if ( !$wgUser->isAnon() && $setlang ) {
+	if ( $setlang && !$wgUser->isAnon() ) {
 		if ( $setlang != $wgUser->getOption( 'language' ) ) {
 			$wgUser->setOption( 'language', $wgLanguageSelectorRequestedLanguage );
 			$wgUser->saveSettings();
@@ -118,13 +127,13 @@ function wfLanguageSelectorExtension() {
 		}
 	}
 
-	if ( $wgUser->isAnon() && !$wgRequest->getVal( 'uselang' ) ) {
+	if ( !$wgRequest->getVal( 'uselang' ) && $wgUser->isAnon() ) {
 
 		//NOTE: we need this for anons, so squids don't get confused.
 		//      but something is still wrong with caching...
 		header( 'Vary: Cookie', false ); //hrm, this is pretty BAD.
 		header( 'Vary: Accept-Language', false );
-		 
+
 		if ( $wgLanguageSelectorRequestedLanguage || $wgLanguageSelectorDetectLanguage != LANGUAGE_SELECTOR_USE_CONTENT_LANG ) {
 
 			if ( !class_exists( 'StubAutoLang' ) ) {
@@ -140,10 +149,10 @@ function wfLanguageSelectorExtension() {
 					//partially copied from StubObject.php. There should be a better way...
 					function _newObject() {
 						global $wgContLanguageCode, $wgContLang, $wgLanguageSelectorDetectLanguage, $wgLanguageSelectorRequestedLanguage;
-	
+
 						$code = $wgLanguageSelectorRequestedLanguage;
 						if (!$code) $code = wfLanguageSelectorDetectLanguage( $wgLanguageSelectorDetectLanguage );
-				
+
 						if( $code == $wgContLanguageCode ) {
 							return $wgContLang;
 						} else {
@@ -158,46 +167,43 @@ function wfLanguageSelectorExtension() {
 		}
 	}
 
-	if ( $wgLanguageSelectorLocation != LANGUAGE_SELECTOR_MANUAL ) {
-		switch($wgLanguageSelectorLocation) {
-			case LANGUAGE_SELECTOR_AT_TOP_OF_TEXT: $wgHooks['BeforePageDisplay'][] = 'wfLanguageSelectorBeforePageDisplay'; break;
-			case LANGUAGE_SELECTOR_IN_TOOLBOX: $wgHooks['MonoBookTemplateToolboxEnd'][] = 'wfLanguageSelectorSkinHook'; break;
+	if ( $wgLanguageSelectorLocation != LANGUAGE_SELECTOR_MANUAL && $wgLanguageSelectorLocation != LANGUAGE_SELECTOR_AT_TOP_OF_TEXT ) {
+		switch ( $wgLanguageSelectorLocation ) {
+			case LANGUAGE_SELECTOR_IN_TOOLBOX:
+				$wgHooks['SkinTemplateToolboxEnd'][] = 'wfLanguageSelectorSkinHook';
+				break;
 			default:
-				$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'wfLanguageSelectorSkinTemplateOutputPageBeforeExec'; break;
+				$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'wfLanguageSelectorSkinTemplateOutputPageBeforeExec';
+				break;
 		}
 	}
 
-	$wgOut->addScript('<script type="'.$wgJsMimeType.'">
-		addOnloadHook(function() { 
-			var i = 1;
-			while ( true ) {
-				var btn = document.getElementById("languageselector-commit-"+i);
-				var sel = document.getElementById("languageselector-select-"+i);
-				var idx = i;
-
-				if (!btn) break;
-
-				btn.style.display = "none";
-				sel.onchange = function() {
-					node = this.parentNode;
-					while( true ) {
-						if( node.tagName.toLowerCase() == "form" ) {
-							node.submit();
-							break;
-						}
-						node = node.parentNode;
-					}
-				};
-
-				i++;
-			}
-		});
-	</script>');
 }
 
 function wfLanguageSelectorBeforePageDisplay( &$out ) {
-	$html = wfLanguageSelectorHTML();
-	$out->mBodytext = $html . $out->mBodytext;
+	global $wgJsMimeType, $wgLanguageSelectorLocation;
+
+	if ( method_exists( $out, 'addScriptClass' ) ) {
+		$out->addScriptClass( 'LanguageSelector' );
+	} else {
+		$out->addScript( "<script type=\"$wgJsMimeType\">" .
+			file_get_contents( dirname( __FILE__ ) . '/LanguageSelector.js' ) .
+			'</script>'
+		);
+	}
+
+	if ( $wgLanguageSelectorLocation == LANGUAGE_SELECTOR_AT_TOP_OF_TEXT ) {
+		$html = wfLanguageSelectorHTML();
+		$out->mBodytext = $html . $out->mBodytext;
+	}
+	return true;
+}
+
+function wfLanguageSelectorGetCacheVaryCookies( &$cookies ) {
+	global $wgCookiePrefix;
+
+	$cookies[] = $wgCookiePrefix.'LanguageSelectorLanguage';
+
 	return true;
 }
 
@@ -212,13 +218,21 @@ function wfLanguageSelectorTag($input, $args) {
 	$class = @$args['class'];
 	$selectorstyle = @$args['selectorstyle'];
 	$buttonstyle = @$args['buttonstyle'];
+	$showcode = @$args['showcode'];
 
 	if ($style) $style = htmlspecialchars($style);
 	if ($class) $class = htmlspecialchars($class);
 	if ($selectorstyle) $selectorstyle = htmlspecialchars($selectorstyle);
 	if ($buttonstyle) $buttonstyle = htmlspecialchars($buttonstyle);
 
-	return wfLanguageSelectorHTML( $style, $class, $selectorstyle, $buttonstyle );
+	if ($showcode) {
+	    $showcode = strtolower($showcode);
+	    if ($showcode == "true" || $showcode == "yes" || $showcode == "on") $showcode = true;
+	    else if ($showcode == "false" || $showcode == "no" || $showcode == "off") $showcode = false;
+	    else $showcode = null;
+	} else $showcode = null;
+
+	return wfLanguageSelectorHTML( $style, $class, $selectorstyle, $buttonstyle, $showcode );
 }
 
 function wfLanguageSelectorSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
@@ -242,7 +256,7 @@ function wfLanguageSelectorSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
 		return true;
 	}
 
-	$key = NULL;
+	$key = null;
 
 	switch($wgLanguageSelectorLocation) {
 		case LANGUAGE_SELECTOR_INTO_SITENOTICE: $key = 'sitenotice'; break;
@@ -276,9 +290,9 @@ function wfLanguageSelectorDetectLanguage( $mode ) {
 
 	if ( empty( $accept ) )
 		return $contLang;
-	
+
 	$accept = explode( ',', $accept );
-	
+
 	/**
 	* normalize accepted languages
 	*/
@@ -294,13 +308,13 @@ function wfLanguageSelectorDetectLanguage( $mode ) {
 	}
 
 	/**
-	* see if the content language is accepted by the 
+	* see if the content language is accepted by the
 	* client.
 	*/
 	if ( $mode == LANGUAGE_SELECTOR_PREFER_CONTENT_LANG && array_key_exists( $contLang, $languages ) ) {
 		return $contLang;
 	}
-	
+
 	arsort( $languages, SORT_NUMERIC );
 
 	/**
@@ -320,30 +334,33 @@ function wfLanguageSelectorDetectLanguage( $mode ) {
 			continue;
 		}
 		*/
-		
+
 		if ( in_array( $code, $wgLanguageSelectorLanguages ) ) {
 			return $code;
 		}
 	}
-		
+
 	return $contLang;
 }
 
-function wfLanguageSelectorAbortNewAccount( &$u ) { //FIXME: doesn't quite work it seems :(
-	global $wgUser;
+function wfLanguageSelectorAddNewAccount( $u ) {
+	global $wgUser, $wgLang;
 
 	//inherit language;
-	//if $wgUser->isAnon, this means remembering what the user selected
+	//if $wgUser is the created user this means remembering what the user selected
 	//otherwise, it would mean inheriting the language from the user creating the account.
-	if ($wgUser->isAnon()) {
-		$u->setOption('language', $wgUser->getOption('language')); 
+	if ( $wgUser === $u ) {
+		$u->setOption( 'language', $wgLang->getCode() );
+		$u->saveSettings();
 	}
 
 	return true;
 }
 
-function wfLanguageSelectorHTML( $style = NULL, $class = NULL, $selectorstyle = NULL, $buttonstyle = NULL ) {
-	global $wgLanguageSelectorLanguages, $wgTitle, $wgLang, $wgContLang, $wgScript;
+function wfLanguageSelectorHTML( $style = null, $class = null, $selectorstyle = null, $buttonstyle = null, $showCode = null ) {
+	global $wgLanguageSelectorLanguages, $wgTitle, $wgLang, $wgContLang, $wgScript, $wgLanguageSelectorShowCode;
+
+	if ($showCode === null) $showCode = $wgLanguageSelectorShowCode;
 
 	static $id = 0;
 	$id += 1;
@@ -357,7 +374,10 @@ function wfLanguageSelectorHTML( $style = NULL, $class = NULL, $selectorstyle = 
 	$html .= Xml::openElement('select', array('name' => 'setlang', 'id' => 'languageselector-select-'.$id, 'style' => $selectorstyle));
 
 	foreach ($wgLanguageSelectorLanguages as $ln) {
-		$html .= Xml::option($wgContLang->getLanguageName($ln), $ln, $ln == $code);
+		$name = $wgContLang->getLanguageName($ln);
+		if ($showCode) $name = wfBCP47($ln) . ' - ' . $name;
+
+		$html .= Xml::option($name, $ln, $ln == $code);
 	}
 
 	$html .= Xml::closeElement('select');

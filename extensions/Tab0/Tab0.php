@@ -4,12 +4,11 @@
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Tab0',
 	'author'         => 'Agbad',
 	'description'    => 'Adds "0" tab, linking to the edit page of the first section of the page',
 	'descriptionmsg' => 'tab0-desc',
-	'svn-date'       => '$LastChangedDate: 2008-06-02 16:59:10 +0200 (pon, 02 cze 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 35722 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Tab0',
 );
 

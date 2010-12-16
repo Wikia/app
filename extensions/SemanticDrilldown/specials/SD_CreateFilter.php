@@ -29,23 +29,10 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 
 	list($namespace, $property_name) = explode(",", $property_string, 2);
 	$sd_props = $sdgContLang->getPropertyLabels();
-	// a simpler call is possible in SMW 1.4 and higher
-	if (class_exists('SMWPropertyValue'))
-		$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] . "::$property_name]]";
-	else
-		$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] .
-			"::$namespace:$property_name|$property_name]]";
+	$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] . "::$property_name]]";
 	$text = wfMsgForContent('sd_filter_coversproperty', $property_tag);
 	if ($values_source == 'category') {
-		// a simpler call is possible in SMW 1.4 and higher
-		if (class_exists('SMWPropertyValue')) {
-			$category_tag = "[[" . $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] . "::$category_used]]";
-		} else {
-			global $wgContLang;
-			$namespace_labels = $wgContLang->getNamespaces();
-			$category_namespace = $namespace_labels[NS_CATEGORY];
-			$category_tag = "[[" . $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] . "::$category_namespace:$category_used|$category_used]]";
-		}
+		$category_tag = "[[" . $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] . "::$category_used]]";
 		$text .= " " . wfMsgForContent('sd_filter_getsvaluesfromcategory', $category_tag);
 	} elseif ($values_source == 'property') {
 		// do nothing
@@ -158,8 +145,8 @@ END;
 	$input_type_label = wfMsg('sd_createfilter_inputtype');
 	$values_list_label = wfMsg('sd_createfilter_listofvalues');
 	// same as for time values
-	$free_text_label = wfMsg('sd_filter_freetext');
-	$free_text_value = wfMsgForContent('sd_filter_freetext');
+	$combo_box_label = wfMsg('sd_filter_combobox');
+	$combo_box_value = wfMsgForContent('sd_filter_combobox');
 	$date_range_label = wfMsg('sd_filter_daterange');
 	$date_range_value = wfMsgForContent('sd_filter_daterange');
 	$require_filter_label = wfMsg('sd_createfilter_requirefilter');
@@ -195,7 +182,7 @@ END;
 	<p>$input_type_label
 	<select id="input_type_dropdown" name="input_type">
 	<option value="">$values_list_label</option>
-	<option value="$free_text_value">$free_text_label</option>
+	<option value="$combo_box_value">$combo_box_label</option>
 	<option value="$date_range_value">$date_range_label</option>
 	</select>
 	</p>
@@ -225,7 +212,7 @@ END;
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $sdgScriptPath . "/skins/SD_main.css"
 	));
 	$wgOut->addHTML($text);

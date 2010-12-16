@@ -20,8 +20,9 @@ $wgExtensionAliasesFiles['Call'] = $dir . 'Call.alias.php';
 $wgSpecialPages['Call'] = 'Call';
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Call',
-	'version' => '1.1',
+	'version' => '1.2',
 	'author' => 'Algorithmix',
 	'description' => 'Create a hyperlink to a template (or to a normal wiki article) with parameter passing. Can be used at the browser’s command line or within wiki text.',
 	'descriptionmsg' => 'call-desc',

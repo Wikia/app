@@ -148,7 +148,7 @@ class PasswordReset extends SpecialPage {
 
 	private function resetPassword( $userID, $newpass, $disableuser ) {
 		global $wgMemc;
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 
 
 		$user = User::newFromId( $userID );
@@ -174,7 +174,7 @@ class PasswordReset extends SpecialPage {
 				if ( $name <> '' ) {
 
 					$u = User::newFromName( $name );
-					if( is_null( $u ) ) {
+					if( !$u instanceof User ) {
 						return true;
 					} elseif ( 0 == $u->getID() ) {
 						return true;

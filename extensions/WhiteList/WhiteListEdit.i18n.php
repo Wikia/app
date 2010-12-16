@@ -98,12 +98,13 @@ This page is only applicable to restricted users",
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'whitelist-desc' => 'Short description of the White List extension, shown on [[Special:Version]].{{doc-important|Do not translate or change links.}}',
+	'whitelist-desc' => '{{desc}}',
 	'mywhitelistpages' => '{{Identical|My pages}}',
 	'whitelisttablemodifyall' => '{{Identical|All}}',
 	'whitelisttablemodifynone' => '{{Identical|None}}',
@@ -147,33 +148,39 @@ $messages['niu'] = array(
 	'whitelisttableedit' => 'Fakahakohako',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
+/** Laz (Laz)
+ * @author Bombola
  */
-$messages['vep'] = array(
-	'mywhitelistpages' => 'Minun lehtpoled',
-	'whitelistfor' => '<center>Aktualine informacii <b>$1</b>-kävutajan täht</center>',
-	'whitelisttablemodify' => 'Modificiruida',
-	'whitelisttablemodifyall' => 'Kaik',
-	'whitelisttablemodifynone' => 'Nimidä',
-	'whitelisttablepage' => "Wikin lehtpol'",
-	'whitelisttableedit' => 'Redaktiruida',
-	'whitelisttableview' => 'Nähta',
-	'whitelisttablenewdate' => "Uz' dat:",
-	'whitelisttablechangedate' => 'Lopstrokun datan vajehtuz',
-	'whitelisttableremove' => 'Čuta poiš',
-	'whitelistnewtableprocess' => 'Process',
+$messages['lzz'] = array(
+	'mywhitelistpages' => 'Çkimi sayfape',
+	'whitelisttableremove' => 'Jili',
 );
 
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
+ * @author Naudefj
  */
 $messages['af'] = array(
+	'mywhitelistpages' => 'My bladsye',
+	'whitelisttablemodify' => 'Wysig',
 	'whitelisttablemodifyall' => 'Alle',
 	'whitelisttablemodifynone' => 'Geen',
+	'whitelisttableexpires' => 'Verval op',
 	'whitelisttableedit' => 'Wysig',
+	'whitelisttableview' => 'Wys',
+	'whitelisttablenewdate' => 'Nuwe datum:',
+	'whitelisttablechangedate' => 'Wysig vervaldatum',
 	'whitelisttableremove' => 'Skrap',
+	'whitelistnewtabledate' => 'Vervaldatum:',
+	'whitelistnewtableprocess' => 'Verwerk',
+	'whitelistnewtablereview' => 'Kontroleer',
+	'whitelistrequest' => 'Versoek om toegang tot meer bladsye',
+	'whitelistrequestconf' => 'Die versoek vir nuwe bladsye is aan $1 gestuur',
 	'whitelistnever' => 'nooit',
+	'whitelistnummatches' => ' - $1 {{PLURAL:$1|resultaat|resultate}}',
+	'group-restricted' => 'Beperk gebruikers',
+	'group-manager' => 'Bestuurders',
+	'group-manager-member' => 'Bestuurder',
 );
 
 /** Amharic (አማርኛ)
@@ -241,14 +248,14 @@ $messages['ar'] = array(
 	'whitelistoverviewrm' => '* إزالة الوصول إلى [[:$1|$1]]',
 	'whitelistoverviewna' => "* إضافة [[:$1|$1]] إلى القائمة البيضاء بوصول '''$2''' و '''$3''' تاريخ انتهاء",
 	'whitelistrequest' => 'طلب السماح لمزيد من الصفحات',
-	'whitelistrequestmsg' => '$1 طلب الوصول إلى {{PLURAL:$3|الصفحة|الصفحات}} التالية:
+	'whitelistrequestmsg' => '$1 طلب الوصول إلى {{PLURAL:$3||الصفحة التالية|الصفحتين التاليتين|الصفحات التالية}}:
 
 $2',
 	'whitelistrequestconf' => 'الطلب للصفحات الجديدة تم إرساله إلى $1',
 	'whitelistnonrestricted' => "المستخدم '''$1''' ليس مستخدما محددا.
 هذه الصفحة مطبقة فقط على المستخدمين المحددين",
 	'whitelistnever' => 'أبدا',
-	'whitelistnummatches' => ' - {{PLURAL:$1|مطابقة واحدة|$1 مطابقة}}',
+	'whitelistnummatches' => ' - {{PLURAL:$1||مطابقة واحدة|مطابقتان|$1 مطابقات|$1 مطابقة}}',
 	'right-editwhitelist' => 'عدل القائمة البيضاء للمستخدمون الموجودون',
 	'right-restricttowhitelist' => 'تعديل وعرض الصفحات على القائمة البيضاء فقط',
 	'action-editwhitelist' => 'عدل القائمة البيضاء لمستخدمين موجودين',
@@ -257,6 +264,23 @@ $2',
 	'group-restricted-member' => 'مستخدم محظور',
 	'group-manager' => 'مديرون',
 	'group-manager-member' => 'مدير',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'mywhitelistpages' => 'ܦܐܬܬ̈ܐ ܕܝܠܝ',
+	'whitelisttablemodifyall' => 'ܟܠ',
+	'whitelisttablemodifynone' => 'ܠܐ ܡܕܡ',
+	'whitelisttablepage' => 'ܦܐܬܐ ܕܘܝܩܝ',
+	'whitelisttableedit' => 'ܫܚܠܦ',
+	'whitelisttableview' => 'ܚܙܝ',
+	'whitelisttableremove' => 'ܠܚܝ',
+	'whitelistnewtableprocess' => 'ܥܡܠܝܬܐ',
+	'whitelistnewtablereview' => 'ܬܢܝܬܐ',
+	'whitelistpagelist' => '{{SITENAME}} ܦܐܬܬ̈ܐ ܠ$1',
+	'whitelistnever' => 'ܠܐ ܡܡܬܘܡ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -422,8 +446,17 @@ $2',
 	'whitelistrequestconf' => 'Заявка за нови страници беше изпратена на $1',
 	'whitelistnever' => 'никога',
 	'whitelistnummatches' => ' - {{PLURAL:$1|едно съвпадение|$1 съвпадения}}',
+	'group-restricted' => 'Ограничени потребители',
+	'group-restricted-member' => 'Ограничен потребител',
 	'group-manager' => 'Управители',
 	'group-manager-member' => 'Управител',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'mywhitelistpages' => 'আমার পাতাসমূহ',
 );
 
 /** Breton (Brezhoneg)
@@ -551,12 +584,18 @@ Ova stranica se može primijeniti samo na ograničene korisnike",
  * @author Jordi Roqué
  * @author Loupeter
  * @author SMP
+ * @author Solde
+ * @author Ssola
  */
 $messages['ca'] = array(
+	'whitelisttablemodify' => 'Modifica',
+	'whitelisttablemodifyall' => 'Tot',
 	'whitelisttablemodifynone' => 'Cap',
-	'whitelisttableedit' => 'Edita',
+	'whitelisttablepage' => 'Pàgina wiki',
+	'whitelisttableedit' => 'Modifica',
 	'whitelisttablenewdate' => 'Nova data:',
 	'whitelisttablechangedate' => 'Canviar data de venciment',
+	'whitelisttableremove' => 'Elimina',
 	'whitelistnewtabledate' => 'Data de venciment:',
 	'whitelistoverviewna' => "* Afegint [[:$1|$1]] a la llista blanca amb accés '''$2''' i '''$3''' data de venciment",
 	'whitelistnever' => 'mai',
@@ -567,6 +606,38 @@ $messages['ca'] = array(
  */
 $messages['ch'] = array(
 	'whitelisttableedit' => 'Tulaika',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ * @author رزگار
+ */
+$messages['ckb-arab'] = array(
+	'whitelist-desc' => 'دەستکاری‌کردنی ڕێگەدان بۆ دەست‌پێ‌گەیشتنی بەکارهێنەرانی سنووردار کراو',
+	'mywhitelistpages' => 'پەڕەکانی من',
+	'whitelisttablemodify' => 'پێداچوونەوە',
+	'whitelisttablemodifyall' => 'ھەموو',
+	'whitelisttablepage' => 'لاپەڕەی ویکی',
+	'whitelisttabletype' => 'جۆری دەست‌پێگەیشتن',
+	'whitelisttableexpires' => 'بەسەرهاتنی کات لە',
+	'whitelisttablemodby' => 'دوایین پێداچوونەوە لە لایەن',
+	'whitelisttablemodon' => 'دوایین پێداچوونەوە لە',
+	'whitelisttableedit' => 'دەستکاری',
+	'whitelisttableview' => 'پیشان‌دان',
+	'whitelisttablenewdate' => 'ڕێکەوتی نوێ:',
+	'whitelisttablechangedate' => 'گۆڕانی ڕێکەوتی بەسەرهاتنی کات',
+	'whitelisttableremove' => 'لابردن',
+	'whitelistnewtabledate' => 'ڕێکەوتی بەسەرهاتنی کات:',
+	'whitelistnewtableprocess' => 'پرۆسە',
+	'whitelistnewtablereview' => 'پێداچوونەوە',
+	'whitelistselectrestricted' => '== دیاری‌کردنی ناوی بەکارهێنەری سنووردارکراو ==',
+	'whitelistrequest' => 'داوای دەستپێگەیشتنی لاپەڕەی زیاتر',
+	'whitelistrequestconf' => 'داخوازی بۆ لاپەڕە نوێکان بۆ $1 ناردرا',
+	'whitelistnever' => 'هیچ‌کات',
+	'group-restricted' => 'بەکارهێنەرانی سنووردارکراو',
+	'group-restricted-member' => 'بەکارهێنەری سنووردارکراو',
+	'group-manager' => 'جێبە‌جێکەران',
+	'group-manager-member' => 'جێبەجێکەر',
 );
 
 /** Czech (Česky)
@@ -656,6 +727,7 @@ $messages['da'] = array(
  * @author Melancholie
  * @author Pill
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'whitelist-desc' => 'Zugriffsrechte von beschränkten Benutzern bearbeiten',
@@ -705,13 +777,21 @@ Diese Seite gilt nur für beschränkte Bentzer.",
 	'whitelistnever' => 'niemals',
 	'whitelistnummatches' => ' - $1 {{PLURAL:$1|Übereinstimmung|Übereinstimmungen}}',
 	'right-editwhitelist' => 'Weiße Liste für existierende Benutzer bearbeiten',
-	'right-restricttowhitelist' => 'Bearbeite und betrachte nur Seiten die in der Positivliste enthalten sind',
+	'right-restricttowhitelist' => 'Seiten ansehen und bearbeiten, die in der Positivliste enthalten sind',
 	'action-editwhitelist' => 'modifiziere die Positivliste für existierende Benutzer',
 	'action-restricttowhitelist' => 'bearbeite und betrachte nur Seiten die in der Positivliste enthalten sind',
 	'group-restricted' => 'Eingeschränkte Benutzer',
 	'group-restricted-member' => 'Eingeschränkter Benutzer',
 	'group-manager' => 'Verwalter',
 	'group-manager-member' => 'Verwalter',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'whitelistnowhitelistedusers' => 'Es gibt keine Benutzer, die der Gruppe „{{MediaWiki:Group-restricted}}“ angehören.
+Sie müssen [[Special:UserRights|Benutzer zu der Gruppe hinzufügen]] bevor Sie Seiten auf die Beobachtungsliste eines Benutzers setzen können.',
 );
 
 /** Zazaki (Zazaki)
@@ -790,17 +870,63 @@ $messages['ee'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Crazymadlover
  * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'whitelist-desc' => 'Αλλαγή των αδειών πρόσβασης των περιορισμένων χρηστών',
+	'whitelistedit' => 'Επεξεργαστής πρόσβασης της άσπρης λίστας',
+	'whitelist' => 'Σελίδες άσπρης λίστας',
 	'mywhitelistpages' => 'Οι Σελίδες μου',
+	'whitelistfor' => '<center>Τωρινές πληροφορίες για το <b>$1</b></center>',
 	'whitelisttablemodify' => 'Τροποποίηση',
 	'whitelisttablemodifyall' => 'Ὀλα',
 	'whitelisttablemodifynone' => 'Κανένα',
+	'whitelisttablepage' => 'Σελίδα βίκι',
+	'whitelisttabletype' => 'Τύπος πρόσβασης',
+	'whitelisttableexpires' => 'Λήγει στις',
+	'whitelisttablemodby' => 'Τελευταία επεξεργασία από τον',
+	'whitelisttablemodon' => 'Τελευταία επεξεργασία στις',
 	'whitelisttableedit' => 'Επεξεργασία',
 	'whitelisttableview' => 'Προβολή',
 	'whitelisttablenewdate' => 'Νέα ημερομηνία:',
+	'whitelisttablechangedate' => 'Αλλαγή ημερομηνίας λήξης',
+	'whitelisttablesetedit' => 'Έτοιμο για επεξεργασία',
+	'whitelisttablesetview' => 'Έτοιμο για εμφάνιση',
+	'whitelisttableremove' => 'Αφαίρεση',
+	'whitelistnewpagesfor' => 'Προσθέτει νέεςς σελίδες στην άσπρη λίστα του <b>$1</b><br />
+Χρησιμοποιήστε είτε * ή % ως χαρακτήρα μπαλαντέρ',
 	'whitelistnewtabledate' => 'Ημερομηνία λήξης:',
+	'whitelistnewtableedit' => 'Έτοιμο για επεξεργασία',
+	'whitelistnewtableview' => 'Έτοιμο για εμφάνιση',
+	'whitelistnowhitelistedusers' => 'Δεν υπάρχουν χρήστες στην ομάδα "{{MediaWiki:Group-restricted}}".
+Πρέπει να [[Special:UserRights|προσθέσετε χρήστες στην ομάδα]] πριν προσθέσετε σελίδες σε μια άσπρη λίστα ενός χρήστη.',
+	'whitelistnewtableprocess' => 'Πρόοδος',
+	'whitelistnewtablereview' => 'Επιθεώρηση',
+	'whitelistselectrestricted' => '== Επιλογή περιορισμένου ονόματος χρήστη ==',
+	'whitelistpagelist' => 'Σελίδες στο {{SITENAME}} για το $1',
+	'whitelistnocalendar' => "<font color='red' size=3>Φαίνεται ότι το [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics], προαπαιτούμενο για αυτή την επέκταση, δεν έχει εγκατασταθεί σωστά!</font>",
+	'whitelistoverview' => '== Επισκόπηση αλλαγών του $1 ==',
+	'whitelistoverviewcd' => "* Αλλαγή της ημερομηνίας στο '''$1''' για το [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Ρυθμίση της πρόσβασης στο '''$1''' για το [[:$2|$2]]",
+	'whitelistoverviewrm' => '* Αφαίρεση της πρόσβασης στο [[:$1|$1]]',
+	'whitelistoverviewna' => "* Προσθήκη του [[:$1|$1]] στην άσπρη λίστα με πρόσβαση '''$2''' και ημερομηνία λήξης στις '''$3'''",
+	'whitelistrequest' => 'Ζήτηση πρόσβασης για περισσότερες σελίδες',
+	'whitelistrequestmsg' => 'Ο/Η $1 έχει άδεια που ζητήθηκε {{PLURAL:$3|στην σελίδα|στις σελίδες}}:
+
+$2',
+	'whitelistrequestconf' => 'Η πρόταση για νέες σελίδες στάλθηκε σε $1',
+	'whitelistnonrestricted' => "Ο χρήστης '''$1''' δεν είναι ένας περιορισμένος χρήστης.
+Αυτή η σελίδα είναι κατάλληλη μόνο για τους περιορισμένους χρήστες",
+	'whitelistnever' => 'ποτέ',
+	'whitelistnummatches' => '  - {{PLURAL:$1|ένα αποτέλεσμα|$1 αποτελέσματα}}',
+	'right-editwhitelist' => 'Τροποποίηση της άσπρης λίστας για τωρινούς χρήστες',
+	'right-restricttowhitelist' => 'Επεξεργασία και προβολή σελίδων στην άσπρη λίστα μόνο',
+	'action-editwhitelist' => 'τροποποίηση της άσπρης λίστας για τους υπάρχοντες χρήστες',
+	'action-restricttowhitelist' => 'επεξεργασία και προβολή σελίδων στην άσπρη λίστα μόνο',
+	'group-restricted' => 'Περιορισμένοι χρήστες',
+	'group-restricted-member' => 'Περιορισμένος χρήστης',
 	'group-manager' => 'Διαχειριστές',
 	'group-manager-member' => 'Διαχειριστής',
 );
@@ -828,6 +954,8 @@ $messages['eo'] = array(
 	'whitelisttablechangedate' => 'Ŝanĝu Findaton',
 	'whitelisttableremove' => 'Forigi',
 	'whitelistnewtabledate' => 'Findato:',
+	'whitelistnewtableedit' => 'Prete redakti',
+	'whitelistnewtableview' => 'Prete vidi',
 	'whitelistnewtableprocess' => 'Procezi',
 	'whitelistnewtablereview' => 'Kontrolu',
 	'whitelistselectrestricted' => '== Selektu Limigitan Salutnomon ==',
@@ -914,8 +1042,20 @@ Está página sólo es aplicable a usuarios restringidos",
 	'group-manager-member' => 'Gestor',
 );
 
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'whitelisttablemodifyall' => 'Kõik',
+	'whitelisttablemodifynone' => 'Ei midagi',
+	'whitelisttableexpires' => 'Aegub',
+	'whitelisttableedit' => 'Redigeeri',
+	'whitelisttableview' => 'Vaata',
+);
+
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  * @author Theklan
  */
 $messages['eu'] = array(
@@ -940,6 +1080,7 @@ $messages['eu'] = array(
 	'whitelistnewtableview' => 'Aldatzeko jarri',
 	'whitelistnewtableprocess' => 'Prozesatu',
 	'whitelistnewtablereview' => 'Berrikusi',
+	'whitelistselectrestricted' => '== Hauta ezazu mugatutako lankide izena ==',
 	'whitelistnever' => 'inoiz',
 	'group-restricted' => 'Mugatutako lankideak',
 	'group-restricted-member' => 'Mugatutako lankidea',
@@ -948,12 +1089,15 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
  * @author Crt
  * @author Nike
  * @author Str4nd
  * @author Vililikku
  */
 $messages['fi'] = array(
+	'whitelist-desc' => 'Muokkaa rajoituksenalaisten käyttäjien käyttöoikeuksia',
+	'whitelist' => 'Sallitut sivut',
 	'mywhitelistpages' => 'Omat sivu',
 	'whitelisttablemodify' => 'Muokkaa',
 	'whitelisttablemodifyall' => 'Kaikki',
@@ -968,10 +1112,20 @@ $messages['fi'] = array(
 	'whitelisttablechangedate' => 'Muuta vanhentumispäivämäärää',
 	'whitelisttableremove' => 'Poista',
 	'whitelistnewtabledate' => 'Vanhentumispäivämäärä',
+	'whitelistnewtableprocess' => 'Käsittele',
+	'whitelistnewtablereview' => 'Tarkasta',
+	'whitelistselectrestricted' => '== Valitse rajattu käyttäjätunnus ==',
+	'whitelistpagelist' => '{{SITENAME}}-sivut kohteelle $1',
+	'whitelistoverview' => '== Yleiskatsaus muutoksista kohteeseen $1 ==',
+	'whitelistoverviewcd' => "* Muutetaan päiväys arvoon '''$1''' kohteelle [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Asetetaan oikeudet '''$1''' kohteelle [[:$2|$2]]",
 	'whitelistrequest' => 'Pyydä pääsyä useammille sivuille',
 	'whitelistrequestmsg' => '$1 on pyytänyt pääsyä {{PLURAL:$3|seuraavalle sivulle|seuraaville sivuille}}:
 
 $2',
+	'whitelistrequestconf' => 'Lähetettiin kohteeseen $1 pyyntö uusista sivuista',
+	'whitelistnonrestricted' => "Käyttäjä '''$1''' ei ole rajoituksenalainen käyttäjä.
+Tätä sivua sovelletaan ainoastaan rajoituksenalaisiin käyttäjiin",
 	'whitelistnever' => 'ei koskaan',
 	'whitelistnummatches' => '  - {{PLURAL:$1|yksi osuma|$1 osumaa}}',
 	'group-restricted' => 'rajoitetut käyttäjät',
@@ -979,14 +1133,16 @@ $2',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author McDutchie
  * @author PieRRoMaN
+ * @author Verdy p
  * @author Zetud
  */
 $messages['fr'] = array(
 	'whitelist-desc' => 'Modifie les permissions d’accès des utilisateurs à pouvoirs restreints',
-	'whitelistedit' => 'Éditeur de la liste blanche des accès',
+	'whitelistedit' => 'Modificateur de la liste blanche des accès',
 	'whitelist' => 'Pages de listes blanches',
 	'mywhitelistpages' => 'Mes pages',
 	'whitelistfor' => '<center>Informations actuelles pour <b>$1</b></center>',
@@ -1019,7 +1175,7 @@ Vous devez [[Special:UserRights|ajouter l’utilisateur au groupe]] avant que vo
 	'whitelistnocalendar' => "<font color='red' size=3>Il semble que le module [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics], une extension prérequise, n’ait pas été installée convenablement !</font>",
 	'whitelistoverview' => '== Vue générale des changements pour $1 ==',
 	'whitelistoverviewcd' => "* Modification de la date de '''$1''' pour [[:$2|$2]]",
-	'whitelistoverviewsa' => "* Configuration de l'accès à '''$1''' pour [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Configuration de l’accès à '''$1''' pour [[:$2|$2]]",
 	'whitelistoverviewrm' => '* Retrait de l’accès à [[:$1|$1]]',
 	'whitelistoverviewna' => "* Ajout de [[:$1|$1]] à la liste blanche avec les droits de '''$2''' et comme date d’expiration le '''$3'''",
 	'whitelistrequest' => 'Demander un accès à plus de pages',
@@ -1027,7 +1183,7 @@ Vous devez [[Special:UserRights|ajouter l’utilisateur au groupe]] avant que vo
 
 $2',
 	'whitelistrequestconf' => 'Une demande d’accès pour de nouvelles pages a été envoyée à $1',
-	'whitelistnonrestricted' => "L'utilisateur '''$1''' n'a pas des droits restreints.
+	'whitelistnonrestricted' => "L’utilisateur '''$1''' n’a pas des droits restreints.
 Cette page ne s’applique qu’aux utilisateurs disposant de droits restreints.",
 	'whitelistnever' => 'jamais',
 	'whitelistnummatches' => ' - {{PLURAL:$1|une occurrence|$1 occurrences}}',
@@ -1039,6 +1195,19 @@ Cette page ne s’applique qu’aux utilisateurs disposant de droits restreints.
 	'group-restricted-member' => 'Utilisateur restreint',
 	'group-manager' => 'Gestionnaires',
 	'group-manager-member' => 'Gestionnaire',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'mywhitelistpages' => 'Mes pâges',
+	'whitelisttablemodify' => 'Changiér',
+	'whitelisttablemodifyall' => 'Tot',
+	'whitelisttablemodifynone' => 'Ren',
+	'whitelisttableedit' => 'Changiér',
+	'whitelisttableview' => 'Fâre vêre',
 );
 
 /** Western Frisian (Frysk)
@@ -1124,22 +1293,28 @@ Esta páxina só é aplicable aos usuarios limitados",
 	'group-manager-member' => 'Xestor',
 );
 
-/** Gothic
+/** Gothic (Gothic)
+ * @author Crazymadlover
  * @author Jocke Pirat
+ * @author Omnipaedista
  */
 $messages['got'] = array(
 	'whitelisttableedit' => 'Máidjan',
 );
+
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
  * @author Omnipaedista
  */
 $messages['grc'] = array(
 	'mywhitelistpages' => 'Αἱ δέλτοι μου',
+	'whitelisttablemodify' => 'Τροποποιεῖν',
 	'whitelisttablemodifyall' => 'Ἅπασαι',
 	'whitelisttablemodifynone' => 'Οὐδέν',
 	'whitelisttableedit' => 'Μεταγράφειν',
+	'whitelisttableview' => 'Ὁρᾶν',
 	'whitelisttableremove' => 'Άφαιρεῖν',
+	'whitelistnewtablereview' => 'Ἐπισκόπησις',
 	'whitelistnever' => 'οὔποτε',
 );
 
@@ -1217,7 +1392,7 @@ $messages['hak'] = array(
 $messages['haw'] = array(
 	'mywhitelistpages' => 'Ka‘u mau ‘ao‘ao',
 	'whitelisttablemodifyall' => 'Apau',
-	'whitelisttableedit' => 'E ho‘opololei',
+	'whitelisttableedit' => 'E hoʻololi',
 	'whitelisttableremove' => 'Kāpae',
 );
 
@@ -1373,9 +1548,63 @@ Tuta strona je jenož na wobmjezowanych wužiwarjow nałožujomna.",
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'whitelist-desc' => 'Korlátozott felhasználók hozzáférési jogosultságainak szerkesztése',
+	'whitelistedit' => 'Engedélylista-hozzáférés szerkesztő',
+	'whitelist' => 'Engedélylista-lapok',
+	'mywhitelistpages' => 'Lapjaim',
+	'whitelistfor' => '<center>Aktuális információk ehhez: <b>$1</b></center>',
+	'whitelisttablemodify' => 'Módosítás',
+	'whitelisttablemodifyall' => 'Mind',
 	'whitelisttablemodifynone' => 'Nincs',
+	'whitelisttablepage' => 'Wiki lap',
+	'whitelisttabletype' => 'Hozzáférés típusa',
+	'whitelisttableexpires' => 'Lejárat',
+	'whitelisttablemodby' => 'Utoljára módosította:',
+	'whitelisttablemodon' => 'Utolsó módosítás dátuma:',
+	'whitelisttableedit' => 'Szerkesztés',
+	'whitelisttableview' => 'Megjelenítés',
+	'whitelisttablenewdate' => 'Új dátum:',
+	'whitelisttablechangedate' => 'Lejárat dátumának megváltoztatása',
+	'whitelisttablesetedit' => 'Beállítás szerkesztésre',
+	'whitelisttablesetview' => 'Beállítás megtekintésre',
+	'whitelisttableremove' => 'Eltávolítás',
+	'whitelistnewpagesfor' => 'Új lapok hozzáadása <b>$1</b> fehérlistájához<br />
+Használd a * vagy % jeleket joker karakterként',
+	'whitelistnewtabledate' => 'Lejárat dátuma:',
+	'whitelistnewtableedit' => 'Beállítás szerkesztésre',
+	'whitelistnewtableview' => 'Beállítás megtekintésre',
+	'whitelistnowhitelistedusers' => 'Nincsenek felhasználók a(z) „{{MediaWiki:Group-restricted}}” csoportban.
+[[Special:UserRights|Felhasználókat kell adnod a csoporthoz]], mielőtt lapokat adhatnál a felhasználó engedélylistájához.',
+	'whitelistnewtableprocess' => 'Folyamat',
+	'whitelistnewtablereview' => 'Ellenőrzés',
+	'whitelistselectrestricted' => '== Korlátozott felhasználó nevének kiválasztása ==',
+	'whitelistpagelist' => '$1 {{SITENAME}}-lapjai',
+	'whitelistnocalendar' => "<font color='red' size=3>Úgy tűnik, hogy a [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics] – ami ennek a kiterjesztésnek előfeltétele – nincs megfelelően telepítve!</font>",
+	'whitelistoverview' => '== A(z) $1 lappal kapcsolatos változtatások áttekintése ==',
+	'whitelistoverviewcd' => "* Dátum megváltoztatása '''$1''' értékre a(z) [[:$2|$2]] laphoz",
+	'whitelistoverviewsa' => "* Hozzáférés beállítása '''$1''' értékre a(z) [[:$2|$2]] laphoz",
+	'whitelistoverviewrm' => '* Hozzáférés eltávolítása a(z) [[:$1|$1]] laptól',
+	'whitelistoverviewna' => "* [[:$1|$1]] hozzáadása az engedélylistához '''$2''' engedéllyel és '''$3''' lejárati dátummal",
+	'whitelistrequest' => 'Hozzáférés kérése több laphoz',
+	'whitelistrequestmsg' => '$1 hozzáférést kért a következő {{PLURAL:$3|laphoz|lapokhoz}}:
+
+$2',
+	'whitelistrequestconf' => 'A kérelem az új lapok iránt el lett küldve $1 részére',
+	'whitelistnonrestricted' => "'''$1''' nem korlátozott felhasználó.
+Ez a lap csak korlátozott felhasználókra vonatkozik",
+	'whitelistnever' => 'soha',
+	'whitelistnummatches' => '  – {{PLURAL:$1|egy|$1}} találat',
+	'right-editwhitelist' => 'létező felhasználók engedélylistájának módosítása',
+	'right-restricttowhitelist' => 'csak a fehérlistán szereplő lapok megtekintése és szerkesztése',
+	'action-editwhitelist' => 'létező felhasználók engedélylistájának módosítása',
+	'action-restricttowhitelist' => 'csak az engedélylistán szereplő lapok megjelenítése és szerkesztése',
+	'group-restricted' => 'Korlátozott felhasználók',
+	'group-restricted-member' => 'Korlátozott felhasználó',
+	'group-manager' => 'kezelők',
+	'group-manager-member' => 'kezelő',
 );
 
 /** Interlingua (Interlingua)
@@ -1439,11 +1668,67 @@ Iste pagina es solmente applicabile al usatores restringite",
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author Irwangatot
+ * @author IvanLanin
+ * @author Kandar
  * @author Rex
  */
 $messages['id'] = array(
+	'whitelist-desc' => 'Sunting hak akses untuk pengguna terbatas',
+	'whitelistedit' => 'Penyunting hak akses daftar putih',
+	'whitelist' => 'Halaman daftar putih',
+	'mywhitelistpages' => 'Halaman saya',
+	'whitelistfor' => '<center>Informasi terkini untuk <b>$1</b></center>',
+	'whitelisttablemodify' => 'Ubah',
 	'whitelisttablemodifyall' => 'Semua',
 	'whitelisttablemodifynone' => 'Tidak ada',
+	'whitelisttablepage' => 'Halaman wiki',
+	'whitelisttabletype' => 'Tipe akses',
+	'whitelisttableexpires' => 'Kadaluwarsa pada',
+	'whitelisttablemodby' => 'Terakhir diubah oleh',
+	'whitelisttablemodon' => 'Terakhir diubah pada',
+	'whitelisttableedit' => 'Sunting',
+	'whitelisttableview' => 'Lihat',
+	'whitelisttablenewdate' => 'Tanggal baru:',
+	'whitelisttablechangedate' => 'Ubah tanggal kadaluarsa',
+	'whitelisttablesetedit' => 'Set ke sunting',
+	'whitelisttablesetview' => 'Set ke lihat',
+	'whitelisttableremove' => 'Hapus',
+	'whitelistnewpagesfor' => 'Tambahkan halaman baru untuk daftar putih <b>$1</b><br />
+Gunakan karakter kartu liar * atau %',
+	'whitelistnewtabledate' => 'Tanggal kadaluarsa:',
+	'whitelistnewtableedit' => 'Set ke sunting',
+	'whitelistnewtableview' => 'Set ke lihat',
+	'whitelistnowhitelistedusers' => 'Tidak ada pengguna dalam kelompok "{{MediaWiki:Group-restricted}}".
+Anda harus [[Special:UserRights|menambahkan pengguna dalam kelompok itu]] sebelum Anda dapat menambahkan halaman ke daftar putih seorang pengguna.',
+	'whitelistnewtableprocess' => 'Proses',
+	'whitelistnewtablereview' => 'Tinjau',
+	'whitelistselectrestricted' => '== Pilih nama pengguna yang dibatasi ==',
+	'whitelistpagelist' => 'Halaman {{SITENAME}} untuk $1',
+	'whitelistnocalendar' => "<font color='red' size=3>Tampaknya [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics], prasyarat bagi ekstensi ini tidak terinstal dengan benar!</font>",
+	'whitelistoverview' => '== Tinjauan perubahan untuk $1 ==',
+	'whitelistoverviewcd' => "* Perubahan tanggal ke '''$1''' untuk [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Mengatur akses terhadap '''$1''' untuk [[:$2|$2]]",
+	'whitelistoverviewrm' => '* Menghapus akses terhadap [[:$1|$1]]',
+	'whitelistoverviewna' => "* Menambahkan [[:$1|$1]] ke daftar putih dengan akses '''$2''' dan '''$3'''",
+	'whitelistrequest' => 'Minta akses ke lebih banyak halaman',
+	'whitelistrequestmsg' => '$1 telah meminta akses ke {{PLURAL:$3|halaman|halaman}} berikut:
+
+$2',
+	'whitelistrequestconf' => 'Permintaan halaman baru telah dikirim ke $1',
+	'whitelistnonrestricted' => "Pengguna '''$1''' bukanlah pengguna yang dibatasi.
+Halaman ini hanya dapat diterapkan pada pengguna yang dibatasi",
+	'whitelistnever' => 'tidak pernah',
+	'whitelistnummatches' => '- {{PLURAL:$1|yang cocok|yang cocok}}',
+	'right-editwhitelist' => 'Ubah daftar putih untuk pengguna yang ada',
+	'right-restricttowhitelist' => 'Menyunting dan menampilkan halaman pada daftar putih saja',
+	'action-editwhitelist' => 'mengubah daftar putih untuk pengguna yang ada',
+	'action-restricttowhitelist' => 'menyunting dan menampilkan halaman pada daftar putih saja',
+	'group-restricted' => 'Kelompok pengguna terbatas',
+	'group-restricted-member' => 'Pengguna terbatas',
+	'group-manager' => 'Kelompok manajer',
+	'group-manager-member' => 'Manajer',
 );
 
 /** Icelandic (Íslenska)
@@ -1455,12 +1740,55 @@ $messages['is'] = array(
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Marco 27
+ * @author Melos
  */
 $messages['it'] = array(
+	'whitelistedit' => 'Editor della whitelist di accesso',
+	'whitelistfor' => '<center>Informazioni correnti per <b>$1</b> </center>',
+	'whitelisttablemodify' => 'Modifica',
+	'whitelisttablemodifyall' => 'Tutti',
+	'whitelisttablemodifynone' => 'Nessuno',
+	'whitelisttablepage' => 'Pagina',
+	'whitelisttabletype' => 'Livello di accesso',
+	'whitelisttableexpires' => 'Scade il',
+	'whitelisttablemodby' => 'Ultima modifica di',
+	'whitelisttablemodon' => 'Ultima modifica il',
 	'whitelisttableedit' => 'Modifica',
+	'whitelisttableview' => 'Visualizzazione',
+	'whitelisttablenewdate' => 'Nuova data:',
+	'whitelisttablechangedate' => 'Cambia data di scadenza',
+	'whitelisttablesetedit' => 'Imposta per la modifica',
+	'whitelisttablesetview' => 'Imposta per la visualizzazione',
+	'whitelisttableremove' => 'Rimuovi',
+	'whitelistnewpagesfor' => 'Aggiungi nuove pagine alla whitelist di <b>$1</b><br />
+Utilizza * o % come carattere jolly',
+	'whitelistnewtabledate' => 'Data di scadenza:',
+	'whitelistnewtableedit' => 'Imposta per la modifica',
+	'whitelistnewtableview' => 'Imposta per la visualizzazione',
+	'whitelistnowhitelistedusers' => 'Non ci sono utenti nel gruppo "{{MediaWiki:Group-restricted}}".
+Devi [[Special:UserRights|aggiungere utenti al gruppo]] prima di poter aggiungere pagine alla whitelist di un utente.',
+	'whitelistnewtablereview' => 'Cambia',
+	'whitelistoverview' => '== Descrizione delle modifiche per $1 ==',
+	'whitelistoverviewcd' => "* Modificata la data di scadenza a '''$1''' per [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Impostato l'accesso a '''$1''' per [[:$2|$2]]",
+	'whitelistoverviewrm' => "* Rimosso l'accesso a [[:$1|$1]]",
+	'whitelistoverviewna' => "* Aggiunta la pagina [[:$1|$1]] con livello di accesso '''$2''' e data di scadenza '''$3''' alla whitelist",
+	'whitelistrequest' => "Richiedi l'accesso ad altre pagine",
+	'whitelistrequestmsg' => "$1 ha richiesto l'accesso {{PLURAL:$3|alla seguente pagina|alle seguenti pagine}}:
+
+$2",
+	'whitelistrequestconf' => 'La richiesta di accesso a nuove pagine è stata inviata a $1',
+	'whitelistnever' => 'mai',
+	'whitelistnummatches' => '  - {{PLURAL:$1|una corrispondenza|$1 corrispondenze}}',
+	'right-editwhitelist' => 'Modifica la whitelist per gli utenti esistenti',
+	'right-restricttowhitelist' => 'Modifica e visualizza solo le pagine presenti nella whitelist',
+	'action-editwhitelist' => 'modificare la whitelist per gli utenti esistenti',
+	'action-restricttowhitelist' => 'modificare e visualizzare solo le pagine presenti nella whitelist',
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
  */
@@ -1502,13 +1830,13 @@ $messages['ja'] = array(
 	'whitelistoverviewrm' => '* [[:$1|$1]] へのアクセスを除去',
 	'whitelistoverviewna' => "* アクセス権限を'''$2'''し、期限切れを '''$3''' として、[[:$1|$1]]をホワイトリストに追加",
 	'whitelistrequest' => 'ページへのアクセス追加を要望',
-	'whitelistrequestmsg' => '$1 は次のページへのアクセスを求めました:
+	'whitelistrequestmsg' => '$1 は次の{{PLURAL:$3|ページ}}へのアクセスを求めました:
 
 $2',
 	'whitelistrequestconf' => '新しいページの要望は $1 に送られました',
 	'whitelistnonrestricted' => "利用者 '''$1''' は制限付利用者ではありません。このページは制限付利用者にのみ適用可能です",
 	'whitelistnever' => '無期限',
-	'whitelistnummatches' => ' - $1件の一致',
+	'whitelistnummatches' => ' - $1{{PLURAL:$1|件}}の一致',
 	'right-editwhitelist' => '既存利用者用のホワイトリストを変更する',
 	'right-restricttowhitelist' => 'ホワイトリストにあるページのみを編集および閲覧する',
 	'action-editwhitelist' => '既存利用者用ホワイトリストの変更',
@@ -1746,10 +2074,13 @@ $messages['lb'] = array(
 	'whitelistnewtabledate' => 'Oflafdatum:',
 	'whitelistnewtableedit' => 'Ännerungsparameter',
 	'whitelistnewtableview' => 'Weisen aschalten',
+	'whitelistnowhitelistedusers' => 'Et gëtt keng Benotzer am Grupp "{{MediaWiki:Group-restricted}}".
+Dir musst [[Special:UserRights|Benotzer an de Grupp derbäisetzen]] ier Dir Säiten anengem Benotzer seng white list derbäisetze kënnt.',
 	'whitelistnewtableprocess' => 'Verschaffen',
 	'whitelistnewtablereview' => 'Nokucken',
 	'whitelistselectrestricted' => '== Limitéierte Benotzernumm wielen ==',
 	'whitelistpagelist' => 'Säite vu(n) {{SITENAME}} fir $1',
+	'whitelistnocalendar' => "<font color='red' size=3>Et gesäit aus wéi wann d'[http://www.mediawiki.org/wiki/Extension:Usage_Statistics Erweiderung:Benotzerstatistiken], eng Viraussetzung fir dës Erweiderung, net richteg instqaléiert ass!</font>",
 	'whitelistoverview' => '== Iwwersiicht vun den Ännerunge vun $1 ==',
 	'whitelistoverviewcd' => "* Datum vun '''$1''' ännere fir [[:$2|$2]]",
 	'whitelistoverviewsa' => "* Autorisatioun vum '''$1''' op [[:$2|$2]] astellen",
@@ -1780,9 +2111,13 @@ $messages['mhr'] = array(
 );
 
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
+	'whitelist-desc' => 'Менување на дозволите за пристап на ограничени корисници',
+	'whitelistedit' => 'Уредник на пристап на белата листа',
+	'whitelist' => 'Страници на белата листа',
 	'mywhitelistpages' => 'Мои страници',
 	'whitelistfor' => '<center>Моментални информации за <b>$1</b></center>',
 	'whitelisttablemodify' => 'Измени',
@@ -1797,9 +2132,47 @@ $messages['mk'] = array(
 	'whitelisttableview' => 'Преглед',
 	'whitelisttablenewdate' => 'Нов датум:',
 	'whitelisttablechangedate' => 'Промени датум на истекување',
+	'whitelisttablesetedit' => 'Постави за уредување',
+	'whitelisttablesetview' => 'Постави за преглед',
+	'whitelisttableremove' => 'Отстрани',
+	'whitelistnewpagesfor' => "Додај нови страници во белата листа<b>$1's</b><br />
+Користете  * или % како џокер",
+	'whitelistnewtabledate' => 'Истекува:',
+	'whitelistnewtableedit' => 'Постави за уредување',
+	'whitelistnewtableview' => 'Постави за преглед',
+	'whitelistnowhitelistedusers' => 'Нема корисници во групата „{{MediaWiki:Group-restricted}}“.
+Пред да можете да додавате страници кон белата листа на корисникот ќе морате да [[Special:UserRights|додадете корисници во групата]].',
+	'whitelistnewtableprocess' => 'Процес',
+	'whitelistnewtablereview' => 'Проверка',
+	'whitelistselectrestricted' => '== Одберете корисничко име ==',
+	'whitelistpagelist' => 'Страници за $1 на {{SITENAME}}',
+	'whitelistnocalendar' => "<font color='red' size=3>Изгледа дека [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics] не е инсталирано како што треба, а од него зависи проширувањето.</font>",
+	'whitelistoverview' => '== Преглед на промени за $1 ==',
+	'whitelistoverviewcd' => "* Промена на датум на '''$1''' за [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Додели пристап на '''$1''' за [[:$2|$2]]",
+	'whitelistoverviewrm' => '* Одземи пристап на [[:$1|$1]]',
+	'whitelistoverviewna' => "* Го додавам корисникот [[:$1|$1]] на белста листа со пристап '''$2''' и датум на истекување '''$3'''",
+	'whitelistrequest' => 'Побарај пристап до повеќе страници',
+	'whitelistrequestmsg' => '$1 побара пристап до {{PLURAL:$3|следнава страница|следниве страници}}:
+
+$2',
+	'whitelistrequestconf' => 'Барањето за нови страници е испратено на $1',
+	'whitelistnonrestricted' => "Корисникот '''$1''' не е ограничен корисник.
+Оваа страница важи само за ограничени корисници",
+	'whitelistnever' => 'никогаш',
+	'whitelistnummatches' => '- {{PLURAL:$1|едно совпаѓање|$1 совпаѓања}}',
+	'right-editwhitelist' => 'Менување на белата листа за постоечки корисници',
+	'right-restricttowhitelist' => 'Уредување и прегледување страници само на белата листа',
+	'action-editwhitelist' => 'менување на белата листа за постоечки корисници',
+	'action-restricttowhitelist' => 'уредувај и прегледувај само страници на белата листа',
+	'group-restricted' => 'Ограничени корисници',
+	'group-restricted-member' => 'Ограничен корисник',
+	'group-manager' => 'Раководители',
+	'group-manager-member' => 'Раководител',
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
@@ -1825,7 +2198,7 @@ $messages['ml'] = array(
 	'whitelistnewtablereview' => 'സം‌ശോധനം',
 	'whitelistpagelist' => '{{SITENAME}} സം‌രംഭത്തില്‍ $1ന്റെ താളുകള്‍',
 	'whitelistnever' => 'ഒരിക്കലും അരുത്:',
-	'whitelistnummatches' => ' - $1 യോജിച്ച ഫലങ്ങള്‍',
+	'whitelistnummatches' => '- {{PLURAL:$1|ഒരു പൊരുത്തം|$1 പൊരുത്തങ്ങൾ}}',
 );
 
 /** Marathi (मराठी)
@@ -1861,12 +2234,27 @@ $2',
 	'whitelistnummatches' => ' - $1 जुळण्या',
 );
 
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'mywhitelistpages' => 'Il-paġni tiegħi',
+	'whitelisttablemodifyall' => 'Kollha',
+	'whitelisttablepage' => 'Paġna wiki',
+	'whitelisttablenewdate' => 'Data ġdida:',
+	'whitelistnewtableprocess' => 'Proċess',
+	'whitelistnever' => 'qatt',
+	'group-restricted' => 'Utenti ristretti',
+	'group-restricted-member' => 'Utent ristrett',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
 	'mywhitelistpages' => 'Монь лопан',
 	'whitelisttablemodifyall' => 'Весе',
+	'whitelisttablepage' => 'Вики лопа',
 	'whitelisttableremove' => 'Нардык',
 	'whitelistnever' => 'зярдояк',
 );
@@ -2030,7 +2418,9 @@ Denne sida kan berre nyttast på avgrensa brukarar.",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'whitelist-desc' => 'Redigering av tilgangsrettigheter for begrensede brukere',
@@ -2057,6 +2447,8 @@ $messages['no'] = array(
 	'whitelistnewtabledate' => 'Utgangsdato:',
 	'whitelistnewtableedit' => 'Sett til redigering',
 	'whitelistnewtableview' => 'Sett til visning',
+	'whitelistnowhitelistedusers' => 'Det finnes ingen brukere i gruppen «{{MediaWiki:Group-restricted}}».
+Du må [[Special:UserRights|legge brukere til gruppen]] før du kan legge til sider til en brukers hvitliste.',
 	'whitelistnewtableprocess' => 'Prosess',
 	'whitelistnewtablereview' => 'Gå gjennom',
 	'whitelistselectrestricted' => '== ANgi navn på begrenset bruker ==',
@@ -2068,7 +2460,7 @@ $messages['no'] = array(
 	'whitelistoverviewrm' => '* Fjerner tilgang til [[:$1|$1]]',
 	'whitelistoverviewna' => "* Legger til [[:$1|$1]] til hviteliste med tilgang '''$2''' og utløpsdato '''$3'''.",
 	'whitelistrequest' => 'Etterspør tilgang til flere sider',
-	'whitelistrequestmsg' => '$1 har etterspurt tilgang til følgende sider:
+	'whitelistrequestmsg' => '$1 har etterspurt tilgang til følgende {{PLURAL:$3|side|sider}}:
 
 $2',
 	'whitelistrequestconf' => 'Etterspørsel om nye sider har blitt sendt til $1',
@@ -2076,6 +2468,14 @@ $2',
 Denne siden kan kun brukes på begrensede brukere.",
 	'whitelistnever' => 'aldri',
 	'whitelistnummatches' => ' - $1 {{PLURAL:$1|treff}}',
+	'right-editwhitelist' => 'Endre hvitlisten for eksisterende brukere',
+	'right-restricttowhitelist' => 'Endre og vis sider som bare er på hvitlisten',
+	'action-editwhitelist' => 'endre hvitlisten for eksisterende brukere',
+	'action-restricttowhitelist' => 'endre og vis sider som bare er på hvitlisten',
+	'group-restricted' => 'Begrensede brukere',
+	'group-restricted-member' => 'Begrenset bruker',
+	'group-manager' => 'Håndterere',
+	'group-manager-member' => 'Håndterer',
 );
 
 /** Occitan (Occitan)
@@ -2160,6 +2560,18 @@ $messages['pa'] = array(
 	'whitelisttableview' => 'ਵੇਖੋ',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'whitelisttablemodify' => 'Tscheensche',
+	'whitelisttablemodifyall' => 'All',
+	'whitelisttablemodifynone' => 'Nix tscheensche',
+	'whitelisttablepage' => 'Blatt',
+	'whitelisttableedit' => 'Ennere',
+	'whitelistnever' => 'nie net',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Leinad
@@ -2224,6 +2636,67 @@ Ta strona ma zastosowanie tylko do użytkowników na których zostały narzucone
 	'group-manager-member' => 'Zarządca',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'whitelist-desc' => "Modìfica ij përmess d'intrada dj'utent a fonsionalità limità",
+	'whitelistedit' => "Modificator dla lista bianca dj'intrade",
+	'whitelist' => 'Pàgine dle liste bianche',
+	'mywhitelistpages' => 'Mie pàgine',
+	'whitelistfor' => '<center>Anformassion corente për <b>$1</b></center>',
+	'whitelisttablemodify' => 'Modifiché',
+	'whitelisttablemodifyall' => 'Tut',
+	'whitelisttablemodifynone' => 'Gnun',
+	'whitelisttablepage' => 'Pàgina wiki',
+	'whitelisttabletype' => "Tipo d'intrada",
+	'whitelisttableexpires' => 'A finiss ai',
+	'whitelisttablemodby' => "Modificà l'ùltima vira da",
+	'whitelisttablemodon' => "Modificà l'ùltima vira ai",
+	'whitelisttableedit' => 'Modifiché',
+	'whitelisttableview' => 'Vëdde',
+	'whitelisttablenewdate' => 'Neuva dàita:',
+	'whitelisttablechangedate' => 'Cangé la dàita dë scadensa',
+	'whitelisttablesetedit' => 'Ativé la modificassion',
+	'whitelisttablesetview' => 'Ativé la visualisassion',
+	'whitelisttableremove' => 'Gavé',
+	'whitelistnewpagesfor' => "Gionta ëd neuve pàgine a la lista bianca ëd <b>$1</b><br />
+Dovré o bin ël caràter * opura % tanme caràter d'indefinission (wildcard)",
+	'whitelistnewtabledate' => 'Dàita dë scadensa:',
+	'whitelistnewtableedit' => 'Ativé la modìfica',
+	'whitelistnewtableview' => 'Ativé la visualisassion',
+	'whitelistnowhitelistedusers' => "A-i é gnun utent ant la partìa « {{MediaWiki:Group-restricted}} ».
+A dev [[Special:UserRights|gionté j'utent ant la partìa]] prima ch'a peula gionté dle pàgine a la lista bianca ëd n'utent.",
+	'whitelistnewtableprocess' => 'Traté',
+	'whitelistnewtablereview' => 'Lese torna',
+	'whitelistselectrestricted' => "== Selessioné un nòm d'utent a acess limità ==",
+	'whitelistpagelist' => 'Pàgine ëd {{SITENAME}} për $1',
+	'whitelistnocalendar' => "<font color='red' size=3>A smija che [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics], un prerequisì për costa estension, a sia pa stàit anstalà për da bin!</font>",
+	'whitelistoverview' => '== Descrission general dle modìfiche për $1 ==',
+	'whitelistoverviewcd' => "* Modìfica dla dàita a '''$1''' për [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Configurassion ëd l'acess a '''$1''' për [[:$2|$2]]",
+	'whitelistoverviewrm' => "* Gaveje l'acess a [[:$1|$1]]",
+	'whitelistoverviewna' => "* Gionta ëd [[:$1|$1]] a la lista bianca con ij drit ëd '''$2''' e dàita dë scadensa '''$3'''",
+	'whitelistrequest' => "Ciamé l'intrada a d'àutre pàgine",
+	'whitelistrequestmsg' => "$1 a l'ha ciamà l'acess a {{PLURAL:$3|la pàgina|le pàgine}} sì-dapress:
+
+$2",
+	'whitelistrequestconf' => "N'arcesta për na pàgina neuva a va mandà a $1",
+	'whitelistnonrestricted' => "L'utent '''$1''' a l'é pa n'utent selessionà.
+Sta pàginà-sì a l'é mach disponìbil a utent selessionà.",
+	'whitelistnever' => 'mai',
+	'whitelistnummatches' => '- {{PLURAL:$1|un-a ocorensa|$1 ocorense}}',
+	'right-editwhitelist' => "Modìfica la lista bianca për j'utent esistent",
+	'right-restricttowhitelist' => 'Modìfica e varda mach pàgine an sla lista bianca',
+	'action-editwhitelist' => 'modìfica la lista bianca për utent esistent',
+	'action-restricttowhitelist' => 'modìfica e varda pàgine an sla lista bianca',
+	'group-restricted' => 'Utent selessionà',
+	'group-restricted-member' => 'Utent selessionà',
+	'group-manager' => 'Mansé',
+	'group-manager-member' => 'Mansé',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -2244,6 +2717,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author Waldir
@@ -2270,16 +2744,16 @@ $messages['pt'] = array(
 	'whitelisttablesetview' => 'Activar visualização',
 	'whitelisttableremove' => 'Remover',
 	'whitelistnewpagesfor' => 'Adicione novas páginas à lista branca de <b>$1</b><br />
-Use * ou % como carácter polivalente',
+Use * ou % como caracteres de substituição',
 	'whitelistnewtabledate' => 'Validade:',
 	'whitelistnewtableedit' => 'Activar edição',
 	'whitelistnewtableview' => 'Activar visualização',
 	'whitelistnowhitelistedusers' => 'Não há utilizadores no grupo "{{MediaWiki:Group-restricted}}".
-Você tem de [[Special:UserRights|adicionar utilizadores ao grupo]] antes de poder adicionar páginas à lista branca de um utilizador.',
+Tem de [[Special:UserRights|adicionar utilizadores ao grupo]] antes de poder adicionar páginas à lista branca de um utilizador.',
 	'whitelistnewtableprocess' => 'Processar',
 	'whitelistnewtablereview' => 'Rever',
 	'whitelistselectrestricted' => '== Selecionar nome de utilizador restrito ==',
-	'whitelistpagelist' => 'Página de {{SITENAME}} para $1',
+	'whitelistpagelist' => 'Páginas da {{SITENAME}} para $1',
 	'whitelistnocalendar' => "<font color='red' size=3>Parece que [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics], um pré-requisito para esta extensão, não foi instalada devidamente!</font>",
 	'whitelistoverview' => '== Resumo das alterações a $1 ==',
 	'whitelistoverviewcd' => "* A alterar data de [[:$2|$2]] para '''$1'''",
@@ -2375,12 +2849,14 @@ $messages['rif'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
  */
 $messages['ro'] = array(
 	'mywhitelistpages' => 'Paginile mele',
 	'whitelisttablemodify' => 'Modifică',
+	'whitelisttablemodifyall' => 'Tot',
 	'whitelisttablemodifynone' => 'Nimic',
 	'whitelisttablepage' => 'Pagină wiki',
 	'whitelisttabletype' => 'Tip de acces',
@@ -2388,8 +2864,18 @@ $messages['ro'] = array(
 	'whitelisttablemodby' => 'Ultima dată modificat de',
 	'whitelisttablemodon' => 'Ultima dată modificat la',
 	'whitelisttableedit' => 'Modifică',
+	'whitelisttableview' => 'Afişează',
 	'whitelisttablenewdate' => 'Dată nouă:',
+	'whitelisttablechangedate' => 'Schimbare dată de expirare',
+	'whitelisttablesetedit' => 'Activare modificare',
+	'whitelisttablesetview' => 'Activare vizualizare',
 	'whitelisttableremove' => 'Elimină',
+	'whitelistnewtabledate' => 'Data de expirare:',
+	'whitelistnewtableedit' => 'Activare modificare',
+	'whitelistnewtableview' => 'Activare vizualizare',
+	'whitelistnewtableprocess' => 'Proces',
+	'whitelistnewtablereview' => 'Recenzie',
+	'whitelistpagelist' => 'Pagini {{SITENAME}} pentru $1',
 	'whitelistrequestmsg' => '$1 a cerut acces la {{PLURAL:$3|următoarea pagină|următoarele pagini}}:
 
 $2',
@@ -2399,6 +2885,8 @@ Această pagină este aplicabilă doar utilizatorilor restricţionaţi",
 	'whitelistnever' => 'niciodată',
 	'group-restricted' => 'Utilizatori restricţionaţi',
 	'group-restricted-member' => 'Utilizator restricţionat',
+	'group-manager' => 'Manageri',
+	'group-manager-member' => 'Manager',
 );
 
 /** Tarandíne (Tarandíne)
@@ -2429,6 +2917,7 @@ $messages['roa-tara'] = array(
  * @author Aleksandrit
  * @author Ferrer
  * @author Innv
+ * @author Kaganer
  * @author Rubin
  * @author Александр Сигачёв
  */
@@ -2459,7 +2948,7 @@ $messages['ru'] = array(
 	'whitelistnewtableedit' => 'Установить для редактирования',
 	'whitelistnewtableview' => 'Установить для просмотра',
 	'whitelistnowhitelistedusers' => 'В группе «{{MediaWiki:Group-restricted}}» нет участников.
-Вы должны [[Special:UserRights|добавить пользователей в группу]], прежде чем вы сможете добавить страницы участников в белый список.',
+Прежде чем вы сможете добавить страницы участников в белый список, вы должны [[Special:UserRights|добавить участников в эту группу]].',
 	'whitelistnewtableprocess' => 'Процесс',
 	'whitelistnewtablereview' => 'Обзор',
 	'whitelistselectrestricted' => '== Выберите имя участника ==',
@@ -2487,6 +2976,66 @@ $2',
 	'group-restricted-member' => 'Участник, ограниченный в правах',
 	'group-manager' => 'Управляющие',
 	'group-manager-member' => 'управляющий',
+);
+
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'whitelist-desc' => 'සීමා කරනු ලැබ ඇති පරිශීලකයන්ගේ ප්‍රවේශ අවසරය සංස්කරණය කරන්න',
+	'whitelistedit' => 'ධවල ලැයිස්තු ප්‍රවේශ සංස්කාරක',
+	'whitelist' => 'ධවල ලැයිස්තු පිටු',
+	'mywhitelistpages' => 'මගේ පිටු',
+	'whitelistfor' => '<center>දැනට <b>$1</b></center>සඳහා පවතින තොරතුරු',
+	'whitelisttablemodify' => 'විකරණය',
+	'whitelisttablemodifyall' => 'සියල්ලම',
+	'whitelisttablemodifynone' => 'කිසිවක් නැත',
+	'whitelisttablepage' => 'විකි පිටුව',
+	'whitelisttabletype' => 'ප්‍රවේශ වර්ගය',
+	'whitelisttableexpires' => 'කල් ඉකුත් වන්නේ',
+	'whitelisttablemodby' => 'අවසන් වරට විකරණය කරන ලද්දේ',
+	'whitelisttablemodon' => 'අවසන් වරට විකරණය කරනු ලැබුවේ',
+	'whitelisttableedit' => 'සංස්කරණය',
+	'whitelisttableview' => 'දර්ශනය',
+	'whitelisttablenewdate' => 'නව දිනය:',
+	'whitelisttablechangedate' => 'කල් ඉකුත්වීමේ දිනය වෙනස් කරන්න',
+	'whitelisttablesetedit' => 'සංස්කරණය කිරීමට සකස් කරන්න',
+	'whitelisttablesetview' => 'දර්ශනය කිරීමට සකසන්න',
+	'whitelisttableremove' => 'ඉවත් කරන්න',
+	'whitelistnewpagesfor' => " <b>$1's</b>ධවල ලැයිස්තුව<br />ට නව පිටු එකතු කරන්න
+ * හෝ % ආදේශක ලකුණ ලෙස භාවිතා කරන්න",
+	'whitelistnewtabledate' => 'කල් ඉකුත්වීමේ දිනය:',
+	'whitelistnewtableedit' => 'සංස්කරණය කිරීමට සකසන්න',
+	'whitelistnewtableview' => 'දර්ශනය කිරීමට සකසන්න',
+	'whitelistnowhitelistedusers' => ' "{{MediaWiki:Group-restricted}}" හි පරිශීලකයන් නොමැත.
+ඔබ පරිශීලකයෙකුගේ ධවල ලැයිස්තුවට පිටු එකතු කිරීමට පෙර [[Special:UserRights|කණ්ඩායමට පරිශීලකයන් එකතු කිරීම]] ට ඔබට සිදුවේ.',
+	'whitelistnewtableprocess' => 'ක්‍රියාවලිය',
+	'whitelistnewtablereview' => 'විවරණය',
+	'whitelistselectrestricted' => '== සීමා කරනු ලැබූ පරිශීලක නාම තෝරන්න ==',
+	'whitelistpagelist' => '$1 සඳහා {{SITENAME}}පිටු',
+	'whitelistnocalendar' => "<font color='red' size=3>මෙම දිඟුවට පූර්ව අවශ්‍යතාවයක් වූ  [http://www.mediawiki.org/wiki/Extension:Usage_Statistics Extension:UsageStatistics], නිවැරදිව පිහිටුවා නැති ලෙසින් පෙනේ!</font>",
+	'whitelistoverview' => '==  $1 සඳහා කළ වෙනස් කිරීම්වල දළ විශපල්ෂණය==',
+	'whitelistoverviewcd' => "*   [[:$2|$2]] සඳහා දිනය '''$1'''ට මාරු කිරීම",
+	'whitelistoverviewsa' => "*  [[:$2|$2]] සඳහා '''$1''' ට ප්‍රවේශය සිටුවීම",
+	'whitelistoverviewrm' => '*  [[:$1|$1]]ට ප්‍රවේශය ඉවත් කිරීම',
+	'whitelistoverviewna' => "*    '''$2''' සහ  '''$3''' කල් ඉකුත්වීමේ දිනය   [[:$1|$1]] ප්‍රවේශය සමඟ ධවල ලැයිස්තුවට එකතු කිරීම",
+	'whitelistrequest' => 'වැඩි පිටු ගණනකට ප්‍ර‍වේශය ඉල්ලීම',
+	'whitelistrequestmsg' => 'පහත  {{PLURAL:$3|පිටුව|පිටු}} සඳහා ප්‍රවේශවීමට $1 ක් ඉල්ලුම් කර ඇත:
+
+$2',
+	'whitelistrequestconf' => 'නව පිටු සඳහා වූ ඉල්ලීම $1 වෙත යවන ලදී',
+	'whitelistnonrestricted' => "'''$1'''  සීමා කරනු ලැබූ පරිශීලකයෙකු නොවේ.
+මෙම පිටුව අදාළ වන්නේ සීමා කරනු ලැබූ පරිශීලකයින්ට පමණි.",
+	'whitelistnever' => 'කවදාවත් නෑ',
+	'whitelistnummatches' => '  - {{PLURAL:$1|ගැළපීම් එකයි|$1 ගැළපීම්}}',
+	'right-editwhitelist' => 'පවතින පරිශීලකයන් සඳහා ධවල ලැයිස්තුව විකරණය',
+	'right-restricttowhitelist' => 'ධවල ලැයිස්තුවේ ඇති පිටු පමණක් පෙන්වීම හා සංස්කරණය',
+	'action-editwhitelist' => 'සිටින පරිශීලකයන් සඳහා ධවල ලැයිස්තුව විකරණය කරන්න',
+	'action-restricttowhitelist' => 'ධවල ලැයිස්තුවේ ඇති පිටු පමණක් පෙන්වීම හා සංස්කරණය',
+	'group-restricted' => 'සීමා කරනු ලැබූ පරිශීලකයින්',
+	'group-restricted-member' => 'සීමා කරනු ලැබූ පරිශීලකයින්',
+	'group-manager' => 'කළමනාකරුවන්',
+	'group-manager-member' => 'කළමනාකරු',
 );
 
 /** Slovak (Slovenčina)
@@ -2549,13 +3098,65 @@ Táto stránka sa týka iba obmedzneých používateľov.",
 	'group-manager-member' => 'Správca',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
+	'mywhitelistpages' => 'Моје стране',
+	'whitelisttablemodifyall' => 'Све',
 	'whitelisttablemodifynone' => 'Нема',
+	'whitelisttablepage' => 'Вики чланак',
+	'whitelisttabletype' => 'Тип приступа',
+	'whitelisttableexpires' => 'Истиче на',
+	'whitelisttablemodby' => 'Последњу измену направио',
+	'whitelisttablemodon' => 'Последња измена на',
 	'whitelisttableedit' => 'Уреди',
+	'whitelisttableview' => 'Преглед',
+	'whitelisttablenewdate' => 'Нови датум:',
+	'whitelisttablechangedate' => 'Промени датум истека',
 	'whitelisttableremove' => 'Уклони',
+	'whitelistnewtabledate' => 'Датум истека:',
+	'whitelistoverview' => '== Преглед измена за $1 ==',
+	'whitelistoverviewcd' => "* Мењање датума на '''$1''' за [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Постављање приступа на '''$1''' за [:$2|$2]]",
+	'whitelistoverviewrm' => '* Уклањање приступа за [[:$1|$1]]',
+	'whitelistrequest' => 'Захтевање приступа за више страна',
+	'whitelistrequestmsg' => '$1 је захтевао приступ {{PLURAL:$3|следећој страни|следећим странама}}:
+
+$2',
+	'whitelistrequestconf' => 'Захтев за новим странама је послат $1',
+	'whitelistnever' => 'никад',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'mywhitelistpages' => 'Moje strane',
+	'whitelisttablemodifyall' => 'Sve',
+	'whitelisttablemodifynone' => 'Nema',
+	'whitelisttablepage' => 'Viki članak',
+	'whitelisttabletype' => 'Tip pristupa',
+	'whitelisttableexpires' => 'Ističe na',
+	'whitelisttablemodby' => 'Poslednju izmenu napravio',
+	'whitelisttablemodon' => 'Poslednja izmena na',
+	'whitelisttableedit' => 'Uredi',
+	'whitelisttableview' => 'Pregled',
+	'whitelisttablenewdate' => 'Novi datum:',
+	'whitelisttablechangedate' => 'Promeni datum isteka',
+	'whitelisttableremove' => 'Ukloni',
+	'whitelistnewtabledate' => 'Datum isteka:',
+	'whitelistoverview' => '== Pregled izmena za $1 ==',
+	'whitelistoverviewcd' => "* Menjanje datuma na '''$1''' za [[:$2|$2]]",
+	'whitelistoverviewsa' => "* Postavljanje pristupa na '''$1''' za [:$2|$2]]",
+	'whitelistoverviewrm' => '* Uklanjanje pristupa za [[:$1|$1]]',
+	'whitelistrequest' => 'Zahtevanje pristupa za više strana',
+	'whitelistrequestmsg' => '$1 je zahtevao pristup {{PLURAL:$3|sledećoj strani|sledećim stranama}}:
+
+$2',
+	'whitelistrequestconf' => 'Zahtev za novim stranama je poslat $1',
+	'whitelistnever' => 'nikad',
 );
 
 /** Seeltersk (Seeltersk)
@@ -2757,19 +3358,25 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
+	'whitelist-desc' => 'నియంత్రిత వాడుకరుల అందుబాటు అనుమతులను మార్చండి',
 	'mywhitelistpages' => 'నా పేజీలు',
 	'whitelistfor' => '<center><b>$1</b> కొరకు ప్రస్తుత సమాచారం</center>',
+	'whitelisttablemodify' => 'మార్చు',
 	'whitelisttablemodifyall' => 'అన్నీ',
+	'whitelisttablemodifynone' => 'ఏదీకాదు',
 	'whitelisttablepage' => 'వికీ పేజీ',
+	'whitelisttabletype' => 'అనుమతి రకం',
 	'whitelisttableexpires' => 'కాలంచెల్లు తేదీ',
 	'whitelisttablemodby' => 'చివరగా మార్చినది',
 	'whitelisttablemodon' => 'చివరి మార్పు తేదీ',
 	'whitelisttableedit' => 'మార్చు',
 	'whitelisttableview' => 'చూడండి',
 	'whitelisttablenewdate' => 'కొత్త తేదీ:',
+	'whitelisttablechangedate' => 'కాలపరిమితి తేదీని మార్చు',
 	'whitelisttableremove' => 'తొలగించు',
 	'whitelistnewtabledate' => 'కాల పరిమితి:',
 	'whitelistnewtablereview' => 'సమీక్షించు',
@@ -2779,9 +3386,13 @@ $messages['te'] = array(
 
 $2',
 	'whitelistrequestconf' => 'కొత్త పేజీలకై అభ్యర్థనని $1 కి పంపించాం',
+	'whitelistnonrestricted' => "వాడుకరి '''$1''' నియంత్రిత వాడుకరి కాదు.
+ఈ పేజీ నియంత్రిత వాడుకరులకు మాత్రమే వర్తిస్తుంది",
 	'whitelistnummatches' => ' - {{PLURAL:$1|ఒక పోలిక|$1 పోలికలు}}',
 	'group-restricted' => 'నియంత్రిత వాడుకరులు',
 	'group-restricted-member' => 'నియంత్రిత వాడుకరి',
+	'group-manager' => 'మేనేజర్లు',
+	'group-manager-member' => 'మేనేజరు',
 );
 
 /** Tetum (Tetun)
@@ -2827,6 +3438,35 @@ $2',
 	'whitelistnummatches' => ' - $1 мутобиқат мекунад',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'whitelist-desc' => 'Içozahoi dastrasiji korbaroni mahdudşudaro viroiş kuned',
+	'whitelist' => 'Sahifahoi Fehristi safed',
+	'mywhitelistpages' => 'Sahifahoi Man',
+	'whitelistfor' => '<center>Ittilooti kununī baroi <b>$1</b></center>',
+	'whitelisttablemodify' => 'Pirostan',
+	'whitelisttablemodifyall' => 'Hama',
+	'whitelisttablemodifynone' => 'Heç',
+	'whitelisttablepage' => 'Sahifai Viki',
+	'whitelisttabletype' => "Nav'i Dastrasī",
+	'whitelisttableexpires' => 'Siparī meşavad dar',
+	'whitelisttablemodby' => 'Oxirin marotiba pirosta şuda bud tavassuti',
+	'whitelisttablemodon' => 'Oxirin marotiba pirosta şuda bud dar',
+	'whitelisttableedit' => 'Viroiş',
+	'whitelisttableview' => 'Didan',
+	'whitelisttablenewdate' => "Ta'rixi Nav:",
+	'whitelisttablechangedate' => "Taƣjiri Ta'rixi Baintihorasī",
+	'whitelisttableremove' => 'Hazf',
+	'whitelistnewtabledate' => "Ta'rixi Baintihorasī:",
+	'whitelistnewtableprocess' => 'Ravand',
+	'whitelistnewtablereview' => 'Peşnamoiş',
+	'whitelistrequest' => 'Ba sahifahoi beştar dastrasiro darxost kuned',
+	'whitelistrequestconf' => 'Darxost baroi sahifahoi çadid ba $1 firistoda şud',
+	'whitelistnever' => 'heçgoh',
+);
+
 /** Thai (ไทย)
  * @author Manop
  * @author Octahedron80
@@ -2844,6 +3484,31 @@ $messages['th'] = array(
 	'whitelistpagelist' => 'หน้า {{SITENAME}} สำหรับ $1',
 	'group-manager' => 'ผู้จัดการ',
 	'group-manager-member' => 'ผู้จัดการ',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'whitelisttablemodify' => 'Üýtget',
+	'whitelisttablemodifyall' => 'Ählisi',
+	'whitelisttablemodifynone' => 'Hiç',
+	'whitelisttablepage' => 'Wiki sahypasy',
+	'whitelisttabletype' => 'Barma tipi',
+	'whitelisttableexpires' => 'Gutarýar',
+	'whitelisttablemodby' => 'Soňky üýtgedileni',
+	'whitelisttablemodon' => 'Soňky üýtgedileni',
+	'whitelisttableedit' => 'Redaktirle',
+	'whitelisttableview' => 'Görkez',
+	'whitelisttablenewdate' => 'Täze sene',
+	'whitelisttablechangedate' => 'Gutarýan wagtyny ýtget',
+	'whitelisttablesetedit' => 'Redaktirlemä sazla',
+	'whitelisttablesetview' => 'Görkezmä sazla',
+	'whitelisttableremove' => 'Aýyr',
+	'whitelistnewtableprocess' => 'Proses',
+	'whitelistnewtablereview' => 'Gözden geçir',
+	'group-restricted' => 'Çäklendirilen ulanyjylar',
+	'group-restricted-member' => 'Çäklendirilen ulanyjy',
 );
 
 /** Tagalog (Tagalog)
@@ -2908,14 +3573,34 @@ Nararapat lamang para sa pinagbabawalang mga tagagamit ang pahinang ito",
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'whitelistedit' => 'Beyaz liste erişim editörü',
+	'whitelist' => 'Beyaz liste sayfaları',
 	'mywhitelistpages' => 'Sayfalarım',
+	'whitelistfor' => '<center><b>$1</b> için mevcut bilgiler</center>',
+	'whitelisttablemodify' => 'Değiştir',
 	'whitelisttablemodifyall' => 'Hepsi',
 	'whitelisttablemodifynone' => 'Hiçbiri',
+	'whitelisttablepage' => 'Viki sayfası',
+	'whitelisttabletype' => 'Erişim türü',
+	'whitelisttablemodby' => 'Son değişikliği yapan:',
+	'whitelisttablemodon' => 'Son değişiklik tarihi:',
 	'whitelisttableedit' => 'Değiştir',
+	'whitelisttablenewdate' => 'Yeni tarih:',
+	'whitelisttablechangedate' => 'Bitiş tarihini değiştir',
 	'whitelisttableremove' => 'Kaldır',
+	'whitelistnewtableprocess' => 'İşlem',
+	'whitelistnewtablereview' => 'İncele',
+	'whitelistselectrestricted' => '== Kısıtlanmış kullanıcı adını seç ==',
+	'whitelistrequest' => 'Daha fazla sayfaya erişim isteyin',
 	'whitelistnever' => 'asla',
+	'right-restricttowhitelist' => 'Sadece beyaz listedeki sayfaları değiştirir ve görür',
+	'group-restricted' => 'Kısıtlanmış kullanıcılar',
+	'group-restricted-member' => 'Kısıtlanmış kullanıcı',
+	'group-manager' => 'Yöneticiler',
+	'group-manager-member' => 'Yönetici',
 );
 
 /** Ukrainian (Українська)
@@ -2946,18 +3631,53 @@ $messages['uk'] = array(
 	'whitelistnewtableedit' => 'Установити для редагування',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'whitelistedit' => 'Vauktan nimikirjutesennoks pästtud ristitud',
+	'whitelist' => 'Vauktan nimikirjutesen lehtpoled',
+	'mywhitelistpages' => 'Minun lehtpoled',
+	'whitelistfor' => '<center>Aktualine informacii <b>$1</b>-kävutajan täht</center>',
+	'whitelisttablemodify' => 'Modificiruida',
+	'whitelisttablemodifyall' => 'Kaik',
+	'whitelisttablemodifynone' => 'Nimidä',
+	'whitelisttablepage' => "Wikin lehtpol'",
+	'whitelisttableedit' => 'Redaktiruida',
+	'whitelisttableview' => 'Nähta',
+	'whitelisttablenewdate' => "Uz' dat:",
+	'whitelisttablechangedate' => 'Lopstrokun datan vajehtuz',
+	'whitelisttableremove' => 'Čuta poiš',
+	'whitelistnewtableprocess' => 'Process',
+	'whitelistnever' => 'nikonz',
+	'group-restricted' => 'Kaidetud kävutajad',
+	'group-restricted-member' => 'Kaidetud kävutai',
+	'group-manager' => 'Menadžerad',
+	'group-manager-member' => 'Menadžer',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'whitelist' => 'Trang trong danh sách trắng',
+	'mywhitelistpages' => 'Trang cá nhân',
+	'whitelisttablemodify' => 'Sửa đổi',
 	'whitelisttablemodifyall' => 'Tất cả',
 	'whitelisttablemodifynone' => 'Không có',
+	'whitelisttablepage' => 'Trang wiki',
+	'whitelisttabletype' => 'Kiểu truy cập',
+	'whitelisttableexpires' => 'Hết hạn vào',
+	'whitelisttablemodby' => 'Sửa đổi lần cuối bởi',
+	'whitelisttablemodon' => 'Sửa đổi lần cuối vào',
 	'whitelisttableedit' => 'Sửa',
+	'whitelisttableview' => 'Xem',
 	'whitelisttablenewdate' => 'Ngày tháng mới:',
 	'whitelisttablechangedate' => 'Thay đổi ngày hạn',
 	'whitelisttableremove' => 'Dời',
 	'whitelistnewtabledate' => 'Ngày hạn:',
+	'whitelistnewtablereview' => 'Duyệt',
 	'whitelistoverviewna' => "* Thêm [[:$1|$1]] vào danh sách trắng với quyền truy cập '''$2''' và ngày hạn '''$3'''",
 	'whitelistnever' => 'không bao giờ',
 );
@@ -2990,8 +3710,21 @@ $messages['vo'] = array(
 	'group-manager-member' => 'Guveran',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'mywhitelistpages' => 'מײַנע בלעטער',
+	'whitelisttablemodifyall' => 'אַלע',
+	'whitelisttablemodifynone' => 'גארנישט',
+	'whitelisttablepage' => 'וויקי בלאַט',
+	'whitelisttableedit' => 'רעדאַקטירן',
+	'whitelistnever' => 'קיינמאָל',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
+ * @author Liangent
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
@@ -3016,6 +3749,12 @@ $messages['zh-hans'] = array(
 	'whitelistpagelist' => '$1 的{{SITENAME}}页面',
 	'whitelistoverview' => '== 查看 $1 的更改 ==',
 	'whitelistoverviewcd' => "* [[:$2|$2]]，修改日期为 '''$1'''",
+	'whitelistrequestmsg' => '$1请求访问以下页面：
+
+$2',
+	'whitelistrequestconf' => '新页面请求已发送到$1',
+	'whitelistnonrestricted' => "用户'''$1'''不是一个受限制的用户。
+这个页面只适用于受限制的用户",
 	'whitelistnever' => '从不',
 	'whitelistnummatches' => '  - {{PLURAL:$1|1个匹配|$1 个匹配}}',
 	'right-editwhitelist' => '修改现有用户的白名单',
@@ -3026,6 +3765,50 @@ $messages['zh-hans'] = array(
 	'group-restricted-member' => '受限用户',
 	'group-manager' => '管理员',
 	'group-manager-member' => '管理员',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'whitelisttablemodify' => '修改',
+	'whitelisttablemodifyall' => '全選',
+	'whitelisttablemodifynone' => '全不選',
+	'whitelisttablepage' => '維基頁面',
+	'whitelisttableexpires' => '失效日期',
+	'whitelisttablemodby' => '最後修改者',
+	'whitelisttablemodon' => '最後修改於',
+	'whitelisttableedit' => '編輯',
+	'whitelisttableview' => '檢視',
+	'whitelisttablenewdate' => '新日期：',
+	'whitelisttablechangedate' => '修改失效日期',
+	'whitelisttableremove' => '移除',
+	'whitelistnewtabledate' => '結束日期：',
+	'whitelistnowhitelistedusers' => '"{{MediaWiki:Group-restricted}}"組中沒有用戶。
+您必須[[Special:UserRights|將用戶添加到組]]后，才能將頁面添加到一個用戶的白名單中。',
+	'whitelistnewtableprocess' => '處理',
+	'whitelistnewtablereview' => '評論',
+	'whitelistselectrestricted' => '== 選擇受限制的用戶名 ==',
+	'whitelistpagelist' => '$1 的{{SITENAME}}頁面',
+	'whitelistoverview' => '== 查看 $1 的更改 ==',
+	'whitelistoverviewcd' => "* [[:$2|$2]]，修改日期為 '''$1'''",
+	'whitelistrequestmsg' => '$1請求訪問以下頁面：
+
+$2',
+	'whitelistrequestconf' => '新頁面請求已發送到$1',
+	'whitelistnonrestricted' => "用戶'''$1'''不是一個受限制的用戶。
+這個頁面只適用於受限制的用戶",
+	'whitelistnever' => '從不',
+	'whitelistnummatches' => '  - {{PLURAL:$1|1個匹配|$1 個匹配}}',
+	'right-editwhitelist' => '修改現有用戶的白名單',
+	'right-restricttowhitelist' => '編輯、查看白名單上的頁面',
+	'action-editwhitelist' => '修改現有用戶的白名單',
+	'action-restricttowhitelist' => '編輯、查看白名單上的頁面',
+	'group-restricted' => '受限用戶',
+	'group-restricted-member' => '受限用戶',
+	'group-manager' => '管理員',
+	'group-manager-member' => '管理員',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

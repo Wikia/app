@@ -17,11 +17,8 @@ $wgHooks['BeforePageDisplay'][] = 'wfSisterDisplay';
 
 function wfSisterDisplay( $out ) {
 	if( $out->isArticleRelated() ) {
-		global $wgTitle;
-		$title = $wgTitle;
-		
 		$sister = new SisterSitesList();
-		$matches = $sister->siblings( $title );
+		$matches = $sister->siblings( $out->getTitle() );
 		
 		if( $matches ) {
 			$out->addHTML( wfSisterList( $matches ) );

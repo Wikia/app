@@ -121,31 +121,28 @@ class PageHeaderModule extends Module {
 		global $wgTitle, $wgMemc, $wgABTests;
 		
 		$revisions = array();
-		
-		if (!(in_array('fullmonty', $wgABTests) || in_array('minimonty1', $wgABTests) || in_array('minimonty2', $wgABTests) || in_array('minimonty3', $wgABTests) )) {
 
-			// use service to get data
-			$service = new PageStatsService($wgTitle->getArticleId());
-	
-			// get info about current revision and list of authors of recent five edits
-			// This key is refreshed by the onArticleSaveComplete() hook
-			$mKey = wfMemcKey('mOasisRecentRevisions2', $wgTitle->getArticleId());
-			$revisions = $wgMemc->get($mKey);
-	
-			if (empty($revisions)) {
-				$revisions = $service->getCurrentRevision();
-	
-				// format timestamps, render avatars and user links
-				if (is_array($revisions)) {
-					foreach($revisions as &$revision) {
-						if (isset($revision['user'])) {
-							$revision['avatarUrl'] = AvatarService::getAvatarUrl($revision['user']);
-							$revision['link'] = AvatarService::renderLink($revision['user']);
-						}
+		// use service to get data
+		$service = new PageStatsService($wgTitle->getArticleId());
+
+		// get info about current revision and list of authors of recent five edits
+		// This key is refreshed by the onArticleSaveComplete() hook
+		$mKey = wfMemcKey('mOasisRecentRevisions2', $wgTitle->getArticleId());
+		$revisions = $wgMemc->get($mKey);
+
+		if (empty($revisions)) {
+			$revisions = $service->getCurrentRevision();
+
+			// format timestamps, render avatars and user links
+			if (is_array($revisions)) {
+				foreach($revisions as &$revision) {
+					if (isset($revision['user'])) {
+						$revision['avatarUrl'] = AvatarService::getAvatarUrl($revision['user']);
+						$revision['link'] = AvatarService::renderLink($revision['user']);
 					}
 				}
-				$wgMemc->set($mKey, $revisions);
 			}
+			$wgMemc->set($mKey, $revisions);
 		}
 
 		return $revisions;
@@ -208,7 +205,7 @@ class PageHeaderModule extends Module {
 			// NOTE: Skip getMostLinkedCategories() on Lyrics and Marvel because we're not sure yet that it's fast enough.
 			$LYRICS_CITY_ID = "43339";
 			$MARVEL_CITY_ID = "2233";
-			if(!(in_array('fullmonty', $wgABTests) || in_array('minimonty1', $wgABTests) || in_array('minimonty2', $wgABTests) || in_array('minimonty3', $wgABTests)) && ($wgCityId != $LYRICS_CITY_ID)  && ($wgCityId != $MARVEL_CITY_ID)){
+			if(($wgCityId != $LYRICS_CITY_ID)  && ($wgCityId != $MARVEL_CITY_ID)){
 				$categories = $service->getMostLinkedCategories();
 			}
 

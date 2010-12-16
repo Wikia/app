@@ -5,7 +5,8 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * Tools for edit page view to aid translators.
  *
  * @author Niklas Laxström
- * @copyright Copyright © 2007-2008 Niklas Laxström
+ * @author Siebrand Mazeland
+ * @copyright Copyright © 2007-2009 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 class TranslateEditAddons {
@@ -13,14 +14,29 @@ class TranslateEditAddons {
 
 	static function addNavigation( &$outputpage, &$text ) {
 		global $wgUser, $wgTitle;
-		$ns = $wgTitle->getNamespace();
-		list( $key, $code ) = self::figureMessage( $wgTitle );
+		static $done = false;
+		if ( $done ) return true;
+		$done = true;
 
-		$group = self::getMessageGroup( $ns, $key );
+		if ( !self::isMessageNamespace( $wgTitle ) ) return true;
+
+
+		list( $key, $code, $group ) = self::getKeyCodeGroup( $wgTitle );
 		if ( $group === null ) return true;
 
-		$defs = $group->getDefinitions();
-		$skip = array_merge( $group->getIgnored(), $group->getOptional() );
+		if ( $group instanceof MessageGroupBase ) {
+			$cache = new MessageGroupCache( $group );
+			if ( !$cache->exists() ) return true;
+			$keys = $cache->getKeys();
+			$defs = array();
+			foreach ( $keys as $_ ) $defs[$_] = $cache->get( $_ );
+			$skip = array_merge( $group->getTags( 'ignored' ), $group->getTags( 'optional' ) );
+		} else {
+			$defs = $group->getDefinitions();
+			$skip = array_merge( $group->getIgnored(), $group->getOptional() );
+		}
+
+		$key = strtolower( strtr( $key, ' ', '_' ) );
 
 		$next = $prev = $def = null;
 		foreach ( array_keys( $defs ) as $tkey ) {
@@ -28,7 +44,7 @@ class TranslateEditAddons {
 			// Keys can have mixed case, but they have to be unique in a case
 			// insensitive manner. It is therefore safe and a must to use case
 			// insensitive comparison method
-			if ( strcasecmp( $tkey, $key ) === 0 ) {
+			if ( $key === strtolower( strtr( $tkey, ' ', '_' ) ) ) {
 				$next = true;
 				$def = $defs[$tkey];
 				continue;
@@ -43,35 +59,51 @@ class TranslateEditAddons {
 		$id = $group->getId();
 		wfLoadExtensionMessages( 'Translate' );
 
+		$ns = $wgTitle->getNamespace();
 		$title = Title::makeTitleSafe( $ns, "$prev/$code" );
 		$prevLink = wfMsgHtml( 'translate-edit-goto-no-prev' );
+
+		$params = array();
+
 		if ( $prev !== null ) {
-			$params = "loadgroup=$id";
-			if ( !$title->exists() ) $params .= '&action=edit';
-			$prevLink = $skin->makeKnownLinkObj( $title,
-				wfMsgHtml( 'translate-edit-goto-prev' ), $params );
+			$params['loadgroup'] = $id;
+			if ( !$title->exists() ) {
+				$params['action'] = 'edit';
+			}
+			$prevLink = $skin->link( $title,
+				wfMsgHtml( 'translate-edit-goto-prev' ), array(), $params );
 		}
 
 		$title = Title::makeTitleSafe( $ns, "$next/$code" );
 		$nextLink = wfMsgHtml( 'translate-edit-goto-no-next' );
 		if ( $next !== null && $next !== true ) {
-			$params = "loadgroup=$id";
-			if ( !$title->exists() ) $params .= '&action=edit';
-			$nextLink = $skin->makeKnownLinkObj( $title,
-				wfMsgHtml( 'translate-edit-goto-next' ), $params );
+			$params['loadgroup'] = $id;
+
+			if ( !$title->exists() ) {
+				$params['action'] = 'edit';
+			}
+
+			$nextLink = $skin->link( $title,
+				wfMsgHtml( 'translate-edit-goto-next' ), array(), $params );
 		}
 
-		$title = SpecialPage::getTitleFor( 'translate' );
+		$title = SpecialPage::getTitleFor( 'Translate' );
 		$title->mFragment = "msg_$next";
-		$list = $skin->makeKnownLinkObj( $title,
+		$list = $skin->link(
+			$title,
 			wfMsgHtml( 'translate-edit-goto-list' ),
-			"group=$id&language=$code" );
+			array(),
+			array(
+				'group' => $id,
+				'language' => $code
+			)
+		);
 
 		$def = TranslateUtils::convertWhiteSpaceToHTML( $def );
 
 		$text .= <<<EOEO
 <hr />
-<ul>
+<ul class="mw-translate-nav-prev-next-list">
 <li>$prevLink</li>
 <li>$nextLink</li>
 <li>$list</li>
@@ -88,13 +120,17 @@ EOEO;
 
 
 	static function addTools( $object ) {
+		if ( !self::isMessageNamespace( $object->mTitle ) ) return true;
+		
+		TranslateEditAddons::addNavigation( $ignored, $object->editFormTextTop );
 		$object->editFormTextTop .= self::editBoxes( $object );
-		global $wgMessageCache, $wgLang;
-		$wgMessageCache->addMessage( 'savearticle', "Save as {$wgLang->getCode()}", $wgLang->getCode() );
+
 		return true;
 	}
 
 	static function buttonHack( $editpage, &$buttons, $tabindex ) {
+		if ( !self::isMessageNamespace( $editpage->mTitle ) ) return true;
+
 		global $wgLang;
 		list( , $code ) = self::figureMessage( $editpage->mTitle );
 		if ( $code !== 'qqq' ) return true;
@@ -106,78 +142,36 @@ EOEO;
 			'tabindex'  => ++$tabindex,
 			'value'     => wfMsg( 'translate-save', $name ),
 			'accesskey' => wfMsg( 'accesskey-save' ),
-			'title'     => wfMsg( 'tooltip-save' ).' ['.wfMsg( 'accesskey-save' ).']',
+			'title'     => wfMsg( 'tooltip-save' ) . ' [' . wfMsg( 'accesskey-save' ) . ']',
 		);
-		$buttons['save'] = Xml::element('input', $temp, '');
+		$buttons['save'] = Xml::element( 'input', $temp, '' );
 		return true;
-	}
-
-	private static function getFallbacks( $code ) {
-		global $wgTranslateLanguageFallbacks, $wgTranslateDocumentationLanguageCode;
-
-		$fallbacks = array();
-		if ( isset( $wgTranslateLanguageFallbacks[$code] ) ) {
-				$temp = $wgTranslateLanguageFallbacks[$code];
-			if ( !is_array( $temp ) ) {
-				$fallbacks = array( $temp );
-			} else {
-				$fallbacks = $temp;
-			}
-		}
-
-		$realFallback = Language::getFallbackFor( $code );
-		if ( $realFallback && $realFallback !== 'en' ) {
-			$fallbacks = array_merge( array( $realFallback ), $fallbacks );
-		}
-
-		return $fallbacks;
-	}
-
-	private static function doBox( $msg, $code, $title = false, $makelink = false ) {
-		global $wgUser, $wgLang;
-		if ( $msg === null ) { return ''; }
-
-		$name = TranslateUtils::getLanguageName( $code, false, $wgLang->getCode() );
-		$code = strtolower( $code );
-
-		$attributes = array();
-		if ( !$title ) {
-			$attributes['class'] = 'mw-sp-translate-in-other-big';
-		} elseif ( $code === 'en' ) {
-			$attributes['class'] = 'mw-sp-translate-edit-definition';
-		} else {
-			$attributes['class'] = 'mw-sp-translate-edit-committed';
-		}
-		if ( mb_strlen( $msg ) < 100 && !$title ) {
-			$attributes['class'] = 'mw-sp-translate-in-other-small';
-		}
-
-		$msg = TranslateUtils::convertWhiteSpaceToHTML( $msg );
-
-		if ( !$title ) $title = "$name ($code)";
-		$title = htmlspecialchars( $title );
-
-		if( $makelink ) {
-			$skin = $wgUser->getSkin();
-			$linkTitle = Title::newFromText( $makelink);
-			$title = $skin->makeKnownLinkObj( $linkTitle, $title, 'action=edit' );
-		}
-		return TranslateUtils::fieldset( $title, Xml::tags( 'code', null, $msg ), $attributes );
 	}
 
 	/**
 	* @return Array of the message and the language
 	*/
-	private static function figureMessage( $title ) {
+	private static function figureMessage( Title $title ) {
 		$text = $title->getDBkey();
 		$pos = strrpos( $text, '/' );
-		$code = substr( $text, $pos + 1 );
-		$key = substr( $text, 0, $pos );
+		if ( $pos === false ) {
+			$code = '';
+			$key = $text;
+		} else {
+			$code = substr( $text, $pos + 1 );
+			$key = substr( $text, 0, $pos );
+		}
 		return array( $key, $code );
 	}
 
+	public static function getKeyCodeGroup( Title $title ) {
+		list( $key, $code ) = self::figureMessage( $title );
+		$group = self::getMessageGroup( $title->getNamespace(), $key );
+		return array( $key, $code, $group );
+	}
+
 	/**
-	 * Tries to determine from which group this message belongs. It tries to get
+	 * Tries to determine to which group this message belongs. It tries to get
 	 * group id from loadgroup GET-paramater, but fallbacks to messageIndex file
 	 * if no valid group was provided, or the group provided is a meta group.
 	 * @param $key The message key we are interested in.
@@ -201,122 +195,126 @@ EOEO;
 	}
 
 	private static function editBoxes( $object ) {
-		wfLoadExtensionMessages( 'Translate' );
-		global $wgTranslateDocumentationLanguageCode, $wgOut, $wgTranslateMessageNamespaces;
+		global $wgTranslateDocumentationLanguageCode, $wgOut, $wgRequest;
 
-		list( $key, $code ) = self::figureMessage( $object->mTitle );
+		$th = new TranslationHelpers( $object->mTitle );
 
-		$group = self::getMessageGroup( $object->mTitle->getNamespace(), $key );
-		if ( $group === null ) return;
-
-		list( $nsMain, /* $nsTalk */ ) = $group->namespaces;
-
-		$en = $group->getMessage( $key, 'en' );
-		$xx = $group->getMessage( $key, $code );
-
-		$boxes = array();
-		// In other languages (if any)
-		$inOtherLanguages = array();
-		$namespace = $object->mTitle->getNsText();
-		foreach ( self::getFallbacks( $code ) as $fbcode ) {
-			$fb = $group->getMessage( $key, $fbcode );
-			/* For fallback, even uncommitted translation may be useful */
-			if ( $fb === null ) {
-				$fb = TranslateUtils::getMessageContent( $key, $fbcode );
-			}
-			if ( $fb !== null ) {
-				/* add a link for editing the fallback messages */
-				$inOtherLanguages[] = self::dobox( $fb, $fbcode, false, $namespace . ':' . $key . '/' . $fbcode );
-			}
-		}
-		if ( count( $inOtherLanguages ) ) {
-			$boxes[] = TranslateUtils::fieldset( wfMsgHtml( self::MSG . 'in-other-languages' ),
-				implode( "\n", $inOtherLanguages ), array( 'class' => 'mw-sp-translate-edit-inother' ) );
-		}
-
-		// User provided documentation
-		if ( $wgTranslateDocumentationLanguageCode ) {
-			global $wgUser;
-			$title = Title::makeTitle( $nsMain, $key . '/' . $wgTranslateDocumentationLanguageCode );
-			$edit = $wgUser->getSkin()->makeKnownLinkObj( $title, wfMsgHtml( self::MSG . 'contribute' ), 'action=edit' );
-			$info = TranslateUtils::getMessageContent( $key, $wgTranslateDocumentationLanguageCode, $nsMain );
-			if ( $info === null ) {
-				$info = $group->getMessage( $key, $wgTranslateDocumentationLanguageCode );
-			}
-			$class = 'mw-sp-translate-edit-info';
-			if ( $info === null && in_array( $nsMain, $wgTranslateMessageNamespaces ) ) {
-				$info = wfMsg( self::MSG . 'no-information' );
-				$class = 'mw-sp-translate-edit-noinfo';
-			}
-
-			if ( $group->getType() === 'gettext' ) {
-				$reader = $group->getReader( 'en' );
-				if ( $reader ) {
-					$data = $reader->parseFile();
-					$help = GettextFormatWriter::formatcomments( @$data[$key]['comments'], false, @$data[$key]['flags'] );
-					$info .= "<hr /><pre>$help</pre>";
-				}
-			}
-
-			$class .= ' mw-sp-translate-message-documentation';
-
-			if ( $info ) {
-				$contents = $wgOut->parse( $info );
-				// Remove whatever block element wrapup the parser likes to add
-				$contents = preg_replace( '~^<([a-z]+)>(.*)</\1>$~us', '\2', $contents );
-				$boxes[] = TranslateUtils::fieldset(
-					wfMsgHtml( self::MSG . 'information', $edit ), $contents, array( 'class' => $class )
-				);
-			}
-		}
-
-		// Can be either NULL or '', ARGH!
-		if ( $object->textbox1 === '' ) {
-			$editField = null;
+		if ( $object->firsttime && !$wgRequest->getCheck( 'oldid' ) && !$wgRequest->getCheck( 'undo' ) ) {
 		} else {
-			$editField = $object->textbox1;
-		}
-
-		if ( $xx !== null && $code !== 'en' ) {
-			// Append translation from the file to edit area, if it's empty.
-			if ( $object->firsttime && $editField === null ) {
-				$object->textbox1 = $xx;
-			}
-		}
-
-		// Definition
-		if ( $en !== null ) {
-			$label = " ({$group->getLabel()})";
-			$boxes[] = self::doBox( $en, 'en', wfMsg( self::MSG . 'definition' ) . $label );
-		}
-
-
-		// Some syntactic checks
-		$translation = ( $editField !== null ) ? $editField : $xx;
-		if ( $translation !== null && $code !== $wgTranslateDocumentationLanguageCode) {
-			$message = new TMessage( $key, $en );
-			// Take the contents from edit field as a translation
-			$message->database = $translation;
-			$checker = MessageChecks::getInstance();
-			if ( $checker->hasChecks( $group->getType() ) ) {
-				$checks = $checker->doChecks( $message, $group->getType(), $code );
-				if ( count( $checks ) ) {
-					$checkMessages = array();
-					foreach ( $checks as $checkParams ) {
-						array_splice( $checkParams, 1, 0, 'parseinline' );
-						$checkMessages[] = call_user_func_array( 'wfMsgExt', $checkParams );
-					}
-
-					$boxes[] = TranslateUtils::fieldset(
-						wfMsgHtml( self::MSG . 'warnings' ), implode( '<hr />', $checkMessages ),
-						array( 'class' => 'mw-sp-translate-edit-warnings' ) );
-				}
-			}
+			$th->setTranslation( $object->textbox1 );
 		}
 
 		TranslateUtils::injectCSS();
-		return Xml::tags( 'div', array( 'class' => 'mw-sp-translate-edit-fields' ), implode( "\n\n", $boxes ) );
+		return $th->getBoxes();
 	}
 
+	public static function hasFuzzyString( $text ) {
+		return strpos( $text, TRANSLATE_FUZZY ) !== false;
+	}
+
+	public static function isFuzzy( Title $title ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$id = $dbr->selectField( 'revtag_type', 'rtt_id', array( 'rtt_name' => 'fuzzy' ), __METHOD__ );
+
+		$tables = array( 'page', 'revtag' );
+		$fields = array( 'rt_type' );
+		$conds  = array(
+			'page_namespace' => $title->getNamespace(),
+			'page_title' => $title->getDBkey(),
+			'rt_type' => $id,
+			'page_id=rt_page',
+			'page_latest=rt_revision'
+		);
+
+		$res = $dbr->selectField( $tables, $fields, $conds, __METHOD__ );
+		return $res === $id;
+	}
+
+	public static function isMessageNamespace( Title $title ) {
+		global $wgTranslateMessageNamespaces; ;
+		$namespace = $title->getNamespace();
+		return in_array( $namespace, $wgTranslateMessageNamespaces, true );
+	}
+
+	public static function tabs( $skin, &$tabs ) {
+		if ( !self::isMessageNamespace( $skin->mTitle ) ) return true;
+
+		unset( $tabs['protect'] );
+
+		return true;
+	}
+
+	public static function keepFields( $edit, $out ) {
+		global $wgRequest;
+		$out->addHTML( "\n" .
+			Xml::hidden( 'loadgroup', $wgRequest->getText( 'loadgroup' ) ) .
+			Xml::hidden( 'loadtask', $wgRequest->getText( 'loadtask' ) ) .
+			"\n"
+		);
+		return true;
+	}
+
+	public static function onSave( $article, $user, $text, $summary,
+			$minor, $_, $_, $flags, $revision ) {
+
+		$title = $article->getTitle();
+
+		if ( !self::isMessageNamespace( $title ) ) return true;
+
+		list( $key, $code, $group ) = self::getKeyCodeGroup( $title );
+
+		// Unknown message, do not handle
+		if ( !$group || !$code ) return true;
+
+		$groups = TranslateUtils::messageKeyToGroups( $title->getNamespace(), $key );
+		$cache = new ArrayMemoryCache( 'groupstats' );
+		foreach ( $groups as $g ) $cache->clear( $g, $code );
+
+		// Check for explicit tag
+		$fuzzy = self::hasFuzzyString( $text );
+
+		// Check for problems, but only if not fuzzy already
+		global $wgTranslateDocumentationLanguageCode;
+		if ( $code !== $wgTranslateDocumentationLanguageCode ) {
+			$checker = $group->getChecker();
+			if ( $checker ) {
+				$en = $group->getMessage( $key, 'en' );
+				$message = new FatMessage( $key, $en );
+				// Take the contents from edit field as a translation
+				$message->setTranslation( $text );
+
+				$checks = $checker->checkMessage( $message, $code );
+				if ( count( $checks ) ) $fuzzy = true;
+			}
+		}
+
+		// Update it
+		if ( $revision === null ) {
+			$rev = $article->getTitle()->getLatestRevId();
+		} else {
+			$rev = $revision->getID();
+		}
+
+		// Add the ready tag
+		$dbw = wfGetDB( DB_MASTER );
+
+		$id = $dbw->selectField( 'revtag_type', 'rtt_id', array( 'rtt_name' => 'fuzzy' ), __METHOD__ );
+
+		$conds = array(
+			'rt_page' => $article->getTitle()->getArticleId(),
+			'rt_type' => $id,
+			'rt_revision' => $rev
+		);
+		// Remove any existing fuzzy tags for this revision
+		$dbw->delete( 'revtag', $conds, __METHOD__ );
+
+		// Add the fuzzy tag if needed
+		if ( $fuzzy !== false ) {
+			$dbw->insert( 'revtag', $conds, __METHOD__ );
+		}
+
+		return true;
+	}
 
 }
+

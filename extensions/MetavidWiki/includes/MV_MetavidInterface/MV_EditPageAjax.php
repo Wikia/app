@@ -4,28 +4,28 @@
  *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
- * 
+ *
+ *
  * The metavid interface class
  * provides the metavid interface for Metavid: requests
  * provides the base metadata
- * 
+ *
  */
  if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
  /* very similar to showEditForm in EditPage
  * differences include:
- * 	ajax type display request and processing 
- *  display type based on mvTitle info 
+ * 	ajax type display request and processing
+ *  display type based on mvTitle info
  */
- 
+
  class MV_EditPageAjax extends EditPage {
 	 var $adj_html = '';
  	 var $basic_html = '';
- 	 
+
  	function __construct( $article ) {
 		$this->mArticle =& $article;
 		$this->mTitle =& $article->mTitle;
-				
+
 		// print "article content: " . $this->mArticle->getContent();
 		# Placeholders for text injection by hooks (empty per default)
 		$this->editFormPageTop =
@@ -35,22 +35,22 @@
 		$this->editFormTextBottom = "";
 	}
 	function do_pre_annoEdit() {
-		
+
 	}
 	function getAjaxForm() {
 		global $wgUser;
-		return '<form id="mvd_form_' . $this->mvd_id . '" name="mvd_form_' . $this->mvd_id . '" method="GET" action="" 
+		return '<form id="mvd_form_' . $this->mvd_id . '" name="mvd_form_' . $this->mvd_id . '" method="GET" action=""
 			onSubmit="mv_do_ajax_form_submit(\'' . $this->mvd_id . '\', \'save\'); return false;" ' .
 			'enctype="multipart/form-data" >' .
 			'<input type="hidden" name="fname" value="mv_edit_submit">' .
-				// do the normal edit hidden fields:		
+				// do the normal edit hidden fields:
 		"\n" . '<input type="hidden" value="' . htmlspecialchars( $wgUser->editToken() ) .
 		'" name="wpEditToken" />' . "\n" .
 		'<input type="hidden" name="title" value="' . $this->mTitle->getDBkey() . '">' . "\n" .
 		'<input type="hidden" name="mvd_id" value="' . $this->mvd_id . '">' . "\n";
 	}
 	function loadEditText() {
-		// get the article text if it exists		
+		// get the article text if it exists
 		if ( $this->mArticle->mTitle->exists() ) {
 			$this->stripped_edit_text = $this->mArticle->getContent();
 		} else {
@@ -61,31 +61,31 @@
 	function do_pre_htEdit() {
 		global $wgOut, $wgUser;
 		$this->loadEditText();
-			
+
 		$MvOverlay = new MV_Overlay();
 		// strip semantic tags which are managed by the interface:
 		$semantic_data = $MvOverlay->get_and_strip_semantic_tags( $this->stripped_edit_text );
 		$out = $js_eval = '';
-		// add a div for previews: 
+		// add a div for previews:
 		$wgOut->addHTML( '<div id="wikiPreview_' . $this->mvd_id . '"></div>' );
-		
-		// set the default action so save page: 
+
+		// set the default action so save page:
 		$wgOut->addHTML( $this->getAjaxForm() );
-		
-		// add in adjust html if present: 
+
+		// add in adjust html if present:
 		$wgOut->addHTML( $this->adj_html );
-	
-		// structure layout via tables (@@todo switch to class based css layout)		
+
+		// structure layout via tables (@@todo switch to class based css layout)
 		$wgOut->addHTML( '<table style="background: transparent;" width="100%"><tr><td valign="top" width="90">' );
 			// output the person selector:
 			if ( !isset ( $semantic_data['spoken_by'] ) )$semantic_data['spoken_by'] = '';
 			$img = mv_get_person_img( $semantic_data['spoken_by'] );
 			$wgOut->addHTML( '<img id="mv_edit_im_' . htmlspecialchars( $this->mvd_id ) . '" style="display: block;margin-left: auto;margin-right: auto;" src="' . htmlspecialchars( $img->getURL() ) . '" width="44">' );
-				$wgOut->addHTML( '<input style="font-size:x-small" 
-						value="' . htmlspecialchars( $semantic_data['spoken_by'] ) . '" 
+				$wgOut->addHTML( '<input style="font-size:x-small"
+						value="' . htmlspecialchars( $semantic_data['spoken_by'] ) . '"
 						name="smw_Spoken_By"
-						onClick="this.value=\'\';" 
-						type="text" id="auto_comp_' . htmlspecialchars( $this->mvd_id ) . '" size="12" 
+						onClick="this.value=\'\';"
+						type="text" id="auto_comp_' . htmlspecialchars( $this->mvd_id ) . '" size="12"
 						maxlength="125" autocomplete="off"/>' );
 				// only add one auto_comp_choices_ per object/request pass
 				if ( !isset( $this->auto_comp_choices ) ) {
@@ -98,7 +98,7 @@
 	}
 	/* copy of edit() from edit page (to override empty page)*/
 	function edit( $textbox1_override = null ) {
-		global $wgOut, $wgUser, $wgRequest, $wgTitle;
+		global $wgOut, $wgUser, $wgRequest;
 
 		$fname = 'MV_EditPage::edit';
 		wfProfileIn( $fname );
@@ -149,18 +149,18 @@
 			// limt rows for ajax:
 			$non_ajax_rows = $wgUser->getIntOption( 'rows' );
 			$wgUser->setOption( 'rows', 5 );
-			
+
 			$sk = $wgUser->getSkin();
 			$cancel = '<a href="javascript:mv_disp_mvd(\'' . $this->mTitle->getDBkey() . '\',\'' .
 					 $this->mvd_id . '\');">' . wfMsgExt( 'cancel', array( 'parseinline' ) ) . '</a>';
-			
+
 			// get the stream parent:
 			$mvd = MV_Index::getMVDbyId( $this->mvd_id );
 			$stream_name = MV_Stream::getStreamNameFromId( $mvd->stream_id );
-			
+
 			$lTitle = Title::makeTitle( NS_SPECIAL, 'Userlogin' );
-			$loginLink = $sk->makeLinkObj( $lTitle, wfMsg( 'login' ), 'returnto=' . MWNamespace::getCanonicalName( MV_NS_STREAM ) . ':' . $stream_name );
-								
+			$loginLink = $lTitle->getFullURL('returnto=' . MWNamespace::getCanonicalName( MV_NS_STREAM ) . ':' . $stream_name );
+
 			$wgOut->addHTML( wfMsg( 'mv_user_cant_edit', $loginLink, $cancel ) );
 			$wgOut->readOnlyPage(  $this->mArticle->getContent(), true, $permErrors );
 			$wgUser->setOption( 'rows', $non_ajax_rows );
@@ -215,9 +215,9 @@
 		# Show applicable editing introductions
 		if ( $this->formtype == 'initial' || $this->firsttime )
 			$this->showIntro();
-	
+
 		if ( $this->mTitle->isTalkPage() ) {
-			$wgOut->addWikiText( wfMsg( 'talkpagetext' ) );
+			$wgOut->addWikiMsg( 'talkpagetext' );
 		}
 
 		# Attempt submission here.  This will check for edit conflicts,
@@ -225,9 +225,9 @@
 		# that edit() already checked just in case someone tries to sneak
 		# in the back door with a hand-edited submission URL.
 
-		// set up commit transaction 
+		// set up commit transaction
 		// $dbw = wfGetDB( DB_MASTER );
-		// $dbw->begin();	
+		// $dbw->begin();
 
 		if ( 'save' == $this->formtype ) {
 			if ( !$this->attemptSave() ) {
@@ -236,7 +236,7 @@
 				return;
 			}
 		}
-		
+
 		// $dbw->immediateCommit();
 
 		# First time through: get contents, set time for conflict
@@ -256,7 +256,7 @@
 		wfProfileOut( "$fname-business-end" );
 		wfProfileOut( $fname );
 	}
-	/********would not have to override if they where not "private" functions 
+	/********would not have to override if they where not "private" functions
 		/**
 	 * Should we show a preview when the edit form is first shown?
 	 *
@@ -323,7 +323,7 @@
 	}
 	function do_post_HtEdit() {
 		global $wgOut;
-		/*"<textarea name=\"wpTextbox{$mvd_id}\" 
+		/*"<textarea name=\"wpTextbox{$mvd_id}\"
 					id=\"wpTextbox{$this->mvd_id}\" rows='3'
 					cols=\"50\" >$text
 					</textarea>"*/
@@ -348,7 +348,7 @@
 	}
 	function internalAttemptSave( &$result, $bot = false ) {
 		global $wgHooks;
-		// clear confirmEdit for ajax edits: 
+		// clear confirmEdit for ajax edits:
 		if ( isset( $wgHooks['EditFilter'] ) ) {
 			foreach ( $wgHooks['EditFilter'] as $k => $hook ) {
 				unset( $wgHooks['EditFilter'][$k] );
@@ -358,13 +358,13 @@
 	}
 	function showEditForm( $formCallback = null ) {
 		global $wgOut, $wgUser, $wgLang, $wgContLang, $wgMaxArticleSize;
-		
+
 		// print "call SHOW EDIT FORM";
 		if ( !isset( $this->stripped_edit_text ) )$this->stripped_edit_text = '';
-		
+
 		$fname = 'EditPageAjax::showEditForm';
 		wfProfileIn( $fname );
-		
+
 		$closeFormHtml = '';
 		// check if we are in the MVD namespace (and need to use templates for edits:)
 		if ( $this->mTitle->getNamespace() == MV_NS_MVD ) {
@@ -374,7 +374,7 @@
 			}
 			$editFormType = strtolower( $this->mvTitle->getMvdTypeKey() );
 		} else {
-			// check if its seq type: 
+			// check if its seq type:
 			if ( $this->mvd_id == 'seq' ) {
 				$editFormType = 'seq';
 			} else {
@@ -388,9 +388,9 @@
 				break;
 				case 'anno_en':
 					$this->loadEditText();
-					// set the default action so save page: 
+					// set the default action so save page:
 					$wgOut->addHTML( $this->getAjaxForm() );
-					// add in adjust html if present: 
+					// add in adjust html if present:
 					$wgOut->addHTML( $this->adj_html );
 				break;
 				case 'seq':
@@ -404,7 +404,7 @@
 				break;
 				default:
 					$this->loadEditText();
-					// set the default action so save page: 
+					// set the default action so save page:
 					$wgOut->addHTML( $this->getAjaxForm() );
 				break;
 			}
@@ -535,7 +535,7 @@
 		if ( $this->formtype == 'preview' ) {
 			$previewOutput = $this->getPreviewText();
 		}
-		
+
 		if ( $wgUser->getOption( 'previewontop' ) ) {
 
 			if ( 'preview' == $this->formtype ) {
@@ -550,7 +550,7 @@
 		}
 		$wgOut->addHTML( $this->basic_html );
 		$wgOut->addHTML( '<div style="display:inline" class="mv_advanced_edit"><br>' );
-		
+
 		// $rows = $wgUser->getIntOption( 'rows' );
 		// $cols = $wgUser->getIntOption( 'cols' );
 		// for ajax short edit area:
@@ -560,7 +560,7 @@
 		$ew = $wgUser->getOption( 'editwidth' );
 		if ( $ew ) $ew = " style=\"width:100%\"";
 		else $ew = '';
-		
+
 		// do ajax action:
 		// $q = 'action=ajax';
 		# if ( "no" == $redirect ) { $q .= "&redirect=no"; }
@@ -582,7 +582,7 @@
 					 $this->mvd_id . '\');">' . wfMsgExt( 'cancel', array( 'parseinline' ) ) . '</a>';
 			$edithelpurl = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'edithelppage' ) );
 		}
-				
+
 		$edithelp = '<a target="helpwindow" href="' . $edithelpurl . '">' .
 			htmlspecialchars( wfMsg( 'edithelp' ) ) . '</a> ' .
 			htmlspecialchars( wfMsg( 'newwindow' ) );
@@ -594,7 +594,7 @@
 				'[[' . wfMsgForContent( 'copyrightpage' ) . ']]',
 				$wgRightsText ) . "\n</div>";
 		*/
-	
+
 		if ( $wgUser->getOption( 'showtoolbar' ) and !$this->isCssJsSubpage ) {
 			# prepare toolbar for edit buttons
 			$toolbar = EditPage::getEditToolbar();
@@ -637,11 +637,6 @@
 			$subjectpreview = '';
 		}
 
-		# Set focus to the edit box on load, except on preview or diff, where it would interfere with the display
-		/*if( !$this->preview && !$this->diff ) {
-			$wgOut->setOnloadHandler( 'document.editform.wpTextbox1.focus()' );
-		}*/
-		
 		$templates = ( $this->preview || $this->section != '' ) ? $this->mPreviewTemplates : $this->mArticle->getUsedTemplates();
 		$formattedtemplates = $sk->formatTemplates( $templates, $this->preview, $this->section != '' );
 
@@ -677,9 +672,9 @@
 			array( 'minor' => $this->minoredit, 'watch' => $this->watchthis ) );
 
 		$checkboxhtml = implode( $checkboxes, "\n" );
-		
+
 		$button_action = 'mv_do_ajax_form_submit(\'' . $this->mvd_id . '\', \'%s\');';
-		
+
 		$buttons = $this->getEditButtons( $tabindex , $button_action );
 		$buttonshtml = implode( $buttons, "\n" );
 
@@ -717,7 +712,7 @@ END
 "
 </textarea>
 		" );
-		
+
 		// close advanced display_edit div
 		$wgOut->addHTML( "</div>" );
 
@@ -836,10 +831,10 @@ END
 		);
 		if ( $this->mvd_id == 'seq' )
 			$temp['value'] = wfMsg( 'mv_save_sequence' );
-		
+
 		if ( $button_action != '' )
 			$temp['onMouseUp'] = sprintf( $button_action, 'save' );
-			
+
 		$buttons['save'] = Xml::element( 'input', $temp, '' );
 
 		++$tabindex; // use the same for preview and live preview
@@ -883,7 +878,7 @@ END
 			);
 			if ( $button_action != '' )
 				$temp['onMouseUp'] = sprintf( $button_action, 'preview' );
-				
+
 			$buttons['preview'] = Xml::element( 'input', $temp, '' );
 			$buttons['live'] = '';
 		}

@@ -22,9 +22,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ("ApiBase.php");
+	require_once ( "ApiBase.php" );
 }
 
 /**
@@ -35,8 +35,8 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiUnblock extends ApiBase {
 
-	public function __construct($main, $action) {
-		parent :: __construct($main, $action);
+	public function __construct( $main, $action ) {
+		parent :: __construct( $main, $action );
 	}
 
 	/**
@@ -46,38 +46,37 @@ class ApiUnblock extends ApiBase {
 		global $wgUser;
 		$params = $this->extractRequestParams();
 
-		if($params['gettoken'])
+		if ( $params['gettoken'] )
 		{
 			$res['unblocktoken'] = $wgUser->editToken();
-			$this->getResult()->addValue(null, $this->getModuleName(), $res);
+			$this->getResult()->addValue( null, $this->getModuleName(), $res );
 			return;
 		}
 
-		if(is_null($params['id']) && is_null($params['user']))
-			$this->dieUsageMsg(array('unblock-notarget'));
-		if(!is_null($params['id']) && !is_null($params['user']))
-			$this->dieUsageMsg(array('unblock-idanduser'));
-		if(is_null($params['token']))
-			$this->dieUsageMsg(array('missingparam', 'token'));
-		if(!$wgUser->matchEditToken($params['token']))
-			$this->dieUsageMsg(array('sessionfailure'));
-		if(!$wgUser->isAllowed('block'))
-			$this->dieUsageMsg(array('cantunblock'));
+		if ( is_null( $params['id'] ) && is_null( $params['user'] ) )
+			$this->dieUsageMsg( array( 'unblock-notarget' ) );
+		if ( !is_null( $params['id'] ) && !is_null( $params['user'] ) )
+			$this->dieUsageMsg( array( 'unblock-idanduser' ) );
+
+		if ( !$wgUser->isAllowed( 'block' ) )
+			$this->dieUsageMsg( array( 'cantunblock' ) );
 
 		$id = $params['id'];
 		$user = $params['user'];
-		$reason = (is_null($params['reason']) ? '' : $params['reason']);
-		$retval = IPUnblockForm::doUnblock($id, $user, $reason, $range);
-		if($retval)
-			$this->dieUsageMsg($retval);
+		$reason = ( is_null( $params['reason'] ) ? '' : $params['reason'] );
+		$retval = IPUnblockForm::doUnblock( $id, $user, $reason, $range );
+		if ( $retval )
+			$this->dieUsageMsg( $retval );
 
-		$res['id'] = intval($id);
+		$res['id'] = intval( $id );
 		$res['user'] = $user;
 		$res['reason'] = $reason;
-		$this->getResult()->addValue(null, $this->getModuleName(), $res);
+		$this->getResult()->addValue( null, $this->getModuleName(), $res );
 	}
 
-	public function mustBePosted() { return true; }
+	public function mustBePosted() {
+		return true;
+	}
 
 	public function isWriteMode() {
 		return true;
@@ -108,6 +107,18 @@ class ApiUnblock extends ApiBase {
 			'Unblock a user.'
 		);
 	}
+	
+    public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'unblock-notarget' ),
+			array( 'unblock-idanduser' ),
+			array( 'cantunblock' ),
+        ) );
+	}
+	
+	public function getTokenSalt() {
+		return '';
+	}
 
 	protected function getExamples() {
 		return array (
@@ -117,6 +128,6 @@ class ApiUnblock extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiUnblock.php 48091 2009-03-06 13:49:44Z catrope $';
+		return __CLASS__ . ': $Id: ApiUnblock.php 62599 2010-02-16 21:59:16Z reedy $';
 	}
 }

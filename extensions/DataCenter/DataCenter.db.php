@@ -139,73 +139,58 @@ abstract class DataCenterDB {
 
 	/**
 	 * Checks if type exists in any of the type categories
-	 * @param	category		String of category to look up type in
-	 * @param	type			String of type to check for
+	 * @param $category String: category to look up type in
+	 * @param $type String: type to check for
 	 */
-	public static function isType(
-		$category,
-		$type
-	) {
+	public static function isType( $category, $type ) {
 		return isset( self::$types[$category][$type] );
 	}
 
 	/**
 	 * Checks if type exists in the facility category
-	 * @param	type			String of asset type to check for
+	 * @param $type String: asset type to check for
 	 */
-	public static function isFacilityType(
-		$type
-	) {
+	public static function isFacilityType( $type ) {
 		return isset( self::$types['facility'][$type] );
 	}
 
 	/**
 	 * Checks if type exists in the link category
-	 * @param	type			String of asset type to check for
+	 * @param $type String: asset type to check for
 	 */
-	public static function isLinkType(
-		$type
-	) {
+	public static function isLinkType( $type ) {
 		return isset( self::$types['link'][$type] );
 	}
 
 	/**
 	 * Checks if type exists in the asset category
-	 * @param	type			String of asset type to check for
+	 * @param $type String: asset type to check for
 	 */
-	public static function isAssetType(
-		$type
-	) {
+	public static function isAssetType( $type ) {
 		return isset( self::$types['asset'][$type] );
 	}
 
 	/**
 	 * Checks if type exists in the model category
-	 * @param	type			String of model type to check for
+	 * @param $type String: model type to check for
 	 */
-	public static function isModelType(
-		$type
-	) {
+	public static function isModelType( $type ) {
 		return isset( self::$types['model'][$type] );
 	}
 
 	/**
 	 * Checks if type exists in the asset category
-	 * @param	type			String of meta type to check for
+	 * @param $type String: meta type to check for
 	 */
-	public static function isMetaType(
-		$type
-	) {
+	public static function isMetaType( $type ) {
 		return isset( self::$types['meta'][$type] );
 	}
 
 	/**
 	 * Checks if class is or is subclass of DataCenterDBRow
-	 * @param	rowClass		String of name of class to check
+	 * @param $rowClass String: name of class to check
 	 */
-	public static function isRowClass(
-		$class
-	) {
+	public static function isRowClass( $class ) {
 		return (
 			class_exists( $class ) &&
 			(
@@ -217,15 +202,11 @@ abstract class DataCenterDB {
 
 	/**
 	 * Checks if a column name belongs to a specific type
-	 * @param	category		String of category to look up type in
-	 * @param	type			String of type to check for
-	 * @param	columnName		String of column to look up
+	 * @param $category String: category to look up type in
+	 * @param $type String: type to check for
+	 * @param $columnName String: column to look up
 	 */
-	public static function isColumnOfType(
-		$category,
-		$type,
-		$columnName
-	) {
+	public static function isColumnOfType( $category, $type, $columnName ) {
 		return (
 			strpos( $columnName, self::$types[$category][$type]['prefix'] ) !==
 			false
@@ -234,15 +215,11 @@ abstract class DataCenterDB {
 
 	/**
 	 * Gets fully prefixed column name from simplified field name
-	 * @param	category		String of category to look up type in
-	 * @param	type			String of type to check for
-	 * @param	fieldName		String of field to look up
+	 * @param $category String: category to look up type in
+	 * @param $type String: type to check for
+	 * @param $fieldName String: field to look up
 	 */
-	public static function getColumnName(
-		$category,
-		$type,
-		$fieldName
-	) {
+	public static function getColumnName( $category, $type, $fieldName ) {
 		return isset( self::$types[$category][$type] ) ?
 			self::$types[$category][$type]['prefix'] . $fieldName :
 			null;
@@ -250,15 +227,11 @@ abstract class DataCenterDB {
 
 	/**
 	 * Gets simplified field name from fully prefixed column name
-	 * @param	category		String of category to look up type in
-	 * @param	type			String of type to check for
-	 * @param	columnName		String of column to look up
+	 * @param $category String: category to look up type in
+	 * @param $type String: type to check for
+	 * @param $columnName String: column to look up
 	 */
-	public static function getFieldName(
-		$category,
-		$type,
-		$columnName
-	) {
+	public static function getFieldName( $category, $type, $columnName ) {
 		return isset( self::$types[$category][$type]['prefix'] ) ?
 			substr(
 				$columnName, strlen( self::$types[$category][$type]['prefix'] )
@@ -268,13 +241,10 @@ abstract class DataCenterDB {
 
 	/**
 	 * Gets table name from category and type
-	 * @param	category		String of category to look up type in
-	 * @param	type			String of type look up table in
+	 * @param $category String: category to look up type in
+	 * @param $type String: type look up table in
 	 */
-	public static function getTableName(
-		$category,
-		$type
-	) {
+	public static function getTableName( $category, $type ) {
 		return isset( self::$types[$category][$type]['table'] ) ?
 			self::$types[$category][$type]['table'] :
 			null;
@@ -282,13 +252,10 @@ abstract class DataCenterDB {
 
 	/**
 	 * Gets row defaults from category and type
-	 * @param	category		String of category to look up type in
-	 * @param	type			String of type look up defaults in
+	 * @param $category String: category to look up type in
+	 * @param $type String: type look up defaults in
 	 */
-	public static function getRowDefaults(
-		$category,
-		$type
-	) {
+	public static function getRowDefaults( $category, $type ) {
 		return isset( self::$types[$category][$type]['defaults'] ) ?
 			self::$types[$category][$type]['defaults'] :
 			array();
@@ -592,15 +559,11 @@ abstract class DataCenterDB {
 
 	/**
 	 * Gets list of valid enum values for a specific field
-	 * @param	category		String of category to look up type in
-	 * @param	type			String of type to look up field in
-	 * @param	field			String of field to look up values for
+	 * @param $category String: category to look up type in
+	 * @param $type String: type to look up field in
+	 * @param $field String: field to look up values for
 	 */
-	public static function getEnum(
-		$category,
-		$type,
-		$field
-	){
+	public static function getEnum( $category, $type, $field ) {
 		if ( !self::isType( $category, $type ) ) {
 			throw new MWException(
 				$category . '/' . $type . ' is not a valid type'
@@ -629,11 +592,9 @@ abstract class DataCenterDB {
 
 	/**
 	 * Checks that a row object represents an existing row in the database
-	 * @param	object			Subclass of DataCenterDBRow to check
+	 * @param $object Object: subclass of DataCenterDBRow to check
 	 */
-	public static function rowExists(
-		DataCenterDBRow $object
-	) {
+	public static function rowExists( DataCenterDBRow $object ) {
 		if ( !$object instanceof DataCenterDBRow ) {
 			throw new MWException(
 				'Object is not an instance of DataCenterDBRow'
@@ -658,11 +619,9 @@ abstract class DataCenterDB {
 
 	/**
 	 * Inserts a row in the database based on the contents of a row object
-	 * @param	rowObject		Subclass of DataCenterDBRow to insert
+	 * @param $object Object: subclass of DataCenterDBRow to insert
 	 */
-	public static function insertRow(
-		$object
-	) {
+	public static function insertRow( $object ) {
 		if ( !$object instanceof DataCenterDBRow ) {
 			throw new MWException(
 				'Object is not an instance of DataCenterDBRow'
@@ -689,11 +648,9 @@ abstract class DataCenterDB {
 
 	/**
 	 * Updates a row in the database based on the contents of a row object
-	 * @param	object		Subclass of DataCenterDBRow to update
+	 * @param $object Object: Subclass of DataCenterDBRow to update
 	 */
-	public static function updateRow(
-		$object
-	) {
+	public static function updateRow( $object ) {
 		if ( !$object instanceof DataCenterDBRow ) {
 			throw new MWException(
 				'Object is not an instance of DataCenterDBRow'
@@ -719,11 +676,9 @@ abstract class DataCenterDB {
 
 	/**
 	 * Deletes a row from the database
-	 * @param	rowObject		Subclass of DataCenterDBRow to delete
+	 * @param $object Object: subclass of DataCenterDBRow to delete
 	 */
-	public static function deleteRow(
-		$object
-	) {
+	public static function deleteRow( $object ) {
 		if ( !$object instanceof DataCenterDBRow ) {
 			throw new MWException(
 				'Object is not an instance of DataCenterDBRow'
@@ -754,10 +709,7 @@ abstract class DataCenterDB {
 	 * - class as DataCenterDBAsset
 	 * - category as asset
 	 */
-	public static function getAssets(
-		$type,
-		array $options = array()
-	) {
+	public static function getAssets( $type, array $options = array() ) {
 		return self::getRows( 'DataCenterDBAsset', 'asset', $type, $options );
 	}
 
@@ -766,10 +718,7 @@ abstract class DataCenterDB {
 	 * - class as DataCenterDBAsset
 	 * - category as asset
 	 */
-	public static function getAsset(
-		$type,
-		$id
-	) {
+	public static function getAsset( $type, $id ) {
 		return self::getRow( 'DataCenterDBAsset', 'asset', $type, $id );
 	}
 
@@ -777,10 +726,7 @@ abstract class DataCenterDB {
 	 * Wraps self::numRows specializing...
 	 * - category as asset
 	 */
-	public static function numAssets(
-		$type,
-		array $options = array()
-	) {
+	public static function numAssets( $type, array $options = array() ) {
 		return self::numRows( 'asset', $type, $options );
 	}
 
@@ -791,10 +737,7 @@ abstract class DataCenterDB {
 	 * - class as DataCenterDBModel
 	 * - category as model
 	 */
-	public static function getModels(
-		$type,
-		array $options = array()
-	) {
+	public static function getModels( $type, array $options = array() ) {
 		return self::getRows( 'DataCenterDBModel', 'model', $type, $options );
 	}
 
@@ -803,10 +746,7 @@ abstract class DataCenterDB {
 	 * - class as DataCenterDBModel
 	 * - category as model
 	 */
-	public static function getModel(
-		$type,
-		$id
-	) {
+	public static function getModel( $type, $id ) {
 		return self::getRow( 'DataCenterDBModel', 'model', $type, $id );
 	}
 
@@ -814,10 +754,7 @@ abstract class DataCenterDB {
 	 * Wraps self::numRows specializing...
 	 * - category as model
 	 */
-	public static function numModels(
-		$type,
-		array $options = array()
-	) {
+	public static function numModels( $type, array $options = array() ) {
 		return self::numRows( 'model', $type, $options );
 	}
 
@@ -828,10 +765,7 @@ abstract class DataCenterDB {
 	 * - class as DataCenterDBLink
 	 * - category as link
 	 */
-	public static function getLinks(
-		$type,
-		array $options = array()
-	) {
+	public static function getLinks( $type, array $options = array() ) {
 		return self::getRows( 'DataCenterDBLink', 'link', $type, $options );
 	}
 
@@ -840,10 +774,7 @@ abstract class DataCenterDB {
 	 * - class as DataCenterDBLink
 	 * - category as link
 	 */
-	public static function getLink(
-		$type,
-		$id
-	) {
+	public static function getLink( $type, $id ) {
 		return self::getRow( 'DataCenterDBLink', 'link', $type, $id );
 	}
 
@@ -851,10 +782,7 @@ abstract class DataCenterDB {
 	 * Wraps self::numRows specializing...
 	 * - category as link
 	 */
-	public static function numLinks(
-		$type,
-		array $options = array()
-	) {
+	public static function numLinks( $type, array $options = array() ) {
 		return self::numRows( 'link', $type, $options );
 	}
 
@@ -864,9 +792,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as asset
 	 */
-	public static function getAssetLinks(
-		array $options = array()
-	) {
+	public static function getAssetLinks( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBAssetLink', 'link', 'asset', $options
 		);
@@ -878,9 +804,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as asset
 	 */
-	public static function getAssetLink(
-		$id
-	) {
+	public static function getAssetLink( $id ) {
 		return self::getRow( 'DataCenterDBAssetLink', 'link', 'asset', $id );
 	}
 
@@ -889,9 +813,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as asset
 	 */
-	public static function numAssetLinks(
-		array $options = array()
-	) {
+	public static function numAssetLinks( array $options = array() ) {
 		return self::numRows( 'link', 'asset', $options );
 	}
 
@@ -901,9 +823,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as model
 	 */
-	public static function getModelLinks(
-		array $options = array()
-	) {
+	public static function getModelLinks( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBModelLink', 'link', 'model', $options
 		);
@@ -915,9 +835,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as model
 	 */
-	public static function getModelLink(
-		$id
-	) {
+	public static function getModelLink( $id ) {
 		return self::getRow( 'DataCenterDBModelLink', 'link', 'model', $id );
 	}
 
@@ -926,9 +844,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as model
 	 */
-	public static function numModelLinks(
-		array $options = array()
-	) {
+	public static function numModelLinks( array $options = array() ) {
 		return self::numRows( 'link', 'model', $options );
 	}
 
@@ -938,9 +854,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as field
 	 */
-	public static function getMetaFieldLinks(
-		array $options = array()
-	) {
+	public static function getMetaFieldLinks( array $options = array() ) {
 		return self::getRows( 'DataCenterDBMetaFieldLink', 'link', 'field', $options );
 	}
 
@@ -950,9 +864,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as field
 	 */
-	public static function getMetaFieldLink(
-		$id
-	) {
+	public static function getMetaFieldLink( $id ) {
 		return self::getRow( 'DataCenterDBMetaFieldLink', 'link', 'field', $id );
 	}
 
@@ -961,9 +873,7 @@ abstract class DataCenterDB {
 	 * - category as link
 	 * - type as field
 	 */
-	public static function numMetaFieldLinks(
-		array $options = array()
-	) {
+	public static function numMetaFieldLinks( array $options = array() ) {
 		return self::numRows( 'link', 'field', $options );
 	}
 
@@ -975,9 +885,7 @@ abstract class DataCenterDB {
 	 * - category as facility
 	 * - type as location
 	 */
-	public static function getLocations(
-		array $options = array()
-	) {
+	public static function getLocations( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBLocation', 'facility', 'location', $options
 		);
@@ -989,9 +897,7 @@ abstract class DataCenterDB {
 	 * - category as facility
 	 * - type as location
 	 */
-	public static function getLocation(
-		$id
-	) {
+	public static function getLocation( $id ) {
 		return self::getRow(
 			'DataCenterDBLocation', 'facility', 'location', $id
 		);
@@ -1002,9 +908,7 @@ abstract class DataCenterDB {
 	 * - category as facility
 	 * - type as location
 	 */
-	public static function numLocations(
-		array $options = array()
-	) {
+	public static function numLocations( array $options = array() ) {
 		return self::numRows( 'facility', 'location', $options );
 	}
 
@@ -1014,9 +918,7 @@ abstract class DataCenterDB {
 	 * - category as facility
 	 * - type as space
 	 */
-	public static function getSpaces(
-		array $options = array()
-	) {
+	public static function getSpaces( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBSpace', 'facility', 'space', $options
 		);
@@ -1028,9 +930,7 @@ abstract class DataCenterDB {
 	 * - category as facility
 	 * - type as space
 	 */
-	public static function getSpace(
-		$id
-	) {
+	public static function getSpace( $id ) {
 		return self::getRow(
 			'DataCenterDBSpace', 'facility', 'space', $id
 		);
@@ -1041,9 +941,7 @@ abstract class DataCenterDB {
 	 * - category as facility
 	 * - type as space
 	 */
-	public static function numSpaces(
-		array $options = array()
-	) {
+	public static function numSpaces( array $options = array() ) {
 		return self::numRows( 'facility', 'space', $options );
 	}
 
@@ -1055,9 +953,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as plan
 	 */
-	public static function getPlans(
-		array $options = array()
-	) {
+	public static function getPlans( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBPlan',
 			'meta',
@@ -1079,9 +975,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as plan
 	 */
-	public static function getPlan(
-		$id
-	) {
+	public static function getPlan( $id ) {
 		return self::getRow(
 			'DataCenterDBPlan',
 			'meta',
@@ -1100,9 +994,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as plan
 	 */
-	public static function numPlans(
-		array $options = array()
-	) {
+	public static function numPlans( array $options = array() ) {
 		return self::numRows( 'meta', 'plan', $options );
 	}
 
@@ -1112,9 +1004,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as change
 	 */
-	public static function getChanges(
-		array $options = array()
-	) {
+	public static function getChanges( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBChange',
 			'meta',
@@ -1149,10 +1039,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as change
 	 */
-	public static function getChange(
-		$id,
-		array $options = array()
-	) {
+	public static function getChange( $id, array $options = array() ) {
 		return self::getRow(
 			'DataCenterDBChange',
 			'meta',
@@ -1187,9 +1074,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as change
 	 */
-	public static function numChanges(
-		array $options = array()
-	) {
+	public static function numChanges( array $options = array() ) {
 		return self::numRows( 'meta', 'change', $options );
 	}
 
@@ -1199,9 +1084,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as field
 	 */
-	public static function getMetaFields(
-		array $options = array()
-	) {
+	public static function getMetaFields( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBMetaField', 'meta', 'field', $options
 		);
@@ -1213,9 +1096,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as field
 	 */
-	public static function getMetaField(
-		$id
-	) {
+	public static function getMetaField( $id ) {
 		return self::getRow(
 			'DataCenterDBMetaField', 'meta', 'field', $id
 		);
@@ -1226,9 +1107,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as field
 	 */
-	public static function numMetaFields(
-		array $options = array()
-	) {
+	public static function numMetaFields( array $options = array() ) {
 		return self::numRows( 'meta', 'field', $options );
 	}
 
@@ -1238,9 +1117,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as value
 	 */
-	public static function getMetaValues(
-		array $options = array()
-	) {
+	public static function getMetaValues( array $options = array() ) {
 		return self::getRows(
 			'DataCenterDBMetaValue', 'meta', 'value', $options
 		);
@@ -1252,9 +1129,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as value
 	 */
-	public static function getMetaValue(
-		$id
-	) {
+	public static function getMetaValue( $id ) {
 		return self::getRow(
 			'DataCenterDBMetaValue', 'meta', 'value', $id
 		);
@@ -1265,9 +1140,7 @@ abstract class DataCenterDB {
 	 * - category as meta
 	 * - type as value
 	 */
-	public static function numMetaValues(
-		array $options = array()
-	) {
+	public static function numMetaValues( array $options = array() ) {
 		return self::numRows( 'meta', 'value', $options );
 	}
 
@@ -1275,15 +1148,11 @@ abstract class DataCenterDB {
 
 	/**
 	 * Builds array of options which specify fields to sort results by
-	 * @param	category		String of category to lookup type in
-	 * @param	type			String of category to lookup fields in
-	 * @param	fields			String or Array of Strings of fields to sort by
+	 * @param $category String: category to lookup type in
+	 * @param $type String: category to lookup fields in
+	 * @param $fields String or Array of Strings of fields to sort by
 	 */
-	public static function buildSort(
-		$category,
-		$type,
-		$fields
-	) {
+	public static function buildSort( $category, $type, $fields ) {
 		$columns = array();
 		if ( !is_array( $fields ) ) {
 			$fields = array( $fields );
@@ -1382,11 +1251,9 @@ abstract class DataCenterDB {
 
 	/**
 	 * Builds array of options which specify limit and offset
-	 * @param	path			Array of link parameters
+	 * @param $path Array: array of link parameters
 	 */
-	public static function buildRange(
-		$path
-	) {
+	public static function buildRange( $path ) {
 		if ( !isset( $path['limit'] ) || $path['limit'] == null ) {
 			$path['limit'] = 10;
 		}
@@ -1404,17 +1271,12 @@ abstract class DataCenterDB {
 	/**
 	 * Builds array of options which match a query against a number of fields
 	 * using case-insensitive partial matching
-	 * @param	category		String of category to lookup type in
-	 * @param	type			String of category to lookup fields in
-	 * @param	fields			String of field to match query with
-	 * @param	value			String of query to match to field value
+	 * @param $category String: category to lookup type in
+	 * @param $type String: category to lookup fields in
+	 * @param $fields String: field to match query with
+	 * @param $query String: query to match to field value
 	 */
-	public static function buildMatch(
-		$category,
-		$type,
-		$fields,
-		$query
-	) {
+	public static function buildMatch( $category, $type, $fields, $query ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$conditions = array();
 		if ( !is_array( $fields ) ) {
@@ -1433,13 +1295,10 @@ abstract class DataCenterDB {
 	/**
 	 * Creates and returns an associative array of rows keyed by a specific
 	 * field, for use as a lookup table or to divide rows into groups
-	 * @param	field			String of name of field to use as key
-	 * @param	rows			Array of DataCenterDBRow objects to process
+	 * @param $field String: name of field to use as key
+	 * @param $rows Array: DataCenterDBRow objects to process
 	 */
-	public static function buildLookupTable(
-		$field,
-		array $rows
-	) {
+	public static function buildLookupTable( $field, array $rows ) {
 		if ( !is_scalar( $field ) && $field !== null ) {
 			throw new MWException(
 				$field . ' is not a field for table keys to be made from'
@@ -1515,11 +1374,7 @@ class DataCenterDBRow {
 	 * @param	row				Optional Associative Array of column and value
 	 * 							pairs to use as initial data overriding defaults
 	 */
-	public function __construct(
-		$category,
-		$type,
-		array $row = array()
-	) {
+	public function __construct( $category, $type, array $row = array() ) {
 		$this->category = $category;
 		$this->type = $type;
 		$this->set( DataCenterDB::getRowDefaults( $category, $type ) );
@@ -1537,9 +1392,7 @@ class DataCenterDBRow {
 	/**
 	 * Sets row data from an Associative Array of column and value pairs
 	 */
-	public function setRow(
-		array $row = array()
-	) {
+	public function setRow( array $row = array() ) {
 		$this->row = count( $row ) > 0 ? $row : null;
 	}
 
@@ -1578,9 +1431,7 @@ class DataCenterDBRow {
 	 * Gets fully prefixed column name from simplified field name
 	 * @param	fieldName		String of name of field to lookup
 	 */
-	public function getColumnName(
-		$fieldName
-	) {
+	public function getColumnName( $fieldName ) {
 		return DataCenterDB::getColumnName(
 			$this->category, $this->type, $fieldName
 		);
@@ -1590,9 +1441,7 @@ class DataCenterDBRow {
 	 * Gets simplified field name from fully prefixed column name
 	 * @param	columnName		String of name of column to lookup
 	 */
-	public function getFieldName(
-		$columnName
-	) {
+	public function getFieldName( $columnName ) {
 		return DataCenterDB::getFieldName(
 			$this->category, $this->type, $columnName
 		);
@@ -1622,11 +1471,7 @@ class DataCenterDBRow {
 	 * 					passed, all fields will be returned as an Associative
 	 * 					Array.
 	 */
-	public function get(
-		$category = null,
-		$type = null,
-		$field = null
-	) {
+	public function get( $category = null, $type = null, $field = null ) {
 		if ( $category === null && $type === null && $field === null ) {
 			$category = $this->category;
 			$type = $this->type;
@@ -1653,7 +1498,7 @@ class DataCenterDBRow {
 				}
 			}
 			return $results;
-		} else if ( is_array( $field ) ) {
+		} elseif ( is_array( $field ) ) {
 			$results = array();
 			foreach ( $field as $fieldName ) {
 				$columnName = DataCenterDB::getColumnName(
@@ -1687,10 +1532,7 @@ class DataCenterDBRow {
 	 * 							Array of field and value pairs
 	 * @param	value			Optional Scalar of value to set
 	 */
-	public function set(
-		$column,
-		$value = null
-	) {
+	public function set( $column, $value = null ) {
 		if ( is_array( $column ) ) {
 			foreach ( $column as $name => $value ) {
 				$columnName = $this->getColumnName( $name );
@@ -1749,9 +1591,7 @@ class DataCenterDBComponent extends DataCenterDBRow {
 	/**
 	 * Gets changes that reference this object by category, type, and ID
 	 */
-	public function getChanges(
-		array $options = array()
-	) {
+	public function getChanges( array $options = array() ) {
 		return DataCenterDB::getChanges(
 			array_merge_recursive(
 				$options,
@@ -1768,9 +1608,7 @@ class DataCenterDBComponent extends DataCenterDBRow {
 		);
 	}
 
-	public function numChanges(
-		array $options = array()
-	) {
+	public function numChanges( array $options = array() ) {
 		return DataCenterDB::numChanges(
 			array_merge_recursive(
 				$options,
@@ -1787,9 +1625,7 @@ class DataCenterDBComponent extends DataCenterDBRow {
 		);
 	}
 
-	public function saveMetaValues(
-		$values = null
-	) {
+	public function saveMetaValues( $values = null ) {
 		if ( !is_array( $values ) ) {
 			return;
 		}
@@ -1823,9 +1659,7 @@ class DataCenterDBComponent extends DataCenterDBRow {
 		}
 	}
 
-	public function insertChange(
-		$values
-	) {
+	public function insertChange( $values ) {
 		if ( !is_array( $values ) ) {
 			return;
 		}
@@ -1926,10 +1760,7 @@ class DataCenterDBAsset extends DataCenterDBComponent {
 	 * - category as asset
 	 * - type as rack
 	 */
-	public static function newFromType(
-		$type,
-		array $values = array()
-	) {
+	public static function newFromType( $type, array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'asset', $type, $values );
 	}
 
@@ -1965,10 +1796,7 @@ class DataCenterDBModel extends DataCenterDBComponent  {
 	 * - class as DataCenterDBModel
 	 * - category as model
 	 */
-	public static function newFromType(
-		$type,
-		array $values = array()
-	) {
+	public static function newFromType( $type, array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'model', $type, $values );
 	}
 
@@ -2031,9 +1859,7 @@ class DataCenterDBAssetLink extends DataCenterDBLink {
 	 * - category as link
 	 * - type as asset
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'link', 'asset', $values );
 	}
 
@@ -2042,9 +1868,7 @@ class DataCenterDBAssetLink extends DataCenterDBLink {
 	/**
 	 * Gets flat list of links
 	 */
-	public function getLinks(
-		array $options = array()
-	) {
+	public function getLinks( array $options = array() ) {
 		if ( !$this->links ) {
 			$links = DataCenterDB::getAssetLinks(
 				DataCenterDB::buildCondition(
@@ -2081,12 +1905,10 @@ class DataCenterDBAssetLink extends DataCenterDBLink {
 
 	/**
 	 * Builds structure of links recursively using list of links
-	 * @param	links			Array of DataCenterDBAssetLink to use as source
-	 * 							for recursive structure construction
+	 * @param $links Array: DataCenterDBAssetLink to use as source for
+	 * 							recursive structure construction
 	 */
-	public function buildStructure(
-		array $links
-	) {
+	public function buildStructure( array $links ) {
 		$id = $this->getId();
 		foreach ( $links as $key => $link ) {
 			if ( $link->get( 'parent_link' ) == $id ) {
@@ -2113,9 +1935,7 @@ class DataCenterDBModelLink extends DataCenterDBLink  {
 	 * - category as link
 	 * - type as model
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'link', 'model', $values );
 	}
 
@@ -2124,10 +1944,7 @@ class DataCenterDBModelLink extends DataCenterDBLink  {
 	 * @param	parent			DataCenterDBModel to set as parent
 	 * @param	child			DataCenterDBModel to set as child
 	 */
-	public static function newFromModels(
-		$parent,
-		$child
-	) {
+	public static function newFromModels( $parent, $child ) {
 		if ( !( $parent instanceof DataCenterDBModel ) ) {
 			throw new MWException(
 				'Parent object is not compatible with DataCenterDBModel'
@@ -2170,9 +1987,7 @@ class DataCenterDBMetaFieldLink extends DataCenterDBLink {
 	 * - category as link
 	 * - type as field
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'link', 'field', $values );
 	}
 
@@ -2235,9 +2050,7 @@ class DataCenterDBLocation extends DataCenterDBComponent {
 	 * - category as facility
 	 * - type as location
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass(
 			__CLASS__, 'facility', 'location', $values
 		);
@@ -2245,9 +2058,7 @@ class DataCenterDBLocation extends DataCenterDBComponent {
 
 	/* Functions */
 
-	public function getSpaces(
-		array $options = array()
-	) {
+	public function getSpaces( array $options = array() ) {
 		return DataCenterDB::getRows(
 			__CLASS__,
 			'facility',
@@ -2272,15 +2083,11 @@ class DataCenterDBSpace extends DataCenterDBComponent {
 	 * - category as facility
 	 * - type as space
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'facility', 'space', $values );
 	}
 
-	public function getPlans(
-		array $options = array()
-	) {
+	public function getPlans( array $options = array() ) {
 		if ( $this->type == 'space' ) {
 			return DataCenterDB::getPlans(
 				array_merge_recursive(
@@ -2311,17 +2118,13 @@ class DataCenterDBMetaField extends DataCenterDBRow  {
 	 * - category as meta
 	 * - type as field
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'meta', 'field', $values );
 	}
 
 	/* Functions */
 
-	public function getLinks(
-		array $options = array()
-	) {
+	public function getLinks( array $options = array() ) {
 		return DataCenterDB::getMetaFieldLinks(
 			array_merge_recursive(
 				$options,
@@ -2359,9 +2162,7 @@ class DataCenterDBMetaValue extends DataCenterDBRow  {
 	 * - category as meta
 	 * - type as value
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'meta', 'value', $values );
 	}
 
@@ -2398,9 +2199,7 @@ class DataCenterDBChange extends DataCenterDBRow  {
 	 * - category as meta
 	 * - type as change
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'meta', 'change', $values );
 	}
 
@@ -2446,9 +2245,7 @@ class DataCenterDBPlan extends DataCenterDBRow  {
 	 * - category as meta
 	 * - type as plan
 	 */
-	public static function newFromValues(
-		array $values = array()
-	) {
+	public static function newFromValues( array $values = array() ) {
 		return parent::newFromClass( __CLASS__, 'meta', 'plan', $values );
 	}
 
@@ -2466,9 +2263,7 @@ class DataCenterDBPlan extends DataCenterDBRow  {
 	/**
 	 * Gets flat list of links
 	 */
-	public function getLinks(
-		array $options = array()
-	) {
+	public function getLinks( array $options = array() ) {
 		if ( !$this->links ) {
 			$this->links = DataCenterDB::getAssetLinks(
 				DataCenterDB::buildCondition(
@@ -2482,9 +2277,7 @@ class DataCenterDBPlan extends DataCenterDBRow  {
 	/**
 	 * Gets structure of links
 	 */
-	public function getStructure(
-		array $options = array()
-	) {
+	public function getStructure( array $options = array() ) {
 		if ( !$this->structure ) {
 			$links = DataCenterDB::getRows(
 				'DataCenterDBAssetLink',

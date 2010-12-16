@@ -5,13 +5,15 @@
  * @addtogroup Extensions
 */
 
+require_once( dirname( __FILE__ ) . '/MathStatFunctions.i18n.magic.php' );
+
 $messages = array();
 
 $messages['en'] = array(
-        'msfunc_desc'     => 'A collection of mathematical and statistical functions',
-        'msfunc_nan'      => 'Resulting value is not a number',
-        'msfunc_inf'      => 'Resulting value is infinity',
-        'msfunc_div_zero' => 'Division by zero',
+	'msfunc_desc'     => 'A collection of mathematical and statistical functions',
+	'msfunc_nan'      => 'Resulting value is not a number',
+	'msfunc_inf'      => 'Resulting value is infinity',
+	'msfunc_div_zero' => 'Division by zero',
 );
 
 /** Message documentation (Message documentation)
@@ -94,6 +96,16 @@ $messages['bn'] = array(
 	'msfunc_div_zero' => 'শূন্য দিয়ে বিভাজন',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'msfunc_desc' => "Dastumad arc'hwelioù jedoniel ha stadegoù",
+	'msfunc_nan' => "An disoc'h n'eo ket un niver anezhañ",
+	'msfunc_inf' => "Anfin eo an disoc'h",
+	'msfunc_div_zero' => 'Rannadur dre mann',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -151,6 +163,14 @@ $messages['dsb'] = array(
 	'msfunc_div_zero' => 'Diwizija pśez nul',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'msfunc_desc' => 'Μία συλλογή μαθηματικών και στατιστικών συναρτήσεων',
+	'msfunc_div_zero' => 'Διαίρεση διά του μηδενός',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -189,6 +209,18 @@ $messages['fa'] = array(
 	'msfunc_div_zero' => 'تقسیم بر صفر',
 );
 
+/** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'msfunc_desc' => 'Kokoelma matemaattisia ja tilastollisia funktioita.',
+	'msfunc_nan' => 'Tulos ei ole numero',
+	'msfunc_inf' => 'Tulos on ääretön',
+	'msfunc_div_zero' => 'Jako nollalla',
+);
+
 /** French (Français)
  * @author Grondin
  * @author Sherbrooke
@@ -220,6 +252,16 @@ $messages['gsw'] = array(
 	'msfunc_nan' => 'Ergebniswärt isch kei Zahl',
 	'msfunc_inf' => 'Ergebniswärt isch uuändlig',
 	'msfunc_div_zero' => 'Division dur Null',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Dineshjk
+ */
+$messages['gu'] = array(
+	'msfunc_desc' => 'ગાણિતિક અને આંકડાકીય વિધેયોનું કલેક્શન',
+	'msfunc_nan' => 'પરીણામ મૂલ્ય સંખ્યા નથી.',
+	'msfunc_inf' => 'પરીણામ મૂલ્ય અનંત છે.',
+	'msfunc_div_zero' => 'શૂન્ય દ્વારા ભાગાકાર',
 );
 
 /** Hebrew (עברית)
@@ -263,8 +305,10 @@ $messages['hsb'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'msfunc_desc' => 'Matematikai és statisztikai függvények gyűjteménye',
 	'msfunc_nan' => 'A kapott érték nem szám',
 	'msfunc_inf' => 'A kapott érték végtelen',
 	'msfunc_div_zero' => 'Nullával való osztás',
@@ -280,11 +324,14 @@ $messages['ia'] = array(
 	'msfunc_div_zero' => 'Division per zero',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
 $messages['id'] = array(
-	'msfunc_nan' => 'Nilai hasil tidak berupa angka',
-	'msfunc_inf' => 'Nilai hasil tak hingga',
-	'msfunc_div_zero' => 'Pembagian dengan nol',
+	'msfunc_desc' => 'Sebuah koleksi fungsi-fungsi matematika dan statistika',
+	'msfunc_nan' => 'Nilai hasil tidak berupa angka (NaN)',
+	'msfunc_inf' => 'Nilai hasil adalah tak hingga',
+	'msfunc_div_zero' => 'Pembagian oleh nol',
 );
 
 /** Ido (Ido)
@@ -335,6 +382,14 @@ $messages['km'] = array(
 	'msfunc_div_zero' => 'ចែកនឹងសូន្យ',
 );
 
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'msfunc_inf' => '경과값이 무한대입니다.',
+	'msfunc_div_zero' => '0으로 나눔',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -353,6 +408,16 @@ $messages['lb'] = array(
 	'msfunc_nan' => "D'Resultat ass keng Zuel",
 	'msfunc_inf' => "D'Resultat ass onendlech",
 	'msfunc_div_zero' => 'Divisioun duerch null',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'msfunc_desc' => 'Збир математички и статистички функции',
+	'msfunc_nan' => 'Добиената вредност не е број',
+	'msfunc_inf' => 'Добиената вредност е бесконечност',
+	'msfunc_div_zero' => 'Делење со нула',
 );
 
 /** Malayalam (മലയാളം)
@@ -427,8 +492,10 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'msfunc_desc' => "N'ansema ëd fonsion matemàtiche e statìstiche",
 	'msfunc_nan' => "L'arzultà a l'é nen un nùmer",
 	'msfunc_inf' => 'Arzultà anfinì',
 	'msfunc_div_zero' => 'Division për zero',
@@ -479,6 +546,9 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'msfunc_desc' => "'Na colleziona de funziune matemateche e statisteche",
+	'msfunc_nan' => "'U valore resultande non g'è 'nu numere",
+	'msfunc_inf' => "'U valore resultande jè infinite",
 	'msfunc_div_zero' => 'Divisione pe zero',
 );
 
@@ -503,15 +573,21 @@ $messages['sk'] = array(
 	'msfunc_div_zero' => 'Delenie nulou',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица) */
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
 $messages['sr-ec'] = array(
+	'msfunc_desc' => 'Колекција математичких и статистичких функција',
 	'msfunc_nan' => 'Резултат није број',
 	'msfunc_inf' => 'Резултат је бесконачан',
 	'msfunc_div_zero' => 'Дељиво са нулом',
 );
 
-/** latinica (latinica) */
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
 $messages['sr-el'] = array(
+	'msfunc_desc' => 'Kolekcija matematičkih i statističkih funkcija',
 	'msfunc_nan' => 'Rezultat nije broj',
 	'msfunc_inf' => 'Rezultat je beskonačan',
 	'msfunc_div_zero' => 'Deljivo sa nulom',
@@ -565,6 +641,16 @@ $messages['tl'] = array(
 	'msfunc_div_zero' => 'Hatiin sa pamamagitan ng wala',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'msfunc_desc' => 'Matematiksel ve istatistiksel fonksiyonlar koleksiyonu',
+	'msfunc_nan' => 'Sonuç değeri bir sayı değildir',
+	'msfunc_inf' => 'Sonuç değeri sonsuzluktur',
+	'msfunc_div_zero' => 'Sıfıra bölme',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -612,8 +698,11 @@ $messages['zh-hans'] = array(
 	'msfunc_div_zero' => '除以零',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
 $messages['zh-hant'] = array(
+	'msfunc_desc' => '數學與統計功能的集合',
 	'msfunc_nan' => '結果數值不是一個數字',
 	'msfunc_inf' => '結果數值是無限',
 	'msfunc_div_zero' => '除以零',

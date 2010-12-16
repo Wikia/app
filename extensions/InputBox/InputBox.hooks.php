@@ -12,11 +12,9 @@ class InputBoxHooks {
 	/* Functions */
 
 	// Initialization
-	public static function register() {
-		global $wgParser;
-
+	public static function register( &$parser ) {
 		// Register the hook with the parser
-		$wgParser->setHook( 'inputbox', array( 'InputBoxHooks', 'render' ) );
+		$parser->setHook( 'inputbox', array( 'InputBoxHooks', 'render' ) );
 
 		// Continue
 		return true;

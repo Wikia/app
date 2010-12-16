@@ -107,8 +107,8 @@ kin la sina toki e ni: toki sina ni li tan sina taso anu lipu pi ken ali.
 'histlast'  => 'sin taso',
 
 # Search results
-'prevn'        => 'nanpa $1 pini',
-'nextn'        => 'nanpa $1 kama',
+'prevn'        => 'nanpa {{PLURAL:$1|$1}} pini',
+'nextn'        => 'nanpa {{PLURAL:$1|$1}} kama',
 'viewprevnext' => 'o lukin e ($1 {{int:pipe-separator}} $2) ($3).',
 
 # Preferences page
@@ -120,12 +120,17 @@ kin la sina toki e ni: toki sina ni li tan sina taso anu lipu pi ken ali.
 'newpageletter'   => 'lipu sin',
 
 # Recent changes linked
-'recentchangeslinked' => 'ante sama',
+'recentchangeslinked'         => 'ante sama',
+'recentchangeslinked-feed'    => 'ante sama',
+'recentchangeslinked-toolbox' => 'ante sama',
 
 # Upload
 'upload'            => 'o pana e lipu nanpa',
 'filedesc'          => 'ante li seme',
 'fileuploadsummary' => 'ante li seme:',
+
+# File description page
+'file-anchor-link' => 'Lipu nanpa',
 
 # Random page
 'randompage' => 'mi wile lukin e lipu ante',

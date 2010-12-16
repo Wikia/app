@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-simpleurl
+  label: StatusNet - SimpleUrl
+  description: "{{int:bw-desc-statusnet-plugin-simpleurl}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/simpleurl
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/SimpleUrl/locale/%CODE%/LC_MESSAGES/SimpleUrl.po
+  targetPattern: plugins/SimpleUrl/locale/%CODE%/LC_MESSAGES/SimpleUrl.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: simpleurl-
+  patterns:
+    - "*"

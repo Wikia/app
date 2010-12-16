@@ -13,19 +13,23 @@
  */
 class SMWTableResultPrinter extends SMWResultPrinter {
 
+	public function getName() {
+		wfLoadExtensionMessages('SemanticMediaWiki');
+		return wfMsg('smw_printername_' . $this->mFormat);
+	}
+
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber;
 		SMWOutputs::requireHeadItem(SMW_HEADER_SORTTABLE);
 
 		// print header
-		if ('broadtable' == $this->mFormat)
-			$widthpara = ' width="100%"';
-		else $widthpara = '';
-		$result = "<table class=\"smwtable\"$widthpara id=\"querytable" . $smwgIQRunningNumber . "\">\n";
-		if ($this->mShowHeaders) { // building headers
+		$result = '<table class="smwtable"' .
+			  ('broadtable' == $this->mFormat?' width="100%"':'') .
+				  " id=\"querytable$smwgIQRunningNumber\">\n";
+		if ($this->mShowHeaders != SMW_HEADERS_HIDE) { // building headers
 			$result .= "\t<tr>\n";
 			foreach ($res->getPrintRequests() as $pr) {
-				$result .= "\t\t<th>" . $pr->getText($outputmode, $this->mLinker) . "</th>\n";
+				$result .= "\t\t<th>" . $pr->getText($outputmode, ($this->mShowHeaders == SMW_HEADERS_PLAIN?null:$this->mLinker) ) . "</th>\n";
 			}
 			$result .= "\t</tr>\n";
 		}
@@ -34,24 +38,31 @@ class SMWTableResultPrinter extends SMWResultPrinter {
 		while ( $row = $res->getNext() ) {
 			$result .= "\t<tr>\n";
 			$firstcol = true;
+			$fieldcount = -1;
 			foreach ($row as $field) {
-				$result .= "\t\t<td>";
+				$fieldcount = $fieldcount + 1;
+
+				$result .= "\t\t<td";
+				$alignment = trim($field->getPrintRequest()->getParameter('align'));
+				if (($alignment == 'right') || ($alignment == 'left') || ($alignment == 'center')) {
+					$result .= ' style="text-align:' . $alignment . ';"';
+				}
+				$result .= ">";
+
 				$first = true;
 				while ( ($object = $field->getNextObject()) !== false ) {
-					if ($object->getTypeID() == '_wpg') { // use shorter "LongText" for wikipage
-						$text = $object->getLongText($outputmode,$this->getLinker($firstcol));
-					} else {
-						$text = $object->getShortText($outputmode,$this->getLinker($firstcol));
-					}
 					if ($first) {
-						if ($object->isNumeric()) { // use numeric sortkey
-							$result .= '<span class="smwsortkey">' . $object->getNumericValue() . '</span>';
+						if ($object->isNumeric()) { // additional hidden sortkey for numeric entries
+							$result .= '<span class="smwsortkey">' . $object->getValueKey() . '</span>';
 						}
 						$first = false;
 					} else {
 						$result .= '<br />';
 					}
-					$result .= $text;
+					// use shorter "LongText" for wikipage
+					$result .= ( ($object->getTypeID() == '_wpg')||($object->getTypeID() == '__sin') )?
+						   $object->getLongText($outputmode,$this->getLinker($firstcol)):
+						   $object->getShortText($outputmode,$this->getLinker($firstcol));
 				}
 				$result .= "</td>\n";
 				$firstcol = false;
@@ -70,6 +81,12 @@ class SMWTableResultPrinter extends SMWResultPrinter {
 		$result .= "</table>\n"; // print footer
 		$this->isHTML = ($outputmode == SMW_OUTPUT_HTML); // yes, our code can be viewed as HTML if requested, no more parsing needed
 		return $result;
+	}
+
+	public function getParameters() {
+		$params = parent::getParameters();
+		$params = array_merge($params, parent::textDisplayParameters());
+		return $params;
 	}
 
 }

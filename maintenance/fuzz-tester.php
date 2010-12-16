@@ -138,7 +138,7 @@ Wiki configuration for testing:
   }
   // --------- End ---------
 
-  Also add/change this in AdminSettings.php:
+  Also add/change this in LocalSettings.php:
   // --------- Start ---------
   $wgEnableProfileInfo = true;
   $wgDBserver = "localhost"; // replace with DB server hostname
@@ -169,7 +169,7 @@ TODO:
 /////////////////////////// COMMAND LINE HELP ////////////////////////////////////
 
 // This is a command line script, load MediaWiki env (gives command line options);
-require('commandLine.inc');
+require_once( dirname(__FILE__) . '/commandLine.inc' );
 
 // if the user asked for an explanation of command line options.
 if ( isset( $options["help"] ) ) {
@@ -1320,7 +1320,7 @@ class viewPageTest extends pageTest {
                         "nds-nl", "nl", "nn", "no", "non", "nv", "oc", "or", "os", "pa", 
                         "pl", "pms", "ps", "pt", "pt-br", "qu", "rmy", "ro", "ru", "sc", 
                         "sd", "sk", "sl", "sq", "sr", "sr-ec", "sr-el",
-                        "su", "sv", "ta", "te", "th", "tlh", "tr", "tt", "ty", "tyv", "udm", 
+                        "su", "sv", "ta", "te", "th", "tr", "tt", "ty", "tyv", "udm", 
                         "ug", "uk", "ur", "utf8", "vec", "vi", "wa", "xal", "yi", "za", 
                         "zh", "zh-cn", "zh-hk", "zh-sg", "zh-tw", "zh-tw") ),
                 "returnto"       => wikiFuzz::makeFuzz(2),
@@ -2447,7 +2447,7 @@ function validateHTML($text) {
     if (curl_error($ch)) {
         trigger_error("Curl error #: " . curl_errno($ch) . " - " . curl_error ($ch) );
         print "Curl error #: " . curl_errno($ch) . " - " . curl_error ($ch) . " - exiting.\n";
-        exit();
+        exit(1);
     }
 
     curl_close ($ch);

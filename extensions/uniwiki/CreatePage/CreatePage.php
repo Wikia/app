@@ -15,12 +15,11 @@ if ( !defined( 'MEDIAWIKI' ) )
  *     GNU GPL v2.0 or later */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CreatePage',
-	'author'         => 'Travis Derouin, Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Travis Derouin', 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Adds a [[Special:CreatePage|special page]] for creating new pages',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
-	'svn-date'       => '$LastChangedDate: 2008-12-07 06:49:59 +0100 (ndz, 07 gru 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44278 $',
 	'descriptionmsg' => 'createpage-desc',
 );
 
@@ -29,7 +28,7 @@ $wgExtensionMessagesFiles['CreatePage'] = $dir . '/CreatePage.i18n.php';
 $wgExtensionAliasesFiles['CreatePage'] = $dir . 'CreatePage.alias.php';
 $wgAutoloadClasses['SpecialCreatePage'] = $dir . '/CreatePage_body.php';
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
-
+$wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
 $wgHooks['BeforePageDisplay'][] = 'UW_CreatePage_CSS';
 function UW_CreatePage_CSS( $out ) {

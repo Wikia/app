@@ -13,6 +13,7 @@
 if ( !defined( 'MEDIAWIKI' ) ) die( 'Not a valid entry point.' );
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'ScanSet',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:ScanSet',
 	'description' => 'View scanned page images from Andreas Grosz\'s CD/DVD sets',
