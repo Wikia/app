@@ -1,6 +1,7 @@
 == Changes since 20101213 ==
 * rt#140776: Undefined variable: categories (Marooned)
 * rt#140425: IE: Facebook JS library causes events to be fired twice (macbre)
+* rt#140917: RTE: cursor issue in source mode (IE8) (macbre)
 
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
