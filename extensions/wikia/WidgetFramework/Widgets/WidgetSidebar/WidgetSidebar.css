@@ -1,0 +1,8 @@
+.WidgetSidebar .listLeft,
+.WidgetSidebar .listRight {
+	width: 50%;
+	float: left;
+}
+
+/* macbre: fixes #1878 */
+* html .WidgetSidebar .listLeft {padding-left: 1%; width: 49%}
