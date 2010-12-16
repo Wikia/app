@@ -34,14 +34,28 @@ class AdSS_User {
 		return false;
 	}
 
-	static function newFromPayerId( $payerId ) {
+	static function newFromPayerId( $payerId, $email ) {
 		global $wgAdSS_DBname;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
-		$row = $dbr->selectRow( 'users', '*', array( 'user_pp_payerid' => $payerId ), __METHOD__ );
+		$row = $dbr->selectRow( 'users', '*', array( 'user_pp_payerid' => $payerId, 'user_email' => $email ), __METHOD__ );
 		if( $row ) {
 			$user = self::newFromRow( $row );
 			if( $user->pp_payerId == $payerId ) {
+				return $user;
+			}
+		}
+		return false;
+	}
+
+	static function newFromBAID( $baid ) {
+		global $wgAdSS_DBname;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$row = $dbr->selectRow( 'users', '*', array( 'user_pp_baid' => $baid ), __METHOD__ );
+		if( $row ) {
+			$user = self::newFromRow( $row );
+			if( $user->pp_baid == $baid ) {
 				return $user;
 			}
 		}
