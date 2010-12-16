@@ -92,7 +92,7 @@ class FBConnectHooks {
 		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript,
 			$fbIncludeJquery, $fbScriptEnableLocales, $wgJsMimeType,
 			$wgStyleVersion, $wgScriptPath, $wgUser;
-		
+
 		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
 			// If the user's language is different from the default language, use the correctly localized facebook code.
 			// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
@@ -136,9 +136,7 @@ STYLE;
 				}
 
 				// Don't include jQuery if it's already in use on the site
-				#$out->includeJQuery();
-				// Temporary workaround until until MW is bundled with jQuery 1.4.2:
-				$out->addScriptFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+				$out->includeJQuery();
 
 				// Add the script file specified by $url
 				if(!empty($fbExtensionScript)){
