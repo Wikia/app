@@ -270,15 +270,12 @@ $wgAjaxExportList[] = "searchSuggest";
 include_once( "$IP/extensions/ExtensionFunctions.php" );
 include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
-include_once( "$IP/extensions/wikia/WidgetFramework/WidgetFramework.php" );
-include_once( "$IP/extensions/wikia/SpecialWidgetDashboard/SpecialWidgetDashboard_setup.php" );
 include_once( "$IP/extensions/wikia/StaffSig/StaffSig.php" );
 include_once( "$IP/extensions/wikia/SpecialSignup/SpecialSignup.php" );
 include_once( "$IP/extensions/wikia/MergeFiles/MergeFiles.php" );
 include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
 include_once( "$IP/extensions/wikia/MostPopularArticles/SpecialMostPopularArticles.php" );
-include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
 include_once( "$IP/extensions/wikia/Scribe/SpecialScribeEvents.php" );
 
 /**
