@@ -1,0 +1,47 @@
+#widgetsSpecialPageList dl
+{
+	margin: 8px 5px;
+	width: 400px;
+	float: left;
+	min-height: 6em;
+}
+
+#widgetsSpecialPageList dt
+{
+	float: left;
+	position: relative;
+}
+
+#widgetsSpecialPageList dd
+{
+	margin-left: 70px
+}
+
+#widgetsSpecialPageList dd h4
+{
+	padding: 4px 0 0 0;
+}
+
+#widgetsSpecialPageCopyrights
+{
+	margin: 50px 0px 30px 0px;
+	color: #666666;
+	font-size: 0.8em;
+	text-align: center;
+	clear: left;
+}
+
+#widgetsSpecialPageList dl dt .widgetsThumb
+{
+	height: 50px;
+	width: 50px;
+}
+
+#widgetsSpecialPageList .sprite {
+	position: absolute;
+	right: -5px;
+	top: 42px;
+	cursor: pointer;
+	z-index: 20;
+}
+
