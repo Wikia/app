@@ -42,7 +42,6 @@ class ContentDisplayModule extends Module {
 		#print_pre($html); print_pre(htmlspecialchars($s));
 
 		wfProfileOut(__METHOD__);
-
 		return true;
 	}
 
@@ -62,9 +61,8 @@ class ContentDisplayModule extends Module {
 	}
 
 	public static function onDoEditSectionLink( $skin, $title, $section, $tooltip, $result, $lang = false ) {
-                global $wgBlankImgUrl, $wgTitle, $wgUser;
-
-                wfProfileIn(__METHOD__);
+		global $wgBlankImgUrl, $wgTitle, $wgUser;
+		wfProfileIn(__METHOD__);
 
 		$result = ''; // reset result first
 
@@ -72,11 +70,11 @@ class ContentDisplayModule extends Module {
 
 		$class = 'editsection';
 
-                // RT#84733 - prompt to login if the user is an anon and can't edit right now (protected pages and wgDisableAnonEditing wikis).
-                $extraClass = "";
-                if ( !$wgTitle->userCanEdit() && $wgUser->isAnon() ) {
-                        $class .= " loginToEditProtectedPage";
-                }
+		// RT#84733 - prompt to login if the user is an anon and can't edit right now (protected pages and wgDisableAnonEditing wikis).
+		$extraClass = "";
+		if ( !$wgTitle->userCan('edit') && $wgUser->isAnon() ) {
+			$class .= " loginToEditProtectedPage";
+		}
 
 		$result .= Xml::openElement( 'span', array( 'class' => $class ) );
 
@@ -86,7 +84,7 @@ class ContentDisplayModule extends Module {
 			array(
 				'src' => $wgBlankImgUrl,
 				'class' => 'sprite edit-pencil',
-				'alt' => wfMsg( 'oasis-section-edit-alt', $tooltip ) 
+				'alt' => wfMsg( 'oasis-section-edit-alt', $tooltip )
 			)
 		);
 		$result .= Xml::closeElement( 'a' );
@@ -95,8 +93,7 @@ class ContentDisplayModule extends Module {
 
 		$result .= Xml::closeElement( 'span' );
 
-                wfProfileOut(__METHOD__);
-
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
