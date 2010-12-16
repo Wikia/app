@@ -119,11 +119,7 @@ class ThemeSettings {
 			}
 		}
 
-
-		$reason = 'Theme Designer - save done by ' . $wgUser->getName();
-
-		// update WF variable with current theme settings
-		WikiFactory::setVarByName(self::WikiFactorySettings, $wgCityId, $settings, $reason);
+		$reason = wfMsg( 'themedesigner-reason', $wgUser->getName() );
 
 		// update history
 		if(!empty($GLOBALS[self::WikiFactoryHistory])) {
@@ -135,6 +131,18 @@ class ThemeSettings {
 			$revisionId = 1;
 		}
 
+		// #140758 - Jakub
+		// validation
+		// default color values
+		foreach ( ThemeDesignerHelper::getColorVars() as $sColorVar => $sDefaultValue ){
+			if ( !isset( $settings[ $sColorVar ] ) || !ThemeDesignerHelper::isValidColor( $settings[ $sColorVar ] ) ){
+				$settings[ $sColorVar ] = $sDefaultValue;
+			}
+		}
+
+		// update WF variable with current theme settings
+		WikiFactory::setVarByName(self::WikiFactorySettings, $wgCityId, $settings, $reason);		
+		
 		// add entry
 		$history[] = array(
 			'settings' => $settings,
@@ -159,6 +167,6 @@ class ThemeSettings {
 
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);
 
-	}
+	}		
 
 }

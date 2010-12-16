@@ -43,6 +43,7 @@ $messages['en'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Don\'t use a graphic',
 	'themedesigner-history-item' => '$1 by $2',
 	'themedesigner-button-change-text' => 'Change text',
+	'themedesigner-reason' => 'Theme Designer - save done by $1'
 );
 
 /** Message documentation (Message documentation)
