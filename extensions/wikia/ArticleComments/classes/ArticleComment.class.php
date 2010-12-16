@@ -359,7 +359,7 @@ class ArticleComment {
 			$canEdit =
 				//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
 				defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ||
-				$this->mTitle->userCanEdit();
+				$this->mTitle->userCan( "edit" );
 
 			//TODO: create new permission and remove checking groups below
 			$groups = $wgUser->getEffectiveGroups();
