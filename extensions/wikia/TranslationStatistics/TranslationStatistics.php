@@ -17,7 +17,9 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['MessageGroupStatistics'] = $dir . 'MessageGroupStatistics.php';
 $wgAutoloadClasses['SpecialTranslationCount'] = $dir . 'SpecialTranslationCount.body.php';
 $wgAutoloadClasses['SpecialNewLanguageStats'] = $dir . 'SpecialLanguageStats.php';
+$wgAutoloadClasses['SpecialNewTranslationStats'] = $dir . 'SpecialTranslationStats.php';
 $wgAutoloadClasses['SpecialGroupStats'] = $dir . 'SpecialGroupStats.body.php';
+
 
 // Attach hooks
 $wgHooks['ArticleSaveComplete'][] = 'MessageGroupStats::invalidateStats';
@@ -28,4 +30,5 @@ $wgExtensionMessagesFiles['TranslationStatistics'] = $dir . 'TranslationStatisti
 // Special pages
 $wgSpecialPages['TranslationCount'] = 'SpecialTranslationCount';
 $wgSpecialPages['NewLanguageStats'] = 'SpecialNewLanguageStats';
+$wgSpecialPages['NewTranslationStats'] = 'SpecialNewTranslationStats';
 $wgSpecialPages['GroupStats'] = 'SpecialGroupStats';

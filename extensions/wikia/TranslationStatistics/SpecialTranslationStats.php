@@ -1,9 +1,9 @@
 <?php
 
-class SpecialTranslationStats extends SpecialPage {
+class SpecialNewTranslationStats extends SpecialPage {
 
 	public function __construct() {
-		parent::__construct( 'TranslationStats' );
+		parent::__construct( 'NewTranslationStats' );
 		$this->includable( true );
 	}
 
@@ -63,9 +63,17 @@ class SpecialTranslationStats extends SpecialPage {
 			}
 
 			$this->draw( $opts );
+		} elseif ( $opts['list'] ) {
+			$this->displayList( $opts );
 		} else {
 			$this->form( $opts );
 		}
+	}
+
+	protected function displayList( $opts ) {
+		$this->setHeaders();
+
+		/* .. */
 	}
 
 	protected function form( $opts ) {
@@ -85,9 +93,11 @@ class SpecialTranslationStats extends SpecialPage {
 		$submit = Xml::submitButton( wfMsg( 'translate-statsf-submit' ) );
 
 		$wgOut->addHTML(
+			wfMsg( 'transstats-tranlate-drawmode' ) . Xml::radio( 'mode', 'draw', true ) . wfMsg( 'transstats-translate-listmode' ) . Xml::radio( 'mode', 'list' ) .
 			$this->eInput( 'width', $opts ) .
 			$this->eInput( 'height', $opts ) .
-			'<tr><td colspan="2"><hr /></td></tr>' .
+			'<tr><td colspan="2"><hr /></td>' .
+			'</tr>' .
 			$this->eInput( 'days', $opts ) .
 			$this->eRadio( 'scale', $opts, array( 'days', 'hours' ) ) .
 			$this->eRadio( 'count', $opts, array( 'edits', 'users' ) ) .
