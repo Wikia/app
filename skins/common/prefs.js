@@ -267,4 +267,3 @@ function updateTimezoneSelection( force_offset ) {
 addOnloadHook(initprefs);
 /* Wikia change end */
 addOnloadHook( timezoneSetup );
-addOnloadHook( tabbedprefs );
