@@ -7,7 +7,7 @@ DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate 
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r31303 build 20101214',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'3.4.2',revision:'r31463 build 20101216',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)

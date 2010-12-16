@@ -109,8 +109,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	display: none;
 }
 
+/* macbre: add IE8 due to RT #140917 */
 .cke_skin_wikia .cke_browser_ie6 .cke_contents textarea,
-.cke_skin_wikia .cke_browser_ie7 .cke_contents textarea
+.cke_skin_wikia .cke_browser_ie7 .cke_contents textarea,
+.cke_skin_wikia .cke_browser_ie8 .cke_contents textarea
 {
 	position: absolute;
 }
