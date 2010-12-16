@@ -442,6 +442,20 @@ AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
 	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
 }
 
+AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
+	var script = '';
+
+	if (slotname.indexOf('INVISIBLE_') > -1) {
+		script = 'Liftium.callAd("'+size+'");';
+	}
+	else {
+		script = AdDriverDelayedLoader.getPlaceHolderIframeScript(slotname, size);
+		script += 'Liftium.callInjectedIframeAd("'+size+'", document.getElementById("'+escape(slotname)+'_iframe"));';
+	}
+
+	return script;
+}
+
 AdDriverDelayedLoader.callLiftium = function() {
 	var slotname = AdDriverDelayedLoader.currentAd.slotname;
 
@@ -456,9 +470,8 @@ AdDriverDelayedLoader.callLiftium = function() {
 	LiftiumOptions.placement = slotname;
 	
 	try {
+		var script = AdDriverDelayedLoader.getLiftiumCallScript(slotname, size);
 		var slot = document.getElementById(slotname);
-		var script = AdDriverDelayedLoader.getPlaceHolderIframeScript(slotname, size);
-		script += 'Liftium.callInjectedIframeAd("'+size+'", document.getElementById("'+escape(slotname)+'_iframe"));';
 		ghostwriter(
 			slot,
 			{
