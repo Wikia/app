@@ -9,7 +9,7 @@ class IPNListener {
 			$baid = $r->getText( 'mp_id' );
 			if( $payerId && $baid ) {
 				$user = AdSS_User::newFromBAID( $baid );
-				if( $user && ( $user->payerId == $payerId ) ) {
+				if( $user && ( $user->pp_payerId == $payerId ) ) {
 					$user->baid = null;
 					$user->save();
 				}
