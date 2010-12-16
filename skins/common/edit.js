@@ -53,11 +53,6 @@ function mwSetupToolbar() {
 		return false;
 	}
 
-	// Wikia fix (Bartek) / textbox is hidden when using FCK, but we want to setup it anyway (Macbre)
-	if (textbox.style.display == 'none' && !document.getElementById('wpTextbox1___Frame')) {
-		return false;
-	}
-
 	// Don't generate buttons for browsers which don't fully
 	// support it.
 	// but don't assume wpTextbox1 is always here
@@ -75,6 +70,12 @@ function mwSetupToolbar() {
 			return false;
 		}
 	}
+
+	// Wikia fix (Bartek) / textbox is hidden when using FCK, but we want to setup it anyway (Macbre)
+	if (textboxes[0].style.display == 'none' && !document.getElementById('wpTextbox1___Frame')) {
+		return false;
+	}
+
 	for ( var i = 0; i < mwEditButtons.length; i++ ) {
 		mwInsertEditButton( toolbar, mwEditButtons[i] );
 	}
