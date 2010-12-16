@@ -88,8 +88,9 @@ var AjaxLogin = {
 		function(e) {
 			return AjaxLogin.tabOrderHack(e, '#wpLoginAndConnectCombo');
 		});
-
-		$('#wpLoginattemptAjax').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
+		
+		//MW 1.16 merge change, original: $('#wpLoginattemptAjax')
+		$('#wpLoginattempt').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
 
 		// ask before going to register form from edit page
 		$('#wpAjaxRegister').click(this.ajaxRegisterConfirm);
@@ -175,7 +176,7 @@ var AjaxLogin = {
 		if(ev) {
 			ev.preventDefault();
 		}
-
+		
 		AjaxLogin.action = 'login';
 		AjaxLogin.form.submit();
 	},

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright ï¿½ 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -103,7 +103,9 @@ class FBConnectAPI {
 				// Query the Facebook API with the users.getInfo method
 				$user_details = $this->Facebook()->api_client->users_getInfo($user, $fields);
 				// Cache the data in the $userinfo array
-				$userinfo[$user] = $user_details[0];
+				
+				//avoid Notice: Uninitialized string offset: 0
+				$userinfo[$user] = !empty( $user_details[ 0 ] ) ? $user_details[ 0 ] : null;
 			} catch( Exception $e ) {
 				error_log( 'Failure in the api when requesting ' . join(',', $fields) .
 				           " on uid $user: " . $e->getMessage());
