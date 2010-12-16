@@ -19,8 +19,8 @@ class GlobalHeaderModule extends Module {
 
 		// generate link to central wiki for language of this wiki
 		$wikiLang = $wgLang->getCode();
-		$langCode = ($wikiLang == 'en') ? '': $wikiLang;
-		$this->centralUrl = 'http://www.wikia.com/go/' .$langCode;
+		$langCode = ($wikiLang == 'en') ? '': '/'.$wikiLang;
+		$this->centralUrl = 'http://www.wikia.com/go' .$langCode;
 
 		// generate link to AutoWikiCreate
 		$userlang = ($wikiLang == 'en') ? '' : "?uselang=$wikiLang";
