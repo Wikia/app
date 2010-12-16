@@ -919,12 +919,8 @@ function wfTimeFormatAgo($stamp){
 	}
 	else if ($ago < 365 * 86400) {
 		// Under 365 days: date, with no year (July 26)
-		$pref = $wgLang->dateFormat(true);
-		if($pref == 'default' || !isset($wgLang->dateFormats["$pref date"])) {
-			$pref = $wgLang->defaultDateFormat;
-		}
 		//remove year from user's date format
-		$format = trim($wgLang->dateFormats["$pref date"], ' ,yY');
+		$format = trim($wgLang->getDateFormatString('date', 'default'), ' ,yY');
 		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
 	}
 	else {
