@@ -194,7 +194,7 @@ class AdSS_Controller extends SpecialPage {
 			return;
 		}
 
-		$user = AdSS_User::newFromPayerId( $payerId );
+		$user = AdSS_User::newFromPayerId( $payerId, $ad->userEmail );
 		if( $user ) {
 			wfDebug( "AdSS: got existing user: {$user->toString()})\n" );
 			if( $user->password == '' ) {

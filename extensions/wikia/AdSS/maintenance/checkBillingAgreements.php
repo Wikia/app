@@ -69,7 +69,7 @@ if( isset( $options['users'] ) ) {
 			);
 	$lastActiveUserId = 0;
 	foreach( $res as $row ) {
-		$user = AdSS_User::newFromPayerId( $row->ppd_payerid );
+		$user = AdSS_User::newFromBAID( $row->ppa_baid );
 		if( !$user ) {
 			continue;
 		}
