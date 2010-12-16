@@ -1375,10 +1375,10 @@ class Linker {
 			. Html::inlineScript(
 				'wgAfterContentAndJS.push(function() {'
 				. 'if (window.showTocToggle) {'
-				. ' var tocShowText = "' . Xml::escapeJsString( wfMsg('showtoc') ) . '";'
-				. ' var tocHideText = "' . Xml::escapeJsString( wfMsg('hidetoc') ) . '";'
+				. ' window.tocShowText = "' . Xml::escapeJsString( wfMsg('showtoc') ) . '";'
+				. ' window.tocHideText = "' . Xml::escapeJsString( wfMsg('hidetoc') ) . '";'
 				. ' showTocToggle();'
-				. ' } }' )
+				. ' } });' )
 				. "\n";
 	}
 
