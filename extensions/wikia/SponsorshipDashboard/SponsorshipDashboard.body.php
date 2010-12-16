@@ -88,11 +88,12 @@ class SponsorshipDashboard extends SpecialPage {
 		$fromWikiStats = $sponsorshipDashboardService->loadDataFromWikiStats();
 
 		$hiddenSeries = array('A' , 'B', 'C', 'D', 'E', 'G', 'I', 'K', 'L', 'X', 'Y');
-
 		$this->displayHeader( 1 );
+
 		if ( !empty( $wgSponsorshipDashboardAllowRanking ) ){
 			$this->displayRanking( $sponsorshipDashboardService->loadTagPosition() );
 		}
+
 		$this->displayChart( $fromWikiStats['serie'], $fromWikiStats['ticks'], $hiddenSeries );
 
 		wfProfileOut( __METHOD__ );
@@ -199,7 +200,9 @@ class SponsorshipDashboard extends SpecialPage {
 		global $wgRequest;
 
 		$aPopularHubs = $this->getPopularHubs();
-
+		if ( empty( $aPopularHubs ) ){ 
+			return false;
+		}
 		$value = ( int ) $wgRequest->getVal( 'cityHub', 0 );
 		if ( empty( $value ) || !in_array( $value, $aPopularHubs ) ){
 			reset( $aPopularHubs );

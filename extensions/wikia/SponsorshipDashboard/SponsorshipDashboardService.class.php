@@ -730,10 +730,12 @@ class SponsorshipDashboardService extends Service {
 		if ( !empty($this->aCityHubs) ){
 			return $this->aCityHubs;
 		}
-
+		
 		$wikiFactoryTags = new WikiFactoryTags($wgCityId);
 		$cityTags = $wikiFactoryTags->getTags();
-		if ( empty($cityTags) ){
+
+		if ( empty( $cityTags ) ){
+			Wikia::log( __METHOD__ , false, "City [{$wgCityId}] has no tags" );
 			return array();
 		}
 		$popularCityHubs = array();
