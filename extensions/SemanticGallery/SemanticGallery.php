@@ -11,6 +11,7 @@ function semanticGallery_Setup()
 
 	// credits
 	$wgExtensionCredits['parserhook'][] = array(
+		'path'            => __FILE__,
 		'name'            => 'Semantic Gallery',
 		'version'         => '0.3.1',
 		'author'          => array( 'Rowan Rodrik van der Molen' ),

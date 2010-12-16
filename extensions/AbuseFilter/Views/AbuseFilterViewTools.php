@@ -1,11 +1,10 @@
 <?php
-
-if (!defined( 'MEDIAWIKI' ))
+if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 class AbuseFilterViewTools extends AbuseFilterView {
-	function show( ) {
-		global $wgRequest,$wgOut;
+	function show() {
+		global $wgRequest, $wgOut, $wgUser;
 
 		// Header
 		$wgOut->setSubTitle( wfMsg( 'abusefilter-tools-subtitle' ) );
@@ -14,16 +13,20 @@ class AbuseFilterViewTools extends AbuseFilterView {
 		// Expression evaluator
 		$eval = '';
 		$eval .= AbuseFilter::buildEditBox( '', 'wpTestExpr' );
-		$eval .= Xml::tags( 'p', null, 
-			Xml::element( 'input', 
-			array( 
-				'type' => 'button', 
-				'id' => 'mw-abusefilter-submitexpr', 
-				'onclick' => 'doExprSubmit();', 
-				'value' => wfMsg( 'abusefilter-tools-submitexpr' ) ) 
-			) 
-		);
-		$eval .= Xml::element( 'p', array( 'id' => 'mw-abusefilter-expr-result' ), ' ' );
+
+		// Only let users with permission actually test it
+		if ( $wgUser->isAllowed( 'abusefilter-modify' ) ) {
+			$eval .= Xml::tags( 'p', null,
+				Xml::element( 'input',
+				array(
+					'type' => 'button',
+					'id' => 'mw-abusefilter-submitexpr',
+					'onclick' => 'doExprSubmit();',
+					'value' => wfMsg( 'abusefilter-tools-submitexpr' ) )
+				)
+			);
+			$eval .= Xml::element( 'p', array( 'id' => 'mw-abusefilter-expr-result' ), ' ' );
+		}
 		$eval = Xml::fieldset( wfMsg( 'abusefilter-tools-expr' ), $eval );
 		$wgOut->addHTML( $eval );
 
@@ -34,23 +37,24 @@ class AbuseFilterViewTools extends AbuseFilterView {
 
 		global $wgUser;
 
-		if ($wgUser->isAllowed( 'abusefilter-modify' )) {
+		if ( $wgUser->isAllowed( 'abusefilter-modify' ) ) {
 			// Hacky little box to re-enable autoconfirmed if it got disabled
 			$rac = '';
-			$rac .= Xml::inputLabel( 
-				wfMsg( 'abusefilter-tools-reautoconfirm-user' ), 
-				'wpReAutoconfirmUser', 
+			$rac .= Xml::inputLabel(
+				wfMsg( 'abusefilter-tools-reautoconfirm-user' ),
+				'wpReAutoconfirmUser',
 				'reautoconfirm-user',
-				45 );
+				45
+			);
 			$rac .= '&nbsp;';
-			$rac .= Xml::element( 
-				'input', 
-				array( 
-					'type' => 'button', 
-					'id' => 'mw-abusefilter-reautoconfirmsubmit', 
-					'onclick' => 'doReautoSubmit();', 
-					'value' => wfMsg( 'abusefilter-tools-reautoconfirm-submit' ) 
-				) 
+			$rac .= Xml::element(
+				'input',
+				array(
+					'type' => 'button',
+					'id' => 'mw-abusefilter-reautoconfirmsubmit',
+					'onclick' => 'doReautoSubmit();',
+					'value' => wfMsg( 'abusefilter-tools-reautoconfirm-submit' )
+				)
 			);
 			$rac = Xml::fieldset( wfMsg( 'abusefilter-tools-reautoconfirm' ), $rac );
 			$wgOut->addHTML( $rac );

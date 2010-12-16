@@ -69,6 +69,25 @@ $3',
 	'latexdoc-desc' => 'تعديل تعاونى لوثائق لا تك',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'latexdoc_no_text' => 'Старонка не ўтрымлівае тэкст, немагчыма стварыць DVI',
+	'latexdoc_cant_create_dir' => 'Немагчыма стварыць часовую дырэкторыю $1',
+	'latexdoc_cant_write' => 'Немагчыма запісаць у файл $1',
+	'latexdoc_error' => 'Памылка LaTeX
+
+Каманда: $1
+
+Вывад: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Атрымаць DVI',
+	'latexdoc_get_pdf' => 'Атрымаць PDF',
+	'latexdoc-desc' => 'Сумеснае рэдагаваньне дакумэнтаў LaTeX',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -89,6 +108,26 @@ $3',
 	'latexdoc-desc' => 'Съвместно редактиране на документи на LaTeX',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'latexdoc_no_text' => "N'eus testenn ebet war ar bajenn, n'eus ket tu krouiñ DVI",
+	'latexdoc_cant_create_dir' => "Diposupl eo krouinn ar c'havlec'h berrbad $1",
+	'latexdoc_cant_write' => 'Diposubl eo skrivañ er rest $1',
+	'latexdoc_error' => 'Fazi LaTeX
+
+Urzhiad : $1
+
+Ezvont : $2
+
+$3',
+	'latexdoc_get_dvi' => 'Kaout DVI',
+	'latexdoc_get_pdf' => 'Kaout PDF',
+	'latexdoc-desc' => 'Kemm kenlabour eus ar restroù LaTeX.',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -106,6 +145,15 @@ $3',
 	'latexdoc_get_dvi' => 'Preuzmi DVI',
 	'latexdoc_get_pdf' => 'Napravi PDF',
 	'latexdoc-desc' => 'Zajedničko uređivanje LaTeX dokumenata',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ * @author Ssola
+ */
+$messages['ca'] = array(
+	'latexdoc_cant_write' => "No s'ha pogut escriure al fitxer $1",
+	'latexdoc-desc' => 'Modificació col·laborativa de documents LaTeX',
 );
 
 /** German (Deutsch)
@@ -148,6 +196,25 @@ $3',
 	'latexdoc-desc' => 'Zgromadne wobźěłowanje dokumentow LaTeX',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'latexdoc_cant_create_dir' => 'Δεν μπορεί να δημιουργήσει τον προσωρινό προορισμό $1',
+	'latexdoc_cant_write' => 'Δεν μπορεί να γράψει στο αρχείο $1',
+	'latexdoc_error' => 'Σφάλμα LaTeX
+
+Εντολή: $1
+
+Έξοδος: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Λήψη DVI',
+	'latexdoc_get_pdf' => 'Λήψη PDF',
+	'latexdoc-desc' => 'Ομαδική επεξεργασία εγγράφων LaTeX.',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -174,9 +241,36 @@ $messages['es'] = array(
 	'latexdoc_no_text' => 'La página no contiene texto, no se puede generar DVI',
 	'latexdoc_cant_create_dir' => 'No se puede crear directorio temporal $1',
 	'latexdoc_cant_write' => 'No se puede escribir al archivo $1',
+	'latexdoc_error' => 'Error LaTeX
+
+Comando: $1
+
+Salida: $2
+
+$3',
 	'latexdoc_get_dvi' => 'Obtener DVI',
 	'latexdoc_get_pdf' => 'Obtener PDF',
 	'latexdoc-desc' => 'Edición colaborativa de documentos LaTeX',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'latexdoc_no_text' => 'Orrialdeak ez du testurik, ezin da sortu DVIrik',
+	'latexdoc_cant_create_dir' => 'Ezin da sortu behin-behineko $1 direktorioa',
+	'latexdoc_cant_write' => 'Ezin da idatzi $1 fitxategian',
+	'latexdoc_error' => 'LaTeX errorea
+
+Komandoa: $1
+
+Irteera: $2
+
+$3',
+	'latexdoc_get_dvi' => 'DVIa eskuratu',
+	'latexdoc_get_pdf' => 'PDFa eskuratu',
+	'latexdoc-desc' => 'LaTeX dokumentuen aldaketa kolaboratiboa',
 );
 
 /** Finnish (Suomi)
@@ -216,7 +310,7 @@ Sortie : $2
 $3',
 	'latexdoc_get_dvi' => 'Obtenir DVI',
 	'latexdoc_get_pdf' => 'Obtenir PDF',
-	'latexdoc-desc' => 'Document LaTeX.',
+	'latexdoc-desc' => 'Modification collaborative de documents LaTeX.',
 );
 
 /** Galician (Galego)
@@ -225,7 +319,7 @@ $3',
  * @author Xosé
  */
 $messages['gl'] = array(
-	'latexdoc_no_text' => 'A páxina non contén texto, non pode xenerar DVI',
+	'latexdoc_no_text' => 'A páxina non contén texto, non pode xerar DVI',
 	'latexdoc_cant_create_dir' => 'Non se pode crear un directorio temporal $1',
 	'latexdoc_cant_write' => 'Non se pode escribir no ficheiro $1',
 	'latexdoc_error' => 'Erro de LaTeX
@@ -355,6 +449,44 @@ $3',
 	'latexdoc-desc' => 'Modification collaborative de documentos LaTeX',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'latexdoc_no_text' => 'Halaman tidak mengandung teks, tidak dapat membuat DVI',
+	'latexdoc_cant_create_dir' => 'Tidak dapat membuat direktori sementara $1',
+	'latexdoc_cant_write' => 'Tidak dapat menulis ke berkas $1',
+	'latexdoc_error' => 'Galat LaTeX
+
+Perintah: $1
+
+Keluaran: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Unduh DVI',
+	'latexdoc_get_pdf' => 'Unduh PDF',
+	'latexdoc-desc' => 'Penyuntingan kolaborasi dokumen LaTeX',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'latexdoc_no_text' => 'Pagina non contiene testo, impossibile generare DVI',
+	'latexdoc_cant_create_dir' => 'Impossibile creare cartella temporanea $1',
+	'latexdoc_cant_write' => 'Impossibile scrivere sul file $1',
+	'latexdoc_error' => 'Errore LaTeX
+
+Comando: $1
+
+Output: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Ottieni DVI',
+	'latexdoc_get_pdf' => 'Ottieni PDF',
+	'latexdoc-desc' => 'Modifica collaborativa di documenti LaTeX',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -451,12 +583,13 @@ $3',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
 	'latexdoc_no_text' => 'Et ass keen Text op der Säit, den DVI kann net gemaach ginn',
 	'latexdoc_cant_create_dir' => 'Den temporäre Repertoire $1 kann net ugeluecht ginn',
-	'latexdoc_cant_write' => 'Et ass net méiglech na de Fichier $1 ze schreiwen',
+	'latexdoc_cant_write' => 'Et ass net méiglech an de Fichier $1 ze schreiwen',
 	'latexdoc_error' => 'LaTeX-Feeler
 
 Opruf: $1
@@ -467,6 +600,25 @@ $3',
 	'latexdoc_get_dvi' => 'DVI kréien',
 	'latexdoc_get_pdf' => 'PDF kréien',
 	'latexdoc-desc' => 'Kollektivt Ännere vu LaTeX Dokumenter',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'latexdoc_no_text' => 'Страницата не содржи текст; не може да се создаде DVI',
+	'latexdoc_cant_create_dir' => 'Не можам да го создадам привремениот директориум $1',
+	'latexdoc_cant_write' => 'Не можам да впишам во податотеката $1',
+	'latexdoc_error' => 'LaTeX грешка
+
+Наредба: $1
+
+Резултат: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Создај DVI',
+	'latexdoc_get_pdf' => 'Создај PDF',
+	'latexdoc-desc' => 'Колаборативно уредување на LaTeX документи',
 );
 
 /** Malayalam (മലയാളം)
@@ -557,7 +709,7 @@ $3',
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'latexdoc_no_text' => 'L’article conten pas de tèxt. Impossible de crear DVI',
+	'latexdoc_no_text' => 'L’article conten pas de tèxte. Impossible de crear DVI',
 	'latexdoc_cant_create_dir' => 'Impossible de crear lo repertòri temporari $1',
 	'latexdoc_cant_write' => 'Impossible d’escriure dins lo fichièr $1',
 	'latexdoc_error' => 'Error LaTeX Comanda : $1 Sortida : $2 $3',
@@ -568,10 +720,41 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author McMonster
+ * @author Yarl
  */
 $messages['pl'] = array(
+	'latexdoc_no_text' => 'Strona nie zawiera tekstu, nie można utworzyć DVI',
 	'latexdoc_cant_create_dir' => 'Nie można utworzyć katalogu tymczasowego $1',
 	'latexdoc_cant_write' => 'Nie można pisać do pliku $1',
+	'latexdoc_error' => 'Błąd LaTeX
+
+Polecenie: $1
+
+Dane wyjściowe: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Pobierz DVI',
+	'latexdoc_get_pdf' => 'Pobierz PDF',
+	'latexdoc-desc' => 'Wspólne edytowanie dokumentów LaTeX',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'latexdoc_no_text' => 'La pàgina a conten pa ëd test, as peul pa generesse un DVI',
+	'latexdoc_cant_create_dir' => 'A peul pa creé la directory temporanea $1',
+	'latexdoc_cant_write' => 'A peul pa scrive an sël file $1',
+	'latexdoc_error' => 'Eror LaTeX
+
+Comand: $1
+
+Output: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Oten DVI',
+	'latexdoc_get_pdf' => 'Fà un PDF',
+	'latexdoc-desc' => 'Modìfica colaborativa ëd document LaTeX',
 );
 
 /** Portuguese (Português)
@@ -635,6 +818,9 @@ $3',
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'latexdoc_no_text' => "'A pàgene non ge condene teste e non ge pò ccrejà DVI",
+	'latexdoc_cant_create_dir' => "Non ge se pò ccrejà 'a cartella temboranea $1",
+	'latexdoc_cant_write' => "Non ge pozze scrivere jndr'à 'u file $1",
 	'latexdoc_error' => 'Errore de LaTeX
 
 Comande: $1
@@ -644,6 +830,7 @@ Resultete: $2
 $3',
 	'latexdoc_get_dvi' => 'Pigghije DVI',
 	'latexdoc_get_pdf' => 'Pigghije PDF',
+	'latexdoc-desc' => 'Cangiamende collaborative cu le documende LaTeX',
 );
 
 /** Russian (Русский)
@@ -732,6 +919,25 @@ $3',
 	'latexdoc-desc' => 'Вироиши ҳамдастии парвандаҳои LaTeX',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'latexdoc_no_text' => 'Sahifai dori matn nest, nametavon DVI tavlid kard',
+	'latexdoc_cant_create_dir' => 'Nametavon pūşai muvaqqatiji $1 eçod kard',
+	'latexdoc_cant_write' => 'Nametavon ba parvandai $1 navişt',
+	'latexdoc_error' => 'Xatoi LaTeX
+
+Farmon: $1
+
+Mahsul: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Giriftani DVI',
+	'latexdoc_get_pdf' => 'Giriftani PDF',
+	'latexdoc-desc' => 'Viroişi hamdastiji parvandahoi LaTeX',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -749,6 +955,25 @@ $3',
 	'latexdoc_get_dvi' => 'Kuhanin ang DVI',
 	'latexdoc_get_pdf' => 'Kuhanin ang PDF',
 	'latexdoc-desc' => 'Tulungang pamamatnugot ng mga kasulatang LaTeX',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'latexdoc_no_text' => 'Sayfa metin içermiyor, DVI oluşturulamadı',
+	'latexdoc_cant_create_dir' => 'Geçici dizin $1 oluşturulamıyor',
+	'latexdoc_cant_write' => '$1 dosyasına yazılamıyor',
+	'latexdoc_error' => 'LaTeX hatası
+
+Komut: $1
+
+Sonuç: $2
+
+$3',
+	'latexdoc_get_dvi' => 'DVI al',
+	'latexdoc_get_pdf' => 'PDF al',
+	'latexdoc-desc' => 'LaTeX belgelerinin işbirliğine dayanan düzenlemesi',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -784,6 +1009,7 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
 	'latexdoc_no_text' => '页面未包含文字，无法生成DVI文件',
@@ -796,6 +1022,28 @@ $messages['zh-hans'] = array(
 输出: $2
 
 $3',
+	'latexdoc_get_dvi' => '取得DVI',
+	'latexdoc_get_pdf' => '取得PDF',
 	'latexdoc-desc' => '协作编辑 LaTex 文件',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'latexdoc_no_text' => '頁面未包含文字，無法生成DVI文件',
+	'latexdoc_cant_create_dir' => '無法生成臨時目錄 $1',
+	'latexdoc_cant_write' => '$1 無法創建',
+	'latexdoc_error' => 'LaTeX 出現錯誤
+
+命令: $1
+
+輸出: $2
+
+$3',
+	'latexdoc_get_dvi' => '取得DVI',
+	'latexdoc_get_pdf' => '取得PDF',
+	'latexdoc-desc' => '協作編輯 LaTex 文件',
 );
 

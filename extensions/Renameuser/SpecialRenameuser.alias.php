@@ -14,18 +14,19 @@ $aliases['en'] = array(
     'Renameuser' => array( 'RenameUser' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Renameuser' => array( 'إعادة_تسمية_مستخدم' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Renameuser' => array( 'إعادة_تسمية_مستخدم' ),
+);
+
+/** Bulgarian (Български) */
+$aliases['bg'] = array(
+	'Renameuser' => array( 'Преименуване' ),
 );
 
 /** Bosnian (Bosanski) */
@@ -38,9 +39,12 @@ $aliases['ca'] = array(
 	'Renameuser' => array( 'Reanomena usuari' ),
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
+/** Czech (Česky) */
+$aliases['cs'] = array(
+	'Renameuser' => array( 'Přejmenovat uživatele' ),
+);
+
+/** German (Deutsch) */
 $aliases['de'] = array(
 	'Renameuser' => array( 'Benutzer umbenennen' ),
 );
@@ -55,6 +59,11 @@ $aliases['dv'] = array(
 	'Renameuser' => array( 'މެމްބަރުގެ ނަން ބަދަލު ކުރައްވާ' ),
 );
 
+/** Greek (Ελληνικά) */
+$aliases['el'] = array(
+	'Renameuser' => array( 'ΜετονομασίαΧρήστη' ),
+);
+
 /** Spanish (Español) */
 $aliases['es'] = array(
 	'Renameuser' => array( 'Cambiar_el_nombre_de_usuario', 'Renombrar_usuario', 'Cambiar_nombre_usuario' ),
@@ -67,7 +76,12 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'Renameuser' => array( 'Renommer utilisateur', 'RenommerUtilisateur', 'Renommer Utilisateur' ),
+	'Renameuser' => array( 'Renommer utilisateur', 'RenommerUtilisateur' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Renameuser' => array( "Renomar l'utilisator", 'RenomarLUtilisator' ),
 );
 
 /** Galician (Galego) */
@@ -80,9 +94,7 @@ $aliases['gsw'] = array(
 	'Renameuser' => array( 'Benutzer e andre Name gee' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'Renameuser' => array( 'שינוי_שם_משתמש' ),
 );
@@ -114,12 +126,17 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'Renameuser' => array( 'Ganti nama pengguna' ),
+	'Renameuser' => array( 'Ganti nama pengguna', 'GantiNamaPengguna' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'Renameuser' => array( 'RinominaUtente' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Renameuser' => array( '利用者名の変更' ),
+	'Renameuser' => array( '利用者名変更', '利用者名の変更' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -152,9 +169,24 @@ $aliases['mk'] = array(
 	'Renameuser' => array( 'ПреименувајКорисник' ),
 );
 
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Renameuser' => array( 'ഉപയോക്തൃപുനർനാമകരണം' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Renameuser' => array( 'सदस्यपुर्नामितकरा' ),
+);
+
 /** Malay (Bahasa Melayu) */
 $aliases['ms'] = array(
 	'Renameuser' => array( 'Tukar nama pengguna' ),
+);
+
+/** Maltese (Malti) */
+$aliases['mt'] = array(
+	'Renameuser' => array( 'BiddelIsemUtent' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -167,9 +199,7 @@ $aliases['nl'] = array(
 	'Renameuser' => array( 'GebruikerHernoemen' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'Renameuser' => array( 'Gi en bruker nytt navn' ),
 );
@@ -191,7 +221,7 @@ $aliases['ps'] = array(
 
 /** Portuguese (Português) */
 $aliases['pt'] = array(
-	'Renameuser' => array( 'Renomear utilizador', 'Renomear usuário' ),
+	'Renameuser' => array( 'Alterar nome de utilizador' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
@@ -202,6 +232,11 @@ $aliases['pt-br'] = array(
 /** Romanian (Română) */
 $aliases['ro'] = array(
 	'Renameuser' => array( 'Redenumire utilizator' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Renameuser' => array( 'PremenovaťPoužívateľa' ),
 );
 
 /** Albanian (Shqip) */
@@ -227,5 +262,10 @@ $aliases['th'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Renameuser' => array( 'Muling pangalan ang tagagamit' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Renameuser' => array( 'KullanıcıİsminiDeğiştir', 'KullanıcıAdınıDeğiştir' ),
 );
 

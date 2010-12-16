@@ -16,6 +16,7 @@ $wgExtensionMessagesFiles['DiscussionThreading'] =  dirname(__FILE__) . '/Discus
 
 $wgExtensionFunctions[] = 'efDiscussionThreadSetup';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'DiscussionThreading',
 	'author' => 'Jack D. Pond, Daniel Brice',
 	'version' => '1.3',
@@ -46,7 +47,8 @@ function efDiscussionThreadSetup() {
 	global $wgVersion;
 	$xversion = explode(".",$wgVersion);
 	if ($xversion[0] <= "1" && $xversion[1] <= "11") {
-		global $wgMessageCache, $messages;
+		global $wgMessageCache, $messages,$wgExtensionMessagesFiles;
+		require_once($wgExtensionMessagesFiles['DiscussionThreading']);
 		foreach( $messages as $lang => $LangMsg )
 			$wgMessageCache->addMessages( $LangMsg, $lang );
 	} else wfLoadExtensionMessages( 'DiscussionThreading' );
@@ -145,7 +147,7 @@ function efDiscussionThread($efform){
 					$text = $text."\n\n".$matches[1]."=Re: ".trim($matches[2])." -- ~~~~".$matches[1]."=";
 				}
 			} else {
-				$text = $text." -- ~~~~<br>\n\n";
+				$text = $text." -- ~~~~<br />\n\n";
 			}
 		   // Add an appropriate number of colons (:) to indent the body.
 		   // Include replace me text, so the user knows where to reply

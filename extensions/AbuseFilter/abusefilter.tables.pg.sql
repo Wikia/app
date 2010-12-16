@@ -1,5 +1,9 @@
 -- SQL tables for AbuseFilter extension (Postgres version)
 
+-- Note: This does not currently work, as the extension generates queries
+-- like this: SELECT af_hidden FROM abuse_filter WHERE af_id = 'new' LIMIT 1
+-- Which makes no sense as af_id is a BIGINT in the MySQL version of the schema
+
 BEGIN;
 
 CREATE SEQUENCE abuse_filter_af_id_seq;
@@ -16,7 +20,8 @@ CREATE TABLE abuse_filter (
     af_hit_count        INTEGER      NOT NULL             DEFAULT 0,
     af_throttled        SMALLINT     NOT NULL             DEFAULT 0,
     af_deleted          SMALLINT     NOT NULL             DEFAULT 0,
-    af_actions          TEXT         NOT NULL             DEFAULT ''
+    af_actions          TEXT         NOT NULL             DEFAULT '',
+    af_global           SMALLINT     NOT NULL             DEFAULT 0
 );
 CREATE INDEX abuse_filter_user ON abuse_filter(af_user);
 
@@ -33,7 +38,7 @@ CREATE INDEX abuse_filter_action_consequence ON abuse_filter_action(afa_conseque
 CREATE SEQUENCE abuse_filter_log_afl_id_seq;
 CREATE TABLE abuse_filter_log (
     afl_id         INTEGER      NOT NULL PRIMARY KEY DEFAULT nextval('abuse_filter_log_afl_id_seq'),
-    afl_filter     INTEGER      NOT NULL,
+    afl_filter     TEXT         NOT NULL,
     afl_user       INTEGER      NOT NULL,
     afl_user_text  TEXT         NOT NULL,
     afl_ip         TEXT         NOT NULL,
@@ -42,7 +47,9 @@ CREATE TABLE abuse_filter_log (
     afl_var_dump   TEXT         NOT NULL,
     afl_timestamp  TIMESTAMPTZ  NOT NULL,
     afl_namespace  SMALLINT     NOT NULL,
-    afl_title      TEXT         NOT NULL
+    afl_title      TEXT         NOT NULL,
+	afl_wiki       TEXT             NULL,
+	afl_deleted    SMALLINT         NULL
 );
 CREATE INDEX abuse_filter_log_filter    ON abuse_filter_log(afl_filter);
 CREATE INDEX abuse_filter_log_ip        ON abuse_filter_log(afl_ip);

@@ -16,6 +16,7 @@ if( isset( $options['help'] ) ) {
 	print "  --skip-core       Don't fetch MediaWiki core files\n";
 	print "  --skip-extensions Don't fetch any extension files\n";
 	print "  --all             Fetch all present extensions, not just those enabled\n";
+	print "  --outdir=<dir>    Override output directory for serialized update files\n";
 	print "\n";
 	exit( 0 );
 }
@@ -26,6 +27,7 @@ $starttime = microtime( true );
 // Prevent the script from timing out
 set_time_limit( 0 );
 ini_set( "max_execution_time", 0 );
+ini_set( 'memory_limit', -1 );
 
 LocalisationUpdate::updateMessages( $options );
 

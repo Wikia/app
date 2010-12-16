@@ -21,12 +21,12 @@
 # http://www.mediawiki.org/wiki/Extension:Interlanguage
 
 $wgExtensionFunctions[]="wfInterlanguageExtension";
-$wgHooks['LanguageGetMagic'][] = 'wfInterlanguageExtensionMagic';
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Interlanguage',
 	'author'         => 'Nikola Smolenski',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Interlanguage',
-	'version'        => '1.1',//preg_replace('/^.* (\d\d\d\d-\d\d-\d\d) .*$/', '\1', '$LastChangedDate$'), #just the date of the last change
+	'version'        => '1.2',
 	'description'    => 'Grabs interlanguage links from another wiki',
 	'descriptionmsg' => 'interlanguage-desc',
 );
@@ -34,11 +34,6 @@ $wgExtensionCredits['parserhook'][] = array(
 function wfInterlanguageExtension() {
 	global $wgParser;
 	$wgParser->setFunctionHook( 'interlanguage', 'InterlanguageExtension', SFH_NO_HASH );
-}
-
-function wfInterlanguageExtensionMagic( &$magicWords, $langCode ) {
-	$magicWords['interlanguage'] = array(0, 'interlanguage');
-	return true;
 }
 
 function InterlanguageExtension( &$parser, $param) {
@@ -50,9 +45,9 @@ function InterlanguageExtension( &$parser, $param) {
 		$param = "$wgInterlanguageExtensionPrefix$param";
 	}
 
-	$url = $wgInterlanguageExtensionApiUrl . "?action=query&prop=langlinks&" . 
+	$url = $wgInterlanguageExtensionApiUrl . "?action=query&prop=langlinks&" .
 			"lllimit=500&format=php&redirects&titles=" . strtr( $param, ' ', '_' );
-	$key = wfMemc( 'Interlanguage', md5( $url ) );
+	$key = wfMemcKey( 'Interlanguage', md5( $url ) );
 	$res = $wgMemc->get( $key );
 
 	if ( !$res ) {

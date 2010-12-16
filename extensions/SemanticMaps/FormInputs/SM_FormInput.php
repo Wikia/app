@@ -41,57 +41,63 @@ abstract class SMFormInput extends MapsMapFeature {
 	/**
 	 * This function is a hook for Semantic Forms, and returns the HTML needed in 
 	 * the form to handle coordinate data.
+	 * 
+	 * @return array
 	 */
 	public final function formInputHTML($coordinates, $input_name, $is_mandatory, $is_disabled, $field_args) {
-		// TODO: Use function args for sf stuffz
 		global $sfgTabIndex;
+		// TODO: Use function args for sf stuffz
 		
 		$this->coordinates = $coordinates;
 		
-		$this->manageGeocoding();
-		
 		$this->setMapSettings();
 		
+		$this->featureParameters = SMFormInputs::$parameters;
+		
 		$this->doMapServiceLoad();
-
-		$this->manageMapProperties($field_args, __CLASS__);
-
-		$this->setCoordinates();
-		$this->setCentre();	
-		$this->setZoom();	
 		
-		// Create html element names
-		$this->setMapName();
-		$this->mapName .= '_'.$sfgTabIndex;
-		$this->geocodeFieldName = $this->elementNamePrefix.'_geocode_'.$this->elementNr.'_'.$sfgTabIndex;
-		$this->coordsFieldName = $this->elementNamePrefix.'_coords_'.$this->elementNr.'_'.$sfgTabIndex;
-		$this->infoFieldName = $this->elementNamePrefix.'_info_'.$this->elementNr.'_'.$sfgTabIndex;			
+		$this->manageGeocoding();		
 
-		// Create the non specific form HTML
-		$this->output .= "
-		<input id='".$this->coordsFieldName."' name='$input_name' type='text' value='$this->startingCoords' size='40' tabindex='$sfgTabIndex'>
-		<span id='".$this->infoFieldName."' class='error_message'></span>";
-		
-		if ($this->enableGeocoding) {
-			$sfgTabIndex++;
+		if (parent::manageMapProperties($field_args, __CLASS__)) {
+			$this->setCoordinates();
+			$this->setCentre();	
+			$this->setZoom();	
 			
-			// Retrieve language values
-			// wfLoadExtensionMessages( 'SemanticMaps' ); // TODO: remove?
-			$enter_address_here_text = wfMsg('semanticmaps_enteraddresshere');
-			$lookup_coordinates_text = wfMsg('semanticmaps_lookupcoordinates');	
-			$not_found_text = wfMsg('semanticmaps_notfound');				
-			
-			$adress_field = smfGetDynamicInput($this->geocodeFieldName, $enter_address_here_text, 'size="30" name="geocode" style="color: #707070" tabindex="'.$sfgTabIndex.'"');
+			// Create html element names
+			$this->setMapName();
+			$this->mapName .= '_'.$sfgTabIndex;
+			$this->geocodeFieldName = $this->elementNamePrefix.'_geocode_'.$this->elementNr.'_'.$sfgTabIndex;
+			$this->coordsFieldName = $this->elementNamePrefix.'_coords_'.$this->elementNr.'_'.$sfgTabIndex;
+			$this->infoFieldName = $this->elementNamePrefix.'_info_'.$this->elementNr.'_'.$sfgTabIndex;			
+	
+			// Create the non specific form HTML
 			$this->output .= "
-			<p>
-				$adress_field
-				<input type='submit' onClick=\"$this->showAddresFunction(document.forms['createbox'].$this->geocodeFieldName.value, '$this->mapName', '$this->coordsFieldName', '$not_found_text'); return false\" value='$lookup_coordinates_text' />
-			</p>";
+			<input id='".$this->coordsFieldName."' name='$input_name' type='text' value='$this->startingCoords' size='40' tabindex='$sfgTabIndex'>
+			<span id='".$this->infoFieldName."' class='error_message'></span>";
+			
+			if ($this->enableGeocoding) $this->addGeocodingField();
+			
+			$this->addSpecificMapHTML();			
 		}
 		
-		$this->addSpecificMapHTML();
+		return array($this->output . $this->errorList, '');
+	}
+	
+	private function addGeocodingField() {
+		global $sfgTabIndex;
+		$sfgTabIndex++;
 		
-		return array($this->output, '');
+		// Retrieve language valuess
+		$enter_address_here_text = wfMsg('semanticmaps_enteraddresshere');
+		$lookup_coordinates_text = wfMsg('semanticmaps_lookupcoordinates');	
+		$not_found_text = wfMsg('semanticmaps_notfound');				
+		
+		$adress_field = SMFormInput::getDynamicInput($this->geocodeFieldName, $enter_address_here_text, 'size="30" name="geocode" style="color: #707070" tabindex="'.$sfgTabIndex.'"');
+		$this->output .= "
+		<p>
+			$adress_field
+			<input type='submit' onClick=\"$this->showAddresFunction(document.forms['createbox'].$this->geocodeFieldName.value, '$this->mapName', '$this->coordsFieldName', '$not_found_text'); return false\" value='$lookup_coordinates_text' />
+		</p>";		
 	}
 	
 	/**
@@ -141,10 +147,28 @@ abstract class SMFormInput extends MapsMapFeature {
 			}
 		}
 		else {
-			$centre = MapsUtils::getLatLon($this->centre);
+			// Geocode and convert if required.
+			$centre = MapsGeocodeUtils::attemptToGeocode($this->centre, $this->geoservice, $this->serviceName);
+			$centre = MapsUtils::getLatLon($centre);
+			
 			$this->centre_lat = $centre['lat'];
 			$this->centre_lon = $centre['lon'];			
 		}		
+	}
+	
+	/**
+	 * Returns html for an html input field with a default value that will automatically dissapear when
+	 * the user clicks in it, and reappers when the focus on the field is lost and it's still empty.
+	 *
+	 * @author Jeroen De Dauw
+	 *
+	 * @param string $id
+	 * @param string $value
+	 * @param string $args
+	 * @return html
+	 */
+	private static function getDynamicInput($id, $value, $args='') {
+		return '<input id="'.$id.'" '.$args.' value="'.$value.'" onfocus="if (this.value==\''.$value.'\') {this.value=\'\';}" onblur="if (this.value==\'\') {this.value=\''.$value.'\';}" />';
 	}
 }
 

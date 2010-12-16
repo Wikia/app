@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-reverseusernameauthentication
+  label: StatusNet - ReverseUsernameAuthentication
+  description: "{{int:bw-desc-statusnet-plugin-reverseusernameauthentication}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/reverseusernameauthentication
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/ReverseUsernameAuthentication/locale/%CODE%/LC_MESSAGES/ReverseUsernameAuthentication.po
+  targetPattern: plugins/ReverseUsernameAuthentication/locale/%CODE%/LC_MESSAGES/ReverseUsernameAuthentication.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: reverseusernameauthentication-
+  patterns:
+    - "*"

@@ -11,7 +11,7 @@ $mv_path = str_replace( 'example_usage/', '', $mv_path );
 <html>
 <head>
 	<title>sample playlist usage</title>
- 	<script type="text/javascript" src="<?php echo htmlspecialchars( $mv_path ) ?>mv_embed.js?<?php echo time()?>"></script> 	
+ 	<script type="text/javascript" src="<?php echo htmlspecialchars( $mv_path ) ?>mv_embed.js?urid=<?php echo time()?>"></script> 	
 </head>
 <body>
 <h3> Sample Playlists</h3>
@@ -38,20 +38,20 @@ $sample_embed[6]['tag'] = '<playlist id="warplaylist" src="' . $plurl . '"/>';
 
 
 // sample smil
-$smilURL = 'sample_smil.smil.xml';
+$smilURL = 'fresh_smil_load.php';
 $sample_embed[8]['tag'] = '<playlist id="smil_pl" src="' . $smilURL . '" />';
-$sample_embed[8]['desc'] = ' <br><b>Crossfading Videos</b><br/><a href="http://service.real.com/help/library/guides/realone/ProductionGuide/HTML/htmfiles/transit.htm">source</a>
+$sample_embed[8]['desc'] = ' <br /><b>Crossfading Videos</b><br /><a href="http://service.real.com/help/library/guides/realone/ProductionGuide/HTML/htmfiles/transit.htm">source</a>
 			The first video fades up from green when it starts to play, 
 			and the second video fades down to green when it ends. 
 			When the first video stops and the second video starts, 
 			though, the two videos crossfade into each other' .
-				'<br>' .
+				'<br />' .
 				'<iframe width="500" height="200" src="' . $smilURL . '">rss feed here</iframe>';
 
 $smilURL = 'http://'.$_SERVER['SERVER_NAME'].'/wiki/index.php/Special:MvExportSequence/Test';
 $sample_embed[9]['tag'] = '<playlist src="' . $smilURL . '" />';
-$sample_embed[9]['desc'] = ' <br><b>MediaWiki example:</b><br/>'.
-				'<br>' .
+$sample_embed[9]['desc'] = ' <br /><b>MediaWiki example:</b><br />'.
+				'<br />' .
 				'<iframe width="500" height="200" src="' . $smilURL . '">rss feed here</iframe>';
 
 // empty sample embed (to only do one:)
@@ -61,19 +61,19 @@ $sample_embed[9]['desc'] = ' <br><b>MediaWiki example:</b><br/>'.
 
 ?>
   <table border="1" cellpadding="6" width="600">
-  	<? foreach ( $sample_embed as $key => $aval ) {
+  	<?php foreach ( $sample_embed as $key => $aval ) {
   		//  &&
-  		if ( $key != 9 && $key != 8 && $key !=4)continue;
+  		if ( $key != 8 )continue;
   	 ?>
 	    <tr>
-	      <td valign="top"><?=$aval['tag']?></td>
-	      <td valign="top"><b>Sample Embed <?=$key?></b><br />
-	      <?=$aval['desc']?><br />
+	      <td valign="top"><?php echo $aval['tag']?></td>
+	      <td valign="top"><b>Sample Embed <?php echo $key?></b><br />
+	      <?php echo $aval['desc']?><br />
 	      &lt;-- code used: <br />
-	     <pre> <?= htmlentities( $aval['tag'] )?></pre>
+	     <pre> <?php echo htmlentities( $aval['tag'] )?></pre>
 	      </td>
 	    </tr>
-	    <? // oput a separator between video and playlist
+	    <?php // oput a separator between video and playlist
 	    if ( $key == 5 ) {
 	    	echo '<tr><td colspan="2"><b>Sample Playlists:</b></td></tr>';
 	    }
@@ -82,6 +82,6 @@ $sample_embed[9]['desc'] = ' <br><b>MediaWiki example:</b><br/>'.
 	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;
   </body>
 </html>
-<?
+<?php
 }
 ?>

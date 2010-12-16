@@ -15,11 +15,10 @@ class DTViewXML extends SpecialPage {
 	public function DTViewXML() {
 		global $wgLanguageCode;
 		SpecialPage::SpecialPage('ViewXML');
-		dtfInitContentLanguage($wgLanguageCode);
 		wfLoadExtensionMessages('DataTransfer');
 	}
 
-	function execute($query = '') {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialViewXML($query);
 	}
@@ -66,39 +65,23 @@ function getNamespacesList() {
 function getGroupings() {
   global $dtgContLang;
 
-  $dt_props = $dtgContLang->getPropertyLabels();
-  $xml_grouping_prop = str_replace(' ', '_', $dt_props[DT_SP_HAS_XML_GROUPING]);
-
   global $smwgIP;
   if (! isset($smwgIP)) {
     return array();
   } else {
-    $smw_version = SMW_VERSION;
-    if ($smw_version{0} == '0') {
-      return array();
-    } else {
-      $groupings = array();
-      $store = smwfGetStore();
-      // handling changed in SMW 1.4
-      if (class_exists('SMWPropertyValue'))
-        $grouping_prop = SMWPropertyValue::makeProperty($xml_grouping_prop);
-      else
-        $grouping_prop = Title::newFromText($xml_grouping_prop, SMW_NS_PROPERTY);
-      $grouped_props = $store->getAllPropertySubjects($grouping_prop);
-      foreach ($grouped_props as $grouped_prop) {
-        // the type of $grouped_prop depends on the version of SMW
-        if ($grouped_prop instanceof SMWWikiPageValue) {
-          $grouped_prop = $grouped_prop->getTitle();
-        }
-        $res = $store->getPropertyValues($grouped_prop, $grouping_prop);
-        $num = count($res);
-        if ($num > 0) {
-          $grouping_label = $res[0]->getTitle()->getText();
-          $groupings[] = array($grouped_prop, $grouping_label);
-        }
+    $groupings = array();
+    $store = smwfGetStore();
+    $grouping_prop = SMWPropertyValue::makeProperty('_DT_XG');
+    $grouped_props = $store->getAllPropertySubjects($grouping_prop);
+    foreach ($grouped_props as $grouped_prop) {
+      $res = $store->getPropertyValues($grouped_prop, $grouping_prop);
+      $num = count($res);
+      if ($num > 0) {
+        $grouping_label = $res[0]->getShortWikiText();
+        $groupings[] = array($grouped_prop, $grouping_label);
       }
-      return $groupings;
     }
+    return $groupings;
   }
 }
 
@@ -394,21 +377,20 @@ function getXMLForPage($title, $simplified_format, $groupings, $depth=0) {
   if (isset($smwgIP)) {
     $store = smwfGetStore();
     foreach ($groupings as $pair) {
-      list($property, $grouping_label) = $pair;
-      $store = smwfGetStore();
+      list($property_page, $grouping_label) = $pair;
       $wiki_page = SMWDataValueFactory::newTypeIDValue('_wpg', $page_title);
       $options = new SMWRequestOptions();
       $options->sort = "subject_title";
+      // get actual property from the wiki-page of the property
+      $property = SMWPropertyValue::makeProperty($property_page->getTitle()->getText());
       $res = $store->getPropertySubjects($property, $wiki_page, $options);
       $num = count($res);
       if ($num > 0) {
+        $grouping_label = str_replace(' ', '_', $grouping_label);
         $text .= "<$grouping_label>\n";
         foreach ($res as $subject) {
-          // the type of $subject depends on the version of SMW
-          if ($subject instanceof SMWWikiPageValue) {
-            $subject = $subject->getTitle();
-          }
-          $text .= getXMLForPage($title, $simplified_format, $groupings, $depth + 1);
+          $subject_title = $subject->getTitle();
+          $text .= getXMLForPage($subject_title, $simplified_format, $groupings, $depth + 1);
         }
         $text .= "</$grouping_label>\n";
       }
@@ -428,8 +410,9 @@ function doSpecialViewXML() {
 	$namespace_labels = $wgContLang->getNamespaces();
 	$category_label = $namespace_labels[NS_CATEGORY];
 	$template_label = $namespace_labels[NS_TEMPLATE];
-	$name_str = "name";
+	$name_str = str_replace(' ', '_', wfMsgForContent('dt_xml_name'));
 	$namespace_str = wfMsg('dt_xml_namespace');
+	$pages_str = str_replace(' ', '_', wfMsgForContent('dt_xml_pages'));
 
 	$form_submitted = false;
 	$page_titles = array();
@@ -449,7 +432,7 @@ function doSpecialViewXML() {
 
 		$groupings = getGroupings();
 		$simplified_format = $wgRequest->getVal('simplified_format');
-		$text = "<Pages>";
+		$text = "<$pages_str>";
 		if ($cats) {
 			foreach ($cats as $cat => $val) {
 				if ($simplified_format)
@@ -488,7 +471,7 @@ function doSpecialViewXML() {
 					$text .= "</$namespace_str>\n";
 			}
 		}
-		$text .= "</Pages>";
+		$text .= "</$pages_str>";
 		print $text;
 	} else {
 		// set 'title' as hidden field, in case there's no URL niceness

@@ -1,0 +1,11 @@
+# Read-only repository setup
+cd %GROUPROOT%
+mkdir osm
+mkdir osm/site
+mkdir osm/potlatch
+cd osm/site
+svn co http://svn.openstreetmap.org/sites/rails_port/config/locales .
+cd ../potlatch
+svn co http://svn.openstreetmap.org/sites/rails_port/config/potlatch/locales .
+
+# TODO: commits

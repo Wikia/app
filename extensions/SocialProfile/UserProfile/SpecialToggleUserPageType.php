@@ -28,8 +28,8 @@ class SpecialToggleUserPage extends UnlistedSpecialPage {
 		global $wgRequest, $wgOut, $wgUser, $wgMemc;
 
 		// This feature is only available to logged-in users.
-		if( !$wgUser->isLoggedIn() ){
-			$wgOut->errorpage('error', 'badaccess');
+		if ( !$wgUser->isLoggedIn() ) {
+			$wgOut->errorpage( 'error', 'badaccess' );
 			return '';
 		}
 
@@ -51,24 +51,25 @@ class SpecialToggleUserPage extends UnlistedSpecialPage {
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user_profile',
-			array( /* SET */
-			'up_type' => $user_page_type
-			), array( /* WHERE */
-			'up_user_id' => $wgUser->getID()
+			/* SET */array(
+				'up_type' => $user_page_type
+			),
+			/* WHERE */array(
+				'up_user_id' => $wgUser->getID()
 			), __METHOD__
 		);
 
 		$key = wfMemcKey( 'user', 'profile', 'info', $wgUser->getID() );
 		$wgMemc->delete( $key );
 
-		if( $user_page_type == 1 && !$wgUser->isBlocked() ){
+		if ( $user_page_type == 1 && !$wgUser->isBlocked() ) {
 			$user_page = Title::makeTitle( NS_USER, $wgUser->getName() );
 			$article = new Article( $user_page );
 			$user_page_content = $article->getContent();
 
 			$user_wiki_title = Title::makeTitle( NS_USER_WIKI, $wgUser->getName() );
 			$user_wiki = new Article( $user_wiki_title );
-			if( !$user_wiki->exists() ){
+			if ( !$user_wiki->exists() ) {
 				$user_wiki->doEdit( $user_page_content, 'import user wiki' );
 			}
 		}

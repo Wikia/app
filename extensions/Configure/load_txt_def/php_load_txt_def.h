@@ -19,7 +19,7 @@
 #ifndef PHP_LOAD_TXT_DEF_H
 #define PHP_LOAD_TXT_DEF_H
 
-#define PHP_LOAD_TXT_DEF_VERSION "0.2"
+#define PHP_LOAD_TXT_DEF_VERSION "0.3"
 
 extern zend_module_entry load_txt_def_module_entry;
 

@@ -25,15 +25,15 @@ class SpecialTranslationChanges extends SpecialPage {
 		$this->setHeaders();
 		$this->hours = min( 168, $wgRequest->getInt( 'hours', 24 ) );
 
-		$rows = TranslateUtils::translationChanges( $this->hours );
+		$rows = TranslateUtils::translationChanges( $this->hours, true );
 		$wgOut->addHTMl( $this->settingsForm() . $this->output( $rows ) );
 	}
 
 	/**
-	 * GLOBALS: $wgTitle, $wgScript
+	 * GLOBALS: $wgScript
 	 */
 	protected function settingsForm() {
-		global $wgTitle, $wgScript;
+		global $wgScript;
 
 		$limit = self::timeLimitSelector( $this->hours );
 		$button = Xml::submitButton( wfMsg( TranslateUtils::MSG . 'submit' ) );
@@ -43,13 +43,13 @@ class SpecialTranslationChanges extends SpecialPage {
 				'action' => $wgScript,
 				'method' => 'get'
 			),
-			Xml::hidden( 'title', $wgTitle->getPrefixedText() ) . $limit . $button
+			Xml::hidden( 'title', $this->getTitle()->getPrefixedText() ) . $limit . $button
 		);
 		return $form;
 	}
 
 	protected static function timeLimitSelector( $selected = 24 ) {
-		$items = array( 3, 6, 12, 24, 48, 72, 168  );
+		$items = array( 3, 6, 12, 24, 48, 72, 168 );
 		$selector = new HTMLSelector( 'hours', 'hours', $selected );
 		foreach ( $items as $item ) $selector->addOption( $item );
 		return $selector->getHTML();
@@ -61,14 +61,12 @@ class SpecialTranslationChanges extends SpecialPage {
 	protected function sort( Array $rows ) {
 		global $wgContLang;
 		$sorted = array();
-		$index = TranslateUtils::messageIndex();
 		$batch = new LinkBatch;
 		foreach ( $rows as $row ) {
 			list( $pieces, ) = explode( '/', $wgContLang->lcfirst( $row->rc_title ), 2 );
 
-			$key = strtolower( $row->rc_namespace . ':' . $pieces );
 			$group = 'Unknown';
-			$mg = @$index[$key];
+			$mg = TranslateUtils::messageKeyToGroup( $row->rc_namespace, $pieces );
 			if ( !is_null( $mg ) ) $group = $mg;
 
 			$lang = 'site';
@@ -78,10 +76,17 @@ class SpecialTranslationChanges extends SpecialPage {
 
 			switch ( $group ) {
 				case 'core': $class = 'mediawiki'; break;
+				case 'out-commonist': $class = 'commonist'; break;
 				case 'out-freecol': $class = 'freecol'; break;
+				case 'out-fudforum': $class = 'fudforum'; break;
 				case 'out-mantis': $class = 'mantis'; break;
+				case 'out-mwlibrl': $class = 'mwlibrl'; break;
+				case 'out-nocc': $class = 'nocc'; break;
+				case 'out-okawix': $class = 'okawix'; break;
+				case 'out-openlayers': $class = 'openlayers'; break;
+				case 'out-osm': $class = 'osm'; break;
 				case 'out-voctrain': $class = 'voctrain'; break;
-				case 'out-zabbix': $class = 'zabbix'; break;
+				case 'out-wikiblame': $class = 'wikiblame'; break;
 				default: $class = 'extension'; break;
 			}
 
@@ -91,16 +96,16 @@ class SpecialTranslationChanges extends SpecialPage {
 
 			$sorted[$class][$group][$lang][] = $row;
 
-			$batch->add( NS_USER,           $row->rc_user_text );
-			$batch->add( NS_USER_TALK,      $row->rc_user_text );
+			$batch->add( NS_USER, $row->rc_user_text );
+			$batch->add( NS_USER_TALK, $row->rc_user_text );
 			if ( $group !== 'core' ) {
-			$batch->add( NS_MEDIAWIKI,      $row->rc_title );
+			$batch->add( NS_MEDIAWIKI, $row->rc_title );
 			}
 			$batch->add( NS_MEDIAWIKI_TALK, $row->rc_title );
-
-
 		}
+
 		ksort( $sorted );
+
 		if ( isset( $sorted['extension'] ) ) {
 			ksort( $sorted['extension'] );
 		}
@@ -112,7 +117,7 @@ class SpecialTranslationChanges extends SpecialPage {
 	protected function output( Array $rows ) {
 		$groupObjects = MessageGroups::singleton()->getGroups();
 		global $wgLang, $wgUser;
-		$index = - 1;
+		$index = -1;
 		$output = '';
 		$skin = $wgUser->getSkin();
 
@@ -139,14 +144,26 @@ class SpecialTranslationChanges extends SpecialPage {
 					Xml::tags( 'span', array( 'id' => $rcl, 'style' => 'display: none;' ),
 						Xml::tags( 'a', array( 'href' => $toggleLink ), $this->downArrow() ) );
 
-					$nchanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ),
-						$wgLang->formatNum( count( $rows ) ) );
+					$nchanges = wfMsgExt(
+						'nchanges',
+						array( 'parsemag', 'escape' ),
+						$wgLang->formatNum( count( $rows ) )
+					);
 
-					$exportLabel = wfMsg( self::MSG . 'export' );
+					$exportLabel = wfMsgHtml( self::MSG . 'export' );
 
-					$titleText = 'Special:' . SpecialPage::getLocalNameFor( 'Translate' );
-					$export = $skin->makeKnownLink( $titleText, $exportLabel,
-						"task=export-to-file&language=$language&group=$group" );
+					$titleText = SpecialPage::getTitleFor( 'translate' );
+
+					$export = $skin->link(
+						$titleText,
+						$exportLabel,
+						array(),
+						array(
+							'task' => 'export-to-file',
+							'language' => $language,
+							'group' => $group
+						)
+					);
 
 					$languageName = TranslateUtils::getLanguageName( $language );
 					if ( !$languageName ) $languageName = $language;
@@ -157,14 +174,17 @@ class SpecialTranslationChanges extends SpecialPage {
 
 					foreach ( $rows as $row ) {
 						$date = $wgLang->timeAndDate( $row->rc_timestamp, /* adj */ true, /* format */ true );
-						$msg = wfMsgExt( self::MSG . 'change', array( 'parsemag' ),
-							$date, wfEscapeWikiText( $row->rc_title ), wfEscapeWikiText( $row->rc_user_text )
+						$msg = wfMsgExt(
+							self::MSG . 'change',
+							array( 'parsemag', 'escape' ),
+							$date,
+							wfEscapeWikiText( $row->rc_title ),
+							wfEscapeWikiText( $row->rc_user_text )
 						);
 						$output .= Xml::tags( 'li', null, $msg );
 					}
 
 					$output .= Xml::closeElement( 'ul' );
-
 				}
 			}
 		}

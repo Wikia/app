@@ -14,6 +14,7 @@ $wgHooks['MagicWordwgVariableIDs'][] = 'wfVariableHookVariables';
 $wgHooks['LanguageGetMagic'][] = 'wfVariableHookRaw';
 $wgHooks['ParserGetVariableValueSwitch'][] = 'wfVariableHookSwitch';
 $wgExtensionCredits['variable'][] = array(
+	'path' => __FILE__,
 	'name' => 'Parser hook',
 	'description' => 'a sample variable hook',
 	'author' => 'Ævar Arnfjörð Bjarmason'

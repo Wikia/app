@@ -14,18 +14,19 @@ $aliases['en'] = array(
 	'InterwikiList' => array('InterwikiList')
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'InterwikiList' => array( 'قائمة_الإنترويكي' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'InterwikiList' => array( 'قائمة_الإنترويكى' ),
+);
+
+/** Bulgarian (Български) */
+$aliases['bg'] = array(
+	'InterwikiList' => array( 'Списък на междууикита' ),
 );
 
 /** Bosnian (Bosanski) */
@@ -61,6 +62,11 @@ $aliases['fi'] = array(
 /** French (Français) */
 $aliases['fr'] = array(
 	'InterwikiList' => array( 'Liste interwiki', 'ListeInterwiki' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'InterwikiList' => array( 'Lista entèrvouiqui', 'ListaEntèrvouiqui' ),
 );
 
 /** Galician (Galego) */
@@ -100,7 +106,12 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'InterwikiList' => array( 'Daftar interwiki' ),
+	'InterwikiList' => array( 'Daftar interwiki', 'DaftarInterwiki' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'InterwikiList' => array( 'ElencoInterwiki', 'ListaInterwiki' ),
 );
 
 /** Japanese (日本語) */
@@ -118,6 +129,11 @@ $aliases['ko'] = array(
 	'InterwikiList' => array( '인터위키목록' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'InterwikiList' => array( 'Engerwiki Leß', 'EngerwikiLeß' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'InterwikiList' => array( 'Interwiki-Lëscht' ),
@@ -126,6 +142,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'InterwikiList' => array( 'ИнтервикиЛиста' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'InterwikiList' => array( 'അന്തര്‍വിക്കിപട്ടിക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'InterwikiList' => array( 'आंतरविकियादी' ),
 );
 
 /** Maltese (Malti) */
@@ -143,9 +169,7 @@ $aliases['nl'] = array(
 	'InterwikiList' => array( 'Interwikilijst' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'InterwikiList' => array( 'Interwikiliste' ),
 );
@@ -153,6 +177,16 @@ $aliases['no'] = array(
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
 	'InterwikiList' => array( 'Lista interwiki' ),
+);
+
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'InterwikiList' => array( 'Spis interwiki' ),
+);
+
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'InterwikiList' => array( 'Lista de interwikis' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
@@ -163,6 +197,11 @@ $aliases['pt-br'] = array(
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'InterwikiList' => array( 'आंन्तरविकिसूची' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'InterwikiList' => array( 'ZoznamInterwiki' ),
 );
 
 /** Swedish (Svenska) */
@@ -178,5 +217,10 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'InterwikiList' => array( 'Talaan ng ugnayang-wiki' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'InterwikiList' => array( 'İntervikiListesi' ),
 );
 

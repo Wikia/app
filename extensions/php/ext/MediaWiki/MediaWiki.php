@@ -22,7 +22,7 @@ $function = 'confirm_MediaWiki_compiled';
 #	$str = "Module $module is not compiled into PHP";
 #}
 echo "$str\n";
-echo "\n\n".utf8_decode(mediawiki_ucfirst(utf8_encode("überfall")))."\n";
+echo "\n\n".utf8_decode(mediawiki_ucfirst(utf8_encode("Ã¼berfall")))."\n";
 echo        utf8_decode(mediawiki_ucfirst(utf8_encode("anton")))."\n";
 echo        utf8_decode(mediawiki_ucfirst(utf8_encode("JeLuF")))."\n";
 

@@ -7,42 +7,29 @@
  */
 
 /**
- * Entry point
- * @param $par String: An article name ??
- */
-function wfSpecialWhatlinkshere($par = NULL) {
-	global $wgRequest, $wgOut, $wgArticleRobotPolicies;
-	$page = new WhatLinksHerePage( $wgRequest, $par );
-	$page->execute();
-	if ( isset( $wgArticleRobotPolicies['Special:WhatLinksHere'] ) ) 
-		$wgOut->setRobotPolicy( $wgArticleRobotPolicies['Special:WhatLinksHere'] ); 
-}
-
-/**
  * implements Special:Whatlinkshere
  * @ingroup SpecialPage
  */
-class WhatLinksHerePage {
-	// Stored data
-	protected $par;
+class SpecialWhatLinksHere extends SpecialPage {
 
 	// Stored objects
 	protected $opts, $target, $selfTitle;
 
 	// Stored globals
-	protected $skin, $request;
+	protected $skin;
 
 	protected $limits = array( 20, 50, 100, 250, 500 );
 
-	function WhatLinksHerePage( $request, $par = null ) {
+	public function __construct() {
+		parent::__construct( 'Whatlinkshere' );
 		global $wgUser;
-		$this->request = $request;
 		$this->skin = $wgUser->getSkin();
-		$this->par = $par;
 	}
 
-	function execute() {
-		global $wgOut, $wgWhatlinkshereLimit;
+	function execute( $par ) {
+		global $wgOut, $wgRequest;
+
+		$this->setHeaders();
 
 		$opts = new FormOptions();
 
@@ -56,12 +43,12 @@ class WhatLinksHerePage {
 		$opts->add( 'hidelinks', false );
 		$opts->add( 'hideimages', false );
 
-		$opts->fetchValuesFromRequest( $this->request );
+		$opts->fetchValuesFromRequest( $wgRequest );
 		$opts->validateIntBounds( 'limit', 0, 5000 );
 
 		// Give precedence to subpage syntax
-		if ( isset($this->par) ) {
-			$opts->setValue( 'target', $this->par );
+		if ( isset($par) ) {
+			$opts->setValue( 'target', $par );
 		}
 
 		// Bind to member variable
@@ -276,8 +263,18 @@ class WhatLinksHerePage {
 			}
 		}
 
-		$suppressRedirect = $row->page_is_redirect ? 'redirect=no' : '';
-		$link = $this->skin->makeKnownLinkObj( $nt, '', $suppressRedirect );
+		if( $row->page_is_redirect ) {
+			$query = array( 'redirect' => 'no' );
+		} else {
+			$query = array();
+		}
+
+		$link = $this->skin->linkKnown(
+			$nt,
+			null,
+			array(),
+			$query
+		);
 
 		// Display properties (redirect or template)
 		$propsText = '';
@@ -311,12 +308,21 @@ class WhatLinksHerePage {
 		if ( $title === null )
 			$title = SpecialPage::getTitleFor( 'Whatlinkshere' );
 
-		$targetText = $target->getPrefixedUrl();
-		return $this->skin->makeKnownLinkObj( $title, $text, 'target=' . $targetText );
+		return $this->skin->linkKnown(
+			$title,
+			$text,
+			array(),
+			array( 'target' => $target->getPrefixedText() )
+		);
 	}
 
 	function makeSelfLink( $text, $query ) {
-		return $this->skin->makeKnownLinkObj( $this->selfTitle, $text, $query );
+		return $this->skin->linkKnown(
+			$this->selfTitle,
+			$text,
+			array(),
+			$query
+		);
 	}
 
 	function getPrevNext( $prevId, $nextId ) {
@@ -331,18 +337,18 @@ class WhatLinksHerePage {
 
 		if ( 0 != $prevId ) {
 			$overrides = array( 'from' => $this->opts->getValue( 'back' ) );
-			$prev = $this->makeSelfLink( $prev, wfArrayToCGI( $overrides, $changed ) );
+			$prev = $this->makeSelfLink( $prev, array_merge( $changed, $overrides ) );
 		}
 		if ( 0 != $nextId ) {
 			$overrides = array( 'from' => $nextId, 'back' => $prevId );
-			$next = $this->makeSelfLink( $next, wfArrayToCGI( $overrides, $changed ) );
+			$next = $this->makeSelfLink( $next, array_merge( $changed, $overrides ) );
 		}
 
 		$limitLinks = array();
 		foreach ( $this->limits as $limit ) {
 			$prettyLimit = $wgLang->formatNum( $limit );
 			$overrides = array( 'limit' => $limit );
-			$limitLinks[] = $this->makeSelfLink( $prettyLimit, wfArrayToCGI( $overrides, $changed ) );
+			$limitLinks[] = $this->makeSelfLink( $prettyLimit, array_merge( $changed, $overrides ) );
 		}
 
 		$nums = $wgLang->pipeList( $limitLinks );
@@ -351,7 +357,7 @@ class WhatLinksHerePage {
 	}
 
 	function whatlinkshereForm() {
-		global $wgScript, $wgTitle;
+		global $wgScript;
 
 		// We get nicer value from the title object
 		$this->opts->consumeValue( 'target' );
@@ -365,7 +371,7 @@ class WhatLinksHerePage {
 		$f = Xml::openElement( 'form', array( 'action' => $wgScript ) );
 		
 		# Values that should not be forgotten
-		$f .= Xml::hidden( 'title', $wgTitle->getPrefixedText() );
+		$f .= Xml::hidden( 'title', SpecialPage::getTitleFor( 'Whatlinkshere' )->getPrefixedText() );
 		foreach ( $this->opts->getUnconsumedValues() as $name => $value ) {
 			$f .= Xml::hidden( $name, $value );
 		}
@@ -393,6 +399,11 @@ class WhatLinksHerePage {
 		return $f;
 	}
 
+	/**
+	 * Create filter panel
+	 * 
+	 * @return string HTML fieldset and filter panel with the show/hide links
+	 */
 	function getFilterPanel() {
 		global $wgLang;
 		$show = wfMsgHtml( 'show' );
@@ -405,11 +416,14 @@ class WhatLinksHerePage {
 		$types = array( 'hidetrans', 'hidelinks', 'hideredirs' );
 		if( $this->target->getNamespace() == NS_FILE )
 			$types[] = 'hideimages';
+
+		// Combined message keys: 'whatlinkshere-hideredirs', 'whatlinkshere-hidetrans', 'whatlinkshere-hidelinks', 'whatlinkshere-hideimages'
+		// To be sure they will be find by grep
 		foreach( $types as $type ) {
 			$chosen = $this->opts->getValue( $type );
-			$msg = wfMsgHtml( "whatlinkshere-{$type}", $chosen ? $show : $hide );
+			$msg = $chosen ? $show : $hide;
 			$overrides = array( $type => !$chosen );
-			$links[] = $this->makeSelfLink( $msg, wfArrayToCGI( $overrides, $changed ) );
+			$links[] =  wfMsgHtml( "whatlinkshere-{$type}", $this->makeSelfLink( $msg, array_merge( $changed, $overrides ) ) );
 		}
 		return Xml::fieldset( wfMsg( 'whatlinkshere-filters' ), $wgLang->pipeList( $links ) );
 	}

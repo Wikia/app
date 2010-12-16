@@ -1,64 +1,60 @@
 <?php
-	if (!defined('MEDIAWIKI')) die();
+	if ( !defined( 'MEDIAWIKI' ) ) die();
 
-	require_once("WikiDataAPI.php"); // for bootstrapCollection
-	require_once("Utilities.php"); 
+	require_once( "WikiDataAPI.php" ); // for bootstrapCollection
+	require_once( "Utilities.php" );
 	
 	$wgAvailableRights[] = 'addcollection';
 	$wgGroupPermissions['bureaucrat']['addcollection'] = true;
 	$wgExtensionFunctions[] = 'wfSpecialAddCollection';
 
 	function wfSpecialAddCollection() {
-	# Moved to SpecialLanguages.i18n.php
-	#        global $wgMessageCache;
-    #            $wgMessageCache->addMessages(array('addcollection'=>'Wikidata: Add collection'),'en');
-                        
 		class SpecialAddCollection extends SpecialPage {
 			function SpecialAddCollection() {
-				SpecialPage::SpecialPage('AddCollection');
+				SpecialPage::SpecialPage( 'AddCollection' );
 			}
 
-			function execute($par) {
+			function execute( $par ) {
 
 				global $wgOut, $wgUser, $wgRequest;
 
-				$wgOut->setPageTitle('Add Collection');
+				$wgOut->setPageTitle( 'Add Collection' );
 
-				if (!$wgUser->isAllowed('addcollection')) {
-					$wgOut->addHTML('You do not have permission to add a collection.');
+				if ( !$wgUser->isAllowed( 'addcollection' ) ) {
+					$wgOut->addHTML( 'You do not have permission to add a collection.' );
 					return false;
 				}
 
-				$dbr = wfGetDB(DB_MASTER);
+				$dbr = wfGetDB( DB_MASTER );
 
-				if ($wgRequest->getText('collection')) {
-					require_once('WikiDataAPI.php');
-					require_once('Transaction.php');
+				if ( $wgRequest->getText( 'collection' ) ) {
+					require_once( 'WikiDataAPI.php' );
+					require_once( 'Transaction.php' );
 
-					$dc = $wgRequest->getText('dataset');
-					$collectionName = $wgRequest->getText('collection');
-					startNewTransaction($wgUser->getID(), wfGetIP(), 'Add collection ' . $collectionName);
-					bootstrapCollection($collectionName,$wgRequest->getText('language'),$wgRequest->getText('type'), $dc);
-					$wgOut->addHTML(wfMsg('ow_collection_added', $collectionName) . "<br />" );	
+					$dc = $wgRequest->getText( 'dataset' );
+					$collectionName = $wgRequest->getText( 'collection' );
+					startNewTransaction( $wgUser->getID(), wfGetIP(), 'Add collection ' . $collectionName );
+					bootstrapCollection( $collectionName, $wgRequest->getText( 'language' ), $wgRequest->getText( 'type' ), $dc );
+					$wgOut->addHTML( wfMsg( 'ow_collection_added', $collectionName ) . "<br />" );
 				}
-				$datasets=wdGetDatasets();
-				$datasetarray['']=wfMsgSc("none_selected");
-				foreach($datasets as $datasetid=>$dataset) {
-					$datasetarray[$datasetid]=$dataset->fetchName();
+				$datasets = wdGetDatasets();
+				$datasetarray[''] = wfMsgSc( "none_selected" );
+				foreach ( $datasets as $datasetid => $dataset ) {
+					$datasetarray[$datasetid] = $dataset->fetchName();
 				}
 
-				$wgOut->addHTML(getOptionPanel(
+				$wgOut->addHTML( getOptionPanel(
 					array(
-						'Collection name:' => getTextBox('collection'),
-						'Language of name:' => getSuggest('language','language'),
-						'Collection type:' => getSelect('type',array('' => 'None','RELT' => 'RELT','LEVL' => 'LEVL','CLAS' => 'CLAS', 'MAPP' => 'MAPP')),
-						'Dataset:' => getSelect('dataset',$datasetarray)
+						'Collection name:' => getTextBox( 'collection' ),
+						'Language of name:' => getSuggest( 'language', 'language' ),
+						'Collection type:' => getSelect( 'type', array( '' => 'None', 'RELT' => 'RELT', 'LEVL' => 'LEVL', 'CLAS' => 'CLAS', 'MAPP' => 'MAPP' ) ),
+						'Dataset:' => getSelect( 'dataset', $datasetarray )
 					),
-					'',array('create' => wfMsg('ow_create'))
-				));
+					'', array( 'create' => wfMsg( 'ow_create' ) )
+				) );
 			}
 		}
 
-		SpecialPage::addPage(new SpecialAddCollection);
+		SpecialPage::addPage( new SpecialAddCollection );
 	}
 

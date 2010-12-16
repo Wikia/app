@@ -4,7 +4,7 @@ or any wiki page using the same syntax as for images.
 
 To install this extension, add the following to the end of your LocalSettings.php:
 
-    require( "$IP/extensions/OggHandler/OggHandler.php" );
+    require_once( "$IP/extensions/OggHandler/OggHandler.php" );
 
 FFmpeg
 ------
@@ -26,35 +26,29 @@ Suggested configure line for minimal functionality:
 
 ./configure --disable-demuxers --disable-muxers --disable-decoders --disable-encoders \
   --disable-ffserver --disable-ffplay --enable-encoder=mjpeg --enable-muxer=mjpeg \
-  --enable-decoder=theora --enable-demuxer=ogg --disable-network \
-  --build-suffix=-still
+  --enable-decoder=theora --enable-demuxer=ogg --disable-network --disable-devices \ 
+  --disable-parsers --enable-parser=vp3 --build-suffix=-still
 
 Set the FFmpeg binary location with:
 
     $wgFFmpegLocation = '/path/to/ffmpeg';
 
-after the require line in LocalSettings.php. 
+after the require line in LocalSettings.php.  (The default is
+'/usr/bin/ffmpeg'.)
 
 Cortado
 -------
 
-Wikimedia maintains a fork of the Cortado Java applet by Fluendo. SVN access to
-the source code is at:
-
-    http://svn.wikimedia.org/svnroot/mediawiki/trunk/cortado/
+Wikimedia uses Cortado Java applet from Xiph.org.
 
 A .jar file compiled from this tree is provided in the OggHandler directory for
 your convenience.
 
-For information about the original project see:
+For information about Cortado see:
 
-    http://www.flumotion.net/cortado/
+    http://theora.org/cortado/
 
 See LICENSE.cortado, LICENSE.jheora and LICENSE.smoke for license information. 
-
-Our fork contains several bug fixes and feature additions. Fluendo appears to 
-have stopped maintaining Cortado. We recommend you file bug reports in
-Wikimedia's bug tracker.
 
 PEAR File_Ogg
 -------------
@@ -66,6 +60,9 @@ either the bundled File_Ogg class, or a File_Ogg package from PEAR with
 version 0.3.0 or greater. It is licensed under the LGPL.
 
 http://pear.php.net/package/File_Ogg
+
+As per the usual convention, the PEAR base directory (the one with PEAR.php in 
+it) must be in your include_path.
 
 Graphics
 --------

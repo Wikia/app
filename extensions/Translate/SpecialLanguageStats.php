@@ -1,5 +1,6 @@
 <?php
 if ( !defined( 'MEDIAWIKI' ) ) die();
+
 /**
  * Implements a special page which givens translation statistics for a given
  * set of message groups. Message group names can be entered (pipe separated)
@@ -28,7 +29,7 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 		$this->outputHeader();
 
 		# no UI when including()
-		if( !$this->including() ) {
+		if ( !$this->including() ) {
 			$code = $wgRequest->getVal( 'code', $par );
 			$suppressComplete = $wgRequest->getVal( 'suppresscomplete', $par );
 			$wgOut->addHTML( $this->languageForm( $code, $suppressComplete ) );
@@ -40,7 +41,7 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 
 		$out = '';
 
-		if( array_key_exists( $code, Language::getLanguageNames() ) ) {
+		if ( array_key_exists( $code, Language::getLanguageNames() ) ) {
 			$out .= $this->getGroupStats( $code, $suppressComplete );
 		} else if ( $code ) {
 			$wgOut->addWikiMsg( 'translate-page-no-such-language' );
@@ -70,7 +71,7 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 				Xml::label( wfMsg( 'translate-language-code-field-name' ), 'code' ) .
 				"</td>
 				<td class='mw-input'>" .
-					Xml::input( 'code', 30, str_replace('_',' ',$code), array( 'id' => 'code' ) ) .
+					Xml::input( 'code', 30, str_replace( '_', ' ', $code ), array( 'id' => 'code' ) ) .
 				"</td></tr><tr><td colspan='2'>" .
 				Xml::checkLabel( wfMsg( 'translate-suppress-complete' ), 'suppresscomplete', 'suppresscomplete', $suppressComplete ) .
 				"</td>" .
@@ -109,7 +110,7 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 
 	# Statistics table element (heading or regular cell)
 	function element( $in, $heading = false, $bgcolor = '' ) {
-		if( $heading ) {
+		if ( $heading ) {
 			$element = '<th>' . $in . '</th>';
 		} else if ( $bgcolor ) {
 			$element = '<td bgcolor="#' . $bgcolor . '">' . $in . '</td>';
@@ -119,32 +120,13 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 		return "\t\t" . $element . "\n";
 	}
 
-	function getGroups() {
-		$groups = wfMsgForContent( 'translate-languagestats-groups' );
-
-		if( $groups ) {
-			// Make the group names clean
-			// Should contain one valid group name per line
-			// All invalid group names should be ignored
-			// Return all group names if there are no valid group names at all
-			// FIXME: implement the above here
-			$cleanGroups = '';
-
-			if( $cleanGroups ) {
-				return $cleanGroups;
-			}
-		}
-
-		return MessageGroups::singleton()->getGroups();
-	}
-
 	function getBackgroundColour( $subset, $total, $fuzzy = false ) {
-		$v = @round(255 * $subset / $total);
+		$v = @round( 255 * $subset / $total );
 
 		if ( $fuzzy ) {
 			# weigh fuzzy with factor 20
 			$v = $v * 20;
-			if( $v > 255 ) $v = 255;
+			if ( $v > 255 ) $v = 255;
 			$v = 255 - $v;
 		}
 
@@ -154,7 +136,7 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 			$green = sprintf( '%02X', 2 * $v );
 		} else {
 			# Yellow to Green
-			$red = sprintf('%02X', 2 * ( 255 - $v ) );
+			$red = sprintf( '%02X', 2 * ( 255 - $v ) );
 			$green = 'FF';
 		}
 		$blue = '00';
@@ -162,20 +144,8 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 		return $red . $green . $blue;
 	}
 
-	/**
-	 * HTML for language statistics
-	 * Copied and adaped from groupStatistics.php by Nikerabbit
-	 * @param integer $code A language code (default empty, example: 'en').
-	 * @param bool $suppressComplete If completely translated groups should be suppressed
-	 * @return string HTML
-	 */
-	function getGroupStats( $code, $suppressComplete = false ) {
-		global $wgUser, $wgLang;
-
-		$out = '';
-
-		# FIXME: provide some sensible header for what is being displayed.
-		$out .= '<!-- ' . $code . " -->\n";
+	function createHeader( $code ) {
+		$out = '<!-- ' . $code . " -->\n";
 		$out .= '<!-- ' . TranslateUtils::getLanguageName( $code, false ) . " -->\n";
 
 		# Create table header
@@ -188,57 +158,129 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 		$out .= $this->element( wfMsg( 'translate-percentage-fuzzy', true ) );
 		$out .= $this->blockend();
 
+		return $out;
+	}
+
+	/**
+	 * HTML for language statistics
+	 * Copied and adaped from groupStatistics.php by Nikerabbit
+	 * @param integer $code A language code (default empty, example: 'en').
+	 * @param bool $suppressComplete If completely translated groups should be suppressed
+	 * @return string HTML
+	 */
+	function getGroupStats( $code, $suppressComplete = false ) {
+		global $wgUser, $wgLang;
+
+		$errorString = '&lt;error&gt;';
+		$out = '';
+
+		$cache = new ArrayMemoryCache( 'groupstats' );
+
 		# Fetch groups stats have to be displayed for
-		$groups = $this->getGroups();
-
+		$groups = MessageGroups::singleton()->getGroups();
 		# Get statistics for the message groups
-		foreach ( $groups as $g ) {
+		foreach ( $groups as $groupName => $g ) {
+			// Do not report if this group is blacklisted.
+			$groupId = $g->getId();
+			$blacklisted = self::isBlacklisted( $groupId, $code );
 
-			// Initialise messages
-			$collection = $g->initCollection( $code );
-			$collection->filter( 'optional' );
-			// Store the count of real messages for later calculation.
-			$total = count( $collection );
-
-			// Fill translations in for counting
-			$g->fillCollection( $collection );
-
-			// Count fuzzy first
-			$collection->filter( 'fuzzy' );
-			$fuzzy = $total - count( $collection );
-
-			// Count the completion percent
-			$collection->filter( 'translated', false );
-			$translated = count( $collection );
-
-			// FIXME: avoid division by 0. Should not happen, but core-mostused has this on Windows at the moment
-			if( !$total ) {
+			if ( $blacklisted !== null ) {
 				continue;
+			}
+
+			$incache = $cache->get( $groupName, $code );
+			if ( $incache !== false ) {
+				list( $fuzzy, $translated, $total ) = $incache;
+			} else {
+				// Initialise messages
+				$collection = $g->initCollection( $code );
+				$collection->setInFile( $g->load( $code ) );
+				$collection->filter( 'ignored' );
+				$collection->filter( 'optional' );
+				// Store the count of real messages for later calculation.
+				$total = count( $collection );
+
+				// Count fuzzy first
+				$collection->filter( 'fuzzy' );
+				$fuzzy = $total - count( $collection );
+
+				// Count the completion percent
+				$collection->filter( 'hastranslation', false );
+				$translated = count( $collection );
+
+				$cache->set( $groupName, $code, array( $fuzzy, $translated, $total ) );
+
 			}
 
 			// Skip if $suppressComplete and complete
-			if( $suppressComplete && !$fuzzy && $translated == $total ) {
+			if ( $suppressComplete && !$fuzzy && $translated == $total ) {
 				continue;
 			}
 
-			$translatedPercentage = wfMsg( 'percent', $wgLang->formatNum( round( 100 * $translated / $total, 2 ) ) );
-			$fuzzyPercentage = wfMsg( 'percent', $wgLang->formatNum( round( 100 * $fuzzy / $total, 2 ) ) );
+			// Division by 0 should not be possible, but does occur. Caching issue?
+			$translatedPercentage = $total ? $wgLang->formatNum( number_format( round( 100 * $translated / $total, 2 ), 2 ) ) : $errorString;
+			$fuzzyPercentage = $total ? $wgLang->formatNum( number_format( round( 100 * $fuzzy / $total, 2 ), 2 ) ) : $errorString;
+
+			if ( !wfEmptyMsg( 'percent', wfMsgNoTrans( 'percent' ) ) ) {
+				$translatedPercentage = $translatedPercentage == $errorString ? $translatedPercentage : wfMsg( 'percent', $translatedPercentage );
+				$fuzzyPercentage = $fuzzyPercentage == $errorString ? $fuzzyPercentage : wfMsg( 'percent', $fuzzyPercentage );
+			} else {
+				// For 1.14 compatability
+				$translatedPercentage = "$translatedPercentage%";
+				$fuzzyPercentage = "$fuzzyPercentage%";
+			}
 
 			$translateTitle = SpecialPage::getTitleFor( 'Translate' );
-			$pageParameters = "group=" . $g->getId() . "&language=" . $code;
-			$translateGroupLink = $wgUser->getSkin()->makeKnownLinkObj( $translateTitle, $g->getLabel(), $pageParameters );
+			$queryParameters = array(
+				'group' => $groupId,
+				'language' => $code
+			);
+
+			$translateGroupLink = $wgUser->getSkin()->link(
+				$translateTitle,
+				$g->getLabel(),
+				array(),
+				$queryParameters
+			);
 
 			$out .= $this->blockstart();
 			$out .= $this->element( $translateGroupLink );
 			$out .= $this->element( $total );
 			$out .= $this->element( $total - $translated );
-			$out .= $this->element( $translatedPercentage, false, $this->getBackgroundColour( $translated, $total ) );
-			$out .= $this->element( $fuzzyPercentage, false, $this->getBackgroundColour( $fuzzy, $total, true ) );
+			$out .= $this->element( $translatedPercentage, false, $translatedPercentage == $errorString ? '' : $this->getBackgroundColour( $translated, $total ) );
+			$out .= $this->element( $fuzzyPercentage, false, $translatedPercentage == $errorString ? '' : $this->getBackgroundColour( $fuzzy, $total, true ) );
 			$out .= $this->blockend();
 		}
 
-		$out .= $this->footer();
+		if ( $out ) {
+			$out = $this->createHeader( $code ) . $out;
+			$out .= $this->footer();
+		} else {
+			$out = wfMsgExt( 'translate-nothing-to-do', 'parse' );
+		}
 
 		return $out;
+	}
+
+	private function isBlacklisted( $groupId, $code ) {
+		global $wgTranslateBlacklist;
+
+		$blacklisted = null;
+
+		$checks = array(
+			$groupId,
+			strtok( $groupId, '-' ),
+			'*'
+		);
+
+		foreach ( $checks as $check ) {
+			$blacklisted = @$wgTranslateBlacklist[$check][$code];
+
+			if ( $blacklisted !== null ) {
+				break;
+			}
+		}
+
+		return $blacklisted;
 	}
 }

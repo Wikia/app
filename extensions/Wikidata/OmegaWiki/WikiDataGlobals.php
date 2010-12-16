@@ -1,128 +1,69 @@
 <?php
 
-require_once("Wikidata.php"); 
-// Attribute names (OLD)
-// deprecated/ legacy code
-// these definitions can now be found in App.php
-// would replace all now, but I'd also need to go through
-// OmegaWikiEditors.php with a fine-toothed comb, which I don't
-// feel like doing right now:-P
-//do not use for new items
+require_once( "Wikidata.php" );
+
+// Ids
+// Work in progress: (Kip)
+// global variables here should be created for each Attribute in OmegaWikiAttributes.php
+// sometimes, other php files have to be adapted...
+
+global $wgOptionSuffix;
+$wgOptionSuffix = "Optn" ;
+
 
 global
-	$wgAlternativeDefinitionAttributeName,
-	$wgAlternativeDefinitionsAttributeName,
-	$wgAnnotationAttributeName,
-	$wgApproximateMeaningsAttributeName,
-	$wgClassAttributeAttributeAttributeName,
-	$wgClassAttributesAttributeName,
-	$wgClassAttributeLevelAttributeName,
-	$wgClassAttributeTypeAttributeName,
-	$wgClassMembershipAttributeName,
-	$wgCollectionAttributeName,
-	$wgCollectionMembershipAttributeName,
-	$wgDefinedMeaningAttributesAttributeName,
-	$wgDefinedMeaningAttributeName,
-#	$wgDefinedMeaningReferenceAttributeName,
-	$wgDefinitionAttributeName,
-	$wgLanguageAttributeName,
-	$wgExactMeaningsAttributeName,
-	$wgExpressionAttributeName,
-	$wgExpressionMeaningsAttributeName,
-	$wgExpressionsAttributeName,
-	$wgGotoSourceAttributeName,
-	$wgIdenticalMeaningAttributeName,
-	$wgIncomingRelationsAttributeName, 
-	$wgLevelAnnotationAttributeName,
-	$wgLinkAttributeAttributeName,
-	$wgLinkAttributeValuesAttributeName,
-	$wgOptionAttributeOptionAttributeName,
-	$wgOptionAttributeOptionsAttributeName,
-	$wgOptionAttributeValuesAttributeName,
-	$wgOtherDefinedMeaningAttributeName,
-	$wgRelationsAttributeName, 
-	$wgRelationTypeAttributeName, 
-	$wgSourceAttributeName,
-	$wgSourceIdentifierAttributeName,
-	$wgSpellingAttributeName,
-	$wgSynonymsAttributeName,
-	$wgSynonymsAndTranslationsAttributeName,
-	$wgTextAttributeAttributeName,
-	$wgTextAttributeName,
-	$wgTextAttributeValuesAttributeName,
-	$wgTranslatedTextAttributeAttributeName,
-	$wgTranslatedTextAttributeName,
-	$wgTranslatedTextAttributeValueAttributeName,
-	$wgTranslatedTextAttributeValuesAttributeName;
+	$wgAlternativeDefinition,
+	$wgAlternativeDefinitions,
+	$wgClassAttributes,
+	$wgClassMembership,
+	$wgCollectionMembership,
+	$wgDefinedMeaning,
+	$wgDefinedMeaningAttributes,
+	$wgDefinition,
+	$wgExpression,
+	$wgExpressionApproximateMeanings,
+	$wgExpressionExactMeanings,
+	$wgExpressionMeanings,
+	$wgIncomingRelations,
+	$wgLinkAttribute,
+	$wgLinkAttributeValues,
+	$wgObjectAttributes,
+	$wgOptionAttribute,
+	$wgOptionAttributeOption,
+	$wgOptionAttributeValues,
+	$wgOtherDefinedMeaning,
+	$wgRelations,
+	$wgSynonymsAndTranslations,
+	$wgTextAttributeValues,
+	$wgTranslatedText;
 
-$wgAlternativeDefinitionAttributeName = "Alternative definition";
-$wgAlternativeDefinitionsAttributeName = "Alternative definitions";	
-$wgAnnotationAttributeName = "Annotation";
-$wgApproximateMeaningsAttributeName = "Approximate meanings";	
-$wgClassAttributeAttributeAttributeName = "Attribute";
-$wgClassAttributesAttributeName = "Class attributes";
-$wgClassAttributeLevelAttributeName = "Level";
-$wgClassAttributeTypeAttributeName = "Type";
-$wgClassMembershipAttributeName = "Class membership";
-$wgCollectionAttributeName = "Collection";
-$wgCollectionMembershipAttributeName = "Collection membership";
-$wgDefinitionAttributeName = "Definition";
-$wgDefinedMeaningAttributesAttributeName = "Annotation";
-#$wgDefinedMeaningAttributeName = "Defined meaning";
-#$wgDefinedMeaningReferenceAttributeName = "Defined meaning";
-$wgExactMeaningsAttributeName = "Exact meanings";
-$wgExpressionAttributeName = "Expression";
-$wgExpressionMeaningsAttributeName = "Expression meanings";
-$wgExpressionsAttributeName = "Expressions";
-$wgIdenticalMeaningAttributeName = "Identical meaning?";
-$wgIncomingRelationsAttributeName = "Incoming relations";
-$wgGotoSourceAttributeName = "Go to source";
-$wgLanguageAttributeName = "Language";
-$wgLevelAnnotationAttributeName = "Annotation";
-$wgOptionAttributeAttributeName = "Property";
-$wgOptionAttributeOptionAttributeName = "Option";
-$wgOptionAttributeOptionsAttributeName = "Options";
-$wgOptionAttributeValuesAttributeName = "Options";
-$wgOtherDefinedMeaningAttributeName = "Other defined meaning";
-$wgRelationsAttributeName = "Relations";
-$wgRelationTypeAttributeName = "Relation type";
-$wgSpellingAttributeName = "Spelling";
-$wgSynonymsAttributeName = "Synonyms"; 
-$wgSynonymsAndTranslationsAttributeName = "Synonyms and translations";
-$wgSourceAttributeName = "Source";
-$wgSourceIdentifierAttributeName = "Source identifier";
-$wgTextAttributeAttributeName = "Property";
-$wgTextAttributeName = "Text";
-$wgTextAttributeValuesAttributeName = "Plain texts";
-$wgTranslatedTextAttributeAttributeName = "Property";
-$wgTranslatedTextAttributeName = "Translated text";
-$wgTranslatedTextAttributeValueAttributeName = "Text";
-$wgTranslatedTextAttributeValuesAttributeName = "Translatable texts";
-$wgLinkAttributeAttributeName = "Property";
-$wgLinkAttributeValuesAttributeName = "Links";
 
-// Attribute Ids
+	$wgAlternativeDefinition = "altDef";
+	$wgAlternativeDefinitions = "altDefs";
+	$wgClassAttributes = "classAtt";
+	$wgClassMembership = "classMembers";
+	$wgCollectionMembership = "colMembers";
+	$wgDefinedMeaning = "dm";
+	$wgDefinedMeaningAttributes = "dmAtt";
+	$wgDefinition = "def";
+	$wgExpression = "exp";
+	$wgExpressionApproximateMeanings = "approx" ;
+	$wgExpressionExactMeanings = "exact" ;
+	$wgExpressionMeanings = "meanings";
+	$wgIncomingRelations = "incomingRel";
+	$wgLinkAttribute = "linkAtt";
+	$wgLinkAttributeValues = $wgLinkAttribute."Val";
+	$wgObjectAttributes = "objAtt";
+	$wgOptionAttribute = "optnAtt"; // must be the same in suggest.js
+	$wgOptionAttributeOption = $wgOptionAttribute.$wgOptionSuffix;
+	$wgOptionAttributeValues = $wgOptionAttribute."Val";
+	$wgOtherDefinedMeaning = "otherDm";
+	$wgRelations = "rel";
+	$wgSynonymsAndTranslations = "syntrans";
+	$wgTextAttributeValues = "txtAttVal";
+	$wgTranslatedText = "transl" ;
 
-global
-	$wgAlternativeDefinitionsAttributeId,
-	$wgClassAttributesAttributeId,
-	$wgClassMembershipAttributeId,
-	$wgCollectionMembershipAttributeId,
-	$wgDefinedMeaningAttributesAttributeId,
-	$wgDefinitionAttributeId,
-	$wgIncomingRelationsAttributeId,
-	$wgRelationsAttributeId, 
-	$wgSynonymsAndTranslationsAttributeId;
-	
-$wgAlternativeDefinitionsAttributeId = "alternative-definitions";
-$wgClassAttributesAttributeId = "class-attributes";
-$wgClassMembershipAttributeId = "class-membership";
-$wgCollectionMembershipAttributeId = "collection-membership";
-$wgDefinedMeaningAttributesAttributeId = "defined-meaning-attributes";
-$wgDefinitionAttributeId = "definition";
-$wgIncomingRelationsAttributeId = "reciprocal-relations";
-$wgRelationsAttributeId = "relations"; 
-$wgSynonymsAndTranslationsAttributeId = "synonyms-translations";
+
 
 // Defined meaning editor
 
@@ -130,19 +71,19 @@ global
 	$wdDefinedMeaningAttributesOrder;
 	
 $wdDefinedMeaningAttributesOrder = array(
-	$wgDefinitionAttributeId,
-	$wgClassAttributesAttributeId,
-	$wgAlternativeDefinitionsAttributeId,
-	$wgSynonymsAndTranslationsAttributeId,
-	$wgIncomingRelationsAttributeId,
-	$wgClassMembershipAttributeId,
-	$wgCollectionMembershipAttributeId,
-	$wgDefinedMeaningAttributesAttributeId
+	$wgDefinition,
+	$wgClassAttributes,
+	$wgAlternativeDefinitions,
+	$wgSynonymsAndTranslations,
+	$wgIncomingRelations,
+	$wgClassMembership,
+	$wgCollectionMembership,
+	$wgDefinedMeaningAttributes
 );
 
 // Go to source templates
 
-require_once("GotoSourceTemplate.php");
+require_once( "GotoSourceTemplate.php" );
 
 global
 	$wgGotoSourceTemplates;
@@ -153,11 +94,11 @@ $wgGotoSourceTemplates = array();	// Map of collection id => GotoSourceTemplate
 
 global
 	$wgDefinedMeaningPageTitlePrefix,
-	//$wgExpressionPageTitlePrefix;
+	// $wgExpressionPageTitlePrefix;
 	$wgUseExpressionPageTitlePrefix;
 	
 $wgDefinedMeaningPageTitlePrefix = "";
-//$wgExpressionPageTitlePrefix = "Multiple meanings"; # Now it's localizable
+// $wgExpressionPageTitlePrefix = "Multiple meanings"; # Now it's localizable
 $wgUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "Multiple meanings:" from message ow_Multiple_meanings
 
 // Search page
@@ -175,7 +116,7 @@ $wgShowSearchWithinWordsOption = true;
 
 // Annotation to column filtering
 
-require_once("PropertyToColumnFilter.php"); 
+require_once( "PropertyToColumnFilter.php" );
 
 global
 	$wgPropertyToColumnFilters;
@@ -188,6 +129,6 @@ global
  *     new PropertyToColumnFilter("references", "References", array(1000, 2000, 3000)) // Defined meaning ids are the attribute ids to filter
  *   )
  * 
- */	
-$wgPropertyToColumnFilters = array(); 
+ */
+$wgPropertyToColumnFilters = array();
 ?>

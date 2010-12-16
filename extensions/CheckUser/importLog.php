@@ -52,5 +52,3 @@ if( $args ) {
 	echo "   --test    Test log parser without doing local lookups\n";
 	echo "\n";
 }
-
-?>

@@ -89,7 +89,7 @@ class Editcount extends IncludableSpecialPage {
 		$fname = 'Editcount::editsByNs';
 		$nscount = array();
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			array( 'user', 'revision', 'page' ),
 			array( 'page_namespace', 'COUNT(*) as count' ),
@@ -120,7 +120,7 @@ class Editcount extends IncludableSpecialPage {
 		$fname = 'Editcount::editsInNs';
 		$nscount = array();
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->selectField(
 			array( 'user', 'revision', 'page' ),
 			array( 'COUNT(*) as count' ),
@@ -163,11 +163,11 @@ class EditcountHTML extends Editcount {
 		$this->nscount = $nscount;
 		$this->total = $total;
 
-		global $wgTitle, $wgOut, $wgLang;
+		global $wgOut, $wgLang;
 
 		$this->setHeaders();
 
-		$action = $wgTitle->escapeLocalUrl();
+		$action = $this->getTitle()->escapeLocalUrl();
 		$user = wfMsgHtml( 'editcount_username' );
 		$submit = wfMsgHtml( 'editcount_submit' );
 		$out = "

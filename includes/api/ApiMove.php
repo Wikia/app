@@ -22,9 +22,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ("ApiBase.php");
+	require_once ( "ApiBase.php" );
 }
 
 
@@ -33,60 +33,68 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiMove extends ApiBase {
 
-	public function __construct($main, $action) {
-		parent :: __construct($main, $action);
+	public function __construct( $main, $action ) {
+		parent :: __construct( $main, $action );
 	}
 
 	public function execute() {
 		global $wgUser;
 		$params = $this->extractRequestParams();
-		if(is_null($params['reason']))
+		if ( is_null( $params['reason'] ) )
 			$params['reason'] = '';
 
-		$this->requireOnlyOneParameter($params, 'from', 'fromid');
-		if(!isset($params['to']))
-			$this->dieUsageMsg(array('missingparam', 'to'));
-		if(!isset($params['token']))
-			$this->dieUsageMsg(array('missingparam', 'token'));
-		if(!$wgUser->matchEditToken($params['token']))
-			$this->dieUsageMsg(array('sessionfailure'));
+		$this->requireOnlyOneParameter( $params, 'from', 'fromid' );
+		if ( !isset( $params['to'] ) )
+			$this->dieUsageMsg( array( 'missingparam', 'to' ) );
 
-		if(isset($params['from']))
+		if ( isset( $params['from'] ) )
 		{
-			$fromTitle = Title::newFromText($params['from']);
-			if(!$fromTitle)
-				$this->dieUsageMsg(array('invalidtitle', $params['from']));
+			$fromTitle = Title::newFromText( $params['from'] );
+			if ( !$fromTitle )
+				$this->dieUsageMsg( array( 'invalidtitle', $params['from'] ) );
 		}
-		else if(isset($params['fromid']))
+		else if ( isset( $params['fromid'] ) )
 		{
-			$fromTitle = Title::newFromID($params['fromid']);
-			if(!$fromTitle)
-				$this->dieUsageMsg(array('nosuchpageid', $params['fromid']));
+			$fromTitle = Title::newFromID( $params['fromid'] );
+			if ( !$fromTitle )
+				$this->dieUsageMsg( array( 'nosuchpageid', $params['fromid'] ) );
 		}
-		if(!$fromTitle->exists())
-			$this->dieUsageMsg(array('notanarticle'));
+
+		if ( !$fromTitle->exists() )
+			$this->dieUsageMsg( array( 'notanarticle' ) );
 		$fromTalk = $fromTitle->getTalkPage();
 
-		$toTitle = Title::newFromText($params['to']);
-		if(!$toTitle)
-			$this->dieUsageMsg(array('invalidtitle', $params['to']));
+		$toTitle = Title::newFromText( $params['to'] );
+		if ( !$toTitle )
+			$this->dieUsageMsg( array( 'invalidtitle', $params['to'] ) );
 		$toTalk = $toTitle->getTalkPage();
 
-		# Move the page
-		$hookErr = null;
-		$retval = $fromTitle->moveTo($toTitle, true, $params['reason'], !$params['noredirect']);
-		if($retval !== true)
-			$this->dieUsageMsg(reset($retval));
+		if ( $toTitle->getNamespace() == NS_FILE
+			&& !RepoGroup::singleton()->getLocalRepo()->findFile( $toTitle )
+			&& wfFindFile( $toTitle ) )
+		{
+			if ( !$params['ignorewarnings'] && $wgUser->isAllowed( 'reupload-shared' ) ) {
+				$this->dieUsageMsg( array( 'sharedfile-exists' ) );
+			} elseif ( !$wgUser->isAllowed( 'reupload-shared' ) ) {
+				$this->dieUsageMsg( array( 'cantoverwrite-sharedfile' ) );
+			}
+		}
 
-		$r = array('from' => $fromTitle->getPrefixedText(), 'to' => $toTitle->getPrefixedText(), 'reason' => $params['reason']);
-		if(!$params['noredirect'] || !$wgUser->isAllowed('suppressredirect'))
+		// Move the page
+		$hookErr = null;
+		$retval = $fromTitle->moveTo( $toTitle, true, $params['reason'], !$params['noredirect'] );
+		if ( $retval !== true )
+			$this->dieUsageMsg( reset( $retval ) );
+
+		$r = array( 'from' => $fromTitle->getPrefixedText(), 'to' => $toTitle->getPrefixedText(), 'reason' => $params['reason'] );
+		if ( !$params['noredirect'] || !$wgUser->isAllowed( 'suppressredirect' ) )
 			$r['redirectcreated'] = '';
 
-		# Move the talk page
-		if($params['movetalk'] && $fromTalk->exists() && !$fromTitle->isTalkPage())
+		// Move the talk page
+		if ( $params['movetalk'] && $fromTalk->exists() && !$fromTitle->isTalkPage() )
 		{
-			$retval = $fromTalk->moveTo($toTalk, true, $params['reason'], !$params['noredirect']);
-			if($retval === true)
+			$retval = $fromTalk->moveTo( $toTalk, true, $params['reason'], !$params['noredirect'] );
+			if ( $retval === true )
 			{
 				$r['talkfrom'] = $fromTalk->getPrefixedText();
 				$r['talkto'] = $toTalk->getPrefixedText();
@@ -94,55 +102,55 @@ class ApiMove extends ApiBase {
 			// We're not gonna dieUsage() on failure, since we already changed something
 			else
 			{
-				$parsed = $this->parseMsg(reset($retval));
+				$parsed = $this->parseMsg( reset( $retval ) );
 				$r['talkmove-error-code'] = $parsed['code'];
 				$r['talkmove-error-info'] = $parsed['info'];
 			}
 		}
 
-		# Move subpages
-		if($params['movesubpages'])
+		// Move subpages
+		if ( $params['movesubpages'] )
 		{
-			$r['subpages'] = $this->moveSubpages($fromTitle, $toTitle,
-					$params['reason'], $params['noredirect']);
-			$this->getResult()->setIndexedTagName($r['subpages'], 'subpage');
-			if($params['movetalk'])
+			$r['subpages'] = $this->moveSubpages( $fromTitle, $toTitle,
+					$params['reason'], $params['noredirect'] );
+			$this->getResult()->setIndexedTagName( $r['subpages'], 'subpage' );
+			if ( $params['movetalk'] )
 			{
-				$r['subpages-talk'] = $this->moveSubpages($fromTalk, $toTalk,
-					$params['reason'], $params['noredirect']);
-				$this->getResult()->setIndexedTagName($r['subpages-talk'], 'subpage');
+				$r['subpages-talk'] = $this->moveSubpages( $fromTalk, $toTalk,
+					$params['reason'], $params['noredirect'] );
+				$this->getResult()->setIndexedTagName( $r['subpages-talk'], 'subpage' );
 			}
 		}
 
-		# Watch pages
-		if($params['watch'] || $wgUser->getOption('watchmoves'))
+		// Watch pages
+		if ( $params['watch'] || $wgUser->getOption( 'watchmoves' ) )
 		{
-			$wgUser->addWatch($fromTitle);
-			$wgUser->addWatch($toTitle);
+			$wgUser->addWatch( $fromTitle );
+			$wgUser->addWatch( $toTitle );
 		}
-		else if($params['unwatch'])
+		else if ( $params['unwatch'] )
 		{
-			$wgUser->removeWatch($fromTitle);
-			$wgUser->removeWatch($toTitle);
+			$wgUser->removeWatch( $fromTitle );
+			$wgUser->removeWatch( $toTitle );
 		}
-		$this->getResult()->addValue(null, $this->getModuleName(), $r);
+		$this->getResult()->addValue( null, $this->getModuleName(), $r );
 	}
-	
-	public function moveSubpages($fromTitle, $toTitle, $reason, $noredirect)
+
+	public function moveSubpages( $fromTitle, $toTitle, $reason, $noredirect )
 	{
 		$retval = array();
-		$success = $fromTitle->moveSubpages($toTitle, true, $reason, !$noredirect);
-		if(isset($success[0]))
-			return array('error' => $this->parseMsg($success));
+		$success = $fromTitle->moveSubpages( $toTitle, true, $reason, !$noredirect );
+		if ( isset( $success[0] ) )
+			return array( 'error' => $this->parseMsg( $success ) );
 		else
 		{
 			// At least some pages could be moved
 			// Report each of them separately
-			foreach($success as $oldTitle => $newTitle)
+			foreach ( $success as $oldTitle => $newTitle )
 			{
-				$r = array('from' => $oldTitle);
-				if(is_array($newTitle))
-					$r['error'] = $this->parseMsg(reset($newTitle));
+				$r = array( 'from' => $oldTitle );
+				if ( is_array( $newTitle ) )
+					$r['error'] = $this->parseMsg( reset( $newTitle ) );
 				else
 					// Success
 					$r['to'] = $newTitle;
@@ -152,7 +160,9 @@ class ApiMove extends ApiBase {
 		return $retval;
 	}
 
-	public function mustBePosted() { return true; }
+	public function mustBePosted() {
+		return true;
+	}
 
 	public function isWriteMode() {
 		return true;
@@ -171,7 +181,8 @@ class ApiMove extends ApiBase {
 			'movesubpages' => false,
 			'noredirect' => false,
 			'watch' => false,
-			'unwatch' => false
+			'unwatch' => false,
+			'ignorewarnings' => false
 		);
 	}
 
@@ -186,7 +197,8 @@ class ApiMove extends ApiBase {
 			'movesubpages' => 'Move subpages, if applicable',
 			'noredirect' => 'Don\'t create a redirect',
 			'watch' => 'Add the page and the redirect to your watchlist',
-			'unwatch' => 'Remove the page and the redirect from your watchlist'
+			'unwatch' => 'Remove the page and the redirect from your watchlist',
+			'ignorewarnings' => 'Ignore any warnings'
 		);
 	}
 
@@ -194,6 +206,21 @@ class ApiMove extends ApiBase {
 		return array(
 			'Move a page.'
 		);
+	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'missingparam', 'to' ),
+			array( 'invalidtitle', 'from' ),
+			array( 'nosuchpageid', 'fromid' ),
+			array( 'notanarticle' ),
+			array( 'invalidtitle', 'to' ),
+			array( 'sharedfile-exists' ),
+		) );
+	}
+
+	public function getTokenSalt() {
+		return '';
 	}
 
 	protected function getExamples() {
@@ -203,6 +230,6 @@ class ApiMove extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiMove.php 48091 2009-03-06 13:49:44Z catrope $';
+		return __CLASS__ . ': $Id: ApiMove.php 62810 2010-02-22 03:34:56Z mah $';
 	}
 }

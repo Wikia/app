@@ -1,6 +1,6 @@
 <?php
 
-if (!defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die;
 }
 
@@ -8,7 +8,7 @@ class DeleteQueueViewList extends DeleteQueueView {
 	public function show( $params ) {
 		global $wgOut;
 
-		wfLoadExtensionMessages('DeleteQueue');
+		wfLoadExtensionMessages( 'DeleteQueue' );
 		$wgOut->setPageTitle( wfMsg( 'deletequeue' ) );
 
 		$this->loadSearch();
@@ -19,16 +19,16 @@ class DeleteQueueViewList extends DeleteQueueView {
 		// Search box
 		$searchBox = array();
 
-		//// Queue selector
+		// // Queue selector
 		$selector = Xml::openElement( 'select', array( 'name' => 'queue' ) ) . "\n";
 		$queues = array( 'speedy', 'prod', 'deletediscuss' );
 		$attribs = array( 'value' => '' );
 		if ( in_array( $this->mQueue, $queues ) )
 			$attribs['selected'] = 'selected';
 		$selector .= Xml::element( 'option', $attribs, wfMsg( 'deletequeue-list-anyqueue' ) );
-		foreach( $queues as $queue ) {
+		foreach ( $queues as $queue ) {
 			$attribs = array( 'value' => $queue );
-			if ($this->mQueue == $queue)
+			if ( $this->mQueue == $queue )
 				$attribs['selected'] = 'selected';
 			$selector .= Xml::element( 'option', $attribs, wfMsg( "deletequeue-queue-$queue" ) );
 		}
@@ -44,28 +44,28 @@ class DeleteQueueViewList extends DeleteQueueView {
 
 		$wgOut->addHTML( $searchBox );
 
-		$conds = array('dq_active' => 1);
+		$conds = array( 'dq_active' => 1 );
 
-		if ($this->mQueue)
+		if ( $this->mQueue )
 			$conds['dq_queue'] = $this->mQueue;
 
-		if ($this->mExpired) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$conds[] = 'dq_expiry<'.$dbr->addQuotes($dbr->timestamp( wfTimestampNow() ) );
+		if ( $this->mExpired ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$conds[] = 'dq_expiry<' . $dbr->addQuotes( $dbr->timestamp( wfTimestampNow() ) );
 		}
 
 		// Headers
 
 		$body = '';
 		$headers = array( 'page', 'queue', 'votes', 'expiry', 'discusspage' );
-		foreach( $headers as $header ) {
+		foreach ( $headers as $header ) {
 			$body .= Xml::element( 'th', null, wfMsg( "deletequeue-list-header-$header" ) ) . "\n";
 		}
 
 		$body = Xml::tags( 'tr', null, $body );
 
 		// The list itself
-		$pager = new DeleteQueuePager($conds);
+		$pager = new DeleteQueuePager( $conds );
 		$body .= $pager->getBody();
 		$body = Xml::tags( 'table', array( 'class' => 'wikitable' ), $body );
 
@@ -87,25 +87,25 @@ class DeleteQueuePager extends ReverseChronologicalPager {
 	}
 
 	function formatRow( $row ) {
-		static $sk=null;
+		static $sk = null;
 
-		if (is_null($sk)) {
+		if ( is_null( $sk ) ) {
 			global $wgUser;
 			$sk = $wgUser->getSkin();
 		}
 
-		$a = Article::newFromID($row->dq_page);
+		$a = Article::newFromID( $row->dq_page );
 		$t = $a->mTitle;
 		$dqi = DeleteQueueItem::newFromArticle( $a );
 		$dqi->loadFromRow( $row );
 		$queue = $dqi->getQueue();
 		global $wgLang;
 
-		if ($dqi->getQueue() == 'deletediscuss') {
+		if ( $dqi->getQueue() == 'deletediscuss' ) {
 			$discusspage = $sk->makeKnownLinkObj( $dqi->getDiscussionPage()->mTitle );
 		} else $discusspage = '';
 
-		if ($row->dq_expiry > $row->dq_timestamp) {
+		if ( $row->dq_expiry > $row->dq_timestamp ) {
 			$expirestr = $wgLang->timeanddate( $row->dq_expiry );
 		} else $expirestr = '';
 

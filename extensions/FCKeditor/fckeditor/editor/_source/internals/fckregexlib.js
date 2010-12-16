@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -63,7 +63,7 @@ SpaceNoClose	: /\/>/g ,
 // Empty elements may be <p></p> or even a simple opening <p> (see #211).
 EmptyParagraph	: /^<(p|div|address|h\d|center)(?=[ >])[^>]*>\s*(<\/\1>)?$/ ,
 
-EmptyOutParagraph : /^<(p|div|address|h\d|center)(?=[ >])[^>]*>(?:\s*|&nbsp;)(<\/\1>)?$/ ,
+EmptyOutParagraph : /^<(p|div|address|h\d|center)(?=[ >])[^>]*>(?:\s*|&nbsp;|&#160;)(<\/\1>)?$/ ,
 
 TagBody			: /></ ,
 
@@ -74,9 +74,11 @@ GeckoEntitiesMarker : /#\?-\:/g ,
 // like "thumbnail.php?src=someimage.jpg" (SF-BUG 1554141).
 ProtectUrlsImg	: /<img(?=\s).*?\ssrc=((?:(?:\s*)("|').*?\2)|(?:[^"'][^ >]+))/gi ,
 ProtectUrlsA	: /<a(?=\s).*?\shref=((?:(?:\s*)("|').*?\2)|(?:[^"'][^ >]+))/gi ,
+ProtectUrlsArea	: /<area(?=\s).*?\shref=((?:(?:\s*)("|').*?\2)|(?:[^"'][^ >]+))/gi ,
 
 Html4DocType	: /HTML 4\.0 Transitional/i ,
 DocTypeTag		: /<!DOCTYPE[^>]*>/i ,
+HtmlDocType		: /DTD HTML/ ,
 
 // These regex are used to save the original event attributes in the HTML.
 TagsWithEvent	: /<[^\>]+ on\w+[\s\r\n]*=[\s\r\n]*?('|")[\s\S]+?\>/g ,
@@ -92,5 +94,7 @@ InvalidSelfCloseTags : /(<(?!base|meta|link|hr|br|param|img|area|input)([a-zA-Z0
 // name is returned with $2.
 StyleVariableAttName : /#\(\s*("|')(.+?)\1[^\)]*\s*\)/g,
 
-RegExp : /^\/(.*)\/([gim]*)$/
+RegExp : /^\/(.*)\/([gim]*)$/,
+
+HtmlTag : /<[^\s<>](?:"[^"]*"|'[^']*'|[^<])*>/
 } ;

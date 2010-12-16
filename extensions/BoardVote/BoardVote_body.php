@@ -215,7 +215,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 		if ( !$this->mDb ) {
 			global $wgBoardVoteDBServer, $wgBoardVoteDB, $wgDBuser, $wgDBpassword;
 
-			$this->mDb = new Database( $wgBoardVoteDBServer, $wgDBuser, $wgDBpassword,
+			$this->mDb = new DatabaseMysql( $wgBoardVoteDBServer, $wgDBuser, $wgDBpassword,
 				$wgBoardVoteDB, /*failfn*/false, /*flags*/0, /*prefix*/'' );
 			if ( !$this->mDb->isOpen() ) {
 				// This should be handled inside the constructor, but we'll check just in case

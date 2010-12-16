@@ -96,7 +96,7 @@ class SFFormInputs {
         $size = 35;
       }
       if ($validation_type_str != '') {
-        if (array_key_exists('part_of_multiple', $other_args)) {
+        if ($other_args['part_of_multiple']) {
           $sfgJSValidationCalls[] = "validate_type_of_multiple_fields($sfgFieldNum, '$validation_type_str')";
         } else {
           $sfgJSValidationCalls[] = "validate_field_type('$input_id', '$validation_type_str', '$info_id')";
@@ -149,20 +149,8 @@ END;
     $input_id = "input_$sfgFieldNum";
     $info_id = "info_$sfgFieldNum";
     $disabled_text = ($is_disabled) ? "disabled" : "";
-    $javascript_text = '';
-    $return_js_text = '';
-    if (array_key_exists('show on select', $other_args)) {
-      $javascript_text = 'onChange="';
-      foreach ($other_args['show on select'] as $div_id => $options) {
-        $options_str = implode("', '", $options);
-        $this_js_text = "showIfSelected('$input_id', ['$options_str'], '$div_id'); ";
-        $javascript_text .= $this_js_text;
-        $return_js_text .= $this_js_text . "\n";
-      }
-      $javascript_text .= '"';
-    }
     $text =<<<END
-	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" $disabled_text $javascript_text>
+	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" $disabled_text>
 
 END;
     // add a blank value at the beginning, unless this is a mandatory field
@@ -188,7 +176,7 @@ END;
 	<span id="$info_id" class="errorMessage"></span>
 
 END;
-    return array($text, $return_js_text);
+    return array($text, null);
   }
 
   /**
@@ -227,21 +215,8 @@ END;
     }
     $cur_values = self::getValuesArray($cur_value, $delimiter);
 
-    $javascript_text = '';
-    $return_js_text;
-    if (array_key_exists('show on select', $other_args)) {
-      $javascript_text = 'onChange="';
-      foreach ($other_args['show on select'] as $div_id => $options) {
-        $options_str = implode("', '", $options);
-        $this_js_text = "showIfSelected('$input_id', ['$options_str'], '$div_id'); ";
-        $javascript_text .= $this_js_text;
-        $return_js_text .= $this_js_text . "\n";
-      }
-      $javascript_text .= '"';
-    }
-
     $text =<<<END
-	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" multiple $size_text $disabled_text $javascript_text>
+	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" multiple $size_text $disabled_text>
 
 END;
     if (($possible_values = $other_args['possible_values']) == null)
@@ -262,7 +237,7 @@ END;
 	<input type="hidden" name="$hidden_input_name" value="1" />
 
 END;
-    return array($text, $return_js_text);
+    return array($text, null);
   }
 
   static function checkboxesHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
@@ -287,19 +262,13 @@ END;
     if (($possible_values = $other_args['possible_values']) == null)
       $possible_values = array(); 
     $text = "";
-    $return_js_text = "";
-    $enum_input_ids = array();
     // if it's mandatory, add a span around all the checkboxes, since
     // some browsers don't support formatting of checkboxes
     if ($is_mandatory)
       $text .= '	<span class="mandatoryFieldsSpan">' . "\n";
     foreach ($possible_values as $key => $possible_value) {
-      // create array $enum_input_ids to associate values with their input IDs,
-      // for use in creating the 'show on select' Javascript later
-      $enum_input_ids[$possible_value] = $input_id;
       $cur_input_name = $input_name . "[" . $key . "]";
       $checked_text = (in_array($possible_value, $cur_values)) ? 'checked="checked"' : "";
-
       if (array_key_exists('value_labels', $other_args) && is_array($other_args['value_labels']) && array_key_exists($possible_value, $other_args['value_labels']))
       	$label = htmlspecialchars($other_args['value_labels'][$possible_value]);
       else
@@ -309,8 +278,6 @@ END;
 
 END;
       $sfgTabIndex++;
-      $sfgFieldNum++;
-      $input_id = "input_$sfgFieldNum";
     }
     // close span
     if ($is_mandatory)
@@ -320,42 +287,7 @@ END;
 	<input type="hidden" name="$hidden_input_name" value="1" />
 
 END;
-
-    $return_js_text = '';
-    if (array_key_exists('show on select', $other_args)) {
-      foreach ($other_args['show on select'] as $div_id => $options) {
-        $cur_input_ids = array();
-        foreach ($options as $option) {
-          if (array_key_exists($option, $enum_input_ids)) {
-            $cur_input_ids[] = $enum_input_ids[$option];
-          }
-        }
-        $options_str = "['" . implode("', '", $cur_input_ids) . "']";
-        $cur_js_text = "showIfChecked($options_str, '$div_id'); ";
-        $return_js_text .= $cur_js_text . "\n";
-        foreach ($possible_values as $key => $possible_value) {
-          $cur_input_id = $enum_input_ids[$possible_value];
-          // we use addClickHandler(), instead of adding the Javascript via
-          // onClick="", because MediaWiki's wikibits.js does its own handling
-          // of checkboxes, which impacts their behavior in IE
-          if (in_array($possible_value, $options)) {
-            $return_js_text .=<<<END
-addClickHandler(
-	document.getElementById('$cur_input_id'),
-	function() { $cur_js_text }
-);
-
-END;
-          }
-        }
-      }
-    }
-
-    // do the replacements
-    foreach ($enum_input_ids as $enum_val => $input_id) {
-      $return_js_text = str_replace("<<$enum_val>>", "'$input_id'", $return_js_text);
-    }
-    return array($text, $return_js_text);
+    return array($text, null);
   }
 
   static function textInputWithAutocompleteHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
@@ -535,7 +467,7 @@ END;
     $input_id = "input_$sfgFieldNum";
     $info_id = "info_$sfgFieldNum";
     // add to validation calls
-    if (array_key_exists('part_of_multiple', $other_args)) {
+    if ($other_args['part_of_multiple']) {
       $sfgJSValidationCalls[] = "validate_type_of_multiple_fields($sfgFieldNum, 'date')";
     } else {
       $sfgJSValidationCalls[] = "validate_field_type('$input_id', 'date', '$info_id')";
@@ -656,18 +588,6 @@ END;
     $info_id = "info_$sfgFieldNum";
     $disabled_text = ($is_disabled) ? "disabled" : "";
     $check_set = false;
-    $javascript_text = '';
-    $return_js_text = '';
-    if (array_key_exists('show on select', $other_args)) {
-      $javascript_text = 'onClick="';
-      foreach($other_args['show on select'] as $div_id => $options) {
-        $options_str = implode("', '", $options);
-          $this_js_text = "showIfSelected('$input_id', ['$options_str'], '$div_id'); ";
-          $javascript_text .= $this_js_text;
-          $return_js_text .= $this_js_text . "\n";
-      }
-      $javascript_text .= '"';
-    }
     $text = "";
     // if it's mandatory, add a span around all the radiobuttons, since
     // some browsers don't support formatting of radiobuttons
@@ -683,7 +603,7 @@ END;
         $text .= ' checked="checked"';
         $check_set = true;
       }
-      $text .= " $disabled_text $javascript_text/> " . wfMsg('sf_formedit_none') . "\n";
+      $text .= " $disabled_text/> " . wfMsg('sf_editdata_none') . "\n";
     }
 
     if (($possible_values = $other_args['possible_values']) == null)
@@ -698,7 +618,7 @@ END;
       	$label = htmlspecialchars($other_args['value_labels'][$possible_value]);
       else
       	$label = $possible_value;
-      $text .= " $disabled_text $javascript_text/> $label\n";
+      $text .= " $disabled_text/> $label\n";
     }
     // close span
     if ($is_mandatory)
@@ -707,7 +627,7 @@ END;
 	<span id="$info_id" class="errorMessage"></span>
 
 END;
-    return array($text, $return_js_text);
+    return array($text, null);
   }
 
   static function checkboxHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
@@ -717,24 +637,7 @@ END;
     if (array_key_exists('class', $other_args))
       $className .= " " . $other_args['class'];
     $info_id = "info_$sfgFieldNum";
-    $input_id = "input_$sfgFieldNum";
     $disabled_text = ($is_disabled) ? "disabled" : "";
-    $return_js_text = '';
-    if (array_key_exists('show on select', $other_args)) {
-      $div_id = key($other_args['show on select']);
-      $this_js_text = "showIfChecked(['$input_id'], '$div_id');";
-      // we use addClickHandler(), instead of adding the Javascript via
-      // onClick="", because MediaWiki's wikibits.js does its own handling
-      // of checkboxes, which impacts their behavior in IE
-      $return_js_text =<<<END
-$this_js_text;
-addClickHandler(
-	document.getElementById("$input_id"),
-	function() { $this_js_text }
-);
-
-END;
-    }
 
     // can show up here either as an array or a string, depending on
     // whether it came from user input or a wiki page
@@ -753,11 +656,11 @@ END;
     }
     $text =<<<END
 	<input name="{$input_name}[is_checkbox]" type="hidden" value="true" />
-	<input id="$input_id" name="{$input_name}[value]" type="checkbox" class="$className" tabindex="$sfgTabIndex" $checked_str $disabled_text/>
+	<input id="input_$sfgFieldNum" name="{$input_name}[value]" type="checkbox" class="$className" tabindex="$sfgTabIndex" $checked_str $disabled_text/>
 	<span id="$info_id" class="errorMessage"></span>
 
 END;
-    return array($text, $return_js_text);
+    return array($text, null);
   }
 
   static function categoryHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
@@ -803,7 +706,7 @@ END;
         $check_set = true;
       }
       $disabled_text = ($is_disabled) ? "disabled" : "";
-      $text .= " $disabled_text/> <em>" . wfMsg('sf_formedit_none') . "</em>\n";
+      $text .= " $disabled_text/> <em>" . wfMsg('sf_editdata_none') . "</em>\n";
     }
 
     global $wgCategoryTreeMaxDepth;

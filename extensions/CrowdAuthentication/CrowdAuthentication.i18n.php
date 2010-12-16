@@ -37,11 +37,32 @@ $messages['arz'] = array(
 	'crowdauthentication-desc' => 'إضافة تأكيد لحشد الأتلاسيان',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'crowdauthentication-desc' => 'Дапаўненьне аўтэнтыфікацыі для Atlassian Crowd',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'crowdauthentication-desc' => 'Adveziant gwiriañ an ostilh muzuliañ ar red evit Atlassian Crowd',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'crowdauthentication-desc' => 'Dodatak potvrde za Atlassian Crowd',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'crowdauthentication-desc' => "Connector d'autentificació per l'Atlassian Crowd",
 );
 
 /** Czech (Česky)
@@ -63,6 +84,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'crowdauthentication-desc' => 'Tykac awtentifikacije za Atlassian Crowd',
+);
+
+/** Greek (Ελληνικά)
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'crowdauthentication-desc' => 'Plugin επιβεβαίωσης για το Atlassian Crowd',
 );
 
 /** Spanish (Español)
@@ -124,6 +152,13 @@ $messages['hi'] = array(
 	'crowdauthentication-desc' => 'ऍट्लेशिअन क्राउड के लिये प्रमाणिकरण प्लग-इन',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'crowdauthentication-desc' => 'Pagpamatuod plugin para Atlassian Tinawo',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -143,6 +178,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'crowdauthentication-desc' => 'Modulo de authentication pro Atlassian Crowd',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'crowdauthentication-desc' => 'Plug-in otentifikasi untuk Atlassian Crowd',
 );
 
 /** Italian (Italiano)
@@ -171,6 +213,20 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'crowdauthentication-desc' => "Authentiséierungs-Erweiderung fir ''Atlassian Crowd''",
+);
+
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'crowdauthentication-desc' => 'Authenticatieplugin veur Atlassian Crowd',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'crowdauthentication-desc' => 'Приклучок за потврдување корисници на Atlassian Crowd',
 );
 
 /** Marathi (मराठी)
@@ -215,6 +271,13 @@ $messages['pl'] = array(
 	'crowdauthentication-desc' => 'Wtyczka logowania dla Atlassian Crowd',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'crowdauthentication-desc' => "Plugin d'autenticassion për Atlassian Crowd",
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -243,11 +306,32 @@ $messages['ru'] = array(
 	'crowdauthentication-desc' => 'Модуль аутентификации для Atlassian Crowd',
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'crowdauthentication-desc' => 'Atlassian Crowd аутентификациятын модула',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'crowdauthentication-desc' => 'Zásuvný modul na overenie služby Atlassian Crowd',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'crowdauthentication-desc' => 'Ауторизацијски плагин за Atlassian Crowd',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'crowdauthentication-desc' => 'Autorizacijski plagin za Atlassian Crowd',
 );
 
 /** Seeltersk (Seeltersk)
@@ -278,6 +362,20 @@ $messages['tl'] = array(
 	'crowdauthentication-desc' => "Pampasak ng pagpapatunay para sa ''Atlassian Crowd''",
 );
 
+/** Turkish (Türkçe)
+ * @author Srhat
+ */
+$messages['tr'] = array(
+	'crowdauthentication-desc' => 'Atlassian Crowd için doğrulama verisi eklentisidir.',
+);
+
+/** Ukrainian (Українська)
+ * @author NickK
+ */
+$messages['uk'] = array(
+	'crowdauthentication-desc' => 'Модуль автентифікації для Atlassian Crowd',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -290,5 +388,26 @@ $messages['vec'] = array(
  */
 $messages['vi'] = array(
 	'crowdauthentication-desc' => 'Phần bổ sung xác minh cho Atlassian Crowd',
+);
+
+/** Yue (粵語)
+ * @author Shinjiman
+ */
+$messages['yue'] = array(
+	'crowdauthentication-desc' => 'Atlassian Crowd嘅認證插件',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Shinjiman
+ */
+$messages['zh-hans'] = array(
+	'crowdauthentication-desc' => 'Atlassian Crowd的认证插件',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Shinjiman
+ */
+$messages['zh-hant'] = array(
+	'crowdauthentication-desc' => 'Atlassian Crowd的認證插件',
 );
 

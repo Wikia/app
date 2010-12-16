@@ -32,7 +32,7 @@ function update_flaggedrevs_stats() {
 		$ns_total[$row->namespace] = intval($row->total);
 	}
 	// Get reviewed page count for each namespace
-	$ret = $dbr->query( 
+	$ret = $dbr->query(
 		"SELECT page_namespace AS namespace, COUNT(*) AS reviewed 
 		FROM $flaggedpages, $page WHERE fp_page_id = page_id 
 		AND page_is_redirect = 0 AND page_namespace IN($ns) 
@@ -42,7 +42,7 @@ function update_flaggedrevs_stats() {
 		$ns_reviewed[$row->namespace] = intval($row->reviewed);
 	}
 	// Get synced page count for each namespace
-	$ret = $dbr->query( 
+	$ret = $dbr->query(
 		"SELECT page_namespace AS namespace, COUNT(*) AS synced 
 		FROM $flaggedpages, $page WHERE fp_page_id = page_id 
 		AND fp_reviewed = 1 AND page_is_redirect = 0 AND page_namespace IN($ns) 
@@ -57,17 +57,18 @@ function update_flaggedrevs_stats() {
 		"AVG( $now - UNIX_TIMESTAMP(fp_pending_since) )",
 		array( 'fp_pending_since IS NOT NULL', 
 			'fp_page_id = page_id',
-			'page_namespace' => $wgFlaggedRevsNamespaces // Sanity check: must still be in proper NS
+			'page_namespace' => $wgFlaggedRevsNamespaces // Sanity check the NS
 		),
 		__METHOD__,
 		array( 'USE INDEX' => array('flaggedpages' => 'fp_pending_since') )
 	);
 	// Get the mean edit review time
-	$size = 15000; // Sample size
+	$size = 10000; // Sample size
 	$seconds = $aveRT = $medianRT = 0;
 	# Only go so far back...otherwise we will get garbage values due to 
 	# the fact that FlaggedRevs wasn't enabled until after a while.
-	$installed = $dbr->selectField( 'logging', 'MIN(log_timestamp)', array('log_type' => 'review') );
+	$installed = $dbr->selectField( 'logging', 'MIN(log_timestamp)',
+		array('log_type' => 'review') );
 	if( !$installed ) $installed = $dbr->timestamp(); // now
 	# Skip the most recent recent revs as they are likely to just 
 	# be WHERE condition misses. This also gives us more data to use.
@@ -110,25 +111,27 @@ function update_flaggedrevs_stats() {
 	}
 	# Add a day for good measure to avoid bias
 	$maxTS = $dbr->timestamp( wfTimestamp(TS_UNIX,$worstLagTS) - 86400 );
+	$encMaxTS = $dbr->addQuotes( $maxTS );
 	# Use a one week time range
 	$minTS = $dbr->timestamp( wfTimestamp(TS_UNIX,$worstLagTS) - 7*86400 );
+	$encMinTS = $dbr->addQuotes( $minTS );
 	# Approximate the number rows to scan
 	$rows = $dbr->estimateRowCount( 'revision', '1',
-		'rev_user=0 AND rev_timestamp BETWEEN '.$dbr->addQuotes($minTS).' AND '.$dbr->addQuotes($maxTS)
+		'rev_user=0 AND rev_timestamp BETWEEN '.$encMinTS.' AND '.$encMaxTS
 	);
 	# If the range doesn't have many rows (like on small wikis), use 14 days
 	if( $rows < 500 ) {
 		$minTS = $dbr->timestamp( wfTimestamp(TS_UNIX,$worstLagTS) - 14*86400 );
 		# Approximate rows to scan
 		$rows = $dbr->estimateRowCount( 'revision', '1',
-			'rev_user=0 AND rev_timestamp BETWEEN '.$dbr->addQuotes($minTS).' AND '.$dbr->addQuotes($maxTS)
+			'rev_user=0 AND rev_timestamp BETWEEN '.$encMinTS.' AND '.$encMaxTS
 		);
 		# If the range doesn't have many rows (like on really small wikis), use 30 days
 		if( $rows <= 500 ) {
 			$minTS = $dbr->timestamp( wfTimestamp(TS_UNIX,$worstLagTS) - 30*86400 );
 			# Approximate rows to scan
 			$rows = $dbr->estimateRowCount( 'revision', '1',
-				'rev_user=0 AND rev_timestamp BETWEEN '.$dbr->addQuotes($minTS).' AND '.$dbr->addQuotes($maxTS)
+				'rev_user=0 AND rev_timestamp BETWEEN '.$encMinTS.' AND '.$encMaxTS
 			);
 			# If the range doesn't have many rows (like on really tiny wikis), use 90 days
 			if( $rows <= 500 ) {
@@ -138,27 +141,22 @@ function update_flaggedrevs_stats() {
 	}
 	# Sanity check the starting timestamp
 	$minTS = max($minTS,$installed);
-	# Get correspond rev_ids to boundaries
-	$timeCondition = 'rev_timestamp BETWEEN '.$dbr->addQuotes($minTS).' AND '.$dbr->addQuotes($maxTS);
-	$minRev = (int)$dbr->selectField( 'revision', 'rev_id',
-		array( $timeCondition, 'rev_user' => 0 ),
-		__METHOD__, array( 'ORDER BY' => 'rev_timestamp ASC' )
-	);
-	$maxRev = (int)$dbr->selectField( 'revision', 'rev_id',
-		array( $timeCondition, 'rev_user' => 0 ),
-		__METHOD__, array( 'ORDER BY' => 'rev_timestamp DESC' )
-	);
-	# Modulus
+	# Get timestamp boundaries
+	$timeCondition = 'rev_timestamp BETWEEN '.$encMinTS.' AND '.$encMaxTS;
+	# Modulus (to spread out over range)
 	$mod = intval($rows/$size);
 	$mod = max($mod,1); # $mod >= 1
 	# For edits that started off pending, how long do they take to get reviewed?
 	# Get the *first* reviewed rev *after* each RC item and get the average difference.
 	# Only do this for revisions to pages that *were* already logged as reviewed.
 	$sql = $dbr->selectSQLText( array('revision','page','logging','flaggedrevs'),
-		array( 'UNIX_TIMESTAMP(rev_timestamp) AS rt', 'UNIX_TIMESTAMP(MIN(fr_timestamp)) AS ft', 'MIN(log_timestamp)' ),
+		array(
+			'UNIX_TIMESTAMP(rev_timestamp) AS rt', // edit time
+			'UNIX_TIMESTAMP(MIN(fr_timestamp)) AS ft', // revision flagging time
+			'MIN(log_timestamp)' // page flagging time
+		),
 		array(
 			$timeCondition, // in time range
-			"rev_id BETWEEN $minRev AND $maxRev", // Better INDEX usage
 			'rev_user = 0', // IP edits (should start off unreviewed)
 			"(rev_id % $mod) = 0", // Better spread
 		),
@@ -167,16 +165,20 @@ function update_flaggedrevs_stats() {
 			'GROUP BY'  => 'rev_id', // stats are for each edit and ID is unique
 			'ORDER BY'  => 'rev_id ASC', // slight bias avoidance, if any
 			'LIMIT'     => $size, // sample size
-			'USE INDEX' => array('revision' => array('PRIMARY','rev_id'),'flaggedrevs' => 'PRIMARY','logging' => 'page_time')
+			'USE INDEX' => array('page' => 'PRIMARY','flaggedrevs' => 'PRIMARY',
+								'logging' => 'page_time')
 		),
 		array( // Assumes title unchanged (reasonable). Double-check NS though.
-			'page' => array('INNER JOIN',array('page_id = rev_page','page_namespace' => $wgFlaggedRevsNamespaces)),
+			'page' => array('INNER JOIN', array('page_id = rev_page',
+				'page_namespace' => $wgFlaggedRevsNamespaces)),
 			// Check that this page was stable at the time...
 			// Assumes that reviewed pages stay reviewed (reasonable).
-			'logging' => array('INNER JOIN','log_namespace = page_namespace AND log_title = page_title 
-				AND log_type = "review" AND log_timestamp < rev_timestamp'),
+			'logging' => array('INNER JOIN','log_namespace = page_namespace
+				AND log_title = page_title AND log_type = "review"
+				AND log_timestamp < rev_timestamp'),
 			// Check *if* it was later reviewed
-			'flaggedrevs' => array('LEFT JOIN', 'fr_page_id = rev_page AND fr_rev_id >= rev_id AND fr_timestamp > rev_timestamp'),
+			'flaggedrevs' => array('LEFT JOIN', 'fr_page_id = page_id
+				AND fr_rev_id >= rev_id AND fr_timestamp > rev_timestamp'),
 		)
 	);
 	# Actually run the query...
@@ -205,14 +207,14 @@ function update_flaggedrevs_stats() {
 		$rank = round( count($times)/2 + .5 ) - 1;
 		$medianRT = $times[$rank];
 		// Make percentile tabulation data
-		$percentile = 45; // start at 30th
+		$percentile = 35; // start at 35th
 		while( $percentile < 100 ) {
 			$rank = round( $percentile*count($times)/100 + .5 ) - 1;
 			$data[$percentile] = $times[$rank];
 			$percentile += 10;
 		}
 	}
-	// Cache percentiles
+	// Save/cache percentiles
 	$key = wfMemcKey( 'flaggedrevs', 'reviewPercentiles' );
 	$dbCache = wfGetCache( CACHE_DB );
 	$dbCache->set( $key, $data, 30*24*3600 );
@@ -220,29 +222,43 @@ function update_flaggedrevs_stats() {
 	$dbw = wfGetDB( DB_MASTER );
 	$dbw->begin();
 	// Create small stats tables if not present
-	list($flaggedrevs_stats,$flaggedrevs_stats2) = $dbr->tableNamesN('flaggedrevs_stats','flaggedrevs_stats2');
+	$flaggedrevs_stats = $dbr->tableName('flaggedrevs_stats');
+	$flaggedrevs_stats2 = $dbr->tableName('flaggedrevs_stats2');
 	if( !$dbw->tableExists( 'flaggedrevs_stats' ) ) {
 		createFlaggedRevsStatsTable( $dbw, $flaggedrevs_stats );
 	}
 	if( !$dbw->tableExists( 'flaggedrevs_stats2' ) ) {
 		createFlaggedRevsStatsTable2( $dbw, $flaggedrevs_stats2 );
 	}
+	// Per-namespace stats...
 	foreach( $wgFlaggedRevsNamespaces as $namespace ) {
 		$dbw->replace( 'flaggedrevs_stats',
 			array( 'namespace' ),
 			array( 'namespace' => intval($namespace),
 				'total'    => isset($ns_total[$namespace]) ? $ns_total[$namespace] : 0,
 				'reviewed' => isset($ns_reviewed[$namespace]) ? $ns_reviewed[$namespace] : 0,
-				'synced'   => isset($ns_synced[$namespace]) ? $ns_synced[$namespace] : 0 ),
+				'synced'   => isset($ns_synced[$namespace]) ? $ns_synced[$namespace] : 0
+			),
 			__METHOD__
 		);
 	}
-	$dbw->replace( 'flaggedrevs_stats2', array('stat_id'),
-		array('stat_id' => 1, 'ave_review_time' => $aveRT, 'med_review_time' => $medianRT, 'ave_pending_time' => $avePET),
+	// Overall stats...
+	$dbw->replace( 'flaggedrevs_stats2',
+		array( 'stat_id' ),
+		array( 'stat_id' => 1,
+			'ave_review_time' => $aveRT,
+			'med_review_time' => $medianRT,
+			'ave_pending_time' => $avePET
+		),
+		__METHOD__
+	);
+	// Update timestamp
+	$dbw->replace( 'querycache_info', array('qci_type'),
+		array('qci_type' => 'validationstats', 'qci_timestamp' => $dbw->timestamp()),
 		__METHOD__
 	);
 	$dbw->commit();
-	// Stats are not up to date!
+	// Stats are now up to date!
 	$key = wfMemcKey( 'flaggedrevs', 'statsUpdated' );
 	$dbCache->set( $key, '1', $wgFlaggedRevsStatsAge );
 	$dbCache->delete( $keySQL );

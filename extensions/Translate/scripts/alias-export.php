@@ -4,7 +4,7 @@
  *
  * @author Niklas Laxstrom
  *
- * @copyright Copyright © 2008, Niklas Laxström
+ * @copyright Copyright © 2008-2009, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @file
  */
@@ -16,7 +16,7 @@ function showUsage() {
 	STDERR( <<<EOT
 Alias exporter.
 
-Usage: php aliasexport.php [options...]
+Usage: php alias-export.php [options...]
 
 Options:
   --target      Target directory for exported files
@@ -46,37 +46,25 @@ if ( !is_writable( $options['target'] ) ) {
 
 $langs = Cli::parseLanguageCodes( $options['lang'] );
 
+$groups = MessageGroups::singleton()->getGroups();
 
-if ( !file_exists( TRANSLATE_ALIASFILE ) || !is_readable( TRANSLATE_ALIASFILE ) ) {
-	STDERR( "Alias file not defined" );
-	exit( 1 );
-}
+foreach ( $groups as $group ) {
+	if ( !$group instanceof ExtensionMessageGroup ) continue;
+	$file = $group->getAliasFile();
 
-$defines = file_get_contents( TRANSLATE_ALIASFILE );
-$sections = preg_split( "/\n\n/", $defines, - 1, PREG_SPLIT_NO_EMPTY );
+	$groupId = $group->getId();
 
-foreach ( $sections as $section ) {
-	$lines = array_map( 'trim', preg_split( "/\n/", $section ) );
-	$name = '';
-	foreach ( $lines as $line ) {
-		if ( $line === '' ) continue;
-		if ( strpos( $line, '=' ) === false ) {
-			if ( $name === '' ) {
-				$name = $line;
-			} else {
-				throw new MWException( "Trying to define name twice: " . $line );
-			}
-		} else {
-			list( $key, $value ) = array_map( 'trim', explode( '=', $line, 2 ) );
-			if ( $key === 'file' ) $file = $value;
-		}
-	}
-
-	if ( $name !== '' ) {
+	if ( $file !== null ) {
 		// Fake a group
-		$group = new AliasMessageGroup( $name );
+		$group = new AliasMessageGroup( $group->getId() );
 		$group->setMessageFile( $file );
-		$group->setVariableName( 'aliases' );
+		// FIXME: getVariableNameAlias() is not read from mediawiki-defines.txt here apparently.
+		// Hacked this one exception in for now
+		if ( $groupId == 'ext-wikilog' ) {
+			$group->setVariableNameAlias( 'specialPageAliases' );
+		} else {
+			$group->setVariableName( $group->getVariableNameAlias() );
+		}
 		$writer = $group->getWriter();
 		$writer->fileExport( $langs, $options['target'] );
 	}

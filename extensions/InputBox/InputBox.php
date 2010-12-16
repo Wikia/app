@@ -30,10 +30,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 // Credits
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'InputBox',
 	'author'         => array( 'Erik Moeller', 'Leonardo Pimenta', 'Rob Church', 'Trevor Parscal' ),
-	'svn-date'       => '$LastChangedDate: 2008-10-30 00:59:03 +0100 (czw, 30 paź 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 42791 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:InputBox',
 	'description'    => 'Allow inclusion of predefined HTML forms.',
 	'descriptionmsg' => 'inputbox-desc',
@@ -50,10 +49,4 @@ $wgAutoloadClasses['InputBoxHooks'] = $dir . 'InputBox.hooks.php';
 $wgAutoloadClasses['InputBox'] = $dir . 'InputBox.classes.php';
 
 // Register parser hook
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	// Modern
-	$wgHooks['ParserFirstCallInit'][] = 'InputBoxHooks::register';
-} else {
-	// Legacy
-	$wgExtensionFunctions[] = array( 'InputBoxHooks', 'register' );
-}
+$wgHooks['ParserFirstCallInit'][] = 'InputBoxHooks::register';

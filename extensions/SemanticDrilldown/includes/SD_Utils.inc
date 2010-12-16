@@ -31,12 +31,14 @@ class SDUtils {
 
 	/**
 	 * Gets a list of the names of all categories in the wiki that aren't
-	 * children of some other category
+	 * children of some other category - this list additionally includes,
+	 * and excludes, categories that are manually set with
+	 * 'SHOWINDRILLDOWN' and 'HIDEFROMDRILLDOWN', respectively.
 	 */
 	function getTopLevelCategories() {
 		$categories = array();
 		$dbr = wfGetDB( DB_SLAVE );
-		extract($dbr->tableNames('page', 'categorylinks'));
+		extract($dbr->tableNames('page', 'categorylinks', 'page_props'));
 		$cat_ns = NS_CATEGORY;
 		$sql = "SELECT page_title FROM $page p LEFT OUTER JOIN $categorylinks cl ON p.page_id = cl.cl_from WHERE p.page_namespace = $cat_ns AND cl.cl_to IS NULL";
 		$res = $dbr->query($sql);
@@ -46,6 +48,29 @@ class SDUtils {
 			}
 		}
 		$dbr->freeResult($res);
+
+		// get 'hide' and 'show' categories
+		$hidden_cats = $shown_cats = array();
+		$sql2 = "SELECT p.page_title, pp.pp_propname FROM $page p JOIN $page_props pp ON p.page_id = pp.pp_page WHERE p.page_namespace = $cat_ns AND (pp.pp_propname = 'hidefromdrilldown' OR pp.pp_propname = 'showindrilldown') AND pp.pp_value = 'y'";
+		$res2 = $dbr->query($sql2);
+		if ($dbr->numRows( $res2 ) > 0) {
+			while ($row = $dbr->fetchRow($res2)) {
+				if ($row[1] == 'hidefromdrilldown')
+					$hidden_cats[] = str_replace('_', ' ', $row[0]);
+				else
+					$shown_cats[] = str_replace('_', ' ', $row[0]);
+			}
+		}
+		$dbr->freeResult($res2);
+		$categories = array_merge($categories, $shown_cats);
+		foreach ($hidden_cats as $hidden_cat) {
+			foreach ($categories as $i => $cat) {
+				if ($cat == $hidden_cat) {
+					unset($categories[$i]);
+				}
+			}
+		}
+		sort($categories);
 		return $categories;
 	}
 
@@ -120,54 +145,14 @@ class SDUtils {
 	 * ($special_prop and $prop represent the same value, depending on
 	 * whether we're using SMW 1.4 or an earlier version)
 	 */
-	function getValuesForProperty($subject, $subject_namespace, $special_prop, $prop, $object_namespace) {
+	function getValuesForProperty($subject, $subject_namespace, $special_prop) {
 		$store = smwfGetStore();
 		$subject_title = Title::newFromText($subject, $subject_namespace);
-
-		// we can do this easily if we're using SMW 1.4 or higher
-		if (class_exists('SMWPropertyValue')) {
-			$property = SMWPropertyValue::makeProperty($special_prop);
-			$res = $store->getPropertyValues($subject_title, $property);
-			// there could be multiple alternate forms
-			$values = array();
-				foreach ($res as $prop_val) {
-				$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
-			}
-			return $values;
-		}
-
-		// otherwise, it's a bit more complicated
-		global $sdgContLang;
-
-		$sd_props = $sdgContLang->getPropertyLabels();
+		$property = SMWPropertyValue::makeProperty($special_prop);
+		$res = $store->getPropertyValues($subject_title, $property);
 		$values = array();
-		if (array_key_exists($prop, $sd_props)) {
-			$property = $sd_props[$prop];
-		} else {
-			$property = "";
-		}
-		if ($property != '') {
-			$prop = SDUtils::createProperty($property, SMW_NS_PROPERTY);
-			$prop_vals = $store->getPropertyValues($subject_title, $prop);
-			foreach ($prop_vals as $prop_val) {
-				$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
-			}
-		}
-		// try aliases as well
-		foreach ($sdgContLang->getPropertyAliases() as $alias => $cur_prop) {
-			// make sure alias doesn't match actual property name - this
-			// is an issue for English, since the English-language values
-			// are used for aliases
-			if (($alias != $property) && (! $prop instanceof Title) && ($cur_prop == $prop)) {
-				$prop = SDUtils::createProperty($alias, SMW_NS_PROPERTY);
-				$prop_vals = $store->getPropertyValues($subject_title, $prop);
-				foreach ($prop_vals as $prop_val) {
-					// make sure it's in the right namespace
-					if ($prop_val->getNamespace() == $object_namespace) {
-						$values[] = $prop_val->getTitle()->getText();
-					}
-				}
-			}
+		foreach ($res as $prop_val) {
+			$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
 		}
 		return $values;
 	}
@@ -177,11 +162,24 @@ class SDUtils {
 	 */
 	function loadFiltersForCategory($category) {
 		$filters = array();
-		$filter_names = SDUtils::getValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_F', SD_SP_HAS_FILTER, SD_NS_FILTER);
+		$filter_names = SDUtils::getValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_F');
 		foreach ($filter_names as $filter_name) {
 			$filters[] = SDFilter::load($filter_name);
 		}
 		return $filters;
+	}
+
+	/**
+	 * Gets all the display parameters defined for a category
+	 */
+	function getDisplayParamsForCategory($category) {
+		$all_display_params = SDUtils::getValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_DP');
+
+		$return_display_params = array();
+		foreach ($all_display_params as $display_params) {
+			$return_display_params[] = explode(';', $display_params);
+		}
+		return $return_display_params;
 	}
 
 	function getCategoryChildren($category_name, $get_categories, $levels) {
@@ -339,6 +337,44 @@ END;
 
 END;
 		return $text;
+	}
+
+	/**
+	 * Register magic-word variable IDs
+	 */
+	function addMagicWordVariableIDs(&$magicWordVariableIDs) {
+		$magicWordVariableIDs[] = 'MAG_HIDEFROMDRILLDOWN';
+		$magicWordVariableIDs[] = 'MAG_SHOWINDRILLDOWN';
+		return true;
+	}
+ 
+	/**
+	 * Set the actual value of the magic words
+	 */
+	function addMagicWordLanguage(&$magicWords, $langCode) {
+		switch($langCode) {
+		default:
+			$magicWords['MAG_HIDEFROMDRILLDOWN'] = array(0, '__HIDEFROMDRILLDOWN__');
+			$magicWords['MAG_SHOWINDRILLDOWN'] = array(0, '__SHOWINDRILLDOWN__');
+		}
+		return true;
+	}
+
+	/**
+	 * Set values in the page_props table based on the presence of the
+	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
+	 */
+	function handleShowAndHide(&$parser, &$text) {
+		global $wgOut, $wgAction;
+		$mw_hide = MagicWord::get('MAG_HIDEFROMDRILLDOWN');
+		if ($mw_hide->matchAndRemove($text)) {
+			$parser->mOutput->setProperty( 'hidefromdrilldown', 'y' );
+		}
+		$mw_show = MagicWord::get('MAG_SHOWINDRILLDOWN');
+		if ($mw_show->matchAndRemove($text)) {
+			$parser->mOutput->setProperty( 'showindrilldown', 'y' );
+		}
+		return true;
 	}
 
 }

@@ -36,9 +36,11 @@ $messages = array(
 'december'  => 'Dékabr',
 'may'       => 'May',
 
-'qbedit'     => 'Uzgartish',
 'mypage'     => 'Mening beti',
 'navigation' => 'Körüsh',
+
+# Cologne Blue skin
+'qbedit' => 'Uzgartish',
 
 'search'           => 'Izdash',
 'searchbutton'     => 'Izdash',
@@ -82,10 +84,6 @@ $messages = array(
 'logout'             => 'Chiqish',
 'userlogout'         => 'Chikish',
 'gotaccountlink'     => 'Kirish',
-'youremail'          => 'Élxet:',
-'username'           => 'Ishletkuqi ismi:',
-'yourlanguage'       => 'Til:',
-'email'              => 'Élxet:',
 'loginlanguagelabel' => 'Til: $1',
 
 # Edit pages
@@ -99,21 +97,27 @@ $messages = array(
 'newarticle'   => '(Yéngi)',
 
 # Search results
-'prevn'       => 'aldinqi $1',
-'nextn'       => 'kéyinki $1',
+'prevn'       => 'aldinqi {{PLURAL:$1|$1}}',
+'nextn'       => 'kéyinki {{PLURAL:$1|$1}}',
 'powersearch' => 'Izdash',
 
 # Preferences page
 'searchresultshead'     => 'Izdash',
 'timezoneregion-asia'   => 'Asiya',
 'timezoneregion-europe' => 'Yawropa',
+'youremail'             => 'Élxet:',
+'username'              => 'Ishletkuqi ismi:',
+'yourlanguage'          => 'Til:',
+'email'                 => 'Élxet:',
 
 # Recent changes
 'recentchanges' => 'Yéngi özgirish',
 
 # Recent changes linked
-'recentchangeslinked'      => 'Yéqinqi özgirishler',
-'recentchangeslinked-page' => 'Betning ismi:',
+'recentchangeslinked'         => 'Yéqinqi özgirishler',
+'recentchangeslinked-feed'    => 'Yéqinqi özgirishler',
+'recentchangeslinked-toolbox' => 'Yéqinqi özgirishler',
+'recentchangeslinked-page'    => 'Betning ismi:',
 
 # Upload
 'upload'          => 'Yéngi höjjet kirgüzush',
@@ -130,8 +134,8 @@ $messages = array(
 # Random page
 'randompage' => 'Halighan Tor Beti',
 
-'brokenredirects-edit'   => '(uzgartish)',
-'brokenredirects-delete' => '(yukhutush)',
+'brokenredirects-edit'   => 'uzgartish',
+'brokenredirects-delete' => 'yukhutush',
 
 # Miscellaneous special pages
 'newpages'          => 'Yéngi betler',
@@ -158,6 +162,7 @@ $messages = array(
 # Undelete
 'undelete-search-submit' => 'Izdash',
 
+'sp-contributions-talk'   => 'Monazire',
 'sp-contributions-submit' => 'Izdash',
 
 # What links here

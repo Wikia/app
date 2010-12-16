@@ -6,7 +6,7 @@
  * @author Yaron Koren
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if (!defined('MEDIAWIKI')) die();
 
 class SFCreateCategory extends SpecialPage {
 
@@ -14,27 +14,27 @@ class SFCreateCategory extends SpecialPage {
 	 * Constructor
 	 */
 	function SFCreateCategory() {
-		SpecialPage::SpecialPage( 'CreateCategory' );
-		wfLoadExtensionMessages( 'SemanticForms' );
+		SpecialPage::SpecialPage('CreateCategory');
+		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute( $query ) {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialCreateCategory();
 	}
 
-	static function createCategoryText( $default_form, $category_name, $parent_category ) {
-		wfLoadExtensionMessages( 'SemanticForms' );
+	static function createCategoryText($default_form, $category_name, $parent_category) {
+		wfLoadExtensionMessages('SemanticForms');
 
-		if ( $default_form == '' ) {
-			$text = wfMsgForContent( 'sf_category_desc', $category_name );
+		if ($default_form == '') {
+			$text = wfMsgForContent('sf_category_desc', $category_name);
 		} else {
 			global $sfgContLang;
 			$specprops = $sfgContLang->getPropertyLabels();
 			$form_tag = "[[" . $specprops[SF_SP_HAS_DEFAULT_FORM] . "::$default_form]]";
-			$text = wfMsgForContent( 'sf_category_hasdefaultform', $form_tag );
+			$text = wfMsgForContent('sf_category_hasdefaultform', $form_tag);
 		}
-		if ( $parent_category != '' ) {
+		if ($parent_category != '') {
 			global $wgContLang;
 			$namespace_labels = $wgContLang->getNamespaces();
 			$category_namespace = $namespace_labels[NS_CATEGORY];
@@ -47,29 +47,32 @@ class SFCreateCategory extends SpecialPage {
 function doSpecialCreateCategory() {
 	global $wgOut, $wgRequest, $wgUser, $sfgScriptPath;
 
-	wfLoadExtensionMessages( 'SemanticForms' );
+	wfLoadExtensionMessages('SemanticForms');
 
 	# cycle through the query values, setting the appropriate local variables
-	$category_name = $wgRequest->getVal( 'category_name' );
-	$default_form = $wgRequest->getVal( 'default_form' );
-	$parent_category = $wgRequest->getVal( 'parent_category' );
+	$category_name = $wgRequest->getVal('category_name');
+	$default_form = $wgRequest->getVal('default_form');
+	$parent_category = $wgRequest->getVal('parent_category');
 
-	$save_button_text = wfMsg( 'savearticle' );
-	$preview_button_text = wfMsg( 'preview' );
+	$save_button_text = wfMsg('savearticle');
+	$preview_button_text = wfMsg('preview');
 	$category_name_error_str = '';
-	$save_page = $wgRequest->getCheck( 'wpSave' );
-	$preview_page = $wgRequest->getCheck( 'wpPreview' );
-	if ( $save_page || $preview_page ) {
+	$save_page = $wgRequest->getCheck('wpSave');
+	$preview_page = $wgRequest->getCheck('wpPreview');
+	if ($save_page || $preview_page) {
 		# validate category name
-		if ( $category_name == '' ) {
-			$category_name_error_str = wfMsg( 'sf_blank_error' );
+		if ($category_name == '') {
+			$category_name_error_str = wfMsg('sf_blank_error');
 		} else {
 			# redirect to wiki interface
-			$wgOut->setArticleBodyOnly( true );
-			$title = Title::makeTitleSafe( NS_CATEGORY, $category_name );
-			$full_text = SFCreateCategory::createCategoryText( $default_form, $category_name, $parent_category );
-			$text = SFUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false, null, null );
-			$wgOut->addHTML( $text );
+			$wgOut->setArticleBodyOnly(true);
+			$namespace = NS_CATEGORY;
+			$title = Title::makeTitleSafe($namespace, $category_name);
+			$full_text = SFCreateCategory::createCategoryText($default_form, $category_name, $parent_category);
+			// HTML-encode
+			$full_text = str_replace('"', '&quot;', $full_text);
+			$text = SFUtils::printRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false, null, null);
+			$wgOut->addHTML($text);
 			return;
 		}
 	}
@@ -80,9 +83,9 @@ function doSpecialCreateCategory() {
 	global $wgContLang;
 	$mw_namespace_labels = $wgContLang->getNamespaces();
 	$special_namespace = $mw_namespace_labels[NS_SPECIAL];
-	$name_label = wfMsg( 'sf_createcategory_name' );
-	$form_label = wfMsg( 'sf_createcategory_defaultform' );
-	$text = <<<END
+	$name_label = wfMsg('sf_createcategory_name');
+	$form_label = wfMsg('sf_createcategory_defaultform');
+	$text =<<<END
 	<form action="" method="get">
 	<input type="hidden" name="title" value="$special_namespace:CreateCategory">
 	<p>$name_label <input size="25" name="category_name" value="">
@@ -92,37 +95,38 @@ function doSpecialCreateCategory() {
 	<option></option>
 
 END;
-	foreach ( $all_forms as $form ) {
+	foreach ($all_forms as $form) {
 		$text .= "	<option>$form</option>\n";
 	}
 
-	$subcategory_label = wfMsg( 'sf_createcategory_makesubcategory' );
+	$subcategory_label = wfMsg('sf_createcategory_makesubcategory');
 	$categories = SFLinkUtils::getCategoriesForArticle();
 	$sk = $wgUser->getSkin();
-	$cf = SpecialPage::getPage( 'CreateForm' );
-	$create_form_link = $sk->makeKnownLinkObj( $cf->getTitle(), $cf->getDescription() );
-	$text .= <<<END
+	$cf = SpecialPage::getPage('CreateForm');
+	$create_form_link = $sk->makeKnownLinkObj($cf->getTitle(), $cf->getDescription());
+	$text .=<<<END
 	</select>
 	<p>$subcategory_label
 	<select id="category_dropdown" name="parent_category">
 	<option></option>
 
 END;
-	foreach ( $categories as $category ) {
-		$category = str_replace( '_', ' ', $category );
-		$text .= "	" . Xml::element( 'option', null, $category ) . "\n";
+	foreach ($categories as $category) {
+		$category = str_replace('_', ' ', $category);
+		$text .= "	" . Xml::element('option', null, $category) . "\n";
 	}
-	$text .= <<<END
+	$text .=<<<END
 	</select>
+	</p>
 	<div class="editButtons">
-	<input type="submit" id="wpSave" name="wpSave" value="$save_button_text">
-	<input type="submit" id="wpPreview" name="wpPreview" value="$preview_button_text">
+	<input type="submit" id="wpSave" name="wpSave" value="$save_button_text"></p>
+	<input type="submit" id="wpPreview" name="wpPreview" value="$preview_button_text"></p>
 	</div>
 	<br /><hr /<br />
 
 END;
 
-	$text .= "	" . Xml::tags( 'p', null, $create_form_link . '.' ) . "\n";
+	$text .= "	" . Xml::tags('p', null, $create_form_link . '.') . "\n";
 	$text .= "	</form>\n";
 
 	$wgOut->addLink( array(
@@ -130,6 +134,6 @@ END;
 		'type' => 'text/css',
 		'media' => "screen",
 		'href' => $sfgScriptPath . "/skins/SF_main.css"
-	) );
-	$wgOut->addHTML( $text );
+	));
+	$wgOut->addHTML($text);
 }

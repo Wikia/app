@@ -40,9 +40,7 @@ class DataCenterWidgetActions extends DataCenterWidget {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets defaults
 		$parameters = array_merge( self::$defaultParameters, $parameters );
 		// Checks for permissions
@@ -72,7 +70,7 @@ class DataCenterWidgetActions extends DataCenterWidget {
 				}
 				// Builds label
 				$label = DataCenterUI::message( 'action', $label . '-type',
-					DataCenterUI::message('type', $subject )
+					DataCenterUI::message( 'type', $subject )
 				);
 				// Builds link
 				$link = DataCenterXml::link( $label, $link );

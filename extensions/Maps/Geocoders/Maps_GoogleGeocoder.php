@@ -34,8 +34,8 @@ final class MapsGoogleGeocoder extends MapsBaseGeocoder {
 		$result = self::GetResponse($requestURL);
 		
 		//Check the Google Geocoder API Response code to ensure success
-		if (substr($result, 0, 3) == "200") {
-			$result =  explode(",", $result);
+		if (substr($result, 0, 3) == '200') {
+			$result =  explode(',', $result);
 			
 			//$precision = $result[1];
 			$latitude = $result[2];

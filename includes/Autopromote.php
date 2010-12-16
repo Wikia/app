@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This class checks if user can get extra rights
  * because of conditions specified in $wgAutopromote
@@ -18,9 +17,9 @@ class Autopromote {
 			if( self::recCheckCondition( $cond, $user ) )
 				$promote[] = $group;
 		}
-		
+
 		wfRunHooks( 'GetAutoPromoteGroups', array( $user, &$promote ) );
-		
+
 		return $promote;
 	}
 
@@ -116,6 +115,8 @@ class Autopromote {
 				return $cond[1] == wfGetIP();
 			case APCOND_IPINRANGE:
 				return IP::isInRange( wfGetIP(), $cond[1] );
+			case APCOND_BLOCKED:
+				return $user->isBlocked();
 			default:
 				$result = null;
 				wfRunHooks( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );

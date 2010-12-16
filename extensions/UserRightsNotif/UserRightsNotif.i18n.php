@@ -23,6 +23,7 @@ $2",
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Lloffiwr
  * @author Purodha
  * @author Siebrand
@@ -37,7 +38,25 @@ $1 is probably the name of the wiki.',
 * $4 is a timestamp in the content language
 * $5 are the groups that have been added
 * $6 are the groups that have been removed',
-	'userrightsnotif-desc' => 'Short description of the Userrightsnotif extension, shown in [[Special:Version]].',
+	'userrightsnotif-desc' => '{{desc}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'userrightsnotifysubject' => 'Groepslidmaatskap is gewysig op $1',
+	'userrightsnotifybody' => 'Hallo $1
+
+Dit is om u in kennis te stel dat u groepslidmaatskap op $2 deur $3 op $4 gewysig is.
+
+Bygevoeg: $5
+Verwyder: $6
+
+Met vriendelike groete,
+
+$2',
+	'userrightsnotif-desc' => 'E-pos kennisgewing aan gebruikers sodra gebruikersregte verander',
 );
 
 /** Arabic (العربية)
@@ -148,6 +167,7 @@ Tennet : $6
 A galon,
 
 $2",
+	'userrightsnotif-desc' => "Kas a ra ur postel kelaouiñ d'an implijerien zo bet kemmet o gwirioù",
 );
 
 /** Bosnian (Bosanski)
@@ -184,6 +204,22 @@ Atentament,
 
 $2",
 	'userrightsnotif-desc' => 'Envia una notificació als usuaris per correu electrònic quan es canvien els seus drets',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'userrightsnotifybody' => 'سڵاو $1.
+
+ئەمە بۆ ئاگادارکردنەوەتە کە هاوبەشیەکانی گرووپت لە $2 دا بەدەست $3 لە $4 دا گۆڕدرا.
+
+زیادکرا:$5 <br />
+لابرا:$6  
+
+لەگەڵ ڕێزدا، 
+
+$2',
 );
 
 /** Czech (Česky)
@@ -327,22 +363,43 @@ $2',
 	'userrightsnotif-desc' => 'Enviar notificación por correo electrónico a usuarios cuyos derechos se han modificado',
 );
 
+/** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
+ * @author Str4nd
+ */
+$messages['fi'] = array(
+	'userrightsnotifysubject' => 'Käyttäjäryhmän jäsenyyden vaihto wikissä $1',
+	'userrightsnotifybody' => 'Hei $1.
+
+Tämä on ilmoitus, että jäsenyyttäsi käyttäjäryhmissä on muutettu sivustolla $2 käyttäjän $3 toimesta $4.
+
+Lisättiin: $5
+Poistettiin: $6
+
+Terveisin,
+
+$2',
+	'userrightsnotif-desc' => 'Lähettää sähköpostiviestin käyttäjille, kun heidän oikeuksiaan muutetaan.',
+);
+
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author PieRRoMaN
  */
 $messages['fr'] = array(
 	'userrightsnotifysubject' => 'Changement d’appartenance à des groupes d’utilisateurs sur $1',
-	'userrightsnotifybody' => "Bonjour $1,
+	'userrightsnotifybody' => 'Bonjour $1,
 
-J’ai l'honneur de vous informer que votre appartenance aux groupes d'utilisateurs sur $2 a été modifiée par $3 le $4.
+J’ai l’honneur de vous informer que votre appartenance aux groupes d’utilisateurs sur $2 a été modifiée par $3 le $4.
 
 Ajouté : $5
 Retiré : $6
 
 Cordialement,
 
-$2",
+$2',
 	'userrightsnotif-desc' => 'Envoie un courriel de notification aux utilisateurs dont les droits ont été modifiés',
 );
 
@@ -352,9 +409,9 @@ $2",
  */
 $messages['gl'] = array(
 	'userrightsnotifysubject' => 'Os membros do grupo cambiaron a $1',
-	'userrightsnotifybody' => 'Ola $1.
+	'userrightsnotifybody' => 'Ola $1:
 
-Isto é para informalo de o grupo ao que pertencía en $2 foi cambiado por $3 ao de $4.
+Isto é para informalo de que o grupo ao que pertencía en $2 foi cambiado por $3 o $4.
 
 
 Engadido: $5
@@ -368,6 +425,7 @@ $2',
 
 /** Swiss German (Alemannisch)
  * @author Als-Holder
+ * @author Melancholie
  */
 $messages['gsw'] = array(
 	'userrightsnotifysubject' => 'Änderig vu dr Gruppezuegherigkeit vum $1',
@@ -381,7 +439,26 @@ Usegnuh: $6
 Mit härzlige Grieß,
 
 $2',
-	'userrightsnotif-desc' => 'Schickt E-Mail-Benochrichtunge iber Rächtänderige an dr Benutzer',
+	'userrightsnotif-desc' => 'Schickt E-Mail-Benochrichtunge iber Rächtänderige an de Benutzer',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
+ */
+$messages['gu'] = array(
+	'userrightsnotifysubject' => '$1 પર સમૂહ સદસ્યતામાં પરિવર્તન',
+	'userrightsnotifybody' => 'નમસ્કાર $1.
+
+આપને જાણ કરવામા આવે છે કે આપની $2 પરની સમૂહ સદસ્યતામાં $3 દ્વારા $4 ના ફેરફાર થયેલ છે. 
+
+ઉમેર્યા: $5
+
+હટાવ્યા: $6
+
+સાદર,
+
+$2',
+	'userrightsnotif-desc' => 'હક્કોમાં ફેરફારની સુચના સભ્યોને ઇ-મેઇલથી મોકલો',
 );
 
 /** Hebrew (עברית)
@@ -436,6 +513,23 @@ $2',
 	'userrightsnotif-desc' => 'Sćele wužiwarjam e-mejlowu powěsće při změnjenju prawow',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'userrightsnotifysubject' => 'Csoporttagság változás a $1 oldalon',
+	'userrightsnotifybody' => 'Szia $1!
+
+Tájékoztatlak, hogy a csoporttagságodat a(z) $2 oldalon $3 megváltoztatta. Módosítás ideje: $4.
+
+Hozzáadva: $5
+Eltávolítva: $6
+
+Üdvözlettel,
+$2',
+	'userrightsnotif-desc' => 'E-mail üzenetet küld a felhasználóknak jogosultságaik megváltozásakor',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -455,6 +549,7 @@ $2',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author IvanLanin
  * @author Rex
  */
 $messages['id'] = array(
@@ -469,7 +564,7 @@ Pengurangan: $6
 Terima kasih,
 
 $2',
-	'userrightsnotif-desc' => 'Kirim notifikasi via e-mail ke para pengguna saat ada perubahan hak pengguna',
+	'userrightsnotif-desc' => 'Mengirimkan notifikasi melalui surel ke para pengguna saat ada perubahan hak pengguna',
 );
 
 /** Italian (Italiano)
@@ -601,13 +696,31 @@ $2',
 	'userrightsnotif-desc' => 'Schéckt dem Benotzer eng Informatioun per E-mail wa seng Rechter änneren',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'userrightsnotifysubject' => 'Промена во членството во група на $1',
+	'userrightsnotifybody' => 'Здраво $1.
+
+Би сакале да ве информираме дека вашите членства во групите на страницата $2 беа променети од $3 во $4.
+
+Додадени: $5
+Отстранети: $6
+
+Со почит,
+
+$2',
+	'userrightsnotif-desc' => 'Им испраќа известување на корисниците по е-пошта кога ќе се променат правата',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'userrightsnotifybody' => 'നമസ്കാരം $1.
 
-താങ്കളുടെ $2ലുള്ള ഗ്രൂപ്പ് അംഗത്വം $3, $4 നു മാറ്റി എന്നറിയിക്കാനാണ്‌ ഈ കത്ത്.
+താങ്കളുടെ $2ലുള്ള സംഘ അംഗത്വം $3, $4 നു മാറ്റി എന്നറിയിക്കാനാണ്‌ ഈ കത്ത്.
 
 ചേര്‍ത്തത്: $5
 ഒഴിവാക്കിയത്: $6
@@ -623,6 +736,14 @@ $2',
  */
 $messages['mr'] = array(
 	'userrightsnotifysubject' => '$1 वरील गट सदस्यत्व बदल',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'userrightsnotifysubject' => "Tibdil fil-grupp ta' sħubija fuq $1",
+	'userrightsnotif-desc' => "Tibgħat nota permezz ta' posta elettronika biex tinforma lill-utenti fuq tibdil tad-drittjiet",
 );
 
 /** Dutch (Nederlands)
@@ -707,6 +828,24 @@ $2',
 	'userrightsnotif-desc' => 'Wyślij informację do użytkowników o zmianach uprawnień',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'userrightsnotifysubject' => "Cambi dl'apartenensa dël grup an dzora a $1",
+	'userrightsnotifybody' => "Cerea $1.
+
+Sòn sì a l'é për anformete che ël tò grup d'apartenensa an dzora a $2 a l'é stàit cambià da $3 a $4.
+
+Giontà: $5
+Gavà: $6
+
+Tante bele còse,
+
+$2",
+	'userrightsnotif-desc' => "A manda na e-mail ëd notìfica a j'utent con un cambiament ëd drit",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -726,6 +865,7 @@ $2',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Waldir
  */
@@ -733,15 +873,15 @@ $messages['pt'] = array(
 	'userrightsnotifysubject' => 'Mudança de estatuto de utilizador em $1',
 	'userrightsnotifybody' => 'Olá $1
 
-Serve esta mensagem para informar que os seu estatuto de utilizador foi modificado em $2, de $3 para $4.
+Serve esta mensagem para informar que os seus grupos de utilizador foram modificados na $2, por $3 às $4.
 
-Adicionado: $5
-Removido: $6
+Adicionados: $5
+Removidos: $6
 
 Os melhores cumprimentos,
 
 $2',
-	'userrightsnotif-desc' => 'Enviar notificação por email a usuários que sofreram alteração de privilégios',
+	'userrightsnotif-desc' => 'Notifica por correio electrónico os utilizadores cujos privilégios forem alterados',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -769,6 +909,24 @@ $messages['ro'] = array(
 	'userrightsnotif-desc' => 'Trimite notificare prin e-mail utilizatorilor când li se modifică permisiunile',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'userrightsnotifysubject' => "Le membre d'u gruppe cangiane sus a $1",
+	'userrightsnotifybody' => "Cià $1.
+
+Queste jè pe te 'mbormà ca le membre d'u gruppe sus a $2 onne state cangiate da $3 a le $4.
+
+Aggiunde: $5
+Luate: $6
+
+Fattà calà,
+
+$2",
+	'userrightsnotif-desc' => "Manne 'na e-mail de notifiche a l'utinde de sus ca onne cangiate le deritte",
+);
+
 /** Russian (Русский)
  * @author Flrn
  * @author Александр Сигачёв
@@ -786,6 +944,24 @@ $messages['ru'] = array(
 
 $2',
 	'userrightsnotif-desc' => 'Отправляет уведомления участникам при изменении прав',
+);
+
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'userrightsnotifysubject' => '$1 මත කණ්ඩායම් සාමාජිකත්වය මාරු කිරීම',
+	'userrightsnotifybody' => 'හෙලෝ $1.
+
+මෙමඟින් $2 මත ඔබේ කණ්ඩායම් සාමාජිකත්වය $3 විසින් $4ට මාරු කර ඇති බව දැනුම් දෙමි.
+
+එකතු කළා: $5
+ඉවත් කළා: $6
+
+සුභ පැතුම් සමඟ,
+
+$2',
+	'userrightsnotif-desc' => 'අයිතීන් වෙනස්කිරීම් මත සිටින පරිශීලකයින්ට ඊ-මේල් නිවේදනයක් යවයි.',
 );
 
 /** Slovak (Slovenčina)
@@ -924,6 +1100,33 @@ $2
 $2',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'userrightsnotifybody' => "Hello $1.
+
+This is to inform you that your group memberships on $2 were changed by $3 at $4.
+
+Added: $5
+Removed: $6
+
+With regards,
+
+$2
+-----
+Salom $1.
+
+Ba ittilo'i şumo merasonem, ki uzvijati şumo dar $2 tavassuti $3 dar $4 taƣjir doda şud.
+
+Ilova şud: $5
+Pok şud: $6
+
+Bo salom,
+
+$2",
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -944,8 +1147,10 @@ $2',
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'userrightsnotifysubject' => '$1 üzerinde grup üyeliği değişikliği',
 	'userrightsnotifybody' => 'Hoşgeldiniz $1 
 
 This is to inform you that your group memberships on $2 were changed by $3 at $4.
@@ -957,6 +1162,26 @@ Taşındı: $6
 With regards,
 
 $2',
+	'userrightsnotif-desc' => 'Hak değişiklikleri sonrasında kullanıcılara e-posta bildirimi gönderir',
+);
+
+/** Ukrainian (Українська)
+ * @author NickK
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'userrightsnotifysubject' => 'Членство в групах змінено на $1',
+	'userrightsnotifybody' => 'Вітаю, $1.
+
+Повідомляю вам, що ваше членство в групах проекту $2 було змінено $3 о $4.
+
+Додано: $5
+Вилучено: $6
+
+З повагою,
+
+$2',
+	'userrightsnotif-desc' => 'Надсилає користувачам повідомлення електронною поштою в разі зміни прав',
 );
 
 /** Vèneto (Vèneto)
@@ -1000,5 +1225,42 @@ $2',
  */
 $messages['vo'] = array(
 	'userrightsnotifysubject' => 'Votükam grupalimanama in $1',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Jimmy xu wrk
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'userrightsnotifysubject' => '$1上的用户群组资格改变',
+	'userrightsnotifybody' => '$1您好，
+
+这个消息通知您您在$2的用户权限已在$4被$3更改。
+
+添加了：$5
+移除了：$6
+
+此致，
+
+$2',
+	'userrightsnotif-desc' => '在权限改变时给用户发送电子邮件通知',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
+$messages['zh-hant'] = array(
+	'userrightsnotifysubject' => '$1上的用戶群組資格改變',
+	'userrightsnotifybody' => '$1您好，
+
+這個消息通知您您在$2的用戶權限已在$4被$3更改。
+
+添加了：$5
+移除了：$6
+
+此致，
+
+$2',
+	'userrightsnotif-desc' => '在權限改變時給用戶發送電子郵件通知',
 );
 

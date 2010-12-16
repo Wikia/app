@@ -32,7 +32,7 @@ class PageByRenderer {
 
 		$this->parser = $parser;
 
-		if ($page===NULL || $page===false || trim($page)==='') {
+		if ($page===null || $page===false || trim($page)==='') {
 			$this->title = $wgTitle;
 			$this->otherpage = false;
 		}
@@ -82,13 +82,13 @@ class PageByRenderer {
 		$res = $dbr->query( $sql, 'PageByRenderer::collectInfo' );
 
 		$users = array();
-		$first = NULL;
-		$last = NULL;
+		$first = null;
+		$last = null;
 		$edits = 0;
 		while ($row = $dbr->fetchObject( $res )) {
 			$edits += 1;
 
-			if ($first===NULL) $first = $row;
+			if ($first===null) $first = $row;
 			$last = $row;
 
 			if ($this->nominor && $row->rev_minor_edit) continue;
@@ -96,7 +96,7 @@ class PageByRenderer {
 
 			if (!isset($users[$row->rev_user])) {
 				$users[$row->rev_user] = array(
-					'name' => $row->rev_user ? $row->rev_user_text : NULL,
+					'name' => $row->rev_user ? $row->rev_user_text : null,
 					'id' => $row->rev_user,
 					'count' => 0,
 				);

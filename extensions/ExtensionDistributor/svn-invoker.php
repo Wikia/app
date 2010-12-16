@@ -9,7 +9,13 @@ if ( php_sapi_name() !== 'cli' ) {
 	exit( 1 );
 }
 
-$wgExtDistWorkingCopy = '/mnt/upload5/private/ExtensionDistributor/mw-snapshot';
+$confFile = dirname( __FILE__ ) . '/svn-invoker.conf';
+if ( !file_exists( $confFile ) ) {
+	echo "Error: please create svn-invoker.conf based on svn-invoker.conf.sample\n";
+	exit( 1 );
+}
+require( $confFile );
+
 svnExecute();
 
 function svnValidate( $s ) {

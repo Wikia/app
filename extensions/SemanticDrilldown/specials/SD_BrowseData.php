@@ -97,22 +97,15 @@ class BrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable($category, $subcategory, $subcategories, $applied_filters) {
-		global $smwgDefaultStore;
-
 		$dbr = wfGetDB( DB_SLAVE );
 		$sql =<<<END
 	CREATE TEMPORARY TABLE semantic_drilldown_values (
 		id INT NOT NULL,
 		INDEX id_index (id)
-	) Engine=MEMORY AS SELECT
+	) AS SELECT ids.smw_id AS id
+
 END;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			$sql .= " ids.smw_id AS id ";
-			$sql .= $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
-		} else {
-			$sql .= " p.page_id AS id ";
-			$sql .= $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
-		}
+		$sql .= $this->getSQLFromClause($category, $subcategory, $subcategories, $applied_filters);
 		$dbr->query($sql);
 	}
 
@@ -137,31 +130,6 @@ END;
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory($subcategory, $child_subcategories) {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getSQLFromClauseForCategory_2($subcategory, $child_subcategories);
-		} else {
-			return $this->getSQLFromClauseForCategory_orig($subcategory, $child_subcategories);
-		}
-	}
-
-	function getSQLFromClauseForCategory_orig($subcategory, $child_subcategories) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-		$subcategory = str_replace("'", "\'", $subcategory);
-		$sql = "FROM semantic_drilldown_values sdv
-			JOIN $categorylinks c
-			ON sdv.id = c.cl_from
-			WHERE (c.cl_to = '$subcategory' ";
-		foreach ($child_subcategories as $i => $subcat) {
-			$subcat = str_replace("'", "\'", $subcat);
-			$sql .= "OR c.cl_to = '$subcat' ";
-		}
-		$sql .= ") ";
-		return $sql;
-	}
-
-	function getSQLFromClauseForCategory_2($subcategory, $child_subcategories) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
@@ -187,93 +155,6 @@ END;
 	 * category, subcategory and filters
 	 */
 	function getSQLFromClause($category, $subcategory, $subcategories, $applied_filters) {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
-		} else {
-			return $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
-		}
-	}
-
-	function getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page' );
-		$smw_relations = $dbr->tableName( 'smw_relations' );
-		$smw_attributes = $dbr->tableName( 'smw_attributes' );
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-
-		$sql = "FROM $page p
-			JOIN $categorylinks c
-			ON p.page_id = c.cl_from ";
-		$cat_ns = NS_CATEGORY;
-		$sql .= "AND p.page_namespace != $cat_ns ";
-		foreach ($applied_filters as $i => $af) {
-			// if any of this filter's values is 'none',
-			// include another table to get this information
-			$includes_none = false;
-			foreach ($af->values as $fv) {
-				if ($fv->text === '_none' || $fv->text === ' none') {
-					$includes_none = true;
-					break;
-				}
-			}
-			if ($includes_none) {
-				if ($af->filter->is_relation) {
-					$property_table_name = $smw_relations;
-					$property_table_nickname = "nr$i";
-					$property_field = 'relation_title';
-					$value_field = 'object_title';
-				} else {
-					$property_table_name = $smw_attributes;
-					$property_table_nickname = "na$i";
-					$property_field = 'attribute_title';
-					$value_field = 'value_xsd';
-				}
-				$property_value = str_replace(' ', '_', $af->filter->property);
-				$property_value = str_replace("'", "\'", $property_value);
-				$sql .= "LEFT OUTER JOIN
-	(SELECT subject_id, $value_field
-	FROM $property_table_name
-	WHERE $property_field = '$property_value') $property_table_nickname
-	ON p.page_id = $property_table_nickname.subject_id ";
-			}
-		}
-		foreach ($applied_filters as $i => $af) {
-			if ($af->filter->is_relation) {
-				$sql .= "LEFT OUTER JOIN $smw_relations r$i
-	ON p.page_id = r$i.subject_id ";
-			} else {
-				$sql .= "JOIN $smw_attributes a$i
-	ON p.page_id = a$i.subject_id ";
-			}
-		}
-		if ($subcategory)
-			$actual_cat = str_replace(' ', '_', $subcategory);
-		else
-			$actual_cat = str_replace(' ', '_', $category);
-		$actual_cat = str_replace("'", "\'", $actual_cat);
-		$sql .= "WHERE (c.cl_to = '$actual_cat' ";
-		foreach ($subcategories as $i => $subcat) {
-			$subcat = str_replace("'", "\'", $subcat);
-			$sql .= "OR c.cl_to = '{$subcat}' ";
-		}
-		$sql .= ") ";
-		foreach ($applied_filters as $i => $af) {
-			if ($af->filter->is_relation) {
-				$property_field = "r$i.relation_title";
-				$value_field = "r$i.object_title";
-			} else {
-				$property_field = "a$i.attribute_title";
-				$value_field = "a$i.value_xsd";
-			}
-			$property_value = str_replace(' ', '_', $af->filter->property);
-			$sql .= "AND $property_field = '$property_value' AND ";
-			$sql .= $af->checkSQL($value_field);
-		}
-		return $sql;
-	}
-
-	function getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
@@ -429,6 +310,25 @@ END;
 	}
 
 	/**
+	 * Print a "nice" version of the value for a filter, if it's some
+	 * special case like 'other', 'none', a boolean, etc.
+	 */
+	function printFilterValue($filter, $value) {
+		$value = str_replace('_', ' ', $value);
+		// if it's boolean, display something nicer than "0" or "1"
+		if ($value === ' other')
+			return wfMsg('sd_browsedata_other');
+		elseif ($value === ' none')
+			return wfMsg('sd_browsedata_none');
+		elseif ($filter->is_boolean)
+			return SDUtils::booleanToString($value);
+		elseif ($filter->is_date && strpos($value, '//T'))
+			return str_replace('//T', '', $value);
+		else
+			return $value;
+	}
+
+	/**
 	 * Print the line showing 'OR' values for a filter that already has
 	 * at least one value set
 	 */
@@ -446,13 +346,13 @@ END;
 		else
 			$or_values = $af->getAllOrValues($this->category);
 		if ($af->search_term != null) {
-			// HACK - printFreeTextInput() needs values as the
+			// HACK - printComboBoxInput() needs values as the
 			// *keys* of the array
 			$filter_values = array();
 			foreach ($or_values as $or_value) {
 				$filter_values[$or_value] = '';
 			}
-			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printFreeTextInput($af->filter->name, $filter_values, $af->search_term);
+			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printComboBoxInput($af->filter->name, $filter_values, $af->search_term);
 			return $results_line;
 		} elseif ($af->lower_date != null || $af->upper_date != null) {
 			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printDateRangeInput($af->filter->name, $af->lower_date, $af->upper_date);
@@ -465,16 +365,7 @@ END;
 		$or_values[] = '_none';
 		foreach ($or_values as $i => $value) {
 			if ($i > 0) { $results_line .= " &middot; "; }
-			$value = str_replace('_', ' ', $value);
-			// if it's boolean, display something nicer than "0" or "1"
-			if ($value === ' other')
-				$filter_text = wfMsg('sd_browsedata_other');
-			elseif ($value === ' none')
-				$filter_text = wfMsg('sd_browsedata_none');
-			elseif ($af->filter->is_boolean)
-				$filter_text = SDUtils::booleanToString($value);
-			else
-				$filter_text = $value;
+			$filter_text = $this->printFilterValue($af->filter, $value);
 			$applied_filters = $this->applied_filters;
 			foreach ($applied_filters as $af2) {
 				if ($af->filter->name == $af2->filter->name) {
@@ -534,15 +425,7 @@ END;
 		$num_printed_values = 0;
 		foreach ($filter_values as $value_str => $num_results) {
 			if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-			// if it's boolean, display something nicer than "0" or "1"
-			if ($value_str === '_other')
-				$filter_text = wfMsg('sd_browsedata_other');
-			elseif ($value_str === '_none')
-				$filter_text = wfMsg('sd_browsedata_none');
-			elseif ($f->is_boolean)
-				$filter_text = SDUtils::booleanToString($value_str);
-			else
-				$filter_text = str_replace('_', ' ', $value_str);
+			$filter_text = $this->printFilterValue($f, $value_str);
 			$filter_text .= " ($num_results)";
 			$filter_url = $cur_url . urlencode(str_replace(' ', '_', $f->name)) . '=' . urlencode(str_replace(' ', '_', $value_str));
 			if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
@@ -555,9 +438,10 @@ END;
 		return $results_line;
 	}
 
-	function printFreeTextInput($filter_name, $filter_values, $cur_value = null) {
+	function printComboBoxInput($filter_name, $filter_values, $cur_value = null) {
 		global $wgRequest;
 
+		$filter_name = str_replace(' ', '_', $filter_name);
 		$input_id = "_search_$filter_name";
 		$text =<<<END
 
@@ -605,8 +489,6 @@ END;
 	}
 
 	function printDateInput($input_name, $cur_value = null) {
-		global $wgAmericanDates;
-
 		$month_names = array(
 			wfMsgForContent('january'),
 			wfMsgForContent('february'),
@@ -701,24 +583,29 @@ END;
 				$filter_values['_other'] = $num_results;
 			}
 		}
-		// show 'None' only if any other results have been found
+		// show 'None' only if any other results have been found, and
+		// if it's not a numeric filter
 		if (count($f->allowed_values) > 0) {
-			$none_filter = SDAppliedFilter::create($f, ' none');
-			$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $none_filter);
-			if ($num_results > 0) {
-				$filter_values['_none'] = $num_results;
+			$fv = SDFilterValue::create($f->allowed_values[0]);
+			if (! $fv->is_numeric) {
+				$none_filter = SDAppliedFilter::create($f, ' none');
+				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $none_filter);
+				if ($num_results > 0) {
+					$filter_values['_none'] = $num_results;
+				}
 			}
-		}
-		// escape here if there are no values
-		if (count($filter_values) == 0) {
-			$f->dropTempTable();
-			return "";
 		}
 
 		$filter_name = urlencode(str_replace(' ', '_', $f->name));
 		$normal_filter = true;
-		if ($f->input_type == wfMsgForContent('sd_filter_freetext')) {
-			$results_line = $this->printFreeTextInput($filter_name, $filter_values);
+		if (count($filter_values) == 0) {
+			$results_line = '(' . wfMsg('sd_browsedata_novalues') . ')';
+		// for backward compatibility, also check against
+		// 'sd_filter_freetext' (i.e. 'text' in English), which was
+		// the old name of the input
+		} elseif ($f->input_type == wfMsgForContent('sd_filter_combobox') ||
+		    $f->input_type == wfMsgForContent('sd_filter_freetext')) {
+			$results_line = $this->printComboBoxInput($filter_name, $filter_values);
 			$normal_filter = false;
 		} elseif ($f->input_type == wfMsgForContent('sd_filter_daterange')) {
 			$results_line = $this->printDateRangeInput($filter_name);
@@ -727,30 +614,27 @@ END;
 			$results_line = $this->printUnappliedFilterValues($cur_url, $f, $filter_values);
 
 		$text = "";
-		// TODO - this check might no longer be necessary
-		if ($results_line != "") {
-			$filter_label = $this->printFilterLabel($f->name);
-			$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
-			$text .=<<<END
+		$filter_label = $this->printFilterLabel($f->name);
+		$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
+		$text .=<<<END
 					<div class="drilldown-filter-label">
 
 END;
-			// no point showing "minimize" arrow if it's just a
-			// single text or date input
-			if ($normal_filter) {
-				$text .=<<<END
+		// no point showing "minimize" arrow if it's just a
+		// single text or date input
+		if ($normal_filter) {
+			$text .=<<<END
 					<a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/down-arrow.png"></a>
 
 END;
-			}
-			$text .=<<<END
+		}
+		$text .=<<<END
 					$filter_label:
 					</div>
 					<div class="drilldown-filter-values" id="$results_div_id">$results_line
 					</div>
 
 END;
-		}
 		$f->dropTempTable();
 		return $text;
 	}
@@ -811,14 +695,7 @@ END;
 			}
 			foreach ($af->values as $j => $fv) {
 				if ($j > 0) {$header .= ' <span class="drilldown-or">' . wfMsg('sd_browsedata_or') . '</span> ';}
-				if ($fv->text == ' other')
-					$filter_text = wfMsg('sd_browsedata_other');
-				elseif ($fv->text == ' none')
-					$filter_text = wfMsg('sd_browsedata_none');
-				elseif ($af->filter->is_boolean)
-					$filter_text = SDUtils::booleanToString($fv->text);
-				else
-					$filter_text = $fv->text;
+				$filter_text = $this->printFilterValue($af->filter, $fv->text);
 				$temp_filters_array = $this->applied_filters;
 				$removed_values = array_splice($temp_filters_array[$i]->values, $j, 1);
 				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
@@ -909,7 +786,7 @@ END;
 	function linkParameters() {
 		$params = array();
 		if ($this->show_single_cat)
-			$params['_single'] = NULL;
+			$params['_single'] = null;
 		$params['_cat'] = $this->category;
 		if ($this->subcategory)
 			$params['_subcat'] = $this->subcategory;
@@ -937,18 +814,14 @@ END;
 	function getSQL() {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			$sql = "SELECT DISTINCT ids.smw_title AS title,
+		$sql = "SELECT DISTINCT ids.smw_title AS title,
 	ids.smw_title AS value,
+	ids.smw_title AS t,
 	ids.smw_namespace AS namespace,
+	ids.smw_namespace AS ns,
+	ids.smw_id AS id,
+	ids.smw_iw AS iw,
 	ids.smw_sortkey AS sortkey\n";
-		} else {
-			$sql = "SELECT DISTINCT p.page_title AS title,
-	p.page_title AS value,
-	p.page_namespace AS namespace,
-	c.cl_sortkey AS sortkey\n";
-		}
 		$sql .= $this->getSQLFromClause($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		return $sql;
 	}
@@ -974,55 +847,48 @@ END;
 	 * @param int $offset Paging offset
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
-		global $wgContLang, $sdgNumResultsColumns;
+		global $wgContLang;
 
-		if( $num > 0 ) {
-			$html = array();
-			if( !$this->listoutput )
-				$html[] = $this->openList( $offset );
-
-			$prev_first_char = "";
-			// default to 3 columns, like with categories
-			if ($sdgNumResultsColumns == null)
-				$sdgNumResultsColumns = 3;
-			$rows_per_column = ceil($num / $sdgNumResultsColumns);
-			// column width is a percentage
-			$column_width = floor(100 / $sdgNumResultsColumns);
-			// code borrowed heavily from QueryPage.php
-			for ($i = 0; $i < $num && $row = $dbr->fetchObject( $res ); $i++) {
-				$line = $this->formatResult( $skin, $row );
-				if ($line) {
-					$cur_first_char = $row->sortkey{0};
-					if ($i % $rows_per_column == 0) {
-						$html[] = "\n			<div style=\"float: left; width: $column_width%;\">\n";
-						if ($cur_first_char == $prev_first_char)
-							$html[] = "				<h3>$cur_first_char " . wfMsg('listingcontinuesabbrev') . "</h3>\n				<ul>\n";
-					}
-					// if we're at a new first letter, end
-					// the last list and start a new one
-					if ($cur_first_char != $prev_first_char) {
-						if ($i % $rows_per_column > 0)
-							$html[] = "				</ul>\n";
-						$html[] = "				<h3>$cur_first_char</h3>\n				<ul>\n";
-					}
-					$prev_first_char = $cur_first_char;
-					$html[] = "					<li>$line</li>\n";
-				}
-				// end list if we're at the end of the column
-				// or the page
-				if (($i + 1) % $rows_per_column == 0 || ($i + 1) == $num)
-					$html[] = "				</ul>\n			</div> <!-- end column -->";
-			}
-
-			# Flush the final result
-			if( $this->tryLastResult() ) {
-				$row = null;
-				$line = $this->formatResult( $skin, $row );
-				if( $line ) {
-					$html[] = "				<li>$line</li>\n";
-				}
-			}
+		$all_display_params = SDUtils::getDisplayParamsForCategory($this->category);
+		$querystring = null;
+		$printouts = $params = array();
+		// only one set of params is handled for now
+		if (count($all_display_params) > 0) {
+			$display_params = array_map('trim', $all_display_params[0]);
+			SMWQueryProcessor::processFunctionParams($display_params, $querystring, $params, $printouts);
 		}
+		if (array_key_exists('format', $params))
+			$format = $params['format'];
+		else
+			$format = 'category';
+		if (array_key_exists('mainlabel', $params)) {
+			$mainlabel = $params['mainlabel'];
+		} else {
+			$mainlabel = '';
+		}
+		$r = $this->addSemanticResultWrapper($dbr, $res, $num, $mainlabel, $printouts);
+		$printer = SMWQueryProcessor::getResultPrinter($format, SMWQueryProcessor::SPECIAL_PAGE, $r);
+
+		$prresult = $printer->getResult($r, $params, SMW_OUTPUT_HTML);
+		if (is_array($prresult))
+			$prtext = $prresult[0];
+		else
+			$prtext = $prresult;
+
+		// Crappy hack to get the contents of SMWOutputs::$mHeadItems,
+		// which may have been set in the result printer, and dump into
+		// headItems of $out.
+		// How else can we do this?
+		global $wgParser;
+		SMWOutputs::commitToParser($wgParser);
+		foreach ( $wgParser->mOutput->mHeadItems as $key => $item ) {
+			$out->addHeadItem($key, $item);
+ 		}
+		// Force one more parser function, so links appear.
+		$wgParser->replaceLinkHolders( $prtext );
+ 
+		$html = array();
+		$html[] = $prtext;
 
 		if( !$this->listoutput )
 			$html[] = $this->closeList();
@@ -1032,6 +898,97 @@ END;
 			: implode( '', $html );
 
 		$out->addHTML( $html );
+
+		// add Ext library, to enable combobox, unless a map is being
+		// displayed - the Javascript for Ext conflicts with the
+		// Javascript for the maps
+		if ($format != 'openlayers' || strpos($format, 'map') !== false) {
+			global $sdgScriptPath;
+			$out->addLink( array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'media' => "screen",
+				'href' => $sdgScriptPath . '/skins/ext-all.css'
+			));
+			// overwrite style from ext-all.css, to set the correct
+			// image for the combobox arrow
+			$out->addScript("<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>");
+			$out->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>');
+			$out->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>');
+		}
+	}
+
+	// Take non-semantic result set returned by Database->query() method, and
+	// wrap it in a SMWQueryResult container for passing to any of the various
+	// semantic result printers.
+	// Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
+	// (does this mean it will only work with certain semantic SQL stores?)
+	function addSemanticResultWrapper($dbr, $res, $num, $mainlabel, $printouts) {
+		$qr = array();
+		$count = 0;
+		$store = smwfGetStore();
+		while ( ($count < $num) && ($row = $dbr->fetchObject($res)) ) {
+			$count++;
+			$v = SMWWikiPageValue::makePage($row->t, $row->ns, $row->sortkey);
+			$qr[] = $v;
+			$store->cacheSMWPageID($row->id,$row->t,$row->ns,$row->iw);
+		}
+		if ($dbr->fetchObject($res)) {
+			$count++;
+		}
+		$dbr->freeResult($res);
+
+		$printrequest = new SMWPrintRequest(SMWPrintRequest::PRINT_THIS, $mainlabel);
+		$main_printout = array();
+		$main_printout[$printrequest->getHash()] = $printrequest;
+		$printouts = array_merge($main_printout, $printouts);
+
+		$query = new SMWQuery();
+		// for SMW 1.5+, handling is quite easy
+		if (! class_exists('SMWTemplateResultPrinter')) {
+			return new SMWQueryResult($printouts, $query, $qr, $store, ($count > $num) );
+		}
+		$result = new SMWQueryResult($printouts, $query, ($count > $num) );
+		foreach ($qr as $qt) {
+			$row = array();
+			$cats = false;
+			foreach ($printouts as $pr) {
+				switch ($pr->getMode()) {
+				case SMWPrintRequest::PRINT_THIS:
+					$row[] = new SMWResultArray(array($qt), $pr);
+				break;
+				case SMWPrintRequest::PRINT_CATS:
+					if ($cats === false) {
+						$cats = $store->getPropertyValues($qt,SMWPropertyValue::makeProperty('_INST'));
+					}
+					$row[] = new SMWResultArray($cats, $pr);
+				break;
+				case SMWPrintRequest::PRINT_PROP:
+					$row[] = new SMWResultArray($store->getPropertyValues($qt,$pr->getData(), null, $pr->getOutputFormat()), $pr);
+				break;
+				case SMWPrintRequest::PRINT_CCAT:
+					if ($cats === false) {
+						$cats = $store->getPropertyValues($qt,SMWPropertyValue::makeProperty('_INST'));
+					}
+					$found = '0';
+					$prkey = $pr->getData()->getDBkey();
+					foreach ($cats as $cat) {
+						if ($cat->getDBkey() == $prkey) {
+							$found = '1';
+							break;
+						}
+					}
+					$dv = SMWDataValueFactory::newTypeIDValue('_boo');
+					$dv->setOutputFormat($pr->getOutputFormat());
+					$dv->setDBkeys(array($found));
+					$row[] = new SMWResultArray(array($dv), $pr);
+				break;
+				}
+			}
+			$result->addRow($row);
+		}
+		wfProfileOut('SMWSQLStore2Queries::getInstanceQueryResult (SMW)');
+		return $result;
 	}
 
 	function openList( $offset ) {
@@ -1048,32 +1005,21 @@ function doSpecialBrowseData($query) {
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $mainCssDir . 'SD_main.css'
 	));
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
-		'href' => $mainCssDir . 'ext-all.css'
-	));
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $mainCssDir . 'xtheme-gray.css'
 	));
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $mainCssDir . 'combos.css'
 	));
-	// overwrite style from ext-all.css, to set the correct image for
-	// the combobox arrow
-	$wgOut->addScript("<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>' . "\n");
 	$javascript_text =<<<END
 function toggleFilterDiv(element_id, label_element) {
 	element = document.getElementById(element_id);

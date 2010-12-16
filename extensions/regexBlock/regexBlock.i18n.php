@@ -27,7 +27,7 @@ $messages['en'] = array(
 This should be done only to prevent vandalism, and in accordance with policy.
 \'\'This page will allow you to block even non-existing users, and will also block users with names similar to given, i.e. "Test" will be blocked along with "Test 2" etc.
 You can also block full IP addresses, meaning that no one logging in from them will be able to edit pages.
-Note: partial IP addresses will be treated by usernames in determining blocking.
+Note: partial IP addresses will be treated as usernames in determining blocking.
 If no reason is specified, a default generic reason will be used.\'\'',
 	'regexblock-page-title-1' => 'Block address using regular expressions',
 	'regexblock-reason-ip' => 'This IP address is prevented from editing due to vandalism or other disruption by you or by someone who shares your IP address.
@@ -45,6 +45,7 @@ Please create an alternate user name or [[$1|contact us]] about the problem',
 	'regexblock-form-submit-empty' => 'Give a user name or an IP address to block.',
 	'regexblock-form-submit-regex' => 'Invalid regular expression.',
 	'regexblock-form-submit-expiry' => 'Please specify an expiration period.',
+	'regexblock-link' => 'block with regular expression',
 	'regexblock-match-stats-record' => "$1 blocked '$2' on '$3' at '$4', logging from address '$5'",
 	'regexblock-nodata-found' => 'No data found',
 	'regexblock-stats-title' => 'Regex block statistics',
@@ -52,7 +53,7 @@ Please create an alternate user name or [[$1|contact us]] about the problem',
 	'regexblock-unblock-log' => "User name or IP address '''$1''' has been unblocked.",
 	'regexblock-unblock-error' => 'Error unblocking $1.
 Probably there is no such user.',
-	'regexblock-regex-filter' => ' or regex value: ', // FIXME: bad i18n. Static formatting and lego
+	'regexblock-regex-filter' => ' or regex value:', // FIXME: bad i18n. Static formatting and lego
 	'regexblock-view-blocked' => 'View blocked by:',
 	'regexblock-view-all' => 'All',
 	'regexblock-view-go' => 'Go',
@@ -62,8 +63,6 @@ Probably there is no such user.',
 	'regexblock-view-reason' => 'reason: $1',
 	'regexblock-view-reason-default' => 'generic reason',
 	'regexblock-view-block-infinite' => 'permanent block',
-	'regexblock-view-block-temporary' => 'expires on ',
-	'regexblock-view-block-expired' => 'EXPIRED on ',
 	'regexblock-view-block-by' => 'blocked by:',
 	'regexblock-view-block-unblock' => 'unblock',
 	'regexblock-view-stats' => 'stats',
@@ -76,6 +75,7 @@ Probably there is no such user.',
  * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Raymond
  * @author SPQRobin
  * @author Siebrand
  */
@@ -86,6 +86,7 @@ $messages['qqq'] = array(
 	'regexblock-reason-ip' => 'Parameter $1 is <tt>$wgContactLink</tt>, which is by default "<tt>Special:Contact</tt>".',
 	'regexblock-reason-name' => 'Parameter $1 is <tt>$wgContactLink</tt>, which is by default "<tt>Special:Contact</tt>".',
 	'regexblock-reason-regex' => 'Parameter $1 is <tt>$wgContactLink</tt>, which is by default "<tt>Special:Contact</tt>".',
+	'regexblock-form-username' => '{{Identical/IP address or username}}',
 	'regexblock-form-reason' => '{{Identical|Reason}}',
 	'regexblock-form-expiry' => '{{Identical|Expiry}}',
 	'regexblock-form-match' => '{{Identical|Exact match}}',
@@ -94,11 +95,17 @@ $messages['qqq'] = array(
 * $2: username
 * $3: database name
 * $4: date/time
-* $5: IP address',
+* $5: IP address
+* $6: isolated date of $4
+* $7: isolated time of $4',
+	'regexblock-regex-filter' => 'This is a field name for a text field in a form. In the field a user is expected to type a regex filter. If a regex filter is present, the field is prefilled with it.',
+	'regexblock-view-blocked' => 'This is a label followed by a dropdown list of all users who have ever used regexBlock on the wiki, allowing the viewer to filter down the list of regexBlocks, i.e. see all blocks performed by User:X if users X, Y and Z have used regexBlock tool. There is [[mw:File:RegexBlock.png|a screenshot]].',
 	'regexblock-view-all' => '{{Identical|All}}',
 	'regexblock-view-go' => '{{Identical|Go}}',
 	'regexblock-view-match' => '{{Identical|Exact match}}',
-	'regexblock-view-block-temporary' => '{{Identical|Expires on}}',
+	'regexblock-view-time' => '* $1 is a date/time
+* $2 is a date (optional)
+* $3 is a time (optional)',
 	'right-regexblock' => '{{doc-right}}',
 );
 
@@ -117,10 +124,16 @@ $messages['niu'] = array(
  */
 $messages['af'] = array(
 	'regexblock-already-blocked' => '$1 is reeds geblok.',
+	'regexblock-expire-duration' => '1 uur,2 uur,4 uur,6 uur,1 dag,3 dae,1 week,2 weke,1 maand,3 maande,6 maande,1 jaar,onbepaald',
+	'regexblock-form-username' => 'IP-adres of gebruikersnaam:',
 	'regexblock-form-reason' => 'Rede:',
+	'regexblock-form-expiry' => 'Verval:',
+	'regexblock-form-submit' => 'Blokkeer die gebruiker',
+	'regexblock-nodata-found' => 'Geen data gevind nie',
 	'regexblock-view-all' => 'Alles',
-	'regexblock-view-go' => 'Gaan',
+	'regexblock-view-go' => 'Laat waai',
 	'regexblock-view-reason' => 'rede: $1',
+	'regexblock-view-stats' => 'statistieke',
 	'regexblock-view-time' => 'op $1',
 );
 
@@ -175,6 +188,7 @@ $messages['ar'] = array(
 	'regexblock-form-submit-empty' => 'أعط اسم مستخدم أو عنوان أيبي للمنع.',
 	'regexblock-form-submit-regex' => 'تعبير منتظم غير صحيح.',
 	'regexblock-form-submit-expiry' => 'من فضلك حدد تاريخ انتهاء.',
+	'regexblock-link' => 'منع بتعبير منتظم',
 	'regexblock-match-stats-record' => "$1 منع '$2' في '$3' في '$4'، تسجيل من العنوان '$5'",
 	'regexblock-nodata-found' => 'لا بيانات تم العثور عليها',
 	'regexblock-stats-title' => 'إحصاءات تعبيرات المنع المنتظمة',
@@ -192,8 +206,6 @@ $messages['ar'] = array(
 	'regexblock-view-reason' => 'السبب: $1',
 	'regexblock-view-reason-default' => 'سبب تلقائي',
 	'regexblock-view-block-infinite' => 'منع دائم',
-	'regexblock-view-block-temporary' => 'ينتهي في',
-	'regexblock-view-block-expired' => 'انتهى في',
 	'regexblock-view-block-by' => 'ممنوع بواسطة:',
 	'regexblock-view-block-unblock' => 'رفع المنع',
 	'regexblock-view-stats' => 'إحصاءات',
@@ -202,7 +214,20 @@ $messages['ar'] = array(
 	'right-regexblock' => 'منع المستخدمين من التعديل في كل الويكيات في مزرعة الويكي',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'regexblock-form-reason' => 'ܥܠܬܐ:',
+	'regexblock-view-all' => 'ܟܠ',
+	'regexblock-view-go' => 'ܙܠ',
+	'regexblock-view-reason' => 'ܥܠܬܐ: $1',
+	'regexblock-view-block-by' => 'ܚܪܝܡܐ ܒܝܕ:',
+	'regexblock-view-block-unblock' => 'ܛܥܘܢ ܚܪܡܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Ghaly
  * @author Meno25
  * @author Ramsis II
  */
@@ -221,14 +246,14 @@ $messages['arz'] = array(
 \'\'هذه الصفحة ستسمح لك بمنع حتى المستخدمين غير الموجودين، وستمنع أيضا المستخدمين بأسماء مشابهة للمعطاة،أى أن "Test" سيتم منعها بالإضافة إلى "Test 2"إلى آخره.
 يمكنك أيضا منع عناوين أيبى كاملة، مما يعنى أنه لا أحد مسجلا للدخول منها سيمكنه تعديل الصفحات.
 ملاحظة: عناوين الأيبى الجزئية سيتم معاملتها بواسطة أسماء مستخدمين فى تحديد المنع.
-لو لم يتم تحديد سبب، سيتم استخدام سبب افتراضى تلقائي.\'\'',
+لو لم يتم تحديد سبب، سيتم استخدام سبب افتراضى تلقائى.\'\'',
 	'regexblock-page-title-1' => 'منع عنوان باستخدام تعبيرات منتظمة',
 	'regexblock-reason-ip' => 'عنوان الأيبى هذا ممنوع نتيجة للتخريب أو إساءة أخرى بواسطتك أو بواسطة شخص يشارك فى عنوان الأيبى الخاص بك.
-لو كنت تعتقد أن هذا خطأ، من فضلك $1',
+لو أنك تعتقد أن هذا خطأ، من فضلك [[$1|اتصل بنا]]',
 	'regexblock-reason-name' => 'اسم المستخدم هذا ممنوع من التحرير نتيجة للتخريب أو إساءة أخرى.
-لو كنت تعتقد أن هذا خطأ، من فضلك $1',
-	'regexblock-reason-regex' => 'اسم المستخدم هذا ممنوع من التحرير نتيجة للتخريب أو إساءة أخرى بواسطة مستخدم باسم مشابه.
-من فضلك أنشيء اسم مستخدم بديل أو $1 حول المشكلة',
+لو كنت تعتقد أن هذا خطأ، من فضلك [[$1|اتصل بنا]]',
+	'regexblock-reason-regex' => 'اسم اليوزر ده ممنوع من التحرير نتيجة للتخريب أو إساءة تانيه بواسطة يوزر بإسم مشابه.
+من فضلك أنشىء اسم يوزر بديل أو [[$1|اتصل بينا]] بخصوص المشكلة',
 	'regexblock-form-username' => 'عنوان الأيبى أو اسم المستخدم:',
 	'regexblock-form-reason' => 'السبب:',
 	'regexblock-form-expiry' => 'الانتهاء:',
@@ -255,9 +280,7 @@ $messages['arz'] = array(
 	'regexblock-view-reason' => 'السبب: $1',
 	'regexblock-view-reason-default' => 'سبب تلقائي',
 	'regexblock-view-block-infinite' => 'منع دائم',
-	'regexblock-view-block-temporary' => 'ينتهى في',
-	'regexblock-view-block-expired' => 'انتهى في',
-	'regexblock-view-block-by' => 'ممنوع بواسطة',
+	'regexblock-view-block-by' => 'ممنوع بواسطة:',
 	'regexblock-view-block-unblock' => 'رفع المنع',
 	'regexblock-view-stats' => 'ستاتس',
 	'regexblock-view-empty' => 'قائمة الأسماء والعناوين الممنوعة فارغة.',
@@ -287,11 +310,11 @@ $messages['be-tarask'] = array(
 Калі не пазначаная прычына, будзе выкарыстоўвацца агульнае апісаньне па змоўчваньні.''",
 	'regexblock-page-title-1' => 'Блякаваньне адрасоў з выкарыстаньнем рэгулярнага выразу',
 	'regexblock-reason-ip' => 'Гэта ІР-адрас быў заблякаваны па прычыне вандалізму ці іншага парушэньня зробленага Вамі альбо кім-небудзь іншым, хто карыстаецца гэтым ІР-адрасам.
-Калі Вы лічыце, што гэта памылка, калі ласка, $1',
+Калі Вы лічыце, што гэта памылка, калі ласка, [[$1|паведаміце нам]]',
 	'regexblock-reason-name' => 'Гэты ўдзельнік ня можа рэдагаваць у выніку вандалізму ці іншага парушэньня.
-Калі Вы лічыце, што  гэта памылка, калі ласка, $1',
+Калі Вы лічыце, што  гэта памылка, калі ласка, [[$1|паведаміце нам]]',
 	'regexblock-reason-regex' => 'Гэты ўдзельнік ня можа рэдагаваць у выніку вандалізму ці іншага парушэньня, якое зрабіў удзельнік з падобным іменем.
-Калі ласка, стварыце рахунак зь іншай назвай, ці $1 аб праблеме',
+Калі ласка, стварыце рахунак зь іншай назвай альбо [[$1|паведаміце нам пра праблему]]',
 	'regexblock-form-username' => 'ІР-адрас альбо імя ўдзельніка:',
 	'regexblock-form-reason' => 'Прычына:',
 	'regexblock-form-expiry' => 'Тэрмін:',
@@ -301,6 +324,7 @@ $messages['be-tarask'] = array(
 	'regexblock-form-submit-empty' => 'Пазначце імя ўдзельніка альбо ІР-адрас для блякаваньня.',
 	'regexblock-form-submit-regex' => 'Няслушны рэгулярны выраз.',
 	'regexblock-form-submit-expiry' => 'Калі ласка, пазначце тэрмін дзеяньня.',
+	'regexblock-link' => 'заблякаваць з рэгулярным выразам',
 	'regexblock-match-stats-record' => '$1 заблякаваў «$2» ў «$3» «$4», увайшоўшага з IP-адрасу «$5»',
 	'regexblock-nodata-found' => 'Нічога ня знойдзена',
 	'regexblock-stats-title' => 'Статыстыка блякаваньняў з дапамогай рэгулярных выразаў',
@@ -318,9 +342,7 @@ $messages['be-tarask'] = array(
 	'regexblock-view-reason' => 'прычына: $1',
 	'regexblock-view-reason-default' => 'агульная прычына',
 	'regexblock-view-block-infinite' => 'бестэрміновае блякаваньне',
-	'regexblock-view-block-temporary' => 'канчаецца',
-	'regexblock-view-block-expired' => 'СКОНЧЫЛАСЯ',
-	'regexblock-view-block-by' => 'заблякаваны',
+	'regexblock-view-block-by' => 'заблякаваны:',
 	'regexblock-view-block-unblock' => 'разблякаваць',
 	'regexblock-view-stats' => 'статыстыка',
 	'regexblock-view-empty' => 'Сьпіс заблякаваных рахункаў і IP-адрасоў пусты.',
@@ -357,55 +379,129 @@ $messages['bg'] = array(
 	'regexblock-view-match' => '(пълно съвпадение)',
 	'regexblock-view-reason' => 'причина: $1',
 	'regexblock-view-block-infinite' => 'перманентно блокиране',
-	'regexblock-view-block-temporary' => 'изтича на',
 	'regexblock-view-block-by' => 'блокиран от',
 	'regexblock-view-block-unblock' => 'отблокиране',
-	'regexblock-view-stats' => '(статистика)',
+	'regexblock-view-stats' => 'статистики',
 	'regexblock-view-empty' => 'Списъкът на блокирани имена и адреси е празен.',
 	'regexblock-view-time' => 'на $1',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'regexblock-view-all' => 'সমস্ত',
+	'regexblock-view-go' => 'যাও',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'regexblock-already-blocked' => '$1 zo stanket dija.',
+	'regexblock-block-log' => "Sanket eo bet an implijer pe ar chomlec'h IP '''$1'''.",
+	'regexblock-block-success' => 'Stanket eo bet an implijer',
+	'regexblock-currently-blocked' => "Chomlec'hioù stanket er mare-mañ :",
+	'regexblock-expire-duration' => '1 eurvezh, 2 eurvezh, 4 eurvezh, 6 eurvezh, 1 devez, 3 devez, 1 sizhunvezh, 2 sizhunvezh, 1 miz, 3 miz, 6 miz, 1 vloaz, da viken',
+	'regexblock-form-username' => "Chomlec'h IP pe anv implijer :",
+	'regexblock-form-reason' => 'Abeg :',
+	'regexblock-form-expiry' => 'Termen :',
+	'regexblock-form-match' => 'Klotadur rik',
+	'regexblock-form-account-block' => 'Berzañ krouidigezh kontoù nevez',
+	'regexblock-form-submit' => 'Stankañ an implijer-mañ',
+	'regexblock-form-submit-empty' => "Roit un anv implijer pe ur chomlec'h IP da stankañ.",
+	'regexblock-form-submit-expiry' => 'Diferit un termen, mar plij.',
+	'regexblock-match-stats-record' => "$1 en deus stanket « $2 » d'an « $3 » da « $4 », liammet adalek ar chomlec'h « $5 »",
+	'regexblock-nodata-found' => "N'eus ket bet kavet roadennoù",
+	'regexblock-unblock-success' => 'Distanket eo bet an implijer',
+	'regexblock-unblock-log' => "Disanket eo bet an implijer pe ar chomlec'h IP '''$1'''.",
+	'regexblock-unblock-error' => "Fazi distankañ $1.
+Sur a-walc'h n'eus ket eus an implijer-mañ.",
+	'regexblock-view-blocked' => 'Gwelet ar stankadurioù gant :',
+	'regexblock-view-all' => 'Pep tra',
+	'regexblock-view-go' => 'Mont',
+	'regexblock-view-match' => '(klotadur rik)',
+	'regexblock-view-account' => "(krouidigezh ar c'hontoù stanket)",
+	'regexblock-view-reason' => 'abeg : $1',
+	'regexblock-view-reason-default' => 'abeg dre-vras',
+	'regexblock-view-block-infinite' => 'stankadur pad',
+	'regexblock-view-block-by' => 'stanket gant :',
+	'regexblock-view-block-unblock' => 'distankañ',
+	'regexblock-view-stats' => 'stadegoù',
+	'regexblock-view-empty' => "Goullo eo roll an implijerien pe ar chomlec'hioù IP bet stanket.",
+	'regexblock-view-time' => "d'an $1",
 );
 
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'regexblock' => 'Regex blokiranje',
 	'regexblock-already-blocked' => '$1 je već blokiran.',
+	'regexblock-block-log' => "Korisničko ime ili IP adresa '''$1''' je blokiran.",
 	'regexblock-block-success' => 'Blokada uspješna',
 	'regexblock-currently-blocked' => 'Trenutno blokirane adrese:',
+	'regexblock-desc' => 'Proširenje koje se koristi za blokiranje korisničkim imena i IP adresa putem redovnih izraza. Sadrži i mehanizam za blokiranje i [[Special:Regexblock|posebnu stranicu]] za dodavanj/upravljanje blokadama',
 	'regexblock-expire-duration' => '1 sat,2 sata,4 sata,6 sati,1 dan,3 dana,1 sedmica,2 sedmice,1 mjesec,3 mjeseca,6 mjeseci,1 godina,neograničeno',
+	'regexblock-page-title' => 'Blokiranje imena putem redovnih izraza',
 	'regexblockstats' => 'Statistike regex bloka',
+	'regexblock-help' => "Koristite obrazac ispod za blokiranje prava pisanja sa određene IP adrese ili korisničkog imena.
+Ovo se koristi samo za prevenciju vandalizma i u skladu sa pravilima.
+''Ova stranica će Vam omogućiti da blokirate i one koji nisu korisnici a i korisnike sa sličnim imenom tj. ''Test'' će biti blokiran zajedno sa ''Test 2'' itd.
+Možete također blokirati pune IP adrese, što znači da ne niko ne može s njih prijaviti za uređivanje stranica.
+Pažnja: djelimična blokada IP adresa će se smatrati kao korisničko ime pri određivanju blokade.
+Ako nije naveden razlog, bit će korišten uobičajeni generički razlog.''",
 	'regexblock-page-title-1' => 'Blokiranje adrese koristeći obične izraze',
+	'regexblock-reason-ip' => 'Ova IP adresa je onemogućena za uređivanje zbog vandalizma ili drugih sličnih akcija od strane Vas ili nekog drugog s kim dijelite Vašu IP adresu.
+Ako mislite da je u pitanju greška, molimo [[$1|kontaktirajte nas]]',
+	'regexblock-reason-name' => 'Ovo korisničko ime je blokirano za uređivanje zbog vandalizma ili drugih nepoželjnih radnji.
+Ako mislite da je greška, molimo [[$1|kontaktirajte nas]]',
+	'regexblock-reason-regex' => 'Ovo korisničko ime je onemogućeno za uređivanje zbog vandalizma i drugih radnji od strane korisnika sa sličnim imenom.
+Molimo napravite drugo korisničko ime ili [[$1|nas obavijestite]] o problemu',
 	'regexblock-form-username' => 'IP adresa ili korisničko ime:',
 	'regexblock-form-reason' => 'Razlog:',
 	'regexblock-form-expiry' => 'Ističe:',
 	'regexblock-form-match' => 'Tačno slaganje',
+	'regexblock-form-account-block' => 'Blokiranje pravljenja novih računa',
 	'regexblock-form-submit' => 'Blokiraj ovog korisnika',
+	'regexblock-form-submit-empty' => 'Navedite korisničko ime ili IP adresu za blokiranje.',
 	'regexblock-form-submit-regex' => 'Nevaljan regularni izraz.',
 	'regexblock-form-submit-expiry' => 'Molimo odredite vrijeme isteka.',
+	'regexblock-link' => 'blokiranje sa regularnim izrazom',
+	'regexblock-match-stats-record' => "$1 blokiran korisnik '$2' na '$3' u '$4', zapisnik sa adrese '$5'",
 	'regexblock-nodata-found' => 'Podaci nisu nađeni',
+	'regexblock-stats-title' => 'Statistike blokade putem regexa',
 	'regexblock-unblock-success' => 'Deblokiranje uspjelo',
+	'regexblock-unblock-log' => "Korisničko ime ili IP adresa '''$1''' je deblokiran.",
 	'regexblock-unblock-error' => 'Greška pri deblokadi $1.
 Moguće da ne postoji takav korisnik.',
 	'regexblock-regex-filter' => '  ili regex vrijednost:',
+	'regexblock-view-blocked' => 'Pregled blokiran od strane:',
 	'regexblock-view-all' => 'Sve',
 	'regexblock-view-go' => 'Idi',
 	'regexblock-view-match' => '(tačno slaganje)',
+	'regexblock-view-regex' => '(slaganje regexa)',
+	'regexblock-view-account' => '(blokiranje pravljenja računa)',
 	'regexblock-view-reason' => 'razlog: $1',
+	'regexblock-view-reason-default' => 'opći razlog',
 	'regexblock-view-block-infinite' => 'trajna blokada',
-	'regexblock-view-block-temporary' => 'ističe dana',
-	'regexblock-view-block-expired' => 'ISTEKLO dana',
 	'regexblock-view-block-by' => 'blokirano od strane:',
 	'regexblock-view-block-unblock' => 'deblokada',
 	'regexblock-view-stats' => 'statistike',
+	'regexblock-view-empty' => 'Spisak blokiranih imena i adresa je prazan.',
 	'regexblock-view-time' => 'u $1',
 	'right-regexblock' => 'Blokiranje korisnika od uređivanja na svim wikijima na wiki farmi',
 );
 
 /** Catalan (Català)
  * @author SMP
+ * @author Solde
  */
 $messages['ca'] = array(
 	'regexblock-already-blocked' => '$1 ja està blocat.',
+	'regexblock-form-reason' => 'Motiu:',
 	'regexblock-view-go' => 'Vés-hi',
 );
 
@@ -424,10 +520,12 @@ $messages['cy'] = array(
 );
 
 /** Danish (Dansk)
+ * @author Byrial
  * @author Jon Harald Søby
  */
 $messages['da'] = array(
 	'regexblock-form-reason' => 'Begrundelse:',
+	'regexblock-view-blocked' => 'Vis blokerede af:',
 );
 
 /** German (Deutsch)
@@ -452,16 +550,16 @@ $messages['de'] = array(
 	'regexblock-help' => "Verwende das folgende Formular um eine IP-Adresse oder einen angemeldeten Benutzer zu sperren.
 Diese Funktion sollte nur zur Verhinderung von Vandalismus und gemäß der Richtlinien eingesetzt werden.
 ''Diese Seite erlaubt es auch nicht existierende Benutzerkonten zu sperren, sowie solche, die ähnliche Namen zu bestehenden Konten haben, zum Beispiel eine Sperre von „Test” sperrt auch „Test 2“ usw.
-Du kannst auch ganze IP-Adressen sperren, so dass niemand der sich unter diesen IP-Adressen einloggt, Seiten editieren kann.
+Du kannst auch ganze IP-Adressen sperren, so dass niemand der sich unter diesen IP-Adressen anmeldet, Seiten bearbeiten kann.
 Achtung: Teile von IP-Adressen werden als Benutzernamen beim Sperren aufgefasst.
-Falls kein Sperrgrund angegeben ist, wird ein Standard-Begründung verwendet.''",
+Falls kein Sperrgrund angegeben ist, wird eine Standard-Begründung verwendet.''",
 	'regexblock-page-title-1' => 'Sperre Adressen anhand regulärer Ausdrücke',
-	'regexblock-reason-ip' => 'Dieser IP-Adresse ist es verboten zu Editieren, da von dieser IP-Adresse – von dir oder jemandem mit derselben IP-Adresse – Vandalismus oder schädliches Verhalten ausging.
-Wenn du denkst, dass es sich hierbei um einen Fehler handelt, $1',
-	'regexblock-reason-name' => 'Diesem Benutzernamen ist es, aufgrund von Vandalismus oder anderem schändlichem verhalten, verboten zu Editieren.
-Wenn du denkst, dass es sich hierbei um einen Fehler handelt, $1',
-	'regexblock-reason-regex' => 'Diesem Benutzernamen ist es, aufgrund von Vandalismus oder anderem schändlichem Verhalten eines Benutzers mit einem ähnliches Benutzernamen, verboten zu Editieren.
-Bitte melde dich mit einem anderen Benutzernamen an oder $1 über das Problem.',
+	'regexblock-reason-ip' => 'Dieser IP-Adresse ist es verboten, Seiten zu bearbeiten, da von dieser IP-Adresse – von dir oder jemandem mit derselben IP-Adresse – Vandalismus oder schädliches Verhalten ausging.
+Wenn du denkst, dass es sich hierbei um einen Fehler handelt, [[$1|nimm bitte Kontakt mit uns auf]].',
+	'regexblock-reason-name' => 'Diesem Benutzernamen ist es, aufgrund von Vandalismus oder anderem schändlichem verhalten, verboten, Seiten zu bearbeiten.
+Wenn du denkst, dass es sich hierbei um einen Fehler handelt, [[$1|nimm bitte Kontakt mit uns auf]].',
+	'regexblock-reason-regex' => 'Diesem Benutzernamen ist es, aufgrund von Vandalismus oder anderem schändlichem Verhalten eines Benutzers mit einem ähnliches Benutzernamen, verboten, Seiten zu bearbeiten.
+Bitte melde dich mit einem anderen Benutzernamen an oder [[$1|nimm Kontakt mit uns auf]].',
 	'regexblock-form-username' => 'IP-Adresse oder Benutzername:',
 	'regexblock-form-reason' => 'Grund:',
 	'regexblock-form-expiry' => 'Ablaufdatum:',
@@ -470,8 +568,9 @@ Bitte melde dich mit einem anderen Benutzernamen an oder $1 über das Problem.',
 	'regexblock-form-submit' => 'Sperre diesen Benutzer',
 	'regexblock-form-submit-empty' => 'Einen Benutzernamen oder eine IP-Adresse für die Sperrung angeben.',
 	'regexblock-form-submit-regex' => 'Ungültiger regulärer Ausdruck.',
-	'regexblock-form-submit-expiry' => 'Bitte wähle einen Verfallszeitraum.',
-	'regexblock-match-stats-record' => '$1 sperrte „$2“ auf „$3“ um „$4“, eingeloggt von Adresse „$5“',
+	'regexblock-form-submit-expiry' => 'Bitte wähle einen Ablaufzeitraum.',
+	'regexblock-link' => 'mit regulärem Ausdruck sperren',
+	'regexblock-match-stats-record' => '$1 sperrte „$2“ auf „$3“ am $6 um $7 Uhr, angemeldet von Adresse „$5“',
 	'regexblock-nodata-found' => 'Keine Daten gefunden',
 	'regexblock-stats-title' => 'Regex-Sperrstatistiken',
 	'regexblock-unblock-success' => 'Entsperrung erfolgreich',
@@ -488,24 +587,33 @@ Vermutlich gibt es keinen solchen Benutzer.',
 	'regexblock-view-reason' => 'Grund: $1',
 	'regexblock-view-reason-default' => 'allgemeiner Grund',
 	'regexblock-view-block-infinite' => 'permanente Sperrung',
-	'regexblock-view-block-temporary' => 'läuft ab am',
-	'regexblock-view-block-expired' => 'ABGELAUFEN am',
-	'regexblock-view-block-by' => 'gesperrt von',
+	'regexblock-view-block-by' => 'gesperrt von:',
 	'regexblock-view-block-unblock' => 'entsperren',
 	'regexblock-view-stats' => 'Statistiken',
 	'regexblock-view-empty' => 'Die Liste der gesperrten Namen und Adressen ist leer.',
-	'regexblock-view-time' => 'am $1',
+	'regexblock-view-time' => 'am $2, $3 Uhr',
 	'right-regexblock' => 'Entzieht Benutzern das Recht auf allen Wikis der Wiki-Farm Bearbeitungen zu tätigen',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de-formal'] = array(
-	'regexblock-reason-ip' => 'Dieser IP-Adresse ist es verboten zu Editieren, da von dieser IP-Adresse – von Ihnen oder jemandem mit derselben IP-Adresse – Vandalismus oder schädliches Verhalten ausging.
-Wenn Sie denken, dass es sich hierbei um einen Fehler handelt, $1',
-	'regexblock-reason-name' => 'Diesem Benutzernamen ist es, aufgrund von Vandalismus oder anderem schändlichem Verhalten, verboten zu Editieren.
-Wenn Sie denken, dass es sich hierbei um einen Fehler handelt, $1',
+	'regexblock-help' => "Verwenden Sie das folgende Formular um eine IP-Adresse oder einen angemeldeten Benutzer zu sperren.
+Diese Funktion sollte nur zur Verhinderung von Vandalismus und gemäß der Richtlinien eingesetzt werden.
+''Diese Seite erlaubt es auch nicht existierende Benutzerkonten zu sperren, sowie solche, die ähnliche Namen zu bestehenden Konten haben, zum Beispiel eine Sperre von „Test” sperrt auch „Test 2“ usw.
+Sie können auch ganze IP-Adressen sperren, so dass niemand der sich unter diesen IP-Adressen anmeldet, Seiten bearbeiten kann.
+Achtung: Teile von IP-Adressen werden als Benutzernamen beim Sperren aufgefasst.
+Falls kein Sperrgrund angegeben ist, wird eine Standard-Begründung verwendet.''",
+	'regexblock-reason-ip' => 'Dieser IP-Adresse ist es verboten zu, Seiten zu bearbeiten, da von dieser IP-Adresse – von Ihnen oder jemandem mit derselben IP-Adresse – Vandalismus oder schädliches Verhalten ausging.
+Wenn Sie denken, dass es sich hierbei um einen Fehler handelt, [[$1|nehmen Sie bitte Kontakt mit uns auf]].',
+	'regexblock-reason-name' => 'Diesem Benutzernamen ist es, aufgrund von Vandalismus oder anderem schändlichem Verhalten, verboten, Seiten zu bearbeiten.
+Wenn Sie denken, dass es sich hierbei um einen Fehler handelt, [[$1|nehmen Sie bitte Kontakt mit uns auf]].',
+	'regexblock-reason-regex' => 'Diesem Benutzernamen ist es, aufgrund von Vandalismus oder anderem schändlichem Verhalten eines Benutzers mit einem ähnliches Benutzernamen, verboten, Seiten zu bearbeiten.
+Bitte melden Sie sich mit einem anderen Benutzernamen an oder [[$1|nehmen Sie Kontakt mit uns auf]].',
+	'regexblock-form-submit-expiry' => 'Bitte wählen Sie einen Ablaufzeitraum.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -526,11 +634,11 @@ To by měło se jano cyniś, aby zajźowało wandalizm a w makanju z zasadach.
 \'\'Toś ten bok buźo śi zmóžnjaś, samo njeeksistujucych wužywarjow blokěrowaś a buźo teke wužywarjow z pódobnym mjenim blokěrowaś, t.j. "Test" buźo se gromaźe "Test 2" atd. blokěrowaś. Móžoš teke dopołne IP-adrese blokěrowaś, to groni, až nichto, kótaryž se z nimi pśizjawja, njamóžo boki wobźěłaś. Pśispomnjeśe: źělne IP-adrese wobchadaju se ako wužywarske mjenja, aby rozsuźił wo blokěrowanju. Jolic pśicyna njejo pódana, buźo se powšykna pśicyna wužiwaś.\'\'',
 	'regexblock-page-title-1' => 'Adresu z pomocu regularnych wurazow blokěrowaś',
 	'regexblock-reason-ip' => 'Toś tej IP-adresy se zawoborujo wobźěłowanje dla wandalizma abo drugego mólenja wót tebje abo někogo, kótaryž ma samsku IP-adresu.
-Jolic wěriš, až to jo zmólenje, pšosym $1',
+Jolic wěriš, až to jo zmólenje, pšosym [[$1|staj se z nami do zwiska]].',
 	'regexblock-reason-name' => 'Toś tomu wužywarskemu mjenjeju se zawoborujo wobźěłowanje, dla wandalizma abo drugego mólenja.
-Jolic wěriš, až to jo zamólenje, pšosym $1',
+Jolic wěriš, až to jo zamólenje, pšosym [[$1|staj se z nami do zwiska]].',
 	'regexblock-reason-regex' => 'Toś tomu wužywarskemu mjenjeju se zawoborujo wobźěłowanje, dla wandalizma abo drugego mólenja wót wužywarja z pódobnym mjenim.
-Pšosym napóraj druge wužywarske mě abo $1 wó toś tom problemje.',
+Pšosym napóraj druge wužywarske mě abo [[$1|informěruj nas]] wó toś tom problemje.',
 	'regexblock-form-username' => 'IP-adresa abo wužywarske mě:',
 	'regexblock-form-reason' => 'Pśicyna:',
 	'regexblock-form-expiry' => 'Wótběgnjo:',
@@ -540,12 +648,13 @@ Pšosym napóraj druge wužywarske mě abo $1 wó toś tom problemje.',
 	'regexblock-form-submit-empty' => 'Pódaj wužywarske mě abo IP-adresu za blokěrowanje.',
 	'regexblock-form-submit-regex' => 'Njepłaśiwy regularny wuraz.',
 	'regexblock-form-submit-expiry' => 'Pšosym pódaj cas pśepadnjenja.',
+	'regexblock-link' => 'z regularnym wurazom blokěrowaś',
 	'regexblock-match-stats-record' => "$1 jo blokěrował '$2' na '$3' '$4', pśizjawjony wót adrese '$5'",
 	'regexblock-nodata-found' => 'Žedne daty namakane',
 	'regexblock-stats-title' => 'Statistika blokěrowanjow pśez regularne wuraze',
 	'regexblock-unblock-success' => 'Pśipušćenje wuspěšnje',
 	'regexblock-unblock-log' => "Wužywarske mě abo IP-adrese '''$1''' jo se pśipušćiło.",
-	'regexblock-unblock-error' => 'Zm´plka pśi pśipušćanju $1.
+	'regexblock-unblock-error' => 'Zmólka pśi pśipušćanju $1.
 Nejskerjej taki wužywaŕ njejo.',
 	'regexblock-regex-filter' => 'abo gódnota regularnego wuraza:',
 	'regexblock-view-blocked' => 'Naglěd blokěrowany wót:',
@@ -557,9 +666,7 @@ Nejskerjej taki wužywaŕ njejo.',
 	'regexblock-view-reason' => 'Pśicyna: $1',
 	'regexblock-view-reason-default' => 'powšykna pśicyna',
 	'regexblock-view-block-infinite' => 'wobstawne blokěrowanje',
-	'regexblock-view-block-temporary' => 'pśepadnjo',
-	'regexblock-view-block-expired' => 'PŚEPADNJONY',
-	'regexblock-view-block-by' => 'blokěrowany wót',
+	'regexblock-view-block-by' => 'blokěrowany wót:',
 	'regexblock-view-block-unblock' => 'pśipušćiś',
 	'regexblock-view-stats' => 'statistiske pódaśa',
 	'regexblock-view-empty' => 'Lisćina blokěrowanych mjenjow a adresow jo prozna.',
@@ -569,23 +676,56 @@ Nejskerjej taki wužywaŕ njejo.',
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'regexblock' => 'Τακτική έκφραση φραγής',
+	'regexblock-already-blocked' => 'Ο $1 είναι ήδη φραγμένος',
+	'regexblock-block-success' => 'Η φραγή πέτυχε',
+	'regexblock-currently-blocked' => 'Υπάρχουσες φραγμένες διευθύνσεις:',
+	'regexblock-page-title' => 'Κανονική φραγή ονόματος έκφρασης',
+	'regexblockstats' => 'Τακτική έκφραση στατιστικών φραγής',
+	'regexblock-form-username' => 'Διεύθυνση IP ή όνομα χρήστη',
 	'regexblock-form-reason' => 'Λόγος:',
+	'regexblock-form-expiry' => 'Λήξη:',
+	'regexblock-form-match' => 'Ακριβής αντιστοιχία',
+	'regexblock-form-account-block' => 'Φραγή δημιουργίας νέων λογαριασμών',
+	'regexblock-form-submit' => 'Φραγή αυτού του χρήστη',
+	'regexblock-form-submit-regex' => 'Μη έγκυρη τακτική έκφραση',
+	'regexblock-nodata-found' => 'Δεν βρέθηκαν δεδομένα',
+	'regexblock-unblock-success' => 'Η άρση φραγής ολοκληρώθηκε επιτυχώς',
+	'regexblock-regex-filter' => ' ή τιμή τακτικής έκφρασης:',
+	'regexblock-view-blocked' => 'Προβολή φραγμένων από:',
+	'regexblock-view-all' => 'Όλα',
+	'regexblock-view-go' => 'Πήγαινε',
+	'regexblock-view-match' => '(ακριβής αντιστοιχία)',
+	'regexblock-view-regex' => '(αντιστοιχία τακτικής έκφρασης)',
+	'regexblock-view-account' => '(φραγή δημιουργίας λογαριασμού)',
 	'regexblock-view-reason' => 'Λόγος: $1',
+	'regexblock-view-reason-default' => 'γενικός λόγος',
+	'regexblock-view-block-infinite' => 'μόνιμη φραγή',
+	'regexblock-view-block-by' => 'φραγμένος από:',
+	'regexblock-view-block-unblock' => 'άρση φραγής',
+	'regexblock-view-stats' => 'στατιστικά',
+	'regexblock-view-time' => 'στις $1',
 );
 
 /** Esperanto (Esperanto)
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'regexblock-already-blocked' => '$1 jam estas forbarita.',
+	'regexblock-block-log' => "Salutnomo aŭ IP-adreso '''$1''' estis forbarita.",
 	'regexblock-block-success' => 'Forbaro sukcesis',
 	'regexblock-currently-blocked' => 'Nune forbaritaj adresoj:',
 	'regexblock-form-username' => 'IP Adreso aŭ salutnomo:',
 	'regexblock-form-reason' => 'Kialo:',
 	'regexblock-form-expiry' => 'Findato:',
+	'regexblock-form-match' => 'Preciza kongruo',
 	'regexblock-form-submit' => 'Forbari ĉi tiun uzanton',
+	'regexblock-form-submit-regex' => 'Malvalida regulara esprimo.',
 	'regexblock-unblock-success' => 'Malforbaro sukcesis',
 	'regexblock-unblock-log' => "Salutnomo aŭ IP-adreso '''$1''' estis restarigita.",
 	'regexblock-unblock-error' => 'Eraro malforbarante $1.
@@ -594,8 +734,10 @@ Verŝajne ne estas uzanto kun tiu nomo.',
 	'regexblock-view-go' => 'Ek!',
 	'regexblock-view-reason' => 'kialo: $1',
 	'regexblock-view-reason-default' => 'malspecifa kialo',
-	'regexblock-view-block-by' => 'forbarita de',
+	'regexblock-view-block-infinite' => 'ĉiama bloko',
+	'regexblock-view-block-by' => 'forbarita de:',
 	'regexblock-view-block-unblock' => 'restarigu',
+	'regexblock-view-stats' => 'statistikoj',
 	'regexblock-view-time' => 'je $1',
 );
 
@@ -604,13 +746,25 @@ Verŝajne ne estas uzanto kun tiu nomo.',
  * @author Imre
  * @author Jatrobat
  * @author Piolinfax
+ * @author Translationista
  */
 $messages['es'] = array(
+	'regexblock' => 'Bloque de expresión regular',
 	'regexblock-already-blocked' => '"$1" ya está bloqueado.',
 	'regexblock-block-log' => "Nombre de usuario o dirección IP '''$1''' ha sido bloqueada.",
 	'regexblock-block-success' => 'Bloqueo fue un éxito',
 	'regexblock-currently-blocked' => 'Direcciones actualmente bloqueadas:',
+	'regexblock-desc' => 'Extensión usada para bloquear nombres de usuario y direcciones de IP con expresiones regulares. Contiene el mecanismo de bloqueo y una [[Special:Regexblock|special page]] para añadir/administrar bloqueos',
 	'regexblock-expire-duration' => '1 hora,2 horas,4 horas,6 horas,1 día,3 días,1 semana,2 semanas,1 mes,3 meses,6 meses,1 año,infinito',
+	'regexblock-page-title' => 'Bloque de nombre de expresiones regulares',
+	'regexblockstats' => 'Estadísticas del bloque de expresiones regulares',
+	'regexblock-help' => 'Utilice el formulario de abajo para bloquear acceso de escritura de un usuario o dirección IP específicos.
+Esto se deberá hacer para prevenir actos vandálicos y en concordancia con la política.
+\'\'ESta página le permite bloquear usuarios no existentes inclusive, y también bloqueará usuarios con nombres similares al introducido. Por ejemplo: "Prueba" se bloqueará en conjunto con "Prueba 2", etc.
+También puede bloquear direcciones completas de IP, con lo que nadie que acceda al sistema desde ahí pueda editar páginas.
+Observación: Las direcciones parciales de IP serán tratadas como nombres de usuario en la determinación de bloqueos.
+Si no se especifica razones, se utilizará una razón genérica predeterminada.\'\'',
+	'regexblock-page-title-1' => 'Bloquear direcciones por medio de expresiones regulares',
 	'regexblock-reason-ip' => 'Esta dirección IP está prevenida de editar a causa de vandalismo u otra desorganización tuya o pde alguien que comparte tu dirección IP.
 Si crees que esto es un error, por favor [[$1|contactanos]]',
 	'regexblock-reason-name' => 'Este nombre de usuario está prevenido de editar a causa de vandalismo u otra desorganización.
@@ -620,46 +774,101 @@ Por favor crea un nombre alternativo o [[$1|contactanos]] acerca del problema',
 	'regexblock-form-username' => 'Dirección IP o nombre de usuario:',
 	'regexblock-form-reason' => 'Motivo:',
 	'regexblock-form-expiry' => 'Expiración:',
+	'regexblock-form-match' => 'Coincidencia exacta',
 	'regexblock-form-account-block' => 'Bloquear creaación de nuevas cuentas',
 	'regexblock-form-submit' => 'Bloquear este usuario',
 	'regexblock-form-submit-empty' => 'De un nombre de usuario o una dirección IP a bloquear.',
 	'regexblock-form-submit-regex' => 'Expresión regular inválida.',
 	'regexblock-form-submit-expiry' => 'Por favor especifique un periodo de expiración.',
+	'regexblock-link' => 'bloque con expresión regular',
+	'regexblock-match-stats-record' => "$1 bloqueado '$2' en '$3' en '$4', iniciando sesión desde dirección '$5'",
 	'regexblock-nodata-found' => 'Sin datos encontrados',
+	'regexblock-stats-title' => 'Estadísticas del bloque de expresiones regulares',
 	'regexblock-unblock-success' => 'Desbloqueo fue un éxito',
 	'regexblock-unblock-log' => "Nombre de usuario o dirección IP '''$1''' ha sido bloqueada.",
 	'regexblock-unblock-error' => 'Error desbloqueando $1.
 Probablemente no existe tal usuario.',
+	'regexblock-regex-filter' => 'o valor de expresión regular:',
 	'regexblock-view-blocked' => 'Ver bloqueos por:',
 	'regexblock-view-all' => 'Todos',
 	'regexblock-view-go' => 'Ir',
+	'regexblock-view-match' => '(coincidencia exacta)',
+	'regexblock-view-regex' => '(coincidencia de expresión regular)',
 	'regexblock-view-account' => '(bloqueo de creación de cuenta)',
 	'regexblock-view-reason' => 'Motivo: $1',
 	'regexblock-view-reason-default' => 'razón genérica',
 	'regexblock-view-block-infinite' => 'bloqueo permanente',
-	'regexblock-view-block-temporary' => 'expira en',
-	'regexblock-view-block-expired' => 'EXPIRA en',
 	'regexblock-view-block-by' => 'bloqueado por:',
 	'regexblock-view-block-unblock' => 'desbloquear',
 	'regexblock-view-stats' => 'Estadísticas',
 	'regexblock-view-empty' => 'La lista de nombres y direcciones bloqueadas está vacía',
 	'regexblock-view-time' => 'en $1',
+	'right-regexblock' => 'Bloquea el permiso de usuario de editar en todas las wikis de la granja wiki',
+);
+
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'regexblock-expire-duration' => '1 tund,2 tundi,4 tundi,6 tundi,1 päev,3 päeva,1 nädal,2 nädalat,1 kuu,3 kuud,6 kuud,1 aasta,igavene',
 );
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
 	'regexblock-form-username' => 'IP helbidea edo lankide izena:',
 	'regexblock-form-reason' => 'Arrazoia:',
+	'regexblock-form-submit' => 'Erabiltzaile hau blokeatu',
+	'regexblock-nodata-found' => 'Ez da daturik aurkitu',
 	'regexblock-view-all' => 'Dena',
 	'regexblock-view-go' => 'Joan',
+	'regexblock-view-reason' => 'arrazoia: $1',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ * @author Option
+ * @author Str4nd
+ */
+$messages['fi'] = array(
+	'regexblock-already-blocked' => '$1 on jo estetty.',
+	'regexblock-block-log' => "Käyttäjätunnus tai IP-osoite '''$1''' on nyt estetty.",
+	'regexblock-block-success' => 'Estäminen onnistui',
+	'regexblock-currently-blocked' => 'Tällä hetkellä estetyt osoitteet:',
+	'regexblock-expire-duration' => '1 tunti,2 tuntia,4 tuntia,6 tuntia,1 vuorokausi,3 vuorokautta,1 viikko,2 viikkoa,1 kuukausi,3 kuukautta,6 kuukautta,1 vuosi,ikuinen',
+	'regexblock-form-username' => 'IP-osoite tai käyttäjätunnus:',
+	'regexblock-form-reason' => 'Syy:',
+	'regexblock-form-expiry' => 'Kesto:',
+	'regexblock-form-match' => 'Tarkka osuma',
+	'regexblock-form-account-block' => 'Estä uusien tunnusten luonti',
+	'regexblock-form-submit' => 'Estä tämä käyttäjä',
+	'regexblock-form-submit-empty' => 'Anna estettävän käyttäjätunnus tai IP-osoite.',
+	'regexblock-nodata-found' => 'Tietoja ei löytynyt',
+	'regexblock-unblock-success' => 'Eston poisto onnistui',
+	'regexblock-unblock-log' => "Eston poistaminen käyttäjätunnukselta tai IP-osoitteelta '''$1''' on onnistunut.",
+	'regexblock-unblock-error' => 'Virhe purkaessa estoa $1.
+Todennäköisesti kyseistä käyttäjää ei ole olemassa.',
+	'regexblock-view-all' => 'Kaikki',
+	'regexblock-view-go' => 'Siirry',
+	'regexblock-view-match' => '(tarkka osuma)',
+	'regexblock-view-account' => '(tunnusten luominen estetty)',
+	'regexblock-view-reason' => 'syy: $1',
+	'regexblock-view-reason-default' => 'yleinen syy',
+	'regexblock-view-block-infinite' => 'pysyvä esto',
+	'regexblock-view-block-by' => 'estänyt:',
+	'regexblock-view-block-unblock' => 'poista esto',
+	'regexblock-view-stats' => 'tilastot',
+	'regexblock-view-empty' => 'Estettyjen käyttäjätunnuksien sekä osoitteiden lista on tyhjä.',
+	'right-regexblock' => 'Estää käyttäjiä muokkaamasta kaikissa wikifarmin wikeissä',
 );
 
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'regexblock' => 'Expressions régulières pour bloquer un utilisateur ou une IP',
@@ -671,12 +880,15 @@ $messages['fr'] = array(
 	'regexblock-expire-duration' => '1 heure,2 heures,4 heures,6 hours,1 jour,3 jours,1 semaine,2 semaines,1 mois,3 mois,6 mois,1 and,infini',
 	'regexblock-page-title' => 'Blocage d’un nom par une expression régulière',
 	'regexblockstats' => 'Statistiques sur les blocages par expressions régulières',
-	'regexblock-help' => "Utilisez le formulaire ci-dessous pour bloquer l’accès en écriture d’une adresse IP ou d’un nom d’utilisateur. Ceci doit être fait uniquement pour éviter tout vandalisme et conformément aux règles prescrites sur le projet. ''Cette page vous autorise même à bloquer des utilisateurs non enregistrés et permet aussi de bloquer des utilisateur présentant des noms similaires. Par exemple, « Test » sera bloqué en même temps que « Test 2 » etc. Vous pouvez aussi bloquer des adresses IP entières, ce qui signifie que personne travaillant depuis celles-ci ne pourra éditer des pages. Note : des adresses IP partielles seront considérées comme des noms d’utilisateur lors du blocage. Si aucun motif n’est indiqué en commentaire, un motif par défaut sera indiqué.''",
+	'regexblock-help' => "Utilisez le formulaire ci-dessous pour bloquer l’accès en écriture d’une adresse IP ou d’un nom d’utilisateur.
+Ceci doit être fait uniquement pour éviter tout vandalisme et conformément aux règles prescrites sur le projet.
+''Cette page vous permet même de bloquer des utilisateurs non enregistrés et ceux présentant des noms similaires au nom donné : par exemple, « Test » sera bloqué en même temps que « Test 2 » etc. Vous pouvez aussi bloquer des adresses IP complètes, ce qui signifie que personne connecté depuis celles-ci ne pourra modifier des pages. Note : des adresses IP partielles seront considérées comme des noms d’utilisateur lors du blocage. Si aucun motif n’est indiqué en commentaire, un motif par défaut sera indiqué.''",
 	'regexblock-page-title-1' => 'Blocage d’une adresse utilisant une expression régulière',
-	'regexblock-reason-ip' => 'Cette adresse IP est écartée de toute édition pour cause de vandalisme ou autres faits analogues par vous ou quelqu’un d’autre partageant votre adresse IP. Si vous êtes persuadé{{GENDER:||e|(e)}} qu’il s’agit d’une erreur, $1',
-	'regexblock-reason-name' => 'Cet utilisateur est écarté de toute édition pour cause de vandalisme ou autres faits analogues.
-Si vous êtes persuadé{{GENDER:||e|(e)}} qu’il s’agit d’une erreur, $1.',
-	'regexblock-reason-regex' => 'Cet utilisateur est écarté de toute édition pour cause de vandalisme ou autres faits analogues par un utilisateur ayant un nom similaire. Veuillez créer un autre compte ou $1 pour signaler le problème.',
+	'regexblock-reason-ip' => 'Cette adresse IP est écartée de toute modification pour cause de vandalisme ou autres faits analogues commis par vous ou quelqu’un d’autre partageant votre adresse IP.
+Si vous êtes persuadé{{GENDER:||e|(e)}} qu’il s’agit d’une erreur, [[$1|contactez-nous]].',
+	'regexblock-reason-name' => 'Cet utilisateur est écarté de toute modification pour cause de vandalisme ou autres faits analogues.
+Si vous êtes persuadé{{GENDER:||e|(e)}} qu’il s’agit d’une erreur, [[$1|contactez-nous]].',
+	'regexblock-reason-regex' => 'Cet utilisateur est écarté de toute modification pour cause de vandalisme ou autres faits analogues commis par un utilisateur ayant un nom similaire. Veuillez créer un autre compte ou [[$1|contactez-nous]] pour signaler le problème.',
 	'regexblock-form-username' => 'Adresse IP ou Utilisateur :',
 	'regexblock-form-reason' => 'Motif :',
 	'regexblock-form-expiry' => 'Expiration :&#160;',
@@ -686,7 +898,8 @@ Si vous êtes persuadé{{GENDER:||e|(e)}} qu’il s’agit d’une erreur, $1.',
 	'regexblock-form-submit-empty' => 'Indiquez un nom d’utilisateur ou une adresse IP à bloquer.',
 	'regexblock-form-submit-regex' => 'Expression régulière incorrecte.',
 	'regexblock-form-submit-expiry' => 'Précisez une période d’expiration.',
-	'regexblock-match-stats-record' => "$1 a bloqué « $2 » le « $3 » à « $4 », connecté depuis l'adresse « $5 »",
+	'regexblock-link' => 'bloquer avec un expression rationnelle',
+	'regexblock-match-stats-record' => '$1 a bloqué « $2 » le « $3 » à « $4 », connecté depuis l’adresse « $5 »',
 	'regexblock-nodata-found' => 'Aucune donnée trouvée',
 	'regexblock-stats-title' => 'Statistiques des blocages par expressions régulières',
 	'regexblock-unblock-success' => 'Le déblocage a réussi',
@@ -702,14 +915,23 @@ Si vous êtes persuadé{{GENDER:||e|(e)}} qu’il s’agit d’une erreur, $1.',
 	'regexblock-view-reason' => 'motif : $1',
 	'regexblock-view-reason-default' => 'aucun motif indiqué',
 	'regexblock-view-block-infinite' => 'blocage permanent',
-	'regexblock-view-block-temporary' => 'expire le',
-	'regexblock-view-block-expired' => 'EXPIRÉ le',
-	'regexblock-view-block-by' => 'bloqué par',
+	'regexblock-view-block-by' => 'bloqué par :',
 	'regexblock-view-block-unblock' => 'débloquer',
 	'regexblock-view-stats' => 'statistiques',
 	'regexblock-view-empty' => 'La liste des utilisateurs et des adresses IP bloqués est vide.',
 	'regexblock-view-time' => 'le $1',
 	'right-regexblock' => 'Bloquer en écriture les utilisateurs sur tout les wikis de la ferme wiki',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'regexblock-form-reason' => 'Rêson :',
+	'regexblock-form-expiry' => 'Èxpiracion :&#160;',
+	'regexblock-view-all' => 'Tôs',
+	'regexblock-view-go' => 'Lanciér',
+	'regexblock-view-reason' => 'rêson : $1',
 );
 
 /** Western Frisian (Frysk)
@@ -740,11 +962,13 @@ $messages['gl'] = array(
 Isto debería facerse só para previr vandalismo, e segundo a política e normas de bloqueo.
 ''Esta páxina permitiralle bloquear incluso usuarios que non existen, e usuarios con nomes semellantes ao dado, é dicir, «Test» será bloqueado xunto con «Test 2», etc. Tamén pode bloquear enderezos IP completos, no sentido de que ninguén rexistrado nos mesmos será capaz de editar páxinas. Nota: os enderezos IP parciais serán tratados polos nomes de usuarios na determinación do bloqueo. Se non se especifica a razón, será usado por defecto un motivo xenérico.''",
 	'regexblock-page-title-1' => 'Bloquear un enderezo usando expresións regulares',
-	'regexblock-reason-ip' => 'A este enderezo IP estalle prohibido editar debido a vandalismo ou outras actividades negativas realizadas por vostede ou por alguén que comparte o seu enderezo IP. Se pensa que se trata dun erro, $1',
-	'regexblock-reason-name' => 'A este nome de usuario estalle prohibido editar debido a vandalismo ou outras actividades negativas. Se pensa que se trata dun erro, $1',
-	'regexblock-reason-regex' => 'A este nome de usuario prohíbeselle editar debido a vandalismo ou outras actividades negativas por parte dun usuario cun nome semellante. Cree un nome de usuario diferente ou $1 sobre o problema',
+	'regexblock-reason-ip' => 'A este enderezo IP estalle prohibido editar debido a vandalismo ou outras actividades negativas realizadas por vostede ou por alguén que comparte o seu enderezo IP. Se pensa que se trata dun erro, [[$1|contacte con nós]]',
+	'regexblock-reason-name' => 'A este nome de usuario estalle prohibido editar debido a vandalismo ou outras actividades negativas.
+Se pensa que se trata dun erro, [[$1|contacte con nós]]',
+	'regexblock-reason-regex' => 'A este nome de usuario estalle prohibido editar debido a vandalismo ou outras actividades negativas por parte dun usuario cun nome semellante.
+Cree un nome de usuario diferente ou [[$1|contacte con nós]] para falar sobre o problema',
 	'regexblock-form-username' => 'Enderezo IP ou nome de usuario:',
-	'regexblock-form-reason' => 'Razón:',
+	'regexblock-form-reason' => 'Motivo:',
 	'regexblock-form-expiry' => 'Remate:',
 	'regexblock-form-match' => 'Procura exacta',
 	'regexblock-form-account-block' => 'Bloqueada a creación de novas contas',
@@ -752,6 +976,7 @@ Isto debería facerse só para previr vandalismo, e segundo a política e normas
 	'regexblock-form-submit-empty' => 'Dar un nome de usuario ou un enderezo IP para bloquear.',
 	'regexblock-form-submit-regex' => 'Expresión regular non válida.',
 	'regexblock-form-submit-expiry' => 'Especifique un período de caducidade.',
+	'regexblock-link' => 'bloquear cunha expresión regular',
 	'regexblock-match-stats-record' => '$1 bloqueou a "$2" en "$3" ás $4, rexistrado desde o enderezo "$5"',
 	'regexblock-nodata-found' => 'Non se atoparon os datos',
 	'regexblock-stats-title' => 'Estatíticas do bloqueo Regex',
@@ -768,9 +993,7 @@ Isto debería facerse só para previr vandalismo, e segundo a política e normas
 	'regexblock-view-reason' => 'razón: $1',
 	'regexblock-view-reason-default' => 'razón xenérica',
 	'regexblock-view-block-infinite' => 'bloqueo permanente',
-	'regexblock-view-block-temporary' => 'expira o',
-	'regexblock-view-block-expired' => 'EXPIRADO o',
-	'regexblock-view-block-by' => 'bloqueado por',
+	'regexblock-view-block-by' => 'bloqueado por:',
 	'regexblock-view-block-unblock' => 'desbloquear',
 	'regexblock-view-stats' => 'estatísticas',
 	'regexblock-view-empty' => 'A lista dos nomes e enderezos bloqueados está baleira.',
@@ -778,17 +1001,21 @@ Isto debería facerse só para previr vandalismo, e segundo a política e normas
 	'right-regexblock' => 'Bloquearlles aos usuarios a edición en todos os wikis na granxa',
 );
 
-/** Gothic
+/** Gothic (Gothic)
+ * @author Crazymadlover
  * @author Jocke Pirat
  */
 $messages['got'] = array(
 	'regexblock-form-reason' => 'Faírina',
 );
+
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['grc'] = array(
 	'regexblock-form-reason' => 'Αἰτία:',
+	'regexblock-form-expiry' => 'Λῆξις:',
 	'regexblock-view-all' => 'ἅπασαι',
 	'regexblock-view-go' => 'Ἱέναι',
 );
@@ -814,11 +1041,11 @@ Obacht: Teil vu IP-Adrässe wäre bim Sperre as Benutzernamen ufgfasst.
 Wänn kei Sperrgrund aagee wird, wird e Standard-Grund bruucht.''",
 	'regexblock-page-title-1' => 'Adrässe mit regulären Uusdrick sperre',
 	'regexblock-reason-ip' => 'Däre IP-Adräss isch s verbote Bearbeitige z mache, wel vu däre IP-Adräss – vu Dir oder eberem mit dr nämligen IP_Adräss -  Vandalismus oder schädlig Verhalten uusgangen isch.
-Wänn Du dänksch, ass es sich dodebyy um e Fähler handlet, no $1',
+Wänn Du dänksch, ass es sich dodebyy um e Fähler handlet, no [[$1|nimm Kontakt zuen is uf]].',
 	'regexblock-reason-name' => 'Däm Benutzername isch s verbote, Bearbeitige z mache, wäge Vandalismus oder anderem schändlige Verhalte.
-Wänn Du dänksch, ass es sich dodebyy um e Fähler handlet, no $1',
+Wänn Du dänksch, ass es sich dodebyy um e Fähler handlet, no [[$1|nimm Kontakt zuen is uf]]',
 	'regexblock-reason-regex' => 'Däm Benutzername isch s verbote, Bearbeitige z mache, wäge Vandalismus oder anderem schändlige Verhalte.
-Bitte mälde Di mit eme andere Benutzernamen aa oder $1 iber s Probläm.',
+Bitte mälde Di mit eme andere Benutzernamen aa oder [[$1|nimm Kontakt zuen is uf]] zum Probläm.',
 	'regexblock-form-username' => 'IP-Adräss oder Benutzername:',
 	'regexblock-form-reason' => 'Grund:',
 	'regexblock-form-expiry' => 'Ablaufdatum:',
@@ -828,6 +1055,7 @@ Bitte mälde Di mit eme andere Benutzernamen aa oder $1 iber s Probläm.',
 	'regexblock-form-submit-empty' => 'E Benutzernamen oder e IP-Adräss fir d Sperrig aagee.',
 	'regexblock-form-submit-regex' => 'Nit giltige regulären Uusdruck.',
 	'regexblock-form-submit-expiry' => 'Bitte wehl e Verfallszytruum.',
+	'regexblock-link' => 'mit eme reguläre Uusdruck sperre',
 	'regexblock-match-stats-record' => '$1 het „$2“ uf „$3“ um „$4“ gsperrt, aagmäldet vu dr Adräss „$5“',
 	'regexblock-nodata-found' => 'Kei Date gfunde',
 	'regexblock-stats-title' => 'Regex-Sperrstatischtike',
@@ -845,9 +1073,7 @@ Wahrschyns git s kei sonige Benutzer.',
 	'regexblock-view-reason' => 'Grund: $1',
 	'regexblock-view-reason-default' => 'allgmeine Grund',
 	'regexblock-view-block-infinite' => 'permanenti Sperrig',
-	'regexblock-view-block-temporary' => 'lauft ab am',
-	'regexblock-view-block-expired' => 'ABGLOFFEN am',
-	'regexblock-view-block-by' => 'gsperrt vu',
+	'regexblock-view-block-by' => 'gsperrt vu:',
 	'regexblock-view-block-unblock' => 'entsperre',
 	'regexblock-view-stats' => 'Statischtike',
 	'regexblock-view-empty' => 'D Lischt vu dr gsperrte Nämen un Adrässen isch läär.',
@@ -870,6 +1096,7 @@ $messages['gv'] = array(
  * @author Singularity
  */
 $messages['haw'] = array(
+	'regexblock-expire-duration' => '1 hola,2 hola,4 hola,6 hola,1 lā,3 lā,1 pule,2 pule,1 mahina,3 mahina,6 mahina,1 makahiki,pau ʻole',
 	'regexblock-form-reason' => 'Kumu:',
 );
 
@@ -891,7 +1118,7 @@ $messages['he'] = array(
 יש לעשות זאת רק כדי להימנע מהשחתה, ובהתאם למדיניות.
 '''דף זה יאפשר לכם לחסום אפילו משתמשים שאינם קיימים, וגם יחסום משתמשים שם שמות הדומים לשם שצויין, לדוגמה: \"בדיקה\" תיחסם יחד עם \"בדיקה 2\" וכו'.
 תוכלו גם לחסום כתובות IP מלאות, כלומר שכל מי שמתחבר מכתובת זו לא יוכל לערוך דפים.
-הערה: כתובות IP חלקיות יחשבו לשמות משתמשים בזיהוי החסימה.
+הערה: כתובות IP חלקיות תיחשבנה לשמות משתמשים בזיהוי החסימה.
 אם לא צוינה סיבה, יעשה שימוש בהודעה כללית כברירת מחדל.'''",
 	'regexblock-page-title-1' => 'חסימת כתובת באמצעות ביטויים רגולריים',
 	'regexblock-reason-ip' => 'העריכה מכתובת IP זו נחסמה עקב  השחתה או הפרעה אחרת על ידיכם או על ידי מישהו אחר החולק איתכם את כתובת ה־IP.
@@ -909,6 +1136,7 @@ $messages['he'] = array(
 	'regexblock-form-submit-empty' => 'כתבו שם משתמש או כתובת IP לחסימה.',
 	'regexblock-form-submit-regex' => 'ביטוי רגולרי בלתי תקין.',
 	'regexblock-form-submit-expiry' => 'אנא ציינו את משך הזמן עד לפקיעת החסימה.',
+	'regexblock-link' => 'חסימה באמצעות ביטויים רגולאריים',
 	'regexblock-match-stats-record' => "$1 נחסם '$2' ב־'$3' ב־'$4', בעת התחברות מהכתובת '$5'",
 	'regexblock-nodata-found' => 'לא נמצאו נתונים',
 	'regexblock-stats-title' => 'סטטיסטיקת הנתונים הרגולריים',
@@ -926,8 +1154,6 @@ $messages['he'] = array(
 	'regexblock-view-reason' => 'סיבה: $1',
 	'regexblock-view-reason-default' => 'סיבה כללית',
 	'regexblock-view-block-infinite' => 'חסימה קבועה',
-	'regexblock-view-block-temporary' => 'תפקע ב־',
-	'regexblock-view-block-expired' => 'פקעה ב־',
 	'regexblock-view-block-by' => 'נחסם על ידי:',
 	'regexblock-view-block-unblock' => 'שחרור חסימה',
 	'regexblock-view-stats' => 'סטטיסטיקה',
@@ -971,8 +1197,6 @@ $messages['hi'] = array(
 	'regexblock-view-reason' => 'कारण: $1',
 	'regexblock-view-reason-default' => 'सर्वसाधारण कारण',
 	'regexblock-view-block-infinite' => 'हमेशा के लिये ब्लॉक',
-	'regexblock-view-block-temporary' => 'समाप्ती',
-	'regexblock-view-block-expired' => 'समाप्त हुआ, समय',
 	'regexblock-view-block-by' => 'ब्लॉक कर्ता',
 	'regexblock-view-block-unblock' => 'अनब्लॉक',
 	'regexblock-view-stats' => '(सांख्यिकी)',
@@ -990,6 +1214,7 @@ $messages['hil'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dnik
+ * @author Ex13
  * @author SpeedyGonsales
  */
 $messages['hr'] = array(
@@ -1004,9 +1229,10 @@ $messages['hr'] = array(
 
 ''Ova stranica omogućava vam blokiranje suradničkih imena prema uzorku (postojećih i novih), npr. ako blokirate « Test 2», blokirat ćete i « Test » itd. Možete također blokirati IP adrese, što znači da nitko tko se prijavi s njih neće moći uređivati. Napomena: djelomične IP adrese bit će analizirane prema suradničkim imenima u određivanju trajanja bloka. Ukoliko razlog nije dan, bit će navedeno generičko objašnjenje.''",
 	'regexblock-page-title-1' => 'Blokiraj adresu koristeći regularni izraz',
-	'regexblock-reason-ip' => 'Ova IP adresa je blokirana (tj. nemoguće je uređivati stranice) zbog vandalizma ili nekog drugog vašeg prekršaja (ili nekog s kim dijelite IP adresu). Ukoliko mislite da je posrijedi greška, molimo $1',
-	'regexblock-reason-name' => 'Ovo suradničko ime je blokirano (tj. spriječeno mu je uređivanje članaka) zbog vandalizma ili nekog drugog prekršaja. Ukoliko mislite da se radi o grešci, molimo $1',
-	'regexblock-reason-regex' => 'Ovo suradničko ime je blokirano (tj. spriječeno mu je uređivanje članaka) zbog vandalizma ili nekog drugog prekršaja suradnika s istim (ili sličnem) imenom. Ukoliko mislite da se radi o grešci, molimo $1',
+	'regexblock-reason-ip' => 'Ova IP adresa je spriječena uređivati stranice zbog vandalizma ili drugog vašeg prekršaja ili nekog s kim dijelite IP adresu. 
+Ukoliko mislite da je posrijedi greška, molimo [[$1|kontaktirajte nas]]',
+	'regexblock-reason-name' => 'Ovo je suradničko ime spriječeno uređivati zbog vandalizma ili nekog drugog prekršaja. Ukoliko mislite da je posrijedi greška, molimo [[$1|kontaktirajte nas]]',
+	'regexblock-reason-regex' => 'Ovo je suradničko ime spriječeno uređivati zbog vandalizma ili nekog drugog prekršaja suradnika sličnog imena. Molimo stvorite drugo suradničko ime ili nas [[$1|kontaktirajte]] o problemu',
 	'regexblock-form-username' => 'IP-adresa ili ime suradnika:',
 	'regexblock-form-reason' => 'Razlog:',
 	'regexblock-form-expiry' => 'Istek bloka:',
@@ -1029,11 +1255,9 @@ $messages['hr'] = array(
 	'regexblock-view-reason' => 'razlog: $1',
 	'regexblock-view-reason-default' => 'uobičajeni razlog',
 	'regexblock-view-block-infinite' => 'trajna blokada',
-	'regexblock-view-block-temporary' => 'ističe u',
-	'regexblock-view-block-expired' => 'ISTEKLO u',
-	'regexblock-view-block-by' => 'blokiran od',
+	'regexblock-view-block-by' => 'blokiran od:',
 	'regexblock-view-block-unblock' => 'deblokiraj',
-	'regexblock-view-stats' => '(statistika)',
+	'regexblock-view-stats' => 'statistika',
 	'regexblock-view-empty' => 'Popis blokiranih imena i adresa je prazan.',
 	'regexblock-view-time' => 'u $1',
 );
@@ -1053,9 +1277,9 @@ $messages['hsb'] = array(
 	'regexblockstats' => 'Regex Block Statistika',
 	'regexblock-help' => 'Wužij formular deleka, zo by pisanski přistup ze specifiskeje adresy abo wužiwarskeho mjena blokował. To měło so jenož činić, zo by wandalizmej zadźěwało a wotpowědujo prawidłam. \'\'Tuta strona budźe će dowoleć, samo njeeksistowacych wužiwarjow blokować a budźe tež wužiwarjow z mjenom, kotrež je datemu podobne, blokować, t.r. "test" budźe so runje tak blokować kaž "test 2" atd. Móžeš dospołne OP-adresy blokować, zo by něchtó, kiž so z nich přizjewja, strony wobdźěłać móhł. Kedźbu: dźělne IP-adresy so přez wužiwarske mjeno wužiwaja, zo by blokowanje postajiło. Jeli přičina njeje podata, budźe so powšitkowna přičina wužiwać.\'\'',
 	'regexblock-page-title-1' => 'Adresu z pomocu regularnych wurazow blokować',
-	'regexblock-reason-ip' => 'Tuta IP-adresa so dla wandalizma abo mylenje přez tebje abo někoho druheho, kiž IP-adresu z tobu dźěli, za wobdźěłowanje zawěra. Jeli mysliš, zo to je zmylk, prošu $1',
-	'regexblock-reason-name' => 'Tute wužiwarske mjeno so dla wandalizma abo druheho mylenja za wobdźěłowanje zawěra. Jerli mysliš, zo to je zmylk, prošu $1',
-	'regexblock-reason-regex' => 'Tute wužiwarske mjeno so dla wandalizma abo druheho mylenja přez wužiwarja z podobnym mjenom zawěra. Prošu wutwor druhe wužiwarske mjeno abo $1 wo tutym problemje',
+	'regexblock-reason-ip' => 'Tuta IP-adresa so dla wandalizma abo mylenje přez tebje abo někoho druheho, kiž IP-adresu z tobu dźěli, za wobdźěłowanje zawěra. Jeli mysliš, zo to je zmylk, prošu [[$1|skontaktuj nas]].',
+	'regexblock-reason-name' => 'Tute wužiwarske mjeno so dla wandalizma abo druheho mylenja za wobdźěłowanje zawěra. Jeli mysliš, zo to je zmylk, prošu [[$1|skontaktuj nas]].',
+	'regexblock-reason-regex' => 'Tute wužiwarske mjeno so dla wandalizma abo druheho mylenja přez wužiwarja z podobnym mjenom zawěra. Prošu wutwor druhe wužiwarske mjeno abo [[$1|informuj nas]] wo tutym problemje.',
 	'regexblock-form-username' => 'IP-adresa abo wužiwarske mjeno:',
 	'regexblock-form-reason' => 'Přičina:',
 	'regexblock-form-expiry' => 'Spadnjenje:',
@@ -1065,6 +1289,7 @@ $messages['hsb'] = array(
 	'regexblock-form-submit-empty' => 'Podaj wužiwarske mjeno abo IP-adresu za blokowanje.',
 	'regexblock-form-submit-regex' => 'Njepłaćiwy regularny wuraz.',
 	'regexblock-form-submit-expiry' => 'Podaj prošu periodu spadnjenja.',
+	'regexblock-link' => 'z regularnym wurazom blokować',
 	'regexblock-match-stats-record' => "$1 jo blokěrował '$2' na '$3' pola '$4' při přizjewjenju wot adresy '$5'",
 	'regexblock-nodata-found' => 'Žane daty namakane',
 	'regexblock-stats-title' => 'Regex Block Statistiske podaća',
@@ -1081,14 +1306,74 @@ $messages['hsb'] = array(
 	'regexblock-view-reason' => 'přičina: $1',
 	'regexblock-view-reason-default' => 'powšitkowna přičina',
 	'regexblock-view-block-infinite' => 'trajne blokowanje',
-	'regexblock-view-block-temporary' => 'spadnje',
-	'regexblock-view-block-expired' => 'SPADNJENY',
-	'regexblock-view-block-by' => 'zablokowany wot',
+	'regexblock-view-block-by' => 'zablokowany wot:',
 	'regexblock-view-block-unblock' => 'wotblokować',
 	'regexblock-view-stats' => 'statistiske podaća',
 	'regexblock-view-empty' => 'Lisćina zablokowanych mjenow a adresow je prózdna.',
 	'regexblock-view-time' => '$1',
 	'right-regexblock' => 'Wužiwarjam wobdźěłowanje na wšěch wikijach na wikijowej farmje zadźěwać',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'regexblock' => 'Reguláris kifejezés alapú blokkolás',
+	'regexblock-already-blocked' => '$1 már blokkolva van.',
+	'regexblock-block-log' => "A(z) '''$1''' felhasználónév vagy IP-cím blokkolva.",
+	'regexblock-block-success' => 'A blokk sikeres',
+	'regexblock-currently-blocked' => 'Jelenleg blokkolt címek:',
+	'regexblock-desc' => 'Kiterjesztés felhasználói nevek és IP-címek blokkolására reguláris kifejezések segítségével. Tartalmazza a blokkolási mechanizmust és egy [[Special:Regexblock|speciális lapot]] a blokkok kezelésére',
+	'regexblock-expire-duration' => '1 óra:1 hour,2 óra:2 hours,4 óra:4 hours,6 óra:6 hours,1 nap:1 day,3 nap:3 days,1 hét:1 week,2 hét:2 weeks,1 hónap:1 month,3 hónap:3 months,6 hónap:6 months,1 év:1 year,végtelen:infinite',
+	'regexblock-page-title' => 'Név blokkolása reguláris kifejezés segítségével',
+	'regexblockstats' => 'Reguláris kifejezés alapú blokkok statisztikája',
+	'regexblock-help' => "Használd az alábbi űrlapot egy megadott IP-cím vagy felhasználónév írási jogosultságának blokkolására.
+Ezt csak vandalizmus megelőzése céljából szabad használni, összhangban az irányelvekkel.
+''Ezen a lapon akár nem létező felhasználókat is blokkolhatsz, és a blokk érinteni fogja a megadotthoz hasonló felhasználóneveket is. Azaz „teszt” blokkolva lesz „teszt 2”-vel együtt, stb.
+Blokkolhatsz teljes IP-címeket is, ami azt jelenti, hogy azokról bejelentkezve senki nem fog tudni szerkeszteni.
+Megjegyzés: részleges IP-címek felhasználónévként lesznek értelmezve a blokk feldolgozásánál.
+Ha nem adsz meg indoklást, általános ok lesz feltüntetve.''",
+	'regexblock-page-title-1' => 'Cím blokkolása reguláris kifejezések segítségével',
+	'regexblock-reason-ip' => 'Ezen IP-cím szerkesztési jogosultsága blokkolva van vandalizmus vagy más káros tevékenység miatt, amit te, vagy valaki veled azonos IP-címet használó követett el.
+Ha úgy gondolod, hogy hiba történt, [[$1|vedd fel velünk a kapcsolatot]]',
+	'regexblock-reason-name' => 'Ezen felhasználónév szerkesztési jogosultsága blokkolva van vandalizmus vagy más káros tevékenység miatt.
+Ha úgy gondolod, hogy hiba történt, [[$1|vedd fel velünk a kapcsolatot]]',
+	'regexblock-reason-regex' => 'Ezen IP-cím szerkesztési jogosultsága blokkolva van vandalizmus vagy más káros tevékenység miatt, amit hasonló nevű felhasználó követett el.
+Kérlek regisztrálj más néven, vagy [[$1|vedd fel velünk a kapcsolatot]]',
+	'regexblock-form-username' => 'IP-cím vagy felhasználói név:',
+	'regexblock-form-reason' => 'Indoklás:',
+	'regexblock-form-expiry' => 'Lejárat:',
+	'regexblock-form-match' => 'Pontos találat',
+	'regexblock-form-account-block' => 'Új fiókok létrehozásának tiltása',
+	'regexblock-form-submit' => 'Blokkold ezt a felhasználót',
+	'regexblock-form-submit-empty' => 'Add meg a blokkolandó felhasználónevet vagy IP-címet.',
+	'regexblock-form-submit-regex' => 'Érvénytelen reguláris kifejezés.',
+	'regexblock-form-submit-expiry' => 'Add meg a blokk lejáratát.',
+	'regexblock-link' => 'blokkolás reguláris kifejezéssel',
+	'regexblock-match-stats-record' => '$1 blokkolta „$2” felhasználót itt: „$3” ekkor: „$4”, naplózás a(z) „$5” címről',
+	'regexblock-nodata-found' => 'Nem található adat',
+	'regexblock-stats-title' => 'Reguláris kifejezés blokk statisztika',
+	'regexblock-unblock-success' => 'A blokk feloldása sikerült',
+	'regexblock-unblock-log' => "A(z) '''$1''' felhasználónév vagy IP-cím blokkja feloldva.",
+	'regexblock-unblock-error' => 'Hiba $1 blokkjának feloldásakor.
+Lehetséges hogy nincs ilyen felhasználó.',
+	'regexblock-regex-filter' => ' vagy reguláris kifejezés:',
+	'regexblock-view-blocked' => 'Blokkok megtekintése a blokkot kiosztó felhasználó szerint:',
+	'regexblock-view-all' => 'Mind',
+	'regexblock-view-go' => 'Menj',
+	'regexblock-view-match' => '(pontos találat)',
+	'regexblock-view-regex' => '(keresés reguláris kifejezéssel)',
+	'regexblock-view-account' => '(fióklétrehozás tiltása)',
+	'regexblock-view-reason' => 'indoklás: $1',
+	'regexblock-view-reason-default' => 'általános indok',
+	'regexblock-view-block-infinite' => 'végleges blokk',
+	'regexblock-view-block-by' => 'blokkolta:',
+	'regexblock-view-block-unblock' => 'blokkolás feloldása',
+	'regexblock-view-stats' => 'statisztikák',
+	'regexblock-view-empty' => 'A blokkolt felhasználónevek és IP-címek listája üres.',
+	'regexblock-view-time' => 'ekkor: $1',
+	'right-regexblock' => 'Felhasználók blokkolása az wikifarmon található összes wikin',
 );
 
 /** Interlingua (Interlingua)
@@ -1111,11 +1396,11 @@ Tu pote tamben blocar adresses IP complete, isto vole dicer que necuno connecten
 Nota: le adresses IP partial essera considerate como nomines de usator in le determination del blocada.
 Si nulle motivo es specificate, un motivo generic predefenite essera usate.\'\'',
 	'regexblock-page-title-1' => 'Blocar adresses per medio de expressiones regular',
-	'regexblock-reason-ip' => 'Iste adresse IP es impedite de facer modificationes pro causa de vandalismo o de altere disruption per te o per alcuno altere qui usa un adresse IP in commun con te. Si tu crede que isto sia un error, per favor $1',
+	'regexblock-reason-ip' => 'Iste adresse IP es impedite de facer modificationes pro causa de vandalismo o de altere disruption per te o per alcuno altere qui usa un adresse IP in commun con te. Si tu crede que isto sia un error, per favor [[$1|contacta nos]].',
 	'regexblock-reason-name' => 'Iste nomine de usator es impedite de facer modificationes pro causa de vandalismo o de altere disruption.
-Si tu crede que isto sia un error, per favor $1',
+Si tu crede que isto sia un error, per favor [[$1|contacta nos]].',
 	'regexblock-reason-regex' => 'Iste nomine de usator es impedite de facer modificationes pro causa de vandalismo o de altere disruption per un usator con un nomine similar.
-Per favor crea un nomine de usator alternative o $1 a proposito de iste problema',
+Per favor crea un nomine de usator alternative o [[$1|contacta nos]] a proposito de iste problema.',
 	'regexblock-form-username' => 'Adresse IP o nomine de usator:',
 	'regexblock-form-reason' => 'Motivo:',
 	'regexblock-form-expiry' => 'Expiration:',
@@ -1125,6 +1410,7 @@ Per favor crea un nomine de usator alternative o $1 a proposito de iste problema
 	'regexblock-form-submit-empty' => 'Specifica un nomine de usator o adresse IP a blocar.',
 	'regexblock-form-submit-regex' => 'Expression regular invalide.',
 	'regexblock-form-submit-expiry' => 'Per favor specifica un periodo de expiration.',
+	'regexblock-link' => 'blocar con expression regular',
 	'regexblock-match-stats-record' => "$1 blocava '$2' in '$3' al '$4', connectite ab le adresse '$5'",
 	'regexblock-nodata-found' => 'Nulle datos trovate',
 	'regexblock-stats-title' => 'Statisticas de blocadas per expressiones regular',
@@ -1142,9 +1428,7 @@ Probabilemente non existe tal usator.',
 	'regexblock-view-reason' => 'motivo: $1',
 	'regexblock-view-reason-default' => 'motivo generic',
 	'regexblock-view-block-infinite' => 'blocada permanente',
-	'regexblock-view-block-temporary' => 'expira le',
-	'regexblock-view-block-expired' => 'EXPIRATE le',
-	'regexblock-view-block-by' => 'blocate per',
+	'regexblock-view-block-by' => 'blocate per:',
 	'regexblock-view-block-unblock' => 'disblocar',
 	'regexblock-view-stats' => 'statisticas',
 	'regexblock-view-empty' => 'Le lista de nomines e adresses blocate es vacue.',
@@ -1153,11 +1437,67 @@ Probabilemente non existe tal usator.',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author Irwangatot
+ * @author IvanLanin
  * @author Rex
  */
 $messages['id'] = array(
+	'regexblock' => 'Pemblokiran regex',
+	'regexblock-already-blocked' => '$1 telah diblokir.',
+	'regexblock-block-log' => "Nama pengguna atau alamat IP '''$1''' telah diblokir.",
+	'regexblock-block-success' => 'Pemblokiran berhasil',
+	'regexblock-currently-blocked' => 'Alamat yang sedang diblokir:',
+	'regexblock-desc' => 'Ekstensi yang digunakan untuk memblokir pengguna nama dan alamat IP dengan ekspresi reguler. Berisi baik mekanisme pemblokiran dan suatu [[Special:Regexblock|halaman istimewa]] untuk menambah/mengelola blokir',
+	'regexblock-expire-duration' => '1 jam,2 jam,4 jam,6 jam,1 hari,3 hari,1 minggu,2 minggu,1 bulan,3 bulan,6 bulan,1 tahun,selamanya',
+	'regexblock-page-title' => 'Pemblokiran nama dengan ekspresi reguler',
+	'regexblockstats' => 'Statistik pemblokiran regex',
+	'regexblock-help' => 'Gunakan formulir di bawah untuk memblokir akses menulis dari alamat IP atau nama pengguna tertentu.
+Gunakan ini hanya untuk mencegah vandalisme dan sesuai dengan kebijakan.
+\'\'Halaman ini memungkinkan Anda untuk bahkan memblokir pengguna yang belum ada, dan juga akan memblokir pengguna dengan nama yang serupa dengan yang diberikan, yaitu "Pengujian" akan diblokir sebagaimana "Pengujian 2", dll.
+Anda juga dapat memblokir seluruh alamat IP, yang berarti bahwa tidak ada yang bisa masuk log dan menyunting halaman.
+Catatan: alamat IP parsial akan diperlakukan seperti nama pengguna dalam penentuan blokir.
+Jika tidak ada alasan yang diberikan, suatu alasan generik baku akan digunakan.\'\'',
+	'regexblock-page-title-1' => 'Blokir alamat menggunakan ekspresi reguler',
+	'regexblock-reason-ip' => 'Alamat IP ini dicekal untuk menyunting karena vandalisme atau gangguan yang dilakukan oleh Anda atau orang lain yang berbagi IP dengan Anda.
+Jika menurut Anda ini adalah suatu kesalahan, silakan [[$1|hubungi kami]]',
+	'regexblock-reason-name' => 'Pengguna ini dicegah dari penyuntingan karena vandalisme atau kekacauan lain.
+Jika anda percaya ini adalah kesalahan, silakan [[$1|hubungi kami]]',
+	'regexblock-reason-regex' => 'Pengguna ini dicegah dari penyuntingan karena vandalisme atau kekacauan lain oleh pengguna dengan nama yang mirip.
+Silakan buat nama pengguna lain atau [[$1|hubungi kami]] tentang permasalahan ini',
+	'regexblock-form-username' => 'Alamat IP atau nama pengguna:',
 	'regexblock-form-reason' => 'Alasan:',
+	'regexblock-form-expiry' => 'Kadaluwarsa:',
+	'regexblock-form-match' => 'Pertandingan tepat',
+	'regexblock-form-account-block' => 'Blokir pembuatan akun baru',
+	'regexblock-form-submit' => 'Blok pengguna ini',
+	'regexblock-form-submit-empty' => 'Memberikan nama pengguna atau alamat IP yang dapat diblokir.',
+	'regexblock-form-submit-regex' => 'Ekspresi regular tidak valid.',
+	'regexblock-form-submit-expiry' => 'Tolong tentukan periode kadaluwarsa.',
+	'regexblock-link' => 'blokir dengan ekspresi reguler',
+	'regexblock-match-stats-record' => "$1 diblok '$2' pada '$3' saat '$4', masuk log dari alamat '$5'",
+	'regexblock-nodata-found' => 'Tanggal tidak ditemukan',
+	'regexblock-stats-title' => 'Statistik blokir regex',
+	'regexblock-unblock-success' => 'Buka blokir berhasil',
+	'regexblock-unblock-log' => "Nama pengguna atau alamat IP '''$1''' telah dibuka diblokirnya.",
+	'regexblock-unblock-error' => 'Kesalahan buka blokir $1.
+Mungkin tidak ada pengguna seperti itu.',
+	'regexblock-regex-filter' => 'atau nilai regex:',
+	'regexblock-view-blocked' => 'Lihat pemblokiran oleh:',
 	'regexblock-view-all' => 'Semua',
+	'regexblock-view-go' => 'Tuju ke',
+	'regexblock-view-match' => '(pertandingan tepat)',
+	'regexblock-view-regex' => '(kecocokan regex)',
+	'regexblock-view-account' => '(pembuatan akun diblokir)',
+	'regexblock-view-reason' => 'alasan: $1',
+	'regexblock-view-reason-default' => 'alasan generik',
+	'regexblock-view-block-infinite' => 'blok permanen',
+	'regexblock-view-block-by' => 'diblokir oleh:',
+	'regexblock-view-block-unblock' => 'buka blokir',
+	'regexblock-view-stats' => 'stat',
+	'regexblock-view-empty' => 'Daftar nama dan alamat yang diblokir kosong.',
+	'regexblock-view-time' => 'pada $1',
+	'right-regexblock' => 'Memblokir pengguna untuk menyunting pada semua wiki di kebun wiki',
 );
 
 /** Ido (Ido)
@@ -1194,7 +1534,7 @@ $messages['ja'] = array(
 	'regexblock-block-log' => "利用者名もしくはIPアドレス '''$1''' はブロックされました。",
 	'regexblock-block-success' => 'ブロック成功',
 	'regexblock-currently-blocked' => '現在ブロックされているアドレス:',
-	'regexblock-desc' => '利用者名やIPアドレスを正規表現でブロックするための拡張機能。ブロック機構とブロックを追加・管理するための[[Special:Regexblock|特別ページ]]の両方を含む',
+	'regexblock-desc' => '利用者名やIPアドレスを正規表現を使ってブロックするための拡張機能。ブロック機構とブロックを追加・管理するための[[Special:Regexblock|特別ページ]]の両方を含む',
 	'regexblock-expire-duration' => '1時間,2時間,4時間,6時間,1日,3日,1週間,2週間,1か月,3か月,6か月,1年,無期限',
 	'regexblock-page-title' => '正規表現による利用者名のブロック',
 	'regexblockstats' => '正規表現ブロック統計',
@@ -1212,6 +1552,7 @@ $messages['ja'] = array(
 	'regexblock-form-submit-empty' => 'ブロックする利用者名かIPアドレスを入力してください。',
 	'regexblock-form-submit-regex' => '無効な正規表現です。',
 	'regexblock-form-submit-expiry' => '期限を設定してください。',
+	'regexblock-link' => '正規表現を使ってブロック',
 	'regexblock-match-stats-record' => '$1 が $2 (アドレス $5) を $3 で $4 にブロックしました',
 	'regexblock-nodata-found' => '該当データなし',
 	'regexblock-stats-title' => '正規表現ブロックの統計',
@@ -1228,8 +1569,6 @@ $messages['ja'] = array(
 	'regexblock-view-reason' => '理由: $1',
 	'regexblock-view-reason-default' => '一般の理由',
 	'regexblock-view-block-infinite' => '無期限ブロック',
-	'regexblock-view-block-temporary' => '予定期限',
-	'regexblock-view-block-expired' => '期限',
 	'regexblock-view-block-by' => 'ブロック実行者:',
 	'regexblock-view-block-unblock' => 'ブロック解除',
 	'regexblock-view-stats' => '統計',
@@ -1240,6 +1579,7 @@ $messages['ja'] = array(
 
 /** Javanese (Basa Jawa)
  * @author Meursault2004
+ * @author Pras
  */
 $messages['jv'] = array(
 	'regexblock-already-blocked' => '$1 wis diblokir',
@@ -1260,9 +1600,7 @@ Yèn ora ana alesan sing diwènèhaké, sawijining alesan umum baku bakal diengg
 	'regexblock-view-reason' => 'alesan: $1',
 	'regexblock-view-reason-default' => 'alesan umum',
 	'regexblock-view-block-infinite' => 'blokade permanèn',
-	'regexblock-view-block-temporary' => 'kadaluwarsa ing',
-	'regexblock-view-block-expired' => 'KADALUWARSA ing',
-	'regexblock-view-block-by' => 'diblokir déning',
+	'regexblock-view-block-by' => 'diblokir déning:',
 );
 
 /** Georgian (ქართული)
@@ -1270,6 +1608,13 @@ Yèn ora ana alesan sing diwènèhaké, sawijining alesan umum baku bakal diengg
  */
 $messages['ka'] = array(
 	'regexblock-form-reason' => 'მიზეზი:',
+);
+
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'regexblock-expire-duration' => '1 tiimi,2 tiimit,4 tiimit,6 tiimit,ulloq 1,ullut 3,sap akunn 1,sap akunn 2,1 qaammat,qaammatit 3,qaammatit 6,ukioq 1,killeqanngitsoq',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1297,12 +1642,18 @@ $messages['km'] = array(
 	'regexblock-view-go' => 'ទៅ',
 	'regexblock-view-account' => '(រាំងខ្ទប់​ការបង្កើត​គណនី)',
 	'regexblock-view-reason' => 'មូលហេតុ៖ $1',
-	'regexblock-view-block-temporary' => 'ផុតកំណត់នៅ',
-	'regexblock-view-block-expired' => 'បានផុតកំណត់នៅ',
-	'regexblock-view-block-by' => 'ត្រូវបានហាមឃាត់ដោយ',
+	'regexblock-view-block-by' => 'ត្រូវបានរាំងខ្ទប់ដោយ៖',
 	'regexblock-view-block-unblock' => 'ឈប់ហាមឃាត់',
 	'regexblock-view-empty' => 'បញ្ជីឈ្មោះអ្នកប្រើប្រាស់និងអាសយដ្ឋានIPគឺទទេ។',
 	'regexblock-view-time' => 'នៅ $1',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'regexblock-form-reason' => 'ಕಾರಣ:',
+	'regexblock-view-go' => 'ಹೋಗು',
 );
 
 /** Krio (Krio)
@@ -1323,15 +1674,62 @@ $messages['krj'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
+	'regexblock' => 'Sperre övver <i lang="en">regular expressions</i>',
+	'regexblock-already-blocked' => '$1 es ald jesperrt.',
+	'regexblock-block-log' => "Dä Metmaacher met däm Name '''\$1''' odder de <code lang=\"en\">IP</code>-Address es jesperrt woode.",
+	'regexblock-block-success' => 'Jesperrt',
+	'regexblock-currently-blocked' => 'Addresse, di em Momang jesperrt sin:',
 	'regexblock-desc' => 'Määt et müjjelesch, Metmaacher  un IP-Addresse övver <i lang="en">regular expressions</i> ze sperre. Deit sperre, un hät en [[Special:Regexblock|Söndersigg]], öm de Sperre ze verwallde.',
+	'regexblock-expire-duration' => '1 Stund:1 hour,2 Stund:2 hours,3 Stund:3 hours,6 Stund:6 hours,12 Stund:12 hours,1 Dach:1 day,3 Däch:3 days,1 Woch:1 week,2 Woche:2 weeks,3 Woche:3 weeks,1 Mond:1 month,3 Mond:3 months,6 Mond:6 months,9 Mond:9 months,1 Johr:1 year,2 Johre:2 years,3 Johre:3 years,Iewich:infinite',
+	'regexblock-page-title' => 'Name Sperre övver <i lang="en">regular expressions</i>',
+	'regexblockstats' => 'Statistike övver et {{int:Regexblock-page-title}}',
+	'regexblock-help' => 'En hee däm Fommulaa kanns De en besptemmpte <code lang="en">IP</code>-Addreß odder enem Metmaacher singe Name shperre un dänne domet et Schriive em Wikki verbeede.
+Dat sullt mer bloß donn, öm Kappottmaacherei ze verhindere, un nur noh dä Räjelle, di mer doför han.
+\'\'Die Sigg hee määt et müjjelesch, Metmaacher ze shperre, die et (noch) nit jitt. Mer hann och leish Metmaacher met ähnlesche Name en einem Rötsch shperre. Zom Beishpell „Ens Versöke“ weet metjeshperrt, wam_mer „Ens Versöke 2“ shperre deiht, un esu wigger. Mer kann och janze <code lang="en">IP</code>-Addresse shperre, wat bedügg, dat keine, dä vun dä Addreß enlogge deiht, mieh Sigge ändere darf. Opjepaß: Hallve <code lang="en">IP</code>-Addresse wäde als Name vun Metmaachere aanjesinnf, wann et öm et Beshtemme vun Shperre jeiht. Wann keine Jrond för et Shperre aanjejovve es, weed ene Shtandatt-Tex jenumme.\'\'',
+	'regexblock-page-title-1' => 'Addresse övver <i lang="en">regular expressions</i> sperre',
 	'regexblock-reason-ip' => 'Et es jraad verbodde, met hee dä IP-Addräß aam Wiki jet ze ändere.
 Dat litt dodraan, dat zoh vill Driß drövver jemaat wood.
 Dat moß ävver nit vun Dir jekumme sin, et kann vun Jedem jekumme sin,
 dä di Address och ens jehatt hät.
-Wann De meins, dat dat esu nit sinn sullt, dann donn $1.',
+Wann De meins, dat dat esu nit sinn sullt, dann donn [[$1|Desch melde]].',
+	'regexblock-reason-name' => 'Dä Metmaacher-Name es jesperrt un kann kei Sigge ändere.
+För jewöhnlesch deiht dat bedügge, dat dä zevill Driß jemaat hät.
+Wann de meins, dat es nit en Odenung, [[$1|lohß et uns weße]].',
+	'regexblock-reason-regex' => 'Dä Metmaacher-Name es jesperrt un mer kann med em kei Sigge ändere.
+Dat litt dodraan, dat zoh vill Driß övver ene janz äähnlijje Name jemaat wood.
+Wann de meins, dat es nit en Odenung, [[$1|lohß et uns weße]], odder nemm janz ene andere Metmaacher-Name. Kanns jo flöck ene neue aanmelde.',
+	'regexblock-form-username' => 'De <code lang="en">IP</code>-Addreß odder enem Metmacher singe Name:',
 	'regexblock-form-reason' => 'Aanlass:',
+	'regexblock-form-expiry' => 'Endt aam:',
+	'regexblock-form-match' => 'Akkeraate Treffer',
+	'regexblock-form-account-block' => 'Donn et neu Aanmelde verbeede',
+	'regexblock-form-submit' => 'Donn dä Metmaacher Sperre',
+	'regexblock-form-submit-empty' => 'Jiff enem Metmacher singe Name odder en <code lang="en">IP</code>-Addreß för zem Sperre aan.',
+	'regexblock-form-submit-regex' => 'En onjöltijje <i lang="en">regular expression</i>.',
+	'regexblock-form-submit-expiry' => 'Beß esu joot, un donn en Zick för et Engk fun de Shperr aanjevve.',
+	'regexblock-link' => 'Schpärre övver <i lang="en">regular expression</i>e ennreschhte.',
+	'regexblock-match-stats-record' => 'Dä Ußdrock „$1“ hät öm/aam $4 för en Sperr en „$3“ för {{GENDER:$2|dä|et|dä Metmaacher|dat|de}} „$2“ jesorrsch, beim Enlogge vun dä IP-Addreeß $5',
+	'regexblock-nodata-found' => 'Kein Date jefonge',
+	'regexblock-stats-title' => 'Shtatistike för de Shperre övver <i lang="en">regular expressions</i>',
+	'regexblock-unblock-success' => 'Nimmieh jeshperrt',
+	'regexblock-unblock-log' => "Dä Metmacher odder de <code lang=\"en\">IP</code>-Addreß '''„\$1“''' es widder frei jejovve.",
+	'regexblock-unblock-error' => 'Fähler beim Sperr-Ophävve. Ene Metmaacher „<nowiki>$1</nowiki>“ jit et nit.',
+	'regexblock-regex-filter' => ' odder en <i lang="en">regular expression</i>:',
+	'regexblock-view-blocked' => 'Sök bloß de Sperre uß vun däm Metmaacher:',
 	'regexblock-view-all' => 'All',
 	'regexblock-view-go' => 'Loß Jonn!',
+	'regexblock-view-match' => '(akkeraat jetroffe)',
+	'regexblock-view-regex' => '(<i lang="en">regular expression</i> jetroffe)',
+	'regexblock-view-account' => '(Neu Aanmelde verbodde)',
+	'regexblock-view-reason' => 'Jrund: $1',
+	'regexblock-view-reason-default' => '— keine Jrund aanjejovve —',
+	'regexblock-view-block-infinite' => 'för iewisch jesperrt',
+	'regexblock-view-block-by' => 'Jesperrt vum:',
+	'regexblock-view-block-unblock' => 'Sperr ophävve',
+	'regexblock-view-stats' => 'Shtatistike',
+	'regexblock-view-empty' => 'De Leß me de jesperrte Metmaacher ier Name un Adresse eß leddisch.',
+	'regexblock-view-time' => 'aam $2 öm $3 Uhr',
+	'right-regexblock' => 'Donn dänne Metmaacher en alle Wikis em eije Shtall voll Wikis et Äandere verbeede',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1343,16 +1741,22 @@ $messages['lb'] = array(
 	'regexblock-block-log' => "De Benotzer oder d'IP-Adress '''$1''' gouf gespaart.",
 	'regexblock-block-success' => "D'Spär ass elo ageschalt",
 	'regexblock-currently-blocked' => 'Aktuell gespaarten Adressen:',
+	'regexblock-desc' => "Erweiderung fir d'Späre vu Benotzernimm an IP-Adressen mat regulären Ausdréck. D'Erweiderung huet esouwuel e Spär-Mechansmus wéi och eng [[Special:Regexblock|Spezialsäit]] fir Spären derbäizesetzen/ze geréieren",
 	'regexblock-expire-duration' => '1 Stonn,2 Stonnen, 4 Stonnen,6 Stonnen,1 Dag,3 Deeg,1 Woch,2 Wochen,1 Mount,3 Méint,6 Méint,1 Joer,onbegrenzt',
+	'regexblock-page-title' => 'Spär vun engem Numm mat engem regulärem Ausdrock',
 	'regexblockstats' => 'Regex Spärstatistiken',
 	'regexblock-page-title-1' => 'Adress spären andem regulär Ausdréck (Regex) benotzt ginn',
-	'regexblock-reason-name' => 'Dëse Benotzer ass wéinst Vandalismus oder ähnlech Ursaache gespaart an däerf keng Ännerunge maachen. Wann Dir iwwerzeecht sidd datt et sech ëm ee Feeler handelt, $1',
+	'regexblock-reason-ip' => "Dës IP-Adress ass wéinst Vandalismus oder anerem Schiedlechem Verhalen vun Iech oder engem Aneren dee mat Iech déi selwëscht IP-Adress deelt fir d'Änner vu Säite gespaart. Wann Dir mengt dëst fir e Feeler, da [[$1|kontaktéiert eis]] w.e.g.",
+	'regexblock-reason-name' => 'Dëse Benotzernumm ass wéinst Vandalismus oder aus ähnlechen Ursaache gespaart an däerf keng Ännerunge maachen. 
+Wann Dir iwwerzeecht sidd datt et sech ëm ee Feeler handelt, [[$1|kontaktéiert eis w.e.g.]]',
+	'regexblock-reason-regex' => 'Dëse Benotzernumm ass wéint Vandalismus oder anerem schiedleche Verhale vun engem Benotzer mat engem ähnleche Benotzernumm gespaart fir Ännerungen a Säiten ze maachen. Wielt w.e.g. en anere Benotzernumm oder [[$1|kontaktéiert eis]] wéinst deem Problem.',
 	'regexblock-form-username' => 'IP-Adress oder Benotzer:',
 	'regexblock-form-reason' => 'Grond:',
 	'regexblock-form-account-block' => 'Uleeë vun neie Benotzerkonte spären',
 	'regexblock-form-submit' => 'Dëse Benotzer spären',
 	'regexblock-form-submit-empty' => 'Gitt e Benotzernumm oder eng IP-Adress un fir ze spären.',
 	'regexblock-form-submit-expiry' => "Gitt w.e.g. en Zäitraum fir d'Spär un.",
+	'regexblock-match-stats-record' => "$1 huet '$2' de(n) '$3' ëm '$4' gespaart, ageloggt vun der Adress '$5'",
 	'regexblock-nodata-found' => 'Keng Date fonnt',
 	'regexblock-stats-title' => 'Regex Spärstatistik',
 	'regexblock-unblock-success' => 'Spär opgehuewen',
@@ -1367,9 +1771,7 @@ Warscheinlech gëtt et esou e Benotzer net.',
 	'regexblock-view-reason' => 'Grond: $1',
 	'regexblock-view-reason-default' => 'allgemenge Grond',
 	'regexblock-view-block-infinite' => 'permanent Spär',
-	'regexblock-view-block-temporary' => 'bis den',
-	'regexblock-view-block-expired' => 'OFGELAF den',
-	'regexblock-view-block-by' => 'gespaart vum',
+	'regexblock-view-block-by' => 'gespaart vum:',
 	'regexblock-view-block-unblock' => 'Spär ophiewen',
 	'regexblock-view-stats' => 'Statistik',
 	'regexblock-view-empty' => "D'Lëscht vun de gespaarte Benotzer an IP-Adressen ass eidel.",
@@ -1391,39 +1793,99 @@ $messages['mhr'] = array(
 	'regexblock-form-reason' => 'Амал:',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'regexblock' => 'Блок по регуларен израз',
+	'regexblock-already-blocked' => '$1 е веќе блокиран.',
+	'regexblock-block-log' => "Корисничкото име или IP-адресата '''$1''' е блокирана.",
+	'regexblock-block-success' => 'Блокирањето успеа',
+	'regexblock-currently-blocked' => 'Моментално блокирани адреси:',
+	'regexblock-desc' => 'Проширување за блокирање на кориснички имиња и IP-адреси со помош на регуларни изрази. Го содржи механизмот за блокирање и [[Special:Regexblock|специјална страница]] за давање/раководење со блокови',
+	'regexblock-expire-duration' => '1 час,2 часа,4 часа,6 часа,1 ден,3 дена,1 недела,2 недели,1 месец,3 месеци,6 месеци,1 година,без рок',
+	'regexblock-page-title' => 'Блокирање на име по регуларен израз',
+	'regexblockstats' => 'Статистика за блок по регуларен израз',
+	'regexblock-help' => "Користете го образецот подолу за блокирање на пристап кон уредување од извесна IP-адреса или корисничко име.
+Ова треба да се употребува само за спречување на вандализам, и во согласност со правилата.
+''Оваа страница ви овозможува да блокирате дури и непостоечки корисници, и да блокирате корисници со имиња слични на зададените, т.е. „Test“ ќе биде блокиран заедно со „Test 2“ и тн.
+Можете и да блокирате полни IP-адреси, што значи дека ниеден корисник најавен со таа IP-адреса нема да може да уредува страници.
+Белешка: делумните IP-адреси ќе се сметаат за кориснички имиња при одлучувањето дали да се даде блок.
+Ако нема назначено причина, тогаш ќе се користи основно зададената општа причина.''",
+	'regexblock-page-title-1' => 'Блокирање на адреси со помош на регуларни изрази',
+	'regexblock-reason-ip' => 'На оваа IP-адреса ѝ е оневозможено уредување поради вандализам или други пореметувачки дејства направени од вас или или некој што ја користи истата IP-адреса.
+Ако сметате дека ова е грешка, тогаш [[$1|контактирајте нè]]',
+	'regexblock-reason-name' => 'На ова корисничко име е му е оневозможено да уредува поради вандализам или други пореметувачки дејства.
+Ако сметате дека ова е грешка, [[$1|контактирајте нè]]',
+	'regexblock-reason-regex' => 'На ова корисничко име му е оневозможено да уредува поради вандализам или други пореметувачки дејства од корисник со слично име.
+Создајте друго корисничко име или [[$1|контактирајте нè]] во врска со овој проблем',
+	'regexblock-form-username' => 'IP-адреса или корисничко име:',
+	'regexblock-form-reason' => 'Причина:',
+	'regexblock-form-expiry' => 'Истекува:',
+	'regexblock-form-match' => 'Токму така',
+	'regexblock-form-account-block' => 'Блокирање на создавањето на нови сметки',
+	'regexblock-form-submit' => 'Блокирај го корисников',
+	'regexblock-form-submit-empty' => 'Наведете корисничко име или IP-адреса за блокирање.',
+	'regexblock-form-submit-regex' => 'Неважечки регуларен израз.',
+	'regexblock-form-submit-expiry' => 'Назначете рок на истекување.',
+	'regexblock-link' => 'блокирај со регуларен израз',
+	'regexblock-match-stats-record' => '$1 го блокираше корисникот „$2“ на „$3“ на „$4“, најавувајќи се од адресата „$5“',
+	'regexblock-nodata-found' => 'Нема пронајдено податоци',
+	'regexblock-stats-title' => 'Статистики за блокирање со регуларен израз',
+	'regexblock-unblock-success' => 'Одблокирањето успеа',
+	'regexblock-unblock-log' => "Корисничкото име или IP-адресата '''$1''' е одблокирана.",
+	'regexblock-unblock-error' => 'Грешка при одблокирање на $1.
+Веројатно таков корисник не постои.',
+	'regexblock-regex-filter' => 'или вредноста на регуларниот израз:',
+	'regexblock-view-blocked' => 'Прегледај блокирани по:',
+	'regexblock-view-all' => 'Сè',
+	'regexblock-view-go' => 'Оди',
+	'regexblock-view-match' => '(токму така)',
+	'regexblock-view-regex' => '(совпаѓање со рег. израз)',
+	'regexblock-view-account' => '(блок на создавање сметки)',
+	'regexblock-view-reason' => 'причина: $1',
+	'regexblock-view-reason-default' => 'општа причина',
+	'regexblock-view-block-infinite' => 'бесконечен блок',
+	'regexblock-view-block-by' => 'блокиран од:',
+	'regexblock-view-block-unblock' => 'одблокирај',
+	'regexblock-view-stats' => 'статистики',
+	'regexblock-view-empty' => 'Листата на блокирани имиња и адреси е празна.',
+	'regexblock-view-time' => 'на $1',
+	'right-regexblock' => 'Блокирање на корисници од уредување на сите викија на вики-фармата',
+);
+
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'regexblock-already-blocked' => '$1 ഇതിനകം തന്നെ തടയപ്പെട്ടിരിക്കുന്നു.',
-	'regexblock-block-log' => "'''$1''' എന്ന ഉപയോക്തൃനാമം അല്ലെങ്കില്‍ ഐപി വിലാസം തടയപ്പെട്ടിരിക്കുന്നു.",
+	'regexblock-block-log' => "'''$1''' എന്ന ഉപയോക്തൃനാമം അല്ലെങ്കില്‍ ഐ.പി. വിലാസം തടയപ്പെട്ടിരിക്കുന്നു.",
 	'regexblock-block-success' => 'തടയല്‍ വിജയിച്ചിരിക്കുന്നു',
 	'regexblock-currently-blocked' => 'നിലവില്‍ തടയപ്പെട്ട വിലാസങ്ങള്‍:',
-	'regexblock-reason-ip' => 'താങ്കളോ അല്ലെങ്കില്‍ മറ്റോരോ നടത്തിയ നശീകരണ പ്രവര്‍ത്തനം മൂലം താങ്കള്‍ ഇപ്പോള്‍ ഉപയോഗിക്കുന്ന ഐപി വിലാസം തിരുത്തല്‍ നടത്തുന്നതില്‍ നിന്നു തടയപ്പെട്ടിരിക്കുന്നു.
-ഇത് ഒരു പിഴവാണെന്നു താങ്കള്‍ കരുതുന്നെങ്കില്‍ ദയവായി $1',
-	'regexblock-reason-name' => 'നശീകരണ പ്രവര്‍ത്തനങ്ങള്‍ മൂലം താങ്കളുടെ ഉപയോക്തൃനാമത്തെ തിരുത്തല്‍ നടത്തുന്നതില്‍ നിന്നു തടഞ്ഞിരിക്കുന്നു. ഇത് ഒരു പിഴവാണെന്നു താങ്കള്‍ കരുതുന്നെങ്കില്‍ ദയവായി $1',
+	'regexblock-reason-ip' => 'താങ്കളോ മറ്റോരോ നടത്തിയ നശീകരണ പ്രവര്‍ത്തനം മൂലം താങ്കള്‍ ഇപ്പോള്‍ ഉപയോഗിക്കുന്ന ഐ.പി. വിലാസം തിരുത്തല്‍ നടത്തുന്നതില്‍ നിന്നു തടയപ്പെട്ടിരിക്കുന്നു.
+ഇത് ഒരു പിഴവാണെന്നു താങ്കള്‍ കരുതുന്നെങ്കില്‍ ദയവായി [[$1|ഞങ്ങളെ ബന്ധപ്പെടുക]]',
+	'regexblock-reason-name' => 'നശീകരണ പ്രവര്‍ത്തനങ്ങള്‍ മൂലം താങ്കളുടെ ഉപയോക്തൃനാമത്തെ തിരുത്തല്‍ നടത്തുന്നതില്‍ നിന്നു തടഞ്ഞിരിക്കുന്നു. ഇതൊരു പിഴവാണെന്നു താങ്കള്‍ കരുതുന്നെങ്കില്‍ ദയവായി [[$1|ഞങ്ങളെ ബന്ധപ്പെടുക]]',
 	'regexblock-reason-regex' => 'ഈ ഉപയോക്തൃനാമത്തോടു സാമ്യമുള്ള ഉപയോക്താവിന്റെ നശീകരണ പ്രവര്‍ത്തനങ്ങള്‍ മൂലം ഈ ഉപയോക്തൃനാമത്തെ തിരുത്തല്‍ നടത്തുന്നതില്‍ നിന്നു തടഞ്ഞിരിക്കുന്നു. 
-ഒന്നുകില്‍ പുതിയൊരു ഉപയോക്തൃനാമം ഉണ്ടാക്കുക അല്ലെങ്കില്‍ ഈ പ്രശ്നത്തെക്കുറിച്ച് $1',
-	'regexblock-form-username' => 'ഐപി വിലാസം അല്ലെങ്കില്‍ ഉപയോക്തൃനാമം:',
+ഒന്നുകില്‍ പുതിയ ഉപയോക്തൃനാമം ഉണ്ടാക്കുക അല്ലെങ്കില്‍ ഈ പ്രശ്നത്തെക്കുറിച്ച് [[$1|ഞങ്ങളെ അറിയിക്കുക]]',
+	'regexblock-form-username' => 'ഐ.പി. വിലാസം അല്ലെങ്കില്‍ ഉപയോക്തൃനാമം:',
 	'regexblock-form-reason' => 'കാരണം:',
 	'regexblock-form-expiry' => 'കാലാവധി:',
 	'regexblock-form-match' => 'കൃത്യമായി യോജിക്കുന്നവ',
-	'regexblock-form-account-block' => 'പുതിയ അക്കൗണ്ടുകള്‍ സൃഷ്ടിക്കുന്നതു തടയുക',
+	'regexblock-form-account-block' => 'പുതിയ അംഗത്വങ്ങള്‍ സൃഷ്ടിക്കുന്നതു തടയുക',
 	'regexblock-form-submit' => ' ഈ  ഉപയോക്താവിനെ തടയുക',
-	'regexblock-form-submit-empty' => 'തടയുവാന്‍ വേണ്ടിയുള്ള ഉപയോക്തൃനാമമോ ഐപി വിലാസമോ ചേര്‍ക്കുക.',
+	'regexblock-form-submit-empty' => 'തടയുവാന്‍ വേണ്ടിയുള്ള ഉപയോക്തൃനാമമോ ഐ.പി. വിലാസമോ ചേര്‍ക്കുക.',
 	'regexblock-form-submit-expiry' => 'ദയവായി തടയലിനു ഒരു കാലാവധി തിരഞ്ഞെടുക്കുക.',
 	'regexblock-unblock-success' => 'സ്വതന്ത്രമാക്കല്‍ വിജയിച്ചിരിക്കുന്നു',
-	'regexblock-unblock-log' => "'''$1''' എന്ന ഉപയോക്തൃനാമം അല്ലെങ്കില്‍ ഐപിവിലാസം സ്വതന്ത്രമാക്കിയിരിക്കുന്നു.",
-	'regexblock-unblock-error' => '$1നെ സ്വതന്ത്രമാക്കുന്നതില്‍ പിശക്. അങ്ങനെയൊരു ഉപയോക്താവ് നിലവിലില്ലായിരിക്കും എന്നതാവും കാരണം.',
+	'regexblock-unblock-log' => "'''$1''' എന്ന ഉപയോക്തൃനാമം അല്ലെങ്കില്‍ ഐ.പി.വിലാസം സ്വതന്ത്രമാക്കിയിരിക്കുന്നു.",
+	'regexblock-unblock-error' => '$1നെ സ്വതന്ത്രമാക്കുന്നതില്‍ പിഴവ്. അങ്ങനെയൊരു ഉപയോക്താവ് നിലവിലില്ലായിരിക്കും എന്നതാവും കാരണം.',
 	'regexblock-view-all' => 'എല്ലാം',
 	'regexblock-view-go' => 'പോകൂ',
 	'regexblock-view-match' => '(കൃത്യമായി യോജിക്കുന്നവ)',
-	'regexblock-view-account' => '(അക്കൗണ്ട് സൃഷ്ടിക്കുന്നതു തടയല്‍)',
+	'regexblock-view-account' => '(അംഗത്വം സൃഷ്ടിക്കുന്നതു തടയല്‍)',
 	'regexblock-view-reason' => 'കാരണം: $1',
 	'regexblock-view-reason-default' => 'സാമാന്യമായ കാരണം',
 	'regexblock-view-block-infinite' => 'സ്ഥിരമായ തടയല്‍',
-	'regexblock-view-block-temporary' => 'കാലാവധി തീരുന്നത്',
-	'regexblock-view-block-expired' => 'കാലാവധി തീരുന്നത്',
 	'regexblock-view-block-by' => 'തടഞ്ഞത്',
 	'regexblock-view-block-unblock' => 'സ്വതന്ത്രമാക്കുക',
 	'regexblock-view-time' => '$1 ന്‌',
@@ -1477,8 +1939,6 @@ $messages['mr'] = array(
 	'regexblock-view-reason' => 'कारण: $1',
 	'regexblock-view-reason-default' => 'सर्वसाधारण कारण',
 	'regexblock-view-block-infinite' => 'कायमस्वरूपी ब्लॉक',
-	'regexblock-view-block-temporary' => 'समाप्ती',
-	'regexblock-view-block-expired' => 'संपल्याची वेळ',
 	'regexblock-view-block-by' => 'ब्लॉक कर्ता',
 	'regexblock-view-block-unblock' => 'अनब्लॉक',
 	'regexblock-view-stats' => '(सांख्यिकी)',
@@ -1486,11 +1946,20 @@ $messages['mr'] = array(
 	'regexblock-view-time' => '$1 वर',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Aurora
+ */
+$messages['ms'] = array(
+	'regexblock-form-reason' => 'Sebab:',
+);
+
 /** Maltese (Malti)
+ * @author Chrisportelli
  * @author Roderick Mallia
  */
 $messages['mt'] = array(
 	'regexblock-already-blocked' => '"$1" diġà bblokkjat',
+	'regexblock-expire-duration' => 'siegħa,sagħtejn,4 sigħat,6 sigħat,ġurnata,3 ġranet,ġimgħa,ġimgħatejn,xahar,3 xhur,6 xhur,sena,infinta',
 );
 
 /** Erzya (Эрзянь)
@@ -1501,6 +1970,7 @@ $messages['myv'] = array(
 	'regexblock-form-reason' => 'Тувталось:',
 	'regexblock-form-expiry' => 'Таштомома шказо:',
 	'regexblock-view-all' => 'Весе',
+	'regexblock-view-go' => 'Адя',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -1515,7 +1985,6 @@ $messages['nah'] = array(
 	'regexblock-view-all' => 'Mochīntīn',
 	'regexblock-view-go' => 'Yāuh',
 	'regexblock-view-reason' => 'īxtlamatiliztli: $1',
-	'regexblock-view-block-temporary' => 'motlamīz īpan',
 	'regexblock-view-stats' => '(tlapōhualli)',
 	'regexblock-view-time' => 'īpan $1',
 );
@@ -1538,9 +2007,12 @@ $messages['nl'] = array(
 	'regexblockstats' => 'Statistieken van regex-blokkeren',
 	'regexblock-help' => "Gebruik het onderstaande formulier om schrijftoegang voor een IP-adres of gebruiker te ontzeggen. Dit hoort eigenlijk alleen te gebeuren om vandalisme te voorkomen, en dient in overeenstemming te zijn met het beleid. ''U kunt zelfs gebruikers die nog niet bestaan blokkeren. Daarnaast worden ook gebruikers met gelijkende namen geblokkeerd. \"Test\" wordt samen met \"Test 2\", enzovoort geblokkeerd. U kunt ook een IP-adres blokkeren, wat betekent dat niemand van dat IP-adres pagina's kan bewerken. Opmerking: IP-adressen worden behandeld als gebruikersnamen bij het bepalen van blokkades. Als er geen reden is opgegeven, dan wordt er een standaard reden gebruikt.''",
 	'regexblock-page-title-1' => 'IP-adres blokkeren met behulp van reguliere uitdrukkingen',
-	'regexblock-reason-ip' => 'Dit IP-adres is door u of door iemand met hetzelfde IP-adres geblokkeerd van bewerken door vandalisme of een andere reden. Als u gelooft dat dit een fout is, gelieve $1',
-	'regexblock-reason-name' => 'Deze gebruikersnaam is geblokkeerd van bewerken door vandalisme of een andere reden. Als u gelooft dat dit een fout is, gelieve $1',
-	'regexblock-reason-regex' => 'Deze gebruikersnaam is door een gebruiker met dezelfde naam geblokkeerd van bewerken door vandalisme of een andere reden. Gelieve een andere gebruikersnaam te kiezen of $1 over het probleem',
+	'regexblock-reason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
+Als u denk dat dit ten onrechte is, [[$1|neem dan contact met ons op]]',
+	'regexblock-reason-name' => 'Deze gebruiker mag niet bewerken wegens vandalisme of verstoring.
+Als u denkt dat dit ten onrechte is, [[$1|neem dan contact met ons op]]',
+	'regexblock-reason-regex' => 'Deze gebruiker mag niet bewerken wegens vandalisme of verstoring door een gebruiker met een gelijkluidende naam.
+Kies een andere gebruikersnaam of [[$1|neem contact met ons op]] over het probleem',
 	'regexblock-form-username' => 'IP-adres of gebruikersnaam:',
 	'regexblock-form-reason' => 'Reden:',
 	'regexblock-form-expiry' => 'Vervalt:',
@@ -1550,6 +2022,7 @@ $messages['nl'] = array(
 	'regexblock-form-submit-empty' => 'Geef een gebruikersnaam of een IP-adres om te blokkeren.',
 	'regexblock-form-submit-regex' => 'Ongeldige reguliere uitdrukking.',
 	'regexblock-form-submit-expiry' => 'Geef een vervaltermijn op.',
+	'regexblock-link' => 'blokkeren met reguliere expressies',
 	'regexblock-match-stats-record' => '$1 blokkeerde "$2" op "$3" om "$4", werkend via IP-adres "$5"',
 	'regexblock-nodata-found' => 'Er zijn geen gegevens aangetroffen',
 	'regexblock-stats-title' => 'Regex-blokkeringsstatistieken',
@@ -1566,9 +2039,7 @@ $messages['nl'] = array(
 	'regexblock-view-reason' => 'reden: $1',
 	'regexblock-view-reason-default' => 'algemene reden',
 	'regexblock-view-block-infinite' => 'permanente blokkade',
-	'regexblock-view-block-temporary' => 'vervalt op',
-	'regexblock-view-block-expired' => 'vervalt op',
-	'regexblock-view-block-by' => 'geblokkeerd door',
+	'regexblock-view-block-by' => 'geblokkeerd door:',
 	'regexblock-view-block-unblock' => 'deblokkeren',
 	'regexblock-view-stats' => 'statistieken',
 	'regexblock-view-empty' => 'De lijst van geblokkeerde namen en IP-adressen is leeg.',
@@ -1596,11 +2067,11 @@ Dette bør berre bli gjort for å hindra hærverk, og i følgje med retningsline
 Du kan òg blokkera fulle IP-adresser, noko som tyder at ingen som loggar på gjennom desse kan endra sider. 
 Merk: delvise IP-adresser vil bli handsama som brukarnamn under blokkering. Om ingen årsak er oppgjeven vil ein standardårsak bli nytta.''",
 	'regexblock-page-title-1' => 'Blokker adressa ved hjelp av regulære uttrykk',
-	'regexblock-reason-ip' => 'IP-adressa di er hindra frå å endra sider grunna hærverk eller annan forstyrring av deg eller andre som nyttar den same IP-adressa. Om du meiner at dette er ein feil, $1',
-	'regexblock-reason-name' => 'Brukarnamnet ditt er hindra frå å endra sider grunna hærverk eller annan forstyrring. 
-Om du meiner at dette er ein feil, $1',
-	'regexblock-reason-regex' => 'Dette brukarnamnet er hindra frå å endra sider grunna hærverk eller annan forstyrring av ein brukar med liknande namn. 
-Opprett eit anna brukarnamn eller $1 om problemet.',
+	'regexblock-reason-ip' => 'Denne IP-adressa er hindra frå å endra sider grunna hærverk eller anna forstyrring av deg eller andre som nyttar den same IP-adressa. [[$1|Kontakt oss]] om du meiner at dette er ein feil.',
+	'regexblock-reason-name' => 'Brukarnamnet ditt er hindra frå å endra sider grunna hærverk eller anna forstyrring.
+[[$1|Kontakt oss]] om du meiner at dette er ein feil.',
+	'regexblock-reason-regex' => 'Dette brukarnamnet er hindra frå å endra sider grunna hærverk eller anna forstyrring av ein brukar med eit liknande namn. 
+Opprett eit anna brukarnamn eller [[$1|kontakt oss]] om problemet.',
 	'regexblock-form-username' => 'IP-adressa eller brukarnamn:',
 	'regexblock-form-reason' => 'Årsak:',
 	'regexblock-form-expiry' => 'Opphøyrstid:',
@@ -1610,6 +2081,7 @@ Opprett eit anna brukarnamn eller $1 om problemet.',
 	'regexblock-form-submit-empty' => 'Oppgje eit brukarnamn eller ei IP-adressa til å blokkera.',
 	'regexblock-form-submit-regex' => 'Ugyldig regulært uttrykk.',
 	'regexblock-form-submit-expiry' => 'Oppgje ei tid for enden på blokkeringa.',
+	'regexblock-link' => 'blokker med regulærutrykk',
 	'regexblock-match-stats-record' => '$1 blokkerte «$2» på «$3» den «$4», frå IP-adressa «$5»',
 	'regexblock-nodata-found' => 'Fann ingen data',
 	'regexblock-stats-title' => 'Statistikk for blokkering med regulære uttrykk',
@@ -1627,9 +2099,7 @@ Truleg finst det ingen brukar med dette namnet.',
 	'regexblock-view-reason' => 'årsak: $1',
 	'regexblock-view-reason-default' => 'generisk årsak',
 	'regexblock-view-block-infinite' => 'permanent blokkering',
-	'regexblock-view-block-temporary' => 'endar',
-	'regexblock-view-block-expired' => 'ENDA',
-	'regexblock-view-block-by' => 'blokkert av',
+	'regexblock-view-block-by' => 'blokkert av:',
 	'regexblock-view-block-unblock' => 'avblokker',
 	'regexblock-view-stats' => 'statistikk',
 	'regexblock-view-empty' => 'Lista over blokkerte namn og adresser er tom.',
@@ -1638,7 +2108,9 @@ Truleg finst det ingen brukar med dette namnet.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'regexblock' => 'Regex-blokkering',
@@ -1647,13 +2119,14 @@ $messages['no'] = array(
 	'regexblock-block-success' => 'Blokkering lyktes',
 	'regexblock-currently-blocked' => 'Nåværende blokkerte adresser:',
 	'regexblock-desc' => 'Utvidelse som brukes for å blokkere brukernavn og IP-adresser ved hjelp av regulære uttrykk. Inneholder både blokkeringsmekanismen og en [[Special:Regexblock|spesialside]] for å legge til og endre blokkeringer',
+	'regexblock-expire-duration' => 'én time,2 timer,fire timer,seks timer,én dag,tre dager,én uke,to uker,én måned,tre måneder,seks måneder, ett år, uendelig',
 	'regexblock-page-title' => 'Tittelblokkering ved hjelp av regulære uttrykk',
 	'regexblockstats' => 'Regex-blokkeringsstatistikk',
 	'regexblock-help' => "Bruk skjemaet nedenfor for å blokkere visse IP-adresser eller brukernavn fra å redigere. Dette burde gjøres kun for å forhindre hærverk, og i følge med retningslinjene. ''Denne siden vil la deg blokkere også ikke-eksisterende brukere, og vil også blokkere brukere med navn som ligner det som blir gitt. F.eks. vil «Test» blokkeres sammen med «Test 2» osv. Du kan også blokkere fulle IP-adresser, hvilket betyr at ingen som logger på via disse kan redigere sider. Merk delvise IP-adresser vil behandles som brukernavn under blokkering. Om ingen begrunnelse oppgis vil en standardbegrunnelse bli brukt.''",
 	'regexblock-page-title-1' => 'Blokker adresse ved hjelp av regulære uttrykk',
-	'regexblock-reason-ip' => 'Denne IP-adressen er hindret fra å redigere på grunn av hærverk eller annen forstyrrelse av deg eller noen andre som bruker samme IP-adresse. Om du mener dette er en feil, vennligst $1',
-	'regexblock-reason-name' => 'Dette brukernavnet er hindret fra å redigere på grunn av hærverk eller annen forstyrrelse. Om du mener dette er en feil, vennligst $1',
-	'regexblock-reason-regex' => 'Dette brukernavnet er forhindret fra redigering på grunn av hærverk eller annen forstyrrelse av en bruker med lignende navn. Vennligst opprett et annet brukernavn eller $1 om problemet.',
+	'regexblock-reason-ip' => 'Denne IP-adressen er hindret fra å redigere på grunn av hærverk eller annen forstyrrelse av deg eller noen andre som bruker samme IP-adresse. Om du mener dette er en feil, vennligst [[$1|kontakt oss]]',
+	'regexblock-reason-name' => 'Dette brukernavnet er hindret fra å redigere på grunn av hærverk eller annen forstyrrelse. Om du mener dette er en feil, vennligst [[$1|kontakt oss]]',
+	'regexblock-reason-regex' => 'Dette brukernavnet er forhindret fra redigering på grunn av hærverk eller annen forstyrrelse av en bruker med lignende navn. Vennligst opprett et annet brukernavn eller [[$1|kontakt oss]] om problemet.',
 	'regexblock-form-username' => 'IP-adresse eller brukernavn:',
 	'regexblock-form-reason' => 'Årsak:',
 	'regexblock-form-expiry' => 'Varighet:',
@@ -1663,10 +2136,14 @@ $messages['no'] = array(
 	'regexblock-form-submit-empty' => 'Angi et brukernavn eller en IP-adresse å blokkere.',
 	'regexblock-form-submit-regex' => 'Ugyldig regulært uttrykk',
 	'regexblock-form-submit-expiry' => 'Angi en utløpstid.',
+	'regexblock-link' => 'blokker med et regulært uttrykk',
+	'regexblock-match-stats-record' => "$1 blokkerte '$2' på '$3' den '$4',fra IP-adressen '$5'",
+	'regexblock-nodata-found' => 'Ingen data funnet',
 	'regexblock-stats-title' => 'Statistikk for blokkering med regulære uttrykk',
 	'regexblock-unblock-success' => 'Avblokkering lyktes',
 	'regexblock-unblock-log' => "Brukernavnet eller IP-adressen '''$1''' er blitt avblokkert",
 	'regexblock-unblock-error' => 'Feil under avblokkering av $1. Det er trolig ingen brukere med det navnet.',
+	'regexblock-regex-filter' => ' eller regex-verdi:',
 	'regexblock-view-blocked' => 'Vis de blokkerte etter:',
 	'regexblock-view-all' => 'Alle',
 	'regexblock-view-go' => '{{int:Go}}',
@@ -1676,13 +2153,12 @@ $messages['no'] = array(
 	'regexblock-view-reason' => 'begrunnelse: $1',
 	'regexblock-view-reason-default' => 'generisk grunn',
 	'regexblock-view-block-infinite' => 'permanent blokkering',
-	'regexblock-view-block-temporary' => 'utgår',
-	'regexblock-view-block-expired' => 'UTGIKK',
-	'regexblock-view-block-by' => 'blokkert av',
+	'regexblock-view-block-by' => 'blokkert av:',
 	'regexblock-view-block-unblock' => 'avblokker',
-	'regexblock-view-stats' => '(statistikk)',
+	'regexblock-view-stats' => 'statistikk',
 	'regexblock-view-empty' => 'listen over blokkerte navn og adresser er tom.',
 	'regexblock-view-time' => '$1',
+	'right-regexblock' => 'Blokker brukere fra å endre på alle wikier på wiki-farmen',
 );
 
 /** Novial (Novial)
@@ -1735,6 +2211,7 @@ Se sètz segur{{GENDER:||a}} que s’agís d’una error, [[$1|contactatz-nos]].
 	'regexblock-form-submit-empty' => 'Indicatz un nom d’utilizaire o una adreça IP de blocar.',
 	'regexblock-form-submit-regex' => 'Expression regulara incorrècta.',
 	'regexblock-form-submit-expiry' => 'Precisatz un periòde d’expiracion.',
+	'regexblock-link' => 'blocar amb una expression racionala',
 	'regexblock-match-stats-record' => "$1 a blocat « $2 » lo « $3 » a « $4 », connectat dempuèi l'adreça « $5 »",
 	'regexblock-nodata-found' => 'Cap de donada pas trobada',
 	'regexblock-stats-title' => 'Estatisticas dels blocatges per expressions regularas',
@@ -1751,8 +2228,6 @@ Se sètz segur{{GENDER:||a}} que s’agís d’una error, [[$1|contactatz-nos]].
 	'regexblock-view-reason' => 'motiu : $1',
 	'regexblock-view-reason-default' => 'cap de motiu indicat',
 	'regexblock-view-block-infinite' => 'blocatge permanent',
-	'regexblock-view-block-temporary' => 'expira lo',
-	'regexblock-view-block-expired' => 'EXPIRAT lo',
 	'regexblock-view-block-by' => 'blocat per :',
 	'regexblock-view-block-unblock' => 'desblocar',
 	'regexblock-view-stats' => 'estatisticas',
@@ -1775,6 +2250,15 @@ $messages['pa'] = array(
 	'regexblock-view-all' => 'ਸਭ',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'regexblock-form-username' => 'IP-Adress odder Yuusernaame:',
+	'regexblock-form-reason' => 'Grund:',
+	'regexblock-view-all' => 'All',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
@@ -1783,7 +2267,7 @@ $messages['pa'] = array(
  */
 $messages['pl'] = array(
 	'regexblock' => 'Blokada z użyciem wyrażenia regularnego',
-	'regexblock-already-blocked' => '$1 jest już zablokowany',
+	'regexblock-already-blocked' => '$1 jest już zablokowany.',
 	'regexblock-block-log' => "Nazwa użytkownika lub adres IP '''$1''' zostały zablokowane.",
 	'regexblock-block-success' => 'Pomyślnie zablokowano',
 	'regexblock-currently-blocked' => 'Obecnie zablokowane adresy:',
@@ -1813,6 +2297,7 @@ Utwórz inną nazwę użytkownika lub [[$1|skontaktuj się z nami]] w celu rozwi
 	'regexblock-form-submit-empty' => 'Podaj nazwę użytkownika lub adres IP do zablokowania.',
 	'regexblock-form-submit-regex' => 'Nieprawidłowe wyrażenie regularne',
 	'regexblock-form-submit-expiry' => 'Określ czas zakończenia blokady.',
+	'regexblock-link' => 'blokada z wykorzystaniem wyrażenia regularnego',
 	'regexblock-match-stats-record' => '$1 zablokowało „$2” w „$3” o „$4”, zalogowanego „$5”',
 	'regexblock-nodata-found' => 'Nie odnaleziono danych',
 	'regexblock-stats-title' => 'Statystyki blokad z użyciem wyrażeń regularnych',
@@ -1830,8 +2315,6 @@ Prawdopodobnie brak takiego użytkownika.',
 	'regexblock-view-reason' => 'powód: $1',
 	'regexblock-view-reason-default' => 'typowa przyczyna',
 	'regexblock-view-block-infinite' => 'blokada stała',
-	'regexblock-view-block-temporary' => 'upływa',
-	'regexblock-view-block-expired' => 'upłynęła',
 	'regexblock-view-block-by' => 'zablokowany przez',
 	'regexblock-view-block-unblock' => 'odblokuj',
 	'regexblock-view-stats' => 'statystyki',
@@ -1840,10 +2323,73 @@ Prawdopodobnie brak takiego użytkownika.',
 	'right-regexblock' => 'Blokowanie użytkownikom możliwości edycji na wszystkich wiki w obrębie farmy',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'regexblock' => 'Blocagi regex',
+	'regexblock-already-blocked' => "$1 a l'é già blocà",
+	'regexblock-block-log' => "Ël nòm utent o l'adrëssa IP '''$1''' a l'é stàit blocà.",
+	'regexblock-block-success' => 'Blocagi bin fàit',
+	'regexblock-currently-blocked' => 'Adrësse blocà al moment:',
+	'regexblock-desc' => 'Estension dovrà për bloché nòm utent e adrësse IP con espression regolar. A conten ël mecanism ëd blocagi e na [[Special:Regexblock|pàgina special]] për gionté/gestì ij blocagi.',
+	'regexblock-expire-duration' => '1 ora, 2 ore, 4 ore, 6 ore, 1 di, 3 di, 1 sman-a, 2 sman-e, 1 mèis, 3 mèis, 6 mèis, 1 ann, sensa fin',
+	'regexblock-page-title' => "Blocagi dël nòm con n'espression regolar",
+	'regexblockstats' => 'Statìstiche ëd blocagi regex',
+	'regexblock-help' => "Deuvra ël formolari sì-sota për bloché l'acess an scritura a na specìfica adrëssa IP o nòm utent.
+Sòn a dovrìa esse fàit mach për evité vandalism, e d'acòrdi con ij deuit.
+''Sta pàgina-sì at përmët ëd bloché ëdcò utent pa esistent, e a blòca ëdcò utent con nòm smijant a col dàit, visadì \"Test\" a sarà blocà ansema a \"Test 2\" e via fòrt.
+It peule ëdcò bloché adrësse IP, visadì che pi gnun intrand da lì a podrà modifiché dle pàgine.
+Nòta: adrësse IP parsiaj a saran tratà com nòm utent për determiné ël blocagi.
+Se gnun-e rason a son specificà, a sarà dovrà na rason genérica stàndard.''",
+	'regexblock-page-title-1' => 'Blòca adrëssa an dovrand espression regolar',
+	'regexblock-reason-ip' => "St'adrëssa IP-sì a peul pa modifiché për vandalism o àutr dann fàit da ti o da cheicun che a condivid  toa adrëssa IP.
+S'it chërde che son a sia n'eror, për piasì [[$1|contatne]]",
+	'regexblock-reason-name' => "Sto nòm utent-sì a peul pa modifiché për vandalism o àutr dann.
+S'it chërde che a sia n'eror, për piasì [[$1|contatne]]",
+	'regexblock-reason-regex' => "Sto nòm utent-sì a peul pa modifichè për vandalism o àutr dann fàit na n'utent con nòm ësmijant.
+Për piasì crea n'àutr nòm utent o [[$1|contatne]] për parlé dël problema.",
+	'regexblock-form-username' => 'Adrëssa IP o nòm utent:',
+	'regexblock-form-reason' => 'rason:',
+	'regexblock-form-expiry' => 'Fin:',
+	'regexblock-form-match' => 'Pròpi istess',
+	'regexblock-form-account-block' => 'Blòca la creassion ëd neuv cont',
+	'regexblock-form-submit' => "Blòca st'utent-sì",
+	'regexblock-form-submit-empty' => "Da un nòm utent o n'adrëssa IP da bloché.",
+	'regexblock-form-submit-regex' => 'Espression regolar pa bon-a.',
+	'regexblock-form-submit-expiry' => 'Për piasì specìfica un temp ëd fin.',
+	'regexblock-link' => 'blòca con espression regolar',
+	'regexblock-match-stats-record' => "$1 a l'ha blocà '$2' su '$3' a '$4', registrand da l'adrëssa '$5'",
+	'regexblock-nodata-found' => 'Pa gnun dat trovà',
+	'regexblock-stats-title' => 'Statìstiche dij blocagi regex',
+	'regexblock-unblock-success' => 'Dësblocagi andàit bin',
+	'regexblock-unblock-log' => "Ël nòm utent o l'adrëssa IP '''$1''' a l'é stàit blocà.",
+	'regexblock-unblock-error' => 'Eror an dësblocand $1.
+A peul esse che a-i sia pa col utent.',
+	'regexblock-regex-filter' => '  o valor regex:',
+	'regexblock-view-blocked' => 'Visualisassion blocà da:',
+	'regexblock-view-all' => 'Tùit',
+	'regexblock-view-go' => 'Va',
+	'regexblock-view-match' => '(pròpi parèj)',
+	'regexblock-view-regex' => '(corëspondensa regex)',
+	'regexblock-view-account' => '(blocagi ëd la creassion ëd cont)',
+	'regexblock-view-reason' => 'rason: $1',
+	'regexblock-view-reason-default' => 'rason genérica',
+	'regexblock-view-block-infinite' => 'blocagi përmanent',
+	'regexblock-view-block-by' => 'blocà da:',
+	'regexblock-view-block-unblock' => 'dësbloché',
+	'regexblock-view-stats' => 'statìstiche',
+	'regexblock-view-empty' => "La lista ëd nòm e adrësse blocà a l'é veuida.",
+	'regexblock-view-time' => 'dzora $1',
+	'right-regexblock' => "Blòca utent për le modìfiche dzora a tute le wiki dl'ansema ëd wiki",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'regexblock-form-username' => 'IP پته يا کارن-نوم:',
 	'regexblock-form-reason' => 'سبب:',
 	'regexblock-form-expiry' => 'د پای نېټه:',
 	'regexblock-view-all' => 'ټول',
@@ -1852,6 +2398,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author Waldir
@@ -1868,10 +2415,10 @@ $messages['pt'] = array(
 	'regexblockstats' => 'Estatísticas de bloqueio de expressões regulares',
 	'regexblock-help' => 'Use o formulário abaixo para bloquear o acesso de escrita a um endereço IP ou nome de utilizador específicos.
 Isto deverá ser feito apenas para prevenir vandalismo, e de acordo com as políticas.
-\'\'Esta página permitir-lhe-á bloquear até mesmo utilizadores não existentes, e também bloqueará utilizadores com nomes semelhantes ao dado, p. ex. "Teste" será bloqueado juntamente com "Teste 2", etc.
-Você pode também bloquear endereços IP completos, significando isto que ninguém deles proveniente poderá editar páginas.
-Nota: endereços IP parciais serão tratados como nomes de utilizadores na determinação do bloqueio.
-Se nenhum motivo for especificado, um motivo genérico por defeito será usado.\'\'',
+\'\'Esta página permitir-lhe-á bloquear até mesmo utilizadores não existentes, e também bloqueará utilizadores com nomes semelhantes ao dado, isto é, "Teste" será bloqueado juntamente com "Teste 2", etc.
+Também pode bloquear endereços IP completos, significando isto que ninguém proveniente deles poderá editar páginas.
+Nota: endereços IP parciais serão tratados como nomes de utilizador na determinação do bloqueio.
+Se nenhum motivo for especificado, será usado um motivo genérico predefinido.\'\'',
 	'regexblock-page-title-1' => 'Bloquear endereço utilizando expressões regulares',
 	'regexblock-reason-ip' => 'Este endereço IP está impedido de editar devido a vandalismo ou outra perturbação por si ou outra pessoa que partilha o seu endereço IP.
 Se crê que se trata de um erro, por favor, [[$1|entre em contacto]]',
@@ -1887,9 +2434,10 @@ Por favor, crie um nome de utilizador alternativo ou [[$1|avise-nos]] sobre o pr
 	'regexblock-form-submit-empty' => 'Forneça um nome de utilizador ou um endereço IP para bloquear.',
 	'regexblock-form-submit-regex' => 'Expressão regular inválida.',
 	'regexblock-form-submit-expiry' => 'Por favor, seleccione um período de expiração.',
+	'regexblock-link' => 'bloqueio com expressão regular',
 	'regexblock-match-stats-record' => "$1 bloqueou '$2' em '$3' em '$4', proveniente do endereço '$5'",
-	'regexblock-nodata-found' => 'Nenhuns dados encontrados',
-	'regexblock-stats-title' => 'Estatísticas de bloqueio de expressões regulares',
+	'regexblock-nodata-found' => 'Não foram encontrados dados',
+	'regexblock-stats-title' => 'Estatísticas de bloqueio com expressões regulares',
 	'regexblock-unblock-success' => 'Desbloqueio bem sucedido',
 	'regexblock-unblock-log' => "O nome de utilizador ou endereço IP '''$1''' foi desbloqueado.",
 	'regexblock-unblock-error' => 'Erro ao desbloquear $1. Provavelmente não existe esse utilizador.',
@@ -1903,14 +2451,12 @@ Por favor, crie um nome de utilizador alternativo ou [[$1|avise-nos]] sobre o pr
 	'regexblock-view-reason' => 'motivo: $1',
 	'regexblock-view-reason-default' => 'motivo genérico',
 	'regexblock-view-block-infinite' => 'bloqueio permanente',
-	'regexblock-view-block-temporary' => 'expira em',
-	'regexblock-view-block-expired' => 'EXPIRADO em',
 	'regexblock-view-block-by' => 'bloqueado por:',
 	'regexblock-view-block-unblock' => 'desbloquear',
 	'regexblock-view-stats' => 'estatísticas',
 	'regexblock-view-empty' => 'Esta lista de nomes e endereços bloqueados está vazia.',
 	'regexblock-view-time' => 'em $1',
-	'right-regexblock' => 'Bloquear a edição a utilizadores em todos os wikis da farm de wikis',
+	'right-regexblock' => 'Bloquear a edição aos utilizadores de todas as wikis da fazenda',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1934,10 +2480,10 @@ Nota: endereços IP parciais serão tratados como nomes de utilizadores na deter
 Se nenhum motivo for especificado, um motivo genérico padrão será usado.\'\'',
 	'regexblock-page-title-1' => 'Bloquear endereço utilizando expressões regulares',
 	'regexblock-reason-ip' => 'Este endereço IP está impedido de editar devido a vandalismo ou outra perturbação por si ou outra pessoa que compartilha o seu endereço IP.
-Se você acredita que se trata de um erro, por favor, $1',
-	'regexblock-reason-name' => 'Este nome de utilizador está impedido de editar devido a vandalismo ou outro tipo de disrupção. Se julgar tratar-se de um erro, por favor $1',
+Se você acredita que se trata de um erro, por favor, [[$1|contate-nos]]',
+	'regexblock-reason-name' => 'Este nome de utilizador está impedido de editar devido a vandalismo ou outro tipo de disrupção. Se julgar tratar-se de um erro, por favor [[$1|contate-nos]]',
 	'regexblock-reason-regex' => 'Este nome de utilizador está impedido de editar devido a vandalismo ou outra perturbação por um utilizador com um nome semelhante.
-Por favor, crie um nome de utilizador alternativo ou $1 sobre o problema',
+Por favor, crie um nome de utilizador alternativo ou [[$1|contate-nos]] sobre o problema',
 	'regexblock-form-username' => 'Endereço IP ou nome de utilizador:',
 	'regexblock-form-reason' => 'Motivo:',
 	'regexblock-form-expiry' => 'Validade:',
@@ -1963,14 +2509,26 @@ Por favor, crie um nome de utilizador alternativo ou $1 sobre o problema',
 	'regexblock-view-reason' => 'motivo: $1',
 	'regexblock-view-reason-default' => 'motivo genérico',
 	'regexblock-view-block-infinite' => 'bloqueio permanente',
-	'regexblock-view-block-temporary' => 'expira em',
-	'regexblock-view-block-expired' => 'EXPIRADO em',
-	'regexblock-view-block-by' => 'bloqueado por',
+	'regexblock-view-block-by' => 'bloqueado por:',
 	'regexblock-view-block-unblock' => 'desbloquear',
 	'regexblock-view-stats' => 'estatísticas',
 	'regexblock-view-empty' => 'Esta lista de nomes e endereços bloqueados está vazia.',
 	'regexblock-view-time' => 'em $1',
 	'right-regexblock' => 'Bloquear a edição a utilizadores em todos os wikis da farm de wikis',
+);
+
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'regexblock-reason-regex' => "Kay ruraqpa sutinqa llamk'apuymanta hark'asqam, yaqa kaqlla sutiyuq ruraq wandaluchaptinmi, millaykunata ruraptinmi. Ama hina kaspa, huk ruraqpa sutiykita kamariy icha [[$1|qillqarimuwayku]] kay sasachakuymanta rimanakunanchikpaq",
+	'regexblock-form-submit' => "Kay ruraqta hark'ay",
+	'regexblock-match-stats-record' => '$1 sutiyuqqa \'$2\' sutiyuqta hark\'an \'$3\' p\'unchawpi \'$4\' pachapi, \'$5\' tiyaymanta hallch\'aspa
+<!--
+structure:
+"hark\'an" = "blocked"
+"$1 sutiyuqqa" = "the one who has the name $1" and so on
+-->',
 );
 
 /** Tarifit (Tarifit)
@@ -1982,15 +2540,31 @@ $messages['rif'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'regexblock' => 'Blocare regex',
 	'regexblock-already-blocked' => '$1 este deja blocat.',
+	'regexblock-currently-blocked' => 'Adrese blocate în prezent:',
 	'regexblock-form-username' => 'Adresă IP sau nume d utilizator:',
 	'regexblock-form-reason' => 'Motiv:',
+	'regexblock-form-expiry' => 'Expirare:',
+	'regexblock-form-account-block' => 'Blochează crearea de conturi noi',
+	'regexblock-form-submit' => 'Blochează acest utilizator',
+	'regexblock-form-submit-regex' => 'Expresie regulată incorectă.',
+	'regexblock-unblock-success' => 'Deblocare cu succes',
+	'regexblock-unblock-log' => "Utilizatorul sau adresa IP '''$1''' a fost deblocat.",
+	'regexblock-view-all' => 'Toţi',
+	'regexblock-view-go' => 'Mergeţi',
+	'regexblock-view-account' => '(blocare creare conturi)',
 	'regexblock-view-reason' => 'motiv: $1',
 	'regexblock-view-reason-default' => 'motiv generic',
-	'regexblock-view-block-temporary' => 'expiră la',
+	'regexblock-view-block-infinite' => 'blocare permanentă',
+	'regexblock-view-block-by' => 'blocat de către:',
+	'regexblock-view-block-unblock' => 'deblocare',
+	'regexblock-view-stats' => 'statistici',
+	'regexblock-view-empty' => 'Lista de nume şi adrese blocate este goală.',
 );
 
 /** Tarandíne (Tarandíne)
@@ -2003,6 +2577,8 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ferrer
+ * @author Innv
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -2012,6 +2588,7 @@ $messages['ru'] = array(
 	'regexblock-block-success' => 'Блокировка выполнена успешно',
 	'regexblock-currently-blocked' => 'Заблокированные сейчас адреса:',
 	'regexblock-desc' => 'Расширение, использующееся для блокировки имён участников и IP-адресов с помощью регулярных выражений. Содержит механизм блокирования и [[Special:Regexblock|служебную страницу]] для добавления и управления блокировками',
+	'regexblock-expire-duration' => '1 час,2 часа,4 часа,6 часов,1 день,3 дня,1 неделя,2 недели,1 месяц,3 месяца,6 месяцев,1 год,бессрочно',
 	'regexblock-page-title' => 'Блокирование имени по регулярному выражению',
 	'regexblockstats' => 'Статистика блокировок по регулярным выражениям',
 	'regexblock-help' => "Используйте приведённую ниже форму для запрета возможности записи для определённого IP-адреса или имени участника.
@@ -2022,11 +2599,11 @@ $messages['ru'] = array(
 Если не указана причина, то будет использовано общее описание по умолчанию.''",
 	'regexblock-page-title-1' => 'Блокировка адресов с помощью регулярных выражений',
 	'regexblock-reason-ip' => 'Этот IP-адрес отстранён от редактирования из-за вандализма или других нарушений, которые могли совершить вы или кто-то другой, использующий такой же IP-адрес.
-Если вы считаете, что это ошибка, пожалуйста, $1',
+Если вы считаете, что это ошибка, пожалуйста, [[$1|свяжитесь с нами]]',
 	'regexblock-reason-name' => 'Это имя участника отстранёно от редактирования из-за вандализма или других нарушений.
-Если вы считаете, что это ошибка, пожалуйста, $1',
+Если вы считаете, что это ошибка, пожалуйста, [[$1|свяжитесь с нами]]',
 	'regexblock-reason-regex' => 'Это имя участника отстранёно от редактирования из-за вандализма или других нарушений, которые совершил участник с похожим именем.
-Пожалуйста, создайте другое имя участника или $1 о проблеме',
+Пожалуйста, создайте другое имя участника или [[$1|сообщите нам]] о проблеме',
 	'regexblock-form-username' => 'IP-адрес или имя участника:',
 	'regexblock-form-reason' => 'Причина:',
 	'regexblock-form-expiry' => 'Истекает:',
@@ -2036,12 +2613,15 @@ $messages['ru'] = array(
 	'regexblock-form-submit-empty' => 'Укажите имя участника или IP-адрес для блокировки.',
 	'regexblock-form-submit-regex' => 'Ошибочное регулярное выражение.',
 	'regexblock-form-submit-expiry' => 'Пожалуйста, укажите время действия.',
+	'regexblock-link' => 'заблокировать с регулярным выражением',
+	'regexblock-match-stats-record' => '$1 блокировал «$2» на «$3» на «$4», вошедшего в систему с адреса «$5»',
 	'regexblock-nodata-found' => 'Ничего не найдено',
 	'regexblock-stats-title' => 'Статистика RegexBlock',
 	'regexblock-unblock-success' => 'Разблокировка выполнена успешно',
 	'regexblock-unblock-log' => "Имя участника или IP-адрес '''$1''' заблокирован.",
 	'regexblock-unblock-error' => 'Ошибка разблокировки $1.
 Возможно, такого участника не существует.',
+	'regexblock-regex-filter' => '  или значение регулярного выражения:',
 	'regexblock-view-blocked' => 'Просмотреть заблокированных:',
 	'regexblock-view-all' => 'Все',
 	'regexblock-view-go' => 'Выполнить',
@@ -2051,9 +2631,7 @@ $messages['ru'] = array(
 	'regexblock-view-reason' => 'причина: $1',
 	'regexblock-view-reason-default' => 'общая причина',
 	'regexblock-view-block-infinite' => 'бессрочная блокировка',
-	'regexblock-view-block-temporary' => 'истекает',
-	'regexblock-view-block-expired' => 'ИСТЕКЛА',
-	'regexblock-view-block-by' => 'заблокирован',
+	'regexblock-view-block-by' => 'заблокирован:',
 	'regexblock-view-block-unblock' => 'разблокировать',
 	'regexblock-view-stats' => 'статистика',
 	'regexblock-view-empty' => 'Список заблокированных имён и адресов пуст.',
@@ -2083,9 +2661,9 @@ $messages['sk'] = array(
 	'regexblockstats' => 'Štatistika regex blokovaní',
 	'regexblock-help' => "Použite tento formulár na zablokovanie úprav z určitej IP adresy alebo používateľského mena. Toto by sa malo využívať iba na predchádzanie vandalizmu a v súlade so zásadami blokovania. ''Táto stránka vým umožní zablokovať aj momentálne neexistujúcich používateľov a používateľov s podobnými menami ako bolo zadané, t.j. okrem « Test » bude zablokovaný aj « Test 2 » atď. Môžete tiež zablokovať celé IP adresy, čo znamená, že nikto, kto z nich pristupuje nebude môcť upravovať stránky. Pozn.: čiastočné IP adresy budú považované za používateľské mená. Ak nebude uvedený dôvod, použije sa štandardný všeobecný dôvod.''",
 	'regexblock-page-title-1' => 'Zablokovať adresu na základe regulárneho výrazu',
-	'regexblock-reason-ip' => 'Tejto IP adrese bolo zakázané upravovanie kvôli vandalizmu alebo inej rušivej činnosti, ktorú ste vykonával vy alebo niekto, s kým máte spoločnú vašu IP adresu. Ak veríte, že toto je omyl, prosím $1',
-	'regexblock-reason-name' => 'Tomuto používateľskému menu bolo zakázané upravovanie kvôli vandalizmu alebo inej rušivej činnosti. Ak veríte, že toto je omyl, prosím $1',
-	'regexblock-reason-regex' => 'Tomuto používateľskému menu bolo zakázané upravovanie kvôli vandalizmu alebo inej rušivej činnosti používateľa s podobným menom. Prosím, vytvorte si alternatívny používateľský účet alebo o probléme $1',
+	'regexblock-reason-ip' => 'Tejto IP adrese bolo zakázané upravovanie kvôli vandalizmu alebo inej rušivej činnosti, ktorú ste vykonávali vy alebo niekto s kým máte spoločnú vašu IP adresu. Ak veríte, že toto je omyl, prosím [[$1|kontaktujte nás]].',
+	'regexblock-reason-name' => 'Tomuto používateľskému menu bolo zakázané upravovanie kvôli vandalizmu alebo inej rušivej činnosti. Ak veríte, že toto je omyl, prosím [[$1|kontaktujte nás]].',
+	'regexblock-reason-regex' => 'Tomuto používateľskému menu bolo zakázané upravovanie kvôli vandalizmu alebo inej rušivej činnosti používateľa s podobným menom. Prosím, vytvorte si alternatívny používateľský účet alebo nás ohľadne problému [[$1|kontaktujte]].',
 	'regexblock-form-username' => 'IP adresa alebo meno používateľa:',
 	'regexblock-form-reason' => 'Dôvod:',
 	'regexblock-form-expiry' => 'Vyprší:',
@@ -2095,6 +2673,7 @@ $messages['sk'] = array(
 	'regexblock-form-submit-empty' => 'Zadajte používateľské meno alebo IP adresu, ktorá sa má zablokovať.',
 	'regexblock-form-submit-regex' => 'Neplatný regulárny výraz.',
 	'regexblock-form-submit-expiry' => 'Prosím zadajte, kedy má blokovanie skončiť.',
+	'regexblock-link' => 'zablokovať regulárnym výrazom',
 	'regexblock-match-stats-record' => '$1 zablokoval účet „$2“ na „$3“ $4, záznam z adresy „$5“',
 	'regexblock-nodata-found' => 'Neboli nájdené žiadne údaje',
 	'regexblock-stats-title' => 'Štatistiky regex blokovaní',
@@ -2111,9 +2690,7 @@ $messages['sk'] = array(
 	'regexblock-view-reason' => 'dôvod: $1',
 	'regexblock-view-reason-default' => 'všeobecný dôvod',
 	'regexblock-view-block-infinite' => 'trvalé blokovanie',
-	'regexblock-view-block-temporary' => 'vyprší',
-	'regexblock-view-block-expired' => 'VYPRŠALO',
-	'regexblock-view-block-by' => 'zablokoval ho',
+	'regexblock-view-block-by' => 'zablokoval ho:',
 	'regexblock-view-block-unblock' => 'odblokovať',
 	'regexblock-view-stats' => 'štatistiky',
 	'regexblock-view-empty' => 'Zoznam blokovaných mien a IP adries je prázdny.',
@@ -2121,11 +2698,18 @@ $messages['sk'] = array(
 	'right-regexblock' => 'Zablokovať úpravy používateľov na všetkých wiki z tejto wiki farmy',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  */
 $messages['sr-ec'] = array(
 	'regexblock-form-reason' => 'Разлог:',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'regexblock-form-reason' => 'Razlog:',
 );
 
 /** Sundanese (Basa Sunda)
@@ -2137,6 +2721,7 @@ $messages['su'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Fluff
  * @author M.M.S.
  * @author Najami
  */
@@ -2147,6 +2732,7 @@ $messages['sv'] = array(
 	'regexblock-block-success' => 'Blockering lyckades',
 	'regexblock-currently-blocked' => 'Nuvarande blockerade adresser:',
 	'regexblock-desc' => 'Tillägg som används för att blockera användarnamn och IP-adresser med hjälp av reguljära uttryck. Innehåller både blockeringsmekansimen och en [[Special:Regexblock|specialsida]] för att lägga till och ändra blockeringar',
+	'regexblock-expire-duration' => '1 timme,2 timmar,4 timmar,6 timmar,1 dag,3 dagar,1 vecka,2 veckor,1 månad,3 månader,6 månader,1 år, oändlig',
 	'regexblock-page-title' => 'Blockering med hjälp av reguljära uttryck',
 	'regexblockstats' => 'Regex-blockeringsstatistik',
 	'regexblock-help' => 'Använd formuläret nedan för att blockera vissa IP-adresser eller användarnamn från att redigera. 
@@ -2156,12 +2742,12 @@ Du kan också blockera fulla IP-adresser, vilket betyder att ingen som loggar in
 Notera att delvisa IP-adresser kommer behandlas som användarnamn under blockering.
 Om ingen beskrivning uppges kommer en standardbeskrivning användas.\'\'',
 	'regexblock-page-title-1' => 'Blockera adress med hjälp av reguljära uttryck',
-	'regexblock-reason-ip' => 'Den här IP-adressen är hindrad från att redigera på grund av vandalism eller annan förstörelse av dig eller någon annan som använder samma IP-adress.
-Om du menar att detta är ett fel, var god $1',
-	'regexblock-reason-name' => 'Det här användarnamnet är hindrad från att redigera på grund av vandalism eller annan förstörelse.
-Om du menar att detta är ett fel, var god $1',
-	'regexblock-reason-regex' => 'Den här IP-adressen är hindrad från att redigera på grund av vandalism eller annan förstörelse av en användare med liknande namn. 
-Var god skapa ett annat användarnamn eller $1 om problemet.',
+	'regexblock-reason-ip' => 'Den här IP-adressen är blockerad från att redigera på grund av vandalism eller annan förstörelse av dig eller någon annan som använder samma IP-adress.
+Om du anser att detta är fel, var god [[$1|kontakta oss]]',
+	'regexblock-reason-name' => 'Det här användarnamnet är blockerat från att redigera på grund av vandalism eller annan förstörelse.
+Om du anser att detta är fel, var god [[$1|kontakta oss]]',
+	'regexblock-reason-regex' => 'Den här IP-adressen är blockerad från att redigera på grund av vandalism eller annan förstörelse av en användare med liknande namn. 
+Var god skapa ett annat användarnamn eller [[$1|kontakta oss]] om problemet.',
 	'regexblock-form-username' => 'IP adress eller användarnamn:',
 	'regexblock-form-reason' => 'Anledning:',
 	'regexblock-form-expiry' => 'Utgång:',
@@ -2171,11 +2757,13 @@ Var god skapa ett annat användarnamn eller $1 om problemet.',
 	'regexblock-form-submit-empty' => 'Ange ett användarnamn eller en IP-adress att blockera.',
 	'regexblock-form-submit-regex' => 'Ogiltigt reguljärt uttryck',
 	'regexblock-form-submit-expiry' => 'Var god ange en utgångstid.',
+	'regexblock-nodata-found' => 'Hittade ingen data',
 	'regexblock-stats-title' => 'Regex-blockeringsstatistik',
 	'regexblock-unblock-success' => 'Avblockering lyckades',
 	'regexblock-unblock-log' => "Användarnamnet eller IP-adressen '''$1''' har avblockerats",
 	'regexblock-unblock-error' => 'Fel under avblockering av $1.
 Troligen så finns det ingen användare med det namnet.',
+	'regexblock-regex-filter' => ' eller det reguljära uttrycket:',
 	'regexblock-view-blocked' => 'Visa de blockerade efter:',
 	'regexblock-view-all' => 'Alla',
 	'regexblock-view-go' => 'Gå',
@@ -2185,13 +2773,12 @@ Troligen så finns det ingen användare med det namnet.',
 	'regexblock-view-reason' => 'anledning: $1',
 	'regexblock-view-reason-default' => 'generisk grund',
 	'regexblock-view-block-infinite' => 'permanent blockering',
-	'regexblock-view-block-temporary' => 'utgår på',
-	'regexblock-view-block-expired' => 'GICK UT på',
-	'regexblock-view-block-by' => 'blockerad av',
+	'regexblock-view-block-by' => 'blockerad av:',
 	'regexblock-view-block-unblock' => 'avblockera',
 	'regexblock-view-stats' => 'statistik',
 	'regexblock-view-empty' => 'Listan över blockerade namn och adresser är tom.',
 	'regexblock-view-time' => 'på $1',
+	'right-regexblock' => 'Blockerar användare från att redigera på alla wikis i wikisamlingen',
 );
 
 /** Silesian (Ślůnski)
@@ -2233,11 +2820,9 @@ $messages['te'] = array(
 	'regexblock-view-reason' => 'కారణం: $1',
 	'regexblock-view-reason-default' => 'సాధారణ కారణం',
 	'regexblock-view-block-infinite' => 'శాశ్వత నిరోధం',
-	'regexblock-view-block-temporary' => 'కాలంచెల్లు తేదీ',
-	'regexblock-view-block-expired' => 'కాలంచెల్లింది',
-	'regexblock-view-block-by' => 'నిరోధించినది',
+	'regexblock-view-block-by' => 'నిరోధించినది:',
 	'regexblock-view-block-unblock' => 'నిరోధం ఎత్తివేయండి',
-	'regexblock-view-stats' => '(గణాంకాలు)',
+	'regexblock-view-stats' => 'గణాంకాలు',
 	'regexblock-view-empty' => 'నిరోధించిన పేర్లు మరియు చిరునామాల జాబితా ఖాళీగా ఉంది.',
 	'regexblock-view-time' => '$1 నాడు',
 );
@@ -2280,7 +2865,6 @@ $messages['tg-cyrl'] = array(
 	'regexblock-view-reason' => 'далел: $1',
 	'regexblock-view-reason-default' => 'далели умумӣ',
 	'regexblock-view-block-infinite' => 'бастани доимӣ',
-	'regexblock-view-block-temporary' => 'сипарӣ мешавад дар',
 	'regexblock-view-block-by' => 'баста шуд тавассути',
 	'regexblock-view-block-unblock' => 'боз кардан',
 	'regexblock-view-stats' => '(омор)',
@@ -2288,11 +2872,54 @@ $messages['tg-cyrl'] = array(
 	'regexblock-view-time' => 'дар $1',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'regexblock-already-blocked' => '"$1" allakaj basta şudaast.',
+	'regexblock-block-log' => "Nomi korbarī jo nişonai '''$1''' basta şud.",
+	'regexblock-block-success' => 'Bastan muvaffaq şud',
+	'regexblock-currently-blocked' => 'Nişonahoi bastaşudai kununī:',
+	'regexblock-form-username' => 'Nişonai IP jo nomi korbarī:',
+	'regexblock-form-reason' => 'Dalel:',
+	'regexblock-form-match' => 'Mutobiqati daqiq',
+	'regexblock-form-account-block' => 'Eçodi bastani hisobhoi çadid',
+	'regexblock-form-submit' => 'Bastani in Korbar',
+	'regexblock-form-submit-empty' => 'Baroi bastan nomi korbarī jo nişonai IP dihed.',
+	'regexblock-form-submit-regex' => "Iborai oddiji nomū'tabar.",
+	'regexblock-form-submit-expiry' => 'Lutfan davrai ba xotimarasiro muşaxxas kuned.',
+	'regexblock-stats-title' => 'Omori Bastani Regex',
+	'regexblock-unblock-success' => 'Boz kardan az bastan muvaffaq şud',
+	'regexblock-unblock-log' => "Nomi korbarī jo nişonai IP '''$1''' az bastan boz şud.",
+	'regexblock-unblock-error' => 'Xato dar boz kardani $1.
+Ehtimolan cunin korbare nest.',
+	'regexblock-view-all' => 'Hama',
+	'regexblock-view-go' => 'Birav',
+	'regexblock-view-match' => '(mutobiqati daqiq)',
+	'regexblock-view-account' => '(bastani eçodi hisobi çadid)',
+	'regexblock-view-reason' => 'dalel: $1',
+	'regexblock-view-reason-default' => 'daleli umumī',
+	'regexblock-view-block-infinite' => 'bastani doimī',
+	'regexblock-view-block-unblock' => 'boz kardan',
+	'regexblock-view-empty' => 'Fehristi nomho va nişonahoi basta şuda xolī ast.',
+	'regexblock-view-time' => 'dar $1',
+);
+
 /** Thai (ไทย)
  * @author Octahedron80
  */
 $messages['th'] = array(
+	'regexblock-expire-duration' => '1 ชั่วโมง,2 ชั่วโมง,4 ชั่วโมง,6 ชั่วโมง,1 วัน,3 วัน,1 สัปดาห์,2 สัปดาห์,1 เดือน,3 เดือน,6 เดือน,1 ปี,ตลอดกาล',
+	'regexblock-form-reason' => 'เหตุผล:',
 	'regexblock-view-all' => 'ทั้งหมด',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'regexblock-view-all' => 'Ählisi',
+	'regexblock-view-go' => 'Git',
 );
 
 /** Tagalog (Tagalog)
@@ -2315,12 +2942,12 @@ Maaari mo ring hadlangan ang buong adres ng IP, na may ibig sabihing walang sinu
 Paunawa: ang hindi buong mga adres ng IP ay tatratuhin ayon sa mga pangalan ng tagagamit para sa pagtukoy ng paghahadlang.
 Kapag walang dahilang tinukoy, isang likas na nakatakdang panglahatan dahil ang gagamitin.\'\'',
 	'regexblock-page-title-1' => 'Hadlangan ang adres sa pamamagitan ng paggamit ng pangkaraniwang mga pagsasaad',
-	'regexblock-reason-ip' => 'Ang adres ng IP na ito ay pinagbawalan sa paggawa ng pagbabago dahil sa bandalismo (pambababoy) o ibang pangaabala mo o ng isang nakikisalo sa iyong adres ng IP.
-Kung naniniwala kang isa itong kamalian, paki $1',
-	'regexblock-reason-name' => 'Ang pangalan ng tagagamit na ito ay pinagbawalan sa paggawa ng pagbabago dahil sa bandalismo (pambababoy) o ibang pangaabala.
-Kung naniniwala kang isa itong kamalian, paki $1',
-	'regexblock-reason-regex' => 'Ang pangalan ng tagagamit na ito ay pinagbawalan sa paggawa ng pagbabago dahil sa bandalismo (pambababoy) o ibang pangaabala ng isang tagagamit na may kahawig na pangalan.
-Pakilikha ang isang kapalit na pangalan ng tagagamit o $1 tungkol sa suliranin',
+	'regexblock-reason-ip' => 'Ang adres ng IP na ito ay pinagbawalan sa paggawa ng pagbabago dahil sa pambababoy o iba pang pang-aabala mo o ng isang nakikisalo sa iyong adres ng IP.
+Kung naniniwala kang isa itong kamalian, paki [[$1|makipag-ugnayan sa amin]]',
+	'regexblock-reason-name' => 'Ang pangalan ng tagagamit na ito ay pinagbawalan sa paggawa ng pagbabago dahil sa pambababoy o iba pang pang-aabala.
+Kung naniniwala kang isa itong kamalian, paki [[$1|makipag-ugnayan sa amin]]',
+	'regexblock-reason-regex' => 'Ang pangalan ng tagagamit na ito ay pinagbawalan sa paggawa ng pagbabago dahil sa pambababoy o iba pang pang-aabala ng isang tagagamit na may kahawig na pangalan.
+Pakilikha ang isang kapalit na pangalan ng tagagamit o [[$1|makipag-ugnayan sa amin]] hinggil sa suliranin',
 	'regexblock-form-username' => 'Adres ng IP o pangalan ng tagagamit:',
 	'regexblock-form-reason' => 'Dahilan:',
 	'regexblock-form-expiry' => 'Katapusan:',
@@ -2347,9 +2974,7 @@ Marahal ay walang ganyang tagagamit.',
 	'regexblock-view-reason' => 'dahilan: $1',
 	'regexblock-view-reason-default' => 'pangkalahatang dahilan',
 	'regexblock-view-block-infinite' => 'pamalagiang paghadlang',
-	'regexblock-view-block-temporary' => 'magtatapos sa',
-	'regexblock-view-block-expired' => 'NAGTAPOS noong',
-	'regexblock-view-block-by' => 'hinadlangan ni',
+	'regexblock-view-block-by' => 'hinadlangan ni:',
 	'regexblock-view-block-unblock' => 'tanggalin sa pagkakahadlang',
 	'regexblock-view-stats' => 'mga estadistika',
 	'regexblock-view-empty' => 'Walang laman ang talaan ng hinadlangang mga pangalan at mga adres.',
@@ -2360,10 +2985,40 @@ Marahal ay walang ganyang tagagamit.',
 /** Turkish (Türkçe)
  * @author Karduelis
  * @author Suelnur
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'regexblock' => 'Regex bloğu',
+	'regexblock-block-success' => 'Engel başarılı',
+	'regexblock-currently-blocked' => 'Halihazırda engellenmiş olan adresler:',
+	'regexblock-page-title' => 'Kurallı ifade ad engeli',
+	'regexblockstats' => 'Regex blok istatistikleri',
+	'regexblock-form-username' => 'IP adresi veya kullanıcı adı:',
 	'regexblock-form-reason' => 'Neden:',
+	'regexblock-form-expiry' => 'Bitiş tarihi:',
+	'regexblock-form-match' => 'Tam eşleşme',
+	'regexblock-form-account-block' => 'Yeni hesap oluşturulmasını engelle',
+	'regexblock-form-submit' => 'Bu kullanıcıyı engelle',
+	'regexblock-form-submit-regex' => 'Geçersiz kurallı ifade',
+	'regexblock-form-submit-expiry' => 'Lütfen bir bitiş süresi belirtin.',
+	'regexblock-unblock-success' => 'Engel kaldırma başarısız oldu',
 	'regexblock-view-all' => 'Hepsi',
+	'regexblock-view-go' => 'Git',
+	'regexblock-view-match' => '(tam eşleşme)',
+	'regexblock-view-regex' => '(regex eşleşmesi)',
+	'regexblock-view-reason' => 'gerekçe: $1',
+	'regexblock-view-reason-default' => 'genel neden',
+	'regexblock-view-block-infinite' => 'süresiz engel',
+	'regexblock-view-block-by' => 'engelleyen:',
+	'regexblock-view-block-unblock' => 'engeli kaldır',
+	'regexblock-view-empty' => 'Engellenmiş ad ve adres listesi boş.',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'regexblock-view-go' => 'كۆچۈش',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -2371,6 +3026,24 @@ $messages['tr'] = array(
  */
 $messages['ug-latn'] = array(
 	'regexblock-view-go' => 'Köchüsh',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'regexblock-form-username' => "IP-адреса або ім'я користувача:",
+	'regexblock-form-reason' => 'Причина:',
+	'regexblock-form-expiry' => 'Закінчення:',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'regexblock-form-reason' => 'Sü:',
+	'regexblock-view-all' => 'Kaik',
+	'regexblock-view-stats' => 'statistik',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -2383,7 +3056,8 @@ $messages['vi'] = array(
 	'regexblock-block-log' => "Tên người dùng hoặc địa chỉ IP '''$1''' đã bị cấm.",
 	'regexblock-block-success' => 'Cấm thành công',
 	'regexblock-currently-blocked' => 'Các địa chỉ hiện đang bị cấm:',
-	'regexblock-desc' => 'Gói mở rộng dùng để cấm những tên người dùng và địa chỉ IP bằng biểu thức chính quy. Có cả cơ chế cấm và một [[Special:Regexblock|trang đặc biệt]] để thêm/quản lý việc cấm',
+	'regexblock-desc' => 'Phần mở rộng dùng để cấm những tên người dùng và địa chỉ IP bằng biểu thức chính quy. Có cả cơ chế cấm và một [[Special:Regexblock|trang đặc biệt]] để thêm/quản lý việc cấm',
+	'regexblock-expire-duration' => '1 tiếng,2 tiếng,4 tiếng,6 tiếng,1 ngày,3 ngày,1 tuần,2 tuần,1 tháng,3 tháng,6 tháng,1 năm,vô hạn',
 	'regexblock-page-title' => 'Cấm tên theo Biểu thức chính quy',
 	'regexblockstats' => 'Thống kê cấm Regex',
 	'regexblock-help' => "Hãy dùng mẫu dưới đây để cấm quyền viết bài của một địa chỉ IP hoặc tên người dùng cụ thể.
@@ -2394,11 +3068,11 @@ Chú ý: các địa chỉ IP bán phần sẽ được đối xử như tên ng
 Nếu không đưa ra lý do gì, một lý do chung chung mặc định sẽ được sử dụng.''",
 	'regexblock-page-title-1' => 'Cấm địa chỉ sử dụng biểu thức chính quy',
 	'regexblock-reason-ip' => 'Địa chỉ IP này bị chặn không được sửa đổi do phá hoại hoặc vi phạm của bạn hoặc bởi ai đó dùng chung địa chỉ IP với bạn.
-Nếu bạn tin rằng đây là nhầm lẫn, xin hãy $1',
+Nếu bạn tin rằng đây là nhầm lẫn, xin hãy [[$1|liên lạc với chúng tôi]].',
 	'regexblock-reason-name' => 'Tên người dùng này bị chặn không được sửa đổi do phá hoại hoặc hành vi vi phạm khác.
-Nếu bạn tin rằng đây là nhầm lẫn, xin hãy $1',
+Nếu bạn tin rằng đây là nhầm lẫn, xin hãy [[$1|liên lạc với chúng tôi]].',
 	'regexblock-reason-regex' => 'Tên người dùng này bị chặn không được sửa đổi do phá hoại hoặc hành vi vi phạm khác của một thành viên có tên tương tự như thế này.
-Xin hãy tạo một tên người dùng thay thế hoặc $1 về vấn đề này',
+Xin hãy tạo một tên người dùng thay thế hoặc [[$1|liên lạc với chúng tôi]] về vấn đề này.',
 	'regexblock-form-username' => 'Địa chỉ IP hoặc tên người dùng:',
 	'regexblock-form-reason' => 'Lý do:',
 	'regexblock-form-expiry' => 'Thời hạn:',
@@ -2408,11 +3082,15 @@ Xin hãy tạo một tên người dùng thay thế hoặc $1 về vấn đề n
 	'regexblock-form-submit-empty' => 'Cung cấp một tên người dùng hoặc một địa chỉ IP để cấm.',
 	'regexblock-form-submit-regex' => 'Biểu thức chính quy không hợp lệ.',
 	'regexblock-form-submit-expiry' => 'Xin xác định thời hạn cấm.',
+	'regexblock-link' => 'cấm dùng biểu thức chính quy',
+	'regexblock-match-stats-record' => '$1 đã cấm “$2” tại “$3” ngày $4, địa chỉ IP là $5',
+	'regexblock-nodata-found' => 'Không tìm thấy dữ liệu',
 	'regexblock-stats-title' => 'Thống kê cấm regex',
 	'regexblock-unblock-success' => 'Bỏ cấm thành công',
 	'regexblock-unblock-log' => "Tên người dùng hoặc địa chỉ IP '''$1''' đã được bỏ cấm.",
 	'regexblock-unblock-error' => 'Lỗi khi bỏ cấm $1.
 Có thể không có thành viên nào như vậy.',
+	'regexblock-regex-filter' => '  hoặc biểu thức chính quy:',
 	'regexblock-view-blocked' => 'Xem những lần cấm do:',
 	'regexblock-view-all' => 'Tất cả',
 	'regexblock-view-go' => 'Xem',
@@ -2422,13 +3100,12 @@ Có thể không có thành viên nào như vậy.',
 	'regexblock-view-reason' => 'lý do: $1',
 	'regexblock-view-reason-default' => 'lý do chung chung',
 	'regexblock-view-block-infinite' => 'cấm vĩnh viễn',
-	'regexblock-view-block-temporary' => 'hết hạn vào',
-	'regexblock-view-block-expired' => 'HẾT HẠN vào',
-	'regexblock-view-block-by' => 'bị cấm bởi',
+	'regexblock-view-block-by' => 'bị cấm bởi:',
 	'regexblock-view-block-unblock' => 'bỏ cấm',
-	'regexblock-view-stats' => '(thống kê)',
+	'regexblock-view-stats' => 'thống kê',
 	'regexblock-view-empty' => 'Danh sách các tên và địa chỉ bị cấm đang trống.',
 	'regexblock-view-time' => 'vào $1',
+	'right-regexblock' => 'Cấm người dùng không được sửa đổi tại wiki nào trong mạng wiki',
 );
 
 /** Volapük (Volapük)
@@ -2455,8 +3132,6 @@ $messages['vo'] = array(
 	'regexblock-view-go' => 'Ledunön',
 	'regexblock-view-reason' => 'kod: $1',
 	'regexblock-view-block-infinite' => 'blokam laidüpik',
-	'regexblock-view-block-temporary' => 'dulon jü',
-	'regexblock-view-block-expired' => 'ÄFINIKON tü',
 	'regexblock-view-block-by' => 'peblokon fa',
 	'regexblock-view-block-unblock' => 'säblokön',
 	'regexblock-view-stats' => 'statits',
@@ -2465,8 +3140,18 @@ $messages['vo'] = array(
 	'right-regexblock' => 'Blokön gebanis in vüks valik vükafarma',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'regexblock-already-blocked' => '$1 איז שוין בלאקירט.',
+	'regexblock-form-reason' => 'אורזאַך:',
+	'regexblock-view-all' => 'אַלע',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
 	'regexblock-block-success' => '封禁成功',
@@ -2474,6 +3159,10 @@ $messages['zh-hans'] = array(
 	'regexblock-form-reason' => '原因：',
 	'regexblock-form-expiry' => '到期日：',
 	'regexblock-form-submit' => '封禁这位用户',
+	'regexblock-nodata-found' => '找不到数据',
+	'regexblock-view-reason' => '原因：$1',
+	'regexblock-view-reason-default' => '一般原因',
+	'regexblock-view-block-infinite' => '永久封禁',
 	'regexblock-view-stats' => '（统计）',
 );
 
@@ -2487,6 +3176,8 @@ $messages['zh-hant'] = array(
 	'regexblock-form-reason' => '原因：',
 	'regexblock-form-expiry' => '到期日：',
 	'regexblock-form-submit' => '封禁該名使用者',
+	'regexblock-nodata-found' => '找不到數據',
+	'regexblock-view-reason' => '原因：$1',
 	'regexblock-view-reason-default' => '一般原因',
 	'regexblock-view-block-infinite' => '永久封禁',
 	'regexblock-view-stats' => '（統計）',

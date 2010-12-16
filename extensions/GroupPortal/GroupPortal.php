@@ -1,7 +1,8 @@
 <?php
 
 $wgExtensionCredits['other'][] = array(
-    'name'    => "GroupPortal",
+	'path' => __FILE__,
+	'name'    => "GroupPortal",
 	'version' => '1.0',
 	'author'  => 'Tim Laqua',
 	'url'     => 'http://www.mediawiki.org/wiki/Extension:GroupPortal'

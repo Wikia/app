@@ -26,10 +26,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 // Credits
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'SearchBox',
 	'author'         => array( 'Trevor Parscal' ),
-	'svn-date'       => '$LastChangedDate: 2008-10-27 13:56:23 -0700 (Mon, 27 Oct 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 42686 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:SearchBox',
 	'description'    => 'Allow inclusion of search forms',
 	'descriptionmsg' => 'searchbox-desc',
@@ -45,10 +44,4 @@ $wgExtensionMessagesFiles['SearchBox'] = $dir . 'SearchBox.i18n.php';
 $wgAutoloadClasses['SearchBoxHooks'] = $dir . 'SearchBox.hooks.php';
 
 // Register parser hook
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	// Modern
-	$wgHooks['ParserFirstCallInit'][] = array( 'SearchBoxHooks::register' );
-} else {
-	// Legacy
-	$wgExtensionFunctions[] = array( 'SearchBoxHooks', 'register' );
-}
+$wgHooks['ParserFirstCallInit'][] = array( 'SearchBoxHooks::register' );

@@ -80,11 +80,6 @@ function devBoxPanelAdditionalScripts( &$out, &$sk ){
 function wfDevBoxForceWiki(&$wikiFactoryLoader){
 	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode;
 
-	// macbre: don't run code below when running in command line mode (memcache starts to act strange)
-	if (!empty($wgCommandLineMode)) {
-		return true;
-	}
-
 	if($wgDevelEnvironment){
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);

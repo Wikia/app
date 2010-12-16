@@ -18,6 +18,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionFunctions[] = 'efSubpageList3';
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'Subpage List 3',
 	'version' => '1.05',
 	'description' => 'Automatically creates a list of the subpages of a page.',

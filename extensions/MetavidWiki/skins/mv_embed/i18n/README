@@ -1,5 +1,0 @@
-This _short_ document outlines the plan for internationalization support for stand alone
-javascript libraries being integrated into mediaWiki.
-
-A key piece is of this system is the script_loader.   mvwScriptLoader.php
-for more info see: http://www.mediawiki.org/wiki/Extension:ScriptLoader

@@ -88,9 +88,13 @@ class SpecialEmailPage extends SpecialPage {
 
 		# Allow selection of a group
 		$groups = "<option />";
-		foreach ( array_keys( $wgGroupPermissions ) as $group ) if ( $group != '*' ) {
+		foreach ( array_keys( $wgGroupPermissions ) as $group ) if ( $group != '*' && $group != 'user' ) {
 			$selected = $group == $this->group ? ' selected' : '';
-			if ( $wgEmailPageAllowAllUsers ) $groups .= "<option$selected>$group</option>";
+			$groups .= "<option$selected>$group</option>";
+		}
+		if ( $wgEmailPageAllowAllUsers ) {
+			$selected = 'user' == $this->group ? ' selected' : '';
+			$groups .= "<option$selected value='user'>ALL USERS</option>";
 		}
 		$wgOut->addHTML( "<tr><td>" . wfMsg( 'ea-fromgroup' ) . "</td><td><select name=\"ea-group\">$groups</select></td></tr>\n" );
 		$wgOut->addHTML( "</table>" );
@@ -127,7 +131,7 @@ class SpecialEmailPage extends SpecialPage {
 			$options .= "<option$selected>$t</option>";
 		}
 		$db->freeResult( $res );
-		if ( $options ) $wgOut->addHTML( wfMsg( 'ea-selectcss' ) . " <select name=\"ea-css\">$options</select><br>\n" );
+		if ( $options ) $wgOut->addHTML( wfMsg( 'ea-selectcss' ) . " <select name=\"ea-css\">$options</select><br />\n" );
 
 		# Get titles in Category:Records and build option list
 		$options = "<option />";
@@ -223,8 +227,9 @@ class SpecialEmailPage extends SpecialPage {
 			} else $css = '';
 
 			# Create a html wrapper for the message
+			$doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 			$head    = "<head>$css</head>";
-			$message = "<html>$head<body style=\"margin:10px\"><div id=\"bodyContent\">$message</div></body></html>";
+			$message = "$doctype\n<html>$head<body style=\"margin:10px\"><div id=\"bodyContent\">$message</div></body></html>";
 		}
 
 		# Send message or list recipients
@@ -249,7 +254,7 @@ class SpecialEmailPage extends SpecialPage {
 					if ( $this->record ) $mail->Body = $this->replaceFields( $message, $recipient );
 					$mail->AddAddress( $recipient );
 					if ( $state = $mail->Send() ) $msg = wfMsg( 'ea-sent', $this->title, $count, $wgUser->getName() );
-					else $error .= "Couldn't send to $recipient: {$mail->ErrorInfo}<br>\n";
+					else $error .= "Couldn't send to $recipient: {$mail->ErrorInfo}<br />\n";
 					$mail->ClearAddresses();
 				} else $msg .= "\n*[mailto:$recipient $recipient]";
 				if ( $error ) $msg = wfMsg( 'ea-error', $this->title, $error );

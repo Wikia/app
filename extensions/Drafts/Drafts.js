@@ -19,6 +19,10 @@ function Draft() {
 	
 	/* Functions */
 	
+	/**
+	 * Sets the state of the draft
+	 * @param {String} newState
+	 */
 	this.setState = function(
 		newState
 	) {
@@ -50,10 +54,16 @@ function Draft() {
 		}
 	}
 	
+	/**
+	 * Gets the state of the draft
+	 */
 	this.getState = function() {
 		return state;
 	}
 	
+	/**
+	 * Sends draft data to server to be saved
+	 */
 	this.save = function() {
 		// Checks if a save is already taking place
 		if ( state == 'saving' ) {
@@ -94,6 +104,9 @@ function Draft() {
 		clearTimeout( timer );
 	}
 
+	/**
+	 * Updates the user interface to represent being out of sync with the server
+	 */
 	this.change = function() {
 		// Sets state to changed
 		self.setState( 'changed' );
@@ -111,6 +124,9 @@ function Draft() {
 		}
 	}
 	
+	/**
+	 * Initializes the user interface
+	 */
 	this.initialize = function() {
 		// Cache edit form reference
 		form = document.editform;
@@ -145,6 +161,10 @@ function Draft() {
 		}
 	}
 
+	/**
+	 * Responds to the server after a save request has been handled
+	 * @param {Object} request
+	 */
 	this.respond = function(
 		request
 	) {

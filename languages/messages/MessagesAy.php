@@ -1,6 +1,9 @@
 <?php
 /** Aymara (Aymar aru)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -20,12 +23,12 @@ $messages = array(
 'tog-hidepatrolled'           => "Jichhnaki jaqukipawina askiptawix unch'ukita imantaña",
 'tog-newpageshidepatrolled'   => "Machaqa uñstawix waruchatat uñstawix unch'ukita imantaña",
 'tog-extendwatchlist'         => "Sarayawi jaqukipaw uñachayasuñatakiw unch'ukit waruch aqatatayaña",
-'tog-usenewrc'                => "Jichhnaki jaqukipawi waliptäta (''JavaScript'')",
+'tog-usenewrc'                => 'Jichhnaki jaqukipawi waliptäta (JavaScript munawiwa)',
 'tog-numberheadings'          => 'Titulun chinu achuraña',
-'tog-showtoolbar'             => "Turkawit irnaqañ täta tisi uñachayaña (''JavaScript'')",
-'tog-editondblclick'          => "Uñstawi turkayaña päsuxuqiña (''JavaScript'')",
+'tog-showtoolbar'             => 'Turkawit irnaqañ täta tisi uñachayaña (JavaScript munawiwa)',
+'tog-editondblclick'          => 'Uñstawi turkayaña päsuxuqiña (JavaScript munawiwa)',
 'tog-editsection'             => '[Turkaña] sipitampi tuqitaki turkawi luräña',
-'tog-editsectiononrightclick' => "(''JavaScript'') titulxat tuqina kupi suxuqiñampi tuqitaki turkawi luräña",
+'tog-editsectiononrightclick' => '(JavaScript munawiwa) titulxat tuqina kupi suxuqiñampi tuqitaki turkawi luräña',
 'tog-showtoc'                 => 'Waruchataw uñachayaña (kimsa tituljampi uñstawitaki)',
 'tog-rememberpassword'        => "Akax jasanchirin imt'awija amtaña",
 'tog-editwidth'               => 'Akiptawit llataxa taqi anchuniwa',
@@ -44,19 +47,19 @@ $messages = array(
 'tog-shownumberswatching'     => "Qawqha apnaqirinaka uñch'ukiskar uñacht'ayaña",
 'tog-fancysig'                => "Mayaxta rixt'a (sipitarachayatawisa)",
 'tog-externaleditor'          => "Anqa askiptiri mirq'iriña (yatxiritakiwa, jasanchirina ajalla jamuqawi wakiskiriwa)",
-'tog-externaldiff'            => "Anqa ''diff''iri mirq'iriña (yatxiritakiwa, jasanchirina ajalla jamuqawi wakiskiriwa)",
+'tog-externaldiff'            => "Anqa diff-iri mirq'iriña (yatxiritakiwa, jasanchirina ajalla jamuqawi wakiskiriwa)",
 'tog-showjumplinks'           => 'Usutataki sipitata "khänaru thuqtaña" uñachayaña',
-'tog-uselivepreview'          => "Uñtawikach'ukix mirq'iña (''JavaScript'' munawiwa) (yant'awiwaki)",
+'tog-uselivepreview'          => "Uñtawikach'ukix mirq'iña (JavaScript munawiwa) (yant'awiwaki)",
 'tog-forceeditsummary'        => "Nayaru yatiyaña ukja ch'usa askiptawit juk'aptayawi apantaskaña",
 'tog-watchlisthideown'        => "Unch'ukit waruchatana askiptawijax imantaña",
-'tog-watchlisthidebots'       => "Unch'ukit waruchatana ''bot''ta askiptawipax imantaña",
+'tog-watchlisthidebots'       => "Unch'ukit waruchatana bot-ta askiptawipax imantaña",
 'tog-watchlisthideminor'      => "Unch'ukit waruchatana sullka askiptawix imantaña",
 'tog-watchlisthideliu'        => "Unch'ukit waruchatana qillqt'ayasita apnaqirina askiptawipax imantaña",
 'tog-watchlisthideanons'      => "Unch'ukit waruchatana sutiwisa apnaqirina askiptawipax imantaña",
 'tog-watchlisthidepatrolled'  => "Unch'ukit waruchatana unch'ukit askiptawix imantaña",
 'tog-nolangconversion'        => "Yaqha aruptaxa jark'aña",
 'tog-ccmeonemails'            => 'Chaski jalayirija nayax yaqhar apayayäta qillqaqawix nayaru apayaña',
-'tog-diffonly'                => "Manqha ''diff''nakax uñstawit yati utjawi janiw uñachayaña",
+'tog-diffonly'                => 'Manqha diff-nakax uñstawit yati utjawi janiw uñachayaña',
 'tog-showhiddencats'          => 'Imantata patawix uñachayaña',
 
 'underline-always' => 'Wiñaya',
@@ -116,16 +119,18 @@ $messages = array(
 
 'article'       => 'Amtachinu',
 'cancel'        => 'Jan saña',
+'moredotdotdot' => 'Yapa...',
+'mypage'        => 'Uñstawija',
+'navigation'    => 'Wampuña',
+'and'           => '&#32;-mpi',
+
+# Cologne Blue skin
 'qbfind'        => 'Thaqaña',
 'qbbrowse'      => 'Wampuña',
 'qbedit'        => 'Turkaña',
 'qbpageoptions' => 'Uñstawitaki ajllita',
 'qbpageinfo'    => "Uñstawxat uñt'ayawi",
 'qbmyoptions'   => 'Ajllitanakaja',
-'moredotdotdot' => 'Yapa...',
-'mypage'        => 'Uñstawija',
-'navigation'    => 'Wampuña',
-'and'           => '&#32;-mpi',
 
 'errorpagetitle'    => 'Pantja',
 'help'              => 'Yanapaña',
@@ -170,10 +175,10 @@ $messages = array(
 'editold'        => 'turkaña',
 'editlink'       => 'trukaña',
 'showtoc'        => 'uñachayaña',
-'site-rss-feed'  => "$1 ''RSS'' jalsuri",
-'site-atom-feed' => "$1 ''Atom'' jalsuri",
-'page-rss-feed'  => "\"\$1\" ''RSS'' jalsuri",
-'page-atom-feed' => "\"\$1\" ''Atom'' jalsuri",
+'site-rss-feed'  => '$1 RSS jalsuri',
+'site-atom-feed' => '$1 Atom jalsuri',
+'page-rss-feed'  => '"$1" RSS jalsuri',
+'page-atom-feed' => '"$1" Atom jalsuri',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'     => 'Amtachinu',
@@ -186,13 +191,10 @@ $messages = array(
 'error' => 'Pantja',
 
 # Login and logout pages
-'loginpagetitle'     => "Qillqt'ayasiña/Entrar",
-'login'              => "Qillqt'ayasiña/Entrar",
-'userlogin'          => "Qillqt'ayasiña/Entrar",
+'login'              => "Qillqt'ayasiña",
+'userlogin'          => "Qillqt'ayasiña",
 'logout'             => 'Mistuña',
 'userlogout'         => 'Mistuña',
-'yourlanguage'       => 'Aru:',
-'email'              => 'Chaski jalayiri',
 'loginlanguagelabel' => 'Aru: $1',
 
 # Edit pages
@@ -205,6 +207,8 @@ $messages = array(
 'preferences'    => 'Amtajarjama',
 'prefs-rc'       => 'Jichha kutikiptatanaka',
 'timezoneoffset' => 'Jalaqtata',
+'yourlanguage'   => 'Aru:',
+'email'          => 'Chaski jalayiri',
 
 # Recent changes
 'recentchanges' => 'Jichha kutikiptatanaka',
@@ -213,7 +217,8 @@ $messages = array(
 # Upload
 'fileuploadsummary' => 'Uñt’ayawi:',
 
-'license' => 'Iyawsawi:',
+'license'        => 'Iyawsawi:',
+'license-header' => 'Iyawsawi:',
 
 # Special:ListFiles
 'listfiles_date'        => 'Uru jakhu',
@@ -221,7 +226,8 @@ $messages = array(
 'listfiles_description' => 'Uñt’ayawi',
 
 # File description page
-'filehist-user' => 'Apnaqiri',
+'file-anchor-link' => "Q'ipi",
+'filehist-user'    => 'Apnaqiri',
 
 # Miscellaneous special pages
 'move' => 'Qillqaraña',
@@ -245,6 +251,7 @@ $messages = array(
 # Undelete
 'undelete-search-submit' => 'Thaqaña',
 
+'sp-contributions-talk'   => 'Kutkatasiña',
 'sp-contributions-submit' => 'Thaqaña',
 
 # Block/unblock

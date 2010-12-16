@@ -112,9 +112,9 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 	* This function shows the request form
 	*/
 	function showForm() {
-		global $wgRequest, $wgOut, $wgUser, $wgTitle;
+		global $wgRequest, $wgOut, $wgUser;
 
-		$action = $wgTitle->escapeLocalUrl();
+		$action = $this->getTitle()->escapeLocalUrl();
 		$f = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $action, 'name' => 'request' ) );
 
 
@@ -135,7 +135,7 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 	* @brief function executed when the special page is opened.
 	*/
 	function execute( $subpage ) {
-		global $wgRequest, $wgOut, $wgUser, $wgTitle;
+		global $wgRequest, $wgOut, $wgUser;
 		$this->setHeaders();
 		
 		//if the user is blocked, deny access.

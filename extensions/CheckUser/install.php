@@ -9,7 +9,7 @@ require_once ( getenv('MW_INSTALL_PATH') !== false
 	: dirname( __FILE__ ) . '/../../maintenance/commandLine.inc' );
 require_once dirname( __FILE__ ) . '/install.inc';
 
-$db =& wfGetDB( DB_MASTER );
+$db = wfGetDB( DB_MASTER );
 if ( $db->tableExists( 'cu_changes' ) && !isset( $options['force'] ) ) {
 	echo "...cu_changes already exists.\n";
 } else {

@@ -15,10 +15,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 $dir = dirname(__FILE__);
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'GlobalBlocking',
 	'author'         => 'Andrew Garrett',
-	'svn-date' => '$LastChangedDate: 2009-03-04 02:33:52 +0100 (śro, 04 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48005 $',
 	'description'    => 'Allows IP addresses to be blocked across multiple wikis',
 	'descriptionmsg' => 'globalblocking-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:GlobalBlocking',
@@ -26,8 +25,11 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles['GlobalBlocking'] =  "$dir/GlobalBlocking.i18n.php";
 $wgExtensionAliasesFiles['GlobalBlocking'] = "$dir/GlobalBlocking.alias.php";
+
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'GlobalBlocking::getUserPermissionsErrors';
 $wgHooks['UserIsBlockedGlobally'][] = 'GlobalBlocking::isBlockedGlobally';
+$wgHooks['UserLoginMailPassword'][] = 'GlobalBlocking::onMailPassword';
+$wgHooks['OtherBlockLogLink'][] = 'GlobalBlocking::getBlockLogLink';
 
 $wgAutoloadClasses['SpecialGlobalBlock'] = "$dir/SpecialGlobalBlock.php";
 $wgSpecialPages['GlobalBlock'] = 'SpecialGlobalBlock';
@@ -65,6 +67,7 @@ $wgGroupPermissions['sysop']['globalblock-whitelist'] = true;
 $wgAvailableRights[] = 'globalblock';
 $wgAvailableRights[] = 'globalunblock';
 $wgAvailableRights[] = 'globalblock-whitelist';
+$wgAvailableRights[] = 'globalblock-exempt';
 
 ## CONFIGURATION
 /**

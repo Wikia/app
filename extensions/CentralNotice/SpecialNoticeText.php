@@ -23,7 +23,7 @@ class SpecialNoticeText extends NoticePage {
 
                 // Quick short circuit to be able to show preferred notices
                 $templates = array();
-                
+
                 if ( $this->language == 'en' && $this->project != null ) {
                     // See if we have any preferred notices for all of en
                     $notices = CentralNoticeDB::getNotices( '', 'en', '', '', 1 );
@@ -39,15 +39,35 @@ class SpecialNoticeText extends NoticePage {
                         }
                     }
                 }
+
+		if ( !$templates && $this->project == 'wikipedia' ) {
+				$notices = CentralNoticeDB::getNotices( 'wikipedia', '', '', '', 1 );
+				if ( $notices && is_array($notices) ) {
+					foreach( $notices as $notice => $val ) {
+						if ( $val['language'] == '' || 
+						     $val['language'] == $this->language ) {
+							$templates = CentralNoticeDB::selectTemplatesAssigned( $notice );
+							break;
+						}
+					}
+				}
+		}
+
                 // Didn't find any preferred matches so do an old style lookup
-                if ( !$templates ) 
+		if ( !$templates )  {
                     $templates = CentralNotice::selectNoticeTemplates( $this->project, $this->language );
+		}
 
 		$templateNames = array_keys( $templates );
 
 		$templateTexts = array_map(
 			array( $this, 'getHtmlNotice' ),
 			$templateNames );
+
+        if ( preg_grep( "/&lt;centralnotice-template-\w{1,}&gt;\z/", $templateTexts ) ) {
+           return false; // Bailing out if we have a failed cache lookup
+        }
+
 		$weights = array_values( $templates );
 		
 		return
@@ -146,6 +166,10 @@ function pickTemplate(templates, weights) {
 	}
 
 	private function formatNum( $num ) {
+		$num = sprintf("%.1f", $num/1e6);
+		if ( substr( $num, -2 ) == '.0' ) {
+    		$num = substr( $num, 0, -2 );
+		}
 		$lang = Language::factory( $this->language );
 		return $lang->formatNum( $num );
 	}
@@ -205,10 +229,7 @@ function pickTemplate(templates, weights) {
 	private function projectName() {
 		global $wgConf, $IP;
 
-		// This is a damn dirty hack
-		if ( file_exists( "$IP/InitialiseSettings.php" ) ) {
-			require_once "$IP/InitialiseSettings.php";
-		}
+		$wgConf->loadFullData();
 
 		// Special cases for commons and meta who have no lang
 		if ( $this->project == 'commons' )

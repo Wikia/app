@@ -189,8 +189,7 @@ Te rog notari la din kontribuţi al {{SITENAME}} sunt konsideraere relesavat sup
 'editundo'                => 'anulizăe',
 
 # Search results
-'noexactmatch'   => "'''N'pažu vec l'nom \"\$1\" n'ķsistst.''' Pute [[:\$1|kreare ce pažu]].",
-'viewprevnext'   => 'Vu ($1) ($2) ($3)',
+'viewprevnext'   => 'Vu ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url' => 'Help:Ajutor',
 'powersearch'    => 'kaută avansata',
 
@@ -216,12 +215,15 @@ $3',
 'boteditletter'   => 'b',
 
 # Recent changes linked
-'recentchangeslinked' => 'Modifikări korelate',
+'recentchangeslinked'         => 'Modifikări korelate',
+'recentchangeslinked-feed'    => 'Modifikări korelate',
+'recentchangeslinked-toolbox' => 'Modifikări korelate',
 
 # Upload
 'upload' => 'trimiţe fişirul',
 
 # File description page
+'file-anchor-link'    => 'Fişirul',
 'filehist'            => 'Historia fişirulu',
 'filehist-current'    => 'kurentu',
 'filehist-datetime'   => 'Data/Temp',
@@ -275,6 +277,8 @@ $3',
 'mycontris'     => 'Mes kontribuţi',
 'contribsub2'   => 'Pentru $1 ($2)',
 'uctop'         => '(susverf)',
+
+'sp-contributions-talk' => 'Diskuţu',
 
 # What links here
 'whatlinkshere'       => 'Legǎtul a ce pažu',

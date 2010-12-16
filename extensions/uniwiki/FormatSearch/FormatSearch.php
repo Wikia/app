@@ -6,12 +6,11 @@ if ( !defined( "MEDIAWIKI" ) )
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'FormatSearch',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Changes to clean up the search results page',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Format_Search',
-	'svn-date'       => '$LastChangedDate: 2008-11-02 03:01:04 +0100 (ndz, 02 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 43061 $',
 	'descriptionmsg' => 'formatsearch-desc',
 );
 

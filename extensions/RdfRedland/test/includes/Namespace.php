@@ -24,7 +24,7 @@ if (!defined('MEDIAWIKI')) die();
  * @subpackage Extensions
  */
 
-class Namespace {
+class MWNamespace {
 
 	public static function isTalk( $namespace ) {
 		switch ( $namespace ) {

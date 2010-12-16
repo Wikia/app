@@ -25,26 +25,19 @@
 //////////////////////////////////////////////////////////////////////////
 
 // Register MediaWiki extension
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'WH_Register';
-} else {
-	$wgExtensionFunctions[] = 'WH_Register';
-}
-
+$wgHooks['ParserFirstCallInit'][] = 'WH_Register';
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'WikiHiero',
 	'author'         => 'Guillaume Blanchard',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:WikiHiero',
-	'svn-date' => '$LastChangedDate: 2008-06-06 22:38:04 +0200 (ptk, 06 cze 2008) $',
-	'svn-revision' => '$LastChangedRevision: 35980 $',
 	'description'    => 'Syntax to display hieroglyph',
 	'descriptionmsg' => 'wikihiero-desc',
 );
 $wgExtensionMessagesFiles['Wikihiero'] =  dirname(__FILE__) . '/wikihiero.i18n.php';
 
-function WH_Register() {
-	global $wgParser;
-	$wgParser->setHook( 'hiero', 'WikiHieroLoader' );
+function WH_Register( &$parser ) {
+	$parser->setHook( 'hiero', 'WikiHieroLoader' );
 	return true;
 }
 

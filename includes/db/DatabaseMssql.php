@@ -10,7 +10,7 @@
 /**
  * @ingroup Database
  */
-class DatabaseMssql extends Database {
+class DatabaseMssql extends DatabaseBase {
 
 	var $mAffectedRows;
 	var $mLastResult;
@@ -25,7 +25,7 @@ class DatabaseMssql extends Database {
 			$failFunction = false, $flags = 0, $tablePrefix = 'get from global') {
 
 		global $wgOut, $wgDBprefix, $wgCommandLineMode;
-		if (!isset($wgOut)) $wgOut = NULL; # Can't get a reference if it hasn't been set yet
+		if (!isset($wgOut)) $wgOut = null; # Can't get a reference if it hasn't been set yet
 		$this->mOut =& $wgOut;
 		$this->mFailFunction = $failFunction;
 		$this->mFlags = $flags;
@@ -43,6 +43,10 @@ class DatabaseMssql extends Database {
 
 		if ($server) $this->open($server, $user, $password, $dbName);
 
+	}
+
+	function getType() {
+		return 'mssql';
 	}
 
 	/**
@@ -131,7 +135,7 @@ class DatabaseMssql extends Database {
 	function close() {
 		$this->mOpened = false;
 		if ($this->mConn) {
-			if ($this->trxLevel()) $this->immediateCommit();
+			if ($this->trxLevel()) $this->commit();
 			return mssql_close($this->mConn);
 		} else return true;
 	}
@@ -446,22 +450,6 @@ class DatabaseMssql extends Database {
 	}
 
 	/**
-	 * Estimate rows in dataset
-	 * Returns estimated count, based on EXPLAIN output
-	 * Takes same arguments as Database::select()
-	 */
-	function estimateRowCount( $table, $vars='*', $conds='', $fname = 'Database::estimateRowCount', $options = array() ) {
-		$rows = 0;
-		$res = $this->select ($table, 'COUNT(*)', $conds, $fname, $options );
-		if ($res) {
-			$row = $this->fetchObject($res);
-			$rows = $row[0];
-		}
-		$this->freeResult($res);
-		return $rows;
-	}
-	
-	/**
 	 * Determines whether a field exists in a table
 	 * Usually aborts on failure
 	 * If errors are explicitly ignored, returns NULL on failure
@@ -490,13 +478,13 @@ class DatabaseMssql extends Database {
 	function indexInfo( $table, $index, $fname = 'Database::indexInfo' ) {
 
 		throw new DBUnexpectedError( $this, 'Database::indexInfo called which is not supported yet' );
-		return NULL;
+		return null;
 
 		$table = $this->tableName( $table );
 		$sql = 'SHOW INDEX FROM '.$table;
 		$res = $this->query( $sql, $fname );
 		if ( !$res ) {
-			return NULL;
+			return null;
 		}
 
 		$result = array();
@@ -708,13 +696,6 @@ class DatabaseMssql extends Database {
 	}
 
 	/**
-	 * USE INDEX clause
-	 */
-	function useIndexClause( $index ) {
-		return "";
-	}
-
-	/**
 	 * REPLACE query wrapper
 	 * PostgreSQL simulates this with a DELETE followed by INSERT
 	 * $row is the row to insert, an associative array
@@ -858,39 +839,11 @@ class DatabaseMssql extends Database {
 	}
 
 	/**
-	 * Returns an SQL expression for a simple conditional.
-	 *
-	 * @param $cond String: SQL expression which will result in a boolean value
-	 * @param $trueVal String: SQL expression to return if true
-	 * @param $falseVal String: SQL expression to return if false
-	 * @return string SQL fragment
-	 */
-	function conditional( $cond, $trueVal, $falseVal ) {
-		return " (CASE WHEN $cond THEN $trueVal ELSE $falseVal END) ";
-	}
-
-	/**
 	 * Should determine if the last failure was due to a deadlock
 	 * @return bool
 	 */
 	function wasDeadlock() {
 		return $this->lastErrno() == 1205;
-	}
-
-	/**
-	 * Begin a transaction, committing any previously open transaction
-	 * @deprecated use begin()
-	 */
-	function immediateBegin( $fname = 'Database::immediateBegin' ) {
-		$this->begin();
-	}
-
-	/**
-	 * Commit transaction, if one is open
-	 * @deprecated use commit()
-	 */
-	function immediateCommit( $fname = 'Database::immediateCommit' ) {
-		$this->commit();
 	}
 
 	/**
@@ -928,16 +881,6 @@ class DatabaseMssql extends Database {
 
 	function limitResultForUpdate($sql, $num) {
 		return $sql;
-	}
-
-	/**
-	 * not done
-	 */
-	public function setTimeout($timeout) { return; }
-
-	function ping() {
-		wfDebug("Function ping() not written for MSSQL yet");
-		return true;
 	}
 
 	/**
@@ -1001,20 +944,9 @@ class DatabaseMssql extends Database {
 		}
 	}
 	
-	/** 
-	 * No-op lock functions
-	 */
-	public function lock( $lockName, $method ) {
-		return true;
-	}
-	public function unlock( $lockName, $method ) {
-		return true;
-	}
-	
 	public function getSearchEngine() {
 		return "SearchEngineDummy";
 	}
-
 }
 
 /**

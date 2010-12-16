@@ -12,7 +12,7 @@ This extension adds better MathML rendering of formulae in <math>
 tags. It also recognizes some additional LaTeX commands.
 
 See the manual (in the file manual.tex) and
-http://meta.wikimedia.org/wiki/Blahtex for more details.
+http://www.mediawiki.org/wiki/Extension:Blahtex for more details.
 
 
 Brief installation instructions:

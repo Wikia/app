@@ -16,6 +16,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 	$wgExtensionFunctions[] = 'efFormatDates';
 	
 	$wgExtensionCredits['parserhook'][] = array(
+		'path' => __FILE__,
 		'name' => 'Date Formatter',
 		'author' => 'Rob Church',
 		'description' => 'Supports refactoring of unlinked dates through the <code><nowiki><date></nowiki></code> tag',

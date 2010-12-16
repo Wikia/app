@@ -19,29 +19,31 @@ class ContributionTracking extends UnlistedSpecialPage {
 		$this->setHeaders();
 		
 		$gateway = $wgRequest->getText( 'gateway' );
-		if( !$wgRequest->wasPosted() ||
-			!in_array( $gateway, array( 'paypal', 'moneybookers' ) ) ) {
+		if( !in_array( $gateway, array( 'paypal', 'moneybookers' ) ) ) {
 			$wgOut->showErrorPage( 'contrib-tracking-error', 'contrib-tracking-error-text' );
 			return;
 		}
 		
 		$db = contributionTrackingConnection();
-		
+
+		$ts = $db->timestamp();
+
 		$tracked_contribution = array(
-			'note' => $wgRequest->getText('comment', NULL),
-			'referrer' => $wgRequest->getText('referrer', NULL),
+			'note' => $wgRequest->getText('comment', null),
+			'referrer' => $wgRequest->getText('referrer', null),
 			'anonymous' => ($wgRequest->getCheck('comment-option', 0) ? 0 : 1),
-			'utm_source' => $wgRequest->getText('utm_source', NULL),
-			'utm_medium' => $wgRequest->getText('utm_medium', NULL),
-			'utm_campaign' => $wgRequest->getText('utm_campaign', NULL),
+			'utm_source' => $wgRequest->getText('utm_source', null),
+			'utm_medium' => $wgRequest->getText('utm_medium', null),
+			'utm_campaign' => $wgRequest->getText('utm_campaign', null),
 			'optout' => ($wgRequest->getCheck('email', 0) ? 0 : 1),
-			'language' => $wgRequest->getText('language', NULL),
+			'language' => $wgRequest->getText('language', null),
+			'ts' => $ts,
 		);
 		
 		// Make all empty strings NULL
 		foreach ($tracked_contribution as $key => $value) {
 			if ($value === '') {
-				$tracked_contribution[$key] = NULL;
+				$tracked_contribution[$key] = null;
 			}
 		}
 		
@@ -104,7 +106,7 @@ class ContributionTracking extends UnlistedSpecialPage {
 		// Tracking
 		$repost['os0'] = $contribution_tracking_id;
 		
-		$wgOut->addWikiText( "<skin>Tomas</skin>{{2008/Donate-header/$language}}" );
+		$wgOut->addWikiText( "{{2009/Donate-banner/$language}}" );
 		$wgOut->addHTML( $this->msgWiki( 'contrib-tracking-submitting' ) );
 		
 		// Output the repost form
@@ -121,8 +123,6 @@ class ContributionTracking extends UnlistedSpecialPage {
 		$output .= '</form>';
 
 		$wgOut->addHTML( $output );
-
-		$wgOut->addWikiText( "{{2008/Donate-footer/$language}}\n" );
 
 		// Automatically post the form if the user has Javascript support
 		$wgOut->addHTML( '<script type="text/javascript">document.contributiontracking.submit();</script>' );

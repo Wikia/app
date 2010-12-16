@@ -49,7 +49,7 @@ $messages['en'] = array(
 	'grouppermissions-log-delete'    => 'deleted group "$2"',
 	'grouppermissions-log-name'      => 'Group permissions log',
 	'grouppermissions-log-header'    => 'This page tracks changes to the underlying permissions of user groups.',
-	'grouppermissions-needjs'        => 'Warning: JavaScript is disabled on your browser. Some features may not work!',
+	'grouppermissions-needjs'        => "'''Warning:''' JavaScript is disabled on your browser. Some features may not work!",
 	'grouppermissions-sp-header'     => 'You may use this page to manage how permissions are sorted and add new permissions. Hover over a permission to read its description',
 	'grouppermissions-sp-sort'       => 'Sort permissions',
 	'grouppermissions-sp-save'       => 'Save',
@@ -114,28 +114,18 @@ $messages['rtm'] = array(
 	'grouppermissions-dologin' => 'Surum',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
-	'grouppermissions-search' => 'Grupp:',
-	'grouppermissions-dologin' => 'Kävutajan nimi',
-	'grouppermissions-dosearch' => 'Mända',
-	'grouppermissions-searchlabel' => 'Ectä gruppiš',
-	'grouppermissions-deletelabel' => 'Čuta grupp',
-	'grouppermissions-never' => 'Nikonz',
-	'grouppermissions-sort-admin' => 'Administriruind',
-	'grouppermissions-sort-tech' => 'Tehnižed',
-	'grouppermissions-sort-misc' => 'Erazvuiččed',
-	'grouppermissions-log-add' => 'ližatihe «$2»-grupp',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
-	'grouppermissions-dosearch' => 'Gaan',
+	'grouppermissions-search' => 'Groep:',
+	'grouppermissions-dologin' => 'Teken in',
+	'grouppermissions-dosearch' => 'Laat waai',
 	'grouppermissions-comment' => 'Opmerking:',
+	'grouppermissions-true' => 'Waar',
+	'grouppermissions-false' => 'Onwaar',
+	'grouppermissions-never' => 'Nooit',
+	'grouppermissions-sp-save' => 'Stoor',
 	'grouppermissions-sp-remove' => 'verwyder',
 );
 
@@ -145,6 +135,13 @@ $messages['af'] = array(
 $messages['am'] = array(
 	'grouppermissions-search' => 'ስብስባ:',
 	'grouppermissions-comment' => 'ማጠቃለያ፦',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'grouppermissions-sp-save' => 'Alzar',
 );
 
 /** Arabic (العربية)
@@ -216,6 +213,33 @@ $messages['ar'] = array(
 	'right-readold' => 'رؤية محتوى المراجعات والفروقات القديمة',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'removeunusedgroups' => 'ܠܚܝ ܟܢܘܫܬ̈ܐ ܠܐ ܦܠܝܚ̈ܐ',
+	'grouppermissions-search' => 'ܟܢܘܫܬܐ:',
+	'grouppermissions-dologin' => 'ܥܘܠ',
+	'grouppermissions-dosearch' => 'ܙܠ',
+	'grouppermissions-searchlabel' => 'ܒܨܝ ܥܠ ܟܢܘܫܬܐ',
+	'grouppermissions-deletelabel' => 'ܫܘܦ ܟܢܘܫܬܐ',
+	'grouppermissions-add' => 'ܐܘܣܦ ܟܢܘܫܬܐ',
+	'grouppermissions-delete' => 'ܫܘܦ ܟܢܘܫܬܐ',
+	'grouppermissions-never' => 'ܠܐ ܡܡܬܘܡ',
+	'grouppermissions-sort-edit' => 'ܫܚܠܦܬܐ',
+	'grouppermissions-sort-admin' => 'ܡܕܒܪܢܘܬܐ',
+	'grouppermissions-log-name' => 'ܣܓܠܐ ܕܦܣܣ̈ܐ ܕܟܢܘܫܬܐ',
+	'grouppermissions-sp-save' => 'ܠܒܘܟ',
+	'grouppermissions-sp-addperm' => 'ܐܘܣܦ ܦܣܣܐ',
+	'grouppermissions-rug-success' => 'ܠܘܚܝܐ ܕܡܦܠܚܢ̈ܐ ܡܢ ܟܢܘܫܬ̈ܐ ܠܐ ܦܠܝܚ̈ܐ ܓܡܪ!',
+	'grouppermissions-rug-confirm' => 'ܠܚܝ ܡܦܠܚܢ̈ܐ ܡܢ ܟܢܘܫܬ̈ܐ ܠܐ ܦܠܝܚ̈ܐ',
+	'right-history' => 'ܚܙܝ ܦܐܬܐ ܕܬܫܥܝܬ̈ܐ',
+	'right-search' => 'ܒܨܝܐ ܒܘܝܩܝ',
+	'right-contributions' => 'ܚܙܝ ܦܐܬܐ ܕܫܘܬܦܘܝܬ̈ܐ',
+	'right-recentchanges' => 'ܚܙܝ ܫܘܚܠܦ̈ܐ ܚܕ̈ܬܐ',
+	'right-edittalk' => 'ܫܚܠܦ ܦܐܬܬ̈ܐ ܕܕܘܪܫܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -245,7 +269,7 @@ $messages['arz'] = array(
 	'grouppermissions-true' => 'صواب',
 	'grouppermissions-false' => 'خطأ',
 	'grouppermissions-never' => 'أبدا',
-	'grouppermissions-nooldrev' => 'تمت مصادفة خطأ عند محاولة أرشفة ملف الضبط الحالي. لا أرشيف سيتم صنعه',
+	'grouppermissions-nooldrev' => 'تمت مصادفة خطأ عند محاولة أرشفة ملف الضبط الحالى. لا أرشيف سيتم صنعه',
 	'grouppermissions-sort-read' => 'قراءة',
 	'grouppermissions-sort-edit' => 'تعديل',
 	'grouppermissions-sort-manage' => 'تحكم',
@@ -286,12 +310,71 @@ $messages['arz'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'grouppermissions' => 'Кіраваньне правамі групаў',
+	'sortpermissions' => 'Сартаваць правы',
+	'removeunusedgroups' => 'Выдаліць групы, якія не выкарыстоўваюцца',
+	'grouppermissions-desc' => 'Кіраваньне правамі групаў праз [[Special:GroupPermissions|спэцыяльную старонку]]',
+	'grouppermissions-desc2' => 'Пашыраная сыстэма правоў',
+	'grouppermissions-desc3' => 'Дазваляе настройваць дзеяньні для зьместу (tabs)',
+	'grouppermissions-desc4' => 'Дазваляе дадаваць дадатковыя інструмэнты ў панэль інструмэнтаў',
+	'grouppermissions-desc-nsm' => 'Кіраваньне прасторамі назваў праз спэцыяльную старонку',
+	'grouppermissions-header' => 'Вы можаце выкарыстоўваць гэтую старонку для зьмены правоў розных групаў удзельнікаў.',
+	'grouppermissions-search' => 'Група:',
+	'grouppermissions-dologin' => 'Імя ўдзельніка',
+	'grouppermissions-dosearch' => 'Перайсьці',
+	'grouppermissions-searchlabel' => 'Пошук па групах',
+	'grouppermissions-deletelabel' => 'Выдаліць групу',
+	'grouppermissions-error' => 'Узьнікла невядомая памылка, калі ласка, націсьніце кнопку «вярнуцца» ў Вашым браўзэры і паспрабуйце ізноў',
+	'grouppermissions-change' => 'Зьмяніць правы групы',
+	'grouppermissions-add' => 'Дадаць групу',
+	'grouppermissions-delete' => 'Выдаліць групу',
 	'grouppermissions-comment' => 'Камэнтар:',
+	'grouppermissions-addsuccess' => '$1 пасьпяхова дададзеная',
+	'grouppermissions-deletesuccess' => '$1 пасьпяхова выдаленая',
+	'grouppermissions-changesuccess' => 'Правы для $1 пасьпяхова зьмененыя',
+	'grouppermissions-true' => 'Праўда',
+	'grouppermissions-false' => 'Няпраўда',
 	'grouppermissions-never' => 'Ніколі',
+	'grouppermissions-nooldrev' => 'Узьнікла памылка пад час спробы архівацыі цяперашняга файла канфігурацыі. Архіў ня будзе створаны',
+	'grouppermissions-sort-read' => 'Чытаньне',
+	'grouppermissions-sort-edit' => 'Рэдагаваньне',
+	'grouppermissions-sort-manage' => 'Кіраваньне',
+	'grouppermissions-sort-admin' => 'Адміністраваньне',
+	'grouppermissions-sort-tech' => 'Тэхнічныя',
+	'grouppermissions-sort-misc' => 'Розныя',
+	'grouppermissions-log-add' => 'дададзеная група «$2»',
+	'grouppermissions-log-change' => 'зьмененыя правы для групы «$2»',
+	'grouppermissions-log-delete' => 'выдаленая група «$2»',
+	'grouppermissions-log-name' => 'Журнал зьменаў правоў групаў',
+	'grouppermissions-log-header' => 'Гэта старонка сочыць за зьменамі базавых правоў групаў удзельнікаў.',
+	'grouppermissions-needjs' => 'Папярэджаньне: у Вашы браўзэры адключаны JavaScript. Некаторыя магчымасьці могуць не працаваць!',
+	'grouppermissions-sp-header' => 'Вы можаце выкарыстоўваць гэтую старонку для кіраваньня парадкам сартаваньня правоў і даданьня новых правоў. Навядзіце курсор на права, каб прачытаць апісаньне',
+	'grouppermissions-sp-sort' => 'Сартаваць правы',
 	'grouppermissions-sp-save' => 'Захаваць',
+	'grouppermissions-sp-success' => 'Правы пасьпяхова адсартаваныя',
+	'grouppermissions-sp-addtype' => 'Дадаць тып сартаваньня',
+	'grouppermissions-sp-addperm' => 'Дадаць права',
 	'grouppermissions-sp-remove' => 'выдаліць',
+	'grouppermissions-sp-deltype' => 'Выдаліць тып сартаваньня',
+	'grouppermissions-rug-header' => 'Вы можаце выкарыстоўваць гэтую старонку для выдаленьня ўдзельнікаў з выдаленых групаў, якія не выкарыстоўваюцца альбо былі выдаленыя.',
+	'grouppermissions-rug-success' => 'Пасьпяхова выдаленыя ўдзельнікі з груп, якія не выкарыстоўваліся!',
+	'grouppermissions-rug-confirm' => 'Выдаліць удзельнікаў з груп, якія не выкарыстоўваюцца',
+	'right-grouppermissions' => 'Кіраваньне правамі групаў',
+	'right-viewsource' => 'прагляд крыніцы абароненай вікі-старонкі',
+	'right-raw' => 'прагляд неапрацаваных старонак',
+	'right-render' => 'прагляд сгенэраваных старонак без навігацыі',
+	'right-info' => 'прагляд інфармацыі пра старонкі',
+	'right-credits' => 'прагляд аўтараў старонкі',
+	'right-history' => 'прагляд гісторыі старонак',
+	'right-search' => 'пошук у вікі',
+	'right-contributions' => 'прагляд старонак з унёскамі',
+	'right-recentchanges' => 'прагляд апошніх зьменаў',
+	'right-edittalk' => 'рэдагаваньне старонкі абмеркаваньняў',
+	'right-edit-new' => 'рэдагаваньне старонак, якія не зьяўляюцца старонкамі абмеркаваньня',
+	'right-readold' => 'прагляд зьместу старых вэрсіяў і параўнаньне вэрсіяў',
 );
 
 /** Bulgarian (Български)
@@ -339,6 +422,74 @@ $messages['bg'] = array(
 	'right-edit-new' => 'редактиране на страници',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'grouppermissions' => 'Merañ aotreoù ar strolladoù',
+	'sortpermissions' => 'Urzhiañ an aotreoù',
+	'removeunusedgroups' => 'Lemel ar strolladoù dizimplij',
+	'grouppermissions-desc' => 'Merañ aotreoù ar strolladoù dre ur [[Special:GroupPermissions|bajenn ispisial]]',
+	'grouppermissions-desc2' => 'Reizhiad an aotreoù astennet',
+	'grouppermissions-desc3' => 'Aotreañ a ra da zanvez an oberezhioù (taolennataoù) bezañ personelaet',
+	'grouppermissions-desc4' => 'Aotreañ a ra ouzhpennañ elfennoù ouzhpenn er boest ostilhoù',
+	'grouppermissions-desc-nsm' => 'Merañ an esaouennoù anv dre ur bajenn ispisial',
+	'grouppermissions-header' => "Gellout a rafec'h implijout ar bajenn-mañ evit kemmañ an aotreoù islinennet evit ar stolladoù implijerien !",
+	'grouppermissions-search' => 'Strollad :',
+	'grouppermissions-dologin' => 'Lugañ',
+	'grouppermissions-dosearch' => 'Mont',
+	'grouppermissions-searchlabel' => "Klask war-lec'h ur strollad",
+	'grouppermissions-deletelabel' => 'Dilemel ar strollad',
+	'grouppermissions-error' => 'Ur fazi dianv a zo bet, mar plij klikit war ar bouton war gil en ho merdeer ha klaskit adarre',
+	'grouppermissions-change' => 'Cheñch aotreoù ar strollad',
+	'grouppermissions-add' => 'Ouzhpennañ ur strollad',
+	'grouppermissions-delete' => 'Dilemel ar strollad',
+	'grouppermissions-comment' => 'Evezhiadenn :',
+	'grouppermissions-addsuccess' => '$1 zo bet ouzhpennet',
+	'grouppermissions-deletesuccess' => '$1 zo bet dilamet',
+	'grouppermissions-changesuccess' => 'Kemmet eo bet aotreoù $1',
+	'grouppermissions-true' => 'Gwir',
+	'grouppermissions-false' => 'Gaou',
+	'grouppermissions-never' => 'Morse',
+	'grouppermissions-sort-read' => 'O lenn',
+	'grouppermissions-sort-edit' => "Oc'h aozañ",
+	'grouppermissions-sort-manage' => 'Merañ',
+	'grouppermissions-sort-admin' => 'Meradur',
+	'grouppermissions-sort-tech' => 'Teknik',
+	'grouppermissions-sort-misc' => 'A bep seurt',
+	'grouppermissions-log-add' => 'en deus ouzhpennet ar strollad « $2 »',
+	'grouppermissions-log-change' => 'en deus cheñchet an aotreoù evit ar strollad « $2 »',
+	'grouppermissions-log-delete' => 'en deus dilamet ar strollad « $2 »',
+	'grouppermissions-log-name' => 'Marilh aotreoù ar strollad',
+	'grouppermissions-log-header' => "Treseal a ra ar bajenn-mañ ar c'hemmoù aotreoù islinennet evit ar stolladoù implijerien.",
+	'grouppermissions-needjs' => "'''Kemennadenn :''' Diweredekaet eo JavaScript war ho merdeer. Posubl-tre eo ne zafe ket en-dro arc'hweladurioù 'zo !",
+	'grouppermissions-sp-sort' => 'Urzhiañ an aotreoù',
+	'grouppermissions-sp-save' => 'Enrollañ',
+	'grouppermissions-sp-success' => 'Urzhiet eo bet an aotreoù',
+	'grouppermissions-sp-addtype' => 'Ouzhpennañ rummadurioù a bep seurt',
+	'grouppermissions-sp-addperm' => 'Ouzhpennañ an aotre',
+	'grouppermissions-sp-remove' => 'lemel',
+	'grouppermissions-sp-deltype' => 'Dilemel an doare rummañ',
+	'grouppermissions-rug-header' => "Rankout a rafec'h implijout ar bajenn-mañ evit dilemel an implijerien eus ar stolladoù dizimplij (diverket) !",
+	'grouppermissions-rug-success' => 'Tennet eo bet an implijerien eus ar stolladoù dizimplij !',
+	'grouppermissions-rug-confirm' => 'Lemel an implijerien eus ar strolladoù dizimplij',
+	'right-grouppermissions' => 'Merañ aotreoù ar strolladoù',
+	'right-viewsource' => 'Gwelet tarzh ar pajennoù gwarezet',
+	'right-raw' => 'Gwelet ar pajennoù diaoz',
+	'right-render' => 'Gwelet deouez ar pajennoù hep merdeiñ',
+	'right-info' => 'GWelet titouroù ar bajenn',
+	'right-credits' => 'Gwelet kredoù ar bajenn',
+	'right-history' => 'Gwelet istor ar bajenn',
+	'right-search' => 'Klask ar wiki',
+	'right-contributions' => 'Gwelet pajennoù an degasadennoù',
+	'right-recentchanges' => "Gwelet ar c'hemmoù graet nevez zo",
+	'right-edittalk' => 'Aozañ ar pajennoù divizout',
+	'right-edit-new' => "Aozañ pajennoù (ha n'int ket pajennoù divizout)",
+	'right-readold' => 'Gwelet danvez an adweladennoù kozh hag an diffoù',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -368,6 +519,7 @@ $messages['bs'] = array(
 	'grouppermissions-true' => 'Tačno',
 	'grouppermissions-false' => 'Netačno',
 	'grouppermissions-never' => 'Nikad',
+	'grouppermissions-nooldrev' => 'Desila se greška pri pokušaju da se arhivira trenutna konfiguracijska datoteka. Arhiva nije napravljena',
 	'grouppermissions-sort-read' => 'Čitanje',
 	'grouppermissions-sort-edit' => 'Uređivanje',
 	'grouppermissions-sort-manage' => 'Upravljanje',
@@ -380,6 +532,7 @@ $messages['bs'] = array(
 	'grouppermissions-log-name' => 'Zapisnik grupnih dopuštenja',
 	'grouppermissions-log-header' => 'Ova stranica prati promjene na određenim dopuštenjima korisničkih grupa.',
 	'grouppermissions-needjs' => 'Upozorenje: JavaScript je onemogućen u Vašem pregledniku. Neke funkcije možda neće raditi!',
+	'grouppermissions-sp-header' => 'Možete koristiti ovu stranicu za određivanje kako će se sortirati dopuštenja i dodavati nova. Pređite mišem preko dopuštenja da pročitate njegov opis',
 	'grouppermissions-sp-sort' => 'Sortiraj dopuštenja',
 	'grouppermissions-sp-save' => 'Sačuvaj',
 	'grouppermissions-sp-success' => 'Dopuštenja su uspješno sortirana',
@@ -407,9 +560,16 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Loupeter
+ * @author Solde
  */
 $messages['ca'] = array(
+	'grouppermissions-search' => 'Grup:',
 	'grouppermissions-comment' => 'Comentari:',
+	'grouppermissions-true' => 'Cert',
+	'grouppermissions-false' => 'Fals',
+	'grouppermissions-never' => 'Mai',
+	'grouppermissions-sort-admin' => 'Administració',
+	'grouppermissions-sp-remove' => 'elimina',
 );
 
 /** German (Deutsch)
@@ -417,6 +577,7 @@ $messages['ca'] = array(
  * @author Leithian
  * @author Purodha
  * @author Raimond Spekking
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'grouppermissions' => 'Gruppenberechtigungen verwalten',
@@ -482,7 +643,18 @@ Schwebe mit der Maus über eine Berechtigung, um eine Beschreibung anzuzeigen.',
 	'right-recentchanges' => 'Letzte Änderungen ansehen',
 	'right-edittalk' => 'Diskussionsseiten bearbeiten',
 	'right-edit-new' => 'Seiten bearbeiten (ausgenommen Diskussionsseiten)',
-	'right-readold' => 'Betrachte den Inhalt von alten Versionen und Versionsunterschieden',
+	'right-readold' => 'Inhalt von alten Versionen und Versionsunterschieden ansehen',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'grouppermissions-header' => 'Mit dieser Spezialseite können Sie die Berechtigungen von Benutzergruppen ändern.',
+	'grouppermissions-error' => 'Es ist ein unbekannter Fehler aufgetreten. Klicken Sie bitte auf die Zurück-Schaltfläche Ihres Browsers und senden Sie die Seite erneut ab.',
+	'grouppermissions-needjs' => 'Warnung: JavaScript ist in Ihrem Browser deaktiviert. Einige Funktionen stehen möglicherweise nicht zur Verfügung.',
+	'grouppermissions-sp-header' => 'Auf dieser Spezialseite können Sie Berechtigungen sortieren und neue Berechtigungen einrichten. Ziehen Sie die Maus über eine Berechtigung, um eine Beschreibung anzuzeigen.',
+	'grouppermissions-rug-header' => 'Auf dieser Seite können Sie Benutzer aus unbenutzten (gelöschten) Gruppen entfernen.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -562,11 +734,34 @@ $messages['ee'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['el'] = array(
 	'grouppermissions-search' => 'Ομάδα:',
+	'grouppermissions-dologin' => 'Είσοδος',
+	'grouppermissions-dosearch' => 'Μετάβαση',
+	'grouppermissions-searchlabel' => 'Αναζήτηση για ομάδα',
+	'grouppermissions-deletelabel' => 'Διαγραφή ομάδας',
+	'grouppermissions-add' => 'Προσθήκη ομάδας',
+	'grouppermissions-delete' => 'Διαγραφή ομάδας',
 	'grouppermissions-comment' => 'Σχόλιο:',
+	'grouppermissions-true' => 'Αληθινός',
+	'grouppermissions-false' => 'Ψεύτικος',
+	'grouppermissions-never' => 'Ποτέ',
+	'grouppermissions-sort-read' => 'Ανάγνωση',
+	'grouppermissions-sort-edit' => 'Επεξεργασία',
+	'grouppermissions-sort-manage' => 'Διαχείριση',
+	'grouppermissions-sort-admin' => 'Διοίκηση',
+	'grouppermissions-sort-tech' => 'Τεχνικό',
+	'grouppermissions-sort-misc' => 'Διάφορα',
+	'grouppermissions-log-add' => 'προστεθειμένη ομάδα "$2"',
+	'grouppermissions-log-delete' => 'διαγραμμένη ομάδα "$2"',
+	'grouppermissions-sp-sort' => 'Ταξινόμηση αδειών',
 	'grouppermissions-sp-save' => 'Αποθηκεύστε',
+	'grouppermissions-sp-remove' => 'αφαίρεση',
+	'right-search' => 'Αναζήτηση του βίκι',
+	'right-recentchanges' => 'Προβολή προσφάτων αλλαγών',
 );
 
 /** Esperanto (Esperanto)
@@ -595,6 +790,7 @@ $messages['eo'] = array(
 	'grouppermissions-sort-edit' => 'Redaktado',
 	'grouppermissions-sort-manage' => 'Administrado',
 	'grouppermissions-sort-admin' => 'Administrado',
+	'grouppermissions-sort-tech' => 'Teknika',
 	'grouppermissions-sort-misc' => 'Diversaĵoj',
 	'grouppermissions-log-add' => 'aldonis grupon "$2"',
 	'grouppermissions-log-change' => 'ŝanĝis rajtojn por grupon "$2"',
@@ -620,6 +816,7 @@ $messages['eo'] = array(
  * @author Crazymadlover
  * @author Imre
  * @author Sanbec
+ * @author Translationista
  */
 $messages['es'] = array(
 	'grouppermissions' => 'Administrar permisos de grupo',
@@ -627,10 +824,16 @@ $messages['es'] = array(
 	'removeunusedgroups' => 'Remover grupos no usados',
 	'grouppermissions-desc' => 'Administrar permisos de grupo a traves de una [[Special:GroupPermissions|pagina especial]]',
 	'grouppermissions-desc2' => 'Sistema de permisos extendido',
+	'grouppermissions-desc3' => 'Permite adaptar las acciones de contenido (pestañas)',
+	'grouppermissions-desc4' => 'Permite la adición de objetos adicionales a la Caja de Herramientas',
+	'grouppermissions-desc-nsm' => 'Gestionar nombres de espacio a través de una página especial',
+	'grouppermissions-header' => 'Puedes utilizar esta página para cambiar los permisos subyacentes de los distintos  grupos de usuario.',
 	'grouppermissions-search' => 'Grupo:',
 	'grouppermissions-dologin' => 'Entrar',
 	'grouppermissions-dosearch' => 'Ir',
+	'grouppermissions-searchlabel' => 'Buscar grupo',
 	'grouppermissions-deletelabel' => 'Borrar grupo',
+	'grouppermissions-error' => 'Un error desconocido ha ocurrido, por favor presione el botón de retroceso de tu navegador e intente de nuevo',
 	'grouppermissions-change' => 'Cambiar permisos de grupo',
 	'grouppermissions-add' => 'Agregar grupo',
 	'grouppermissions-delete' => 'Borrar grupo',
@@ -641,6 +844,7 @@ $messages['es'] = array(
 	'grouppermissions-true' => 'Verdadero',
 	'grouppermissions-false' => 'Falso',
 	'grouppermissions-never' => 'Nunca',
+	'grouppermissions-nooldrev' => 'Error encontrado cuando se intentaba archivar el archivo de configuración actual. Ningún archivo será creado',
 	'grouppermissions-sort-read' => 'Leyendo',
 	'grouppermissions-sort-edit' => 'Editando',
 	'grouppermissions-sort-manage' => 'Gerencia',
@@ -650,40 +854,132 @@ $messages['es'] = array(
 	'grouppermissions-log-add' => 'Agregado grupo "$2"',
 	'grouppermissions-log-change' => 'Permisos cambiados para grupo "$2"',
 	'grouppermissions-log-delete' => 'borrado grupo "$2"',
+	'grouppermissions-log-name' => 'Registro de permisos de grupo',
+	'grouppermissions-log-header' => 'Esta página rastrea los cambios realizados a los permisos subyacentes de los grupos de usuario.',
+	'grouppermissions-needjs' => 'Advertencia: JavaScript está deshabilitado en tu navegador. Algunas características pueden no funcionar!',
+	'grouppermissions-sp-header' => 'Puedes utilizar esta página para gestionar la forma en que se organizan y añaden nuevos permisos. Coloca el puntero sobre un permiso para leer su descripción.',
 	'grouppermissions-sp-sort' => 'Ordenar permisos',
 	'grouppermissions-sp-save' => 'Guardar',
+	'grouppermissions-sp-success' => 'Permisos han sido exitosamente ordenados',
+	'grouppermissions-sp-addtype' => 'Añadir tipo de orden',
 	'grouppermissions-sp-addperm' => 'Agregar permiso',
 	'grouppermissions-sp-remove' => 'remover',
+	'grouppermissions-sp-deltype' => 'Borrar tipo de orden',
 	'grouppermissions-rug-header' => 'Puedes usar esta página para remover usuarios de grupos no usados (borrados)',
 	'grouppermissions-rug-success' => 'usuarios removidos exitosamente de grupos no usados!',
 	'grouppermissions-rug-confirm' => 'Remover usurios de grupos no usados',
 	'right-grouppermissions' => 'Administrar permisos de grupo',
 	'right-viewsource' => 'Ver fuente wiki de páginas protegidas',
+	'right-raw' => 'Ver páginas en crudo',
+	'right-render' => 'Ver páginas procesadas sin navegación',
 	'right-info' => 'Ver información de página',
+	'right-credits' => 'Ver créditos de página',
+	'right-history' => 'Ver historiales de página',
 	'right-search' => 'Buscar el wiki',
 	'right-contributions' => 'Ver páginas de contribuciones',
 	'right-recentchanges' => 'Ver cambios recientes',
 	'right-edittalk' => 'Editar páginas de discusión',
+	'right-edit-new' => 'Editar páginas (las cuales no sean páginas de discusión)',
+	'right-readold' => 'Ver el contenido de revisiones previas y diffs',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'grouppermissions-search' => 'Taldea:',
+	'grouppermissions-dologin' => 'Saioa hasi',
+	'grouppermissions-dosearch' => 'Joan',
+	'grouppermissions-searchlabel' => 'Taldeak bilatu',
+	'grouppermissions-deletelabel' => 'Taldea ezabatu',
+	'grouppermissions-add' => 'Taldea gehitu',
+	'grouppermissions-delete' => 'Taldea ezabatu',
+	'grouppermissions-comment' => 'Iruzkina:',
+	'grouppermissions-true' => 'Egia',
+	'grouppermissions-false' => 'Gezurra',
+	'grouppermissions-never' => 'Inoiz',
+	'grouppermissions-sort-manage' => 'Kudeaketa',
+	'grouppermissions-sort-admin' => 'Administrazioa',
+	'grouppermissions-sort-tech' => 'Teknikoa',
+	'grouppermissions-sp-save' => 'Gorde',
+	'grouppermissions-sp-remove' => 'kendu',
 );
 
 /** Finnish (Suomi)
  * @author Crt
  * @author Nike
+ * @author Silvonen
  * @author Str4nd
+ * @author ZeiP
  */
 $messages['fi'] = array(
+	'grouppermissions' => 'Hallitse ryhmien oikeuksia',
+	'sortpermissions' => 'Lajittele käyttöoikeudet',
 	'removeunusedgroups' => 'Poista käyttämättömät ryhmät',
+	'grouppermissions-desc' => 'Hallitse ryhmäoikeuksia [[Special:GroupPermissions|toimintosivun]] kautta',
+	'grouppermissions-desc2' => 'Laajennettu käyttöoikeusjärjestelmä',
+	'grouppermissions-desc3' => 'Mahdollistaa sisältötoiminteiden (välilehdet) mukauttamisen',
+	'grouppermissions-desc4' => 'Mahdollistaa elementtien lisäämisen työkalulaatikkoon',
+	'grouppermissions-desc-nsm' => 'Hallitse nimiavaruuksia toimintosivun kautta',
+	'grouppermissions-header' => 'Voit käyttää tätä sivua muuttaaksesi eri käyttäjäryhmien oikeuksia',
 	'grouppermissions-search' => 'Ryhmä',
+	'grouppermissions-dologin' => 'Kirjaudu sisään',
 	'grouppermissions-dosearch' => 'Siirry',
 	'grouppermissions-searchlabel' => 'Etsi ryhmää',
+	'grouppermissions-deletelabel' => 'Poista ryhmä',
+	'grouppermissions-error' => 'Tuntematon virhe on tapahtunut, käytä selaimesi takaisin-painiketta ja yritä uudestaan',
+	'grouppermissions-change' => 'Muuta ryhmäoikeuksia',
 	'grouppermissions-add' => 'Lisää ryhmä',
 	'grouppermissions-delete' => 'Poista ryhmä',
+	'grouppermissions-comment' => 'Kommentti',
 	'grouppermissions-addsuccess' => '$1 lisättiin',
 	'grouppermissions-deletesuccess' => '$1 poistettiin',
+	'grouppermissions-changesuccess' => 'Oikeudet ryhmälle $1 on onnistuneesti muutettu',
+	'grouppermissions-true' => 'Kyllä',
+	'grouppermissions-false' => 'Ei',
+	'grouppermissions-never' => 'Ei koskaan',
+	'grouppermissions-nooldrev' => 'Virhe yrittäessä arkistoida nykyistä asetustiedostoa. Arkistoa ei tehdä',
+	'grouppermissions-sort-read' => 'Lukeminen',
+	'grouppermissions-sort-edit' => 'Muokkaaminen',
+	'grouppermissions-sort-manage' => 'Hallinta',
+	'grouppermissions-sort-admin' => 'Ylläpito',
+	'grouppermissions-sort-tech' => 'Tekninen',
+	'grouppermissions-sort-misc' => 'Sekalainen',
+	'grouppermissions-log-add' => 'lisätty ryhmä ”$2”',
+	'grouppermissions-log-change' => 'muutti ryhmän ”$2” oikeuksia',
+	'grouppermissions-log-delete' => 'poistettu ryhmä ”$2”',
+	'grouppermissions-log-name' => 'Ryhmäoikeusloki',
+	'grouppermissions-log-header' => 'Tämä sivu seuraa muutoksia käyttäjäryhmien oikeuksiin.',
+	'grouppermissions-needjs' => "'''Varoitus:''' JavaScript on suljettu selaimestasi. Jotkin ominaisuudet eivät saata toimia!",
+	'grouppermissions-sp-header' => 'Voit käyttää tätä sivua hallitaksesi oikeuksien lajittelua ja lisätäksesi uusia oikeuksia. Pidä hiiren kursoria oikeuden päällä lukeaksesi sen kuvauksen',
+	'grouppermissions-sp-sort' => 'Lajittele käyttöoikeudet',
+	'grouppermissions-sp-save' => 'Tallenna',
+	'grouppermissions-sp-success' => 'Käyttöoikeudet on lajiteltu onnistuneesti',
+	'grouppermissions-sp-addtype' => 'Lisää lajittelutyyppi',
+	'grouppermissions-sp-addperm' => 'Lisää käyttöoikeus',
+	'grouppermissions-sp-remove' => 'poista',
+	'grouppermissions-sp-deltype' => 'Poista lajittelutyyppi',
+	'grouppermissions-rug-header' => 'Voit käyttää tätä sivua poistaaksesi käyttäjät käyttämättömistä (poistetuista) ryhmistä.',
+	'grouppermissions-rug-success' => 'Poistettu onnistuneesti käyttäjät käyttämättömistä ryhmistä!',
+	'grouppermissions-rug-confirm' => 'Poista käyttäjiä käyttämättömistä ryhmistä',
+	'right-grouppermissions' => 'Hallita ryhmien käyttöoikeuksia',
+	'right-viewsource' => 'Katsoa suojattujen sivujen wikikoodeja',
+	'right-raw' => 'Katsoa jäsentämättömiä sivuja',
+	'right-render' => 'Katsoa jäsennettyjä sivuja ilman valikkoa',
+	'right-info' => 'Katsoa sivujen tietoja',
+	'right-credits' => 'Katsoa sivujen tekijäluetteloja',
+	'right-history' => 'Katsoa sivujen historioita',
+	'right-search' => 'Etsiä wikistä',
+	'right-contributions' => 'Katsoa muokkausluetteloja',
+	'right-recentchanges' => 'Katsoa tuoreita muutoksia',
+	'right-edittalk' => 'Muokata keskustelusivuja',
+	'right-edit-new' => 'Muokata sivuja (jotka eivät ole keskustelusivuja)',
+	'right-readold' => 'Nähdä vanhojen versioiden sisällön ja muutokset',
 );
 
 /** French (Français)
  * @author Grondin
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'grouppermissions' => 'Gérer les permissions des groupes',
@@ -713,7 +1009,7 @@ $messages['fr'] = array(
 	'grouppermissions-never' => 'Jamais',
 	'grouppermissions-nooldrev' => 'Une erreur est intervenue lors de la tentative d’archivage du fichier de configuration. Aucune archive ne sera créée.',
 	'grouppermissions-sort-read' => 'Lecture',
-	'grouppermissions-sort-edit' => 'Édition',
+	'grouppermissions-sort-edit' => 'Modification',
 	'grouppermissions-sort-manage' => 'Gestion',
 	'grouppermissions-sort-admin' => 'Administration',
 	'grouppermissions-sort-tech' => 'Technique',
@@ -748,6 +1044,19 @@ $messages['fr'] = array(
 	'right-edittalk' => 'Modifier les pages de discussion',
 	'right-edit-new' => 'Modifier les pages (qui n’ont pas de page de discussion)',
 	'right-readold' => 'Voir le contenu des anciennes versions et des diffs',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'grouppermissions-search' => 'Tropa :',
+	'grouppermissions-dologin' => 'Branchement',
+	'grouppermissions-dosearch' => 'Lanciér',
+	'grouppermissions-true' => 'Veré',
+	'grouppermissions-sp-save' => 'Sôvar',
+	'grouppermissions-sp-remove' => 'enlevar',
 );
 
 /** Western Frisian (Frysk)
@@ -838,10 +1147,12 @@ $messages['gl'] = array(
  * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'grouppermissions-search' => 'Ὁμάς:',
 	'grouppermissions-dologin' => 'Συνδεῖσθαι',
 	'grouppermissions-dosearch' => 'Ἱέναι',
 	'grouppermissions-comment' => 'Σχόλιον:',
 	'grouppermissions-never' => 'Οὔποτε',
+	'grouppermissions-sp-save' => 'Γράφειν',
 	'grouppermissions-sp-remove' => 'ἀφαιρεῖν',
 );
 
@@ -1128,6 +1439,74 @@ $messages['hsb'] = array(
 	'right-readold' => 'Wobsah starych wersijow a rozdźělow wersijow sej wobhladać',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'grouppermissions' => 'Csoportjogosultságok kezelése',
+	'sortpermissions' => 'Jogosultságok rendezése',
+	'removeunusedgroups' => 'Nem használt csoportok eltávolítása',
+	'grouppermissions-desc' => 'Csoportjogosultságok kezelése [[Special:GroupPermissions|speciális lapon]]',
+	'grouppermissions-desc2' => 'Kiterjesztett jogosultsági rendszer',
+	'grouppermissions-desc3' => 'Lehetővé teszi a fő műveletek (fülek) személyre szabását',
+	'grouppermissions-desc4' => 'Lehetővé teszi további elemek felvételét az eszköztárba',
+	'grouppermissions-desc-nsm' => 'Névterek kezelése speciális lapon',
+	'grouppermissions-header' => 'Ezen a lapon megváltoztathatod a különböző felhasználói csoportok jogosultságait.',
+	'grouppermissions-search' => 'Csoport:',
+	'grouppermissions-dologin' => 'Bejelentkezés',
+	'grouppermissions-dosearch' => 'Menj',
+	'grouppermissions-searchlabel' => 'Csoport keresése',
+	'grouppermissions-deletelabel' => 'Csoport törlése',
+	'grouppermissions-error' => 'Ismeretlen hiba történt, nyomd meg a böngésződ vissza gombját, majd próbáld újra',
+	'grouppermissions-change' => 'Csoportjogosultságok megváltoztatása',
+	'grouppermissions-add' => 'Csoport hozzáadása',
+	'grouppermissions-delete' => 'Csoport törlése',
+	'grouppermissions-comment' => 'Megjegyzés:',
+	'grouppermissions-addsuccess' => '$1 sikeresen hozzáadva',
+	'grouppermissions-deletesuccess' => '$1 sikeresen törölve',
+	'grouppermissions-changesuccess' => '$1 jogosultságai sikeresen megváltoztatva',
+	'grouppermissions-true' => 'Igen',
+	'grouppermissions-false' => 'Nem',
+	'grouppermissions-never' => 'Soha',
+	'grouppermissions-nooldrev' => 'Hiba történt a jelenlegi beállításfájl archiválása közben. Nem fog archívum készülni',
+	'grouppermissions-sort-read' => 'Olvasás',
+	'grouppermissions-sort-edit' => 'Szerkesztés',
+	'grouppermissions-sort-manage' => 'Kezelés',
+	'grouppermissions-sort-admin' => 'Adminisztráció',
+	'grouppermissions-sort-tech' => 'Technikai',
+	'grouppermissions-sort-misc' => 'Vegyes',
+	'grouppermissions-log-add' => '„$2” csoport hozzáadva',
+	'grouppermissions-log-change' => 'a(z) „$2” csoport jogosultságai megváltoztatva',
+	'grouppermissions-log-delete' => '„$2” csoport törölve',
+	'grouppermissions-log-name' => 'Csoportjogosultságok naplója',
+	'grouppermissions-log-header' => 'A felhasználói csoportokhoz tartozó jogosultságok változásainak naplója',
+	'grouppermissions-needjs' => "'''Figyelem:''' a JavaScript le van tiltva a böngésződben. Néhány funkció lehet, hogy nem fog működni!",
+	'grouppermissions-sp-header' => 'Ezen a lapon beállíthatod a jogosultságok kiosztását, és új jogosultságokat adhatsz hozzá. Vidd az egeret egy jogosultság fölé, hogy lásd a leírását',
+	'grouppermissions-sp-sort' => 'Jogosultságok rendezése',
+	'grouppermissions-sp-save' => 'Mentés',
+	'grouppermissions-sp-success' => 'Jogosultságok sikeresen csoportosítva',
+	'grouppermissions-sp-addtype' => 'Rendezési kulcs hozzáadása',
+	'grouppermissions-sp-addperm' => 'Jogosultság hozzáadása',
+	'grouppermissions-sp-remove' => 'eltávolítás',
+	'grouppermissions-sp-deltype' => 'Rendezési kulcs törlése',
+	'grouppermissions-rug-header' => 'Ezen a lapon eltávolíthatod a felhasználókat a nem használt (törölt) csoportokból.',
+	'grouppermissions-rug-success' => 'A felhasználók sikeresen eltávolítva a nem használt csoportokból!',
+	'grouppermissions-rug-confirm' => 'Felhasználók eltávolítása a nem használt csoportokból',
+	'right-grouppermissions' => 'csoportjogosultságok kezelése',
+	'right-viewsource' => 'védett lapok wiki forrásának megtekintése',
+	'right-raw' => 'Nyers lapok megtekintése',
+	'right-render' => 'legenerált lapok megtekintése a navigáció nélkül',
+	'right-info' => 'lapinformációk megtekintése',
+	'right-credits' => 'lap közreműködőinek megtekintése',
+	'right-history' => 'laptörténetek megtekintése',
+	'right-search' => 'Keresés a wikiben',
+	'right-contributions' => 'közreműködés lapok megtekintése',
+	'right-recentchanges' => 'Friss változtatások megtekintése',
+	'right-edittalk' => 'vitalapok szerkesztése',
+	'right-edit-new' => 'lapok szerkesztése (amelyek nem vitalapok)',
+	'right-readold' => 'régi lapváltozatok és eltérések megnézése',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -1146,7 +1525,7 @@ $messages['ia'] = array(
 	'grouppermissions-dosearch' => 'Ir',
 	'grouppermissions-searchlabel' => 'Cercar gruppo',
 	'grouppermissions-deletelabel' => 'Deler gruppo',
-	'grouppermissions-error' => 'Un error incognite ha occurrite, per favor preme le button de retorno in tu navigator e reprova',
+	'grouppermissions-error' => 'Un error incognite ha occurrite, per favor preme le button de retorno in tu navigator e reproba',
 	'grouppermissions-change' => 'Cambiar permissiones de gruppo',
 	'grouppermissions-add' => 'Adder gruppo',
 	'grouppermissions-delete' => 'Deler gruppo',
@@ -1194,6 +1573,82 @@ $messages['ia'] = array(
 	'right-edittalk' => 'Modificar paginas de discussion',
 	'right-edit-new' => 'Modificar paginas (non discussion)',
 	'right-readold' => 'Vider le contento de ancian versiones e comparationes',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author IvanLanin
+ */
+$messages['id'] = array(
+	'grouppermissions' => 'Kelola akses group',
+	'sortpermissions' => 'Urutkan akses',
+	'removeunusedgroups' => 'Hapus kelompok yang tak terpakai',
+	'grouppermissions-desc' => 'Mengelola akses group melalui [[Special:GroupPermissions|halaman istimewa]]',
+	'grouppermissions-desc2' => 'Sistem hak akses yang diperluas',
+	'grouppermissions-desc3' => 'Memungkinkan penyesuaian hak akses untuk operasi isi (tab)',
+	'grouppermissions-desc4' => 'Memungkinkan penambahan butir ke kotak peralatan',
+	'grouppermissions-desc-nsm' => 'Mengelola ruang nama melalui halaman istimewa',
+	'grouppermissions-header' => 'Anda dapat menggunakan halaman ini untuk mengubah hak akses dari berbagai kelompok pengguna.',
+	'grouppermissions-search' => 'Kelompok:',
+	'grouppermissions-dologin' => 'Masuk log',
+	'grouppermissions-dosearch' => 'Tuju ke',
+	'grouppermissions-searchlabel' => 'Cari kelompok',
+	'grouppermissions-deletelabel' => 'Hapus kelompok',
+	'grouppermissions-error' => 'Telah terjadi kesalahan yang tidak dikenal, silakan tekan tombol kembali pada penjelajah Anda dan coba lagi.',
+	'grouppermissions-change' => 'Ubah akses group',
+	'grouppermissions-add' => 'Tambahkan kelompok',
+	'grouppermissions-delete' => 'Hapus kelompok',
+	'grouppermissions-comment' => 'Komentar:',
+	'grouppermissions-addsuccess' => '$1 telah berhasil ditambahkan',
+	'grouppermissions-deletesuccess' => '$1 telah berhasil dihapus',
+	'grouppermissions-changesuccess' => 'Akses untuk $1 telah berhasil diubah',
+	'grouppermissions-true' => 'Benar',
+	'grouppermissions-false' => 'Salah',
+	'grouppermissions-never' => 'Tidak pernah',
+	'grouppermissions-nooldrev' => 'Kesalahan ditemukan saat mencoba untuk mengarsipkan berkas konfigurasi saat ini. Arsip tidak akan dibuat',
+	'grouppermissions-sort-read' => 'Membaca',
+	'grouppermissions-sort-edit' => 'Menyunting',
+	'grouppermissions-sort-manage' => 'Pengelolaan',
+	'grouppermissions-sort-admin' => 'Administrasi',
+	'grouppermissions-sort-tech' => 'Teknis',
+	'grouppermissions-sort-misc' => 'Lain-lain',
+	'grouppermissions-log-add' => 'menambahkan kelompok "$2"',
+	'grouppermissions-log-change' => 'mengganti akses untuk kelompok "$2"',
+	'grouppermissions-log-delete' => 'menghapus kelompok "$2"',
+	'grouppermissions-log-name' => 'Log akses kelompok',
+	'grouppermissions-log-header' => 'Halaman ini melacak perubahan pada hak akses kelompok pengguna.',
+	'grouppermissions-needjs' => "'''Peringatan:''' JavaScript dinonaktifkan pada penjelajah Anda. Beberapa fitur mungkin tidak bekerja!",
+	'grouppermissions-sp-header' => 'Anda dapat menggunakan halaman ini untuk mengatur bagaimana hak akses diurutkan dan menambah akses baru. Arahkan di atas sebuah izin untuk membaca deskripsinya.',
+	'grouppermissions-sp-sort' => 'Urutkan akses',
+	'grouppermissions-sp-save' => 'Simpan',
+	'grouppermissions-sp-success' => 'Akses telah berhasil diurutkan',
+	'grouppermissions-sp-addtype' => 'Tambahkan tipe pengurutan',
+	'grouppermissions-sp-addperm' => 'Tambahkan akses',
+	'grouppermissions-sp-remove' => 'hapus',
+	'grouppermissions-sp-deltype' => 'Hapus tipe pengurutan',
+	'grouppermissions-rug-header' => 'Anda dapat menggunakan halaman ini untuk menghapus pengguna dari kelompok yang tak digunakan (dihapus).',
+	'grouppermissions-rug-success' => 'Berhasil menghapus pengguna dari kelompok yang tak terpakai!',
+	'grouppermissions-rug-confirm' => 'Hapus pengguna dari kelompok yang tak terpakai',
+	'right-grouppermissions' => 'Mengelola akses kelompok',
+	'right-viewsource' => 'Melihat sumber wiki dari halaman yang dilindungi',
+	'right-raw' => 'Melihat halaman mentah',
+	'right-render' => 'Melihat halaman yang ditampilkan tanpa navigasi',
+	'right-info' => 'Melihat info halaman',
+	'right-credits' => 'Melihat kredit halaman',
+	'right-history' => 'Melihat sejarah halaman',
+	'right-search' => 'Mencari di wiki',
+	'right-contributions' => 'Melihat halaman kontribusi',
+	'right-recentchanges' => 'Melihat perubahan terbaru',
+	'right-edittalk' => 'Menyunting halaman pembicaraan',
+	'right-edit-new' => 'Menyunting halaman (yang bukan halaman pembicaraan)',
+	'right-readold' => 'Melihat isi revisi lama dan perbedaan revisi',
+);
+
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'grouppermissions-sp-save' => 'Registragar',
 );
 
 /** Italian (Italiano)
@@ -1276,7 +1731,7 @@ $messages['ja'] = array(
 	'removeunusedgroups' => '未使用グループの削除',
 	'grouppermissions-desc' => '[[Special:GroupPermissions|特別ページ]]を用いてグループの権限を管理する',
 	'grouppermissions-desc2' => '拡張権限システム',
-	'grouppermissions-desc3' => '許可する操作（各タブ）をカスタマイズできます',
+	'grouppermissions-desc3' => '許可する操作(各タブ)をカスタマイズできます',
 	'grouppermissions-desc4' => 'ツールボックスに追加項目を加えられます',
 	'grouppermissions-desc-nsm' => '特別ページを用いて名前空間を管理する',
 	'grouppermissions-header' => 'このページを使用することで、さまざまな利用者グループの権限を変更することができます。',
@@ -1308,7 +1763,7 @@ $messages['ja'] = array(
 	'grouppermissions-log-delete' => 'グループ「$2」を削除しました',
 	'grouppermissions-log-name' => 'グループ権限記録',
 	'grouppermissions-log-header' => 'これは、利用者グループの権限の変更を記録したものです。',
-	'grouppermissions-needjs' => '警告: お使いのブラウザでは JavaScript が無効になっています。いくつかの機能が動作しない可能性があります。',
+	'grouppermissions-needjs' => "'''警告:''' お使いのブラウザでは JavaScript が無効になっています。いくつかの機能が動作しない可能性があります。",
 	'grouppermissions-sp-header' => 'このページで権限の分類方法を管理し、あるいは新しい権限を追加することができます。権限の解説を見るためには上にカーソルを置いてください。',
 	'grouppermissions-sp-sort' => '権限を整列',
 	'grouppermissions-sp-save' => '保存',
@@ -1317,7 +1772,7 @@ $messages['ja'] = array(
 	'grouppermissions-sp-addperm' => '権限を追加',
 	'grouppermissions-sp-remove' => '削除',
 	'grouppermissions-sp-deltype' => '分類種別を削除',
-	'grouppermissions-rug-header' => 'このページを使用すると、未使用（削除済み）のグループから利用者を除くことができます。',
+	'grouppermissions-rug-header' => 'このページを使用すると、未使用(削除済み)のグループから利用者を除くことができます。',
 	'grouppermissions-rug-success' => '未使用グループから利用者を正常に除きました！',
 	'grouppermissions-rug-confirm' => '未使用グループから利用者を除く',
 	'right-grouppermissions' => 'グループの権限を管理する',
@@ -1331,7 +1786,7 @@ $messages['ja'] = array(
 	'right-contributions' => '投稿記録を閲覧する',
 	'right-recentchanges' => '最近の更新を閲覧する',
 	'right-edittalk' => 'ノートページを編集する',
-	'right-edit-new' => '主ページ（ノートページではないページ）を編集する',
+	'right-edit-new' => '主ページ(ノートページではないページ)を編集する',
 	'right-readold' => '過去の版の内容および差分を閲覧する',
 );
 
@@ -1377,6 +1832,13 @@ $messages['km'] = array(
 	'right-edit-new' => 'កែប្រែទំព័រ (ដែលមិនមែនជាទំព័រពិភាក្សា)',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'grouppermissions-dosearch' => 'ಹೋಗು',
+);
+
 /** Korean (한국어)
  * @author Kwj2772
  */
@@ -1403,6 +1865,8 @@ $messages['ksh'] = array(
 	'sortpermissions' => 'Rääschte zotteere',
 	'removeunusedgroups' => 'Nit jebruchte Jruppe fott schmiiße',
 	'grouppermissions-desc' => 'Donn de Jroppe-Rääschte övver en [[Special:GroupPermissions|Söndersigg]] verwallde.',
+	'grouppermissions-desc2' => 'E jrüüßer Süßteem vu Rääschte',
+	'grouppermissions-desc3' => 'Määt et müjjelesch, de Akßjuhne för der Enhaldt em Wiki enzeshtelle',
 	'grouppermissions-desc4' => 'Määt exta Endrääsch onger „{{int:toolbox}}“ müjjelesch',
 	'grouppermissions-desc-nsm' => 'Donn de Appachtemangs övver en Söndersigg verwallde',
 	'grouppermissions-header' => 'Do kanns op dä Sigg hee de Rääschde vun dä Metmaacher en dä divärse Metmaacherjroppe ändere.',
@@ -1411,9 +1875,11 @@ $messages['ksh'] = array(
 	'grouppermissions-dosearch' => 'Lohß Jonn!',
 	'grouppermissions-searchlabel' => 'En Jropp söhke',
 	'grouppermissions-deletelabel' => 'De Jropp fottschmiiße',
+	'grouppermissions-error' => 'Ene unbekannte Fähler es opjetrodde. Donn dä „Retuur“-Knopp en Dingem Brauser bruche, un dann versöhk et norr_en neu.',
 	'grouppermissions-change' => 'Rääschde för Jroppe fun Metmaachere ändere',
 	'grouppermissions-add' => 'Jropp dobei donn',
 	'grouppermissions-delete' => 'Jropp fottschmiiße',
+	'grouppermissions-comment' => 'Kommentaa:',
 	'grouppermissions-addsuccess' => '$1 woodt dobei jedonn',
 	'grouppermissions-deletesuccess' => '$1 es fotjeschmesse',
 	'grouppermissions-changesuccess' => 'De Rääschde för Metjleeder fun $1 sin jeändert',
@@ -1424,6 +1890,7 @@ $messages['ksh'] = array(
 	'grouppermissions-sort-read' => 'Lesse',
 	'grouppermissions-sort-edit' => 'Ändere',
 	'grouppermissions-sort-manage' => 'Verwallde',
+	'grouppermissions-sort-admin' => 'Zotteer Verwallde',
 	'grouppermissions-sort-tech' => 'Täschnesch',
 	'grouppermissions-sort-misc' => 'Söns jet',
 	'grouppermissions-log-add' => 'hät de Jropp „$2“ dobei jedonn',
@@ -1435,9 +1902,13 @@ $messages['ksh'] = array(
 	'grouppermissions-sp-header' => 'Op hee dä Söndersigg kanns De Rääschte em Wiki zotteere un neu Rääschte enreschte.
 
 Jangk met de Mous övver e Rääsch en dä Leß, öm jezeisch ze krijje, wat domet loß es.',
+	'grouppermissions-sp-sort' => 'De Rääschte zotteere',
 	'grouppermissions-sp-save' => 'Afshpeishere',
+	'grouppermissions-sp-success' => 'De Rääschte sen jez zotteet',
+	'grouppermissions-sp-addtype' => 'Donn en Aat vun Zotteer dobei',
 	'grouppermissions-sp-addperm' => 'Donn e Rääsch dobei',
 	'grouppermissions-sp-remove' => 'fott domet',
+	'grouppermissions-sp-deltype' => 'Donn en Aat vun Zotteer fott nämme',
 	'grouppermissions-rug-header' => 'Do kann hee op dä Sigg Metmaacher uß Jroppe eruß nämme, die nit (mieh) en Jebruch sen.',
 	'grouppermissions-rug-success' => 'Han dä Metmaacher us der Jroppe eruß jenumme, di nit en Jebruch sen!',
 	'grouppermissions-rug-confirm' => 'Metmaacher uß Jroppe eruß nämme, di nit en Jebruch sen',
@@ -1446,7 +1917,7 @@ Jangk met de Mous övver e Rääsch en dä Leß, öm jezeisch ze krijje, wat dom
 	'right-raw' => 'Sigge „rüh“ beloore, nur der Wikitex vun Sigge afroofe',
 	'right-render' => 'De aanjezeischte Sigge belohre, der ohne do hen jonn ze möße',
 	'right-info' => 'De Date un Enfommazjuhne övver Sigge beloore',
-	'right-credits' => 'De Credits vun Sigge beloore',
+	'right-credits' => 'De Metmaacher ier ääschte Name un ehr Beidräch för en Sigg beloore',
 	'right-history' => 'De Leste met ällder Versione vun Sigge beloore',
 	'right-search' => 'Em Wiki söhke',
 	'right-contributions' => 'Sigge met Beidrääsch aanloore',
@@ -1457,6 +1928,7 @@ Jangk met de Mous övver e Rääsch en dä Leß, öm jezeisch ze krijje, wat dom
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -1465,13 +1937,15 @@ $messages['lb'] = array(
 	'removeunusedgroups' => 'Gruppen déi net benotzt ginn ewechhuelen',
 	'grouppermissions-desc' => "D'Rechter vu Gruppen iwwer eng [[Special:GroupPermissions|Spezialsäit]] geréieren",
 	'grouppermissions-desc2' => 'ERweiderte System vun de Rechter',
+	'grouppermissions-desc4' => "Erlaabt et zusätzlech Objeten an d'Geschiirkëscht derbäizesetzen",
 	'grouppermissions-desc-nsm' => 'Grupperechter iwwer eng Spezialsäit verwalten',
-	'grouppermissions-header' => "Dir kënnt dës Säit benotzen fir déi ënnerluechte Rechter vun de verschidden Benotzergruppen z'änneren.",
+	'grouppermissions-header' => "Dir kënnt dës Säit benotze fir déi ënnerluechte Rechter vun de verschiddene Benotzergruppen z'änneren.",
 	'grouppermissions-search' => 'Grupp:',
 	'grouppermissions-dologin' => 'Aloggen',
 	'grouppermissions-dosearch' => 'Lass',
 	'grouppermissions-searchlabel' => 'Sich no engem Grupp',
 	'grouppermissions-deletelabel' => 'Grupp läschen',
+	'grouppermissions-error' => 'en onbekannte Feeler ass geschitt, klickt w.e.g. op den Zréck-Knäppche vun ärem Browser a versicht nach eng Kéier',
 	'grouppermissions-change' => "D'Rechter vum Grupp änneren",
 	'grouppermissions-add' => 'Grupp derbäisetzen',
 	'grouppermissions-delete' => 'Grupp läschen',
@@ -1482,6 +1956,7 @@ $messages['lb'] = array(
 	'grouppermissions-true' => 'Wouer',
 	'grouppermissions-false' => 'Falsch',
 	'grouppermissions-never' => 'Nie',
+	'grouppermissions-nooldrev' => 'Et ass e Feeler opgetruede beim Versuch fir den aktuelle Konfiguratiouns-Fichier ofzespäicheren. Et gouf keen Archiv ugeluecht',
 	'grouppermissions-sort-read' => 'Liesen',
 	'grouppermissions-sort-edit' => 'Ännerung',
 	'grouppermissions-sort-manage' => 'Gestioun',
@@ -1492,17 +1967,24 @@ $messages['lb'] = array(
 	'grouppermissions-log-change' => 'huet d\'Rechter fir de Grupp "$2" geännert',
 	'grouppermissions-log-delete' => 'huet de Grupp "$2" geläscht',
 	'grouppermissions-log-name' => 'Lëscht vun de Rechter vu Gruppen',
-	'grouppermissions-log-header' => 'Dës Säit weist Ännerungen bäi de Rechter vun de Benotzergruppen.',
+	'grouppermissions-log-header' => 'Dës Säit weist Ännerunge bei de Rechter vun de Benotzergruppen.',
 	'grouppermissions-needjs' => 'Opgepasst: Java Script ass an ärem Browser ausgeschalt. Et ka sënn datt e puer Fonctionalitéite net ginn !',
+	'grouppermissions-sp-header' => "Dir kënnt dës Säit benotze fir ze geréiere wéi Rechter zortéiert ginn a fir nei Rechter derbäizesetzen. Fuert matt der Maus iwwer e Recht fir d'Beschreiwung ze liesen",
 	'grouppermissions-sp-sort' => 'Rechter sortéieren',
 	'grouppermissions-sp-save' => 'Späicheren',
-	'grouppermissions-sp-success' => "D'Rechter goufe sortéiert",
+	'grouppermissions-sp-success' => "D'Rechter goufen zortéiert",
+	'grouppermissions-sp-addtype' => 'Sortéierungstyp derbäisetzen',
 	'grouppermissions-sp-addperm' => 'Rechter derbäisetzen',
 	'grouppermissions-sp-remove' => 'ewech huelen',
+	'grouppermissions-sp-deltype' => 'Sortéierungstyp läschen',
+	'grouppermissions-rug-header' => 'Dir kënnt dës Säit bentze fir Benotzer aus net benotzte (geläschte) Gruppen erauszehuelen.',
+	'grouppermissions-rug-success' => 'Benotzer goufen aus net benotzte Gruppen erausgeholl!',
 	'grouppermissions-rug-confirm' => 'Benotzer aus net benotzte Gruppen eraushuelen',
 	'right-grouppermissions' => 'Grupperechter verwalten',
 	'right-viewsource' => 'De Wiki-Quelltext vu gespaarte Säit weisen',
+	'right-raw' => 'Réi (raw) Säite kucken',
 	'right-info' => "D'Informarioune vun der Säit weisen",
+	'right-credits' => 'Referenzen (Credits) vun der Säit kucken',
 	'right-history' => "D'Versioune vun der Säit weisen",
 	'right-search' => 'Op der Wiki sichen',
 	'right-contributions' => "D'Säite vun de Kontributioune weisen",
@@ -1520,6 +2002,82 @@ $messages['lt'] = array(
 	'right-recentchanges' => 'Žiūrėti naujausius keitimus',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'grouppermissions' => 'Раководење со групни дозволи',
+	'sortpermissions' => 'Сортирај дозволи',
+	'removeunusedgroups' => 'Отстрани неискористени групи',
+	'grouppermissions-desc' => 'Раководење на групни дозволи преку [[Special:GroupPermissions|специјална страница]]',
+	'grouppermissions-desc2' => 'Проширен систем на дозволи',
+	'grouppermissions-desc3' => 'Овозможува прилагодување на дејствата со содржината (јазичињата)',
+	'grouppermissions-desc4' => 'Овозможува додавање на дополнителни елементи во Алатникот',
+	'grouppermissions-desc-nsm' => 'Раководење со именски простори преку специјална страница',
+	'grouppermissions-header' => 'Оваа страница може да ја користите за менување на основните дозволи на разни кориснички групи.',
+	'grouppermissions-search' => 'Група:',
+	'grouppermissions-dologin' => 'Корисн. име',
+	'grouppermissions-dosearch' => 'Оди',
+	'grouppermissions-searchlabel' => 'Пребарај група',
+	'grouppermissions-deletelabel' => 'Избриши група',
+	'grouppermissions-error' => 'Се појави непозната грешка. Притиснете на копчето за враќање назад во прелистувачот и обидете се повторно',
+	'grouppermissions-change' => 'Измени групни дозволи',
+	'grouppermissions-add' => 'Додај група',
+	'grouppermissions-delete' => 'Избриши група',
+	'grouppermissions-comment' => 'Коментар:',
+	'grouppermissions-addsuccess' => '$1 е успешно додаден',
+	'grouppermissions-deletesuccess' => '$1 е успешно избришан',
+	'grouppermissions-changesuccess' => 'Дозволите за $1 се успешно изменети',
+	'grouppermissions-true' => 'Вистина',
+	'grouppermissions-false' => 'Лага',
+	'grouppermissions-never' => 'Никогаш',
+	'grouppermissions-nooldrev' => 'Настана грешка при обидот за архивирање на моменталната конфигурациона податоека. Нема да биде создаден архив.',
+	'grouppermissions-sort-read' => 'Читање',
+	'grouppermissions-sort-edit' => 'Уредување',
+	'grouppermissions-sort-manage' => 'Раководење',
+	'grouppermissions-sort-admin' => 'Администрирање',
+	'grouppermissions-sort-tech' => 'Технички',
+	'grouppermissions-sort-misc' => 'Разни',
+	'grouppermissions-log-add' => 'ја додаде групата „$2“',
+	'grouppermissions-log-change' => 'ги измени дозволите за групата „$2“',
+	'grouppermissions-log-delete' => 'ја избриша групата „$2“',
+	'grouppermissions-log-name' => 'Дневник на групни дозволи',
+	'grouppermissions-log-header' => 'Оваа следица ги следи промените на основните дозволи на корисничките групи.',
+	'grouppermissions-needjs' => "'''Предупредување:''' Во вашиот прелистувач е исклучен JavaScript. Некои функции може да не работат!",
+	'grouppermissions-sp-header' => 'Можете да ја користите оваа страница за да раководите со начинот на сортирање на дозволите и да додавате нови дозволи. Отидете со курсорот врз некоја дозвола за да го прочитаате нејзиниот опис.',
+	'grouppermissions-sp-sort' => 'Сортирај дозволи',
+	'grouppermissions-sp-save' => 'Зачувај',
+	'grouppermissions-sp-success' => 'Дозволите се успешно сортирани',
+	'grouppermissions-sp-addtype' => 'Додај тип на сортирање',
+	'grouppermissions-sp-addperm' => 'Додај дозвола',
+	'grouppermissions-sp-remove' => 'отстрани',
+	'grouppermissions-sp-deltype' => 'Избриши тип на сортирање',
+	'grouppermissions-rug-header' => 'Оваа страница можете да ја користите за отстранување на корисници од неискористени (избришани) групи.',
+	'grouppermissions-rug-success' => 'Корисниците се успешно отстранети од неискористените групи!',
+	'grouppermissions-rug-confirm' => 'Отстрани корисници од неискористени групи',
+	'right-grouppermissions' => 'Раководење со групни дозволи',
+	'right-viewsource' => 'Преглед на вики-кодот на заштитени страници',
+	'right-raw' => 'Преглед на сирови страници',
+	'right-render' => 'Преглед на страниците прикажани без навигација',
+	'right-info' => 'Преглед на информации за страниците',
+	'right-credits' => 'Преглед на авторите на страниците',
+	'right-history' => 'Преглед на историите на страниците',
+	'right-search' => 'Пребарување на викито',
+	'right-contributions' => 'Предглед на придонесите',
+	'right-recentchanges' => 'Преглед на скорешните промени',
+	'right-edittalk' => 'Уредување на страници за разговор',
+	'right-edit-new' => 'Уредување на страници (кои не се страници за разговор)',
+	'right-readold' => 'Преглед на содржините на стари ревизии и разлики',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'grouppermissions-dologin' => 'Нэвтрэх',
+	'grouppermissions-comment' => 'Тайлбар:',
+);
+
 /** Maltese (Malti)
  * @author Roderick Mallia
  */
@@ -1532,6 +2090,7 @@ $messages['mt'] = array(
  */
 $messages['myv'] = array(
 	'grouppermissions-search' => 'Курось:',
+	'grouppermissions-dosearch' => 'Адя',
 	'grouppermissions-true' => 'Виде',
 	'grouppermissions-sp-remove' => 'нардык',
 );
@@ -1690,6 +2249,7 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'grouppermissions' => 'Behandle grupperettigheter',
@@ -1730,7 +2290,7 @@ $messages['no'] = array(
 	'grouppermissions-log-name' => 'Logg for endringer i grupperettigheter',
 	'grouppermissions-log-header' => 'Denne siden viser endringer i rettighetene brukergrupper innehar.',
 	'grouppermissions-needjs' => 'Advarsel: JavaScript er slått av i nettleseren din. Noen funksjoner vil ikke fungere.',
-	'grouppermissions-sp-header' => 'Du kan bruke denne siden for å styre hvordan rettigheter sorteres, og legge til nye rettigheter.',
+	'grouppermissions-sp-header' => 'Du kan bruke denne siden til å styre hvordan rettigheter sorteres, og legge til nye rettigheter. Hold musepekeren over en rettighet for å lese dens beskrivelse.',
 	'grouppermissions-sp-sort' => 'Sorter rettigheter',
 	'grouppermissions-sp-save' => 'Lagre',
 	'grouppermissions-sp-success' => 'Rettighetene ble sortert',
@@ -1753,6 +2313,7 @@ $messages['no'] = array(
 	'right-recentchanges' => 'Vise siste endringer',
 	'right-edittalk' => 'Redigere diskusjonssider',
 	'right-edit-new' => 'Redigere sider',
+	'right-readold' => 'Vis innhold fra gamle versjoner og forskjeller',
 );
 
 /** Occitan (Occitan)
@@ -1831,12 +2392,25 @@ $messages['os'] = array(
 	'grouppermissions-sp-save' => 'Афтæ уæд',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'grouppermissions-dologin' => 'Kumm nei',
+	'grouppermissions-comment' => 'Anmaerricking:',
+	'grouppermissions-true' => 'Ya',
+	'grouppermissions-false' => 'Nee',
+	'grouppermissions-never' => 'Nie net',
+);
+
 /** Polish (Polski)
  * @author Airwolf
  * @author Maikking
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'grouppermissions' => 'Zarządzanie uprawnieniami grup',
+	'sortpermissions' => 'Sortuj uprawnienia',
 	'removeunusedgroups' => 'Usuń nieużywane grupy',
 	'grouppermissions-search' => 'Grupa',
 	'grouppermissions-dologin' => 'Zaloguj',
@@ -1854,10 +2428,18 @@ $messages['pl'] = array(
 	'grouppermissions-true' => 'Prawda',
 	'grouppermissions-false' => 'Fałsz',
 	'grouppermissions-never' => 'Nigdy',
+	'grouppermissions-sort-read' => 'Odczyt',
+	'grouppermissions-sort-edit' => 'Edycja',
+	'grouppermissions-sort-manage' => 'Zarządzanie',
+	'grouppermissions-sort-admin' => 'Administracja',
+	'grouppermissions-sort-tech' => 'Obsługa techniczna',
+	'grouppermissions-sort-misc' => 'Różne',
 	'grouppermissions-log-add' => 'dodał grupę „$2”',
 	'grouppermissions-log-change' => 'zmienił uprawnienia grupy „$2”',
 	'grouppermissions-log-delete' => 'usunął grupę „$2”',
+	'grouppermissions-log-name' => 'Rejestr uprawnień grup',
 	'grouppermissions-needjs' => 'Ostrzeżenie: JavaScript w Twojej przeglądarce jest wyłączony. Niektóre opcje mogą nie działać.',
+	'grouppermissions-sp-sort' => 'Sortuj uprawnienia',
 	'grouppermissions-sp-save' => 'Zapisz',
 	'grouppermissions-sp-remove' => 'usuń',
 	'grouppermissions-rug-header' => 'Ta strona służy do usuwania użytkowników z nieużywanych lub usuniętych grup.',
@@ -1876,6 +2458,75 @@ $messages['pl'] = array(
 	'right-edittalk' => 'Edytuj stronę dyskusji',
 	'right-edit-new' => 'Edycja stron',
 	'right-readold' => 'Wyświetl treść starych wersji i różnice',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'grouppermissions' => 'Gestì ij përmess ëd la partìa',
+	'sortpermissions' => 'Órdina ij përmess',
+	'removeunusedgroups' => 'Gava partìe pa dovrà',
+	'grouppermissions-desc' => 'Gestiss përmess ëd le partìe via na [[Special:GroupPermissions|pàgina special]]',
+	'grouppermissions-desc2' => 'Sistema ëd përmess estèis',
+	'grouppermissions-desc3' => "A përmët ëd përsonalisé j'assion ëd contnù (tabulassion)",
+	'grouppermissions-desc4' => "A përmët ëd gionté element adissionaj a la cassiëtta dj'utiss",
+	'grouppermissions-desc-nsm' => 'Gestiss spassi nominaj via na pàgina special',
+	'grouppermissions-header' => "It peule dovré sta pàgina-sì për cangé ij përmess sotastant dle vàire partìe d'utent",
+	'grouppermissions-search' => 'Partìa:',
+	'grouppermissions-dologin' => 'Intra',
+	'grouppermissions-dosearch' => 'Va',
+	'grouppermissions-searchlabel' => 'Sërca partìa',
+	'grouppermissions-deletelabel' => 'Scancela partìa',
+	'grouppermissions-error' => "A l'é capitaje n'eror sconossù, për piasì sgnaca ël boton andré ans tò navigador e preuva torna",
+	'grouppermissions-change' => 'Cangia ij përmess ëd partìa',
+	'grouppermissions-add' => 'Gionta partìa',
+	'grouppermissions-delete' => 'Scancela partìa',
+	'grouppermissions-comment' => 'Coment:',
+	'grouppermissions-addsuccess' => "$1 a l'é stàit giontà da bin",
+	'grouppermissions-deletesuccess' => "$1 a l'é stàit scancelà da bin",
+	'grouppermissions-changesuccess' => 'Ij përmess për $1 a son ëstàit cangià da bin',
+	'grouppermissions-true' => 'Ver',
+	'grouppermissions-false' => 'Fàuss',
+	'grouppermissions-never' => 'Mai',
+	'grouppermissions-nooldrev' => "Ancontrà n'eror an provand a archivié ël document ëd configurassion corent. Gnun archivi a sarà fàit",
+	'grouppermissions-sort-read' => 'Lese',
+	'grouppermissions-sort-edit' => 'Modifiché',
+	'grouppermissions-sort-manage' => 'Gestion',
+	'grouppermissions-sort-admin' => 'Aministrassion',
+	'grouppermissions-sort-tech' => 'Técnich',
+	'grouppermissions-sort-misc' => 'Diferent',
+	'grouppermissions-log-add' => 'giontà partìa "$2"',
+	'grouppermissions-log-change' => 'cangià përmess për la partìa "$2"',
+	'grouppermissions-log-delete' => 'scancelà partìa "$2"',
+	'grouppermissions-log-name' => 'Registr dij përmess dle partìe',
+	'grouppermissions-log-header' => 'Sta pàgina-sì a lista ij cambi ai përmess sotastant dle partìe utent',
+	'grouppermissions-needjs' => "'''Avis:''' JavaScript a l'é disabilità an tò navigador. Vàire possibilità a podrìo travajé nen!",
+	'grouppermissions-sp-header' => 'Ti it peule dovré sta pàgina-sì për gestì com ij përmess a son ordinà e për gionté përmess. Andé dzora a un përmess për lese soa descrission.',
+	'grouppermissions-sp-sort' => 'Órdina përmess',
+	'grouppermissions-sp-save' => 'Salva',
+	'grouppermissions-sp-success' => 'Ij përmess a son ëstàit ordinà da bin',
+	'grouppermissions-sp-addtype' => "Gionta sòrt d'ordinament",
+	'grouppermissions-sp-addperm' => 'Gionta përmess',
+	'grouppermissions-sp-remove' => 'gava',
+	'grouppermissions-sp-deltype' => "Scancela sòrt d'ordinament",
+	'grouppermissions-rug-header' => 'It peule dovré sta pàgina-sì për gavé utent da partìe pa dovrà (scancelà).',
+	'grouppermissions-rug-success' => "Gavà da bin j'utent da partìe pa dovrà!",
+	'grouppermissions-rug-confirm' => "Gavé j'utent da partìe pa dovrà",
+	'right-grouppermissions' => 'Gestiss përmess ëd partìa',
+	'right-viewsource' => 'Vardé la sorgiss wiki dle pàgine protegiùe',
+	'right-raw' => 'Varda pàgine dë sbòss',
+	'right-render' => 'Varda pàgine rendùe sensa navigassion',
+	'right-info' => 'Varda anformassion dle pàgine',
+	'right-credits' => 'Varda crédit dle pàgine',
+	'right-history' => 'Varda stòrie dle pàgine',
+	'right-search' => 'Sërca ant la wiki',
+	'right-contributions' => 'Varda pàgine ëd contribussion',
+	'right-recentchanges' => 'Vëdde ij cangiament recent',
+	'right-edittalk' => 'Modifiché le pàgine ëd discussion',
+	'right-edit-new' => "Modìfica pàgine (ch'a son pa pàgine ëd discussion)",
+	'right-readold' => 'Varda contnù ëd veje revision e diferense',
 );
 
 /** Pashto (پښتو)
@@ -1898,6 +2549,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author MF-Warburg
  * @author Malafaya
  * @author Waldir
@@ -1910,14 +2562,14 @@ $messages['pt'] = array(
 	'grouppermissions-desc2' => 'Sistema de permissões alargado',
 	'grouppermissions-desc3' => 'Permite que as ações de conteúdo (separadores) sejam personalizadas',
 	'grouppermissions-desc4' => 'Permite a adição de itens adicionais à caixa de ferramentas.',
-	'grouppermissions-desc-nsm' => 'Gira domínios através de uma página especial',
-	'grouppermissions-header' => 'Você pode usar esta página para alterar as permissões subjacentes dos vários grupos de utilizadores.',
+	'grouppermissions-desc-nsm' => 'Gerir espaços nominais através de uma página especial',
+	'grouppermissions-header' => 'Pode usar esta página para alterar as permissões inerentes aos vários grupos de utilizadores.',
 	'grouppermissions-search' => 'Grupo:',
 	'grouppermissions-dologin' => 'Autenticar-se',
 	'grouppermissions-dosearch' => 'Ir',
 	'grouppermissions-searchlabel' => 'Pesquise por um grupo',
 	'grouppermissions-deletelabel' => 'Apagar o grupo',
-	'grouppermissions-error' => 'Ocorreu um erro desconhecido; por favor aperte o botão de retornar no seu navegador e tente novamente',
+	'grouppermissions-error' => "Ocorreu um erro desconhecido; por favor clique o botão 'voltar' do seu navegador e tente novamente",
 	'grouppermissions-change' => 'Alterar as permissões do grupo',
 	'grouppermissions-add' => 'Adicionar grupo',
 	'grouppermissions-delete' => 'Eliminar grupo',
@@ -1959,7 +2611,7 @@ $messages['pt'] = array(
 	'right-info' => 'Ver informação de páginas',
 	'right-credits' => 'Ver créditos de páginas',
 	'right-history' => 'Ver histórico de páginas',
-	'right-search' => 'Pesquisar no wiki',
+	'right-search' => 'Pesquisar na wiki',
 	'right-contributions' => 'Ver páginas de contribuições',
 	'right-recentchanges' => 'Ver modificações recentes',
 	'right-edittalk' => 'Editar páginas de discussão',
@@ -2043,12 +2695,14 @@ $messages['rif'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'removeunusedgroups' => 'Elimină grupuri neutilizate',
 	'grouppermissions-search' => 'Grup:',
 	'grouppermissions-dologin' => 'Autentificare',
+	'grouppermissions-dosearch' => 'Mergeţi',
 	'grouppermissions-searchlabel' => 'Caută grup',
 	'grouppermissions-deletelabel' => 'Şterge grup',
 	'grouppermissions-change' => 'Schimbă permisiunile de grup',
@@ -2058,10 +2712,18 @@ $messages['ro'] = array(
 	'grouppermissions-addsuccess' => '$1 a fost adăugat cu succes',
 	'grouppermissions-deletesuccess' => '$1 a fost şters cu succes',
 	'grouppermissions-changesuccess' => 'Permisiunile pentru $1 au fost schimbate cu succes',
+	'grouppermissions-true' => 'Adevărat',
+	'grouppermissions-false' => 'Fals',
 	'grouppermissions-never' => 'Niciodată',
+	'grouppermissions-sort-read' => 'Citire',
+	'grouppermissions-sort-edit' => 'Modificare',
+	'grouppermissions-sort-manage' => 'Management',
+	'grouppermissions-sort-admin' => 'Administraţia',
+	'grouppermissions-sort-tech' => 'Tehnic',
 	'grouppermissions-log-add' => 'adăugat grupul "$2"',
 	'grouppermissions-log-change' => 'schimbat permisiunile grupului "$2"',
 	'grouppermissions-log-delete' => 'şters grupul "$2"',
+	'grouppermissions-sp-sort' => 'Sortează permisiunile',
 	'grouppermissions-sp-save' => 'Salvează',
 	'grouppermissions-sp-addperm' => 'Adaugă permisiune',
 	'grouppermissions-sp-remove' => 'elimină',
@@ -2084,13 +2746,20 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'grouppermissions' => 'Управление правами доступа',
+	'sortpermissions' => 'Упорядочить разрешения',
 	'removeunusedgroups' => 'Удалить неиспользуемые группы',
 	'grouppermissions-desc' => 'Управление правами доступа через [[Special:GroupPermissions|спецстраницу]]',
+	'grouppermissions-desc2' => 'Расширенная система разрешений',
+	'grouppermissions-desc3' => 'Позволить настройку действий содержимого (вкладок)',
+	'grouppermissions-desc4' => 'Позволить добавлять дополнительные элементы на панель инструментов',
+	'grouppermissions-desc-nsm' => 'Управление пространствами имён через служебную страницу',
+	'grouppermissions-header' => 'Вы можете использовать эту страницу для изменения нижележащих резрешений различных групп участников.',
 	'grouppermissions-search' => 'Группа:',
 	'grouppermissions-dologin' => 'Имя участника',
 	'grouppermissions-dosearch' => 'Перейти',
 	'grouppermissions-searchlabel' => 'Поиск по группам',
 	'grouppermissions-deletelabel' => 'Удалить группу',
+	'grouppermissions-error' => 'Произошла неизвестная ошибка, пожалуйста, нажмите кнопку назад и повторите ещё раз.',
 	'grouppermissions-change' => 'Изменить групповые права доступа',
 	'grouppermissions-add' => 'Добавить группу',
 	'grouppermissions-delete' => 'Удалить группу',
@@ -2101,6 +2770,7 @@ $messages['ru'] = array(
 	'grouppermissions-true' => 'Истина',
 	'grouppermissions-false' => 'Ложь',
 	'grouppermissions-never' => 'Никогда',
+	'grouppermissions-nooldrev' => 'Произошла ошибка при попытке архивировать текущий конфигурационный файл. Архив не был создан',
 	'grouppermissions-sort-read' => 'Чтение',
 	'grouppermissions-sort-edit' => 'Правка',
 	'grouppermissions-sort-manage' => 'Управление',
@@ -2111,14 +2781,25 @@ $messages['ru'] = array(
 	'grouppermissions-log-change' => 'изменил разрешения для группы «$2»',
 	'grouppermissions-log-delete' => 'удалена группа «$2»',
 	'grouppermissions-log-name' => 'Журнал групповых прав доступа',
+	'grouppermissions-log-header' => 'Это страница отслеживает изменения в нижележащих разрешениях групп участников.',
 	'grouppermissions-needjs' => 'Внимание. В вашем браузере отключён JavaScript. Некоторые функции могут не работать!',
+	'grouppermissions-sp-header' => 'Вы можете использовать эту страницу для управления разрешениями, их сортировки, добавления новых разрешений. Наведите курсор мыши на разрешение, чтобы прочитать его описание',
+	'grouppermissions-sp-sort' => 'Сортировка разрешений',
 	'grouppermissions-sp-save' => 'Сохранить',
+	'grouppermissions-sp-success' => 'Разрешения успешно сортированы',
+	'grouppermissions-sp-addtype' => 'Добавить тип сортировки',
 	'grouppermissions-sp-addperm' => 'Добавить разрешение',
 	'grouppermissions-sp-remove' => 'удалить',
+	'grouppermissions-sp-deltype' => 'Удалить тип сортировки',
+	'grouppermissions-rug-header' => 'Вы можете использовать эту страницу для удаления участников из неиспользуемых (удалённых) групп.',
+	'grouppermissions-rug-success' => 'Успешно удалены участники из неиспользуемых групп!',
 	'grouppermissions-rug-confirm' => 'Удалить участников из неиспользуемых групп',
 	'right-grouppermissions' => 'Управление групповыми правами',
 	'right-viewsource' => 'Просмотр вики-кода защищённых страниц',
+	'right-raw' => 'просмотр сырых страниц',
+	'right-render' => 'просмотр страниц без навигации',
 	'right-info' => 'Просмотр информации о странице',
+	'right-credits' => 'просмотр авторов страницы',
 	'right-history' => 'Просмотр истории страниц',
 	'right-search' => 'Поиск в вики',
 	'right-contributions' => 'Просмотр вклада',
@@ -2194,6 +2875,112 @@ $messages['sk'] = array(
 	'right-edittalk' => 'Upraviť diskusné stránky',
 	'right-edit-new' => 'Upravovať stránky (ktoré nie sú diskusné stránky)',
 	'right-readold' => 'Zobrazovať obsah starých revízií a ich rozdiely',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'grouppermissions-search' => 'Група:',
+	'grouppermissions-dologin' => 'Пријављивање',
+	'grouppermissions-dosearch' => 'Иди',
+	'grouppermissions-searchlabel' => 'Потражи групу',
+	'grouppermissions-deletelabel' => 'Обриши групу',
+	'grouppermissions-change' => 'Промени овлашћења група',
+	'grouppermissions-add' => 'Додај групу',
+	'grouppermissions-delete' => 'Обриши групу',
+	'grouppermissions-comment' => 'Коментар:',
+	'grouppermissions-addsuccess' => '$1 је успешно додата',
+	'grouppermissions-deletesuccess' => '$ је успешно обрисана',
+	'grouppermissions-changesuccess' => 'Овлашћења за $1 су успешно промењена',
+	'grouppermissions-true' => 'True',
+	'grouppermissions-false' => 'False',
+	'grouppermissions-never' => 'Никад',
+	'grouppermissions-sort-read' => 'Читање',
+	'grouppermissions-sort-edit' => 'Мењање',
+	'grouppermissions-sort-manage' => 'Менаџмент',
+	'grouppermissions-sort-admin' => 'Администрација',
+	'grouppermissions-sort-misc' => 'Разно',
+	'grouppermissions-log-add' => 'додата група „$2“',
+	'grouppermissions-log-change' => 'промењене дозволе за групу „$2“',
+	'grouppermissions-log-delete' => 'обрисана група „$2“',
+	'grouppermissions-log-name' => 'Историја дозвола група',
+	'grouppermissions-needjs' => "'''Упозорење:''' JavaScript је онемогућен у вашем браузеру. Неке погодности софтвера би могле бити онемогућене!",
+	'grouppermissions-sp-sort' => 'Сортирај дозволе',
+	'grouppermissions-sp-save' => 'Сними',
+	'grouppermissions-sp-success' => 'Дозволе су успешно сортиране',
+	'grouppermissions-sp-addtype' => 'Додај тип сортирања',
+	'grouppermissions-sp-addperm' => 'Додај дозволу',
+	'grouppermissions-sp-remove' => 'обриши',
+	'grouppermissions-sp-deltype' => 'Обриши тип сортирања',
+	'grouppermissions-rug-header' => 'На овој страни можете да обришете кориснике из некоришћених (обрисаних) група.',
+	'grouppermissions-rug-success' => 'Корисници успешно обрисани из некоришћених група!',
+	'grouppermissions-rug-confirm' => 'Обриши кориснике из некоришћених група',
+	'right-grouppermissions' => 'Управљање дозволама група',
+	'right-viewsource' => 'Преглед вики-сорс заштићених страна',
+	'right-raw' => 'Преглед сирових страна',
+	'right-render' => 'Преглед рендерованих страна без навигације',
+	'right-info' => 'Преглед информација о странама',
+	'right-history' => 'Преглед историја страница',
+	'right-search' => 'Претраживање Викија',
+	'right-contributions' => 'Преглед доприноса странама',
+	'right-recentchanges' => 'Преглед скорашњим изменама',
+	'right-edittalk' => 'Мењање страна за разговор',
+	'right-edit-new' => 'Мењање страна (које нису стране за разговор)',
+	'right-readold' => 'Преглед садржаја старих ревизија и дифова',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'grouppermissions-search' => 'Grupa:',
+	'grouppermissions-dologin' => 'Prijavljivanje',
+	'grouppermissions-dosearch' => 'Idi',
+	'grouppermissions-searchlabel' => 'Potraži grupu',
+	'grouppermissions-deletelabel' => 'Obriši grupu',
+	'grouppermissions-change' => 'Promeni ovlašćenja grupa',
+	'grouppermissions-add' => 'Dodaj grupu',
+	'grouppermissions-delete' => 'Obriši grupu',
+	'grouppermissions-comment' => 'Komentar:',
+	'grouppermissions-addsuccess' => '$1 je uspešno dodata',
+	'grouppermissions-deletesuccess' => '$ je uspešno obrisana',
+	'grouppermissions-changesuccess' => 'Ovlašćenja za $1 su uspešno promenjena',
+	'grouppermissions-true' => 'True',
+	'grouppermissions-false' => 'False',
+	'grouppermissions-never' => 'Nikad',
+	'grouppermissions-sort-read' => 'Čitanje',
+	'grouppermissions-sort-edit' => 'Menjanje',
+	'grouppermissions-sort-manage' => 'Menadžment',
+	'grouppermissions-sort-admin' => 'Administracija',
+	'grouppermissions-sort-misc' => 'Razno',
+	'grouppermissions-log-add' => 'dodata grupa „$2“',
+	'grouppermissions-log-change' => 'promenjene dozvole za grupu „$2“',
+	'grouppermissions-log-delete' => 'obrisana grupa „$2“',
+	'grouppermissions-log-name' => 'Istorija dozvola grupa',
+	'grouppermissions-needjs' => "'''Upozorenje:''' JavaScript je onemogućen u vašem brauzeru. Neke pogodnosti softvera bi mogle biti onemogućene!",
+	'grouppermissions-sp-sort' => 'Sortiraj dozvole',
+	'grouppermissions-sp-save' => 'Snimi',
+	'grouppermissions-sp-success' => 'Dozvole su uspešno sortirane',
+	'grouppermissions-sp-addtype' => 'Dodaj tip sortiranja',
+	'grouppermissions-sp-addperm' => 'Dodaj dozvolu',
+	'grouppermissions-sp-remove' => 'obriši',
+	'grouppermissions-sp-deltype' => 'Obriši tip sortiranja',
+	'grouppermissions-rug-header' => 'Na ovoj strani možete da obrišete korisnike iz nekorišćenih (obrisanih) grupa.',
+	'grouppermissions-rug-success' => 'Korisnici uspešno obrisani iz nekorišćenih grupa!',
+	'grouppermissions-rug-confirm' => 'Obriši korisnike iz nekorišćenih grupa',
+	'right-grouppermissions' => 'Upravljanje dozvolama grupa',
+	'right-viewsource' => 'Pregled viki-sors zaštićenih strana',
+	'right-raw' => 'Pregled sirovih strana',
+	'right-render' => 'Pregled renderovanih strana bez navigacije',
+	'right-info' => 'Pregled informacija o stranama',
+	'right-history' => 'Pregled istorija stranica',
+	'right-search' => 'Pretraživanje Vikija',
+	'right-contributions' => 'Pregled doprinosa stranama',
+	'right-recentchanges' => 'Pregled skorašnjim izmenama',
+	'right-edittalk' => 'Menjanje strana za razgovor',
+	'right-edit-new' => 'Menjanje strana (koje nisu strane za razgovor)',
+	'right-readold' => 'Pregled sadržaja starih revizija i difova',
 );
 
 /** Seeltersk (Seeltersk)
@@ -2294,11 +3081,19 @@ $messages['te'] = array(
 	'grouppermissions-add' => 'సమూహాన్ని చేర్చు',
 	'grouppermissions-delete' => 'సమూహాన్ని తొలగించు',
 	'grouppermissions-comment' => 'వ్యాఖ్య:',
+	'grouppermissions-addsuccess' => '$1ని విజయవంతంగా చేర్చాం',
+	'grouppermissions-deletesuccess' => '$1ని విజయవంతంగా తొలగించాం',
 	'grouppermissions-true' => 'సత్యం',
 	'grouppermissions-false' => 'అసత్యం',
 	'grouppermissions-sort-tech' => 'సాంకేతికం',
+	'grouppermissions-log-add' => '"$2" గుంపుని చేర్చారు',
+	'grouppermissions-log-change' => '"$2" గుంపు యొక్క అనుమతులని మార్చారు',
+	'grouppermissions-log-delete' => '"$2" గుంపుని తొలగించారు',
+	'grouppermissions-log-name' => 'గుంపు అనుమతుల చిట్టా',
+	'grouppermissions-log-header' => 'వాడుకరి గుంపుల యొక్క అనుమతులకి జరిగిన మార్పులను ఈ పేజీ గమనిస్తుంది.',
 	'grouppermissions-sp-save' => 'భద్రపరచు',
 	'grouppermissions-sp-remove' => 'తొలగించు',
+	'right-raw' => 'ముడి పేజీలను చూడగలడం',
 	'right-info' => 'పేజీ సమాచారం చూడవచ్చు',
 	'right-history' => 'పేజీల చరిత్రలను చూడవచ్చు',
 	'right-search' => 'వికిలో అన్వేషించవచ్చు',
@@ -2312,6 +3107,15 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'grouppermissions-never' => 'Nunka',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'grouppermissions-dosearch' => 'Git',
+	'grouppermissions-sp-save' => 'Ýazdyr',
+	'grouppermissions-sp-remove' => 'aýyr',
 );
 
 /** Tagalog (Tagalog)
@@ -2385,19 +3189,78 @@ $messages['tl'] = array(
 /** Turkish (Türkçe)
  * @author Karduelis
  * @author Nyasar
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'grouppermissions' => 'Grup izinlerini yönetin',
 	'sortpermissions' => 'İzinleri sırala',
 	'removeunusedgroups' => 'Kullanılmayan grupları sil',
 	'grouppermissions-desc' => 'Grup izinlerini [[Special:GroupPermissions|special page]] üzerinden yönetin',
+	'grouppermissions-desc2' => 'Genişletilmiş izin sistemi',
+	'grouppermissions-desc3' => 'İçerik işlemlerinin (sekmeler) özelleştirilmesini mümkün kılar',
 	'grouppermissions-desc4' => 'Araçlara yeni kalemler eklemeye izin verir',
+	'grouppermissions-desc-nsm' => 'İsim alanlarını özel bir sayfa aracılığıyla yönetir',
+	'grouppermissions-header' => 'Çeşitli kullanıcı gruplarının izinlerini değiştirmek için bu sayfayı kullanabilirsiniz.',
 	'grouppermissions-search' => 'Grup:',
 	'grouppermissions-dologin' => 'oturum açma',
+	'grouppermissions-dosearch' => 'Git',
+	'grouppermissions-searchlabel' => 'Grup ara',
 	'grouppermissions-deletelabel' => 'Grup sil',
+	'grouppermissions-error' => 'Bilinmeyen bir hata oluştu, lütfen tarayıcınızın geri düğmesine tıklayın ve tekrar deneyin',
+	'grouppermissions-change' => 'Grup izinlerini değiştir',
 	'grouppermissions-add' => 'Grup ekle',
 	'grouppermissions-delete' => 'Grup sil',
+	'grouppermissions-comment' => 'Açıklama:',
+	'grouppermissions-addsuccess' => '$1 başarıyla eklendi',
+	'grouppermissions-deletesuccess' => '$1 başarıyla silindi',
+	'grouppermissions-changesuccess' => '$1 için izinler başarıyla değiştirildi',
+	'grouppermissions-true' => 'True',
+	'grouppermissions-false' => 'False',
+	'grouppermissions-never' => 'Asla',
+	'grouppermissions-nooldrev' => 'Mevcut konfigürasyon dosyası arşivlenmeye çalışıldığında hata ile karşılaşıldı. Arşivleme yapılmayacak',
+	'grouppermissions-sort-read' => 'Okuma',
+	'grouppermissions-sort-edit' => 'Değiştirme',
+	'grouppermissions-sort-manage' => 'Yönetim',
+	'grouppermissions-sort-admin' => 'Yönetim',
+	'grouppermissions-sort-tech' => 'Teknik',
+	'grouppermissions-sort-misc' => 'Diğer',
+	'grouppermissions-log-add' => '"$2" grubu eklendi',
+	'grouppermissions-log-change' => '"$2" grubu için izinler değiştirildi',
+	'grouppermissions-log-delete' => '"$2" grubu silindi',
+	'grouppermissions-log-name' => 'Grup izini kayıtları',
+	'grouppermissions-log-header' => 'Bu sayfa, kullanıcı gruplarının izinlerindeki değişiklikleri takip etmektedir.',
+	'grouppermissions-needjs' => "'''Uyarı:''' Tarayıcınızda JavaScript devre dışı bırakılmış. Bazı özellikler çalışmayabilir!",
+	'grouppermissions-sp-header' => 'İzinlerin sıralanışını yönetmek ve yeni izinler eklemek için bu sayfayı kullanabilirsiniz. Tanımını okumak için fare ile bir iznin üzerine gelin',
+	'grouppermissions-sp-sort' => 'İzinleri sırala',
 	'grouppermissions-sp-save' => 'Kaydet',
+	'grouppermissions-sp-success' => 'İzinler başarıyla sıralandı',
+	'grouppermissions-sp-addtype' => 'Sıralama türünü ekle',
+	'grouppermissions-sp-addperm' => 'İzin ekle',
+	'grouppermissions-sp-remove' => 'kaldır',
+	'grouppermissions-sp-deltype' => 'Sıralama türünü sil',
+	'grouppermissions-rug-header' => 'Kullanıcıları kullanılmayan (silinmiş) gruplardan kaldırmak için bu sayfayı kullanabilirsiniz.',
+	'grouppermissions-rug-success' => 'Kullanıcılar kullanılmayan gruplardan başarıyla kaldırıldı!',
+	'grouppermissions-rug-confirm' => 'Kullanıcıları kullanılmayan gruplardan kaldır',
+	'right-grouppermissions' => 'Grup izinlerini yönetir',
+	'right-viewsource' => 'Koruma altındaki sayfaların viki kaynağını görür',
+	'right-raw' => 'Ham sayfaları görür',
+	'right-render' => 'İşlenen sayfaları gezinmeden görür',
+	'right-info' => 'Sayfa bilgilerini görür',
+	'right-credits' => 'Sayfaya emeği geçenleri görür',
+	'right-history' => 'Sayfa geçmişlerini görür',
+	'right-search' => 'Vikiyi ara',
+	'right-contributions' => 'Katkı sayfalarını gör',
+	'right-recentchanges' => 'Son değişiklikleri görür',
+	'right-edittalk' => 'Tartışma sayfalarında değişiklik yapar',
+	'right-edit-new' => '(Tartışma sayfası olmayan) Sayfalarda değişiklik yapar',
+	'right-readold' => 'Eski sürüm ve farkların içeriğini gör',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'grouppermissions-dosearch' => 'كۆچۈش',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -2406,6 +3269,95 @@ $messages['tr'] = array(
 $messages['ug-latn'] = array(
 	'grouppermissions-dologin' => 'Kirish',
 	'grouppermissions-dosearch' => 'Köchüsh',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'grouppermissions-comment' => 'Коментар:',
+	'grouppermissions-sp-remove' => 'вилучити',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'removeunusedgroups' => 'Heitta poiš kävutamatomad gruppad',
+	'grouppermissions-search' => 'Grupp:',
+	'grouppermissions-dologin' => 'Kävutajan nimi',
+	'grouppermissions-dosearch' => 'Mända',
+	'grouppermissions-searchlabel' => 'Ectä gruppiš',
+	'grouppermissions-deletelabel' => 'Čuta grupp',
+	'grouppermissions-add' => 'Ližata grupp',
+	'grouppermissions-delete' => 'Čuta grupp',
+	'grouppermissions-comment' => 'Homaičend:',
+	'grouppermissions-true' => 'Todesine',
+	'grouppermissions-false' => 'Vär',
+	'grouppermissions-never' => 'Nikonz',
+	'grouppermissions-sort-read' => 'Lugend',
+	'grouppermissions-sort-edit' => 'Redaktiruind',
+	'grouppermissions-sort-manage' => 'Ohjendamine',
+	'grouppermissions-sort-admin' => 'Administriruind',
+	'grouppermissions-sort-tech' => 'Tehnižed',
+	'grouppermissions-sort-misc' => 'Erazvuiččed',
+	'grouppermissions-log-add' => 'ližatihe «$2»-grupp',
+	'grouppermissions-sp-save' => 'Panda muštho',
+	'grouppermissions-sp-remove' => 'heitta',
+	'right-edittalk' => 'Redaktiruida lodulehtpoled',
+	'right-edit-new' => 'Redaktiruide lehtpoled (päiči lodulehtpolid)',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
+$messages['vi'] = array(
+	'grouppermissions' => 'Quản lý quyền nhóm',
+	'sortpermissions' => 'Sắp xếp quyền',
+	'removeunusedgroups' => 'Dời nhóm không dùng',
+	'grouppermissions-desc' => 'Quản lý quyền nhóm dùng [[Special:GroupPermissions|trang đặc biệt]]',
+	'grouppermissions-desc2' => 'Hệ thống quyền mở rộng',
+	'grouppermissions-desc-nsm' => 'Quản lý không gian tên dùng trang đặc biệt',
+	'grouppermissions-search' => 'Nhóm:',
+	'grouppermissions-dologin' => 'Đăng nhập',
+	'grouppermissions-dosearch' => 'Tìm kiếm',
+	'grouppermissions-searchlabel' => 'Tìm kiếm nhóm',
+	'grouppermissions-deletelabel' => 'Xóa nhóm',
+	'grouppermissions-change' => 'Thay đổi quyền nhóm',
+	'grouppermissions-add' => 'Thêm nhóm',
+	'grouppermissions-delete' => 'Xóa nhóm',
+	'grouppermissions-comment' => 'Ghi chú:',
+	'grouppermissions-addsuccess' => 'Đã thêm $1 thành công',
+	'grouppermissions-deletesuccess' => 'Đã xóa $1 thành công',
+	'grouppermissions-changesuccess' => 'Đã thay đổi quyền của $1 thành công',
+	'grouppermissions-never' => 'Không bao giờ',
+	'grouppermissions-sort-tech' => 'Kỹ thuật',
+	'grouppermissions-log-add' => 'đã thêm nhóm “$2”',
+	'grouppermissions-log-change' => 'đã thay đổi quyền của nhóm “$2”',
+	'grouppermissions-log-delete' => 'xóa nhóm “$2”',
+	'grouppermissions-log-name' => 'Nhật trình quyền nhóm',
+	'grouppermissions-sp-sort' => 'Sắp xếp quyền',
+	'grouppermissions-sp-save' => 'Lưu',
+	'grouppermissions-sp-success' => 'Đã sắp xếp quyền thành công',
+	'grouppermissions-sp-addtype' => 'Thêm cách sắp xếp',
+	'grouppermissions-sp-addperm' => 'Thêm quyền',
+	'grouppermissions-sp-remove' => 'dời',
+	'grouppermissions-sp-deltype' => 'Xóa cách sắp xếp',
+	'grouppermissions-rug-success' => 'Đã dời người dùng thành công khỏi nhóm không dùng!',
+	'grouppermissions-rug-confirm' => 'Dời người dùng khỏi nhóm không dùng',
+	'right-grouppermissions' => 'Quản lý quyền nhóm',
+	'right-viewsource' => 'Xem mã nguồn wiki của trang khóa',
+	'right-raw' => 'Xem trang dạng thô',
+	'right-render' => 'Xem trang kết xuất không có phần chuyển hướng',
+	'right-info' => 'Xem thông tin về trang',
+	'right-credits' => 'Xem thông tin ghi nhận đóng góp cho trang',
+	'right-history' => 'Xem lịch sử trang',
+	'right-search' => 'Tìm kiếm trong wiki',
+	'right-contributions' => 'Xem danh sách đóng góp',
+	'right-recentchanges' => 'Xem danh sách thay đổi gần đây',
+	'right-edittalk' => 'Sửa đổi trang thảo luận',
+	'right-edit-new' => 'Sửa đổi trang (trừ trang thảo luận)',
+	'right-readold' => 'Xem nội dung của phiên bản cũ và khác biệt',
 );
 
 /** Volapük (Volapük)
@@ -2472,15 +3424,29 @@ $messages['vo'] = array(
  */
 $messages['yi'] = array(
 	'grouppermissions-search' => 'גרופע:',
+	'grouppermissions-dologin' => 'אַרײַנלאגירן',
 	'grouppermissions-dosearch' => 'גיין',
 	'grouppermissions-searchlabel' => 'זוכן גרופע',
+	'grouppermissions-sp-save' => 'אויפֿהיטן',
 	'right-search' => 'זוכן אין וויקי',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'grouppermissions-never' => '从不',
+	'grouppermissions-sp-save' => '保存',
+	'grouppermissions-sp-remove' => '移除',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
+$messages['zh-hant'] = array(
+	'grouppermissions-never' => '從不',
+	'grouppermissions-sp-save' => '保存',
+	'grouppermissions-sp-remove' => '移除',
 );
 

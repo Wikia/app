@@ -239,5 +239,5 @@ function ajaxFormPreviewRun(btn){
     }
 }
 
-if (wgAction=='formedit' || wgCanonicalSpecialPageName == 'FormEdit')
+if (wgAction=='formedit' || wgCanonicalSpecialPageName == 'AddData' || wgCanonicalSpecialPageName == 'EditData')
     addOnloadHook(ajaxFormPreviewInit);

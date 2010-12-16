@@ -7,9 +7,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
  *
  * @addtogroup Extensions
  *
- * @link http://meta.wikimedia.org/wiki/Cite/Cite.php Documentation
- * @link http://www.w3.org/TR/html4/struct/text.html#edef-CITE <cite> definition in HTML
- * @link http://www.w3.org/TR/2005/WD-xhtml2-20050527/mod-text.html#edef_text_cite <cite> definition in XHTML 2.0
+ * @link http://www.mediawiki.org/wiki/Extension:Cite/Cite.php Documentation
  *
  * @bug 4579
  *
@@ -25,9 +23,8 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 }
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'Cite',
-	'svn-date' => '$LastChangedDate: 2009-02-12 19:02:27 +0100 (czw, 12 lut 2009) $',
-	'svn-revision' => '$LastChangedRevision: 47190 $',
 	'author' => 'Ævar Arnfjörð Bjarmason',
 	'description' => 'Adds <nowiki><ref[ name=id]></nowiki> and <nowiki><references/></nowiki> tags, for citations', // kept for b/c
 	'descriptionmsg' => 'cite_desc',

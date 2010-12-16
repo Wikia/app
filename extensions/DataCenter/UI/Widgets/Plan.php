@@ -75,9 +75,7 @@ class DataCenterWidgetPlan extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Adds script to UI
 		DataCenterUI::addScript(
 			'/extensions/DataCenter/Resources/Widgets/Plan/Plan.js'
@@ -125,9 +123,7 @@ class DataCenterWidgetPlan extends DataCenterWidget {
 		return $xmlOutput;
 	}
 
-	private static function addPlanJsFunction(
-		array $parameters
-	) {
+	private static function addPlanJsFunction( array $parameters ) {
 		// Adds script to add plan to scene
 		$jsOutput = DataCenterJs::callFunction(
 			'scene.setModule',
@@ -148,9 +144,7 @@ class DataCenterWidgetPlan extends DataCenterWidget {
 		return DataCenterJs::buildFunction( array( 'scene' ), $jsOutput );
 	}
 
-	private static function buildStateJsObject(
-		$parameters
-	) {
+	private static function buildStateJsObject( $parameters ) {
 		// Builds array for state
 		$state = array(
 			'focus' => array(
@@ -170,11 +164,11 @@ class DataCenterWidgetPlan extends DataCenterWidget {
 			$state['focus']['id'] = $parameters['look-at-rack'];
 			$state['focus']['progress'] = 1;
 			$state['focus']['inc'] = true;
-		} else if ( $parameters['zoom-to-rack'] !== null ) {
+		} elseif ( $parameters['zoom-to-rack'] !== null ) {
 			$state['focus']['id'] = $parameters['zoom-to-rack'];
 			$state['focus']['progress'] = 0;
 			$state['focus']['inc'] = true;
-		} else if ( $parameters['zoom-from-rack'] !== null ) {
+		} elseif ( $parameters['zoom-from-rack'] !== null ) {
 			$state['focus']['id'] = $parameters['zoom-from-rack'];
 			$state['focus']['progress'] = 0;
 			$state['focus']['inc'] = false;
@@ -183,9 +177,7 @@ class DataCenterWidgetPlan extends DataCenterWidget {
 		return DataCenterJs::toObject( $state );
 	}
 
-	private static function buildPhysicalJsObject(
-		$parameters
-	) {
+	private static function buildPhysicalJsObject( $parameters ) {
 		// Creates shortcut to plan
 		$plan = $parameters['plan'];
 		// Gets plan's space from database
@@ -256,7 +248,7 @@ class DataCenterWidgetPlan extends DataCenterWidget {
 			// Creates empty array
 			$physical = array();
 		}
-		// Returns javascript object
+		// Returns JavaScript object
 		return DataCenterJs::toObject( $physical );
 	}
 }

@@ -14,16 +14,12 @@ $aliases['en'] = array(
     'Eval' => array( 'Eval' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Eval' => array( 'تقييم' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Eval' => array( 'تقييم' ),
 );
@@ -48,6 +44,11 @@ $aliases['fr'] = array(
 	'Eval' => array( 'Évaluer', 'Evaluer' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Eval' => array( 'Èstimar' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'Eval' => array( 'Avaliación' ),
@@ -58,9 +59,7 @@ $aliases['gsw'] = array(
 	'Eval' => array( 'Uuswerte' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'Eval' => array( 'פירוש' ),
 );
@@ -75,19 +74,39 @@ $aliases['ht'] = array(
 	'Eval' => array( 'Evalye' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Eval' => array( 'Evalutation' ),
+);
+
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Eval' => array( 'Evaluasi' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'Eval' => array( '評価', 'PHPコードとして評価' ),
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'Eval' => array( 'Bewertung' ),
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Eval' => array( '평가' ),
 );
 
-/** Maltese (Malti) */
-$aliases['mt'] = array(
-	'Eval' => array( 'Eval' ),
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Eval' => array( 'Berääschne' ),
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$aliases['lb'] = array(
+	'Eval' => array( 'Bewäertung' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Eval' => array( 'ईव्हाल' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -102,12 +121,12 @@ $aliases['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
-	'Eval' => array( 'Eval' ),
+	'Eval' => array( 'Beregn' ),
 );
 
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
-	'Eval' => array( 'Evaluar' ),
+	'Eval' => array( 'Avalorar' ),
 );
 
 /** Sanskrit (संस्कृत) */
@@ -115,8 +134,18 @@ $aliases['sa'] = array(
 	'Eval' => array( 'ईवाल्‌' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Eval' => array( 'Vyhodnotenie' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Eval' => array( 'Pagsusuri' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Eval' => array( 'Değ' ),
 );
 

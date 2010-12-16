@@ -144,6 +144,9 @@ img { border: none; }
 }
 
 /* preference page with js-genrated toc */
+#mw-pref-clear {
+	clear: both;
+}
 #preftoc {
     float: left;
     margin: 1em 1em 1em 1em;
@@ -159,12 +162,12 @@ img { border: none; }
     display: block;
     color: #005189;
 }
-#prefcontrol {
+.mw-prefs-buttons {
     clear: left;
     float: left;
     margin-top: 1em;
 }
-div.prefsectiontip {
+div.htmlform-tip {
     font-size: 94%;
     margin-top: 0.4em;
     color: #666;
@@ -214,38 +217,8 @@ span.updatedmarker {
 	background-color:#00FF00;
 }
 
-table.gallery {
-        border:  1px solid #cccccc;
-        margin:  2px;
-        padding: 2px;
-        background-color:#ffffff;
-}
-
-table.gallery tr {
-    vertical-align:top;
-}
-
-table.gallery td {
-      vertical-align:top;
-      background-color:#f9f9f9;
-      border: solid 2px white;
-}
-
 div.gallerybox {
-        margin: 2px;
-        width:  150px;
-}
-
-div.gallerybox div.thumb {
-        text-align: center;
-        border: 1px solid #cccccc;
-        margin: 2px;
-}
-
-div.gallerytext {
-	overflow: hidden;
-        font-size: 94%;
-        padding: 2px 4px;
+	width:  150px;
 }
 
 span.comment {
@@ -319,12 +292,6 @@ table.collapsed tr.collapsable {
     clear: both;
 }
 
-#mw_trackbacks {
-	border: solid 1px #bbbbff;
-	background-color: #eeeeff;
-	padding: 0.2em;
-}
-
 /* Allmessages table */
 
 #allmessagestable th {
@@ -345,15 +312,6 @@ table.collapsed tr.collapsable {
 
 #jump-to-nav {
   display: none;
-}
-
-/* Keep this temporarily so that cached pages will display right */
-table.gallery td.galleryheader {
-    text-align: center;
-	font-weight: bold;
-}
-table.gallery caption {
-	font-weight: bold;
 }
 
 div.multipageimagenavbox {
@@ -415,4 +373,11 @@ table.multipageimage td {
 
 form#specialpages {
 	display: inline;
+}
+
+body {
+	background-color: #ffffec;
+}
+body.ns-0 {
+	background-color: white;
 }

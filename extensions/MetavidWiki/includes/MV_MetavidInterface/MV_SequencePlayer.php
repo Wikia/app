@@ -31,7 +31,7 @@
 					'src="' . $this->getExportUrl() . '"></playlist>';
  	}
  	function getExportUrl(){
- 		$exportTitle = Title::MakeTitle( NS_SPECIAL, 'MvExportSequence/' . $this->seqTitle->getDBKey() );
+ 		$exportTitle = Title::MakeTitle( NS_SPECIAL, 'MvExportSequence/' . $this->seqTitle->getDBkey() );
  		$export_url = $exportTitle->getFullURL();
  		if($this->oldid!=''){
  			$ss = ( strpos( $export_url, '?' ) === false ) ? '?':'&';

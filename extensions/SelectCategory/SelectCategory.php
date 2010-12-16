@@ -63,6 +63,7 @@ if( !isset( $wgSelectCategoryEnableSubpages ) ) $wgSelectCategoryEnableSubpages 
 
 ## Register extension setup hook and credits:
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'SelectCategory',
 	'version'        => '0.7dev',
 	'author'         => 'Leon Weber & Manuel Schneider',

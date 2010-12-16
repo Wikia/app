@@ -16,8 +16,15 @@ $dtgScriptPath = $wgScriptPath . '/extensions/DataTransfer';
 $dtgIP = $IP . '/extensions/DataTransfer';
 ##
 
-// PHP fails to find relative includes at some level of inclusion:
-//$pathfix = $IP . $dtgScriptPath;
+###
+# Permission to import files
+###
+$wgGroupPermissions['sysop']['datatransferimport'] = true;
+$wgAvailableRights[] = 'datatransferimport';
 
 // load global functions
 require_once('DT_GlobalFunctions.php');
+
+// initialize content language
+global $wgLanguageCode;
+dtfInitContentLanguage($wgLanguageCode);

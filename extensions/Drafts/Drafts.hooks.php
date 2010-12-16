@@ -6,20 +6,51 @@
  * @ingroup Extensions
  */
 
-// Drafts hooks
 class DraftHooks {
+
+	/* Static Functions */
+public static function schema() {
+		global $wgExtNewTables, $wgExtModifiedFields;
+		
+		$wgExtNewTables[] = array(
+			'drafts',
+			dirname( __FILE__ ) . '/Drafts.sql'
+		);
+		$wgExtModifiedFields[] = array(
+			'drafts',
+			'draft_token',
+			dirname( __FILE__ ) . '/patch-draft_token.sql'
+		);
+		
+		return true;
+	}
+
+	/**
+	 * SpecialMovepageAfterMove hook
+	 */
+	public static function move(
+		$this,
+		$ot,
+		$nt
+	) {
+		// Update all drafts of old article to new article for all users
+		Drafts::move( $ot, $nt );
+		// Continue
+		return true;
+	}
+
 	/**
 	 * ArticleSaveComplete hook
 	 */
 	public static function discard(
-		&$article,
-		&$user,
-		&$text,
-		&$summary,
-		&$m,
-		&$watchthis,
-		&$section,
-		&$flags,
+		$article,
+		$user,
+		$text,
+		$summary,
+		$m,
+		$watchthis,
+		$section,
+		$flags,
 		$rev
 	) {
 		global $wgRequest;
@@ -38,7 +69,7 @@ class DraftHooks {
 	 * Load draft...
 	 */
 	public static function loadForm(
-		&$editpage
+		$editpage
 	) {
 		global $wgUser, $wgRequest, $wgOut, $wgTitle, $wgLang;
 		// Check permissions
@@ -58,7 +89,8 @@ class DraftHooks {
 			if ( $wgRequest->getVal( 'action' ) == 'submit' &&
 				$wgUser->editToken() == $wgRequest->getText( 'wpEditToken' ) )
 			{
-				// If the draft wasn't specified in the url, try using a form-submitted one
+				// If the draft wasn't specified in the url, try using a
+				// form-submitted one
 				if ( !$draft->exists() ) {
 					$draft = Draft::newFromID(
 						$wgRequest->getIntOrNull( 'wpDraftID' )
@@ -120,14 +152,14 @@ class DraftHooks {
 
 	/**
 	 * EditFilter hook
-	 * Intercept the saving of an article to detect if the submission was from the non-javascript
-	 * save draft button
+	 * Intercept the saving of an article to detect if the submission was from
+	 * the non-javascript save draft button
 	 */
 	public static function interceptSave(
 		$editor,
 		$text,
 		$section,
-		&$error
+		$error
 	) {
 		global $wgRequest;
 		// Don't save if the save draft button caused the submit
@@ -144,8 +176,8 @@ class DraftHooks {
 	 * Add draft saving controls
 	 */
 	public static function controls(
-		&$editpage,
-		&$buttons
+		$editpage,
+		$buttons
 	) {
 		global $wgUser, $wgTitle, $wgRequest;
 		global $egDraftsAutoSaveWait, $egDraftsAutoSaveTimeout;
@@ -210,7 +242,7 @@ class DraftHooks {
 				array(
 					'type' => 'hidden',
 					'name' => 'wpDraftToken',
-					'value' => Draft::newToken()
+					'value' => wfGenerateToken()
 				)
 			);
 			$buttons['savedraft'] .= Xml::element( 'input',
@@ -270,9 +302,6 @@ class DraftHooks {
 		global $wgScriptPath, $wgJsMimeType, $wgDraftsStyleVersion;
 		// FIXME: assumes standard dir structure
 		// Add javascript to support ajax draft saving
-		$out->addInlineScript(
-			"var wgDraftsStyleVersion = \"$wgDraftsStyleVersion\";\n"
-		);
 		$out->addScript(
 			Xml::element(
 				'script',

@@ -10,16 +10,12 @@ $aliases['en'] = array(
 	'InspectCache' => array( 'InspectCache' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'InspectCache' => array( 'فحص_الكاش' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'InspectCache' => array( 'فحص_الكاش' ),
 );
@@ -42,6 +38,11 @@ $aliases['fi'] = array(
 /** French (Français) */
 $aliases['fr'] = array(
 	'InspectCache' => array( 'InspecterCache' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'InspectCache' => array( 'Controlar lo cache', 'ControlarLoCache' ),
 );
 
 /** Galician (Galego) */
@@ -71,12 +72,37 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'InspectCache' => array( 'Inspeksi tembolok' ),
+	'InspectCache' => array( 'Periksa tembolok', 'PeriksaTembolok', 'Periksa kas', 'PeriksaKas' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'InspectCache' => array( 'IspezionaCache' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'InspectCache' => array( 'キャッシュの点検' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'InspectCache' => array( 'Cache_beloore', 'Cache_Beloore', 'CacheBeloore' ),
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$aliases['lb'] = array(
+	'InspectCache' => array( 'Cache iwwerpréiwen' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'InspectCache' => array( 'ПрегледајКеш' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'InspectCache' => array( 'सयतपासा' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -99,9 +125,19 @@ $aliases['oc'] = array(
 	'InspectCache' => array( "Inspectar l'amagatal", 'InspectarAmagatal' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'InspectCache' => array( 'Inspeccionar cache' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'InspectCache' => array( 'संगणकसंस्मृतिपरिक्षती' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'InspectCache' => array( 'SkúmanieCache' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -112,5 +148,10 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'InspectCache' => array( 'Suriin ang nakakubling taguan' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'InspectCache' => array( 'ÖnbellekDenetle' ),
 );
 

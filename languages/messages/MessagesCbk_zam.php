@@ -51,7 +51,7 @@ $messages = array(
 'views'            => 'Maga vista',
 'categorypage'     => 'Mira con el pagina de categoria',
 'otherlanguages'   => 'na otro maga lenguaje',
-'lastmodifiedat'   => 'Ya modifica con este pagina por ultimo vez en hora $2 del $1.', # $1 date, $2 time
+'lastmodifiedat'   => 'Ya modifica con este pagina por ultimo vez en hora $2 del $1.',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Acerca de {{SITENAME}}',
@@ -104,7 +104,12 @@ El contraseña de este nuevo cuenta puede cambia na pagina ''[[Special:ChangePas
 'allarticles' => 'Todo maga articulo',
 
 # Special:Categories
-'categories' => 'Maga categoria',
+'categories'         => 'Maga categoria',
+'categoriespagetext' => 'El maga siguiente {{PLURAL:$1|categoria tiene|categoria tiene}} maga pagina o medio de comunicacion.
+
+El maga [[Special:UnusedCategories|categoria sin usando]] jendeh ta abuya aqui.
+
+Por favor mira tambien el maga [[Special:WantedCategories|categoria requeridas]].',
 
 # Watchlist
 'watch' => 'Vicia',

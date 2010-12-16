@@ -17,11 +17,14 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Byrial
  * @author Jon Harald Søby
  * @author Meno25
  * @author Purodha
  */
 $messages['qqq'] = array(
+	'cleanchanges-changerightslink' => 'Link text for a link in the recent changes page to manage user rights for a user.
+It is shown after clicking on the "Show user links"-picture if you are allowed to manage user rights.',
 	'cleanchanges-desc' => 'Shown in [[Special:Version]]',
 	'cleanchanges-language' => '{{Identical|Language}}',
 	'cleanchanges-language-na' => 'Used in the trailer selection of [[Special:RecentChanges]] to not filter on any trailer.
@@ -38,6 +41,7 @@ $messages['af'] = array(
 	'cleanchanges-language' => 'Taal:',
 	'cleanchanges-language-na' => 'Alle tale',
 	'cleanchanges-users' => 'Gebruikers (geskei deur "|"):',
+	'cleanchanges-showuserlinks' => 'Wys gebruiker se skakels',
 );
 
 /** Amharic (አማርኛ)
@@ -59,6 +63,14 @@ $messages['ar'] = array(
 	'cleanchanges-language-na' => 'الكل',
 	'cleanchanges-users' => 'المستخدمون (للفصل: |):',
 	'cleanchanges-showuserlinks' => 'إظهار وصلات المستخدم',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'cleanchanges-language-na' => 'ܟܠ',
+	'cleanchanges-showuserlinks' => 'ܚܘܝ ܐܣܘܪ̈ܐ ܕܡܦܠܚܢܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -85,13 +97,20 @@ $messages['ast'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'cleanchanges-changerightslink' => 'зьмяніць групы',
+	'cleanchanges-desc' => 'Болей кампактны паказ [[Special:RecentChanges|сьпісу апошніх зьменаў]]',
 	'cleanchanges-language' => 'Мова:',
+	'cleanchanges-language-na' => 'Усе',
+	'cleanchanges-users' => 'Удзельнікі (разьдзяляльнік: |):',
+	'cleanchanges-showuserlinks' => 'Паказваць спасылкі ўдзельнікаў',
 );
 
 /** Bulgarian (Български)
  * @author DCLXVI
+ * @author Spiritia
  */
 $messages['bg'] = array(
 	'cleanchanges-changerightslink' => 'промяна на групите',
@@ -99,6 +118,7 @@ $messages['bg'] = array(
 	'cleanchanges-language' => 'Език:',
 	'cleanchanges-language-na' => 'Всички',
 	'cleanchanges-users' => 'Потребители (Разд: |):',
+	'cleanchanges-showuserlinks' => 'Показване на потребителските връзки',
 );
 
 /** Bengali (বাংলা)
@@ -115,6 +135,10 @@ $messages['bn'] = array(
 $messages['br'] = array(
 	'cleanchanges-changerightslink' => 'kemmañ a ra ar strolladoù',
 	'cleanchanges-desc' => "Doare diskouez krennoc'h evit [[Special:RecentChanges|roll ar c'hemmoù diwezhañ]]",
+	'cleanchanges-language' => 'Yezh :',
+	'cleanchanges-language-na' => 'An holl',
+	'cleanchanges-users' => 'Implijerien (Dispart. gant |) :',
+	'cleanchanges-showuserlinks' => 'Diskwel liammoù an implijer-mañ',
 );
 
 /** Bosnian (Bosanski)
@@ -129,6 +153,17 @@ $messages['bs'] = array(
 	'cleanchanges-showuserlinks' => 'Prikaži korisničke linkove',
 );
 
+/** Catalan (Català)
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'cleanchanges-changerightslink' => 'canvia els grups',
+	'cleanchanges-language' => 'Idioma:',
+	'cleanchanges-language-na' => 'Tot',
+	'cleanchanges-users' => 'Usuaris (Separador: |):',
+);
+
 /** Czech (Česky)
  * @author Danny B.
  * @author Matěj Grabovský
@@ -140,6 +175,30 @@ $messages['cs'] = array(
 	'cleanchanges-language-na' => 'Všechny',
 	'cleanchanges-users' => 'Uživatelé (oddělovač |):',
 	'cleanchanges-showuserlinks' => 'Ukázat uživatelské odkazy',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'cleanchanges-changerightslink' => 'newid grwpiau',
+	'cleanchanges-desc' => 'Dangos manylion cryno yn unig ar y [[Special:RecentChanges|rhestr newidiadau diweddar]]',
+	'cleanchanges-language' => 'Iaith:',
+	'cleanchanges-language-na' => 'Oll',
+	'cleanchanges-users' => 'Defnyddwyr (Gwah: |):',
+	'cleanchanges-showuserlinks' => 'Dangos cysylltiadau at ddefnyddwyr',
+);
+
+/** Danish (Dansk)
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'cleanchanges-changerightslink' => 'ændr grupper',
+	'cleanchanges-desc' => 'Mere kompakt visning af [[Special:RecentChanges|seneste ændringer]]',
+	'cleanchanges-language' => 'Sprog:',
+	'cleanchanges-language-na' => 'Alle',
+	'cleanchanges-users' => 'Brugere (adskil med |)',
+	'cleanchanges-showuserlinks' => 'Vis brugerhenvisninger',
 );
 
 /** German (Deutsch)
@@ -168,9 +227,16 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['el'] = array(
+	'cleanchanges-changerightslink' => 'αλλαγή ομάδων',
+	'cleanchanges-desc' => 'Πιο συμπαγής προβολή της [[Special:RecentChanges|λίστας προσφάτων αλλαγών]]',
 	'cleanchanges-language' => 'Γλώσσα:',
+	'cleanchanges-language-na' => 'Όλες',
+	'cleanchanges-users' => 'Χρήστες (Διαχωρ.: |):',
+	'cleanchanges-showuserlinks' => 'Προβολή συνδέσμων χρήστη',
 );
 
 /** Esperanto (Esperanto)
@@ -200,11 +266,13 @@ $messages['es'] = array(
 
 /** Estonian (Eesti)
  * @author Avjoska
+ * @author Pikne
  */
 $messages['et'] = array(
 	'cleanchanges-changerightslink' => 'muuda gruppe',
 	'cleanchanges-language' => 'Keel:',
 	'cleanchanges-language-na' => 'Kõik',
+	'cleanchanges-users' => 'Kasutajad (erald:&nbsp;|):',
 );
 
 /** Basque (Euskara)
@@ -248,10 +316,16 @@ $messages['fr'] = array(
 );
 
 /** Western Frisian (Frysk)
+ * @author SK-luuut
  * @author Snakesteuben
  */
 $messages['fy'] = array(
-	'cleanchanges-language-na' => 'Alle',
+	'cleanchanges-changerightslink' => 'feroarje groepen',
+	'cleanchanges-desc' => 'Kompaktere werjefte fan de [[Special:RecentChanges|list mei lêste feroarings]]',
+	'cleanchanges-language' => 'Taal:',
+	'cleanchanges-language-na' => 'Alle talen',
+	'cleanchanges-users' => 'Meidoggers (Skiedingsteken: |):',
+	'cleanchanges-showuserlinks' => 'Meidoggerskeppelingen sjen litte',
 );
 
 /** Irish (Gaeilge)
@@ -271,7 +345,7 @@ $messages['gl'] = array(
 	'cleanchanges-changerightslink' => 'mudar grupos',
 	'cleanchanges-desc' => 'Unha mostra máis compacta da [[Special:RecentChanges|lista de cambios recentes]]',
 	'cleanchanges-language' => 'Lingua:',
-	'cleanchanges-language-na' => 'Todo',
+	'cleanchanges-language-na' => 'Todas',
 	'cleanchanges-users' => 'Usuarios (separados por: |):',
 	'cleanchanges-showuserlinks' => 'Mostrar as ligazóns de usuario',
 );
@@ -339,7 +413,7 @@ $messages['hi'] = array(
 );
 
 /** Croatian (Hrvatski)
- * @author Suradnik13
+ * @author Ex13
  */
 $messages['hr'] = array(
 	'cleanchanges-changerightslink' => 'promijeni grupe',
@@ -387,14 +461,16 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Rex
  */
 $messages['id'] = array(
-	'cleanchanges-changerightslink' => 'ubah grup',
-	'cleanchanges-desc' => 'Tampilan lebih sederhana dari [[Special:RecentChanges|daftar perubahan terbaru]]',
+	'cleanchanges-changerightslink' => 'ubah kelompok',
+	'cleanchanges-desc' => 'Tampilan lebih padat dari [[Special:RecentChanges|daftar perubahan terbaru]]',
 	'cleanchanges-language' => 'Bahasa:',
 	'cleanchanges-language-na' => 'Semua',
-	'cleanchanges-users' => 'Pengguna (pemisah: |):',
+	'cleanchanges-users' => 'Pengguna (Pemisah: |):',
+	'cleanchanges-showuserlinks' => 'Tunjukkan pranala pengguna',
 );
 
 /** Italian (Italiano)
@@ -418,7 +494,7 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'cleanchanges-changerightslink' => '権限の変更',
-	'cleanchanges-desc' => '[[Special:RecentChanges|最近更新したページ]]をコンパクトな表示にする',
+	'cleanchanges-desc' => '[[Special:RecentChanges|最近の更新一覧]]をよりコンパクトに表示する',
 	'cleanchanges-language' => '言語:',
 	'cleanchanges-language-na' => 'すべて',
 	'cleanchanges-users' => '利用者 (|で区切る):',
@@ -432,6 +508,13 @@ $messages['jv'] = array(
 	'cleanchanges-changerightslink' => 'owahana grup',
 );
 
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'cleanchanges-language' => 'Oqaatsit:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
@@ -443,6 +526,13 @@ $messages['km'] = array(
 	'cleanchanges-language-na' => 'ទាំងអស់',
 	'cleanchanges-users' => 'អ្នកប្រើប្រាស់​(ខណ្ឌដោយ |)៖',
 	'cleanchanges-showuserlinks' => 'បង្ហាញ​តំណ​អ្នកប្រើប្រាស់',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'cleanchanges-language' => 'ಭಾಷೆ:',
 );
 
 /** Korean (한국어)
@@ -466,7 +556,7 @@ $messages['ksh'] = array(
 	'cleanchanges-showuserlinks' => 'Links op Metmaacher zeije',
 );
 
-/** Cornish (Kernewek)
+/** Cornish (Kernowek)
  * @author Kw-Moon
  */
 $messages['kw'] = array(
@@ -486,6 +576,25 @@ $messages['lb'] = array(
 	'cleanchanges-showuserlinks' => "D'Linke vun dësem Benotzer weisen",
 );
 
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'cleanchanges-changerightslink' => 'gróppe verangere',
+	'cleanchanges-desc' => 'Mier compacte weergave van de [[Special:RecentChanges|lies mit recènte verangeringe]]',
+	'cleanchanges-language' => 'Sjpraok:',
+	'cleanchanges-language-na' => 'Alle sjpraoke',
+	'cleanchanges-users' => 'Gebroekers (sjeijingsteike "|"):',
+	'cleanchanges-showuserlinks' => 'Gebroekersverwiezinge betrachte',
+);
+
+/** Eastern Mari (Олык Марий)
+ * @author Сай
+ */
+$messages['mhr'] = array(
+	'cleanchanges-language-na' => 'Чыла',
+);
+
 /** Macedonian (Македонски)
  * @author Brest
  */
@@ -494,16 +603,17 @@ $messages['mk'] = array(
 	'cleanchanges-desc' => 'Компактен приказ на [[Special:RecentChanges|скорешни промени]]',
 	'cleanchanges-language' => 'Јазик:',
 	'cleanchanges-language-na' => 'Сите',
-	'cleanchanges-users' => 'Корисници (граничник: |):',
+	'cleanchanges-users' => 'Корисници (разделник: |):',
 	'cleanchanges-showuserlinks' => 'Прикажи кориснички врски',
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'cleanchanges-changerightslink' => 'ഗ്രൂപ്പുകള്‍ മാറ്റുക',
-	'cleanchanges-desc' => '[[Special:RecentChanges|പുതിയ മാറ്റങ്ങളുടെ പട്ടികയുടെ]]ഒതുക്കമുള്ള പ്രദര്‍ശനം',
+	'cleanchanges-desc' => '[[Special:RecentChanges|പുതിയ മാറ്റങ്ങളുടെ പട്ടികയുടെ]] ഒതുക്കമുള്ള പ്രദര്‍ശനം',
 );
 
 /** Marathi (मराठी)
@@ -526,10 +636,12 @@ $messages['ms'] = array(
 );
 
 /** Maltese (Malti)
+ * @author Chrisportelli
  * @author Roderick Mallia
  */
 $messages['mt'] = array(
 	'cleanchanges-language' => 'Lingwa:',
+	'cleanchanges-showuserlinks' => 'Uri l-ħoloq tal-utent',
 );
 
 /** Erzya (Эрзянь)
@@ -574,6 +686,7 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'cleanchanges-changerightslink' => 'endre grupper',
@@ -581,6 +694,7 @@ $messages['no'] = array(
 	'cleanchanges-language' => 'Språk:',
 	'cleanchanges-language-na' => 'Alle',
 	'cleanchanges-users' => 'Brukere (separer med |):',
+	'cleanchanges-showuserlinks' => 'Vis brukerlenker',
 );
 
 /** Occitan (Occitan)
@@ -602,6 +716,14 @@ $messages['pa'] = array(
 	'cleanchanges-language-na' => 'ਸਭ',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'cleanchanges-language' => 'Schprooch:',
+	'cleanchanges-language-na' => 'all',
+);
+
 /** Polish (Polski)
  * @author Leinad
  * @author Masti
@@ -618,6 +740,18 @@ $messages['pl'] = array(
 	'cleanchanges-showuserlinks' => 'Pokaż linki użytkownika',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'cleanchanges-changerightslink' => 'cambia ij grup',
+	'cleanchanges-desc' => 'Visualisassion pì s-ciassa dla [[Special:RecentChanges|lista dij cambe ressent]]',
+	'cleanchanges-language' => 'Lenga:',
+	'cleanchanges-language-na' => 'Tùit',
+	'cleanchanges-users' => 'Utent (Sep: |):',
+	'cleanchanges-showuserlinks' => "Mosta colegament ëd l'utent",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -627,6 +761,7 @@ $messages['ps'] = array(
 	'cleanchanges-language' => 'ژبه:',
 	'cleanchanges-language-na' => 'ټول',
 	'cleanchanges-users' => 'کارونکي (Sep: |):',
+	'cleanchanges-showuserlinks' => 'د کارن تړنې ښکاره کول',
 );
 
 /** Portuguese (Português)
@@ -654,10 +789,12 @@ $messages['pt-br'] = array(
 );
 
 /** Tarifit (Tarifit)
+ * @author Aryaz
  * @author Jose77
  */
 $messages['rif'] = array(
-	'cleanchanges-language-na' => 'Maṛṛa',
+	'cleanchanges-language' => 'Tutlayt:',
+	'cleanchanges-language-na' => 'Marra',
 );
 
 /** Romanian (Română)
@@ -681,6 +818,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ferrer
  * @author Innv
  * @author Александр Сигачёв
  */
@@ -690,6 +828,19 @@ $messages['ru'] = array(
 	'cleanchanges-language' => 'Язык:',
 	'cleanchanges-language-na' => 'Все',
 	'cleanchanges-users' => 'Участники (разделитель: |):',
+	'cleanchanges-showuserlinks' => 'Показывать ссылки участников',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'cleanchanges-changerightslink' => 'бөлөхтөрү уларытыы',
+	'cleanchanges-desc' => '[[Special:RecentChanges|Кэнники уларытыылары]] арыый дьаһамырдык көрдөрүү',
+	'cleanchanges-language' => 'Тыла:',
+	'cleanchanges-language-na' => 'Бары',
+	'cleanchanges-users' => 'Кыттааччылар (араарыы: |):',
+	'cleanchanges-showuserlinks' => 'Кыттааччылар сигэлэрин көрдөр',
 );
 
 /** Slovak (Slovenčina)
@@ -704,12 +855,29 @@ $messages['sk'] = array(
 	'cleanchanges-showuserlinks' => 'Zobrazovať používateľské odkazy',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'cleanchanges-changerightslink' => 'промени групе',
 	'cleanchanges-desc' => 'Компактнији приказ списка [[Special:RecentChanges|скорашњих измена]]',
+	'cleanchanges-language' => 'Језик:',
+	'cleanchanges-language-na' => 'Све',
+	'cleanchanges-users' => 'Корисници (Раздв: |):',
+	'cleanchanges-showuserlinks' => 'Покажи корисничке линкове',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'cleanchanges-changerightslink' => 'promeni grupe',
+	'cleanchanges-desc' => 'Kompaktniji prikaz spiska [[Special:RecentChanges|skorašnjih izmena]]',
+	'cleanchanges-language' => 'Jezik:',
+	'cleanchanges-language-na' => 'Sve',
+	'cleanchanges-users' => 'Korisnici (Razdv: |):',
+	'cleanchanges-showuserlinks' => 'Pokaži korisničke linkove',
 );
 
 /** Seeltersk (Seeltersk)
@@ -759,13 +927,16 @@ $messages['szl'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
 	'cleanchanges-changerightslink' => 'గుంపులను మార్చండి',
+	'cleanchanges-desc' => '[[Special:RecentChanges|ఇటీవలి మార్పుల]]ని సంక్షిప్తముగా చూపుము',
 	'cleanchanges-language' => 'భాష:',
 	'cleanchanges-language-na' => 'అన్నీ',
 	'cleanchanges-users' => 'వాడుకరులు (| తో వేరుపరచి):',
+	'cleanchanges-showuserlinks' => 'వాడుకరి లింకులను చూపుము',
 );
 
 /** Tetum (Tetun)
@@ -785,11 +956,28 @@ $messages['tg-cyrl'] = array(
 	'cleanchanges-language-na' => 'Ҳама',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'cleanchanges-changerightslink' => 'taƣjiri gurūhho',
+	'cleanchanges-language' => 'Zabon:',
+	'cleanchanges-language-na' => 'Hama',
+);
+
 /** Thai (ไทย)
  * @author Octahedron80
  */
 $messages['th'] = array(
 	'cleanchanges-language-na' => 'ทั้งหมด',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'cleanchanges-language' => 'Dil:',
+	'cleanchanges-language-na' => 'Ählisi',
 );
 
 /** Tagalog (Tagalog)
@@ -817,6 +1005,25 @@ $messages['tr'] = array(
 	'cleanchanges-showuserlinks' => 'Kullanıcı bağlantılarını göster',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Рашат Якупов
+ */
+$messages['tt-cyrl'] = array(
+	'cleanchanges-changerightslink' => 'төркемнәрне төзәтергә',
+	'cleanchanges-desc' => '[[Special:RecentChanges|Баягы төзәтмәләрнең]] тыгызлау',
+	'cleanchanges-language' => 'Тел:',
+	'cleanchanges-language-na' => 'Барысы',
+	'cleanchanges-users' => 'Катнашучылар (бүлү: |):',
+	'cleanchanges-showuserlinks' => 'Катнашучылар сылтамаларын күрсәтү',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'cleanchanges-language' => 'تىل:',
+);
+
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
  * @author Jose77
  */
@@ -826,6 +1033,7 @@ $messages['ug-latn'] = array(
 
 /** Ukrainian (Українська)
  * @author Ahonc
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'cleanchanges-changerightslink' => 'змінити групи',
@@ -833,6 +1041,7 @@ $messages['uk'] = array(
 	'cleanchanges-language' => 'Мова:',
 	'cleanchanges-language-na' => 'Усі',
 	'cleanchanges-users' => 'Користувачі (розділювач: |):',
+	'cleanchanges-showuserlinks' => 'Показувати посилання користувачів',
 );
 
 /** Vèneto (Vèneto)
@@ -845,6 +1054,15 @@ $messages['vec'] = array(
 	'cleanchanges-language-na' => 'Tute',
 	'cleanchanges-users' => 'Utenti (separà da |):',
 	'cleanchanges-showuserlinks' => 'Mostra colegamenti utente',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'cleanchanges-language' => "Kel':",
+	'cleanchanges-language-na' => 'Kaik',
+	'cleanchanges-users' => 'Kävutajad (erigoitim: |)',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -872,18 +1090,31 @@ $messages['vo'] = array(
 	'cleanchanges-showuserlinks' => 'Jonön gebanayümis',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'cleanchanges-language' => 'שפראך:',
+	'cleanchanges-language-na' => 'אלע',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Chenzw
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
+	'cleanchanges-changerightslink' => '更改群组',
+	'cleanchanges-desc' => '更简洁的显示[[Special:RecentChanges|最近更改清单]]',
 	'cleanchanges-language' => '语言：',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Alexsh
+ * @author Liangent
  */
 $messages['zh-hant'] = array(
 	'cleanchanges-changerightslink' => '更改群組',
 	'cleanchanges-desc' => '更簡潔的顯示[[Special:RecentChanges|最近更改清單]]',
+	'cleanchanges-language' => '語言：',
 );
 

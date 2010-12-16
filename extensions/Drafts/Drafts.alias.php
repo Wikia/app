@@ -13,6 +13,11 @@ $aliases['en'] = array(
 	'Drafts' => array( 'Drafts' ),
 );
 
+/** Afrikaans (Afrikaans) */
+$aliases['af'] = array(
+	'Drafts' => array( 'Kladwerk' ),
+);
+
 /** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Drafts' => array( 'مسودات' ),
@@ -63,9 +68,19 @@ $aliases['fr'] = array(
 	'Drafts' => array( 'Brouillons' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Drafts' => array( 'Brolyons' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'Drafts' => array( 'Bosquexo' ),
+);
+
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'Drafts' => array( 'મુસ્દ્દો' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
@@ -83,6 +98,16 @@ $aliases['ia'] = array(
 	'Drafts' => array( 'Versiones provisori' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Drafts' => array( 'Draf' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'Drafts' => array( 'Bozze' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'Drafts' => array( '下書き' ),
@@ -93,14 +118,29 @@ $aliases['km'] = array(
 	'Drafts' => array( 'ពង្រាង' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Drafts' => array( 'Versione Zwescheshpeischere' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
-	'Drafts' => array( 'Brouillonen' ),
+	'Drafts' => array( 'Virbereedungen' ),
 );
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'Drafts' => array( 'РаботнаВерзија' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Drafts' => array( 'കരട്' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Drafts' => array( 'मसूदा' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -128,6 +168,11 @@ $aliases['oc'] = array(
 	'Drafts' => array( 'Borrolhons' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'Drafts' => array( 'Brudnopisy' ),
+);
+
 /** Portuguese (Português) */
 $aliases['pt'] = array(
 	'Drafts' => array( 'Rascunhos' ),
@@ -143,9 +188,24 @@ $aliases['sa'] = array(
 	'Drafts' => array( 'प्रारूप' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Drafts' => array( 'Rozpísané' ),
+);
+
+/** Swedish (Svenska) */
+$aliases['sv'] = array(
+	'Drafts' => array( 'Utkast' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Drafts' => array( 'Mga balangkas' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Drafts' => array( 'Taslaklar' ),
 );
 
 /** Vèneto (Vèneto) */

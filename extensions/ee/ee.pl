@@ -5,8 +5,8 @@
 #
 # written by Erik Möller - public domain
 #
-# User documentation:      http://meta.wikimedia.org/wiki/Help:External_editors
-# Technical documentation: http://meta.wikimedia.org/wiki/Help:External_editors/Tech
+# User documentation:      http://www.mediawiki.org/wiki/Manual:External_editors
+# Technical documentation: http://www.mediawiki.org/wiki/Manual:External_editors:_control_files
 #
 # To do: Edit conflicts
 #

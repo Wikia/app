@@ -22,10 +22,9 @@
 //		   [[User:Mike Dillon]]
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'MetaKeywords',
 	'author'         => '[http://en.wiktionary.org/wiki/User:Conrad.Irwin Conrad Irwin]',
-	'svn-date'       => '$LastChangedDate: 2008-08-13 08:39:09 +0200 (śro, 13 sie 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 39275 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:MetaKeywords',
 	'description'    => 'Lets wikis add meta keywords depending on namespace',
 	'descriptionmsg' => 'metakeywords-desc',

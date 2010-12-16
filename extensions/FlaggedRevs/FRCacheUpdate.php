@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Class containing cache update methods and job construction
+ * for the special case of purging pages due to links contained
+ * only in the stable version of pages
+ */
 class FRCacheUpdate {
 	public $mTitle, $mTable;
     public $mRowsPerJob, $mRowsPerQuery;
@@ -14,19 +18,19 @@ class FRCacheUpdate {
 
 	public function doUpdate() {
 		global $wgFlaggedRevsCacheUpdates;
-		if( !isset($wgFlaggedRevsCacheUpdates) ) {
+		if ( !isset( $wgFlaggedRevsCacheUpdates ) ) {
 			$wgFlaggedRevsCacheUpdates = array(); // temp var
 		}
 		$key = $this->mTitle->getPrefixedDBKey();
-		if( isset($wgFlaggedRevsCacheUpdates[$key]) )
+		if ( isset( $wgFlaggedRevsCacheUpdates[$key] ) )
 			return; // No duplicates...
 		# Fetch the IDs
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( $this->mTable, $this->getFromField(),
 			$this->getToCondition(), __METHOD__ );
-		if( $dbr->numRows($res) > 0 ) {
+		if ( $dbr->numRows( $res ) > 0 ) {
 			# Do it right now?
-			if( $dbr->numRows($res) <= $this->mRowsPerJob ) {
+			if ( $dbr->numRows( $res ) <= $this->mRowsPerJob ) {
 				$this->invalidateIDs( $res );
 			# Defer to job queue...
 			} else {
@@ -38,7 +42,7 @@ class FRCacheUpdate {
 
 	protected function insertJobs( ResultWrapper $res ) {
 		$numRows = $res->numRows();
-		if( !$numRows ) return; // sanity check
+		if ( !$numRows ) return; // sanity check
 		$numBatches = ceil( $numRows / $this->mRowsPerJob );
 		$realBatchSize = ceil( $numRows / $numBatches );
 		$start = false;
@@ -46,13 +50,13 @@ class FRCacheUpdate {
 		do {
 			$first = $last = false; // first/last page_id of this batch
 			# Get $realBatchSize items (or less if not enough)...
-			for( $i = 0; $i < $realBatchSize; $i++ ) {
+			for ( $i = 0; $i < $realBatchSize; $i++ ) {
 				$row = $res->fetchRow();
 				# Is there another row?
-				if( $row ) {
+				if ( $row ) {
 					$id = $row[0];
 					$last = $id; // $id is the last page_id of this batch
-					if( $first === false )
+					if ( $first === false )
 						$first = $id; // set first page_id of this batch
 				# Out of rows?
 				} else {
@@ -61,7 +65,7 @@ class FRCacheUpdate {
 				}
             }
 			# Insert batch into the queue if there is anything there
-			if( $first ) {
+			if ( $first ) {
 				$params = array(
 					'table' => $this->mTable,
 					'start' => $first,
@@ -70,7 +74,7 @@ class FRCacheUpdate {
 				$jobs[] = new FRCacheUpdateJob( $this->mTitle, $params );
 			}
             $start = $id; // Where the last ID left off
-		} while( $start );
+		} while ( $start );
 		Job::batchInsert( $jobs );
     }
 
@@ -88,39 +92,39 @@ class FRCacheUpdate {
      */
     public function invalidateIDs( ResultWrapper $res ) {
         global $wgUseFileCache, $wgUseSquid;
-        if( $res->numRows() == 0 ) return; // sanity check
+        if ( $res->numRows() == 0 ) return; // sanity check
 
         $dbw = wfGetDB( DB_MASTER );
         $timestamp = $dbw->timestamp();
         $done = false;
 
-        while( !$done ) {
+        while ( !$done ) {
             # Get all IDs in this query into an array
             $ids = array();
-            for( $i = 0; $i < $this->mRowsPerQuery; $i++ ) {
+            for ( $i = 0; $i < $this->mRowsPerQuery; $i++ ) {
                 $row = $res->fetchRow();
-                if( $row ) {
+                if ( $row ) {
                     $ids[] = $row[0];
                 } else {
                     $done = true;
                     break;
                 }
             }
-            if( count($ids) == 0 ) break;
+            if ( count( $ids ) == 0 ) break;
             # Update page_touched
             $dbw->update( 'page', array( 'page_touched' => $timestamp ),
 				array( 'page_id' => $ids ), __METHOD__ );
             # Update static caches
-            if( $wgUseSquid || $wgUseFileCache ) {
+            if ( $wgUseSquid || $wgUseFileCache ) {
                 $titles = Title::newFromIDs( $ids );
 				# Update squid cache
-                if( $wgUseSquid ) {
+                if ( $wgUseSquid ) {
                     $u = SquidUpdate::newFromTitles( $titles );
                     $u->doUpdate();
                 }
                 # Update file cache
-                if( $wgUseFileCache ) {
-                    foreach( $titles as $title ) {
+                if ( $wgUseFileCache ) {
+                    foreach ( $titles as $title ) {
                         HTMLFileCache::clearFileCache( $title );
                     }
                 }
@@ -154,10 +158,10 @@ class FRCacheUpdateJob extends Job {
 		# Get query conditions
 		$fromField = $update->getFromField();
 		$conds = $update->getToCondition();
-		if( $this->start ) {
+		if ( $this->start ) {
 			$conds[] = "$fromField >= {$this->start}";
 		}
-		if( $this->end ) {
+		if ( $this->end ) {
 			$conds[] = "$fromField <= {$this->end}";
 		}
 

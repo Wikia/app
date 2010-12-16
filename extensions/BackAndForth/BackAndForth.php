@@ -13,11 +13,10 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgAutoloadClasses['BackAndForth'] = dirname( __FILE__ ) . '/BackAndForth.class.php';
-$wgExtensionFunctions[] = 'efBackAndForth';
+$wgHooks['ArticleViewHeader'][] = 'BackAndForth::viewHook';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Back and Forth',
-	'svn-date' => '$LastChangedDate: 2008-11-30 04:15:22 +0100 (ndz, 30 lis 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'author' => 'Rob Church',
 	'description' => 'Adds "Next" and "Previous" alphabetic paging links to the top of articles',
 	'descriptionmsg' => 'backforth-desc',
@@ -25,14 +24,3 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionMessagesFiles['BackAndForth'] = dirname(__FILE__) . '/BackAndForth.i18n.php';
-
-/**
- * Extension setup function
- */
-function efBackAndForth() {
-	global $wgHooks;
-
-	wfLoadExtensionMessages( 'BackAndForth' );
-
-	$wgHooks['ArticleViewHeader'][] = 'BackAndForth::viewHook';
-}

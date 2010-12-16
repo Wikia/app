@@ -2,7 +2,7 @@
 
 class CCFilters {
 
-	public static function user( &$conds, &$tables, &$join_conds, &$opts ) {
+	public static function user( &$conds, &$tables, &$join_conds, $opts ) {
 		global $wgRequest;
 		$opts->add( 'users', '' );
 		$users = $wgRequest->getVal( 'users' );
@@ -25,7 +25,7 @@ class CCFilters {
 		return true;
 	}
 
-	public static function userForm( &$items, &$opts ) {
+	public static function userForm( &$items, $opts ) {
 		wfLoadExtensionMessages( 'CleanChanges' );
 		$opts->consumeValue( 'users' );
 		global $wgRequest;

@@ -18,9 +18,7 @@ class DataCenterControllerPlans extends DataCenterController {
 
 	/* Functions */
 
-	public function __construct(
-		array $path
-	) {
+	public function __construct( array $path ) {
 		// Actions
 		if ( $path['id'] ) {
 			if ( DataCenterPage::userCan( 'remove' ) ) {
@@ -50,7 +48,7 @@ class DataCenterControllerPlans extends DataCenterController {
 		if ( $path['id'] ) {
 			$type = $path['type'];
 			$id = $path['id'];
-		} else if (
+		} elseif (
 			is_array( $path['parameter'] ) &&
 			count( $path['parameter'] ) >= 2
 		) {
@@ -92,10 +90,7 @@ class DataCenterControllerPlans extends DataCenterController {
 		}
 	}
 
-	public function remove(
-		array $data,
-		$type
-	) {
+	public function remove( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'remove' ) ) {
 			return false;
 		}
@@ -126,10 +121,7 @@ class DataCenterControllerPlans extends DataCenterController {
 		return false;
 	}
 
-	public function save(
-		array $data,
-		$type
-	) {
+	public function save( array $data, $type ) {
 		if ( !DataCenterPage::userCan( 'change' ) ) {
 			return false;
 		}

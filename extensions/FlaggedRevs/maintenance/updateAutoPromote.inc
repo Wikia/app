@@ -3,7 +3,7 @@
 
 function update_autopromote() {
 	global $wgContentNamespaces, $wgFlaggedRevsAutopromote;
-	$batchSize = 20;
+	$batchSize = 50;
 	echo "Populating and updating flaggedrevs_promote table\n";
 
 	$db = wfGetDB( DB_SLAVE );

@@ -127,7 +127,7 @@ foreach ( $sets as $setName => $members ) {
 # Map output
 $output = var_export( $setsByChar, true );
 $output = str_replace( "\n", $endl, $output );
-fwrite( $outputFile, '$equivset = ' . "$output$endl?" . ">$endl" );
+fwrite( $outputFile, '$equivset = ' . "$output;$endl" );
 
 # Serialized codepoint map
 $codepointMap = array();

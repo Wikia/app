@@ -75,6 +75,7 @@ $wgNewsChannelExportTextOnly = false;
 // End of configuration settings
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'News Channel',
 	'version'        => '2.1',
 	'author'         => '[mailto:codedriller@gmail.com Iaroslav Vassiliev]',

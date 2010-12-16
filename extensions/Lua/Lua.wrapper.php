@@ -85,7 +85,7 @@ class LuaWrapper {
 			$this->proc = proc_open($luacmd,
 						array(0 => array('pipe', 'r'),
 						      1 => array('pipe', 'w')),
-						$this->pipes, NULL, NULL);
+						$this->pipes, null, null);
 			if (!is_resource($this->proc)) {
 				$this->defunct = TRUE;
 				throw new LuaError('interp_notfound');
@@ -144,8 +144,8 @@ class LuaWrapper {
 			# Wait for a response back on the other pipe
 			$res    = '';
 			$read   = array($this->pipes[1]);
-			$write  = NULL;
-			$except = NULL;
+			$write  = null;
+			$except = null;
 			while (!feof($this->pipes[1])) {
 				if (false === ($num_changed_streams =
 					       stream_select($read, $write, $except,
@@ -165,13 +165,13 @@ class LuaWrapper {
 			}
 			$success = ($match[2] == 'true');
 			$out = $success ? $match[1] : '';
-			$err = $success ? NULL      : $match[1];
+			$err = $success ? null      : $match[1];
 		}
 		# Either way, the output should now be in $out, and if 
 		# applicable, the error in $err.
 
 		# If an error was raised, abort and throw an exception
-		if ($err != NULL) {
+		if ($err != null) {
 			if (preg_match('/LOC_LIMIT$/', $err)) {
 				$this->destroy();
 				throw new LuaError('overflow_loc');
@@ -200,7 +200,7 @@ class LuaWrapper {
 
 		# Destroy the lua instance and/or external process and pipes
 		if (isset($this->lua)) {
-			$this->lua = NULL;
+			$this->lua = null;
 		} else {
 			if (isset($this->proc)) {
 				fclose($this->pipes[0]);

@@ -2,7 +2,7 @@
   * Javascript functions for Yahoo! Maps functionallity in Maps and it's extensions
   *
   * @file YahooMapFunctions.js
-  * @ingroup Maps
+  * @ingroup MapsYahooMaps
   *
   * @author Jeroen De Dauw
   */
@@ -37,15 +37,15 @@ function createYMarker(geoPoint, title, label, icon){
 /**
  * Returns YMap object with the provided properties and markers.
  */
-function initializeYahooMap(mapName, lat, lon, zoom, type, types, controls, scrollWheelZoom, markers) {
+function initializeYahooMap(mapName, lat, lon, zoom, type, types, controls, scrollWheelZoom, markers, height) {
 	 var centre = (lon != null && lat != null) ? new YGeoPoint(lat, lon) : null;
-	 return createYahooMap(document.getElementById(mapName), centre, zoom, type, types, controls, scrollWheelZoom, markers);
+	 return createYahooMap(document.getElementById(mapName), centre, zoom, type, types, controls, scrollWheelZoom, markers, height);
 }
 
 /**
  * Returns YMap object with the provided properties.
  */
-function createYahooMap(mapElement, centre, zoom, type, types, controls, scrollWheelZoom, markers) {
+function createYahooMap(mapElement, centre, zoom, type, types, controls, scrollWheelZoom, markers, height) {
 	var typesContainType = false;
 
 	for (var i = 0; i < types.length; i++) {
@@ -59,6 +59,10 @@ function createYahooMap(mapElement, centre, zoom, type, types, controls, scrollW
 	map.removeZoomScale();
 	
 	for (i in controls){
+		if (controls[i].toLowerCase() == 'auto-zoom') {
+			if (height > 42) controls[i] = height > 100 ? 'zoom' : 'zoom-short';
+		}			
+		
 		switch (controls[i]) {
 			case 'scale' : 
 				map.addZoomScale();

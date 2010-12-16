@@ -9,11 +9,7 @@ var DATACENTER_PLAN_Z_SCALE = 1.5;
  * @param	physical	Object of space/rack/object physical structure
  * @param	state		Object of highlight/focus state
  */
-function DataCenterScenePlan(
-	id,
-	physical,
-	state
-) {
+function DataCenterScenePlan( id, physical, state ) {
 	/* Private Members */
 
 	var self = this;
@@ -34,26 +30,26 @@ function DataCenterScenePlan(
 			outline: 'rgba( 0, 0, 0, 0.75 )',
 			safe: {
 				normal: {
-				    side: 'rgba( 25, 25, 25, 0.75 )',
-				    bottom: 'rgba( 50, 50, 50, 0.75 )',
-				    top: 'rgba( 75, 75, 75, 0.75 )'
+					side: 'rgba( 25, 25, 25, 0.75 )',
+					bottom: 'rgba( 50, 50, 50, 0.75 )',
+					top: 'rgba( 75, 75, 75, 0.75 )'
 				},
 				current: {
 					side: 'rgba( 50, 75, 100, 0.5 )',
-				    bottom: 'rgba( 125, 150, 175, 0.5 )',
-				    top: 'rgba( 150, 175, 200, 0.5 )'
+					bottom: 'rgba( 125, 150, 175, 0.5 )',
+					top: 'rgba( 150, 175, 200, 0.5 )'
 				}
 			},
 			overlap: {
 				normal: {
 					side: 'rgba( 150, 100, 100, 0.75 )',
-				    bottom: 'rgba( 175, 125, 125, 0.75 )',
-				    top: 'rgba( 200, 150, 150, 0.75 )'
+					bottom: 'rgba( 175, 125, 125, 0.75 )',
+					top: 'rgba( 200, 150, 150, 0.75 )'
 				},
 				current: {
 					side: 'rgba( 200, 150, 150, 0.5 )',
-				    bottom: 'rgba( 225, 175, 175, 0.5 )',
-				    top: 'rgba( 250, 200, 200, 0.5 )'
+					bottom: 'rgba( 225, 175, 175, 0.5 )',
+					top: 'rgba( 250, 200, 200, 0.5 )'
 				}
 			}
 		},
@@ -62,7 +58,7 @@ function DataCenterScenePlan(
 			safe: {
 				normal: {
 					side: 'rgb( 100, 100, 100 )',
-				    top: 'rgb( 125, 125, 125 )'
+					top: 'rgb( 125, 125, 125 )'
 				},
 				current: {
 					side: 'rgb( 100, 125, 150 )',
@@ -90,9 +86,9 @@ function DataCenterScenePlan(
 			highlight: { rack: null, object: null }
 		};
 	}
-	
+
 	/* Public Functions */
-	
+
 	/**
 	 * Sets a flag that the current virtual dimensions are invalid
 	 */
@@ -114,9 +110,7 @@ function DataCenterScenePlan(
 	/**
 	 * Sets reference to scene this plan is in
 	 */
-	this.setScene = function(
-		newScene
-	) {
+	this.setScene = function( newScene ) {
 		scene = newScene
 	}
 	/**
@@ -130,11 +124,7 @@ function DataCenterScenePlan(
 	 * @param	rackId			Integer of row ID of rack to modify
 	 * @param	orientation		Integer of orientation to set
 	 */
-	this.setRackOrientation = function(
-		rackId,
-		orientation,
-		update
-	) {
+	this.setRackOrientation = function( rackId, orientation, update ) {
 		physical.racks[rackId].orientation = orientation;
 		self.resync();
 		self.update( update );
@@ -145,12 +135,7 @@ function DataCenterScenePlan(
 	 * @param	x				Integer of x position to set
 	 * @param	y				Integer of y position to set
 	 */
-	this.setRackPosition = function(
-		rackId,
-		x,
-		y,
-		update
-	) {
+	this.setRackPosition = function( rackId, x, y, update ) {
 		physical.racks[rackId].x = x;
 		physical.racks[rackId].y = y;
 		self.resync();
@@ -178,12 +163,7 @@ function DataCenterScenePlan(
 	 * @param	objectId		Integer of row ID of object to modify
 	 * @param	z				Integer of x position to set
 	 */
-	this.setObjectPosition = function(
-		rackId,
-		objectId,
-		z,
-		update
-	) {
+	this.setObjectPosition = function( rackId, objectId, z, update ) {
 		physical.racks[rackId].objects[objectId].z = z;
 		self.resync();
 		self.update( update );
@@ -192,19 +172,14 @@ function DataCenterScenePlan(
 	 * Sets rack highlight
 	 * @param	rackId		Integer of row ID of rack to highlight
 	 */
-	this.setRackHighlight = function(
-		rackId,
-		update
-	) {
+	this.setRackHighlight = function( rackId, update ) {
 		state.highlight.rack = rackId ? rackId : null;
 		self.update( update );
 	}
 	/**
 	 * Clears rack highlight
 	 */
-	this.clearRackHighlight = function(
-		update
-	) {
+	this.clearRackHighlight = function( update ) {
 		state.highlight.rack = null;
 		self.update( update );
 	}
@@ -212,19 +187,14 @@ function DataCenterScenePlan(
 	 * Sets object highlight
 	 * @param	rackId		Integer of row ID of rack to highlight
 	 */
-	this.setObjectHighlight = function(
-		objectId,
-		update
-	) {
+	this.setObjectHighlight = function( objectId, update ) {
 		state.highlight.object = objectId ? objectId : null;
 		self.update( update );
 	}
 	/**
 	 * Clears object highlight
 	 */
-	this.clearObjectHighlight = function(
-		update
-	) {
+	this.clearObjectHighlight = function( update ) {
 		state.highlight.object = null;
 		self.update( update );
 	}
@@ -240,9 +210,7 @@ function DataCenterScenePlan(
 	 * Updates rendering of space
 	 * @param	update			Flag of whether to actually update
 	 */
-	this.update = function(
-		update
-	) {
+	this.update = function( update ) {
 		if ( update && scene && scene.isLive() ) {
 			scene.render();
 		}
@@ -292,10 +260,10 @@ function DataCenterScenePlan(
 		virtual.y = ( cache.canvas.height / 2 ) - ( virtual.depth / 2 );
 		virtual.meter = virtual.width / physical.width;
 		virtual.base = [
-		    { x: virtual.width, y: 0 },
-		    { x: 0, y: 0 },
-		    { x: 0, y: virtual.depth },
-		    { x: virtual.width, y: virtual.depth },
+			{ x: virtual.width, y: 0 },
+			{ x: 0, y: 0 },
+			{ x: 0, y: virtual.depth },
+			{ x: virtual.width, y: virtual.depth },
 		];
 		virtual.top = {
 			x: virtual.normal.x * virtual.height,
@@ -474,9 +442,7 @@ function DataCenterScenePlan(
 	/**
 	 * Synchronizes rack's virtual and physical dimensions
 	 */
-	this.syncRack = function(
-		rackId
-	) {
+	this.syncRack = function( rackId ) {
 		var rack = {};
 		// Calculates and stores rack dimensional information
 		rack.orientation =
@@ -510,11 +476,7 @@ function DataCenterScenePlan(
 	/**
 	 * Draws rack onto it's plan's canvas
 	 */
-	this.renderRack = function(
-		rackId,
-		pass,
-		overlap
-	) {
+	this.renderRack = function( rackId, pass, overlap ) {
 		var rack = {
 			physical: physical.racks[rackId],
 			virtual: virtual.racks[rackId],
@@ -674,10 +636,7 @@ function DataCenterScenePlan(
 	/**
 	 * Synchronizes object's virtual and physical dimensions
 	 */
-	this.syncObject = function(
-		rackId,
-		objectId
-	) {
+	this.syncObject = function( rackId, objectId ) {
 		var object = {};
 		// Scale and orientation
 		var unit = virtual.meter * DATACENTER_PLAN_U_HEIGHT *
@@ -718,11 +677,7 @@ function DataCenterScenePlan(
 	/**
 	 * Draws object onto it's plan's canvas
 	 */
-	this.renderObject = function(
-		rackId,
-		objectId,
-		overlap
-	) {
+	this.renderObject = function( rackId, objectId, overlap ) {
 		var object = {
 			physical: physical.racks[rackId].objects[objectId],
 			virtual: virtual.racks[rackId].objects[objectId],

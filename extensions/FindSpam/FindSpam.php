@@ -14,6 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'FindSpam',
 	'version' => '1.0',
 	'author' => 'Tim Starling',

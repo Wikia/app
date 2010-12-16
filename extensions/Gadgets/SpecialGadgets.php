@@ -50,54 +50,63 @@ class SpecialGadgets extends SpecialPage {
 		$listOpen = false;
 
 		$msgOpt = array( 'parseinline', 'parsemag' );
-
+		$editInterfaceAllowed = $wgUser->isAllowed( 'editinterface' ) ? true : false ;
+			
 		foreach ( $gadgets as $section => $entries ) {
 			if ( $section !== false && $section !== '' ) {
 				$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-section-$section$lang" );
-				$lnk = $t ? $skin->makeLinkObj( $t, wfMsgHTML("edit"), 'action=edit' ) : htmlspecialchars($section);
+				if ( $editInterfaceAllowed ) {
+					$lnkTarget = $t
+						? $skin->link( $t, wfMsgHTML( 'edit' ), array(), array( 'action' => 'edit' ) ) 
+						: htmlspecialchars( $section );
+					$lnk =  "&nbsp; &nbsp; [$lnkTarget]";
+				} else {
+					$lnk = '';
+				}
 				$ttext = wfMsgExt( "gadget-section-$section", $msgOpt );
 
 				if( $listOpen ) {
-					$wgOut->addHTML( '</ul>' );
+					$wgOut->addHTML( Xml::closeElement( 'ul' ) . "\n" );
 					$listOpen = false;
 				}
-				$wgOut->addHTML( "\n<h2>$ttext &nbsp; &nbsp; [$lnk]</h2>\n" );
+				$wgOut->addHTML( Html::rawElement( 'h2', array(), $ttext . $lnk ) . "\n" );
 			}
 
 			foreach ( $entries as $gname => $code ) {
 				$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-$gname$lang" );
 				if ( !$t ) continue;
 
-				$lnk = $skin->makeLinkObj( $t, wfMsgHTML("edit"), 'action=edit' );
+				if ( $editInterfaceAllowed ) {
+					$lnkTarget = $skin->link( $t, wfMsgHTML( 'edit' ), array(), array( 'action' => 'edit' ) );
+					$lnk =  "&nbsp; &nbsp; [$lnkTarget]";
+				} else {
+					$lnk = '';
+				}
 				$ttext = wfMsgExt( "gadget-$gname", $msgOpt );
 
 				if( !$listOpen ) {
 					$listOpen = true;
-					$wgOut->addHTML( '<ul>' );
+					$wgOut->addHTML( Xml::openElement( 'ul' ) );
 				}
-				$wgOut->addHTML( "<li>" );
-				$wgOut->addHTML( "$ttext &nbsp; &nbsp; [$lnk]<br />" );
+				$wgOut->addHTML( Xml::openElement( 'li' ) .
+						$ttext . $lnk . "<br />" .
+						wfMsgHTML( 'gadgets-uses' ) . wfMsg( 'colon-separator' )
+				);
 
-				$wgOut->addHTML( wfMsgHTML( "gadgets-uses" ) . wfMsg( 'colon-separator' ) );
-
-				$first = true;
+				$lnk = array();
 				foreach ( $code as $codePage ) {
 					$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-$codePage" );
 					if ( !$t ) continue;
 
-					if ( $first ) $first = false;
-					else $wgOut->addHTML(", ");
-
-					$lnk = $skin->makeLinkObj( $t, htmlspecialchars( $t->getText() ) );
-					$wgOut->addHTML($lnk);
+					$lnk[] = $skin->link( $t, htmlspecialchars( $t->getText() ) );
 				}
-
-				$wgOut->addHTML( "</li>" );
+				$wgOut->addHTML( $wgLang->commaList( $lnk ) );
+				$wgOut->addHTML( Xml::closeElement( 'li' ) . "\n" );
 			}
 		}
 
 		if( $listOpen ) {
-			$wgOut->addHTML( '</ul>' );
+			$wgOut->addHTML( Xml::closeElement( 'ul' ) . "\n" );
 		}
 	}
 }

@@ -17,7 +17,7 @@ Read through the entire document, and if you wish to indicate your support for i
 	'sign-address'         => 'Street address:',
 	'sign-city'            => 'City:',
 	'sign-state'           => 'State:',
-	'sign-zip'             => 'Zip code:',
+	'sign-zip'             => 'Postal code:',
 	'sign-country'         => 'Country:',
 	'sign-phone'           => 'Phone number:',
 	'sign-bday'            => 'Age:',
@@ -25,8 +25,8 @@ Read through the entire document, and if you wish to indicate your support for i
 	'sign-indicates-req'   => '<small><i><font color="red">*</font> indicates required field.</i></small>',
 	'sign-hide-note'       => '<small><i><font color="red">**</font> Note: Unlisted information will still be visible to moderators.</i></small>',
 	'sign-list-anonymous'  => 'List anonymously',
-	'sign-list-hideaddress'=> 'Do not list address',
-	'sign-list-hideextaddress'=>'Do not list city, state, zip, or country',
+	'sign-list-hideaddress' => 'Do not list address',
+	'sign-list-hideextaddress' => 'Do not list city, state, postal code, or country',
 	'sign-list-hidephone'  => 'Do not list phone',
 	'sign-list-hidebday'   => 'Do not list age',
 	'sign-list-hideemail'  => 'Do not list e-mail',
@@ -48,7 +48,7 @@ $1',
 	'sign-viewfield-city'       => 'City',
 	'sign-viewfield-state'      => 'State',
 	'sign-viewfield-country'    => 'Country',
-	'sign-viewfield-zip'        => 'Zip',
+	'sign-viewfield-zip'        => 'Postal code',
 	'sign-viewfield-ip'         => 'IP address',
 	'sign-viewfield-agent'      => 'User agent',
 	'sign-viewfield-phone'      => 'Phone',
@@ -56,12 +56,12 @@ $1',
 	'sign-viewfield-age'        => 'Age',
 	'sign-viewfield-options'    => 'Options',
 	'sign-viewsigs-intro'       => 'Shown below are the signatures recorded for <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
-	'sign-sigadmin-currentlyopen'=>'Signing is currently enabled for this document.',
+	'sign-sigadmin-currentlyopen' => 'Signing is currently enabled for this document.',
 	'sign-sigadmin-close'       => 'Disable signing',
-	'sign-sigadmin-currentlyclosed'=>'Signing is currently disabled for this document.',
+	'sign-sigadmin-currentlyclosed' => 'Signing is currently disabled for this document.',
 	'sign-sigadmin-open'        => 'Enable signing',
 	'sign-signatures'           => 'Signatures',
-	'sign-sigadmin-closesuccess'=> 'Signing successfully disabled.',
+	'sign-sigadmin-closesuccess' => 'Signing successfully disabled.',
 	'sign-sigadmin-opensuccess' => 'Signing successfully enabled.',
 	'sign-viewsignatures'       => 'view signatures',
 	'sign-closed'               => 'closed',
@@ -90,19 +90,22 @@ $1',
 	'sign-review-comment'          => 'Comment',
 	'sign-submitreview'            => 'Submit review',
 	'sign-uniquequery-similarname' => 'Similar name',
-	'sign-uniquequery-similaraddress'=> 'Similar address',
-	'sign-uniquequery-similarphone'=> 'Similar phone',
-	'sign-uniquequery-similaremail'=> 'Similar email',
+	'sign-uniquequery-similaraddress' => 'Similar address',
+	'sign-uniquequery-similarphone' => 'Similar phone',
+	'sign-uniquequery-similaremail' => 'Similar email',
 	'sign-uniquequery-1signed2'    => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] signed [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'signdocument' => '{{Identical|Sign document}}',
 	'sign-realname' => '{{Identical|Name}}',
+	'sign-address' => '{{Identical|Street}}',
 	'sign-city' => '{{Identical|City}}',
 	'sign-state' => '{{Identical|State}}',
 	'sign-country' => '{{Identical|Country}}',
@@ -110,6 +113,7 @@ $messages['qqq'] = array(
 	'sign-email' => '{{Identical|E-mail address}}',
 	'sign-submit' => '{{Identical|Sign document}}',
 	'sign-viewfield-realname' => '{{Identical|Name}}',
+	'sign-viewfield-address' => '{{Identical|Address}}',
 	'sign-viewfield-city' => '{{Identical|City}}',
 	'sign-viewfield-state' => '{{Identical|State}}',
 	'sign-viewfield-country' => '{{Identical|Country}}',
@@ -117,6 +121,7 @@ $messages['qqq'] = array(
 	'sign-viewfield-agent' => '{{Identical|User agent}}',
 	'sign-viewfield-email' => '{{Identical|E-mail}}',
 	'sign-viewfield-options' => '{{Identical|Options}}',
+	'sign-signatures' => '{{Identical|Signature}}',
 	'sig-private' => '{{Identical|Private}}',
 	'sign-emailto' => '{{optional}}',
 	'sign-viewfield-reviewedby' => '{{Identical|Reviewer}}',
@@ -138,17 +143,29 @@ $messages['niu'] = array(
  * @author SPQRobin
  */
 $messages['af'] = array(
+	'signdocument' => 'Onderteken dokument',
 	'sign-realname' => 'Naam:',
+	'sign-address' => 'Straat:',
 	'sign-city' => 'Stad:',
+	'sign-state' => 'Staat:',
 	'sign-country' => 'Land:',
-	'sign-email' => 'E-pos adres:',
+	'sign-phone' => 'Telefoonnommer:',
+	'sign-email' => 'E-posadres:',
+	'sign-submit' => 'Onderteken dokument',
 	'sign-viewfield-realname' => 'Naam',
+	'sign-viewfield-address' => 'Adres',
 	'sign-viewfield-city' => 'Stad',
+	'sign-viewfield-state' => 'Staat',
 	'sign-viewfield-country' => 'Land',
+	'sign-viewfield-ip' => 'IP-adres',
 	'sign-viewfield-email' => 'E-pos',
 	'sign-viewfield-options' => 'Opsies',
+	'sign-signatures' => 'Handtekeninge',
+	'sig-private' => '<i>Privaat</i>',
+	'sign-viewfield-reviewedby' => 'Resensent',
 	'sign-viewfield-reviewcomment' => 'Opmerking',
 	'sign-review-comment' => 'Opmerking',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] ondertekende [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
 /** Amharic (አማርኛ)
@@ -281,6 +298,14 @@ $1',
 	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] وقع [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'sign-viewfield-country' => 'ܐܬܪܐ',
+	'sign-viewfield-options' => 'ܓܒܝܬ̈ܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Ghaly
  * @author Meno25
@@ -305,7 +330,7 @@ $messages['arz'] = array(
 	'sign-hide-note' => '<small><i><font color="red">**</font> ملاحظة: المعلومات غير المعروضة ستظل مرئية للمديرين.</i></small>',
 	'sign-list-anonymous' => 'عرض كمجهول',
 	'sign-list-hideaddress' => 'لا تعرض العنوان',
-	'sign-list-hideextaddress' => 'لا تعرض المدينة، الولاية، الرقم البريدي، أو البلد',
+	'sign-list-hideextaddress' => 'لا تعرض المدينة، الولاية، الرقم البريدى، أو البلد',
 	'sign-list-hidephone' => 'لا تعرض الهاتف',
 	'sign-list-hidebday' => 'لا تعرض العمر',
 	'sign-list-hideemail' => 'لا تعرض البريد الإلكتروني',
@@ -315,7 +340,7 @@ $messages['arz'] = array(
 من فضلك تأكد من أن معلوماتك الشخصية صحيحة وأننا نملك وسيلة للاتصال بك للتأكد من هويتك.
 لاحظ أن عنوان الأيبى الخاص بك ومعلومات التعريف الأخرى سيتم تسجيلها بواسطة هذه الاستمارة وسيتم استخدامها بواسطة المديرين لتحجيم التوقيعات المكررة وتأكيد صحة معلوماتك الشخصية.
 بما أن استخدام البروكسيهات المجهولة والمفتوحة يمنع قدرتنا على أداء هذه المهمة، التوقيعات من هذه البروكسيهات على الأرجح لن يتم احتسابها.
-لو أنك موصول حاليا بواسطة خادم بروكسي، من فضلك اقطع التوصيل منه واستخدم اتصالا قياسيا أثناء التوقيع.</div>
+لو أنك موصول حاليا بواسطة خادم بروكسى، من فضلك اقطع التوصيل منه واستخدم اتصالا قياسيا أثناء التوقيع.</div>
 
 $1',
 	'sig-success' => 'لقد وقعت الوثيقة بنجاح.',
@@ -548,23 +573,175 @@ $messages['bg'] = array(
 	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] подписа [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'signdocument' => 'Sinañ an teul',
+	'sign-nodocselected' => "Diuzit an teul hoc'h eus c'hoant da sinañ, mar plij.",
+	'sign-selectdoc' => 'Teul :',
+	'sign-error-nosuchdoc' => "N'eus ket eus an teul ($1) hoc'h eus goulennet.",
+	'sign-realname' => 'Anv :',
+	'sign-address' => "Chomlec'h :",
+	'sign-city' => 'Kêr :',
+	'sign-state' => 'Stad :',
+	'sign-zip' => 'Kod-post :',
+	'sign-country' => 'Bro :',
+	'sign-phone' => 'Niverenn bellgomz :',
+	'sign-bday' => 'Oad :',
+	'sign-email' => "Chomlec'h postel :",
+	'sign-list-anonymous' => 'Listennañ en un doare dianv',
+	'sign-list-hideaddress' => "Chom hep menegiñ ar chomlec'h",
+	'sign-list-hideextaddress' => "Arabat menegiñ ar gêr, ar stad (departamant), ar c'hod post pe ar vro",
+	'sign-list-hidephone' => 'chom hep menegiñ an niverenn bellgomz',
+	'sign-list-hidebday' => 'Chom hep menegiñ an oad',
+	'sign-list-hideemail' => "Chom hep menegiñ ar chomlec'h postel",
+	'sign-submit' => 'Sinañ an teul',
+	'sig-success' => "Sinet hoc'h eus an teul.",
+	'sign-view-selectfields' => '<b>Maeziennoù da ziskwel :</b>',
+	'sign-viewfield-timestamp' => 'Deiziad hag eur',
+	'sign-viewfield-realname' => 'Anv',
+	'sign-viewfield-address' => "Chomlec'h",
+	'sign-viewfield-city' => 'Kêr',
+	'sign-viewfield-state' => 'Stad',
+	'sign-viewfield-country' => 'Bro',
+	'sign-viewfield-zip' => 'Kod-post',
+	'sign-viewfield-ip' => "Chomlec'h IP",
+	'sign-viewfield-agent' => 'Graer implijer',
+	'sign-viewfield-phone' => 'Pellgomz',
+	'sign-viewfield-email' => 'Postel',
+	'sign-viewfield-age' => 'Oad',
+	'sign-viewfield-options' => 'Dibarzhioù',
+	'sign-viewsigs-intro' => 'Amañ dindan emañ ar sinadurioù enrollet evit <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
+	'sign-sigadmin-currentlyopen' => 'Gweredekaet eo ar sinañ evit an teul-mañ.',
+	'sign-sigadmin-close' => 'Diweredekaat an dilesadur',
+	'sign-sigadmin-currentlyclosed' => 'Diweredekaet eo ar sinañ evit an teul-mañ.',
+	'sign-sigadmin-open' => 'Gweredekaat an dilesadur',
+	'sign-signatures' => 'Sinadurioù',
+	'sign-sigadmin-closesuccess' => 'Diweredekaet eo bet an dilesadur.',
+	'sign-sigadmin-opensuccess' => 'Gweredekaet eo bet an dilesadur.',
+	'sign-viewsignatures' => 'gwelet ar sinadurioù',
+	'sign-closed' => 'serr',
+	'sig-anonymous' => '<i>Dizanv</i>',
+	'sig-private' => '<i>Prevez</i>',
+	'sign-sigdetails' => 'Munudoù ar sinadur',
+	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
+-->[[User:$1|$1]] ([[User talk:$1|Kaozeadenn]] • <!--
+-->[[Special:Contributions/$1|Degasadennoù]] • <!--
+-->[http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on WHOIS] • <!--
+-->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
+-->[http://www.robtex.com/rbls/$1.html RBLs] • <!--
+-->[[Special:BlockIP/$1|Stankañ an implijer]] • <!--
+-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} Marilh ar stankadennoù] • <!--
+-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} Gwiriekadur un implijer])<!--
+--></span>',
+	'sign-viewfield-stricken' => 'Barrennet',
+	'sign-viewfield-reviewedby' => 'Adweler',
+	'sign-viewfield-reviewcomment' => 'Addispleg',
+	'sign-detail-uniquequery' => 'Hennadoù damheñvel',
+	'sign-detail-uniquequery-run' => 'Lañsañ ar reked',
+	'sign-detail-strike' => 'Barrennañ ar sinadur',
+	'sign-reviewsig' => 'Adwelet ar sinadur',
+	'sign-review-comment' => 'Addispleg',
+	'sign-submitreview' => 'Kas an adweladenn',
+	'sign-uniquequery-similarname' => 'Anv damheñvel',
+	'sign-uniquequery-similaraddress' => "Chomlec'h damheñvel",
+	'sign-uniquequery-similarphone' => 'Niverenn bellgomz damheñvel',
+	'sign-uniquequery-similaremail' => 'Postel damheñvel',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] en deus kadarnaet [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'signdocument' => 'Potpisivanje dokumenta',
+	'sign-nodocselected' => 'Molimo odaberite dokument koji želite da potpišete.',
+	'sign-selectdoc' => 'Dokument:',
+	'sign-error-nosuchdoc' => 'Dokument koji ste zahtijevali ($1) ne postoji.',
 	'sign-realname' => 'Ime:',
+	'sign-address' => 'Kućna adresa:',
+	'sign-city' => 'Grad:',
+	'sign-state' => 'Pokrajina:',
+	'sign-zip' => 'Poštanski broj:',
+	'sign-country' => 'Država:',
+	'sign-phone' => 'Broj telefona:',
+	'sign-bday' => 'Starost:',
+	'sign-email' => 'E-mail adresa:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> označava obavezna polja.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Napomena: Ne prikazane informacije će i dalje biti dostupne moderatorima.</i></small>',
+	'sign-list-anonymous' => 'Prikaži anonimne',
+	'sign-list-hideaddress' => 'Ne prikazuj adresu',
+	'sign-list-hideextaddress' => 'Ne prikazuj grad, pokrajinu, poštanski broj ili državu',
+	'sign-list-hidephone' => 'Ne prikazuj broj telefona',
+	'sign-list-hidebday' => 'Ne prikazuj godine',
+	'sign-list-hideemail' => 'Ne prikazuj e-mail',
+	'sign-submit' => 'Potpiši dokument',
+	'sig-success' => 'Uspješno ste potpisali dokument.',
+	'sign-view-selectfields' => '<b>Polja za prikaz:</b>',
+	'sign-viewfield-timestamp' => 'Vremenska oznaka',
 	'sign-viewfield-realname' => 'Ime',
+	'sign-viewfield-address' => 'Adresa',
+	'sign-viewfield-city' => 'Grad',
+	'sign-viewfield-state' => 'Pokrajina',
+	'sign-viewfield-country' => 'Država',
+	'sign-viewfield-zip' => 'Poštanski broj',
 	'sign-viewfield-ip' => 'IP adresa',
+	'sign-viewfield-phone' => 'Telefon',
+	'sign-viewfield-age' => 'Starost',
 	'sign-viewfield-options' => 'Opcije',
+	'sign-sigadmin-close' => 'Onemogući potpisivanje',
+	'sign-sigadmin-open' => 'Omogući potpisivanje',
+	'sign-signatures' => 'Potpisi',
+	'sign-sigadmin-closesuccess' => 'Potpisivanje uspješno onemogućeno.',
+	'sign-sigadmin-opensuccess' => 'Potpisivanje uspješno omogućeno.',
+	'sign-closed' => 'zatvoreno',
+	'sig-anonymous' => '<i>Anonimni</i>',
+	'sig-private' => '<i>Privatno</i>',
+	'sign-sigdetails' => 'Detalji potpisa',
 	'sign-viewfield-reviewcomment' => 'Komentar',
+	'sign-detail-uniquequery-run' => 'Pokreni upit',
 	'sign-review-comment' => 'Komentar',
+	'sign-uniquequery-similaraddress' => 'Slične adrese',
+	'sign-uniquequery-similarphone' => 'Slični telefoni',
 );
 
 /** Catalan (Català)
  * @author Jordi Roqué
+ * @author Solde
  */
 $messages['ca'] = array(
+	'sign-selectdoc' => 'Document:',
+	'sign-realname' => 'Nom:',
+	'sign-address' => 'Adreça:',
+	'sign-city' => 'Ciutat:',
+	'sign-state' => 'Estat:',
+	'sign-zip' => 'Codi postal:',
+	'sign-country' => 'País:',
+	'sign-phone' => 'Telèfon:',
+	'sign-bday' => 'Edat:',
+	'sign-email' => 'Correu electrònic:',
+	'sign-list-hideaddress' => "No mostris l'adreça",
+	'sign-list-hideextaddress' => "No mostris la ciutat, l'estat, el codi postal, o el país",
+	'sign-list-hidephone' => 'No mostris el telèfon',
+	'sign-list-hidebday' => "No mostris l'edat",
+	'sign-list-hideemail' => 'No mostris el correu electrònic',
+	'sign-viewfield-timestamp' => 'Fus horari',
+	'sign-viewfield-realname' => 'Nom',
+	'sign-viewfield-address' => 'Adreça',
+	'sign-viewfield-city' => 'Ciutat',
+	'sign-viewfield-state' => 'Estat',
+	'sign-viewfield-country' => 'País',
+	'sign-viewfield-zip' => 'Codi postal',
+	'sign-viewfield-ip' => 'Adreça IP',
+	'sign-viewfield-phone' => 'Telèfon',
+	'sign-viewfield-email' => 'Correu electrònic',
+	'sign-viewfield-age' => 'Edat',
 	'sign-viewfield-options' => 'Opcions',
+	'sig-anonymous' => '<i>Anònim</i>',
+	'sig-private' => '<i>Privat</i>',
 	'sign-viewfield-reviewcomment' => 'Comentari',
 	'sign-review-comment' => 'Comentari',
 );
@@ -662,8 +839,8 @@ $1',
 -->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
 -->[http://www.robtex.com/rbls/$1.html RBLs] • <!--
 -->[[Special:BlockIP/$1|Benutzer sperren]] • <!--
--->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} Sperr-Logbuch] • <!--
--->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} Checkuser])<!--
+-->[{{fullurl:{{#special:Log}}|type=block&page={{ns:2}}:{{urlencode:$1}}}} Sperr-Logbuch] • <!--
+-->[{{fullurl:{{#special:CheckUser}}|ip={{urlencode:$1}}}} Checkuser])<!--
 --></span>',
 	'sign-viewfield-stricken' => 'Gestrichen',
 	'sign-viewfield-reviewedby' => 'Prüfer',
@@ -682,6 +859,7 @@ $1',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
  * @author Revolus
  * @author Umherirrender
  */
@@ -689,6 +867,15 @@ $messages['de-formal'] = array(
 	'sign-nodocselected' => 'Bitte wählen Sie das zu signierende Dokument aus.',
 	'sign-docheader' => '<div class="noarticletext">Bitte benutzen Sie dieses Formular, um das hierunter angezeigte Dokument „[[$1]]“ zu signieren.
 Bitte lesen Sie das gesammte Dokument und wenn Sie ihm Ihre Zustimmung geben, füllen Sie bitte die nötigen Felder aus, um es zu signieren.</div>',
+	'sign-information' => '<div class="noarticletext">Danke, dass Sie sich die Zeit genommen haben, dieses Dokument durchzulesen.
+Wenn Sie ihm zustimmen, zeigen Sie dies bitte indem Sie die benötigten Felder unten ausfüllen und anschließend auf „Dokument unterschreiben“ klicken.
+Bitte stellen Sie sicher, dass Ihre persönlichen Informationen korrekt sind und dass wir die Möglichkeit haben, Sie zur Feststellung Ihrer Identität zu kontaktieren.
+Beachten Sie, dass Ihre IP-Adresse und andere persönliche Informationen von diesem Formular aufgezeichnet werden und dass sie von Moderatoren benutzt werden, um doppelte Unterschriften zu beseitigen und Ihre Daten zu verifizieren.
+Da die Benutzung offener Proxys uns in der Durchführung dieser Aufgabe einschränkt, werden Unterschriften über solche Proxys in der Regel nicht bearbeitet.
+Sollten Sie gerade über einen solchen Server verbunden sein, trennen Sie bitte die Verbindung von ihm und nutzen Sie eine Standardverbindung.</div>
+
+$1',
+	'sig-success' => 'Sie haben das Dokument erfolgreich unterschrieben.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -783,29 +970,75 @@ $1',
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'signdocument' => 'Υπογραφή εγγράφου',
+	'sign-nodocselected' => 'Παρακαλώ επιλέξτε το έγγραφο που θα θέλατε να υπογράψετε.',
+	'sign-selectdoc' => 'Έγγραφο:',
+	'sign-error-nosuchdoc' => 'Το έγγραφο που ζητήσατε ($1) δεν υπάρχει.',
 	'sign-realname' => 'Όνομα:',
+	'sign-address' => 'Διεύθυνση οικίας:',
 	'sign-city' => 'Πόλη:',
+	'sign-state' => 'Πολιτεία:',
+	'sign-zip' => 'Ταχυδρομικός κώδικας:',
 	'sign-country' => 'Χώρα:',
 	'sign-phone' => 'Αριθμός τηλεφώνου:',
 	'sign-bday' => 'Ηλικία:',
 	'sign-email' => 'Διεύθυνση ηλεκτρονικού ταχυδρομείου:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> υποδεικνύει τα υποχρεωτικά πεδία.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Σημείωση: Ακαταχώρητες πληροφορίες θα είναι ορατές στους μεσολαβητές.</i></small>',
+	'sign-list-anonymous' => 'Ανώνυμη κατάταξη',
+	'sign-list-hideaddress' => 'Μην περιλαβάνετε τη διεύθυνση',
+	'sign-list-hideextaddress' => 'Μην περιλαμβάνετε πόλη, πολιτεία, Τ.Κ., ή χώρα',
+	'sign-list-hidephone' => 'Μην περιλαμβάνετε το τηλέφωνο',
+	'sign-list-hidebday' => 'Μην περιλαμβάνετε την ηλικία',
+	'sign-list-hideemail' => 'Μην περιλαμβάνετε την ηλεκτρονική διεύθυνση',
+	'sign-submit' => 'Πιστοποίηση εγγράφου',
+	'sig-success' => 'Έχεις επιτυχώς υπογράψει το έγγραφο.',
+	'sign-view-selectfields' => '<b>Πεδία προς προβολή:</b>',
+	'sign-viewfield-entryid' => 'Καταχώρηση ταυτότητας',
+	'sign-viewfield-timestamp' => 'Ημερομηνία',
 	'sign-viewfield-realname' => 'Όνομα',
 	'sign-viewfield-address' => 'Διεύθυνση',
 	'sign-viewfield-city' => 'Πόλη',
+	'sign-viewfield-state' => 'Πολιτεία',
 	'sign-viewfield-country' => 'Χώρα',
+	'sign-viewfield-zip' => 'Τ.Κ.',
+	'sign-viewfield-ip' => 'IP διεύθυνση',
+	'sign-viewfield-agent' => 'Χρήστης πράκτορας',
 	'sign-viewfield-phone' => 'Τηλέφωνο',
 	'sign-viewfield-email' => 'Ηλεκτρονικό ταχυδρομείο',
 	'sign-viewfield-age' => 'Ηλικία',
 	'sign-viewfield-options' => 'Επιλογές',
+	'sign-sigadmin-currentlyopen' => 'Η υπογραφή είναι τώρα ενεργοποιημένη για αυτό το έγγραφο.',
+	'sign-sigadmin-close' => 'Απενεργοποίηση υπογραφής',
+	'sign-sigadmin-currentlyclosed' => 'Η υπογραφή είναι τώρα απενεργοποιημένη για αυτό το έγγραφο.',
+	'sign-sigadmin-open' => 'Ενεργοποίηση υπογραφής',
 	'sign-signatures' => 'Υπογραφές',
+	'sign-sigadmin-closesuccess' => 'Η επιτυχής υπογραφή απενεργοποιήθηκε.',
+	'sign-sigadmin-opensuccess' => 'Η επιτυχής υπογραφή ενεργοποιήθηκε.',
+	'sign-viewsignatures' => 'προβολή υπογραφών',
+	'sign-closed' => 'κλεισμένο',
+	'sign-error-closed' => 'Η υπογραφή αυτού του εγγράφου είναι τώρα απενεργοποιημένη.',
 	'sig-anonymous' => '<i>Ανώνυμος</i>',
+	'sig-private' => '<i>Ιδιωτικός</i>',
+	'sign-sigdetails' => 'Λεπτομέρειες υπογραφής',
+	'sign-viewfield-stricken' => 'Σβησμένο',
+	'sign-viewfield-reviewedby' => 'Κριτικός',
 	'sign-viewfield-reviewcomment' => 'Σχόλιο',
+	'sign-detail-uniquequery' => 'Παρόμοιες οντότητες',
+	'sign-detail-uniquequery-run' => 'Εκτέλεση αιτήματος',
+	'sign-detail-strike' => 'Σβήσιμο υπογραφής',
+	'sign-reviewsig' => 'Επισκόπηση υπογραφής',
 	'sign-review-comment' => 'Σχόλιο',
+	'sign-submitreview' => 'Καταχώρηση κριτικής',
 	'sign-uniquequery-similarname' => 'Παρόμοιο όνομα',
 	'sign-uniquequery-similaraddress' => 'Παρόμοια διεύθυνση',
 	'sign-uniquequery-similarphone' => 'Παρόμοιο τηλέφωνο',
+	'sign-uniquequery-similaremail' => 'Παρόμοιο email',
 );
 
 /** Esperanto (Esperanto)
@@ -873,12 +1106,15 @@ $messages['eo'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Dferg
  * @author Imre
  */
 $messages['es'] = array(
 	'signdocument' => 'Firmar documento',
 	'sign-nodocselected' => 'Por favor seleccione el documento que desea firmar.',
 	'sign-selectdoc' => 'Documento:',
+	'sign-docheader' => '<div class="noarticletext">Por favor usar este formulario para firmar el documento "[[$1]]," mostrado abajo.
+Leer todo el documento completo, y si deseas indicar tu apoyo a él, rellena en los campos requeridos para firmarlo.</div>',
 	'sign-error-nosuchdoc' => 'El documento que ha solicitado ($1) no existe.',
 	'sign-realname' => 'Nombre:',
 	'sign-address' => 'Dirección domiciliaria:',
@@ -889,18 +1125,40 @@ $messages['es'] = array(
 	'sign-phone' => 'Número de teléfono:',
 	'sign-bday' => 'Edad:',
 	'sign-email' => 'Dirección de correo electrónico:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> indica campos requeridos.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Nota: Información no listada será todavía visible para los moderadores.</i></small>',
+	'sign-list-anonymous' => 'Listar anónimamente',
+	'sign-list-hideaddress' => 'No listar dirección',
+	'sign-list-hideextaddress' => 'No listar ciudad, estado/región/departamento, código postal, o ciudad',
+	'sign-list-hidephone' => 'No listar teléfono',
+	'sign-list-hidebday' => 'No listar edad',
+	'sign-list-hideemail' => 'No listar correo electrónico',
 	'sign-submit' => 'Firmar documento',
+	'sign-information' => '<div class="noarticletext">Gracias por tomarte el tiempo de revisar este documento.
+Si estás de acuerdo con él, Por favor indica tu apoyo llenando en los campos requeridos abajo y haciendo click en "Firmar documento".
+Por favor asegúrate que tu información personal es correcta y que tenemos alguna forma de contactarte para verificar tu identidad.
+Nota que tu dirección IP y otra información de identidad será registrada mediante este formulario y usada por los moderadores para eliminar firmas duplicadas y confirmar la exactitud de tu información personal.
+Como el uso de proxies abiertos y anónimos inhiben nuestra habilidad de ejecutar esta tarea, las firmas desde estos proxies al parecer no serán contadas.
+Si estás actualmente conectado a través de un servidor proxy, por favor desconéctate de el y usa una conexión standard cuando firmes.</div>
+
+$1',
 	'sig-success' => 'Ha firmado exitosamente el documento.',
+	'sign-view-selectfields' => '<b>Campos a mostrar:</b>',
+	'sign-viewfield-entryid' => 'Ingresar ID',
+	'sign-viewfield-timestamp' => 'Fechador',
 	'sign-viewfield-realname' => 'Nombre',
 	'sign-viewfield-address' => 'Dirección',
 	'sign-viewfield-city' => 'Ciudad',
 	'sign-viewfield-state' => 'Estado',
 	'sign-viewfield-country' => 'País',
+	'sign-viewfield-zip' => 'Código postal',
 	'sign-viewfield-ip' => 'Dirección IP',
+	'sign-viewfield-agent' => 'Agente de usuario',
 	'sign-viewfield-phone' => 'Teléfono',
 	'sign-viewfield-email' => 'Correo electrónico',
 	'sign-viewfield-age' => 'Edad',
 	'sign-viewfield-options' => 'Opciones',
+	'sign-viewsigs-intro' => 'Lo mostrado abajo son las firmas registradas para <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
 	'sign-sigadmin-currentlyopen' => 'Firma esta actualmente habilitada para este documento.',
 	'sign-sigadmin-close' => 'Deshabilitar firma',
 	'sign-sigadmin-currentlyclosed' => 'Firma actualmente está deshabilitada para este documento.',
@@ -914,13 +1172,37 @@ $messages['es'] = array(
 	'sig-anonymous' => '<i>Anónimo</i>',
 	'sig-private' => '<i>Privado</i>',
 	'sign-sigdetails' => 'detalles de firma',
+	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
+-->[[User:$1|$1]] ([[User talk:$1|discusión]] • <!--
+-->[[Special:Contributions/$1|contribuciones]] • <!--
+-->[http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on WHOIS] • <!--
+-->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
+-->[http://www.robtex.com/rbls/$1.html RBLs] • <!--
+-->[[Special:BlockIP/$1|bloquear usuario]] • <!--
+-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} bloquear registro] • <!--
+-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} checkip])<!--
+--></span>',
+	'sign-viewfield-stricken' => 'Tachado',
 	'sign-viewfield-reviewedby' => 'Revisor',
 	'sign-viewfield-reviewcomment' => 'Comentario',
+	'sign-detail-uniquequery' => 'Entidades similares',
+	'sign-detail-uniquequery-run' => 'Ejecutar consulta',
+	'sign-detail-strike' => 'Tachar firma',
+	'sign-reviewsig' => 'Revisar firma',
 	'sign-review-comment' => 'Comentario',
+	'sign-submitreview' => 'Enviar revisión',
 	'sign-uniquequery-similarname' => 'Nombre similar',
 	'sign-uniquequery-similaraddress' => 'Dirección similar',
 	'sign-uniquequery-similarphone' => 'Teléfono similar',
 	'sign-uniquequery-similaremail' => 'Correo electrónico similar',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] firmó [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
+);
+
+/** Estonian (Eesti)
+ * @author Silvar
+ */
+$messages['et'] = array(
+	'sign-signatures' => 'Allkirjad',
 );
 
 /** Basque (Euskara)
@@ -980,10 +1262,17 @@ $messages['ext'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
  * @author Nike
+ * @author Silvonen
  * @author Str4nd
  */
 $messages['fi'] = array(
+	'signdocument' => 'Allekirjoita asiakirja',
+	'sign-nodocselected' => 'Valitse asiakirja, jonka haluat allekirjoittaa.',
+	'sign-selectdoc' => 'Asiakirja',
+	'sign-error-nosuchdoc' => 'Pyytämääsi asiakirjaa ($1) ei löydy.',
 	'sign-realname' => 'Nimi',
 	'sign-address' => 'Katuosoite',
 	'sign-city' => 'Kaupunki',
@@ -1001,6 +1290,9 @@ $messages['fi'] = array(
 	'sign-list-hidephone' => 'Älä listaa puhelinnumeroa',
 	'sign-list-hidebday' => 'Älä listaa ikää',
 	'sign-list-hideemail' => 'Älä listaa sähköpostiosoitetta',
+	'sign-submit' => 'Allekirjoita dokumentti',
+	'sig-success' => 'Onnistuneesti allekirjoitit asiakirjan.',
+	'sign-view-selectfields' => '<b>Näytettävät kentät:</b>',
 	'sign-viewfield-timestamp' => 'Aikaleima',
 	'sign-viewfield-realname' => 'Nimi',
 	'sign-viewfield-address' => 'Osoite',
@@ -1009,12 +1301,24 @@ $messages['fi'] = array(
 	'sign-viewfield-country' => 'Maa',
 	'sign-viewfield-zip' => 'Postinumero',
 	'sign-viewfield-ip' => 'IP-osoite',
+	'sign-viewfield-agent' => 'Selaintunniste',
 	'sign-viewfield-phone' => 'Puhelin',
 	'sign-viewfield-email' => 'Sähköpostiosoite',
 	'sign-viewfield-age' => 'Ikä',
+	'sign-viewfield-options' => 'Valinnat',
+	'sign-sigadmin-currentlyopen' => 'Tällä hetkellä  tämän asiakirjan allekirjoitustoiminto on käytössä.',
+	'sign-sigadmin-close' => 'Ota allekirjoittaminen pois käytöstä',
+	'sign-sigadmin-currentlyclosed' => 'Tällä hetkellä tämän asiakirjan allekirjoittamistoiminto on estetty.',
+	'sign-sigadmin-open' => 'Ota allekirjoittaminen käyttöön',
+	'sign-signatures' => 'Allekirjoitukset',
+	'sign-sigadmin-closesuccess' => 'Allekirjoittaminen poistettiin käytöstä onnistuneesti.',
+	'sign-sigadmin-opensuccess' => 'Allekirjoitus otettiin käyttöön onnistuneesti.',
+	'sign-viewsignatures' => 'näytä allekirjoitukset',
 	'sign-closed' => 'suljettu',
+	'sign-error-closed' => 'Tämän asiakirjan allekirjoittamistoiminto on tällä hetkellä estetty.',
 	'sig-anonymous' => '<i>Nimetön</i>',
 	'sig-private' => '<i>Yksityinen</i>',
+	'sign-sigdetails' => 'Allekirjoituksen tiedot',
 	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
 -->[[User:$1|$1]] ([[User talk:$1|keskustelu]] • <!--
 -->[[Special:Contributions/$1|muokkaukset]] • <!--
@@ -1025,6 +1329,17 @@ $messages['fi'] = array(
 -->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} estoloki] • <!--
 -->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} osoitepaljastus])<!--
 --></span>',
+	'sign-viewfield-reviewedby' => 'Arvioija',
+	'sign-viewfield-reviewcomment' => 'Kommentti',
+	'sign-detail-uniquequery-run' => 'Suorita kysely',
+	'sign-detail-strike' => 'Yliviivaa allekirjoitus',
+	'sign-reviewsig' => 'Arvioi allekirjoitus',
+	'sign-review-comment' => 'Kommentoi',
+	'sign-submitreview' => 'Lähetä arvio',
+	'sign-uniquequery-similarname' => 'Samankaltainen nimi',
+	'sign-uniquequery-similaraddress' => 'Samankaltainen osoite',
+	'sign-uniquequery-similarphone' => 'Samankaltainen puhelinnumero',
+	'sign-uniquequery-similaremail' => 'Samankaltainen sähköpostiosoite',
 );
 
 /** French (Français)
@@ -1037,8 +1352,8 @@ $messages['fr'] = array(
 	'signdocument' => 'Authentifier le document',
 	'sign-nodocselected' => 'Prière de choisir le document que vous voulez authentifier',
 	'sign-selectdoc' => 'Document :',
-	'sign-docheader' => '<div class="noarticletext">Prière d\'utiliser ce formulaire pour authentifier le document « [[$1]] » affichée ci-dessous. Lire le document au complet, et si vous souhaitez signifier votre appui, remplir les champs pour l\'authentifier.</div>',
-	'sign-error-nosuchdoc' => "Le document demandé ($1) n'existe pas.",
+	'sign-docheader' => '<div class="noarticletext">Prière d’utiliser ce formulaire pour authentifier le document « [[$1]] » affichée ci-dessous. Lire le document au complet, et si vous souhaitez signifier votre appui, remplir les champs pour l’authentifier.</div>',
+	'sign-error-nosuchdoc' => 'Le document demandé ($1) n’existe pas.',
 	'sign-realname' => 'Nom :',
 	'sign-address' => 'Adresse rue :',
 	'sign-city' => 'Ville :',
@@ -1051,11 +1366,11 @@ $messages['fr'] = array(
 	'sign-indicates-req' => '<small><i><font color="red">*</font> indique les champs obligatoires.</i></small>',
 	'sign-hide-note' => '<small><i><font color="red">**</font> Les informations non listées sont toujours visibles pour les modérateurs.</i></small>',
 	'sign-list-anonymous' => 'Lister de façon anonyme',
-	'sign-list-hideaddress' => "Ne pas lister l'adresse",
-	'sign-list-hideextaddress' => "Ne pas lister la ville, l'état (le département ou la province), le code postal ou le pays",
+	'sign-list-hideaddress' => 'Ne pas lister l’adresse',
+	'sign-list-hideextaddress' => 'Ne pas lister la ville, l’état (le département ou la province), le code postal ou le pays',
 	'sign-list-hidephone' => 'Ne pas lister le numéro de téléphone',
-	'sign-list-hidebday' => "Ne pas lister l'âge",
-	'sign-list-hideemail' => "Ne pas lister l'adresse de courriel",
+	'sign-list-hidebday' => 'Ne pas lister l’âge',
+	'sign-list-hideemail' => 'Ne pas lister l’adresse de courriel',
 	'sign-submit' => 'Authentifier le document',
 	'sign-information' => '<div class="noarticletext">Merci d’avoir complètement lu ce document. Si vous êtes d’accord avec son contenu, signifiez votre appui en remplissant les champs requis ci-dessous et en cliquant « Authentifier document ».
 Prière de vérifier que vos informations personnelles sont exactes et que nous possédons un moyen de vous contacter pour valider votre identité.
@@ -1066,7 +1381,7 @@ Si vous êtes connecté{{GENDER:||e|(e)}} à travers un serveur mandataire, pri�
 $1',
 	'sig-success' => 'Vous avez authentifié le document.',
 	'sign-view-selectfields' => "'''Champs à afficher :'''",
-	'sign-viewfield-entryid' => "ID de l'entrée",
+	'sign-viewfield-entryid' => 'ID de l’entrée',
 	'sign-viewfield-timestamp' => 'Date et heure',
 	'sign-viewfield-realname' => 'Nom',
 	'sign-viewfield-address' => 'Adresse',
@@ -1081,16 +1396,16 @@ $1',
 	'sign-viewfield-age' => 'Âge',
 	'sign-viewfield-options' => 'Options',
 	'sign-viewsigs-intro' => 'Ci-dessous apparaissent les signatures enregistrées pour <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
-	'sign-sigadmin-currentlyopen' => "L'authentification est présentement activée pour ce document.",
-	'sign-sigadmin-close' => "Désactiver l'authentification",
-	'sign-sigadmin-currentlyclosed' => "L'authentification est présentement désactivée pour ce document.",
-	'sign-sigadmin-open' => "Activer l'authentification",
+	'sign-sigadmin-currentlyopen' => 'L’authentification est présentement activée pour ce document.',
+	'sign-sigadmin-close' => 'Désactiver l’authentification',
+	'sign-sigadmin-currentlyclosed' => 'L’authentification est présentement désactivée pour ce document.',
+	'sign-sigadmin-open' => 'Activer l’authentification',
 	'sign-signatures' => 'Signatures',
-	'sign-sigadmin-closesuccess' => "L'authentification est désactivée.",
-	'sign-sigadmin-opensuccess' => "L'authentification est activée.",
+	'sign-sigadmin-closesuccess' => 'L’authentification est désactivée.',
+	'sign-sigadmin-opensuccess' => 'L’authentification est activée.',
 	'sign-viewsignatures' => 'Voir les signatures',
 	'sign-closed' => 'fermée',
-	'sign-error-closed' => "L'authentification de ce document est présentée désactivée.",
+	'sign-error-closed' => 'L’authentification de ce document est présentée désactivée.',
 	'sig-anonymous' => "''Anonymement''",
 	'sig-private' => "''Privé''",
 	'sign-sigdetails' => 'Détails de la signature',
@@ -1100,9 +1415,9 @@ $1',
 		-->[http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on WHOIS] • <!--
 		-->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
 		-->[http://www.robtex.com/rbls/$1.html RBLs] • <!--
-		-->[[Special:BlockIP/$1|Bloquer l\'utisateur]] • <!--
+		-->[[Special:BlockIP/$1|Bloquer l’utisateur]] • <!--
 		-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} Journal des blocages] • <!--
-		-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} Vérification d\'utilisateur])<!--
+		-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} Vérification d’utilisateur])<!--
 		--></span>',
 	'sign-viewfield-stricken' => 'Biffé',
 	'sign-viewfield-reviewedby' => 'Réviseur',
@@ -1118,6 +1433,14 @@ $1',
 	'sign-uniquequery-similarphone' => 'Numéro de téléphone semblable',
 	'sign-uniquequery-similaremail' => 'Adresse de courriel semblable',
 	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] a authentifié [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'sign-viewfield-realname' => 'Nom',
+	'sign-signatures' => 'Signatures',
 );
 
 /** Western Frisian (Frysk)
@@ -1164,7 +1487,7 @@ $1',
 	'sig-success' => 'Asinou o documento sen problemas.',
 	'sign-view-selectfields' => '<b>Campos a mostrar:</b>',
 	'sign-viewfield-entryid' => 'ID da entrada',
-	'sign-viewfield-timestamp' => 'Selo temporal',
+	'sign-viewfield-timestamp' => 'Data e hora',
 	'sign-viewfield-realname' => 'Nome',
 	'sign-viewfield-address' => 'Enderezo',
 	'sign-viewfield-city' => 'Cidade',
@@ -1219,19 +1542,27 @@ $1',
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['grc'] = array(
 	'sign-realname' => 'Ὄνομα:',
 	'sign-phone' => 'Ἀριθμὸς τηλεφώνου:',
 	'sign-email' => 'Ἡλεκτρονικὴ διεύθυνσις:',
 	'sign-viewfield-realname' => 'Ὄνομα',
-	'sign-viewfield-ip' => 'IP-διεύθυνσις',
+	'sign-viewfield-address' => 'Διεύθυνσις',
+	'sign-viewfield-city' => 'Πόλις',
+	'sign-viewfield-state' => 'Πολιτεία',
+	'sign-viewfield-country' => 'Χώρα',
+	'sign-viewfield-ip' => 'Διεύθυνσις IP:',
 	'sign-viewfield-agent' => 'Χρώμενος πράκτωρ',
+	'sign-viewfield-phone' => 'Τηλέφωνον',
 	'sign-viewfield-email' => 'Ἠλεκτρονικαὶ ἐπιστολαί',
+	'sign-viewfield-age' => 'Ἡλικία',
 	'sign-viewfield-options' => 'Ἐπιλογαί',
 	'sig-private' => '<ι>Ἰδιωτική</ι>',
 	'sign-viewfield-reviewedby' => 'ἐπιθεωρητής',
 	'sign-viewfield-reviewcomment' => 'Σχόλιον',
+	'sign-detail-uniquequery-run' => 'Ἐκτελεῖν πεῦσιν',
 	'sign-review-comment' => 'Σχόλιον',
 );
 
@@ -1513,7 +1844,7 @@ $1',
 	'sign-viewfield-country' => 'Kraj',
 	'sign-viewfield-zip' => 'Póstowe wodźenske čisło',
 	'sign-viewfield-ip' => 'IP-adresa',
-	'sign-viewfield-agent' => 'User agent',
+	'sign-viewfield-agent' => 'Identifikacija wobhladowaka',
 	'sign-viewfield-phone' => 'Telefonowe čisło',
 	'sign-viewfield-email' => 'E-mejl',
 	'sign-viewfield-age' => 'Staroba',
@@ -1559,15 +1890,97 @@ $1',
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Dorgan
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'signdocument' => 'Dokumentum aláírása',
+	'sign-nodocselected' => 'Kérlek válaszd ki a dokumentumot, ami alá szeretnél írni.',
+	'sign-selectdoc' => 'Dokumentum:',
+	'sign-docheader' => '<div class="noarticletext">Ezen űrlap segítségével aláírhatod az alább láthatő „[[$1]]” dokumentumot.
+Olvasd át az egészet, és ha jelezni szeretnéd a támogatásod, töltsd ki a szükséges mezőket az aláíráshoz.</div>',
+	'sign-error-nosuchdoc' => 'Az általad keresett dokumentum ($1) nem létezik.',
 	'sign-realname' => 'Név:',
+	'sign-address' => 'Utca:',
 	'sign-city' => 'Város:',
+	'sign-state' => 'Megye:',
 	'sign-zip' => 'Irányítószám:',
+	'sign-country' => 'Ország:',
 	'sign-phone' => 'Telefonszám:',
 	'sign-bday' => 'Életkor:',
 	'sign-email' => 'E-mail cím:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> kötelező mező.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Megjegyzés: a nem listázott információk továbbra is láthatóak lesznek a moderátorok számára.</i></small>',
+	'sign-list-anonymous' => 'Megjelenítés névtelenül',
+	'sign-list-hideaddress' => 'Ne jelenítsd meg a címet',
+	'sign-list-hideextaddress' => 'Ne jelenítsd meg a várost, megyét, irányítószámot vagy országot',
+	'sign-list-hidephone' => 'Ne jelenítsd meg a telefonszámot',
+	'sign-list-hidebday' => 'Ne jelenítsd meg a kort',
+	'sign-list-hideemail' => 'Ne jelenítsd meg az e-mail címet',
+	'sign-submit' => 'Dokumentum aláírása',
+	'sign-information' => '<div class="noarticletext">Köszönjük, hogy rászántad az idődet, és végigolvastad a dokumentumot.
+Ha egyetértesz vele, jelezd támogatásod: töltsd ki az alábbi mezőket, majd kattints a „Dokumentum aláírása” gombra.
+Győződj meg arról, hogy az általad megadott személyes információk helyesek, hogy így meg tudjuk erősíteni valamilyen formában a személyazonosságodat.
+Az űrlap rögzíti az IP-címedet, valamint néhány más, azonosító információt, azért, hogy a moderátorok kiszűrhessék a dupla aláírásokat, és megerősíthessék a személyes információid helyességét.
+Mivel a nyílt proxyk használata meggátol minket ebben, az innen érkező szavazatok valószínűleg nem lesznek számításba véve.
+Ha jelenleg egy proxyszerveren keresztül csatlakozol, kapcsolódj le róla, és használj sima kapcsolatot az aláírás közben.</div>
+
+$1',
+	'sig-success' => 'Sikeresen aláírtad a dokumentumot.',
+	'sign-view-selectfields' => '<b>Megjelenített mezők:</b>',
+	'sign-viewfield-entryid' => 'Bejegyzés azonosítója',
+	'sign-viewfield-timestamp' => 'Időbélyeg',
+	'sign-viewfield-realname' => 'Név',
+	'sign-viewfield-address' => 'Cím',
+	'sign-viewfield-city' => 'Város',
+	'sign-viewfield-state' => 'Megye',
+	'sign-viewfield-country' => 'Ország',
+	'sign-viewfield-zip' => 'Irányítószám',
+	'sign-viewfield-ip' => 'IP-cím',
+	'sign-viewfield-agent' => 'User agent',
+	'sign-viewfield-phone' => 'Telefonszám',
+	'sign-viewfield-email' => 'E-mail cím',
+	'sign-viewfield-age' => 'Kor',
+	'sign-viewfield-options' => 'Beállítások',
+	'sign-viewsigs-intro' => 'Alább láthatóak a(z) <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span> dokumentumhoz rögzített aláírások.',
+	'sign-sigadmin-currentlyopen' => 'A dokumentum aláírása engedélyezett.',
+	'sign-sigadmin-close' => 'Aláírás letiltása',
+	'sign-sigadmin-currentlyclosed' => 'A dokumentum aláírása jelenleg nem engedélyezett.',
+	'sign-sigadmin-open' => 'Aláírás engedélyezése',
+	'sign-signatures' => 'Aláírások',
+	'sign-sigadmin-closesuccess' => 'Az aláírás sikeresen letiltva.',
+	'sign-sigadmin-opensuccess' => 'Az aláírás sikeresen engedélyezve.',
+	'sign-viewsignatures' => 'aláírások megtekintése',
+	'sign-closed' => 'lezárva',
+	'sign-error-closed' => 'A dokumentum aláírása jelenleg nem lehetséges.',
+	'sig-anonymous' => '<i>Névtelen</i>',
+	'sig-private' => '<i>Privát</i>',
+	'sign-sigdetails' => 'Aláírás részletei',
+	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
+-->[[User:$1|$1]] ([[User talk:$1|vita]] • <!--
+-->[[Special:Contributions/$1|szerkesztések]] • <!--
+-->[http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on WHOIS] • <!--
+-->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
+-->[http://www.robtex.com/rbls/$1.html RBL-ek] • <!--
+-->[[Special:BlockIP/$1|blokkolás]] • <!--
+-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} blokkolási napló] • <!--
+-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} IP-ellenőrzés])<!--
+--></span>',
+	'sign-viewfield-stricken' => 'Érvénytelenítés',
+	'sign-viewfield-reviewedby' => 'Ellenőrző',
+	'sign-viewfield-reviewcomment' => 'Megjegyzés',
+	'sign-detail-uniquequery' => 'Hasonló entitások',
+	'sign-detail-uniquequery-run' => 'Lekérdezés futtatása',
+	'sign-detail-strike' => 'Aláírás érvénytelenítése',
+	'sign-reviewsig' => 'Aláírás értékelése',
+	'sign-review-comment' => 'Megjegyzés',
+	'sign-submitreview' => 'Értékelés elküldése',
+	'sign-uniquequery-similarname' => 'Hasonló név',
+	'sign-uniquequery-similaraddress' => 'Hasonló cím',
+	'sign-uniquequery-similarphone' => 'Hasonló telefonszám',
+	'sign-uniquequery-similaremail' => 'Hasonló e-mail cím',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] aláírta a következő dokumentumot: [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
 /** Armenian (Հայերեն)
@@ -1600,7 +2013,7 @@ Per favor lege le documento integre, e si tu vole indicar tu appoio de illo, com
 	'sign-hide-note' => '<small><i><font color="red">**</font> Nota: Le informationes non listate essera totevia disponibile al moderatores.</i></small>',
 	'sign-list-anonymous' => 'Listar anonymemente',
 	'sign-list-hideaddress' => 'Non listar adresse',
-	'sign-list-hideextaddress' => 'Non listar citate, stato/provincia, codice postal, o pais',
+	'sign-list-hideextaddress' => 'Non listar citate, stato/provincia, codice postal o pais',
 	'sign-list-hidephone' => 'Non listar telephono',
 	'sign-list-hidebday' => 'Non listar etate',
 	'sign-list-hideemail' => 'Non listar e-mail',
@@ -1670,14 +2083,116 @@ $1',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
+ * @author IvanLanin
  * @author Rex
  */
 $messages['id'] = array(
+	'signdocument' => 'Tandatangani dokumen',
+	'sign-nodocselected' => 'Silakan pilih dokumen yang ingin Anda tanda tangani.',
+	'sign-selectdoc' => 'Dokumen:',
+	'sign-docheader' => '<div class="noarticletext">Silakan gunakan formulir ini untuk menandatangani dokumen "[[$1]]," yang ditampilkan berikut.
+Baca keseluruhan dokumen, dan jika Anda ingin menunjukkan dukungan Anda terhadapnya, isi isian yang diminta untuk menandatanganinya</div>',
+	'sign-error-nosuchdoc' => 'Dokumen yang Anda minta ($1) tidak ada.',
 	'sign-realname' => 'Nama:',
+	'sign-address' => 'Alamat rumah:',
+	'sign-city' => 'Kota:',
+	'sign-state' => 'Keadaan:',
+	'sign-zip' => 'Kode pos:',
+	'sign-country' => 'Negara:',
+	'sign-phone' => 'Nomor telepon:',
+	'sign-bday' => 'Usia:',
+	'sign-email' => 'Alamat surel:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> menunjukkan isian yang dibutuhkan.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Catatan: Informasi yang tidak didaftarkan masih dapat dilihat oleh moderator.</i></small>',
+	'sign-list-anonymous' => 'Daftarkan secara anonim',
+	'sign-list-hideaddress' => 'Jangan tampilkan alamat',
+	'sign-list-hideextaddress' => 'Jangan tampilkan kota, provinsi, kode pos, atau negara',
+	'sign-list-hidephone' => 'Jangan tampilkan telepon',
+	'sign-list-hidebday' => 'Jangan tampilkan usia',
+	'sign-list-hideemail' => 'Jangan tampilkan surel',
+	'sign-submit' => 'Tandatangani dokumen',
+	'sign-information' => '<div class="noarticletext">Terima kasih telah meluangkan waktu untuk membaca keseluruhan dokumen ini.
+Jika Anda setuju dengan isinya, silakan tunjukkan dukungan Anda dengan mengisi kolom yang harus diisi di bawah ini dan mengklik "Tanda tangani dokumen".
+Harap pastikan bahwa informasi pribadi Anda sudah benar dan bahwa kami memiliki suatu cara untuk menghubungi Anda untuk memverifikasikan identitas Anda.
+Catat bahwa alamat IP Anda dan informasi identifikasi lain akan dicatat oleh isian ini dan digunakan oleh moderator untuk menghilangkan duplikat tanda tangan dan mengkonfirmasi kebenaran informasi pribadi Anda.
+Karena penggunaan proksi terbuka dan anonim menghambat kemampuan kami untuk melakukan tugas ini, tanda tangan dari proksi semacam itu cenderung tidak akan diperhitungkan.
+Jika Anda sedang tersambung melalui server proksi, silakan putuskan koneksi tersebut gunakan koneksi standar sewaktu menandatangani.</div>
+
+$1',
+	'sig-success' => 'Anda berhasil menandatangani dokumen.',
+	'sign-view-selectfields' => '<b>Isian yang akan ditampilkan:</b>',
+	'sign-viewfield-entryid' => 'ID Masukan',
+	'sign-viewfield-timestamp' => 'Stempel waktu',
 	'sign-viewfield-realname' => 'Nama',
+	'sign-viewfield-address' => 'Alamat',
+	'sign-viewfield-city' => 'Kota',
+	'sign-viewfield-state' => 'Keadaan',
+	'sign-viewfield-country' => 'Negara',
+	'sign-viewfield-zip' => 'Kode pos',
+	'sign-viewfield-ip' => 'Alamat IP',
 	'sign-viewfield-agent' => 'Aplikasi pengguna',
+	'sign-viewfield-phone' => 'Telepon',
+	'sign-viewfield-email' => 'Surel',
+	'sign-viewfield-age' => 'Usia',
 	'sign-viewfield-options' => 'Pilihan',
+	'sign-viewsigs-intro' => 'Di bawah ini ditunjukkan tanda tangan yang dicatat untuk <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
+	'sign-sigadmin-currentlyopen' => 'Penandatanganan saat ini diaktifkan untuk dokumen ini.',
+	'sign-sigadmin-close' => 'Nonaktifkan penandatanganan',
+	'sign-sigadmin-currentlyclosed' => 'Penandatanganan saat ini dinonaktifkan untuk dokumen ini.',
+	'sign-sigadmin-open' => 'Aktifkan penandatanganan',
+	'sign-signatures' => 'Tanda tangan',
+	'sign-sigadmin-closesuccess' => 'Penandatanganan berhasil dinonaktifkan.',
+	'sign-sigadmin-opensuccess' => 'Penandatanganan berhasil diaktifkan.',
+	'sign-viewsignatures' => 'lihat tanda tangan',
+	'sign-closed' => 'ditutup',
+	'sign-error-closed' => 'Penandatanganan dokumen ini sedang dimatikan.',
+	'sig-anonymous' => '<i>Anonim</i>',
+	'sig-private' => '<i>Pribadi</i>',
+	'sign-sigdetails' => 'Detail tanda tangan',
+	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
+-->[[User:$1|$1]] ([[User talk:$1|bicara]] • <!--
+-->[[Special:Contributions/$1|kontribusi]] • <!--
+-->[http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on WHOIS] • <!--
+-->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
+-->[http://www.robtex.com/rbls/$1.html RBLs] • <!--
+-->[[Special:BlockIP/$1|blokir]] • <!--
+-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} log pemblokiran] • <!--
+-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} cek ip])<!--
+--></span>',
+	'sign-viewfield-stricken' => 'Coret',
+	'sign-viewfield-reviewedby' => 'Peninjau',
+	'sign-viewfield-reviewcomment' => 'Komentar',
+	'sign-detail-uniquequery' => 'Entitas serupa',
+	'sign-detail-uniquequery-run' => 'Jalankan query',
+	'sign-detail-strike' => 'Coret tanda tangan',
+	'sign-reviewsig' => 'Tinjau tanda tangan',
+	'sign-review-comment' => 'Komentar',
+	'sign-submitreview' => 'Kirim tinjauan',
+	'sign-uniquequery-similarname' => 'Nama serupa',
+	'sign-uniquequery-similaraddress' => 'Alamat serupa',
+	'sign-uniquequery-similarphone' => 'Telepon serupa',
+	'sign-uniquequery-similaremail' => 'Surel serupa',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] tandatangan [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'sign-realname' => 'Áhà:',
+	'sign-city' => 'Ama Ukwu:',
+	'sign-phone' => 'Onuogụgụ nkpo gi:',
+	'sign-bday' => 'Áfó olé:',
+	'sign-viewfield-realname' => 'Áhà',
+	'sign-viewfield-city' => 'Ama ukwu',
+	'sign-viewfield-age' => 'Áfọ olé',
+	'sign-closed' => 'mmechịrị',
+	'sign-viewfield-stricken' => 'Kùrù',
+	'sign-detail-uniquequery-run' => 'Gbá ncho',
+	'sign-review-comment' => 'Okwu-nokwu',
+	'sign-uniquequery-similarname' => 'Áhá yituru nká',
 );
 
 /** Ido (Ido)
@@ -1710,7 +2225,7 @@ $messages['it'] = array(
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'signdocument' => '文書の署名',
+	'signdocument' => '文書署名',
 	'sign-nodocselected' => '署名したい文書を選んでください。',
 	'sign-selectdoc' => '文書:',
 	'sign-docheader' => '<div class="noarticletext">以下の文書「[[$1]]」に署名するにはこのフォームを使います。文書全体を熟読し、その文書に支持を表明すると決めた場合、必須欄を埋めて署名してください。</div>',
@@ -1923,6 +2438,21 @@ $messages['km'] = array(
 	'sign-uniquequery-similaremail' => 'អ៊ីមែលស្រដៀងគ្នា',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'sign-realname' => 'ಹೆಸರು:',
+	'sign-state' => 'ರಾಜ್ಯ:',
+	'sign-country' => 'ದೇಶ:',
+	'sign-bday' => 'ವಯಸ್ಸು:',
+	'sign-viewfield-realname' => 'ಹೆಸರು',
+	'sign-viewfield-address' => 'ವಿಳಾಸ',
+	'sign-viewfield-country' => 'ದೇಶ',
+	'sign-viewfield-email' => 'ಇ-ಅಂಚೆ',
+	'sign-viewfield-age' => 'ವಯಸ್ಸು',
+);
+
 /** Kinaray-a (Kinaray-a)
  * @author Jose77
  */
@@ -1962,7 +2492,7 @@ Beß esu joot, un liß dat janze Dokkemänt. Wann De dämm dann Ding Zohshtemmun
 	'sign-information' => '<div class="noarticletext">Merci, dat De Der de Zick jenumme häs, dorch hee dat Dokkemänt ze lässe.
 Wann de dämm zostemme kanns, dann donn Ding Ongerstötzung dodorch ußdröcke, dat De hee unge de notwendijje Felder ußföllß, un dann op „{{int:sign-submit}}“ klecks.
 Paß joot drop op, dat dat wat De övver Dech sellver enndrähß och rechtech es, un dat mer winnichsdens eine Wääch hät, öm met Der en Kuntack ze kumme, öm ze kike, wä De bes, un öm ze ovverpröfe, dat dat all ääsch es.
-Opjepaß: Ding aktoälle IP-Addräß un ander ähnlijje Date wäde zosamme met dä Date us dämm Dommulaa faßjehallde. Se wäde vun de Moderatore jebruch, öm dubbel dijjitaale Ongerschreffte eruß ze sammelle, un de Rechtechkeit vun Ding päsönlejje Date eruß ze krijje.
+Opjepaß: Ding aktoälle IP-Addräß un ander ähnlijje Date wäde zosamme met dä Date us dämm Fommulaa faßjehallde. Se wäde vun de Moderatore jebruch, öm dubbel dijjitaale Ongerschreffte eruß ze sammelle, un de Rechtechkeit vun Ding päsönlejje Date eruß ze krijje.
 Weil de Moderatore fö_jewööhnlesch esu en Pröfunge för Fobendunge övver offe, un namelos maachende <i lang="en">proxy server</i> täschnesch koum udder jaa nit maache künne, es et müjjelech, un beinah secher, dat Ungerschreffte övver esu en <i lang="en">proxies</i> nit jezallt weede.
 Wann de jrad övver ene <i lang="en">proxy</i> am Netz am hange bes, dann bes esu joot, donn Dich för ene Momang vun em trenne, un nemm en nommaale Verbendung för et Ongerschriive.</div>
 
@@ -2036,12 +2566,15 @@ $messages['la'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
 	'signdocument' => 'Dokument ënnerschreiwen',
 	'sign-nodocselected' => 'Wielt w.e.g dat Dokument aus dat Dir ënenrschreiwe wëllt.',
 	'sign-selectdoc' => 'Dokument:',
+	'sign-docheader' => '<div class="noarticletext">Benotzt w.e.g. dëse Formulair, fir d\'Dokument „[[$1]]“, dat hei ënnedrënner gewisen ass, z\'ënnerschreiwen.
+Liest dat ganzt Dokument duerch a wann Dir dozou Är Ënnerstëtzung gi wëllt da fëllt déi néideg Felder aus fir et z\'ënnerschreiwen.</div>',
 	'sign-error-nosuchdoc' => 'Dat Dokument, dat Dir ugefrot hutt ($1), gëtt et net.',
 	'sign-realname' => 'Numm:',
 	'sign-address' => 'Adress Strooss:',
@@ -2052,8 +2585,11 @@ $messages['lb'] = array(
 	'sign-phone' => 'Telefonsnummer:',
 	'sign-bday' => 'Alter:',
 	'sign-email' => 'E-Mail-Adress:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> weist obligatorescht Feld.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Opgepasst: Och déi net ugewisen Informatioune bleiwen fir d\'Moderateuren sichtbar.</i></small>',
 	'sign-list-anonymous' => 'Als anonym weisen',
 	'sign-list-hideaddress' => 'Adress net weisen',
+	'sign-list-hideextaddress' => 'Stad, Stat, Postcode oder Land net weisen',
 	'sign-list-hidephone' => "D'Telefeonsnummer net weisen",
 	'sign-list-hidebday' => 'Den Alter net weisen',
 	'sign-list-hideemail' => "D'E-Mailadress net weisen",
@@ -2088,10 +2624,12 @@ $messages['lb'] = array(
 	'sign-viewfield-stricken' => 'Duerchgestrach',
 	'sign-viewfield-reviewedby' => 'Reviseur',
 	'sign-viewfield-reviewcomment' => 'Bemierkung',
+	'sign-detail-uniquequery' => 'Ähnlecht Eenheeten',
+	'sign-detail-uniquequery-run' => 'Ufro ausféieren',
 	'sign-detail-strike' => 'Ënnerschreft duerchsträichen',
 	'sign-reviewsig' => 'Ënnerschrëft nokucken',
 	'sign-review-comment' => 'Bemierkung',
-	'sign-uniquequery-similarname' => 'Ähnleche Numm',
+	'sign-uniquequery-similarname' => 'Ähnlechen Numm',
 	'sign-uniquequery-similaraddress' => 'Ähnlech Adress',
 	'sign-uniquequery-similarphone' => 'Ähnlech Telefonsnummer',
 	'sign-uniquequery-similaremail' => 'Ähnlech E-Mailadress',
@@ -2110,6 +2648,98 @@ $messages['lt'] = array(
  */
 $messages['mhr'] = array(
 	'sign-viewfield-email' => 'Электрон почто',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'signdocument' => 'Потпиши документ',
+	'sign-nodocselected' => 'Одберете го документот што сакате да го потпишете.',
+	'sign-selectdoc' => 'Документ:',
+	'sign-docheader' => '<div class="noarticletext">Употребете го овој образец за да го потпишете документот „[[$1]]“, прикажан подолу.
+Испрочитајте го целиот документ, и ако сакате да му изразите поддршка, пополнете ги бараните полиња за да го потпишете.</div>',
+	'sign-error-nosuchdoc' => 'Документот кој го побаравте ($1) не постои.',
+	'sign-realname' => 'Име:',
+	'sign-address' => 'Адреса:',
+	'sign-city' => 'Град:',
+	'sign-state' => 'Сојуз. држава',
+	'sign-zip' => 'Поштенски број:',
+	'sign-country' => 'Земја:',
+	'sign-phone' => 'Телефон:',
+	'sign-bday' => 'Возраст:',
+	'sign-email' => 'Е-пошта:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> задолжително поле.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Напомена: Информациите кои нема да се прикажат сепак ќе бидат видливи за модераторите.</i></small>',
+	'sign-list-anonymous' => 'Анонимно',
+	'sign-list-hideaddress' => 'Не прикажувај адреса',
+	'sign-list-hideextaddress' => 'Не прикажувај град, сојузна држава, поштенски број и земја',
+	'sign-list-hidephone' => 'Не прикажувај телефон',
+	'sign-list-hidebday' => 'Не прикажувај возраст',
+	'sign-list-hideemail' => 'Не прикажувај е-пошта',
+	'sign-submit' => 'Потпиши',
+	'sign-information' => '<div class="noarticletext">Ви благодариме што посветивте време за да го прочитате овој документ.
+Доколку се согласувате со него, изразете ја вашата поддршка со пополнување на бараните полиња подолу и кликнување на „Потпиши“.
+Проверете дали вашите лични податоци се точни и дека имаме некаков начин да ве исконтактираме за да го провериме вашиот идентитет.
+Имајте на ум дека вашата IP-адреса и другите идентификациони информации ќе се запишат со овој образец и ќе им послужат на модераторите за елиминирање на дуплирани потписи и за потврдување на исправноста на вашите лични податоци.
+Бидејќи употребата на отворени и анонимизирачки посредници (проксија) ни попречува во извршувањето на оваа задача, најверојатно е дека потписите од такви проксија нема да се сметаат.
+Ако моментално сте поврзани преку прокси-сервер, исклучете се и користете обично поврзување додека се потпишувате.</div>
+
+$1',
+	'sig-success' => 'Успешно го потпишавте документот.',
+	'sign-view-selectfields' => '<b>Полиња за прикажување:</b>',
+	'sign-viewfield-entryid' => 'ID на записот',
+	'sign-viewfield-timestamp' => 'Датум и време',
+	'sign-viewfield-realname' => 'Име',
+	'sign-viewfield-address' => 'Адреса',
+	'sign-viewfield-city' => 'Град',
+	'sign-viewfield-state' => 'Сојуз. држава',
+	'sign-viewfield-country' => 'Земја',
+	'sign-viewfield-zip' => 'Поштенски број',
+	'sign-viewfield-ip' => 'IP-адреса',
+	'sign-viewfield-agent' => 'Прелистувач',
+	'sign-viewfield-phone' => 'Телефон',
+	'sign-viewfield-email' => 'Е-пошта',
+	'sign-viewfield-age' => 'Возраст',
+	'sign-viewfield-options' => 'Нагодувања',
+	'sign-viewsigs-intro' => 'Подолу се прикажани потписи собрани за <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
+	'sign-sigadmin-currentlyopen' => 'Потпишувањето на овој документ е моментално овозможено.',
+	'sign-sigadmin-close' => 'Оневозможи потпишување',
+	'sign-sigadmin-currentlyclosed' => 'Потпишувањето на овој документ е моментално оневозможено.',
+	'sign-sigadmin-open' => 'Овозможи потпишување',
+	'sign-signatures' => 'Потписи',
+	'sign-sigadmin-closesuccess' => 'Потпишувањето е успешно оневозможено.',
+	'sign-sigadmin-opensuccess' => 'Потпишувањето е успешно овозможено.',
+	'sign-viewsignatures' => 'види потписи',
+	'sign-closed' => 'затворено',
+	'sign-error-closed' => 'Потпишувањето на овој документ е моментално оневозможено.',
+	'sig-anonymous' => '<i>Анонимен</i>',
+	'sig-private' => '<i>Приватен</i>',
+	'sign-sigdetails' => 'Подробности за потписот',
+	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
+-->[[User:$1|$1]] ([[User talk:$1|разговор]] • <!--
+-->[[Special:Contributions/$1|придонеси]] • <!--
+-->[http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on WHOIS] • <!--
+-->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
+-->[http://www.robtex.com/rbls/$1.html RBLs] • <!--
+-->[[Special:BlockIP/$1|блокирај]] • <!--
+-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} дневник на блокирања] • <!--
+-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} провери])<!--
+--></span>',
+	'sign-viewfield-stricken' => 'Прецртано',
+	'sign-viewfield-reviewedby' => 'Проверувач',
+	'sign-viewfield-reviewcomment' => 'Коментар',
+	'sign-detail-uniquequery' => 'Слични записи',
+	'sign-detail-uniquequery-run' => 'Исполни барање',
+	'sign-detail-strike' => 'Прецртај потпис',
+	'sign-reviewsig' => 'Провери потпис',
+	'sign-review-comment' => 'Коментар',
+	'sign-submitreview' => 'Поднеси проверка',
+	'sign-uniquequery-similarname' => 'Слично име',
+	'sign-uniquequery-similaraddress' => 'Слична адреса',
+	'sign-uniquequery-similarphone' => 'Сличен телефон',
+	'sign-uniquequery-similaremail' => 'Слична е-пошта',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] се потпиша на [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
 /** Malayalam (മലയാളം)
@@ -2145,7 +2775,7 @@ $messages['ml'] = array(
 	'sign-viewfield-state' => 'സംസ്ഥാനം',
 	'sign-viewfield-country' => 'രാജ്യം',
 	'sign-viewfield-zip' => 'സിപ്പ്',
-	'sign-viewfield-ip' => 'ഐപി വിലാസം',
+	'sign-viewfield-ip' => 'ഐ.പി. വിലാസം',
 	'sign-viewfield-phone' => 'ഫോണ്‍',
 	'sign-viewfield-email' => 'ഇമെയില്‍',
 	'sign-viewfield-age' => 'വയസ്സ്',
@@ -2172,6 +2802,14 @@ $messages['ml'] = array(
 	'sign-uniquequery-similarphone' => 'ഒരേപോലുള്ള ഫോണ്‍',
 	'sign-uniquequery-similaremail' => 'ഒരേ പോലുള്ള ഇമെയില്‍',
 	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1],  [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2]ല്‍ ഒപ്പിട്ടു.',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'sign-viewfield-reviewcomment' => 'Тайлбар',
+	'sign-review-comment' => 'Тайлбар',
 );
 
 /** Marathi (मराठी)
@@ -2633,7 +3271,7 @@ $messages['oc'] = array(
 \$1",
 	'sig-success' => 'Avètz autentificat lo document.',
 	'sign-view-selectfields' => "'''Camps d'afichar :'''",
-	'sign-viewfield-entryid' => 'ID de la dintrada',
+	'sign-viewfield-entryid' => "ID de l'entrada",
 	'sign-viewfield-timestamp' => 'Data e ora',
 	'sign-viewfield-realname' => 'Nom',
 	'sign-viewfield-address' => 'Adreça',
@@ -2694,11 +3332,23 @@ $messages['os'] = array(
 	'sign-viewfield-email' => 'Эл. посты адрис',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'sign-realname' => 'Naame:',
+	'sign-viewfield-realname' => 'Naame',
+	'sign-viewfield-address' => 'Adress',
+	'sign-viewfield-reviewcomment' => 'Anmaerricking',
+	'sign-review-comment' => 'Anmaerricking',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
  * @author McMonster
  * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
 	'signdocument' => 'Podpisz dokument',
@@ -2718,6 +3368,7 @@ Przeczytaj cały dokument dokładnie i jeśli uznasz, że chcesz go poprzeć, w 
 	'sign-email' => 'Adres e‐mail:',
 	'sign-indicates-req' => '<small><i><font color="red">*</font> oznacza wymagane pole.</i></small>',
 	'sign-hide-note' => '<small><i><font color="red">**</font> Uwaga – ukryte przez Ciebie informacje nadal będą widoczne dla administratorów.</i></small>',
+	'sign-list-anonymous' => 'Lista anonimowych',
 	'sign-list-hideaddress' => 'Nie pokazuj adresu',
 	'sign-list-hideextaddress' => 'Nie pokazuj miejscowości, kodu pocztowego ani kraju.',
 	'sign-list-hidephone' => 'Nie pokazuj numeru telefonu',
@@ -2726,6 +3377,7 @@ Przeczytaj cały dokument dokładnie i jeśli uznasz, że chcesz go poprzeć, w 
 	'sign-submit' => 'Podpisz dokument',
 	'sig-success' => 'Dokument został podpisany.',
 	'sign-view-selectfields' => '<b>Pola do wyświetlenia:</b>',
+	'sign-viewfield-entryid' => 'Identyfikator wpisu',
 	'sign-viewfield-timestamp' => 'Znacznik czasu',
 	'sign-viewfield-realname' => 'Nazwa',
 	'sign-viewfield-address' => 'Adres',
@@ -2739,8 +3391,19 @@ Przeczytaj cały dokument dokładnie i jeśli uznasz, że chcesz go poprzeć, w 
 	'sign-viewfield-email' => 'E‐mail',
 	'sign-viewfield-age' => 'Wiek',
 	'sign-viewfield-options' => 'Opcje',
+	'sign-sigadmin-currentlyopen' => 'Podpisanie tego dokumentu jest obecnie włączone.',
 	'sign-sigadmin-close' => 'Wyłącz podpisywanie',
+	'sign-sigadmin-currentlyclosed' => 'Podpisanie tego dokumentu jest obecnie wyłączone.',
+	'sign-sigadmin-open' => 'Włącz podpisywanie',
 	'sign-signatures' => 'Podpisy',
+	'sign-sigadmin-closesuccess' => 'Wyłączono podpisywanie.',
+	'sign-sigadmin-opensuccess' => 'Włączono podpisywanie.',
+	'sign-viewsignatures' => 'zobacz podpisy',
+	'sign-closed' => 'zamknięte',
+	'sign-error-closed' => 'Podpisywanie tego dokumentu jest obecnie wyłączone.',
+	'sig-anonymous' => '<i>anonim</i>',
+	'sig-private' => '<i>prywatne</i>',
+	'sign-sigdetails' => 'Szczegóły podpisu',
 	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
 -->[[User:$1|$1]] ([[User talk:$1|dyskusja]] • <!--
 -->[[Special:Contributions/$1|wkład]] • <!--
@@ -2751,7 +3414,19 @@ Przeczytaj cały dokument dokładnie i jeśli uznasz, że chcesz go poprzeć, w 
 -->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} blokady] • <!--
 -->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} sprawdź IP])<!--
 --></span>',
+	'sign-viewfield-stricken' => 'Przekreślone',
+	'sign-viewfield-reviewedby' => 'Sprawdzający',
+	'sign-viewfield-reviewcomment' => 'Komentarz',
+	'sign-detail-uniquequery' => 'Podobne wpisy',
+	'sign-detail-uniquequery-run' => 'Uruchom zapytanie',
+	'sign-detail-strike' => 'Wykreśl podpis',
+	'sign-reviewsig' => 'Sprawdź podpis',
 	'sign-review-comment' => 'Komentarz',
+	'sign-submitreview' => 'Wyślij wynik sprawdzenia',
+	'sign-uniquequery-similarname' => 'Podobna nazwa',
+	'sign-uniquequery-similaraddress' => 'Podobny adres',
+	'sign-uniquequery-similarphone' => 'Podobny numer telefonu',
+	'sign-uniquequery-similaremail' => 'Podobny adres e‐mail',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2876,6 +3551,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  */
@@ -2894,7 +3570,7 @@ Leia o documento completo, e se desejar indicar o seu suporte, preencha o campos
 	'sign-country' => 'País:',
 	'sign-phone' => 'Número de telefone:',
 	'sign-bday' => 'Idade:',
-	'sign-email' => 'Endereço de e-mail:',
+	'sign-email' => 'Correio electrónico:',
 	'sign-indicates-req' => '<small><i><font color="red">*</font> indica um campo obrigatório.</i></small>',
 	'sign-hide-note' => '<small><i><font color="red">**</font> Nota: Informação não listada continuará visível a moderadores.</i></small>',
 	'sign-list-anonymous' => 'Listar como anónimo',
@@ -2902,14 +3578,14 @@ Leia o documento completo, e se desejar indicar o seu suporte, preencha o campos
 	'sign-list-hideextaddress' => 'Não listar cidade, estado, código postal ou país',
 	'sign-list-hidephone' => 'Não listar telefone',
 	'sign-list-hidebday' => 'Não listar idade',
-	'sign-list-hideemail' => 'Não listar email',
+	'sign-list-hideemail' => 'Não listar correio electrónico',
 	'sign-submit' => 'Assinar documento',
-	'sign-information' => '<div class="noarticletext">Obrigado por tomar o seu tempo a ler todo o documento.
-Se concordar, por favor, indique o seu suporte preenchendo os campos necessários abaixo e clicando em "Assinar documento".
-Por favor, certifique-se que a sua informação pessoal está correta, e que teremos alguma forma de o contactar para verificar a sua identidade.
-Note que o seu endereço IP e outra informação identificativa serão registados por este formulário e usados por moderadores para eliminar assinaturas duplicadas e confirmar a exatidão da sua informação pessoal.
-Como a utilização de proxies abertos e anónimos previne a nossa possibilidade de realizar esta tarefa, assinatura provenientes de tais proxies provavelmente não serão contabilizadas.
-Se está atualmente ligado através de um servidor proxy, por favor, desligue-se deste e use uma ligação convencional durante a assinatura.</div>
+	'sign-information' => '<div class="noarticletext">Obrigado pelo tempo que dedicou a ler todo o documento.
+Se concorda com ele, por favor, indique o seu apoio preenchendo os campos necessários abaixo e clicando "Assinar documento".
+Por favor, certifique-se de que a sua informação pessoal está correcta e de que teremos alguma forma de contactá-lo para verificar a sua identidade.
+Note que o seu endereço IP e outras informações identificativas serão registados por este formulário e usados pelos moderadores para eliminar assinaturas duplicadas e confirmar a exactidão da sua informação pessoal.
+Como a utilização de proxies abertos e anónimos inibe a nossa capacidade de realizar esta tarefa, as assinaturas provenientes de tais proxies provavelmente não serão contabilizadas.
+Se está presentemente ligado através de um servidor proxy, por favor, desligue-se deste e use uma ligação convencional durante a assinatura.</div>
 
 $1',
 	'sig-success' => 'O documento foi assinado com sucesso.',
@@ -2925,20 +3601,20 @@ $1',
 	'sign-viewfield-ip' => 'Endereço IP',
 	'sign-viewfield-agent' => 'Agente utilizador',
 	'sign-viewfield-phone' => 'Telefone',
-	'sign-viewfield-email' => 'E-mail',
+	'sign-viewfield-email' => 'Correio electrónico',
 	'sign-viewfield-age' => 'Idade',
 	'sign-viewfield-options' => 'Opções',
 	'sign-viewsigs-intro' => 'Mostradas abaixo estão as assinaturas registadas para <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
-	'sign-sigadmin-currentlyopen' => 'Assinatura está atualmente ativada para este documento.',
+	'sign-sigadmin-currentlyopen' => 'Assinatura está presentemente activada para este documento.',
 	'sign-sigadmin-close' => 'Desactivar assinaturas',
-	'sign-sigadmin-currentlyclosed' => 'Assinatura está atualmente desativada para este documento.',
+	'sign-sigadmin-currentlyclosed' => 'Assinatura está presentemente desactivada para este documento.',
 	'sign-sigadmin-open' => 'Ativar assinaturas',
 	'sign-signatures' => 'Assinaturas',
-	'sign-sigadmin-closesuccess' => 'Assinaturas desativadas com sucesso.',
-	'sign-sigadmin-opensuccess' => 'Assinaturas ativadas com sucesso.',
+	'sign-sigadmin-closesuccess' => 'Assinaturas desactivadas com sucesso.',
+	'sign-sigadmin-opensuccess' => 'Assinaturas activadas com sucesso.',
 	'sign-viewsignatures' => 'ver assinaturas',
 	'sign-closed' => 'fechado',
-	'sign-error-closed' => 'A possibilidade de assinar este documento está atualmente desativada.',
+	'sign-error-closed' => 'A possibilidade de assinar este documento está presentemente desactivada.',
 	'sig-anonymous' => '<i>Anónimo</i>',
 	'sig-private' => '<i>Privado</i>',
 	'sign-sigdetails' => 'Detalhes da assinatura',
@@ -2961,10 +3637,10 @@ $1',
 	'sign-reviewsig' => 'Rever assinatura',
 	'sign-review-comment' => 'Comentar',
 	'sign-submitreview' => 'Submeter revisão',
-	'sign-uniquequery-similarname' => 'Nome similar',
+	'sign-uniquequery-similarname' => 'Nome semelhante',
 	'sign-uniquequery-similaraddress' => 'Endereço semelhante',
 	'sign-uniquequery-similarphone' => 'Telefone semelhante',
-	'sign-uniquequery-similaremail' => 'Email similar',
+	'sign-uniquequery-similaremail' => 'Correio electrónico semelhante',
 	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] assinou [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
@@ -3060,17 +3736,27 @@ $1',
 	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] assinou [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'sign-uniquequery-1signed2' => "[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] sutiyuqqa [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2] nisqa qillqarimata silq'un.",
+);
+
 /** Rhaeto-Romance (Rumantsch) */
 $messages['rm'] = array(
 	'sign-viewfield-realname' => 'Num',
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'signdocument' => 'Semnaţi documentul',
 	'sign-selectdoc' => 'Document:',
 	'sign-realname' => 'Nume:',
+	'sign-address' => 'Adresă stradă:',
 	'sign-city' => 'Oraş:',
 	'sign-zip' => 'Cod poştal:',
 	'sign-country' => 'Ţară:',
@@ -3078,19 +3764,36 @@ $messages['ro'] = array(
 	'sign-bday' => 'Vârstă:',
 	'sign-email' => 'Adresă e-mail:',
 	'sign-list-hideaddress' => 'Nu afişa adresa',
+	'sign-list-hideextaddress' => 'Nu afişa oraşul, statul, codul poştal sau ţara',
 	'sign-list-hidephone' => 'Nu afişa telefonul',
 	'sign-list-hidebday' => 'Nu afişa vârsta',
 	'sign-list-hideemail' => 'Nu afişa adresa de e-mail',
+	'sign-submit' => 'Semnaţi documentul',
+	'sign-viewfield-entryid' => 'ID intrare',
+	'sign-viewfield-timestamp' => 'Data şi ora',
 	'sign-viewfield-realname' => 'Nume',
 	'sign-viewfield-address' => 'Adresă',
 	'sign-viewfield-city' => 'Oraş',
+	'sign-viewfield-state' => 'Stat',
 	'sign-viewfield-country' => 'Ţară',
+	'sign-viewfield-zip' => 'Cod poştal',
 	'sign-viewfield-ip' => 'Adresă IP',
+	'sign-viewfield-agent' => 'Agent utilizator',
 	'sign-viewfield-phone' => 'Telefon',
 	'sign-viewfield-email' => 'E-mail',
 	'sign-viewfield-age' => 'Vârstă',
 	'sign-viewfield-options' => 'Opţiuni',
+	'sign-sigadmin-currentlyopen' => 'Semnarea este momentan activată pentru acest document.',
+	'sign-sigadmin-close' => 'Dezactivează semnarea',
+	'sign-sigadmin-currentlyclosed' => 'Semnarea este momentan dezactivată pentru acest document.',
+	'sign-sigadmin-open' => 'Activează semnarea',
 	'sign-signatures' => 'Semnături',
+	'sign-sigadmin-closesuccess' => 'Semnarea dezactivată cu succes.',
+	'sign-sigadmin-opensuccess' => 'Semnarea activată cu succes.',
+	'sign-viewsignatures' => 'vedeţi semnături',
+	'sign-closed' => 'închis',
+	'sign-error-closed' => 'Semnarea acestui document este momentan dezactivată.',
+	'sig-anonymous' => '<i>Anonim</i>',
 	'sig-private' => '<i>Privat</i>',
 	'sign-sigdetails' => 'Detaliile semnăturii',
 	'sign-viewfield-reviewcomment' => 'Comentariu',
@@ -3168,7 +3871,7 @@ $messages['ru'] = array(
 	'sign-list-hideemail' => 'Не включать в список эл. почту',
 	'sign-submit' => 'Подписать документ',
 	'sign-information' => '<div class="noarticletext">Спасибо, что потратили своё время на прочтение этого документа.
-Если вы согласны с ним, пожалуйста, выразите вашу поддержку, заполнив приведённые ниже поля и нажав кнопку «Подписать документ». 
+Если вы согласны с ним, пожалуйста, выразите вашу поддержку, заполнив приведённые ниже поля и нажав кнопку «Подписать документ».
 Пожалуйста, убедитесь, что приводимые вами личные сведения правильны, что указаны способы связи, которыми можено воспользоваться для проверки подлинности.
 Заметьте, что ваш IP-адрес и иная идентификационная информация будет записана с помощью этой формы и использована модераторами для удаления повторных подписей и подтверждения правильности личных сведений.
 Поскольку использование открытых и анонимизирующих прокси препятствует нашей возможности выполнить эту задачу, подписи с таких прокси, скорее всего, будут учитываться.
@@ -3317,13 +4020,183 @@ $1',
 	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] podpísal [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
+	'signdocument' => 'Потпиши документ',
+	'sign-nodocselected' => 'Молимо Вас, изаберите документ који желите да потпишете',
+	'sign-selectdoc' => 'Документ:',
+	'sign-docheader' => '<div class="noarticletext">Молимо Вас да користите ову форму као бисте потписали документ "[[$1]]", приказан испод.
+Прочитајте цели документ и, ако желите да потврдите да га се са његовим садржајем слажете, попуните потребна поља и потпишите га.</div>',
+	'sign-error-nosuchdoc' => 'Документ који сте затражили ($1) не постоји.',
+	'sign-realname' => 'Име:',
+	'sign-address' => 'Адреса:',
+	'sign-city' => 'Град:',
+	'sign-state' => 'Држава:',
+	'sign-zip' => 'Поштански код:',
+	'sign-country' => 'Земља:',
+	'sign-phone' => 'Телефонски број:',
+	'sign-bday' => 'Старост:',
 	'sign-email' => 'Е-пошта:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> означава обавезно поље.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Напомена: неприказане информације ће још увек бити видљиве модераторима.</i></small>',
+	'sign-list-anonymous' => 'Прикажи као анонимно',
+	'sign-list-hideaddress' => 'Не приказуј адресу',
+	'sign-list-hideextaddress' => 'Не приказуј град, државу, поштански код, или земљу',
+	'sign-list-hidephone' => 'Не пријазуј телефон',
+	'sign-list-hidebday' => 'Не приказуј старост',
+	'sign-list-hideemail' => 'Не приказуј имејл',
+	'sign-submit' => 'Потпиши документ',
+	'sign-information' => '<div class="noarticletext">Хвала Вам што сте одвојили времен да прочитате овај документ.
+Ако се слажете с њим, молимо Вас да покажете вашу подршку попуњавањем обавезних поља испод и кликом на дугме "Потпиши документ".
+
+Молимо Вас да проверите да ли сте ваше личне информације унели исправно и да сте нам дали довољно информација како бисмо Вас могли контактирати зарад провере идентитета.
+Приметите да ће Ваша IP адреса и остале идентификујуће информације бити снимљење кроз ову форму и коришћене од стране модератора, како би се елиминисала дупла слања и потврдила тачност ваших личних података.
+Пошто коришћење отворених и анонимних проксија умањује наше могћности да испунимо овај задатак, потписи послати са њих највероватније неће бити урачунати.
+Ако сте тренутно повезани на интернет преко прокси сервера, молимо Вас да се дисконектујете с њега и користите стандардну конекцију током потписивања документа.</div>
+
+$1',
+	'sig-success' => 'Успешно сте потписали документ.',
+	'sign-view-selectfields' => '<b>Поља за приказ:</b>',
+	'sign-viewfield-entryid' => 'ID уноса',
+	'sign-viewfield-timestamp' => 'Временска марка',
+	'sign-viewfield-realname' => 'Име',
+	'sign-viewfield-address' => 'Адреса',
+	'sign-viewfield-city' => 'Град',
+	'sign-viewfield-state' => 'Држава',
+	'sign-viewfield-country' => 'Земља',
+	'sign-viewfield-zip' => 'Поштански код',
+	'sign-viewfield-ip' => 'IP адреса',
+	'sign-viewfield-agent' => 'Браузер корисника',
+	'sign-viewfield-phone' => 'Телефон',
+	'sign-viewfield-email' => 'Имејл',
+	'sign-viewfield-age' => 'Старост',
+	'sign-viewfield-options' => 'Опције',
+	'sign-viewsigs-intro' => 'Испод су приказани потписи снимљени за <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
+	'sign-sigadmin-currentlyopen' => 'Потписивање је тренутно омогућено за овај документ.',
+	'sign-sigadmin-close' => 'Онемогући потписивање',
+	'sign-sigadmin-currentlyclosed' => 'Потписивање је тренутно онемогућено за овај документ.',
+	'sign-sigadmin-open' => 'Омогући потписивање',
+	'sign-signatures' => 'Потписи',
+	'sign-sigadmin-closesuccess' => 'Потписивање успешно онемогућено.',
+	'sign-sigadmin-opensuccess' => 'Потписивање успешно омогућено.',
+	'sign-viewsignatures' => 'погледај потписе',
+	'sign-closed' => 'затворено',
+	'sign-error-closed' => 'Потписивање овог документа је тренутно онемогућено.',
+	'sig-anonymous' => '<i>Анонимно</i>',
+	'sig-private' => '<i>Приватно</i>',
+	'sign-sigdetails' => 'Детаљи о потпису',
+	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
+-->[[User:$1|$1]] ([[User talk:$1|разговор]] • <!--
+-->[[Special:Contributions/$1|доприноси]] • <!--
+-->[http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on WHOIS] • <!--
+-->[http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on RDNS] • <!--
+-->[http://www.robtex.com/rbls/$1.html RBLs] • <!--
+-->[[Special:BlockIP/$1|блокирај корисника]] • <!--
+-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} историја блокирања] • <!--
+-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} checkip])<!--
+--></span>',
+	'sign-viewfield-stricken' => 'Залепљен',
 	'sign-viewfield-reviewcomment' => 'Коментар',
+	'sign-detail-uniquequery' => 'Слични ентитети',
+	'sign-detail-uniquequery-run' => 'Изврши захтев',
 	'sign-review-comment' => 'Коментар',
+	'sign-uniquequery-similarname' => 'Слично име',
+	'sign-uniquequery-similaraddress' => 'Слична адреса',
+	'sign-uniquequery-similarphone' => 'Сличан телефон',
+	'sign-uniquequery-similaremail' => 'Сличан имејл',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] потписан [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'signdocument' => 'Potpiši dokument',
+	'sign-nodocselected' => 'Molimo Vas, izaberite dokument koji želite da potpišete',
+	'sign-selectdoc' => 'Dokument:',
+	'sign-docheader' => '<div class="noarticletext">Molimo Vas da koristite ovu formu kao biste potpisali dokument "[[$1]]", prikazan ispod.
+Pročitajte celi dokument i, ako želite da potvrdite da ga se sa njegovim sadržajem slažete, popunite potrebna polja i potpišite ga.</div>',
+	'sign-error-nosuchdoc' => 'Dokument koji ste zatražili ($1) ne postoji.',
+	'sign-realname' => 'Ime:',
+	'sign-address' => 'Adresa:',
+	'sign-city' => 'Grad:',
+	'sign-state' => 'Država:',
+	'sign-zip' => 'Poštanski kod:',
+	'sign-country' => 'Zemlja:',
+	'sign-phone' => 'Telefonski broj:',
+	'sign-bday' => 'Starost:',
+	'sign-email' => 'E-pošta:',
+	'sign-indicates-req' => '<small><i><font color="red">*</font> označava obavezno polje.</i></small>',
+	'sign-hide-note' => '<small><i><font color="red">**</font> Napomena: neprikazane informacije će još uvek biti vidljive moderatorima.</i></small>',
+	'sign-list-anonymous' => 'Prikaži kao anonimno',
+	'sign-list-hideaddress' => 'Ne prikazuj adresu',
+	'sign-list-hideextaddress' => 'Ne prikazuj grad, državu, poštanski kod, ili zemlju',
+	'sign-list-hidephone' => 'Ne prijazuj telefon',
+	'sign-list-hidebday' => 'Ne prikazuj starost',
+	'sign-list-hideemail' => 'Ne prikazuj imejl',
+	'sign-submit' => 'Potpiši dokument',
+	'sign-information' => '<div class="noarticletext">Hvala Vam što ste odvojili vremen da pročitate ovaj dokument.
+Ako se slažete s njim, molimo Vas da pokažete vašu podršku popunjavanjem obaveznih polja ispod i klikom na dugme "Potpiši dokument".
+
+Molimo Vas da proverite da li ste vaše lične informacije uneli ispravno i da ste nam dali dovoljno informacija kako bismo Vas mogli kontaktirati zarad provere identiteta.
+Primetite da će Vaša IP adresa i ostale identifikujuće informacije biti snimljenje kroz ovu formu i korišćene od strane moderatora, kako bi se eliminisala dupla slanja i potvrdila tačnost vaših ličnih podataka.
+Pošto korišćenje otvorenih i anonimnih proksija umanjuje naše mogćnosti da ispunimo ovaj zadatak, potpisi poslati sa njih najverovatnije neće biti uračunati.
+Ako ste trenutno povezani na internet preko proksi servera, molimo Vas da se diskonektujete s njega i koristite standardnu konekciju tokom potpisivanja dokumenta.</div>
+
+$1',
+	'sig-success' => 'Uspešno ste potpisali dokument.',
+	'sign-view-selectfields' => '<b>Polja za prikaz:</b>',
+	'sign-viewfield-entryid' => 'ID unosa',
+	'sign-viewfield-timestamp' => 'Vremenska marka',
+	'sign-viewfield-realname' => 'Ime',
+	'sign-viewfield-address' => 'Adresa',
+	'sign-viewfield-city' => 'Grad',
+	'sign-viewfield-state' => 'Država',
+	'sign-viewfield-country' => 'Zemlja',
+	'sign-viewfield-zip' => 'Poštanski kod',
+	'sign-viewfield-ip' => 'IP adresa',
+	'sign-viewfield-agent' => 'Brauzer korisnika',
+	'sign-viewfield-phone' => 'Telefon',
+	'sign-viewfield-email' => 'Imejl',
+	'sign-viewfield-age' => 'Starost',
+	'sign-viewfield-options' => 'Opcije',
+	'sign-viewsigs-intro' => 'Ispod su prikazani potpisi snimljeni za <span class="plainlinks">[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} $1]</span>.',
+	'sign-sigadmin-currentlyopen' => 'Potpisivanje je trenutno omogućeno za ovaj dokument.',
+	'sign-sigadmin-close' => 'Onemogući potpisivanje',
+	'sign-sigadmin-currentlyclosed' => 'Potpisivanje je trenutno onemogućeno za ovaj dokument.',
+	'sign-sigadmin-open' => 'Omogući potpisivanje',
+	'sign-signatures' => 'Potpisi',
+	'sign-sigadmin-closesuccess' => 'Potpisivanje uspešno onemogućeno.',
+	'sign-sigadmin-opensuccess' => 'Potpisivanje uspešno omogućeno.',
+	'sign-viewsignatures' => 'pogledaj potpise',
+	'sign-closed' => 'zatvoreno',
+	'sign-error-closed' => 'Potpisivanje ovog dokumenta je trenutno onemogućeno.',
+	'sig-anonymous' => '<i>Anonimno</i>',
+	'sig-private' => '<i>Privatno</i>',
+	'sign-sigdetails' => 'Detalji o potpisu',
+	'sign-iptools' => '<span class="plainlinksneverexpand"><!--
+-->[[User:$1|$1]] ([[User talk:$1|razgovor]] • <!--
+-->[[Special:Contributions/$1|doprinosi]] • <!--
+-->[<a href="http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on">http://www.dnsstuff.com/tools/whois.ch?domain={{urlencode:$1}}&cache=off&email=on</a> WHOIS] • <!--
+-->[<a href="http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on">http://www.dnsstuff.com/tools/ptr.ch?ip={{urlencode:$1}}&cache=off&email=on</a> RDNS] • <!--
+-->[<a href="http://www.robtex.com/rbls/$1.html">http://www.robtex.com/rbls/$1.html</a> RBLs] • <!--
+-->[[Special:BlockIP/$1|blokiraj korisnika]] • <!--
+-->[{{fullurl:Special:Log/block|page=User:{{urlencode:$1}}}} istorija blokiranja] • <!--
+-->[{{fullurl:Special:CheckUser|ip={{urlencode:$1}}}} checkip])<!--
+--></span>',
+	'sign-viewfield-stricken' => 'Zalepljen',
+	'sign-viewfield-reviewcomment' => 'Komentar',
+	'sign-detail-uniquequery' => 'Slični entiteti',
+	'sign-detail-uniquequery-run' => 'Izvrši zahtev',
+	'sign-review-comment' => 'Komentar',
+	'sign-uniquequery-similarname' => 'Slično ime',
+	'sign-uniquequery-similaraddress' => 'Slična adresa',
+	'sign-uniquequery-similarphone' => 'Sličan telefon',
+	'sign-uniquequery-similaremail' => 'Sličan imejl',
+	'sign-uniquequery-1signed2' => '[{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs&detail=$3}} $1] potpisan [{{SERVER}}{{localurl: Special:SignDocument|doc=$4&viewsigs}} $2].',
 );
 
 /** Seeltersk (Seeltersk)
@@ -3536,11 +4409,48 @@ $messages['tg-cyrl'] = array(
 	'sign-review-comment' => 'Тавзеҳ',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'sign-realname' => 'Nom:',
+	'sign-address' => 'Nişonai kūca:',
+	'sign-city' => 'Şahr:',
+	'sign-state' => 'Vilojat:',
+	'sign-country' => 'Kişvar:',
+	'sign-phone' => 'Şumorai telefon:',
+	'sign-bday' => 'Sinnu sol:',
+	'sign-email' => 'Nişonai E-mail:',
+	'sign-viewfield-realname' => 'Nom',
+	'sign-viewfield-address' => 'Nişona',
+	'sign-viewfield-city' => 'Şahr',
+	'sign-viewfield-state' => 'Vilojat',
+	'sign-viewfield-country' => 'Kişvar',
+	'sign-viewfield-zip' => 'Indeks',
+	'sign-viewfield-ip' => 'Nişonai IP',
+	'sign-viewfield-phone' => 'Telefon',
+	'sign-viewfield-email' => 'Poctai elektronī',
+	'sign-viewfield-options' => 'Ixtijorot',
+	'sign-viewfield-reviewcomment' => 'Tavzehot',
+	'sign-review-comment' => 'Tavzeh',
+);
+
 /** Thai (ไทย)
  * @author Octahedron80
+ * @author Passawuth
  */
 $messages['th'] = array(
+	'sign-email' => 'อีเมล:',
 	'sign-viewfield-ip' => 'หมายเลขไอพี',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'sign-realname' => 'At:',
+	'sign-viewfield-realname' => 'At',
+	'sign-viewfield-reviewedby' => 'Gözden geçiriji',
 );
 
 /** Tagalog (Tagalog)
@@ -3572,7 +4482,7 @@ Pakibasang mabuti ang buong dokumento, at kung ibig mong ipahayag ang pagtangkil
 	'sign-list-hideemail' => 'Huwag itala ang e-liham',
 	'sign-submit' => 'Lagdaan ang kasulatan/dokumento',
 	'sign-information' => '<div class="noarticletext">Salamat sa pagbibigay mo ng panahon upang basahin ang kahabaan ng kasulatang ito.
-Kung pumapayag ka rito, pakipahayag ang iyong pagtangkilik sa pamamagitan ng pagpupuno sa loob ng kinakailangang mga kahanayan sa ibaba at pagpindot sa "Lagdaan ang kasulatan".  
+Kung pumapayag ka rito, pakipahayag ang iyong pagtangkilik sa pamamagitan ng pagpupuno sa loob ng kinakailangang mga kahanayan sa ibaba at pagpindot sa "Lagdaan ang kasulatan".
 Pakitiyak lamang na tama ang iyong pansariling kabatiran at na mayroon nga kaming paraan upang makipagugnayan sa iyo upang mapatunayan ang iyong katauhan.
 Pakitandaan lamang na ang adres ng IP mo at iba pang mapagkikilanlang kabatiran ay itatala sa pamamagitan ng pormularyong ito at gagamitin ng mga tagapamagitan upang maalis ang nagkakadalawang mga lagda at tiyakin ang katumpakan ng iyong pansariling kabatiran.
 Dahil sa nagbibigay ng hangganan sa aming kakayanan ang pagsasagawa ng gawaing ito ang paggamit ng bukas at mga pamalit (\'\'proxy\'\') na pang-hindi nagpapakilala, mas malamang na hindi bibilangin ang mga lagdang nagmumula sa ganyang mga pamalit.
@@ -3638,21 +4548,72 @@ $1',
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'signdocument' => 'Belgeyi imzala',
+	'sign-nodocselected' => 'Lütfen imzalamak istediğiniz belgeyi seçin.',
+	'sign-selectdoc' => 'Belge:',
 	'sign-realname' => 'Adı:',
+	'sign-address' => 'Cadde adresi:',
 	'sign-city' => 'Şehir:',
+	'sign-state' => 'Eyalet:',
 	'sign-zip' => 'Posta kodu:',
 	'sign-country' => 'Ülke:',
 	'sign-phone' => 'Telefon numarası:',
 	'sign-bday' => 'Yaş:',
 	'sign-email' => 'E-posta adresi:',
+	'sign-list-anonymous' => 'Anonim olarak listele',
+	'sign-list-hideaddress' => 'Adres listeleme',
+	'sign-list-hideextaddress' => 'Şehir, eyalet, posta kodu ya da ülke listeleme',
+	'sign-list-hidephone' => 'Telefon listeleme',
+	'sign-list-hidebday' => 'Yaş listeleme',
+	'sign-list-hideemail' => 'E-posta listeleme',
+	'sign-submit' => 'Belge imzala',
+	'sig-success' => 'Belgeyi başarıyla imzaladınız.',
+	'sign-viewfield-entryid' => 'Girdi kimliği',
+	'sign-viewfield-timestamp' => 'Zaman kodu',
+	'sign-viewfield-realname' => 'İsim',
 	'sign-viewfield-address' => 'Adres',
 	'sign-viewfield-city' => 'Şehir',
+	'sign-viewfield-state' => 'Eyalet',
 	'sign-viewfield-country' => 'Ülke',
+	'sign-viewfield-zip' => 'Posta kodu',
+	'sign-viewfield-ip' => 'IP adresi',
 	'sign-viewfield-agent' => 'Kullanıcı temsilcisi',
+	'sign-viewfield-phone' => 'Telefon',
 	'sign-viewfield-email' => 'E-posta',
+	'sign-viewfield-age' => 'Yaş',
+	'sign-viewfield-options' => 'Seçenekler',
+	'sign-sigadmin-currentlyopen' => 'İmzalama, halihazırda bu belge için etkinleştirilmiş durumda.',
+	'sign-sigadmin-close' => 'İmzalamayı devre dışı bırak',
+	'sign-sigadmin-currentlyclosed' => 'İmzalama halihazırda bu belge için devre dışı bırakılmış durumda.',
+	'sign-signatures' => 'İmzalar',
+	'sign-sigadmin-closesuccess' => 'İmzalama başarıyla devre dışı bırakıldı.',
+	'sign-sigadmin-opensuccess' => 'İmzalama başarıyla etkinleştirildi.',
+	'sign-viewsignatures' => 'imzaları gör',
+	'sign-closed' => 'kapandı',
+	'sign-error-closed' => 'Bu belgenin imzalanması halihazırda devre dışı bırakılmış durumda.',
+	'sign-sigdetails' => 'İmza detayları',
+	'sign-viewfield-stricken' => 'Üstü çizilmiş',
+	'sign-viewfield-reviewedby' => 'İnceleyen',
+	'sign-viewfield-reviewcomment' => 'Yorum',
+	'sign-detail-uniquequery-run' => 'Sorguyu başlat',
+	'sign-detail-strike' => 'İmzanın üstünü çiz',
+	'sign-reviewsig' => 'İmzayı incele',
+	'sign-review-comment' => 'Yorum',
 	'sign-submitreview' => 'Gözden geçirmeyi gönder',
+	'sign-uniquequery-similarname' => 'Benzer ad',
+	'sign-uniquequery-similaraddress' => 'Benzer adres',
+	'sign-uniquequery-similarphone' => 'Benzer telefon',
+	'sign-uniquequery-similaremail' => 'Benzer e-posta',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'sign-viewfield-email' => 'ئېلخەت',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -3660,6 +4621,55 @@ $messages['tr'] = array(
  */
 $messages['ug-latn'] = array(
 	'sign-viewfield-email' => 'Élxet',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'sign-address' => 'Поштова адреса:',
+	'sign-city' => 'Місто:',
+	'sign-state' => 'Штат:',
+	'sign-email' => 'Адреса електронної пошти:',
+	'sign-viewfield-address' => 'Адреса',
+	'sign-viewfield-city' => 'Місто',
+	'sign-viewfield-state' => 'Штат',
+	'sign-viewfield-email' => 'Електронна пошта',
+	'sign-review-comment' => 'Коментар',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'signdocument' => 'Allekitjutada dokument',
+	'sign-realname' => 'Nimi:',
+	'sign-address' => "Adres (ird, pert' i m. e.):",
+	'sign-city' => 'Lidn:',
+	'sign-state' => 'Štat:',
+	'sign-zip' => 'Počtindeks:',
+	'sign-country' => 'Valdkund:',
+	'sign-phone' => 'Telefonnomer:',
+	'sign-bday' => 'Igä:',
+	'sign-email' => 'E-počtan adres:',
+	'sign-submit' => 'Allekirjuta dokument',
+	'sign-viewfield-entryid' => 'Kirjutesen ID',
+	'sign-viewfield-timestamp' => 'Dat/Aig',
+	'sign-viewfield-realname' => 'Nimi',
+	'sign-viewfield-address' => 'Adres',
+	'sign-viewfield-city' => 'Lidn',
+	'sign-viewfield-state' => 'Štat, agj',
+	'sign-viewfield-country' => 'Valdkund',
+	'sign-viewfield-zip' => 'Počtindeks',
+	'sign-viewfield-ip' => 'IP-adres',
+	'sign-viewfield-agent' => 'Kaclim',
+	'sign-viewfield-phone' => 'Telefonnomer',
+	'sign-viewfield-email' => 'E-počtan adres',
+	'sign-viewfield-age' => 'Igä',
+	'sign-viewfield-options' => 'Järgendused',
+	'sign-signatures' => 'Allekirjutesed',
+	'sign-viewsignatures' => 'nähta allekirjutesed',
+	'sign-closed' => 'sauptud',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -3819,21 +4829,44 @@ $messages['vo'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'sign-realname' => 'נאמען:',
+	'sign-viewfield-realname' => 'נאָמען',
 	'sign-closed' => 'פֿאַרמאַכט',
+	'sig-private' => '<i>פריוואַט</i>',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
+	'sign-realname' => '姓名：',
+	'sign-address' => '街道地址：',
+	'sign-city' => '城市：',
+	'sign-state' => '州份/省份：',
+	'sign-zip' => '邮政编号：',
+	'sign-country' => '国家地区：',
+	'sign-phone' => '电话号码：',
+	'sign-bday' => '年龄：',
+	'sign-email' => '电邮地址：',
+	'sign-list-hideaddress' => '不要列出地址',
+	'sign-list-hideextaddress' => '不要列出城市、州份／省份、邮政编号或国家地区',
+	'sign-list-hidephone' => '不要列出电话',
+	'sign-list-hidebday' => '不要列出年龄',
+	'sign-list-hideemail' => '不要列出电邮',
 	'sign-viewfield-realname' => '姓名',
 	'sign-viewfield-address' => '地址',
+	'sign-viewfield-city' => '城市',
+	'sign-viewfield-state' => '州份/省份',
+	'sign-viewfield-country' => '国家地区',
+	'sign-viewfield-zip' => '邮政编号',
 	'sign-viewfield-ip' => 'IP地址',
 	'sign-viewfield-phone' => '电话',
 	'sign-viewfield-email' => '电子邮件',
 	'sign-viewfield-age' => '年龄',
 	'sign-viewfield-options' => '选项',
+	'sign-closed' => '已关闭',
 	'sign-viewfield-reviewcomment' => '评论',
 	'sign-review-comment' => '评论',
 	'sign-uniquequery-similarname' => '近似姓名',
@@ -3843,15 +4876,38 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'sign-realname' => '姓名：',
+	'sign-address' => '街道地址：',
+	'sign-city' => '城市：',
+	'sign-state' => '州份/省份：',
+	'sign-zip' => '郵政編號：',
+	'sign-country' => '國家地區：',
+	'sign-phone' => '電話號碼：',
+	'sign-bday' => '年齡：',
+	'sign-email' => '電郵地址：',
+	'sign-list-hideaddress' => '不要列出地址',
+	'sign-list-hideextaddress' => '不要列出城市、州份／省份、郵政編號或國家地區',
+	'sign-list-hidephone' => '不要列出電話',
+	'sign-list-hidebday' => '不要列出年齡',
+	'sign-list-hideemail' => '不要列出電郵',
 	'sign-viewfield-realname' => '姓名',
 	'sign-viewfield-address' => '地址',
+	'sign-viewfield-city' => '城市',
+	'sign-viewfield-state' => '州份/省份',
+	'sign-viewfield-country' => '國家地區',
+	'sign-viewfield-zip' => '郵政編號',
 	'sign-viewfield-ip' => 'IP位址',
 	'sign-viewfield-phone' => '電話',
 	'sign-viewfield-email' => '電郵',
 	'sign-viewfield-age' => '年齡',
+	'sign-viewfield-options' => '選項',
+	'sign-closed' => '已關閉',
+	'sign-viewfield-reviewcomment' => '評論',
+	'sign-review-comment' => '評論',
 	'sign-uniquequery-similarname' => '近似姓名',
 	'sign-uniquequery-similaraddress' => '近似地址',
 	'sign-uniquequery-similarphone' => '近似電話',

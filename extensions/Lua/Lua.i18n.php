@@ -31,6 +31,13 @@ $messages['qqq'] = array(
 	'lua_error_internal' => '{{Identical|Internal error}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'lua_error_internal' => 'Interne fout',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -73,12 +80,48 @@ $messages['ast'] = array(
 	'lua_overflow_time' => "Algamáu'l máximu tiempu d'execución",
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'lua_error_internal' => 'Inteana Fehla',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'lua_desc' => 'Пашырае парсэр падтрымкай убудаваных блёкаў коду [http://www.lua.org/ Lua]',
+	'lua_error' => 'Памылка ў радку $1',
+	'lua_extension_notfound' => 'Пашырэньне Lua не сканфігураванае',
+	'lua_interp_notfound' => 'Інтэрпрэтатар Lua ня знойдзены',
+	'lua_error_internal' => 'Унутраная памылка',
+	'lua_overflow_recursion' => 'Дасягнуты ліміт рэкурсіўных выклікаў',
+	'lua_overflow_loc' => 'Дасягнуты максымальны ліміт колькасьці радкоў у кодзе',
+	'lua_overflow_time' => 'Дасягнуты максымальны час выкананьня',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'lua_error' => 'Грешка на ред $1',
 	'lua_error_internal' => 'Вътрешна грешка',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'lua_desc' => "Astenn a ra ar parser a-benn skoriñ bloc'hadennoù enframmet ar c'hod [http://www.lua.org/ Lua]",
+	'lua_error' => 'Fazi el linenn $1',
+	'lua_extension_notfound' => "N'eo ket kefluniet an astenn Lua",
+	'lua_interp_notfound' => "N'eo ket bet kavet dielfenner Lua",
+	'lua_error_internal' => 'Fazi diabarzh',
+	'lua_overflow_recursion' => 'Bevenn ar rekursadur tizhet',
+	'lua_overflow_loc' => 'Niver brasañ a linennoù kod tizhet',
+	'lua_overflow_time' => 'Pad erounit hirañ tizhet',
 );
 
 /** Bosnian (Bosanski)
@@ -95,11 +138,19 @@ $messages['bs'] = array(
 	'lua_overflow_time' => 'Dostignuto maksimalno vrijeme izvršenja',
 );
 
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'lua_error_internal' => 'Error intern',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
-	'lua_desc' => 'Rozšiřuje sntaktický analyzátor o podporu vložených kódů v jazyku [http://www.lua.org/ Lua]',
+	'lua_desc' => 'Rozšiřuje syntaktický analyzátor o možnost vkládání bloků kódu v jazyce [http://www.lua.org/ Lua]',
 	'lua_error' => 'Chyba na řádku $1',
 	'lua_extension_notfound' => 'Rozšíření Lua není nakonfigurováno',
 	'lua_interp_notfound' => 'Nebyl nalezen překladač Lua',
@@ -141,9 +192,18 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'lua_desc' => 'Επεκτείνει τον λεξιαναλυτή με υποστήριξη ενσωματωμένων πλοκάδων του κώδικα [http://www.lua.org/ Lua]',
 	'lua_error' => 'Σφάλμα στη γραμμή $1',
+	'lua_extension_notfound' => 'Η επέκταση Lua δεν διαμορφώθηκε',
+	'lua_interp_notfound' => 'Ο διερμηνέας Lua δεν βρέθηκε',
+	'lua_error_internal' => 'Εσωτερικό σφάλμα',
+	'lua_overflow_recursion' => 'Φτάσατε στο όριο αναδρομής',
+	'lua_overflow_loc' => 'Φτάσατε στο μέγιστο όριο γραμμών κώδικα',
+	'lua_overflow_time' => 'Φτάσατε στο μέγιστο όριο εκτέλεσης',
 );
 
 /** Esperanto (Esperanto)
@@ -164,10 +224,22 @@ $messages['eo'] = array(
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'lua_desc' => 'Extiende el analizador con soporte para bloques empotrados de código [http://www.lua.org/ Lua]',
 	'lua_error' => 'Error en línea $1',
 	'lua_extension_notfound' => 'Extensión Lua no configurada',
 	'lua_interp_notfound' => 'Intérprete Lua no encontrado',
 	'lua_error_internal' => 'Error interno',
+	'lua_overflow_recursion' => 'Límite de recurso alcanzado',
+	'lua_overflow_loc' => 'Límite máximo de líneas de código alcanzada',
+	'lua_overflow_time' => 'Tiempo de ejecución máximo alcanzado',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'lua_error' => 'Errorea $1. lerroan',
+	'lua_error_internal' => 'Barneko errorea',
 );
 
 /** Finnish (Suomi)
@@ -305,6 +377,34 @@ $messages['ia'] = array(
 	'lua_overflow_time' => 'Durata maxime de execution excedite',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'lua_desc' => 'Perkaya parser dengan dukungan untuk kode [http://www.lua.org/ Lua]',
+	'lua_error' => 'Kesalahan pada baris $1',
+	'lua_extension_notfound' => 'Pengaya Lua belum dikonfigurasi',
+	'lua_interp_notfound' => 'Interpretasi Lua tidak ditemukan',
+	'lua_error_internal' => 'Kesalahan internal',
+	'lua_overflow_recursion' => 'Batas rekursi telah dicapai',
+	'lua_overflow_loc' => 'Batas jumlah baris kode telah dicapai',
+	'lua_overflow_time' => 'Batas waktu eksekusi telah dicapai',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'lua_desc' => 'Estende il parser con il supporto per blocchi incorporati di codice [http://www.lua.org/ Lua]',
+	'lua_error' => 'Errore nella linea $1',
+	'lua_extension_notfound' => 'Estensione Lua non configurata',
+	'lua_interp_notfound' => 'Interprete Lua non trovato',
+	'lua_error_internal' => 'Errore interno',
+	'lua_overflow_recursion' => 'Raggiunto il limite di ricorsione',
+	'lua_overflow_loc' => 'Limite di numero massimo di righe di codice raggiunto',
+	'lua_overflow_time' => 'Tempo massimo di esecuzione raggiunto',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -348,6 +448,20 @@ $messages['lb'] = array(
 	'lua_error' => 'Feeler an der Linn $1',
 	'lua_extension_notfound' => 'Lua-Erweiderung net configuréiert',
 	'lua_error_internal' => 'Interne Feeler',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'lua_desc' => 'Додава поддршка во парсерот за вметнати блокови со [http://www.lua.org/ Lua] код',
+	'lua_error' => 'Грешка на ред $1',
+	'lua_extension_notfound' => 'Проширувањето Lua не е конфигурирано',
+	'lua_interp_notfound' => 'Lua интерпретаторот не е пронајден',
+	'lua_error_internal' => 'Внатрешна грешка',
+	'lua_overflow_recursion' => 'Достигнато е ограничувањето за рекурзија',
+	'lua_overflow_loc' => 'Достигната е максималниот број на редови код',
+	'lua_overflow_time' => 'Достигнато е максималното време за извршување',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -420,6 +534,34 @@ $messages['os'] = array(
 	'lua_error_internal' => 'Мидæг рæдыд',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'lua_desc' => 'Rozszerza analizator składni o wsparcie dla wbudowanych bloków skryptów w języku [http://www.lua.org/ Lua]',
+	'lua_error' => 'Błąd w wierszu $1',
+	'lua_extension_notfound' => 'Rozszerzenie Lua nie zostało skonfigurowane',
+	'lua_interp_notfound' => 'Brak interpretera Lua',
+	'lua_error_internal' => 'Błąd wewnętrzny',
+	'lua_overflow_recursion' => 'Osiągnięto ograniczenie głębokości rekurencji',
+	'lua_overflow_loc' => 'Osiągnięto maksymalną liczbę linii kodu',
+	'lua_overflow_time' => 'Osiągnięto maksymalny czas wykonywania',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'lua_desc' => 'A estend ël parser con apògg për ij blòch antern dël còdes [http://www.lua.org/ Lua]',
+	'lua_error' => 'Eror an sla linia $1',
+	'lua_extension_notfound' => 'Estension Lua pa configurà',
+	'lua_interp_notfound' => 'Anterprete Lua pa trovà',
+	'lua_error_internal' => 'Eror antern',
+	'lua_overflow_recursion' => 'Lìmit ëd ricursion rivà',
+	'lua_overflow_loc' => 'Lìmit dël massim nùmer ëd linie ëd còdes rivà',
+	'lua_overflow_time' => "Temp massim d'esecussion rivà",
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -448,24 +590,46 @@ $messages['pt-br'] = array(
 	'lua_overflow_time' => 'Tempo máximo de execução atingido',
 );
 
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'lua_error' => 'Eroare la linia $1',
+	'lua_extension_notfound' => 'Extensia Lua neconfigurată',
+	'lua_interp_notfound' => 'Interpretor Lua negăsit',
+	'lua_error_internal' => 'Eroare internă',
+	'lua_overflow_recursion' => 'Limita de recursie a fost atinsă',
+	'lua_overflow_loc' => 'Numărul maxim de linii de cod a fost atins',
+	'lua_overflow_time' => 'Timpul maxim de execuţie a fost atins',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'lua_desc' => "Estenne l'analizzatore cu 'u supporte pe blocche 'nzertate de codece [http://www.lua.org/ Lua]",
 	'lua_error' => "Errore sus 'a linee $1",
 	'lua_extension_notfound' => 'Le estenziune de Lua non ge sonde configurete',
 	'lua_interp_notfound' => "L'interprete Lua non g'a state acchiete",
 	'lua_error_internal' => 'Errore inderne',
+	'lua_overflow_recursion' => 'Limite de ricorsione raggiunde',
+	'lua_overflow_loc' => 'Numere massime de linèe de codece raggiunde',
+	'lua_overflow_time' => 'Numere massime de vote de esecuzione raggiunde',
 );
 
 /** Russian (Русский)
  * @author Ferrer
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'lua_desc' => 'Добавляет в парсер поддержку блоков кода [http://www.lua.org/ Lua]',
 	'lua_error' => 'Ошибка на линии $1',
 	'lua_extension_notfound' => 'Расширение Lua не настроено',
 	'lua_interp_notfound' => 'Интерпретатор Lua не найден',
 	'lua_error_internal' => 'Внутренняя ошибка',
+	'lua_overflow_recursion' => 'Достигнут предел рекурсии',
+	'lua_overflow_loc' => 'Достигнут предел максимального числа строчек кода',
+	'lua_overflow_time' => 'Достигнут предел максимального времени выполнения',
 );
 
 /** Slovak (Slovenčina)
@@ -480,6 +644,20 @@ $messages['sk'] = array(
 	'lua_overflow_recursion' => 'Bol dosiahnutý limit rekurzie',
 	'lua_overflow_loc' => 'Bol dosiahnutý limit počtu riadkov kódu',
 	'lua_overflow_time' => 'Bol dosiahnutý limit času behu',
+);
+
+/** Swedish (Svenska)
+ * @author Fluff
+ */
+$messages['sv'] = array(
+	'lua_desc' => 'Utökar tolken med stöd för inbäddade block av [http://www.lua.org/ Luakod]',
+	'lua_error' => 'Fel på rad $1',
+	'lua_extension_notfound' => 'Lua-tillägget ej konfigurerat',
+	'lua_interp_notfound' => 'Hittade inte Lua-tolken',
+	'lua_error_internal' => 'Internt fel',
+	'lua_overflow_recursion' => 'Rekursionsgräns uppnådd',
+	'lua_overflow_loc' => 'Maximalt antal kodrader uppnått',
+	'lua_overflow_time' => 'Maximal exekveringstid uppnådd',
 );
 
 /** Telugu (తెలుగు)
@@ -503,6 +681,20 @@ $messages['tl'] = array(
 	'lua_overflow_time' => 'Naabot na ang pinakamataas na panahon ng pagsasakatuparan',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'lua_desc' => 'Ayrıştırıcıyı [http://www.lua.org/ Lua] kodunun yerleşik blok desteği ile genişletir',
+	'lua_error' => '$1. satırda hata',
+	'lua_extension_notfound' => 'Lua eklentisi konfigüre edildi',
+	'lua_interp_notfound' => 'Lua yorumlayıcısı bulunamadı',
+	'lua_error_internal' => 'Dahili hata',
+	'lua_overflow_recursion' => 'Özyineleme sınırına ulaşıldı',
+	'lua_overflow_loc' => 'Azami kod satırı sınırına ulaşıldı',
+	'lua_overflow_time' => 'Azami yürütme süresine ulaşıldı',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
@@ -515,5 +707,40 @@ $messages['vi'] = array(
 	'lua_overflow_recursion' => 'Quá hạn chế đệ quy',
 	'lua_overflow_loc' => 'Quá số dòng mã tối đa',
 	'lua_overflow_time' => 'Quá thời gian chạy tối đa',
+);
+
+/** Volapük (Volapük)
+ * @author Malafaya
+ */
+$messages['vo'] = array(
+	'lua_error_internal' => 'Pöl ninik',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
+ */
+$messages['zh-hans'] = array(
+	'lua_desc' => '通过支持嵌入[http://www.lua.org/ Lua]代码段来扩展解析器。',
+	'lua_error' => '第$1行有错误',
+	'lua_extension_notfound' => '未配置Lua插件',
+	'lua_interp_notfound' => '未找到Lua解释器',
+	'lua_error_internal' => '内部错误',
+	'lua_overflow_recursion' => '递归越限',
+	'lua_overflow_loc' => '代码行数越限',
+	'lua_overflow_time' => '运行时间越限',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author PhiLiP
+ */
+$messages['zh-hant'] = array(
+	'lua_desc' => '透過支援嵌入[http://www.lua.org/ Lua]程式碼段來拓展解析器。',
+	'lua_error' => '第$1行有錯誤',
+	'lua_extension_notfound' => '未設定Lua插件',
+	'lua_interp_notfound' => '未找到Lua直譯器',
+	'lua_error_internal' => '內部錯誤',
+	'lua_overflow_recursion' => '遞回越限',
+	'lua_overflow_loc' => '程式碼行數越限',
+	'lua_overflow_time' => '執行時間越限',
 );
 

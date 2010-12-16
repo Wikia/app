@@ -20,9 +20,8 @@
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'TitleKey',
-	'svn-date' => '$LastChangedDate: 2008-05-06 13:59:58 +0200 (wto, 06 maj 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
 	'author' => 'Brion Vibber',
 	'description' => 'Title prefix search suggestion backend',
 	'descriptionmsg' => 'titlekey-desc',
@@ -44,8 +43,17 @@ $wgHooks['ParserTestTables'          ][] = 'TitleKey::testTables';
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'TitleKey::schemaUpdates';
 
 // Search hooks...
-$wgHooks['PrefixSearchBackend'][] = 'TitleKey::prefixSearchBackend';
-$wgHooks['SearchGetNearMatch' ][] = 'TitleKey::searchGetNearMatch';
+// Delay setup to avoid compatibility problems with hook ordering
+// when coexisting with MWSearch... we want MWSearch to be able to
+// take over the PrefixSearchBackend hook without disabling the
+// SearchGetNearMatch hook point.
+$wgExtensionFunctions[] = 'efTitleKeySetup';
+
+function efTitleKeySetup() {
+	global $wgHooks;
+	$wgHooks['PrefixSearchBackend'][] = 'TitleKey::prefixSearchBackend';
+	$wgHooks['SearchGetNearMatch' ][] = 'TitleKey::searchGetNearMatch';
+}
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['TitleKey'] = $dir . 'TitleKey.i18n.php';

@@ -31,6 +31,15 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 		return 'result.csv';
 	}
 
+	public function getQueryMode($context) {
+		return ($context==SMWQueryProcessor::SPECIAL_PAGE)?SMWQuery::MODE_INSTANCES:SMWQuery::MODE_NONE;
+	}
+
+	public function getName() {
+		wfLoadExtensionMessages('SemanticMediaWiki');
+		return wfMsg('smw_printername_csv');
+	}
+
 	protected function getResultText($res, $outputmode) {
 		$result = '';
 		if ($outputmode == SMW_OUTPUT_FILE) { // make CSV file
@@ -84,6 +93,10 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 			$this->isHTML = ($outputmode == SMW_OUTPUT_HTML); // yes, our code can be viewed as HTML if requested, no more parsing needed
 		}
 		return $result;
+	}
+
+	public function getParameters() {
+		return parent::exportFormatParameters();
 	}
 
 }

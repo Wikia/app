@@ -26,10 +26,10 @@ if (!defined('MEDIAWIKI')) die();
 
 class MwRdf_Vocabulary_DCMiType extends MwRdf_Vocabulary {
 
-	const NAMESPACE = "http://purl.org/dc/dcmitype/";
+	const RDF_NAMESPACE = "http://purl.org/dc/dcmitype/";
 
 	public function getNS() {
-		return self::NAMESPACE;
+		return self::RDF_NAMESPACE;
 	}
 
 	public $Collection;

@@ -6,7 +6,7 @@
 class SpamRegexHooks {
 
 	public static function onEditFilter( $editpage ) {
-		global $wgOut, $wgTitle;
+		global $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		// here we get only the phrases for blocking in summaries...
@@ -27,7 +27,7 @@ class SpamRegexHooks {
 					$wgOut->addWikiMsg( 'spamprotectiontext' );
 					$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$s_matches[0]}</nowiki>" );
 					$wgOut->addWikiMsg( 'spamregex-summary' );
-					$wgOut->returnToMain( false, $wgTitle );
+					$wgOut->returnToMain( false, $editpage->mTitle );
 					$wgOut->addHTML( '</div>' );
 					wfProfileOut( __METHOD__ );
 					return false;

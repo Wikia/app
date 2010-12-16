@@ -11,7 +11,7 @@
  * 
  */
 function DataCenterRenderer() {
-	
+
 	/* Private Members */
 
 	var self = this;
@@ -25,9 +25,7 @@ function DataCenterRenderer() {
 	 * Gets a reference to a target by it's id
 	 * @param	target	String or Integer of ID of target
 	 */
-	this.getTarget = function(
-		target
-	) {
+	this.getTarget = function( target ) {
 		if ( targets[target] !== undefined  ) {
 			return targets[target];
 		}
@@ -38,10 +36,7 @@ function DataCenterRenderer() {
 	 * @param	type	A function object which will be created and then passed
 	 * 					to each job for each target
 	 */
-	this.addQueue = function(
-		queue,
-		type
-	) {
+	this.addQueue = function( queue, type ) {
 		queues[queue] = type;
 	}
 	/**
@@ -49,11 +44,7 @@ function DataCenterRenderer() {
 	 * @param	queue	String of name of rendering system used to reference it
 	 * @param	target	String of XML ID of element to perform this job for
 	 */
-	this.addJob = function(
-		queue,
-		target,
-		job
-	) {
+	this.addJob = function( queue, target, job ) {
 		if ( jobs[queue] === undefined  ) {
 			jobs[queue] = {};
 		}
@@ -107,7 +98,7 @@ function DataCenterRenderer() {
  * which can be added, accessed and removed during run-time.
  */
 function DataCenterPool() {
-	
+
 	/* Private Members */
 
 	var self = this;
@@ -120,9 +111,7 @@ function DataCenterPool() {
 	 * Adds an object to pool, and returns it's unique ID
 	 * @param	object	Object reference to add
 	 */
-	this.addObject = function(
-		object
-	) {
+	this.addObject = function( object ) {
 		var id = count++;
 		objects[id] = object;
 		return id;
@@ -131,9 +120,7 @@ function DataCenterPool() {
 	 * Removes an object form pool
 	 * @param	id	ID number of object to remove
 	 */
-	this.removeObject = function(
-		id
-	) {
+	this.removeObject = function( id ) {
 		if ( objects[id] !== undefined ) {
 			delete objects[id];
 		}
@@ -142,9 +129,7 @@ function DataCenterPool() {
 	 * Gets an object from pool
 	 * @param	id	ID number of object to get
 	 */
-	this.getObject = function(
-		id
-	) {
+	this.getObject = function( id ) {
 		if ( objects[id] !== undefined ) {
 			return objects[id];
 		}
@@ -155,12 +140,9 @@ function DataCenterPool() {
  * @param	target	The XML ID of a DIV in which a plan should be rendered
  * 					into.
  */
-function DataCenterScene(
-	target
-) {
-	
+function DataCenterScene( target ) {
 	/* Private Members */
-	
+
 	// Reference to itself
 	var self = this;
 	// Colors used in rendering
@@ -175,9 +157,9 @@ function DataCenterScene(
 	var features = {
 		radialGradient: true
 	};
-	
+
 	/* Configuration */
-	
+
 	// Gets target element
 	var element = document.getElementById( target );
 	// Sets element's background color so there's consistency when resizing
@@ -206,9 +188,9 @@ function DataCenterScene(
 		'click',
 		new Function( target + ".getModule().click();" )
 	);
-	
+
 	/* Public Functions */
-	
+
 	/**
 	 * Checks if scene that rack is part of is live
 	 */
@@ -245,10 +227,7 @@ function DataCenterScene(
 	 * @param	newModule	Object of scene compatible module to render
 	 * @param	update		Boolean flag indicating desire to re-render now
 	 */
-	this.setModule = function (
-		newModule,
-		update
-	) {
+	this.setModule = function( newModule, update ) {
 		newModule.setScene( self );
 		module = newModule;
 		// Automatically re-render
@@ -258,9 +237,7 @@ function DataCenterScene(
 	 * Re-renders scene
 	 * @param	update		Boolean flag indicating desire to re-render now
 	 */
-	this.update = function (
-		update
-	) {
+	this.update = function( update ) {
 		// Check if scene is live and update flag is set
 		if ( self.isLive() && update ) {
 			// Renders scene
@@ -304,9 +281,7 @@ function DataCenterScene(
 /**
  * Abstraction for a Google Maps object
  */
-function DataCenterMap(
-	target
-) {
+function DataCenterMap( target ) {
 	// Checks that browser is compatible with Google Maps
 	if ( !GBrowserIsCompatible() ) {
 		return;
@@ -338,11 +313,7 @@ function DataCenterMap(
 	 * 			content		String of content to place in info window (optional)
 	 * 			popup		Boolean of whether to initially show info window
 	 */
-	this.addMarker = function(
-		lat,
-		lng,
-		options
-	) {
+	this.addMarker = function( lat, lng, options ) {
 		var marker = new GMarker( new GLatLng( lat, lng ) );
 		map.addOverlay( marker );
 		if ( options && options.content ) {
@@ -366,10 +337,7 @@ function DataCenterMap(
 	 * 			latField	Object reference of XML form element to update
 	 * 			lngField	Object reference of XML form element to update
 	 */
-	this.showAddress = function(
-		address,
-		options
-	) {
+	this.showAddress = function( address, options ) {
 		// Adds this object to pool and gets it's ID
 		poolID = dataCenter.pool.addObject( self );
 		// Stores the options last used for later reference
@@ -385,9 +353,7 @@ function DataCenterMap(
 	 * Response to address lookup which is called asynchronously
 	 * @param	point	GPoint object of address lookup result
 	 */
-	this.respond = function(
-		point
-	) {
+	this.respond = function( point ) {
 		if ( point ) {
 			map.setCenter( point, 14 );
 			map.clearOverlays();
@@ -417,11 +383,7 @@ function DataCenterMap(
 	 * 			content		String of content to place in info window (optional)
 	 * 			popup		Boolean of whether to initially show info window
 	 */
-	this.showPosition = function(
-		lat,
-		lng,
-		options
-	) {
+	this.showPosition = function( lat, lng, options ) {
 		var point = new GLatLng( lat, lng );
 		map.setCenter( point, 14 );
 		map.clearOverlays();
@@ -438,8 +400,8 @@ dataCenter.ui = {};
 dataCenter.ui.layouts = {};
 dataCenter.ui.widgets = {};
 // Adds hooks that cause dataCenter systems to react to window events
-hookEvent( "load", dataCenter.renderer.setup );
-hookEvent( "resize", dataCenter.renderer.render );
+hookEvent( 'load', dataCenter.renderer.setup );
+hookEvent( 'resize', dataCenter.renderer.render );
 // Adds rendering queues for scene system
 dataCenter.renderer.addQueue( 'scene', DataCenterScene );
 // Adds rendering queues for map system

@@ -20,23 +20,36 @@ class SpecialTranslate extends SpecialPage {
 	protected $options     = null;
 
 	function __construct() {
-		wfMemIn( __METHOD__ );
 		SpecialPage::SpecialPage( 'Translate' );
-		wfMemOut( __METHOD__ );
 	}
 
 	/**
 	 * Access point for this special page.
-	 * GLOBALS: $wgHooks, $wgOut.
 	 */
 	public function execute( $parameters ) {
-		wfMemIn( __METHOD__ );
-		wfLoadExtensionMessages( 'Translate' );
+		global $wgOut, $wgTranslateBlacklist, $wgUser, $wgRequest;
 		TranslateUtils::injectCSS();
-		global $wgOut, $wgTranslateBlacklist;
+
+		$this->setHeaders();
+		if ( $parameters === 'manage' ) {
+			$this->restriction( 'translate-manage' );
+			if ( !$this->userCanExecute( $wgUser ) ) {
+				$this->displayRestrictionError();
+				return;
+			}
+
+			$manage = new SpecialManageGroups();
+			$manage->execute();
+			return;
+		} elseif ( $parameters === 'editpage' ) {
+			$editpage = TranslationEditPage::newFromRequest( $wgRequest );
+			if ( $editpage ) {
+				$editpage->execute();
+				return;
+			}
+		}
 
 		$this->setup( $parameters );
-		$this->setHeaders();
 
 		$errors = array();
 
@@ -47,7 +60,8 @@ class SpecialTranslate extends SpecialPage {
 			return;
 		}
 
-		if ( !$this->options['language'] ) {
+		$codes = Language::getLanguageNames( false );
+		if ( !$this->options['language'] || !isset( $codes[$this->options['language']] ) ) {
 			$errors['language'] = wfMsgExt( self::MSG . 'no-such-language', array( 'parse' ) );
 			$this->options['language'] = $this->defaults['language'];
 		}
@@ -64,7 +78,6 @@ class SpecialTranslate extends SpecialPage {
 		$wgOut->addHTML( $this->settingsForm( $errors ) );
 
 		if ( count( $errors ) ) {
-			wfMemOut( __METHOD__ );
 			return;
 		} else {
 			$checks = array(
@@ -110,11 +123,9 @@ class SpecialTranslate extends SpecialPage {
 				$wgOut->addHTML( $description . $links . $output . $links );
 			}
 		}
-		wfMemOut( __METHOD__ );
 	}
 
 	protected function setup( $parameters ) {
-		wfMemIn( __METHOD__ );
 		global $wgUser, $wgRequest;
 
 		$defaults = array(
@@ -163,15 +174,13 @@ class SpecialTranslate extends SpecialPage {
 
 		$this->group = MessageGroups::getGroup( $this->options['group'] );
 		$this->task  = TranslateTasks::getTask( $this->options['task'] );
-		wfMemOut( __METHOD__ );
 	}
 
 	/**
-	 * GLOBALS: $wgTitle, $wgScript
+	 * GLOBALS: $wgScript
 	 */
 	protected function settingsForm( $errors ) {
-		wfMemIn( __METHOD__ );
-		global $wgTitle, $wgScript;
+		global $wgScript;
 
 		$task = $this->taskSelector();
 		$group = $this->groupSelector();
@@ -183,7 +192,7 @@ class SpecialTranslate extends SpecialPage {
 		$options = array();
 		foreach ( array( 'task', 'group', 'language', 'limit' ) as $g ) {
 			$options[] = self::optionRow(
-				Xml::tags( 'label', array( 'for' => $g ), wfMsg( self::MSG . $g, 'escapenoentities' ) ),
+				Xml::tags( 'label', array( 'for' => $g ), wfMsgExt( self::MSG . $g, 'escapenoentities' ) ),
 				$$g,
 				array_key_exists( $g, $errors ) ? $errors[$g] : null
 			);
@@ -193,14 +202,13 @@ class SpecialTranslate extends SpecialPage {
 			Xml::openElement( 'fieldset', array( 'class' => 'mw-sp-translate-settings' ) ) .
 				Xml::element( 'legend', null, wfMsg( self::MSG . 'settings-legend' ) ) .
 				Xml::openElement( 'form', array( 'action' => $wgScript, 'method' => 'get' ) ) .
-					Xml::hidden( 'title', $wgTitle->getPrefixedText() ) .
+					Xml::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
 					Xml::openElement( 'table' ) .
 						implode( "", $options ) .
 						self::optionRow( $button, ' ' ) .
 					Xml::closeElement( 'table' ) .
 				Xml::closeElement( 'form' ) .
 			Xml::closeElement( 'fieldset' );
-		wfMemOut( __METHOD__ );
 		return $form;
 	}
 
@@ -217,24 +225,22 @@ class SpecialTranslate extends SpecialPage {
 	/* Selectors ahead */
 
 	protected function groupSelector() {
-		wfMemIn( __METHOD__ );
 		$groups = MessageGroups::singleton()->getGroups();
 		$selector = new HTMLSelector( 'group', 'group', $this->options['group'] );
 		foreach ( $groups as $id => $class ) {
-			$selector->addOption( $class->getLabel(), $id );
+			if ( MessageGroups::getGroup( $id )->exists() ) {
+				$selector->addOption( $class->getLabel(), $id );
+			}
 		}
-		wfMemOut( __METHOD__ );
 		return $selector->getHTML();
 	}
 
 	protected function taskSelector() {
-		wfMemIn( __METHOD__ );
 		$selector = new HTMLSelector( 'task', 'task', $this->options['task'] );
 		foreach ( TranslateTasks::getTasks() as $id ) {
 			$label = call_user_func( array( 'TranslateTask', 'labelForTask' ), $id );
 			$selector->addOption( $label, $id );
 		}
-		wfMemOut( __METHOD__ );
 		return $selector->getHTML();
 	}
 
@@ -244,32 +250,26 @@ class SpecialTranslate extends SpecialPage {
 	}
 
 	protected function limitSelector() {
-		wfMemIn( __METHOD__ );
 		global $wgLang;
 		$items = array( 100, 250, 500, 1000, 2500 );
 		$selector = new HTMLSelector( 'limit', 'limit', $this->options['limit'] );
 		foreach ( $items as $count ) {
 			$selector->addOption( wfMsgExt( self::MSG . 'limit-option', 'parsemag', $wgLang->formatNum( $count ) ), $count );
 		}
-		wfMemOut( __METHOD__ );
 		return $selector->getHTML();
 	}
 
 	private $paging = null;
 	public function cbAddPagingNumbers( $start, $count, $total ) {
-		wfMemIn( __METHOD__ );
 		$this->paging = array(
 			'start' => $start,
 			'count' => $count,
 			'total' => $total
 		);
-		wfMemOut( __METHOD__ );
 	}
 
 	protected function doStupidLinks() {
-		wfMemIn( __METHOD__ );
 		if ( $this->paging === null ) {
-			wfMemOut( __METHOD__ );
 			return '';
 		}
 
@@ -309,7 +309,6 @@ class SpecialTranslate extends SpecialPage {
 			$navigation = Xml::tags( 'p', null, $showing . ' ' . $navigation );
 		}
 
-		wfMemOut( __METHOD__ );
 		return
 			Xml::openElement( 'fieldset' ) .
 				Xml::element( 'legend', null, wfMsg( self::MSG . 'navigation-legend' ) ) .
@@ -318,16 +317,18 @@ class SpecialTranslate extends SpecialPage {
 	}
 
 	private function makeOffsetLink( $label, $offset ) {
-		wfMemIn( __METHOD__ );
-		global $wgTitle, $wgUser;
+		global $wgUser;
 		$skin = $wgUser->getSkin();
-		$link = $skin->makeLinkObj( $wgTitle, $label,
-			wfArrayToCGI(
-				array( 'offset' => $offset ),
-				$this->nondefaults
-			)
+		$query = array_merge(
+			$this->nondefaults,
+			array( 'offset' => $offset )
 		);
-		wfMemOut( __METHOD__ );
+		$link = $skin->link(
+			$this->getTitle(),
+			$label,
+			array(),
+			$query
+		);
 		return $link;
 	}
 
@@ -350,6 +351,7 @@ class SpecialTranslate extends SpecialPage {
 		$structure = array();
 
 		foreach ( $groups as $id => $o ) {
+			if ( !MessageGroups::getGroup( $id )->exists() ) continue;
 			foreach ( $wgTranslateGroupStructure as $pattern => $hypergroup ) {
 				if ( preg_match( $pattern, $id ) ) {
 					// Emulate deepArraySet, because AFAIK php doesn't have one
@@ -395,7 +397,6 @@ class SpecialTranslate extends SpecialPage {
 	public function formatGroupInformation( $blocks, $level = 2 ) {
 		global $wgUser;
 
-
 		if ( is_array( $blocks ) ) {
 			$block = array_shift( $blocks );
 		} else {
@@ -407,9 +408,17 @@ class SpecialTranslate extends SpecialPage {
 		$title = $this->getTitle();
 
 		$code =  $this->options['language'];
-		$extra = "group=$id&language=$code" ;
+		$queryParams = array(
+			'group' => $id,
+			'language' => $code
+		);
 
-		$edit = $wgUser->getSkin()->makeKnownLinkObj( $title, wfMsgHtml( self::MSG . 'edit' ), $extra );
+		$edit = $wgUser->getSkin()->link(
+			$title,
+			wfMsgHtml( self::MSG . 'edit' ),
+			array(),
+			$queryParams
+		);
 		$label =  htmlspecialchars( $block->getLabel() ) . " ($edit)";
 		$desc = $this->getGroupDescription( $block );
 		$hasSubblocks = is_array( $blocks ) && count( $blocks );
@@ -420,7 +429,7 @@ class SpecialTranslate extends SpecialPage {
 			$class = 'mw-sp-translate-target';
 		}
 
-		$out = "\n<div class=\"$class\">\n";
+		$out = "\n<div class=\"$class mw-sp-translate-$id\">\n";
 		$out .= Xml::tags( "h$level", null, $label );
 
 		if ( $desc !== null ) {

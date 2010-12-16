@@ -438,7 +438,7 @@ public class BaseTest {
 				//can't use deleteArticle() - it's working only for regular skins (with navbar)
 				session().open("index.php?action=delete&title=" + articleName);
 				session().waitForPageToLoad(TIMEOUT);
-				session().select("wpDeleteReasonList", "label=Author request");
+				session().select("wpDeleteReasonList", "label=regexp:.*Author request");
 				session().type("wpReason", "Wikia automated test");
 				session().uncheck("wpWatch");
 				session().click("wpConfirmB");

@@ -43,6 +43,15 @@ class SRFiCalendar extends SMWResultPrinter {
 		}
 	}
 
+	public function getQueryMode($context) {
+		return ($context==SMWQueryProcessor::SPECIAL_PAGE)?SMWQuery::MODE_INSTANCES:SMWQuery::MODE_NONE;
+	}
+
+	public function getName() {
+		wfLoadExtensionMessages('SemanticResultFormats');
+		return wfMsg('srf_printername_icalendar');
+	}
+
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber, $wgSitename, $wgServer, $wgRequest;
 		$result = '';
@@ -62,7 +71,7 @@ class SRFiCalendar extends SMWResultPrinter {
 
 			$row = $res->getNext();
 			while ( $row !== false ) {
-				$wikipage = $row[0]->getNextObject(); // get the object
+				$wikipage = $row[0]->getResultSubject(); // get the object
 				$startdate = false;
 				$enddate = false;
 				$location = '';
@@ -146,7 +155,7 @@ class SRFiCalendar extends SMWResultPrinter {
 		$year = number_format($year, 0, '.', '');
 		$time = str_replace(':','', $dv->getTimeString(false));
 		if ( ($time == false) && ($isend) ) { // increment by one day, compute date to cover leap years etc.
-			$dv = SMWDataValueFactory::newTypeIDValue('_dat',$dv->getWikiValue() . 'T00:00:00+24:00');
+			$dv = SMWDataValueFactory::newTypeIDValue('_dat',$dv->getWikiValue() . 'T00:00:00-24:00');
 		}
 		$month = $dv->getMonth();
 		if (strlen($month) == 1) $month = '0' . $month;
@@ -155,6 +164,13 @@ class SRFiCalendar extends SMWResultPrinter {
 		$result = $year . $month . $day;
 		if ($time != false) $result .= "T$time";
 		return $result;
+	}
+
+	public function getParameters() {
+		$params = parent::exportFormatParameters();
+		$params[] = array('name' => 'icalendartitle', 'type' => 'string', 'description' => wfMsg('srf_paramdesc_icalendartitle'));
+		$params[] = array('name' => 'icalendardescription', 'type' => 'string', 'description' => wfMsg('srf_paramdesc_icalendardescription'));
+		return $params;
 	}
 
 }

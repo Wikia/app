@@ -10,13 +10,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Count Edits',
-	'svn-date' => '$LastChangedDate: 2008-09-26 08:27:47 +0200 (ptk, 26 wrz 2008) $',
-	'svn-revision' => '$LastChangedRevision: 41282 $',
 	'author' => 'Rob Church',
 	'description' => '[[Special:CountEdits|Special page]] that counts user edits and provides a top-ten contributor list',
 	'descriptionmsg' => 'countedits-desc',
-	'url' => 'http://www.mediawiki.wiki/wiki/Extesion:CountEdits',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:CountEdits',
 );
 
 $dir = dirname(__FILE__) . '/';

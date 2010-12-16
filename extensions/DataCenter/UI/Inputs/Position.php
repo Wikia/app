@@ -47,9 +47,7 @@ class DataCenterInputPosition extends DataCenterInput {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $wgScriptPath;
 		// Checks that...
 		if (

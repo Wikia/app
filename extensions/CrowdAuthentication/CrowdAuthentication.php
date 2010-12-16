@@ -6,7 +6,7 @@
  * freely. This software is provided 'as-is', without any express or implied
  * warranty.
  */
-/* $Id: CrowdAuthentication.php 37969 2008-07-23 19:25:48Z simetrical $ */
+/* $Id: CrowdAuthentication.php 62451 2010-02-13 23:03:40Z demon $ */
 /*
  * AuthPlugin that authenticates users against Atlassian Crowd.
  *
@@ -24,9 +24,8 @@
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Crowd Authentication Plugin',
-	'svn-date'       => '$LastChangedDate: 2008-07-23 21:25:48 +0200 (śro, 23 lip 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 37969 $',
 	'author'         => 'River Tarnell',
 	'description'    => 'Authentication plugin for Atlassian Crowd',
 	'descriptionmsg' => 'crowdauthentication-desc',
@@ -173,7 +172,7 @@ class CrowdAuthenticator extends AuthPlugin {
 		$groups = $this->crowd->searchGroups(array("in0" => $this->token, "in1" => array($restr)));
 		$groups = $groups->out->SOAPGroup;
 
-		$dbw =& wfGetDB(DB_MASTER);
+		$dbw = wfGetDB(DB_MASTER);
 		if ($caOverwriteLocalGroups)
 			$dbw->delete('user_group', array('ug_user' => $user->getId()));
 

@@ -1,4 +1,4 @@
-[[Maps 0.3.4]]
+[[Maps 0.5.3]]
 
 Once you have downloaded the code, place the 'Maps' directory within your MediaWiki 'extensions' directory.
 Then add the following code to your LocalSettings.php file after the line that installs Semantic MediaWiki:

@@ -1,16 +1,16 @@
 <?php
 
-if( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 class TodoTemplate extends QuickTemplate {
 	function execute() {
 	global $wgOut, $tododetail, $todosummary, $todoemail, $todosubmit;
-	$todosummary = wfMsg('todo-issue-summary');
-	$tododetail=wfMsg('todo-form-details');
-	$todoemail=wfMsg('todo-form-email');
-	$todosubmit=wfMsg('todo-form-submit');
-	$wgOut->addHTML("
+	$todosummary = wfMsg( 'todo-issue-summary' );
+	$tododetail = wfMsg( 'todo-form-details' );
+	$todoemail = wfMsg( 'todo-form-email' );
+	$todosubmit = wfMsg( 'todo-form-submit' );
+	$wgOut->addHTML( "
 <style type=\"text/css\">
 .mwTodoNewForm {
 	border: solid 1px #ccc;
@@ -22,15 +22,15 @@ class TodoTemplate extends QuickTemplate {
 .mwTodoTitle {
 	font-weight: bold;
 }
-</style>");
+</style>" );
 ?>
-<script type="text/javascript" src="<?php $this->text('script') ?>"></script>
+<script type="text/javascript" src="<?php $this->text( 'script' ) ?>"></script>
 
-<form action="<?php $this->text('action') ?>" method="post">
+<form action="<?php $this->text( 'action' ) ?>" method="post">
 	<input type="hidden" name="wpNewItem" value="1" />
 		<p>
 <?php
-$wgOut->addHTML("
+$wgOut->addHTML( "
 		<div class=\"mwTodoNewForm\">
 			<label for=\"wpSummary\">{$todosummary}</label>
 			<br />

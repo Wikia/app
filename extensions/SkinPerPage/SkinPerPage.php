@@ -6,6 +6,7 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Skin per page',
 	'version'        => '1.0',
 	'author'         => 'Tim Starling',

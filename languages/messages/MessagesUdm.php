@@ -14,11 +14,9 @@ $fallback = 'ru';
 $namespaceNames = array(
 	NS_MEDIA            => 'Медиа',
 	NS_SPECIAL          => 'Панель',
-	NS_MAIN             => '',
 	NS_TALK             => 'Вераськон',
 	NS_USER             => 'Викиавтор',
 	NS_USER_TALK        => 'Викиавтор_сярысь_вераськон',
-	# NS_PROJECT set by $wgMetaNamespace
 	NS_PROJECT_TALK     => '$1_сярысь_вераськон',
 	NS_FILE             => 'Суред',
 	NS_FILE_TALK        => 'Суред_сярысь_вераськон',
@@ -39,10 +37,12 @@ $separatorTransformTable = array(',' => ' ', '.' => ',' );
 $messages = array(
 'linkprefix' => '/^(.*?)(„|«)$/sDu',
 
-'article'        => 'Статья',
+'article' => 'Статья',
+'mypage'  => 'Ас бам',
+'mytalk'  => 'викиавтор сярысь вераськон',
+
+# Cologne Blue skin
 'qbspecialpages' => 'Ваньмыз панельёс',
-'mypage'         => 'Ас бам',
-'mytalk'         => 'викиавтор сярысь вераськон',
 
 'help'             => 'Валэктонъёс',
 'history'          => 'Бамлэн историез',
@@ -61,6 +61,7 @@ $messages = array(
 'mainpage'             => 'Кутскон бам',
 'mainpage-description' => 'Кутскон бам',
 'portal'               => 'Сообщество',
+'portal-url'           => 'Project:Портал сообщества',
 
 'editsection' => 'тупатыны',
 
@@ -101,13 +102,15 @@ $messages = array(
 'hist'          => 'история',
 
 # Recent changes linked
-'recentchangeslinked' => 'Герӟаськем тупатонъёс',
+'recentchangeslinked'         => 'Герӟаськем тупатонъёс',
+'recentchangeslinked-feed'    => 'Герӟаськем тупатонъёс',
+'recentchangeslinked-toolbox' => 'Герӟаськем тупатонъёс',
 
 # Upload
 'upload' => 'Файл поныны',
 
 # File description page
-'sharedupload' => 'Этот файл из $1 и может использоваться в других проектах.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'sharedupload' => 'Этот файл из $1 и может использоваться в других проектах.',
 
 # Random page
 'randompage' => 'Олокыӵе статья',

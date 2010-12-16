@@ -26,7 +26,7 @@ class SharedUserRights extends SpecialPage {
 	}
 
 	public function userCanExecute( $user ) {
-		return $user->isAllowed( 'userrights-global' );
+		return $user->isAllowed( 'userrights-shared' );
 	}
 
 	/**
@@ -45,11 +45,11 @@ class SharedUserRights extends SpecialPage {
 		} else {
 			$this->mTarget = $wgRequest->getVal( 'user' );
 		}
-		
+
 		# This might be redundant, but more security is always good. Right?
 		if ( !$this->userCanExecute( $wgUser ) ) {
 			global $wgOut;
-			$wgOut->permissionRequired( 'userrights-global' );
+			$wgOut->permissionRequired( 'userrights-shared' );
 			return;
 		}
 
@@ -104,7 +104,7 @@ class SharedUserRights extends SpecialPage {
 		$allgroups = $this->getAllGroups();
 		$addgroup = array();
 		$removegroup = array();
-		
+
 		foreach ( $allgroups as $group ) {
 			// We'll tell it to remove all unchecked groups, and add all checked groups.
 			// Later on, this gets filtered for what can actually be removed
@@ -114,7 +114,7 @@ class SharedUserRights extends SpecialPage {
 				$removegroup[] = $group;
 			}
 		}
-		
+
 		$removegroup = array_unique(
 			array_intersect( (array)$removegroup, $allgroups ) );
 		$addgroup = array_unique(
@@ -122,7 +122,7 @@ class SharedUserRights extends SpecialPage {
 
 		$oldGroups = $this->listGroups( $username );
 		$newGroups = $oldGroups;
-		
+
 		# remove groups
 		if ( $removegroup ) {
 			$newGroups = array_diff( $newGroups, $removegroup );
@@ -130,7 +130,7 @@ class SharedUserRights extends SpecialPage {
 				$this->removeGroup( $username, $group );
 			}
 		}
-		
+
 		# add new groups
 		if ( $addgroup ) {
 			$newGroups = array_merge( $newGroups, $addgroup );
@@ -138,7 +138,7 @@ class SharedUserRights extends SpecialPage {
 				$this->addGroup( $username, $group );
 			}
 		}
-		
+
 		$newGroups = array_unique( $newGroups );
 
 		# Clear the caches
@@ -191,8 +191,8 @@ class SharedUserRights extends SpecialPage {
 
 	function addGroup( $username, $groupname ) {
 		$groups = $this->listGroups( $username );
-		
-		if( in_array( $groupname, $groups )) {
+
+		if ( in_array( $groupname, $groups ) ) {
 			return false;
 		} else {
 			$user = $this->fetchUser( $username );
@@ -212,7 +212,7 @@ class SharedUserRights extends SpecialPage {
 
 	function removeGroup( $username, $groupname ) {
 		$user = $this->fetchUser( $username );
-		
+
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->delete( efSharedTable( 'shared_user_groups' ), array(
@@ -232,7 +232,7 @@ class SharedUserRights extends SpecialPage {
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgSharedDB );
 
 		$groups = array();
-		
+
 		$res = $dbr->select(
 			'shared_user_groups',
 			'sug_group',
@@ -256,7 +256,7 @@ class SharedUserRights extends SpecialPage {
 	 */
 	function fetchUser( $username ) {
 		global $wgOut, $wgUser;
-		
+
 		$name = trim( $username );
 
 		if ( $name == '' ) {
@@ -288,12 +288,12 @@ class SharedUserRights extends SpecialPage {
 	}
 
 	function makeGroupNameList( $ids ) {
-		global $wgContentLang;
+		global $wgContLang;
 
 		if ( empty( $ids ) ) {
 			return wfMsgForContent( 'rightsnone' );
 		} else {
-			return $wgContentLang->commaList( $ids );
+			return $wgContLang->commaList( $ids );
 		}
 	}
 
@@ -403,12 +403,12 @@ class SharedUserRights extends SpecialPage {
 
 		foreach ( $allgroups as $group ) {
 			$set = in_array( $group, $usergroups );
-			
+
 			$attr = array();
 			$text = User::getGroupMember( $group );
 			$checkbox = Xml::checkLabel( $text, "wpGroup-$group",
 				"wpGroup-$group", $set, $attr );
-			
+
 			$settable_col .= "$checkbox<br />\n";
 		}
 
@@ -440,7 +440,7 @@ class SharedUserRights extends SpecialPage {
 
 		return $ret;
 	}
-	
+
 	/**
 	 * Show a rights log fragment for the specified user
 	 *

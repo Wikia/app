@@ -13,13 +13,13 @@ class SpecialDuplicator extends SpecialPage {
 	 * Title of the page we are duplicating
 	 */
 	private $source = '';
-	private $sourceTitle = NULL;
+	private $sourceTitle = null;
 
 	/**
 	 * Title of the page we are saving to
 	 */
 	private $dest = '';
-	private $destTitle = NULL;
+	private $destTitle = null;
 
 	/**
 	 * Whether or not we're duplicating the talk page
@@ -133,9 +133,9 @@ class SpecialDuplicator extends SpecialPage {
 	private function setOptions( &$request, $title ) {
 		$source = $request->getText( 'source' );
 		$this->source = $source ? $source : ( $title ? $title : '' );
-		$this->sourceTitle = Title::newFromUrl( $this->source );
+		$this->sourceTitle = Title::newFromURL( $this->source );
 		$this->dest = $request->getText( 'dest', '' );
-		$this->destTitle = Title::newFromUrl( $this->dest );
+		$this->destTitle = Title::newFromURL( $this->dest );
 		$this->talk = $request->getCheck( 'talk' );
 	}
 

@@ -54,6 +54,7 @@ function wfGeoExtension () {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
         'name' => 'Geo',
         'description' => 'Enables rich geotagging functionality',
         'author' => array( 'Egil Kvaleberg', 'Jens Frank' ),

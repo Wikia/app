@@ -39,6 +39,7 @@ final class MapsGeocoder {
 	 * @param string $service
 	 * @param string $mappingService
 	 * @param string $format
+	 * 
 	 * @return formatted coordinate string or false
 	 */
 	public static function geocodeToString($address, $service = '', $mappingService = '', $format = '%1$s, %2$s') {
@@ -53,10 +54,11 @@ final class MapsGeocoder {
 	 * @param string $address
 	 * @param string $service
 	 * @param string $mappingService
+	 * 
 	 * @return array with coordinates or false
 	 */
 	public static function geocode($address, $service, $mappingService) {
-		global $egMapsAvailableGeoServices, $wgAutoloadClasses, $egMapsIP, $IP;
+		global $egMapsAvailableGeoServices, $wgAutoloadClasses, $egMapsDir, $IP;
 		
 		// If the adress is already in the cache and the cache is enabled, return the coordinates.
 		if (self::$mEnableCache && array_key_exists($address, MapsGeocoder::$mGeocoderCache)) {
@@ -68,12 +70,11 @@ final class MapsGeocoder {
 		$service = self::getValidGeoService($service, $mappingService);
 		
 		// Make sure the needed class is loaded.
-		$file = $egMapsAvailableGeoServices[$service]['local'] ? $egMapsIP . '/' . $egMapsAvailableGeoServices[$service]['file'] : $IP . '/extensions/' . $egMapsAvailableGeoServices[$service]['file'];
+		$file = $egMapsAvailableGeoServices[$service]['local'] ? $egMapsDir . $egMapsAvailableGeoServices[$service]['file'] : $IP . '/extensions/' . $egMapsAvailableGeoServices[$service]['file'];
 		$wgAutoloadClasses[$egMapsAvailableGeoServices[$service]['class']] = $file;
 		
 		// Call the geocode function in the spesific geocoder class.
-		$phpAtLeast523 = MapsUtils::phpVersionIsEqualOrBigger('5.2.3');
-		$coordinates = call_user_func(array($egMapsAvailableGeoServices[$service]['class'], 'geocode'), $phpAtLeast523 ? $address : array($address));
+		$coordinates = call_user_func(array($egMapsAvailableGeoServices[$service]['class'], 'geocode'), $address);
 
 		// Add the obtained coordinates to the cache when there is a result and the cache is enabled.
 		if (self::$mEnableCache && $coordinates) {
@@ -89,6 +90,7 @@ final class MapsGeocoder {
 	 *
 	 * @param string $service
 	 * @param string $mappingService
+	 * 
 	 * @return string
 	 */
 	private static function getValidGeoService($service, $mappingService) {
@@ -99,7 +101,7 @@ final class MapsGeocoder {
 			foreach ($egMapsAvailableGeoServices as $geoService => $serviceData) {
 				if (in_array($mappingService, $serviceData))  {
 					$service = $geoService; // Use the override
-					continue;
+					break;
 				}
 			}	
 			
@@ -108,7 +110,7 @@ final class MapsGeocoder {
 		}
 		else {
 			// If a service is provided, but is not supported, use the default.
-			if(!array_key_exists($service, $egMapsAvailableGeoServices)) $service = $egMapsDefaultGeoService;
+			if(! array_key_exists($service, $egMapsAvailableGeoServices)) $service = $egMapsDefaultGeoService;
 		}
 
 		return $service;

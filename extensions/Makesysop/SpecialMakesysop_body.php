@@ -117,7 +117,7 @@ class MakesysopForm {
 
 		$fname = 'MakesysopForm::doSubmit';
 
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$user_groups = $dbw->tableName( 'user_groups' );
 		$usertable   = $dbw->tableName( 'user' );
 

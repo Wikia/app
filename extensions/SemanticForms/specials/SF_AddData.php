@@ -52,9 +52,9 @@ static function printAddForm($form_name, $target_name, $alt_forms) {
 	wfLoadExtensionMessages('SemanticForms');
 
 	// initialize some variables
-	$page_title = NULL;
-	$target_title = NULL;
-	$page_name_formula = NULL;
+	$page_title = null;
+	$target_title = null;
+	$page_name_formula = null;
 
 	// get contents of form and target page - if there's only one,
 	// it might be a target with only alternate forms
@@ -129,14 +129,17 @@ static function printAddForm($form_name, $target_name, $alt_forms) {
 			$page_contents = null;
 		}
 		list ($form_text, $javascript_text, $data_text, $form_page_title, $generated_page_name) =
-			$sfgFormPrinter->formHTML($form_definition, $form_submitted, $page_is_source, $page_contents, $page_title, $page_name_formula);
+			$sfgFormPrinter->formHTML($form_definition, $form_article->getID(), $form_submitted, $page_is_source, $page_contents, $page_title, $page_name_formula);
 		if ($form_submitted) {
 			if ($page_name_formula != '') {
-				// append a namespace, if one was specified
+				$target_name = $generated_page_name;
+				// prepend a super-page, if one was specified
+				if ($wgRequest->getCheck('super_page')) {
+					$target_name = $wgRequest->getVal('super_page') . '/' . $target_name;
+				}
+				// prepend a namespace, if one was specified
 				if ($wgRequest->getCheck('namespace')) {
-					$target_name = $wgRequest->getVal('namespace') . ':' . $generated_page_name;
-				} else {
-					$target_name = $generated_page_name;
+					$target_name = $wgRequest->getVal('namespace') . ':' . $target_name;
 				}
 				// replace "unique number" tag with one that
 				// won't get erased by the next line
@@ -162,8 +165,13 @@ static function printAddForm($form_name, $target_name, $alt_forms) {
 						$target_title = Title::newFromText(preg_replace('/{num.*}/', $title_number, $target_name));
 						// if title number is blank,
 						// change it to 2; otherwise,
-						// increment it
-						$title_number = ($title_number == "") ? 2 : $title_number + 1;
+						// increment it, and if necessary
+						// pad it with leading 0s as well
+						if ($title_number == "") {
+							$title_number = 2;
+						} else {
+							$title_number = str_pad($title_number + 1, strlen($title_number), '0', STR_PAD_LEFT);
+						}
 					} while ($target_title->exists());
 				} else {
 					$target_title = Title::newFromText($target_name);
@@ -174,7 +182,7 @@ static function printAddForm($form_name, $target_name, $alt_forms) {
 		} else {
 			// override the default title for this page if
 			// a title was specified in the form
-			if ($form_page_title != NULL) {
+			if ($form_page_title != null) {
 				if ($target_name == '') {
 					$wgOut->setPageTitle($form_page_title);
 				} else {

@@ -103,7 +103,7 @@ function do_update_wiki_page( $wgTitle, $wikiText, $ns = null, $forceUpdate = fa
 		$wgTitle = Title::makeTitle( $ns, ucfirst( $wgTitle ) );
 	}
 
-	if ( trim( $wgTitle->getDBKey() ) == '' ) {
+	if ( trim( $wgTitle->getDBkey() ) == '' ) {
 		print "empty title (no insert /update) \n";
 		return ;
 	}

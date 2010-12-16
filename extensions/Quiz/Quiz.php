@@ -37,6 +37,7 @@
  * Extension's parameters.
  */
 $wgExtensionCredits['parserhook'][] = array(
+    'path'           => __FILE__,
     'name'           => 'Quiz',
     'version'        => '1.0.1',
     'author'         => 'lrbabe',
@@ -51,12 +52,7 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['QuizExtension'] = $dir . 'Quiz.i18n.php';
 
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfQuizExtension';
-} else {
-	$wgExtensionFunctions[] = 'wfQuizExtension';
-}
-
+$wgHooks['ParserFirstCallInit'][] = 'wfQuizExtension';
 $wgHooks['ParserClearState'][] = 'Quiz::resetQuizID';
 $wgHooks['LoadAllMessages'][] = 'Quiz::loadMessages';
 
@@ -65,9 +61,8 @@ $wgHooks['LoadAllMessages'][] = 'Quiz::loadMessages';
  * Register the extension with the WikiText parser.
  * The tag used is <quiz>
  */
-function wfQuizExtension() {
-    global $wgParser;
-    $wgParser->setHook("quiz", "renderQuiz");
+function wfQuizExtension( &$parser ) {
+    $parser->setHook("quiz", "renderQuiz");
 	return true;
 }
 
@@ -80,7 +75,7 @@ function wfQuizExtension() {
  * 
  * @return 						An HTML quiz.
  */
-function renderQuiz($input, $argv, &$parser) {
+function renderQuiz($input, $argv, $parser) {
 	$parser->disableCache();
 	$quiz = new Quiz($argv, $parser);
 	return $quiz->parseQuiz($input);
@@ -279,7 +274,7 @@ class Quiz {
 			if(!empty($settingsTr)) $settingsTable .= "<tr>\n$settingsTr</tr>\n";
 		}		
 		if(!empty($settingsTable)) $output .= "<table class=\"settings\">\n$settingsTable</table>\n";
-		$output .= "<input type=\"hidden\" name=\"quizId\" value=\"$this->mQuizId\"/ >";
+		$output .= "<input type=\"hidden\" name=\"quizId\" value=\"$this->mQuizId\" />";
 	    
 	    $output .= "<div class=\"quizQuestions\">";
 		$output .= $input;
@@ -583,7 +578,7 @@ class Question {
 		$expectOn 		= 0;
 		$checkedCount 	= 0;
 		foreach($raws as $proposalId => $raw) {
-			$text 			= NULL;
+			$text 			= null;
 			$colSpan 		= "";
 			$signesOutput 	= "";
 			if(preg_match($this->mProposalPattern, $raw, $matches)) {
@@ -616,7 +611,7 @@ class Question {
 						break;
 					}
 					# Determine if the input had to be checked.
-					$checked = ($this->mBeingCorrected && $this->mRequest->getVal($name) == $value)? "checked=\"checked\"" : NULL;
+					$checked = ($this->mBeingCorrected && $this->mRequest->getVal($name) == $value)? "checked=\"checked\"" : null;
 					# Determine the color of the cell and modify the state of the question.
 					switch($sign) {
 					case "+":

@@ -1,17 +1,22 @@
 <?php
-
 if ( !defined( 'MEDIAWIKI' ) ) die;
 
 class SummaryPageView extends LqtView {
 	function show() {
 		wfLoadExtensionMessages( 'LiquidThreads' );
 		$thread = Threads::withSummary( $this->article );
-		if ( $thread ) {
-			$url = $thread->root()->getTitle()->getFullURL();
-			$name = $thread->root()->getTitle()->getPrefixedText();
+		if ( $thread && $thread->root() ) {
+			global $wgUser;
+
+			$t = $thread->root()->getTitle();
+			$link = $wgUser->getSkin()->link( $t );
 			$this->output->setSubtitle(
-			wfMsg( 'lqt_summary_subtitle',
-			'<a href="' . $url . '">' . $name . '</a>' ) );
+				wfMsgExt(
+					'lqt_summary_subtitle',
+					array( 'parseinline', 'replaceafter' ),
+					$link
+				)
+			);
 		}
 		return true;
 	}

@@ -71,6 +71,6 @@ public class CategorySelectTest extends BaseTest {
 
 		// TODO: Test to make sure that deleting one tag by clicking an X deletes exactly that one tag (and not more, if there are more). See rt#45033
 
-		doDelete("label=Author request", "Clean up after test");
+		doDelete("label=regexp:.*Author request", "Clean up after test");
 	}
 }

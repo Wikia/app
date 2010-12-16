@@ -93,9 +93,7 @@ class DataCenterWidgetFieldLinks extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $wgUser;
 		// Gets current path
 		$path = DataCenterPage::getPath();
@@ -274,9 +272,7 @@ class DataCenterWidgetFieldLinks extends DataCenterWidget {
 		return $xmlOutput;
 	}
 
-	public function saveFieldLinks(
-		array $data
-	) {
+	public function saveFieldLinks( array $data ) {
 		$metaField = DataCenterDBMetaField::newFromValues( $data['row'] );
 		$metaFieldLinks = $metaField->getLinks();
 		// Build table of links that do exist
@@ -313,7 +309,7 @@ class DataCenterWidgetFieldLinks extends DataCenterWidget {
 						)
 					);
 					$metaFieldLink->insert();
-				} else if (
+				} elseif (
 					!isset( $shouldExistTable[$key] ) &&
 					isset( $doesExistTable[$key] ) &&
 					( $doesExistTable[$key]->numValues() == 0 )

@@ -13,6 +13,7 @@ class SRFCalendar extends SMWResultPrinter {
 
 	protected $mTemplate = '';
 	protected $mUserParam = '';
+	protected $mRealUserLang = null;
 
 	protected function readParameters($params,$outputmode) {
 		SMWResultPrinter::readParameters($params,$outputmode);
@@ -23,6 +24,18 @@ class SRFCalendar extends SMWResultPrinter {
 		if (array_key_exists('userparam', $params)) {
 			$this->mUserParam = trim($params['userparam']);
 		}
+		if (array_key_exists('lang', $params)) {
+			global $wgLang;
+			// store the actual user's language, so we can revert
+			// back to it after printing the calendar
+			$this->mRealUserLang = clone($wgLang);
+			$wgLang = Language::factory(trim($params['lang']));
+		}
+	}
+
+	public function getName() {
+		wfLoadExtensionMessages('SemanticResultFormats');
+		return wfMsg('srf_printername_calendar');
 	}
 
 	public function getResult($results, $params, $outputmode) {
@@ -39,10 +52,11 @@ class SRFCalendar extends SMWResultPrinter {
 		$skin = $wgUser->getSkin();
 		$result = "";
 
-		$locations = array();
+		$events = array();
 		// print all result rows
 		while ( $row = $res->getNext() ) {
-			$date = $title = $text = $color = "";
+			$dates = array();
+			$title = $text = $color = "";
 			
 			if ($this->mTemplate != '') { // build template code
 				$this->hasTemplates = true;
@@ -53,14 +67,14 @@ class SRFCalendar extends SMWResultPrinter {
 					$text .= '|' . ($i + 1) . '=';
 					while ( ($object = $field->getNextObject()) !== false ) {
 						if ($object->getTypeID() == '_dat') {
-							$test .= SRFCalendar::formatDateStr($object);
+							$text .= SRFCalendar::formatDateStr($object);
 						} elseif ($object->getTypeID() == '_wpg') { // use shorter "LongText" for wikipage
-							$text .= $object->getLongText($outputmode, NULL);
+							$text .= $object->getLongText($outputmode, null);
 						} else {
-							$text .= $object->getShortText($outputmode, NULL);
+							$text .= $object->getShortText($outputmode, null);
 						}
 						if ($pr->getMode() == SMWPrintRequest::PRINT_PROP && $pr->getTypeID() == '_dat') {
-							$date = SRFCalendar::formatDateStr($object);
+							$dates[] = SRFCalendar::formatDateStr($object);
 						}
 					}
 				}
@@ -84,14 +98,14 @@ class SRFCalendar extends SMWResultPrinter {
 							$text .= $pr->getHTMLText($skin) . " " . $object->getShortText($outputmode, $skin);
 						}
 						if ($pr->getMode() == SMWPrintRequest::PRINT_PROP && $pr->getTypeID() == '_dat') {
-							$date = SRFCalendar::formatDateStr($object);
+							$dates[] = SRFCalendar::formatDateStr($object);
 						}
 					}
 				}
 				if ($i > 1)
 					$text .= ")";
 			}
-			if ($date != '') {
+			if (count($dates) > 0) {
 				// handle the 'color=' value, whether it came
 				// from a compound query or a regular one
 				if (property_exists($row[0], 'display_options')) {
@@ -99,13 +113,23 @@ class SRFCalendar extends SMWResultPrinter {
 						$color = $row[0]->display_options['color'];
 				} elseif (array_key_exists('color', $this->m_params))
 					$color = $this->m_params['color'];
-				$events[] = array($title, $text, $date, $color);
+				foreach ($dates as $date)
+					$events[] = array($title, $text, $date, $color);
 			}
 		}
 
 		$result = SRFCalendar::displayCalendar($events);
-
-		return array($result, 'noparse' => 'true', 'isHTML' => 'true');
+		// go back to the actual user's language, in case a different
+		// language had been specified for this calendar
+		if (! is_null($this->mRealUserLang)) {
+			global $wgLang;
+			$wgLang = $this->mRealUserLang;
+		}
+		global $wgParser;
+		if (is_null($wgParser->getTitle()))
+			return $result;
+		else
+			return array($result, 'noparse' => 'true', 'isHTML' => 'true');
 	}
 
 
@@ -139,16 +163,36 @@ class SRFCalendar extends SMWResultPrinter {
 	function displayCalendar($events) {
 		global $wgOut, $srfgScriptPath, $wgParser, $wgRequest;
 
+		$wgParser->disableCache();
+
 		$wgOut->addLink( array(
 			'rel' => 'stylesheet',
 			'type' => 'text/css',
-			'media' => "screen, projection, print",
+			'media' => "screen, print",
 			'href' => $srfgScriptPath . "/Calendar/skins/SRFC_main.css"
 		));
 		wfLoadExtensionMessages('SemanticResultFormats');
 
+		// set variables differently depending on whether this is
+		// being called from an #ask call or the Special:Ask page
 		$page_title = $wgParser->getTitle();
-		$skin = $wgParser->getOptions()->getSkin();
+		$additional_query_string = '';
+		$hidden_inputs = '';
+		$in_ask_page = is_null($page_title);
+		if ($in_ask_page) {
+			global $wgTitle;
+			$page_title = $wgTitle;
+			global $wgUser;
+			$skin = $wgUser->getSkin();
+			foreach ($wgRequest->getValues() as $key => $value) {
+				if ($key != 'month' && $key != 'year') {
+					$additional_query_string .= "&$key=$value";
+					$hidden_inputs .= "<input type=\"hidden\" name=\"$key\" value=\"$value\" />";
+				}
+			}
+		} else {
+			$skin = $wgParser->getOptions()->getSkin();
+		}
 		// get all the date-based values we need - the current month
 		// and year (i.e., the one the user is looking at - not
 		// necessarily the "current" ones), the previous and next months
@@ -188,8 +232,8 @@ class SRFCalendar extends SMWResultPrinter {
 		if ($cur_year == "0") {$cur_year = "1"; }
 		if ($next_year == "0") {$next_year = "1"; }
 		if ($prev_year == "0") {$prev_year = "-1"; }
-		$prev_month_url = $page_title->getLocalURL("month=$prev_month_num&year=$prev_year");
-		$next_month_url = $page_title->getLocalURL("month=$next_month_num&year=$next_year");
+		$prev_month_url = $page_title->getLocalURL("month=$prev_month_num&year=$prev_year" . $additional_query_string);
+		$next_month_url = $page_title->getLocalURL("month=$next_month_num&year=$next_year" . $additional_query_string);
 		$today_url = $page_title->getLocalURL();
 		$today_text = wfMsg('srfc_today');
 		$prev_month_text = wfMsg('srfc_previousmonth');
@@ -233,6 +277,7 @@ END;
 		$text .=<<<END
 </select>
 <input name="year" type="text" value="$cur_year" size="4">
+$hidden_inputs
 <input type="submit" value="$go_to_month_text">
 </form>
 </td>
@@ -296,23 +341,17 @@ END;
 				list($event_title, $other_text, $event_date, $color) = $event;
 				if ($event_date == $date_str) {
 					if ($this->mTemplate != '') {
-						$templatetext = '{{' . $this->mTemplate . $other_text . '}}';
+						$templatetext = '{{' . $this->mTemplate . $other_text .'|thisdate=' . $date_str . '}}';
 						$templatetext = $wgParser->replaceVariables($templatetext);
 						$templatetext = $wgParser->recursiveTagParse($templatetext);
-						if ($color != '') {
-							$text .= '<span style="color: ' . $color . '">' . $templatetext . '</span>';
-						} else {
-							$text .= $templatetext;
-						}
+						$text .= $templatetext;
 					} else {
-						$event_name = str_replace('_', ' ', $event_title->getPrefixedDbKey());
+						$event_str = $skin->makeLinkObj($event_title);
 						if ($color != '') {
-							$event_url = $event_title->getPrefixedDbKey();
-							$event_str = '<a href="' . $event_url . '" style="color: ' . $color . '">' . $event_name . "</a>";
+							$text .= "<p class=\"colored-entry\" style=\"border-left: 7px $color solid;\">$event_str $other_text</p>\n";
 						} else {
-							$event_str = $skin->makeLinkObj($event_title, $event_name);
+							$text .= "$event_str $other_text\n\n";
 						}
-						$text .= "$event_str $other_text\n\n";
 					}
 				}
 			}
@@ -332,5 +371,11 @@ END;
 
 		return $text;
 	}
+
+        public function getParameters() {
+                $params = parent::getParameters();
+                $params[] = array('name' => 'lang', 'type' => 'string', 'description' => wfMsg('srf_paramdesc_calendarlang'));
+                return $params;
+        }
 
 }

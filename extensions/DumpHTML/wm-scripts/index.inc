@@ -12,7 +12,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Wikipedia Static HTML Dumps</title>
-		<style type="text/css" media="screen,projection">/*<![CDATA[*/
+		<style type="text/css" media="screen">/*<![CDATA[*/
 body {
 	font: x-small sans-serif;
 	background: #f9f9f9 url(http://en.wikipedia.org/skins-1.5/monobook/headbg.jpg) 0 0 no-repeat;

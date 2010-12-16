@@ -14,69 +14,55 @@ $messages = array();
 $messages['en'] = array(
 	'deletebatch' => 'Delete batch of pages',
 	'deletebatch-desc' => '[[Special:DeleteBatch|Delete a batch of pages]]',
-	'deletebatch-help' => 'Delete a batch of pages. You can either perform a single delete, or delete pages listed in a file.
+	'deletebatch-help' => 'Delete a batch of pages.
+You can either perform a single delete, or delete pages listed in a file.
 Choose a user that will be shown in deletion logs.
-Uploaded file should contain page name and optional reason separated by a "|" character in each line.',
+Uploaded files should contain page name and optional reason, separated by a "|" character in each line.',
 	'deletebatch-caption' => 'Page list:',
 	'deletebatch-title' => 'Delete batch',
 	'deletebatch-link-back' => 'Go back to the special page',
 	'deletebatch-as' => 'Run the script as:',
 	'deletebatch-both-modes' => 'Please choose either one specified page or a given list of pages.',
 	'deletebatch-or' => '<b>or</b>',
+	'deletebatch-delete' => 'Delete',
 	'deletebatch-page' => 'Pages to be deleted:',
-	'deletebatch-reason' => 'Reason for deletion',
-	'deletebatch-processing' => 'deleting pages $1',
-	'deletebatch-from-file' => 'from file list',
-	'deletebatch-from-form' => 'from form',
-	'deletebatch-success-subtitle' => 'for $1',
+	'deletebatch-processing-from-file' => 'deleting pages from file list',
+	'deletebatch-processing-from-form' => 'deleting pages from form',
 	'deletebatch-omitting-nonexistant' => 'Omitting non-existing page $1.',
 	'deletebatch-omitting-invalid' => 'Omitting invalid page $1.',
 	'deletebatch-file-bad-format' => 'The file should be plain text',
 	'deletebatch-file-missing' => 'Unable to read given file',
-	'deletebatch-select-script' => 'delete page script',
-	'deletebatch-select-yourself' => 'you',
-	'deletebatch-no-page' => 'Please specify at least one page to delete OR choose a file containing page list.',
+	'deletebatch-select-script' => 'Delete page script',
+	'deletebatch-select-yourself' => 'You',
+	'deletebatch-no-page' => 'Please specify at least one page to delete or choose a file containing page list.',
 	'right-deletebatch' => 'Batch delete pages',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Fryed-peach
+ * @author IAlex
  * @author Jon Harald Søby
  * @author Malafaya
  * @author Purodha
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'deletebatch-desc' => 'Short description of the :Deletebatch extension, shown in [[Special:Version]]. Do not translate or change links.',
-	'deletebatch-button' => '{{Identical|Delete}}',
-	'deletebatch-reason' => '{{Identical|Reason for deletion}}',
-	'deletebatch-processing' => 'Used as page subtitle.
-* $1 is text from {{msg-mw|deletebatch-from-file}} or {{msg-mw|deletebatch-from-form}}',
-	'deletebatch-from-file' => 'Used as $1 in {{msg-mw|Deletebatch-processing}}',
-	'deletebatch-from-form' => 'Used as $1 in {{msg-mw|Deletebatch-processing}}',
-	'deletebatch-success-subtitle' => '{{Identical|For $1}}',
+	'deletebatch-or' => '{{Identical|Or}}',
+	'deletebatch-delete' => '{{Identical|Delete}}',
 	'deletebatch-select-script' => 'User name. Entry in dropdown for user that should execute the deletions',
 	'deletebatch-select-yourself' => 'Entry in dropdown for user that should execute the deletions',
+	'right-deletebatch' => '{{doc-right|deletebatch}}',
 );
 
-/** Goanese Konkani (Latin) (कोंकणी/Konknni  (Latin))
- * @author Deepak D'Souza
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
  */
-$messages['gom-latn'] = array(
-	'deletebatch-success-subtitle' => '$1 khatir',
-);
-
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
-	'deletebatch-caption' => 'Lehtpoliden nimikirjutez:',
-	'deletebatch-title' => 'Čuta uded lehtpoled',
-	'deletebatch-link-back' => 'Tagaze specialižele lehtpolele',
-	'deletebatch-as' => 'Radatada skript kut:',
-	'deletebatch-both-modes' => "Olgat hüväd, valikat lehtpol' vai lehtpoliden nimikirjutez.",
-	'deletebatch-or' => '<b>vai</b>',
-	'deletebatch-page' => 'Lehtpoled čutes:',
-	'deletebatch-reason' => 'Čudandan sü',
+$messages['af'] = array(
+	'deletebatch-or' => '<b>Of</b>',
+	'deletebatch-delete' => 'Skrap',
+	'deletebatch-select-yourself' => 'u',
 );
 
 /** Arabic (العربية)
@@ -95,12 +81,10 @@ $messages['ar'] = array(
 	'deletebatch-as' => 'تشغيل السكريبت ك:',
 	'deletebatch-both-modes' => 'من فضلك اختر إما صفحة واحدة أو قائمة معطاة من الصفحات.',
 	'deletebatch-or' => '<b>أو</b>',
+	'deletebatch-delete' => 'حذف',
 	'deletebatch-page' => 'الصفحات للحذف:',
-	'deletebatch-reason' => 'سبب الحذف',
-	'deletebatch-processing' => 'حذف الصفحات $1',
-	'deletebatch-from-file' => 'من قائمة ملف',
-	'deletebatch-from-form' => 'من استمارة',
-	'deletebatch-success-subtitle' => 'ل$1',
+	'deletebatch-processing-from-file' => 'جاري حذف الصفحات من قائمة الملف',
+	'deletebatch-processing-from-form' => 'جاري حذف الصفحات من الاستمارة',
 	'deletebatch-omitting-nonexistant' => 'إزالة صفحة غير موجودة $1.',
 	'deletebatch-omitting-invalid' => 'إزالة صفحة غير صحيحة $1.',
 	'deletebatch-file-bad-format' => 'الملف ينبغي أن يكون نصا خالصا',
@@ -129,11 +113,6 @@ $messages['arz'] = array(
 	'deletebatch-both-modes' => 'من فضلك اختر إما صفحة واحدة أو قائمة معطاة من الصفحات.',
 	'deletebatch-or' => '<b>أو</b>',
 	'deletebatch-page' => 'الصفحات للحذف:',
-	'deletebatch-reason' => 'سبب الحذف',
-	'deletebatch-processing' => 'مسح الصفحات $1 شغال',
-	'deletebatch-from-file' => 'من قائمة ملف',
-	'deletebatch-from-form' => 'من استمارة',
-	'deletebatch-success-subtitle' => 'ل$1',
 	'deletebatch-omitting-nonexistant' => 'إزالة صفحة غير موجودة $1.',
 	'deletebatch-omitting-invalid' => 'إزالة صفحة غير صحيحة $1.',
 	'deletebatch-file-bad-format' => 'الملف ينبغى أن يكون نصا خالصا',
@@ -146,25 +125,77 @@ $messages['arz'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
-	'deletebatch-button' => 'Выдаліць',
+	'deletebatch' => 'Выдаленьне групы старонак',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Выдаліць групу старонак]]',
+	'deletebatch-help' => 'Выдаленьне групы старонак. Вы можаце выдаляць старонкі па адной альбо выдаліць старонкі зьмешчаныя ў файле.
+Выберыце ўдзельніка, які будзе паказаны ў журнале выдаленьняў.
+Загружаны файл павінен зьмяшчаць назвы старонак і неабавязковую прычыну выдаленьня, якія падзеленыя паміж сабой сымбалем «|» па аднаму запісу на радок.',
+	'deletebatch-caption' => 'Сьпіс старонак:',
+	'deletebatch-title' => 'Выдаліць групу',
+	'deletebatch-link-back' => 'Вярнуцца да спэцыяльнай старонкі',
+	'deletebatch-as' => 'Запусьціць скрыпт як:',
+	'deletebatch-both-modes' => 'Калі ласка, выберыце адну вызначаную старонку альбо сьпіс старонак.',
+	'deletebatch-or' => '<b>ці</b>',
+	'deletebatch-delete' => 'Выдаліць',
+	'deletebatch-page' => 'Старонкі да выдаленьня:',
+	'deletebatch-processing-from-file' => 'выдаленьне старонак са сьпісу ў файле',
+	'deletebatch-processing-from-form' => 'выдаленьне старонак з формы',
+	'deletebatch-omitting-nonexistant' => 'Прапушчаная неіснуючая старонка $1.',
+	'deletebatch-omitting-invalid' => 'Прапушчаная няслушная старонка $1.',
+	'deletebatch-file-bad-format' => 'Файл павінен утрымліваць толькі тэкст',
+	'deletebatch-file-missing' => 'Немагчыма прачытаць пададзены файл',
+	'deletebatch-select-script' => 'скрыпт выдаленьня старонак',
+	'deletebatch-select-yourself' => 'Вы',
+	'deletebatch-no-page' => 'Калі ласка, пазначце хаця б адну старонку АЛЬБО файл, які ўтрымлівае сьпіс старонак да выдаленьня.',
+	'right-deletebatch' => 'выдаленьне групы старонак',
 );
 
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'deletebatch-link-back' => 'Връщане към специалната страница',
 	'deletebatch-as' => 'Стартиране на скрипта като:',
 	'deletebatch-or' => '<b>ИЛИ</b>',
+	'deletebatch-delete' => 'Изтриване',
 	'deletebatch-page' => 'Страници за изтриване:',
-	'deletebatch-reason' => 'Причина за изтриването',
-	'deletebatch-processing' => 'изтриване на страниците $1',
-	'deletebatch-from-file' => 'от списък във файл',
-	'deletebatch-from-form' => 'от формуляр',
-	'deletebatch-success-subtitle' => 'за $1',
 	'deletebatch-file-bad-format' => 'Необходимо е файлът да съдържа само текст',
 	'deletebatch-file-missing' => 'Предоставеният файл не може да бъде прочетен',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'deletebatch' => 'Dilemel ur strollad pajennoù',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Dilemel ur strollad pajennoù]]',
+	'deletebatch-help' => "Dilemel ur strollad pajennoù.
+Tu 'zo deoc'h lañsañ un dilemadur eeun pe dilemel pajennoù listennet en ur restr.
+Dibabit un iplijer a vo lakaet e marilh an dilamadennoù.
+Ur restr enporzhiet a c'hello bezañ ennañ : anv ur bajenn hag un abeg (diret) evit he dilemel, rankout a raio bezañ dispartiet gant ur \"|\" evit pep linenn.",
+	'deletebatch-caption' => 'Roll ar pajennoù :',
+	'deletebatch-title' => 'Dilemel ur strollad',
+	'deletebatch-link-back' => "Distreiñ d'ar bajenn dibar",
+	'deletebatch-as' => 'Lañsañ ar skript evel :',
+	'deletebatch-both-modes' => 'Mar plij dibabit pe ur bajenn roet pe ur roll roet a bajennoù',
+	'deletebatch-or' => '<b>pe</b>',
+	'deletebatch-delete' => 'Dilemel',
+	'deletebatch-page' => 'Pajennoù da zilemel :',
+	'deletebatch-processing-from-file' => 'o tilemel pajennoù adalek ur restr gant ur roll',
+	'deletebatch-processing-from-form' => 'o tilemel pajennoù adalek ar furmskrid',
+	'deletebatch-omitting-nonexistant' => "Mank ar bajenn $1 ha n'eus ket diouti.",
+	'deletebatch-omitting-invalid' => 'Mank ar bajenn fall $1.',
+	'deletebatch-file-bad-format' => 'Ar restr a zle bezañ testenn blaen',
+	'deletebatch-file-missing' => 'Diposubl eo lenn ar restr roet',
+	'deletebatch-select-script' => 'Skript evit dilemel pajennoù',
+	'deletebatch-select-yourself' => "C'hwi",
+	'deletebatch-no-page' => "Mar plij roit ur bajenn da zilemel d'an nebeutañ PE dibabit ur restr ennañ ur roll pajennoù",
+	'right-deletebatch' => 'Dilemel pajennoù dre strolladoù',
 );
 
 /** Bosnian (Bosanski)
@@ -172,13 +203,15 @@ $messages['bg'] = array(
  */
 $messages['bs'] = array(
 	'deletebatch-caption' => 'Spisak stranica:',
+	'deletebatch-link-back' => 'Nazad na posebnu stranicu',
+	'deletebatch-as' => 'Pokreni skriptu kao:',
 	'deletebatch-or' => '<b>ili</b>',
+	'deletebatch-delete' => 'Obriši',
 	'deletebatch-page' => 'Stranice koje će biti obrisane:',
-	'deletebatch-reason' => 'Razlog brisanja',
-	'deletebatch-processing' => 'brisanje stranica $1',
-	'deletebatch-from-file' => 'iz spiska datoteke',
-	'deletebatch-from-form' => 'iz obrazca',
-	'deletebatch-success-subtitle' => 'za $1',
+	'deletebatch-processing-from-file' => 'brisanje stranica sa spiska datoteka',
+	'deletebatch-processing-from-form' => 'brisanje stranica iz obrazca',
+	'deletebatch-file-bad-format' => 'Datoteka bi trebala biti u formi običnog teksta',
+	'deletebatch-file-missing' => 'Ne možete se pročitati navedena datoteka',
 	'deletebatch-select-yourself' => 'vi',
 );
 
@@ -199,11 +232,6 @@ El fitxer indicat només pot contenir el títol de la pàgina i el motiu per a e
 	'deletebatch-both-modes' => 'Escolliu una pàgina especificada o una llista de pàgines donada.',
 	'deletebatch-or' => '<b>o</b>',
 	'deletebatch-page' => 'Pàgines a esborrar:',
-	'deletebatch-reason' => 'Motiu per a ser esborrat',
-	'deletebatch-processing' => 'esborrant pàgines $1',
-	'deletebatch-from-file' => 'des de llista',
-	'deletebatch-from-form' => 'des de formulari',
-	'deletebatch-success-subtitle' => 'per $1',
 	'deletebatch-omitting-nonexistant' => "S'ha omès la pàgina inexistent $1.",
 	'deletebatch-omitting-invalid' => "S'ha omès la pàgina no vàlida $1.",
 	'deletebatch-file-bad-format' => 'El fitxer ha de ser de text pla',
@@ -221,6 +249,7 @@ El fitxer indicat només pot contenir el títol de la pàgina i el motiu per a e
  * @author MF-Warburg
  * @author Purodha
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'deletebatch' => 'Eine Reihe von Seiten löschen',
@@ -234,12 +263,10 @@ Die hochzuladende Datei sollte pro Zeile einen Seitentitel und kann optional ein
 	'deletebatch-as' => 'Skript ausführen als:',
 	'deletebatch-both-modes' => 'Bitte wähle entweder eine spezifische Seite oder eine gegebene Liste von Seiten.',
 	'deletebatch-or' => '<b>oder</b>',
+	'deletebatch-delete' => 'Löschen',
 	'deletebatch-page' => 'Zu löschende Seiten:',
-	'deletebatch-reason' => 'Löschgrund',
-	'deletebatch-processing' => 'lösche Seiten $1',
-	'deletebatch-from-file' => 'von Dateiliste',
-	'deletebatch-from-form' => 'von Eingabe',
-	'deletebatch-success-subtitle' => 'für $1',
+	'deletebatch-processing-from-file' => 'Seiten über Dateiliste löschen',
+	'deletebatch-processing-from-form' => 'Seiten über Formular löschen',
 	'deletebatch-omitting-nonexistant' => 'Überspringe nicht vorhandene Seite $1.',
 	'deletebatch-omitting-invalid' => 'Überspringe ungültige Seite $1.',
 	'deletebatch-file-bad-format' => 'Die Datei sollte Klartext enthalten.',
@@ -252,9 +279,16 @@ Die hochzuladende Datei sollte pro Zeile einen Seitentitel und kann optional ein
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author ChrisiPK
+ * @author Imre
  */
 $messages['de-formal'] = array(
+	'deletebatch-help' => 'Löschen Sie eine Reihe von Seiten. Sie können einerseits eine einzelne Seite löschen, aber auch mehrere Seiten, die Sie in einer Datei aufzählen.
+Wählen Sie einen Benutzer, der im Löschlogbuch angezeigt werden soll.
+Die hochzuladende Datei sollte pro Zeile einen Seitentitel und kann optional einen mit einem senkrechten Strich („|“) abgetrennten Löschgrund enthalten.',
 	'deletebatch-link-back' => 'Sie können zur Erweiterung zurückgehen',
+	'deletebatch-both-modes' => 'Bitte wählen Sie entweder eine spezifische Seite oder eine gegebene Liste von Seiten.',
+	'deletebatch-select-yourself' => 'Sie',
+	'deletebatch-no-page' => 'Bitte geben Sie entweder zumindest eine zu löschende Seite an oder wählen Sie eine Datei, die eine Liste von zu löschenden Seiten enthält.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -272,12 +306,10 @@ Nagrata dataja by měła mě boka a opcionelnu pśicynu wopśimjeś, kótarejž 
 	'deletebatch-as' => 'Skript wuwjasć ako:',
 	'deletebatch-both-modes' => 'Pšosym wubjeŕ pak jaden pódany boka pak danu lisćinu bokow.',
 	'deletebatch-or' => '<b>abo</b>',
+	'deletebatch-delete' => 'Wulašowaś',
 	'deletebatch-page' => 'Boki, kótarež maju se wulašowaś:',
-	'deletebatch-reason' => 'Pśicyna za wulašowanje',
-	'deletebatch-processing' => 'boki $1 se lašuju',
-	'deletebatch-from-file' => 'z lisćiny datajow',
-	'deletebatch-from-form' => 'z formulara',
-	'deletebatch-success-subtitle' => 'za $1',
+	'deletebatch-processing-from-file' => 'boki lašuju se z datajoweje lisćiny',
+	'deletebatch-processing-from-form' => 'boki lašuju so z formulara',
 	'deletebatch-omitting-nonexistant' => 'Njeeksistujucy bok $1 se wuwóstaja.',
 	'deletebatch-omitting-invalid' => 'Njepłaśiwy bok $1 se wuwóstaja.',
 	'deletebatch-file-bad-format' => 'Dataja by měła lutny tekst wopśimjeś',
@@ -288,7 +320,19 @@ Nagrata dataja by měła mě boka a opcionelnu pśicynu wopśimjeś, kótarejž 
 	'right-deletebatch' => 'Někotare boki wulašowaś',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'deletebatch-caption' => 'Λίστα σελίδων:',
+	'deletebatch-as' => 'Τρέξιμο του σκριπτ ως:',
+	'deletebatch-or' => '<b>ή</b>',
+	'deletebatch-delete' => 'Διαγραφή',
+	'deletebatch-select-yourself' => 'Εσείς',
+);
+
 /** Esperanto (Esperanto)
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
@@ -297,45 +341,73 @@ $messages['eo'] = array(
 	'deletebatch-help' => 'Por forigi aron de paĝoj. Vi povas aŭ fari unuopan forigon, aŭ forigi paĝojn listitajn en dosiero.
 Selektu uzanton kiu estos montrata en forigadaj protokoloj.
 Alŝutita dosiero enhavu paĝan nomon kaj nedevigan kialon apartigita de signo "|" en ĉiu linio.',
-	'deletebatch-caption' => 'Paĝlisto',
+	'deletebatch-caption' => 'Paĝlisto:',
 	'deletebatch-title' => 'Forigi aron',
-	'deletebatch-link-back' => 'Vi povas reiri al la etendilo',
-	'deletebatch-as' => 'Voki la skripton kiel',
+	'deletebatch-link-back' => 'Reiru al la speciala paĝo',
+	'deletebatch-as' => 'Voki la skripton kiel:',
 	'deletebatch-both-modes' => 'Bonvolu selekti aŭ unu specifan paĝon aŭ donatan liston de paĝoj.',
 	'deletebatch-or' => '<b>AŬ</b>',
-	'deletebatch-page' => 'Forigotaj paĝoj',
-	'deletebatch-reason' => 'Kialo por forigo',
-	'deletebatch-processing' => 'forigante paĝojn',
-	'deletebatch-from-file' => 'de dosierlisto',
-	'deletebatch-from-form' => 'de paĝo',
-	'deletebatch-success-subtitle' => 'por $1',
+	'deletebatch-delete' => 'Forigi',
+	'deletebatch-page' => 'Forigotaj paĝoj:',
 	'deletebatch-omitting-nonexistant' => 'Pasante neekzistan paĝon $1.',
 	'deletebatch-omitting-invalid' => 'Pasante nevalidan paĝon $1.',
 	'deletebatch-file-bad-format' => 'La dosiero estu norma teksto',
 	'deletebatch-file-missing' => 'Ne eblas legi donatan dosieron',
 	'deletebatch-select-script' => 'skripto por forigi paĝon',
 	'deletebatch-select-yourself' => 'vi',
-	'deletebatch-no-page' => 'Bonvolu specifigi almenaŭ unu paĝon por forigi AŬ selekti dosieron enhavantan paĝliston.',
+	'deletebatch-no-page' => 'Bonvolu specifi almenaŭ unu paĝon por forigi AŬ selekti dosieron enhavantan paĝliston.',
 );
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Imre
  * @author Sanbec
+ * @author Translationista
  */
 $messages['es'] = array(
+	'deletebatch' => 'Eliminar lote de páginas',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Eliminar un lote de páginas]]',
+	'deletebatch-help' => 'Eliminar un lote de páginas.
+Puedes realizar un solo borrado o eliminar páginas listadas en un archivo.
+Elige el usuario que se mostrará en los registros de borrado.
+Los archivos subidos deben contener el nombre de la página y el motivo opcional, separados por un caracter "|" en cada línea.',
 	'deletebatch-caption' => 'Lista de páginas:',
+	'deletebatch-title' => 'Eliminar lote',
 	'deletebatch-link-back' => 'Regresar a la página especial',
+	'deletebatch-as' => 'Ejecutar el script como:',
+	'deletebatch-both-modes' => 'Por favor escoger ya sea una página específica o una lista dada de páginas.',
 	'deletebatch-or' => '<b>o</b>',
+	'deletebatch-delete' => 'Borrar',
 	'deletebatch-page' => 'Páginas a ser borradas:',
-	'deletebatch-reason' => 'Razón para borrado',
-	'deletebatch-processing' => 'borrando páginas $1',
-	'deletebatch-from-file' => 'de la lista de archivos',
-	'deletebatch-from-form' => 'del formulario',
-	'deletebatch-success-subtitle' => 'Para $1',
+	'deletebatch-processing-from-file' => 'borrando páginas de la lista de archivos',
+	'deletebatch-processing-from-form' => 'borrando páginas del formulario',
 	'deletebatch-omitting-nonexistant' => 'Omitiendo página no existente $1.',
 	'deletebatch-omitting-invalid' => 'Omitiendo página inválida $1.',
+	'deletebatch-file-bad-format' => 'El archivo debería ser texto simple',
+	'deletebatch-file-missing' => 'Incapaz de leer archivo dado',
+	'deletebatch-select-script' => 'Borrar el script de la página',
 	'deletebatch-select-yourself' => 'usted',
 	'deletebatch-no-page' => 'Por favor especifique al menos una página a borrar O escoja un archivo conteniendo una lista de páginas.',
+	'right-deletebatch' => 'Borrar páginas en lote',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'deletebatch-or' => '<b>või</b>',
+	'deletebatch-delete' => 'Kustuta',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'deletebatch-caption' => 'Orrialde zerrenda:',
+	'deletebatch-or' => '<b>edo</b>',
+	'deletebatch-delete' => 'Ezabatu',
+	'deletebatch-page' => 'Ezabatu beharreko orrialdeak:',
+	'deletebatch-select-yourself' => 'Zu',
 );
 
 /** Finnish (Suomi)
@@ -348,24 +420,20 @@ $messages['fi'] = array(
 	'deletebatch' => 'Poista useita sivuja',
 	'deletebatch-desc' => 'Mahdollistaa [[Special:DeleteBatch|sivujen poistamisen erissä]].',
 	'deletebatch-help' => 'Poista useita sivuja. Voit joko tehdä yhden poiston tai poistaa tiedostossa listatut sivut. Valitse käyttäjä, joka näytetään poistolokeissa. Tallennetun tiedoston tulisi sisältää sivun nimi ja vapaaehtoinen syy | -merkin erottamina joka rivillä.',
-	'deletebatch-caption' => 'Sivulista:',
+	'deletebatch-caption' => 'Sivulista',
 	'deletebatch-title' => 'Poista useita sivuja',
-	'deletebatch-link-back' => 'Voit palata lisäosaan',
-	'deletebatch-as' => 'Suorita skripti käyttäjänä:',
+	'deletebatch-link-back' => 'Palaa takaisin toimintosivulle',
+	'deletebatch-as' => 'Poiston suorittaja',
 	'deletebatch-both-modes' => 'Valitse joko määritelty sivu tai annettu lista sivuista.',
 	'deletebatch-or' => '<b>TAI</b>',
-	'deletebatch-page' => 'Poistettavat sivut:',
-	'deletebatch-reason' => 'Poiston syy',
-	'deletebatch-processing' => 'poistetaan sivuja $1',
-	'deletebatch-from-file' => 'tiedostolistasta',
-	'deletebatch-from-form' => 'lomakkeesta',
-	'deletebatch-success-subtitle' => '$1',
+	'deletebatch-delete' => 'Poista',
+	'deletebatch-page' => 'Poistettavat sivut',
 	'deletebatch-omitting-nonexistant' => 'Ohitetaan olematon sivu $1.',
 	'deletebatch-omitting-invalid' => 'Ohitetaan kelpaamaton sivu $1.',
 	'deletebatch-file-bad-format' => 'Tiedoston tulisi olla raakatekstiä',
 	'deletebatch-file-missing' => 'Ei voi lukea annettua tiedostoa',
-	'deletebatch-select-script' => 'sivunpoistoskripti',
-	'deletebatch-select-yourself' => 'sinä',
+	'deletebatch-select-script' => 'yleinen sivunpoistotunnus',
+	'deletebatch-select-yourself' => 'oma tunnus',
 	'deletebatch-no-page' => 'Määrittele ainakin yksi poistettava sivu TAI valitse tiedosto, joka sisältää sivulistan.',
 	'right-deletebatch' => 'Poistaa sivuja erissä',
 );
@@ -388,12 +456,10 @@ Un fichier importé pourra contenir un nom de la page et un motif facultatif sé
 	'deletebatch-as' => 'Lancer le script comme :',
 	'deletebatch-both-modes' => 'Veuillez choisir, soit une des pages indiquées, soit une liste donnée de pages.',
 	'deletebatch-or' => '<b>OU</b>',
+	'deletebatch-delete' => 'Supprimer',
 	'deletebatch-page' => 'Pages à supprimer :',
-	'deletebatch-reason' => 'Motif de la suppression',
-	'deletebatch-processing' => 'suppression des pages $1',
-	'deletebatch-from-file' => 'depuis la liste d’un fichier',
-	'deletebatch-from-form' => 'à partir du formulaire',
-	'deletebatch-success-subtitle' => 'pour « $1 »',
+	'deletebatch-processing-from-file' => 'suppression des pages depuis un fichier de liste',
+	'deletebatch-processing-from-form' => 'suppression des pages depuis le formulaire',
 	'deletebatch-omitting-nonexistant' => 'Omission de la page « $1 » inexistante.',
 	'deletebatch-omitting-invalid' => 'Omission de la page « $1 » incorrecte.',
 	'deletebatch-file-bad-format' => 'Le fichier doit être en texte simple',
@@ -402,14 +468,6 @@ Un fichier importé pourra contenir un nom de la page et un motif facultatif sé
 	'deletebatch-select-yourself' => 'vous',
 	'deletebatch-no-page' => 'Veuillez indiquer au moins une page à supprimer OU un fichier donné contenant une liste de pages.',
 	'right-deletebatch' => 'Supprimer des pages en lot',
-);
-
-/** Western Frisian (Frysk)
- * @author Snakesteuben
- */
-$messages['fy'] = array(
-	'deletebatch-button' => 'Wiskje',
-	'deletebatch-reason' => 'Reden foar it wiskjen',
 );
 
 /** Galician (Galego)
@@ -421,18 +479,16 @@ $messages['gl'] = array(
 	'deletebatch-help' => 'Borrar un conxunto de páxinas. Pode levar a cabo un borrado único ou borrar as páxinas listadas nun ficheiro.
 Escolla o usuario que será amosado nos rexistros de borrado.
 O ficheiro cargado debería conter o nome da páxina e unha razón opcional separados por un carácter de barra vertical ("|") en cada liña.',
-	'deletebatch-caption' => 'Lista da páxina:',
+	'deletebatch-caption' => 'Lista de páxinas:',
 	'deletebatch-title' => 'Borrar un conxunto',
 	'deletebatch-link-back' => 'Voltar á páxina especial',
 	'deletebatch-as' => 'Executar a escritura como:',
 	'deletebatch-both-modes' => 'Por favor, escolla unha páxina específica ou unha lista de páxinas dadas.',
 	'deletebatch-or' => '<b>OU</b>',
+	'deletebatch-delete' => 'Borrar',
 	'deletebatch-page' => 'Páxinas a ser borradas:',
-	'deletebatch-reason' => 'Razón para o borrado',
-	'deletebatch-processing' => 'borrando as páxinas $1',
-	'deletebatch-from-file' => 'da lista de ficheiros',
-	'deletebatch-from-form' => 'do formulario',
-	'deletebatch-success-subtitle' => 'de $1',
+	'deletebatch-processing-from-file' => 'borrando as páxinas da lista de ficheiros',
+	'deletebatch-processing-from-form' => 'borrando as páxinas do formulario',
 	'deletebatch-omitting-nonexistant' => 'Omitindo a páxina $1, que non existe.',
 	'deletebatch-omitting-invalid' => 'Omitindo a páxina inválida $1.',
 	'deletebatch-file-bad-format' => 'O ficheiro debería ser un texto sinxelo',
@@ -448,10 +504,9 @@ O ficheiro cargado debería conter o nome da páxina e unha razón opcional sepa
  * @author Omnipaedista
  */
 $messages['grc'] = array(
-	'deletebatch-button' => 'Διαγράφειν',
 	'deletebatch-or' => '<b>ἢ</b>',
-	'deletebatch-success-subtitle' => 'διὰ τὸ $1',
-	'deletebatch-select-yourself' => 'σύ',
+	'deletebatch-delete' => 'Σβεννύναι',
+	'deletebatch-select-yourself' => 'Σύ',
 );
 
 /** Swiss German (Alemannisch)
@@ -469,12 +524,10 @@ D Datei, wu soll uffeglade wäre, sott pro Zyyle ei Sytetitel haa un s cha optio
 	'deletebatch-as' => 'Skript uusfieren as:',
 	'deletebatch-both-modes' => 'Bitte wehl äntwäder e spezifischi Seite oder e Lischt vu Syte.',
 	'deletebatch-or' => '<b>oder</b>',
+	'deletebatch-delete' => 'Lesche',
 	'deletebatch-page' => 'Syte, wu solle glescht wäre:',
-	'deletebatch-reason' => 'Leschgrund',
-	'deletebatch-processing' => 'Am Lesche vu dr Syte $1',
-	'deletebatch-from-file' => 'vu Dateilischt',
-	'deletebatch-from-form' => 'vu Yygab',
-	'deletebatch-success-subtitle' => 'fir $1',
+	'deletebatch-processing-from-file' => 'Lescht Syte us dr Dateie-Lischt',
+	'deletebatch-processing-from-form' => 'Lescht Dateie us dr Formular',
 	'deletebatch-omitting-nonexistant' => 'Ibergump Syte $1, wu s nit git.',
 	'deletebatch-omitting-invalid' => 'Ibergump nit giltigi Syte $1.',
 	'deletebatch-file-bad-format' => 'In dr Datei sott s Klartäxt haa.',
@@ -501,12 +554,10 @@ $messages['he'] = array(
 	'deletebatch-as' => 'הרצת הסקריפט בתור:',
 	'deletebatch-both-modes' => 'אנא בחרו בדף אחד מסוים או ברשימה נתונה של דפים.',
 	'deletebatch-or' => '<b>או</b>',
+	'deletebatch-delete' => 'מחיקה',
 	'deletebatch-page' => 'דפים למחיקה:',
-	'deletebatch-reason' => 'סיבה למחיקה',
-	'deletebatch-processing' => 'מחיקת דפים $1',
-	'deletebatch-from-file' => 'מרשימת בקובץ',
-	'deletebatch-from-form' => 'מתוך טופס',
-	'deletebatch-success-subtitle' => 'עבור $1',
+	'deletebatch-processing-from-file' => 'מחיקת דפים מרשימת הקבצים',
+	'deletebatch-processing-from-form' => 'מחיקת דפים מטופס',
 	'deletebatch-omitting-nonexistant' => 'השמטת דף שאינו קיים $1.',
 	'deletebatch-omitting-invalid' => 'השמטת דף בלתי תקין $1.',
 	'deletebatch-file-bad-format' => 'הקובץ אמור להיות קובץ טקסט פשוט.',
@@ -519,6 +570,7 @@ $messages['he'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
+ * @author Ex13
  */
 $messages['hr'] = array(
 	'deletebatch' => 'Izbriši skupinu stranica',
@@ -526,18 +578,13 @@ $messages['hr'] = array(
 	'deletebatch-help' => 'Brisanje skupine stranica. Možete izbrisati samo jednu stranicu, ili izbrisati stranice s popisa.
 Odaberite suradnika koje će biti prikazan u evidencijama.
 Postavljena datoteka treba sadržavati nazive stranica, a dodatno razlog odvojen kosom crtom "|", u svakom redu.',
-	'deletebatch-caption' => 'Popis stranica',
+	'deletebatch-caption' => 'Popis stranica:',
 	'deletebatch-title' => 'Skupno brisanje',
-	'deletebatch-link-back' => 'Možete se vratiti nazad na ekstenziju',
-	'deletebatch-as' => 'Pokreni skriptu kao',
+	'deletebatch-link-back' => 'Vrati se na posebnu stranicu',
+	'deletebatch-as' => 'Pokreni skriptu kao:',
 	'deletebatch-both-modes' => 'Molimo vas odaberiti ili jednu određenu stranicu ili popis stranica.',
 	'deletebatch-or' => '<b>ili</b>',
-	'deletebatch-page' => 'Stranice za brisanje',
-	'deletebatch-reason' => 'Razlog za brisanje',
-	'deletebatch-processing' => 'brišem stranice',
-	'deletebatch-from-file' => 's popisa iz datoteke',
-	'deletebatch-from-form' => 'iz obrasca',
-	'deletebatch-success-subtitle' => 'za $1',
+	'deletebatch-page' => 'Stranice za brisanje:',
 	'deletebatch-omitting-nonexistant' => 'Izostavljanje nepostojeće stranice $1.',
 	'deletebatch-omitting-invalid' => 'Izostavljanje neispravne stranice $1.',
 	'deletebatch-file-bad-format' => 'U datoteci bi trebao biti čisti tekst',
@@ -561,12 +608,10 @@ Nahrata dataja měła mjeno strony a opcionalnu přičinu wobsahować, kotrejž 
 	'deletebatch-as' => 'Skript wuwjesć jako:',
 	'deletebatch-both-modes' => 'Prošu wubjer pak jednu podatu stronu abo datu lisćinu stronow.',
 	'deletebatch-or' => '<b>abo</b>',
+	'deletebatch-delete' => 'Wušmórnyć',
 	'deletebatch-page' => 'Strony, kotrež maja so wušmórnyć:',
-	'deletebatch-reason' => 'Přičina za wušmórnjenje',
-	'deletebatch-processing' => 'strony $1 so šmórnu',
-	'deletebatch-from-file' => 'z datajoweje lisćiny',
-	'deletebatch-from-form' => 'z formulara',
-	'deletebatch-success-subtitle' => 'za $1',
+	'deletebatch-processing-from-file' => 'strony wušmóruja so z datajoweje lisćiny',
+	'deletebatch-processing-from-form' => 'Strony wušmóruja so z formulara',
 	'deletebatch-omitting-nonexistant' => 'Njeeksistowaca strona $1 so wuwostaja.',
 	'deletebatch-omitting-invalid' => 'Njepłaćiwa strona $1 so wuwostaja.',
 	'deletebatch-file-bad-format' => 'Dataja měła z luteho teksta wobstać.',
@@ -579,6 +624,7 @@ Nahrata dataja měła mjeno strony a opcionalnu přičinu wobsahować, kotrejž 
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'deletebatch' => 'Lapok tömeges törlése',
@@ -586,8 +632,24 @@ $messages['hu'] = array(
 	'deletebatch-help' => 'Törölhetsz egyetlen lapot, vagy egy fájlban listázottakat.
 Válaszd ki a felhasználói nevet, ami meg fog jelenni a törlési naplóban.
 A feltöltött fájl minden sora tartalmazhat „|” karakterrel elválasztva egy törlési okot.',
-	'deletebatch-caption' => 'Lapok listája',
+	'deletebatch-caption' => 'Lapok listája:',
 	'deletebatch-title' => 'Lapok tömeges törlése',
+	'deletebatch-link-back' => 'Vissza a speciális lapra',
+	'deletebatch-as' => 'A szkript futtatása mint:',
+	'deletebatch-both-modes' => 'Kérlek válassz egy konkrét lapot, vagy a lapok egy megadott listáját.',
+	'deletebatch-or' => '<b>vagy</b>',
+	'deletebatch-delete' => 'Törlés',
+	'deletebatch-page' => 'Törlendő lapok:',
+	'deletebatch-processing-from-file' => 'lapok törlése fájllista alapján',
+	'deletebatch-processing-from-form' => 'lapok törlése űrlap alapján',
+	'deletebatch-omitting-nonexistant' => 'A(z) $1 nem létező lap kihagyása.',
+	'deletebatch-omitting-invalid' => 'A(z) $1 érvénytelen lap kihagyása.',
+	'deletebatch-file-bad-format' => 'A fájlnak egyszerű szövegnek kell lennie',
+	'deletebatch-file-missing' => 'A megadott fájl nem olvasható',
+	'deletebatch-select-script' => 'Laptörlés szkript',
+	'deletebatch-select-yourself' => 'te',
+	'deletebatch-no-page' => 'Kérlek adj meg legalább egy törlendő lapot, vagy válassz egy lapok listáját tartalmazó fájlt.',
+	'right-deletebatch' => 'Lapok kötegelt törlése',
 );
 
 /** Interlingua (Interlingua)
@@ -605,12 +667,10 @@ Le file cargate debe continer in cata linea un nomine de pagina e un motivo facu
 	'deletebatch-as' => 'Executar le script como:',
 	'deletebatch-both-modes' => 'Per favor selige, o un del paginas specificate, o un lista date de paginas.',
 	'deletebatch-or' => '<b>o</b>',
+	'deletebatch-delete' => 'Deler',
 	'deletebatch-page' => 'Paginas a deler:',
-	'deletebatch-reason' => 'Motivo pro deletion',
-	'deletebatch-processing' => 'deletion del paginas $1',
-	'deletebatch-from-file' => 'a partir del lista in un file',
-	'deletebatch-from-form' => 'a partir del formulario',
-	'deletebatch-success-subtitle' => 'pro $1',
+	'deletebatch-processing-from-file' => 'deletion de paginas ex un lista de files',
+	'deletebatch-processing-from-form' => 'deletion de paginas ex formulario',
 	'deletebatch-omitting-nonexistant' => 'Omission del pagina non existente "$1".',
 	'deletebatch-omitting-invalid' => 'Omission del pagina invalide "$1".',
 	'deletebatch-file-bad-format' => 'Le file debe esser in texto simple',
@@ -619,6 +679,37 @@ Le file cargate debe continer in cata linea un nomine de pagina e un motivo facu
 	'deletebatch-select-yourself' => 'tu',
 	'deletebatch-no-page' => 'Per favor, o specifica al minus un pagina a deler, o selige un file continente un lista de paginas.',
 	'right-deletebatch' => 'Deler paginas in lot',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author IvanLanin
+ */
+$messages['id'] = array(
+	'deletebatch' => 'Menghapus sekelompok halaman',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Menghapus sekelompok halaman]]',
+	'deletebatch-help' => 'Menghapus sekelompok halaman.
+Anda dapat melakukan penghapusan sekaligus, atau menghapus halaman-halaman yang terdaftar dalam suatu berkas.
+Pilihlah pengguna yang akan ditampilkan pada log penghapusan.
+Berkas yang diunggah harus mengandung nama halaman dan alasan opsional, dipisahkan dengan suatu tanda "|" pada setiap barisnya.',
+	'deletebatch-caption' => 'Daftar halaman:',
+	'deletebatch-title' => 'Penghapusan kelompok',
+	'deletebatch-link-back' => 'Kembali ke halaman istimewa',
+	'deletebatch-as' => 'Jalankan skrip sebagai:',
+	'deletebatch-both-modes' => 'Silakan pilih suatu halaman tertentu atau suatu daftar halaman.',
+	'deletebatch-or' => '<b>atau</b>',
+	'deletebatch-delete' => 'Hapus',
+	'deletebatch-page' => 'Halaman yang akan dihapus:',
+	'deletebatch-processing-from-file' => 'menghapus halaman dari daftar berkas',
+	'deletebatch-processing-from-form' => 'menghapus halaman dari isian',
+	'deletebatch-omitting-nonexistant' => 'Mengabaikan halaman $1 yang tidak ada.',
+	'deletebatch-omitting-invalid' => 'Mengabaikan halaman $1 yang tidak valid.',
+	'deletebatch-file-bad-format' => 'Berkas harus berbentuk teks polos',
+	'deletebatch-file-missing' => 'Tidak dapat membaca berkas yang diberikan',
+	'deletebatch-select-script' => 'Skrip penghapusan halaman',
+	'deletebatch-select-yourself' => 'Anda',
+	'deletebatch-no-page' => 'Silakan berikan paling tidak satu halaman untuk dihapus atau pilih berkas yang berisi daftar halaman.',
+	'right-deletebatch' => 'Menghapus sekelompok halaman',
 );
 
 /** Italian (Italiano)
@@ -638,12 +729,10 @@ I file caricati dovrebbero contenere il nome della pagina e un motivo opzionale 
 	'deletebatch-as' => 'Esegui lo script come:',
 	'deletebatch-both-modes' => 'Per favore scegli o una pagina specificata o una data lista di pagine.',
 	'deletebatch-or' => '<b>o</b>',
+	'deletebatch-delete' => 'Cancella',
 	'deletebatch-page' => 'Pagine da cancellare:',
-	'deletebatch-reason' => 'Motivo della cancellazione',
-	'deletebatch-processing' => 'eliminazione di pagine $1',
-	'deletebatch-from-file' => 'da elenco in un file',
-	'deletebatch-from-form' => 'da modulo',
-	'deletebatch-success-subtitle' => 'per $1',
+	'deletebatch-processing-from-file' => 'eliminazione di pagine da un file di elenco',
+	'deletebatch-processing-from-form' => 'eliminazione di pagine da modulo',
 	'deletebatch-omitting-nonexistant' => 'Tralascio la pagina non esistente $1.',
 	'deletebatch-omitting-invalid' => 'Tralascio la pagina non valida $1.',
 	'deletebatch-file-bad-format' => 'Il file dovrebbe essere di solo testo',
@@ -663,31 +752,30 @@ $messages['ja'] = array(
 	'deletebatch' => 'ページを一括削除する',
 	'deletebatch-desc' => '[[Special:DeleteBatch|ページを一括削除する]]',
 	'deletebatch-help' => 'ページを一括削除することができます。ページ毎の削除の他に、ファイルに列挙したページ群を削除することができます。削除記録に表示される利用者を選択してください。アップロードされたファイルについては、各行にページ名とパイプ記号 (|) で区切った理由の追加説明を記す必要があります。',
-	'deletebatch-caption' => 'ページリスト:',
+	'deletebatch-caption' => 'ページ一覧:',
 	'deletebatch-title' => '一括削除',
 	'deletebatch-link-back' => '特別ページに戻る',
 	'deletebatch-as' => 'スクリプトを実行する名義:',
-	'deletebatch-both-modes' => '指定された1つのページか、または与えられたページリストのどちらかを選んでください。',
+	'deletebatch-both-modes' => '特定の1ページか、または与えられたページ一覧のどちらかを選んでください。',
 	'deletebatch-or' => '<b>または</b>',
+	'deletebatch-delete' => '削除',
 	'deletebatch-page' => '削除するページ:',
-	'deletebatch-reason' => '削除の理由',
-	'deletebatch-processing' => '$1ページを削除する',
-	'deletebatch-from-file' => 'ファイルリストから',
-	'deletebatch-from-form' => 'フォームから',
-	'deletebatch-success-subtitle' => '$1',
+	'deletebatch-processing-from-file' => 'ファイル一覧からページを削除',
+	'deletebatch-processing-from-form' => 'フォームからページを削除',
 	'deletebatch-omitting-nonexistant' => '存在しないページ $1 は省略しました。',
 	'deletebatch-omitting-invalid' => '無効なページ $1 は省略しました。',
 	'deletebatch-file-bad-format' => 'ファイルは、プレーンテキストであるべきです',
 	'deletebatch-file-missing' => '与えられたファイルを読み込むことができません。',
 	'deletebatch-select-script' => 'ページ削除スクリプト',
 	'deletebatch-select-yourself' => 'あなた',
-	'deletebatch-no-page' => '削除するページを少なくとも1ページ指定するか、ページリストを含むファイルを選んでください。',
+	'deletebatch-no-page' => '削除するページを少なくとも1ページ指定するか、ページ一覧を含むファイルを選んでください。',
 	'right-deletebatch' => 'ページ削除を一括して実行する',
 );
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  * @author Thearith
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
 	'deletebatch' => 'លុប​បាច់​នៃ​ទំព័រ',
@@ -697,24 +785,14 @@ $messages['km'] = array(
 	'deletebatch-link-back' => 'ត្រឡប់​ទៅកាន់​ទំព័រ​ពិសេស',
 	'deletebatch-as' => 'រត់​ស្គ្រីប​ជា៖',
 	'deletebatch-or' => '<b>ឬ</b>',
+	'deletebatch-delete' => 'លុបចោល',
 	'deletebatch-page' => 'ទំព័រ​ដែល​ត្រូវ​លុប៖',
-	'deletebatch-reason' => 'មូលហេតុនៃការលុប',
-	'deletebatch-processing' => 'ការលុបទំព័រ $1',
-	'deletebatch-from-file' => 'ពី​បញ្ជី​ឯកសារ',
-	'deletebatch-from-form' => 'ពី​ទម្រង់',
-	'deletebatch-success-subtitle' => 'សម្រាប់ $1',
+	'deletebatch-processing-from-file' => 'កំពុង​លុប​ទំព័រ​ចេញ​ពី​បញ្ជី​ឯកសារ​',
 	'deletebatch-omitting-invalid' => 'លុប​ទំព័រ​មិនត្រឹមត្រូវ $1 ។',
 	'deletebatch-file-bad-format' => 'ឯកសារ​គួរតែ​ជា​អត្ថបទធម្មតា',
 	'deletebatch-file-missing' => 'មិន​អាច​អាន​ឯកសារ​ដែល​បាន​ផ្ដល់​ឱ្យ',
 	'deletebatch-select-script' => 'លុប​ស្គ្រីប​ទំព័រ',
 	'deletebatch-select-yourself' => 'អ្នក',
-);
-
-/** Krio (Krio)
- * @author Jose77
- */
-$messages['kri'] = array(
-	'deletebatch-button' => 'Dilit',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -735,12 +813,10 @@ dohenger kann ene „|“ stonn, un dann dohenger ene Jrond för et Fottschmiiß
 	'deletebatch-as' => 'Lohß dat Projramm loufe als Metmaacher:',
 	'deletebatch-both-modes' => 'Sök entweder en bestemmpte Sigg uß, udder en Leß met Sigge.',
 	'deletebatch-or' => '<b>udder</b>',
+	'deletebatch-delete' => 'Maach fott!',
 	'deletebatch-page' => 'Sigge zom Fottschmiiße:',
-	'deletebatch-reason' => 'Der Jrond för et Fottschmiiße',
-	'deletebatch-processing' => 'Sigge fottschmiiße us $1',
-	'deletebatch-from-file' => 'ene huhjelaade Leß',
-	'deletebatch-from-form' => 'em Fomulaa',
-	'deletebatch-success-subtitle' => 'för $1',
+	'deletebatch-processing-from-file' => 'Sigge per Datei-Leß fott am schmiiße',
+	'deletebatch-processing-from-form' => 'Sigge per Fommulaa fott am schmiiße',
 	'deletebatch-omitting-nonexistant' => 'Donn de Sigg $1 övverjonn, weil et se nit jit.',
 	'deletebatch-omitting-invalid' => 'Donn dä Tittel $1 övverjonn, weil hä onjöltesh eß.',
 	'deletebatch-file-bad-format' => 'En dä Datei sullt nommaale Täx stonn.',
@@ -763,30 +839,57 @@ $messages['lb'] = array(
 	'deletebatch-link-back' => "Gitt zréck op d'Spezialsäit",
 	'deletebatch-both-modes' => 'Wielt entweder eng spezifesch Säit oder eng spezifesch Lëscht vu Säiten.',
 	'deletebatch-or' => '<b>ODER</b>',
+	'deletebatch-delete' => 'Läschen',
 	'deletebatch-page' => 'Säite fir ze läschen:',
-	'deletebatch-reason' => 'Grond fir ze läschen',
-	'deletebatch-processing' => "d'Säite gi $1 geläscht",
-	'deletebatch-from-file' => 'vun der Lëscht vun de Fichiere',
-	'deletebatch-from-form' => 'vum Formulaire',
-	'deletebatch-success-subtitle' => 'fir $1',
+	'deletebatch-processing-from-form' => 'Säiten vum Formulaire aus läschen',
 	'deletebatch-omitting-nonexistant' => "D'Säit $1 déi et net gëtt iwwersprangen.",
 	'deletebatch-omitting-invalid' => 'Déi ongëlteg Säit $1 iwwersprangen.',
+	'deletebatch-file-missing' => 'De Fichier deen ukoum konnt net geliest ginn',
 	'deletebatch-select-script' => 'de Script vun der Säit läschen',
 	'deletebatch-select-yourself' => 'Dir',
 );
 
-/** Eastern Mari (Олык Марий)
- * @author Сай
+/** Malagasy (Malagasy)
+ * @author Jagwar
  */
-$messages['mhr'] = array(
-	'deletebatch-reason' => 'Шӧрымын амалже',
+$messages['mg'] = array(
+	'right-deletebatch' => "Mamafa pejy maro anatin'ny tao iray",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'deletebatch' => 'Збирно бришење страници',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Бришење на збир страници]]',
+	'deletebatch-help' => 'Збирно бришење страници.
+Можете да го користите за едно бришење, или пак за бришење на страници наведени во податотека.
+Одберете го корисникот кој ќе се прикаже во дневникот на бришења.
+Подигнатите податотеки треба да содржат име на страницата и незадолжителна причина, одвоени со знакот „|“ во секој ред.',
+	'deletebatch-caption' => 'Листа на страници:',
+	'deletebatch-title' => 'Избриши збир',
+	'deletebatch-link-back' => 'Назад кон специјалната страница',
+	'deletebatch-as' => 'Пушти ја скриптата како:',
+	'deletebatch-both-modes' => 'Изберете една назначена страница, или дадена листа страници.',
+	'deletebatch-or' => '<b>или</b>',
+	'deletebatch-delete' => 'Избриши',
+	'deletebatch-page' => 'Страници за бришење:',
+	'deletebatch-processing-from-file' => 'бришење страници од листа од податотека',
+	'deletebatch-processing-from-form' => 'бришење страници од образец',
+	'deletebatch-omitting-nonexistant' => 'За испуштање на непостоечката страница $1.',
+	'deletebatch-omitting-invalid' => 'За испуштање на неважечката страница $1.',
+	'deletebatch-file-bad-format' => 'Податотеката мора да содржи само прост текст',
+	'deletebatch-file-missing' => 'Не можам да ја прочитам дадената податотека',
+	'deletebatch-select-script' => 'Скрипта за бришење на страници',
+	'deletebatch-select-yourself' => 'Вие',
+	'deletebatch-no-page' => 'Назначете барем една страница за бришење или изберете податотека која содржи листа на страници.',
+	'right-deletebatch' => 'Збирно бришење страници',
 );
 
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
-	'deletebatch-button' => 'Нардамс',
 	'deletebatch-or' => '<b>эли</b>',
 );
 
@@ -794,10 +897,6 @@ $messages['myv'] = array(
  * @author Fluence
  */
 $messages['nah'] = array(
-	'deletebatch-button' => 'Ticpolōz',
-	'deletebatch-reason' => 'Tlapololiztli īxtlamatiliztli',
-	'deletebatch-processing' => 'mopolocateh zāzanilli',
-	'deletebatch-success-subtitle' => '$1 ītechcopa',
 	'deletebatch-select-yourself' => 'teh',
 );
 
@@ -817,13 +916,11 @@ Het bestand dat u uploadt moet op iedere regel een paginanaam en een reden bevat
 	'deletebatch-link-back' => 'Teruggaan naar de speciale pagina',
 	'deletebatch-as' => 'Script uitvoeren als:',
 	'deletebatch-both-modes' => "Kies een bepaalde pagina of geef een list met pagina's op.",
-	'deletebatch-or' => '<b>OF</b>',
+	'deletebatch-or' => '<b>Of</b>',
+	'deletebatch-delete' => 'Verwijderen',
 	'deletebatch-page' => "Te verwijderen pagina's:",
-	'deletebatch-reason' => 'Reden voor verwijderen',
-	'deletebatch-processing' => "bezig met het verwijderen van pagina's $1",
-	'deletebatch-from-file' => 'van een lijst uit een bestand',
-	'deletebatch-from-form' => 'uit het formulier',
-	'deletebatch-success-subtitle' => 'voor $1',
+	'deletebatch-processing-from-file' => "bezig met het verwijderen van pagina's uit een bestandslijst",
+	'deletebatch-processing-from-form' => "bezig met het verwijderen van pagina's uit het formulier",
 	'deletebatch-omitting-nonexistant' => 'Niet-bestaande pagina $1 is overgeslagen.',
 	'deletebatch-omitting-invalid' => 'Ongeldige paginanaam $1 is overgeslagen.',
 	'deletebatch-file-bad-format' => 'Het bestand moet platte tekst bevatten',
@@ -835,6 +932,7 @@ Het bestand dat u uploadt moet op iedere regel een paginanaam en een reden bevat
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Gunnernett
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -849,12 +947,10 @@ Ei opplasta fil må innehalda namnet på sida, og kan òg ha ei valfri sletteår
 	'deletebatch-as' => 'Køyr skriptet som:',
 	'deletebatch-both-modes' => 'Vel éi sida eller ei lista over sider.',
 	'deletebatch-or' => '<b>eller</b>',
+	'deletebatch-delete' => 'Slett',
 	'deletebatch-page' => 'Sider som skal bli sletta:',
-	'deletebatch-reason' => 'Sletteårsak',
-	'deletebatch-processing' => 'slettar sidene $1',
-	'deletebatch-from-file' => 'frå fillista',
-	'deletebatch-from-form' => 'frå skjema',
-	'deletebatch-success-subtitle' => 'for $1',
+	'deletebatch-processing-from-file' => 'slettar sider frå lista over filer',
+	'deletebatch-processing-from-form' => 'slettar sider frå skjemaet',
 	'deletebatch-omitting-nonexistant' => 'Tek ikkje med sida $1 som ikkje finst.',
 	'deletebatch-omitting-invalid' => 'Tek ikkje med den ugyldige sida $1.',
 	'deletebatch-file-bad-format' => 'Fila bør innehalda rein tekst',
@@ -868,6 +964,7 @@ Ei opplasta fil må innehalda namnet på sida, og kan òg ha ei valfri sletteår
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Harald Khan
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'deletebatch' => 'Slett mange sider',
@@ -875,18 +972,16 @@ $messages['no'] = array(
 	'deletebatch-help' => 'Slett en serie av sider. Du kan også utføre en enkel sletting, eller slette sider listet opp i en fil.
 Velg en bruker som skal vises i slettingsloggen.
 En opplastet fil må inneholde navnet på siden, og kan også ha en valgfri slettingsgrunn skilt fra tittelen med «|».',
-	'deletebatch-caption' => 'Sideliste',
+	'deletebatch-caption' => 'Sideliste:',
 	'deletebatch-title' => 'Slett serie',
-	'deletebatch-link-back' => 'Du kan gå tilbake til utvidelsen',
-	'deletebatch-as' => 'Kjør skriptet som',
+	'deletebatch-link-back' => 'Gå tilbake til spesialsiden',
+	'deletebatch-as' => 'Kjør skriptet som:',
 	'deletebatch-both-modes' => 'Velg én side eller en liste over sider.',
 	'deletebatch-or' => '<b>eller</b>',
-	'deletebatch-page' => 'Sider som skal slettes',
-	'deletebatch-reason' => 'Slettingsårsak',
-	'deletebatch-processing' => 'sletter sidene $1',
-	'deletebatch-from-file' => 'fra filliste',
-	'deletebatch-from-form' => 'fra skjema',
-	'deletebatch-success-subtitle' => 'for $1',
+	'deletebatch-delete' => 'Slett',
+	'deletebatch-page' => 'Sider som skal slettes:',
+	'deletebatch-processing-from-file' => 'sletter sider fra listen over filer',
+	'deletebatch-processing-from-form' => 'sletter sider fra skjemaet',
 	'deletebatch-omitting-nonexistant' => 'Utelater den ikke-eksisterende siden $1.',
 	'deletebatch-omitting-invalid' => 'Utelater den ugyldige siden $1.',
 	'deletebatch-file-bad-format' => 'Filen bør inneholde ren tekst',
@@ -894,6 +989,7 @@ En opplastet fil må inneholde navnet på siden, og kan også ha en valgfri slet
 	'deletebatch-select-script' => 'slett sideskript',
 	'deletebatch-select-yourself' => 'du',
 	'deletebatch-no-page' => 'Vennligst oppgi minst én side å slette eller velg en fil med en liste av sider.',
+	'right-deletebatch' => 'Masseslett sider',
 );
 
 /** Occitan (Occitan)
@@ -911,20 +1007,25 @@ Un fichièr importat poirà conténer un nom de la pagina e un motiu facultatiu 
 	'deletebatch-as' => "Aviar l'escript coma :",
 	'deletebatch-both-modes' => 'Causissètz, siá una de las paginas indicadas, siá una tièra donada de paginas.',
 	'deletebatch-or' => '<b>o</b>',
+	'deletebatch-delete' => 'Suprimir',
 	'deletebatch-page' => 'Paginas de suprimir :',
-	'deletebatch-reason' => 'Motiu de la supression',
-	'deletebatch-processing' => 'supression de las paginas $1',
-	'deletebatch-from-file' => 'dempuèi la tièra d’un fichièr',
-	'deletebatch-from-form' => 'a partir del formulari',
-	'deletebatch-success-subtitle' => 'per « $1 »',
+	'deletebatch-processing-from-file' => 'supression de las paginas dempuèi un fichièr de lista',
+	'deletebatch-processing-from-form' => 'supression de las paginas dempuèi lo formulari',
 	'deletebatch-omitting-nonexistant' => 'Omission de la pagina « $1 » inexistenta.',
 	'deletebatch-omitting-invalid' => 'Omission de la pagina « $1 » incorrècta.',
-	'deletebatch-file-bad-format' => 'Lo fichièr deu èsser en tèxt simple',
+	'deletebatch-file-bad-format' => 'Lo fichièr deu èsser en tèxte simple',
 	'deletebatch-file-missing' => 'Impossible de legir lo fichièr donat',
 	'deletebatch-select-script' => "suprimir l'escript de la pagina",
 	'deletebatch-select-yourself' => 'vos',
 	'deletebatch-no-page' => 'Indicatz al mens una pagina de suprimir O un fichièr donat que conten una tièra de paginas.',
 	'right-deletebatch' => 'Suprimir de paginas en lòt',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'deletebatch-or' => '<b>odder</b>',
 );
 
 /** Polish (Polski)
@@ -945,12 +1046,10 @@ Przesyłany plik powinien zawierać nazwę strony i powód usunięcia w jednej l
 	'deletebatch-as' => 'Uruchom skrypt jako',
 	'deletebatch-both-modes' => 'Wybierz jedną stronę albo grupę stron.',
 	'deletebatch-or' => '<b>lub</b>',
+	'deletebatch-delete' => 'Usuń',
 	'deletebatch-page' => 'Lista stron do usunięcia:',
-	'deletebatch-reason' => 'Powód usunięcia',
-	'deletebatch-processing' => 'usuwanie stron $1',
-	'deletebatch-from-file' => 'z listy zawartej w pliku',
-	'deletebatch-from-form' => 'z',
-	'deletebatch-success-subtitle' => 'dla $1',
+	'deletebatch-processing-from-file' => 'usuwanie stron z użyciem listy plików',
+	'deletebatch-processing-from-form' => 'usuwanie stron z wykorzystaniem formularza',
 	'deletebatch-omitting-nonexistant' => 'Pominięto nieistniejącą stronę $1.',
 	'deletebatch-omitting-invalid' => 'Pominięto niewłaściwą stronę $1.',
 	'deletebatch-file-bad-format' => 'Plik powinien zawierać wyłącznie tekst',
@@ -961,14 +1060,46 @@ Przesyłany plik powinien zawierać nazwę strony i powód usunięcia w jednej l
 	'right-deletebatch' => 'usuwanie grupy stron',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'deletebatch' => 'Scancela na partìa ëd pàgine',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Scancela na partìa ëd pàgine]]',
+	'deletebatch-help' => "Scancela na partìa ëd pàgine.
+It peule ëdcò fé na scancelassion sìngola, o scancelé dle pàgine listà an n'archivi.
+Sern n'utent che a sarà mostà ant ël registr ëd le scancelassion.
+J'archivi carià a dovrìo conten-e ël nòm dla pàgina e na rason opsional, separà da un caràter \"|\" an minca linia.",
+	'deletebatch-caption' => 'Lista dle pàgine:',
+	'deletebatch-title' => 'Scancela na partìa',
+	'deletebatch-link-back' => 'Va andré a la pàgina special',
+	'deletebatch-as' => 'Fà giré lë script com:',
+	'deletebatch-both-modes' => 'Për piasì sern na pàgina specificà o na serta lista ëd pàgine.',
+	'deletebatch-or' => '<b>o</b>',
+	'deletebatch-delete' => 'Scancela',
+	'deletebatch-page' => 'Pàgine da scancelé:',
+	'deletebatch-processing-from-file' => "scancelassion ëd pàgine da n'archivi ëd lista",
+	'deletebatch-processing-from-form' => 'scancelassion ëd pàgine dal formolari',
+	'deletebatch-omitting-nonexistant' => 'As lassa sté la pàgina $1$ ch\'a esist pa.',
+	'deletebatch-omitting-invalid' => 'As lassa sté la pàgina $1 pa bon-a.',
+	'deletebatch-file-bad-format' => "L'archivi a dovrìa esse mach test",
+	'deletebatch-file-missing' => "L'archivi dàit as peul pa les-se",
+	'deletebatch-select-script' => 'Script dë scancelassion ëd na pàgina',
+	'deletebatch-select-yourself' => 'Ti',
+	'deletebatch-no-page' => "Për piasì specìfica almanch na pàgina da scancelé o sern n'archivi ch'a conten-a na lista ëd pàgine.",
+	'right-deletebatch' => 'Scancela le pàgine an partìa',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
 	'deletebatch' => 'Apagar páginas em bloco',
 	'deletebatch-desc' => 'Permite [[Special:DeleteBatch|eliminar páginas em bloco]]',
-	'deletebatch-help' => 'Elimine um bloco de páginas. Você pode realizar uma única eliminação, ou eliminar páginas listadas num ficheiro.
+	'deletebatch-help' => 'Elimine um bloco de páginas. Pode fazer a eliminação de um bloco, ou de todas as páginas que listar num ficheiro.
 Escolha um utilizador que será mostrado nos registos de eliminação.
 O ficheiro carregado deverá conter o nome da página e um motivo opcional, separados por um carácter "|" em cada linha.',
 	'deletebatch-caption' => 'Lista de páginas:',
@@ -977,12 +1108,10 @@ O ficheiro carregado deverá conter o nome da página e um motivo opcional, sepa
 	'deletebatch-as' => 'Executar o script como:',
 	'deletebatch-both-modes' => 'Por favor, escolha uma página especificada ou uma dada lista de páginas.',
 	'deletebatch-or' => '<b>ou</b>',
+	'deletebatch-delete' => 'Apagar',
 	'deletebatch-page' => 'Páginas a eliminar:',
-	'deletebatch-reason' => 'Motivo da eliminação',
-	'deletebatch-processing' => 'a eliminar páginas $1',
-	'deletebatch-from-file' => 'de lista em ficheiro',
-	'deletebatch-from-form' => 'de formulário',
-	'deletebatch-success-subtitle' => 'para $1',
+	'deletebatch-processing-from-file' => 'a apagar as páginas listadas no ficheiro',
+	'deletebatch-processing-from-form' => 'a apagar as páginas listadas no formulário',
 	'deletebatch-omitting-nonexistant' => 'A omitir página não existente $1.',
 	'deletebatch-omitting-invalid' => 'A omitir página inválida $1.',
 	'deletebatch-file-bad-format' => 'O ficheiro deve conter texto pleno',
@@ -1008,12 +1137,10 @@ O arquivo carregado deverá conter o nome da página e um motivo opcional, separ
 	'deletebatch-as' => 'Executar o script como:',
 	'deletebatch-both-modes' => 'Por favor, escolha uma página especificada ou uma dada lista de páginas.',
 	'deletebatch-or' => '<b>ou</b>',
+	'deletebatch-delete' => 'Remover',
 	'deletebatch-page' => 'Páginas a eliminar:',
-	'deletebatch-reason' => 'Motivo da eliminação',
-	'deletebatch-processing' => 'eliminando páginas $1',
-	'deletebatch-from-file' => 'de lista em arquivo',
-	'deletebatch-from-form' => 'de formulário',
-	'deletebatch-success-subtitle' => 'para $1',
+	'deletebatch-processing-from-file' => 'Removendo páginas da lista de arquivos',
+	'deletebatch-processing-from-form' => 'deletando páginas do formulário',
 	'deletebatch-omitting-nonexistant' => 'Omitindo página não existente $1.',
 	'deletebatch-omitting-invalid' => 'Omitindo página inválida $1.',
 	'deletebatch-file-bad-format' => 'O arquivo deve conter texto pleno',
@@ -1025,16 +1152,14 @@ O arquivo carregado deverá conter o nome da página e um motivo opcional, separ
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'deletebatch-caption' => 'Lista de pagini:',
 	'deletebatch-or' => '<b>sau</b>',
-	'deletebatch-page' => 'Pagini de şters',
-	'deletebatch-reason' => 'Motiv pentru ştergere',
-	'deletebatch-processing' => 'ştergere pagini $1',
-	'deletebatch-from-file' => 'din lista de fişiere',
-	'deletebatch-from-form' => 'din formular',
-	'deletebatch-success-subtitle' => 'pentru $1',
+	'deletebatch-delete' => 'Ştergere',
+	'deletebatch-page' => 'Pagini de şters:',
 	'deletebatch-file-missing' => 'Nu se poate citi fişierul dat',
 );
 
@@ -1043,29 +1168,40 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'deletebatch-or' => '<b>o</b>',
-	'deletebatch-from-file' => "da 'a liste de le file",
-	'deletebatch-success-subtitle' => 'pe $1',
+	'deletebatch-delete' => 'Scangille',
 	'deletebatch-select-yourself' => 'tu',
 );
 
 /** Russian (Русский)
  * @author Ferrer
  * @author Innv
+ * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'deletebatch-caption' => 'Список страниц',
+	'deletebatch' => 'Удаление набора страниц',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Удаление набора страниц]]',
+	'deletebatch-help' => 'Удаление набора страниц. Вы можете использовать это для одного удаления, или удаления страниц, перечисленных в файле.
+Выберите участника, который будет показан в журнале удалений.
+Загружаемый файл должен содержать имя страницы и необязательную причину удаления, их должен разделять символ «|».',
+	'deletebatch-caption' => 'Список страниц:',
+	'deletebatch-title' => 'Удаление набора',
+	'deletebatch-link-back' => 'Вернуться к служебной странице',
 	'deletebatch-as' => 'Запустить скрипт как:',
 	'deletebatch-both-modes' => 'Пожалуйста, выберите одну страницу или список страниц.',
 	'deletebatch-or' => '<b>или</b>',
+	'deletebatch-delete' => 'Удалить',
 	'deletebatch-page' => 'Страницы к удалению:',
-	'deletebatch-reason' => 'Причина удаления',
-	'deletebatch-from-file' => 'из списка файлов',
-	'deletebatch-success-subtitle' => 'для $1',
+	'deletebatch-processing-from-file' => 'удаление страниц из списка в файле',
+	'deletebatch-processing-from-form' => 'удаление страниц из веб-формы',
 	'deletebatch-omitting-nonexistant' => 'За исключением несуществующей страницы $1.',
 	'deletebatch-omitting-invalid' => 'За исключением ошибочной страницы $1.',
+	'deletebatch-file-bad-format' => 'Файл должен содержать простой текст',
+	'deletebatch-file-missing' => 'Невозможно прочитать данный файл',
 	'deletebatch-select-script' => 'скрипт удаления страниц',
 	'deletebatch-select-yourself' => 'вы',
+	'deletebatch-no-page' => 'Пожалуйста, выберите минимум одну страницу для удаления ИЛИ выберите файл, содержащий список страниц.',
+	'right-deletebatch' => 'удаление набора страниц',
 );
 
 /** Slovak (Slovenčina)
@@ -1083,12 +1219,10 @@ Nahraný súbor by mal na každom riadku obsahovať názov stránky a nepovinne 
 	'deletebatch-as' => 'Spustiť skript ako:',
 	'deletebatch-both-modes' => 'Prosím, vyberte buď zadanú stránku alebo zadaý zoznam stránok.',
 	'deletebatch-or' => '<b>ALEBO</b>',
+	'deletebatch-delete' => 'Zmazať',
 	'deletebatch-page' => 'Stránky, ktoré budú zmazané:',
-	'deletebatch-reason' => 'Dôvod zmazania',
-	'deletebatch-processing' => 'mažú sa stránky $1',
-	'deletebatch-from-file' => 'zo zoznamu v súbore',
-	'deletebatch-from-form' => 'z formulára',
-	'deletebatch-success-subtitle' => 'z $1',
+	'deletebatch-processing-from-file' => 'mažú sa stránky zo zoznamu súborov',
+	'deletebatch-processing-from-form' => 'mažú sa stránky z formulára',
 	'deletebatch-omitting-nonexistant' => 'Vynecháva sa neexistujúca stránka $1.',
 	'deletebatch-omitting-invalid' => 'Vynecháva sa neplatná stránka $1.',
 	'deletebatch-file-bad-format' => 'Súbor by mal byť textovom formáte',
@@ -1102,6 +1236,7 @@ Nahraný súbor by mal na každom riadku obsahovať názov stránky a nepovinne 
 /** Swedish (Svenska)
  * @author M.M.S.
  * @author Najami
+ * @author Per
  */
 $messages['sv'] = array(
 	'deletebatch' => 'Radera serier av sidor',
@@ -1115,12 +1250,10 @@ En uppladdad fil ska innehålla sidnamn och en valfri anledning separerade med e
 	'deletebatch-as' => 'Kör skriptet som:',
 	'deletebatch-both-modes' => 'Var god välj antingen en specifierad sida eller en lista över sidor.',
 	'deletebatch-or' => '<b>ELLER</b>',
+	'deletebatch-delete' => 'Radera',
 	'deletebatch-page' => 'Sidor som ska raderas:',
-	'deletebatch-reason' => 'Anledning för radering',
-	'deletebatch-processing' => 'raderar sidor $1',
-	'deletebatch-from-file' => 'från fillistan',
-	'deletebatch-from-form' => 'från formulär',
-	'deletebatch-success-subtitle' => 'för $1',
+	'deletebatch-processing-from-file' => 'raderar sidor från listan över filer',
+	'deletebatch-processing-from-form' => 'raderar sidor från formuläret',
 	'deletebatch-omitting-nonexistant' => 'Utelämna ej existerande sida $1.',
 	'deletebatch-omitting-invalid' => 'Utelämna ogiltig sida $1.',
 	'deletebatch-file-bad-format' => 'Filen ska innehålla ren text',
@@ -1137,19 +1270,11 @@ En uppladdad fil ska innehålla sidnamn och en valfri anledning separerade med e
  */
 $messages['te'] = array(
 	'deletebatch-caption' => 'పేజీల జాబితా:',
+	'deletebatch-link-back' => 'తిరిగి ప్రత్యేక పేజీకి వెళ్ళండి',
 	'deletebatch-or' => '<b>లేదా</b>',
-	'deletebatch-page' => 'తొలగించాల్సిన పేజీలు',
-	'deletebatch-reason' => 'తొలగింపునకు కారణం',
-	'deletebatch-from-file' => 'ఫైలు నుంచి',
-	'deletebatch-from-form' => 'ఫారం నుంచి',
-);
-
-/** Tetum (Tetun)
- * @author MF-Warburg
- */
-$messages['tet'] = array(
-	'deletebatch-button' => 'Halakon',
-	'deletebatch-reason' => 'Motivu ba halakon:',
+	'deletebatch-delete' => 'తొలగించు',
+	'deletebatch-page' => 'తొలగించాల్సిన పేజీలు:',
+	'deletebatch-select-yourself' => 'మీరు',
 );
 
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
@@ -1157,10 +1282,21 @@ $messages['tet'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'deletebatch-caption' => 'Феҳристи саҳифа',
-	'deletebatch-reason' => 'Сабаби ҳазв',
-	'deletebatch-from-file' => 'аз феҳристи парванда',
-	'deletebatch-success-subtitle' => 'барои $1',
 	'deletebatch-select-yourself' => 'шумо',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'deletebatch-select-yourself' => 'şumo',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'deletebatch-delete' => 'Öçür',
 );
 
 /** Tagalog (Tagalog)
@@ -1179,11 +1315,6 @@ Dapat na naglalaman ang ikinargang talaksan ng pangalan ng pahina at maaaring hi
 	'deletebatch-both-modes' => 'Pakipili ang isang tinukoy na pahina o isang ibinigay na talaan ng mga pahina.',
 	'deletebatch-or' => '<b>o</b>',
 	'deletebatch-page' => 'Mga pahinang buburahin:',
-	'deletebatch-reason' => 'Dahilan ng pagbura',
-	'deletebatch-processing' => 'binubura ang mga pahinang $1',
-	'deletebatch-from-file' => 'mula sa talaan ng talaksan',
-	'deletebatch-from-form' => 'mula sa pormularyo',
-	'deletebatch-success-subtitle' => 'para sa $1',
 	'deletebatch-omitting-nonexistant' => 'Hindi isinasali ang hindi umiiral na pahinang $1.',
 	'deletebatch-omitting-invalid' => 'Hindi isinasali ang hindi tanggap na pahinang $1.',
 	'deletebatch-file-bad-format' => 'Dapat na teksto lamang ang talaksan',
@@ -1197,14 +1328,39 @@ Dapat na naglalaman ang ikinargang talaksan ng pangalan ng pahina at maaaring hi
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Mach
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'deletebatch' => 'Sayfa gruplarını sil',
+	'deletebatch-desc' => '[[Special:DeleteBatch|Bir sayfa grubunu siler]]',
+	'deletebatch-help' => 'Bir sayfa grubunu silin.
+İsterseniz tek bir silme işlemi gerçekleştirebilir ya da isterseniz bir dosyada listelenen sayfaları silebilirsiniz.
+Silme kayıtlarında gösterilecek bir kullanıcı seçin.
+Yüklenen dosyalar sayfası adını ve isteğe bağlı gerekçeyi içermeli; bu değerler her satırda "|" karakteri ile ayrılmalıdır.',
 	'deletebatch-caption' => 'Sayfa listesi:',
+	'deletebatch-title' => 'Grubu sil',
+	'deletebatch-link-back' => 'Özel sayfaya geri dön',
+	'deletebatch-as' => 'Betiği şu şekilde çalıştır:',
+	'deletebatch-both-modes' => 'Lütfen belirtilen bir sayfa veya verilen bir sayfa listesi seçin.',
+	'deletebatch-or' => '<b>veya</b>',
+	'deletebatch-delete' => 'Sil',
+	'deletebatch-page' => 'Silinecek sayfalar:',
+	'deletebatch-processing-from-file' => 'dosya listesindeki sayfalar siliniyor',
+	'deletebatch-processing-from-form' => 'formdan sayfalar siliniyor',
+	'deletebatch-omitting-nonexistant' => 'Mevcut olmayan $1 sayfası atlanıyor.',
+	'deletebatch-omitting-invalid' => 'Geçersiz olan $1 sayfası atlanıyor.',
+	'deletebatch-file-bad-format' => 'Dosya düz metin olmalı',
+	'deletebatch-file-missing' => 'Verilen dosya okunamıyor',
+	'deletebatch-select-script' => 'Sayfa betiğini sil',
+	'deletebatch-select-yourself' => 'Siz',
+	'deletebatch-no-page' => 'Sayfa listesini içeren bir sayfayı silmek ya da seçmek için lütfen en az bir sayfa belirtin.',
+	'right-deletebatch' => 'Sayfaları toplu siler',
 );
 
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'deletebatch' => 'Вилучення сторінок групами',
@@ -1214,19 +1370,28 @@ $messages['uk'] = array(
 Завантажений файл повинен містити у кожному рядку назву сторінки та необов\'язкову причину вилучення, відокремлену символом "|".',
 	'deletebatch-caption' => 'Список сторінок:',
 	'deletebatch-title' => 'Вилучити групу',
-	'deletebatch-link-back' => 'Ви можете повернутися до розширення',
+	'deletebatch-link-back' => 'Повернутися до спеціальної сторінки',
 	'deletebatch-as' => 'Запустити скрипт як:',
 	'deletebatch-both-modes' => 'Виберіть або одну вказану сторінку, або наданий список сторінок.',
 	'deletebatch-or' => '<b>або</b>',
+	'deletebatch-delete' => 'Вилучити',
 	'deletebatch-page' => 'Сторінки до вилучення:',
-	'deletebatch-reason' => 'Причина вилучення',
-	'deletebatch-processing' => 'вилучення сторінок $1',
-	'deletebatch-from-file' => 'із списку файлу',
-	'deletebatch-from-form' => 'з форми',
-	'deletebatch-success-subtitle' => 'для $1',
 	'deletebatch-omitting-nonexistant' => 'Пропускання неіснуючої сторінки $1.',
 	'deletebatch-file-missing' => 'Не в змозі прочитати наданий файл',
 	'deletebatch-select-yourself' => 'ви',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'deletebatch-caption' => 'Lehtpoliden nimikirjutez:',
+	'deletebatch-title' => 'Čuta uded lehtpoled',
+	'deletebatch-link-back' => 'Tagaze specialižele lehtpolele',
+	'deletebatch-as' => 'Radatada skript kut:',
+	'deletebatch-both-modes' => "Olgat hüväd, valikat lehtpol' vai lehtpoliden nimikirjutez.",
+	'deletebatch-or' => '<b>vai</b>',
+	'deletebatch-page' => 'Lehtpoled čutes:',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1245,11 +1410,6 @@ Tập tin đã tải nên có chứa tên trang và lý do tùy chọn phân tá
 	'deletebatch-both-modes' => 'Xin hãy chọn một trang hoặc một danh sách trang cho trước.',
 	'deletebatch-or' => '<b>hoặc</b>',
 	'deletebatch-page' => 'Các trang sẽ bị xóa:',
-	'deletebatch-reason' => 'Lý do xóa',
-	'deletebatch-processing' => 'đang xóa trang $1',
-	'deletebatch-from-file' => 'từ danh sách tập tin',
-	'deletebatch-from-form' => 'từ mẫu',
-	'deletebatch-success-subtitle' => 'đối với $1',
 	'deletebatch-omitting-nonexistant' => 'Đang bỏ trang $1 không tồn tại.',
 	'deletebatch-omitting-invalid' => 'Đang bỏ trang $1 không hợp lệ.',
 	'deletebatch-file-bad-format' => 'Tập tin nên ở dạng thuần ký tự',
@@ -1271,15 +1431,17 @@ $messages['vo'] = array(
 	'deletebatch-title' => 'Moükön padamödoti',
 	'deletebatch-or' => '<b>u</b>',
 	'deletebatch-page' => 'Pads moükabik:',
-	'deletebatch-reason' => 'Kod moükama',
-	'deletebatch-processing' => 'pads $1 pamoükons',
-	'deletebatch-from-file' => 'se ragivalised',
-	'deletebatch-from-form' => 'se fomet',
-	'deletebatch-success-subtitle' => 'pro $1',
 	'deletebatch-omitting-nonexistant' => 'Pad no dabinöl $1 pamoädon.',
 	'deletebatch-omitting-invalid' => 'Pad no lonöföl $1 pamoädon.',
 	'deletebatch-file-missing' => 'No mögos ad reidön ragivi pavilöl',
 	'deletebatch-select-yourself' => 'ol',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'deletebatch-delete' => 'אויסמעקן',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
@@ -1288,8 +1450,6 @@ $messages['vo'] = array(
 $messages['zh-hans'] = array(
 	'deletebatch-caption' => '页面列表',
 	'deletebatch-or' => '<b>或</b>',
-	'deletebatch-reason' => '删除原因',
-	'deletebatch-processing' => '正在删除$1页面',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -1299,7 +1459,5 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'deletebatch-caption' => '頁面清單',
 	'deletebatch-or' => '<b>或</b>',
-	'deletebatch-reason' => '刪除原因',
-	'deletebatch-processing' => '正在刪除$1頁面',
 );
 

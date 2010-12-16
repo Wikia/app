@@ -63,14 +63,13 @@ $wgWebStoreSettings = array(
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['WebStore'] = $dir . 'WebStore.i18n.php';
-$wgAutoloadClasses['WebStoreClient'] = $dir . 'WebStoreClient.php';
+#$wgAutoloadClasses['WebStoreClient'] = $dir . 'WebStoreClient.php';
 $wgAutoloadClasses['WebStoreCommon'] = $dir . 'WebStoreCommon.php';
 $wgAutoloadClasses['WebStorePostFile'] = $dir . 'WebStorePostFile.php';
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'WebStore',
-	'svn-date' => '$LastChangedDate: 2008-12-18 06:56:43 +0100 (czw, 18 gru 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44752 $',
 	'author' => 'Tim Starling',
 	'description' => 'Web-only (non-NFS) file storage middleware',
 	'descriptionmsg' => 'webstore-desc',

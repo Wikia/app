@@ -294,6 +294,17 @@ AdDriver.postProcessSlot = function(slotname) {
 	}
 }
 
+AdDriver.canCallLiftium = function(slotname) {
+	switch (slotname) {	
+		case 'INVISIBLE_TOP':
+		case 'INVISIBLE_1':
+			return false;
+			break;
+	}
+
+	return true;
+}
+
 AdDriver.callDARTCallback = function(slotname) {
 	if (typeof(window.adDriverLastDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slotname]) {
 		AdDriver.log(slotname + ' was filled by DART');
@@ -303,7 +314,12 @@ AdDriver.callDARTCallback = function(slotname) {
 	else {
 		AdDriver.setLastDARTCallNoAd(slotname, window.wgNow.getTime());
 		AdDriver.log(slotname + ' was not filled by DART');
-		return 'Liftium';
+		if (AdDriver.canCallLiftium(slotname)) {
+			return 'Liftium';
+		}
+		else {
+			return;
+		}
 	}
 }
 
@@ -408,6 +424,13 @@ AdDriverDelayedLoader.callDART = function() {
 					var liftiumCall = new AdDriverCall(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, ''); 
 					AdDriverDelayedLoader.prependCall(liftiumCall); 
 				} 
+				else {
+					// track ad call in Google Analytics, for forecasting.
+					// Track only calls that do not fall back to Liftium.
+					// (Those calls will be tracked by Liftium.)
+					// Based on Liftium.callInjectedIframeAd
+					Liftium.trackEvent(Liftium.buildTrackUrl(["slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]), "UA-17475676-6");
+				}
 				AdDriverDelayedLoader.loadNext();
 			}
 		}
@@ -422,13 +445,9 @@ AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
 AdDriverDelayedLoader.callLiftium = function() {
 	var slotname = AdDriverDelayedLoader.currentAd.slotname;
 
-	// do not call Liftium for certain slots
-	switch (slotname) {	
-		case 'INVISIBLE_TOP':
-		case 'INVISIBLE_1':
-			AdDriverDelayedLoader.loadNext();
-			return;
-			break;
+	if (!AdDriver.canCallLiftium(slotname)) {
+		AdDriverDelayedLoader.loadNext();
+		return;
 	}
 
 	AdDriver.log(slotname + ': calling Liftium...');
@@ -483,7 +502,7 @@ AdDriverDelayedLoader.loadNext = function() {
 AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
-	if (typeof wgNow != 'undefined') {
+	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverCalls.length) {
 		var loadTime = (new Date()).getTime() - wgNow.getTime();
 		$().log('AdDriver started loading after ' + loadTime + ' ms');
 	}

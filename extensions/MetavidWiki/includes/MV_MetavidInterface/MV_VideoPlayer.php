@@ -57,9 +57,9 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 				$coma=', ';
 			}
 			$o.='</span>';*/
-			$o .= '<span class="download"><a href="javascript:$j(\'#' . htmlspecialchars( $this->embed_id ) . '\').get(0).showVideoDownload()">Download Options</a></span>';
+			$o .= '<span class="download"><a href="javascript:$j(\'#' . htmlspecialchars( $this->embed_id ) . '\').get(0).showDownload()">Download Options</a></span>';
 		}
-		$o .= '<span class="embed"><a href="javascript:$j(\'#' . htmlspecialchars( $this->embed_id ) . '\').get(0).showEmbedCode();">Embed Video</a></span>' .
+		$o .= '<span class="embed"><a href="javascript:$j(\'#' . htmlspecialchars( $this->embed_id ) . '\').get(0).showShare();">Embed Video</a></span>' .
 				'</p>';
 		// about file: 
 		$talkPage = Title::newFromText( 'Anno_en:' . strtolower( $mvTitle->wiki_title ), MV_NS_MVD_TALK );

@@ -1,6 +1,6 @@
-[[Validator 0.2.2]]
+[[Validator 0.4.2]]
 
-Once you have downloaded the code, place the 'SemanticMaps' directory within
+Once you have downloaded the code, place the 'Validator' directory within
 your MediaWiki 'extensions' directory. Then add the following code to your
 LocalSettings.php file BEFORE the inclusion of any extensions using Validator:
 

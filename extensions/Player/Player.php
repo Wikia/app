@@ -16,9 +16,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Player',
-	'svn-date' => '$LastChangedDate: 2008-11-30 04:15:22 +0100 (ndz, 30 lis 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'author' => 'Daniel Kinzler, brightbyte.de',
 	'url' => 'http://mediawiki.org/wiki/Extension:Player',
 	'description' => 'embedded multimedia playback using common browser plugins',
@@ -42,7 +41,7 @@ $wgPlayerExtensionPath = $GLOBALS['wgServer'] . $GLOBALS['wgScriptPath'] . '/ext
 $wgPlayerMimeOverride = array( );
 
 $wgPlayerTemplates = array();
-$wgPlayerVideoResolutionDetector = NULL;
+$wgPlayerVideoResolutionDetector = null;
 
 require_once( dirname( __FILE__ ) . '/PlayerDefaultSettings.php' );
 
@@ -60,7 +59,7 @@ function renderPlayerTag( $name, $args, &$parser ) {
 	$attributes = array();
 	$options = array();
 
-	$deferred = NULL; //TODO: true forces immediate playback (no ajax), false suppresses it (use ajax).
+	$deferred = null; //TODO: true forces immediate playback (no ajax), false suppresses it (use ajax).
 
 	foreach ($args as $k => $v) {
 		if (in_array($k, $attribnames)) $attributes[$k] = $v;
@@ -158,7 +157,7 @@ if (!function_exists('urlencodeMap')) {
 			if ($s!=='') $s.= '&';
 			$s.= urlencode($k);
 
-			if ($v === false || $v === NULL) continue;
+			if ($v === false || $v === null) continue;
 			else if ($v !== true) $s.= '=' . urlencode($v);
 		}
 

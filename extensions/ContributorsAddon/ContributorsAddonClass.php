@@ -11,7 +11,7 @@ class SpecialContributorsAddon extends SpecialContributors {
 			$skin =& $wgUser->getSkin();
 			$link = $skin->makeKnownLinkObj( $this->target );
 			$contribText .= '<h2>' . wfMsgHtml( 'contributors-subtitle', $link ) . '</h2>';
-			list( $contributors, $others ) = $this->getMainContributors();
+			list( $contributors, $others ) = $this->getMainContributors($wgTitle);
 			$contribText .=  '<ul>';
 			foreach( $contributors as $username => $info ) {
 				list( $id, $count ) = $info;

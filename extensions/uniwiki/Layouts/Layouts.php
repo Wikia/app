@@ -7,12 +7,11 @@ if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Layouts',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Populate newly-created pages with editable "layouts" to encourage a common structure for pages',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Layouts',
-	'svn-date'       => '$LastChangedDate: 2009-03-13 21:00:23 +0100 (ptk, 13 mar 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 48387 $',
 	'descriptionmsg' => 'layouts-desc',
 );
 
@@ -76,9 +75,9 @@ function UW_Layouts_maybeRedirectToLayout( $article, $user ) {
 	/* don't hijack the request if we are
 	 * in the middle of switching modes,
 	 * previewing,  or showing changes */
-	if ( isset( $wgRequest->data['switch-mode'] )
-	|| isset( $wgRequest->data['wpTextbox1'] )
-	|| isset( $wgRequest->data['section-0'] ) )
+	if ( $wgRequest->getVal('switch-mode')
+	|| $wgRequest->getVal('wpTextbox1')
+	|| $wgRequest->getVal('section-0' ) )
 		return true;
 
 	/* if this page is new,
@@ -87,8 +86,8 @@ function UW_Layouts_maybeRedirectToLayout( $article, $user ) {
 	 * and we are not submitting the form (either saving OR preview)
 	 * and we're NOT editing an old revision */
 	if ( $article->getID() === 0 
-	&& ( !isset( $wgRequest->data['oldid'] ) || $article->fetchContent( $wgRequest->data['oldid'] ) === false )
-	&& ( $wgRequest->getVal ( "layout" ) === NULL )
+	&& ( $wgRequest->getVal('oldid') || $article->fetchContent( $wgRequest->getVal('oldid') ) === false )
+	&& ( $wgRequest->getVal ( "layout" ) === null )
 	&& in_array ( $article->mTitle->getNamespace(), $wgLayoutWhiteList )
 	&& ( $wgRequest->getVal( "action" ) != "submit" ) )
 
@@ -246,7 +245,7 @@ function UW_Layouts_preFillTextBox ( &$text, $title ) {
 	/* fetch the layout from the query string,
 	 * or abort this hook if it is missing */
 	$layout_slug = $wgRequest->getVal ( "layout" );
-	if ( $layout_slug === NULL )
+	if ( $layout_slug === null )
 		return true;
 
 	// fetch the layout object

@@ -189,8 +189,7 @@ $messages = array(
 'editundo'                => 'анулизаје',
 
 # Search results
-'noexactmatch'   => "'''Нпажу вец лном \"\$1\" н-ќсистст.''' Путе [[:\$1|креаре це пажу]].",
-'viewprevnext'   => 'Ву ($1) ($2) ($3)',
+'viewprevnext'   => 'Ву ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url' => 'Help:Ајутор',
 'powersearch'    => 'каутај авансата',
 
@@ -216,12 +215,15 @@ $3',
 'boteditletter'   => 'б',
 
 # Recent changes linked
-'recentchangeslinked' => 'Модификајри корелате',
+'recentchangeslinked'         => 'Модификајри корелате',
+'recentchangeslinked-feed'    => 'Модификајри корелате',
+'recentchangeslinked-toolbox' => 'Модификајри корелате',
 
 # Upload
 'upload' => 'тримиће фиширул',
 
 # File description page
+'file-anchor-link'    => 'фиширул',
 'filehist'            => 'Хисториа фиширулу',
 'filehist-current'    => 'куренту',
 'filehist-datetime'   => 'Дата/Темп',
@@ -275,6 +277,8 @@ $3',
 'mycontris'     => 'Мес контрибући',
 'contribsub2'   => 'пентру $1 ($2)',
 'uctop'         => '(сусверф)',
+
+'sp-contributions-talk' => 'дискућу',
 
 # What links here
 'whatlinkshere'       => 'Легајтул а це пажу',

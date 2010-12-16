@@ -42,7 +42,7 @@ class SpecialPlayer extends SpecialPage {
 		$options['forcegeneric'] = ( @$options['forcegeneric'] || $wgRequest->getCheck( 'forcegeneric' ) );
 		$options['playersize'] = $wgRequest->getVal( 'playersize', @$options['playersize'] );
 
-		$title = $file ? Title::makeTitleSafe(NS_IMAGE, $file) : NULL;
+		$title = $file ? Title::makeTitleSafe(NS_IMAGE, $file) : null;
 
 		if ( $title ) {
 			$this->showPlayer( $title, $options );

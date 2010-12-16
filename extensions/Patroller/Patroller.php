@@ -10,6 +10,7 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Patroller',
 	'version' => '1.0rc3',
 	'author' => 'Rob Church',

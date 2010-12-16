@@ -45,6 +45,15 @@ class SRFBibTeX extends SMWResultPrinter {
 		}
 	}
 
+	public function getQueryMode($context) {
+		return ($context==SMWQueryProcessor::SPECIAL_PAGE)?SMWQuery::MODE_INSTANCES:SMWQuery::MODE_NONE;
+	}
+
+	public function getName() {
+		wfLoadExtensionMessages('SemanticResultFormats');
+		return wfMsg('srf_printername_bibtex');
+	}
+
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber, $wgSitename, $wgServer, $wgRequest;
 		$result = '';
@@ -55,8 +64,6 @@ class SRFBibTeX extends SMWResultPrinter {
 			}
 			$row = $res->getNext();
 			while ( $row !== false ) {
-				$wikipage = $row[0]->getNextObject(); // get the object
-
 				$type = '';
 				$address = '';
 				$annote = '';
@@ -276,7 +283,7 @@ class SRFBibTeX extends SMWResultPrinter {
 			foreach ($items as $item) {
 				$result .= $item->text();
 			}
-		} else { // just make link to vcard
+		} else { // just make link to export
 			if ($this->getSearchLabel($outputmode)) {
 				$label = $this->getSearchLabel($outputmode);
 			} else {
@@ -292,6 +299,11 @@ class SRFBibTeX extends SMWResultPrinter {
 			$this->isHTML = ($outputmode == SMW_OUTPUT_HTML); // yes, our code can be viewed as HTML if requested, no more parsing needed
 		}
 		return $result;
+	}
+
+	public function getParameters() {
+		$params = parent::exportFormatParameters();
+		return $params;
 	}
 
 }
@@ -460,5 +472,5 @@ techreport
 unpublished
 	A document having an author and title, but not formally published.
 	Required fields: author, title, note
-	Optional fields: month, year, key 
+	Optional fields: month, year, key
 */

@@ -15,10 +15,9 @@ if ( !defined( 'MEDIAWIKI' ) )
 
 $dir = dirname( __FILE__ );
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'HoneypotIntegration',
 	'author'         => 'Andrew Garrett',
-	'svn-date'       => '$LastChangedDate: 2009-03-05 09:27:11 +0100 (czw, 05 mar 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 48055 $',
 	'description'    => 'Provides integration with Project Honey Pot for MediaWiki sites',
 	'descriptionmsg' => 'honeypot-desc',
 );
@@ -26,11 +25,23 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['HoneypotIntegration'] =  "$dir/HoneypotIntegration.i18n.php";
 $wgAutoloadClasses[ 'HoneypotIntegration' ] = "$dir/HoneypotIntegration.class.php";
 
-$wgHooks['AbuseFilter-filterAction'][] = 'HoneypotIntegration::onAbuseFilterFilterAction';
-$wgHooks['AbuseFilter-builder'][] = 'HoneypotIntegration::onAbuseFilterBuilder';
-$wgHooks['EditPage::showEditForm:fields'][] = 'HoneypotIntegration::onShowEditForm';
+// Stuff that's been sort of semi-implemented, but we don't want to activate yet.
+//  Keeping commented-out so it doesn't get lost.
+#$wgHooks['AbuseFilter-filterAction'][] = 'HoneypotIntegration::onAbuseFilterFilterAction';
+#$wgHooks['AbuseFilter-builder'][] = 'HoneypotIntegration::onAbuseFilterBuilder';
+// $wgHooks['GetUserPermissionsErrorsExpensive'][] =
+// 	'HoneypotIntegration::onGetUserPermissionsErrorsExpensive';
 
-$wgHoneypotURLs = array( 'http://www.google.com' );
+$wgHooks['EditPage::showEditForm:fields'][] = 'HoneypotIntegration::onShowEditForm';
+$wgHooks['RecentChange_save'][] = 'HoneypotIntegration::onRecentChangeSave';
+
+$wgHoneypotURLSource = '';
+
 $wgHoneypotTemplates = array(
 	'<a href="honeypoturl"><!-- randomtext --></a>',
 );
+
+$wgHoneypotAutoLoad = false;
+
+$wgHoneypotDataFile = false;
+

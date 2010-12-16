@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-autocomplete
+  label: StatusNet - Autocomplete
+  description: "{{int:bw-desc-statusnet-plugin-autocomplete}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/autocomplete
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/Autocomplete/locale/%CODE%/LC_MESSAGES/Autocomplete.po
+  targetPattern: plugins/Autocomplete/locale/%CODE%/LC_MESSAGES/Autocomplete.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: autocomplete-
+  patterns:
+    - "*"

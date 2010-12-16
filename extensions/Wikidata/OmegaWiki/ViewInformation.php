@@ -22,7 +22,7 @@ class ViewInformation {
 	public function __construct() {
 		$this->filterLanguageId = 0;
 		$this->queryTransactionInformation;
-		$this->showRecordLifeSpan = false; 
+		$this->showRecordLifeSpan = false;
 		$this->propertyToColumnFilters = array();
 		$this->viewOrEdit = "view";
 	}
@@ -35,7 +35,7 @@ class ViewInformation {
 		return $this->filterLanguageId != 0;
 	}
 	
-	public function setPropertyToColumnFilters(array $propertyToColumnFilters) {
+	public function setPropertyToColumnFilters( array $propertyToColumnFilters ) {
 		$this->propertyToColumnFilters = $propertyToColumnFilters;
 	}
 	
@@ -44,12 +44,12 @@ class ViewInformation {
 	}
 	
 	public function getLeftOverAttributeFilter() {
-		$allFilteredAttributeIds = array();	
+		$allFilteredAttributeIds = array();
 		
-		foreach ($this->getPropertyToColumnFilters() as $propertyToColumnFilter)  
-			$allFilteredAttributeIds = array_merge($allFilteredAttributeIds, $propertyToColumnFilter->attributeIDs);
+		foreach ( $this->getPropertyToColumnFilters() as $propertyToColumnFilter )
+			$allFilteredAttributeIds = array_merge( $allFilteredAttributeIds, $propertyToColumnFilter->attributeIDs );
 		
-		return new ExcludeAttributeIDsFilter($allFilteredAttributeIds);
+		return new ExcludeAttributeIDsFilter( $allFilteredAttributeIds );
 	}
 
 	/* make an attempt at a hashCode function.
@@ -60,12 +60,12 @@ class ViewInformation {
 	 */
 	public function hashCode() {
 		return
-			$this->filterLanguageId.",".
-			$this->showRecordLifeSpan.",".
+			$this->filterLanguageId . "," .
+			$this->showRecordLifeSpan . "," .
 			$this->viewOrEdit;
 	}
 
-	public function __tostring(){
+	public function __tostring() {
 		return "viewinformation object>";
 	}
 }

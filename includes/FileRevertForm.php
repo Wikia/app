@@ -17,7 +17,7 @@ class FileRevertForm {
 	/**
 	 * Constructor
 	 *
-	 * @param File $file File we're reverting
+	 * @param $file File we're reverting
 	 */
 	public function __construct( $file ) {
 		$this->title = $file->getTitle();
@@ -114,7 +114,16 @@ class FileRevertForm {
 		global $wgOut, $wgUser;
 		$wgOut->setPageTitle( wfMsg( 'filerevert', $this->title->getText() ) );
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
-		$wgOut->setSubtitle( wfMsg( 'filerevert-backlink', $wgUser->getSkin()->makeKnownLinkObj( $this->title ) ) );
+		$wgOut->setSubtitle( wfMsg(
+			'filerevert-backlink',
+			$wgUser->getSkin()->link(
+				$this->title,
+				null,
+				array(),
+				array(),
+				array( 'known', 'noclasses' )
+			)
+		) );
 	}
 
 	/**

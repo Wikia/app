@@ -10,9 +10,7 @@ class DataCenterViewSettingsField extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		$metaFields = DataCenterDB::getMetaFields();
 		return DataCenterUI::renderLayout(
 			'columns',
@@ -58,9 +56,7 @@ class DataCenterViewSettingsField extends DataCenterView {
 		);
 	}
 
-	public function view(
-		$path
-	) {
+	public function view( $path ) {
 		$metaField = DataCenterDB::getMetaField( $path['id'] );
 		return DataCenterUI::renderLayout(
 			'columns',
@@ -103,9 +99,7 @@ class DataCenterViewSettingsField extends DataCenterView {
 		);
 	}
 
-	public function remove(
-		$path
-	) {
+	public function remove( $path ) {
 		$metaField = DataCenterDB::getMetaField( $path['id'] );
 		$metaFieldLinks = $metaField->getLinks();
 		foreach ( $metaFieldLinks as $metaFieldLink ) {
@@ -183,15 +177,11 @@ class DataCenterViewSettingsField extends DataCenterView {
 		);
 	}
 
-	public function add(
-		$path
-	) {
+	public function add( $path ) {
 		return $this->configure( $path );
 	}
 
-	public function configure(
-		$path
-	) {
+	public function configure( $path ) {
 		// Detects mode
 		if ( !$path['id'] ) {
 			// Creates new component

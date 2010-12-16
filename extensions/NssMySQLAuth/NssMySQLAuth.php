@@ -17,6 +17,7 @@
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'NssMySQLAuth',
 	'version'        => '1.0',
 	'author'         => 'Bryan Tong Minh',

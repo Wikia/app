@@ -25,7 +25,6 @@ function efConfigureAjax( $setting, $group ) {
 	if ( $settings->getSettingType( $setting ) != 'array' )
 		return '<err#>';
 
-	wfLoadExtensionMessages( 'Configure' );
 	$type = $settings->getArrayType( $setting );
 	switch( $type ) {
 	case 'group-bool':
@@ -112,5 +111,89 @@ function efConfigureGetAllRights( &$rights ) {
 	global $wgRestrictionLevels;
 	$newrights = array_diff( $wgRestrictionLevels, array( '', 'sysop' ) ); // Pseudo rights
 	$rights = array_unique( array_merge( $rights, $newrights ) );
+	return true;
+}
+
+/**
+ * Add JS variable to the output, for use in Configure.js
+ */
+function efConfigureMakeGlobalVariablesScript( &$vars ) {
+	global $wgConfigureAddJsVariables, $wgUseAjax;
+
+	if ( !$wgConfigureAddJsVariables )
+		return true;
+
+	$vars['wgConfigureAdd'] = wfMsg( 'configure-js-add' );
+	$vars['wgConfigureRemove'] = wfMsg( 'configure-js-remove' );
+	$vars['wgConfigureRemoveRow'] = wfMsg( 'configure-js-remove-row' );
+	$vars['wgConfigurePromptGroup'] = wfMsg( 'configure-js-prompt-group' );
+	$vars['wgConfigureGroupExists'] = wfMsg( 'configure-js-group-exists' );
+	$vars['wgConfigureUseAjax'] = (bool)$wgUseAjax;
+	$vars['wgConfigureGetImageUrl'] = wfMsg( 'configure-js-get-image-url' );
+	$vars['wgConfigureImageError'] = wfMsg( 'configure-js-image-error' );
+	$vars['wgConfigureBiglistShown'] = wfMsg( 'configure-js-biglist-shown' );
+	$vars['wgConfigureBiglistHidden'] = wfMsg( 'configure-js-biglist-hidden' );
+	$vars['wgConfigureBiglistShow'] = wfMsg( 'configure-js-biglist-show' );
+	$vars['wgConfigureBiglistHide'] = wfMsg( 'configure-js-biglist-hide' );
+	$vars['wgConfigureSummaryNone'] = wfMsg( 'configure-js-summary-none' );
+	$vars['wgConfigureThrottleSummary'] = wfMsg( 'configure-throttle-summary' );
+	return true;
+}
+
+/**
+ * Display link to Special:Configure
+ */
+function efConfigureFarmerAdminPermissions( $farmer ) {
+	global $wgOut;
+
+	wfLoadExtensionMessages( 'Configure' );
+	$wgOut->wrapWikiMsg( '== $1 ==', 'farmer-basic-permission' );
+	$wgOut->addWikiMsg( 'configure-farmer-settings' );
+
+	return false;
+}
+
+/**
+ * Avoid displaying anything :)
+ */
+function efConfigureFarmerAdminSkin( $farmer ) {
+	return false;	
+}
+
+/**
+ * Display link to Special:Extensions
+ */
+function efConfigureFarmerAdminExtensions( $farmer ) {
+	global $wgOut;
+
+	$wgOut->wrapWikiMsg( '== $1 ==', 'farmer-extensions' );
+	$wgOut->addWikiMsg( 'configure-farmer-extensions' );
+
+	return false;
+}
+
+/**
+ * Display link to Special:Extensions
+ */
+function efConfigureFarmerManageExtensions( $farmer ) {
+	global $wgOut;
+
+	$wgOut->wrapWikiMsg( '== $1 ==', 'farmer-extensions-available' );
+	$wgOut->addWikiMsg( 'configure-farmer-extensions-list' );
+
+	return false;
+}
+
+/**
+ * Adds links to Configure's special pages to the Special:AdminLinks page,
+ * defined by the Admin Links extension
+ */
+function efConfigureAddToAdminLinks( &$adminLinksTree ) {
+	$generalSection = $adminLinksTree->getSection( wfMsg( 'adminlinks_general' ) );
+	$configureRow = new ALRow( 'configure' );
+	$configureRow->addItem( ALItem::newFromSpecialPage( 'Configure' ) );
+	$configureRow->addItem( ALItem::newFromSpecialPage( 'Extensions' ) );
+	$configureRow->addItem( ALItem::newFromSpecialPage( 'ViewConfig' ) );
+	$generalSection->addRow( $configureRow );
 	return true;
 }

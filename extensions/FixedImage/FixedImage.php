@@ -34,28 +34,23 @@ $wgFixedImageHooks = array(
 	);
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'FixedImage',
 	'author'         => 'Brion Vibber',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:FixedImage',
-	'svn-date'       => '$LastChangedDate: 2008-12-20 10:32:47 +0100 (sob, 20 gru 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44839 $',
 	'description'    => 'Just include an image',
 	'descriptionmsg' => 'fixedimage-desc',
 );
 $wgExtensionMessagesFiles['FixedImage'] =  dirname(__FILE__) . '/FixedImage.i18n.php';
 
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'fixedImageSetup';
-} else {
-	$wgExtensionFunctions[] = 'fixedImageSetup';
-}
+$wgHooks['ParserFirstCallInit'][] = 'fixedImageSetup';
 
-function fixedImageSetup() {
-	global $wgParser, $wgFixedImageHooks;
+function fixedImageSetup( &$parser ) {
+	global $wgFixedImageHooks;
 	foreach( $wgFixedImageHooks as $key => $data ) {
 		$wrapper = create_function( '$text, $params=null',
 			"return fixedImageHandler('$key', \$text, \$params);" );
-		$wgParser->setHook( $key, $wrapper );
+		$parser->setHook( $key, $wrapper );
 	}
 	return true;
 }

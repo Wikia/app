@@ -4,7 +4,7 @@
  * Extension that adds a new toggle in user preferences to show if the user is
  * aviabled or not. See http://mediawiki.org/wiki/Extension:OnlineStatus for
  * more informations.
- * Require MediaWiki 1.11.0 to work.
+ * Require MediaWiki 1.16 alpha r52503 or higher to work.
  *
  * @addtogroup Extensions
  * @author Alexandre Emsenhuber
@@ -13,11 +13,11 @@
 
 // Add credit :)
 $wgExtensionCredits['other'][] = array(
-	'svn-date'       => '$LastChangedDate: 2008-09-19 20:33:16 +0200 (ptk, 19 wrz 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 41039 $',
+	'path'           => __FILE__,
 	'name'           => 'OnlineStatus',
 	'author'         => 'Alexandre Emsenhuber',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:OnlineStatus',
+	'version'        => '2009-08-22',
 	'description'    => 'Add a preference to show if the user is currently present or not on the wiki',
 	'descriptionmsg' => 'onlinestatus-desc',
 );
@@ -29,34 +29,35 @@ $wgExtensionCredits['other'][] = array(
  */
 $wgAllowAnyUserOnlineStatusFunction = true;
 
+/**
+ * New preferences for this extension
+ */
+$wgDefaultUserOptions['online'] = 'online';
+$wgDefaultUserOptions['showonline'] = 0;
+$wgDefaultUserOptions['onlineonlogin'] = 1;
+$wgDefaultUserOptions['offlineonlogout'] = 1;
+
+// Add messages files
+$wgExtensionMessagesFiles['OnlineStatus'] = dirname( __FILE__ ) . '/OnlineStatus.i18n.php';
+$wgExtensionMessagesFiles['OnlineStatusMagic'] = dirname( __FILE__ ) . '/OnlineStatus.i18n.magic.php';
+
+// FIXME: Should be a separate class file
 class OnlineStatus {
-
+	// FIXME: Can't this just be in the core bit instead of the class? The init() will not have to be called
 	static function init(){
-		global $wgExtensionMessagesFiles, $wgExtensionFunctions, $wgHooks, $wgAjaxExportList;
-
-		// Add messages file
-		$wgExtensionMessagesFiles['OnlineStatus'] = dirname( __FILE__ ) . '/OnlineStatus.i18n.php';
+		global $wgExtensionFunctions, $wgHooks, $wgAjaxExportList;
 
 		// Hooks for the Parser
-		// Use ParserFirstCallInit if aviable
-		if( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) )
-			$wgHooks['ParserFirstCallInit'][] = 'OnlineStatus::ParserFirstCallInit';
-		else
-			$wgExtensionFunctions[] = 'OnlineStatus::Setup';
+		$wgHooks['ParserFirstCallInit'][] = 'OnlineStatus::ParserFirstCallInit';
 
 		// Magic words hooks
 		$wgHooks['MagicWordwgVariableIDs'][] = 'OnlineStatus::MagicWordVariable';
-		$wgHooks['LanguageGetMagic'][] = 'OnlineStatus::LanguageGetMagic';
 		$wgHooks['ParserGetVariableValueSwitch'][] = 'OnlineStatus::ParserGetVariable';
 
 		// Hooks for Special:Preferences
-		$wgHooks['InitPreferencesForm'][] = 'OnlineStatus::InitPreferencesForm';
-		$wgHooks['PreferencesUserInformationPanel'][] = 'OnlineStatus::PreferencesUserInformationPanel';
-		$wgHooks['ResetPreferences'][] = 'OnlineStatus::ResetPreferences';
-		$wgHooks['SavePreferences'][] = 'OnlineStatus::SavePreferences';
+		$wgHooks['GetPreferences'][] = 'OnlineStatus::GetPreferences';
 
 		// User hook
-		$wgHooks['UserToggles'][] = 'OnlineStatus::UserToggles';
 		$wgHooks['UserLoginComplete'][] = 'OnlineStatus::UserLoginComplete';
 		$wgHooks['UserLogoutComplete'][] = 'OnlineStatus::UserLogoutComplete';
 
@@ -142,14 +143,6 @@ class OnlineStatus {
 	}
 
 	/**
-	 * Extension function
-	 */
-	static function Setup() {
-		global $wgParser;
-		self::ParserFirstCallInit( $wgParser );
-	}
-
-	/**
 	 * Hook for ParserFirstCallInit
 	 */
 	static function ParserFirstCallInit( $parser ){
@@ -184,17 +177,6 @@ class OnlineStatus {
 	}
 
 	/**
-	 * Hook function for LanguageGetMagic
-	 * @todo maybe allow localisation
-	 */
-	static function LanguageGetMagic( &$magicWords, $langCode ) {
-		$magicWords['onlinestatus_word'] = array( 1, 'ONLINESTATUS' );
-		$magicWords['onlinestatus_word_raw'] = array( 1, 'RAWONLINESTATUS' );
-		$magicWords['anyuseronlinestatus'] = array( 0, 'anyuseronlinestatus' );
-		return true;
-	}
-
-	/**
 	 * Hook function for ParserGetVariableValueSwitch
 	 */
 	static function ParserGetVariable( &$parser, &$varCache, &$index, &$ret ){
@@ -216,52 +198,11 @@ class OnlineStatus {
 	}
 
 	/**
-	 * Hook function for SavePreferences
+	 * Hook for user preferences
 	 */
-	static function SavePreferences( $prefs, $user, &$msg, $old = array() ){
-		# We need to invalidate caches for these pages, maybe it would be good
-		# to be done for subpages, but it would too expensive
-		if( !is_array( $old ) || empty( $old ) ){
-			# MediaWiki is < 1.13, at that time, $old param wasn't present
-			# We can't check if the user changed the online toggle as it is
-			# already saved :(
-			$changed = true;
-		} elseif( !isset( $old['online'] ) || !isset( $old['showonline'] ) )  {
-			$changed = true;
-		} else {
-			$changed = !( $old['online'] == $user->mOptions['online']
-				&& $old['showonline'] == $user->mOptions['showonline'] );
-		}
-		if( $changed ){
-			$user->getUserPage()->invalidateCache();
-			$user->getTalkPage()->invalidateCache();
-		}
-		return true;
-	}
-
-	/**
-	 * Hook function for InitPreferencesForm
-	 */
-	static function InitPreferencesForm( $prefs, $request ) {
-		$prefs->mToggles['online'] = $request->getVal( 'wpOnline' );
-		$prefs->mToggles['showonline'] = $request->getCheck( 'wpOpShowOnline' ) ? 1 : 0;
-		return true;
-	}
-
-	/**
-	 * Hook function for ResetPreferences
-	 */
-	static function ResetPreferences( $prefs, $user ) {
-		$prefs->mToggles['online'] = $user->getOption( 'online' );
-		$prefs->mToggles['showonline'] = $user->getOption( 'showonline' );
-		return true;
-	}
-
-	/**
-	 * Hook function for PreferencesUserInformationPanel
-	 */
-	static function PreferencesUserInformationPanel( $prefsForm, &$html ) {
+	public static function GetPreferences( $user, &$preferences ) {
 		wfLoadExtensionMessages( 'OnlineStatus' );
+
 		$msg = wfMsgForContentNoTrans( 'onlinestatus-levels' );
 		$lines = explode( "\n", $msg );
 		$radios = array();
@@ -269,44 +210,53 @@ class OnlineStatus {
 			if( substr( $line, 0, 1 ) != '*' )
 				continue;
 			$lev = trim( $line, '* ' );
-			$radios[] = Xml::radioLabel(
-				wfMsg( 'onlinestatus-toggle-' . $lev ),
-				'wpOnline',
-				$lev,
-				'wpOnline-' . $lev,
-				$lev == $prefsForm->mToggles['online']
-			);
+			$radios[wfMsg( 'onlinestatus-toggle-' . $lev )] = $lev;
 		}
-		$out = "<ul>\n<li>";
-		$out .= implode( "</li>\n<li>", $radios );
-		$out .= "</li>\n</ul>";
-		$html .= $prefsForm->tableRow(
-			wfMsgExt( 'onlinestatus-toggles-desc', array( 'escapenoentities' ) ),
-			$out .
-			Xml::checkLabel( wfMsg( 'onlinestatus-toggles-show' ), 'wpOpShowOnline', 'wpOpShowOnline', (bool)$prefsForm->mToggles['showonline'] ) .
-			wfMsgExt( 'onlinestatus-toggles-explain', array( 'parse' ) )
-		);
-		return true;
-	}
 
-	/**
-	 * Hook for UserToggles
-	 */
-	static function UserToggles( &$toggles ){
-		$toggles[] = 'onlineOnLogin';
-		$toggles[] = 'offlineOnLogout';
-		return true;	
+		$preferences['onlineonlogin'] =
+			array(
+				'type' => 'toggle',
+				'section' => 'misc',
+				'label-message' => 'onlinestatus-pref-onlineonlogin',
+			);
+
+		$preferences['offlineonlogout'] =
+			array(
+				'type' => 'toggle',
+				'section' => 'misc',
+				'label-message' => 'onlinestatus-pref-offlineonlogout',
+			);
+
+		$prefs = array(
+			'online' => array(
+				'type' => 'radio',
+				'section' => 'personal/info',
+				'options' => $radios,
+				'label-message' => 'onlinestatus-toggles-desc',
+			),
+			'showonline' => array(
+				'type' => 'check',
+				'section' => 'personal/info',
+				'label-message' => 'onlinestatus-toggles-show',
+				'help-message' => 'onlinestatus-toggles-explain',
+			)
+		);
+
+		$after = array_key_exists( 'registrationdate', $preferences ) ? 'registrationdate' : 'editcount';
+		$preferences = wfArrayInsertAfter( $preferences, $prefs, $after );
+
+		return true;
 	}
 
 	/**
 	 * Hook for UserLoginComplete
 	 */
 	static function UserLoginComplete( $user ){
-		if( $user->getOption( 'offlineOnLogout' ) ){
+		if( $user->getOption( 'onlineonlogin' ) ){
 			$user->setOption( 'online', 'online' );
 			$user->saveSettings();
 		}
-		return true;	
+		return true;
 	}
 
 	/**
@@ -318,11 +268,11 @@ class OnlineStatus {
 		$oldUser = User::newFromName( $oldName );
 		if( !$oldUser instanceof User )
 			return true;
-		if( $oldUser->getOption( 'offlineOnLogout' ) ){
+		if( $oldUser->getOption( 'offlineonlogout' ) ){
 			$oldUser->setOption( 'online', 'offline' );
 			$oldUser->saveSettings();
 		}
-		return true;	
+		return true;
 	}
 
 	/**
@@ -333,13 +283,9 @@ class OnlineStatus {
 		global $wgUseAjax;
 
 		if( $wgUser->isLoggedIn() && $wgUseAjax ){
-			global $wgScriptPath, $wgJsMimeType;
-			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgScriptPath}/extensions/OnlineStatus/OnlineStatus.js\"></script>" );
-			$out->addLink( array(
-				'rel' => 'stylesheet',
-				'type' => 'text/css',
-				'href' => "{$wgScriptPath}/extensions/OnlineStatus/OnlineStatus.css"
-			) );
+			global $wgScriptPath;
+			$out->addScriptFile( "{$wgScriptPath}/extensions/OnlineStatus/OnlineStatus.js" );
+			$out->addExtensionStyle( "{$wgScriptPath}/extensions/OnlineStatus/OnlineStatus.css" );
 		}
 
 		if( !in_array( $wgRequest->getVal( 'action', 'view' ), array( 'view', 'purge' ) ) )

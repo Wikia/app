@@ -96,7 +96,7 @@ function smwfDoSpecialOWLExport($page = '') {
 
 	// nothing exported yet; show user interface:
 	$html = '<form name="tripleSearch" action="" method="POST">' . "\n" .
-	        wfMsg('smw_exportrdf_docu') . "\n" .
+	        '<p>' . wfMsg('smw_exportrdf_docu') . "</p>\n" .
 	        '<input type="hidden" name="postform" value="1"/>' . "\n" .
 	        '<textarea name="pages" cols="40" rows="10"></textarea><br />' . "\n";
 	if ( $wgUser->isAllowed('delete') || $smwgAllowRecursiveExport) {
@@ -253,16 +253,21 @@ class OWLExport {
 		$this->delay_flush = 10; //flush only after (fully) printing 11 objects
 		$this->extra_namespaces = array();
 
-		$this->printHeader(); // also inits global namespaces
+		if (count($pages) == 1) { // ensure that ontologies that are retrieved as linked data are not confused with their subject!
+			$ontologyuri=SMWExporter::expandURI('&export;') . '/' . urlencode(end($pages));
+		} else { // use empty URI, i.e. "location" as URI otherwise
+			$ontologyuri='';
+		}
+		$this->printHeader($ontologyuri); // also inits global namespaces
 
 		wfProfileIn("RDF::PrintPages::PrepareQueue");
 		// transform pages into queued export titles
 		$cur_queue = array();
 		foreach ($pages as $page) {
 			$title = Title::newFromText($page);
-			if (NULL === $title) continue; //invalid title name given
+			if (null === $title) continue; //invalid title name given
 			$st = new SMWSmallTitle();
-			$st->dbkey = $title->getDBKey();
+			$st->dbkey = $title->getDBkey();
 			$st->namespace = $title->getNamespace();
 			$cur_queue[] = $st;
 		}
@@ -286,20 +291,20 @@ class OWLExport {
 		}
 
 		// for pages not processed recursively, print at least basic declarations
-		wfProfileIn("RDF::PrintPages::Auxilliary");
+		wfProfileIn("RDF::PrintPages::Auxiliary");
 		$this->date = ''; // no date restriction for the rest!
 		if (!empty($this->element_queue)) {
 			if ( '' != $this->pre_ns_buffer ) {
-				$this->post_ns_buffer .= "\t<!-- auxilliary definitions -->\n";
+				$this->post_ns_buffer .= "\t<!-- auxiliary definitions -->\n";
 			} else {
-				print "\t<!-- auxilliary definitions -->\n"; // just print this comment, so that later outputs still find the empty pre_ns_buffer!
+				print "\t<!-- auxiliary definitions -->\n"; // just print this comment, so that later outputs still find the empty pre_ns_buffer!
 			}
 			while (!empty($this->element_queue)) {
 				$st = array_pop($this->element_queue);
 				$this->printObject($st,false,false);
 			}
 		}
-		wfProfileOut("RDF::PrintPages::Auxilliary");
+		wfProfileOut("RDF::PrintPages::Auxiliary");
 		$this->printFooter();
 		$this->flushBuffers(true);
 		wfProfileOut("RDF::PrintPages");
@@ -326,7 +331,6 @@ class OWLExport {
 				print "\nCannot open \"$outfile\" for writing.\n";
 				return false;
 			}
-			print "\nWriting OWL/RDF dump to file \"$outfile\" ...\n";
 			$this->delay_flush = -1; // never flush, we flush in another way
 		}
 		$this->extra_namespaces = array();
@@ -340,10 +344,10 @@ class OWLExport {
 		$delaycount = $delayeach;
 		for ($id = $start; $id <= $end; $id++) {
 			$title = Title::newFromID($id);
-			if ( ($title === NULL) || !smwfIsSemanticsProcessed($title->getNamespace()) ) continue;
+			if ( ($title === null) || !smwfIsSemanticsProcessed($title->getNamespace()) ) continue;
 			if ( !OWLExport::fitsNsRestriction($ns_restriction, $title->getNamespace()) ) continue;
 			$st = new SMWSmallTitle();
-			$st->dbkey = $title->getDBKey();
+			$st->dbkey = $title->getDBkey();
 			$st->namespace = $title->getNamespace();
 			$cur_queue = array($st);
 			$a_count++; //DEBUG
@@ -439,7 +443,7 @@ class OWLExport {
 		while($row = $db->fetchObject($res)) {
 			$foundpages = true;
 			//$t = Title::makeTitle($row->page_namespace, $row->page_title);
-			//if ($t === NULL) continue;
+			//if ($t === null) continue;
 			//$et = new SMWExportTitle($t, $this);
 			$st = new SMWSmallTitle();
 			$st->dbkey = $row->page_title;
@@ -484,33 +488,33 @@ class OWLExport {
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('rdf','type'), $ed);
 		$ed = new SMWExpData(new SMWExpLiteral($wgSitename));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('rdfs','label'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral($wgSitename, NULL, 'http://www.w3.org/2001/XMLSchema#string'));
+		$ed = new SMWExpData(new SMWExpLiteral($wgSitename, null, 'http://www.w3.org/2001/XMLSchema#string'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','siteName'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SMWExporter::expandURI('&wikiurl;'), NULL, 'http://www.w3.org/2001/XMLSchema#string'));
+		$ed = new SMWExpData(new SMWExpLiteral(SMWExporter::expandURI('&wikiurl;'), null, 'http://www.w3.org/2001/XMLSchema#string'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','pagePrefix'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SMW_VERSION, NULL, 'http://www.w3.org/2001/XMLSchema#string'));
+		$ed = new SMWExpData(new SMWExpLiteral(SMW_VERSION, null, 'http://www.w3.org/2001/XMLSchema#string'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','smwVersion'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral($wgLanguageCode, NULL, 'http://www.w3.org/2001/XMLSchema#string'));
+		$ed = new SMWExpData(new SMWExpLiteral($wgLanguageCode, null, 'http://www.w3.org/2001/XMLSchema#string'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','langCode'), $ed);
 
 		// stats
-		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::pages(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
+		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::pages(), null, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','pageCount'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::articles(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
+		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::articles(), null, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','contentPageCount'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::images(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
+		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::images(), null, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','mediaCount'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::edits(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
+		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::edits(), null, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','editCount'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::views(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
+		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::views(), null, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','viewCount'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::users(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
+		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::users(), null, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','userCount'), $ed);
-		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::admins(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
+		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::admins(), null, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','adminCount'), $ed);
 
 		$mainpage = Title::newMainPage();
-		if ($mainpage !== NULL) {
+		if ($mainpage !== null) {
 			$ed = new SMWExpData(new SMWExpResource($mainpage->getFullURL()));
 			$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','mainPage'), $ed);
 		}
@@ -536,7 +540,7 @@ class OWLExport {
 
 	/* Functions for exporting RDF */
 
-	protected function printHeader() {
+	protected function printHeader($ontologyuri = '') {
 		global $wgContLang;
 
 		$this->pre_ns_buffer .=
@@ -562,7 +566,7 @@ class OWLExport {
 
 		$this->post_ns_buffer .=
 			">\n\t<!-- Ontology header -->\n" .
-			"\t<owl:Ontology rdf:about=\"\">\n" .
+			"\t<owl:Ontology rdf:about=\"$ontologyuri\">\n" .
 			"\t\t<swivt:creationDate rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" . date(DATE_W3C) . "</swivt:creationDate>\n" .
 			"\t\t<owl:imports rdf:resource=\"http://semantic-mediawiki.org/swivt/1.0\" />\n" .
 			"\t</owl:Ontology>\n" .
@@ -677,7 +681,7 @@ class OWLExport {
 				$inSubs = smwfGetStore()->getPropertySubjects( $inRel, $value );
 				foreach($inSubs as $inSub) {
 					$stb = new SMWSmallTitle();
-					$stb->dbkey = $inSub->getDBKey();
+					$stb->dbkey = $inSub->getDBkey();
 					$stb->namespace = $inSub->getNamespace();
 					if (!array_key_exists($stb->getHash(), $this->element_done)) {
 						$semdata = smwfGetStore()->getSemanticData($inSub, array('__spu', '__typ', '__imp'));
@@ -694,7 +698,7 @@ class OWLExport {
 				$pinst = SMWPropertyValue::makeProperty('_INST');
 				foreach($instances as $instance) {
 					$stb = new SMWSmallTitle();
-					$stb->dbkey = $instance->getDBKey();
+					$stb->dbkey = $instance->getDBkey();
 					$stb->namespace = $instance->getNamespace();
 					if (!array_key_exists($stb->getHash(), $this->element_done)) {
 						$semdata = smwfGetStore()->getSemanticData($instance, array('__spu', '__typ', '__imp'));
@@ -715,7 +719,7 @@ class OWLExport {
 				while ($resarray !== false) {
 					$instance = end($resarray)->getNextObject();
 					$stb = new SMWSmallTitle();
-					$stb->dbkey = $instance->getDBKey();
+					$stb->dbkey = $instance->getDBkey();
 					$stb->namespace = $instance->getNamespace();
 					if (!array_key_exists($stb->getHash(), $this->element_done)) {
 						$semdata = smwfGetStore()->getSemanticData($instance,  array('__spu', '__typ', '__imp'));
@@ -795,7 +799,7 @@ class OWLExport {
 		if ($title instanceof SMWWikiPageValue) {
 			$spt = new SMWSmallTitle();
 			$title = $title->getTitle();
-			$spt->dbkey = $title->getDBKey();
+			$spt->dbkey = $title->getDBkey();
 			$spt->namespace = $title->getNamespace();
 			$spt->modifier = $element->getModifier();
 			if ( !array_key_exists($spt->getHash(), $this->element_done) ) {

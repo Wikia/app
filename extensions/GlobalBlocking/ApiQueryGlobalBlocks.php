@@ -138,6 +138,10 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 		$result->addValue('query', $this->getModuleName(), $data);
 	}
 
+	public function getCacheMode($params) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'start' => array(
@@ -205,6 +209,12 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 	public function getDescription() {
 		return 'List all globally blocked IP addresses.';
 	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array ( 'code' => 'cidrtoobroad', 'info' => 'CIDR ranges broader than /16 are not accepted' ),
+		) );
+	}
 
 	protected function getExamples() {
 		return array (	'api.php?action=query&list=globalblocks',
@@ -213,6 +223,6 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryGlobalBlocks.php 69579 2010-07-20 02:49:55Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryGlobalBlocks.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

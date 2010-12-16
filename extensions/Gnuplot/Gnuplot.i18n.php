@@ -18,6 +18,13 @@ $messages['qqq'] = array(
 	'gnuplot-desc' => 'Shown in [[Special:Version]].',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'gnuplot-desc' => 'Voeg die <nowiki><gnuplot></nowiki>-etiket by om van Gnuplot gebruik te maak',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -32,6 +39,13 @@ $messages['arz'] = array(
 	'gnuplot-desc' => 'يضيف الوسم <code><nowiki><gnuplot></nowiki></code> لاستخدام جنو بلوت',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'gnuplot-desc' => 'Дадае тэг <code><nowiki><gnuplot></nowiki></code> для выкарыстаньня Gnuplot',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -39,11 +53,25 @@ $messages['bg'] = array(
 	'gnuplot-desc' => 'Добавя етикет <code><nowiki><gnuplot></nowiki></code> за използване на Gnuplot',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'gnuplot-desc' => 'Ouzhpennañ a ra ar valizenn <code><nowiki><gnuplot></nowiki></code> evit gellout ober gant Gnuplot',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'gnuplot-desc' => 'Dodaje oznaku <code><nowiki><gnuplot></nowiki></code> za upotrebu Gnuplot',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'gnuplot-desc' => "Afegeix l'etiqueta <code><nowiki><gnuplot></nowiki></code> per a usar Gnuplot",
 );
 
 /** Czech (Česky)
@@ -63,6 +91,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'gnuplot-desc' => 'Pśidawa toflicku <code><nowiki><gnuplot></nowiki></code>, aby se Gnuplot wužywał',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'gnuplot-desc' => 'Προσθέτει την ετικέτα <code><nowiki><gnuplot></nowiki></code> για χρήση Gnuplot',
 );
 
 /** Esperanto (Esperanto)
@@ -114,6 +149,13 @@ $messages['gsw'] = array(
 	'gnuplot-desc' => 'Fiegt s <code><nowiki><gnuplot></nowiki></code>-Tag yy zum Gnuplot verwände',
 );
 
+/** Gujarati (ગુજરાતી)
+ * @author Dineshjk
+ */
+$messages['gu'] = array(
+	'gnuplot-desc' => 'Gnuplot (સોફ્ટવેર) વાપરવા માટે <code><nowiki><gnuplot></nowiki></code> ઊમેરે છે.',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
@@ -126,6 +168,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'gnuplot-desc' => 'Gnuplot में <code><nowiki><gnuplot></nowiki></code> टैग बढायें',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'gnuplot-desc' => 'Nagadugang ang tag <code><nowiki><gnuplot></nowiki></code> para magamit ang Gnuplot',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -147,6 +196,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'gnuplot-desc' => 'Adde le etiquetta <code><nowiki><gnuplot></nowiki></code> pro usar Gnuplot',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'gnuplot-desc' => 'Menambahkan tag <code><nowiki><gnuplot></nowiki></code> untuk menggunakan Gnuplot',
 );
 
 /** Italian (Italiano)
@@ -189,6 +245,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'gnuplot-desc' => 'Setzt den tag <code><nowiki><gnuplot></nowiki></code> derbäi fir Gnuplot ze benotzen',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'gnuplot-desc' => 'Ја додава ознаката <code><nowiki><gnuplot></nowiki></code> за користење на Gnuplot',
 );
 
 /** Marathi (मराठी)
@@ -234,6 +297,13 @@ $messages['pl'] = array(
 	'gnuplot-desc' => 'Dodaje tag <code><nowiki><gnuplot></nowiki></code> do użycia przez Gnuplot',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'gnuplot-desc' => 'A gionta ël tag <code><nowiki><gnuplot></nowiki></code> për dovré Gnuplot',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -246,6 +316,13 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'gnuplot-desc' => 'Adiciona a marca <code><nowiki><gnuplot></nowiki></code> para utilizar o Gnuplot',
+);
+
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'gnuplot-desc' => 'Adaugă marcajul <code><nowiki><gnuplot></nowiki></code> pentru a folosi Gnuplot',
 );
 
 /** Tarandíne (Tarandíne)
@@ -262,6 +339,13 @@ $messages['ru'] = array(
 	'gnuplot-desc' => 'Добавляет тег <code><nowiki><gnuplot></nowiki></code> для использования Gnuplot',
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'gnuplot-desc' => 'Gnuplot туһанарга <code><nowiki><gnuplot></nowiki></code> тиэги эбэр',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -269,11 +353,32 @@ $messages['sk'] = array(
 	'gnuplot-desc' => 'Pridáva značku <code><nowiki><gnuplot></nowiki></code> pre použitie Gnuplot',
 );
 
+/** Lower Silesian (Schläsch)
+ * @author Piotron
+ */
+$messages['sli'] = array(
+	'gnuplot-desc' => 'Fiegt dan <code><nowiki><gnuplot></nowiki></code>-Tag hinzu, um Gnuplot zu varwenda',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'gnuplot-desc' => 'E vendos kodin <code><nowiki><gnuplot></nowiki></code> për të përdorur Gnuplot',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'gnuplot-desc' => 'Додаје таг <code><nowiki><gnuplot></nowiki></code> зарад коришћења Gnuplot-а',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'gnuplot-desc' => 'Dodaje tag <code><nowiki><gnuplot></nowiki></code> zarad korišćenja Gnuplot-a',
 );
 
 /** Seeltersk (Seeltersk)
@@ -323,6 +428,13 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'gnuplot-desc' => 'Gnuplot kullanmak için <code><nowiki><gnuplot></nowiki></code> etiketini ekler',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'gnuplot-desc' => 'Додає тег <code><nowiki><gnuplot></nowiki></code> для використання Gnuplot',
 );
 
 /** Vèneto (Vèneto)

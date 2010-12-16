@@ -157,9 +157,7 @@ class DataCenterWidgetForm extends DataCenterWidget {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $wgUser;
 		// Sets defaults
 		$parameters = array_merge( self::$defaultParameters, $parameters );
@@ -260,7 +258,7 @@ class DataCenterWidgetForm extends DataCenterWidget {
 						// Sets name of input for form processing
 						$inputOptions['name'] = "row[{$inputOptions['field']}]";
 					// Alternatively checks if a list of fields were given
-					} else if ( isset( $inputOptions['fields'] ) ) {
+					} elseif ( isset( $inputOptions['fields'] ) ) {
 						// Loops over each sub-field
 						foreach( $inputOptions['fields'] as $key => $field ) {
 							// Checks if sub-field is an array

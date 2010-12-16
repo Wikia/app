@@ -10,9 +10,7 @@ class DataCenterViewOverview extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		return DataCenterUI::renderLayout(
 			'columns',
 			array(

@@ -97,10 +97,11 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'spamregex' => 'تعبير منتظم لسبام',
-	'spamregex-desc' => '[[Special:SpamRegex|فلتر]] العبارات غير المرغوب فيها في الصفحات المعدلة، بالاعتماد على التعبيرات المنتظمة',
+	'spamregex-desc' => '[[Special:SpamRegex|مُرشّح]] العبارات غير المرغوب فيها في الصفحات المعدلة، بالاعتماد على التعبيرات المنتظمة',
 	'spamregex-error-unblocking' => 'خطأ رفع منع "$1". على الأرجح لا يوجد نمط كهذا.',
 	'spamregex-summary' => 'النص تم العثور عليه في ملخص الصفحة.',
 	'spamregex-intro' => 'استخدم هذه الاستمارة لمنع تعبيرات من الحفظ في نص صفحة بكفاءة.
@@ -128,6 +129,13 @@ $messages['ar'] = array(
 	'spamregex-text' => '(نص)',
 	'spamregex-summary-log' => '(ملخص)',
 	'right-spamregex' => 'منع عبارات السبام من خلال [[Special:SpamRegex]]',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 ܠܚܝ]) ܐܬܬܘܣܦ ܒܝܕ $5 ܒ$6 ܫܥܬܐ $7",
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -229,13 +237,65 @@ $messages['bg'] = array(
 	'right-spamregex' => 'Блокиране на спам фрази чрез [[Special:SpamRegex]]',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'spamregex-text' => '(লেখা)',
+	'spamregex-summary-log' => '(সারাংশ)',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'spamregex' => 'Strob regex (Spam regex)',
+	'spamregex-error-unblocking' => 'Fazi distankañ "$1". Sur a-walc\'h n\'eus ket a batrom.',
+	'spamregex-summary' => 'Kavet eo bet an destenn e diverradur ar bajenn.',
+	'spamregex-currently-blocked' => "'''Frazennoù stanket evit bremañ :'''",
+	'spamregex-move' => "An abeg hoc'h eus ebarzhet a oa ennañ ur frazenn stanket.",
+	'spamregex-no-currently-blocked' => "'''N'eus frazenn stanket ebet.'''",
+	'spamregex-log' => "* '''$1''' $2  ([{{SERVER}}$3&text=$4 dilemel]) ouzhpennet gant $5 d'ar $6 da $7",
+	'spamregex-unblock-success' => 'Distanket eo bet an implijer.',
+	'spamregex-unblock-message' => "Distanket eo bet ar bajenn '''$1''' evit an embann.",
+	'spamregex-block-success' => 'Graet eo ar stankadur',
+	'spamregex-block-message' => "Stanket eo bet ar frazenn '''$1'''",
+	'spamregex-warning-1' => 'Reiñ ur frazenn da stankañ.',
+	'spamregex-warning-2' => "Mar plij dibabit d'an nebeutañ un doare stankañ.",
+	'spamregex-already-blocked' => '« $1 » zo stanket dija',
+	'spamregex-phrase-block' => 'Frazenn da stankañ :',
+	'spamregex-phrase-block-text' => 'stankañ ar frazenn e testenn ar bajenn',
+	'spamregex-phrase-block-summary' => 'stankañ ar frazenn en evezhiadenn',
+	'spamregex-block-submit' => 'Stankañ&nbsp;ar&nbsp;frazenn-se',
+	'spamregex-text' => '(Testenn)',
+	'spamregex-summary-log' => '(Diverradur)',
+	'right-spamregex' => 'Stankañ stroboù dre [[Special:SpamRegex]]',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'spamregex' => 'Regularni izrazi spama',
+	'spamregex-desc' => '[[Special:SpamRegex|Izdvajanje]] neželjenih fraza u uređenim stranicama, na osnovu regularnih izraza',
+	'spamregex-error-unblocking' => 'Greška pri deblokadi "$1". Moguće je da nema takve šeme.',
+	'spamregex-summary' => 'Tekst je pronađen u sažetku stranice',
+	'spamregex-currently-blocked' => "'''Trenutno blokirane fraze:'''",
+	'spamregex-move' => 'Razlog koji ste unijeli sadrži blokiranu frazu.',
+	'spamregex-no-currently-blocked' => "'''Nema blokiranih fraza.'''",
 	'spamregex-unblock-success' => 'Deblokada uspješna',
+	'spamregex-unblock-message' => "Fraza '''$1''' je deblokirana za uređivanje.",
 	'spamregex-block-success' => 'Blokada uspješna',
+	'spamregex-block-message' => "Fraza '''$1''' je blokirana.",
+	'spamregex-warning-1' => 'Navedite frazu za blokiranje.',
+	'spamregex-error-1' => 'Nevaljan regularni izraz.',
 	'spamregex-already-blocked' => '"$1" je već blokiran',
+	'spamregex-phrase-block' => 'Fraza za blokadu:',
+	'spamregex-phrase-block-text' => 'blokirana fraza u tekstu stranice',
+	'spamregex-phrase-block-summary' => 'blokirana fraza u sažetku',
+	'spamregex-text' => '(Tekst)',
+	'spamregex-summary-log' => '(Sažetak)',
 );
 
 /** Catalan (Català)
@@ -243,6 +303,14 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'spamregex-already-blocked' => '«$1» ja està blocat',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'spamregex-text' => '(دەق)',
+	'spamregex-summary-log' => '(پوختە)',
 );
 
 /** Danish (Dansk)
@@ -269,7 +337,7 @@ Sei aber vorsichtig, Phrasen sollten nicht zu kurz oder zu allgemein sein.',
 	'spamregex-currently-blocked' => "'''Derzeit gesperrte Phrasen:'''",
 	'spamregex-move' => 'Die Zusammenfassung, die du angabst, enthält eine gesperrte Phrase.',
 	'spamregex-no-currently-blocked' => "'''Es gibt derzeit keine gesperrten Phrasen.'''",
-	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 entfernen]) hinzugefügt durch $5 am $6 um $7",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 entfernen]) hinzugefügt durch $5 am $6 um $7 Uhr",
 	'spamregex-page-title-1' => 'Sperre Phrase als regulären Ausdruck',
 	'spamregex-unblock-success' => 'Entsperrung erfolgreich',
 	'spamregex-unblock-message' => "Phrase „'''$1'''“ wurde für Bearbeitungen entsperrt.",
@@ -286,16 +354,18 @@ Sei aber vorsichtig, Phrasen sollten nicht zu kurz oder zu allgemein sein.',
 	'spamregex-block-submit' => 'Phrase sperren',
 	'spamregex-text' => '(Text)',
 	'spamregex-summary-log' => '(Zusammenfassung)',
-	'right-spamregex' => 'Blockiere ungewollte Phrasen über [[Special:SpamRegex]]',
+	'right-spamregex' => 'Ungewollte Phrasen über [[Special:SpamRegex]] blockieren',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author ChrisiPK
+ * @author Imre
  */
 $messages['de-formal'] = array(
 	'spamregex-intro' => 'Benutzen Sie dieses Formular, um effektiv zu verhindern, dass angegebene Phrasen in den Text einer Seite eingefügt werden.
 Wenn der Text die angegebene Phrase enthält, wird die Änderung nicht gespeichert und ein Hinweis an den Benutzer ausgegeben, der versucht hat, die Seite zu speichern.
 Seien Sie aber vorsichtig, Phrasen sollten nicht zu kurz oder zu allgemein sein.',
+	'spamregex-move' => 'Die Zusammenfassung, die Sie angegeben haben, enthält eine gesperrte Phrase.',
 	'spamregex-warning-2' => 'Bitte wählen Sie mindestens eine Sperrmethode aus.',
 );
 
@@ -336,8 +406,22 @@ Buź pak wobglědniwy, wuraze njeby pśekrotke abo pśepowšykne byś.',
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'spamregex' => 'Τακτική έκφραση spam',
+	'spamregex-currently-blocked' => "'''Υπάρχουσες φραγμένες φράσεις:'''",
+	'spamregex-no-currently-blocked' => "'''Δεν υπάρχουν φραγμένες φράσεις.'''",
+	'spamregex-unblock-success' => 'Η απόφραξη ολοκληρώθηκε επιτυχώς.',
+	'spamregex-block-success' => 'Η φραγή ήταν επιτυχής',
+	'spamregex-block-message' => "Η φράση '''$1''' έχει φραγεί.",
+	'spamregex-warning-1' => 'Δώστε μια φράση για φραγή.',
+	'spamregex-warning-2' => 'Παρακαλώ ελέγξτε τουλάχιστον μια λειτουργία φραγής.',
+	'spamregex-already-blocked' => 'Ο "$1" είναι ήδη φραγμένος',
+	'spamregex-phrase-block' => 'Φράση για φραγή:',
+	'spamregex-phrase-block-text' => 'γραφή φράσης στο κείμενο της σελίδας',
+	'spamregex-phrase-block-summary' => 'φραγή φράση στη σύνοψη',
+	'spamregex-block-submit' => 'Φραγή&nbsp;της&nbsp;φράσης',
 	'spamregex-text' => '(κείμενο)',
 	'spamregex-summary-log' => '(Περίληψη)',
 );
@@ -369,14 +453,24 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Antur
  * @author Crazymadlover
+ * @author Dferg
  * @author Imre
  */
 $messages['es'] = array(
+	'spamregex' => 'Spam regex',
+	'spamregex-desc' => '[[Special:SpamRegex|Filtrar]] frases no deseadas en páginas editadas, basadas en expresiones regulares',
+	'spamregex-error-unblocking' => 'Error desbloqueando "$1". Probablemente no existe tal ruta.',
 	'spamregex-summary' => 'El texto fue encontrado en el resumen de página.',
+	'spamregex-intro' => 'Use este formulario para evitar la inclusión de expresiones en el texto de una página.
+Si el texto contiene la expresion dada, no se grabará el cambio y se mostrará una explicación al usuario que intenta guardar la página.
+Sea cuidadoso, las expresiones a prohibir no deberían ser muy cortas o muy comunes.',
+	'spamregex-page-title' => 'Bloqueo de expresiones no deseadas spam regex',
 	'spamregex-currently-blocked' => "'''Frases actualmente bloqueadas:'''",
 	'spamregex-move' => 'La razón que ha ingresado contiene una frase bloqueada.',
 	'spamregex-no-currently-blocked' => "'''No hay frases bloqueadas.'''",
+	'spamregex-log' => " '''$1''' $2 ([{{SERVER}}$3&text=$4 borrado]) agregado por  $5 sobre $6 en $7",
 	'spamregex-page-title-1' => 'Bloquear frase usando expresiones regulares',
 	'spamregex-unblock-success' => 'Desbloque fue un éxito',
 	'spamregex-unblock-message' => "Frase '''$1''' ha sido bloqueada de la edición.",
@@ -390,6 +484,7 @@ $messages['es'] = array(
 	'spamregex-phrase-block' => 'Frase a bloquear:',
 	'spamregex-phrase-block-text' => 'bloquear frase en texto de página',
 	'spamregex-phrase-block-summary' => 'bloquear frase en resumen',
+	'spamregex-block-submit' => 'Block&nbsp;this&nbsp;frases',
 	'spamregex-text' => '(Texto)',
 	'spamregex-summary-log' => '(Resumen)',
 	'right-spamregex' => 'Bloquear frases spam a traves de [[Special:SpamRegex]]',
@@ -397,19 +492,45 @@ $messages['es'] = array(
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
+	'spamregex-currently-blocked' => "'''Gaur egun blokeatutako esaldiak:'''",
+	'spamregex-no-currently-blocked' => "'''Ez dago blokeatutako esaldirik.'''",
+	'spamregex-warning-1' => 'Idatz ezazu blokeatzeko esaldi bat.',
+	'spamregex-phrase-block' => 'Blokeatu beharreko esaldia:',
+	'spamregex-block-submit' => 'Esaldi&nbsp;hau&nbsp;blokeatu',
 	'spamregex-text' => '(Testu)',
 	'spamregex-summary-log' => '(Laburpen)',
 );
 
 /** Finnish (Suomi)
+ * @author Silvonen
  * @author Str4nd
  */
 $messages['fi'] = array(
+	'spamregex-error-unblocking' => 'Ilmauksen ”$1” eston poisto ei onnistunut. Sitä ei todennäköisesti ole estetty.',
+	'spamregex-summary' => 'Teksti löytyi sivun yhteenvedosta.',
+	'spamregex-currently-blocked' => "'''Estetyt ilmaukset:'''",
+	'spamregex-move' => 'Antamasi syy sisälsi estetyn ilmauksen.',
+	'spamregex-no-currently-blocked' => "'''Estettyjä ilmauksia ei ole.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 poista]) lisäsi $5 $6 klo $7",
+	'spamregex-page-title-1' => 'Estä ilmaus säännöllisten lausekkeiden avulla',
 	'spamregex-unblock-success' => 'Eston poisto onnistui',
+	'spamregex-unblock-message' => "Ilmauksen '''$1''' esto on poistettu.",
+	'spamregex-page-title-2' => 'Estä ilmausten tallentaminen säännöllisten lausekkeiden avulla',
 	'spamregex-block-success' => 'Esto onnistui',
+	'spamregex-block-message' => "Ilmaus '''$1''' on estetty.",
+	'spamregex-warning-1' => 'Anna estettävä ilmaus.',
 	'spamregex-error-1' => 'Virheellinen säännöllinen lauseke.',
+	'spamregex-warning-2' => 'Valitse ainakin yksi estotapa.',
+	'spamregex-already-blocked' => '”$1” on jo estetty',
+	'spamregex-phrase-block' => 'Estettävä ilmaus:',
+	'spamregex-phrase-block-text' => 'estä ilmaus sivun tekstissä',
+	'spamregex-phrase-block-summary' => 'estä ilmaus yhteenvedossa',
+	'spamregex-block-submit' => 'Estä&nbsp;tämä&nbsp;ilmaus',
+	'spamregex-text' => '(Teksti)',
+	'spamregex-summary-log' => '(Yhteenveto)',
 );
 
 /** French (Français)
@@ -446,6 +567,15 @@ $messages['fr'] = array(
 	'spamregex-text' => '(Texte)',
 	'spamregex-summary-log' => '(Commentaire)',
 	'right-spamregex' => 'Bloquer du spam depuis [[Special:SpamRegex]]',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'spamregex-text' => '(Tèxto)',
+	'spamregex-summary-log' => '(Rèsumâ)',
 );
 
 /** Western Frisian (Frysk)
@@ -492,8 +622,16 @@ Teña en conta que as expresións non deberían ser moi curtas ou moi comúns.',
 	'right-spamregex' => 'Bloquear as frases de spam mediante [[Special:SpamRegex]]',
 );
 
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
+ */
+$messages['grc'] = array(
+	'spamregex-summary-log' => '(Σύνοψις)',
+);
+
 /** Swiss German (Alemannisch)
  * @author Als-Holder
+ * @author Melancholie
  */
 $messages['gsw'] = array(
 	'spamregex' => 'Spam regex',
@@ -501,7 +639,7 @@ $messages['gsw'] = array(
 	'spamregex-error-unblocking' => 'Het „$1“ nit chenne frejgee. Wahrschyyns git kei sonigs Muschter.',
 	'spamregex-summary' => 'Dr Täxt isch in dr Zämmefassig gfunde wore.',
 	'spamregex-intro' => 'Verwänd des Formular go effektiv verhindere, ass Phrase, wu aagee wore sin, in dr Täxt yygee wäre.
-Wänn s im Täxt Phrase het, wu aagee sin, no wird d Änderig nit gspycheret un e Hiiwyys an dr Benutzer uusgee, wu versuecht het, d Syte z spychere.
+Wänn s im Täxt Phrase het, wu aagee sin, no wird d Änderig nit gspycheret un e Hiiwyys an de Benutzer uusgee, wu versuecht het, d Syte z spychere.
 Bii aber vorsichtig, Phrase sotte nit z churz oder zue allgmein syy.',
 	'spamregex-page-title' => 'Nit gwinschti Uusdrick filtere',
 	'spamregex-currently-blocked' => "'''Im Momänt gsperrti Phrase:'''",
@@ -618,6 +756,41 @@ $messages['hsb'] = array(
 	'right-spamregex' => 'Spamowe wurazy přez [[Special:SpamRegex]] blokować',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'spamregex' => 'Spam reguláris kifejezés',
+	'spamregex-desc' => 'Nemkívánatos kifejezések [[Special:SpamRegex|kiszűrése]] a szerkesztett lapokról, reguláris kifejezések alapján',
+	'spamregex-error-unblocking' => 'Hiba a(z) „$1” blokkolásának feloldásakor. Valószínűleg nincs ilyen minta.',
+	'spamregex-summary' => 'Szövegtalálat a lap összefoglalójában.',
+	'spamregex-intro' => 'Használd ezt az űrlapot kifejezések lapszövegbe mentésének hatékony blokkolásához.
+Ha a szöveg tartalmazza a megadott kifejezést, a változtatás nem kerül mentésre és egy magyarázat jelenik meg a felhasználónak, aki menteni próbálta a lapot.
+Javasolt az óvatosság, a kifejezések nem lehetnek túl rövidek vagy túl gyakoriak.',
+	'spamregex-page-title' => 'Nem kívánatos kifejezések blokkolása',
+	'spamregex-currently-blocked' => "'''Jelenleg blokkolt kifejezések:'''",
+	'spamregex-move' => 'A megadott indoklás blokkolt kifejezést tartalmazott.',
+	'spamregex-no-currently-blocked' => "'''Nincsenek blokkolt kifejezések.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 eltávolítás]) hozzáadta $5 ekkor: $6 $7",
+	'spamregex-page-title-1' => 'Kifejezés blokkolása reguláris kifejezések használatával',
+	'spamregex-unblock-success' => 'A blokk feloldása sikerült',
+	'spamregex-unblock-message' => "A(z) '''$1''' kifejezés blokkolása feloldva a szerkesztésből.",
+	'spamregex-page-title-2' => 'Kifejezések blokkolása mentés előtt reguláris kifejezések használatával',
+	'spamregex-block-success' => 'A blokkolás sikerült',
+	'spamregex-block-message' => "A(z) '''$1''' kifejezés blokkolva.",
+	'spamregex-warning-1' => 'Adj meg egy blokkolandó kifejezést.',
+	'spamregex-error-1' => 'Érvénytelen reguláris kifejezés.',
+	'spamregex-warning-2' => 'Kérlek válassz legalább egy blokkolási módot.',
+	'spamregex-already-blocked' => '„$1” már blokkolva van',
+	'spamregex-phrase-block' => 'Blokkolandó kifejezés:',
+	'spamregex-phrase-block-text' => 'kifejezés blokklása a lap szövegében',
+	'spamregex-phrase-block-summary' => 'kifejezés blokklása az összefoglalóban',
+	'spamregex-block-submit' => 'Kifejezés blokkolása',
+	'spamregex-text' => '(Szöveg)',
+	'spamregex-summary-log' => '(Összefoglaló)',
+	'right-spamregex' => 'Összetett spam kifejezések blokkolása a [[Special:SpamRegex]] lapon',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -651,6 +824,42 @@ Caution avisate: le expressiones non debe esser troppo curte o troppo commun.',
 	'spamregex-text' => '(Texto)',
 	'spamregex-summary-log' => '(Summario)',
 	'right-spamregex' => 'Blocar phrases de spam per medio de [[Special:SpamRegex]]',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author IvanLanin
+ */
+$messages['id'] = array(
+	'spamregex' => 'Regex spam',
+	'spamregex-desc' => '[[Special:SpamRegex|Menyaring]] frasa yang tak diinginkan di halaman yang disunting, didasarkan pada ekspresi regular (regex).',
+	'spamregex-error-unblocking' => 'Kesalahan menghapus blokir "$1". Mungkin pola tersebut tak ditemukan.',
+	'spamregex-summary' => 'Teks tersebut ditemukan di ringkasan halaman.',
+	'spamregex-intro' => 'Gunakan isian ini untuk secara efektif memblokir penyimpanan ekspresi ke teks halaman.
+Jika teks mengandung ekspresi tertentu, perubahan tidak akan disimpan dan penjelasan akan ditampilkan kepada pengguna yang mencoba untuk menyimpan halaman.
+Disarankan agar ekspresi tidak terlalu pendek atau terlalu umum.',
+	'spamregex-page-title' => 'Blok ekspresi yang tidak diinginkan spam regex',
+	'spamregex-currently-blocked' => "'''Frasa yang sedang diblokir:'''",
+	'spamregex-move' => 'Alasan yang Anda masukkan mengandung suatu frasa yang diblokir.',
+	'spamregex-no-currently-blocked' => "''Tidak ada frasa yang diblokir.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 hapus]) ditambahkan oleh $5 pada $6 pukul $7",
+	'spamregex-page-title-1' => 'Blokir frasa dengan menggunakan ekspresi reguler',
+	'spamregex-unblock-success' => 'Pembukaan blokir berhasil',
+	'spamregex-unblock-message' => "Frasa '''$1''' telah dibuka blokirnya.",
+	'spamregex-page-title-2' => 'Blokir penyimpanan frasa dengan menggunakan ekspresi regular',
+	'spamregex-block-success' => 'Pemblokir berhasil',
+	'spamregex-block-message' => "Frasa '''$1''' telah diblokir.",
+	'spamregex-warning-1' => 'Berikan suatu frasa untuk diblokir',
+	'spamregex-error-1' => 'Ekspresi regular tidak valid.',
+	'spamregex-warning-2' => 'Silakan pilih paling tidak satu mode blokir.',
+	'spamregex-already-blocked' => '"$1" telah diblokir',
+	'spamregex-phrase-block' => 'Frasa untuk diblokir:',
+	'spamregex-phrase-block-text' => 'blokir frasa dalam teks halaman',
+	'spamregex-phrase-block-summary' => 'blokir frasa dalam ringkasan',
+	'spamregex-block-submit' => 'Blokirnbsp;frasa&nbsp;ini',
+	'spamregex-text' => '(Teks)',
+	'spamregex-summary-log' => '(Ringkasan)',
+	'right-spamregex' => 'Blokir frasa spam melalui [[Special:SpamRegex]]',
 );
 
 /** Icelandic (Íslenska)
@@ -740,6 +949,13 @@ $messages['km'] = array(
 	'spamregex-summary-log' => '(សេចក្តីសង្ខេប)',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'spamregex-summary-log' => '(ಸಾರಾಂಶ)',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -783,15 +999,18 @@ do es e Stöck Tex dren, dä jesperrt es.',
  * @author Robby
  */
 $messages['lb'] = array(
+	'spamregex-desc' => '[[Special:SpamRegex|Filter]] onerwënscht Setz aus geännerte Säiten eraus, op Basis vu regulären Ausdréck',
 	'spamregex-error-unblocking' => 'Feeler bäim ophiewe vun der Spär: "$1". Et gëtt wahrscheinlech keen esou e Muster.',
 	'spamregex-summary' => 'Dësen Text gouf am Resumé vun der Säit fonnt',
 	'spamregex-currently-blocked' => "'''Sätz déi elo gespaart sinn:'''",
 	'spamregex-no-currently-blocked' => "'''Et gëtt keng gespaarte Sätz.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 ewechhuelen]) derbäigesat vum $5 de(n) $6 ëm $7 Auer",
 	'spamregex-unblock-success' => 'Spär ass opgehuewen',
 	'spamregex-block-success' => 'Gespaart',
 	'spamregex-block-message' => "De Saatz '''$1''' gouf gespaart.",
 	'spamregex-already-blocked' => '"$1" ass scho gespaart',
 	'spamregex-phrase-block' => 'Saatz fir ze spären',
+	'spamregex-phrase-block-text' => 'Saatz am Text vun enger Säit spären',
 	'spamregex-phrase-block-summary' => 'Saatz am Resumé spären',
 	'spamregex-block-submit' => 'Spär&nbsp;dëse&nbsp;Saz',
 	'spamregex-text' => '(Text)',
@@ -812,6 +1031,41 @@ $messages['mhr'] = array(
 	'spamregex-summary-log' => '(Чылаже)',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'spamregex' => 'Филтер за спам',
+	'spamregex-desc' => '[[Special:SpamRegex|Филтрирање]] на непожелни фрази во уредуваните страници, засновано на регуларни изрази',
+	'spamregex-error-unblocking' => 'Грешка при одблокирањето на „$1“. Веројатно нема таква шема.',
+	'spamregex-summary' => 'Текстот е пронајден во описот на страницата.',
+	'spamregex-intro' => 'Користете го овој образец за ефективно блокирање на изрази кои не сакате да можат да се зачувуваат во страници.
+Ако текстот го содржи зададениот израз, промените нема да се зачуваат и на корисникот кој го внел изразот ќе му се појави објаснување.
+Бидете внимателни, зададените изрази не треба да бидат прекратки или пречести.',
+	'spamregex-page-title' => 'Спам-филтер за блокирање на непожелни изрази',
+	'spamregex-currently-blocked' => "'''Моментално блокирани фрази:'''",
+	'spamregex-move' => 'Причината којашто ја внесовте содржеше блокирана фраза.',
+	'spamregex-no-currently-blocked' => "'''Нема блокирани фрази.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 отстрани]) додадено од $5 на $6 во $7",
+	'spamregex-page-title-1' => 'Блокирање на фраза со помош на регуларен израз',
+	'spamregex-unblock-success' => 'Одблокирањето успеа',
+	'spamregex-unblock-message' => "Фразата '''$1''' е одблокирана за уредување.",
+	'spamregex-page-title-2' => 'Блокирање на зачувувањето на фрази со помош на регуларни изрази',
+	'spamregex-block-success' => 'Блокирањето успеа',
+	'spamregex-block-message' => "Фразата '''$1''' е блокирана.",
+	'spamregex-warning-1' => 'Наведете фраза за блокирање.',
+	'spamregex-error-1' => 'Неважечки регуларен израз.',
+	'spamregex-warning-2' => 'Одберете барем еден режим на блокирање.',
+	'spamregex-already-blocked' => '„$1“ е веќе блокирано',
+	'spamregex-phrase-block' => 'Фраза за блокирање:',
+	'spamregex-phrase-block-text' => 'блокирање на фраза во текстот на страницата',
+	'spamregex-phrase-block-summary' => 'блокирање на фраза во описот на измени',
+	'spamregex-block-submit' => 'Блокирај&nbsp;ја&nbsp;оваа&nbsp;фраза',
+	'spamregex-text' => '(Текст)',
+	'spamregex-summary-log' => '(Опис)',
+	'right-spamregex' => 'Блокирање на спам-фрази со помош на [[Special:SpamRegex]]',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
@@ -820,6 +1074,13 @@ $messages['ml'] = array(
 	'spamregex-block-success' => 'തടയല്‍ വിജയിച്ചിരിക്കുന്നു',
 	'spamregex-already-blocked' => '"$1" ഇതിനകം തന്നെ തടയപ്പെട്ടിരിക്കുന്നു.',
 	'spamregex-summary-log' => '(ചുരുക്കം)',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'spamregex-summary-log' => '(Товч агуулга)',
 );
 
 /** Marathi (मराठी)
@@ -957,6 +1218,7 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'spamregex' => 'SpamRegex',
@@ -968,6 +1230,7 @@ $messages['no'] = array(
 	'spamregex-currently-blocked' => "'''Nåværende blokkerte fraser:'''",
 	'spamregex-move' => 'Årsaken du skrev inn inneholdt en blokkert frase.',
 	'spamregex-no-currently-blocked' => "'''Det er ingen blokkerte fraser.'''",
+	'spamregex-log' => "'''$1''' $2 ([{{SERVER}}$3&text=$4 fjern]) lagt til av $5 den $6 klokka $7",
 	'spamregex-page-title-1' => 'Blokker frase ved hjelp av regulære uttrykk',
 	'spamregex-unblock-success' => 'Avblokkering lyktes',
 	'spamregex-unblock-message' => "Frasen '''$1''' er ikke lenger blokkert.",
@@ -984,6 +1247,7 @@ $messages['no'] = array(
 	'spamregex-block-submit' => 'Blokker&nbsp;denne&nbsp;frasen',
 	'spamregex-text' => '(Tekst)',
 	'spamregex-summary-log' => '(Sammendrag)',
+	'right-spamregex' => 'Blokkér spamfraser gjennom [[Special:SpamRegex]]',
 );
 
 /** Occitan (Occitan)
@@ -993,8 +1257,8 @@ $messages['oc'] = array(
 	'spamregex' => 'Expressions regularas de Spams',
 	'spamregex-desc' => "[[Special:SpamRegex|Filtre]], dins las paginas, las frasas o mots indesirables, basat sus d'expressions regularas",
 	'spamregex-error-unblocking' => 'Error de desblocatge de « $1 ». I a probablament pas cap de modèl.',
-	'spamregex-summary' => 'Lo tèxt en question es estat detectat dins lo comentari de la pagina.',
-	'spamregex-intro' => "Utilizatz aqueste formulari per blocar efièchament las expressions que pòdon èsser salvadas dins una pagina tèxt. Se lo tèxt conten las expressions definidas, los cambiaments poiràn pas èsser salvats e un motiu explicatiu serà afichat a l’utilizaire qu'a volgut salvar la pagina. Es important de prendre en consideracion que las expressions deuràn pas èsser ni tròp longas ni tròp correntas.",
+	'spamregex-summary' => 'Lo tèxte en question es estat detectat dins lo comentari de la pagina.',
+	'spamregex-intro' => "Utilizatz aqueste formulari per blocar efièchament las expressions que pòdon èsser salvadas dins una pagina tèxte. Se lo tèxte conten las expressions definidas, los cambiaments poiràn pas èsser salvats e un motiu explicatiu serà afichat a l’utilizaire qu'a volgut salvar la pagina. Es important de prene en consideracion que las expressions deuràn pas èsser ni tròp longas ni tròp correntas.",
 	'spamregex-page-title' => 'Blocatge de las expressions regularas de spams',
 	'spamregex-currently-blocked' => "'''Frasas actualament blocadas :'''",
 	'spamregex-move' => "Lo motiu qu'avètz inscrich conteniá una frasa blocada.",
@@ -1011,10 +1275,10 @@ $messages['oc'] = array(
 	'spamregex-warning-2' => 'Causissètz almens un mòde de blocatge.',
 	'spamregex-already-blocked' => '« $1 » ja es blocat',
 	'spamregex-phrase-block' => 'Frasa de blocar :',
-	'spamregex-phrase-block-text' => 'blocar la frasa dins lo tèxt de l’article',
+	'spamregex-phrase-block-text' => 'blocar la frasa dins lo tèxte de l’article',
 	'spamregex-phrase-block-summary' => 'blocar la frasa dins lo comentari',
 	'spamregex-block-submit' => 'Blocar&nbsp;aquesta&nbsp;frasa',
-	'spamregex-text' => '(Tèxt)',
+	'spamregex-text' => '(Tèxte)',
 	'spamregex-summary-log' => '(Comentari)',
 	'right-spamregex' => 'Blocar de spam dempuèi [[Special:SpamRegex]]',
 );
@@ -1065,7 +1329,44 @@ Należy zwrócić uwagę, by wyrażania nie były zbyt krótkie lub zbyt często
 	'right-spamregex' => 'Blokowanie spamu, przez blokowanie zwrotów na stronie [[Special:SpamRegex]]',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'spamregex' => 'Regex dë spam',
+	'spamregex-desc' => '[[Special:SpamRegex|A filtra]] fras pa vorsùe an pàgine modificà, basà dzora a espression regolar',
+	'spamregex-error-unblocking' => 'Eror an sblocand "$1". Probabilment col model a-i é pa.',
+	'spamregex-summary' => "Ël test a l'é stàit trovà ant ël somari dla pàgina.",
+	'spamregex-intro' => "Deuvra sta forma-sì për vieté efetivament ëd salvé j'espression ant ël test ëd na pàgina.
+Se ël test a conten l'espression dàita, ël cambi a sarà pa salvà e na spiegassion a sarà visualisà a l'utent ch'a l'ha provà a salvé la pàgina.
+As sugeriss che l'espression a dovrìa esse pa tròp curta o tròp comun-a.",
+	'spamregex-page-title' => "Blocagi ëd j'espression pa vorsùe dë spam regex",
+	'spamregex-currently-blocked' => "'''Fras blocà al moment:'''",
+	'spamregex-move' => "La rason ch'it l'has anserì a contnìa na fras blocà.",
+	'spamregex-no-currently-blocked' => "'''A-i é pa gnun-e fras blocà.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 gava]) giontà da $5 dzora $6 a $7",
+	'spamregex-page-title-1' => "Blòca fras ch'a deuvra d'espression regolar",
+	'spamregex-unblock-success' => 'Sblocagi andàit bin',
+	'spamregex-unblock-message' => "La fras '''$1''' a l'é stàita sblocà e a peul esse modificà.",
+	'spamregex-page-title-2' => 'Blòca le fras (a peulo pa esse salvà) an dovrand espression regolar',
+	'spamregex-block-success' => 'Blocagi andàit bin',
+	'spamregex-block-message' => "La fras '''$1''' a l'é stàita blocà.",
+	'spamregex-warning-1' => 'Dà na fras da bloché.',
+	'spamregex-error-1' => 'Espression regolar pa bon-a.',
+	'spamregex-warning-2' => 'Për piasì contròla almanch na manera ëd bloché.',
+	'spamregex-already-blocked' => '"$1" a l\'é già blocà.',
+	'spamregex-phrase-block' => 'Fras da bloché:',
+	'spamregex-phrase-block-text' => 'blòca fras ant ël test ëd pàgina',
+	'spamregex-phrase-block-summary' => 'blòca fras ant ël resumé',
+	'spamregex-block-submit' => 'Blòca&nbsp;sta&nbsp;fras',
+	'spamregex-text' => '(Test)',
+	'spamregex-summary-log' => '(Resumé)',
+	'right-spamregex' => 'Blòca fras dë spam con [[Special:SpamRegex]]',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author Waldir
@@ -1078,9 +1379,9 @@ $messages['pt'] = array(
 	'spamregex-intro' => 'Use este formulário para efetivamente bloquear expressões de serem gravadas no texto de uma página.
 Se o texto contém a dada expressão, as alterações não serão gravadas e uma explicação será apresentada ao utilizador que tentou gravar a página.
 Pede-se atenção: as expressões não deverão ser demasiado curtas ou demasiado comuns.',
-	'spamregex-page-title' => 'Bloco de expressões indesejadas da expressão regular de spam',
-	'spamregex-currently-blocked' => "'''Frases atualmente bloqueadas:'''",
-	'spamregex-move' => 'O motivo que você introduziu contém uma frase bloqueada.',
+	'spamregex-page-title' => "Bloco de expressões regulares ''(regex)'' das expressões de ''spam'' indesejadas",
+	'spamregex-currently-blocked' => "'''Frases presentemente bloqueadas:'''",
+	'spamregex-move' => 'O motivo que introduziu continha uma frase bloqueada.',
 	'spamregex-no-currently-blocked' => "'''Não há frases bloqueadas.'''",
 	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 remover]) adicionado por $5 em $6 em $7",
 	'spamregex-page-title-1' => 'Bloquear frase usando expressões regulares',
@@ -1148,6 +1449,11 @@ $messages['rif'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'spamregex-no-currently-blocked' => "'''Nu există expresii blocate.'''",
+	'spamregex-unblock-success' => 'Deblocare cu succes',
+	'spamregex-block-success' => 'Blocare cu succes',
+	'spamregex-block-message' => "Expresia '''$1''' a fost blocată.",
+	'spamregex-error-1' => 'Expresie regulată incorectă.',
 	'spamregex-already-blocked' => '"$1" este deja blocat',
 	'spamregex-text' => '(Text)',
 	'spamregex-summary-log' => '(Rezumat)',
@@ -1244,6 +1550,64 @@ $messages['sma'] = array(
 	'spamregex-text' => '(Tjaalege)',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'spamregex-desc' => '[[Special:SpamRegex|Филтрирајте]] нежељене фразе у измењеним странама, помоћу регуларних израза',
+	'spamregex-error-unblocking' => 'Грешка приликом одблокирања "$1". Вероватно та фраза и није блокирана.',
+	'spamregex-summary' => 'Текст се нашао у опису странице.',
+	'spamregex-currently-blocked' => "'''Тренутно блокиране фразе:'''",
+	'spamregex-move' => 'Разлог који сте навели је садржао блокирану фразу.',
+	'spamregex-no-currently-blocked' => "'''Нема блокираних фраза.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 уклони]) додат са $5 на $6 у $7",
+	'spamregex-page-title-1' => 'Блокирај фразе помоћу регуларних израза',
+	'spamregex-unblock-success' => 'Деблокирање успешно',
+	'spamregex-unblock-message' => "Фраза '''$1''' је била одблокирана за измене.",
+	'spamregex-block-success' => 'Блок успешан.',
+	'spamregex-block-message' => "Фраза '''$1''' је сада блокирана.",
+	'spamregex-warning-1' => 'Наведите фразу коју треба блокирати.',
+	'spamregex-error-1' => 'Невалидан регуларни израз.',
+	'spamregex-warning-2' => 'Молимо Вас да означите макар један начин блокирања.',
+	'spamregex-already-blocked' => '"$1" је већ блокирана',
+	'spamregex-phrase-block' => 'Фраза за блокирање:',
+	'spamregex-phrase-block-text' => 'блокирајте фразу у тексту странице',
+	'spamregex-phrase-block-summary' => 'блокирајте фразу у опису измене',
+	'spamregex-block-submit' => 'Блокирајте&nbsp;ову&nbsp;фразу',
+	'spamregex-text' => '(Текст)',
+	'spamregex-summary-log' => '(Опис)',
+	'right-spamregex' => 'Блокирајте спам-фразе помоћу [[Special:SpamRegex]]',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'spamregex-desc' => '[[Special:SpamRegex|Filtrirajte]] neželjene fraze u izmenjenim stranama, pomoću regularnih izraza',
+	'spamregex-error-unblocking' => 'Greška prilikom odblokiranja "$1". Verovatno ta fraza i nije blokirana.',
+	'spamregex-summary' => 'Tekst se našao u opisu stranice.',
+	'spamregex-currently-blocked' => "'''Trenutno blokirane fraze:'''",
+	'spamregex-move' => 'Razlog koji ste naveli je sadržao blokiranu frazu.',
+	'spamregex-no-currently-blocked' => "'''Nema blokiranih fraza.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 ukloni]) dodat sa $5 na $6 u $7",
+	'spamregex-page-title-1' => 'Blokiraj fraze pomoću regularnih izraza',
+	'spamregex-unblock-success' => 'Deblokiranje uspešno',
+	'spamregex-unblock-message' => "Fraza '''$1''' je bila odblokirana za izmene.",
+	'spamregex-block-success' => 'Blok uspešan.',
+	'spamregex-block-message' => "Fraza '''$1''' je sada blokirana.",
+	'spamregex-warning-1' => 'Navedite frazu koju treba blokirati.',
+	'spamregex-error-1' => 'Nevalidan regularni izraz.',
+	'spamregex-warning-2' => 'Molimo Vas da označite makar jedan način blokiranja.',
+	'spamregex-already-blocked' => '"$1" je već blokirana',
+	'spamregex-phrase-block' => 'Fraza za blokiranje:',
+	'spamregex-phrase-block-text' => 'blokirajte frazu u tekstu stranice',
+	'spamregex-phrase-block-summary' => 'blokirajte frazu u opisu izmene',
+	'spamregex-block-submit' => 'Blokirajte&nbsp;ovu&nbsp;frazu',
+	'spamregex-text' => '(Tekst)',
+	'spamregex-summary-log' => '(Opis)',
+	'right-spamregex' => 'Blokirajte spam-fraze pomoću [[Special:SpamRegex]]',
+);
+
 /** Sundanese (Basa Sunda)
  * @author Irwangatot
  */
@@ -1268,6 +1632,7 @@ Var observant på att uttryck inte bör vara för korta eller för vanliga.',
 	'spamregex-currently-blocked' => "'''Nuvarande blockerade fraser:'''",
 	'spamregex-move' => 'Anledningen du skrev in innehöll en blockerad fras.',
 	'spamregex-no-currently-blocked' => "'''Det finns inga blockerade fraser.'''",
+	'spamregex-log' => "* '''$1''' $2 ([{{SERVER}}$3&text=$4 ta bort]) lagd till av $5 den $6 kl $7",
 	'spamregex-page-title-1' => 'Blockera fras med hjälp av reguljära uttryck',
 	'spamregex-unblock-success' => 'Avblockering lyckades',
 	'spamregex-unblock-message' => "Frasen '''$1''' är inte längre blockerad.",
@@ -1331,6 +1696,23 @@ $messages['tg-cyrl'] = array(
 	'spamregex-summary-log' => '(Хулоса)',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'spamregex-error-1' => "Iborai oddiji nomū'tabar",
+	'spamregex-already-blocked' => '"$1" allakaj basta şudaast',
+	'spamregex-text' => '(Matn)',
+	'spamregex-summary-log' => '(Xulosa)',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'spamregex-text' => '(Tekst)',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -1368,9 +1750,28 @@ Imimungkahi ang pagiingat, hindi dapat na napakaiksi o napakapangkaraniwan ang m
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'spamregex' => 'Reklam regexi',
+	'spamregex-unblock-success' => 'Engel kaldırma işlemi başarılı',
+	'spamregex-error-1' => 'Geçersiz kurallı ifade.',
+	'spamregex-text' => '(Metin)',
 	'spamregex-summary-log' => '(Özet)',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'spamregex-summary-log' => '(опис)',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'spamregex-text' => '(Tekst)',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1378,7 +1779,17 @@ $messages['tr'] = array(
  * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'spamregex-page-title-1' => 'Cấm cụm từ dùng biểu thức chính quy',
+	'spamregex-unblock-success' => 'Bỏ cấm thành công',
+	'spamregex-block-success' => 'Cấm thành công',
+	'spamregex-block-message' => "Cụm từ '''$1''' đã bị cấm.",
+	'spamregex-error-1' => 'Biểu thức chính quy không hợp lệ.',
 	'spamregex-already-blocked' => '“$1” đã bị cấm rồi',
+	'spamregex-phrase-block' => 'Cụm từ để cấm:',
+	'spamregex-phrase-block-text' => 'cấm cụm từ trong nội dung trang',
+	'spamregex-phrase-block-summary' => 'cấm cụm từ trong tóm lược',
+	'spamregex-block-submit' => 'Cấm&nbsp;cụm&nbsp;từ&nbsp;này',
+	'spamregex-text' => '(Văn bản)',
 	'spamregex-summary-log' => '(Tóm lược)',
 );
 
@@ -1387,5 +1798,21 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'spamregex-text' => '(Vödem)',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'spamregex-text' => '（文字）',
+	'spamregex-summary-log' => '（摘要）',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
+$messages['zh-hant'] = array(
+	'spamregex-text' => '（文字）',
+	'spamregex-summary-log' => '（摘要）',
 );
 

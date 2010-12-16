@@ -29,6 +29,7 @@ define('SPAMREGEX_SUMMARY', 1);
 
 // Extension credits
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Regular Expression Spam Block',
 	'version' => '1.2.2',
 	'author' => array( 'Bartek Łapiński', 'Alexandre Emsenhuber', 'Jack Phoenix' ),

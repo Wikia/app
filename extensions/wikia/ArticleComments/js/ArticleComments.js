@@ -5,12 +5,29 @@ var ArticleComments = {
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.postComment);
 		$('#article-comm-order').find('a').bind('click', ArticleComments.changeOrder);
 		$('#article-comments-pagination').find('div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
-		$('#article-comments').delegate('.article-comm-delete', 'click', ArticleComments.linkDelete);
-		$('#article-comments').delegate('.article-comm-edit', 'click', ArticleComments.edit);
-		$('#article-comments').delegate('.article-comm-history', 'click', ArticleComments.linkHistory);
-		$('#article-comments').delegate('.article-comm-reply', 'click', ArticleComments.reply);
-		$('#article-comments').delegate('.article-comments-li', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
-		$('#article-comments').delegate('.article-comments-li', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
+		// Support Monobook which is using jquery 1.3.
+		// TODO: remove use of live() if/when monobook version of jquery is upgraded and use delegate() instead
+		if (jQuery.delegate == undefined) {
+			$('#article-comments').each( function() {
+				$('.article-comm-delete', this).live('click', ArticleComments.linkDelete);
+				$('.article-comm-edit', this).live('click', ArticleComments.edit);
+				$('.article-comm-history', this).live('click', ArticleComments.linkHistory);
+				$('.article-comm-reply', this).live('click', ArticleComments.reply);
+				$('.article-comments-li', this).live('mouseover', function() {
+					$(this).find('.tools').css('visibility', 'visible');
+				});
+				$('.article-comments-li', this).live('mouseout', function() {
+					$(this).find('.tools').css('visibility', 'hidden');
+				});
+			});
+ 		} else {
+			$('#article-comments').delegate('.article-comm-delete', 'click', ArticleComments.linkDelete);
+			$('#article-comments').delegate('.article-comm-edit', 'click', ArticleComments.edit);
+			$('#article-comments').delegate('.article-comm-history', 'click', ArticleComments.linkHistory);
+			$('#article-comments').delegate('.article-comm-reply', 'click', ArticleComments.reply);
+			$('#article-comments').delegate('.article-comments-li', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
+			$('#article-comments').delegate('.article-comments-li', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
+		}
 		$('#article-comm-fbMonit').mouseenter( function() {$('#fbCommentMessage').fadeIn( 'slow' )});
 		$('#article-comm-fbMonit').mouseleave( function() {$('#fbCommentMessage').fadeOut( 'slow' )});
 		ArticleComments.addHover();

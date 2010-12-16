@@ -18,30 +18,26 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Gadgets',
-	'svn-date' => '$LastChangedDate: 2009-03-10 18:06:04 +0100 (wto, 10 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48268 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://mediawiki.org/wiki/Extension:Gadgets',
 	'description' => 'lets users select custom javascript gadgets',
 	'descriptionmsg' => 'gadgets-desc',
 );
 
-$wgHooks['InitPreferencesForm'][] = 'wfGadgetsInitPreferencesForm';
-$wgHooks['RenderPreferencesForm'][] = 'wfGadgetsRenderPreferencesForm';
-$wgHooks['ResetPreferences'][] = 'wfGadgetsResetPreferences';
+$wgHooks['GetPreferences'][] = 'wfGadgetsGetPreferences';
 $wgHooks['BeforePageDisplay'][] = 'wfGadgetsBeforePageDisplay';
 $wgHooks['ArticleSaveComplete'][] = 'wfGadgetsArticleSaveComplete';
-$wgHooks['LoadAllMessages'][] = 'wfGadgetsInjectMessages';
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Gadgets'] = $dir . 'Gadgets.i18n.php';
-$wgExtensionAliasesFiles['Gadgets'] = $dir . 'Gadgets.i18n.alias.php';
+$wgExtensionAliasesFiles['Gadgets'] = $dir . 'Gadgets.alias.php';
 $wgAutoloadClasses['SpecialGadgets'] = $dir . 'SpecialGadgets.php';
 $wgSpecialPages['Gadgets'] = 'SpecialGadgets';
 $wgSpecialPageGroups['Gadgets'] = 'wiki';
 
-function wfGadgetsArticleSaveComplete( &$article, &$wgUser, $text ) {
+function wfGadgetsArticleSaveComplete( &$article, &$user, $text ) {
 	//update cache if MediaWiki:Gadgets-definition was edited
 	$title = $article->mTitle;
 	if( $title->getNamespace() == NS_MEDIAWIKI && $title->getText() == 'Gadgets-definition' ) {
@@ -51,9 +47,9 @@ function wfGadgetsArticleSaveComplete( &$article, &$wgUser, $text ) {
 }
 
 function wfLoadGadgets() {
-	static $gadgets = NULL;
+	static $gadgets = null;
 
-	if ( $gadgets !== NULL ) return $gadgets;
+	if ( $gadgets !== null ) return $gadgets;
 
 	$struct = wfLoadGadgetsStructured();
 	if ( !$struct ) {
@@ -69,15 +65,15 @@ function wfLoadGadgets() {
 	return $gadgets;
 }
 
-function wfLoadGadgetsStructured( $forceNewText = NULL ) {
+function wfLoadGadgetsStructured( $forceNewText = null ) {
 	global $wgMemc;
 
-	static $gadgets = NULL;
-	if ( $gadgets !== NULL && $forceNewText === NULL ) return $gadgets;
+	static $gadgets = null;
+	if ( $gadgets !== null && $forceNewText === null ) return $gadgets;
 
 	$key = wfMemcKey( 'gadgets-definition' );
 
-	if ( $forceNewText === NULL ) {
+	if ( $forceNewText === null ) {
 		//cached?
 		$gadgets = $wgMemc->get( $key );
 		if ( is_array($gadgets) ) return $gadgets;
@@ -117,80 +113,58 @@ function wfLoadGadgetsStructured( $forceNewText = NULL ) {
 
 	//cache for a while. gets purged automatically when MediaWiki:Gadgets-definition is edited
 	$wgMemc->set( $key, $gadgets, 60*60*24 );
-	$source = $forceNewText !== NULL ? 'input text' : 'MediaWiki:Gadgets-definition';
+	$source = $forceNewText !== null ? 'input text' : 'MediaWiki:Gadgets-definition';
 	wfDebug( __METHOD__ . ": $source parsed, cache entry $key updated\n");
 
 	return $gadgets;
 }
 
-function wfGadgetsInitPreferencesForm( $prefs, $request ) {
-	$gadgets = wfLoadGadgets();
-	if ( !$gadgets ) return true;
-
-	foreach ( $gadgets as $gname => $code ) {
-		$tname = "gadget-$gname";
-		$prefs->mToggles[$tname] = $request->getCheck( "wpOp$tname" ) ? 1 : 0;
-	}
-
-	return true;
-}
-
-function wfGadgetsResetPreferences( $prefs, $user ) {
-	$gadgets = wfLoadGadgets();
-	if ( !$gadgets ) return true;
-
-	foreach ( $gadgets as $gname => $code ) {
-		$tname = "gadget-$gname";
-		$prefs->mToggles[$tname] = $user->getOption( $tname );
-	}
-
-	return true;
-}
-
-function wfGadgetsRenderPreferencesForm( $prefs, $out ) {
+function wfGadgetsGetPreferences( $user, &$preferences ) {
 	$gadgets = wfLoadGadgetsStructured();
-	if ( !$gadgets ) return true;
-
+	if (!$gadgets) return true;
+	
 	wfLoadExtensionMessages( 'Gadgets' );
-
-	$out->addHTML( "\n<fieldset>\n<legend>" . wfMsgHtml( 'gadgets-prefs' ) . "</legend>\n" );
-
-	$out->addWikiMsg( 'gadgets-prefstext' );
-
-	$msgOpt = array( 'parseinline' );
-
-	foreach ( $gadgets as $section => $entries ) {
-		if ( $section !== false && $section !== '' ) {
-			$ttext = wfMsgExt( "gadget-section-$section", $msgOpt );
-			$out->addHTML( "\n<h2 id=\"".htmlspecialchars("gadget-section-$section")."\">" . $ttext . "</h2>\n" );
-		}
-
-		foreach ( $entries as $gname => $code ) {
-			$tname = "gadget-$gname";
-			$ttext = wfMsgExt( $tname, $msgOpt );
-			$checked = @$prefs->mToggles[$tname] == 1 ? ' checked="checked"' : '';
-			$disabled = '';
-
-			# NOTE: No label for checkmarks as this causes the checks to toggle
-			# when clicking a link in the describing text.
-			$out->addHTML( "<div class='toggle'><input type='checkbox' value='1' " .
-				"id=\"$tname\" name=\"wpOp$tname\"$checked$disabled />" .
-				" <span class='toggletext'><label for='$tname'>$ttext</label></span></div>\n" );
+	
+	$options = array();
+	foreach( $gadgets as $section => $thisSection ) {
+		$section = wfMsgExt( "gadget-section-$section", 'parseinline' );
+		$options[$section] = array();
+		foreach( $thisSection as $gname => $code ) {
+			$options[$section][wfMsgExt( "gadget-$gname", 'parseinline' )] = $gname;
 		}
 	}
-
-	$out->addHTML( "</fieldset>\n\n" );
-
+	
+	$preferences['gadgets-intro'] =
+		array(
+			'type' => 'info',
+			'label' => '&nbsp;',
+			'default' => Xml::tags( 'tr', array(),
+				Xml::tags( 'td', array( 'colspan' => 2 ),
+					wfMsgExt( 'gadgets-prefstext', 'parse' ) ) ),
+			'section' => 'gadgets',
+			'raw' => 1,
+			'rawrow' => 1,
+		);
+	
+	$preferences['gadgets'] = 
+		array(
+			'type' => 'multiselect',
+			'options' => $options,
+			'section' => 'gadgets',
+			'label' => '&nbsp;',
+			'prefix' => 'gadget-',
+		);
+		
 	return true;
 }
 
 function wfGadgetsBeforePageDisplay( &$out ) {
-	global $wgUser, $wgTitle;
+	global $wgUser;
 	if ( !$wgUser->isLoggedIn() ) return true;
 
 	//disable all gadgets on Special:Preferences
-	if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
-		$name = SpecialPage::resolveAlias( $wgTitle->getText() );
+	if ( $out->getTitle()->getNamespace() == NS_SPECIAL ) {
+		$name = SpecialPage::resolveAlias( $out->getTitle()->getText() );
 		if ( $name == "Preferences" ) return true;
 	}
 
@@ -210,7 +184,7 @@ function wfGadgetsBeforePageDisplay( &$out ) {
 }
 
 function wfApplyGadgetCode( $code, &$out, &$done ) {
-	global $wgSkin, $wgJsMimeType;
+	global $wgJsMimeType;
 
 	//FIXME: stuff added via $out->addScript appears below usercss and userjs in the head tag.
 	//       but we'd want it to appear above explicit user stuff, so it can be overwritten.
@@ -224,44 +198,13 @@ function wfApplyGadgetCode( $code, &$out, &$done ) {
 
 		if ( preg_match( '/\.js/', $codePage ) ) {
 			$u = $t->getLocalURL( 'action=raw&ctype=' . $wgJsMimeType );
-			$out->addScript( '<script type="' . $wgJsMimeType . '" src="' . htmlspecialchars( $u ) . '"></script>' . "\n" );
+			//switched to addScriptFile call to support scriptLoader
+			$out->addScriptFile( $u );
 		}
 		else if ( preg_match( '/\.css/', $codePage ) ) {
 			$u = $t->getLocalURL( 'action=raw&ctype=text/css' );
 			$out->addScript( '<style type="text/css">/*<![CDATA[*/ @import "' . $u . '"; /*]]>*/</style>' . "\n" );
 		}
 	}
-}
-
-/**
-* inject descriptions into system messages, so they show on Special:Allmessages
-*/
-function wfGadgetsInjectMessages() {
-	global $wgLang, $wgMessageCache;
-
-	$gadgets = wfLoadGadgetsStructured();
-	if ( !$gadgets ) return true;
-
-	$args = array();
-	$messages = array();
-
-	foreach ( $gadgets as $section => $entries ) {
-		if ( $section !== false && $section !== '' ) {
-			$tname = "gadget-section-$section";
-			$ttext = wfMsgReal( $tname, $args, true, false, false );
-			if ( wfEmptyMsg( $tname, $ttext ) ) $ttext = $section;
-			$messages[$tname] = $ttext;
-		}
-
-		foreach ( $entries as $gname => $code ) {
-			$tname = "gadget-$gname";
-			$ttext = wfMsgReal( $tname, $args, true, false, false );
-			if ( wfEmptyMsg( $tname, $ttext ) ) $ttext = $gname;
-			$messages[$tname] = $ttext;
-		}
-	}
-	
-	$wgMessageCache->addMessages( $messages );
-	return true;
 }
 

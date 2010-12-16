@@ -20,6 +20,7 @@ $wgExtensionFunctions[]        = 'wfSetupCSS';
 $wgHooks['LanguageGetMagic'][] = 'wfCSSLanguageGetMagic';
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CSS',
 	'author'         => '[http://www.organicdesign.co.nz/nad User:Nad]',
 	'description'    => 'A parser-function for adding CSS files, article or inline rules to articles',
@@ -39,7 +40,7 @@ class CSS {
 		}
 
 	function magicCss(&$parser, $css) {
-		global $wgOut, $wgRequest, $wgTitle;
+		global $wgOut, $wgRequest;
 		$parser->mOutput->mCacheTime = -1;
 		$url = false;
 		if (ereg('\\{', $css)) {

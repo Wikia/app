@@ -37,6 +37,11 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'createbox-desc' => 'Gespesialiseerde invoerveld vir die skep van nuwe bladsye',
 	'createbox-create' => 'Skep',
+	'createbox-exists' => "Jammer, \"'''{{FULLPAGENAME}}'''\" bestaan al reeds.
+
+U kan nie hierdie bladsy skep nie, maar u kan dit wel [{{fullurl:{{FULLPAGENAME}}|action=edit}} wysig], [{{fullurl:{{FULLPAGENAME}}}} wys], of 'n ander bladsy via die onderstaande vorm skep.
+
+<createbox>break=no</createbox>",
 );
 
 /** Arabic (العربية)
@@ -51,6 +56,13 @@ $messages['ar'] = array(
 أنت لا يمكنك إنشاء هذه الصفحة، لكن يمكنك [{{fullurl:{{FULLPAGENAME}}|action=edit}} تعديلها], [{{fullurl:{{FULLPAGENAME}}}} قراءتها]، أو اختيار إنشاء صفحة أخرى باستخدام الصندوق بالأسفل.
 
 <createbox>break=no</createbox>",
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'createbox-create' => 'ܒܪܝ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -153,6 +165,17 @@ Du kannst diese Seite nicht anlegen, aber du kannst sie [{{fullurl:{{FULLPAGENAM
 <createbox>break=no</createbox>",
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'createbox-exists' => "„'''{{FULLPAGENAME}}'''“ existiert bereits.
+
+Sie können diese Seite nicht anlegen, aber Sie können sie [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeiten], [{{fullurl:{{FULLPAGENAME}}}} lesen] oder eine andere Seite mithilfe des untenstehenden Eingabefeldes anlegen.
+
+<createbox>break=no</createbox>",
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -195,6 +218,13 @@ $messages['es'] = array(
 No puedes crear esta página, pero puedes [{{fullurl:{{FULLPAGENAME}}|action=edit}} editarla], [{{fullurl:{{FULLPAGENAME}}}} leerla], o escoger crear una página diferente usando la tabla de debajo.
 
 <createbox>break=no</createbox>",
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'createbox-create' => 'Loo',
 );
 
 /** Basque (Euskara)
@@ -351,6 +381,14 @@ Anda tidak dapat membuat halaman ini, namun Anda dapat [{{fullurl:{{FULLPAGENAME
 <createbox>break=no</createbox>",
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'createbox-desc' => 'Ntiyéntiyé di mkpà maka éké ihü',
+	'createbox-create' => 'Ké',
+);
+
 /** Italian (Italiano)
  * @author Pietrodn
  */
@@ -436,7 +474,7 @@ $messages['lb'] = array(
 	'createbox-create' => 'Maachen',
 	'createbox-exists' => "Pardon, \"'''{{FULLPAGENAME}}'''\" gëtt et schonn.
 
-Dir kënnt dës Sàit net uleeën, awer Dir kënnt [{{fullurl:{{FULLPAGENAME}}|action=edit}} s'änneren], [{{fullurl:{{FULLPAGENAME}}}} liest] oder wielt fir eng aner Säit unzeleeë mat Hellëf vun der Kescht ënnendrënner.",
+Dir kënnt dës Säit net uleeën, awer Dir kënnt [{{fullurl:{{FULLPAGENAME}}|action=edit}} s'änneren], [{{fullurl:{{FULLPAGENAME}}}} liest] oder wielt fir eng aner Säit unzeleeë mat Hëllef vun der Këscht ënnendrënner.",
 );
 
 /** Macedonian (Македонски)
@@ -563,14 +601,20 @@ It peule pa creé sta pàgina-sì, ma it peule [{{fullurl:{{FULLPAGENAME}}|actio
  */
 $messages['ps'] = array(
 	'createbox-create' => 'جوړول',
+	'createbox-exists' => "بخښنه دې وي چې د \"'''{{FULLPAGENAME}}'''\" په نوم مخ د پخوا نه شته.
+
+تاسې دا مخ نه شی جوړولای، خو تاسې کولای شی چې [{{fullurl:{{FULLPAGENAME}}|action=edit}} سم يې کړی]، [{{fullurl:{{FULLPAGENAME}}}} وې لولی]، او يا هم د لانديني چوکاټ په کارولو سره په کوم بل نوم يو مخ جوړ کړی.
+
+<createbox>break=no</createbox>",
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
-	'createbox-desc' => 'Inputbox especializado para a criação de páginas',
+	'createbox-desc' => 'Caixa especializada para a criação de páginas',
 	'createbox-create' => 'Criar',
 	'createbox-exists' => "Desculpe, \"'''{{FULLPAGENAME}}'''\" já existe.
 
@@ -629,6 +673,14 @@ $messages['ru'] = array(
 <createbox>break=no</createbox>",
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'createbox-desc' => 'Сирэй айарга аналлаах формалар',
+	'createbox-create' => 'Айарга',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -666,7 +718,11 @@ Du kan inte skapa den här sidan, men du kan [{{fullurl:{{FULLPAGENAME}}|action=
  * @author Lloffiwr
  */
 $messages['sw'] = array(
+	'createbox-desc' => 'Kisanduku ingizo maalum kwa ajili ya kuanzisha ukurasa',
 	'createbox-create' => 'Anzisha kurasa',
+	'createbox-exists' => "Kumradhi, \"'''{{FULLPAGENAME}}'''\" inapatikana tayari.
+
+Huwezi kuanzisha ukurasa, lakini unaweza [{{fullurl:{{FULLPAGENAME}}|action=edit}} kuuhariri] au [{{fullurl:{{FULLPAGENAME}}}} kuusoma], au kuanzisha ukurasa mwingine kwa kutumia sanduku iliyopo chini.",
 );
 
 /** Telugu (తెలుగు)
@@ -690,6 +746,13 @@ $messages['tg-cyrl'] = array(
 	'createbox-create' => 'Эҷод',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'createbox-create' => 'Eçod',
+);
+
 /** Thai (ไทย)
  * @author Ans
  */
@@ -701,6 +764,13 @@ $messages['th'] = array(
 คุณไม่สามารถสร้างหน้านี้ได้, แต่คุณสามารถ[{{fullurl:{{FULLPAGENAME}}|action=edit}} แก้ไข]หรือ[{{fullurl:{{FULLPAGENAME}}}} เปิดอ่าน]หน้านี้, หรือเลือกที่จะสร้างเนื้อหาในชื่ออื่น โดยใช้กล่องด้านล่างนี้.
 
 <createbox>break=no</createbox>",
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'createbox-create' => 'Döret',
 );
 
 /** Tagalog (Tagalog)

@@ -1,5 +1,5 @@
 <?PHP
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 require_once( 'SignDocumentHelpers.php' );
 
 // TODO: Doc
@@ -24,16 +24,16 @@ class SpecialSignDocument extends SpecialPage {
 		$this->includable( true );
 	}
 
-	function execute($par = null) {
+	function execute( $par = null ) {
 		global $wgOut, $wgRequest, $wgUser;
 
-		wfLoadExtensionMessages('SpecialSignDocument');
+		wfLoadExtensionMessages( 'SpecialSignDocument' );
 
 		$this->setHeaders();
 		if ( $wgUser->isAllowed( 'sigadmin' ) ) {
 			$this->mDocumentId = (int) $wgRequest->getVal( 'doc', null );
 
-			if ( $this->mDocumentId && !is_null($wgRequest->getVal( 'viewsigs' )) ) {
+			if ( $this->mDocumentId && !is_null( $wgRequest->getVal( 'viewsigs' ) ) ) {
 				$tmp = new SignatureViewer();
 				$tmp->execute();
 				return;
@@ -41,7 +41,7 @@ class SpecialSignDocument extends SpecialPage {
 
 			if ( $this->mDocumentId == null )
 				$this->showSelectDocument();
-			else if (!$wgRequest->wasPosted()) {
+			else if ( !$wgRequest->wasPosted() ) {
 				$this->mCurrentSig = SignDocumentSignature::newBasic();
 				$this->showSignForm();
 			}
@@ -63,7 +63,7 @@ class SpecialSignDocument extends SpecialPage {
 		$out .= Xml::openElement( 'form', array(
 			'id' => 'mw-SignDocument-SelectDoc-form',
 			'action' => $wgTitle->escapeLocalUrl(),
-			'method' => 'get') );
+			'method' => 'get' ) );
 
 		$out .= '<p><strong>' . wfMsg( 'sign-selectdoc' ) . '</strong>&nbsp;';
 
@@ -93,8 +93,8 @@ class SpecialSignDocument extends SpecialPage {
 		$itms = SignDocumentForm::getNamesFromDB();
 		$firstItem = null;
 
-		foreach(array_keys($itms) as $itm) {
-			if (!$firstItem) $firstItem = $itm;
+		foreach ( array_keys( $itms ) as $itm ) {
+			if ( !$firstItem ) $firstItem = $itm;
 			$out .= $this->buildOption( $itm, $itms[$itm], $firstItem );
 		}
 
@@ -103,7 +103,7 @@ class SpecialSignDocument extends SpecialPage {
 	}
 
 	function buildOption( $text, $value, $selected ) {
-		$selectedAttrib = ($selected == $text)
+		$selectedAttrib = ( $selected == $text )
 			? array( 'selected' => 'selected' )
 			: array();
 
@@ -113,12 +113,12 @@ class SpecialSignDocument extends SpecialPage {
 	}
 
 	function showSignForm() {
-		global $wgOut, $wgUser, $wgRequest, $wgTitle;
+		global $wgOut, $wgUser, $wgRequest;
 
-		$this->mForm = SignDocumentForm::newFromDB( $wgRequest->getVal('doc') );
+		$this->mForm = SignDocumentForm::newFromDB( $wgRequest->getVal( 'doc' ) );
 
 		if ( !$this->mForm ) {
-			$wgOut->addWikiText( wfMsg( 'sign-error-nosuchdoc', $wgRequest->getVal('doc') ) );
+			$wgOut->addWikiText( wfMsg( 'sign-error-nosuchdoc', $wgRequest->getVal( 'doc' ) ) );
 			return;
 		}
 
@@ -130,9 +130,9 @@ class SpecialSignDocument extends SpecialPage {
 		$skin = $wgUser->getSkin();
 
 		$wgOut->addHTML( '<div style="position:absolute; top:5px; right:10px;">' .
-			'[<b>'. $skin->makeKnownLinkObj( SpecialPage::getTitleFor('SignDocument'),
-				wfMsg( 'sign-viewsignatures' ), 'doc=' . $wgRequest->getVal('doc')
-				. '&viewsigs&timestamp&realname')
+			'[<b>' . $skin->makeKnownLinkObj( SpecialPage::getTitleFor( 'SignDocument' ),
+				wfMsg( 'sign-viewsignatures' ), 'doc=' . $wgRequest->getVal( 'doc' )
+				. '&viewsigs&timestamp&realname' )
 			   	. '</b>]</div>' );
 
 		if ( !$this->mForm->mOpen ) {
@@ -159,7 +159,7 @@ class SpecialSignDocument extends SpecialPage {
 	function addSignForm() {
 		global $wgOut, $wgTitle, $wgRequest;
 
-		$this->mForm = SignDocumentForm::newFromDB( $wgRequest->getVal('doc') );
+		$this->mForm = SignDocumentForm::newFromDB( $wgRequest->getVal( 'doc' ) );
 
 		/* We need the values the user submitted, even if they're not listed. */
 		$this->mCurrentSig->setAllAccessible( true );
@@ -169,43 +169,43 @@ class SpecialSignDocument extends SpecialPage {
 		$out .= Xml::openElement( 'form', array(
 			'id' => 'mw-SignDocument-sign-form',
 			'action' => $wgTitle->escapeLocalUrl(),
-			'method' => 'post') );
+			'method' => 'post' ) );
 
 		$out .= '<table>';
-		$out .= $this->makeInput( false, false, 'realname', wfMsg('sign-realname'),
+		$out .= $this->makeInput( false, false, 'realname', wfMsg( 'sign-realname' ),
 				$this->mCurrentSig->getRealname(), 'anonymous' );
 
 		$out .= $this->makeInput( $this->mForm->mAddressHidden,
 				$this->mForm->mAddressOptional,
-				'address', wfMsg('sign-address'),
+				'address', wfMsg( 'sign-address' ),
 				$this->mCurrentSig->getAddress(), 'hideaddress' );
 		$out .= $this->makeInput( $this->mForm->mExtAddressHidden,
 				$this->mForm->mExtAddressOptional,
-				'city', wfMsg('sign-city'),
+				'city', wfMsg( 'sign-city' ),
 				$this->mCurrentSig->getCity(), 'hideextaddress' );
 		$out .= $this->makeInput( $this->mForm->mExtAddressHidden,
 				$this->mForm->mExtAddressOptional,
-				'state', wfMsg('sign-state'),
+				'state', wfMsg( 'sign-state' ),
 				$this->mCurrentSig->getState(), false );
 		$out .= $this->makeInput( $this->mForm->mExtAddressHidden,
 				$this->mForm->mExtAddressOptional,
-				'zip', wfMsg('sign-zip'),
+				'zip', wfMsg( 'sign-zip' ),
 				$this->mCurrentSig->getZip(), false );
 		$out .= $this->makeInput( $this->mForm->mExtAddressHidden,
 				$this->mForm->mExtAddressOptional,
-				'country', wfMsg('sign-country'),
+				'country', wfMsg( 'sign-country' ),
 				$this->mCurrentSig->getCountry(), false );
 		$out .= $this->makeInput( $this->mForm->mPhoneHidden,
 				$this->mForm->mPhoneOptional,
-				'phone', wfMsg('sign-phone'),
+				'phone', wfMsg( 'sign-phone' ),
 				$this->mCurrentSig->getPhone(), 'hidephone' );
 		$out .= $this->makeInput( $this->mForm->mBdayHidden,
 				$this->mForm->mBdayOptional,
-				'bday', wfMsg('sign-bday'),
+				'bday', wfMsg( 'sign-bday' ),
 				$this->mCurrentSig->getBday(), 'hidebday' );
 		$out .= $this->makeInput( $this->mForm->mEmailHidden,
 				$this->mForm->mEmailOptional,
-				'email', wfMsg('sign-email'),
+				'email', wfMsg( 'sign-email' ),
 				$this->mCurrentSig->getEmail(), 'hideemail' );
 
 		$out .= '<tr><td></td><td>' . wfMsg( 'sign-indicates-req' ) . '</td></tr>';
@@ -215,12 +215,12 @@ class SpecialSignDocument extends SpecialPage {
 
 				'type' => 'hidden',
 				'name' => 'doc',
-				'value' => $wgRequest->getVal('doc') ) );
+				'value' => $wgRequest->getVal( 'doc' ) ) );
 
 		$out .= '<tr><td>' . Xml::element( 'input', array(
 				'id' => 'mwSignDocument-submit',
 				'type' => 'submit',
-				'value' => wfMsg( 'sign-submit') ) );
+				'value' => wfMsg( 'sign-submit' ) ) );
 
 		$out .= '</td></tr>';
 
@@ -230,23 +230,23 @@ class SpecialSignDocument extends SpecialPage {
 	}
 
 	function makeInput( $hidden, $optional, $name, $caption, $value, $markPrivate = false ) {
-		if ($hidden) return '';
+		if ( $hidden ) return '';
 		$out = '<tr><td>';
-		if (!$optional) $caption .= '<font color="red">*</font>';
+		if ( !$optional ) $caption .= '<font color="red">*</font>';
 		$out .= "<strong>$caption&nbsp;";
 		$out .= '</td><td>';
 		$out .= Xml::element( 'input', array(
 			'id' => "wmSignDocument-$name",
 			'name' => $name,
 			'value' => $value,
-			'style' => 'width: 400px;'));
+			'style' => 'width: 400px;' ) );
 		if ( $markPrivate ) {
 			$out .= '</td><td>';
 			$out .= Xml::checkLabel(
 	                    wfMsg( "sign-list-$markPrivate" ) .  '**',
 						$markPrivate,
 						$markPrivate,
-						false);
+						false );
 		}
 
 		$out .= '</td></tr>';
@@ -274,10 +274,10 @@ class SpecialSignDocument extends SpecialPage {
 		}
 
 		$wgOut->addHTML( '<div style="position:absolute; top:5px; right:10px;">' .
-			'[<b>'. $wgUser->getSkin()->makeKnownLinkObj( SpecialPage::getTitleFor('SignDocument'),
-				wfMsg( 'sign-viewsignatures' ), 'doc=' . $wgRequest->getVal('doc')
-				. '&viewsigs&timestamp&realname')
-			   	. '</b>]</div>' );
+			'[<b>' . $wgUser->getSkin()->makeKnownLinkObj( SpecialPage::getTitleFor( 'SignDocument' ),
+				wfMsg( 'sign-viewsignatures' ), 'doc=' . $wgRequest->getVal( 'doc' )
+				. '&viewsigs&timestamp&realname' )
+				. '</b>]</div>' );
 
 		try {
 			$this->mCurrentSig->checkRequired();
@@ -291,7 +291,7 @@ class SpecialSignDocument extends SpecialPage {
 
 		$this->mCurrentSig->addToDB();
 
-		wfLogSignDocumentSignature($this->mCurrentSig);
+		wfLogSignDocumentSignature( $this->mCurrentSig );
 
 		$wgOut->addWikiText( wfMsg( 'sig-success' ) );
 	}
@@ -306,36 +306,36 @@ class SignatureViewer {
 	private $mFields;
 
 	function execute() {
-		global $wgRequest, $wgTitle, $wgUser;
+		global $wgRequest, $wgUser;
 
-		if ($wgRequest->getVal('detail')) {
+		if ( $wgRequest->getVal( 'detail' ) ) {
 			$this->doDetail();
 			return;
 		} else
 
 		$this->setUp();
 
-		if ($wgRequest->wasPosted() && $wgUser->isAllowed('sigadmin')) {
-		   	if (!is_null($wgRequest->getVal('opensigning') ) )
+		if ( $wgRequest->wasPosted() && $wgUser->isAllowed( 'sigadmin' ) ) {
+		   	if ( !is_null( $wgRequest->getVal( 'opensigning' ) ) )
 				$this->openSigning();
-			else if (!is_null($wgRequest->getVal('closesigning') ) )
+			else if ( !is_null( $wgRequest->getVal( 'closesigning' ) ) )
 				$this->closeSigning();
 		}
 
 		global $wgOut;
 
-		//TODO: Add counts, etc.
+		// TODO: Add counts, etc.
 		$wgOut->addWikiText( wfMsg( 'sign-viewsigs-intro', $this->mForm->mPagename, $this->mForm->getId() ) );
 
 		$wgOut->addHTML( $this->getCloseOpenOptions() );
 
 		$wgOut->addHTML( '<br />' . $this->getFieldSelector() );
 
-		$wgOut->addHTML( '<fieldset><legend>' . wfMsg('sign-signatures') . '</legend>' );
+		$wgOut->addHTML( '<fieldset><legend>' . wfMsg( 'sign-signatures' ) . '</legend>' );
 		$wgOut->addHTML( $this->getTableHead() );
 
-		foreach ($this->mSigs as $sig)
-			$wgOut->addHTML( $this->getSigRow($sig, $sig->mStricken ) );
+		foreach ( $this->mSigs as $sig )
+			$wgOut->addHTML( $this->getSigRow( $sig, $sig->mStricken ) );
 
 		$wgOut->addHTML( '</table>' );
 		$wgOut->addHTML( '</fieldset>' );
@@ -346,32 +346,32 @@ class SignatureViewer {
 	private function setUp() {
 		global $wgRequest;
 
-		$doc = $wgRequest->getVal('doc');
-		if (!$doc) throw new MWException();
+		$doc = $wgRequest->getVal( 'doc' );
+		if ( !$doc ) throw new MWException();
 
 		$this->mForm = SignDocumentForm::newFromDB( $doc );
 		$this->mSigs = SignDocumentSignature::getAllFromDB( $this->mForm->getId() );
 
 		$this->mFields = array(
-			#'entryid'    => !is_null($wgRequest->getVal('entryid')),
-			'timestamp'  => !is_null($wgRequest->getVal('timestamp')),
-			'realname'   => !is_null($wgRequest->getVal('realname')),
-			'address'    => !is_null($wgRequest->getVal('address')),
-			'city'       => !is_null($wgRequest->getVal('city')),
-			'state'      => !is_null($wgRequest->getVal('state')),
-			'country'    => !is_null($wgRequest->getVal('country')),
-			'zip'        => !is_null($wgRequest->getVal('zip')),
-			'phone'      => !is_null($wgRequest->getVal('phone')),
-			'email'      => !is_null($wgRequest->getVal('email')),
-			'age'        => !is_null($wgRequest->getVal('age')),
-			'ip'         => !is_null($wgRequest->getVal('ip')),
-			'agent'      => !is_null($wgRequest->getVal('agent'))
+			# 'entryid'    => !is_null($wgRequest->getVal('entryid')),
+			'timestamp'  => !is_null( $wgRequest->getVal( 'timestamp' ) ),
+			'realname'   => !is_null( $wgRequest->getVal( 'realname' ) ),
+			'address'    => !is_null( $wgRequest->getVal( 'address' ) ),
+			'city'       => !is_null( $wgRequest->getVal( 'city' ) ),
+			'state'      => !is_null( $wgRequest->getVal( 'state' ) ),
+			'country'    => !is_null( $wgRequest->getVal( 'country' ) ),
+			'zip'        => !is_null( $wgRequest->getVal( 'zip' ) ),
+			'phone'      => !is_null( $wgRequest->getVal( 'phone' ) ),
+			'email'      => !is_null( $wgRequest->getVal( 'email' ) ),
+			'age'        => !is_null( $wgRequest->getVal( 'age' ) ),
+			'ip'         => !is_null( $wgRequest->getVal( 'ip' ) ),
+			'agent'      => !is_null( $wgRequest->getVal( 'agent' ) )
 		);
 	}
 
 	private function getCloseOpenOptions() {
 		global $wgUser, $wgTitle;
-		if (!$wgUser->isAllowed('sigadmin')) return '';
+		if ( !$wgUser->isAllowed( 'sigadmin' ) ) return '';
 
 		$url = $wgTitle->escapeLocalUrl() . '?doc=' . $this->mForm->getId()
 				. '&viewsigs';
@@ -382,23 +382,23 @@ class SignatureViewer {
 			'method' => 'post' ) );
 
 		if ( $this->mForm->mOpen ) {
-			$out .= wfMsg('sign-sigadmin-currentlyopen') . '&nbsp;';
+			$out .= wfMsg( 'sign-sigadmin-currentlyopen' ) . '&nbsp;';
 			$out .= Xml::element( 'input', array(
 					'type'  => 'submit',
 					'name'  => 'closesigning-submit',
 					'value' => wfMsg( 'sign-sigadmin-close' ) ) );
 			$out .= Xml::element( 'input', array(
 					'type'  => 'hidden',
-					'name'  => 'closesigning') );
+					'name'  => 'closesigning' ) );
 		} else {
-			$out .= wfMsg('sign-sigadmin-currentlyclosed') . '&nbsp;';
+			$out .= wfMsg( 'sign-sigadmin-currentlyclosed' ) . '&nbsp;';
 			$out .= Xml::element( 'input', array(
 					'type'  => 'submit',
 					'name'  => 'opensigning-submit',
 					'value' => wfMsg( 'sign-sigadmin-open' ) ) );
 			$out .= Xml::element( 'input', array(
 					'type'  => 'hidden',
-					'name'  => 'opensigning') );
+					'name'  => 'opensigning' ) );
 		}
 
 		$out .= '</form>';
@@ -411,36 +411,36 @@ class SignatureViewer {
 		$out .= Xml::openElement( 'form', array(
 			'id' => 'mw-sdoc-viewsigs-fieldselector-form',
 			'action' => $wgTitle->escapeLocalUrl(),
-			'method' => 'get') );
+			'method' => 'get' ) );
 
 		$out .= wfMsg( 'sign-view-selectfields' );
 
 		$out .= Xml::element( 'input', array(
 			'type' => 'hidden', 'name' => 'doc',
-			'value' => $this->mForm->getId()));
+			'value' => $this->mForm->getId() ) );
 
 		$out .= Xml::element( 'input', array(
-			'type' => 'hidden', 'name' => 'viewsigs'));
+			'type' => 'hidden', 'name' => 'viewsigs' ) );
 
-		foreach (array_keys($this->mFields) as $field)
-			$out .= $this->fieldCheck($field);
+		foreach ( array_keys( $this->mFields ) as $field )
+			$out .= $this->fieldCheck( $field );
 
 		$out .= '&nbsp;' . Xml::element( 'input', array(
-			'type' => 'submit', 'value' => wfMsg('go') ) );
+			'type' => 'submit', 'value' => wfMsg( 'go' ) ) );
 
 		$out .= '</form>';
 		return $out;
 	}
 
-	private function fieldCheck($id) {
+	private function fieldCheck( $id ) {
 		global $wgRequest, $wgUser;
-		if ($id == 'ip' || $id == 'agent') {
-			if (!$wgUser->isAllowed('sigadmin')) return '';
+		if ( $id == 'ip' || $id == 'agent' ) {
+			if ( !$wgUser->isAllowed( 'sigadmin' ) ) return '';
 		}
 		return '&nbsp;' . Xml::checkLabel(
 			wfMsg( "sign-viewfield-$id" ),
 			$id, $id,
-			$this->mFields[$id]);
+			$this->mFields[$id] );
 	}
 
 	private function getTableHead() {
@@ -449,11 +449,11 @@ class SignatureViewer {
 		$out .= 'style="cell-border: 0.25px solid gray; text-align: left;';
 	    $out .= 'border-spacing: 1px; margin-left: 1em;"><tr>';
 
-		if ( $wgUser->isAllowed('sigadmin') )
+		if ( $wgUser->isAllowed( 'sigadmin' ) )
 			$out .= '<th>' . wfMsg( 'sign-viewfield-options' ) . '</th>';
 
-		foreach ($this->mFields as $field => $val) {
-			if ($val) $out .= '<th>' . wfMsg( "sign-viewfield-$field" ) . '</th>';
+		foreach ( $this->mFields as $field => $val ) {
+			if ( $val ) $out .= '<th>' . wfMsg( "sign-viewfield-$field" ) . '</th>';
 		}
 
 		return '</tr>' . $out;
@@ -464,11 +464,11 @@ class SignatureViewer {
 		$out = '<s><tr>';
 		if ( $sig->isPrivileged() )
 			$out .= '<td>[' . $wgUser->getSkin()->makeKnownLinkObj(
-				SpecialPage::getTitleFor('SignDocument'),
-				wfMsg('sign-viewfield-options'), 'doc=' .
+				SpecialPage::getTitleFor( 'SignDocument' ),
+				wfMsg( 'sign-viewfield-options' ), 'doc=' .
 				$this->mForm->getId() . '&viewsigs&detail=' . $sig->mId ) . ']</td>';
 
-		#$out .= $this->getSigCell( 'entryid', $sig->mId, $del );
+		# $out .= $this->getSigCell( 'entryid', $sig->mId, $del );
 		$out .= $this->getSigCell( 'timestamp', $sig->mTimestamp, $del ) ;
 		$out .= $this->getSigCell( 'realname', $sig->getRealName(), $del );
 		$out .= $this->getSigCell( 'address', $sig->getAddress(), $del );
@@ -486,32 +486,32 @@ class SignatureViewer {
 	}
 
 	private function getSigCell( $id, $text, $del = false ) {
-		if (!$this->mFields[$id]) return '';
-		if ($del) return "<td><del>$text</del>&nbsp;&nbsp;</td>";
+		if ( !$this->mFields[$id] ) return '';
+		if ( $del ) return "<td><del>$text</del>&nbsp;&nbsp;</td>";
 		return "<td>$text&nbsp;&nbsp;</td>";
 	}
 
 	private function closeSigning() {
 		global $wgOut;
-		$this->mForm->setOpen(false);
+		$this->mForm->setOpen( false );
 		$wgOut->addWikiText( wfMsg( 'sign-sigadmin-closesuccess', $this->mForm->mPagename ) );
 	}
 
 	private function openSigning() {
 		global $wgOut;
-		$this->mForm->setOpen(true);
+		$this->mForm->setOpen( true );
 		$wgOut->addWikiText( wfMsg( 'sign-sigadmin-opensuccess', $this->mForm->mPagename ) );
 	}
 
 	private function doDetail() {
 		global $wgUser, $wgOut, $wgRequest;
 
-		if ( !$wgUser->isAllowed('sigadmin') ) {
+		if ( !$wgUser->isAllowed( 'sigadmin' ) ) {
 			$wgOut->permissionRequired( 'sigadmin' );
 			return;
 		}
 
-		$sig = SignDocumentSignature::newFromDB( $wgRequest->getVal('detail') );
+		$sig = SignDocumentSignature::newFromDB( $wgRequest->getVal( 'detail' ) );
 
 		if ( is_null( $sig ) ) {
 			$wgOut->addWikiText( wfMsg( 'sig-nosuchsig' ) );
@@ -533,8 +533,8 @@ class SignatureViewer {
 
 		$out = '';
 
-		$url = $wgTitle->escapeLocalUrl() . '?doc=' . $wgRequest->getVal('doc')
-				. '&viewsigs&detail=' . $wgRequest->getVal('detail');
+		$url = $wgTitle->escapeLocalUrl() . '?doc=' . $wgRequest->getVal( 'doc' )
+				. '&viewsigs&detail=' . $wgRequest->getVal( 'detail' );
 
 		$out .= Xml::openElement( 'form', array(
 			'id'     => 'doreview-form',
@@ -547,14 +547,14 @@ class SignatureViewer {
 	         wfMsg( "sign-detail-strike" ),
 			'strikesig',
 			'strikesig',
-			$sig->mStricken);
+			$sig->mStricken );
 
 		$out .= '&nbsp;&nbsp;' . wfMsg( 'sign-review-comment' ) . ':&nbsp;';
 		$out .= Xml::element( 'input', array(
 			'type'  => 'text',
 			'name'  => 'reviewcomment',
 			'value' => $sig->mStrickenComment,
-	   		'style' => 'width: 450px;'	) );
+			'style' => 'width: 450px;'	) );
 
 		$out .= '&nbsp;&nbsp;' . Xml::element( 'input', array(
 			'type'  => 'submit',
@@ -569,12 +569,12 @@ class SignatureViewer {
 
 	private function updateReviewFromPost( $sig ) {
 		global $wgRequest;
-		if (!$wgRequest->wasPosted() || is_null($wgRequest->getVal('doreview'))
-				|| is_null($wgRequest->getVal('reviewcomment' ) ) )
-			return; //What are you doing here then?
+		if ( !$wgRequest->wasPosted() || is_null( $wgRequest->getVal( 'doreview' ) )
+				|| is_null( $wgRequest->getVal( 'reviewcomment' ) ) )
+			return; // What are you doing here then?
 
 		$sig->postReview( $wgRequest->getVal( 'reviewcomment' ),
-				$wgRequest->getVal('strikesig'));
+				$wgRequest->getVal( 'strikesig' ) );
 	}
 
 	private function getDetailTable( $sig ) {
@@ -584,22 +584,22 @@ class SignatureViewer {
 		$out .= '<table style="width: 100%"><tr><td><table>';
 
 		$out .= $this->getDetailTableRow( 'realname', $sig->getRealName(),
-				$sig->isHidden('realname') );
+				$sig->isHidden( 'realname' ) );
 		$out .= $this->getDetailTableRow( 'address', $sig->getAddress(),
-				$sig->isHidden('address') );
+				$sig->isHidden( 'address' ) );
 		$out .= $this->getDetailTableRow( 'city', $sig->getCity(),
-   				$sig->isHidden('extaddress') );
+   				$sig->isHidden( 'extaddress' ) );
 		$out .= $this->getDetailTableRow( 'state', $sig->getState(),
-   				$sig->isHidden('extaddress') );
+   				$sig->isHidden( 'extaddress' ) );
 		$out .= $this->getDetailTableRow( 'country', $sig->getCountry(),
-				$sig->isHidden('extaddress') );
+				$sig->isHidden( 'extaddress' ) );
 		$out .= $this->getDetailTableRow( 'zip', $sig->getZip(),
-				$sig->isHidden('extaddress') );
+				$sig->isHidden( 'extaddress' ) );
 		$out .= $this->getDetailTableRow( 'phone', $sig->getPhone(),
-				$sig->isHidden('phone') );
+				$sig->isHidden( 'phone' ) );
 		$out .= $this->getDetailTableRow( 'email',
-				wfMsg( 'sign-emailto', $sig->getEmail() ),
-		   		$sig->isHidden('email')	);
+			wfMsg( 'sign-emailto', $sig->getEmail() ),
+			$sig->isHidden( 'email' )	);
 
 		$out .= '</table></td><td valign="top"><table valign="top">';
 
@@ -608,7 +608,7 @@ class SignatureViewer {
 			'parse' ), $sig->getIp() ) );
 		$out .= $this->getDetailTableRow( 'agent', $sig->getAgent() );
 
-		$out .= $this->getDetailTableRow( 'stricken', ($sig->mStricken)?wfMsg( 'yes' ):wfMsg('no') );
+		$out .= $this->getDetailTableRow( 'stricken', ( $sig->mStricken ) ? wfMsg( 'yes' ):wfMsg( 'no' ) );
 		$out .= $this->getDetailTableRow( 'reviewedby', $sig->getReviewedBy() );
 		$out .= $this->getDetailTableRow( 'reviewcomment', $sig->mStrickenComment );
 
@@ -620,7 +620,7 @@ class SignatureViewer {
 
 	private function getDetailTableRow( $fieldid, $val, $priv = false ) {
 		return '<tr><td><strong>' . wfMsg( "sign-viewfield-$fieldid" ) . ':</strong></td><td>'
-				. $val . (($priv)?(' (' . wfMsg( 'sig-private' ) . ')'):'') . '</td></tr>';
+				. $val . ( ( $priv ) ? ( ' (' . wfMsg( 'sig-private' ) . ')' ):'' ) . '</td></tr>';
 	}
 
 	private function runDetailUniqueQuery( $sig ) {
@@ -630,8 +630,8 @@ class SignatureViewer {
 		$out .= '<fieldset><legend>' . wfMsg( 'sign-detail-uniquequery' ) . '</legend>';
 
 		if ( !$wgRequest->wasPosted() || !$wgRequest->getVal( 'rununiquequery' ) ) {
-			$url = $wgTitle->escapeLocalUrl() . '?doc=' . $wgRequest->getVal('doc')
-				. '&viewsigs&detail=' . $wgRequest->getVal('detail');
+			$url = $wgTitle->escapeLocalUrl() . '?doc=' . $wgRequest->getVal( 'doc' )
+				. '&viewsigs&detail=' . $wgRequest->getVal( 'detail' );
 			$out .= Xml::openElement( 'form', array(
 				'id' => 'rununiquequery-form',
 				'action' => $url,
@@ -640,7 +640,7 @@ class SignatureViewer {
 			$out .= Xml::element( 'input', array(
 				'type' => 'submit',
 				'name' => 'rununiquequery',
-				'value'=> wfMsg( 'sign-detail-uniquequery-run' ) ) );
+				'value' => wfMsg( 'sign-detail-uniquequery-run' ) ) );
 
 			return '</form></fieldset>' . $out;
 		}
@@ -658,10 +658,10 @@ class SignatureViewer {
 		$out = "<h5>$header</h5>";
 
 		$out .= '<ul>';
-		foreach ($sigs as $sig)
-			$out .= '<li>' . wfMsgExt( 'sign-uniquequery-1signed2', array( 'parse'),
-					$sig->getRealName(), $sig->mForm->mPagename,
-					$sig->mId,  $sig->mForm->getId() ) . '</li>';
+		foreach ( $sigs as $sig )
+			$out .= '<li>' . wfMsgExt( 'sign-uniquequery-1signed2', array( 'parse' ),
+				$sig->getRealName(), $sig->mForm->mPagename,
+				$sig->mId,  $sig->mForm->getId() ) . '</li>';
 
 		$out .= '</ul>';
 

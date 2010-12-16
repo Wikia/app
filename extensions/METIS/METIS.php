@@ -20,24 +20,28 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die("This is the METIS extension");
 }
 
-$wgExtensionFunctions[] = 'efMetis';
-$wgExtensionCredits['other'][] = array( 'name' => 'METIS', 'author' => 'Jens Frank' );
+$wgExtensionCredits['other'][] = array(
+	'name' => 'METIS',
+	'path' => __FILE__,
+	'author' => 'Jens Frank',
+	'description' => 'Add support for METIS counting pixels',
+);
 
-function efMetis() {
-	global $wgHooks;
-	#$wgHooks['BeforePageDisplay'][] = 'efMetisAddPixel';
-	$wgHooks['ArticleViewHeader'][] = 'efMetisAddPixel';
-}
+#$wgHooks['BeforePageDisplay'][] = 'efMetisAddPixel';
+$wgHooks['ArticleViewHeader'][] = 'efMetisAddPixel';
+
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'efMetisSchemaUpdate';
 
 function efMetisAddPixel( &$article ) {
-	global $wgTitle, $wgOut;
+	global $wgOut;
 	/* Only show the pixel for articles in the main namespace */
 
-	if ( $wgTitle->getNamespace() == NS_MAIN ) {
+	$title = $article->getTitle();
+	if ( $title->getNamespace() == NS_MAIN ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$pixel = $dbr->selectField( 'metis', 'metis_pixel',
-				array( 'metis_id' => $wgTitle->getArticleID() ),
-				'efMetisAddPixel' );
+			array( 'metis_id' => $title->getArticleID() ),
+			__FUNCTION__ );
 		if ( !is_null( $pixel ) ) {
 			$wgOut->addHTML( '<img src="' . $pixel . '" width="1" height="1" alt="">' );
 		}
@@ -46,4 +50,13 @@ function efMetisAddPixel( &$article ) {
 	return true;
 }
 
-?>
+function efMetisSchemaUpdate() {
+	global $wgDBtype, $wgExtNewTables;
+
+	if ( $wgDBtype == 'mysql' ) {
+		$wgExtNewTables[] = array( 'metis', dirname( __FILE__ ) . '/METIS.sql' );
+	} elseif( $wgDBtype == 'postgres' ) {
+		$wgExtNewTables[] = array( 'metis', dirname( __FILE__ ) . '/METIS.pg.sql' );
+	}
+	return true;
+}

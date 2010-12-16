@@ -21,19 +21,29 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Bennylin
  * @author Purodha
  */
 $messages['qqq'] = array(
+	'logentry-append' => '{{Identical|Append}}',
 	'logentry-parserhook-desc' => 'Short desciption of this extension.
 Shown in [[Special:Version]].
 Do not translate or change tag names, or link anchors.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'logentry-append' => 'Byvoeg',
+);
+
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
-	'logentry-append' => 'إضافة',
+	'logentry-append' => 'ألحق',
 	'logentry-parserhook-desc' => 'امتداد الوسم هذا يوفر استمارة للإضافة/التخطيط لصفحات السجلات',
 	'logentry-specialpage-desc' => 'امتداد الوسم هذا يوفر معالجة للإضافة لصفحات السجلات',
 	'logentry' => 'مدخلة سجل',
@@ -60,12 +70,55 @@ $messages['bar'] = array(
 	'logentry-invalidpage' => 'Ungültige Seitn',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'logentry-append' => 'Дадаць',
+	'logentry-parserhook-desc' => 'Гэты тэг пашырэньня дадае форму для даданьня інфармацыі ў журналы падзеяў',
+	'logentry-specialpage-desc' => 'Гэты тэг пашырэньня дазваляе дадаваць інфармацыю ў журналы падзеяў',
+	'logentry' => 'Дадаць інфармацыю ў журналы падзеяў',
+	'logentry-invalidpage' => 'Няслушная старонка',
+	'logentry-invalidtoken' => 'Няслушны сымбаль',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'logentry-invalidpage' => 'Невалидна страница',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'logentry-append' => 'Ouzhpennañ',
+	'logentry-parserhook-desc' => "Ouzhpennañ a ra an astenn-mañ ur valizenn a bourchas ur furmskrid da ouzhpennañ/rakproseziñ testennoù d'ar pajennoù marilh",
+	'logentry-specialpage-desc' => 'Porvezañ a ra an astenn balizennoù-mañ un argerzh evit ober ouzhpennadennoù da bajennoù ar marilhoù',
+	'logentry' => 'Marilh ar monedoù',
+	'logentry-invalidpage' => 'Pajenn direizh',
+	'logentry-invalidtoken' => 'Fichenn direizh',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'logentry-append' => 'Pridodaj',
+	'logentry-parserhook-desc' => 'Ova oznaka proširenja omogućuje obrazac za dodavanje/uklanjanje informacija sa stranica zapisnika',
+	'logentry-specialpage-desc' => 'Ova oznaka proširenja omogućuje obradu neriješenih stranica zapisnika',
 	'logentry' => 'StavkaZapisa',
 	'logentry-invalidpage' => 'Nevaljana stranica',
+	'logentry-invalidtoken' => 'Nevaljan token',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'logentry-invalidpage' => 'Pàgina no vàlida',
 );
 
 /** German (Deutsch)
@@ -92,6 +145,17 @@ $messages['dsb'] = array(
 	'logentry-invalidtoken' => 'Njepłaśiwy token',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'logentry-append' => 'Προσάρτηση',
+	'logentry' => 'Αρχείο καταχωρήσεων',
+	'logentry-invalidpage' => 'Μη έγκυρη σελίδα',
+	'logentry-invalidtoken' => 'Μή έγκυρο δείγμα',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -109,16 +173,33 @@ $messages['eo'] = array(
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'logentry-append' => 'Apéndice',
+	'logentry-parserhook-desc' => 'Esta extensión de etiqueta provee un formulario para añadir/preprocesar a páginas de registro',
+	'logentry-specialpage-desc' => 'Esta extensión de etiqueta provee un proceso para añadir a páginas de registro',
+	'logentry' => 'LogEntry',
 	'logentry-invalidpage' => 'Página inválida',
+	'logentry-invalidtoken' => 'Ficha inválida',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'logentry-append' => 'Erantsi',
+	'logentry-invalidpage' => 'Baliogabeko orrialdea',
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
  * @author Str4nd
  * @author Vililikku
  */
 $messages['fi'] = array(
 	'logentry-append' => 'Lisää',
+	'logentry-parserhook-desc' => 'Tämä merkintälaajennus tarjoaa lomakkeen, jonka avulla voidaan lisätä tekstiä lokisivujen alkuun tai loppuun.',
 	'logentry-invalidpage' => 'Virheellinen sivu',
+	'logentry-invalidtoken' => 'Virheellinen lipuke',
 );
 
 /** French (Français)
@@ -182,11 +263,13 @@ $messages['hsb'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'logentry-append' => 'Hozzáfűzés',
 	'logentry-parserhook-desc' => 'Ez a kiegészítő lehetővé teszi bejegyzések hozzáfűzését a naplófájlokhoz',
 	'logentry-specialpage-desc' => 'Ez a kiegészítő feldolgozza a naplófájlokhoz való hozzáfűzéseket',
+	'logentry' => 'Naplóbejegyzés',
 	'logentry-invalidpage' => 'Érvénytelen lap',
 	'logentry-invalidtoken' => 'Érvénytelen token',
 );
@@ -201,6 +284,30 @@ $messages['ia'] = array(
 	'logentry' => 'Entrata in registro',
 	'logentry-invalidpage' => 'Pagina invalide',
 	'logentry-invalidtoken' => 'Indicio invalide',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'logentry-append' => 'Tambah',
+	'logentry-parserhook-desc' => 'Pengaya tag ini menyediakan sebuah formulir untuk menambahkan catatan ke halaman log',
+	'logentry-specialpage-desc' => 'Pengaya tag ini menyediakan proses untuk menambahkan catatan ke halaman log',
+	'logentry' => 'LogEntry',
+	'logentry-invalidpage' => 'Halaman tidak sah',
+	'logentry-invalidtoken' => 'Token tidak sah',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'logentry-append' => 'Aggiungi',
+	'logentry-parserhook-desc' => "Questa estensione tag fornisce un modulo per aggiungere del testo all'inizio o alla fine della pagine dei registri",
+	'logentry-specialpage-desc' => 'Questa estensione tag fornisce un processo per aggiungere alle pagine dei registri',
+	'logentry' => 'LogEntry',
+	'logentry-invalidpage' => 'Pagina non valida',
+	'logentry-invalidtoken' => 'Token non valido',
 );
 
 /** Japanese (日本語)
@@ -239,7 +346,20 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'logentry-append' => 'Derbäisetzen',
+	'logentry' => 'Androung an e Logbuch',
 	'logentry-invalidpage' => 'Net valabel Säit',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'logentry-append' => 'Додај',
+	'logentry-parserhook-desc' => 'Оваа ознака-проширување дава форма за додавање н записи на почетокот или крајот на дневнички страници',
+	'logentry-specialpage-desc' => 'Оваа ознака-проширување овозможува обработка за придодавање на дневнички страници',
+	'logentry' => 'СтавкаВоДневникот',
+	'logentry-invalidpage' => 'Неправилна страница',
+	'logentry-invalidtoken' => 'Неправилен жетон',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -273,25 +393,62 @@ $messages['nn'] = array(
 	'logentry-invalidtoken' => 'Ugyldig token',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'logentry-append' => 'Legg til',
+	'logentry-parserhook-desc' => 'Denne merkelapputvidelsen gir et skjema for å legge til merkelapper før eller etter på loggsider',
+	'logentry-specialpage-desc' => 'Denne merkelapputvidelsen tilbyr utførelse av å legge til merkelapper på loggsider',
+	'logentry' => 'Loggelement',
+	'logentry-invalidpage' => 'Ugyldig side',
+	'logentry-invalidtoken' => 'Ugyldig symbol',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'logentry-append' => 'Apondre',
-	'logentry-parserhook-desc' => 'Aquesta extension de balisa apond una balisa que provesís un formulari per apondre / prefixar de tèxt a las paginas de jornals',
+	'logentry-parserhook-desc' => 'Aquesta extension de balisa apond una balisa que provesís un formulari per apondre / prefixar de tèxte a las paginas de jornals',
 	'logentry-specialpage-desc' => 'Aquesta extension de balisa apond un processús per apondre a las paginas de jornals',
 	'logentry' => 'Jornal de las entradas',
 	'logentry-invalidpage' => 'Pagina incorrècta',
 	'logentry-invalidtoken' => 'Presa incorrècta',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'logentry-append' => 'Dopisz',
+	'logentry-parserhook-desc' => 'Rozszerzenie dodaje znacznik wstawiający formularz umożliwiający dopisanie treści na początek lub koniec strony logu',
+	'logentry-specialpage-desc' => 'Rozszerzenie realizuje dodanie wpisu do strony logu',
+	'logentry' => 'WpisDoLogu',
+	'logentry-invalidpage' => 'Nieprawidłowa strona',
+	'logentry-invalidtoken' => 'Nieprawidłowy token',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'logentry-append' => 'Gionta',
+	'logentry-parserhook-desc' => 'Sta estension-sì dël tag a da na forma për gionté a fin/inissi dle pàgine dij registr',
+	'logentry-specialpage-desc' => 'Sta estension-sì dël tag a da un process për gionté a le pàgine dij registr',
+	'logentry' => 'LogEntry',
+	'logentry-invalidpage' => 'Pàgina pa bon-a',
+	'logentry-invalidtoken' => 'Token pa bon',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'logentry-append' => 'Acrescentar',
-	'logentry-parserhook-desc' => 'Esta extensão de marca fornece uma forma de acrescentar ao início/fim de páginas de registo',
-	'logentry-specialpage-desc' => 'Esta extensão de marca fornece processamento para acrescentar a páginas de registo',
+	'logentry-parserhook-desc' => 'Esta extensão de elementos HTML fornece um formulário para acrescentar dados no topo ou fundo das páginas dos registos',
+	'logentry-specialpage-desc' => 'Esta extensão de elementos HTML fornece um processo para acrescentar dados no fundo das páginas dos registos',
 	'logentry' => 'Entrada de Registo',
 	'logentry-invalidpage' => 'Página inválida',
 	'logentry-invalidtoken' => 'Token inválido',
@@ -309,11 +466,31 @@ $messages['pt-br'] = array(
 	'logentry-invalidtoken' => 'Token inválido',
 );
 
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'logentry-invalidpage' => 'Pagină nevalidă',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'logentry-append' => 'Mitte in code',
+	'logentry-invalidpage' => 'Pàgene invalide',
+	'logentry-invalidtoken' => 'Token invalide',
+);
+
 /** Russian (Русский)
  * @author Ferrer
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'logentry-append' => 'Добавить',
+	'logentry-parserhook-desc' => 'Этот тег-расширение предоставляет форму для добавления записей в начало или конец страницы в виде журнала',
+	'logentry-specialpage-desc' => 'Этот тег-расширение предоставляет механизм добавления на страницу записей в виде журнала',
+	'logentry' => 'ЗаписьЖурнала',
 	'logentry-invalidpage' => 'Неправильная страница',
 	'logentry-invalidtoken' => 'Неправильный токен',
 );
@@ -338,9 +515,13 @@ $messages['sq'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Fluff
  * @author Najami
  */
 $messages['sv'] = array(
+	'logentry-append' => 'Lägg till efter',
+	'logentry-parserhook-desc' => 'Detta märkestillägget ger ett formulär för att lägga till element före/efter andra element på loggsidor',
+	'logentry' => 'Loggelement',
 	'logentry-invalidpage' => 'Ogiltig sida',
 );
 
@@ -354,6 +535,33 @@ $messages['tl'] = array(
 	'logentry' => 'Pagpapasok sa Tala',
 	'logentry-invalidpage' => 'Hindi tanggap na pahina',
 	'logentry-invalidtoken' => 'Hindi tanggap na pananda',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'logentry' => 'KayıtGirdisi',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'logentry-invalidpage' => "Vär lehtpol'",
+	'logentry-invalidtoken' => 'Vär token',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'logentry-append' => 'Nối',
+	'logentry-parserhook-desc' => 'Bộ mở rộng thẻ này cung cấp một mẫu đơn để nối/cắt các trang nhật trình',
+	'logentry-specialpage-desc' => 'Bộ mở rộng thẻ này cung cấp cách xử lý nối các trang nhật trình',
+	'logentry' => 'Mục nhật trình',
+	'logentry-invalidpage' => 'Trang không hợp lệ',
+	'logentry-invalidtoken' => 'Khóa không hợp lệ',
 );
 
 /** Volapük (Volapük)

@@ -161,7 +161,7 @@ class SpamBlacklist {
 
 		if ( !is_string( $httpText ) || ( !$warning && !mt_rand( 0, $this->warningChance ) ) ) {
 			wfDebugLog( 'SpamBlacklist', "Loading spam blacklist from $fileName\n" );
-			$httpText = $this->getHTTP( $fileName );
+			$httpText = Http::get( $fileName );
 			if( $httpText === false ) {
 				wfDebugLog( 'SpamBlacklist', "Error loading blacklist from $fileName\n" );
 			}
@@ -190,7 +190,7 @@ class SpamBlacklist {
 	 * @return Matched text if the edit should not be allowed, false otherwise
 	 */
 	function filter( &$title, $text, $section, $editsummary = '', EditPage &$editPage = null ) {
-		global $wgArticle, $wgVersion, $wgOut, $wgParser, $wgUser;
+		global $wgVersion, $wgOut, $wgParser, $wgUser;
 
 		$fname = 'wfSpamBlacklistFilter';
 		wfProfileIn( $fname );
@@ -282,7 +282,7 @@ class SpamBlacklist {
 	 * WARNING: I can add more *of the same link* with no problem here.
 	 */
 	function getCurrentLinks( $title ) {
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$id = $title->getArticleId(); // should be zero queries
 		$res = $dbr->select( 'externallinks', array( 'el_to' ),
 			array( 'el_from' => $id ), __METHOD__ );
@@ -307,7 +307,7 @@ class SpamBlacklist {
 		$text = false;
 		if ( $dbr->tableExists( 'page' ) ) {
 			// 1.5 schema
-			$dbw =& wfGetDB( DB_READ );
+			$dbw = wfGetDB( DB_READ );
 			$dbw->selectDB( $db );
 			$revision = Revision::newFromTitle( Title::newFromText( $article ) );
 			if ( $revision ) {
@@ -322,22 +322,6 @@ class SpamBlacklist {
 		}
 		$dbr->selectDB( $wgDBname );
 		return strval( $text );
-	}
-
-	function getHTTP( $url ) {
-		// Use wfGetHTTP from MW 1.5 if it is available
-		global $IP;
-		include_once( "$IP/includes/HttpFunctions.php" );
-		wfSuppressWarnings();
-		if ( function_exists( 'wfGetHTTP' ) ) {
-			$text = wfGetHTTP( $url );
-		} else {
-			$url_fopen = ini_set( 'allow_url_fopen', 1 );
-			$text = file_get_contents( $url );
-			ini_set( 'allow_url_fopen', $url_fopen );
-		}
-		wfRestoreWarnings();
-		return $text;
 	}
 
 	/**
@@ -402,10 +386,10 @@ class SpamRegexBatch {
 		# Make regex
 		# It's faster using the S modifier even though it will usually only be run once
 		//$regex = 'https?://+[a-z0-9_\-.]*(' . implode( '|', $lines ) . ')';
-		//return '/' . str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $regex) ) . '/Si';
+		//return '/' . str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $regex) ) . '/Sim';
 		$regexes = array();
 		$regexStart = '/https?:\/\/+[a-z0-9_\-.]*(';
-		$regexEnd = ($batchSize > 0 ) ? ')/Si' : ')/i';
+		$regexEnd = ($batchSize > 0 ) ? ')/Sim' : ')/im';
 		$build = false;
 		foreach( $lines as $line ) {
 			if( substr( $line, -1, 1 ) == "\\" ) {

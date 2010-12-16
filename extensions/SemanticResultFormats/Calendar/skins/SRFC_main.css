@@ -28,6 +28,7 @@ table.month_calendar td {
 	vertical-align: top;
 }
 table.month_calendar td div.day {
+	background: white;
 	min-height: 15px;
 	min-width: 15px;
 	padding: 5px;
@@ -88,4 +89,10 @@ table.month_calendar tr.weekdays td {
 	vertical-align: middle;
 	color: #555555;
 	padding: 8px 2px 2px 2px;
+}
+table.month_calendar td p.colored-entry {
+	border-top: 1px #f4f4d2 solid;
+	border-bottom: 1px #f4f4d2 solid;
+	padding: 2px 0 2px 6px;
+	background: #ffffdd;
 }

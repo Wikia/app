@@ -48,6 +48,12 @@ function wfSpecialEmailuser( $par ) {
 			case 'mailnologin':
 				$wgOut->showErrorPage( 'mailnologin', 'mailnologintext' );
 				return;
+			default:
+				// It's a hook error
+				list( $title, $msg, $params ) = $error;
+				$wgOut->showErrorPage( $title, $msg, $params );
+				return;
+				
 		}
 	}	
 	
@@ -256,7 +262,7 @@ class EmailUserForm {
 		
 	}
 	static function validateEmailTarget ( $target ) {
-		if ( "" == $target ) {
+		if ( $target == "" ) {
 			wfDebug( "Target is empty.\n" );
 			return "notarget";
 		}
@@ -268,7 +274,7 @@ class EmailUserForm {
 		}
 	
 		$nu = User::newFromName( $nt->getText() );
-		if( is_null( $nu ) || !$nu->getId() ) {
+		if( !$nu instanceof User || !$nu->getId() ) {
 			wfDebug( "Target is invalid user.\n" );
 			return "notarget";
 		} else if ( !$nu->isEmailConfirmed() ) {
@@ -284,6 +290,10 @@ class EmailUserForm {
 	static function getPermissionsError ( $user, $editToken ) {
 		if( !$user->canSendEmail() ) {
 			wfDebug( "User can't send.\n" );
+			// FIXME: this is also the error if user is in a group
+			//        that is not allowed to send e-mail (no right
+			//        'sendemail'). Error messages should probably
+			//        be more fine grained.
 			return "mailnologin";
 		}
 		
@@ -297,12 +307,17 @@ class EmailUserForm {
 			return 'actionthrottledtext';
 		}
 		
+		$hookErr = null;
+		wfRunHooks( 'EmailUserPermissionsErrors', array( $user, $editToken, &$hookErr ) );
+		
+		if ($hookErr) {
+			return $hookErr;
+		}
+		
 		if( !$user->matchEditToken( $editToken ) ) {
 			wfDebug( "Matching edit token failed.\n" );
 			return 'sessionfailure';
 		}
-		
-		return;
 	}
 	
 	static function newFromURL( $target, $text, $subject, $cc_me )

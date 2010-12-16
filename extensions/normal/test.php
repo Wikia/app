@@ -16,7 +16,7 @@ $tests = array(
 	"a\xcc\x80" => "à",
 	"e\xcc\x81" => "é",
 	
-	"\xc0" => NULL, # Head byte at end is known to fail
+	"\xc0" => null, # Head byte at end is known to fail
 	"\xc0\x20" => "\xef\xbf\xbd\x20", # If followed, replacement char is ok
 );
 

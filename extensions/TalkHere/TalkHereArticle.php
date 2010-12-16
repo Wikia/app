@@ -22,7 +22,7 @@ class TalkHereArticle {
 
 		$this->_article = $article;
 		$this->_talkTitle = $talkTitle;
-		$this->_talk = NULL;
+		$this->_talk = null;
 	}
 
 	function __call( $name, $args ) {

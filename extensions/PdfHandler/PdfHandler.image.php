@@ -79,7 +79,7 @@ class PdfImage {
 	}
 
 	public function retrieveMetaData() {
-		global $wgPdfInfo;
+		global $wgPdfInfo, $wgPdftoText;
 
 		if ( $wgPdfInfo ) {
 			wfProfileIn( 'pdfinfo' );
@@ -92,6 +92,25 @@ class PdfImage {
 			wfProfileOut( 'pdfinfo' );
 		} else {
 			$data = null;
+		}
+
+		# Read text layer
+		if ( isset( $wgPdftoText ) ) { 
+			wfProfileIn( 'pdftotext' );
+			$cmd = wfEscapeShellArg( $wgPdftoText ) . ' '. wfEscapeShellArg( $this->mFilename ) . ' - ';
+			wfDebug( __METHOD__.": $cmd\n" );
+			$txt = wfShellExec( $cmd, $retval );
+			wfProfileOut( 'pdftotext' );
+			if( $retval == 0 ) {
+				$txt = str_replace( "\r\n", "\n", $txt );
+				$pages = explode( "\f", $txt );
+				foreach( $pages as $page => $pageText ) {
+					# Get rid of invalid UTF-8, strip control characters
+					# Note we need to do this per page, as \f page feed would be stripped.
+					$pages[$page] = UtfNormal::cleanUp( $pageText );
+				}
+				$data['text'] = $pages;
+			}
 		}
 		return $data;
 	}

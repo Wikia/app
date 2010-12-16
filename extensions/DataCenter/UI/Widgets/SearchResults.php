@@ -82,9 +82,7 @@ class DataCenterWidgetSearchResults extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $wgUser;
 		// Gets current path
 		$path = DataCenterPage::getPath();
@@ -139,8 +137,7 @@ class DataCenterWidgetSearchResults extends DataCenterWidget {
 				'body',
 				array( 'message' => 'notice-no-results', 'style' => 'notice' )
 			);
-		}
-		else {
+		} else {
 			$joins = array();
 			if ( $currentTarget['class'] == 'DataCenterDBAsset' ) {
 				$joins = array_merge_recursive(

@@ -6,7 +6,7 @@
  *
  * @addtogroup Extensions
  *
- * @link http://meta.wikimedia.org/wiki/Cite/Cite.php Documentation
+ * @link http://www.mediawiki.org/wiki/Extension:Cite/Cite.php Documentation
  * @link http://www.w3.org/TR/html4/struct/text.html#edef-CITE <cite> definition in HTML
  * @link http://www.w3.org/TR/2005/WD-xhtml2-20050527/mod-text.html#edef_text_cite <cite> definition in XHTML 2.0
  *
@@ -87,13 +87,44 @@ class Cite {
 	var $mParser;
 	
 	/**
-	 * True when a <ref> or <references> tag is being processed.
+	 * True when a <ref> tag is being processed.
 	 * Used to avoid infinite recursion
 	 * 
 	 * @var boolean
 	 */
 	var $mInCite = false;
-	
+
+	/**
+	 * True when a <references> tag is being processed.
+	 * Used to detect the use of <references> to define refs
+	 * 
+	 * @var boolean
+	 */
+	var $mInReferences = false;
+
+	/**
+	 * Error stack used when defining refs in <references>
+	 * 
+	 * @var array
+	 */
+	var $mReferencesErrors = array();
+
+	/**
+	 * Group used when in <references> block
+	 * 
+	 * @var string
+	 */
+	var $mReferencesGroup = '';
+
+	/**
+	 * <ref> call stack 
+	 * Used to cleanup out of sequence ref calls created by #tag
+	 * See description of function rollbackRef.
+	 * 
+	 * @var array
+	 */
+	var $mRefCallStack = array();
+
 	/**#@-*/
 
 	/**
@@ -130,23 +161,72 @@ class Cite {
 		# The key here is the "name" attribute.
 		list($key,$group) = $this->refArg( $argv );
 		
+		# Split these into groups.
+		if( $group === null ) {
+			if( $this->mInReferences ) {
+				$group = $this->mReferencesGroup;
+			} else {
+				$group = $default_group;
+			}
+		}
+		
+		# This section deals with constructions of the form 
+		#
+		# <references>
+		# <ref name="foo"> BAR </ref>
+		# </references>
+		#
+		if( $this->mInReferences ) {
+			if( $group != $this->mReferencesGroup ) {
+				# <ref> and <references> have conflicting group attributes.
+				$this->mReferencesErrors[] = 
+					$this->error( 'cite_error_references_group_mismatch', htmlspecialchars( $group ) );
+			} elseif( $str !== '' ) {
+				if( !isset($this->mRefs[$group]) ) {
+					# Called with group attribute not defined in text.
+					$this->mReferencesErrors[] = 
+						$this->error( 'cite_error_references_missing_group', htmlspecialchars( $group ) );
+				} elseif( $key === null || $key === '' ) {
+					# <ref> calls inside <references> must be named
+					$this->mReferencesErrors[] = 
+						$this->error( 'cite_error_references_no_key' );
+				} elseif( !isset($this->mRefs[$group][$key]) ) {
+					# Called with name attribute not defined in text.
+					$this->mReferencesErrors[] = 
+						$this->error( 'cite_error_references_missing_key', $key );
+				} else {
+					# Assign the text to corresponding ref
+					$this->mRefs[$group][$key]['text'] = $str;
+				}
+			} else {
+				# <ref> called in <references> has no content.
+				$this->mReferencesErrors[] = 
+					$this->error( 'cite_error_empty_references_define', $key );
+			}
+			return '';
+		}
+
 		if( $str === '' ) {
 			# <ref ...></ref>.  This construct is  invalid if
 			# it's a contentful ref, but OK if it's a named duplicate and should
 			# be equivalent <ref ... />, for compatability with #tag.
-			if ( $key == false )
+			if ( $key == false ) {
+				$this->mRefCallStack[] = false;
 				return $this->error( 'cite_error_ref_no_input' );
-			else
+			} else {
 				$str = null;
+			}
 		}
 				
 		if( $key === false ) {
 			# TODO: Comment this case; what does this condition mean?
+			$this->mRefCallStack[] = false;
 			return $this->error( 'cite_error_ref_too_many_keys' );
 		}
 
 		if( $str === null and $key === null ) {
 			# Something like <ref />; this makes no sense.
+			$this->mRefCallStack[] = false;
 			return $this->error( 'cite_error_ref_no_key' );
 		}
 		
@@ -155,6 +235,8 @@ class Cite {
 			# cing duplicate id's in the XHTML.  The Right Thing To Do
 			# would be to mangle them, but it's not really high-priority
 			# (and would produce weird id's anyway).
+
+			$this->mRefCallStack[] = false;
 			return $this->error( 'cite_error_ref_numeric_key' );
 		}
 
@@ -172,21 +254,19 @@ class Cite {
 			# Possible improvement: print the warning, followed by the contents
 			# of the <ref> tag.  This way no part of the article will be eaten
 			# even temporarily.
+
+			$this->mRefCallStack[] = false;
 			return $this->error( 'cite_error_included_ref' );
 		}
 
-		# Split these into groups.
-		if( $group === null ) {
-			$group = $default_group;
-		}
-		
 		if( is_string( $key ) or is_string( $str ) ) {
 			# We don't care about the content: if the key exists, the ref
 			# is presumptively valid.  Either it stores a new ref, or re-
 			# fers to an existing one.  If it refers to a nonexistent ref,
 			# we'll figure that out later.  Likewise it's definitely valid
 			# if there's any content, regardless of key.
-			return $this->stack( $str, $key, $group );
+
+			return $this->stack( $str, $key, $group, $argv );
 		}
 
 		# Not clear how we could get here, but something is probably
@@ -245,7 +325,7 @@ class Cite {
 	 * @param mixed $key Argument to the <ref> tag as returned by $this->refArg()
 	 * @return string 
 	 */
-	function stack( $str, $key = null, $group ) {
+	function stack( $str, $key = null, $group, $call ) {
 		if (! isset($this->mRefs[$group])) 
 			$this->mRefs[$group]=array();
 		if (! isset($this->mGroupCnt[$group]))
@@ -255,6 +335,7 @@ class Cite {
 			// No key
 			//$this->mRefs[$group][] = $str;
 			$this->mRefs[$group][] = array('count'=>-1, 'text'=>$str, 'key'=>++$this->mOutCnt);
+			$this->mRefCallStack[] = array( 'new', $call, $str, $key, $group, $this->mOutCnt );
 
 			return $this->linkRef( $group, $this->mInCnt++ );
 		} else if ( is_string( $key ) ) {
@@ -267,6 +348,8 @@ class Cite {
 					'key' => ++$this->mOutCnt,
 					'number' => ++$this->mGroupCnt[$group]
 				);
+				$this->mRefCallStack[] = array( 'new', $call, $str, $key, $group, $this->mOutCnt );
+
 				$this->mInCnt++;
 				return
 					$this->linkRef(
@@ -281,7 +364,12 @@ class Cite {
 				if ( $this->mRefs[$group][$key]['text'] === null && $str !== '' ) {
 					// If no text found before, use this text
 					$this->mRefs[$group][$key]['text'] = $str;
-				};
+					$this->mRefCallStack[] = array( 'assign', $call, $str, $key, $group, 
+						$this->mRefs[$group][$key]['key'] );
+				} else {
+					$this->mRefCallStack[] = array( 'increment', $call, $str, $key, $group,  
+						$this->mRefs[$group][$key]['key'] );
+				}
 				return 
 					$this->linkRef(
 						$group,
@@ -297,6 +385,59 @@ class Cite {
 	}
 	
 	/**
+	 * Partially undoes the effect of calls to stack()
+	 * 
+	 * Called by guardedReferences()
+	 *
+	 * The option to define <ref> within <references> makes the 
+	 * behavior of <ref> context dependent.  This is normally fine
+	 * but certain operations (especially #tag) lead to out-of-order
+	 * parser evaluation with the <ref> tags being processed before
+	 * their containing <reference> element is read.  This leads to
+	 * stack corruption that this function works to fix.
+	 *
+	 * This function is not a total rollback since some internal
+	 * counters remain incremented.  Doing so prevents accidentally
+	 * corrupting certain links.
+	 */
+	function rollbackRef( $type, $key, $group, $index ) {
+		if( !isset( $this->mRefs[$group] ) ) { return; }
+
+		if( $key === null ) {
+			foreach( $this->mRefs[$group] as $k => $v ) {
+				if( $this->mRefs[$group][$k]['key'] === $index ) {
+					$key = $k;
+					break;
+				}
+			}
+		}
+
+		# Sanity checks that specified element exists.
+		if( $key === null ) { return; }
+		if( !isset( $this->mRefs[$group][$key] ) ) { return; }
+		if( $this->mRefs[$group][$key]['key'] != $index ) { return; }
+
+		switch( $type ) {
+		case 'new':
+			# Rollback the addition of new elements to the stack.
+			unset( $this->mRefs[$group][$key] );
+			if( count( $this->mRefs[$group] ) == 0 ) {
+				unset( $this->mRefs[$group] );
+				unset( $this->mGroupCnt[$group] );
+			}
+			break;
+		case 'assign':
+			# Rollback assignment of text to pre-existing elements.
+			$this->mRefs[$group][$key]['text'] = null;
+			# continue without break
+		case 'increment':
+			# Rollback increase in named ref occurences.
+			$this->mRefs[$group][$key]['count']--;
+			break;
+		}
+	}
+
+	/**
 	 * Callback function for <references>
 	 *
 	 * @param string $str Input
@@ -305,16 +446,16 @@ class Cite {
 	 */
 	function references( $str, $argv, $parser ) {
 		wfLoadExtensionMessages( 'Cite' );
-		if ( $this->mInCite ) {
+		if ( $this->mInCite || $this->mInReferences ) {
 			if ( is_null( $str ) ) {
 				return htmlspecialchars( "<references/>" );
 			} else {
 				return htmlspecialchars( "<references>$str</references>" );
 			}
 		} else {
-			$this->mInCite = true;
+			$this->mInReferences = true;
 			$ret = $this->guardedReferences( $str, $argv, $parser );
-			$this->mInCite = false;
+			$this->mInReferences = false;
 			return $ret;
 		}
 	}
@@ -324,22 +465,62 @@ class Cite {
 
 		$this->mParser = $parser;
 		
-		if ( strval( $str ) !== '' )
-			return $this->error( 'cite_error_references_invalid_input' );
-
-		
 		if ( isset( $argv['group'] ) and $wgAllowCiteGroups) {
 			$group = $argv['group'];
 			unset ($argv['group']);
-			
 		}
 		
+		if ( strval( $str ) !== '' ) {
+			$this->mReferencesGroup = $group;
+			
+			# Detect whether we were sent already rendered <ref>s
+			# Mostly a side effect of using #tag to call references
+			$count = substr_count( $str, $parser->uniqPrefix() . "-ref-" );
+			for( $i = 1; $i <= $count; $i++ ) {
+				if( count( $this->mRefCallStack ) < 1 ) break;
+
+				# The following assumes that the parsed <ref>s sent within 
+				# the <references> block were the most recent calls to
+				# <ref>.  This assumption is true for all known use cases,
+				# but not strictly enforced by the parser.  It is possible
+				# that some unusual combination of #tag, <references> and
+				# conditional parser functions could be created that would
+				# lead to malformed references here.
+				$call = array_pop( $this->mRefCallStack );
+				if( $call !== false ) {
+					list($type, $ref_argv, $ref_str, 
+						$ref_key, $ref_group, $ref_index) = $call;
+
+					# Undo effects of calling <ref> while unaware of containing <references> 
+					$this->rollbackRef( $type, $ref_key, $ref_group, $ref_index );
+
+					# Rerun <ref> call now that mInReferences is set.
+					$this->guardedRef( $ref_str, $ref_argv, $parser );
+				}
+			}
+
+			# Parse $str to process any unparsed <ref> tags.
+			$parser->recursiveTagParse( $str );
+
+			# Reset call stack
+			$this->mRefCallStack = array();
+		}
+
 		if ( count( $argv ) && $wgAllowCiteGroups )
 			return $this->error( 'cite_error_references_invalid_parameters_group' );
 		elseif ( count( $argv ) )
 			return $this->error( 'cite_error_references_invalid_parameters' );
-		else
-			return $this->referencesFormat($group);
+		else {
+			$s = $this->referencesFormat( $group );
+			if ( $parser->getOptions()->getIsSectionPreview() ) return $s;
+			
+			# Append errors generated while processing <references>
+			if ( count( $this->mReferencesErrors ) > 0 ) {
+				$s .= "\n" . implode( "<br />\n", $this->mReferencesErrors );
+				$this->mReferencesErrors = array();
+			}
+			return $s;
+		}
 	}
 
 	/**
@@ -680,13 +861,15 @@ class Cite {
 	function clearState() {
 		# Don't clear state when we're in the middle of parsing
 		# a <ref> tag
-		if($this->mInCite)
+		if( $this->mInCite || $this->mInReferences )
 			return true;
  
 		$this->mGroupCnt = array();
 		$this->mOutCnt = -1;
 		$this->mInCnt = 0;
 		$this->mRefs = array();
+		$this->mReferencesErrors = array();
+		$this->mRefCallStack = array();
 
 		return true;
 	}
@@ -755,5 +938,3 @@ class Cite {
 
 	/**#@-*/
 }
-
-?>

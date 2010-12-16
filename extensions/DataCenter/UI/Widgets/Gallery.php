@@ -54,9 +54,7 @@ class DataCenterWidgetGallery extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets defaults
 		$parameters = array_merge_recursive(
 			self::$defaultParameters, $parameters

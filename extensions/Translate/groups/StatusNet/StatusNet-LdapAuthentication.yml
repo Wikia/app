@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-ldapauthentication
+  label: StatusNet - LdapAuthentication
+  description: "{{int:bw-desc-statusnet-plugin-ldapauthentication}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/ldapauthentication
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/LdapAuthentication/locale/%CODE%/LC_MESSAGES/LdapAuthentication.po
+  targetPattern: plugins/LdapAuthentication/locale/%CODE%/LC_MESSAGES/LdapAuthentication.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: ldapauthentication-
+  patterns:
+    - "*"

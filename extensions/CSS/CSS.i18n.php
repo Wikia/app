@@ -16,10 +16,18 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  */
 $messages['qqq'] = array(
-	'css-desc' => 'Short description of the Css extension, shown on [[Special:Version]]',
+	'css-desc' => '{{desc}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'css-desc' => "'n Ontleder-funksie wat dit moontlik maak om CSS-stylesheets in spesifieke bladsye in te sluit",
 );
 
 /** Arabic (العربية)
@@ -36,6 +44,13 @@ $messages['arz'] = array(
 	'css-desc' => 'دالة محلل تسمح بأنماط CSS أن تضمن فى صفحات معينة',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'css-desc' => 'Функцыя парсэра, якая дазваляе ўключаць табліцы стыляў CSS ў пазначаныя старонкі',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -43,11 +58,25 @@ $messages['bg'] = array(
 	'css-desc' => 'Функция на парсера, която позволява вмъкването на CSS стилове в страниците',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'css-desc' => "Un arc'hwel eus ar parser a aotren degas follennoù stil CSS e-barzh pajennoù zo",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'css-desc' => 'Parserska funkcija koja omogućuje da se CSS stilovi uključe u određene stranice',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'css-desc' => "Una funció d'anàlisi que permet incloure fulls d'estil CSS a pàgines concretes",
 );
 
 /** Czech (Česky)
@@ -61,7 +90,7 @@ $messages['cs'] = array(
  * @author ChrisiPK
  */
 $messages['de'] = array(
-	'css-desc' => 'Eine Parser-Funktion, die es ermöglicht, CSS-Stylesheets in bestimmte Seiten einzubinden',
+	'css-desc' => 'Eine Parser-Funktion, die es ermöglicht, CSS (Cascading Style Sheets) in bestimmte Seiten einzubinden',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -69,6 +98,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'css-desc' => 'Parserowa funkcija, kótaraž zmóžnja stilowe pśedłogi CSS do specifiskich bokow zapśěgnuś',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'css-desc' => 'Μία λεξιαναλυτική συνάρτηση που επιτρέπει σε CSS-stylesheets να συμπεριληφθούν σε συγκεκριμένες σελίδες',
 );
 
 /** Spanish (Español)
@@ -114,11 +150,25 @@ $messages['gsw'] = array(
 	'css-desc' => 'E Parser-Funktion, wu s megli macht, CSS-Stylesheet in bstimmti Syten yyzbinde',
 );
 
+/** Gujarati (ગુજરાતી)
+ * @author Dineshjk
+ */
+$messages['gu'] = array(
+	'css-desc' => 'પાર્સર વિધેય કે જે કોઇ ખાસ પાનાં પર CSS સ્ટાઇલશીટ મુકવા દે છે.',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
 $messages['he'] = array(
 	'css-desc' => 'הוראת תנאי המאפשרת הכללת גליונות עיצוב מסוג CSS בדפים מסוימים',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'css-desc' => 'Ang parser panksiyon nga naga pasugot sa CSS estilopahina nga gin-entra sa ensakto nga mga pahina',
 );
 
 /** Croatian (Hrvatski)
@@ -135,11 +185,26 @@ $messages['hsb'] = array(
 	'css-desc' => 'Parserowa funkcija, kotraž dowola CSS stilowe předłohi do specifiskich stronow zapřijeć',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'css-desc' => 'Értelmezőfüggvény CSS stíluslapok beágyazásához meghatározott lapokon',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'css-desc' => 'Un function del analysator syntactic que permitte includer folios de stilos CSS in paginas specific',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'css-desc' => 'Fungsi parser yang berguna untuk mengijinkan CSS diikutkan di halaman tertentu',
 );
 
 /** Italian (Italiano)
@@ -151,9 +216,10 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Whym
  */
 $messages['ja'] = array(
-	'css-desc' => 'CSSスタイルシートを特定のページに埋め込めるようになるパーサー関数',
+	'css-desc' => 'CSSスタイルシートを特定のページに埋め込めるようにするパーサー関数',
 );
 
 /** Korean (한국어)
@@ -182,6 +248,34 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'css-desc' => 'Eng Parser-Funktioun déi et erlaabt CSS-Stilblieder a spzifesch Säiten anzebannen',
+);
+
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'css-desc' => "'n Parserfunktie die 't mäögelik maak om CSS-stylesheets op te numme in aangegeve pagina's",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'css-desc' => 'Парсер функција која дозволува прикажување на CSS стилски табли на одбрани страници',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Aurora
+ */
+$messages['ms'] = array(
+	'css-desc' => 'Satu fungsi penghurai yang membenarkan lembaran gaya CSS dimasukkan ke laman tertentu',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'css-desc' => "Een parserfunctie dee 't meugelijk maak um CSS-stylesheets op te nemen in an-egeven pagina's",
 );
 
 /** Dutch (Nederlands)
@@ -219,6 +313,13 @@ $messages['pl'] = array(
 	'css-desc' => 'Funkcja parsera pozwalająca dołączać arkusze stylów CSS do wskazanych stron',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'css-desc' => "Na fonsion dël parser che a përmëtt d'anserì jë stylesheet CSS an drinta a pàgine spessìfiche",
+);
+
 /** Portuguese (Português)
  * @author Waldir
  */
@@ -247,11 +348,46 @@ $messages['roa-tara'] = array(
 	'css-desc' => "'Na funzione de parser ca conzende a le fogghie de stile CSS de essere ingluse jndr'à specifiche pàggene",
 );
 
+/** Russian (Русский)
+ * @author Ferrer
+ */
+$messages['ru'] = array(
+	'css-desc' => 'Функция парсера, позволяющая включать таблицы стилей CSS в определённые страницы',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'css-desc' => 'CSS истииллэрин таабылларын сорох сирэйдэргэ киллэрэри хааччыйар парсер функцията',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'css-desc' => 'Funkcia syntaktického analyzátora, ktorá umožňuje vkladanie CSS do určitých stránok.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'css-desc' => 'Функција парсера која омогућује да се CSS стилови укључе у одређене стране',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'css-desc' => 'Funkcija parsera koja omogućuje da se CSS stilovi uključe u određene strane',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Irwangatot
+ */
+$messages['su'] = array(
+	'css-desc' => 'Fungsi parser anu kapaké pikeun ngijinan CSS dibawa dina kaca nu tangtu',
 );
 
 /** Swedish (Svenska)
@@ -275,6 +411,20 @@ $messages['tl'] = array(
 	'css-desc' => "Isang tungkuling pambanghay (''parser'') na nagpapahintulot sa estilo ng mga pilas ng CSS na mapabilang sa tinutukoy na mga pahina",
 );
 
+/** Turkish (Türkçe)
+ * @author Srhat
+ */
+$messages['tr'] = array(
+	'css-desc' => 'Belirli sayfalara CSS biçem yapraklarının uygulanmasına olanak tanıyan bir derleyici işlevdir.',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'css-desc' => 'Функція парсеру, яка дозволяє включати таблиці стилів CSS в конкретні сторінки',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -294,5 +444,12 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'css-desc' => '可让CSS样式表包含在特定页面的语法解析功能',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
+$messages['zh-hant'] = array(
+	'css-desc' => '可讓CSS樣式表包含在特定頁面的語法解析功能',
 );
 

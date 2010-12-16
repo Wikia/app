@@ -26,6 +26,13 @@ $messages['qqq'] = array(
 	'categoryintersection-desc' => 'Shown in [[Special:Version]]. Do not translate links.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'categoryintersection-results' => 'Die soektog het $1 {{PLURAL:$1|resultaat|resultate}} opgelewer.',
+);
+
 /** Arabic (العربية)
  * @author Alnokta
  * @author Meno25
@@ -40,14 +47,27 @@ $messages['ar'] = array(
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Ghaly
  * @author Meno25
  */
 $messages['arz'] = array(
 	'categoryintersection' => 'تقاطع تصنيف',
 	'categoryintersection-desc' => 'يصون جدول بقيم الهاش ل[[Special:CategoryIntersection|تقاطعات التصنيف]] فى صفحة',
-	'categoryintersection-doit' => 'اعرض الصفحات فى كل هذه التصنيفات',
-	'categoryintersection-maxcategories' => 'أقصى عدد مسموح به للتصنيفات المتقاطعة هو $1.',
-	'categoryintersection-results' => 'البحث أرجع $1 {{PLURAL:$1|نتيجة|نتيجة}}.',
+	'categoryintersection-doit' => 'اعرض الصفحات فى كل التصنيفات دى',
+	'categoryintersection-maxcategories' => 'اكبر عدد مسموح بيه للتصنيفات المتقاطعة هو $1.',
+	'categoryintersection-results' => 'التدوير $1 {{PLURAL:$1|نتيجة|نتيجة}}.',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'categoryintersection' => 'Перасячэньне катэгорый',
+	'categoryintersection-desc' => 'Падтрымлівае табліцу з хэш-значэньнямі для [[Special:CategoryIntersection|перасячэньня катэгорыяў]] на старонцы',
+	'categoryintersection-doit' => 'Сьпіс старонак ва ўсіх гэтых катэгорыях',
+	'categoryintersection-maxcategories' => 'Максымальная дазволеная колькасьць катэгорыяў для перасячэньня — $1.',
+	'categoryintersection-results' => 'Пошук даў $1 {{PLURAL:$1|вынік|вынікі|вынікаў}}.',
 );
 
 /** Bulgarian (Български)
@@ -130,6 +150,14 @@ $messages['dsb'] = array(
 	'categoryintersection-results' => 'Pytanje jo $1 {{PLURAL:$1|wuslědk|wuslědka|wuslědki|wuslědkow}} wróśíło.',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'categoryintersection' => 'Διατομή κατηγοριών',
+	'categoryintersection-doit' => 'Λίστα σελίδων σε όλες αυτές τις κατηγορίες',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -145,6 +173,7 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'categoryintersection' => 'Categoría intersección',
+	'categoryintersection-desc' => 'Mantiene una tabla con valores desmenuzados para [[Special:CategoryIntersection|intersecciones de categoría]] dentro de una página',
 	'categoryintersection-doit' => 'Lista de páginas en todas estas categorías',
 	'categoryintersection-maxcategories' => 'El número máximo permitido de categorías intersectadas es $1.',
 	'categoryintersection-results' => 'La búsqueda retornó $1 {{PLURAL:$1|resultado|resultados}}.',
@@ -161,11 +190,17 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
  * @author Nike
+ * @author Silvonen
  * @author Vililikku
  */
 $messages['fi'] = array(
+	'categoryintersection' => 'Luokkien leikkaus',
+	'categoryintersection-desc' => 'Ylläpitää hajautusalgoritmin arvojen taulukkoa sivunsisäisäisesti näytettynä olevia [[Special:CategoryIntersection|luokkien leikkauksia]] varten',
 	'categoryintersection-doit' => 'Listaa kaikissa näissä luokissa olevat sivut',
+	'categoryintersection-maxcategories' => 'Suurin sallittu määrä luokkia, joista tehdään leikkaus, on $1.',
 	'categoryintersection-results' => 'Haku palautti $1 {{PLURAL:$1|tuloksen|tulosta}}.',
 );
 
@@ -268,6 +303,17 @@ $messages['ia'] = array(
 	'categoryintersection-results' => 'Le recerca retornava $1 {{PLURAL:$1|resultato|resultatos}}.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'categoryintersection' => 'Persimpangan kategori',
+	'categoryintersection-desc' => 'Membuat suatu tabel dengan nilai "hash" untuk [[Special:CategoryIntersection|persimpangan kategori]] di dalam suatu halaman',
+	'categoryintersection-doit' => 'Daftarkan semua halaman di kategori-kategori ini',
+	'categoryintersection-maxcategories' => 'Angka maksimal yang diijinkan untuk persimpangan kategori adalah $1.',
+	'categoryintersection-results' => 'Pencarian Anda menghasilkan $1 {{PLURAL:$1|hasil|hasil}}.',
+);
+
 /** Ido (Ido)
  * @author Malafaya
  */
@@ -303,7 +349,7 @@ $messages['ja'] = array(
 	'categoryintersection-desc' => '[[Special:CategoryIntersection|カテゴリの交差検索]]に利用するハッシュ値を含むテーブルを保持する',
 	'categoryintersection-doit' => 'これらのカテゴリすべてに属しているページを列挙する',
 	'categoryintersection-maxcategories' => '交差できるカテゴリの最大数は$1です。',
-	'categoryintersection-results' => '検索結果は$1件です。',
+	'categoryintersection-results' => '検索結果は$1{{PLURAL:$1|件}}です。',
 );
 
 /** Javanese (Basa Jawa)
@@ -349,6 +395,17 @@ $messages['lb'] = array(
 	'categoryintersection-results' => "D'Resultat vun der der Sich  {{PLURAL:$1|ass $1 Titel|si(nn) $1 Titelen}}.",
 );
 
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'categoryintersection' => 'Categoriedoorsjneet',
+	'categoryintersection-desc' => "Hilt 'n tabel bie mit hashwaerd veur [[Special:CategoryIntersection|categoriedoorsjneet]] veur 'n pagina",
+	'categoryintersection-doit' => "Pagina's in al dees categorieë betrachte",
+	'categoryintersection-maxcategories' => "'t Maximaal aantal categoriedoorsjneet is $1.",
+	'categoryintersection-results' => 'De zeukopdrach haet $1 {{PLURAL:$1|rizzeltaat|rizzeltate}} opgelieverd.',
+);
+
 /** Lao (ລາວ)
  * @author Passawuth
  */
@@ -357,11 +414,12 @@ $messages['lo'] = array(
 );
 
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
 	'categoryintersection' => 'Пресек на категории',
-	'categoryintersection-desc' => 'Одржување на табела со хеш вредности за [[Special:CategoryIntersection|пресек на категории]] во страница',
+	'categoryintersection-desc' => 'Одржување на табела со тарабни вредности за [[Special:CategoryIntersection|пресек на категории]] во страница',
 	'categoryintersection-doit' => 'Листа на страници во сите овие категории',
 	'categoryintersection-maxcategories' => 'Максимално дозволен број на категории чиј пресек се бара е $1.',
 	'categoryintersection-results' => 'Пребарувањето врати $1 {{PLURAL:$1|резултат|резултати}}.',
@@ -371,7 +429,7 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'categoryintersection-doit' => 'ഈ വിഭാഗത്തിലുള്ള താളുകളെല്ലാം പ്രദര്‍ശിപ്പിക്കുക',
+	'categoryintersection-doit' => 'ഈ വർഗ്ഗത്തിലുള്ള താളുകളെല്ലാം പ്രദര്‍ശിപ്പിക്കുക',
 	'categoryintersection-results' => 'തിരച്ചിലില്‍ $1 {{PLURAL:$1|ഫലം|ഫലങ്ങള്‍}} കിട്ടി.',
 );
 
@@ -441,6 +499,17 @@ $messages['pl'] = array(
 	'categoryintersection-results' => 'Wyszukiwanie zwróciło $1 {{PLURAL:$1|wynik|wyniki|wyników}}',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'categoryintersection' => 'Antërsession ëd categorìe',
+	'categoryintersection-desc' => 'A manten na tabela con i valor hash për [[Special:CategoryIntersection|Antërsession ëd categorìa]] an drinta a na pàgina',
+	'categoryintersection-doit' => 'Lista le pàgine an tute ste categorìe-sì',
+	'categoryintersection-maxcategories' => 'Ël màssim nùmer ëd categorìe antërsecante an $1.',
+	'categoryintersection-results' => "L'arserca a l'é rëndù $1 {{PLURAL:$1|arzultà|arzultà}}.",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -487,6 +556,10 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'categoryintersection' => "Intersezione 'mbrà categorije",
+	'categoryintersection-desc' => "Mandene 'na tavule cu le vlaore hash pe le [[Special:CategoryIntersection|interseziune 'mbrà categorije]] jndr'à 'na pàgene",
+	'categoryintersection-doit' => "Elenghe le pàggene jndr'à tutte ste categorije",
+	'categoryintersection-maxcategories' => "'U numere massime de categorije ca se 'ndurtigghiescene jè $1.",
+	'categoryintersection-results' => "'A ricerche ha returnate $1 {{PLURAL:$1|resultate|resultate}}.",
 );
 
 /** Russian (Русский)
@@ -498,6 +571,16 @@ $messages['ru'] = array(
 	'categoryintersection-doit' => 'Вывести страницы во всех этих категориях',
 	'categoryintersection-maxcategories' => 'Максимально допустимое число пересекающихся категорий — $1.',
 	'categoryintersection-results' => 'Поиск дал {{PLURAL:$1|$1 результат|$1 результата|$1 результатов}}.',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'categoryintersection' => 'Категориялар быһа охсуһуулара',
+	'categoryintersection-doit' => 'Бу категориялар сирэйдэрин барытын көрдөр',
+	'categoryintersection-maxcategories' => 'Быһа охсуһар категориялар муҥутуур ахсааннара — $1.',
+	'categoryintersection-results' => 'Көрдөөһүн $1 түмүгү биэрдэ.',
 );
 
 /** Tachelhit (Tašlḥiyt)
@@ -517,6 +600,28 @@ $messages['sk'] = array(
 	'categoryintersection-doit' => 'Zoznam stránok vo všetkých týchto kategóriách',
 	'categoryintersection-maxcategories' => 'Maximálny povolený počet kategórií, ktoré majú prienik je $1.',
 	'categoryintersection-results' => 'Hľadanie vrátilo $1 {{PLURAL:$1|výsledok|výsledky|výsledkov}}.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'categoryintersection' => 'Пресек категорија',
+	'categoryintersection-desc' => 'Одржава табелу са хеш вредностима за [[Special:CategoryIntersection|пресеке категорија]] унутар стране',
+	'categoryintersection-doit' => 'Дај списак страна у свим овим категоријама',
+	'categoryintersection-maxcategories' => 'Максималан дозвољен број категорија у пресеку је $1.',
+	'categoryintersection-results' => 'Претрага је вратила $1 {{PLURAL:$1|резултат|резултата}}.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'categoryintersection' => 'Presek kategorija',
+	'categoryintersection-desc' => 'Održava tabelu sa heš vrednostima za [[Special:CategoryIntersection|preseke kategorija]] unutar strane',
+	'categoryintersection-doit' => 'Daj spisak strana u svim ovim kategorijama',
+	'categoryintersection-maxcategories' => 'Maksimalan dozvoljen broj kategorija u preseku je $1.',
+	'categoryintersection-results' => 'Pretraga je vratila $1 {{PLURAL:$1|rezultat|rezultata}}.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -568,6 +673,14 @@ $messages['tg-cyrl'] = array(
 	'categoryintersection-results' => 'Ҷустуҷӯ бо $1 {{PLURAL:$1|натиҷа|натоиҷ}} баргашт.',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'categoryintersection-doit' => 'Sahifahoi dar hamai in gurūhho buda fehrist şavad',
+	'categoryintersection-results' => 'Çustuçū bo $1 {{PLURAL:$1|natiça|natoiç}} bargaşt.',
+);
+
 /** Thai (ไทย)
  * @author Passawuth
  */
@@ -586,6 +699,17 @@ $messages['tl'] = array(
 	'categoryintersection-results' => 'Nagbalik ang paghahanap ng $1 {{PLURAL:$1|kinalabasan|mga kinalabasan}}.',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'categoryintersection' => 'Kategori kesişimi',
+	'categoryintersection-desc' => 'Bir sayfadaki [[Special:CategoryIntersection|kategori kesişmeleri]] için sağlama değerlerinden oluşan bir tablo tutar',
+	'categoryintersection-doit' => 'Tüm bu kategorilerdeki sayfaları listele',
+	'categoryintersection-maxcategories' => 'İzin verilen azami kesişen kategori sayısı $1 şeklindedir.',
+	'categoryintersection-results' => 'Arama, $1 {{PLURAL:$1|sonuç|sonuç}} verdi.',
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  */
@@ -597,6 +721,13 @@ $messages['uk'] = array(
 	'categoryintersection-results' => 'Пошук дав {{PLURAL:$1|$1 результат|$1 результати|$1 результатів}}.',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'categoryintersection-doit' => 'Ozutada lehtpolid kaikiš neniš kategorijoiš',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -606,7 +737,7 @@ $messages['vi'] = array(
 	'categoryintersection-desc' => 'Sử dụng một bản chứa các giá trị băm dùng cho [[Special:CategoryIntersection|các thể loại giao nhau]] trong một trang',
 	'categoryintersection-doit' => 'Liệt kê các trang trong tất cả các thể loại này',
 	'categoryintersection-maxcategories' => 'Số thể loại giao nhau tối đa cho phép là $1.',
-	'categoryintersection-results' => 'Tìm được $1 tựa bài.',
+	'categoryintersection-results' => 'Tìm được $1 {{PLURAL:$1|kết quả|kết quả}}.',
 );
 
 /** Volapük (Volapük)

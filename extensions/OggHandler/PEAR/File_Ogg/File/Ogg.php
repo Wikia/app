@@ -50,7 +50,7 @@ define("OGG_STREAM_FLAC",       4);
 
 /**
  * Capture pattern to determine if a file is an Ogg physical stream.
- * 
+ *
  * @access  private
  */
 define("OGG_CAPTURE_PATTERN", "OggS");
@@ -58,13 +58,13 @@ define("OGG_CAPTURE_PATTERN", "OggS");
  * Maximum size of an Ogg stream page plus four.  This value is specified to allow
  * efficient parsing of the physical stream.  The extra four is a paranoid measure
  * to make sure a capture pattern is not split into two parts accidentally.
- * 
+ *
  * @access  private
  */
 define("OGG_MAXIMUM_PAGE_SIZE", 65311);
 /**
  * Capture pattern for an Ogg Vorbis logical stream.
- * 
+ *
  * @access  private
  */
 define("OGG_STREAM_CAPTURE_VORBIS", "vorbis");
@@ -75,38 +75,38 @@ define("OGG_STREAM_CAPTURE_VORBIS", "vorbis");
 define("OGG_STREAM_CAPTURE_SPEEX",  "Speex   ");
 /**
  * Capture pattern for an Ogg FLAC logical stream.
- * 
+ *
  * @access  private
  */
 define("OGG_STREAM_CAPTURE_FLAC",   "FLAC");
 /**
  * Capture pattern for an Ogg Theora logical stream.
- * 
+ *
  * @access  private
  */
 define("OGG_STREAM_CAPTURE_THEORA", "theora");
 /**
  * Error thrown if the file location passed is nonexistant or unreadable.
- * 
+ *
  * @access  private
  */
 define("OGG_ERROR_INVALID_FILE", 1);
 /**
  * Error thrown if the user attempts to extract an unsupported logical stream.
- * 
+ *
  * @access  private
  */
 define("OGG_ERROR_UNSUPPORTED",  2);
 /**
  * Error thrown if the user attempts to extract an logical stream with no
  * corresponding serial number.
- * 
+ *
  * @access  private
  */
 define("OGG_ERROR_BAD_SERIAL",   3);
 /**
  * Error thrown if the stream appears to be corrupted.
- * 
+ *
  * @access  private
  */
 define("OGG_ERROR_UNDECODABLE",      4);
@@ -164,6 +164,15 @@ class File_Ogg
      * Total length in seconds of the entire file
      */
     var $_totalLength;
+    var $_startOffset = false;
+
+    /**
+     * Maximum number of pages to store detailed metadata for, per stream.
+     * We can't store every page because there could be millions, causing an OOM.
+     * This must be big enough so that all the codecs can get the metadata they
+     * need without re-reading the file.
+     */
+    var $_maxPageCacheSize = 4;
 
     /**
      * Returns an interface to an Ogg physical stream.
@@ -175,7 +184,7 @@ class File_Ogg
      * @access  public
      * @param   string  $fileLocation   The path of the file to be examined.
      */
-    function File_Ogg($fileLocation)
+    function __construct($fileLocation)
     {
         clearstatcache();
         if (! file_exists($fileLocation)) {
@@ -220,13 +229,13 @@ class File_Ogg
      * Read a binary structure from a file. An array of unsigned integers are read.
      * Large integers are upgraded to floating point on overflow.
      *
-     * Format is big-endian as per Theora bit packing convention, this function 
+     * Format is big-endian as per Theora bit packing convention, this function
      * won't work for Vorbis.
      *
      * @param   resource    $file
      * @param   array       $fields Associative array mapping name to length in bits
      */
-    static function _readBigEndian($file, $fields) 
+    static function _readBigEndian($file, $fields)
     {
         $bufferLength = ceil(array_sum($fields) / 8);
         $buffer = fread($file, $bufferLength);
@@ -359,6 +368,7 @@ class File_Ogg
 
         // Exact granule position
         $abs_granule_pos = self::_littleEndianBin2Hex( substr($pageData, 6, 8));
+
         // Approximate (floating point) granule position
         $pos = unpack("Va/Vb", substr($pageData, 6, 8));
         $approx_granule_pos = $pos['a'] + $pos['b'] * pow(2, 32);
@@ -387,11 +397,33 @@ class File_Ogg
             'data_length'           => $pageFinish - $pageOffset,
             'group'                 => $groupId,
         );
+        if ( !isset( $this->_streamList[$stream_serial['data']] ) ) {
+            $this->_streamList[$stream_serial['data']] = array(
+                'pages' => array(),
+                'data_length' => 0,
+                'first_granule_pos' => null,
+                'last_granule_pos' => null,
+            );
+        }
+        $stream =& $this->_streamList[$stream_serial['data']];
+        if ( count( $stream['pages'] ) < $this->_maxPageCacheSize ) {
+            $stream['pages'][$page_sequence['data']] = $page;
+        }
+        $stream['last_page'] = $page;
+        $stream['data_length'] += $page['data_length'];
 
-        $this->_streamList[$stream_serial['data']]['stream_page'][$page_sequence['data']] = $page;
+        # Reject -1 as a granule pos, that means no segment finished in the packet
+        if ( $abs_granule_pos !== 'ffffffffffffffff' ) {
+            if ( $stream['first_granule_pos'] === null ) {
+                $stream['first_granule_pos'] = $abs_granule_pos;
+            }
+            $stream['last_granule_pos'] = $abs_granule_pos;
+        }
+
+        $pageData = null;
         return $page;
     }
-    
+
     /**
      *  @access         private
      */
@@ -426,48 +458,53 @@ class File_Ogg
             }
 
             $this_page_offset = $page['body_finish'];
-            fseek($this->_filePointer, $this_page_offset, SEEK_SET);
+            fseek( $this->_filePointer, $this_page_offset, SEEK_SET );
         }
         // Loop through the streams, and find out what type of stream is available.
         $groupLengths = array();
-        foreach ($this->_streamList as $stream_serial => $pages) {
-            fseek($this->_filePointer, $pages['stream_page'][0]['body_offset'], SEEK_SET);
+        foreach ($this->_streamList as $stream_serial => $streamData) {
+            fseek($this->_filePointer, $streamData['pages'][0]['body_offset'], SEEK_SET);
             $pattern = fread($this->_filePointer, 8);
             if (preg_match("/" . OGG_STREAM_CAPTURE_VORBIS . "/", $pattern)) {
                 $this->_streamList[$stream_serial]['stream_type'] = OGG_STREAM_VORBIS;
-                $stream = new File_Ogg_Vorbis($stream_serial, $pages['stream_page'], $this->_filePointer);
+                $stream = new File_Ogg_Vorbis($stream_serial, $streamData, $this->_filePointer);
             } elseif (preg_match("/" . OGG_STREAM_CAPTURE_SPEEX . "/", $pattern)) {
                 $this->_streamList[$stream_serial]['stream_type'] = OGG_STREAM_SPEEX;
-                $stream = new File_Ogg_Speex($stream_serial, $pages['stream_page'], $this->_filePointer);
+                $stream = new File_Ogg_Speex($stream_serial, $streamData, $this->_filePointer);
             } elseif (preg_match("/" . OGG_STREAM_CAPTURE_FLAC . "/", $pattern)) {
                 $this->_streamList[$stream_serial]['stream_type'] = OGG_STREAM_FLAC;
-                $stream = new File_Ogg_Flac($stream_serial, $pages['stream_page'], $this->_filePointer);
+                $stream = new File_Ogg_Flac($stream_serial, $streamData, $this->_filePointer);
             } elseif (preg_match("/" . OGG_STREAM_CAPTURE_THEORA . "/", $pattern)) {
                 $this->_streamList[$stream_serial]['stream_type'] = OGG_STREAM_THEORA;
-                $stream = new File_Ogg_Theora($stream_serial, $pages['stream_page'], $this->_filePointer);
+                $stream = new File_Ogg_Theora($stream_serial, $streamData, $this->_filePointer);
             } else {
-                $pages['stream_type'] = "unknown";
+                $streamData['stream_type'] = "unknown";
                 $stream = false;
             }
 
             if ($stream) {
                 $this->_streams[$stream_serial] = $stream;
-                $group = $pages['stream_page'][0]['group'];
+                $group = $streamData['pages'][0]['group'];
                 if (isset($groupLengths[$group])) {
                     $groupLengths[$group] = max($groupLengths[$group], $stream->getLength());
                 } else {
                     $groupLengths[$group] = $stream->getLength();
                 }
+                //just store the startOffset for the first stream:
+                if( $this->_startOffset === false ){
+                	$this->_startOffset = $stream->getStartOffset();
+                }
+
             }
         }
         $this->_groupLengths = $groupLengths;
         $this->_totalLength = array_sum( $groupLengths );
         unset($this->_streamList);
     }
-    
+
     /**
      * Returns the overead percentage used by the Ogg headers.
-     * 
+     *
      * This function returns the percentage of the total stream size
      * used for Ogg headers.
      *
@@ -484,7 +521,7 @@ class File_Ogg
         }
         return sprintf("%0.2f", ($header_size / $stream_size) * 100);
     }
-    
+
     /**
      * Returns the appropriate logical bitstream that corresponds to the provided serial.
      *
@@ -502,7 +539,7 @@ class File_Ogg
 
         return $this->_streams[$streamSerial];
     }
-    
+
     /**
      * This function returns true if a logical bitstream of the requested type can be found.
      *
@@ -521,7 +558,7 @@ class File_Ogg
         }
         return (false);
     }
-    
+
     /**
      * Returns an array of logical streams inside this physical bitstream.
      *
@@ -558,7 +595,7 @@ class File_Ogg
             if (! isset($streams[$stream_type]))
                 // Initialise the result list for this stream type.
                 $streams[$stream_type] = array();
-                        
+
             $streams[$stream_type][] = $serial;
         }
 
@@ -570,7 +607,16 @@ class File_Ogg
         else
             return array();
     }
-
+    /**
+     * getStartOffset
+     *
+     * @return unknown
+     */
+	function getStartOffset(){
+		if( $this->_startOffset === false)
+			return 0;
+		return $this->_startOffset;
+	}
     /**
      * Get the total length of the group of streams
      */

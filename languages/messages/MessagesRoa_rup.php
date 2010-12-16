@@ -42,12 +42,14 @@ $messages = array(
 'november-gen'  => 'Brumar',
 'december-gen'  => 'Andreulu',
 
-'article'        => 'Articlu',
-'cancel'         => 'Alasã',
+'article'    => 'Articlu',
+'cancel'     => 'Alasã',
+'mytalk'     => 'Zburare-a mea',
+'navigation' => 'Navigatsia',
+
+# Cologne Blue skin
 'qbedit'         => 'Alãxiri',
 'qbspecialpages' => 'Frãndzã spetsiale',
-'mytalk'         => 'Zburare-a mea',
-'navigation'     => 'Navigatsia',
 
 'help'             => 'Agiutor',
 'search'           => 'Caftã',
@@ -102,8 +104,6 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 'notloggedin'        => 'Nu hits ligats',
 'createaccount'      => 'Fãtsets Isape',
 'gotaccountlink'     => 'Ligats-vã',
-'youremail'          => 'E-mail:',
-'username'           => 'Numa di ufilizitor:',
 
 # Edit pages
 'summary'            => 'Rezime:',
@@ -123,12 +123,16 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 'mypreferences'     => 'Alidzerle-a meale',
 'prefsnologin'      => 'Nu hits ligats',
 'searchresultshead' => 'Caftã',
+'youremail'         => 'E-mail:',
+'username'          => 'Numa di ufilizitor:',
 
 # Recent changes
 'recentchanges' => 'Alãxiri',
 
 # Recent changes linked
-'recentchangeslinked' => 'Alãxiri ligate',
+'recentchangeslinked'         => 'Alãxiri ligate',
+'recentchangeslinked-feed'    => 'Alãxiri ligate',
+'recentchangeslinked-toolbox' => 'Alãxiri ligate',
 
 # Upload
 'upload'          => 'Pitritsets file',
@@ -140,8 +144,8 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 # Random page
 'randompage' => 'Frãndzã di nipandicã',
 
-'brokenredirects-edit'   => '(Alãxiri)',
-'brokenredirects-delete' => '(Ashcirdzire)',
+'brokenredirects-edit'   => 'Alãxiri',
+'brokenredirects-delete' => 'Ashcirdzire',
 
 # Miscellaneous special pages
 'newpages-username' => 'Numa di ufilizitor:',

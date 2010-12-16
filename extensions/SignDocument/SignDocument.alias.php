@@ -11,20 +11,27 @@ $aliases['en'] = array(
 	'CreateSignDocument' => array( 'CreateSignDocument' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Afrikaans (Afrikaans) */
+$aliases['af'] = array(
+	'SignDocument' => array( 'TekenDokument' ),
+	'CreateSignDocument' => array( 'SkepTekenDokument' ),
+);
+
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'SignDocument' => array( 'توقيع_الوثيقة' ),
 	'CreateSignDocument' => array( 'إنشاء_توقيع_الوثيقة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'SignDocument' => array( 'توقيع_الوثيقة' ),
 	'CreateSignDocument' => array( 'إنشاء_توقيع_الوثيقة' ),
+);
+
+/** Bosnian (Bosanski) */
+$aliases['bs'] = array(
+	'SignDocument' => array( 'PotpisivanjeDokumenta' ),
 );
 
 /** German (Deutsch) */
@@ -54,19 +61,47 @@ $aliases['hsb'] = array(
 /** Interlingua (Interlingua) */
 $aliases['ia'] = array(
 	'SignDocument' => array( 'Signar documento' ),
-	'CreateSignDocument' => array( 'Crear signar documento' ),
+	'CreateSignDocument' => array( 'Activar signatura de documentos' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'SignDocument' => array( 'FirmaDocumento' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'SignDocument' => array( '文書の署名' ),
-	'CreateSignDocument' => array( '文書の署名を有効化' ),
+	'SignDocument' => array( '文書署名' ),
+	'CreateSignDocument' => array( '文書署名の有効化' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'SignDocument' => array( 'Dokemänt ongerschriive' ),
+	'CreateSignDocument' => array( 'Ongerschrevve Dokemänt aanlääje' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'SignDocument' => array( 'Dokument ënnerschreiwen' ),
 	'CreateSignDocument' => array( 'Dokument ënnerschreiwen erméiglechen' ),
+);
+
+/** Lumbaart (Lumbaart) */
+$aliases['lmo'] = array(
+	'SignDocument' => array( 'FirmaDocüment' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'SignDocument' => array( 'പ്രമാണത്തിലൊപ്പിടുക' ),
+	'CreateSignDocument' => array( 'പ്രമാണത്തിലൊപ്പിടൽ സൃഷ്ടിക്കുക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'SignDocument' => array( 'सहीदस्त' ),
+	'CreateSignDocument' => array( 'दस्तसहीनर्मितीकरा' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -90,6 +125,12 @@ $aliases['no'] = array(
 /** Pashto (پښتو) */
 $aliases['ps'] = array(
 	'SignDocument' => array( 'لاسوند لاسليک کول' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'SignDocument' => array( 'PodpísaťDokument' ),
+	'CreateSignDocument' => array( 'VytvoriťPodpísanýDokument' ),
 );
 
 /** Swedish (Svenska) */

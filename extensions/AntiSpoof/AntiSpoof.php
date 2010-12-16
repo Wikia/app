@@ -1,9 +1,8 @@
 <?php
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'AntiSpoof',
-	'svn-date' => '$LastChangedDate: 2009-02-02 16:06:12 +0100 (pon, 02 lut 2009) $',
-	'svn-revision' => '$LastChangedRevision: 46709 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:AntiSpoof',
 	'author' => 'Brion Vibber',
 	'description' => 'Blocks the creation of accounts with mixed-script, confusing and similar usernames',
@@ -81,7 +80,7 @@ function asAbortNewAccountHook( $user, &$message ) {
 			wfDebugLog( 'antispoof', "{$mode}CONFLICT new account '$name' [$normalized] spoofs " . implode( ',', $conflicts ) );
 			if( $active ) {
 				$numConflicts = count( $conflicts );
-				$message = wfMsgExt( 'antispoof-conflict-top', array('parsemag'), $name, $numConflicts );
+				$message = wfMsgExt( 'antispoof-conflict-top', array('parsemag'), htmlspecialchars( $name ), $numConflicts );
 				$message .= '<ul>';
 				foreach( $conflicts as $simUser ) {
 					$message .= '<li>' . wfMsg( 'antispoof-conflict-item', $simUser ) . '</li>';

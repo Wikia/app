@@ -36,7 +36,7 @@ $wgSpecialPages['MultipleUpload'] = 'MultipleUpload';
 $wgSpecialPageGroups['MultipleUpload'] = 'media';
 
 // Hooked functions
-$wgHooks['MonoBookTemplateToolboxEnd'][]  = 'wfMultiUploadToolbox';
+$wgHooks['SkinTemplateToolboxEnd'][]  = 'wfMultiUploadToolbox';
 $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'wfSpecialMultiUploadNav';
 
 // Add the link to Special:MultipleUpload to all SkinTemplate-based skins for users with the 'upload' user right

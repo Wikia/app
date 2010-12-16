@@ -22,28 +22,28 @@
  * @addtogroup Extensions
  */
 
-require_once('commandLine.inc');
-ini_set( "include_path", "/usr/share/php:" . ini_get("include_path"));
+require_once( 'commandLine.inc' );
+ini_set( "include_path", "/usr/share/php:" . ini_get( "include_path" ) );
 
-require_once("$IP/extensions/OpenID/Consumer.php");
+require_once( "$IP/extensions/OpenID/Consumer.php" );
 
 global $wgSharedDB, $wgDBprefix;
 $tableName = "${wgDBprefix}user_openid";
-if (isset($wgSharedDB)) {
+if ( isset( $wgSharedDB ) ) {
 	$tableName = "`$wgSharedDB`.$tableName";
 }
 
-$dbr =& wfGetDB( DB_SLAVE );
+$dbr = wfGetDB( DB_SLAVE );
 
-$res = $dbr->select(array('user'),
-					array('user_name'),
-					array('user_options LIKE "%openid_url%"'),
+$res = $dbr->select( array( 'user' ),
+					array( 'user_name' ),
+					array( 'user_options LIKE "%openid_url%"' ),
 					'optionToTable',
-					array('ORDER BY' => 'user_name'));
+					array( 'ORDER BY' => 'user_name' ) );
 
-while ($res && $row = $dbr->fetchObject($res)) {
-	$user = User::newFromName($row->user_name);
-	print( $user->getName() . ": " . $user->getOption('openid_url') . "\n");
-	OpenIDSetUserUrl($user, $user->getOption('openid_url'));
+while ( $res && $row = $dbr->fetchObject( $res ) ) {
+	$user = User::newFromName( $row->user_name );
+	print( $user->getName() . ": " . $user->getOption( 'openid_url' ) . "\n" );
+	OpenIDSetUserUrl( $user, $user->getOption( 'openid_url' ) );
 }
-$dbr->freeResult($res);
+$dbr->freeResult( $res );

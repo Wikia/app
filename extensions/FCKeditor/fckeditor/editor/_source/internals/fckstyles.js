@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -88,7 +88,7 @@ var FCKStyles = FCK.Styles =
 				var style = styles[ styleName ] ;
 				var state = style.CheckActive( path ) ;
 
-				if ( style._LastState != state )
+				if ( state != ( style._LastState || null ) )
 				{
 					style._LastState = state ;
 
@@ -210,6 +210,8 @@ var FCKStyles = FCK.Styles =
 			// Remove elements nodes that match with this style rules.
 			if ( tagsRegex.test( currentNode.nodeName ) )
 				FCKDomTools.RemoveNode( currentNode, true ) ;
+			else
+				FCKDomTools.RemoveAttributes( currentNode, FCKConfig.RemoveAttributesArray );
 
 			currentNode = nextNode ;
 		}
@@ -290,6 +292,10 @@ var FCKStyles = FCK.Styles =
 
 		// Get the "Style" nodes defined in the XML file.
 		var styleNodes = stylesXmlObj.$Style ;
+
+		// Check that it did contain some valid nodes
+		if ( !styleNodes )
+			return styles ;
 
 		// Add each style to our "Styles" collection.
 		for ( var i = 0 ; i < styleNodes.length ; i++ )

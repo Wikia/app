@@ -1,0 +1,80 @@
+---
+BASIC:
+  id: out-mantis
+  label: MantisBT (web-based bugtracking system)
+  description: "{{int:bw-desc-mantisbt}}"
+  namespace: NS_MANTIS
+  display: out/mantis/
+  class: FileBasedMessageGroup
+
+FILES:
+  class: PhpVariablesFFS
+  sourcePattern: %GROUPROOT%/lang/strings_%CODE%.txt
+  targetPattern: strings_%CODE%.txt
+  codeMap:
+    af:      afrikaans
+    am:      amharic
+    ar:      arabic
+    arz:     arabicegyptianspoken
+    bg:      bulgarian
+    br:      breton
+    ca:      catalan
+    cs:      czech
+    da:      danish
+    de:      german
+    el:      greek
+    en:      english
+    es:      spanish
+    et:      estonian
+    fi:      finnish
+    fr:      french
+    gl:      galician
+    gsw:     swissgerman
+    he:      hebrew
+    hr:      croatian
+    hu:      hungarian
+    is:      icelandic
+    it:      italian
+    ja:      japanese
+    ko:      korean
+    ksh:     ripoarisch
+    lt:      lithuanian
+    lv:      latvian
+    mk:      macedonian
+    nl:      dutch
+    nn:      norwegian_nynorsk
+    no:      norwegian_bokmal
+    oc:      occitan
+    pl:      polish
+    pt-br:   portuguese_brazil
+    pt:      portuguese_standard
+    ro:      romanian
+    ru:      russian
+    sk:      slovak
+    sl:      slovene
+    sr-ec:   serbian
+    sv:      swedish
+    tl:      tagalog
+    tr:      turkish
+    uk:      ukrainian
+    ur:      urdu
+    vo:      volapuk
+    zh-hans: chinese_simplified
+    zh-hant: chinese_traditional
+
+CHECKER:
+  class: MessageChecker
+  checks:
+    - printfCheck
+    - braceBalanceCheck
+
+TAGS:
+  optional:
+    - s_sponsorship_process_url
+    - s_charset
+    - s_p
+    - s_priority_abbreviation
+    - s_attachment_alt
+    - s_phpmailer_language
+    - s_word_separator
+    - s_directionality

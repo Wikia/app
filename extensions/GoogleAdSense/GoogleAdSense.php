@@ -45,6 +45,7 @@ $wgGoogleAdSenseSlot   = 'none'; // Slot ID for your AdSense script (example: 12
 $wgGoogleAdSenseID     = 'none'; // ID for your AdSense script (example: translatewiki)
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Google AdSense',
 	'version'        => '1.1',
 	'author'         => 'Siebrand Mazeland',

@@ -72,8 +72,16 @@ $messages['af'] = array(
 	'formsave' => 'Stoor',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'formsave' => 'Alzar',
+);
+
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'form-desc' => '[[Special:Form|واجهة استمارة]] لبدء الصفحات الجديدة',
@@ -84,7 +92,7 @@ $messages['ar'] = array(
 	'formbadnametext' => 'لا توجد استمارة بهذا الاسم.',
 	'formpattern' => '$1-استمارة',
 	'formtitlepattern' => 'أضف $1 جديدا',
-	'formsave' => 'حفظ',
+	'formsave' => 'احفظ',
 	'formindexmismatch-title' => 'نمط الاسم والقالب لا يتطابقان',
 	'formindexmismatch' => 'هذه الاستمارة بها أنماط أسماء وقوالب غير متطابقة بدءا عند الفهرس $1.',
 	'formarticleexists' => 'الصفحة موجودة',
@@ -92,8 +100,8 @@ $messages['ar'] = array(
 	'formbadpagename' => 'اسم صفحة سيء',
 	'formbadrecaptcha' => 'قيم غير صحيحة لreCaptcha. حاول مرة ثانية.',
 	'formbadpagenametext' => 'بيانات الاستمارة التي أدخلتها تصنع اسم صفحة سيئا، "$1".',
-	'formrequiredfielderror' => '{{PLURAL:$2|الحقل $1 مطلوب|الحقول $1 مطلوبة}} لهذه الاستمارة.
-من فضلك {{PLURAL:$2|املأه|املأها}}.',
+	'formrequiredfielderror' => '{{PLURAL:$2||الحقل $1 مطلوب|الحقلان $1 مطلوبان|الحقول $1 مطلوبة}} لهذه الاستمارة.
+من فضلك {{PLURAL:$2||املأه|املأهما|املأها}}.',
 	'formsavesummary' => 'صفحة جديدة باستخدام [[Special:Form/$1|الاستمارة $1]]',
 	'formsaveerror' => 'خطأ في حفظ الاستمارة',
 	'formsaveerrortext' => "حدث خطأ غير معروف أثناء حفظ الاستمارة '$1'.",
@@ -178,16 +186,94 @@ $messages['bg'] = array(
 	'formarticleexiststext' => 'Страницата [[$1]] вече съществува.',
 	'formbadpagename' => 'Грешно име на страница',
 	'formbadrecaptcha' => 'Неправилни стойности за reCaptcha. Опитайте отново.',
-	'formrequiredfielderror' => 'Този формуляр изисква полето $1 да бъде попълнено.',
+	'formrequiredfielderror' => 'Този формуляр изисква {{PLURAL:$2|полето $1 да бъде попълнено|полетата $1 да бъдат попълнени}}.
+Необходимо е да {{PLURAL:$2|го попълните|ги попълните}}.',
 	'formsaveerror' => 'Грешка при съхранение на формуляра',
 	'formsaveerrortext' => "Възникна непозната грешка при опит да се съхрани страницата '$1'.",
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'form-desc' => 'নতুন পাতা শুরু করতে [[Special:Form|ফরম ইন্টারফেস]]',
+	'form' => 'ফরম',
+	'formnoname' => 'কোনো ফরম নাম নাই',
+	'formbadname' => 'মন্দ ফরম নাম',
+	'formbadnametext' => 'এই নামে কোনো ফরম নাই।',
+	'formpattern' => '$1-ফরম',
+	'formtitlepattern' => 'নতুন $1 যোগ',
+	'formsave' => 'সংরক্ষণ',
+	'formarticleexists' => 'পাতা রয়েছে',
+	'formbadpagename' => 'পাতার মন্দ নাম',
+	'formsaveerror' => 'ফরম সংরক্ষণে ত্রুটি',
+);
+
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
+	'form-desc' => 'Un [[Special:Form|etrefas furmskrid]] evit kregiñ gant pajennoù nevez',
+	'form' => 'Furmskrid',
+	'formnoname' => 'Anv ebet',
+	'formnonametext' => 'Roit anv ar furmskrid, gant ar stumm "Ispisial:Furmskrid/AnvArFurmskrid".',
+	'formbadname' => 'Anv furmskrid fall',
+	'formbadnametext' => "N'eus furmskrid ebet gant an anv-se.",
+	'formpattern' => 'furmskrid-$1',
+	'formtitlepattern' => 'Ouzhpennañ un $1 nevez',
 	'formsave' => 'Enrollañ',
+	'formindexmismatch-title' => 'Ne glot ket livaoueg an anvioù gant ar patrom',
+	'formindexmismatch' => 'Ar furm skrid-mañ en deus patromoù ne glotont ket adalek $1.',
+	'formarticleexists' => 'Ar bajenn zo anezhi dija',
+	'formarticleexiststext' => 'Ar bajenn [[$1]] zo anezhi dija.',
+	'formbadpagename' => 'Anv fall evit ar bajenn',
+	'formbadrecaptcha' => 'Talvoudoù fall evit reCaptcha. Klaskit adarre.',
+	'formbadpagenametext' => 'Ar roadennoù o peus lakaet a grou un anv fall evit ar bajenn,  "$1".',
+	'formrequiredfielderror' => "Ezhomm 'zo eus ar maezienn{{PLURAL:$2||où}} $1 er furmskrid.
+Mar plij leunit {{PLURAL:$2|anezhañ|anezho}}.",
+	'formsavesummary' => "Pajenn nevez oc'h implijout  [[Special:Form/$1|ar furmskrid $1]]",
+	'formsaveerror' => 'Fazi en ur enrollañ ar furmskrid',
+	'formsaveerrortext' => 'Ur fazi a ro bet pa veze enrollet ar bajenn "$1".',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'form-desc' => '[[Special:Form|Interfejs obrazac]] za započinjanje novih stranica',
+	'form' => 'Obrazac',
+	'formnoname' => 'Nema imena obrasca',
+	'formnonametext' => 'Morate navesti naziv obrasca, poput "Special:Form/Nameofform".',
+	'formbadname' => 'Loš naziv obrasca',
+	'formbadnametext' => 'Ne postoji obrazac s takvim imenom.',
+	'formpattern' => '$1-obrazac',
+	'formtitlepattern' => 'Dodaj novi $1',
+	'formsave' => 'Sačuvaj',
+	'formindexmismatch-title' => 'Naslov šeme i šablona se ne podudaraju',
+	'formindexmismatch' => 'Ovaj obrazac ne odgovara šemi imena i šablona koja započinje indeksom $1.',
+	'formarticleexists' => 'Stranica postoji',
+	'formarticleexiststext' => 'Stranica [[$1]] već postoji.',
+	'formbadpagename' => 'Loš naziv stranice',
+	'formbadrecaptcha' => 'Netačne vrijednosti za reCaptcha. Pokušajte ponovno.',
+	'formbadpagenametext' => 'Podaci iz obrasca koje ste unijeli su napravili pogrešno ime stranice, "$1".',
+	'formrequiredfielderror' => '{{PLURAL:$2|Polje $1 je neophodno|Polja $1 su neophodna}} za ovaj obrazac.
+Molimo popunite {{PLURAL:$2|ga|ih}}.',
+	'formsavesummary' => 'Nova stranica koristeći [[Special:Form/$1|obrazac $1]]',
+	'formsaveerror' => 'Greška pri spremanju obrasca',
+	'formsaveerrortext' => "Desila se nepoznata greška pri spremanju stranice '$1'.",
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'form' => 'Formulari',
+	'formbadname' => 'Nom del formulari incorrecte',
+	'formtitlepattern' => 'Afegeix un nou $1',
+	'formsave' => 'Desa',
+	'formsaveerror' => 'Error desant el formulari',
 );
 
 /** Czech (Česky)
@@ -224,7 +310,7 @@ $messages['de'] = array(
 	'form-desc' => 'Eine [[Special:Form|Eingabemaske]] für das Erzeugen von neuen Seiten',
 	'form' => 'Formular',
 	'formnoname' => 'Kein Formularname',
-	'formnonametext' => 'Du musst einen Formularnamen angeben, z. B. „{{ns:Special}}:Form/Formularname“.',
+	'formnonametext' => 'Du musst einen Formularnamen angeben, z. B. „{{#special:Form}}/Formularname“.',
 	'formbadname' => 'Falscher Formularname',
 	'formbadnametext' => 'Es gibt kein Formular mit diesem Namen.',
 	'formpattern' => '$1-Formular',
@@ -242,6 +328,16 @@ Bitte fülle {{PLURAL:$2|es|sie}} aus.',
 	'formsavesummary' => 'Neue Seite, die auf dem [[Special:Form/$1|Formular $1]] basiert',
 	'formsaveerror' => 'Fehler beim Speichern des Formulares',
 	'formsaveerrortext' => 'Es gab einen unbekannten Fehler beim Speichern der Seite „$1“.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ * @author Umherirrender
+ */
+$messages['de-formal'] = array(
+	'formnonametext' => 'Sie müssen einen Formularnamen angeben, z. B. „{{#special:Form}}/Formularname“.',
+	'formrequiredfielderror' => '{{PLURAL:$2|Das Feld $1 ist ein Pfichtfeld|Die Felder $1 sind Pfichtfelder}}.
+Bitte füllen Sie {{PLURAL:$2|es|sie}} aus.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -273,26 +369,48 @@ Pšosym wupołń {{PLURAL:$2|jo|jej|je|je}}.',
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'form-desc' => 'Μια [[Special:Form|φόρμα επιφάνειας]] για έναρξη νέων σελίδων',
+	'form' => 'Φόρμα',
+	'formnoname' => 'Κανένα όνομα φόρμας',
+	'formbadname' => 'Κακό όνομα φόρμας',
+	'formbadnametext' => 'Δεν υπάρχει καμιά φόρμα με αυτό το όνομα.',
+	'formpattern' => '$1-φόρμα',
+	'formtitlepattern' => 'Προσθήκη νέου $1',
 	'formsave' => 'Αποθηκεύστε',
+	'formindexmismatch-title' => 'Αναντιστοιχία μεταξύ μοτίβου ονόματος και προτύπου',
+	'formindexmismatch' => 'Αυτή η φόρμα παρουσιάζει αναντιστοιχία μεταξύ μοτίβου ονόματος και προτύπου στον δείκτη $1.',
+	'formarticleexists' => 'Η σελίδα υπάρχει',
+	'formarticleexiststext' => 'Η σελίδα [[$1]] υπάρχει ήδη.',
+	'formbadpagename' => 'Κακό όνομα σελίδας',
+	'formsavesummary' => 'Νέα σελίδα που χρησιμοποιεί τη [[Special:Form/$1|φόρμα $1]]',
+	'formsaveerror' => 'Σφάλμα στην αποθήκευση της φόρμας',
 );
 
 /** Esperanto (Esperanto)
  * @author Melancholie
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'form' => 'Formulario',
 	'formnoname' => 'Neniu nomo de kamparo',
+	'formnonametext' => 'Vi devas provizi formularan nomon, ekzemple "Special:Form/NomoDeFormularo".',
+	'formbadname' => 'Malbona nomo de formularo',
+	'formbadnametext' => 'Ne estas formularo kun tiu nomo.',
 	'formpattern' => '$1-formularo',
 	'formtitlepattern' => 'Aldoni nova $1',
 	'formsave' => 'Konservi',
 	'formarticleexists' => 'Paĝo ekzistas',
 	'formarticleexiststext' => 'La paĝo [[$1]] jam ekzistas.',
 	'formbadpagename' => 'Fuŝa paĝnomo',
-	'formrequiredfielderror' => 'La kampo $1 estas deviga por ĉi tiu kamparo.
-Bonvolu plenumi ĝin.',
+	'formbadrecaptcha' => 'Malkorektaj valoroj por reCaptcha. Reprovu.',
+	'formrequiredfielderror' => 'La {{PLURAL:$2|kampo $1 estas deviga|kampoj $1 estas devigaj}} por ĉi tiu formulario.
+Bonvolu plenigi {{PLURAL:$2|ĝin|ilin}}.',
+	'formsaveerror' => 'Eraro konservante formularon',
 	'formsaveerrortext' => "Estis nekonata eraro konservante paĝon '$1'.",
 );
 
@@ -311,10 +429,13 @@ $messages['es'] = array(
 	'formpattern' => 'Formulario de $1',
 	'formtitlepattern' => 'Agregar nuevo $1',
 	'formsave' => 'Guardar',
+	'formindexmismatch-title' => 'No se corresponde el nombre del modelo y la plantilla',
+	'formindexmismatch' => 'Este formulario tiene nombres de patrones y plantillas que no coinciden, comenzando por $1.',
 	'formarticleexists' => 'La página existe',
 	'formarticleexiststext' => 'La página [[$1]] ya existe.',
 	'formbadpagename' => 'Mal nombre de página',
 	'formbadrecaptcha' => 'Valores incorrectos para reCaptcha. Intente nuevamente.',
+	'formbadpagenametext' => 'Los datos de formulario que ingresó hacen un mal nombre de página, "$1".',
 	'formrequiredfielderror' => 'Los {{PLURAL:$2|campo $1 es|campos $1 son}} requeridos para este formulario.
 Por favor {{PLURAL:$2|rellénelo|rellénelos}}.',
 	'formsavesummary' => 'Nueva página usando [[Special:Form/$1|formulario $1]]',
@@ -333,9 +454,14 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
+ * @author Cimon Avaro
+ * @author Crt
  * @author Jack Phoenix
+ * @author ZeiP
  */
 $messages['fi'] = array(
+	'form-desc' => '[[Special:Form|Lomake]] uusien sivujen luomiseen',
 	'form' => 'Lomake',
 	'formnoname' => 'Ei lomakkeen nimeä',
 	'formnonametext' => 'Sinun tulee antaa lomakkeen nimi, kuten "Special:Form/Lomakkeennimi".',
@@ -344,12 +470,15 @@ $messages['fi'] = array(
 	'formpattern' => '$1-lomake',
 	'formtitlepattern' => 'Lisää uusi $1',
 	'formsave' => 'Tallenna',
+	'formindexmismatch-title' => 'Nimimalli- ja mallinnetäsmäämättömyys',
 	'formindexmismatch' => 'Tällä lomakkeella on yhteensopimattomat nimi- ja mallinekaavat alkaen riviltä $1.',
 	'formarticleexists' => 'Sivu on jo olemassa',
 	'formarticleexiststext' => 'Sivu [[$1]] on jo olemassa.',
 	'formbadpagename' => 'Huono sivun nimi',
+	'formbadrecaptcha' => 'Väärät vastausarvot reCaptcha-varmistukselle. Yritä uudestaan.',
 	'formbadpagenametext' => 'Antamasi lomakkeen tiedot tekevät huonon sivun nimen, "$1".',
-	'formrequiredfielderror' => 'Kenttä $1 on pakollinen tälle lomakkeelle. Ole hyvä ja täytä se.',
+	'formrequiredfielderror' => '{{PLURAL:$2|Kenttä $1 on|Kentät $1 ovat}} pakollisia tässä lomakkeessa.
+Ole hyvä ja täytä {{PLURAL:$2|se|ne}}.',
 	'formsavesummary' => 'Uusi sivu käyttäen [[Special:Form/$1]]',
 	'formsaveerror' => 'Virhe lomaketta tallennettaessa',
 	'formsaveerrortext' => "Tuntematon virhe tapahtui sivua '$1' tallennettaessa.",
@@ -360,6 +489,7 @@ $messages['fi'] = array(
  * @author Grondin
  * @author IAlex
  * @author McDutchie
+ * @author Omnipaedista
  * @author Sherbrooke
  */
 $messages['fr'] = array(
@@ -368,11 +498,11 @@ $messages['fr'] = array(
 	'formnoname' => 'Aucun nom',
 	'formnonametext' => 'Veuillez spécifier le nom du formulaire, sous la forme « Special:Formulaire/NomDuFormulaire ».',
 	'formbadname' => 'Nom incorrect',
-	'formbadnametext' => "Le nom choisi pour le formulaire est incorrect. Aucun formulaire n'existe sous ce nom.",
+	'formbadnametext' => 'Le nom choisi pour le formulaire est incorrect. Aucun formulaire n’existe sous ce nom.',
 	'formpattern' => 'formulaire-$1',
 	'formtitlepattern' => 'Ajouter un(e) $1',
 	'formsave' => 'Sauvegarder',
-	'formindexmismatch-title' => 'Palette de nom et erreur de modèle',
+	'formindexmismatch-title' => 'Inadéquation entre la palette de nom et le modèle',
 	'formindexmismatch' => 'Ce formulaire a des patrons et des modèles qui ne correspondent pas à partir de $1.',
 	'formarticleexists' => 'La page existe déjà.',
 	'formarticleexiststext' => 'La page nommée [[$1]] existe déjà.',
@@ -380,10 +510,17 @@ $messages['fr'] = array(
 	'formbadrecaptcha' => 'Valeur incorrecte pour reCaptcha. Essayez à nouveau',
 	'formbadpagenametext' => 'Les données saisies forment un mauvais nom de page, « $1 ».',
 	'formrequiredfielderror' => '{{PLURAL:$2|Le champ $1 est|Les champs $1 sont}} requis dans ce formulaire.
-Vous devez {{PLURAL:$2|le|les}} remplir.',
+Vous devez le{{PLURAL:$2||s}} remplir.',
 	'formsavesummary' => 'Nouvelle page utilisant [[Special:Form/$1|le formulaire $1]]',
-	'formsaveerror' => "Une erreur s'est produite pendant la sauvegarde.",
-	'formsaveerrortext' => "Une erreur inconnue s'est produite pendant la sauvegarde de ''$1''.",
+	'formsaveerror' => 'Une erreur s’est produite pendant la sauvegarde.',
+	'formsaveerrortext' => "Une erreur inconnue s’est produite pendant la sauvegarde de ''$1''.",
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'formsave' => 'Sôvar',
 );
 
 /** Western Frisian (Frysk)
@@ -421,6 +558,15 @@ $messages['gl'] = array(
 	'formsaveerrortext' => "Houbo un erro descoñecido ao gardar a páxina '$1'.",
 );
 
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'formsave' => 'Γράφειν',
+	'formbadpagename' => 'Κακὸν ὄνομα δέλτου',
+);
+
 /** Swiss German (Alemannisch)
  * @author Als-Holder
  */
@@ -441,8 +587,8 @@ $messages['gsw'] = array(
 	'formbadpagename' => 'Nit zuelässige Sytename',
 	'formbadrecaptcha' => 'Nit giltigi Wärt fir reCaptcha. Versuech s nomol.',
 	'formbadpagenametext' => 'D Formulardate, wu yygee wore sin, gän e nit zuelässige Sytename: „$1“.',
-	'formrequiredfielderror' => 'S Fäld $1 isch e Pfichtfäld.
-Bitte fill s uus.',
+	'formrequiredfielderror' => '{{PLURAL:$2|S Fäld $1 isch e Pfichtfäld|D Fälder $1 sin Pfichtfälder}}.
+Bitte fill {{PLURAL:$2|s|si}} uus.',
 	'formsavesummary' => 'Neji Syte, wu uf em [[Special:Form/$1|Formular $1]] basiert',
 	'formsaveerror' => 'Fähler bim Spychere vum Formular',
 	'formsaveerrortext' => 'S het e nit bekannte Fähler gee bim Spychere vu dr Syte „$1“.',
@@ -511,9 +657,30 @@ $messages['hsb'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'form-desc' => '[[Special:Form|Űrlap interfész]] új lapok létrehozásához',
+	'form' => 'Űrlap',
+	'formnoname' => 'Nincs űrlapnév',
+	'formnonametext' => 'Meg kell adnod egy űrlapnevet, mint például „{{#special:Form}}/Űrlapneve”',
+	'formbadname' => 'Hibás űrlapnév',
+	'formbadnametext' => 'Nincs ilyen nevű űrlap.',
+	'formpattern' => '$1 űrlap',
+	'formtitlepattern' => 'Új $1 hozzáadása',
 	'formsave' => 'Mentés',
+	'formindexmismatch-title' => 'A név minta és a sablon nem egyezik',
+	'formindexmismatch' => 'Ez az űrlap nem egyező névmintákat és sablonokat tartalmaz, a $1 indextől kezdve.',
+	'formarticleexists' => 'A lap már létezik',
+	'formarticleexiststext' => 'A(z) [[$1]] lap már létezik.',
+	'formbadpagename' => 'Hibás lapnév',
+	'formbadrecaptcha' => 'Helytelen értékek a reCaptchához. Próbáld újra.',
+	'formbadpagenametext' => 'A beírt űrlapadat hibás lapcímet generál: „$1”.',
+	'formrequiredfielderror' => 'A {{PLURAL:$2|$1 mező|$1 mezők}} kitöltése kötelező ennél az űrlapnál.
+Kérlek {{PLURAL:$2|töltsd ki|töltsd ki őket}}.',
+	'formsavesummary' => 'Új lap a(z) [[Special:Form/$1|$1 űrlap]] használatával',
+	'formsaveerror' => 'Hiba az űrlap mentésekor',
+	'formsaveerrortext' => 'A(z) „$1” lap mentésekor ismeretlen hiba történt.',
 );
 
 /** Interlingua (Interlingua)
@@ -534,7 +701,7 @@ $messages['ia'] = array(
 	'formarticleexists' => 'Pagina existe',
 	'formarticleexiststext' => 'Le pagina [[$1]] existe ja.',
 	'formbadpagename' => 'Nomine de pagina invalide',
-	'formbadrecaptcha' => 'Valores incorrecte pro reCaptcha. Reprova.',
+	'formbadrecaptcha' => 'Valores incorrecte pro reCaptcha. Reproba.',
 	'formbadpagenametext' => 'Le datos de formulario que tu entrava resulta in un nomine de pagina invalide, "$1".',
 	'formrequiredfielderror' => 'Le {{PLURAL:$2|campo|campos}} $1 es requirite pro iste formulario.
 Per favor completa {{PLURAL:$2|lo|los}}.',
@@ -545,9 +712,37 @@ Per favor completa {{PLURAL:$2|lo|los}}.',
 
 /** Indonesian (Bahasa Indonesia)
  * @author Irwangatot
+ * @author IvanLanin
  */
 $messages['id'] = array(
+	'form-desc' => 'Suatu [[Special:Form|antarmuka formulir]] untuk membuat halaman baru',
+	'form' => 'Formulir',
+	'formnoname' => 'Nama formulir kosong',
+	'formnonametext' => 'Anda harus memasukkan nama formulir seperti "Special:Form/Namaformulir".',
+	'formbadname' => 'Nama formulir salah',
+	'formbadnametext' => 'Tidak ada formulir dengan nama itu.',
+	'formpattern' => '$1-form',
+	'formtitlepattern' => 'Tambah $1 baru',
 	'formsave' => 'Simpan',
+	'formindexmismatch-title' => 'Pola nama dan templat tidak cocok',
+	'formindexmismatch' => 'Formulir ini tidak cocok dengan pola nama dan templat dimulai dari indeks $1.',
+	'formarticleexists' => 'Halaman telah ada',
+	'formarticleexiststext' => 'Halaman [[$1]] telah ada.',
+	'formbadpagename' => 'Nama halaman salah',
+	'formbadrecaptcha' => 'Nilai reCaptcha salah. Coba lagi.',
+	'formbadpagenametext' => 'Data formulir yang Anda masukkan mengandung nama halaman yang salah, "$1".',
+	'formrequiredfielderror' => '{{PLURAL:$2|Isian $1|Isian $1}} diperlukan oleh formulir ini.
+Silakan masukkan {{PLURAL:$2|isian|isian}} itu.',
+	'formsavesummary' => 'Halaman baru menggunakan [[Special:Form/$1|formulir $1]]',
+	'formsaveerror' => 'Kesalahan penyimpanan formulir',
+	'formsaveerrortext' => "Terjadi kesalahan yang tak dikenal sewaktu menyimpan halaman '$1'.",
+);
+
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'formsave' => 'Registragar',
 );
 
 /** Icelandic (Íslenska)
@@ -557,7 +752,35 @@ $messages['is'] = array(
 	'formsave' => 'Vista',
 );
 
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'form-desc' => "Un'[[Special:Form|interfaccia di modulo]] per iniziare nuove pagine",
+	'form' => 'Modulo',
+	'formnoname' => 'Nessun nome per il modulo',
+	'formnonametext' => 'È necessario fornire un nome per il modulo, come "Special:Form/Nomedelmodulo"',
+	'formbadname' => 'Nome modulo errato',
+	'formbadnametext' => 'Non ci sono moduli con quel nome.',
+	'formpattern' => '$1-modulo',
+	'formtitlepattern' => 'Aggiungere un nuovo $1',
+	'formsave' => 'Salva',
+	'formindexmismatch-title' => 'Modello del nome e template non corrispondono',
+	'formindexmismatch' => "Questo modulo ha modelli di nome e template che non corrispondono a partire dall'indice $1.",
+	'formarticleexists' => 'La pagina esiste',
+	'formarticleexiststext' => 'La pagina [[$1]] esiste già.',
+	'formbadpagename' => 'Nome pagina errato',
+	'formbadrecaptcha' => 'Valori errati per reCaptcha. Provare di nuovo.',
+	'formbadpagenametext' => 'I dati inseriti nel modulo generano un nome pagina errato, "$1".',
+	'formrequiredfielderror' => '{{PLURAL:$2|Il campo $1 è richiesto|I campi $1 sono richiesti}} per questo modulo.
+{{PLURAL:$2|Compilarlo|Compilarli}}.',
+	'formsavesummary' => 'Nuova pagina utilizzando il [[Special:Form/$1|modulo $1]]',
+	'formsaveerror' => 'Errore durante il salvataggio del modulo',
+	'formsaveerrortext' => "Si è verificato un errore sconosciuto durante il salvataggio della pagina '$1'.",
+);
+
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
  */
@@ -578,7 +801,7 @@ $messages['ja'] = array(
 	'formbadpagename' => '不正なページ名',
 	'formbadrecaptcha' => 'reCAPTCHA 用の値が不正です。再度試してください。',
 	'formbadpagenametext' => 'あなたが入力したフォームのデータは不正なページ名「$1」を作ります。',
-	'formrequiredfielderror' => '欄 $1 はこのフォームで必須です。入力してください。',
+	'formrequiredfielderror' => '{{PLURAL:$2|欄 $1}}はこのフォームで必須です。{{PLURAL:$2|入力}}してください。',
 	'formsavesummary' => '[[Special:Form/$1|$1フォーム]]を使ってページ作成',
 	'formsaveerror' => 'フォーム保存時のエラー',
 	'formsaveerrortext' => 'ページ「$1」の保存時に不明なエラーがありました。',
@@ -603,8 +826,8 @@ $messages['jv'] = array(
 	'formarticleexists' => 'Kacané ana',
 	'formarticleexiststext' => 'Kaca [[$1]] wis ana.',
 	'formbadpagename' => 'Jeneng kaca ala',
-	'formrequiredfielderror' => 'Lapangan $1 diperlokaké kanggo formulir iki.
-Tulung diisi.',
+	'formrequiredfielderror' => '{{PLURAL:$2|Field $1 |Fields $1 }} diperlokaké kanggo formulir iki.
+Mangga diisi {{PLURAL:$2|iki|iki}}.',
 	'formsavesummary' => 'Kaca anyar nganggo [[Special:Form/$1|formulir $1]]',
 	'formsaveerror' => 'Ana kaluputan nalika nyimpen formulir',
 	'formsaveerrortext' => "Ana kaluputan sing ora dimangertèni nalika nyimpen kaca '$1'.",
@@ -668,6 +891,7 @@ $messages['la'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -675,14 +899,17 @@ $messages['lb'] = array(
 	'form' => 'Formulaire',
 	'formnoname' => 'Keen Numm vum Formulaire',
 	'formnonametext' => 'Dir musst en Numm vum Formulaire uginn, zum Beispill "Special:Form/NummvumFormulaire".',
-	'formbadname' => 'Falsche Numm vum Formulaire',
-	'formbadnametext' => 'Et gëtt kee Formaulaire mat dem Numm.',
+	'formbadname' => 'Falschen Numm vum Formulaire',
+	'formbadnametext' => 'Et gëtt kee Formulaire mat dem Numm.',
 	'formpattern' => '$1-Formulaire',
 	'formtitlepattern' => 'Nei $1 derbäisetzen',
 	'formsave' => 'Späicheren',
+	'formindexmismatch-title' => 'Duercherneen tëschent dem Numm an der Schabloun',
+	'formindexmismatch' => "Dëse Formulaire ass net richteg configuréiert wat d'Schablounen an d'Modeller vun den Donnéeën. De Feeler fänkt beim Index $1 un.",
 	'formarticleexists' => "D'Säit gëtt et schonn.",
 	'formarticleexiststext' => "D'Säit [[$1]] gëtt et schonn.",
 	'formbadpagename' => 'Falsche Säitennumm',
+	'formbadrecaptcha' => 'Falsche Wert fir reCaptcha. Probéiert nach emol.',
 	'formbadpagenametext' => 'Déi Donnéeën déi Dir an de Formulaire aginn hutt erginn e Säitennumm, den net ka gespäichert ginn: "$1".',
 	'formrequiredfielderror' => "D'{{PLURAL:$2|Feld $1 muss|Felder $1 mussen}} an dësem Formulaire ausgefëllt ginn.
 Fëllt {{PLURAL:$2|et|se}} w.e.g. aus.",
@@ -696,6 +923,33 @@ Fëllt {{PLURAL:$2|et|se}} w.e.g. aus.",
  */
 $messages['mhr'] = array(
 	'formsave' => 'Аралаш',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'form-desc' => '[[Special:Form|Интерфејс]] за започнување нови страници',
+	'form' => 'Образец',
+	'formnoname' => 'Нема име на образецот',
+	'formnonametext' => 'Мора да наведете име на образецот, како да речеме „Special:Form/ИмеНаОбразец“',
+	'formbadname' => 'Лошо име на образецот',
+	'formbadnametext' => 'Нема образец со тоа име.',
+	'formpattern' => '$1-образец',
+	'formtitlepattern' => 'Додај нов $1',
+	'formsave' => 'Зачувај',
+	'formindexmismatch-title' => 'Несоодветно име и шаблон',
+	'formindexmismatch' => 'Овој образец има несоодветни имиња и шаблони во позиција $1.',
+	'formarticleexists' => 'Страницата постои',
+	'formarticleexiststext' => 'Страницата [[$1]] веќе постои.',
+	'formbadpagename' => 'Лошо име на страницата',
+	'formbadrecaptcha' => 'Неточни вредности за reCaptcha. Обидете се повторно.',
+	'formbadpagenametext' => 'Внесените податоци во образецот доведуваат до погрешен назив на страницата, „$1“.',
+	'formrequiredfielderror' => '{{PLURAL:$2|Полето $1 е задолжително во овој образец|Полињата $1 се задолжителни во овој образец}}.
+Пополнете {{PLURAL:$2|го|ги}}.',
+	'formsavesummary' => 'Нова страница, користејќи го [[Special:Form/$1|образецот $1]]',
+	'formsaveerror' => 'Грешка при зачувување на образецот',
+	'formsaveerrortext' => 'Се појави непозната грешка при зачувувањето на страницата „$1“.',
 );
 
 /** Malayalam (മലയാളം)
@@ -841,6 +1095,7 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'form-desc' => 'Et [[Special:Form|skjema]] for å opprette nye sider',
@@ -859,7 +1114,7 @@ $messages['no'] = array(
 	'formbadpagename' => 'Ugyldig sidenavn',
 	'formbadrecaptcha' => 'Gale verdier fro reCaptcha. Prøv igjen.',
 	'formbadpagenametext' => 'Skjemadataene du skrev inn utgjør et ugyldig sidenavn, «$1».',
-	'formrequiredfielderror' => 'Feltet $1 er påkrevd for dette skjemaet. Vennligst fyll det inn.',
+	'formrequiredfielderror' => '{{PLURAL:$2|Feltet $1 er obligatorisk|Feltene $1 er obligatoriske}} for dette skjemaet. Vær vennlig og fyll {{PLURAL:$2|det|dem}} ut.',
 	'formsavesummary' => 'Ny side vha. [[Special:Form/$1|skjemaet $1]]',
 	'formsaveerror' => 'Feil under skjemalagring',
 	'formsaveerrortext' => 'Det var en ukjent feil under lagring av siden ‘$1’.',
@@ -930,8 +1185,10 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'form-desc' => "N'[[Special:Form|antëfacia ëd forma]] për fé parte neuve pàgine",
 	'form' => 'Domanda',
 	'formnoname' => 'Domanda sensa tìtol',
 	'formnonametext' => 'A venta deje un tìtol al mòdulo ëd domanda, coma "Special:Form/nòm_dla_domanda".',
@@ -940,13 +1197,16 @@ $messages['pms'] = array(
 	'formpattern' => '$1-domanda',
 	'formtitlepattern' => 'Gionté $1 neuv',
 	'formsave' => 'Salvé',
+	'formindexmismatch-title' => 'Model dël nòm e stamp a corispondo pa',
 	'formindexmismatch' => "Ës mòdulo-sì a l'ha në schema ëd nòm e stamp malcobià a parte da 'nt l'ìndess $1.",
 	'formarticleexists' => 'La pàgina a-i é',
 	'formarticleexiststext' => 'La pàgina [[$1]] a-i é già',
 	'formbadpagename' => 'Nòm ëd pàgina pa bon',
+	'formbadrecaptcha' => 'Valor pa giust për reCaptcha. Prova torna.',
 	'formbadpagenametext' => 'Ij dat ant sël mòdulo ëd domanda ch\'a l\'ha butà a dan un nòm ëd pàgina nen bon, "$1".',
-	'formrequiredfielderror' => "Ël camp $1 a l'é obligatòri për ës mòdulo ëd domanda-sì. Për piasì, ch'a lo compila.",
-	'formsavesummary' => "Neuva pàgina ch'a dòvra [[Special:Form/$1]]",
+	'formrequiredfielderror' => "{{PLURAL:$2|Ël camp $1 a l'é|Ij camp $1 a son}} obligatòri për ës mòdulo ëd domanda-sì. 
+Për piasì, {{PLURAL:$2|ch'a lo|ch'a-j}} compila.",
+	'formsavesummary' => "Neuva pàgina ch'a dòvra [[Special:Form/$1|mòdul $1]]",
 	'formsaveerror' => 'Eror ën salvand ël mòdulo ëd domanda',
 	'formsaveerrortext' => "A-i é sta-ie n'eror amprevist ën salvand la pàgina '$1'.",
 );
@@ -1010,9 +1270,14 @@ Por favor, {{PLURAL:$2|preencha-o|preencha-os}}.',
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'form' => 'Formular',
+	'formnoname' => 'Niciun nume pentru formular',
+	'formbadname' => 'Nume incorect',
+	'formtitlepattern' => 'Adaugă nou $1',
 	'formsave' => 'Salvează',
 	'formarticleexists' => 'Pagina există',
 	'formarticleexiststext' => 'Pagina [[$1]] deja există.',
@@ -1056,6 +1321,16 @@ $messages['ru'] = array(
 	'formsaveerrortext' => 'При сохранении страницы «$1» возникла неизвестная ошибка.',
 );
 
+/** Sinhala (සිංහල)
+ * @author චතුනි අලහප්පෙරුම
+ */
+$messages['si'] = array(
+	'formarticleexists' => 'පිටුව පවතියි',
+	'formarticleexiststext' => '[[$1]] පිටුව දැනටමත් පවතියි.',
+	'formbadpagename' => 'නොමනා පිටු නාමය',
+	'formbadrecaptcha' => 'reCaptcha වෙනුවෙන් සාවද්‍යය අගයන් සැපයුමකි. යළි උත්සාහ කරන්න.',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -1072,7 +1347,7 @@ $messages['sk'] = array(
 	'formindexmismatch-title' => 'Vzor názvu a šablóna si nezodpovedajú.',
 	'formindexmismatch' => 'Vzory názvu tohto formulára sa nezhodujú a šablóny začínajú od indexu $1.',
 	'formarticleexists' => 'Stránka existuje',
-	'formarticleexiststext' => 'Stránka [[$1]] úž existuje.',
+	'formarticleexiststext' => 'Stránka [[$1]] už existuje.',
 	'formbadpagename' => 'Chybný názov stránky',
 	'formbadrecaptcha' => 'Neplatné hodnoty reCaptcha. Skúste to znova.',
 	'formbadpagenametext' => 'Údaje formulára, ktoré ste zadali tvoria chybný názov stránky - „$1“.',
@@ -1089,12 +1364,20 @@ $messages['so'] = array(
 	'formsave' => 'Kaydi',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  */
 $messages['sr-ec'] = array(
 	'formsave' => 'Сачувај',
 	'formarticleexists' => 'Страна постоји',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'formsave' => 'Sačuvaj',
+	'formarticleexists' => 'Strana postoji',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1182,6 +1465,7 @@ $messages['sw'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'form-desc' => 'కొత్త పేజీలను మొదలుపెట్టడానికి ఒక [[Special:Form|ఫారం]]',
 	'form' => 'ఫారం',
 	'formnoname' => 'ఫారం పేరు లేదు',
 	'formnonametext' => 'మీరు తప్పనిసరిగా ఫారానికి ఓ పేరు, "Special:Form/Nameofform" వంటిది ఇవ్వాలి.',
@@ -1214,11 +1498,35 @@ $messages['tg-cyrl'] = array(
 	'formsaveerrortext' => "Дар ҳоли захираи саҳифаи '$1' хатои ношиносе буд.",
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'formnonametext' => 'Şumo bojad nomi formro, ba monandi "Special:Form/Nameofform" peşnihod kuned.',
+	'formbadname' => 'Nomi formi nomunosib',
+	'formbadnametext' => 'Heç forme bo on nom nest.',
+	'formtitlepattern' => 'Ilova $1i nav',
+	'formsave' => 'Zaxira kardan',
+	'formarticleexists' => 'Sahifa vuçud dorad',
+	'formarticleexiststext' => 'Sahifa [[$1]] allakaj vuçud dorad.',
+	'formbadpagename' => 'Nomi sahifa nomunosib',
+	'formbadpagenametext' => 'Dodai forme, ki şumo vorid kardaed nomi nomunosibe ba sahifa, "$1" mekunad.',
+	'formsaveerror' => 'Xato dar holi zaxirai form',
+	'formsaveerrortext' => "Dar holi zaxirai sahifai '$1' xatoi noşinose bud.",
+);
+
 /** Thai (ไทย)
  * @author Passawuth
  */
 $messages['th'] = array(
 	'formsave' => 'บันทึก',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'formsave' => 'Ýazdyr',
 );
 
 /** Tagalog (Tagalog)
@@ -1250,10 +1558,24 @@ Pakipunuan {{PLURAL:$2|ito|sila}} ng laman.',
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'form' => 'Form',
+	'formnoname' => 'Form adı yok',
+	'formbadnametext' => 'Bu isimde bir form yok.',
+	'formtitlepattern' => 'Yeni $1 ekle',
 	'formsave' => 'Kaydet',
+	'formarticleexists' => 'Sayfa mevcut',
 	'formbadpagename' => 'Kötü madde adı',
+	'formsaveerror' => 'Formu kaydetmede hata',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Timming
+ */
+$messages['tt-cyrl'] = array(
+	'formsavesummary' => 'Яңа бит, [[Special:Form/$1|$1 формасы]] ярдәмендә',
 );
 
 /** Ukrainian (Українська)
@@ -1262,6 +1584,32 @@ $messages['tr'] = array(
 $messages['uk'] = array(
 	'formsave' => 'Зберегти',
 	'formarticleexists' => 'Сторінка існує',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'form' => 'Form',
+	'formnoname' => 'Ei ole forman nimed',
+	'formbadname' => 'Hond forman nimi',
+	'formpattern' => '$1-form',
+	'formsave' => 'Panda muštho',
+	'formbadpagename' => 'Vär lehtpolen nimi',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
+$messages['vi'] = array(
+	'form' => 'Biểu mẫu',
+	'formnoname' => 'Biểu mẫu không có tên',
+	'formtitlepattern' => 'Thêm $1 mới',
+	'formsave' => 'Lưu',
+	'formarticleexists' => 'Trang đã tồn tại',
+	'formarticleexiststext' => 'Trang [[$1]] đã tồn tại.',
+	'formsavesummary' => 'Trang mới theo [[Special:Form/$1|biểu mẫu $1]]',
+	'formsaveerror' => 'Lỗi lưu biểu mẫu',
 );
 
 /** Volapük (Volapük)
@@ -1288,19 +1636,46 @@ Fulükolös oni.',
 	'formsaveerrortext' => 'Pöl nesevädik ejenon dü dakip pada: „$1“.',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'formsave' => 'אויפֿהיטן',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
+	'form' => '表单',
+	'formnoname' => '没有表单名',
+	'formnonametext' => '你必须提供一个表单名，如“Special:Form/表单名”。',
+	'formbadname' => '错误的表单名',
+	'formbadnametext' => '没有这个名字的表单。',
+	'formpattern' => '$1-表单',
+	'formtitlepattern' => '添加新的$1',
 	'formsave' => '保存',
 	'formarticleexists' => '页面存在',
+	'formbadpagename' => '错误的表单名',
+	'formsaveerror' => '储存表格时发生错误',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'form' => '表格',
+	'formnoname' => '未有表格名稱',
+	'formnonametext' => '你必須提供一個表單名，如“Special:Form/表單名”。',
+	'formbadname' => '錯誤的表單名',
+	'formbadnametext' => '沒有這個名字的表單。',
+	'formpattern' => '$1-表單',
+	'formtitlepattern' => '添加新的$1',
 	'formsave' => '儲存',
 	'formarticleexists' => '頁面存在',
+	'formbadpagename' => '錯誤的表單名',
+	'formsaveerror' => '儲存表格時發生錯誤',
 );
 

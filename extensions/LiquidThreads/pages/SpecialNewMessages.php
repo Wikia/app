@@ -1,12 +1,11 @@
 <?php
-
 if ( !defined( 'MEDIAWIKI' ) ) die;
 
 class SpecialNewMessages extends SpecialPage {
 	private $user, $output, $request, $title;
 
 	function __construct() {
-		SpecialPage::SpecialPage( 'Newmessages' );
+		SpecialPage::SpecialPage( 'NewMessages' );
 		$this->includable( true );
 	}
 
@@ -15,21 +14,31 @@ class SpecialNewMessages extends SpecialPage {
 	*/
 	function getDescription() {
 		wfLoadExtensionMessages( 'LiquidThreads' );
-		return wfMsg( 'lqt_newmessages' );
+		return wfMsg( 'lqt_newmessages-title' );
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgRequest, $wgTitle, $wgUser;
+		global $wgOut, $wgRequest, $wgUser;
 		wfLoadExtensionMessages( 'LiquidThreads' );
 		$this->user = $wgUser;
 		$this->output = $wgOut;
 		$this->request = $wgRequest;
-		$this->title = $wgTitle;
 
 		$this->setHeaders();
 
-		$view = new NewUserMessagesView( $this->output, new Article( $this->title ),
-			$this->title, $this->user, $this->request );
+		$article = new Article( $this->getTitle() );
+		$title = $this->getTitle();
+
+		// Clear newtalk
+		$this->user->setNewtalk( false );
+
+		$view = new NewUserMessagesView( $this->output, $article,
+			$title, $this->user, $this->request );
+
+		if ( $this->request->getBool( 'lqt_inline' ) ) {
+			$view->doInlineEditForm();
+			return;
+		}
 
 		$view->showOnce(); // handles POST etc.
 
@@ -40,15 +49,27 @@ class SpecialNewMessages extends SpecialPage {
 			$wgOut->addWikitext( wfMsg( 'lqt-no-new-messages' ) );
 			return;
 		}
-		$view->showReadAllButton( $both_sets ); // ugly hack.
+
+		$html = '';
+
+		$html .= $view->getReadAllButton( $both_sets );
 
 		$view->setHeaderLevel( 3 );
 
-		$this->output->addHTML( '<h2 class="lqt_newmessages_section">' . wfMsg ( 'lqt-messages-sent' ) . '</h2>' );
+		$html .= Xml::tags(
+			'h2',
+			array( 'class' => 'lqt_newmessages_section' ),
+			wfMsgExt( 'lqt-messages-sent', 'parseinline' )
+		);
+		$wgOut->addHTML( $html );
 		$view->setThreads( $first_set );
 		$view->show();
 
-		$this->output->addHTML( '<h2 class="lqt_newmessages_section">' . wfMsg ( 'lqt-other-messages' ) . '</h2>' );
+		$wgOut->addHTML( Xml::tags(
+			'h2',
+			array( 'class' => 'lqt_newmessages_section' ),
+			wfMsgExt( 'lqt-other-messages', 'parseinline' )
+		) );
 		$view->setThreads( $second_set );
 		$view->show();
 	}

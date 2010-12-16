@@ -8,9 +8,9 @@ Include it in LocalSettings.php:
 == Updating data ==
 
 Download newest data from CLDR site:
- http://unicode.org/cldr/repository_access.html
+ http://www.unicode.org/cldr/repository_access.html
 
 Example:
- wget http://unicode.org/Public/cldr/1.5.0/core.zip
+ wget http://www.unicode.org/Public/cldr/1.7.1/core.zip
  unzip core.zip -d core
  php rebuild.php

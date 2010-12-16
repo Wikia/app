@@ -37,10 +37,8 @@ YAHOO.util.Easing={easeNone:function(B,A,D,C){return D*B/C+A;},easeIn:function(B
 }this.constrainY=true;},resetConstraints:function(){if(this.initPageX||this.initPageX===0){var D=(this.maintainOffset)?this.lastPageX-this.initPageX:0;var C=(this.maintainOffset)?this.lastPageY-this.initPageY:0;this.setInitPosition(D,C);}else{this.setInitPosition();}if(this.constrainX){this.setXConstraint(this.leftConstraint,this.rightConstraint,this.xTickSize);}if(this.constrainY){this.setYConstraint(this.topConstraint,this.bottomConstraint,this.yTickSize);}},getTick:function(I,F){if(!F){return I;}else{if(F[0]>=I){return F[0];}else{for(var D=0,C=F.length;D<C;++D){var E=D+1;if(F[E]&&F[E]>=I){var H=I-F[D];var G=F[E]-I;return(G>H)?F[D]:F[E];}}return F[F.length-1];}}},toString:function(){return("DragDrop "+this.id);}};YAHOO.augment(YAHOO.util.DragDrop,YAHOO.util.EventProvider);})();YAHOO.util.DD=function(C,A,B){if(C){this.init(C,A,B);}};YAHOO.extend(YAHOO.util.DD,YAHOO.util.DragDrop,{scroll:true,autoOffset:function(C,B){var A=C-this.startPageX;var D=B-this.startPageY;this.setDelta(A,D);},setDelta:function(B,A){this.deltaX=B;this.deltaY=A;},setDragElPos:function(C,B){var A=this.getDragEl();this.alignElWithMouse(A,C,B);},alignElWithMouse:function(C,G,F){var E=this.getTargetCoord(G,F);if(!this.deltaSetXY){var H=[E.x,E.y];YAHOO.util.Dom.setXY(C,H);var D=parseInt(YAHOO.util.Dom.getStyle(C,"left"),10);var B=parseInt(YAHOO.util.Dom.getStyle(C,"top"),10);this.deltaSetXY=[D-E.x,B-E.y];}else{YAHOO.util.Dom.setStyle(C,"left",(E.x+this.deltaSetXY[0])+"px");YAHOO.util.Dom.setStyle(C,"top",(E.y+this.deltaSetXY[1])+"px");}this.cachePosition(E.x,E.y);var A=this;setTimeout(function(){A.autoScroll.call(A,E.x,E.y,C.offsetHeight,C.offsetWidth);},0);},cachePosition:function(B,A){if(B){this.lastPageX=B;this.lastPageY=A;}else{var C=YAHOO.util.Dom.getXY(this.getEl());this.lastPageX=C[0];this.lastPageY=C[1];}},autoScroll:function(J,I,E,K){if(this.scroll){var L=this.DDM.getClientHeight();var B=this.DDM.getClientWidth();var N=this.DDM.getScrollTop();var D=this.DDM.getScrollLeft();var H=E+I;var M=K+J;var G=(L+N-I-this.deltaY);var F=(B+D-J-this.deltaX);var C=40;var A=(document.all)?80:30;if(H>L&&G<C){window.scrollTo(D,N+A);}if(I<N&&N>0&&I-N<C){window.scrollTo(D,N-A);}if(M>B&&F<C){window.scrollTo(D+A,N);}if(J<D&&D>0&&J-D<C){window.scrollTo(D-A,N);}}},applyConfig:function(){YAHOO.util.DD.superclass.applyConfig.call(this);this.scroll=(this.config.scroll!==false);},b4MouseDown:function(A){this.setStartPosition();this.autoOffset(YAHOO.util.Event.getPageX(A),YAHOO.util.Event.getPageY(A));},b4Drag:function(A){this.setDragElPos(YAHOO.util.Event.getPageX(A),YAHOO.util.Event.getPageY(A));},toString:function(){return("DD "+this.id);}});YAHOO.util.DDProxy=function(C,A,B){if(C){this.init(C,A,B);this.initFrame();}};YAHOO.util.DDProxy.dragElId="ygddfdiv";YAHOO.extend(YAHOO.util.DDProxy,YAHOO.util.DD,{resizeFrame:true,centerFrame:false,createFrame:function(){var B=this,A=document.body;if(!A||!A.firstChild){setTimeout(function(){B.createFrame();},50);return;}var F=this.getDragEl(),E=YAHOO.util.Dom;if(!F){F=document.createElement("div");F.id=this.dragElId;var D=F.style;D.position="absolute";D.visibility="hidden";D.cursor="move";D.border="2px solid #aaa";D.zIndex=999;D.height="25px";D.width="25px";var C=document.createElement("div");E.setStyle(C,"height","100%");E.setStyle(C,"width","100%");E.setStyle(C,"background-color","#ccc");E.setStyle(C,"opacity","0");F.appendChild(C);A.insertBefore(F,A.firstChild);}},initFrame:function(){this.createFrame();},applyConfig:function(){YAHOO.util.DDProxy.superclass.applyConfig.call(this);this.resizeFrame=(this.config.resizeFrame!==false);this.centerFrame=(this.config.centerFrame);this.setDragElId(this.config.dragElId||YAHOO.util.DDProxy.dragElId);},showFrame:function(E,D){var C=this.getEl();var A=this.getDragEl();var B=A.style;this._resizeProxy();if(this.centerFrame){this.setDelta(Math.round(parseInt(B.width,10)/2),Math.round(parseInt(B.height,10)/2));}this.setDragElPos(E,D);YAHOO.util.Dom.setStyle(A,"visibility","visible");},_resizeProxy:function(){if(this.resizeFrame){var H=YAHOO.util.Dom;var B=this.getEl();var C=this.getDragEl();var G=parseInt(H.getStyle(C,"borderTopWidth"),10);var I=parseInt(H.getStyle(C,"borderRightWidth"),10);var F=parseInt(H.getStyle(C,"borderBottomWidth"),10);var D=parseInt(H.getStyle(C,"borderLeftWidth"),10);if(isNaN(G)){G=0;}if(isNaN(I)){I=0;}if(isNaN(F)){F=0;}if(isNaN(D)){D=0;}var E=Math.max(0,B.offsetWidth-I-D);var A=Math.max(0,B.offsetHeight-G-F);H.setStyle(C,"width",E+"px");H.setStyle(C,"height",A+"px");}},b4MouseDown:function(B){this.setStartPosition();var A=YAHOO.util.Event.getPageX(B);var C=YAHOO.util.Event.getPageY(B);this.autoOffset(A,C);},b4StartDrag:function(A,B){this.showFrame(A,B);},b4EndDrag:function(A){YAHOO.util.Dom.setStyle(this.getDragEl(),"visibility","hidden");},endDrag:function(D){var C=YAHOO.util.Dom;var B=this.getEl();var A=this.getDragEl();C.setStyle(A,"visibility","");C.setStyle(B,"visibility","hidden");YAHOO.util.DDM.moveToEl(B,A);C.setStyle(A,"visibility","hidden");C.setStyle(B,"visibility","");},toString:function(){return("DDProxy "+this.id);}});YAHOO.util.DDTarget=function(C,A,B){if(C){this.initTarget(C,A,B);}};YAHOO.extend(YAHOO.util.DDTarget,YAHOO.util.DragDrop,{toString:function(){return("DDTarget "+this.id);}});YAHOO.register("dragdrop",YAHOO.util.DragDropMgr,{version:"2.7.0",build:"1796"});YAHOO.util.Attribute=function(B,A){if(A){this.owner=A;this.configure(B,true);}};YAHOO.util.Attribute.prototype={name:undefined,value:null,owner:null,readOnly:false,writeOnce:false,_initialConfig:null,_written:false,method:null,setter:null,getter:null,validator:null,getValue:function(){var A=this.value;if(this.getter){A=this.getter.call(this.owner,this.name);}return A;},setValue:function(F,B){var E,A=this.owner,C=this.name;var D={type:C,prevValue:this.getValue(),newValue:F};if(this.readOnly||(this.writeOnce&&this._written)){return false;}if(this.validator&&!this.validator.call(A,F)){return false;}if(!B){E=A.fireBeforeChangeEvent(D);if(E===false){return false;}}if(this.setter){F=this.setter.call(A,F,this.name);if(F===undefined){}}if(this.method){this.method.call(A,F,this.name);}this.value=F;this._written=true;D.type=C;if(!B){this.owner.fireChangeEvent(D);}return true;},configure:function(B,C){B=B||{};if(C){this._written=false;}this._initialConfig=this._initialConfig||{};for(var A in B){if(B.hasOwnProperty(A)){this[A]=B[A];if(C){this._initialConfig[A]=B[A];}}}},resetValue:function(){return this.setValue(this._initialConfig.value);},resetConfig:function(){this.configure(this._initialConfig,true);},refresh:function(A){this.setValue(this.value,A);}};(function(){var A=YAHOO.util.Lang;YAHOO.util.AttributeProvider=function(){};YAHOO.util.AttributeProvider.prototype={_configs:null,get:function(C){this._configs=this._configs||{};var B=this._configs[C];if(!B||!this._configs.hasOwnProperty(C)){return null;}return B.getValue();},set:function(D,E,B){this._configs=this._configs||{};var C=this._configs[D];if(!C){return false;}return C.setValue(E,B);},getAttributeKeys:function(){this._configs=this._configs;var C=[],B;for(B in this._configs){if(A.hasOwnProperty(this._configs,B)&&!A.isUndefined(this._configs[B])){C[C.length]=B;}}return C;},setAttributes:function(D,B){for(var C in D){if(A.hasOwnProperty(D,C)){this.set(C,D[C],B);}}},resetValue:function(C,B){this._configs=this._configs||{};if(this._configs[C]){this.set(C,this._configs[C]._initialConfig.value,B);return true;}return false;},refresh:function(E,C){this._configs=this._configs||{};var F=this._configs;E=((A.isString(E))?[E]:E)||this.getAttributeKeys();for(var D=0,B=E.length;D<B;++D){if(F.hasOwnProperty(E[D])){this._configs[E[D]].refresh(C);}}},register:function(B,C){this.setAttributeConfig(B,C);},getAttributeConfig:function(C){this._configs=this._configs||{};var B=this._configs[C]||{};var D={};for(C in B){if(A.hasOwnProperty(B,C)){D[C]=B[C];}}return D;},setAttributeConfig:function(B,C,D){this._configs=this._configs||{};C=C||{};if(!this._configs[B]){C.name=B;this._configs[B]=this.createAttribute(C);}else{this._configs[B].configure(C,D);}},configureAttribute:function(B,C,D){this.setAttributeConfig(B,C,D);},resetAttributeConfig:function(B){this._configs=this._configs||{};this._configs[B].resetConfig();},subscribe:function(B,C){this._events=this._events||{};if(!(B in this._events)){this._events[B]=this.createEvent(B);}YAHOO.util.EventProvider.prototype.subscribe.apply(this,arguments);},on:function(){this.subscribe.apply(this,arguments);},addListener:function(){this.subscribe.apply(this,arguments);},fireBeforeChangeEvent:function(C){var B="before";B+=C.type.charAt(0).toUpperCase()+C.type.substr(1)+"Change";C.type=B;return this.fireEvent(C.type,C);},fireChangeEvent:function(B){B.type+="Change";return this.fireEvent(B.type,B);},createAttribute:function(B){return new YAHOO.util.Attribute(B,this);}};YAHOO.augment(YAHOO.util.AttributeProvider,YAHOO.util.EventProvider);})();(function(){var B=YAHOO.util.Dom,C=YAHOO.util.AttributeProvider;var A=function(D,E){this.init.apply(this,arguments);};A.DOM_EVENTS={"click":true,"dblclick":true,"keydown":true,"keypress":true,"keyup":true,"mousedown":true,"mousemove":true,"mouseout":true,"mouseover":true,"mouseup":true,"focus":true,"blur":true,"submit":true,"change":true};A.prototype={DOM_EVENTS:null,DEFAULT_HTML_SETTER:function(F,D){var E=this.get("element");if(E){E[D]=F;}},DEFAULT_HTML_GETTER:function(D){var E=this.get("element"),F;if(E){F=E[D];}return F;},appendChild:function(D){D=D.get?D.get("element"):D;return this.get("element").appendChild(D);},getElementsByTagName:function(D){return this.get("element").getElementsByTagName(D);},hasChildNodes:function(){return this.get("element").hasChildNodes();},insertBefore:function(D,E){D=D.get?D.get("element"):D;E=(E&&E.get)?E.get("element"):E;return this.get("element").insertBefore(D,E);},removeChild:function(D){D=D.get?D.get("element"):D;return this.get("element").removeChild(D);},replaceChild:function(D,E){D=D.get?D.get("element"):D;E=E.get?E.get("element"):E;return this.get("element").replaceChild(D,E);},initAttributes:function(D){},addListener:function(H,G,I,F){var E=this.get("element")||this.get("id");F=F||this;var D=this;if(!this._events[H]){if(E&&this.DOM_EVENTS[H]){YAHOO.util.Event.addListener(E,H,function(J){if(J.srcElement&&!J.target){J.target=J.srcElement;}D.fireEvent(H,J);},I,F);}this.createEvent(H,this);}return YAHOO.util.EventProvider.prototype.subscribe.apply(this,arguments);},on:function(){return this.addListener.apply(this,arguments);},subscribe:function(){return this.addListener.apply(this,arguments);},removeListener:function(E,D){return this.unsubscribe.apply(this,arguments);},addClass:function(D){B.addClass(this.get("element"),D);},getElementsByClassName:function(E,D){return B.getElementsByClassName(E,D,this.get("element"));},hasClass:function(D){return B.hasClass(this.get("element"),D);},removeClass:function(D){return B.removeClass(this.get("element"),D);},replaceClass:function(E,D){return B.replaceClass(this.get("element"),E,D);},setStyle:function(E,D){return B.setStyle(this.get("element"),E,D);},getStyle:function(D){return B.getStyle(this.get("element"),D);},fireQueue:function(){var E=this._queue;for(var F=0,D=E.length;F<D;++F){this[E[F][0]].apply(this,E[F][1]);}},appendTo:function(E,F){E=(E.get)?E.get("element"):B.get(E);this.fireEvent("beforeAppendTo",{type:"beforeAppendTo",target:E});
 F=(F&&F.get)?F.get("element"):B.get(F);var D=this.get("element");if(!D){return false;}if(!E){return false;}if(D.parent!=E){if(F){E.insertBefore(D,F);}else{E.appendChild(D);}}this.fireEvent("appendTo",{type:"appendTo",target:E});return D;},get:function(D){var F=this._configs||{},E=F.element;if(E&&!F[D]&&!YAHOO.lang.isUndefined(E.value[D])){this._setHTMLAttrConfig(D);}return C.prototype.get.call(this,D);},setAttributes:function(J,G){var E={},H=this._configOrder;for(var I=0,D=H.length;I<D;++I){if(J[H[I]]!==undefined){E[H[I]]=true;this.set(H[I],J[H[I]],G);}}for(var F in J){if(J.hasOwnProperty(F)&&!E[F]){this.set(F,J[F],G);}}},set:function(E,G,D){var F=this.get("element");if(!F){this._queue[this._queue.length]=["set",arguments];if(this._configs[E]){this._configs[E].value=G;}return;}if(!this._configs[E]&&!YAHOO.lang.isUndefined(F[E])){this._setHTMLAttrConfig(E);}return C.prototype.set.apply(this,arguments);},setAttributeConfig:function(D,E,F){this._configOrder.push(D);C.prototype.setAttributeConfig.apply(this,arguments);},createEvent:function(E,D){this._events[E]=true;return C.prototype.createEvent.apply(this,arguments);},init:function(E,D){this._initElement(E,D);},destroy:function(){var D=this.get("element");YAHOO.util.Event.purgeElement(D,true);this.unsubscribeAll();if(D&&D.parentNode){D.parentNode.removeChild(D);}this._queue=[];this._events={};this._configs={};this._configOrder=[];},_initElement:function(F,E){this._queue=this._queue||[];this._events=this._events||{};this._configs=this._configs||{};this._configOrder=[];E=E||{};E.element=E.element||F||null;var H=false;var D=A.DOM_EVENTS;this.DOM_EVENTS=this.DOM_EVENTS||{};for(var G in D){if(D.hasOwnProperty(G)){this.DOM_EVENTS[G]=D[G];}}if(typeof E.element==="string"){this._setHTMLAttrConfig("id",{value:E.element});}if(B.get(E.element)){H=true;this._initHTMLElement(E);this._initContent(E);}YAHOO.util.Event.onAvailable(E.element,function(){if(!H){this._initHTMLElement(E);}this.fireEvent("available",{type:"available",target:B.get(E.element)});},this,true);YAHOO.util.Event.onContentReady(E.element,function(){if(!H){this._initContent(E);}this.fireEvent("contentReady",{type:"contentReady",target:B.get(E.element)});},this,true);},_initHTMLElement:function(D){this.setAttributeConfig("element",{value:B.get(D.element),readOnly:true});},_initContent:function(D){this.initAttributes(D);this.setAttributes(D,true);this.fireQueue();},_setHTMLAttrConfig:function(D,F){var E=this.get("element");F=F||{};F.name=D;F.setter=F.setter||this.DEFAULT_HTML_SETTER;F.getter=F.getter||this.DEFAULT_HTML_GETTER;F.value=F.value||E[D];this._configs[D]=new YAHOO.util.Attribute(F,this);}};YAHOO.augment(A,C);YAHOO.util.Element=A;})();YAHOO.register("element",YAHOO.util.Element,{version:"2.7.0",build:"1796"});YAHOO.register("utilities", YAHOO, {version: "2.7.0", build: "1796"});
 
-//start prototype / scriptac helper
-
+// Start prototype / scriptac helper
 var $ = YAHOO.util.Dom.get;
-
 
 function $El(name) {
 	return new YAHOO.util.Element(name);
@@ -51,54 +49,54 @@ var $E = YAHOO.util.Event;
 var $$ = YAHOO.util.Dom.getElementsByClassName;
 
 var Class = {
-  create: function() {
-    return function() {
-      this.initialize.apply(this, arguments);
-    }
-  }
+	create: function() {
+		return function() {
+			this.initialize.apply(this, arguments);
+		}
+	}
 }
 var $A = Array.from = function(iterable) {
-  if (!iterable) return [];
-  if (iterable.toArray) {
-    return iterable.toArray();
-  } else {
-    var results = [];
-    for (var i = 0, length = iterable.length; i < length; i++)
-      results.push(iterable[i]);
-    return results;
-  }
+	if (!iterable) return [];
+	if (iterable.toArray) {
+		return iterable.toArray();
+	} else {
+		var results = [];
+		for (var i = 0, length = iterable.length; i < length; i++)
+			results.push(iterable[i]);
+		return results;
+	}
 }
 Function.prototype.bind = function() {
-  var __method = this, args = $A(arguments), object = args.shift();
-  return function() {
-    return __method.apply(object, args.concat($A(arguments)));
-  }
+	var __method = this, args = $A(arguments), object = args.shift();
+	return function() {
+		return __method.apply(object, args.concat($A(arguments)));
+	}
 }
 
 YAHOO.util.Dom.getDimensions = function(element){
-    element = YAHOO.util.Dom.get(element);
-    var display = YAHOO.util.Dom.getStyle( element, 'display');
+	element = YAHOO.util.Dom.get(element);
+	var display = YAHOO.util.Dom.getStyle( element, 'display');
 
-    if (display != 'none' && display != null) // Safari bug
-      return {width: element.offsetWidth, height: element.offsetHeight};
+	if (display != 'none' && display != null) // Safari bug
+		return {width: element.offsetWidth, height: element.offsetHeight};
 
-    // All *Width and *Height properties give 0 on elements with display none,
-    // so enable the element temporarily
-    var els = element.style;
-    var originalVisibility = els.visibility;
-    var originalPosition = els.position;
-    var originalDisplay = els.display;
-    els.visibility = 'hidden';
-    els.position = 'absolute';
-    els.display = 'block';
+	// All *Width and *Height properties give 0 on elements with display none,
+	// so enable the element temporarily
+	var els = element.style;
+	var originalVisibility = els.visibility;
+	var originalPosition = els.position;
+	var originalDisplay = els.display;
+	els.visibility = 'hidden';
+	els.position = 'absolute';
+	els.display = 'block';
 
-    var originalWidth = element.clientWidth;
-    var originalHeight = element.clientHeight;
-    els.display = originalDisplay;
-    els.position = originalPosition;
-    els.visibility = originalVisibility;
+	var originalWidth = element.clientWidth;
+	var originalHeight = element.clientHeight;
+	els.display = originalDisplay;
+	els.position = originalPosition;
+	els.visibility = originalVisibility;
 
-    return {width: originalWidth, height: originalHeight};
+	return {width: originalWidth, height: originalHeight};
 }
 
 function Element_Show() {
@@ -116,157 +114,154 @@ YAHOO.util.Element.prototype.hide = Element_Hide;
 YAHOO.util.Element.prototype.show = Element_Show;
 
 YAHOO.util.Element.remove = function(el) {
-    element = $(el);
-    element.parentNode.removeChild(element);
+	element = $(el);
+	element.parentNode.removeChild(element);
 }
 
 /*
 * scriptaculous functionality
 */
 YAHOO.widget.Effects = function() {
-    return {
-        version: '0.8'
-    }
+	return {
+		version: '0.8'
+	}
 }();
 
 YAHOO.widget.Effects.Hide = function(inElm) {
-    this.element = YAHOO.util.Dom.get(inElm);
+	this.element = YAHOO.util.Dom.get(inElm);
 
-    YAHOO.util.Dom.setStyle(this.element, 'display', 'none');
-    YAHOO.util.Dom.setStyle(this.element, 'visibility', 'hidden');
+	YAHOO.util.Dom.setStyle(this.element, 'display', 'none');
+	YAHOO.util.Dom.setStyle(this.element, 'visibility', 'hidden');
 }
 
 YAHOO.widget.Effects.Show = function(inElm) {
-    this.element = YAHOO.util.Dom.get(inElm);
+	this.element = YAHOO.util.Dom.get(inElm);
 
-    YAHOO.util.Dom.setStyle(this.element, 'display', 'block');
-    YAHOO.util.Dom.setStyle(this.element, 'visibility', 'visible');
+	YAHOO.util.Dom.setStyle(this.element, 'display', 'block');
+	YAHOO.util.Dom.setStyle(this.element, 'visibility', 'visible');
 }
 
 YAHOO.widget.Effects.Fade = function(inElm, opts) {
-    this.element = YAHOO.util.Dom.get(inElm);
+	this.element = YAHOO.util.Dom.get(inElm);
 
-    var attributes = {
-        opacity: { from: 1, to: 0 }
-    };
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	var attributes = {
+		opacity: { from: 1, to: 0 }
+	};
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
-    var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
-    var secs = ((opts && opts.seconds) ? opts.seconds : 1);
-    var delay = ((opts && opts.delay) ? opts.delay : false);
+	var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
+	var secs = ((opts && opts.seconds) ? opts.seconds : 1);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
 
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
-    this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
-    this.effect.onComplete.subscribe(function() {
-        YAHOO.widget.Effects.Hide(this.element);
-        this.onEffectComplete.fire();
-    }, this, true);
-    if (!delay) {
-        this.effect.animate();
-    }
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
+	this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
+	this.effect.onComplete.subscribe(function() {
+		YAHOO.widget.Effects.Hide(this.element);
+		this.onEffectComplete.fire();
+	}, this, true);
+	if (!delay) {
+		this.effect.animate();
+	}
 }
 
 YAHOO.widget.Effects.Fade.prototype.animate = function() {
-    this.effect.animate();
+	this.effect.animate();
 }
 
 YAHOO.widget.Effects.Appear = function(inElm, opts) {
-    this.element = YAHOO.util.Dom.get(inElm);
+	this.element = YAHOO.util.Dom.get(inElm);
 
-    YAHOO.util.Dom.setStyle(this.element, 'opacity', '0');
-    YAHOO.widget.Effects.Show(this.element);
-    var attributes = {
-        opacity: { from: 0, to: 1 }
-    };
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	YAHOO.util.Dom.setStyle(this.element, 'opacity', '0');
+	YAHOO.widget.Effects.Show(this.element);
+	var attributes = {
+		opacity: { from: 0, to: 1 }
+	};
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
-    var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
-    var secs = ((opts && opts.seconds) ? opts.seconds : 3);
-    var delay = ((opts && opts.delay) ? opts.delay : false);
+	var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
+	var secs = ((opts && opts.seconds) ? opts.seconds : 3);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
 
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
-    this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
-    this.effect.onComplete.subscribe(function() {
-        this.onEffectComplete.fire();
-    }, this, true);
-    if (!delay) {
-        this.effect.animate();
-    }
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
+	this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
+	this.effect.onComplete.subscribe(function() {
+		this.onEffectComplete.fire();
+	}, this, true);
+	if (!delay) {
+		this.effect.animate();
+	}
 }
 
 YAHOO.widget.Effects.Appear.prototype.animate = function() {
-    this.effect.animate();
+	this.effect.animate();
 }
 
-
 YAHOO.widget.Effects.BlindUp = function(inElm, opts) {
-    var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
-    var secs = ((opts && opts.seconds) ? opts.seconds : 1);
-    var delay = ((opts && opts.delay) ? opts.delay : false);
-    var ghost = ((opts && opts.ghost) ? opts.ghost : false);
+	var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
+	var secs = ((opts && opts.seconds) ? opts.seconds : 1);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
+	var ghost = ((opts && opts.ghost) ? opts.ghost : false);
 
-    this.element = YAHOO.util.Dom.get(inElm);
-    this._height = $D.getDimensions(this.element).height;
-    this._top = parseInt($D.getStyle(this.element, 'top'));
+	this.element = YAHOO.util.Dom.get(inElm);
+	this._height = $D.getDimensions(this.element).height;
+	this._top = parseInt($D.getStyle(this.element, 'top'));
 
-    this._opts = opts;
+	this._opts = opts;
 
-    YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
-    var attributes = {
-        height: { to: 0 }
-    };
-    if (ghost) {
-        attributes.opacity = {
-            to : 0,
-            from: 1
-        }
-    }
+	YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
+	var attributes = {
+		height: { to: 0 }
+	};
+	if (ghost) {
+		attributes.opacity = {
+			to : 0,
+			from: 1
+		}
+	}
 
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
+	if (opts && opts.bind && (opts.bind == 'bottom')) {
+		var attributes = {
+			height: { from: 0, to: parseInt(this._height)},
+			top: { from: (this._top + parseInt(this._height)), to: this._top }
+		};
+		if (ghost) {
+			attributes.opacity = {
+				to : 1,
+				from: 0
+			}
+		}
+	}
 
-    if (opts && opts.bind && (opts.bind == 'bottom')) {
-        var attributes = {
-            height: { from: 0, to: parseInt(this._height)},
-            top: { from: (this._top + parseInt(this._height)), to: this._top }
-        };
-        if (ghost) {
-            attributes.opacity = {
-                to : 1,
-                from: 0
-            }
-        }
-    }
-
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
 	this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
 
 	this.effect.onComplete.subscribe(function() {
 		if (this._opts && this._opts.bind && (this._opts.bind == 'bottom')) {
 			YAHOO.util.Dom.setStyle(this.element, 'top', this._top + 'px');
 		} else {
-
 			YAHOO.widget.Effects.Hide(this.element);
 			YAHOO.util.Dom.setStyle(this.element, 'height', this._height+"px");
 		}
@@ -282,14 +277,13 @@ YAHOO.widget.Effects.BlindUp = function(inElm, opts) {
 * Preps the style of the element before running the Animation.
 */
 YAHOO.widget.Effects.BlindUp.prototype.prepStyle = function() {
-    if (this._opts && this._opts.bind && (this._opts.bind == 'bottom')) {
+	if (this._opts && this._opts.bind && (this._opts.bind == 'bottom')) {
+		YAHOO.util.Dom.setStyle(this.element, 'height', '0px');
+		YAHOO.util.Dom.setStyle(this.element, 'top', this._height);
+	}
 
-        YAHOO.util.Dom.setStyle(this.element, 'height', '0px');
-        YAHOO.util.Dom.setStyle(this.element, 'top', this._height);
-    }
-
-    YAHOO.util.Dom.setStyle(this.element, 'height', this._height+'px');
-    YAHOO.widget.Effects.Show(this.element);
+	YAHOO.util.Dom.setStyle(this.element, 'height', this._height+'px');
+	YAHOO.widget.Effects.Show(this.element);
 }
 /**
 * Fires off the embedded Animation.
@@ -300,326 +294,319 @@ YAHOO.widget.Effects.BlindUp.prototype.animate = function() {
 }
 
 YAHOO.widget.Effects.BlindDown = function(inElm, opts) {
-    var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
-    var secs = ((opts && opts.seconds) ? opts.seconds : 1);
-    var delay = ((opts && opts.delay) ? opts.delay : false);
-    var ghost = ((opts && opts.ghost) ? opts.ghost : false);
+	var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
+	var secs = ((opts && opts.seconds) ? opts.seconds : 1);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
+	var ghost = ((opts && opts.ghost) ? opts.ghost : false);
 
-    this.element = YAHOO.util.Dom.get(inElm);
+	this.element = YAHOO.util.Dom.get(inElm);
 
-    this._opts = opts;
-    this._height = parseInt($D.getDimensions(this.element).height );
+	this._opts = opts;
+	this._height = parseInt($D.getDimensions(this.element).height );
 
-    this._top = parseInt($D.getStyle(this.element, 'top'));
+	this._top = parseInt($D.getStyle(this.element, 'top'));
 
-    YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
-    var attributes = {
-        height: { from: 0, to: this._height }
-    };
-    if (ghost) {
-        attributes.opacity = {
-            to : 1,
-            from: 0
-        }
-    }
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
+	var attributes = {
+		height: { from: 0, to: this._height }
+	};
+	if (ghost) {
+		attributes.opacity = {
+			to : 1,
+			from: 0
+		}
+	}
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
+	if (opts && opts.bind && (opts.bind == 'bottom')) {
+		var attributes = {
+			height: { to: 0, from: parseInt(this._height)},
+			top: { to: (this._top + parseInt(this._height)), from: this._top }
+		};
+		if (ghost) {
+			attributes.opacity = {
+				to : 0,
+				from: 1
+			}
+		}
+	}
 
-    if (opts && opts.bind && (opts.bind == 'bottom')) {
-        var attributes = {
-            height: { to: 0, from: parseInt(this._height)},
-            top: { to: (this._top + parseInt(this._height)), from: this._top }
-        };
-        if (ghost) {
-            attributes.opacity = {
-                to : 0,
-                from: 1
-            }
-        }
-    }
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
+	this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
 
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
-
-    this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
-
-    if (opts && opts.bind && (opts.bind == 'bottom')) {
-        this.effect.onComplete.subscribe(function() {
-            YAHOO.widget.Effects.Hide(this.element);
-            YAHOO.util.Dom.setStyle(this.element, 'top', this._top + 'px');
-            YAHOO.util.Dom.setStyle(this.element, 'height', this._height + 'px');
-            YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
-            this.onEffectComplete.fire();
-        }, this, true);
-    } else {
-        this.effect.onComplete.subscribe(function() {
-            YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
-            this.onEffectComplete.fire();
-        }, this, true);
-    }
-    if (!delay) {
-        this.animate();
-    }
+	if (opts && opts.bind && (opts.bind == 'bottom')) {
+		this.effect.onComplete.subscribe(function() {
+			YAHOO.widget.Effects.Hide(this.element);
+			YAHOO.util.Dom.setStyle(this.element, 'top', this._top + 'px');
+			YAHOO.util.Dom.setStyle(this.element, 'height', this._height + 'px');
+			YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
+			this.onEffectComplete.fire();
+		}, this, true);
+	} else {
+		this.effect.onComplete.subscribe(function() {
+			YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
+			this.onEffectComplete.fire();
+		}, this, true);
+	}
+	if (!delay) {
+		this.animate();
+	}
 }
 /**
 * Preps the style of the element before running the Animation.
 */
 YAHOO.widget.Effects.BlindDown.prototype.prepStyle = function() {
-    if (this._opts && this._opts.bind && (this._opts.bind == 'bottom')) {
-    } else {
+	if (this._opts && this._opts.bind && (this._opts.bind == 'bottom')) {
+	} else {
+		YAHOO.util.Dom.setStyle(this.element, 'height', '0px');
+	}
 
-        YAHOO.util.Dom.setStyle(this.element, 'height', '0px');
-    }
-
-    YAHOO.widget.Effects.Show(this.element);
+	YAHOO.widget.Effects.Show(this.element);
 }
 /**
 * Fires off the embedded Animation.
 */
 YAHOO.widget.Effects.BlindDown.prototype.animate = function() {
-    this.prepStyle();
-    this.effect.animate();
+	this.prepStyle();
+	this.effect.animate();
 }
 
-
 YAHOO.widget.Effects.BlindRight = function(inElm, opts) {
-    var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
-    var secs = ((opts && opts.seconds) ? opts.seconds : 1);
-    var delay = ((opts && opts.delay) ? opts.delay : false);
-    var ghost = ((opts && opts.ghost) ? opts.ghost : false);
-    this.element = YAHOO.util.Dom.get(inElm);
+	var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
+	var secs = ((opts && opts.seconds) ? opts.seconds : 1);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
+	var ghost = ((opts && opts.ghost) ? opts.ghost : false);
+	this.element = YAHOO.util.Dom.get(inElm);
 
-    this._width = parseInt(YAHOO.util.Dom.getStyle(this.element, 'width'));
-    this._left = parseInt(YAHOO.util.Dom.getStyle(this.element, 'left'));
-    this._opts = opts;
+	this._width = parseInt(YAHOO.util.Dom.getStyle(this.element, 'width'));
+	this._left = parseInt(YAHOO.util.Dom.getStyle(this.element, 'left'));
+	this._opts = opts;
 
-    YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
-    var attributes = {
-        width: { from: 0, to: this._width }
-    };
-    if (ghost) {
-        attributes.opacity = {
-            to : 1,
-            from: 0
-        }
-    }
+	var attributes = {
+		width: { from: 0, to: this._width }
+	};
+	if (ghost) {
+		attributes.opacity = {
+			to : 1,
+			from: 0
+		}
+	}
 
-    if (opts && opts.bind && (opts.bind == 'right')) {
-        var attributes = {
-            width: { to: 0 },
-            /*left: { from: parseInt, to: this._width }*/
-            left: { to: this._left + parseInt(this._width), from: this._left }
-        };
-        if (ghost) {
-            attributes.opacity = {
-                to : 0,
-                from: 1
-            }
-        }
-    }
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
-    this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
-    if (opts && opts.bind && (opts.bind == 'right')) {
-        this.effect.onComplete.subscribe(function() {
-            YAHOO.widget.Effects.Hide(this.element);
-            YAHOO.util.Dom.setStyle(this.element, 'width', this._width + 'px');
-            YAHOO.util.Dom.setStyle(this.element, 'left', this._left + 'px');
-            this._width = null;
-            YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
-            this.onEffectComplete.fire();
-        }, this, true);
-    } else {
-        this.effect.onComplete.subscribe(function() {
-            YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
-            this.onEffectComplete.fire();
-        }, this, true);
-    }
-    if (!delay) {
-        this.animate();
-    }
+	if (opts && opts.bind && (opts.bind == 'right')) {
+		var attributes = {
+			width: { to: 0 },
+			/*left: { from: parseInt, to: this._width }*/
+			left: { to: this._left + parseInt(this._width), from: this._left }
+		};
+		if (ghost) {
+			attributes.opacity = {
+				to : 0,
+				from: 1
+			}
+		}
+	}
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
+	this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
+	if (opts && opts.bind && (opts.bind == 'right')) {
+		this.effect.onComplete.subscribe(function() {
+			YAHOO.widget.Effects.Hide(this.element);
+			YAHOO.util.Dom.setStyle(this.element, 'width', this._width + 'px');
+			YAHOO.util.Dom.setStyle(this.element, 'left', this._left + 'px');
+			this._width = null;
+			YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
+			this.onEffectComplete.fire();
+		}, this, true);
+	} else {
+		this.effect.onComplete.subscribe(function() {
+			YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
+			this.onEffectComplete.fire();
+		}, this, true);
+	}
+	if (!delay) {
+		this.animate();
+	}
 }
 /**
 * Preps the style of the element before running the Animation.
 */
 YAHOO.widget.Effects.BlindRight.prototype.prepStyle = function() {
-    if (this._opts && this._opts.bind && (this._opts.bind == 'right')) {
-    } else {
-        YAHOO.util.Dom.setStyle(this.element, 'width', '0');
-    }
+	if (this._opts && this._opts.bind && (this._opts.bind == 'right')) {
+	} else {
+		YAHOO.util.Dom.setStyle(this.element, 'width', '0');
+	}
 }
 /**
 * Fires off the embedded Animation.
 */
 YAHOO.widget.Effects.BlindRight.prototype.animate = function() {
-    this.prepStyle();
-    this.effect.animate();
+	this.prepStyle();
+	this.effect.animate();
 }
 
 YAHOO.widget.Effects.BlindLeft = function(inElm, opts) {
-    var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
-    var secs = ((opts && opts.seconds) ? opts.seconds : 1);
-    var delay = ((opts && opts.delay) ? opts.delay : false);
-    var ghost = ((opts && opts.ghost) ? opts.ghost : false);
-    this.ghost = ghost;
+	var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeOut);
+	var secs = ((opts && opts.seconds) ? opts.seconds : 1);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
+	var ghost = ((opts && opts.ghost) ? opts.ghost : false);
+	this.ghost = ghost;
 
-    this.element = YAHOO.util.Dom.get(inElm);
-    this._width = YAHOO.util.Dom.getStyle(this.element, 'width');
-    this._left = parseInt(YAHOO.util.Dom.getStyle(this.element, 'left'));
+	this.element = YAHOO.util.Dom.get(inElm);
+	this._width = YAHOO.util.Dom.getStyle(this.element, 'width');
+	this._left = parseInt(YAHOO.util.Dom.getStyle(this.element, 'left'));
 
+	this._opts = opts;
+	YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
+	var attributes = {
+		width: { to: 0 }
+	};
+	if (ghost) {
+		attributes.opacity = {
+			to : 0,
+			from: 1
+		}
+	}
 
-    this._opts = opts;
-    YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
-    var attributes = {
-        width: { to: 0 }
-    };
-    if (ghost) {
-        attributes.opacity = {
-            to : 0,
-            from: 1
-        }
-    }
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	if (opts && opts.bind && (opts.bind == 'right')) {
+		var attributes = {
+			width: { from: 0, to: parseInt(this._width) },
+			left: { from: this._left + parseInt(this._width), to: this._left }
+		};
+		if (ghost) {
+			attributes.opacity = {
+				to : 1,
+				from: 0
+			}
+		}
+	}
 
-
-    if (opts && opts.bind && (opts.bind == 'right')) {
-        var attributes = {
-            width: { from: 0, to: parseInt(this._width) },
-            left: { from: this._left + parseInt(this._width), to: this._left }
-        };
-        if (ghost) {
-            attributes.opacity = {
-                to : 1,
-                from: 0
-            }
-        }
-    }
-
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
-    this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
-    if (opts && opts.bind && (opts.bind == 'right')) {
-        this.effect.onComplete.subscribe(function() {
-            this.onEffectComplete.fire();
-        }, this, true);
-    } else {
-        this.effect.onComplete.subscribe(function() {
-            YAHOO.widget.Effects.Hide(this.element);
-            YAHOO.util.Dom.setStyle(this.element, 'width', this._width);
-            YAHOO.util.Dom.setStyle(this.element, 'left', this._left + 'px');
-            YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
-            this._width = null;
-            this.onEffectComplete.fire();
-        }, this, true);
-    }
-    if (!delay) {
-        this.animate();
-    }
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
+	this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
+	if (opts && opts.bind && (opts.bind == 'right')) {
+		this.effect.onComplete.subscribe(function() {
+			this.onEffectComplete.fire();
+		}, this, true);
+	} else {
+		this.effect.onComplete.subscribe(function() {
+			YAHOO.widget.Effects.Hide(this.element);
+			YAHOO.util.Dom.setStyle(this.element, 'width', this._width);
+			YAHOO.util.Dom.setStyle(this.element, 'left', this._left + 'px');
+			YAHOO.util.Dom.setStyle(this.element, 'opacity', 1);
+			this._width = null;
+			this.onEffectComplete.fire();
+		}, this, true);
+	}
+	if (!delay) {
+		this.animate();
+	}
 }
 /**
 * Preps the style of the element before running the Animation.
 */
 YAHOO.widget.Effects.BlindLeft.prototype.prepStyle = function() {
-    if (this._opts && this._opts.bind && (this._opts.bind == 'right')) {
-        YAHOO.widget.Effects.Hide(this.element);
-        YAHOO.util.Dom.setStyle(this.element, 'width', '0px');
-        YAHOO.util.Dom.setStyle(this.element, 'left', parseInt(this._width));
-        if (this.ghost) {
-            YAHOO.util.Dom.setStyle(this.element, 'opacity', 0);
-        }
-        YAHOO.widget.Effects.Show(this.element);
-    }
+	if (this._opts && this._opts.bind && (this._opts.bind == 'right')) {
+		YAHOO.widget.Effects.Hide(this.element);
+		YAHOO.util.Dom.setStyle(this.element, 'width', '0px');
+		YAHOO.util.Dom.setStyle(this.element, 'left', parseInt(this._width));
+		if (this.ghost) {
+			YAHOO.util.Dom.setStyle(this.element, 'opacity', 0);
+		}
+		YAHOO.widget.Effects.Show(this.element);
+	}
 }
 /**
 * Fires off the embedded Animation.
 */
 YAHOO.widget.Effects.BlindLeft.prototype.animate = function() {
-    this.prepStyle();
-    this.effect.animate();
+	this.prepStyle();
+	this.effect.animate();
 }
 
-
 YAHOO.widget.Effects.Pulse = function(inElm, opts) {
-    this.element = YAHOO.util.Dom.get(inElm);
+	this.element = YAHOO.util.Dom.get(inElm);
 
-    this._counter = 0;
-    this._maxCount = 9;
-    var attributes = {
-        opacity: { from: 1, to: 0 }
-    };
+	this._counter = 0;
+	this._maxCount = 9;
+	var attributes = {
+		opacity: { from: 1, to: 0 }
+	};
 
-    if (opts && opts.maxcount) {
-        this._maxCount = opts.maxcount;
-    }
+	if (opts && opts.maxcount) {
+		this._maxCount = opts.maxcount;
+	}
 
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
-    var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeIn);
-    var secs = ((opts && opts.seconds) ? opts.seconds : .25);
-    var delay = ((opts && opts.delay) ? opts.delay : false);
+	var ease = ((opts && opts.ease) ? opts.ease : YAHOO.util.Easing.easeIn);
+	var secs = ((opts && opts.seconds) ? opts.seconds : .25);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
 
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
-    this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
-    this.effect.onComplete.subscribe(function() {
-        if (this.done) {
-            this.onEffectComplete.fire();
-        } else {
-            if (this._counter < this._maxCount) {
-                this._counter++;
-                if (this._on) {
-                    this._on = null;
-                    this.effect.attributes = { opacity: { to: 0 } }
-                } else {
-                    this._on = true;
-                    this.effect.attributes = { opacity: { to: 1 } }
-                }
-                this.effect.animate();
-            } else {
-                this.done = true;
-                this._on = null;
-                this._counter = null;
-                this.effect.attributes = { opacity: { to: 1 } }
-                this.effect.animate();
-            }
-        }
-    }, this, true);
-    if (!delay) {
-        this.effect.animate();
-    }
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
+	this.effect = new YAHOO.util.Anim(this.element, attributes, secs, ease);
+	this.effect.onComplete.subscribe(function() {
+		if (this.done) {
+			this.onEffectComplete.fire();
+		} else {
+			if (this._counter < this._maxCount) {
+				this._counter++;
+				if (this._on) {
+					this._on = null;
+					this.effect.attributes = { opacity: { to: 0 } }
+				} else {
+					this._on = true;
+					this.effect.attributes = { opacity: { to: 1 } }
+				}
+				this.effect.animate();
+			} else {
+				this.done = true;
+				this._on = null;
+				this._counter = null;
+				this.effect.attributes = { opacity: { to: 1 } }
+				this.effect.animate();
+			}
+		}
+	}, this, true);
+	if (!delay) {
+		this.effect.animate();
+	}
 }
 /**
 * Fires off the embedded Animation.
 */
 YAHOO.widget.Effects.Pulse.prototype.animate = function() {
-    this.effect.animate();
+	this.effect.animate();
 }
 
 /**
@@ -637,94 +624,89 @@ YAHOO.widget.Effects.Pulse.prototype.animate = function() {
 * @type Object
 */
 YAHOO.widget.Effects.Shadow = function(inElm, opts) {
-    var delay = ((opts && opts.delay) ? opts.delay : false);
-    var topOffset = ((opts && opts.top) ? opts.top : 8);
-    var leftOffset = ((opts && opts.left) ? opts.left : 8);
-    var shadowColor = ((opts && opts.color) ? opts.color : '#ccc');
-    var shadowOpacity = ((opts && opts.opacity) ? opts.opacity : .75);
+	var delay = ((opts && opts.delay) ? opts.delay : false);
+	var topOffset = ((opts && opts.top) ? opts.top : 8);
+	var leftOffset = ((opts && opts.left) ? opts.left : 8);
+	var shadowColor = ((opts && opts.color) ? opts.color : '#ccc');
+	var shadowOpacity = ((opts && opts.opacity) ? opts.opacity : .75);
 
-    this.element = YAHOO.util.Dom.get(inElm);
+	this.element = YAHOO.util.Dom.get(inElm);
 
+	if (YAHOO.util.Dom.get(this.element.id + '_shadow')) {
+		this.shadow = YAHOO.util.Dom.get(this.element.id + '_shadow');
+	} else {
+		this.shadow = document.createElement('div');
+		this.shadow.id = this.element.id + '_shadow';
+		this.element.parentNode.appendChild(this.shadow);
+	}
 
-    if (YAHOO.util.Dom.get(this.element.id + '_shadow')) {
-        this.shadow = YAHOO.util.Dom.get(this.element.id + '_shadow');
-    } else {
-        this.shadow = document.createElement('div');
-        this.shadow.id = this.element.id + '_shadow';
-        this.element.parentNode.appendChild(this.shadow);
-    }
+	var h = parseInt($T.getHeight(this.element));
+	var w = parseInt(YAHOO.util.Dom.getStyle(this.element, 'width'));
+	var z = this.element.style.zIndex;
+	if (!z) {
+		z = 1;
+		this.element.style.zIndex = z;
+	}
 
-    var h = parseInt($T.getHeight(this.element));
-    var w = parseInt(YAHOO.util.Dom.getStyle(this.element, 'width'));
-    var z = this.element.style.zIndex;
-    if (!z) {
-        z = 1;
-        this.element.style.zIndex = z;
-    }
+	YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
+	YAHOO.util.Dom.setStyle(this.shadow, 'height', h + 'px');
+	YAHOO.util.Dom.setStyle(this.shadow, 'width', w + 'px');
+	YAHOO.util.Dom.setStyle(this.shadow, 'background-color', shadowColor);
+	YAHOO.util.Dom.setStyle(this.shadow, 'opacity', 0);
+	YAHOO.util.Dom.setStyle(this.shadow, 'position', 'absolute');
+	this.shadow.style.zIndex = (z - 1);
+	var xy = YAHOO.util.Dom.getXY(this.element);
 
-    YAHOO.util.Dom.setStyle(this.element, 'overflow', 'hidden');
-    YAHOO.util.Dom.setStyle(this.shadow, 'height', h + 'px');
-    YAHOO.util.Dom.setStyle(this.shadow, 'width', w + 'px');
-    YAHOO.util.Dom.setStyle(this.shadow, 'background-color', shadowColor);
-    YAHOO.util.Dom.setStyle(this.shadow, 'opacity', 0);
-    YAHOO.util.Dom.setStyle(this.shadow, 'position', 'absolute');
-    this.shadow.style.zIndex = (z - 1);
-    var xy = YAHOO.util.Dom.getXY(this.element);
+	/**
+	* Custom Event fired after the effect completes
+	* @type Object
+	*/
+	this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
 
-    /**
-    * Custom Event fired after the effect completes
-    * @type Object
-    */
-    this.onEffectComplete = new YAHOO.util.CustomEvent('oneffectcomplete', this);
+	var attributes = {
+		opacity: { from: 0, to: shadowOpacity },
+		top: {
+			from: xy[1],
+			to: (xy[1] + topOffset)
+		},
+		left: {
+			from: xy[0],
+			to: (xy[0] + leftOffset)
+		}
+	};
 
-
-    var attributes = {
-        opacity: { from: 0, to: shadowOpacity },
-        top: {
-            from: xy[1],
-            to: (xy[1] + topOffset)
-        },
-        left: {
-            from: xy[0],
-            to: (xy[0] + leftOffset)
-        }
-    };
-
-    /**
-    * YUI Animation Object
-    * @type Object
-    */
-    this.effect = new YAHOO.util.Anim(this.shadow, attributes);
-    this.effect.onComplete.subscribe(function() {
-        this.onEffectComplete.fire();
-    }, this, true);
-    if (!delay) {
-        this.animate();
-    }
+	/**
+	* YUI Animation Object
+	* @type Object
+	*/
+	this.effect = new YAHOO.util.Anim(this.shadow, attributes);
+	this.effect.onComplete.subscribe(function() {
+		this.onEffectComplete.fire();
+	}, this, true);
+	if (!delay) {
+		this.animate();
+	}
 }
 /**
 * Fires off the embedded Animation.
 */
 YAHOO.widget.Effects.Shadow.prototype.animate = function() {
-    this.effect.animate();
+	this.effect.animate();
 }
 /**
 * String function for reporting to YUI Logger
 */
 YAHOO.widget.Effects.Shadow.prototype.toString = function() {
-    return 'Effect Shadow [' + this.element.id + ']';
+	return 'Effect Shadow [' + this.element.id + ']';
 }
-
-
 
 if (!YAHOO.Tools) {
-    $T = {
-        getHeight: function(el) {
-            return YAHOO.util.Dom.getStyle(el, 'height');
-        }
-    }
+	$T = {
+		getHeight: function(el) {
+			return YAHOO.util.Dom.getStyle(el, 'height');
+		}
+	}
 }
-
 
 /**
 * @class
@@ -742,28 +724,28 @@ YAHOO.widget.Effects.ContainerEffect = function() {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindUpDownBinded = function(overlay, dur) {
-    var bupdownbinded = new YAHOO.widget.ContainerEffect(overlay,
-        { attributes: {
-            effect: 'BlindUp',
-            opts: {
-                bind: 'bottom'
-            }
-        },
-            duration: dur
-        }, {
-            attributes: {
-                effect: 'BlindDown',
-                opts: {
-                    bind: 'bottom'
-                }
-            },
-            duration: dur
-        },
-            overlay.element,
-            YAHOO.widget.Effects.Container
-        );
-    bupdownbinded.init();
-    return bupdownbinded;
+	var bupdownbinded = new YAHOO.widget.ContainerEffect(overlay,
+		{ attributes: {
+			effect: 'BlindUp',
+			opts: {
+				bind: 'bottom'
+			}
+		},
+			duration: dur
+		}, {
+			attributes: {
+				effect: 'BlindDown',
+				opts: {
+					bind: 'bottom'
+				}
+			},
+			duration: dur
+		},
+			overlay.element,
+			YAHOO.widget.Effects.Container
+		);
+	bupdownbinded.init();
+	return bupdownbinded;
 }
 /**
 * @constructor
@@ -774,9 +756,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindUpDownBinded = function(overlay, dur) 
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindUpDown = function(overlay, dur) {
-    var bupdown = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown' }, duration: dur }, { attributes: { effect: 'BlindUp' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bupdown.init();
-    return bupdown;
+	var bupdown = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown' }, duration: dur }, { attributes: { effect: 'BlindUp' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bupdown.init();
+	return bupdown;
 }
 /**
 * @constructor
@@ -787,9 +769,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindUpDown = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindLeftRightBinded = function(overlay, dur) {
-    var bleftrightbinded = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: {bind: 'right'} }, duration: dur }, { attributes: { effect: 'BlindRight', opts: { bind: 'right' } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bleftrightbinded.init();
-    return bleftrightbinded;
+	var bleftrightbinded = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: {bind: 'right'} }, duration: dur }, { attributes: { effect: 'BlindRight', opts: { bind: 'right' } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bleftrightbinded.init();
+	return bleftrightbinded;
 }
 /**
 * @constructor
@@ -800,9 +782,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindLeftRightBinded = function(overlay, du
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindLeftRight = function(overlay, dur) {
-    var bleftright = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight' }, duration: dur }, { attributes: { effect: 'BlindLeft' } , duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bleftright.init();
-    return bleftright;
+	var bleftright = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight' }, duration: dur }, { attributes: { effect: 'BlindLeft' } , duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bleftright.init();
+	return bleftright;
 }
 /**
 * @constructor
@@ -813,9 +795,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindLeftRight = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindRightFold = function(overlay, dur) {
-    var brightfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight' }, duration: dur }, { attributes: { effect: 'Fold' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    brightfold.init();
-    return brightfold;
+	var brightfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight' }, duration: dur }, { attributes: { effect: 'Fold' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	brightfold.init();
+	return brightfold;
 }
 /**
 * @constructor
@@ -826,9 +808,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindRightFold = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindLeftFold = function(overlay, dur) {
-    var bleftfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: { bind: 'right' } }, duration: dur }, { attributes: { effect: 'Fold' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bleftfold.init();
-    return bleftfold;
+	var bleftfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: { bind: 'right' } }, duration: dur }, { attributes: { effect: 'Fold' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bleftfold.init();
+	return bleftfold;
 }
 /**
 * @constructor
@@ -839,9 +821,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindLeftFold = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.UnFoldFold = function(overlay, dur) {
-    var bunfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'UnFold' }, duration: dur }, { attributes: { effect: 'Fold' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bunfold.init();
-    return bunfold;
+	var bunfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'UnFold' }, duration: dur }, { attributes: { effect: 'Fold' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bunfold.init();
+	return bunfold;
 }
 /**
 * @constructor
@@ -852,9 +834,9 @@ YAHOO.widget.Effects.ContainerEffect.UnFoldFold = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindDownDrop = function(overlay, dur) {
-    var bdowndrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown' }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bdowndrop.init();
-    return bdowndrop;
+	var bdowndrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown' }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bdowndrop.init();
+	return bdowndrop;
 }
 
 /**
@@ -866,9 +848,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindDownDrop = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindUpDrop = function(overlay, dur) {
-    var bupdrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindUp', opts: { bind: 'bottom' } }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bupdrop.init();
-    return bupdrop;
+	var bupdrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindUp', opts: { bind: 'bottom' } }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bupdrop.init();
+	return bupdrop;
 }
 
 /**
@@ -880,9 +862,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindUpDrop = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindUpDownBindedGhost = function(overlay, dur) {
-    var bupdownbinded = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindUp', opts: {ghost: true, bind: 'bottom' } }, duration: dur }, { attributes: { effect: 'BlindDown', opts: { ghost: true, bind: 'bottom'} }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container);
-    bupdownbinded.init();
-    return bupdownbinded;
+	var bupdownbinded = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindUp', opts: {ghost: true, bind: 'bottom' } }, duration: dur }, { attributes: { effect: 'BlindDown', opts: { ghost: true, bind: 'bottom'} }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container);
+	bupdownbinded.init();
+	return bupdownbinded;
 }
 /**
 * @constructor
@@ -893,9 +875,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindUpDownBindedGhost = function(overlay, 
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindUpDownGhost = function(overlay, dur) {
-    var bupdown = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'BlindUp', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bupdown.init();
-    return bupdown;
+	var bupdown = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'BlindUp', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bupdown.init();
+	return bupdown;
 }
 /**
 * @constructor
@@ -906,9 +888,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindUpDownGhost = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindLeftRightBindedGhost = function(overlay, dur) {
-    var bleftrightbinded = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: {bind: 'right', ghost: true } }, duration: dur }, { attributes: { effect: 'BlindRight', opts: { bind: 'right', ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bleftrightbinded.init();
-    return bleftrightbinded;
+	var bleftrightbinded = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: {bind: 'right', ghost: true } }, duration: dur }, { attributes: { effect: 'BlindRight', opts: { bind: 'right', ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bleftrightbinded.init();
+	return bleftrightbinded;
 }
 /**
 * @constructor
@@ -919,9 +901,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindLeftRightBindedGhost = function(overla
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindLeftRightGhost = function(overlay, dur) {
-    var bleftright = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'BlindLeft', opts: { ghost: true } } , duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bleftright.init();
-    return bleftright;
+	var bleftright = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'BlindLeft', opts: { ghost: true } } , duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bleftright.init();
+	return bleftright;
 }
 /**
 * @constructor
@@ -932,9 +914,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindLeftRightGhost = function(overlay, dur
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindRightFoldGhost = function(overlay, dur) {
-    var brightfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'Fold', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    brightfold.init();
-    return brightfold;
+	var brightfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindRight', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'Fold', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	brightfold.init();
+	return brightfold;
 }
 /**
 * @constructor
@@ -945,9 +927,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindRightFoldGhost = function(overlay, dur
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindLeftFoldGhost = function(overlay, dur) {
-    var bleftfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: { bind: 'right', ghost: true } }, duration: dur }, { attributes: { effect: 'Fold', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bleftfold.init();
-    return bleftfold;
+	var bleftfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindLeft', opts: { bind: 'right', ghost: true } }, duration: dur }, { attributes: { effect: 'Fold', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bleftfold.init();
+	return bleftfold;
 }
 /**
 * @constructor
@@ -958,9 +940,9 @@ YAHOO.widget.Effects.ContainerEffect.BlindLeftFoldGhost = function(overlay, dur)
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.UnFoldFoldGhost = function(overlay, dur) {
-    var bleftfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'UnFold', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'Fold', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bleftfold.init();
-    return bleftfold;
+	var bleftfold = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'UnFold', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'Fold', opts: { ghost: true } }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bleftfold.init();
+	return bleftfold;
 }
 
 /**
@@ -972,9 +954,9 @@ YAHOO.widget.Effects.ContainerEffect.UnFoldFoldGhost = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindDownDropGhost = function(overlay, dur) {
-    var bdowndrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bdowndrop.init();
-    return bdowndrop;
+	var bdowndrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindDown', opts: { ghost: true } }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bdowndrop.init();
+	return bdowndrop;
 }
 
 /**
@@ -986,12 +968,10 @@ YAHOO.widget.Effects.ContainerEffect.BlindDownDropGhost = function(overlay, dur)
 * @type Object
 */
 YAHOO.widget.Effects.ContainerEffect.BlindUpDropGhost = function(overlay, dur) {
-    var bupdrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindUp', opts: { bind: 'bottom', ghost: true } }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
-    bupdrop.init();
-    return bupdrop;
+	var bupdrop = new YAHOO.widget.ContainerEffect(overlay, { attributes: { effect: 'BlindUp', opts: { bind: 'bottom', ghost: true } }, duration: dur }, { attributes: { effect: 'Drop' }, duration: dur }, overlay.element, YAHOO.widget.Effects.Container );
+	bupdrop.init();
+	return bupdrop;
 }
-
-
 
 /**
 * @class
@@ -1001,36 +981,36 @@ YAHOO.widget.Effects.ContainerEffect.BlindUpDropGhost = function(overlay, dur) {
 * @type Object
 */
 YAHOO.widget.Effects.Container = function(el, attrs, dur) {
-    var opts = { delay: true };
-    if (attrs.opts) {
-        for (var i in attrs.opts) {
-            opts[i] = attrs.opts[i];
-        }
-    }
-    //var eff = eval('new YAHOO.widget.Effects.' + attrs.effect + '("' + el.id + '", {delay: true' + opts + '})');
-    var func = eval('YAHOO.widget.Effects.' + attrs.effect);
-    var eff = new func(el, opts);
+	var opts = { delay: true };
+	if (attrs.opts) {
+		for (var i in attrs.opts) {
+			opts[i] = attrs.opts[i];
+		}
+	}
+	//var eff = eval('new YAHOO.widget.Effects.' + attrs.effect + '("' + el.id + '", {delay: true' + opts + '})');
+	var func = eval('YAHOO.widget.Effects.' + attrs.effect);
+	var eff = new func(el, opts);
 
-    /**
-    * Empty event handler to make ContainerEffects happy<br>
-    * May try to attach them to my effects later
-    * @type Object
-    */
-    //eff.onStart = new YAHOO.util.CustomEvent('onstart', this);
-    eff.onStart = eff.effect.onStart;
-    /**
-    * Empty event handler to make ContainerEffects happy<br>
-    * May try to attach them to my effects later
-    * @type Object
-    */
-    //eff.onTween = new YAHOO.util.CustomEvent('ontween', this);
-    eff.onTween = eff.effect.onTween;
-    /**
-    * Empty event handler to make ContainerEffects happy<br>
-    * May try to attach them to my effects later
-    * @type Object
-    */
-    //eff.onComplete = new YAHOO.util.CustomEvent('oncomplete', this);
-    eff.onComplete = eff.onEffectComplete;
-    return eff;
+	/**
+	* Empty event handler to make ContainerEffects happy<br>
+	* May try to attach them to my effects later
+	* @type Object
+	*/
+	//eff.onStart = new YAHOO.util.CustomEvent('onstart', this);
+	eff.onStart = eff.effect.onStart;
+	/**
+	* Empty event handler to make ContainerEffects happy<br>
+	* May try to attach them to my effects later
+	* @type Object
+	*/
+	//eff.onTween = new YAHOO.util.CustomEvent('ontween', this);
+	eff.onTween = eff.effect.onTween;
+	/**
+	* Empty event handler to make ContainerEffects happy<br>
+	* May try to attach them to my effects later
+	* @type Object
+	*/
+	//eff.onComplete = new YAHOO.util.CustomEvent('oncomplete', this);
+	eff.onComplete = eff.onEffectComplete;
+	return eff;
 }

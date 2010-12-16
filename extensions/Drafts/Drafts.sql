@@ -3,11 +3,11 @@
 -- 
 -- Table for storing working changes to pages that
 -- users have yet to commit.
-CREATE TABLE /*$wgDBPrefix*/drafts (
+CREATE TABLE /*_*/drafts (
     -- Unique ID for drafts
     draft_id INTEGER AUTO_INCREMENT,
     -- Unique value generated at edit time to prevent duplicate submissions
-    draft_token INTEGER,
+    draft_token VARBINARY(255),
     -- User who made the draft, 0 for anons
     draft_user INTEGER NOT NULL default 0,
     -- Page ID, 0 for proposed new pages
@@ -39,5 +39,6 @@ CREATE TABLE /*$wgDBPrefix*/drafts (
         draft_title,
         draft_savetime
     ),
-    INDEX draft_savetime (draft_savetime)
+    INDEX draft_savetime (draft_savetime),
+    INDEX draft_page (draft_page)
 ) /*$wgDBTableOptions*/;

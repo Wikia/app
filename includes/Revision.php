@@ -1,8 +1,4 @@
 <?php
-/**
- * @todo document
- * @file
- */
 
 /**
  * @todo document
@@ -12,7 +8,8 @@ class Revision {
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
 	const DELETED_RESTRICTED = 8;
-
+	// Convenience field
+	const SUPPRESSED_USER = 12;
 	// Audience options for Revision::getText()
 	const FOR_PUBLIC = 1;
 	const FOR_THIS_USER = 2;
@@ -22,9 +19,8 @@ class Revision {
 	 * Load a page revision from a given revision ID number.
 	 * Returns null if no such revision can be found.
 	 *
-	 * @param int $id
-	 * @access public
-	 * @static
+	 * @param $id Integer
+	 * @return Revision or null
 	 */
 	public static function newFromId( $id ) {
 		return Revision::newFromConds(
@@ -37,9 +33,9 @@ class Revision {
 	 * that's attached to a given title. If not attached
 	 * to that title, will return null.
 	 *
-	 * @param Title $title
-	 * @param int $id
-	 * @return Revision
+	 * @param $title Title
+	 * @param $id Integer
+	 * @return Revision or null
 	 */
 	public static function newFromTitle( $title, $id = 0 ) {
 		$conds = array( 
@@ -67,13 +63,36 @@ class Revision {
 	}
 
 	/**
+	 * Make a fake revision object from an archive table row. This is queried
+	 * for permissions or even inserted (as in Special:Undelete)
+	 * @todo Fixme: should be a subclass for RevisionDelete. [TS]
+	 */
+	public static function newFromArchiveRow( $row, $overrides = array() ) {
+		$attribs = $overrides + array(
+			'page'       => isset( $row->page_id ) ? $row->page_id : null,
+			'id'         => isset( $row->ar_rev_id ) ? $row->ar_rev_id : null,
+			'comment'    => $row->ar_comment,
+			'user'       => $row->ar_user,
+			'user_text'  => $row->ar_user_text,
+			'timestamp'  => $row->ar_timestamp,
+			'minor_edit' => $row->ar_minor_edit,
+			'text_id'    => isset( $row->ar_text_id ) ? $row->ar_text_id : null,
+			'deleted'    => $row->ar_deleted,
+			'len'        => $row->ar_len);
+		if ( isset( $row->ar_text ) && !$row->ar_text_id ) {
+			// Pre-1.5 ar_text row
+			$attribs['text'] = self::getRevisionText( $row, 'ar_' );
+		}
+		return new self( $attribs );
+	}
+
+	/**
 	 * Load a page revision from a given revision ID number.
 	 * Returns null if no such revision can be found.
 	 *
-	 * @param Database $db
-	 * @param int $id
-	 * @access public
-	 * @static
+	 * @param $db DatabaseBase
+	 * @param $id Integer
+	 * @return Revision or null
 	 */
 	public static function loadFromId( $db, $id ) {
 		return Revision::loadFromConds( $db,
@@ -86,19 +105,17 @@ class Revision {
 	 * that's attached to a given page. If not attached
 	 * to that page, will return null.
 	 *
-	 * @param Database $db
-	 * @param int $pageid
-	 * @param int $id
-	 * @return Revision
-	 * @access public
-	 * @static
+	 * @param $db DatabaseBase
+	 * @param $pageid Integer
+	 * @param $id Integer
+	 * @return Revision or null
 	 */
 	public static function loadFromPageId( $db, $pageid, $id = 0 ) {
-		$conds=array('page_id=rev_page','rev_page'=>intval( $pageid ), 'page_id'=>intval( $pageid ));
+		$conds = array( 'page_id=rev_page','rev_page' => intval( $pageid ), 'page_id'=>intval( $pageid ) );
 		if( $id ) {
-			$conds['rev_id']=intval($id);
+			$conds['rev_id'] = intval( $id );
 		} else {
-			$conds[]='rev_id=page_latest';
+			$conds[] = 'rev_id=page_latest';
 		}
 		return Revision::loadFromConds( $db, $conds );
 	}
@@ -108,12 +125,10 @@ class Revision {
 	 * that's attached to a given page. If not attached
 	 * to that page, will return null.
 	 *
-	 * @param Database $db
-	 * @param Title $title
-	 * @param int $id
-	 * @return Revision
-	 * @access public
-	 * @static
+	 * @param $db DatabaseBase
+	 * @param $title Title
+	 * @param $id Integer
+	 * @return Revision or null
 	 */
 	public static function loadFromTitle( $db, $title, $id = 0 ) {
 		if( $id ) {
@@ -134,12 +149,10 @@ class Revision {
 	 * WARNING: Timestamps may in some circumstances not be unique,
 	 * so this isn't the best key to use.
 	 *
-	 * @param Database $db
-	 * @param Title $title
-	 * @param string $timestamp
-	 * @return Revision
-	 * @access public
-	 * @static
+	 * @param $db Database
+	 * @param $title Title
+	 * @param $timestamp String
+	 * @return Revision or null
 	 */
 	public static function loadFromTimestamp( $db, $title, $timestamp ) {
 		return Revision::loadFromConds(
@@ -153,12 +166,10 @@ class Revision {
 	/**
 	 * Given a set of conditions, fetch a revision.
 	 *
-	 * @param array $conditions
-	 * @return Revision
-	 * @access private
-	 * @static
+	 * @param $conditions Array
+	 * @return Revision or null
 	 */
-	private static function newFromConds( $conditions ) {
+	public static function newFromConds( $conditions ) {
 		$db = wfGetDB( DB_SLAVE );
 		$row = Revision::loadFromConds( $db, $conditions );
 		if( is_null( $row ) && wfGetLB()->getServerCount() > 1 ) {
@@ -172,11 +183,9 @@ class Revision {
 	 * Given a set of conditions, fetch a revision from
 	 * the given database connection.
 	 *
-	 * @param Database $db
-	 * @param array $conditions
-	 * @return Revision
-	 * @access private
-	 * @static
+	 * @param $db Database
+	 * @param $conditions Array
+	 * @return Revision or null
 	 */
 	private static function loadFromConds( $db, $conditions ) {
 		$res = Revision::fetchFromConds( $db, $conditions );
@@ -197,28 +206,8 @@ class Revision {
 	 * fetch all of a given page's revisions in turn.
 	 * Each row can be fed to the constructor to get objects.
 	 *
-	 * @param Title $title
+	 * @param $title Title
 	 * @return ResultWrapper
-	 * @access public
-	 * @static
-	 */
-	public static function fetchAllRevisions( $title ) {
-		return Revision::fetchFromConds(
-			wfGetDB( DB_SLAVE ),
-			array( 'page_namespace' => $title->getNamespace(),
-			       'page_title'     => $title->getDBkey(),
-			       'page_id=rev_page' ) );
-	}
-
-	/**
-	 * Return a wrapper for a series of database rows to
-	 * fetch all of a given page's revisions in turn.
-	 * Each row can be fed to the constructor to get objects.
-	 *
-	 * @param Title $title
-	 * @return ResultWrapper
-	 * @access public
-	 * @static
 	 */
 	public static function fetchRevision( $title ) {
 		return Revision::fetchFromConds(
@@ -234,11 +223,9 @@ class Revision {
 	 * which will return matching database rows with the
 	 * fields necessary to build Revision objects.
 	 *
-	 * @param Database $db
-	 * @param array $conditions
+	 * @param $db Database
+	 * @param $conditions Array
 	 * @return ResultWrapper
-	 * @access private
-	 * @static
 	 */
 	private static function fetchFromConds( $db, $conditions ) {
 		$fields = self::selectFields();
@@ -285,6 +272,7 @@ class Revision {
 			'old_flags'
 		);
 	}
+
 	/**
 	 * Return the list of page fields that should be selected from page table
 	 */
@@ -297,7 +285,9 @@ class Revision {
 	}
 
 	/**
-	 * @param object $row
+	 * Constructor
+	 *
+	 * @param $row Mixed: either a database row or an array
 	 * @access private
 	 */
 	function Revision( $row ) {
@@ -363,20 +353,17 @@ class Revision {
 			$this->mCurrent   = false;
 			# If we still have no len_size, see it we have the text to figure it out
 			if ( !$this->mSize )
-				$this->mSize      = is_null($this->mText) ? null : strlen($this->mText);
+				$this->mSize      = is_null( $this->mText ) ? null : strlen( $this->mText );
 		} else {
 			throw new MWException( 'Revision constructor passed invalid row format.' );
 		}
-		$this->mUnpatrolled = NULL;
+		$this->mUnpatrolled = null;
 	}
-
-	/**#@+
-	 * @access public
-	 */
 
 	/**
 	 * Get revision ID
-	 * @return int
+	 *
+	 * @return Integer
 	 */
 	public function getId() {
 		return $this->mId;
@@ -384,7 +371,8 @@ class Revision {
 
 	/**
 	 * Get text row ID
-	 * @return int
+	 *
+	 * @return Integer
 	 */
 	public function getTextId() {
 		return $this->mTextId;
@@ -392,7 +380,8 @@ class Revision {
 
 	/**
 	 * Get parent revision ID (the original previous page revision)
-	 * @return int
+	 *
+	 * @return Integer
 	 */
 	public function getParentId() {
 		return $this->mParentId;
@@ -400,7 +389,8 @@ class Revision {
 
 	/**
 	 * Returns the length of the text in this revision, or null if unknown.
-	 * @return int
+	 *
+	 * @return Integer
 	 */
 	public function getSize() {
 		return $this->mSize;
@@ -408,6 +398,7 @@ class Revision {
 
 	/**
 	 * Returns the title of the page associated with this entry.
+	 *
 	 * @return Title
 	 */
 	public function getTitle() {
@@ -430,7 +421,8 @@ class Revision {
 
 	/**
 	 * Set the title of the revision
-	 * @param Title $title
+	 *
+	 * @param $title Title
 	 */
 	public function setTitle( $title ) {
 		$this->mTitle = $title;
@@ -438,7 +430,8 @@ class Revision {
 
 	/**
 	 * Get the page ID
-	 * @return int
+	 *
+	 * @return Integer
 	 */
 	public function getPage() {
 		return $this->mPage;
@@ -449,13 +442,13 @@ class Revision {
 	 * If the specified audience does not have access to it, zero will be 
 	 * returned.
 	 *
-	 * @param integer $audience One of:
+	 * @param $audience Integer: one of:
 	 *      Revision::FOR_PUBLIC       to be displayed to all users
 	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
 	 *      Revision::RAW              get the ID regardless of permissions
 	 *
 	 *
-	 * @return int
+	 * @return Integer
 	 */
 	public function getUser( $audience = self::FOR_PUBLIC ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
@@ -469,7 +462,8 @@ class Revision {
 
 	/**
 	 * Fetch revision's user id without regard for the current user's permissions
-	 * @return string
+	 *
+	 * @return String
 	 */
 	public function getRawUser() {
 		return $this->mUser;
@@ -480,7 +474,7 @@ class Revision {
 	 * If the specified audience does not have access to the username, an 
 	 * empty string will be returned.
 	 *
-	 * @param integer $audience One of:
+	 * @param $audience Integer: one of:
 	 *      Revision::FOR_PUBLIC       to be displayed to all users
 	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
 	 *      Revision::RAW              get the text regardless of permissions
@@ -489,9 +483,9 @@ class Revision {
 	 */
 	public function getUserText( $audience = self::FOR_PUBLIC ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
-			return "";
+			return '';
 		} elseif( $audience == self::FOR_THIS_USER && !$this->userCan( self::DELETED_USER ) ) {
-			return "";
+			return '';
 		} else {
 			return $this->mUserText;
 		}
@@ -499,7 +493,8 @@ class Revision {
 
 	/**
 	 * Fetch revision's username without regard for view restrictions
-	 * @return string
+	 *
+	 * @return String
 	 */
 	public function getRawUserText() {
 		return $this->mUserText;
@@ -510,18 +505,18 @@ class Revision {
 	 * If the specified audience does not have access to the comment, an 
 	 * empty string will be returned.
 	 *
-	 * @param integer $audience One of:
+	 * @param $audience Integer: one of:
 	 *      Revision::FOR_PUBLIC       to be displayed to all users
 	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
 	 *      Revision::RAW              get the text regardless of permissions
 	 *
-	 * @return string
+	 * @return String
 	 */
 	function getComment( $audience = self::FOR_PUBLIC ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_COMMENT ) ) {
-			return "";
+			return '';
 		} elseif( $audience == self::FOR_THIS_USER && !$this->userCan( self::DELETED_COMMENT ) ) {
-			return "";
+			return '';
 		} else {
 			return $this->mComment;
 		}
@@ -529,24 +524,25 @@ class Revision {
 
 	/**
 	 * Fetch revision comment without regard for the current user's permissions
-	 * @return string
+	 *
+	 * @return String
 	 */
 	public function getRawComment() {
 		return $this->mComment;
 	}
 
 	/**
-	 * @return bool
+	 * @return Boolean
 	 */
 	public function isMinor() {
 		return (bool)$this->mMinorEdit;
 	}
 	
 	/**
-	 * @return int rcid of the unpatrolled row, zero if there isn't one
+	 * @return Integer rcid of the unpatrolled row, zero if there isn't one
 	 */
 	public function isUnpatrolled() {
-		if( $this->mUnpatrolled !== NULL ) {
+		if( $this->mUnpatrolled !== null ) {
 			return $this->mUnpatrolled;
 		}
 		$dbr = wfGetDB( DB_SLAVE );
@@ -565,15 +561,16 @@ class Revision {
 
 	/**
 	 * int $field one of DELETED_* bitfield constants
-	 * @return bool
+	 *
+	 * @return Boolean
 	 */
 	public function isDeleted( $field ) {
-		return ($this->mDeleted & $field) == $field;
+		return ( $this->mDeleted & $field ) == $field;
 	}
-	
+
 	/**
 	 * Get the deletion bitfield of the revision
-	 */	
+	 */
 	public function getVisibility() {
 		return (int)$this->mDeleted;
 	}
@@ -583,19 +580,19 @@ class Revision {
 	 * If the specified audience does not have the ability to view this 
 	 * revision, an empty string will be returned.
 	 *
-	 * @param integer $audience One of:
+	 * @param $audience Integer: one of:
 	 *      Revision::FOR_PUBLIC       to be displayed to all users
 	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
 	 *      Revision::RAW              get the text regardless of permissions
 	 *
 	 *
-	 * @return string
+	 * @return String
 	 */
 	public function getText( $audience = self::FOR_PUBLIC ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_TEXT ) ) {
-			return "";
+			return '';
 		} elseif( $audience == self::FOR_THIS_USER && !$this->userCan( self::DELETED_TEXT ) ) {
-			return "";
+			return '';
 		} else {
 			return $this->getRawText();
 		}
@@ -603,6 +600,8 @@ class Revision {
 
 	/**
 	 * Alias for getText(Revision::FOR_THIS_USER)
+	 *
+	 * @return String
 	 */
 	public function revText() {
 		return $this->getText( self::FOR_THIS_USER );
@@ -610,7 +609,8 @@ class Revision {
 
 	/**
 	 * Fetch revision text without regard for view restrictions
-	 * @return string
+	 *
+	 * @return String
 	 */
 	public function getRawText() {
 		if( is_null( $this->mText ) ) {
@@ -621,14 +621,14 @@ class Revision {
 	}
 
 	/**
-	 * @return string
+	 * @return String
 	 */
 	public function getTimestamp() {
-		return wfTimestamp(TS_MW, $this->mTimestamp);
+		return wfTimestamp( TS_MW, $this->mTimestamp );
 	}
 
 	/**
-	 * @return bool
+	 * @return Boolean
 	 */
 	public function isCurrent() {
 		return $this->mCurrent;
@@ -636,7 +636,8 @@ class Revision {
 
 	/**
 	 * Get previous revision for this title
-	 * @return Revision
+	 *
+	 * @return Revision or null
 	 */
 	public function getPrevious() {
 		if( $this->getTitle() ) {
@@ -649,7 +650,9 @@ class Revision {
 	}
 
 	/**
-	 * @return Revision
+	 * Get next revision for this title
+	 *
+	 * @return Revision or null
 	 */
 	public function getNext() {
 		if( $this->getTitle() ) {
@@ -664,11 +667,12 @@ class Revision {
 	/**
 	 * Get previous revision Id for this page_id
 	 * This is used to populate rev_parent_id on save
-	 * @param Database $db
-	 * @return int
+	 *
+	 * @param $db DatabaseBase
+	 * @return Integer
 	 */
 	private function getPreviousRevisionId( $db ) {
-		if( is_null($this->mPage) ) {
+		if( is_null( $this->mPage ) ) {
 			return 0;
 		}
 		# Use page_latest if ID is not given
@@ -682,7 +686,7 @@ class Revision {
 				__METHOD__,
 				array( 'ORDER BY' => 'rev_id DESC' ) );
 		}
-		return intval($prevId);
+		return intval( $prevId );
 	}
 
 	/**
@@ -690,9 +694,9 @@ class Revision {
 	  * $row is usually an object from wfFetchRow(), both the flags and the text
 	  * field must be included
 	  *
-	  * @param object $row The text data
-	  * @param string $prefix table prefix (default 'old_')
-	  * @return string $text|false the text requested
+	  * @param $row Object: the text data
+	  * @param $prefix String: table prefix (default 'old_')
+	  * @return String: text the text requested or false on failure
 	  */
 	public static function getRevisionText( $row, $prefix = 'old_' ) {
 		wfProfileIn( __METHOD__ );
@@ -716,13 +720,13 @@ class Revision {
 
 		# Use external methods for external objects, text in table is URL-only then
 		if ( in_array( 'external', $flags ) ) {
-			$url=$text;
-			@list(/* $proto */,$path)=explode('://',$url,2);
-			if ($path=="") {
+			$url = $text;
+			@list(/* $proto */, $path ) = explode( '://', $url, 2 );
+			if( $path == '' ) {
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
-			$text=ExternalStore::fetchFromURL($url);
+			$text = ExternalStore::fetchFromURL( $url );
 		}
 
 		// If the text was fetched without an error, convert it
@@ -746,7 +750,9 @@ class Revision {
 			}
 
 			global $wgLegacyEncoding;
-			if( $wgLegacyEncoding && !in_array( 'utf-8', $flags ) && !in_array( 'utf8', $flags ) ) {
+			if( $text !== false && $wgLegacyEncoding 
+				&& !in_array( 'utf-8', $flags ) && !in_array( 'utf8', $flags ) ) 
+			{
 				# Old revisions kept around in a legacy encoding?
 				# Upconvert on demand.
 				# ("utf8" checked for compatibility with some broken
@@ -766,8 +772,8 @@ class Revision {
 	 * data is compressed, and 'utf-8' if we're saving in UTF-8
 	 * mode.
 	 *
-	 * @param mixed $text reference to a text
-	 * @return string
+	 * @param $text Mixed: reference to a text
+	 * @return String
 	 */
 	public static function compressRevisionText( &$text ) {
 		global $wgCompressRevisions;
@@ -792,8 +798,8 @@ class Revision {
 	 * Insert a new revision into the database, returning the new revision ID
 	 * number on success and dies horribly on failure.
 	 *
-	 * @param Database $dbw
-	 * @return int
+	 * @param $dbw DatabaseBase (master connection)
+	 * @return Integer
 	 */
 	public function insertOn( $dbw ) {
 		global $wgDefaultExternalStore;
@@ -818,7 +824,7 @@ class Revision {
 
 		# Record the text (or external storage URL) to the text table
 		if( !isset( $this->mTextId ) ) {
-			$old_id = $dbw->nextSequenceValue( 'text_old_id_val' );
+			$old_id = $dbw->nextSequenceValue( 'text_old_id_seq' );
 			$dbw->insert( 'text',
 				array(
 					'old_id'    => $old_id,
@@ -829,10 +835,12 @@ class Revision {
 			$this->mTextId = $dbw->insertId();
 		}
 
+		if ( $this->mComment === null ) $this->mComment = "";
+
 		# Record the edit in revisions
 		$rev_id = isset( $this->mId )
 			? $this->mId
-			: $dbw->nextSequenceValue( 'rev_rev_id_val' );
+			: $dbw->nextSequenceValue( 'revision_rev_id_seq' );
 		$dbw->insert( 'revision',
 			array(
 				'rev_id'         => $rev_id,
@@ -844,16 +852,16 @@ class Revision {
 				'rev_user_text'  => $this->mUserText,
 				'rev_timestamp'  => $dbw->timestamp( $this->mTimestamp ),
 				'rev_deleted'    => $this->mDeleted,
-				'rev_len'	     => $this->mSize,
+				'rev_len'        => $this->mSize,
 				'rev_parent_id'  => is_null($this->mParentId) ?
 					$this->getPreviousRevisionId( $dbw ) : $this->mParentId
 			), __METHOD__
 		);
 
-		$this->mId = !is_null($rev_id) ? $rev_id : $dbw->insertId();
-		
+		$this->mId = !is_null( $rev_id ) ? $rev_id : $dbw->insertId();
+
 		wfRunHooks( 'RevisionInsertComplete', array( &$this, $data, $flags ) );
-		
+
 		wfProfileOut( __METHOD__ );
 
 		return $this->mId;
@@ -863,17 +871,19 @@ class Revision {
 	 * Lazy-load the revision's text.
 	 * Currently hardcoded to the 'text' table storage engine.
 	 *
-	 * @return string
+	 * @return String
 	 */
-	private function loadText() {
+	protected function loadText() {
 		wfProfileIn( __METHOD__ );
 
 		// Caching may be beneficial for massive use of external storage
 		global $wgRevisionCacheExpiry, $wgMemc;
-		$key = wfMemcKey( 'revisiontext', 'textid', $this->getTextId() );
+		$textId = $this->getTextId();
+		$key = wfMemcKey( 'revisiontext', 'textid', $textId );
 		if( $wgRevisionCacheExpiry ) {
 			$text = $wgMemc->get( $key );
 			if( is_string( $text ) ) {
+				wfDebug( __METHOD__ . ": got id $textId from cache\n" );
 				wfProfileOut( __METHOD__ );
 				return $text;
 			}
@@ -925,11 +935,11 @@ class Revision {
 	 * Such revisions can for instance identify page rename
 	 * operations and other such meta-modifications.
 	 *
-	 * @param Database $dbw
-	 * @param int      $pageId ID number of the page to read from
-	 * @param string   $summary
-	 * @param bool     $minor
-	 * @return Revision
+	 * @param $dbw DatabaseBase
+	 * @param $pageId Integer: ID number of the page to read from
+	 * @param $summary String: revision's summary
+	 * @param $minor Boolean: whether the revision should be considered as minor
+	 * @return Mixed: Revision, or null on error
 	 */
 	public static function newNullRevision( $dbw, $pageId, $summary, $minor ) {
 		wfProfileIn( __METHOD__ );
@@ -963,34 +973,56 @@ class Revision {
 	/**
 	 * Determine if the current user is allowed to view a particular
 	 * field of this revision, if it's marked as deleted.
-	 * @param int $field one of self::DELETED_TEXT,
-	 *                          self::DELETED_COMMENT,
-	 *                          self::DELETED_USER
-	 * @return bool
+	 *
+	 * @param $field Integer:one of self::DELETED_TEXT,
+	 *                              self::DELETED_COMMENT,
+	 *                              self::DELETED_USER
+	 * @return Boolean
 	 */
 	public function userCan( $field ) {
-		if( ( $this->mDeleted & $field ) == $field ) {
+		return self::userCanBitfield( $this->mDeleted, $field );
+	}
+
+	/**
+	 * Determine if the current user is allowed to view a particular
+	 * field of this revision, if it's marked as deleted. This is used
+	 * by various classes to avoid duplication.
+	 *
+	 * @param $bitfield Integer: current field
+	 * @param $field Integer: one of self::DELETED_TEXT = File::DELETED_FILE,
+	 *                               self::DELETED_COMMENT = File::DELETED_COMMENT,
+	 *                               self::DELETED_USER = File::DELETED_USER
+	 * @return Boolean
+	 */
+	public static function userCanBitfield( $bitfield, $field ) {
+		if( $bitfield & $field ) { // aspect is deleted
 			global $wgUser;
-			$permission = ( $this->mDeleted & self::DELETED_RESTRICTED ) == self::DELETED_RESTRICTED
-				? 'suppressrevision'
-				: 'deleterevision';
-			wfDebug( "Checking for $permission due to $field match on $this->mDeleted\n" );
+			$permission = '';
+			if ( $bitfield & self::DELETED_RESTRICTED ) {
+				$permission = 'suppressrevision';
+			} elseif ( $field & self::DELETED_TEXT ) {
+				$permission = 'deletedtext';
+			} else {
+				$permission = 'deletedhistory';
+			}
+			wfDebug( "Checking for $permission due to $field match on $bitfield\n" );
 			return $wgUser->isAllowed( $permission );
 		} else {
 			return true;
 		}
 	}
 
-
 	/**
 	 * Get rev_timestamp from rev_id, without loading the rest of the row
-	 * @param Title $title
-	 * @param integer $id
+	 *
+	 * @param $title Title
+	 * @param $id Integer
+	 * @return String
 	 */
 	static function getTimestampFromId( $title, $id ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		// Casting fix for DB2
-		if ($id == '') {
+		if ( $id == '' ) {
 			$id = 0;
 		}
 		$conds = array( 'rev_id' => $id );
@@ -1006,8 +1038,10 @@ class Revision {
 
 	/**
 	 * Get count of revisions per page...not very efficient
-	 * @param Database $db
-	 * @param int $id, page id
+	 *
+	 * @param $db DatabaseBase
+	 * @param $id Integer: page id
+	 * @return Integer
 	 */
 	static function countByPageId( $db, $id ) {
 		$row = $db->selectRow( 'revision', 'COUNT(*) AS revCount',
@@ -1020,8 +1054,10 @@ class Revision {
 
 	/**
 	 * Get count of revisions per page...not very efficient
-	 * @param Database $db
-	 * @param Title $title
+	 *
+	 * @param $db DatabaseBase
+	 * @param $title Title
+	 * @return Integer
 	 */
 	static function countByTitle( $db, $title ) {
 		$id = $title->getArticleId();

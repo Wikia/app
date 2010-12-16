@@ -238,7 +238,7 @@ class PHPMailer {
   // PROPERTIES, PRIVATE
   /////////////////////////////////////////////////
 
-  private $smtp            = NULL;
+  private $smtp            = null;
   private $to              = array();
   private $cc              = array();
   private $bcc             = array();
@@ -565,7 +565,7 @@ class PHPMailer {
    * @return bool
    */
   function SmtpConnect() {
-    if($this->smtp == NULL) {
+    if($this->smtp == null) {
       $this->smtp = new SMTP();
     }
 
@@ -615,7 +615,7 @@ class PHPMailer {
    * @return void
    */
   function SmtpClose() {
-    if($this->smtp != NULL) {
+    if($this->smtp != null) {
       if($this->smtp->Connected()) {
         $this->smtp->Quit();
         $this->smtp->Close();

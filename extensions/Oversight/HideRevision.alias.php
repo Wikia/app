@@ -15,17 +15,13 @@ $aliases['en'] = array(
 	'Oversight'    => array( 'Oversight' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'HideRevision' => array( 'إخفاء_نسخة' ),
 	'Oversight' => array( 'أوفرسايت' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'HideRevision' => array( 'إخفاء_نسخة' ),
 	'Oversight' => array( 'أوفرسايت' ),
@@ -37,9 +33,7 @@ $aliases['bs'] = array(
 	'Oversight' => array( 'Nadzor' ),
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
+/** German (Deutsch) */
 $aliases['de'] = array(
 	'HideRevision' => array( 'Version verstecken' ),
 	'Oversight' => array( 'Oversight-Logbuch' ),
@@ -65,8 +59,14 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'HideRevision' => array( 'Masquer révision', 'MasquerRevision' ),
-	'Oversight' => array( 'Superviser', 'Superviseur', 'Supervision' ),
+	'HideRevision' => array( 'Masquer révision' ),
+	'Oversight' => array( 'Superviser', 'Supervision' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'HideRevision' => array( 'Cachiér la vèrsion', 'CachiérLaVèrsion' ),
+	'Oversight' => array( 'Supèrvisar', 'Supèrvisor', 'Supèrvision' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -75,9 +75,7 @@ $aliases['gsw'] = array(
 	'Oversight' => array( 'Oversight-Logbuech' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'HideRevision' => array( 'הסתרת_גרסה' ),
 	'Oversight' => array( 'צפייה_בגרסאות_שהוסתרו' ),
@@ -97,25 +95,36 @@ $aliases['hsb'] = array(
 
 /** Interlingua (Interlingua) */
 $aliases['ia'] = array(
-	'HideRevision' => array( 'Celar revision' ),
+	'HideRevision' => array( 'Celar version' ),
 	'Oversight' => array( 'Supervision' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'HideRevision' => array( 'Sembunyikan revisi' ),
-	'Oversight' => array( 'Pengawas revisi' ),
+	'HideRevision' => array( 'Sembunyikan revisi', 'SembunyikanRevisi' ),
+	'Oversight' => array( 'Pengawas revisi', 'PengawasRevisi' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'HideRevision' => array( 'NascondiRevisione' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'HideRevision' => array( '版の秘匿' ),
-	'Oversight' => array( '秘匿版の閲覧' ),
+	'HideRevision' => array( '版の秘匿', '版秘匿' ),
+	'Oversight' => array( '秘匿版の閲覧', '秘匿版閲覧' ),
 );
 
 /** Korean (한국어) */
 $aliases['ko'] = array(
 	'Oversight' => array( '오버사이트' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'HideRevision' => array( 'Version versteische' ),
+	'Oversight' => array( 'Logbooch vum Versione Vershteische' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -126,6 +135,23 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'HideRevision' => array( 'СокријРевизија' ),
+	'Oversight' => array( 'Надгледување' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'HideRevision' => array( 'നാൾപ്പതിപ്പ്മറയ്ക്കുക' ),
+	'Oversight' => array( 'മേൽനോട്ടം' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Oversight' => array( 'झापडबंद' ),
+);
+
+/** Maltese (Malti) */
+$aliases['mt'] = array(
+	'HideRevision' => array( 'AħbiReviżjoni' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -143,6 +169,7 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'HideRevision' => array( 'Skjul revisjon' ),
+	'Oversight' => array( 'Oversikt' ),
 );
 
 /** Occitan (Occitan) */
@@ -157,15 +184,27 @@ $aliases['pl'] = array(
 	'Oversight' => array( 'Rejestr ukrywania' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'HideRevision' => array( 'Esconder revisão' ),
+);
+
 /** Romanian (Română) */
 $aliases['ro'] = array(
 	'HideRevision' => array( 'Ascunde modificarea' ),
+	'Oversight' => array( 'Suprimare' ),
 );
 
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'HideRevision' => array( 'आवृत्तीलुपयति' ),
 	'Oversight' => array( 'वृजावलोकन' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'HideRevision' => array( 'SkryťRevíziu' ),
+	'Oversight' => array( 'Dozor' ),
 );
 
 /** Swedish (Svenska) */
@@ -182,5 +221,16 @@ $aliases['sw'] = array(
 $aliases['tl'] = array(
 	'HideRevision' => array( 'Itago ang pagbabago' ),
 	'Oversight' => array( 'Maingat na pamamahala' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'HideRevision' => array( 'SürümGizle' ),
+	'Oversight' => array( 'Gözetmen' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'HideRevision' => array( 'ScondiRevision' ),
 );
 

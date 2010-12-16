@@ -62,14 +62,31 @@ class MV_MagicWords {
 				return $this->getRecentSpeeches();
 				break;
 			case 'PERSONSPEECHES':
-				return $this->getPersonOut();
+				return $this->getPersonOut( 'speech_by');
+				break;
+			case 'PERSONSPOKENBY':
+				return $this->getPersonOut( 'spoken_by' );
 				break;
 			case 'VIDEOBILL':
 				return $this->getBillOut();
 				break;
-			default:
-				return "error: unknown mvData function: <b>{$this->magicTypeKey}</b> <br>";
+			case 'TOTALSTREAMLENGTH':
+				return $this->getTotalLength();
 				break;
+			default:
+				return "error: unknown mvData function: <b>{$this->magicTypeKey}</b> <br />";
+				break;
+		}
+	}
+	function getTotalLength(){
+		$dbr = & wfGetDB( DB_READ );
+		$result =& $dbr->query('SELECT SUM( `duration` ) as `dur`
+FROM `mv_streams` ');		
+		if ( $dbr->numRows( $result ) == 0 ) {
+			return '';
+		} else {
+			$row = $dbr->fetchObject( $result );
+			return trim( seconds2Description	( $row->dur) );
 		}
 	}
 	function getBillOut() {
@@ -84,8 +101,8 @@ class MV_MagicWords {
 		$ms->filters[] = array ( 'a' => 'and', 't' => 'bill', 'v' => $bill_name );
 		$ms->doSearch( $log_search = false );
 		return $ms->getUnifiedResultsHTML( $show_sidebar = false );
-	}
-	function getPersonOut() {
+	}	
+	function getPersonOut( $sp_mode = 'speech_by' ) {
 		if ( $this->params['person'] != '' ) {
 			$person_name = $this->params['person'];
 		} else {
@@ -99,7 +116,7 @@ class MV_MagicWords {
 		$pgsl = $mvMediaSearchResultsLimit;
 		$mvMediaSearchResultsLimit	= $this->params['num_results'];
 
-		$ms->filters[] = array ( 'a' => 'and', 't' => 'spoken_by', 'v' => $person_name );
+		$ms->filters[] = array ( 'a' => 'and', 't' => $sp_mode, 'v' => $person_name );
 		$ms->doSearch( $log_search = false );
 
 		$mvMediaSearchResultsLimit = $pgsl;
@@ -209,7 +226,7 @@ class MV_MagicWords {
 					$ptitle = Title::MakeTitle( NS_MAIN, $mvd_row->Speech_by );
 					$mvd_out_html .= '<span class="keywords">' .
 							$sk->makeKnownLinkObj( $ptitle, $ptitle->getText() ) .
- 						'</span><br>';
+ 						'</span><br />';
 				}
 			}
 			if ( isset( $mvd_row->Bill ) ) {
@@ -217,7 +234,7 @@ class MV_MagicWords {
 					$btitle = Title::MakeTitle( NS_MAIN, $mvd_row->Bill );
 					$mvd_out_html .= '<span class="keywords">Bill: ' .
 							$sk->makeKnownLinkObj( $btitle ) . '
- 						</span><br>';
+ 						</span><br />';
 				}
 			}
 			global $wgContLang;
@@ -238,7 +255,7 @@ class MV_MagicWords {
 						 $mvd_out_html.=$coma.$sk->makeKnownLinkObj($cTitle, $cTitle->getText());
 						 $coma=', ';
 				 	}
-					$mvd_out_html.='</span><br>';
+					$mvd_out_html.='</span><br />';
 				 }
 			}
 		}else{		
@@ -257,8 +274,8 @@ class MV_MagicWords {
 		if( ($row->end_time - $row->start_time) > 20*60)
 			$row->end_time = $row->start_time + 20*60;			
 		
-		$nt = $mvStream->getStreamName() . '/' . seconds2ntp( $row->start_time )
-		. '/' . seconds2ntp( $row->end_time );
+		$nt = $mvStream->getStreamName() . '/' . seconds2npt( $row->start_time )
+		. '/' . seconds2npt( $row->end_time );
 		$mvTitle = new MV_Title( $nt, MV_NS_STREAM );
 			
 		$mvStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( $extra_range = '0' ) );
@@ -293,6 +310,7 @@ class MV_MagicWords {
 		return $o;
 	}
 	function formatOutputItems($outItems){
+		$o='';
 		$class_attr = ( $this->params['class'] != '' ) ? ' class="' . htmlspecialchars($this->params['class']) . '"':'';
 		if ( $this->params['format'] == 'ul_list' ) {
 			$o .= '<ul' . $class_attr . '>';
@@ -325,7 +343,7 @@ class MV_MagicWords {
 	// get the top few search results this is a ~slow~ query ...
 	// @@todo we should only run it every 2 hours or something..
 	function getTopSearches() {
-		$dbr =& wfGetDB( DB_READ );
+		$dbr = wfGetDB( DB_READ );
 		$o = '';
 		$options = array();
 		/*$result = $dbr->select('mv_search_digest', '`query_key`, COUNT(1) as `hit_count`', "`time` >= '$start_time' ",
@@ -383,5 +401,3 @@ class MV_MagicWords {
 		return $o;
 	}
 }
-
-?>

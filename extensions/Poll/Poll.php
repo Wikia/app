@@ -26,7 +26,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Poll',
-	'version'        => '1.0(r51982)',
+	'version'        => '1.1',
 	'path'           => __FILE__,
 	'author'         => 'Jan Luca',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Poll2',
@@ -74,12 +74,14 @@ function efPollSchemaUpdates() {
 		$wgExtNewTables[] = array( 'poll', "$base/archives/Poll.sql" ); // Initial install tables
 		$wgExtNewFields[] = array( 'poll', 'creater', "$base/archives/patch-creater.sql" ); // Add creater
 		$wgExtNewFields[] = array( 'poll', 'dis', "$base/archives/patch-dis.sql" ); // Add dis
-		$wgExtNewFields[] = array( 'poll', 'multi', "$base/archives/patch-multi.sql" ); // Add user
+		$wgExtNewFields[] = array( 'poll', 'multi', "$base/archives/patch-multi.sql" ); // Add multi
+		$wgExtNewFields[] = array( 'poll', 'ip', "$base/archives/patch-ip.sql" ); // Add ip
 		
 		// "poll_answer"-Table: The answer of the users
 		$wgExtNewTables[] = array( 'poll_answer', "$base/archives/Poll-answer.sql" ); // Initial answer tables
 		$wgExtNewFields[] = array( 'poll_answer', 'user', "$base/archives/patch-user.sql" ); // Add user
 		$wgExtNewFields[] = array( 'poll_answer', 'vote_other', "$base/archives/patch-vote_other.sql" ); // Add vote_other
+		$wgExtNewFields[] = array( 'poll_answer', 'ip', "$base/archives/patch-answer-ip.sql" ); // Add ip
 	}
 	return true;
 }

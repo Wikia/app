@@ -10,9 +10,10 @@
 
 $wgExtensionFunctions[] = 'wfAddaction';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Content action hook',
 	'author' => 'Ævar Arnfjörð Bjarmason',
-	'desciprion' => 'Adds a new tab to each page',
+	'description' => 'Adds a new tab to each page',
 );
 
 

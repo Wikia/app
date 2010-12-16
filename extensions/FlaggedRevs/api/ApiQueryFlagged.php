@@ -59,6 +59,10 @@ class ApiQueryFlagged extends ApiQueryBase {
 		$db->freeResult( $res );
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array();
 	}
@@ -82,6 +86,6 @@ class ApiQueryFlagged extends ApiQueryBase {
 	}
 	
 	public function getVersion() {
-		return __CLASS__.': $Id: ApiQueryFlagged.php 41809 2008-10-07 14:27:55Z catrope $';
+		return __CLASS__.': $Id: ApiQueryFlagged.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

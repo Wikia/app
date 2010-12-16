@@ -20,7 +20,7 @@ $messages['en'] = array(
 	// Page
 	'datacenter' => 'DataCenter',
 	// Description
-	'datacenter-desc' => 'DataCenter Planing and Asset Tracking System',
+	'datacenter-desc' => 'DataCenter Planning and Asset Tracking System',
 	// Pages
 	'datacenter-ui-page-assets' => 'Assets',
 	'datacenter-ui-page-facilities' => 'Facilities',

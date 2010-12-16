@@ -48,7 +48,7 @@ function populateCategorySearch( $begin, $maxlag, $throttle, $force ) {
 			break;
 		$pageid = intval($row->page_id);
 		$where = 'page_id > ' . $pageid;
-		
+
 		# Get all categories this page is in
 		$res = $dbw->select(
 			'categorylinks',

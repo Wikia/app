@@ -4,7 +4,6 @@
   * @ingroup Language
   *
   * @author Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-  * @bug 1638, 2135
   * @link http://be.wikipedia.org/wiki/Talk:LanguageBe.php
   * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
   * @license http://www.gnu.org/copyleft/fdl.html GNU Free Documentation License
@@ -25,6 +24,8 @@ class LanguageBe_tarask extends Language {
 		//if no number with word, then use $form[0] for singular and $form[1] for plural or zero
 		if( count($forms) === 2 ) return $count == 1 ? $forms[0] : $forms[1];
 
+		// FIXME: CLDR defines 4 plural forms instead of 3
+		//        http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 		$forms = $this->preConvertPlural( $forms, 3 );
 
 		if ($count > 10 && floor(($count % 100) / 10) == 1) {

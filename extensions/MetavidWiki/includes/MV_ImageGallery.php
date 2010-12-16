@@ -43,7 +43,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 			$time = false;
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time ) );
 
-			$img = wfFindFile( $nt, $time );
+			$img = wfFindFile( $nt, array( 'time' => $time ) );
 			
 			
 			if ( $nt->getNamespace() == MV_NS_MVD ||
@@ -153,4 +153,3 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 		return $s;
 	}
  }
-?>

@@ -146,7 +146,7 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	private static function toggleAds($enable = true, $BAId = null) {
-		global $wgCityId, $wgShowAds, $wgUser, $wgExternalDatawareDB;
+		global $wgCityId, $wgShowAds, $wgUser, $wgExternalDatawareDB, $wgServer;
 
 		wfProfileIn( __METHOD__ );
 
@@ -170,6 +170,13 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 				// fix for AJAX calls (TODO: needed here?)
 				$dbw->commit();
 			}
+
+			//purge all pages on the wiki ... ?
+			//SquidUpdate::purge( array( $wgServer ) );
+
+			// ... or just Mainpage for now:
+			$oMainPage = new Article( Title::newFromText( wfMsgForContent( 'Mainpage' ) ), NS_MAIN );
+			$oMainPage->doPurge();
 		} else {
 			$result = true;
 		}

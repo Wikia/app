@@ -24,6 +24,7 @@ EOT;
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'          => __FILE__,
 	'name'          => 'EditOwn',
 	'author'        => 'Roan Kattouw',
 	'url'           => 'http://www.mediawiki.org/wiki/Extension:EditOwn',
@@ -61,6 +62,14 @@ function EditOwn($title, $user, $action, &$result)
 		$result = $cache[$user->getName()][$title->getArticleId()];
 		return is_null($result);
 	}
+	
+	if(!$title->exists())
+	{
+		// Creation is allowed
+		$cache[$user->getName()][$title->getArticleId()] = null;
+		$result = null;
+		return true;
+	}
 
 	// Since there's no easy way to get the first revision,
 	// we'll just do a DB query
@@ -72,7 +81,7 @@ function EditOwn($title, $user, $action, &$result)
 	$row = $dbr->fetchObject($res);
 	if(!$row)
 	{
-		// Nonexistent title? Creation is allowed
+		// Title with no revs, weird... allow creation
 		$cache[$user->getName()][$title->getArticleId()] = null;
 		$result = null;
 		return true;

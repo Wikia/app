@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-infinitescroll
+  label: StatusNet - InfiniteScroll
+  description: "{{int:bw-desc-statusnet-plugin-infinitescroll}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/infinitescroll
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/InfiniteScroll/locale/%CODE%/LC_MESSAGES/InfiniteScroll.po
+  targetPattern: plugins/InfiniteScroll/locale/%CODE%/LC_MESSAGES/InfiniteScroll.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: infinitescroll-
+  patterns:
+    - "*"

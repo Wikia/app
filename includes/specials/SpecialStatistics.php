@@ -23,7 +23,7 @@ class SpecialStatistics extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgOut, $wgRequest, $wgMessageCache;
+		global $wgOut, $wgRequest, $wgMessageCache, $wgMemc;
 		global $wgDisableCounters, $wgMiserMode, $wgTitle;
 		$wgMessageCache->loadAllMessages();
 
@@ -38,7 +38,8 @@ class SpecialStatistics extends SpecialPage {
 		$this->activeUsers = SiteStats::activeUsers();
 		$this->admins = SiteStats::numberingroup('sysop');
 		$this->numJobs = SiteStats::jobs();
-
+		$this->hook = '';
+	
 		# Staticic - views
 		$viewsStats = '';
 		if( !$wgDisableCounters ) {
@@ -47,8 +48,13 @@ class SpecialStatistics extends SpecialPage {
 
 		# Set active user count
 		if( !$wgMiserMode ) {
-			$dbw = wfGetDB( DB_MASTER );
-			SiteStatsUpdate::cacheUpdate( $dbw );
+			$key = wfMemcKey( 'sitestats', 'activeusers-updated' );
+			// Re-calculate the count if the last tally is old...
+			if( !$wgMemc->get($key) ) {
+				$dbw = wfGetDB( DB_MASTER );
+				SiteStatsUpdate::cacheUpdate( $dbw );
+				$wgMemc->set( $key, '1', 24*3600 ); // don't update for 1 day
+			}
 		}
 
 		# Do raw output
@@ -56,7 +62,7 @@ class SpecialStatistics extends SpecialPage {
 			$this->doRawOutput();
 		}
 
-		$text = Xml::openElement( 'table', array( 'class' => 'mw-statistics-table' ) );
+		$text = Xml::openElement( 'table', array( 'class' => 'wikitable mw-statistics-table' ) );
 
 		# Statistic - pages
 		$text .= $this->getPageStats();
@@ -74,6 +80,12 @@ class SpecialStatistics extends SpecialPage {
 		# Statistic - popular pages
 		if( !$wgDisableCounters && !$wgMiserMode ) {
 			$text .= $this->getMostViewedPages();
+		}
+		
+		# Statistic - other
+		$extraStats = array();
+		if( wfRunHooks( 'SpecialStatsAddExtra', array( &$extraStats ) ) ) {
+			$text .= $this->getOtherStats( $extraStats );
 		}
 
 		$text .= Xml::closeElement( 'table' );
@@ -154,14 +166,22 @@ class SpecialStatistics extends SpecialPage {
 						array( 'class' => 'mw-statistics-jobqueue' ) );
 	}
 	private function getUserStats() {
-		global $wgLang, $wgRCMaxAge;
+		global $wgLang, $wgUser, $wgRCMaxAge;
+		$sk = $wgUser->getSkin();
 		return Xml::openElement( 'tr' ) .
 			Xml::tags( 'th', array( 'colspan' => '2' ), wfMsgExt( 'statistics-header-users', array( 'parseinline' ) ) ) .
 			Xml::closeElement( 'tr' ) .
 				$this->formatRow( wfMsgExt( 'statistics-users', array( 'parseinline' ) ),
 						$wgLang->formatNum( $this->users ),
 						array( 'class' => 'mw-statistics-users' ) ) .
-				$this->formatRow( wfMsgExt( 'statistics-users-active', array( 'parseinline' ) ),
+				$this->formatRow( wfMsgExt( 'statistics-users-active', array( 'parseinline' ) ) . ' ' .
+							$sk->link(
+								SpecialPage::getTitleFor( 'Activeusers' ),
+								wfMsgHtml( 'listgrouprights-members' ),
+								array(),
+								array(),
+								'known'
+							),
 						$wgLang->formatNum( $this->activeUsers ),
 						array( 'class' => 'mw-statistics-users-active' ),
 						'statistics-users-active-desc',
@@ -189,13 +209,19 @@ class SpecialStatistics extends SpecialPage {
 			} else {
 				$grouppageLocalized = $msg;
 			}
-			$grouppage = $sk->makeLink( $grouppageLocalized, htmlspecialchars( $groupnameLocalized ) );
-			$grouplink = $sk->link( SpecialPage::getTitleFor( 'Listusers' ),
+			$linkTarget = Title::newFromText( $grouppageLocalized );
+			$grouppage = $sk->link(
+				$linkTarget,
+				htmlspecialchars( $groupnameLocalized )
+			);
+			$grouplink = $sk->link(
+				SpecialPage::getTitleFor( 'Listusers' ),
 				wfMsgHtml( 'listgrouprights-members' ),
 				array(),
 				array( 'group' => $group ),
-				'known' );
-				# Add a class when a usergroup contains no members to allow hiding these rows
+				'known'
+			);
+			# Add a class when a usergroup contains no members to allow hiding these rows
 			$classZero = '';
 			$countUsers = SiteStats::numberingroup( $groupname );
 			if( $countUsers == 0 ) {
@@ -247,7 +273,9 @@ class SpecialStatistics extends SpecialPage {
 				)
 			);
 			if( $res->numRows() > 0 ) {
+				$text .= Xml::openElement( 'tr' );
 				$text .= Xml::tags( 'th', array( 'colspan' => '2' ), wfMsgExt( 'statistics-mostpopular', array( 'parseinline' ) ) );
+				$text .= Xml::closeElement( 'tr' );
 				while( $row = $res->fetchObject() ) {
 					$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
 					if( $title instanceof Title ) {
@@ -261,6 +289,26 @@ class SpecialStatistics extends SpecialPage {
 		return $text;
 	}
 
+	private function getOtherStats( $stats ) {
+		global $wgLang;
+
+		if ( !count( $stats ) )
+			return '';
+
+		$return = Xml::openElement( 'tr' ) .
+			Xml::tags( 'th', array( 'colspan' => '2' ), wfMsgExt( 'statistics-header-hooks', array( 'parseinline' ) ) ) .
+			Xml::closeElement( 'tr' );
+			
+		foreach( $stats as $name => $number ) {
+			$name = htmlspecialchars( $name );
+			$number = htmlspecialchars( $number );
+			
+			$return .= $this->formatRow( $name, $wgLang->formatNum( $number ), array( 'class' => 'mw-statistics-hook' ) );
+		}
+		
+		return $return;
+	}
+	
 	/**
 	 * Do the action=raw output for this page. Legacy, but we support
 	 * it for backwards compatibility

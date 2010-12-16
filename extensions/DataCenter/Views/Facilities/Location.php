@@ -10,9 +10,7 @@ class DataCenterViewFacilitiesLocation extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		// Gets all components from database
 		$locations = DataCenterDB::getLocations(
 			DataCenterDB::buildSort(
@@ -42,7 +40,7 @@ class DataCenterViewFacilitiesLocation extends DataCenterView {
 				$tables[$tense] = null;
 			}
 		}
-		// Returns 2 columm layout with a table and a map widget
+		// Returns 2 column layout with a table and a map widget
 		return DataCenterUI::renderLayout(
 			'columns',
 			array(
@@ -78,9 +76,7 @@ class DataCenterViewFacilitiesLocation extends DataCenterView {
 		);
 	}
 
-	public function view(
-		$path
-	) {
+	public function view( $path ) {
 		// Checks if the user did not provide enough information
 		if ( !$path['id'] ) {
 			// Returns error message
@@ -167,15 +163,11 @@ class DataCenterViewFacilitiesLocation extends DataCenterView {
 		);
 	}
 
-	public function add(
-		$path
-	) {
+	public function add( $path ) {
 		return $this->edit( $path );
 	}
 
-	public function edit(
-		$path
-	) {
+	public function edit( $path ) {
 		// Detects mode
 		if ( !$path['id'] ) {
 			// Creates a new facility location
@@ -222,7 +214,7 @@ class DataCenterViewFacilitiesLocation extends DataCenterView {
 				'subject' => DataCenterUI::message( 'type', $path['type'] )
 			);
 		}
-		// Builds javascript that hooks the button into the geocoder
+		// Builds JavaScript that hooks the button into the geocoder
 		$jsForm = 'document.form_save';
 		$jsOut = DataCenterJs::callFunction(
 			'addHandler',

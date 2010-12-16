@@ -202,4 +202,19 @@ class PdfHandler extends ImageHandler {
 		$data = $this->getMetaArray( $image );
 		return PdfImage::getPageSize( $data, $page );
 	}
+
+	function getPageText( $image, $page ){
+		$data = $this->getMetaArray( $image, true );
+		if ( !$data ) {
+			return false;
+		}
+		if( ! isset( $data['text'] ) ) {
+			return false;
+		}
+		if( ! isset( $data['text'][$page-1] ) ) {
+			return false;
+		}
+		return $data['text'][$page-1];
+	}
+
 }

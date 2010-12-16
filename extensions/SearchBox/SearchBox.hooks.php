@@ -12,11 +12,9 @@ class SearchBoxHooks {
 	/* Functions */
 
 	// Initialization
-	public static function register() {
-		global $wgParser;
-
+	public static function register( &$parser ) {
 		// Register the hook with the parser
-		$wgParser->setHook( 'searchbox', 'SearchBoxHooks::render' );
+		$parser->setHook( 'searchbox', 'SearchBoxHooks::render' );
 
 		// Continue
 		return true;

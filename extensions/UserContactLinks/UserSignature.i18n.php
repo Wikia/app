@@ -9,17 +9,18 @@ $messages = array();
 
 $messages['en'] = array(
 	'usercontactlink-baduser' => 'incorrect username',
-	'usercontactlink-desc'    => 'Provides the ability to simply and consistantly add other user names using ^^^user^^^ syntax',
+	'usercontactlink-desc'    => 'Provides the ability to simply and consistently add other user names using ^^^user^^^ syntax',
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'usercontactlink-baduser' => '{{Identical|Incorrect username}}',
-	'usercontactlink-desc' => 'Short description of this extension, shown on [[Special:Version]].',
+	'usercontactlink-desc' => '{{desc}}',
 );
 
 /** Faeag Rotuma (Faeag Rotuma)
@@ -60,6 +61,14 @@ $messages['avk'] = array(
 	'usercontactlink-baduser' => 'Favesikyoltaj',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'usercontactlink-baduser' => 'fåischa Benutzanãm',
+	'usercontactlink-desc' => 'Eamöglicht, dass Benutzanãmen oafåch mid ^^^Benutza^^^ valinkt wean',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -83,12 +92,36 @@ $messages['bn'] = array(
 	'usercontactlink-baduser' => 'বেঠিক ব্যবহারকারী নাম',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'usercontactlink-baduser' => 'Anv implijer faziek',
+	'usercontactlink-desc' => 'Talvezout a ra da ouzhpennañ aes hag ingal anvioù implijer all en ur ober gant an ereadur ^^^user^^^',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'usercontactlink-baduser' => 'pogrešno korisničko ime',
 	'usercontactlink-desc' => 'Daje mogućnost jednostavnog i konzistentnog dodavanja drugih korisničkih imena koristeći ^^^user^^^ sintaksu',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ * @author Ssola
+ */
+$messages['ca'] = array(
+	'usercontactlink-baduser' => "nom d'usuari incorrecte",
+	'usercontactlink-desc' => "Permet la capacitat d'afegir simplement i amb consistència altres noms d'usuari utilitzant la sintaxi ^^^user^^^",
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'usercontactlink-baduser' => 'ناوی بەکارهێنەری هەڵە',
 );
 
 /** Czech (Česky)
@@ -120,6 +153,7 @@ $messages['dsb'] = array(
  */
 $messages['el'] = array(
 	'usercontactlink-baduser' => 'λανθασμένο όνομα χρήστη',
+	'usercontactlink-desc' => 'Επιτρέπει στον χρήστη να προσθέτει με απλό τρόπο και συνέπεια άλλα ονόματα χρήστη χρησιμοποιώντας το συντακτικό ^^^user^^^',
 );
 
 /** Esperanto (Esperanto)
@@ -139,9 +173,11 @@ $messages['es'] = array(
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Theklan
  */
 $messages['eu'] = array(
 	'usercontactlink-baduser' => 'Lankide izen okerra',
+	'usercontactlink-desc' => '^^^lankidea^^^ sintaxia erabilita beste lankide baten erabiltzaile izena erabiltzea baimentzen du',
 );
 
 /** Persian (فارسی)
@@ -153,20 +189,23 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
  * @author Nike
  * @author Vililikku
  */
 $messages['fi'] = array(
 	'usercontactlink-baduser' => 'virheellinen käyttäjätunnus',
+	'usercontactlink-desc' => 'Suo mahdollisuuden lisätä yksinkertaisesti ja yhdenmukaisesti muita käyttäjätunnuksia käyttäen ^^^user^^^ syntaksia',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author PieRRoMaN
  */
 $messages['fr'] = array(
 	'usercontactlink-baduser' => 'nom d’utilisateur incorrect',
-	'usercontactlink-desc' => "Permet d'ajouter simplement et avec consistance d'autres noms d'utilisateurs en utilisant la syntaxe ^^^user^^^",
+	'usercontactlink-desc' => 'Permet d’ajouter simplement et avec consistance d’autres noms d’utilisateurs en utilisant la syntaxe ^^^user^^^',
 );
 
 /** Galician (Galego)
@@ -184,6 +223,14 @@ $messages['gl'] = array(
 $messages['gsw'] = array(
 	'usercontactlink-baduser' => 'falscher Benutzername',
 	'usercontactlink-desc' => 'Macht s megli, Benutzername eifach mit ^^^Benutzer^^^ z vergleiche',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
+ */
+$messages['gu'] = array(
+	'usercontactlink-baduser' => 'ખોટું સભ્યનામ',
+	'usercontactlink-desc' => '‌‌‍^^^સભ્ય^^^ વાક્ય રચના વાપરી અને સહેલાઇ અને સંગતતાથી અન્ય સભ્યનામો ઉમેરવાની ક્ષમતા પ્રદાન કરે છે',
 );
 
 /** Hebrew (עברית)
@@ -219,6 +266,22 @@ $messages['ia'] = array(
 	'usercontactlink-desc' => 'Permitte adder simple- e consistentemente altere nomines de usator con le syntaxe ^^^user^^^',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'usercontactlink-baduser' => 'nama pengguna salah',
+	'usercontactlink-desc' => 'Memampukan untuk menambahkan nama pengguna lain secara konsisten dengan menggunakan sintaks ^^^pengguna^^^',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'usercontactlink-baduser' => 'nome utente errato',
+	'usercontactlink-desc' => 'Permette di aggiungere semplicemente e coerentemente altri nomi utente usando la sintassi ^^^user^^^',
+);
+
 /** Japanese (日本語)
  * @author Mizusumashi
  */
@@ -239,9 +302,11 @@ $messages['jv'] = array(
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
 	'usercontactlink-baduser' => 'ឈ្មោះអ្នកប្រើប្រាស់មិនត្រឹមត្រូវទេ',
+	'usercontactlink-desc' => 'ផ្ដល់​លទ្ធភាព​ក្នុងការ​សម្រួល​និង​បន្ថែមឲ្យ​ត្រឹម​ត្រូវ​​ឈ្មោះ​អ្នក​ប្រើ​ប្រាស់​ផ្សេង​ៗទៀត​ ដោយ​ប្រើ​ប្រាស់​វាក្យ​សម្ពន្ធ ^^^user^^^',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -257,7 +322,7 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'usercontactlink-baduser' => 'falsche Benotzernumm',
-	'usercontactlink-desc' => 'Erméiglecht et fir einfach an dauernd aner Benotzernimm mat Hellëf vun der Syntax ^^^user^^^ derbäizesetzen',
+	'usercontactlink-desc' => 'Erméiglecht et fir einfach an dauernd aner Benotzernimm mat Hëllef vun der Syntax ^^^user^^^ derbäizesetzen',
 );
 
 /** Macedonian (Македонски)
@@ -338,6 +403,14 @@ $messages['pl'] = array(
 	'usercontactlink-desc' => 'Umożliwia w prosty i logiczny sposób dodawanie nowych nazw użytkownika za pomocą polecenia ^^^user^^^.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'usercontactlink-baduser' => 'Nòm utent nen giust',
+	'usercontactlink-desc' => 'A dà la possibilità ëd gionté an manera sempia e coerenta àutri nòm utent an dovrand la sintass ^^^user^^^',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -347,12 +420,13 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
 	'usercontactlink-baduser' => 'nome de utilizador incorrecto',
-	'usercontactlink-desc' => 'Fornece a possibilidade de addicionar de forma simples e consistente outros nomes de utilizador, usando a sintaxe ^^^user^^^',
+	'usercontactlink-desc' => 'Fornece a possibilidade de adicionar de forma simples e consistente outros nomes de utilizador, usando a sintaxe ^^^user^^^',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -370,6 +444,14 @@ $messages['ro'] = array(
 	'usercontactlink-baduser' => 'nume de utilizator incorect',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'usercontactlink-baduser' => 'Nome utende sbagliate',
+	'usercontactlink-desc' => "Te dè 'a possibbilità de aggiungere facile facile l'otre nome utinde ausanne 'a sindassi ^^^user^^^",
+);
+
 /** Russian (Русский)
  * @author Ferrer
  * @author Александр Сигачёв
@@ -377,6 +459,14 @@ $messages['ro'] = array(
 $messages['ru'] = array(
 	'usercontactlink-baduser' => 'некорректное имя участника',
 	'usercontactlink-desc' => 'Предоставляет возможность легко добавить имена других участников с помощью синтаксиса ^^^участник^^^',
+);
+
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'usercontactlink-baduser' => 'වැරදි පරිශීලක නාමය',
+	'usercontactlink-desc' => '^^^user^^^ වාග් රීතිය භාවිතා කරමින් සරලව හා ස්ථායීව  අනෙක් පරිශීලකයින් එකතු කිරීමට හැකියාව සලසයි',
 );
 
 /** Slovak (Slovenčina)
@@ -387,11 +477,36 @@ $messages['sk'] = array(
 	'usercontactlink-desc' => 'Poskytuje možnosť jednoducho a konzistentne pridávať mená ostatných používateľov pomocou syntaxe ^^^používateľ^^^',
 );
 
+/** Lower Silesian (Schläsch)
+ * @author Jonny84
+ * @author Schläsinger
+ */
+$messages['sli'] = array(
+	'usercontactlink-baduser' => 'foalscher Nutzernoame',
+	'usercontactlink-desc' => 'Macht es möglich, Benutzernamen einfach mit ^^^Benutzer^^^ zu verlinken',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'usercontactlink-baduser' => 'llogari jo korrekte',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'usercontactlink-baduser' => 'неправилно корисничко име',
+	'usercontactlink-desc' => 'Пружа могућност једноставног и непрекидног додавања других корисничких имена, коришћењем ^^^user^^^ синтаксе',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'usercontactlink-baduser' => 'nepravilno korisničko ime',
+	'usercontactlink-desc' => 'Pruža mogućnost jednostavnog i neprekidnog dodavanja drugih korisničkih imena, korišćenjem ^^^user^^^ sintakse',
 );
 
 /** Seeltersk (Seeltersk)
@@ -412,10 +527,12 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
 	'usercontactlink-baduser' => 'తప్పుడు వాడుకరిపేరు',
+	'usercontactlink-desc' => '^^^వాడుకరి^^^ నమూనా ద్వారా మిగతా వాడుకరుల పేర్లను తేలికగా మరియు నిర్ణీత పద్ధతిలో కలుపు వీలును కలిగించును',
 );
 
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
@@ -423,6 +540,13 @@ $messages['te'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'usercontactlink-baduser' => 'номи корбарии нодуруст',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'usercontactlink-baduser' => 'nomi korbariji nodurust',
 );
 
 /** Tagalog (Tagalog)
@@ -435,9 +559,11 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'usercontactlink-baduser' => 'Hatalı kullanıcı adı',
+	'usercontactlink-desc' => '^^^Kullanıcı^^^ sözdizimi kullanılarak basit ve sürekli bir şekilde diğer kullanıcı adlarını ekleme imkanı sağlar',
 );
 
 /** Vèneto (Vèneto)

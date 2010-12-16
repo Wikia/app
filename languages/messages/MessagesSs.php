@@ -67,25 +67,44 @@ $messages = array(
 'subcategories'            => 'Mikhakha lengaphansi',
 'category-media-header'    => 'i-Media lekulomkhakha "$1"',
 'category-empty'           => "''Lomkhakha ute makhasi nobe i-media lewuphetse.''",
-'hidden-category-category' => 'Mikhakha lefihliwe', # Name of the category where hidden categories will be listed
+'hidden-category-category' => 'Mikhakha lefihliwe',
 'listingcontinuesabbrev'   => 'chubeka.',
+'index-category'           => 'Makhasi lacokelelwe',
+'noindex-category'         => 'Makhasi lasabalele',
 
 'mainpagetext' => "'''i-MediaWiki seyifakeke ngalokuphelele.'''",
 
-'about'          => 'Kabanti',
-'article'        => 'Likhasi lentfo',
-'newwindow'      => '(kuvulekela tukweli-window lelisha)',
-'cancel'         => 'Yekela',
+'about'         => 'Kabanti',
+'article'       => 'Likhasi lentfo',
+'newwindow'     => '(kuvulekela tukweli-window lelisha)',
+'cancel'        => 'Yekela',
+'moredotdotdot' => 'Lokunyenti...',
+'mypage'        => 'Likhasi lami',
+'mytalk'        => 'Tingcoco tami',
+'anontalk'      => 'Tingcogco letentwe ngulelikheli lale-IP',
+
+# Cologne Blue skin
 'qbfind'         => 'Tfola',
 'qbbrowse'       => 'Browse',
 'qbedit'         => 'Hlela',
 'qbpageoptions'  => 'Lelikhasi',
 'qbmyoptions'    => 'Makhasi ami',
 'qbspecialpages' => 'Emakhasi labalulekile',
-'moredotdotdot'  => 'Lokunyenti...',
-'mypage'         => 'Likhasi lami',
-'mytalk'         => 'Tingcoco tami',
-'anontalk'       => 'Tingcogco letentwe ngulelikheli lale-IP',
+
+# Vector skin
+'vector-action-addsection'   => 'Ngeta sihloko',
+'vector-action-move'         => 'Khweshisa',
+'vector-namespace-help'      => 'Likhasi lelusito',
+'vector-namespace-main'      => 'Likhasi',
+'vector-namespace-mediawiki' => 'Mlayeto',
+'vector-namespace-special'   => 'Likhasi lelibalulekile',
+'vector-namespace-talk'      => 'Ingcoco',
+'vector-namespace-user'      => 'Likhasi lemuntfu',
+'vector-view-create'         => 'Create',
+'vector-view-edit'           => 'Hlela',
+'vector-view-history'        => 'Bona umlandvo',
+'vector-view-view'           => 'Fundza',
+'actions'                    => 'Tento',
 
 'returnto'          => 'Buyela ku $1.',
 'help'              => 'Sita',
@@ -128,11 +147,16 @@ $messages = array(
 'otherlanguages'    => 'Ngaletinye tilwimi',
 'redirectedfrom'    => '(Utfunyelelwe likhasi $1)',
 'redirectpagesub'   => 'Likhasi lekutfumela',
-'lastmodifiedat'    => 'Lelikhasi ligcine kushintjwa ngetingu $1, ngo $2.', # $1 date, $2 time
+'lastmodifiedat'    => 'Lelikhasi ligcine kushintjwa ngetingu $1, ngo $2.',
 'viewcount'         => 'Lelikhasi selibonwe {{PLURAL:$1|kanye|kayi $1}}.',
 'protectedpage'     => 'Likhasi lelivikelekile',
 'jumpto'            => 'Zuba ku:',
 'jumptosearch'      => 'sesha',
+'view-pool-error'   => 'Siyacolisa, maseva etfu agwele kakhulu ngalesikhatsi.
+Kunebantfu labanyenti labatama kubona lelikhasi.
+Sicela ume kancane ngaphambi lwekuphindze ubone lelikhasi.
+
+$1',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Kabanti nge {{SITENAME}}',
@@ -148,7 +172,7 @@ $messages = array(
 'mainpage-description' => 'Likhasi lelikhulu',
 'policy-url'           => 'Project:Umtsetfo',
 'portal'               => 'Likhefi le-inthanethi',
-'portal-url'           => 'Project:Likhefi leinthanethi',
+'portal-url'           => 'Project:Likhefi le-inthanethi',
 
 'badaccess'        => 'Liphutsa lemalungelo',
 'badaccess-group0' => 'Awukavunyelwa kwenta lesento lobowutama kusenta.',
@@ -178,8 +202,6 @@ $messages = array(
 'nstab-help' => 'Likhasi lelusito',
 
 # Login and logout pages
-'uid'                => 'Matisi Wemuntfu:',
-'yourlanguage'       => 'Lulwimi:',
 'loginlanguagelabel' => 'Lulwimi: $1',
 
 # Search results
@@ -187,24 +209,33 @@ $messages = array(
 'search-mwsuggest-disabled' => 'kute mibono',
 'search-relatedarticle'     => 'Lokuhlobene',
 'mwsuggest-disable'         => 'Vala losito/mibono ye AJAX',
+'searcheverything-enable'   => 'Sesha onke ma namespaces',
 'searchrelated'             => 'lokuhlobene',
 'searchall'                 => 'konke',
 'showingresults'            => "Ngaphasi kukhonjiswa kuya ku {{PLURAL:$1|'''1''' umphumela|'''$1''' miphumela}} kucalwa nga #'''$2'''.",
 'showingresultsnum'         => "Ngaphansi kukhonjiswa {{PLURAL:$3|'''1''' umphumela|'''$3''' miphumela}} kucalwa nga #'''$2'''.",
+'showingresultsheader'      => "{{PLURAL:$5|Umphumela '''$1''' of '''$3'''|Imiphumela '''$1 - $2''' ye '''$3'''}} ya '''$4'''",
 'search-nonefound'          => 'Kute umphume lotfolwe/lofanele lesicelo sakho.',
 'powersearch'               => 'Sesha ngalokuphakeme',
 'powersearch-legend'        => 'Sesha ngalokuphakeme',
 'powersearch-ns'            => 'Sesha ku namespaces:',
 'powersearch-redir'         => 'Makhasi latfumelayo',
 'powersearch-field'         => 'Sesha i',
+'powersearch-togglelabel'   => 'Buka:',
+'powersearch-toggleall'     => 'Konke',
+'powersearch-togglenone'    => 'Kute',
 'search-external'           => 'Sesha ngelithulusi langaphandle',
 'searchdisabled'            => '{{SITENAME}} kusesha kuvinjiwe.
 Ungasesha nge Google.
 Naka kutsi makhasi abo e {{SITENAME}} angaba sekadlulelwe sikhatsi.',
 
+# Quickbar
+'qbsettings-none' => 'Kute',
+
 # Preferences page
-'qbsettings-none'   => 'Kute',
 'searchresultshead' => 'Sesha',
+'uid'               => 'Matisi Wemuntfu:',
+'yourlanguage'      => 'Lulwimi:',
 
 # Special:ListFiles
 'listfiles_date' => 'Lusuku',
@@ -249,6 +280,7 @@ Naka kutsi makhasi abo e {{SITENAME}} angaba sekadlulelwe sikhatsi.',
 # Undelete
 'undelete-search-submit' => 'Sesha',
 
+'sp-contributions-talk'   => 'ingcoco',
 'sp-contributions-submit' => 'Sesha',
 
 # Block/unblock

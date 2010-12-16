@@ -35,7 +35,8 @@ protected $m_DatatypeLabels = array(
 	'_dat' => 'Data',  // name of the datetime (calendar) type
 	'_ema' => 'Email',  // name of the email type
 	'_uri' => 'URL',  // name of the URL type
-	'_anu' => 'Annotation URI' // name of the annotation URI type (OWL annotation property)
+	'_anu' => 'Annotazione URI', // name of the annotation URI type (OWL annotation property)
+	'_tel' => 'Telephone number',  // name of the telephone (URI) type //TODO: translate
 );
 
 protected $m_DatatypeAliases = array(
@@ -52,28 +53,31 @@ protected $m_SpecialProperties = array(
 	'_TYPE'  => 'Ha tipo', //'Has type',
 	'_URI'   => 'URI equivalente', //'Equivalent URI',
 	'_SUBP' => 'Sottopropriet&agrave; di', // 'Subproperty of',
-	'_UNIT' => 'Display units', //TODO
+	'_SUBC' => 'Subcategory of', // TODO: translate
+	'_UNIT' => 'Visualizza unit&agrave;',
 	'_IMPO' => 'Importato da', // 'Imported from',
 	'_CONV' => 'Corrisponde a ', // 'Corresponds to',
 	'_SERV' => 'Fornisce servizio', // 'Provides service',
 	'_PVAL' => 'Ammette valore', //'Allows value'
+	'_MDAT' => 'Data di modifica',
+	'_ERRP' => 'Ha un valore improprio per'
 );
 
 protected $m_SpecialPropertyAliases = array(
-	'Display unit' => '_UNIT'
+	'Display unit' => '_UNIT',
 );
 
 protected $m_Namespaces = array( // TODO: translate (English aliases can be kept, see other language files
-	SMW_NS_RELATION       => 'Relation',
-	SMW_NS_RELATION_TALK  => 'Relation_talk',
-	SMW_NS_PROPERTY       => 'Property',
-	SMW_NS_PROPERTY_TALK  => 'Property_talk',
-	SMW_NS_TYPE           => 'Type',
-	SMW_NS_TYPE_TALK      => 'Type_talk',
-	SMW_NS_CONCEPT        => 'Concept',
-	SMW_NS_CONCEPT_TALK   => 'Concept_talk'
+	SMW_NS_PROPERTY       => 'Proprietà',
+	SMW_NS_PROPERTY_TALK  => 'Discussione proprietà',
+	SMW_NS_TYPE           => 'Tipo',
+	SMW_NS_TYPE_TALK      => 'Discussione tipo',
+	SMW_NS_CONCEPT        => 'Concetto',
+	SMW_NS_CONCEPT_TALK   => 'Discussione concetto'
 );
 
+protected $m_months = array("gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre");
+
+protected $m_monthsshort = array("gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic");
+
 }
-
-

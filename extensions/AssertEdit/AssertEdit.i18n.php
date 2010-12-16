@@ -113,6 +113,15 @@ $messages['bs'] = array(
 	'assert_edit_message' => 'Određeni zahtjev ($1) nije uspjeo.',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'assert_edit_title' => 'Asserció fallida',
+	'assert_edit_desc' => "Afegeix assercions d'edició per usar amb els bots",
+	'assert_edit_message' => "L'asserció especificada ($1) ha fallat.",
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -138,6 +147,15 @@ $messages['de'] = array(
 	'assert_edit_message' => 'Der angegebene Anspruch ($1) ist fehlgeschlagen.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Xoser
+ */
+$messages['diq'] = array(
+	'assert_edit_title' => 'Bar bibiyo',
+	'assert_edit_desc' => 'Pê botî ra assertionê vurnayîşî de keno',
+	'assert_edit_message' => 'Assertionşê ($1) ke ti specife kerd ay nihebitiyeno.',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -158,12 +176,13 @@ $messages['el'] = array(
 );
 
 /** Esperanto (Esperanto)
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'assert_edit_title' => 'Aserto malsukcesis',
 	'assert_edit_desc' => 'Aldonas redaktajn asertojn por uzo de robotoj',
-	'assert_edit_message' => 'La specifigita aserto ($1) malsukcesis.',
+	'assert_edit_message' => 'La specifita aserto ($1) malsukcesis.',
 );
 
 /** Spanish (Español)
@@ -173,6 +192,15 @@ $messages['es'] = array(
 	'assert_edit_title' => 'Una aserción fracasó',
 	'assert_edit_desc' => 'Añade aserciones de editar para el uso de los bots',
 	'assert_edit_message' => 'La aserción especificada ($1) fracasó.',
+);
+
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'assert_edit_title' => 'Kinnitus ebaõnnestunud',
+	'assert_edit_desc' => 'Lisab roboti kasutusele redigeerimiskinnituse.',
+	'assert_edit_message' => 'Määratud kinnitus ($1) ebaõnnestus.',
 );
 
 /** Basque (Euskara)
@@ -194,11 +222,12 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Crt
  * @author Nike
  */
 $messages['fi'] = array(
 	'assert_edit_title' => 'Vahvistus epäonnistui',
-	'assert_edit_desc' => 'Muokkausvahvistusmahdollisuus boteille',
+	'assert_edit_desc' => 'Muokkausvahvistusmahdollisuus boteille.',
 	'assert_edit_message' => 'Määritelty vahvistus ($1) epäonnistui.',
 );
 
@@ -216,9 +245,17 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
-	'assert_edit_title' => 'Falyita de l’entrebetâ',
-	'assert_edit_desc' => 'Apond des èdicions d’entrebetâ por l’usâjo per des bots.',
-	'assert_edit_message' => 'L’entrebetâ endicâ ($1) at pas reussia.',
+	'assert_edit_title' => 'Falyita de l’assèrcion',
+	'assert_edit_desc' => 'Apond des assèrcions de changement por l’usâjo per des bots.',
+	'assert_edit_message' => 'L’assèrcion spècefiâ ($1) at pas reussia.',
+);
+
+/** Western Frisian (Frysk)
+ * @author SK-luuut
+ */
+$messages['fy'] = array(
+	'assert_edit_title' => 'Befêstiging mislearre',
+	'assert_edit_message' => 'De frege befêstiging ($1) mislearre.',
 );
 
 /** Galician (Galego)
@@ -358,6 +395,13 @@ $messages['jv'] = array(
 	'assert_edit_message' => 'Pandhedhesan sing dikarepaké ($1) gagal.',
 );
 
+/** Georgian (ქართული)
+ * @author BRUTE
+ */
+$messages['ka'] = array(
+	'assert_edit_title' => 'მტკიცება არ სრულდება',
+);
+
 /** Kazakh (Arabic script) (‫قازاقشا (تٴوتە)‬) */
 $messages['kk-arab'] = array(
 	'assert_edit_title' => 'ماقۇلداۋ سٵتسٸز',
@@ -402,6 +446,32 @@ $messages['li'] = array(
 	'assert_edit_title' => 'Bevestiging mislök.',
 	'assert_edit_desc' => 'Maak rolbevestiginge meugelik veur gebroek door bots',
 	'assert_edit_message' => 'De gevraogde bevestiging ($1) mislökde.',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Matasg
+ */
+$messages['lt'] = array(
+	'assert_edit_title' => 'Tvirtinimas atšauktas',
+	'assert_edit_desc' => 'Prideda redagavimo tvirtinimus naudojimui su botais',
+	'assert_edit_message' => 'Nurodytas tvirtinimas ($1) atšauktas.',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'assert_edit_title' => 'Tsy nande ny assertion',
+	'assert_edit_desc' => "Manampy assertion ny fanovàna ho an'ny fampiasàna rindrankajy (bot)",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'assert_edit_title' => 'Тврдењето не успеа',
+	'assert_edit_desc' => 'Додава тврдења за уредувања за користење од страна на ботови',
+	'assert_edit_message' => 'Назначеното тврдење ($1) не успеа.',
 );
 
 /** Malayalam (മലയാളം)
@@ -494,6 +564,15 @@ $messages['pl'] = array(
 	'assert_edit_message' => 'Określone żądanie ($1) nie wystąpiło.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'assert_edit_title' => 'Assersion falìa',
+	'assert_edit_desc' => 'A gionta assersion ëd modìfica da dovré dai bot',
+	'assert_edit_message' => "L'assersion spessificà ($1) a l'é falìa.",
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -565,6 +644,15 @@ $messages['scn'] = array(
 	'assert_edit_message' => "L'affirmazzioni nnicata ($1) non ariniscìu.",
 );
 
+/** Tachelhit (Tašlḥiyt)
+ * @author Dalinanir
+ */
+$messages['shi'] = array(
+	'assert_edit_title' => 'Ur ittuykkad',
+	'assert_edit_desc' => 'Zayd ukkd imbddeln s botn',
+	'assert_edit_message' => 'Tuwkid ($1) ur izri',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -574,13 +662,22 @@ $messages['sk'] = array(
 	'assert_edit_message' => 'Uvedený predpoklad ($1) zlyhal.',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'assert_edit_title' => 'Потврда није успела.',
 	'assert_edit_desc' => 'Додаје потврде измена код коришћења ботова.',
 	'assert_edit_message' => 'Одређена тврдња ($1) није успела.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'assert_edit_title' => 'Potvrda nije uspela.',
+	'assert_edit_desc' => 'Dodaje potvrde izmena kod korišćenja botova.',
+	'assert_edit_message' => 'Određena tvrdnja ($1) nije uspela.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -617,6 +714,24 @@ $messages['tg-cyrl'] = array(
 	'assert_edit_title' => 'Таъйид номуваффақ шуд',
 	'assert_edit_desc' => 'Имкони таъйиди вироишҳоро барои истифодаи роботҳо илова мекунад',
 	'assert_edit_message' => 'Таъйиди мавриди назар ($1) номувофиқ буд.',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'assert_edit_title' => "Ta'jid nomuvaffaq şud",
+	'assert_edit_desc' => "Imkoni ta'jidi viroişhoro baroi istifodai robotho ilova mekunad",
+	'assert_edit_message' => "Ta'jidi mavridi nazar ($1) nomuvofiq bud.",
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'assert_edit_title' => 'Tassyklama şowsuz',
+	'assert_edit_desc' => 'Botlar tarapyndan ulanmak üçin özgerdiş tassyklamalaryny goşýar',
+	'assert_edit_message' => 'Görkezilen tassyklama ($1) şowsuz.',
 );
 
 /** Tagalog (Tagalog)
@@ -697,7 +812,7 @@ $messages['zea'] = array(
 $messages['zh-hans'] = array(
 	'assert_edit_title' => '维护失败',
 	'assert_edit_desc' => '为机器人的编辑添加声明',
-	'assert_edit_message' => '所指定的断言 ($1) 失败。',
+	'assert_edit_message' => '所指定的断言 （$1） 失败。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -706,6 +821,6 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'assert_edit_title' => '維護失敗',
 	'assert_edit_desc' => '為機器人的編輯增加聲明',
-	'assert_edit_message' => '所指定的斷言 ($1) 失敗。',
+	'assert_edit_message' => '所指定的斷言 （$1） 失敗。',
 );
 

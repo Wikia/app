@@ -2,7 +2,7 @@
 
 class CrosswikiBlock {
 	public static function normalizeOptions( $user, &$options ) {
-		if( User::isIP( $user ) ) {
+		if ( User::isIP( $user ) ) {
 			$options['autoblock'] = false;
 			$options['noemail'] = false;
 		} else {
@@ -23,7 +23,7 @@ class CrosswikiBlock {
 		$this->mOptions = $options;
 		$this->mId = $id;
 	}
-	
+
 	public static function newFromRow( $row, $db ) {
 		$options = array();
 		$options['anononly'] = $row->ipb_anon_only;
@@ -42,7 +42,7 @@ class CrosswikiBlock {
 		global $wgDBname;
 		$dbw = $this->getDB();
 
-		$ipb_id = $dbw->nextSequenceValue('ipblocks_ipb_id_val');
+		$ipb_id = $dbw->nextSequenceValue( 'ipblocks_ipb_id_val' );
 		$values = array(
 			'ipb_id' => $ipb_id,
 			'ipb_address' => $this->mTarget,
@@ -67,7 +67,7 @@ class CrosswikiBlock {
 
 		return $affected;
 	}
-	
+
 	public function remove() {
 		$dbw = $this->getDB();
 
@@ -98,46 +98,46 @@ class CrosswikiBlock {
 
 	static function formatLogOptions( $opts ) {
 		$r = array();
-		if( $opts['anononly'] )
+		if ( $opts['anononly'] )
 			$r[] = 'anononly';
-		if( $opts['nocreate'] )
+		if ( $opts['nocreate'] )
 			$r[] = 'nocreate';
-		if( !$opts['autoblock'] )
+		if ( !$opts['autoblock'] )
 			$r[] = 'noautoblock';
-		if( $opts['noemail'] )
+		if ( $opts['noemail'] )
 			$r[] = 'blockemail';
 		return implode( ',', $r );
 	}
-	
+
 	static function parseBlockAddress( $addr ) {
 		$r = array();
 		$bits = explode( '@', $addr, 2 );
-		if( count( $bits ) < 2 ) return array( 'error' => 'nowiki' );
+		if ( count( $bits ) < 2 ) return array( 'error' => 'nowiki' );
 		list( $target, $wiki ) = $bits;
-		if( !UserRightsProxy::validDatabase( $wiki ) ) {
+		if ( !UserRightsProxy::validDatabase( $wiki ) ) {
 			return array( 'error' => 'invalidwiki', 'wiki' => $wiki );
 		}
-		if( preg_match( '/^#[0-9]+$/', $target ) ) {
+		if ( preg_match( '/^#[0-9]+$/', $target ) ) {
 			return array( 'blockid' => substr( $target, 1 ), 'wiki' => $wiki );
-		} elseif( User::isIP( $target ) ) {
+		} elseif ( User::isIP( $target ) ) {
 			return array( 'ip' => $target, 'wiki' => $wiki );
-		} elseif( User::isCreatableName( $target ) ) {
+		} elseif ( User::isCreatableName( $target ) ) {
 			return array( 'username' => $target, 'wiki' => $wiki );
 		} else {
 			return array( 'error' => 'invalidusername', 'username' => $target );
 		}
 	}
-	
+
 	static function getBlockRow( $target ) {
 		$dbw = UserRightsProxy::getDB( $target['wiki'] );
 		$conds = array();
-		if( isset( $target['blockid'] ) ) {
+		if ( isset( $target['blockid'] ) ) {
 			$conds['ipb_id'] = $target['blockid'];
 		}
-		if( isset( $target['ip'] ) ) {
+		if ( isset( $target['ip'] ) ) {
 			$conds['ipb_address'] = $target['ip'];
 		}
-		if( isset( $target['username'] ) ) {
+		if ( isset( $target['username'] ) ) {
 			$conds['ipb_address'] = $target['username'];
 		}
 		return $dbw->selectRow( 'ipblocks', '*', $conds, __METHOD__ );

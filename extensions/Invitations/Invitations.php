@@ -24,8 +24,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 define('Invitations',1);
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'author'         => 'Andrew Garrett',
-	'version'        => '$Revision: 36735 $',
+	'version'        => '$Revision: 50967 $',
 	'name'           => 'Invitations',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Invitations',
 	'description'    => 'Allows management of new features by restricting them to an invitation-based system.',
@@ -39,7 +40,7 @@ $wgAutoloadClasses['SpecialInvitations'] = $dir . 'Invitations_page.php';
 $wgAutoloadClasses['Invitations'] = $dir . 'Invitations_obj.php';
 
 $wgExtensionMessagesFiles['Invitations'] = $dir . 'Invitations.i18n.php';
-$wgExtensionAliasesFiles['Invitations'] = $dir . 'Invitations.i18n.alias.php';
+$wgExtensionAliasesFiles['Invitations'] = $dir . 'Invitations.alias.php';
 
 $wgInvitationTypes = array();
 

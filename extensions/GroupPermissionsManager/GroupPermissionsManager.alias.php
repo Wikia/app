@@ -15,21 +15,17 @@ $aliases['en'] = array(
 	'SortPermissions' => array( 'SortPermissions' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'GroupPermissions' => array( 'سماحات_المجموعة' ),
 	'RemoveUnusedGroups' => array( 'إزالة_المجموعات_غير_المستخدمة' ),
 	'SortPermissions' => array( 'ترتيب_السماحات' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'GroupPermissions' => array( 'سماحات_المجموعة' ),
-	'RemoveUnusedGroups' => array( 'إزالة_المجموعات_غير_المستخدمة' ),
+	'RemoveUnusedGroups' => array( 'إزالة_المجموعات_مش_المستخدمة' ),
 	'SortPermissions' => array( 'ترتيب_السماحات' ),
 );
 
@@ -42,7 +38,7 @@ $aliases['bs'] = array(
 
 /** German (Deutsch) */
 $aliases['de'] = array(
-	'GroupPermissions' => array( 'Gruppenrechte' ),
+	'GroupPermissions' => array( 'Rechte von Gruppen' ),
 	'RemoveUnusedGroups' => array( 'Unbenutze Gruppen entfernen' ),
 	'SortPermissions' => array( 'Rechte sortieren' ),
 );
@@ -54,10 +50,25 @@ $aliases['dsb'] = array(
 	'SortPermissions' => array( 'Pšawa sortěrowaś' ),
 );
 
+/** Persian (فارسی) */
+$aliases['fa'] = array(
+	'GroupPermissions' => array( 'دسترسی_گروه' ),
+	'RemoveUnusedGroups' => array( 'حذف_گروه_بی‌استفاده' ),
+	'SortPermissions' => array( 'اختیارات_مرتب' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'GroupPermissions' => array( 'Permissions des groupes', 'Permission des groupes' ),
+	'RemoveUnusedGroups' => array( 'Retirer groupes inutilisés', 'RetirerGroupesInutilisés' ),
 	'SortPermissions' => array( 'Trier les permissions' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'GroupPermissions' => array( 'Pèrmissions a les tropes', 'PèrmissionsALesTropes' ),
+	'RemoveUnusedGroups' => array( 'Enlevar les tropes inutilisâs', 'EnlevarLesTropesInutilisâs' ),
+	'SortPermissions' => array( 'Triyér les pèrmissions', 'TriyérLesPèrmissions' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -95,6 +106,19 @@ $aliases['ia'] = array(
 	'SortPermissions' => array( 'Ordinar permissiones' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'GroupPermissions' => array( 'Hak kelompok', 'HakKelompok' ),
+	'RemoveUnusedGroups' => array( 'Hapus kelompok tak digunakan', 'HapusKelompokTakDigunakan' ),
+	'SortPermissions' => array( 'Hak pengurutan', 'HakPengurutan' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'GroupPermissions' => array( 'PermessiGruppo' ),
+	'RemoveUnusedGroups' => array( 'RimuoviGruppiInutilizzati' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'GroupPermissions' => array( 'グループ権限' ),
@@ -102,17 +126,43 @@ $aliases['ja'] = array(
 	'SortPermissions' => array( '権限の分類' ),
 );
 
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'GroupPermissions' => array( '그룹 권한' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'GroupPermissions' => array( 'JroppeRääschte', 'JruppeRääschte' ),
+	'SortPermissions' => array( 'Rääschte_Zotteere', 'RääschteZotteere' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'GroupPermissions' => array( 'Grupperechter' ),
 	'RemoveUnusedGroups' => array( 'Onbenotzte Gruppen ewechhuelen' ),
-	'SortPermissions' => array( 'Rechter sortéieren' ),
+	'SortPermissions' => array( 'Rechter zortéieren' ),
 );
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'GroupPermissions' => array( 'ГрупниПермисии' ),
+	'RemoveUnusedGroups' => array( 'ОтстраниНеискористениГрупи' ),
 	'SortPermissions' => array( 'ВидовиПермисии' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'GroupPermissions' => array( 'സംഘാനുമതികൾ' ),
+	'RemoveUnusedGroups' => array( 'ഉപയോഗിക്കാത്ത സംഘങ്ങളിൽനിന്ന് മാറ്റുക' ),
+	'SortPermissions' => array( 'അനുമതികൾക്രമപ്പെടുത്തൽ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'GroupPermissions' => array( 'गटपरवानग्या' ),
+	'RemoveUnusedGroups' => array( 'नवापरलेलेग्रूपकाढा' ),
+	'SortPermissions' => array( 'गटवारीपरवानग्या' ),
 );
 
 /** Maltese (Malti) */
@@ -144,6 +194,27 @@ $aliases['no'] = array(
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
 	'GroupPermissions' => array( 'Permission dels gropes' ),
+	'RemoveUnusedGroups' => array( 'Levar gropes inutilizats', 'LevarGropesInutilizats' ),
+	'SortPermissions' => array( 'Triar las permissions' ),
+);
+
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'GroupPermissions' => array( 'Uprawnienia grup' ),
+	'RemoveUnusedGroups' => array( 'Usuwanie niewykorzystywanych grup' ),
+	'SortPermissions' => array( 'Sortowanie uprawnień' ),
+);
+
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'GroupPermissions' => array( 'Privilégios de grupo' ),
+	'RemoveUnusedGroups' => array( 'Remover grupos não utilizados' ),
+	'SortPermissions' => array( 'Ordenar privilégios' ),
+);
+
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'GroupPermissions' => array( 'Permisiuni de grup' ),
 );
 
 /** Sanskrit (संस्कृत) */
@@ -151,6 +222,13 @@ $aliases['sa'] = array(
 	'GroupPermissions' => array( 'गटसंमती' ),
 	'RemoveUnusedGroups' => array( 'अप्रयूक्तगटत्यजति' ),
 	'SortPermissions' => array( 'अनुज्ञासंविचिनोति' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'GroupPermissions' => array( 'SkupinovéOprávnenia' ),
+	'RemoveUnusedGroups' => array( 'OdstrániťNepoužívanéSkupiny' ),
+	'SortPermissions' => array( 'TriedenieOprávnení' ),
 );
 
 /** Swedish (Svenska) */
@@ -163,5 +241,12 @@ $aliases['tl'] = array(
 	'GroupPermissions' => array( 'Mga kapahintulutan ng pangkat' ),
 	'RemoveUnusedGroups' => array( 'Tanggalin ang mga pangkat na hindi ginagamit' ),
 	'SortPermissions' => array( 'Mga pahintulot sa pagsasama-sama' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'GroupPermissions' => array( 'Grupİzinleri' ),
+	'RemoveUnusedGroups' => array( 'KullanılmayanGruplarıKaldır' ),
+	'SortPermissions' => array( 'İzinleriSırala' ),
 );
 

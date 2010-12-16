@@ -1,6 +1,9 @@
 .fundraiserstats-view-box {
-	width: 100%;
 	border: solid 1px silver;
+}
+.fundraiserstats-view-box h3 {
+	margin-top: 0;
+	padding-top: 0;
 }
 .fundraiserstats-today {
 	position: absolute;
@@ -13,16 +16,21 @@
 .fundraiserstats-bar-2007 {
 	background-color: #AAAAFF;
 	border: outset 1px #AAAAFF;
-	width: 3px;
+	width: 2px;
 	margin-left: 3px;
 }
 .fundraiserstats-bar-2008 {
 	background-color: #AAFFAA;
 	border: outset 1px #AAFFAA;
-	width: 3px;
+	width: 2px;
+}
+.fundraiserstats-bar-2009 {
+	background-color: #FFAAAA;
+	border: outset 1px #FFAAAA;
+	width: 2px;
 }
 .fundraiserstats-bar-space {
-	width: 3px;
+	width: 2px;
 }
 .fundraiserstats-chart {
 	padding: 10px;

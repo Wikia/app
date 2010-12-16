@@ -55,6 +55,11 @@ if ( oFakeImage )
 			oTemplateSpan = FCK.GetRealElement( oFakeImage ) ;
 			sFakeClass = 'FCK__MWSpecial';
 		}
+		else if ( oFakeImage.getAttribute('_fck_mw_html') )
+		{
+			oTemplateSpan = FCK.GetRealElement( oFakeImage ) ;
+			sFakeClass = 'FCK__MWHtml';
+		}
 		else if ( oFakeImage.getAttribute('_fck_mw_nowiki') )
 		{
 			oTemplateSpan = FCK.GetRealElement( oFakeImage ) ;
@@ -99,6 +104,7 @@ window.onload = function()
 	// Activate the "OK" button.
 	window.parent.SetOkButton( true ) ;
 	window.parent.SetAutoSize( true ) ;
+	GetE('xTemplateRaw').focus();
 }
 
 function LoadSearchResults( result )
@@ -111,7 +117,7 @@ function LoadSearchResults( result )
 		for ( var i = 0 ; i < results.length ; i++ )
 			FCKTools.AddSelectOption( select, results[i], results[i] ) ;
 	}
-	
+
 	if ( sSelectedTag ) {
 		select.value = sSelectedTag ;
 	}
@@ -129,7 +135,7 @@ function LoadSelection()
 
 	GetE('xTemplateRaw').value = FCKTools.HTMLDecode(oTemplateSpan.innerHTML).replace(/fckLR/g,'\r\n' ).replace( /&quot;/g, '"' ) ;
 	var tagName = oTemplateSpan.getAttribute('_fck_mw_tagname').toLowerCase();
-	
+
 	sSelectedTag = tagName ;
 	GetE('xSelectTag').value = tagName;
 }
@@ -138,10 +144,15 @@ function LoadDocumentation()
 {
 	var tagName = GetE('xSelectTag').value;
 	if (tagName == 'dpl')
-		GetE('xDefinition').innerHTML = 'DPL stands for Dynamic Page List, and allows to generate a formatted list of pages based on selection criteria. See <a href="#" onclick="javascript:window.open(\'http://semeb.com/dpldemo/index.php?title=Dynamic_Page_List\')">manual</a> for details';
-		
+	{
+		if (!FCKLang.DplHelp) FCKLang.DplHelp = 'DPL stands for Dynamic Page List, and allows to generate a formatted list of pages based on selection criteria. See %link for details';
+		GetE('xDefinition').innerHTML = FCKLang.DplHelp.replace( /%link/g, '<a href="#" onclick="javascript:window.open(\'http://semeb.com/dpldemo/index.php?title=Dynamic_Page_List\')">manual</a>' ) ;
+	}
 	if (tagName == 'inputbox')
-		GetE('xDefinition').innerHTML = 'Inputbox allows to create a form for users to create new pages. The new pages edit box can be pre-loaded with any template. See <a href="#" onclick="javascript:window.open(\'http://meta.wikimedia.org/wiki/Help:Inputbox\')">manual</a> for details';
+	{
+		if (!FCKLang.inputboxHelp) FCKLang.inputboxHelp = 'Inputbox allows to create a form for users to create new pages. The new pages edit box can be pre-loaded with any template. See %link for details';
+		GetE('xDefinition').innerHTML = FCKLang.inputboxHelp.replace( /%link/g, '<a href="#" onclick="javascript:window.open(\'http://www.mediawiki.org/wiki/Extension:InputBox\')">manual</a>' ) ;
+	}
 }
 
 //#### The OK button was hit.
@@ -153,11 +164,11 @@ function Ok()
 		oTemplateSpan.className = 'fck_mw_special' ;
 		SetAttribute( oTemplateSpan, '_fck_mw_customtag', 'true' ) ;
 	}
-	
+
 	var templateData = FCKTools.HTMLEncode(GetE('xTemplateRaw').value.Trim().replace(/(\r\n|\n)/g, 'fckLR' )).replace( /"/g, '&quot;' ) ;
-	
+
 	oTemplateSpan.innerHTML = templateData ;
-	SetAttribute( oTemplateSpan, '_fck_mw_tagname', GetE('xSelectTag').value ) ;   
+	SetAttribute( oTemplateSpan, '_fck_mw_tagname', GetE('xSelectTag').value ) ;
 
 	switch (GetE('xSelectTag').value)
 	{
@@ -173,6 +184,9 @@ function Ok()
 		case 'includeonly':
 		sFakeClass = 'FCK__MWIncludeonly';
 		break;
+		case 'html':
+		sFakeClass = 'FCK__MWHtml';
+		break;
 		case 'onlyinclude':
 		sFakeClass = 'FCK__MWOnlyinclude';
 		break;
@@ -180,14 +194,14 @@ function Ok()
 		sFakeClass = 'FCK__MWSpecial';
 		break;
 	}
-	
+
 	if ( !oFakeImage )
 	{
 		oFakeImage	= oEditor.FCKDocumentProcessor_CreateFakeImage( sFakeClass, oTemplateSpan ) ;
 		oFakeImage.setAttribute( '_fck_mw_special', 'true', 0 ) ;
 		oFakeImage	= FCK.InsertElement( oFakeImage ) ;
 	}
-	else 
+	else
 		oFakeImage.className = sFakeClass ;
 
 	return true ;
@@ -200,7 +214,7 @@ function Ok()
 		<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
 			<tr>
 				<td>
-					<span>Current Special Tag:</span>
+					<span fcklang="wikiSpTag">Current Special Tag</span>:
 					<select id="xSelectTag" onchange="LoadDocumentation()">
 					</select><br>
 					<i><span id="xDefinition"></span></i>
@@ -209,7 +223,7 @@ function Ok()
 			<tr>
 				<td>
 					<hr>
-					Special tag parameters:
+					<span fcklang="wikiSpParam">Special tag parameters</span>:
 			</tr>
 			<tr>
 				<td height="100%">

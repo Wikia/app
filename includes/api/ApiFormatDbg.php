@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ('ApiFormatBase.php');
+	require_once ( 'ApiFormatBase.php' );
 }
 
 /**
@@ -33,19 +33,19 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiFormatDbg extends ApiFormatBase {
 
-	public function __construct($main, $format) {
-		parent :: __construct($main, $format);
+	public function __construct( $main, $format ) {
+		parent :: __construct( $main, $format );
 	}
 
 	public function getMimeType() {
-		# This looks like it should be text/plain, but IE7 is so
-		# brain-damaged it tries to parse text/plain as HTML if it
-		# contains HTML tags. Using MIME text/text works around this bug
+		// This looks like it should be text/plain, but IE7 is so
+		// brain-damaged it tries to parse text/plain as HTML if it
+		// contains HTML tags. Using MIME text/text works around this bug
 		return 'text/text';
 	}
 
 	public function execute() {
-		$this->printText(var_export($this->getResultData(), true));
+		$this->printText( var_export( $this->getResultData(), true ) );
 	}
 
 	public function getDescription() {
@@ -53,6 +53,6 @@ class ApiFormatDbg extends ApiFormatBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatDbg.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id: ApiFormatDbg.php 61444 2010-01-23 22:52:40Z reedy $';
 	}
 }

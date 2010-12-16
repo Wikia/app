@@ -9,6 +9,7 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Duplicator',
 	'version' => '1.2',
 	'author' => 'Rob Church',
@@ -41,7 +42,7 @@ $wgDuplicatorRevisionLimit = 250;
 function efDuplicator() {
 	global $wgHooks;
 	$wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'efDuplicatorNavigation';
-	$wgHooks['MonoBookTemplateToolboxEnd'][] = 'efDuplicatorToolbox';
+	$wgHooks['SkinTemplateToolboxEnd'][] = 'efDuplicatorToolbox';
 }
 
 /**

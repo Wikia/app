@@ -1,4 +1,14 @@
 <?php
+/**
+ * Command line script to import/update source messages and translations into the wiki database.
+ *
+ * @addtogroup Extensions
+ *
+ * @author Niklas Laxström
+ * @copyright Copyright © 2007-2009, Niklas Laxström
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @file
+ */
 
 $optionsWithArgs = array( 'group', 'lang', 'start', 'end' );
 require( dirname( __FILE__ ) . '/cli.inc' );
@@ -23,7 +33,6 @@ EOT
 }
 
 if ( isset( $options['help'] ) ) showUsage();
-
 
 if ( !isset( $options['group'] ) ) {
 	STDERR( "ESG1: Message group id must be supplied with group parameter." );
@@ -68,7 +77,11 @@ foreach ( $groups as &$group ) {
 
 	foreach ( $codes as $code ) {
 
-		$file = $group->getMessageFileWithPath( $code );
+		if ( $group instanceof FileBasedMessageGroup ) {
+			$file = $group->getSourceFilePath( $code );
+		} else {
+			$file = $group->getMessageFileWithPath( $code );
+		}
 		if ( !$file ) continue;
 
 		if ( !file_exists( $file ) ) continue;
@@ -84,8 +97,8 @@ foreach ( $groups as &$group ) {
 		STDOUT( "Modify time for $code: " . wfTimestamp( TS_ISO_8601, $ts ) );
 
 		$count = $cs->checkConflicts( $code, $start, $end, $ts );
-
 	}
+
 	unset( $group );
 }
 
@@ -130,28 +143,31 @@ class ChangeSyncer {
 		if ( !count( $messages ) ) return;
 
 		$collection = $this->group->initCollection( $code );
-		$this->group->fillCollection( $collection );
+		$collection->filter( 'ignored' );
+		$collection->loadTranslations();
 
 		foreach ( $messages as $key => $translation ) {
-
 			if ( !isset( $collection[$key] ) ) {
 				// STDOUT( "Unknown key $key" );
 				continue;
 			}
 
+			// FIXME: temporary exception. Should be fixed elsewhere more generically
+			if ( $translation == '{{PLURAL:GETTEXT|}}' ) {
+				return;
+			}
 
-
-			$title = Title::makeTitleSafe( $this->group->namespaces[0], "$key/$code" );
+			$title = Title::makeTitleSafe( $this->group->getNamespace(), "$key/$code" );
 
 			$page = $title->getPrefixedText();
 
-			if ( $collection[$key]->database === null ) {
+			if ( $collection[$key]->translation() === null ) {
 				STDOUT( "Importing $page as a new translation" );
 				$this->import( $title, $translation, 'Importing a new translation' );
 				continue;
 			}
 
-			$current = str_replace( TRANSLATE_FUZZY, '', $collection[$key]->translation );
+			$current = str_replace( TRANSLATE_FUZZY, '', $collection[$key]->translation() );
 			$translation = str_replace( TRANSLATE_FUZZY, '', $translation );
 			if ( $translation === $current ) continue;
 
@@ -205,7 +221,6 @@ class ChangeSyncer {
 
 			if ( !$this->interactive ) continue;
 			STDOUT( " →Needs manual resolution", $page );
-
 			STDOUT( "Source translation at $changeDate:" );
 			STDOUT( $this->color( 'blue', $translation ) . "\n" );
 			STDOUT( "Wiki translation at $wikiDate:" );
@@ -225,7 +240,6 @@ class ChangeSyncer {
 					break;
 				}
 			} while ( true );
-
 		}
 	}
 
@@ -294,7 +308,6 @@ class ChangeSyncer {
 
 		$wgUser = $old;
 	}
-
 }
 
 STDOUT( wfTimestamp( TS_RFC2822 ) );

@@ -36,11 +36,26 @@ $messages['arz'] = array(
 	'cldr-desc' => 'امتداد يوفر أسماء لغات مترجمة',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'cldr-desc' => 'Untastützung fia lokalisiate Språchnnãmen',
+);
+
 /** Southern Balochi (بلوچی مکرانی)
  * @author Mostafadaneshvar
  */
 $messages['bcc'] = array(
 	'cldr-desc' => 'برنامه الحاقی که نام دگه زبانانء ترجمه اش کنت',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'cldr-desc' => 'Пашырэньне, якое дадае пераклады назваў моў',
 );
 
 /** Bulgarian (Български)
@@ -57,11 +72,25 @@ $messages['bn'] = array(
 	'cldr-desc' => 'এই এক্সটেনশনটি ভাষাগুলির স্থানীয়কৃত নাম প্রদান করে',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'cldr-desc' => "Astenn a bourchas roll lec'helaet anv ar yezhoù",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'cldr-desc' => 'Ekstenzija koja pruža lokalizirane nazive jezika',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'cldr-desc' => 'Extensió que proporciona noms localitzats de les llengües',
 );
 
 /** Czech (Česky)
@@ -83,6 +112,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'cldr-desc' => 'Rozšyrjenje, kótarež pódawa lokalizěrowane rěcne mjenja.',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'cldr-desc' => 'Επέκταση που παρέχει εντοπιωμένα ονόματα γλωσσών',
 );
 
 /** Esperanto (Esperanto)
@@ -119,6 +155,13 @@ $messages['fr'] = array(
 	'cldr-desc' => 'Extension qui fournit le nom des langues disponibles',
 );
 
+/** Western Frisian (Frysk)
+ * @author SK-luuut
+ */
+$messages['fy'] = array(
+	'cldr-desc' => "Taheaksel dy't fertaalde taalnammen oanbiedt",
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -152,6 +195,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'cldr-desc' => 'स्थानिकीकरण हुए भाषा का नाम देनेवाला एक्स्टेंशन',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'cldr-desc' => 'Ekstensiyon nga gahatag ngalan lengwahe nga nangin lokal',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -194,7 +244,7 @@ $messages['it'] = array(
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'cldr-desc' => 'ローカライズされている言語名リストを提供する',
+	'cldr-desc' => 'ローカライズされた言語名を提供する拡張機能',
 );
 
 /** Javanese (Basa Jawa)
@@ -202,6 +252,13 @@ $messages['ja'] = array(
  */
 $messages['jv'] = array(
 	'cldr-desc' => 'Èkstènsi sing mènèhi jeneng basa sing dilokalisasi',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author វ័ណថារិទ្ធ
+ */
+$messages['km'] = array(
+	'cldr-desc' => 'Extension ដែលផ្តល់នូវ​ឈ្មោះ​ជាភាសា​ក្នុងស្រុក​',
 );
 
 /** Korean (한국어)
@@ -232,6 +289,20 @@ $messages['li'] = array(
 	'cldr-desc' => 'Oetbreiding die euverzatte name van tale beejt',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Matasg
+ */
+$messages['lt'] = array(
+	'cldr-desc' => 'Priedas leidžiantis rodyti lokalizuotus kalbų pavadinimus',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'cldr-desc' => 'Fanitarana manome ny anaram-piteny misy',
+);
+
 /** Macedonian (Македонски)
  * @author Brest
  */
@@ -253,11 +324,32 @@ $messages['mr'] = array(
 	'cldr-desc' => 'स्थानिकीकरण झालेल्या भाषेचे नाव देणारा विस्तार',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Zamwan
+ */
+$messages['ms'] = array(
+	'cldr-desc' => 'Sambungan yang menyediakan nama-nama bahasa setempat',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
 $messages['nds'] = array(
 	'cldr-desc' => 'Verlöövt dat Bruken vun översett Naams vun Spraken',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'cldr-desc' => 'Uutbreiding dee vertaalde namen van talen biejt',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'cldr-desc' => 'एक्सटेन्सन जसले लोकालाइज गरिएको भाषा नाम प्रयोग गर्न सहयोग गर्छ',
 );
 
 /** Dutch (Nederlands)
@@ -295,11 +387,19 @@ $messages['pl'] = array(
 	'cldr-desc' => 'Rozszerzenie dostarczające zlokalizowane nazwy języków',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'cldr-desc' => 'Estension che a dà ij nòm localisà dle lenghe',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'cldr-desc' => 'Extensão que providencia nomes localizados de línguas',
+	'cldr-desc' => 'Extensão que fornece nomes de língua localizados',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -344,11 +444,32 @@ $messages['sk'] = array(
 	'cldr-desc' => 'Rozšírenie, ktoré poskytuje lokalizované názvy jazykov',
 );
 
+/** Lower Silesian (Schläsch)
+ * @author Jonny84
+ */
+$messages['sli'] = array(
+	'cldr-desc' => 'Unterstützung fier lokalisierte Sproachanoama',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'cldr-desc' => 'Shtesë që paraqet emrat lokal të gjuhëve',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'cldr-desc' => 'Екстензија која омогућава локализацију назива језика',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'cldr-desc' => 'Ekstenzija koja omogućava lokalizaciju naziva jezika',
 );
 
 /** Seeltersk (Seeltersk)
@@ -387,6 +508,13 @@ $messages['tg-cyrl'] = array(
 	'cldr-desc' => 'Афзунае, ки номҳои маҳалликунонидашудаи забонҳоро пешкаш мекунад',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'cldr-desc' => 'Afzunae, ki nomhoi mahallikunonidaşudai zabonhoro peşkaş mekunad',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -399,6 +527,20 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'cldr-desc' => 'Yerelleştirilmiş dil isimlerini sağlayan eklenti',
+);
+
+/** Uighur (Uyghurche‎ / ئۇيغۇرچە)
+ * @author Sahran
+ */
+$messages['ug'] = array(
+	'cldr-desc' => 'يەرلىكلەشتۈرۈلگەن تىل ئاتى كېينرەك تەمىنلىنىدۇ',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Sahran
+ */
+$messages['ug-arab'] = array(
+	'cldr-desc' => 'يەرلىكلەشتۈرۈلگەن تىل ئاتى كېيىنرەك تەمىنلىنىدۇ',
 );
 
 /** Ukrainian (Українська)
@@ -415,11 +557,19 @@ $messages['vec'] = array(
 	'cldr-desc' => 'Estension che fornisse i nomi localizà de le varie lengue',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'cldr-desc' => 'Liža, kudamb andab keliden nimiden kändused',
+);
+
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
-	'cldr-desc' => 'Gói mở rộng cung cấp tên ngôn ngữ đã địa phương hóa',
+	'cldr-desc' => 'Phần mở rộng cung cấp tên ngôn ngữ đã địa phương hóa',
 );
 
 /** Volapük (Volapük)

@@ -42,7 +42,7 @@ class CategoryIntersection extends SpecialPage {
 	function getForm() {
 		$ret = '';
 		$ret .= "<form method='post'>";
-		$ret .= "<textarea name='lines' rows='10' cols='50' style='width:100%'></textarea><br/>";
+		$ret .= "<textarea name='lines' rows='10' cols='50' style='width:100%'></textarea><br />";
 		$ret .= "<input type='submit' name='doit' value='" . wfMsgHtml('categoryintersection-doit') . "' />";
 		$ret .= "</form>";
 		return $ret;

@@ -14,23 +14,17 @@ $aliases['en'] = array(
 	'SpamRegex' => array( 'SpamRegex' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'SpamRegex' => array( 'سبام_ريجيكس' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'SpamRegex' => array( 'سبام_ريجيكس' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'SpamRegex' => array( 'ביטויי_ספאם' ),
 );
@@ -45,14 +39,24 @@ $aliases['ia'] = array(
 	'SpamRegex' => array( 'Regex antispam', 'Regex anti-spam' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'SpamRegex' => array( 'Regex spam', 'RegexSpam' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'SpamRegex' => array( 'スパム正規表現フィルター' ),
+	'SpamRegex' => array( 'スパム正規表現フィルター', 'スパム正規表現フィルタ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'SpamRegex' => array( 'उत्पातरिजेक्स' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
-	'SpamRegex' => array( 'Spam_regeliere_expressie' ),
+	'SpamRegex' => array( 'Moek_regeliere_uutdrokking' ),
 );
 
 /** Dutch (Nederlands) */

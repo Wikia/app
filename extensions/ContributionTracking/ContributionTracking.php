@@ -10,10 +10,9 @@ EOT;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'ContributionTracking',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:ContributionTracking',
-	'svn-date'       => '$LastChangedDate: 2008-11-03 19:43:49 +0100 (pon, 03 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 43135 $',
 	'author'         => 'David Strauss',
 	'descriptionmsg' => 'contributiontracking-desc',
 );

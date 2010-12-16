@@ -136,7 +136,7 @@ class MwRdf_ModelingAgent {
 		$this->linkedTitles = array();
 		$id = $this->Title->getArticleID();
 		if ($id != 0) {
-			$dbr =& wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->select('pagelinks',
 				array('pl_namespace', 'pl_title'),
 				array('pl_from = ' . $id),

@@ -13,12 +13,11 @@ if ( !defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'LinkOpenID',
 	'author'         => 'Michael Holzt',
 	'description'    => 'allow users to link their account to an external OpenID',
 	'descriptionmsg' => 'linkopenid-desc',
-	'svn-date'       => '$LastChangedDate: 2008-12-04 18:13:39 +0100 (czw, 04 gru 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44237 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:LinkOpenID',
 );
 

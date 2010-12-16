@@ -15,11 +15,13 @@ $messages = array(
 'april'    => 'ᏥᎶᏂ',
 'june'     => 'DᎡᎭᎷᏱ',
 
-'about'          => 'ᎬᏩᏚᏫᏛ',
-'article'        => 'ᎤᏓᏡᎬ',
+'about'      => 'ᎬᏩᏚᏫᏛ',
+'article'    => 'ᎤᏓᏡᎬ',
+'navigation' => 'ᎠᏂᎩᏍᏗ ᏥᏳ',
+
+# Cologne Blue skin
 'qbpageinfo'     => 'ᎦᎷᎯᏍᏗ',
 'qbspecialpages' => 'ᎤᏤᎵᏛ',
-'navigation'     => 'ᎠᏂᎩᏍᏗ ᏥᏳ',
 
 'help'             => 'ᎠᎵᏍᏕᎸᏗ',
 'search'           => 'ᎠᏯᏍᏗ',
@@ -61,7 +63,9 @@ $messages = array(
 'recentchanges' => 'ᎾᏞᎬ ᏗᎦᏁᏟᏴᏍᏗ',
 
 # Recent changes linked
-'recentchangeslinked' => 'ᎪᎱᏍᏗ ᎠᎾᏓᏛᏂ ᏗᎦᏁᏟᏴᏍᏗ',
+'recentchangeslinked'         => 'ᎪᎱᏍᏗ ᎠᎾᏓᏛᏂ ᏗᎦᏁᏟᏴᏍᏗ',
+'recentchangeslinked-feed'    => 'ᎪᎱᏍᏗ ᎠᎾᏓᏛᏂ ᏗᎦᏁᏟᏴᏍᏗ',
+'recentchangeslinked-toolbox' => 'ᎪᎱᏍᏗ ᎠᎾᏓᏛᏂ ᏗᎦᏁᏟᏴᏍᏗ',
 
 # Upload
 'upload' => 'ᎦᎸᎳᏗᏢ ᎠᎧᎵᎢ ᎠᏝᎥᎢ',
@@ -74,6 +78,8 @@ $messages = array(
 
 # Delete
 'actioncomplete' => 'ᎠᏍᏆᏙᏅᎯ',
+
+'sp-contributions-talk' => 'ᎧᏃᎮᎸᏗ',
 
 # What links here
 'whatlinkshere' => 'ᎦᏙ ᎤᏍᏗ ᏗᏕᎬᏔᏛ ᎠᎭᏂ',

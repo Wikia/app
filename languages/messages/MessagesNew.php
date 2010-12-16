@@ -11,11 +11,9 @@
 $namespaceNames = array(
 	NS_MEDIA            => 'माध्यम',
 	NS_SPECIAL          => 'विशेष',
-	NS_MAIN             => '',
 	NS_TALK             => 'खँलाबँला',
 	NS_USER             => 'छ्येलेमि',
 	NS_USER_TALK        => 'छ्येलेमि_खँलाबँला',
-	# NS_PROJECT set by $wgMetaNamespace
 	NS_PROJECT_TALK     => '$1_खँलाबँला',
 	NS_FILE             => 'किपा',
 	NS_FILE_TALK        => 'किपा_खँलाबँला',
@@ -24,7 +22,7 @@ $namespaceNames = array(
 	NS_HELP             => 'ग्वाहालि',
 	NS_HELP_TALK        => 'ग्वाहालि_खँलाबँला',
 	NS_CATEGORY         => 'पुचः',
-	NS_CATEGORY_TALK    => 'पुचः_खँलाबँला'
+	NS_CATEGORY_TALK    => 'पुचः_खँलाबँला',
 );
 
 $digitTransformTable = array(
@@ -149,7 +147,7 @@ $messages = array(
 'category-media-header'          => 'पुचः "$1"य् दुगु मिडिया',
 'category-empty'                 => "''थ्व पुचले आःईले पौ वा मिदिया मदु।''",
 'hidden-categories'              => '{{PLURAL:$1|गुप्त पुचः|गुप्त पुचःतः}}',
-'hidden-category-category'       => 'गुप्त पुचःतः', # Name of the category where hidden categories will be listed
+'hidden-category-category'       => 'गुप्त पुचःतः',
 'category-subcat-count'          => '{{PLURAL:$2|थ्व पुचले बियातःगु उपपुचः जक्क दु।|थ्व पुचले $2 सकलय् बियातःगु {{PLURAL:$1|उपपुचः|$1 उपपुचःतः}} दु।}}',
 'category-subcat-count-limited'  => 'थ्व पुचले बियातःगु {{PLURAL:$1|उपपुचः|$1 उपपुचःत}} दु।',
 'category-article-count'         => '{{PLURAL:$2|थ्व पुचले क्वे बियातःगु पौ दु।|$2 सकलय् थ्व बियातःगु {{PLURAL:$1|पौ|$1 पौस}} थ्व पुचले दु।}}',
@@ -158,8 +156,6 @@ $messages = array(
 
 'about'         => 'विषयक',
 'article'       => 'कण्टेण्ट पौ',
-'qbfind'        => 'मालादिसँ',
-'qbedit'        => 'सम्पादन',
 'moredotdotdot' => 'अप्व॰॰॰',
 'mypage'        => 'जिगु पौ',
 'mytalk'        => 'जिगु खं',
@@ -167,8 +163,11 @@ $messages = array(
 'navigation'    => 'परिवहन',
 'and'           => '&#32;व',
 
-# Metadata in edit box
-'metadata_help' => 'मेटाडेटा:',
+# Cologne Blue skin
+'qbfind'  => 'मालादिसँ',
+'qbedit'  => 'सम्पादन',
+'faq'     => 'आपालं न्यनिगु न्ह्यसः (FAQ)',
+'faqpage' => 'Project:आपालं न्यनिगु न्ह्यसःत (FAQ)',
 
 'returnto'         => '$1य् लिहाँझासँ।',
 'tagline'          => '{{SITENAME}}नं',
@@ -200,7 +199,6 @@ $messages = array(
 'aboutsite'            => '{{SITENAME}}या बारेय्',
 'aboutpage'            => 'Project:बारेय्',
 'copyright'            => 'कण्टेण्ट $1 कथं उपलब्ध दु।',
-'copyrightpagename'    => '{{SITENAME}} लेखाधिकार',
 'copyrightpage'        => '{{ns:project}}:लेखाधिकार',
 'currentevents'        => 'जुयाच्वँगु घटना',
 'currentevents-url'    => 'Project:जुयाच्वँगु घटना',
@@ -208,8 +206,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:साधारण डिस्क्लेमर्स',
 'edithelp'             => 'सम्पादन ग्वहालि',
 'edithelppage'         => 'Help:सम्पादन',
-'faq'                  => 'आपालं न्यनिगु न्ह्यसः (FAQ)',
-'faqpage'              => 'Project:आपालं न्यनिगु न्ह्यसःत (FAQ)',
 'helppage'             => 'Help:धलःपौ',
 'mainpage'             => 'मू पौ',
 'mainpage-description' => 'मू पौ',
@@ -264,10 +260,6 @@ $messages = array(
 "<tt>$2</tt>" फंक्सनया 
 <blockquote><tt>$1</tt></blockquote> ख। 
 MySQL नं इरर "<tt>$3: $4</tt>" क्यंगु दु।',
-'noconnect'       => 'माफ यानादिसँ! थ्व विकिइ छुं प्राविधिक कठिनाइ वयाच्वँगु दु व डेटाबेस सर्भरयात स्वापू तये मफयाच्वँगु दु।<br />
-$1',
-'nodb'            => 'डेटाबेस $1यात ल्यये मफुत।',
-'cachederror'     => 'थ्व पौ अनुरोधित पौया क्यासे कपि ख व अप-टु-डेट मजुइफु।',
 'laggedslavemode' => 'चेतावनी: पतिइ न्हुगु अपदेत मदेफु ।',
 'readonly'        => 'देताबेस संरक्षित',
 'enterlockreason' => 'पौ कुनातयेगुया निंतिं कारण बियादिसँ, नापं पौ गब्ले चायेकिगु जुइफु उकिया अनुमान नं बियादिसँ',
@@ -281,7 +273,6 @@ $1',
 'welcomecreation'         => '== लसकुस, $1! ==
 छिगु खाता चायेके धुंकल।
 छिगु [[Special:Preferences|{{SITENAME}} प्राथमिकता]] हिलिगु लुमंकादिसँ।',
-'loginpagetitle'          => 'छ्य्‌लामि दुहां झासँ',
 'yourname'                => 'छ्य्‌लामि नां:',
 'yourpassword'            => 'दुथखँग्वः (पासवर्द):',
 'yourpasswordagain'       => 'दुथखँग्वः हानं तियादिसँ:',
@@ -294,11 +285,6 @@ $1',
 'nologinlink'             => 'खाता न्ह्यथनादिसँ',
 'createaccount'           => 'खाता चायेकादिसँ',
 'gotaccountlink'          => 'दुहां झासँ',
-'youremail'               => 'इ-मेल:',
-'username'                => 'छ्य्‌लामि नां:',
-'yourrealname'            => 'वास्तविक नां:',
-'yourlanguage'            => 'भाषा:',
-'email'                   => 'इ-मेल',
 'loginsuccesstitle'       => 'लग इन सफल जुल',
 'accountcreated'          => 'खाता न्ह्येथन',
 'loginlanguagelabel'      => 'भाषा: $1',
@@ -319,11 +305,6 @@ $1',
 'revisionasof'     => '$1 तक्कया संस्करण',
 'previousrevision' => '←पुलांगु संस्करण',
 
-# Diffs
-'diff-i'      => "'''ब्यक्वःगु'''",
-'diff-b'      => "'''गाढा'''",
-'diff-strong' => "'''कडा'''",
-
 # Search results
 'searchhelp-url' => 'Help:धलःपौ',
 'searchrelated'  => 'स्वापू दुःगु',
@@ -333,11 +314,16 @@ $1',
 # Preferences page
 'mypreferences'  => 'जिगु प्राथमिकता',
 'changepassword' => 'पासवर्द हिलादिसँ',
-'math'           => 'गणित',
-'datetime'       => 'दिं व ई',
+'prefs-math'     => 'गणित',
+'prefs-datetime' => 'दिं व ई',
 'prefs-personal' => 'छ्य्‌लामि प्रोफाइल',
 'prefs-rc'       => 'न्हुगु हिलेज्या',
 'saveprefs'      => 'स्वथनादिसँ',
+'youremail'      => 'इ-मेल:',
+'username'       => 'छ्य्‌लामि नां:',
+'yourrealname'   => 'वास्तविक नां:',
+'yourlanguage'   => 'भाषा:',
+'email'          => 'इ-मेल',
 
 # User rights
 'userrights-user-editname' => 'छपू छ्य्‌लामि नां तयादिसँ:',
@@ -354,7 +340,8 @@ $1',
 'upload' => 'संचिका चढ़ाएँ',
 
 # File description page
-'filehist-user' => 'छ्य्‌लामि',
+'file-anchor-link' => 'फाइल',
+'filehist-user'    => 'छ्य्‌लामि',
 
 # Random page
 'randompage' => 'छगु च्वसुइ येंकादिसं',
@@ -388,6 +375,8 @@ $1',
 
 # Contributions
 'mycontris' => 'जिगु योगदान',
+
+'sp-contributions-talk' => 'खँल्हाबँल्हा',
 
 # What links here
 'whatlinkshere' => 'थन छु स्वाई',

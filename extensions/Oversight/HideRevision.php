@@ -41,10 +41,9 @@ $wgGroupPermissions['oversight']['oversight'] = true;
 // $wgGroupPermissions['quiscustodiet']['oversight'] = true;
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Oversight',
 	'author'         => 'Brion Vibber',
-	'svn-date'       => '$LastChangedDate: 2008-11-29 12:00:43 +0100 (sob, 29 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44035 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Oversight',
 	'description'    => 'Hide individual revisions from all users for legal reasons, etc.',
 	'descriptionmsg' => 'hiderevision-desc',

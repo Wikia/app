@@ -67,20 +67,19 @@ function diffcheck() {
 				} else {
 					inputs[1].style.visibility = 'visible';
 				}
-				lis[i].className = lis[i].classNameOriginal;
+				if ( typeof lis[i].classNameOriginal != 'undefined' ) {
+					lis[i].className = lis[i].classNameOriginal;
+				}
 			}
 		}
 	}
 	return true;
 }
 
-// page history stuff
-// attach event handlers to the input elements on history page
+// Attach event handlers to the input elements on history page
 function histrowinit() {
 	var hf = document.getElementById('pagehistory');
-	if (!hf) {
-		return;
-	}
+	if (!hf) return;
 	var lis = hf.getElementsByTagName('li');
 	for (var i = 0; i < lis.length; i++) {
 		var inputs = historyRadios(lis[i]);

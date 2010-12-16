@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'Asksql'    => array( 'Asksql' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Asksql' => array( 'سؤال_إس_كيو_إل' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Asksql' => array( 'سؤال_إس_كيو_إل' ),
 );
@@ -52,6 +48,11 @@ $aliases['fr'] = array(
 	'Asksql' => array( 'Requête SQL', 'Requete SQL', 'RequêteSQL', 'RequeteSQL' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Asksql' => array( 'Requéta SQL', 'RequétaSQL' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'Asksql' => array( 'SQL-Abfrog' ),
@@ -72,9 +73,14 @@ $aliases['ia'] = array(
 	'Asksql' => array( 'Consulta SQL' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Asksql' => array( 'Tanya SQL', 'TanyaSQL', 'Tanya sql', 'Tanyasql' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Asksql' => array( 'SQLクエリの実行' ),
+	'Asksql' => array( 'SQLクエリの実行', 'ＳＱＬクエリの実行', 'SQL実行', 'ＳＱＬ実行' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -85,6 +91,11 @@ $aliases['ksh'] = array(
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'Asksql' => array( 'SQL-Ufroen' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Asksql' => array( 'एसक्यूएलविचारा' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -112,13 +123,38 @@ $aliases['pl'] = array(
 	'Asksql' => array( 'Zapytanie SQL' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'Asksql' => array( 'Întreabăsql' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'Asksql' => array( 'एस्‌क्यूएल्‌पृच्छा' ),
 );
 
+/** Sinhala (සිංහල) */
+$aliases['si'] = array(
+	'Asksql' => array( 'Sqlවිමසන්න' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Asksql' => array( 'SQLPožiadavka' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Asksql' => array( 'Tanungin ang SQL' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'Asksql' => array( 'SQL查询' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'Asksql' => array( 'SQL查詢' ),
 );
 

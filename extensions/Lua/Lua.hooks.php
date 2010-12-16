@@ -11,10 +11,9 @@
 
 class LuaHooks {
 	/** ParserFirstCallInit hook */
-	public static function parserInit() {
-		global $wgParser;
-		$wgParser->setHook( 'lua', 'LuaHooks::renderTag' );
-		$wgParser->setFunctionHook('luaexpr', 'LuaHooks::renderExpr');
+	public static function parserInit( &$parser ) {
+		$parser->setHook( 'lua', 'LuaHooks::renderTag' );
+		$parser->setFunctionHook('luaexpr', 'LuaHooks::renderExpr');
 		return true;
 	}
 

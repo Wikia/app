@@ -1,13 +1,20 @@
  /**
-  * Javascript functions for Google Maps functionallity in Maps and it's extensions
+  * Javascript functions for Google Maps functionallity in Maps.
   *
   * @file GoogleMapFunctions.js
-  * @ingroup Maps
+  * @ingroup MapsGoogleMaps
   *
   * @author Robert Buzink
   * @author Yaron Koren   
   * @author Jeroen De Dauw
   */
+
+var GOverlays = [
+	new GLayer("com.panoramio.all"),
+	new GLayer("com.youtube.all"),
+	new GLayer("org.wikipedia.en"),
+	new GLayer("com.google.webcams")
+];
 
 
 /**
@@ -42,41 +49,45 @@ function createGMarker(point, title, label, icon) {
 
 /**
  * Returns GMap2 object with the provided properties and markers.
+ * This is done by setting the map centre and size, and passing the arguments to function createGoogleMap.
  */
-function initializeGoogleMap(mapName, width, height, lat, lon, zoom, type, types, controls, scrollWheelZoom, markers) {
-	var map;
-	
-	var centre = (lat != null && lon != null) ? new GLatLng(lat, lon) : null;
-	
+function initializeGoogleMap(mapName, mapOptions, markers) {
 	if (GBrowserIsCompatible()) {
-		map = createGoogleMap(document.getElementById(mapName), new GSize(width, height), centre, zoom, type, types, controls, scrollWheelZoom, markers);
+		mapOptions.centre = (mapOptions.lat != null && mapOptions.lon != null) ? new GLatLng(mapOptions.lat, mapOptions.lon) : null;
+		mapOptions.size = new GSize(mapOptions.width, mapOptions.height);	
+		return createGoogleMap(mapName, mapOptions, markers);	
 	}
-		
-	return map;
+	else {
+		return false;
+	}
 }
 
 /**
  * Returns GMap2 object with the provided properties.
  */
-function createGoogleMap(mapElement, size, centre, zoom, type, types, controls, scrollWheelZoom, markers) {
+function createGoogleMap(mapName, mapOptions, markers) {
+	var mapElement = document.getElementById(mapName);
 	var typesContainType = false;
 
 	// TODO: Change labels of the moon/mars map types?
-	for (var i = 0; i < types.length; i++) {
-		if (types[i] == type) typesContainType = true;
-	}
-	
-	if (! typesContainType) {
-		types.push(type);
+	for (var i = 0; i < mapOptions.types.length; i++) {
+		if (mapOptions.types[i] == mapOptions.type) typesContainType = true;
 	}
 
-	var map = new GMap2(mapElement, {size: size, mapTypes: types});
-	
-	map.setMapType(type);	
-	
+	if (! typesContainType) mapOptions.types.push(mapOptions.type);
+
+	var map = new GMap2(mapElement, {size: mapOptions.size, mapTypes: mapOptions.types});
+	map.name = mapName;
+
+	map.setMapType(mapOptions.type);	
+
 	// List of GControls: http://code.google.com/apis/maps/documentation/reference.html#GControl
-	for (i in controls){
-		switch (controls[i]) {
+	for (i in mapOptions.controls){
+		if (mapOptions.controls[i].toLowerCase() == 'auto') {
+			if (mapOptions.height > 75) mapOptions.controls[i] = mapOptions.height > 320 ? 'large' : 'small';
+		}			
+		
+		switch (mapOptions.controls[i]) {
 			case 'large' : 
 				map.addControl(new GLargeMapControl3D());
 				break;
@@ -94,10 +105,13 @@ function createGoogleMap(mapElement, size, centre, zoom, type, types, controls, 
 				break;
 			case 'type' : 
 				map.addControl(new GMapTypeControl());
-				break;		
+				break;				
 			case 'type-menu' : 
 				map.addControl(new GMenuMapTypeControl());
 				break;
+			case 'overlays' : 
+				map.addControl(new MoreControl());
+				break;					
 			case 'overview' : case 'overview-map' : 
 				map.addControl(new GOverviewMapControl());
 				break;					
@@ -109,29 +123,118 @@ function createGoogleMap(mapElement, size, centre, zoom, type, types, controls, 
 				break;	
 		}
 	}	
-	
-	var bounds = ((zoom == null || centre == null) && markers.length > 1) ? new GLatLngBounds() : null;
-	
+
+	var bounds = ((mapOptions.zoom == null || mapOptions.centre == null) && markers.length > 1) ? new GLatLngBounds() : null;
+
 	for (i in markers) {
 		var marker = markers[i];
 		map.addOverlay(createGMarker(marker.point, marker.title, marker.label, marker.icon));
 		if (bounds != null) bounds.extend(marker.point);
 	}
-	
+
 	if (bounds != null) {
 		map.setCenter(bounds.getCenter(), map.getBoundsZoomLevel(bounds));
 	}
+
+	if (mapOptions.centre != null) map.setCenter(mapOptions.centre);
+	if (mapOptions.zoom != null) map.setZoom(mapOptions.zoom);
 	
-	if (centre != null) map.setCenter(centre);
-	if (zoom != null) map.setZoom(zoom);
-	
-	if (scrollWheelZoom) map.enableScrollWheelZoom();
-	
+	if (mapOptions.scrollWheelZoom) map.enableScrollWheelZoom();
+
 	map.enableContinuousZoom();
+	
+	// Make the map variable available for other functions
+	if (!window.GMaps) window.GMaps = new Object;
+	eval("window.GMaps." + mapName + " = map;"); 	
 	
 	return map;
 }
  
 function getGMarkerData(lat, lon, title, label, icon) {
 		return {point: new GLatLng(lat, lon), title: title, label: label, icon: icon};
+}
+
+function setupCheckboxShiftClick() { return true; }
+
+function MoreControl() {};
+MoreControl.prototype = new GControl();
+
+MoreControl.prototype.initialize = function(map) {
+	this.map = map;
+	
+	var more = document.getElementById(map.name + "-outer-more");
+
+	var buttonDiv = document.createElement("div");
+	buttonDiv.id = map.name + "-more-button";
+	buttonDiv.title = "Show/Hide Overlays";
+	buttonDiv.style.border = "1px solid black";
+	buttonDiv.style.width = "86px";
+
+	var textDiv = document.createElement("div");
+	textDiv.id = map.name + "-inner-more";
+	textDiv.setAttribute('class', 'inner-more');
+	textDiv.appendChild(document.createTextNode("Overlays"));
+
+	buttonDiv.appendChild(textDiv);
+
+	// Register Event handlers
+	more.onmouseover = showGLayerbox;
+	more.onmouseout = setGLayerboxClose;
+
+	// Insert the button just after outer_more div.
+	more.insertBefore(buttonDiv, document.getElementById(map.name + "-more-box").parentNode);
+
+	// Remove the whole div from its location and reinsert it to the map.
+	map.getContainer().appendChild(more);
+
+	return more;
+};
+
+MoreControl.prototype.getDefaultPosition = function() {
+	return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(7, 35));
+};
+
+function checkGChecked(mapName)	{
+	//	Returns true if	a checkbox is still	checked otherwise false.
+	var	boxes = document.getElementsByName(mapName + "-overlay-box");
+	for(var	i = 0; i < boxes.length; i++) {
+		if(boxes[i].checked) return true;
+	}
+	return false;
+}
+
+function showGLayerbox() {
+	var mapName = this.id.split('-')[0];	
+	eval("if(window.timer_" + mapName + ") clearTimeout(timer_" + mapName + ");");
+	document.getElementById(mapName + "-more-box").style.display = "block";
+	var	button = document.getElementById(mapName + "-inner-more");
+	button.style.borderBottomWidth = "4px";
+	button.style.borderBottomColor = "white";
+}
+
+
+function setGLayerboxClose() {
+	var mapName = this.id.split('-')[0];
+	var	layerbox = document.getElementById(mapName + "-more-box");
+	var	button = document.getElementById(mapName + "-inner-more");
+	var	bottomColor	= checkGChecked(mapName) ? "#6495ed" : "#c0c0c0";
+	eval("timer_" + mapName + " = window.setTimeout(function() { layerbox.style.display = 'none'; button.style.borderBottomWidth = '1px'; button.style.borderBottomColor = bottomColor; },	400);");
+}
+
+function switchGLayer(map, checked, layer) {
+	var	layerbox = document.getElementById(map.name + "-more-box");
+	var	button = document.getElementById(map.name + "-inner-more");
+	
+	if(checked)	{
+			map.addOverlay(layer);
+	}
+	else {
+			map.removeOverlay(layer);
+	}
+	
+}
+
+function initiateGOverlay(elementId, mapName, urlNr) {
+	document.getElementById(elementId).checked = true;
+	switchGLayer(GMaps[mapName], true, GOverlays[urlNr]);
 }

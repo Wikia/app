@@ -14,7 +14,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 	/**
 	 * Maximum number of pages to show on single index subpage.
 	 */
-	protected $maxLineCount = 200;
+	protected $maxLineCount = 100;
 
 	/**
 	 * Maximum number of chars to show for an entry.
@@ -48,7 +48,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 
 		$namespaces = $wgContLang->getNamespaces();
 
-		$wgOut->setPagetitle( ( $namespace > 0 && in_array( $namespace, array_keys( $namespaces) ) )  ?
+		$wgOut->setPagetitle( 
+			( $namespace > 0 && in_array( $namespace, array_keys( $namespaces) ) ) ?
 			wfMsg( 'allinnamespace', str_replace( '_', ' ', $namespaces[$namespace] ) ) :
 			wfMsg( 'allarticles' )
 		);
@@ -69,53 +70,52 @@ class SpecialAllpages extends IncludableSpecialPage {
 	 * @param string $to dbKey we are ending listing at.
 	 */
 	function namespaceForm( $namespace = NS_MAIN, $from = '', $to = '' ) {
-	    global $wgScript;
-	    $t = $this->getTitle();
-
-	    $out  = Xml::openElement( 'div', array( 'class' => 'namespaceoptions' ) );
-	    $out .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
-	    $out .= Xml::hidden( 'title', $t->getPrefixedText() );
-	    $out .= Xml::openElement( 'fieldset' );
-	    $out .= Xml::element( 'legend', null, wfMsg( 'allpages' ) );
-	    $out .= Xml::openElement( 'table', array( 'id' => 'nsselect', 'class' => 'allpages' ) );
-	    $out .= "<tr>
-	            <td class='mw-label'>" .
-	                Xml::label( wfMsg( 'allpagesfrom' ), 'nsfrom' ) .
-	            "</td>
-	            <td class='mw-input'>" .
-	                Xml::input( 'from', 30, str_replace('_',' ',$from), array( 'id' => 'nsfrom' ) ) .
-	            "</td>
-	        </tr>
-	        <tr>
-	            <td class='mw-label'>" .
-	                Xml::label( wfMsg( 'allpagesto' ), 'nsto' ) .
-	            "</td>
-	            <td class='mw-input'>" .
-	                Xml::input( 'to', 30, str_replace('_',' ',$to), array( 'id' => 'nsto' ) ) .
-	            "</td>
-	        </tr>
-	        <tr>
-	            <td class='mw-label'>" .
-	                Xml::label( wfMsg( 'namespace' ), 'namespace' ) .
-	            "</td>
-	            <td class='mw-input'>" .
-	                Xml::namespaceSelector( $namespace, null ) . ' ' .
-	                Xml::submitButton( wfMsg( 'allpagessubmit' ) ) .
-	            "</td>
-	            </tr>";
-	    $out .= Xml::closeElement( 'table' );
-	    $out .= Xml::closeElement( 'fieldset' );
-	    $out .= Xml::closeElement( 'form' );
-	    $out .= Xml::closeElement( 'div' );
-	    return $out;
+		global $wgScript;
+		$t = $this->getTitle();
+	
+		$out  = Xml::openElement( 'div', array( 'class' => 'namespaceoptions' ) );
+		$out .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
+		$out .= Xml::hidden( 'title', $t->getPrefixedText() );
+		$out .= Xml::openElement( 'fieldset' );
+		$out .= Xml::element( 'legend', null, wfMsg( 'allpages' ) );
+		$out .= Xml::openElement( 'table', array( 'id' => 'nsselect', 'class' => 'allpages' ) );
+		$out .= "<tr>
+	<td class='mw-label'>" .
+			Xml::label( wfMsg( 'allpagesfrom' ), 'nsfrom' ) .
+			"	</td>
+	<td class='mw-input'>" .
+			Xml::input( 'from', 30, str_replace('_',' ',$from), array( 'id' => 'nsfrom' ) ) .
+			"	</td>
+</tr>
+<tr>
+	<td class='mw-label'>" .
+			Xml::label( wfMsg( 'allpagesto' ), 'nsto' ) .
+			"	</td>
+			<td class='mw-input'>" .
+			Xml::input( 'to', 30, str_replace('_',' ',$to), array( 'id' => 'nsto' ) ) .
+			"		</td>
+</tr>
+<tr>
+	<td class='mw-label'>" .
+			Xml::label( wfMsg( 'namespace' ), 'namespace' ) .
+			"	</td>
+			<td class='mw-input'>" .
+			Xml::namespaceSelector( $namespace, null ) . ' ' .
+			Xml::submitButton( wfMsg( 'allpagessubmit' ) ) .
+			"	</td>
+</tr>";
+		$out .= Xml::closeElement( 'table' );
+		$out .= Xml::closeElement( 'fieldset' );
+		$out .= Xml::closeElement( 'form' );
+		$out .= Xml::closeElement( 'div' );
+		return $out;
 	}
 
 	/**
 	 * @param integer $namespace (default NS_MAIN)
 	 */
 	function showToplevel( $namespace = NS_MAIN, $from = '', $to = '' ) {
-		global $wgOut, $wgContLang;
-		$align = $wgContLang->isRtl() ? 'left' : 'right';
+		global $wgOut;
 
 		# TODO: Either make this *much* faster or cache the title index points
 		# in the querycache table.
@@ -126,8 +126,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 
 		$from = Title::makeTitleSafe( $namespace, $from );
 		$to = Title::makeTitleSafe( $namespace, $to );
-		$from = ( $from && $from->isLocal() ) ? $from->getDBKey() : null;
-		$to = ( $to && $to->isLocal() ) ? $to->getDBKey() : null;
+		$from = ( $from && $from->isLocal() ) ? $from->getDBkey() : null;
+		$to = ( $to && $to->isLocal() ) ? $to->getDBkey() : null;
 
 		if( isset($from) )
 			$where[] = 'page_title >= '.$dbr->addQuotes( $from );
@@ -190,7 +190,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 		// Instead, display the first section directly.
 		if( count( $lines ) <= 2 ) {
 			if( !empty($lines) ) {
-				$this->showChunk( $namespace, $lines[0], $lines[count($lines)-1] );
+				$this->showChunk( $namespace, $from, $to );
 			} else {
 				$wgOut->addHTML( $this->namespaceForm( $namespace, $from, $to ) );
 			}
@@ -198,13 +198,13 @@ class SpecialAllpages extends IncludableSpecialPage {
 		}
 
 		# At this point, $lines should contain an even number of elements.
-		$out .= "<table class='allpageslist' style='background: inherit;'>";
+		$out .= Xml::openElement( 'table', array( 'class' => 'allpageslist' ) );
 		while( count ( $lines ) > 0 ) {
 			$inpoint = array_shift( $lines );
 			$outpoint = array_shift( $lines );
 			$out .= $this->showline( $inpoint, $outpoint, $namespace );
 		}
-		$out .= '</table>';
+		$out .= Xml::closeElement( 'table' );
 		$nsForm = $this->namespaceForm( $namespace, $from, $to );
 
 		# Is there more?
@@ -213,11 +213,17 @@ class SpecialAllpages extends IncludableSpecialPage {
 		} else {
 			if( isset($from) || isset($to) ) {
 				global $wgUser;
-				$out2 = '<table style="background: inherit;" width="100%" cellpadding="0" cellspacing="0" border="0">';
-				$out2 .= '<tr valign="top"><td>' . $nsForm;
-				$out2 .= '</td><td align="' . $align . '" style="font-size: smaller; margin-bottom: 1em;">' .
-					$wgUser->getSkin()->makeKnownLinkObj( $this->getTitle(), wfMsgHtml ( 'allpages' ) );
-				$out2 .= "</td></tr></table>";
+				$out2 = Xml::openElement( 'table', array( 'class' => 'mw-allpages-table-form' ) ).
+						'<tr>
+							<td>' .
+								$nsForm .
+							'</td>
+							<td class="mw-allpages-nav">' .
+								$wgUser->getSkin()->link( $this->getTitle(), wfMsgHtml ( 'allpages' ),
+									array(), array(), 'known' ) .
+							"</td>
+						</tr>" .
+					Xml::closeElement( 'table' );
 			} else {
 				$out2 = $nsForm;
 			}
@@ -233,7 +239,6 @@ class SpecialAllpages extends IncludableSpecialPage {
 	 */
 	function showline( $inpoint, $outpoint, $namespace = NS_MAIN ) {
 		global $wgContLang;
-		$align = $wgContLang->isRtl() ? 'left' : 'right';
 		$inpointf = htmlspecialchars( str_replace( '_', ' ', $inpoint ) );
 		$outpointf = htmlspecialchars( str_replace( '_', ' ', $outpoint ) );
 		// Don't let the length runaway
@@ -248,7 +253,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 			"<a href=\"$link\">$inpointf</a></td><td>",
 			"</td><td><a href=\"$link\">$outpointf</a>"
 		);
-		return '<tr><td align="' . $align . '">'.$out.'</td></tr>';
+		return '<tr><td class="mw-allpages-alphaindexline">' . $out . '</td></tr>';
 	}
 
 	/**
@@ -264,8 +269,6 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$fromList = $this->getNamespaceKeyAndText($namespace, $from);
 		$toList = $this->getNamespaceKeyAndText( $namespace, $to );
 		$namespaces = $wgContLang->getNamespaces();
-		$align = $wgContLang->isRtl() ? 'left' : 'right';
-
 		$n = 0;
 
 		if ( !$fromList || !$toList ) {
@@ -299,13 +302,12 @@ class SpecialAllpages extends IncludableSpecialPage {
 			);
 
 			if( $res->numRows() > 0 ) {
-				$out = '<table style="background: inherit;" border="0" width="100%">';
-
+				$out = Xml::openElement( 'table', array( 'class' => 'mw-allpages-table-chunk' ) );
 				while( ( $n < $this->maxPerPage ) && ( $s = $res->fetchObject() ) ) {
 					$t = Title::makeTitle( $s->page_namespace, $s->page_title );
 					if( $t ) {
 						$link = ( $s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .
-							$sk->makeKnownLinkObj( $t, htmlspecialchars( $t->getText() ), false, false ) .
+							$sk->linkKnown( $t, htmlspecialchars( $t->getText() ) ) .
 							($s->page_is_redirect ? '</div>' : '' );
 					} else {
 						$link = '[[' . htmlspecialchars( $s->page_title ) . ']]';
@@ -316,13 +318,13 @@ class SpecialAllpages extends IncludableSpecialPage {
 					$out .= "<td width=\"33%\">$link</td>";
 					$n++;
 					if( $n % 3 == 0 ) {
-						$out .= '</tr>';
+						$out .= "</tr>\n";
 					}
 				}
 				if( ($n % 3) != 0 ) {
-					$out .= '</tr>';
+					$out .= "</tr>\n";
 				}
-				$out .= '</table>';
+				$out .= Xml::closeElement( 'table' );
 			} else {
 				$out = '';
 			}
@@ -342,7 +344,9 @@ class SpecialAllpages extends IncludableSpecialPage {
 					'page_title',
 					array( 'page_namespace' => $namespace, 'page_title < '.$dbr->addQuotes($from) ),
 					__METHOD__,
-					array( 'ORDER BY' => 'page_title DESC', 'LIMIT' => $this->maxPerPage, 'OFFSET' => ($this->maxPerPage - 1 ) )
+					array( 'ORDER BY' => 'page_title DESC', 
+						'LIMIT' => $this->maxPerPage, 'OFFSET' => ($this->maxPerPage - 1 )
+					)
 				);
 
 				# Get first title of previous complete chunk
@@ -370,28 +374,44 @@ class SpecialAllpages extends IncludableSpecialPage {
 			$self = $this->getTitle();
 
 			$nsForm = $this->namespaceForm( $namespace, $from, $to );
-			$out2 = '<table style="background: inherit;" width="100%" cellpadding="0" cellspacing="0" border="0">';
-			$out2 .= '<tr valign="top"><td>' . $nsForm;
-			$out2 .= '</td><td align="' . $align . '" style="font-size: smaller; margin-bottom: 1em;">' .
-					$sk->makeKnownLinkObj( $self,
-						wfMsgHtml ( 'allpages' ) );
+			$out2 = Xml::openElement( 'table', array( 'class' => 'mw-allpages-table-form' ) ).
+						'<tr>
+							<td>' .
+								$nsForm .
+							'</td>
+							<td class="mw-allpages-nav">' .
+								$sk->link( $self, wfMsgHtml ( 'allpages' ), array(), array(), 'known' );
 
 			# Do we put a previous link ?
 			if( isset( $prevTitle ) &&  $pt = $prevTitle->getText() ) {
-				$q = 'from=' . $prevTitle->getPartialUrl()
-					. ( $namespace ? '&namespace=' . $namespace : '' );
-				$prevLink = $sk->makeKnownLinkObj( $self,
-					wfMsgHTML( 'prevpage', htmlspecialchars( $pt ) ), $q );
+				$query = array( 'from' => $prevTitle->getText() );
+
+				if( $namespace )
+					$query['namespace'] = $namespace;
+
+				$prevLink = $sk->linkKnown(
+					$self,
+					htmlspecialchars( wfMsg( 'prevpage', $pt ) ),
+					array(),
+					$query
+				);
 				$out2 = $wgLang->pipeList( array( $out2, $prevLink ) );
 			}
 
 			if( $n == $this->maxPerPage && $s = $res->fetchObject() ) {
 				# $s is the first link of the next chunk
 				$t = Title::MakeTitle($namespace, $s->page_title);
-				$q = 'from=' . $t->getPartialUrl()
-					. ( $namespace ? '&namespace=' . $namespace : '' );
-				$nextLink = $sk->makeKnownLinkObj( $self,
-					wfMsgHtml( 'nextpage', htmlspecialchars( $t->getText() ) ), $q );
+				$query = array( 'from' => $t->getText() );
+
+				if( $namespace )
+					$query['namespace'] = $namespace;
+
+				$nextLink = $sk->linkKnown(
+					$self,
+					htmlspecialchars( wfMsg( 'nextpage', $t->getText() ) ),
+					array(),
+					$query
+				);
 				$out2 = $wgLang->pipeList( array( $out2, $nextLink ) );
 			}
 			$out2 .= "</td></tr></table>";
@@ -399,7 +419,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 
 		$wgOut->addHTML( $out2 . $out );
 		if( isset($prevLink) or isset($nextLink) ) {
-			$wgOut->addHTML( '<hr /><p style="font-size: smaller; float: ' . $align . '">' );
+			$wgOut->addHTML( '<hr /><p class="mw-allpages-nav">' );
 			if( isset( $prevLink ) ) {
 				$wgOut->addHTML( $prevLink );
 			}
@@ -430,7 +450,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 		if ( $t && $t->isLocal() ) {
 			return array( $t->getNamespace(), $t->getDBkey(), $t->getText() );
 		} else if ( $t ) {
-			return NULL;
+			return null;
 		}
 
 		# try again, in case the problem was an empty pagename
@@ -439,7 +459,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 		if ( $t && $t->isLocal() ) {
 			return array( $t->getNamespace(), '', '' );
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 }

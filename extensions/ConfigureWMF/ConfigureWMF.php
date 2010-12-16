@@ -5,6 +5,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Configure (WMF)',
 	'author'         => 'Victor Vasiliev',
 	'version'        => '0.1not-for-productional-use',

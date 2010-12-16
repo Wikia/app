@@ -11,8 +11,8 @@
  * 
  * @link http://www.mediawiki.org/wiki/Extension:CategoryOnUpload
  *
- * @author MinuteElectron <minuteelectron@googlemail.com>
- * @copyright Copyright © 2008 MinuteElectron.
+ * @author Robert Leverington <robert@rhl.me.uk>
+ * @copyright Copyright © 2008 - 2009 Robert Leverington.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -21,10 +21,11 @@ if( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
 // Register extension credits.
 $wgExtensionCredits[ 'other' ][] = array(
+	'path'          => __FILE__,
 	'name'          => 'CategoryOnUpload',
 	'url'           => 'http://www.mediawiki.org/wiki/Extension:CategoryOnUpload',
-	'author'        => 'MinuteElectron',
-	'version'       => '1.0',
+	'author'        => 'Robert Leverington',
+	'version'       => '1.1.0',
 	'description'   => 'Prompts a user to select a category when uploading a file.',
 	'decriptionmsg' => 'categoryonupload-desc'
 );
@@ -39,6 +40,7 @@ $wgHooks[ 'UploadForm:BeforeProcessing' ][] = 'efCategoryOnUploadProcess';
 // Initialize configuration variables.
 $wgCategoryOnUploadDefault = null;
 $wgCategoryOnUploadAllowNone = true;
+$wgCategoryOnUploadList = null;
 
 /**
  * Adds a category selection box to the end of the default UploadForm table.
@@ -79,48 +81,62 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 
 	}
 
-	/* Get a database read object.
-	 */
-	$dbr = wfGetDB( DB_SLAVE );
-
-	/* Perform a query on the categorylinks table to retreieve a list of all
-	 * cateogries, this probably shouldn't be installed on wikis with more than
-	 * a few hundred categories as the list would be very long.  If anyone ever
-	 * feels the need to put this extension on such a wiki, a dynamic AJAX
-	 * interface could be created; but when it was developed only a few needed
-	 * to be displayed so this was not an issue.  Fallback to the select box is
-	 * essential no matter what improvements are made.
-	 * 
-	 * It would be nice to use the category table to avoid having to do a
-	 * manual query and perhaps improve performance, but it appears to not
-	 * descriminate between existing and non-existing categories, this would be
-	 * essential; probably needs more looking in to however.  Also it would be
-	 * nice not to use it until 1.13 is released so that it works on at least
-	 * the latest release.
-	 */
-	$res = $dbr->query( 'SELECT DISTINCT cl_to FROM ' . $wgDBprefix . 'categorylinks' );
-
 	/* Get deault category, to compare with category option being output, so the
 	 * default category can be selected.
 	 */
-	global $wgCategoryOnUploadDefault;
+	global $wgCategoryOnUploadDefault, $wgCategoryOnUploadList;
 
-	/* Generate an option for each of the categories in the wiki and add.  A
-	 * title object could be generated for each of the categories so that the
-	 * hacky replacement of '_' to ' ' could be removed, but it seams a waste
-	 * of resources.  If this becomes an issue simply remove the # comments and
-	 * comment out the first line.
-	 */
-	while( $row = $dbr->fetchObject( $res ) ) {
+	if( !is_array( $wgCategoryOnUploadList ) ) {
 
-		$text   = str_replace( '_', ' ', $row->cl_to );
-		#$title = Title::newFromText( $row->cl_to, NS_CATEGORY );
-		#$text  = $title->getText();
-
-		/* Add option to output, if it is the default then make it selected too.
+		/* Get a database read object.
 		 */
-		$cat .= Xml::option( $text, $row->cl_to, ( $text == $wgCategoryOnUploadDefault ) );
+		$dbr = wfGetDB( DB_SLAVE );
 
+		/* Perform a query on the categorylinks table to retreieve a list of all
+		 * cateogries, this probably shouldn't be installed on wikis with more than
+		 * a few hundred categories as the list would be very long.  If anyone ever
+		 * feels the need to put this extension on such a wiki, a dynamic AJAX
+		 * interface could be created; but when it was developed only a few needed
+		 * to be displayed so this was not an issue.  Fallback to the select box is
+		 * essential no matter what improvements are made.
+		 * 
+		 * It would be nice to use the category table to avoid having to do a
+		 * manual query and perhaps improve performance, but it appears to not
+		 * descriminate between existing and non-existing categories, this would be
+		 * essential; probably needs more looking in to however.  Also it would be
+		 * nice not to use it until 1.13 is released so that it works on at least
+		 * the latest release.
+		 */
+		$res = $dbr->query( 'SELECT DISTINCT cl_to FROM ' . $wgDBprefix . 'categorylinks' );
+
+		/* Generate an option for each of the categories in the wiki and add.  A
+		 * title object could be generated for each of the categories so that the
+		 * hacky replacement of '_' to ' ' could be removed, but it seams a waste
+		 * of resources.  If this becomes an issue simply remove the # comments and
+		 * comment out the first line.
+		 */
+		while( $row = $dbr->fetchObject( $res ) ) {
+
+			$text   = str_replace( '_', ' ', $row->cl_to );
+			#$title = Title::newFromText( $row->cl_to, NS_CATEGORY );
+			#$text  = $title->getText();
+
+			/* Add option to output, if it is the default then make it selected too.
+			 */
+			$cat .= Xml::option( $text, $row->cl_to, ( $text == $wgCategoryOnUploadDefault ) );
+
+		}
+
+	} else {
+		foreach( $wgCategoryOnUploadList as $category ) {
+			$text   = str_replace( '_', ' ', $category );
+			#$title = Title::newFromText( $row->cl_to, NS_CATEGORY );
+			#$text  = $title->getText();
+
+			/* Add option to output, if it is the default then make it selected too.
+			 */
+			$cat .= Xml::option( $text, $category, ( $text == $wgCategoryOnUploadDefault ) );
+		}
 	}
 
 	/* Close all the open elements, finished generation.

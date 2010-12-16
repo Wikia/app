@@ -71,9 +71,19 @@ $aliases['fr'] = array(
 	'BoardVote' => array( "Vote du conseil d'administration", 'VoteConseil' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'BoardVote' => array( "Èlèccion du Consèly d'administracion", 'ÈlèccionDuConsèlyDAdministracion' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'BoardVote' => array( 'Kuratoriumswahl' ),
+);
+
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'BoardVote' => array( 'સમિતિમત' ),
 );
 
 /** Hebrew (עברית)
@@ -126,6 +136,11 @@ $aliases['ksh'] = array(
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'BoardVote' => array( 'Wiel fir de Verwaltungsrot' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'BoardVote' => array( 'कार्यकारिणीमत' ),
 );
 
 /** Malay (Bahasa Melayu) */

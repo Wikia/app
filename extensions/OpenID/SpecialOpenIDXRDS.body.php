@@ -22,8 +22,8 @@
  * @addtogroup Extensions
  */
 
-if (!defined('MEDIAWIKI'))
-	exit(1);
+if ( !defined( 'MEDIAWIKI' ) )
+	exit( 1 );
 
 # Outputs a Yadis (http://yadis.org/) XRDS file, saying that this server
 # supports OpenID and lots of other jazz.
@@ -31,85 +31,88 @@ if (!defined('MEDIAWIKI'))
 class SpecialOpenIDXRDS extends SpecialOpenID {
 
 	function SpecialOpenIDXRDS() {
-		SpecialPage::SpecialPage("OpenIDXRDS", '', false);
+		SpecialPage::SpecialPage( 'OpenIDXRDS', '', false );
 	}
 
 	# $par is a user name
 
-	function execute($par) {
+	function execute( $par ) {
 		global $wgOut, $wgOpenIDClientOnly;
 
 		wfLoadExtensionMessages( 'OpenID' );
-		
+
 		# No server functionality if this site is only a client
 		# Note: special page is un-registered if this flag is set,
 		# so it'd be unusual to get here.
-		
-		if ($wgOpenIDClientOnly) {
-			wfHttpError(404, "Not Found", wfMsg('openidclientonlytext'));
+
+		if ( $wgOpenIDClientOnly ) {
+			wfHttpError( 404, "Not Found", wfMsg( 'openidclientonlytext' ) );
 			return;
 		}
 
 		// XRDS preamble XML.
-		$xml_template = array('<?xml version="1.0" encoding="UTF-8"?>',
-							  '<xrds:XRDS',
-							  '  xmlns:xrds="xri://\$xrds"',
-							  '  xmlns:openid="http://openid.net/xmlns/1.0"',
-							  '  xmlns="xri://$xrd*($v*2.0)">',
-							  '<XRD>');
+		$xml_template = array( '<?xml version="1.0" encoding="UTF-8"?' . '>',
+			'<xrds:XRDS',
+			'  xmlns:xrds="xri://\$xrds"',
+			'  xmlns:openid="http://openid.net/xmlns/1.0"',
+			'  xmlns="xri://$xrd*($v*2.0)">',
+			'<XRD>' );
 
 		# Check to see if the parameter is really a user name
 
-		if (!$par) {
-			wfHttpError(404, "Not Found", wfMsg('openidnousername'));
+		if ( !$par ) {
+			wfHttpError( 404, "Not Found", wfMsg( 'openidnousername' ) );
+			return;
 		}
 
-		$user = User::newFromName($par);
+		$user = User::newFromName( $par );
 
-		if (!$user || $user->getID() == 0) {
-			wfHttpError(404, "Not Found", wfMsg('openidbadusername'));
+		if ( !$user || $user->getID() == 0 ) {
+			wfHttpError( 404, "Not Found", wfMsg( 'openidbadusername' ) );
+			return;
 		}
 
 		// Generate the user page URL.
 
-		$user_title = Title::makeTitle(NS_USER, $user->getName());
+		$user_title = $user->getUserPage();
 		$user_url = $user_title->getFullURL();
 
 		// Generate the OpenID server endpoint URL.
-		$server_title = Title::makeTitle(NS_SPECIAL, 'OpenIDServer');
+		$server_title = SpecialPage::getTitleFor( 'OpenIDServer' );
 		$server_url = $server_title->getFullURL();
 
 		// Define array of Yadis services to be included in
 		// the XRDS output.
 		$services = array(
-						  array('uri' => $server_url,
+						  array( 'uri' => $server_url,
 								'priority' => '0',
-								'types' => array('http://openid.net/signon/1.0',
+								'types' => array( 'http://openid.net/signon/1.0',
 												 'http://openid.net/sreg/1.0',
-												 'http://specs.openid.net/auth/2.0/signon'),
-								'delegate' => $user_url),
+												 'http://specs.openid.net/auth/2.0/signon' ),
+								'delegate' => $user_url ),
 						  );
 
 		// Generate <Service> elements into $service_text.
 		$service_text = "\n";
-		foreach ($services as $service) {
-		    $types = array();
-		    foreach ($service['types'] as $type_uri) {
-		        $types[] = '    <Type>'.$type_uri.'</Type>';
-		    }
-		    $service_text .= implode("\n",
-									 array('  <Service priority="'.$service['priority'].'">',
-										   '    <URI>'.$server_url.'</URI>',
-										   implode("\n", $types),
-										   '  </Service>'));
+		foreach ( $services as $service ) {
+			$types = array();
+			foreach ( $service['types'] as $type_uri ) {
+				$types[] = '    <Type>' . $type_uri . '</Type>';
+			}
+			$service_text .= implode( "\n",
+				 array( '  <Service priority="' . $service['priority'] . '">',
+				'    <URI>' . $server_url . '</URI>',
+				implode( "\n", $types ),
+				'  </Service>' ) );
 		}
 
 		$wgOut->disable();
 
 		// Print content-type and XRDS XML.
-		header("Content-Type", "application/xrds+xml");
-		print implode("\n", $xml_template);
+		header( "Content-Type: application/xrds+xml" );
+
+		print implode( "\n", $xml_template );
 		print $service_text;
-		print implode("\n", array("</XRD>", "</xrds:XRDS>"));
+		print implode( "\n", array( "</XRD>", "</xrds:XRDS>" ) );
 	}
 }

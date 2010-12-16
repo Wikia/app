@@ -268,7 +268,3 @@ body.ajax * {
 	display: none;
 }
 
-/* hide comments reply button #140755 */
-.comments .buttons {
-	display: none;
-}

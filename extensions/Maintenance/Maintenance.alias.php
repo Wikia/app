@@ -15,18 +15,19 @@ $aliases['en'] = array(
 	'Maintenance' => array( 'Maintenance' )
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'Maintenance' => array( 'صيانة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Maintenance' => array( 'صيانة' ),
+);
+
+/** Bulgarian (Български) */
+$aliases['bg'] = array(
+	'Maintenance' => array( 'Поддръжка' ),
 );
 
 /** Breton (Brezhoneg) */
@@ -57,6 +58,11 @@ $aliases['eu'] = array(
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'Maintenance' => array( 'Ylläpito' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Maintenance' => array( 'Mantegnence' ),
 );
 
 /** Galician (Galego) */
@@ -94,6 +100,11 @@ $aliases['id'] = array(
 	'Maintenance' => array( 'Pemeliharaan' ),
 );
 
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'Maintenance' => array( 'Manutenzione' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'Maintenance' => array( 'メンテナンス' ),
@@ -109,6 +120,11 @@ $aliases['ko'] = array(
 	'Maintenance' => array( '정비' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Maintenance' => array( 'Waadung' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'Maintenance' => array( 'Ënnerhalt' ),
@@ -117,6 +133,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'Maintenance' => array( 'Одржување' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Maintenance' => array( 'പരിപാലനം' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Maintenance' => array( 'मेंटेननन्स' ),
 );
 
 /** Maltese (Malti) */
@@ -139,6 +165,11 @@ $aliases['no'] = array(
 	'Maintenance' => array( 'Vedlikehold' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'Maintenance' => array( 'Manutenção' ),
+);
+
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
 	'Maintenance' => array( 'Manutenção' ),
@@ -147,6 +178,11 @@ $aliases['pt-br'] = array(
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'Maintenance' => array( 'निर्वहण' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Maintenance' => array( 'Údržba' ),
 );
 
 /** Albanian (Shqip) */
@@ -164,8 +200,33 @@ $aliases['sw'] = array(
 	'Maintenance' => array( 'Matengenezo' ),
 );
 
+/** Thai (ไทย) */
+$aliases['th'] = array(
+	'Maintenance' => array( 'การบำรุงรักษา' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'Maintenance' => array( 'Pagpapanatili' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Maintenance' => array( 'Bakım' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Maintenance' => array( 'Manutension' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'Maintenance' => array( '维护' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'Maintenance' => array( '維護' ),
 );
 

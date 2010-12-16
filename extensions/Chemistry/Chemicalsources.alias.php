@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'ChemicalSources' => array( 'ChemicalSources' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ChemicalSources' => array( 'مصادر_كيميائية' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ChemicalSources' => array( 'مصادر_كيميائية' ),
 );
@@ -42,9 +38,9 @@ $aliases['dsb'] = array(
 	'ChemicalSources' => array( 'Chemiske žrědła' ),
 );
 
-/** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
-	'ChemicalSources' => array( 'ChemicalSources' ),
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'ChemicalSources' => array( 'રસાયણસ્રોત' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
@@ -62,9 +58,24 @@ $aliases['ia'] = array(
 	'ChemicalSources' => array( 'Fontes chimic' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'ChemicalSources' => array( 'Rujukan kimia', 'RujukanKimia' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'ChemicalSources' => array( '化学関連の検索' ),
+);
+
+/** Khmer (ភាសាខ្មែរ) */
+$aliases['km'] = array(
+	'ChemicalSources' => array( 'ប្រភពគីមី' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'ChemicalSources' => array( 'Schimisch Quelle' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -75,6 +86,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'ChemicalSources' => array( 'ХемискиИзвори' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'ChemicalSources' => array( 'രസതന്ത്രസ്രോതസ്സുകൾ' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ChemicalSources' => array( 'रासायनीकस्रोत' ),
 );
 
 /** Maltese (Malti) */
@@ -107,6 +128,11 @@ $aliases['sa'] = array(
 	'ChemicalSources' => array( 'रसायनस्रोत' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ChemicalSources' => array( 'ChemickéZdroje' ),
+);
+
 /** Albanian (Shqip) */
 $aliases['sq'] = array(
 	'ChemicalSources' => array( 'BurimeKimike' ),
@@ -115,5 +141,15 @@ $aliases['sq'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ChemicalSources' => array( 'Mga pinagmulang makakimika' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ChemicalSources' => array( 'KimyasalKaynaklar' ),
+);
+
+/** Veps (Vepsan kel') */
+$aliases['vep'] = array(
+	'ChemicalSources' => array( 'HimižedPurtked' ),
 );
 

@@ -88,6 +88,10 @@ class StubObject {
 	 */
 	function _unstub( $name = '_unstub', $level = 2 ) {
 		static $recursionLevel = 0;
+
+		if ( !($GLOBALS[$this->mGlobal] instanceof StubObject) )
+			return $GLOBALS[$this->mGlobal]; // already unstubbed.
+		
 		if ( get_class( $GLOBALS[$this->mGlobal] ) != $this->mClass ) {
 			$fname = __METHOD__.'-'.$this->mGlobal;
 			wfProfileIn( $fname );
@@ -96,7 +100,7 @@ class StubObject {
 				throw new MWException( "Unstub loop detected on call of \${$this->mGlobal}->$name from $caller\n" );
 			}
 			wfDebug( "Unstubbing \${$this->mGlobal} on call of \${$this->mGlobal}::$name from $caller\n" );
-			$GLOBALS[$this->mGlobal] = $this->_newObject();
+			$obj = $GLOBALS[$this->mGlobal] = $this->_newObject();
 			--$recursionLevel;
 			wfProfileOut( $fname );
 		}
@@ -144,14 +148,8 @@ class StubUserLang extends StubObject {
 	function _newObject() {
 		global $wgContLanguageCode, $wgRequest, $wgUser, $wgContLang;
 		$code = $wgRequest->getVal( 'uselang', $wgUser->getOption( 'language' ) );
-
-		// if variant is explicitely selected, use it instead the one from wgUser
-		// see bug #7605
-		if( $wgContLang->hasVariants() && in_array($code, $wgContLang->getVariants()) ){
-			$variant = $wgContLang->getPreferredVariant();
-			if( $variant != $wgContLanguageCode )
-				$code = $variant;
-		}
+		// BCP 47 - letter case MUST NOT carry meaning
+		$code = strtolower( $code );
 
 		# Validate $code
 		if( empty( $code ) || !preg_match( '/^[a-z-]+$/', $code ) || ( $code === 'qqq' ) ) {

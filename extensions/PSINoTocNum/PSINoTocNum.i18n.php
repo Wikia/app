@@ -42,6 +42,13 @@ $messages['bg'] = array(
 	'psinotocnum-desc' => 'Нова вълшебна думичка „<nowiki>__NOTOCNUM__</nowiki>“',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'psinotocnum-desc' => 'Ger burzhudus nevez "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -133,11 +140,25 @@ $messages['he'] = array(
 	'psinotocnum-desc' => 'מילת קסם חדשה "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'psinotocnum-desc' => 'Bag-o nga majic hambal "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
 	'psinotocnum-desc' => 'Nowe magiske słowo "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'psinotocnum-desc' => 'Új varázsszó: „<nowiki>__NOTOCNUM__</nowiki>”',
 );
 
 /** Interlingua (Interlingua)
@@ -189,6 +210,13 @@ $messages['lb'] = array(
 	'psinotocnum-desc' => "Neit ''magescht Wuert'' \"<nowiki>__NOTOCNUM__</nowiki>\"",
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'psinotocnum-desc' => 'Нов волшебен збор „<nowiki>__NOTOCNUM__</nowiki>“',
+);
+
 /** Marathi (मराठी)
  * @author Kaustubh
  */
@@ -229,6 +257,20 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'psinotocnum-desc' => 'Mot magic novèl « <nowiki>__NOTOCNUM__</nowiki> »',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'psinotocnum-desc' => 'Nowe magiczne słowo „<nowiki>__NOTOCNUM__</nowiki>”',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'psinotocnum-desc' => 'Neuva pàrola màgica "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
 /** Portuguese (Português)
@@ -280,6 +322,20 @@ $messages['sq'] = array(
 	'psinotocnum-desc' => 'Fjalë e re magjike "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'psinotocnum-desc' => 'Нова магична реч "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'psinotocnum-desc' => 'Nova magična reč "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -306,6 +362,20 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'psinotocnum-desc' => 'Bagong masalamangkang salita na "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'psinotocnum-desc' => 'Yeni sihirli kelime "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'psinotocnum-desc' => 'Нове магічне слово "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
 /** Vietnamese (Tiếng Việt)

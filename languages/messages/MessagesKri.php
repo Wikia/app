@@ -68,8 +68,12 @@ $messages = array(
 'category-empty'        => "''Dis katigori-ya noh geht noh pej o midya foh naw.''",
 'hidden-categories'     => '{{PLURAL:$1|Katigori we dehm dohn ayd|Katigori-dehm we dehm dohn ayd}}',
 
-'qbedit' => 'Chenj',
 'mytalk' => 'Mi Tohk',
+
+# Cologne Blue skin
+'qbedit'  => 'Chenj',
+'faq'     => 'Kweshtyohn-dehm we ohlman de aks',
+'faqpage' => 'Project:Kwehstyohn-dehm we ohlman de aks',
 
 'returnto'         => 'Go bak tu $1.',
 'tagline'          => 'Dis kòmòt {{SITENAME}}',
@@ -109,13 +113,10 @@ $messages = array(
 'aboutsite'            => 'Na bòt {{SITENAME}}',
 'aboutpage'            => 'Project:Na bòt',
 'copyright'            => 'Dis kòtènt-im prais nò pass $1 .',
-'copyrightpagename'    => '{{wehbsait-im nem}} kohpirait',
 'disclaimers'          => 'Disklema-dèm',
 'disclaimerpage'       => 'Project:Disklema fò òltin',
 'edithelp'             => 'Advais foh we yu wan ehdit',
 'edithelppage'         => 'Help:Ehditin',
-'faq'                  => 'Kweshtyohn-dehm we ohlman de aks',
-'faqpage'              => 'Project:Kwehstyohn-dehm we ohlman de aks',
 'helppage'             => 'Help:Kohntehnt-dehm',
 'mainpage'             => 'Men Pej',
 'mainpage-description' => 'Men Pej',
@@ -187,8 +188,6 @@ Luk [[Special:Version|version page]].',
 'badretype'               => 'Di tu paswohd-dehm noh mach.',
 'userexists'              => 'Ohda pohsin dohn tek da yuzanem de.
 Yu go geht foh pik ohda wan.',
-'youremail'               => 'E-mail:',
-'username'                => 'Yuzanem:',
 
 # Edit pages
 'watchthis'                        => 'Wach dis pej-ya',
@@ -202,13 +201,12 @@ So dehm go sev yu IP address na di pej-im chenj istri",
 If yu pres Sev bak, dehm go sev yu chenj lehk so.",
 'missingcommenttext'               => 'Rait yu opinyohn ohnda yah.',
 'permissionserrorstext-withaction' => 'Yu noh go ebul fo $2, bicoh {{PLURAL:$1|reason|reasons}}:',
-'recreate-deleted-warn'            => "'''Ebo!!: Yu de mek bak wan pej we dehm bin dohn ires.'''
+'recreate-moveddeleted-warn'       => "'''Ebo!!: Yu de mek bak wan pej we dehm bin dohn ires.'''
 
 Yu sabi if yu foh wok pan dis pej-ya.
 Di log we dehm kip foh dis pej-in dilishohn de ya:",
-'deleted-notice'                   => 'Dehm dohn ires dis pej-ya.
+'moveddeleted-notice'              => 'Dehm dohn ires dis pej-ya.
 Di log we dehm kip foh dis pej-in dilishohn de ya:',
-'deletelog-fulllog'                => 'Luk di wan-ol lohg',
 'edit-hook-aborted'                => 'Wan Hook dohn pul wetin yu chenj.
 I noh eksplen wetin-mek.',
 'edit-gone-missing'                => 'Wi noh ebul updet dis pej-ya.
@@ -225,21 +223,12 @@ Sohmtehm dehm dohn ires am.',
 'revertmerge' => 'Ònmaj',
 
 # Diffs
-'editundo'          => 'chenj am bak tu wetin i bin bi bifo',
-'diff-multi'        => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} not shown)',
-'diff-movedto'      => 'dèm dòn muf am go $1',
-'diff-styleadded'   => '$1 dèm dòn add dis stail',
-'diff-added'        => '$1 dèm dòn add am',
-'diff-changedto'    => 'Dèm dòn chenj am tu $1',
-'diff-movedoutof'   => 'Dèm dòn muf am kòmòt $1',
-'diff-styleremoved' => '$1 dèm dòn pul dis stail',
-'diff-removed'      => '$1 Dèm dòn pul am',
-'diff-changedfrom'  => 'Dèm dòn tek $1 mek',
-'diff-src'          => 'sòce',
+'editundo'   => 'chenj am bak tu wetin i bin bi bifo',
+'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} not shown)',
 
 # Search results
-'prevn'              => 'Go bak $1',
-'nextn'              => 'nèks wan $1',
+'prevn'              => 'Go bak {{PLURAL:$1|$1}}',
+'nextn'              => 'nèks wan {{PLURAL:$1|$1}}',
 'searchhelp-url'     => 'Help:Kohntehnt-dehm',
 'powersearch'        => 'Luk fò sòmtin kyaful-wan',
 'powersearch-legend' => 'Luk fò sòmtin fain-wan',
@@ -254,6 +243,8 @@ Mehmba se sohmtehm dehm indeks-dehm noh ohp-tu-det {{SITENAME}}.',
 # Preferences page
 'prefsnologin'      => 'Yu noh kam insai di sait yet',
 'searchresultshead' => 'Luk foh am',
+'youremail'         => 'E-mail:',
+'username'          => 'Yuzanem:',
 
 # Upload
 'upload'          => 'Òplod fail',
@@ -262,6 +253,7 @@ Mehmba se sohmtehm dehm indeks-dehm noh ohp-tu-det {{SITENAME}}.',
 'watchthisupload' => 'Wach dis pej-ya',
 
 # File description page
+'file-anchor-link'   => 'Fail',
 'filehist-deleteone' => 'ires',
 'filehist-datetime'  => 'Det/Taim',
 'filehist-thumb'     => 'Tohmnel',
@@ -275,8 +267,8 @@ Di [[Special:WhatLinksHere/$2|ful list]] de yah.',
 # File deletion
 'filedelete-submit' => 'Ires',
 
-'brokenredirects-edit'   => '(chenj)',
-'brokenredirects-delete' => '(ires)',
+'brokenredirects-edit'   => 'chenj',
+'brokenredirects-delete' => 'ires',
 
 # Miscellaneous special pages
 'movethispage' => 'Muf dis pej-ya',
@@ -322,6 +314,7 @@ Di [[Special:WhatLinksHere/$2|ful list]] de yah.',
 # Undelete
 'undelete-search-submit' => 'Luk foh am',
 
+'sp-contributions-talk'   => 'Tòk',
 'sp-contributions-submit' => 'Luk foh am',
 
 # What links here

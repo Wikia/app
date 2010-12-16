@@ -17,6 +17,7 @@ function migratePassZero() {
 
 	$start = microtime( true );
 	$migrated = 0;
+	$users = array();
 
 	// List all user accounts on this wiki in the migration table
 	// on the central authentication server.

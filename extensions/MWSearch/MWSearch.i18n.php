@@ -82,6 +82,13 @@ $messages['bn'] = array(
 	'mwsearch-desc' => 'MWSearch প্লাগইন',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'mwsearch-desc' => "Adveziant MWSearch evit ar c'hlaskoù e MediaWiki",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -103,11 +110,25 @@ $messages['cs'] = array(
 	'mwsearch-desc' => 'Zásuvný modul MWSearch',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'mwsearch-desc' => 'Ategyn MWSearch',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
 $messages['de'] = array(
 	'mwsearch-desc' => 'Hintergrundprozess für die Lucene-Suchmaschine',
+);
+
+/** Zazaki (Zazaki)
+ * @author Aspar
+ */
+$messages['diq'] = array(
+	'mwsearch-desc' => 'zeylê MWSearchi',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -136,6 +157,13 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'mwsearch-desc' => 'Complemento MWSearch',
+);
+
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'mwsearch-desc' => 'MWSearch-lisa',
 );
 
 /** Basque (Euskara)
@@ -167,6 +195,20 @@ $messages['fr'] = array(
 	'mwsearch-desc' => 'Plug-in pour les recherches dans MediaWiki',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'mwsearch-desc' => 'Modulo d’èxtension por les rechèrches dens MediaWiki.',
+);
+
+/** Friulian (Furlan)
+ * @author Klenje
+ */
+$messages['fur'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -193,6 +235,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'mwsearch-desc' => 'एमडब्ल्यूखोज प्लगीन',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'mwsearch-desc' => 'MWPangita plugin',
 );
 
 /** Croatian (Hrvatski)
@@ -235,6 +284,13 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'mwsearch-desc' => 'MWChöwá jikodo',
 );
 
 /** Italian (Italiano)
@@ -284,6 +340,27 @@ $messages['lb'] = array(
  */
 $messages['li'] = array(
 	'mwsearch-desc' => 'MWZeuk ingaef',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Matasg
+ */
+$messages['lt'] = array(
+	'mwsearch-desc' => 'MWSearch įskiepis',
+);
+
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'mwsearch-desc' => 'MWSearch spraudnis',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'mwsearch-desc' => 'MWSearch приклучок',
 );
 
 /** Malayalam (മലയാളം)
@@ -357,6 +434,13 @@ $messages['pl'] = array(
 	'mwsearch-desc' => 'Wtyczka MWSearch',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -368,6 +452,13 @@ $messages['pt'] = array(
  * @author Carla404
  */
 $messages['pt-br'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
 	'mwsearch-desc' => 'Plugin MWSearch',
 );
 
@@ -399,11 +490,18 @@ $messages['sk'] = array(
 	'mwsearch-desc' => 'Zásuvný modul MWSearch',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'mwsearch-desc' => 'MWSearch додатак',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'mwsearch-desc' => 'MWSearch dodatak',
 );
 
 /** Seeltersk (Seeltersk)
@@ -432,6 +530,20 @@ $messages['te'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'mwsearch-desc' => 'Афзунаи MWSearch',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'mwsearch-desc' => 'Afzunai MWSearch',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'mwsearch-desc' => 'MWSearch goşmaça moduly',
 );
 
 /** Tagalog (Tagalog)
@@ -484,10 +596,11 @@ $messages['yue'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
-	'mwsearch-desc' => 'MWSearch 加载项',
+	'mwsearch-desc' => 'MWSearch插件',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

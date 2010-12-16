@@ -11,8 +11,9 @@
  *
  * @link http://www.mediawiki.org/wiki/Extension:MultiBoilerplate
  *
- * @author MinuteElectron <minuteelectron@googlemail.com>
- * @copyright Copyright © 2007-2008 MinuteElectron.
+ * @author Robert Leverington <robert@rhl.me.uk>
+ * @copyright Copyright © 2007 - 2009 Robert Leverington.
+ * @copyright Copyright © 2009 Al Maghi.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -21,19 +22,25 @@ if( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
 // Extension credits.
 $wgExtensionCredits[ 'other' ][] = array(
+	'path'           => __FILE__,
 	'name'           => 'MultiBoilerplate',
 	'description'    => 'Allows a boilerplate to be selected from a drop down box located above the edit form when editing pages.',
 	'descriptionmsg' => 'multiboilerplate-desc',
-	'author'         => 'MinuteElectron',
+	'author'         => array( 'Robert Leverington', 'Al Maghi' ),
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:MultiBoilerplate',
-	'version'        => '1.6',
+	'version'        => '1.8.0',
 );
 
 // Hook into EditPage::showEditForm:initial to modify the edit page header.
 $wgHooks[ 'EditPage::showEditForm:initial' ][] = 'efMultiBoilerplate';
 
 // Set extension messages file.
-$wgExtensionMessagesFiles[ 'MultiBoilerplate' ] = dirname( __FILE__ ) . '/MultiBoilerplate.i18n.php';
+$dir = dirname( __FILE__ ) . '/';
+$wgExtensionMessagesFiles[ 'MultiBoilerplate' ] = $dir . 'MultiBoilerplate.i18n.php';
+$wgExtensionMessagesFiles[ 'MultiBoilerplate' ] = $dir . 'MultiBoilerplate.i18n.php';
+$wgAutoloadClasses['SpecialBoilerplates'] = $dir . 'SpecialBoilerplates_body.php';
+$wgSpecialPages['Boilerplates'] = 'SpecialBoilerplates';
+$wgSpecialPageGroups['Boilerplates'] = 'wiki'; //section of [[Special:SpecialPages]]
 
 // Default configuration variables.
 /* Array of boilerplate names to boilerplate pages to load, for example:
@@ -45,6 +52,19 @@ $wgExtensionMessagesFiles[ 'MultiBoilerplate' ] = dirname( __FILE__ ) . '/MultiB
 $wgMultiBoilerplateOptions = array(); 
 /* Whether or not to show the form when editing pre-existing pages. */
 $wgMultiBoilerplateOverwrite = false;
+/* Whether or not to display a special page listing boilerplates.
+ * If set to true then the special page exists. */
+$wgMultiBoilerplateDiplaySpecialPage = false;
+ 
+$wgHooks['SpecialPage_initList'][]='efBoilerplateDisplaySpecialPage'; 
+function efBoilerplateDisplaySpecialPage( &$aSpecialPages ) {
+	global $wgMultiBoilerplateDiplaySpecialPage;
+	if ( !$wgMultiBoilerplateDiplaySpecialPage ) {
+		unset( $aSpecialPages['Boilerplates'] );
+	}
+	return true;
+}
+
 
 /**
  * Generate the form to be displayed at the top of the edit page and insert it.
@@ -54,7 +74,7 @@ $wgMultiBoilerplateOverwrite = false;
 function efMultiBoilerplate( $form ) {
 
 	// Get various variables needed for this extension.
-	global $wgMultiBoilerplateOptions, $wgMultiBoilerplateOverwrite, $wgArticle, $wgTitle, $wgRequest;
+	global $wgMultiBoilerplateOptions, $wgMultiBoilerplateOverwrite, $wgTitle, $wgRequest;
 
 	// Load messages into the message cache.
 	wfLoadExtensionMessages( 'MultiBoilerplate' );
@@ -75,16 +95,18 @@ function efMultiBoilerplate( $form ) {
 			$options .= Xml::option( $name, $template, $selected );
 		}
 	} else {
-		$things = wfMsg( 'multiboilerplate' );
+		$things = wfMsgForContent( 'multiboilerplate' );
 		$options = '';
 		$things = explode( "\n", str_replace( "\r", "\n", str_replace( "\r\n", "\n", $things ) ) ); // Ensure line-endings are \n
 		foreach( $things as $row ) {
-			$row = ltrim( $row, '* ' ); // Remove the asterix (and a space if found) from the start of the line.
-			$row = explode( '|', $row );
-			if( !isset( $row[ 1 ] ) ) return true; // Invalid syntax, abort.
-			$selected = false;
-			if( $wgRequest->getVal( 'boilerplate' ) == $row[ 1 ] ) $selected = true;
-			$options .= Xml::option( $row[ 0 ], $row[ 1 ], $selected );
+			if ( substr( ltrim( $row ), 0, 1)==="*" ) {
+				$row = ltrim( $row, '* ' ); // Remove the asterix (and a space if found) from the start of the line.
+				$row = explode( '|', $row );
+				if( !isset( $row[ 1 ] ) ) return true; // Invalid syntax, abort.
+				$selected = false;
+				if( $wgRequest->getVal( 'boilerplate' ) == $row[ 1 ] ) $selected = true;
+				$options .= Xml::option( $row[ 0 ], $row[ 1 ], $selected );
+			}
 		}
 	}
 
@@ -95,7 +117,7 @@ function efMultiBoilerplate( $form ) {
 	$form->editFormPageTop .=
 		Xml::openElement( 'form', array( 'id' => 'multiboilerplateform', 'name' => 'multiboilerplateform', 'method' => 'get', 'action' => $wgTitle->getEditURL() ) ) .
 			Xml::openElement( 'fieldset' ) .
-				Xml::element( 'legend', NULL, wfMsg( 'multiboilerplate-legend' ) ) .
+				Xml::element( 'legend', null, wfMsg( 'multiboilerplate-legend' ) ) .
 				Xml::openElement( 'label' ) .
 					wfMsg( 'multiboilerplate-label' ) .
 					Xml::openElement( 'select', array( 'name' => 'boilerplate' ) ) .

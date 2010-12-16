@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-emailauthentication
+  label: StatusNet - EmailAuthentication
+  description: "{{int:bw-desc-statusnet-plugin-emailauthentication}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/emailauthentication
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/EmailAuthentication/locale/%CODE%/LC_MESSAGES/EmailAuthentication.po
+  targetPattern: plugins/EmailAuthentication/locale/%CODE%/LC_MESSAGES/EmailAuthentication.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: emailauthentication-
+  patterns:
+    - "*"

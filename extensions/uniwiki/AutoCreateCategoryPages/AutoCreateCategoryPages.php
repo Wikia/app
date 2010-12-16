@@ -8,12 +8,11 @@ if ( !defined( 'MEDIAWIKI' ) )
 
 /* ---- CREDITS ---- */
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'AutoCreateCategoryPages',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array ( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Create stub Category pages automatically',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Auto_Create_Category_Pages',
-	'svn-date'       => '$LastChangedDate: 2009-01-19 14:58:23 +0100 (pon, 19 sty 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 45892 $',
 	'descriptionmsg' => 'autocreatecategorypages-desc',
 );
 

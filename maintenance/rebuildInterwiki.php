@@ -6,13 +6,14 @@
  * @file
  * @todo document
  * @ingroup Maintenance
+ * @ingroup Wikimedia
  */
 
 /** */
 $oldCwd = getcwd();
 
 $optionsWithArgs = array( "d" );
-require( "commandLine.inc" );
+require_once( dirname(__FILE__) . '/commandLine.inc' );
 require( "rebuildInterwiki.inc" );
 chdir( $oldCwd );
 

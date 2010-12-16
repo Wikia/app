@@ -3,7 +3,7 @@
  * A query printer for maps using the Yahoo Maps API
  *
  * @file SM_YahooMaps.php
- * @ingroup SemanticMaps
+ * @ingroup SMYahooMaps
  *
  * @author Jeroen De Dauw
  */
@@ -14,7 +14,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 final class SMYahooMapsQP extends SMMapPrinter {
 
-	public $serviceName = MapsYahooMapsUtils::SERVICE_NAME;
+	public $serviceName = MapsYahooMaps::SERVICE_NAME;
 	
 	/**
 	 * @see SMMapPrinter::setQueryPrinterSettings()
@@ -25,9 +25,7 @@ final class SMYahooMapsQP extends SMMapPrinter {
 		
 		$this->elementNamePrefix = $egMapsYahooMapsPrefix;
 		
-		$this->defaultZoom = $egMapsYahooMapsZoom;	
-
-		$this->defaultParams = MapsYahooMapsUtils::getDefaultParams();
+		$this->defaultZoom = $egMapsYahooMapsZoom;				
 	}
 	
 	/**
@@ -37,7 +35,7 @@ final class SMYahooMapsQP extends SMMapPrinter {
 	protected function doMapServiceLoad() {
 		global $egYahooMapsOnThisPage;
 		
-		MapsYahooMapsUtils::addYMapDependencies($this->output);	
+		MapsYahooMaps::addYMapDependencies($this->output);	
 		$egYahooMapsOnThisPage++;
 		
 		$this->elementNr = $egYahooMapsOnThisPage;		
@@ -49,11 +47,6 @@ final class SMYahooMapsQP extends SMMapPrinter {
 	 */
 	protected function addSpecificMapHTML() {
 		global $wgJsMimeType;
-		
-		$this->type = MapsYahooMapsUtils::getYMapType($this->type, true);
-		$this->controls = MapsYahooMapsUtils::createControlsString($this->controls);
-		
-		$this->autozoom = MapsYahooMapsUtils::getAutozoomJSValue($this->autozoom);
 		
 		$markerItems = array();
 		
@@ -67,21 +60,33 @@ final class SMYahooMapsQP extends SMMapPrinter {
 			$markerItems[] = "getYMarkerData($lat, $lon, '$title', '$label', '$icon')";
 		}
 		
-		$markersString = implode(',', $markerItems);
-
-		$this->types = explode(",", $this->types);
-		
-		$typesString = MapsYahooMapsUtils::createTypesString($this->types);			
+		$markersString = implode(',', $markerItems);	
 		
 		$this->output .= "
 		<div id='$this->mapName' style='width: {$this->width}px; height: {$this->height}px;'></div>  
 		
 		<script type='$wgJsMimeType'>/*<![CDATA[*/
 		addOnloadHook(
-			initializeYahooMap('$this->mapName', $this->centre_lat, $this->centre_lon, $this->zoom, $this->type, [$typesString], [$this->controls], $this->autozoom, [$markersString])
+			initializeYahooMap('$this->mapName', $this->centre_lat, $this->centre_lon, $this->zoom, $this->type, [$this->types], [$this->controls], $this->autozoom, [$markersString], $this->height)
 		);
 			/*]]>*/</script>";		
 
 	}	
 
+	/**
+	 * Returns type info, descriptions and allowed values for this QP's parameters after adding the spesific ones to the list.
+	 */	
+    public function getParameters() {
+        $params = parent::getParameters();
+        
+        $allowedTypes = MapsYahooMaps::getTypeNames();
+        
+        $params[] = array('name' => 'controls', 'type' => 'enum-list', 'description' => wfMsg('semanticmaps_paramdesc_controls'), 'values' => MapsYahooMaps::getControlNames());
+        $params[] = array('name' => 'types', 'type' => 'enum-list', 'description' => wfMsg('semanticmaps_paramdesc_types'), 'values' => $allowedTypes);
+        $params[] = array('name' => 'type', 'type' => 'enumeration', 'description' => wfMsg('semanticmaps_paramdesc_type'), 'values' => $allowedTypes);
+        $params[] = array('name' => 'autozoom', 'type' => 'enumeration', 'description' => wfMsg('semanticmaps_paramdesc_autozoom'), 'values' => array('on', 'off'));
+        
+        return $params;
+    }	
+	
 }

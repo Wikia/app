@@ -10,16 +10,17 @@ $aliases['en'] = array(
 	'ShowProcesslist' => array( 'ShowProcesslist' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Afrikaans (Afrikaans) */
+$aliases['af'] = array(
+	'ShowProcesslist' => array( 'WysProseslys' ),
+);
+
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ShowProcesslist' => array( 'عرض_قائمة_العمل' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ShowProcesslist' => array( 'عرض_قائمة_العمل' ),
 );
@@ -66,12 +67,17 @@ $aliases['hu'] = array(
 
 /** Interlingua (Interlingua) */
 $aliases['ia'] = array(
-	'ShowProcesslist' => array( 'Monstrar lista de processos' ),
+	'ShowProcesslist' => array( 'Lista de processos' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'ShowProcesslist' => array( 'Daftar proses' ),
+	'ShowProcesslist' => array( 'Daftar proses', 'DaftarProses' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'ShowProcesslist' => array( 'MostraListaProcessi' ),
 );
 
 /** Japanese (日本語) */
@@ -86,7 +92,12 @@ $aliases['ksh'] = array(
 
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
-	'ShowProcesslist' => array( "Weis d'Lëscht vun den Prozessen" ),
+	'ShowProcesslist' => array( "Weis d'Lëscht vun de Prozesser" ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ShowProcesslist' => array( 'प्रक्रीयासूचीदाखवा' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -104,8 +115,18 @@ $aliases['no'] = array(
 	'ShowProcesslist' => array( 'Vis prosessliste' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ShowProcesslist' => array( 'ZobraziťZoznamProcesov' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ShowProcesslist' => array( 'Ipakita ang talaan ng proseso' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ShowProcesslist' => array( 'İşlemListesiniGöster' ),
 );
 

@@ -46,9 +46,7 @@ class DataCenterWidgetMap extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $egDataCenterGoogleMapsAPIKey;
 		DataCenterUI::addScript(
 			'http://maps.google.com/maps?file=api&v=2&key=' .
@@ -83,7 +81,7 @@ class DataCenterWidgetMap extends DataCenterWidget {
 				self::addMarkersJsFunction( $parameters )
 			);
 		// Alternatively checks if a single location was given
-		} else if ( $parameters['location'] ) {
+		} elseif ( $parameters['location'] ) {
 			// Builds script to add setup job to renderer
 			$jsOutput = sprintf(
 				"dataCenter.renderer.addJob( 'map', %s, %s );",
@@ -107,10 +105,7 @@ class DataCenterWidgetMap extends DataCenterWidget {
 
 	/* Private Funtions */
 
-	private static function markerOptions(
-		array $parameters,
-		$location
-	) {
+	private static function markerOptions( array $parameters, $location ) {
 		// Begins window
 		$xmlOutput = DataCenterXml::open( 'div', array( 'class' => 'window' ) );
 		// Adds heading
@@ -150,9 +145,7 @@ class DataCenterWidgetMap extends DataCenterWidget {
 		return DataCenterJs::toObject( array( 'content' => $xmlOutput ) );
 	}
 
-	private static function showPositionJsFunction(
-		array $parameters
-	) {
+	private static function showPositionJsFunction( array $parameters ) {
 		$location = $parameters['location'];
 		// Builds script to show position
 		return sprintf(
@@ -163,9 +156,7 @@ class DataCenterWidgetMap extends DataCenterWidget {
 		);
 	}
 
-	private static function addMarkersJsFunction(
-		array $parameters
-	) {
+	private static function addMarkersJsFunction( array $parameters ) {
 		// Begins building javascript for adding markers
 		$jsMarkers = '';
 		// Loops over each location

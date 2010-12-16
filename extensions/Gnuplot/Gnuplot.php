@@ -19,10 +19,9 @@
 ####################
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Gnuplot',
 	'author'         => 'Christina Pöpper',
-	'svn-date' => '$LastChangedDate: 2009-03-19 13:34:14 +0100 (czw, 19 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48578 $',
 	'description'    => 'Adds the tag <code><nowiki><gnuplot></nowiki></code> to use Gnuplot',
 	'descriptionmsg' => 'gnuplot-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Gnuplot',

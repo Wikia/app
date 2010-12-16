@@ -23,21 +23,40 @@
 # Extension info available at http://www.mediawiki.org/wiki/Extension:SmoothGallery
 # SmoothGallery available at http://smoothgallery.jondesign.net/
 #
-# Version 1.0i / 2007-02-03
-#
+# sgallery Parser Function changes contributed by David Claughton <dave@eclecticdave.com>
+# infopane sliding and opacity patch provided by David Claughton <dave@eclecticdave.com>
 
-if( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
+
+/**
+ * Add extension information to Special:Version
+ */
+$wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'SmoothGallery parser extension',
+	'version'        => '1.1g',
+	'author'         => 'Ryan Lane',
+	'description'    => 'Allows users to create galleries with images that have been uploaded. Allows most options of SmoothGallery',
+	'descriptionmsg' => 'smoothgallery-desc',
+	'url'            => 'http://www.mediawiki.org/wiki/Extension:SmoothGallery',
+);
 
 $wgExtensionFunctions[] = "efSmoothGallery";
 
 $wgHooks['OutputPageParserOutput'][] = 'smoothGalleryParserOutput';
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['SmoothGallery'] = $dir . 'SmoothGallery.i18n.php';
+if( version_compare( $wgVersion, '1.16alpha', '>=' ) ) {
+	$wgExtensionMessagesFiles['SmoothGalleryMagic'] = $dir . 'SmoothGallery.i18n.magic.php';
+} else {
+	$wgHooks['LanguageGetMagic'][] = 'smoothGalleryLanguageGetMagic';
+}
 $wgAutoloadClasses['SmoothGallery'] = $dir . 'SmoothGalleryClass.php';
+$wgAutoloadClasses['SmoothGalleryParser'] = $dir . 'SmoothGalleryParser.php';
 
-//sane defaults. always initialize to avoid register_globals vulnerabilities
+// sane defaults. always initialize to avoid register_globals vulnerabilities
 $wgSmoothGalleryDelimiter = "\n";
 $wgSmoothGalleryExtensionPath = $wgScriptPath . '/extensions/SmoothGallery';
 $wgSmoothGalleryAllowExternal = false;
@@ -49,18 +68,56 @@ function efSmoothGallery() {
 
 	$wgParser->setHook( 'sgallery', 'initSmoothGallery' );
 	$wgParser->setHook( 'sgalleryset', 'initSmoothGallerySet' );
+
+	$wgParser->setFunctionHook( 'sgallery', 'initSmoothGalleryPF' );
 }
 
-function initSmoothGallery( $input, $argv, &$parser, $calledAsSet=false ) {
-	require_once( 'SmoothGalleryParser.php' );
+// FIXME: split off to a hook file and use $wgHooks['ParserFirstCallInit'] to init tags
+function initSmoothGalleryPF( &$parser ) {
+	global $wgSmoothGalleryDelimiter;
 
+	$numargs = func_num_args();
+	if ( $numargs < 2 ) {
+		$input = "#SmoothGallery: no arguments specified";
+		return str_replace( '§', '<', '§pre>§nowiki>' . $input . '§/nowiki>§/pre>' );
+	}
+
+	// fetch all user-provided arguments (skipping $parser)
+	$input = "";
+	$argv = array();
+	$arg_list = func_get_args();
+	for ( $i = 1; $i < $numargs; $i++ ) {
+		$p1 = $arg_list[$i];
+
+		$aParam = explode( '=', $p1, 2 );
+		if ( count( $aParam ) < 2 ) {
+			continue;
+		}
+		SmoothGallery::debug( 'sgallery tag parameter: ', $aParam );
+		if ( $aParam[0] == "imagelist" ) {
+			$input = $aParam[1];
+			continue;
+		}
+		$sKey = trim( $aParam[0] );
+		$sVal = trim( $aParam[1] );
+
+		if ( $sKey != '' ) {
+			$argv[$sKey] = $sVal;
+		}
+	}
+
+	$output = initSmoothGallery( $input, $argv, $parser );
+	return array( $output, 'noparse' => true, 'isHTML' => true );
+}
+
+function initSmoothGallery( $input, $argv, &$parser, $calledAsSet = false ) {
 	$sgParser = new SmoothGalleryParser( $input, $argv, $parser, $calledAsSet );
 	$sgGallery = new SmoothGallery();
 
 	$sgGallery->setParser( $parser );
 	$sgGallery->setSet( $calledAsSet );
 	$sgGallery->setArguments( $sgParser->getArguments() );
-	$sgGallery->setGalleries( $sgParser->getGalleries() ); 
+	$sgGallery->setGalleries( $sgParser->getGalleries() );
 
 	$sgGallery->checkForErrors();
 	if ( $sgGallery->hasErrors() ) {
@@ -91,13 +148,10 @@ function smoothGalleryParserOutput( &$outputPage, &$parserOutput )  {
 }
 
 /**
- * Add extension information to Special:Version
+ * We ignore langCode - parser function names can be translated but
+ * we are not using this feature
  */
-$wgExtensionCredits['other'][] = array(
-	'name'        => 'SmoothGallery parser extension',
-	'version'     => '1.1c (beta)',
-	'author'      => 'Ryan Lane',
-	'description' => 'Allows users to create galleries with images that have been uploaded. Allows most options of SmoothGallery',
-	'descriptionmsg' => 'smoothgallery-desc',
-	'url'         => 'http://www.mediawiki.org/wiki/Extension:SmoothGallery',
-);
+function smoothGalleryLanguageGetMagic( &$magicWords, $langCode ) {
+	$magicWords['sgallery']  = array( 0, 'sgallery' );
+	return true;
+}

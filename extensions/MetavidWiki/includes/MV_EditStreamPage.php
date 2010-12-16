@@ -1,25 +1,25 @@
 <?php
 /*
  * MV_EditStreamPage.php Created on Nov 28, 2007
- * 
+ *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
  */
- 
- // edit stream adds some additional form items (if admin) 
+
+ // edit stream adds some additional form items (if admin)
  // enables inline editing of media files
- // enables 
+ // enables
 
  // enables "protected" metadata ie strips all occurrences of semantic property from page (such as stream duration)
  class MV_EditStreamPage extends EditPage {
  	var $mv_action = '';
  	var $status_error = '';
  	var $status_ok = '';
- 	
+
  	function edit() {
  		global $wgOut, $wgUser, $wgHooks;
  		// check permission if admin show 'edit files'
@@ -37,23 +37,23 @@
  	}
  	/*put thrown together quickly... could clean up/simplify*/
  	function displayEditStreamFiles() {
- 		global $wgOut, $wgTitle, $wgScriptPath, $wgRequest, $wgUser;
+ 		global $wgOut, $wgScriptPath, $wgRequest, $wgUser;
  		$html = '';
- 	
+
 		$streamFiles = $this->mArticle->mvTitle->mvStream->getFileList();
 		// process the requested changes
  		$this->proccessReq( $streamFiles );
 		if ( $this->status_error != '' )$html .= '<span class="error">' . htmlspecialchars( $this->status_error ) . '</span><br />';
 		if ( $this->status_ok != '' )$html .= $this->status_ok . '<br />';
-		
+
 		if ( count( $streamFiles ) == 0 ) {
 			$html .= '<b>' . wfMsg( 'mv_no_stream_files' ) . '</b>';
 		} else {
 			$html .= '<form action="' . htmlspecialchars( $wgRequest->getRequestURL() ) . '" method="POST">';
 			$html .= '<input type="hidden" name="mv_action" value="edit_stream_files">';
-			
+
 			$html .= '<input type="hidden" name="wpEditToken" value="' . htmlspecialchars( $wgUser->editToken() ) . '"/>';
-			
+
 			$html .= '<fieldset><legend>' . wfMsg( 'mv_file_list' ) . '</legend>' . "\n";
 			$html .= '<table width="600" border="0">';
 			$html .= '</tr><tr>';
@@ -69,7 +69,7 @@
 			$html .= '</table></fieldset>';
 			$html .= '</form>';
 		}
-		// add new stream: 
+		// add new stream:
 		$html .= '<form action="' . htmlspecialchars( $wgRequest->getRequestURL() ) . '" method="POST">';
 		$html .= '<input type="hidden" name="mv_action" value="new_stream_file" >';
 		$html .= '<input type="hidden" name="wpEditToken" value="' . htmlspecialchars( $wgUser->editToken() ) . '" >';
@@ -86,24 +86,26 @@
  	}
  	function proccessReq( & $streamFiles ) {
  		global $wgRequest, $wgUser;
- 		
-	 		
+
+
  		// make sure the user can edit streams:
  		if ( !$wgUser->isAllowed( 'mv_edit_stream' ) ) {
  			$this->status_error = wfMsg( 'add_stream_permission' );
  			return;
  		}
- 		
+
  		// confirm the edit token:
- 		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
- 			$this->status_error = wfMsg( 'token_suffix_mismatch' );
- 			return ;
- 		} 		
- 		
+ 		if( $wgRequest->getVal( 'wpEditToken' ) ){
+	 		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
+	 			$this->status_error = wfMsg( 'token_suffix_mismatch' );
+	 			return ;
+	 		}
+ 		}
+ 		$stream =  $this->mArticle->mvTitle->mvStream;
  		$this->mv_action = $wgRequest->getVal( 'mv_action' );
  		if ( $this->mv_action == 'new_stream_file' ) {
- 			// @@todo a bit more input scrubbing: 
- 			$newSf = new MV_StreamFile( $this->mArticle->mvTitle->mvStream, $_POST['sf_new'] );
+ 			// @@todo a bit more input scrubbing:
+ 			$newSf = new MV_StreamFile( $stream, $_POST['sf_new'] );
  			// check against existing stream files:
  			$doAdd = true;
  			foreach ( $streamFiles as $sf ) {
@@ -116,13 +118,30 @@
  				$newSf->writeStreamFileDB();
  				$streamFiles[] = $newSf;
  			}
+
+ 			//check if stream length is 0 then update that to the stream-file length
+ 			if( $stream->getDuration() == 0 ){
+ 				$stream->duration = $newSf->getDuration();
+ 				$stream->updateStreamDB();
+ 			}
+
+
  		} else if ( $this->mv_action == 'edit_stream_files' ) {
+ 			$dur = 0;
  			foreach ( $streamFiles as $sf ) {
  				if ( $_POST['sf_' . $sf->id] ) {
  					$sf->updateValues( $_POST['sf_' . $sf->id] );
  					$sf->writeStreamFileDB();
+ 					if( $sf->getDuration() > $dur);
+ 						$dur = $sf->getDuration();
  				}
  			}
+ 			//check if stream length is 0 then update that to the stream-file length
+ 			if( $stream->getDuration() == 0 ){
+ 				$stream->duration = $dur;
+ 				$stream->updateStreamDB();
+ 			}
+
  			$this->status_ok = wfMsg( 'mv_updated_stream_files' );
  		} else if ( $this->mv_action == 'rm_stream_file' ) {
  			$rmID = $wgRequest->getVal( 'rid' );
@@ -157,7 +176,7 @@
  		if ( !isset( $sf['file_desc_msg'] ) )$sf['file_desc_msg'] = 'mv_ogg_low_quality';
  		if ( !isset( $sf['path_type'] ) )$sf['path_type'] = 'url_anx';
  		if ( !isset( $sf['path'] ) )$sf['path'] = '';
- 		
+
 		$html .= '<tr>';
 			if ( $remove_link ) {
 				global $wgRequest;
@@ -168,19 +187,19 @@
 			$html .= '<td><input type="text" name="sf_' . htmlspecialchars( $sf['id'] ) . '[duration]" value="' . htmlspecialchars( $sf['duration'] ) . '" maxlength="11" size="7" /></td>';
 			$html .= '<td><input type="text" name="sf_' . htmlspecialchars( $sf['id'] ) . '[base_offset]" value="' . htmlspecialchars( $sf['base_offset'] ) . '" maxlength="11" size="7" /></td>';
 			$html .= '<td><select name="sf_' . htmlspecialchars( $sf['id'] ) . '[path_type]">';
-			
+
 			$sel = ( $sf['path_type'] == 'url_anx' ) ? ' selected':'';
 			$html .= '<option value="url_anx"' . $sel . '>' . wfMsg( 'mv_path_type_url_anx' ) . '</option>';
-			
+
 			$sel = ( $sf['path_type'] == 'wiki_title' ) ? ' selected':'';
 			$html .= '<option value="wiki_title"' . $sel . '>' . wfMsg( 'mv_path_type_wiki_title' ) . '</option>';
-			
+
 			$sel = ( $sf['path_type'] == 'url_file' ) ? ' selected':'';
 			$html .= '<option value="url_file"' . $sel . '>' . wfMsg( 'mv_path_type_url_file' ) . '</option>';
-			
+
 			$sel = ( $sf['path_type'] == 'mp4_stream' ) ? ' selected':'';
 			$html .= '<option value="mp4_stream"' . $sel . '>' . wfMsg( 'mv_path_type_mp4_stream' ) . '</option>';
-			
+
 			$html .='</select></td>';
 			$html .= '<td><input type="text" name="sf_' . htmlspecialchars( $sf['id'] ) . '[path]" value="' . htmlspecialchars( $sf['path'] ) . '" maxlength="512" size="20" />' .
 					'<input type="hidden" name="sf_' . htmlspecialchars( $sf['id'] ) . '[stream_id]" value="' . htmlspecialchars( $sf['stream_id'] ) . '">' .
@@ -189,4 +208,3 @@
 		return $html;
  	}
  }
-?>

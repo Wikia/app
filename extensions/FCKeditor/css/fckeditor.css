@@ -10,15 +10,15 @@
 */
 
 /**
- * Stylesheet for screen/projection.  All rules not marked media-specific are
- * shared with handheld.css and should be updated in tandem.  The rules can't
- * be in the same file because old browsers like IE5 won't obey @media rules.
+ * Stylesheet for screen.  All rules not marked media-specific are shared with
+ * handheld.css and should be updated in tandem.  The rules can't be in the
+ * same file because old browsers like IE5 won't obey @media rules.
  *
- * Rules that are screen/projection-specific are marked with commented-out
- * @media rules and indentation.
+ * Rules that are screen-specific are marked with commented-out @media rules
+ * and indentation.
  */
 
-/* @media screen, projection { */
+/* @media screen { */
 	#column-one {
 		padding-top: 160px;
 	}
@@ -84,7 +84,7 @@ img {
 	border: none;
 	vertical-align: middle;
 }
-/* @media screen, projection { */
+/* @media screen { */
 	p {
 		margin: .4em 0 .5em 5px;
 		line-height: 1.5em;
@@ -223,7 +223,7 @@ pre {
 ** the main content area
 */
 
-/* @media screen, projection { */
+/* @media screen { */
 	#siteSub {
 		display: none;
 	}
@@ -730,7 +730,7 @@ special external link styling */
 ** Logo properties
 */
 
-/* @media screen, projection { */
+/* @media screen { */
 	#p-logo {
 		top: 0;
 		left: 0;
@@ -757,7 +757,7 @@ special external link styling */
 ** the navigation portlet
 */
 
-/* @media screen, projection { */
+/* @media screen { */
 	#p-navigation {
 		position: relative;
 		z-index: 3;
@@ -783,7 +783,7 @@ special external link styling */
 /*
 ** Search portlet
 */
-/* @media screen, projection { */
+/* @media screen { */
 	#p-search {
 		position: relative;
 		z-index: 3;
@@ -811,7 +811,7 @@ input.searchButton {
 /*
 ** the personal toolbar
 */
-/* @media screen, projection { */
+/* @media screen { */
 	#p-personal {
 		position: absolute;
 		left: 0;
@@ -896,7 +896,7 @@ input.searchButton {
 /*
 ** the page-related actions- page/talk, edit etc
 */
-/* @media screen, projection { */
+/* @media screen { */
 	#p-cactions {
 		position: absolute;
 		top: 1.3em;
@@ -991,7 +991,7 @@ input.searchButton {
 /*
 ** the remaining portlets
 */
-/* @media screen, projection { */
+/* @media screen { */
 	#p-tbx,
 	#p-lang {
 		position: relative;
@@ -1046,7 +1046,7 @@ input.searchButton {
 	background-color: #f0f0f0;
 	color: #000;
 }
-/* @media screen, projection { */
+/* @media screen { */
 	#preftoc li {
 		margin: 1px -2px 1px 2px;
 		float: left;
@@ -1113,7 +1113,7 @@ input.searchButton {
 .prefsection table, .prefsection legend {
 	background-color: #F9F9F9;
 }
-/* @media screen, projection { */
+/* @media screen { */
 	.mainLegend {
 		display: none;
 	}
@@ -1187,7 +1187,7 @@ div#userlogin .captcha {
 	font-weight: bold;
 }
 
-/* @media screen, projection { */
+/* @media screen { */
 	/*
 	** IE/Mac fixes, hope to find a validating way to move this
 	** to a separate stylesheet. This would work but doesn't validate:

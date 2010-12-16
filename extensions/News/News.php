@@ -16,11 +16,10 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array( 
+	'path' => __FILE__,
 	'name' => 'News', 
 	'author' => 'Daniel Kinzler, brightbyte.de', 
 	'url' => 'http://mediawiki.org/wiki/Extension:News',
-	'svn-date' => '$LastChangedDate: 2008-11-30 04:15:22 +0100 (ndz, 30 lis 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'description' => 'shows customized recent changes on a wiki pages or as RSS or Atom feed',
 	'descriptionmsg' => 'newsextension-desc',
 );
@@ -74,7 +73,7 @@ function wfNewsFeedTag( $templatetext, $argv, &$parser ) {
     return $html;
 }
 
-function wfNewsFeedLinkTag( $linktext, $argv, &$parser ) {
+function wfNewsFeedLinkTag( $linktext, $argv, $parser ) {
     return NewsRenderer::renderFeedLink($linktext, $argv, $parser);
 }
 

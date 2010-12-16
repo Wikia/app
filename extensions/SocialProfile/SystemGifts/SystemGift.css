@@ -131,3 +131,65 @@
 	padding: 5px;
 	margin-bottom: 5px;
 }
+
+/* Special:TopAwards */
+.top-awards {
+	float: left;
+	width: 60%;
+	padding-top: 15px;
+}
+
+.top-awards-navigation {
+	float: right;
+	margin: 15px 0px 0px 0px;
+	width: 20%;
+}
+
+.top-awards-navigation p {
+	margin: 0px 0px 3px 0px;
+}
+
+.top-awards-navigation a {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.top-awards-navigation h1 {
+	color: #333333;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 0px 0px 3px 0px;
+	margin: 0px 0px 10px 0px !important;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.top-award-title {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0px 0px 18px 0px;
+	color: #797979;
+}
+
+.top-award {
+	margin: 0px 0px 18px 0px;
+	font-size: 13px;
+	color: #797979;
+}
+
+.top-award-number {
+	font-size: 16px;
+	color: #dcdcdc;
+	font-weight: bold;
+	margin: 0px 10px 0px 0px;
+}
+
+.top-award img {
+	vertical-align: middle;
+	margin: 0px 3px 0px 0px;
+}
+
+.top-award a {
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: none;
+}

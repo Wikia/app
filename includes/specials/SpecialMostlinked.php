@@ -22,22 +22,35 @@ class MostlinkedPage extends QueryPage {
 	function isExpensive() { return true; }
 	function isSyndicated() { return false; }
 
-	/**
-	 * Note: Getting page_namespace only works if $this->isCached() is false
-	 */
 	function getSQL() {
+		global $wgMiserMode;
+
 		$dbr = wfGetDB( DB_SLAVE );
+
+		# In miser mode, reduce the query cost by adding a threshold for large wikis
+		if ( $wgMiserMode ) {
+			$numPages = SiteStats::pages();
+			if ( $numPages > 10000 ) {
+				$cutoff = 100;
+			} elseif ( $numPages > 100 ) {
+				$cutoff = intval( sqrt( $numPages ) );
+			} else {
+				$cutoff = 1;
+			}
+		} else {
+			$cutoff = 1;
+		}
+
 		list( $pagelinks, $page ) = $dbr->tableNamesN( 'pagelinks', 'page' );
 		return
 			"SELECT 'Mostlinked' AS type,
 				pl_namespace AS namespace,
 				pl_title AS title,
-				COUNT(*) AS value,
-				page_namespace
+				COUNT(*) AS value
 			FROM $pagelinks
 			LEFT JOIN $page ON pl_namespace=page_namespace AND pl_title=page_title
-			GROUP BY pl_namespace, pl_title, page_namespace
-			HAVING COUNT(*) > 1";
+			GROUP BY pl_namespace, pl_title
+			HAVING COUNT(*) > $cutoff";
 	}
 
 	/**
@@ -57,12 +70,13 @@ class MostlinkedPage extends QueryPage {
 	 * Make a link to "what links here" for the specified title
 	 *
 	 * @param $title Title being queried
+	 * @param $caption String: text to display on the link
 	 * @param $skin Skin to use
-	 * @return string
+	 * @return String
 	 */
 	function makeWlhLink( &$title, $caption, &$skin ) {
 		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedDBkey() );
-		return $skin->makeKnownLinkObj( $wlh, $caption );
+		return $skin->linkKnown( $wlh, $caption );
 	}
 
 	/**
@@ -75,7 +89,10 @@ class MostlinkedPage extends QueryPage {
 	function formatResult( $skin, $result ) {
 		global $wgLang;
 		$title = Title::makeTitleSafe( $result->namespace, $result->title );
-		$link = $skin->makeLinkObj( $title );
+		if ( !$title ) {
+			return '<!-- ' . htmlspecialchars( "Invalid title: [[$title]]" ) . ' -->';
+		}
+		$link = $skin->link( $title );
 		$wlh = $this->makeWlhLink( $title,
 			wfMsgExt( 'nlinks', array( 'parsemag', 'escape'),
 				$wgLang->formatNum( $result->value ) ), $skin );

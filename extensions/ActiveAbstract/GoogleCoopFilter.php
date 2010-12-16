@@ -1,10 +1,9 @@
 <?php
-
-require_once('AbstractFilter.php');
+require_once( 'AbstractFilter.php' );
 
 /**
  * Dump filter for creation of a Google Coop 'Subscribed Links' file
- * 
+ *
  * Usage:
  *
  * HOSTNAME=kamelopedia.mormo.org php dumpBackup.php \
@@ -36,6 +35,7 @@ require_once('AbstractFilter.php');
  * @addtogroup maintenance
  *
  */
+
 class GoogleCoopFilter extends AbstractFilter {
 	/**
  	* Register the filter function with the dump manager
@@ -72,7 +72,7 @@ class GoogleCoopFilter extends AbstractFilter {
 				$wgSitename . ':' . $this->title->getPrefixedText() ) . "\n";
 		$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'more_url' ),
 				$this->title->getFullUrl() ) . "\n";
-				
+
 		// add abstract and links when we have revision data...
 		$this->revision = null;
 
@@ -87,9 +87,9 @@ class GoogleCoopFilter extends AbstractFilter {
 				$text = '-';
 			}
 			$lines = $this->_threeLines( $text );
-			for( $i=1; $i<4; $i++ ) {
+			for ( $i = 1; $i < 4; $i++ ) {
 				if ( $lines[$i] != '' ) {
-					$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'text'.$i ), $lines[$i] ) . "\n";
+					$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'text' . $i ), $lines[$i] ) . "\n";
 				}
 			}
 		}
@@ -105,14 +105,14 @@ class GoogleCoopFilter extends AbstractFilter {
 
 	/**
 	 * Returns an array of three strings, each string of the array has no more than
-	 * 79 characters. The three strings are the first three 'lines' of the text 
+	 * 79 characters. The three strings are the first three 'lines' of the text
 	 * given in $str.
 	 *
 	 * Lines are split at the last blank before position 79.
 	 * If there's no blank before position, the entire string is returned as first
 	 * element of the result array.
 	 *
-	 * This code needs a cleanup, it became rather ugly after adding exception 
+	 * This code needs a cleanup, it became rather ugly after adding exception
 	 * handling :-(
 	 */
 	function _threeLines( $str ) {
@@ -153,6 +153,4 @@ class GoogleCoopFilter extends AbstractFilter {
 
 		return $s;
 	}
-
 }
-

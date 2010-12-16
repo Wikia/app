@@ -41,9 +41,7 @@ class DataCenterViewAssets extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		if ( !isset( self::$options[$path['type']] ) ) {
 			return DataCenterUI::renderWidget(
 				'body', array(
@@ -127,9 +125,7 @@ class DataCenterViewAssets extends DataCenterView {
 		);
 	}
 
-	public function history(
-		$path
-	) {
+	public function history( $path ) {
 		$asset = DataCenterDB::getAsset( $path['type'], $path['id'] );
 		return DataCenterUI::renderLayout(
 			'columns',
@@ -156,9 +152,7 @@ class DataCenterViewAssets extends DataCenterView {
 		);
 	}
 
-	public function export(
-		$path
-	) {
+	public function export( $path ) {
 		// Returns single columm layout with a table
 		return DataCenterUI::renderLayout(
 			'columns',
@@ -183,9 +177,7 @@ class DataCenterViewAssets extends DataCenterView {
 		);
 	}
 
-	public function view(
-		$path
-	) {
+	public function view( $path ) {
 		// Checks if the user did not provide enough information
 		if ( !$path['id'] ) {
 			// Returns error message
@@ -257,9 +249,7 @@ class DataCenterViewAssets extends DataCenterView {
 		);
 	}
 
-	public function design(
-		$path
-	) {
+	public function design( $path ) {
 		$options = DataCenterViewModels::$options[$path['type']];
 		if ( isset( $options['gallery'] ) ) {
 			// Gets all components from database
@@ -300,15 +290,11 @@ class DataCenterViewAssets extends DataCenterView {
 		}
 	}
 
-	public function deploy(
-		$path
-	) {
+	public function deploy( $path ) {
 		return $this->manage( $path );
 	}
 
-	public function manage(
-		$path
-	) {
+	public function manage( $path ) {
 		// Checks if...
 		if (
 			// No rack asset was specified

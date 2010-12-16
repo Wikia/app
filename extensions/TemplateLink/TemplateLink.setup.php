@@ -19,6 +19,7 @@ EOT;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'TemplateLink',
 	'version' => '1.1',
 	'author' =>'Magnus Manske',
@@ -28,6 +29,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'TemplateLink',
 	'version' => '1.2',
 	'author' =>'Magnus Manske',

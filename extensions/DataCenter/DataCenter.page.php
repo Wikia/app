@@ -17,9 +17,7 @@ abstract class DataCenterController {
 
 	/* Abstract Functions */
 
-	public abstract function __construct(
-		array $path
-	);
+	public abstract function __construct( array $path );
 }
 
 abstract class DataCenterView {
@@ -30,9 +28,7 @@ abstract class DataCenterView {
 
 	/* Functions */
 
-	public function __construct(
-		$controller
-	) {
+	public function __construct( $controller ) {
 		$this->controller = $controller;
 	}
 }
@@ -139,9 +135,7 @@ class DataCenterPage extends SpecialPage {
 
 	/* Private Static Functions */
 
-	private static function urlToSub(
-		$url
-	) {
+	private static function urlToSub( $url ) {
 		global $wgTitle;
 		$start = stripos( $url, $wgTitle->getBaseText() );
 		if ( $start !== false ) {
@@ -154,9 +148,7 @@ class DataCenterPage extends SpecialPage {
 		return $url;
 	}
 
-	private static function subToPath(
-		$sub
-	) {
+	private static function subToPath( $sub ) {
 		$path = array();
 		// Removes leading or trailing slashes, sanitizing hand-entered URLs
 		$sub = trim( $sub, '/');
@@ -212,9 +204,7 @@ class DataCenterPage extends SpecialPage {
 
 	/* Public Static Functions */
 
-	public static function getState(
-		$key
-	) {
+	public static function getState( $key ) {
 		if ( isset( self::$state['public'][$key] ) ) {
 			return self::$state['public'][$key];
 		} else {
@@ -222,10 +212,7 @@ class DataCenterPage extends SpecialPage {
 		}
 	}
 
-	public static function setState(
-		$key,
-		$value
-	) {
+	public static function setState( $key, $value ) {
 		self::$state['public'][$key] = $value;
 	}
 
@@ -244,9 +231,7 @@ class DataCenterPage extends SpecialPage {
 		return self::$path;
 	}
 
-	public static function userCan(
-		$action
-	) {
+	public static function userCan( $action ) {
 		if ( is_array( $action ) ) {
 			if ( count( $action ) > 0 ) {
 				foreach ( $action as $right ) {
@@ -270,9 +255,7 @@ class DataCenterPage extends SpecialPage {
 		wfLoadExtensionMessages( 'DataCenter' );
 	}
 
-	public function execute(
-		$sub
-	) {
+	public function execute( $sub ) {
 		global $wgOut, $wgScriptPath, $wgUser, $wgRequest;
 		// Checks if the user is logged in
 		if ( !$wgUser->isLoggedIn() ) {

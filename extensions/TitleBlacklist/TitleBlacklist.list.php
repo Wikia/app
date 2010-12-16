@@ -141,7 +141,7 @@ class TitleBlacklist {
 	public function isBlacklisted( $title, $action = 'edit' ) {
 		global $wgUser;
 		if( !($title instanceof Title) ) {
-			$title = Title::newFromString( $title );
+			$title = Title::newFromText( $title );
 		}
 		$blacklist = $this->getBlacklist();
 		foreach ( $blacklist as $item ) {
@@ -166,7 +166,7 @@ class TitleBlacklist {
 	public function isWhitelisted( $title, $action = 'edit' ) {
 		global $wgUser;
 		if( !($title instanceof Title) ) {
-			$title = Title::newFromString( $title );
+			$title = Title::newFromText( $title );
 		}
 		$whitelist = $this->getWhitelist();
 		foreach( $whitelist as $item ) {

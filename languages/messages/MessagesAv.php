@@ -55,17 +55,15 @@ $messages = array(
 'viewsource'    => 'Код бихьи',
 
 # Login and logout pages
-'loginpagetitle' => 'Цlар бице',
-'userlogin'      => 'ЦIар бице',
-'userlogout'     => 'Къватlиве лъугьине',
+'userlogin'  => 'ЦIар бице',
+'userlogout' => 'Къватlиве лъугьине',
 
 # Edit pages
 'savearticle' => 'Хъвай-хъвай цIунизе',
 
 # Preferences page
-'preferences'        => 'Рекъезаби',
-'math_unknown_error' => 'Лъалареб гъалатl',
-'localtime'          => 'Бакlалъул заман',
+'preferences' => 'Рекъезаби',
+'localtime'   => 'Бакlалъул заман',
 
 # User rights
 'userrights-user-editname' => 'ГIахьалчиясул цIар хъвай:',
@@ -84,7 +82,9 @@ $messages = array(
 'newpageletter'   => 'ЦI',
 
 # Recent changes linked
-'recentchangeslinked' => 'Рухьарал хиса-басиял',
+'recentchangeslinked'         => 'Рухьарал хиса-басиял',
+'recentchangeslinked-feed'    => 'Рухьарал хиса-басиял',
+'recentchangeslinked-toolbox' => 'Рухьарал хиса-басиял',
 
 # Upload
 'uploadnologin' => 'Дуца цIар бицун гьечIо',
@@ -121,6 +121,9 @@ $messages = array(
 'move-page-legend' => 'Гьумералъул цlар хисизе',
 'movearticle'      => 'Гьумералъул цIар хисизе',
 'movepagebtn'      => 'Гьумералъул цlар хисизе',
+
+# Math errors
+'math_unknown_error' => 'Лъалареб гъалатl',
 
 # Special:SpecialPages
 'specialpages' => 'Хассал гьумерал',

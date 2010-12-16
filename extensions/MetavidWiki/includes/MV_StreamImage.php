@@ -133,7 +133,7 @@ class MV_StreamImage {
 		if ( !$req_time )$req_time = '0';
 
 		if ( count( explode( ":", $req_time ) ) >= 2 ) {
-			$req_time = ntp2seconds( $req_time );
+			$req_time = npt2seconds( $req_time );
 		} else {
 			if ( !is_numeric( $req_time ) && $req_time >= 0 ) {
 				throw "error in req time format";
@@ -390,4 +390,3 @@ function ImageTrueColorToPalette2( $image, $dither, $ncolors ) {
    // @imagedestroy($colors_handle);
    return $image;
 }
-?>

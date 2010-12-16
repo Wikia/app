@@ -1,17 +1,17 @@
 <?php
 
-require_once('Wikidata.php');
-require_once('Transaction.php');
-require_once('WikiDataAPI.php');
-require_once('forms.php');
-require_once('Attribute.php');
-require_once('type.php');
-require_once('languages.php');
-require_once('HTMLtable.php');
-require_once('OmegaWikiRecordSets.php');
-require_once('OmegaWikiEditors.php');
-require_once('ViewInformation.php');
-require_once('WikiDataGlobals.php');
+require_once( 'Wikidata.php' );
+require_once( 'Transaction.php' );
+require_once( 'WikiDataAPI.php' );
+require_once( 'forms.php' );
+require_once( 'Attribute.php' );
+require_once( 'type.php' );
+require_once( 'languages.php' );
+require_once( 'HTMLtable.php' );
+require_once( 'OmegaWikiRecordSets.php' );
+require_once( 'OmegaWikiEditors.php' );
+require_once( 'ViewInformation.php' );
+require_once( 'WikiDataGlobals.php' );
 
 /**
  * Load and modify content in a OmegaWiki-enabled
@@ -20,17 +20,16 @@ require_once('WikiDataGlobals.php');
  */
 class OmegaWiki extends DefaultWikidataApplication {
 	public function view() {
-		global
-			$wgOut, $wgTitle;
+		global $wgOut, $wgTitle;
 
 		parent::view();
 		$this->outputViewHeader();
 
 		$spelling = $wgTitle->getText();
-		$recordset = getExpressionsRecordSet($spelling, $this->viewInformation);
+		$recordset = getExpressionsRecordSet( $spelling, $this->viewInformation );
 		$wgOut->addHTML(
-			getExpressionsEditor($spelling, $this->viewInformation)->view(
-				$this->getIdStack(), 
+			getExpressionsEditor( $spelling, $this->viewInformation )->view(
+				$this->getIdStack(),
 				$recordset
 			)
 		);
@@ -47,27 +46,27 @@ class OmegaWiki extends DefaultWikidataApplication {
 		$spelling = $wgTitle->getText();
 
 		$wgOut->addHTML(
-			getExpressionsEditor($spelling, $this->viewInformation)->view(
-				$this->getIdStack(), 
-				getExpressionsRecordSet($spelling, $this->viewInformation)
+			getExpressionsEditor( $spelling, $this->viewInformation )->view(
+				$this->getIdStack(),
+				getExpressionsRecordSet( $spelling, $this->viewInformation )
 			)
 		);
 		
-		$wgOut->addHTML(DefaultEditor::getExpansionCss());
-		$wgOut->addHTML("<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>");
+		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
+		$wgOut->addHTML( "<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>" );
 	}
 
-	protected function save($referenceQueryTransactionInformation) {
+	protected function save( $referenceQueryTransactionInformation ) {
 		global
 			$wgTitle;
 
-		parent::save($referenceQueryTransactionInformation);
+		parent::save( $referenceQueryTransactionInformation );
 
 		$spelling = $wgTitle->getText();
 		
-		getExpressionsEditor($spelling, $this->viewInformation)->save(
-			$this->getIdStack(), 
-			getExpressionsRecordSet($spelling, $this->viewInformation)
+		getExpressionsEditor( $spelling, $this->viewInformation )->save(
+			$this->getIdStack(),
+			getExpressionsRecordSet( $spelling, $this->viewInformation )
 		);
 	}
 
@@ -75,15 +74,15 @@ class OmegaWiki extends DefaultWikidataApplication {
 		global
 			$wgOut, $wgTitle, $wgUser;
 
-		if(!parent::edit()) return false;
+		if ( !parent::edit() ) return false;
 		$this->outputEditHeader();
 
 		$spelling = $wgTitle->getText();
 
 		$wgOut->addHTML(
-			getExpressionsEditor($spelling, $this->viewInformation)->edit(
-				$this->getIdStack(), 
-				getExpressionsRecordSet($spelling, $this->viewInformation)
+			getExpressionsEditor( $spelling, $this->viewInformation )->edit(
+				$this->getIdStack(),
+				getExpressionsRecordSet( $spelling, $this->viewInformation )
 			)
 		);
 
@@ -94,16 +93,17 @@ class OmegaWiki extends DefaultWikidataApplication {
 		global
 			$wgTitle, $wgUseExpressionPageTitlePrefix;
 	
-		if ($wgUseExpressionPageTitlePrefix)
-			$prefix = wfMsg('ow_Multiple_meanings') . ' ';
+		if ( $wgUseExpressionPageTitlePrefix )
+			$title = wfMsg( 'ow_Multiple_meanings', $wgTitle->getText() );
 		else
-			$prefix	= "";
+			$title	= $wgTitle->getText();
 					
-		return $prefix . $wgTitle->getText();
+		return $title;
 	}
-	
+
 	protected function getIdStack() {
-		return new IdStack("expression");
+		global $wgExpression ;
+		return new IdStack( $wgExpression );
 	}
 }
 

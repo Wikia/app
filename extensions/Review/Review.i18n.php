@@ -104,6 +104,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'review_sidebar_title' => 'مراجعة',
@@ -127,7 +128,7 @@ $messages['ar'] = array(
 	'review_total_statistics' => 'الإجمالي',
 	'review_statistics_left_corner' => 'المراجعة',
 	'review_version_link' => 'المراجعة #$1',
-	'review_statistic_cell' => 'المتوسط: $1 of $2<br />($4 سجل {{PLURAL:$4|مستخدم|مستخدم}}، $5 {{PLURAL:$5|مستخدم|مستخدم}} مجهول)',
+	'review_statistic_cell' => 'المتوسط: $1 من $2<br />({{PLURAL:$4|لا يوجد مستخدمون مسجلون|مستخدم مسجل واحد|مستخدمان مسجلان|$4 مستخدمين مسجلين|$4 مستخدمًا مسجلًا|$4 مستخدم مسجل}} و{{PLURAL:$5|لا يوجد مستخدمون مجهولون|مستخدم مجهول واحد|مستخدمان مجهولان|$5 مستخدمين مجهولين|$5 مستخدمًا مجهولًا|$5 مستخدم مجهول}})',
 	'review_version_statistic_cell' => '$1 من $2',
 	'review_version_reviews_link' => '<small>(مراجعات النسخة)</small>',
 	'review_concerns_page' => 'هذه المراجعة هي حول الصفحة "$1".',
@@ -145,6 +146,15 @@ $messages['ar'] = array(
 	'review_no_opinion' => 'لا رأي',
 	'review_rating' => 'التقييم',
 	'review_comment' => 'تعليق',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'review_statistics_left_corner' => 'ܬܢܝܬܐ',
+	'review_version_link' => 'ܬܢܝܬܐ #$1',
+	'review_version_statistic_cell' => '$1 ܡܢ $2',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -348,13 +358,33 @@ $messages['br'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'review_sidebar_title' => 'Pregled',
+	'review-desc' => 'Omogućuje korisnicima da [[Special:Review|provjere]] stranice',
+	'review_topic_page' => 'Teme pregleda',
 	'review_sidebar_explanation' => "Krajnji lijevi potvrdni okvir uvijek znači 'bez mišljenja'.",
+	'review_your_review' => 'Vaša provjera ove stranice/revizije:',
+	'review_page_link' => 'statistike provjere',
+	'review_for_page' => 'Pregled za stranicu "$1"',
+	'review_for_user' => 'Provjera za korisnika "$1"',
 	'review_error' => 'Nešto nije u redu!',
+	'review_no_reviews_for_page' => 'Trenutno nema provjera za "$1".',
 	'review_total_statistics' => 'Ukupno',
+	'review_statistics_left_corner' => 'Revizija',
+	'review_version_link' => 'Revizija #$1',
 	'review_statistic_cell' => 'Prosjek: $1 of $2<br />($4 {{PLURAL:$4|registrovani korisnik|registrovana korisnika|registrovanih korisnika}}, $5 {{PLURAL:$4|anonimni korisnik|anonimna korisnika|anonimnih korisnika}})',
+	'review_version_statistic_cell' => '$1 od $2',
+	'review_version_reviews_link' => '<small>(pregledi verzije)</small>',
+	'review_concerns_page' => 'Ovaj pregled je o stranici "$1".',
+	'review_user_reviews' => '<small>(provjere ovog korisnika)</small>',
+	'review_user_page_list' => 'Korisnik je provjerio slijedeće stranice:',
 	'review_user_details_link' => '(detalji)',
+	'review_has_been_stored' => 'Vaš pregled je spremljen!',
+	'review_page_review' => 'Provjera stranice "$1"',
 	'review_blocked' => 'Blokirani ste i ne možete učestvovati u pregledima.',
+	'review_wrong_namespace' => 'Stranice u ovom imenskom prostoru ne mogu biti provjerene!',
 	'review_topic' => 'Tema',
+	'review_no_opinion' => 'Bez mišljenja',
+	'review_rating' => 'Rejting',
 	'review_comment' => 'Komentar',
 );
 
@@ -395,7 +425,7 @@ $messages['de'] = array(
 	'review_sidebar_explanation' => 'Das ganz linke Auswahlkästchen bedeutet immer „keine Meinung“.',
 	'review_save' => 'Prüfung speichern',
 	'review_your_review' => 'Deine Prüfung dieser Seite/Version:',
-	'review_sidebar_you_have_other_reviews_for_this_article' => "Du hast schon andere Versionen dieser Seite geprüft. Deine anderen Bewertungen werden mit dieser Prüfung verschmolzen wo du 'keine Meinung' ausgewählt hast.",
+	'review_sidebar_you_have_other_reviews_for_this_article' => 'Du hast schon andere Versionen dieser Seite geprüft. Deine anderen Bewertungen werden mit dieser Prüfung verschmolzen wo du „keine Meinung“ ausgewählt hast.',
 	'review_page_link' => 'Prüfungsstatistiken',
 	'review_sidebar_final' => 'Für die Prüfungsdaten dieser Seite, siehe ihre $1',
 	'review_for_page' => 'Prüfung der Seite „$1“',
@@ -426,11 +456,14 @@ $messages['de'] = array(
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
  * @author Revolus
  */
 $messages['de-formal'] = array(
 	'review_your_review' => 'Ihre Prüfung dieser Seite/Version:',
+	'review_sidebar_you_have_other_reviews_for_this_article' => 'Sie haben schon andere Versionen dieser Seite geprüft. Ihre anderen Bewertungen werden mit dieser Prüfung verschmolzen wo Sie „keine Meinung“ ausgewählt haben.',
 	'review_has_been_stored' => 'Ihre Prüfung wurde gespeichert!',
+	'review_blocked' => 'Sie sind gesperrt und können an der Codeprüfung nicht teilnehmen.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -481,9 +514,25 @@ Twóje druge pógódnośenja zjadnośuju se do toś togo, źož sy wubrał 'žed
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'review_sidebar_title' => 'Επιθεώρηση',
+	'review_topic_page' => 'Επιθεώρηση θεμάτων',
+	'review_page_link' => 'επιθεώρηση στατιστικών',
+	'review_for_page' => 'Επιθεώρηση για τη σελίδα "$1"',
+	'review_for_user' => 'Επιθεώρηση για τον χρήστη "$1"',
+	'review_error' => 'Κάτι είναι λάθος!',
+	'review_total_statistics' => 'Σύνολο',
+	'review_statistics_left_corner' => 'Αναθεώρηση',
+	'review_version_link' => 'Έκδοση #$1',
+	'review_version_statistic_cell' => '$1 από $2',
 	'review_user_details_link' => '(λεπτομέρειες)',
+	'review_has_been_stored' => 'Η επιθεώρηση σας έχει αποθηκευτεί!',
+	'revision_review_this_page_version_link' => 'Επιθεώρηση της έκδοσης αυτής της σελίδας.',
+	'review_page_review' => 'Επιθεώρηση της σελίδας "$1"',
+	'review_topic' => 'Θέμα',
 	'review_no_opinion' => 'Καμία γνώμη',
 	'review_rating' => 'Αξιολόγηση',
 	'review_comment' => 'Σχόλιο',
@@ -517,12 +566,16 @@ $messages['eo'] = array(
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Imre
+ * @author Locos epraix
  */
 $messages['es'] = array(
 	'review_sidebar_title' => 'Revisar',
+	'review-desc' => 'Permite a los usuarios [[Special:Review|revisar]] páginas',
 	'review_topic_page' => 'Revisar tópicos',
 	'review_save' => 'Almacenar revisión',
+	'review_your_review' => 'Tu revisión de esta página/revisión:',
 	'review_page_link' => 'revisar estadísticas',
+	'review_sidebar_final' => 'Para datos de revisión de esta vista de página, vea su $1',
 	'review_for_page' => 'Revisión para página "$1"',
 	'review_for_user' => 'Revisión para usuario "$1"',
 	'review_error' => 'Algo está equivocado!',
@@ -530,6 +583,7 @@ $messages['es'] = array(
 	'review_total_statistics' => 'Total',
 	'review_statistics_left_corner' => 'Revisión',
 	'review_version_link' => 'Revisión #$1',
+	'review_statistic_cell' => 'Promedio: $1 de $2<br />($4 {{PLURAL:$4|usuario|usuario}} {{PLURAL:$4|registrado|registrados}}, $5 {{PLURAL:$5|usuario|usuario}} {{PLURAL:$5|anónimo|anónimos}})',
 	'review_version_statistic_cell' => '$1 de $2',
 	'review_version_reviews_link' => '<small>(revisiones de versión)</small>',
 	'review_concerns_page' => 'Esta revisión es acerca de la página "$1".',
@@ -537,12 +591,15 @@ $messages['es'] = array(
 	'review_user_reviews' => '<small>(revisiones por este usuario)</small>',
 	'review_user_page_list' => 'El usuario revisó las siguientes páginas:',
 	'review_user_details_link' => '(detalles)',
+	'review_do_merge' => 'Fusionar mis revistas de otras revisiones de esta página en esta otra',
 	'review_has_been_stored' => 'Tu revisión ha sido almacenada!',
 	'revision_review_this_page_version_link' => 'Revisar esta versión de la página.',
 	'review_page_review' => 'Revisión de la página "$1"',
 	'review_blocked' => 'Estás bloqueado y no puedes participar en revisiones.',
+	'review_wrong_namespace' => 'La páginas en este espacio de nombre no pueden ser revisadas!',
 	'review_topic' => 'Tópico',
 	'review_no_opinion' => 'Sin opinión',
+	'review_rating' => 'Valorización',
 	'review_comment' => 'Comentario',
 );
 
@@ -551,6 +608,7 @@ $messages['es'] = array(
  * @author Kobazulo
  */
 $messages['eu'] = array(
+	'review_error' => 'Zerbait oker dago!',
 	'review_total_statistics' => 'Guztira',
 	'review_user_details_link' => '(xehetasunak)',
 	'review_blocked' => 'Blokeatuta zaude eta ezin duzu berrikuspenetan parte hartu.',
@@ -603,13 +661,36 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
  * @author Crt
  * @author Str4nd
  */
 $messages['fi'] = array(
+	'review_sidebar_title' => 'Arvioi',
+	'review-desc' => 'Sallii käyttäjien [[Special:Review|arvioida]] sivuja.',
+	'review_save' => 'Tallenna arviointi',
+	'review_your_review' => 'Arviointisi tästä sivusta tai versiosta:',
+	'review_page_link' => 'arviointien tilastotiedot',
+	'review_for_page' => 'Arviointi sivua "$1" koskien',
+	'review_error' => 'Jokin on väärin!',
 	'review_total_statistics' => 'Yhteensä',
+	'review_statistics_left_corner' => 'Versio',
+	'review_version_link' => 'Versio $1',
+	'review_statistic_cell' => 'Keskimäärin $1 / $2<br />($4 {{PLURAL:$4|rekisteröity käyttäjä|rekisteröityä käyttäjää}}, $5 {{PLURAL:$5|nimetön käyttäjä|nimetöntä käyttäjää}})',
+	'review_concerns_page' => 'Tämä on arviointi, joka koskee sivua ”$1”.',
+	'review_concerns_user' => 'Tämä koskee arvioita, jotka on tehnyt käyttäjä ”$1”.',
+	'review_user_reviews' => '<small>(tämän käyttäjän arviot)</small>',
+	'review_user_page_list' => 'Käyttäjä on arvioinut seuraavat sivut:',
+	'review_user_details_link' => '(tiedot)',
+	'review_do_merge' => 'Yhdistä arvioni tämän sivun muista versioista tähän arvioon',
 	'review_has_been_stored' => 'Arvostelusi tallennettiin.',
+	'revision_review_this_page_version_link' => 'Arvioi tämä versio sivusta.',
+	'review_page_review' => 'Sivun ”$1” arviointi',
 	'review_blocked' => 'Olet estetty, joten et voi osallistua.',
+	'review_wrong_namespace' => 'Tämän nimiavaruuden sivuja ei voi arvioida.',
+	'review_no_opinion' => 'Ei mielipidettä',
+	'review_rating' => 'Arvosana',
+	'review_comment' => 'Kommentti',
 );
 
 /** French (Français)
@@ -624,22 +705,22 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'review_sidebar_title' => 'Révision',
 	'review-desc' => 'Permet aux utilisateurs de [[Special:Review|valider]] des pages',
-	'review_topics' => "# Liste de sujets pour l'extension « review » de MediaWiki.
+	'review_topics' => '# Liste de sujets pour l’extension « review » de MediaWiki.
 # ....
 # Chaque sujet est défini par une liste de données séparées par « : » (toute autre liste est ignorée).
 # ....
-# Les données dans l'ordre sont :
+# Les données dans l’ordre sont :
 ## identifiant numérique (>0)
 ## nom
 ## étendue (>1)
 ## signification de la plus petite valeur (ex. « mauvais »)
 ## signification de la plus grande valeur (ex. « bon »)
 # ....
-# Par exemple, s'il faut seulement choisir « non » ou « oui », l'étendue vaut 2.
-# Par exemple, s'il faut choisir entre « médiocre », « mauvais », « à améliorer », « bien » ou « très bien », l'étendue vaut 5.
+# Par exemple, s’il faut seulement choisir « non » ou « oui », l’étendue vaut 2.
+# Par exemple, s’il faut choisir entre « médiocre », « mauvais », « à améliorer », « bien » ou « très bien », l’étendue vaut 5.
 # ....
 1:Qualité:5:mauvais:bon
-2:Prêt pour 1.0:2:non:oui",
+2:Prêt pour 1.0:2:non:oui',
 	'review_topic_page' => 'Sujets à révision',
 	'review_sidebar_explanation' => 'La boîte à cocher la plus à gauche toute signifie toujours « sans opinion ».',
 	'review_save' => 'Sauvegarder la révision',
@@ -650,7 +731,7 @@ $messages['fr'] = array(
 	'review_for_page' => 'Révision pour la page « $1 »',
 	'review_for_user' => 'Révision pour contributeur « $1 »',
 	'review_error' => 'Quelque chose cloche.',
-	'review_no_reviews_for_page' => "Il n'y a pas de révisions pour « $1 ».",
+	'review_no_reviews_for_page' => 'Il n’y a pas de révisions pour « $1 ».',
 	'review_total_statistics' => 'Total',
 	'review_statistics_left_corner' => 'Révision',
 	'review_version_link' => 'Révision #$1',
@@ -658,7 +739,7 @@ $messages['fr'] = array(
 	'review_version_statistic_cell' => '$1 de $2',
 	'review_version_reviews_link' => '<small>(révisions de version)</small>',
 	'review_concerns_page' => 'Cette révision est à propos de la page « $1 ».',
-	'review_concerns_user' => "C'est à propos des révisions faites par le contributeur « $1 ».",
+	'review_concerns_user' => 'C’est à propos des révisions faites par le contributeur « $1 ».',
 	'review_user_reviews' => '<small>(révisions par ce contributeur)</small>',
 	'review_user_page_list' => 'Le contributeur a révisé les pages suivantes :',
 	'review_user_details_link' => '(détails)',
@@ -672,6 +753,15 @@ $messages['fr'] = array(
 	'review_no_opinion' => 'Sans opinion',
 	'review_rating' => 'Évaluation',
 	'review_comment' => 'Commentaire',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'review_total_statistics' => 'Soma',
+	'review_statistics_left_corner' => 'Rèvision',
+	'review_version_link' => 'Rèvision #$1',
 );
 
 /** Western Frisian (Frysk)
@@ -732,7 +822,10 @@ $messages['gl'] = array(
  * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'review_sidebar_title' => 'Ἐπισκόπησις',
+	'review_topic_page' => 'Ἐπιθεώρησις θεμάτων',
 	'review_total_statistics' => 'Συνολικόν',
+	'review_statistics_left_corner' => 'Ἀναθεώρησις',
 	'review_user_details_link' => '(λεπτομέρειαι)',
 	'review_topic' => 'Θέμα',
 	'review_rating' => 'Βάθμισις',
@@ -930,7 +1023,7 @@ $messages['hsb'] = array(
  */
 $messages['ia'] = array(
 	'review_sidebar_title' => 'Recension',
-	'review-desc' => 'Le function de [[Special:Review|validation]], restabilite.',
+	'review-desc' => 'Permitte al usatores [[Special:Review|revider]] paginas',
 	'review_topics' => "# Ecce le lista de topicos e intervallos pro le extension Review (Recension).
 # Cata topico se defini con un linea de cinque valores, separate per  ':' (omne altere linea es ignorate).
 # Le ordine es: clave numeric (>0), nomine, intervallo maxime (>1; 2=si/no), significato del valor le plus basse (p.ex. 'mal'), significato del valor le plus alte (p.ex. 'bon').
@@ -950,7 +1043,7 @@ $messages['ia'] = array(
 	'review_total_statistics' => 'Total',
 	'review_statistics_left_corner' => 'Version',
 	'review_version_link' => 'Version #$1',
-	'review_statistic_cell' => 'Media: $1 de $2<br />($4 usatores, $5 anonymos)',
+	'review_statistic_cell' => 'Media: $1 de $2<br />($4 {{PLURAL:$4|usator|usatores}} registrate, $5 {{PLURAL:$5|usator|usatores}} anonyme)',
 	'review_version_statistic_cell' => '$1 de $2',
 	'review_version_reviews_link' => '<small>(recensiones de versiones)</small>',
 	'review_concerns_page' => 'Iste recension es a proposito del pagina "$1".',
@@ -971,12 +1064,16 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
  * @author Rex
  */
 $messages['id'] = array(
+	'review_sidebar_title' => 'Tinjau',
 	'review_total_statistics' => 'Total',
+	'review_statistics_left_corner' => 'Revisi',
 	'review_user_details_link' => '(rincian)',
+	'review_comment' => 'Komentar',
 );
 
 /** Italian (Italiano)
@@ -988,13 +1085,14 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
 	'review_sidebar_title' => '批評',
 	'review-desc' => '利用者がページを[[Special:Review|批評]]できるようにする',
-	'review_topics' => '# 以下は批評機能で使用する、題目と値の範囲のリストです。
+	'review_topics' => '# 以下は査読機能で使用する題目と値の範囲の一覧です。
 # 各題目は、5つの値をもつ行で定義されます。値は「:」で区切ります。その他の行は無視されます。
 # 順序は次のようにします: 数値キー (>0)、名前、値の数 (>1。2 = 真/偽)、最低値の意味 (例: 不良)、最高値の意味 (例: 良)
 1:品質:5:不良:良
@@ -1013,7 +1111,7 @@ $messages['ja'] = array(
 	'review_total_statistics' => '合計',
 	'review_statistics_left_corner' => '特定版',
 	'review_version_link' => '第$1版',
-	'review_statistic_cell' => '平均: $2中 $1<br />(登録利用者 $4人、匿名利用者 $5人)',
+	'review_statistic_cell' => '平均: $2中 $1<br />(登録{{PLURAL:$4|利用者}} $4人、匿名{{PLURAL:$5|利用者}} $5人)',
 	'review_version_statistic_cell' => '$2中 $1',
 	'review_version_reviews_link' => '<small>(特定版への批評)</small>',
 	'review_concerns_page' => 'この批評はページ「$1」についてのものです。',
@@ -1035,6 +1133,7 @@ $messages['ja'] = array(
 
 /** Javanese (Basa Jawa)
  * @author Meursault2004
+ * @author Pras
  */
 $messages['jv'] = array(
 	'review_error' => 'Ana sing salah!',
@@ -1043,7 +1142,7 @@ $messages['jv'] = array(
 	'review_version_link' => 'Révisi #$1',
 	'review_version_statistic_cell' => '$1 saka $2',
 	'review_user_details_link' => '(détail)',
-	'review_blocked' => 'Panjenengan iku diblokir, mangga lungaa.',
+	'review_blocked' => 'Panjenengan diblokir lan ora bisa mèlu ngowahi.',
 	'review_topic' => 'Topik',
 	'review_no_opinion' => 'Ora ana komentar',
 	'review_comment' => 'Komentar',
@@ -1067,7 +1166,7 @@ $messages['km'] = array(
 	'review_total_statistics' => 'សរុប',
 	'review_statistics_left_corner' => 'ការពិនិត្យឡើងវិញ',
 	'review_version_link' => 'ការពិនិត្យឡើងវិញ #$1',
-	'review_statistic_cell' => 'មធ្យម: $1 នៃ $2<br />($4 អ្នកប្រើប្រាស់, $5 អនាមិក)',
+	'review_statistic_cell' => 'មធ្យម: $1 of $2<br />($4 {{PLURAL:$4|អ្នកប្រើប្រាស់|អ្នកប្រើប្រាស់}}​បាន​ចុះឈ្មោះ, $5 {{PLURAL:$5|អ្នកប្រើប្រាស់|អ្នកប្រើប្រាស់}}​អនាមិក)',
 	'review_version_statistic_cell' => '$1 នៃ $2',
 	'review_version_reviews_link' => '<small>(ពិនិត្យ​កំណែ​ឡើងវិញ)</small>',
 	'review_concerns_page' => 'ការពិនិត្យឡើងវិញ​នេះ គឺ​ស្ដីអំពី​ទំព័រ "$1" ។',
@@ -1116,7 +1215,7 @@ woh de „{{int:review_no_opinion}}“ ußjesooht häs.',
 	'review_total_statistics' => 'Zosamme',
 	'review_statistics_left_corner' => 'Enschätze',
 	'review_version_link' => 'De Version #$1 enschätze',
-	'review_statistic_cell' => 'Dä Dorschnett: $1 vun $2<br />($4 Metmaacher, $5 Namloose)',
+	'review_statistic_cell' => 'Dä Dorschnett: $1 vun $2<br />({{PLURAL:$4|eine|$4|keine}} Metmaacher, {{PLURAL:$5|eine|$5|keine}} Namloose)',
 	'review_version_statistic_cell' => '$1 vun $2',
 	'review_version_reviews_link' => '<small>(Enschätzunge vun Versione)</small>',
 	'review_concerns_page' => 'Die Enschätzunge hee es för de Sigg „$1“.',
@@ -1137,20 +1236,42 @@ woh de „{{int:review_no_opinion}}“ ußjesooht häs.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
+	'review_sidebar_title' => 'Nokucken',
+	'review-desc' => 'Erlaabt et Benotzer fir Säiten [[Special:Review|nozekucken]].',
+	'review_topic_page' => 'Sujete fir nozekucken',
+	'review_sidebar_explanation' => "Déi éischt Këscht fir unzeklicken heescht ëmmer 'keng Meenung'.",
 	'review_save' => 'Versioun späicheren',
+	'review_your_review' => 'Är Bewäertung vun dëser Säit/Versioun:',
+	'review_sidebar_you_have_other_reviews_for_this_article' => "Dir hutt schonn aner Versioune vun dëser Säit nogekuckt.
+Är aner Bewäertunge gi mat dëser zesummegeluecht wann Dir 'Keng Meenung' erausgewielt hutt.",
 	'review_page_link' => 'Statistike vum Nokucken',
+	'review_for_page' => 'Nokucke vun der Säit "$1"',
+	'review_for_user' => 'Bewäertung fir de Benotzer "$1"',
 	'review_error' => 'Et ass eppes falsch!',
+	'review_no_reviews_for_page' => 'Et gëtt elo näischt fir "$1" fir nozekucken.',
 	'review_total_statistics' => 'Total',
 	'review_statistics_left_corner' => 'Versioun',
 	'review_version_link' => 'Versioun #$1',
+	'review_statistic_cell' => 'Duerchschnëtt: $1 vun $2<br />($4 {{PLURAL:$4|registréierte|registréiert}} Benotzer, $5 {{PLURAL:$5|anonyme|anonym}} Benotzer)',
 	'review_version_statistic_cell' => '$1 vu(n) $2',
+	'review_version_reviews_link' => '<small>(Bewäertunge vun der Versioun)</small>',
+	'review_concerns_page' => 'Dëst ass d\'Bewertung vun der Säit "$1".',
+	'review_concerns_user' => 'Dëst sinn d\'Bewertunge vum Benotzer "$1".',
+	'review_user_reviews' => '<small>(Bewäertunge vun dësem Benotzer)</small>',
+	'review_user_page_list' => 'De Benotzer huet dës Säiten nogekuckt:',
 	'review_user_details_link' => '(Detailer)',
+	'review_has_been_stored' => 'Är Bewäertung gouf gespäichert!',
+	'revision_review_this_page_version_link' => 'Dës Versioun vun der Säit nokucken.',
+	'review_page_review' => 'Nokucke vun der Säit "$1"',
 	'review_blocked' => 'Dir sidd gespaart a kënnt net beim Nokucke vu Säite matmaachen.',
+	'review_wrong_namespace' => 'Säiten an dësem Nummraum kënnen net nogekuckt ginn!',
 	'review_topic' => 'Thema',
 	'review_no_opinion' => 'Keng Meenung',
+	'review_rating' => 'Bewäertung',
 	'review_comment' => 'Bemierkung',
 );
 
@@ -1369,10 +1490,11 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Laaknor
  */
 $messages['no'] = array(
 	'review_sidebar_title' => 'Gå gjennom',
-	'review-desc' => 'Den gjenoppståtte [[Special:Review|valideringsfunksjonen]].',
+	'review-desc' => 'Tillater brukere å [[Special:Review|vurdere]] sider',
 	'review_topics' => '# Følgende er en liste over emner og verdier for valideringsutvidelse.
 # Hvert emne defineres av en linje på fem verdier, skilt fra hverandre med «:» (alle andre linjer ignoreres).
 # Rekkeølgen er: Numerisk verdi (>0), navn, maksimum verdi (>1; 2=yes/no), betydning av laveste verdi (f.eks. «dårlig»), betydning av høyeste verdi (f.eks. «bra»).
@@ -1392,7 +1514,7 @@ $messages['no'] = array(
 	'review_total_statistics' => 'Totalt',
 	'review_statistics_left_corner' => 'Revisjon',
 	'review_version_link' => 'Revisjon #$1',
-	'review_statistic_cell' => 'Gjennomsnitt: $1 av $2<br />($4 registrerte, $5 uregistrerte)',
+	'review_statistic_cell' => 'Gjennomsnitt: $1 av $2<br />({{PLURAL:$4|registrert|registrerte}}, $5 {{PLURAL:$5|uregistrert bruker|uregistrerte brukere}})',
 	'review_version_statistic_cell' => '$1 av $2',
 	'review_version_reviews_link' => '<small>(versjonsgjennomganger)</small>',
 	'review_concerns_page' => 'Denne gjennomgangen gjelder siden «$1».',
@@ -1404,7 +1526,7 @@ $messages['no'] = array(
 	'review_has_been_stored' => 'Gjennomgangen din har blitt lagret!',
 	'revision_review_this_page_version_link' => 'Gå gjennom denne versjonen av siden.',
 	'review_page_review' => 'Gjennomgang av siden «$1»',
-	'review_blocked' => 'Du er blokkert, gå vekk.',
+	'review_blocked' => 'Du er blokkert, og kan ikke delta i vurderinger.',
 	'review_wrong_namespace' => 'Kan ikke gå gjennom sider i dette navnerommet.',
 	'review_topic' => 'Emne',
 	'review_no_opinion' => 'Ingen mening',
@@ -1465,6 +1587,13 @@ $messages['oc'] = array(
 	'review_no_opinion' => 'Sens opinion',
 	'review_rating' => 'Evaluacion',
 	'review_comment' => 'Comentari',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'review_comment' => 'Comment',
 );
 
 /** Polish (Polski)
@@ -1613,6 +1742,7 @@ As suas outras classificações serão fundidas nesta onde selecionou 'sem opini
 $messages['ro'] = array(
 	'review_error' => 'Ceva e greşit!',
 	'review_total_statistics' => 'Total',
+	'review_version_link' => 'Revizia #$1',
 	'review_user_details_link' => '(detalii)',
 	'review_comment' => 'Comentariu',
 );
@@ -1625,6 +1755,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ferrer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -1649,19 +1780,19 @@ $messages['ru'] = array(
 	'review_total_statistics' => 'Всего',
 	'review_statistics_left_corner' => 'Версия',
 	'review_version_link' => 'Версия #$1',
-	'review_statistic_cell' => 'Среднее: $1 из $2<br />($4 участ., $5 анонимов)',
+	'review_statistic_cell' => 'Среднее: $1 из $2<br />($4 {{PLURAL:$4|зарегистрированный участник|зарегистрированных участника|зарегистрированных участников}}, $5 {{PLURAL:$5|аноним|анонима|анонимов}})',
 	'review_version_statistic_cell' => '$1 из $2',
 	'review_version_reviews_link' => '<small>(оценки версий)</small>',
 	'review_concerns_page' => 'Это оценка страницы «$1».',
 	'review_concerns_user' => 'Это об оценках участника «$1».',
-	'review_user_reviews' => '<small>(оценки {{GENDER:$1|этого участника|этой участницы}})</small>',
-	'review_user_page_list' => '{{GENDER:$1|Участник оценил|Участница оценила}} следующие страницы:',
+	'review_user_reviews' => '<small>(оценки этого участника)</small>',
+	'review_user_page_list' => 'Участник оценил следующие страницы:',
 	'review_user_details_link' => '(подробности)',
 	'review_do_merge' => 'Перенести мои оценки других версий этой страницы на эту версию',
 	'review_has_been_stored' => 'Ваша оценка сохранена!',
 	'revision_review_this_page_version_link' => 'Проверить эту версию страницы.',
 	'review_page_review' => 'Проверка страницы «$1»',
-	'review_blocked' => 'Вы заблокированы, уходите.',
+	'review_blocked' => 'Вы заблокированы и поэтому не можете участвовать в проверках.',
 	'review_wrong_namespace' => 'Страницы в этом пространстве имён не могут быть оценены!',
 	'review_topic' => 'Категория',
 	'review_no_opinion' => 'Нет мнения',
@@ -1716,9 +1847,19 @@ $messages['sk'] = array(
 
 /** Serbian Cyrillic ekavian (ћирилица)
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
+	'review_total_statistics' => 'Укупно',
 	'review_comment' => 'Коментар',
+);
+
+/** latinica (latinica)
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'review_total_statistics' => 'Ukupno',
+	'review_comment' => 'Komentar',
 );
 
 /** Swedish (Svenska)
@@ -1727,7 +1868,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'review_sidebar_title' => 'Granska',
-	'review-desc' => 'Den återupplivade [[Special:Review|kontrolleringsfunktionen]].',
+	'review-desc' => 'Låter användare [[Special:Review|granska]] sidor',
 	'review_topics' => '# Följande är listan över ämnen och rankningar för kontrolleringstillägget.
 # Varje ämne definieras av en linje på fem värden, skiljt från varandra med ":" (alla andra linjer ignoreras).
 # Följden är: numeriskt värde (>0), namn, maximalt värde (>1; 2=yes/no), betydelsen av de lägsta värdena (t.ex. "dålig"), betydelse av högsta värde (t.ex. "bra").
@@ -1747,7 +1888,7 @@ $messages['sv'] = array(
 	'review_total_statistics' => 'Total',
 	'review_statistics_left_corner' => 'Revision',
 	'review_version_link' => 'Revision #$1',
-	'review_statistic_cell' => 'Genomsnitt: $1 av $2<br />($4 registrerade, $5 andra)',
+	'review_statistic_cell' => 'Genomsnitt: $1 av $2<br />($4 registrerade {{PLURAL:$4|användare|användare}}, $5 anonyma {{PLURAL:$5|användare|användare}})',
 	'review_version_statistic_cell' => '$1 av $2',
 	'review_version_reviews_link' => '<small>(versionsgranskningar)</small>',
 	'review_concerns_page' => 'Den här granskningen gäller sidan "$1".',
@@ -1790,7 +1931,7 @@ $messages['te'] = array(
 	'review_total_statistics' => 'మొత్తం',
 	'review_statistics_left_corner' => 'కూర్పు',
 	'review_version_link' => 'కూర్పు #$1',
-	'review_statistic_cell' => 'సగటు: $2 లో $1 <br />($4 వాడుకరులు, $5 అనామకులు)',
+	'review_statistic_cell' => 'సగటు: $2 లో $1<br />($4 నమోదైన {{PLURAL:$4|వాడుకరి|వాడుకరులు}}, $5 అనామక {{PLURAL:$5|వాడుకరి|వాడుకరులు}})',
 	'review_version_reviews_link' => '<small>(కూర్పు సమీక్షలు)</small>',
 	'review_concerns_page' => 'ఈ సమీక్ష "$1" అనే పేజీ గురించి.',
 	'review_user_reviews' => '<small>(ఈ వాడుకరి చేసిన సమీక్షలు)</small>',
@@ -1799,7 +1940,7 @@ $messages['te'] = array(
 	'review_has_been_stored' => 'మీ సమీక్ష భద్రమయ్యింది!',
 	'revision_review_this_page_version_link' => 'పేజీ యొక్క ఈ కూర్పుని సమీక్షించండి.',
 	'review_page_review' => '"$1" పేజీ యొక్క సమీక్ష',
-	'review_blocked' => 'మిమ్మల్ని నిరోధించారు, వెళ్ళిపోండి.',
+	'review_blocked' => 'మిమ్మల్ని నిరోధించారు. మీరు సమీక్షలలో పాల్గొనలేరు.',
 	'review_topic' => 'విషయం',
 	'review_no_opinion' => 'అభిప్రాయం లేదు',
 	'review_rating' => 'రేటింగు',
@@ -1817,6 +1958,14 @@ $messages['tg-cyrl'] = array(
 	'review_version_statistic_cell' => '$1 аз $2',
 	'review_blocked' => 'Шумо баста шудаед, равед.',
 	'review_comment' => 'Тавзеҳ',
+);
+
+/** Thai (ไทย)
+ * @author Passawuth
+ */
+$messages['th'] = array(
+	'review_sidebar_title' => 'ตรวจสอบ',
+	'review_total_statistics' => 'รวม',
 );
 
 /** Tagalog (Tagalog)
@@ -1872,6 +2021,14 @@ $messages['tr'] = array(
 	'review_topic' => 'Konu',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'review_total_statistics' => 'Kaiked',
+	'review_topic' => 'Tem',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -1879,11 +2036,11 @@ $messages['tr'] = array(
 $messages['vi'] = array(
 	'review_sidebar_title' => 'Duyệt',
 	'review-desc' => 'Cho phép thành viên [[Special:Review|phê chuẩn]] trang',
-	'review_topics' => "# Dưới đây là danh sách các chủ đề và tầm vực của gói mở rộng duyệt bài.
-# Mỗi chủ đề được định nghĩa bằng một dòng năm giá trị, cách nhau bởi      Normal   0               false   false   false      EN-US   JA   X-NONE                                                         MicrosoftInternetExplorer4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ‘:’  (tất cả những dòng khác được bỏ qua).
-# Thứ tự là: khóa số (>0), tên, tầm lớn nhất (>1; 2=có/không), ý nghĩa của giá trị nhỏ nhất (ví dụ, 'tồi'), ý nghĩa của giá trị cao nhất (ví dụ, 'tốt').
+	'review_topics' => '# Dưới đây là danh sách các chủ đề và tầm vực của phần mở rộng duyệt bài.
+# Mỗi chủ đề được định nghĩa bằng một dòng năm giá trị, cách nhau bởi “:” (tất cả những dòng khác được bỏ qua).
+# Thứ tự là: khóa số (>0), tên, tầm lớn nhất (>1; 2=có/không), ý nghĩa của giá trị nhỏ nhất (ví dụ, “tồi”), ý nghĩa của giá trị cao nhất (ví dụ, “tốt”).
 1:Chất lượng:5:tồi:tốt
-2:Sẵn sàng cho 1.0:2:không:có",
+2:Sẵn sàng cho 1.0:2:không:có',
 	'review_topic_page' => 'Duyệt chủ đề',
 	'review_sidebar_explanation' => 'Hộp kiểm ngoài cùng bên trái luôn có nghĩa là      Normal   0               false   false   false      EN-US   JA   X-NONE                                                         MicrosoftInternetExplorer4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ‘không có ý kiến’.',
 	'review_save' => 'Lưu trữ duyệt bài',

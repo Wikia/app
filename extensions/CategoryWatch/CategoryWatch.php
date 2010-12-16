@@ -15,13 +15,14 @@
 
 if ( !defined('MEDIAWIKI' ) ) die( 'Not an entry point.' );
 
-define( 'CATEGORYWATCH_VERSION', '1.0.0, 2009-03-22' );
+define( 'CATEGORYWATCH_VERSION', '1.1.0, 2009-04-21' );
 
 $wgCategoryWatchNotifyEditor = true;
 $wgCategoryWatchUseAutoCat   = false;
 
 $wgExtensionFunctions[] = 'wfSetupCategoryWatch';
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CategoryWatch',
 	'author'         => '[http://www.organicdesign.co.nz/User:Nad User:Nad]',
 	'description'    => 'Extends watchlist functionality to include notification about membership changes of watched categories',
@@ -80,7 +81,7 @@ class CategoryWatch {
 	/**
 	 * Find changes in categorisation and send messages to watching users
 	 */
-	function onArticleSaveComplete( &$article, &$user, &$text ) {
+	function onArticleSaveComplete( &$article, &$user, &$text, &$summary, &$medit ) {
 
 		# Get cats after update
 		$this->after = array();
@@ -97,40 +98,56 @@ class CategoryWatch {
 
 		# Notify watchers of each cat about the addition or removal of this article
 		if ( count( $add ) > 0 || count( $sub ) > 0 ) {
-			$page = $article->getTitle()->getText();
+			
+			$page     = $article->getTitle();
+			$pagename = $page->getPrefixedText();
+			$pageurl  = $page->getFullUrl();
+			$page     = "$pagename ($pageurl)";
+			
 			if ( count( $add ) == 1 && count( $sub ) == 1 ) {
 				$add = array_shift( $add );
 				$sub = array_shift( $sub );
 
 				$title   = Title::newFromText( $add, NS_CATEGORY );
-				$message = wfMsg( 'categorywatch-catmovein', $page, $add, $sub );
-				$this->notifyWatchers( $title, $user, $message );
+				$message = wfMsg( 'categorywatch-catmovein', $page, $this->friendlyCat( $add ), $this->friendlyCat( $sub ) );
+				$this->notifyWatchers( $title, $user, $message, $summary, $medit );
 
-				$title   = Title::newFromText( $sub, NS_CATEGORY );
-				$message = wfMsg( 'categorywatch-catmoveout', $page, $sub, $add );
-				$this->notifyWatchers( $title, $user, $message );
+				#$title   = Title::newFromText( $sub, NS_CATEGORY );
+				#$message = wfMsg( 'categorywatch-catmoveout', $page, $this->friendlyCat( $sub ), $this->friendlyCat( $add ) );
+				#$this->notifyWatchers( $title, $user, $message, $summary, $medit );
 			}
 			else {
 
-				foreach ($add as $cat) {
+				foreach ( $add as $cat ) {
 					$title   = Title::newFromText( $cat, NS_CATEGORY );
-					$message = wfMsg( 'categorywatch-catadd', $page, $cat );
-					$this->notifyWatchers( $title, $user, $message );
+					$message = wfMsg( 'categorywatch-catadd', $page, $this->friendlyCat( $cat ) );
+					$this->notifyWatchers( $title, $user, $message, $summary, $medit );
 				}
 
-				foreach ( $sub as $cat ) {
-					$title   = Title::newFromText( $cat, NS_CATEGORY );
-					$message = wfMsg( 'categorywatch-catsub', $page, $cat );
-					$this->notifyWatchers( $title, $user, $message );
-				}
+				#foreach ( $sub as $cat ) {
+				#	$title   = Title::newFromText( $cat, NS_CATEGORY );
+				#	$message = wfMsg( 'categorywatch-catsub', $page, $this->friendlyCat( $cat ) );
+				#	$this->notifyWatchers( $title, $user, $message, $summary, $medit );
+				#}
 			}
 		}
 
 		return true;
 	}
 
-	function notifyWatchers( &$title, &$editor, &$message ) {
-		global $wgLang, $wgEmergencyContact, $wgNoReplyAddress, $wgCategoryWatchNotifyEditor;
+	/**
+	 * Return "Category:Cat (URL)" from "Cat"
+	 */
+	function friendlyCat( $cat ) {
+		$cat     = Title::newFromText( $cat, NS_CATEGORY );
+		$catname = $cat->getPrefixedText();
+		$caturl  = $cat->getFullUrl();
+		return "$catname ($caturl)";
+	}
+
+	function notifyWatchers( &$title, &$editor, &$message, &$summary, &$medit ) {
+		global $wgLang, $wgEmergencyContact, $wgNoReplyAddress, $wgCategoryWatchNotifyEditor,
+			$wgEnotifRevealEditorAddress, $wgEnotifUseRealName, $wgPasswordSender, $wgEnotifFromEditor;
 
 		# Get list of users watching this category
 		$dbr = wfGetDB( DB_SLAVE );
@@ -139,48 +156,73 @@ class CategoryWatch {
 		$res = $dbr->select( 'watchlist', array( 'wl_user' ), $conds, __METHOD__ );
 
 		# Wrap message with common body and send to each watcher
-		$page    = $title->getText();
-		$from    = new MailAddress( $wgEmergencyContact, 'WikiAdmin' );
-		$replyto = new MailAddress( $wgNoReplyAddress );
-		foreach ( $res as $row ) {
-			$watchingUser = User::newFromId( $row->wl_user );
+		$page           = $title->getPrefixedText();
+		$adminAddress   = new MailAddress( $wgPasswordSender, 'WikiAdmin' );
+		$editorAddress  = new MailAddress( $editor );
+		$summary        = $summary ? $summary : ' - ';
+		$medit          = $medit ? wfMsg( 'minoredit' ) : '';
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			$watchingUser   = User::newFromId( $row[0] );
+			$timecorrection = $watchingUser->getOption( 'timecorrection' );
+			$editdate       = $wgLang->timeanddate( wfTimestampNow(), true, false, $timecorrection );
 			if ( $watchingUser->getOption( 'enotifwatchlistpages' ) && $watchingUser->isEmailConfirmed() ) {
-				$to = new MailAddress( $watchingUser );
-				$timecorrection = $watchingUser->getOption( 'timecorrection' );
-				$editdate =	$wgLang->timeanddate( wfTimestampNow(), true, false, $timecorrection );
-				$editdat1 =	$wgLang->date( wfTimestampNow(), true, false, $timecorrection );
-				$edittim2 =	$wgLang->time( wfTimestampNow(), true, false, $timecorrection );
-				$body = wfMsg(
-					'categorywatch-emailbody',
-					$watchingUser->getName(),
-					$page,
-					$editdate,
-					$editor->getName(),
-					$message,
-					$editdat1,
-					$edittim2
+				
+				$to      = new MailAddress( $watchingUser );
+				$subject = wfMsg( 'categorywatch-emailsubject', $page );
+				$body    = wfMsgForContent( 'enotif_body' );
+
+				# Reveal the page editor's address as REPLY-TO address only if
+				# the user has not opted-out and the option is enabled at the
+				# global configuration level.
+				$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
+				if ( $wgEnotifRevealEditorAddress
+					&& ( $editor->getEmail() != '' )
+					&& $editor->getOption( 'enotifrevealaddr' ) ) {
+					if ( $wgEnotifFromEditor ) {
+						$from = $editorAddress;
+					} else {
+						$from = $adminAddress;
+						$replyto = $editorAddress;
+					}
+				} else {
+					$from = $adminAddress;
+					$replyto = new MailAddress( $wgNoReplyAddress );
+				}
+
+				# Define keys for body message
+				$userPage = $editor->getUserPage();
+				$keys = array(
+					'$WATCHINGUSERNAME' => $name,
+					'$NEWPAGE'          => $message,
+					'$PAGETITLE'        => $page,
+					'$PAGEEDITDATE'     => $editdate,
+					'$CHANGEDORCREATED' => wfMsgForContent( 'changed' ),
+					'$PAGETITLE_URL'    => $title->getFullUrl(),
+					'$PAGEEDITOR_WIKI'  => $userPage->getFullUrl(),
+					'$PAGESUMMARY'      => $summary,
+					'$PAGEMINOREDIT'    => $medit,
+					'$OLDID'            => ''
 				);
-				if ( function_exists( 'userMailer' ) ) {
-					userMailer(
-						$to,
-						$from,
-						wfMsg( 'categorywatch-emailsubject', $page ),
-						$body,
-						$replyto,
-						'CategoryWatch'
-					);
+				if ( $editor->isIP( $name ) ) {
+					$utext = wfMsgForContent( 'enotif_anon_editor', $name );
+					$subject = str_replace( '$PAGEEDITOR', $utext, $subject );
+					$keys['$PAGEEDITOR'] = $utext;
+					$keys['$PAGEEDITOR_EMAIL'] = wfMsgForContent( 'noemailtitle' );
+				} else {
+					$subject = str_replace( '$PAGEEDITOR', $name, $subject );
+					$keys['$PAGEEDITOR'] = $name;
+					$emailPage = SpecialPage::getSafeTitleFor( 'Emailuser', $name );
+					$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getFullUrl();
 				}
-				else {
-					UserMailer::send(
-						$to,
-						$from,
-						wfMsg( 'categorywatch-emailsubject', $page ),
-						$body,
-						$replyto,
-						null,
-						'CategoryWatch'
-					);
-				}
+
+				$keys['$PAGESUMMARY'] = $summary;
+
+				# Replace keys, wrap text and send
+				$body = strtr( $body, $keys );
+				$body = wordwrap( $body, 72 );
+				if ( function_exists( 'userMailer' ) ) userMailer( $to, $from, $subject, $body, $replyto );
+				else UserMailer::send( $to, $from, $subject, $body, $replyto, null, 'CategoryWatch' );
+
 			}
 		}
 

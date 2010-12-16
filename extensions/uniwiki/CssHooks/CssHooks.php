@@ -9,12 +9,11 @@ if ( !defined( "MEDIAWIKI" ) )
 /* ---- CREDITS ---- */
 
 $wgExtensionCredits['other'][] = array(
+	'path'        => __FILE__,
 	'name'        => 'CssHooks',
-	'author'      => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'      => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description' => 'Add some CSS hooks to the HTML output of articles, for better styling',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_CSS_Hooks',
-	'svn-date'       => '$LastChangedDate: 2008-11-02 03:15:45 +0100 (ndz, 02 lis 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 43063 $',
 	'descriptionmsg' => 'csshooks-desc',
 );
 

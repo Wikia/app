@@ -45,9 +45,7 @@ class DataCenterWidgetHeading extends DataCenterWidget {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets defaults
 		$parameters = array_merge( self::$defaultParameters, $parameters );
 		// Begins widget
@@ -65,9 +63,7 @@ class DataCenterWidgetHeading extends DataCenterWidget {
 				$message = DataCenterUI::message(
 					'heading', $parameters['message'], $parameters['subject']
 				);
-			}
-			// Checks if a type was given
-			else if ( $parameters['type'] !== null ) {
+			} elseif ( $parameters['type'] !== null ) { // Checks if a type was given
 				// Uses type-based message
 				$message = DataCenterUI::message(
 					'heading',
@@ -83,7 +79,7 @@ class DataCenterWidgetHeading extends DataCenterWidget {
 			// Returns heading with message
 			$xmlOutput .= $message;
 		// Checks if text was given
-		} else if ( $parameters['text'] !== null ) {
+		} elseif ( $parameters['text'] !== null ) {
 			// Adds a heading with text
 			$xmlOutput .= $parameters['text'];
 		}

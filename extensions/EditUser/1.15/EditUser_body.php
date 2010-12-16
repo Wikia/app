@@ -95,7 +95,7 @@ class EditUser extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgUser, $wgOut, $wgTitle;
+		global $wgUser, $wgOut;
 		#Begin EditUser additions
 		global $wgRequest;
 		if( !$wgUser->isAllowed( 'edituser' ) ) {

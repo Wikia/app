@@ -1,0 +1,20 @@
+---
+BASIC:
+  id: out-okawix-dtd
+  label: Okawix (Dtd)
+  description: "{{int:bw-desc-okawix-dtd}}"
+  namespace: NS_OKAWIX
+  display: out/okawix/dtd
+  class: FileBasedMessageGroup
+
+FILES:
+  class: OkawixDtdFFS
+  sourcePattern: %GROUPROOT%/okawix/locale/%CODE%/interfacewiki/okawix.dtd
+  targetPattern: %CODE%/interfacewiki/okawix.dtd
+  codeMap:
+    de:    de-DE
+    en:    en-US
+    fr:    fr-FR
+
+AUTOLOAD:
+  OkawixDtdFFS: Okawix-dtd.php

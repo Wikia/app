@@ -26,7 +26,11 @@ class TranslateUtils {
 		if ( !isset( $cache[$message] ) ) {
 			$cache[$message] = $wgContLang->ucfirst( $message );
 		}
-		return $cache[$message] . '/' . $code;
+		if ( $code ) {
+			return $cache[$message] . '/' . $code;
+		} else {
+			return $cache[$message];
+		}
 	}
 
 	public static function figureMessage( $text ) {
@@ -34,37 +38,6 @@ class TranslateUtils {
 		$code = substr( $text, $pos + 1 );
 		$key = substr( $text, 0, $pos );
 		return array( $key, $code );
-	}
-
-	/**
-	 * Fills the actual translation from database, if any.
-	 *
-	 * @param $messages MessageCollection
-	 * @param $namespaces Array: two-item 1-d array with namespace numbers
-	 */
-	public static function fillContents( MessageCollection $messages,
-		array $namespaces ) {
-		wfMemIn( __METHOD__ ); wfProfileIn( __METHOD__ );
-
-		$titles = array();
-		foreach ( $messages->keys() as $key ) {
-			$titles[] = self::title( $key, $messages->code );
-		}
-
-		if ( !count( $titles ) ) return;
-
-		// Fetch contents
-		$titles = self::getContents( $titles, $namespaces[0] );
-
-		foreach ( $messages->keys() as $key ) {
-			$title = self::title( $key, $messages->code );
-			if ( isset( $titles[$title] ) ) {
-				$messages[$key]->database = $titles[$title][0];
-				$messages[$key]->addAuthor( $titles[$title][1] );
-			}
-		}
-
-		wfProfileOut( __METHOD__ ); wfMemOut( __METHOD__ );
 	}
 
 	public static function getMessageContent( $key, $language,
@@ -82,7 +55,6 @@ class TranslateUtils {
 	 * @param $namespace Mixed: the number of the namespace to look in for.
 	 */
 	public static function getContents( $titles, $namespace ) {
-		wfMemIn( __METHOD__ ); wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE );
 		$rows = $dbr->select( array( 'page', 'revision', 'text' ),
 			array( 'page_title', 'old_text', 'old_flags', 'rev_user_text' ),
@@ -106,11 +78,16 @@ class TranslateUtils {
 		$rows->free();
 
 		return $titles;
-		wfProfileOut( __METHOD__ ); wfMemOut( __METHOD__ );
 	}
 
-	public static function translationChanges( $hours = 24 ) {
-		wfMemIn( __METHOD__ );
+	/**
+	 * Fetches recent changes for titles in given namespaces
+	 *
+	 * @param $hours Int: number of hours.
+	 * @param $bots  Bool: should bot edits be included.
+	 * @param $ns    Array: array of namespace IDs.
+	 */
+	public static function translationChanges( $hours = 24, $bots = false, $ns = null ) {
 		global $wgTranslateMessageNamespaces;
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -126,7 +103,8 @@ class TranslateUtils {
 
 		$sql = "SELECT $fields, substring_index(rc_title, '/', -1) as lang FROM $recentchanges " .
 		"WHERE rc_timestamp >= '{$cutoff}' " .
-		"AND rc_namespace in ($namespaces) " .
+		( $bots ? '' : 'AND rc_bot = 0 ' ) .
+		( $ns ? 'AND rc_namespace IN (' . implode( ',', $ns ) . ') ' : "AND rc_namespace in ($namespaces) " ) .
 		"ORDER BY lang ASC, rc_timestamp DESC";
 
 		$res = $dbr->query( $sql, __METHOD__ );
@@ -137,97 +115,7 @@ class TranslateUtils {
 			$rows[] = $row;
 		}
 		$dbr->freeResult( $res );
-		wfMemOut( __METHOD__ );
 		return $rows;
-	}
-
-	/* Table output helpers */
-
-	public static function tableHeader( $title = '' ) {
-		$tableheader = Xml::openElement( 'table', array(
-			'class'   => 'mw-sp-translate-table',
-			'border'  => '1',
-			'cellspacing' => '0' )
-		);
-
-		$tableheader .= Xml::openElement( 'tr' );
-		$tableheader .= Xml::element( 'th',
-			array( 'rowspan' => '2' ),
-			$title ? $title : wfMsgHtml( 'allmessagesname' )
-		);
-		$tableheader .= Xml::element( 'th', null, wfMsgHtml( 'allmessagesdefault' ) );
-		$tableheader .= Xml::closeElement( 'tr' );
-
-		$tableheader .= Xml::openElement( 'tr' );
-		$tableheader .= Xml::element( 'th', null, wfMsgHtml( 'allmessagescurrent' ) );
-		$tableheader .= Xml::closeElement( 'tr' );
-
-		return $tableheader;
-	}
-
-	public static function makeListing( MessageCollection $messages, $group,
-		$review = false, array $namespaces ) {
-
-		global $wgUser;
-		$sk = $wgUser->getSkin();
-		wfLoadExtensionMessages( 'Translate' );
-
-		$uimsg = array();
-		foreach ( array( 'edit', 'optional' ) as $msg ) {
-			$uimsg[$msg] = wfMsgHtml( self::MSG . $msg );
-		}
-
-		$output =  '';
-
-		foreach ( $messages as $key => $m ) {
-
-			$tools = array();
-
-			$title = Title::makeTitle(
-				$namespaces[0],
-				self::title( $key, $messages->code )
-			);
-
-			$original = $m->definition;
-			$message = $m->translation ? $m->translation : $original;
-
-			global $wgLang;
-			$niceTitle = htmlspecialchars( $wgLang->truncate( $key, - 30 ) );
-
-			if ( 1 || $wgUser->isAllowed( 'translate' ) ) {
-				$tools['edit'] = $sk->makeKnownLinkObj( $title, $niceTitle, "action=edit&loadgroup=$group" );
-			} else {
-				$tools['edit'] = '';
-			}
-
-			$anchor = 'msg_' . $key;
-			$anchor = Xml::element( 'a', array( 'name' => $anchor, 'href' => "#$anchor" ), "↓" );
-
-			$extra = '';
-			if ( $m->optional ) $extra = '<br />' . $uimsg['optional'];
-
-			$leftColumn = $anchor . $tools['edit'] . $extra;
-
-			if ( $review ) {
-				$output .= Xml::tags( 'tr', array( 'class' => 'orig' ),
-					Xml::tags( 'td', array( 'rowspan' => '2' ), $leftColumn ) .
-					Xml::tags( 'td', null, TranslateUtils::convertWhiteSpaceToHTML( $original ) )
-				);
-
-				$output .= Xml::tags( 'tr', array( 'class' => 'new' ),
-					Xml::tags( 'td', null, TranslateUtils::convertWhiteSpaceToHTML( $message ) ) .
-					Xml::closeElement( 'tr' )
-				);
-			} else {
-				$output .= Xml::tags( 'tr', array( 'class' => 'def' ),
-					Xml::tags( 'td', null, $leftColumn ) .
-					Xml::tags( 'td', null, TranslateUtils::convertWhiteSpaceToHTML( $message ) )
-				);
-			}
-
-		}
-
-		return $output;
 	}
 
 	/* Some other helpers for ouput*/
@@ -246,7 +134,6 @@ class TranslateUtils {
 	}
 
 	public static function getLanguageName( $code, $native = false, $language = 'en' ) {
-		wfMemIn( __METHOD__ );
 		if ( !$native && is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
 			$languages = LanguageNames::getNames( $language ,
 				LanguageNames::FALLBACK_NORMAL,
@@ -269,12 +156,10 @@ class TranslateUtils {
 				break;
 		}
 		$code = implode( '-', $parts );
-		wfMemOut( __METHOD__ );
 		return isset( $languages[$code] ) ? $languages[$code] . $suffix : false;
 	}
 
 	public static function languageSelector( $language, $selectedId ) {
-		wfMemIn( __METHOD__ );
 		global $wgLang;
 		if ( is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
 			$languages = LanguageNames::getNames( $language,
@@ -291,14 +176,31 @@ class TranslateUtils {
 		foreach ( $languages as $code => $name ) {
 			$selector->addOption( "$code - $name", $code );
 		}
-		wfMemOut( __METHOD__ );
 		return $selector->getHTML();
 	}
 
+	static $mi = null;
+
 	public static function messageKeyToGroup( $namespace, $key ) {
-		$key = self::normaliseKey( $namespace, $key );
-		$index = self::messageIndex();
-		return @$index[$key];
+		if ( self::$mi === null ) self::messageIndex();
+
+		# Performance hotspot
+		# $normkey = self::normaliseKey( $namespace, $key );
+		$normkey = str_replace( " ", "_", strtolower( "$namespace:$key" ) );
+
+		$group = @self::$mi[$normkey];
+		if ( is_array( $group ) ) $group = $group[0];
+		return $group;
+	}
+
+	public static function messageKeyToGroups( $namespace, $key ) {
+		if ( self::$mi === null ) self::messageIndex();
+
+		# Performance hotspot
+		# $normkey = self::normaliseKey( $namespace, $key );
+		$normkey = str_replace( " ", "_", strtolower( "$namespace:$key" ) );
+
+		return (array) @self::$mi[$normkey];
 	}
 
 	public static function normaliseKey( $namespace, $key ) {
@@ -306,15 +208,19 @@ class TranslateUtils {
 	}
 
 	public static function messageIndex() {
-		wfMemIn( __METHOD__ );
-		$keyToGroup = array();
-		if ( file_exists( TRANSLATE_INDEXFILE ) ) {
-			$keyToGroup = unserialize( file_get_contents( TRANSLATE_INDEXFILE ) );
+		global $wgCacheDirectory;
+		$filename = "$wgCacheDirectory/translate_messageindex.cdb";
+		if ( !file_exists( $filename ) ) MessageIndexRebuilder::execute();
+
+		if ( file_exists( $filename ) ) {
+			$reader = CdbReader::open( $filename );
+			$keyToGroup = unserialize( $reader->get( 'map' ) );
 		} else {
+			$keyToGroup = false;
 			wfDebug( __METHOD__ . ": Message index missing." );
 		}
 
-		wfMemOut( __METHOD__ );
+		self::$mi = $keyToGroup;
 		return $keyToGroup;
 	}
 
@@ -349,9 +255,7 @@ class TranslateUtils {
 
 		global $wgHooks, $wgOut, $wgTranslateCssLocation;
 		if ( $wgTranslateCssLocation ) {
-			$wgOut->addLink( array( 'rel' => 'stylesheet', 'type' => 'text/css',
-				'href' => "$wgTranslateCssLocation/Translate.css", )
-			);
+			$wgOut->addExtensionStyle( "$wgTranslateCssLocation/Translate.css" );
 		} else {
 			$wgHooks['SkinTemplateSetupPageCss'][] = array( __CLASS__ , 'injectCSSCB' );
 		}

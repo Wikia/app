@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'CloseWiki' => array( 'CloseWiki' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'CloseWiki' => array( 'إغلاق_الويكي' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'CloseWiki' => array( 'إغلاق_الويكى' ),
 );
@@ -57,6 +53,11 @@ $aliases['gsw'] = array(
 	'CloseWiki' => array( 'Wiki zuemache' ),
 );
 
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'CloseWiki' => array( 'બંધવિકિ' ),
+);
+
 /** Croatian (Hrvatski) */
 $aliases['hr'] = array(
 	'CloseWiki' => array( 'Zatvori_wiki' ),
@@ -77,6 +78,11 @@ $aliases['ia'] = array(
 	'CloseWiki' => array( 'Clauder wiki' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'CloseWiki' => array( 'Tutup wiki', 'TutupWiki' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'CloseWiki' => array( 'ウィキ閉鎖', 'ウィキを閉鎖する' ),
@@ -87,6 +93,11 @@ $aliases['km'] = array(
 	'CloseWiki' => array( 'បិទវិគី' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'CloseWiki' => array( 'Wiki deeschmaacher' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'CloseWiki' => array( 'Wiki zoumaachen' ),
@@ -95,6 +106,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'CloseWiki' => array( 'ЗатвореноВики' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'CloseWiki' => array( 'വിക്കിഅടയ്ക്കുക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'CloseWiki' => array( 'विकिबंदकरा' ),
 );
 
 /** Maltese (Malti) */
@@ -127,9 +148,19 @@ $aliases['ps'] = array(
 	'CloseWiki' => array( 'ويکي تړل' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'CloseWiki' => array( 'Închide Wiki' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'CloseWiki' => array( 'वृविकि' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'CloseWiki' => array( 'ZatvoriťWiki' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -137,8 +168,33 @@ $aliases['sw'] = array(
 	'CloseWiki' => array( 'FungaWiki' ),
 );
 
+/** Thai (ไทย) */
+$aliases['th'] = array(
+	'CloseWiki' => array( 'ปิดวิกิ' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'CloseWiki' => array( 'Isara ang wiki' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'CloseWiki' => array( 'VikiKapat' ),
+);
+
+/** Veps (Vepsan kel') */
+$aliases['vep'] = array(
+	'CloseWiki' => array( 'SaubataWiki' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'CloseWiki' => array( '关闭Wiki' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'CloseWiki' => array( '關閉Wiki' ),
 );
 

@@ -4,21 +4,19 @@
  * Extension credits
  */
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Central Auth',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CentralAuth',
-	'svn-date' => '$LastChangedDate: 2009-03-04 06:12:35 +0100 (śro, 04 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48012 $',
 	'author' => 'Brion Vibber',
 	'description'    => 'Merge accounts across a wiki farm',
 	'descriptionmsg' => 'centralauth-desc',
 );
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'MergeAccount',
 	'author'         => 'Brion Vibber',
 	'url'            => 'http://meta.wikimedia.org/wiki/Help:Unified_login',
-	'svn-date' => '$LastChangedDate: 2009-03-04 06:12:35 +0100 (śro, 04 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48012 $',
 	'description'    => '[[Special:MergeAccount|Merge multiple accounts]] for Single User Login',
 	'descriptionmsg' => 'centralauth-mergeaccount-desc',
 );
@@ -124,9 +122,27 @@ $wgCentralAuthLoginIcon = false;
  */
 $wgCentralAuthCreateOnView = false;
 
-// UDP logging stuff
+/**
+ * Settings for sending the CentralAuth events to the RC-to-UDP system
+ */
 $wgCentralAuthUDPAddress = false;
 $wgCentralAuthNew2UDPPrefix = '';
+
+/**
+ * A CSS file version. Change each time centralauth.css is changed.
+ */
+$wgCentralAuthStyleVersion = 1;
+
+/**
+ * List of local pages global users may edit while being globally locked.
+ */
+$wgCentralAuthLockedCanEdit = array();
+
+/**
+ * Size of wikis handled in one suppress user job.
+ * Keep in mind that one wiki requires ~10 queries.
+ */
+$wgCentralAuthWikisPerSuppressJob = 10;
 
 /**
  * Initialization of the autoloaders, and special extension pages.
@@ -138,8 +154,7 @@ $wgAutoloadClasses['SpecialGlobalUsers'] = "$caBase/SpecialGlobalUsers.php";
 $wgAutoloadClasses['CentralAuthUser'] = "$caBase/CentralAuthUser.php";
 $wgAutoloadClasses['CentralAuthPlugin'] = "$caBase/CentralAuthPlugin.php";
 $wgAutoloadClasses['CentralAuthHooks'] = "$caBase/CentralAuthHooks.php";
-$wgAutoloadClasses['WikiMap'] = "$caBase/WikiMap.php";
-$wgAutoloadClasses['WikiReference'] = "$caBase/WikiMap.php";
+$wgAutoloadClasses['CentralAuthSuppressUserJob'] = "$caBase/SuppressUserJob.php";
 $wgAutoloadClasses['WikiSet'] = "$caBase/WikiSet.php";
 $wgAutoloadClasses['SpecialAutoLogin'] = "$caBase/SpecialAutoLogin.php";
 $wgAutoloadClasses['CentralAuthUserArray'] = "$caBase/CentralAuthUserArray.php";
@@ -148,13 +163,16 @@ $wgAutoloadClasses['SpecialGlobalGroupMembership'] = "$caBase/SpecialGlobalGroup
 $wgAutoloadClasses['CentralAuthGroupMembershipProxy'] = "$caBase/CentralAuthGroupMembershipProxy.php";
 $wgAutoloadClasses['SpecialGlobalGroupPermissions'] = "$caBase/SpecialGlobalGroupPermissions.php";
 $wgAutoloadClasses['SpecialEditWikiSets'] = "$caBase/SpecialEditWikiSets.php";
+$wgAutoloadClasses['ApiQueryGlobalUserInfo'] = "$caBase/ApiQueryGlobalUserInfo.php";
 
 $wgExtensionMessagesFiles['SpecialCentralAuth'] = "$caBase/CentralAuth.i18n.php";
 $wgExtensionAliasesFiles['SpecialCentralAuth'] = "$caBase/CentralAuth.alias.php";
 
+$wgJobClasses['crosswikiSuppressUser'] = 'CentralAuthSuppressUserJob';
+
 $wgHooks['AuthPluginSetup'][] = 'CentralAuthHooks::onAuthPluginSetup';
 $wgHooks['AddNewAccount'][] = 'CentralAuthHooks::onAddNewAccount';
-$wgHooks['PreferencesUserInformationPanel'][] = 'CentralAuthHooks::onPreferencesUserInformationPanel';
+$wgHooks['GetPreferences'][] = 'CentralAuthHooks::onGetPreferences';
 $wgHooks['AbortNewAccount'][] = 'CentralAuthHooks::onAbortNewAccount';
 $wgHooks['UserLoginComplete'][] = 'CentralAuthHooks::onUserLoginComplete';
 $wgHooks['UserLoadFromSession'][] = 'CentralAuthHooks::onUserLoadFromSession';
@@ -178,11 +196,18 @@ $wgHooks['RenameUserWarning'][] = 'CentralAuthHooks::onRenameUserWarning';
 $wgHooks['RenameUserPreRename'][] = 'CentralAuthHooks::onRenameUserPreRename';
 $wgHooks['RenameUserComplete'][] = 'CentralAuthHooks::onRenameUserComplete';
 
-$wgAvailableRights[] = 'centralauth-admin';
+// For SecurePoll
+$wgHooks['SecurePoll_GetUserParams'][] = 'CentralAuthHooks::onSecurePoll_GetUserParams';
+
 $wgAvailableRights[] = 'centralauth-merge';
+$wgAvailableRights[] = 'centralauth-unmerge';
+$wgAvailableRights[] = 'centralauth-lock';
+$wgAvailableRights[] = 'centralauth-oversight';
 $wgAvailableRights[] = 'globalgrouppermissions';
 $wgAvailableRights[] = 'globalgroupmembership';
-$wgGroupPermissions['steward']['centralauth-admin'] = true;
+$wgGroupPermissions['steward']['centralauth-unmerge'] = true;
+$wgGroupPermissions['steward']['centralauth-lock'] = true;
+$wgGroupPermissions['steward']['centralauth-oversight'] = true;
 $wgGroupPermissions['*']['centralauth-merge'] = true;
 
 $wgSpecialPages['CentralAuth'] = 'SpecialCentralAuth';
@@ -199,6 +224,8 @@ $wgSpecialPageGroups['GlobalGroupPermissions'] = 'users';
 $wgSpecialPageGroups['EditWikiSets'] = 'wiki';
 $wgSpecialPageGroups['GlobalUsers'] = 'users';
 
+$wgAPIMetaModules['globaluserinfo'] = 'ApiQueryGlobalUserInfo';
+
 $wgLogTypes[]                      = 'globalauth';
 $wgLogNames['globalauth']          = 'centralauth-log-name';
 $wgLogHeaders['globalauth']        = 'centralauth-log-header';
@@ -209,6 +236,7 @@ $wgLogActions['globalauth/hide']   = 'centralauth-log-entry-hide';
 $wgLogActions['globalauth/unhide'] = 'centralauth-log-entry-unhide';
 $wgLogActions['globalauth/lockandhid'] = 'centralauth-log-entry-lockandhide';
 $wgLogActions['globalauth/setstatus'] = 'centralauth-log-entry-chgstatus';
+$wgLogActions['suppress/setstatus'] = 'centralauth-log-entry-chgstatus';
 
 $wgLogTypes[]                          = 'gblrights';
 $wgLogNames['gblrights']               = 'centralauth-rightslog-name';

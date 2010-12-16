@@ -136,7 +136,6 @@ watch
 notitlematches
 nextn
 prevn
-showingresultstotal
 unwatch
 mycontris
 unwatching

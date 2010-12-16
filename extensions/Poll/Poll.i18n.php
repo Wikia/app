@@ -57,7 +57,10 @@ $messages['en'] = array(
 	'poll-no-dis' => 'No Description!',
 	'poll-create-allow-more' => 'Allow Multi-Vote',
 	'poll-vote-changed' => 'Vote has been changed!',
-	'poll-vote-other' => 'Other answers: '
+	'poll-vote-other' => 'Other answers:',
+	'poll-ip-error' => 'Unregistered person can not vote at this poll!',
+	'poll-create-allow-ip' => 'Allow unregistered users to vote',
+	'poll-vote-error-ip-change' => 'Unregistered users can not change his vote!',
 );
 
 /** German (Deutsch)
@@ -97,6 +100,7 @@ $messages['de'] = array(
 	'poll-delete-right-error' => 'Du musst der Autor dieser Umfrage sein oder die "poll-admin"-Gruppenberechtigung haben, um diese Umfrage zu löschen',
 	'poll-delete-pass' => 'Umfrage erfolgreich gelöscht',
 	'poll-delete-cancel' => 'Umfrage wurde nicht gelöscht(Häckchen nicht gesetzt)!',
+	'poll-invalid-id' => 'Unbekannte Umfrage-ID!',
 	'poll-logpage' => 'Umfrage-Logbuch',
 	'poll-logpagetext' => 'Dieses Logbuch zeigt Änderungen an den Umfragen.',
 	'poll-log-create' => '$1 hat "$2" erstellt!',
@@ -108,5 +112,8 @@ $messages['de'] = array(
 	'poll-no-dis' => 'Keine Beschreibung vorhanden!',
 	'poll-create-allow-more' => 'Mehfachabstimmung erlaubt',
 	'poll-vote-changed' => 'Stimme wurde geändert!',
-	'poll-vote-other' => 'Andere Antworten: '
+	'poll-vote-other' => 'Andere Antworten:',
+	'poll-ip-error' => 'Nicht registrierte Benutzer können bei dieser Umfrage nicht abstimmen!',
+	'poll-create-allow-ip' => 'Erlaube nicht registrierten Benutzer abzustimmen',
+	'poll-vote-error-ip-change' => 'Leider können nicht registrierten Benutzer ihr Stimme nicht nachträglich ändern!',
 );

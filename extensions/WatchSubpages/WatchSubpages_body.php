@@ -1,23 +1,32 @@
 <?php
 #restrict to subpages
 class WatchSubpages extends SpecialPage {
-	function WatchSubpages() {
-		SpecialPage::SpecialPage( 'Watchsubpages', 'watchsubpages' );
+
+	/**
+	 * Constructor - set up the new special page
+	 */
+	public function __construct() {
+		parent::__construct( 'Watchsubpages', 'watchsubpages' );
 	}
 
-	function execute( $par ) {
+	/**
+	 * Show the special page
+	 *
+	 * @param $subpage Mixed: parameter passed to the page or null
+	 */
+	public function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser;
 
-		if( !$wgUser->isAllowed('watchsubpages') ) {
-			$wgOut->permissionRequired('watchsubpages');
+		if( !$wgUser->isAllowed( 'watchsubpages' ) ) {
+			$wgOut->permissionRequired( 'watchsubpages' );
 			return;
 		}
-		
+
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		
+
 		wfLoadExtensionMessages( 'WatchSubpages' );
 
 		$namespace = $wgRequest->getInt( 'namespace' );
@@ -38,10 +47,10 @@ class WatchSubpages extends SpecialPage {
 			$toWatch = array_diff( $titles, $current );
 			$this->watchTitles( $toWatch, $wgUser );
 			$wgUser->invalidateCache();
-			$wgOut->addHTML( wfMsg('watchsubpages-addedtowatchlist') );
+			$wgOut->addHTML( wfMsg( 'watchsubpages-addedtowatchlist' ) );
 			$this->showTitles( $toWatch, $wgOut, $wgUser->getSkin() );
 		}
-		$this->showForm( $wgOut, $wgUser, $namespace, trim($guidename, "/") );
+		$this->showForm( $wgOut, $wgUser, $namespace, trim( $guidename, '/' ) );
 	}
 
 	/**
@@ -160,7 +169,7 @@ class WatchSubpages extends SpecialPage {
 			if( !$title instanceof Title )
 				$title = Title::newFromText( $title );
 			if( $title instanceof Title ) {
-				$output->addHTML( "<li>" . $skin->makeLinkObj( $title )
+				$output->addHTML( '<li>' . $skin->makeLinkObj( $title )
 				. ' (' . $skin->makeLinkObj( $title->getTalkPage(), $talk ) . ")</li>\n" );
 			}
 		}
@@ -172,6 +181,7 @@ class WatchSubpages extends SpecialPage {
 	 *
 	 * @param $output OutputPage
 	 * @param $user User
+	 * @param $namespace A namespace constant, such as NS_MAIN
 	 * @param $guide GuideName
 	 */
 	private function showForm( $output, $user, $namespace, $guide ) {
@@ -183,33 +193,33 @@ class WatchSubpages extends SpecialPage {
 		$form .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
 		$form .= Xml::hidden( 'title', $self->getPrefixedText() );
 		$form .= Xml::openElement( 'table', array( 'id' => 'nsselect', 'class' => 'allpages' ) );
-		$form .= "<tr>
-				<td>" .
+		$form .= '<tr>
+				<td>' .
 					Xml::label( 'Guide name:', 'nsfrom' ) .
-				"</td>
-				<td>" .
-					Xml::input( 'guide', 20, htmlspecialchars ( $guide . '/' ), array( 'id' => 'nsfrom' ) ) .
-				"</td>
+				'</td>
+				<td>' .
+					Xml::input( 'guide', 20, htmlspecialchars( $guide . '/' ), array( 'id' => 'nsfrom' ) ) .
+				'</td>
 			</tr>
 			<tr>
-				<td>" .
+				<td>' .
 					Xml::label( wfMsg( 'namespace' ), 'namespace' ) .
-				"</td>
-				<td>" .
+				'</td>
+				<td>' .
 					Xml::namespaceSelector( $namespace, null ) .
 					Xml::submitButton( wfMsg( 'allpagessubmit' ) ) .
-				"</td>
-				</tr>";
+				'</td>
+			</tr>';
 		$form .= Xml::closeElement( 'table' );
 		$form .= Xml::closeElement( 'form' );
 		$form .= Xml::closeElement( 'div' );
 
-		if($guide !== '') {
+		if( $guide !== '' ) {
 			$form .= Xml::openElement( 'form', array( 'method' => 'post',
 				'action' => $self->getLocalUrl( 'guide=' . $guide ) ) );
 			$form .= Xml::hidden( 'token', $user->editToken( 'watchsubpages' ) );
-			$form .= '<fieldset><legend>'.wfMsg('watchsubpages-addtitles').'</legend>';
-			$form .= wfMsg('watchsubpages-form');
+			$form .= '<fieldset><legend>' . wfMsg( 'watchsubpages-addtitles' ) . '</legend>';
+			$form .= wfMsg( 'watchsubpages-form' );
 			foreach( $this->getPrefixlistInfo( $namespace, $guide . '/' ) as $namespace => $pages ) {
 				$form .= '<h2>' . $this->getNamespaceHeading( $namespace ) . '</h2>';
 				$form .= '<ul>';
@@ -219,7 +229,7 @@ class WatchSubpages extends SpecialPage {
 				}
 				$form .= '</ul>';
 			}
-			$form .= '<p>' . Xml::submitButton( wfMsg('watchsubpages-addtitles') ) . '</p>';
+			$form .= '<p>' . Xml::submitButton( wfMsg( 'watchsubpages-addtitles' ) ) . '</p>';
 			$form .= '</fieldset></form>';
 		}
 		$output->addHTML( $form );
@@ -230,11 +240,12 @@ class WatchSubpages extends SpecialPage {
 	 * and return as a two-dimensional array with namespace, title and
 	 * redirect status
 	 *
+	 * @param $namespace Namespace constant, defaults to NS_MAIN
 	 * @param $guide GuideName
 	 * @return array
 	 */
 	private function getPrefixlistInfo( $namespace = NS_MAIN, $guide ) {
-		$prefixList = $this->getNamespaceKeyAndText($namespace, $guide);
+		$prefixList = $this->getNamespaceKeyAndText( $namespace, $guide );
 
 		$titles = array();
 		list( $prefixNS, $prefixKey, $guide ) = $prefixList;
@@ -286,28 +297,27 @@ class WatchSubpages extends SpecialPage {
 	/**
 	 * @param $ns int: the namespace of the article
 	 * @param $text string: the name of the article
-	 * @return array( int namespace, string dbkey, string pagename ) or NULL on error
+	 * @return array( int namespace, string dbkey, string pagename ) or null on error
 	 * @static (sort of)
-	 * @access private
 	 */
-	function getNamespaceKeyAndText ($ns, $text) {
+	private function getNamespaceKeyAndText( $ns, $text ) {
 		if ( $text == '' )
 			return array( $ns, '', '' ); # shortcut for common case
 
-		$t = Title::makeTitleSafe($ns, $text);
+		$t = Title::makeTitleSafe( $ns, $text );
 		if ( $t && $t->isLocal() ) {
 			return array( $t->getNamespace(), $t->getDBkey(), $t->getText() );
-		} else if ( $t ) {
-			return NULL;
+		} elseif ( $t ) {
+			return null;
 		}
 
 		# try again, in case the problem was an empty pagename
-		$text = preg_replace('/(#|$)/', 'X$1', $text);
-		$t = Title::makeTitleSafe($ns, $text);
+		$text = preg_replace( '/(#|$)/', 'X$1', $text );
+		$t = Title::makeTitleSafe( $ns, $text );
 		if ( $t && $t->isLocal() ) {
 			return array( $t->getNamespace(), '', '' );
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 

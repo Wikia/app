@@ -15,10 +15,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Skizzerz
  */
 $messages['qqq'] = array(
-	'jskit-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'jskit-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -42,11 +43,32 @@ $messages['arz'] = array(
 	'jskit-desc' => 'يدمج مجموعة أدوات جافاسكريبت إلى صفحة ويكى',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'jskit-desc' => 'Інтэгруе інструмэнты js-kit ў старонкі {{GRAMMAR:родны|{{SITENAME}}}}',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'jskit-desc' => 'Enframmañ a ra an ostilhoù js-kit en ur bajenn wiki',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'jskit-desc' => 'Integrira js-kit alate na wiki stranicu',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'jskit-desc' => 'Integra les eines js-kit en una pàgina wiki',
 );
 
 /** German (Deutsch)
@@ -63,6 +85,13 @@ $messages['dsb'] = array(
 	'jskit-desc' => 'Integrěrujo rědy JS-kita na wikijowem boku',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'jskit-desc' => 'Ενσωματώνει τα εργαλεία js-kit σε κάποια σελίδα wiki',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Sanbec
@@ -76,6 +105,13 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'jskit-desc' => 'js-kit tresnak sartzen ditu wiki orrian',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'jskit-desc' => 'Yhdistää JS-kit-työkalut wikisivulle.',
 );
 
 /** French (Français)
@@ -106,6 +142,13 @@ $messages['he'] = array(
 	'jskit-desc' => 'הטמעת כלי js-kit לתוך דף ויקי',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'jskit-desc' => 'Nagatipon js-kit tools sa wiki pahina',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -113,11 +156,32 @@ $messages['hsb'] = array(
 	'jskit-desc' => 'Integruje nastroje JS-kita na wikijowej stronje',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'jskit-desc' => 'A JS-Kit eszközök integrálása wiki oldalakra',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'jskit-desc' => 'Integra le instrumentos js-kit in un pagina wiki',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'jskit-desc' => 'Integrasikan peralatan js-kit ke sebuah halaman wiki',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'jskit-desc' => 'Integra gli strumenti js-kit in una pagina wiki',
 );
 
 /** Japanese (日本語)
@@ -141,6 +205,13 @@ $messages['lb'] = array(
 	'jskit-desc' => 'Integréiert JS-Kit-Toolen a Wiki-Säiten',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'jskit-desc' => 'Интегрира js-kit алатки на викистраница',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -162,6 +233,13 @@ $messages['nn'] = array(
 	'jskit-desc' => 'Integrerer js-kit-verkty på ei wikisida',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'jskit-desc' => 'Integrerer js-kit-verktøy på en wikiside',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -175,6 +253,13 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'jskit-desc' => 'Integruje narzędzia js-kit ze stroną wiki',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'jskit-desc' => 'A ìntegra lë strument js-kit an dzora a na pàgina wiki',
 );
 
 /** Portuguese (Português)
@@ -199,6 +284,13 @@ $messages['roa-tara'] = array(
 	'jskit-desc' => 'Indegre le tool js-kit sus a le pàggene de Uicchi',
 );
 
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'jskit-desc' => 'Интегрирует набор инструментов JS на страницу вики',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -211,6 +303,20 @@ $messages['sk'] = array(
  */
 $messages['sq'] = array(
 	'jskit-desc' => 'Integron mjetet js-kit në një faqe wiki',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'jskit-desc' => 'Интегрише js-kit алате у Вики-чланак',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'jskit-desc' => 'Integriše js-kit alate u Viki-članak',
 );
 
 /** Swedish (Svenska)
@@ -239,6 +345,20 @@ $messages['tet'] = array(
  */
 $messages['tl'] = array(
 	'jskit-desc' => "Nagsasama ng mga kagamitang pang-''js-kit'' sa ibabaw ng isang pahina ng wiki",
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'jskit-desc' => 'js-kit araçlarını bir viki sayfasına entegre eder',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'jskit-desc' => 'Інтегрує набір інструментів JS на сторінку вікі',
 );
 
 /** Vietnamese (Tiếng Việt)

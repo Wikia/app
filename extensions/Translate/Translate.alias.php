@@ -17,6 +17,9 @@ $aliases['en'] = array(
 	'TranslationStats'   => array( 'TranslationStats' ),
 	'Translations'       => array( 'Translations' ),
 	'LanguageStats'      => array( 'LanguageStats' ),
+	'PageTranslation'    => array( 'PageTranslation' ),
+	'ImportTranslations' => array( 'ImportTranslations' ),
+	'FirstSteps'         => array( 'FirstSteps' ),
 );
 
 /** Afrikaans (Afrikaans) */
@@ -24,23 +27,26 @@ $aliases['af'] = array(
 	'Translate' => array( 'Vertaal' ),
 	'Magic' => array( 'GevorderdeVertaal' ),
 	'TranslationChanges' => array( 'VertaalVeranderinge' ),
+	'TranslationStats' => array( 'VertaalStatistieke' ),
+	'Translations' => array( 'Vertalings' ),
+	'LanguageStats' => array( 'TaalStatsistieke' ),
+	'PageTranslation' => array( 'BladsyVertaling' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
-	'Translate' => array( 'ترجمة' ),
-	'Magic' => array( 'ترجمة_متقدمة', 'ماجيك' ),
-	'TranslationChanges' => array( 'تغييرات_الترجمة' ),
-	'TranslationStats' => array( 'إحصاءات_الترجمة' ),
-	'Translations' => array( 'ترجمات' ),
-	'LanguageStats' => array( 'إحصاءات_اللغات' ),
+	'Translate'            => array( 'ترجمة' ),
+	'Magic'                => array( 'ترجمة_متقدمة', 'ماجيك' ),
+	'TranslationChanges'   => array( 'تغييرات_الترجمة' ),
+	'TranslationStats'     => array( 'إحصاءات_الترجمة' ),
+	'Translations'         => array( 'ترجمات' ),
+	'LanguageStats'        => array( 'إحصاءات_اللغات' ),
+	'PageTranslation'      => array( 'ترجمة_صفحة' ),
+	'ImportTranslations'   => array( 'استيراد_الترجمات' ),
+	'FirstSteps'           => array( 'الخطوات الأولى' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'Translate' => array( 'ترجمة' ),
 	'Magic' => array( 'ترجمة_متقدمة', 'ماجيك' ),
@@ -48,6 +54,8 @@ $aliases['arz'] = array(
 	'TranslationStats' => array( 'إحصاءات_الترجمة' ),
 	'Translations' => array( 'ترجمات' ),
 	'LanguageStats' => array( 'إحصاءات_اللغات' ),
+	'PageTranslation' => array( 'ترجمة_صفحة' ),
+	'ImportTranslations' => array( 'استيراد_الترجمات' ),
 );
 
 /** Assamese (অসমীয়া) */
@@ -55,6 +63,12 @@ $aliases['as'] = array(
 	'Translate' => array( 'অনুবাদ কৰক' ),
 	'TranslationChanges' => array( 'অনুবাদিত সলনিবোৰ' ),
 	'TranslationStats' => array( 'অনুবাদ পৰিসংখ্যা' ),
+);
+
+/** Azerbaijani (Azərbaycan) */
+$aliases['az'] = array(
+	'Translations' => array( 'Tərcümələr' ),
+	'PageTranslation' => array( 'SəhifəTərcüməsi' ),
 );
 
 /** Southern Balochi (بلوچی مکرانی) */
@@ -67,6 +81,7 @@ $aliases['bcc'] = array(
 /** Breton (Brezhoneg) */
 $aliases['br'] = array(
 	'Translate' => array( 'Treiñ' ),
+	'LanguageStats' => array( 'StadegoùYezh' ),
 );
 
 /** Bosnian (Bosanski) */
@@ -75,6 +90,10 @@ $aliases['bs'] = array(
 	'Magic' => array( 'NaprednoPrevodjenje' ),
 	'TranslationChanges' => array( 'PromjenePrevoda' ),
 	'TranslationStats' => array( 'StatistikePrevoda' ),
+	'Translations' => array( 'Prijevodi' ),
+	'LanguageStats' => array( 'StatistikeJezika' ),
+	'PageTranslation' => array( 'PrijevodStranice' ),
+	'ImportTranslations' => array( 'UvozPrijevoda' ),
 );
 
 /** Cebuano (Cebuano) */
@@ -118,22 +137,32 @@ $aliases['dv'] = array(
 	'Translations' => array( 'ތަރުޖަމާތައް' ),
 );
 
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'Translations' => array( 'Traducciones' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'Translate' => array( 'ترجمه' ),
 	'Magic' => array( 'ترجمه_پیشرفته' ),
 	'TranslationChanges' => array( 'تغییرات_ترجمه' ),
 	'TranslationStats' => array( 'آمار_ترجمه' ),
+	'Translations' => array( 'ترجمه‌ها' ),
+	'LanguageStats' => array( 'آمار_زبان‌ها' ),
+	'PageTranslation' => array( 'ترجمه_صفحه' ),
+	'ImportTranslations' => array( 'درون‌بری_ترجمه‌ها' ),
 );
 
-/** Finnish (Suomi)
- * @author Nike
- */
+/** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'Translate' => array( 'Käännä' ),
 	'Magic' => array( 'Laajennettu kääntäminen' ),
 	'TranslationChanges' => array( 'Käännösmuutokset' ),
 	'TranslationStats' => array( 'Käännöstilastot' ),
+	'Translations' => array( 'Käännökset' ),
+	'LanguageStats' => array( 'Kielitilastot' ),
+	'PageTranslation' => array( 'Sivujen kääntäminen' ),
 );
 
 /** French (Français) */
@@ -141,7 +170,19 @@ $aliases['fr'] = array(
 	'Translate' => array( 'Traduire' ),
 	'Magic' => array( 'Traduction avancée', 'Traductionavancée', 'Traduction avancee', 'Traductionavancee' ),
 	'TranslationChanges' => array( 'Modifications des traductions', 'Modificationsdestraductions' ),
+	'TranslationStats' => array( 'StatistiquesDesTraductions', 'Statistiques des traductions' ),
 	'Translations' => array( 'Traductions' ),
+	'LanguageStats' => array( 'StatistiquesDesLangues', 'Statistiques des langues' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'Translate' => array( 'Traduire' ),
+	'Magic' => array( 'Traduccion avanciê', 'TraduccionAavanciê' ),
+	'TranslationChanges' => array( 'Changements de les traduccions', 'ChangementsDeLesTraduccions' ),
+	'TranslationStats' => array( 'Statistiques de traduccion', 'StatistiquesDeTraduccion' ),
+	'Translations' => array( 'Traduccions' ),
+	'LanguageStats' => array( 'Statistiques de les lengoues', 'StatistiquesDeLesLengoues' ),
 );
 
 /** Galician (Galego) */
@@ -164,9 +205,7 @@ $aliases['gsw'] = array(
 	'LanguageStats' => array( 'Sprochstatischtik' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'Translate' => array( 'תרגום' ),
 	'Magic' => array( 'תרגום_מתקדם' ),
@@ -214,14 +253,32 @@ $aliases['ia'] = array(
 	'TranslationStats' => array( 'Statisticas de traduction' ),
 	'Translations' => array( 'Traductiones' ),
 	'LanguageStats' => array( 'Statisticas de linguas' ),
+	'PageTranslation' => array( 'Traduction de paginas' ),
+	'ImportTranslations' => array( 'Importar traductiones' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'Translate' => array( 'Terjemahan' ),
-	'Magic' => array( 'Terjemahan lanjut', 'Terjemahanlanjut' ),
-	'TranslationChanges' => array( 'Perubahan terjemahan', 'Perubahanterjemahan' ),
-	'TranslationStats' => array( 'Statistik terjemahan' ),
+	'Translate' => array( 'Terjemahkan' ),
+	'Magic' => array( 'Terjemahkan lanjut', 'TerjemahkanLanjut' ),
+	'TranslationChanges' => array( 'Perubahan terjemahan', 'PerubahanTerjemahan' ),
+	'TranslationStats' => array( 'Statistik terjemahan', 'StatistikTerjemahan' ),
+	'Translations' => array( 'Terjemahan' ),
+	'LanguageStats' => array( 'Statistik bahasa', 'StatistikBahasa' ),
+	'PageTranslation' => array( 'Terjemahan halaman', 'TerjemahanHalaman' ),
+	'ImportTranslations' => array( 'Impor terjemahan', 'ImporTerjemahan' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'Translate' => array( 'Traduci' ),
+	'Magic' => array( 'TraduciAvanzato' ),
+	'TranslationChanges' => array( 'ModificheTraduzione' ),
+	'TranslationStats' => array( 'StatisticheTraduzione' ),
+	'Translations' => array( 'Traduzioni' ),
+	'LanguageStats' => array( 'StatisticheLingua' ),
+	'PageTranslation' => array( 'TraduzionePagina' ),
+	'ImportTranslations' => array( 'ImportaTraduzioni' ),
 );
 
 /** Japanese (日本語) */
@@ -232,6 +289,8 @@ $aliases['ja'] = array(
 	'TranslationStats' => array( '翻訳統計' ),
 	'Translations' => array( '翻訳結果' ),
 	'LanguageStats' => array( '言語統計' ),
+	'PageTranslation' => array( 'ページ翻訳' ),
+	'ImportTranslations' => array( '翻訳インポート' ),
 );
 
 /** Georgian (ქართული) */
@@ -247,6 +306,9 @@ $aliases['km'] = array(
 /** Korean (한국어) */
 $aliases['ko'] = array(
 	'Translate' => array( '번역' ),
+	'Magic' => array( '고급 번역' ),
+	'TranslationChanges' => array( '번역 변경' ),
+	'PageTranslation' => array( '페이지 번역' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -261,7 +323,10 @@ $aliases['ksh'] = array(
 
 /** Cornish (Kernewek) */
 $aliases['kw'] = array(
+	'Translate' => array( 'Treylya' ),
+	'Magic' => array( 'TreylyaAvoncys' ),
 	'Translations' => array( 'Treylyansow' ),
+	'PageTranslation' => array( 'TreylyansAnFolen' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -272,15 +337,56 @@ $aliases['lb'] = array(
 	'TranslationStats' => array( 'Iwwersetzungsstatistiken' ),
 	'Translations' => array( 'Iwwersetzungen' ),
 	'LanguageStats' => array( 'Sproochestatistiken' ),
+	'PageTranslation' => array( 'Säiten-Iwwersetzung' ),
+	'ImportTranslations' => array( 'Iwwersetzungen importéieren' ),
+);
+
+/** Lumbaart (Lumbaart) */
+$aliases['lmo'] = array(
+	'Translate' => array( 'Volta' ),
+	'Translations' => array( 'Tradüzion' ),
+);
+
+/** Lithuanian (Lietuvių) */
+$aliases['lt'] = array(
+	'Translate' => array( 'Vertimas' ),
+	'PageTranslation' => array( 'Puslapio vertimas' ),
 );
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'Translate' => array( 'Преведување' ),
 	'Magic' => array( 'НапредноПреведување' ),
+	'TranslationChanges' => array( 'ПромениВоПреводот' ),
 	'TranslationStats' => array( 'СтатистикиЗаПреведување' ),
 	'Translations' => array( 'Преводи' ),
 	'LanguageStats' => array( 'СтатистикаЗаЈазик' ),
+	'PageTranslation' => array( 'ПреводНаСтраницата' ),
+	'ImportTranslations' => array( 'УвезиПреводи' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'Translate' => array( 'തർജ്ജമ' ),
+	'Magic' => array( 'വിപുലീകൃതതർജ്ജമ', 'മായാജാലം' ),
+	'TranslationChanges' => array( 'തർജ്ജമയിലെമാറ്റങ്ങൾ' ),
+	'TranslationStats' => array( 'തർജ്ജമസ്ഥിതിവിവരം' ),
+	'Translations' => array( 'തർജ്ജമകൾ' ),
+	'LanguageStats' => array( 'ഭാഷാസ്ഥിതിവിവരം' ),
+	'PageTranslation' => array( 'താളിന്റെതർജ്ജമ' ),
+	'ImportTranslations' => array( 'തർജ്ജമ ഇറക്കുമതി' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'Translate' => array( 'भाषांतर' ),
+	'Magic' => array( 'प्रगतभाषांतर', 'जादुई' ),
+	'TranslationChanges' => array( 'भाषांतरबदल' ),
+	'TranslationStats' => array( 'भाषांतरसांख्यिकी' ),
+	'Translations' => array( 'भाषांतरणे' ),
+	'LanguageStats' => array( 'भाषासांख्यिकी' ),
+	'PageTranslation' => array( 'पृष्ठभाषांतर' ),
+	'ImportTranslations' => array( 'भाषांतराआयात' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -291,9 +397,13 @@ $aliases['ms'] = array(
 
 /** Maltese (Malti) */
 $aliases['mt'] = array(
-	'Translate' => array( 'Traduċi' ),
+	'Translate' => array( 'Traduzzjoni' ),
 	'Magic' => array( 'TraduzzjoniAvvanzata' ),
-	'TranslationChanges' => array( 'TibdilTraduzzjonali' ),
+	'TranslationChanges' => array( 'TibdilTraduzzjoni' ),
+	'TranslationStats' => array( 'StatistikaTraduzzjoni' ),
+	'Translations' => array( 'Traduzzjonijiet' ),
+	'LanguageStats' => array( 'StatistikaLingwa' ),
+	'PageTranslation' => array( 'TraduzzjoniPaġna' ),
 );
 
 /** Mirandese (Mirandés) */
@@ -339,6 +449,14 @@ $aliases['nl'] = array(
 	'TranslationStats' => array( 'Vertaalstatistieken', 'Vertalingsstatistieken' ),
 	'Translations' => array( 'Vertalingen' ),
 	'LanguageStats' => array( 'Taalstatistieken' ),
+	'PageTranslation' => array( 'Paginavertaling' ),
+	'ImportTranslations' => array( 'VertalingenImporteren' ),
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Translate' => array( 'Set om' ),
+	'Translations' => array( 'Omsetjingar' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
@@ -349,6 +467,8 @@ $aliases['no'] = array(
 	'TranslationStats' => array( 'Oversettelsesstatistikk' ),
 	'Translations' => array( 'Oversettelser' ),
 	'LanguageStats' => array( 'Språkstatistikk' ),
+	'PageTranslation' => array( 'Sideoversettelse' ),
+	'ImportTranslations' => array( 'Importer oversettelser' ),
 );
 
 /** Occitan (Occitan) */
@@ -382,7 +502,11 @@ $aliases['pt'] = array(
 	'Translate' => array( 'Traduzir' ),
 	'Magic' => array( 'Tradução avançada' ),
 	'TranslationChanges' => array( 'Alterações em traduções' ),
-	'TranslationStats' => array( 'Estado da tradução', 'Status da tradução' ),
+	'TranslationStats' => array( 'Estatísticas de traduções' ),
+	'Translations' => array( 'Traduções' ),
+	'LanguageStats' => array( 'Estatísticas de línguas' ),
+	'PageTranslation' => array( 'Tradução de páginas' ),
+	'ImportTranslations' => array( 'Importar traduções' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
@@ -395,7 +519,14 @@ $aliases['pt-br'] = array(
 
 /** Romanian (Română) */
 $aliases['ro'] = array(
-	'Translate' => array( 'Tradu' ),
+	'Translate' => array( 'Traducere' ),
+	'Magic' => array( 'Traducere avansată' ),
+	'TranslationChanges' => array( 'Modificări traduceri' ),
+	'TranslationStats' => array( 'Statistici traduceri' ),
+	'Translations' => array( 'Traduceri' ),
+	'LanguageStats' => array( 'Statistici limbă' ),
+	'PageTranslation' => array( 'Traducere pagină' ),
+	'ImportTranslations' => array( 'Importare traduceri' ),
 );
 
 /** Sanskrit (संस्कृत) */
@@ -406,6 +537,17 @@ $aliases['sa'] = array(
 	'TranslationStats' => array( 'भाषांतरसांख्यिकी' ),
 	'Translations' => array( 'भाषांतर' ),
 	'LanguageStats' => array( 'भाषासांख्यिकी' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'Translate' => array( 'Preložiť' ),
+	'Magic' => array( 'RozšírenéPreložiť' ),
+	'TranslationChanges' => array( 'ZmenyPrekladov' ),
+	'TranslationStats' => array( 'ŠtatistikyPrekladov' ),
+	'Translations' => array( 'Preklady' ),
+	'LanguageStats' => array( 'ŠtatistikyJazykov' ),
+	'PageTranslation' => array( 'PrekladStránky' ),
 );
 
 /** Albanian (Shqip) */
@@ -446,13 +588,20 @@ $aliases['sw'] = array(
 $aliases['te'] = array(
 	'Translate' => array( 'అనువాదం' ),
 	'TranslationChanges' => array( 'అనువాదమార్పులు' ),
+	'TranslationStats' => array( 'అనువాదలెక్కలు' ),
 	'Translations' => array( 'అనువాదాలు' ),
+	'LanguageStats' => array( 'భాషాలెక్కలు' ),
+	'PageTranslation' => array( 'పేజిఅనువాదము' ),
+	'ImportTranslations' => array( 'అనువాదాలదిగుమతి' ),
 );
 
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'Translate' => array( 'แปล' ),
+	'Magic' => array( 'การแปลขั้นสูง' ),
 	'TranslationStats' => array( 'สถิติการแปล' ),
+	'Translations' => array( 'การแปล' ),
+	'LanguageStats' => array( 'สถิติภาษา' ),
 );
 
 /** Tagalog (Tagalog) */
@@ -467,7 +616,14 @@ $aliases['tl'] = array(
 
 /** Turkish (Türkçe) */
 $aliases['tr'] = array(
-	'Translate' => array( 'Çeviri' ),
+	'Translate' => array( 'Çevir', 'Çeviri' ),
+	'Magic' => array( 'GelişmişÇeviri' ),
+	'TranslationChanges' => array( 'ÇeviriDeğişiklikleri' ),
+	'TranslationStats' => array( 'Çeviriİstatistikleri' ),
+	'Translations' => array( 'Çeviriler' ),
+	'LanguageStats' => array( 'Dilİstatistikleri' ),
+	'PageTranslation' => array( 'SayfaÇevirisi' ),
+	'ImportTranslations' => array( 'ÇevirileriİçeAktar' ),
 );
 
 /** Vèneto (Vèneto) */

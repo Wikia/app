@@ -9,14 +9,22 @@
 # k' i gn a.
 
 class LanguageWa extends Language {
+	/**
+	 * Use singular form for zero
+	 */
+	function convertPlural( $count, $forms ) {
+		if ( !count($forms) ) { return ''; }
+		$forms = $this->preConvertPlural( $forms, 2 );
+
+		return ($count <= 1) ? $forms[0] : $forms[1];
+	}
+
 	###
 	### Dates in Walloon are "1î d' <monthname>" for 1st of the month,
 	### "<day> di <monthname>" for months starting by a consoun, and
 	### "<day> d' <monthname>" for months starting with a vowel
 	###
 	function date( $ts, $adj = false, $format = true, $tc = false ) {
-		global $wgUser;
-
 		if ( $adj ) { $ts = $this->userAdjust( $ts, $tc ); }
 		$datePreference = $this->dateFormat( $format );
 

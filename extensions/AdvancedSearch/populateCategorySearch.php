@@ -6,20 +6,20 @@
 
 $optionsWithArgs = array( 'begin', 'max-slave-lag', 'throttle' );
 
-$commandLineInc = dirname(__FILE__) . "/../../maintenance/commandLine.inc";
-if(!file_exists($commandLineInc))
-	die("Can't find commandLine.inc\nPlease copy it to " .
-	realpath(dirname(__FILE__) . "/../../") . "maintenance or make a symlink.");
+$commandLineInc = dirname( __FILE__ ) . "/../../maintenance/commandLine.inc";
+if ( !file_exists( $commandLineInc ) )
+	die( "Can't find commandLine.inc\nPlease copy it to " .
+	realpath( dirname( __FILE__ ) . "/../../" ) . "maintenance or make a symlink." );
 require_once $commandLineInc;
 require_once "populateCategorySearch.inc";
 
-if( isset( $options['help'] ) ) {
+if ( isset( $options['help'] ) ) {
 	echo <<<TEXT
 This script will populate the categorysearch table, added by the
 CategorySearch extension. It will print out progress indicators every
 1000 pages it adds to the table.  The script is perfectly safe to run on large,
 live wikis, and running it multiple times is harmless.  You may want to use the
-throttling options if it's causing too much load; they will not affect
+throttling options if it is causing too much load; they will not affect
 correctness.
 
 If the script is stopped and later resumed, you can use the --begin option with
@@ -39,7 +39,7 @@ Default: empty (start from beginning).
     --max-slave-lag: If slave lag exceeds this many seconds, wait until it
 drops before continuing.  Default: 10.
     --throttle: Wait this many milliseconds after each page.  Default: 0.
-    --force: Run regardless of whether the database says it's been run already.
+    --force: Run regardless of whether the database says it has been run already.
 TEXT;
 	exit( 0 );
 }
@@ -50,6 +50,7 @@ $defaults = array(
 	'throttle' => 0,
 	'force' => false
 );
+
 $options = array_merge( $defaults, $options );
 
 populateCategorySearch( $options['begin'], $options['max-slave-lag'],

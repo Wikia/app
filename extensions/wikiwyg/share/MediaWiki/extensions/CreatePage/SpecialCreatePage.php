@@ -11,6 +11,7 @@ if(!defined('MEDIAWIKI'))
 
 $wgExtensionFunctions[] = 'wfCreatePageSetup';
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Create Page',
 	'author' => 'Bartek Łapiński',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Wikiwyg',
@@ -44,7 +45,7 @@ function wfCreatePageSpecial( $par ) {
 		$wgWikiwygImagePath = "$wgWikiwygPath/share/MediaWiki/images";
 	}
 
-    $wgOut->addScript("<style type=\"text/css\" media=\"screen,projection\">/*<![CDATA[*/ @import \"$wgWikiwygCssPath/MediaWikiwyg.css\"; /*]]>*/</style>\n");
+    $wgOut->addScript("<style type=\"text/css\" media=\"screen\">/*<![CDATA[*/ @import \"$wgWikiwygCssPath/MediaWikiwyg.css\"; /*]]>*/</style>\n");
         /* load main js file when not loaded yet */
 	if (wfGetDependingOnSkin () == 0) {
 		if (isset($wgWysiwygEnabled) && ($wgWysiwygEnabled == true)) {

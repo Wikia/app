@@ -22,7 +22,7 @@ $aliases['arz'] = array(
 
 /** Bosnian (Bosanski) */
 $aliases['bs'] = array(
-	'WhoIsWatching' => array( 'TkoPregleda' ),
+	'WhoIsWatching' => array( 'KoPregleda' ),
 );
 
 /** German (Deutsch) */
@@ -45,9 +45,19 @@ $aliases['fa'] = array(
 	'WhoIsWatching' => array( 'چه_کسی_پی‌گیری_می‌کند' ),
 );
 
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'WhoIsWatching' => array( 'Ketkä tarkkailevat' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'WhoIsWatching' => array( 'Qui a en suivi', 'QuiAEnSuivi' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'WhoIsWatching' => array( 'Qui at en survelyence', 'QuiAtEnSurvelyence' ),
 );
 
 /** Galician (Galego) */
@@ -80,6 +90,16 @@ $aliases['ia'] = array(
 	'WhoIsWatching' => array( 'Qui observa' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'WhoIsWatching' => array( 'Siapa yang memantau', 'SiapaPantau' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'WhoIsWatching' => array( 'ChiOsserva' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'WhoIsWatching' => array( 'ページをウォッチしている利用者' ),
@@ -92,7 +112,12 @@ $aliases['km'] = array(
 
 /** Ripoarisch (Ripoarisch) */
 $aliases['ksh'] = array(
-	'WhoIsWatching' => array( 'Wä paß op op' ),
+	'WhoIsWatching' => array( 'Wä paß op op', 'WäPassOpOp', 'WäPaßOpOp' ),
+);
+
+/** Cornish (Kernewek) */
+$aliases['kw'] = array(
+	'WhoIsWatching' => array( 'PiwUsiOwKolya' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -100,9 +125,24 @@ $aliases['lb'] = array(
 	'WhoIsWatching' => array( 'Wien iwwerwaacht' ),
 );
 
+/** Lithuanian (Lietuvių) */
+$aliases['lt'] = array(
+	'WhoIsWatching' => array( 'Kas stebi' ),
+);
+
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'WhoIsWatching' => array( 'КојНабљудува' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'WhoIsWatching' => array( 'ആരൊക്കെശ്രദ്ധിക്കുന്നു' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'WhoIsWatching' => array( 'कोणकोणबघतय' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -135,13 +175,33 @@ $aliases['sa'] = array(
 	'WhoIsWatching' => array( 'अन्यकतम्‌पश्यति' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'WhoIsWatching' => array( 'KtoSleduje' ),
+);
+
 /** Sundanese (Basa Sunda) */
 $aliases['su'] = array(
 	'WhoIsWatching' => array( 'SahaNuMoncorong' ),
 );
 
+/** Telugu (తెలుగు) */
+$aliases['te'] = array(
+	'WhoIsWatching' => array( 'ఎవరువీక్షిస్తున్నారు' ),
+);
+
+/** Thai (ไทย) */
+$aliases['th'] = array(
+	'WhoIsWatching' => array( 'ผู้ที่กำลังเฝ้าดู' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'WhoIsWatching' => array( 'Sino ang nagbabantay' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'WhoIsWatching' => array( 'Kimİzliyor' ),
 );
 

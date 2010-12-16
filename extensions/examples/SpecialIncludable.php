@@ -13,6 +13,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionFunctions[] = 'wfIncludable';
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Includable',
 	'description' => 'a sample includable Special Page',
 	'author' => 'Ævar Arnfjörð Bjarmason'

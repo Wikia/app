@@ -14,11 +14,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'yui-desc' => 'Short description of the Yui extension, shown in [[Special:Version]].{{doc-important|Do not translate or change links.}}',
+	'yui-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -63,11 +64,18 @@ $messages['bg'] = array(
 	'yui-desc' => 'Набор от инструменти и контроли, написани на Джаваскрипт',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'yui-desc' => 'ইউটিলিটি এবং কন্ট্রোলের একটি গুচ্ছ, যা জাভাস্ক্রিপ্টে লেখা হয়েছে',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
-	'yui-desc' => 'Un heuliad mavegoù ha kontroloù, skrivet e JavaSkript',
+	'yui-desc' => 'Un heuliad mavegoù ha kontroloù, skrivet e JavaScript',
 );
 
 /** Bosnian (Bosanski)
@@ -91,6 +99,13 @@ $messages['cs'] = array(
 	'yui-desc' => 'Sada nástrojů napsaných v JavaScriptu.',
 );
 
+/** Danish (Dansk)
+ * @author Masz
+ */
+$messages['da'] = array(
+	'yui-desc' => 'En række værktøjer og kontroller skrevet på JavaScript',
+);
+
 /** German (Deutsch)
  * @author Revolus
  */
@@ -103,6 +118,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'yui-desc' => 'Sajźba rědow a kontrolnych elementow napisanych w JavaScripśe',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'yui-desc' => 'Μία σειρά τυποποιήσεων και ελέγχων γραμμένων σε JavaScript',
 );
 
 /** Esperanto (Esperanto)
@@ -162,6 +184,20 @@ $messages['he'] = array(
 	'yui-desc' => 'ערכת כלים ובקרים, שנכתבה ב־JavaScript',
 );
 
+/** Hindi (हिन्दी)
+ * @author Kiranmayee
+ */
+$messages['hi'] = array(
+	'yui-desc' => 'जावास्क्रिप्ट में लिखा हुआ कुछ कंट्रोल्स और उठिलिठीस',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'yui-desc' => 'Isa ka set sang kagamitan kag mga kontrol, nga ginsulat sa JavaScript',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -188,6 +224,13 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'yui-desc' => 'Sebuah set alat-alat dan pengendali, ditulis dalam JavaScript',
+);
+
+/** Ido (Ido)
+ * @author Wyvernoid
+ */
+$messages['io'] = array(
+	'yui-desc' => 'Kolekto di utensili ed direktado, skribita per JavaScript',
 );
 
 /** Icelandic (Íslenska)
@@ -225,6 +268,14 @@ $messages['km'] = array(
 	'yui-desc' => 'ការកំណត់​នៃ​ឧបករណ៍ប្រើប្រាស់ និង​គ្រប់គ្រង ត្រូវ​បាន​សរសេរ​នៅក្នុង JavaScript',
 );
 
+/** Karachay-Balkar (Къарачай-Малкъар)
+ * @author Iltever
+ * @author Къарачайлы
+ */
+$messages['krc'] = array(
+	'yui-desc' => 'JavaScript-де джазылгъан интструментле бла джюрютюучю элементлени джыйымы',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -246,11 +297,26 @@ $messages['li'] = array(
 	'yui-desc' => "'n Verzameling hölpmi-jjel en besturingsillemaenter in JavaSjrif",
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Matasg
+ */
+$messages['lt'] = array(
+	'yui-desc' => 'Rinkinys naudmenų ir nustatymų, parašytų JavaScript',
+);
+
+/** Latvian (Latviešu)
+ * @author FnTmLV
+ */
+$messages['lv'] = array(
+	'yui-desc' => 'Palīgrīku un kontroļu kopums, rakstīts JavaScript valodā',
+);
+
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
-	'yui-desc' => 'Множество на алатки и контроли, напишани во JavaScript.',
+	'yui-desc' => 'Збир алатки и контроли, напишани во JavaScript.',
 );
 
 /** Marathi (मराठी)
@@ -288,6 +354,13 @@ $messages['nds-nl'] = array(
 	'yui-desc' => 'Een verzameling hulpmiddels en besturingselementen in Java',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'yui-desc' => 'JavaScriptमा लेखिएको औजारहरु र नियन्त्रणहरुको समूह',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -323,6 +396,13 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'yui-desc' => 'Zestaw narzędzi i elementów kontrolnych napisanych w JavaScripcie',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'yui-desc' => "N'ansema d'utility e ëd controj, scrivù an JavaScript",
 );
 
 /** Pashto (پښتو)
@@ -368,6 +448,20 @@ $messages['ru'] = array(
 	'yui-desc' => 'Набор написанных на JavaScript инструментов и управляющих элементов',
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'yui-desc' => 'JavaScript көмөтүнэн оҥоһуллубут үнүстүрүмүөннэр уонна салайар элэмиэннэр',
+);
+
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'yui-desc' => 'JavaScript මඟින් ලියන ලද,උපයෝගිතා හා පාලක කට්ටලයක්',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -375,11 +469,32 @@ $messages['sk'] = array(
 	'yui-desc' => 'Sada nástrojov napísaných v JavaScripte',
 );
 
+/** Lower Silesian (Schläsch)
+ * @author Jonny84
+ */
+$messages['sli'] = array(
+	'yui-desc' => 'Eine Sammlung in JavaScript geschriebener Werkzeuge und Steuerelemente',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'yui-desc' => 'Një tërësi shërbimesh dhe kontrollesh të shkruara në JavaScript',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'yui-desc' => 'Скуп алата и контрола, написаних у јаваскрипту',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'yui-desc' => 'Skup alata i kontrola, napisanih u javaskriptu',
 );
 
 /** Seeltersk (Seeltersk)
@@ -418,6 +533,13 @@ $messages['ta'] = array(
 	'yui-desc' => 'ஜாவாஸ்க்ரிப்ட்டில் எழுதப்பட்ட பயன்பாடுகள் மற்றும் கட்டுப்பாடுகளின் தொகுதி',
 );
 
+/** Telugu (తెలుగు)
+ * @author Kiranmayee
+ */
+$messages['te'] = array(
+	'yui-desc' => 'జావాస్క్రిప్టు లో రాయబడిన కొన్ని పనిముట్లు మరియు ఉపకరణాలు',
+);
+
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
@@ -425,11 +547,32 @@ $messages['tg-cyrl'] = array(
 	'yui-desc' => 'Маҷмӯъи барномаҳои судманд ва танзимот, ки дар ҶаваСкрипт навишта шудаанд',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'yui-desc' => "Maçmū'i barnomahoi sudmand va tanzimot, ki dar ÇavaSkript navişta şudaand",
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'yui-desc' => 'กลุ่มของเครื่องมือและส่วนควบคุม เขียนด้วย JavaScript',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
 	'yui-desc' => 'Isang pangkat ng mga kagamitan at ma pangkontrol/pangtaban, na nakasulat sa JavaScript',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'yui-desc' => "JavaScript'de yazılmış bir araçlar ve kontroller seti",
 );
 
 /** Ukrainian (Українська)
@@ -446,6 +589,13 @@ $messages['vec'] = array(
 	'yui-desc' => 'Na serie de utilità e controli, scriti in JavaScript',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'yui-desc' => 'JavaScriptal kirjutadud azegišt',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
@@ -458,5 +608,12 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'yui-desc' => '使用JavaScript编写的程序和控件',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Alexsh
+ */
+$messages['zh-hant'] = array(
+	'yui-desc' => '使用JavaScript撰寫的控制工具',
 );
 

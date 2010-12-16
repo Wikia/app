@@ -40,15 +40,27 @@ Options:
   --file=<testfile> Run test cases from a custom file instead of parserTests.txt
   --record         Record tests in database
   --compare        Compare with recorded results, without updating the database.
+  --setversion     When using --record, set the version string to use (useful
+                   with git-svn so that you can get the exact revision)
   --keep-uploads   Re-use the same upload directory for each test, don't delete it
   --fuzz           Do a fuzz test instead of a normal test
   --seed <n>       Start the fuzz test from the specified seed
   --help           Show this help message
   --run-disabled   run disabled tests
-
+  --upload         Upload test results to remote wiki (per \$wgParserTestRemote)
 
 ENDS;
     exit( 0 );
+}
+
+# Cases of weird db corruption were encountered when running tests on earlyish
+# versions of SQLite
+if ( $wgDBtype == 'sqlite' ) {
+	$db = wfGetDB( DB_MASTER );
+	$version = $db->getServerVersion();
+	if ( version_compare( $version, '3.6' ) < 0 ) {
+		die( "Parser tests require SQLite version 3.6 or later, you have $version\n" );
+	}
 }
 
 # There is a convention that the parser should never

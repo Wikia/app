@@ -69,13 +69,23 @@ table.mw-codereview-meta td {
 }
 
 .mw-codereview-status-reverted td {
-	background: #cceeff !important;
+	background: #ddd !important;
+	color: #666 !important;
+	text-decoration: line-through !important;
 }
 .mw-codereview-status-reverted:hover td {
-	background: #66bbff !important;
+	background: #aaa !important;
+	text-decoration: line-through !important;
 }
 .mw-codereview-status-deferred td {
 	color: #666;
+}
+
+.mw-codereview-success {
+	color: #1a2;
+}
+.mw-codereview-fail {
+	color: #d21;
 }
 
 /* Diffs */
@@ -85,7 +95,7 @@ table.mw-codereview-meta td {
 }
 
 .mw-codereview-diff del {
-	text-decoration: line-through;
+	text-decoration: none;
 	color: red;
 }
 

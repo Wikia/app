@@ -1,15 +1,21 @@
 <?php
+
 /**
- * Example class for HTTP accessable external objects
+ * Example class for HTTP accessable external objects.
+ * Only supports reading, not storing.
  *
  * @ingroup ExternalStorage
  */
 class ExternalStoreHttp {
-	/* Fetch data from given URL */
-	function fetchFromURL($url) {
-		ini_set( "allow_url_fopen", true );
-		$ret = file_get_contents( $url );
-		ini_set( "allow_url_fopen", false );
+
+	/**
+	 * Fetch data from given URL
+	 *
+	 * @param $url String: the URL
+	 * @return String: the content at $url
+	 */
+	function fetchFromURL( $url ) {
+		$ret = Http::get( $url );
 		return $ret;
 	}
 

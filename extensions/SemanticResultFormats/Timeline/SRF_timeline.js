@@ -58,7 +58,7 @@ function smw_make_timeline(div) {
 						case "YEAR": bands[bandcount] = Timeline.DateTime.YEAR; break;
 						case "DECADE": bands[bandcount] = Timeline.DateTime.DECADE; break;
 						case "CENTURY": bands[bandcount] = Timeline.DateTime.CENTURY; break;
-						case "MILLENIUM": bands[bandcount] = Timeline.DateTime.MILLENIUM; break;
+						case "MILLENNIUM": bands[bandcount] = Timeline.DateTime.MILLENNIUM; break;
 						default: bandcount--; //dont count unrecognized bands
 					}
 					bandcount++;

@@ -10,6 +10,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'securepasswords-desc' => 'Creates more secure password hashes and adds a password strength checker',
+	'securepasswords-invalid' => '', #dummy value, never shown to user, DO NOT TRANSLATE
 	'securepasswords-valid' => 'Your password is invalid or too short.
 It must:',
 	'securepasswords-minlength' => 'be at least $1 {{PLURAL:$1|character|characters}} long',
@@ -35,13 +36,14 @@ Do not translate or change tag names, or link anchors.',
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  * @author Ouda
  */
 $messages['ar'] = array(
 	'securepasswords-desc' => 'ينشئ هاشات كلمة سر أكثر أمنا ويضيف متحقق من قوة كلمة السر',
 	'securepasswords-valid' => 'كلمة السر غير صحيحة أو قصيرة جدا.
 يجب:',
-	'securepasswords-minlength' => 'تكون على الأقل $1 {{PLURAL:$1|حرف|حرف}} طولا',
+	'securepasswords-minlength' => 'يكون طولها على الأقل {{PLURAL:$1||حرفًا واحدًا|حرفين|$1 حروف|$1 حرفًا|$1 حرف}}',
 	'securepasswords-lowercase' => 'تحتوي على الأقل على حرف واحد صغير',
 	'securepasswords-uppercase' => 'تحتوي على الأقل على حرف واحد كبير',
 	'securepasswords-digit' => 'يحتوى على رقم واحد على الأقل',
@@ -85,6 +87,23 @@ $messages['be-tarask'] = array(
 	'securepasswords-word' => 'ня быць словам',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'securepasswords-valid' => 'Direizh pe re verr eo ho ker-tremen.
+Ret eo dezhañ :',
+	'securepasswords-minlength' => "kaout an hirder a $1 arouezenn{{PLURAL:$1||}} d'an nebeutañ",
+	'securepasswords-lowercase' => "kaout ul lizherenn vihan d'an nebeutañ",
+	'securepasswords-uppercase' => "kaout ul lizherenn vras d'an nebeutañ",
+	'securepasswords-digit' => '1 sifr ennañ da nebeutañ',
+	'securepasswords-special' => "kaout 1 arouezenn arbennik d'an nebeutañ (an arouezennoù arbennik a zo : $1)",
+	'securepasswords-username' => "bezañ disheñvel eus hoc'h anv implijer",
+	'securepasswords-word' => 'arabat eo e vefe ur ger',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -99,6 +118,19 @@ Mora:',
 	'securepasswords-special' => 'sadržavati najmanje 1 specijalni znak (specijalni znakovi su: $1)',
 	'securepasswords-username' => 'biti različita od Vašeg korisničkog imena',
 	'securepasswords-word' => 'ne bude riječ',
+);
+
+/** Catalan (Català)
+ * @author Aleator
+ */
+$messages['ca'] = array(
+	'securepasswords-valid' => 'La seva contrasenya no és vàlida o és massa curta:
+Ha de:',
+	'securepasswords-minlength' => 'ser com a mínim de $1 {{PLURAL:$1|caràcter|caràcters}}',
+	'securepasswords-lowercase' => 'contenir com a mínim 1 lletra en minúscula',
+	'securepasswords-uppercase' => 'contenir com a mínim 1 lletra en majúscula',
+	'securepasswords-digit' => 'contenir com a mínim 1 dígit',
+	'securepasswords-special' => 'contenir com a mínim 1 caràcter especial (són caràcters especials els següents: $1)',
 );
 
 /** German (Deutsch)
@@ -118,6 +150,15 @@ Es muss:',
 	'securepasswords-word' => 'etwas anderes sein als ein Wort',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'securepasswords-valid' => 'Ihr Passwort ist ungültig oder zu kurz.
+Es muss:',
+	'securepasswords-username' => 'sich von Ihrem Benutzernamen unterscheiden',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -133,10 +174,36 @@ $messages['dsb'] = array(
 	'securepasswords-word' => 'něco druge byś ako słowo',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'securepasswords-digit' => 'περίληψη τουλάχιστον 1 ψηφίου',
+	'securepasswords-word' => 'να μην είναι μία λέξη',
+);
+
+/** Esperanto (Esperanto)
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'securepasswords-valid' => 'Via pasvorto estas malvalida aŭ tro mallonga.
+Ĝi devas:',
+	'securepasswords-minlength' => 'esti longa almenaŭ $1 {{PLURAL:$1|signo|signoj}}',
+	'securepasswords-lowercase' => 'enhavi almenaŭ 1 minusklan signon',
+	'securepasswords-uppercase' => 'enhavi almenaŭ 1 majusklan signon',
+	'securepasswords-digit' => 'enhavi almenaŭ 1 ciferon',
+	'securepasswords-special' => 'enhavi almenaŭ 1 specialan signon (specialaj signoj estas: $1)',
+	'securepasswords-username' => 'esti malsama de via salutnomo',
+	'securepasswords-word' => 'ne esti vorto',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Sanbec
  */
 $messages['es'] = array(
+	'securepasswords-desc' => 'Crea cifrados de contraseñas más seguras y añade un comprobador de su fortaleza',
 	'securepasswords-valid' => 'Tu contraseña es inválida o demasiado corta.
 Debe ser:',
 	'securepasswords-minlength' => 'ser al menos $1 {{PLURAL:$1|caracter|caracteres}} de largo',
@@ -189,12 +256,12 @@ Sen pitää täyttää seuraavat ehdot:',
 $messages['fr'] = array(
 	'securepasswords-desc' => 'Crée des hachages de mots de passe plus sûrs et ajoute un vérificateur de complexité de mots de passe',
 	'securepasswords-valid' => 'Votre mot de passe est invalide ou trop court. Il doit :',
-	'securepasswords-minlength' => 'être long d’au moins $1 {{PLURAL:$1|caractère|caractères}}',
+	'securepasswords-minlength' => 'être long d’au moins $1 caractère{{PLURAL:$1||s}}',
 	'securepasswords-lowercase' => 'contenir au moins 1 lettre minuscule',
 	'securepasswords-uppercase' => 'contenir au moins 1 lettre majuscule',
 	'securepasswords-digit' => 'contenir au moins 1 chiffre',
 	'securepasswords-special' => 'contenir au moins 1 caractère spécial (les caractères spéciaux sont : $1)',
-	'securepasswords-username' => "être différent de votre nom d'utilisateur",
+	'securepasswords-username' => 'être différent de votre nom d’utilisateur',
 	'securepasswords-word' => 'ne pas être un mot',
 );
 
@@ -212,6 +279,22 @@ Debe:',
 	'securepasswords-special' => 'conter, polo menos, un carácter especial (caracteres especiais son: $1)',
 	'securepasswords-username' => 'ser diferente do seu nome de usuario',
 	'securepasswords-word' => 'non ser unha palabra',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'securepasswords-desc' => 'Legt sichereri Passwort-Hashes aa un fiegt e Passwortstärchipriefieg zue',
+	'securepasswords-valid' => 'Dyy Passwort isch nit giltig oder z churz.
+S muess:',
+	'securepasswords-minlength' => 'zmindescht $1 {{PLURAL:$1|Zeiche|Zeiche}} lang syy',
+	'securepasswords-lowercase' => 'zmindescht ei Chleibuechstab din haa',
+	'securepasswords-uppercase' => 'zmindescht ei Großbuechstab din haa',
+	'securepasswords-digit' => 'zmindescht ei Ziffer din haa',
+	'securepasswords-special' => 'zmindescht ei Sonderzeiche din haa (Sonderzeiche sin: $1)',
+	'securepasswords-username' => 'sich vu Dynem Benutzernamen unterscheide',
+	'securepasswords-word' => 'ebis anderes syy wie ne Wort',
 );
 
 /** Hebrew (עברית)
@@ -245,6 +328,22 @@ $messages['hsb'] = array(
 	'securepasswords-word' => 'něšto druhe być hač słowo',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'securepasswords-desc' => 'Biztonságosabb jelszó-hasheket készít, és jelszó megadásakor ellenőrzi annak erősségét',
+	'securepasswords-valid' => 'A jelszavad érvénytelen, vagy túl rövid.
+Követelmények:',
+	'securepasswords-minlength' => 'legalább {{PLURAL:$1|egy|$1}} karakter hosszú',
+	'securepasswords-lowercase' => 'legalább egy kisbetűt tartalmaz',
+	'securepasswords-uppercase' => 'legalább egy nagybetűt tartalmaz',
+	'securepasswords-digit' => 'legalább egy számot tartalmaz',
+	'securepasswords-special' => 'legalább egy speciális karaktert tartalmaz (speciális karakterek: $1)',
+	'securepasswords-username' => 'különböznie kell a felhasználói nevedtől',
+	'securepasswords-word' => 'nem lehet egy szó',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -261,7 +360,40 @@ Illo debe:',
 	'securepasswords-word' => 'non esser un parola',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'securepasswords-desc' => 'Membuat sebuah pengacakan kata sandi yang lebih aman dan menambah pemeriksaan kekuatan kata sandi',
+	'securepasswords-valid' => 'Kata sandi Anda tidak sah atau terlalu pendek.
+Kata sandi Anda harus:',
+	'securepasswords-minlength' => 'memiliki panjang paling tidak $1 {{PLURAL:$1|karakter|karakter}}',
+	'securepasswords-lowercase' => 'memiliki huruf kecil paling tidak 1',
+	'securepasswords-uppercase' => 'memiliki huruf besar paling tidak 1',
+	'securepasswords-digit' => 'memiliki angka paling tidak 1',
+	'securepasswords-special' => 'memiliki karakter istimewa ($1) paling tidak 1',
+	'securepasswords-username' => 'berbeda dari nama pengguna Anda',
+	'securepasswords-word' => 'tidak boleh sebuah kata (dalam bahasa Inggris)',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'securepasswords-desc' => 'Crea hash password più sicuri e aggiunge un controllore della complessità delle password',
+	'securepasswords-valid' => 'La password non è valida o è troppo corta.
+Deve:',
+	'securepasswords-minlength' => 'essere lunga almeno $1 {{PLURAL:$1|carattere|caratteri}}',
+	'securepasswords-lowercase' => 'contenere almeno 1 lettera minuscola',
+	'securepasswords-uppercase' => 'contenere almeno 1 lettera maiuscola',
+	'securepasswords-digit' => 'contenere almeno 1 cifra',
+	'securepasswords-special' => 'contenere almeno 1 carattere speciale (caratteri speciali sono: $1)',
+	'securepasswords-username' => 'essere diversa dal proprio nome utente',
+	'securepasswords-word' => 'non essere una parola',
+);
+
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  * @author Mizusumashi
  */
@@ -269,7 +401,7 @@ $messages['ja'] = array(
 	'securepasswords-desc' => 'より安全なパスワードのハッシュを生成し、パスワード強度検査器を追加する',
 	'securepasswords-valid' => 'あなたのパスワードは不正であるか、または短すぎます。
 以下を充たさなければなりません:',
-	'securepasswords-minlength' => '$1文字以上の長さである',
+	'securepasswords-minlength' => '$1{{PLURAL:$1|文字}}以上の長さである',
 	'securepasswords-lowercase' => '最低1文字は小文字を含む',
 	'securepasswords-uppercase' => '最低1文字は大文字を含む',
 	'securepasswords-digit' => '最低1文字は数字を含む',
@@ -341,6 +473,22 @@ Et:',
 	'securepasswords-word' => 'däerf kee Wuert sinn',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'securepasswords-desc' => 'Создава повеќе тараби за безбедна лозинка и додава проверувач на јачината на лозинката',
+	'securepasswords-valid' => 'Вашата лозинка е неважечка или прекратка.
+Лозинката мора да:',
+	'securepasswords-minlength' => 'содржи барем  $1 {{PLURAL:$1|знак|знаци}}',
+	'securepasswords-lowercase' => 'содржи барем 1 мала буква',
+	'securepasswords-uppercase' => 'содржи барем 1 голема буква',
+	'securepasswords-digit' => 'содржи барем 1 цифра',
+	'securepasswords-special' => 'содржи барем 1 специјален знак (специјални знаци се: $1)',
+	'securepasswords-username' => 'се разликува од вашето корисничко име',
+	'securepasswords-word' => 'не биде збор',
+);
+
 /** Nahuatl (Nāhuatl)
  * @author Fluence
  */
@@ -380,6 +528,22 @@ Det må:',
 	'securepasswords-word' => 'ikkje vera eit ord',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'securepasswords-desc' => 'Oppretter sikrere passordhasher og legger til en funksjon for sjekking av passordstyrke',
+	'securepasswords-valid' => 'Passordet ditt er ugyldig eller for kort.
+Det må:',
+	'securepasswords-minlength' => 'være minst {{PLURAL:$1|ett tegn|$1 tegn}} langt',
+	'securepasswords-lowercase' => 'inneholde minst én liten bokstav',
+	'securepasswords-uppercase' => 'inneholde minst én stor bokstav',
+	'securepasswords-digit' => 'inneholde minst ett tall',
+	'securepasswords-special' => 'inneholde minst ett spesialtegn (spesialtegnene er: $1)',
+	'securepasswords-username' => 'være forskjellig fra brukernavnet ditt',
+	'securepasswords-word' => 'ikke være et ord',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -401,8 +565,9 @@ Deu :',
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'securepasswords-valid' => 'Twoje hasło jest nieprawidłowe lub zbyt krótkie.
-Musi:',
+	'securepasswords-desc' => 'Tworzy bezpieczniejszy skrót hasła oraz poprawia jego weryfikację',
+	'securepasswords-valid' => 'Hasło jest nieprawidłowe lub zbyt krótkie.
+Musi ono:',
 	'securepasswords-minlength' => 'składać się z co najmniej $1 {{PLURAL:$1|znaku|znaków}}',
 	'securepasswords-lowercase' => 'zawierać co najmniej 1 małą literę',
 	'securepasswords-uppercase' => 'zawierać co najmniej 1 wielką literę',
@@ -412,11 +577,28 @@ Musi:',
 	'securepasswords-word' => 'nie być słowem',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'securepasswords-desc' => 'A crea ciav casuaj pì sicure e a gionta un controlor ëd la fòrsa dla ciav',
+	'securepasswords-valid' => "Toa ciav a l'é pa bon-a o tròp curta.
+A deuv:",
+	'securepasswords-minlength' => 'esse almanch longa $1 {{PLURAL:$1|caràter|caràter}}',
+	'securepasswords-lowercase' => 'conten-e almanch 1 litra minùscula',
+	'securepasswords-uppercase' => 'conten-e almanch 1 litra maiùscola',
+	'securepasswords-digit' => 'conten almanch 1 sifra',
+	'securepasswords-special' => 'conten-e almanch 1 caràter special (caràter speciaj a son: $1)',
+	'securepasswords-username' => 'esse diferen da tò stranòm',
+	'securepasswords-word' => 'pa esse na paròla',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'securepasswords-desc' => 'Cria hashes de palavras-chaves mais seguros e adiciona um verificador da força da palavra-chave',
+	'securepasswords-desc' => 'Cria resumos criptográficos das palavras-chave mais seguros e adiciona um verificador da solidez da palavra-chave',
 	'securepasswords-valid' => 'A sua palavra-chave é inválida ou demasiado curta.
 Tem de:',
 	'securepasswords-minlength' => 'ter pelo menos $1 {{PLURAL:$1|caracter|caracteres}} de comprimento',
@@ -470,10 +652,20 @@ Adda essere:",
 );
 
 /** Russian (Русский)
+ * @author Ferrer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'securepasswords-desc' => 'Создаёт защищённые хеши паролей и добавляет проверку силы пароля',
+	'securepasswords-valid' => 'Вам пароль неверный или слишком короткий.
+Он должен:',
+	'securepasswords-minlength' => 'быть, по крайней мере, длиной $1 {{PLURAL:$1|символ|символа|символов}}',
+	'securepasswords-lowercase' => 'содержит минимум 1 строчную букву',
+	'securepasswords-uppercase' => 'содержит минимум 1 прописную букву',
+	'securepasswords-digit' => 'содержать минимум одну цифру',
+	'securepasswords-special' => 'содержать минимум 1 служебный символ (служебные символы: $1)',
 	'securepasswords-username' => 'будет отличаться от вашего имени участника',
+	'securepasswords-word' => 'не слово',
 );
 
 /** Slovak (Slovenčina)
@@ -499,7 +691,7 @@ $messages['stq'] = array(
 	'securepasswords-desc' => 'Moaket sicherere Paaswoud-Hashes un föiget ne Paaswoudstäärken-Wröige bietou',
 	'securepasswords-valid' => 'Dien Paaswoud is uungultich of tou kuut.
 Et mout:',
-	'securepasswords-minlength' => 'ap minste $1 Teekene loang weese',
+	'securepasswords-minlength' => 'ap minste $1 {{PLURAL:$1|Teeken|Teekene}} loang weese',
 	'securepasswords-lowercase' => 'ap minste ne Littikbouksteeuwe änthoolde',
 	'securepasswords-uppercase' => 'ap minste ne Grootbouksteeuwe änthoolde',
 	'securepasswords-digit' => 'ap minste een Ziffer änthoolde',
@@ -525,16 +717,18 @@ Det måste:',
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
+	'securepasswords-desc' => 'మరికొన్ని సంరక్షిత పాసువార్డు హాషులను సృష్టించి, పాసువార్డు బలము చూసే పనిముట్టుని కలుపుతుంది',
 	'securepasswords-valid' => 'మీ సంకేతపదం సరైనది కాదు లేదా మరీ చిన్నగా ఉంది.
 అది:',
 	'securepasswords-minlength' => 'కనీసం $1 {{PLURAL:$1|అక్షరం|అక్షరాల}} పొడవుండాలి',
 	'securepasswords-lowercase' => 'కనీసం ఒక్క చిన్న బడి అక్షరాన్నైనా కలిగివుండాలి.',
 	'securepasswords-uppercase' => 'కనీసం ఒక్క పెద్దబడి అక్షరాన్నైనా కలిగివుండాలి.',
 	'securepasswords-digit' => 'కనీసం ఒక్క అంకెనైనా కలిగివుండాలి.',
-	'securepasswords-special' => 'కనీసం 1 ప్రత్యేక అక్షరాన్నైనా కలిగివుండాలి (ప్రత్యేక అక్షరాలు ఇవీ: 1)',
+	'securepasswords-special' => 'కనీసం 1 ప్రత్యేక అక్షరాన్నైనా కలిగివుండాలి (ప్రత్యేక అక్షరాలు ఇవీ: $1)',
 	'securepasswords-username' => 'మీ వాడుకరిపేరు అయివుండకూడదు',
 	'securepasswords-word' => 'ఒక పదం అయివుండకూడదు',
 );
@@ -553,6 +747,42 @@ Dapat itong:',
 	'securepasswords-special' => 'maglaman ng kahit na 1 natatanging panitik (ang natatanging mga panitik ay: $1)',
 	'securepasswords-username' => 'naiiba/kaiba mula sa iyong pangalan ng tagagamit',
 	'securepasswords-word' => 'hindi isang salita',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'securepasswords-lowercase' => 'en az bir küçük harf içermektedir',
+	'securepasswords-uppercase' => 'en az 1 büyük harf içermektedir',
+	'securepasswords-digit' => 'en az 1 rakam içermektedir',
+	'securepasswords-username' => 'kullanıcı adınızan farklı olacak',
+	'securepasswords-word' => 'kelime olmayacak',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'securepasswords-valid' => 'Teiden peitsana om vär vai lühüdahk.
+Pidab säta se neniden käskusiden mödhe:',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'securepasswords-desc' => 'Tạo ra những bảng băm mật khẩu an toàn hơn và bổ sung một bộ kiểm tra độ mạnh mật khẩu',
+	'securepasswords-valid' => 'Mật khẩu của bạn không hợp lệ hay ngắn quá.
+Nó phải:',
+	'securepasswords-minlength' => 'tối thiểu là $1 {{PLURAL:$1|ký tự|ký tự}}',
+	'securepasswords-lowercase' => 'có ít nhất một chữ nhỏ',
+	'securepasswords-uppercase' => 'có ít nhất một chữ hoa',
+	'securepasswords-digit' => 'có ít nhất một chữ số',
+	'securepasswords-special' => 'có ít nhất một ký tự đặc biệt (tức là: $1)',
+	'securepasswords-username' => 'khác với tên hiệu',
+	'securepasswords-word' => 'không phải là từ',
 );
 
 /** Volapük (Volapük)

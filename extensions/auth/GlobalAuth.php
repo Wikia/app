@@ -56,7 +56,7 @@ class GlobalAuth {
 	function userExists( $username ) {
 		$fname='GlobalAuth::userExists';
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( $this->tablename, 'user_wiki',
 			array( 'user_name' => $username ),
 			$fname );
@@ -82,7 +82,7 @@ class GlobalAuth {
 	function authenticate( $username, $password ) {
 		$fname='GlobalAuth::userExists';
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( $this->tablename, array( 'user_wiki',
 				'user_name','user_password',
 				'user_email', 'user_email_authenticated',
@@ -151,7 +151,7 @@ class GlobalAuth {
 	 * @access public
 	 */
 	function setPassword( $password ) {
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$success = $dbw->update( $this->tablename,
 				array( 'user_password' => wfEncryptPassword( $this->data->user_id, $password ) ),
 				array( 'user_id' => $this->data->user_id,
@@ -169,7 +169,7 @@ class GlobalAuth {
 	 * @access public
 	 */
 	function updateExternalDB( $user ) {
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$success = $dbw->update( $this->tablename,
 				array( /*SET*/
 					//'user_password' =>,
@@ -207,7 +207,7 @@ class GlobalAuth {
 	function addUser( $user, $password ) {
 		$fname = 'GlobalAuth::addUser';
 
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select( $this->tablename, 
 				array( 'user_id', 'user_wiki', 'user_password' ),
 				array( 'user_name' => $user->getName() ),

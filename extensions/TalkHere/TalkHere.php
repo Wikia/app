@@ -17,6 +17,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'TalkHere',
 	'version' => '2008-01-19',
 	'author' => 'Daniel Kinzler',
@@ -25,7 +26,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'talkhere-desc',
 );
 
-$wgTalkHereNamespaces = NULL; //namespaces to apply TalkHere to.
+$wgTalkHereNamespaces = null; //namespaces to apply TalkHere to.
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['TalkHere'] = $dir . 'TalkHere.i18n.php';
@@ -68,7 +69,7 @@ function wfTalkHereArticleFromTitle( &$title, &$article ) {
 	$oldid     = $wgRequest->getVal( 'oldid'     );
 	$diff      = $wgRequest->getVal( 'diff'      );
 
-	if ($action == 'purge') $action = NULL; //"purge" is not considered an action in this context
+	if ($action == 'purge') $action = null; //"purge" is not considered an action in this context
 
 	if ( $action || $oldid || $diff ) return true;
 

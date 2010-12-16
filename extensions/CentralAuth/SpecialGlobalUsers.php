@@ -73,7 +73,7 @@ class GlobalUsersPager extends UsersPager {
 
 	function getQueryInfo() {
 		$localwiki = wfWikiID();
-		$conds = array( 'gu_hidden' => 0 );
+		$conds = array( 'gu_hidden' => CentralAuthUser::HIDDEN_NONE );
 
 		if( $this->mGroup )
 			$conds['gug_group'] = $this->mGroup;
@@ -89,7 +89,13 @@ class GlobalUsersPager extends UsersPager {
 		);
 	}
 
+	/**
+	 * Formats a row
+	 * @param object $row The row to be formatted for output
+	 * @return string HTML li element with username and info about this user
+	 */
 	function formatRow( $row ) {
+		global $wgLang;
 		$user = htmlspecialchars( $row->gu_name );
 		$info = array();
 		if( $row->gu_locked )
@@ -105,8 +111,8 @@ class GlobalUsersPager extends UsersPager {
 		if( $groups ) {
 			$info[] = $groups;
 		}
-		$info = implode( ', ', $info );
-		return '<li>' . wfSpecialList( $user, $info ) . '</li>';
+		$info = $wgLang->commaList( $info );
+		return Html::rawElement( 'li', array(), wfSpecialList( $user, $info ) );
 	}
 
 	function getBody() {

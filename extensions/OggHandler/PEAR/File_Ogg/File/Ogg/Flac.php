@@ -38,7 +38,7 @@ class File_Ogg_Flac extends File_Ogg_Media
     /**
      * @access  private
      */
-	function File_Ogg_Flac($streamSerial, $streamData, $filePointer)
+	function __construct($streamSerial, $streamData, $filePointer)
     {
         parent::__construct($streamSerial, $streamData, $filePointer);
         $this->_decodeHeader();
@@ -62,7 +62,7 @@ class File_Ogg_Flac extends File_Ogg_Media
      */
     function _decodeHeader()
     {
-        fseek($this->_filePointer, $this->_streamList[0]['body_offset'], SEEK_SET);
+        fseek($this->_filePointer, $this->_streamData['pages'][0]['body_offset'], SEEK_SET);
         // Check if this is the correct header.
         $packet = unpack("Cdata", fread($this->_filePointer, 1));
         if ($packet['data'] != 0x7f)
@@ -116,7 +116,7 @@ class File_Ogg_Flac extends File_Ogg_Media
 
     function _decodeCommentsHeader()
     {
-        fseek($this->_filePointer, $this->_streamList[1]['body_offset'], SEEK_SET);
+        fseek($this->_filePointer, $this->_streamData['pages'][1]['body_offset'], SEEK_SET);
         $blockHeader = File_Ogg::_readBigEndian( $this->_filePointer,
             array(
                 'last_block' => 1,

@@ -17,7 +17,7 @@ __NOTOC__
 == {{FULLPAGENAME}}的參考文獻格式 ==
 
 === GB7714格式 ===
-{{SITENAME}}编者．{{FULLPAGENAME}}[G/OL]．{{SITENAME}}，{{int:sitesubtitle}}，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}［<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation>］．{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
+{{SITENAME}}編者．{{FULLPAGENAME}}[G/OL]．{{SITENAME}}，{{int:sitesubtitle}}，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}［<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation>］．{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
 
 === APA格式 ===
 {{FULLPAGENAME}}．（{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日）．''{{SITENAME}}，{{int:sitesubtitle}}''．於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation>查閲自{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
@@ -26,13 +26,13 @@ __NOTOC__
 「{{FULLPAGENAME}}」．''{{SITENAME}}，{{int:sitesubtitle}}''．{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（協調世界時）．<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation> &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;．
 
 === MHRA格式 ===
-{{SITENAME}}编者，『{{FULLPAGENAME}}』，''{{SITENAME}}，{{int:sitesubtitle}}''，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（協調世界時），&lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;［於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查閲］
+{{SITENAME}}編者，『{{FULLPAGENAME}}』，''{{SITENAME}}，{{int:sitesubtitle}}''，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（協調世界時），&lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;［於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查閲］
 
 === 芝加哥格式 ===
-{{SITENAME}}编者，「{{FULLPAGENAME}}」，''{{SITENAME}}，{{int:sitesubtitle}}''，{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}（於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查閲）．
+{{SITENAME}}編者，「{{FULLPAGENAME}}」，''{{SITENAME}}，{{int:sitesubtitle}}''，{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}（於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查閲）．
 
 === CBE/CSE格式 ===
-{{SITENAME}}编者．{{FULLPAGENAME}}［網際網絡］．{{SITENAME}}，{{int:sitesubtitle}}；{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（協調世界時）［引用於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>］．可訪問自：
+{{SITENAME}}編者．{{FULLPAGENAME}}［網際網絡］．{{SITENAME}}，{{int:sitesubtitle}}；{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（協調世界時）［引用於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>］．可訪問自：
 {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
 
 === Bluebook格式 ===
@@ -48,7 +48,7 @@ __NOTOC__
     note = "[線上資源；訪問於<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>]"
   }
 
-使用LaTeX包裝的連結（開頭某処的<code>\usepackage{url}</code>）將提供更好的網址格式，推薦選用下列格式：
+使用LaTeX包裝的連結（開頭某處的<code>\usepackage{url}</code>）將提供更好的網址格式，推薦選用下列格式：
   @misc{ wiki:xxx,
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",

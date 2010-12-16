@@ -19,11 +19,9 @@ $linkPrefixExtension = true;
 $namespaceNames = array(
 	NS_MEDIA            => 'Медиа',
 	NS_SPECIAL          => 'Къуллугъирал_лажин',
-	NS_MAIN             => '',
 	NS_TALK             => 'Ихтилат',
 	NS_USER             => 'Гьуртту_хьума',
-	NS_USER_TALK        => 'Гьуртту_хьуминнал_ихтилат', 
-	#NS_PROJECT set by $wgMetaNamespace
+	NS_USER_TALK        => 'Гьуртту_хьуминнал_ихтилат',
 	NS_PROJECT_TALK     => '$1лиясса_ихтилат',
 	NS_FILE             => 'Сурат',
 	NS_FILE_TALK        => 'Суратраясса_ихтилат',
@@ -41,7 +39,9 @@ $linkTrail = '/^([a-zабвгдеёжзийклмнопрстуфхцчшщъы�
 
 $messages = array(
 'article' => 'Тарих',
-'qbedit'  => 'Дакьин дуван',
+
+# Cologne Blue skin
+'qbedit' => 'Дакьин дуван',
 
 'history'          => 'Макьала',
 'history_short'    => 'Макьала',
@@ -70,12 +70,15 @@ $messages = array(
 'recentchanges' => 'Махъсса дахханашивурту',
 
 # File description page
-'filehist-user' => 'Гьурттучув',
+'file-anchor-link' => 'Сурат',
+'filehist-user'    => 'Гьурттучув',
 
 # Miscellaneous special pages
 'move' => 'ЦIа даххана дан',
 
 # Special:Log
 'specialloguserlabel' => 'Гьурттучув:',
+
+'sp-contributions-talk' => 'Ихтилат',
 
 );

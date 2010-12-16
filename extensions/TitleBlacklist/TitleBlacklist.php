@@ -10,6 +10,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Title Blacklist',
 	'author'         => array( 'VasilievVV', 'Fran Rogers' ),
 	'version'        => '1.4.2',

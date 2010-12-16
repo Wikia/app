@@ -27,7 +27,7 @@ Please also be sure that you specify all fields exactly as they should be, ''bef
 	'createsigndoc-hidden'       => 'Hidden',
 	'createsigndoc-optional'     => 'Optional',
 	'createsigndoc-create'       => 'Create',
-	'createsigndoc-error-generic'=> 'Error: $1',
+	'createsigndoc-error-generic' => 'Error: $1',
 	'createsigndoc-error-pagenoexist' => 'Error: The page [[$1]] does not exist.',
 	'createsigndoc-success'      => 'Document signing has been successfully enabled on [[$1]].
 You can [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} test it].',
@@ -36,12 +36,14 @@ This cannot be done a second time.'
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Jon Harald Søby
  */
 $messages['qqq'] = array(
 	'createsigndoc-pagename' => '{{Identical|Page}}',
 	'createsigndoc-email' => '{{Identical|E-mail address}}',
 	'createsigndoc-phone' => '{{Identical|Phone number}}',
+	'createsigndoc-introtext' => '{{Identical|Introduction}}',
 	'createsigndoc-hidden' => '{{Identical|Hidden}}',
 	'createsigndoc-optional' => '{{Identical|Optional}}',
 	'createsigndoc-create' => '{{Identical|Create}}',
@@ -54,7 +56,11 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'createsigndoc-pagename' => 'Bladsy:',
-	'createsigndoc-email' => 'E-pos adres',
+	'createsigndoc-email' => 'E-posadres:',
+	'createsigndoc-phone' => 'Telefoonnommer:',
+	'createsigndoc-introtext' => 'Inleiding:',
+	'createsigndoc-hidden' => 'Verborge',
+	'createsigndoc-optional' => 'Opsioneel',
 	'createsigndoc-create' => 'Skep',
 );
 
@@ -83,6 +89,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'createsigndocument' => 'فعل توقيع الوثيقة',
@@ -107,13 +114,20 @@ $messages['ar'] = array(
 	'createsigndoc-introtext' => 'مقدمة:',
 	'createsigndoc-hidden' => 'مخفية',
 	'createsigndoc-optional' => 'اختياري',
-	'createsigndoc-create' => 'إنشاء',
+	'createsigndoc-create' => 'أنشئ',
 	'createsigndoc-error-generic' => 'خطأ: $1',
 	'createsigndoc-error-pagenoexist' => 'خطأ: الصفحة [[$1]] غير موجودة.',
 	'createsigndoc-success' => 'توقيع الوثيقة تم تفعيله بنجاح في [[$1]].
 أنت يمكنك [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} اختباره].',
 	'createsigndoc-error-alreadycreated' => 'توقيع الوثيقة "$1" موجود بالفعل.
 هذا لا يمكن عمله مرة ثانية.',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'createsigndoc-pagename' => 'ܦܐܬܐ:',
 );
 
 /** Araucanian (Mapudungun)
@@ -223,27 +237,92 @@ $messages['bg'] = array(
 	'createsigndoc-error-pagenoexist' => 'Грешка: Страницата [[$1]] не съществува.',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'createsigndocument' => 'Gweredekaat ar gwiriañ teulioù',
+	'createsigndoc-head' => "Ober gant ar furmskrid-mañ evit krouiñ ur bajenn 'Teul sinañ' evit ar bajenn merket, d'an implijerien da c'hellout [[Special:SignDocument|he sinañ]].
+Merkit anv ar bajenn a fell deoc'h gweredekaat ar sinadur niverel eviti, izili ar strollad implijerien a vo aotreet da sinañ, peseurt maeziennoù a c'hallo an implijerien gwelet ha peseurt re a vo diret, an oad bihanañ evit gellout emezelañ er strollad (n'eus ket a oad bihanañ dre ziouer);
+hag ur rakskrid a ginnig an teul berr-ha-berr hag a bourchas kuzulioù d'an implijerien.
+
+<b>Evit ar mare n'haller ket diverkañ un teul sinañ ur wezh m'eo bet krouet</b> nemet dre gemmañ diaz titouroù ar wiki.
+A zo muioc'h, an destenn diskwelet war an teul sinañ a vo an destenn \"red\", ne vern ar c'hemmoù a vo degaset enni goude-se.
+Se zo kaoz e rankit bezañ peursur eo stabil a-walc'h an teul evit bezañ sinet.
+Hag \"a-raok kas ar furmskrid-mañ\", bezit sur eo bet leuniet an holl vaeziennoù tre evel ma oa ret ober.",
+	'createsigndoc-pagename' => 'Pajenn :',
+	'createsigndoc-allowedgroup' => 'Strollad aotreet :',
+	'createsigndoc-email' => "Chomlec'h postel :",
+	'createsigndoc-address' => "Chomlec'h post :",
+	'createsigndoc-extaddress' => 'Kêr, bro/proviñs/departamant, Stad :',
+	'createsigndoc-phone' => 'Niverenn bellgomz',
+	'createsigndoc-bday' => 'Deiziad ganedigezh :',
+	'createsigndoc-minage' => 'Oad yaouankañ :',
+	'createsigndoc-introtext' => 'Digoradur :',
+	'createsigndoc-hidden' => 'Kuzhet',
+	'createsigndoc-optional' => 'Diret',
+	'createsigndoc-create' => 'Krouiñ',
+	'createsigndoc-error-generic' => 'Fazi : $1',
+	'createsigndoc-error-pagenoexist' => "Fazi : Ar bajenn [[$1]] n'eus ket anezhi.",
+	'createsigndoc-success' => 'Gweredekaet eo ar gwiriañ teulioù war [[$1]].
+Gallout a rit [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} amprouiñ].',
+	'createsigndoc-error-alreadycreated' => 'Krouet eo bet an teul gwiriekaat evit "$1" dija.
+N\'hall ket bezañ graet un eil gwech.',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'createsigndocument' => 'Omogućuje potpisivanje dokumenata',
+	'createsigndoc-head' => "Koristite ovaj obrazac za pravljenje stranice 'Potpis dokumenta' za navedenu stranicu, tako da bi ti korisnici imali mogućnost da ih [[Special:SignDocument|potpišu]].
+Molimo navedite naziv stranice na kojoj želite omogućiti digitalni potpis, članove koje korisničke grupe će moći ih potpisivati, koja polja želite da budu vidljiva korisnicima a koja bi bila opcionalna, najmanju starost za obavezno potpisivanje dokumenta od strane korisnika (bez minimuma ako nije navedeno);
+i kratki uvodni tekst koji opisuje dokument i daje uputstva korisnicima.
+
+<b>Trenutno ne postoji način da se obrišu ili izmijene potpisani dokumenti nakon što su napravljeni</b> bez direktnog pristupa bazi podataka.
+Dodatno, tekst stranice koji je prikazan na stranici potpisa će biti ''trenutni'' tekst stranice, bez obzira na promjene koje su učinjene nakon današnjeg dana.
+Molimo budite potpuno sigurni, da je dokument spreman i stabilan za potpisivanje.
+Također budite potpuno sigurni da ste naveli sva polja ispravno kako bi trebalo, ''prije nego pošaljete ovaj obrazac''.",
 	'createsigndoc-pagename' => 'Stranica:',
+	'createsigndoc-allowedgroup' => 'Dopuštena grupa:',
+	'createsigndoc-email' => 'E-mail adresa:',
 	'createsigndoc-address' => 'Kućna adresa:',
+	'createsigndoc-extaddress' => 'Grad, pokrajina, država:',
+	'createsigndoc-phone' => 'Broj telefona:',
+	'createsigndoc-bday' => 'Rođendan:',
+	'createsigndoc-minage' => 'Najmanja starost:',
+	'createsigndoc-introtext' => 'Uvod:',
 	'createsigndoc-hidden' => 'Sakriveno',
+	'createsigndoc-optional' => 'Opcionalno',
 	'createsigndoc-create' => 'Napravi',
 	'createsigndoc-error-generic' => 'Greška: $1',
 	'createsigndoc-error-pagenoexist' => 'Greška: Stranica [[$1]] ne postoji.',
+	'createsigndoc-success' => 'Potpisivanje dokumenata je uspješno omogućeno na [[$1]].
+Možete [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} ga isprobati].',
+	'createsigndoc-error-alreadycreated' => 'Potpisani dokument "$1" već postoji.
+Ne možete ga potpisati po drugi put.',
 );
 
 /** Catalan (Català)
  * @author Loupeter
  * @author SMP
+ * @author Solde
  */
 $messages['ca'] = array(
 	'createsigndoc-pagename' => 'Pàgina:',
+	'createsigndoc-email' => 'Correu electrònic:',
+	'createsigndoc-address' => 'Adreça:',
+	'createsigndoc-extaddress' => 'Ciutat, estat, país:',
+	'createsigndoc-phone' => 'Telèfon:',
+	'createsigndoc-bday' => 'Data de naixement:',
+	'createsigndoc-minage' => 'Edat mínima:',
+	'createsigndoc-introtext' => 'Introducció:',
 	'createsigndoc-hidden' => 'Amagat',
+	'createsigndoc-optional' => 'Opcional',
 	'createsigndoc-create' => 'Crear',
+	'createsigndoc-error-generic' => 'Error: $1',
+	'createsigndoc-error-pagenoexist' => 'Error: La pàgina [[$1]] no existeix.',
 );
 
 /** Corsican (Corsu) */
@@ -349,8 +428,12 @@ To njedajo se drugi raz cyniś.',
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'createsigndocument' => 'Ενεργοποίηση υπογραφής εγγράφων',
 	'createsigndoc-pagename' => 'Σελίδα:',
 	'createsigndoc-allowedgroup' => 'Ομάδα:',
 	'createsigndoc-email' => 'Διεύθυνση ηλεκτρονικού ταχυδρομείου:',
@@ -358,12 +441,17 @@ $messages['el'] = array(
 	'createsigndoc-extaddress' => 'Πόλη, Περιοχή, Χώρα:',
 	'createsigndoc-phone' => 'Τηλεφωνικός αριθμός:',
 	'createsigndoc-bday' => 'Ημερομηνία Γέννησης:',
+	'createsigndoc-minage' => 'Ελάχιστη ηλικία:',
 	'createsigndoc-introtext' => 'Εισαγωγή:',
+	'createsigndoc-hidden' => 'Κρυμμένος',
+	'createsigndoc-optional' => 'Προαιρετικός',
+	'createsigndoc-create' => 'Δημιουργία',
 	'createsigndoc-error-generic' => 'Σφάλμα: $1',
 	'createsigndoc-error-pagenoexist' => 'Σφάλμα: Η σελίδα [[$1]] δεν υπάρχει.',
 );
 
 /** Esperanto (Esperanto)
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
@@ -382,9 +470,10 @@ $messages['eo'] = array(
 	'createsigndoc-create' => 'Krei',
 	'createsigndoc-error-generic' => 'Eraro: $1',
 	'createsigndoc-error-pagenoexist' => 'Eraro: La paĝo [[$1]] ne ekzistas.',
-	'createsigndoc-success' => 'Dokumenta subskribado estis sukcese ebligita ĉe [[$1]].
-Por testi ĝin, bonvolu eniri [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} ĉi tiun paĝon].',
-	'createsigndoc-error-alreadycreated' => 'Subskribado de dokumento "$1" jam ekzistas.',
+	'createsigndoc-success' => 'Dokumenta subskribado estas sukcese ebligita ĉe [[$1]].
+Vi povas [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} testi ĝin].',
+	'createsigndoc-error-alreadycreated' => 'Subskribado de dokumento "$1" jam ekzistas.
+Tio ne estas dufoje ebla.',
 );
 
 /** Spanish (Español)
@@ -393,18 +482,31 @@ Por testi ĝin, bonvolu eniri [{{SERVER}}{{localurl: Special:SignDocument|doc=$2
  */
 $messages['es'] = array(
 	'createsigndocument' => 'Habilitar firma de documentos',
+	'createsigndoc-head' => "Usar este formulario para crear una página 'Firmar documento' para la página proveída, tal que los usuarios podrán [[Special:SignDocument|firmarla]].
+Por favor especifica el nombre de la página en el cual deseas habilitar el firmado digital, miembros de cuales grupos deberían estar permitidos de firmala, que campos desearías hacer visibles a los usuarios y cuales deberían ser opcionales, una mínima edad a ser requerida a los usuarios para firmar el documento (sin mínimo si fue omitida);
+y un breve texto introductorio que describa el documento y que provea instrucciones a los usuarios.
+<b>No hay actualmente manera de borrar o modificar la página de firma después de que son creados </b> sin acceso directo a la base de datos.
+Adicionalmente, el texto de la página mostrada en la página de firma será el texto ''actual'' de la página, a pesar de los cambios hechos a esta después de hoy.
+Por favor ser absolutamente positivo que el documento es a un punto de estabilidad para firmado.
+Por favor también asegúrate que especificas todos los campos exactamente como debería ser, ''antes de enviar este formulario''.",
 	'createsigndoc-pagename' => 'Página:',
 	'createsigndoc-allowedgroup' => 'Grupo permitido:',
 	'createsigndoc-email' => 'Dirección de correo electrónico:',
 	'createsigndoc-address' => 'Dirección domiciliaria:',
+	'createsigndoc-extaddress' => 'Ciudad, estado/región/departamento, país:',
 	'createsigndoc-phone' => 'Número de teléfono:',
 	'createsigndoc-bday' => 'Fecha de nacimiento:',
 	'createsigndoc-minage' => 'Edad mínima:',
+	'createsigndoc-introtext' => 'Introducción:',
 	'createsigndoc-hidden' => 'Oculto',
 	'createsigndoc-optional' => 'Opcional',
 	'createsigndoc-create' => 'Crear',
 	'createsigndoc-error-generic' => 'Error: $1',
 	'createsigndoc-error-pagenoexist' => 'Error: La página [[$1]] no existe.',
+	'createsigndoc-success' => 'Firmado de documento ha sido exitosamente habilitado en [[$1]].
+Puedes [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} probarlo].',
+	'createsigndoc-error-alreadycreated' => 'Firmado de documento "$1" ya existe.
+Esto puede no ser hecho por segunda vez.',
 );
 
 /** Basque (Euskara)
@@ -413,6 +515,7 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'createsigndoc-pagename' => 'Orri:',
+	'createsigndoc-allowedgroup' => 'Baimendutako taldea:',
 	'createsigndoc-email' => 'Email helbidea:',
 	'createsigndoc-address' => 'Helbidea:',
 	'createsigndoc-extaddress' => 'Udalerria, estatua, herrialdea:',
@@ -420,6 +523,7 @@ $messages['eu'] = array(
 	'createsigndoc-bday' => 'Urtebetetzea:',
 	'createsigndoc-minage' => 'Gutxienezko adina:',
 	'createsigndoc-introtext' => 'Sarrera:',
+	'createsigndoc-hidden' => 'Ezkutaturik',
 	'createsigndoc-optional' => 'Hautazkoa',
 	'createsigndoc-create' => 'Sortu',
 	'createsigndoc-error-generic' => 'Errorea: $1',
@@ -438,6 +542,7 @@ $messages['ext'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Crt
  * @author Str4nd
  * @author Vililikku
  */
@@ -457,24 +562,28 @@ $messages['fi'] = array(
 	'createsigndoc-create' => 'Luo',
 	'createsigndoc-error-generic' => 'Virhe: $1',
 	'createsigndoc-error-pagenoexist' => 'Virhe: sivua [[$1]] ei löydy.',
-	'createsigndoc-error-alreadycreated' => 'Asiakirjan allekirjoitus ”$1” on jo olemassa.',
+	'createsigndoc-error-alreadycreated' => 'Asiakirjan allekirjoitus ”$1” on jo olemassa.
+Tätä ei voi tehdä toista kertaa.',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author IAlex
  * @author Sherbrooke
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'createsigndocument' => "Activer l'authentification des documents",
-	'createsigndoc-head' => "Utilisez ce formulaire pour créer une « page d'authentification » de documents pour la page en question, de façon que chaque utilisateur soit capable de [[Special:SignDocument|l’authentifier]].
-Prière d'indiquer l'intitulé de la page pour lequel vous souhaitez activer la fonction, les membres du groupe d'utilisateurs, quels champs seront accessibles aux utilisateurs et ceux qui seront optionnels, l'âge minimal pour être membre du groupe (pas de minimum par défaut) ;
-et un bref document expliquant le document et donnant des instructions aux utilisateurs.
+	'createsigndocument' => 'Activer l’authentification des documents',
+	'createsigndoc-head' => "Utilisez ce formulaire pour créer une page de « document de signature » pour la page indiquée, afin que les utilisateurs soient capables de [[Special:SignDocument|l’authentifier]].
+Prière d’indiquer l’intitulé de la page pour laquelle vous souhaitez activer la signature numérique, les membres du groupe d’utilisateurs qui seront habilités à la signer, quels champs vous voulez rendre visibles aux utilisateurs et ceux qui seront optionnels, l’âge minimal pour être membre du groupe (pas de minimum par défaut) ;
+et un bref texte d’introduction pour décrire le document et donner des instructions aux utilisateurs.
 
-'''Présentement, il n'y a aucun moyen d'effacer les documents une fois créés''', sauf en éditant la base de données du wiki. De plus, le texte de la page affiché sur la page authentifiée sera le texte ''courant'', peu importe les modifications faites par la suite.
-Pour cette raison, soyez certain que le document soit suffisamment stable pour être authentifié.
-''Avant de soumettre le formulaire'', vérifiez que vous avez bien choisi les champs tels que vous souhaitiez qu'ils soient.",
+<b>Il n’y a actuellement aucun moyen d’effacer un document de signature une fois celui-ci créé</b>, sauf en modifiant directement la base de données du wiki.
+De plus, le texte de la page affichée sur le document de signature sera son texte ''actuel'', quelles que soient ses modifications faites par la suite.
+Pour cette raison, soyez absolument certain que le document soit suffisamment stable pour être signé.
+''Avant de soumettre ce formulaire'', vérifiez que vous en avez renseigné tous les champs exactement comme ils devraient l’être.",
 	'createsigndoc-pagename' => 'Page :',
 	'createsigndoc-allowedgroup' => 'Groupe autorisé :',
 	'createsigndoc-email' => 'Addresse de courriel :',
@@ -488,11 +597,18 @@ Pour cette raison, soyez certain que le document soit suffisamment stable pour �
 	'createsigndoc-optional' => 'Optionnel',
 	'createsigndoc-create' => 'Créer',
 	'createsigndoc-error-generic' => 'Erreur : $1',
-	'createsigndoc-error-pagenoexist' => "La page [[$1]] n'existe pas.",
-	'createsigndoc-success' => "L'authentification des documents est activée sur [[$1]].
-Vous pouvez [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} le tester].",
-	'createsigndoc-error-alreadycreated' => "Le document d’authentification pour « $1 » a déjà été créé.
-Il ne peut l'être une seconde fois.",
+	'createsigndoc-error-pagenoexist' => 'La page [[$1]] n’existe pas.',
+	'createsigndoc-success' => 'L’authentification des documents est activée sur [[$1]].
+Vous pouvez [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} le tester].',
+	'createsigndoc-error-alreadycreated' => 'Le document d’authentification pour « $1 » a déjà été créé.
+Il ne peut l’être une seconde fois.',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'createsigndoc-pagename' => 'Pâge :',
 );
 
 /** Western Frisian (Frysk)
@@ -593,7 +709,7 @@ Bitte bii au no sicher, ass Du alli notwändige Fälder aagee hesch, ''voreb Du 
 	'createsigndoc-error-pagenoexist' => 'Fähler: D Syte [[$1]] git s nit.',
 	'createsigndoc-success' => 'S Signiere isch erfolgryych uf [[$1]] aktiviert wore.
 Bsuech bitte [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} die Syte] go s uusprobiere.',
-	'createsigndoc-error-alreadycreated' => 'Dokumäntsignatur „$1“ git s scho. 
+	'createsigndoc-error-alreadycreated' => 'Dokumäntsignatur „$1“ git s scho.
 Zweimol goht nit.',
 );
 
@@ -686,6 +802,37 @@ $messages['hsb'] = array(
 To njeda so druhi raz činić.',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'createsigndocument' => 'Dokumentumok aláírásának engedélyezése',
+	'createsigndoc-head' => "Ezzel az űrlappal egy „Dokumentum aláírása” lapot készíthetsz a megadott laphoz, így a felhasználók képesek lesznek [[Special:SignDocument|aláírni azt]].
+Kérlek add meg, melyik lapon szeretnéd engedélyezni a digitális aláírást, melyik felhasználói csoport tagjai írhatják alá, mely mezők legyenek láthatóak a felhasználóknak és melyek legyenek opcionálisak, az aláíráshoz szükséges életkort (nem lesz minimális életkor, ha kihagyod); valamint egy rövid bevezetőt, ami leírja a dokumentumot és útmutatást ad a felhasználóknak.
+
+<b>Jelenleg semmilyen módon nem lehet törölni vagy módosítani aláírás dokumentumokat elkészültük után</b> közvetlen adatbázis-hozzáférés nélkül. Ráadásul az aláírás lapon megjelenített lapszöveg a lap ''aktuális'' tartalma lesz, függetlenül az esetleges későbbi módosításoktól.
+Légy abszolút biztos benne, hogy a dokumentum stabil állapotban van az aláíráshoz.
+Végül bizonyosodj meg róla, hogy minden mezőt megfelelően kitöltöttél ''még mielőtt elküldöd az űrlapot''.",
+	'createsigndoc-pagename' => 'Lap:',
+	'createsigndoc-allowedgroup' => 'Engedélyezett csoport:',
+	'createsigndoc-email' => 'E-mail cím:',
+	'createsigndoc-address' => 'Otthoni cím:',
+	'createsigndoc-extaddress' => 'Város, megye, ország:',
+	'createsigndoc-phone' => 'Telefonszám:',
+	'createsigndoc-bday' => 'Születési dátum:',
+	'createsigndoc-minage' => 'Minimális kor:',
+	'createsigndoc-introtext' => 'Bevezetés:',
+	'createsigndoc-hidden' => 'Rejtett',
+	'createsigndoc-optional' => 'Nem kötelező',
+	'createsigndoc-create' => 'Létrehozás',
+	'createsigndoc-error-generic' => 'Hiba: $1',
+	'createsigndoc-error-pagenoexist' => 'Hiba: nincs [[$1]] nevű lap.',
+	'createsigndoc-success' => 'A dokumentum aláírása sikeresen engedélyezve itt: [[$1]].
+[{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} Tesztelheted].',
+	'createsigndoc-error-alreadycreated' => 'A(z) „$1” dokumentum-aláírás már létezik.
+Ezt nem lehet újból megtenni.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -719,6 +866,55 @@ Tu pote [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} testar lo].',
 Isto non pote esser facite un secunde vice.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author IvanLanin
+ */
+$messages['id'] = array(
+	'createsigndocument' => 'Aktifkan penandatanganan dokumen',
+	'createsigndoc-head' => "Gunakan formulir ini untuk membuat suatu 'Dokumen tanda tangan' untuk halaman yang diberikan, sehingga pengguna akan dapat [[Special:SignDocument|menandatanganinya]].
+Silakan tentukan nama halaman yang ingin Anda aktifkan penandatanganan digitalnya, anggota yang kelompok penggunanya diperbolehkan untuk menandatanganinya, isian-isian mana yang ingin Anda perlihatkan ke pengguna dan mana yang bersifat opsional, usia minimum untuk mengharuskan pengguna untuk menandatangani dokumen (tidak ada minimum jika diabaikan);
+serta teks pengantar singkat yang menjelaskan dokumen dan memberikan instruksi kepada pengguna.
+
+<b>Saat ini tidak ada cara untuk menghapus atau mengubah dokumen tanda tangan setelah dibuat</b> tanpa akses langsung ke basis data.
+Tambahan, teks halaman yang ditampilkan pada halaman tanda tangan akan menjadi teks ''terkini'' halaman, tanpa mempedulikan perubahan yang dibuat setelah ini.
+Harap pastikan bahwa dokumen ini sudah cukup stabil untuk ditandatangani.
+Harap pastikan juga bahwa Anda menentukan semua isian persis seperti yang seharusnya ''sebelum menyimpan formulir ini''.",
+	'createsigndoc-pagename' => 'Halaman:',
+	'createsigndoc-allowedgroup' => 'Grup yang diizinkan:',
+	'createsigndoc-email' => 'Alamat surel:',
+	'createsigndoc-address' => 'Alamat rumah:',
+	'createsigndoc-extaddress' => 'Kota, negara bagian, negara:',
+	'createsigndoc-phone' => 'Nomor telepon:',
+	'createsigndoc-bday' => 'Tanggal lahir:',
+	'createsigndoc-minage' => 'Umur minimum:',
+	'createsigndoc-introtext' => 'Pendahuluan:',
+	'createsigndoc-hidden' => 'Tersembunyi',
+	'createsigndoc-optional' => 'Opsional',
+	'createsigndoc-create' => 'Buat',
+	'createsigndoc-error-generic' => 'Kesalahan: $1',
+	'createsigndoc-error-pagenoexist' => 'Kesalahan: Halaman [[$1]] tidak ada.',
+	'createsigndoc-success' => 'Penandatanganan dokumen telah berhasil diaktifkan pada [[$1]].
+Anda dapat [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} mengujinya].',
+	'createsigndoc-error-alreadycreated' => 'Penandatangan "$1" telah ada.
+Hal ini tidak dapat dilakukan dua kali.',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'createsigndoc-pagename' => 'Ihü:',
+	'createsigndoc-phone' => 'Onuogụgụ nkpo go:',
+	'createsigndoc-bday' => 'Ogẹ òmúmú:',
+	'createsigndoc-introtext' => 'Ndubata:',
+	'createsigndoc-hidden' => 'Zonariri',
+	'createsigndoc-optional' => 'I cho, ka I chogị',
+	'createsigndoc-create' => 'Ké',
+	'createsigndoc-error-generic' => 'Nsogbu: $1',
+	'createsigndoc-error-pagenoexist' => 'Nsogbu: Ihü [[$1]] a digì.',
+);
+
 /** Icelandic (Íslenska) */
 $messages['is'] = array(
 	'createsigndoc-pagename' => 'Síða:',
@@ -734,10 +930,11 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Whym
  */
 $messages['ja'] = array(
-	'createsigndocument' => '文書への署名を有効化する',
-	'createsigndoc-head' => "このフォームを使って、指定したページに「{{int:Signdocument}}」ページを作成し、利用者が[[Special:SignDocument|署名]]できるようにします。デジタル署名を有効にしたいページの名前と、どの利用者グループに属す者が署名できるのか、どの欄を利用者に表示しどの欄を任意とするのか、文書に署名するのに必要な最低の年齢（既定では年齢制限なし）、さらに文書を解説し手順を説明する手短な序文、を指定してください。
+	'createsigndocument' => '文書署名の有効化',
+	'createsigndoc-head' => "このフォームを使って、指定したページに「{{int:Signdocument}}」ページを作成し、利用者が[[Special:SignDocument|署名]]できるようにします。デジタル署名を有効にしたいページの名前と、どの利用者グループに属す者が署名できるのか、どの欄を利用者に表示しどの欄を任意とするのか、文書に署名するのに必要な最低の年齢(既定では年齢制限なし)、さらに文書を解説し手順を説明する手短な序文、を指定してください。
 
 <b>現時点では、署名文書を作成した後にそれを削除もしくは改変するための手段は提供していません。</b>データベースに直接アクセスするのが唯一の手段です。くわえて、署名ページに表示される該当ページの内容はそのページの''現時点''の内容であり、現時点以降になされた変更は反映されません。その文書が署名にふさわしい安定度に達していると、絶対の確信をもってから行ってください。また、''このフォームの送信前に''、すべての欄の内容が完全に正確であることを確認してください。",
 	'createsigndoc-pagename' => 'ページ:',
@@ -750,7 +947,7 @@ $messages['ja'] = array(
 	'createsigndoc-minage' => '最低年齢:',
 	'createsigndoc-introtext' => '序文:',
 	'createsigndoc-hidden' => '非表示',
-	'createsigndoc-optional' => '任意',
+	'createsigndoc-optional' => '省略可能',
 	'createsigndoc-create' => '作成',
 	'createsigndoc-error-generic' => 'エラー: $1',
 	'createsigndoc-error-pagenoexist' => 'エラー: ページ [[$1]] は存在しません。',
@@ -802,10 +999,11 @@ $messages['km'] = array(
 );
 
 /** Korean (한국어)
+ * @author Klutzy
  * @author ToePeu
  */
 $messages['ko'] = array(
-	'createsigndoc-create' => '만들기',
+	'createsigndoc-create' => '생성',
 );
 
 /** Krio (Krio)
@@ -853,18 +1051,21 @@ Mer kann jetz dat [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} Ungerschr
 	'createsigndoc-error-alreadycreated' => 'De Ongerschreffte-Mapp för de Sigg „$1“ es ald aanjelaat.',
 );
 
-/** Cornish (Kernewek)
+/** Cornish (Kernowek)
+ * @author Kernoweger
  * @author Kw-Moon
  */
 $messages['kw'] = array(
-	'createsigndoc-introtext' => 'Kommendyans:',
+	'createsigndoc-introtext' => 'Komendyans:',
 );
 
 /** Latin (Latina)
+ * @author Omnipaedista
  * @author SPQRobin
  */
 $messages['la'] = array(
 	'createsigndoc-pagename' => 'Pagina:',
+	'createsigndoc-create' => 'Creare',
 	'createsigndoc-error-pagenoexist' => 'Error: Pagina [[$1]] non existit.',
 );
 
@@ -876,6 +1077,7 @@ $messages['lb'] = array(
 	'createsigndoc-pagename' => 'Säit:',
 	'createsigndoc-allowedgroup' => 'Erlaabte Grupp:',
 	'createsigndoc-email' => 'E-mail Adress:',
+	'createsigndoc-address' => 'Wunnadress:',
 	'createsigndoc-extaddress' => 'Stad, Regioun/Bundesstaat, Land:',
 	'createsigndoc-phone' => 'Telefonsnummer:',
 	'createsigndoc-bday' => 'Geburtsdag:',
@@ -906,12 +1108,45 @@ $messages['mhr'] = array(
 	'createsigndoc-pagename' => 'Лаштык:',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'createsigndocument' => 'Овозможи потпишување документи',
+	'createsigndoc-head' => "Употребувајте го овој образец за да создадете страница „Потпиши документ“ за наведената страница, така што корисниците ќе можат [[Special:SignDocument|да го потпишуваат]].
+Назначете го името на страницата на која сакате да овозможите дигитално потпишување, членовите од која група ќе можат да се потпишуваат, кои полиња сакате да бидат видливи за корисниците и кои треба да бидат незадолжителни, минимална возраст на корисникот за да може да се потпише (ако не се наведе, тогаш ќе нема старосна граница);
+и краток воведен текст кој го опшишува документот и им дава напатствија на корисниците.
+
+<b>Моментално не постои начин да се избришат или менуваат потпишани документи откако ќе се создадат</b> без директен пристап кон базата на податоци.
+Покрај ова, текстот на прикажаната страница кај потписот ќе биде ''тековниот'' текст на страницата, без разлика на тоа дали се вршени промени по денешниот ден.
+Уверете се дека сте апсолутно сигурни дека документот е на таков степен на стабилност што може да се потпипше.
+Исто така проверете дали сте ги назначиле сите полиња токму како што треба да стојат, ''пред да го испратите овој образец''.",
+	'createsigndoc-pagename' => 'Страница:',
+	'createsigndoc-allowedgroup' => 'Дозволена група:',
+	'createsigndoc-email' => 'Е-пошта:',
+	'createsigndoc-address' => 'Домашна адреса:',
+	'createsigndoc-extaddress' => 'Град, сојузна држава, земја:',
+	'createsigndoc-phone' => 'Телефонски број:',
+	'createsigndoc-bday' => 'Датум на раѓање:',
+	'createsigndoc-minage' => 'Минимална возраст:',
+	'createsigndoc-introtext' => 'Вовед:',
+	'createsigndoc-hidden' => 'Скриено',
+	'createsigndoc-optional' => 'Незадолжително',
+	'createsigndoc-create' => 'Создај',
+	'createsigndoc-error-generic' => 'Грешка: $1',
+	'createsigndoc-error-pagenoexist' => 'Грешка: Страницата [[$1]] не постои.',
+	'createsigndoc-success' => 'Потпишувањето документи е успешно овозможено на [[$1]].
+Можете да [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} го испробате].',
+	'createsigndoc-error-alreadycreated' => 'Потпишувањето за „$1“ веќе постои.
+Ова не може да се направи по втор пат.',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'createsigndoc-pagename' => 'താള്‍:',
-	'createsigndoc-allowedgroup' => 'അനുവദനീയമായ ഗ്രൂപ്പ്:',
+	'createsigndoc-allowedgroup' => 'അനുവദനീയമായ സംഘം:',
 	'createsigndoc-email' => 'ഇമെയില്‍ വിലാസം:',
 	'createsigndoc-address' => 'വീടിന്റെ വിലാസം:',
 	'createsigndoc-extaddress' => 'നഗരം. സംസ്ഥാനം, രാജ്യം:',
@@ -923,7 +1158,7 @@ $messages['ml'] = array(
 	'createsigndoc-optional' => 'നിര്‍ബന്ധമില്ല',
 	'createsigndoc-create' => 'താള്‍ സൃഷ്ടിക്കുക',
 	'createsigndoc-error-generic' => 'പിഴവ്: $1',
-	'createsigndoc-error-pagenoexist' => 'പിശക്: [[$1]] എന്ന താള്‍ നിലവിലില്ല.',
+	'createsigndoc-error-pagenoexist' => 'പിഴവ്: [[$1]] എന്ന താള്‍ നിലവിലില്ല.',
 	'createsigndoc-success' => '[[$1]] പ്രമാണഒപ്പിടല്‍ വിജയകരമായി പ്രവര്‍ത്തനസജ്ജമാക്കിയിരിക്കുന്നു. അതു പരീക്ഷിക്കുവാന്‍ ദയവായി [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} ഈ താള്‍] സന്ദര്‍ശിക്കുക.',
 	'createsigndoc-error-alreadycreated' => 'പ്രമാണ ഒപ്പിടല്‍ "$1" നിലവിലുണ്ട്.',
 );
@@ -1053,6 +1288,7 @@ Du kan [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} testa det].',
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'createsigndocument' => 'Slå på dokumentsignering',
@@ -1073,8 +1309,10 @@ $messages['no'] = array(
 	'createsigndoc-create' => 'Opprett',
 	'createsigndoc-error-generic' => 'Feil: $1',
 	'createsigndoc-error-pagenoexist' => 'Feil: Siden [[$1]] eksisterer ikke.',
-	'createsigndoc-success' => 'Dokumentsignering har blitt slått på for [[$1]]. For å signere det, besøk [{{fullurl:Special:SignDocument|doc=$2}} denne siden].',
-	'createsigndoc-error-alreadycreated' => 'Dokumentsigneringen «$1» finnes allerede.',
+	'createsigndoc-success' => 'Dokumentsignering har blitt slått på for [[$1]].
+Du kan [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} teste det].',
+	'createsigndoc-error-alreadycreated' => 'Dokumentsigneringen «$1» finnes allerede.
+Dette kan ikke gjøres to ganger.',
 );
 
 /** Occitan (Occitan)
@@ -1083,9 +1321,9 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'createsigndocument' => "Activar l'autentificacion dels documents",
 	'createsigndoc-head' => "Utilizatz aqueste formulari per crear una pagina d'autentificacion de documents per l'article en question, de biais que cada utilizaire serà capable d'autentificar via [[Special:SignDocument|Signit]].
-Mercés d'indicar lo nom de l'article pelquin desiratz activar la foncion, los membres del grop d'utilizaires, quins camps seràn accessibles als utilizaires (seràn opcionals), l'edat minimala per èsser membre del grop (pas de minimom siquenon) e un document brèu explicant lo document e balhant d'instruccions als utilizaires.
+Mercés d'indicar lo nom de l'article pel qual desiratz activar la foncion, los membres del grop d'utilizaires, quins camps seràn accessibles als utilizaires (seràn opcionals), l'edat minimala per èsser membre del grop (pas de minimom siquenon) e un document brèu explicant lo document e balhant d'instruccions als utilizaires.
 
-<b>Presentadament, i a pas cap de mejan d'escafar los documents un còp creats</b>, al despart en editant la banca de donadas del wiki. E mai, lo tèxt de l'article afichat sus la pagina autentificada serà lo tèxt ''corrent'', pauc impòrta las modificacions fachas de per aprèp. Per aquesta rason, siatz segur que lo document es sufisentament estable per èsser autentificat e, ''abans de sometre lo formulari'', verificatz qu'avètz plan causit los camps tals coma desiratz que sián.",
+<b>Actualament, i a pas cap de mejan d'escafar los documents un còp creats</b>, al despart en editant la banca de donadas del wiki. E mai, lo tèxte de l'article afichat sus la pagina autentificada serà lo tèxte ''corrent'', pauc impòrta las modificacions fachas de per aprèp. Per aquesta rason, siatz segur que lo document es sufisentament estable per èsser autentificat e, ''abans de sometre lo formulari'', verificatz qu'avètz plan causit los camps tals coma desiratz que sián.",
 	'createsigndoc-pagename' => 'Pagina :',
 	'createsigndoc-allowedgroup' => 'Grop autorizat :',
 	'createsigndoc-email' => 'Adreça de corrièr electronic :',
@@ -1113,19 +1351,32 @@ $messages['os'] = array(
 	'createsigndoc-pagename' => 'Фарс:',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'createsigndoc-pagename' => 'Blatt:',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
  * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
+	'createsigndocument' => 'Włącz podpisywanie dokumentów',
 	'createsigndoc-pagename' => 'Strona:',
+	'createsigndoc-allowedgroup' => 'Dozwolone grupy:',
 	'createsigndoc-email' => 'Adres e‐mail:',
 	'createsigndoc-address' => 'Adres domowy',
 	'createsigndoc-extaddress' => 'Miejscowość, kraj',
 	'createsigndoc-phone' => 'Numer telefonu:',
 	'createsigndoc-bday' => 'Data urodzenia:',
 	'createsigndoc-minage' => 'Minimalny wiek',
+	'createsigndoc-introtext' => 'Wstęp:',
+	'createsigndoc-hidden' => 'Ukryte',
+	'createsigndoc-optional' => 'Nieobowiązkowe',
 	'createsigndoc-create' => 'Utwórz',
 	'createsigndoc-error-generic' => 'Błąd: $1',
 	'createsigndoc-error-pagenoexist' => 'Błąd: Strona [[$1]] nie istnieje',
@@ -1133,6 +1384,7 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'createsigndocument' => 'Visché la firma digital ëd na pàgina coma document',
@@ -1164,7 +1416,10 @@ Për piasì, ch'a varda d'avej controlà sò test coma ch'as dev anans che mande
 	'createsigndoc-create' => 'Buté an firma',
 	'createsigndoc-error-generic' => 'Eror: $1',
 	'createsigndoc-error-pagenoexist' => "Eror: a-i é pa gnun-a pàgina ch'as ciama [[$1]].",
-	'createsigndoc-success' => "La procedura për buté an firma [[$1]] a l'é andaita a bonfin. Për provela, për piasì ch'a varda [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} ambelessì].",
+	'createsigndoc-success' => "La procedura për buté an firma [[$1]] a l'é andaita a bonfin. 
+Për provela, për piasì ch'a [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} la preuva].",
+	'createsigndoc-error-alreadycreated' => 'La firma dël document "$1" a esist già.
+Sòn sì a peul pa esse fàit na sconda vira.',
 );
 
 /** Pashto (پښتو)
@@ -1182,6 +1437,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
@@ -1196,7 +1452,7 @@ Por favor, certifique-se com o máximo rigor de que o documento está numa situa
 Assegure-se também de que especificou todos os campos exactamente como devem ser, ''antes de enviar este formulário''.",
 	'createsigndoc-pagename' => 'Página:',
 	'createsigndoc-allowedgroup' => 'Grupo autorizado:',
-	'createsigndoc-email' => 'Endereço de e-mail:',
+	'createsigndoc-email' => 'Correio electrónico:',
 	'createsigndoc-address' => 'Endereço da residência:',
 	'createsigndoc-extaddress' => 'Cidade, Estado, País:',
 	'createsigndoc-phone' => 'Número de telefone:',
@@ -1208,8 +1464,8 @@ Assegure-se também de que especificou todos os campos exactamente como devem se
 	'createsigndoc-create' => 'Criar',
 	'createsigndoc-error-generic' => 'Erro: $1',
 	'createsigndoc-error-pagenoexist' => 'Erro: A página [[$1]] não existe.',
-	'createsigndoc-success' => 'A assinatura de documentos foi ativada com sucesso em [[$1]].
-Você pode agora [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} testá-la].',
+	'createsigndoc-success' => 'A assinatura de documentos foi activada com sucesso em [[$1]].
+Pode agora [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} testá-la].',
 	'createsigndoc-error-alreadycreated' => 'A assinatura de documentos "$1" já existe.
 Isto não pode ser feito segunda vez.',
 );
@@ -1251,6 +1507,8 @@ Isto não pode ser feito pela segunda vez.',
 $messages['ro'] = array(
 	'createsigndoc-pagename' => 'Pagină:',
 	'createsigndoc-email' => 'Adresă e-mail:',
+	'createsigndoc-address' => 'Adresă domiciliu:',
+	'createsigndoc-extaddress' => 'Oraş, stat, ţară:',
 	'createsigndoc-phone' => 'Număr de telefon:',
 	'createsigndoc-bday' => 'Zi de naştere:',
 	'createsigndoc-minage' => 'Vârstă minimă:',
@@ -1267,6 +1525,13 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'createsigndocument' => "Abbilite le firme sus a 'u documende",
+	'createsigndoc-head' => "Ause sta schermate pe ccrejà 'na vôsce de 'Documende Firmate' pa pàgene, cumme a certe utinde ca 'u ponne [[Special:SignDocument|firmà]].
+Pe piacere specifiche 'u nome d'a vôsce sus a quale tu vuè ccu abbilitesce 'a firma diggitale, le membre de quale gruppe utinde avessere avè 'u permesse pe firmà, cè cambe tu vuè face vedè a l'utinde e quale avessere a essere facoltative, l'età minime da cercà a l'utinde pe farle firmà 'nu documende (ce non ge mitte ninde non ge serve l'età); e 'n'indroduziona piccenne ca descrive 'u documente e dè le istruziune a l'utinde.
+
+<b>Non ge stè nisciune mode pe luvà o cangià 'a firme de le documinde apprisse ca onne state ccrejate</b> senza 'n'accesse dirette a 'u database.
+In aggiunde, 'u teste d'a pàgene visualizzate sus a pàgene de firme addevènde 'u teste ''corrende'' d'a pàgene, senze scè penzanne a le cangiaminde fatte apprisse a osce.
+Pe piacere vide ce sì secure secure ca 'u documende jè 'nu punde de securezze pa firme.
+Pe piacere fà attenzione a specificà tutte le cambe esattamende cumme avessera essere, ''apprime de confermà sta schermata''.",
 	'createsigndoc-pagename' => 'Pàgene:',
 	'createsigndoc-allowedgroup' => 'Gruppe permesse:',
 	'createsigndoc-email' => 'Indirizze e-mail:',
@@ -1314,8 +1579,9 @@ $messages['ru'] = array(
 	'createsigndoc-error-generic' => 'Ошибка: $1',
 	'createsigndoc-error-pagenoexist' => 'Ошибка: страницы [[$1]] не существует.',
 	'createsigndoc-success' => 'Подписание документа успешно включено на странице [[$1]].
-Чтобы проверить сбор подписей, пожалуйста, зайдите на [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} эту страницу].',
-	'createsigndoc-error-alreadycreated' => 'Сбор подписей для страницы «$1» уже включён.',
+Вы можете [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} проверить его].',
+	'createsigndoc-error-alreadycreated' => 'Сбор подписей для страницы «$1» уже включён.
+Это не может быть сделано ещё раз.',
 );
 
 /** Slovak (Slovenčina)
@@ -1355,14 +1621,43 @@ Otestovať ho môžete na [{{SERVER}}{{localurl: Special:SignDocument|doc=$2}} t
 Túto operáciu nie je možné druhýkrát vrátiť.',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'createsigndoc-pagename' => 'Страна:',
 	'createsigndoc-allowedgroup' => 'Дозвољена група:',
 	'createsigndoc-email' => 'Е-пошта:',
+	'createsigndoc-address' => 'Кућна адреса:',
 	'createsigndoc-extaddress' => 'Град, држава:',
+	'createsigndoc-phone' => 'Телефонски број:',
+	'createsigndoc-bday' => 'Дан рођења:',
+	'createsigndoc-minage' => 'Најмања старост:',
+	'createsigndoc-introtext' => 'Увод:',
+	'createsigndoc-hidden' => 'Сакривено',
+	'createsigndoc-optional' => 'Опционо',
+	'createsigndoc-create' => 'Направи',
+	'createsigndoc-error-generic' => 'Грешка: $1',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'createsigndoc-pagename' => 'Strana:',
+	'createsigndoc-allowedgroup' => 'Dozvoljena grupa:',
+	'createsigndoc-email' => 'E-pošta:',
+	'createsigndoc-address' => 'Kućna adresa:',
+	'createsigndoc-extaddress' => 'Grad, država:',
+	'createsigndoc-phone' => 'Telefonski broj:',
+	'createsigndoc-bday' => 'Dan rođenja:',
+	'createsigndoc-minage' => 'Najmanja starost:',
+	'createsigndoc-introtext' => 'Uvod:',
+	'createsigndoc-hidden' => 'Sakriveno',
+	'createsigndoc-optional' => 'Opciono',
+	'createsigndoc-create' => 'Napravi',
+	'createsigndoc-error-generic' => 'Greška: $1',
 );
 
 /** Swati (SiSwati)
@@ -1458,6 +1753,38 @@ $messages['tg-cyrl'] = array(
 	'createsigndoc-error-pagenoexist' => 'Хато: Саҳифаи [[$1]] вуҷуд надорад.',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'createsigndoc-pagename' => 'Sahifa:',
+	'createsigndoc-email' => 'Nişonai E-mail:',
+	'createsigndoc-address' => 'Suroƣai Xona:',
+	'createsigndoc-extaddress' => 'Şahr, Vilojat, Kişvar:',
+	'createsigndoc-phone' => 'Şumorai telefon:',
+	'createsigndoc-bday' => 'Zodrūz:',
+	'createsigndoc-introtext' => 'Şinosoī:',
+	'createsigndoc-optional' => 'Ixtijorī',
+	'createsigndoc-create' => 'Eçod',
+	'createsigndoc-error-generic' => 'Xato: $1',
+	'createsigndoc-error-pagenoexist' => 'Xato: Sahifai [[$1]] vuçud nadorad.',
+);
+
+/** Thai (ไทย)
+ * @author Passawuth
+ */
+$messages['th'] = array(
+	'createsigndoc-email' => 'อีเมล:',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'createsigndoc-pagename' => 'Sahypa:',
+	'createsigndoc-create' => 'Döret',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -1493,11 +1820,23 @@ Hindi na ito magagawa sa ikalawang pagkakataon.',
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'createsigndocument' => 'Belge imzalamayı etkinleştir',
 	'createsigndoc-pagename' => 'Sayfa:',
+	'createsigndoc-allowedgroup' => 'İzin verilen grup:',
+	'createsigndoc-email' => 'E-posta adresi:',
+	'createsigndoc-address' => 'Ev adresi:',
+	'createsigndoc-extaddress' => 'Şehir, eyalet, ülke:',
 	'createsigndoc-phone' => 'Telefon numarası:',
 	'createsigndoc-bday' => 'Doğum günü:',
+	'createsigndoc-minage' => 'Minimum yaş:',
+	'createsigndoc-introtext' => 'Giriş:',
+	'createsigndoc-hidden' => 'Gizli',
+	'createsigndoc-optional' => 'Opsiyonel',
+	'createsigndoc-create' => 'Oluştur',
+	'createsigndoc-error-generic' => 'Hata: $1',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -1505,6 +1844,33 @@ $messages['tr'] = array(
  */
 $messages['ug-latn'] = array(
 	'createsigndoc-pagename' => 'Bet:',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'createsigndoc-email' => 'Адреса електронної пошти:',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'createsigndoc-pagename' => "Lehtpol'",
+	'createsigndoc-allowedgroup' => 'Lasktud gruppad',
+	'createsigndoc-email' => 'E-počtan adres:',
+	'createsigndoc-address' => 'Kodiadres:',
+	'createsigndoc-extaddress' => 'Lidn, štat, valdkund:',
+	'createsigndoc-phone' => 'Telefonnomer:',
+	'createsigndoc-bday' => 'Sündundpäiv:',
+	'createsigndoc-minage' => 'Minimaline igä:',
+	'createsigndoc-introtext' => 'Tulend:',
+	'createsigndoc-hidden' => 'Peittud',
+	'createsigndoc-optional' => 'Opcionaline',
+	'createsigndoc-create' => 'Säta',
+	'createsigndoc-error-generic' => 'Petuz: $1',
+	'createsigndoc-error-pagenoexist' => "Petuz: ei ole [[$1]]-lehtpol't.",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1561,13 +1927,22 @@ $messages['vo'] = array(
 	'createsigndoc-error-pagenoexist' => 'Pöl: Pad: [[$1]] no dabinon.',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'createsigndocument' => 'לאזן אונטערשרייבן דאקומענטן',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'createsigndocument' => '启用文档签名',
 	'createsigndoc-pagename' => '页面：',
+	'createsigndoc-email' => '电邮地址：',
 	'createsigndoc-phone' => '电话号码：',
 	'createsigndoc-bday' => '出生日期：',
 	'createsigndoc-hidden' => '隐藏',
@@ -1577,10 +1952,13 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
+ * @author Liangent
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'createsigndocument' => '啟用文件簽名',
+	'createsigndoc-pagename' => '頁面：',
+	'createsigndoc-email' => '電郵地址：',
 	'createsigndoc-phone' => '電話號碼：',
 	'createsigndoc-bday' => '出生日期：',
 	'createsigndoc-hidden' => '隱藏',

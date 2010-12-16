@@ -7,10 +7,19 @@ http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/NewestPages/?view=log
 
 The main changes between versions are listed here:
 
-27/08/2006
-Version 1.6
-	* Allow user to exclude redirects from results
-	* Minor tweaks to HTML
+01/06/2009
+Version 1.9
+	* Modernisized. 
+
+01/06/2009
+Version 1.8
+	* Make PostgreSQL compatible. Patch contributed by Hans Spaans.
+
+11/01/2008
+Version 1.7
+	* use wfLoadExtensionMessages for NewestPages
+	* remove pre MW1.11 backward compat
+	* delay message loading
 
 17/08/2006
 Version 1.5

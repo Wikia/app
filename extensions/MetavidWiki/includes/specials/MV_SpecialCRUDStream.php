@@ -4,13 +4,13 @@
  *
  * All Metavid Wiki code is Released under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
- * 
+ *
  */
- 
+
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /* @@TODO also support oggHandler stream setup */
@@ -18,25 +18,25 @@ class MV_SpecialCRUDStream extends SpecialPage {
 	function __construct( $mode = 'add' ) {
 		parent::__construct( 'Mv_Add_Stream' );
 		$this->mode = 'add';
-		// print_r(debug_backtrace());	
+		// print_r(debug_backtrace());
 		if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
 			parent::setGroup( 'Mv_Add_Stream', 'mv_group' );
 		}
 
 	}
-	function execute() {
-		global $wgRequest, $wgOut, $wgUser, $mvStream_name, $mvgIP, $wgTitle;
+	function execute( $par ) {
+		global $wgRequest, $wgOut, $wgUser, $mvStream_name, $mvgIP;
 		# init html output var:
-		$html = '';				
-		
+		$html = '';
+
 
         # Get request data from, e.g.
         $title_str = $wgRequest->getVal( 'title' );
-                      
-        // get Mv_Title to normalize the stream name:       
+
+        // get Mv_Title to normalize the stream name:
         $this->stream_name = ( $wgRequest->getVal( 'stream_name' ) == '' ) ? '':
         	 MV_Title::normalizeTitle( $wgRequest->getVal( 'stream_name' ) );
-        	 
+
         $this->stream_type = 	$wgRequest->getVal( 'stream_type' );
         $this->wpEditToken =	$wgRequest->getVal( 'wpEditToken' );
 		$this->stream_desc  = 	$wgRequest->getVal( 'stream_desc' );
@@ -48,9 +48,9 @@ class MV_SpecialCRUDStream extends SpecialPage {
 			if ( $curRevision )
 				$this->stream_desc = $curRevision->getText();
 		}
-		
+
         if ( $this->stream_name == '' ) {
-        	// default page request           	                
+        	// default page request
     		$parts = split( '/', $title_str );
     		if ( count( $parts ) >= 2 ) {
     			// means we can use part 1 as a stream name:
@@ -64,17 +64,17 @@ class MV_SpecialCRUDStream extends SpecialPage {
 				// possible edit
 			}
 		}
-					
+
 		// if edit check for stream name:
     	if ( $this->mode == 'edit' && $this->stream_name == '' ) {
     		$html .= wfMsg( 'edit_stream_missing' );
 			$wgOut->addHTML( $html );
     		return ;
     	}
-    	
-    	
+
+
     	$this->check_permissions();
-    	
+
     	if ( count( $this->_allowedStreamTypeArray ) == 0 ) {
     		// break out user lacks permissions to add anything
 			$html .= wfMsg( 'add_stream_permission' );
@@ -82,7 +82,7 @@ class MV_SpecialCRUDStream extends SpecialPage {
 			return ;
     	}
     	// output the stream form
-    	// output the add stream form	
+    	// output the add stream form
 			$spectitle = Title::makeTitle( NS_SPECIAL, 'Mv_Add_stream' );
 			$docutitle = Title::newFromText( wfMsg( 'mv_add_stream' ), NS_HELP );
 			if ( $this->mode == 'edit' ) {
@@ -100,9 +100,9 @@ class MV_SpecialCRUDStream extends SpecialPage {
 			         '<input type="hidden" name="title" value="' . htmlspecialchars( $spectitle->getPrefixedText() ) . '"/>' ;
 			$html .= '<table width="600" border="0">' .
 					'<tr>';
-					
+
 			$html .= '<td  width="140">';
-			// output the stream type pulldown	
+			// output the stream type pulldown
 			$html .= '<i>' . wfMsg( 'mv_label_stream_name' ) . "</i>:";
 			$html .= '</td><td>';
 			$html .= '<input type="text" name="stream_name" value="' . htmlspecialchars( MV_Title::getStreamNameText( $this->stream_name ) ) . '" size="30" maxlength="1024"><br />' . "\n";
@@ -123,22 +123,22 @@ class MV_SpecialCRUDStream extends SpecialPage {
 				$token = EDIT_TOKEN_SUFFIX;
 			}
 			$html .= "\n<input type='hidden' value=\"$token\" name=\"wpEditToken\" />\n";
-			// output the text area: 
+			// output the text area:
 			$html .= '<textarea tabindex="1" accesskey="," name="stream_desc" id="stream_desc" rows=6 cols=40>' . htmlspecialchars( $this->stream_desc ) . '</textarea>' . "\n";
 			$html .= '<br /><input type="submit" value="' . htmlspecialchars( wfMsg( 'mv_add_stream_submit' ) ) . "\"/>\n</form>";
-			
+
 			$html .= '</td></tr></table>';
     		$html .= '</fieldset>';
-		  	# Output menu items 
-			# @@todo link with language file                
+		  	# Output menu items
+			# @@todo link with language file
             $wgOut->addHTML( $html );
-            
-            
+
+
             // output the stream files list (if in edit mode)
             if ( $this->mode == 'edit' )
     			$this->list_stream_files();
 	}
-	/* for now its just a list no edit allowed 
+	/* for now its just a list no edit allowed
 	 * (all file management done via maintenance scripts )
 	 */
 	function list_stream_files() {
@@ -147,13 +147,13 @@ class MV_SpecialCRUDStream extends SpecialPage {
 		$stream =& mvGetMVStream( array( 'name' => $this->stream_name ) );
 		$stream->db_load_stream();
 		$stream_files = $stream->getFileList();
-		
+
 		if ( count( $stream_files ) == 0 ) {
 			$html .= wfMsg( 'mv_no_stream_files' );
 			$wgOut->addHTML( $html );
 			return ;
 		}
-		// output filedset container: 
+		// output filedset container:
 		$html .= '<fieldset><legend>' . wfMsg( 'mv_file_list' ) . '</legend>' . "\n";
 		$html .= '<table width="600" border="0">';
 		foreach ( $stream_files as $sf ) {
@@ -169,7 +169,7 @@ class MV_SpecialCRUDStream extends SpecialPage {
 	function add_stream( $stream=null ) {
 		$out = '';
 		$mvTitle = new MV_Title( $this->stream_name );
-		 	
+
 		// fist check if the given stream name already exists
 		if ( $mvTitle->doesStreamExist() ) {
 			$mv_page = Title::newFromText( $this->stream_name, MV_NS_STREAM );
@@ -184,35 +184,35 @@ class MV_SpecialCRUDStream extends SpecialPage {
 			if ( $stream->insertStream( $this->stream_type ) ) {
 				global $wgUser;
 				$sk = $wgUser->getSkin();
-				
+
 				// insert page
 				$streamTitle = Title::newFromText( $this->stream_name, MV_NS_STREAM  );
 				$wgArticle = new Article( $streamTitle );
 				$status = $wgArticle->doEdit( $this->stream_desc, wfMsg( 'mv_summary_add_stream' ) );
 				if ( $status === true || ( is_object( $status ) && $status->isOK() ) ) {
-					// stream inserted sucesfully report to output							
-					$out = wfMsg('mv_stream_added', $sk->makeLinkObj( $streamTitle,  $this->stream_name ) );					 
+					// stream inserted sucesfully report to output
+					$out = wfMsg('mv_stream_added', $sk->makeLinkObj( $streamTitle,  $this->stream_name ) );
 				} else {
 					$out = wfMsg( 'mv_error_stream_insert' );
 				}
-							
+
 			} else {
 				// stream failed insert
 			}
-					
+
 		}
 		return $out;
 	}
 	/*
 	 * Returns an array of stream types the current user can add
 	 * @@todo we should just check the $mvStreamTypePermission directly if we can...
-	 * @@todo deprecate this: use mediaWikis user system: 
-	 * $wgUser->isAllowed( 'trackback' ) 
+	 * @@todo deprecate this: use mediaWikis user system:
+	 * $wgUser->isAllowed( 'trackback' )
 	 */
 	function check_permissions() {
 		global $mvStreamTypePermission, $wgUser;
 		$this->_allowedStreamTypeArray = array();
-		
+
 		$user_groups = $wgUser->getGroups();
 		if ( $wgUser->isLoggedIn() ) {
 			array_push( $user_groups, 'user' );
@@ -224,11 +224,11 @@ class MV_SpecialCRUDStream extends SpecialPage {
 						$this->_allowedStreamTypeArray[$type] = true;
 					}
 				}
-				
+
 			}
 		}
 		return $this->_allowedStreamTypeArray;
 	}
-	
+
 }
 ?>

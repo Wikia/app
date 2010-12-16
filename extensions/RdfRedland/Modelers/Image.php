@@ -37,7 +37,7 @@ class MwRdf_Image_Modeler extends MwRdf_Modeler {
 		$dctype = MwRdf::Vocabulary( 'dctype' );
 		$model = MwRdf::Model();
 		$tr = $this->Agent->titleResource();
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select('imagelinks',
 		array('il_to'),
 		array('il_from = ' . $this->Agent->getTitle()->getArticleID()),

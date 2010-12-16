@@ -21,9 +21,7 @@ class DataCenterLayoutTabs extends DataCenterLayout {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Increment the number of tabbed layouts in existence
 		self::$sets++;
 		// Gets id for this set
@@ -112,10 +110,7 @@ class DataCenterLayoutTabs extends DataCenterLayout {
 							}
 						}
 					},
-					addSet: function(
-						name,
-						count
-					) {
+					addSet: function( name, count ) {
 						this.sets[name] = {};
 						this.sets[name].count = count;
 					}

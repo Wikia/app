@@ -10,10 +10,9 @@
  */
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Lua parser extensions',
 	'author'         => 'Fran Rogers',
-	'svn-date'       => '$LastChangedDate: 2008-08-13 09:27:17 +0200 (śro, 13 sie 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 39277 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Lua',
 	'description'    => 'Extends the parser with support for embedded blocks of Lua code',
 	'descriptionmsg' => 'lua_desc',
@@ -37,10 +36,6 @@ if (!isset($wgLuaMaxTime))
 	$wgLuaMaxTime = 5;
 
 
-if (defined('MW_SUPPORTS_PARSERFIRSTCALLINIT')) {
-	$wgHooks['ParserFirstCallInit'][] = 'LuaHooks::parserInit';
-} else {
-	$wgExtensionFunctions[] = 'LuaHooks::parserInit';
-}
+$wgHooks['ParserFirstCallInit'][] = 'LuaHooks::parserInit';
 $wgHooks['LanguageGetMagic'][] = 'LuaHooks::magic';
 $wgHooks['ParserBeforeTidy'][] = 'LuaHooks::beforeTidy';

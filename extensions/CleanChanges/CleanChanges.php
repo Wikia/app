@@ -18,10 +18,11 @@ $wgExtensionMessagesFiles['CleanChanges'] = $dir . 'CleanChanges.i18n.php';
 $wgAutoloadClasses['NCL'] =  $dir . 'CleanChanges_body.php';
 
 /* Hook into code */
-$wgHooks['FetchChangesList'][] = 'NCL::hook' ;
+$wgHooks['FetchChangesList'][] = 'NCL::hook';
 
 /* Extension information */
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Clean Changes',
 	'version' => '2008-10-16',
 	'author' => 'Niklas Laxström',

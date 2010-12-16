@@ -36,6 +36,23 @@ $messages['qqq'] = array(
 	'right-asksql' => '{{doc-right}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'asksql' => 'SQL-soekopdrag',
+	'asksql-desc' => "Voer SQL-soekopdragte uit deur middel van 'n [[Special:Asksql|spesiale bladsy]]",
+	'asksqltext' => "Die onderstaande vorm kan gebruik word om 'n soekopdrag teen die databasis uit te voer.
+Gebruik enkelaanhalingstekens ('soos die') om stringe aan te dui.
+Hierdie funksie kan 'n aansienlike lading op die bediener plaas, gebruik dit asseblief spaarsamig.",
+	'sqlislogged' => 'Let daarop dat alle navrae gelog word.',
+	'sqlquery' => 'Sleutel soekopdrag in',
+	'querybtn' => 'Voer soekopdrag uit',
+	'selectonly' => 'Slegs lees-alleen soekopgragte word toegelaat.',
+	'querysuccessful' => 'Soekopdrag suksesvol uitgevoer',
+	'right-asksql' => 'Skep SQL-soekopdragte',
+);
+
 /** Old English (Anglo-Saxon)
  * @author Wōdenhelm
  */
@@ -118,6 +135,24 @@ $messages['bcl'] = array(
 	'querysuccessful' => 'Matriumpo an paghapot',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'asksql' => 'SQL-запыт',
+	'asksql-desc' => 'Выкананьне SQL-запытаў з дапамогай [[Special:Asksql|спэцыяльнай старонкі]]',
+	'asksqltext' => "Выкарыстоўвайце форму унізе для стварэньня прамых запытаў да базы зьвестак.
+Выкарыстоўвайце апострафы для абазначэньня сымбальных пасьлядоўнасьцяў ('вось так').
+Гэта можа стварыць значную нагрузку на сэрвэр, таму выкарыстоўвайце гэтую функцыю ня часта.",
+	'sqlislogged' => 'Калі ласка, памятайце, што ўсе запыты запісваюцца ў журнал падзеяў.',
+	'sqlquery' => 'Увод запыту',
+	'querybtn' => 'Адправіць запыт',
+	'selectonly' => 'Дазволеныя толькі запыты на чытаньне.',
+	'querysuccessful' => 'Запыт выкананы',
+	'right-asksql' => 'выкананьне SQL-запытаў',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -157,7 +192,7 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'asksql' => 'Reked SQL',
-	'asksql-desc' => 'Sevel a ra rekedoù SQL dre ur [[Special:Asksql|bajenn zibar]]',
+	'asksql-desc' => 'Sevel a ra rekedoù SQL dre ur [[Special:Asksql|bajenn dibar]]',
 	'asksqltext' => "Ober gant ar furmskrid a-is evit sevel ur reked war-eeun ouzh ar bank titouroù.
 Ober gant unskraboù('evel-hen') evit termeniñ an neudennad.
 An dra-se a c'hall kargañ ar servijer spontus, setu n'emañ ket da vezañ implijet re alies.",
@@ -166,6 +201,7 @@ An dra-se a c'hall kargañ ar servijer spontus, setu n'emañ ket da vezañ impli
 	'querybtn' => 'Kas ar reked',
 	'selectonly' => "N'eo aotreet nemet ar rekedoù lenn-hepken",
 	'querysuccessful' => "Reked disoc'het",
+	'right-asksql' => 'Krouiñ a ra rekedoù SQL',
 );
 
 /** Bosnian (Bosanski)
@@ -183,6 +219,24 @@ Ovo može dovesti do češćeg ažuriranja na serveru, pa te molimo da ovo funkc
 	'selectonly' => 'Samo pretrage koje čizaju podatke su dozvoljene.',
 	'querysuccessful' => 'Pretraga uspjela.',
 	'right-asksql' => 'Napravi SQL pretragu/upit.',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'asksql' => 'Consulta SQL',
+	'asksql-desc' => 'Executa consultes SQL a través de la [[Special:Asksql|pàgina especial]]',
+	'asksqltext' => "Useu el formulari inferior per a realitzar consultes directament a la base de dades.
+Useu cometes senzilles ('com aquestes') per a delimitar els textos.
+Això pot carregar considerablement el servidor, per tant, si us plau useu aquesta funció adequadament.",
+	'sqlislogged' => "Si us plau, observeu que totes les consultes s'enregistren.",
+	'sqlquery' => 'Introduiu una consulta',
+	'querybtn' => 'Tramet una consulta',
+	'selectonly' => 'Solament estan permeses les consultes de només lectura.',
+	'querysuccessful' => 'Consulta correcta',
+	'right-asksql' => 'Fes consultes SQL',
 );
 
 /** Czech (Česky)
@@ -298,6 +352,7 @@ $messages['eo'] = array(
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Drini
+ * @author Locos epraix
  */
 $messages['es'] = array(
 	'asksql' => 'Consulta SQL',
@@ -308,7 +363,7 @@ Esto puede añadir una carga considerable al servidor, por lo que úsalo esporá
 	'sqlislogged' => 'Por favor nota que todas las consultas quedan registradas',
 	'sqlquery' => 'Ingresar pregunta',
 	'querybtn' => 'Enviar pregunta',
-	'selectonly' => 'Sólo se permiten consultas de lectura solamente.',
+	'selectonly' => 'Sólo se permiten consultas de solo-lectura.',
 	'querysuccessful' => 'Consulta exitosa',
 	'right-asksql' => 'Realiza consultas SQL',
 );
@@ -332,7 +387,7 @@ $messages['eu'] = array(
  */
 $messages['fi'] = array(
 	'asksql' => 'SQL-kysely',
-	'asksql-desc' => 'Mahdollistaa SQL-kyselyiden tekemisen [[Special:Asksql|toimintosivun]] kautta',
+	'asksql-desc' => 'Mahdollistaa SQL-kyselyiden tekemisen [[Special:Asksql|toimintosivun]] kautta.',
 	'asksqltext' => "Käytä alla olevaa lomaketta tehdäksesi suoria kyselyitä tietokannasta. Merkkijonovakioita merkitään yksinkertaisilla lainausmerkeillä ('näin'). Kyselyt voivat usein kuormittaa palvelinta huomattavasti, joten käytä tätä toimintoa säästeliäästi.",
 	'sqlislogged' => 'Huomioithan, että kaikki kyselyt kirjataan.',
 	'sqlquery' => 'Kirjoita kysely',
@@ -379,16 +434,16 @@ $messages['frc'] = array(
  */
 $messages['frp'] = array(
 	'asksql' => 'Requéta SQL',
-	'asksqltext' => "Utilisâd ceti formulèro por fâre una requéta drêta
-dens la bâsa de balyês.
+	'asksql-desc' => 'Fât des requétes SQL a travèrs una [[Special:Asksql|pâge spèciâla]].',
+	'asksqltext' => "Utilisâd ceti formulèro por fâre una requéta drêta dens la bâsa de balyês.
 Utilisâd les apostrofes ('d’ense') por les chênes de caractèros.
-Cen pôt sovent surchargiér lo sèrvior. Donc, utilisâd
-cela fonccion avouéc parcimonie.",
+Cen pôt sovent surchargiér lo sèrvor. A côsa de cen, utilisâd cela fonccion avouéc parcimonie.",
 	'sqlislogged' => 'Notâd bien que totes les requétes sont jornalisâs.',
-	'sqlquery' => 'Entrâd la requéta',
+	'sqlquery' => 'Buchiéd la requéta',
 	'querybtn' => 'Sometre la requéta',
-	'selectonly' => 'Solètes les requétes en lèctures solètes sont pèrmêses.',
+	'selectonly' => 'Solament les requétes en lèctura solèta sont pèrmêses.',
 	'querysuccessful' => 'La requéta at étâ ègzécutâ avouéc reusséta.',
+	'right-asksql' => 'Fâre des requétes SQL',
 );
 
 /** Galician (Galego)
@@ -541,6 +596,7 @@ Iste function frequentemente adde un carga considerabile al servitor, ergo usa l
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Ivan Lanin
  * @author Rex
  */
@@ -550,7 +606,7 @@ $messages['id'] = array(
 	'asksqltext' => "Gunakan isian berikut untuk melakukan kueri langsung ke basis data. Gunakan kutip tunggal ('seperti ini') untuk membatasi literal string. Hal ini cukup membebani server, jadi gunakanlah fungsi ini secukupnya.",
 	'sqlislogged' => 'Ingatlah bahwa semua kueri akan dicatat.',
 	'sqlquery' => 'Masukkan kueri',
-	'querybtn' => 'Kirim',
+	'querybtn' => 'Kirim kueri',
 	'selectonly' => 'Hanya kueri baca-saja yang diijinkan.',
 	'querysuccessful' => 'Kueri berhasil',
 	'right-asksql' => 'Melakukan kueri SQL',
@@ -599,7 +655,7 @@ $messages['ja'] = array(
 	'asksql' => 'SQLクエリの実行',
 	'asksql-desc' => '[[Special:Asksql|{{int:specialpage}}]]からSQLクエリを実行する',
 	'asksqltext' => "以下のフォームを使用して、データベースへ直接SQLクエリを送信できます。
-文字列リテラルの区切りにはシングルクォート（'～'）を用いてください。
+文字列リテラルの区切りにはシングルクォート('～')を用いてください。
 この機能の使用はサーバに相当の負荷をかけることがあります。使用は控えめにしてください。",
 	'sqlislogged' => '実行した全てのクエリはログに記録されます。',
 	'sqlquery' => 'SQL文:',
@@ -642,6 +698,7 @@ $messages['km'] = array(
 $messages['ko'] = array(
 	'asksql' => 'SQL 쿼리',
 	'asksql-desc' => '[[Special:Asksql|특수 문서]]를 통해 SQL 쿼리를 제출',
+	'sqlquery' => '쿼리를 입력하십시오.',
 	'querybtn' => '쿼리 제출',
 	'selectonly' => '읽기 전용 쿼리만 허용됩니다.',
 	'querysuccessful' => '쿼리 성공',
@@ -671,9 +728,9 @@ Dat kann der ßööver ööndlesh beschäfftijje, also beß e besje fürseschtes
 $messages['lb'] = array(
 	'asksql' => 'SQL Offro',
 	'asksql-desc' => 'SQL-Offroen iwwer eng [[Special:Asksql|Spezialsäit]] maachen.',
-	'asksqltext' => "Benotzt de Formular hei ënnedrënner fir eng Ufro un d'Datebank ze rrichten.
+	'asksqltext' => "Benotzt de Formular hei ënnedrënner fir eng Ufro un d'Datebank ze riichten.
 Benotzt dëst Zeechen' ('esou wéi hei') fir Werter an der Ufro ofzegrenzen.
-Esou Ufroen kënnen zu enger grousser Belaaschtung vun de Servere féieren, dofir froe mir iech dës Funktioun mat Moderatioun ze benotzen.",
+Esou Ufroen kënnen zu enger grousser Belaaschtung vun de Servere féieren, dofir gitt spuersam mat dëser Fonktioun ëm.",
 	'sqlislogged' => 'Zu ärer Informatioun: All Ufroen ginn an e Logbuch agedro',
 	'sqlquery' => 'Ufro aginn',
 	'querybtn' => 'Ufro schécken',
@@ -684,9 +741,20 @@ Esou Ufroen kënnen zu enger grousser Belaaschtung vun de Servere féieren, dofi
 
 /** Limburgish (Limburgs)
  * @author Ooswesthoesbes
+ * @author Pahles
  */
 $messages['li'] = array(
 	'asksql' => 'SQL-zeukopdrach',
+	'asksql-desc' => "Veur SQL-zeukopdrachte oet via 'n [[Special:Asksql|speciaal pagina]]",
+	'asksqltext' => "Gebroek 't ongersjtaond formeleer om direk 'n zeukopdrach op de database te make.
+Gebroek appestroffe ('zoe dus') es delimiter veur strings.
+Dit kan zörge veur zjwaor belasting van de server, gebroek dees funktie dus sjpaarzaam.",
+	'sqlislogged' => "Alle zeukopdrachte waere in 'n logbook opgesjlage.",
+	'sqlquery' => "Veur 'n zeukopdrach in",
+	'querybtn' => 'Veur zeukopdrach oet',
+	'selectonly' => 'Doe kans inkel allein-leze zeukopdrachte oetvoere.',
+	'querysuccessful' => 'Zeukopdrach oetgevoerd',
+	'right-asksql' => 'SQL-zeukopdrachte oetvoere',
 );
 
 /** Lithuanian (Lietuvių)
@@ -706,6 +774,23 @@ Tai gali papildomai apkrauti serverį, taigi naudokite šią funkciją atsakinga
 	'selectonly' => 'Tiktai neredaguojamos užklausos yra leidžiamos.',
 	'querysuccessful' => 'Užklausa sėkminga.',
 	'right-asksql' => 'Vykdyti SQL užklausas',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'asksql' => 'SQL барање',
+	'asksql-desc' => 'Поставувајте SQL барања преку [[Special:Asksql|специјална страница]]',
+	'asksqltext' => "Користете го образецот подолу за да поставувате директни барања до базата на податоци.
+Користете единечни наводници ('вака') за разграничување на низите. симболи.
+Овие барања честопати значително го преоптоваруваат серверот, и затоа бидете умерени со бројот и честотата на барањата.",
+	'sqlislogged' => 'Имајте на ум дека сите барања се заведуваат во дневник.',
+	'sqlquery' => 'Внесете го барањето',
+	'querybtn' => 'Поднеси барање',
+	'selectonly' => 'Дозволени се само барања за читање',
+	'querysuccessful' => 'Барањето е успешно',
+	'right-asksql' => 'Поставете SQL барања',
 );
 
 /** Malayalam (മലയാളം)
@@ -818,9 +903,11 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'asksql' => 'Operassion SQL',
+	'asksql-desc' => 'Fà dle query SQL con na [[Special:Asksql|pàgina special]]',
 	'asksqltext' => "Ch'a dòvra ël quàder ëd domanda ambelessì sota për fé dj'operassion bele drita ant sla base dat.
 Ch'a dòvra le virgolëtte sìngole ('parèj') për marchèj'espression leteraj.
 Sòn soèns a men-a a carié ëd travaj la màchina serventa, donca për piasì ch'a lo dòvra con criteri.",
@@ -829,6 +916,7 @@ Sòn soèns a men-a a carié ëd travaj la màchina serventa, donca për piasì 
 	'querybtn' => "Mandé an là l'operassion",
 	'selectonly' => 'As peul mach fesse operassion ëd letura.',
 	'querysuccessful' => 'Operassion andaita a bon fin',
+	'right-asksql' => 'A fà dle query SQL',
 );
 
 /** Portuguese (Português)
@@ -952,6 +1040,7 @@ si prega di usàrila cu giudizziu.",
 );
 
 /** Tachelhit (Tašlḥiyt)
+ * @author Dalinanir
  * @author Zanatos
  */
 $messages['shi'] = array(
@@ -965,6 +1054,7 @@ zod ɣikkad izdar ayfk tql iggotn i serveur, ɣayan afk ikhassa ast bahra ortskh
 	'querybtn' => 'skr asqsi',
 	'selectonly' => 'ɣar isksitn n lqraya waḥdutn aytiyoqbaln',
 	'querysuccessful' => 'asqsi injḥ !',
+	'right-asksql' => 'Skr  SQL',
 );
 
 /** Slovak (Slovenčina)
@@ -985,13 +1075,22 @@ používajte túto funkciu s rozmyslom.",
 	'right-asksql' => 'Zadávanie SQL požiadaviek',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  */
 $messages['sr-ec'] = array(
 	'sqlquery' => 'Унеси упит',
 	'querybtn' => 'Постави упит',
 	'querysuccessful' => 'Упит успешан',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'sqlquery' => 'Unesi upit',
+	'querybtn' => 'Postavi upit',
+	'querysuccessful' => 'Upit uspešan',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1046,6 +1145,14 @@ Detta kan leda till väsentlig belastning av servern, så använd denna funktion
 	'right-asksql' => 'Göra SQL-frågningar',
 );
 
+/** Telugu (తెలుగు)
+ * @author Kiranmayee
+ */
+$messages['te'] = array(
+	'asksql' => 'SQL కొర్రి',
+	'sqlquery' => 'క్యూరీ ని raayandi',
+);
+
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
@@ -1060,6 +1167,22 @@ $messages['tg-cyrl'] = array(
 	'querybtn' => 'Фиристодани дархост',
 	'selectonly' => 'Танҳо пурсишҳои фақат-хондан иҷозат дода шудаанд.',
 	'querysuccessful' => 'Дархост бо муваффақият',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'asksql' => 'Pursişi SQL',
+	'asksql-desc' => 'Tariqi [[Special:Asksql|sahifai viƶa]] pursişhoi SQL guzaroned',
+	'asksqltext' => "Baroi pursişi çustuçūi mustaqimi pojgohi doda az formi zerin istifoda bared.
+Baroi mahdud kardani riştahoi harfho az noxunaki jakka ('monandi in') istifoda bared.
+In amal metavonad ba xidmatguzor bori zijode ilova kunad, binobar in lutfan in amalro kam istifoda bared.",
+	'sqlislogged' => 'Lutfan tavaççūh kuned, ki hamai pursişho sabt meşavand.',
+	'sqlquery' => 'Vorid kardani darxost',
+	'querybtn' => 'Firistodani darxost',
+	'selectonly' => 'Tanho pursişhoi faqat-xondan içozat doda şudaand.',
+	'querysuccessful' => 'Darxost bo muvaffaqijat',
 );
 
 /** Tagalog (Tagalog)
@@ -1098,6 +1221,8 @@ Bu çoğu kez sunucuya oldukça yük ekler, bu yüzden lütfen bu fonksiyonu ted
 
 /** Ukrainian (Українська)
  * @author Ahonc
+ * @author NickK
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'asksql' => 'SQL-запит',
@@ -1108,8 +1233,9 @@ $messages['uk'] = array(
 	'sqlislogged' => 'Усі запити записуються до журналу.',
 	'sqlquery' => 'Введення запиту',
 	'querybtn' => 'Відправити запит',
-	'selectonly' => 'Дозволені тільки записи на читання.',
+	'selectonly' => 'Дозволені тільки запити на читання.',
 	'querysuccessful' => 'Запит виконано',
+	'right-asksql' => 'Виконання SQL-запитів',
 );
 
 /** Vèneto (Vèneto)

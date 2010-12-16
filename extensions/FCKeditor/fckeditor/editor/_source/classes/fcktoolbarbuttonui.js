@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -35,6 +35,7 @@ var FCKToolbarButtonUI = function( name, label, tooltip, iconPathOrStripInfoArra
 		FCK.IECleanup.AddItem( this, FCKToolbarButtonUI_Cleanup ) ;
 }
 
+FCKToolbarButtonUI.prototype.TypeName = 'FCKToolbarButtonUI' ;		// @Packager.RemoveLine
 
 FCKToolbarButtonUI.prototype._CreatePaddingElement = function( document )
 {
@@ -125,6 +126,10 @@ FCKToolbarButtonUI.prototype.ChangeState = function( newState, force )
 		return ;
 
 	var e = this.MainElement ;
+
+	// In IE it can happen when the page is reloaded that MainElement is null, so exit here
+	if ( !e )
+		return ;
 
 	switch ( parseInt( newState, 10 ) )
 	{

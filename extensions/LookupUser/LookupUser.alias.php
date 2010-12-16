@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'LookupUser' => array( 'LookupUser' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'LookupUser' => array( 'مطالعة_مستخدم' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'LookupUser' => array( 'مطالعة_مستخدم' ),
 );
@@ -42,14 +38,39 @@ $aliases['ia'] = array(
 	'LookupUser' => array( 'Cercar usator' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'LookupUser' => array( 'Lihat pengguna', 'LihatPengguna' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'LookupUser' => array( 'ControllaUtente' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'LookupUser' => array( '利用者情報調査', '利用者情報を調査' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'LookupUser' => array( 'Metmaacher_Nohloore', 'MetmaacherNohloore', 'Medmaacher_Nohloore', 'MedmaacherNohloore' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'LookupUser' => array( 'Benotzer nokucken' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'LookupUser' => array( 'ПобарајГоКорисникот', 'ПобарајКорисник' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'LookupUser' => array( 'ഉപയോക്താവിനെനോക്കുക' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -72,6 +93,11 @@ $aliases['sa'] = array(
 	'LookupUser' => array( 'योजकपश्यन्तु' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'LookupUser' => array( 'VyhľadaniePoužívateľa' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'LookupUser' => array( 'TafutaMtumiaji' ),
@@ -80,5 +106,10 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'LookupUser' => array( 'Hanapin ang tagagamit' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'LookupUser' => array( 'KullanıcıAra' ),
 );
 

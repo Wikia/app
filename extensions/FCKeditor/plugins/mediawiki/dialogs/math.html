@@ -60,6 +60,7 @@ window.onload = function()
 	// Activate the "OK" button.
 	window.parent.SetOkButton( true ) ;
 	window.parent.SetAutoSize( true ) ;
+	GetE('xTemplateRaw').focus();
 }
 
 function LoadSelection()
@@ -73,34 +74,49 @@ function LoadSelection()
 function Ok()
 {
 	var formula = GetE('xTemplateRaw').value.Trim() ;
-	
+
 	if ( formula.length == 0 )
 	{
-		alert( 'Please type the formula' ) ;
+		alert( FCKLang.wikiTeXEmpty || 'Please type the formula' ) ;
 		return false ;
 	}
 
-	window.parent.document.getElementById( 'btnOk' ).disabled = true ;
-	window.parent.document.getElementById( 'btnCancel' ).disabled = true ;
+	if ( oEditor.window.parent.FCKeditorAPI && oEditor.window.parent.FCKeditorAPI.Version.match( /^2\.5/ ) ) {
+		window.parent.document.getElementById( 'btnOk' ).disabled = true ;
+		window.parent.document.getElementById( 'btnCancel' ).disabled = true ;
+	}
 
 	oEditor.window.parent.sajax_request_type = 'GET' ;
 	oEditor.window.parent.sajax_do_call( 'wfSajaxGetMathUrl', [formula], UpdateImageFromAjax ) ;
-	
+
 	return false ;
 }
 
 function UpdateImageFromAjax( response )
 {
+	oEditor.FCKUndo.SaveUndoStep() ;
+
 	if ( !oMathImage )
+	{
 		oMathImage = FCK.CreateElement( 'IMG' ) ;
+		oMathImage.className = 'FCK__MWMath' ;
+		oMathImage.src = FCKConfig.PluginsPath + 'mediawiki/images/icon_math.gif' ;
+	}
 	else
-		oEditor.FCKUndo.SaveUndoStep() ;
-	
+	{
+		if ( response.responseText )
+		{
+			oMathImage.src = response.responseText ;
+			SetAttribute( oMathImage, "_fcksavedurl", response.responseText ) ;
+		}
+		else
+		{
+			oMathImage.src = FCKConfig.PluginsPath + 'mediawiki/images/icon_math.gif' ;
+		}
+	}
+
 	SetAttribute( oMathImage, "_fck_mw_math", GetE('xTemplateRaw').value.Trim() ) ;
 	SetAttribute( oMathImage, "_fckfakelement", 'true' ) ;
-
-	oMathImage.src = response.responseText ;
-	SetAttribute( oMathImage, "_fcksavedurl", response.responseText ) ;
 
 	// Call it using setTimeout to avoid a strange behavior in Firefox.
 	window.setTimeout( window.parent.Cancel, 0 ) ;
@@ -113,7 +129,7 @@ function UpdateImageFromAjax( response )
 		<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
 			<tr>
 				<td>
-					<span>Formula (TeX markup)</span>
+					<span fcklang="wikiTeX">Formula (TeX markup)</span>
 				</td>
 			</tr>
 			<tr>

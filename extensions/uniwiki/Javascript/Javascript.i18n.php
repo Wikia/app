@@ -14,11 +14,19 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'javascript-desc' => 'Short description of this extension, shown on [[Special:Version]].',
+	'javascript-desc' => '{{desc}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'javascript-desc' => 'Voeg uniwiki.js by elke bladsy wat JavaScript-kode tussen die Uniwiki-uitbreidings deel',
 );
 
 /** Arabic (العربية)
@@ -49,11 +57,25 @@ $messages['bg'] = array(
 	'javascript-desc' => 'Добавя uniwiki.js към всяка страница, съдържаща Джаваскрипт код, използван от разширенията Uniwiki',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'javascript-desc' => 'Ouzhpennañ a ra uniwiki.js war pep pajenn enni kod JavaScript rannet etre an astennoù Uniwiki',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'javascript-desc' => 'Dodaje uniwiki.js na svaku stranicu koja sadrži JavaScript kod koji se dijeli između Uniwiki proširenja',
+);
+
+/** Catalan (Català)
+ * @author Ssola
+ */
+$messages['ca'] = array(
+	'javascript-desc' => 'Afegeix uniwiki.js a cada pàgina que conté codi JavaScript compartit entre extensions Uniwiki',
 );
 
 /** Czech (Česky)
@@ -75,6 +97,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'javascript-desc' => 'Pśidawa dataju uniwiki.js ku kuždemu bokoju, kótaraž wopśimujo JavaScriptowy kod, kótaryž jo zgromadny za rozšyrjenja Uniwiki',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'javascript-desc' => 'Προσθέτει το uniwiki.js σε κάθε σελίδα που περιέχει κώσικα JavaScript κοινό με τις επεκτάσεις Uniwiki',
 );
 
 /** Spanish (Español)
@@ -129,6 +158,13 @@ $messages['he'] = array(
 	'javascript-desc' => 'הוספת הקובץ uniwiki.js לכל דף, שמכיל קוד JavaScript המשותף בין ההרחבות של יוניויקי',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'javascript-desc' => 'Nagadugang uniwiki.js sa kada pahina nga may ara JavaScript koda upod sang Uniwiki ekstensiyon',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -136,11 +172,32 @@ $messages['hsb'] = array(
 	'javascript-desc' => 'Přidawa dataju uniwiki.js ke kóždej stronje, kotraž JavaScriptowy kod wobsahuje, kotryž so přez rozšěrjenja Uniwiki zhromadnje wužiwa',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'javascript-desc' => 'Az uniwiki.js hozzáadása minden laphoz. Ez tartalmazza az Uniwiki-kiterjesztések által közösen használt JavaScript-kódot',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'javascript-desc' => 'Adde uniwiki.js a cata pagina que contine codice JavaScript usate in commun per le extensiones Uniwiki',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'javascript-desc' => 'Menambahkan uniwiki.js ke setiap halaman yang mengandung kode JavaScript pada ekstensi-ekstensi Uniwiki',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'javascript-desc' => 'Aggiunge uniwiki.js per ogni pagina contenente il codice JavaScript condiviso tra estensioni Uniwiki',
 );
 
 /** Japanese (日本語)
@@ -176,6 +233,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'javascript-desc' => 'Setzt uniwiki.js op all Säit derbäi op däer JavaScript-Code de vu verschiddenen Uniwiki Erweiderunge benotzt gëtt',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'javascript-desc' => 'Го додава uniwiki.js на секоја страница што содржи JavaScript код кој е заеднички за Uniwiki проширувањата',
 );
 
 /** Nedersaksisch (Nedersaksisch)
@@ -220,6 +284,13 @@ $messages['pl'] = array(
 	'javascript-desc' => 'Dodaje uniwiki.js do każdej strony zawierającej kod JavaScript dzielony pomiędzy rozszerzenia Uniwiki',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'javascript-desc' => "A gionta uniwiki.js a minca pàgina ch'a conten còdes JavaScript condivis an tra estension Uniwiki",
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -248,6 +319,13 @@ $messages['ru'] = array(
 	'javascript-desc' => 'Добавляет uniwiki.js на каждую страницу, содержащую код JavaScript, разделяемый расширениями Uniwiki',
 );
 
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'javascript-desc' => ' යුනුවිකි දිඟුවන් අතර බෙදාගෙන ඇති JavaScript කේත සහිත හැම පිටුවකටම  uniwiki.js එකතු කරයි',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -260,6 +338,20 @@ $messages['sk'] = array(
  */
 $messages['sq'] = array(
 	'javascript-desc' => 'Vendosë uniwiki.js në çdo faqe që përmban kodin JavaScript të ndarë mes prapashtesave në Uniwiki',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'javascript-desc' => 'Додаје uniwiki.js на сваку страну која садржи јаваскрипт код који се користи између више Унивики екстензија',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'javascript-desc' => 'Dodaje uniwiki.js na svaku stranu koja sadrži javaskript kod koji se koristi između više Univiki ekstenzija',
 );
 
 /** Seeltersk (Seeltersk)
@@ -288,6 +380,27 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'javascript-desc' => 'Nagdaragdag ng uniwiki.js sa bawat pahinang naglalaman ng kodigong JavaScript na pinagsasaluhan sa pagitan ng mga karugtong na pang-Uniwiki',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'javascript-desc' => "Univiki eklentileri arasında paylaşılan Java kodlarını içeren tüm sayfalara uniwiki.js'yi ekler",
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'javascript-desc' => 'Додає uniwiki.js до кожної сторінки, яка містить код JavaScript, що розподіляється між розширеннями Uniwiki',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'javascript-desc' => 'Ližadab uniwiki.js kaikuččile lehtpolile, kus om Uniwiki-ližoiden turbiš jagatud JavaScriptan kod',
 );
 
 /** Vietnamese (Tiếng Việt)

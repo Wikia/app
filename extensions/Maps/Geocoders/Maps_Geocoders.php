@@ -25,12 +25,13 @@ final class Geocoders {
 	 * Initialization function for Maps geocoder functionality.
 	 */
 	public static function initialize() {
-		global $wgAutoloadClasses, $egMapsIP, $egMapsGeoServices;
+		global $wgAutoloadClasses, $egMapsDir, $egMapsGeoServices;
 		
 		$egMapsGeoServices = array();
 		
-		$wgAutoloadClasses['MapsBaseGeocoder'] 		= $egMapsIP . '/Geocoders/Maps_BaseGeocoder.php';
-		$wgAutoloadClasses['MapsGeocoder'] 			= $egMapsIP . '/Geocoders/Maps_Geocoder.php';
+		$wgAutoloadClasses['MapsBaseGeocoder'] 		= $egMapsDir . 'Geocoders/Maps_BaseGeocoder.php';
+		$wgAutoloadClasses['MapsGeocoder'] 			= $egMapsDir . 'Geocoders/Maps_Geocoder.php';
+		$wgAutoloadClasses['MapsGeocodeUtils'] 		= $egMapsDir . 'Geocoders/Maps_GeocodeUtils.php';
 	}
 	
 }

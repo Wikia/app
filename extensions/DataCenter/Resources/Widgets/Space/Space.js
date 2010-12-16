@@ -7,10 +7,7 @@ var DATACENTER_SPACE_Z_SCALE = 1.5;
  * @param	id			Integer of row ID of plan
  * @param	physical	Object of space physical structure
  */
-function DataCenterSceneSpace(
-	id,
-	physical
-) {
+function DataCenterSceneSpace( id, physical ) {
 	/* Private Members */
 
 	var self = this;
@@ -29,9 +26,9 @@ function DataCenterSceneSpace(
 	if ( !physical ) {
 		physical = { width: 1, height: 1, depth: 1, orientation: 0 };
 	}
-	
+
 	/* Public Functions */
-	
+
 	/**
 	 * Sets a flag that the current virtual dimensions are invalid
 	 */
@@ -53,9 +50,7 @@ function DataCenterSceneSpace(
 	/**
 	 * Sets reference to scene this plan is in
 	 */
-	this.setScene = function(
-		newScene
-	) {
+	this.setScene = function( newScene ) {
 		scene = newScene
 	}
 	/**
@@ -64,10 +59,8 @@ function DataCenterSceneSpace(
 	this.getID = function() {
 		return id;
 	}
-	
-	this.setWidth = function(
-		width	
-	) {
+
+	this.setWidth = function( width ) {
 		physical.width = width;
 		self.resync();
 		// Automatically re-render
@@ -76,9 +69,7 @@ function DataCenterSceneSpace(
 		}
 	}
 
-	this.setHeight = function(
-		height	
-	) {
+	this.setHeight = function( height ) {
 		physical.height = height;
 		self.resync();
 		// Automatically re-render
@@ -87,9 +78,7 @@ function DataCenterSceneSpace(
 		}
 	}
 
-	this.setDepth = function(
-		depth	
-	) {
+	this.setDepth = function( depth ) {
 		physical.depth = depth;
 		self.resync();
 		// Automatically re-render
@@ -97,7 +86,7 @@ function DataCenterSceneSpace(
 			scene.render();
 		}
 	}
-	
+
 	/**
 	 * Handles click event
 	 */
@@ -129,7 +118,7 @@ function DataCenterSceneSpace(
 	 * Synchronizes space's virtual and physical dimensions
 	 */
 	this.syncSpace = function() {
-		if ( !physical.orientation ) {	
+		if ( !physical.orientation ) {
 			physical.orientation = 0;
 		}
 		var factor = Math.min(
@@ -148,10 +137,10 @@ function DataCenterSceneSpace(
 		virtual.y = ( cache.canvas.height / 2 ) - ( virtual.depth / 2 );
 		virtual.meter = virtual.width / physical.width;
 		virtual.base = [
-		    { x: virtual.width, y: 0 },
-		    { x: 0, y: 0 },
-		    { x: 0, y: virtual.depth },
-		    { x: virtual.width, y: virtual.depth }
+			{ x: virtual.width, y: 0 },
+			{ x: 0, y: 0 },
+			{ x: 0, y: virtual.depth },
+			{ x: virtual.width, y: virtual.depth }
 		];
 		virtual.top = {
 			x: virtual.normal.x * virtual.height,
@@ -165,7 +154,7 @@ function DataCenterSceneSpace(
 		self.sync();
 		self.renderSpace();
 	}
-	
+
 	this.renderSpace = function() {
 		// View offset
 		var offset = {

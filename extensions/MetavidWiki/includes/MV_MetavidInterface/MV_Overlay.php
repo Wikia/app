@@ -10,16 +10,16 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 // hide the fact box in any MV_Overlay driven view of mvd
 global $smwgShowFactbox;
 $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
- 		
+
  class MV_Overlay extends MV_Component {
  	/*init function should load the target overlay*/
- 	// set up defaults: 
+ 	// set up defaults:
  	var $req = 'stream_transcripts';
  	var $tl_width = '16';
  	var $parserOutput = null;
  	var $oddEvenToggle = true;
  	var $mvd_pages = array();
- 	
+
 /*structures the component output and call html code generation */
  	function getHTML() {
  		switch( $this->req ) {
@@ -31,14 +31,14 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
  			break;
  		}
 	}
-	
-	// renders recent changes in the MVD namespace 
+
+	// renders recent changes in the MVD namespace
 	function do_Recentchanges() {
 		global $wgOut;
-		// quick and easy way: 
+		// quick and easy way:
 		$wgOut->addWikiText( '{{Special:Recentchanges/namespace=' . MV_NS_MVD . '}}' );
 	}
-	
+
 	function do_stream_transcripts() {
 		global $wgOut;
 		$this->procMVDReqSet();
@@ -46,46 +46,53 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		$out = '';
 		// set up left hand side timeline
 		$ttl_width = count( $this->mvd_tracks ) * ( $this->tl_width );
-		/*$wgOut->addHTML('<div id="mv_time_line" style="width:'.$ttl_width.'px">' . 
+		/*$wgOut->addHTML('<div id="mv_time_line" style="width:'.$ttl_width.'px">' .
 					$this->get_video_timeline() .
 				'</div>');
 		*/
 		// get nav-interface links
 
-		$wgOut->addHTML( '<div id="mv_fd_mvd_cont" >' );
+		$wgOut->addHTML( '<div id="mv_fd_mvd_cont" style="position:relative;" >' );
 			$wgOut->addHTML( "<div id=\"mv_add_new_mvd\" style=\"display:none;\"></div>" );
 			$this->get_transcript_pages();
 		$wgOut->addHTML( "</div>" );
 	}
-	
+
 	function render_full() {
 		global $wgOut;
- 		// "<div >" . 		 					 	
+ 		// "<div >" .
  		$wgOut->addHTML( "<div id=\"selectionsBox\">\n" );
 	 		$this->getHTML();
  		$wgOut->addHTML( "</div>\n" );
  		// add in contorls:
  		$wgOut->addHTML( $this->render_controls() );
- 		
+
 	}
-	
+
 	function render_controls() {
-		return '<div class="layers">	
+		global $mvgShowLayerControls;
+		$ct = '<div class="layers">
 				<ul>
 					<li>
 						<a href="javascript:mv_disp_add_mvd(\'anno_en\')">' . wfMsg( 'mv_new_anno_en' ) . '</a>
 					</li>
 					<li>
-						<a title="' . htmlspecialchars( wfMsg( 'mv_new_ht_en' ) ) . '" href="javascript:mv_disp_add_mvd(\'ht_en\')">' . wfMsg( 'mv_new_ht_en' ) . '</a> 
-					</li>
-				</ul>
+						<a title="' . htmlspecialchars( wfMsg( 'mv_new_ht_en' ) ) . '" href="javascript:mv_disp_add_mvd(\'ht_en\')">' . wfMsg( 'mv_new_ht_en' ) . '</a>
+					</li>';
+		if($mvgShowLayerControls){
+			$ct.= '<li>
+						<a title="' . htmlspecialchars( wfMsg( 'mv_mang_layers' ) ) . '" href="javascript:mv_tool_disp(\'mang_layers\')">' . wfMsg( 'mv_mang_layers' ) . '</a>
+				   </li>';
+		}
+		$ct.='		</ul>
 				</div>';
+		return $ct;
 	}
 	function render_menu() {
 		global $wgLang;
 
 		$base_title = '';
-		// set the base title to the stream name: 
+		// set the base title to the stream name:
 		if ( isset( $this->mv_interface->article->mvTitle ) ) {
 			$base_title = $this->mv_interface->article->mvTitle->getStreamName();
 		}
@@ -112,10 +119,10 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		foreach ( $this->mvd_pages as & $mvd_page ) {
 				$out .= $this->get_timeline_html( $mvd_page );
 		}
-		// output the time stamps: 
+		// output the time stamps:
 		/*$out.='<div style="position:absolute;top:0%;z-index:2;background:#FFFFFF;font-size:x-small">';
 		$out.=$start_str;
-		$out.='</div>';	
+		$out.='</div>';
 		$out.='<div style="position:absolute;top:100%;z-index:2;background:#FFFFFF;font-size:x-small">';
 		$out.=$end_str;
 		$out.='</div>';*/
@@ -125,7 +132,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 	function load_transcripts() {
 		// global $mvgIP;
 		// require_once($mvgIP . '/includes/MV_Index.php');
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		global $wgRequest;
 		$mvd_rows = & MV_Index::getMVDInRange( $this->mv_interface->article->mvTitle->getStreamId(),
 							$this->mv_interface->article->mvTitle->getStartTimeSeconds(),
@@ -142,7 +149,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 	function get_transcript_pages() {
 		global $wgUser, $mvgIP, $wgOut;
 		$sk = $wgUser->getSkin();
-		
+
 		$out = '';
 		if ( count( $this->mvd_pages ) == 0 ) {
 			$out = 'no mvd rows found';
@@ -157,15 +164,15 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		// print_r($mvd_page);
 		// "<div id=\"mv_ctail_{$mvd_page->id}\" style=\"position:relative\">"
 		if ( isset( $this->mv_interface->smwProperties['playback_resolution'] ) ) {
-			// for now just put in a hack that forces no size adjustment	
+			// for now just put in a hack that forces no size adjustment
 			$img_url = MV_StreamImage::getStreamImageURL( $mvd_page->stream_id, $mvd_page->start_time, null, true );
 		} else {
 			$img_url = MV_StreamImage::getStreamImageURL( $mvd_page->stream_id, $mvd_page->start_time, $mvDefaultVideoPlaybackRes, true );
 		}
 		$oe_class = '';
-		//color annnotative layers seperatly:		
+		//color annnotative layers seperatly:
 		$oe_class.=' ' . htmlspecialchars( strtolower( $mvd_page->mvd_type ) );
-		//preset classes for rendering on page load (will repaint but whatever) 		
+		//preset classes for rendering on page load (will repaint but whatever)
 		if ( $this->oddEvenToggle ) {
 			$this->oddEvenToggle = false;
 			$oe_class .= ' even';
@@ -173,14 +180,14 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			$this->oddEvenToggle = true;
 			$oe_class .= ' odd';
 		}
-		
+
 		// style=\"background:#".$this->getMvdBgColor($mvd_page)."\" "
 		$wgOut->addHTML( '<fieldset class="mv_fd_mvd' . htmlspecialchars( $oe_class ) . '" id="mv_fd_mvd_' . htmlspecialchars( $mvd_page->id ) . '" ' .
 					'name="' . htmlspecialchars( $mvd_page->wiki_title ) . '" ' .
 					'image_url="' . htmlspecialchars( $img_url ) . '" >' );
-		
-		/*$wgOut->addHTML("<legend id=\"mv_ld_{$mvd_page->id}\">" .  
-				$this->get_mvd_menu($mvd_page) . 
+
+		/*$wgOut->addHTML("<legend id=\"mv_ld_{$mvd_page->id}\">" .
+				$this->get_mvd_menu($mvd_page) .
 				"</legend>");*/
 		// $menu_html = $this->get_mvd_menu($mvd_page);
 		$wgOut->addHTML( "<div id=\"mv_fcontent_{$mvd_page->id}\">" );
@@ -199,7 +206,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		return $this->get_timeline_html( $this->mvd_pages[$mvd_id] );
 	}
 	function get_fd_mvd_request( $titleKey, $mvd_id, $mode = 'inner', $content = '' ) {
-		global $wgOut;		
+		global $wgOut;
 		if ( !isset( $this->mvd_pages[$mvd_id] ) )
 			$this->mvd_pages[$mvd_id] = MV_Index::getMVDbyId( $mvd_id );
 		if ( $mode == 'inner' ) {
@@ -212,31 +219,31 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 	function get_timeline_html( &$mvd_page ) {
 		$out = '<div id="mv_tl_mvd_' . $mvd_page->id . '" ' .
 			'class="mv_timeline_mvd_jumper" ' .
-			'title="' . wfMsg( 'mv_play' ) . ' ' . seconds2ntp( $mvd_page->start_time ) . '" ' .
+			'title="' . wfMsg( 'mv_play' ) . ' ' . seconds2npt( $mvd_page->start_time ) . '" ' .
 			/*
 			 * time_line actions added by jQuery
 			'onmouseover="mv_mvd_tlOver(\''.$mvd_page->id.'\')" '.
-			'onmouseout="mv_mvd_tlOut(\''.$mvd_page->id.'\')" '.			
-			'onmouseup="mv_do_play()" ' . 			
+			'onmouseout="mv_mvd_tlOut(\''.$mvd_page->id.'\')" '.
+			'onmouseup="mv_do_play()" ' .
 			*/
 			'style="position:absolute;background:#' . $this->getMvdBgColor( $mvd_page ) . ';' .
 			'width:' . $this->tl_width . 'px;';
 		// set left based on array key:
 		$keyOrder = array_search( strtolower( $mvd_page->mvd_type ), $this->mvd_tracks );
-		// @@todo probably should throw an error: 
+		// @@todo probably should throw an error:
 		if ( $keyOrder === false )$keyOrder = 0;
 		$out .= 'left:' . ( $keyOrder * $this->tl_width ) . 'px;';
 		// check if duration is set (for php calculation of height position)
 		if ( $this->duration ) {
-			// print "master range: $this->start_time to $this->end_time \n";				
-			// max out ranges: 			
+			// print "master range: $this->start_time to $this->end_time \n";
+			// max out ranges:
 			$page_start = ( $mvd_page->start_time < $this->start_time ) ? $this->start_time:$mvd_page->start_time;
 			$page_end =  ( $mvd_page->end_time > $this->end_time ) ? $this->end_time:$mvd_page->end_time;
-			
+
 			$page_duration 	= $page_end - $page_start;
-			// print "page duration $page_end - $page_start: $page_duration \n";	
+			// print "page duration $page_end - $page_start: $page_duration \n";
 			$height_perc 	= round( 100 * ( $page_duration / $this->duration ), 2 );
-		
+
 			if ( $page_start == 0 ) { // avoid dividing zero
 				$loc_perc = 0;
 			} else {
@@ -248,7 +255,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 				$height_perc = 100 - $loc_perc;
 			}
 			if ( $loc_perc < 0 )$loc_perc = 0;
-			
+
 			$out .= 'height:' . $height_perc . '%;' .
 				  'top:' . $loc_perc . '%"></div>' . "\n";
 		} else {
@@ -256,7 +263,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		}
 		return $out;
 	}
-	
+
 	function getMVDhtml( &$mvd_page, $absolute_links = false ) {
 		global $wgOut;
 		// incase we call mid output (but really should use outputMVD in those cases)
@@ -272,34 +279,34 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		global $wgOut, $wgUser, $wgEnableParserCache;
 		// $mvdTile = Title::makeTitle(MV_NS_MVD, $mvd_page->wiki_title );
 		$mvdTitle = new MV_Title( $mvd_page->wiki_title );
-		// print "js_log('outputMVD: ".$mvdTitle->getText()."');\n";
+		// print "mw.log('outputMVD: ".$mvdTitle->getText()."');\n";
 		$mvdArticle = new Article( $mvdTitle );
 		if ( !$mvdArticle->exists() ) {
-			// print "js_log('missing: " .$mvd_page->wiki_title."');\n";
+			// print "mw.log('missing: " .$mvd_page->wiki_title."');\n";
 			return ;
 		}
-		// use the cache by default: 
+		// use the cache by default:
 		// $usepCache = (isset($mvd_page->usePcache))?$mvd_page->usePcache:true;
-		
+
 		/*try to pull from cache: separate out cache for internal links vs external links cache*/
-		if( $wgEnableParserCache ) { 
+		if( $wgEnableParserCache ) {
 			$MvParserCache = & MV_ParserCache::singleton();
 			$add_opt = ( $absolute_links ) ? 'a':'';
 			// add the dbKey since I don't know how to easy purge the cache and we are getting cache missmatch
 			$add_opt .= $mvdTitle->getDBkey();
 			$MvParserCache->addToKey( $add_opt );
-			
+
 			$parserOutput = $MvParserCache->get( $mvdArticle, $wgUser );
 		}else{
 			$parserOutput=false;
 		}
 		if ( $parserOutput !== false ) {
-			// print "js_log('found in cache: with hash: " . $MvParserCache->getKey( $mvdArticle, $wgUser )."');\n";
-			// found in cache output and be done with it: 					
+			// print "mw.log('found in cache: with hash: " . $MvParserCache->getKey( $mvdArticle, $wgUser )."');\n";
+			// found in cache output and be done with it:
 			$wgOut->addParserOutput( $parserOutput );
 		} else {
-			// print "js_log('not found in cache');\n";
-			// print "js_log('titleDB: ".$tsTitle->getDBkey() ."');\n";
+			// print "mw.log('not found in cache');\n";
+			// print "mw.log('titleDB: ".$tsTitle->getDBkey() ."');\n";
 			if ( $mvdTitle->exists() ) {
 				// grab the article text:
 				$curRevision = Revision::newFromTitle( $mvdTitle );
@@ -308,15 +315,15 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 				if ( isset( $this->preMoveArtileText ) ) {
 					$wikiText = & $this->preMoveArtileText;
 				} else {
-					// @@todo throw error: 
+					// @@todo throw error:
 					// print "error article: "	.  $mvd_page->wiki_title . " not there \n";
-					print "js_log('missing: " . $mvd_page->wiki_title . "');\n";
+					print "mw.log('missing: " . $mvd_page->wiki_title . "');\n";
 					return ;
 				}
 			}
 			$parserOutput =  $this->parse_format_text( $wikiText, $mvdTitle, $mvd_page, $absolute_links );
-			
-			// if absolute_links set preg_replace with the server for every relative link:				
+
+			// if absolute_links set preg_replace with the server for every relative link:
 			if ( $absolute_links == true ) {
 				global $wgServer;
 				$parserOutput->mText = str_replace( array( 'href="/', 'src="/' ), array( 'href="' . $wgServer . '/', 'src="' . $wgServer . '/' ), $parserOutput->mText );
@@ -342,7 +349,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			case 'anno_en':
 				$play_link_o = '<a href="javascript:mv_do_play(' . htmlspecialchars( $mvd_page->id ) . ')">';
 				$play_link_img_close = '<img border="0" src="' . htmlspecialchars( $mvgScriptPath ) . '/skins/images/button_play.png">' . '</a>';
-					
+
 				$smw_attr = $this->get_and_strip_semantic_tags( $text );
 				foreach ( $smw_attr as $smw_key => $smw_attr_val ) {
 					// do special display for given values:
@@ -353,7 +360,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 							if( $pTitle->exists() ){
 								$pimg = mv_get_person_img( $smw_attr_val );
 								$pre_text_html .= '<p class="mvd_page_image">';
-								
+
 								if ( $mvd_page != '' ) {
 									$pre_text_html .= $play_link_o;
 									$added_play_link = true;
@@ -370,9 +377,9 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 					$smwKeyTitle = Title::newFromText( $smw_key );
 					$valueTitle = Title::newFromText( $smw_attr_val );
 					if ( $template_key == 'anno_en' )
-						$smw_text_html .= ucwords( $smwKeyTitle->getText() ) . ': ' . $sk->makeLinkObj( $valueTitle ) . '<br>';
+						$smw_text_html .= ucwords( $smwKeyTitle->getText() ) . ': ' . $sk->makeLinkObj( $valueTitle ) . '<br />';
 				}
-					
+
 				if ( !$added_play_link && $mvd_page != '' ) {
 					$pre_text_html .= '<p class="mvd_page_image">' . $play_link_o . $play_link_img_close . '</p>';
 					// print "SHOULD HAVE PUT IN pre_text:$pre_text_html";
@@ -381,16 +388,16 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 				if ( $mvd_page != '' ) {
 					$pre_text_html .= '<span class="mvd_menu_header">' . $this->get_mvd_menu( $mvd_page ) . '</span>';
 				}
-				// if absolute links clear out links: 
+				// if absolute links clear out links:
 				if ( $absolute_links )
 					$pre_text_html = '';
 				$pre_text_html .= '<span class="description">';
 				$pre_text_html .= $smw_text_html;
-				// for ht_en add spoken by add name to start of text: 
+				// for ht_en add spoken by add name to start of text:
 				if ( $template_key == 'ht_en' ) {
-					// if we have the person title add them to start of the text output: 
+					// if we have the person title add them to start of the text output:
 					if ( isset( $pTitle ) ) {
-						// have to prepend it cuz of <p> insertion for first paragraph						
+						// have to prepend it cuz of <p> insertion for first paragraph
 						$text = '[[' . $pTitle->getText() . ']]: ' . trim( $text );
 					}
 				}
@@ -401,114 +408,114 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		}
 		// now add the text with categories if present:
 		$sk =& $wgUser->getSkin();
-		// run via parser to add in Category info: 
+		// run via parser to add in Category info:
 		// $parserOptions = ParserOptions::newFromUser( $wgUser );
 		$parserOptions = new ParserOptions();
 		$parserOptions->setEditSection( false );
 		$parserOptions->setTidy( true );
 		$parserOutput = $wgParser->parse( $text , $mvdTile, $parserOptions, true, true );
 		$wgOut->addCategoryLinks( $parserOutput->getCategories() );
-		
+
 		$parserOutput->mText .=	$sk->getCategories();
 		$parserOutput->mText = $pre_text_html . $parserOutput->mText . $post_text_html;
-				
-		// empty out the categories (should work) 
+
+		// empty out the categories (should work)
 		$wgOut->mCategoryLinks = array();
 		$parserOutput->mCategories = null;
 		return $parserOutput;
 	}
 	function get_add_disp( $baseTitle, $mvdType, $time_range ) {
 		global $wgUser, $wgOut, $mvDefaultClipLength, $mvMVDTypeAllAvailable, $wgRequest;
-		
+
 		list( $this->start_context, $this->end_context ) = split( '/', $time_range );
-		// first make sure its a valid mvd_type 
+		// first make sure its a valid mvd_type
 		if ( !in_array( $mvdType, $mvMVDTypeAllAvailable ) )return;
 			# Or we could throw an exception:
-			# throw new MWException( __METHOD__ . ' called invalid mvdType.' );		
+			# throw new MWException( __METHOD__ . ' called invalid mvdType.' );
 
 		$mvd_page = new MV_MVD();
 		$mvd_page->id = 'new';
-		
-		// print 'st ' . $this->start_context . "<br />" ;		
-		// $mvd_page->start_time = $start_context; //seconds2ntp(0);		
- 		// $mvd_page->end_time  = seconds2ntp( ntp2seconds($start_context) +  $mvDefaultClipLength);
+
+		// print 'st ' . $this->start_context . "<br />" ;
+		// $mvd_page->start_time = $start_context; //seconds2npt(0);
+ 		// $mvd_page->end_time  = seconds2npt( npt2seconds($start_context) +  $mvDefaultClipLength);
  		$mvd_page->wiki_title = $mvdType . ':' . strtolower( $baseTitle ) . '/_new';
 		$this->get_edit_disp( $mvd_page->wiki_title, 'new' );
- 				
-		
+
+
 		return $wgOut->getHTML();
-		
-		// make temporary unique "new" mvd title: (for now default to ht_en 
-		// but in the future default to no template type and let the user select) 
+
+		// make temporary unique "new" mvd title: (for now default to ht_en
+		// but in the future default to no template type and let the user select)
 
 		// $wgTitle = Title::newFromText($titleKey, MV_NS_MVD);
 
-		
+
 		// make a "new" mvd:
 		// $mvd_page = new mvd_pageObj();
 		// $mvd_page->id = 'new';
-		// $mvd_page->start_time = seconds2ntp(0);
- 		// $mvd_page->end_time  = seconds2ntp($mvDefaultClipLength);
-		// $mvd_page->wiki_title = 'Ht_en:' . $baseTitle.'_'.rand(0,99999).'/'.	$mvd_page->start_time . '/' . $mvd_page->end_time;				
+		// $mvd_page->start_time = seconds2npt(0);
+ 		// $mvd_page->end_time  = seconds2npt($mvDefaultClipLength);
+		// $mvd_page->wiki_title = 'Ht_en:' . $baseTitle.'_'.rand(0,99999).'/'.	$mvd_page->start_time . '/' . $mvd_page->end_time;
 
 		// $this->get_edit_disp($mvd_page->wiki_title,'new');
 		// clear out html:
 		// $wgOut->clearHTML();
 
-		// get encapsulated mvd: 
+		// get encapsulated mvd:
 		// $this->get_fd_mvd_page($mvd_page, $edit_html);
 
-		// get the edit page code:			
+		// get the edit page code:
 	}
 	/*return transcript menu*/
 	function get_mvd_menu( &$mvd_page ) {
 		global $wgUser, $mvgScriptPath, $wgRequest;
 		$sk = $wgUser->getSkin();
-		
+
 		// hack to get menu correct...
 		$do_adjust = $wgRequest->getVal( 'do_adjust' );
-		//fix boolean string issue: 
+		//fix boolean string issue:
 		$do_adjust = ( $do_adjust == 'false' ) ? false : $do_adjust;
 		if ( $do_adjust  ) {
 			$tmpMvPage = new MV_Title( $wgRequest->getVal( 'newTitle' ) );
 			$mvd_page->wiki_title = $tmpMvPage->wiki_title;
-			$mvd_page->start_time = ntp2seconds( $tmpMvPage->start_time );
-			$mvd_page->end_time	  = ntp2seconds( $tmpMvPage->end_time );
+			$mvd_page->start_time = npt2seconds( $tmpMvPage->start_time );
+			$mvd_page->end_time	  = npt2seconds( $tmpMvPage->end_time );
 		}
-		
+
 		$out = '';
 		// set up links:
 		$plink = '';
 		$elink = '<a title="' . htmlspecialchars( wfMsg( 'mv_edit_adjust_title' ) ) .
 				'" href="javascript:mv_edit_disp(\'' . htmlspecialchars( $mvd_page->wiki_title ) .
 				'\', \'' . htmlspecialchars( $mvd_page->id ) . '\')">' . wfMsg( 'mv_edit' ) . '</a>';
-		
+
 		// $alink = '<a title="'.wfMsg('mv_adjust_title').'" href="javascript:mv_adjust_disp(\''.$mvd_page->wiki_title.'\', \''.$mvd_page->id.'\')">'.wfMsg('mv_adjust').'</a>';
 
 		// print "wiki title: " . $mvd_page->wiki_title;
 		$hTitle = Title::newFromText( $mvd_page->wiki_title, MV_NS_MVD );
 		// print $hTitle->
 		$hlink =  $sk->makeKnownLinkObj( $hTitle, wfMsg( 'mv_history' ), 'action=history' );
-		
+
 		$dTitle =  Title::newFromText( $mvd_page->wiki_title, MV_NS_MVD_TALK );
 		$dlink = $sk->makeKnownLinkObj( $dTitle,  wfMsg( 'talk' ) );
-		
-		// {s:\''.seconds2ntp($mvd_page->start_time).'\',e:\''.seconds2ntp($mvd_page->end_time).'\'}
-		/*$plink='<a title="'.htmlspecialchars(wfMsg('mv_play').' '.seconds2ntp($mvd_page->start_time) . ' to ' . seconds2ntp($mvd_page->end_time)).' " ' .
-				'style="text-decoration:none;" ' .		
+
+		// {s:\''.seconds2npt($mvd_page->start_time).'\',e:\''.seconds2npt($mvd_page->end_time).'\'}
+		/*$plink='<a title="'.htmlspecialchars(wfMsg('mv_play').' '.seconds2npt($mvd_page->start_time) . ' to ' . seconds2npt($mvd_page->end_time)).' " ' .
+				'style="text-decoration:none;" ' .
 				'href="javascript:mv_do_play('.htmlspecialchars($mvd_page->id).');">' .
 					'<span style="width:44px"><img src="'.htmlspecialchars($mvgScriptPath).'/skins/images/control_play_blue.png"></span>'.'</a>'.
-					htmlspecialchars(seconds2ntp($mvd_page->start_time) . ' to ' . htmlspecialchars(seconds2ntp($mvd_page->end_time)));
+					htmlspecialchars(seconds2npt($mvd_page->start_time) . ' to ' . htmlspecialchars(seconds2npt($mvd_page->end_time)));
 		*/
-		$plink = htmlspecialchars( seconds2ntp( $mvd_page->start_time ) ) . ' to ' . htmlspecialchars( seconds2ntp( $mvd_page->end_time ) );
-		// @@TODO set up conditional display: (view source if not logged on, protect, remove if given permission)  
+		$plink = htmlspecialchars( seconds2npt( $mvd_page->start_time ) ) . ' to ' . htmlspecialchars( seconds2npt( $mvd_page->end_time ) );
+		// @@TODO set up conditional display: (view source if not logged on, protect, remove if given permission)
 		$out .= $plink;
 		$out .= "( $elink $hlink $dlink";
 		if ( $wgUser->isAllowed( 'mv_delete_mvd' ) ) {
 			$rlink = '<a title="' . htmlspecialchars( wfMsg( 'mv_remove_title' ) ) . '" href="javascript:mv_disp_remove_mvd(\'' . htmlspecialchars( $mvd_page->wiki_title ) . '\', \'' . htmlspecialchars( $mvd_page->id ) . '\')">' . wfMsg( 'mv_remove' ) . '</a>';
 			$out .= ' ' .  $rlink;
 		}
-		$out .= " )<br> ";
+		$out .= " )<br /> ";
 		return $out;
 	}
 	/*
@@ -544,22 +551,22 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		return $ret_ary;
 	}
 	/*
-	* @@todo in the future dataHelpers could accommodate more.. (but lets avoid recreating the halo semantic mediaWiki extension).). 
+	* @@todo in the future dataHelpers could accommodate more.. (but lets avoid recreating the halo semantic mediaWiki extension).).
 	 */
 	function get_dataHelpers( $titleKey = 'new', $mvd_id = 'new' ) {
 		global $mvMetaDataHelpers, $mvMetaCategoryHelper, $wgUser, $mvgScriptPath;
 		$o = '';
 		$sk = $wgUser->getSkin();
 		$mvd_type = strtolower( array_shift( split( ':', $titleKey ) ) );
-				
-				
+
+
 		// init metadata array: label
 		$metaData = array( 'prop' => array(), 'categories' => array() );
 		// just get msg and basic div layout: \
 		// css layout of forms was F*@#!!! withing me for some reason so yay table :P
 		$o .= '<span class="mv_basic_edit"><a href="#" onClick="mv_mvd_advs_toggle(' . htmlspecialchars( $mvd_id ) . ');return false;">' . wfMsg( 'mv_advanced_edit' ) . '</a></span>
 			 <span style="display:none" class="mv_advanced_edit"><a href="#" onClick="mv_mvd_advs_toggle(' . htmlspecialchars( $mvd_id ) . ');return false;">' . wfMsg( 'mv_basic_edit' ) . '</a></span>';
-			 
+
 		$o .= '<input type="hidden" id="adv_basic_' . htmlspecialchars( $mvd_id ) . '" name="adv_basic" value="basic">';
 		$o .= '<table class="mv_basic_edit mv_dataHelpers" id="mv_dataHelpers_' . htmlspecialchars( $mvd_id ) . '">';
 			if ( isset( $mvMetaDataHelpers[strtolower( $mvd_type )] ) ) {
@@ -572,33 +579,33 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			  		}
 			  		$metaData =  $mvTitle->getMetaData();
 				}
-									
+
 				foreach ( $mvMetaDataHelpers[strtolower( $mvd_type )] as $prop => $ac_index ) {
 					$val = '';
-					// normalize the 
+					// normalize the
 					$prop = str_replace( ' ', '_', $prop );
 					// set existing "value"
 					if ( isset( $metaData['prop'][$prop] ) ) {
 						$val = $metaData['prop'][$prop];
 					}
-					// make sure the property exists: 
+					// make sure the property exists:
 					$swmTitle = Title::newFromText( (string)$prop, SMW_NS_PROPERTY );
 					$smwImageHTML = '';
 					if ( $swmTitle->exists() ) {
 						// $help_img =$sk->makeKnownLinkObj($swmTitle, '<img src="'.htmlspecialchars($mvgScriptPath).'/skins/images/help_icon.png">');
-						// special case for person image: (would be good to generalize but kind of complicated) 
+						// special case for person image: (would be good to generalize but kind of complicated)
 						if ( $swmTitle->getText() == 'Speech_by' ) {
 							$img = mv_get_person_img( $val );
 							$smwImageHTML = '<img id="smw_' . htmlspecialchars( $prop ) . '_img" style="display: block;margin-left: auto;margin-right: auto;" src="' . htmlspecialchars( $img->getURL() ) . '" width=\"44\">';
 						}
-																		
+
 						$o .= "<tr><td><label>" . htmlspecialchars( $swmTitle->getText() ) .
 								':</label></td><td>' . $smwImageHTML . '<input class="mv_anno_ac_' . htmlspecialchars( $mvd_id ) . '" ' .
 						 		'size="40" name="smw_' . htmlspecialchars( $prop ) . '" type="text" value="' . htmlspecialchars( $val ) . '"> ' .
 								'<div class="autocomplete" id="smw_' . htmlspecialchars( $prop ) . '_choices_' . htmlspecialchars( $mvd_id ) . '" style="display: none;"/>
 								</td></tr>';
 					} else {
-						print '<span class="error">Error:</span>' . $sk->makeKnownLinkObj( $swmTitle, $swmTitle->getText() ) . ' does not exist<br>' ;
+						print '<span class="error">Error:</span>' . $sk->makeKnownLinkObj( $swmTitle, $swmTitle->getText() ) . ' does not exist<br />' ;
 					}
 				}
 				$mvgScriptPath = htmlspecialchars( $mvgScriptPath );
@@ -610,12 +617,12 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 					$o .= '<div id="mv_ext_cat_container_' . htmlspecialchars( $mvd_id ) . '"></div>';
 					foreach ( $metaData['categories'] as $cat => $page ) {
 						$catTitle = Title::newFromText( $cat, NS_CATEGORY );
-						$o .= '<span id="ext_cat_' . htmlspecialchars( $i ) . '"><input value="' . $catTitle->getDBKey() . '" type="hidden" style="display:none;" name="ext_cat_' . $i . '" class="mv_ext_cat">' .
+						$o .= '<span id="ext_cat_' . htmlspecialchars( $i ) . '"><input value="' . $catTitle->getDBkey() . '" type="hidden" style="display:none;" name="ext_cat_' . $i . '" class="mv_ext_cat">' .
 							$catTitle->getText() .
 							'<a  href="#" onclick="$j(\'#ext_cat_' . $i . '\').fadeOut(\'fast\').remove();return false;">
 								<img border="0" src="' . $mvgScriptPath . '/skins/images/delete.png">
-							</a>	
-							</span><br>';
+							</a>
+							</span><br />';
 						$i++;
 					}
 					$o .= '</tr>';
@@ -637,10 +644,10 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		$out = '';
 		if ( $mvd_id == 'new' || $mvd_id == 'seq' ) {
 			global $mvDefaultClipLength;
-			$start_time = isset( $this->start_context ) ? $this->start_context:seconds2ntp( 0 );
+			$start_time = isset( $this->start_context ) ? $this->start_context:seconds2npt( 0 );
  			$end_time  = isset( $this->end_context ) ?
-	 			seconds2ntp( ntp2seconds( $this->start_context ) + $mvDefaultClipLength ):
-	 			seconds2ntp( $mvDefaultClipLength );
+	 			seconds2npt( npt2seconds( $this->start_context ) + $mvDefaultClipLength ):
+	 			seconds2npt( $mvDefaultClipLength );
 		} else {
 	  		$mvTitle = new MV_Title( $titleKey );
 	  		if ( !$mvTitle->validRequestTitle() ) {
@@ -649,48 +656,23 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 	  		$start_time = $mvTitle->getStartTime();
 	  		$end_time = $mvTitle->getEndTime();
 		}
-  		  	
+		if($start_time == "null")
+			$start_time = '0:00:00';
 		/*
 		 * @@todo move some of this to CSS
   		 */
 		$mvd_id = htmlspecialchars( $mvd_id );
 		$mvgScriptPath = htmlspecialchars( $mvgScriptPath );
-		$out .= ' 
-	<span id="mv_adjust_msg_' . $mvd_id . '"></span> 
-	<table style="background:transparent;position:relative" width="94%" border="0"><tr><td width="40">
-<span id="track_time_start_' . $mvd_id . '" style="font-size:small">0:00:00</span>
-</td><td>' .
-'<div id="container_track_' . $mvd_id . '" style="width:100%; height: 5px; background-color: rgb(170, 170, 170); border:1px solid black; position: relative">';
-	// add some overlays to make the track look like it ends/starts at 0+-7px  
-	$out .= '<div style="position:absolute;left:0px;width:7px;height: 5px;background-color: white;border-right:1px solid black;"></div>' .
-		  '<div style="position:absolute;right:0px;width:7px;height: 5px;background-color: white;border-left:1px solid black;"></div>';
-	// the reszie div structure: 
-	$out .= '<div id="resize_' . $mvd_id . '" style="height: 20px; position: absolute;">
-		<div id="handle1_' . $mvd_id . '" style="background:no-repeat url(\'' . $mvgScriptPath . '/skins/images/slider_handle_green.gif\')"; class="ui-resizable-w ui-resizable-handle"></div>	
-		<div id="handle2_' . $mvd_id . '" style="background:no-repeat url(\'' . $mvgScriptPath . '/skins/images/slider_handle_red.gif\')"; class="ui-resizable-e ui-resizable-handle"></div>	
-		<div id="dragSpan_' . $mvd_id . '" class="ui-dragSpan"></div>		
-	</div>
-</div>' .
-// '<input type="hidden" id="wpPreview_stop_msg_' .$mvd_id.'" value="'.wfMsg('mv_adjust_preview_stop').'">'.
-// style="background: red url(\''.$mvgScriptPath.'/skins/mv_embed/images/slider_handle.gif\')"
-  /*<div id="track_'.$mvd_id.'" style="width:100%;background-color: rgb(170, 170, 170); height: 5px; position: relative;">
-    <div class="" id="handle1_'.$mvd_id.'" style="cursor: move;position:absolute;background-color:#5f5;height:20px;z-index:3">&nbsp;</div>
-    <div class="" id="handle2_'.$mvd_id.'" style="cursor: move;position:absolute;background-color:#f55;height:20px;z-index:3">&nbsp;</div>
-	<div class="" id="selected_'.$mvd_id.'" style="position:absolute;background-color:#55f;height:10px;z-index:1;overflow:hidden"></div>
-  </div>*/
-'</td><td width="50">
-<span id="track_time_end_' . $mvd_id . '" style="font-size:small">0:00:00</span>
-	</td></tr></table>
-  <br />';
-	
+		$out .= '<br /><div class="inOutSlider"></div><br />';
+
 		$out .= '<span style="float:left;"><label class="mv_css_form" for="mv_start_hr_' . $mvd_id . '"><i>' . wfMsg( 'mv_start_desc' ) . ':</i></label> ' .
 			'<input class="mv_adj_hr" size="8" maxlength="8" value="' . htmlspecialchars( $start_time ) . '" id="mv_start_hr_' . $mvd_id . '" name="mv_start_hr_' . $mvd_id . '">' .
 			'</span>';
-		
+
 		$out .= '<span style="float:left;"><label class="mv_css_form" for="mv_end_hr_' . $mvd_id . '"><i>' . wfMsg( 'mv_end_desc' ) . ':</i></label> ' .
 			'<input class="mv_adj_hr" size="8" maxlength="8" value="' . htmlspecialchars( $end_time ) . '" id="mv_end_hr_' . $mvd_id . '" name="mv_end_hr_' . $mvd_id . '">' .
 			'</span>';
-			
+
 		// output page text (if not "new")
 		// if($mvd_id!='new')
 		//	$out.=$this->get_fd_mvd_request( $titleKey, $mvd_id);
@@ -719,34 +701,34 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 	/*@@TODO document */
 	function do_edit_submit( $titleKey, $mvd_id, $returnEncapsulated = false, $newTitleKey = '' ) {
 		global $wgOut, $wgScriptPath, $wgUser, $wgTitle, $wgRequest, $wgContLang;
-		
+
 		if ( $mvd_id == 'new' ) {
 			$titleKey = substr( $_REQUEST['title'], 0, strpos( $_REQUEST['title'], '/' ) ) .
-				'/' . $_REQUEST['mv_start_hr_new'] . '/' . $_REQUEST['mv_end_hr_new'];			
-		}		
+				'/' . $_REQUEST['mv_start_hr_new'] . '/' . $_REQUEST['mv_end_hr_new'];
+		}
 		// if doing basic editing use basic wpTextBox:
 		if ( $wgRequest->getVal( 'adv_basic' ) == 'basic' ) {
 			$wpTextbox1 = $wgRequest->getVal( 'basic_wpTextbox' );
 		} else {
 			$wpTextbox1 = $wgRequest->getVal( 'wpTextbox1' );
 		}
-		
+
 		// set up the title /article
 		$wgTitle = Title::newFromText( $titleKey, MV_NS_MVD );
 		$Article = new Article( $wgTitle );
-		
+
 		$wpTextbox1 = trim( $wpTextbox1 );
 		// add all semantic form based attributes/relations to the posted body text
 		$formSemanticText = '';
 		foreach ( $_POST as $key => $val ) {
 			$do_swm_include = true;
 			if ( substr( $key, 0, 4 ) == 'smw_' ) {
-				// try attribute		
+				// try attribute
 				$swmTitle = Title::newFromText( substr( $key, 4 ), SMW_NS_PROPERTY );
 				if ( $swmTitle->exists() ) {
-					// make sure the semantic is not empty: 
+					// make sure the semantic is not empty:
 					if ( trim( $val ) != '' ) {
-						// @@todo update for other smw types: 
+						// @@todo update for other smw types:
 						if ( $swmTitle->getDBkey() == 'Spoken_By' ) {
 							$wpTextbox1 = "[[" . $swmTitle->getText() . '::' . $val . ']] ' . $wpTextbox1;
 						} else {
@@ -756,53 +738,53 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 				}
 			}
 		}
-		// add all categorizations: 
+		// add all categorizations:
 		$catNStxt = $wgContLang->getNsText( NS_CATEGORY );
 		foreach ( $_POST as $k => $v ) {
 			if ( strpos( $k, 'ext_cat_' ) !== false ) {
 				$wpTextbox1 .= "\n[[" . $catNStxt . ":" . $v . "]]";
 			}
 		}
-		// add the text to the end after a line break to not confuse manual editors		
+		// add the text to the end after a line break to not confuse manual editors
 		$editPageAjax = new MV_EditPageAjax( $Article );
 		$editPageAjax->mvd_id = $mvd_id;
-		
-		// if preview just return the parsed preview 
+
+		// if preview just return the parsed preview
 		// @@todo refactor to use as much EditPage code as possible or (switch over to the API)
-		// use the "livePreview" functionality of Edit page. 
+		// use the "livePreview" functionality of Edit page.
 		if ( isset( $_POST['wpPreview'] ) ) {
 			// $out = $editPageAjax->getPreviewText();
-			// $wgOut->addHTML($out);			
+			// $wgOut->addHTML($out);
 			$mvTitle = new MV_Title( $wgRequest->getVal( 'title' ) );
-			
+
 			$parserOutput = $this->parse_format_text( $wpTextbox1, $mvTitle );
-		
+
 			$wgOut->addParserOutput( $parserOutput );
 			return $wgOut->getHTML() . '<div style="clear:both;"><hr></div>';
 		}
-						
+
 		if ( $editPageAjax->edit( $wpTextbox1 ) == false ) {
 			if ( $mvd_id == 'new' ) {
-				
-				// get context info to position timeline element: 
+
+				// get context info to position timeline element:
 				$rt = ( isset( $_REQUEST['wgTitle'] ) ) ? $_REQUEST['wgTitle']:null;
 				$this->get_overlay_context_from_title( $rt );
 
-				// get updated mvd_id: 				
-				$dbr =& wfGetDB( DB_SLAVE );
+				// get updated mvd_id:
+				$dbr = wfGetDB( DB_SLAVE );
 				$result = & MV_Index::getMVDbyTitle( $titleKey, 'mv_page_id' );
 				$mvd_id = $result->id;
-				// update title key				
-				
+				// update title key
+
 				// purge cache for parent stream and MVD
 				MV_MVD::onEdit( $this->mvd_pages, $mvd_id );
-				
+
 				// return Encapsulated (since its a new mvd)
 				$returnEncapsulated = true;
 			} else {
-				// purge cache for parent stream 
+				// purge cache for parent stream
 				MV_MVD::onEdit( $this->mvd_pages, $mvd_id );
-			}			
+			}
 			if ( $returnEncapsulated ) {
 				//print "get Encapsulated:\n";
 				return php2jsObj( array( 'status' => 'ok',
@@ -831,24 +813,24 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		$this->duration   = $mvContextTitle->getDuration();
 	}
 	/* do the move @@todo this could be abstracted to extend special move page
-	 * although special move_page is not very complex. 
+	 * although special move_page is not very complex.
 	 */
 	 // very similar to SpecialMovepage.php doSubmit()
 	function do_adjust_submit( $titleKey, $mvd_id, $newTitle, $contextTitle, $outputMVD = '' ) {
-		global $wgOut, $mvgIP, $wgUser;		
+		global $wgOut, $mvgIP, $wgUser;
 		// get context from MVStream request title:
 		$this->get_overlay_context_from_title( $contextTitle );
-		
+
 		$this->reason = isset( $_REQUEST['wpSummary'] ) ? $_REQUEST['wpSummary']:wfMsg( 'mv_adjust_default_reason' );
 		$this->moveTalk = true;
 		$this->watch = false;
-		
+
 		// do the move:
 		if ( $wgUser->pingLimiter( 'move' ) ) {
 			$wgOut->rateLimited();
 			return array( 'status' => 'error', 'error_txt' => $wgOut->getHTML() ) ;
 		}
-		
+
   		// we should only be adjusting MVD namespace items:
 		$ot = Title::newFromText( $titleKey, MV_NS_MVD );
 		$nt = Title::newFromText( $newTitle, MV_NS_MVD );
@@ -856,8 +838,8 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		if ( !$ot->exists() ) {
 			$wgOut->addHTML( '<p class="error">' . wfMsg( 'mv_adjust_old_title_missing', $ot->getText() ) . "</p>\n" );
 			return array( 'status' => 'error', 'error_txt' => $wgOut->getHTML() );
-		}		
-		
+		}
+
 		// if the page we want to move to exists and starts with #REDIRECT override it
 		if ( $nt->exists() ) {
 			$ntArticle = new Article( $nt );
@@ -865,11 +847,11 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			if ( substr( $cur_text, 0, strlen( '#REDIRECT' ) ) == '#REDIRECT' ) {
 				// remove page (normal users can "delete mvd_pages if they are redirects)
 				$ntArticle->doDelete( wfMsgForContent( 'mv_redirect_and_delete_reason' ) );
-				// clear deletion log msg: 
+				// clear deletion log msg:
 				$wgOut->clearHTML();
 			}
 		}
-		
+
 		# Delete to make way if requested (not dealt with for now)
 		// if ( $wgUser->isAllowed( 'delete' ) && $this->deleteAndMove ) {
 		//	$article = new Article( $nt );
@@ -885,26 +867,26 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		$old_article = new Article( $ot );
 		$this->preMoveArtileText = $old_article->getContent();
 		unset( $old_article );
-		
+
 		// @@todo we should really just remove the old article (instead of putting a redirect there)
 		$error = $ot->moveTo( $nt, true, $this->reason );
-		
-		
+
+
 		if ( $error !== true ) {
 			$wgOut->addWikiText( '<p class="error">' . wfMsg( $error ) . "</p>\n" );
 			return array( 'status' => 'error', 'error_txt' => $wgOut->getHTML() );
 		} else {
-			/*print "js_log('should have moved the page');\n";
-			print "js_log('new page title: ".$nt->getText()."');\n";
-			//clear cache for title: 	
-			//$nt->invalidateCache();					
+			/*print "mw.log('should have moved the page');\n";
+			print "mw.log('new page title: ".$nt->getText()."');\n";
+			//clear cache for title:
+			//$nt->invalidateCache();
 			//Article::onArticleEdit($nt);
 			global $wgDeferredUpdateList, $mediaWiki;
 			$mediaWiki->doUpdates( $wgDeferredUpdateList );
 			//try again:
 			$newTitle = Title::newFromText($nt->getText(), MV_NS_MVD);
 			$na = new Article($newTitle);
-			print "js_log('new page content: " .$na->getContent() . "');\n";
+			print "mw.log('new page content: " .$na->getContent() . "');\n";
 			*/
 		}
 		//wfRunHooks( 'SpecialMovepageAfterMove', array( &$this , &$ot , &$nt ) )	;
@@ -913,7 +895,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		if ( $ott->exists() ) {
 			if ( $this->moveTalk && !$ot->isTalkPage() && !$nt->isTalkPage() ) {
 				$ntt = $nt->getTalkPage();
-	
+
 				# Attempt the move
 				$error = $ott->moveTo( $ntt, true, $this->reason );
 				if ( $error === true ) {
@@ -937,44 +919,44 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			$wgUser->removeWatch( $ot );
 			$wgUser->removeWatch( $nt );
 		}
-		// purge cache of parent stream & mvd_node: 
+		// purge cache of parent stream & mvd_node:
 		MV_MVD::onEdit( $this->mvd_pages, $mvd_id );
 		// MV_MVD::onMove($this->mvd_pages, $mvd_id, $newTitle);
 		// MV_MVD::disableCache($this->mvd_pages, $mvd_id);
 
 		// $tsTitle = Title::newFromText( $newTitle, MV_NS_MVD);
-		// print "js_log('titleDB: ".$tsTitle->getDBkey() ."');\n";
-		/*if($tsTitle->exists()){	
-			print "js_log('{$tsTitle->getDBkey()}  present:');\n";
+		// print "mw.log('titleDB: ".$tsTitle->getDBkey() ."');\n";
+		/*if($tsTitle->exists()){
+			print "mw.log('{$tsTitle->getDBkey()}  present:');\n";
 		}else{
-			print "js_log('{$tsTitle->getDBkey()}  not present');\n";
-		}*/						
-			
+			print "mw.log('{$tsTitle->getDBkey()}  not present');\n";
+		}*/
+
 		# return the javascript object (so that the inteface can update the user)
 		// get_fd_mvd_request($titleKey, $mvd_id, $mode='inner', $content='')
 		return array( 'status' => 'ok',
 						'error_txt' => $wgOut->getHTML(),
 						'mv_adjust_ok_move' => wfMsg( 'mv_adjust_ok_move' ),
-						'titleKey' => $newTitle,						
+						'titleKey' => $newTitle,
 						'tl_mvd' => $this->get_tl_mvd_request( $newTitle, $mvd_id )
 			);
 	}
 	function get_edit_disp( $titleKey, $mvd_id = 'new', $ns = MV_NS_MVD ) {
 		global $mvgIP, $wgOut, $wgScriptPath, $wgUser, $wgTitle, $mvMetaDataHelpers;
-		
+
 		$mvd_type = strtolower( array_shift( split( ':', $titleKey ) ) );
 		// print "new article title: " . 	$titleKey;
 		$wgTitle = Title::newFromText( $titleKey, $ns );
-		// make a title article with global title: 
+		// make a title article with global title:
 		$Article = new Article( $wgTitle );
-		// make the ediPageajax obj		
+		// make the ediPageajax obj
 
 		$editPageAjax = new MV_EditPageAjax( $Article );
 
-		
+
 		$customPreEditHtml = $this->get_adjust_disp( $titleKey, $mvd_id );
-		
-		// add custom data helpers if editing annotative layer: 
+
+		// add custom data helpers if editing annotative layer:
 		if ( $mvd_type == 'anno_en' ) {
 			$editPageAjax->setBasicHtml( $this->get_dataHelpers( $titleKey, $mvd_id ) );
 			// don't display "advanced" edit
@@ -983,16 +965,16 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 
 		// add in adjust code & hidden helpers
 		$editPageAjax->setAdjustHtml(  $customPreEditHtml	);
-		// set ts id: 
+		// set ts id:
 		$editPageAjax->mvd_id = $mvd_id;
-		
-		// fill wgOUt with edit form: 
+
+		// fill wgOUt with edit form:
 		$editPageAjax->edit();
 		return $wgOut->getHTML();
 		// @@todo base edit display off of template (some how?)
-		// special structure for editing type ht_en				
+		// special structure for editing type ht_en
 	}
-	
+
 	function get_history_disp( $titleKey, $mvd_id ) {
 		global $mvgIP, $wgOut;
 		$title = Title::newFromText( $titleKey, MV_NS_MVD );
@@ -1014,9 +996,9 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		global $wgOut;
 		$title = Title::newFromText( $titleKey, MV_NS_MVD );
 		$article = new Article( $title );
-		// purge parent article: 
+		// purge parent article:
 		MV_MVD::onEdit( $this->mvd_pages, $mvd_id );
-		// run the delete function: 
+		// run the delete function:
 		$article->doDelete( $_REQUEST['wpReason'] );
 		// check if delete
 		if ( $article->exists() ) {
@@ -1031,7 +1013,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			@list( $width, $height ) = explode( 'x', $this->mv_interface->smwProperties['playback_resolution'] );
 			if ( isset( $width ) && isset( $height ) ) {
 				if ( is_numeric( $width ) && is_numeric( $height ) ) {
-					// offset in refrence to mv_custom.css 
+					// offset in refrence to mv_custom.css
 					$width += 2;
 					$height += 30;
 					$left = $width + 10 + 30;
@@ -1047,24 +1029,24 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 class MV_MVD {
 	/*actions for mvd page edits */
 	function onEdit( &$mvd_pages_cache, $mvd_id ) {
-		// force update local mvd_page_cache from db: 				
+		// force update local mvd_page_cache from db:
 		$mvd_pages_cache[$mvd_id] = MV_Index::getMVDbyId( $mvd_id );
-		
+
 		$stream_name = MV_Stream::getStreamNameFromId( $this->mvd_pages[$mvd_id]->stream_id );
 		$streamTitle = Title::newFromText( $stream_name, MV_NS_STREAM );
 		// clear the cache for the parent stream page:
 		// print "clear parent stream: " . $streamTitle ."\n";
 		Article::onArticleEdit( $streamTitle );
-	
+
 	}
 	// updates the current version cached version of mvd
 	function onMove( &$mvd_pages_cache, $mvd_id ) {
-	//	if(!isset($mvd_pages_cache[$mvd_id]))				
-	//		$mvd_pages_cache[$mvd_id] = MV_Index::getMVDbyId($mvd_id);		
+	//	if(!isset($mvd_pages_cache[$mvd_id]))
+	//		$mvd_pages_cache[$mvd_id] = MV_Index::getMVDbyId($mvd_id);
 	}
 	/*function disableCache($mvd_id){
-		if(!isset($mvd_pages_cache[$mvd_id]))				
-			$mvd_pages_cache[$mvd_id] = MV_Index::getMVDbyId($mvd_id);	
+		if(!isset($mvd_pages_cache[$mvd_id]))
+			$mvd_pages_cache[$mvd_id] = MV_Index::getMVDbyId($mvd_id);
 		$mvd_pages_cache[$mvd_id]->usePCache=false;
 	}*/
 }

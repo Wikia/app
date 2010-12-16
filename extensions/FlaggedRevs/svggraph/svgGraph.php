@@ -541,7 +541,7 @@ class svgGraph {
       if ($this->rotTagsX == 0) {
         $transform = "transform='translate(0, $innerPadding)'";
         $this->svgPlot .= "<text text-anchor='middle' $transform dy='1em' x='$u' y='$bottom'>$text</text>\n";
-      } else if($this->rotTagsX > 0) {
+      } elseif($this->rotTagsX > 0) {
         $transform = "transform='translate(0, $innerPadding) rotate({$this->rotTagsX} $u $bottom)'";
         $this->svgPlot .= "<text text-anchor='start' $transform x='$u' y='$bottom'>$text</text>\n";
       } else {
@@ -715,8 +715,10 @@ class svgGraph {
       if ($max < 0) $factor = - pow(10, (floor(log10(abs($max))) + $resolution) );
       else $factor = pow(10, (floor(log10(abs($max))) - $resolution) );
     }
-    $max = $factor * @ceil($max / $factor);
-    $min = $factor * @floor($min / $factor);
+    wfSuppressWarnings();
+    $max = $factor * ceil($max / $factor);
+    $min = $factor * floor($min / $factor);
+    wfRestoreWarnings();
 
     return array('min' => $min, 'max' => $max);
   }
@@ -766,5 +768,3 @@ class svgGraph {
   }
 
 }
-
-?>

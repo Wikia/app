@@ -4,7 +4,7 @@
  * Form input hook that adds an Open Layers map format to Semantic Forms
  *
  * @file SM_OpenLayersFormInput.php
- * @ingroup SemanticMaps
+ * @ingroup SMOpenLayers
  * 
  * @author Jeroen De Dauw
  */
@@ -15,7 +15,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 final class SMOpenLayersFormInput extends SMFormInput {
 	
-	public $serviceName = MapsOpenLayersUtils::SERVICE_NAME;	
+	public $serviceName = MapsOpenLayers::SERVICE_NAME;	
 	
 	/**
 	 * @see MapsMapFeature::setMapSettings()
@@ -25,12 +25,10 @@ final class SMOpenLayersFormInput extends SMFormInput {
 		global $egMapsOpenLayersZoom, $egMapsOpenLayersPrefix;
 		
 		$this->elementNamePrefix = $egMapsOpenLayersPrefix;
-		$this->showAddresFunction = 'showOLAddress';	
 
 		$this->earthZoom = 1;
 
-		$this->defaultParams = MapsOpenLayersUtils::getDefaultParams();
-        $this->defaultZoom = $egMapsOpenLayersZoom;			
+        $this->defaultZoom = $egMapsOpenLayersZoom;	
 	}	
 	
 	/**
@@ -39,13 +37,13 @@ final class SMOpenLayersFormInput extends SMFormInput {
 	 */
 	protected function addFormDependencies() {
 		global $wgJsMimeType;
-		global $smgScriptPath, $smgOLFormsOnThisPage;
+		global $smgScriptPath, $smgOLFormsOnThisPage, $smgStyleVersion;
 		
-		MapsOpenLayersUtils::addOLDependencies($this->output);
+		MapsOpenLayers::addOLDependencies($this->output);
 		
 		if (empty($smgOLFormsOnThisPage)) {
 			$smgOLFormsOnThisPage = 0;
-			$this->output .= "<script type='$wgJsMimeType' src='$smgScriptPath/OpenLayers/SM_OpenLayersFunctions.js'></script>";
+			$this->output .= "<script type='$wgJsMimeType' src='$smgScriptPath/OpenLayers/SM_OpenLayersFunctions.js?$smgStyleVersion'></script>";
 		}
 	}	
 	
@@ -71,15 +69,13 @@ final class SMOpenLayersFormInput extends SMFormInput {
 	protected function addSpecificMapHTML() {
 		global $wgJsMimeType;
 		
-		$controlItems = MapsOpenLayersUtils::createControlsString($this->controls);
-		
-		$layerItems = MapsOpenLayersUtils::createLayersStringAndLoadDependencies($this->output, $this->layers);	
+		$layerItems = MapsOpenLayers::createLayersStringAndLoadDependencies($this->output, $this->layers);	
 		
 		$this->output .="
 		<div id='".$this->mapName."' style='width: {$this->width}px; height: {$this->height}px; background-color: #cccccc;'></div>  
 		
 		<script type='$wgJsMimeType'>/*<![CDATA[*/
-		addOnloadHook(makeFormInputOpenLayer('".$this->mapName."', '".$this->coordsFieldName."', ".$this->centre_lat.", ".$this->centre_lon.", ".$this->zoom.", ".$this->marker_lat.", ".$this->marker_lon.", [$layerItems], [$controlItems], $this->height));
+		addOnloadHook(makeFormInputOpenLayer('".$this->mapName."', '".$this->coordsFieldName."', ".$this->centre_lat.", ".$this->centre_lon.", ".$this->zoom.", ".$this->marker_lat.", ".$this->marker_lon.", [$layerItems], [$this->controls], $this->height));
 		/*]]>*/</script>";			
 	}
 	

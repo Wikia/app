@@ -1,10 +1,17 @@
 <?php
 
 /**
- * A query printer for maps using the Open Layers API
- *
- * @file SM_OpenLayers.php 
+ * This groupe contains all OpenLayers related files of the Semantic Maps extension.
+ * 
+ * @defgroup SMOpenLayers OpenLayers
  * @ingroup SemanticMaps
+ */
+
+/**
+ * This file holds the general information for the OpenLayers service.
+ *
+ * @file SM_OpenLayers.php
+ * @ingroup SMOpenLayers
  *
  * @author Jeroen De Dauw
  */
@@ -13,71 +20,5 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
-final class SMOpenLayers extends SMMapPrinter {
-
-	public $serviceName = MapsOpenLayers::SERVICE_NAME;	
-	
-	/**
-	 * @see SMMapPrinter::setQueryPrinterSettings()
-	 *
-	 */
-	protected function setQueryPrinterSettings() {
-		global $egMapsOpenLayersZoom, $egMapsOpenLayersPrefix;
-		
-		$this->elementNamePrefix = $egMapsOpenLayersPrefix;
-		$this->defaultZoom = $egMapsOpenLayersZoom;		
-		
-		$this->defaultParams = MapsOpenLayersUtils::getDefaultParams();
-	}	
-
-	/**
-	 * @see SMMapPrinter::doMapServiceLoad()
-	 *
-	 */
-	protected function doMapServiceLoad() {
-		global $egOpenLayersOnThisPage;
-		
-		MapsOpenLayersUtils::addOLDependencies($this->output);
-		$egOpenLayersOnThisPage++;
-		
-		$this->elementNr = $egOpenLayersOnThisPage;		
-	}
-	
-	/**
-	 * @see SMMapPrinter::addSpecificMapHTML()
-	 *
-	 */
-	protected function addSpecificMapHTML() {
-		global $wgJsMimeType;
-		
-		$controlItems = MapsOpenLayersUtils::createControlsString($this->controls);
-		
-		MapsMapper::enforceArrayValues($this->layers);
-		$layerItems = MapsOpenLayersUtils::createLayersStringAndLoadDependencies($this->output, $this->layers);
-
-		MapsUtils::makePxValue($this->width);
-		MapsUtils::makePxValue($this->height);
-			
-		$markerItems = array();
-		
-		foreach ($this->m_locations as $location) {
-			// Create a string containing the marker JS 
-			list($lat, $lon, $title, $label, $icon) = $location;
-			
-			$title = str_replace("'", "\'", $title);
-			$label = str_replace("'", "\'", $label);
-			
-			$markerItems[] = "getOLMarkerData($lon, $lat, '$title', '$label', '$icon')";
-		}
-		
-		$markersString = implode(',', $markerItems);		
-		
-		$this->output .= "<div id='$this->mapName' style='width: $this->width; height: $this->height; background-color: #cccccc;'></div>
-		<script type='$wgJsMimeType'> /*<![CDATA[*/
-			addLoadEvent(
-				initOpenLayer('$this->mapName', $this->centre_lon, $this->centre_lat, $this->zoom, [$layerItems], [$controlItems], [$markersString])
-			);
-		/*]]>*/ </script>";		
-	}
-
-}
+$egMapsServices['openlayers']['qp'] = array('class' => 'SMOpenLayersQP', 'file' => 'OpenLayers/SM_OpenLayersQP.php', 'local' => true);
+$egMapsServices['openlayers']['fi'] = array('class' => 'SMOpenLayersFormInput', 'file' => 'OpenLayers/SM_OpenLayersFormInput.php', 'local' => true);

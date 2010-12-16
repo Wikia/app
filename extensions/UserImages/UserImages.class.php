@@ -12,12 +12,12 @@ class UserImagesGallery {
 	/**
 	 * Parent parser
 	 */
-	private $parser = NULL;
+	private $parser = null;
 
 	/**
 	 * User object representing the queried user
 	 */
-	private $user = NULL;
+	private $user = null;
 
 	/**
 	 * Custom caption for output
@@ -102,7 +102,7 @@ class UserImagesGallery {
 	 * @return array
 	 */
 	private function getImages() {
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'image', '*', array( 'img_user' => $this->user->getId() ), __METHOD__, array( 'ORDER BY' => 'img_timestamp', 'LIMIT' => $this->limit ) );
 		if( $res && $dbr->numRows( $res ) > 0 ) {
 			$images = array();

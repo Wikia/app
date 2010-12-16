@@ -11,6 +11,7 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
+'path' => __FILE__,
 'name' => "EditSubpages",
 'description' => "Allows sysops to unlock a page and all subpages of that page for anonymous editing via [[MediaWiki:Unlockedpages]]",
 'descriptionmsg' => 'editsubpages-desc',

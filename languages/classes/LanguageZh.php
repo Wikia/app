@@ -11,7 +11,6 @@ class ZhConverter extends LanguageConverter {
 	function __construct($langobj, $maincode,
 								$variants=array(),
 								$variantfallbacks=array(),
-								$markup=array(),
 								$flags = array(),
 								$manualLevel = array() ) {
 		$this->mDescCodeSep = '：';
@@ -19,7 +18,6 @@ class ZhConverter extends LanguageConverter {
 		parent::__construct($langobj, $maincode,
 									$variants,
 									$variantfallbacks,
-									$markup,
 									$flags,
 									$manualLevel);
 		$names = array(
@@ -133,6 +131,7 @@ class LanguageZh extends LanguageZh_hans {
 		parent::__construct();
 
 		$variants = array('zh','zh-hans','zh-hant','zh-cn','zh-hk','zh-mo','zh-my','zh-sg','zh-tw');
+		
 		$variantfallbacks = array(
 			'zh'      => array('zh-hans','zh-hant','zh-cn','zh-tw','zh-hk','zh-sg','zh-mo','zh-my'),
 			'zh-hans' => array('zh-cn','zh-sg','zh-my'),
@@ -152,7 +151,7 @@ class LanguageZh extends LanguageZh_hans {
 
 		$this->mConverter = new ZhConverter( $this, 'zh',
 								$variants, $variantfallbacks,
-								array(),array(),
+								array(),
 								$ml);
 
 		$wgHooks['ArticleSaveComplete'][] = $this->mConverter;
@@ -171,31 +170,31 @@ class LanguageZh extends LanguageZh_hans {
 			"\"$1\"", $text);
 	}
 
-	// word segmentation
-	function stripForSearch( $string ) {
+	/**
+	 * auto convert to zh-hans and normalize special characters.
+	 *
+	 * @param $string String
+	 * @param $autoVariant String, default to 'zh-hans'
+	 * @return String
+	 */
+	function normalizeForSearch( $string, $autoVariant = 'zh-hans' ) {
 		wfProfileIn( __METHOD__ );
 
-		// eventually this should be a word segmentation
-		// for now just treat each character as a word
-		// @fixme only do this for Han characters...
-		$t = preg_replace(
-				"/([\\xc0-\\xff][\\x80-\\xbf]*)/",
-				" $1", $string);
-
-        //always convert to zh-hans before indexing. it should be
-		//better to use zh-hans for search, since conversion from
-		//Traditional to Simplified is less ambiguous than the
-		//other way around
-
-		$t = $this->mConverter->autoConvert($t, 'zh-hans');
-		$t = parent::stripForSearch( $t );
+		// always convert to zh-hans before indexing. it should be
+		// better to use zh-hans for search, since conversion from
+		// Traditional to Simplified is less ambiguous than the
+		// other way around
+		$s = $this->mConverter->autoConvert( $string, $autoVariant );
+		// LanguageZh_hans::normalizeForSearch
+		$s = parent::normalizeForSearch( $s );
 		wfProfileOut( __METHOD__ );
-		return $t;
+		return $s;
 
 	}
 
 	function convertForSearchResult( $termsArray ) {
 		$terms = implode( '|', $termsArray );
+		$terms = self::convertDoubleWidth( $terms );
 		$terms = implode( '|', $this->mConverter->autoConvertToAllVariants( $terms ) );
 		$ret = array_unique( explode('|', $terms) );
 		return $ret;

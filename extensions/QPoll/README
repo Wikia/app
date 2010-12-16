@@ -1,0 +1,13 @@
+MediaWiki extension QPoll, version 0.6.4
+
+This extension allows to create polls embedded into the wikipages. Every poll
+may contain a set of the questions of various types. The polls can be "chained"
+(when the dependent poll would be available for voting only after a successful
+submission of the "dependance" poll). Questions may have various types: with
+unique, single or multiple category selections. Categories can be placed into
+the groups (metacategories also known as category spans) to make a
+"subquestions" inside a question. Optional dependence of the question's
+proposal text on the user's choice of category in another previously voted
+poll.
+
+See http://mediawiki.org/wiki/Extension:QPoll for further details.

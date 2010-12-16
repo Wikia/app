@@ -5,8 +5,8 @@ class PopulateAwards extends UnlistedSpecialPage {
 	/**
 	 * Constructor
 	 */
-	public function __construct(){
-		parent::__construct('PopulateAwards'/*class*/, 'awardsmanage' /*restriction*/);
+	public function __construct() {
+		parent::__construct( 'PopulateAwards'/*class*/, 'awardsmanage' /*restriction*/ );
 	}
 
 	/**
@@ -14,11 +14,11 @@ class PopulateAwards extends UnlistedSpecialPage {
 	 *
 	 * @param $gift_category Mixed: parameter passed to the page or null
 	 */
-	public function execute( $gift_category ){
-		global $wgUser, $wgOut, $wgMemc;
+	public function execute( $gift_category ) {
+		global $wgUser, $wgOut, $wgUserLevels;
 
 		# If the user doesn't have the required 'awardsmanage' permission, display an error
-		if( !$wgUser->isAllowed( 'awardsmanage' ) ) {
+		if ( !$wgUser->isAllowed( 'awardsmanage' ) ) {
 			$wgOut->permissionRequired( 'awardsmanage' );
 			return;
 		}
@@ -34,8 +34,7 @@ class PopulateAwards extends UnlistedSpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
- 
-		global $wgUserLevels;
+
 		$wgUserLevels = '';
 
 		$g = new SystemGifts();

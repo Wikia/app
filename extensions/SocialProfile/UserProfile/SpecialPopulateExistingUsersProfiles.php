@@ -28,37 +28,41 @@ class SpecialPopulateUserProfiles extends SpecialPage {
 	public function execute( $params ) {
 		global $wgRequest, $wgOut, $wgUser;
 
-		if( !in_array( 'staff', $wgUser->getGroups() ) ){
+		if ( !in_array( 'staff', $wgUser->getEffectiveGroups() ) ) {
 			$wgOut->errorpage( 'error', 'badaccess' );
 			return '';
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
-		$res = $dbw->select( 'page',
+		$res = $dbw->select(
+			'page',
 			array( 'page_title' ),
 			array( 'page_namespace' => NS_USER ),
-			__METHOD__,
-			''
+			__METHOD__
 		);
 
 		$count = 0; // To avoid an annoying PHP notice
 
-		while( $row = $dbw->fetchObject( $res ) ){
+		while ( $row = $dbw->fetchObject( $res ) ) {
 			$user_name_title = Title::newFromDBkey( $row->page_title );
 			$user_name = $user_name_title->getText();
 			$user_id = User::idFromName( $user_name );
 
-			if( $user_id > 0 ){
-			//echo "user_name:{$user_name}/user_id:" . $user_id . "<br />";
-			//$count++;
-
-				$s = $dbw->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $user_id ), __METHOD__ );
+			if ( $user_id > 0 ) {
+				$s = $dbw->selectRow(
+					'user_profile',
+					array( 'up_user_id' ),
+					array( 'up_user_id' => $user_id ),
+					__METHOD__
+				);
 				if ( $s === false ) {
-					$dbw->insert( 'user_profile',
+					$dbw->insert(
+						'user_profile',
 						array(
 							'up_user_id' => $user_id,
 							'up_type' => 0
-						), __METHOD__
+						),
+						__METHOD__
 					);
 					$count++;
 				}

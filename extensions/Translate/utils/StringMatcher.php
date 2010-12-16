@@ -1,19 +1,33 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+interface StringMangler {
+	public static function EmptyMatcher();
+	public function setConf( $configuration );
 
-class StringMatcher extends StringMangler {
+	// String or array
+	public function match( $string );
+	public function mangle( $data );
+	public function unMangle( $data );
+}
+
+
+class StringMatcher implements StringMangler {
 	protected $sPrefix = '';
 	protected $aExact  = array();
 	protected $aPrefix = array();
 	protected $aRegex  = array();
 
 	public static function EmptyMatcher() {
-		return new StringMatcher( '', array() );
+		return new StringMatcher;
 	}
 
-	public function __construct( $prefix, Array $strings ) {
+	public function __construct( $prefix = '', $patterns = array() ) {
 		$this->sPrefix = $prefix;
-		$this->init( $strings );
+		$this->init( $patterns );
+	}
+
+	public function setConf( $conf ) {
+		$this->sPrefix = $conf['prefix'];
+		$this->init( $conf['patterns'] );
 	}
 
 	protected function init( Array $strings ) {

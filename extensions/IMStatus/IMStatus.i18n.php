@@ -30,11 +30,11 @@ $messages['en'] = array(
         'imstatus_gtalk_width' => 'width of the box, in pixels.',
 
         'imstatus_icq_id' => 'your ICQ ID',
-        'imstatus_icq_style' => 'a number ranging from 0 to 26 (yes, there are 27 available styles...).',
+        'imstatus_icq_style' => 'a number ranging from 0 to 26 (yes, there are 27 available styles).',
 
         'imstatus_live_code' => 'your Live Messenger website id',
         'imstatus_live_get_code' => 'your Live Messenger website id: <strong>this is not your e-mail address</strong>, you need to generate one in
-<a href="$1">your live messenger options</a>.
+<a href="$1">your Live Messenger options</a>.
 The id you need to provide is the numbers and letters between "$2" and "$3".',
 
         'imstatus_skype_nbstyle' => 'Note: If you choose a style which is also an action, your action choice will be overridden by the action matching your chosen style.',
@@ -45,26 +45,34 @@ The id you need to provide is the numbers and letters between "$2" and "$3".',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Fryed-peach
+ * @author Nghtwlkr
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'imstatus-desc' => 'Short description of the IMStatus extension, shown on [[Special:Version]].',
+	'imstatus-desc' => 'Kort beskrivelse av IMStatus-utvidelsen, vist i [[Special:Version]].',
 	'imstatus_default' => '{{Identical|Default}}',
+	'imstatus_example' => '{{Identical|Example}}',
 	'imstatus_live_get_code' => 'The parameters are pieces of static text to help a user find what he needs.
 * $1 is "http://settings.messenger.live.com/applications/CreateHtml.aspx"
 * $2 is "invitee="
 * $3 is "@apps.messenger"',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
  */
-$messages['vep'] = array(
+$messages['af'] = array(
+	'imstatus_syntax' => 'Sintaks',
+	'imstatus_default' => 'Standaard',
+	'imstatus_example' => 'Voorbeeld',
+	'imstatus_possible_val' => 'Moontlike waardes',
 	'imstatus_max' => 'maks.',
 	'imstatus_min' => 'min.',
-	'imstatus_or' => 'vai',
+	'imstatus_or' => 'of',
+	'imstatus_your_name' => 'u naam by $1',
 );
 
 /** Arabic (العربية)
@@ -130,14 +138,41 @@ $messages['arz'] = array(
 الرقم الذى تحتاج إلى توفيره هو الأرقام والحروف بين "$2" و "$3".',
 	'imstatus_skype_nbstyle' => 'ملاحظة: إذا اخترت أسلوبا هو أيضا فعل، اختيارك للفعل سيطغى عليه بواسطة الفعل المطابق لأسلوبك المختار.',
 	'imstatus_xfire_size' => 'حجم الزر، من $1 (أكبر) إلى $2 (أصغر).',
-	'imstatus_yahoo_style' => 'أسلوب الزر، من $1 (أصغر) إلى $2 (أكبر)، $3 و $4 هما للبريد الصوتي.',
+	'imstatus_yahoo_style' => 'أسلوب الزر، من $1 (أصغر) إلى $2 (أكبر)، $3 و $4 هما للبريد الصوتى.',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'imstatus-desc' => 'Дадае тэгі для паказу анлайн-статусу розных інтэрнэт-камунікатараў (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'imstatus_syntax' => 'Сынтаксіс',
 	'imstatus_default' => 'Па змоўчваньні',
+	'imstatus_example' => 'Прыклад',
+	'imstatus_possible_val' => 'Магчымыя значэньні',
+	'imstatus_max' => 'максымум',
+	'imstatus_min' => 'мінімум',
+	'imstatus_or' => 'ці',
+	'imstatus_style' => 'стыль індыкатара статусу',
+	'imstatus_action' => 'дзеяньне, калі будзе націснутая кнопка',
+	'imstatus_details_saa' => 'Дадатковай інфармацыю пра ўсе стылі і дзеяньні, глядзіце на $1.',
+	'imstatus_your_name' => 'Ваша $1 імя',
+	'imstatus_aim_presence' => '$1 паказвае Ваш статус са спасылкай, якая запускае AIM для дасылкі Вам паведамленьня, пры ўмове што ўдзельнік яго ўсталяваў.',
+	'imstatus_aim_api' => '$1 паказвае Ваш статус са спасылкай якая запускае <b>браўзэр</b>, дзе javascript-вэрсія AIM дасылае Вам паведамленьне.',
+	'imstatus_gtalk_code' => 'Ваш код у google talk',
+	'imstatus_gtalk_get_code' => 'Ваш код у google talk: атрымаць на $1.',
+	'imstatus_gtalk_height' => 'вышыня акенца ў піксэлях.',
+	'imstatus_gtalk_width' => 'шырыня акенца ў піксэлях.',
+	'imstatus_icq_id' => 'Ваш ідэнтыфікатар ICQ',
+	'imstatus_icq_style' => 'лічба з дыяпазону ад 0 да 26 (так, ёсьць 27 даступных стыляў).',
+	'imstatus_live_code' => 'Ваш ідэнтыфікатар на сайце Live Messenger',
+	'imstatus_live_get_code' => 'Ваш ідэнтыфікатар на сайце Live Messenger: <strong>гэта ня Ваш адрас электроннай пошты</strong>, Вам неабходна стварыць яго у
+<a href="$1">Вашых настройках Live Messenger</a>.
+Неабходны Вам ідэнтыфікатар складаецца з лічбаў і літар з дыяпазону паміж «$2» і «$3».',
+	'imstatus_skype_nbstyle' => 'Заўважце: калі Вы выберыце стыль, які зьяўляецца дзеяньнем, Ваш выбар дзеяньня будзе пераназначаны дзеяньнем, якое адпавядае выбранаму стылю.',
+	'imstatus_xfire_size' => 'памер кнопкі, ад $1 (самы вялікі) да $2 (самы малы).',
+	'imstatus_yahoo_style' => 'стыль кнопкі ад $1 (самы малы) да $2 (самы вялікі), $3 і $4 ужываюцца для галасавой пошты.',
 );
 
 /** Bulgarian (Български)
@@ -150,25 +185,90 @@ $messages['bg'] = array(
 	'imstatus_or' => 'или',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'imstatus-desc' => 'Ouzhpennañ balizennoù evit diskouez enlinenn ar statud (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'imstatus_syntax' => 'Ereadur',
+	'imstatus_default' => 'Dre ziouer',
+	'imstatus_example' => 'Skouer',
+	'imstatus_possible_val' => 'Talvoudoù posupl',
+	'imstatus_max' => 'muiañ',
+	'imstatus_min' => 'nebeutañ',
+	'imstatus_or' => 'pe',
+	'imstatus_style' => 'stil ar merker statud',
+	'imstatus_action' => "obererezh pa 'vez kliket ar bouton",
+	'imstatus_details_saa' => "Evit kaout muioc'h a ditouroù diwar-benn ar stiloù hag an obererezhioù, kit wa welet $1.",
+	'imstatus_your_name' => "hoc'h anv $1",
+	'imstatus_aim_presence' => "$1 a ziskouez ho statud gant ul liamm hag a lañso AIM evit ma c'helfe un implijer kas deoc'h ur gemenadenn war eeun, m'en deus staliet pep tra.",
+	'imstatus_aim_api' => '$1 a ziskouez ho statud gant ul liamm hag a lañso ur <b>merdeer</b>, un doare javascript eus AIM evit kas ur gemenadenn war eeun.',
+	'imstatus_gtalk_code' => 'ho kod Google Talk',
+	'imstatus_gtalk_get_code' => 'ho kod Google Talk : tapit anezhañ war $1.',
+	'imstatus_gtalk_height' => 'uhelder ar boest, e piksel.',
+	'imstatus_gtalk_width' => 'ledander ar boest, e piksel.',
+	'imstatus_icq_id' => 'ho ID ICQ',
+	'imstatus_icq_style' => "un niver etre 0 ha 26 (ya, tu 'zo kaout 27 stil disheñvel).",
+	'imstatus_live_code' => "ho ID war lec'hienn Live Messenger",
+	'imstatus_live_get_code' => 'Ho ker tremen Live Messenger : <strong>n\'eo ket ho chomlec\'h postel</strong>, rankout a reoc\'h krouiñ unan en
+<a href="$1">ho tibaboù Live Messenger</a>.
+An ID ho peus da reiñ a zo savet gant sifroù ha lizherennoù etre "$2" ha "$3".',
+	'imstatus_skype_nbstyle' => "Notenn : ma tibaboc'h ur stil hag a zo ivez un obererezh, ho tibab obererezh a vo flastret gant an obererezh a glot gant ar stil ho peus dibabet.",
+	'imstatus_xfire_size' => 'ment ar bouton, eus $1 (an hini vrasañ) da $2 (an hini vihanañ).',
+	'imstatus_yahoo_style' => 'doare ar bouton, eus $1 (an hini vihanañ) da $2 (an hini vrasañ), $3 ha $4 a zo kemenadennoù dre gomz.',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'imstatus-desc' => 'Dodaje oznake za prikaz raznih online statusa za IM (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'imstatus_syntax' => 'Sintaksa',
+	'imstatus_default' => 'Pretpostavljeno',
 	'imstatus_example' => 'Primjer',
 	'imstatus_possible_val' => 'Moguće vrijednosti',
+	'imstatus_max' => 'najviše',
+	'imstatus_min' => 'najmanje',
 	'imstatus_or' => 'ili',
 	'imstatus_style' => 'stil statusnog pokazatelja',
 	'imstatus_action' => 'akcija kada se klikne dugme',
+	'imstatus_details_saa' => 'Za više detalja o svim stilovima i akcijama, pogledajte $1.',
 	'imstatus_your_name' => 'Vaše $1 ime',
+	'imstatus_aim_presence' => '$1 prikazuje Vaš status sa linkom koji će pokrenuti AIM da bi Vam poslao IM, koji je korisnik instalirao.',
+	'imstatus_aim_api' => '$1 pokazuje Vaš status sa linkov koji pokreće <b>preglednik</b>, verziju javascript od AIM-a za slanje IM.',
+	'imstatus_gtalk_code' => 'Vaš google talk kod',
+	'imstatus_gtalk_get_code' => 'Vaš kod za google talk: uzmite ga na $1.',
 	'imstatus_gtalk_height' => 'visina kutije, u pikselima.',
 	'imstatus_gtalk_width' => 'širina kutije, u pikselima.',
 	'imstatus_icq_id' => 'Vaš ICQ ID',
 	'imstatus_icq_style' => 'broj između 0 i 26 (da, dostupno je 27 stilova...).',
 	'imstatus_live_code' => 'vaš Live Messenger website id',
+	'imstatus_live_get_code' => 'Vaš Live Messenger websajt id: <strong>ovo nije Vaša e-mail adresa</strong>, trebate da generišete jedan u <a href="$1">Vašim opcijama za live messenger</a>.
+Id koji trebate da navedete su brojevi i slova između oznaka "$2" i "$3".',
+	'imstatus_skype_nbstyle' => 'Napomena: Ako odaberete stil koji proizvodi akciju, Vaš izbor akcije će biti zamijenjen akcijom koja odgovara Vašem odabranom stilu.',
+	'imstatus_xfire_size' => 'veličina dugmeta, od $1 (najveće) do $2 (najmanje).',
+	'imstatus_yahoo_style' => 'stil dugmeta, od $1 (najmanje) do $2 (najveće), $3 i $4 su za zvučni mail.',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'imstatus_syntax' => 'Sintaxi',
+	'imstatus_default' => 'Per defecte',
+	'imstatus_example' => 'Exemple',
+	'imstatus_possible_val' => 'Possibles valors',
+	'imstatus_max' => 'màx',
+	'imstatus_min' => 'mín',
+	'imstatus_or' => 'o',
 );
 
 /** Czech (Česky)
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'imstatus-desc' => 'Přidává značky zobrazující stav přítomnosti uživatelů různých IM sítí (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo!)',
@@ -190,7 +290,7 @@ $messages['cs'] = array(
 	'imstatus_gtalk_height' => 'výška okraje v pixelech',
 	'imstatus_gtalk_width' => 'šířka okraje v pixelech',
 	'imstatus_icq_id' => 'váš ICQ identifikátor',
-	'imstatus_icq_style' => 'číslo v rozsahu 0-26 (ano, je dostupných 27 stylů…).',
+	'imstatus_icq_style' => 'číslo v rozsahu 0–26 (ano, je dostupných 27 stylů).',
 	'imstatus_live_code' => 'váš identifikátor na webu Live Messenger',
 	'imstatus_live_get_code' => 'váš identifikátor na webu Live Messenger: <strong>toto není vaše emailová adresa</strong>, musíte si ji vytvořit <a href="$1">ve svých nastaveních Live Messenger</a>.
 Indentifikítor, který musíte zadat, jsou písmena a číslice mezi $2 a $3.',
@@ -224,13 +324,31 @@ $messages['de'] = array(
 	'imstatus_gtalk_width' => 'Breite der Box in Pixel.',
 	'imstatus_icq_id' => 'deine ICQ-UIN',
 	'imstatus_icq_style' => 'eine Zahl zwischen 0 und 26 (ja, es gibt 27 verschiedene Stile …).',
-	'imstatus_live_code' => 'deine Live Messenger Website-ID',
-	'imstatus_live_get_code' => 'deine Live Messenger Website-ID: <strong>Das ist nicht deine E-Mail-Adresse</strong>.
-Du musst dir eine in den <a href="$1">Live Messenger Optionen</a> erstellen.
+	'imstatus_live_code' => 'deine Live-Messenger-Website-ID',
+	'imstatus_live_get_code' => 'deine Live-Messenger-Website-ID: <strong>Das ist nicht deine E-Mail-Adresse</strong>.
+Du musst dir eine in den <a href="$1">Live-Messenger-Optionen</a> erstellen.
 Die ID, die du benötigst, sind die Zahlen und Buchstaben zwischen „$2“ und „$3“.',
 	'imstatus_skype_nbstyle' => 'Hinweis: wenn du einen Stil aussuchst, der auch eine Aktion beinhaltet, wird deine Aktionsauswahl durch die Aktion des Stiles ersetzt.',
 	'imstatus_xfire_size' => 'die Größe der Schaltfläche, von $1 (größte) bis $2 (kleinste).',
 	'imstatus_yahoo_style' => 'der Stil der Schaltfläche, von $1 (kleinste) bis $2 (größte), $3 und $4 sind für Voicemail.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ * @author Umherirrender
+ */
+$messages['de-formal'] = array(
+	'imstatus_your_name' => 'Ihr $1-Name',
+	'imstatus_aim_presence' => '$1 zeigt Ihren Status mit einem Link, der AIM startet (sofern er installiert ist), um Ihnen eine Nachricht zu senden.',
+	'imstatus_aim_api' => '$1 zeigt Ihren Status mit einem Link, der eine <b>Browser</b>, JavaScript Version von AIM, startet, um Ihnen eine Nachricht zu senden.',
+	'imstatus_gtalk_code' => 'Ihr Google-Talk-Code',
+	'imstatus_gtalk_get_code' => 'Ihren Google-Talk-Code erhalten Sie bei $1.',
+	'imstatus_icq_id' => 'Ihre ICQ-UIN',
+	'imstatus_live_code' => 'Ihre Live-Messenger-Website-ID',
+	'imstatus_live_get_code' => 'Ihre Live-Messenger-Website-ID: <strong>Das ist nicht Ihre E-Mail-Adresse</strong>.
+Sie müssen sich eine in den <a href="$1">Live-Messenger-Optionen</a> erstellen.
+Die ID, die Sie benötigen, sind die Zahlen und Buchstaben zwischen „$2“ und „$3“.',
+	'imstatus_skype_nbstyle' => 'Hinweis: wenn Sie einen Stil aussuchen, der auch eine Aktion beinhaltet, wird Ihre Aktionsauswahl durch die Aktion des Stiles ersetzt.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -265,15 +383,36 @@ ID, kótaryž musyš pódaś, su licby a pismiki mjazy "$2 a "$3".',
 	'imstatus_yahoo_style' => 'stil tłocaška, wót $1 (nejmjeńšy) do $2 (nejwětšy), $3 a $4 stej za Voicemail.',
 );
 
+/** Greek (Ελληνικά)
+ * @author Consta
+ * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'imstatus_syntax' => 'Συντακτικό',
+	'imstatus_default' => 'Προεπιλογή',
+	'imstatus_example' => 'Παράδειγμα',
+	'imstatus_possible_val' => 'Πιθανές τιμές',
+	'imstatus_max' => 'μεγ',
+	'imstatus_min' => 'ελαχ',
+	'imstatus_or' => 'ή',
+	'imstatus_your_name' => 'το όνομά σας $1',
+	'imstatus_gtalk_height' => 'ύψος κουτιού σε πίξελ',
+	'imstatus_gtalk_width' => 'πλάτος κουτιού σε πίξελ',
+	'imstatus_icq_id' => 'η ταυτότητα ICQ σας',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'imstatus_syntax' => 'Sintakso',
 	'imstatus_default' => 'Defaŭlta',
 	'imstatus_example' => 'Ekzemplo',
-	'imstatus_possible_val' => 'Eblaj valutoj',
+	'imstatus_possible_val' => 'Eblaj valoroj',
 	'imstatus_max' => 'maks',
 	'imstatus_min' => 'min',
 	'imstatus_or' => 'aŭ',
@@ -286,8 +425,10 @@ $messages['eo'] = array(
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Imre
+ * @author Translationista
  */
 $messages['es'] = array(
+	'imstatus-desc' => 'Añade etiquetas para mostrar varios estados de mensajería instantánea en línea (AIM, Google Talk, ICQ, MSN / Live Messenger, Skype, Xfire, Yahoo)',
 	'imstatus_syntax' => 'Sintaxis',
 	'imstatus_default' => 'Por defecto',
 	'imstatus_example' => 'Ejemplo',
@@ -299,21 +440,32 @@ $messages['es'] = array(
 	'imstatus_action' => 'acción cuando el botón está presionado',
 	'imstatus_details_saa' => 'Para más detalles acerca de todos los estilos y acciones, vea $1.',
 	'imstatus_your_name' => 'tu $1 nombre',
+	'imstatus_aim_presence' => '$1 muestra tu status con un vínculo que ejecutará AIM para enviarte un mensaje instantáneo, siempre que el usuario lo haya instalado.',
+	'imstatus_aim_api' => '$1 muestra tu estado con un vínculo que ejecutará un <b>navegador</b>, una versión JavaScript de AIM para enviarte un mensaje instantáneo.',
 	'imstatus_gtalk_code' => 'tu código de discusión google',
 	'imstatus_gtalk_get_code' => 'tu código de discusión google: obtenlo en $1.',
 	'imstatus_gtalk_height' => 'altura de la tabla, en pixeles.',
 	'imstatus_gtalk_width' => 'ancho de la tabla, en pixeles.',
 	'imstatus_icq_id' => 'Tu ICQ ID',
+	'imstatus_icq_style' => 'un número del 0 al 26 (sí, hay 27 estilos disponibles).',
+	'imstatus_live_code' => 'tu ID de Live Messenger',
+	'imstatus_live_get_code' => 'tu ID de Live Messenger: <strong>esta no es tu dirección de correo electrónico</strong>; debes generar uno <a href="$1">en tus opciones del Live Messenger</a>.El ID que debes proporcionar son los números y letras entre "$2" y "$3".',
+	'imstatus_skype_nbstyle' => 'Observación: Si elige un estilo que sea también una acción, la acción elegida previamente será invalidada por la acción concordante con el estilo que elija.',
 	'imstatus_xfire_size' => 'el tamaño del botón, de $1 (mayor) a $2 (menor).',
 	'imstatus_yahoo_style' => 'el estilo del botón, de $1 (mayor) a $2 (menor), $3 y $4 son para correo de voz.',
 );
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
+	'imstatus_syntax' => 'Sintaxia',
 	'imstatus_default' => 'Lehenetsia',
 	'imstatus_example' => 'Adibidea',
+	'imstatus_max' => 'max',
+	'imstatus_min' => 'min',
+	'imstatus_or' => 'edo',
 );
 
 /** Persian (فارسی)
@@ -326,7 +478,9 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Crt
  * @author Nike
+ * @author Silvonen
  * @author Vililikku
+ * @author ZeiP
  */
 $messages['fi'] = array(
 	'imstatus-desc' => 'Lisää elementit monien pikaviestimien tilan näyttämiseen (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo).',
@@ -334,9 +488,17 @@ $messages['fi'] = array(
 	'imstatus_default' => 'Oletus',
 	'imstatus_example' => 'Esimerkki',
 	'imstatus_possible_val' => 'Mahdolliset arvot',
+	'imstatus_max' => 'enintään',
+	'imstatus_min' => 'vähintään',
+	'imstatus_or' => 'tai',
 	'imstatus_style' => 'tilanilmaisimen tyyli',
 	'imstatus_action' => 'toimenpide, kun painiketta napsautetaan',
 	'imstatus_details_saa' => 'Lisätietoja kaikista tyyleistä ja toimenpiteistä löytyy sivulta $1.',
+	'imstatus_your_name' => '$1-nimesi',
+	'imstatus_aim_presence' => '$1 näyttää tilasi linkkinä, joka avaa AIM:n lähettämään sinulle pikaviestiä, jos käyttäjällä on se asennettuna.',
+	'imstatus_aim_api' => '$1 näyttää tilasi linkkinä, joka avaa <b>selaimen</b> AIM:n JavaScript-versioon lähettämään sinulle pikaviestiä.',
+	'imstatus_gtalk_code' => 'google talk -tunnuksesi',
+	'imstatus_gtalk_get_code' => 'google talk -tunnuksesi: hanki se osoitteessa $1.',
 	'imstatus_gtalk_height' => 'laatikon korkeus, pikseleinä.',
 	'imstatus_gtalk_width' => 'laatikon leveys, pikseleinä.',
 	'imstatus_icq_id' => 'ICQ-tunnuksesi',
@@ -344,6 +506,9 @@ $messages['fi'] = array(
 	'imstatus_live_code' => 'Live Messenger -sivuston tunnuksesi',
 	'imstatus_live_get_code' => 'Live Messenger -sivuston tunnus: <strong>tämä ei ole sähköpostiosoitteesi</strong>. Sinun täytyy luoda se <a href="$1">Live Messenger -asetuksissasi</a>.
 Tunnus, joka sinun pitää antaa, on numeroita ja kirjaimia merkkijonojen <code>$2</code> ja <code>$3</code> väliltä.',
+	'imstatus_skype_nbstyle' => 'Huomaa: Jos valitset tyylin joka on myös toiminto, valitsemasi tyylin toiminto yliajaa valitsemasi toiminnon.',
+	'imstatus_xfire_size' => 'painikkeen koko, $1:stä (suurin) $2:een (pienin).',
+	'imstatus_yahoo_style' => 'painikkeen tyyli, $1:stä (pienin) $2:een (suurin), $3 ja $4 ovat äänivastaajalle.',
 );
 
 /** French (Français)
@@ -396,7 +561,7 @@ $messages['gl'] = array(
 	'imstatus_details_saa' => 'Para obter información sobre todos os estilos e accións, consulte $1.',
 	'imstatus_your_name' => 'o seu nome $1',
 	'imstatus_aim_presence' => '$1 mostra o seu status cunha ligazón que executará o AIM para enviarlle unha mensaxe instantánea, sempre que o usuario o teña instalado.',
-	'imstatus_aim_api' => '$1 mostra o seu status cunha ligazón que executará desde un <b>navegador</b> unha versión JavaScript de AIM para enviarlle unha mensaxe instantánea.',
+	'imstatus_aim_api' => '$1 mostra o seu estado cunha ligazón que executará un <b>navegador</b>, unha versión JavaScript de AIM para enviarlle unha mensaxe instantánea.',
 	'imstatus_gtalk_code' => 'o código da súa conversa Google',
 	'imstatus_gtalk_get_code' => 'o código da súa conversa Google: obtéñao en $1.',
 	'imstatus_gtalk_height' => 'alto da caixa, en píxeles.',
@@ -406,16 +571,18 @@ $messages['gl'] = array(
 	'imstatus_live_code' => 'o seu ID da páxina web do Live Messenger',
 	'imstatus_live_get_code' => 'o seu ID da páxina web do Live Messenger: <strong>este non é o seu enderezo de correo electrónico</strong>, necesita xerar un <a href="$1">nas súas opcións do Live Messenger</a>.
 O ID que precisa proporcionar son os números e letras entre "$2" e "$3".',
-	'imstatus_skype_nbstyle' => 'Nota: se escolle un estilo que tamén sexa unha acción, a súa escolla da acción será sobreescrita pola acción que coincida co estilo elixido.',
+	'imstatus_skype_nbstyle' => 'Nota: se escolle un estilo que tamén sexa unha acción, a súa escolla da acción será sobrescrita pola acción que coincida co estilo elixido.',
 	'imstatus_xfire_size' => 'o botón do tamaño, de $1 (o maior) a $2 (o menor).',
 	'imstatus_yahoo_style' => 'o botón do estilo, de $1 (o menor) a $2 (o maior), $3 e $4 son para as mensaxes faladas.',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
  * @author Omnipaedista
  */
 $messages['grc'] = array(
 	'imstatus_syntax' => 'Σύνταξις',
+	'imstatus_default' => 'Προκαθωρισμένη',
 	'imstatus_max' => 'μέγ',
 	'imstatus_min' => 'ἐλάχ',
 	'imstatus_or' => 'ἢ',
@@ -444,7 +611,7 @@ $messages['gsw'] = array(
 	'imstatus_gtalk_height' => 'Hechi vum Chaschte Pixel.',
 	'imstatus_gtalk_width' => 'Breiti vum Chaschte in Pixel.',
 	'imstatus_icq_id' => 'Dyy ICQ-UIN',
-	'imstatus_icq_style' => 'e Zahl zwische 0 un 26 (jo, s git 27 verschideni Stil …).',
+	'imstatus_icq_style' => 'e Zahl zwische 0 un 26 (jo, s git 27 verschideni Stil ...).',
 	'imstatus_live_code' => 'Dyy Live Messenger Website-ID',
 	'imstatus_live_get_code' => 'Dyy Live Messenger Website-ID: <strong>Des isch nit Dyy E-Mail-Adräss</strong>.
 Du muesch Di eini in dr <a href="$1">Live Messenger Optione</a> aalege.
@@ -519,6 +686,39 @@ ID, kotryž dyrbiš podać, su ličby a pismiki mjez "$2" a "$3".',
 	'imstatus_yahoo_style' => 'stil tłóčatka, wot $1 (najmjeńši) do $2 (najwjetši), $3 a $4 stej za Voicemail.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'imstatus-desc' => 'Tagek különböző azonnali üzenetküldő szolgáltatások bejelentkezési állapotának megjelenítésére (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'imstatus_syntax' => 'Szintaxis',
+	'imstatus_default' => 'Alapértelmezett',
+	'imstatus_example' => 'Példa',
+	'imstatus_possible_val' => 'Lehetséges értékek',
+	'imstatus_max' => 'max.',
+	'imstatus_min' => 'min.',
+	'imstatus_or' => 'vagy',
+	'imstatus_style' => 'állapotjelző stílusa',
+	'imstatus_action' => 'művelet a gombra való kattintáskor',
+	'imstatus_details_saa' => 'További részletekért az összes stílusról és műveletről lásd a következő lapot: $1.',
+	'imstatus_your_name' => '$1-azonosító',
+	'imstatus_aim_presence' => 'A(z) $1 megjeleníti az állapotodat egy hivatkozással, ami elindítja az AIM programot hogy azonnali üzenetet küldjenek neked (ha a felhasználónak telepítve van).',
+	'imstatus_aim_api' => 'A(z) $1 megjeleníti a bejelentkezési állapotodat egy hivatkozással, ami elindít egy <b>böngészőt</b> az AIM javascript-es változatával, hogy azonnali üzenetet küldjenek neked.',
+	'imstatus_gtalk_code' => 'a google talk kódod',
+	'imstatus_gtalk_get_code' => 'a Google Talk kódodat a(z) $1 címen tudhatod meg.',
+	'imstatus_gtalk_height' => 'a doboz magassága, képpontban.',
+	'imstatus_gtalk_width' => 'a doboz szélessége, pixelekben.',
+	'imstatus_icq_id' => 'az ICQ-azonosítód',
+	'imstatus_icq_style' => '0-tól 26-ig terjedő szám (igen, 27 stílus van)',
+	'imstatus_live_code' => 'a Live Messenger weboldal azonosítód',
+	'imstatus_live_get_code' => 'a Live Messenger weboldal azonosítód: <strong>ez nem az e-mail címed</strong>, készítened kell egyet a <a href="$1">Live Messenger beállításaidnál</a>.
+Az azonosító amit meg kell adnod az "$2" és "$3" közti számok és betűk.',
+	'imstatus_skype_nbstyle' => 'Megjegyzés: ha olyan stílust választasz, ami egyben művelet is, az egyébként választott műveletet felül fogja bírálni a stílushoz tartozó.',
+	'imstatus_xfire_size' => 'a gomb mérete, a legnagyobbtól ($1) a legkisebbig ($2).',
+	'imstatus_yahoo_style' => 'a gomb stílusa a legkisebbtől ($1) a legnagyobbig ($2), $3 és $4 pedig a hangpostához.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -547,9 +747,74 @@ $messages['ia'] = array(
 	'imstatus_live_get_code' => 'tu ID del sito web Live Messenger: <strong>isto non es tu adresse de e-mail.</strong> Tu debe generar un ID per medio de
 <a href="$1">tu optiones de Live Messenger</a>.
 Le ID a fornir hic es le numeros e litteras inter "$2" e "$3".',
-	'imstatus_skype_nbstyle' => 'Nota: Si tu selige un stilo que es tamben un action, tu selection de action essera ultrapassate per le action correspondente a tu stilo seligite.',
+	'imstatus_skype_nbstyle' => 'Nota: Si tu selige un stilo que es tamben un action, tu selection de action essera supplantate per le action correspondente a tu stilo seligite.',
 	'imstatus_xfire_size' => 'le grandor del button, de $1 (le plus grande) a $2 (le plus parve).',
 	'imstatus_yahoo_style' => 'le stilo del button, de $1 (le plus parve) a $2 (le plus grande), $3 e $4 es pro le messages vocal.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author IvanLanin
+ */
+$messages['id'] = array(
+	'imstatus-desc' => 'Menambahkan tag untuk menampilkan status daring dari berbagai IM (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'imstatus_syntax' => 'Sintaks',
+	'imstatus_default' => 'Baku',
+	'imstatus_example' => 'Contoh',
+	'imstatus_possible_val' => 'Nilai yang mungkin',
+	'imstatus_max' => 'maks',
+	'imstatus_min' => 'min',
+	'imstatus_or' => 'atau',
+	'imstatus_style' => 'gaya indikator status',
+	'imstatus_action' => 'tindakan ketika tombol diklik',
+	'imstatus_details_saa' => 'Untuk informasi lebih rinci tentang semua gaya dan tindakan, lihat $1.',
+	'imstatus_your_name' => 'nama $1 Anda',
+	'imstatus_aim_presence' => '$1 menunjukkan status Anda dengan pranala yang akan menjalankan AIM untuk mengirim Anda pesan istan, asalkan pengguna telah menginstalnya.',
+	'imstatus_aim_api' => '$1 menunjukkan status Anda dengan pranala yang akan menjalankan suatu versi javascript <b>peramban</b> AIM untuk mengirimkan Anda pesan instan.',
+	'imstatus_gtalk_code' => 'kode google talk Anda',
+	'imstatus_gtalk_get_code' => 'kode google takl Anda: dapatkan di $1.',
+	'imstatus_gtalk_height' => 'tinggi kotak, dalam piksel.',
+	'imstatus_gtalk_width' => 'lebar kotak, dalam piksel',
+	'imstatus_icq_id' => 'ID ICQ Anda',
+	'imstatus_icq_style' => 'suatu angka berkisar antara 0 hingga 26 (ya, tersedia 27 gaya).',
+	'imstatus_live_code' => 'ID situs web Live Messenger Anda',
+	'imstatus_live_get_code' => 'ID situs web Live Messenger Anda: <strong>ini bukan alamat surel Anda</strong>, Anda perlu membuatnya di <a href="$1">opsi Live Messenger Anda</a>.
+ID yang perlu Anda berikan adalah angka dan huruf antara "$2" dan "$3".',
+	'imstatus_skype_nbstyle' => 'Catatan: Jika Anda memilih suatu gaya yang juga merupakan suatu tindakan, pilihan tindakan Anda akan diganti dengan tindakan yang cocok dengan gaya yang dipilih.',
+	'imstatus_xfire_size' => 'ukuran tombol, dari $1 (terbesar) hingga $2 (terkecil).',
+	'imstatus_yahoo_style' => 'gaya  tombol, dari $1 (terkecil) hingga $2 (terbesar), $3 dan $4 ditujukan untuk kotak suara.',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'imstatus-desc' => 'Aggiunge tag per mostrare lo stato di connessione in diversi programmi di messaggistica istantanea (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'imstatus_syntax' => 'Sintassi',
+	'imstatus_default' => 'Predefinito',
+	'imstatus_example' => 'Esempio',
+	'imstatus_possible_val' => 'Possibili valori',
+	'imstatus_max' => 'max',
+	'imstatus_min' => 'min',
+	'imstatus_or' => 'o',
+	'imstatus_style' => "stile dell'indicatore di stato",
+	'imstatus_action' => 'azione quando si fa clic sul pulsante',
+	'imstatus_details_saa' => 'Per ulteriori informazioni su tutti gli stili e le azioni, consultare $1.',
+	'imstatus_your_name' => 'tuo nome $1',
+	'imstatus_aim_presence' => "$1 mostra il proprio stato con un collegamento che manderà un messaggio istantaneo via AIM, a condizione che l'utente lo abbia installato.",
+	'imstatus_aim_api' => '$1 mostra il proprio stato con un collegamento che avvierà un <b>browser</b>, versione javascript di AIM per inviarti un messaggio istantaneo.',
+	'imstatus_gtalk_code' => 'tuo codice google talk',
+	'imstatus_gtalk_get_code' => 'tuo codice google talk: ottienilo a $1.',
+	'imstatus_gtalk_height' => 'altezza della casella, in pixel.',
+	'imstatus_gtalk_width' => 'larghezza della casella, in pixel.',
+	'imstatus_icq_id' => 'tuo ID ICQ',
+	'imstatus_icq_style' => 'un numero fra 0 e 26 (sì, ci sono 27 stili disponibili).',
+	'imstatus_live_code' => 'tuo id del sito web Live Messenger',
+	'imstatus_live_get_code' => 'tuo id del sito web Live Messenger: <strong>questo non è il tuo indirizzo email</strong>, è necessario generarne uno nelle <a href="$1">proprie opzioni Live Messenger</a>.
+L\'id che bisogna fornire sono i numeri e le lettere fra "$2" e "$3".',
+	'imstatus_skype_nbstyle' => "Nota: se si sceglie uno stile che è anche un'azione, la scelta dell'azione verrà sovrascritta dalle azioni che corrispondono allo stile scelto.",
+	'imstatus_xfire_size' => 'dimensione del pulsante, da $1 (il più grande) a $2 (il più piccolo).',
+	'imstatus_yahoo_style' => 'lo stile del pulsante, da $1 (il più piccolo) a $2 (il più grande), $3 e $4 sono per i messaggi vocali.',
 );
 
 /** Japanese (日本語)
@@ -575,16 +840,16 @@ $messages['ja'] = array(
 	'imstatus_aim_api' => '$1は、あなたにインスタントメッセージを送信できるように、ブラウザーを起動して JavaScript 版の AIM を表示するリンクを付けて、あなたの状態を表示します。',
 	'imstatus_gtalk_code' => 'あなたのGoogleトークコード',
 	'imstatus_gtalk_get_code' => 'あなたのGoogleトークコード: $1で取得する。',
-	'imstatus_gtalk_height' => 'ボックスの高さ（ピクセル単位）',
-	'imstatus_gtalk_width' => 'ボックスの幅（ピクセル単位）',
+	'imstatus_gtalk_height' => 'ボックスの高さ(ピクセル単位)',
+	'imstatus_gtalk_width' => 'ボックスの幅(ピクセル単位)',
 	'imstatus_icq_id' => 'あなたのICQ ID',
-	'imstatus_icq_style' => '0から26の範囲の数（つまり、27の有効なスタイルが存在します…）',
+	'imstatus_icq_style' => '0から26の範囲の数(つまり、27の有効なスタイルが存在します...)',
 	'imstatus_live_code' => 'あなたのLive MessengerウェブサイトのID',
 	'imstatus_live_get_code' => 'あなたのLiveメッセンジャー・ウェブサイトのID: <strong>これは、あなたのeメールアドレスではなく</strong>、 <a href="$1">あなたのLiveメッセンジャーのオプション</a>で取得する必要があります。
 必要とされるIDは、"$2"と"$3"の間の文字と数字からなります。',
 	'imstatus_skype_nbstyle' => '註: もし、あなたがアクションをともなったスタイルを選択したならば、あなたの選択したアクションは、選択されたスタイルに適合するアクションで上書きされます。',
-	'imstatus_xfire_size' => '$1（最大）から$2（最小）のボタンのサイズ。',
-	'imstatus_yahoo_style' => '$1（最大）から$2（最小）のボタンのスタイル（$3と$4は、音声メール用）。',
+	'imstatus_xfire_size' => '$1(最大)から$2(最小)のボタンのサイズ。',
+	'imstatus_yahoo_style' => '$1(最大)から$2(最小)のボタンのスタイル($3と$4は、音声メール用)。',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -646,6 +911,7 @@ De Akßjuhn en dä Aanzeisch weet jenumme.",
  * @author Robby
  */
 $messages['lb'] = array(
+	'imstatus-desc' => 'Setzt Markéierungen derbäi déi den Online-Status vu verschiddenen Instant Messanger Systemer (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo) weisen',
 	'imstatus_syntax' => 'Syntax',
 	'imstatus_default' => 'Standard',
 	'imstatus_example' => 'Beispill',
@@ -653,18 +919,27 @@ $messages['lb'] = array(
 	'imstatus_max' => 'max',
 	'imstatus_min' => 'min',
 	'imstatus_or' => 'oder',
+	'imstatus_style' => 'Styl vum Indicateur vum Status',
+	'imstatus_action' => 'Aktioun wann de Knäppche geklickt ass',
+	'imstatus_details_saa' => "fir méi Detailer iwwer d'Stiler and d'Aktioune, kukckt w.e.g. $1.",
 	'imstatus_your_name' => 'ären $1 Numm',
 	'imstatus_gtalk_code' => 'Äre Google Talk Code',
+	'imstatus_gtalk_get_code' => 'Ären Goggle-Talk-Code: Fot Iech en op $1.',
 	'imstatus_gtalk_height' => 'Höicht vun der Këscht a Pixel.',
 	'imstatus_gtalk_width' => 'Breet vun der Këscht, a Pixel.',
 	'imstatus_icq_id' => 'är ICQ ID',
 	'imstatus_icq_style' => 'eng Zuel tëschent 0 a 26 (jo, et gëtt 27 verschidde Stylen ...).',
+	'imstatus_live_code' => 'Är Live Messenger Website-Idendifikatioun',
+	'imstatus_xfire_size' => "d'Gréisst vum Knäppchen, vun $1 (gréissten) bis $2 (klengsten).",
+	'imstatus_yahoo_style' => 'de Styl vum Knäppchen, vun $1 (klengsten) bis $2 (gréissten), $3 a(n) $4 si fir Voicemail.',
 );
 
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
+	'imstatus-desc' => 'Додава ознаки за приказ на разни сатуси во програми за инстант-пораки (IM)  (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
 	'imstatus_syntax' => 'Синтакса',
 	'imstatus_default' => 'Основно',
 	'imstatus_example' => 'Пример',
@@ -673,8 +948,24 @@ $messages['mk'] = array(
 	'imstatus_min' => 'min',
 	'imstatus_or' => 'или',
 	'imstatus_style' => 'стил на статус индикаторот',
-	'imstatus_action' => 'акција кога ќе се кликне на копчето',
+	'imstatus_action' => 'дејство при кликнување на копчето',
+	'imstatus_details_saa' => 'За повеќе подробности за сите стилови и дејства, погледајте $1.',
 	'imstatus_your_name' => 'вашето $1 име',
+	'imstatus_aim_presence' => '$1 го прикажува вашиот статус заедно со врска која ќе го отвори AIM за праќање на инстант-порака, доколку корисникот го има инсталирано.',
+	'imstatus_aim_api' => '$1 го прикажува вашиот статус со врска која ќе отвори <b>прелистувач</b>, javascript-верзија на AIM за праќање на инстант-порака.',
+	'imstatus_gtalk_code' => 'вашиот код на google talk',
+	'imstatus_gtalk_get_code' => 'ваѓиот код на google talk code: преземете го на $1.',
+	'imstatus_gtalk_height' => 'висината на кутијата, во пиксели.',
+	'imstatus_gtalk_width' => 'ширината на кутијата, во пиксели.',
+	'imstatus_icq_id' => 'вашиот ICQ ID',
+	'imstatus_icq_style' => 'број од 0 до 26 (да, постојат 27 различни стилови).',
+	'imstatus_live_code' => 'вашиот id на веб-страницата на Live Messenger',
+	'imstatus_live_get_code' => 'вашиот id на веб-страницата на Live Messenger website : <strong>ова не е вашата е-пошта</strong>, ќе треба да го создадете во
+<a href="$1">вашите прилагодувања на Live Messenger</a>.
+Во тој id треба да има букви и бројки од „$2“ до „$3“.',
+	'imstatus_skype_nbstyle' => 'Белешка: Ако одберете стил кој е истовремено и дејство, вашиот избор на дејство ќе биде заменет со дејството соодветно на одбраниот стил.',
+	'imstatus_xfire_size' => 'големина на копчето, од $1 (најголемо) до $2 (најмало).',
+	'imstatus_yahoo_style' => 'стил на копчето, од $1 (најмало) до $2 (најголемо), $3 и $4 се за говорна пошта.',
 );
 
 /** Erzya (Эрзянь)
@@ -760,6 +1051,38 @@ ID\'en du må oppgje er tala og bokstavane mellom  «$2» og «$3».',
 	'imstatus_yahoo_style' => 'knappestilen, frå $1 (minst) til $2 (størst), $3 og $4 er for lydpost.',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'imstatus-desc' => 'Legg til merkelapper for å vise forskjellige påloggingsstatuser i direktemeldingsprogram (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'imstatus_syntax' => 'Syntaks',
+	'imstatus_default' => 'Standard',
+	'imstatus_example' => 'Eksempel',
+	'imstatus_possible_val' => 'Mulige verdier',
+	'imstatus_max' => 'max',
+	'imstatus_min' => 'min',
+	'imstatus_or' => 'eller',
+	'imstatus_style' => 'stilen til statusindikatoren',
+	'imstatus_action' => 'handling når knappen blir klikket på',
+	'imstatus_details_saa' => 'For flere detaljer om alle stilene og handligene, se $1.',
+	'imstatus_your_name' => 'ditt $1 navn',
+	'imstatus_aim_presence' => '$1 viser statusen din med en lenke som vil starte AIM for å sende deg en direktemelding, gitt at brukeren har det installert.',
+	'imstatus_aim_api' => '$1 viser statusen din med en lenke som vil starte en <b>nettleser</b>-javaskriptversjon av AIM for å sende deg en direktemelding.',
+	'imstatus_gtalk_code' => 'din google talk-kode',
+	'imstatus_gtalk_get_code' => 'din google talk-kode: få den på $1.',
+	'imstatus_gtalk_height' => 'boksens høyde, i piksler.',
+	'imstatus_gtalk_width' => 'boksens bredde, i piksler.',
+	'imstatus_icq_id' => 'din ICQ-ID',
+	'imstatus_icq_style' => 'et tall i intervallet fra 0 til 26 (ja, det finnes 27 tilgjengelige stiler).',
+	'imstatus_live_code' => "ID'en til ditt Live Messenger-nettsted",
+	'imstatus_live_get_code' => 'ID\'en til ditt Live Messenger-nettsted: <strong>dette er ikke e-postadressen din</strong>, du må lage en i <a href="$1">dine Live Messenger-alternativ</a>.
+ID\'en du må oppgi er tallene og bokstavene mellom "$2" og "$3".',
+	'imstatus_skype_nbstyle' => 'Merk: Dersom du velger en stil som også er en handling vil handlingsvalget ditt bli overkjørt av handlingen som samsvarer med stilvalget ditt.',
+	'imstatus_xfire_size' => 'knappens størrelse, fra $1 (størst) til $2 (minst).',
+	'imstatus_yahoo_style' => 'knappes stil, fra $1 (minst) til $2 (størst), $3 og $4 er for lydpost.',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -780,16 +1103,25 @@ $messages['oc'] = array(
 	'imstatus_aim_api' => "$1 aficha vòstre estat amb un ligam qu'aviarà dins un <b>navigador</b> una version javascript de AIM per vos mandar un messatge instantanèu.",
 	'imstatus_gtalk_code' => 'vòstre còde Google Talk',
 	'imstatus_gtalk_get_code' => 'vòstre còde Google Talk : obtenètz-lo sus $1.',
-	'imstatus_gtalk_height' => 'nautor de la boita, en pixèls.',
-	'imstatus_gtalk_width' => 'largor de la boita, en pixèls.',
+	'imstatus_gtalk_height' => 'nautor de la bóstia, en pixèls.',
+	'imstatus_gtalk_width' => 'largor de la bóstia, en pixèls.',
 	'imstatus_icq_id' => 'vòstre identificant ICQ',
 	'imstatus_icq_style' => 'un nombre entre 0 e 26 (òc, i a 27 estils disponibles...).',
-	'imstatus_live_code' => 'vòstre identificant sul sit Live Messenger',
-	'imstatus_live_get_code' => 'vòstre identificant sul sit Live Messenger : <strong>es pas vòstra adreça de messatjariá</strong>, vos ne cal generir un dins <a href="$1">vòstras opcions Live Messenger</a>.
+	'imstatus_live_code' => 'vòstre identificant sul site Live Messenger',
+	'imstatus_live_get_code' => 'vòstre identificant sul site Live Messenger : <strong>es pas vòstra adreça de messatjariá</strong>, vos ne cal generar una dins <a href="$1">vòstras opcions Live Messenger</a>.
 L’identificant de provesir aicí es compausat de chifras e letras entre « $2 » e « $3 ».',
 	'imstatus_skype_nbstyle' => "Nòta : se causissètz un estil que tanben es una accion, vòstra causida d’accion serà espotida per l’accion que correspond a l'estil qu'avètz causit.",
 	'imstatus_xfire_size' => 'la talha del boton, de $1 (la mai granda) a $2 (la mai pichona).',
 	'imstatus_yahoo_style' => "l'estil del boton, de $1 (lo mai pichon) a $2 (lo mai grand), $3 e $4 son pels messatges vocals.",
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'imstatus_or' => 'odder',
+	'imstatus_icq_id' => 'dei ICQ-ID',
+	'imstatus_icq_style' => 'en Zehl vun 0 bis 26 (ya, es gitt 27 verschiddeni Aarde …).',
 );
 
 /** Polish (Polski)
@@ -810,15 +1142,58 @@ $messages['pl'] = array(
 	'imstatus_action' => 'działanie, kiedy zostanie kliknięty przycisk',
 	'imstatus_details_saa' => 'Aby uzyskać więcej informacji na temat wszystkich stylów i działania, zobacz $1.',
 	'imstatus_your_name' => 'Twoja $1 nazwa',
+	'imstatus_aim_presence' => '$1 pokazuje Twój status oraz link który uruchamia AIM przesyłając mu Twój identyfikator jeśli użytkownik ma zainstalowany program komunikatora.',
+	'imstatus_aim_api' => '$1 pokazuje status z linkiem uruchamiającym w <b>przeglądarce</b> wersję JavaScript komunikatora AIM do wysyłania wiadomości błyskawicznych.',
 	'imstatus_gtalk_code' => 'kod komunikatora google',
 	'imstatus_gtalk_get_code' => 'kod komunikatora google – uzyskaj go z $1.',
 	'imstatus_gtalk_height' => 'wysokość okna w pikselach.',
 	'imstatus_gtalk_width' => 'szerokość okna w pikselach.',
 	'imstatus_icq_id' => 'identyfikator ICQ',
 	'imstatus_icq_style' => 'liczba z zakresu od 0 do 26 (tak, jest aż 27 dostępnych stylów...).',
+	'imstatus_live_code' => 'Twój identyfikator webowy Live Messengera',
+	'imstatus_live_get_code' => 'Twój identyfikator witryny Live Messanger – <strong>nie jest to Twój adres e‐mailowy</strong>; identyfikator musisz wygenerować w <a href="$1">opcjach swojego Live Messengera</a>.
+Identyfikator jest ciągiem liter i cyfr umieszczonych pomiędzy „$2” a „$3”.',
+	'imstatus_skype_nbstyle' => 'Uwaga: Jeśli wybierzesz styl, który jest związany z jakąś akcją, wybrane działanie zostanie nadpisane domyślną akcją odpowiadającą wybranemu stylowi.',
+	'imstatus_xfire_size' => 'wielkość przycisku od $1 (największy) do $2 (najmniejszy).',
+	'imstatus_yahoo_style' => 'styl przycisku od $1 (najmniejszy) do $2 (największy), $3 i $4 dla poczty głosowej.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'imstatus-desc' => 'A gionta dij tag për mosté vàire stat IM an linia (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfie, Yahoo)',
+	'imstatus_syntax' => 'Sintassi',
+	'imstatus_default' => 'Default',
+	'imstatus_example' => 'Esempi',
+	'imstatus_possible_val' => 'Valor possìbij',
+	'imstatus_max' => 'màssim',
+	'imstatus_min' => 'mìnim',
+	'imstatus_or' => 'o',
+	'imstatus_style' => "stil ëd l'andicator dë stat",
+	'imstatus_action' => "assion quand ël boton a l'é sgnacà",
+	'imstatus_details_saa' => "Për pi 'd detaj dzora tùit jë stij e j'assion, varda $1.",
+	'imstatus_your_name' => 'tò nòm $1',
+	'imstatus_aim_presence' => "$1 a mostra tò stat con un colegament che a farà parte AIM për mandete un mëssagi subitan, se l'utent a l'ha anstalalo.",
+	'imstatus_aim_api' => "$1 a mostra tò stat con un colegament che a farà parte un <a>navigator</b>, version javascript d'AIM për mandete un mëssagi subitan.",
+	'imstatus_gtalk_code' => 'tò còdes google talk',
+	'imstatus_gtalk_get_code' => 'tò còdes google talk: pij-lo a $1.',
+	'imstatus_gtalk_height' => 'autëssa dël box, an pixel.',
+	'imstatus_gtalk_width' => 'larghëssa dël box, an pixel.',
+	'imstatus_icq_id' => 'tò ID ICQ',
+	'imstatus_icq_style' => 'un nùmer da 0 a 26 (é!, a-i son 27 stij disponìbij),',
+	'imstatus_live_code' => 'tò identificativ an sël sit Live Messenger',
+	'imstatus_live_get_code' => 'tò identificativ dël sit Live Messenger: <strong>cost-sì a l\'é pa toa adrëssa ëd pòsta eletrònica</strong>, it deve generene un an 
+<a href="$1">toa opsion Live Messenger</a>.
+L\'identificativ ch\'it deve dé a son ij nùmer e le litre an tra "$2" e "$3".',
+	'imstatus_skype_nbstyle' => "Nòta: S'it serne në stil che a l'é ëdcò n'assion, toa assion sërnùa a sarà coatà da l'assion ch'a corispond a tò stil sërnù.",
+	'imstatus_xfire_size' => 'la dimension dël boton, da $1 (ël pi gròss) a $2 (ël pi cit).',
+	'imstatus_yahoo_style' => 'lë stil dël boton, da $1 (ël pi cit) a $2 (ël pi gròss), $3 e $4 a son për mëssagi vocaj.',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -843,8 +1218,8 @@ $messages['pt'] = array(
 	'imstatus_icq_id' => 'o seu ID do ICQ',
 	'imstatus_icq_style' => 'um número entre 0 e 26 (sim, existem 27 estilos disponíveis...).',
 	'imstatus_live_code' => 'o seu ID do sítio Live Messenger',
-	'imstatus_live_get_code' => 'o seu ID do sítio Live Messenger: <strong>não é o seu endereço de e-mail</strong>, precisará de gerar um nas <a href="$1">opções do seu Live Messenger</a>.
-O ID que você precisa de fornecer consiste em números e letras entre "$2" e "$3".',
+	'imstatus_live_get_code' => 'o seu ID do Live Messenger: <strong>não é o seu endereço de correio electrónico</strong>, tem de gerar um ID nas <a href="$1">opções do Live Messenger</a>.
+O ID que precisa de fornecer são os números e letras entre "$2" e "$3".',
 	'imstatus_skype_nbstyle' => 'Nota: Se escolher um estilo que seja também uma acção, a sua escolha de acção será suplantada pela acção que corresponda ao seu estilo escolhido.',
 	'imstatus_xfire_size' => 'o tamanho do botão, de $1 (maior) a $2 (menor).',
 	'imstatus_yahoo_style' => 'o estilo do botão, de $1 (menor) a $2 (maior), $3 e $4 são para correio de voz.',
@@ -893,6 +1268,8 @@ $messages['ro'] = array(
 	'imstatus_max' => 'max',
 	'imstatus_min' => 'min',
 	'imstatus_or' => 'sau',
+	'imstatus_gtalk_height' => 'înălţimea cutiei, în pixeli.',
+	'imstatus_gtalk_width' => 'lăţimea cutiei, în pixeli.',
 	'imstatus_icq_style' => 'un număr între 0 şi 26 (da, există 27 de stiluri disponibile...).',
 	'imstatus_xfire_size' => 'mărimea butoanelor, de la $1 (cel mai mare) la $2 (cel mai mic).',
 );
@@ -917,9 +1294,11 @@ $messages['roa-tara'] = array(
 
 /** Russian (Русский)
  * @author Ferrer
+ * @author Innv
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'imstatus-desc' => 'Добавляет теги для отображения различных статусов IM (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
 	'imstatus_syntax' => 'Синтаксис',
 	'imstatus_default' => 'По умолчанию',
 	'imstatus_example' => 'Пример',
@@ -928,7 +1307,24 @@ $messages['ru'] = array(
 	'imstatus_min' => 'мин.',
 	'imstatus_or' => 'или',
 	'imstatus_style' => 'стиль индикатора состояния',
+	'imstatus_action' => 'действие при нажатии кнопки',
+	'imstatus_details_saa' => 'Для подробностей о всех стилях и действиях, смотрите $1.',
+	'imstatus_your_name' => 'ваше $1 имя',
+	'imstatus_aim_presence' => '$1 показывает ваш статус вместе с ссылкой, которая запускает AIM для отправления сообщения, если у пользователя он установлен.',
+	'imstatus_aim_api' => '$1 показывает ваш статус вместе с ссылкой, которая запускает <b>браузер</b>, с javascript-версий AIM для отправления сообщения.',
+	'imstatus_gtalk_code' => 'ваш код google talk',
+	'imstatus_gtalk_get_code' => 'ваш код google code: получите его на $1',
+	'imstatus_gtalk_height' => 'высота блока, в пикселах.',
+	'imstatus_gtalk_width' => 'ширина блока, в пикселах.',
 	'imstatus_icq_id' => 'ваш ICQ ID',
+	'imstatus_icq_style' => 'числа от 0 до 26 (да, существует 27 доступных стилей).',
+	'imstatus_live_code' => 'ваш id вебсайта Live Messenger',
+	'imstatus_live_get_code' => 'ваш id вебсайта Live Messenger: <strong>это не ваш адрес электронной почты</strong>, вы должны создать его в
+<a href="$1">ваших настройках Live Messenger</a>.
+В id должны быть буквы и цифры от «$2» до «$3».',
+	'imstatus_skype_nbstyle' => 'Примечание. Если вы выбрали стиль, который является также действием, ваши действия будут переопределены действием, соответствующим выбранному вами стилю.',
+	'imstatus_xfire_size' => 'размер кнопки, от $1 (наибольший) до $2 (наименьший).',
+	'imstatus_yahoo_style' => 'стиль кнопки, от $1 (наименьший) до $2 (наибольший), $3 и $4 для голосовой почты.',
 );
 
 /** Slovak (Slovenčina)
@@ -963,6 +1359,44 @@ Identifikátor, ktorý musíte zadať, sú písmená a číslice medzi „$2” 
 	'imstatus_yahoo_style' => 'štýl tlačidla od $1 (najväčší) do $2 (najmenší). $3 a $4 slúžia pre hlasovú poštu.',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'imstatus_syntax' => 'Синтакса',
+	'imstatus_default' => 'Подразумевано',
+	'imstatus_example' => 'Пример',
+	'imstatus_possible_val' => 'Могуће вредности',
+	'imstatus_max' => 'макс',
+	'imstatus_min' => 'мин',
+	'imstatus_or' => 'или',
+	'imstatus_action' => 'акција по клику дугмета',
+	'imstatus_your_name' => 'Ваше $1 име',
+	'imstatus_gtalk_height' => 'висина кутије, у пикселима.',
+	'imstatus_gtalk_width' => 'ширина кутије, у пикселима.',
+	'imstatus_icq_id' => 'Ваш ICQ ID',
+	'imstatus_xfire_size' => 'величина дугмета, од $1 (највеће) до $2 (најмање).',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'imstatus_syntax' => 'Sintaksa',
+	'imstatus_default' => 'Podrazumevano',
+	'imstatus_example' => 'Primer',
+	'imstatus_possible_val' => 'Moguće vrednosti',
+	'imstatus_max' => 'maks',
+	'imstatus_min' => 'min',
+	'imstatus_or' => 'ili',
+	'imstatus_action' => 'akcija po kliku dugmeta',
+	'imstatus_your_name' => 'Vaše $1 ime',
+	'imstatus_gtalk_height' => 'visina kutije, u pikselima.',
+	'imstatus_gtalk_width' => 'širina kutije, u pikselima.',
+	'imstatus_icq_id' => 'Vaš ICQ ID',
+	'imstatus_xfire_size' => 'veličina dugmeta, od $1 (najveće) do $2 (najmanje).',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -984,20 +1418,29 @@ $messages['stq'] = array(
 
 /** Swedish (Svenska)
  * @author Najami
+ * @author Per
  */
 $messages['sv'] = array(
+	'imstatus-desc' => 'Lägg till tag för att visa olika status i direktmeddelandeprogram (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
 	'imstatus_syntax' => 'Syntax',
 	'imstatus_default' => 'Standard',
 	'imstatus_example' => 'Exempel',
+	'imstatus_possible_val' => 'Möjliga värden',
 	'imstatus_max' => 'högst',
 	'imstatus_min' => 'minst',
 	'imstatus_or' => 'eller',
+	'imstatus_style' => 'stil på statusindikatorn',
+	'imstatus_action' => 'handling när du klickar på knappen',
+	'imstatus_details_saa' => 'För mer detaljer om all stilar och handlingar, se $1.',
 	'imstatus_your_name' => 'ditt $1 namn',
 	'imstatus_gtalk_code' => 'din google talk-kod',
 	'imstatus_gtalk_get_code' => 'din google talk-kod: få den på $1.',
 	'imstatus_gtalk_height' => 'boxens höjd, i pixlar.',
 	'imstatus_gtalk_width' => 'boxens bredd, i pixlar.',
 	'imstatus_icq_id' => 'ditt ICQ-ID',
+	'imstatus_icq_style' => 'ett tal mellan 0 och 26 (ja det finns 27 möjliga stilar).',
+	'imstatus_live_code' => 'ditt ID till Live Messenger sajten',
+	'imstatus_skype_nbstyle' => 'Notera: Om du väljer en stil som också är en handling så kommer ditt handlingsval att bli ändrat till att matcha din valda stil.',
 	'imstatus_xfire_size' => 'knappens storlek, från $1 (störst) till $2 (minst).',
 );
 
@@ -1047,6 +1490,57 @@ Ang id na dapat mong ibigay ay ang mga bilang at mga titik na nasa pagitan ng "$
 	'imstatus_yahoo_style' => 'estilo ng pindutan, mula $1 (pinakamaliit) hanggang $2 (pinakamalaki), para sa "liham na may tinig" (\'\'voicemail\'\') ang $3 at $4.',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'imstatus_syntax' => 'Sözdizimi',
+	'imstatus_default' => 'Varsayılan',
+	'imstatus_example' => 'Örnek',
+	'imstatus_possible_val' => 'Olası değerler',
+	'imstatus_max' => 'maks',
+	'imstatus_min' => 'min',
+	'imstatus_or' => 'veya',
+	'imstatus_style' => 'durum göstergesi biçemi',
+	'imstatus_action' => 'düğmeye tıklandığında etkin',
+	'imstatus_details_saa' => 'Tüm biçem ve işlemler hakkında daha fazla bilgi almak için $1 sayfasını inceleyin.',
+	'imstatus_gtalk_code' => 'google talk kodunuz',
+	'imstatus_gtalk_get_code' => 'google talk kodunuz: $1 kaynağından alın.',
+	'imstatus_gtalk_height' => 'kutunun piksel cinsinden yüksekliği.',
+	'imstatus_gtalk_width' => 'kutunun piksel cinsinden genişliği.',
+	'imstatus_icq_id' => 'ICQ numaranız',
+	'imstatus_icq_style' => '0 ile 26 arasında bir rakam (evet, 27 kullanılabilir biçem mevcut)',
+	'imstatus_live_code' => 'Live Messenger web sitesi kimliğiniz',
+	'imstatus_xfire_size' => 'düğme boyutu, $1 (en büyük) ile $2 (en küçük) arasında.',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ерней
+ */
+$messages['tt-cyrl'] = array(
+	'imstatus_default' => 'Килешү буенча',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'imstatus_example' => 'Приклад',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'imstatus_syntax' => 'Sintaksis',
+	'imstatus_default' => 'Augotižjärgendusen mödhe',
+	'imstatus_example' => 'Ozutez',
+	'imstatus_max' => 'maks.',
+	'imstatus_min' => 'min.',
+	'imstatus_or' => 'vai',
+	'imstatus_icq_id' => 'teiden ICQ ID',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
@@ -1070,7 +1564,7 @@ $messages['vi'] = array(
 	'imstatus_gtalk_height' => 'chiều cao của hộp (pixel).',
 	'imstatus_gtalk_width' => 'chiều ngang của hộp (pixel).',
 	'imstatus_icq_id' => 'ID của bạn trên ICQ',
-	'imstatus_icq_style' => 'số trong dãy từ 0 đến 26 (có 27 kiểu chứ…).',
+	'imstatus_icq_style' => 'số trong dãy từ 0 đến 26 (có 27 kiểu chứ...).',
 	'imstatus_live_code' => 'ID website của bạn trên Live Messenger',
 	'imstatus_live_get_code' => 'ID website của bạn trên Live Messenger: <strong>đây không phải là địa chỉ thư điện tử của bạn</strong>! Bạn cần phải tạo ra ID ở trang <a href="$1">tùy chọn Live Messenger</a>. Bạn cần cho vào ID có các số và chữ từ “$2” đến “$3”.',
 	'imstatus_skype_nbstyle' => 'Chú ý: Nếu bạn chọn cùng kiểu cùng tác động, tác động của kiểu được chọn sẽ được sử dụng, thay vì tác động được chọn.',
@@ -1119,11 +1613,43 @@ $messages['zh-hans'] = array(
 	'imstatus_gtalk_height' => '箱体的高度，单位为pixel。',
 	'imstatus_gtalk_width' => '箱体的宽度，单位为pixel。',
 	'imstatus_icq_id' => '您的ICQ ID',
-	'imstatus_icq_style' => '范围从0到26（没错，一共有27种样式可供选择……）。',
+	'imstatus_icq_style' => '范围从0到26（没错，一共有27种样式可供选择...…）。',
 	'imstatus_live_code' => '您的Live Messenger网站ID',
 	'imstatus_live_get_code' => '您的Live Messenger网站ID：<strong>并不是您的电子邮件地址</strong>，您需要在<a href="$1">您的live messenger选项
 </a>中生成。
 需要提供的ID由"$2"和"$3"之间的数字、字母组成。',
-	'imstatus_xfire_size' => '按钮的大小，可从 $1 (最大) 到 $2 (最小)供选择。',
+	'imstatus_xfire_size' => '按钮的大小，可从 $1 （最大） 到 $2 （最小）供选择。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'imstatus-desc' => '增加了顯示各種即時通訊軟件在線狀態標籤（例如AIM、Google Talk、ICQ、MSN/Live Messenger、Skype、Xfire、Yahoo）',
+	'imstatus_syntax' => '語法',
+	'imstatus_default' => '默認',
+	'imstatus_example' => '例子',
+	'imstatus_possible_val' => '可能值',
+	'imstatus_max' => '最大',
+	'imstatus_min' => '最小',
+	'imstatus_or' => '或者',
+	'imstatus_style' => '狀態指示符的樣式',
+	'imstatus_action' => '當按鈕按下時，就',
+	'imstatus_details_saa' => '如要獲得更多關於樣式和動作的信息，請參見$1。',
+	'imstatus_your_name' => '您的$1名稱',
+	'imstatus_aim_presence' => '$1顯示了您的狀態，並提供了一個鏈接，以便那些安裝了AIM的用戶可以直接發給您一個即時信息。',
+	'imstatus_aim_api' => '$1顯示了您的狀態，並提供了一個鏈接，以啟動<b>瀏覽器</b>，通過javascript版本的AIM發給您一個即時信息。',
+	'imstatus_gtalk_code' => '您的Google Talk代碼',
+	'imstatus_gtalk_get_code' => '您的Google Talk代碼：在$1獲得它。',
+	'imstatus_gtalk_height' => '箱體的高度，單位為pixel。',
+	'imstatus_gtalk_width' => '箱體的寬度，單位為pixel。',
+	'imstatus_icq_id' => '您的ICQ ID',
+	'imstatus_icq_style' => '範圍從0到26（沒錯，一共有27種樣式可供選擇...…）。',
+	'imstatus_live_code' => '您的Live Messenger網站ID',
+	'imstatus_live_get_code' => '您的Live Messenger網站ID：<strong>並不是您的電子郵件地址</strong>，您需要在<a href="$1">您的live messenger選項
+</a>中生成。
+需要提供的ID由"$2"和"$3"之間的數字、字母組成。',
+	'imstatus_xfire_size' => '按鈕的大小，可從 $1 （最大） 到 $2 （最小）供選擇。',
 );
 

@@ -80,20 +80,19 @@ abstract class MediaTransformOutput {
 		}
 	}
 
-	function getDescLinkAttribs( $alt = false, $params = '' ) {
+	function getDescLinkAttribs( $title = null, $params = '' ) {
 		$query = $this->page ? ( 'page=' . urlencode( $this->page ) ) : '';
 		if( $params ) {
 			$query .= $query ? '&'.$params : $params;
 		}
-		$title = $this->file->getTitle();
-		if ( strval( $alt ) === '' ) {
-			$alt = $title->getText();
-		}
-		return array(
+		$attribs = array(
 			'href' => $this->file->getTitle()->getLocalURL( $query ),
 			'class' => 'image',
-			'title' => $alt
 		);
+		if ( $title ) {
+			$attribs['title'] = $title;
+		}
+		return $attribs;
 	}
 }
 
@@ -155,18 +154,29 @@ class ThumbnailImage extends MediaTransformOutput {
 		}
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
-		# Note: if title is empty and alt is not, make the title empty, don't
-		# use alt; only use alt if title is not set
+
+		/**
+		 * Note: if title is empty and alt is not, make the title empty, don't
+		 * use alt; only use alt if title is not set
+		 * wikia change, Inez
+		 */
 		$title = !isset( $options['title'] ) ? $alt : $options['title'];
-		$query = empty($options['desc-query'])  ? '' : $options['desc-query'];
+
+		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
 
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$linkAttribs = array( 'href' => $options['custom-url-link'] );
+			if ( !empty( $options['title'] ) ) {
+				$linkAttribs['title'] = $options['title'];
+			}
 		} elseif ( !empty( $options['custom-title-link'] ) ) {
 			$title = $options['custom-title-link'];
-			$linkAttribs = array( 'href' => $title->getLinkUrl(), 'title' => $title->getFullText() );
+			$linkAttribs = array(
+				'href' => $title->getLinkUrl(),
+				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
+			);
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			$linkAttribs = $this->getDescLinkAttribs( $title, $query );
+			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
 			/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
 			/* Images SEO project */
 			$linkAttribs['data-image-name'] = $this->file->getTitle()->getText();
@@ -186,7 +196,6 @@ class ThumbnailImage extends MediaTransformOutput {
 			'src' => $this->url,
 			'width' => $this->width,
 			'height' => $this->height,
-			'border' => 0,
 		);
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";

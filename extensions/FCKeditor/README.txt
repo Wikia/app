@@ -1,7 +1,6 @@
 == Installation ==
 
-This integration is mainly done by a dedicated MediaWiki extension. But, to better integration with MediaWiki, some of its code had to be "hacked", detailed instruction may be found here:
-http://mediawiki.fckeditor.net/index.php/FCKeditor_integration_guide
+This integration is done by a dedicated MediaWiki extension. See http://www.mediawiki.org/wiki/Extension:FCKeditor_(Official) for details.
 
 == About the project ==
 
@@ -15,7 +14,7 @@ So, to see it in action, just go to our Sandbox: http://mediawiki.fckeditor.net/
 
 == Integration status ==
 
-We have created the first working prototype for this integration. It is still in the first stages, but shows the potential of it, and it’s actually fully usable. In any case, use it on production web sites at your own risk. 
+We have created the first working prototype for this integration. It is still in the first stages, but shows the potential of it, and itâ€™s actually fully usable. In any case, use it on production web sites at your own risk. 
 
 The following features are currently available: 
 * Rich editing: instead of writing inside a plain text area, using Wikitext markup for the text    * structure and formatting, you can use visual tools, which reflect the final output. 

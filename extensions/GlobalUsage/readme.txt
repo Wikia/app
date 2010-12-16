@@ -4,28 +4,13 @@ by the CheckUsage tool on the toolserver, but it is merely a hack of function
 that should be built in.
 
 GlobalUsage creates a new table globalimagelinks, which is basically the same
-as imagelinks, but includes the usage of all images on all associated wikis,
-including local images. The field il_from has been replaced by gil_wiki,
-gil_page, gil_page_namespace and gil_page_title which contain respectively the
-interwiki prefix, page id and page namespace and title. Since the foreign wiki
-may use different namespaces, the namespace name needs to be included in the 
-link as well.
+as imagelinks, but includes the usage of all images on all associated wikis. 
 
-There should be one globalimagelinks table per farm, even if multiple shared
-image repositories are used. The field gil_is_local indicates whether the file
-exists locally.
+The field il_from has been replaced by (gil_wiki, gil_page, gil_page_namespace, 
+gil_page_title) which contain respectively the wiki id, page id and page 
+namespace name (because they can not be fetched by the shared repo) and title. 
 
-== GlobalUsageDaemon and populating the table ==
-This extension provides a daemon which can be used when for some reason hooks
-can not be used, like on the Toolserver. This daemon will readout recentchanges
-to fill the globalimagelinks table.
+The table globalimagelinks actually does not track the usage of links of images
+on the shared repository, but simply all images that do not exist on the local
+wiki.
 
-This daemon is also useful for populating the globalimagelinks table. Using
-this method it is possible to get an as consistent as posible database. To do
-so first create the table on the master wiki. Then, on each project separately:
-* Run extensions/GlobalUsage/populateGlobalUsage.php on that wiki. See
-  php extensions/GlobalUsage/populateGlobalUsage.php --help for information.
-* When the daemon has finished populating the table from the local imagelinks
-  and started to follow recentchanges, enable the extension.
-* When the daemon has reached the time at which the extension was enabled, 
-  the daemon can be stopped.

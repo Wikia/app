@@ -1,46 +1,46 @@
 <?php
 
-require_once('Attribute.php');
+require_once( 'Attribute.php' );
 
 interface AttributeIDFilter {
-	public function filter(array $attributeIDs);
+	public function filter( array $attributeIDs );
 	public function leavesOnlyOneOption();
 }
 
 class IncludeAttributeIDsFilter implements AttributeIDFilter {
 	protected $attributeIDsToInclude;
 	
-	public function __construct($attributeIDsToInclude) {
+	public function __construct( $attributeIDsToInclude ) {
 		$this->attributeIDsToInclude = $attributeIDsToInclude;
 	}
 
-	public function filter(array $attributeIDs) {
+	public function filter( array $attributeIDs ) {
 		$result = array();
 		
-		foreach ($attributeIDs as $attributeID) 
-			if (in_array($attributeID, $this->attributeIDsToInclude))
+		foreach ( $attributeIDs as $attributeID )
+			if ( in_array( $attributeID, $this->attributeIDsToInclude ) )
 				$result[] = $attributeID;
 			
 		return $result;
 	}
 
 	public function leavesOnlyOneOption() {
-		return count($this->attributeIDsToInclude) == 1;
+		return count( $this->attributeIDsToInclude ) == 1;
 	}
 }
 
 class ExcludeAttributeIDsFilter implements AttributeIDFilter {
 	protected $attributeIDsToExclude;
 	
-	public function __construct($attributeIDsToExclude) {
+	public function __construct( $attributeIDsToExclude ) {
 		$this->attributeIDsToExclude = $attributeIDsToExclude;
 	}
 
-	public function filter(array $attributeIDs) {
+	public function filter( array $attributeIDs ) {
 		$result = array();
 		
-		foreach ($attributeIDs as $attributeID) 
-			if (!in_array($attributeID, $this->attributeIDsToExclude))
+		foreach ( $attributeIDs as $attributeID )
+			if ( !in_array( $attributeID, $this->attributeIDsToExclude ) )
 				$result[] = $attributeID;
 			
 		return $result;
@@ -81,25 +81,25 @@ class PropertyToColumnFilter {
 	protected $attribute;   	// Attribute
 	protected $propertyCaption; // Caption of the first column
 	protected $valueCaption; 	// Caption of the second column
-	
-	public function __construct($identifier, $sectionCaption, array $attributeIDs, $propertyCaption = "", $valueCaption = "") {
+
+	public function __construct( $identifier, $sectionCaption, array $attributeIDs, $propertyCaption = "", $valueCaption = "" ) {
 		$this->attributeIDs = $attributeIDs;
-		$this->attribute = new Attribute($identifier, $sectionCaption, "will-be-specified-later");
+		$this->attribute = new Attribute( $identifier, $sectionCaption, "will-be-specified-later" );
 		
-		if ($propertyCaption != "")
+		if ( $propertyCaption != "" )
 			$this->propertyCaption = $propertyCaption;
 		else
 			$this->propertyCaption = "Property"; // wfMsgSc("Property"); does not work
-			
-		if ($valueCaption != "")
+
+		if ( $valueCaption != "" )
 			$this->valueCaption = $valueCaption;
 		else
 			$this->valueCaption = "Value"; // wfMsgSc("Value"); does not work
-	}                                                                
+	}
                                                                 	
 	public function getAttribute() {
 		return $this->attribute;
-	} 
+	}
 	
 	public function getAttributeIDs() {
 		return $this->attributeIDs;
@@ -114,7 +114,7 @@ class PropertyToColumnFilter {
 	}
 	
 	public function getAttributeIDFilter() {
-		return new IncludeAttributeIDsFilter($this->attributeIDs);
+		return new IncludeAttributeIDsFilter( $this->attributeIDs );
 	}
 }
 

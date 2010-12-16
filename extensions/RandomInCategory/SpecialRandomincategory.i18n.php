@@ -49,8 +49,9 @@ $messages['niu'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
+	'randomincategory-toolbox' => 'Lukrake bladsy',
 	'randomincategory-label' => 'Kategorie:',
-	'randomincategory-submit' => 'Gaan',
+	'randomincategory-submit' => 'Laat waai',
 );
 
 /** Amharic (አማርኛ)
@@ -70,6 +71,15 @@ $messages['ar'] = array(
 	'randomincategory-nocategory' => 'التصنيف $1 غير موجود أو فارغ',
 	'randomincategory-label' => 'التصنيف:',
 	'randomincategory-submit' => 'اذهب',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'randomincategory' => 'ܦܐܬܐ ܚܘܚܬܐ ܒܣܕܪܐ',
+	'randomincategory-label' => 'ܣܕܪܐ:',
+	'randomincategory-submit' => 'ܙܠ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -108,10 +118,36 @@ $messages['bg'] = array(
 	'randomincategory-label' => 'Категория:',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'randomincategory-toolbox' => 'অজানা পাতা',
+	'randomincategory-label' => 'বিশয়শ্রেণী:',
+	'randomincategory-submit' => 'যাও',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'randomincategory' => 'Ur bajenn dre zegouezh er rummad',
+	'randomincategory-desc' => '[[Special:Randomincategory|Pajenn dibar]] da gaout ur bajenn dre zegouezh er rummad',
+	'randomincategory-toolbox' => 'Pajenn dre zegouezh',
+	'randomincategory-nocategory' => "Goullo eo ar rummad $1 pe n'eus ket anezhañ",
+	'randomincategory-label' => 'Rummad :',
+	'randomincategory-submit' => 'Mont',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'randomincategory' => 'Slučajna stranica u kategoriji',
+	'randomincategory-desc' => '[[Special:Randomincategory|Posebna stranica]] za prikaz slučajne stranice u kategoriji',
+	'randomincategory-toolbox' => 'Slučajna stranica',
+	'randomincategory-nocategory' => 'Kategorija $1 ne postoji ili je prazna',
+	'randomincategory-label' => 'Kategorija:',
 	'randomincategory-submit' => 'Idi',
 );
 
@@ -176,9 +212,16 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'randomincategory' => 'Τυχαία σελίδα στην κατηγορία',
+	'randomincategory-desc' => '[[Special:Randomincategory|Ειδική σελίδα]] για την λήψη τυχαίας σελίδας στην κατηγορία',
+	'randomincategory-toolbox' => 'Τυχαία σελίδα',
+	'randomincategory-nocategory' => 'Η κατηγορία $1 δεν υπάρχει ή είναι άδεια',
 	'randomincategory-label' => 'Κατηγορία:',
+	'randomincategory-submit' => 'Πήγαινε',
 );
 
 /** Esperanto (Esperanto)
@@ -218,11 +261,14 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
  * @author Mobe
  * @author Str4nd
  */
 $messages['fi'] = array(
 	'randomincategory' => 'Satunnainen sivu luokassa',
+	'randomincategory-desc' => '[[Special:Randomincategory|Toimintosivu]], josta saa luokkakohtaisen satunnaisen sivun.',
 	'randomincategory-toolbox' => 'Satunnainen sivu',
 	'randomincategory-nocategory' => 'Luokkaa $1 ei ole tai se on tyhjä.',
 	'randomincategory-label' => 'Luokka',
@@ -241,6 +287,14 @@ $messages['fr'] = array(
 	'randomincategory-nocategory' => 'La catégorie « $1 » n’existe pas ou est vide',
 	'randomincategory-label' => 'Catégorie :',
 	'randomincategory-submit' => 'Lancer',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'randomincategory-label' => 'Catègorie :',
+	'randomincategory-submit' => 'Lanciér',
 );
 
 /** Western Frisian (Frysk)
@@ -332,9 +386,14 @@ $messages['hi'] = array(
 
 /** Hiligaynon (Ilonggo)
  * @author Jose77
+ * @author Tagimata
  */
 $messages['hil'] = array(
+	'randomincategory' => 'Lagpatan nga pahina sa kategorya',
+	'randomincategory-desc' => '[[Special:Randomincategory|Special page]] para makuha ang palagpat nga pahina sa kategorya',
 	'randomincategory-toolbox' => 'Lagpat nga Panid',
+	'randomincategory-nocategory' => 'Kategorya $1 wala pa nahimuan o blangko ini',
+	'randomincategory-label' => 'Kategorya:',
 	'randomincategory-submit' => 'Lakat',
 );
 
@@ -359,9 +418,11 @@ $messages['hsb'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'randomincategory' => 'Véletlen lap egy kategóriából',
+	'randomincategory-desc' => '[[Special:Randomincategory|Speciális lap]] véletlen lap eléréséhez adott kategóriában',
 	'randomincategory-toolbox' => 'Véletlen lap',
 	'randomincategory-nocategory' => '$1 névvel nem létezik kategória vagy üres.',
 	'randomincategory-label' => 'Kategória:',
@@ -381,10 +442,23 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Rex
  */
 $messages['id'] = array(
+	'randomincategory' => 'Halaman sembarang di kategori',
+	'randomincategory-desc' => '[[Special:Randomincategory|Halaman istimewa]] untuk melihat halaman sembarang di kategori',
+	'randomincategory-toolbox' => 'Halaman sembarang',
+	'randomincategory-nocategory' => 'Kategori $1 tidak ada atau kosong',
 	'randomincategory-label' => 'Kategori:',
+	'randomincategory-submit' => 'Tuju ke',
+);
+
+/** Ido (Ido)
+ * @author Wyvernoid
+ */
+$messages['io'] = array(
+	'randomincategory-toolbox' => 'Hazarda pagino',
 );
 
 /** Icelandic (Íslenska)
@@ -443,6 +517,14 @@ $messages['km'] = array(
 	'randomincategory-submit' => 'ទៅ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'randomincategory-label' => 'ವರ್ಗ:',
+	'randomincategory-submit' => 'ಹೋಗು',
+);
+
 /** Krio (Krio)
  * @author Jose77
  */
@@ -470,7 +552,7 @@ $messages['ksh'] = array(
 	'randomincategory-submit' => 'Loß Jonn!',
 );
 
-/** Cornish (Kernewek)
+/** Cornish (Kernowek)
  * @author Kw-Moon
  */
 $messages['kw'] = array(
@@ -500,6 +582,14 @@ $messages['lb'] = array(
 	'randomincategory-submit' => 'Lass',
 );
 
+/** Lumbaart (Lumbaart)
+ * @author Dakrismeno
+ */
+$messages['lmo'] = array(
+	'randomincategory-toolbox' => 'Una pagina a cas',
+	'randomincategory-nocategory' => "La categuria $1 o l'esista mia o l'è vöda",
+);
+
 /** Lithuanian (Lietuvių)
  * @author Homo
  */
@@ -517,6 +607,18 @@ $messages['lt'] = array(
  */
 $messages['mhr'] = array(
 	'randomincategory-toolbox' => 'Вучыдымо (случайный) статья',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'randomincategory' => 'Случајна страница во категорија',
+	'randomincategory-desc' => '[[Special:Randomincategory|Специјална страница]] за добивање на случајна страница во категорија',
+	'randomincategory-toolbox' => 'Случајна страница',
+	'randomincategory-nocategory' => 'Категоријата $1 не постои или е празна',
+	'randomincategory-label' => 'Категорија:',
+	'randomincategory-submit' => 'Оди',
 );
 
 /** Malayalam (മലയാളം)
@@ -538,6 +640,20 @@ $messages['mr'] = array(
 	'randomincategory-nocategory' => '$1 वर्ग अस्तित्वात नाही किंवा रिकामा आहे',
 	'randomincategory-label' => 'वर्ग:',
 	'randomincategory-submit' => 'चला',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Aurora
+ */
+$messages['ms'] = array(
+	'randomincategory-label' => 'Kategori:',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'randomincategory-submit' => 'Адя',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -614,15 +730,36 @@ $messages['os'] = array(
 	'randomincategory-label' => 'Категори',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'randomincategory-label' => 'Abdeeling:',
+);
+
 /** Polish (Polski)
  * @author Maikking
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'randomincategory' => 'Losowa strona w kategorii',
+	'randomincategory-desc' => '[[Special:Randomincategory|Strona specjalna]] zwracająca losową stronę z kategorii',
 	'randomincategory-toolbox' => 'Losowa strona',
 	'randomincategory-nocategory' => 'Kategoria $1 nie istnieje lub jest pusta',
 	'randomincategory-label' => 'Kategoria',
+	'randomincategory-submit' => 'Dalej',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'randomincategory' => 'Pàgina a cas ant na categorìa',
+	'randomincategory-desc' => '[[Special:Randomincategory|Pàgina special]] për pijé na pàgina a cas ant na categorìa',
+	'randomincategory-toolbox' => 'Na pàgina qualsëssìa',
+	'randomincategory-nocategory' => "La categorìa $1 a esist pa o a l'é veuida",
+	'randomincategory-label' => 'Categorìa:',
+	'randomincategory-submit' => 'Va',
 );
 
 /** Pashto (پښتو)
@@ -677,6 +814,18 @@ $messages['ro'] = array(
 	'randomincategory-label' => 'Categorie:',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'randomincategory' => "Pàggene a uecchije jndr'à categorije",
+	'randomincategory-desc' => "[[Special:Randomincategory|Pàgena speciale]] pe pigghià 'na pàgene a uecchije jndr'à categorije",
+	'randomincategory-toolbox' => 'Pàgene a uecchije',
+	'randomincategory-nocategory' => "'A categorije $1 non g'esiste o jè vacande",
+	'randomincategory-label' => 'Categorije:',
+	'randomincategory-submit' => 'Veje',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -700,6 +849,30 @@ $messages['sk'] = array(
 	'randomincategory-nocategory' => 'Kategória $1 neexistuje alebo je prázdna',
 	'randomincategory-label' => 'Kategória:',
 	'randomincategory-submit' => 'Vykonať',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'randomincategory' => 'Случајна страна из категорије',
+	'randomincategory-desc' => '[[Special:Randomincategory|Специјална страна]] за преузимање случајне стране из категорије',
+	'randomincategory-toolbox' => 'Случајна страна',
+	'randomincategory-nocategory' => 'Категорија $1 не постоји или је празна',
+	'randomincategory-label' => 'Категорија:',
+	'randomincategory-submit' => 'Иди',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'randomincategory' => 'Slučajna strana iz kategorije',
+	'randomincategory-desc' => '[[Special:Randomincategory|Specijalna strana]] za preuzimanje slučajne strane iz kategorije',
+	'randomincategory-toolbox' => 'Slučajna strana',
+	'randomincategory-nocategory' => 'Kategorija $1 ne postoji ili je prazna',
+	'randomincategory-label' => 'Kategorija:',
+	'randomincategory-submit' => 'Idi',
 );
 
 /** Seeltersk (Seeltersk)
@@ -766,6 +939,26 @@ $messages['tg-cyrl'] = array(
 	'randomincategory-submit' => 'Бирав',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'randomincategory' => 'Sahifai tasodufī dar gurūh',
+	'randomincategory-desc' => '[[Special:Randomincategory|Sahifai viƶa]] baroi giriftani sahifai tasodufī dar gurūh',
+	'randomincategory-toolbox' => 'Sahifai tasodufī',
+	'randomincategory-nocategory' => 'Gurūhi $1 vuçud nadorad jo xolī ast',
+	'randomincategory-label' => 'Gurūh:',
+	'randomincategory-submit' => 'Birav',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'randomincategory-label' => 'Kategoriýa:',
+	'randomincategory-submit' => 'Git',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -781,12 +974,22 @@ $messages['tl'] = array(
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'randomincategory' => 'Kategoriye göre rastgele sayfa',
 	'randomincategory-desc' => 'Kategoride rasgele bir sayfa için [[Special:Randomincategory|özel sayfa]]',
 	'randomincategory-toolbox' => 'Rastgele sayfa',
+	'randomincategory-nocategory' => '$1 kategorisi mevcut değil ya da boş',
 	'randomincategory-label' => 'Kategori:',
+	'randomincategory-submit' => 'Git',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'randomincategory-submit' => 'كۆچۈش',
 );
 
 /** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
@@ -794,6 +997,20 @@ $messages['tr'] = array(
  */
 $messages['ug-latn'] = array(
 	'randomincategory-submit' => 'Köchüsh',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'randomincategory-label' => 'Категорія:',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'randomincategory-label' => 'Kategorii:',
 );
 
 /** Vietnamese (Tiếng Việt)

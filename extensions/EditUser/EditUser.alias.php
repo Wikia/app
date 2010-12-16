@@ -14,16 +14,12 @@ $aliases['en'] = array(
 	'EditUser' => array( 'EditUser' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'EditUser' => array( 'تعديل_المستخدم' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'EditUser' => array( 'تعديل_المستخدم' ),
 );
@@ -43,9 +39,19 @@ $aliases['dsb'] = array(
 	'EditUser' => array( 'Wužywarske nastajenja wobźěłaś' ),
 );
 
+/** Persian (فارسی) */
+$aliases['fa'] = array(
+	'EditUser' => array( 'ویرایش_کاربر' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'EditUser' => array( 'Modifier l’utilisateur', 'ModifierUtilisateur', 'EditerUtilisateur', 'ÉditerUtilisateur', 'Éditer l’utilisateur' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'EditUser' => array( "Changiér l'utilisator", 'ChangiérLUtilisator' ),
 );
 
 /** Galician (Galego) */
@@ -58,9 +64,12 @@ $aliases['gsw'] = array(
 	'EditUser' => array( 'Benutzeryystellige bearbeite' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'EditUser' => array( 'સભ્યફેરફાર' ),
+);
+
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'EditUser' => array( 'עריכת_משתמש' ),
 );
@@ -90,6 +99,11 @@ $aliases['ia'] = array(
 	'EditUser' => array( 'Modificar usator' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'EditUser' => array( 'Sunting pengguna', 'SuntingPengguna' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'EditUser' => array( '利用者情報の編集' ),
@@ -100,9 +114,29 @@ $aliases['km'] = array(
 	'EditUser' => array( 'កែប្រែអ្នកប្រើប្រាស់' ),
 );
 
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'EditUser' => array( '사용자 편집' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'EditUser' => array( 'Metmaacher ier Enstellunge Ändere Metmaacher ier Enshtellunge Ändere' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'EditUser' => array( 'Benotzer änneren' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'EditUser' => array( 'УредиКорисник' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'EditUser' => array( 'संपादनसदस्य' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -120,9 +154,7 @@ $aliases['nl'] = array(
 	'EditUser' => array( 'GebruikerBewerken' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'EditUser' => array( 'Rediger bruker' ),
 );
@@ -132,9 +164,24 @@ $aliases['oc'] = array(
 	'EditUser' => array( 'EditarUtilizaire', 'Editar l’utilizaire' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'EditUser' => array( 'Editar utilizador' ),
+);
+
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'EditUser' => array( 'Modificare utilizator' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'EditUser' => array( 'सम्पादन्‌योजक' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'EditUser' => array( 'ÚpravaPoužívateľa' ),
 );
 
 /** Swedish (Svenska) */
@@ -155,5 +202,10 @@ $aliases['th'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'EditUser' => array( 'Baguhin ang tagagamit' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'EditUser' => array( 'KullanıcıDüzenle' ),
 );
 

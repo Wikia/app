@@ -18,6 +18,28 @@ $magicWords['ar'] = array(
 	'display_address'     => array( '0', 'عنوان_العرض', 'display_address' ),
 	'display_addresses'   => array( '0', 'عناوين_العرض', 'display_addresses' ),
 	'geocode'             => array( '0', 'كود_جغرافي', 'geocode' ),
+	'geocodelat'          => array( '0', 'كود_جغرافي_طول', 'geocodelat' ),
+	'geocodelng'          => array( '0', 'كود_جغرافي_عرض', 'geocodelng' ),
+);
+
+$magicWords['arz'] = array(
+	'display_point'       => array( '0', 'نقطة_العرض', 'display_point' ),
+	'display_points'      => array( '0', 'نقاط_العرض', 'display_points' ),
+	'display_address'     => array( '0', 'عنوان_العرض', 'display_address' ),
+	'display_addresses'   => array( '0', 'عناوين_العرض', 'display_addresses' ),
+	'geocode'             => array( '0', 'كود_جغرافي', 'geocode' ),
+	'geocodelat'          => array( '0', 'كود_جغرافى_طول', 'كود_جغرافي_طول', 'geocodelat' ),
+	'geocodelng'          => array( '0', 'كود_جغرافى_عرض', 'كود_جغرافي_عرض', 'geocodelng' ),
+);
+
+$magicWords['es'] = array(
+	'display_point'       => array( '0', 'mostrar_punto', 'display_point' ),
+	'display_points'      => array( '0', 'mostrar_puntos', 'display_points' ),
+	'display_address'     => array( '0', 'mostrar_dirección', 'mostrar_direccion', 'display_address' ),
+	'display_addresses'   => array( '0', 'mostrar_direcciones', 'display_addresses' ),
+	'geocode'             => array( '0', 'geocodificar', 'geocode' ),
+	'geocodelat'          => array( '0', 'geocodificarlat', 'geocodelat' ),
+	'geocodelng'          => array( '0', 'geocodificarlng', 'geocodificarlong', 'geocodelng' ),
 );
 
 $magicWords['mr'] = array(

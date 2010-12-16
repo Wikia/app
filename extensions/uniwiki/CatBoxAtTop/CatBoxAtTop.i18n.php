@@ -16,12 +16,20 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'catboxattop-desc' => 'Short description of the extension, shown in [[Special:Version]].',
+	'catboxattop-desc' => '{{desc}}',
 	'catboxattop-categories' => '{{Identical|Categories}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'catboxattop-categories' => 'Kategorieë',
 );
 
 /** Amharic (አማርኛ)
@@ -38,6 +46,13 @@ $messages['am'] = array(
 $messages['ar'] = array(
 	'catboxattop-desc' => 'يضيف صندوق تصنيف إلى أعلى يمين الصفحات',
 	'catboxattop-categories' => 'تصنيفات',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'catboxattop-categories' => 'ܣܕܪ̈ܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -66,12 +81,35 @@ $messages['bg'] = array(
 	'catboxattop-categories' => 'Категории',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'catboxattop-desc' => 'Ouzhpennañ a ra ur voest rummadoù e laez ar pajennoù a-zehoù.',
+	'catboxattop-categories' => 'Rummadoù',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'catboxattop-desc' => 'Dodaje okvir kategorije u gornjem desnom uglu stranice',
 	'catboxattop-categories' => 'Kategorije',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'catboxattop-desc' => "Afegeix una caixa de categoria a dalt a l'esquerra de les pàgines",
+	'catboxattop-categories' => 'Categories',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'catboxattop-categories' => 'هاوپۆلەکان',
 );
 
 /** Czech (Česky)
@@ -99,6 +137,14 @@ $messages['dsb'] = array(
 	'catboxattop-categories' => 'Kategorije',
 );
 
+/** Greek (Ελληνικά)
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'catboxattop-desc' => 'Προσθέτει ένα κουτί κατηγορίας πάνω δεξιά από τις σελίδες',
+	'catboxattop-categories' => 'Κατηγορίες',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -113,6 +159,13 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'catboxattop-desc' => 'Añade una caja de categorías en la parte superior derecha de las páginas',
 	'catboxattop-categories' => 'Categorías',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'catboxattop-categories' => 'Kategooriad',
 );
 
 /** Basque (Euskara)
@@ -139,6 +192,13 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'catboxattop-desc' => 'Ajoute une boîte de catégorie en haut à droite des pages',
 	'catboxattop-categories' => 'Catégories',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'catboxattop-categories' => 'Catègories',
 );
 
 /** Irish (Gaeilge)
@@ -189,12 +249,36 @@ $messages['hsb'] = array(
 	'catboxattop-categories' => 'Kategorije',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'catboxattop-desc' => 'Kategóriadoboz hozzáadása a lapok jobb felső sarkába',
+	'catboxattop-categories' => 'Kategóriák',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'catboxattop-desc' => 'Adde un quadro con categorias in alto a derecta del paginas',
+	'catboxattop-desc' => 'Adde un quadro con categorias in alto a dextra del paginas',
 	'catboxattop-categories' => 'Categorias',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'catboxattop-desc' => 'Menambahkan sebuah kotak kategori di kanan atas halaman',
+	'catboxattop-categories' => 'Kategori',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'catboxattop-desc' => "Aggiunge una casella della categoria nell'angolo in alto a destra delle pagine",
+	'catboxattop-categories' => 'Categorie',
 );
 
 /** Japanese (日本語)
@@ -213,6 +297,13 @@ $messages['km'] = array(
 	'catboxattop-categories' => 'ចំណាត់ថ្នាក់ក្រុម​ផ្សេងៗ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'catboxattop-categories' => 'ವರ್ಗಗಳು',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -229,11 +320,27 @@ $messages['lb'] = array(
 	'catboxattop-categories' => 'Kategorien',
 );
 
+/** Laz (Laz)
+ * @author Bombola
+ */
+$messages['lzz'] = array(
+	'catboxattop-categories' => "K'at'egorepe",
+);
+
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
+	'catboxattop-desc' => 'Додава кутија за категорија горе-десно во страниците',
 	'catboxattop-categories' => 'Категории',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'catboxattop-categories' => 'Категорият',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -260,11 +367,19 @@ $messages['nn'] = array(
 	'catboxattop-categories' => 'Kategoriar',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'catboxattop-desc' => 'Legger til en kategoriboks oppe til høyre på sider',
+	'catboxattop-categories' => 'Kategorier',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'catboxattop-desc' => 'Apondre una boita de categoria en naut a drecha de las paginas',
+	'catboxattop-desc' => 'Apondre una bóstia de categoria en naut a drecha de las paginas',
 	'catboxattop-categories' => 'Categorias',
 );
 
@@ -275,12 +390,27 @@ $messages['os'] = array(
 	'catboxattop-categories' => 'Категоритæ',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'catboxattop-categories' => 'Abdeelinge',
+);
+
 /** Polish (Polski)
  * @author Leinad
  */
 $messages['pl'] = array(
 	'catboxattop-desc' => 'Dodaje pole kategorii w prawym górnym rogu stron',
 	'catboxattop-categories' => 'Kategorie',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'catboxattop-desc' => 'A gionta na casela dla categorìa an sima a drita dla pàgina',
+	'catboxattop-categories' => 'Categorìe',
 );
 
 /** Western Punjabi (پنجابی)
@@ -336,12 +466,36 @@ $messages['ru'] = array(
 	'catboxattop-categories' => 'Категории',
 );
 
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'catboxattop-desc' => 'පිටුවල දකණු පස ඉහළට ප්‍රවර්ග කොටුවක් එකතු කරයි',
+	'catboxattop-categories' => 'ප්‍රවර්ගයන්',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'catboxattop-desc' => 'Pridáva pole s kategóriami do pravého horného rohu stránok',
 	'catboxattop-categories' => 'Kategórie',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'catboxattop-desc' => 'Додаје кутијицу за категорије у горње десне углове чланака',
+	'catboxattop-categories' => 'Категорија',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'catboxattop-desc' => 'Dodaje kutijicu za kategorije u gornje desne uglove članaka',
+	'catboxattop-categories' => 'Kategorija',
 );
 
 /** Seeltersk (Seeltersk)
@@ -374,6 +528,13 @@ $messages['tet'] = array(
 	'catboxattop-categories' => 'Kategoria sira',
 );
 
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'catboxattop-categories' => 'Kategorialar',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -399,6 +560,14 @@ $messages['uk'] = array(
 	'catboxattop-categories' => 'Категорії',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'catboxattop-desc' => 'Ližadab kategorijan menü lehtesen oiktaha ülembaižhe tahoze',
+	'catboxattop-categories' => 'Kategorijad',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -413,6 +582,13 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'catboxattop-categories' => 'Klads',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'catboxattop-categories' => 'קאַטעגאריעס',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

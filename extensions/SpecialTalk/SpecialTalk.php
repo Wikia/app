@@ -13,6 +13,7 @@ if ( ! defined( 'MEDIAWIKI' ) ) die();
  */
 $wgExtensionFunctions[] = 'wfSpecialTalk';
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'Special talk',
 	'description' => 'Adds a talk tab to Special Pages',
 	'author' => 'Ævar Arnfjörð Bjarmason'
@@ -30,8 +31,6 @@ function wfSpecialTalk() {
 		}
 
 		public function SpecialTalkHook( SkinTemplate &$skin_template, array &$content_actions ) {
-			global $wgTitle;
-
 			$title = Title::makeTitle( NS_PROJECT_TALK, $skin_template->mTitle->getText() );
 
 			$content_actions['talk'] = $skin_template->tabAction(

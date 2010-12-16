@@ -8,64 +8,36 @@
  */
 
 /** */
-require_once( 'commandLine.inc' );
+require_once( dirname(__FILE__) . '/commandLine.inc' );
 
-$mcc = new memcached( array('persistant' => true/*, 'debug' => true*/) );
+$mcc = new MWMemcached( array('persistant' => true/*, 'debug' => true*/) );
 $mcc->set_servers( $wgMemCachedServers );
 #$mcc->set_debug( true );
 
 function mccShowHelp($command) {
-
-	if(! $command ) { $command = 'fullhelp'; }
-	$onlyone = true;
-
-	switch ( $command ) {
-
-		case 'fullhelp':
-			// will show help for all commands
-			$onlyone = false;
-
-		case 'get':
-			print "get: grabs something\n";
-		if($onlyone) { break; }
-
-		case 'getsock':
-			print "getsock: lists sockets\n";
-		if($onlyone) { break; }
-
-		case 'set':
-			print "set: changes something\n";
-		if($onlyone) { break; }
-
-		case 'delete':
-			print "delete: deletes something\n";
-		if($onlyone) { break; }
-
-		case 'history':
-			print "history: show command line history\n";
-		if($onlyone) { break; }
-
-		case 'server':
-			print "server: show current memcached server\n";
-		if($onlyone) { break; }
-
-		case 'dumpmcc':
-			print "dumpmcc: shows the whole thing\n";
-		if($onlyone) { break; }
-
-		case 'exit':
-		case 'quit':
-			print "exit or quit: exit mcc\n";
-		if($onlyone) { break; }
-
-		case 'help':
-			print "help: help about a command\n";
-		if($onlyone) { break; }
-
-		default:
-			if($onlyone) {
-				print "$command: command does not exist or no help for it\n";
-			}
+	$commandList = array( 
+		'get' => 'grabs something',
+		'getsock' => 'lists sockets',
+		'set' => 'changes something',
+		'delete' => 'deletes something',
+		'history' => 'show command line history',
+		'server' => 'show current memcached server',
+		'dumpmcc' => 'shows the whole thing',
+		'exit' => 'exit mcc',
+		'quit' => 'exit mcc',
+		'help' => 'help about a command',
+	);
+	if( !$command ) { 
+		$command = 'fullhelp';
+	}
+	if( $command === 'fullhelp' ) {
+		foreach( $commandList as $cmd => $desc ) {
+			print "$cmd: $desc\n";
+		}
+	} elseif( isset( $commandList[$command] ) ) {
+		print "$command: $commandList[$command]\n";
+	} else {
+		print "$command: command does not exist or no help for it\n";
 	}
 }
 
@@ -114,6 +86,10 @@ do {
 			break;
 
 		case 'server':
+			if ( $mcc->_single_sock !== null ) {
+				print $mcc->_single_sock . "\n";
+				break;
+			}
 			$res = $mcc->get( $args[0] );
 			$hv = $mcc->_hashfunc( $args[0] );
 			for ( $i = 0; $i < 3; $i++ ) {
@@ -176,5 +152,3 @@ do {
 		}
 	}
 } while ( !$quit );
-
-

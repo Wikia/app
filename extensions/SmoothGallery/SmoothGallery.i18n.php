@@ -49,6 +49,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'smoothgallery' => 'معرض ناعم',
@@ -61,9 +62,9 @@ $messages['ar'] = array(
 	'smoothgallery-not-found' => 'لا صور تمت إضافتها للمعرض.
 من فضلك أضف صورة واحدة على الأقل.',
 	'smoothgallery-no-images' => 'لم يتم العثور على صور في هذا المعرض.
-تأكد من أن {{PLURAL:$3|الصورة|كل الصور}} المطلوبة موجودة.
-{{PLURAL:$2|الصورة|الصور}} التالية لم يتم العثور عليها: $1',
-	'smoothgallery-invalid-images' => '{{PLURAL:$2|الصورة|الصور}} المطلوبة التالية كانت من نوع غير صحيح: $1',
+تأكد من أن {{PLURAL:$3||الصورة المطلوبة موجودة|الصورتين المطلوبتين موجودتان|كل الصور المطلوبة موجودة}}.
+لم يتم العثور على {{PLURAL:$2||الصورة التالية|الصورتين التاليتين|الصور التالية}}: $1',
+	'smoothgallery-invalid-images' => 'لم تكن {{PLURAL:$2||الصورة المطلوبة التالية|الصورتان المطلوبتان التاليتان|الصور المطلوبة التالية}} من نوع صحيح: $1',
 	'smoothgallery-unexpected-error' => 'حدث خطأ غير متوقع.
 من فضلك أبلغ عن هذا الخطأ.',
 	'smoothgallery-javascript-disabled' => 'الجافاسكريبت مطلوب لرؤية هذا المعرض جيدا.',
@@ -122,11 +123,34 @@ $messages['bg'] = array(
 	'smoothgallery-desc' => 'Позволява на потребителите да създават галерии с качените от тях файлове.',
 	'smoothgallery-gallery-not-found' => 'Поисканата галерия не съществува',
 	'smoothgallery-not-found' => 'Не бяха добавени картинки в галерията. Необходимо е да се добави поне една картинка.',
-	'smoothgallery-no-images' => 'Не бяха открити картинки в галерията. Необходимо е всички картинки да съществуват. Следните картинки не бяха намерени: $1',
+	'smoothgallery-no-images' => 'Не бяха открити картинки в галерията.
+Уверете се, че {{PLURAL:$3|картинката съществува|всички картинки съществуват}}.
+{{PLURAL:$2|Следната картинка не беше намерена|Следните картинки не бяха намерени}}: $1',
 	'smoothgallery-invalid-images' => '{{PLURAL:$2|Следният заявен файл е|Следните заявени файлове са}} от невалиден тип: $1',
 	'smoothgallery-unexpected-error' => 'Възникна неочаквана грешка.
 Моля, съобщете за нея на администратор.',
 	'smoothgallery-javascript-disabled' => 'За правилно показване на галерията е необходим Javascript.',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'smoothgallery' => 'SmoothGallery',
+	'smoothgallery-desc' => 'Aotren an implijerien da grouiñ palieroù gant skeudennoù karget.
+Aotren an darn vrasañ eus dibarzhioù SmoothGallery',
+	'smoothgallery-title' => 'SmoothGallery',
+	'smoothgallery-smoothgallerytitle' => 'SmoothGallery: $1',
+	'smoothgallery-error' => '<b>Fazi gant ar SmoothGallery :</b>',
+	'smoothgallery-gallery-not-found' => "N'eus ket eus ar palier goulennet.",
+	'smoothgallery-not-found' => "N'eus bet ouzhpennet skeudenn ebet d'ar palier.
+Ouzhpennit ur skeudenn da nebeutañ, mar plij.",
+	'smoothgallery-invalid-images' => 'Ur furmad direizh a oa gant {{PLURAL:$2|ar skeudenn|ar skeudennoù}} da-heul : $1',
+	'smoothgallery-unexpected-error' => "Ur fazi dic'hortoz zo bet.
+Leugnit un danevell draen, mar plij.",
+	'smoothgallery-javascript-disabled' => 'Rekis eo JavaScript evit gwelet ervat ar skeudennaoueg.',
 );
 
 /** Bosnian (Bosanski)
@@ -151,6 +175,15 @@ Molimo ispunite izvještaj o grešci.',
 	'smoothgallery-javascript-disabled' => 'Da bi ste pravilno pregledali ovu galeriju neophodna Vam je Javascript.',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'smoothgallery-desc' => "Permet als usuaris crear galeries amb les imatges carregades.
+Permet la majoria d'opcions de SmoothGallery",
+	'smoothgallery-gallery-not-found' => 'La galeria requerida no no existeix.',
+);
+
 /** German (Deutsch)
  * @author MF-Warburg
  * @author Purodha
@@ -169,6 +202,13 @@ $messages['de'] = array(
 	'smoothgallery-invalid-images' => '{{PLURAL:$2|Das folgende Bild hat|Die folgenden Bilder haben}} einen ungültigen Typ: $1',
 	'smoothgallery-unexpected-error' => 'Es ist ein unerwarteter Fehler aufgetreten. Bitte schreibe eine Fehlermeldung.',
 	'smoothgallery-javascript-disabled' => 'JavaScript wird benötigt, um die Galerie darzustellen.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'smoothgallery-unexpected-error' => 'Es ist ein unerwarteter Fehler aufgetreten. Bitte schreiben Sie eine Fehlermeldung.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -191,6 +231,21 @@ Pśeznań se, lěc {{PLURAL:$3|pominany wobraz eksistěrujo|wšej $3 pominanej w
 	'smoothgallery-unexpected-error' => 'Njewócakana zmólka jo nastała.
 Pšosym napiš powěźeńku zmólki.',
 	'smoothgallery-javascript-disabled' => 'JavaScript jo trěbny, aby se galerija korektnje zwobrazniła.',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'smoothgallery' => 'ΟμαλήΣυλλογή',
+	'smoothgallery-title' => 'ΟμαλήΣυλλογή',
+	'smoothgallery-smoothgallerytitle' => 'ΟμαλήΣυλλογή: $1',
+	'smoothgallery-error' => '<b>Σφάλμα ΟμαλήΣυλλογή:</b>',
+	'smoothgallery-gallery-not-found' => 'Η συλλογή που απαιτήθηκε δεν υπάρχει.',
+	'smoothgallery-unexpected-error' => 'Προέκυψε ένα μη αναμενόμενο σφάλμα.
+Παρακαλώ συντάξτε μια αναφορά σφαλμάτων.',
+	'smoothgallery-javascript-disabled' => 'Η JavaScript χρειάζεται για να εμφανιστεί αυτή η συλλογή κανονικά.',
 );
 
 /** Esperanto (Esperanto)
@@ -233,10 +288,20 @@ Por favor archive un reporte de errores.',
  * @author Str4nd
  */
 $messages['fi'] = array(
+	'smoothgallery' => 'SmoothGallery',
+	'smoothgallery-desc' => 'Antaa käyttäjille mahdollisuuden luoda kuvagallerioita tallennetuista kuvista.
+Käyttää suurinta osaa SmoothGalleryn ominaisuuksista',
+	'smoothgallery-title' => 'SmoothGallery',
+	'smoothgallery-smoothgallerytitle' => 'SmoothGallery: $1',
+	'smoothgallery-error' => '<b>SmoothGalleryn virhe:</b>',
 	'smoothgallery-gallery-not-found' => 'Pyydettyä galleriaa ei ole.',
+	'smoothgallery-unexpected-error' => 'Havaittiin odottamaton virhe.
+Ole hyvä ja tee virheraportti.',
+	'smoothgallery-javascript-disabled' => 'Tämän gallerian täydelliseen näyttämiseen vaaditaan JavaScript-tuki.',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Dereckson
  * @author Grondin
  * @author IAlex
@@ -244,18 +309,18 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'smoothgallery' => 'SmoothGallery',
-	'smoothgallery-desc' => "Autorise les utilisateurs à créer des galeries avec des images téléchargées. Autorise plus d'options de SmoothGallery",
+	'smoothgallery-desc' => 'Autorise les utilisateurs à créer des galeries avec des images téléchargées. Autorise plus d’options de SmoothGallery',
 	'smoothgallery-title' => 'SmoothGallery',
 	'smoothgallery-smoothgallerytitle' => 'SmoothGallery : $1',
 	'smoothgallery-error' => "'''Erreur de SmoothGallery :'''",
-	'smoothgallery-gallery-not-found' => "La galerie demandée n'existe pas.",
+	'smoothgallery-gallery-not-found' => 'La galerie demandée n’existe pas.',
 	'smoothgallery-not-found' => 'Aucune image ajoutée à la galerie. Ajoutez au moins une image.',
-	'smoothgallery-no-images' => "Aucune image n'a été trouvée dans cette galerie.
-Vérifiez que {{PLURAL:$3|l'image requise existe|toutes les images requises existent}}.
-{{PLURAL:$2|Cette image n'a pas été trouvée|Ces images n'ont pas été trouvées}} : $1.",
-	'smoothgallery-invalid-images' => "{{PLURAL:$2|L'image demandée suivante est|Les images demandées suivantes sont}} d’un format incorrect : $1",
+	'smoothgallery-no-images' => 'Aucune image n’a été trouvée dans cette galerie.
+Vérifiez que {{PLURAL:$3|l’image requise existe|toutes les images requises existent}}.
+{{PLURAL:$2|Cette image n’a pas été trouvée|Ces images n’ont pas été trouvées}} : $1.',
+	'smoothgallery-invalid-images' => '{{PLURAL:$2|L’image demandée suivante est|Les images demandées suivantes sont}} d’un format incorrect : $1',
 	'smoothgallery-unexpected-error' => 'Erreur inattendue. Prière de remplir un rapport de bogue.',
-	'smoothgallery-javascript-disabled' => "JavaScript est nécessaire pour voir cette galerie d'images (<code><nowiki><gallery>...</gallery></nowiki></code>).",
+	'smoothgallery-javascript-disabled' => 'JavaScript est nécessaire pour voir cette galerie d’images (<code><nowiki><gallery>...</gallery></nowiki></code>).',
 );
 
 /** Galician (Galego)
@@ -338,6 +403,30 @@ $messages['hsb'] = array(
 	'smoothgallery-javascript-disabled' => 'Javascript je trjeba, zo by so tuta galerija prawje zwobrazniła.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'smoothgallery' => 'SmoothGallery',
+	'smoothgallery-desc' => 'Lehetővé teszi JavaScript alapú képgalériák létrehozását a feltöltött képekből.
+A SmoothGallery legtöbb beállítását támogatja',
+	'smoothgallery-title' => 'SmoothGallery',
+	'smoothgallery-smoothgallerytitle' => 'SmoothGallery: $1',
+	'smoothgallery-error' => '<b>SmoothGallery hiba:</b>',
+	'smoothgallery-gallery-not-found' => 'A kért galéria nem létezik.',
+	'smoothgallery-not-found' => 'Nem lettek képek hozzáadva a galériához.
+Adj hozzá legalább egy képet.',
+	'smoothgallery-no-images' => 'Ebben a galériában nincsenek képek.
+
+Ellenőrizd, hogy a kért {{PLURAL:$3|kép létezik-e|képek léteznek-e}}.
+A következő {{PLURAL:$2|kép nem található|képek nem találhatóak}}: $1',
+	'smoothgallery-invalid-images' => 'A következő kért {{PLURAL:$2|kép érvénytelen típusú|képek érvénytelen típusúak}}: $1',
+	'smoothgallery-unexpected-error' => 'Nem várt hiba történt.
+Légyszíves készíts hibajelentést.',
+	'smoothgallery-javascript-disabled' => 'A galéria helyes megjelenítéséhez JavaScript szükséges.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -360,7 +449,29 @@ Per favor reporta isto como un error in le software.',
 	'smoothgallery-javascript-disabled' => 'JavaScript es requirite pro vider iste galeria correctemente.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'smoothgallery' => 'SmoothGallery',
+	'smoothgallery-desc' => 'Mengijinkan pengguna membuat galeri dengan berkas yang telah dimuat.',
+	'smoothgallery-title' => 'SmoothGallery',
+	'smoothgallery-smoothgallerytitle' => 'SmoothGallery: $1',
+	'smoothgallery-error' => '<b>Galat pada SmoothGallery:</b>',
+	'smoothgallery-gallery-not-found' => 'Galeri yang Anda cari tidak ditemukan.',
+	'smoothgallery-not-found' => 'Tidak ada gambar yang ditambahkan ke galeri.
+Tambahkan paling tidak sebuah gambar.',
+	'smoothgallery-no-images' => 'Tidak ada gambar yang ditemukan di galeri ini.
+Pastikan {{PLURAL:$3|gambar|gambar}} yang Anda cari ada.
+{{PLURAL:$2|Gambar|Gambar}} berikut tidak ditemukan: $1',
+	'smoothgallery-invalid-images' => 'Tipe {{PLURAL:$2|gambar|gambar}} yang diminta tidak sah: $1',
+	'smoothgallery-unexpected-error' => 'Terdapat kesalahan yang tidak terduga.
+Mohon kirimkan sebuah laporan bug.',
+	'smoothgallery-javascript-disabled' => 'Penjelajah Anda membutuhkan JavaScript untuk menampilkan galeri ini dengan benar.',
+);
+
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  */
 $messages['ja'] = array(
@@ -372,8 +483,8 @@ SmoothGallery のほとんどのオプションを利用可能とする',
 	'smoothgallery-error' => '<b>スムースギャラリーのエラー:</b>',
 	'smoothgallery-gallery-not-found' => '要求したギャラリーは存在しません。',
 	'smoothgallery-not-found' => 'このギャラリーには画像がありません。最低でも1つは画像を指定してください。',
-	'smoothgallery-no-images' => 'このギャラリーには画像がありません。指定した{{PLURAL:$3|画像が|画像がすべて}}存在するか確認してください。次の画像は見つかりませんでした: $1',
-	'smoothgallery-invalid-images' => '要求された次の画像は不正な形式です: $1',
+	'smoothgallery-no-images' => 'このギャラリーには画像がありません。指定した{{PLURAL:$3|画像が|画像がすべて}}存在するか確認してください。次の{{PLURAL:$2|画像}}は見つかりませんでした: $1',
+	'smoothgallery-invalid-images' => '要求された次の{{PLURAL:$2|画像}}は不正な形式です: $1',
 	'smoothgallery-unexpected-error' => '予期せぬエラーが発生しました。バグ報告を提出してください。',
 	'smoothgallery-javascript-disabled' => 'このギャラリーを正しく閲覧するには JavaScript が必要です。',
 );
@@ -392,14 +503,14 @@ $messages['jv'] = array(
  */
 $messages['km'] = array(
 	'smoothgallery' => 'វិចិត្រសាលរាបស្មើ',
-	'smoothgallery-desc' => 'អនុញ្ញាត​ឱ្យ​បង្កើត​វិចិត្រសាល​ជាមួយ​រូបភាព​ដែល​បាន​ផ្ទុកឡើង​។ 
+	'smoothgallery-desc' => 'អនុញ្ញាត​ឱ្យ​បង្កើត​វិចិត្រសាល​ជាមួយ​រូបភាព​ដែល​បាន​ផ្ទុកឡើង​។
 
 អនុញ្ញាត​ជម្រើស​ភាគច្រើន​នៃ​វិចិត្រសាលរាបស្មើ​',
 	'smoothgallery-title' => 'វិចិត្រសាលរាបស្មើ',
 	'smoothgallery-smoothgallerytitle' => 'វិចិត្រសាលរាបស្មើ​៖ $1',
 	'smoothgallery-error' => 'កំហុស​វិចិត្រសាលរាបស្មើ​​៖',
 	'smoothgallery-gallery-not-found' => 'មិនមានវិចិត្រសាលដែលត្រូវបានស្នើ​។',
-	'smoothgallery-not-found' => 'មិនមាន​រូបភាព​ត្រូវ​បាន​បន្ថែម​ទៅ​ក្នុង​វិចិត្រសាល​ទេ​។ 
+	'smoothgallery-not-found' => 'មិនមាន​រូបភាព​ត្រូវ​បាន​បន្ថែម​ទៅ​ក្នុង​វិចិត្រសាល​ទេ​។
 
 សូម​បន្ថែម​រូបភាព​យ៉ាងហោច​មួយ​។',
 	'smoothgallery-javascript-disabled' => 'តម្រូវឱ្យមាន Javascript ដើម្បី​មើលបានល្អ​វិចិត្រសាលនេះ​។',
@@ -439,7 +550,35 @@ Erméiglecht déi meescht Optioune vun SmoothGallerie',
 	'smoothgallery-gallery-not-found' => 'Déi ugefrote Gallerie gëtt et net.',
 	'smoothgallery-not-found' => "Et goufe keng Biller an d'Gallerie derbäigesat.
 Setzt w.e.g. mindestens ee Bild derbäi.",
+	'smoothgallery-no-images' => 'An dëser Gallerie goufe keng Biller fonnt.
+Vergewëssert Iech datt et{{PLURAL:$3|dat ugefrote Bild|déi ugefrote Biller}} gëtt.
+{{PLURAL:$2|Dëst Bild gouf|Dës Biller goufe}} fonnt: $1',
+	'smoothgallery-invalid-images' => '{{PLURAL:$2|Dëst ugefrote Bild ass|Dës ugefrote Biller sinn}} an engem net valabele Format: $1',
+	'smoothgallery-unexpected-error' => 'Et gouf en onerwaarte Feeler.
+Fëllt w.e.g. eng Feelermeldung (bug report) aus.',
 	'smoothgallery-javascript-disabled' => 'JavaScriot gëtt gebraucht fir dës Gallerie korrekt ze gesinn.',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'smoothgallery' => 'Глатка галерија',
+	'smoothgallery-desc' => 'Им овозможува на корисниците да создаваат галерии со подигнати слики.
+Ги поддржува највеќето можности на SmoothGallery',
+	'smoothgallery-title' => 'Глатка галерија',
+	'smoothgallery-smoothgallerytitle' => 'Глатка галерија: $1',
+	'smoothgallery-error' => '<b>Грешка со Глатката галерија:</b>',
+	'smoothgallery-gallery-not-found' => 'Побараната галерија не постои.',
+	'smoothgallery-not-found' => 'Не беа додадени слики во галеријата.
+Додајте барем една слика.',
+	'smoothgallery-no-images' => 'Неа беа пронајдени слики во галеријата.
+Проверете дали {{PLURAL:$3|постои бараната слика|постојат сите барани слики}}.
+{{PLURAL:$2|Не беше пронајдена следната слика|Не беа пронајдени следните слики}}: $1',
+	'smoothgallery-invalid-images' => '{{PLURAL:$2|Следнава побарана слика е|Следниве побарани слики се}} од неважечки тип: $1',
+	'smoothgallery-unexpected-error' => 'Се случи неочекувана грешка.
+Поднесете пријава за грешката.',
+	'smoothgallery-javascript-disabled' => 'За правилен приказ на галеријата потребен е JavaScript.',
 );
 
 /** Marathi (मराठी)
@@ -448,7 +587,7 @@ Setzt w.e.g. mindestens ee Bild derbäi.",
  */
 $messages['mr'] = array(
 	'smoothgallery' => 'मुलायमप्रेक्षा',
-	'smoothgallery-desc' => 'उपयोगकर्त्यांना चढवलेल्या चित्रणांपासून दीर्घा(प्रेक्षा)बनवण्याकरिता अनुमति देते. 
+	'smoothgallery-desc' => 'उपयोगकर्त्यांना चढवलेल्या चित्रणांपासून दीर्घा(प्रेक्षा)बनवण्याकरिता अनुमति देते.
 मुलायमदिर्घा(प्रेक्षा) बनविण्याकरिता सर्वाधिक पर्याय उपलब्ध करून देते.',
 	'smoothgallery-title' => 'मुलायमप्रेक्षा',
 	'smoothgallery-smoothgallerytitle' => 'मुलायमप्रेक्षा $1',
@@ -492,13 +631,13 @@ De volgende {{PLURAL:$2|afbeelding is|afbeeldingen zijn}} niet aangetroffen: $1'
  */
 $messages['nn'] = array(
 	'smoothgallery' => 'Jamnt galleri',
-	'smoothgallery-desc' => 'Lèt brukarar oppretta galleri med bilete som er blitt lasta opp. 
+	'smoothgallery-desc' => 'Lèt brukarar oppretta galleri med bilete som er blitt lasta opp.
 Inneheld dei fleste av SmoothGallery sine valalternativ.',
 	'smoothgallery-title' => 'Jamnt galleri',
 	'smoothgallery-smoothgallerytitle' => 'Jamnt galleri: $1',
 	'smoothgallery-error' => '<b>Feil med jamnt galleri:</b>',
 	'smoothgallery-gallery-not-found' => 'Det etterspurde galleriet finst ikkje.',
-	'smoothgallery-not-found' => 'Ingen bilete blei lagt til i galleriet. 
+	'smoothgallery-not-found' => 'Ingen bilete blei lagt til i galleriet.
 Legg til minst eitt bilete.',
 	'smoothgallery-no-images' => 'Ingen bilete blei funne i dette galleriet.
 Forsikra deg om at {{PLURAL:$3|biletet|bileta}} finst.
@@ -511,6 +650,7 @@ Lever ein feilrapport.',
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'smoothgallery' => 'Mykt galleri',
@@ -520,8 +660,10 @@ $messages['no'] = array(
 	'smoothgallery-error' => '<b>Feil med mykt galleri:</b>',
 	'smoothgallery-gallery-not-found' => 'Det etterspurte galleriet finnes ikke.',
 	'smoothgallery-not-found' => 'Ingen bilder ble lagt til i galleriet. Legg til minst ett bilde.',
-	'smoothgallery-no-images' => 'Ingen bilder ble funnet i dette galleriet. Forsikre deg om at alle bilder finnes. Følgende bilder ble ikke funnet. $1',
-	'smoothgallery-invalid-images' => 'Følgende etterspurte bilder var av en ugyldig type: $1',
+	'smoothgallery-no-images' => 'Ingen bilder ble funnet i dette galleriet.
+Forsikre deg om at {{PLURAL:$3|bildet|bildene}} finnes.
+Følgende {{PLURAL:$2|bilde|bilder}} ble ikke funnet: $1',
+	'smoothgallery-invalid-images' => 'Følgende etterspurte {{PLURAL:$2|bilde|bilder}} var av en ugyldig type: $1',
 	'smoothgallery-unexpected-error' => 'Det var en uventet feil. Lever en feilrapport.',
 	'smoothgallery-javascript-disabled' => 'Javascript er nødvendig for å vise dette galleriet korrekt.',
 );
@@ -552,7 +694,7 @@ Verificatz que {{PLURAL:$3|l'imatge requerit existís|totes los imatges requerit
  */
 $messages['pl'] = array(
 	'smoothgallery' => 'Płynna galeria',
-	'smoothgallery-desc' => 'Pozwala użytkownikom na tworzenie galerii przesłanych zdjęć. 
+	'smoothgallery-desc' => 'Pozwala użytkownikom na tworzenie galerii przesłanych zdjęć.
 Udostępnia większości opcji SmoothGallery',
 	'smoothgallery-title' => 'Płynna galeria',
 	'smoothgallery-smoothgallerytitle' => 'Płynna galeria: $1',
@@ -569,15 +711,23 @@ Upewnij się, czy {{PLURAL:$3|szukana grafika istnieje|szukane grafiki istnieją
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'smoothgallery' => 'SmoothGallery',
+	'smoothgallery-desc' => "A përmëtt a j'utent ëd creé ëd galerìe con figure che a son stàite carià.
+A përmëtt pì opsion dë SmoothGallery",
 	'smoothgallery-title' => 'SmoothGallery',
 	'smoothgallery-smoothgallerytitle' => 'SmoothGallery: $1',
 	'smoothgallery-error' => '<b>SmoothGallery eror:</b>',
+	'smoothgallery-gallery-not-found' => 'La galerìa ciamà a esist pa.',
 	'smoothgallery-not-found' => "A l'é pa giontasse gnun-a figura a la galerìa. Për piasì, ch'a në gionta almanch un-a.",
-	'smoothgallery-no-images' => "Pa gnun-a figura trovà ant sta galerìa-sì. Ch'a contròla che le figure dont a fa da manca a-i sio da bon. A son nen trovasse ste figure-sì: $1",
+	'smoothgallery-no-images' => "Pa gnun-a figura trovà ant sta galerìa-sì. 
+Ch'a contròla che {{PLURAL:$3|la figura|le figure}} dont a fa da manca a-i sio da bon. 
+{{PLURAL:$2|La figura a l'é|Le figure a son}} pa trovasse: $1",
+	'smoothgallery-invalid-images' => "{{PLURAL:$2|La figura sota ciamà a l'era|Le figure sota ciamà a j'ero}} ëd na sòrt pa bon-a: $1",
 	'smoothgallery-unexpected-error' => "A l'é sta-ie n'eror amprevist. Për piasì, ch'a-j lo segnala aj programator.",
+	'smoothgallery-javascript-disabled' => 'A-i é dabzògn ëd Javascript për vëdde sta galerìa-sì da bin.',
 );
 
 /** Pashto (پښتو)
@@ -678,18 +828,45 @@ Uistite sa, že {{PLURAL:$3|požadovaný obrázok existuje|všetky požadované 
 	'smoothgallery-javascript-disabled' => 'Správne zobrazenie tejto galérie vyžaduje JavaScript.',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'smoothgallery' => 'ЛакаГалерија',
+	'smoothgallery-desc' => 'Омогућује корисницима да праве галерије са сликама које су послали.
+Омогућује већи број опција за SmoothGallery.',
 	'smoothgallery-title' => 'ЛакаГалерија',
 	'smoothgallery-smoothgallerytitle' => 'ЛакаГалерија: $1',
 	'smoothgallery-error' => '<b>ЛакаГалерија грешка:</b>',
+	'smoothgallery-gallery-not-found' => 'Захтевана галерија не постоји.',
 	'smoothgallery-not-found' => 'Нема слика у галерији. Додајте најмање једну слику.',
-	'smoothgallery-no-images' => 'Није пронађена слика у галерији. Уверите се да тражене слике постоје. Следеће слиек нису пронађене: $1',
+	'smoothgallery-no-images' => 'Нису нађене слике у овој галерији.
+Осигурајте се да {{PLURAL:$3|захтевана слика постоји|све захтеване слике постоје}}.
+{{PLURAL:$2|Следећа слика није нађена|Следеће слике нису нађене}}: $1',
+	'smoothgallery-invalid-images' => 'Тип {{PLURAL:$2|следеће захтеване слике|следећих захтеваних слика}} је био непознат: $1',
 	'smoothgallery-unexpected-error' => 'Десила се неочекивана грешка. Молимо обавестите администраторе.',
 	'smoothgallery-javascript-disabled' => 'Јаваскрипт је потребан да би се галерија нормално приказала.',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'smoothgallery' => 'LakaGalerija',
+	'smoothgallery-desc' => 'Omogućuje korisnicima da prave galerije sa slikama koje su poslali.
+Omogućuje veći broj opcija za SmoothGallery.',
+	'smoothgallery-title' => 'LakaGalerija',
+	'smoothgallery-smoothgallerytitle' => 'LakaGalerija: $1',
+	'smoothgallery-error' => '<b>LakaGalerija greška:</b>',
+	'smoothgallery-gallery-not-found' => 'Zahtevana galerija ne postoji.',
+	'smoothgallery-not-found' => 'Nema slika u galeriji. Dodajte najmanje jednu sliku.',
+	'smoothgallery-no-images' => 'Nisu nađene slike u ovoj galeriji.
+Osigurajte se da {{PLURAL:$3|zahtevana slika postoji|sve zahtevane slike postoje}}.
+{{PLURAL:$2|Sledeća slika nije nađena|Sledeće slike nisu nađene}}: $1',
+	'smoothgallery-invalid-images' => 'Tip {{PLURAL:$2|sledeće zahtevane slike|sledećih zahtevanih slika}} je bio nepoznat: $1',
+	'smoothgallery-unexpected-error' => 'Desila se neočekivana greška. Molimo obavestite administratore.',
+	'smoothgallery-javascript-disabled' => 'Javaskript je potreban da bi se galerija normalno prikazala.',
 );
 
 /** Swedish (Svenska)
@@ -737,6 +914,13 @@ Magpadala/magpasa lamang po ng isang ulat (report) ng depekto (''bug'').",
 	'smoothgallery-javascript-disabled' => 'Kinakailangan ang Javascript upang matanaw/matingnan ng tama/wasto ang galerya/tanghalang ito.',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'smoothgallery-gallery-not-found' => 'İstenen galeri mevcut değil.',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -765,5 +949,19 @@ Xin hãy đăng một báo cáo lỗi.',
  */
 $messages['vo'] = array(
 	'smoothgallery-gallery-not-found' => 'Magodem pavilöl no dabinon.',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'smoothgallery-javascript-disabled' => '需要JavaScript以正常检视本图片廊。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'smoothgallery-javascript-disabled' => '需要JavaScript以正常檢視本圖片廊。',
 );
 

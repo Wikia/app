@@ -48,11 +48,11 @@ class TemplateLink extends SpecialPage
 	}
 
 	function sandboxParse($wikiText){
-		global $wgTitle, $wgUser;
+		global $wgUser;
 		$myParser = new Parser();
 		$myParserOptions = new ParserOptions();
 		$myParserOptions->initialiseFromUser($wgUser);
-		$result = $myParser->parse($wikiText, $wgTitle, $myParserOptions);
+		$result = $myParser->parse($wikiText, $this->getTitle(), $myParserOptions);
 		return $result->getText();
 	}
 }

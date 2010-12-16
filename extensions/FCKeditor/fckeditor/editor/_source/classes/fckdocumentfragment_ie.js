@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -34,6 +34,7 @@ var FCKDocumentFragment = function( parentDocument )
 // Append the contents of this Document Fragment to another node.
 FCKDocumentFragment.prototype =
 {
+	TypeName : 'FCKDocumentFragment',		// @Packager.RemoveLine
 
 	AppendTo : function( targetNode )
 	{

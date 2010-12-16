@@ -2,6 +2,7 @@
 /**
  * Internationalization file for the RandomUsersWithAvatars extension.
  *
+ * @file
  * @ingroup Extensions
  */
 
@@ -54,6 +55,21 @@ $messages['bg'] = array(
 	'random-users-avatars-desc' => 'Добавя етикета <tt>&lt;randomuserswithavatars&gt;</tt> за показване на аватарите на случани потребители',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'random-users-avatars-title' => 'কমিউনিটির সাথে সাক্ষাৎ করুন',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'random-users-avatars-title' => 'Ober anaoudegezh gant ar gumuniezh',
+	'random-users-avatars-desc' => 'Ouzhpennañ a ra ar valizenn <tt>&lt;randomuserswithavatars&gt;</tt> evit diskwel avataroù implijerien dibabet dre zegouezh',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -78,6 +94,15 @@ $messages['dsb'] = array(
 	'random-users-avatars-desc' => 'Pśidawa toflicku <tt>&lt;randomuserswithavatars&gt;</tt> za zwobraznjenje pśipadnje wuzwólonych wužywarjow',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'random-users-avatars-title' => 'Γνωρίστε την κοινότητα',
+	'random-users-avatars-desc' => 'Προσθέτει την ετικέτα <tt>&lt;randomuserswithavatars&gt;</tt> για την προβολή άβαταρ τυχαία επιλεγμένων χρηστών',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -96,10 +121,13 @@ $messages['es'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
  * @author Jack Phoenix
  */
 $messages['fi'] = array(
 	'random-users-avatars-title' => 'Tapaa yhteisö',
+	'random-users-avatars-desc' => 'Lisää <tt>&lt;randomuserswithavatars&gt;</tt>-elementin, joka esittää satunnaisesti valitun käyttäjän avatarin.',
 );
 
 /** French (Français)
@@ -143,12 +171,36 @@ $messages['hsb'] = array(
 	'random-users-avatars-desc' => 'Přidawa tafličku <tt>&lt;randomuserswithavatars&gt;</tt> za zwobraznjenje awatarow připadnje wuzwolenych wužiwarjow',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'random-users-avatars-title' => 'Találkozz a közösséggel',
+	'random-users-avatars-desc' => '<tt>&lt;randomuserswithavatars&gt;</tt> tag véletlenszerűen választott felhasználók avatarjainak megjelenítésére',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'random-users-avatars-title' => 'Facer le cognoscentia del communitate',
+	'random-users-avatars-title' => 'Cognosce le communitate',
 	'random-users-avatars-desc' => 'Adde le etiquetta <tt>&lt;randomuserswithavatars&gt;</tt> pro monstrar le avatares de usatores seligite aleatorimente',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'random-users-avatars-title' => 'Jumpailah komunitas',
+	'random-users-avatars-desc' => 'Tambahkan tag <tt>&lt;randomuserswithavatars&gt;</tt> untuk menampilkan avatar pengguna secara acak',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'random-users-avatars-title' => 'Incontra la comunità',
+	'random-users-avatars-desc' => 'Aggiunge il tag <tt>&lt;randomuserswithavatars&gt;</tt> per visualizzare gli avatar di utenti scelti a caso',
 );
 
 /** Japanese (日本語)
@@ -175,11 +227,12 @@ $messages['ksh'] = array(
 	'random-users-avatars-desc' => 'Määt et müjjelesch, met <tt>&lt;randomuserswithavatars&gt;</tt> de Avataare fun zofälesch ußsohte Metmaacher aanzezeije.',
 );
 
-/** Cornish (Kernewek)
+/** Cornish (Kernowek)
+ * @author Kernoweger
  * @author Kw-Moon
  */
 $messages['kw'] = array(
-	'random-users-avatars-title' => 'Dyerbynna an kemmynieth',
+	'random-users-avatars-title' => 'Dyerbynna an gemmynieth',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -188,6 +241,14 @@ $messages['kw'] = array(
 $messages['lb'] = array(
 	'random-users-avatars-title' => "D'Gemeinschaft treffen",
 	'random-users-avatars-desc' => "Setzt den <tt>&lt;randomuserswithavatars&gt;</tt> Tag derbäi fir d'Avataren vun zoufälleg ausgesichte Benotzer ze weisen",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'random-users-avatars-title' => 'Запознајте ја заедницата',
+	'random-users-avatars-desc' => 'Додава ознака <tt>&lt;randomuserswithavatars&gt;</tt> за прикажување на аватари на случајно-избрани корисници',
 );
 
 /** Dutch (Nederlands)
@@ -223,6 +284,22 @@ $messages['oc'] = array(
 	'random-users-avatars-desc' => 'Apond la balisa <tt>&lt;randomuserswithavatars&gt;</tt> per afichar los avatars d’utilizaires causits aleatòriament',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'random-users-avatars-title' => 'Poznaj społeczność',
+	'random-users-avatars-desc' => 'Dodaje znacznik <tt>&lt;randomuserswithavatars&gt;</tt> wyświetlający portret losowo wybranego użytkownika',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'random-users-avatars-title' => 'Ancontra la comunità',
+	'random-users-avatars-desc' => "A gionta ël tag <tt>&lt;randomuserswithavatars&gt;</tt> për visualisé j'avatar dj'utent sërnù a cas",
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  * @author Waldir
@@ -246,6 +323,14 @@ $messages['pt-br'] = array(
 $messages['roa-tara'] = array(
 	'random-users-avatars-title' => "Ingontre 'a comunitate",
 	'random-users-avatars-desc' => "Aggiunge 'u tag <tt>&lt;randomuserswithavatars&gt;</tt> pe fà vedè le avatar scacchiete a uecchije da l'utinde",
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'random-users-avatars-title' => 'Познакомьтесь с сообществом',
+	'random-users-avatars-desc' => 'Добавляет тег <tt>&lt;randomuserswithavatars&gt;</tt> для отображения аватар случайно выбранных участников',
 );
 
 /** Slovak (Slovenčina)
@@ -278,6 +363,14 @@ $messages['sv'] = array(
 $messages['tl'] = array(
 	'random-users-avatars-title' => 'Makipagtagpo sa pamayanan',
 	'random-users-avatars-desc' => "Nagdaragdag ng tatak na <tt>&lt;randomuserswithavatars&gt;</tt> upang maipakita/mapalitaw ang mga abatar/huwaran ng mga tagagamit na napili ayon sa ibinigay ng pagkakataon/tsansa (''random'')",
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'random-users-avatars-title' => 'Topluluk ile tanış',
+	'random-users-avatars-desc' => 'Rastgele seçilen kullanıcıların avatarlarını görüntülemek için <tt>&lt;randomuserswithavatars&gt;</tt> etiketini ekler',
 );
 
 /** Vèneto (Vèneto)

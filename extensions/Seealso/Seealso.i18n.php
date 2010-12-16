@@ -23,10 +23,12 @@ $messages['qqq'] = array(
 );
 
 /** Afrikaans (Afrikaans)
+ * @author Naudefj
  * @author SPQRobin
  */
 $messages['af'] = array(
 	'seealso' => 'Sien ook',
+	'seealso-desc' => "Gelokaliseerde 'Sien ook' opskrifte met behulp van die <code><nowiki><seealso></nowiki></code> etiket",
 );
 
 /** Arabic (العربية)
@@ -52,6 +54,22 @@ $messages['arz'] = array(
 	'seealso-desc' => "عناوين 'See also' مترجمة باستخدام الوسم <code><nowiki><seealso></nowiki></code>.",
 );
 
+/** Azerbaijani (Azərbaycan)
+ * @author Gulmammad
+ * @author Wertuose
+ */
+$messages['az'] = array(
+	'seealso' => 'Həmçinin bax',
+	'seealso-desc' => '<code><nowiki><seealso></nowiki></code> teqi vasitəsilə lokallaşdırılmış "Həmçinin bax" başlıqları',
+);
+
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'seealso' => 'Schau aa',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -69,6 +87,13 @@ $messages['bg'] = array(
 	'seealso-desc' => "Добавя възможност за използване на раздел 'Вижте също' с помощта на етикет <code><nowiki><seealso></nowiki></code>",
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'seealso' => 'আরও দেখুন',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -83,6 +108,24 @@ $messages['br'] = array(
 $messages['bs'] = array(
 	'seealso' => 'Također pogledajte',
 	'seealso-desc' => "Lokalizirani 'Također pogledajte' naslovi koristeći oznaku <code><nowiki><seealso></nowiki></code>",
+);
+
+/** Catalan (Català)
+ * @author SMP
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'seealso' => 'Vegeu també',
+	'seealso-desc' => "Localitza les seccions «Vegeu també» usant l'etiqueta <code><nowiki><seealso></nowiki></code>",
+);
+
+/** Czech (Česky)
+ * @author Matěj Grabovský
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'seealso' => 'Vizte též',
+	'seealso-desc' => 'Lokalizované nadpisy „Související články“ pomocí značky &lt;seealso&gt;',
 );
 
 /** Welsh (Cymraeg)
@@ -112,9 +155,11 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
 	'seealso' => 'Δείτε επίσης',
+	'seealso-desc' => "Εντοπιοποίηση των επικεφαλίδων 'Βλέπε επίσης' μέσω της ετικέτας <code><nowiki><seealso></nowiki></code>",
 );
 
 /** Esperanto (Esperanto)
@@ -132,6 +177,13 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'seealso' => 'Véase también',
 	'seealso-desc' => "Traducidos 'See also' encabezados usando la etiqueta <code><nowiki><seealso></nowiki></code>",
+);
+
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'seealso' => 'Vaata ka',
 );
 
 /** Basque (Euskara)
@@ -156,6 +208,7 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'seealso' => 'Katso myös',
+	'seealso-desc' => 'Katso myös -otsakkeita eri kielillä käyttäen elementtiä <code><nowiki><seealso></nowiki></code>.',
 );
 
 /** French (Français)
@@ -166,6 +219,13 @@ $messages['fr'] = array(
 	'seealso-desc' => 'En-tête « Voir aussi » utilisée par la balise <code><nowiki><seealso></nowiki></code>',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'seealso' => 'Vêde avouéc',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -173,6 +233,22 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'seealso' => 'Véxase tamén',
 	'seealso-desc' => "Cabeceira 'Véxase tamén' localizada empregando a etiqueta <code><nowiki><seealso></nowiki></code>",
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'seealso' => 'Ὁρᾶν ἐπἴσης',
+	'seealso-desc' => 'Ἐντοπιοποίησις ἐπικεφαλίδῶν «Ὁρᾶν ἐπἴσης» διὰ τοῦ προσαρτήματος <code><nowiki><seealso></nowiki></code>',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'seealso' => 'Lueg au',
+	'seealso-desc' => "Lokalisierti 'Lueg au'-Iberschrifte mit em Tag <code><nowiki><seealso></nowiki></code>",
 );
 
 /** Hebrew (עברית)
@@ -201,9 +277,11 @@ $messages['hsb'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'seealso' => 'Lásd még',
+	'seealso-desc' => 'Lokalizált „Lásd még” szakaszcímek a <code><nowiki><seealso></nowiki></code> tag használatával',
 );
 
 /** Interlingua (Interlingua)
@@ -214,11 +292,21 @@ $messages['ia'] = array(
 	'seealso-desc' => 'Capites "Vide etiam" localisate per medio del etiquetta <code><nowiki><seealso></nowiki></code>',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'seealso' => 'Lihat pula',
+	'seealso-desc' => "Judul bagian 'Lihat pula' yang telah diterjemahkan secara lokal dengan menggunakan tag <code><nowiki><seealso></nowiki></code>",
+);
+
 /** Ido (Ido)
  * @author Malafaya
+ * @author Wyvernoid
  */
 $messages['io'] = array(
 	'seealso' => 'Videz anke',
+	'seealso-desc' => "Lokizita 'Videz anke' rubikri uzante la kodo <code><nowiki><seealso></nowiki></code>",
 );
 
 /** Icelandic (Íslenska)
@@ -251,6 +339,13 @@ $messages['jv'] = array(
 	'seealso' => 'Uga delengen',
 );
 
+/** Georgian (ქართული)
+ * @author Temuri rajavi
+ */
+$messages['ka'] = array(
+	'seealso' => 'იხილეთ აგრეთვე',
+);
+
 /** Kazakh (Cyrillic) (Қазақша (Cyrillic))
  * @author AlefZet
  */
@@ -271,6 +366,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'seealso' => '함께 보기',
+	'seealso-desc' => "<code><nowiki><seealso></nowiki></code> 태그를 이용해 번역된 '더 보기' 제목을 보여 줌",
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -279,6 +375,14 @@ $messages['ko'] = array(
 $messages['ksh'] = array(
 	'seealso' => 'Loor och hee',
 	'seealso-desc' => 'Övverschreffte en de jeweilije Shprooch met däm zosäzlijje <code><nowiki><seealso></nowiki></code> Befäähl em Wiki.',
+);
+
+/** Cornish (Kernowek)
+ * @author Kernoweger
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'seealso' => 'Gweles ynwedh',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -302,6 +406,14 @@ $messages['li'] = array(
  */
 $messages['lt'] = array(
 	'seealso' => 'Žiūrėkite taip pat',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'seealso' => 'Видете исто така',
+	'seealso-desc' => "Локализирани наслови 'Видете исто така' кои ја користат ознаката <code><nowiki><seealso></nowiki></code>",
 );
 
 /** Malayalam (മലയാളം)
@@ -358,6 +470,13 @@ $messages['oc'] = array(
 	'seealso-desc' => 'Entèsta « Vejatz tanben » utilizada per la balisa <code><nowiki><seealso></nowiki></code>',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'seealso' => 'Guck aach',
+);
+
 /** Polish (Polski)
  * @author Leinad
  * @author Maikking
@@ -365,6 +484,14 @@ $messages['oc'] = array(
 $messages['pl'] = array(
 	'seealso' => 'Zobacz też',
 	'seealso-desc' => 'Umiejscawianie nagłówka „Zobacz też” za pomocą znacznika <code><nowiki><seealso></nowiki></code>',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'seealso' => 'Varda ëdcò',
+	'seealso-desc' => "Antestassion 'Varda ëdcò' localisà an dovrand ël tag <code><nowiki><seealso></nowiki></code>",
 );
 
 /** Pashto (پښتو)
@@ -390,6 +517,13 @@ $messages['pt'] = array(
 $messages['pt-br'] = array(
 	'seealso' => 'Ver também',
 	'seealso-desc' => "Títulos de seção 'Ver também' localizados usando a marca <code><nowiki><seealso></nowiki></code>",
+);
+
+/** Romanian (Română)
+ * @author Firilacroco
+ */
+$messages['ro'] = array(
+	'seealso' => 'Vedeţi, de asemenea,',
 );
 
 /** Tarandíne (Tarandíne)
@@ -454,6 +588,13 @@ $messages['tg-cyrl'] = array(
 	'seealso' => 'Нигаред низ',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'seealso' => 'Nigared niz',
+);
+
 /** Thai (ไทย)
  * @author Passawuth
  */
@@ -475,6 +616,13 @@ $messages['tl'] = array(
 $messages['tr'] = array(
 	'seealso' => 'Ayrıca bakınız',
 	'seealso-desc' => "<code><nowiki><seealso></nowiki></code> etiketini kullanan yerelleştirilmiş 'Ayrıca bakınız' başlıkları",
+);
+
+/** Urdu (اردو)
+ * @author محبوب عالم
+ */
+$messages['ur'] = array(
+	'seealso' => 'نیز دیکھئے',
 );
 
 /** Vèneto (Vèneto)
@@ -501,6 +649,20 @@ $messages['vo'] = array(
 	'seealso' => 'Logolös i',
 );
 
+/** Kalmyk (Хальмг)
+ * @author Huuchin
+ */
+$messages['xal'] = array(
+	'seealso' => 'Дәкәд хәләтн',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'seealso' => 'זעט אויך',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
  * @author Wmr89502270
@@ -511,10 +673,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Alexsh
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'seealso' => '參見',
+	'seealso-desc' => '使用<code><nowiki><seealso></nowiki></code>以在地化「參閱」標題',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

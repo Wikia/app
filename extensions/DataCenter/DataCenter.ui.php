@@ -10,9 +10,7 @@ class DataCenterCss {
 
 	/* Static Functions */
 
-	public static function toAttributes(
-		array $attributes
-	) {
+	public static function toAttributes( array $attributes ) {
 		$cssOutput = '';
 		foreach( $attributes as $name => $value ) {
 			if ( !is_int( $name ) ) {
@@ -27,15 +25,12 @@ class DataCenterJs {
 
 	/* Static Functions */
 
-	public static function chain(
-		$functions,
-		$end = true
-	) {
+	public static function chain( $functions, $end = true ) {
 		$jsFunctions = array();
 		foreach( $functions as $name => $arguments ) {
 			if ( is_int( $name ) ) {
 				$jsFunctions[] = sprintf( '%s()', $arguments );
-			} else if ( is_array( $arguments ) ) {
+			} elseif ( is_array( $arguments ) ) {
 				$jsFunctions[] = sprintf(
 					'%s(%s)', $name, implode( ',', $arguments )
 				);
@@ -47,12 +42,10 @@ class DataCenterJs {
 	}
 
 	/**
-	 * Escapes a javascript string to make it safe to use anywhere
-	 * @param	string			String to escape
+	 * Escapes a JavaScript string to make it safe to use anywhere
+	 * @param $string String: String to escape
 	 */
-	public static function escape(
-		$string
-	) {
+	public static function escape( $string ) {
 		return Xml::escapeJSString( $string );
 	}
 
@@ -60,9 +53,7 @@ class DataCenterJs {
 	 * Converts a PHP value to a javascript object
 	 * @param	value			Associative Array to convert
 	 */
-	public static function toObject(
-		$values
-	) {
+	public static function toObject( $values ) {
 		// Arrays
 		if ( is_array( $values ) ) {
 			$jsValues = array();
@@ -82,9 +73,7 @@ class DataCenterJs {
 	 * Converts a PHP value to a javascript array
 	 * @param	value			Array or Scalar to convert
 	 */
-	public static function toArray(
-		$values
-	) {
+	public static function toArray( $values ) {
 		// Arrays
 		if ( is_array( $values ) ) {
 			$jsValues = array();
@@ -108,9 +97,7 @@ class DataCenterJs {
 	 * 							in which case the ' quotes will be removed and
 	 * 							the value will be used as a statement
 	 */
-	public static function toScalar(
-		$value
-	) {
+	public static function toScalar( $value ) {
 		// Arrays
 		if ( is_array( $value ) ) {
 			return "'" . self::escape( implode( $value ) ) . "'";
@@ -149,18 +136,15 @@ class DataCenterJs {
 
 	/**
 	 * Builds an annonomous javascript function declaration
-	 * @param	arguments		Array of argument names to accept
-	 * @param	body			String of code for body
+	 * @param $arguments Array: array of argument names to accept
+	 * @param $body String: code for body
 	 */
-	public static function buildFunction(
-		$arguments,
-		$body
-	) {
+	public static function buildFunction( $arguments, $body ) {
 		if ( is_array( $arguments ) ) {
 			return sprintf(
 				'function(%s){%s}', implode( ',', $arguments ), $body
 			);
-		} else if ( $arguments !== null ) {
+		} elseif ( $arguments !== null ) {
 			return sprintf( 'function(%s){%s}', $arguments, $body );
 		} else {
 			return sprintf( 'function(){%s}', $body );
@@ -169,13 +153,10 @@ class DataCenterJs {
 
 	/**
 	 * Builds an annonomous javascript function declaration
-	 * @param	arguments		Array of argument names to accept
-	 * @param	body			String of code for body
+	 * @param $prototype String
+	 * @param $arguments Array: array of argument names to accept
 	 */
-	public static function buildInstance(
-		$prototype,
-		$arguments = array()
-	) {
+	public static function buildInstance( $prototype, $arguments = array() ) {
 		if ( !is_array( $arguments ) ) {
 			$arguments = array( $arguments );
 		}
@@ -202,18 +183,11 @@ class DataCenterJs {
 		) . ( $end ? ';' : '' );
 	}
 
-	public static function declareVar(
-		$name,
-		$value = 'null',
-		$end = true
-	) {
+	public static function declareVar( $name, $value = 'null', $end = true ) {
 		return sprintf( 'var %s=%s', $name, $value ) . ( $end ? ';' : '' );
 	}
 
-	public static function declareVars(
-		array $vars,
-		$end = true
-	) {
+	public static function declareVars( array $vars, $end = true ) {
 		$jsOutput = '';
 		foreach( $vars as $name => $value ) {
 			if ( is_int( $name ) ) {
@@ -245,7 +219,7 @@ class DataCenterJs {
 	}
 
 	/**
-	 * Builds javascript effect
+	 * Builds JavaScript effect
 	 * @param	options			Array of effect parameters containing...
 	 * 			script			JavaScript to run, with sprintf syntax for
 	 * 							including fields in the order listed
@@ -262,10 +236,7 @@ class DataCenterJs {
 	 * @param	row				DataCenterDBRow object from which to extract
 	 * 							fields from
 	 */
-	public static function buildEffect(
-		$script,
-		$fields = null
-	) {
+	public static function buildEffect( $script, $fields = null ) {
 		// Checks for...
 		if (
 			// Required types
@@ -323,7 +294,6 @@ class DataCenterXml {
 	 * @param	attributes		Optional Array of XML attributes
 	 * @param	content...		Any number of Strings of XML content
 	 */
-
 	public static function row() {
 		$arguments = func_get_args();
 		$attributes = array();
@@ -415,11 +385,9 @@ class DataCenterXml {
 
 	/**
 	 * Builds an XML string for a complete input
-	 * @param	attributes		Array of XML attributes
+	 * @param $attributes Array: XML attributes
 	 */
-	public static function input(
-		array $attributes = array()
-	) {
+	public static function input( array $attributes = array() ) {
 		return self::tag( 'div', $attributes );
 	}
 
@@ -446,23 +414,18 @@ class DataCenterXml {
 
 	/**
 	 * Builds an XML string for a tag opening
-	 * @param	tag				Name of tag
-	 * @param	attributes		Array of XML attributes
+	 * @param $tag String: name of tag
+	 * @param $attributes Array: XML attributes
 	 */
-	public static function open(
-		$tag,
-		array $attributes = array()
-	) {
+	public static function open( $tag, array $attributes = array() ) {
 		return Xml::openElement( $tag, $attributes );
 	}
 
 	/**
 	 * Builds an XML string for a tag closing
-	 * @param	tag				Name of tag
+	 * @param $tag String: name of tag
 	 */
-	public static function close(
-		$tag
-	) {
+	public static function close( $tag ) {
 		return Xml::closeElement( $tag );
 	}
 
@@ -478,9 +441,7 @@ class DataCenterXml {
 	 * @param	script			String of raw text to use as script contents or
 	 * 							Array of attributes such as src
 	 */
-	public static function script(
-		$script
-	) {
+	public static function script( $script ) {
 		if ( is_array( $script ) ) {
 			return Xml::element(
 				'script',
@@ -510,9 +471,7 @@ class DataCenterXml {
 	 * 			id				Scalar of ID of row
 	 * 			parameter		Scalar parameter or Array of parameters
 	 */
-	public static function url(
-		array $parameters
-	) {
+	public static function url( array $parameters ) {
 		global $wgTitle;
 		// Gets the base url
 		if ( !self::$urlBase ) {
@@ -550,14 +509,14 @@ class DataCenterXml {
 				$url .= '/' . $parameters['action'];
 				// Checks if parameter was given
 				if ( $parameters['parameter'] !== null ) {
-					if ( is_array( $parameters['parameter'] ) ) {						// Adds parameter to url
+					if ( is_array( $parameters['parameter'] ) ) { // Adds parameter to url
 						$url .= ':' . implode( ',', $parameters['parameter'] );
 					} else {
 						// Adds parameter to url
 						$url .= ':' . $parameters['parameter'];
 					}
 				}
-			} else if ( $parameters['limit'] !== null  ) {
+			} elseif ( $parameters['limit'] !== null  ) {
 				$url .= '/';
 			}
 			if ( $parameters['limit'] !== null  ) {
@@ -600,13 +559,10 @@ class DataCenterXml {
 
 	/**
 	 * Builds an XML string for a link
-	 * @param	label			String of raw text to use as label
-	 * @param	parameters		Array of link parameters for self::url
+	 * @param $label String: raw text to use as label
+	 * @param $parameters Array: link parameters for self::url
 	 */
-	public static function link(
-		$label = null,
-		array $parameters
-	) {
+	public static function link( $label = null, array $parameters ) {
 		return Xml::element(
 			'a', array( 'href' => self::url( $parameters ) ), $label
 		);
@@ -635,10 +591,7 @@ class DataCenterXml {
 	 * @param	row				DataCenterDBRow object from which to extract
 	 * 							field/fields from
 	 */
-	public static function buildLink(
-		$options,
-		$row = null
-	) {
+	public static function buildLink( $options, $row = null ) {
 		// Checks if row was given
 		if ( isset( $options['page'] ) && $row instanceof DataCenterDBRow ) {
 			// Transforms options based on row
@@ -701,18 +654,12 @@ class DataCenterXml {
 	 * @param	row				DataCenterDBRow object from which to extract
 	 * 							field/fields from
 	 */
-	public static function buildEffects(
-		array $options,
-		$fields
-	) {
+	public static function buildEffects( array $options, $fields ) {
 		if ( $fields instanceof DataCenterDBRow ) {
 			$fields = $fields->get();
 		}
-		// Checks for...
-		if (
-			// Required types
-			( is_array( $fields ) )
-		) {
+		// Checks for required types
+		if ( ( is_array( $fields ) ) ) {
 			$effects = array();
 			// Loops over each effect
 			foreach ( $options as $effect ) {
@@ -737,21 +684,17 @@ abstract class DataCenterRenderable {
 
 	/**
 	 * Abstract function for rendering the input
-	 * @param	parameters		Array of parameters
+	 * @param $parameters Array: array of parameters
 	 */
-	abstract public static function render(
-		array $parameters
-	);
+	public static function render( array $parameters ) {}
 
 	/* Protected Static Functions */
 
 	/**
 	 * Builds XML string of begining of input
-	 * @param	class			CSS class name of widget
+	 * @param $class String: CSS class name of widget
 	 */
-	protected static function begin(
-		$class
-	) {
+	protected static function begin( $class ) {
 		return DataCenterXml::open( 'div', array( 'class' => $class ) );
 	}
 
@@ -775,10 +718,7 @@ abstract class DataCenterWidget extends DataCenterRenderable {
 
 	/* Static Functions */
 
-	public static function buildPaging(
-		$page,
-		$num
-	) {
+	public static function buildPaging( $page, $num ) {
 		$range = array( 'limit' => 10, 'offset' => 0 );
 		if ( isset( $page['limit'] ) && $page['limit'] !== null ) {
 			$range['limit'] = $page['limit'];
@@ -933,11 +873,7 @@ class DataCenterUI {
 	 * @param	arguments		String or array of strings of arguments which
 	 * 							will be passed to MediaWiki's message parser
 	 */
-	public static function message(
-		$type,
-		$name = null,
-		$arguments = null
-	) {
+	public static function message( $type, $name = null, $arguments = null ) {
 		if ( !$name ) {
 			return wfMsg( $type );
 		}
@@ -955,10 +891,7 @@ class DataCenterUI {
 	 * 							no formatting or any of the following...
 	 * 				date		Localized date and time format from timestamp
 	 */
-	public static function format(
-		$value,
-		$format
-	) {
+	public static function format( $value, $format ) {
 		global $wgLang;
 		// Handles format type
 		switch ( $format ) {
@@ -1001,7 +934,7 @@ class DataCenterUI {
 				$wgOut->addScript(
 					DataCenterXml::script( array( 'src' => $url ) )
 				);
-			} else if ( strpos( $url, '<' ) !== false ) {
+			} elseif ( strpos( $url, '<' ) !== false ) {
 				$wgOut->addScript( sprintf( $url, $wgScriptPath ) );
 			} else {
 				$wgOut->addScriptFile( $wgScriptPath . $url );
@@ -1031,14 +964,11 @@ class DataCenterUI {
 
 	/**
 	 * Builds string of XML using widget
-	 * @param	name			Name of widget to use
-	 * @param	parameters		Parameters to pass on to widget
+	 * @param $name String: name of widget to use
+	 * @param $parameters Array: parameters to pass on to widget
 	 * @return	String of widget's XML output
 	 */
-	public static function renderWidget(
-		$name,
-		array $parameters = array()
-	) {
+	public static function renderWidget( $name, array $parameters = array() ) {
 		if ( isset( self::$widgets[$name] ) ) {
 			$function = array( self::$widgets[$name], 'render' );
 			if ( is_callable( $function ) ) {
@@ -1053,14 +983,11 @@ class DataCenterUI {
 
 	/**
 	 * Builds string of XML using input
-	 * @param	name			Name of input to use
-	 * @param	parameters		Parameters to pass on to input
+	 * @param $name String: name of input to use
+	 * @param $parameters Array: parameters to pass on to input
 	 * @return	String of input's XML output
 	 */
-	public static function renderInput(
-		$name,
-		array $parameters = array()
-	) {
+	public static function renderInput( $name, array $parameters = array() ) {
 		if ( isset( self::$inputs[$name] ) ) {
 			$function = array( self::$inputs[$name], 'render' );
 			if ( is_callable( $function ) ) {
@@ -1075,14 +1002,11 @@ class DataCenterUI {
 
 	/**
 	 * Builds string of XML using layout
-	 * @param	name			Name of layout to use
-	 * @param	contents		Array of strings of XML to layout
-	 * @return	String of layout's XML output
+	 * @param $name String: name of layout to use
+	 * @param $contents Array: array of strings of XML to layout
+	 * @return String of layout's XML output
 	 */
-	public static function renderLayout(
-		$name,
-		array $contents = array()
-	) {
+	public static function renderLayout( $name, array $contents = array() ) {
 		if ( isset( self::$layouts[$name] ) ) {
 			$function = array( self::$layouts[$name], 'render' );
 			if ( is_callable( $function ) ) {
@@ -1097,11 +1021,9 @@ class DataCenterUI {
 
 	/**
 	 * Appends the scripts list, skipping duplicate entries
-	 * @param	url				Fully qualified URL to javascript file
+	 * @param $url String: fully qualified URL to JavaScript file
 	 */
-	public static function addScript(
-		$url
-	) {
+	public static function addScript( $url ) {
 		if ( !in_array( $url, self::$output['scripts'] ) ) {
 			self::$output['scripts'][] = $url;
 		}
@@ -1109,11 +1031,9 @@ class DataCenterUI {
 
 	/**
 	 * Appends content to the output cache
-	 * @param	content			String of XML content to append
+	 * @param $content String: XML content to append
 	 */
-	public static function addContent(
-		$content
-	) {
+	public static function addContent( $content ) {
 		self::$output['content'] .= $content;
 	}
 
@@ -1130,7 +1050,7 @@ class DataCenterUI {
 		DataCenterController $controller,
 		array $path
 	) {
-		global $wgTitle, $wgUser;
+		global $wgUser;
 		// Adds main menu
 		self::$output['menu'] .= DataCenterXml::open(
 			'div', array( 'class' => 'menu' )
@@ -1198,34 +1118,28 @@ class DataCenterUI {
 
 	/**
 	 * Checks if widget is available
-	 * @param	name			Name of widget to look for
-	 * @return	Boolean true if exists, false if not
+	 * @param $name String: name of widget to look for
+	 * @return Boolean true if exists, false if not
 	 */
-	public static function isWidget(
-		$name
-	) {
+	public static function isWidget( $name ) {
 		return isset( self::$widgets[$name] );
 	}
 
 	/**
 	 * Checks if input is available
-	 * @param	name			Name of input to look for
-	 * @return	Boolean true if exists, false if not
+	 * @param $name String: name of input to look for
+	 * @return Boolean true if exists, false if not
 	 */
-	public static function isInput(
-		$name
-	) {
+	public static function isInput( $name ) {
 		return isset( self::$inputs[$name] );
 	}
 
 	/**
 	 * Checks if layout is available
-	 * @param	name			Name of layout to look for
-	 * @return	Boolean true if exists, false if not
+	 * @param $name String: name of layout to look for
+	 * @return Boolean true if exists, false if not
 	 */
-	public static function isLayout(
-		$name
-	) {
+	public static function isLayout( $name ) {
 		return isset( self::$layouts[$name] );
 	}
 }

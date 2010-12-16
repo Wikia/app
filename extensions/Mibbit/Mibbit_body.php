@@ -19,18 +19,18 @@ class Mibbit extends SpecialPage {
 		$this->setHeaders();
 
 		// Introduction message, explaining to users what this is etc.
-		$wgOut->addHTML( Xml::element( 'p', null, wfMsg( 'mibbit-header' ) ) );
+		$wgOut->addWikiMsg( 'mibbit-header' );
 
 		// Prepare query string to pass to widget.
 		$queryAssoc = array(
 			'server'  => $wgMibbitServer,
 			'channel' => $wgMibbitChannel
 		);
-		if( $wgUser->isLoggedIn() ) $queryAssoc[ 'nick' ] = $wgUser->getName();
-		if( $wgMibbitExtraParameters ) {
+		if ( $wgUser->isLoggedIn() ) $queryAssoc[ 'nick' ] = str_replace( ' ', '_', $wgUser->getName() );
+		if ( $wgMibbitExtraParameters ) {
 			$queryAssoc = array_merge( $queryAssoc, $wgMibbitExtraParameters );
 		}
-		foreach( $queryAssoc as $parameter => $value ) {
+		foreach ( $queryAssoc as $parameter => $value ) {
 			$query[] = $parameter . '=' . urlencode( $value );
 		}
 		$queryString = implode( $query, '&' );

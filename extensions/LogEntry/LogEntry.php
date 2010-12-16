@@ -26,10 +26,9 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 // Credits
 $wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'LogEntry',
 	'author'         => 'Trevor Parscal', 
-	'svn-date'       => '$LastChangedDate: 2008-10-29 19:24:14 +0100 (śro, 29 paź 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 42777 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:LogEntry', 
 	'description'    => 'This tag extension provides a form for appending/prepending to log pages',
 	'descriptionmsg' => 'logentry-parserhook-desc',
@@ -59,13 +58,7 @@ $wgAutoloadClasses['LogEntryHooks'] = $dir . 'LogEntry.hooks.php';
 $wgAutoloadClasses['LogEntry'] = $dir . 'LogEntry.page.php';
 
 // Register parser hook
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	// Modern
-    $wgHooks['ParserFirstCallInit'][] = 'LogEntryHooks::register';
-} else {
-	// Legacy
-    $wgExtensionFunctions[] = 'LogEntryHooks::register';
-}
+$wgHooks['ParserFirstCallInit'][] = 'LogEntryHooks::register';
 
 // Register the LogEntry special page
 $wgSpecialPages['LogEntry'] = 'LogEntry';

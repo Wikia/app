@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -26,15 +26,16 @@ var FCKMenuBlock = function()
 	this._Items	= new Array() ;
 }
 
+FCKMenuBlock.prototype.TypeName = 'FCKMenuBlock' ;		// @Packager.RemoveLine
 
 FCKMenuBlock.prototype.Count = function()
 {
 	return this._Items.length ;
 }
 
-FCKMenuBlock.prototype.AddItem = function( name, label, iconPathOrStripInfoArrayOrIndex, isDisabled )
+FCKMenuBlock.prototype.AddItem = function( name, label, iconPathOrStripInfoArrayOrIndex, isDisabled, customData )
 {
-	var oItem = new FCKMenuItem( this, name, label, iconPathOrStripInfoArrayOrIndex, isDisabled ) ;
+	var oItem = new FCKMenuItem( this, name, label, iconPathOrStripInfoArrayOrIndex, isDisabled, customData ) ;
 
 	oItem.OnClick		= FCKTools.CreateEventListener( FCKMenuBlock_Item_OnClick, this ) ;
 	oItem.OnActivate	= FCKTools.CreateEventListener( FCKMenuBlock_Item_OnActivate, this ) ;
@@ -94,6 +95,9 @@ FCKMenuBlock.prototype.Create = function( parentElement )
 
 function FCKMenuBlock_Item_OnClick( clickedItem, menuBlock )
 {
+	if ( menuBlock.Hide )
+		menuBlock.Hide() ;
+
 	FCKTools.RunFunction( menuBlock.OnClick, menuBlock, [ clickedItem ] ) ;
 }
 
@@ -107,7 +111,7 @@ function FCKMenuBlock_Item_OnActivate( menuBlock )
 		if ( !FCKBrowserInfo.IsIE && oActiveItem.HasSubMenu && !this.HasSubMenu )
 		{
 			menuBlock._Window.focus() ;
-			
+
 			// Due to the event model provided by Opera, we need to set
 			// HasFocus here as the above focus() call will not fire the focus
 			// event in the panel immediately (#1200).

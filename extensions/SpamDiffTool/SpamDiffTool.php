@@ -20,6 +20,7 @@ $wgSpamBlacklistArticle = "Project:Spam-Blacklist";
 require_once("SpecialPage.php");
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'SpamDiffTool',
 	'author' => 'Travis Derouin',
 	'description' => 'Provides a basic way of adding new entries to the Spam Blacklist from diff pages',
@@ -150,7 +151,7 @@ function wfSpecialSpamDiffTool() {
 			
 	        # Get the last edit not by this guy
 			$current = Revision::newFromTitle( $title );
- 			$dbw =& wfGetDB( DB_MASTER );
+ 			$dbw = wfGetDB( DB_MASTER );
 	        $user = intval( $current->getUser() );
 	        $user_text = $dbw->addQuotes( $current->getUserText() );
 	        $s = $dbw->selectRow( 'revision',

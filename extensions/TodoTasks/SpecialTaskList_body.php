@@ -4,7 +4,7 @@ function TaskListLoadMessages() {
     static $messagesLoaded = false;
     if ($messagesLoaded) return;
         $messagesLoaded = true;
-	wfLoadExtensionMessages('TaskList');    
+	wfLoadExtensionMessages('TaskList');
 }
 
 function wfMsgTL($key) {
@@ -13,18 +13,12 @@ function wfMsgTL($key) {
 }
 
 function wfTodoParserFunction_Setup() {
-        global $wgParser;
-        # Set a function hook associating the "example" magic word with our function
-        $wgParser->setFunctionHook( 'todo', 'wfTodoParserFunction_Render' );
-}
+	global $wgParser;
 
-function wfTodoParserFunction_Magic( &$magicWords, $langCode ) {
-        # Add the magic word
-        # The first array element is case sensitive, in this case it is not case sensitive
-        # All remaining elements are synonyms for our parser function
-        $magicWords['todo'] = array( 0, 'todo' );
-        # unless we return true, other parser functions extensions won't get loaded.
-        return true;
+	# Set a function hook associating the "example" magic word with our function
+	$wgParser->setFunctionHook( 'todo', 'wfTodoParserFunction_Render' );
+
+	return true;
 }
 
 # only create the following function if it was not already installed with the User Contact Links extension
@@ -77,18 +71,18 @@ if (!function_exists('getUserIDFromUserText')) {
 }
 
 function getValidProjects() {
-    global $wgOut;
+	global $wgOut;
 
-    $ProjPageTitle = Title::newFromText ('TodoTasksValidProjects', NS_MEDIAWIKI) ;
-    if ($ProjPageTitle == NULL) {
-        $wgOut->addWikiText(wfMsgTL('tasklistnoprojects'));
-        return;
-    }
-    return Revision::newFromTitle($ProjPageTitle)->getText();
+	$validProjects = wfMsgForContentNoTrans( 'todoTasksValidProjects' );
+	if ( $validProjects == '' ) {
+		$wgOut->addWikiText( wfMsg( 'tasklistnoprojects' ) );
+		return;
+	}
+	return $validProjects;
 }
 
 function validateProject($projlist, $proj) {
-        
+
     $validprojects = preg_split('/\s*\*\s*/', $projlist, -1, PREG_SPLIT_NO_EMPTY);
     foreach ($validprojects as $vp) {
         if (preg_match("/^$proj$/i", $vp))
@@ -194,7 +188,7 @@ function wfTodoParserFunction_Render( &$parser, $input, $users, $project='') {
     return $text;
 }
 
-function addPersonalUrl(&$personal_urls, $wgTitle)
+function addPersonalUrl( &$personal_urls, $title )
 {
     global $wgOut, $wgUser;
 
@@ -207,14 +201,14 @@ function addPersonalUrl(&$personal_urls, $wgTitle)
     return true;
 }
 
-function todoPreviewAction(&$q) {
+function todoPreviewAction($q) {
     global $todoPreview;
 
     $todoPreview = $q;
     return true;
 }
 
-function todoSavePreparser(&$q) {
+function todoSavePreparser($q) {
     // update the text of the todo so that it has a propper full name in it.
     // this way, the <dpl> search will work better
     $newpagetext = '';
@@ -227,8 +221,8 @@ function todoSavePreparser(&$q) {
                       (todo)                    # template may be a TODO
                       |                         # or
                       (action item)             # template may be an ACTION ITEM
-                    ) 
-                    \s*                         # the template name may have trailing spaces 
+                    )
+                    \s*                         # the template name may have trailing spaces
                     \|                          # the pipe to indicate template parameter #1 (task description)
                     (                           # capture the template parameter in $4; this string is comprized of
                       [^|]*?                    # a possible sequence of non pipe characters
@@ -312,10 +306,12 @@ class TaskList extends SpecialPage
             }
             $username = $user->getName();
             $fullname = $user->getRealName();
+            // FIXME: Notice Undefined offset: 1 in extensions\TodoTasks\SpecialTaskList_body.php on line 306
+            // If GetRealName does not contain one or more spaces.
             list ($firstname, $lastname) = preg_split('/ /', $fullname);
 
             $wgOut->addWikiText(sprintf(wfMsgTL('tasklistbyname'), $fullname));
-            $wgOut->addWikiText("<dpl> uses=Template:Todo\n notuses=Template:Status Legend\n include={Todo}.dpl\n 
+            $wgOut->addWikiText("<dpl> uses=Template:Todo\n notuses=Template:Status Legend\n include={Todo}.dpl\n
 includematch=/${fullname}/i\n </dpl>");
         }
     }
@@ -323,65 +319,75 @@ includematch=/${fullname}/i\n </dpl>");
 
 class TaskListByProject extends SpecialPage
 {
-    function TaskListByProject() {
-        SpecialPage::SpecialPage("TaskListByProject");
-        self::loadMessages();
-        return true;
-    }
+	public function __construct() {
+		parent::__construct( 'TaskListByProject' );
+		SpecialPage::SpecialPage("TaskListByProject");
+		self::loadMessages();
+		return true;
+	}
 
     function loadMessages() {
         TaskListLoadMessages();
         return true;
     }
 
-    function execute($proj) {
-        global $wgRequest, $wgOut;
+	function execute($proj) {
+		global $wgRequest, $wgOut, $wgUseProjects;
 
-        $this->setHeaders();
-        $wgOut->setPagetitle(wfMsgTL('tasklistbyproject'));
+		$this->setHeaders();
 
-        $project = '';
+		if ( !$wgUseProjects ) {
+			$wgOut->showErrorPage( 'tasklistbyproject', 'tasklistnowguseprojects' );
+			return;
+		}
 
-        if (isset($proj)) {
-            $proj = str_replace('+', ' ', $proj);
-            $validProjects = getValidProjects();
-            $project = validateProject($validProjects, $proj);
-            if ($project == wfMsgTL('tasklistunknownproject')) {
-                $wgOut->addWikiText(sprintf(wfMsgTL('tasklistbyprojectbad'), $proj));
-                self::ValidProjectsForm();
-                return;
-            }
-        }
+		$wgOut->setPagetitle(wfMsgTL('tasklistbyproject'));
 
-        self::ValidProjectsForm();
+		$project = '';
 
-        if ($project == '')
-            $project = $wgRequest->getVal('project');
-        if ($project) {
-            $wgOut->addWikiText("----");
-            $wgOut->addWikiText(sprintf(wfMsgTL('tasklistbyprojname'), $project));
-            $dpl =  "<dpl>\n uses=Template:Todo \n notuses=Template:Status Legend \n include={Todo}.dpl \n";
-            $dpl .= 'includematch=/project\s*=\s*([^\x2c]*\x2c)*\s*' . $project . '\s*(\x2c[^\x2c]*\s*)*$/i';
-            $dpl .= "\n </dpl>";
-            $wgOut->addWikiText($dpl);
-        }
-    }
+		if (isset($proj)) {
+			$proj = str_replace('+', ' ', $proj);
+			$validProjects = getValidProjects();
+			$project = validateProject($validProjects, $proj);
+			if ($project == wfMsgTL('tasklistunknownproject')) {
+				$wgOut->addWikiText(sprintf(wfMsgTL('tasklistbyprojectbad'), $proj));
+				self::ValidProjectsForm();
+				return;
+			}
+		}
 
-    function ValidProjectsForm() {
-        global $wgOut;
+		self::ValidProjectsForm();
 
-        $titleObj = SpecialPage::getTitleFor( "TaskListByProject" );
-        $kiaction = $titleObj->getLocalUrl();
-        $wgOut->addHTML("<FORM ACTION=\"{$kiaction}\" METHOD=GET><LABEL FOR=project>" .
-                        wfMsgTL('tasklistchooseproj') . "</LABEL>");
-        $wgOut->addHTML("<select name=project>");
+		if ($project == '')
+		$project = $wgRequest->getVal('project');
+		if ($project) {
+			$wgOut->addWikiText("----");
+			$wgOut->addWikiText(sprintf(wfMsgTL('tasklistbyprojname'), $project));
+			$dpl =  "<dpl>\n uses=Template:Todo \n notuses=Template:Status Legend \n include={Todo}.dpl \n";
+			$dpl .= 'includematch=/project\s*=\s*([^\x2c]*\x2c)*\s*' . $project . '\s*(\x2c[^\x2c]*\s*)*$/i';
+			$dpl .= "\n </dpl>";
+			$wgOut->addWikiText($dpl);
+		}
+	}
 
-        $validprojects = preg_split('/\s*\*\s*/', getValidProjects(), -1, PREG_SPLIT_NO_EMPTY);
-        foreach ($validprojects as $vp) 
-            $wgOut->addHTML("<option value=\"$vp\">$vp</option>");
+	function ValidProjectsForm() {
+		global $wgOut;
 
-        $wgOut->addHTML("</select><INPUT TYPE=submit VALUE='" . wfMsgTL('tasklistprojdisp') . "'></FORM>");
-    }
+		$titleObj = SpecialPage::getTitleFor( "TaskListByProject" );
+		$kiaction = $titleObj->getLocalUrl();
+
+		$validprojects = preg_split('/\s*\*\s*/', getValidProjects(), -1, PREG_SPLIT_NO_EMPTY);
+
+		if( $validprojects ) {
+			$wgOut->addHTML("<FORM ACTION=\"{$kiaction}\" METHOD=GET><LABEL FOR=project>" .
+			wfMsgTL('tasklistchooseproj') . "</LABEL>");
+			$wgOut->addHTML("<select name=project>");
+
+			foreach ($validprojects as $vp) {
+				$wgOut->addHTML("<option value=\"$vp\">$vp</option>");
+			}
+	
+			$wgOut->addHTML("</select><INPUT TYPE=submit VALUE='" . wfMsgTL('tasklistprojdisp') . "'></FORM>");
+		}
+	}
 }
-
-?>

@@ -4,15 +4,15 @@
  *
  * All Metavid Wiki code is Released under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
- * 
+ *
  */
  if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
- 
- /*@@TODO document 
+
+ /*@@TODO document
   * @@todo title implementation is a bit messy ..
   * MV_Title should really just extend title and be passed around as a title
   *  instead of having two objects (Title and MV_title)
@@ -24,36 +24,36 @@
  	var $end_time = null;
  	var $id = null;
 	var $view_count = null;
- 	
+
  	var $hasMVDType = false;
  	var $dispVideoPlayerTime = false;
- 	// a pointer to the mvStream 
+ 	// a pointer to the mvStream
  	var $mvStream = null;
  	var $wiki_title = '';
  	// default namespace for mvTitle MV_NS_MVD
- 	function __construct( $title, $ns = MV_NS_MVD ) { 		
- 		// handle title object 		
+ 	function __construct( $title, $ns = MV_NS_MVD ) {
+ 		// handle title object
  		if ( is_string( $title ) ) {
  			$title = parent::makeTitle( $ns, $title );
  		}
- 		//print "RAN TITLE: ". $title->getDBKey();
+ 		//print "RAN TITLE: ". $title->getDBkey();
  		$this->inheritTitle( $title ) ;
  		// its just a plain string generate the parse info
- 		$this->wiki_title = $title->getDBKey();
- 		$this->parseTitle( $title->getDBKey() );
+ 		$this->wiki_title = $title->getDBkey();
+ 		$this->parseTitle( $title->getDBkey() );
  		// print "mv_title stream name: " . $this->stream_name. "\n";
  	}
  	function inheritTitle( & $title ) {
  		if( !is_object($title)){
  			//print_r( debug_backtrace() );
- 			return false; 		
+ 			return false;
  		}
  		foreach ( $title as $k => $v ) {
  			$this->$k = $v;
  		}
  	}
  	function hasMVDType() { return $this->hasMVDType; }
- 	/* 
+ 	/*
  	 * checks if the given request is valid:
  	 * valid request include:
  	 * type:existing_stream/##:##:##(/##:##:##)?
@@ -62,7 +62,7 @@
  		// @@todo should throw use exceptions
  		// first check if stream exists
  		if ( !$this->doesStreamExist() ) {
- 			// print "stream does not exist"; 
+ 			// print "stream does not exist";
  			return false;
  		}
  		if ( !$this->hasMVDType() ) {
@@ -76,7 +76,7 @@
  		return true;
  	}
  	/*
-	 * Check the db for the given stream name 
+	 * Check the db for the given stream name
 	 */
 	function doesStreamExist() {
 		// print "looking for: ". 	$this->stream_name;
@@ -88,7 +88,7 @@
 	function getStreamName() { return $this->stream_name; }
 	/*
 	 * Returns the stream name with uppercase first word
-	 *  and spaces for underscores 
+	 *  and spaces for underscores
 	 */
 	function getStreamNameText( $sn = '' ) {
 		if ( $sn == '' )$sn =  $this->stream_name;
@@ -98,11 +98,11 @@
 		$d = $this->mvStream->getStreamStartDate();
 		if(!isset($d) || $d==0)
 			return $this->getStreamNameText();
-		$sn_parts = split('_',$this->stream_name);		
-		//remove the date part of the array: 
+		$sn_parts = split('_',$this->stream_name);
+		//remove the date part of the array:
 		array_pop( $sn_parts);
 		foreach($sn_parts as & $sp)
-			$sp = ucfirst($sp);			
+			$sp = ucfirst($sp);
 		$sn = (count($sn_parts)>1)? implode(' ', $sn_parts): $sp[0];
 		return $sn .' on '. date('M jS, Y',$d);
 	}
@@ -126,68 +126,68 @@
 	function getWikiTitle() { return $this->wiki_title; }
 	function getStartTime() { return $this->start_time; }
 	function setStartTimeNtp($start_time){
-		$this->start_time = $start_time;	
-	}	
-	function getEndTime() { return $this->end_time; }	
+		$this->start_time = $start_time;
+	}
+	function getEndTime() { return $this->end_time; }
 	function setEndTimeNtp($end_time){
 		$this->end_time = $end_time;
 	}
  	function getTimeRequest() { return $this->start_time . '/' . $this->end_time; }
 	function getMwTitle() { return Title::MakeTitle( MV_NS_MVD, $this->wiki_title ); }
-	
+
 	function setStartEndIfEmpty() {
 		global $mvDefaultStreamViewLength, $wgRequest;
-		//if overview mode override the time settings: 
+		//if overview mode override the time settings:
 		if( $wgRequest->getVal('view') == 'overview' ){
 			$this->start_time_sec = 0;
-			$this->start_time = seconds2ntp( $this->start_time_sec ); 
+			$this->start_time = seconds2npt( $this->start_time_sec );
 			$this->end_time_sec = $this->getDuration();
-			$this->end_time = seconds2ntp( $this->end_time_sec );
+			$this->end_time = seconds2npt( $this->end_time_sec );
 		}
-		
+
 		if ( $this->start_time == null ) {
 			$this->start_time_sec = 0;
- 			$this->start_time = seconds2ntp( $this->start_time_sec ); 			
+ 			$this->start_time = seconds2npt( $this->start_time_sec );
  		} else {
- 			$this->start_time_sec = ntp2seconds( $this->start_time );
+ 			$this->start_time_sec = npt2seconds( $this->start_time );
 		}
- 		if ( $this->end_time == null || ntp2seconds( $this->end_time ) < $this->start_time_sec ) {
+ 		if ( $this->end_time == null || npt2seconds( $this->end_time ) < $this->start_time_sec ) {
  			if ( $this->start_time_sec == 0 ) {
- 				$this->end_time = seconds2ntp( $mvDefaultStreamViewLength );
+ 				$this->end_time = seconds2npt( $mvDefaultStreamViewLength );
  				$this->end_time_sec = $mvDefaultStreamViewLength;
  			} else {
  				$this->end_time_sec = ( $this->start_time_sec + $mvDefaultStreamViewLength );
- 				$this->end_time = seconds2ntp( $this->end_time_sec );
+ 				$this->end_time = seconds2npt( $this->end_time_sec );
  			}
  			if ( $this->getDuration() != 0 ) {
 	 			if ( $this->end_time_sec > $this->getDuration() ) {
 	 				$this->end_time_sec = $this->getDuration();
-	 				$this->end_time = seconds2ntp( $this->end_time_sec );
+	 				$this->end_time = seconds2npt( $this->end_time_sec );
 	 			}
  			}
  		}
 	}
-	/* 
+	/*
 	 * returns start time in seconds
 	 */
 	function getStartTimeSeconds() {
 		if ( isset( $this->start_time_sec ) )return $this->start_time_sec;
-		$this->start_time_sec = ntp2seconds( $this->start_time );
+		$this->start_time_sec = npt2seconds( $this->start_time );
 		return $this->start_time_sec;
 	}
-	/* 
+	/*
 	 * returns end time in seconds
 	 */
 	function getEndTimeSeconds() {
 		if ( isset( $this->end_time ) ) {
 			if ( isset( $this->end_time_sec ) )return $this->end_time_sec;
-			$this->end_time_sec = ntp2seconds( $this->end_time );
+			$this->end_time_sec = npt2seconds( $this->end_time );
 			return $this->end_time_sec;
 		}
 		return null;
 	}
 	/*
-	 * legacy/convenience function (should probably just update all getDuration calls 
+	 * legacy/convenience function (should probably just update all getDuration calls
 	 * to call global MVstream directly
 	 */
 	function getDuration() {
@@ -198,34 +198,34 @@
 		return $this->getEndTimeSeconds() - $this->getStartTimeSeconds();
 	}
 	function getSegmentDurationNTP( $short_time = false ) {
-		return seconds2ntp( $this->getSegmentDuration(), $short_time );
+		return seconds2npt( $this->getSegmentDuration(), $short_time );
 	}
 	/*
 	 * returns a near by stream range:
 	 */
 	function getNearStreamName( $range = null, $length = null ) {
 		global $mvDefaultClipLength, $mvDefaultClipRange;
-		
+
 		$stream = & mvGetMVStream( $this->stream_name );
-	
+
 		if ( $range === null )$range = $mvDefaultClipRange;
-		if ( $length === null )$length = $mvDefaultClipLength;		
-		
+		if ( $length === null )$length = $mvDefaultClipLength;
+
 		// subtract $range seconds from the start time:
 		$start_t = $this->getStartTimeSeconds()  - $range;
 		if ( $start_t < 0 )$start_t = 0;
-		
-		$start_ntp = seconds2ntp( $start_t ) ;
+
+		$start_ntp = seconds2npt( $start_t ) ;
 		// add $range seconds to the end time:
 		if ( isset( $this->end_time ) ) {
 			$end_t = $this->getEndTimeSeconds()  + $range;
 			if ( $end_t > $stream->getDuration() ) {
 				$end_t = $stream->getDuration();
 			}
-			$end_ntp = '/' . seconds2ntp( $this->getEndTimeSeconds()  + $range );
+			$end_ntp = '/' . seconds2npt( $this->getEndTimeSeconds()  + $range );
 		} else {
 			// make the end time the default Clip length
-			$end_ntp = '/' . seconds2ntp( $this->getStartTimeSeconds() + $length + $range );
+			$end_ntp = '/' . seconds2npt( $this->getStartTimeSeconds() + $length + $range );
 		}
 		return $this->stream_name . '/' . $start_ntp . $end_ntp;
 	}
@@ -245,7 +245,7 @@
 	}
 	function getFullStreamImageURL( $size = null, $req_time = null, $foce_server = '' ) {
 		global $wgServer, $mvExternalImages;
-		// if using external images already: 
+		// if using external images already:
 		if ( $mvExternalImages ) {
 			return $this->getStreamImageURL( $size, $req_time, $foce_server );
 		} else {
@@ -253,7 +253,7 @@
 			return $wgServer . $this->getStreamImageURL( $size, $req_time, $foce_server );
 		}
 	}
-	// @@todo force_server is a weird hack ... @@todo remove and update other code locations 
+	// @@todo force_server is a weird hack ... @@todo remove and update other code locations
 	function getStreamImageURL( $size = null, $req_time = null, $foce_server = '', $direct_link=false ) {
 		global $mvDefaultVideoPlaybackRes;
 		if ( $size == null ) {
@@ -264,14 +264,14 @@
 			if ( !$req_time )$req_time = '0:00:00';
 		}
 		if ( $foce_server == '' ) {
-			// get the image path: (and generate the image if necessary)				
+			// get the image path: (and generate the image if necessary)
 			return MV_StreamImage::getStreamImageURL( $this->getStreamId(), $req_time, $size, $direct_link );
 		} else {
 			return $foce_server . $this->getStreamName() . '?t=' . $req_time;
 		}
 	}
 	/* gets all ~direct~ metadata for the current MV_Title
-	 * (does not grab overlapping metadata) 
+	 * (does not grab overlapping metadata)
 	 * (semantic properties and categories)
 	 * */
 	function getMetaData( $normalized_prop_name = true ) {
@@ -281,7 +281,7 @@
 		$text = $article->getContent();
 		// @@todo should use semanticMediaWiki api here
 		$tmpProp = MV_Overlay::get_and_strip_semantic_tags( $text );
-		// strip categories	
+		// strip categories
 		$retAry['striped_text'] = preg_replace( '/\[\[[^:]+:[^\]]+\]\]/', '', $text );
 		if ( $normalized_prop_name ) {
 			foreach ( $tmpProp as $pkey => $pval ) {
@@ -290,9 +290,9 @@
 		} else {
 			$retAry['prop'] = $tmpProp;
 		}
-		
+
   		$sk =& $wgUser->getSkin();
-		// run via parser to add in Category info: 
+		// run via parser to add in Category info:
 		$parserOptions = ParserOptions::newFromUser( $wgUser );
 		$parserOutput = $wgParser->parse( $text , $this, $parserOptions );
 		$retAry['categories'] = $parserOutput->getCategories();
@@ -300,17 +300,17 @@
 	}
 	/*
 	 * function: getWebStreamURL
-	 * 
+	 *
 	 * returns full web accessible path to stream
 	 * (by default this is the web streameable version of the file)
 	 * web stream is file_desc_msg as: mv_ogg_low_quality
 	 * $mvDefaultVideoQualityKey in MV_Settings.php
-	 * 
+	 *
 	 */
 	function getWebStreamURL( $quality = null ) {
 		global $mvVideoArchivePaths, $mvDefaultVideoQualityKey;
 		// @@todo mediawiki path for media (instead of hard link to $mvVideoArchive)
-		// @@todo make sure file exists		
+		// @@todo make sure file exists
 		if ( !$quality )$quality = $mvDefaultVideoQualityKey;
 		if ( $this->doesStreamExist() ) {
 			// @@todo cache this / have a more organized store for StreamFiles in streamTitle
@@ -321,22 +321,22 @@
 			) );
 			if ( $dbr->numRows( $result ) == 0 )return false;
 			$streamFile  = $dbr->fetchObject( $result );
-						
-			// print_r($streamFile);		
-			// make sure we have streamFiles (used to generate the link)				
+
+			// print_r($streamFile);
+			// make sure we have streamFiles (used to generate the link)
 			$mvStreamFile = new MV_StreamFile( $this->mvStream, $streamFile );
-			// if link empty return false:			
+			// if link empty return false:
 			if ( $mvStreamFile->getFullURL() == '' )return false;
 					$time_req = '';
 			if ( $this->getStartTime() != '' && $this->getEndTime() != '' ) {
 				if ( $mvStreamFile->supportsURLTimeEncoding() ) {
 					if( $mvStreamFile->path_type=='url_anx' )
 						$time_req  = '?t=' . $this->getStartTime() . '/' . $this->getEndTime();
-					
+
 					if( $mvStreamFile->path_type=='mp4_stream' )
 						$time_req  = '?start=' . $this->getStartTimeSeconds() . '&end=' . $this->getEndTimeSeconds();
 				}
-			}			
+			}
 			return $mvStreamFile->getFullURL() . $time_req;
 		} else {
 			// @@todo throw ERROR
@@ -345,7 +345,7 @@
 	}
 	function getROEURL() {
 		$roeTitle = Title::newFromText( 'MvExportStream', NS_SPECIAL );
-		// add the query: 
+		// add the query:
 		$query = 'stream_name=' . htmlspecialchars( $this->getStreamName() ) .
 					'&t=' . htmlspecialchars( $this->getTimeRequest() .
 					'&feed_format=roe' );
@@ -359,7 +359,7 @@
 		$force_server = (isset($options['force_server']))?$options['force_server']:'';
 		$autoplay = (isset($options['autoplay']))?$options['autoplay']:false;
 		$showmeta =  (isset($options['showmeta']))?$options['showmeta']:false;
-		
+
 		$tag = 'video';
 		if ( $size == '' ) {
 			global $mvDefaultVideoPlaybackRes;
@@ -368,25 +368,25 @@
 		} else {
 			list( $vWidth, $vHeight, $na ) = MV_StreamImage::getSizeType( $size );
 		}
-		
-		
+
+
 		$stream_web_url = $this->getWebStreamURL( $mvDefaultVideoQualityKey );
 		$flash_stream_url = $this->getWebStreamURL( $mvDefaultFlashQualityKey );
 		$mp4_stream_url = 	$this->getWebStreamURL( $mvDefaultMP4QualityKey );
 		// print "looking for q: $mvDefaultFlashQualityKey ";
 
-		// print "FOUND: $flash_stream_url";		
+		// print "FOUND: $flash_stream_url";
 		$roe_url = 	$this->getROEURL();
-		//if no urls available return missing: 
+		//if no urls available return missing:
 		if ( !$stream_web_url &&  !$flash_stream_url && !$mp4_stream_url ) {
-			return wfMsg( 'mv_error_stream_missing' );
+			return wfMsgWikiHtml( 'mv_error_stream_missing' );
 		}
-		
+
 		if ( $stream_web_url || $flash_stream_url || $mp4_stream_url) {
 			$o = '';
-			/*if($this->dispVideoPlayerTime){				
+			/*if($this->dispVideoPlayerTime){
 				$o.='<span id="mv_videoPlayerTime">'.$this->getStartTime().' to '.
-						htmlspecialchars( $this->getEndTime() ) . 
+						htmlspecialchars( $this->getEndTime() ) .
 					'</span>';
 			}*/
 			$o .= '<' . htmlspecialchars( $tag ) . ' ';
@@ -394,31 +394,31 @@
 			$o .= 'poster="' . $this->getStreamImageURL( $size, null, $force_server ) . '" ' .
 				'roe="' . $roe_url . '" ';
 			$o .= ($showmeta)?'show_meta_link="true" ':'show_meta_link="false" ' ;
-			
+
 			$o .= ( $autoplay ) ? ' autoplay="true" ':'';
-			
+
 			$o .= 'style="width:' . htmlspecialchars( $vWidth ) . 'px;height:' . htmlspecialchars( $vHeight ) . 'px" ' .
 				'controls="true" embed_link="true" >';
-			
+
 			if ( $stream_web_url )
 				$o .= '<source timeFormat="anx" type="' .
 					htmlspecialchars( MV_StreamFile::getTypeForQK( $mvDefaultVideoQualityKey ) ) .
 					'" src="' . $stream_web_url . '"></source>';
-						
+
 			if ( $flash_stream_url )
 				$o .= '<source timeFormat="anx" type="' .
 					htmlspecialchars( MV_StreamFile::getTypeForQK( $mvDefaultFlashQualityKey ) ) .
 					'" src="' . $flash_stream_url . '"></source>';
-			
+
 			if ( $mp4_stream_url )
 				$o.='<source timeFormat="mp4" type="' .
 					htmlspecialchars( MV_StreamFile::getTypeForQK( $mvDefaultMP4QualityKey ) ) .
 					'" src="' . $mp4_stream_url . '"></source>';
-					
+
 			$o .= '</' . htmlspecialchars( $tag ) . '>';
 			return $o;
-		}					
-	}	
+		}
+	}
 	function getViewCount() {
 		if ( $this->view_count == null ) {
 			$dbr = & wfGetDB( DB_READ );
@@ -446,19 +446,19 @@
 		return $title_str;
 	}
 	 /*
-	 * returns a parsed title/request 
+	 * returns a parsed title/request
 	 */
 	function parseTitle( $title ) {
 		global $mvDefaultClipLength;
  		// the metavid namespace:
  		// stream:stream_name ||
- 		// mvd:type:stream_name_date/start_time/end_time	 		
+ 		// mvd:type:stream_name_date/start_time/end_time
 
  		$parts = split( '/', $title );
 		if ( !isset( $parts[1] ) )$parts[1] = '';
  		// check for type:
  		$sub_parts = split( ':', $parts[0] );
-		
+
  		if ( count( $sub_parts ) == 2 ) {
  			if ( $sub_parts[0] == '' && $sub_parts[1] == '' ) {
  				$this->stream_name = null;
@@ -474,7 +474,7 @@
  				$this->stream_name = null;
  			} else {
  				// print_r($sub_parts);
- 				// @@todo do look up of single part request 
+ 				// @@todo do look up of single part request
  				$this->stream_name = $sub_parts[0];
  				// $this->stream_name = null;
  			}
@@ -492,28 +492,27 @@
  			}
  		}
  		// (support null endtimes)
- 		// if the endtime is unset set it to the default length after the start time: 
+ 		// if the endtime is unset set it to the default length after the start time:
  		// if(!isset($end_time)){
- 			// $this->end_time = seconds2ntp(ntp2seconds($this->start_time) + $mvDefaultClipLength) ;
+ 			// $this->end_time = seconds2npt(npt2seconds($this->start_time) + $mvDefaultClipLength) ;
  		// }
 
- 		// @@todo make sure start time is not negative & end time is not > duration 
+ 		// @@todo make sure start time is not negative & end time is not > duration
 
- 		// validate the start time: 
+ 		// validate the start time:
  		if ( mvIsNtpTime( $this->start_time ) == false )$this->start_time = null;
- 		
- 		// validate the end time: 
+
+ 		// validate the end time:
  		if ( $this->end_time != null ) {
  			if ( mvIsNtpTime( $this->end_time ) == false )$this->end_time = null;
- 			
- 			// make sure the end time is > than the start time: 		
- 			if ( ntp2seconds( $this->start_time ) > ntp2seconds( $this->end_time ) ) {
- 				// @@TODO better error handling 
+
+ 			// make sure the end time is > than the start time:
+ 			if ( npt2seconds( $this->start_time ) > npt2seconds( $this->end_time ) ) {
+ 				// @@TODO better error handling
  				$this->start_time = null;
  				$this->end_time = null;
  			}
  		}
  	}
- 	
+
 }
-?>

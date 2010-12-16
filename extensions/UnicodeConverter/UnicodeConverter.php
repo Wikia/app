@@ -11,6 +11,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Unicode Converter',
 	//'version' => '1.1',
 	'author' => 'Tim Starling',

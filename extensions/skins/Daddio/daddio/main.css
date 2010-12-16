@@ -162,42 +162,28 @@ div.portlet {
 div.portlet h5 {
 	padding: 0.1em 0 0.3em 1em;
 	margin: 0 0 0 0;
-	background-color: #dddddd;
-	font-weight: bold;
-	border-bottom: solid 1px #3c78b5;
-	height: 1em;
-}
-
-div.portlet h4 {
-	padding: 0.1em 0 0.3em 1em;
-	margin: 0 0 0 0;
 	font-weight: bold;
 	height: 1.1em;
 }
 
-div.portlet P {
+div.portlet p {
 	margin-top: 0;
 	line-height: 0.5em;
 }
 
-div.navbox {
-	padding: 0 0 0 0;
-	margin: 0 0 0 0;
+.generated-sidebar.portlet h5 {
 	width: 90%;
 	height: 64px;
 	background: url(navbox.png) center right no-repeat;
 }
-div.searchbox {
-	padding: 0 0 0 0;
-	margin: 0 0 0 0;
+
+#p-search h5 {
 	width: 90%;
 	height: 64px;
 	background: url(searchbox.png) center right no-repeat;
 }
 
-div.toolbox {
-	padding: 0 0 0 0;
-	margin: 0 0 0 0;
+#p-tb h5 {
 	width: 90%;
 	height: 64px;
 	background: url(toolbox.png) center right no-repeat;

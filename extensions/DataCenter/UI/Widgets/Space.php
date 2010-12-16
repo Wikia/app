@@ -40,9 +40,7 @@ class DataCenterWidgetSpace extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Adds script to UI
 		DataCenterUI::addScript(
 			'/extensions/DataCenter/Resources/Widgets/Space/Space.js'
@@ -92,9 +90,7 @@ class DataCenterWidgetSpace extends DataCenterWidget {
 		return $xmlOutput;
 	}
 
-	private static function addSpaceJsFunction(
-		array $parameters
-	) {
+	private static function addSpaceJsFunction( array $parameters ) {
 		// Adds script to add space to scene
 		$jsOutput = DataCenterJs::callFunction(
 			'scene.setModule',
@@ -114,9 +110,7 @@ class DataCenterWidgetSpace extends DataCenterWidget {
 		return DataCenterJs::buildFunction( array( 'scene' ), $jsOutput );
 	}
 
-	private static function buildPhysicalJsObject(
-		$parameters
-	) {
+	private static function buildPhysicalJsObject( $parameters ) {
 		// Creates shortcut to space
 		$space = $parameters['space'];
 		// Checks if space was valid

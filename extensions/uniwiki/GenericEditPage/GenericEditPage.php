@@ -7,12 +7,11 @@ if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'GenericEditPage',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Supplements the edit page with something more usable',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
-	'svn-date'       => '$LastChangedDate: 2009-03-06 22:14:41 +0100 (ptk, 06 mar 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 48098 $',
 	'descriptionmsg' => 'gep-desc',
 );
 
@@ -28,6 +27,7 @@ $wgSuggestCategory          = false;
 $wgSuggestCategoryRecipient = $wgEmergencyContact;
 $wgUseCategoryPage          = false;
 $wgRequireCategory          = false;
+$wgAlwaysShowIntroSection   = false;	
 $wgGenericEditPageWhiteList = array( NS_MAIN );
 $wgAllowSimilarTitles		= true;
 
@@ -179,7 +179,7 @@ function UW_GenericEditPage_extractCategoriesIntoBox( &$text ) {
 
 	/* add any categories that may have been passed with the
 	 * GET request as if they started out on the page */
-	$data = $wgRequest->data;
+	$data = $wgRequest->getValues();
 	foreach ( $data as $key => $value ) {
 		if ( $key == 'category' ) {
 			$category = substr ( $value, 9 ); // value = category-categoryname
@@ -344,6 +344,7 @@ function UW_GenericEditPage_renderSectionBox ( $sections ) {
 function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 	global $wgHooks, $wgParser, $wgTitle, $wgRequest, $wgUser, $wgCategoryBox, $wgSectionBox, $wgRequireCategory;
 	global $wgGenericEditPageClass, $wgSwitchMode, $wgGenericEditPageWhiteList, $wgAllowSimilarTitles;
+	global $wgAlwaysShowIntroSection;
 
 	// disable this whole thing on conflict and comment pages
 	if ( $editor->section == "new" || $editor->isConflict )
@@ -442,9 +443,9 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 	 * but not in the page, copy it. otherwise, use the page text (even if empty) */
 	$result[] = ( !empty($layout[0]) && $layout[0]['text'] && !$page[0]['text'] ) ? $layout[0] : $page[0];
 
-	/* only show the un-named section if it is being used. as
-	 * default, do not encourage people to use it by showing it */
-	$result[0]['in-use'] = ( $result[0]['text'] != "" );
+	/* decide whether or not to show the introduction section.
+	 * if configured to do so, it won't appear if there isn't any text in it already */
+	$result[0]['in-use'] = $wgAlwaysShowIntroSection ? true : ( $result[0]['text'] != '' );
 
 	// get sections that are in the layout
 	for ( $i = 2; $i < count ( $layout ); $i++ ) {
@@ -698,7 +699,7 @@ function UW_GenericEditPage_editPageCss ( &$out ) {
 
 function UW_GenericEditPage_combineBeforeSave ( &$editpage_Obj ) {
 	global $wgRequest, $wgSwitchMode;
-	$data = $wgRequest->data;
+	$data = $wgRequest->getValues();
 
 	/* if this request was triggered by the user
 	 * pressing the "switch mode" button, then

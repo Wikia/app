@@ -142,17 +142,21 @@ var categoryTreeRetryMsg = "Please wait a moment and try again.";
 
           result = result.replace(/##LOAD##/g, categoryTreeExpandMsg);
           div.innerHTML= result;
+
+          categoryTreeShowToggles();
       }
 
       var opt = categoryTreeEncodeValue(options);
       sajax_do_call( "efCategoryTreeAjaxWrapper", [cat, opt, 'json'] , f );
     }
-    
-    // Re-show the CategoryTreeToggles.
-    addOnloadHook( function() {
-    	var toggles = getElementsByClassName( document, 'span', 'CategoryTreeToggle' );
-    	
-    	for( var i = 0; i<toggles.length; ++i ) {
-    		toggles[i].style.display = 'inline';
-    	}
-    } );
+
+    function categoryTreeShowToggles() {
+      var toggles = getElementsByClassName( document, 'span', 'CategoryTreeToggle' );
+
+      for( var i = 0; i<toggles.length; ++i ) {
+        toggles[i].style.display = 'inline';
+      }
+    }
+
+    // Re-show the CategoryTreeToggles
+    addOnloadHook(categoryTreeShowToggles);

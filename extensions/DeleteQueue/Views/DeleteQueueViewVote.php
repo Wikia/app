@@ -1,6 +1,6 @@
 <?php
 
-if (!defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die;
 }
 
@@ -10,13 +10,13 @@ class DeleteQueueViewVote extends DeleteQueueView {
 		$article = Article::newFromId( $article_id );
 		$this->process( $article );
 	}
-	
+
 	/**
 	 * Process the 'delvote' action.
 	 * @param Article $article The article to endorse/object to deletion of.
 	 */
 	public function process( $article ) {
-		global $wgRequest,$wgOut,$wgUser,$wgTitle;
+		global $wgRequest, $wgOut, $wgUser;
 
 		$errs =
 			$article->mTitle->getUserPermissionsErrors( 'deletequeue-vote', $wgUser );
@@ -36,10 +36,10 @@ class DeleteQueueViewVote extends DeleteQueueView {
 
 		if ( $wgUser->matchEditToken( $token ) &&
 			in_array( $action, array( 'endorse', 'object' ) ) ) {
-			
+
 			$dqi->addVote( $action, $comments );
 
-			if ($action == 'object' && $dqi->getQueue( ) == 'prod') {
+			if ( $action == 'object' && $dqi->getQueue( ) == 'prod' ) {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->begin();
 
@@ -50,7 +50,7 @@ class DeleteQueueViewVote extends DeleteQueueView {
 						$article->mTitle,
 						$comments,
 						array(
-							wfMsgForContent('deletequeue-queue-prod'),
+							wfMsgForContent( 'deletequeue-queue-prod' ),
 							wfMsgForContent( "deletequeue-queue-deletediscuss" )
 						)
 					);
@@ -72,27 +72,29 @@ class DeleteQueueViewVote extends DeleteQueueView {
 		$fields = array();
 
 		$options = Xml::tags( 'p', null,
-			Xml::radioLabel( wfMsg( 'deletequeue-vote-endorse' ),
-							'wpVote',
-							'endorse',
-							'mw-deletequeue-vote-endorse'
-							)
-						);
-						
+			Xml::radioLabel(
+				wfMsg( 'deletequeue-vote-endorse' ),
+				'wpVote',
+				'endorse',
+				'mw-deletequeue-vote-endorse'
+			)
+		);
+
 		$options .= Xml::tags( 'p', null,
-			Xml::radioLabel( wfMsg( 'deletequeue-vote-object' ),
-						'wpVote',
-						'object',
-						'mw-deletequeue-vote-object'
-						)
-					);
-					
+			Xml::radioLabel(
+				wfMsg( 'deletequeue-vote-object' ),
+				'wpVote',
+				'object',
+				'mw-deletequeue-vote-object'
+			)
+		);
+
 		$fields['deletequeue-vote-action'] = $options;
 		$fields['deletequeue-vote-reason'] = Xml::input( 'wpComments', 45, $comments );
-		
+
 		$article_id = $article->getId();
 		$title = $this->getTitle( "vote/$article_id" );
-		
+
 		$form = Xml::buildForm( $fields, 'deletequeue-vote-submit' ) .
 			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
 			Xml::hidden( 'title', $title->getPrefixedText() );
@@ -101,8 +103,10 @@ class DeleteQueueViewVote extends DeleteQueueView {
 			array(
 				'action' => $title->getLocalURL(),
 				'method' => 'POST'
-			), $form );
-			
+			),
+			$form
+		);
+
 		$form = Xml::fieldset( wfMsg( 'deletequeue-vote-legend' ), $form );
 
 		$wgOut->addHTML( $form );

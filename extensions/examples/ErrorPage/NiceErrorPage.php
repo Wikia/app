@@ -52,9 +52,4 @@ class NiceErrorPage {
 		);
 		return $a;
 	}
-
-	static function __call( $method, $args ) {
-		$name = str_replace( 'OP', '', $method );
-		return $this->$name( $args[0] );
-	}
 }

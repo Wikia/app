@@ -56,11 +56,10 @@ $oaiAudit = false;
 $oaiAuditDatabase = false;
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'OAIRepository',
 	'author'         => 'Brion Vibber',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:OAIRepository',
-	'svn-date'       => '$LastChangedDate: 2008-08-21 18:27:19 +0200 (czw, 21 sie 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 39772 $',
 	'description'    => 'Provides [http://www.openarchives.org/OAI/openarchivesprotocol.html OAI-PMH] repository interface',
 	'descriptionmsg' => 'oai-desc',
 );
@@ -81,7 +80,7 @@ $wgHooks['ArticleUndelete'      ][] = 'oaiUpdateUndelete';
 $oaiDeleteIds = array();
 
 function oaiUpdatePage( $id, $action ) {
-	$dbw =& wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER );
 	#$dbw->immediateBegin();
 	$dbw->replace( 'updates',
 		array( 'up_page' ),

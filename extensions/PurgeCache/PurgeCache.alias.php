@@ -10,16 +10,12 @@ $aliases['en'] = array(
 	'PurgeCache' => array( 'PurgeCache' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'PurgeCache' => array( 'إفراغ_الكاش' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'PurgeCache' => array( 'إفراغ_الكاش' ),
 );
@@ -39,9 +35,19 @@ $aliases['es'] = array(
 	'PurgeCache' => array( 'Purgar_caché' ),
 );
 
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'PurgeCache' => array( 'Pyyhi_välimuistiversio' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'PurgeCache' => array( 'Purger le cache', 'Purger cache', 'PurgerLeCache', 'PurgerCache' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'PurgeCache' => array( 'Purgiér lo cache', 'PurgiérLoCache' ),
 );
 
 /** Galician (Galego) */
@@ -66,12 +72,22 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'PurgeCache' => array( 'Pembersihan tembolok' ),
+	'PurgeCache' => array( 'Pembersihan tembolok', 'PembersihanTembolok', 'Purgasi kas', 'PurgasiKas' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'PurgeCache' => array( 'キャッシュ削除' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'PurgeCache' => array( '캐시갱신' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'PurgeCache' => array( 'Zwescheschpeischer leddisch' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -82,6 +98,11 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'PurgeCache' => array( 'ИсчистиКеш' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'PurgeCache' => array( 'കാഷെശുദ്ധീകരണം' ),
 );
 
 /** Maltese (Malti) */
@@ -114,6 +135,11 @@ $aliases['sa'] = array(
 	'PurgeCache' => array( 'पुनातिसंगणकसंस्मृति' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'PurgeCache' => array( 'VyčistiťCache' ),
+);
+
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'PurgeCache' => array( 'ล้างแคช' ),
@@ -122,5 +148,10 @@ $aliases['th'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'PurgeCache' => array( 'Purgahin ang baunan' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'PurgeCache' => array( 'ÖnbellekBoşalt', 'ÖnbellekTemizle' ),
 );
 

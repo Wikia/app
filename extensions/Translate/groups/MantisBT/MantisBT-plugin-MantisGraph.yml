@@ -1,0 +1,69 @@
+---
+BASIC:
+  id: out-mantis-mantisgraph
+  label: MantisBT - Mantis Graph
+  description: "{{int:bw-desc-mantisbt-mantisgraph}}"
+  namespace: NS_MANTIS
+  display: out/mantis/mantisgraph
+  class: FileBasedMessageGroup
+
+FILES:
+  class: PhpVariablesFFS
+  sourcePattern: %GROUPROOT%/plugins/MantisGraph/lang/strings_%CODE%.txt
+  targetPattern: strings_%CODE%.txt
+  codeMap:
+    af:      afrikaans
+    am:      amharic
+    ar:      arabic
+    arz:     arabicegyptianspoken
+    bg:      bulgarian
+    br:      breton
+    ca:      catalan
+    cs:      czech
+    da:      danish
+    de:      german
+    el:      greek
+    en:      english
+    es:      spanish
+    et:      estonian
+    fi:      finnish
+    fr:      french
+    gl:      galician
+    gsw:     swissgerman
+    he:      hebrew
+    hr:      croatian
+    hu:      hungarian
+    is:      icelandic
+    it:      italian
+    ja:      japanese
+    ko:      korean
+    ksh:     ripoarisch
+    lt:      lithuanian
+    lv:      latvian
+    mk:      macedonian
+    nl:      dutch
+    nn:      norwegian_nynorsk
+    no:      norwegian_bokmal
+    oc:      occitan
+    pl:      polish
+    pt-br:   portuguese_brazil
+    pt:      portuguese_standard
+    ro:      romanian
+    ru:      russian
+    sk:      slovak
+    sl:      slovene
+    sr-ec:   serbian
+    sv:      swedish
+    tl:      tagalog
+    tr:      turkish
+    uk:      ukrainian
+    ur:      urdu
+    vo:      volapuk
+    zh-hans: chinese_simplified
+    zh-hant: chinese_traditional
+
+CHECKER:
+  class: MessageChecker
+  checks:
+    - printfCheck
+    - braceBalanceCheck

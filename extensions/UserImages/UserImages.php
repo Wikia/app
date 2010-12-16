@@ -15,9 +15,8 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'User Image Gallery',
-	'svn-date' => '$LastChangedDate: 2008-12-18 06:56:43 +0100 (czw, 18 gru 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44752 $',
 	'version' => '1.1',
 	'author' => 'Rob Church',
 	'description' => 'Generate galleries of user-uploaded images with <code><nowiki><userimage /></nowiki></code>',

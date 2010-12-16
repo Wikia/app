@@ -24,13 +24,9 @@ class ParserOutput
 		$mOutputHooks = array(),      # Hook tags as per $wgParserOutputHooks
 		$mWarnings = array(),         # Warning text to be returned to the user. Wikitext formatted, in the key only
 		$mSections = array(),         # Table of contents
-		$mProperties = array();       # Name/value pairs to be cached in the DB
+		$mProperties = array(),       # Name/value pairs to be cached in the DB
+		$mTOCHTML = '';	              # HTML of the TOC
 	private $mIndexPolicy = '';	      # 'index' or 'noindex'?  Any other value will result in no change.
-
-	/**
-	 * Overridden title for display
-	 */
-	private $displayTitle = false;
 
 	function ParserOutput( $text = '', $languageLinks = array(), $categoryLinks = array(),
 		$containsOldMagic = false, $titletext = '' )
@@ -54,10 +50,12 @@ class ParserOutput
 	function &getImages()                { return $this->mImages; }
 	function &getExternalLinks()         { return $this->mExternalLinks; }
 	function getNoGallery()              { return $this->mNoGallery; }
+	function getHeadItems()              { return $this->mHeadItems; }
 	function getSubtitle()               { return $this->mSubtitle; }
 	function getOutputHooks()            { return (array)$this->mOutputHooks; }
 	function getWarnings()               { return array_keys( $this->mWarnings ); }
 	function getIndexPolicy()            { return $this->mIndexPolicy; }
+	function getTOCHTML()                { return $this->mTOCHTML; }
 
 	function containsOldMagic()          { return $this->mContainsOldMagic; }
 	function setText( $text )            { return wfSetVar( $this->mText, $text ); }
@@ -68,10 +66,10 @@ class ParserOutput
 	function setTitleText( $t )          { return wfSetVar( $this->mTitleText, $t ); }
 	function setSections( $toc )         { return wfSetVar( $this->mSections, $toc ); }
 	function setIndexPolicy( $policy )   { return wfSetVar( $this->mIndexPolicy, $policy ); }
+	function setTOCHTML( $tochtml )      { return wfSetVar( $this->mTOCHTML, $tochtml ); }
 
 	function addCategory( $c, $sort )    { $this->mCategories[$c] = $sort; }
 	function addLanguageLink( $t )       { $this->mLanguageLinks[] = $t; }
-	function addExternalLink( $url )     { $this->mExternalLinks[$url] = 1; }
 	function addWarning( $s )            { $this->mWarnings[$s] = 1; }
 
 	function addOutputHook( $hook, $data = false ) {
@@ -91,23 +89,18 @@ class ParserOutput
 		return (bool)$this->mNewSection;
 	}
 
+	function addExternalLink( $url ) {
+		# We don't register links pointing to our own server, unless... :-)
+		global $wgServer, $wgRegisterInternalExternals;
+		if( $wgRegisterInternalExternals or stripos($url,$wgServer.'/')!==0)
+			$this->mExternalLinks[$url] = 1; 
+	}
+
 	function addLink( $title, $id = null ) {
-		/* Wikia change begin - @author: eloy */
 		if ( $title->isExternal() ) {
-			/** Don't record interwikis in pagelinks (but in 1.15 do not register
-			 * interwikilinks as well since we don't have iwlinks table)
-			 *
-			 * more info:
-			 *
-			 * https://bugzilla.wikimedia.org/show_bug.cgi?id=14473
-			 *
-			 * interwiki links were added in http://www.mediawiki.org/wiki/Special:Code/MediaWiki/65104
-			 *
-			 **/
+			// Don't record interwikis in pagelinks
 			return;
 		}
-		/* Wikia change end */
-
 		$ns = $title->getNamespace();
 		$dbk = $title->getDBkey();
 		if ( $ns == NS_MEDIA ) {
@@ -186,7 +179,7 @@ class ParserOutput
 	 * @param string $text Desired title text
 	 */
 	public function setDisplayTitle( $text ) {
-		$this->displayTitle = $text;
+		$this->setTitleText( $text );
 	}
 
 	/**
@@ -195,7 +188,11 @@ class ParserOutput
 	 * @return string
 	 */
 	public function getDisplayTitle() {
-		return $this->displayTitle;
+		$t = $this->getTitleText( );
+		if( $t === '' ) {
+			return false;
+		}
+		return $t;
 	}
 
 	/**

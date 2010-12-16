@@ -16,6 +16,7 @@ class WikiExtensionFormatReader extends WikiFormatReader {
 		}
 
 		$data = file_get_contents( $this->filename ) . "\n";
+		$data = SimpleFFS::fixNewLines( $data );
 
 		$headerP = "
 		.*? # Ungreedily eat header

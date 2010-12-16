@@ -17,9 +17,7 @@ class SiteMatrix {
 		global $wgSiteMatrixFile, $wgSiteMatrixSites;
 		global $wgLocalDatabases, $IP, $wgConf;
 
-		if( file_exists( "$IP/InitialiseSettings.php" ) ) {
-			require_once "$IP/InitialiseSettings.php";
-		}
+		$wgConf->loadFullData();
 
 		if( file_exists( $wgSiteMatrixFile ) ){
 			$this->langlist = array_map( 'trim', file( $wgSiteMatrixFile ) );
@@ -187,6 +185,13 @@ class SiteMatrixPage extends SpecialPage {
 		$this->outputHeader();
 
 		$matrix = new SiteMatrix();
+		
+		if( class_exists( 'LanguageNames' ) ) {
+			global $wgLang;
+			$localLanguageNames = LanguageNames::getNames( $wgLang->getCode() );
+		} else {
+			$localLanguageNames = array();
+		}
 
 		if( $wgRequest->getVal( 'action' ) == 'raw' ){
 			$wgOut->disable();
@@ -197,7 +202,14 @@ class SiteMatrixPage extends SpecialPage {
 			echo "\t<matrix size=\"{$count}\">\n";
 			foreach ( $matrix->getLangList() as $lang ) {
 				$langhost = str_replace( '_', '-', $lang );
-				echo "\t\t<language code=\"{$langhost}\" name=\"".htmlspecialchars( $wgLanguageNames[$lang] )."\">\n";
+				$attribs = array(
+					'code' => $langhost,
+					'name' => $wgLanguageNames[$lang],
+				);
+				if( isset( $localLanguageNames[$lang] ) ) {
+					$attribs['localname'] = $localLanguageNames[$lang];
+				}
+				echo "\t\t" . Xml::openElement( 'language', $attribs ) . "\n";
 				foreach ( $matrix->getSites() as $site ) {
 					if ( $matrix->exist( $lang, $site ) ) {
 						$url = $matrix->getUrl( $lang, $site );
@@ -224,7 +236,7 @@ class SiteMatrixPage extends SpecialPage {
 		# Construct the HTML
 
 		# Header row
-		$s = Xml::openElement( 'table', array( 'id' => 'mw-sitematrix-table' ) ) .
+		$s = Xml::openElement( 'table', array( 'class' => 'wikitable', 'id' => 'mw-sitematrix-table' ) ) .
 			"<tr>" .
 				Xml::element( 'th', null, wfMsg( 'sitematrix-language' ) ) .
 				Xml::element( 'th', array( 'colspan' => count( $matrix->getSites() ) ), wfMsg( 'sitematrix-project' ) ) .
@@ -241,7 +253,11 @@ class SiteMatrixPage extends SpecialPage {
 		foreach ( $matrix->getLangList() as $lang ) {
 			$anchor = strtolower( '<a id="' . htmlspecialchars( $lang ) . '" name="' . htmlspecialchars( $lang ) . '"></a>' );
 			$s .= '<tr>';
-			$s .= '<td>' . $anchor . '<strong>' . $wgLanguageNames[$lang] . '</strong></td>';
+			$attribs = array();
+			if( isset( $localLanguageNames[$lang] ) ) {
+				$attribs['title'] = $localLanguageNames[$lang];
+			}
+			$s .= '<td>' . $anchor . Xml::element( 'strong', $attribs, $wgLanguageNames[$lang] ) . '</td>';
 			$langhost = str_replace( '_', '-', $lang );
 			foreach ( $matrix->getNames() as $site => $name ) {
 				$url = $matrix->getUrl( $lang, $site );
@@ -310,6 +326,14 @@ class ApiQuerySiteMatrix extends ApiQueryBase {
 		$matrix_out = array(
 			'count' => $matrix->getCount(),
 		);
+		
+		if( class_exists( 'LanguageNames' ) ) {
+			global $wgLang;
+			$localLanguageNames = LanguageNames::getNames( $wgLang->getCode() );
+		} else {
+			$localLanguageNames = array();
+		}
+
 		foreach ( $matrix->getLangList() as $lang ) {
 			$langhost = str_replace( '_', '-', $lang );
 			$language = array(
@@ -317,6 +341,9 @@ class ApiQuerySiteMatrix extends ApiQueryBase {
 				'name' => $wgLanguageNames[$lang],
 				'site' => array(),
 			);
+			if( isset( $localLanguageNames[$lang] ) ) {
+				$language['localname'] = $localLanguageNames[$lang];
+			}
 
 			foreach ( $matrix->getSites() as $site ) {
 				if ( $matrix->exist( $lang, $site ) ) {
@@ -343,6 +370,12 @@ class ApiQuerySiteMatrix extends ApiQueryBase {
 			$wiki = array();
 			$wiki['url'] = $url;
 			$wiki['code'] = str_replace( '_', '-', $lang ) . ( $site != 'wiki' ? $site : '' );
+			
+			if( $matrix->isPrivate( $lang . $site ) ) 
+				$wiki['private'] = '';
+			if( $matrix->isFishbowl( $lang . $site ) )
+				$wiki['fishbowl'] = '';
+			
 			$specials[] = $wiki;
 		}
 
@@ -371,6 +404,6 @@ class ApiQuerySiteMatrix extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: SiteMatrix_body.php 45542 2009-01-08 04:46:58Z raymond $';
+		return __CLASS__ . ': $Id: SiteMatrix_body.php 66255 2010-05-12 02:12:12Z simetrical $';
 	}
 }

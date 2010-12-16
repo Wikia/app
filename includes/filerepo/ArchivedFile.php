@@ -33,7 +33,7 @@ class ArchivedFile
 		$this->id = -1;
 		$this->title = false;
 		$this->name = false;
-		$this->group = '';
+		$this->group = 'deleted'; // needed for direct use of constructor
 		$this->key = '';
 		$this->size = 0;
 		$this->bits = 0;
@@ -45,47 +45,48 @@ class ArchivedFile
 		$this->description = '';
 		$this->user = 0;
 		$this->user_text = '';
-		$this->timestamp = NULL;
+		$this->timestamp = null;
 		$this->deleted = 0;
 		$this->dataLoaded = false;
-		
+		$this->exists = false;
+
 		if( is_object($title) ) {
 			$this->title = $title;
 			$this->name = $title->getDBkey();
 		}
-		
+
 		if ($id)
 			$this->id = $id;
-		
+
 		if ($key)
 			$this->key = $key;
-		
+
 		if (!$id && !$key && !is_object($title))
 			throw new MWException( "No specifications provided to ArchivedFile constructor." );
 	}
 
 	/**
 	 * Loads a file object from the filearchive table
-	 * @return ResultWrapper
+	 * @return true on success or null
 	 */
 	public function load() {
 		if ( $this->dataLoaded ) {
 			return true;
 		}
 		$conds = array();
-		
+
 		if( $this->id > 0 )
 			$conds['fa_id'] = $this->id;
 		if( $this->key ) {
-			$conds['fa_storage_group'] = $this->group;	
+			$conds['fa_storage_group'] = $this->group;
 			$conds['fa_storage_key'] = $this->key;
 		}
 		if( $this->title )
 			$conds['fa_name'] = $this->title->getDBkey();
-			
+
 		if( !count($conds))
 			throw new MWException( "No specific information for retrieving archived file" );
-		
+
 		if( !$this->title || $this->title->getNamespace() == NS_FILE ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select( 'filearchive',
@@ -142,13 +143,14 @@ class ArchivedFile
 			return;
 		}
 		$this->dataLoaded = true;
+		$this->exists = true;
 
 		return true;
 	}
 
 	/**
 	 * Loads a file object from the filearchive table
-	 * @return ResultWrapper
+	 * @return ArchivedFile
 	 */
 	public static function newFromRow( $row ) {
 		$file = new ArchivedFile( Title::makeTitle( NS_FILE, $row->fa_name ) );
@@ -176,7 +178,6 @@ class ArchivedFile
 
 	/**
 	 * Return the associated title object
-	 * @public
 	 */
 	public function getTitle() {
 		return $this->title;
@@ -194,12 +195,24 @@ class ArchivedFile
 		return $this->id;
 	}
 
+	public function exists() {
+		$this->load();
+		return $this->exists;
+	}
+
 	/**
 	 * Return the FileStore key
 	 */
 	public function getKey() {
 		$this->load();
 		return $this->key;
+	}
+
+	/**
+	 * Return the FileStore key (overriding base File class)
+	 */
+	public function getStorageKey() {
+		return $this->getKey();
 	}
 
 	/**
@@ -235,7 +248,6 @@ class ArchivedFile
 
 	/**
 	 * Return the size of the image file, in bytes
-	 * @public
 	 */
 	public function getSize() {
 		$this->load();
@@ -244,7 +256,6 @@ class ArchivedFile
 
 	/**
 	 * Return the bits of the image file, in bytes
-	 * @public
 	 */
 	public function getBits() {
 		$this->load();
@@ -337,30 +348,33 @@ class ArchivedFile
 	}
 
 	/**
-	 * int $field one of DELETED_* bitfield constants
+	 * Returns the deletion bitfield
+	 * @return int
+	 */
+	public function getVisibility() {
+		$this->load();
+		return $this->deleted;
+	}
+
+	/**
 	 * for file or revision rows
+	 *
+	 * @param $field Integer: one of DELETED_* bitfield constants
 	 * @return bool
 	 */
 	public function isDeleted( $field ) {
+		$this->load();
 		return ($this->deleted & $field) == $field;
 	}
 
 	/**
 	 * Determine if the current user is allowed to view a particular
 	 * field of this FileStore image file, if it's marked as deleted.
-	 * @param int $field
+	 * @param $field Integer
 	 * @return bool
 	 */
 	public function userCan( $field ) {
-		if( ($this->deleted & $field) == $field ) {
-			global $wgUser;
-			$permission = ( $this->deleted & File::DELETED_RESTRICTED ) == File::DELETED_RESTRICTED
-				? 'suppressrevision'
-				: 'deleterevision';
-			wfDebug( "Checking for $permission due to $field match on $this->deleted\n" );
-			return $wgUser->isAllowed( $permission );
-		} else {
-			return true;
-		}
+		$this->load();
+		return Revision::userCanBitfield( $this->deleted, $field );
 	}
 }

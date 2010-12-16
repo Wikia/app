@@ -103,7 +103,7 @@ class SMWLinearValue extends SMWNumberValue {
 
 		$value = false;
 		if ($this->m_unit === $this->m_mainunit) { // only try if conversion worked
-			if ( ($value === false) && $this->m_outformat) { // first try given output unit
+			if ( ($value === false) && ($this->m_outformat) && ($this->m_outformat != '-') ) { // first try given output unit
 				$unit = $this->normalizeUnit($this->m_outformat);
 				$printunit = $unit;
 				if (array_key_exists($unit, $this->m_unitids)) { // find id for output unit
@@ -167,13 +167,13 @@ class SMWLinearValue extends SMWNumberValue {
 			// delete all previous errors, this is our real problem
 			/// TODO: probably we should check for this earlier, but avoid unnecessary DB requests ...
 			wfLoadExtensionMessages('SemanticMediaWiki');
-			$this->m_errors = array(wfMsgForContent('smw_unknowntype', SMWDataValueFactory::findTypeLabel($this->getTypeID())));
+			$this->addError(wfMsgForContent('smw_unknowntype', SMWDataValueFactory::findTypeLabel($this->getTypeID())));
 			return;
 		}
 		$numdv = SMWDataValueFactory::newTypeIDValue('_num'); // used for parsing the factors
 		foreach ($factors as $dv) {
 			$numdv->setUserValue($dv->getWikiValue());
-			if (!$numdv->isValid() || ($numdv->getNumericValue() === 0)) {
+			if (!$numdv->isValid() || ($numdv->getValueKey() === 0)) {
 				continue; // ignore problematic conversions
 			}
 			$unit_aliases = preg_split('/\s*,\s*/u', $numdv->getUnit());
@@ -182,11 +182,11 @@ class SMWLinearValue extends SMWNumberValue {
 				$unit = $this->normalizeUnit($unit);
 				if ($first) {
 					$unitid = $unit;
-					if ( $numdv->getNumericValue() == 1 ) { // add main unit to front of array (displyed first)
+					if ( $numdv->getValueKey() == 1 ) { // add main unit to front of array (displyed first)
 						$this->m_mainunit = $unit;
-						$this->m_unitfactors = array( $unit => $numdv->getNumericValue() ) + $this->m_unitfactors;
+						$this->m_unitfactors = array( $unit => $numdv->getValueKey() ) + $this->m_unitfactors;
 					} else { // non-main units are not ordered -- they might come out in any way the DB likes (can be modified via display units)
-						$this->m_unitfactors[$unit] = $numdv->getNumericValue();
+						$this->m_unitfactors[$unit] = $numdv->getValueKey();
 					}
 					$first = false;
 				}
@@ -203,7 +203,7 @@ class SMWLinearValue extends SMWNumberValue {
 		if ($this->m_displayunits !== false) return;
 		$this->initConversionData(); // needed to normalise unit strings
 		$this->m_displayunits = array();
-		if ( ($this->m_property === NULL) || ($this->m_property->getWikiPageValue() === NULL) ) return;
+		if ( ($this->m_property === null) || ($this->m_property->getWikiPageValue() === null) ) return;
 		$values = smwfGetStore()->getPropertyValues($this->m_property->getWikiPageValue(), SMWPropertyValue::makeProperty('_UNIT'));
 		$units = array();
 		foreach ($values as $value) { // Join all if many annotations exist. Discouraged (random order) but possible.

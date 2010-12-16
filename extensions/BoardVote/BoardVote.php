@@ -16,11 +16,10 @@ if( !defined('MEDIAWIKI') ) {
 
 # Extension credits
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'BoardVote',
 	'author' => array( 'Tim Starling', 'Kwan Ting Chan', 'others' ),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:BoardVote',
-	'svn-date' => '$LastChangedDate: 2009-01-10 21:10:48 +0100 (sob, 10 sty 2009) $',
-	'svn-revision' => '$LastChangedRevision: 45650 $',
 	'description' => '[[meta:Board elections|Wikimedia Board of Trustees election]]',
 	'descriptionmsg' => 'boardvote-desc',
 );

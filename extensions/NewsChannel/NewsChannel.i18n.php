@@ -28,10 +28,20 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'newschannel-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'newschannel_format' => '{{Identical|Format}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'newschannel_format' => 'Formaat:',
+	'newschannel_limit' => 'Limiet:',
 );
 
 /** Arabic (العربية)
@@ -91,10 +101,25 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'newschannel-desc' => 'Създава емисия с новини като [[Special:NewsChannel|специална страница]]',
 	'newschannel_format' => 'Формат:',
 	'newschannel_limit' => 'Лимит:',
 	'newschannel_include_category' => 'Допълнителна категория:',
 	'newschannel_exclude_category' => 'Изключване на категория:',
+	'newschannel_submit_button' => 'Създаване на емисия',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'newschannel' => 'Kanol geleier',
+	'newschannel-desc' => 'Emplementiñ a ra ur ganol geleier evel [[Special:NewsChannel|ur bajenn dibar]] dinamek',
+	'newschannel_format' => 'Furmad :',
+	'newschannel_limit' => 'Bevenn :',
+	'newschannel_include_category' => 'Rummad ouzhpenn :',
+	'newschannel_exclude_category' => 'Rummad lezet a-gostez :',
+	'newschannel_submit_button' => 'Krouiñ al lanvad',
 );
 
 /** Bosnian (Bosanski)
@@ -149,6 +174,21 @@ $messages['dsb'] = array(
 	'newschannel_submit_button' => 'Kanal napóraś',
 );
 
+/** Greek (Ελληνικά)
+ * @author Consta
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'newschannel' => 'Κανάλι νέων',
+	'newschannel-desc' => 'Υλοποεί ένα κανάλι νέων ως μία δυναμική [[Special:NewsChannel|ειδική σελίδα]]',
+	'newschannel_format' => 'Μορφή:',
+	'newschannel_limit' => 'Όριο:',
+	'newschannel_include_category' => 'Πρόσθετη κατηγορία:',
+	'newschannel_exclude_category' => 'Εξαίρεση κατηγορίας:',
+	'newschannel_submit_button' => 'Δημιουργία ροής',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -163,37 +203,66 @@ $messages['eo'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Sanbec
  */
 $messages['es'] = array(
 	'newschannel' => 'Canal de noticias',
+	'newschannel-desc' => 'Implementa un canal de noticias como una [[Special:NewsChannel|página especial]] dinámica',
 	'newschannel_format' => 'Formato:',
 	'newschannel_limit' => 'Límite:',
 	'newschannel_include_category' => 'Categoría adicional:',
 	'newschannel_exclude_category' => 'Excluir categoría:',
+	'newschannel_submit_button' => 'Crear sindicación',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'newschannel' => 'Uudistekanal',
+	'newschannel_format' => 'Formaat:',
+	'newschannel_include_category' => 'Lisakategooria:',
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
  * @author Str4nd
  */
 $messages['fi'] = array(
 	'newschannel' => 'Uutiskanava',
+	'newschannel-desc' => 'Toteuttaa uutiskanavan dynaamisena [[Special:NewsChannel|toimintosivuna]].',
+	'newschannel_format' => 'Muoto',
 	'newschannel_limit' => 'Rajoitus',
+	'newschannel_include_category' => 'Lisäluokka:',
+	'newschannel_exclude_category' => 'Poissulkeva luokka:',
 	'newschannel_submit_button' => 'Luo syöte',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author Mauro Bornet
  * @author McDutchie
  */
 $messages['fr'] = array(
-	'newschannel' => "Chaîne d'information",
+	'newschannel' => 'Chaîne d’information',
 	'newschannel-desc' => 'Implémente une chaîne de nouvelles comme une [[Special:NewsChannel|page spéciale]] dynamique',
 	'newschannel_format' => 'Format:',
 	'newschannel_limit' => 'Limite:',
 	'newschannel_include_category' => 'Catégorie(s) additionnelle(s):',
 	'newschannel_exclude_category' => 'Catégorie(s) exclue(s):',
 	'newschannel_submit_button' => 'Créer le flux',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'newschannel_format' => 'Format :',
+	'newschannel_limit' => 'Limita :',
+	'newschannel_include_category' => 'Catègorie(s) de ples :',
 );
 
 /** Irish (Gaeilge)
@@ -214,6 +283,14 @@ $messages['gl'] = array(
 	'newschannel_include_category' => 'Categoría adicional:',
 	'newschannel_exclude_category' => 'Excluír a categoría:',
 	'newschannel_submit_button' => 'Crear a fonte de novas',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'newschannel_format' => 'Μορφή:',
+	'newschannel_limit' => 'Ὅριον:',
 );
 
 /** Swiss German (Alemannisch)
@@ -256,6 +333,19 @@ $messages['hsb'] = array(
 	'newschannel_submit_button' => 'Kanal wutworić',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'newschannel' => 'Hírcsatorna',
+	'newschannel-desc' => 'Hírcsatorna megvalósítás dinamikus [[Special:NewsChannel|speciális lapként]]',
+	'newschannel_format' => 'Formátum:',
+	'newschannel_limit' => 'Korlát:',
+	'newschannel_include_category' => 'További kategória:',
+	'newschannel_exclude_category' => 'Kategória kihagyása:',
+	'newschannel_submit_button' => 'Hírcsatorna készítése',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -267,6 +357,41 @@ $messages['ia'] = array(
 	'newschannel_include_category' => 'Categoria additional:',
 	'newschannel_exclude_category' => 'Excluder categoria:',
 	'newschannel_submit_button' => 'Crear syndication',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'newschannel' => 'Saluran berita',
+	'newschannel-desc' => 'Memasang sebuah saluran berita sebagai [[Special:NewsChannel|halaman istimewa]]',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Batas:',
+	'newschannel_include_category' => 'Kategori tambahan:',
+	'newschannel_exclude_category' => 'Jangan masukkan kategori:',
+	'newschannel_submit_button' => 'Buat sindikasi',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'newschannel' => 'Nkushi Akíkó Uwà',
+	'newschannel_limit' => 'Érúrú:',
+	'newschannel_submit_button' => 'Ké ntá',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'newschannel' => 'Canale di informazione',
+	'newschannel-desc' => 'Implementa un canale di notizie come una [[Special:NewsChannel|pagina speciale]] dinamica',
+	'newschannel_format' => 'Formato:',
+	'newschannel_limit' => 'Limite:',
+	'newschannel_include_category' => 'Ulteriori categorie:',
+	'newschannel_exclude_category' => 'Escludi categoria:',
+	'newschannel_submit_button' => 'Crea feed',
 );
 
 /** Japanese (日本語)
@@ -315,6 +440,20 @@ $messages['lb'] = array(
 	'newschannel_limit' => 'Limit:',
 	'newschannel_include_category' => 'Zousätzlech Kategorie:',
 	'newschannel_exclude_category' => 'Kategorie ausschléissen:',
+	'newschannel_submit_button' => 'Rubrik uleeën',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'newschannel' => 'Канал за вести',
+	'newschannel-desc' => 'Имплементира канал за вести како динамична [[Special:NewsChannel|специјална страница]]',
+	'newschannel_format' => 'Формат:',
+	'newschannel_limit' => 'Ограничување:',
+	'newschannel_include_category' => 'Дополнителна категорија:',
+	'newschannel_exclude_category' => 'Исклучи ја категоријата:',
+	'newschannel_submit_button' => 'Создај емитување',
 );
 
 /** Dutch (Nederlands)
@@ -369,6 +508,13 @@ $messages['oc'] = array(
 	'newschannel_submit_button' => 'Crear lo flus',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'newschannel' => 'Nuus',
+);
+
 /** Polish (Polski)
  * @author Leinad
  */
@@ -380,6 +526,19 @@ $messages['pl'] = array(
 	'newschannel_include_category' => 'Dodatkowa kategoria:',
 	'newschannel_exclude_category' => 'Wyklucz z kategorii:',
 	'newschannel_submit_button' => 'Utwórz kanał',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'newschannel' => 'Canal ëd neuve',
+	'newschannel-desc' => 'A amplementa un canal ëd neuve con na [[Special:NewsChannel|pàgina special]] dinàmica',
+	'newschannel_format' => 'Formà:',
+	'newschannel_limit' => 'Lìmit:',
+	'newschannel_include_category' => 'Categorìa adissional:',
+	'newschannel_exclude_category' => 'Categorìa scartà:',
+	'newschannel_submit_button' => 'Crea un feed',
 );
 
 /** Pashto (پښتو)
@@ -417,11 +576,34 @@ $messages['pt-br'] = array(
 	'newschannel_submit_button' => 'Criar "feed"',
 );
 
+/** Romanian (Română)
+ * @author Firilacroco
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'newschannel' => 'Canal de ştiri',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Limită:',
+	'newschannel_include_category' => 'Categorie adiţională:',
+	'newschannel_exclude_category' => 'Exclude categoria:',
+	'newschannel_submit_button' => 'Creaţi flux',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'newschannel_format' => 'Formate:',
+	'newschannel_limit' => 'Limite:',
+);
+
 /** Russian (Русский)
  * @author Iaroslav Vassiliev
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'newschannel' => 'Канал новостей',
+	'newschannel-desc' => 'Создаёт новостной канал в виде динамической [[Special:NewsChannel|служебной страницы]]',
 	'newschannel_format' => 'Формат новостей:',
 	'newschannel_limit' => 'Кол-во последних новостей:',
 	'newschannel_include_category' => 'Дополнительная категория:',
@@ -442,6 +624,26 @@ $messages['sk'] = array(
 	'newschannel_submit_button' => 'Vytvoriť kanál',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'newschannel_format' => 'Формат:',
+	'newschannel_limit' => 'Лимит:',
+	'newschannel_include_category' => 'Додатна категорија:',
+	'newschannel_exclude_category' => 'Искључи категорију:',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Limit:',
+	'newschannel_include_category' => 'Dodatna kategorija:',
+	'newschannel_exclude_category' => 'Isključi kategoriju:',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -459,6 +661,7 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'newschannel' => 'వార్తా వాహిని',
 	'newschannel_limit' => 'పరిమితి:',
 	'newschannel_include_category' => 'అదనపు వర్గం:',
 );
@@ -476,6 +679,19 @@ $messages['tl'] = array(
 	'newschannel_submit_button' => 'Lumikha ng pasubo/pakain',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'newschannel' => 'Haber kanalı',
+	'newschannel-desc' => 'Bir haber kanalını dinamik bir [[Special:NewsChannel|özel sayfa]] olarak uygulamaya koyar',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Sınır:',
+	'newschannel_include_category' => 'Ek kategori:',
+	'newschannel_exclude_category' => 'Şu kategoriyi hariç tut:',
+	'newschannel_submit_button' => 'Besleme oluştur',
+);
+
 /** Ukrainian (Українська)
  * @author AS
  */
@@ -487,6 +703,16 @@ $messages['uk'] = array(
 	'newschannel_include_category' => 'Додаткова категорія:',
 	'newschannel_exclude_category' => 'Виключити категорію:',
 	'newschannel_submit_button' => 'Вивести',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'newschannel' => 'Uzištusiden kanal',
+	'newschannel_format' => 'Uzištusiden format:',
+	'newschannel_limit' => 'Tantoižiden uzištusiden lugumär:',
+	'newschannel_include_category' => 'Ližakategorii:',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -512,5 +738,26 @@ $messages['vo'] = array(
 	'newschannel_limit' => 'Mied:',
 	'newschannel_include_category' => 'Klad pluik:',
 	'newschannel_exclude_category' => 'Plödakipön kladi:',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'newschannel' => '新闻频道',
+	'newschannel_format' => '格式：',
+	'newschannel_limit' => '限制：',
+	'newschannel_submit_button' => '创建供稿',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'newschannel' => '新聞頻道',
+	'newschannel_format' => '格式：',
+	'newschannel_limit' => '限制：',
+	'newschannel_submit_button' => '創建供稿',
 );
 

@@ -44,7 +44,7 @@ class SpecialContributors extends IncludableSpecialPage {
 		if( is_object( $this->target ) ) {
 			if( $this->target->exists() ) {
 				$names = array();
-				list( $contributors, $others ) = $this->getMainContributors();
+				list( $contributors, $others ) = self::getMainContributors($this->target);
 				foreach( $contributors as $username => $info )
 					$names[] = $username;
 				$output = $wgContentLang->listToText( $names );
@@ -88,7 +88,7 @@ class SpecialContributors extends IncludableSpecialPage {
 			$skin =& $wgUser->getSkin();
 			$link = $skin->makeKnownLinkObj( $this->target );
 			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'contributors-subtitle', $link ) . '</h2>' );
-			list( $contributors, $others ) = $this->getMainContributors();
+			list( $contributors, $others ) = self::getMainContributors($this->target);
 			$wgOut->addHTML( '<ul>' );
 			foreach( $contributors as $username => $info ) {
 				list( $id, $count ) = $info;
@@ -116,12 +116,12 @@ class SpecialContributors extends IncludableSpecialPage {
 	 *
 	 * @return array
 	 */
-	protected function getMainContributors() {
+	public static function getMainContributors($title) {
 		wfProfileIn( __METHOD__ );
 		global $wgContributorsLimit, $wgContributorsThreshold;
 		$total = 0;
 		$ret = array();
-		$all = $this->getContributors();
+		$all = self::getContributors($title);
 		foreach( $all as $username => $info ) {
 			list( $id, $count ) = $info;
 			if( $total >= $wgContributorsLimit && $count < $wgContributorsThreshold )
@@ -139,10 +139,10 @@ class SpecialContributors extends IncludableSpecialPage {
 	 *
 	 * @return array
 	 */
-	protected function getContributors() {
+	public static function getContributors($title) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
-		$k = wfMemcKey( 'contributors', $this->target->getArticleId() );
+		$k = wfMemcKey( 'contributors', $title->getArticleId() );
 		$contributors = $wgMemc->get( $k );
 		if( !$contributors ) {
 			$contributors = array();
@@ -154,7 +154,7 @@ class SpecialContributors extends IncludableSpecialPage {
 					'rev_user',
 					'rev_user_text',
 				),
-				$this->getConditions(),
+				self::getConditions($title),
 				__METHOD__,
 				array(
 					'GROUP BY' => 'rev_user_text',
@@ -176,9 +176,9 @@ class SpecialContributors extends IncludableSpecialPage {
 	 *
 	 * @return array
 	 */
-	protected function getConditions() {
+	protected static function getConditions($title) {
 		global $wgVersion;
-		$conds['rev_page'] = $this->target->getArticleId();
+		$conds['rev_page'] = $title->getArticleId();
 		if( version_compare( $wgVersion, '1.11alpha', '>=' ) )
 			$conds[] = 'rev_deleted & ' . Revision::DELETED_USER . ' = 0';
 		return $conds;
@@ -194,7 +194,7 @@ class SpecialContributors extends IncludableSpecialPage {
 	 */
 	private function determineTarget( &$request, $override ) {
 		$target = $request->getText( 'target', $override );
-		$this->target = Title::newFromUrl( $target );
+		$this->target = Title::newFromURL( $target );
 	}
 	
 	/**

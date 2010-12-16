@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Poista muotoilu",
 InsertLinkLbl		: "Linkki",
 InsertLink			: "Lisää linkki/muokkaa linkkiä",
 RemoveLink			: "Poista linkki",
+VisitLink			: "Avaa linkki",
 Anchor				: "Lisää ankkuri/muokkaa ankkuria",
 AnchorDelete		: "Poista ankkuri",
 InsertImageLbl		: "Kuva",
@@ -72,6 +73,9 @@ BlockJustify		: "Tasaa molemmat reunat",
 DecreaseIndent		: "Pienennä sisennystä",
 IncreaseIndent		: "Suurenna sisennystä",
 Blockquote			: "Lainaus",
+CreateDiv			: "Lisää Div",
+EditDiv				: "Muokkaa Div:ä",
+DeleteDiv			: "Poista Div",
 Undo				: "Kumoa",
 Redo				: "Toista",
 NumberedListLbl		: "Numerointi",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Työkalukokonaisuus \"%1\" ei ole olemassa",
 NoActiveX			: "Selaimesi turvallisuusasetukset voivat rajoittaa joitain editorin ominaisuuksia. Sinun pitää ottaa käyttöön asetuksista \"Suorita ActiveX komponentit ja -plugin-laajennukset\". Saatat kohdata virheitä ja huomata puuttuvia ominaisuuksia.",
 BrowseServerBlocked : "Resurssiselainta ei voitu avata. Varmista, että ponnahdusikkunoiden estäjät eivät ole päällä.",
 DialogBlocked		: "Apuikkunaa ei voitu avaata. Varmista, että ponnahdusikkunoiden estäjät eivät ole päällä.",
+VisitLinkBlocked	: "IUutta ikkunaa ei voitu avata. Varmista, että ponnahdusikkunoiden estäjät eivät ole päällä.",
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Solujen väli",
 DlgTableCellPad		: "Solujen sisennys",
 DlgTableCaption		: "Otsikko",
 DlgTableSummary		: "Yhteenveto",
+DlgTableHeaders		: "Ylätunnisteet",
+DlgTableHeadersNone		: "Ei ylätunnisteita",
+DlgTableHeadersColumn	: "Ensimmäinen sarake",
+DlgTableHeadersRow		: "Ensimmäinen rivi",
+DlgTableHeadersBoth		: "Molemmat",
 
 // Table Cell Dialog
 DlgCellTitle		: "Solun ominaisuudet",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Ylös",
 DlgCellVerAlignMiddle	: "Keskelle",
 DlgCellVerAlignBottom	: "Alas",
 DlgCellVerAlignBaseline	: "Tekstin alas",
+DlgCellType		: "Solun tyyppi",
+DlgCellTypeData		: "Sisältö",
+DlgCellTypeHeader	: "Ylätunniste",
 DlgCellRowSpan		: "Rivin jatkuvuus",
 DlgCellCollSpan		: "Sarakkeen jatkuvuus",
 DlgCellBackColor	: "Taustaväri",
@@ -359,7 +372,6 @@ DlgPasteMsg2	: "Liitä painamalla (<STRONG>Ctrl+V</STRONG>) ja painamalla <STRON
 DlgPasteSec		: "Selaimesi turva-asetukset eivät salli editorin käyttää leikepöytää suoraan. Sinun pitää suorittaa liittäminen tässä ikkunassa.",
 DlgPasteIgnoreFont		: "Jätä huomioimatta fonttimääritykset",
 DlgPasteRemoveStyles	: "Poista tyylimääritykset",
-DlgPasteCleanBox		: "Tyhjennä",
 
 // Color Picker
 ColorAutomatic	: "Automaattinen",
@@ -512,5 +524,16 @@ DlgAboutAboutTab	: "Editorista",
 DlgAboutBrowserInfoTab	: "Selaimen tiedot",
 DlgAboutLicenseTab	: "Lisenssi",
 DlgAboutVersion		: "versio",
-DlgAboutInfo		: "Lisää tietoa osoitteesta"
+DlgAboutInfo		: "Lisää tietoa osoitteesta",
+
+// Div Dialog
+DlgDivGeneralTab	: "Edistynyt",
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Tyyli",
+DlgDivInlineStyle	: "Rivin sisäinen tyyli",
+
+ScaytTitle			: "SCAYT",	//MISSING
+ScaytTitleOptions	: "Options",	//MISSING
+ScaytTitleLangs		: "Languages",	//MISSING
+ScaytTitleAbout		: "About"	//MISSING
 };

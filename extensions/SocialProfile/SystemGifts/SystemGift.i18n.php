@@ -12,7 +12,7 @@ $messages = array();
  * @author Purodha
  */
 $messages['en'] = array(
-	'systemgiftmanager' => 'System gifts manager', 
+	'systemgiftmanager' => 'System gifts manager',
 	'ga-addnew' => '+ Add new gift',
 	'ga-back-edit-gift' => 'Back to edit this gift',
 	'ga-back-gift-list' => 'Back to gift list',
@@ -69,7 +69,7 @@ The {{SITENAME}} team
 
 ---
 
-Hey, want to stop getting emails from us?  
+Hey, want to stop getting emails from us?
 
 Click $5
 and change your settings to disable email notifications.',
@@ -79,18 +79,35 @@ and change your settings to disable email notifications.',
 
 /** Message documentation (Message documentation)
  * @author Fryed-peach
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'ga-goback' => '{{Identical|Go back}}',
 	'ga-large' => '{{Identical|Large}}',
 	'ga-medium' => '{{Identical|Medium}}',
 	'ga-new' => '{{Identical|New}}',
 	'ga-next' => '{{Identical|Next}}',
 	'ga-previous' => '{{Identical|Prev}}',
 	'ga-small' => '{{Identical|Small}}',
+	'right-awardsmanage' => '{{doc-right|awardsmanage}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'ga-goback' => 'Gaan terug',
+	'ga-large' => 'Groot',
+	'ga-medium' => 'Middelmatig',
+	'ga-new' => 'Nuut',
+	'ga-next' => 'Volgende',
+	'ga-previous' => 'Vorige',
+	'ga-small' => 'Klein',
 );
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'systemgiftmanager' => 'مدير هدايا النظام',
@@ -99,7 +116,7 @@ $messages['ar'] = array(
 	'ga-back-gift-list' => 'رجوع لقائمة الهدايا',
 	'ga-back-link' => '<a href="$1">< رجوع إلى ملف $2</a>',
 	'ga-choosefile' => 'اختر الملف:',
-	'ga-count' => '$1 يمتلك $2 {{PLURAL:$2|جائزة|جائزة}}.',
+	'ga-count' => 'لدى $1 {{PLURAL:$2||جائزة واحدة|جائزتين|$2 جوائز|$2 جائزة}}.',
 	'ga-create-gift' => 'إنشاء الهدية',
 	'ga-created' => 'الهدية تم إنشاؤها',
 	'ga-currentimage' => 'الصورة الحالية',
@@ -108,13 +125,13 @@ $messages['ar'] = array(
 	'ga-error-title' => 'آه، أنت أخذت منحنى خاطئا!',
 	'ga-file-instructions' => 'صورتك يجب أن تكون jpeg، png أو gif (لا gif فيديو)، ويجب أن تكون أقل من 100 كيلوبت في الحجم.',
 	'ga-gift' => 'هدية',
-	'ga-gift-given-count' => 'هذه الهدية تم منحها $1 {{PLURAL:$1|مرة|مرة}}',
+	'ga-gift-given-count' => 'أعطيت هذه الهدية {{PLURAL:$1||مرة واحدة|مرتين|$1 مرات|$1 مرة}}',
 	'ga-gift-title' => '"$2" الخاصة ب$1',
 	'ga-giftdesc' => 'وصف الهدية',
 	'ga-giftimage' => 'صورة الهدية',
 	'ga-giftname' => 'اسم الهدية',
 	'ga-gifttype' => 'نوع الهدية',
-	'ga-goback' => 'رجوع',
+	'ga-goback' => 'ارجع',
 	'ga-imagesbelow' => 'بالأسفل صورك التي سيتم استخدامها في الموقع',
 	'ga-img' => 'أضف/استبدل الصورة',
 	'ga-large' => 'كبير',
@@ -150,7 +167,7 @@ $4
 
 ---
 
-ها، تريد أن تتوقف عن تلقي رسائل البريد الإلكتروني منا؟   
+ها، تريد أن تتوقف عن تلقي رسائل البريد الإلكتروني منا؟
 
 اضغط $5
 وغير إعداداتك لتعطيل إخطارات البريد الإكتروني.',
@@ -218,7 +235,7 @@ $4
 
 ---
 
-ها، تريد أن تتوقف عن تلقى رسائل البريد الإلكترونى منا؟   
+ها، تريد أن تتوقف عن تلقى رسائل البريد الإلكترونى منا؟
 
 اضغط $5
 وغير إعداداتك لتعطيل إخطارات البريد الإكترونى.',
@@ -300,6 +317,170 @@ $4
 $messages['bg'] = array(
 	'ga-addnew' => '+ Добавяне на нов подарък',
 	'ga-choosefile' => 'Избиране на файл:',
+	'ga-currentimage' => 'Текуща картинка',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'systemgiftmanager' => 'Reizhiad merañ ar profoù',
+	'ga-addnew' => '+ Ouzhpennañ ur prof nevez',
+	'ga-back-edit-gift' => 'Distreiñ da aozañ ar prof-mañ',
+	'ga-back-gift-list' => 'Distreiñ da roll ar profoù',
+	'ga-back-link' => '<a href="$1">< Distreiñ da brofil $2</a>',
+	'ga-choosefile' => 'Dibab ur restr :',
+	'ga-count' => '$1 en deus $2 {{PLURAL:$2|garedon|garedon}}.',
+	'ga-create-gift' => 'Krouiñ ur prof',
+	'ga-created' => 'Krouet eo bet ar prof',
+	'ga-currentimage' => 'Skeudenn red',
+	'ga-error-message-invalid-link' => "Direizh eo al liamm hoc'h eus ebarzhet.",
+	'ga-error-message-no-user' => "N'eus ket eus an implijer emaoc'h o klask gwelet.",
+	'ga-error-title' => "Hopala, kemeret hoc'h eus un hent fall !",
+	'ga-file-instructions' => "Ret eo d'ho skeudenn bezañ er furmad jpeg, png pe gif (n'eo ket gif bev), ha ret eo d'he ment bezañ dindan 100 ko.",
+	'ga-gift' => 'prof',
+	'ga-gift-given-count' => 'Roet eo bet ar prof-mañ $1 {{PLURAL:$1|wech|gwech}}',
+	'ga-gift-title' => '« $2 »  $1',
+	'ga-giftdesc' => 'deskrivadur ar prof',
+	'ga-giftimage' => 'skeudenn eus ar prof',
+	'ga-giftname' => 'anv ar prof',
+	'ga-gifttype' => 'seurt prof',
+	'ga-goback' => 'Distreiñ',
+	'ga-imagesbelow' => "Amañ dindan emañ ar skeudennoù a vo implijet war al lec'hienn",
+	'ga-img' => "ouzhpennañ / erlec'hiañ ar skeudenn",
+	'ga-large' => 'Bras',
+	'ga-medium' => 'Etre',
+	'ga-mediumlarge' => 'Etre-bras',
+	'ga-new' => 'Nevez',
+	'ga-next' => 'Da-heul',
+	'ga-previous' => 'Kent',
+	'ga-recent-recipients-award' => 'Degemererien all eus ar garedon-mañ',
+	'ga-saved' => 'Enrollet eo bet ar prof',
+	'ga-small' => 'Bihan',
+	'ga-threshold' => 'treuzoù',
+	'ga-title' => 'Garedon $1',
+	'ga-uploadsuccess' => 'Kaset eo bet mat',
+	'ga-viewlist' => 'Gwelet roll ar profoù',
+	'system_gift_received_subject' => "Resevet hoc'h eus ar garedon $1 war {{SITENAME}} !",
+	'system_gift_received_body' => "Salud deoc'h, \$1.
+
+Emaoc'h o paouez resev ar garedon \$2 war {{SITENAME}} !
+
+\"\$3\"
+
+Klikit war al liamm amañ dindan evit gwelet ho trofe !
+
+\$4
+
+Emichañs e plijo deoc'h !
+
+Trugarez deoc'h,
+
+
+Skipailh {{SITENAME}} 
+
+---
+
+C'hoant hoc'h eus da baouez da resev posteloù diganimp ?
+
+Klikit war \$5
+ha cheñchit hoc'h arventennoù evit diweredekaat ar c'hemenn dra bostel.",
+	'right-awardsmanage' => 'Krouiñ hag aozañ garedonoù',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'systemgiftmanager' => 'Upravitelj sistemskih poklona',
+	'ga-addnew' => '+ Dodaj novi poklon',
+	'ga-back-edit-gift' => 'Nazad na uređivanje ovog poklona',
+	'ga-back-gift-list' => 'Nazad na spisak poklona',
+	'ga-back-link' => '<a href="$1">< Nazad na profil korisnika $2</a>',
+	'ga-choosefile' => 'Odaberi datoteku:',
+	'ga-count' => '$1 ima $2 {{PLURAL:$2|nagradu|nagrade|nagrada}}.',
+	'ga-create-gift' => 'Napravi poklon',
+	'ga-created' => 'Poklon je napravljen',
+	'ga-currentimage' => 'Trenutna slika',
+	'ga-error-message-invalid-link' => 'Link koji ste unijeli nije valjan.',
+	'ga-error-message-no-user' => 'Korisnik kojeg pokušavate pogledati ne postoji.',
+	'ga-error-title' => 'Ups, desilo nešto se nepredviđeno!',
+	'ga-file-instructions' => 'Vaša slika treba biti jpeg, png ili gif (bez animiranih gif-ova) i mora biti manja od 100 kilobajta.',
+	'ga-gift' => 'poklon',
+	'ga-gift-given-count' => 'Ovaj poklon je poslan $1 {{PLURAL:$1|put|puta}}',
+	'ga-gift-title' => '"$2" korisnika $1',
+	'ga-giftdesc' => 'opis poklona',
+	'ga-giftimage' => 'slika poklona',
+	'ga-giftname' => 'naziv poklona',
+	'ga-gifttype' => 'tip poklona',
+	'ga-goback' => 'Idi nazad',
+	'ga-imagesbelow' => 'Ispod se nalaze Vaše slike koje se koriste na ovom sajtu',
+	'ga-img' => 'dodaj/zamijeni sliku',
+	'ga-large' => 'Veliki',
+	'ga-medium' => 'Srednji',
+	'ga-mediumlarge' => 'Srednje-veliki',
+	'ga-new' => 'Novi',
+	'ga-next' => 'Slijedeći',
+	'ga-previous' => 'Preth',
+	'ga-recent-recipients-award' => 'Drugi nedavni primaoci ove nagrade',
+	'ga-saved' => 'Poklon je sačuvan',
+	'ga-small' => 'Malehni',
+	'ga-threshold' => 'prag',
+	'ga-title' => 'Nagrade korisnika $1',
+	'ga-uploadsuccess' => 'Postavljanje uspješno',
+	'ga-viewlist' => 'Pogledajte spisak poklona',
+	'system_gift_received_subject' => 'Dobili ste $1 nagradu na {{SITENAME}}!',
+	'system_gift_received_body' => 'Pozdrav $1.
+
+Upravo ste dobili $2 nagradu na {{SITENAME}}!
+
+"$3"
+
+Kliknite ispod da pregledate Vašu kolekciju nagrada!
+
+$4
+
+Nadamo se da Vam se sviđa!
+
+Hvala,
+
+
+{{SITENAME}} tim
+
+---
+
+Hej, da li želite da prestanete dobivati e-mailove od nas?
+
+Kliknite $5
+i promijenite Vaše postavke onemogućavajući obavještenja putem emaila.',
+	'right-awardsmanage' => 'Pravljenje novih i uređivanje postojećih nagrada',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'ga-giftdesc' => 'descripció del regal',
+	'ga-giftimage' => 'imatge del regal',
+	'ga-giftname' => 'nom del regal',
+	'ga-gifttype' => 'tipus de regal',
+	'ga-goback' => 'Torna enrerra',
+	'ga-large' => 'Llarg',
+	'ga-medium' => 'Mitjà',
+	'ga-mediumlarge' => 'Mitjà-llarg',
+	'ga-new' => 'Nou',
+	'ga-next' => 'Següent',
+	'ga-previous' => 'Anterior',
+	'ga-small' => 'Petit',
+	'ga-threshold' => 'llindar',
+	'ga-title' => 'Premis de $1',
+);
+
+/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+ * @author Marmzok
+ */
+$messages['ckb-arab'] = array(
+	'ga-goback' => 'گەڕانەوە بۆ دواوە',
 );
 
 /** German (Deutsch)
@@ -467,10 +648,111 @@ a změń nastajenja, aby znjemóžnił e-mailowe zdźělenja.',
 	'right-awardsmanage' => 'Nowe myta napóraś a eksistěrujuce wobźěłaś',
 );
 
+/** Greek (Ελληνικά)
+ * @author Consta
+ * @author Crazymadlover
+ * @author Omnipaedista
+ * @author ZaDiak
+ */
+$messages['el'] = array(
+	'systemgiftmanager' => 'Διαχειριστής συστήματος δώρων',
+	'ga-addnew' => '+ Προσθήκη νέου δώρου',
+	'ga-back-edit-gift' => 'Πίσω στην επεξεργασία αυτού του δώρου',
+	'ga-back-gift-list' => 'Πίσω στη λίστα δώρων',
+	'ga-back-link' => '<a href="$1">< Πίσω στο προφίλ του $2</a>',
+	'ga-choosefile' => 'Επιλογή αρχείου:',
+	'ga-count' => 'Ο $1 έχει $2 {{PLURAL:$2|βραβείο|βραβεία}}.',
+	'ga-create-gift' => 'Δημιουργία δώρου',
+	'ga-created' => 'Το δώρο έχει δημιουργηθεί',
+	'ga-currentimage' => 'Τρέχουσα εικόνα',
+	'ga-error-message-invalid-link' => 'Ο σύνδεσμος που δώσατε δεν είναι έγκυρος.',
+	'ga-error-message-no-user' => 'Ο χρήστης που προσπαθείτε να δείτε δεν υπάρχει.',
+	'ga-error-title' => 'Ουπς, πήρες μια λάθος στροφή!',
+	'ga-file-instructions' => 'Η εικόνα σας πρέπει να ειναι jpeg, png ή gif (όχι κινούμενα gif) και πρέπει να είναι λιγότερο από 100kb σε μέγεθος.',
+	'ga-gift' => 'δώρο',
+	'ga-gift-given-count' => 'Αυτό το δώρο έχει δοθεί $1 {{PLURAL:$1|φορά|φορές}}',
+	'ga-gift-title' => '"$2" του $1',
+	'ga-giftdesc' => 'περιγραφή δώρου',
+	'ga-giftimage' => 'εικόνα δώρου',
+	'ga-giftname' => 'όνομα δώρου',
+	'ga-gifttype' => 'τύπος δώρου',
+	'ga-goback' => 'Πήγαινε πίσω',
+	'ga-imagesbelow' => 'Παρακάτω είναι οι εικόνες που θα χρησιμοποιηθούν στον ιστοτόπο',
+	'ga-img' => 'προσθήκη/αντικατάσταση εικόνας',
+	'ga-large' => 'Μεγάλος',
+	'ga-medium' => 'Μέσος',
+	'ga-mediumlarge' => 'Μεσαίο-μεγάλο',
+	'ga-new' => 'Νέο',
+	'ga-next' => 'Επομ',
+	'ga-previous' => 'Προηγ',
+	'ga-recent-recipients-award' => 'Άλλοι πρόσφατοι παραλήπτες του βραβείου',
+	'ga-saved' => 'Το δώρο έχει αποθηκευθεί',
+	'ga-small' => 'Μικρός',
+	'ga-threshold' => 'κατώφλι',
+	'ga-title' => 'Τα βραβεία του $1',
+	'ga-uploadsuccess' => 'Επιτυχής φόρτωση',
+	'ga-viewlist' => 'Προβολή λίστας δώρων',
+	'system_gift_received_subject' => 'Έλαβες το $1 βραβείο στο {{SITENAME}}!',
+	'system_gift_received_body' => 'Γεια $1.
+
+Μόλις λάβατε το βραβείο $2 στο {{SITENAME}}.
+
+"$3"
+
+Κάνετε κλικ παρακάτω για να δείτε το τρόπαιό σας!
+
+$4
+
+Ελπίζουμε να σας αρέσει!
+
+Ευχαριστούμε,
+
+
+Η ομάδα του {{SITENAME}}
+
+---
+
+Θέλετε να σταματήσετε να λαμβάνετε μηνύματα από εμάς;
+
+Κάντε κλικ στο $5
+και αλλάξετε τις ρυθμίσεις σας έτσι ώστε να απενεργοποιήσετε τις ειδοποιήσεις που λαμβάνετε μέσω ηλεκτρονικού ταχυδρομείου.',
+	'right-awardsmanage' => 'Δημιουργία νέων και επεξεργασία υπάρχοντων βραβείων',
+);
+
+/** Esperanto (Esperanto)
+ * @author Lucas
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'ga-addnew' => '+ Aldoni novan donacon',
+	'ga-back-gift-list' => 'Reiri al donaclisto',
+	'ga-choosefile' => 'Elekti dosieron:',
+	'ga-count' => '$1 havas $2 {{PLURAL:$2|premion|premiojn}}.',
+	'ga-create-gift' => 'Krei donacon',
+	'ga-created' => 'La donaco estis kreita',
+	'ga-currentimage' => 'Nuna bildo',
+	'ga-gift' => 'donaco',
+	'ga-gift-title' => '"$2" de $1',
+	'ga-gifttype' => 'donaca speco',
+	'ga-goback' => 'Reen',
+	'ga-large' => 'Granda',
+	'ga-medium' => 'Meza',
+	'ga-mediumlarge' => 'Mezgranda',
+	'ga-new' => 'Nova',
+	'ga-next' => 'Poste',
+	'ga-previous' => 'Antaŭe',
+	'ga-saved' => 'La donaco estis konservita',
+	'ga-small' => 'Malgranda',
+	'ga-title' => 'Premioj de $1',
+	'ga-uploadsuccess' => 'Alŝtuo sukcesis',
+	'ga-viewlist' => 'Vidi donacan liston',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'systemgiftmanager' => 'Administrador de sistema de regalos',
 	'ga-addnew' => '+ Agregar nuevo regalo',
 	'ga-back-edit-gift' => 'Regresar a editar este regalo',
 	'ga-back-gift-list' => 'Regresar a la lista de regalos',
@@ -485,6 +767,7 @@ $messages['es'] = array(
 	'ga-error-title' => 'Woops, usted tomó un turno equivocado!',
 	'ga-file-instructions' => 'Tu imagen debe ser un jpeg, png o gif (no gif animado), y debe ser menor que 100kb en tamaño.',
 	'ga-gift' => 'regalo',
+	'ga-gift-given-count' => 'Este regalo ha sido enviado $1 {{PLURAL:$1|vez|veces}}',
 	'ga-gift-title' => '"$2" de $1',
 	'ga-giftdesc' => 'descripción de regalo',
 	'ga-giftimage' => 'imagen de regalo',
@@ -502,14 +785,85 @@ $messages['es'] = array(
 	'ga-recent-recipients-award' => 'Otros receptores recientes de este premio',
 	'ga-saved' => 'El regalo ha sido grabado',
 	'ga-small' => 'Pequeño',
+	'ga-threshold' => 'umbral',
 	'ga-title' => 'premios de $1',
 	'ga-uploadsuccess' => 'Carga exitosa',
 	'ga-viewlist' => 'Ver lista de regalos',
 	'system_gift_received_subject' => 'Usted ha recibido el premio $1 en {{SITENAME}}!',
+	'system_gift_received_body' => 'Hola $1.
+
+Acabas de haber recibido el premio $2 en {{SITENAME}}!
+
+"$3"
+
+Haz click abajo para chequear tu trofeo!
+
+$4
+
+Esperamos que te guste!
+
+Gracias,
+
+
+El equipo {{SITENAME}}
+
+---
+
+Hey, Deseas no recibir más correos de nosotros?
+
+Haz click en $5
+y cambia tus configuraciones para deshabilitar notificaciones por correo electrónico.',
 	'right-awardsmanage' => 'Crear nuevo y editar premios existentes',
 );
 
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'ga-choosefile' => 'Vali fail:',
+	'ga-create-gift' => 'Loo kingitus',
+	'ga-created' => 'Kingitus on loodud',
+	'ga-currentimage' => 'Praegune pilt',
+	'ga-gift' => 'kingitus',
+	'ga-giftdesc' => 'kingituse kirjeldus',
+	'ga-giftimage' => 'kingituse pilt',
+	'ga-giftname' => 'kingituse nimi',
+	'ga-gifttype' => 'kingituse tüüp',
+	'ga-goback' => 'Tagasi',
+	'ga-img' => 'lisa/vaheta pilt',
+	'ga-large' => 'Suur',
+	'ga-medium' => 'Keskmine',
+	'ga-new' => 'Uus',
+	'ga-next' => 'Järgmine',
+	'ga-previous' => 'Eelmine',
+	'ga-saved' => 'Kingitus on salvestatud',
+	'ga-small' => 'Väike',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'ga-addnew' => '+ Opari berria gehitu',
+	'ga-back-edit-gift' => 'Opari hau editatzeko itzuli',
+	'ga-back-gift-list' => 'Oparien zerrendara itzuli',
+	'ga-create-gift' => 'Oparia sortu',
+	'ga-created' => 'Oparia sortu da',
+	'ga-gift' => 'oparia',
+	'ga-giftdesc' => 'opariaren deskribapena',
+	'ga-giftimage' => 'opariaren irudia',
+	'ga-giftname' => 'opariaren izena',
+	'ga-gifttype' => 'opari mota',
+	'ga-goback' => 'Atzera itzuli',
+	'ga-img' => 'gehitu/ordeztu irudia',
+	'ga-new' => 'Berria',
+	'ga-next' => 'Hurrengoa',
+	'ga-previous' => 'Aurrekoa',
+	'ga-viewlist' => 'Oparien zerrenda ikusi',
+);
+
 /** Finnish (Suomi)
+ * @author Crt
  * @author Jack Phoenix
  */
 $messages['fi'] = array(
@@ -536,7 +890,7 @@ $messages['fi'] = array(
 	'ga-gifttype' => 'lahjan tyyppi',
 	'ga-goback' => 'Palaa takaisin',
 	'ga-imagesbelow' => 'Alapuolella ovat kuvasi, joita käytetään sivustolla',
-	'ga-img' => 'lisää/korvaa kuva',
+	'ga-img' => 'lisää tai korvaa kuva',
 	'ga-large' => 'Suuri',
 	'ga-medium' => 'Keskikokoinen',
 	'ga-mediumlarge' => 'Keskikokoinen - suuri',
@@ -550,7 +904,7 @@ $messages['fi'] = array(
 	'ga-title' => 'Käyttäjän $1 palkinnot',
 	'ga-uploadsuccess' => 'Tallentaminen onnistui',
 	'ga-viewlist' => 'Katso lahjalista',
-	'system_gift_received_subject' => 'Olet saanut $1-palkinnon {{GRAMMAR:inessive|{{SITENAME}}}}!',
+	'system_gift_received_subject' => 'Olet saanut palkinnon $1 {{GRAMMAR:inessive|{{SITENAME}}}}!',
 	'system_gift_received_body' => 'Hei $1:
 
 Olet juuri saanut $2-palkinnon {{GRAMMAR:inessive|{{SITENAME}}}}!
@@ -578,6 +932,7 @@ ja muuta asetuksiasi poistaaksesi sähköpostitoiminnot käytöstä.',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author IAlex
  * @author PieRRoMaN
  * @author Verdy p
@@ -594,7 +949,7 @@ $messages['fr'] = array(
 	'ga-created' => 'Le cadeau a été créé',
 	'ga-currentimage' => 'Image actuelle',
 	'ga-error-message-invalid-link' => 'Le lien que vous avez entré est invalide.',
-	'ga-error-message-no-user' => "L'utilisateur que vous essayez de voir n'existe pas.",
+	'ga-error-message-no-user' => 'L’utilisateur que vous essayez de voir n’existe pas.',
 	'ga-error-title' => 'Oops, vous avez pris un mauvais tour !',
 	'ga-file-instructions' => 'Voir image doit être jpeg, png ou gif (mais pas animée) et doit être plus petite que 100 Ko.',
 	'ga-gift' => 'cadeau',
@@ -606,7 +961,7 @@ $messages['fr'] = array(
 	'ga-gifttype' => 'type de cadeau',
 	'ga-goback' => 'Revenir',
 	'ga-imagesbelow' => 'Les image qui seront utilisées sur ce site sont affichées ci-dessous',
-	'ga-img' => "ajouter / modifier l'image",
+	'ga-img' => 'ajouter / modifier l’image',
 	'ga-large' => 'Grand',
 	'ga-medium' => 'Moyen',
 	'ga-mediumlarge' => 'Moyen-Grand',
@@ -621,7 +976,7 @@ $messages['fr'] = array(
 	'ga-uploadsuccess' => 'Téléchargement effectué avec succès',
 	'ga-viewlist' => 'Voir la liste des cadeaux',
 	'system_gift_received_subject' => 'Vous avez reçu le prix $1 sur {{SITENAME}} !',
-	'system_gift_received_body' => "Bonjour $1,
+	'system_gift_received_body' => 'Bonjour $1,
 
 Vous avez reçu le prix $2 sur {{SITENAME}} !
 
@@ -631,20 +986,31 @@ Cliquez sur le lien ci-dessous pour voir votre trophée
 
 $4
 
-Nous espérons que l'apprécierez !
+Nous espérons que l’apprécierez !
 
 Merci,
 
 
-L'équipe de {{SITENAME}}
+L’équipe de {{SITENAME}}
 
 ---
 
 Vous ne voulez plus recevoir de courriels de notre part ?
 
 Cliquez $5
-et modifiez vos préférences pour désactiver les notifications par courriel.",
+et modifiez vos préférences pour désactiver les notifications par courriel.',
 	'right-awardsmanage' => 'Créer et modifier les prix existants',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'ga-large' => 'Grant',
+	'ga-new' => 'Novél',
+	'ga-next' => 'Aprés',
+	'ga-small' => 'Petiôt',
 );
 
 /** Galician (Galego)
@@ -708,7 +1074,7 @@ O equipo de {{SITENAME}}
 
 ---
 
-Quere deixar de recibir os nosos correos electrónicos?  
+Quere deixar de recibir os nosos correos electrónicos?
 
 Prema $5
 e cambie as súas preferencias para desactivar as notificacións por correo electrónico.',
@@ -717,10 +1083,17 @@ e cambie as súas preferencias para desactivar as notificacións por correo elec
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'ga-currentimage' => 'Παροῦσα εἰκών',
+	'ga-gift' => 'δῶρον',
+	'ga-gift-title' => '"$2" τοῦ $1',
 	'ga-new' => 'Νέα',
-	'ga-next' => 'Ἑπομέναι',
+	'ga-next' => 'Ἑπομ',
+	'ga-previous' => 'Προηγ',
+	'ga-threshold' => 'οὐδός',
+	'ga-title' => 'Τὰ βραβεῖα τοῦ $1',
 );
 
 /** Swiss German (Alemannisch)
@@ -784,7 +1157,7 @@ D Lyt vu {{SITENAME}}
 
 ---
 
-Ha, Du wetsch gar keini E-Mai meh vun is iberchu?   
+Ha, Du wetsch gar keini E-Mai meh vun is iberchu?
 
 Druck $5
 un ändere Dyyni Yystellige go d E-Mail-Benochrichtigunge abstelle.',
@@ -926,6 +1299,74 @@ a změń swoje nastajenja, zo by e-mejlowe zdźělenja znjemóžnił.',
 	'right-awardsmanage' => 'Nowe myta wutworić a eksistowace wobdźěłać',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'systemgiftmanager' => 'Rendszerajándékok kezelése',
+	'ga-addnew' => '+ Új ajándék hozzáadása',
+	'ga-back-edit-gift' => 'Vissza ezen ajándék szerkesztéséhez',
+	'ga-back-gift-list' => 'Vissza az ajándékok listájához',
+	'ga-back-link' => '<a href="$1">< vissza $2 profiljára</a>',
+	'ga-choosefile' => 'Fájl kiválasztása:',
+	'ga-count' => '$1 felhasználónak $2 díja van.',
+	'ga-create-gift' => 'Ajándék készítése',
+	'ga-created' => 'Az ajándék elkészült',
+	'ga-currentimage' => 'Jelenlegi kép',
+	'ga-error-message-invalid-link' => 'A megadott hivatkozás érvénytelen.',
+	'ga-error-message-no-user' => 'A felhasználó, akit meg próbáltál tekinteni nem létezik.',
+	'ga-error-title' => 'Hoppá, eltévedtél!',
+	'ga-file-instructions' => 'A képnek jpeg, png vagy (nem animált) gif formátumúnak, és 100 KB-nál kisebb méretűnek kell lennie.',
+	'ga-gift' => 'ajándék',
+	'ga-gift-given-count' => 'Ezt az ajándékot $1 alkalommal adták át.',
+	'ga-gift-title' => '$1 „$2” ajándéka',
+	'ga-giftdesc' => 'ajándék leírása',
+	'ga-giftimage' => 'ajándék képe',
+	'ga-giftname' => 'ajándék neve',
+	'ga-gifttype' => 'ajándék típusa',
+	'ga-goback' => 'Visszalépés',
+	'ga-imagesbelow' => 'Alább láthatóak a képeid, amelyek használva lesznek az oldalon',
+	'ga-img' => 'kép hozzáadása/cseréje',
+	'ga-large' => 'Nagy',
+	'ga-medium' => 'Közepes',
+	'ga-mediumlarge' => 'Középnagy',
+	'ga-new' => 'Új',
+	'ga-next' => 'Következő',
+	'ga-previous' => 'Előző',
+	'ga-recent-recipients-award' => 'A többiek, akik a közelmúltban megkapták e díjat',
+	'ga-saved' => 'Az ajándék elmentve',
+	'ga-small' => 'Kicsi',
+	'ga-threshold' => 'küszöb',
+	'ga-title' => '$1 díjai',
+	'ga-uploadsuccess' => 'Sikeres feltöltés',
+	'ga-viewlist' => 'Ajándékok listájának megtekintése',
+	'system_gift_received_subject' => 'Megkaptad a(z) $1 díjat a(z) {{SITENAME}} oldalon!',
+	'system_gift_received_body' => 'Szia $1!
+
+Épp most kaptad meg a(z) $2 díjat a(z) {{SITENAME}} oldalon!
+
+„$3”
+
+Kattints alant, hogy megnézd!
+
+$4
+
+Reméljük tetszeni fog!
+
+Köszönettel,
+
+A(z) {{SITENAME}} oldal csapata
+
+
+~~
+Szeretnéd ha nem zaklatnánk több e-maillel?
+
+Kattints a linkre: $5
+és tiltsd le az e-mail értesítéseket a beállításaidban',
+	'right-awardsmanage' => 'Új díjak készítése vagy meglevők szerkesztése',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -994,30 +1435,113 @@ e disactiva in tu preferentias le notificationes per e-mail.',
 	'right-awardsmanage' => 'Crear nove premios e modificar existentes',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ * @author Irwangatot
+ * @author IvanLanin
+ * @author Kandar
+ */
+$messages['id'] = array(
+	'systemgiftmanager' => 'Sistem pengelolaan hadiah',
+	'ga-addnew' => '+ Tambahkan hadiah baru',
+	'ga-back-edit-gift' => 'Kembali untuk menyunting hadiah ini',
+	'ga-back-gift-list' => 'Kembali ke daftar hadiah',
+	'ga-back-link' => '<a href="$1">< Kembali ke profil $2</a>',
+	'ga-choosefile' => 'Pilih berkas:',
+	'ga-count' => '$1 memiliki $2 {{PLURAL:$2|penghargaan|penghargaan}}.',
+	'ga-create-gift' => 'Buat hadiah',
+	'ga-created' => 'Hadiah sudah dibuat',
+	'ga-currentimage' => 'Gambar saat ini',
+	'ga-error-message-invalid-link' => 'Pranala yang anda masukkan tidak benar.',
+	'ga-error-message-no-user' => 'Pengguna yang anda coba buka tidak ada.',
+	'ga-error-title' => 'Aduh, anda salah belok!',
+	'ga-file-instructions' => 'Gambar anda harus jpeg, png atau gif (tanpa animasi), dan ukurannya tidak boleh lebih dari 100kb.',
+	'ga-gift' => 'hadiah',
+	'ga-gift-given-count' => 'Hadiah ini telah diberikan $1 {{PLURAL:$1|kali|kali}}',
+	'ga-gift-title' => '$1 "$2"',
+	'ga-giftdesc' => 'penjelasan hadiah',
+	'ga-giftimage' => 'gambar hadiah',
+	'ga-giftname' => 'nama hadiah',
+	'ga-gifttype' => 'tipe hadiah',
+	'ga-goback' => 'Kembali',
+	'ga-imagesbelow' => 'Di bawah ini adalah gambar-gambar yang akan digunakan di situs',
+	'ga-img' => 'tambahkan/ganti gambar',
+	'ga-large' => 'Besar',
+	'ga-medium' => 'Menengah',
+	'ga-mediumlarge' => 'Sedang-besar',
+	'ga-new' => 'Baru',
+	'ga-next' => 'Selanjutnya',
+	'ga-previous' => 'Sebelumnya',
+	'ga-recent-recipients-award' => 'Penerima lain penghargaan ini',
+	'ga-saved' => 'Hadiah sudah disimpan',
+	'ga-small' => 'Kecil',
+	'ga-threshold' => 'ambang batas',
+	'ga-title' => '$1 hadiah',
+	'ga-uploadsuccess' => 'Sukses mengunggah',
+	'ga-viewlist' => 'Lihat daftar hadiah',
+	'system_gift_received_subject' => 'Anda mendapatkan $1 piala di {{SITENAME}}!',
+	'system_gift_received_body' => 'Hai $1.
+
+Anda baru menerima $2 penghargaan di {{SITENAME}}!
+
+"$3"
+
+Klik di bawah untuk mengetahui jenis penghargaan Anda!
+
+$4
+
+Kami harap Anda menyukainya!
+
+Terima kasih,
+
+
+{{SITENAME}} tim
+
+---
+
+Ingin berhenti mendapatkan surel dari kami?
+
+Klik $5
+dan ubah setting anda untuk menonaktifkan notifikasi surel.',
+	'right-awardsmanage' => 'Buat baru dan sunting penghargaan yang ada',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'ga-small' => 'Ntàkiri',
+);
+
 /** Japanese (日本語)
  * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'systemgiftmanager' => 'システムギフトマネージャー',
-	'ga-addnew' => '+ 新しいプレゼントを追加',
-	'ga-back-edit-gift' => '戻ってこのプレゼントを編集する',
-	'ga-back-gift-list' => 'プレゼントリストへ戻る',
+	'systemgiftmanager' => 'システムからの贈り物の管理',
+	'ga-addnew' => '+ 新しい贈り物を追加',
+	'ga-back-edit-gift' => '戻ってこの贈り物を編集する',
+	'ga-back-gift-list' => '贈り物一覧へ戻る',
 	'ga-back-link' => '<a href="$1">< $2のプロフィールへ戻る</a>',
 	'ga-choosefile' => 'ファイルを選ぶ:',
-	'ga-count' => '$1 は $2 回表彰されています',
-	'ga-create-gift' => 'プレゼントを作成',
-	'ga-created' => 'プレゼントは作成されました。',
+	'ga-count' => '$1 は$2{{PLURAL:$2|回}}表彰されています',
+	'ga-create-gift' => '贈り物を作成',
+	'ga-created' => '贈り物を作成しました',
 	'ga-currentimage' => '現在の画像',
 	'ga-error-message-invalid-link' => '入力されたリンクは無効です',
 	'ga-error-message-no-user' => '表示しようとした利用者は存在しません。',
-	'ga-gift' => 'ギフト',
-	'ga-giftdesc' => 'プレゼントの説明',
-	'ga-giftimage' => 'ギフト画像',
-	'ga-giftname' => 'ギフト名',
-	'ga-gifttype' => 'ギフトタイプ',
+	'ga-error-title' => 'おっと、手順を間違えたようです！',
+	'ga-file-instructions' => '使用できる画像は jpeg、png、または gif (gifアニメーション除く)で、サイズが100kb以下のものです。',
+	'ga-gift' => '贈り物',
+	'ga-gift-given-count' => 'この贈り物はいままでに$1{{PLURAL:$1|回}}贈られています',
+	'ga-gift-title' => '$1の「$2」',
+	'ga-giftdesc' => '贈り物の説明',
+	'ga-giftimage' => '贈り物用画像',
+	'ga-giftname' => '贈り物名',
+	'ga-gifttype' => '贈り物の種類',
 	'ga-goback' => '戻る',
+	'ga-imagesbelow' => '以下はこのサイトであなたの画像として使用されている画像です',
 	'ga-img' => '画像を追加もしくは置き換え',
 	'ga-large' => '大',
 	'ga-medium' => '中',
@@ -1025,12 +1549,51 @@ $messages['ja'] = array(
 	'ga-new' => '新規',
 	'ga-next' => '次',
 	'ga-previous' => '前',
-	'ga-saved' => 'プレゼントは保存されました。',
+	'ga-recent-recipients-award' => 'ほかにこの賞を最近受けた人',
+	'ga-saved' => '贈り物を保存しました',
 	'ga-small' => '小',
 	'ga-threshold' => '閾値',
+	'ga-title' => '$1のもらった賞',
 	'ga-uploadsuccess' => 'アップロード成功',
-	'ga-viewlist' => 'プレゼントリストを見る',
+	'ga-viewlist' => '贈り物一覧を見る',
+	'system_gift_received_subject' => '{{SITENAME}}にて$1賞を受けました',
+	'system_gift_received_body' => '$1さん、こんにちは。
+
+$1さんは、{{SITENAME}}にて$2賞を受賞されました！
+
+「$3」
+
+トロフィー入れを確認するには下のリンクをクリックしてください！
+
+$4
+
+お気に入れば幸いです！
+
+{{SITENAME}}チーム
+
+---
+メール受信を停止したい場合は、
+$5
+をクリックして、メール通知を無効にするよう設定変更してください。',
 	'right-awardsmanage' => '賞の編集・新規作成',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author វ័ណថារិទ្ធ
+ */
+$messages['km'] = array(
+	'ga-addnew' => '+ បន្ថែម​អំណោយ​ថ្មី​',
+	'ga-back-gift-list' => 'ត្រឡប់ទៅកាន់បញ្ជីអំណោយ​',
+	'ga-create-gift' => 'បង្កើត​អំណោយ',
+	'ga-created' => 'អំណោយ​ត្រូវ​បាន​បង្កើត​',
+	'ga-currentimage' => 'រូបភាពបច្ចុប្បន្ន',
+	'ga-gift' => 'អំណោយ​',
+	'ga-large' => 'ធំ​',
+	'ga-medium' => 'មធ្យម​',
+	'ga-new' => 'ថ្មី​',
+	'ga-next' => 'បន្ទាប់​',
+	'ga-previous' => 'មុន​',
+	'ga-small' => 'តូច​',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -1107,13 +1670,17 @@ $messages['lb'] = array(
 	'ga-back-gift-list' => "Zréck op d'Lëscht vun de Cadeauen",
 	'ga-back-link' => '<a href="$1">< Zréck op dem $2 säi Profil</a>',
 	'ga-choosefile' => 'Wielt e Fichier:',
+	'ga-count' => '$1 huet $2 {{PLURAL:$2|Auszeechnung|Auszeechnungen}}.',
 	'ga-create-gift' => 'Cadeau uleeën',
 	'ga-created' => 'De Cadeau gouf ugeluecht',
 	'ga-currentimage' => 'Aktuellt Bild',
 	'ga-error-message-invalid-link' => 'De Link deen Dir uginn hutt ass net valabel.',
 	'ga-error-message-no-user' => 'De Benotzer, deen Dir kucke wëllt, gëtt et net.',
+	'ga-error-title' => 'Ups, Dir hutt e falsche Wee gewielt!',
 	'ga-file-instructions' => 'Är Bild muss e jpeg, png oder gif (keng animéiert Gifen) a muss méi kleng si wéi 100 kb.',
 	'ga-gift' => 'Cadeau',
+	'ga-gift-given-count' => 'Dëse Cadeau gouf $1 {{PLURAL:$1|mol gemaach|mol gemaach}}',
+	'ga-gift-title' => '"$2" vum $1',
 	'ga-giftdesc' => 'Bechreiwung vum Cadeau',
 	'ga-giftimage' => 'Bild vum Cadeau',
 	'ga-giftname' => 'Numm vum Cadeau',
@@ -1123,13 +1690,87 @@ $messages['lb'] = array(
 	'ga-img' => 'Bild derbäisetzen/ersetzen',
 	'ga-large' => 'Grouss',
 	'ga-medium' => 'Mëttel',
+	'ga-mediumlarge' => 'Mëttelgrouss',
 	'ga-new' => 'Nei',
 	'ga-next' => 'Nächst',
 	'ga-previous' => 'Vireg',
+	'ga-recent-recipients-award' => 'Anerer déi dës Auszeechnung viru kuerzem kritt hunn',
 	'ga-saved' => 'De Cadeau gouf gespäichert',
 	'ga-small' => 'Kleng',
+	'ga-threshold' => 'Limit',
+	'ga-title' => 'Dem $1 seng Auszeechnungen',
 	'ga-uploadsuccess' => 'Eroplueden ofgeschloss',
 	'ga-viewlist' => 'Lëscht vun de Cadeaue kucken',
+	'system_gift_received_subject' => "Dir hutt d'$1-Auszeechnung op {{SITENAME}}!",
+	'right-awardsmanage' => 'Nei Auszeechnungen uleeën a bestoender änneren',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'systemgiftmanager' => 'Раководител со системски подароци',
+	'ga-addnew' => '+ Додај нов подарок',
+	'ga-back-edit-gift' => 'Назад кон уредувањето на овој подарок',
+	'ga-back-gift-list' => 'Назад кон листата на подароци',
+	'ga-back-link' => '<a href="$1">< Назад кон профилот на $2</a>',
+	'ga-choosefile' => 'Одберете податотека:',
+	'ga-count' => '$1 има $2 {{PLURAL:$2|награда|награди}}.',
+	'ga-create-gift' => 'Создај подарок',
+	'ga-created' => 'Подарокот е создаден',
+	'ga-currentimage' => 'Моментална слика',
+	'ga-error-message-invalid-link' => 'Внесената врска е неважечка.',
+	'ga-error-message-no-user' => 'Корисникот кој сакате да го видите не постои.',
+	'ga-error-title' => 'Упс, направивте погрешен потег!',
+	'ga-file-instructions' => 'Сликата мора да биде од типот jpeg, png или gif (но не анимиран gif), и мора да биде помала од 100кб.',
+	'ga-gift' => 'подарок',
+	'ga-gift-given-count' => 'Овој подарок досега е подаруван $1 {{PLURAL:$1|пат|пати}}',
+	'ga-gift-title' => '„$2“ на $1',
+	'ga-giftdesc' => 'опис на подарокот',
+	'ga-giftimage' => 'слика на подарокот',
+	'ga-giftname' => 'име на подарокот',
+	'ga-gifttype' => 'тип на подарок',
+	'ga-goback' => 'Назад',
+	'ga-imagesbelow' => 'Подолу се наоѓаат сликите коишто ќе се користат на веб-страницата',
+	'ga-img' => 'додај/замени слика',
+	'ga-large' => 'Голем',
+	'ga-medium' => 'Среден',
+	'ga-mediumlarge' => 'Средно-голем',
+	'ga-new' => 'Нов',
+	'ga-next' => 'Следен',
+	'ga-previous' => 'Претходен',
+	'ga-recent-recipients-award' => 'Други скорешни добитници на оваа награда',
+	'ga-saved' => 'Подарокот е зачуван',
+	'ga-small' => 'Мал',
+	'ga-threshold' => 'праг',
+	'ga-title' => 'Наградите на $1',
+	'ga-uploadsuccess' => 'Подигањето е успешно',
+	'ga-viewlist' => 'Види листа на подароци',
+	'system_gift_received_subject' => 'Ја добивте наградата $1 на {{SITENAME}}!',
+	'system_gift_received_body' => 'Здраво $1.
+
+Штотуку ја добивте наградата $2 на {{SITENAME}}!
+
+„$3“
+
+Кликнете подолу за да си ја видите витрината со трофеи!
+
+$4
+
+Се надеваме дека Ви се допаѓа!
+
+Благодариме,
+
+
+Екипата на {{SITENAME}}
+
+---
+
+Сакате повеќе да не добивате е-пошта од нас?
+
+Кликнете на $5
+и изменете си ги нагодувањата за да оневозможите известувања по е-пошта.',
+	'right-awardsmanage' => 'Создавање на нови и уредување на постоечки награди',
 );
 
 /** Dutch (Nederlands)
@@ -1195,7 +1836,7 @@ Het {{SITENAME}}-team
 
 ---
 
-Wilt u geen e-mails meer van ons ontvangen?   
+Wilt u geen e-mails meer van ons ontvangen?
 
 Klik op $5
 en wijzig uw instellingen om e-mailwaarschuwingen uit te schakelen.',
@@ -1246,7 +1887,7 @@ $messages['nn'] = array(
 	'system_gift_received_subject' => 'Du har motteke utmerkinga $1 på {{SITENAME}}!',
 	'system_gift_received_body' => 'Hei $1:
 
-Du har nett motteke $2-utmerkinga på {{SITENAME}}!   
+Du har nett motteke $2-utmerkinga på {{SITENAME}}!
 
 «$3»
 
@@ -1268,6 +1909,73 @@ Vil du ikkje lenger motta e-postar frå oss?
 Trykk $5
 og endra innstillingane dine for å slå av e-postmeldingar.',
 	'right-awardsmanage' => 'Opprett nye og endra eksisterande utmerkingar',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Simny
+ */
+$messages['no'] = array(
+	'systemgiftmanager' => 'Systemgaveforvalter',
+	'ga-addnew' => '+ legg til en ny presang',
+	'ga-back-edit-gift' => 'Tilbake til endring av gaven',
+	'ga-back-gift-list' => 'Tilbake til gavelista',
+	'ga-back-link' => '<a href="$1">< tilbake til $2s profil </a>',
+	'ga-choosefile' => 'Velg fil:',
+	'ga-count' => '$1 har {{PLURAL:$2|én utmerkelse|$2 utmerkelser}}.',
+	'ga-create-gift' => 'opprett gave',
+	'ga-created' => 'Gaven har blitt opprettet',
+	'ga-currentimage' => 'Nåværende bilde',
+	'ga-error-message-invalid-link' => 'Lenken du oppga er ugyldig.',
+	'ga-error-message-no-user' => 'Brukeren du ønsker å se finnes ikke.',
+	'ga-error-title' => 'Oi, du svingte feil!',
+	'ga-file-instructions' => 'Bildet ditt må være et jpeg, png, eller gif (ingen animerte gif-filer), og ha en størrelse på mindre en 100 kb.',
+	'ga-gift' => 'gave',
+	'ga-gift-given-count' => 'Denne gaven har blitt gitt {{PLURAL:$1|én gang|$1 ganger}}',
+	'ga-gift-title' => '$1s «$2»',
+	'ga-giftdesc' => 'beskrivelse av gave',
+	'ga-giftimage' => 'gavebilde',
+	'ga-giftname' => 'gavenavn',
+	'ga-gifttype' => 'gavetype',
+	'ga-goback' => 'Gå tilbake',
+	'ga-imagesbelow' => 'Under er bildene dine som vil bli brukt på sida.',
+	'ga-img' => 'legg til/erstatt bilde',
+	'ga-large' => 'Stort',
+	'ga-medium' => 'Middels',
+	'ga-mediumlarge' => 'middels stort',
+	'ga-new' => 'Ny',
+	'ga-next' => 'Neste',
+	'ga-previous' => 'Forrige',
+	'ga-recent-recipients-award' => 'Andre som nylig mottok denne utmerkelsen',
+	'ga-saved' => 'Gaven har blitt lagret',
+	'ga-small' => 'Lite',
+	'ga-threshold' => 'terskel',
+	'ga-title' => '$1s utmerkelser',
+	'ga-uploadsuccess' => 'Opplasting vellykket',
+	'ga-viewlist' => 'Se gavelista',
+	'system_gift_received_subject' => 'Du har mottatt utmerkelsen $1 på {{SITENAME}}!',
+	'system_gift_received_body' => 'Hei $1.
+
+Du har akkurat mottatt en $2-utmerkelse på {{SITENAME}}!
+
+«$3»
+
+Klikk under for å se trofeet ditt!
+
+$4
+
+Vi håper du liker det!
+
+Takk,
+
+{{SITENAME}}-laget
+
+---
+
+Vil du ikke lenger motta e-poster fra oss?
+
+Klikk $5
+og forandre dine innstillinger for å slå av e-postbeskjeder.',
+	'right-awardsmanage' => 'Opprett nye og endre eksisterende utmerkelser',
 );
 
 /** Occitan (Occitan)
@@ -1296,7 +2004,7 @@ $messages['oc'] = array(
 	'ga-giftname' => 'nom del present',
 	'ga-gifttype' => 'tipe del present',
 	'ga-goback' => 'Tornar',
-	'ga-imagesbelow' => 'Los imatges que seràn utilizats sus aquel sit son afichats çaijós',
+	'ga-imagesbelow' => 'Los imatges que seràn utilizats sus aquel site son afichats çaijós',
 	'ga-img' => "apondre / modificar l'imatge",
 	'ga-large' => 'Grand',
 	'ga-medium' => 'Mejan',
@@ -1336,6 +2044,16 @@ Volètz pas recebre mai de corrièrs electronics de nòstra part ?
 Clicatz $5
 e modificatz vòstras preferéncias per desactivar las notificacions per corrièr electronic.",
 	'right-awardsmanage' => 'Crear de prèmis novèls e modificar los prèmis existents',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'ga-large' => 'Gross',
+	'ga-new' => 'Nei',
+	'ga-next' => 'Neegscht',
+	'ga-small' => 'Glee',
 );
 
 /** Polish (Polski)
@@ -1380,7 +2098,98 @@ $messages['pl'] = array(
 	'ga-uploadsuccess' => 'Przesłano',
 	'ga-viewlist' => 'Zobacz listę prezentu',
 	'system_gift_received_subject' => 'Dostałeś nagrodę $1 na {{GRAMMAR:MS.lp|{{SITENAME}}}}!',
+	'system_gift_received_body' => 'Witaj $1.
+
+Otrzymałeś właśnie nagrodę $2 w {{GRAMMAR:MS.lp|{{SITENAME}}}}!
+
+„$3”
+
+Kliknij poniżej, aby sprawdzić dlaczego!
+
+$4
+
+Mamy nadzieję, że się cieszysz!
+
+Dziękujemy, 
+
+zespół {{GRAMMAR:D.lp|{{SITENAME}}}}
+
+--- 
+
+Nie chcesz otrzymywać wiadomości?
+
+Kliknij $5
+i zmień ustawienia, aby wyłączyć powiadomienia e-mail.',
 	'right-awardsmanage' => 'Tworzenie nowych oraz edytowanie istniejących nagród',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'systemgiftmanager' => 'Gestor dël sistema ëd cadò',
+	'ga-addnew' => '+ Gionta un cadò neuv',
+	'ga-back-edit-gift' => 'André a modifiché sto cadò-sì',
+	'ga-back-gift-list' => 'André a la lista dij cadò',
+	'ga-back-link' => '<a href="$1">< André al profil ëd $2</a>',
+	'ga-choosefile' => "Serne l'archivi:",
+	'ga-count' => "$1 a l'ha $2 {{PLURAL:$2|premi|premi}}.",
+	'ga-create-gift' => 'Crea cadò',
+	'ga-created' => "Ël cadò a l'é stàit creà",
+	'ga-currentimage' => 'Figura corenta',
+	'ga-error-message-invalid-link' => "Ël colegament ch'it l'has anserì a l'é pa bon.",
+	'ga-error-message-no-user' => "L'utent ch'it l'has provà a vardé a esist pa.",
+	'ga-error-title' => "Contacc, a l'é rivaje un brut colp!",
+	'ga-file-instructions' => 'Toa figura a deuv esse na jpeg, png o gif (gif pa animà), e a deuv esse men che 100kb an dimension.',
+	'ga-gift' => 'cadò',
+	'ga-gift-given-count' => "Sto cadò-sì a l'é stàit fàit $1 {{PLURAL:$1|vira|vire}}",
+	'ga-gift-title' => '"$2" ëd $1',
+	'ga-giftdesc' => 'descrission dël cadò',
+	'ga-giftimage' => 'figura dël cadò',
+	'ga-giftname' => 'nòm dël cadò',
+	'ga-gifttype' => 'sòrt ëd cadò',
+	'ga-goback' => 'Va andré',
+	'ga-imagesbelow' => 'Sota a-i son soe figure che a saran dovrà an sël sit',
+	'ga-img' => 'gionta/cambia figura',
+	'ga-large' => 'Gròss',
+	'ga-medium' => 'Medi',
+	'ga-mediumlarge' => 'Medi-gròss',
+	'ga-new' => 'Neuv',
+	'ga-next' => 'Dapress',
+	'ga-previous' => 'Prima',
+	'ga-recent-recipients-award' => "Àutri che ëd recent a l'han arseivù sto premi-sì",
+	'ga-saved' => "Ël cadò a l'é stàit salvà",
+	'ga-small' => 'Cit',
+	'ga-threshold' => 'seuja',
+	'ga-title' => 'premi ëd $1',
+	'ga-uploadsuccess' => 'Carià da bin',
+	'ga-viewlist' => 'Varda la lista dij cadò',
+	'system_gift_received_subject' => "It l'has arseivù ël premi $1 dzora a {{SITENAME}}!",
+	'system_gift_received_body' => 'Cerea $1.
+
+It l\'has pen-e arseivù ël premi $2 dzora {{SITENAME}}!
+
+"$3"
+
+Sgnaca sota për controlé tò trofeo!
+
+$4
+
+I speroma ch\'at piasa!
+
+Mersì,
+
+
+L\'echip {{SITENAME}}
+
+---
+
+Scota, veus-to pa pi arseive mëssagi ëd pòsta eletrònica da noiàutri?
+
+Sgnaca $5
+e cambia toe ampostassion për disabilité le notìfiche an pòsta eletrònica.',
+	'right-awardsmanage' => "Crea neuv premi e modìfica j'esistent",
 );
 
 /** Pashto (پښتو)
@@ -1400,34 +2209,35 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Vanessa Sabino
  * @author Waldir
  */
 $messages['pt'] = array(
-	'systemgiftmanager' => 'Gerenciador do Sistema de Presentes',
-	'ga-addnew' => '+ Adicionar Novo Presente',
-	'ga-back-edit-gift' => 'Voltar para Editar Este Presente',
-	'ga-back-gift-list' => 'Voltar para Lista de Presentes',
-	'ga-back-link' => '<a href="$1">< Voltar para Perfil de $2</a>',
-	'ga-choosefile' => 'Escolher Arquivo:',
-	'ga-count' => '$1 tem $2 {{PLURAL:$2|prêmio|prêmios}}.',
-	'ga-create-gift' => 'Criar presente',
-	'ga-created' => 'O presente foi criado',
-	'ga-currentimage' => 'Imagem Atual',
-	'ga-error-message-invalid-link' => 'O link que você colocou é inválido.',
-	'ga-error-message-no-user' => 'O utilizador que você está tentando ver não existe.',
-	'ga-error-title' => 'Ops, você entrou no lugar errado!',
-	'ga-file-instructions' => 'Sua imagem precisa ser um jpeg, png or gif (sem gifs animados), e precisa ter tamanho menor que 100kb.',
-	'ga-gift' => 'presente',
-	'ga-gift-given-count' => 'Este presente foi dado a $1 {{PLURAL:$1|vez|vezes}}',
+	'systemgiftmanager' => 'Administrador do sistema de prendas',
+	'ga-addnew' => '+ Adicionar nova prenda',
+	'ga-back-edit-gift' => 'Voltar para editar esta prenda',
+	'ga-back-gift-list' => 'Voltar à lista de prendas',
+	'ga-back-link' => '<a href="$1">< Voltar ao perfil de $2</a>',
+	'ga-choosefile' => 'Escolher ficheiro:',
+	'ga-count' => '$1 tem {{PLURAL:$2|um prémio|$2 prémios}}.',
+	'ga-create-gift' => 'Criar prenda',
+	'ga-created' => 'A prenda foi criada',
+	'ga-currentimage' => 'Imagem actual',
+	'ga-error-message-invalid-link' => 'A ligação que forneceu é inválida.',
+	'ga-error-message-no-user' => 'O utilizador que está tentando ver não existe.',
+	'ga-error-title' => 'Ui, virou na curva errada!',
+	'ga-file-instructions' => 'A imagem tem de ser um jpeg, png or gif (sem gifs animados) e ter um tamanho inferior a 100KB.',
+	'ga-gift' => 'prenda',
+	'ga-gift-given-count' => 'Esta prenda foi dada {{PLURAL:$1|uma vez|$1 vezes}}',
 	'ga-gift-title' => '"$2" de $1',
-	'ga-giftdesc' => 'descrição do presente',
-	'ga-giftimage' => 'imagem do presente',
-	'ga-giftname' => 'nome do presente',
-	'ga-gifttype' => 'tipo do presente',
+	'ga-giftdesc' => 'descrição da prenda',
+	'ga-giftimage' => 'imagem da prenda',
+	'ga-giftname' => 'nome da prenda',
+	'ga-gifttype' => 'tipo da prenda',
 	'ga-goback' => 'Voltar',
-	'ga-imagesbelow' => 'Abaixo estão suas imagens que serão usadas no site',
+	'ga-imagesbelow' => 'Abaixo estão as suas imagens que serão usadas no sítio',
 	'ga-img' => 'adicionar/substituir imagem',
 	'ga-large' => 'Grande',
 	'ga-medium' => 'Médio',
@@ -1435,21 +2245,21 @@ $messages['pt'] = array(
 	'ga-new' => 'Novo',
 	'ga-next' => 'Próximo',
 	'ga-previous' => 'Anterior',
-	'ga-recent-recipients-award' => 'Outros ganhadores recentes deste prêmio',
-	'ga-saved' => 'Este presente foi salvo',
+	'ga-recent-recipients-award' => 'Outros ganhadores recentes deste prémio',
+	'ga-saved' => 'Esta prenda foi gravada',
 	'ga-small' => 'Pequeno',
 	'ga-threshold' => 'threshold',
-	'ga-title' => 'Presentes de $1',
+	'ga-title' => 'prémios de $1',
 	'ga-uploadsuccess' => 'Upload bem sucedido',
-	'ga-viewlist' => 'Ver Lista de Presentes',
-	'system_gift_received_subject' => 'Você recebeu o prêmio $1 em {{SITENAME}}!',
-	'system_gift_received_body' => 'Oi $1:
+	'ga-viewlist' => 'Ver lista de prendas',
+	'system_gift_received_subject' => 'Recebeu o prémio $1 na {{SITENAME}}!',
+	'system_gift_received_body' => 'Olá $1,
 
-Você acaba de receber o prêmio $2 em {{SITENAME}}!
+Acaba de receber o prémio $2 na {{SITENAME}}!
 
 "$3"
 
-Clique abaixo para ver sua estante de troféis!
+Clique abaixo para ver a sua estante de troféus!
 
 $4
 
@@ -1458,15 +2268,15 @@ Esperamos que tenha gostado!
 Obrigado,
 
 
-O Time de {{SITENAME}}
+A equipa da {{SITENAME}}
 
 ---
 
-Ei, quer parer de receber e-mails de nós?
+Olhe, quer parar de receber as nossas mensagens?
 
 Clique $5
-e altere suas preferências para desabilitar e-mails de notificação.',
-	'right-awardsmanage' => 'Crie novos e edite galardões existentes',
+e altere as suas preferências para desactivar as notificações por correio electrónico.',
+	'right-awardsmanage' => 'Criar novos prémios e editar os existentes',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1537,6 +2347,108 @@ e altere suas preferências para desabilitar e-mails de notificação.',
 	'right-awardsmanage' => 'Crie novos e edite prêmios existentes',
 );
 
+/** Romanian (Română)
+ * @author Firilacroco
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'ga-choosefile' => 'Alegeţi fişier:',
+	'ga-create-gift' => 'Creaţi un cadou',
+	'ga-currentimage' => 'Imaginii curente',
+	'ga-error-message-invalid-link' => 'Legătura introdusă este incorectă.',
+	'ga-gift' => 'cadou',
+	'ga-giftimage' => 'imaginea cadoului',
+	'ga-giftname' => 'numele cadoului',
+	'ga-gifttype' => 'tipul cadoului',
+	'ga-goback' => 'Reveniţi',
+	'ga-large' => 'Mare',
+	'ga-medium' => 'Mediu',
+	'ga-mediumlarge' => 'Mediu-mare',
+	'ga-new' => 'Nou',
+	'ga-next' => 'Următorul',
+	'ga-previous' => 'Anteriorul',
+	'ga-small' => 'Mic',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'ga-choosefile' => "Scacchie 'u file:",
+	'ga-gift' => 'riale',
+	'ga-new' => 'Nuève',
+);
+
+/** Russian (Русский)
+ * @author Ferrer
+ * @author Innv
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'systemgiftmanager' => 'Система управления подарками',
+	'ga-addnew' => '+ Добавить новый подарок',
+	'ga-back-edit-gift' => 'Вернуться к редактированию этого подарка',
+	'ga-back-gift-list' => 'Вернуться к списку подарков',
+	'ga-back-link' => '<a href="$1">< Вернуться к странице $2</a>',
+	'ga-choosefile' => 'Выберите файл:',
+	'ga-count' => '$1 имеет $2 {{PLURAL:$1|награду|награды|наград}}.',
+	'ga-create-gift' => 'Создать подарок',
+	'ga-created' => 'Подарок был создан',
+	'ga-currentimage' => 'Текущее изображение',
+	'ga-error-message-invalid-link' => 'Введённая вами ссылка ошибочна.',
+	'ga-error-message-no-user' => 'Участник, которого вы хотите посмотреть, не существует.',
+	'ga-error-title' => 'Опа, вы ввели неправильное название!',
+	'ga-file-instructions' => 'Ваше изображение должно быть в формате jpeg, png или gif (неанимированный gif), и быть меньше 100 КБ.',
+	'ga-gift' => 'подарок',
+	'ga-gift-given-count' => 'Этот подарок был подарен $1 {{PLURAL:$1|раз|раза|раза}}',
+	'ga-gift-title' => '$1 «$2»',
+	'ga-giftdesc' => 'описание подарка',
+	'ga-giftimage' => 'изображение подарка',
+	'ga-giftname' => 'название подарка',
+	'ga-gifttype' => 'тип подарка',
+	'ga-goback' => 'Перейти назад',
+	'ga-imagesbelow' => 'Ниже находятся ваши изображения, которые будут использоваться на сайте',
+	'ga-img' => 'добавить/изменить изображение',
+	'ga-large' => 'Большой',
+	'ga-medium' => 'Средний',
+	'ga-mediumlarge' => 'Средний-большой',
+	'ga-new' => 'Новый',
+	'ga-next' => 'Следующий',
+	'ga-previous' => 'Предыдущий',
+	'ga-recent-recipients-award' => 'Другие недавние получатели этой награды',
+	'ga-saved' => 'Этот подарок был сохранён',
+	'ga-small' => 'Маленький',
+	'ga-threshold' => 'порог',
+	'ga-title' => 'Награды $1',
+	'ga-uploadsuccess' => 'Загрузка успешно завершена',
+	'ga-viewlist' => 'Просмотр списка подарков',
+	'system_gift_received_subject' => 'Вы получили награду $1 на {{SITENAME}}!',
+	'system_gift_received_body' => 'Здравствуйте, $1.
+
+Вы только что получили награду $2 на {{SITENAME}}!
+
+«$3»
+
+Нажмите ниже для проверки вашего трофея!
+
+$4
+
+Мы надеемся, что вам понравится!
+
+Спасибо,
+
+
+Команда {{SITENAME}}
+
+---
+
+Хотите прекратить получать письма от нас?
+
+Нажмите $5
+и измените ваши настройки, отключив отправку уведомлений по электронной почте.',
+	'right-awardsmanage' => 'создание новых и правка существующих наград',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -1605,13 +2517,137 @@ a zmeňte svoje nastavenia týkajúce sa upozornení emailom.',
 	'right-awardsmanage' => 'Vytvárať nové alebo upravovať existujúce ocenenia',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'ga-addnew' => '+ Додајте нови поклон',
+	'ga-back-edit-gift' => 'Повратак на измену овог поклона',
+	'ga-back-gift-list' => 'Повратак на списак поклона',
+	'ga-back-link' => '<a href="$1">< Повратак на профил $2</a>',
+	'ga-choosefile' => 'Изаберите фајл:',
+	'ga-count' => '$1 има $2 {{PLURAL:$2|награду|награда}}.',
+	'ga-create-gift' => 'Направите поклон',
+	'ga-created' => 'Поклон је направљен',
+	'ga-currentimage' => 'Тренутна слика',
+	'ga-error-message-invalid-link' => 'Линк који сте навели је неисправан.',
+	'ga-error-message-no-user' => 'Корисник кога покушавате да видите не постоји.',
+	'ga-file-instructions' => 'Ваша слика мора бити у jpeg/jpg, png или gif (неанимираном) формату, и мора бити величине испод 100kB.',
+	'ga-gift' => 'поклон',
+	'ga-gift-given-count' => 'Овај поклон је био поклоњен $1 {{PLURAL:$1|пут|пута}}',
+	'ga-gift-title' => '"$2" од $1',
+	'ga-giftdesc' => 'опис поклона',
+	'ga-giftimage' => 'слика поклона',
+	'ga-giftname' => 'назив поклона',
+	'ga-gifttype' => 'врста поклона',
+	'ga-goback' => 'Назад',
+	'ga-imagesbelow' => 'Испод се налазе ваше слике које ће бити коришћене на сајту',
+	'ga-img' => 'додај/замени слику',
+	'ga-large' => 'Велико',
+	'ga-medium' => 'Средње',
+	'ga-mediumlarge' => 'Средње-велико',
+	'ga-new' => 'Ново',
+	'ga-next' => 'Следеће',
+	'ga-previous' => 'Претходно',
+	'ga-recent-recipients-award' => 'Други скорији примаоци ове награде',
+	'ga-saved' => 'Поклон је снимљен',
+	'ga-small' => 'Мало',
+	'ga-title' => 'Награде $1',
+	'ga-uploadsuccess' => 'Слање успешно',
+	'ga-viewlist' => 'Погледај списак поклона',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'ga-addnew' => '+ Dodajte novi poklon',
+	'ga-back-edit-gift' => 'Povratak na izmenu ovog poklona',
+	'ga-back-gift-list' => 'Povratak na spisak poklona',
+	'ga-back-link' => '<a href="$1">< Povratak na profil $2</a>',
+	'ga-choosefile' => 'Izaberite fajl:',
+	'ga-count' => '$1 ima $2 {{PLURAL:$2|nagradu|nagrada}}.',
+	'ga-create-gift' => 'Napravite poklon',
+	'ga-created' => 'Poklon je napravljen',
+	'ga-currentimage' => 'Trenutna slika',
+	'ga-error-message-invalid-link' => 'Link koji ste naveli je neispravan.',
+	'ga-error-message-no-user' => 'Korisnik koga pokušavate da vidite ne postoji.',
+	'ga-file-instructions' => 'Vaša slika mora biti u jpeg/jpg, png ili gif (neanimiranom) formatu, i mora biti veličine ispod 100kB.',
+	'ga-gift' => 'poklon',
+	'ga-gift-given-count' => 'Ovaj poklon je bio poklonjen $1 {{PLURAL:$1|put|puta}}',
+	'ga-gift-title' => '"$2" od $1',
+	'ga-giftdesc' => 'opis poklona',
+	'ga-giftimage' => 'slika poklona',
+	'ga-giftname' => 'naziv poklona',
+	'ga-gifttype' => 'vrsta poklona',
+	'ga-goback' => 'Nazad',
+	'ga-imagesbelow' => 'Ispod se nalaze vaše slike koje će biti korišćene na sajtu',
+	'ga-img' => 'dodaj/zameni sliku',
+	'ga-large' => 'Veliko',
+	'ga-medium' => 'Srednje',
+	'ga-mediumlarge' => 'Srednje-veliko',
+	'ga-new' => 'Novo',
+	'ga-next' => 'Sledeće',
+	'ga-previous' => 'Prethodno',
+	'ga-recent-recipients-award' => 'Drugi skoriji primaoci ove nagrade',
+	'ga-saved' => 'Poklon je snimljen',
+	'ga-small' => 'Malo',
+	'ga-title' => 'Nagrade $1',
+	'ga-uploadsuccess' => 'Slanje uspešno',
+	'ga-viewlist' => 'Pogledaj spisak poklona',
+);
+
+/** Swedish (Svenska)
+ * @author Per
+ */
+$messages['sv'] = array(
+	'systemgiftmanager' => 'Systempresentförvaltare',
+	'ga-addnew' => '+ lägg till en ny present',
+	'ga-back-edit-gift' => 'Tillbaka för att ändra denna present',
+	'ga-back-gift-list' => 'Tillbaka till presentlista',
+	'ga-choosefile' => 'Välj fil:',
+	'ga-count' => '$1 har $2 {{PLURAL:$2|utmärkelse|utmärkelser}}.',
+	'ga-create-gift' => 'Skapa present',
+	'ga-created' => 'Presenten har skapats',
+	'ga-currentimage' => 'Nuvarande bild',
+	'ga-error-message-invalid-link' => 'Länken du angav är ogiltig.',
+	'ga-error-message-no-user' => 'Användaren du försöker titta på existerar inte.',
+	'ga-error-title' => 'Oj, du gick visst fel!',
+	'ga-gift' => 'present',
+	'ga-gift-given-count' => 'Presenten har delats ut $1 {{PLURAL:$1|gång|gånger}}',
+	'ga-gift-title' => '$1s "$2"',
+	'ga-giftdesc' => 'beskrivning av present',
+	'ga-giftimage' => 'presentbild',
+	'ga-giftname' => 'presentnamn',
+	'ga-gifttype' => 'presenttyp',
+	'ga-goback' => 'Gå tillbaka',
+	'ga-img' => 'lägg till/byt ut bild',
+	'ga-large' => 'Stor',
+	'ga-new' => 'Ny',
+	'ga-next' => 'Nästa',
+	'ga-previous' => 'Föregående',
+	'ga-recent-recipients-award' => 'Andra som nyligen fick denna utmärkelse',
+	'ga-saved' => 'Presenten har sparats',
+	'ga-small' => 'Liten',
+	'ga-threshold' => 'tröskel',
+	'ga-title' => '$1s utmärkelser',
+	'ga-viewlist' => 'Visa presentlista',
+	'right-awardsmanage' => 'Skapa nya och ändra existerande utmärkelser',
+);
+
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
+	'ga-gift-given-count' => 'ఈ బహుమతిని {{PLURAL:$1|ఒకసారి|$1 సార్లు}} ఇచ్చారు',
 	'ga-giftdesc' => 'బహుమతి వివరణ',
 	'ga-giftname' => 'బహుమతి పేరు',
 	'ga-gifttype' => 'బహుమతి రకం',
+	'ga-goback' => 'వెనక్కి వెళ్ళు',
+	'ga-new' => 'కొత్త',
+	'ga-next' => 'తర్వాతి',
+	'ga-previous' => 'గత',
 );
 
 /** Tagalog (Tagalog)
@@ -1684,11 +2720,153 @@ at baguhin ang mga pagtatakda mo upang huwag nang paganahin ang mga pagpapabatid
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'systemgiftmanager' => 'Sistem hediye yöneticisi',
+	'ga-addnew' => '+ Yeni hediye ekle',
+	'ga-back-edit-gift' => 'Bu hediyeyi düzenlemeye geri dön',
+	'ga-back-gift-list' => 'Hediye listesine geri dön',
+	'ga-back-link' => '<a href="$1">< $2 adlı kullanıcının profiline geri dön</a>',
+	'ga-choosefile' => 'Dosya seç:',
+	'ga-count' => '$1, $2 {{PLURAL:$2|ödüle|ödüle}} sahip.',
+	'ga-create-gift' => 'Hediye oluştur',
+	'ga-created' => 'Hediye oluşturuldu',
+	'ga-currentimage' => 'Mevcut resim',
+	'ga-error-message-invalid-link' => 'Girdiğiniz bağlantı geçersiz.',
+	'ga-error-message-no-user' => 'Görmeye çalıştığınız kullanıcı mevcut değil.',
+	'ga-error-title' => 'Hay Allah, yanlış işlem yaptınız!',
+	'ga-file-instructions' => 'Resminiz jpeg, png veya gif (animasyonlu gif dosyaları hariç) formatında ve 100kb altı boyutta olmalıdır.',
+	'ga-gift' => 'hediye',
+	'ga-gift-given-count' => 'Bu hediye $1 {{PLURAL:$1|kez|kez}} verildi',
+	'ga-gift-title' => '$1 adlı kullanıcının "$2" hediyesi',
+	'ga-giftdesc' => 'hediye açıklaması',
+	'ga-giftimage' => 'hediye resmi',
+	'ga-giftname' => 'hediye adı',
+	'ga-gifttype' => 'hediye türü',
+	'ga-goback' => 'Geri dön',
+	'ga-imagesbelow' => 'Sitede kullanılacak resimleriniz aşağıdadır',
+	'ga-img' => 'resim ekle/değiştir',
 	'ga-large' => 'Büyük',
+	'ga-medium' => 'Orta',
+	'ga-mediumlarge' => 'Orta-büyük',
 	'ga-new' => 'Yeni',
 	'ga-next' => 'Sonraki',
+	'ga-previous' => 'Önceki',
+	'ga-recent-recipients-award' => 'Bu ödülün diğer yakın zamanlı alıcıları',
+	'ga-saved' => 'Hediye kaydedildi',
 	'ga-small' => 'Küçük',
+	'ga-threshold' => 'eşik',
+	'ga-title' => '$1 adlı kullanıcının ödülleri',
+	'ga-uploadsuccess' => 'Yükleme başarılı',
+	'ga-viewlist' => 'Hediye listesini gör',
+	'system_gift_received_subject' => '{{SITENAME}} üzerinde $1 ödülü aldınız!',
+	'system_gift_received_body' => 'Merhaba $1.
+
+{{SITENAME}} üzerinde $2 ödülünü aldınız!
+
+"$3"
+
+Ödül dolabınızı kontrol etmek için aşağıya tıklayın!
+
+$4
+
+Umarız hoşunuza gider!
+
+Teşekkürler,
+
+{{SITENAME}} ekibi
+
+---
+
+Hey, bizden e-posta alımını durdurmak ister misiniz?
+
+$5 bağlantısına tıklayın
+ve e-posta bildirimlerini devre dışı bırakmak için ayarlarınızı değiştirin.',
+	'right-awardsmanage' => 'Yeni ödül oluşturur ve mevcut ödülleri düzenler',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'ga-next' => 'Наступний',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'ga-choosefile' => 'Valiče fail:',
+	'ga-gift' => 'lahj',
+	'ga-gift-given-count' => 'Nece lahj om anttud $1 {{PLURAL:$1|kerd|kerdad}}',
+	'ga-gift-title' => '$1-kävutajan "$2"',
+	'ga-giftdesc' => 'lahjan ümbrikacund',
+	'ga-giftimage' => 'lahjan kuva',
+	'ga-giftname' => 'lahjan nimi',
+	'ga-gifttype' => 'lahjan tip',
+	'ga-goback' => 'Mäne tagaze',
+	'ga-large' => "Sur'",
+	'ga-medium' => 'Keskmäine',
+	'ga-mediumlarge' => "Keskmäižsur'",
+	'ga-new' => "Uz'",
+	'ga-next' => "Jäl'gh.",
+	'ga-previous' => 'Edel.',
+	'ga-small' => "Pen'",
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
+$messages['vi'] = array(
+	'ga-choosefile' => 'Chọn tập tin:',
+	'ga-currentimage' => 'Hình hiện hành',
+	'ga-gift-title' => '“$2” của $1',
+	'ga-goback' => 'Trở lại',
+	'ga-img' => 'thêm/thay hình',
+	'ga-large' => 'Lớn',
+	'ga-medium' => 'Vừa',
+	'ga-mediumlarge' => 'Hơi lớn',
+	'ga-new' => 'Mới',
+	'ga-next' => 'Sau',
+	'ga-previous' => 'Trước',
+	'ga-small' => 'Nhỏ',
+	'ga-title' => 'Huy chương của $1',
+	'ga-uploadsuccess' => 'Đã tải lên thành công',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ * @author PhiLiP
+ */
+$messages['zh-hans'] = array(
+	'ga-giftdesc' => '礼物说明',
+	'ga-giftimage' => '礼物图片',
+	'ga-giftname' => '礼物名称',
+	'ga-gifttype' => '礼物种类',
+	'ga-goback' => '后退',
+	'ga-large' => '大',
+	'ga-medium' => '中',
+	'ga-small' => '小',
+	'ga-uploadsuccess' => '上载成功',
+	'ga-viewlist' => '检视礼物清单',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ * @author Mark85296341
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'ga-giftdesc' => '禮物說明',
+	'ga-giftimage' => '禮物圖片',
+	'ga-giftname' => '禮物名稱',
+	'ga-gifttype' => '禮物種類',
+	'ga-goback' => '後退',
+	'ga-large' => '大',
+	'ga-medium' => '中',
+	'ga-small' => '小',
+	'ga-uploadsuccess' => '上載成功',
+	'ga-viewlist' => '檢視禮物清單',
 );
 

@@ -1,0 +1,75 @@
+#openid_form {
+	width: 470px;	
+}
+
+#openid_form legend {
+	font-weight: bold;
+}
+
+#openid_input_area {
+	clear: both;
+	padding: 20px;
+	margin: 5px;
+}
+#openid_btns {
+}
+#openid_highlight {
+	padding: 3px;
+	background-color: #FFFCC9;
+	float: left;
+}
+.openid_large_btn {
+	width: 100px;
+	height: 60px;
+	border: 2px solid #DDD;
+	margin: 3px;
+	float: left;
+	background: #fff url(openid_sprite.png) no-repeat top left;
+}
+.openid_small_btn {
+	width: 24px;
+	height: 24px;
+	border: 1px solid #DDD;
+	margin: 3px;
+	float: left;
+	background: #fff url(openid_sprite.png) no-repeat top left;
+}	
+
+.openid_selected {
+	border: 2px solid orange;
+}
+
+a.openid_large_btn:focus {
+	outline: none;
+}
+a.openid_large_btn:focus {
+	-moz-outline-style: none;
+}
+
+#openid_large_providers {
+}
+#openid_small_providers_icons {
+}
+
+#openid_provider_openid_icon { background-position: 0 -526px; }
+#openid_provider_google_icon { background-position: 0 -282px; }
+#openid_provider_yahoo_icon { background-position: 0 -832px; }
+#openid_provider_aol_icon { background-position: 0 -30px; }
+
+#openid_provider_myopenid_icon { background-position: 0 -426px; }
+#openid_provider_livejournal_icon { background-position: 0 -372px; }
+#openid_provider_vox_icon { background-position: 0 -724px; }
+#openid_provider_wordpress_icon { background-position: 0 -778px; }
+#openid_provider_blogger_icon { background-position: 0 -120px; }
+#openid_provider_flickr_icon { background-position: 0 -228px; }
+#openid_provider_verisign_icon { background-position: 0 -616px; }
+#openid_provider_vidoop_icon { background-position: 0 -670px; }
+#openid_provider_claimid_icon { background-position: 0 -174px; }
+
+#openid_url {
+	background: url(openid_sprite.png) no-repeat;
+	background-position: 0 -480px;
+	background-color: #fff;
+	color: #000;
+	padding-left: 18px;
+}

@@ -161,7 +161,7 @@ abstract class CommunityVoiceRatings {
 		if ( $error ) {
 			// Checks if there are any error messages to return
 			if ( count( $errors ) ) {
-				return Html::div(
+				return CsHtml::div(
 					array( 'class' => 'error' ), implode( ' ', $errors )
 				);
 			}
@@ -173,7 +173,7 @@ abstract class CommunityVoiceRatings {
 		$rating = self::getAverageRating( $args['category'], $args['title'] );
 		$userVoted = self::getUserVoted( $args['category'], $args['title'] );
 		// Builds sanitized HTML id with prepended module naming
-		$id = Html::toId(
+		$id = CsHtml::toId(
 			'cv_ratings_scale_' . $args['category'] . '_' . $args['title']
 		);
 		// Gets stats message
@@ -185,7 +185,7 @@ abstract class CommunityVoiceRatings {
 		);
 
 		// Begins rating scale
-		$htmlOut = Html::open(
+		$htmlOut = CsHtml::open(
 			'div',
 			array( 'class' => 'communityvoice-ratings-scale', 'id' => $id )
 		);
@@ -205,17 +205,17 @@ abstract class CommunityVoiceRatings {
 			/* Ajax Interaction */
 
 			// Adds scale script
-			$htmlOut .= Html::script(
-				Js::callFunction(
+			$htmlOut .= CsHtml::script(
+				CsJs::callFunction(
 					'communityVoice.ratings.scales.add',
-					Js::buildInstance(
+					CsJs::buildInstance(
 						'CommunityVoiceRatingsScale',
 						array(
-							Js::toScalar( $id ),
-							Js::toScalar( $args['category'] ),
-							Js::toScalar( $args['title'] ),
-							Js::toScalar( $rating ),
-							Js::toObject(
+							CsJs::toScalar( $id ),
+							CsJs::toScalar( $args['category'] ),
+							CsJs::toScalar( $args['title'] ),
+							CsJs::toScalar( $rating ),
+							CsJs::toObject(
 								array(
 									'stats' => $stats,
 									'status' => array(
@@ -232,7 +232,7 @@ abstract class CommunityVoiceRatings {
 									)
 								)
 							),
-							Js::toScalar( $wgTitle->getPrefixedText() )
+							CsJs::toScalar( $wgTitle->getPrefixedText() )
 						)
 					)
 				)
@@ -241,10 +241,10 @@ abstract class CommunityVoiceRatings {
 			/* HTML Form Interaction */
 
 			// Begins non-javascript fallback
-			$htmlOut .= Html::open( 'noscript' );
+			$htmlOut .= CsHtml::open( 'noscript' );
 			// Begins form
 			$specialPageTitle = Title::newFromText( 'Special:CommunityVoice' );
-			$htmlOut .= Html::open(
+			$htmlOut .= CsHtml::open(
 				'form',
 				array(
 					'action' => $specialPageTitle->getFullUrl(),
@@ -263,7 +263,7 @@ abstract class CommunityVoiceRatings {
 			// Loops over each field
 			foreach ( $hiddenFields as $name => $value ) {
 				// Adds hidden field
-				$htmlOut .= Html::input(
+				$htmlOut .= CsHtml::input(
 					array(
 						'type' => 'hidden', 'name' => $name, 'value' => $value
 					)
@@ -272,7 +272,7 @@ abstract class CommunityVoiceRatings {
 			// Loops 5 times (once per star)
 			for ( $i = 0; $i < 5; $i++ ) {
 				// Adds star as image input
-				$htmlOut .= Html::input(
+				$htmlOut .= CsHtml::input(
 					array(
 						'type' => 'image',
 						'name' => 'scale[rating_' . ( $i + 1 ) . ']',
@@ -289,11 +289,11 @@ abstract class CommunityVoiceRatings {
 				);
 			}
 			// Adds stats message
-			$htmlOut .= Html::tag( 'span', array( 'class' => 'stats' ), $stats );
+			$htmlOut .= CsHtml::tag( 'span', array( 'class' => 'stats' ), $stats );
 			// Ends form
-			$htmlOut .= Html::close( 'form' );
+			$htmlOut .= CsHtml::close( 'form' );
 			// Ends non-javascript fallback
-			$htmlOut .= Html::close( 'noscript' );
+			$htmlOut .= CsHtml::close( 'noscript' );
 		} else {
 
 			/* No Interaction */
@@ -301,7 +301,7 @@ abstract class CommunityVoiceRatings {
 			// Loops 5 times (once per star)
 			for ( $i = 0; $i < 5; $i++ ) {
 				// Adds star as image
-				$htmlOut .= Html::tag(
+				$htmlOut .= CsHtml::tag(
 					'img',
 					array(
 						'src' => sprintf(
@@ -317,7 +317,7 @@ abstract class CommunityVoiceRatings {
 				);
 			}
 			// Adds stats message
-			$htmlOut .= Html::tag( 'span', array( 'class' => 'stats' ), $stats );
+			$htmlOut .= CsHtml::tag( 'span', array( 'class' => 'stats' ), $stats );
 		}
 		// Ends scale
 		$htmlOut .= Xml::closeElement( 'div' );
@@ -357,10 +357,10 @@ abstract class CommunityVoiceRatings {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->commit();
 			// Returns result
-			return Js::toObject(  $result );
+			return CsJs::toObject(  $result );
 		}
 		// Returns error information
-		return Js::toObject( array( 'rating' => - 1, 'stats' => 'ready' ) );
+		return CsJs::toObject( array( 'rating' => - 1, 'stats' => 'ready' ) );
 	}
 
 	/**
@@ -425,11 +425,11 @@ abstract class CommunityVoiceRatings {
 		global $wgOut;
 		//
 		$wgOut->addWikiText( '==== Categories ====' );
-		$xmlCategories = Html::open( 'ul' );
+		$xmlCategories = CsHtml::open( 'ul' );
 		foreach ( self::getCategories() as $category ) {
-			$xmlCategories .= Html::tag( 'li', array(), $category );
+			$xmlCategories .= CsHtml::tag( 'li', array(), $category );
 		}
-		$xmlCategories .= Html::close( 'ul' );
+		$xmlCategories .= CsHtml::close( 'ul' );
 		$wgOut->addHtml( $xmlCategories );
 	}
 

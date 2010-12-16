@@ -18,7 +18,7 @@ class UserMerge extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgUser, $wgTitle;
+		global $wgRequest, $wgOut, $wgUser;
 
 		wfLoadExtensionMessages( 'UserMerge' );
 
@@ -111,7 +111,7 @@ class UserMerge extends SpecialPage {
 		}
 
  		$wgOut->addHTML(
-			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgTitle->getLocalUrl(), 'id' => 'usermergeform' ) ) .
+			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalUrl(), 'id' => 'usermergeform' ) ) .
 			Xml::fieldset( wfMsg( 'usermerge-fieldset' ) ) .
 			Xml::openElement( 'table', array( 'id' => 'mw-usermerge-table' ) ) .
 			"<tr>

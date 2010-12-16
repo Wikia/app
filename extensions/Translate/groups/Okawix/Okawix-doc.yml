@@ -1,0 +1,17 @@
+---
+BASIC:
+  id: out-okawix-doc
+  label: Okawix (Documentation)
+  description: "{{int:bw-desc-okawix-doc}}"
+  namespace: NS_OKAWIX
+  display: out/okawix/doc
+  class: FileBasedMessageGroup
+
+FILES:
+  class: JavaFFS
+  sourcePattern: %GROUPROOT%/okawix/locale/%CODE%/interfacewiki/okawix-doc.properties
+  targetPattern: %CODE%/interfacewiki/okawix-doc.properties
+  codeMap:
+    de:    de-DE
+    en:    en-US
+    fr:    fr-FR

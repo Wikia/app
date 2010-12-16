@@ -5,11 +5,11 @@ if ( ! defined( 'MEDIAWIKI' ) )
 class DeleteQueueInterface {
 
 	public static function formatReason( $reason1, $reason2 ) {
-		if ($reason1 && $reason2 && $reason1 != 'other') {
+		if ( $reason1 && $reason2 && $reason1 != 'other' ) {
 			return "$reason1: $reason2";
-		} elseif ($reason2) {
+		} elseif ( $reason2 ) {
 			return $reason2;
-		} elseif ($reason1) {
+		} elseif ( $reason1 ) {
 			return $reason1;
 		} else {
 			return false;
@@ -25,7 +25,7 @@ class DeleteQueueInterface {
 		$list = wfMsgForContent( "deletequeue-$queue-reasons" );
 
 		// Does a specific list exist?
-		if ($list && $list != '-') {
+		if ( $list && $list != '-' ) {
 			return $list;
 		}
 

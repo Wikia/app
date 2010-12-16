@@ -90,5 +90,3 @@ function import_cu_log( $db, $log ) {
 	}
 	echo "...cu_log table populated: $matched matched rows, $unmatched discarded rows\n";
 }
-
-?>

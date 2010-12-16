@@ -12,12 +12,13 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 
 # Adding credit :)
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Configure',
 	'author' => array( 'Alexandre Emsenhuber', 'Andrew Garrett' ),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Configure',
 	'description' => 'Allow authorised users to configure the wiki via a web-based interface',
 	'descriptionmsg' => 'configure-desc',
-	'version' => '0.13.7',
+	'version' => '0.15.12 (1.16 branch-2)',
 );
 
 # Configuration part
@@ -80,7 +81,9 @@ $wgConfigureExtDir = "$IP/extensions/";
  * Each value of this array should be an array with the following keys:
  * - name: name of the extension (required)
  * - dir: dir name of the extension, if different than extension's name
- * - file: main file name, if different that name.php
+ * - file: main file name, if different than name.php
+ * - settings-file: file containing settings definitions, if different than
+ *   the main file
  * - settings: array of settings mapping setting's name to its type
  * - array: array type for settings
  * - empty: array of overrides for settings values when they match empty()
@@ -96,6 +99,11 @@ $wgConfigureExtDir = "$IP/extensions/";
  * - url: url to the documentation page
  */
 $wgConfigureAdditionalExtensions = array();
+
+/**
+ * List of disabled extensions
+ */
+$wgConfigureDisabledExtensions = array();
 
 /**
  * Allows to enable an extension by setting a variable instead of directly
@@ -134,7 +142,7 @@ $wgConfigureEditRestrictions = array();
 
 /**
  * Array of not editable settings, by anyone.
- * They won't be saved in conf-now.ser.
+ * They won't be saved in conf-now.php.
  * Superseded, use the explicit whitelist.
  */
 $wgConfigureNotEditableSettings = array();
@@ -166,7 +174,14 @@ $wgConfigureUpdateCacheEpoch = false;
 /**
  * Styles versions, you shouldn't change it
  */
-$wgConfigureStyleVersion = '20';
+$wgConfigureStyleVersion = '21';
+
+/**
+ * Whether to add JS variables to the output
+ * THIS IS *NOT* A CONFIGURATION OPTION AND MUST *NOT* BE CHANGED IN
+ * LocalSetting.php
+ */
+$wgConfigureAddJsVariables = false;
 
 # Adding new rights...
 $wgAvailableRights[] = 'configure';
@@ -201,7 +216,7 @@ require_once( $dir . 'Configure.func.php' );
 
 # Adding internationalisation...
 $wgExtensionMessagesFiles['Configure'] = $dir . 'Configure.i18n.php';
-$wgExtensionMessagesFiles['ConfigureSettings'] = $dir . 'Configure.settings.i18n.php';
+$wgExtensionMessagesFiles['ConfigureSettings'] = $dir . 'settings/Settings.i18n.php';
 
 # And special pages aliases...
 $wgExtensionAliasesFiles['Configure'] = $dir . 'Configure.alias.php';
@@ -209,26 +224,35 @@ $wgExtensionAliasesFiles['Configure'] = $dir . 'Configure.alias.php';
 # Add custom rights defined in $wgRestrictionLevels
 $wgHooks['UserGetAllRights'][] = 'efConfigureGetAllRights';
 
+# For interaction with Extension:Farmer
+$wgHooks['FarmerAdminPermissions'][] = 'efConfigureFarmerAdminPermissions';
+$wgHooks['FarmerAdminSkin'][] = 'efConfigureFarmerAdminSkin';
+$wgHooks['FarmerAdminExtensions'][] = 'efConfigureFarmerAdminExtensions';
+$wgHooks['FarmerManageExtensions'][] = 'efConfigureFarmerManageExtensions';
+
+# For interaction with Admin Links extension
+$wgHooks['AdminLinks'][] = 'efConfigureAddToAdminLinks';
+
 # Handlers
-$wgAutoloadClasses['ConfigureHandler'] = $dir . 'Configure.handler.php';
-$wgAutoloadClasses['ConfigureHandlerFiles'] = $dir . 'Configure.handler-files.php';
-$wgAutoloadClasses['ConfigureHandlerDb'] = $dir . 'Configure.handler-db.php';
+$wgAutoloadClasses['ConfigureHandler'] = $dir . 'handler/Handler.php';
+$wgAutoloadClasses['ConfigureHandlerFiles'] = $dir . 'handler/HandlerFiles.php';
+$wgAutoloadClasses['ConfigureHandlerDb'] = $dir . 'handler/HandlerDb.php';
 
 # Adding the new special pages...
 # Common code
-$wgAutoloadClasses['ConfigurationPage'] = $dir . 'Configure.page.php';
+$wgAutoloadClasses['ConfigurationPage'] = $dir . 'specials/ConfigurationPage.php';
 # Special:Configure
-$wgAutoloadClasses['SpecialConfigure'] = $dir . 'SpecialConfigure.php';
+$wgAutoloadClasses['SpecialConfigure'] = $dir . 'specials/SpecialConfigure.php';
 $wgSpecialPages['Configure'] = 'SpecialConfigure';
 # Special:ViewConfig
-$wgAutoloadClasses['SpecialViewConfig'] = $dir . 'SpecialViewConfig.php';
+$wgAutoloadClasses['SpecialViewConfig'] = $dir . 'specials/SpecialViewConfig.php';
 $wgSpecialPages['ViewConfig'] = 'SpecialViewConfig';
 # Special:Extensions
-$wgAutoloadClasses['SpecialExtensions'] = $dir . 'SpecialExtensions.php';
+$wgAutoloadClasses['SpecialExtensions'] = $dir . 'specials/SpecialExtensions.php';
 $wgSpecialPages['Extensions'] = 'SpecialExtensions';
 
 # Helper for Special:Extension
-$wgAutoloadClasses['WebExtension'] = $dir . 'Configure.ext.php';
+$wgAutoloadClasses['WebExtension'] = $dir . 'settings/WebExtension.php';
 
 # Core settings
 define( 'CONF_SETTINGS_CORE', 1 );
@@ -240,8 +264,8 @@ define( 'CONF_SETTINGS_EXT', 2 );
 define( 'CONF_SETTINGS_BOTH', 3 );
 
 # Helper for configuration settings
-$wgAutoloadClasses['ConfigurationSettings'] = $dir . 'Configure.settings.php';
-$wgAutoloadClasses['TxtDef'] = $dir . 'TxtDef.php';
+$wgAutoloadClasses['ConfigurationSettings'] = $dir . 'settings/ConfigurationSettings.php';
+$wgAutoloadClasses['TxtDef'] = $dir . 'load_txt_def/TxtDef.php';
 
 # Groups
 $wgSpecialPageGroups['Configure'] = 'wiki';
@@ -255,9 +279,9 @@ $wgAutoloadClasses['ExtPreviewConfigurationDiff'] = $dir . 'Configure.diff.php';
 $wgAutoloadClasses['HistoryConfigurationDiff'] = $dir . 'Configure.diff.php';
 
 # Pager stuff
-$wgAutoloadClasses['ConfigurationPager'] = $dir . 'Configure.pager.php';
-$wgAutoloadClasses['ConfigurationPagerDb'] = $dir . 'Configure.pager-db.php';
-$wgAutoloadClasses['ConfigurationPagerFiles'] = $dir . 'Configure.pager-files.php';
+$wgAutoloadClasses['ConfigurationPager'] = $dir . 'pager/Pager.php';
+$wgAutoloadClasses['ConfigurationPagerDb'] = $dir . 'pager/PagerDb.php';
+$wgAutoloadClasses['ConfigurationPagerFiles'] = $dir . 'pager/PagerFiles.php';
 
 # API module
 $wgAutoloadClasses['ApiConfigure'] = $dir . 'Configure.api.php';
@@ -265,3 +289,6 @@ $wgExtensionFunctions[] = 'efConfigureSetupAPI';
 
 # Adding the ajax function
 $wgAjaxExportList[] = 'efConfigureAjax';
+
+# JS stuff
+$wgHooks['MakeGlobalVariablesScript'][] = 'efConfigureMakeGlobalVariablesScript';

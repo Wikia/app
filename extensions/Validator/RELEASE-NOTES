@@ -4,6 +4,93 @@ For a documentation of all features, see http://www.mediawiki.org/wiki/Extension
 This change log contains a list of completed to-do's (new features, bug fixes, refactoring) for every version of Validator.
 
 
+== Validator change log ==
+
+=== Validator 0.4.2 ===
+(2010-10-28)
+
+* Fixed compatibility with MediaWiki 1.15.x.
+
+* Removed the lowerCaseValue field in the Parameter class and replaced it's functionality with a ParameterManipulation.
+
+=== Validator 0.4.1 ===
+(2010-10-20)
+
+* Various small fixes and improvements
+
+=== Validator 0.4 ===
+(2010-10-15)
+
+==== New features ====
+
+* Added ParserHook class that allows for out-of-the-box parser function and tag extension creation
+: with full Validator support.
+  
+* Added listerrors parser hook that allows you to list all validation errors that occurred at the point it's rendered.
+
+* Added support for conditional parameter adding.
+
+==== Refactoring ====
+
+Basically everything got rewritten...
+
+* Added Parameter and ListParameter classes to replace parameter definitions in array form.
+
+* Added ParameterCriterion and ListParameterCriterion classes for better handling of parameter criteria.
+
+* Added ParameterManipulation and ListParameterManipulation classes for more structured formatting of parameters.
+
+* Added ValidationError class to better describe errors.
+
+* Replaced the error level enum by ValidationError::SEVERITY_ and ValidationError::ACTION_, which are linked in $egErrorActions. 
+
+=== Validator 0.3.6 ===
+(2010-08-26)
+
+* Added support for 'tolower' argument in parameter info definitions.
+
+=== Validator 0.3.5 ===
+(2010-07-26)
+
+* Fixed issue with the original parameter name (and in some cases also value) in error messages.
+
+=== Validator 0.3.4 ===
+(2010-07-07)
+
+* Fixed issue with parameter reference that occurred in php 5.3 and later. 
+
+* Fixed escaping issue that caused parameter names in error messages to be shown incorrectly.
+
+* Fixed small issue with parameter value trimming that caused problems when objects where passed.
+
+=== Validator 0.3.3 ===
+(2010-06-20)
+
+* Fixed bug that caused notices when using the ValidatorManager::manageParsedParameters method in some cases.
+
+=== Validator 0.3.2 ===
+(2010-06-07)
+
+* Added lower casing to parameter names, and optionally, but default on, lower-casing for parameter values.
+
+* Added removal of default parameters from the default parameter queue when used as a named parameter.
+
+=== Validator 0.3.1 ===
+(2010-06-04)
+
+* Added ValidatorManager::manageParsedParameters and Validator::setParameters.
+
+=== Validator 0.3 ===
+(2010-05-31)
+
+* Added generic default parameter support.
+
+* Added parameter dependency support.
+
+* Added full meta data support for validation and formatting functions, enabling more advanced handling of parameters.
+
+* Major refactoring to conform to MediaWiki convention.
+
 === Validator 0.2.2 ===
 (2010-03-01)
 
@@ -39,3 +126,5 @@ This change log contains a list of completed to-do's (new features, bug fixes, r
 (2009-12-17)
 
 * Initial release, featuring parameter validation, defaulting and error generation.
+
+{{Validator see also}}

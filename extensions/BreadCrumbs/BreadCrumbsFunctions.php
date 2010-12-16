@@ -14,64 +14,67 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 function fnBreadCrumbsShowHook( &$m_pageObj ) {
-  global $wgTitle;
-  global $wgOut;
-  global $wgUser;
-  global $wgBreadCrumbsDelimiter;
-  global $wgBreadCrumbsCount;
-  
-  # deserialize data from session into array:
-  $m_BreadCrumbs = array();
-  if( isset( $_SESSION['BreadCrumbs'] ) ) $m_BreadCrumbs = $_SESSION['BreadCrumbs'];
-  # cache index of last element:
-  $m_count = count( $m_BreadCrumbs ) - 1;
+	global $wgTitle, $wgOut, $wgUser;
+	global $wgBreadCrumbsDelimiter, $wgBreadCrumbsCount, $wgBreadCrumbsShowAnons;
 
-  # check for doubles:
-  if( $m_count < 1 || $m_BreadCrumbs[ $m_count ] != $wgTitle->getPrefixedText() ) {
-    if( $m_count >= 1) {
-      # reduce the array set, remove older elements:
-      $m_BreadCrumbs = array_slice( $m_BreadCrumbs, ( 1 - $wgBreadCrumbsCount ) );
-    }
-    # add new page:
-    array_push( $m_BreadCrumbs, $wgTitle->getPrefixedText() );
-  }
-  # serialize data from array to session:
-  $_SESSION['BreadCrumbs'] = $m_BreadCrumbs;
-  # update cache:
-  $m_count = count( $m_BreadCrumbs ) - 1;
+	if ( !$wgBreadCrumbsShowAnons && $wgUser->isAnon() )
+		return true;
 
-  # acquire a skin object:
-  $m_skin =& $wgUser->getSkin();
-  # build the breadcrumbs trail:
-  $m_trail = '<div id="BreadCrumbsTrail">';
-  for( $i = 0; $i <= $m_count; $i++ ) {
-    $m_trail .= $m_skin->makeLink( $m_BreadCrumbs[$i] );
-    if( $i < $m_count ) $m_trail .= $wgBreadCrumbsDelimiter;
-  }
-  $m_trail .= '</div>';
-  $wgOut->addHTML( $m_trail );
+	# deserialize data from session into array:
+	$m_BreadCrumbs = array();
+	if( isset( $_SESSION['BreadCrumbs'] ) ) $m_BreadCrumbs = $_SESSION['BreadCrumbs'];
+	# cache index of last element:
+	$m_count = count( $m_BreadCrumbs ) - 1;
 
-  # invalidate internal MediaWiki cache:
-  $wgTitle->invalidateCache();
-  $wgUser->invalidateCache();
+	# check for doubles:
+	if( $m_count < 1 || $m_BreadCrumbs[ $m_count ] != $wgTitle->getPrefixedText() ) {
+		if( $m_count >= 1) {
+			# reduce the array set, remove older elements:
+			$m_BreadCrumbs = array_slice( $m_BreadCrumbs, ( 1 - $wgBreadCrumbsCount ) );
+		}
+		# add new page:
+		array_push( $m_BreadCrumbs, $wgTitle->getPrefixedText() );
+	}
+	# serialize data from array to session:
+	$_SESSION['BreadCrumbs'] = $m_BreadCrumbs;
+	# update cache:
+	$m_count = count( $m_BreadCrumbs ) - 1;
 
-  # Return true to let the rest work:
-  return true;
+	# acquire a skin object:
+	$m_skin =& $wgUser->getSkin();
+	# build the breadcrumbs trail:
+	$m_trail = '<div id="BreadCrumbsTrail">';
+	for( $i = 0; $i <= $m_count; $i++ ) {
+		$m_trail .= $m_skin->makeLink( $m_BreadCrumbs[$i] );
+		if( $i < $m_count ) $m_trail .= $wgBreadCrumbsDelimiter;
+	}
+	$m_trail .= '</div>';
+	$wgOut->addHTML( $m_trail );
+
+	# invalidate internal MediaWiki cache:
+	$wgTitle->invalidateCache();
+	$wgUser->invalidateCache();
+
+	# Return true to let the rest work:
+	return true;
 }
 
 ## Entry point for the hook for printing the CSS:
 function fnBreadCrumbsOutputHook( &$m_pageObj, $m_parserOutput ) {
-  global $wgScriptPath;
+	global $wgScriptPath, $wgBreadCrumbsShowAnons, $wgUser;
 
-  # Register CSS file for our select box:
-  $m_pageObj->addLink(
-    array(
-      'rel'   => 'stylesheet',
-      'type'  => 'text/css',
-      'href'  => $wgScriptPath . '/extensions/BreadCrumbs/BreadCrumbs.css'
-    )
-  );
+	if ( !$wgBreadCrumbsShowAnons && $wgUser->isAnon() )
+		return true;
 
-  # Be nice:
-  return true;
+	# Register CSS file for our select box:
+	$m_pageObj->addLink(
+		array(
+			'rel'   => 'stylesheet',
+			'type'  => 'text/css',
+			'href'  => $wgScriptPath . '/extensions/BreadCrumbs/BreadCrumbs.css'
+		)
+	);
+
+	# Be nice:
+	return true;
 }

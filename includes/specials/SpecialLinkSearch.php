@@ -9,9 +9,7 @@
 
 /**
  * Special:LinkSearch to search the external-links table.
- * @ingroup SpecialPage
  */
-
 function wfSpecialLinkSearch( $par ) {
 
 	list( $limit, $offset ) = wfCheckLimits();
@@ -48,7 +46,7 @@ function wfSpecialLinkSearch( $par ) {
 
 	$self = Title::makeTitle( NS_SPECIAL, 'Linksearch' );
 
-	$wgOut->addWikiText( wfMsg( 'linksearch-text', '<nowiki>' . $wgLang->commaList( $wgUrlProtocols) . '</nowiki>' ) );
+	$wgOut->addWikiMsg( 'linksearch-text', '<nowiki>' . $wgLang->commaList( $wgUrlProtocols ) . '</nowiki>' );
 	$s =	Xml::openElement( 'form', array( 'id' => 'mw-linksearch-form', 'method' => 'get', 'action' => $GLOBALS['wgScript'] ) ) .
 		Xml::hidden( 'title', $self->getPrefixedDbKey() ) .
 		'<fieldset>' .
@@ -96,11 +94,11 @@ class LinkSearchPage extends QueryPage {
 	 */
 	static function mungeQuery( $query , $prot ) {
 		$field = 'el_index';
-		$rv = LinkFilter::makeLike( $query , $prot );
+		$rv = LinkFilter::makeLikeArray( $query , $prot );
 		if ($rv === false) {
 			//makeLike doesn't handle wildcard in IP, so we'll have to munge here.
 			if (preg_match('/^(:?[0-9]{1,3}\.)+\*\s*$|^(:?[0-9]{1,3}\.){3}[0-9]{1,3}:[0-9]*\*\s*$/', $query)) {
-				$rv = $prot . rtrim($query, " \t*") . '%';
+				$rv = array( $prot . rtrim($query, " \t*"), $dbr->anyString() );
 				$field = 'el_to';
 			}
 		}
@@ -125,8 +123,8 @@ class LinkSearchPage extends QueryPage {
 
 		/* strip everything past first wildcard, so that index-based-only lookup would be done */
 		list( $munged, $clause ) = self::mungeQuery( $this->mQuery, $this->mProt );
-		$stripped = substr($munged,0,strpos($munged,'%')+1);
-		$encSearch = $dbr->addQuotes( $stripped );
+		$stripped = LinkFilter::keepOneWildcard( $munged );
+		$like = $dbr->buildLike( $stripped );
 
 		$encSQL = '';
 		if ( isset ($this->mNs) && !$wgMiserMode )
@@ -144,14 +142,14 @@ class LinkSearchPage extends QueryPage {
 				$externallinks $use_index
 			WHERE
 				page_id=el_from
-				AND $clause LIKE $encSearch
+				AND $clause $like
 				$encSQL";
 	}
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( $result->namespace, $result->title );
 		$url = $result->url;
-		$pageLink = $skin->makeKnownLinkObj( $title );
+		$pageLink = $skin->linkKnown( $title );
 		$urlLink = $skin->makeExternalLink( $url, $url );
 
 		return wfMsgHtml( 'linksearch-line', $urlLink, $pageLink );
@@ -164,7 +162,7 @@ class LinkSearchPage extends QueryPage {
 		global $wgOut;
 		list( $this->mMungedQuery, $clause ) = LinkSearchPage::mungeQuery( $this->mQuery, $this->mProt );
 		if( $this->mMungedQuery === false ) {
-			$wgOut->addWikiText( wfMsg( 'linksearch-error' ) );
+			$wgOut->addWikiMsg( 'linksearch-error' );
 		} else {
 			// For debugging
 			// Generates invalid xhtml with patterns that contain --

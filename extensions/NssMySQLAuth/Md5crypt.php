@@ -61,8 +61,8 @@ class Md5crypt {
 		return $ret;
 	}
 
-	static function encryptPassword($pw, $salt = NULL, $Magic = '$1$') {
-		if($salt !== NULL) {
+	static function encryptPassword($pw, $salt = null, $Magic = '$1$') {
+		if($salt !== null) {
 			// Take care of the magic string if present
 			if(substr($salt, 0, strlen($Magic)) == $Magic) {
 				$salt = substr($salt, strlen($Magic), strlen($salt));

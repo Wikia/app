@@ -15,6 +15,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Username Blacklist',
 	'author'         => 'Rob Church',
 	'version'        => '1.7.1', # see README

@@ -1,5 +1,5 @@
 <?php
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	exit( 1 );
 }
@@ -13,16 +13,16 @@ class SpecialPurgeCache extends SpecialPage {
 	function execute( $par ) {
 		global $wgUser, $wgRequest, $wgOut;
 
-		wfLoadExtensionMessages('PurgeCache');
+		wfLoadExtensionMessages( 'PurgeCache' );
 
 		$this->setHeaders();
-		if( $wgUser->isAllowed( 'purgecache' ) ) {
-			if( $wgRequest->getCheck( 'purge' ) && $wgRequest->wasPosted() ) {
-				$dbw =& wfGetDB( DB_MASTER );
-				$dbw->delete( 'objectcache', '*', 'PurgeCache::execute' );
-				$wgOut->addWikiText( wfMsg('purgecache-purged') );
+		if ( $wgUser->isAllowed( 'purgecache' ) ) {
+			if ( $wgRequest->getCheck( 'purge' ) && $wgRequest->wasPosted() ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->delete( 'objectcache', '*', __METHOD__ );
+				$wgOut->addWikiMsg( 'purgecache-purged' );
 			} else {
-				$wgOut->addWikiText( wfMsg('purgecache-warning') );
+				$wgOut->addWikiMsg( 'purgecache-warning' );
 				$wgOut->addHTML( $this->makeForm() );
 			}
 		} else {
@@ -33,7 +33,7 @@ class SpecialPurgeCache extends SpecialPage {
 	function makeForm() {
 		$self = $this->getTitle();
 		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-		$form .= Xml::element( 'input', array( 'type' => 'submit', 'name' => 'purge', 'value' => wfMsg('purgecache-button') ) );
+		$form .= Xml::element( 'input', array( 'type' => 'submit', 'name' => 'purge', 'value' => wfMsg( 'purgecache-button' ) ) );
 		$form .= Xml::closeElement( 'form' );
 		return $form;
 	}

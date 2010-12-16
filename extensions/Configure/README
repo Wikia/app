@@ -35,7 +35,7 @@ The extension will require to store the configuration either:
 * a directory that have to be writable by the web server. The default path is
   the $IP/serialized directory, that means the "serialized" directory in the
   wiki root path. You can change it in $wgConfigureFilesPath.
-* a database in which the configure.sql (or configure.pg.sql if you use
+* a database in which the sql/configure.sql (or sql/configure.pg.sql if you use
   PostgreSQL) patch is applied, by default the database is "config", you can
   change its name in $wgConfigureDatabase. To use this, you'll need to define
   all your database and memcached settings before calling efConfigureSetup() or

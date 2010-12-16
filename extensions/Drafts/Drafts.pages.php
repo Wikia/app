@@ -6,11 +6,13 @@
  * @ingroup Extensions
  */
 
-// Drafts Special Page
 class DraftsPage extends SpecialPage {
 
 	/* Functions */
 
+	/**
+	 * Generic constructor
+	 */
 	public function __construct() {
 		// Initialize special page
 		SpecialPage::SpecialPage( 'Drafts' );
@@ -18,7 +20,11 @@ class DraftsPage extends SpecialPage {
 		wfLoadExtensionMessages( 'Drafts' );
 	}
 
-	public function execute( $par ) {
+	/**
+	 * Executes special page rendering and data processing
+	 * @param string $sub MediaWiki supplied sub-page path
+	 */
+	public function execute( $sub ) {
 		global $wgRequest, $wgOut, $wgUser;
 		// Begin output
 		$this->setHeaders();

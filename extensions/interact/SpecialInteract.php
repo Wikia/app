@@ -3,6 +3,7 @@ if (!defined('MEDIAWIKI')) die();
 
 /** Register the extension */
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'Interact',
 	'description' => 'Add Special:Interact that let you know who you talked with.',
 	'author'	=> 'Ashar Voultoiz',
@@ -24,7 +25,7 @@ class InteractPage extends QueryPage {
 	function sortDescending() { return false; }
 
 	function getSQL() {
-		$db =& wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 		$page = $db->tableName( 'page' );
 		$revision = $db->tableName( 'revision' );
 

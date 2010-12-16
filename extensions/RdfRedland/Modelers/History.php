@@ -33,7 +33,7 @@ class MwRdf_History_Modeler extends MwRdf_Modeler {
 		$dcterms = MwRdf::Vocabulary( 'dcterms' );
 		$model = MwRdf::Model();
 		$tr = $this->Agent->titleResource();
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( array('page', 'revision'),
 		array('rev_id', 'rev_timestamp', 'rev_user', 'rev_user_text'),
 		array('page_namespace = ' . $this->Agent->getTitle()->getNamespace(),

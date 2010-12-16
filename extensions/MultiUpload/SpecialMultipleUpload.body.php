@@ -168,13 +168,13 @@ class MultipleUploadForm extends UploadForm {
 			$this->mainUploadForm( wfMsg( 'multiupload-no-files' ) );
 		} else {
 			$this->mShowUploadForm = false;
-			$wgOut->redirect(''); // clear the redirect, we want to show a nice page of images
+			$wgOut->redirect( '' ); // clear the redirect, we want to show a nice page of images
 			$this->mShowUploadForm = true;
 			if( $this->mHasWarning ) {
 				$this->showWarningOptions();
 			}
 		}
-		$wgOut->addHTML( Xml::closeElement( 'form' ) . "\n");
+		$wgOut->addHTML( Xml::closeElement( 'form' ) . "\n" );
 	}
 
 	/**
@@ -182,11 +182,10 @@ class MultipleUploadForm extends UploadForm {
 	 * @access private
 	 */
 	function showSuccess() {
-		global $wgUser, $wgOut, $wgContLang;
+		global $wgUser, $wgOut;
 		$t = $this->mLocalFile->getTitle();
 		$wgOut->addHTML( '<h2>' . wfMsg( 'multiupload-fileuploaded' ) . '</h2>' );
-		//$wgOut->addWikiText( "[[:{$t->getFullText()}]]" );
-		$wgOut->addHTML($wgUser->getSkin()->makeThumbLink2( $t, $this->mLocalFile, array('caption' => $t->getText())));
+		$wgOut->addHTML( $wgUser->getSkin()->makeThumbLink2( $t, $this->mLocalFile, array( 'caption' => $t->getText() ) ) );
 	}
 
 	/**
@@ -286,7 +285,7 @@ class MultipleUploadForm extends UploadForm {
 			? 'checked="checked"'
 			: '';
 
-		$wgOut->addScriptFile( $wgScriptPath.'/extensions/MultiUpload/multiupload.js' );
+		$wgOut->addScriptFile( $wgScriptPath . '/extensions/MultiUpload/multiupload.js' );
 		$wgOut->addHTML( "
 	<form id='upload' method='post' enctype='multipart/form-data' action=\"$action\">
 		<table border='0' width='90%'>

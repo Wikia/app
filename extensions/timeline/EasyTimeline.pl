@@ -61,8 +61,16 @@
 #   however internal font used by Ploticus has strange mapping so some are replaced
 #   by undercore or unaccented version of character
 #   this is a make do solution until full unicode support with external fonts will be added
+#
+# 1.12 June 2009
+# - Don't send -mapfile to ploticus without also sending -csmap, this creates an XSS 
+#   vulnerability
+#
+# 1.13 Jan 2010
+# -change svg encoding from iso-8859-1 -> UTF-8
+# -allow font to be specified using -f option as opposed to hardcoded FreeSans.
 
-  $version = "1.9" ;
+  $version = "1.13" ;
 
   use Time::Local ;
   use Getopt::Std ;
@@ -131,7 +139,7 @@
 sub ParseArguments
 {
   my $options ;
-  getopt ("iTAPe", \%options) ;
+  getopt ("iTAPef", \%options) ;
 
   &Abort ("Specify input file as: -i filename") if (! defined (@options {"i"})) ;
 
@@ -147,6 +155,10 @@ sub ParseArguments
   $tmpdir    = @options {"T"} ; # For MediaWiki: temp directory to use
   $plcommand = @options {"P"} ; # For MediaWiki: full path of ploticus command
   $articlepath=@options {"A"} ; # For MediaWiki: Path of an article, relative to this servers root
+  $font_file = @options {"f"} ; # font to use. Must be in environemnt variable GDFONTPATH unless builtin "ascii" font
+
+  if (! defined @options {"f"} )
+  { $font_file="ascii"; }
 
   if (! defined @options {"A"} )
   { $articlepath="http://en.wikipedia.org/wiki/\$1"; }
@@ -3355,7 +3367,7 @@ sub WritePlotFile
 # my $cmd = "$pl $map -" . "svg" . " -o $file_vector $file_script -tightcrop -font \"Times\"" ;
 # my $cmd = "$pl $map -" . "svg" . " -o $file_vector $file_script -tightcrop" ;
   my $cmd = EscapeShellArg($pl) . " $map -" . "svg" . " -o " .
-    EscapeShellArg($file_vector) . " " . EscapeShellArg($file_script) . " -tightcrop" ;
+    EscapeShellArg($file_vector) . " " . EscapeShellArg($file_script) . " -tightcrop -xml_encoding UTF-8" ;
   print "$cmd\n";
   system ($cmd) ;
 
@@ -3381,17 +3393,20 @@ sub WritePlotFile
   print FILE_OUT &DecodeInput($script) ;
   close "FILE_OUT" ;
 
-  $map = ($MapPNG && $linkmap) ? "-csmap" : "";
-  if ($linkmap && $showmap)
-  { $map .= " -csmapdemo" ; }
+  if ($MapPNG && $linkmap) {
+	$map = "-csmap -mapfile " . EscapeShellArg($file_htmlmap);
+  } elsif ($linkmap && $showmap) { 
+	$map = "-csmapdemo -mapfile ". EscapeShellArg($file_htmlmap);
+  } else {
+	$map = '';
+  }
 
 # $crop = "-crop 0,0," + @ImageSize {"width"} . "," . @ImageSize {"height"} ;
   print "Running Ploticus to generate bitmap\n" ;
 # $cmd = "$pl $map -" . $fmt . " -o $file_bitmap $file_script -tightcrop" ; # -v $file_bitmap" ;
 # $cmd = "$pl $map -" . $fmt . " -o $file_bitmap $file_script -tightcrop -diagfile $file_pl_info -errfile $file_pl_err" ;
   $cmd = EscapeShellArg($pl) . " $map -" . $fmt . " -o " .
-    EscapeShellArg($file_bitmap) . " " . EscapeShellArg($file_script) . " -tightcrop -font FreeSans.ttf" .
-    " -mapfile " . EscapeShellArg($file_htmlmap) ;
+    EscapeShellArg($file_bitmap) . " " . EscapeShellArg($file_script) . " -tightcrop -font " . EscapeShellArg($font_file);
   print "$cmd\n";
   system ($cmd) ;
 

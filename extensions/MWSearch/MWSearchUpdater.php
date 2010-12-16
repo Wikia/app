@@ -131,7 +131,7 @@ class MWSearchUpdater {
 	 * @static
 	 */
 	function outParam( $param ) {
-		if( is_object( $param ) && is_a( $param, 'Title' ) ) {
+		if( $param instanceof Title ) {
 			return new XML_RPC_Value(
 				array(
 					'Namespace' => new XML_RPC_Value( $param->getNamespace(), 'int' ),
@@ -191,6 +191,5 @@ class MWSearchUpdater {
 		}
 	}
 }
-
 
 

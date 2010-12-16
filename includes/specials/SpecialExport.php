@@ -44,17 +44,18 @@ class SpecialExport extends SpecialPage {
 		$this->templates = $wgRequest->getCheck( 'templates' );
 		$this->images = $wgRequest->getCheck( 'images' ); // Doesn't do anything yet
 		$this->pageLinkDepth = $this->validateLinkDepth(
-														$wgRequest->getIntOrNull( 'pagelink-depth' ) );
+			$wgRequest->getIntOrNull( 'pagelink-depth' ) );
+		$nsindex = '';
 		
 		if ( $wgRequest->getCheck( 'addcat' ) ) {
 			$page = $wgRequest->getText( 'pages' );
 			$catname = $wgRequest->getText( 'catname' );
 			
-			if ( $catname !== '' && $catname !== NULL && $catname !== false ) {
+			if ( $catname !== '' && $catname !== null && $catname !== false ) {
 				$t = Title::makeTitleSafe( NS_MAIN, $catname );
 				if ( $t ) {
 					/**
-					 * @fixme This can lead to hitting memory limit for very large
+					 * @todo Fixme: this can lead to hitting memory limit for very large
 					 * categories. Ideally we would do the lookup synchronously
 					 * during the export in a single query.
 					 */
@@ -65,15 +66,15 @@ class SpecialExport extends SpecialPage {
 		}
 		else if( $wgRequest->getCheck( 'addns' ) && $wgExportFromNamespaces ) {
 			$page = $wgRequest->getText( 'pages' );
-			$nsindex = $wgRequest->getText( 'nsindex' );
+			$nsindex = $wgRequest->getText( 'nsindex', '' );
 			
-			if ( $nsindex !== '' && $nsindex !== NULL && $nsindex !== false ) {
+			if ( strval( $nsindex ) !== ''  ) {
 				/**
-				 * Same implementation as above, so same @fixme
+				 * Same implementation as above, so same @todo
 				 */
 				$nspages = $this->getPagesFromNamespace( $nsindex );
 				if ( $nspages ) $page .= "\n" . implode( "\n", $nspages );
-			}       
+			}
 		}
 		else if( $wgRequest->wasPosted() && $par == '' ) {
 			$page = $wgRequest->getText( 'pages' );
@@ -87,10 +88,10 @@ class SpecialExport extends SpecialPage {
 			$limit = $wgRequest->getInt( 'limit' );
 			$dir = $wgRequest->getVal( 'dir' );
 			$history = array(
-							 'dir' => 'asc',
-							 'offset' => false,
-							 'limit' => $wgExportMaxHistory,
-							 );
+				'dir' => 'asc',
+				'offset' => false,
+				'limit' => $wgExportMaxHistory,
+			);
 			$historyCheck = $wgRequest->getCheck( 'history' );
 			if ( $this->curonly ) {
 				$history = WikiExporter::CURRENT;
@@ -146,12 +147,12 @@ class SpecialExport extends SpecialPage {
 		$wgOut->addWikiMsg( 'exporttext' );
 		
 		$form = Xml::openElement( 'form', array( 'method' => 'post',
-												'action' => $this->getTitle()->getLocalUrl( 'action=submit' ) ) );
+			'action' => $this->getTitle()->getLocalUrl( 'action=submit' ) ) );
 		$form .= Xml::inputLabel( wfMsg( 'export-addcattext' )    , 'catname', 'catname', 40 ) . '&nbsp;';
 		$form .= Xml::submitButton( wfMsg( 'export-addcat' ), array( 'name' => 'addcat' ) ) . '<br />';
 		
 		if ( $wgExportFromNamespaces ) {
-			$form .= Xml::namespaceSelector( '', null, 'nsindex', wfMsg( 'export-addnstext' ) ) . '&nbsp;';
+			$form .= Xml::namespaceSelector( $nsindex, null, 'nsindex', wfMsg( 'export-addnstext' ) ) . '&nbsp;';
 			$form .= Xml::submitButton( wfMsg( 'export-addns' ), array( 'name' => 'addns' ) ) . '<br />';
 		}
 		
@@ -190,10 +191,22 @@ class SpecialExport extends SpecialPage {
 	private function doExport( $page, $history, $list_authors ) {
 		global $wgExportMaxHistory;
 		
-		/* Split up the input and look up linked pages */
-		$inputPages = array_filter( explode( "\n", $page ), array( $this, 'filterPage' ) );
-		$pageSet = array_flip( $inputPages );
+		$pageSet = array(); // Inverted index of all pages to look up
 		
+		// Split up and normalize input
+		foreach( explode( "\n", $page ) as $pageName ) {
+			$pageName = trim( $pageName );
+			$title = Title::newFromText( $pageName );
+			if( $title && $title->getInterwiki() == '' && $title->getText() !== '' ) {
+				// Only record each page once!
+				$pageSet[$title->getPrefixedText()] = true;
+			}
+		}
+		
+		// Set of original pages to pass on to further manipulation...
+		$inputPages = array_keys( $pageSet );
+		
+		// Look up any linked pages if asked...
 		if( $this->templates ) {
 			$pageSet = $this->getTemplates( $inputPages, $pageSet );
 		}
@@ -210,7 +223,13 @@ class SpecialExport extends SpecialPage {
 		 */
 		
 		$pages = array_keys( $pageSet );
-		
+
+		// Normalize titles to the same format and remove dupes, see bug 17374
+		foreach( $pages as $k => $v ) {
+			$pages[$k] = str_replace( " ", "_", $v );
+		}
+		$pages = array_unique( $pages );
+
 		/* Ok, let's get to it... */
 		if( $history == WikiExporter::CURRENT ) {
 			$lb = false;
@@ -256,8 +275,7 @@ class SpecialExport extends SpecialPage {
 			$lb->closeAll();
 		}
 	}
-	
-	
+
 	private function getPagesFromCategory( $title ) {
 		global $wgContLang;
 		
@@ -374,7 +392,7 @@ class SpecialExport extends SpecialPage {
 			$title = Title::newFromText( $page );
 			if( $title ) {
 				$pageSet[$title->getPrefixedText()] = true;
-				/// @fixme May or may not be more efficient to batch these
+				/// @todo Fixme: May or may not be more efficient to batch these
 				///        by namespace when given multiple input pages.
 				$result = $dbr->select(
 									   array( 'page', $table ),
@@ -382,7 +400,7 @@ class SpecialExport extends SpecialPage {
 									   array_merge( $join,
 												   array(
 														 'page_namespace' => $title->getNamespace(),
-														 'page_title' => $title->getDBKey() ) ),
+														 'page_title' => $title->getDBkey() ) ),
 									   __METHOD__ );
 				foreach( $result as $row ) {
 					$template = Title::makeTitle( $row->namespace, $row->title );
@@ -391,13 +409,6 @@ class SpecialExport extends SpecialPage {
 			}
 		}
 		return $pageSet;
-	}
-	
-	/**
-	 * Callback function to remove empty strings from the pages array.
-	 */
-	private function filterPage( $page ) {
-		return $page !== '' && $page !== null;
 	}
 }
 

@@ -28,15 +28,48 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $egMapsAvailableFeatures['qp'] = array(
 							'name' => 'Query Printer',
 							'class' => 'SMQueryPrinters',
-							'file' => 'SemanticMaps/QueryPrinters/SM_QueryPrinters.php',
-							'local' => false
+							'file' => 'SemanticMaps/QueryPrinters/SM_QueryPrinters.php'
 							);
 
 $egMapsAvailableFeatures['fi'] = array(
 							'name' => 'Form input',
 							'class' => 'SMFormInputs',
-							'file' => 'SemanticMaps/FormInputs/SM_FormInputs.php',
-							'local' => false
-							);							
+							'file' => 'SemanticMaps/FormInputs/SM_FormInputs.php'
+							);		
 
 
+
+
+
+# Mapping services configuration
+
+# Include the mapping services that should be loaded into Semantic Maps. 
+# Commenting or removing a mapping service will cause Semantic Maps to completely ignore it, and so improve performance.
+include_once $smgDir . 'GoogleMaps/SM_GoogleMaps.php'; 	// Google Maps
+include_once $smgDir . 'OpenLayers/SM_OpenLayers.php'; 	// OpenLayers
+include_once $smgDir . 'YahooMaps/SM_YahooMaps.php'; 	// Yahoo! Maps
+include_once $smgDir . 'OpenStreetMap/SM_OSM.php'; 		// OpenLayers optimized for OSM
+
+# Array of String. The default mapping service for each feature, which will be used when no valid service is provided by the user.
+# Each service needs to be enabled, if not, the first one from the available services will be taken.
+# Note: The default service needs to be available for the feature you set it for, since it's used as a fallback mechanism.
+$egMapsDefaultServices['qp'] = 'googlemaps2';
+$egMapsDefaultServices['fi'] = 'googlemaps2';
+
+
+
+
+
+# Query Printers
+
+# Boolean. The default value for the forceshow parameter. Will force a map to be shown even when there are no query results
+# when set to true. This value will only be used when the user does not provide one.
+$smgQPForceShow = false;
+
+# Boolean. The default value for the showtitle parameter. Will hide the title in the marker pop-ups when set to true. 
+# This value will only be used when the user does not provide one.
+$smgQPShowTitle = true;
+
+# String or false. Allows you to define the content and it's layout of marker pop-ups via a template.
+# This value will only be used when the user does not provide one.
+$smgQPTemplate = false; 

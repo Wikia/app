@@ -30,7 +30,7 @@ function do_stream_attr_check( $old_stream ) {
 		$mvStream->duration = ( $old_stream->adj_end_time - $old_stream->adj_start_time );
 	}
 	$mvStream->updateStreamDB();
-	print "$old_stream->name update: duration:" . seconds2ntp( $mvStream->duration ) . ' startDay:' . date( 'm-d-y', $mvStream->date_start_time ) . "\n";
+	print "$old_stream->name update: duration:" . seconds2npt( $mvStream->duration ) . ' startDay:' . date( 'm-d-y', $mvStream->date_start_time ) . "\n";
 	// if($i==3)die;
 	// $i++;
 }
@@ -41,8 +41,8 @@ function get_all_mv_streams(){
 		'*',
 		'',
 		__METHOD__
-	);	
-	if ( $dbr->numRows( $result ) == 0 )die("do_stream_file_check: no streams found");	
+	);
+	if ( $dbr->numRows( $result ) == 0 )die("do_stream_file_check: no streams found");
 	while ( $stream = $dbr->fetchObject( $result ) ) {
 		$streams[$stream->id] = $stream;
 	}
@@ -59,8 +59,8 @@ function do_remove_orphaned_streams(){
 		'',
 		__METHOD__,
 		array( 'GROUP BY' => 'stream_id')
-	);	
-	while ( $stream = $dbr->fetchObject( $result ) ) {	
+	);
+	while ( $stream = $dbr->fetchObject( $result ) ) {
 		if(!isset($all_valid_streams[$stream->stream_id ])){
 			$orphaned_streams[ $stream->stream_id ] = 1;
 		}
@@ -70,8 +70,8 @@ function do_remove_orphaned_streams(){
 		'',
 		__METHOD__,
 		array( 'GROUP BY' => 'stream_id')
-	);	
-	while ( $stream = $dbr->fetchObject( $result ) ) {	
+	);
+	while ( $stream = $dbr->fetchObject( $result ) ) {
 		if( !isset($all_valid_streams[ $stream->stream_id ] ) ){
 			$orphaned_streams[ $stream->stream_id ] = 1;
 		}
@@ -79,18 +79,18 @@ function do_remove_orphaned_streams(){
 	foreach($orphaned_streams as $stream_id => $na){
 		$mvStream = new MV_Stream( array('id'=> $stream_id) );
 		//double check stream does not exist:
-		if( ! $mvStream->doesStreamExist() ){					
+		if( ! $mvStream->doesStreamExist() ){
 			print "stream id: {$stream_id} does not exist in stream table (remove)\n";
-			//remove files in the stream directory: 
+			//remove files in the stream directory:
 			$filedir = '/video/metavid/mvprime_stream_images/' .
-							 MV_StreamImage::getRelativeImagePath( $stream_id );	
+							 MV_StreamImage::getRelativeImagePath( $stream_id );
 			//print "dir is: $filedir \n";
 			if( is_dir($filedir )){
 				$cmd = 'rm -rf ' . $filedir;
 				print "removing image run#: $cmd \n";
 				shell_exec($cmd);
-			}	
-			//print "removing DB entires for $stream_id\n";		
+			}
+			//print "removing DB entires for $stream_id\n";
 			$mvStream->deleteDB();
 		}
 	}
@@ -101,38 +101,38 @@ function do_remove_orphaned_streams(){
 		if( !$mvStreamTitle->exists() ){
 			print "stream: {$stream->name} does not exist as a wiki page\n";
 			//should remove here
-			$mvStream = new MV_Stream( $stream );			
+			$mvStream = new MV_Stream( $stream );
 		}
 	}*/
 }
 function do_stream_date_check(){
 	$streams = get_all_mv_streams();
 	foreach ( $streams as $stream ) {
-		preg_match("/([0-9]+-[0-9]+-[0-9]+)/", $stream->name, $matches);						    			
+		preg_match("/([0-9]+-[0-9]+-[0-9]+)/", $stream->name, $matches);
 		if( ! isset( $matches[1] ) ){
 			print "no date found in {$stream->name}\n";
-			continue;             
+			continue;
 		}
 		$sdate = $force_update = false;
- 		//check for srt file: 
+ 		//check for srt file:
  		$srt_file = '/video/metavid/raw_mpeg2/' . $stream->name . '.srt';
  		if( is_file( $srt_file ) ){
  			$srt_ary = file( $srt_file );
- 			$time = intval( trim( str_replace( 'starttime' , '', $srt_ary[2] )) );	 		
- 			//ignore bad .srt values (before 08 	
-			if( intval( date('y', $time) > 8)) {	 			
+ 			$time = intval( trim( str_replace( 'starttime' , '', $srt_ary[2] )) );
+ 			//ignore bad .srt values (before 08
+			if( intval( date('y', $time) > 8)) {
 	 			if( $stream->date_start_time != $time){
 	 				$sdate=$time;
 	 				$force_update = true;
 	 				print "force srt update:: ";
-	 			}	 			 
+	 			}
 	 		}
  		}
  		//no date from srt make starting at 9am
  		if( !$sdate ){
 			$sd = explode('-',$matches[1]);
 			$sdate = mktime( 9, 0, 0, $sd[0], $sd[1], intval('20'.$sd[2]) );
- 		}		
+ 		}
 		if( date('d-y', $stream->date_start_time) != date('d-y',$sdate) || $force_update ) {
 			//print "should update date: " . $stream->date_start_time . ' to '.  $sdate . ' for ' . $stream->name . "\n";
 			$dbw = wfGetDB( DB_WRITE );
@@ -142,10 +142,10 @@ function do_stream_date_check(){
 			print "$stream->name date updated\n";
 		}else{
            	print "$stream->name date is ok\n";
-		}			
+		}
 	}
 }
-function do_stream_file_check( $old_stream=false ) {	
+function do_stream_file_check( $old_stream=false ) {
 	global $mvgIP, $mvVideoArchivePaths;
 	$stream_set = Array();
 	if($old_stream==false){
@@ -160,7 +160,7 @@ function do_stream_file_check( $old_stream=false ) {
 		) );
 		$file_list = $mvStream->getFileList();
 		//print 'f:do_stream_file_check:' . $stream->name . ' dur: ' . $mvStream->getDuration() . "\n";
-		
+
 		// @@todo have multiple file locations for same file?
 		$set = array();
 		foreach ( $mvVideoArchivePaths as $path ) {
@@ -181,10 +181,10 @@ function do_stream_file_check( $old_stream=false ) {
 				// $set['mv_ogg_high_quality']='http://128.114.20.64/media/' . $stream->name . '.HQ.ogg';
 			}
 		}
-		
-		//check archive.org paths: 
-		
-	
+
+		//check archive.org paths:
+
+
 		if ( count( $set ) == 0 ) {
 			// no files present (remove stream)
 			print 'no files present should remove: ' . $stream->name . "\n";
@@ -192,30 +192,30 @@ function do_stream_file_check( $old_stream=false ) {
 		}
 		$dbw = wfGetDB( DB_WRITE );
 		$sql = "DELETE FROM `mv_stream_files` WHERE `stream_id`=" . $mvStream->id . " AND " .
-				"(`file_desc_msg`='mv_ogg_high_quality' " .  
-				" OR `file_desc_msg`='mv_ogg_low_quality' " . 
+				"(`file_desc_msg`='mv_ogg_high_quality' " .
+				" OR `file_desc_msg`='mv_ogg_low_quality' " .
 				" OR `file_desc_msg`='mv_flash_low_quality')";
 		$dbw->query( $sql );
 		// update files:
 		if(!isset($set['mv_ogg_low_quality'])){
-			print "Missing lowQ ogg for: "	.$stream->name ."\n";	
+			print "Missing lowQ ogg for: "	.$stream->name ."\n";
 		}
 		if(!isset($set['mv_ogg_high_quality'])){
-			print "Missing highQ ogg for: "	.$stream->name ."\n";	
+			print "Missing highQ ogg for: "	.$stream->name ."\n";
 		}
 		if(!isset($set['mv_flash_low_quality'])){
-			print "Missing flash for: "	.$stream->name ."\n";	
+			print "Missing flash for: "	.$stream->name ."\n";
 		}
 		foreach ( $set as $qf => $path_url ) {
 			do_insert_stream_file( $mvStream, $path_url, $qf );
 		}
-	}	
+	}
 }
 
 function do_insert_stream_file( $mvStream, $path, $quality_msg ) {
 	global $mvVideoArchivePaths;
 	$dbw = wfGetDB( DB_WRITE );
-	$dur = $mvStream->getDuration();	
+	$dur = $mvStream->getDuration();
 	// get file duration from nfo file :
 	$dur = $mvStream->getDuration();
 	if($dur == 0){
@@ -232,7 +232,7 @@ function do_insert_stream_file( $mvStream, $path, $quality_msg ) {
 					if ( strpos( $len, '.' ) !== false ) {
 						$len = substr( $len, 0, strpos( $len, '.' ) );
 					}
-					$dur = ntp2seconds( $len );
+					$dur = npt2seconds( $len );
 				} else {
 					echo "empty nfo file: $nfo_url \n";
 					$dur = 0;
@@ -242,9 +242,9 @@ function do_insert_stream_file( $mvStream, $path, $quality_msg ) {
 				$dur = 0;
 			}
 		}
-	}	
+	}
 	$sql = "INSERT INTO `mv_stream_files` (`stream_id`, `file_desc_msg`, `path`, `duration`)" .
-		" VALUES ('{$mvStream->id}', '{$quality_msg}', '{$path}', {$dur} )";	
+		" VALUES ('{$mvStream->id}', '{$quality_msg}', '{$path}', {$dur} )";
 	$dbw->query( $sql );
 }
 // @@todo convert to MV_EditStream
@@ -321,7 +321,7 @@ function do_stream_insert( $mode, $stream_name = '' ) {
 }
 function do_annotate_speeches( $stream, $force ) {
 	print "do annotations for $stream->name \n";
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 	if ( $force ) {
 		global $botUserName;
 		// get wiki stream id:
@@ -343,9 +343,9 @@ function do_annotate_speeches( $stream, $force ) {
 	// get all mvd's
 	$mvStream = MV_Stream::newStreamByName( $stream->name );
 	if ( $mvStream->doesStreamExist() ) {
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		// get all pages in range (up 10k)
-		$mvd_rows =& MV_Index::getMVDInRange( $mvStream->getStreamId(), null, null, 'Ht_en', false, 'Spoken_By', array('LIMIT'=>10000) );		
+		$mvd_rows =& MV_Index::getMVDInRange( $mvStream->getStreamId(), null, null, 'Ht_en', false, 'Spoken_By', array('LIMIT'=>10000) );
 		if ( count( $mvd_rows ) != 0 ) {
 			print "looking at ". count( $mvd_rows ). " text rows\n";
 			$prev_person = '';
@@ -366,7 +366,7 @@ function do_annotate_speeches( $stream, $force ) {
 							// diffrent person: if more than 1 min long
 							if ( $prev_et - $prev_st > 60 ) {
 								$doSpeechUpdate = true;
-								print "insert annotation $prev_person: " . seconds2ntp( $prev_st ) . " to " . seconds2ntp( $prev_et ) . " \n";
+								print "insert annotation $prev_person: " . seconds2npt( $prev_st ) . " to " . seconds2npt( $prev_et ) . " \n";
 								// check for existing speech by in range if so skip (add subtract 1 to start/end (to not get matches that land on edges) (up to 10,000 meta per stream)
 								$mvd_anno_rows = MV_Index::getMVDInRange( $mvStream->getStreamId(), $prev_st + 1, $prev_et - 1, 'Anno_en', false, 'Speech_by' );
 								foreach($mvd_anno_rows as  $row) {
@@ -378,7 +378,7 @@ function do_annotate_speeches( $stream, $force ) {
 								}
 								if ( $doSpeechUpdate ) {
 									$page_txt = '[[Speech by:=' . str_replace( '_', ' ', $prev_person ) . ']]';
-									$annoTitle = Title::makeTitle( MV_NS_MVD, 'Anno_en:' . $mvStream->getStreamName() . '/' . seconds2ntp( $prev_st ) . '/' . seconds2ntp( $prev_et ) );
+									$annoTitle = Title::makeTitle( MV_NS_MVD, 'Anno_en:' . $mvStream->getStreamName() . '/' . seconds2npt( $prev_st ) . '/' . seconds2npt( $prev_et ) );
 									do_update_wiki_page( $annoTitle, $page_txt );
 								}
 							}
@@ -388,7 +388,7 @@ function do_annotate_speeches( $stream, $force ) {
 					}
 				}
 			}
-			print "\n\ndone with annotation inserts got to " . seconds2ntp( $prev_et ) . ' of ' . seconds2ntp( $mvStream->getDuration() ) . "\n";
+			print "\n\ndone with annotation inserts got to " . seconds2npt( $prev_et ) . ' of ' . seconds2npt( $mvStream->getDuration() ) . "\n";
 		}else{
 			print "no annotations added 0 mvd transcript pages found\n";
 		}
@@ -442,7 +442,7 @@ function do_process_text( $stream, $force ) {
 			$i++;
 			$j++;
 			$start_time = $page->time - $stream->adj_start_time;
-			if ( seconds2ntp( $start_time ) < 0 )
+			if ( seconds2npt( $start_time ) < 0 )
 				$start_time = '0:00:00';
 			if ( ( $inx + 1 ) == count( $pages ) ) {
 				$end_time = $stream->adj_end_time - $stream->adj_start_time;
@@ -467,7 +467,7 @@ function do_process_text( $stream, $force ) {
 			"LIMIT 1 ";
 			$person_res = $dbr->query( $sql );
 
-			$page_title = $stream->name . '/' . seconds2ntp( $start_time ) . '/' . seconds2ntp( $end_time );
+			$page_title = $stream->name . '/' . seconds2npt( $start_time ) . '/' . seconds2npt( $end_time );
 			// print $page_title . "\n";
 			$page_body = '';
 			if ( $dbr->numRows( $person_res ) != 0 ) {
@@ -488,8 +488,8 @@ function do_process_text( $stream, $force ) {
  */
 function do_process_images( $stream, $force = false ) {
 	global $mvLocalImgLoc, $MVStreams, $wgDBname;
-	$dbr =& wfGetDB( DB_SLAVE );
-	$dbw =& wfGetDB( DB_MASTER );
+	$dbr = wfGetDB( DB_SLAVE );
+	$dbw = wfGetDB( DB_MASTER );
 
 	// get all images for the current stream:
 	$sql = "SELECT * FROM `metavid`.`image_archive`
@@ -517,7 +517,7 @@ function do_process_images( $stream, $force = false ) {
 		$relative_time = $row->time - $stream->adj_start_time;
 		// status updates:
 		if ( $i == 10 ) {
-			print "On image $j of $img_count time: " . seconds2ntp( $relative_time ) . " $metavid_img_url\n";
+			print "On image $j of $img_count time: " . seconds2npt( $relative_time ) . " $metavid_img_url\n";
 			$i = 0;
 		}
 		$j++;
@@ -538,7 +538,7 @@ function do_process_images( $stream, $force = false ) {
 			// make sure its there and matches what it should be:
 			if ( is_file( $local_img_file ) ) {
 				$row = $dbr->fetchObject( $img_check );
-				// print "file $local_img_file skiped, stream_id:" . $mv_stream_id . " time: " . seconds2ntp($relative_time) . "\n";
+				// print "file $local_img_file skiped, stream_id:" . $mv_stream_id . " time: " . seconds2npt($relative_time) . "\n";
 				continue;
 			} else {
 				// grab but don't insert:
@@ -569,24 +569,24 @@ function do_process_images( $stream, $force = false ) {
 
 
 // given a stream name it pulls all metavid stream data and builds semantic wiki page
-function mv_semantic_stream_desc( & $mvTitle, & $stream ) {	
+function mv_semantic_stream_desc( & $mvTitle, & $stream ) {
 	/*$sql = "SELECT * FROM `metavid`.`streams` WHERE `name` LIKE '" . $mvTitle->getStreamName() . "'";
 	$dbr = wfGetDB(DB_SLAVE);
 	$res = $dbr->query($sql);
 	//echo "\n" . $sql . "\n";
 	$stream = $dbr->fetchObject($res);*/
 	//$stream_id = $stream->id;
-	$out = '';	
-	//(if we have old version of stream copy over is properties) 
+	$out = '';
+	//(if we have old version of stream copy over is properties)
 	if( isset( $stream->org_start_time ) )
 		$stream->date_start_time = $stream->org_start_time;
-		
-	
+
+
 	$start_time = $stream->date_start_time;
-	
-	
-	
-	// add links/generic text at the start	
+
+
+
+	// add links/generic text at the start
 	$date = date( 'Ymd', $start_time );
 	$cspan_date = date( 'Y-m-d', $start_time );
 	$ch_type = '';
@@ -605,8 +605,8 @@ function mv_semantic_stream_desc( & $mvTitle, & $stream ) {
 		' THOMAS Extension of Remarks]' . "\n\n";
 	}
 	$dbw = wfGetDB( DB_WRITE );
-	
-	//clear out existing archive.org files for the current stream			
+
+	//clear out existing archive.org files for the current stream
 	//$sql = "DELETE FROM  `mv_stream_files` WHERE `stream_id`='{$stream->id}' AND `file_desc_msg` LIKE 'ao_file_%' LIMIT 10";
 	//$dbw->query( $sql );
 	//print "removed existing archive.org files for $stream->name \n";
@@ -616,7 +616,7 @@ function mv_semantic_stream_desc( & $mvTitle, & $stream ) {
 	// grab file list from archive.org:
 	//require_once( 'scrape_and_insert.inc.php' );
 	//$aos = new MV_ArchiveOrgScrape();
-	
+
 	//$file_list = $aos->getFileList( $stream->name );
 	//if($file_list===false || count($file_list)==0) {
 	//	print 'no files on archive.org for'. $stream->name ."\n\n";
@@ -626,24 +626,24 @@ function mv_semantic_stream_desc( & $mvTitle, & $stream ) {
 	// all streams have congretional cronical:
 	$out .= '*[http://www.c-spanarchives.org/congress/?q=node/69850&date=' . $cspan_date . '&hors=' . $ch_type .
 	' CSPAN\'s Congressional Chronicle]' . "\n";
-	
-	//if ( $file_list ) {					
-		$out .= '*[http://www.archive.org/details/mv_' . $stream->name . 
+
+	//if ( $file_list ) {
+		$out .= '*[http://www.archive.org/details/mv_' . $stream->name .
 		' Archive.org hosted version]' . "\n";
 		// also output 'direct' semantic links to alternate file qualities:
-		/*$out .= "\n===Full File Links===\n";		
+		/*$out .= "\n===Full File Links===\n";
 		$found_ogg=false;
 		foreach ( $file_list as $file ) {
 			$name = str_replace( ' ', '_', $file[2] );
 			$url = 'http://archive.org'.$file[1];
-			$size = $file[3];		
-									
+			$size = $file[3];
+
 			// add these files into the mv_files table:
 			// @@todo in the future we should tie the mv_files table to the semantic properties.
 			// check if already present:
-			
+
 			$quality_msg = 'ao_file_' . $name;
-			
+
 			if($name=='Ogg_Video'){
 				$found_ogg=true;
 			}
@@ -654,15 +654,15 @@ function mv_semantic_stream_desc( & $mvTitle, & $stream ) {
 			}
 			//print "found ogg $found_ogg name: $name  qm:$quality_msg\n";
 
-			//output stream to wiki text: 
-			$out .= "*[{$url} $name] {$size}\n";	
-			
+			//output stream to wiki text:
+			$out .= "*[{$url} $name] {$size}\n";
+
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->query( "SELECT * FROM `mv_stream_files`
 					WHERE `stream_id`={$mvTitle->getStreamId()}
 					AND `file_desc_msg`='{$quality_msg}'" );
 			if ( $dbr->numRows( $res ) == 0 ) {
-				$sql = "INSERT INTO `mv_stream_files` (`stream_id`,`duration`, `file_desc_msg`, `path_type`, `path`)" . 
+				$sql = "INSERT INTO `mv_stream_files` (`stream_id`,`duration`, `file_desc_msg`, `path_type`, `path`)" .
 				" VALUES ('{$mvTitle->getStreamId()}','{$mvTitle->getDuration()}', '{$quality_msg}', '{$path_type}','{$url}' )";
 			} else {
 				$row = $dbr->fetchObject( $res );
@@ -697,7 +697,7 @@ function mv_semantic_stream_desc( & $mvTitle, & $stream ) {
 				// other options [stream high quality sync ];
 			break;
 		}
-	}	
+	}
 	return $out;
 }
 function mvd_consistancy_check(){
@@ -708,150 +708,220 @@ function mvd_consistancy_check(){
 		'*',
 		'date_start_time >= '.  mktime(0, 0, 0, 1, 1, 2009),
 		__METHOD__
-	);	
-	if ( $dbr->numRows( $result ) == 0 )die("no streams found"."\n". $dbr->lastQuery() ."\n");	
+	);
+	if ( $dbr->numRows( $result ) == 0 )die("no streams found"."\n". $dbr->lastQuery() ."\n");
 	while ( $stream = $dbr->fetchObject( $result ) ) {
 		//get all the mvds for this stream
 		$mvd_res = $dbr->select( 'mv_mvd_index', '*', array('stream_id'=>$stream->id));
 		while ( $mvd = $dbr->fetchObject( $mvd_res ) ) {
-			//make sure the article exists: 
+			//make sure the article exists:
 			$mvdTitle = Title::newFromText($mvd->wiki_title, MV_NS_MVD);
 			if($mvdTitle->exists()){
 				//update the text:
 				$mvdArticle = new Article ($mvdTitle);
-				$text = $mvdArticle->getRawText();			
+				$text = $mvdArticle->getRawText();
 				//find the spoken by or speech by text:
 				$sb_pat =  '/\[\[Spoken By(\:.)([^\]]*)]]/i';
-				preg_match($sb_pat, $text, $matches );	
-				if(isset($matches[2])){			
-					$replacement = ($matches[2] == 'Unknown')?'': 
+				preg_match($sb_pat, $text, $matches );
+				if(isset($matches[2])){
+					$replacement = ($matches[2] == 'Unknown')?'':
 								'[[Spoken By::'. str_replace('_', ' ', $matches[2]).']]';
 					$text = preg_replace($sb_pat, $replacement, $text);
 				}
 				//do the same for speech by
 				$sb_pat =  '/\[\[Speech by(\:.)([^\]]*)]]/i';
 				preg_match($sb_pat, $text, $matches );
-				if(isset($matches[2])){				
-					$replacement = ($matches[2] == 'Unknown')?'': 
+				if(isset($matches[2])){
+					$replacement = ($matches[2] == 'Unknown')?'':
 								'[[Speech by::'. str_replace('_', ' ', $matches[2]).']]';
 					$text = preg_replace($sb_pat, $replacement, $text);
-				}							
+				}
 				//trim all double spaces
-				$text = preg_replace('/[\s]+/', ' ', $text);			
+				$text = preg_replace('/[\s]+/', ' ', $text);
 				//uc upper words:
-				//$text = preg_replace("/[^A-Z]\.(\s)(\\w)/e", '".$1".strtoupper("$2")', $text);				
-				do_update_wiki_page( $mvdTitle, trim($text),'',true);						
+				//$text = preg_replace("/[^A-Z]\.(\s)(\\w)/e", '".$1".strtoupper("$2")', $text);
+				do_update_wiki_page( $mvdTitle, trim($text),'',true);
 			}else{
-				print "orphaned mvd: {$mvd->wiki_title} (should remove) \n"; 
-			}			
-		}	
-		//die('only update one stream at a time');	
-	}		
+				print "orphaned mvd: {$mvd->wiki_title} (should remove) \n";
+			}
+		}
+		//die('only update one stream at a time');
+	}
 }
 function do_bill_insert( $bill_key ) {
-	//grab bill list with categories from govtrack
-}
-function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force = false ) {
-	global $valid_attributes, $states_ary;		
-	
-	$dbr = wfGetDB( DB_SLAVE );			
-	
 	include_once( 'scrape_and_insert.inc.php' );
 	$mvScrape = new MV_BaseScraper();
-	
+	$myBillScraper = new MV_BillScraper();
+
+	$congressNum = 111;
+	print "do_bill_insert:: $bill_key downloading fresh bills.index.xml....\n ";
+	//grab bill list with categories from govtrack
+	$raw_govtrack_bill_data = $mvScrape->doRequest('http://www.govtrack.us/data/us/'.$congressNum.'/bills.index.xml', array(), true);
+	//turn bill data into an array:
+	preg_match_all("/<bill\s([^>]*)\>/U",$raw_govtrack_bill_data,$nodes);
+	print "found " . count($nodes[1]) . " bills \n";
+	$types = array('type', 'number', 'title', 'official-title', 'status', 'last-action');
+
+	$billAry = array();
+	foreach($nodes[1] as $bill_str){
+		$bObj = array();
+		preg_match_all('/([^=]*)="([^"]*)"/', $bill_str, $matches);
+		foreach($matches[1] as $inx => $tkey){
+			if(in_array(trim($tkey), $types)){
+				$bObj[ trim($tkey) ] = $matches[2][$inx];
+			}
+		}
+		//setup some keys:
+		$bObj['GovTrackID'] = $bObj['type'] . $congressNum . '-' . $bObj['number'];
+		$bObj['ThomasID']	= 'd'.$congressNum.':'.$bObj['type'].$bObj['number'].':';
+		$bObj['OpenCongressBillID']	=$congressNum.'-'.$bObj['type'].$bObj['number'];
+		$bObj['CongressSession'] = $congressNum;
+		$tp = explode(':',	$bObj['title']);
+		$bObj['Bill Key'] = $tp[0];
+
+		$maplightBillId = get_map_light_bill_id( $bObj );
+		if($maplightBillId===false){
+			print "Could not find maplight id for bill: " . $bObj['type'] . '+' . $bObj['number'] . "\n";
+			$bObj['MapLightBillID'] = false;
+		}else{
+			$bObj['MapLightBillID'] = $maplightBillId;
+			//now that we do have a maplight key get the interest info:
+			$bObj['interests'] = $myBillScraper->proccMapLightBillIntrests($maplightBillId);
+		}
+		$billAry[] = $bObj;
+		//do proccess the bill (insert into the wiki)
+		print "ProccessBill::";
+		$myBillScraper->processBill($bObj['GovTrackID'], $bObj['Bill Key'],$bObj['OpenCongressBillID'], $bObj['MapLightBillID'], false, false);
+	}
+
+}
+function get_map_light_bill_id($bObj){
+	include_once( 'scrape_and_insert.inc.php' );
+	$mvScrape = new MV_BaseScraper();
+	$rawBillPage = $mvScrape->doRequest('http://maplight.org/map/us/bill/search/' . $bObj['type'] . '+' . $bObj['number'] ) ;
+	//get the basic zone:
+	$sb = strpos($rawBillPage, '<h3>Bills numbered');
+	if($sb===false){
+	  return false;
+	}
+
+	$se = strpos($rawBillPage, '<h3>Bills matching', $sb);
+	if($se === false){
+		return false;
+	}
+
+	$target_search_area = substr($rawBillPage, $sb, $se-$sb );
+	//get the matchign area
+	preg_match_all('/href=\"([^"]*)"[^(]*\(([^t]*)/', $target_search_area, $matches);
+	foreach($matches[2] as $inx => $val){
+		if($val == $bObj['CongressSession'] ){
+			//remove the unused parts of the url
+			return str_replace('/map/us/bill/', '', $matches[1][$inx]);
+		}
+	}
+	return false;
+}
+function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force = false ) {
+	global $valid_attributes, $states_ary;
+
+	$dbr = wfGetDB( DB_SLAVE );
+
+	include_once( 'scrape_and_insert.inc.php' );
+	$mvScrape = new MV_BaseScraper();
+
 	//get all people from govtrack db ( should not have to do this all the time)
-	$govtrackDB = array(); 
-	//avoid duplicating the $govtrackDB array: 
+	$govtrackDB = array();
+	//avoid duplicating the $govtrackDB array:
 	getGovTrackPeopleDB( $govtrackDB );
-	
-	//get all people from the congress people category 
+
+	//get all people from the congress people category
 	$result = $dbr->select( 'categorylinks', 'cl_sortkey', array (
 		'cl_to' => 'Congress_Person'
 		)
-	);	
+	);
 	if ( $dbr->numRows( $result ) == 0 )
 		die( 'could not find people: ' . "\n" );
 	$out = '';
 	$person_ary = array();
-	while ( $person = $dbr->fetchObject( $result ) ) {	
+	while ( $person = $dbr->fetchObject( $result ) ) {
 		$person_ary[] = $person;
 	}
-	foreach ( $person_ary as $person) {		
+	foreach ( $person_ary as $person) {
 		$person_name = $person->cl_sortkey;
-		//get person data from  wiki: 
+		//get person data from  wiki:
 		$person_title = Title::newFromText( $person_name );
-		
+
 		$smwStore =& smwfGetStore();
-		
-		//check for govtrack key in page 
+
+		//check for govtrack key in page
 		$propTitle = Title::newFromText('GovTrack Person ID', SMW_NS_PROPERTY );
 		$smwProps = $smwStore->getPropertyValues( $person_title, $propTitle );
-		if ( count( $smwProps ) != 0 ) {			
-			$v = current( $smwProps );	
-			$person->gov_track_id = $v->getXSDValue();		
+		if ( count( $smwProps ) != 0 ) {
+			$v = current( $smwProps );
+			$person->gov_track_id = $v->getXSDValue();
 		}else{
-			print "person: $person_name has no GovTrack Person ID make sure to include this on their page\n";						
+			print "person: $person_name has no GovTrack Person ID make sure to include this on their page\n";
 		}
-		if( isset($person->gov_track_id) ){			
+		if( isset($person->gov_track_id) ){
 			setGovTrackSpecifcAttr($person, $govtrackDB[ $person->gov_track_id ]);
 		}else{
-			//check for govtrack key in $govtrackDB: 
+			//check for govtrack key in $govtrackDB:
 			foreach( $govtrackDB as $gov_track_person){
-				if( isset($gov_track_person['metavidid']) && $gov_track_person['metavidid'] == str_replace(' ', '_',$person_name) ){					
-					setGovTrackSpecifcAttr($person, $gov_track_person);		
-				}			
+				if( isset($gov_track_person['metavidid']) && $gov_track_person['metavidid'] == str_replace(' ', '_',$person_name) ){
+					setGovTrackSpecifcAttr($person, $gov_track_person);
+				}
 			}
 			reset($govtrackDB);
 			//did not find metavid id try name test:
 			if( !isset($person->govtrack_id )){
-				foreach( $govtrackDB as $gov_track_person){							
-					if(isset($gov_track_person['middlename'])){					
-						$gov_name = $gov_track_person['firstname'] .' '. 
-										substr($gov_track_person['middlename'],0,1) . '. ' . 
-										$gov_track_person['lastname']; 
-						//first check for exact match: 
-						if( strtolower($gov_name) == strtolower($person_name) ){						
-							setGovTrackSpecifcAttr($person, $gov_track_person);							
+				foreach( $govtrackDB as $gov_track_person){
+					if(isset($gov_track_person['middlename'])){
+						$gov_name = $gov_track_person['firstname'] .' '.
+										substr($gov_track_person['middlename'],0,1) . '. ' .
+										$gov_track_person['lastname'];
+						//first check for exact match:
+						if( strtolower($gov_name) == strtolower($person_name) ){
+							setGovTrackSpecifcAttr($person, $gov_track_person);
 							break;
 						}
 					}
-					//else first last check:  
+					//else first last check:
 					$nparts = split(' ', $person_name);
 					if( strtolower( $gov_track_person['firstname']) == strtolower($nparts[0]) &&
-						strtolower( $gov_track_person['lastname']) == strtolower( $nparts[count($nparts)-1] ) ){							
-						setGovTrackSpecifcAttr($person, $gov_track_person);	
-						break;					
-					}													 
+						strtolower( $gov_track_person['lastname']) == strtolower( $nparts[count($nparts)-1] ) ){
+						setGovTrackSpecifcAttr($person, $gov_track_person);
+						break;
+					}
 				}
-			}						
-			if(!isset($person->gov_track_id)){			
+			}
+			if(!isset($person->gov_track_id)){
 				die("\n could not find gov track id for $person_name please add manually or remove from Congress_Person category\n ");
 			}
 		}
-		//set the maplight key (not in sunlight api)  
+		//set the maplight key (not in sunlight api)
 		$propTitle = Title::newFromText( 'MAPLight Person ID', SMW_NS_PROPERTY );
 		$smwProps = $smwStore->getPropertyValues( $person_title, $propTitle );
 		if ( count( $smwProps ) != 0 ) {
 			$v = current( $smwProps );
 			$mapk = $v->getXSDValue();
-			$person->maplight_id = $v->getXSDValue();			
+			$person->maplight_id = $v->getXSDValue();
 		}else{
-			print "person: $person_name has no MAPLight Person ID could not lookup with sunlight api?\n";	
+			print "person: $person_name has no MAPLight Person ID could not lookup with sunlight api?\n";
 		}
-		
+
 		//set $person->name_ocr
 		$propTitle = Title::newFromText( 'Name OCR', SMW_NS_PROPERTY );
 		$smwProps = $smwStore->getPropertyValues( $person_title, $propTitle );
 		if ( count( $smwProps ) != 0 ) {
 			$v = current( $smwProps );
-			$person->name_ocr = $v->getXSDValue();			
-		}			
-				
+			$person->name_ocr = $v->getXSDValue();
+		}
+
 		$page_body = '{{Congress Person|' . "\n";
 		foreach ( $valid_attributes as $dbKey => $attr ) {
 			list ( $name, $desc ) = $attr;
 			if( $dbKey == 'gov_track_id'){
-				//we key all to govtrack id make sure its there: 
+				//we key all to govtrack id make sure its there:
 				$page_body.="GovTrack Person ID=".$person->gov_track_id . "|\n";
 			}else if ( $dbKey == 'total_received' ) {
 				if ( !$mapk ) {
@@ -862,29 +932,29 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 					if ( isset( $matches[1] ) ) {
 						$page_body .= "{$name}=\$" . $matches[1] . "|\n";
 					}
-				}		
+				}
 			} else if($dbKey == 'roles'){
 				if ( $person->$dbKey ) {
 					$i=1;
 					foreach($person->$dbKey as $role){
-						$page_body.="Role $i Type=" . ucfirst($role['type'])."|\n"; 
+						$page_body.="Role $i Type=" . ucfirst($role['type'])."|\n";
 						$page_body.="Role $i Party=" .  $role['party']. "|\n";
 						$page_body.="Role $i State=" .  $role['state']. "|\n";
 						$page_body.="Role $i Start Date=" . $role['startdate']."|\n";
 						$page_body.="Role $i End Date=" . $role['enddate'] . "|\n";
 						$i++;
-					}						
-				}	
+					}
+				}
 			} else if($dbKey == 'committee'){
 				if ( isset($person->$dbKey) ) {
 					$i = 1;
 					foreach($person->$dbKey as $committee){
 						if(isset($committee ['committee']))
-							$page_body.="Committee $i= ".$committee ['committee'] ."|\n"; 
+							$page_body.="Committee $i= ".$committee ['committee'] ."|\n";
 						if(isset($committee['subcommittee']))
-							$page_body.="Subcommittee $i= ".$committee ['subcommittee'] ."|\n";	
+							$page_body.="Subcommittee $i= ".$committee ['subcommittee'] ."|\n";
 						if(isset($committee['role']))
-							$page_body.="Committee Role $i= ".$committee ['role'] ."|\n";												
+							$page_body.="Committee Role $i= ".$committee ['role'] ."|\n";
 						$i++;
 					}
 				}
@@ -902,7 +972,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 				if ( !$person->$dbKey ) {
 					// print 'do_maplight_id'."\n";
 					// try to grab the maplight id
-					$person_lookup = $govtrackDB[ $person->gov_track_id ]; 
+					$person_lookup = $govtrackDB[ $person->gov_track_id ];
 					$raw_results = $mvScrape->doRequest( 'http://maplight.org/map/us/legislator/search/' . $person_lookup->lastname . '+' . $person->firstname );
 					preg_match_all( '/map\/us\/legislator\/([^"]*)">(.*)<\/a>.*<td>([^<]*)<.*<td>([^<]*)<.*<td>([^<]*)<.*<td>([^<]*)</U', $raw_results, $matches );
 
@@ -939,12 +1009,12 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 					$mapk = $person->$dbKey;
 				}
 				$page_body .= "{$name}=" . $mapk . "|\n";
-			} else {				
+			} else {
 				//try the $sulightData array
 				if(isset($sulightData[ $dbKey ])){
 					$page_body.= $name . '=' . $sulightData[ $dbKey ]."| \n";
 				}else{
-					if( isset($person->$dbKey) ){				
+					if( isset($person->$dbKey) ){
 						if ( trim( $person->$dbKey ) != '' ) {
 							if ( $dbKey == 'state' )	$person->state = $states_ary[$person->state];
 							$page_body .= "{$name}={$person->$dbKey}|  \n";
@@ -976,7 +1046,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 		/*$page_body .= "Full Name=" . $person->title . ' ' . $person->first .
 			' ' . $person->middle . ' ' . $person->last . "|  \n";*/
 
-		//close: 
+		//close:
 		$page_body .= '}}';
 		// add in basic info to be overwitten by transclude (from
 		/*$full_name = $person->title . ' ' . $person->first .
@@ -986,24 +1056,24 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 
 		$page_body .= "\n" . 'Person page For <b>' . $full_name . "</b><br />\n";*/
 			//	 			"Text Spoken By [[Special:MediaSearch/person/{$person->name_clean}|$full_name]] ";
-				
+
 		do_update_wiki_page( $person_title, $page_body, '', $force );
 		//die('only run on first person'."\n");
 	}
-	 
+
 	foreach ( $person_ary as $person ) {
-		$person_lookup = $govtrackDB[ $person->gov_track_id ]; 
+		$person_lookup = $govtrackDB[ $person->gov_track_id ];
 		// download/upload all the photos:
 		$imgTitle = Title :: makeTitle( NS_IMAGE, $person->cl_sortkey . '.jpg' );
 		// if(!$imgTitle->exists()){
 		global $wgTmpDirectory;
 		$url = 'http://www.govtrack.us/data/photos/' . $person->gov_track_id . '-100px.jpeg';
-		//check if url exists: 
+		//check if url exists:
 		if( !url_exists($url)){
 			print " no image found for: {$person->cl_sortkey}\n";
-			continue; 
+			continue;
 		}
-		
+
 		// print $wgTmpDirectory . "\n";
 		$local_file = tempnam( $wgTmpDirectory, 'WEBUPLOAD' );
 		// copy file:
@@ -1047,42 +1117,42 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 		}
 	}
 }
-function setGovTrackSpecifcAttr(&$person, &$gov_track_person){			
+function setGovTrackSpecifcAttr(&$person, &$gov_track_person){
 	$person->gov_track_id = $gov_track_person['id'];
-	
-	//also set govtrack only properties: 
+
+	//also set govtrack only properties:
 	if(isset($gov_track_person['birthday']))
 		$person->birthday = $gov_track_person['birthday'];
-		
+
 	if(isset($gov_track_person['religion']))
 		$person->religion = $gov_track_person['religion'];
-	
+
 	if(isset($gov_track_person['youtubeid']))
 		$person->youtubeid = $gov_track_person['youtubeid'];
-		
+
 	if(isset($gov_track_person['roles']))
 		$person->roles = $gov_track_person['roles'];
-	
+
 	if(isset($gov_track_person['committee']))
-		$person->committee = $gov_track_person['committee'];			
+		$person->committee = $gov_track_person['committee'];
 }
 //loads a big xml file
 function getGovTrackPeopleDB( &$govTrackDb){
 	include_once( 'scrape_and_insert.inc.php' );
 	$mvScrape = new MV_BaseScraper();
-	//get the last few people.xml databases (starting with most recent)	
-	$raw_govtrack_data = $mvScrape->doRequest('http://www.govtrack.us/data/us/111/repstats/people.xml');		
+	//get the last few people.xml databases (starting with most recent)
+	$raw_govtrack_data = $mvScrape->doRequest('http://www.govtrack.us/data/us/111/repstats/people.xml');
 
-	govtrackXMLtoARRAY($govTrackDb, $raw_govtrack_data);	
+	govtrackXMLtoARRAY($govTrackDb, $raw_govtrack_data);
 	$oneElevenCount  = count($govTrackDb);
 	print "govTrackDb: populated " . count($govTrackDb) . " from govTrack people.xml \n";
-	//should have a well populated $govTrackDb 
+	//should have a well populated $govTrackDb
 }
-function govtrackXMLtoARRAY(&$govTrackDb, & $xmlstring) {  
+function govtrackXMLtoARRAY(&$govTrackDb, & $xmlstring) {
    //normal XML parsing is too slow: use preg match:
 	preg_match_all("/<person([^>]*)>(.*)<\/person>/sU",$xmlstring,$nodes);
 	print "found " . count($nodes[1]) . " person nodes \n";
-	$poKeys = array();	
+	$poKeys = array();
 	foreach($nodes[1] as $pokey => $persons_attr){
    		preg_match_all("/([a-z]*)=\'([^\']*)\'/",$persons_attr, $attr);
 		$cur_person = array();
@@ -1090,12 +1160,12 @@ function govtrackXMLtoARRAY(&$govTrackDb, & $xmlstring) {
 	   		$cur_person[$key_name] = $attr[2][$key];
 		}
 		if(!isset( $govTrackDb[ $cur_person['id'] ])){
-			$govTrackDb[ $cur_person['id'] ] =$cur_person; 
-		}	
-		//committee and roles:	
-		if(isset($nodes[2][$pokey])){	
+			$govTrackDb[ $cur_person['id'] ] =$cur_person;
+		}
+		//committee and roles:
+		if(isset($nodes[2][$pokey])){
 			$persons_child_xml = $nodes[2][$pokey];
-			preg_match_all("/<role([^>]*)>/", $persons_child_xml, $roles);   	
+			preg_match_all("/<role([^>]*)>/", $persons_child_xml, $roles);
 			if( count($roles[1] != 0)){
 				$govTrackDb[ $cur_person['id'] ]['roles']=array();
 				foreach($roles[1] as $role_attr){
@@ -1105,7 +1175,7 @@ function govtrackXMLtoARRAY(&$govTrackDb, & $xmlstring) {
 						$cur_role[$key_name] = $rattr[2][$key];
 				   	}
 					$govTrackDb[ $cur_person['id'] ]['roles'][]=$cur_role;
-			   	}	    	  			
+			   	}
 			}
 			preg_match_all("/<current-committee-assignment([^>]*)>/",  $persons_child_xml, $committee);
 			if(count($committee[1])!=0){
@@ -1115,7 +1185,7 @@ function govtrackXMLtoARRAY(&$govTrackDb, & $xmlstring) {
 					$cur_com=array();
 					foreach($cattr[1] as $key=>$key_name){
 						$cur_com[ $key_name ] = $cattr[2][$key];
-					}									
+					}
 					$govTrackDb[  $cur_person['id'] ]['committee'][] = $cur_com;
 				}
 			}
@@ -1172,14 +1242,14 @@ function do_proc_interest( $intrestKey, $intrestName ) {
 			}
 		}
 	}
-	$page_body .= '}}';				
+	$page_body .= '}}';
 	$wTitle = Title::makeTitle( NS_MAIN, $intrestName );
 	print "Interest: ";
 	do_update_wiki_page( $wTitle, $page_body );
 	print "\n";
 }
 function do_rm_congress_persons() {
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 	$result = $dbr->query( " SELECT *
 	FROM `categorylinks`
 	WHERE `cl_to` LIKE 'Congress_Person' " );
@@ -1263,12 +1333,12 @@ $valid_attributes = array (
 		'CRP ID',
 		'Congress Person\'s <a href="http://www.opensecrets.org/">Open Secrets</a> Id',
 		'string'
-	),	
+	),
 	'gov_track_id' => array (
 		'GovTrack Person ID',
 		'Congress Person\' <a href="www.govtrack.us">govtrack.us</a> person ID',
 		'string'
-	),	
+	),
 	'birthday'=>array(
 		'Birthday',
 		'Birthday',
@@ -1278,7 +1348,7 @@ $valid_attributes = array (
 		'Religion',
 		'Religion',
 		'page'
-	),	
+	),
 	'roles'=>array(
 		'Roles',
 		'Roles date ranges of congress activity',
@@ -1403,7 +1473,7 @@ $valid_attributes = array (
 		'Webform',
 		'URL of web contact form',
 		'URL'
-	),	
+	),
 	'eventful_id'=>array(
 		'Eventful ID',
 		'Eventfull id',

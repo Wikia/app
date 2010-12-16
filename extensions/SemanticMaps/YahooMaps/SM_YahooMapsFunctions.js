@@ -2,7 +2,7 @@
   * Javascript functions for Yahoo! Maps functionallity in Semantic Maps
   *
   * @file SM_YahooMapsFunctions.js
-  * @ingroup SemanticMaps
+  * @ingroup SMYahooMaps
   * 
   * @author Jeroen De Dauw
   */
@@ -11,8 +11,8 @@
  * This function holds spesific functionallity for the Yahoo! Maps form input of Semantic Maps
  * TODO: Refactor as much code as possible to non specific functions
  */
-function makeFormInputYahooMap(mapName, locationFieldName, lat, lon, zoom, type, types, controls, scrollWheelZoom, marker_lat, marker_lon) {
-	var map = createYahooMap(document.getElementById(mapName), new YGeoPoint(lat, lon), zoom, type, types, controls, scrollWheelZoom, [getYMarkerData(marker_lat, marker_lon, '', '', '')]);
+function makeFormInputYahooMap(mapName, locationFieldName, lat, lon, zoom, type, types, controls, scrollWheelZoom, marker_lat, marker_lon, height) {
+	var map = createYahooMap(document.getElementById(mapName), new YGeoPoint(lat, lon), zoom, type, types, controls, scrollWheelZoom, [getYMarkerData(marker_lat, marker_lon, '', '', '')], height);
 
 	// Show a starting marker only if marker coordinates are provided
 	if (marker_lat != null && marker_lon != null) {

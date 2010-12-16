@@ -10,9 +10,7 @@ class DataCenterViewSearch extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		return DataCenterUI::renderLayout(
 			'columns',
 			array(
@@ -35,9 +33,7 @@ class DataCenterViewSearch extends DataCenterView {
 		);
 	}
 
-	public function results(
-		$path
-	) {
+	public function results( $path ) {
 		return DataCenterUI::renderLayout(
 			'columns',
 			array(

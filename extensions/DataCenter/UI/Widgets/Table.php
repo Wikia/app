@@ -79,9 +79,7 @@ class DataCenterWidgetTable extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets defaults
 		$parameters = array_merge_recursive(
 			self::$defaultParameters, $parameters
@@ -195,9 +193,7 @@ class DataCenterWidgetTable extends DataCenterWidget {
 	 * 							the widget as options for the entire column,
 	 * 							merging with default options to ensure keys exist
 	 */
-	private static function processFields(
-		$fields
-	) {
+	private static function processFields( $fields ) {
 		// Checks that fields is an array with at least one element
 		if ( count( $fields ) == 0 ) {
 			return null;

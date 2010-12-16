@@ -18,6 +18,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionFunctions[] = 'efPreloader';
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Preloader',
 	'author'         => 'Rob Church',
 	'version'        => '1.1.1',

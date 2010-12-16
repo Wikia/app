@@ -1,0 +1,13 @@
+# Read-only repository setup
+cd %GROUPROOT%
+svn co https://svn.wikia-code.com/wikia/trunk/extensions/wikia wikia
+
+# Add following code to LocalSettings.php or a file included by it:
+$wgHooks['TranslatePostInitGroups'] = array( 'setupWikia' );
+function setupWikia() {
+	$foo = new PremadeWikiaExtensionGroups();
+	$foo->addAll();
+	return true;
+}
+
+# TODO: commits

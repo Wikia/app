@@ -2,9 +2,9 @@
 
 global
 	$annotationMeaningName,
-	$definedMeaningMeaningName, 
+	$definedMeaningMeaningName,
 	$definitionMeaningName,
-	$relationMeaningName, 
+	$relationMeaningName,
 	$synTransMeaningName,
 
 	$classAttributeLevels;

@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,8 +44,9 @@ RemoveFormat		: "Remover Formatação",
 InsertLinkLbl		: "Hiperlink",
 InsertLink			: "Inserir/Editar Hiperlink",
 RemoveLink			: "Remover Hiperlink",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Inserir/Editar Âncora",
-AnchorDelete		: "Remove Anchor",	//MISSING
+AnchorDelete		: "Remover Âncora",
 InsertImageLbl		: "Figura",
 InsertImage			: "Inserir/Editar Figura",
 InsertFlashLbl		: "Flash",
@@ -71,7 +72,10 @@ RightJustify		: "Alinhar Direita",
 BlockJustify		: "Justificado",
 DecreaseIndent		: "Diminuir Recuo",
 IncreaseIndent		: "Aumentar Recuo",
-Blockquote			: "Blockquote",	//MISSING
+Blockquote			: "Recuo",
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Desfazer",
 Redo				: "Refazer",
 NumberedListLbl		: "Numeração",
@@ -105,27 +109,27 @@ SelectionField	: "Caixa de Listagem",
 ImageButton		: "Botão de Imagem",
 
 FitWindow		: "Maximizar o tamanho do editor",
-ShowBlocks		: "Show Blocks",	//MISSING
+ShowBlocks		: "Mostrar blocos",
 
 // Context Menu
 EditLink			: "Editar Hiperlink",
 CellCM				: "Célula",
 RowCM				: "Linha",
 ColumnCM			: "Coluna",
-InsertRowAfter		: "Insert Row After",	//MISSING
-InsertRowBefore		: "Insert Row Before",	//MISSING
+InsertRowAfter		: "Inserir linha abaixo",
+InsertRowBefore		: "Inserir linha acima",
 DeleteRows			: "Remover Linhas",
-InsertColumnAfter	: "Insert Column After",	//MISSING
-InsertColumnBefore	: "Insert Column Before",	//MISSING
+InsertColumnAfter	: "Inserir coluna à direita",
+InsertColumnBefore	: "Inserir coluna à esquerda",
 DeleteColumns		: "Remover Colunas",
-InsertCellAfter		: "Insert Cell After",	//MISSING
-InsertCellBefore	: "Insert Cell Before",	//MISSING
+InsertCellAfter		: "Inserir célula à direita",
+InsertCellBefore	: "Inserir célula à esquerda",
 DeleteCells			: "Remover Células",
 MergeCells			: "Mesclar Células",
-MergeRight			: "Merge Right",	//MISSING
-MergeDown			: "Merge Down",	//MISSING
-HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
-VerticalSplitCell	: "Split Cell Vertically",	//MISSING
+MergeRight			: "Mesclar com célula à direita",
+MergeDown			: "Mesclar com célula abaixo",
+HorizontalSplitCell	: "Dividir célula horizontalmente",
+VerticalSplitCell	: "Dividir célula verticalmente",
 TableDelete			: "Apagar Tabela",
 CellProperties		: "Formatar Célula",
 TableProperties		: "Formatar Tabela",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "A barra de ferramentas \"%1\" não existe",
 NoActiveX			: "As configurações de segurança do seu browser podem limitar algumas características do editor. Você precisa habilitar a opção \"Executar controles e plug-ins ActiveX\". Você pode experimentar erros e alertas de características faltantes.",
 BrowseServerBlocked : "Os recursos do browser não puderam ser abertos. Tenha certeza que todos os bloqueadores de popup estão desabilitados.",
 DialogBlocked		: "Não foi possível abrir a janela de diálogo. Tenha certeza que todos os bloqueadores de popup estão desabilitados.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Espaçamento",
 DlgTableCellPad		: "Enchimento",
 DlgTableCaption		: "Legenda",
 DlgTableSummary		: "Resumo",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Formatar célula",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Superior",
 DlgCellVerAlignMiddle	: "Centralizado",
 DlgCellVerAlignBottom	: "Inferior",
 DlgCellVerAlignBaseline	: "Baseline",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Transpor Linhas",
 DlgCellCollSpan		: "Transpor Colunas",
 DlgCellBackColor	: "Cor do Plano de Fundo",
@@ -332,7 +345,7 @@ DlgCellBorderColor	: "Cor da Borda",
 DlgCellBtnSelect	: "Selecionar...",
 
 // Find and Replace Dialog
-DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+DlgFindAndReplaceTitle	: "Localizar e Substituir",
 
 // Find Dialog
 DlgFindTitle		: "Localizar...",
@@ -356,10 +369,9 @@ PasteAsText		: "Colar como Texto sem Formatação",
 PasteFromWord	: "Colar do Word",
 
 DlgPasteMsg2	: "Transfira o link usado no box usando o teclado com (<STRONG>Ctrl+V</STRONG>) e <STRONG>OK</STRONG>.",
-DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
+DlgPasteSec		: "As configurações de segurança do seu navegador não permitem que o editor acesse os dados da área de transferência diretamente. Por favor cole o conteúdo novamente nesta janela.",
 DlgPasteIgnoreFont		: "Ignorar definições de fonte",
 DlgPasteRemoveStyles	: "Remove definições de estilo",
-DlgPasteCleanBox		: "Limpar Box",
 
 // Color Picker
 ColorAutomatic	: "Automático",
@@ -512,5 +524,16 @@ DlgAboutAboutTab	: "Sobre",
 DlgAboutBrowserInfoTab	: "Informações do Navegador",
 DlgAboutLicenseTab	: "Licença",
 DlgAboutVersion		: "versão",
-DlgAboutInfo		: "Para maiores informações visite"
+DlgAboutInfo		: "Para maiores informações visite",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style",	//MISSING
+
+ScaytTitle			: "SCAYT",	//MISSING
+ScaytTitleOptions	: "Options",	//MISSING
+ScaytTitleLangs		: "Languages",	//MISSING
+ScaytTitleAbout		: "About"	//MISSING
 };

@@ -43,6 +43,11 @@ per query result.
 Displays query results in interactive timelines, displaying an arbitrary number
 of individual dates per query result.
 
+=== outline ====
+
+Displays query results in an "outline" form, using the values of one more
+properties as the headers.
+
 === sum ===
 
 Displays the sum of the numeric values of the queried property.
@@ -78,7 +83,7 @@ requires data to be transmitted to Google.
 === ploticus ===
 
 Creates a variety of graph types using the Ploticus application, which must be
-installed.
+installed (this format is currently disabled, due to a security hole).
 
 === graph ===
 
@@ -105,11 +110,11 @@ Contact Denny at denny@semantic-mediawiki.org if you are interested.
 
 == Developers ==
 
-Development is coordinated by Denny Vrandecic, Yaron Koren and Markus Krötzsch.
+Development is coordinated by Denny Vrandecic, Yaron Koren and Markus Krï¿½tzsch.
 If you are interested in taking over coordination, please contact Denny.
 
 Semantic Result Formats development is funded by Institut AIFB of
-Universität Karlsruhe, Germany; see http://www.aifb.uni-karlsruhe.de
+Universitï¿½t Karlsruhe, Germany; see http://www.aifb.uni-karlsruhe.de
 Specific development tasks have been supported by the European Union under
 the project Active.
 
@@ -118,7 +123,8 @@ the project Active.
 * S Page has contributed code, and currently coordinates user support.
 
 * The Graph format was contributed by Frank Dengler, based on AT&T's Dot
-  Graphic utility and the MediaWiki Graph extension.
+  Graphic utility and the MediaWiki Graph extension. The Process format
+  had great contributions by Hans-JÃ¶rg Happel.
 
 * The Eventline and Timeline code is based on the Timeline code by the
   MIT Simile project.

@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-sample
+  label: StatusNet - Sample
+  description: "{{int:bw-desc-statusnet-plugin-sample}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/sample
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/Sample/locale/%CODE%/LC_MESSAGES/Sample.po
+  targetPattern: plugins/Sample/locale/%CODE%/LC_MESSAGES/Sample.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: sample-
+  patterns:
+    - "*"

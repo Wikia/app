@@ -1,13 +1,15 @@
 <?php
-if( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
 // Hooks registration:
 global $wgHooks;
+
 $wgHooks['ArticleSaveComplete'][] = 'wfAjaxShowEditorsCleanup';
 $wgHooks['BeforePageDisplay'][] = 'wfAjaxShowEditorsAddCSS';
 $wgHooks['AjaxAddScript'][] = 'wfAjaxShowEditorsAddJS';
 $wgHooks['EditPage::showEditForm:initial'][] = 'wfAjaxShowEditorsShowBox';
+
 /**
 	$article: the article (object) saved
 	$user: the user (object) who saved the article
@@ -19,14 +21,14 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'wfAjaxShowEditorsShowBox';
 */
 function wfAjaxShowEditorsCleanup( $article, $user ) {
 	global $wgCommandLineMode;
-	if( $wgCommandLineMode ) {
+	if ( $wgCommandLineMode ) {
 		return true;
 	}
 	$articleId = $article->getID();
 	$userId = $user->getName();
 
-	$dbw =& wfGetDB(DB_MASTER);
-	$dbw->delete('editings',
+	$dbw = wfGetDB( DB_MASTER );
+	$dbw->delete( 'editings',
 		array(
 			'editings_page' => $articleId,
 			'editings_user' => $userId,
@@ -39,7 +41,7 @@ function wfAjaxShowEditorsCleanup( $article, $user ) {
 // Only when editing a page
 function wfAjaxShowEditorsAddCSS( $out ) {
 	global $action;
-	if( $action != 'edit' ) {
+	if ( $action != 'edit' ) {
 		return true;
 	}
 	global $wgScriptPath;
@@ -66,8 +68,8 @@ function wfAjaxShowEditorsShowBox( ) {
 	wfLoadExtensionMessages( 'AjaxShowEditors' );
 
 	$wgOut->addWikiText(
-		'<div id="ajax-se"><p id="ajax-se-title">'.wfMsg('ajax-se-title').'</p>'
-		. '<p id="ajax-se-editors">'. wfMsg('ajax-se-pending') . '</p>'
+		'<div id="ajax-se"><p id="ajax-se-title">' . wfMsg( 'ajax-se-title' ) . '</p>'
+		. '<p id="ajax-se-editors">' . wfMsg( 'ajax-se-pending' ) . '</p>'
 		. '</div>'
 		);
 	return true;

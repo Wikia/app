@@ -287,15 +287,16 @@ class InputBox {
 				'style' => 'background-color:' . $this->mBGColor
 			)
 		);
-		$htmlOut .= Xml::openElement( 'form',
-			array(
-				'name' => 'createbox',
-				'id' => 'createbox',
-				'class' => 'createbox',
-				'action' => $wgScript,
-				'method' => 'get'
-			)
+		$createBoxParams = array(
+			'name' => 'createbox',
+			'class' => 'createbox',
+			'action' => $wgScript,
+			'method' => 'get'
 		);
+		if( isset( $this->mId ) ) {
+			$createBoxParams['id'] = Sanitizer::escapeId( $this->mId );
+		}
+		$htmlOut .= Xml::openElement( 'form', $createBoxParams );
 		$htmlOut .= Xml::openElement( 'input',
 			array(
 				'type' => 'hidden',
@@ -381,15 +382,16 @@ class InputBox {
 				'style' => 'background-color:' . $this->mBGColor
 			)
 		);
-		$htmlOut .= Xml::openElement( 'form',
-			array(
-				'name' => 'commentbox',
-				'id' => 'commentbox',
-				'class' => 'commentbox',
-				'action' => $wgScript,
-				'method' => 'get'
-			)
+		$commentFormParams = array(
+			'name' => 'commentbox',
+			'class' => 'commentbox',
+			'action' => $wgScript,
+			'method' => 'get'
 		);
+		if( isset( $this->mId ) ) {
+			$commentFormParams['id'] = Sanitizer::escapeId( $this->mId );
+		}
+		$htmlOut .= Xml::openElement( 'form', $commentFormParams );
 		$htmlOut .= Xml::openElement( 'input',
 			array(
 				'type' => 'hidden',

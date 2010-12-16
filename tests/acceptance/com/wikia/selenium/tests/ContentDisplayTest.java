@@ -17,8 +17,6 @@ public class ContentDisplayTest extends BaseTest {
 		String fileName = session().getEval("window.jQuery('.wikia-gallery').find('img').eq(0).attr('src')");
 		fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
 		String fileUploader = session().getEval("window.jQuery('.wikia-gallery').find('.wikia-gallery-item-user').eq(0).text()");
-		System.out.println(fileName);
-		System.out.println(fileUploader);
 
 		// create test page
 		loginAsStaff();
@@ -40,6 +38,6 @@ public class ContentDisplayTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='catlinks']//a[text()='Bar']"));
 
 		// cleanup
-		doDelete("label=Author request", "Wikia PageTypes test");
+		doDelete("label=regexp:.*Author request", "Wikia PageTypes test");
 	}
 }

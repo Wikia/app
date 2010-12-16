@@ -16,6 +16,8 @@ if (! defined ( 'MEDIAWIKI' )) {
 	die ( 'Not an entry point.' );
 }
 
+// TODO: merge with parding done in the geo coord type located in SM.
+
 class MapsUtils {	
 	
 	/*
@@ -25,12 +27,15 @@ class MapsUtils {
 	 * @param string $coordinates
 	 */
 	public static function getLatLon($coordinates) {
-		$coordinates = preg_split ( "/,/", $coordinates );
+		$containsComma = strpos($coordinates, ',') !== false;
+		$coordinates = $containsComma ? preg_split ( '/,/', $coordinates ) : explode ( ' ', $coordinates );
+
 		if (count ( $coordinates ) == 2) {
-			$lat = MapsUtils::convertCoord ( $coordinates [0] );
-			$lon = MapsUtils::convertCoord ( $coordinates [1] );
-			return array ('lat' => $lat, 'lon' => $lon);
-		} else {
+			return array (
+				'lat' => MapsUtils::convertCoord ( $coordinates [0] ),
+				'lon' => MapsUtils::convertCoord ( $coordinates [1] )
+			);
+		} else {				
 			return array ('lat' => null, 'lon' => null);
 		}
 	}
@@ -171,28 +176,6 @@ class MapsUtils {
 		}		
 		
 		return $lonlat;
-	}	
-	
-	/**
-	 * Returns if the current php version is equal of bigger then the provided one.
-	 *
-	 * @param string $requiredVersion
-	 * @return boolean
-	 */
-	public static function phpVersionIsEqualOrBigger($requiredVersion) {
-		// TODO: Ensure this works, and does not cause errors for some versions.
-		$currentVersion = phpversion();
-
-		for($i = 0; $i < 3; $i++) {
-			if ($currentVersion[$i] < $requiredVersion[$i]) {
-				return false; 
-			}
-			else if($currentVersion[$i] > $requiredVersion[$i]) {
-				return true;
-			} 
-		}
-		
-		return true;
 	}	
 	
 }

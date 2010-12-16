@@ -55,19 +55,23 @@ $messages = array(
 'november'  => 'Hukuri',
 'december'  => "N'wendzamhala",
 
-'newwindow'      => '(Yi pfula e ndhzawini yintswa)',
-'cancel'         => 'Thsika',
+'newwindow'     => '(Yi pfula e ndhzawini yintswa)',
+'cancel'        => 'Thsika',
+'moredotdotdot' => "Swin'wana...",
+'mypage'        => 'Tluka ramina',
+'mytalk'        => 'Mbulavulo namina',
+'anontalk'      => 'Vulavula na IP leyi',
+'and'           => '&#32;nakambe',
+
+# Cologne Blue skin
 'qbfind'         => 'Kuma',
 'qbedit'         => 'Lulamisa',
 'qbpageoptions'  => 'Tluka leri',
 'qbpageinfo'     => 'mongo',
 'qbmyoptions'    => 'Matluka ya mina',
 'qbspecialpages' => 'Matluka yohlawuleka',
-'moredotdotdot'  => "Swin'wana...",
-'mypage'         => 'Tluka ramina',
-'mytalk'         => 'Mbulavulo namina',
-'anontalk'       => 'Vulavula na IP leyi',
-'and'            => '&#32;nakambe',
+'faq'            => 'FAQ',
+'faqpage'        => 'Project:FAQ',
 
 'errorpagetitle'   => 'Xihoxo',
 'returnto'         => 'Thlelela e $1.',
@@ -101,8 +105,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:Swithsuxa nadzu hikuangara',
 'edithelp'             => 'Mpfuno hi ta mindzulamiso',
 'edithelppage'         => 'Help:Mindzulamiso',
-'faq'                  => 'FAQ',
-'faqpage'              => 'Project:FAQ',
 'helppage'             => 'Help:Leswinga ndzeni',
 'mainpage'             => 'Tlukankulu',
 'mainpage-description' => 'Tluka-Nkulu',
@@ -179,10 +181,6 @@ The last attempted database query was:
 "$1"
 from within function "$2".
 MySQL returned error "$3: $4"',
-'noconnect'            => 'Sorry! The wiki is experiencing some technical difficulties, and cannot contact the database server.<br />
-$1',
-'nodb'                 => 'Could not select database $1',
-'cachederror'          => 'The following is a cached copy of the requested page, and may not be up to date.',
 'laggedslavemode'      => 'Warning: Page may not contain recent updates.',
 'readonly'             => 'Database locked',
 'enterlockreason'      => 'Enter a reason for the lock, including an estimate of when the lock will be released',
@@ -232,8 +230,6 @@ Query: $2',
 'userlogout'              => 'Pfala u famba',
 'nologinlink'             => 'Tumbuluxa akhawunti',
 'createaccount'           => 'Tumbuluxa akhawunti',
-'yourrealname'            => 'Vito ra ntiyiso:',
-'yourlanguage'            => 'Ririmi:',
 
 # Edit pages
 'summary'          => 'Nkomiso:',
@@ -273,11 +269,13 @@ U hi tshembisa nakambe leswaku hi wena mutsari wa leswi nyikeriwaka laha, kumbe 
 'mypreferences'   => 'Minhlawulo ya mina',
 'prefs-edits'     => 'Ntsengo wa mindzulamiso:',
 'skin-preview'    => 'Ndzinganiso',
-'datetime'        => 'Siku na nkarhi',
+'prefs-datetime'  => 'Siku na nkarhi',
 'prefs-watchlist' => 'Nxaxamelo wa Leswivoniwaka',
 'saveprefs'       => 'Hlayisa',
 'resetprefs'      => 'sula kucinca lokungahlayisiwangiki',
-'textboxsize'     => 'Kululamisa',
+'prefs-editing'   => 'Kululamisa',
+'yourrealname'    => 'Vito ra ntiyiso:',
+'yourlanguage'    => 'Ririmi:',
 
 # Rights
 'right-read'       => 'Matluka yo Hlaya',
@@ -291,7 +289,9 @@ U hi tshembisa nakambe leswaku hi wena mutsari wa leswi nyikeriwaka laha, kumbe 
 'show'          => 'Komba',
 
 # Recent changes linked
-'recentchangeslinked' => 'Kuncica loku yelanaka',
+'recentchangeslinked'         => 'Kuncica loku yelanaka',
+'recentchangeslinked-feed'    => 'Kuncica loku yelanaka',
+'recentchangeslinked-toolbox' => 'Kuncica loku yelanaka',
 
 # Upload
 'upload' => 'Khandziyisa fayili',
@@ -303,6 +303,7 @@ U hi tshembisa nakambe leswaku hi wena mutsari wa leswi nyikeriwaka laha, kumbe 
 'listfiles_name' => 'vito',
 
 # File description page
+'file-anchor-link'   => 'Fayili',
 'filehist-deleteall' => 'sula hinkwaswo',
 'filehist-deleteone' => 'Dlaya',
 'filehist-revert'    => 'thlerisela',
@@ -349,13 +350,14 @@ U hi tshembisa nakambe leswaku hi wena mutsari wa leswi nyikeriwaka laha, kumbe 
 'contributions' => 'Minyikelo ya mutirhisi',
 'mycontris'     => 'Minyikelo ya mina',
 'contribsub2'   => 'For $1 ($2)',
-'nocontribs'    => 'Ku hava ku cinca loku kumiweke eka xiyenge lexi.', # Optional parameter: $1 is the user name
+'nocontribs'    => 'Ku hava ku cinca loku kumiweke eka xiyenge lexi.',
 'uctop'         => '(Henhla)',
 'month'         => 'Kusukela e ka nhweti ya (kuya endhzaku):',
 'year'          => 'Ku sukela e ka lembe ra (kuya endhzaku):',
 
 'sp-contributions-newbies'     => 'Komba minyikela ya ti akhawunti tintswa ntsena',
 'sp-contributions-newbies-sub' => 'Eka ti akhawunti ti ntswa',
+'sp-contributions-talk'        => 'Mbulavulo',
 'sp-contributions-search'      => 'Lava minyikelo',
 
 # What links here

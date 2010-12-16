@@ -18,7 +18,7 @@ class CentralAuthUser extends AuthPluginUser {
 	 */
 	/*private*/ var $mName;
 	/*private*/ var $mStateDirty = false;
-	/*private*/ var $mVersion = 2;
+	/*private*/ var $mVersion = 4;
 	/*private*/ var $mDelayInvalidation = 0;
 	
 	static $mCacheVars = array(
@@ -33,6 +33,7 @@ class CentralAuthUser extends AuthPluginUser {
 		'mAuthenticationTimestamp',
 		'mGroups',
 		'mRights',
+		'mHomeWiki',
 
 		# Store the string list instead of the array, to save memory, and 
 		# avoid unserialize() overhead
@@ -40,6 +41,10 @@ class CentralAuthUser extends AuthPluginUser {
 
 		'mVersion',
 	);
+
+	const HIDDEN_NONE = '';
+	const HIDDEN_LISTS = 'lists';
+	const HIDDEN_OVERSIGHT = 'suppressed';
 
 	function __construct( $username ) {
 		$this->mName = $username;
@@ -89,10 +94,10 @@ class CentralAuthUser extends AuthPluginUser {
 	 */
 	protected function resetState() {
 		unset( $this->mGlobalId );
-		unset( $this->mProperties );
 		unset( $this->mGroups );
 		unset( $this->mAttachedArray );
 		unset( $this->mAttachedList );
+		unset( $this->mHomeWiki );
 	}
 	
 	/**
@@ -131,7 +136,8 @@ class CentralAuthUser extends AuthPluginUser {
 
 		$sql =
 			"SELECT gu_id, lu_wiki, gu_salt, gu_password,gu_auth_token, " .
-				"gu_locked,gu_hidden,gu_registration,gu_email,gu_email_authenticated " .
+			"gu_locked,gu_hidden, gu_registration, gu_email, " . 
+			"gu_email_authenticated, gu_home_db " .
 			"FROM $globaluser " .
 			"LEFT OUTER JOIN $localuser ON gu_name=lu_name AND lu_wiki=? " .
 			"WHERE gu_name=?";
@@ -208,12 +214,13 @@ class CentralAuthUser extends AuthPluginUser {
 			$this->mAuthenticationTimestamp =
 				wfTimestampOrNull( TS_MW, $row->gu_email_authenticated );
 			$this->mFromMaster = $fromMaster;
+			$this->mHomeWiki = $row->gu_home_db;
 		} else {
 			$this->mGlobalId = 0;
 			$this->mIsAttached = false;
 			$this->mFromMaster = $fromMaster;
 			$this->mLocked = false;
-			$this->mHidden = false;
+			$this->mHidden = '';
 		}
 	}
 	
@@ -359,6 +366,8 @@ class CentralAuthUser extends AuthPluginUser {
 	}
 
 	/**
+	 * Returns whether the account is
+	 * locked.
 	 * @return bool
 	 */
 	public function isLocked() {
@@ -367,6 +376,8 @@ class CentralAuthUser extends AuthPluginUser {
 	}
 
 	/**
+	 * Returns whether user name should not
+	 * be shown in public lists.
 	 * @return bool	
 	 */
 	public function isHidden() {
@@ -375,11 +386,44 @@ class CentralAuthUser extends AuthPluginUser {
 	}
 
 	/**
+	 * Returns whether user's name should
+	 * be hidden from all public views because
+	 * of privacy issues.
+	 * @return bool
+	 */
+	public function isOversighted() {
+		$this->loadState();
+		return $this->mHidden == self::HIDDEN_OVERSIGHT;
+	}
+
+	/**
+	 * Returns the hidden level of
+	 * the account.
+	 */
+	public function getHiddenLevel() {
+		$this->loadState();
+
+		// b/c-failsafe. Should never happen
+		if( $this->mHidden === '0' )
+			$this->mHidden = '';
+
+		return $this->mHidden;
+	}
+
+	/**
 	 * @return string timestamp
 	 */
 	public function getRegistration() {
 		$this->loadState();
 		return wfTimestamp( TS_MW, $this->mRegistration );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getHomeWiki() {
+		$this->loadState();
+		return $this->mHomeWiki;
 	}
 
 	/**
@@ -402,7 +446,7 @@ class CentralAuthUser extends AuthPluginUser {
 				'gu_password' => $hash,
 
 				'gu_locked' => 0,
-				'gu_hidden' => 0,
+				'gu_hidden' => '',
 
 				'gu_registration' => $dbw->timestamp(),
 			),
@@ -466,6 +510,8 @@ class CentralAuthUser extends AuthPluginUser {
 				'gu_email' => $email,
 				'gu_email_authenticated' => $dbw->timestampOrNull( $emailAuth ),
 				'gu_registration' => $dbw->timestamp(), // hmmmm
+				'gu_locked' => 0,
+				'gu_hidden' => '',
 			),
 			__METHOD__,
 			array( 'IGNORE' ) );
@@ -947,40 +993,138 @@ class CentralAuthUser extends AuthPluginUser {
 
 	/**
 	 * Hide a global account
+	 * @deprecated Use adminSetHidden
 	 */
 	function adminHide() {
-		$dbw = self::getCentralDB();
-		$dbw->begin();
-		$dbw->update( 'globaluser', array( 'gu_hidden' => 1 ),
-			array( 'gu_name' => $this->mName ), __METHOD__ );
-		if ( !$dbw->affectedRows() ) {
-			$dbw->commit();
-			return Status::newFatal( 'centralauth-admin-hide-nonexistent', $this->mName );
-		}
-		$dbw->commit();
-		
-		$this->invalidateCache();
-		
-		return Status::newGood();
+		$this->adminSetHidden( self::HIDDEN_LISTS );
 	}
 
 	/**
 	 * Unhide a global account
+	 * @deprecated Use adminSetHidden
 	 */
 	function adminUnhide() {
+		$this->adminSetHidden( self::HIDDEN_NONE );
+	}
+
+	/**
+	 * Change account hiding level.
+	 */
+	function adminSetHidden( $level ) {
 		$dbw = self::getCentralDB();
 		$dbw->begin();
-		$dbw->update( 'globaluser', array( 'gu_hidden' => 0 ),
+		$dbw->update( 'globaluser', array( 'gu_hidden' => $level ),
 			array( 'gu_name' => $this->mName ), __METHOD__ );
 		if ( !$dbw->affectedRows() ) {
 			$dbw->commit();
 			return Status::newFatal( 'centralauth-admin-unhide-nonexistent', $this->mName );
 		}
 		$dbw->commit();
-		
+
 		$this->invalidateCache();
-		
+
 		return Status::newGood();
+	}
+
+	/**
+	 * Suppresses all user accounts in all wikis.
+	 */
+	function suppress( $reason ) {
+		global $wgUser;
+		$this->doCrosswikiSuppression( true, $wgUser->getName(), $reason );
+	}
+
+	/**
+	 * Unsuppresses all user accounts in all wikis.
+	 */
+	function unsuppress( $reason ) {
+		global $wgUser;
+		$this->doCrosswikiSuppression( false, $wgUser->getName(), $reason );
+	}
+
+	protected function doCrosswikiSuppression( $suppress, $by, $reason ) {
+		global $wgCentralAuthWikisPerSuppressJob;
+		$this->loadAttached();
+		if( count( $this->mAttachedArray ) <= $wgCentralAuthWikisPerSuppressJob ) {
+			foreach( $this->mAttachedArray as $wiki ) {
+				$this->doLocalSuppression( $suppress, $wiki, $by, $reason );
+			}
+		} else {
+			$jobParams = array(
+				'username' => $this->getName(),
+				'suppress' => $suppress,
+				'by' => $by,
+				'reason' => $reason,
+			);
+			$jobs = array();
+			$chunks = array_chunk( $this->mAttachedArray, $wgCentralAuthWikisPerSuppressJob );
+			foreach( $chunks as $wikis ) {
+				$jobParams['wikis'] = $wikis;
+				$jobs[] = Job::factory(
+					'crosswikiSuppressUser',
+					Title::makeTitleSafe( NS_USER, $this->getName() ),
+					$jobParams );
+			}
+			Job::batchInsert( $jobs );
+		}
+	}
+
+	/**
+	 * Suppresses a local account of a user.
+	 */
+	public function doLocalSuppression( $suppress, $wiki, $by, $reason ) {
+		global $wgConf, $wgLanguageNames;
+
+		$lb = wfGetLB( $wiki );
+		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
+		$data = $this->localUserData( $wiki );
+
+		if( $suppress ) {
+			list( $site, $lang ) = $wgConf->siteFromDB( $wiki );
+			$lang = isset( $wgLanguageNames[$lang] ) ? $lang : 'en';
+			$blockReason = wfMsgReal( 'centralauth-admin-suppressreason',
+				array( $by, $reason ), true, $lang );
+
+			$ipbID = $dbw->nextSequenceValue( 'ipblocks_ipb_id_seq' );
+			$dbw->insert( 'ipblocks',
+				array(
+					'ipb_id' => $ipbID,
+					'ipb_address' => $this->mName,
+					'ipb_user' => $data['id'],
+					'ipb_by' => 0,
+					'ipb_by_text' => $by,
+					'ipb_reason' => $blockReason,
+					'ipb_timestamp' => $dbw->timestamp( wfTimestampNow() ),
+					'ipb_auto' => false,
+					'ipb_anon_only' => false,
+					'ipb_create_account' => true,
+					'ipb_enable_autoblock' => false,
+					'ipb_expiry' => Block::infinity(),
+					'ipb_range_start' => '',
+					'ipb_range_end' => '',
+					'ipb_deleted'	=> true,
+					'ipb_block_email' => true,
+					'ipb_allow_usertalk' => false
+				), __METHOD__, array( 'IGNORE' )
+			);
+
+			IPBlockForm::suppressUserName( $this->mName, $data['id'], $dbw );
+		} else {
+			$dbw->delete(
+				'ipblocks',
+				array(
+					'ipb_user' => $data['id'],
+					'ipb_by' => 0,	// Check whether this block was imposed globally
+					'ipb_deleted' => true,
+				),
+				__METHOD__
+			);
+
+			// Unsuppress only if unblocked
+			if( $dbw->affectedRows() ) {
+				IPBlockForm::unsuppressUserName( $this->mName, $data['id'], $dbw );
+			}
+		}
 	}
 
 	/**
@@ -1022,7 +1166,7 @@ class CentralAuthUser extends AuthPluginUser {
 				$wgCentralAuthUDPAddress, $wgCentralAuthNew2UDPPrefix );
 		}
 	}
-	
+
 	/**
 	 * Generate an IRC line corresponding to user unification/creation
 	 * @param Title $userpage
@@ -1054,15 +1198,15 @@ class CentralAuthUser extends AuthPluginUser {
 			return "no user";
 		}
 
-		list($salt,$crypt) = $this->getPasswordHash();
-		$locked = $this->isLocked();
-
-		if( $locked ) {
-			wfDebugLog( 'CentralAuth',
-				"authentication for '$this->mName' failed due to lock" );
+		// Don't allow users to autocreate if they are oversighted.
+		// If they do, their name will appear on local user list
+		// (and since it contains private info, its inacceptable).
+		// FIXME: this will give users "password incorrect" error.
+		// Giving correct message requires AuthPlugin and SpecialUserlogin
+		// rewriting.
+		if( !User::idFromName( $this->getName() ) && $this->isOversighted() )
 			return "locked";
-		}
-		
+
 		return true;
 	}
 

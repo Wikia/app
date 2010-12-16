@@ -29,11 +29,13 @@ if (!defined('MEDIAWIKI')) {
 define('DESCRIPTION_VERSION', '0.1');
 
 $wgExtensionFunctions[] = 'DescriptionSetup';
-$wgExtensionCredits['other'][] = array('name' => 'Description',
-									   'version' => DESCRIPTION_VERSION,
-									   'author' => 'Evan Prodromou',
-									   'url' => 'http://www.mediawiki.org/wiki/Extension:Description',
-									   'description' => 'Adds a description meta-tag to MW pages');
+$wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
+	'name' => 'Description',
+	'version' => DESCRIPTION_VERSION,
+	'author' => 'Evan Prodromou',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:Description',
+	'description' => 'Adds a description meta-tag to MW pages');
 
 function DescriptionSetup() {
 	

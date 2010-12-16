@@ -26,6 +26,7 @@
  */
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'version'     => '0.2',
 	'name' => 'Throttle',
 	'author' => 'Brion Vibber',

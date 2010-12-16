@@ -13,8 +13,20 @@
  * @ingroup ExternalStorage
  */
 class ExternalStore {
-	/* Fetch data from given URL */
-	static function fetchFromURL( $url ) {
+	var $mParams;
+	
+	function __construct( $params = array() ) {
+		$this->mParams = $params;
+	}
+	
+	/**
+	 * Fetch data from given URL
+	 *
+	 * @param $url String: The URL of the text to get
+	 * @param $params Array: associative array of parameters for the ExternalStore object.
+	 * @return The text stored or false on error
+	 */
+	static function fetchFromURL( $url, $params = array() ) {
 		global $wgExternalStores;
 
 		if( !$wgExternalStores )
@@ -25,16 +37,20 @@ class ExternalStore {
 		if( $path == '' )
 			return false;
 
-		$store = self::getStoreObject( $proto );
+		$store = self::getStoreObject( $proto, $params );
 		if ( $store === false )
 			return false;
 		return $store->fetchFromURL( $url );
 	}
 
 	/**
-	 * Get an external store object of the given type
+	 * Get an external store object of the given type, with the given parameters
+	 *
+	 * @param $proto String: type of external storage, should be a value in $wgExternalStores
+	 * @param $params Array: associative array of parameters for the ExternalStore object.
+	 * @return ExternalStore subclass or false on error
 	 */
-	static function getStoreObject( $proto ) {
+	static function getStoreObject( $proto, $params = array() ) {
 		global $wgExternalStores;
 		if( !$wgExternalStores )
 			return false;
@@ -48,18 +64,18 @@ class ExternalStore {
 			return false;
 		}
 
-		return new $class();
+		return new $class($params);
 	}
 
 	/**
 	 * Store a data item to an external store, identified by a partial URL
 	 * The protocol part is used to identify the class, the rest is passed to the
 	 * class itself as a parameter.
-	 * Returns the URL of the stored data item, or false on error
+	 * @return The URL of the stored data item, or false on error
 	 */
-	static function insert( $url, $data, &$revision = null ) {
+	static function insert( $url, $data, $params = array() ) {
 		list( $proto, $params ) = explode( '://', $url, 2 );
-		$store = self::getStoreObject( $proto );
+		$store = self::getStoreObject( $proto, $params );
 		if ( $store === false ) {
 			return false;
 		} else {
@@ -72,10 +88,11 @@ class ExternalStore {
 	 * This function does not need a url param, it builds it by
 	 * itself. It also fails-over to the next possible clusters.
 	 *
-	 * @param string $data
-	 * Returns the URL of the stored data item, or false on error
+	 * @param $data String
+	 * @param $storageParams Array: associative array of parameters for the ExternalStore object.
+	 * @return The URL of the stored data item, or false on error
 	 */
-	public static function insertToDefault( $data ) {
+	public static function insertToDefault( $data, $storageParams = array() ) {
 		global $wgDefaultExternalStore;
 		$tryStores = (array)$wgDefaultExternalStore;
 		$error = false;
@@ -84,7 +101,7 @@ class ExternalStore {
 			$storeUrl = $tryStores[$index];
 			wfDebug( __METHOD__.": trying $storeUrl\n" );
 			list( $proto, $params ) = explode( '://', $storeUrl, 2 );
-			$store = self::getStoreObject( $proto );
+			$store = self::getStoreObject( $proto, $storageParams );
 			if ( $store === false ) {
 				throw new MWException( "Invalid external storage protocol - $storeUrl" );
 			}
@@ -110,5 +127,10 @@ class ExternalStore {
 		} else {
 			throw new MWException( "Unable to store text to external storage" );
 		}
+	}
+	
+	/** Like insertToDefault, but inserts on another wiki */
+	public static function insertToForeignDefault( $data, $wiki ) {
+		return self::insertToDefault( $data, array( 'wiki' => $wiki ) );
 	}
 }

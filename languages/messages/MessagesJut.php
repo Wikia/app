@@ -119,16 +119,24 @@ $messages = array(
 'category-media-header'    => "Medier i'n klynge „$1“",
 'category-empty'           => "''Denne klynge endeholter før øjeblikket æ verke sider æller medie-gøret.''",
 'hidden-categories'        => '{{PLURAL:$1|Skjult klynge|Skjulte klynger}}',
-'hidden-category-category' => 'Skjulte klynger', # Name of the category where hidden categories will be listed
+'hidden-category-category' => 'Skjulte klynger',
 'listingcontinuesabbrev'   => 'førtgøte',
 
 'mainpagetext'      => "'''MediaWiki er nu installeret.'''",
 'mainpagedocfooter' => "Se vores engelskspråĝede [http://meta.wikimedia.org/wiki/MediaWiki_localisation dokumentåsje tilpasnenge'm åf æ brugergrænseflade] og [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide æ brugervejlednenge] før åplysnenger åpsætnenge'm og anvendelse.",
 
-'about'          => 'Åm',
-'article'        => 'Ertikel',
-'newwindow'      => '(åbner i et nyt vendue)',
-'cancel'         => 'Åfbryd',
+'about'         => 'Åm',
+'article'       => 'Ertikel',
+'newwindow'     => '(åbner i et nyt vendue)',
+'cancel'        => 'Åfbryd',
+'moredotdotdot' => 'Mære...',
+'mypage'        => 'Miin side',
+'mytalk'        => 'Min diskusje',
+'anontalk'      => 'Diskusjeside før denne IP-adresse',
+'navigation'    => 'Navigasje',
+'and'           => '&#32;og',
+
+# Cologne Blue skin
 'qbfind'         => 'Søĝ',
 'qbbrowse'       => 'Gennemse',
 'qbedit'         => 'Redigær',
@@ -136,15 +144,8 @@ $messages = array(
 'qbpageinfo'     => "Informåsje side'm",
 'qbmyoptions'    => 'Miine endstellenger',
 'qbspecialpages' => 'Sonst sider',
-'moredotdotdot'  => 'Mære...',
-'mypage'         => 'Miin side',
-'mytalk'         => 'Min diskusje',
-'anontalk'       => 'Diskusjeside før denne IP-adresse',
-'navigation'     => 'Navigasje',
-'and'            => '&#32;og',
-
-# Metadata in edit box
-'metadata_help' => 'Metadata:',
+'faq'            => 'VSF',
+'faqpage'        => 'Project:Vøl stellen fråĝer (VSF)',
 
 'errorpagetitle'    => 'Fejl',
 'returnto'          => 'Tilbage til $1.',
@@ -194,7 +195,7 @@ $messages = array(
 'otherlanguages'    => 'Andre språĝ',
 'redirectedfrom'    => '(Åmstyret frå $1)',
 'redirectpagesub'   => 'Åmstyrenge',
-'lastmodifiedat'    => 'Denne side blev senest ændret den $2, $1.', # $1 date, $2 time
+'lastmodifiedat'    => 'Denne side blev senest ændret den $2, $1.',
 'viewcount'         => 'Æ side er vest i alt $1 {{PLURAL:$1|geng|genger}}.',
 'protectedpage'     => 'Beskyttet side',
 'jumpto'            => 'Skeft til:',
@@ -205,7 +206,6 @@ $messages = array(
 'aboutsite'            => "{{SITENAME}}'m",
 'aboutpage'            => 'Project:Åm',
 'copyright'            => 'Endholtet er udgævet under $1.',
-'copyrightpagename'    => '{{SITENAME}} åphavsret',
 'copyrightpage'        => '{{ns:project}}:Åphavsret',
 'currentevents'        => 'Nænte begevenheder',
 'currentevents-url'    => 'Project:Nænte begevenheder',
@@ -213,8 +213,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:Huses førbeholt',
 'edithelp'             => 'Hjælp til redigærenge',
 'edithelppage'         => "Help:Vordan redigærer a'n side",
-'faq'                  => 'VSF',
-'faqpage'              => 'Project:Vøl stellen fråĝer (VSF)',
 'helppage'             => 'Help:Hjælpførside',
 'mainpage'             => 'Førsit',
 'mainpage-description' => 'Førsit',
@@ -287,9 +285,6 @@ MySQL æ returnerede fejl "<tt>$3: $4</tt>".',
 'dberrortextcl'        => 'Der er åpstået en syntaksfejl i en databaseførespørgsel. 
 Den seneste førsøĝte databaseførespørgsel var: "$1" frå\'n funksje "$2". 
 MySQL æ returnerede fejl "$3: $4".',
-'noconnect'            => "Der er pråblæmer ve {{SITENAME}} han database, vi kan desværre ekke kåm i kontakt ve den før øjeblikket. Prøv ig'n senere. <br />$1",
-'nodb'                 => "Kan ekke vælge'n database $1",
-'cachederror'          => 'Det følgende er en gemt kopi åf den ønskede side, og er måske ekke helt åpdateret.',
 'laggedslavemode'      => 'Bemærk: Den veste side endholter mulegves ekke de nyeste ændrenger.',
 'readonly'             => 'Æ database er skrevebeskyttet',
 'enterlockreason'      => "Skrev en begrundelse før æ skrevebeskyttelse, ve samt en vurderenge åf, hvornår æ skrevebeskyttelse åphæves ig'n",
@@ -331,9 +326,6 @@ Førespørgsel: $2',
 'createaccount'           => 'Åpret en ny konto',
 'gotaccount'              => "Du har ålerede en brugerkonto? '''$1'''.",
 'gotaccountlink'          => 'Loĝ på',
-'youremail'               => 'E-mail:',
-'yourrealname'            => 'Dit rigtege navn*',
-'prefs-help-realname'     => '* <strong>Dit rigtege navn</strong> (valgfrit): Hves du vælger at åplyse dit navn hvil dette bleve brugt til at tilskreve dig dit arbejde.',
 'loginsuccesstitle'       => 'Du er nu loĝget på',
 'loginsuccess'            => 'Du er nu loĝget på {{SITENAME}} søm "$1".',
 'nosuchuser'              => 'Der er ig\'n bruger ve navnet "$1". Kontrollér æ stavemåde ig\'n, æller brug æ formulår herunder til at åprette en ny brugerkonto.',
@@ -383,17 +375,17 @@ Før en e-mail ken modtages åf andre brugere åf æ {{SITENAME}}-mailfunksje, s
 'hr_tip'          => 'Plat lenje (brug den sparsåmt)',
 
 # Edit pages
-'summary'                => 'Beskrevelse:',
-'subject'                => 'Emne/åverskreft:',
-'minoredit'              => "Dette'r en mendre æller lile ændrenge.",
-'watchthis'              => 'Åvervåg denne ertikel',
-'savearticle'            => 'Gem side',
-'preview'                => 'Førhåndsvesnenge',
-'showpreview'            => 'Førhåndsvesnenge',
-'showdiff'               => 'Ves ændrenger',
-'anoneditwarning'        => "Du arbejder uden at være loĝget på. Estedet før brugernav veses så'n IP-adresse i'n hersenengerskigt.",
-'summary-preview'        => 'Førhåndsvesnenge åf beskrevelselejne:',
-'blockedtext'            => "'''Dit brugernav æller din IP-adresse er blevet blokeret.'''
+'summary'                    => 'Beskrevelse:',
+'subject'                    => 'Emne/åverskreft:',
+'minoredit'                  => "Dette'r en mendre æller lile ændrenge.",
+'watchthis'                  => 'Åvervåg denne ertikel',
+'savearticle'                => 'Gem side',
+'preview'                    => 'Førhåndsvesnenge',
+'showpreview'                => 'Førhåndsvesnenge',
+'showdiff'                   => 'Ves ændrenger',
+'anoneditwarning'            => "Du arbejder uden at være loĝget på. Estedet før brugernav veses så'n IP-adresse i'n hersenengerskigt.",
+'summary-preview'            => 'Førhåndsvesnenge åf beskrevelselejne:',
+'blockedtext'                => "'''Dit brugernav æller din IP-adresse er blevet blokeret.'''
 
 Æ blokerenge er lavet åf $1. Æ begrundelse er ''$2''.
 
@@ -404,27 +396,27 @@ Før en e-mail ken modtages åf andre brugere åf æ {{SITENAME}}-mailfunksje, s
 Du ken kåle $1 æller en åf de andre [[{{MediaWiki:Grouppage-sysop}}|administratårer]] før at diskutere æ blokerenge.
 Du ken ekke bruge æ funksje 'e-mail til denne bruger' vemendre der er ångevet en gyldig email-addresse i dine
 [[Special:Preferences|kontoendstellenger]]. Din nuværende IP-addresse er $3, og blokerengs-ID er #$5. Ångev venlegst en æller begge i åle henvendelser.",
-'newarticle'             => '(Ny)',
-'newarticletext'         => "'''{{SITENAME}} har endnu ekke nogen {{NAMESPACE}}-side ve nav {{PAGENAME}}.'''<br /> Du ken begynde en side ve at skreve i'n boks herunder. (se'n [[{{MediaWiki:Helppage}}|hjælp]] før yderligere åplysnenger).<br /> Æller du ken [[Special:Search/{{PAGENAME}}|søĝe æfter {{PAGENAME}} i {{SITENAME}}]].<br /> Ves det ekke var din meneng, så tryk på æ '''Tilbage'''- æller æ '''Back'''-knåp.",
-'noarticletext'          => "'''{{SITENAME}} har ekke nogen side ve prånt dette nav.''' 
+'newarticle'                 => '(Ny)',
+'newarticletext'             => "'''{{SITENAME}} har endnu ekke nogen {{NAMESPACE}}-side ve nav {{PAGENAME}}.'''<br /> Du ken begynde en side ve at skreve i'n boks herunder. (se'n [[{{MediaWiki:Helppage}}|hjælp]] før yderligere åplysnenger).<br /> Æller du ken [[Special:Search/{{PAGENAME}}|søĝe æfter {{PAGENAME}} i {{SITENAME}}]].<br /> Ves det ekke var din meneng, så tryk på æ '''Tilbage'''- æller æ '''Back'''-knåp.",
+'noarticletext'              => "'''{{SITENAME}} har ekke nogen side ve prånt dette nav.''' 
 * Du ken '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} starte æ side {{PAGENAME}}]''' 
 * Æller [[Special:Search/{{PAGENAME}}|søĝe æfter {{PAGENAME}}]] i andre ertikler 
 ---- 
 * Ves du har åprettet denne ertikel endenfør de sedste få minutter, så ken de skyldes at der er ledt førsenkelse i'n åpdaterenge åf {{SITENAME}}s cache. Vent venligst og tjek igen senere'n ertikel'm dukker åp, enden du førsøĝer at åprette'n ertikel igen.",
-'previewnote'            => "'''Husk at dette er kun en førhåndsvesnenge, æ side er ekke gemt endnu!'''",
-'editing'                => 'Redigærer $1',
-'editingsection'         => 'Redigærer $1 (åfsnet)',
-'copyrightwarning'       => "'''Husk: åpskrev engen websider, søm ekke tilhører dig selv, brug engen åphavsretsligt beskyttede værker uden tilladelse frå'n ejer!'''<br />
+'previewnote'                => "'''Husk at dette er kun en førhåndsvesnenge, æ side er ekke gemt endnu!'''",
+'editing'                    => 'Redigærer $1',
+'editingsection'             => 'Redigærer $1 (åfsnet)',
+'copyrightwarning'           => "'''Husk: åpskrev engen websider, søm ekke tilhører dig selv, brug engen åphavsretsligt beskyttede værker uden tilladelse frå'n ejer!'''<br />
 Du lover os hermed, at du selv '''har skrevet skrevselenger''', at skrevselenger tilhører ålmenheden, er ('''åpværer hus'''), æller at æ '''åphavsrets-endehaver''' har gevet sen '''tilladelse'''. Ves denne skrevselenger ålerede er åfentliggkort andre steder, skrev det venligst på æ diskusjesside.
 <i>Bemærk venligst, at ål {{SITENAME}}-ertikler åtomatisk står under „$2“ (se $1 før lileskrevselenger). Ves du ekke vel, at dit arbejde her ændres og udbredes åf andre, så tryk ekke på „Gem“.</i>",
-'longpagewarning'        => "'''ADVARSEL: Denne side er $1 kilobyte stor; nogle browsere ken have pårblæmer ve at redigære sider der nærmer sig æller er større end 32 kb. 
+'longpagewarning'            => "'''ADVARSEL: Denne side er $1 kilobyte stor; nogle browsere ken have pårblæmer ve at redigære sider der nærmer sig æller er større end 32 kb. 
 Åvervej æ side'm ken åpdeles i mendre dæle.'''",
-'templatesused'          => 'Skablåner der er brugt på denne side:',
-'templatesusedpreview'   => 'Følgende skablåner bruges åf denne ertikelførhåndsvesnenge:',
-'template-protected'     => '(skrevebeskyttet)',
-'template-semiprotected' => '(skrevebeskyttet før ekke ånmeldte og nye brugere)',
-'nocreatetext'           => "Æ'n åpdiin har begrænset åprettelse åf nye sider. Bestående sider ken ændres æller [[Special:UserLogin|loĝge på]].",
-'recreate-deleted-warn'  => "'''Advarsel: Du er ve at genskabe en tidligere slettet side.'''
+'templatesused'              => 'Skablåner der er brugt på denne side:',
+'templatesusedpreview'       => 'Følgende skablåner bruges åf denne ertikelførhåndsvesnenge:',
+'template-protected'         => '(skrevebeskyttet)',
+'template-semiprotected'     => '(skrevebeskyttet før ekke ånmeldte og nye brugere)',
+'nocreatetext'               => "Æ'n åpdiin har begrænset åprettelse åf nye sider. Bestående sider ken ændres æller [[Special:UserLogin|loĝge på]].",
+'recreate-moveddeleted-warn' => "'''Advarsel: Du er ve at genskabe en tidligere slettet side.'''
  
 Åvervej det'm er passende at genåprette'n side. De slettede hersenenger før 
 denne side er vest nedenfør:",
@@ -433,7 +425,7 @@ denne side er vest nedenfør:",
 'viewpagelogs'        => 'Ves loglister før denne side',
 'currentrev'          => 'Nuværende hersenenge',
 'revisionasof'        => 'Hersenenger frå $1',
-'revision-info'       => 'Hersenenge frå $1 til $2', # Additionally available: $3: revision id
+'revision-info'       => 'Hersenenge frå $1 til $2',
 'previousrevision'    => '←Ældre hersenenge',
 'nextrevision'        => 'Nyere hersenenge→',
 'currentrevisionlink' => 'se nuværende hersenenge',
@@ -447,7 +439,7 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'histlast'            => 'Nyeste',
 
 # Revision feed
-'history-feed-item-nocomment' => '$1 ve $2', # user at time
+'history-feed-item-nocomment' => '$1 ve $2',
 
 # Diffs
 'history-title'           => 'Hersengsskigte før "$1"',
@@ -458,18 +450,20 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'diff-multi'              => '(Æ hersenengssammenlegnenge vetåger {{PLURAL:$1|en mellemleggende hersenenge|$1 mellemleggende hersenenger}}.)',
 
 # Search results
-'noexactmatch'   => "'''{{SITENAME}} har engen ertikel ve dette nav.''' Du ken [[:$1|åprette en ertikel ve dette nav]].",
-'prevn'          => 'førge $1',
-'nextn'          => 'nægste $1',
-'viewprevnext'   => 'Ves ($1) ($2) ($3)',
+'prevn'          => 'førge {{PLURAL:$1|$1}}',
+'nextn'          => 'nægste {{PLURAL:$1|$1}}',
+'viewprevnext'   => 'Ves ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url' => 'Help:Hjælpførside',
 'searchall'      => 'ål',
 'powersearch'    => 'Søĝ',
 
 # Preferences page
-'preferences'   => 'Endstellenger',
-'mypreferences' => 'Endstellenger',
-'skin-preview'  => 'Førhåndsvesnenge',
+'preferences'         => 'Endstellenger',
+'mypreferences'       => 'Endstellenger',
+'skin-preview'        => 'Førhåndsvesnenge',
+'youremail'           => 'E-mail:',
+'yourrealname'        => 'Dit rigtege navn*',
+'prefs-help-realname' => '* <strong>Dit rigtege navn</strong> (valgfrit): Hves du vælger at åplyse dit navn hvil dette bleve brugt til at tilskreve dig dit arbejde.',
 
 'grouppage-sysop' => '{{ns:project}}:Administråtorer',
 
@@ -500,6 +494,8 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 
 # Recent changes linked
 'recentchangeslinked'          => 'Relaterede ændrenger',
+'recentchangeslinked-feed'     => 'Relaterede ændrenger',
+'recentchangeslinked-toolbox'  => 'Relaterede ændrenger',
 'recentchangeslinked-title'    => 'Ændrenger der vegånde til "$1"',
 'recentchangeslinked-noresult' => 'I det udvalgte tidsrum blev der ekke føretaget ændrenger på siderne der henveses til.',
 'recentchangeslinked-summary'  => "Denne sonstside beser de seneste ændrenger på de sider der henveses til. Sider på din åvervågnengsliste er vest ve '''fed''' skreft.",
@@ -514,6 +510,7 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'listfiles' => 'Billetliste',
 
 # File description page
+'file-anchor-link'          => 'Billet',
 'filehist'                  => 'Billetskigt',
 'filehist-help'             => "Klik på'n dato/tid før at se den hersenenge åf gøret.",
 'filehist-current'          => 'nuværende',
@@ -525,9 +522,7 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'imagelinks'                => 'Billethenvesnenger',
 'linkstoimage'              => 'De følgende sider henveser til dette billet:',
 'nolinkstoimage'            => 'Der er engen sider der henveser til dette billet.',
-'sharedupload'              => 'Denne gøret er en fælles læĝenge og ken bruges åf andre projekter.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
-'noimage'                   => 'Der er engen gøret ve dette nav, du ken $1',
-'noimage-linktext'          => 'læĝge den åp',
+'sharedupload'              => 'Denne gøret er en fælles læĝenge og ken bruges åf andre projekter.',
 'uploadnewversion-linktext' => 'Læĝ en ny hersenenge åf denne gøret åp',
 
 # MIME search
@@ -675,7 +670,6 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'protectexpiry'               => 'Udløb:',
 'protect_expiry_invalid'      => 'Æ udløbstiid er ugyldeg.',
 'protect_expiry_old'          => "Æ udløbstiid legger i'n førtiid.",
-'protect-unchain'             => 'Ændre flytnengsbeskyttelse',
 'protect-text'                => "Her ken beskyttelsesståt før æ side '''<nowiki>$1</nowiki>''' ses og ændres.",
 'protect-locked-access'       => "Den brugerkonto har ekke de nødvendege rettegheder til at æ ændre sidebeskyttelse. Her er de aktuelle beskyttelsesendstellenger før æ side '''„$1“:'''",
 'protect-cascadeon'           => 'Denne side er del åf en nedarvet skrevebeskyttelse. Wen er endeholt i nedenstående {{PLURAL:$1|side|sider}}, søm er skrevebeskyttet ve tilvalg åf "nedarvende sidebeskyttelse" Æ sidebeskyttelse ken ændres før denne side, det påverker dog ekke\'n kaskadespærrenge:',
@@ -687,7 +681,7 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'protect-expiring'            => 'til $1 (UTC)',
 'protect-cascade'             => 'Nedarvende spærrenge – ål skabelåner, søm er endbundet i denne side spærres også.',
 'protect-cantedit'            => 'Du kenst ekke ændre beskyttelsesnivå før denne side, da du ekke kenst redigære føden.',
-'protect-expiry-options'      => '1 tême:1 hour,1 dåĝ:1 day,1 uge:1 week,2 uger:2 weeks,1 måned:1 month,3 måneder:3 months,6 måneder:6 months,1 år:1 year,ubegrænset:indefinite', # display1:time1,display2:time2,...
+'protect-expiry-options'      => '1 tême:1 hour,1 dåĝ:1 day,1 uge:1 week,2 uger:2 weeks,1 måned:1 month,3 måneder:3 months,6 måneder:6 months,1 år:1 year,ubegrænset:indefinite',
 'restriction-type'            => 'Beskyttelsesståt',
 'restriction-level'           => 'Beskyttelseshøjde',
 
@@ -709,6 +703,8 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 
 'sp-contributions-newbies-sub' => 'Før nybegyndere',
 'sp-contributions-blocklog'    => 'Blokerengslog',
+'sp-contributions-deleted'     => 'Slettede brugerbidråg',
+'sp-contributions-talk'        => 'diskusje',
 
 # What links here
 'whatlinkshere'       => 'Vat henveser hertil',
@@ -723,7 +719,7 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 
 # Block/unblock
 'blockip'       => 'Bloker bruger',
-'ipboptions'    => '1 tême:1 hour,2 têmer:2 hours,6 têmer:6 hours,1 dåĝ:1 day,3 dåĝ:3 days,1 uge:1 week,2 uger:2 weeks,1 måned:1 month,3 måneder:3 months,1 år:1 year,ubegrænset:indefinite', # display1:time1,display2:time2,...
+'ipboptions'    => '1 tême:1 hour,2 têmer:2 hours,6 têmer:6 hours,1 dåĝ:1 day,3 dåĝ:3 days,1 uge:1 week,2 uger:2 weeks,1 måned:1 month,3 måneder:3 months,1 år:1 year,ubegrænset:indefinite',
 'ipblocklist'   => 'Blokerede IP-adresser og brugernave',
 'blocklink'     => 'blåker',
 'unblocklink'   => 'åphæv blokerenge',
@@ -754,7 +750,7 @@ I disse tilfælde er du nødt til at flytte æller sammenflette'n side manuelt."
 'move-watch'       => 'Denne side åvervåges',
 'movepagebtn'      => 'Flyt side',
 'pagemovedsub'     => 'Flytnenge gennemført',
-'movepage-moved'   => 'Æ side \'\'\'"$1" er flyttet til "$2"\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'   => 'Æ side \'\'\'"$1" er flyttet til "$2"\'\'\'',
 'articleexists'    => 'En side ve det navn eksisterer ålrede, æller det
 navn du harst valgt er ekke gyldegt. Vælg et andet navn.',
 'talkexists'       => 'Æ side blev flyttet korrekt, men den tilhørende diskusjeside ken ekke flyttes, førdi der ålrede eksisterer en ve den nye titel. Du erst nødt til at flette dem sammen manuelt.',
@@ -851,7 +847,7 @@ Kun endholtet åf æ liste (lenjer startende ve *) bliver brugt. Den første hen
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # External editor support
 'edit-externally'      => "Redigær denne gøret ve'n utsende redigærstøme",
@@ -868,7 +864,7 @@ Kun endholtet åf æ liste (lenjer startende ve *) bliver brugt. Den første hen
 'watchlisttools-raw'  => 'Redigær rå åvervågnengsliste',
 
 # Special:Version
-'version' => "Informasje MediaWiki'm", # Not used as normal message but as header for the special page itself
+'version' => "Informasje MediaWiki'm",
 
 # Special:SpecialPages
 'specialpages' => 'Sonst sider',

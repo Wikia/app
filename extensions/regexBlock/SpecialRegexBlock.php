@@ -242,9 +242,9 @@ class RegexBlockForm extends SpecialPage {
 			}
 		}
 
-		$wgOut->addHTML('</select>&nbsp;'.wfMsg( 'regexblock-regex-filter' ).'
+		$wgOut->addHTML( '</select>&nbsp;' . wfMsg( 'regexblock-regex-filter' ) . wfMsg( 'word-separator' ) . '
 			<input type="text" name="rfilter" id="regex_filter" value="'.$this->mRegexFilter.'" />
-			<input type="submit" value="'.wfMsg( 'regexblock-view-go' ).'">
+			<input type="submit" value="'.wfMsg( 'regexblock-view-go' ).'" />
 			</form>
 		<br /><br />');
 		if ( !empty( $blockers ) ) {
@@ -270,7 +270,8 @@ class RegexBlockForm extends SpecialPage {
 
 				$wgOut->addHTML('<li style="border-bottom:1px dashed #778899; padding-bottom:2px;font-size:11px">
 					<b><font style="color:#3B7F07; font-size:12px">'.$row['blckby_name'].'</font>'.$comma.$exact_match.$create_block.'</b>'.$comma.' 
-					('.wfMsg( 'regexblock-view-block-by' ).' <b>'.$row['blocker'].'</b>, '.$reason.') '.wfMsg( 'regexblock-view-time', $row['time'] ).$comma.' 
+					('.wfMsg( 'regexblock-view-block-by' ).' <b>'.$row['blocker'].'</b>, '.$reason.') '.
+					   wfMsg( 'regexblock-view-time', $row['datim'], $row['date'], $row['time'] ).$comma.' 
 					(<a href="'.$action_unblock.'&ip='.$row['ublock_ip'].'&blocker='.$row['ublock_blocker'].'">'.wfMsg( 'regexblock-view-block-unblock' ).'</a>) '.$comma.$row['expiry'].$comma.' ('.$stats_link.')
 					</li>');
 			}
@@ -410,7 +411,9 @@ class RegexBlockForm extends SpecialPage {
 							$row->stats_user,
 							htmlspecialchars( $row->stats_dbname ),
 							$wgLang->timeanddate( wfTimestamp( TS_MW, $row->stats_timestamp ), true ),
-							$row->stats_ip
+							$row->stats_ip,
+							$wgLang->date( wfTimestamp( TS_MW, $row->stats_timestamp ), true ),
+							$wgLang->time( wfTimestamp( TS_MW, $row->stats_timestamp ), true )
 						)
 					).'
 					</li>');
@@ -523,7 +526,9 @@ class RegexBlockData {
 			$ublock_ip = urlencode( $row->blckby_name );
 			$ublock_blocker = urlencode( $row->blckby_blocker );
 			$reason = ( $row->blckby_reason ) ? wfMsg( 'regexblock-form-reason' ) . $row->blckby_reason : wfMsg( 'regexblock-view-reason-default' );
-			$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->blckby_timestamp ), true );
+			$idatim = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->blckby_timestamp ), true );
+			$date = $wgLang->date( wfTimestamp( TS_MW, $row->blckby_timestamp ), true );
+			$time = $wgLang->time( wfTimestamp( TS_MW, $row->blckby_timestamp ), true );
 
 			/* put data to array */
 			$blocker_list[] = array(
@@ -532,6 +537,8 @@ class RegexBlockData {
 				'create_block' => $row->blckby_create,
 				'blocker' => $row->blckby_blocker,
 				'reason' => $reason,
+				'datim' => $datim,
+				'date' => $date,
 				'time' => $time,
 				'ublock_ip'	=> $ublock_ip,
 				'ublock_blocker' => $ublock_blocker,

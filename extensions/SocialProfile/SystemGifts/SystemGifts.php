@@ -11,7 +11,7 @@ $wgSystemGiftsScripts = "$wgScriptPath/extensions/SocialProfile/SystemGifts";
 $wgAutoloadClasses['SystemGifts'] = "{$wgSystemGiftsDirectory}/SystemGiftsClass.php";
 $wgAutoloadClasses['UserSystemGifts'] = "{$wgSystemGiftsDirectory}/UserSystemGiftsClass.php";
 
-//Special Pages
+// Special Pages
 $wgAutoloadClasses['TopAwards'] = "{$wgSystemGiftsDirectory}/TopAwards.php";
 $wgSpecialPages['TopAwards'] = 'TopAwards';
 

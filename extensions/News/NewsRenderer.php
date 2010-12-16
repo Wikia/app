@@ -58,7 +58,7 @@ class NewsRenderer {
 		$title = $article->getTitle();
 		$article->getContent(); 
 		$text = $article->mContent;
-		if (!$text) return NULL;
+		if (!$text) return null;
 
 		$uniq_prefix = "\x07NR-UNIQ";
 		$elements = array( 'nowiki', 'gallery', 'newsfeed');
@@ -75,7 +75,7 @@ class NewsRenderer {
 			return new NewsRenderer( $title, $content, $params, $parser );
 		}
 
-		return NULL;
+		return null;
 	}
 
 	function __construct( $title, $templatetext, $argv, &$parser ) {
@@ -90,13 +90,13 @@ class NewsRenderer {
 
 		if ( !is_null( $this->templatetext ) ) {
 			$this->templatetext = trim( $this->templatetext );
-			if ( $this->templatetext == '' ) $this->templatetext = NULL;
+			if ( $this->templatetext == '' ) $this->templatetext = null;
 		}
 
 		$this->usetemplate = !is_null( $this->templatetext );
 	
-		$this->templateparser = NULL;
-		$this->templateoptions = NULL;
+		$this->templateparser = null;
+		$this->templateoptions = null;
 	
 		#$template = @$argv['template'];
 	
@@ -110,7 +110,6 @@ class NewsRenderer {
 			$this->templateoptions->setEditSection( false );
 			$this->templateoptions->setNumberHeadings( false );
 			$this->templateoptions->setRemoveComments( true );
-			$this->templateoptions->setUseTeX( false );
 			$this->templateoptions->setUseDynamicDates( false );
 			$this->templateoptions->setInterwikiMagic( true ); //strip interlanguage-links
 			$this->templateoptions->setAllowSpecialInclusion( false );
@@ -151,11 +150,11 @@ class NewsRenderer {
 					$this->namespaces[$i] = 0;
 				} else {
 					$this->namespaces[$i] = MWNamespace::getCanonicalIndex( $ns );
-					if ( $this->namespaces[$i] === false || $this->namespaces[$i] === NULL )
+					if ( $this->namespaces[$i] === false || $this->namespaces[$i] === null )
 						$this->namespaces[$i] = $wgContLang->getNsIndex( $ns );
 				}
 	
-				if ( $this->namespaces[$i] === false || $this->namespaces[$i] === NULL ) 
+				if ( $this->namespaces[$i] === false || $this->namespaces[$i] === null ) 
 					unset( $this->namespaces[$i] );
 			}
 		}
@@ -553,10 +552,10 @@ class NewsRenderer {
 		}
 	}
 
-	static function replaceVariables($parser, $text, $params = NULL, $title = NULL) {
+	static function replaceVariables($parser, $text, $params = null, $title = null) {
 		global $wgVersion;
 
-		if ( $params === NULL ) $params = array();
+		if ( $params === null ) $params = array();
 		$text = $parser->replaceVariables( $text, $params );
 
 		/*
@@ -616,7 +615,7 @@ class NewsRenderer {
 		$t = @$argv['feed'];
 		if ($t) $t = NewsRenderer::replaceVariables( $parser, $t );
 
-		$title = $t === NULL ? NULL : Title::newFromText($t);
+		$title = $t === null ? null : Title::newFromText($t);
 		if (!$title) $title = $GLOBALS['wgTitle'];
 
 		#$id = @$argv['id'];
@@ -631,7 +630,7 @@ class NewsRenderer {
 			$iconright = ( strtolower(trim($m[2])) === 'right' );
 		}
 		
-		$ticon = $icon ? Title::newFromText($icon, NS_IMAGE) : NULL;
+		$ticon = $icon ? Title::newFromText($icon, NS_IMAGE) : null;
 		if ( $ticon ) {
 			$image = wfFindFile( $ticon );
 			if ( !$image->exists() ) {
@@ -641,9 +640,9 @@ class NewsRenderer {
 			$image = false;
 		}
 
-		$thumb = $image ? $image->getThumbnail(80, 16) : NULL;
+		$thumb = $image ? $image->getThumbnail(80, 16) : null;
 		if ($image && !$thumb) $thumb = $image;
-		$iconurl = $thumb ? $thumb->getUrl() : NULL;
+		$iconurl = $thumb ? $thumb->getUrl() : null;
 
 		$url = NewsRenderer::getFeedURL($title, $format); 
 
@@ -684,7 +683,7 @@ class NewsRenderer {
 		return $row[0];
 	}
 
-	static function sanitizeWikiText( $text, $parser = NULL ) {
+	static function sanitizeWikiText( $text, $parser = null ) {
 		if ( !$parser ) $parser = $GLOBALS['wgParser'];
 
 		$elements = array_keys( $parser->mTagHooks );
@@ -722,7 +721,7 @@ class NewsRenderer {
 		return false;
 	}
 
-	static function extractHead( $text, $title = NULL ) {
+	static function extractHead( $text, $title = null ) {
 		$text = trim($text);
 
 		if ( strlen($text) < NEWS_HEAD_LENGTH ) return $text;
@@ -786,7 +785,7 @@ class NewsFeedPage extends Article {
 		if ($wgUser->isAnon() && $usecache) {
 			$cachekey = $this->getCacheKey();
 			$ocache = wfGetParserCacheStorage();
-			$e = $ocache ? $ocache->get( $cachekey ) : NULL;
+			$e = $ocache ? $ocache->get( $cachekey ) : null;
 			$note .= ' anon;';
 			$debug = $e ? "got cached" : "no cached";
 			wfDebug( "$fname: ($debug) \n" );
@@ -801,9 +800,9 @@ class NewsFeedPage extends Article {
 				$note .= ' user;';
 			}
 			
-			$cachekey = NULL;
-			$ocache = NULL;
-			$e = NULL;
+			$cachekey = null;
+			$ocache = null;
+			$e = null;
 			$note .= ' user;';
 		}
 		

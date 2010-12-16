@@ -9,7 +9,7 @@ class RandomPageInCategory extends SpecialPage {
 	private $category = null;
 
 	function __construct() {
-		SpecialPage::SpecialPage( 'Randomincategory' );
+		SpecialPage::SpecialPage( 'RandomInCategory' );
 	}
 
 	function getDescription() {
@@ -26,14 +26,14 @@ class RandomPageInCategory extends SpecialPage {
 				$par = $requestCategory;
 			}
 			else {
-				$wgOut->addHTML( RandomPageInCategory::getForm() );
+				$wgOut->addHTML( $this->getForm() );
 				return;
 			}
 		}
 
 		$rnd = $this;
 		if( !$rnd->setCategory( $par ) ) {
-			$wgOut->addHTML( RandomPageInCategory::getForm( $par ) );
+			$wgOut->addHTML( $this->getForm( $par ) );
 			return;
 		}
 
@@ -41,7 +41,7 @@ class RandomPageInCategory extends SpecialPage {
 
 		if( is_null( $title ) ) {
 			$wgOut->addWikiText( wfMsg( 'randomincategory-nocategory', $par ) );
-			$wgOut->addHTML( RandomPageInCategory::getForm( $par ) );
+			$wgOut->addHTML( $this->getForm( $par ) );
 			return;
 		}
 
@@ -95,6 +95,7 @@ class RandomPageInCategory extends SpecialPage {
 			FROM $page $use_index JOIN $categorylinks ON page_id = cl_from
 			WHERE page_is_redirect = 0
 			AND page_random >= $randstr
+			AND page_namespace != " . NS_CATEGORY . "
 			AND cl_to = $category
 			$extra
 			ORDER BY page_random";
@@ -104,8 +105,8 @@ class RandomPageInCategory extends SpecialPage {
 		return $dbr->fetchObject( $res );
 	}
 
-	public static function getForm( $par = null ) {
-		global $wgScript, $wgTitle, $wgRequest;
+	public function getForm( $par = null ) {
+		global $wgScript, $wgRequest;
 
 		if( !( $category = $par ) ) {
 			$category = $wgRequest->getVal( 'category' );
@@ -115,7 +116,7 @@ class RandomPageInCategory extends SpecialPage {
 			Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) .
 				Xml::openElement( 'fieldset' ) .
 					Xml::element( 'legend', array(), wfMsg( 'randomincategory' ) ) .
-					Xml::hidden( 'title', $wgTitle->getPrefixedText() ) .
+					Xml::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
 					Xml::openElement( 'p' ) .
 						Xml::label( wfMsg( 'randomincategory-label' ), 'category' ) . ' ' .
 						Xml::input( 'category', null, $category, array( 'id' => 'category' ) ) . ' ' .

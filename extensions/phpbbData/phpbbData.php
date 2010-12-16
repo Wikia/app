@@ -13,6 +13,7 @@ $wgPhpbbDataRootPath        = 'forum/';
 $wgPhpbbDataUpdatedDuration = 24;		# hours
 
 $wgExtensionCredits['other'][] = array(
+	'path'        => __FILE__,
 	'name'        => 'phpbbData',
 	'version'     => '1.0',
 	'author'      => 'Tim Laqua',

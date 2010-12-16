@@ -41,11 +41,17 @@ $messages['qqq'] = array(
 	'invitations-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
  */
-$messages['vep'] = array(
-	'invitations-inviteform-submit' => 'Kucta',
+$messages['af'] = array(
+	'invite-logentry' => 'het $1 uitgenodig om die funksie <i>$2</i> te gebruik.',
+	'invitations-feature-notallowed' => 'U het nie toegang om <i>$1</i> te gebruik nie.',
+	'invitations-inviteform-title' => "Nooi 'n gebruiker om $1 te gebruik",
+	'invitations-inviteform-username' => 'Gebruiker om uit te nooi',
+	'invitations-inviteform-submit' => 'Nooi uit',
+	'invitations-error-baduser' => 'Dit lyk nie of die gebruiker wat u verskaf het bestaan nie.',
+	'invitations-error-alreadyinvited' => 'Die gebruiker wat u verskaf het het reeds toegang tot hierdie funksie!',
 );
 
 /** Arabic (العربية)
@@ -116,8 +122,40 @@ $messages['bar'] = array(
 	'invitations-inviteform-submit' => 'eilådn',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'invite-logpage' => 'Журнал запрашэньняў',
+	'invite-logpagetext' => 'Гэта журнал запрашэньняў выкарыстоўваць магчымасьці праграмнага забесьпячэньня.',
+	'invite-logentry' => 'запрасіў $1 выкарыстоўваць магчымасьць <i>$2</i>.',
+	'invitations' => 'Кіраваньне запрашэньнямі выкарыстоўваць магчымасьці праграмнага забесьпячэньня',
+	'invitations-desc' => 'Дазваляе [[Special:Invitations|кіраваць новымі магчымасьцямі]] з абмежаваньнем доступу з дапамогай сыстэмы запрашэньняў',
+	'invitations-invitedlist-description' => 'Вы маеце доступ да наступных магчымасьцяў, якія даступныя толькі па запрашэньням.
+Каб кіраваць запрашэньнямі да кожнай магчымасьці, націсьніце на яе назву.',
+	'invitations-invitedlist-none' => 'Вы не былі запрошаны выкарыстоўваць якой-небудзь з магчымасьцяў, якія даступныя толькі па запрашэньнях.',
+	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Даступнае $1 запрашэньне|Даступныя $1 запрашэньні|Даступныя $1 запрашэньняў}})',
+	'invitations-pagetitle' => 'Магчымасьці праграмнага забесьпячэньня, якія даступныя толькі па запрашэньнях',
+	'invitations-uninvitedlist-description' => 'Вы ня маеце доступу да іншых магчымасьцяў праграмнага забесьпячэньня, якія даступныя толькі па запрашэньнях.',
+	'invitations-uninvitedlist-none' => 'Зараз няма іншых магчымасьцяў праграмнага забесьпячэньня, якія даступныя толькі па запрашэньнях.',
+	'invitations-feature-pagetitle' => 'Кіраваньне запрашэньнямі — $1',
+	'invitations-feature-access' => 'Зараз Вы маеце доступ да выкарыстаньня <i>$1</i>.',
+	'invitations-feature-numleft' => 'Вы ўсё яшчэ маеце {{PLURAL:$2|адно запрашэньне|<b>$1</b> з $2 {{PLURAL:$2|запрашэньня|запрашэньняў|запрашэньняў}}}}.',
+	'invitations-feature-noneleft' => 'Вы выкарысталі ўсе Вашыя запрашэньні на гэтую магчымасьць',
+	'invitations-feature-noneyet' => 'Вы яшчэ не атрымалі запрашэньняў для гэтай магчымасьці.',
+	'invitations-feature-notallowed' => 'Вы ня маеце доступу для выкарыстаньня <i>$1</i>.',
+	'invitations-inviteform-title' => 'Запрасіць удзельніка выкарыстоўваць $1',
+	'invitations-inviteform-username' => 'Запрасіць удзельніка',
+	'invitations-inviteform-submit' => 'Запрасіць',
+	'invitations-error-baduser' => 'Удзельнік, якога Вы пазначылі, не існуе.',
+	'invitations-error-alreadyinvited' => 'Удзельнік, якога Вы пазначылі, ужо мае доступ да гэтай магчымасьці!',
+	'invitations-invite-success' => 'Вы пасьпяхова запрасілі $1 выкарыстоўваць гэтую магчымасьць!',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
+ * @author Spiritia
  */
 $messages['bg'] = array(
 	'invite-logpage' => 'Дневник на поканите',
@@ -130,11 +168,13 @@ $messages['bg'] = array(
 	'invitations-invitedlist-none' => 'Нямате покана да използвате нито една от софтуерните възможности, достъпни с покана.',
 	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Налична е една покана|Налични са $1 покани}})',
 	'invitations-pagetitle' => 'Възможности на софтуера, достъпни с покана',
+	'invitations-uninvitedlist-description' => 'Можете да получите достъп до тези софтуерни възможности само след покана.',
 	'invitations-uninvitedlist-none' => 'На този етап няма други софтуерни възможности, които да са отбелязани, че са достъпни с покана.',
 	'invitations-feature-pagetitle' => 'Управление на поканите - $1',
 	'invitations-feature-access' => 'В момента имате достъп да използвате <i>$1</i>.',
 	'invitations-feature-numleft' => 'Имате {{PLURAL:$2|една оставаща покана|оставащи <b>$1</b> от $2 покани}}.',
 	'invitations-feature-noneleft' => 'Вече сте използвали всички отпуснати покани за тази услуга',
+	'invitations-feature-noneyet' => 'Все още не сте получили своя дял от покани за тази софтуерна възможност.',
 	'invitations-feature-notallowed' => 'Нямате достъп да използвате <i>$1</i>.',
 	'invitations-inviteform-title' => 'Изпращане на покана на потребител да използва $1',
 	'invitations-inviteform-username' => 'Потребител',
@@ -144,19 +184,64 @@ $messages['bg'] = array(
 	'invitations-invite-success' => 'Поканата на $1 за достъп до услугата беше изпратена успешно!',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ * @author Fulup
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'invite-logpage' => 'Marilh ar pedadennoù',
+	'invite-logpagetext' => "Setu ur marilh eus an implijerien o pediñ implijerien all evit implijout an arc'hweladur eus meziantoù disheñvel",
+	'invite-logentry' => "pedet en deus $1 da implijout arc'hweladur <i>$2</i>.",
+	'invitations' => "Merañ pedadennoù an arc'hweladurioù meziant",
+	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Ur bedadenn|$1 pedadenn}} posupl a zo)',
+	'invitations-feature-pagetitle' => 'Merañ ar bedadenn - $1',
+	'invitations-feature-access' => 'Er mare-mañ ho peus ar moned evit implijout <i>$1</i>.',
+	'invitations-feature-numleft' => "{{PLURAL:$2|Ur bedadenn|<b>$1</b> pedadenn diwar $2 pedadenn}} ho peus c'hoazh.",
+	'invitations-feature-noneleft' => "Implijet ho peus o holl pedadennoù aotreet evit an arc'hweladur-mañ",
+	'invitations-feature-noneyet' => "N'ho peus ket resevet ho pedadennoù evit an arc'hweladur-mañ.",
+	'invitations-feature-notallowed' => "Ne c'helloc'h ket dont tre evit implijout <i>$1</i>.",
+	'invitations-inviteform-title' => 'Pediñ un implijer da implijout $1',
+	'invitations-inviteform-username' => 'Implijer da bediñ',
+	'invitations-inviteform-submit' => 'Pediñ',
+	'invitations-error-baduser' => "War a seblant n'ez eus ket eus an implijer ho peus meneget.",
+	'invitations-error-alreadyinvited' => "An implijer ho peus meneget en deus dija ar moned d'an arc'hweladur-mañ !",
+	'invitations-invite-success' => "Pedet ho peus $1 evit implijout an arc'hweladur-mañ !",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'invite-logpage' => 'Zapisnik pozivnica',
+	'invite-logentry' => 'pozovi $1 da koristi mogućnost <i>$2</i>.',
+	'invitations-desc' => 'Omogućava [[Special:Invitations|upravljanje novim mogućnostima]] putem pozivanja',
+	'invitations-invitedlist-none' => 'Niste pozvani da koristite neku od mogućnosti softvera za pozivanje.',
 	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Jedan poziv|$1 poziva}} dostupno)',
+	'invitations-uninvitedlist-description' => 'Nemate pristup do ovih drugih osobina softvera samo za pozivanje.',
+	'invitations-feature-pagetitle' => 'Upravljanje pozivima - $1',
 	'invitations-feature-access' => 'Trenutno imate pristup za upotrebu <i>$1</i>.',
+	'invitations-feature-notallowed' => 'Nemate pristup za upotrebu <i>$1</i>.',
 	'invitations-inviteform-title' => 'Pozovi korisnika da koristi $1',
+	'invitations-inviteform-username' => 'Korisnik koji se poziva',
 	'invitations-inviteform-submit' => 'Pozovi',
+	'invitations-error-baduser' => 'Korisnik kojeg ste naveli ne postoji.',
+	'invitations-error-alreadyinvited' => 'Korisnik kojeg ste naveli već ima pristup ovoj mogućnosti!',
 	'invitations-invite-success' => 'Uspješno se pozvali $1 da koristi ovu mogućnost!',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'invitations-inviteform-submit' => 'Convida',
+	'invitations-error-baduser' => "L'usuari especificat no sembla existir.",
+	'invitations-error-alreadyinvited' => "L'usuari especificat ja té accés a aquesta funciónalitat!",
+	'invitations-invite-success' => 'Heu convidat $1 a usar aquesta funcionalitat amb èxit!',
+);
+
 /** German (Deutsch)
+ * @author Jens Liebenau
  * @author Melancholie
  * @author Pill
  * @author Raimond Spekking
@@ -172,7 +257,7 @@ $messages['de'] = array(
 	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Eine Einladung/Aufforderung|$1 Einladungen/Aufforderungen}} verfügbar)',
 	'invitations-pagetitle' => 'Softwarefunktionen auf Einladungs-Basis',
 	'invitations-uninvitedlist-description' => 'Du hast keinen Zugang zu anderen einladungsbasierten Softwarefunktionen.',
-	'invitations-uninvitedlist-none' => 'Zur Zeit sind keine weiteren Softwarefunktionen einladungsbasiert.',
+	'invitations-uninvitedlist-none' => 'Zurzeit sind keine weiteren Softwarefunktionen einladungsbasiert.',
 	'invitations-feature-pagetitle' => 'Einladungs-Verwaltung - $1',
 	'invitations-feature-access' => 'Du hast Zugang zur Nutzung von <i>$1</i>.',
 	'invitations-feature-numleft' => '{{PLURAL:$2|Dir steht noch eine Einladung|Dir stehen noch <b>$1</b> von insgesamt $2 Einladungen}} zur Verfügung.',
@@ -185,6 +270,21 @@ $messages['de'] = array(
 	'invitations-error-baduser' => 'Der angegebene Benutzer ist nicht vorhanden.',
 	'invitations-error-alreadyinvited' => 'Der angegebene Benutzer hat bereits Zugang zu dieser Softwarefunktion!',
 	'invitations-invite-success' => 'Du hast erfolgreich $1 zu dieser Softwarefunktion eingeladen!',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Imre
+ */
+$messages['de-formal'] = array(
+	'invitations-invitedlist-description' => 'Sie haben Zugang zu den folgenden einladungsbasierten Softwarefunktionen. Um Einladungen für eine bestimmte Softwarefunktion zu verwalten, klicken Sie auf ihren Namen.',
+	'invitations-invitedlist-none' => 'Sie haben bisher keine Einladung zur Nutzung von einladungsbasierten Softwarefunktionen erhalten.',
+	'invitations-uninvitedlist-description' => 'Sie haben keinen Zugang zu anderen einladungsbasierten Softwarefunktionen.',
+	'invitations-feature-access' => 'Sie haben Zugang zur Nutzung von <i>$1</i>.',
+	'invitations-feature-numleft' => '{{PLURAL:$2|Ihnen steht noch eine Einladung|Ihnen stehen noch <b>$1</b> von insgesamt $2 Einladungen}} zur Verfügung.',
+	'invitations-feature-noneleft' => 'Sie haben alle Ihnen zugewiesenen Einladungen für diese Softwarefunktion verbraucht.',
+	'invitations-feature-noneyet' => 'Ihnen wurden noch keine Einladungen für diese Softwarefunktion zugewiesen.',
+	'invitations-feature-notallowed' => 'Sie haben keine Berechtigung, um <i>$1</i> zu nutzen.',
+	'invitations-invite-success' => 'Sie haben erfolgreich $1 zu dieser Softwarefunktion eingeladen!',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -306,10 +406,22 @@ $messages['es'] = array(
 	'invitations-invite-success' => 'Ha invitado con éxito a $1 usar esta función.',
 );
 
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'invitations-inviteform-title' => 'Kutsu kasutaja $1 kasutama',
+	'invitations-inviteform-username' => 'Kutsutav kasutaja',
+	'invitations-inviteform-submit' => 'Kutsu',
+	'invitations-error-baduser' => 'Märgitud kasutajanimi puudub.',
+);
+
 /** Basque (Euskara)
  * @author Kobazulo
  */
 $messages['eu'] = array(
+	'invitations-inviteform-title' => 'Lankide bat $1 erabiltzeko gonbidatu',
+	'invitations-inviteform-username' => 'Gonbidatu beharreko erabiltzailea',
 	'invitations-inviteform-submit' => 'Gonbidatu',
 );
 
@@ -411,6 +523,7 @@ Para xestionar as invitacións para unha característica individual, faga clic n
  */
 $messages['grc'] = array(
 	'invite-logpage' => 'Κατάλογος προσκλήσεων',
+	'invitations-feature-pagetitle' => 'Διαχείρισις προσκλήσεως - $1',
 	'invitations-inviteform-submit' => 'Προσκαλεῖν',
 );
 
@@ -530,6 +643,36 @@ Zo by softwaru za jednotliwu funkciju zrjadował, klikń na jeje mjeno.',
 	'invitations-invite-success' => 'Sy $1 wuspěšnje přeprosył, zo by tutu funkciju wužiwał!',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'invite-logpage' => 'Meghívások naplója',
+	'invite-logpagetext' => 'Felhasználók naplója, akik meghívták egymást különböző programfunkciók használatára.',
+	'invite-logentry' => 'meghívta $1 szerkesztőt a <i>$2</i> funkció használatára.',
+	'invitations' => 'Meghívók kezelése különböző programfunkciókhoz',
+	'invitations-desc' => '[[Special:Invitations|Új funkciók kezelése]] meghívó alapú rendszerre korlátozásukkal',
+	'invitations-invitedlist-description' => 'Az alább felsorolt csak meghívásos alapon elérhető szoftverfunkciókhoz van hozzáférésed.
+Egy egyedi funkció meghívóinak kezeléséhez kattints a nevére.',
+	'invitations-invitedlist-none' => 'Még nem hívtak meg egyetlen csak meghívásos alapon elérhető programfunkció használatára sem.',
+	'invitations-invitedlist-item-count' => '({{PLURAL:$1|egy|$1}} elérhető meghívó)',
+	'invitations-pagetitle' => 'Csak meghívással elérhető programfunkciók',
+	'invitations-uninvitedlist-description' => 'Nincs hozzáférésed ezekhez ezen egyéb csak meghívásos programfunkciókhoz.',
+	'invitations-uninvitedlist-none' => 'Jelenleg nincs más programfunkció, ami csak meghívásos alapon elérhető.',
+	'invitations-feature-pagetitle' => 'Meghívókezelés – $1',
+	'invitations-feature-access' => 'Jelenleg van hozzáférésed használni a következőt: <i>$1</i>.',
+	'invitations-feature-numleft' => 'Még van {{PLURAL:$2|egy meghívód|<b>$1</b> meghívód a $2 darabból}}.',
+	'invitations-feature-noneleft' => 'Elhasználtad az összes kiosztott meghívódat ehhez a funkcióhoz',
+	'invitations-feature-noneyet' => 'Még nem kaptad meg a kiosztott meghívóidat ehhez a funkcióhoz.',
+	'invitations-feature-notallowed' => 'Nincs hozzáférésed használni a következőt: <i>$1</i>.',
+	'invitations-inviteform-title' => 'Szerkesztő meghívása $1 használatára',
+	'invitations-inviteform-username' => 'Meghívandó szerkesztő',
+	'invitations-inviteform-submit' => 'Meghívás',
+	'invitations-error-baduser' => 'Úgy tűnik, hogy az általad megadott szerkesztő  nem létezik.',
+	'invitations-error-alreadyinvited' => 'Az általad megadott szerkesztőnek már van hozzáférése ehhez a funkcióhoz!',
+	'invitations-invite-success' => 'Sikeresen meghívtad $1 felhasználót ennek a funkciónak a használatára!',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -560,7 +703,38 @@ Pro gerer le invitationes a un function particular, clicca super le nomine de il
 	'invitations-invite-success' => 'Tu ha invitate $1 a usar iste function con successo!',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'invite-logpage' => 'Log Undangan',
+	'invite-logpagetext' => 'Ini adalah log pengguna mengundang satu sama lain dalam menggunakan berbagai fitur perangkat lunak.',
+	'invite-logentry' => 'mengundang $1 menggunakan <i>$2</i> fitur.',
+	'invitations' => 'Pengelolaan undangan untuk fitur perangkat lunak',
+	'invitations-desc' => 'Memungkinkan [[Special:Invitations|manajemen fitur baru]] dengan membatasi mereka dalam sistem berbasis-undangan',
+	'invitations-invitedlist-description' => 'Anda memiliki akses ke hanya-mengundang fitur perangkat lunak ini. 
+Untuk mengelola undangan untuk setiap fitur, klik pada namanya.',
+	'invitations-invitedlist-none' => 'Anda belum diundang untuk menggunakan hanya-mengundang fitur perangkat lunak.',
+	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Satu undangan|$1 undangan}} tersedia)',
+	'invitations-pagetitle' => 'Hanya-Undang fitur perangkat lunak',
+	'invitations-uninvitedlist-description' => 'Anda tidak memiliki akses ke hanya-mengundang fitur perangkat lunak yang lain.',
+	'invitations-uninvitedlist-none' => 'Saat ini, tidak ada fitur perangkat lunak lain yang ditunjukkan sebagai hanya-undangan.',
+	'invitations-feature-pagetitle' => 'Pengelolaan Undangan - $1',
+	'invitations-feature-access' => 'Saat ini Anda memiliki akses untuk menggunakan <i>$1</i>.',
+	'invitations-feature-numleft' => 'Anda masih memiliki {{PLURAL:$2|satu undangan tersisa|<b>$1</b> dari $2 undangan keluar  tersisa}}.',
+	'invitations-feature-noneleft' => 'Anda sudah menggunakan semua alokasi undangan dari fitur ini',
+	'invitations-feature-noneyet' => 'Andan belum menerima alokasi untuk undangan dari fitur ini.',
+	'invitations-feature-notallowed' => 'Anda tidak memiliki akses untuk menggunakan <i>$1</i>.',
+	'invitations-inviteform-title' => 'Undang pengguna untuk menggunakan $1',
+	'invitations-inviteform-username' => 'Pengguna untuk diundang',
+	'invitations-inviteform-submit' => 'Undangan',
+	'invitations-error-baduser' => 'Pengguna yang anda tuju tidak terlihat keberadaanya.',
+	'invitations-error-alreadyinvited' => 'Pengguna yang anda tuju sudah memiliki akses pada fitur ini!',
+	'invitations-invite-success' => 'Anda berhasil mengundang $1 untuk menggunakan fitur ini!',
+);
+
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  */
 $messages['ja'] = array(
@@ -571,7 +745,7 @@ $messages['ja'] = array(
 	'invitations-desc' => '招待された利用者でなければ利用できないような[[Special:Invitations|新機能管理]]を実現する',
 	'invitations-invitedlist-description' => 'あなたは以下の招待限定のソフトウェア機能を利用できます。各機能への招待を管理するには、その名前をクリックしてください。',
 	'invitations-invitedlist-none' => 'あなたは招待限定のソフトウェア機能にはひとつも招待されていません。',
-	'invitations-invitedlist-item-count' => '($1件の招待があります)',
+	'invitations-invitedlist-item-count' => '($1件の{{PLURAL:$1|招待}}があります)',
 	'invitations-pagetitle' => '招待限定のソフトウェア機能',
 	'invitations-uninvitedlist-description' => 'あなたはこれらの招待限定のソフトウェア機能を利用できません。',
 	'invitations-uninvitedlist-none' => '現時点では、他に招待限定に設定されたソフトウェア機能はありません。',
@@ -585,8 +759,8 @@ $messages['ja'] = array(
 	'invitations-inviteform-username' => '招待する利用者',
 	'invitations-inviteform-submit' => '招待',
 	'invitations-error-baduser' => '指定した利用者は存在しないようです。',
-	'invitations-error-alreadyinvited' => '指定した利用者は既にこの機能を利用できます。',
-	'invitations-invite-success' => 'この機能への $1 の招待に成功しました。',
+	'invitations-error-alreadyinvited' => '指定した利用者は既にこの機能を利用できます！',
+	'invitations-invite-success' => 'この機能への $1 の招待に成功しました！',
 );
 
 /** Javanese (Basa Jawa)
@@ -663,6 +837,7 @@ $messages['ksh'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -671,9 +846,13 @@ $messages['lb'] = array(
 	'invite-logentry' => "huet $1 invitéiert fir d'Functionalitéit <i>$2</i> ze benotzen.",
 	'invitations' => 'Gestioun vun den Invitatioune fir Software-Functionalitéiten',
 	'invitations-desc' => "Erméiglecht d'[[Special:Invitations|Gestioun vun neie Fonctionnalitéiten]] déi op déi Benotzer limitéiert sinn, déi dofir invitéiert ginn",
-	'invitations-invitedlist-none' => 'Dir gouft net invitéiert fir eng Softwarefonctioun ze benotzen fir déi een invitéiert gëtt.',
+	'invitations-invitedlist-description' => 'Dir hutt Zougang zu dëse Software-Fonctiounen déi nëmme fir invitéiert Benotzer zougänglech sinn.
+Fir Invitatioune fir eng bestëmmte fonctioun ze kréien, klickt w.e.g. op de jeweilegen Numm.',
+	'invitations-invitedlist-none' => 'Dir gouft net invitéiert fir eng Softwarefonctioun ze benotze fir déi een invitéiert gëtt.',
 	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Eng Invitatioun|$1 Invitatioune}} disponibel)',
 	'invitations-pagetitle' => 'Fonctionnalitéiten op Invitatiouns-Basis',
+	'invitations-uninvitedlist-description' => 'Dir hutt keen Zougang zu den aneren op Invtatioun baséiert Software-Fonctiounen.',
+	'invitations-uninvitedlist-none' => 'Zu dësem Zäitpunkt gëtt et keng aner Softarefonctiounen déi just fir invitéiert Benotzer disponibel sinn.',
 	'invitations-feature-pagetitle' => 'Gestioun vun der Invitatioun - $1',
 	'invitations-feature-access' => 'Dir kënnt elo <i>$1</i> benotzen.',
 	'invitations-feature-numleft' => 'Dir hutt nach {{PLURAL:$2|eng Invitatioun |<b>$1</b> vun ären $2 Invitatiounen}} iwwreg.',
@@ -683,9 +862,39 @@ $messages['lb'] = array(
 	'invitations-inviteform-title' => 'Ee Benotzer invitéiere fir $1 ze benotzen',
 	'invitations-inviteform-username' => "Benotzer fir z'invitéieren",
 	'invitations-inviteform-submit' => 'Invitéieren',
-	'invitations-error-baduser' => 'De Benotzer deen Dir uginn huet schéngt et net ze ginn.',
-	'invitations-error-alreadyinvited' => 'Dee Benotzer deen Dir uginn huet huet schonn Accès op déi Fonctioun!',
+	'invitations-error-baduser' => 'De Benotzer deen Dir uginn hutt schéngt et net ze ginn.',
+	'invitations-error-alreadyinvited' => 'Dee Benotzer deen Dir uginn hutt huet schonn Accès op déi Fonctioun!',
 	'invitations-invite-success' => 'Dir hutt de(n) $1 invitéiert fir dës Fonctioun ze benotzen!',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'invite-logpage' => 'Дневник на покани',
+	'invite-logpagetext' => 'Ова е дневник на корисниците кои си праќаат покани за користење на разни програмски можности.',
+	'invite-logentry' => 'испрати покана до $1 за да користи <i>$2</i>.',
+	'invitations' => 'Раководење со покани за програмски можности',
+	'invitations-desc' => 'Овозможува [[Special:Invitations|раководење со нови можности]]  со тоа што ги ограничува преку систем на покани',
+	'invitations-invitedlist-description' => 'Имате пристап до следниве програмски можности, достапни само со покана.
+За раководење со поканите за поединечни можности, кликнете на името на можноста.',
+	'invitations-invitedlist-none' => 'Не сте поканети да ја корисите оваа програмска можност, достапна само со покана.',
+	'invitations-invitedlist-item-count' => '(Имате {{PLURAL:$1|една покана|$1 покани}} на располагање)',
+	'invitations-pagetitle' => 'Можности на програмот достапни само со покана',
+	'invitations-uninvitedlist-description' => 'Немате пристап до оваа и други програмски можности, кои се достапни само со покана.',
+	'invitations-uninvitedlist-none' => 'Моментално нема други програмски можности достапни само со покана.',
+	'invitations-feature-pagetitle' => 'Раководење со поканите - $1',
+	'invitations-feature-access' => 'Моментално имате пристап да користите <i>$1</i>.',
+	'invitations-feature-numleft' => '{{PLURAL:$2|Ви преостанува уште една покана|Ви преостануваат уште <b>$1</b> од $2 покани}}.',
+	'invitations-feature-noneleft' => 'Ги искористивте сите покани кои ви следуваат за оваа можност',
+	'invitations-feature-noneyet' => 'Немате добиено следување од покани за оваа можност.',
+	'invitations-feature-notallowed' => 'Немате пристап да користите <i>$1</i>.',
+	'invitations-inviteform-title' => 'Покана до корисник да користи $1',
+	'invitations-inviteform-username' => 'Корисник',
+	'invitations-inviteform-submit' => 'Покани',
+	'invitations-error-baduser' => 'Се чини дека назначениот корисник не постои.',
+	'invitations-error-alreadyinvited' => 'Назначениот корисник веќе има пристап до оваа можност!',
+	'invitations-invite-success' => 'Успешно го поканивте корисникот $1 да ја користи оваа можност!',
 );
 
 /** Malayalam (മലയാളം)
@@ -706,7 +915,7 @@ $messages['ml'] = array(
 	'invitations-feature-numleft' => 'ബാക്കിയുള്ള $2 ക്ഷണപത്രികകളില്‍ താങ്കള്‍ക്ക് ഇപ്പോഴും  <b>$1</b> എണ്ണമുണ്ട്.',
 	'invitations-feature-noneleft' => 'ഈ സവിശേഷതയുടെ ലഭ്യമായ ക്ഷണപത്രികകളെല്ലാം താങ്കള്‍ ഉപയോഗിച്ചു കഴിഞ്ഞു.',
 	'invitations-feature-noneyet' => 'ഈ സവിശേഷതയുടെ താങ്കള്‍ക്ക് വരേണ്ട ക്ഷണപത്രിക താങ്കള്‍ക്ക് ലഭിച്ചിട്ടില്ല.',
-	'invitations-feature-notallowed' => 'നിങ്ങള്‍ക്ക്  <i>$1</i> ഉപയോഗിക്കാനുള്ള അനുമതി ഇല്ല.',
+	'invitations-feature-notallowed' => 'താങ്കള്‍ക്ക്  <i>$1</i> ഉപയോഗിക്കാനുള്ള അനുമതി ഇല്ല.',
 	'invitations-inviteform-title' => '$1 ഉപയോഗിക്കുവാന്‍ വേണ്ടി ഉപയോക്താവിനെ ക്ഷണിക്കുക',
 	'invitations-inviteform-username' => 'ക്ഷണിക്കപ്പെടേണ്ട ഉപയോക്താവ്',
 	'invitations-inviteform-submit' => 'ക്ഷണിക്കുക',
@@ -873,6 +1082,37 @@ $messages['pl'] = array(
 	'invitations-inviteform-submit' => 'Zaproś',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'invite-logpage' => "Registr ëd j'anvit",
+	'invite-logpagetext' => "Sto-sì a l'é un registr ëd j'utent che as anvito l'un l'àutr a dovré le diferente possibilità dël programa.",
+	'invite-logentry' => 'Anvità $1 a dovré la possibilità <i>$2</i>.',
+	'invitations' => "Gestiss j'anvit a le possibilità software",
+	'invitations-desc' => "A përmët le [[Special:Invitations|gestion ëd le neuve possibilità]] an restrinzendje a un sistema basà an sj'anvit",
+	'invitations-invitedlist-description' => "It l'has mach acess a le caraterìstiche sì-sota dël programa mach a anvit.
+Për gestì j'anvit për na sola caraterìstica, sgnaca an sël sò nòm.",
+	'invitations-invitedlist-none' => 'It ses pa stàit anvità a dovré dle possibilità dël programa mach a anvit.',
+	'invitations-invitedlist-item-count' => "({{PLURAL:$1|N'anvit disponìbil|$1 anvit disponibij}})",
+	'invitations-pagetitle' => 'Possibilità software mach a anvit',
+	'invitations-uninvitedlist-description' => "It l'has pa acess a coste àutre caraterìstiche dël programa mach a anvit.",
+	'invitations-uninvitedlist-none' => 'Adess, gnun-e àutre possibilità software a son nominà mach a anvit.',
+	'invitations-feature-pagetitle' => "Gestion ëd j'anvit - $1",
+	'invitations-feature-access' => "Adess it l'has acess për dovré <i>$1</i>.",
+	'invitations-feature-numleft' => "It l'has ancó {{PLURAL:$2|n'anvit restant|<b>$1</b> anvit restant dij tò $2}}.",
+	'invitations-feature-noneleft' => "It l'has dovrà tùit ij tò anvit për sta possibilità-sì",
+	'invitations-feature-noneyet' => "It l'has pa ancó arseivù toa alocassion d'anvit për sta possibilità-sì.",
+	'invitations-feature-notallowed' => "It l'has pa acess për dovré <i>$1</i>.",
+	'invitations-inviteform-title' => "Anvita n'utent a dovré $1",
+	'invitations-inviteform-username' => 'Utent da anvité',
+	'invitations-inviteform-submit' => 'Anvit',
+	'invitations-error-baduser' => "L'utent ch'it l'has specificà a smija ch'a esista pa.",
+	'invitations-error-alreadyinvited' => "L'utent ch'it l'has specificà a l'ha già acess a sta possibiltà-sì!",
+	'invitations-invite-success' => "It l'has anvità con sucess $1 a dovré sta possibilità-sì!",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -944,11 +1184,22 @@ $messages['pt-br'] = array(
 	'invitations-invite-success' => 'Convidou $1 para usar esta funcionalidade com sucesso!',
 );
 
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'invite-logentry' => "qayakun $1 sutiyuqta <i>$2</i> nisqata llamk'achinanpaq.",
+);
+
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'invitations-invitedlist-item-count' => '({{PLURAL:$1|O invitaţie disponibilă|$1 invitaţii disponibile}})',
+	'invitations-inviteform-submit' => 'Invitaţi',
+	'invitations-error-baduser' => 'Utilizatorul specificat pare să nu existe.',
+	'invitations-error-alreadyinvited' => 'Utilizatorul specificat are deja acces la această funcţionalitate!',
 );
 
 /** Tarandíne (Tarandíne)
@@ -971,6 +1222,7 @@ $messages['ru'] = array(
 	'invitations-desc' => 'Позволяет [[Special:Invitations|управлять новыми возможностями]], ограничивая к ним доступ с помощью системы приглашений',
 	'invitations-invitedlist-description' => 'Вы имеете доступ к следующим возможностям программного обеспечения, доступным только по приглашениям. Чтобы управлять приглашениями каждой возможности ПО, щёлкните по её имени.',
 	'invitations-invitedlist-none' => 'Вы не были приглашены использовать какую-либо возможность программы, из доступных только по приглашениям.',
+	'invitations-invitedlist-item-count' => '({{PLURAL:$1|Доступно $1 приглашение|Доступно $1 приглашения|Доступно $1 приглашений}})',
 	'invitations-pagetitle' => 'Возможность ПО только по приглашению',
 	'invitations-uninvitedlist-description' => 'У вас нет доступа к другим возможностям ПО, доступным только по приглашениям.',
 	'invitations-uninvitedlist-none' => 'В настоящее время нет других возможностей ПО, доступных только по приглашениям.',
@@ -1032,7 +1284,7 @@ $messages['stq'] = array(
 	'invitations-uninvitedlist-none' => 'Apstuuns sunt neen wiedere Softwarefunktione ienleedengsbasierd',
 	'invitations-feature-pagetitle' => 'Ienleedengsferwaltenge - $1',
 	'invitations-feature-access' => 'Du hääst Tougoang toun Gebruuk fon <i>$1</i>.',
-	'invitations-feature-numleft' => 'Die stounde noch <b>$1</b> fon mädnunner $2 Ienleedengen tou Ferföigenge.',
+	'invitations-feature-numleft' => 'Die {{PLURAL:$2|stoant noch een Ienleedenge|stounde noch <b>$1</b> fon mädnunner $2 Ienleedengen}}  tou Ferföigenge.',
 	'invitations-feature-noneleft' => 'Du hääst aal die touwiesde Ienleedengen foar disse Softwarefunktion ferbruukt.',
 	'invitations-feature-noneyet' => 'Die wuuden noch neen Ienleedengen foar disse Softwarefunktion touwiesd.',
 	'invitations-feature-notallowed' => 'Du hääst neen Begjuchtigenge, uum <i>$1</i> tou bruuken.',
@@ -1074,6 +1326,7 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
@@ -1082,7 +1335,7 @@ $messages['te'] = array(
 	'invitations-invitedlist-item-count' => '({{PLURAL:$1|ఒక ఆహ్వానం|$1 ఆహ్వానాలు}} ఉన్నాయి)',
 	'invitations-feature-pagetitle' => 'ఆహ్వాన నిర్వహణ - $1',
 	'invitations-feature-access' => '<i>$1</i>ని వాడడానికి ప్రస్తుతం మీకు అనుమతి ఉంది.',
-	'invitations-feature-numleft' => 'మీ $2 ఆహ్వనాలలో మీ దగ్గర ఇంకా <b>$1</b> మిగిలివున్నాయి.',
+	'invitations-feature-numleft' => 'మీ దగ్గర  ఇంకా  {{PLURAL:$2|ఒక ఆహ్వానము ఉంది|$2 ఆహ్వనాలలో<b>$1</b> మిగిలివున్నాయి}}.',
 	'invitations-inviteform-title' => '$1ని వాడడానికి ఓ వాడుకరిని ఆహ్వానించండి',
 	'invitations-inviteform-username' => 'ఆహ్వానించాల్సిన వాడుకరి',
 	'invitations-inviteform-submit' => 'ఆహ్వానించు',
@@ -1100,6 +1353,17 @@ $messages['tg-cyrl'] = array(
 	'invitations-error-baduser' => 'Корбари шумо мушаххас карда ба назар мерасад, ки вуҷуд надорад',
 	'invitations-error-alreadyinvited' => 'Корбари шумо мушаххас карда аллакай ба ин хусусият дастрасӣ дорад!',
 	'invitations-invite-success' => 'Барои истифодаи ин хусусия шумо $1-ро бо муваффақият таклиф кардед',
+);
+
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'invitations-inviteform-username' => 'Korbar baroi taklif',
+	'invitations-inviteform-submit' => 'Taklif',
+	'invitations-error-baduser' => 'Korbari şumo muşaxxas karda ba nazar merasad, ki vuçud nadorad',
+	'invitations-error-alreadyinvited' => 'Korbari şumo muşaxxas karda allakaj ba in xususijat dastrasī dorad!',
+	'invitations-invite-success' => 'Baroi istifodai in xususija şumo $1-ro bo muvaffaqijat taklif karded',
 );
 
 /** Tagalog (Tagalog)
@@ -1132,6 +1396,34 @@ Para mapamahalaan ang mga paanyaya para sa isang partikular na kasangkapang-kata
 	'invitations-invite-success' => 'Matagumpay mong naanyayahan si $1 upang magamit ang kasangkapang-katangiang ito!',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'invite-logpage' => 'Davet kaydı',
+	'invitations' => 'Yazılım özelliklerine daveti yönet',
+	'invitations-pagetitle' => 'Sadece davete dayanan yazılım özellikleri',
+	'invitations-feature-pagetitle' => 'Davet yönetimi - $1',
+	'invitations-inviteform-username' => 'Davet edilecek kullanıcı',
+	'invitations-inviteform-submit' => 'Davet et',
+	'invitations-error-baduser' => 'Belirttiğiniz kullanıcı görünüşe göre mevcut değil.',
+	'invitations-error-alreadyinvited' => 'Belirttiğiniz kullanıcı zaten bu özelliğe erişime sahip!',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'invitations-desc' => 'Дозволяє [[Special:Invitations|управління новими функціями]], обмежуючи доступ до них за допомогою системи запрошень',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'invitations-inviteform-submit' => 'Kucta',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -1160,5 +1452,19 @@ $messages['vi'] = array(
 	'invitations-error-baduser' => 'Thành viên bạn chỉ định dường như không tồn tại.',
 	'invitations-error-alreadyinvited' => 'Thành viên bạn chỉ định đã có quyền sử dụng tính năng này rồi!',
 	'invitations-invite-success' => 'Bạn đã mời $1 sử dụng tính năng này!',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'invite-logpage' => '邀请记录',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'invite-logpage' => '邀請記錄',
 );
 

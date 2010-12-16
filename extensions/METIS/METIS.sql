@@ -6,6 +6,6 @@ CREATE TABLE /*$wgDBprefix*/metis (
 	metis_author_pixel varchar(80),
 	PRIMARY KEY metis_id (metis_id)
 	
-) 
+);
 
 	

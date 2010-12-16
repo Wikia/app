@@ -26,8 +26,8 @@ if (!defined('MEDIAWIKI')) die();
 
 class MwRdf_Vocabulary_DCTerms extends MwRdf_Vocabulary {
 
-	const NAMESPACE = "http://purl.org/dc/terms/";
-	public function getNS() { return self::NAMESPACE; }
+	const RDF_NAMESPACE = "http://purl.org/dc/terms/";
+	public function getNS() { return self::RDF_NAMESPACE; }
 
 	public $abstract;
 	public $accessRights;

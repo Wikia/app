@@ -1,0 +1,38 @@
+<SecurePoll>
+<election>
+<configuration>
+<title>Radio range test 2</title>
+<ballot>radio-range</ballot>
+<tally>histogram-range</tally>
+<primaryLang>en</primaryLang>
+<startDate>2009-07-19T00:00:00Z</startDate>
+<endDate>2019-08-10T00:00:00Z</endDate>
+<id>60</id>
+<property name="admins">Tim</property>
+<property name="must-answer-all">yes</property>
+<message name="title" lang="en">RR2 test</message>
+<message name="intro" lang="en">RR2 test intro</message>
+<message name="jump-text" lang="en">RR2 test jump text</message>
+<message name="return-text" lang="en">RR2 test return text</message>
+<auth>local</auth>
+<question>
+<property name="min-score">1</property>
+<property name="max-score">5</property>
+<id>61</id>
+<message name="text" lang="en">Indicate how much you agree with the following statements by choosing a number from 1 to 5, where 1=strongly disagree, 5=strongly agree.</message>
+<option>
+<id>62</id>
+<message name="text" lang="en">I like icecream.</message>
+</option>
+<option>
+<id>63</id>
+<message name="text" lang="en">Kittens are evil.</message>
+</option>
+<option>
+<id>64</id>
+<message name="text" lang="en">Radiative forcing due to a doubling of atmospheric CO&lt;sub&gt;2&lt;/sub&gt; is 3.7 W/m&lt;sup&gt;2&lt;/sup&gt;.</message>
+</option>
+</question>
+</configuration>
+</election>
+</SecurePoll>

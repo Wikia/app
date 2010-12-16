@@ -1,4 +1,3 @@
-
 .lqt_watchlist_messages_notice {
 	background-color: #eee;
 	border:           1px solid #ddd;
@@ -23,26 +22,12 @@
 	padding-bottom: 0.75em;
 }
 
-.lqt_newer_older {
-	margin-right: 1em;
-}
-.lqt_newer_older_disabled {
-	margin-right: 1em;
-	color:        #999;
-}
-
-.lqt_start_discussion {
-	display: table; /* Became necessary in Safari recently; don't know why it wasn't before. */
-	vertical-align: middle;
-	font-size:      120%;
-	clear: left;
-}
-
 .lqt_header_notice {
 	font-size:   smaller;
 	float:       right;
 	font-weight: bold;
 }
+
 .lqt_header_content {
 	border-bottom: 2px solid #ddd;
 	border-right:  2px solid #ddd;
@@ -54,18 +39,20 @@
 	float: left;
 	width: 100%;
 }
+
 .lqt_header_commands {
 	float:      right;
 	clear:      both;
 	list-style: none;
 	margin:     0;
 	margin-top: 0.5em;
+	font-size: 90%;
 }
+
 .lqt_header_commands li {
 	display:       inline;
 	padding-right: 0.6em;
 	font-weight:   bold;
-	font-size:     smaller;
 }
 
 .lqt_thread_show_summary {
@@ -73,22 +60,10 @@
 	margin-bottom: 0.5em;
 }
 
-.lqt_summary_notice {
-	display:    table; /* Occupy only the width of the text, */
-	width:      auto;  /* not the entire available width.    */
-	font-size:  smaller;
-	border:     1px solid #c0c090;
-	background: #eeeeee;
-	margin:     1em 0;
-	padding:    0.5em 1em;
-}
-.lqt_summary_notice a {
-	font-weight: bold;
+.lqt_thread_permalink_summary {
+	margin-right: 12em;
 }
 
-.lqt_thread_permalink_summary {
-	margin-right: 5em;
-}
 .lqt_thread_permalink_summary_body {
 	background-color: #eee;
 	border:           1px solid #ddd;
@@ -97,115 +72,18 @@
 	padding-right:    1em;
 	margin:           2em 1em 1em 1em;
 }
+
 .lqt_thread_permalink_summary_title {
 	float:       left;
 	margin-left: 1em;
 	font-weight: bold;
 }
-.lqt_thread_permalink_summary_edit {
+
+.lqt_thread_permalink_summary_actions {
 	float:        right;
 	margin-right: 1em;
 	font-weight:  normal;
 	font-size:    smaller;
-}
-
-.lqt_subject_increment {
-	color: #999;
-}
-
-
-/*********************************
-The archive and TOC on talkpages.
-**********************************/
-
-.lqt_archive_teaser_empty {
-	clear:       both;
-	font-weight: bold;
-}
-.lqt_archive_teaser {
-	float:   left;
-	display: table;
-	width:   auto;
-}
-.lqt_toc_wrapper {
-	float:        left;
-	margin-right: 3.5em; /* Space before archive */
-}
-.lqt_toc_archive_wrapper {
-	margin-top:    0.5em;
-	margin-bottom: 1.5em;
-	float:         left;
-}
-.lqt_archive_teaser ul,
-.lqt_toc_wrapper ul {
-	list-style-type:  none;
-	list-style-image: none;
-	text-align:       left;
-	padding-left:     0;
-	margin-top:       0;
-	margin-left:      0;
-	margin-bottom:    0.6em;
-}
-.lqt_archive_teaser ul li,
-.lqt_toc_wrapper ul li {
-	padding-left: 1em;
-	border-left:  solid 1px #ddd;
-}
-h2.lqt_recently_archived,
-h2.lqt_toc_title {
-	border:        none;
-	font-size:     100%;
-	font-weight:   bold;
-	margin-bottom: 0 !important;
-}
-.lqt_archive_teaser .lqt_browse_archive {
-	float:       right;
-	font-weight: bold;
-	margin-top:  0;
-}
-
-
-/*********************************
-The archive page.
-**********************************/
-
-.lqt_search_annotations {
-	float:      left;
-	text-align: right;
-	font-style: italic;
-}
-
-#lqt_archive_search_form {
-	clear:            left;
-	border:           1px solid #ddd;
-	margin:           0.5em 0;
-	background-color: #eee;
-	padding:          0.4em;
-	display:          table;
-	width:            auto;
-}
-#lqt_archive_search_form table {
-	background-color: transparent;
-}
-.lqt_archive_listing {
-	clear: left;
-}
-.lqt_archive_listing td {
-	padding-right: 2em;
-	padding-bottom: 1em;
-	vertical-align: top;
-}
-.lqt_archive_listing td p:first-child {
-	/* The summary is wrapped in <p> tags by the wikitext parser,
-	 * which messes up the vertical alignment. */
-	margin:  0;
-	padding: 0;
-}
-.lqt_archive_listing th {
-	text-align:     left;
-	vertical-align: baseline;
-	font-weight:    bold;
-	border-bottom:  1px solid #ddd;
 }
 
 .lqt_hidden {
@@ -213,17 +91,16 @@ The archive page.
 }
 
 .lqt_post_changed_by_history {
-	padding:          0.5em 1em;
+	padding: 0.5em !important;
 	background-color: #eeeeee;
-	border:           solid 1pt #ffaa66;
+	border:           solid 1pt #66aaff;
 	display:          table;
-	width:            auto;
 }
 
 .lqt_post_new_message {
-	padding:          0.5em 1em;
-	background-color: #eeeeee;
-	border:           solid 1pt #ffaa66;
+	padding: 0.5em !important;
+	background-color: #eeeeee !important;
+	border:           solid 1pt #66aaff;
 	display:          table;
 	width:            auto;
 }
@@ -232,63 +109,10 @@ The archive page.
 	padding:          0.75em 1.5em;
 	margin-bottom:    1em;
 	background-color: #eeeeee;
-	border:           solid 1pt #ffaa66;
-	display:          table;
-	width:            auto;
-}
-
-.lqt_thread_disclosure_triangle {
-	margin-right: 4pt;
-}
-
-.lqt_deleted_notice {
-	color:      #999;
-	font-style: italic;
-}
-
-.lqt_deleted_notice a {
-	color: #5874d1;
-}
-.lqt_deleted_notice a:visited {
-	color: #937cba;
-}
-.lqt_deleted_notice a:active {
-	color: #faa700;
-}
-
-.lqt_channel_body {
-	background-color: white;
-}
-
-.ns-98 #content {
-	background-color: white;
-}
-
-.lqt_post {
-	margin-bottom:  2em;
-	padding:        0;
-	padding-bottom: 0.5em;
-	clear:          both;
-}
-
-.lqt_post_highlight {
-	border:     solid 1px #fabd23;
-	margin-top: 0.1in;
-	padding:    0.2em;
-}
-
-.lqt_replies {
-	margin-left: 0.25in;
-}
-
-.lqt_nonindent_message {
-	color:     #777;
-	font-size: smaller;
-}
-
-.lqt_header {
-	clear:         both;
-	padding-right: 7em; /* so as not to bump into threadlevel_commands. */
+	border:           solid 1pt #66aaff;
+	text-align: center;
+	margin-left: 20%;
+	margin-right: 20%;
 }
 
 .lqt_threadlevel_commands {
@@ -299,7 +123,6 @@ The archive page.
 
 	float: right;
 
-	font-size: smaller;
 	color:     #777;
 }
 
@@ -308,150 +131,25 @@ The archive page.
 	list-style-type: none;
 	padding-right:   0.6em;
 }
-
-.lqt_footer {
-	margin:         0;
-	font-size:      smaller;
-	color:          #777;
-	padding-top:    0;
-	padding-bottom: 0;
-	display:        table;
-	width:          auto;
-	margin-left:    -0.6em;
-}
-
-.lqt_footer li {
-	display:         inline;
-	list-style-type: none;
-	padding-right:   0.6em;
-	margin-top:      0;
-	margin-bottom:   0;
-
-	background-color: #efefef;
-	border-bottom:    solid 1px #ddd;
-}
-
-/* This doesn't work in IE, so we need to replace it. What we want is
- * padding-left on the surrounding ul, but then we would need to place
- * the background color on the ul, and there is a *gap*. */
-.lqt_footer li:first-child {
-	padding-left: 0.6em;
-}
-
 #lqt_subject_field {
 	margin-top:    0.7em;
 	margin-bottom: 0.5em;
 	width:         80%;
 }
 
-.lqt_post .lqt_footer a,
-.lqt_nonindent_message a,
-.lqt_threadlevel_commands a {
-	color: #5874d1;
-}
-.lqt_post .lqt_footer a:visited,
-.lqt_nonindent_message a:visited,
-.lqt_threadlevel_commands a:visited {
-	color: #937cba;
-}
-.lqt_post .lqt_footer a:active,
-.lqt_nonindent_message a:active,
-.lqt_threadlevel_commands a:active {
-	color: #faa700;
-}
-.lqt_post .lqt_footer a.stub,
-.lqt_nonindent_message a.stub,
-.lqt_threadlevel_commands a.stub {
-	color: #a66e7a;
-}
-.lqt_post .lqt_footer a.new,
-#p-personal a.new, .lqt_threadlevel_commands a.new,
-.lqt_nonindent_message a.new, #p-personal a.new,
-.lqt_threadlevel_commands a.new,
-#p-personal a.new {
-	color: #d25858;
-}
-.lqt_post .lqt_footer a.new:visited,
-#p-personal a.new:visited,
-.lqt_threadlevel_commands a.new:visited,
-.lqt_nonindent_message a.new:visited,
-#p-personal a.new:visited,
-.lqt_threadlevel_commands a.new:visited,
-#p-personal a.new:visited {
-	color: #c49292;
-}
-
-.lqt_post .lqt_footer .lqt_footer_commands:hover a,
-.lqt_nonindent_message:hover a, .lqt_threadlevel_commands:hover a {
-	color:           #002bb8;
-	text-decoration: none;
-}
-.lqt_post .lqt_footer .lqt_footer_commands:hover a:visited,
-.lqt_nonindent_message:hover a:visited, .lqt_threadlevel_commands:hover a:visited {
-	color:           #5a3696;
-	text-decoration: none;
-}
-.lqt_post .lqt_footer .lqt_footer_commands:hover a:active,
-.lqt_nonindent_message:hover a:active, .lqt_threadlevel_commands:hover a:active {
-	color:           #faa700;
-	text-decoration: none;
-}
-.lqt_post .lqt_footer .lqt_footer_commands:hover a.stub,
-.lqt_nonindent_message:hover a.stub, .lqt_threadlevel_commands:hover a.stub {
-	color:           #772233;
-	text-decoration: none;
-}
-.lqt_post .lqt_footer .lqt_footer_commands:hover a.new,
-#p-personal a.new, .lqt_threadlevel_commands:hover a.new, .lqt_nonindent_message:hover a.new, #p-personal a.new, .lqt_threadlevel_commands:hover a.new, #p-personal a.new {
-	color:           #ba0000;
-	text-decoration: none;
-}
-.lqt_post .lqt_footer .lqt_footer_commands:hover a.new:visited,
-#p-personal a.new:visited, .lqt_threadlevel_commands:hover a.new:visited, .lqt_nonindent_message:hover a.new:visited, #p-personal a.new:visited, .lqt_threadlevel_commands:hover a.new:visited, #p-personal a.new:visited {
-	color:           #a55858;
-	text-decoration: none;
-}
-
-
-/* light, background color scheme:
-.lqt_post_color_1 a { background-color: #E0BF96 !important; }
-.lqt_post_color_2 a { background-color: #D2E096 !important; }
-.lqt_post_color_3 a { background-color: #96E0B4 !important; }
-.lqt_post_color_4 a { background-color: #96CCE0 !important; }
-.lqt_post_color_5 a { background-color: #C096E0 !important; }
-.lqt_post_color_6 a { background-color: #E09696 !important; }
-*/
-
-/* bright, forground color scheme: */
-.lqt_post_color_1 a { color: #cd9800 !important; }
-.lqt_post_color_2 a { color: #cd0098 !important; }
-.lqt_post_color_3 a { color: #98cd00 !important; }
-.lqt_post_color_4 a { color: #9800cd !important; }
-.lqt_post_color_5 a { color: #0098cd !important; }
-.lqt_post_color_6 a { color: #00cd98 !important; }
-
-.lqt_footer_sig:hover .lqt_post_color_1 a { color: #cd9800 !important; }
-.lqt_footer_sig:hover .lqt_post_color_2 a { color: #cd0098 !important; }
-.lqt_footer_sig:hover .lqt_post_color_3 a { color: #98cd00 !important; }
-.lqt_footer_sig:hover .lqt_post_color_4 a { color: #9800cd !important; }
-.lqt_footer_sig:hover .lqt_post_color_5 a { color: #0098cd !important; }
-.lqt_footer_sig:hover .lqt_post_color_6 a { color: #00cd98 !important; }
-
-.lqt_footer_sig:hover a { text-decoration: none; }
-
-li#ca-nstab-thread {
+body.skin-monobook li#ca-nstab-thread {
 	/* from #ca-talk */
 	margin-right: 1.6em;
 }
 
 .lqt_view_options  {
-	font-size:85%;
-	float:right;
+	padding: 0.2em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	/*float: left;*/
+	display: inline-block;
 }
-.lqt_view_options input {
-	/* This doesn't cascade for some reason. */
-	font-size:85%;
-}
+
 .lqt_go_sort {
 	font-weight:bold;
 }
@@ -460,10 +158,333 @@ li#ca-nstab-thread {
 	font-style: italic;
 	margin: 0.5em 1em;
 }
+
 .lqt_rc_ellipsis {
 	font-style: normal;
 	font-weight: bold;
 }
+
 .lqt_rc_author_notice_others {
 	color: #cd9800;
+}
+
+.lqt_toc {
+	width: 80%;
+	border-collapse: collapse;
+}
+
+.lqt_toc th {
+	border-bottom: 1px solid #000000;
+}
+
+.lqt_toc td,.lqt_toc th {
+	margin: 0;
+	padding: 0.2em;
+	text-align: left;
+}
+
+.lqt_toc td {
+	border-bottom: 1px solid #aaaaaa;
+}
+
+.lqt-newmessages-left {
+	padding-right: 1em;
+	vertical-align: top;
+	padding-top: 1em;
+}
+
+.lqt-thread-toolbar-info > span {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.lqt-thread-toolbar-signature {
+	padding-left: 0 !important;
+}
+
+.lqt-thread-toolbar-author {
+	font-weight: bold;
+}
+
+.lqt-thread-toolbar-edited-author {
+	font-size: 80%;
+}
+
+.lqt-thread-toolbar-edited-others {
+	font-size: 80%;
+}
+
+.lqt-command-icon {
+	height: 1.25em;
+	line-height: 1.25em;
+	background-position: center left;
+	background-repeat: no-repeat;
+	display: inline;
+}
+
+.lqt-thread-actions-trigger {
+	margin-top: 8px;
+	border: none;
+	color: #002BB8;
+}
+
+.lqt-thread-toolbar-menu ul {
+	display: none;
+	position: absolute;
+	right: 0;
+	left: auto;
+	background-color: white;
+	border: solid 1px silver;
+	margin-right: 1px;
+	margin-left: 10px;
+	margin-top: 5px;
+	list-style: none;
+	padding: 0;
+	z-index: 10;
+	margin-top: 0px;
+
+}
+
+.lqt-thread-toolbar-command-list li {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin-top: 0;
+	margin-bottom: 0;
+	list-style-type: none;
+	list-style-image: none;
+	display: block;
+}
+
+.lqt-thread-permalink {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+.lqt-header-quote {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+.lqt-thread-actions-icon {
+	display: block;
+	width: 3em;
+	height: 2em;
+	padding-right: 0.5em;
+	background-image: url('icons/arrow-down-icon.png');
+	background-position: right center;
+	background-repeat: no-repeat;
+	line-height: 2em;
+	margin-left: 0.5em;
+	color: #666666;
+	cursor: pointer;
+}
+.lqt-talkpage-search {
+	/*float: left;*/
+	display: inline-block;
+}
+
+.lqt-talkpage-search {
+	padding: 0.2em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+.lqt-talkpage-header {
+	border: 1px solid #ddd;
+	clear: both;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+div.lqt-post-sep {
+	padding: 0;
+	margin: 0;
+	margin-left: 1em;
+	margin-bottom: -1px;
+	background-image: url(images/break.png);
+	background-position: bottom;
+	background-repeat: repeat-x;
+	clear: both;
+	line-height: 1em;
+}
+
+.lqt-thread-replies > .lqt-thread-first > .lqt-post-wrapper,
+.lqt-thread-no-subthreads.lqt-thread-topmost > .lqt-post-wrapper {
+	background-image: url(images/vertical-fade.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: top left;
+}
+
+.lqt-thread-replies {
+	margin-left: 1em;
+}
+
+.lqt-thread-replies,
+.lqt-thread-no-subthreads.lqt-thread-topmost {
+	background-image: url(images/edge.png);
+	background-repeat: repeat-y;
+	background-position: left center;
+}
+
+.lqt-replies-finish {
+	background-image: url(images/edge.png);
+	background-position: bottom;
+	background-repeat: repeat-x;
+}
+
+.lqt-replies-finish > div {
+	background-image: url(images/corner.png);
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	/* The space is caused by the use of a non-breaking space, so we need to use line-height here */
+	line-height: 1em;
+}
+
+.lqt-post-wrapper {
+	padding: 0.5em 1em;
+	overflow: auto;
+}
+
+.lqt-thread-info-panel {
+	float: right;
+}
+
+.lqt-thread-toolbar-timestamp {
+	color: #778899;
+}
+
+.lqt-thread-toolbar {
+	right: 0.5em;
+	position: absolute;
+	
+}
+
+.lqt-command {
+	margin-top: 8px;
+	padding: 0;
+}
+.lqt-thread-toolbar .lqt-command > a {
+	display: block;
+}
+
+.lqt-command-link a {
+	margin-left: 1em;
+	height: 2em;
+	padding-left: 26px;
+	background-image: url(icons/link.png) !important;
+	background-repeat: no-repeat;
+	background-position: left center !important;
+	line-height: 2em;
+	overflow: hidden;
+}
+
+.lqt-command-quote a {
+	margin-left: 1em;
+	height: 2em;
+	background-image: url(icons/quote.png);
+	background-position: left center !important;
+	background-repeat: no-repeat;
+	padding-left: 26px;
+	line-height: 2em;
+}
+.lqt-thread-toolbar-menu {
+	margin-top: 8px;
+	height: 2em;
+}
+.lqt-thread-toolbar-commands {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	line-height: 1em;
+	height: 1em;
+}
+.lqt-thread-toolbar-commands > .lqt-command,
+.lqt-thread-toolbar-menu {
+	float: left;
+}
+.lqt-thread-toolbar * {
+	text-decoration: none !important;
+}
+
+.lqt_start_discussion {
+/*	float: left;*/
+	font-weight: bold;
+}
+
+.lqt-updated-notification {
+	text-align: center;
+	margin-left: 20%;
+	margin-right: 20%;
+	padding: 1em;
+	font-weight: bold;
+	border: 1px solid #dddddd;
+	background-color: #eeeeee;
+}
+
+.lqt-edit-form {
+	margin-top: 1em;
+}
+
+.lqt-show-replies,
+.lqt-show-more-posts{
+	margin-left: 2em;
+	font-size: 120%;
+}
+
+.lqt-post-sep,
+.lqt-replies-finish {
+	clear: both;
+}
+
+table.lqt-new-messages {
+	width: 100%;
+}
+
+.lqt-newmessages-left {
+	width: 10em	;
+}
+
+.lqt-thread-link-url,
+.lqt-thread-link-title {
+	font-family: monospace;
+}
+
+.lqt-thread-signature > span {
+	padding-right: 1em;
+}
+
+.lqt-command {
+	line-height: 2em;
+}
+
+.lqt-add-reply {
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-top: 0.2em;
+	font-size: 120%;
+}
+
+.lqt-reply-form {
+	padding: 0.5em 1em;
+}
+
+.lqt-drop-zone {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding: 0.5em 1em;
+	border: 1px solid #999999;
+	text-align: center center;
+	color: #999999;
+}
+
+.lqt-drop-zone.lqt-drop-zone-active {
+	border: 1px solid #3333ff !important;
+}
+
+.lqt-drop-zone.lqt-drop-zone-hover {
+	border: 2px solid #3333ff !important;
+	color: #3333ff !important;
+	font-weight: bold !important;
 }

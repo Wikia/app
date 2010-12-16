@@ -23,8 +23,8 @@
  * @file
  */
 
-/** 
- * This file is the entry point for all API queries. It begins by checking 
+/**
+ * This file is the entry point for all API queries. It begins by checking
  * whether the API is enabled on this wiki; if not, it informs the user that
  * s/he should set $wgEnableAPI to true and exits. Otherwise, it constructs
  * a new ApiMain using the parameter passed to it as an argument in the URL
@@ -34,12 +34,11 @@
  * in the URL.
  */
 
-define('DONT_INTERPOLATE_TITLE', true);
-
 // Initialise common code
-require (dirname(__FILE__) . '/includes/WebStart.php');
+require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
-wfProfileIn('api.php');
+wfProfileIn( 'api.php' );
+$starttime = microtime( true );
 
 // URL safety checks
 //
@@ -51,38 +50,67 @@ wfProfileIn('api.php');
 // which will end up triggering HTML detection and execution, hence
 // XSS injection and all that entails.
 //
-// Ensure that all access is through the canonical entry point...
-//
-if( isset( $_SERVER['SCRIPT_URL'] ) ) {
-	$url = $_SERVER['SCRIPT_URL'];
-} else {
-	$url = $_SERVER['PHP_SELF'];
-}
-if( strcmp( "$wgScriptPath/api$wgScriptExtension", $url ) ) {
+if ( $wgRequest->isPathInfoBad() ) {
 	wfHttpError( 403, 'Forbidden',
-		'API must be accessed through the primary script entry point.' );
+		'Invalid file extension found in PATH_INFO. ' .
+		'The API must be accessed through the primary script entry point.' );
 	return;
 }
 
 // Verify that the API has not been disabled
-if (!$wgEnableAPI || $wgHideAPI) {
+if ( !$wgEnableAPI || !$wgHideAPI ) {
 	echo 'MediaWiki API is not enabled for this site. Add the following line to your LocalSettings.php';
 	echo '<pre><b>$wgEnableAPI=true;</b></pre>';
-	die(1);
+	die( 1 );
+}
+
+// Selectively allow cross-site AJAX
+
+/*
+ * Helper function to convert wildcard string into a regex
+ * '*' => '.*?'
+ * '?' => '.'
+ * @ return string
+ */
+function convertWildcard( $search ) {
+	$search = preg_quote( $search, '/' );
+	$search = str_replace(
+		array( '\*', '\?' ),
+		array( '.*?', '.' ),
+		$search
+	);
+	return "/$search/";
+}
+
+if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
+	$exceptions = array_map( 'convertWildcard', $wgCrossSiteAJAXdomainExceptions );
+	$regexes = array_map( 'convertWildcard', $wgCrossSiteAJAXdomains );
+	foreach ( $regexes as $regex ) {
+		if ( preg_match( $regex, $_SERVER['HTTP_ORIGIN'] ) ) {
+			foreach ( $exceptions as $exc ) { // Check against exceptions
+				if ( preg_match( $exc, $_SERVER['HTTP_ORIGIN'] ) ) {
+					break 2;
+				}
+			}
+			header( "Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}" );
+			header( 'Access-Control-Allow-Credentials: true' );
+			break;
+		}
+	}
 }
 
 // So extensions can check whether they're running in API mode
-define('MW_API', true);
+define( 'MW_API', true );
 
 // Set a dummy $wgTitle, because $wgTitle == null breaks various things
 // In a perfect world this wouldn't be necessary
-$wgTitle = Title::newFromText('API');
+$wgTitle = Title::makeTitle( NS_MAIN, 'API' );
 
 /* Construct an ApiMain with the arguments passed via the URL. What we get back
  * is some form of an ApiMain, possibly even one that produces an error message,
  * but we don't care here, as that is handled by the ctor.
  */
-$processor = new ApiMain($wgRequest, $wgEnableWriteAPI);
+$processor = new ApiMain( $wgRequest, $wgEnableWriteAPI );
 
 // Process data & print results
 $processor->execute();
@@ -91,9 +119,27 @@ $processor->execute();
 wfDoUpdates();
 
 // Log what the user did, for book-keeping purposes.
-wfProfileOut('api.php');
+$endtime = microtime( true );
+wfProfileOut( 'api.php' );
 wfLogProfilingData();
+
+// Log the request
+if ( $wgAPIRequestLog ) {
+	$items = array(
+			wfTimestamp( TS_MW ),
+			$endtime - $starttime,
+			wfGetIP(),
+			$_SERVER['HTTP_USER_AGENT']
+	);
+	$items[] = $wgRequest->wasPosted() ? 'POST' : 'GET';
+	if ( $processor->getModule()->mustBePosted() ) {
+		$items[] = "action=" . $wgRequest->getVal( 'action' );
+	} else {
+		$items[] = wfArrayToCGI( $wgRequest->getValues() );
+	}
+	wfErrorLog( implode( ',', $items ) . "\n", $wgAPIRequestLog );
+	wfDebug( "Logged API request to $wgAPIRequestLog\n" );
+}
 
 // Shut down the database
 wfGetLBFactory()->shutdown();
-

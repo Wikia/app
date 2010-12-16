@@ -109,7 +109,7 @@ class ApiConfigure extends ApiBase {
 				$conf = ConfigurationSettings::singleton( CONF_SETTINGS_EXT );
 				$ret = array();
 				foreach ( $conf->getAllExtensionsObjects() as $ext ) {
-					if( !$ext->isInstalled() ) continue; // must exist
+					if( !$ext->isUsable() ) continue; // must exist
 					$extArr = array();
 					$extArr['name'] = $ext->getName();
 					if ( $ext->isActivated() )
@@ -356,6 +356,14 @@ class ApiConfigure extends ApiBase {
 			'group' => 'Whether to group settings',
 		);
 	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'code' => 'noconf', 'info' => 'You need to call efConfigureSetup() to use this module'  ),
+			array( 'code' => 'noversion', 'info' => 'version not found' ),
+			array( 'code' => 'nowiki', 'info' => 'wiki not found in version' ),
+		) );
+	}
 
 	protected function getDescription() {
 		return 'Configure extension\'s API module';
@@ -368,6 +376,6 @@ class ApiConfigure extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: Configure.api.php 45729 2009-01-14 16:20:05Z ialex $';
+		return __CLASS__ . ': $Id: Configure.api.php 64445 2010-03-31 16:42:29Z ialex $';
 	}
 }

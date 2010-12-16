@@ -31,5 +31,3 @@ foreach ( $lines as $line ) {
 		print $line;
 	}
 }
-
-?>

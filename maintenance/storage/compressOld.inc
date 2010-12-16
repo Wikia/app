@@ -57,7 +57,8 @@ function compressPage( $row, $extdb ) {
 			'old_text' => $compress
 		), array( /* WHERE */
 			'old_id' => $row->old_id
-		), $fname, 'LIMIT 1'
+		), $fname,
+		array( 'LIMIT' => 1 )
 	);
 	return true;
 }
@@ -104,7 +105,8 @@ function compressWithConcat( $startId, $maxChunkSize, $beginDate,
 	# overwriting bulk storage concat rows. Don't compress external references, because
 	# the script doesn't yet delete rows from external storage.
 	$conds = array(
-		"old_flags NOT LIKE '%object%' AND old_flags NOT LIKE '%external%'");
+		'old_flags NOT ' . $dbr->buildLike( $dbr->anyString(), 'object', $dbr->anyString() ) . ' AND old_flags NOT '
+			. $dbr->buildLike( $dbr->anyString(), 'external', $dbr->anyString() ) );
 
 	if ( $beginDate ) {
 		if ( !preg_match( '/^\d{14}$/', $beginDate ) ) {

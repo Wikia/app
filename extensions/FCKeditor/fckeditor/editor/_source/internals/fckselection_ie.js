@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -28,11 +28,11 @@ FCKSelection.GetType = function()
 	// So we'd better check the object returned by createRange() rather than by looking at the type.
 	try
 	{
-		var ieType = FCK.EditorDocument.selection.type ;
+		var ieType = FCKSelection.GetSelection().type ;
 		if ( ieType == 'Control' || ieType == 'Text' )
 			return ieType ;
 
-		if ( FCK.EditorDocument.selection.createRange().parentElement )
+		if ( this.GetSelection().createRange().parentElement )
 			return 'Text' ;
 	}
 	catch(e)
@@ -49,10 +49,10 @@ FCKSelection.GetSelectedElement = function()
 {
 	if ( this.GetType() == 'Control' )
 	{
-		var oRange = FCK.EditorDocument.selection.createRange() ;
+		var oRange = this.GetSelection().createRange() ;
 
 		if ( oRange && oRange.item )
-			return FCK.EditorDocument.selection.createRange().item(0) ;
+			return this.GetSelection().createRange().item(0) ;
 	}
 	return null ;
 } ;
@@ -69,7 +69,7 @@ FCKSelection.GetParentElement = function()
 			return null ;
 
 		default :
-			return FCK.EditorDocument.selection.createRange().parentElement() ;
+			return this.GetSelection().createRange().parentElement() ;
 	}
 } ;
 
@@ -86,12 +86,12 @@ FCKSelection.GetBoundaryParentElement = function( startBoundary )
 
 		default :
 			var doc = FCK.EditorDocument ;
-			
+
 			var range = doc.selection.createRange() ;
 			range.collapse( startBoundary !== false ) ;
-			
+
 			var el = range.parentElement() ;
-			
+
 			// It may happen that range is comming from outside "doc", so we
 			// must check it (#1204).
 			return FCKTools.GetElementDocument( el ) == doc ? el : null ;
@@ -101,22 +101,23 @@ FCKSelection.GetBoundaryParentElement = function( startBoundary )
 FCKSelection.SelectNode = function( node )
 {
 	FCK.Focus() ;
-	FCK.EditorDocument.selection.empty() ;
+	this.GetSelection().empty() ;
 	var oRange ;
 	try
 	{
 		// Try to select the node as a control.
 		oRange = FCK.EditorDocument.body.createControlRange() ;
 		oRange.addElement( node ) ;
+		oRange.select() ;
 	}
 	catch(e)
 	{
 		// If failed, select it as a text range.
 		oRange = FCK.EditorDocument.body.createTextRange() ;
 		oRange.moveToElementText( node ) ;
+		oRange.select() ;
 	}
 
-	oRange.select() ;
 } ;
 
 FCKSelection.Collapse = function( toStart )
@@ -124,7 +125,7 @@ FCKSelection.Collapse = function( toStart )
 	FCK.Focus() ;
 	if ( this.GetType() == 'Text' )
 	{
-		var oRange = FCK.EditorDocument.selection.createRange() ;
+		var oRange = this.GetSelection().createRange() ;
 		oRange.collapse( toStart == null || toStart === true ) ;
 		oRange.select() ;
 	}
@@ -135,19 +136,19 @@ FCKSelection.HasAncestorNode = function( nodeTagName )
 {
 	var oContainer ;
 
-	if ( FCK.EditorDocument.selection.type == "Control" )
+	if ( this.GetSelection().type == "Control" )
 	{
 		oContainer = this.GetSelectedElement() ;
 	}
 	else
 	{
-		var oRange  = FCK.EditorDocument.selection.createRange() ;
+		var oRange  = this.GetSelection().createRange() ;
 		oContainer = oRange.parentElement() ;
 	}
 
 	while ( oContainer )
 	{
-		if ( oContainer.tagName == nodeTagName ) return true ;
+		if ( oContainer.nodeName.IEquals( nodeTagName ) ) return true ;
 		oContainer = oContainer.parentNode ;
 	}
 
@@ -155,6 +156,7 @@ FCKSelection.HasAncestorNode = function( nodeTagName )
 } ;
 
 // The "nodeTagName" parameter must be UPPER CASE.
+// It can be also an array of names
 FCKSelection.MoveToAncestorNode = function( nodeTagName )
 {
 	var oNode, oRange ;
@@ -162,9 +164,9 @@ FCKSelection.MoveToAncestorNode = function( nodeTagName )
 	if ( ! FCK.EditorDocument )
 		return null ;
 
-	if ( FCK.EditorDocument.selection.type == "Control" )
+	if ( this.GetSelection().type == "Control" )
 	{
-		oRange = FCK.EditorDocument.selection.createRange() ;
+		oRange = this.GetSelection().createRange() ;
 		for ( i = 0 ; i < oRange.length ; i++ )
 		{
 			if (oRange(i).parentNode)
@@ -176,11 +178,11 @@ FCKSelection.MoveToAncestorNode = function( nodeTagName )
 	}
 	else
 	{
-		oRange  = FCK.EditorDocument.selection.createRange() ;
+		oRange  = this.GetSelection().createRange() ;
 		oNode = oRange.parentElement() ;
 	}
 
-	while ( oNode && oNode.nodeName != nodeTagName )
+	while ( oNode && !oNode.nodeName.Equals( nodeTagName ) )
 		oNode = oNode.parentNode ;
 
 	return oNode ;
@@ -189,7 +191,7 @@ FCKSelection.MoveToAncestorNode = function( nodeTagName )
 FCKSelection.Delete = function()
 {
 	// Gets the actual selection.
-	var oSel = FCK.EditorDocument.selection ;
+	var oSel = this.GetSelection() ;
 
 	// Deletes the actual selection contents.
 	if ( oSel.type.toLowerCase() != "none" )
@@ -199,3 +201,88 @@ FCKSelection.Delete = function()
 
 	return oSel ;
 } ;
+
+/**
+ * Returns the native selection object.
+ */
+FCKSelection.GetSelection = function()
+{
+	this.Restore() ;
+	return FCK.EditorDocument.selection ;
+}
+
+FCKSelection.Save = function( lock )
+{
+	var editorDocument = FCK.EditorDocument ;
+
+	if ( !editorDocument )
+		return ;
+
+	// Avoid saving again a selection while a dialog is open #2616
+	if ( this.locked )
+		return ;
+	this.locked = !!lock ;
+
+	var selection = editorDocument.selection ;
+	var range ;
+
+	if ( selection )
+	{
+		// The call might fail if the document doesn't have the focus (#1801),
+		// but we don't want to modify the current selection (#2495) with a call to FCK.Focus() ;
+		try {
+			range = selection.createRange() ;
+		}
+		catch(e) {}
+
+		// Ensure that the range comes from the editor document.
+		if ( range )
+		{
+			if ( range.parentElement && FCKTools.GetElementDocument( range.parentElement() ) != editorDocument )
+				range = null ;
+			else if ( range.item && FCKTools.GetElementDocument( range.item(0) )!= editorDocument )
+				range = null ;
+		}
+	}
+
+	this.SelectionData = range ;
+}
+
+FCKSelection._GetSelectionDocument = function( selection )
+{
+	var range = selection.createRange() ;
+	if ( !range )
+		return null;
+	else if ( range.item )
+		return FCKTools.GetElementDocument( range.item( 0 ) ) ;
+	else
+		return FCKTools.GetElementDocument( range.parentElement() ) ;
+}
+
+FCKSelection.Restore = function()
+{
+	if ( this.SelectionData )
+	{
+		FCK.IsSelectionChangeLocked = true ;
+
+		try
+		{
+			// Don't repeat the restore process if the editor document is already selected.
+			if ( String( this._GetSelectionDocument( FCK.EditorDocument.selection ).body.contentEditable ) == 'true' )
+			{
+				FCK.IsSelectionChangeLocked = false ;
+				return ;
+			}
+			this.SelectionData.select() ;
+		}
+		catch ( e ) {}
+
+		FCK.IsSelectionChangeLocked = false ;
+	}
+}
+
+FCKSelection.Release = function()
+{
+	this.locked = false ;
+	delete this.SelectionData ;
+}

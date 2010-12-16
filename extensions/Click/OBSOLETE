@@ -1,6 +1,0 @@
-As of MediaWiki 1.14.0 this extension is obsolete due to core functionality for
-linking images.  It will be deleted from subversion on the 1.15.0 release, you
-are advised to migrate to the core functionality - this extension will no longer
-be updated or supported except for critical security issues.
-
-http://www.mediawiki.org/wiki/Help:Images

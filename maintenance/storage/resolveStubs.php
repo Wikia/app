@@ -35,11 +35,9 @@ function resolveStubs() {
 		
 		$res = $dbr->select( 'text', array( 'old_id', 'old_text', 'old_flags' ),
 			"old_id>=$start AND old_id<=$end " .
-			# Using a more restrictive flag set for now, until I do some more analysis -- TS
-			#"AND old_flags LIKE '%object%' AND old_flags NOT LIKE '%external%' ".
-			
-			"AND old_flags='object' " .
-			"AND LOWER(LEFT(old_text,22)) = 'O:15:\"historyblobstub\"'", $fname );
+			"AND old_flags LIKE '%object%' AND old_flags NOT LIKE '%external%' ".
+			'AND LOWER(CONVERT(LEFT(old_text,22) USING latin1)) = \'o:15:"historyblobstub"\'', 
+			$fname );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			resolveStub( $row->old_id, $row->old_text, $row->old_flags );
 		}
@@ -69,7 +67,7 @@ function resolveStub( $id, $stubText, $flags ) {
 
 	# Get the (maybe) external row
 	$externalRow = $dbr->selectRow( 'text', array( 'old_text' ),
-		array( 'old_id' => $stub->mOldId, "old_flags LIKE '%external%'" ),
+		array( 'old_id' => $stub->mOldId, 'old_flags' . $dbr->buildLike( $dbr->anyString(), 'external', $dbr->anyString() ) ),
 		$fname
 	);
 

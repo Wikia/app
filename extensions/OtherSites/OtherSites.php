@@ -35,6 +35,7 @@ $wgOtherSites = array(
 );
 
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
 	'name' => 'OtherSites',
 	'version' => '1.0',
 	'author' => 'Mark Jaroski',

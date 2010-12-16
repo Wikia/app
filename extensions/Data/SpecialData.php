@@ -75,13 +75,13 @@ function wfDataPreview ( &$t , &$dk )
 function wfDataView ( $dt ) # $dt = data type
 	{
 	if ( $dt == "" ) return ;
-	global $wgParser, $wgTitle;
+	global $wgParser;
 	global $wgOut , $wgUser ;
 	$nsdata = 20 ;
 	$s = "<h2>{$dt}</h2>" ;
 	
 	# Read from source
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 	$sql = "SELECT * FROM cur WHERE cur_namespace={$nsdata} AND cur_title=\"{$dt}\"";
 	$res1 = $dbr->query( $sql, "wfDataEdit" );
 	$data = $dbr->fetchObject( $res1 ) ;
@@ -117,7 +117,7 @@ function wfDataEdit ( $dt ) # $dt = data type
 	else $comment = "" ;
 	
 	# Read form source
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 	$sql = "SELECT * FROM cur WHERE cur_namespace={$nsdata} AND cur_title=\"{$dt}\"";
 	$res1 = $dbr->query( $sql, "wfDataEdit" );
 	$data = $dbr->fetchObject( $res1 ) ;
@@ -133,7 +133,7 @@ function wfDataEdit ( $dt ) # $dt = data type
 	if ( isset ( $_POST['doit'] ) && $dk[$masterkey] )
 		{
 		# Get next revision number
-		$dbw =& wfGetDB( DB_MASTER ); # Maybe DB_SLAVE didn't update yet
+		$dbw = wfGetDB( DB_MASTER ); # Maybe DB_SLAVE didn't update yet
 		$sql = "SELECT MAX(rev_id) AS m FROM data_rev WHERE rev_cur_id={$data->cur_id} AND rev_masterkey=\"" . $dk[$masterkey] . "\"" ;
 		$r = $dbw->query( $sql, "wfDataEdit" );
 		$newrev = $dbr->fetchObject( $r ) ;
@@ -256,7 +256,7 @@ function wfSpecialData()
 
 		$s .= "<form method=post>" ;
 		$s .= "Data type " ;
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$sql = "SELECT cur_id,cur_title FROM cur WHERE cur_namespace={$nsdata}";
 		$res1 = $dbr->query( $sql, "wfSpecialData" );
 		$s .= "<select name='data_type'>\n" ;

@@ -74,16 +74,34 @@ class DoubleRedirectsPage extends PageQueryPage {
 			}
 		}
 		if ( !$result ) {
-			return '<s>' . $skin->makeLinkObj( $titleA, '', 'redirect=no' ) . '</s>';
+			return '<s>' . $skin->link( $titleA, null, array(), array( 'redirect' => 'no' ) ) . '</s>';
 		}
 
 		$titleB = Title::makeTitle( $result->nsb, $result->tb );
 		$titleC = Title::makeTitle( $result->nsc, $result->tc );
 
-		$linkA = $skin->makeKnownLinkObj( $titleA, '', 'redirect=no' );
-		$edit = $skin->makeBrokenLinkObj( $titleA, "(".wfMsg("qbedit").")" , 'redirect=no&action=edit');
-		$linkB = $skin->makeKnownLinkObj( $titleB, '', 'redirect=no' );
-		$linkC = $skin->makeKnownLinkObj( $titleC );
+		$linkA = $skin->linkKnown(
+			$titleA,
+			null,
+			array(),
+			array( 'redirect' => 'no' )
+		);
+		$edit = $skin->linkKnown(
+			$titleA,
+			wfMsgExt( 'parentheses', array( 'escape' ), wfMsg( 'editlink' ) ),
+			array(),
+			array(
+				'redirect' => 'no',
+				'action' => 'edit'
+			)
+		);
+		$linkB = $skin->linkKnown(
+			$titleB,
+			null,
+			array(),
+			array( 'redirect' => 'no' )
+		);
+		$linkC = $skin->linkKnown( $titleC );
 		$arr = $wgContLang->getArrow() . $wgContLang->getDirMark();
 
 		return( "{$linkA} {$edit} {$arr} {$linkB} {$arr} {$linkC}" );

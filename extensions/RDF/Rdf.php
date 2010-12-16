@@ -79,6 +79,7 @@ if (defined('MEDIAWIKI')) {
 	/* Config end */
 	
 	$wgExtensionCredits['other'][] = array(
+		'path' => __FILE__,
 		'name' => 'RDF',
 		'version' => MWRDF_VERSION,
 		'description' => 'RDF framework for MediaWiki',
@@ -572,7 +573,7 @@ if (defined('MEDIAWIKI')) {
 		global $DCTERM;
 		$model = ModelFactory::getDefaultModel();
 		$ar = MwRdfArticleResource($article);
-		$dbr =& wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$res = $dbr->select(array('pagelinks'),
 							array('pl_namespace', 'pl_title'),
 							array('pl_from = ' . $article->mTitle->getArticleID()),
@@ -601,7 +602,7 @@ if (defined('MEDIAWIKI')) {
 		$model = ModelFactory::getDefaultModel();
 		$nt = $article->getTitle();
 		$tr = MwRdfTitleResource($nt);
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( array('page', 'revision'),
 							 array('rev_id', 'rev_timestamp', 'rev_user', 'rev_user_text'),
 							 array('page_namespace = ' . $nt->getNamespace(),
@@ -637,7 +638,7 @@ if (defined('MEDIAWIKI')) {
 		$nt = $article->getTitle();
 		$tr = MwRdfTitleResource($nt);
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select('imagelinks',
 							array('il_to'),
 							array('il_from = ' . $nt->getArticleID()),
@@ -960,7 +961,7 @@ if (defined('MEDIAWIKI')) {
 	function MwRdfOnArticleSave($article, $dc1, $dc2, $dc3, $dc4, $dc5, $dc6) {
 		$id = $article->mTitle->getArticleID();
 		if ($id != 0) {
-			$dbr =& wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->select('pagelinks',
 								array('pl_namespace', 'pl_title'),
 								array('pl_from = ' . $id),

@@ -9,12 +9,11 @@ if ( !defined( "MEDIAWIKI" ) )
 /* ---- CREDITS ---- */
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'CatBoxAtTop',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Adds a category box to the top right of pages',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Category_Box_at_Top',
-	'svn-date'       => '$LastChangedDate',
-	'svn-revision'   => '$LastChangedRevision: 43745 $',
 	'descriptionmsg' => 'catboxattop-desc',
 );
 

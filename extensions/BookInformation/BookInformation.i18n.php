@@ -49,6 +49,7 @@ $messages['af'] = array(
 	'bookinfo-result-year' => 'Jaar:',
 	'bookinfo-error-invalidisbn' => 'Ongeldige ISBN ingetik.',
 	'bookinfo-error-nosuchitem' => 'Item bestaan nie of kon nie gevind word nie.',
+	'bookinfo-error-nodriver' => 'Kon nie die regte "Book Information Driver" inisialiseer nie.',
 	'bookinfo-error-noresponse' => 'Geen antwoord of versoek neem te lank.',
 	'bookinfo-purchase' => 'Koop die boek vanaf $1',
 	'bookinfo-provider' => 'Gegewens verskaf deur: $1',
@@ -95,6 +96,15 @@ $messages['ar'] = array(
 	'bookinfo-error-noresponse' => 'لا رد أو الطلب انتهت فترته.',
 	'bookinfo-purchase' => 'اشتر هذا الكتاب من $1',
 	'bookinfo-provider' => 'مزود البيانات: $1',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'bookinfo-result-author' => 'ܣܝܘܡܐ:',
+	'bookinfo-result-publisher' => 'ܦܪܣܢܐ:',
+	'bookinfo-result-year' => 'ܫܢܬܐ:',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -159,11 +169,15 @@ $messages['bcl'] = array(
  */
 $messages['be-tarask'] = array(
 	'bookinfo-header' => 'Інфармацыя пра кнігу',
+	'bookinfo-desc' => 'Пашырае [[Special:Booksources|спэцыяльную старонку пошуку кніг]] інфармацыяй з ўэб-сэрвісу',
 	'bookinfo-result-title' => 'Назва:',
 	'bookinfo-result-author' => 'Аўтар:',
 	'bookinfo-result-publisher' => 'Выдавецтва:',
 	'bookinfo-result-year' => 'Год:',
 	'bookinfo-error-invalidisbn' => 'Уведзены няслушны ISBN.',
+	'bookinfo-error-nosuchitem' => 'Запіс не існуе альбо ня можа быць знойдзены.',
+	'bookinfo-error-nodriver' => 'Немагчыма ініцыялізаваць адпаведны драйвэр інфармацыі пра кнігі.',
+	'bookinfo-error-noresponse' => 'Няма адказу альбо перавышаны час чаканьня адказу.',
 	'bookinfo-purchase' => 'Набыць гэту кнігу ў $1',
 	'bookinfo-provider' => 'Крыніца інфармацыі: $1',
 );
@@ -505,15 +519,15 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'bookinfo-header' => 'Enformacions sur les ôvres',
-	'bookinfo-desc' => 'Ètend [[Special:Booksources]] avouéc des enformacions dês un sèrviço Vouèbe.',
+	'bookinfo-desc' => 'Complète la [[Special:Booksources|pâge spèciâla de les sôrses d’ôvres de refèrence]] avouéc des enformacions dês un sèrviço vouèbe.',
 	'bookinfo-result-title' => 'Titro :',
 	'bookinfo-result-author' => 'Ôtor :',
 	'bookinfo-result-publisher' => 'Èditor :',
 	'bookinfo-result-year' => 'An :',
 	'bookinfo-error-invalidisbn' => 'ISBN envalido.',
-	'bookinfo-error-nosuchitem' => 'Cél èlèment ègziste pas ou il at pas possu étre trovâ.',
+	'bookinfo-error-nosuchitem' => 'Cél èlèment ègziste pas ou ben il at pas possu étre trovâ.',
 	'bookinfo-error-nodriver' => 'Empossiblo d’inicialisar un motor d’enformacion sur les ôvres.',
-	'bookinfo-error-noresponse' => 'Gins de rèponsa ou de dèpassement du dèlê.',
+	'bookinfo-error-noresponse' => 'Gins de rèponsa ou ben de dèpassement du dèlê.',
 	'bookinfo-purchase' => 'Achetar cél lévro dessus $1',
 	'bookinfo-provider' => 'Fornissor de les balyês : $1',
 );
@@ -563,6 +577,7 @@ $messages['grc'] = array(
 	'bookinfo-result-title' => 'Ἐπιγραφή:',
 	'bookinfo-result-author' => 'Δημιουργός:',
 	'bookinfo-result-publisher' => 'Ἐκδότης:',
+	'bookinfo-result-year' => 'Ἔτος:',
 );
 
 /** Swiss German (Alemannisch)
@@ -588,10 +603,18 @@ $messages['gsw'] = array(
  * @author MacTire02
  */
 $messages['gv'] = array(
+	'bookinfo-header' => 'Oayllys lioar',
+	'bookinfo-desc' => 'Mooadaghey [[Special:Booksources|yn duillag er lheh ry hoi farraneyn-fys lioar]] lesh oayllys veih shirveish voggyl.',
 	'bookinfo-result-title' => 'Ennym:',
 	'bookinfo-result-author' => 'Ughtar:',
 	'bookinfo-result-publisher' => 'Soilsheyder:',
 	'bookinfo-result-year' => 'Blein:',
+	'bookinfo-error-invalidisbn' => 'ISBN neuchiart currit stiagh.',
+	'bookinfo-error-nosuchitem' => 'Cha nel y nhee ayn ny cha row eh er geddyn magh.',
+	'bookinfo-error-nodriver' => 'Cha nel eh jargal yn Immanagh Oayllys Lioar y ghoaill toshiaght.',
+	'bookinfo-error-noresponse' => 'Cha row freggyrt ayn ny haghyr jerrey traa lesh yn aghin.',
+	'bookinfo-purchase' => 'Kionnee yn lioar shoh veih $1',
+	'bookinfo-provider' => 'Kiareyder fysseree: $1',
 );
 
 /** Hebrew (עברית)
@@ -825,10 +848,11 @@ $messages['jut'] = array(
 
 /** Javanese (Basa Jawa)
  * @author Meursault2004
+ * @author Pras
  */
 $messages['jv'] = array(
 	'bookinfo-header' => 'Informasi buku',
-	'bookinfo-desc' => 'Ngembangaké [[Special:Booksources]] mawa informasi saka sumber-sumber buku',
+	'bookinfo-desc' => 'Kembangna [[Special:Booksources|kaca mligi sumber buku]] mawa informasi saka sawijining peladèn wèb',
 	'bookinfo-result-title' => 'Irah-irahan (judhul):',
 	'bookinfo-result-author' => 'Pangripta:',
 	'bookinfo-result-publisher' => 'Panerbit:',
@@ -900,6 +924,13 @@ $messages['kk-latn'] = array(
 	'bookinfo-provider' => 'Derek jetistirwşisi: $1',
 );
 
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'bookinfo-result-year' => 'Ukioq:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
@@ -920,8 +951,17 @@ $messages['km'] = array(
 	'bookinfo-provider' => 'អ្នកផ្គត់ផ្គង់ទិន្នន័យ៖ $1',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'bookinfo-result-author' => 'ಕರ್ತೃ:',
+);
+
 /** Korean (한국어)
+ * @author Klutzy
  * @author Kwj2772
+ * @author Yknok29
  */
 $messages['ko'] = array(
 	'bookinfo-header' => '책 정보',
@@ -932,6 +972,7 @@ $messages['ko'] = array(
 	'bookinfo-result-year' => '연도:',
 	'bookinfo-error-invalidisbn' => '잘못된 ISBN이 입력되었습니다.',
 	'bookinfo-error-nosuchitem' => '해당되는 결과가 없거나 찾을 수 없습니다.',
+	'bookinfo-error-nodriver' => '책 정보 드라이버를 초기화할 수 없습니다.',
 	'bookinfo-error-noresponse' => '서버의 반응이 없가나 요청 시간을 초과했습니다.',
 	'bookinfo-purchase' => '$1에서 이 책을 구입하기',
 	'bookinfo-provider' => '데이터 제공자: $1',
@@ -1026,6 +1067,24 @@ $messages['lt'] = array(
 	'bookinfo-result-year' => 'Metai:',
 	'bookinfo-error-invalidisbn' => 'Įvestas blogas ISBN',
 	'bookinfo-purchase' => 'Pirkti šią knygą iš $1',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'bookinfo-header' => 'Antsipirihany momba ny boky',
+	'bookinfo-desc' => "Mameno ny [[Special:Booksources|pejy manokana momba ny foto-boky]] avy amin'ny servisy Internet",
+	'bookinfo-result-title' => 'lohateny:',
+	'bookinfo-result-author' => 'Mpanoratra azy:',
+	'bookinfo-result-publisher' => 'Mpamoaka azy:',
+	'bookinfo-result-year' => 'Taona:',
+	'bookinfo-error-invalidisbn' => 'Tsy izy ny ISBN nampidirinao',
+	'bookinfo-error-nosuchitem' => 'Tsy hita tao io zavatra io na tsy misy',
+	'bookinfo-error-nodriver' => "Tsy afaka mandefa ny rindrankajy momba ny antsipirihan'ny boky",
+	'bookinfo-error-noresponse' => 'Tsy nisy valiny na ela loatra niandry.',
+	'bookinfo-purchase' => "Vidio any amin'ny $1 io boky",
+	'bookinfo-provider' => 'mpanome data : $1',
 );
 
 /** Macedonian (Македонски)
@@ -1198,7 +1257,7 @@ $messages['oc'] = array(
 	'bookinfo-error-nosuchitem' => 'Aqueste element existís pas o es pas pogut èsser trobat.',
 	'bookinfo-error-nodriver' => 'Impossible d’inicializar un motor d’informacion suls obratges.',
 	'bookinfo-error-noresponse' => 'Cap de responsa o depassament de la sosta.',
-	'bookinfo-purchase' => 'Comprar aqueste libre sus $1',
+	'bookinfo-purchase' => 'Crompar aqueste libre sus $1',
 	'bookinfo-provider' => 'Fornidor de donadas : $1',
 );
 
@@ -1210,7 +1269,7 @@ $messages['os'] = array(
 	'bookinfo-result-title' => 'Сæргонд:',
 	'bookinfo-result-author' => 'Автор:',
 	'bookinfo-result-year' => 'Аз:',
-	'bookinfo-purchase' => 'Ацы чиныг алхæнæн ис ам:',
+	'bookinfo-purchase' => 'Ацы чиныг алхæнæн ис ам $1:',
 );
 
 /** Pampanga (Kapampangan)
@@ -1222,6 +1281,14 @@ $messages['pam'] = array(
 	'bookinfo-result-author' => 'Talasulat',
 	'bookinfo-result-publisher' => 'Talabulalag (Publisher):',
 	'bookinfo-error-nosuchitem' => 'Ala yu o e meyakit ing bageng iti.',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'bookinfo-result-author' => 'Schreiwer:',
+	'bookinfo-result-year' => 'Yaahr:',
 );
 
 /** Polish (Polski)
@@ -1246,9 +1313,11 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'bookinfo-header' => 'Anformassion ant sëj lìber',
+	'bookinfo-desc' => 'A espand la [[Special:Booksources|pàgina special dle sorziss sij lìber]] con anformassion pijà da un sërvissi Web',
 	'bookinfo-result-title' => 'Tìtol:',
 	'bookinfo-result-author' => 'Aotor:',
 	'bookinfo-result-publisher' => 'Editor:',
@@ -1277,6 +1346,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author 555
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -1291,7 +1361,7 @@ $messages['pt'] = array(
 	'bookinfo-error-nodriver' => 'Não foi possível inicializar um Book Information Driver (Dispositivo de Informação de Livro) apropriado.',
 	'bookinfo-error-noresponse' => 'Sem resposta ou tempo de pedido expirado.',
 	'bookinfo-purchase' => 'Comprar este livro a $1',
-	'bookinfo-provider' => 'Provedor de dados: $1',
+	'bookinfo-provider' => 'Fornecedor de dados: $1',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1353,6 +1423,9 @@ $messages['roa-tara'] = array(
 	'bookinfo-result-author' => 'Autore:',
 	'bookinfo-result-publisher' => 'Pubblicatore:',
 	'bookinfo-result-year' => 'Anne:',
+	'bookinfo-error-invalidisbn' => 'ISBN inzerite invalide.',
+	'bookinfo-error-nosuchitem' => "L'artichele non g'esiste o non ge se pò acchià.",
+	'bookinfo-purchase' => 'Accatte stu libbre da $1',
 );
 
 /** Russian (Русский)
@@ -1378,7 +1451,7 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'bookinfo-header' => 'Кинигэ туһунан',
-	'bookinfo-desc' => 'Ситим (Веб) сулууспаларын сибидиэнньэлэринэн [[Special:Booksources]] кэҥэтэр',
+	'bookinfo-desc' => 'Ситим (Веб) сулууспаларын сибидиэнньэлэринэн [[Special:Booksources|кинигэлэр источниктарын туһунан анал сирэйи]] кэҥэтэр',
 	'bookinfo-result-title' => 'Аата:',
 	'bookinfo-result-author' => 'Суруйааччы:',
 	'bookinfo-result-publisher' => 'Кинигэ кыһата:',
@@ -1409,7 +1482,7 @@ $messages['sk'] = array(
 	'bookinfo-provider' => 'Poskytovateľ údajov: $1',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  */
 $messages['sr-ec'] = array(
@@ -1421,6 +1494,20 @@ $messages['sr-ec'] = array(
 	'bookinfo-error-invalidisbn' => 'Погрешно укуцан ISBN',
 	'bookinfo-purchase' => 'Купите ову књигу од $1',
 	'bookinfo-provider' => 'Подаци из: $1',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'bookinfo-header' => 'Informacije za knjigu',
+	'bookinfo-result-title' => 'Naslov:',
+	'bookinfo-result-author' => 'Autor:',
+	'bookinfo-result-publisher' => 'Izdavač:',
+	'bookinfo-result-year' => 'Godina:',
+	'bookinfo-error-invalidisbn' => 'Pogrešno ukucan ISBN',
+	'bookinfo-purchase' => 'Kupite ovu knjigu od $1',
+	'bookinfo-provider' => 'Podaci iz: $1',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1542,16 +1629,41 @@ $messages['tg-cyrl'] = array(
 	'bookinfo-provider' => 'Муҳаёкунандаи иттилоот: $1',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'bookinfo-header' => 'Ittilooti kitob',
+	'bookinfo-result-title' => 'Unvon:',
+	'bookinfo-result-author' => 'Muallif:',
+	'bookinfo-result-publisher' => 'Naşrijot:',
+	'bookinfo-result-year' => 'Soli intişor:',
+	'bookinfo-error-invalidisbn' => 'ISBN-iji ƣajrimiçoz vorid şudaast.',
+	'bookinfo-error-nosuchitem' => 'In mavrid vuçud nadorad jo pajdo naşud.',
+	'bookinfo-error-nodriver' => 'Rohandozi munosibi ittilooti kitob qobil ba korgirī nest.',
+	'bookinfo-error-noresponse' => 'Posuxe vuçud nadoşt jo mūhlati darxost siparī şud.',
+	'bookinfo-purchase' => 'Xaridani in kitob az $1',
+	'bookinfo-provider' => 'Muhajokunandai ittiloot: $1',
+);
+
 /** Thai (ไทย)
  * @author Ans
  * @author Manop
+ * @author Woraponboonkerd
  */
 $messages['th'] = array(
 	'bookinfo-header' => 'ข้อมูลหนังสือ',
+	'bookinfo-desc' => 'ข้อมูลเพิ่มเติม[[Special:Booksources|หน้าพิเศษเกี่ยวกับข้อมูลหนังสือ]]จากบริการบนเว็บไซต์',
+	'bookinfo-result-title' => 'ชื่อหนังสือ:',
 	'bookinfo-result-author' => 'ผู้แต่ง:',
 	'bookinfo-result-publisher' => 'ผู้ตีพิมพ์:',
 	'bookinfo-result-year' => 'ปี:',
 	'bookinfo-error-invalidisbn' => 'รหัส ISBN ที่ใส่ไม่ถูกต้อง',
+	'bookinfo-error-nosuchitem' => 'ไม่พบข้อมูลหนังสือ',
+	'bookinfo-error-nodriver' => 'ไม่สามารถเริ่มต้นไดร์ฟเวอร์ของข้ิอมูลหนังสือที่เหมาะสมได้',
+	'bookinfo-error-noresponse' => 'ไม่มีการตอบรับหรือการร้องขอหมดเวลาก่อน',
+	'bookinfo-purchase' => 'ซื้อหนังสือเล่มนี้ได้ที่ $1',
+	'bookinfo-provider' => 'ผู้ให้ข้อมูล: $1',
 );
 
 /** Tagalog (Tagalog)
@@ -1628,6 +1740,18 @@ $messages['vec'] = array(
 	'bookinfo-provider' => 'Dati tirà fora da: $1',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'bookinfo-header' => 'Informacii kirjas',
+	'bookinfo-result-title' => 'Nimi:',
+	'bookinfo-result-author' => 'Avtor:',
+	'bookinfo-result-publisher' => 'Pästai:',
+	'bookinfo-result-year' => "Pästandan voz':",
+	'bookinfo-error-invalidisbn' => 'Nece ISBN om vär.',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -1662,6 +1786,13 @@ $messages['vo'] = array(
 	'bookinfo-error-noresponse' => 'No edabinon geükam, u tim tulunüpik ya epasetikon.',
 	'bookinfo-purchase' => 'Remolös buki at se $1',
 	'bookinfo-provider' => 'Nüns pesedons se: $1',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'bookinfo-result-title' => 'טיטל:',
 );
 
 /** Yue (粵語) */

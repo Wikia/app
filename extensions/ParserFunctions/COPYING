@@ -1,30 +1,5 @@
-The ParserFunctions extension may be copied and redistributed under either the
-DWTFYWWI license or the GNU General Public License, at the option of the
-licensee. The text of both licenses is given below.
-
-The majority of this extension is written by (and copyright) Tim Starling. Minor
-modifications have been made by various members of the MediaWiki development
-team. 
-
--------------------------------------------------------------------------------
-
-                         DWTFYWWI LICENSE
-                       Version 1, January 2006
-
- Copyright (C) 2006 Ævar Arnfjörð Bjarmason
-
-                            Preamble
-
-  The licenses for most software are designed to take away your
-freedom to share and change it.  By contrast, the DWTFYWWI or Do
-Whatever The Fuck You Want With It license is intended to guarantee
-your freedom to share and change the software--to make sure the
-software is free for all its users.
-
-                         DWTFYWWI LICENSE
-   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-0. The author grants everyone permission to do whatever the fuck they
-want with the software, whatever the fuck that may be.
+The ParserFunctions extension may be copied and redistributed under the GNU 
+General Public License.
 
 -------------------------------------------------------------------------------
 

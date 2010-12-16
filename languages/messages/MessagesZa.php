@@ -72,15 +72,34 @@ $messages = array(
 'pagecategories' => '{{PLURAL:$1$1 aen|faendingz|faendingz}}',
 'subcategories'  => 'Faendingz lwgsai',
 
-'about'          => 'Gvendaengz',
-'article'        => 'Banjbienj',
-'cancel'         => 'Fwtqfex',
+'about'      => 'Gvendaengz',
+'article'    => 'Banjbienj',
+'cancel'     => 'Fwtqfex',
+'mytalk'     => 'Gaeq gou gangj',
+'navigation' => 'Dazzaeuh',
+
+# Cologne Blue skin
 'qbfind'         => 'Ra',
 'qbedit'         => 'Gaij',
 'qbmyoptions'    => 'Yieb gou',
 'qbspecialpages' => 'Doenghmae daegxsei',
-'mytalk'         => 'Gaeq gou gangj',
-'navigation'     => 'Dazzaeuh',
+'faq'            => 'Cam caeuq dap',
+'faqpage'        => 'Project:Cam caeuq dap',
+
+# Vector skin
+'vector-action-delete'       => 'Ca',
+'vector-action-move'         => 'Daen',
+'vector-action-protect'      => 'Bauj',
+'vector-namespace-category'  => 'Faendingz',
+'vector-namespace-help'      => 'Yieb bangcoh',
+'vector-namespace-image'     => 'Vwnzgen',
+'vector-namespace-main'      => 'Yieb',
+'vector-namespace-media'     => 'Yieb moizdij',
+'vector-namespace-mediawiki' => 'Siusik',
+'vector-namespace-template'  => 'Mozbanj',
+'vector-view-create'         => 'Laeb',
+'vector-view-edit'           => 'gaij',
+'vector-view-history'        => 'Cazyawj lizsij',
 
 'errorpagetitle'   => 'Loengloek',
 'tagline'          => 'okcih {{SITENAME}}',
@@ -117,8 +136,6 @@ $messages = array(
 'disclaimerpage'       => 'Project:Itbuen mienxcwz',
 'edithelp'             => 'Caeuq mungz san-zonz',
 'edithelppage'         => 'Help:gaij',
-'faq'                  => 'Cam caeuq dap',
-'faqpage'              => 'Project:Cam caeuq dap',
 'helppage'             => 'Help:moegloeg',
 'mainpage'             => 'Yiebdaeuz',
 'mainpage-description' => 'Yiebdeauz',
@@ -166,7 +183,6 @@ $messages = array(
 'userlogout'              => 'Doiq ok',
 'notloggedin'             => 'Maengx laezhaej',
 'nologinlink'             => 'Laeb bouxdeiz',
-'username'                => 'Ciu bouxdeiz:',
 
 # Edit pages
 'summary'            => 'Saegmangj:',
@@ -195,6 +211,7 @@ $messages = array(
 'mypreferences'     => 'Doenghgaeq gou hae',
 'prefsnologin'      => 'Maengx laezhaej',
 'searchresultshead' => 'Cwmh',
+'username'          => 'Ciu bouxdeiz:',
 
 'group-user-member' => 'Bouxsawjyungq',
 

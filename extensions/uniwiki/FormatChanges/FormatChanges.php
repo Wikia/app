@@ -6,12 +6,11 @@ if ( !defined( "MEDIAWIKI" ) )
 	die();
 
 $wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'FormatChanges',
-	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
+	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
 	'description'    => 'Reformats the [[Special:RecentChanges|recent changes]]',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Format_Changes',
-	'svn-date'       => '$LastChangedDate: 2009-01-19 14:58:23 +0100 (pon, 19 sty 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 45892 $',
 	'descriptionmsg' => 'formatchanges-desc',
 );
 

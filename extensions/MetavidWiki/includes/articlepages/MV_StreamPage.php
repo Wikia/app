@@ -45,7 +45,7 @@ class MV_StreamPage extends Article {
  		return new MV_StreamPage( $article->mTitle, $mvTitle );
  	}
  	public function view() {
-		global $wgRequest, $wgUser, $wgOut, $wgTitle, $wgJsMimeType, $mvgScriptPath;
+		global $wgRequest, $wgUser, $wgOut, $wgJsMimeType, $mvgScriptPath;
 		// @@TODO fix stream view() for old versions ... will likely have to replicate Article::view() 
 
 		// include the metavid headers (for embedding video in the page) 
@@ -103,18 +103,17 @@ class MV_StreamPage extends Article {
  		$page = 'stream page';
  		$wgOut->addHTML( $page );
 		$wgOut->returnToMain( false );
-	
+
 		$wgOut->output();
  	}
  	function delete() {
  		global $wgOut, $wgRequest, $wgUser;
  		if ( !$wgRequest->wasPosted() ) {
- 			$wgOut->addHTML( wfMsg( 'mv_stream_delete_warrning',
+ 			$wgOut->addHTML( wfMsgExt( 'mv_stream_delete_warrning', 'parsemag',
 			 MV_Index::countMVDInRange( $this->mvTitle->getStreamId() ) ) );
  		}
  		// update text button to delete stream rather than delete stream
  		parent::delete();
  	}
- 	
- }
-?>
+}
+

@@ -6,11 +6,10 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'ShowProcesslist',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Show_Process_List',
 	'author'         => 'Brion VIBBER',
-	'svn-date'       => '$LastChangedDate: 2008-08-15 22:01:48 +0200 (ptk, 15 sie 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 39430 $',
 	'description'    => 'Display the output of SHOW FULL PROCESSLIST',
 	'descriptionmsg' => 'showprocesslist-desc',
 );

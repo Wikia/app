@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,26 @@ FCKShowBlockCommand.prototype.Execute = function()
 	else
 		body.className += ' FCK__ShowBlocks' ;
 
+	if ( FCKBrowserInfo.IsIE )
+	{
+		try
+		{
+			FCK.EditorDocument.selection.createRange().select() ;
+		}
+		catch ( e )
+		{}
+	}
+	else
+	{
+		var focus = FCK.EditorWindow.getSelection().focusNode ;
+		if ( focus )
+		{
+			if ( focus.nodeType != 1 )
+				focus = focus.parentNode ;
+			FCKDomTools.ScrollIntoView( focus, false ) ;
+		}
+	}
+
 	FCK.Events.FireEvent( 'OnSelectionChange' ) ;
 }
 
@@ -52,14 +72,12 @@ FCKShowBlockCommand.prototype.GetState = function()
 	if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
 		return FCK_TRISTATE_DISABLED ;
 
-	// On some cases FCK.EditorDocument.body is not yet available, so try/catch.
-	try
-	{
-		if ( /FCK__ShowBlocks(?:\s|$)/.test( FCK.EditorDocument.body.className ) )
-			return FCK_TRISTATE_ON ;
-	}
-	catch (e)
-	{}
+	// On some cases FCK.EditorDocument.body is not yet available
+	if ( !FCK.EditorDocument )
+		return FCK_TRISTATE_OFF ;
+
+	if ( /FCK__ShowBlocks(?:\s|$)/.test( FCK.EditorDocument.body.className ) )
+		return FCK_TRISTATE_ON ;
 
 	return FCK_TRISTATE_OFF ;
 }

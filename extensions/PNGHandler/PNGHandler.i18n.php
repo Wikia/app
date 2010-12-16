@@ -1,6 +1,6 @@
 <?php
 /**
- * Internationalisation file for extension Post Comment.
+ * Internationalisation file for extension PNG Handler.
  *
  * @addtogroup Extensions
 */
@@ -19,6 +19,13 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'pnghandler-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'pnghandler-desc' => 'Verklein PNG-lêers met pngds',
 );
 
 /** Arabic (العربية)
@@ -49,6 +56,13 @@ $messages['bg'] = array(
 	'pnghandler-desc' => 'Преоразмеряване на PNG с помощта на pngds',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'pnghandler-desc' => 'Adventañ PNGoù a-drugarez da pngds',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -76,6 +90,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'pnghandler-desc' => 'Wjelikosć wobrazow PNG z pomocu pngds změniś',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'pnghandler-desc' => 'Επαναπροσδιορισμός του μεγέθους των PNG μέσω pngds',
 );
 
 /** Esperanto (Esperanto)
@@ -134,6 +155,20 @@ $messages['he'] = array(
 	'pnghandler-desc' => 'שינוי גודל קובצי PNG באמצעות pngds',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'pnghandler-desc' => 'Islan ang kadaku-on PNGs gamit sang pngds',
+);
+
+/** Croatian (Hrvatski)
+ * @author Mnalis
+ */
+$messages['hr'] = array(
+	'pnghandler-desc' => 'Promijeni veličinu PNGova koristeći pngds',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -153,6 +188,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'pnghandler-desc' => "Redimensionar imagines PNG per medio de 'pngds'",
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'pnghandler-desc' => 'Besarkan atau kecilkan PNG menggunakan pngds',
 );
 
 /** Italian (Italiano)
@@ -187,7 +229,7 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'pnghandler-desc' => 'PNGen redimensionéiere mat Hellëf vu pngds',
+	'pnghandler-desc' => 'PNGen redimensionéiere mat Hëllef vu pngds',
 );
 
 /** Macedonian (Македонски)
@@ -246,6 +288,13 @@ $messages['pl'] = array(
 	'pnghandler-desc' => 'Zmiana rozmiaru obrazu w formacie PNG z użyciem „pngds”',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'pnghandler-desc' => 'A redimension-a PNGs an dovrand pngds',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  */
@@ -274,6 +323,13 @@ $messages['roa-tara'] = array(
 	'pnghandler-desc' => 'Ridimenzione le PNG ausanne le pngds',
 );
 
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'pnghandler-desc' => 'Изменяет размер PNG-файлов с помощью pngds',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -281,11 +337,18 @@ $messages['sk'] = array(
 	'pnghandler-desc' => 'Zmeniť veľkosť obrázkov PNG pomocou pngds',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  */
 $messages['sr-ec'] = array(
 	'pnghandler-desc' => 'Промени величину ПНГ слика користећи pngds',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'pnghandler-desc' => 'Promeni veličinu PNG slika koristeći pngds',
 );
 
 /** Seeltersk (Seeltersk)
@@ -316,6 +379,20 @@ $messages['tl'] = array(
 	'pnghandler-desc' => "Muling bigyan ng sukat ang mga PNG sa pamamagitan ng paggamit ng ''pngds''",
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'pnghandler-desc' => "Pngds kullanarak PNG'lerin boyutunu düzenler",
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'pnghandler-desc' => 'Змінює розмір PNG-файлів за допомогою pngds',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -338,9 +415,10 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'pnghandler-desc' => '使用pngds調整PNG圖像大小',
+	'pnghandler-desc' => '使用pngds調整PNG圖片大小',
 );
 

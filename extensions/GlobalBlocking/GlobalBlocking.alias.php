@@ -17,9 +17,7 @@ $aliases['en'] = array(
 	'GlobalBlockStatus' => array( 'GlobalBlockWhitelist', 'GlobalBlockStatus', 'DisableGlobalBlock' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'GlobalBlock' => array( 'منع_عام' ),
 	'GlobalBlockList' => array( 'قائمة_منع_عامة' ),
@@ -27,9 +25,7 @@ $aliases['ar'] = array(
 	'GlobalBlockStatus' => array( 'قائمة_المنع_العام_البيضاء', 'حالة_المنع_العام', 'تعطيل_المنع_العام' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'GlobalBlock' => array( 'منع_عام' ),
 	'GlobalBlockList' => array( 'قائمة_منع_عامة' ),
@@ -75,6 +71,22 @@ $aliases['es'] = array(
 	'GlobalBlockStatus' => array( 'Lista_blanca_de_bloqueos_globales', 'Lista_blanca_bloqueos_globales' ),
 );
 
+/** Estonian (Eesti) */
+$aliases['et'] = array(
+	'GlobalBlock' => array( 'Globaalselt_blokeerimine' ),
+	'GlobalBlockList' => array( 'Globaalne_blokeerimisloend' ),
+	'RemoveGlobalBlock' => array( 'Globaalse_blokeeringu_eemaldamine' ),
+	'GlobalBlockStatus' => array( 'Globaalsete_blokeeringute_valge_nimekiri' ),
+);
+
+/** Persian (فارسی) */
+$aliases['fa'] = array(
+	'GlobalBlock' => array( 'بستن_سراسری' ),
+	'GlobalBlockList' => array( 'فهرست_بستن_سراسری' ),
+	'RemoveGlobalBlock' => array( 'بازکردن_سراسری' ),
+	'GlobalBlockStatus' => array( 'فهرست_سفید_بستن_سراسری' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'GlobalBlock' => array( 'Globaaliesto' ),
@@ -85,6 +97,15 @@ $aliases['fi'] = array(
 /** French (Français) */
 $aliases['fr'] = array(
 	'GlobalBlock' => array( 'Blocage global', 'BlocageGlobal' ),
+	'RemoveGlobalBlock' => array( 'Déblocage global', 'DéblocageGlobal' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'GlobalBlock' => array( 'Blocâjo globâl', 'BlocâjoGlobâl' ),
+	'GlobalBlockList' => array( 'Lista des blocâjos globâls', 'ListaDesBlocâjosGlobâls' ),
+	'RemoveGlobalBlock' => array( 'Dèblocâjo globâl', 'DèblocâjoGlobâl' ),
+	'GlobalBlockStatus' => array( 'Lista blanche des blocâjos globâls', 'ListaBlancheDesBlocâjosGlobâls' ),
 );
 
 /** Galician (Galego) */
@@ -103,9 +124,7 @@ $aliases['gsw'] = array(
 	'GlobalBlockStatus' => array( 'Uusnahme vun ere wältwyte Sperri' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
+/** Hebrew (עברית) */
 $aliases['he'] = array(
 	'GlobalBlock' => array( 'חסימה_גלובלית' ),
 	'GlobalBlockList' => array( 'רשימת_חסומים_גלובליים' ),
@@ -151,10 +170,18 @@ $aliases['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'GlobalBlock' => array( 'Pemblokiran global' ),
-	'GlobalBlockList' => array( 'Daftar pemblokiran global' ),
-	'RemoveGlobalBlock' => array( 'Batal pemblokiran global' ),
-	'GlobalBlockStatus' => array( 'Daftar pemblokiran global nonaktif' ),
+	'GlobalBlock' => array( 'Pemblokiran global', 'PemblokiranGlobal' ),
+	'GlobalBlockList' => array( 'Daftar pemblokiran global', 'DaftarPemblokiranGlobal' ),
+	'RemoveGlobalBlock' => array( 'Batalkan pemblokiran global', 'BatalkanPemblokiranGlobal' ),
+	'GlobalBlockStatus' => array( 'Daftar putih pemblokiran global', 'DaftarPutihPemblokiranGlobal' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'GlobalBlock' => array( 'BloccoGlobale' ),
+	'GlobalBlockList' => array( 'ElencoBlocchiGlobali', 'ListaBlocchiGlobali' ),
+	'RemoveGlobalBlock' => array( 'SbloccoGlobale' ),
+	'GlobalBlockStatus' => array( 'StatoLocaleBloccoGlobale', 'DisabilitaBloccoGlobale', 'ListaBiancaBloccoGlobale' ),
 );
 
 /** Japanese (日本語) */
@@ -172,6 +199,14 @@ $aliases['ko'] = array(
 	'RemoveGlobalBlock' => array( '전체차단취소', '전체차단해제' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'GlobalBlock' => array( 'Jemeinsam Sperre' ),
+	'GlobalBlockList' => array( 'Leß met jemeinsam Sperre' ),
+	'RemoveGlobalBlock' => array( 'Jemeinsam Sperre ophävve', 'Jemeinsam Sperre ophevve' ),
+	'GlobalBlockStatus' => array( 'Ußnahme vun de jemeinsam Sperre' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'GlobalBlock' => array( 'Global Spären' ),
@@ -186,6 +221,22 @@ $aliases['mk'] = array(
 	'GlobalBlockList' => array( 'ЛистаНаГлобалниБлокирања' ),
 	'RemoveGlobalBlock' => array( 'ГлобалниДеблокирања', 'БришиГлобаленБлок' ),
 	'GlobalBlockStatus' => array( 'СтатусНаГлобаленБлок', 'ОневозможиГлобаленБлок' ),
+);
+
+/** Malayalam (മലയാളം) */
+$aliases['ml'] = array(
+	'GlobalBlock' => array( 'ആഗോളതടയൽ' ),
+	'GlobalBlockList' => array( 'ആഗോളതടയൽപട്ടിക' ),
+	'RemoveGlobalBlock' => array( 'ആഗോളതടയൽനീക്കുക' ),
+	'GlobalBlockStatus' => array( 'ആഗോളതടയൽശുദ്ധപട്ടിക', 'ആഗോളതടയൽസ്ഥിതി', 'ആഗോളതടയൽപട്ടികനിർജീവമാക്കുക' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'GlobalBlock' => array( 'वैश्विकब्लॉक' ),
+	'GlobalBlockList' => array( 'वैश्विकब्लॉकयादी' ),
+	'RemoveGlobalBlock' => array( 'वैश्विकअनब्लॉक' ),
+	'GlobalBlockStatus' => array( 'वैश्विकब्लॉकश्वेतपत्र' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -223,9 +274,7 @@ $aliases['nn'] = array(
 	'GlobalBlockList' => array( 'Global blokkeringsliste' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'GlobalBlock' => array( 'Blokker globalt', 'Global blokkering' ),
 	'GlobalBlockList' => array( 'Global blokkeringsliste' ),
@@ -254,7 +303,10 @@ $aliases['ps'] = array(
 
 /** Portuguese (Português) */
 $aliases['pt'] = array(
-	'GlobalBlock' => array( 'Bloquear globalmente' ),
+	'GlobalBlock' => array( 'Bloqueio global' ),
+	'GlobalBlockList' => array( 'Lista de bloqueios globais' ),
+	'RemoveGlobalBlock' => array( 'Desbloqueio global', 'Remover bloqueio global' ),
+	'GlobalBlockStatus' => array( 'Lista branca de bloqueios globais' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
@@ -267,6 +319,7 @@ $aliases['ro'] = array(
 	'GlobalBlock' => array( 'Blocare globală' ),
 	'GlobalBlockList' => array( 'Lista de blocări globale' ),
 	'RemoveGlobalBlock' => array( 'Deblocare globală', 'Elimină blocarea globală' ),
+	'GlobalBlockStatus' => array( 'Lista albă de blocări globale', 'Stare blocare globală', 'Dezactivare blocare globală' ),
 );
 
 /** Sanskrit (संस्कृत) */
@@ -275,6 +328,14 @@ $aliases['sa'] = array(
 	'GlobalBlockList' => array( 'वैश्विकप्रतिबन्धसूची' ),
 	'RemoveGlobalBlock' => array( 'वैश्विकअप्रतिबन्ध' ),
 	'GlobalBlockStatus' => array( 'वैश्विकअप्रतिबन्धसूची' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'GlobalBlock' => array( 'GlobálneBlokovanie' ),
+	'GlobalBlockList' => array( 'ZoznamGlobálnehoBlokovania' ),
+	'RemoveGlobalBlock' => array( 'GlobálneOdblokovanie' ),
+	'GlobalBlockStatus' => array( 'BielaListinaGlobálnehoBlokovania' ),
 );
 
 /** Swedish (Svenska) */
@@ -290,5 +351,34 @@ $aliases['tl'] = array(
 	'GlobalBlockList' => array( 'Talaan ng pandaigdigang paghadlang' ),
 	'RemoveGlobalBlock' => array( 'Pandaigdigang hindi paghadlang', 'Tanggalin ang pandaigdigang paghadlang' ),
 	'GlobalBlockStatus' => array( 'Puting talaan ng pandaigdigang paghadlang', 'Kalagayan ng pandaigdigang paghadlang', 'Huwag paganahin ang pandaigdigang paghadlang' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'GlobalBlock' => array( 'KüreselEngel' ),
+	'GlobalBlockList' => array( 'KüreselEngelListesi' ),
+	'RemoveGlobalBlock' => array( 'KüreselEngelKaldırma' ),
+	'GlobalBlockStatus' => array( 'KüreselEngelBeyazListesi' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'GlobalBlock' => array( 'BlocoGlobal' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'GlobalBlock' => array( '全域封禁' ),
+	'GlobalBlockList' => array( '全域封禁列表' ),
+	'RemoveGlobalBlock' => array( '解除全域封禁' ),
+	'GlobalBlockStatus' => array( '全域封禁白名单' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'GlobalBlock' => array( '全域封禁' ),
+	'GlobalBlockList' => array( '全域封禁列表' ),
+	'RemoveGlobalBlock' => array( '解除全域封禁' ),
+	'GlobalBlockStatus' => array( '全域封禁白名單' ),
 );
 

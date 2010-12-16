@@ -12,16 +12,16 @@
 
 class NewestPages extends IncludableSpecialPage {
 
-	var $limit = NULL;
-	var $namespace = NULL;
-	var $redirects = NULL;
+	var $limit = null;
+	var $namespace = null;
+	var $redirects = null;
 
 	public function __construct() {
 		IncludableSpecialPage::SpecialPage( 'Newestpages', '', true, false, 'default', true );
 	}
 
 	public function execute( $par ) {
-		global $wgRequest, $wgOut, $wgContLang;
+		global $wgRequest, $wgOut, $wgContLang, $wgLang;
 
 		wfLoadExtensionMessages( 'NewestPages' );
 
@@ -29,20 +29,36 @@ class NewestPages extends IncludableSpecialPage {
 		$this->decipherParams( $par );
 		$this->setOptions( $wgRequest );
 
-		$dbr =& wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page' );
-		$nsf = $this->getNsFragment();
-		$redir = $this->redirects ? '' : ' AND page_is_redirect = 0';
-		$res = $dbr->query( "SELECT page_namespace, page_title, page_is_redirect FROM $page WHERE {$nsf}{$redir} ORDER BY page_id DESC LIMIT 0,{$this->limit}" );
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$conds = array();
+		$conds[] = $this->getNsFragment();
+		if ( !$this->redirects ) $conds['page_is_redirect'] = 0;
+		$res = $dbr->select(
+			'page',
+			array(
+				'page_namespace',
+				'page_title',
+				'page_is_redirect'
+			),
+			$conds,
+			__METHOD__,
+			array(
+				'ORDER BY' => 'page_id DESC',
+				'LIMIT' => "{$this->limit}",
+				'OFFSET' => '0',
+			)
+		);
 		$count = $dbr->numRows( $res );
 
 		# Don't show the navigation if we're including the page
 		if( !$this->mIncluding ) {
 			$this->setHeaders();
+			$limit = $wgLang->formatNum( $this->limit );
 			if( $this->namespace > 0 ) {
-				$wgOut->addWikiText( wfMsgExt( 'newestpages-ns-header', array( 'parsemag' ), $this->limit, $wgContLang->getFormattedNsText( $this->namespace ) ) );
+				$wgOut->addWikiMsg( 'newestpages-ns-header', $limit, $wgContLang->getFormattedNsText( $this->namespace ) );
 			} else {
-				$wgOut->addWikiText( wfMsgExt( 'newestpages-header', array( 'parsemag' ), $this->limit ) );
+				$wgOut->addWikiMsg( 'newestpages-header', $limit );
 			}
 			$wgOut->addHTML( $this->makeNamespaceForm() );
 			$wgOut->addHTML( '<p>' . $this->makeLimitLinks() );
@@ -52,15 +68,16 @@ class NewestPages extends IncludableSpecialPage {
 		if( $count > 0 ) {
 			# Make list
 			if( !$this->mIncluding )
-				$wgOut->addWikiText( wfMsgExt( 'newestpages-showing', array( 'parsemag' ), $count ) );
+				
+				$wgOut->addWikiMsg( 'newestpages-showing', $wgLang->formatNum($count) );
 			$wgOut->addHTML( "<ol>" );
-			while( $row = $dbr->fetchObject( $res ) )
+			foreach ( $res as $row ) {
 				$wgOut->addHTML( $this->makeListItem( $row ) );
+			}
 			$wgOut->addHTML( "</ol>" );
 		} else {
-			$wgOut->addWikiText( wfMsg( 'newestpages-none' ) );
+			$wgOut->addWikiMsg( 'newestpages-none' );
 		}
-		$dbr->freeResult( $res );
 	}
 
 	function setOptions( &$req ) {
@@ -128,7 +145,7 @@ class NewestPages extends IncludableSpecialPage {
 		$limits = array( 10, 20, 30, 50, 100, 150 );
 		foreach( $limits as $limit ) {
 			if( $limit != $this->limit ) {
-				$links[] = $this->makeSelfLink( $limit, 'limit', $limit );
+				$links[] = $this->makeSelfLink( $wgLang->formatNum($limit), 'limit', $limit );
 			} else {
 				$links[] = (string)$limit;
 			}
@@ -144,7 +161,7 @@ class NewestPages extends IncludableSpecialPage {
 	function makeSelfLink( $label, $oname = false, $oval = false ) {
 		global $wgUser;
 		$skin =& $wgUser->getSkin();
-		$self = Title::makeTitle( NS_SPECIAL, $this->getName() );
+		$self = $this->getTitle();
 		$attr['limit'] = $this->limit;
 		$attr['namespace'] = $this->namespace;
 		if( !$this->redirects )
@@ -157,7 +174,7 @@ class NewestPages extends IncludableSpecialPage {
 	}
 
 	function makeNamespaceForm() {
-		$self = Title::makeTitle( NS_SPECIAL, $this->getName() );
+		$self = $this->getTitle();
 		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$form .= Xml::label( wfMsg( 'newestpages-namespace' ), 'namespace' ) . '&nbsp;';
 		$form .= Xml::namespaceSelector( $this->namespace, 'all' );

@@ -70,19 +70,21 @@ $messages = array(
 
 'mainpagetext' => "'''Software del wiki installat con successe.'''",
 
-'about'          => 'Apropó',
-'article'        => 'Articul',
-'newwindow'      => '(aperte un nov fenestre)',
-'cancel'         => 'Anullar',
+'about'         => 'Apropó',
+'article'       => 'Articul',
+'newwindow'     => '(aperte un nov fenestre)',
+'cancel'        => 'Anullar',
+'moredotdotdot' => 'Plu mult...',
+'mytalk'        => 'Mi discussion',
+'anontalk'      => 'Discussion por ti ci IP',
+'and'           => '&#32;e',
+
+# Cologne Blue skin
 'qbfind'         => 'Serchar',
 'qbedit'         => 'Modificar',
 'qbpageoptions'  => 'Págine de optiones',
 'qbpageinfo'     => 'Págine de information',
 'qbspecialpages' => 'Special págines',
-'moredotdotdot'  => 'Plu mult...',
-'mytalk'         => 'Mi discussion',
-'anontalk'       => 'Discussion por ti ci IP',
-'and'            => '&#32;e',
 
 'errorpagetitle'   => 'Errore',
 'returnto'         => 'Retornar a $1.',
@@ -156,11 +158,9 @@ $messages = array(
 'viewsource' => 'Vider fonte',
 
 # Login and logout pages
-'logouttitle'                => 'Fine de session',
 'logouttext'                 => "'''Vu ha terminat vor session.'''
 
 Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session denov quam li sam usator o quam un diferent usator.",
-'loginpagetitle'             => 'Registrar se/Intrar',
 'yourname'                   => 'Vor nómine usatori:',
 'yourpassword'               => 'Vor passa-parol:',
 'yourpasswordagain'          => 'Tippa denov vor passa-parol',
@@ -175,7 +175,6 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'createaccount'              => 'Crear un nov conto',
 'gotaccountlink'             => 'Intrar',
 'badretype'                  => 'Li passa-paroles queles vu tippat ne es identic.',
-'youremail'                  => 'Vor ret-adresse:',
 'loginerror'                 => 'Erra in initiation del session',
 'nocookieslogin'             => '{{SITENAME}} utilisa cookies por far intrar usatores. Vu nu ne permisse cookies. Ples permisser les e provar denov.',
 'loginsuccesstitle'          => 'Apertion de session successosi',
@@ -210,16 +209,19 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'lineno' => 'Linea $1:',
 
 # Search results
-'viewprevnext'   => 'Vider ($1) ($2) ($3)',
+'viewprevnext'   => 'Vider ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url' => 'Help:Auxilie',
+
+# Quickbar
+'qbsettings' => 'Personalisation del barre de utensiles',
 
 # Preferences page
 'preferences'    => 'Preferenties',
 'mypreferences'  => 'Mi preferenties',
 'prefsnologin'   => 'Vu ne ha intrat',
-'qbsettings'     => 'Personalisation del barre de utensiles',
 'changepassword' => 'Modificar passa-parol',
 'saveprefs'      => 'Conservar preferenties',
+'youremail'      => 'Vor ret-adresse:',
 
 # Groups
 'group-user'  => 'Usatores',
@@ -246,7 +248,9 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'newpageletter'     => 'N',
 
 # Recent changes linked
-'recentchangeslinked' => 'Relatet modificationes',
+'recentchangeslinked'         => 'Relatet modificationes',
+'recentchangeslinked-feed'    => 'Relatet modificationes',
+'recentchangeslinked-toolbox' => 'Relatet modificationes',
 
 # Upload
 'upload'    => 'Cargar file',
@@ -323,6 +327,8 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 # Contributions
 'mycontris' => 'Mi contributiones',
 
+'sp-contributions-talk' => 'Discussion',
+
 # What links here
 'whatlinkshere' => 'Ligat págines',
 
@@ -361,7 +367,7 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'monthsall'     => 'omni',
 
 # Special:Version
-'version' => 'Version', # Not used as normal message but as header for the special page itself
+'version' => 'Version',
 
 # Special:SpecialPages
 'specialpages' => 'Special págines',

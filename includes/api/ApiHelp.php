@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ('ApiBase.php');
+	require_once ( 'ApiBase.php' );
 }
 
 /**
@@ -35,15 +35,15 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiHelp extends ApiBase {
 
-	public function __construct($main, $action) {
-		parent :: __construct($main, $action);
+	public function __construct( $main, $action ) {
+		parent :: __construct( $main, $action );
 	}
 
 	/**
 	 * Stub module for displaying help when no parameters are given
 	 */
 	public function execute() {
-		$this->dieUsage('', 'help');
+		$this->dieUsage( '', 'help' );
 	}
 
 	public function shouldCheckMaxlag() {
@@ -61,6 +61,6 @@ class ApiHelp extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiHelp.php 48091 2009-03-06 13:49:44Z catrope $';
+		return __CLASS__ . ': $Id: ApiHelp.php 60930 2010-01-11 15:55:52Z simetrical $';
 	}
 }

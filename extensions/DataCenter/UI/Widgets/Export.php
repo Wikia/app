@@ -79,9 +79,7 @@ class DataCenterWidgetExport extends DataCenterWidget {
 
 	/* Static Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		global $wgUser;
 		// Gets current path
 		$path = DataCenterPage::getPath();
@@ -232,11 +230,9 @@ class DataCenterWidgetExport extends DataCenterWidget {
 		return $xmlOutput;
 	}
 
-	public static function export(
-		array $data
-	) {
+	public static function export( array $data ) {
 		global $wgOut;
-		// Disables mediawiki output
+		// Disables MediaWiki output
 		$wgOut->disable();
 		// Gets current path
 		$path = DataCenterPage::getPath();
@@ -253,8 +249,8 @@ class DataCenterWidgetExport extends DataCenterWidget {
 			) .
 			' - ' . $date . '.' . $data['meta']['format'];
 		// Sets headers for downloading CSV file
-		header("Content-type: application/octet-stream");
-		header("Content-Disposition: attachment; filename=\"{$fileName}\"");
+		header( 'Content-type: application/octet-stream' );
+		header( "Content-Disposition: attachment; filename=\"{$fileName}\"" );
 		$rows = DataCenterDB::getRows(
 			'DataCenterDBRow',
 			$data['meta']['category'],
@@ -340,9 +336,7 @@ class DataCenterWidgetExport extends DataCenterWidget {
 		}
 	}
 
-	private static function exportValue(
-		$value
-	) {
+	private static function exportValue( $value ) {
 		if (
 			strpos( $value, ',' ) !== false ||
 			strpos( $value, '"' ) !== false ||

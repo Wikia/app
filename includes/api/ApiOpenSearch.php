@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ("ApiBase.php");
+	require_once ( "ApiBase.php" );
 }
 
 /**
@@ -33,34 +33,38 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiOpenSearch extends ApiBase {
 
-	public function __construct($main, $action) {
-		parent :: __construct($main, $action);
+	public function __construct( $main, $action ) {
+		parent :: __construct( $main, $action );
 	}
 
 	public function getCustomPrinter() {
-		return $this->getMain()->createPrinterByName('json');
+		return $this->getMain()->createPrinterByName( 'json' );
 	}
 
 	public function execute() {
-		global $wgEnableMWSuggest;
+		global $wgEnableOpenSearchSuggest, $wgSearchSuggestCacheExpiry;
 		$params = $this->extractRequestParams();
 		$search = $params['search'];
 		$limit = $params['limit'];
 		$namespaces = $params['namespace'];
 		$suggest = $params['suggest'];
-		# $wgEnableMWSuggest hit incoming when $wgEnableMWSuggest is disabled
-		if( $suggest && !$wgEnableMWSuggest ) return;
-		
-		// Open search results may be stored for a very long time
-		$this->getMain()->setCacheMaxAge(1200);
-		$this->getMain()->setCacheMode( 'public' );
 
-		$srchres = PrefixSearch::titleSearch( $search, $limit, $namespaces );
+		// MWSuggest or similar hit
+		if ( $suggest && !$wgEnableOpenSearchSuggest )
+			$srchres = array();
+		else {
+			// Open search results may be stored for a very long
+			// time
+			$this->getMain()->setCacheMaxAge( $wgSearchSuggestCacheExpiry );
+			$this->getMain()->setCacheMode( 'public' );
 
+			$srchres = PrefixSearch::titleSearch( $search, $limit,
+				$namespaces );
+		}
 		// Set top level elements
 		$result = $this->getResult();
-		$result->addValue(null, 0, $search);
-		$result->addValue(null, 1, $srchres);
+		$result->addValue( null, 0, $search );
+		$result->addValue( null, 1, $srchres );
 	}
 
 	public function getAllowedParams() {
@@ -87,7 +91,7 @@ class ApiOpenSearch extends ApiBase {
 			'search' => 'Search string',
 			'limit' => 'Maximum amount of results to return',
 			'namespace' => 'Namespaces to search',
-			'suggest' => 'Do nothing if $wgEnableMWSuggest is false',
+			'suggest' => 'Do nothing if $wgEnableOpenSearchSuggest is false',
 		);
 	}
 
@@ -102,6 +106,6 @@ class ApiOpenSearch extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiOpenSearch.php 69986 2010-07-27 03:57:39Z tstarling $';
+		return __CLASS__ . ': $Id: ApiOpenSearch.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

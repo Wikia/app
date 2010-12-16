@@ -37,6 +37,7 @@ class SemanticGallery_ResultPrinter extends SMWResultPrinter
 		while ($row = $results->getNext()) {
 			$firstField = $row[0];
 			$imgTitle = $firstField->getNextObject()->getTitle();
+			$imgCaption = '';
 
 			// Is there a property queried for display with ?property
 			if ( isset($row[1]) ) {

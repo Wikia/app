@@ -36,6 +36,7 @@ class MagicWord {
 	static public $mVariableIDsInitialised = false;
 	static public $mVariableIDs = array(
 		'currentmonth',
+		'currentmonth1',
 		'currentmonthname',
 		'currentmonthnamegen',
 		'currentmonthabbrev',
@@ -46,6 +47,7 @@ class MagicWord {
 		'currenttime',
 		'currenthour',
 		'localmonth',
+		'localmonth1',
 		'localmonthname',
 		'localmonthnamegen',
 		'localmonthabbrev',
@@ -62,6 +64,7 @@ class MagicWord {
 		'server',
 		'servername',
 		'scriptpath',
+		'stylepath',
 		'pagename',
 		'pagenamee',
 		'fullpagename',
@@ -81,7 +84,6 @@ class MagicWord {
 		'revisionuser',
 		'subpagename',
 		'subpagenamee',
-		'displaytitle',
 		'talkspace',
 		'talkspacee',
 		'subjectspace',
@@ -92,31 +94,22 @@ class MagicWord {
 		'subjectpagenamee',
 		'numberofusers',
 		'numberofactiveusers',
-		'newsectionlink',
-		'nonewsectionlink',
 		'numberofpages',
 		'currentversion',
 		'basepagename',
 		'basepagenamee',
-		'urlencode',
 		'currenttimestamp',
 		'localtimestamp',
 		'directionmark',
-		'language',
 		'contentlanguage',
-		'pagesinnamespace',
 		'numberofadmins',
 		'numberofviews',
-		'defaultsort',
-		'pagesincategory',
-		'index',
-		'noindex',
-		'numberingroup',
 	);
 
 	/* Array of caching hints for ParserCache */
 	static public $mCacheTTLs = array (
 		'currentmonth' => 86400,
+		'currentmonth1' => 86400,
 		'currentmonthname' => 86400,
 		'currentmonthnamegen' => 86400,
 		'currentmonthabbrev' => 86400,
@@ -127,6 +120,7 @@ class MagicWord {
 		'currenttime' => 3600,
 		'currenthour' => 3600,
 		'localmonth' => 86400,
+		'localmonth1' => 86400,
 		'localmonthname' => 86400,
 		'localmonthnamegen' => 86400,
 		'localmonthabbrev' => 86400,
@@ -167,8 +161,14 @@ class MagicWord {
 		'index',
 		'noindex',
 		'staticredirect',
+		'notitleconvert',
+		'nocontentconvert',
 	);
 
+	static public $mSubstIDs = array(
+		'subst',
+		'safesubst',
+	);
 
 	static public $mObjects = array();
 	static public $mDoubleUnderscoreArray = null;
@@ -192,7 +192,7 @@ class MagicWord {
 	 */
 	static function &get( $id ) {
 		wfProfileIn( __METHOD__ );
-		if (!array_key_exists( $id, self::$mObjects ) ) {
+		if ( !isset( self::$mObjects[$id] ) ) {
 			$mw = new MagicWord();
 			$mw->load( $id );
 			self::$mObjects[$id] = $mw;
@@ -220,6 +220,13 @@ class MagicWord {
 		return self::$mVariableIDs;
 	}
 
+	/**
+	 * Get an array of parser substitution modifier IDs
+	 */
+	static function getSubstIDs() {
+		return self::$mSubstIDs; 
+	}
+
 	/* Allow external reads of TTL array */
 	static function getCacheTTL($id) {
 		if (array_key_exists($id,self::$mCacheTTLs)) {
@@ -235,6 +242,14 @@ class MagicWord {
 			self::$mDoubleUnderscoreArray = new MagicWordArray( self::$mDoubleUnderscoreIDs );
 		}
 		return self::$mDoubleUnderscoreArray;
+	}
+
+	/**
+	 * Clear the self::$mObjects variable
+	 * For use in parser tests
+	 */
+	public static function clearCache() {
+		self::$mObjects = array();
 	}
 
 	# Initialises this object with an ID
@@ -320,7 +335,7 @@ class MagicWord {
 	 * @return bool
 	 */
 	function match( $text ) {
-		return preg_match( $this->getRegex(), $text );
+		return (bool)preg_match( $this->getRegex(), $text );
 	}
 
 	/**
@@ -328,7 +343,7 @@ class MagicWord {
 	 * @return bool
 	 */
 	function matchStart( $text ) {
-		return preg_match( $this->getRegexStart(), $text );
+		return (bool)preg_match( $this->getRegexStart(), $text );
 	}
 
 	/**
@@ -341,7 +356,7 @@ class MagicWord {
 		$matches = array();
 		$matchcount = preg_match( $this->getVariableStartToEndRegex(), $text, $matches );
 		if ( $matchcount == 0 ) {
-			return NULL;
+			return null;
 		} else {
 			# multiple matched parts (variable match); some will be empty because of
 			# synonyms. The variable will be the second non-empty one so remove any
@@ -555,7 +570,7 @@ class MagicWordArray {
 	}
 
 	/**
-	 * Get an unanchored regex
+	 * Get an unanchored regex that does not match parameters
 	 */
 	function getRegex() {
 		if ( is_null( $this->regex ) ) {
@@ -572,14 +587,29 @@ class MagicWordArray {
 	}
 
 	/**
-	 * Get a regex for matching variables
+	 * Get a regex for matching variables with parameters
 	 */
 	function getVariableRegex() {
 		return str_replace( "\\$1", "(.*?)", $this->getRegex() );
 	}
 
 	/**
-	 * Get an anchored regex for matching variables
+	 * Get a regex anchored to the start of the string that does not match parameters
+	 */
+	function getRegexStart() {
+		$base = $this->getBaseRegex();
+		$newRegex = array( '', '' );
+		if ( $base[0] !== '' ) {
+			$newRegex[0] = "/^(?:{$base[0]})/iuS";
+		}
+		if ( $base[1] !== '' ) {
+			$newRegex[1] = "/^(?:{$base[1]})/S"; 
+		}
+		return $newRegex;
+	}
+
+	/**
+	 * Get an anchored regex for matching variables with parameters
 	 */
 	function getVariableStartToEndRegex() {
 		$base = $this->getBaseRegex();
@@ -676,5 +706,30 @@ class MagicWordArray {
 			$text = preg_replace( $regex, '', $text );
 		}
 		return $found;
+	}
+
+	/**
+	 * Return the ID of the magic word at the start of $text, and remove
+	 * the prefix from $text.
+	 * Return false if no match found and $text is not modified.
+	 * Does not match parameters.
+	 */
+	public function matchStartAndRemove( &$text ) {
+		$regexes = $this->getRegexStart();
+		foreach ( $regexes as $regex ) {
+			if ( $regex === '' ) {
+				continue;
+			}
+			if ( preg_match( $regex, $text, $m ) ) {
+				list( $id, $param ) = $this->parseMatch( $m );
+				if ( strlen( $m[0] ) >= strlen( $text ) ) {
+					$text = '';
+				} else {
+					$text = substr( $text, strlen( $m[0] ) );
+				}
+				return $id;
+			}
+		}
+		return false;
 	}
 }

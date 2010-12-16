@@ -10,9 +10,7 @@ class DataCenterViewFacilitiesSpace extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		// Gets all components from database
 		$spaces = DataCenterDB::getSpaces(
 			array_merge_recursive(
@@ -73,9 +71,7 @@ class DataCenterViewFacilitiesSpace extends DataCenterView {
 		);
 	}
 
-	public function view(
-		$path
-	) {
+	public function view( $path ) {
 		// Checks if the user did not provide enough information
 		if ( !$path['id'] ) {
 			// Returns error message
@@ -178,15 +174,11 @@ class DataCenterViewFacilitiesSpace extends DataCenterView {
 		);
 	}
 
-	public function add(
-		$path
-	) {
+	public function add( $path ) {
 		return $this->edit( $path );
 	}
 
-	public function edit(
-		$path
-	) {
+	public function edit( $path ) {
 		// Checks if...
 		if (
 			// No space facility was specified
@@ -246,7 +238,7 @@ class DataCenterViewFacilitiesSpace extends DataCenterView {
 				'subject' => DataCenterUI::message( 'type', $path['type'] )
 			);
 		}
-		// Builds javascript to access renderable facility
+		// Builds JavaScript to access renderable facility
 		$jsTarget = DataCenterJs::chain(
 			array(
 				"dataCenter.renderer.getTarget" =>

@@ -21,8 +21,8 @@ the formats that satisfy the following criteria:
 * they are considered reasonably stable and secure.
 
 Currently, these default formats thus are:
-'vcard', 'icalendar', 'calendar', 'timeline', 'eventline', 'sum', 'average',
-'min', 'max'.
+'vcard', 'icalendar', 'calendar', 'timeline', 'eventline', 'bibtex', 'outline',
+'sum', 'average', 'min', 'max'.
 
 To add more formats to this list, you can add lines like:
 
@@ -31,11 +31,6 @@ To add more formats to this list, you can add lines like:
 ... or you can override the set of formats entirely, with a call like:
 
  $srfgFormats = array('calendar', 'timeline');
-
-... using one or more of the following values:
-
-  average, calendar, eventline, exhibit, googlebar, googlepie, graph, ploticus,
-  max, min, sum, timeline
 
 There are some formats that you may not want to include because they may
 not follow certain policies within your wiki; the formats 'googlebar' and
@@ -55,6 +50,8 @@ Notes on specific formats:
   Googlepie requires access to the Google servers in order to render.
 * graph: in order to get the graph format to run, you first must have
   the MediaWiki Graph extension running.
+* process: in order to get the process format to run, you first must
+  have the MediaWiki Graph extension running
 * ploticus: requires that the Ploticus application be installed on the
   server.
 * timeline: requires Javascript to render.

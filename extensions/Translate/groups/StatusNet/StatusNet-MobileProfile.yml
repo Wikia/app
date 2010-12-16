@@ -1,0 +1,25 @@
+---
+BASIC:
+  id: out-statusnet-mobileprofile
+  label: StatusNet - MobileProfile
+  description: "{{int:bw-desc-statusnet-plugin-mobileprofile}}"
+  namespace: NS_STATUSNET
+  display: out/statusnet/mobileprofile
+  class: GettextMessageGroup
+
+FILES:
+  class: GettextFFS
+  sourcePattern: %GROUPROOT%/plugins/MobileProfile/locale/%CODE%/LC_MESSAGES/MobileProfile.po
+  targetPattern: plugins/MobileProfile/locale/%CODE%/LC_MESSAGES/MobileProfile.po
+  codeMap:
+    en-gb: en_GB
+    no: nb
+    pt-br: pt_BR
+    zh-hans: zh_CN
+    zh-hant: zh_TW
+
+MANGLER
+  class: StringMatcher
+  prefix: mobileprofile-
+  patterns:
+    - "*"

@@ -6,7 +6,7 @@
  * (at your option) any later version.
  *
  * @author Roan Kattouw <roan.kattouw@home.nl>
- * @copyright Copyright (C) 2008 Roan Kattouw 
+ * @copyright Copyright (C) 2008 Roan Kattouw
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
  *
  * An extension that allows for searching inside categories
@@ -15,26 +15,25 @@
  *
  */
 # Alert the user that this is not a valid entry point to MediaWiki if they try to access the extension file directly.
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo <<<EOT
 To install the AdvancedSearch extension, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/AdvancedSearch/AdvancedSearch.setup.php" );
 EOT;
-	exit(1);
+	exit( 1 );
 }
 
 /**
  * Class that pages search results
- * 
+ *
  * FIXME: Only works with MySQL, not with PostGreSQL or Oracle
  */
-class AdvancedSearchPager
-{
+class AdvancedSearchPager {
 	// array(array('foo', bar'), array('baz')) means
 	// foo AND bar OR baz
 	protected $mInclText, $mExclText, $mInclCats, $mExclCats, $mNamespaces;
 	protected $mSearchTitle, $mSearchContent, $mKey;
-	
+
 	/** A list of stop words ignored by the MySQL fulltext search */
 	static $stopWords = array(
 		'a\'s', 'able', 'about', 'above', 'according', 'accordingly',
@@ -61,7 +60,7 @@ class AdvancedSearchPager
 		'elsewhere', 'enough', 'entirely', 'especially', 'et', 'etc',
 		'even', 'ever', 'every', 'everybody', 'everyone', 'everything',
 		'everywhere', 'ex', 'exactly', 'example', 'except', 'far',
-		'few', 'fifth', 'first', 'five', 'followed', 'following', 
+		'few', 'fifth', 'first', 'five', 'followed', 'following',
 		'follows', 'for', 'former', 'formerly', 'forth', 'four',
 		'from', 'further', 'furthermore', 'get', 'gets', 'getting',
 		'given', 'gives', 'go', 'goes', 'going', 'gone', 'got',
@@ -124,7 +123,7 @@ class AdvancedSearchPager
 		'whose', 'why', 'will', 'willing', 'wish', 'with', 'within',
 		'without', 'won\'t', 'wonder', 'would', 'would', 'wouldn\'t',
 		'yes', 'yet', 'you', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve',
-		'your', 'yours', 'yourself', 'yourselves', 'zero');
+		'your', 'yours', 'yourself', 'yourselves', 'zero' );
 
 	/**
 	 * Constructor
@@ -136,54 +135,49 @@ class AdvancedSearchPager
 	 * @param $namespaces array Array of NS_* constants
 	 * @param $permalink bool If true, cache this query longer
 	 */
-	public function __construct($incltext, $excltext, $inclcats, $exclcats, $speedcats, $dropdown, $namespaces, $searchTitle, $searchContent)
-	{
-		$this->mInclText = $this->parse($incltext, true);
-		$this->mExclText = $this->parse($excltext, true);
+	public function __construct( $incltext, $excltext, $inclcats, $exclcats, $speedcats, $dropdown, $namespaces, $searchTitle, $searchContent ) {
+		$this->mInclText = $this->parse( $incltext, true );
+		$this->mExclText = $this->parse( $excltext, true );
 
-		$sc = implode(' ' . wfMsg('advancedsearch-keyword-or') . ' ', $speedcats);
+		$sc = implode( ' ' . wfMsg( 'advancedsearch-keyword-or' ) . ' ', $speedcats );
 		$ic = "( $inclcats ) AND ( $sc ) AND ( $dropdown )";
-		$this->mInclCats = $this->parse($ic, false);
-		$this->mExclCats = $this->parse($exclcats, false);
+		$this->mInclCats = $this->parse( $ic, false );
+		$this->mExclCats = $this->parse( $exclcats, false );
 		$this->mNamespaces = $namespaces;
 		$this->mSearchTitle = $searchTitle;
 		$this->mSearchContent = $searchContent;
-		$this->mKey = md5(implode("\0", array($incltext, $excltext, $ic, $exclcats,
-						implode(',', $namespaces),
+		$this->mKey = md5( implode( "\0", array( $incltext, $excltext, $ic, $exclcats,
+						implode( ',', $namespaces ),
 						$searchTitle ? 1 : 0,
-						$searchContent ? 1 : 0)));
+						$searchContent ? 1 : 0 ) ) );
 
 		# Check whether all namespace boxes were checked
 		# If so, save some work
-		if($this->mNamespaces == array_keys(AdvancedSearch::searchableNamespaces()))
+		if ( $this->mNamespaces == array_keys( AdvancedSearch::searchableNamespaces() ) )
 			$this->mNamespaces = array();
-		$this->mDb = wfGetDb(DB_SLAVE);
+		$this->mDb = wfGetDb( DB_SLAVE );
 	}
-	
-	public function getSearchTitle()
-	{
+
+	public function getSearchTitle() {
 		return $this->mSearchTitle;
 	}
-	
-	public function getSearchContent()
-	{
+
+	public function getSearchContent() {
 		return $this->mSearchContent;
 	}
-	
-	public function cacheQuery()
-	{
+
+	public function cacheQuery() {
 		global $wgMemc;
-		$key = wfMemcKey('advancedsearch', $this->mKey);
-		$wgMemc->set($key, $this);
+		$key = wfMemcKey( 'advancedsearch', $this->mKey );
+		$wgMemc->set( $key, $this );
 		return $this->mKey;
 	}
-	
-	public static function newFromKey($key)
-	{
+
+	public static function newFromKey( $key ) {
 		global $wgMemc;
-		$retval = $wgMemc->get(wfMemcKey('advancedsearch', $key));
-		if($retval instanceof AdvancedSearchPager)
-			$retval->mDb = wfGetDb(DB_SLAVE);
+		$retval = $wgMemc->get( wfMemcKey( 'advancedsearch', $key ) );
+		if ( $retval instanceof AdvancedSearchPager )
+			$retval->mDb = wfGetDb( DB_SLAVE );
 		return $retval;
 	}
 
@@ -191,13 +185,12 @@ class AdvancedSearchPager
 	 * Find out whether any errors occurred when parsing the search strings
 	 * @return array Array of errors, which are either strings or false (no error)
 	 */
-	public function getParseErrors()
-	{
+	public function getParseErrors() {
 		return array(
-			(is_string($this->mInclText) ? $this->mInclText : false),
-			(is_string($this->mExclText) ? $this->mExclText : false),
-			(is_string($this->mInclCats) ? $this->mInclCats : false),
-			(is_string($this->mExclCats) ? $this->mExclCats : false)
+			( is_string( $this->mInclText ) ? $this->mInclText : false ),
+			( is_string( $this->mExclText ) ? $this->mExclText : false ),
+			( is_string( $this->mInclCats ) ? $this->mInclCats : false ),
+			( is_string( $this->mExclCats ) ? $this->mExclCats : false )
 		);
 	}
 
@@ -207,12 +200,11 @@ class AdvancedSearchPager
 	 * @param $indices array Array of indices, i.e. array(1,2,3) gets $arr[1][2][3]
 	 * @return mixed
 	 */
-	public static function getFromArray($arr, $indices)
-	{
-		$i = array_shift($indices);
-		if(empty($indices))
+	public static function getFromArray( $arr, $indices ) {
+		$i = array_shift( $indices );
+		if ( empty( $indices ) )
 			return @$arr[$i];
-		return self::getFromArray(@$arr[$i], $indices);
+		return self::getFromArray( @$arr[$i], $indices );
 	}
 
 	/**
@@ -221,13 +213,12 @@ class AdvancedSearchPager
 	 * @param $arr array Array to work on
 	 * @param $indices array See getFromArray()
 	 */
-	public static function setInArray($value, &$arr, $indices)
-	{
-		$i = array_shift($indices);
-		if(empty($indices))
+	public static function setInArray( $value, &$arr, $indices ) {
+		$i = array_shift( $indices );
+		if ( empty( $indices ) )
 			$arr[$i] = $value;
 		else
-			self::setInArray($value, $arr[$i], $indices);
+			self::setInArray( $value, $arr[$i], $indices );
 	}
 
 	/**
@@ -236,67 +227,66 @@ class AdvancedSearchPager
 	 * @param $parseSpaces bool If true, parse spaces as ANDs
 	 * @return mixed Array, or error message (string) if $text is invalid
 	 */
-	protected function parse($text, $parseSpaces)
-	{
+	protected function parse( $text, $parseSpaces ) {
 		$arr = array();
-		$boom = explode(' ', $text);
+		$boom = explode( ' ', $text );
 		// Keep track of where we are in $arr
-		$indices = array(0, 0);
+		$indices = array( 0, 0 );
 		$depth = 0;
-		$tokens = array(wfMsg('advancedsearch-keyword-and'),
-				wfMsg('advancedsearch-keyword-or'),
-				'(', ')', '');
+		$tokens = array( wfMsg( 'advancedsearch-keyword-and' ),
+				wfMsg( 'advancedsearch-keyword-or' ),
+				'(', ')', '' );
 		// We can expect two things:
 		// 'token': we expect AND, OR, ) or a continuation
 		// 'word': we expect ( or text
 		$expecting = 'word';
-		for($i = 0; $i < count($boom); $i++)
+		for ( $i = 0; $i < count( $boom ); $i++ )
 		{
-			if($expecting == 'token')
+			if ( $expecting == 'token' )
 			{
-				if($boom[$i] == wfMsg('advancedsearch-keyword-and'))
+				if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-and' ) )
 				{
 					// Increment the last index
-					end($indices);
-					$indices[key($indices)]++;
+					end( $indices );
+					$indices[key( $indices )]++;
 					$expecting = 'word';
 					continue;
 				}
-				if($boom[$i] == wfMsg('advancedsearch-keyword-or'))
+				if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-or' ) )
 				{
 					// Increment the second-to-last index
 					// and set the last one to 0
-					end($indices);
-					$indices[key($indices)] = 0;
-					prev($indices);
-					$indices[key($indices)]++;
+					end( $indices );
+					$indices[key( $indices )] = 0;
+					prev( $indices );
+					$indices[key( $indices )]++;
 					$expecting = 'word';
 					continue;
 				}
 				// ( is invalid here
-				if($boom[$i] == '(')
-					return wfMsg('advancedsearch-parse-error-1',
-						htmlspecialchars(@$boom[$i - 1]),
-						htmlspecialchars($boom[$i]),
-						htmlspecialchars(@$boom[$i + 1]));
+				if ( $boom[$i] == '(' )
+					return wfMsg( 'advancedsearch-parse-error-1',
+						htmlspecialchars( @$boom[$i - 1] ),
+						htmlspecialchars( $boom[$i] ),
+						htmlspecialchars( @$boom[$i + 1] ) );
 				// We found a word, so it's a continuation
-				if($parseSpaces && $boom[$i] != ')')
+				if ( $parseSpaces && $boom[$i] != ')' )
 				{
 					// Increment the last index
-					end($indices);
-					$indices[key($indices)]++;
+					end( $indices );
+					$indices[key( $indices )]++;
 				}
 			}
 			// We're expecting a word
 			// Check that it's not a token
-			if($boom[$i] == wfMsg('advancedsearch-keyword-and') ||
-						$boom[$i] == wfMsg('advancedsearch-keyword-or'))
-				return wfMsg('advancedsearch-parse-error-1',
-					htmlspecialchars(@$boom[$i - 1]),
-					htmlspecialchars($boom[$i]),
-					htmlspecialchars(@$boom[$i + 1]));
+			if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-and' ) ||
+						$boom[$i] == wfMsg( 'advancedsearch-keyword-or' ) )
+				return wfMsg( 'advancedsearch-parse-error-1',
+					htmlspecialchars( @$boom[$i - 1] ),
+					htmlspecialchars( $boom[$i] ),
+					htmlspecialchars( @$boom[$i + 1] ) );
 			// See if it's ( or )
-			if($boom[$i] == '(')
+			if ( $boom[$i] == '(' )
 			{
 				// Go one level deeper
 				$indices[] = 0;
@@ -305,281 +295,272 @@ class AdvancedSearchPager
 				$expecting = 'word';
 				continue;
 			}
-			if($boom[$i] == ')')
+			if ( $boom[$i] == ')' )
 			{
 				// Go one level down
 				$depth--;
-				if($depth < 0)
+				if ( $depth < 0 )
 					// More ) than (
-					return wfMsg('advancedsearch-parse-error-2',
-						htmlspecialchars(@$boom[$i - 1]),
-						htmlspecialchars($boom[$i]),
-						htmlspecialchars(@$boom[$i + 1]));
-				array_pop($indices);
-				array_pop($indices);
+					return wfMsg( 'advancedsearch-parse-error-2',
+						htmlspecialchars( @$boom[$i - 1] ),
+						htmlspecialchars( $boom[$i] ),
+						htmlspecialchars( @$boom[$i + 1] ) );
+				array_pop( $indices );
+				array_pop( $indices );
 				$expecting = 'token';
 				continue;
 			}
 			// Parse quotes
-			if(substr($boom[$i], 0, 1) == '"')
+			if ( substr( $boom[$i], 0, 1 ) == '"' )
 			{
 				$word = $boom[$i];
-				while(substr($word, -1) !== '"')
+				while ( substr( $word, - 1 ) !== '"' )
 				{
 					$i++;
-					if(!isset($boom[$i]))
-						return wfMsg('advancedsearch-parse-error-4');
-					$word .= ' '. $boom[$i];
+					if ( !isset( $boom[$i] ) )
+						return wfMsg( 'advancedsearch-parse-error-4' );
+					$word .= ' ' . $boom[$i];
 				}
 				# Strip the quotes
-				$word = substr($word, 1, -1);
+				$word = substr( $word, 1, - 1 );
 			}
 			else
 				$word = $boom[$i];
 			// Put this word in the array
-			$lastAdded = self::getFromArray($arr, $indices);
-			if(empty($lastAdded))
+			$lastAdded = self::getFromArray( $arr, $indices );
+			if ( empty( $lastAdded ) )
 			{
-				if($parseSpaces || in_array(@$boom[$i + 1], $tokens))
-				{ 
+				if ( $parseSpaces || in_array( @$boom[$i + 1], $tokens ) )
+				{
 					# We got a single word. Check that it's not too
 					# short or a stop word
-					if(strlen($word) <= 3 && $word != '')
-						return wfMsg('advancedsearch-parse-error-5', $word);
-					if(in_array($word, self::$stopWords))
-						return wfMsg('advancedsearch-parse-error-6', $word);
+					if ( strlen( $word ) <= 3 && $word != '' )
+						return wfMsg( 'advancedsearch-parse-error-5', $word );
+					if ( in_array( $word, self::$stopWords ) )
+						return wfMsg( 'advancedsearch-parse-error-6', $word );
 				}
-				self::setInArray($word, $arr, $indices);
+				self::setInArray( $word, $arr, $indices );
 			}
 			else
-				self::setInArray("$lastAdded $word", $arr, $indices);
+				self::setInArray( "$lastAdded $word", $arr, $indices );
 			$expecting = 'token';
 		}
 		// Check if all ( were closed
-		if($depth != 0)
-			return wfMsg('advancedsearch-parse-error-3');
+		if ( $depth != 0 )
+			return wfMsg( 'advancedsearch-parse-error-3' );
 		return $arr;
 	}
-	
+
 	/**
 	 * Is an array really empty? Also checks for nested emptiness, e.g.
 	 * array(array(''))
 	 * @param $arr array
 	 * @return bool
 	 */
-	static function isEmpty($arr)
-	{
-		if(empty($arr))
+	static function isEmpty( $arr ) {
+		if ( empty( $arr ) )
 			return true;
-		if(!is_array($arr))
+		if ( !is_array( $arr ) )
 			return false;
-		foreach($arr as $a)
-			if(!self::isEmpty($a))
+		foreach ( $arr as $a )
+			if ( !self::isEmpty( $a ) )
 				return false;
 		return true;
-	} 
+	}
 
 	/**
 	 * Generate a MATCH condition
 	 * @param $arr array $m{Incl,Excl}{Text,Cats}
 	 * @return string A MATCH condition
 	 */
-	protected function getMatchString($arr)
-	{
+	protected function getMatchString( $arr ) {
 		$conds = array();
-		foreach($arr as $a)
+		$searchEngine = SearchEngine::create();
+		foreach ( $arr as $a )
 		{
 			$subconds = array();
-			foreach((array)$a as $b)
+			foreach ( (array)$a as $b )
 			{
-				if(is_array($b))
+				if ( is_array( $b ) )
 				{
-					$m = $this->getMatchString($b);
-					if(!empty($m))
+					$m = $this->getMatchString( $b );
+					if ( !empty( $m ) )
 						$subconds[] = "+($m)";
 				}
 				else
 				{
 					global $wgContLang;
-					$s = $wgContLang->stripForSearch($b);
-					$s = $this->mDb->strencode($s);
+					$s = $wgContLang->normalizeForSearch( $b );
+					$s = $searchEngine->normalizeText( $s );
+					$s = $this->mDb->strencode( $s );
 					# If $s contains spaces or ( ) :, quote it
-					if(strpos($s, ' ') !== false
-						|| strpos($s, '(') !== false
-						|| strpos($s, ')') !== false
-						|| strpos($s, ':') !== false)
+					if ( strpos( $s, ' ' ) !== false
+						|| strpos( $s, '(' ) !== false
+						|| strpos( $s, ')' ) !== false
+						|| strpos( $s, ':' ) !== false )
 							$s = "\"$s\"";
-					if(!empty($s))
+					if ( !empty( $s ) )
 						$subconds[] = "+$s";
 				}
 			}
-			$sc = implode(' ', $subconds);
-			if(!empty($sc))
+			$sc = implode( ' ', $subconds );
+			if ( !empty( $sc ) )
 				$conds[] = "($sc)";
 		}
-		return implode(' ', $conds);
+		return implode( ' ', $conds );
 	}
-	
+
 	/**
 	 * Get the DB key for a category
 	 * @param $c string Category name
 	 */
-	public static function categoryKey(&$c)
-	{
-		$t = Title::makeTitleSafe(NS_CATEGORY, $c);
-		if(!$t)
+	public static function categoryKey( &$c ) {
+		$t = Title::makeTitleSafe( NS_CATEGORY, $c );
+		if ( !$t )
 			return false;
 		$c = $t->getDBkey();
 	}
 
-	public function getQueryInfo()
-	{
+	public function getQueryInfo() {
 		$db = $this->mDb;
 		$retval = array();
 
-		$incltext = $db->strencode($this->getMatchString($this->mInclText));
-		$excltext = $db->strencode($this->getMatchString($this->mExclText));
-		array_walk_recursive($this->mInclCats, array(__CLASS__, 'categoryKey'));
-		array_walk_recursive($this->mExclCats, array(__CLASS__, 'categoryKey'));
-		$inclcats = $db->strencode($this->getMatchString($this->mInclCats));
-		$exclcats = $db->strencode($this->getMatchString($this->mExclCats));
-		
+		$incltext = $db->strencode( $this->getMatchString( $this->mInclText ) );
+		$excltext = $db->strencode( $this->getMatchString( $this->mExclText ) );
+		array_walk_recursive( $this->mInclCats, array( __CLASS__, 'categoryKey' ) );
+		array_walk_recursive( $this->mExclCats, array( __CLASS__, 'categoryKey' ) );
+		$inclcats = $db->strencode( $this->getMatchString( $this->mInclCats ) );
+		$exclcats = $db->strencode( $this->getMatchString( $this->mExclCats ) );
+
 		$retval['tables'][] = 'page';
-		if(!self::isEmpty($this->mInclText) || !self::isEmpty($this->mExclText))
+		if ( !self::isEmpty( $this->mInclText ) || !self::isEmpty( $this->mExclText ) )
 		{
 			$retval['tables'][] = 'searchindex';
 			$retval['conds'][] = 'page_id=si_page';
-			if(!self::isEmpty($this->mInclText))
+			if ( !self::isEmpty( $this->mInclText ) )
 			{
 				$titlecond = $contentcond = $cond = '';
-				if($this->mSearchTitle)
+				if ( $this->mSearchTitle )
 					$titlecond = "MATCH (si_title) AGAINST ('$incltext' IN BOOLEAN MODE)";
-				if($this->mSearchContent)
+				if ( $this->mSearchContent )
 					$contentcond = "MATCH (si_text) AGAINST ('$incltext' IN BOOLEAN MODE)";
-				if(!empty($titlecond) && !empty($contentcond))
+				if ( !empty( $titlecond ) && !empty( $contentcond ) )
 					$cond = "$titlecond OR $contentcond";
 				else
 					$cond = $titlecond . $contentcond;
-				if(!empty($cond))
+				if ( !empty( $cond ) )
 					$retval['conds'][] = $cond;
 			}
-			if(!self::isEmpty($this->mExclText))
+			if ( !self::isEmpty( $this->mExclText ) )
 			{
 				$titlecond = $contentcond = $cond = '';
-				if($this->mSearchTitle)
+				if ( $this->mSearchTitle )
 					$titlecond = "NOT MATCH (si_title) AGAINST ('$excltext' IN BOOLEAN MODE)";
-				if($this->mSearchContent)
+				if ( $this->mSearchContent )
 					$contentcond = "NOT MATCH (si_text) AGAINST ('$excltext' IN BOOLEAN MODE)";
-				if(!empty($titlecond) && !empty($contentcond))
+				if ( !empty( $titlecond ) && !empty( $contentcond ) )
 					$cond = "$titlecond OR $contentcond";
 				else
 					$cond = $titlecond . $contentcond;
-				if(!empty($cond))
+				if ( !empty( $cond ) )
 					$retval['conds'][] = $cond;
 			}
 		}
-		if(!self::isEmpty($this->mInclCats) || !self::isEmpty($this->mExclCats))
+		if ( !self::isEmpty( $this->mInclCats ) || !self::isEmpty( $this->mExclCats ) )
 		{
 			$retval['tables'][] = 'categorysearch';
 			$retval['conds'][] = 'page_id=cs_page';
-			if(!self::isEmpty($this->mInclCats))
+			if ( !self::isEmpty( $this->mInclCats ) )
 				$retval['conds'][] = "MATCH (cs_categories) AGAINST ('$inclcats' IN BOOLEAN MODE)";
-			if(!self::isEmpty($this->mExclCats))
+			if ( !self::isEmpty( $this->mExclCats ) )
 				$retval['conds'][] = "NOT MATCH (cs_categories) AGAINST ('$exclcats' IN BOOLEAN MODE)";
 		}
-		if(!empty($this->mNamespaces))
+		if ( !empty( $this->mNamespaces ) )
 			$retval['conds']['page_namespace'] = $this->mNamespaces;
-			
-		$retval['fields'] = array('page_namespace', 'page_title');
+
+		$retval['fields'] = array( 'page_namespace', 'page_title' );
 		return $retval;
 	}
 
-	public function reallyDoQuery()
-	{
-		if(isset($this->mResult))
+	public function reallyDoQuery() {
+		if ( isset( $this->mResult ) )
 			return $this->mResult;
 		global $wgRequest;
-		list($this->mLimit, $this->mOffset) = $wgRequest->getLimitOffset(50, 'limit');
+		list( $this->mLimit, $this->mOffset ) = $wgRequest->getLimitOffset( 50, 'limit' );
 		$info = $this->getQueryInfo();
 		$tables = $info['tables'];
 		$fields = $info['fields'];
-		$conds = isset($info['conds']) ? $info['conds'] : array();
-		$options = isset($info['options']) ? $info['options'] : array();
-		$join_conds = isset($info['join_conds']) ? $info['join_conds'] : array();
-		if($this->mOffset != '')
-			$options['OFFSET'] = intval($this->mOffset);
-		$options['LIMIT'] = intval($this->mLimit);
-		$this->mResult = $this->mDb->select($tables, $fields, $conds, __METHOD__, $options, $join_conds);
-		return new ResultWrapper($this->mDb, $this->mResult);		
+		$conds = isset( $info['conds'] ) ? $info['conds'] : array();
+		$options = isset( $info['options'] ) ? $info['options'] : array();
+		$join_conds = isset( $info['join_conds'] ) ? $info['join_conds'] : array();
+		if ( $this->mOffset != '' )
+			$options['OFFSET'] = intval( $this->mOffset );
+		$options['LIMIT'] = intval( $this->mLimit );
+		$this->mResult = $this->mDb->select( $tables, $fields, $conds, __METHOD__, $options, $join_conds );
+		return new ResultWrapper( $this->mDb, $this->mResult );
 	}
-	
-	public function getNumRows()
-	{
-		if(!isset($this->mResult))
+
+	public function getNumRows() {
+		if ( !isset( $this->mResult ) )
 			$this->reallyDoQuery();
 		return $this->mResult->numRows();
-	}		
+	}
 
-	public function preprocessResults($result)
-	{
+	public function preprocessResults( $result ) {
 		# Run a LinkBatch query
 		$lb = new LinkBatch;
 		$result->rewind();
-		while(($row = $result->fetchObject()))
-			$lb->add($row->page_namespace, $row->page_title);
+		while ( ( $row = $result->fetchObject() ) ) {
+			$lb->add( $row->page_namespace, $row->page_title );
+		}
 		$lb->execute();
 		$result->rewind();
 	}
 
-	public function getStartBody()
-	{
-		return Xml::openElement('table') . Xml::openElement('tr');
+	public function getStartBody() {
+		return Xml::openElement( 'table' ) . Xml::openElement( 'tr' );
 	}
 
-	public function getEndBody()
-	{
-		return Xml::closeElement('tr') . Xml::closeElement('table');
+	public function getEndBody() {
+		return Xml::closeElement( 'tr' ) . Xml::closeElement( 'table' );
 	}
 
-	public function formatRow($row)
-	{
+	public function formatRow( $row ) {
 		global $wgUser;
 		static $i = 0;
-		$open = Xml::openElement('td', array('valign' => 'top')) . Xml::openElement('ul');
-		$close = Xml::closeElement('ul') . Xml::closeElement('td');
+		$open = Xml::openElement( 'td', array( 'valign' => 'top' ) ) . Xml::openElement( 'ul' );
+		$close = Xml::closeElement( 'ul' ) . Xml::closeElement( 'td' );
 		$tdb = $tdf = '';
-		if($i == 0)
+		if ( $i == 0 )
 			$tdb = $open;
-		else if($i == ceil($this->mLimit / 2))
+		else if ( $i == ceil( $this->mLimit / 2 ) )
 			$tdb = $close . $open;
-		else if($i == $this->mLimit - 1)
+		else if ( $i == $this->mLimit - 1 )
 			$tdf = $close;
-		$i++; 
-		$title = Title::makeTitle($row->page_namespace, $row->page_title);
-		$link = $wgUser->getSkin()->makeLinkObj($title, htmlspecialchars($title->getPrefixedText()));
-		return $tdb . Xml::tags('li', null, $link) . $tdf . "\n";		
+		$i++;
+		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+		$link = $wgUser->getSkin()->makeLinkObj( $title, htmlspecialchars( $title->getPrefixedText() ) );
+		return $tdb . Xml::tags( 'li', null, $link ) . $tdf . "\n";
 	}
-	
-	protected function getDefaultQuery()
-	{
+
+	protected function getDefaultQuery() {
 		$retval = $_GET;
-		unset($retval['offset']);
-		unset($retval['limit']);
-		unset($retval['title']);
+		unset( $retval['offset'] );
+		unset( $retval['limit'] );
+		unset( $retval['title'] );
 		return $retval;
 	}
-	
-	public function getBody()
-	{
+
+	public function getBody() {
 		$res = $this->reallyDoQuery();
-		$this->preprocessResults($res);
-		$prevnext = wfViewPrevNext($this->mOffset, $this->mLimit,
-				SpecialPage::getTitleFor('AdvancedSearch'),
-				wfArrayToCGI($this->getDefaultQuery()),
-				($this->getNumRows() < $this->mLimit));
+		$this->preprocessResults( $res );
+		$prevnext = wfViewPrevNext( $this->mOffset, $this->mLimit,
+				SpecialPage::getTitleFor( 'AdvancedSearch' ),
+				wfArrayToCGI( $this->getDefaultQuery() ),
+				( $this->getNumRows() < $this->mLimit ) );
 		$retval = $this->getStartBody();
-		while(($row = $res->fetchObject()))
-			$retval .= $this->formatRow($row);
+		while ( ( $row = $res->fetchObject() ) )
+			$retval .= $this->formatRow( $row );
 		$retval .= $this->getEndBody();
 		return $prevnext . $retval . $prevnext;
 	}

@@ -14,11 +14,19 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'formatsearch-desc' => 'Short description of the extension, shown in [[Special:Version]].',
+	'formatsearch-desc' => '{{desc}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'formatsearch-desc' => 'Maak die soekresultate-bladsy skoon.',
 );
 
 /** Arabic (العربية)
@@ -49,11 +57,25 @@ $messages['bg'] = array(
 	'formatsearch-desc' => 'Почиства страницата с резултати от търсенето',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'formatsearch-desc' => "Riñsañ pajenn disoc'hoù an enklaskoù",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'formatsearch-desc' => 'Čisti stranicu pretrage',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'formatsearch-desc' => 'Neteja la pàgina de resultats de la cerca',
 );
 
 /** Czech (Česky)
@@ -77,6 +99,13 @@ $messages['dsb'] = array(
 	'formatsearch-desc' => 'Rumujo bok pytańskich wuslědkow',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'formatsearch-desc' => 'Καθαρίζει την σελίδα αποτελεσμάτων αναζήτησης',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -89,6 +118,13 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'formatsearch-desc' => 'Limpia la página de resultados de búsqueda',
+);
+
+/** Estonian (Eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'formatsearch-desc' => 'Puhastab otsingutulemuste lehekülje',
 );
 
 /** Basque (Euskara)
@@ -135,6 +171,13 @@ $messages['he'] = array(
 	'formatsearch-desc' => 'ההרחבה מנקה את דף תוצאות החיפוש',
 );
 
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'formatsearch-desc' => 'Gina tinlu-an ang pahina nga resulta pagpangita',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -154,6 +197,20 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'formatsearch-desc' => 'Netta le pagina de resultatos de recerca',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'formatsearch-desc' => 'Membersihkan halaman hasil pencarian',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'formatsearch-desc' => 'Pulisce la pagina dei risultati di ricerca',
 );
 
 /** Japanese (日本語)
@@ -190,6 +247,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'formatsearch-desc' => "Botzt d'Säit mat de Resultater vun der Sich",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'formatsearch-desc' => 'Ја исчистува страницата со резултати од пребарување',
 );
 
 /** Nedersaksisch (Nedersaksisch)
@@ -234,6 +298,13 @@ $messages['pl'] = array(
 	'formatsearch-desc' => 'Czyści stronę z wynikami wyszukiwania',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'formatsearch-desc' => "A scansela la pàgina dj'arzultà dl'arserca",
+);
+
 /** Portuguese (Português)
  * @author Waldir
  */
@@ -269,6 +340,13 @@ $messages['ru'] = array(
 	'formatsearch-desc' => 'Приводит в порядок страницу выдачи результатов поиска',
 );
 
+/** Sinhala (සිංහල)
+ * @author Calcey
+ */
+$messages['si'] = array(
+	'formatsearch-desc' => 'සෙවීම් ප්‍රතිඵල පිටුව හිස් කරයි',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -281,6 +359,20 @@ $messages['sk'] = array(
  */
 $messages['sq'] = array(
 	'formatsearch-desc' => 'Pastron faqen e rezultateve të kërkimit',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'formatsearch-desc' => 'Чисти страну са резултатима претраге',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'formatsearch-desc' => 'Čisti stranu sa rezultatima pretrage',
 );
 
 /** Seeltersk (Seeltersk)
@@ -323,6 +415,13 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'formatsearch-desc' => 'Упорядковує сторінку видачі результатів пошуку',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'formatsearch-desc' => "Puhtastab ecmižen rezul'tatoiden lehtpol't",
 );
 
 /** Vietnamese (Tiếng Việt)

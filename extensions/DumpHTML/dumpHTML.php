@@ -70,7 +70,7 @@ if ( version_compare( $wgVersion, '1.11.1', '<' ) ) {
 
 error_reporting( E_ALL & (~E_NOTICE) );
 
-if( isset( $options['help'] ) ) {
+if( isset( $options['help'] ) || isset( $options['h'] ) ) {
 	echo $usage;
 	exit;
 }

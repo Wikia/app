@@ -129,9 +129,7 @@ class DataCenterViewModels extends DataCenterView {
 
 	/* Functions */
 
-	public function main(
-		$path
-	) {
+	public function main( $path ) {
 		if ( !isset( self::$options[$path['type']] ) ) {
 			return 'MODELS';
 		}
@@ -195,9 +193,7 @@ class DataCenterViewModels extends DataCenterView {
 		);
 	}
 
-	public function history(
-		$path
-	) {
+	public function history( $path ) {
 		$model = DataCenterDB::getModel( $path['type'], $path['id'] );
 		return DataCenterUI::renderLayout(
 			'columns',
@@ -224,9 +220,7 @@ class DataCenterViewModels extends DataCenterView {
 		);
 	}
 
-	public function view(
-		$path
-	) {
+	public function view( $path ) {
 		// Checks if the user did not provide enough information
 		if ( !$path['id'] ) {
 			// Returns error message
@@ -310,9 +304,7 @@ class DataCenterViewModels extends DataCenterView {
 		);
 	}
 
-	public function select(
-		$path
-	) {
+	public function select( $path ) {
 		// Checks if...
 		if (
 			// There was only one parameter
@@ -369,15 +361,11 @@ class DataCenterViewModels extends DataCenterView {
 		}
 	}
 
-	public function attach(
-		$path
-	) {
+	public function attach( $path ) {
 		return $this->configure( $path );
 	}
 
-	public function configure(
-		$path
-	) {
+	public function configure( $path ) {
 		// Checks if...
 		if (
 			is_array( $path['parameter'] ) &&
@@ -489,15 +477,11 @@ class DataCenterViewModels extends DataCenterView {
 		);
 	}
 
-	public function create(
-		$path
-	) {
+	public function create( $path ) {
 		return $this->modify( $path );
 	}
 
-	public function modify(
-		$path
-	) {
+	public function modify( $path ) {
 		// Checks if the type is supported
 		if ( !isset( self::$options[$path['type']]['gallery'] ) ) {
 			// Returns error message

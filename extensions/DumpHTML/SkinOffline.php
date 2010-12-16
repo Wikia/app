@@ -242,4 +242,3 @@ class SkinOfflineTemplate extends QuickTemplate {
 		wfRestoreWarnings();
 	}
 }
-?>

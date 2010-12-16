@@ -245,6 +245,7 @@ END;
 		global $sfgMaxAutocompleteValues;
 
 		$db = wfGetDB( DB_SLAVE );
+		$fname = "SFUtils;:getAllPagesForCategory";
 		$top_category = str_replace(' ', '_', $top_category);
 		$categories = array($top_category);
 		$checkcategories = array($top_category);
@@ -264,8 +265,7 @@ END;
 					array('categorylinks', 'page'),
 					array('page_title', 'page_namespace'),
 					array('cl_from = page_id', $conditions),
-					__METHOD__,
-					'SORT BY cl_sortkey');
+					$fname);
 				if ($res) {
 					while ($res && $row = $db->fetchRow($res)) {
 						if (array_key_exists('page_title', $row)) {
@@ -293,12 +293,14 @@ END;
 				}
 			}
 			if (count($newcategories) == 0) {
+				sort($pages);
 				return $pages;
 			} else {
 				$categories = array_merge($categories, $newcategories);
 			}
 			$checkcategories = array_diff($newcategories, array());
 		}
+		sort($pages);
 		return $pages;
 	}
 
@@ -328,7 +330,6 @@ END;
 		while ($res = $query_result->getNext()) {
 			$pages[] = $res[0]->getNextText(SMW_OUTPUT_WIKI);
 		}
-		sort($pages);
 		return $pages;
 	}
 
@@ -339,6 +340,7 @@ END;
 		global $wgContLang;
 		$namespaces = $wgContLang->getNamespaces();
 		$db = wfGetDB( DB_SLAVE );
+		$fname = "SFUtils::getAllPagesForNamespace";
 		$pages = array();
 		foreach ($namespaces as $ns_code => $ns_name) {
 			if ($ns_name == $namespace_name) {
@@ -352,7 +354,7 @@ END;
 				$sql_options['ORDER BY'] = 'page_title';
 				$res = $db->select( $db->tableNames('page'),
 					'page_title',
-					$conditions, __METHOD__, $sql_options);
+					$conditions, $fname, $sql_options);
 				while ($row = $db->fetchRow($res)) {
 					$cur_value = str_replace('_', ' ', $row[0]);
 					if ($substring == null) {

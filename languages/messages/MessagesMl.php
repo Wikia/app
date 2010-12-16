@@ -36,16 +36,16 @@ $namespaceNames = array(
 	NS_USER             => 'ഉപയോക്താവ്',
 	NS_USER_TALK        => 'ഉപയോക്താവിന്റെ_സംവാദം',
 	NS_PROJECT_TALK     => '$1_സംവാദം',
-	NS_FILE             => 'ചിത്രം',
-	NS_FILE_TALK        => 'ചിത്രത്തിന്റെ_സംവാദം',
+	NS_FILE             => 'പ്രമാണം',
+	NS_FILE_TALK        => 'പ്രമാണത്തിന്റെ_സംവാദം',
 	NS_MEDIAWIKI        => 'മീഡിയവിക്കി',
 	NS_MEDIAWIKI_TALK   => 'മീഡിയവിക്കി_സംവാദം',
 	NS_TEMPLATE         => 'ഫലകം',
 	NS_TEMPLATE_TALK    => 'ഫലകത്തിന്റെ_സംവാദം',
 	NS_HELP             => 'സഹായം',
 	NS_HELP_TALK        => 'സഹായത്തിന്റെ_സംവാദം',
-	NS_CATEGORY         => 'വര്‍ഗ്ഗം',
-	NS_CATEGORY_TALK    => 'വര്‍ഗ്ഗത്തിന്റെ_സംവാദം',
+	NS_CATEGORY         => 'വർഗ്ഗം',
+	NS_CATEGORY_TALK    => 'വർഗ്ഗത്തിന്റെ_സംവാദം',
 );
 
 $namespaceAliases = array(
@@ -55,124 +55,232 @@ $namespaceAliases = array(
 	'ഉസം' => NS_USER_TALK,
 	'ചി' => NS_FILE,
 	'ചിസം' => NS_FILE_TALK,
+	'ചിത്രം' => NS_FILE,
+	'ചിത്രത്തിന്റെ_സംവാദം' => NS_FILE_TALK,
 	'ഫ' => NS_TEMPLATE,
 	'ഫസം' => NS_TEMPLATE_TALK,
 	'വി' => NS_CATEGORY,
 	'വിസം' => NS_CATEGORY_TALK,
 	'വിഭാഗം' => NS_CATEGORY,
 	'വിഭാഗത്തിന്റെ_സംവാദം' => NS_CATEGORY_TALK,
+	'വർഗ്ഗം' => NS_CATEGORY,
+	'വർഗ്ഗത്തിന്റെ_സംവാദം' => NS_CATEGORY_TALK,
 	'സ' => NS_HELP,
 	'സസം' => NS_HELP_TALK,
 );
 
+$specialPageAliases = array(
+	'DoubleRedirects'           => array( 'ഇരട്ടത്തിരിച്ചുവിടലുകൾ' ),
+	'BrokenRedirects'           => array( 'പൊട്ടിയതിരിച്ചുവിടലുകൾ' ),
+	'Disambiguations'           => array( 'നാനാർത്ഥങ്ങൾ' ),
+	'Userlogin'                 => array( 'പ്രവേശനം' ),
+	'Userlogout'                => array( 'പുറത്തുകടക്കൽ' ),
+	'CreateAccount'             => array( 'അംഗത്വമെടുക്കൽ' ),
+	'Preferences'               => array( 'ക്രമീകരണങ്ങൾ' ),
+	'Watchlist'                 => array( 'ശ്രദ്ധിക്കുന്നവ' ),
+	'Recentchanges'             => array( 'സമീപകാലമാറ്റങ്ങൾ' ),
+	'Upload'                    => array( 'അപ്‌ലോഡ്' ),
+	'Listfiles'                 => array( 'പ്രമാണങ്ങളുടെ പട്ടിക', 'ചിത്രങ്ങളുടെ പട്ടിക' ),
+	'Newimages'                 => array( 'പുതിയ പ്രമാണങ്ങൾ', 'പുതിയ ചിത്രങ്ങൾ' ),
+	'Listusers'                 => array( 'ഉപയോക്താക്കളുടെ പട്ടിക' ),
+	'Listgrouprights'           => array( 'സമൂഹത്തിന്റെ അവകാശങ്ങളുടെ പട്ടിക' ),
+	'Statistics'                => array( 'സ്ഥിതിവിവരം' ),
+	'Randompage'                => array( 'ക്രമരഹിതമായി', 'താളുകൾ ക്രമരഹിതമായി' ),
+	'Lonelypages'               => array( 'അനാഥ താളുകൾ' ),
+	'Uncategorizedpages'        => array( 'വർഗ്ഗീകരിക്കാത്ത താളുകൾ' ),
+	'Uncategorizedcategories'   => array( 'വർഗ്ഗീകരിക്കാത്ത വർഗ്ഗങ്ങൾ' ),
+	'Uncategorizedimages'       => array( 'വർഗ്ഗീകരിക്കാത്ത പ്രമാണങ്ങൾ' ),
+	'Uncategorizedtemplates'    => array( 'വർഗ്ഗീകരിക്കാത്ത ഫലകങ്ങൾ' ),
+	'Unusedcategories'          => array( 'ഉപയോഗിക്കാത്ത വർഗ്ഗങ്ങൾ' ),
+	'Unusedimages'              => array( 'ഉപയോഗിക്കാത്ത പ്രമാണങ്ങൾ' ),
+	'Wantedpages'               => array( 'ആവശ്യമുള്ള താളുകൾ', 'പൊട്ടിയ കണ്ണികൾ' ),
+	'Wantedcategories'          => array( 'ആവശ്യമുള്ള വർഗ്ഗങ്ങൾ' ),
+	'Wantedfiles'               => array( 'ആവശ്യമുള്ള പ്രമാണങ്ങൾ' ),
+	'Wantedtemplates'           => array( 'ആവശ്യമുള്ള ഫലകങ്ങൾ' ),
+	'Mostlinked'                => array( 'കൂടുതൽ കണ്ണികളുള്ള താളുകൾ', 'കൂടുതൽ കണ്ണികളുള്ളവ' ),
+	'Mostlinkedcategories'      => array( 'കൂടുതൽ കണ്ണികളുള്ള വർഗ്ഗങ്ങൾ', 'കൂടുതൽ ഉപയോഗിച്ചിട്ടുള്ള വർഗ്ഗങ്ങൾ' ),
+	'Mostlinkedtemplates'       => array( 'കൂടുതൽ കണ്ണികളുള്ള ഫലകങ്ങൾ', 'കൂടുതൽ ഉപയോഗിച്ചിട്ടുള്ള ഫലകങ്ങൾ' ),
+	'Mostimages'                => array( 'കൂടുതൽ കണ്ണികളുള്ള പ്രമാണങ്ങൾ', 'കൂടുതൽ പ്രമാണങ്ങൾ', 'കൂടുതൽ ചിത്രങ്ങൾ' ),
+	'Mostcategories'            => array( 'കൂടുതൽ വർഗ്ഗങ്ങൾ' ),
+	'Mostrevisions'             => array( 'കൂടുതൽ പുനരവലോകനങ്ങൾ' ),
+	'Fewestrevisions'           => array( 'കുറഞ്ഞ പുനരവലോകനങ്ങൾ' ),
+	'Shortpages'                => array( 'ചെറിയ താളുകൾ' ),
+	'Longpages'                 => array( 'വലിയ താളുകൾ' ),
+	'Newpages'                  => array( 'പുതിയ താളുകൾ' ),
+	'Ancientpages'              => array( 'പുരാതന താളുകൾ' ),
+	'Deadendpages'              => array( 'അന്ത്യസ്ഥാനത്തുള്ള താളുകൾ' ),
+	'Protectedpages'            => array( 'സംരക്ഷിത താളുകൾ' ),
+	'Protectedtitles'           => array( 'സംരക്ഷിത ശീർഷകങ്ങൾ' ),
+	'Allpages'                  => array( 'എല്ലാതാളുകളും' ),
+	'Prefixindex'               => array( 'പൂർവ്വപദസൂചിക' ),
+	'Ipblocklist'               => array( 'തടയൽ‌പട്ടിക', 'ഐപികളുടെ തടയൽ‌പട്ടിക' ),
+	'Specialpages'              => array( 'പ്രത്യേകതാളുകൾ' ),
+	'Contributions'             => array( 'സംഭാവനകൾ' ),
+	'Emailuser'                 => array( 'ഉപയോക്തൃഇമെയിൽ' ),
+	'Confirmemail'              => array( 'ഇമെയിൽ സ്ഥിരീകരിക്കുക' ),
+	'Whatlinkshere'             => array( 'കണ്ണികളെന്തെല്ലാം' ),
+	'Recentchangeslinked'       => array( 'ബന്ധപ്പെട്ട മാറ്റങ്ങൾ' ),
+	'Movepage'                  => array( 'താൾ മാറ്റുക' ),
+	'Blockme'                   => array( 'എന്നെതടയുക' ),
+	'Booksources'               => array( 'പുസ്തകസ്രോതസ്സുകൾ' ),
+	'Categories'                => array( 'വർഗ്ഗങ്ങൾ' ),
+	'Export'                    => array( 'കയറ്റുമതി' ),
+	'Version'                   => array( 'പതിപ്പ്' ),
+	'Allmessages'               => array( 'സർവ്വസന്ദേശങ്ങൾ' ),
+	'Log'                       => array( 'രേഖ', 'രേഖകൾ' ),
+	'Blockip'                   => array( 'തടയുക', 'ഐപിയെ തടയുക', 'ഉപയോക്താവിനെ തടയുക' ),
+	'Undelete'                  => array( 'മായ്ച്ചവ പുനഃസ്ഥാപനം' ),
+	'Import'                    => array( 'ഇറക്കുമതി' ),
+	'Lockdb'                    => array( 'ഡി.ബി.ബന്ധിക്കുക' ),
+	'Unlockdb'                  => array( 'ഡി.ബി.ബന്ധനംനീക്കുക' ),
+	'Userrights'                => array( 'ഉപയോക്തൃഅവകാശങ്ങൾ', 'കാര്യനിർവാഹകസൃഷ്ടി', 'യന്ത്രസൃഷ്ടി' ),
+	'MIMEsearch'                => array( 'മൈംതിരയൽ' ),
+	'FileDuplicateSearch'       => array( 'പ്രമാണത്തിന്റെ അപരനുള്ള തിരച്ചിൽ' ),
+	'Unwatchedpages'            => array( 'ആരുംശ്രദ്ധിക്കാത്തതാളുകൾ' ),
+	'Listredirects'             => array( 'തിരിച്ചുവിടൽ‌പട്ടിക' ),
+	'Revisiondelete'            => array( 'നാൾപ്പതിപ്പ് മായ്ക്കൽ' ),
+	'Unusedtemplates'           => array( 'ഉപയോഗിക്കാത്തഫലകങ്ങൾ' ),
+	'Randomredirect'            => array( 'ക്രമരഹിതതിരിച്ചുവിടലുകൾ' ),
+	'Mypage'                    => array( 'എന്റെ താൾ' ),
+	'Mytalk'                    => array( 'എന്റെ സംവാദം' ),
+	'Mycontributions'           => array( 'എന്റെ സംഭാവനകൾ' ),
+	'Listadmins'                => array( 'കാര്യനിർവാഹകപട്ടിക' ),
+	'Listbots'                  => array( 'യന്ത്രങ്ങളുടെ പട്ടിക' ),
+	'Popularpages'              => array( 'ജനകീയതാളുകൾ' ),
+	'Search'                    => array( 'അന്വേഷണം' ),
+	'Resetpass'                 => array( 'രഹസ്യവാക്ക് മാറ്റുക' ),
+	'Withoutinterwiki'          => array( 'അന്തർവിക്കിയില്ലാത്തവ' ),
+	'MergeHistory'              => array( 'നാൾവഴിലയിപ്പിക്കുക' ),
+	'Filepath'                  => array( 'പ്രമാണവിലാസം' ),
+	'Invalidateemail'           => array( 'സാധുവല്ലാത്ത ഇമെയിൽ' ),
+	'Blankpage'                 => array( 'ശൂന്യതാൾ' ),
+	'LinkSearch'                => array( 'കണ്ണികൾ തിരയുക' ),
+	'DeletedContributions'      => array( 'മായ്ച്ച സേവനങ്ങൾ' ),
+	'Tags'                      => array( 'റ്റാഗുകൾ' ),
+	'Activeusers'               => array( 'സജീവ ഉപയോക്താക്കൾ' ),
+);
+
 $magicWords = array(
-#   ID                                 CASE  SYNONYMS
-	'redirect'               => array( 0, '#REDIRECT' , '#തിരിച്ചുവിടുക' , 'തിരിച്ചുവിടല്‍' ),
-	'notoc'                  => array( 0, '__NOTOC__' , '__ഉള്ളടക്കംവേണ്ട__' ),
-	'nogallery'              => array( 0, '__NOGALLERY__' , '__ചിത്രസഞ്ചയംവേണ്ട__' ),
-	'forcetoc'               => array( 0, '__FORCETOC__' , '__ഉള്ളടക്കംഇടുക__' ),
-	'toc'                    => array( 0, '__TOC__' , '__ഉള്ളടക്കം__' ),
-	'noeditsection'          => array( 0, '__NOEDITSECTION__' , '__സംശോധിക്കേണ്ട__' ),
-	'start'                  => array( 0, '__START__' , '__തുടക്കം__' , '__പ്രാരംഭം__' ),
-
-	'currentmonth'           => array( 1,'CURRENTMONTH' , 'മാസം' ),
-	'currentmonthname'       => array( 1, 'CURRENTMONTHNAME' , 'മാസത്തിന്റെപേര്‌' ),
-	'currentmonthabbrev'     => array( 1, 'CURRENTMONTHABBREV'  , 'മാസത്തിന്റെപേര്‌സംഗ്രഹം' , 'മാസത്തിന്റെപേര്‌ചുരുക്കം' ),
-	'currentday'             => array( 1, 'CURRENTDAY' , 'ദിവസം' ),
-	'currentday2'            => array( 1, 'CURRENTDAY2' , 'ദിവസം2' ),
-	'currentdayname'         => array( 1, 'CURRENTDAYNAME' , 'ദിവസത്തിന്റെപേര്‌' ),
-	'currentyear'            => array( 1, 'CURRENTYEAR' , 'വര്‍ഷം' ),
-	'currenttime'            => array( 1, 'CURRENTTIME' , 'സമയം' ),
-	'currenthour'            => array( 1, 'CURRENTHOUR' , 'മണിക്കൂര്‍' ),
-
-	'localmonth'             => array( 1, 'LOCALMONTH' , 'പ്രാദേശികമാസം' ),
-	'localmonthname'         => array( 1, 'LOCALMONTHNAME' , 'പ്രാദേശികമാസത്തിന്റെപേര്‌' ),
-	'localmonthabbrev'       => array( 1, 'LOCALMONTHABBREV' , 'പ്രാദേശികമാസത്തിന്റെപേര്‌സംഗ്രഹം' ,  'പ്രാദേശികമാസത്തിന്റെപേര്‌ചുരുക്കം' ),
-	'localday'               => array( 1, 'LOCALDAY' , 'പ്രാദേശികദിവസം' ),
-	'localday2'              => array( 1, 'LOCALDAY2' , 'പ്രാദേശികദിവസം2' ),
-	'localdayname'           => array( 1, 'LOCALDAYNAME' , 'പ്രാദേശികദിവസത്തിന്റെപേര്‌' ),
-	'localyear'              => array( 1, 'LOCALYEAR' , 'പ്രാദേശികവര്‍ഷം' ),
-	'localtime'              => array( 1, 'LOCALTIME' , 'പ്രാദേശികസമയം' ),
-	'localhour'              => array( 1, 'LOCALHOUR' , '', 'പ്രാദേശികമണിക്കൂര്‍' ),
-
-	'numberofpages'          => array( 1, 'NUMBEROFPAGES' , 'താളുകളുടെഎണ്ണം' ),
-	'numberofarticles'       => array( 1, 'NUMBEROFARTICLES' , 'ലേഖങ്ങളുടെഎണ്ണം' ),
-	'numberoffiles'          => array( 1, 'NUMBEROFFILES' , 'പ്രമാണങ്ങളുടെഎണ്ണം'),
-	'numberofusers'          => array( 1, 'NUMBEROFUSERS' , 'ഉപയോക്താക്കളുടെഎണ്ണം' , 'അംഗങ്ങളുടെഎണ്ണം' ),
-
-	'pagename'               => array( 1, 'PAGENAME' , 'താളിന്റെപേര്‌' ),
-	'pagenamee'              => array( 1, 'PAGENAMEE' , 'താളിന്റെപേര്‌സമഗ്രം' ),
-	'namespace'              => array( 1, 'NAMESPACE' , 'നാമമേഖല' ),
-	'namespacee'             => array( 1, 'NAMESPACEE' , 'നാമമേഖലസമഗ്രം' ),
-	'talkspace'              => array( 1, 'TALKSPACE' , 'സംവാദമേഖല' ),
-	'talkspacee'             => array( 1, 'TALKSPACEE' , 'സംവാദമേഖലസമഗ്രം' ),
-	'subjectspace'           => array( 1, 'SUBJECTSPACE', 'ARTICLESPACE'  , 'വിഷയമേഖല' , 'ലേഖനമേഖല' ),
-	'subjectspacee'          => array( 1, 'SUBJECTSPACEE', 'ARTICLESPACEE'  , 'വിഷയമേഖലസമഗ്രം'  , 'ലേഖനമേഖലസമഗ്രം' ),
-	'fullpagename'           => array( 1, 'FULLPAGENAME' , 'താളിന്റെമുഴുവന്‍പേര്‌' ),
-	'fullpagenamee'          => array( 1, 'FULLPAGENAMEE'  , 'താളിന്റെമുഴുവന്‍പേര്സമഗ്രം'  ),
-	'subpagename'            => array( 1, 'SUBPAGENAME' , 'അനുബന്ധതാളിന്റെപേര്‌'),
-	'subpagenamee'           => array( 1, 'SUBPAGENAMEE'  , 'അനുബന്ധതാളിന്റെപേര്സമഗ്രം' ),
-	'basepagename'           => array( 1, 'BASEPAGENAME' , 'അടിസ്ഥാനതാളിന്റെപേര്‌' ),
-	'basepagenamee'          => array( 1, 'BASEPAGENAMEE'  , 'അടിസ്ഥാനതാളിന്റെപേര്‌സമഗ്രം' ),
-	'talkpagename'           => array( 1, 'TALKPAGENAME' , 'സംവാദതാളിന്റെപേര്‌'),
-	'talkpagenamee'          => array( 1, 'TALKPAGENAMEE' , 'സംവാദതാളിന്റെപേര്‌സമഗ്രം' ),
-	'subjectpagename'        => array( 1, 'SUBJECTPAGENAME', 'ARTICLEPAGENAME' , 'ലേഖനതാളിന്റെപേര്‌' ),
-	'subjectpagenamee'       => array( 1, 'SUBJECTPAGENAMEE', 'ARTICLEPAGENAMEE' , 'ലേഖനതാളിന്റെപേര്‌സമഗ്രം' ),
-
-	'msg'                    => array( 0, 'MSG:' , 'സന്ദേശം:' ),
-	'subst'                  => array( 0, 'SUBST:' , 'ബദല്‍:' ),
-	'msgnw'                  => array( 0, 'MSGNW:' , 'മൂലരൂപം:' ),
-	'end'                    => array( 0, '__END__' , '__ശുഭം__' ),
-
-	'img_thumbnail'          => array( 1, 'thumbnail', 'thumb' , 'ലഘുചിത്രം' , 'ലഘു' ),
-	'img_manualthumb'        => array( 1, 'thumbnail=$1', 'thumb=$1' , 'ലഘുചിത്രം=$1' , 'ലഘു=$1' ),
-	'img_right'              => array( 1, 'right' , 'വലത്ത്‌' , 'വലത്‌' ),
-	'img_left'               => array( 1, 'left' , 'ഇടത്ത്‌' , 'ഇടത്‌' ),
-	'img_none'               => array( 1, 'none' , 'ശൂന്യം' ),
-	'img_width'              => array( 1, '$1px' , '$1ബിന്ദു' ),
-	'img_center'             => array( 1, 'center', 'centre' , 'നടുവില്‍' , 'നടുക്ക്‌' ),
-	'img_framed'             => array( 1, 'framed', 'enframed', 'frame' , 'ചട്ടം', 'ചട്ടത്തില്‍' ),
-	'img_page'               => array( 1, 'page=$1', 'page $1', 'താള്‍=$1', 'താള്‍ $1' ),
-
-	'sitename'               => array( 1, 'SITENAME' ,'സൈറ്റിന്റെപേര്' ),
-	'ns'                     => array( 0, 'NS:' , 'നാമേ:' , 'നാമമേഖല' ),
-	'localurl'               => array( 0, 'LOCALURL:' , 'ലോക്കല്‍യുആര്‍എല്‍:' ),
-	'localurle'              => array( 0, 'LOCALURLE:' , 'ലോക്കല്‍യുആര്‍എല്‍ഇ:' ),
-	'server'                 => array( 0, 'SERVER' , 'സെര്‍വര്‍' ),
-	'servername'             => array( 0, 'SERVERNAME' , 'സെര്‍വറിന്റെപേര്' ),
-	'scriptpath'             => array( 0, 'SCRIPTPATH' ,'സ്ക്രിപ്റ്റ്പാത്ത്'),
-	'grammar'                => array( 0, 'GRAMMAR:' , 'വ്യാകരണം:' ),
-
-	'currentweek'            => array( 1, 'CURRENTWEEK' , 'ആഴ്ച' ,'ആഴ്‌ച' ),
-	'currentdow'             => array( 1, 'CURRENTDOW', 'ദിവസത്തിന്റെപേര്‌അക്കത്തില്‍' ),
-	'localweek'              => array( 1, 'LOCALWEEK' , 'പ്രാദേശികആഴ്ച' , 'പ്രാദേശികആഴ്‌ച' ),
-	'localdow'               => array( 1, 'LOCALDOW' , 'ആഴ്ചയുടെപേര്‌അക്കത്തില്‍' , 'ആഴ്‌ചയുടെപേര്‌അക്കത്തില്‍' ),
-
-	'revisionid'             => array( 1, 'REVISIONID' , 'തിരുത്തല്‍അടയാളം' ),
-	'revisionday'            => array( 1, 'REVISIONDAY' , 'തിരുത്തിയദിവസം' , 'തിരുത്തിയദിനം' ),
-	'revisionday2'           => array( 1, 'REVISIONDAY2' , 'തിരുത്തിയദിവസം2' , 'തിരുത്തിയദിനം2'),
-	'revisionmonth'          => array( 1, 'REVISIONMONTH' , 'തിരുത്തിയമാസം'),
-	'revisionyear'           => array( 1, 'REVISIONYEAR' , 'തിരുത്തിയവര്‍ഷം' ),
-	'revisiontimestamp'      => array( 1, 'REVISIONTIMESTAMP' , 'തിരുത്തിയസമയമുദ്ര' ),
-
-	'plural'                 => array( 0, 'PLURAL:' , 'ബഹുവചനം:'),
-	'raw'                    => array( 0, 'RAW:' , 'വരി:' ),
-	'displaytitle'           => array( 1, 'DISPLAYTITLE' , 'ശീര്‍ഷകംപ്രദര്‍ശിപ്പിക്കുക' , 'തലക്കെട്ട്പ്രദര്‍ശിപ്പിക്കുക'  ),
-	'rawsuffix'              => array( 1, 'R' , 'വ' ),
-	'newsectionlink'         => array( 1, '__NEWSECTIONLINK__' , '__പുതിയവിഭാഗംകണ്ണി__', '__പുതിയഖണ്ഡിക്കണ്ണി__'),
-
-	'currentversion'         => array( 1, 'CURRENTVERSION' , 'പതിപ്പ്' ),
-	'currenttimestamp'       => array( 1, 'CURRENTTIMESTAMP' , 'സമയമുദ്ര' ),
-	'localtimestamp'         => array( 1, 'LOCALTIMESTAMP' , 'പ്രാദേശികസമയമുദ്ര' ),
-	'directionmark'          => array( 1, 'DIRECTIONMARK', 'DIRMARK' , 'ദിശാ‍അടയാളം' ),
-	'language'               => array( 0, '#LANGUAGE:' , '#ഭാഷ:' ),
-	'contentlanguage'        => array( 1, 'CONTENTLANGUAGE', 'CONTENTLANG' , 'ഉള്ളടക്കഭാഷ' ),
-	'pagesinnamespace'       => array( 1, 'PAGESINNAMESPACE:', 'PAGESINNS:' , 'നാമമേഖലയിലുള്ളതാളുകള്‍' ),
-	'numberofadmins'         => array( 1, 'NUMBEROFADMINS'  , 'കാര്യനിര്‍വ്വാഹകരുടെഎണ്ണം' ),
-	'formatnum'              => array( 0, 'FORMATNUM' , 'ദശാംശഘടന' , 'സംഖ്യാഘടന' ),
-	'padleft'                => array( 0, 'PADLEFT' , 'ഇടത്ത്നിറക്കുക' ),
-	'padright'               => array( 0, 'PADRIGHT' , 'വലത്ത്നിറക്കുക' ),
-	'special'                => array( 0, 'special' , 'പ്രത്യേകം' ),
+	'redirect'              => array( '0', '#തിരിച്ചുവിടുക', '#തിരിച്ചുവിടൽ', '#REDIRECT' ),
+	'notoc'                 => array( '0', '__ഉള്ളടക്കംവേണ്ട__', '__NOTOC__' ),
+	'nogallery'             => array( '0', '__ചിത്രസഞ്ചയംവേണ്ട__', '__NOGALLERY__' ),
+	'forcetoc'              => array( '0', '__ഉള്ളടക്കംഇടുക__', '__FORCETOC__' ),
+	'toc'                   => array( '0', '__ഉള്ളടക്കം__', '__TOC__' ),
+	'noeditsection'         => array( '0', '__സംശോധിക്കേണ്ട__', '__NOEDITSECTION__' ),
+	'noheader'              => array( '0', '__തലക്കെട്ടുവേണ്ട__', '__NOHEADER__' ),
+	'currentmonth'          => array( '1', 'ഈമാസം', 'ഈമാസം2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
+	'currentmonth1'         => array( '1', 'ഈമാസം1', 'CURRENTMONTH1' ),
+	'currentmonthname'      => array( '1', 'ഈമാസത്തിന്റെപേര്‌', 'CURRENTMONTHNAME' ),
+	'currentmonthnamegen'   => array( '1', 'ഈമാസത്തിന്റെപേരുസൃഷ്ടിക്കുക', 'CURRENTMONTHNAMEGEN' ),
+	'currentmonthabbrev'    => array( '1', 'ഈമാസത്തിന്റെപേര്‌സംഗ്രഹം', 'ഈമാസത്തിന്റെപേര്‌ചുരുക്കം', 'CURRENTMONTHABBREV' ),
+	'currentday'            => array( '1', 'ഈദിവസം', 'CURRENTDAY' ),
+	'currentday2'           => array( '1', 'ഈദിവസം2', 'CURRENTDAY2' ),
+	'currentdayname'        => array( '1', 'ഈദിവസത്തിന്റെപേര്‌', 'CURRENTDAYNAME' ),
+	'currentyear'           => array( '1', 'ഈവർഷം', 'CURRENTYEAR' ),
+	'currenttime'           => array( '1', 'ഈസമയം', 'CURRENTTIME' ),
+	'currenthour'           => array( '1', 'ഈമണിക്കൂർ', 'CURRENTHOUR' ),
+	'localmonth'            => array( '1', 'പ്രാദേശികമാസം', 'പ്രാദേശികമാസം2', 'LOCALMONTH', 'LOCALMONTH2' ),
+	'localmonth1'           => array( '1', 'പ്രാദേശികമാസം1', 'LOCALMONTH1' ),
+	'localmonthname'        => array( '1', 'പ്രാദേശികമാസത്തിന്റെപേര്‌', 'LOCALMONTHNAME' ),
+	'localmonthnamegen'     => array( '1', 'പ്രാദേശികമാസത്തിന്റെപേരുസൃഷ്ടിക്കുക', 'LOCALMONTHNAMEGEN' ),
+	'localmonthabbrev'      => array( '1', 'പ്രാദേശികമാസത്തിന്റെപേര്‌സംഗ്രഹം', 'പ്രാദേശികമാസത്തിന്റെപേര്‌ചുരുക്കം', 'LOCALMONTHABBREV' ),
+	'localday'              => array( '1', 'പ്രാദേശികദിവസം', 'LOCALDAY' ),
+	'localday2'             => array( '1', 'പ്രാദേശികദിവസം2', 'LOCALDAY2' ),
+	'localdayname'          => array( '1', 'പ്രാദേശികദിവസത്തിന്റെപേര്‌', 'LOCALDAYNAME' ),
+	'localyear'             => array( '1', 'പ്രാദേശികവർഷം', 'LOCALYEAR' ),
+	'localtime'             => array( '1', 'പ്രാദേശികസമയം', 'LOCALTIME' ),
+	'localhour'             => array( '1', 'പ്രാദേശികമണിക്കൂർ', 'LOCALHOUR' ),
+	'numberofpages'         => array( '1', 'താളുകളുടെയെണ്ണം', 'NUMBEROFPAGES' ),
+	'numberofarticles'      => array( '1', 'ലേഖങ്ങനളുടെയെണ്ണം', 'NUMBEROFARTICLES' ),
+	'numberoffiles'         => array( '1', 'പ്രമാണങ്ങളുടെയെണ്ണം', 'NUMBEROFFILES' ),
+	'numberofusers'         => array( '1', 'ഉപയോക്താക്കളുടെയെണ്ണം', 'അംഗങ്ങളുയെണ്ണം', 'NUMBEROFUSERS' ),
+	'numberofactiveusers'   => array( '1', 'സജീവോപയാക്താക്കളുടെയെണ്ണം', 'NUMBEROFACTIVEUSERS' ),
+	'numberofedits'         => array( '1', 'തിരുത്തലുകളുടെണ്ണം', 'NUMBEROFEDITS' ),
+	'numberofviews'         => array( '1', 'എടുത്തുനോക്കലുകളുടെണ്ണം', 'NUMBEROFVIEWS' ),
+	'pagename'              => array( '1', 'താളിന്റെപേര്‌', 'PAGENAME' ),
+	'pagenamee'             => array( '1', 'താളിന്റെപേര്‌സമഗ്രം', 'PAGENAMEE' ),
+	'namespace'             => array( '1', 'നാമമേഖല', 'NAMESPACE' ),
+	'namespacee'            => array( '1', 'നാമമേഖലസമഗ്രം', 'NAMESPACEE' ),
+	'talkspace'             => array( '1', 'സംവാദമേഖല', 'TALKSPACE' ),
+	'talkspacee'            => array( '1', 'സംവാദമേഖലസമഗ്രം', 'TALKSPACEE' ),
+	'subjectspace'          => array( '1', 'വിഷയമേഖല', 'ലേഖനമേഖല', 'SUBJECTSPACE', 'ARTICLESPACE' ),
+	'subjectspacee'         => array( '1', 'വിഷയമേഖലസമഗ്രം', 'ലേഖനമേഖലസമഗ്രം', 'SUBJECTSPACEE', 'ARTICLESPACEE' ),
+	'fullpagename'          => array( '1', 'താളിന്റെമുഴുവൻപേര്‌', 'FULLPAGENAME' ),
+	'fullpagenamee'         => array( '1', 'താളിന്റെമുഴുവൻപേര്സമഗ്രം', 'FULLPAGENAMEE' ),
+	'subpagename'           => array( '1', 'അനുബന്ധതാളിന്റെപേര്‌', 'SUBPAGENAME' ),
+	'subpagenamee'          => array( '1', 'അനുബന്ധതാളിന്റെപേര്സമഗ്രം', 'SUBPAGENAMEE' ),
+	'basepagename'          => array( '1', 'അടിസ്ഥാനതാളിന്റെപേര്‌', 'BASEPAGENAME' ),
+	'basepagenamee'         => array( '1', 'അടിസ്ഥാനതാളിന്റെപേര്‌സമഗ്രം', 'BASEPAGENAMEE' ),
+	'talkpagename'          => array( '1', 'സംവാദതാളിന്റെപേര്‌', 'TALKPAGENAME' ),
+	'talkpagenamee'         => array( '1', 'സംവാദതാളിന്റെപേര്‌സമഗ്രം', 'TALKPAGENAMEE' ),
+	'subjectpagename'       => array( '1', 'ലേഖനതാളിന്റെപേര്‌', 'SUBJECTPAGENAME', 'ARTICLEPAGENAME' ),
+	'subjectpagenamee'      => array( '1', 'ലേഖനതാളിന്റെപേര്‌സമഗ്രം', 'SUBJECTPAGENAMEE', 'ARTICLEPAGENAMEE' ),
+	'msg'                   => array( '0', 'സന്ദേശം:', 'MSG:' ),
+	'subst'                 => array( '0', 'ബദൽ:', 'ബദൽ:', 'SUBST:' ),
+	'msgnw'                 => array( '0', 'മൂലരൂപം:', 'MSGNW:' ),
+	'img_thumbnail'         => array( '1', 'ലഘുചിത്രം', 'ലഘു', 'thumbnail', 'thumb' ),
+	'img_manualthumb'       => array( '1', 'ലഘുചിത്രം=$1', 'ലഘു=$1', 'thumbnail=$1', 'thumb=$1' ),
+	'img_right'             => array( '1', 'വലത്ത്‌', 'വലത്‌', 'right' ),
+	'img_left'              => array( '1', 'ഇടത്ത്‌', 'ഇടത്‌', 'left' ),
+	'img_none'              => array( '1', 'ശൂന്യം', 'none' ),
+	'img_width'             => array( '1', '$1ബിന്ദു', '$1px' ),
+	'img_center'            => array( '1', 'നടുവിൽ', 'നടുക്ക്‌', 'center', 'centre' ),
+	'img_framed'            => array( '1', 'ചട്ടം', 'ചട്ടത്തിൽ', 'framed', 'enframed', 'frame' ),
+	'img_page'              => array( '1', 'താൾ=$1', 'താൾ $1', 'page=$1', 'page $1' ),
+	'img_border'            => array( '1', 'അതിർവര', 'border' ),
+	'img_top'               => array( '1', 'മേലെ', 'top' ),
+	'img_text_top'          => array( '1', 'എഴുത്ത്-മേലെ', 'text-top' ),
+	'img_middle'            => array( '1', 'മദ്ധ്യം', 'middle' ),
+	'img_bottom'            => array( '1', 'താഴെ', 'bottom' ),
+	'img_text_bottom'       => array( '1', 'എഴുത്ത്-താഴെ', 'text-bottom' ),
+	'img_link'              => array( '1', 'കണ്ണി=$1', 'link=$1' ),
+	'img_alt'               => array( '1', 'പകരം=$1', 'alt=$1' ),
+	'sitename'              => array( '1', 'സൈറ്റിന്റെപേര്', 'SITENAME' ),
+	'ns'                    => array( '0', 'നാമേ:', 'NS:' ),
+	'localurl'              => array( '0', 'ലോക്കൽയുആർഎൽ:', 'LOCALURL:' ),
+	'localurle'             => array( '0', 'ലോക്കൽയുആർഎൽഇ:', 'LOCALURLE:' ),
+	'server'                => array( '0', 'സെർവർ', 'SERVER' ),
+	'servername'            => array( '0', 'സെർവറിന്റെപേര്', 'SERVERNAME' ),
+	'scriptpath'            => array( '0', 'സ്ക്രിപ്റ്റ്പാത്ത്', 'SCRIPTPATH' ),
+	'grammar'               => array( '0', 'വ്യാകരണം:', 'GRAMMAR:' ),
+	'gender'                => array( '0', 'ലിംഗം:', 'GENDER:' ),
+	'currentweek'           => array( '1', 'ആഴ്ച', 'ആഴ്‌ച', 'CURRENTWEEK' ),
+	'currentdow'            => array( '1', 'ദിവസത്തിന്റെപേര്‌അക്കത്തിൽ', 'CURRENTDOW' ),
+	'localweek'             => array( '1', 'പ്രാദേശികആഴ്ച', 'പ്രാദേശികആഴ്‌ച', 'LOCALWEEK' ),
+	'localdow'              => array( '1', 'ആഴ്ചയുടെപേര്‌അക്കത്തിൽ', 'ആഴ്‌ചയുടെപേര്‌അക്കത്തിൽ', 'LOCALDOW' ),
+	'revisionid'            => array( '1', 'തിരുത്തൽഅടയാളം', 'REVISIONID' ),
+	'revisionday'           => array( '1', 'തിരുത്തിയദിവസം', 'തിരുത്തിയദിനം', 'REVISIONDAY' ),
+	'revisionday2'          => array( '1', 'തിരുത്തിയദിവസം2', 'തിരുത്തിയദിനം2', 'REVISIONDAY2' ),
+	'revisionmonth'         => array( '1', 'തിരുത്തിയമാസം', 'REVISIONMONTH' ),
+	'revisionyear'          => array( '1', 'തിരുത്തിയവർഷം', 'REVISIONYEAR' ),
+	'revisiontimestamp'     => array( '1', 'തിരുത്തിയസമയമുദ്ര', 'REVISIONTIMESTAMP' ),
+	'plural'                => array( '0', 'ബഹുവചനം:', 'PLURAL:' ),
+	'fullurl'               => array( '0', 'പൂർണ്ണവിലാസം:', 'FULLURL:' ),
+	'raw'                   => array( '0', 'അസംസ്കൃതം:', 'RAW:' ),
+	'displaytitle'          => array( '1', 'ശീർഷകംപ്രദർശിപ്പിക്കുക', 'തലക്കെട്ട്പ്രദർശിപ്പിക്കുക', 'DISPLAYTITLE' ),
+	'rawsuffix'             => array( '1', 'വ', 'R' ),
+	'newsectionlink'        => array( '1', '__പുതിയവിഭാഗംകണ്ണി__', '__പുതിയഖണ്ഡിക്കണ്ണി__', '__NEWSECTIONLINK__' ),
+	'nonewsectionlink'      => array( '1', '__പുതിയവിഭാഗംകണ്ണിവേണ്ട__', '__പുതിയഖണ്ഡിക്കണ്ണിവേണ്ട__', '__NONEWSECTIONLINK__' ),
+	'currentversion'        => array( '1', 'ഈപതിപ്പ്', 'CURRENTVERSION' ),
+	'currenttimestamp'      => array( '1', 'സമയമുദ്ര', 'CURRENTTIMESTAMP' ),
+	'localtimestamp'        => array( '1', 'പ്രാദേശികസമയമുദ്ര', 'LOCALTIMESTAMP' ),
+	'directionmark'         => array( '1', 'ദിശാസൂചിക', 'DIRECTIONMARK', 'DIRMARK' ),
+	'language'              => array( '0', '#ഭാഷ:', '#LANGUAGE:' ),
+	'contentlanguage'       => array( '1', 'ഉള്ളടക്കഭാഷ', 'CONTENTLANGUAGE', 'CONTENTLANG' ),
+	'pagesinnamespace'      => array( '1', 'നാമമേഖലയിലുള്ളതാളുകൾ', 'PAGESINNAMESPACE:', 'PAGESINNS:' ),
+	'numberofadmins'        => array( '1', 'കാര്യനിർവ്വാഹകരുടെഎണ്ണം', 'NUMBEROFADMINS' ),
+	'formatnum'             => array( '0', 'ദശാംശഘടന', 'സംഖ്യാഘടന', 'FORMATNUM' ),
+	'padleft'               => array( '0', 'ഇടത്ത്നിറക്കുക', 'PADLEFT' ),
+	'padright'              => array( '0', 'വലത്ത്നിറക്കുക', 'PADRIGHT' ),
+	'special'               => array( '0', 'പ്രത്യേകം', 'special' ),
+	'tag'                   => array( '0', 'റ്റാഗ്', 'tag' ),
+	'hiddencat'             => array( '1', '‌‌__മറഞ്ഞിരിക്കുംവർഗ്ഗം__', '__HIDDENCAT__' ),
+	'pagesincategory'       => array( '1', 'വർഗ്ഗത്തിലുള്ളതാളുകൾ', 'PAGESINCATEGORY', 'PAGESINCAT' ),
+	'pagesize'              => array( '1', 'താൾവലിപ്പം', 'PAGESIZE' ),
+	'index'                 => array( '1', '‌‌__സൂചിക__', '__INDEX__' ),
+	'noindex'               => array( '1', '__സൂചികവേണ്ട__', '__NOINDEX__' ),
+	'protectionlevel'       => array( '1', 'സംരക്ഷണതലം', 'PROTECTIONLEVEL' ),
+	'formatdate'            => array( '0', 'ദിനരേഖീകരണരീതി', 'ദിവസരേഖീകരണരീതി', 'formatdate', 'dateformat' ),
 );
 
 $messages = array(
@@ -206,6 +314,7 @@ $messages = array(
 'tog-enotifminoredits'        => 'ചെറുതിരുത്തലുകൾക്കും എനിക്ക് ഇമെയിൽ അയയ്ക്കുക',
 'tog-enotifrevealaddr'        => 'വിജ്ഞാപന മെയിലുകളിൽ എന്റെ ഇമെയിൽ വിലാസം വെളിവാക്കാൻ അനുവദിക്കുക',
 'tog-shownumberswatching'     => 'ശ്രദ്ധിക്കുന്ന ഉപയോക്താക്കളുടെ എണ്ണം കാണിക്കുക',
+'tog-oldsig'                  => 'നിലവിലുള്ള ഒപ്പ് എങ്ങനെയുണ്ടെന്നു കാണുക:',
 'tog-fancysig'                => 'ഒപ്പ് ഒരു വിക്കിടെക്സ്റ്റായി പരിഗണിക്കുക (കണ്ണി സ്വയം ചേർക്കേണ്ടതില്ല)',
 'tog-externaleditor'          => 'തിരുത്തലുകൾക്കായി ബാഹ്യ ഉപകരണങ്ങൾ സ്വതേ ഉപയോഗിക്കുക',
 'tog-externaldiff'            => 'വ്യത്യാസം അറിയാനായി ബാഹ്യ ഉപകരണങ്ങൾ സ്വതേ ഉപയോഗിക്കുക',
@@ -226,6 +335,13 @@ $messages = array(
 'underline-always'  => 'എല്ലായ്പ്പോഴും',
 'underline-never'   => 'ഒരിക്കലും അരുത്',
 'underline-default' => 'ബ്രൗസറിലേതു പോലെ',
+
+# Font style option in Special:Preferences
+'editfont-style'     => 'തിരുത്തൽ മേഖലയിലെ ഫോണ്ടിന്റെ ശൈലി',
+'editfont-default'   => 'ബ്രൗസറിലേതു പോലെ',
+'editfont-monospace' => 'മോണോസ്പേസ്ഡ് ഫോണ്ട്',
+'editfont-sansserif' => 'സാൻസ്-സെറിഫ് ഫോണ്ട്',
+'editfont-serif'     => 'സെറിഫ് ഫോണ്ട്',
 
 # Dates
 'sunday'        => 'ഞായർ',
@@ -286,7 +402,7 @@ $messages = array(
 'category-media-header'          => '"$1" എന്ന വർഗ്ഗത്തിലെ പ്രമാണങ്ങൾ',
 'category-empty'                 => "''ഈ വർഗ്ഗത്തിൽ താളുകളോ പ്രമാണങ്ങളോ ഇല്ല.''",
 'hidden-categories'              => '{{PLURAL:$1|മറഞ്ഞിരിക്കുന്ന വർഗ്ഗം|മറഞ്ഞിരിക്കുന്ന വർഗ്ഗങ്ങൾ}}',
-'hidden-category-category'       => 'മറഞ്ഞിരിക്കുന്ന വർഗ്ഗങ്ങൾ', # Name of the category where hidden categories will be listed
+'hidden-category-category'       => 'മറഞ്ഞിരിക്കുന്ന വർഗ്ഗങ്ങൾ',
 'category-subcat-count'          => '{{PLURAL:$2|ഈ വർഗ്ഗത്തിനു്‌ താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന ഒരു ഉപവർഗ്ഗം മാത്രമേ ഉള്ളൂ.|ഈ വർഗ്ഗത്തിനു്‌ മൊത്തം $2 ഉപവർഗ്ഗങ്ങളുള്ളതിൽ {{PLURAL:$1|ഒരു ഉപവർഗ്ഗം|$1 ഉപവർഗ്ഗങ്ങൾ}} താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്നു.}}',
 'category-subcat-count-limited'  => 'ഈ വർഗ്ഗത്തിനു താഴെ കാണുന്ന {{PLURAL:$1|ഉപവർഗ്ഗമുണ്ട്|$1 ഉപവർഗ്ഗങ്ങളുണ്ട്}}.',
 'category-article-count'         => '{{PLURAL:$2|ഈ വർഗ്ഗത്തിൽ താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന ഒരു താളേ ഉള്ളൂ.|ഈ വർഗ്ഗത്തിൽ $2 താളുകളുള്ളതിൽ {{PLURAL:$1|ഒരു താൾ|$1 താളുകൾ}} താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്നു.}}',
@@ -294,6 +410,8 @@ $messages = array(
 'category-file-count'            => '{{PLURAL:$2|ഈ വർഗ്ഗത്തിൽ താഴെ കാണുന്ന ഒരു പ്രമാണം മാത്രമേ ഉള്ളൂ.|മൊത്തം $2 പ്രമാണങ്ങളുള്ളതിൽ {{PLURAL:$1|ഒരു പ്രമാണം|$1 പ്രമാണങ്ങൾ}} താഴെ കാണിച്ചിരിക്കുന്നു.}}',
 'category-file-count-limited'    => 'ഈ വർഗ്ഗത്തിൽ താഴെ കാണുന്ന {{PLURAL:$1|ഒരു പ്രമാണം|$1 പ്രമാണങ്ങൾ}} ഉണ്ട്.',
 'listingcontinuesabbrev'         => 'തുടർച്ച.',
+'index-category'                 => 'വർഗ്ഗീകരിക്കപ്പെട്ട താളുകൾ',
+'noindex-category'               => 'വർഗ്ഗീകരിക്കപ്പെടാത്ത താളുകൾ',
 
 'mainpagetext'      => "'''മീഡിയവിക്കി വിജയകരമായി സജ്ജീകരിച്ചിരിക്കുന്നു.'''",
 'mainpagedocfooter' => 'വിക്കി സോഫ്റ്റ്‌വെയർ ഉപയോഗിക്കുന്നതിനെ കുറിച്ചുള്ള വിശദാംശങ്ങൾക്ക്  [http://meta.wikimedia.org/wiki/Help:Contents സോഫ്റ്റ്‌വെയർ സഹായി] കാണുക.
@@ -303,10 +421,18 @@ $messages = array(
 * [http://www.mediawiki.org/wiki/Manual:FAQ മീഡിയവിക്കി സ്ഥിരംചോദ്യങ്ങൾ]
 * [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce മീഡിയവിക്കി പ്രകാശന മെയിലിങ്ങ് ലിസ്റ്റ്]',
 
-'about'          => 'വിവരണം',
-'article'        => 'ലേഖന താൾ',
-'newwindow'      => '(പുതിയ ജാലകത്തിൽ തുറന്നു വരും)',
-'cancel'         => 'റദ്ദാക്കുക',
+'about'         => 'വിവരണം',
+'article'       => 'ലേഖന താൾ',
+'newwindow'     => '(പുതിയ ജാലകത്തിൽ തുറന്നു വരും)',
+'cancel'        => 'റദ്ദാക്കുക',
+'moredotdotdot' => 'കൂടുതൽ...',
+'mypage'        => 'എന്റെ താൾ',
+'mytalk'        => 'എന്റെ സംവാദതാൾ',
+'anontalk'      => 'ഈ ഐ.പി.യുടെ സം‌വാദം താൾ',
+'navigation'    => 'ഉള്ളടക്കം',
+'and'           => '&#32;ഒപ്പം',
+
+# Cologne Blue skin
 'qbfind'         => 'കണ്ടെത്തുക',
 'qbbrowse'       => 'പരതുക',
 'qbedit'         => 'തിരുത്തുക',
@@ -314,15 +440,35 @@ $messages = array(
 'qbpageinfo'     => 'സന്ദർഭം',
 'qbmyoptions'    => 'എന്റെ താളുകൾ',
 'qbspecialpages' => 'പ്രത്യേക താളുകൾ',
-'moredotdotdot'  => 'കൂടുതൽ...',
-'mypage'         => 'എന്റെ താൾ',
-'mytalk'         => 'എന്റെ സംവാദതാൾ',
-'anontalk'       => 'ഈ ഐ.പി.യുടെ സം‌വാദം താൾ',
-'navigation'     => 'ഉള്ളടക്കം',
-'and'            => '&#32;ഒപ്പം',
+'faq'            => 'പതിവുചോദ്യങ്ങൾ',
+'faqpage'        => 'Project:പതിവുചോദ്യങ്ങൾ',
 
-# Metadata in edit box
-'metadata_help' => 'മെറ്റാഡാറ്റ:',
+# Vector skin
+'vector-action-addsection'   => 'വിഷയം ചേർക്കുക',
+'vector-action-delete'       => 'മായ്ക്കുക',
+'vector-action-move'         => 'തലക്കെട്ട് മാറ്റുക',
+'vector-action-protect'      => 'സം‌രക്ഷിക്കുക',
+'vector-action-undelete'     => 'മായ്ക്കപ്പെട്ടത് പുനഃസ്ഥാപിക്കുക',
+'vector-action-unprotect'    => 'സം‌രക്ഷണം നീക്കുക',
+'vector-namespace-category'  => 'വർഗ്ഗം',
+'vector-namespace-help'      => 'സഹായം താൾ',
+'vector-namespace-image'     => 'പ്രമാണം',
+'vector-namespace-main'      => 'ലേഖനം',
+'vector-namespace-media'     => 'മീഡിയ താൾ',
+'vector-namespace-mediawiki' => 'സന്ദേശം',
+'vector-namespace-project'   => 'പദ്ധതി താൾ',
+'vector-namespace-special'   => 'പ്രത്യേക താൾ',
+'vector-namespace-talk'      => 'സം‌വാദം',
+'vector-namespace-template'  => 'ഫലകം',
+'vector-namespace-user'      => 'ഉപയോക്താവിന്റെ താൾ',
+'vector-view-create'         => 'സൃഷ്ടിക്കുക',
+'vector-view-edit'           => 'തിരുത്തുക',
+'vector-view-history'        => 'നാൾവഴി കാണുക',
+'vector-view-view'           => 'വായിക്കുക',
+'vector-view-viewsource'     => 'മൂലരൂപം കാണുക',
+'actions'                    => 'നടപടികൾ',
+'namespaces'                 => 'നാമമേഖല',
+'variants'                   => 'ചരങ്ങൾ',
 
 'errorpagetitle'    => 'പിഴവ്',
 'returnto'          => '$1 എന്ന താളിലേക്ക് തിരിച്ചുപോവുക.',
@@ -372,18 +518,22 @@ $messages = array(
 'otherlanguages'    => 'ഇതര ഭാഷകളിൽ',
 'redirectedfrom'    => '($1 എന്ന താളിൽ നിന്നും തിരിച്ചുവിട്ടതു പ്രകാരം)',
 'redirectpagesub'   => 'തിരിച്ചുവിടൽ താൾ',
-'lastmodifiedat'    => 'ഈ താൾ അവസാനം തിരുത്തപ്പെട്ടത്: $2, $1.', # $1 date, $2 time
+'lastmodifiedat'    => 'ഈ താൾ അവസാനം തിരുത്തപ്പെട്ടത്: $2, $1.',
 'viewcount'         => 'ഈ താൾ {{PLURAL:$1|ഒരു തവണ|$1 തവണ}} സന്ദർശിക്കപ്പെട്ടിട്ടുണ്ട്.',
 'protectedpage'     => 'സംരക്ഷിത താൾ',
 'jumpto'            => 'പോവുക:',
 'jumptonavigation'  => 'വഴികാട്ടി',
 'jumptosearch'      => 'തിരയൂ',
+'view-pool-error'   => 'ക്ഷമിക്കണം, ഈ നിമിഷം സെർവറുകൾ അമിതഭാരം കൈകാര്യം ചെയ്യുകയാണ്.
+ധാരാളം ഉപയോക്താക്കൾ ഈ താൾ കാണുവാൻ ശ്രമിച്ചുകൊണ്ടിരിക്കുകയാണ്.
+ഇനിയും താൾ ലഭ്യമാക്കുവാൻ താങ്കൾ ശ്രമിക്കുന്നതിന് മുൻപ് ദയവായി അല്പസമയം കാത്തിരിക്കുക. 
+
+$1',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => '{{SITENAME}} സം‌രംഭത്തെക്കുറിച്ച്',
 'aboutpage'            => 'Project:വിവരണം',
 'copyright'            => 'ഉള്ളടക്കം $1 പ്രകാരം ലഭ്യം.',
-'copyrightpagename'    => '{{SITENAME}} പകർപ്പവകാശം',
 'copyrightpage'        => '{{ns:project}}:പകർപ്പവകാശം',
 'currentevents'        => 'സമകാലികം',
 'currentevents-url'    => 'Project:സമകാലികം',
@@ -391,14 +541,12 @@ $messages = array(
 'disclaimerpage'       => 'Project:പൊതുനിരാകരണം',
 'edithelp'             => 'തിരുത്തൽ സഹായി',
 'edithelppage'         => 'Help:തിരുത്തൽ വഴികാട്ടി',
-'faq'                  => 'പതിവുചോദ്യങ്ങൾ',
-'faqpage'              => 'Project:പതിവുചോദ്യങ്ങൾ',
 'helppage'             => 'Help:ഉള്ളടക്കം',
 'mainpage'             => 'പ്രധാന താൾ',
 'mainpage-description' => 'പ്രധാന താൾ',
 'policy-url'           => 'Project:നയം',
 'portal'               => 'സാമൂഹികകവാടം',
-'portal-url'           => 'Project:സാമൂഹ്യകവാടം',
+'portal-url'           => 'Project:സാമൂഹികകവാടം',
 'privacy'              => 'സ്വകാര്യതാനയം',
 'privacypage'          => 'Project:സ്വകാര്യതാനയം',
 
@@ -471,10 +619,6 @@ $messages = array(
 "$1"
 "$2" എന്ന നിർദ്ദേശത്തിനകത്ത് നിന്നും .
 വിവരശേഖരത്തിൽ നിന്നും ലഭിച്ച പിഴവ് "$3: $4"',
-'noconnect'            => 'ക്ഷമിക്കണം! ചില സാങ്കേതികപ്രശ്നങ്ങൾ മൂലം വിക്കിക്കു ഡാറ്റാബേസ് സെർവറുമായി ബന്ധപ്പെടാൻ സാധിച്ചില്ല. <br />
-$1',
-'nodb'                 => '$1 എന്ന ഡാറ്റാബേസ് തിരഞ്ഞെടുക്കാൻ പറ്റിയില്ല.',
-'cachederror'          => 'താങ്കൾ ആവശ്യപ്പെട്ട താളിന്റെ തദ്ദേശീയമായി സംഭരിച്ചുവയ്ക്കപ്പെട്ടിട്ടുള്ള ഒരു പതിപ്പാണ് താഴെക്കാണുന്നത്. ഇത് ഏറ്റവും പുതിയ പതിപ്പാവണമെന്നില്ല.',
 'laggedslavemode'      => 'മുന്നറിയിപ്പ്: താളിൽ അടുത്തകാലത്ത് വരുത്തിയ പുതുക്കലുകൾ ഉണ്ടാവണമെന്നില്ല.',
 'readonly'             => 'ഡാറ്റാബേസ് ബന്ധിച്ചിരിക്കുന്നു',
 'enterlockreason'      => 'ഡാറ്റാബേസ് ബന്ധിക്കുവാനുള്ള കാരണം സൂചിപ്പിക്കുക. അതോടൊപ്പം എപ്പോഴാണ്‌ ബന്ധനം അഴിക്കുവാൻ ഉദ്ദേശിക്കുന്നതെന്നും രേഖപ്പെടുത്തുക.',
@@ -492,6 +636,8 @@ $1',
 'readonly_lag'         => 'വിവരശേഖരം സ്വയം ബന്ധിക്കപ്പെട്ടിരിക്കുന്നു അതേസമയം കീഴ്-വിവരശേഖര സെർവറുകൾ മാസ്റ്റർ വരെ പിടിച്ചിരിക്കുന്നു',
 'internalerror'        => 'ആന്തരികമായ പ്രശ്നം',
 'internalerror_info'   => 'ആന്തരികപ്രശ്നം: $1',
+'fileappenderrorread'  => 'കൂട്ടിച്ചേർക്കുന്ന സമയം "$1" വായിച്ചെടുക്കാൻ കഴിഞ്ഞില്ല.',
+'fileappenderror'      => '"$1" എന്നത് "$2"-ലേക്ക് കൂട്ടിച്ചേർക്കുവാൻ സാധിച്ചില്ല.',
 'filecopyerror'        => '"$1" എന്ന പ്രമാണം "$2" എന്നതിലേയ്ക്ക് പകർത്താൻ സാധിച്ചില്ല.',
 'filerenameerror'      => 'പ്രമാണം "$1", "$2" എന്ന തലക്കെട്ടിലേയ്ക്കു മാറ്റാൻ സാധിച്ചില്ല.',
 'filedeleteerror'      => '"$1" നീക്കം ചെയ്യാൻ സാധിച്ചില്ല.',
@@ -501,7 +647,8 @@ $1',
 'unexpected'           => 'പ്രതീക്ഷിക്കാത്ത മൂല്യം: "$1"="$2".',
 'formerror'            => 'പിഴവ്: ഫോം സമർപ്പിക്കുവാൻ പറ്റിയില്ല',
 'badarticleerror'      => 'താങ്കൾ ചെയ്യാനുദ്ദേശിക്കുന്നത് ഈ താളിൽ സാദ്ധ്യമല്ല',
-'cannotdelete'         => 'സൂചിപ്പിച്ച താളോ പ്രമാണമോ നീക്കം ചെയ്യാന്‍ സാധിച്ചില്ല. (അതു മറ്റാരെങ്കിലും മുമ്പേ നീക്കം ചെയ്തിട്ടുണ്ടാവാം.)',
+'cannotdelete'         => '"$1" എന്ന താൾ അഥവാ പ്രമാണം നീക്കം ചെയ്യാൻ കഴിഞ്ഞില്ല.
+അതു മിക്കവാറും മറ്റാരെങ്കിലും നീക്കം ചെയ്തിട്ടുണ്ടാവാം.',
 'badtitle'             => 'അസാധുവായ തലക്കെട്ട്',
 'badtitletext'         => 'താങ്കൾ ആവശ്യപ്പെട്ട തലക്കെട്ടുള്ള ഒരു താൾ നിലവിലില്ല. ഇതു തെറ്റായി അന്തർഭാഷാ/അന്തർവിക്കി കണ്ണി ചെയ്യപ്പെട്ടതു മൂലമോ, തലക്കെട്ടിൽ ഉപയോഗിക്കരുതാത്ത അക്ഷരരൂപങ്ങൾ ഉപയോഗിച്ചതു മൂലമോ സംഭവിച്ചതായിരിക്കാം.',
 'perfcached'           => 'താഴെ കൊടുത്തിരിക്കുന്ന വിവരം ശേഖരിക്കപ്പെട്ടതാണ് ആയതിനാൽ ചിലപ്പോൾ നവീനമായിരിക്കില്ല.',
@@ -533,7 +680,6 @@ $2',
 'virus-unknownscanner' => 'തിരിച്ചറിയാനാകാത്ത ആന്റിവൈറസ്:',
 
 # Login and logout pages
-'logouttitle'                => 'യൂസർ ലോഗൗട്ട്',
 'logouttext'                 => "'''താങ്കൾ ഇപ്പോൾ {{SITENAME}} സംരംഭത്തിൽനിന്നും ലോഗൗട്ട് ചെയ്തിരിക്കുന്നു'''
 
 അജ്ഞാതമായിരുന്നു കൊണ്ട് {{SITENAME}} സം‌രംഭം താങ്കൾക്കു തുടർന്നും ഉപയോഗിക്കാവുന്നതാണ്‌.
@@ -542,7 +688,6 @@ $2',
 'welcomecreation'            => '== സ്വാഗതം, $1! ==
 താങ്കളുടെ അംഗത്വം സൃഷ്ടിക്കപ്പെട്ടിരിക്കുന്നു.
 താങ്കളുടെ [[Special:Preferences|{{SITENAME}} ക്രമീകരണങ്ങളിൽ]] ആവശ്യമായ മാറ്റം വരുത്തുവാൻ മറക്കരുതേ.',
-'loginpagetitle'             => 'ഉപയോക്തൃലോഗിൻ',
 'yourname'                   => 'ഉപയോക്തൃനാമം:',
 'yourpassword'               => 'രഹസ്യവാക്ക്:',
 'yourpasswordagain'          => 'രഹസ്യവാക്ക് ഒരിക്കൽക്കൂടി:',
@@ -553,6 +698,7 @@ $2',
 'nav-login-createaccount'    => 'പ്രവേശിക്കുക / അംഗത്വമെടുക്കുക',
 'loginprompt'                => '{{SITENAME}} സംരംഭത്തിൽ ലോഗിൻ ചെയ്യാൻ താങ്കൾ കുക്കികൾ (Cookies) സജ്ജമാക്കിയിരിക്കണം.',
 'userlogin'                  => 'പ്രവേശിക്കുക / അംഗത്വമെടുക്കുക',
+'userloginnocreate'          => 'പ്രവേശിക്കുക',
 'logout'                     => 'ലോഗൗട്ട്',
 'userlogout'                 => 'ലോഗൗട്ട്',
 'notloggedin'                => 'പ്രവേശിച്ചിട്ടില്ല',
@@ -564,29 +710,8 @@ $2',
 'createaccountmail'          => 'ഇമെയിൽ വഴി',
 'badretype'                  => 'താങ്കൾ ടൈപ്പു ചെയ്ത രഹസ്യവാക്കുകൾ തമ്മിൽ യോജിക്കുന്നില്ല.',
 'userexists'                 => 'ഈ പേരിൽ മറ്റൊരു ഉപയോക്തൃനാമം  നിലവിലുണ്ട്. ദയവായി മറ്റൊരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക.',
-'youremail'                  => 'ഇമെയിൽ:',
-'username'                   => 'ഉപയോക്തൃനാമം:',
-'uid'                        => 'ഉപയോക്തൃഐ.ഡി:',
-'prefs-memberingroups'       => 'അംഗത്വമുള്ള {{PLURAL:$1|സംഘം|സംഘങ്ങൾ}}:',
-'yourrealname'               => 'യഥാർത്ഥ പേര്‌:',
-'yourlanguage'               => 'ഭാഷ:',
-'yourvariant'                => 'വ്യത്യാസമാനം',
-'yournick'                   => 'ഒപ്പ്:',
-'badsig'                     => 'അനുവദനീയമല്ലാത്ത രൂപത്തിലുള്ള ഒപ്പ്. HTML ടാഗുകൾ പരിശോധിക്കുക.',
-'badsiglength'               => 'താങ്കളുടെ ഒപ്പിനു നീളം കൂടുതലാണ്‌. 
-അതിലെ {{PLURAL:$1|അക്ഷരത്തിന്റെ|അക്ഷരങ്ങങ്ങളുടെ}} എണ്ണം $1 ൽ താഴെയായിരിക്കണം.',
-'yourgender'                 => 'ആൺ/പെൺ:',
-'gender-unknown'             => 'വ്യക്തമാക്കിയിട്ടില്ല',
-'gender-male'                => 'പുരുഷൻ',
-'gender-female'              => 'സ്ത്രീ',
-'prefs-help-gender'          => 'നിർബന്ധമില്ല: സോഫ്റ്റ്‌വെയർ ഉപയോഗിച്ച് സ്ത്രീകളേയും പുരുഷന്മാരേയും ശരിയായി സംബോധന ചെയ്യാൻ ഉപയോഗിക്കുന്നു.
-ഈ വിവരം പരസ്യമായി ലഭ്യമായിരിക്കുന്നതാണ്‌.',
-'email'                      => 'ഇമെയിൽ',
-'prefs-help-realname'        => 'താങ്കളുടെ യഥാർത്ഥ പേര്‌ നൽകണമെന്നു നിർബന്ധമില്ല. എങ്കിലും അങ്ങനെ ചെയ്താൽ താങ്കളുടെ സംഭാവനകൾ ആ പേരിൽ അംഗീകരിക്കപ്പെടും.',
 'loginerror'                 => 'പ്രവേശനം സാധിച്ചില്ല',
-'prefs-help-email'           => 'ഇമെയിൽ വിലാസം നൽകണമെന്ന് നിർബന്ധമില്ല, പക്ഷേ താങ്കൾ രഹസ്യവാക്ക് മറന്നാൽ പുതിയത് അയച്ചു തരാൻ ഇതുകൊണ്ട് സാധിക്കുന്നതാണ്‌.
-താങ്കൾക്കായുള്ള താളിൽ നിന്നോ, താങ്കൾക്കുള്ള സന്ദേശങ്ങളുടെ താളിൽ നിന്നോ മറ്റുപയോക്താക്കൾക്ക് താങ്കളുടെ വ്യക്തിത്വം മനസ്സിലാക്കാതെ തന്നെ താങ്കൾക്ക് സന്ദേശങ്ങളയയ്ക്കാനും ഈ സം‌വിധാനം അവസരം നൽകുന്നു.',
-'prefs-help-email-required'  => 'ഇമെയിൽ വിലാസം ആവശ്യമാണ്‌.',
+'createaccounterror'         => 'അംഗത്വമെടുക്കാൻ കഴിഞ്ഞില്ല:$1',
 'nocookiesnew'               => 'ഉപയോക്തൃഅംഗത്വം ഉണ്ടാക്കിയിരിക്കുന്നു. പക്ഷെ താങ്കൾ ലോഗിൻ ചെയ്തിട്ടില്ല. {{SITENAME}} സംരംഭത്തിൽ ലോഗിൻ ചെയ്യുവാൻ കുക്കികൾ സജ്ജമാക്കിയിരിക്കണം. താങ്കളുടെ കമ്പ്യൂട്ടറിൽ നിലവിൽ കുക്കികൾ ഡിസേബിൾ ചെയ്തിരിക്കുന്നു. അതു എനേബിൾ ചെയ്തു താങ്കളുടെ ഉപയോക്തൃനാമവും രഹസ്യവാക്കും ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യൂ.',
 'nocookieslogin'             => '{{SITENAME}} സംരഭത്തിൽ ലോഗിൻ ചെയ്യുവാൻ കുക്കികൾ സജ്ജമാക്കിയിരിക്കണം. പക്ഷെ താങ്കൾ കുക്കികൾ സജ്ജമാക്കിയിട്ടില്ല. കുക്കികൾ സജ്ജമാക്കിയതിനു ശേഷം വീണ്ടും ലോഗിൻ ചെയ്യാൻ ശ്രമിക്കൂ.',
 'noname'                     => 'താങ്കൾ സാധുവായ ഉപയോക്തൃനാമം സൂചിപ്പിച്ചിട്ടില്ല.',
@@ -597,15 +722,18 @@ $2',
 പുതിയ [[Special:UserLogin/signup|അംഗത്വമെടുക്കുക]].',
 'nosuchusershort'            => '"<nowiki>$1</nowiki>" എന്ന പേരിൽ ഒരു ഉപയോക്താവ് ഇല്ല. അക്ഷരങ്ങൾ ഒന്നു കൂടി പരിശോധിക്കുക.',
 'nouserspecified'            => 'ഉപയോക്തൃനാമം നിർബന്ധമായും ചേർക്കണം.',
+'login-userblocked'          => 'ഈ ഉപയോക്താവ് തടയപ്പെട്ടിരിക്കുന്നു. പ്രവേശനം അനുവദിക്കുന്നില്ല.',
 'wrongpassword'              => 'താങ്കൾ നൽകിയ രഹസ്യവാക്ക് തെറ്റാണ്, വീണ്ടും ശ്രമിക്കുക.',
 'wrongpasswordempty'         => 'താങ്കൾ രഹസ്യവാക്ക് നൽകിയിരുന്നില്ല. വീണ്ടും ശ്രമിക്കുക.',
-'passwordtooshort'           => 'നിങ്ങളുടെ രഹസ്യവാക്ക് ഒന്നുകില്‍ അസാധുവാണ് അല്ലെങ്കില്‍ വളരെ ചെറുതാണ്. രഹസ്യവാക്കില്‍ കുറഞ്ഞതു {{PLURAL:$1|1 അക്ഷരം|$1 അക്ഷരങ്ങള്‍}} ഉണ്ടാവണം. രഹസ്യവാക്ക് നിങ്ങളുടെ ഉപയോക്തൃനാമത്തില്‍ നിന്നു വ്യത്യസ്തമായിരിക്കുകയും വേണം.',
+'passwordtooshort'           => 'രഹസ്യവാക്കിൽ കുറഞ്ഞതു {{PLURAL:$1|ഒരു അക്ഷരം|$1 അക്ഷരങ്ങൾ}} ഉണ്ടായിരിക്കണം.',
+'password-name-match'        => 'താങ്കളുടെ രഹസ്യവാക്ക് ഉപയോക്തൃനാമത്തിൽ നിന്നും വ്യത്യസ്തമായിരിക്കണം.',
 'mailmypassword'             => 'പുതിയ രഹസ്യവാക്ക് ഇമെയിൽ ചെയ്യുക',
 'passwordremindertitle'      => '{{SITENAME}} സംരംഭത്തിൽ ഉപയോഗിക്കാനുള്ള താത്ക്കാലിക രഹസ്യവാക്ക്',
 'passwordremindertext'       => 'ആരോ ഒരാൾ (ഒരു പക്ഷേ താങ്കളായിരിക്കാം, $1 എന്ന ഐ.പി. വിലാസത്തിൽനിന്ന്) {{SITENAME}} ($4) സംരംഭത്തിലേക്ക് പുതിയ രഹസ്യവാക്ക് ആവശ്യപ്പെട്ടിരിക്കുന്നു. "$2" എന്ന ഉപയോക്താവിന് ആവശ്യമായ ഒരു താൽകാലിക രഹസ്യവാക്കായി "$3" എന്ന് സജ്ജീകരിച്ചിരിക്കുന്നു. ഇത് താങ്കളുടെ ആവശ്യമാണെങ്കിൽ, താങ്കൾ പ്രവേശം ചെയ്ത് പുതിയ രഹസ്യവാക്ക് സജ്ജീകരിക്കേണ്ടതാണ്. താങ്കളുടെ താത്കാലിക രഹസ്യവാക്കിന്റെ കാലാവധി {{PLURAL:$5|ഒരു ദിവസമാകുന്നു|$5 ദിവങ്ങളാകുന്നു}}.
 
 ഈ അഭ്യർത്ഥന മറ്റാരെങ്കിലും നടത്തിയതാണെങ്കിൽ, അതല്ല പഴയ രഹസ്യവാക്ക് ഓർമ്മയുണ്ടായിരിക്കുകയും അത് മാറ്റുവാൻ താങ്കൾക്ക് താത്പര്യവുമില്ലെങ്കിൽ, ഈ സന്ദേശം അവഗണിച്ച് താങ്കളുടെ പഴയ രഹസ്യവാക്ക് തുടർന്നും ഉപയോഗിക്കാവുന്നതാണ്‌.',
 'noemail'                    => '"$1" എന്ന ഉപയോക്താവ് ഇമെയിൽ വിലാസം ക്രമീകരിച്ചിട്ടില്ല.',
+'noemailcreate'              => 'താങ്കൾ സാധുവായ ഇമെയിൽ വിലാസം നൽകേണ്ടതാണ്',
 'passwordsent'               => '‘$1” എന്ന അംഗത്വത്തിനായി രജിസ്റ്റർ ചെയ്യപ്പെട്ടിട്ടുള്ള ഇമെയിൽ വിലാസത്തിലേക്ക് ഒരു പുതിയ രഹസ്യവാക്ക് അയച്ചിട്ടുണ്ട്. അത് ലഭിച്ചശേഷം ദയവായി ലോഗിൻ ചെയ്യുക.',
 'blocked-mailpassword'       => 'താങ്കളുടെ ഐ.പി. വിലാസത്തെ ഈ വിക്കി തിരുത്തുന്നതിൽ നിന്നു തടഞ്ഞിട്ടുള്ളതാണ്‌. അതിനാൽ രഹസ്യവാക്ക് വീണ്ടെടുക്കുവാനുള്ള സജ്ജീകരണം ഉപയോഗിക്കുന്നതിനു താങ്കൾക്ക് അവകാശമില്ല.',
 'eauthentsent'               => 'താങ്കൾ വിക്കിയിൽ ക്രമീകരിച്ചിട്ടുള്ള ഇമെയിൽ വിലാസത്തിലേക്ക് സ്ഥിരീകരണത്തിനായി ഒരു മെയിൽ അയച്ചിട്ടുണ്ട്. ഇവിടെ നിന്ന് ആ ഇമെയിൽ വിലാസത്തിലേക്ക് മറ്റൊരു മെയിൽ കൂടി അയക്കുന്നതിനു മുൻപായി, അംഗത്വം താങ്കളുടേതു തന്നെ എന്നു ഉറപ്പു വരുത്തുന്നതിനായി, ഇപ്പോൾ അയച്ചിട്ടുള്ള മെയിലിലെ നിർദ്ദേശങ്ങൾ താങ്കൾ പാലിക്കേണ്ടതാണ്.',
@@ -625,9 +753,11 @@ $2',
 'createaccount-text'         => '{{SITENAME}} സംരംഭത്തിൽ ($4) താങ്കളുടെ ഇമെയിൽ വിലാസത്തിൽ ആരോ ഒരു അംഗത്വം "$2" എന്ന ഉപയോക്തൃനാമത്തിൽ ഉണ്ടാക്കിയിരിക്കുന്നു (രഹസ്യവാക്ക്: "$3").  താങ്കൾ ഇപ്പോൾ ലോഗിൻ ചെയ്തു രഹസ്യവാക്ക് മാറ്റേണ്ടതാകുന്നു.
 
 അംഗത്വം അബദ്ധവശാൽ ഉണ്ടാക്കിയതാണെങ്കിൽ താങ്കൾക്ക് ഈ സന്ദേശം നിരാകരിക്കാവുന്നതാണ്‌.',
+'usernamehasherror'          => 'ഉപയോക്തൃനാമത്തിൽ ഹാഷ് ലിപികൾ ഉൾപ്പെടുത്തരുത്',
 'login-throttled'            => 'താങ്കൾ നിരവധി പ്രാവശ്യം ലോഗിൻ ചെയ്യാൻ ശ്രമിച്ചിരിക്കുന്നു.
 പുതിയതായി ശ്രമിക്കുന്നതിനു മുമ്പ് ദയവായി കാത്തിരിക്കുക.',
 'loginlanguagelabel'         => 'ഭാഷ: $1',
+'suspicious-userlogout'      => 'ലോഗൗട്ട് ചെയ്യാനുള്ള താങ്കളുടെ അഭ്യർത്ഥന നിരസിച്ചിരിക്കുന്നു, കാരണം അത് തകർന്ന ബ്രൗസറിൽ നിന്നോ കാഷിങ് പ്രോക്സിയിൽ നിന്നോ ഉണ്ടായതുപോലെ അനുഭവപ്പെടുന്നു.',
 
 # Password reset dialog
 'resetpass'                 => 'രഹസ്യവാക്ക് പുനഃക്രമീകരിക്കുക',
@@ -638,14 +768,13 @@ $2',
 'retypenew'                 => 'പുതിയ രഹസ്യവാക്ക് ഉറപ്പിക്കുക:',
 'resetpass_submit'          => 'രഹസ്യവാക്ക് സജ്ജീകരിച്ചശേഷം ലോഗിൻ ചെയ്യുക',
 'resetpass_success'         => 'താങ്കളുടെ രഹസ്യവാക്ക് വിജയകരമായി മാറ്റിയിരിക്കുന്നു! ഇപ്പോൾ താങ്കളെ സംരംഭത്തിലേക്ക് ആനയിക്കുന്നു...',
-'resetpass_bad_temporary'   => 'അസാധുവായ താൽക്കാലിക രഹസ്യവാക്ക്. ഒന്നുകിൽ ഇതിനകം താങ്കൾ രഹസ്യവാക്ക് മാറ്റിയിരിക്കാം. അല്ലെങ്കിൽ പുതിയ ഒരു താൽക്കാലിക രഹസ്യവാക്ക് ആവശ്യപ്പെട്ടിട്ടുണ്ടായിരിക്കാം.',
 'resetpass_forbidden'       => 'രഹസ്യവാക്കുകൾ മാറ്റുന്നത് അനുവദിക്കുന്നില്ല',
 'resetpass-no-info'         => 'ഈ താൾ നേരിട്ടു കാണുന്നതിന് താങ്കൾ ലോഗിൻ ചെയ്തിരിക്കണം.',
 'resetpass-submit-loggedin' => 'രഹസ്യവാക്ക് മാറ്റുക',
+'resetpass-submit-cancel'   => 'റദ്ദാക്കുക',
 'resetpass-wrong-oldpass'   => 'സാധുതയില്ലാത്ത താത്കാലിക അല്ലെങ്കിൽ നിലവിലുള്ള രഹസ്യവാക്ക്.
 നിലവിൽ താങ്കൾ വിജയകരമായി രഹസ്യവാക്ക് മാറ്റിയിട്ടുണ്ട് അല്ലെങ്കിൽ ഒരു പുതിയ താത്കാലിക രഹസ്യവാക്കിന് ആവശ്യപ്പെട്ടിരിക്കുന്നു.',
 'resetpass-temp-password'   => 'താത്കാലിക രഹസ്യവാക്ക്:',
-'resetpass-log'             => 'രഹസ്യവാക്ക് പുതിയതിന്റെ പട്ടിക',
 
 # Edit page toolbar
 'bold_sample'     => 'കടുപ്പിച്ച എഴുത്ത്',
@@ -713,7 +842,6 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. ''$2'' എന്ന�
 'blockededitsource'                => "'''$1''' എന്ന താളിൽ '''താങ്കൾ നടത്തിയ തിരുത്തലുകളുടെ''' പൂർണ്ണരൂപം താഴെക്കാണിച്ചിരിക്കുന്നു:",
 'whitelistedittitle'               => 'തിരുത്താൻ ലോഗിൻ ചെയ്യണം',
 'whitelistedittext'                => 'താളുകൾ തിരുത്താൻ താങ്കൾ $1 ചെയ്യേണ്ടതാണ്',
-'confirmedittitle'                 => 'തിരുത്താൻ ഇമെയിൽ വിലാസം സ്ഥിരീകരിക്കേണ്ടതുണ്ട്',
 'confirmedittext'                  => 'താളുകൾ തിരുത്തുന്നതിനു മുൻപ് താങ്കൾ താങ്കളുടെ ഇമെയിൽ വിലാസം സ്ഥിരീകരിക്കേണ്ടതാണ്‌. ഇമെയിൽ വിലാസം ക്രമപ്പെടുത്തി സാധുത പരിശോധിക്കാൻ [[Special:Preferences|എന്റെ ക്രമീകരണങ്ങൾ]] എന്ന സം‌വിധാനം ഉപയോഗിക്കുക.',
 'nosuchsectiontitle'               => 'ഉപവിഭാഗം കണ്ടെത്താനായില്ല',
 'nosuchsectiontext'                => 'നിലവിലില്ലാത്ത ഒരു ഉപവിഭാഗമാണു താങ്കൾ തിരുത്താൻ ശ്രമിക്കുന്നത്.
@@ -736,7 +864,13 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. ''$2'' എന്ന�
 |}",
 'noarticletext'                    => 'ഈ താളിൽ ഇതുവരെ ഉള്ളടക്കം ആയിട്ടില്ല.
 താങ്കൾക്ക് മറ്റുതാളുകളിൽ [[Special:Search/{{PAGENAME}}|ഇതേക്കുറിച്ച് അന്വേഷിക്കുകയോ]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ബന്ധപ്പെട്ട രേഖകൾ പരിശോധിക്കുകയോ], [{{fullurl:{{FULLPAGENAME}}|action=edit}} ഈ താൾ തിരുത്തുകയോ ചെയ്യാവുന്നതാണ്]</span>.',
+'noarticletext-nopermission'       => 'ഇപ്പോൾ ഈ താളിൽ എഴുത്തുകളൊന്നും ഇല്ല.
+താങ്കൾക്ക് മറ്റു താളുകളിൽ [[Special:Search/{{PAGENAME}}|ഈ താളിന്റെ തലക്കെട്ടിനായി തിരയാവുന്നതാണ്‌]],
+അല്ലെങ്കിൽ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ബന്ധപ്പെട്ട രേഖകൾ പരിശോധിക്കാവുന്നതാണ്‌]</span>.',
 'userpage-userdoesnotexist'        => '"$1" എന്ന ഉപയോക്താവ് അംഗത്വമെടുത്തിട്ടില്ല. ഈ താൾ സൃഷ്ടിക്കണമോ എന്നതു പരിശോധിക്കുക.',
+'userpage-userdoesnotexist-view'   => '"$1" എന്ന അം‌ഗത്വം നിലവിലില്ല.',
+'blocked-notice-logextract'        => 'ഈ ഉപയോക്താവ് ഇപ്പോൾ തടയപ്പെട്ടിരിക്കുകയാണ്.
+തടയൽ രേഖയിലെ പുതിയ ഉൾപ്പെടുത്തൽ അവലംബമായി താഴെ നൽകിയിരിക്കുന്നു:',
 'clearyourcache'                   => "'''പ്രത്യേക ശ്രദ്ധയ്ക്ക്:'''
 
 സേവ് ചെയ്ത ക്രമീകരണങ്ങൾ കാണാൻ താങ്കളുടെ ബ്രൗസറിന്റെ കാഷെ ക്ലിയർ ചെയ്യണം.
@@ -745,7 +879,8 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. ''$2'' എന്ന�
 *'''ഇന്റർനെറ്റ് എക്സ്പ്ലോറർ (IE):''Refresh'' ബട്ടൺ അമർത്തുമ്പോൾ ''Ctrl'' കീ അമർത്തിപിടിക്കുക. അല്ലെങ്കിൽ ''Ctrl-F5'' അമർത്തുക;
 *'''ഓപ്പറ (Opera)''':  ''Tools→Preferences'' ഉപയോഗിച്ച് കാഷെ പൂർണ്ണമായും ക്ലിയർ ചെയ്യുക;
 *'''Konqueror:''': ''Reload'' ബട്ടൺ അമർത്തുകയോ ''F5'' കീ അമർത്തുകയോ ചെയ്യുക.",
-'usercssjsyoucanpreview'           => "'''വഴികാട്ടി:''' താങ്കളുടെ പുതിയ CSS/JS സേവ് ചെയ്യുന്നതിനു മുമ്പ് 'പ്രിവ്യൂ കാണുക' എന്ന ബട്ടൻ ഉപയോഗിച്ച് പരിശോധിക്കുക.",
+'usercssyoucanpreview'             => "'''വഴികാട്ടി:''' താങ്കളുടെ പുതിയ CSS സേവ് ചെയ്യുന്നതിനു മുമ്പ് \"{{int:showpreview}}\" എന്ന ബട്ടൻ ഉപയോഗിച്ച് പരിശോധിക്കുക.",
+'userjsyoucanpreview'              => "'''വഴികാട്ടി:''' താങ്കളുടെ പുതിയ ജാവാസ്ക്രിപ്റ്റ് സേവ് ചെയ്യുന്നതിനു മുമ്പ് \"{{int:showpreview}}\" എന്ന ബട്ടൻ ഉപയോഗിച്ച് പരിശോധിക്കുക.",
 'usercsspreview'                   => "'''താങ്കൾ താങ്കളുടെ സ്വന്തം CSS പ്രിവ്യൂ ചെയ്യുക മാത്രമേ ചെയ്യുന്നുള്ളൂ എന്ന കാര്യം ഓർമ്മിക്കുക.'''
 '''ഇതു സേവ് ചെയ്തിട്ടില്ല!'''",
 'userjspreview'                    => "'''താങ്കൾ താങ്കളുടെ സ്വന്തം ജാവസ്ക്രിപ്റ്റ് പ്രിവ്യൂ ചെയ്യുക മാത്രമേ ചെയ്യുന്നുള്ളൂ എന്ന കാര്യം ഓർമ്മിക്കുക. ഇതു സേവ് ചെയ്തിട്ടില്ല!'''",
@@ -790,13 +925,13 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. ''$2'' എന്ന�
 താളുകളുടെ ഉപവിഭാഗങ്ങൾ തിരഞ്ഞെടുത്ത് തിരുത്തുന്നത് പരിഗണിക്കുക.",
 'longpageerror'                    => "'''പിഴവ്: താങ്കൾ സമർപ്പിച്ച എഴുത്തുകൾക്ക് $1 കിലോബൈറ്റ്സ് വലിപ്പമുണ്ട്. പരമാവധി അനുവദനീയമായ വലിപ്പം $2 കിലോബൈറ്റ്സ് ആണ്‌. അതിനാലിതു സേവ് ചെയ്യാൻ സാദ്ധ്യമല്ല.'''",
 'readonlywarning'                  => "'''മുന്നറിയിപ്പ്: വിവരശേഖരം അതിന്റെ പരിപാലനത്തിനു വേണ്ടി ബന്ധിച്ചിരിക്കുന്നു, അതുകൊണ്ട് താങ്കളിപ്പോൾ വരുത്തിയ മാറ്റങ്ങൾ സേവ് ചെയ്യാൻ സാദ്ധ്യമല്ല.''' താങ്കൾ വരുത്തിയ മാറ്റങ്ങൾ ഒരു ടെക്സ്റ്റ് പ്രമാണത്തിലേക്ക് പകർത്തി (കട്ട് & പേസ്റ്റ്) പിന്നീടുള്ള ഉപയോഗത്തിനായി സേവ് ചെയ്യുവാൻ താല്പര്യപ്പെടുന്നു. വിവരശേഖരം ബന്ധിച്ച അഡ്മിനിസ്ട്രേറ്റർ നൽകിയ വിശദീകരണം: $1",
-'protectedpagewarning'             => "'''മുന്നറിയിപ്പ്:  ഈ താള്‍ സിസോപ്പ് അധികാരമുള്ളവര്‍ക്ക് മാത്രം തിരുത്താന്‍ സാധിക്കാവുന്ന തരത്തില്‍ സം‌രക്ഷിക്കപ്പെട്ടിരിക്കുന്നു '''",
-'semiprotectedpagewarning'         => "'''ശ്രദ്ധിക്കുക:''' ഈ താള്‍ സംരക്ഷിക്കപ്പെട്ടിട്ടുള്ളതാണ്; {{SITENAME}} സംരംഭത്തില്‍ അംഗത്വമെടുത്തിട്ടുള്ളവര്‍ക്കേ ഈ താള്‍ തിരുത്താന്‍ സാധിക്കൂ.",
+'protectedpagewarning'             => "'''മുന്നറിയിപ്പ്:  ഈ താൾ കാര്യനിർവാഹക പദവിയുള്ളവർക്കു മാത്രം തിരുത്താൻ സാധിക്കാവുന്ന തരത്തിൽ സം‌രക്ഷിക്കപ്പെട്ടിരിക്കുന്നു.''' അവലംബമായി രേഖകളിൽ ലഭ്യമായ ഏറ്റവും പുതിയ വിവരം താഴെ നൽകിയിരിക്കുന്നു:",
+'semiprotectedpagewarning'         => "'''ശ്രദ്ധിക്കുക:'''അംഗത്വമെടുത്തിട്ടുള്ളവർക്കുമാത്രം തിരുത്താൻ സാധിക്കുന്ന വിധത്തിൽ ഈ താൾ സംരക്ഷിക്കപ്പെട്ടിരിക്കുന്നു. അവലംബമായി രേഖകളിലെ ഏറ്റവും പുതിയ വിവരം താഴെ കൊടുത്തിരിക്കുന്നു:",
 'cascadeprotectedwarning'          => "'''മുന്നറിയിപ്പ്:''' ഈ താൾ കാര്യനിർ‌വാഹക അവകാശമുള്ളവർക്കു മാത്രം തിരുത്തുവാൻ സാധിക്കുന്ന വിധത്തിൽ സം‌രക്ഷിക്കപ്പെട്ടിട്ടുള്ളതാണ്‌. {{PLURAL:$1|താൾ|താളുകൾ}} കാസ്കേഡ് സം‌രക്ഷണം ചെയ്തപ്പോൾ അതിന്റെ ഭാഗമായി സംരക്ഷിക്കപ്പെട്ടിട്ടുള്ളതാണ്‌ ഈ താൾ.",
-'titleprotectedwarning'            => "'''മുന്നറിയിപ്പ്: ഈ താള്‍ സൃഷ്ടിക്കണമെങ്കില്‍ [[Special:ListGroupRights|പ്രത്യേക അവകാശമുള്ള]] ഉപയോക്താക്കള്‍ വേണ്ടിയിരിക്കുന്നു.'''",
-'templatesused'                    => 'ഈ താളില്‍ ഉപയോഗിച്ചിരിക്കുന്ന ഫലകങ്ങള്‍:',
-'templatesusedpreview'             => 'ഈ താളില്‍ ഇപ്പോള്‍ ഉപയോഗിച്ചിരിക്കുന്ന ഫലകങ്ങള്‍:',
-'templatesusedsection'             => 'ഈ ഉപവിഭാഗത്തില്‍ ഉപയോഗിച്ചിരിക്കുന്ന ഫലകങ്ങള്‍:',
+'titleprotectedwarning'            => "'''മുന്നറിയിപ്പ്: [[Special:ListGroupRights|പ്രത്യേക അവകാശമുള്ള]] ഉപയോക്താക്കൾക്ക് മാത്രം സൃഷ്ടിക്കാൻ സാധിക്കുന്ന വിധത്തിൽ ഈ താൾ സംരക്ഷിക്കപ്പെട്ടിരിക്കുന്നു.''' അവലംബമായി രേഖകളിൽ ലഭ്യമായ ഏറ്റവും പുതിയ വിവരം താഴെ നൽകിയിരിക്കുന്നു:",
+'templatesused'                    => 'ഈ താളിൽ ഉപയോഗിച്ചിരിക്കുന്ന {{PLURAL:$1|ഫലകം|ഫലകങ്ങൾ}}:',
+'templatesusedpreview'             => 'ഈ പ്രിവ്യൂവിൽ ഉപയോഗിച്ചിരിക്കുന്ന {{PLURAL:$1|ഫലകം|ഫലകങ്ങൾ}}:',
+'templatesusedsection'             => 'ഈ ഉപവിഭാഗത്തിൽ ഉപയോഗിച്ചിരിക്കുന്ന {{PLURAL:$1|ഫലകം|ഫലകങ്ങൾ}}:',
 'template-protected'               => '(സം‌രക്ഷിക്കപ്പെട്ടിരിക്കുന്നു)',
 'template-semiprotected'           => '(അർ‌ദ്ധസം‌രക്ഷിതം)',
 'hiddencategories'                 => 'ഈ താൾ {{PLURAL:$1|മറഞ്ഞിരിക്കുന്ന ഒരു വർഗ്ഗത്തിൽ|മറഞ്ഞിരിക്കുന്ന $1 വർഗ്ഗങ്ങളിൽ}} അംഗമാണു്‌:',
@@ -805,16 +940,17 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. ''$2'' എന്ന�
 'nocreatetext'                     => '{{SITENAME}} സംരംഭത്തിൽ പുതിയ താളുകൾ സൃഷ്ടിക്കുവാനുള്ള അവകാശം നിയന്ത്രിതമാണ്‌.
 താങ്കൾ ദയവായി തിരിച്ചുചെന്ന് നിലവിലുള്ള ഒരു താൾ തിരുത്തുകയോ, അഥവാ [[Special:UserLogin|ലോഗിൻ ചെയ്യുകയോ ഒരു അംഗത്വം സൃഷ്ടിക്കുകയോ]] ചെയ്യാൻ അഭ്യർത്ഥിക്കുന്നു.',
 'nocreate-loggedin'                => 'പുതിയ താളുകൾ സൃഷ്ടിക്കുവാനുള്ള അനുവാദം താങ്കൾക്കില്ല.',
+'sectioneditnotsupported-title'    => 'വിഭാഗങ്ങളായുള്ള തിരുത്തൽ പിന്തുണയ്ക്കുന്നില്ല',
+'sectioneditnotsupported-text'     => 'ഈ തിരുത്താനുള്ള താളിൽ വിഭാഗങ്ങളായുള്ള തിരുത്തൽ പിന്തുണയ്ക്കുന്നില്ല.',
 'permissionserrors'                => 'അനുമതിപ്രശ്നം',
 'permissionserrorstext'            => 'താഴെ കൊടുത്തിരിക്കുന്ന {{PLURAL:$1|കാരണം|കാരണങ്ങൾ}} കൊണ്ട് താങ്കൾക്ക് ഈ പ്രവൃത്തി ചെയ്യാനുള്ള അനുമതിയില്ല:',
 'permissionserrorstext-withaction' => 'താങ്കൾക്ക് $2 എന്ന പ്രവൃത്തി ചെയ്യാൻ അനുമതി ഇല്ല, {{PLURAL:$1|കാരണം|കാരണങ്ങൾ}} താഴെ കൊടുത്തിരിക്കുന്നു:',
-'recreate-deleted-warn'            => "
-'''മുന്നറിയിപ്പ്: മുമ്പ് മായ്ച്ചുകളഞ്ഞ താളാണ്‌ താങ്കള്‍ വീണ്ടും ചേര്‍ക്കാന്‍ ശ്രമിക്കുന്നത്'''
+'recreate-moveddeleted-warn'       => "'''മുന്നറിയിപ്പ്: മുമ്പ് മായ്ച്ചുകളഞ്ഞ താളാണ്‌ താങ്കൾ വീണ്ടും ചേർക്കാൻ ശ്രമിക്കുന്നത്'''
 
-താങ്കള്‍ ചെയ്യുന്നത് ശരിയായ നടപടിയാണോ എന്നു പരിശോധിക്കുക. ഉറപ്പിനായി ഈ താളിന്റെ മായ്ക്കല്‍ രേഖ കൂടെ ചേര്‍ത്തിരിക്കുന്നു.",
-'deleted-notice'                   => 'ഈ താള്‍ മായ്ക്കപ്പെട്ടിരിക്കുന്നു. 
-
-ഈ താളിന്റെ മായ്ക്കല്‍ പട്ടിക മറ്റ് വിവരങ്ങള്‍ക്കായി  താഴെ കൊടുത്തിരിക്കുന്നു',
+താങ്കൾ ചെയ്യുന്നത് ശരിയായ നടപടിയാണോ എന്നു പരിശോധിക്കുക. ഉറപ്പിനായി ഈ താളിന്റെ മായ്ക്കൽ രേഖയും മാറ്റൽ രേഖയും കൂടെ ചേർത്തിരിക്കുന്നു.",
+'moveddeleted-notice'              => 'ഈ താൾ മായ്ക്കപ്പെട്ടിരിക്കുന്നു. 
+ഈ താളിന്റെ മായ്ക്കൽ രേഖ പരിശോധനയ്ക്കായി താഴെ കൊടുത്തിരിക്കുന്നു',
+'log-fulllog'                      => 'എല്ലാ രേഖകളും കാണുക',
 'edit-hook-aborted'                => 'കൊളുത്ത് ഛേദിച്ച തിരുത്ത്.
 ഇത് ഒരു വിശദീകരണവും നൽകിയിട്ടില്ല.',
 'edit-gone-missing'                => 'ഈ താൾ പുതുക്കുവാൻ സാധിക്കുകയില്ല.
@@ -837,6 +973,7 @@ It should have less than $2 {{PLURAL:$2|call|calls}}, there {{PLURAL:$1|is now $
 'post-expand-template-argument-category'  => 'താൾ ഫലകത്തിന്റെ ഘടകങ്ങളിൽ ഒഴിവാക്കിയവ ഉൾക്കൊള്ളുന്നു',
 'parser-template-loop-warning'            => 'ഫലകക്കുരുക്ക് കണ്ടെത്തിയിരിക്കുന്നു: [[$1]]',
 'parser-template-recursion-depth-warning' => 'ഫലകത്തിന്റെ പുനരാവർത്തന ആഴത്തിന്റെ പരിധി കഴിഞ്ഞിരിക്കുന്നു ($1)',
+'language-converter-depth-warning'        => 'ഭാഷ മാറ്റൽ ഉപകരണത്തിന്റെ ആഴത്തിന്റെ പരിധി കവിഞ്ഞിരിക്കുന്നു ($1)',
 
 # "Undo" feature
 'undo-success' => 'ഈ തിരുത്തൽ താങ്കൾക്ക് തിരസ്ക്കരിക്കാവുന്നതാണ്‌. താഴെ കൊടുത്തിരിക്കുന്ന പതിപ്പുകൾ തമ്മിലുള്ള താരതമ്യം ഒന്നുകൂടി പരിശോധിച്ച് ഈ പ്രവൃത്തി ചെയ്യണോ എന്ന് ഒന്നുകൂടി ഉറപ്പാക്കുക. ഉറപ്പാണെങ്കിൽ തിരുത്തൽ തിരസ്ക്കരിക്കുവാൻ താൾ സേവ് ചെയ്യുക.',
@@ -854,9 +991,9 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 'viewpagelogs'           => 'ഈ താളുമായി ബന്ധപ്പെട്ട രേഖകൾ കാണുക',
 'nohistory'              => 'ഈ താളിന് നാൾവഴി ഇല്ല.',
 'currentrev'             => 'ഇപ്പോഴുള്ള രൂപം',
-'currentrev-asof'        => '$1 -ല്‍ നിലവില്‍ ഉള്ള രൂപം',
+'currentrev-asof'        => '$1 -ൽ നിലവിലുള്ള രൂപം',
 'revisionasof'           => '$1-നു നിലവിലുണ്ടായിരുന്ന രൂപം',
-'revision-info'          => '$1-നു ഉണ്ടായിരുന്ന രൂപം സൃഷ്ടിച്ചത്:- $2', # Additionally available: $3: revision id
+'revision-info'          => '$1-നു ഉണ്ടായിരുന്ന രൂപം സൃഷ്ടിച്ചത്:- $2',
 'previousrevision'       => '←പഴയ രൂപം',
 'nextrevision'           => 'പുതിയ രൂപം→',
 'currentrevisionlink'    => 'ഇപ്പോഴുള്ള രൂപം',
@@ -869,7 +1006,7 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 
 സൂചന: (ഇപ്പോൾ) = നിലവിലുള്ള പതിപ്പുമായുള്ള വ്യത്യാസം, (മുമ്പ്) = തൊട്ടുമുൻപത്തെ പതിപ്പുമായുള്ള വ്യത്യാസം, (ചെ.) = ചെറിയ തിരുത്തൽ.",
 'history-fieldset-title' => 'നാൾവഴി പരിശോധന',
-'deletedrev'             => '[മായ്ച്ചു]',
+'history-show-deleted'   => 'മായ്ക്കപ്പെട്ടവ മാത്രം',
 'histfirst'              => 'പഴയവ',
 'histlast'               => 'പുതിയവ',
 'historysize'            => '({{PLURAL:$1|1 ബൈറ്റ്|$1 ബൈറ്റുകൾ}})',
@@ -878,61 +1015,117 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 # Revision feed
 'history-feed-title'          => 'നാൾവഴി',
 'history-feed-description'    => 'വിക്കിയിൽ ഈ താളിന്റെ നാൾവഴി',
-'history-feed-item-nocomment' => '$1 ല്‍ $2', # user at time
+'history-feed-item-nocomment' => '$1 ൽ $2',
 'history-feed-empty'          => 'താങ്കൾ തിരഞ്ഞ താൾ നിലവിലില്ല.
 പ്രസ്തുത താൾ വിക്കിയിൽ നിന്നു ഒഴിവാക്കിയിരിക്കാനോ പുനർനാമകരണം ചെയ്തിരിക്കാനോ സാദ്ധ്യത ഉണ്ട്.
 ബന്ധപ്പെട്ട പുതിയ താളുകൾ കണ്ടെത്താൻ [[Special:Search|വിക്കിയിലെ തിരച്ചിൽ]] എന്ന താൾ ഉപയോഗിക്കുക.',
 
 # Revision deletion
-'rev-deleted-comment'       => '(പ്രസ്താവന ഒഴിവാക്കിയിരിക്കുന്നു)',
-'rev-deleted-user'          => '(ഉപയോക്തൃനാമം ഒഴിവാക്കിയിരിക്കുന്നു)',
-'rev-deleted-event'         => '(പ്രവർത്തനരേഖയിൽ നടത്തിയ പ്രവർത്തനം ഒഴിവാക്കിയിരിക്കുന്നു)',
-'rev-deleted-text-view'     => 'ഈ താളിന്റെ പതിപ്പുകള്‍ പൊതുവായ ദര്‍ശനത്തില്‍ നിന്നു മാറ്റിയിരിക്കുന്നു.
-{{SITENAME}} സം‌രഭത്തിലെ കാര്യനിര്‍‌വാഹകന്‍ എന്ന നിലയില്‍ നിങ്ങള്‍ക്ക് അതു കാണാം. കൂടുതല്‍ വിവരങ്ങള്‍ക്ക്  [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} മായ്ക്കല്‍ ലോഗ്] കാണുക.',
-'rev-delundel'              => 'പ്രദർശിപ്പിക്കുക/മറയ്ക്കുക',
-'revisiondelete'            => 'പതിപ്പുകൾ ഒഴിവാക്കുകയോ/പുനഃസ്ഥാപിക്കുകയോ ചെയ്യുക',
-'revdelete-nooldid-title'   => 'അസാധുവായ ലക്ഷ്യ നാൾപ്പതിപ്പ്',
-'revdelete-nooldid-text'    => 'ഈ പ്രവൃത്തി ചെയ്യുവാനാവശ്യമായ ഉദ്ദിഷ്ട പതിപ്പ്/പതിപ്പുകൾ താങ്കൾ തിരഞ്ഞെടുത്തിട്ടില്ല അല്ലെങ്കിൽ ഉദ്ദിഷ്ട പതിപ്പ് നിലവിലില്ല അതുമല്ലെങ്കിൽ താങ്കൾ നിലവിലുള്ള പതിപ്പ് മറയ്ക്കുവാൻ ശ്രമിക്കുന്നു.',
-'revdelete-nologtype-title' => 'പ്രവർത്തനരേഖയുടെ തരം നൽകിയിട്ടില്ല',
-'revdelete-nologtype-text'  => 'ഈ പ്രവൃത്തി ചെയ്യുവാൻ പ്രവർത്തനരേഖയുടെ തരം താങ്കൾ വ്യക്തമാക്കിയിട്ടില്ല.',
-'revdelete-nologid-title'   => 'തെറ്റായ തിരുത്തൽ പട്ടിക',
-'revdelete-nologid-text'    => 'ഈ പ്രവൃത്തി ചെയ്യുവാനായി രേഖയിൽ ലക്ഷ്യം വെയ്ക്കേണ്ട സംഭവം താങ്കൾ വ്യക്തമാക്കിയിട്ടില്ല അല്ലെങ്കിൽ വ്യക്തമാക്കിയത് നിലനിൽക്കുന്നില്ല.',
-'revdelete-selected'        => "'''[[:$1]] എന്ന താളിന്റെ {{PLURAL:$2|തിരഞ്ഞെടുത്ത പതിപ്പ്|തിരഞ്ഞെടുത്ത പതിപ്പുകൾ}}:'''",
-'logdelete-selected'        => "'''{{PLURAL:$1|തിരഞ്ഞെടുത്ത രേഖയിലുള്ളത്|തിരഞ്ഞെടുത്ത രേഖയിലുള്ളവ}}:'''",
-'revdelete-text'            => "'''താങ്കള്‍ മായ്ച്ച പതിപ്പുകളും പ്രവര്‍ത്തനരേഖകളും താളിന്റെ നാള്‍‌വഴിയിലും ലോഗുകളിലും തുടര്‍ന്നും ലഭ്യമാകും. പക്ഷെ ആ പതിപ്പുകളുടെ ഉള്ളടക്കം പൊതുജനത്തിനു പ്രാപ്യമല്ല.'''
+'rev-deleted-comment'         => '(പ്രസ്താവന ഒഴിവാക്കിയിരിക്കുന്നു)',
+'rev-deleted-user'            => '(ഉപയോക്തൃനാമം ഒഴിവാക്കിയിരിക്കുന്നു)',
+'rev-deleted-event'           => '(പ്രവർത്തനരേഖയിൽ നടത്തിയ പ്രവർത്തനം ഒഴിവാക്കിയിരിക്കുന്നു)',
+'rev-deleted-user-contribs'   => '[ഉപയോക്തൃനാമം അഥവാ ഐ.പി. വിലാസം ഒഴിവാക്കപ്പെട്ടിരിക്കുന്നു - തിരുത്തൽ സേവനങ്ങളിൽ നിന്നും മറച്ചിരിക്കുന്നു]',
+'rev-deleted-text-permission' => "താളിന്റെ ഈ നാൾപ്പതിപ്പ് '''മായ്ച്ചിരിക്കുന്നു'''.
+കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} മായ്ക്കൽ രേഖയിൽ] കാണാവുന്നതാണ്.",
+'rev-deleted-text-unhide'     => "താളിന്റെ ഈ നാൾപ്പതിപ്പ് '''മായ്ച്ചിരിക്കുന്നു'''.
+കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} മായ്ക്കൽ രേഖയിൽ] ഉണ്ടായിരിക്കും.
+കാര്യനിർവ്വാഹകനെന്ന നിലയിൽ താങ്കൾക്ക് ഇപ്പോഴും വേണമെങ്കിൽ [$1 ഈ നാൾപ്പതിപ്പ് കാണാവുന്നതാണ്].",
+'rev-suppressed-text-unhide'  => "താളിന്റെ ഈ സംശോധനം '''ഒതുക്കപ്പെട്ടിരിക്കുന്നു'''.
+കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} ഒതുക്കൽ രേഖയിൽ] ഉണ്ടാകും.
+കാര്യനിർവാകനായതിനാൽ  താങ്കൾക്ക് ആവശ്യമെങ്കിൽ [$1 ഈ സംശോധനം കാണാൻ] കഴിയുന്നതാണ്.",
+'rev-deleted-text-view'       => "ഈ താളിന്റെ പതിപ്പുകൾ '''മായ്ച്ചിരിക്കുന്നു'''.
 
-{{SITENAME}} സം‌രംഭത്തിലെ മറ്റു കാര്യനിര്‍‌വാഹകര്‍ക്ക് ഈ മറഞ്ഞിരിക്കുന്ന ഉള്ളടക്കം പരിശോധിക്കുവാനും താങ്കള്‍ മായ്ച്ചതു തിരസ്ക്കരിക്കുവാനും സാധിക്കും.  മറ്റു കൂടുതല്‍ സം‌രക്ഷണ പരിമിതികള്‍ സജ്ജീകരിച്ചിട്ടില്ലെങ്കില്‍ ഇതേ ഇന്റര്‍ഫേസ് ഉപയോഗിച്ചു തന്നെ അത്തരത്തില്‍ പ്രവര്‍ത്തിക്കുന്നതിനു അവര്‍ക്ക് സാധിക്കും.",
-'revdelete-suppress-text'   => "താഴെ പറയുന്ന സാഹചര്യങ്ങളിൽ '''മാത്രമേ''' ഒതുക്കൽ ഉപയോഗിക്കാവൂ:
+കാര്യനിർ‌വാഹകൻ എന്ന നിലയിൽ താങ്കാൾക്ക് അവ കാണാവുന്നതാണ്;  കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} മായ്ക്കൽ രേഖയിൽ] കാണാം.",
+'rev-suppressed-text-view'    => "താളിന്റെ ഈ സംശോധനം '''ഒതുക്കിയിരിക്കുന്നു'''.
+കാര്യനിർവാഹകനെന്നിരിക്കെ താങ്കൾക്കത് കാണാവുന്നതാണ്; കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} ഒതുക്കൽ രേഖയിൽ] ഉണ്ട്.",
+'rev-deleted-no-diff'         => "നാൾപ്പതിപ്പുകളിലൊന്ന് '''മായ്ച്ചിരിക്കുന്നതിനാൽ''' ഈ വ്യത്യാസം താങ്കൾക്ക് കാണാൻ കഴിയില്ല.
+കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} മായ്ക്കൽ രേഖയിൽ] ഉണ്ടായിരിക്കും.",
+'rev-suppressed-no-diff'      => "ഒരു നാൾപ്പതിപ്പ് '''മായ്ക്കപ്പെട്ടിരിക്കുന്നു''' എന്ന കാരണത്താൽ ഈ വ്യത്യാസം കാണാൻ താങ്കൾക്ക് കഴിയില്ല.",
+'rev-deleted-unhide-diff'     => "ഈ വ്യത്യാസങ്ങളിലെ ഒരു നാൾപ്പതിപ്പ് '''മായ്ക്കപ്പെട്ടിരിക്കുന്നു'''.
+[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} മായ്ക്കൽ രേഖയിൽ] വിശദവിവരങ്ങൾ ഉണ്ടായിരിക്കും.
+കാര്യനിർവാഹകനായതിനാൽ താങ്കൾക്ക് [$1 ഈ വ്യത്യാസം] വേണമെങ്കിൽ കാണാവുന്നതാണ്.",
+'rev-suppressed-unhide-diff'  => "ഈ വ്യത്യാസത്തിലെ ഒരു നാൾപ്പതിപ്പ് '''ഒതുക്കിയിരിക്കുന്നു'''.
+[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} ഒതുക്കൽ രേഖയിൽ] കൂടുതൽ വിവരങ്ങൾ ഉണ്ടാകാം.
+ഒരു കാര്യനിർവാഹകനായതിനാൽ താങ്കൾ ആഗ്രഹിക്കുന്നുവെങ്കിൽ [$1 ഈ വ്യത്യാസം കാണാവുന്നതാണ്].",
+'rev-deleted-diff-view'       => "ഈ വ്യത്യാസത്തിലെ ഒരു മാറ്റം '''മായ്ക്കപ്പെട്ടിരിക്കുന്നു'''.
+കാര്യനിർവാഹകനായതിനാൽ താങ്കൾക്ക് ഈ മാറ്റം കാണാവുന്നതാണ്; കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} മായ്ക്കൽ രേഖയിൽ] ഉണ്ടാവും.",
+'rev-suppressed-diff-view'    => "ഈ വ്യത്യാസത്തിലെ ഒരു നാൾപ്പതിപ്പ് '''ഒതുക്കിയിരിക്കുന്നു'''.
+ഒരു കാര്യനിർവാഹകനായതിനാല താങ്കൾ ഈ മാറ്റം കാണാൻ കഴിയുന്നതാണ്; കൂടുതൽ വിവരങ്ങൾ [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} ഒതുക്കൽ രേഖയിൽ] ഉണ്ടായിരിക്കും.",
+'rev-delundel'                => 'പ്രദർശിപ്പിക്കുക/മറയ്ക്കുക',
+'rev-showdeleted'             => 'പ്രദർശിപ്പിക്കുക',
+'revisiondelete'              => 'പതിപ്പുകൾ ഒഴിവാക്കുകയോ/പുനഃസ്ഥാപിക്കുകയോ ചെയ്യുക',
+'revdelete-nooldid-title'     => 'അസാധുവായ ലക്ഷ്യ നാൾപ്പതിപ്പ്',
+'revdelete-nooldid-text'      => 'ഈ പ്രവൃത്തി ചെയ്യുവാനാവശ്യമായ ഉദ്ദിഷ്ട പതിപ്പ്/പതിപ്പുകൾ താങ്കൾ തിരഞ്ഞെടുത്തിട്ടില്ല അല്ലെങ്കിൽ ഉദ്ദിഷ്ട പതിപ്പ് നിലവിലില്ല അതുമല്ലെങ്കിൽ താങ്കൾ നിലവിലുള്ള പതിപ്പ് മറയ്ക്കുവാൻ ശ്രമിക്കുന്നു.',
+'revdelete-nologtype-title'   => 'പ്രവർത്തനരേഖയുടെ തരം നൽകിയിട്ടില്ല',
+'revdelete-nologtype-text'    => 'ഈ പ്രവൃത്തി ചെയ്യുവാൻ പ്രവർത്തനരേഖയുടെ തരം താങ്കൾ വ്യക്തമാക്കിയിട്ടില്ല.',
+'revdelete-nologid-title'     => 'തെറ്റായ തിരുത്തൽ പട്ടിക',
+'revdelete-nologid-text'      => 'ഈ പ്രവൃത്തി ചെയ്യുവാനായി രേഖയിൽ ലക്ഷ്യം വെയ്ക്കേണ്ട സംഭവം താങ്കൾ വ്യക്തമാക്കിയിട്ടില്ല അല്ലെങ്കിൽ വ്യക്തമാക്കിയത് നിലനിൽക്കുന്നില്ല.',
+'revdelete-no-file'           => 'നിർദ്ദേശിച്ച പ്രമാണം നിലവിലില്ല.',
+'revdelete-show-file-confirm' => '"<nowiki>$1</nowiki>" പ്രമാണത്തിന്റെ $2 തീയതി $3 -യ്ക്കു നിലനിന്നിരുന്ന മായ്ക്കപ്പെട്ട പതിപ്പു  കാണണം എന്നു താങ്കൾക്ക് ഉറപ്പാണോ?',
+'revdelete-show-file-submit'  => 'അതെ',
+'revdelete-selected'          => "'''[[:$1]] എന്ന താളിന്റെ {{PLURAL:$2|തിരഞ്ഞെടുത്ത പതിപ്പ്|തിരഞ്ഞെടുത്ത പതിപ്പുകൾ}}:'''",
+'logdelete-selected'          => "'''{{PLURAL:$1|തിരഞ്ഞെടുത്ത രേഖയിലുള്ളത്|തിരഞ്ഞെടുത്ത രേഖയിലുള്ളവ}}:'''",
+'revdelete-text'              => "'''മായ്ക്കപ്പെട്ട നാൾരൂപങ്ങളും സംഭവങ്ങളും താളിന്റെ നാൾവഴിയിലും രേഖകളിലും ഉണ്ടായിരിക്കും, പക്ഷേ ആ ഉള്ളടക്കം പൊതുജനത്തിനു ലഭ്യമല്ല.'''
+താങ്കൾ മായ്ച്ച പതിപ്പുകളും പ്രവർത്തനരേഖകളും താളിന്റെ നാൾവഴിയിലും ലോഗുകളിലും തുടർന്നും ലഭ്യമാകും. പക്ഷെ ആ പതിപ്പുകളുടെ ഉള്ളടക്കം പൊതുജനത്തിനു പ്രാപ്യമല്ല.
+{{SITENAME}} സം‌രംഭത്തിലെ മറ്റു കാര്യനിർ‌വാഹകർക്ക് ഈ മറഞ്ഞിരിക്കുന്ന ഉള്ളടക്കം പരിശോധിക്കുവാനും താങ്കൾ മായ്ച്ചതു തിരസ്ക്കരിക്കുവാനും സാധിക്കും.  മറ്റു കൂടുതൽ സം‌രക്ഷണ പരിമിതികൾ സജ്ജീകരിച്ചിട്ടില്ലെങ്കിൽ ഇതേ സമ്പർക്കമുഖം ഉപയോഗിച്ചു തന്നെ അത്തരത്തിൽ പ്രവർത്തിക്കുന്നതിനു അവർക്ക് സാധിക്കും.",
+'revdelete-confirm'           => 'ഇതിന്റെ അനന്തരഫലങ്ങളെക്കുറിച്ചറിയാമെന്നും,  [[{{MediaWiki:Policy-url}}|നയങ്ങൾ]] പാലിച്ചാണ് താങ്കളിത് ചെയ്യുന്നതെന്നും താങ്കൾ ദയവായി സ്ഥിരീകരിക്കുക.',
+'revdelete-suppress-text'     => "താഴെ പറയുന്ന സാഹചര്യങ്ങളിൽ '''മാത്രമേ''' ഒതുക്കൽ ഉപയോഗിക്കാവൂ:
 * അപകീർത്തികരമായ വിവരങ്ങൾ അടങ്ങിയവ
 * അനുയോജ്യമല്ലാത്ത വ്യക്തി വിവരങ്ങൾ
 *: ''വീട്ടുവിലാസങ്ങൾ, ടെലിഫോൺ നമ്പറുകൾ, സാമൂഹിക സുരക്ഷാ നമ്പരുകൾ, തുടങ്ങിയവ.''",
-'revdelete-legend'          => 'ദർശനത്തിനു നിയന്ത്രണങ്ങൾ ഏർപ്പെടുത്തുക',
-'revdelete-hide-text'       => 'മാറ്റം വന്ന എഴുത്ത് മറയ്ക്കുക',
-'revdelete-hide-name'       => 'പ്രവൃത്തിയും ലക്ഷ്യവും മറയ്ക്കുക',
-'revdelete-hide-comment'    => 'തിരുത്തലിന്റെ അഭിപ്രായം മറയ്ക്കുക',
-'revdelete-hide-user'       => 'തിരുത്തുന്ന ആളുടെ ഉപയോക്തൃനാമം/ഐ.പി. വിലാസം മറയ്ക്കുക',
-'revdelete-hide-restricted' => 'വിവരങ്ങളുടെ നിയന്ത്രണം മറ്റുള്ളവരെ പോലെ കാര്യനിർവാഹകർക്കും ബാധകമാക്കുക',
-'revdelete-suppress'        => 'സിസോപ്പുകളിൽ നിന്നും മറ്റുള്ളവരിൽ നിന്നും ഈ ഡാറ്റാ മറച്ചു വെക്കുക',
-'revdelete-hide-image'      => 'പ്രമാണത്തിന്റെ ഉള്ളടക്കം മറയ്ക്കുക',
-'revdelete-unsuppress'      => 'പുനഃസ്ഥാപിച്ച പതിപ്പുകളിലുള്ള നിയന്ത്രണങ്ങൾ ഒഴിവാക്കുക',
-'revdelete-log'             => 'കാരണം:',
-'revdelete-submit'          => 'തിരഞ്ഞെടുത്ത പതിപ്പിനു ബാധകമാക്കുക',
-'revdelete-logentry'        => '[[$1]]-ന്റെ പതിപ്പുകൾ പ്രദർശിപ്പിക്കുന്ന വിധം തിരുത്തിയിരിക്കുന്നു',
-'logdelete-logentry'        => '[[$1]] സാഹചര്യത്തിന്റെ പ്രദർശനപരത മാറ്റിയിരിക്കുന്നു',
-'revdelete-success'         => "'''നാൾപ്പതിപ്പുകളുടെ ദർശനീയത വിജയകരമായി പുതുക്കിയിരിക്കുന്നു.'''",
-'logdelete-success'         => "'''രേഖയുടെ ദൃശ്യത വിജയകരമായി നിശ്ചിതപ്പെടുത്തി.'''",
-'revdel-restore'            => 'കാണുന്ന രൂപത്തിൽ മാറ്റം വരുത്തുക',
-'pagehist'                  => 'താളിന്റെ നാൾവഴി',
-'deletedhist'               => 'ഒഴിവാക്കപ്പെട്ട നാൾവഴി',
-'revdelete-content'         => 'ഉള്ളടക്കം',
-'revdelete-summary'         => 'തിരുത്തലിന്റെ ചുരുക്കം',
-'revdelete-uname'           => 'ഉപയോക്തൃനാമം',
-'revdelete-restricted'      => 'കാര്യനിർവാഹകർക്ക് പ്രവർത്തന അതിരുകൾ ഏർപ്പെടുത്തിയിരിക്കുന്നു',
-'revdelete-unrestricted'    => 'കാര്യനിർവാഹകർക്ക് ഏർപ്പെടുത്തിയ പ്രവർത്തന അതിരുകൾ നീക്കം ചെയ്തിരിക്കുന്നു',
-'revdelete-hid'             => '$1 അപ്രത്യക്ഷമാക്കി',
-'revdelete-unhid'           => '$1 പ്രത്യക്ഷമാക്കി',
-'revdelete-log-message'     => '{{PLURAL:$2|ഒരു നാൾപ്പതിപ്പിന്റെ|$2 നാൾപ്പതിപ്പുകളുടെ}} $1',
-'logdelete-log-message'     => '{{PLURAL:$2|സാഹചര്യങ്ങളിൽ|$2 സാഹചര്യങ്ങളിൽ}} $1',
+'revdelete-legend'            => 'ദർശനത്തിനു നിയന്ത്രണങ്ങൾ ഏർപ്പെടുത്തുക',
+'revdelete-hide-text'         => 'മാറ്റം വന്ന എഴുത്ത് മറയ്ക്കുക',
+'revdelete-hide-image'        => 'പ്രമാണത്തിന്റെ ഉള്ളടക്കം മറയ്ക്കുക',
+'revdelete-hide-name'         => 'പ്രവൃത്തിയും ലക്ഷ്യവും മറയ്ക്കുക',
+'revdelete-hide-comment'      => 'തിരുത്തലിന്റെ അഭിപ്രായം മറയ്ക്കുക',
+'revdelete-hide-user'         => 'തിരുത്തുന്ന ആളുടെ ഉപയോക്തൃനാമം/ഐ.പി. വിലാസം മറയ്ക്കുക',
+'revdelete-hide-restricted'   => 'വിവരങ്ങളുടെ നിയന്ത്രണം മറ്റുള്ളവരെ പോലെ കാര്യനിർവാഹകർക്കും ബാധകമാക്കുക',
+'revdelete-radio-same'        => '(മാറ്റം വരുത്തരുത്)',
+'revdelete-radio-set'         => 'അതെ',
+'revdelete-radio-unset'       => 'അല്ല',
+'revdelete-suppress'          => 'സിസോപ്പുകളിൽ നിന്നും മറ്റുള്ളവരിൽ നിന്നും ഈ ഡാറ്റാ മറച്ചു വെക്കുക',
+'revdelete-unsuppress'        => 'പുനഃസ്ഥാപിച്ച പതിപ്പുകളിലുള്ള നിയന്ത്രണങ്ങൾ ഒഴിവാക്കുക',
+'revdelete-log'               => 'കാരണം:',
+'revdelete-submit'            => 'തിരഞ്ഞെടുത്ത {{PLURAL:$1|നാൾപ്പതിപ്പിനു|നാൾപ്പതിപ്പുകൾക്ക്}} ബാധകമാക്കുക',
+'revdelete-logentry'          => '[[$1]]-ന്റെ പതിപ്പുകൾ പ്രദർശിപ്പിക്കുന്ന വിധം തിരുത്തിയിരിക്കുന്നു',
+'logdelete-logentry'          => '[[$1]] സാഹചര്യത്തിന്റെ പ്രദർശനപരത മാറ്റിയിരിക്കുന്നു',
+'revdelete-success'           => "'''നാൾപ്പതിപ്പുകളുടെ ദർശനീയത വിജയകരമായി പുതുക്കിയിരിക്കുന്നു.'''",
+'revdelete-failure'           => "'''നാൾപ്പതിപ്പിന്റെ ദർശനീയത പുതുക്കാൻ കഴിഞ്ഞില്ല:'''
+$1",
+'logdelete-success'           => "'''രേഖയുടെ ദൃശ്യത വിജയകരമായി നിശ്ചിതപ്പെടുത്തി.'''",
+'logdelete-failure'           => "'''രേഖയുടെ ദൃശ്യത നിശ്ചിതപ്പെടുത്താൻ കഴിഞ്ഞില്ല:'''
+$1",
+'revdel-restore'              => 'കാണുന്ന രൂപത്തിൽ മാറ്റം വരുത്തുക',
+'pagehist'                    => 'താളിന്റെ നാൾവഴി',
+'deletedhist'                 => 'ഒഴിവാക്കപ്പെട്ട നാൾവഴി',
+'revdelete-content'           => 'ഉള്ളടക്കം',
+'revdelete-summary'           => 'തിരുത്തലിന്റെ ചുരുക്കം',
+'revdelete-uname'             => 'ഉപയോക്തൃനാമം',
+'revdelete-restricted'        => 'കാര്യനിർവാഹകർക്ക് പ്രവർത്തന അതിരുകൾ ഏർപ്പെടുത്തിയിരിക്കുന്നു',
+'revdelete-unrestricted'      => 'കാര്യനിർവാഹകർക്ക് ഏർപ്പെടുത്തിയ പ്രവർത്തന അതിരുകൾ നീക്കം ചെയ്തിരിക്കുന്നു',
+'revdelete-hid'               => '$1 അപ്രത്യക്ഷമാക്കി',
+'revdelete-unhid'             => '$1 പ്രത്യക്ഷമാക്കി',
+'revdelete-log-message'       => '{{PLURAL:$2|ഒരു നാൾപ്പതിപ്പിന്റെ|$2 നാൾപ്പതിപ്പുകളുടെ}} $1',
+'logdelete-log-message'       => '{{PLURAL:$2|സാഹചര്യങ്ങളിൽ|$2 സാഹചര്യങ്ങളിൽ}} $1',
+'revdelete-hide-current'      => '$2, $1 തീയതിയിലെ ഇനം മറയ്ക്കുമ്പോൾ പിഴവ് സംഭവിച്ചു: ഇത് ഇപ്പോഴുള്ള നാൾപ്പതിപ്പാണ്.
+ഇത് മറയ്ക്കാൻ കഴിയില്ല.',
+'revdelete-show-no-access'    => '$2, $1 തീയതി കുറിച്ച ഇനം പ്രദർശിപ്പിക്കുന്നതിൽ പിഴവ്: ഇത് "പരിമിതപ്പെടുത്തിയതെന്ന്" അടയാളപ്പെടുത്തിയിരിക്കുന്നു.
+താങ്കൾക്ക് അതിനുള്ള അനുമതിയില്ല.',
+'revdelete-modify-no-access'  => '$2, $1 എന്നു സമയമുദ്രയുള്ള ഇനം പുതുക്കുന്നതിൽ പിഴവ്: ഈ ഇനം "ഉപയോഗം പരിമിതപ്പെടുത്തിയത്" എന്നടയാളപ്പെടുത്തിയതാണ്.
+താങ്കൾക്കതിനുള്ള അനുമതി ഇല്ല.',
+'revdelete-modify-missing'    => 'ഇനം ഐ.ഡി. $1 ഉള്ളതിൽ മാറ്റം വരുത്തുമ്പോൾ പിഴവ് സംഭവിച്ചു: ഇത് ഡേറ്റാബേസിൽ ലഭ്യമല്ല!',
+'revdelete-no-change'         => "'''മുന്നറിയിപ്പ്:''' $2 $1 തീയതിയിലുള്ള ഇനം മുമ്പുതന്നെ ദൃശ്യതാ ക്രമീകരണങ്ങൾ ആവശ്യപ്പെട്ടിട്ടുണ്ട്.",
+'revdelete-concurrent-change' => '$1 $2 ദിനസമയമുദ്രയുള്ള ഇനം പുതുക്കുമ്പോൾ പിഴവു സംഭവിച്ചിരിക്കുന്നു: താങ്കൾ പുതുക്കാൻ ശ്രമിക്കുമ്പോൾ മറ്റാരോ അതിന്റെ സ്ഥിതി മാറ്റിയതായി കാണുന്നു.
+ദയവായി രേഖകൾ പരിശോധിക്കുക.',
+'revdelete-only-restricted'   => '$2, $1 തീയതിയിലെ ഇനം മറയ്ക്കുന്നതിൽ പിഴവ്: ഒതുക്കലിനുള്ള മറ്റ് ഐച്ഛികങ്ങളിലൊന്ന് തിരഞ്ഞെടുക്കാതെ ഇനങ്ങൾ കാര്യനിർവാഹകരുടെ ദൃഷ്ടിയിൽ നിന്നും ഒതുക്കാൻ താങ്കൾക്ക് കഴിയില്ല.',
+'revdelete-reason-dropdown'   => '*മായ്ക്കാനുള്ള സാധാരണ കാരണങ്ങൾ
+**പകർപ്പവകാശ ലംഘനം
+**അനുയോജ്യമല്ലാത്ത വ്യക്തി വിവരങ്ങൾ
+**അടിസ്ഥാനപരമായി ദോഷകരമാകുന്ന വിവരങ്ങൾ',
+'revdelete-otherreason'       => 'മറ്റ്/കൂടുതൽ കാരണം:',
+'revdelete-reasonotherlist'   => 'മറ്റ് കാരണം',
+'revdelete-edit-reasonlist'   => 'മായ്ക്കലിന്റെ കാരണം തിരുത്തുക',
+'revdelete-offender'          => 'നാൾപ്പതിപ്പിന്റെ രചയിതാവ്:',
 
 # Suppression log
 'suppressionlog'     => 'ഒതുക്കൽ രേഖ',
@@ -969,55 +1162,13 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 'mergelogpagetext'   => 'രണ്ടു താളുകളുടെ നാൾ‌വഴികൾ തമ്മിൽ സം‌യോജിപ്പിച്ചതിന്റെ പ്രവർത്തനരേഖകളുടെ ഏറ്റവും പുതിയ പട്ടിക താഴെ കാണാം.',
 
 # Diffs
-'history-title'           => '"$1" എന്ന താളിന്റെ നാൾവഴി',
-'difference'              => '(തിരഞ്ഞെടുത്ത പതിപ്പുകൾ തമ്മിലുള്ള വ്യത്യാസം)',
-'lineno'                  => 'വരി $1:',
-'compareselectedversions' => 'തിരഞ്ഞെടുത്ത പതിപ്പുകൾ തമ്മിലുള്ള വ്യത്യാസം കാണുക',
-'visualcomparison'        => 'ദൃഷ്ടിഗോചര തുലനം',
-'wikicodecomparison'      => 'വിക്കിവാചക തുലനം',
-'editundo'                => 'മാറ്റം തിരസ്ക്കരിക്കുക',
-'diff-multi'              => '(ഇടക്കുള്ള {{PLURAL:$1|ഒരു പതിപ്പിലെ മാറ്റം|$1 പതിപ്പുകളിലെ മാറ്റങ്ങൾ}} ഇവിടെ കാണിക്കുന്നില്ല.)',
-'diff-movedto'            => '$1 ലേക്ക് നീക്കപെട്ടിരിക്കുന്നു',
-'diff-styleadded'         => '$1 എന്ന ശൈലി ചേർത്തിരിക്കുന്നു',
-'diff-added'              => '$1 ചേർത്തു',
-'diff-changedto'          => '$1 ലേക്ക് മാറ്റിയിരിക്കുന്നു',
-'diff-movedoutof'         => '$1-ൽ നിന്നും നീക്കിയിരിക്കുന്നു',
-'diff-styleremoved'       => '$1 എന്ന ശൈലി നീക്കിയിരിക്കുന്നു',
-'diff-removed'            => '$1 നീക്കം ചെയ്തിരിക്കുന്നു',
-'diff-changedfrom'        => '$1 ൽ നിന്നും മാറ്റിയിരിക്കുന്നു',
-'diff-src'                => 'ഉറവിടം',
-'diff-withdestination'    => '$1 എന്ന ലക്ഷ്യത്തോടെ',
-'diff-with'               => '&#32;ന്റെ കൂടെ $1 $2',
-'diff-with-final'         => '&#32;ഉം $1 $2',
-'diff-width'              => 'വീതി',
-'diff-height'             => 'നീളം',
-'diff-p'                  => "ഒരു '''ഖണ്ഡിക'''",
-'diff-blockquote'         => "ഒരു '''ഉദ്ധരണി'''",
-'diff-h1'                 => "ഒരു '''തലക്കെട്ട് (നില 1)'''",
-'diff-h2'                 => "ഒരു '''തലക്കെട്ട് (നില 2)'''",
-'diff-h3'                 => "ഒരു '''തലക്കെട്ട് (നില 3)'''",
-'diff-h4'                 => "ഒരു '''തലക്കെട്ട് (നില 4)'''",
-'diff-h5'                 => "ഒരു '''തലക്കെട്ട് (നില 5)'''",
-'diff-ul'                 => "'''എണ്ണമിടാത്ത ലിസ്റ്റ്'''",
-'diff-ol'                 => "'''എണ്ണമിട്ട ലിസ്റ്റ്'''",
-'diff-table'              => "ഒരു '''പട്ടിക'''",
-'diff-tbody'              => "'''പട്ടികയുടെ ഉള്ളടക്കം'''",
-'diff-tr'                 => "ഒരു '''വരി'''",
-'diff-td'                 => "ഒരു '''നിര'''",
-'diff-th'                 => "ഒരു '''തലക്കെട്ട്'''",
-'diff-hr'                 => "'''കുറുകെയുള്ള വര'''",
-'diff-dt'                 => "'''നിർവ്വചന പദം'''",
-'diff-dd'                 => "ഒരു '''നിർവചനം'''",
-'diff-img'                => "ഒരു '''ചിത്രം'''",
-'diff-a'                  => "ഒരു '''കണ്ണി'''",
-'diff-i'                  => "'''ചെരിച്ച്'''",
-'diff-b'                  => "'''കടുപ്പത്തിൽ'''",
-'diff-strong'             => "'''ദൃഢം'''",
-'diff-font'               => "'''ഫോണ്ട്'''",
-'diff-big'                => "'''വലുത്'''",
-'diff-del'                => "'''മായ്ച്ചത്'''",
-'diff-tt'                 => "'''ഉറച്ച വീതി'''",
-'diff-strike'             => "'''വെട്ടുക'''",
+'history-title'            => '"$1" എന്ന താളിന്റെ നാൾവഴി',
+'difference'               => '(തിരഞ്ഞെടുത്ത പതിപ്പുകൾ തമ്മിലുള്ള വ്യത്യാസം)',
+'lineno'                   => 'വരി $1:',
+'compareselectedversions'  => 'തിരഞ്ഞെടുത്ത പതിപ്പുകൾ തമ്മിലുള്ള വ്യത്യാസം കാണുക',
+'showhideselectedversions' => 'തിരഞ്ഞെടുത്ത മാറ്റങ്ങൾ പ്രദർശിപ്പിക്കുക/മറയ്ക്കുക',
+'editundo'                 => 'മാറ്റം തിരസ്ക്കരിക്കുക',
+'diff-multi'               => '(ഇടക്കുള്ള {{PLURAL:$1|ഒരു പതിപ്പിലെ മാറ്റം|$1 പതിപ്പുകളിലെ മാറ്റങ്ങൾ}} ഇവിടെ കാണിക്കുന്നില്ല.)',
 
 # Search results
 'searchresults'                    => 'തിരച്ചിലിന്റെ ഫലം',
@@ -1025,26 +1176,25 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 'searchresulttext'                 => '{{SITENAME}} സംരംഭത്തിൽ വിവരങ്ങൾ എങ്ങനെ അന്വേഷിച്ചു കണ്ടെത്താമെന്നറിയാൻ, [[{{MediaWiki:Helppage}}|{{int:help}}]] എന്ന താൾ കാണുക.',
 'searchsubtitle'                   => 'താങ്കൾ അന്വേഷിച്ച വാക്ക് \'\'\'[[:$1]]\'\'\' ആണ്‌. ([[Special:Prefixindex/$1|"$1" എന്ന വാക്കിൽ തുടങ്ങുന്ന എല്ലാ താളുകളും]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|"$1"എന്ന വാക്കിലേക്ക് കണ്ണി ചേർത്തിരിക്കുന്ന എല്ലാ താളുകളും]])',
 'searchsubtitleinvalid'            => "താങ്കൾ തിരഞ്ഞത് '''$1'''",
-'noexactmatch'                     => "'''ഈ വിക്കിയിൽ \"\$1\" എന്ന തലക്കെട്ടിൽ എന്ന താൾ നിലവിലില്ല.'''
-താങ്കൾക്ക് [[:\$1|പ്രസ്തുത ശീർഷകത്തോടു കൂടിയ ഒരു താൾ]] തുടങ്ങാവുന്നതാണ്.",
-'noexactmatch-nocreate'            => "'''\"\$1\" എന്ന താൾ നിലവിലില്ല.'''",
 'toomanymatches'                   => 'യോജിച്ച ഫലങ്ങൾ വളരെയധികം കിട്ടിയിരിക്കുന്നു; ദയവായി വേറൊരു അന്വേഷണ വാക്ക് ഉപയോഗിച്ച് തിരയുക.',
 'titlematches'                     => 'താളിന്റെ തലക്കെട്ടുമായി യോജിക്കുന്ന ഫലങ്ങൾ',
 'notitlematches'                   => 'ഒരു താളിന്റെയും തലക്കെട്ടുമായി യോജിക്കുന്നില്ല',
 'textmatches'                      => 'താങ്കൾ തിരഞ്ഞ വാക്കുകൾ ഉള്ള താളുകൾ',
 'notextmatches'                    => 'താളുകളുടെ ഉള്ളടക്കത്തിൽ താങ്കൾ തിരഞ്ഞ വാക്കുമായി യോജിക്കുന്ന ഫലങ്ങൾ ഒന്നും തന്നെയില്ല',
-'prevn'                            => 'മുമ്പത്തെ $1',
-'nextn'                            => 'അടുത്ത $1',
+'prevn'                            => 'മുമ്പത്തെ {{PLURAL:$1|$1}}',
+'nextn'                            => 'അടുത്ത {{PLURAL:$1|$1}}',
 'prevn-title'                      => 'മുൻപത്തെ {{PLURAL:$1|ഒരു ഫലം|$1 ഫലങ്ങൾ}}',
 'nextn-title'                      => 'അടുത്ത {{PLURAL:$1|ഒരു ഫലം|$1 ഫലങ്ങൾ}}',
 'shown-title'                      => '{{PLURAL:$1|ഒരു ഫലം|$1 ഫലങ്ങൾ}} വീതം താളിൽ കാണിക്കുക',
-'viewprevnext'                     => '($1) ($2) ($3) മാറ്റങ്ങള്‍ കാണുക',
+'viewprevnext'                     => '($1 {{int:pipe-separator}} $2 {{int:pipe-separator}} $3 മാറ്റങ്ങൾ കാണുക)',
 'searchmenu-legend'                => 'തിരച്ചിൽ ഉപാധികൾ',
 'searchmenu-exists'                => "'''\"[[:\$1]]\" എന്ന പേരിൽ ഒരു താൾ ഈ വിക്കിയിൽ നിലവിലുണ്ട്'''",
 'searchmenu-new'                   => "'''ഈ വിക്കിയിൽ \"[[:\$1]]\" താൾ നിർമ്മിക്കുക!'''",
 'searchhelp-url'                   => 'Help:ഉള്ളടക്കം',
 'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|ഈ പൂർ‌വ്വപദങ്ങളുള്ള താളുകൾ ബ്രൗസ് ചെയ്യുക]]',
-'searchprofile-images'             => 'പ്രമാണങ്ങള്‍',
+'searchprofile-articles'           => 'ലേഖനങ്ങളിൽ',
+'searchprofile-project'            => 'സഹായം, പദ്ധതി താളുകളിൽ',
+'searchprofile-images'             => 'പ്രമാണങ്ങളിൽ',
 'searchprofile-everything'         => 'എല്ലാം',
 'searchprofile-advanced'           => 'വിപുലമായ വിധം',
 'searchprofile-articles-tooltip'   => '$1 മേഖലയിൽ തിരയുക',
@@ -1064,11 +1214,12 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 'search-mwsuggest-disabled'        => 'നിർദ്ദേശങ്ങൾ വേണ്ട',
 'search-relatedarticle'            => 'ബന്ധപ്പെട്ടവ',
 'mwsuggest-disable'                => 'അജാക്സ് നിർദ്ദേശങ്ങൾ വേണ്ട',
+'searcheverything-enable'          => 'എല്ലാ നാമമേഖലകളും തിരയുക',
 'searchrelated'                    => 'ബന്ധപ്പെട്ടവ',
 'searchall'                        => 'എല്ലാം',
 'showingresults'                   => "ഇതിനു താഴെ #'''$2'''-ൽ തുടങ്ങുന്ന {{PLURAL:$1|'''ഒരു''' ഫലം|'''$1''' ഫലങ്ങൾ}} പ്രദർശിപ്പിക്കുന്നു.",
 'showingresultsnum'                => "താഴെ #'''$2''' കൊണ്ടു തുടങ്ങുന്ന {{PLURAL:$3|'''ഒരു''' ഫലം|'''$3''' ഫലങ്ങൾ}} കാണിച്ചിരിക്കുന്നു.",
-'showingresultstotal'              => "{{PLURAL:$4|'''$1''' മുതൽ '''$3''' വരെയുള്ള ഫലം|'''$3''' ഫലങ്ങളിൽ '''$1''' മുതൽ '''$2''' വരെയുള്ളവ}} താഴെ കൊടുത്തിരിക്കുന്നു",
+'showingresultsheader'             => "'''$4''' എന്ന പദത്തിനു ലഭിച്ച {{PLURAL:$5|ആകെ '''$3''' എണ്ണത്തിൽ '''$1''' ഫലം |ആകെ '''$3''' എണ്ണത്തിൽ '''$1 - $2''' ഫലങ്ങൾ}}",
 'nonefound'                        => "'''ശ്രദ്ധിക്കുക''': ചില നാമമേഖലകൾ മാത്രമേ സ്വതേ തിരയാറുള്ളൂ. എല്ലാ വിവരങ്ങളിലും തിരയാൻ '''തിരയേണ്ട നാമമേഖലകൾ''' ''എല്ലാം'' എന്നതോ ആവശ്യമായ നാമമേഖലമാത്രം തിരയുവാൻ (സംവാദം, ഫലകം, തുടങ്ങിയവ) അതു മാത്രമായോ ടിക്ക് ചെയ്യേണ്ടതാണ്.",
 'search-nonefound'                 => 'താങ്കളുടെ തിരച്ചിലിനനുയോജ്യമായ ഫലങ്ങൾ ഒന്നും ലഭ്യമല്ല.',
 'powersearch'                      => 'തിരയൂ',
@@ -1076,112 +1227,151 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 'powersearch-ns'                   => 'തിരയേണ്ട നാമമേഖലകൾ',
 'powersearch-redir'                => 'തിരിച്ചുവിടലുകൾ കാണിക്കുക',
 'powersearch-field'                => 'ഇതിനു വേണ്ടി തിരയുക',
+'powersearch-togglelabel'          => 'അടയാളപ്പെടുത്തുക:',
+'powersearch-toggleall'            => 'എല്ലാം',
+'powersearch-togglenone'           => 'ഒന്നുംവേണ്ട',
 'search-external'                  => 'ബാഹ്യ അന്വേഷണം',
 'searchdisabled'                   => '{{SITENAME}} സം‌രംഭത്തിൽ തിരച്ചിൽ ദുർബലപ്പെടുത്തിയിരിക്കുന്നു. താങ്കൾക്ക് ഗൂഗിൾ ഉപയോഗിച്ച് തത്കാലം തിരച്ചിൽ നടത്താവുന്നതാണ്‌. പക്ഷെ ഗൂഗിളിൽ {{SITENAME}} സം‌രംഭത്തിന്റെ സൂചിക കാലഹരണപ്പെട്ടതായിരിക്കാൻ സാദ്ധ്യതയുണ്ട്.',
 
+# Quickbar
+'qbsettings'               => 'ദ്രുത സൗകര്യം',
+'qbsettings-none'          => 'ഒന്നുമില്ല',
+'qbsettings-fixedleft'     => 'സ്ഥിരമായ ഇടത്',
+'qbsettings-fixedright'    => 'സ്ഥിരമായ വലത്',
+'qbsettings-floatingleft'  => 'ഇടത്തേയ്ക്ക് ഒഴുകി നിൽക്കുക',
+'qbsettings-floatingright' => 'വലത്തേയ്ക്ക് ഒഴുകി നിൽക്കുക',
+
 # Preferences page
-'preferences'               => 'ക്രമീകരണങ്ങൾ',
-'mypreferences'             => 'എന്റെ ക്രമീകരണങ്ങൾ',
-'prefs-edits'               => 'ആകെ തിരുത്തലുകൾ:',
-'prefsnologin'              => 'ലോഗിൻ ചെയ്തിട്ടില്ല',
-'prefsnologintext'          => 'ഉപയോക്തൃക്രമീകരണങ്ങള്‍ മാറ്റാന്‍ താങ്കള്‍ <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} ലോഗിന്‍ ചെയ്തിരിക്കണം]</span>.',
-'qbsettings'                => 'ദ്രുത സൗകര്യം',
-'qbsettings-none'           => 'ഒന്നുമില്ല',
-'qbsettings-fixedleft'      => 'സ്ഥിരമായ ഇടത്',
-'qbsettings-fixedright'     => 'സ്ഥിരമായ വലത്',
-'qbsettings-floatingleft'   => 'ഇടത്തേയ്ക്ക് ഒഴുകി നിൽക്കുക',
-'qbsettings-floatingright'  => 'വലത്തേയ്ക്ക് ഒഴുകി നിൽക്കുക',
-'changepassword'            => 'രഹസ്യവാക്ക് മാറ്റുക',
-'skin'                      => 'രൂപം',
-'skin-preview'              => 'പ്രിവ്യൂ',
-'math'                      => 'സമവാക്യം',
-'dateformat'                => 'തീയതി പ്രദർശിപ്പിക്കുന്ന രീതി',
-'datedefault'               => 'ക്രമീകരണങ്ങൾ വേണ്ട',
-'datetime'                  => 'ദിവസവും സമയവും',
-'math_failure'              => 'parse ചെയ്യുവാൻ പരാജയപ്പെട്ടു',
-'math_unknown_error'        => 'കാരണമറിയാത്ത പിഴവ്',
-'math_unknown_function'     => 'അജ്ഞാതമായ ഫങ്ങ്ഷൻ',
-'math_lexing_error'         => 'ലെക്സിങ് പിഴവ്',
-'math_syntax_error'         => 'തെറ്റായ പദവിന്യാസം',
-'math_image_error'          => 'PNG രൂപത്തിലേയ്ക്കുള്ള മാറ്റം പരാജയപ്പെട്ടു;
-latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻസ്റ്റോൾ ചെയ്തിരിക്കുന്നതെന്നു പരിശോധിക്കുക',
-'math_bad_tmpdir'           => 'math temp ഡയറക്ടറി ഉണ്ടാക്കാനോ അതിലേക്കു എഴുതാനോ സാധിച്ചില്ല',
-'math_bad_output'           => 'math output ഡയറക്ടറി ഉണ്ടാക്കാനോ അതിലേക്കു എഴുതാനോ സാധിച്ചില്ല',
-'math_notexvc'              => 'പ്രവർത്തനസജ്ജമായ texvc ലഭ്യമല്ല;
-സജ്ജീകരിച്ചെടുക്കാനുള്ള സഹായത്തിനു ദയവായി math/README കാണുക.',
-'prefs-personal'            => 'അഹം',
-'prefs-rc'                  => 'പുതിയ മാറ്റങ്ങൾ',
-'prefs-watchlist'           => 'ശ്രദ്ധിക്കുന്നവ',
-'prefs-watchlist-days'      => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയിൽ പ്രദർശിപ്പിക്കേണ്ട പരമാവധി ദിവസങ്ങൾ:',
-'prefs-watchlist-days-max'  => '(പരമാവധി 7 ദിവസം)',
-'prefs-watchlist-edits'     => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയുടെ വികസിത രൂപത്തിൽ പ്രദർശിപ്പിക്കേണ്ട പരമാവധി മാറ്റങ്ങൾ:',
-'prefs-watchlist-edits-max' => 'പരമാവധി എണ്ണം: 1000',
-'prefs-misc'                => 'പലവക',
-'prefs-resetpass'           => 'രഹസ്യവാക്ക് മാറ്റുക',
-'saveprefs'                 => 'സേവ് ചെയ്യുക',
-'resetprefs'                => 'സേവ് ചെയ്തിട്ടില്ലാത്ത മാറ്റങ്ങൾ പുനഃക്രമീകരിക്കുക',
-'restoreprefs'              => 'സ്വതേയുള്ള ക്രമീകരണങ്ങൾ പുനഃസ്ഥാപിക്കുക',
-'textboxsize'               => 'തിരുത്തല്‍',
-'prefs-edit-boxsize'        => 'തിരുത്തൽ ജാലകത്തിന്റെ വലിപ്പം',
-'rows'                      => 'വരി:',
-'columns'                   => 'നിര:',
-'searchresultshead'         => 'തിരയൂ',
-'resultsperpage'            => 'ഒരു താളിലുള്ള ശരാശരി സന്ദർശനം:',
-'contextlines'              => 'ഓരോ സന്ദർശനത്തിലും ചേർക്കപ്പെട്ട വരികൾ:',
-'contextchars'              => 'ഓരോ വരിയുടേയും പ്രസക്തി:',
-'stub-threshold'            => '<a href="#" class="stub">അപൂർണ്ണമായ കണ്ണിയെന്നു</a> സ്ഥാപിക്കാനുള്ള ത്വരകം (ബൈറ്റുകൾ):',
-'recentchangesdays'         => 'പുതിയ മാറ്റങ്ങളിൽ കാണിക്കേണ്ട ദിവസങ്ങളുടെ എണ്ണം:',
-'recentchangesdays-max'     => '(പരമാവധി $1 {{PLURAL:$1|ദിവസം|ദിവസങ്ങൾ}})',
-'recentchangescount'        => 'പുതിയ മാറ്റങ്ങളുടെ താളില്‍ പ്രദര്‍ശിപ്പിക്കേണ്ട തിരുത്തലുകളുടെ എണ്ണം:',
-'savedprefs'                => 'താങ്കളുടെ ക്രമീകരണങ്ങൾ കാത്തുസൂക്ഷിച്ചിരിക്കുന്നു.',
-'timezonelegend'            => 'സമയ മേഖല:',
-'timezonetext'              => '¹സെർവർ സമയവും (UTC) താങ്കളുടെ പ്രാദേശിക സമയവും തമ്മിലുള്ള വ്യത്യാസം.',
-'localtime'                 => 'പ്രാദേശിക സമയം:',
-'timezoneselect'            => 'സമയ മേഖല',
-'timezoneuseserverdefault'  => 'സെർ‌വറിൽ സ്വതേയുള്ളത് ഉപയോഗിക്കുക',
-'timezoneuseoffset'         => 'മറ്റുള്ളത് (എന്താണെന്നു നൽകുക)',
-'timezoneoffset'            => 'വ്യത്യാസം¹:',
-'servertime'                => 'സെർവർ സമയം:',
-'guesstimezone'             => 'സമയവ്യത്യാസം ബ്രൗസറിൽ നിന്നും ശേഖരിക്കൂ',
-'timezoneregion-africa'     => 'ആഫ്രിക്ക',
-'timezoneregion-america'    => 'അമേരിക്ക',
-'timezoneregion-antarctica' => 'അന്റാർട്ടിക്ക',
-'timezoneregion-arctic'     => 'ആർട്ടിക്',
-'timezoneregion-asia'       => 'ഏഷ്യ',
-'timezoneregion-atlantic'   => 'അറ്റ്ലാന്റിക് സമുദ്രം',
-'timezoneregion-australia'  => 'ഓസ്ട്രേലിയ',
-'timezoneregion-europe'     => 'യൂറോപ്പ്',
-'timezoneregion-indian'     => 'ഇന്ത്യൻ മഹാസമുദ്രം',
-'timezoneregion-pacific'    => 'ശാന്തസമുദ്രം',
-'allowemail'                => 'എനിക്ക് എഴുത്തയക്കാൻ മറ്റുള്ളവരെ അനുവദിക്കുക',
-'prefs-searchoptions'       => 'തിരച്ചിൽ ക്രമീകരണങ്ങൾ',
-'prefs-namespaces'          => 'നാമമേഖലകൾ',
-'defaultns'                 => 'സ്വതവേ ഈ നാമമേഖലകളില്‍ തിരയുക:',
-'default'                   => 'സ്വതവെ',
-'files'                     => 'ഫയലുകള്‍',
-'prefs-custom-css'          => 'സ്വന്തം സി.എസ്.എസ്.',
-'prefs-custom-js'           => 'സ്വന്തം ജെ.എസ്.',
+'preferences'                   => 'ക്രമീകരണങ്ങൾ',
+'mypreferences'                 => 'എന്റെ ക്രമീകരണങ്ങൾ',
+'prefs-edits'                   => 'ആകെ തിരുത്തലുകൾ:',
+'prefsnologin'                  => 'ലോഗിൻ ചെയ്തിട്ടില്ല',
+'prefsnologintext'              => 'ഉപയോക്തൃക്രമീകരണങ്ങൾ മാറ്റാൻ താങ്കൾ <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} ലോഗിൻ]</span> ചെയ്തിരിക്കണം.',
+'changepassword'                => 'രഹസ്യവാക്ക് മാറ്റുക',
+'prefs-skin'                    => 'രൂപം',
+'skin-preview'                  => 'പ്രിവ്യൂ',
+'prefs-math'                    => 'സമവാക്യം',
+'datedefault'                   => 'ക്രമീകരണങ്ങൾ വേണ്ട',
+'prefs-datetime'                => 'ദിവസവും സമയവും',
+'prefs-personal'                => 'അഹം',
+'prefs-rc'                      => 'പുതിയ മാറ്റങ്ങൾ',
+'prefs-watchlist'               => 'ശ്രദ്ധിക്കുന്നവ',
+'prefs-watchlist-days'          => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയിൽ പ്രദർശിപ്പിക്കേണ്ട പരമാവധി ദിവസങ്ങൾ:',
+'prefs-watchlist-days-max'      => '(പരമാവധി 7 ദിവസം)',
+'prefs-watchlist-edits'         => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയുടെ വികസിത രൂപത്തിൽ പ്രദർശിപ്പിക്കേണ്ട പരമാവധി മാറ്റങ്ങൾ:',
+'prefs-watchlist-edits-max'     => '(പരമാവധി 1000 തിരുത്തലുകൾ)',
+'prefs-watchlist-token'         => 'ശ്രദ്ധിക്കുന്നവയുടെ പട്ടികയ്ക്കുള്ള അടയാളപദം:',
+'prefs-misc'                    => 'പലവക',
+'prefs-resetpass'               => 'രഹസ്യവാക്ക് മാറ്റുക',
+'prefs-email'                   => 'ഇമെയിൽ ക്രമീകരണങ്ങൾ',
+'prefs-rendering'               => 'ദൃശ്യരൂപം',
+'saveprefs'                     => 'സേവ് ചെയ്യുക',
+'resetprefs'                    => 'സേവ് ചെയ്തിട്ടില്ലാത്ത മാറ്റങ്ങൾ പുനഃക്രമീകരിക്കുക',
+'restoreprefs'                  => 'സ്വതേയുള്ള ക്രമീകരണങ്ങൾ പുനഃസ്ഥാപിക്കുക',
+'prefs-editing'                 => 'തിരുത്തൽ',
+'prefs-edit-boxsize'            => 'തിരുത്തൽ ജാലകത്തിന്റെ വലിപ്പം',
+'rows'                          => 'വരി:',
+'columns'                       => 'നിര:',
+'searchresultshead'             => 'തിരയൂ',
+'resultsperpage'                => 'ഒരു താളിലുള്ള ശരാശരി സന്ദർശനം:',
+'contextlines'                  => 'ഓരോ സന്ദർശനത്തിലും ചേർക്കപ്പെട്ട വരികൾ:',
+'contextchars'                  => 'ഓരോ വരിയുടേയും പ്രസക്തി:',
+'stub-threshold'                => '<a href="#" class="stub">അപൂർണ്ണമായ കണ്ണിയെന്നു</a> സ്ഥാപിക്കാനുള്ള ത്വരകം (ബൈറ്റുകൾ):',
+'recentchangesdays'             => 'പുതിയ മാറ്റങ്ങളിൽ കാണിക്കേണ്ട ദിവസങ്ങളുടെ എണ്ണം:',
+'recentchangesdays-max'         => 'പരമാവധി {{PLURAL:$1|ഒരു ദിവസം|$1 ദിവസങ്ങൾ}}',
+'recentchangescount'            => 'സ്വതേ പ്രദർശിപ്പിക്കേണ്ട തിരുത്തലുകളുടെ എണ്ണം:',
+'prefs-help-recentchangescount' => 'ഇത് പുതിയമാറ്റങ്ങൾ, താളിന്റെ നാൾ‌വഴികൾ, രേഖകൾ എന്നിവയെ ഉൾക്കൊള്ളുന്നു.',
+'prefs-help-watchlist-token'    => 'ഈ പെട്ടിയിൽ ഒരു രഹസ്യവാക്ക് ഉപയോഗിച്ചാൽ താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയ്ക്കുള്ള ആർ.എസ്.എസ്. ഫീഡ് ഉണ്ടാക്കുന്നതാണ്.
+ഈ രഹസ്യവാക്ക് അറിയാവുന്ന ആർക്കും താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടിക വായിക്കാവുന്നതാണ്. അതുകൊണ്ട് സുരക്ഷിതമായ ഒന്നു തിരഞ്ഞെടുക്കുക.
+ഇവിടെ താങ്കൾക്കുപയോഗിക്കാവുന്ന ക്രമരഹിതമായി സൃഷ്ടിച്ച ഒരെണ്ണം കൊടുത്തിരിക്കുന്നു: $1',
+'savedprefs'                    => 'താങ്കളുടെ ക്രമീകരണങ്ങൾ കാത്തുസൂക്ഷിച്ചിരിക്കുന്നു.',
+'timezonelegend'                => 'സമയ മേഖല:',
+'localtime'                     => 'പ്രാദേശിക സമയം:',
+'timezoneuseserverdefault'      => 'സെർ‌വറിൽ സ്വതേയുള്ളത് ഉപയോഗിക്കുക',
+'timezoneuseoffset'             => 'മറ്റുള്ളത് (എന്താണെന്നു നൽകുക)',
+'timezoneoffset'                => 'വ്യത്യാസം¹:',
+'servertime'                    => 'സെർവർ സമയം:',
+'guesstimezone'                 => 'സമയവ്യത്യാസം ബ്രൗസറിൽ നിന്നും ശേഖരിക്കൂ',
+'timezoneregion-africa'         => 'ആഫ്രിക്ക',
+'timezoneregion-america'        => 'അമേരിക്ക',
+'timezoneregion-antarctica'     => 'അന്റാർട്ടിക്ക',
+'timezoneregion-arctic'         => 'ആർട്ടിക്',
+'timezoneregion-asia'           => 'ഏഷ്യ',
+'timezoneregion-atlantic'       => 'അറ്റ്ലാന്റിക് സമുദ്രം',
+'timezoneregion-australia'      => 'ഓസ്ട്രേലിയ',
+'timezoneregion-europe'         => 'യൂറോപ്പ്',
+'timezoneregion-indian'         => 'ഇന്ത്യൻ മഹാസമുദ്രം',
+'timezoneregion-pacific'        => 'ശാന്തസമുദ്രം',
+'allowemail'                    => 'എനിക്ക് എഴുത്തയക്കാൻ മറ്റുള്ളവരെ അനുവദിക്കുക',
+'prefs-searchoptions'           => 'തിരച്ചിൽ ക്രമീകരണങ്ങൾ',
+'prefs-namespaces'              => 'നാമമേഖലകൾ',
+'defaultns'                     => 'അല്ലെങ്കിൽ ഈ നാമമേഖലകളിൽ തിരയുക:',
+'default'                       => 'സ്വതവെ',
+'prefs-files'                   => 'പ്രമാണങ്ങൾ',
+'prefs-custom-css'              => 'സ്വന്തം സി.എസ്.എസ്.',
+'prefs-custom-js'               => 'സ്വന്തം ജെ.എസ്.',
+'prefs-reset-intro'             => 'സൈറ്റിൽ സ്വതേയുണ്ടാവേണ്ട ക്രമീകരണങ്ങൾ പുനഃക്രമീകരിക്കാൻ താങ്കൾക്ക് ഈ താൾ ഉപയോഗിക്കാവുന്നതാണ്.
+ഇത് തിരിച്ചു ചെയ്യാൻ സാദ്ധ്യമല്ല.',
+'prefs-emailconfirm-label'      => 'ഇമെയിൽ സ്ഥിരീകരണം:',
+'prefs-textboxsize'             => 'തിരുത്താനുള്ള ജാലകത്തിന്റെ വലിപ്പം',
+'youremail'                     => 'ഇമെയിൽ:',
+'username'                      => 'ഉപയോക്തൃനാമം:',
+'uid'                           => 'ഉപയോക്തൃഐ.ഡി:',
+'prefs-memberingroups'          => 'അംഗത്വമുള്ള {{PLURAL:$1|സംഘം|സംഘങ്ങൾ}}:',
+'prefs-registration'            => 'അംഗത്വം എടുത്തത്:',
+'yourrealname'                  => 'യഥാർത്ഥ പേര്‌:',
+'yourlanguage'                  => 'ഭാഷ:',
+'yourvariant'                   => 'വ്യത്യാസമാനം',
+'yournick'                      => 'ഒപ്പ്:',
+'prefs-help-signature'          => 'സംവാദം താളിലെ കുറിപ്പുകളിൽ "<nowiki>~~~~</nowiki>" ഉപയോഗിച്ച് ഒപ്പിടേണ്ടതാണ്, അത് താങ്കളുടെ സമയമുദ്രയോടുകൂടിയ ഒപ്പായി  സ്വയം  മാറിക്കൊള്ളും.',
+'badsig'                        => 'അനുവദനീയമല്ലാത്ത രൂപത്തിലുള്ള ഒപ്പ്. HTML ടാഗുകൾ പരിശോധിക്കുക.',
+'badsiglength'                  => 'താങ്കളുടെ ഒപ്പിനു നീളം കൂടുതലാണ്‌. 
+അതിലെ {{PLURAL:$1|അക്ഷരത്തിന്റെ|അക്ഷരങ്ങങ്ങളുടെ}} എണ്ണം $1 ൽ താഴെയായിരിക്കണം.',
+'yourgender'                    => 'ആൺ/പെൺ:',
+'gender-unknown'                => 'വ്യക്തമാക്കിയിട്ടില്ല',
+'gender-male'                   => 'പുരുഷൻ',
+'gender-female'                 => 'സ്ത്രീ',
+'prefs-help-gender'             => 'നിർബന്ധമില്ല: സോഫ്റ്റ്‌വെയർ ഉപയോഗിച്ച് സ്ത്രീകളേയും പുരുഷന്മാരേയും ശരിയായി സംബോധന ചെയ്യാൻ ഉപയോഗിക്കുന്നു.
+ഈ വിവരം പരസ്യമായി ലഭ്യമായിരിക്കുന്നതാണ്‌.',
+'email'                         => 'ഇമെയിൽ',
+'prefs-help-realname'           => 'താങ്കളുടെ യഥാർത്ഥ പേര്‌ നൽകണമെന്നു നിർബന്ധമില്ല. എങ്കിലും അങ്ങനെ ചെയ്താൽ താങ്കളുടെ സംഭാവനകൾ ആ പേരിൽ അംഗീകരിക്കപ്പെടും.',
+'prefs-help-email'              => 'ഇമെയിൽ വിലാസം നൽകണമെന്ന് നിർബന്ധമില്ല, പക്ഷേ താങ്കൾ രഹസ്യവാക്ക് മറന്നാൽ പുതിയത് അയച്ചു തരാൻ ഇതുകൊണ്ട് സാധിക്കുന്നതാണ്‌.
+താങ്കൾക്കായുള്ള താളിൽ നിന്നോ, താങ്കൾക്കുള്ള സന്ദേശങ്ങളുടെ താളിൽ നിന്നോ മറ്റുപയോക്താക്കൾക്ക് താങ്കളുടെ വ്യക്തിത്വം മനസ്സിലാക്കാതെ തന്നെ താങ്കൾക്ക് സന്ദേശങ്ങളയയ്ക്കാനും ഈ സം‌വിധാനം അവസരം നൽകുന്നു.',
+'prefs-help-email-required'     => 'ഇമെയിൽ വിലാസം ആവശ്യമാണ്‌.',
+'prefs-info'                    => 'അടിസ്ഥാന വിവരങ്ങൾ',
+'prefs-i18n'                    => 'ആഗോളീകരണം',
+'prefs-signature'               => 'ഒപ്പ്',
+'prefs-dateformat'              => 'ദിന ലേഖന രീതി',
+'prefs-timeoffset'              => 'സമയ വ്യത്യാസം',
+'prefs-advancedediting'         => 'വിപുലമായ ഉപാധികൾ',
+'prefs-advancedrc'              => 'വിപുലമായ ഉപാധികൾ',
+'prefs-advancedrendering'       => 'വിപുലമായ ഉപാധികൾ',
+'prefs-advancedsearchoptions'   => 'വിപുലമായ ഉപാധികൾ',
+'prefs-advancedwatchlist'       => 'വിപുലമായ ഉപാധികൾ',
+'prefs-display'                 => 'പ്രദർശന ഐച്ഛികങ്ങൾ',
+'prefs-diffs'                   => 'വ്യത്യാസങ്ങൾ',
 
 # User rights
-'userrights'                  => 'ഉപയോക്തൃ അവകാശ പരിപാലനം', # Not used as normal message but as header for the special page itself
-'userrights-lookup-user'      => 'ഉപയോക്തൃസംഘങ്ങളെ പരിപാലിക്കുക',
-'userrights-user-editname'    => 'ഒരു ഉപയോക്തൃനാമം ടൈപ്പു ചെയ്യുക:',
-'editusergroup'               => 'ഉപയോക്തൃസംഘങ്ങൾ തിരുത്തുക',
-'editinguser'                 => "'''[[User:$1|$1]]''' എന്ന ഉപയോക്താവിന്റെ ഉപയോക്തൃ അവകാശങ്ങൾ തിരുത്തുന്നു ([[User talk:$1|{{int:talkpagelinktext}}]]{{int:pipe-separator}}[[Special:Contributions/$1|{{int:contribslink}}]])",
-'userrights-editusergroup'    => 'ഉപയോക്തൃസമൂഹത്തിലെ അംഗത്വം തിരുത്തുക',
-'saveusergroups'              => 'ഉപയോക്തൃസംഘങ്ങൾ സേവ് ചെയ്യുക',
-'userrights-groupsmember'     => 'അംഗത്വമുള്ളത്:',
-'userrights-groups-help'      => 'ഈ ഉപയോക്താവ് ഉൾപ്പെട്ടിട്ടുള്ള സംഘങ്ങൾ താങ്കൾക്ക് മാറ്റാവുന്നതാണ്:
+'userrights'                   => 'ഉപയോക്തൃ അവകാശ പരിപാലനം',
+'userrights-lookup-user'       => 'ഉപയോക്തൃസംഘങ്ങളെ പരിപാലിക്കുക',
+'userrights-user-editname'     => 'ഒരു ഉപയോക്തൃനാമം ടൈപ്പു ചെയ്യുക:',
+'editusergroup'                => 'ഉപയോക്തൃസംഘങ്ങൾ തിരുത്തുക',
+'editinguser'                  => "'''[[User:$1|$1]]''' എന്ന ഉപയോക്താവിന്റെ ഉപയോക്തൃ അവകാശങ്ങൾ തിരുത്തുന്നു ([[User talk:$1|{{int:talkpagelinktext}}]]{{int:pipe-separator}}[[Special:Contributions/$1|{{int:contribslink}}]])",
+'userrights-editusergroup'     => 'ഉപയോക്തൃസമൂഹത്തിലെ അംഗത്വം തിരുത്തുക',
+'saveusergroups'               => 'ഉപയോക്തൃസംഘങ്ങൾ സേവ് ചെയ്യുക',
+'userrights-groupsmember'      => 'അംഗത്വമുള്ളത്:',
+'userrights-groupsmember-auto' => 'അന്തർലീനമായ അംഗത്വം:',
+'userrights-groups-help'       => 'ഈ ഉപയോക്താവ് ഉൾപ്പെട്ടിട്ടുള്ള സംഘങ്ങൾ താങ്കൾക്ക് മാറ്റാവുന്നതാണ്:
 *ഉപയോക്താവ് ആ സംഘത്തിലുണ്ടെന്ന് ശരിയിട്ട ചതുരം അർത്ഥമാക്കുന്നു.
 *ഉപയോക്താവ് ആ സംഘത്തിലില്ലെന്ന് ശരിയിടാത്ത ചതുരം അർത്ഥമാക്കുന്നു.
 *ഒരു * ഒരിക്കൽ സംഘം കൂട്ടിച്ചേർത്താൻ പിന്നീട് അത് നീക്കാൻ താങ്കൾക്ക് കഴിയില്ലന്നോ, അല്ലെങ്കിൽ തിരിച്ചോ അർത്ഥമാക്കുന്നു.',
-'userrights-reason'           => 'കാരണം:',
-'userrights-no-interwiki'     => 'മറ്റ് വിക്കികളിലെ ഉപയോക്തൃ അവകാശങ്ങൾ തിരുത്തുവാൻ താങ്കൾക്ക് അനുമതിയില്ല.',
-'userrights-nodatabase'       => '$1 എന്ന ഡാറ്റാബേസ് നിലവിലില്ല അല്ലെങ്കിൽ പ്രാദേശികമല്ല.',
-'userrights-nologin'          => 'ഉപയോക്താക്കൾക്ക് അവകാശങ്ങൾ കൊടുക്കണമെങ്കിൽ താങ്കൾ കാര്യനിർ‌വാഹക അംഗത്വം ഉപയോഗിച്ച് [[Special:UserLogin|പ്രവേശിച്ചിരിക്കണം]].',
-'userrights-notallowed'       => 'ഉപയോക്താക്കൾക്ക് അവകാശങ്ങൾ കൊടുക്കാനുള്ള അനുമതി താങ്കളുടെ അംഗത്വത്തിനില്ല.',
-'userrights-changeable-col'   => 'താങ്കൾക്ക് മാറ്റാവുന്ന സംഘങ്ങൾ',
-'userrights-unchangeable-col' => 'താങ്കൾക്ക് മാറ്റാനാവാത്ത സംഘങ്ങൾ',
+'userrights-reason'            => 'കാരണം:',
+'userrights-no-interwiki'      => 'മറ്റ് വിക്കികളിലെ ഉപയോക്തൃ അവകാശങ്ങൾ തിരുത്തുവാൻ താങ്കൾക്ക് അനുമതിയില്ല.',
+'userrights-nodatabase'        => '$1 എന്ന ഡാറ്റാബേസ് നിലവിലില്ല അല്ലെങ്കിൽ പ്രാദേശികമല്ല.',
+'userrights-nologin'           => 'ഉപയോക്താക്കൾക്ക് അവകാശങ്ങൾ കൊടുക്കണമെങ്കിൽ താങ്കൾ കാര്യനിർ‌വാഹക അംഗത്വം ഉപയോഗിച്ച് [[Special:UserLogin|പ്രവേശിച്ചിരിക്കണം]].',
+'userrights-notallowed'        => 'ഉപയോക്താക്കൾക്ക് അവകാശങ്ങൾ കൊടുക്കാനുള്ള അനുമതി താങ്കളുടെ അംഗത്വത്തിനില്ല.',
+'userrights-changeable-col'    => 'താങ്കൾക്ക് മാറ്റാവുന്ന സംഘങ്ങൾ',
+'userrights-unchangeable-col'  => 'താങ്കൾക്ക് മാറ്റാനാവാത്ത സംഘങ്ങൾ',
 
 # Groups
 'group'               => 'സംഘം:',
@@ -1235,6 +1425,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'right-bigdelete'             => 'വലിയ നാൾവഴിയുള്ള താളുകൾ മായ്ക്കുക',
 'right-deleterevision'        => 'താളിന്റെ പ്രത്യേക പതിപ്പുകൾ മായ്ക്കുക പുനഃസ്ഥാപിക്കുക',
 'right-deletedhistory'        => 'മായ്ക്കപ്പെട്ട വിവരങ്ങൾ ബന്ധപ്പെട്ട എഴുത്തുകൾ ഇല്ലാതെ കാണുക',
+'right-deletedtext'           => 'മായ്ക്കപ്പെട്ട എഴുത്തും താളിന്റെ മായ്ക്കപ്പെട്ട പതിപ്പുകൾ തമ്മിലുള്ള വ്യത്യാസവും കാണുക',
 'right-browsearchive'         => 'നീക്കം ചെയ്യപ്പെട്ട താളുകളിൽ തിരയുക',
 'right-undelete'              => 'താൾ പുനഃസ്ഥാപിക്കുക',
 'right-suppressrevision'      => 'കാര്യനിർവാഹകരിൽ നിന്നും മറയ്ക്കപ്പെട്ട നാൾപ്പതിപ്പുകൾ സംശോധനം ചെയ്യുക, പുനഃസ്ഥാപിക്കുക',
@@ -1248,6 +1439,8 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'right-editprotected'         => 'സംരക്ഷിത താളുകൾ തിരുത്തുക (നിർഝരിത സംരക്ഷണം അല്ലാത്തത്)',
 'right-editinterface'         => 'ഉപയോക്തൃ സമ്പർക്കമുഖത്തിൽ മാറ്റം വരുത്തുക',
 'right-editusercssjs'         => 'മറ്റ് ഉപയോക്താക്കളുടെ CSS, JS പ്രമാണങ്ങൾ തിരുത്തുക',
+'right-editusercss'           => 'മറ്റ് ഉപയോക്താക്കളുടെ CSS പ്രമാണങ്ങൾ തിരുത്തുക',
+'right-edituserjs'            => 'മറ്റ് ഉപയോക്താക്കളുടെ JS പ്രമാണങ്ങൾ തിരുത്തുക',
 'right-rollback'              => 'ഒരു പ്രത്യേക താളിൽ അവസാനം തിരുത്തൽ നടത്തിയ ഉപയോക്താവിന്റെ തിരുത്തൽ പെട്ടെന്ന് ഒഴിവാക്കുക',
 'right-markbotedits'          => 'മുൻപ്രാപനം നടത്തിയ തിരുത്തലുകൾ യാന്ത്രിക തിരുത്തലുകളായി അടയാളപ്പെടുത്തുക',
 'right-noratelimit'           => 'നിലവാരമിടലിന്റെ പരിധികൾ ബാധകമല്ല',
@@ -1264,6 +1457,8 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'right-siteadmin'             => 'ഡേറ്റാബേസ് തുറക്കുക, പൂട്ടുക',
 'right-reset-passwords'       => 'മറ്റ് ഉപയോക്താക്കളുടെ രഹസ്യവാക്കുകൾ റീസെറ്റ് ചെയ്യുക',
 'right-override-export-depth' => 'കണ്ണിവത്കരിക്കപ്പെട്ട താളുകളുടെ ആഴം 5 വരെയുള്ള താളുകൾ കയറ്റുമതി ചെയ്യുക',
+'right-versiondetail'         => 'സോഫ്റ്റ്‌‌വെയർ പതിപ്പ് വിവരങ്ങൾ വിശദമായി കാട്ടുക',
+'right-sendemail'             => 'മറ്റുപയോക്താക്കൾക്ക് ഇമെയിൽ അയയ്ക്കുക',
 
 # User rights log
 'rightslog'      => 'ഉപയോക്തൃ അവകാശ രേഖ',
@@ -1313,8 +1508,17 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'recentchanges-legend'              => 'സമീപകാല മാറ്റങ്ങളുടെ ക്രമീകരണം',
 'recentchangestext'                 => '{{SITENAME}} സംരംഭത്തിലെ ഏറ്റവും പുതിയ മാറ്റങ്ങൾ ഇവിടെ കാണാം.',
 'recentchanges-feed-description'    => 'ഈ ഫീഡ് ഉപയോഗിച്ച് വിക്കിയിലെ പുതിയ മാറ്റങ്ങൾ നിരീക്ഷിക്കുക.',
+'recentchanges-label-legend'        => 'സൂചന: $1.',
+'recentchanges-legend-newpage'      => '$1 - പുതിയ താൾ',
+'recentchanges-label-newpage'       => 'ഈ തിരുത്തൽ മൂലം ഒരു പുതിയ താൾ സൃഷ്ടിക്കപ്പെട്ടിരിക്കുന്നു',
+'recentchanges-legend-minor'        => '$1 - ചെറിയ തിരുത്ത്',
+'recentchanges-label-minor'         => 'ഇതൊരു ചെറിയ തിരുത്തലാണ്',
+'recentchanges-legend-bot'          => '$1 - യന്ത്രം ഉപയോഗിച്ചുള്ള തിരുത്ത്',
+'recentchanges-label-bot'           => 'ഒരു യന്ത്രം നടത്തിയ തിരുത്താണിത്',
+'recentchanges-legend-unpatrolled'  => '$1 - റോന്തുചുറ്റപ്പെടാത്ത തിരുത്ത്',
+'recentchanges-label-unpatrolled'   => 'ഇതുവരെ റോന്തു ചുറ്റപ്പെടാത്ത ഒരു തിരുത്താണിത്',
 'rcnote'                            => "കഴിഞ്ഞ {{PLURAL:$2|ദിവസം|'''$2''' ദിവസങ്ങൾക്കുള്ളിൽ}} സംഭവിച്ച, {{PLURAL:$1|'''1''' തിരുത്തൽ|'''$1''' തിരുത്തലുകൾ}} താഴെക്കാണാം. ശേഖരിച്ച സമയം: $4, $5.",
-'rcnotefrom'                        => '<b>$2</b> മുതലുള്ള മാറ്റങ്ങള്‍ (<b>$1</b> എണ്ണം വരെ കാണാം).',
+'rcnotefrom'                        => '<b>$2</b> മുതലുള്ള മാറ്റങ്ങൾ (<b>$1</b> എണ്ണം വരെ കാണാം).',
 'rclistfrom'                        => '$1 മുതലുള്ള മാറ്റങ്ങൾ പ്രദർശിപ്പിക്കുക',
 'rcshowhideminor'                   => 'ചെറുതിരുത്തലുകൾ $1',
 'rcshowhidebots'                    => 'യന്ത്രങ്ങളെ $1',
@@ -1339,6 +1543,8 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 
 # Recent changes linked
 'recentchangeslinked'          => 'അനുബന്ധ മാറ്റങ്ങൾ',
+'recentchangeslinked-feed'     => 'അനുബന്ധ മാറ്റങ്ങൾ',
+'recentchangeslinked-toolbox'  => 'അനുബന്ധ മാറ്റങ്ങൾ',
 'recentchangeslinked-title'    => '$1 എന്ന താളുമായി ബന്ധപ്പെട്ട മാറ്റങ്ങൾ',
 'recentchangeslinked-noresult' => 'ഈ താളിലേയ്ക്ക് കണ്ണികളുള്ള മറ്റ് താളുകൾക്ക് ഇവിടെ സൂചിപ്പിക്കപ്പെട്ട സമയത്ത് മാറ്റങ്ങളൊന്നും സം‌ഭവിച്ചിട്ടില്ല.',
 'recentchangeslinked-summary'  => "ഒരു പ്രത്യേക താളിൽ നിന്നു കണ്ണി ചേർക്കപ്പെട്ടിട്ടുള്ള താളുകളിൽ അവസാനമായി വരുത്തിയ മാറ്റങ്ങളുടെ പട്ടിക താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്നു. ഈ പട്ടികയിൽ പെടുന്ന [[Special:Watchlist|താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകൾ]] '''കടുപ്പിച്ച്''' കാണിച്ചിരിക്കുന്നു.",
@@ -1348,8 +1554,8 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 # Upload
 'upload'                      => 'അപ്‌ലോഡ്‌',
 'uploadbtn'                   => 'പ്രമാണം അപ്‌ലോഡ് ചെയ്യുക',
-'reupload'                    => 'ഒരിക്കൽകൂടി അപ്‌ലോഡ് ചെയ്യുക',
 'reuploaddesc'                => 'വീണ്ടും അപ്‌ലോഡ് ചെയ്ത് നോക്കാനായി തിരിച്ചു പോവുക.',
+'upload-tryagain'             => 'പുതുക്കിയ പ്രമാണ വിവരണങ്ങൾ സമർപ്പിക്കുക',
 'uploadnologin'               => 'ലോഗിൻ ചെയ്തിട്ടില്ല',
 'uploadnologintext'           => 'പ്രമാണങ്ങൾ അപ്‌ലോഡ് ചെയ്യാൻ താങ്കൾ [[Special:UserLogin|ലോഗിൻ]] ചെയ്തിരിക്കണം',
 'upload_directory_missing'    => 'അപ്‌‌ലോഡ് ഡയറക്ടറി ($1) ലഭ്യമല്ല, അത് സൃഷ്ടിക്കാൻ വെബ്‌‌സെർവറിനു സാധിക്കില്ല.',
@@ -1382,6 +1588,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'minlength1'                  => 'പ്രമാണത്തിന്റെ പേരിൽ ഒരക്ഷരമെങ്കിലും ഉണ്ടാവണം.',
 'illegalfilename'             => 'പ്രമാണത്തിന്റെ "$1" എന്ന പേരിൽ, താളിന്റെ തലക്കെട്ടിൽ അനുവദനീയമല്ലാത്ത ചിഹ്നങ്ങൾ ഉണ്ട്. ദയവായി പ്രമാണം പുനർനാമകരണം നടത്തി വീണ്ടും അപ്‌ലോഡ് ചെയ്യുവാൻ ശ്രമിക്കുക.',
 'badfilename'                 => 'പ്രമാണത്തിന്റെ പേര് "$1" എന്നാക്കി മാറ്റിയിരിക്കുന്നു.',
+'filetype-mime-mismatch'      => 'മൈം തരവുമായി പ്രമാണത്തിന്റെ എക്സ്റ്റെൻഷൻ ഒത്തുപോകുന്നില്ല.',
 'filetype-badmime'            => '"$1" എന്ന MIME ഇനത്തിലുള്ള പ്രമാണങ്ങൾ അപ്‌ലോഡ് ചെയ്യുന്നത് അനുവദനീയമല്ല.',
 'filetype-bad-ie-mime'        => 'ഈ പ്രമാണത്തെ ഇന്റർനെറ്റ് എക്സ്‌‌പ്ലോറർ "$1" ആയി തിരിച്ചറിഞ്ഞിരിക്കുന്നു, ഇത് അപകടകരമായ തരം പ്രമാണമായതിനാൽ അനുവദനീയമല്ല.',
 'filetype-unwanted-type'      => "'''\".\$1\"''' ഉപയോഗയോഗ്യമല്ലാത്ത ഒരു പ്രമാണ തരം ആണ്‌. {{PLURAL:\$3|പ്രമാണ തരം|പ്രമാണ തരങ്ങൾ}}  \$2 ആണ് അഭിലഷണീയം.",
@@ -1402,7 +1609,6 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 * ഇപ്പോൾ അപ്‌ലോഡ് ചെയ്ത പ്രമാണത്തിന്റെ പേര്‌: '''<tt>[[:$1]]</tt>'''
 * നിലവിലുള്ള പ്രമാണത്തിന്റെ പേര്‌: '''<tt>[[:$2]]</tt>'''
 വേറെ ഒരു പേരു തിരഞ്ഞെടുക്കുക.",
-'fileexists-thumb'            => "<center>'''നിലവിലുള്ള പ്രമാണം'''</center>",
 'fileexists-thumbnail-yes'    => "ഈ ചിത്രം വലിപ്പം കുറച്ച ഒന്നാണെന്നു ''(ലഘുചിത്രം)'' കാണുന്നു.
 [[$1|ലഘുചിത്രം]]
 ദയവായി '''<tt>[[:$1]]</tt>''' എന്ന ചിത്രം പരിശോധിക്കുക. 
@@ -1418,6 +1624,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 ആ പ്രമാണത്തിന്റെ മായ്ക്കൽ ചരിത്രം എടുത്തു പരിശോധിച്ച ശേഷം വീണ്ടും അപ്‌‌ലോഡ് ചെയ്യുക.',
 'successfulupload'            => 'അപ്‌ലോഡ് വിജയിച്ചിരിക്കുന്നു',
 'uploadwarning'               => 'അപ്‌ലോഡ് മുന്നറിയിപ്പ്',
+'uploadwarning-text'          => 'ദയവായി താഴെയുള്ള പ്രമാണ വിവരണങ്ങൾ പുതുക്കി വീണ്ടും ശ്രമിക്കുക.',
 'savefile'                    => 'പ്രമാണം കാത്ത് സൂക്ഷിക്കുക',
 'uploadedimage'               => '"[[$1]]" അപ്‌ലോഡ് ചെയ്തു.',
 'overwroteimage'              => '"[[$1]]" എന്നതിന്റെ പുതിയ പതിപ്പ് അപ്‌ലോഡ് ചെയ്തിരിക്കുന്നു',
@@ -1426,11 +1633,14 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'php-uploaddisabledtext'      => 'പി.എച്ച്.പി.യിൽ പ്രമാണ അപ്‌‌ലോഡുകൾ സാദ്ധ്യമല്ലാതാക്കിയിരിക്കുന്നു.
 ദയവായി file_uploads ക്രമീകരണങ്ങൾ പരിശോധിക്കുക.',
 'uploadscripted'              => 'ഈ പ്രമാണത്തിൽ വെബ്ബ് ബ്രൗസർ തെറ്റായി വ്യാഖ്യാനിച്ചേക്കാവുന്ന HTML അല്ലെങ്കിൽ സ്ക്രിപ് കോഡുകൾ ഉണ്ട്.',
-'uploadcorrupt'               => 'ഉപയോഗയോഗ്യമല്ലാത്തതോ തെറ്റായ എക്സ്റ്റൻഷൻ ഉപയോഗിക്കുന്നതോ ആയ ഒരു പ്രമാണമാണിത്‌. ദയവായി ഒന്നു കൂടി പരിശോധിച്ചതിനു ശേഷം മാത്രം പ്രമാണം അപ്‌ലോഡ് ചെയ്യുക.',
 'uploadvirus'                 => 'പ്രമാണത്തിൽ വൈറസുണ്ട്! വിശദാംശങ്ങൾ: $1',
+'upload-source'               => 'സ്രോതസ്സ് പ്രമാണം',
 'sourcefilename'              => 'അപ്‌ലോഡ് ചെയ്യേണ്ട പ്രമാണത്തിന്റെ സ്രോതസ്സ് നാമം:',
+'sourceurl'                   => 'സ്രോതസ്സ് യു.ആർ.എൽ:',
 'destfilename'                => '{{SITENAME}} സംരംഭത്തിൽ ഉപയോഗിക്കേണ്ട പേര്:',
 'upload-maxfilesize'          => 'പ്രമാണത്തിന്റെ വലിപ്പത്തിന്റെ കൂടിയ പരിധി: $1',
+'upload-description'          => 'പ്രമാണ വിവരണം',
+'upload-options'              => 'അപ്‌‌ലോഡ് ഐച്ഛികങ്ങൾ',
 'watchthisupload'             => 'ഈ പ്രമാണം ശ്രദ്ധിക്കുക',
 'filewasdeleted'              => 'ഈ പേരിലുള്ള ഒരു പ്രമാണം ഇതിനു മുൻപ് അപ്‌ലോഡ് ചെയ്യുകയും പിന്നീട് മായ്ക്കുകയും ചെയ്തിട്ടുള്ളതാണ്‌. ഈ പ്രമാണം തുടർന്നും അപ്‌ലോഡ് ചെയ്യുന്നതിനു മുൻപ് $1 പരിശോധിക്കേണ്ടതാണ്‌.',
 'upload-wasdeleted'           => "'''മുന്നറിയിപ്പ്: മുൻപ് അപ്‌ലോഡ് ചെയ്യുകയും പിന്നീട് മായ്ക്കുകയും ചെയ്തിട്ടുള്ള ഒരു പ്രമാണമാണ്‌ താങ്കൾ അപ്‌ലോഡ് ചെയ്യാൻ ശ്രമിക്കുന്നത്.'''
@@ -1439,14 +1649,45 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 താങ്കളുടെ പരിശോധനയ്ക്കായി പ്രമാണത്തിന്റെ മായ്ക്കൽ രേഖ ഇവിടെ കൊടുത്തിരിക്കുന്നു:",
 'filename-bad-prefix'         => "താങ്കൾ അപ്‌ലോഡ് ചെയ്യുവാൻ ശ്രമിക്കുന്ന പ്രമാണത്തിന്റെ പേര്‌ '''\"\$1\"''' എന്നാണ്‌ തുടങ്ങുന്നത്. ഇതു ഡിജിറ്റൽ ക്യാമറയിൽ പടങ്ങൾക്കു യാന്ത്രികമായി ചേർക്കുന്ന പേരാണ്‌. ദയവു ചെയ്തു താങ്കൾ അപ്‌ലോഡ് ചെയ്യുന്ന പ്രമാണത്തെ വിശദീകരിക്കുന്ന അനുയോജ്യമായ ഒരു പേരു തിരഞ്ഞെടുക്കുക.",
 
-'upload-proto-error'      => 'തെറ്റായ പ്രോട്ടോക്കോൾ',
-'upload-proto-error-text' => 'റിമോട്ട് അപ്‌ലോഡിനു <code>http://</code> അഥവാ <code>ftp://</code> എന്നു തുടങ്ങുന്ന URL വേണം.',
-'upload-file-error'       => 'ആന്തരികപ്രശ്നം',
-'upload-file-error-text'  => 'സെർവറിൽ ഒരു താൽക്കാലിക പ്രമാണം ഉണ്ടാക്കുവാൻ ശ്രമിക്കുമ്പോൾ ആന്തരികപ്രശ്നം സംഭവിച്ചു. ദയവായി [[Special:ListUsers/sysop|കാര്യനിർവാഹകരിലൊരാളെ]] സമീപിക്കുക.',
-'upload-misc-error'       => 'കാരണം അജ്ഞാതമായ അപ്‌ലോഡ് പിഴവ്',
-'upload-misc-error-text'  => 'അപ്‌ലോഡിങ്ങ് സമയത്ത് അജ്ഞാതമായ പിഴവ് സംഭവിച്ചു.
+'upload-proto-error'        => 'തെറ്റായ പ്രോട്ടോക്കോൾ',
+'upload-proto-error-text'   => 'റിമോട്ട് അപ്‌ലോഡിനു <code>http://</code> അഥവാ <code>ftp://</code> എന്നു തുടങ്ങുന്ന URL വേണം.',
+'upload-file-error'         => 'ആന്തരികപ്രശ്നം',
+'upload-file-error-text'    => 'സെർവറിൽ ഒരു താൽക്കാലിക പ്രമാണം ഉണ്ടാക്കുവാൻ ശ്രമിക്കുമ്പോൾ ആന്തരികപ്രശ്നം സംഭവിച്ചു. ദയവായി [[Special:ListUsers/sysop|കാര്യനിർവാഹകരിലൊരാളെ]] സമീപിക്കുക.',
+'upload-misc-error'         => 'കാരണം അജ്ഞാതമായ അപ്‌ലോഡ് പിഴവ്',
+'upload-misc-error-text'    => 'അപ്‌ലോഡിങ്ങ് സമയത്ത് അജ്ഞാതമായ പിഴവ് സംഭവിച്ചു.
 ദയവായി URL സാധുവാണോ എന്നും അതു പ്രാപ്യമാണോ എന്നും പരിശോധിച്ചതിനു ശേഷം വീണ്ടും പരിശ്രമിക്കുക.
 തുടർന്നും പ്രശ്നം അവശേഷിക്കുകയാണെങ്കിൽ [[Special:ListUsers/sysop|കാര്യനി‌ർവാഹകരിലൊരാളെ]] സമീപിക്കുക.',
+'upload-too-many-redirects' => 'യൂ.ആർ.എല്ലിൽ നിരവധി തിരിച്ചുവിടലുകളുണ്ട്',
+'upload-unknown-size'       => 'വലിപ്പം അറിയില്ല',
+'upload-http-error'         => 'ഒരു എച്ച്.റ്റി.റ്റി.പി. പിഴവു സംഭവിച്ചിരിക്കുന്നു: $1',
+
+# img_auth script messages
+'img-auth-accessdenied' => 'പ്രവേശനമില്ല',
+'img-auth-nopathinfo'   => 'PATH_INFO ലഭ്യമല്ല.
+താങ്കളുടെ സെർവർ ഈ വിവരം കൈമാറ്റം ചെയ്യാൻ തയ്യാറാക്കിയിട്ടില്ല.
+അത് img_auth പിന്തുണയില്ലാത്ത സി.ജി.ഐ. അധിഷ്ഠിതമായ ഒന്നായിരിക്കാം.
+http://www.mediawiki.org/wiki/Manual:Image_Authorization കാണുക.',
+'img-auth-notindir'     => 'ആവശ്യപ്പെട്ട പാത അപ്‌‌ലോഡ് ഡയറക്റ്ററിയിൽ സജ്ജീകരിച്ചു നൽകിയിട്ടില്ല.',
+'img-auth-badtitle'     => '"$1" എന്നതിൽ നിന്ന് സാധുവായ തലക്കെട്ട് സൃഷ്ടിക്കാൻ കഴിയില്ല.',
+'img-auth-nologinnWL'   => 'താങ്കൾ ലോഗിൻ ചെയ്തിട്ടില്ല ഒപ്പം "$1" ശുദ്ധിപട്ടികയിൽ ഇല്ല.',
+'img-auth-nofile'       => '"$1" എന്ന പ്രമാണം നിലവിലില്ല.',
+'img-auth-isdir'        => 'താങ്കൾ "$1" എന്ന ഡയറക്ടറി എടുക്കാനാണു ശ്രമിക്കുന്നത്.
+പ്രമാണങ്ങൾ എടുക്കാൻ മാത്രമേ അനുവദിക്കുള്ളു.',
+'img-auth-streaming'    => 'സ്ട്രീമിങ് "$1".',
+'img-auth-public'       => 'img_auth.php എന്ന ഗുണനിർവഹണം സ്വകാര്യ‌‌വിക്കികളിൽ പ്രമാണങ്ങൾ ഔട്ട്പുട്ട് ചെയ്യുന്നതിനുള്ളതാണ്.
+ഈ വിക്കി ഒരു പൊതുജന വിക്കിയായാണ് ക്രമീകരിച്ചിരിക്കുന്നത്.
+സുരക്ഷയ്ക്ക് ഏറ്റവും അനുകൂലിതമായെന്നതിനാൽ img_auth.php നിർജീവമാക്കിയിരിക്കുന്നു.',
+'img-auth-noread'       => '"$1" എടുത്തുനോക്കാൻ ഉപയോക്താവിനു കഴിയില്ല.',
+
+# HTTP errors
+'http-invalid-url'      => 'അസാധുവായ യു.ആർ.എൽ.: $1',
+'http-invalid-scheme'   => '"$1" രീതിയിലുള്ള യു.ആർ.എല്ലുകൾ പിന്തുണയ്ക്കുന്നില്ല',
+'http-request-error'    => 'അഭ്യർത്ഥന അയയ്ക്കുന്നതിൽ അപരിചിതമായ പിഴവ്:',
+'http-read-error'       => 'എച്ച്.റ്റി.റ്റി.പി. വിവരം പ്രദർശിപ്പിക്കുന്നതിൽ പിഴവ്.',
+'http-timed-out'        => 'എച്ച്.റ്റി.റ്റി.പി. അഭ്യർത്ഥന സമയം കഴിഞ്ഞു.',
+'http-curl-error'       => 'യു.ആർ.എൽ. ശേഖരിക്കുന്നതിൽ പിഴവ്: $1',
+'http-host-unreachable' => 'യു.ആർ.എൽ.-ല്‍ എത്തിപ്പെടാന്‍ സാധിച്ചില്ല',
+'http-bad-status'       => 'എച്ച്.റ്റി.റ്റി.പി. അഭ്യർത്ഥനാ വേളയിൽ ഒരു പിഴവുണ്ടായി: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
 'upload-curl-error6'       => 'URL-ൽ എത്തിപ്പെടാൻ സാധിച്ചില്ല',
@@ -1455,6 +1696,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'upload-curl-error28-text' => 'ഈ സൈറ്റിൽ നിന്നു പ്രതികരണം ലഭിക്കുവാൻ ധാരാളം സമയമെടുക്കുന്നു. സൈറ്റ് സജീവമാണോ എന്നു പരിശോധിക്കുകയും കുറച്ച് സമയം കാത്തു നിന്നതിനു ശേഷം വീടും ശ്രമിക്കുകയും ചെയ്യുക. തിരക്കു കുറഞ്ഞ സമയത്ത് പരിശ്രമിക്കുന്നതാവും നല്ലത്.',
 
 'license'            => 'പകർപ്പവകാശ വിവരങ്ങൾ:',
+'license-header'     => 'അനുമതി',
 'nolicense'          => 'ഒന്നും തിരഞ്ഞെടുത്തിട്ടില്ല',
 'license-nopreview'  => '(പ്രിവ്യൂ ലഭ്യമല്ല)',
 'upload_source_url'  => '(സാധുവായ, ആർക്കും ഉപയോഗിക്കാവുന്ന URL)',
@@ -1473,38 +1715,42 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'listfiles_count'       => 'പതിപ്പുകൾ',
 
 # File description page
-'filehist'                  => 'പ്രമാണ നാൾവഴി',
-'filehist-help'             => 'ഏതെങ്കിലും തീയതി/സമയ കണ്ണിയിൽ ഞെക്കിയാൽ പ്രസ്തുതസമയത്ത് ഈ പ്രമാണം എങ്ങനെയായിരുന്നു എന്നു കാണാം.',
-'filehist-deleteall'        => 'എല്ലാം മായ്ക്കുക',
-'filehist-deleteone'        => 'ഇതു മായ്ക്കുക',
-'filehist-revert'           => 'പൂർവ്വസ്ഥിതിയിലാക്കുക',
-'filehist-current'          => 'നിലവിലുള്ളത്',
-'filehist-datetime'         => 'തീയതി/സമയം',
-'filehist-thumb'            => 'ലഘുചിത്രം',
-'filehist-thumbtext'        => 'മാറ്റം $1-ന്റെ ലഘുചിത്രം',
-'filehist-nothumb'          => 'ലഘുചിത്രമില്ല',
-'filehist-user'             => 'ഉപയോക്താവ്',
-'filehist-dimensions'       => 'അളവുകൾ',
-'filehist-filesize'         => 'പ്രമാണത്തിന്റെ വലിപ്പം',
-'filehist-comment'          => 'അഭിപ്രായം',
-'imagelinks'                => 'പ്രമാണത്തിലേക്കുള്ള കണ്ണികൾ',
-'linkstoimage'              => 'താഴെ കാണുന്ന {{PLURAL:$1|താളിൽ|$1 താളുകളിൽ}}  ഈ ചിത്രം ഉപയോഗിക്കുന്നു:',
-'linkstoimage-more'         => 'ഈ പ്രമാണത്തിലേയ്ക്ക് {{PLURAL:$1|ഒരു താളിലധികം കണ്ണി|$1 താളിലധികം കണ്ണികൾ}} ഉണ്ട്.
+'file-anchor-link'                  => 'പ്രമാണം',
+'filehist'                          => 'പ്രമാണ നാൾവഴി',
+'filehist-help'                     => 'ഏതെങ്കിലും തീയതി/സമയ കണ്ണിയിൽ ഞെക്കിയാൽ പ്രസ്തുതസമയത്ത് ഈ പ്രമാണം എങ്ങനെയായിരുന്നു എന്നു കാണാം.',
+'filehist-deleteall'                => 'എല്ലാം മായ്ക്കുക',
+'filehist-deleteone'                => 'ഇതു മായ്ക്കുക',
+'filehist-revert'                   => 'പൂർവ്വസ്ഥിതിയിലാക്കുക',
+'filehist-current'                  => 'നിലവിലുള്ളത്',
+'filehist-datetime'                 => 'തീയതി/സമയം',
+'filehist-thumb'                    => 'ലഘുചിത്രം',
+'filehist-thumbtext'                => 'മാറ്റം $1-ന്റെ ലഘുചിത്രം',
+'filehist-nothumb'                  => 'ലഘുചിത്രമില്ല',
+'filehist-user'                     => 'ഉപയോക്താവ്',
+'filehist-dimensions'               => 'അളവുകൾ',
+'filehist-filesize'                 => 'പ്രമാണത്തിന്റെ വലിപ്പം',
+'filehist-comment'                  => 'അഭിപ്രായം',
+'filehist-missing'                  => 'പ്രമാണം ലഭ്യമല്ല',
+'imagelinks'                        => 'പ്രമാണത്തിലേക്കുള്ള കണ്ണികൾ',
+'linkstoimage'                      => 'താഴെ കാണുന്ന {{PLURAL:$1|താളിൽ|$1 താളുകളിൽ}}  ഈ ചിത്രം ഉപയോഗിക്കുന്നു:',
+'linkstoimage-more'                 => 'ഈ പ്രമാണത്തിലേയ്ക്ക് {{PLURAL:$1|ഒരു താളിലധികം കണ്ണി|$1 താളിലധികം കണ്ണികൾ}} ഉണ്ട്.
 താഴെക്കൊടുത്തിരിക്കുന്ന പട്ടിക ഈ പ്രമാണത്തിലേയ്ക്കു മാത്രമുള്ള {{PLURAL:$1|ആദ്യ താളിന്റെ കണ്ണി|ആദ്യ $1 താളുകളുടെ കണ്ണികൾ}} കാട്ടുന്നു.
 [[Special:WhatLinksHere/$2|മുഴുവൻ പട്ടികയും]] ലഭ്യമാണ്.',
-'nolinkstoimage'            => 'ഈ ചിത്രം/പ്രമാണം വിക്കിയിലെ താളുകളിലൊന്നിലും ഉപയോഗിക്കുന്നില്ല.',
-'morelinkstoimage'          => 'ഈ പ്രമാണത്തിലേയ്ക്കുള്ള [[Special:WhatLinksHere/$1|കൂടുതൽ കണ്ണികൾ]] കാണുക.',
-'redirectstofile'           => 'താഴെ ഈ പ്രമാണത്തിലേയ്ക്കുള്ള {{PLURAL:$1|പ്രമാണ തിരിച്ചുവിടലുകൾ|$1 പ്രമാണങ്ങളുടെ തിരിച്ചുവിടൽ}} കൊടുത്തിരിക്കുന്നു:',
-'duplicatesoffile'          => 'ഈ പ്രമാണത്തിന്റെ {{PLURAL:$1|ഒരു അപര പ്രമാണത്തെ|$1 അപര പ്രമാണങ്ങളെ}} താഴെ കൊടുത്തിരിക്കുന്നു ([[Special:FileDuplicateSearch/$2|കൂടുതൽ വിവരങ്ങൾ]]):',
-'sharedupload'              => 'ഇത് $1 സം‌രംഭത്തിൽ നിന്നുള്ള പ്രമാണമാണ്‌, മറ്റു സം‌രംഭങ്ങളും ഇതുപയോഗിക്കുന്നുണ്ടാകാം.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
-'shareduploadwiki'          => 'കൂടുതൽ വിവരത്തിനു $1 കാണുക.',
-'shareduploadwiki-desc'     => 'ഇതിന്റെ $1 ഉള്ള കുറിപ്പ് താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്നു.',
-'shareduploadwiki-linktext' => 'പ്രമാണത്തെക്കുറിച്ചുള്ള വിവരണത്തിന്റെ താൾ',
-'noimage'                   => 'ഈ പേരിൽ പ്രമാണങ്ങൾ ഒന്നുമില്ല, പക്ഷേ താങ്കൾക്ക് $1.',
-'noimage-linktext'          => 'അപ്‌ലോഡ് ചെയ്യുക',
-'uploadnewversion-linktext' => 'ഈ ചിത്രത്തിലും മെച്ചപ്പെട്ടത് അപ്‌ലോഡ് ചെയ്യുക',
-'shared-repo-from'          => '$1 സംരംഭത്തിൽ നിന്ന്', # $1 is the repository name
-'shared-repo'               => 'ഒരു പങ്കുവെക്കപ്പെട്ട സംഭരണി', # used when shared-repo-NAME does not exist
+'nolinkstoimage'                    => 'ഈ ചിത്രം/പ്രമാണം വിക്കിയിലെ താളുകളിലൊന്നിലും ഉപയോഗിക്കുന്നില്ല.',
+'morelinkstoimage'                  => 'ഈ പ്രമാണത്തിലേയ്ക്കുള്ള [[Special:WhatLinksHere/$1|കൂടുതൽ കണ്ണികൾ]] കാണുക.',
+'redirectstofile'                   => 'താഴെ ഈ പ്രമാണത്തിലേയ്ക്കുള്ള {{PLURAL:$1|പ്രമാണ തിരിച്ചുവിടലുകൾ|$1 പ്രമാണങ്ങളുടെ തിരിച്ചുവിടൽ}} കൊടുത്തിരിക്കുന്നു:',
+'duplicatesoffile'                  => 'ഈ പ്രമാണത്തിന്റെ {{PLURAL:$1|ഒരു അപര പ്രമാണത്തെ|$1 അപര പ്രമാണങ്ങളെ}} താഴെ കൊടുത്തിരിക്കുന്നു ([[Special:FileDuplicateSearch/$2|കൂടുതൽ വിവരങ്ങൾ]]):',
+'sharedupload'                      => 'ഇത് $1 സം‌രംഭത്തിൽ നിന്നുള്ള പ്രമാണമാണ്‌, മറ്റു സം‌രംഭങ്ങളും ഇതുപയോഗിക്കുന്നുണ്ടാകാം.',
+'sharedupload-desc-there'           => 'ഈ പ്രമാണം $1 സംരംഭത്തിൽ നിന്നുമുള്ളതാണ്, മറ്റു പദ്ധതികൾ ഇതുപയോഗിക്കുന്നുണ്ടാകാം.
+കൂടുതൽ വിവരങ്ങൾക്ക് ദയവായി [$2 പ്രമാണത്തിന്റെ വിവരണ താൾ] കാണുക.',
+'sharedupload-desc-here'            => 'ഈ പ്രമാണം $1 സംരംഭത്തിൽ നിന്നുമുള്ളതാണ്, മറ്റു പദ്ധതികൾ ഇതുപയോഗിക്കുന്നുണ്ടാകാം.
+ഈ [$2 പ്രമാണത്തിന്റെ വിവരണ താളിലുള്ള] വിവരങ്ങൾ താഴെ കൊടുത്തിരിക്കുന്നു.',
+'filepage-nofile'                   => 'ഈ പേരിൽ ഒരു പ്രമാണവും നിലവിലില്ല.',
+'filepage-nofile-link'              => 'ഈ പേരിൽ ഒരു പ്രമാണവും നിലവിലില്ല, താങ്കൾക്ക് [$1 അത് അപ്‌ലോഡ് ചെയ്യാവുന്നതാണ്‌]',
+'uploadnewversion-linktext'         => 'ഈ ചിത്രത്തിലും മെച്ചപ്പെട്ടത് അപ്‌ലോഡ് ചെയ്യുക',
+'shared-repo-from'                  => '$1 സംരംഭത്തിൽ നിന്ന്',
+'shared-repo'                       => 'ഒരു പങ്കുവെക്കപ്പെട്ട സംഭരണി',
+'shared-repo-name-wikimediacommons' => 'വിക്കിമീഡിയ കോമൺസ്',
 
 # File reversion
 'filerevert'                => '$1 തിരസ്ക്കരിക്കുക',
@@ -1533,6 +1779,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 ** നിലവിലുള്ള പ്രമാണത്തിന്റെ പകർപ്പ്
 ** പകർപ്പവകാശ വിവരങ്ങൾ ചേർത്തിട്ടില്ല',
 'filedelete-edit-reasonlist'  => 'മായ്ക്കലിന്റെ കാരണം തിരുത്തുക',
+'filedelete-maintenance'      => 'നന്നാക്കൽ പ്രവർത്തനങ്ങൾ പുരോഗമിക്കുന്നതിനാൽ പ്രമാണങ്ങളുടെ മായ്ക്കലും പുനഃസ്ഥാപിക്കലും താത്ക്കാലികമായി നിർത്തിവച്ചിരിക്കുന്നു.',
 
 # MIME search
 'mimesearch'         => 'MIME തിരയൽ',
@@ -1554,7 +1801,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 
 # Random page
 'randompage'         => 'ഏതെങ്കിലും താൾ',
-'randompage-nopages' => '$1 എന്ന നെയിംസ്പേസില്‍ താളുകളൊന്നുമില്ല.',
+'randompage-nopages' => 'ഇനി കൊടുത്തിരിക്കുന്ന {{PLURAL:$2|നാമമേഖലയിൽ|നാമമേഖലകളിൽ}} താളുകൾ ഒന്നുമില്ല: $1.',
 
 # Random redirect
 'randomredirect'         => 'ക്രമരഹിതമായ തിരിച്ചുവിടൽ',
@@ -1566,6 +1813,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'statistics-header-edits'      => 'തിരുത്തൽ സ്ഥിതിവിവരക്കണക്കുകൾ',
 'statistics-header-views'      => 'സന്ദർശനങ്ങളുടെ സ്ഥിതിവിവരക്കണക്കുകൾ',
 'statistics-header-users'      => 'ഉപയോക്താക്കളുടെ സ്ഥിതിവിവരക്കണക്കുകൾ',
+'statistics-header-hooks'      => 'മറ്റു സ്ഥിതിവിവരക്കണക്കുകൾ',
 'statistics-articles'          => 'ലേഖനങ്ങൾ',
 'statistics-pages'             => 'താളുകൾ',
 'statistics-pages-desc'        => 'സം‌വാദം താളുകൾ, തിരിച്ചുവിടലുകൾ തുടങ്ങിയവയടക്കം വിക്കിയിലെ എല്ലാ താളുകളും.',
@@ -1593,8 +1841,8 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 
 'brokenredirects'        => 'മുറിഞ്ഞ തിരിച്ചുവിടലുകൾ',
 'brokenredirectstext'    => 'താഴെക്കാണുന്ന തിരിച്ചുവിടലുകൾ നിലവിലില്ലാത്ത താളുകളിലേയ്ക്കാണ്‌:',
-'brokenredirects-edit'   => '(തിരുത്തുക)',
-'brokenredirects-delete' => '(മായ്ക്കുക)',
+'brokenredirects-edit'   => 'തിരുത്തുക',
+'brokenredirects-delete' => 'മായ്ക്കുക',
 
 'withoutinterwiki'         => 'അന്തർഭാഷാകണ്ണികൾ ഇല്ലാത്ത താളുകൾ',
 'withoutinterwiki-summary' => 'താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന താളുകളിൽ മറ്റു ഭാഷാ വിക്കികളിലേക്ക്  കണ്ണി ചേർത്തിട്ടില്ല.',
@@ -1702,14 +1950,15 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 
 # Special:Categories
 'categories'                    => 'വർഗ്ഗങ്ങൾ',
-'categoriespagetext'            => 'താഴെ കൊടുത്തിരിക്കുന്ന വിഭാഗങ്ങളില്‍ താളുകളും പ്രമാണങ്ങളുമുണ്ട്. [[Special:UnusedCategories|ഉപയോഗിക്കപ്പെടാത്ത വിഭാഗങ്ങള്‍]] ഇവിടെ കാണിക്കുന്നില്ല. [[Special:WantedCategories|അവശ്യവിഭാഗങ്ങള്‍]] കൂടി കാണുക.',
+'categoriespagetext'            => 'താഴെ കൊടുത്തിരിക്കുന്ന {{PLURAL:$1|വർഗ്ഗത്തിൽ|വർഗ്ഗങ്ങളിൽ}} താളുകളും പ്രമാണങ്ങളുമുണ്ട്. [[Special:UnusedCategories|ഉപയോഗിക്കപ്പെടാത്ത വർഗ്ഗങ്ങൾ]] ഇവിടെ കാണിക്കുന്നില്ല. [[Special:WantedCategories|അവശ്യവർഗ്ഗങ്ങൾ]] കൂടി കാണുക.',
 'categoriesfrom'                => 'ഇങ്ങനെ തുടങ്ങുന്ന വർഗ്ഗങ്ങൾ കാട്ടുക:',
 'special-categories-sort-count' => 'എണ്ണത്തിനനുസരിച്ച് ക്രമപ്പെടുത്തുക',
 'special-categories-sort-abc'   => 'അക്ഷരമാലാക്രമത്തിൽ ക്രമീകരിക്കുക',
 
 # Special:DeletedContributions
-'deletedcontributions'       => 'മായ്ക്കപ്പെട്ട ഉപയോക്തൃസംഭാവനകൾ',
-'deletedcontributions-title' => 'മായ്ക്കപ്പെട്ട ഉപയോക്തൃസംഭാവനകൾ',
+'deletedcontributions'             => 'മായ്ക്കപ്പെട്ട ഉപയോക്തൃസംഭാവനകൾ',
+'deletedcontributions-title'       => 'മായ്ക്കപ്പെട്ട ഉപയോക്തൃസംഭാവനകൾ',
+'sp-deletedcontributions-contribs' => 'സം‌ഭാവനകൾ',
 
 # Special:LinkSearch
 'linksearch'       => 'വെബ്ബ് കണ്ണികൾ',
@@ -1725,6 +1974,16 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'listusersfrom'      => 'ഇങ്ങനെ തുടങ്ങുന്ന ഉപയോക്താക്കളെ പ്രദർശിപ്പിക്കുക:',
 'listusers-submit'   => 'പ്രദർശിപ്പിക്കുക',
 'listusers-noresult' => 'ഈ സംഘത്തിൽ ഉൾപ്പെടുന്ന ഉപയോക്താക്കൾ ആരും ഇല്ല.',
+'listusers-blocked'  => '(തടയപ്പെട്ടത്)',
+
+# Special:ActiveUsers
+'activeusers'            => 'സജീവ ഉപയോക്താക്കളുടെ പട്ടിക',
+'activeusers-intro'      => 'ഇത് കഴിഞ്ഞ {{PLURAL:$1|ദിവസം|$1 ദിവസങ്ങളിൽ}} ഏതെങ്കിലും വിധത്തിലുള്ള പ്രവർത്തനങ്ങൾ ചെയ്ത ഉപയോക്താക്കളുടെ പട്ടികയാണ്.',
+'activeusers-count'      => 'അവസാനത്തെ {{PLURAL:$3|ഒരു ദിവസം|$3 ദിവസങ്ങളിൽ}} നടത്തിയ {{PLURAL:$1|ഒരു തിരുത്തൽ|$1 തിരുത്തലുകൾ}}',
+'activeusers-from'       => 'ഇങ്ങനെ തുടങ്ങുന്ന ഉപയോക്താക്കളെ കാട്ടുക:',
+'activeusers-hidebots'   => 'യന്ത്രങ്ങളെ മറയ്ക്കുക',
+'activeusers-hidesysops' => 'കാര്യനിർവാഹകരെ മറയ്ക്കുക',
+'activeusers-noresult'   => 'ഉപയോക്താക്കളില്ല',
 
 # Special:Log/newusers
 'newuserlogpage'              => 'ഉപയോക്തൃ സൃഷ്ടിയുടെ രേഖ',
@@ -1735,17 +1994,23 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'newuserlog-autocreate-entry' => 'യാന്ത്രികമായി സൃഷ്ടിക്കപ്പെട്ട അംഗത്വം',
 
 # Special:ListGroupRights
-'listgrouprights'                 => 'ഉപയോക്തൃവിഭാഗത്തിന്റെ അവകാശങ്ങൾ',
-'listgrouprights-summary'         => 'ഈ വിക്കിയിൽ നിർവ്വചിക്കപ്പെട്ടിരിക്കുന്ന ഉപയോക്തൃസംഘങ്ങളെയും, ആ സംഘങ്ങൾക്ക് പ്രാപ്തമായിട്ടുള്ള അവകാശങ്ങളേയും താഴെ കുറിച്ചിരിക്കുന്നു.
+'listgrouprights'                      => 'ഉപയോക്തൃവിഭാഗത്തിന്റെ അവകാശങ്ങൾ',
+'listgrouprights-summary'              => 'ഈ വിക്കിയിൽ നിർവ്വചിക്കപ്പെട്ടിരിക്കുന്ന ഉപയോക്തൃസംഘങ്ങളെയും, ആ സംഘങ്ങൾക്ക് പ്രാപ്തമായിട്ടുള്ള അവകാശങ്ങളേയും താഴെ കുറിച്ചിരിക്കുന്നു.
 വ്യക്തിപരമായ അവകാശങ്ങളെ കുറിച്ച് [[{{MediaWiki:Listgrouprights-helppage}}|കൂടുതൽ വിവരങ്ങൾ]] ഉണ്ടാകാനിടയുണ്ട്.',
-'listgrouprights-group'           => 'വിഭാഗം',
-'listgrouprights-rights'          => 'അവകാശങ്ങൾ',
-'listgrouprights-helppage'        => 'Help:സംഘാവകാശങ്ങൾ',
-'listgrouprights-members'         => '(അംഗങ്ങളുടെ പട്ടിക)',
-'listgrouprights-addgroup'        => '{{PLURAL:$2|സംഘം|സംഘങ്ങൾ}} ചേർക്കുക: $1',
-'listgrouprights-removegroup'     => '{{PLURAL:$2|സംഘം|സംഘങ്ങൾ}} നീക്കംചെയ്യുക: $1',
-'listgrouprights-addgroup-all'    => 'എല്ലാ സംഘങ്ങളേയും ചേർക്കുക',
-'listgrouprights-removegroup-all' => 'എല്ലാ സംഘങ്ങളേയും നീക്കം ചെയ്യുക',
+'listgrouprights-key'                  => '* <span class="listgrouprights-granted">അവകാശം നൽകിയിരിക്കുന്നു</span>
+* <span class="listgrouprights-revoked">അവകാശം നീക്കിയിരിക്കുന്നു</span>',
+'listgrouprights-group'                => 'വിഭാഗം',
+'listgrouprights-rights'               => 'അവകാശങ്ങൾ',
+'listgrouprights-helppage'             => 'Help:സംഘാവകാശങ്ങൾ',
+'listgrouprights-members'              => '(അംഗങ്ങളുടെ പട്ടിക)',
+'listgrouprights-addgroup'             => '{{PLURAL:$2|സംഘം|സംഘങ്ങൾ}} ചേർക്കുക: $1',
+'listgrouprights-removegroup'          => '{{PLURAL:$2|സംഘം|സംഘങ്ങൾ}} നീക്കംചെയ്യുക: $1',
+'listgrouprights-addgroup-all'         => 'എല്ലാ സംഘങ്ങളേയും ചേർക്കുക',
+'listgrouprights-removegroup-all'      => 'എല്ലാ സംഘങ്ങളേയും നീക്കം ചെയ്യുക',
+'listgrouprights-addgroup-self'        => 'സ്വന്തം അംഗത്വത്തിലേയ്ക്ക് {{PLURAL:$2|സംഘത്തെ|സംഘങ്ങളെ}} ചേർക്കുക: $1',
+'listgrouprights-removegroup-self'     => 'സ്വന്തം അംഗത്വത്തിൽ നിന്ന് {{PLURAL:$2|സംഘത്തെ|സംഘങ്ങളെ}} നീക്കം ചെയ്യുക: $1',
+'listgrouprights-addgroup-self-all'    => 'എല്ലാ സംഘങ്ങളേയും സ്വന്തം അംഗത്വത്തിൽ ചേർക്കുക',
+'listgrouprights-removegroup-self-all' => 'സ്വന്തം അംഗത്വത്തിൽ നിന്ന് എല്ലാ സംഘങ്ങളേയും നീക്കംചെയ്യുക',
 
 # E-mail user
 'mailnologin'      => 'അയയ്ക്കാനുള്ള വിലാസം ലഭ്യമല്ല',
@@ -1818,6 +2083,32 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'enotif_lastvisited'           => 'താങ്കളുടെ അവസാന സന്ദർശനത്തിനു ശേഷമുണ്ടായ മാറ്റങ്ങൾ കാണുവാൻ  $1 സന്ദർശിക്കുക.',
 'enotif_lastdiff'              => 'ഈ മാറ്റം ദർശിക്കാൻ $1 കാണുക.',
 'enotif_anon_editor'           => 'അജ്ഞാത ഉപയോക്താവ് $1',
+'enotif_body'                  => 'പ്രിയ $WATCHINGUSERNAME,
+
+
+{{SITENAME}} സം‌രംഭത്തിലെ $PAGETITLE താൾ $PAGEEDITDATE-ൽ $PAGEEDITOR എന്ന ഉപയോക്താവ് $CHANGEDORCREATED, ഇപ്പോഴുള്ള പതിപ്പിനായി $PAGETITLE_URL കാണുക.
+
+$NEWPAGE
+
+തിരുത്തിയയാൾ നൽകിയ സം‌ഗ്രഹം: $PAGESUMMARY $PAGEMINOREDIT
+
+തിരുത്തിയയാളെ ബന്ധപ്പെടുക:
+മെയിൽ: $PAGEEDITOR_EMAIL
+വിക്കി: $PAGEEDITOR_WIKI
+
+താങ്കൾ ഈ താൾ സന്ദർശിക്കുന്നില്ലങ്കിൽ മറ്റ് അറിയിപ്പുകൾ ഒന്നുമുണ്ടാകുന്നതല്ല.
+ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടിക സന്ദർശിച്ചും ഉൾപ്പെട്ട താളുകളിലെ അറിയിപ്പ് മുദ്രകൾ താങ്കൾക്ക് പുനഃക്രമീകരിക്കാവുന്നതാണ്‌.
+             താങ്കളുടെ {{SITENAME}} സുഹൃദ് അറിയിപ്പ് സജ്ജീകരണം
+         
+--
+ശ്രദ്ധിക്കുന്ന പട്ടികയിലെ ക്രമീകരണങ്ങളിൽ മാറ്റം വരുത്താൻ, സന്ദർശിക്കുക
+{{fullurl:{{#special:Watchlist}}/edit}}
+
+താൾ താങ്കൾ ശ്രദ്ധിക്കുന്നവയുടെ പട്ടികയിൽ നിന്ന് നീക്കംചെയ്യാൻ, സന്ദർശിക്കുക
+$UNWATCHURL
+
+അഭിപ്രായം അറിയിക്കാനും മറ്റു സഹായങ്ങൾക്കും:
+{{fullurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
 'deletepage'             => 'താൾ മായ്ക്കുക',
@@ -1828,9 +2119,10 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'exblank'                => 'താൾ ശൂന്യമായിരുന്നു',
 'delete-confirm'         => '"$1" മായ്ക്കുക',
 'delete-legend'          => 'മായ്ക്കുക',
-'historywarning'         => 'മുന്നറിയിപ്പ്: നിങ്ങള്‍ മായ്ക്കുവാന്‍ പോകുന്ന താള്‍ തിരുത്തല്‍ ചരിത്രം ഉള്ള ഒരു താളാണ്.',
+'historywarning'         => "'''മുന്നറിയിപ്പ്''': താങ്കൾ മായ്ക്കുവാൻ പോകുന്ന താളിനു ഏകദേശം {{PLURAL:$1|ഒരു നാൾപ്പതിപ്പ്|$1 നാൾപ്പതിപ്പുകൾ}} ഉള്ള നാൾവഴി ഉണ്ട്:",
 'confirmdeletetext'      => 'താങ്കൾ ഒരു താൾ അതിന്റെ തിരുത്തൽ ചരിത്രമടക്കം മായ്ക്കുവാൻ പോവുകയാണ്. താങ്കൾ ചെയ്യുന്നതിന്റെ പരിണതഫലം താങ്കൾക്കറിയാമെന്നും, താങ്കളുടെ ഈ മായ്ക്കൽ [[{{MediaWiki:Policy-url}}|വിക്കിയുടെ നയം]] അനുസരിച്ചാണു ചെയ്യുന്നതെന്നും ഉറപ്പാക്കുക.',
 'actioncomplete'         => 'പ്രവൃത്തി പൂർത്തിയായിരിക്കുന്നു',
+'actionfailed'           => 'പ്രവൃത്തി പരാജയപ്പെട്ടിരിക്കുന്നു',
 'deletedtext'            => '"<nowiki>$1</nowiki>" മായ്ച്ചിരിക്കുന്നു. പുതിയതായി നടന്ന മായ്ക്കലുകളുടെ വിവരങ്ങൾ $2 ഉപയോഗിച്ച് കാണാം.',
 'deletedarticle'         => '"[[$1]]" മായ്ച്ചിരിക്കുന്നു',
 'suppressedarticle'      => '"[[$1]]" ഒതുക്കിയിരിക്കുന്നു',
@@ -1850,18 +2142,19 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'delete-warning-toobig'  => 'ഈ താളിനു വളരെ വിപുലമായ തിരുത്തൽ ചരിത്രമുണ്ട്. അതായത്, ഇതിനു് $1 മേൽ {{PLURAL:$1|പതിപ്പുണ്ട്|പതിപ്പുകളുണ്ട്}}. ഇത്തരം താളുകൾ മായ്ക്കുന്നതു {{SITENAME}} സം‌രംഭത്തിന്റെ ഡാറ്റാബേസ് ഓപ്പറേഷനെ ബാധിച്ചേക്കാം. അതിനാൽ വളരെ ശ്രദ്ധാപൂർവ്വം തുടർനടപടികളിലേക്കു നീങ്ങുക.',
 
 # Rollback
-'rollback'         => 'തിരുത്തലുകൾ റോൾബാക്ക് ചെയ്യുക',
-'rollback_short'   => 'റോൾബാക്ക്',
-'rollbacklink'     => 'റോൾബാക്ക്',
-'rollbackfailed'   => 'റോൾബാക്ക് പരാജയപ്പെട്ടു',
-'cantrollback'     => 'റോൾ ബാക്ക് ചെയ്യുവാൻ സാദ്ധ്യമല്ല. ഒരു ഉപയോക്താവ് മാത്രമാണു ഈ താളിൽ സം‌ഭാവന ചെയ്തിരിക്കുന്നത്.',
-'alreadyrolled'    => '[[:$1]] എന്ന താളിൽ [[User:$2|$2]] ([[User talk:$2|Talk]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) നടത്തിയ തിരുത്തലുകൾ മുൻപ്രാപനം ചെയ്യാൻ സാധിക്കുന്നതല്ല. മറ്റാരോ താൾ തിരുത്തുകയോ മുൻപ്രാപനം ചെയ്യുകയോ ചെയ്തിരിക്കുന്നു.
+'rollback'          => 'തിരുത്തലുകൾ റോൾബാക്ക് ചെയ്യുക',
+'rollback_short'    => 'റോൾബാക്ക്',
+'rollbacklink'      => 'റോൾബാക്ക്',
+'rollbackfailed'    => 'റോൾബാക്ക് പരാജയപ്പെട്ടു',
+'cantrollback'      => 'റോൾ ബാക്ക് ചെയ്യുവാൻ സാദ്ധ്യമല്ല. ഒരു ഉപയോക്താവ് മാത്രമാണു ഈ താളിൽ സം‌ഭാവന ചെയ്തിരിക്കുന്നത്.',
+'alreadyrolled'     => '[[:$1]] എന്ന താളിൽ [[User:$2|$2]] ([[User talk:$2|Talk]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) നടത്തിയ തിരുത്തലുകൾ മുൻപ്രാപനം ചെയ്യാൻ സാധിക്കുന്നതല്ല. മറ്റാരോ താൾ തിരുത്തുകയോ മുൻപ്രാപനം ചെയ്യുകയോ ചെയ്തിരിക്കുന്നു.
 
 താളിലെ അവസാന തിരുത്തൽ ചെയ്തിരിക്കുന്നത് [[User:$3|$3]] ([[User talk:$3|Talk]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]) ആണ്.',
-'editcomment'      => "തിരുത്തലിന്റെ ചുരുക്കം: \"''\$1''\" എന്നായിരുന്നു.", # only shown if there is an edit comment
-'revertpage'       => '[[Special:Contributions/$2|$2]] ([[User talk:$2|സംവാദം]]) നടത്തിയ തിരുത്തലുകൾ നീക്കം ചെയ്തിരിക്കുന്നു; നിലവിലുള്ള പതിപ്പ് [[User:$1|$1]] സൃഷ്ടിച്ചതാണ്', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
-'rollback-success' => '$1 ചെയ്ത തിരുത്തൽ തിരസ്ക്കരിച്ചിരിക്കുന്നു; $2 ചെയ്ത തൊട്ടു മുൻപത്തെ പതിപ്പിലേക്ക് സേവ് ചെയ്യുന്നു.',
-'sessionfailure'   => 'താങ്കളുടെ ലോഗിൻ സെഷനിൽ പ്രശ്നങ്ങളുള്ളതായി കാണുന്നു;
+'editcomment'       => "തിരുത്തലിന്റെ ചുരുക്കം: \"''\$1''\" എന്നായിരുന്നു.",
+'revertpage'        => '[[Special:Contributions/$2|$2]] ([[User talk:$2|സംവാദം]]) നടത്തിയ തിരുത്തലുകൾ നീക്കം ചെയ്തിരിക്കുന്നു; നിലവിലുള്ള പതിപ്പ് [[User:$1|$1]] സൃഷ്ടിച്ചതാണ്',
+'revertpage-nouser' => '(ഉപയോക്തൃനാമം നീക്കിയിരിക്കുന്നു) നടത്തിയ തിരുത്തലുകൾ [[User:$1|$1]] സൃഷ്ടിച്ച അവസാന പതിപ്പിലേയ്ക്ക് മുൻപ്രാപനം ചെയ്തിരിക്കുന്നു',
+'rollback-success'  => '$1 ചെയ്ത തിരുത്തൽ തിരസ്ക്കരിച്ചിരിക്കുന്നു; $2 ചെയ്ത തൊട്ടു മുൻപത്തെ പതിപ്പിലേക്ക് സേവ് ചെയ്യുന്നു.',
+'sessionfailure'    => 'താങ്കളുടെ ലോഗിൻ സെഷനിൽ പ്രശ്നങ്ങളുള്ളതായി കാണുന്നു;
 സെഷൻ തട്ടിയെടുക്കൽ ഒഴിവാക്കാനുള്ള മുൻകരുതലായി ഈ പ്രവൃത്തി റദ്ദാക്കിയിരിക്കുന്നു.
 ദയവായി പിന്നോട്ട് പോയി താങ്കൾ വന്ന താളിൽ ചെന്ന്, വീണ്ടും ശ്രമിക്കുക.',
 
@@ -1880,7 +2173,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'protectexpiry'               => 'സംരക്ഷണ കാലാവധി:',
 'protect_expiry_invalid'      => 'കാലാവധി തീരുന്ന സമയം അസാധുവാണ്.',
 'protect_expiry_old'          => 'കാലവധി തീരുന്ന സമയം ഭൂതകാലത്തിലാണ്.',
-'protect-unchain'             => 'തലക്കെട്ടുമാറ്റാനുള്ള അനുമതികൾ പുനഃസ്ഥാപിക്കുക',
+'protect-unchain-permissions' => 'മറ്റ് സംരക്ഷണ ഐച്ഛികങ്ങൾ തുറക്കുക',
 'protect-text'                => "താങ്കൾക്ക് ഇവിടെ '''<nowiki>$1</nowiki>''' എന്ന താളിന്റെ നിലവിലുള്ള സംരക്ഷണമാനം ദർശിക്കുകയും അതിൽ മാറ്റംവരുത്തുകയും ചെയ്യാം.",
 'protect-locked-blocked'      => "തടയപ്പെട്ടിരിക്കുന്ന സമയത്ത് താങ്കൾക്ക് സം‌രക്ഷണ പരിധി മാറ്റുവാൻ സാധിക്കില്ല. '''$1''' എന്ന താളിന്റെ നിലവിലുള്ള ക്രമീകരണം ഇതാണ്‌:",
 'protect-locked-dblock'       => "ഡാറ്റാബേസ് ബന്ധിച്ചിരിക്കുന്നതു കാരണം താങ്കൾക്കു സം‌രക്ഷണമാനം മാറ്റുവാൻ സാധിക്കില്ല.
@@ -1909,7 +2202,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 ** സൃഷ്ടിപരമല്ലാതെ ഭവിക്കുന്ന തിരുത്തൽ യുദ്ധം
 ** സന്ദർശകരുടെ എണ്ണം വളരെ കൂടുതലായ താൾ',
 'protect-edit-reasonlist'     => 'സംരക്ഷണ കാരണങ്ങൾ തിരുത്തുക',
-'protect-expiry-options'      => '1 മണിക്കൂർ:1 hour,1 ദിവസം:1 day,1 ആഴ്ച:1 week,2 ആഴ്ച:2 weeks,1 മാസം:1 month,3 മാസം:3 months,6 മാസം:6 months,1 വർഷം:1 year,അനന്തകാലം:infinite', # display1:time1,display2:time2,...
+'protect-expiry-options'      => '1 മണിക്കൂർ:1 hour,1 ദിവസം:1 day,1 ആഴ്ച:1 week,2 ആഴ്ച:2 weeks,1 മാസം:1 month,3 മാസം:3 months,6 മാസം:6 months,1 വർഷം:1 year,അനന്തകാലം:infinite',
 'restriction-type'            => 'അനുമതി:',
 'restriction-level'           => 'പരിമിതപ്പെടുത്തലിന്റെ മാനം:',
 'minimum-size'                => 'കുറഞ്ഞ വലിപ്പം',
@@ -1948,6 +2241,7 @@ latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻ�
 'undelete-nodiff'            => 'പഴയ പതിപ്പുകൾ ഒന്നും കണ്ടില്ല.',
 'undeletebtn'                => 'പുനഃസ്ഥാപിക്കുക',
 'undeletelink'               => 'കാണുക/പുനഃസ്ഥാപിക്കുക',
+'undeleteviewlink'           => 'കാണുക',
 'undeletereset'              => 'പുനഃക്രമീകരിക്കുക',
 'undeleteinvert'             => 'വിപരീതം തിരഞ്ഞെടുക്കുക',
 'undeletecomment'            => 'കാരണം:',
@@ -1983,19 +2277,23 @@ $1',
 'contributions-title' => '$1 എന്ന ഉപയോക്താവിന്റെ സംഭാവനകൾ',
 'mycontris'           => 'എന്റെ സംഭാവനകൾ',
 'contribsub2'         => '$1 എന്ന ഉപയോക്താവിന്റെ $2.',
-'nocontribs'          => 'ഈ മാനദണ്ഡങ്ങളുമായി യോജിക്കുന്ന മാറ്റങ്ങൾ ഒന്നും കണ്ടില്ല.', # Optional parameter: $1 is the user name
+'nocontribs'          => 'ഈ മാനദണ്ഡങ്ങളുമായി യോജിക്കുന്ന മാറ്റങ്ങൾ ഒന്നും കണ്ടില്ല.',
 'uctop'               => '(അവസാനത്തെ തിരുത്തൽ)',
 'month'               => 'മാസം:',
 'year'                => 'വർഷം:',
 
-'sp-contributions-newbies'       => 'പുതിയ അംഗങ്ങൾ നടത്തിയ തിരുത്തലുകൾ മാത്രം',
-'sp-contributions-newbies-sub'   => 'പുതിയ അംഗത്വങ്ങൾക്ക്',
-'sp-contributions-newbies-title' => 'പുതിയ അംഗത്വമെടുത്ത ഉപയോക്താക്കളുടെ സേവനങ്ങൾ',
-'sp-contributions-blocklog'      => 'തടയൽ രേഖ',
-'sp-contributions-logs'          => 'പ്രവർത്തനരേഖകൾ',
-'sp-contributions-search'        => 'ചെയ്ത സേവനങ്ങൾ',
-'sp-contributions-username'      => 'ഐ.പി. വിലാസം അഥവാ ഉപയോക്തൃനാമം:',
-'sp-contributions-submit'        => 'തിരയൂ',
+'sp-contributions-newbies'        => 'പുതിയ അംഗങ്ങൾ നടത്തിയ തിരുത്തലുകൾ മാത്രം',
+'sp-contributions-newbies-sub'    => 'പുതിയ അംഗത്വങ്ങൾക്ക്',
+'sp-contributions-newbies-title'  => 'പുതിയ അംഗത്വമെടുത്ത ഉപയോക്താക്കളുടെ സേവനങ്ങൾ',
+'sp-contributions-blocklog'       => 'തടയൽ രേഖ',
+'sp-contributions-deleted'        => 'മായ്ക്കപ്പെട്ട ഉപയോക്തൃസംഭാവനകൾ',
+'sp-contributions-logs'           => 'പ്രവർത്തനരേഖകൾ',
+'sp-contributions-talk'           => 'സംവാദം',
+'sp-contributions-userrights'     => 'ഉപയോക്തൃ അവകാശങ്ങളുടെ പരിപാലനം',
+'sp-contributions-blocked-notice' => 'ഈ ഉപയോക്താവ് ഇപ്പോൾ തടയപ്പെട്ടിരിക്കുകയാണ്. അവലംബമായി തടയൽ രേഖയുടെ പുതിയ ഭാഗം താഴെ കൊടുത്തിരിക്കുന്നു:',
+'sp-contributions-search'         => 'ചെയ്ത സേവനങ്ങൾ',
+'sp-contributions-username'       => 'ഐ.പി. വിലാസം അഥവാ ഉപയോക്തൃനാമം:',
+'sp-contributions-submit'         => 'തിരയൂ',
 
 # What links here
 'whatlinkshere'            => 'അനുബന്ധകണ്ണികൾ',
@@ -2018,6 +2316,7 @@ $1',
 
 # Block/unblock
 'blockip'                         => 'ഉപയോക്താവിനെ തടയുക',
+'blockip-title'                   => 'ഉപയോക്താവിനെ തടയുക',
 'blockip-legend'                  => 'ഉപയോക്താവിനെ തടയുക',
 'blockiptext'                     => 'ഏതെങ്കിലും ഐ.പി. വിലാസത്തേയോ ഉപയോക്താവിനേയോ തടയുവാൻ താഴെയുള്ള ഫോം ഉപയോഗിക്കുക.
 [[{{MediaWiki:Policy-url}}|വിക്കിയുടെ നയം]] അനുസരിച്ച് നശീകരണപ്രവർത്തനം തടയാൻ മാത്രമേ ഇതു ചെയ്യാവൂ.
@@ -2041,7 +2340,7 @@ $1',
 'ipbenableautoblock'              => 'ഈ ഉപയോക്താവ് അവസാനം ഉപയോഗിച്ച ഐ.പി.യും തുടർന്ന് ഉപയോഗിക്കാൻ സാദ്ധ്യതയുള്ള ഐ.പി.കളും യാന്ത്രികമായി തടയുക',
 'ipbsubmit'                       => 'ഈ ഉപയോക്താവിനെ തടയുക',
 'ipbother'                        => 'മറ്റ് കാലാവധി:',
-'ipboptions'                      => '2 മണിക്കൂർ നേരത്തേയ്ക്ക്:2 hours,1 ദിവസത്തേയ്ക്ക്:1 day,3 ദിവസത്തേയ്ക്ക്:3 days,1 ആഴ്ചത്തേയ്ക്ക്:1 week,2 ആഴ്ചത്തേയ്ക്ക്:2 weeks,1 മാസത്തേയ്ക്ക്:1 month,3 മാസത്തേയ്ക്ക്:3 months,6 മാസത്തേയ്ക്ക്:6 months,1 വർഷത്തേയ്ക്ക്:1 year,അനന്തകാലത്തേയ്ക്ക്:infinite', # display1:time1,display2:time2,...
+'ipboptions'                      => '2 മണിക്കൂർ നേരത്തേയ്ക്ക്:2 hours,1 ദിവസത്തേയ്ക്ക്:1 day,3 ദിവസത്തേയ്ക്ക്:3 days,1 ആഴ്ചത്തേയ്ക്ക്:1 week,2 ആഴ്ചത്തേയ്ക്ക്:2 weeks,1 മാസത്തേയ്ക്ക്:1 month,3 മാസത്തേയ്ക്ക്:3 months,6 മാസത്തേയ്ക്ക്:6 months,1 വർഷത്തേയ്ക്ക്:1 year,അനന്തകാലത്തേയ്ക്ക്:infinite',
 'ipbotheroption'                  => 'മറ്റുള്ളവ',
 'ipbotherreason'                  => 'മറ്റ്/കൂടുതൽ കാരണം:',
 'ipbhidename'                     => 'തിരുത്തലുകൾ, പട്ടികകൾ എന്നിവയിൽ നിന്നും ഉപയോക്തൃനാമം മറയ്ക്കുക',
@@ -2070,9 +2369,11 @@ $1',
 'ipblocklist-sh-tempblocks'       => '$1 താൽക്കാലിക വിലക്കുകൾ',
 'ipblocklist-sh-addressblocks'    => 'ഏക ഐ.പി. വിലക്കുകൾ $1',
 'ipblocklist-submit'              => 'തിരയൂ',
+'ipblocklist-localblock'          => 'പ്രാദേശിക തടയൽ',
+'ipblocklist-otherblocks'         => 'മറ്റ് {{PLURAL:$1|തടയൽ|തടയലുകൾ}}',
 'blocklistline'                   => '$1-നു, $3-യെ $2 തടഞ്ഞിരിക്കുന്നു ($4)',
 'infiniteblock'                   => 'അനിശ്ചിത കാലം',
-'expiringblock'                   => '$1 നു കാലാവധി തീരുന്നു',
+'expiringblock'                   => 'കാലാവധി തീരുന്നത് - $1 $2',
 'anononlyblock'                   => 'അജ്ഞാത ഉപയോക്താക്കളെ മാത്രം',
 'noautoblockblock'                => 'യാന്ത്രികതടയൽ ഒഴിവാക്കിയിരിക്കുന്നു',
 'createaccountblock'              => 'അംഗത്വം സൃഷ്ടിക്കുന്നതിൽനിന്ന് തടഞ്ഞിരിക്കുന്നു',
@@ -2086,7 +2387,10 @@ $1',
 'contribslink'                    => 'സംഭാവനകൾ',
 'autoblocker'                     => 'താങ്കളുടെ ഐ.പി. വിലാസം "[[User:$1|$1]]" എന്ന ഉപയോക്താവ് ഈ അടുത്ത് ഉപയോഗിക്കുകയും പ്രസ്തുത ഉപയോക്താവിനെ വിക്കിയിൽ നിന്നു തടയുകയും ചെയ്തിട്ടുള്ളതാണ്‌. അതിനാൽ താങ്കളും യാന്ത്രികമായി തടയപ്പെട്ടിരിക്കുന്നു. $1ന്റെ തടയലിനു സൂചിപ്പിക്കപ്പെട്ട കാരണം "$2" ആണ്‌.',
 'blocklogpage'                    => 'തടയൽ രേഖ',
-'blocklog-fulllog'                => 'എല്ലാ തടയൽ രേഖകളും',
+'blocklog-showlog'                => 'ഈ ഉപയോക്താവ് മുമ്പേ തടയപ്പെട്ടതാണ്.
+തടയൽ രേഖ അവലംബമായി താഴെ കൊടുത്തിരിക്കുന്നു:',
+'blocklog-showsuppresslog'        => 'ഈ ഉപയോക്താവ് മുമ്പേ തടയപ്പെടുകയും മറയ്ക്കപ്പെടുകയും ചെയ്തതാണ്.
+അവലംബത്തിനായി ഒതുക്കൽ രേഖ താഴെ കൊടുത്തിരിക്കുന്നു:',
 'blocklogentry'                   => '[[$1]]-നെ $2 കാലത്തേക്കു വിലക്കിയിരിക്കുന്നു $3',
 'reblock-logentry'                => '[[$1]] തടയൽ നിബന്ധനകൾ മാറ്റിയിരിക്കുന്നു, തടയൽ അവസാനിക്കുന്നത് $2 $3',
 'blocklogtext'                    => '{{SITENAME}} സംരംഭത്തിൽ പ്രവർത്തിക്കുന്നതിൽ നിന്ന് ഉപയോക്താക്കളെ തടഞ്ഞതിന്റേയും, പുനഃപ്രവർത്തനാനുമതി നൽകിയതിന്റേയും രേഖകൾ താഴെ കാണാം. {{SITENAME}} സംരംഭം സ്വയം  തടയുന്ന ഐ.പി. വിലാസങ്ങൾ ഈ പട്ടികയിൽ ഇല്ല. [[Special:IPBlockList|തടയപ്പെട്ടിട്ടുള്ള ഐ.പി. വിലാസങ്ങളുടെ പട്ടിക]] എന്നതാളിൽ നിലവിലുള്ള നിരോധനങ്ങളേയും തടയലുകളേയും കാണാവുന്നതാണ്.',
@@ -2106,9 +2410,11 @@ $1',
 'ipb-needreblock'                 => '== നിലവിൽ തടയപ്പെട്ടതാണ് ==
 $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 താങ്കൾ സജ്ജീകരണത്തിൽ മാറ്റം വരുത്തുവാൻ ഉദ്ദേശിക്കുന്നുണ്ടോ?',
+'ipb-otherblocks-header'          => 'മറ്റ് {{PLURAL:$1|തടയൽ|തടയലുകൾ}}',
 'ipb_cant_unblock'                => 'പിഴവ്: $1 എന്ന തടയൽ ഐ.ഡി. കാണുന്നില്ല. ഇതിനകം അതിന്റെ തടയൽ നീക്കം ചെയ്തിരിക്കാം.',
 'ipb_blocked_as_range'            => 'പിഴവ്:  $1 എന്ന ഐ.പി.യെ നേരിട്ടല്ല തടഞ്ഞിട്ടുള്ളത്. അതിനാൽ തടയൽ നീക്കം ചെയ്യുവാൻ സാദ്ധ്യമല്ല. അതിനെ $2ന്റെ ഭാഗമായുള്ള റേഞ്ചിൽ ആണ്‌ തടഞ്ഞിട്ടുള്ളത്. അത് ഒഴിവാക്കാവുന്നതാണ്.',
 'ip_range_invalid'                => 'അസാധുവായ ഐ.പി. റേഞ്ച്.',
+'ip_range_toolarge'               => 'പരിധി നിശ്ചയിച്ചുള്ള തടയലുകൾ /$1 എന്നതിലും കൂടുതലാകാൻ അനുവദിക്കുന്നില്ല.',
 'blockme'                         => 'എന്നെ തടയുക',
 'proxyblocker'                    => 'പ്രോക്സി തടയൽ',
 'proxyblocker-disabled'           => 'ഈ പ്രക്രിയ അനുവദനീയമല്ല.',
@@ -2117,6 +2423,7 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'sorbsreason'                     => '{{SITENAME}} ഉപയോഗിക്കുന്ന DNSBL ൽ താങ്കളുടെ ഐ.പി. വിലാസം ഒരു ഓപ്പൺ പ്രോക്സിയായാണു രേഖപ്പെടുത്തിട്ടുള്ളത്.',
 'sorbs_create_account_reason'     => '{{SITENAME}} ഉപയോഗിക്കുന്ന DNSBL ൽ താങ്കളുടെ ഐ.പി. വിലാസം ഒരു ഓപ്പൺ പ്രോക്സിയായാണു രേഖപ്പെടുത്തിട്ടുള്ളത്. താങ്കൾക്ക് അംഗത്വമെടുക്കാൻ സാദ്ധ്യമല്ല.',
 'cant-block-while-blocked'        => 'താങ്കൾ തടയപ്പെട്ടിരിക്കുമ്പോൾ മറ്റുപയോക്താക്കളെ തടയാൻ താങ്കൾക്ക് സാധിക്കില്ല.',
+'cant-see-hidden-user'            => 'താങ്കൾ തടയാൻ ശ്രമിക്കുന്ന ഉപയോക്താവ് മുമ്പേ തടയപ്പെടുകയും മറയ്ക്കപ്പെടുകയും ചെയ്യപ്പെട്ടതാണ്. താങ്കൾക്ക് ഉപയോക്താവിനെ മറയ്ക്കാനുള്ള അവകാശം ഇല്ലെങ്കിൽ, ഉപയോക്താവിനെതിരെ ഉള്ള തടയൽ കാണാനോ തിരുത്താനോ കഴിയുന്നതല്ല.',
 
 # Developer tools
 'lockdb'              => 'ഡാറ്റാബേസ് ബന്ധിക്കുക',
@@ -2163,6 +2470,7 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 
 അത്തരം സന്ദർഭങ്ങളിൽ സം‌വാദം താളുകൾ താങ്കൾ സ്വയം കൂട്ടിച്ചേർക്കേണ്ടതാണ്.",
 'movearticle'                  => 'മാറ്റേണ്ട താൾ',
+'moveuserpage-warning'         => "'''മുന്നറിയിപ്പ്:''' ഉപയോക്താവിനുള്ള താളാണ് താങ്കൾ മാറ്റാൻ പോകുന്നത്. താൾ മാത്രമേ മാറുകയുള്ളു എന്നും ഉപയോക്താവിന്റെ പേര് ''മാറുകയില്ലെന്നും'' ദയവായി ഓർക്കുക.",
 'movenologin'                  => 'ലോഗിൻ ചെയ്തിട്ടില്ല',
 'movenologintext'              => 'തലക്കെട്ടു മാറ്റാനുള്ള അനുമതി കൈവരിക്കാൻ താങ്കൾ ഒരു രജിസ്റ്റേർഡ് ഉപയോക്താവായിരിക്കുകയും [[Special:UserLogin|ലോഗിൻ ചെയ്തിരിക്കുകയും]] ചെയ്യേണ്ടത് അത്യന്താപേക്ഷിതമാണ്‌.',
 'movenotallowed'               => 'താളുകളുടെ തലക്കെട്ടു മാറ്റുവാനുള്ള അനുവാദം താങ്കൾക്കില്ല.',
@@ -2173,7 +2481,7 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'move-watch'                   => 'ഈ താളിലെ മാറ്റങ്ങൾ ശ്രദ്ധിക്കുക',
 'movepagebtn'                  => 'താൾ മാറ്റുക',
 'pagemovedsub'                 => 'തലക്കെട്ടു മാറ്റം വിജയിച്ചിരിക്കുന്നു',
-'movepage-moved'               => '\'\'\'"$1" എന്ന ലേഖനം "$2" എന്ന തലക്കെട്ടിലേക്ക് മാറ്റിയിരിക്കുന്നു\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'               => '\'\'\'"$1" എന്ന ലേഖനം "$2" എന്ന തലക്കെട്ടിലേക്ക് മാറ്റിയിരിക്കുന്നു\'\'\'',
 'movepage-moved-redirect'      => 'ഒരു തിരിച്ചുവിടൽ സൃഷ്ടിച്ചിരിക്കുന്നു.',
 'movepage-moved-noredirect'    => 'തിരിച്ചുവിടലിന്റെ സൃഷ്ടി ഒതുക്കിയിരിക്കുന്നു.',
 'articleexists'                => 'ഈ പേരിൽ മറ്റൊരു താൾ ഉള്ളതായി കാണുന്നു, അല്ലെങ്കിൽ താങ്കൾ തിരഞ്ഞെടുത്ത തലക്കെട്ട് സ്വീകാര്യമല്ല. ദയവായി മറ്റൊരു തലക്കെട്ട് തിരഞ്ഞെടുക്കുക.',
@@ -2214,6 +2522,12 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'imageinvalidfilename'         => 'പ്രമാണത്തിനു ലക്ഷ്യമിട്ട പേര് അസാധുവാണ്',
 'fix-double-redirects'         => 'പഴയ തലക്കെട്ടിലേക്കുള്ള തിരിച്ചുവിടൽ താളുകളും ഇതോടൊപ്പം പുതുക്കുക',
 'move-leave-redirect'          => 'പിന്നിൽ ഒരു തിരിച്ചുവിടൽ നിലനിർത്തുക',
+'protectedpagemovewarning'     => "'''മുന്നറിയിപ്പ്:'''  കാര്യനിർവാഹക പദവിയുള്ളവർക്കു മാത്രം മാറ്റാൻ കഴിയുന്ന വിധത്തിൽ ഈ താൾ സംരക്ഷിക്കപ്പെട്ടിരിക്കുന്നു. അവലംബമായി രേഖകളിലെ ഏറ്റവും പുതിയ വിവരം താഴെ നൽകിയിരിക്കുന്നു:",
+'semiprotectedpagemovewarning' => "'''കുറിപ്പ്:''' അംഗത്വമെടുത്ത ഉപയോക്താക്കൾക്കു മാത്രം മാറ്റാൻ കഴിയുന്ന വിധത്തിൽ ഈ താൾ സംരക്ഷിക്കപ്പെട്ടിരിക്കുന്നു. അവലംബമായി രേഖകളിലെ ഏറ്റവും പുതിയ വിവരം താഴെ കൊടുത്തിരിക്കുന്നു:",
+'move-over-sharedrepo'         => '==പ്രമാണം നിലനിൽക്കുന്നുണ്ട്==
+പങ്ക് ‌‌വെച്ചുപയോഗിക്കുന്ന ശേഖരണിയൊന്നിൽ [[:$1]] നിലനിൽക്കുന്നു. ഈ തലക്കെട്ടിലേയ്ക്ക് ഒരു പ്രമാണത്തെ മാറ്റുന്നത് പങ്ക് വെച്ചുപയോഗിക്കുന്ന പ്രമാണത്തെ അതിലംഘിക്കുന്നതാണ്.',
+'file-exists-sharedrepo'       => 'താങ്കൾ തിരഞ്ഞെടുത്ത പ്രമാണ നാമം പങ്ക് വെയ്ക്കപ്പെട്ടുപയോഗിക്കുന്ന റെപ്പോസിറ്ററിയിൽ ഉപയോഗിക്കുന്നു.
+ദയവായി മറ്റൊരു നാമം സ്വീകരിക്കുക.',
 
 # Export
 'export'            => 'താളുകൾ കയറ്റുമതി ചെയ്യുക',
@@ -2236,15 +2550,21 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'export-pagelinks'  => 'ഉൾപ്പെടുത്തേണ്ട കണ്ണികളുള്ള താളുകളുടെ ആഴം:',
 
 # Namespace 8 related
-'allmessages'               => 'സന്ദേശസഞ്ചയം',
-'allmessagesname'           => 'പേര്‌',
-'allmessagesdefault'        => 'സ്വതേയുള്ള ഉള്ളടക്കം',
-'allmessagescurrent'        => 'നിലവിലുള്ള ഉള്ളടക്കം',
-'allmessagestext'           => 'ഇത് മീഡിയവിക്കി നാമമേഖലയിൽ ലഭ്യമായ വ്യവസ്ഥാസന്ദേശങ്ങളുടെ ഒരു പട്ടിക ആണ്‌.
+'allmessages'                   => 'സന്ദേശസഞ്ചയം',
+'allmessagesname'               => 'പേര്‌',
+'allmessagesdefault'            => 'സ്വതേയുള്ള ഉള്ളടക്കം',
+'allmessagescurrent'            => 'നിലവിലുള്ള ഉള്ളടക്കം',
+'allmessagestext'               => 'ഇത് മീഡിയവിക്കി നാമമേഖലയിൽ ലഭ്യമായ വ്യവസ്ഥാസന്ദേശങ്ങളുടെ ഒരു പട്ടിക ആണ്‌.
 പ്രാമാണികമായ വിധത്തിൽ മീഡിയവിക്കിയുടെ പ്രാദേശീകരണം താങ്കൾ ഉദ്ദേശിക്കുന്നുവെങ്കിൽ ദയവായി [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation], [http://translatewiki.net translatewiki.net] എന്നീ താളുകൾ സന്ദർശിക്കുക.',
-'allmessagesnotsupportedDB' => "'''\$wgUseDatabaseMessages''' ബന്ധിച്ചിരിക്കുന്നതു കാരണം ഈ താൾ ഉപയോഗിക്കുവാൻ സാദ്ധ്യമല്ല.",
-'allmessagesfilter'         => 'സന്ദേശങ്ങൾ പേരുപയോഗിച്ചു ഫിൽറ്റർ ചെയ്യുക:',
-'allmessagesmodified'       => 'മാറ്റം വരുത്തിയവ മാത്രം പ്രദർശിപ്പിക്കുക',
+'allmessagesnotsupportedDB'     => "'''\$wgUseDatabaseMessages''' ബന്ധിച്ചിരിക്കുന്നതു കാരണം ഈ താൾ ഉപയോഗിക്കുവാൻ സാദ്ധ്യമല്ല.",
+'allmessages-filter-legend'     => 'അരിപ്പ',
+'allmessages-filter'            => 'പുനഃക്രമീകരിച്ച ക്രമത്തിൽ തിരഞ്ഞുവെയ്ക്കുക:',
+'allmessages-filter-unmodified' => 'തിരുത്തപ്പെടാത്തത്',
+'allmessages-filter-all'        => 'എല്ലാം',
+'allmessages-filter-modified'   => 'തിരുത്തപ്പെട്ടത്',
+'allmessages-prefix'            => 'പൂർവ്വപദത്തിനനുസരിച്ച് തിരഞ്ഞുവെയ്ക്കുക:',
+'allmessages-language'          => 'ഭാഷ:',
+'allmessages-filter-submit'     => 'പോകൂ',
 
 # Thumbnails
 'thumbnail-more'           => 'വലുതാക്കി കാണിക്കുക',
@@ -2254,6 +2574,9 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'djvu_no_xml'              => 'DjVu പ്രമാണത്തിനു വേണ്ടി XML ശേഖരിക്കുവാൻ പറ്റിയില്ല',
 'thumbnail_invalid_params' => 'ലഘുചിത്രത്തിനാവശ്യമായ ചരങ്ങൾ അസാധുവാണ്',
 'thumbnail_dest_directory' => 'ലക്ഷ്യ ഡയറക്ടറി സൃഷ്ടിക്കുവാൻ സാധിച്ചില്ല',
+'thumbnail_image-type'     => 'ചിത്രത്തിന്റെ തരം പിന്തുണക്കപ്പെട്ടതല്ല',
+'thumbnail_gd-library'     => 'അപൂർണ്ണമായ ജി.ഡി. ലൈബ്രറി ക്രമീകരണം: ഫങ്ഷൻ $1 ലഭ്യമല്ല',
+'thumbnail_image-missing'  => 'പ്രമാണം ലഭ്യമല്ലെന്നു കാണുന്നു: $1',
 
 # Special:Import
 'import'                     => 'താളുകൾ ഇറക്കുമതി ചെയ്യുക',
@@ -2321,6 +2644,7 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'tooltip-ca-viewsource'           => 'ഈ താൾ സം‌രക്ഷിക്കപ്പെട്ടിരിക്കുന്നു. താങ്കൾക്ക് ഈ താളിന്റെ മൂലരൂപം കാണാവുന്നതാണ്‌.',
 'tooltip-ca-history'              => 'ഈ താളിന്റെ പഴയ പതിപ്പുകൾ.',
 'tooltip-ca-protect'              => 'ഈ താൾ സം‌രക്ഷിക്കുക',
+'tooltip-ca-unprotect'            => 'ഈ താളിന്റെ സംരക്ഷണം ഒഴിവാക്കുക',
 'tooltip-ca-delete'               => 'ഈ താൾ നീക്കം ചെയ്യുക',
 'tooltip-ca-undelete'             => 'ഈ താൾ നീക്കം ചെയ്തതിനുമുമ്പ് വരുത്തിയ തിരുത്തലുകൾ പുനഃസ്ഥാപിക്കുക',
 'tooltip-ca-move'                 => 'ഈ താളിന്റെ തലക്കെട്ടു്‌ മാറ്റുക',
@@ -2331,6 +2655,7 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'tooltip-search-fulltext'         => 'ഈ പദത്തിലുള്ള താളുകൾ തേടുക',
 'tooltip-p-logo'                  => 'പ്രധാനതാൾ സന്ദർശിക്കുക',
 'tooltip-n-mainpage'              => 'പ്രധാനതാൾ സന്ദർശിക്കുക',
+'tooltip-n-mainpage-description'  => 'പ്രധാനതാൾ സന്ദർശിക്കുക',
 'tooltip-n-portal'                => 'പദ്ധതി താളിനെക്കുറിച്ച്, താങ്കൾക്കെന്തൊക്കെ ചെയ്യാം, കാര്യങ്ങൾ എവിടെനിന്ന് കണ്ടെത്താം',
 'tooltip-n-currentevents'         => 'സമകാലീനസംഭവങ്ങളുടെ പശ്ചാത്തലം അന്വേഷിക്കുക',
 'tooltip-n-recentchanges'         => 'വിക്കിയിലെ സമീപകാലമാറ്റങ്ങൾ',
@@ -2369,9 +2694,11 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 
 # Stylesheets
 'common.css' => '/* ഇവിടെ നൽകുന്ന സി.എസ്.എസ്. എല്ലാ ദൃശ്യരൂപങ്ങൾക്കും ബാധകമായിരിക്കും */',
+'vector.css' => '/* ഇവിടെ നൽകുന്ന സി.എസ്.എസ്. വെക്റ്റർ ദൃശ്യരൂപത്തിനു ബാധകമായിരിക്കും*/',
 
 # Scripts
 'common.js' => '/* ഇവിടെ നൽകുന്ന ജാവാസ്ക്രിപ്റ്റ് എല്ലാ ഉപയോക്താക്കൾക്കും, എല്ലാ താളുകളിലും പ്രവർത്തിക്കുന്നതായിരിക്കും */',
+'vector.js' => '/*ഇവിടെ നൽകുന്ന ജാവാസ്ക്രിപ്റ്റ് വെക്റ്റർ ദൃശ്യരൂപം ഉപയോഗിക്കുന്ന ഉപയോക്താക്കൾക്ക് ബാധകമായിരിക്കും*/',
 
 # Metadata
 'nodublincore'      => 'ഡബ്ലിൻ കോർ ആർ.ഡി.എഫ്. മെറ്റാഡേറ്റാ ഈ സെർവറിൽ സജ്ജമല്ല.',
@@ -2381,10 +2708,12 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 # Attribution
 'anonymous'        => '{{SITENAME}} സംരംഭത്തിലെ അജ്ഞാത {{PLURAL:$1|ഉപയോക്താവ്|ഉപയോക്താക്കൾ}}',
 'siteuser'         => '{{SITENAME}} ഉപയോക്താവ് $1',
-'lastmodifiedatby' => '$2, $1 നു $3 ആണ്‌ ഈ താൾ അവസാനം പുതുക്കിയത്.', # $1 date, $2 time, $3 user
+'anonuser'         => '{{SITENAME}} പദ്ധതിയിലെ അജ്ഞാത ഉപയോക്താവ് $1',
+'lastmodifiedatby' => '$2, $1 നു $3 ആണ്‌ ഈ താൾ അവസാനം പുതുക്കിയത്.',
 'othercontribs'    => '$1 നടത്തിയ സൃഷ്ടിയെ അധികരിച്ച്.',
 'others'           => 'മറ്റുള്ളവർ',
 'siteusers'        => '{{SITENAME}} {{PLURAL:$2|ഉപയോക്താവ്‌|ഉപയോക്താക്കൾ}} $1',
+'anonusers'        => '{{SITENAME}} പദ്ധതിയിലെ അജ്ഞാത {{PLURAL:$2|ഉപയോക്താവ്|ഉപയോക്താക്കൾ}} $1',
 'creditspage'      => 'താളിനുള്ള കടപ്പാട്',
 'nocredits'        => 'ഈ താളിന്റെ കടപ്പാട് വിവരങ്ങൾ ലഭ്യമല്ല.',
 
@@ -2414,6 +2743,7 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'skinname-chick'       => 'സുന്ദരി',
 'skinname-simple'      => 'ലളിതം',
 'skinname-modern'      => 'നവീനം',
+'skinname-vector'      => 'വെക്റ്റർ',
 
 # Math options
 'mw_math_png'    => 'എപ്പോഴും PNG ആയി പ്രദർശിപ്പിക്കുക',
@@ -2423,11 +2753,24 @@ $1 നിലവിൽ തടയപ്പെട്ടതാണ്.<br />
 'mw_math_modern' => 'ആധുനിക ബ്രൗസറുകൾക്കായി നിർദേശിക്കപ്പെട്ടത്',
 'mw_math_mathml' => 'പറ്റുമെങ്കിൽ MathML (പരീക്ഷണാടിസ്ഥാനം)',
 
+# Math errors
+'math_failure'          => 'parse ചെയ്യുവാൻ പരാജയപ്പെട്ടു',
+'math_unknown_error'    => 'കാരണമറിയാത്ത പിഴവ്',
+'math_unknown_function' => 'അജ്ഞാതമായ ഫങ്ങ്ഷൻ',
+'math_lexing_error'     => 'ലെക്സിങ് പിഴവ്',
+'math_syntax_error'     => 'തെറ്റായ പദവിന്യാസം',
+'math_image_error'      => 'PNG രൂപത്തിലേയ്ക്കുള്ള മാറ്റം പരാജയപ്പെട്ടു;
+latex, dvips, gs, convert എന്നിവ ശരിയായാണോ ഇൻസ്റ്റോൾ ചെയ്തിരിക്കുന്നതെന്നു പരിശോധിക്കുക',
+'math_bad_tmpdir'       => 'math temp ഡയറക്ടറി ഉണ്ടാക്കാനോ അതിലേക്കു എഴുതാനോ സാധിച്ചില്ല',
+'math_bad_output'       => 'math output ഡയറക്ടറി ഉണ്ടാക്കാനോ അതിലേക്കു എഴുതാനോ സാധിച്ചില്ല',
+'math_notexvc'          => 'പ്രവർത്തനസജ്ജമായ texvc ലഭ്യമല്ല;
+സജ്ജീകരിച്ചെടുക്കാനുള്ള സഹായത്തിനു ദയവായി math/README കാണുക.',
+
 # Patrolling
 'markaspatrolleddiff'                 => 'റോന്തുചുറ്റിയതായി അടയാളപ്പെടുത്തുക',
 'markaspatrolledtext'                 => 'ഈ താളിൽ റോന്തുചുറ്റിയതായി രേഖപ്പെടുത്തുക',
 'markedaspatrolled'                   => 'റോന്തുചുറ്റിയതായി രേഖപ്പെടുത്തിയിരിക്കുന്നു',
-'markedaspatrolledtext'               => "\"'''{{PAGENAME}}'''\" എന്ന താളില്‍ റോന്തുചുറ്റിയതായി രേഖപ്പെടുത്തിയിരിക്കുന്നു",
+'markedaspatrolledtext'               => '[[:$1]] എന്ന താളിന്റെ തിരഞ്ഞെടുത്ത നാൾപ്പതിപ്പിൽ റോന്തുചുറ്റിയതായി രേഖപ്പെടുത്തിയിരിക്കുന്നു',
 'rcpatroldisabled'                    => 'പുതിയ മാറ്റങ്ങളുടെ റോന്തുചുറ്റൽ ദുർബലപ്പെടുത്തിയിരിക്കുന്നു',
 'rcpatroldisabledtext'                => 'പുതിയ മാറ്റങ്ങളുടെ റോന്തുചുറ്റൽ സം‌വിധാനം ദുർബലപ്പെടുത്തിയിരിക്കുകയാണ്‌.',
 'markedaspatrollederror'              => 'റോന്തുചുറ്റിയതായി അടയാളപ്പെടുത്തുക സാധ്യമല്ല',
@@ -2456,12 +2799,9 @@ $1',
 'previousdiff' => '← മുൻ‌പത്തെ വ്യത്യാസം',
 'nextdiff'     => 'അടുത്ത വ്യത്യാസം →',
 
-# Visual comparison
-'visual-comparison' => 'ദൃഷ്ടിഗോചരമായ താരതമ്യം',
-
 # Media information
 'mediawarning'         => "'''മുന്നറിയിപ്പ്''': ഈ തരത്തിലുള്ള പ്രമാണത്തിൽ വിനാശകാരിയായ കോഡ് ഉണ്ടായേക്കാം. ഇതു തുറക്കുന്നതു താങ്കളുടെ കമ്പ്യൂട്ടറിനു അപകടമായി തീർന്നേക്കാം.",
-'imagemaxsize'         => 'ചിത്രത്താളുകളിൽ ചിത്രത്തിന്റെ വലിപ്പം:',
+'imagemaxsize'         => "ചിത്രത്തിന്റെ വലിപ്പം:<br />''(പ്രമാണത്തിന്റെ വിവരണ താളുകളിൽ)''",
 'thumbsize'            => 'ലഘുചിത്രത്തിന്റെ വലിപ്പം:',
 'widthheightpage'      => '$1×$2, $3 {{PLURAL:$3|താൾ|താളുകൾ}}',
 'file-info'            => '(പ്രമാണത്തിന്റെ വലിപ്പം: $1, MIME തരം: $2)',
@@ -2470,6 +2810,8 @@ $1',
 'svg-long-desc'        => '(SVG പ്രമാണം, നാമമാത്രമായ $1 × $2 പിക്സലുകൾ, പ്രമാണത്തിന്റെ വലിപ്പം: $3)',
 'show-big-image'       => 'പൂർണ്ണ റെസലൂഷൻ',
 'show-big-image-thumb' => '<small>ഈ പ്രിവ്യൂവിന്റെ വലിപ്പം: $1 × $2 പിക്സലുകൾ</small>',
+'file-info-gif-looped' => 'പുനരാവർത്തിതം',
+'file-info-gif-frames' => '{{PLURAL:$1|ഒരു ചട്ടം|$1 ചട്ടങ്ങൾ}}',
 
 # Special:NewFiles
 'newimages'             => 'പുതിയ പ്രമാണങ്ങളുടെ ഗാലറി',
@@ -2500,7 +2842,7 @@ $1',
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # EXIF tags
 'exif-imagewidth'                  => 'വീതി',
@@ -2611,14 +2953,14 @@ $1',
 
 'exif-unknowndate' => 'തീയ്യതി അജ്ഞാതം',
 
-'exif-orientation-1' => 'സാധാരണം', # 0th row: top; 0th column: left
-'exif-orientation-2' => 'തിരശ്ചീനമാക്കി', # 0th row: top; 0th column: right
-'exif-orientation-3' => '180° തിരിച്ചു', # 0th row: bottom; 0th column: right
-'exif-orientation-4' => 'കുത്തനെ തിരിച്ചു', # 0th row: bottom; 0th column: left
-'exif-orientation-5' => '90° CCW തിരിക്കുകയും കുത്തനെയാക്കുകയും ചെയ്തു', # 0th row: left; 0th column: top
-'exif-orientation-6' => '90° CW തിരിച്ചു', # 0th row: right; 0th column: top
-'exif-orientation-7' => '90° CW തിരിക്കുകയും കുത്തനെയാക്കുകയും ചെയ്തു', # 0th row: right; 0th column: bottom
-'exif-orientation-8' => '90° CCW തിരിച്ചു', # 0th row: left; 0th column: bottom
+'exif-orientation-1' => 'സാധാരണം',
+'exif-orientation-2' => 'തിരശ്ചീനമാക്കി',
+'exif-orientation-3' => '180° തിരിച്ചു',
+'exif-orientation-4' => 'കുത്തനെ തിരിച്ചു',
+'exif-orientation-5' => '90° CCW തിരിക്കുകയും കുത്തനെയാക്കുകയും ചെയ്തു',
+'exif-orientation-6' => '90° CW തിരിച്ചു',
+'exif-orientation-7' => '90° CW തിരിക്കുകയും കുത്തനെയാക്കുകയും ചെയ്തു',
+'exif-orientation-8' => '90° CCW തിരിച്ചു',
 
 'exif-componentsconfiguration-0' => 'നിലവിലില്ല',
 
@@ -2720,7 +3062,7 @@ $1',
 'exif-gpsmeasuremode-2' => 'ദ്വിമാന അളവ്',
 'exif-gpsmeasuremode-3' => 'ത്രിമാന അളവ്',
 
-# Pseudotags used for GPSSpeedRef and GPSDestDistanceRef
+# Pseudotags used for GPSSpeedRef
 'exif-gpsspeed-k' => 'കിലോമീറ്റർ/മണിക്കൂർ',
 'exif-gpsspeed-m' => 'മൈലുകൾ/മണിക്കൂർ',
 'exif-gpsspeed-n' => 'നോട്ടുകൾ (Knots)',
@@ -2739,6 +3081,7 @@ $1',
 'watchlistall2'    => 'എല്ലാം',
 'namespacesall'    => 'എല്ലാം',
 'monthsall'        => 'എല്ലാം',
+'limitall'         => 'എല്ലാം',
 
 # E-mail address confirmation
 'confirmemail'             => 'ഇമെയിൽ വിലാസം സ്ഥിരീകരിക്കൽ',
@@ -2758,13 +3101,13 @@ $1',
 'confirmemail_loggedin'    => 'താങ്കളുടെ ഇമെയിൽ വിലാസം സ്ഥിരീകരിക്കപ്പെട്ടിരിക്കുന്നു.',
 'confirmemail_error'       => 'താങ്കളുടെ സ്ഥിരീകരണം സൂക്ഷിച്ചുവയ്ക്കാനുള്ള ശ്രമത്തിനിടയ്ക്ക് എന്തോ പിഴവ് സംഭവിച്ചു.',
 'confirmemail_subject'     => '{{SITENAME}} ഇമെയിൽ വിലാസ സ്ഥിരീകരണം',
-'confirmemail_body'        => '$1 എന്ന ഐപി വിലാസത്തില്‍ നിന്നു (ഒരു പക്ഷെ താങ്കളായിരിക്കാം), "$2" എന്ന പേരോടു കൂടിയും ഈ ഇമെയില്‍ വിലാസത്തോടു കൂടിയും {{SITENAME}} സം‌രംഭത്തില്‍ ഒരു അക്കൗണ്ട് സൃഷ്ടിച്ചിരിക്കുന്നു.
+'confirmemail_body'        => '$1 എന്ന ഐ.പി. വിലാസത്തിൽ നിന്നു (ഒരു പക്ഷെ താങ്കളായിരിക്കാം), "$2" എന്ന പേരോടു കൂടിയും ഈ ഇമെയിൽ വിലാസത്തോടു കൂടിയും {{SITENAME}} സം‌രംഭത്തിൽ ഒരു അംഗത്വം സൃഷ്ടിച്ചിരിക്കുന്നു.
 
-ഈ അക്കൗണ്ട് താങ്കളുടേതാണ്‌ എന്നു സ്ഥിരീകരിക്കുവാനും {{SITENAME}} സം‌രംഭത്തില്‍ ഇമെയിലുമായി ബന്ധപ്പെട്ട സേവനങ്ങള്‍ ഉപയോഗിക്കുവാനും താഴെ കാണുന്ന കണ്ണി ബ്രൗസറില്‍ തുറക്കുക.
+ഈ അംഗത്വം താങ്കളുടേതാണ്‌ എന്നു സ്ഥിരീകരിക്കുവാനും {{SITENAME}} സം‌രംഭത്തിൽ ഇമെയിലുമായി ബന്ധപ്പെട്ട സേവനങ്ങൾ ഉപയോഗിക്കുവാനും താഴെ കാണുന്ന കണ്ണി ബ്രൗസറിൽ തുറക്കുക.
 
 $3
 
-അക്കൗണ്ട് ഉണ്ടാക്കിയത് താങ്കളല്ലെങ്കില്‍ ഇമെയില്‍ വിലാസ സ്ഥിരീകരണം റദ്ദാക്കുവാന്‍ താഴെയുള്ള കണ്ണി ബ്രൗസറില്‍ തുറക്കുക.  
+അംഗത്വം ഉണ്ടാക്കിയത് താങ്കളല്ലെങ്കിൽ ഇമെയിൽ വിലാസ സ്ഥിരീകരണം റദ്ദാക്കുവാൻ താഴെയുള്ള കണ്ണി ബ്രൗസറിൽ തുറക്കുക.  
 
 $5
 
@@ -2860,7 +3203,7 @@ $1',
 'duplicate-defaultsort' => '\'\'\'മുന്നറിയിപ്പ്:\'\'\' ക്രമപ്പെടുത്താനുള്ള ചാവിയായ "$2" മുമ്പ് ക്രമപ്പെടുത്താനുള്ള ചാവിയായിരുന്ന "$1" എന്നതിനെ അതിലംഘിക്കുന്നു.',
 
 # Special:Version
-'version'                          => 'പതിപ്പ്', # Not used as normal message but as header for the special page itself
+'version'                          => 'പതിപ്പ്',
 'version-extensions'               => 'ഇൻസ്റ്റോൾ ചെയ്തിട്ടുള്ള അനുബന്ധങ്ങൾ',
 'version-specialpages'             => 'പ്രത്യേക താളുകൾ',
 'version-variables'                => 'ചരങ്ങൾ',
@@ -2871,7 +3214,7 @@ $1',
 'version-skin-extension-functions' => 'ദൃശ്യരൂപാനുബന്ധങ്ങളുടെ കർത്തവ്യങ്ങൾ',
 'version-hook-name'                => 'കൊളുത്തിന്റെ പേര്',
 'version-hook-subscribedby'        => 'വരിക്കാരനായത്',
-'version-version'                  => 'പതിപ്പ്',
+'version-version'                  => '(പതിപ്പ് $1)',
 'version-license'                  => 'ലൈസൻസ്',
 'version-software'                 => 'ഇൻസ്റ്റാൾ ചെയ്ത സോഫ്റ്റ്‌വെയർ',
 'version-software-product'         => 'സോഫ്റ്റ്‌വെയർ ഉല്പ്പന്നം',
@@ -2941,5 +3284,16 @@ $1',
 'dberr-usegoogle'   => 'അതേസമയം താങ്കൾക്ക് ഗൂഗിൾ വഴി തിരയുവാൻ ശ്രമിക്കാവുന്നതാണ്.',
 'dberr-outofdate'   => 'ഞങ്ങളുടെ ഉള്ളടക്കത്തിന്റെ സൂചികകൾ കാലഹരണപ്പെട്ടതാകാമെന്ന് ഓർക്കുക.',
 'dberr-cachederror' => 'ആവശ്യപ്പെട്ട താളിന്റെ കാഷ് ചെയ്യപ്പെട്ട പകർപ്പാണിത്, ഇത് ഇപ്പോഴുള്ളതാകണമെന്നില്ല.',
+
+# HTML forms
+'htmlform-invalid-input'       => 'താങ്കൾ നൽകിയ ചില വിവരങ്ങളിൽ അപാകതകളുണ്ട്',
+'htmlform-select-badoption'    => 'താങ്കൾ നൽകിയ വില ഒരു സ്വീകാര്യമായ ഉപാധിയല്ല.',
+'htmlform-int-invalid'         => 'താങ്കൾ നൽകിയ വില ഒരു പൂർണ്ണസംഖ്യയല്ല.',
+'htmlform-float-invalid'       => 'താങ്കൾ നൽകിയ വില ഒരു അക്കമല്ല.',
+'htmlform-int-toolow'          => 'താങ്കൾ നൽകിയത് ഏറ്റവും കുറഞ്ഞ വിലയായ $1-നു താഴെയാണ്',
+'htmlform-int-toohigh'         => 'താങ്കൾ നൽകിയത് ഏറ്റവും കൂടിയ വിലയായ $1-നു മുകളിലാണ്',
+'htmlform-submit'              => 'സമർപ്പിക്കുക',
+'htmlform-reset'               => 'മാറ്റങ്ങൾ വേണ്ട',
+'htmlform-selectorother-other' => 'മറ്റുള്ളവ',
 
 );

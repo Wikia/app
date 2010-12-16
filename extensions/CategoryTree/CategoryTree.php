@@ -62,7 +62,7 @@ $wgCategoryTreeMaxDepth = array(CT_MODE_PAGES => 1, CT_MODE_ALL => 1, CT_MODE_CA
 # Set $wgCategoryTreeForceHeaders to true to force the JS and CSS headers for CategoryTree to be included on every page. 
 # May be usefull for using CategoryTree from within system messages, in the sidebar, or a custom skin.
 $wgCategoryTreeForceHeaders = false; 
-$wgCategoryTreeSidebarRoot = NULL;
+$wgCategoryTreeSidebarRoot = null;
 $wgCategoryTreeHijackPageCategories = false; # EXPERIMENTAL! NOT YET FOR PRODUCTION USE! Main problem is general HTML/CSS layout cruftiness.
 
 $wgCategoryTreeExtPath = $wgExtensionsPath . '/CategoryTree'; # Wikia change - RT #11231
@@ -72,8 +72,8 @@ $wgCategoryTreeUseCategoryTable = version_compare( $wgVersion, "1.13", '>=' );
 $wgCategoryTreeOmitNamespace = CT_HIDEPREFIX_CATEGORIES;
 $wgCategoryTreeDefaultMode = CT_MODE_CATEGORIES;
 $wgCategoryTreeDefaultOptions = array(); #Default values for most options. ADD NEW OPTIONS HERE!
-$wgCategoryTreeDefaultOptions['mode'] = NULL; # will be set to $wgCategoryTreeDefaultMode in efCategoryTree(); compatibility quirk
-$wgCategoryTreeDefaultOptions['hideprefix'] = NULL; # will be set to $wgCategoryTreeDefaultMode in efCategoryTree(); compatibility quirk
+$wgCategoryTreeDefaultOptions['mode'] = null; # will be set to $wgCategoryTreeDefaultMode in efCategoryTree(); compatibility quirk
+$wgCategoryTreeDefaultOptions['hideprefix'] = null; # will be set to $wgCategoryTreeDefaultMode in efCategoryTree(); compatibility quirk
 $wgCategoryTreeDefaultOptions['showcount'] = false;
 $wgCategoryTreeDefaultOptions['namespaces'] = false; # false means "no filter"
 
@@ -102,25 +102,23 @@ $wgCategoryTreePageCategoryOptions['namespaces'] = false;
 $wgCategoryTreePageCategoryOptions['depth'] = 0;
 #$wgCategoryTreePageCategoryOptions['class'] = 'CategoryTreeInlineNode';
 
-$wgExtensionAliasesFiles['CategoryTree'] = dirname(__FILE__) . '/CategoryTreePage.i18n.alias.php';
+$wgExtensionAliasesFiles['CategoryTree'] = dirname(__FILE__) . '/CategoryTree.alias.php';
 
 /**
  * Register extension setup hook and credits
  */
 $wgExtensionFunctions[] = 'efCategoryTree';
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'CategoryTree',
-	'svn-date' => '$LastChangedDate: 2009-03-09 12:54:39 +0100 (pon, 09 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48218 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CategoryTree',
 	'description' => 'Dynamically navigate the category structure',
 	'descriptionmsg' => 'categorytree-desc',
 );
 $wgExtensionCredits['parserhook'][] = array(
+	'path' => __FILE__,
 	'name' => 'CategoryTree',
-	'svn-date' => '$LastChangedDate: 2009-03-09 12:54:39 +0100 (pon, 09 mar 2009) $',
-	'svn-revision' => '$LastChangedRevision: 48218 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CategoryTree',
 	'description' => 'Dynamically navigate the category structure',
@@ -131,6 +129,11 @@ $wgExtensionCredits['parserhook'][] = array(
  * Register the special page
  */
 $dir = dirname(__FILE__) . '/';
+
+if ( $wgUseAjax && $wgCategoryTreeAllowTag ) {
+	$wgExtensionMessagesFiles['CategoryTreeMagic'] = $dir . 'CategoryTree.i18n.magic.php';
+}
+
 $wgExtensionMessagesFiles['CategoryTree'] = $dir . 'CategoryTree.i18n.php';
 $wgAutoloadClasses['CategoryTreePage'] = $dir . 'CategoryTreePage.php';
 $wgAutoloadClasses['CategoryTree'] = $dir . 'CategoryTreeFunctions.php';
@@ -139,7 +142,6 @@ $wgSpecialPages['CategoryTree'] = 'CategoryTreePage';
 $wgSpecialPageGroups['CategoryTree'] = 'pages';
 #$wgHooks['SkinTemplateTabs'][] = 'efCategoryTreeInstallTabs';
 $wgHooks['ArticleFromTitle'][] = 'efCategoryTreeArticleFromTitle';
-$wgHooks['LanguageGetMagic'][] = 'efCategoryTreeGetMagic';
 
 /**
  * register Ajax function
@@ -152,7 +154,7 @@ $wgAjaxExportList[] = 'efCategoryTreeAjaxWrapper';
 function efCategoryTree() {
 	global $wgUseAjax, $wgHooks, $wgOut;
 	global $wgCategoryTreeDefaultOptions, $wgCategoryTreeDefaultMode, $wgCategoryTreeOmitNamespace;
-	global $wgCategoryTreeCategoryPageOptions, $wgCategoryTreeCategoryPageMode;
+	global $wgCategoryTreeCategoryPageOptions, $wgCategoryTreeCategoryPageMode, $wgCategoryTreeAllowTag;
 	global $wgCategoryTreeSidebarRoot, $wgCategoryTreeForceHeaders, $wgCategoryTreeHijackPageCategories;
 
 	# Abort if AJAX is not enabled
@@ -172,10 +174,8 @@ function efCategoryTree() {
 		$wgHooks['SkinJoinCategoryLinks'][] = 'efCategoryTreeSkinJoinCategoryLinks';
 	}
 
-	if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+	if( $wgCategoryTreeAllowTag ) {
 		$wgHooks['ParserFirstCallInit'][] = 'efCategoryTreeSetHooks';
-	} else {
-		efCategoryTreeSetHooks();
 	}
 
 	if ( !isset( $wgCategoryTreeDefaultOptions['mode'] ) || is_null( $wgCategoryTreeDefaultOptions['mode'] ) ) {
@@ -198,26 +198,9 @@ function efCategoryTree() {
 	}
 }
 
-function efCategoryTreeSetHooks() {
-	global $wgParser, $wgCategoryTreeAllowTag;
-	if ( $wgCategoryTreeAllowTag ) {
-		$wgParser->setHook( 'categorytree' , 'efCategoryTreeParserHook' );
-		$wgParser->setFunctionHook( 'categorytree' , 'efCategoryTreeParserFunction' );
-	}
-	return true;
-}
-
-/**
-* Hook magic word
-*/
-function efCategoryTreeGetMagic( &$magicWords, $langCode ) {
-	global $wgUseAjax, $wgCategoryTreeAllowTag;
-
-	if ( $wgUseAjax && $wgCategoryTreeAllowTag ) {
-		//XXX: should we allow a local alias?
-		$magicWords['categorytree'] = array( 0, 'categorytree' );
-	}
-
+function efCategoryTreeSetHooks( &$parser ) {
+	$parser->setHook( 'categorytree' , 'efCategoryTreeParserHook' );
+	$parser->setFunctionHook( 'categorytree' , 'efCategoryTreeParserFunction' );
 	return true;
 }
 
@@ -323,7 +306,7 @@ function efCategoryTreeSkinTemplateOutputPageBeforeExec( &$skin, &$tpl ) {
  * Entry point for the <categorytree> tag parser hook.
  * This loads CategoryTreeFunctions.php and calls CategoryTree::getTag()
  */
-function efCategoryTreeParserHook( $cat, $argv, $parser = NULL, $allowMissing = false ) {
+function efCategoryTreeParserHook( $cat, $argv, $parser = null, $allowMissing = false ) {
 	global $wgOut;
 
 	if ( $parser ) {
@@ -377,7 +360,7 @@ function efCategoryTreeOutputPageMakeCategoryLinks( &$out, &$categories, &$links
 	$ct = new CategoryTree( $wgCategoryTreePageCategoryOptions );
 
 	foreach ( $categories as $category => $type ) {
-		$links[$type][] = efCategoryTreeParserHook( $category, $wgCategoryTreePageCategoryOptions, NULL, true );
+		$links[$type][] = efCategoryTreeParserHook( $category, $wgCategoryTreePageCategoryOptions, null, true );
 	}
 
 	return false;

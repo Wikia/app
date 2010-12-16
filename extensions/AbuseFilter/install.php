@@ -1,15 +1,14 @@
 <?php
-
-/*
+/**
  * Makes the required changes for the AbuseFilter extension
  */
 
-require_once ( getenv('MW_INSTALL_PATH') !== false
-	? getenv('MW_INSTALL_PATH')."/maintenance/commandLine.inc"
+require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
+	? getenv( 'MW_INSTALL_PATH' ) . "/maintenance/commandLine.inc"
 	: dirname( __FILE__ ) . '/../../maintenance/commandLine.inc' );
 
 $sqlfile = '/abusefilter.tables.sql';
-if ($wgDBtype == 'postgres')
+if ( $wgDBtype == 'postgres' )
 	 $sqlfile = '/abusefilter.tables.pg.sql';
 
 dbsource( dirname( __FILE__ ) . $sqlfile );
@@ -18,7 +17,7 @@ dbsource( dirname( __FILE__ ) . $sqlfile );
 wfLoadExtensionMessages( 'AbuseFilter' );
 $user = User::newFromName( wfMsgForContent( 'abusefilter-blocker' ) );
 
-if (!$user->getId()) {
+if ( !$user->getId() ) {
 	$user->addToDatabase();
 	$user->saveSettings();
 	# Increment site_stats.ss_users

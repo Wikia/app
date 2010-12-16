@@ -13,16 +13,12 @@ $aliases['en'] = array(
 	'RefreshSpecial' => array( 'RefreshSpecial' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'RefreshSpecial' => array( 'تحديث_خاص' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'RefreshSpecial' => array( 'تحديث_خاص' ),
 );
@@ -34,17 +30,12 @@ $aliases['bs'] = array(
 
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
-	'RefreshSpecial' => array( 'Toimintosivun päivitys' ),
+	'RefreshSpecial' => array( 'Toimintosivujen päivitys' ),
 );
 
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'RefreshSpecial' => array( 'Actualizar a páxina especial' ),
-);
-
-/** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
-	'RefreshSpecial' => array( 'RefreshSpecial' ),
 );
 
 /** Hungarian (Magyar) */
@@ -57,6 +48,11 @@ $aliases['ia'] = array(
 	'RefreshSpecial' => array( 'Refrescar special' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'RefreshSpecial' => array( 'Perbarui halaman istimewa', 'PerbaruiHalamanIstimewa' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'RefreshSpecial' => array( '特別ページの更新' ),
@@ -65,6 +61,11 @@ $aliases['ja'] = array(
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'RefreshSpecial' => array( 'Spezialsäiten aktualiséieren' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'RefreshSpecial' => array( 'ПревчитајСпецијални' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -82,8 +83,18 @@ $aliases['no'] = array(
 	'RefreshSpecial' => array( 'Oppdater spesialsider' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'RefreshSpecial' => array( 'ŠpeciálneObnovenie' ),
+);
+
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'RefreshSpecial' => array( 'Natatanging pagsasariwa' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'RefreshSpecial' => array( 'ÖzelYenile' ),
 );
 

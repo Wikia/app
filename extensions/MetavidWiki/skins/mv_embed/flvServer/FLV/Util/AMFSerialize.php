@@ -46,7 +46,7 @@ class FLV_Util_AMFSerialize {
      */
     function serialize( $var, $skipMark = false )
     {
-    	$number='';	
+    	$number = '';
         // process objects as hashed arrays
         if ( is_object( $var ) )
             $var = (array)$var;
@@ -94,7 +94,6 @@ class FLV_Util_AMFSerialize {
             return ( $skipMark ? '':"\x01" ) . ( $var ? "\x01" : "\x00" );
 
         } else if ( is_numeric( $var ) ) {
-			
             $number .= pack( 'd', $var );
 
             // reverse bytes if we are in little-endian hardware
@@ -121,7 +120,8 @@ class FLV_Util_AMFSerialize {
                     if ( $this->isLittleEndian )
                         $tz = strrev( $tz );
                 }
-
+				if(!isset($tz))
+					$tz='';
                 return ( $skipMark ? '':"\x0B" ) . $this->serialize( (float)$ms, true ) . pack( 'n', $tz );
             }
 
@@ -135,7 +135,7 @@ class FLV_Util_AMFSerialize {
         } else {
 
             // if the datatype is not supported use a null value
-            return $this->serialize( NULL );
+            return $this->serialize( null );
 
         }
     }

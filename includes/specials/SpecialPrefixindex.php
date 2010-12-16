@@ -115,7 +115,7 @@ class SpecialPrefixindex extends SpecialAllpages {
 				array( 'page_namespace', 'page_title', 'page_is_redirect' ),
 				array(
 					'page_namespace' => $namespace,
-					'page_title LIKE \'' . $dbr->escapeLike( $prefixKey ) .'%\'',
+					'page_title' . $dbr->buildLike( $prefixKey, $dbr->anyString() ),
 					'page_title >= ' . $dbr->addQuotes( $fromKey ),
 				),
 				__METHOD__,
@@ -136,7 +136,10 @@ class SpecialPrefixindex extends SpecialAllpages {
 					$t = Title::makeTitle( $s->page_namespace, $s->page_title );
 					if( $t ) {
 						$link = ($s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .
-							$sk->makeKnownLinkObj( $t, htmlspecialchars( $t->getText() ), false, false ) .
+							$sk->linkKnown(
+								$t,
+								htmlspecialchars( $t->getText() )
+							) .
 							($s->page_is_redirect ? '</div>' : '' );
 					} else {
 						$link = '[[' . htmlspecialchars( $s->page_title ) . ']]';
@@ -170,17 +173,26 @@ class SpecialPrefixindex extends SpecialAllpages {
 						$nsForm .
 					'</td>
 					<td id="mw-prefixindex-nav-form">' .
-						$sk->makeKnownLinkObj( $self, wfMsg ( 'allpages' ) );
+						$sk->linkKnown( $self, wfMsgHtml( 'allpages' ) );
 
 			if( isset( $res ) && $res && ( $n == $this->maxPerPage ) && ( $s = $res->fetchObject() ) ) {
-				$namespaceparam = $namespace ? "&namespace=$namespace" : "";
+				$query = array(
+					'from' => $s->page_title,
+					'prefix' => $prefix
+				);
+
+				if( $namespace ) {
+					$query['namespace'] = $namespace;
+				}
+
 				$out2 = $wgLang->pipeList( array(
 					$out2,
-					$sk->makeKnownLinkObj(
+					$sk->linkKnown(
 						$self,
 						wfMsgHtml( 'nextpage', str_replace( '_',' ', htmlspecialchars( $s->page_title ) ) ),
-						"from=" . wfUrlEncode( $s->page_title ) .
-						"&prefix=" . wfUrlEncode( $prefix ) . $namespaceparam )
+						array(),
+						$query
+					)
 				) );
 			}
 			$out2 .= "</td></tr>" .

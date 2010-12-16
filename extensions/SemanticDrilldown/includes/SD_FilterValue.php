@@ -18,7 +18,7 @@ class SDFilterValue {
 
 	function create($actual_val, $filter_time_period = null) {
 		$fv = new SDFilterValue();
-		$fv->text = $actual_val;
+		$fv->text = htmlspecialchars($actual_val);
 
 		if ($fv->text == ' none')
 			$fv->is_none = true;

@@ -21,7 +21,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 class SRFPloticus extends SMWResultPrinter {
 	protected $m_ploticusparams = '';
-	protected $m_imageformat = 'png';
+	protected $m_imageformat = 'gif';
 	protected $m_titletext = '';
 	protected $m_showcsv = false;
 	protected $m_ploticusmode = 'prefab';
@@ -104,7 +104,7 @@ class SRFPloticus extends SMWResultPrinter {
 		// check parameters
 		$validformats = array('svg', 'svgz','swf', 'png', 'gif', 'jpeg', 'drawdump', 'drawdumpa', 'eps', 'ps');
 		if (!in_array($this->m_imageformat, $validformats))
-		    return ('<p classid="srfperror">ERROR: '. $this->m_imageformat. ' is not a supported imageformat.<br/>Valid imageformats are: ' .
+		    return ('<p classid="srfperror">ERROR: '. $this->m_imageformat. ' is not a supported imageformat.<br />Valid imageformats are: ' .
 			    implode(', ', $validformats) . '</p>');
 		
 		if (empty($this->m_ploticusparams))
@@ -165,7 +165,7 @@ class SRFPloticus extends SMWResultPrinter {
 			 foreach ($row as $field) {
 				 $growing = array();
 				 while (($object = $field->getNextObject()) !== false) {
-					 $text = Sanitizer::decodeCharReferences($object->getWikiValue());
+					 $text = Sanitizer::decodeCharReferences($object->getXSDValue());
 					 // decode: CSV knows nothing of possible HTML entities
 					 $growing[] = $text;
 				 }
@@ -302,7 +302,7 @@ class SRFPloticus extends SMWResultPrinter {
 					$rtnstr .= '<object type="application/x-shockwave-flash" data="' . $graphURL . '"' .
 						(empty($this->m_width)? ' ' : ' width="'. $this->m_width . '" ') .
 						(empty($this->m_height)? ' ' : ' height="'. $this->m_height . '" ') .
-						'<param name="movie" value="' . $graphURL .
+						'><param name="movie" value="' . $graphURL .
 						'"><param name="loop" value="false"><param name="SCALE" value="noborder"> alt : <a href="'. $graphURL .
 						'">Requires Adobe Flash plugin</a></object>';
 					break;
@@ -323,7 +323,7 @@ class SRFPloticus extends SMWResultPrinter {
 					$rtnstr .= '<object type="application/postscript" data="' . $graphURL . '"' .
 					(empty($this->m_width)? ' ' : ' width="'. $this->m_width . '" ') .
 					(empty($this->m_height)? ' ' : ' height="'. $this->m_height . '" ') .
-					' alt : <a href="'. $graphURL . '">Requires PDF-capable browser</a></object>';
+					'> alt : <a href="'. $graphURL . '">Requires PDF-capable browser</a></object>';
 			}
 			$rtnstr .= '</td></tr>';
 		}
@@ -347,6 +347,7 @@ class SRFPloticus extends SMWResultPrinter {
 		
 		// if showrefresh is on, create link to force refresh
 		if ($this->m_showrefresh) {
+			global $wgArticlePath;
 			$rtnstr .= ' <a href="' . $wgArticlePath . '?action=purge" title="Reload"><img src="'.
 				$srficonPath . 'reload_16.png" alt="Reload"></a>';
 		}

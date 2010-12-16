@@ -13,39 +13,43 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "[ <b> Error <b /> ] This is not a valid entry point.\n";
+	echo "[ <b> Error </b> ] This is not a valid entry point.\n";
 	exit( 1 );
 }
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'GetFamily',
-	'version' => '1.0',
+	'version' => '1.0.1',
 	'author' => 'Łukasz Matysiak',
 	'description' => 'Generates a family file for pywikipediabot',
+	'descriptionmsg' => 'getfamily-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:GetFamily'
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['GetFamily'] = $dir . 'GetFamily.i18n.php';
-$wgSpecialPages['GetFamily'] = array('SpecialPage', 'GetFamily', 'getfamily');
+// FIXME: add $wgExtensionAliasesFiles
+$wgSpecialPages['GetFamily'] = array( 'SpecialPage', 'GetFamily', 'getfamily' );
 
 // New user right
 $wgAvailableRights[] = 'getfamily';
 $wgGroupPermissions['*']['getfamily'] = true;
 
-function wfSpecialGetFamily(){
+// FIXME: split off into GetFamily_body.php
+function wfSpecialGetFamily() {
 	global $wgRequest, $wgLanguageNames;
 	global $wgScript, $wgDBname, $wgLanguageCode, $wgSitename, $wgServer, $wgArticlePath, $wgCanonicalNamespaceNames, $wgVersion;
 
 	$out = '';
 
-	if ( $wgRequest->getVal( 'action' ) == 'GetLocal' ){
+	if ( $wgRequest->getVal( 'action' ) == 'GetLocal' ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$fromLang = $wgRequest->getVal( 'fromLang' );
 		$result = $dbr->select( 'interwiki', array( 'iw_url' ), array( 'iw_prefix' => $fromLang ), __METHOD__ );
-		if ( $object = $dbr->fetchObject( $result ) ){
+		if ( $object = $dbr->fetchObject( $result ) ) {
 			$fromLang = $object->iw_url;
 		} else {
 			$fromLang = '';
@@ -54,31 +58,31 @@ function wfSpecialGetFamily(){
 		header( 'Content-Type: text/xml' );
 		$out .= "<family>\n";
 
-		$out .= Xml::element( 'urlcheck', array(), $fromLang )."\n";
-		$out .= Xml::element( 'language', array(), $wgLanguageCode )."\n";
-		$out .= Xml::element( 'hostname', array(), str_replace( 'http://', '', $wgServer ) )."\n";
-		$out .= Xml::element( 'path', array(), $wgScript )."\n";
+		$out .= Xml::element( 'urlcheck', array(), $fromLang ) . "\n";
+		$out .= Xml::element( 'language', array(), $wgLanguageCode ) . "\n";
+		$out .= Xml::element( 'hostname', array(), str_replace( 'http://', '', $wgServer ) ) . "\n";
+		$out .= Xml::element( 'path', array(), $wgScript ) . "\n";
 
-		//$keys = array_keys ($wgCanonicalNamespaceNames);
+		// $keys = array_keys ($wgCanonicalNamespaceNames);
 		$language = Language::factory( $wgLanguageCode );
 		$array = $language->getNamespaces();
 		$keys = array_keys( $array );
 
-		foreach( $keys as $key ){
+		foreach ( $keys as $key ) {
 			$out .= Xml::openElement( 'namespace', array() ) . "\n";
 			$out .= Xml::element( 'key', array(), $key ) . "\n";
-			//$out .= Xml::element('name', array(), $wgCanonicalNamespaceNames[$key]) . "\n";
+			// $out .= Xml::element('name', array(), $wgCanonicalNamespaceNames[$key]) . "\n";
 			$out .= Xml::element( 'name', array(), $array[$key] ) . "\n";
 			$out .= Xml::closeElement( 'namespace' );
 		}
 		$out .= "</family>\n";
 	} else {
-		header('Content-Type: text/plain');
+		header( 'Content-Type: text/plain' );
 
 		$langcodes = array_keys( $wgLanguageNames );
 
 		$dbr = wfGetDB( DB_SLAVE );
-		foreach( $langcodes as $lang_code ){
+		foreach ( $langcodes as $lang_code ) {
 			$where .= ', ' . $dbr->addQuotes( $lang_code );
 		}
 		$where = substr( $where, 1 );
@@ -86,11 +90,11 @@ function wfSpecialGetFamily(){
 
 		$datalinks = array();
 
-		while( $dbObject = $dbr->fetchObject( $result ) ){
+		while ( $dbObject = $dbr->fetchObject( $result ) ) {
 			$datalinks[$dbObject->iw_prefix] = $dbObject->iw_url;
 		}
 
-		$datalinks[$wgLanguageCode] = $wgServer.$wgArticlePath;
+		$datalinks[$wgLanguageCode] = $wgServer . $wgArticlePath;
 
 		unset( $datalinks['bug'] );
 
@@ -99,41 +103,41 @@ function wfSpecialGetFamily(){
 		$metadata['path'] = array();
 		$namespacedata = array();
 
-		foreach( $datalinks as $lang => $link ){
-			$link = str_replace( '$1', 'Special:GetFamily?action=GetLocal&fromLang='.$wgLanguageCode, $link );
-			if( !class_exists( 'WikiCurl' ) ){
+		foreach ( $datalinks as $lang => $link ) {
+			$link = str_replace( '$1', 'Special:GetFamily?action=GetLocal&fromLang=' . $wgLanguageCode, $link );
+			if ( !class_exists( 'WikiCurl' ) ) {
 				global $IP;
-				require_once("$IP/extensions/WikiCurl/WikiCurl.php");
+				require_once( "$IP/extensions/WikiCurl/WikiCurl.php" );
 			}
 			$handler = new WikiCurl();
 			$content = $handler->get( $link );
-			if ( strpos( $content, '<family>' ) === false ){
+			if ( strpos( $content, '<family>' ) === false ) {
 				unset( $handler );
 				continue;
 			}
-            $content = substr( $content, strpos( $content, "\r\n\r\n" ) + 4 );
-            unset( $handler );
+			$content = substr( $content, strpos( $content, "\r\n\r\n" ) + 4 );
+			unset( $handler );
 
 			try {
 				$xml = new SimpleXMLElement( $content );
-            } catch( Exception $e ){
+			} catch ( Exception $e ) {
 				continue;
-            }
+			}
 
-			//$urlcheck = (string)$xml->urlcheck;
-			//if ( strcmp( $urlcheck, $wgServer.$wgArticlePath ) != 0 ){
+			// $urlcheck = (string)$xml->urlcheck;
+			// if ( strcmp( $urlcheck, $wgServer.$wgArticlePath ) != 0 ){
 			//	continue;
-			//}
+			// }
 			$metadata['langs'][$lang] = (string)$xml->hostname;
 			$metadata['path'][$lang] = (string)$xml->path;
 
-			foreach( $xml->namespace as $namespace ){
+			foreach ( $xml->namespace as $namespace ) {
 				$namespacedata[(int)$namespace->key][$lang] = (string)$namespace->name;
 			}
 		}
 
-			if ( $namespacedata != array() ){
-$out .= "# -*- coding: utf-8  -*-
+		if ( $namespacedata != array() ) {
+			$out .= "# -*- coding: utf-8  -*-
 
 '''
 The $wgSitename family.
@@ -141,8 +145,8 @@ The $wgSitename family.
 This is config file for pywikipediabot framework.
 It was generated by Special:GetFamily (a Wikia extension).
 
-Save this file to families/{$wgDBname}_family.py in your pywikibot installation       
-The pywikipediabot itself is available for free download from svn.wikimedia.org          
+Save this file to families/{$wgDBname}_family.py in your pywikibot installation
+The pywikipediabot itself is available for free download from svn.wikimedia.org
 '''
 
 import family
@@ -152,24 +156,24 @@ class Family(family.Family):
     def __init__(self):
         family.Family.__init__(self)
         self.name = '$wgDBname' # Set the family name; this should be the same as in the filename.
-         
+
         self.langs = {\n";
 
 		$keys = array_keys( $metadata['langs'] );
 
-		foreach( $keys as $key ){
-           $out .= "            '$key': '{$metadata['langs'][$key]}', \n";
+		foreach ( $keys as $key ) {
+			$out .= "            '$key': '{$metadata['langs'][$key]}', \n";
 		}
 
 		$out .= "        }\n        \n";
 
 		$namespace_keys = array_keys( $namespacedata );
 
-		foreach( $namespace_keys as $key ){
+		foreach ( $namespace_keys as $key ) {
 			$langs = array_keys( $namespacedata[$key] );
 			$out .= "        self.namespaces[$key] = {\n";
 
-			foreach( $langs as $lang ){
+			foreach ( $langs as $lang ) {
 				$out .= "            '$lang': u'{$namespacedata[$key][$lang]}',\n";
 			}
 			$out .=  "        }\n        \n";
@@ -178,31 +182,30 @@ class Family(family.Family):
 		preg_match( '/[0-9]*\.[0-9]*/', $wgVersion, $version );
 		$version = $version[0];
 
-$out .= "         
+		$out .= "
     def hostname(self, code):
         return self.langs[code]
-        
+
     def path(self, code):
         path = ''\n";
 
 		$keys = array_keys( $metadata['langs'] );
 
-		foreach( $keys as $key ){
-           $out .=  "        if code == '$key':\n            path = '{$metadata['path'][$key]}'\n";
+		foreach ( $keys as $key ) {
+			$out .=  "        if code == '$key':\n            path = '{$metadata['path'][$key]}'\n";
 		}
 
+		$out .= "        return path
 
-$out .= "        return path
-     
     def login_address(self, code):
         return '%s?title=%s:Userlogin&action=submitlogin' % (self.path(code), self.special_namespace_url(code))
-     
+
     def version(self, code):
-        return '".$version."' # The MediaWiki version used. Not very important in most cases.
+        return '" . $version . "' # The MediaWiki version used. Not very important in most cases.
 ";
-} else {
-	$out .= wfMsg( 'getfamily-interwikierror' );
-}
+		} else {
+			$out .= wfMsg( 'getfamily-interwikierror' );
+		}
 	}
 	die( $out );
 }

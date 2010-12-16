@@ -56,6 +56,7 @@ $wgGroupPermissions['staff']['regexblock'] = true;
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'regexBlock',
 	'author' => array( 'Bartek Łapiński', 'Tomasz Klim', 'Piotr Molski', 'Adrian Wieczorek', 'Alexandre Emsenhuber', 'Jack Phoenix' ),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:RegexBlock',

@@ -14,6 +14,7 @@
 if( defined( 'MEDIAWIKI' ) ) {
 	$wgExtensionFunctions[] = 'efContributorsAddon';
 	$wgExtensionCredits['other'][] = array(
+		'path' => __FILE__,
 		'name' => 'ContributorsAddon',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:ContributorsAddon',
 		'author' => 'Tim Laqua',
@@ -31,7 +32,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 		return true;
 	}
 	
-	function efContributorsAddonSetup(&$out, &$parseroutput) {
+	function efContributorsAddonSetup(&$out, $parseroutput) {
 		global $wgScriptPath;
 		$out->addScript( '<link rel="stylesheet" type="text/css" href="' . $wgScriptPath . '/extensions/ContributorsAddon/ContributorsAddon.css" />' );
 		$out->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/ContributorsAddon/ContributorsAddon.js"><!-- ContributorsAddon js --></script>' );

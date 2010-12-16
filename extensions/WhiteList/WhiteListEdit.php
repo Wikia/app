@@ -29,6 +29,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  */
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'WhiteListEdit',
 	'version'        => 'v0.11.2',
 	'author'         => array('Paul Grinberg', 'Mike Sullivan'),
@@ -109,8 +110,8 @@ function WL_doCheckWhiteList(&$title, &$uwUser, $action, &$result) {
 	return WhiteListExec::CheckWhiteList($title, $uwUser, $action, $result);
 }
 
-function WL_doAddRestrictedPagesTab(&$personal_urls, $wgTitle) {
-	return WhiteListHooks::AddRestrictedPagesTab($personal_urls, $wgTitle);
+function WL_doAddRestrictedPagesTab(&$personal_urls, $title ) {
+	return WhiteListHooks::AddRestrictedPagesTab($personal_urls, $title );
 }
 
 // TODO - this is missing from Siebrand's changes

@@ -3,7 +3,7 @@
 -- Table structure for table `Confirm account`
 -- Replace /*$wgDBprefix*/ with the proper prefix
 
--- This stores all of our reviews, 
+-- This stores all of our reviews,
 -- the corresponding tags are stored in the tag table
 CREATE TABLE /*$wgDBprefix*/account_requests (
   acr_id int unsigned NOT NULL auto_increment,
@@ -42,10 +42,10 @@ CREATE TABLE /*$wgDBprefix*/account_requests (
   acr_type tinyint(255) unsigned default 0,
   -- Areas of interest
   acr_areas mediumblob NOT NULL,
-  
+
   -- Timestamp of account registration.
   acr_registration char(14) NOT NULL,
-  
+
   -- Flag for rejected accounts
   acr_deleted bool NOT NULL,
   -- Time of rejection (if rejected)
@@ -56,7 +56,7 @@ CREATE TABLE /*$wgDBprefix*/account_requests (
   acr_user int unsigned NOT NULL default 0,
   -- Reason
   acr_comment varchar(255) NOT NULL default '',
-  
+
   PRIMARY KEY (acr_id),
   UNIQUE KEY (acr_name),
   UNIQUE KEY (acr_email(255)),
@@ -93,18 +93,18 @@ CREATE TABLE /*$wgDBprefix*/account_credentials (
   acd_storage_key VARCHAR(64) NULL,
   -- Areas of interest
   acd_areas mediumblob NOT NULL,
-  
+
   -- Timestamp of account registration.
   acd_registration char(14) NOT NULL,
-  
+
   -- Timestamp of acceptance
   acd_accepted binary(14),
   -- The user who accepted it
   acd_user int unsigned NOT NULL default 0,
   -- Reason given in email
   acd_comment varchar(255) NOT NULL default '',
-  
+
   PRIMARY KEY (acd_user_id,acd_id),
   UNIQUE KEY (acd_id)
-  
+
 ) TYPE=InnoDB;

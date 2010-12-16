@@ -41,24 +41,37 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 	}
 
 	private function run( $resultPageSet = null ) {
-		// Permission check
 		global $wgUser;
-		if ( !$wgUser->isAllowed( 'unreviewedpages' ) )
-			$this->dieUsage(
-				"You need the unreviewedpages right to request the list of"
-				." old reviewed pages.",
-				'permissiondenied'
-			);
-
 		$params = $this->extractRequestParams();
 
 		// Construct SQL Query
-		$this->addTables( array( 'page', 'flaggedpages' ) );
+		$this->addTables( array( 'page', 'flaggedpages', 'revision' ) );
 		$this->addWhereFld( 'page_namespace', $params['namespace'] );
+		$useIndex = array( 'flaggedpages' => 'fp_pending_since' );
 		if( $params['filterredir'] == 'redirects' )
 			$this->addWhereFld( 'page_is_redirect', 1 );
 		if( $params['filterredir'] == 'nonredirects' )
 			$this->addWhereFld( 'page_is_redirect', 0 );
+		if( $params['maxsize'] !== null )
+			# Get absolute difference for comparison. ABS(x-y)
+			# is broken due to mysql unsigned int design.
+			$this->addWhere( 'GREATEST(page_len,rev_len)-LEAST(page_len,rev_len) <= '.
+				intval($params['maxsize']) );
+		if( $params['filterwatched'] == 'watched' ) {
+			if( !($uid = $wgUser->getId()) ) {
+				$this->dieUsage('You must be logged-in to have a watchlist', 'notloggedin');
+			}
+			$this->addTables( 'watchlist' );
+			$this->addWhereFld( 'wl_user', $uid );
+			$this->addWhere( 'page_namespace = wl_namespace' );
+			$this->addWhere( 'page_title = wl_title' );
+		}
+		if( $params['category'] != '' ) {
+			$this->addTables( 'categorylinks' );
+			$this->addWhere( 'cl_from = fp_page_id' );
+			$this->addWhereFld( 'cl_to', $params['category'] );
+			$useIndex['categorylinks'] = 'cl_from';
+		}
 		$this->addWhereRange(
 			'fp_pending_since',
 			$params['dir'],
@@ -66,12 +79,11 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 			$params['end']
 		);
 		$this->addWhere( 'page_id=fp_page_id' );
+		$this->addWhere( 'rev_id=fp_stable' );
 		if ( !isset( $params['start'] ) && !isset( $params['end'] ) )
 			$this->addWhere( 'fp_pending_since IS NOT NULL' );
-		$this->addOption(
-			'USE INDEX',
-			array( 'flaggedpages' => 'fp_pending_since' )
-		);
+			
+		$this->addOption( 'USE INDEX', $useIndex );
 
 		if ( is_null( $resultPageSet ) ) {
 			$this->addFields( array (
@@ -79,6 +91,8 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 				'page_namespace',
 				'page_title',
 				'page_latest',
+				'page_len',
+				'rev_len',
 				'fp_stable',
 				'fp_pending_since',
 				'fp_quality'
@@ -107,20 +121,17 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 			}
 
 			if ( is_null( $resultPageSet ) ) {
-				$title = Title::makeTitle(
-					$row->page_namespace,
-					$row->page_title
-				);
+				$title = Title::newFromRow( $row );
 				$data[] = array(
 					'pageid' => intval( $row->page_id ),
 					'ns' => intval( $title->getNamespace() ),
 					'title' => $title->getPrefixedText(),
 					'revid' => intval( $row->page_latest ),
 					'stable_revid' => intval( $row->fp_stable ),
-					'pending_since' =>
-						wfTimestamp( TS_ISO_8601, $row->fp_pending_since ),
+					'pending_since' => wfTimestamp( TS_ISO_8601, $row->fp_pending_since ),
 					'flagged_level' => intval( $row->fp_quality ),
-					'flagged_level_text' => FlaggedRevs::getQualityLevelText( $row->fp_quality )
+					'flagged_level_text' => FlaggedRevs::getQualityLevelText( $row->fp_quality ),
+					'diff_size' => (int)$row->page_len - (int)$row->rev_len
 				);
 			} else {
 				$resultPageSet->processDbRow( $row );
@@ -135,8 +146,17 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 		}
 	}
 
+	public function getCacheMode( $params ) {
+		if ( $params['filterwatched'] == 'watched' ) {
+			// Private data
+			return 'private';
+		} else {
+			return 'public';
+		}
+	}
+
 	public function getAllowedParams() {
-		global $wgFlaggedRevsNamespaces;
+		$namespaces = FlaggedRevs::getReviewNamespaces();
 		return array (
 			'start' => array (
 				ApiBase::PARAM_TYPE => 'timestamp'
@@ -146,26 +166,29 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 			),
 			'dir' => array (
 				ApiBase::PARAM_DFLT => 'newer',
-				ApiBase::PARAM_TYPE => array (
-					'newer',
-					'older'
-				)
+				ApiBase::PARAM_TYPE => array( 'newer', 'older' )
+			),
+			'maxsize' => array (
+				ApiBase::PARAM_TYPE => 'integer',
+				ApiBase::PARAM_DFLT => null,
+				ApiBase::PARAM_MIN 	=> 0
+			),
+			'filterwatched' => array (
+				ApiBase::PARAM_DFLT => 'all',
+				ApiBase::PARAM_TYPE => array( 'watched', 'all' )
 			),
 			'namespace' => array (
-				ApiBase::PARAM_DFLT =>
-					!$wgFlaggedRevsNamespaces ?
-					NS_MAIN :
-					$wgFlaggedRevsNamespaces[0],
+				ApiBase::PARAM_DFLT => !$namespaces ?
+					NS_MAIN : $namespaces[0],
 				ApiBase::PARAM_TYPE => 'namespace',
 				ApiBase::PARAM_ISMULTI => true,
 			),
+			'category' => array(
+				ApiBase::PARAM_TYPE => 'string'
+			),
 			'filterredir' => array (
 				ApiBase::PARAM_DFLT => 'all',
-				ApiBase::PARAM_TYPE => array (
-					'redirects',
-					'nonredirects',
-					'all'
-				)
+				ApiBase::PARAM_TYPE => array( 'redirects', 'nonredirects', 'all' )
 			),
 			'limit' => array (
 				ApiBase::PARAM_DFLT => 10,
@@ -179,12 +202,15 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 
 	public function getParamDescription() {
 		return array (
-			'start' => 'Start listing at this timestamp.',
-			'end' => 'Stop listing at this timestamp.',
-			'namespace' => 'The namespaces to enumerate.',
-			'filterredir' => 'How to filter for redirects',
-			'limit' => 'How many total pages to return.',
-			'dir' => array(
+			'start' 	  	=> 'Start listing at this timestamp.',
+			'end'			=> 'Stop listing at this timestamp.',
+			'namespace' 	=> 'The namespaces to enumerate.',
+			'filterredir'	=> 'How to filter for redirects.',
+			'maxsize' 		=> 'Maximum character count change size.',
+			'category'      => 'Show pages only in the given category.',
+			'filterwatched' => 'How to filter for pages on your watchlist.',
+			'limit' 		=> 'How many total pages to return.',
+			'dir' 			=> array(
 				'In which direction to list.',
 				'*newer: list the longest waiting pages first',
 				'*older: list the newest items first'
@@ -198,6 +224,12 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 			'sorted by timestamp of the first unreviewed edit of that page.'
 		);
 	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'code' => 'notloggedin', 'info' => 'You must be logged-in to have a watchlist' ),
+		) );
+	}
 
 	protected function getExamples() {
 		return array (
@@ -209,6 +241,6 @@ class ApiQueryOldreviewedpages extends ApiQueryGeneratorBase {
 	}
 	
 	public function getVersion() {
-		return __CLASS__.': $Id: ApiQueryOldreviewedpages.php 44870 2008-12-21 12:48:08Z catrope $';
+		return __CLASS__.': $Id: ApiQueryOldreviewedpages.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

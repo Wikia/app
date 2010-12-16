@@ -9,7 +9,7 @@ in LocalSettings.php which loads App.php before running this script.
 
 */
 
-define('MEDIAWIKI', true );
+define( 'MEDIAWIKI', true );
 ob_end_flush();
 
 $wgUseMasterForMaintenance = true;
@@ -22,20 +22,20 @@ chdir( $IP );
 
 ini_set( 'include_path', ".$sep$IP$sep$IP/extensions/Wikidata/OmegaWiki$sep$IP/includes$sep$IP/languages$sep$IP/maintenance" );
 
-require_once( "Defines.php");
-require_once( "ProfilerStub.php");
-require_once( "LocalSettings.php");
-require_once( "Setup.php");
+require_once( "Defines.php" );
+require_once( "ProfilerStub.php" );
+require_once( "LocalSettings.php" );
+require_once( "Setup.php" );
 require_once( "StartProfiler.php" );
-require_once( "Exception.php");
-require_once( "GlobalFunctions.php");
-require_once( "Database.php");
-include_once( "AdminSettings.php");
+require_once( "Exception.php" );
+require_once( "GlobalFunctions.php" );
+require_once( "Database.php" );
+include_once( "AdminSettings.php" );
 
 global
 	$wgCommandLineMode, $wgUser, $numberOfBytes;
 
-function ReadSQLFile( $database, $pattern, $prefix, $filename ){
+function ReadSQLFile( $database, $pattern, $prefix, $filename ) {
 	$fp = fopen( $filename, 'r' );
 	if ( false === $fp ) {
 		return "Could not open \"{$filename}\".\n";
@@ -49,9 +49,9 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ){
 		$sl = strlen( $line ) - 1;
 
 		if ( $sl < 0 ) { continue; }
-		if ( '-' == $line{0} && '-' == $line{1} ) { continue; }
+		if ( '-' == $line { 0 } && '-' == $line { 1 } ) { continue; }
 
-		if ( ';' == $line{$sl} && ($sl < 2 || ';' != $line{$sl - 1})) {
+		if ( ';' == $line { $sl } && ( $sl < 2 || ';' != $line { $sl - 1 } ) ) {
 			$done = true;
 			$line = substr( $line, 0, $sl );
 		}
@@ -60,7 +60,7 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ){
 		$cmd .= "$line\n";
 
 		if ( $done ) {
-			$cmd = str_replace(';;', ";", $cmd);
+			$cmd = str_replace( ';;', ";", $cmd );
 			$cmd = trim( str_replace( $pattern, $prefix, $cmd ) );
 			$res = $database->query( $cmd );
 
@@ -76,28 +76,28 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ){
 	return true;
 }
 
-function getUserId( $userName ){
-	$dbr = wfGetDB(DB_SLAVE);
+function getUserId( $userName ) {
+	$dbr = wfGetDB( DB_SLAVE );
 	$result = $dbr->query( "select user_id from user where user_name = '$userName'" );
-	if ( $row = $dbr->fetchObject( $result ) ){
+	if ( $row = $dbr->fetchObject( $result ) ) {
 		return $row->user_id;
 	}
 	else {
-		return -1;
+		return - 1;
 	}
 }
 
-function setUser( $userid ){
+function setUser( $userid ) {
 	global $wgUser;
 	$wgUser->setId( $userid );
 	$wgUser->loadFromId();
 }
 
-function setDefaultDC( $dc ){
+function setDefaultDC( $dc ) {
 	global $wgUser, $wdDefaultViewDataSet;
 
-	$groups=$wgUser->getGroups();
-	foreach($groups as $group) {
+	$groups = $wgUser->getGroups();
+	foreach ( $groups as $group ) {
 		$wdGroupDefaultView[$group] = $dc;
 	}
 	$wdDefaultViewDataSet = $dc;
@@ -111,7 +111,7 @@ $password = $wgDBadminpassword;
 $server   = $wgDBserver;
 
 # Parse arguments
-for( $arg = reset( $argv ); $arg !== false; $arg = next( $argv ) ) {
+for ( $arg = reset( $argv ); $arg !== false; $arg = next( $argv ) ) {
 	if ( substr( $arg, 0, 8 ) == '-dataset' ) {
 		$prefix = next( $argv );
 		$wdPrefix = $prefix . "_";
@@ -135,22 +135,22 @@ for( $arg = reset( $argv ); $arg !== false; $arg = next( $argv ) ) {
 	}
 }
 
-if ( !isset( $wdTemplate ) ){
-	echo( "SQL template should be provided!\n");
-	echo( "usage: ReadPatch.php -dataset <prefix> -template <sql template> [-server <server> -database <database> -user <username> -password <password>]\n");
+if ( !isset( $wdTemplate ) ) {
+	echo( "SQL template should be provided!\n" );
+	echo( "usage: ReadPatch.php -dataset <prefix> -template <sql template> [-server <server> -database <database> -user <username> -password <password>]\n" );
 	exit();
 }
 
-if ( !isset( $wdPrefix ) ){
-	echo( "database prefix should be provided!\n");
-	echo( "usage: ReadPatch.php -dataset <prefix> -template <sql template> [-server <server> -database <database> -user <username> -password <password>]\n");
+if ( !isset( $wdPrefix ) ) {
+	echo( "database prefix should be provided!\n" );
+	echo( "usage: ReadPatch.php -dataset <prefix> -template <sql template> [-server <server> -database <database> -user <username> -password <password>]\n" );
 	exit();
 }
 
 # Do a pre-emptive check to ensure we've got credentials supplied
 # We can't, at this stage, check them, but we can detect their absence,
 # which seems to cause most of the problems people whinge about
-if( !isset( $user ) || !isset( $password ) ) {
+if ( !isset( $user ) || !isset( $password ) ) {
 	echo( "No superuser credentials could be found. Please provide the details\n" );
 	echo( "of a user with appropriate permissions to update the database. See\n" );
 	echo( "AdminSettings.sample for more details.\n\n" );
@@ -160,7 +160,7 @@ if( !isset( $user ) || !isset( $password ) ) {
 # This will vomit up an error if there are permissions problems
 $wdDatabase = new $dbclass( $server, $user, $password, $database, 1 );
 
-if( !$wdDatabase->isOpen() ) {
+if ( !$wdDatabase->isOpen() ) {
 	# Appears to have failed
 	echo( "A connection to the database could not be established. Check the\n" );
 	echo( "values of \$wgDBadminuser and \$wgDBadminpassword.\n" );

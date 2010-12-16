@@ -28,6 +28,15 @@ class SRFvCard extends SMWResultPrinter {
 		}
 	}
 
+	public function getQueryMode($context) {
+		return ($context==SMWQueryProcessor::SPECIAL_PAGE)?SMWQuery::MODE_INSTANCES:SMWQuery::MODE_NONE;
+	}
+
+	public function getName() {
+		wfLoadExtensionMessages('SemanticResultFormats');
+		return wfMsg('srf_printername_vcard');
+	}
+
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber, $wgSitename, $wgServer, $wgRequest;
 		$result = '';
@@ -38,7 +47,7 @@ class SRFvCard extends SMWResultPrinter {
 			}
 			$row = $res->getNext();
 			while ( $row !== false ) {
-				$wikipage = $row[0]->getNextObject(); // get the object
+				$wikipage = $row[0]->getResultSubject(); // get Subject of the Result
 				// name
 				$prefix = ''; // something like 'Dr.'
 				$firstname = ''; // given name
@@ -326,6 +335,9 @@ class SRFvCard extends SMWResultPrinter {
 		return $result;
 	}
 
+	public function getParameters() {
+		return parent::exportFormatParameters();
+	}
 }
 
 /**

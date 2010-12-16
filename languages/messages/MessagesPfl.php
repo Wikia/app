@@ -11,6 +11,8 @@
  * @author SPS
  */
 
+$fallback = 'de';
+
 $messages = array(
 'underline-always'  => 'Immer',
 'underline-never'   => 'Garnet',
@@ -66,9 +68,11 @@ $messages = array(
 'about'      => 'Iwwer',
 'newwindow'  => '(werd im e naie Fenschter uffgmacht)',
 'cancel'     => 'Abbreche',
-'qbfind'     => 'Finne',
 'mytalk'     => 'Gebabbel mit dir.',
 'navigation' => 'Navigation',
+
+# Cologne Blue skin
+'qbfind' => 'Finne',
 
 'errorpagetitle'   => 'Fehler',
 'returnto'         => 'Zrick zu $1.',
@@ -101,7 +105,7 @@ $messages = array(
 'otherlanguages'   => 'In annere Sproche',
 'redirectedfrom'   => '(Wairrerglaidet vun $1)',
 'redirectpagesub'  => 'Wairerlaidungssaid',
-'lastmodifiedat'   => 'Die Said isch zum ledschde Mol gänneret woore am $1, am $2.', # $1 date, $2 time
+'lastmodifiedat'   => 'Die Said isch zum ledschde Mol gänneret woore am $1, am $2.',
 'viewcount'        => 'Die Seid isch bis jetzerd {{PLURAL:$1|$1|$1}} mol uffgerufe worre.',
 'jumpto'           => 'Spring zu:',
 'jumptonavigation' => 'Navigation',
@@ -226,13 +230,13 @@ Dai Ännerunge sinn no nid gspaichert worre!",
 Wenn du nit willhsct, dass deswu du gschriwwe hoscht, gänneret un kopiert werre kann, dann duu s do nit naischraiwe.<br />
 du gebbscht do au zu, dass Du des selwerscht gschriwwe hoscht orrer vun ere effentliche, fraie Quell ('''public domain''')orrer vun ere ähnliche fraie Quell her hoscht.
 '''SCHRAIB DO NIX NAI, WAS URHEWERRECHTKLICH GSCHITZT ISCH!'''",
-'templatesused'                    => 'Vorlache wu uff derre Said gebraucht werre:',
-'templatesusedpreview'             => 'Vorlache wu in derre Vorschau gebraucht werre:',
+'templatesused'                    => '{{PLURAL:$1|Vorlach wu uff derre Said gebraucht werd|Vorlache wu uff derre Said gebraucht werre}}:',
+'templatesusedpreview'             => '{{PLURAL:$1|Vorlach wu in derre Vorschau gebraucht werd|Vorlache wu in derre Vorschau gebraucht werre}}:',
 'template-protected'               => '(gschitzt)',
 'template-semiprotected'           => '(halb-gschitzt)',
 'hiddencategories'                 => 'Die Said ghert zu {{PLURAL:$1|1 versteckelte Kategorie|$1 versteckelte Kategorie}}:',
 'permissionserrorstext-withaction' => 'Du därfscht nid $2, aus {{PLURAL:$1|dem Grund|denne Grind}}:',
-'deleted-notice'                   => 'Die Said isch glescht worre.
+'moveddeleted-notice'              => 'Die Said isch glescht worre.
 De Leschaidrach fer die Said isch do unne aagewwe als Quell.',
 
 # History pages
@@ -272,14 +276,11 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 'searchresulttext'          => 'Fer mehr Informatione iwwer d Such in {{SITENAME}}, guck emol uff [[{{MediaWiki:Helppage}}|{{int:help}}]].',
 'searchsubtitle'            => 'Du hoscht no \'\'\'[[:$1]]\'\'\' gesucht ([[Special:Prefixindex/$1|alle Saire wo mit "$1" aafange]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|alle Saire wo uf "$1" verlinkt sin]])',
 'searchsubtitleinvalid'     => "Du hoscht '''$1''' gsucht",
-'noexactmatch'              => "'''S gebbd ke Said, wu \"\$1\" hääßt.'''
-Du kannscht awwer [[:\$1|die Said aaleche]].",
-'noexactmatch-nocreate'     => "'''S gebbt ke Said, wu \"\$1\" hääßt.'''",
 'notitlematches'            => 'Ken Sairetitel gfunne',
 'notextmatches'             => 'Ken Iwwerainstimmunge mit Inhalte',
-'prevn'                     => 'voriche $1',
-'nextn'                     => 'negschte $1',
-'viewprevnext'              => 'Gugg ($1) ($2) ($3)',
+'prevn'                     => 'voriche {{PLURAL:$1|$1}}',
+'nextn'                     => 'negschte {{PLURAL:$1|$1}}',
+'viewprevnext'              => 'Gugg ($1 {{int:pipe-separator}} $2) ($3)',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 Word|$2 Wärder}})',
 'search-redirect'           => '(Wairerlaitung $1)',
 'search-section'            => '(Abschnitt $1)',
@@ -289,7 +290,6 @@ Du kannscht awwer [[:\$1|die Said aaleche]].",
 'search-interwiki-more'     => '(meh)',
 'search-mwsuggest-enabled'  => 'mid Vorschläch',
 'search-mwsuggest-disabled' => 'ke Vorschläch',
-'showingresultstotal'       => "Do {{PLURAL:$4|folcht s Suchergebnis '''$1''' vun '''$3:'''|folche d Suchergebniss '''$1–$2''' vun '''$3:'''}}",
 'nonefound'                 => "'''Hiiwais:''' S werre standardmäßich numme e Dail Namensraim durchsucht. Setz ''all:'' vor Dai Suchbegriff zum alle Saire (mit Dischbediersaire, Vorlache usw.) durchsuche orrer direkt de Name vum Namensraum, wu durchsucht werre sell.",
 'powersearch'               => 'Erwaiterte Such',
 'powersearch-legend'        => 'Erwaiterte Such',
@@ -348,6 +348,8 @@ Du kannscht awwer [[:\$1|die Said aaleche]].",
 
 # Recent changes linked
 'recentchangeslinked'         => 'Was on verlinkde Seide gemacht worre isch',
+'recentchangeslinked-feed'    => 'Was on verlinkde Seide gemacht worre isch',
+'recentchangeslinked-toolbox' => 'Was on verlinkde Seide gemacht worre isch',
 'recentchangeslinked-title'   => 'Ännerunge an Saire, wu „$1“ druf verlinkt',
 'recentchangeslinked-summary' => "Des isch e Lischt vun Ännerunge, wu erscht gmacht worre sin an Saire, die wu vun ere bstimmte Said verlinkt sin (orrer die wu zu ere bstimmte Kategorie ghere).
 Saire uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
@@ -357,12 +359,12 @@ Saire uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 # Upload
 'upload'        => 'Hochlade',
 'uploadbtn'     => 'Datei hochlade',
-'reupload'      => 'Widder hochlade',
 'uploadlogpage' => 'Dateie-Logbuch',
 'savefile'      => 'Datei schbeichere',
 'uploadedimage' => 'hot "[[$1]]" hochglare',
 
 # File description page
+'file-anchor-link'          => 'Datei',
 'filehist'                  => 'Dateigschicht',
 'filehist-help'             => 'Drick uff e Zaidpunkt zum aazääche, wie s dort ausgsähne hot.',
 'filehist-current'          => 'aktuell',
@@ -374,9 +376,7 @@ Saire uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 'filehist-comment'          => 'Kommentar',
 'imagelinks'                => 'Dateilinks',
 'linkstoimage'              => 'Die {{PLURAL:$1|Said verwaist|$1 Saire verwaise}} uff die Datei:',
-'sharedupload'              => 'Die Datei isch vun $1 un s kann sai, dass se ach vun annere Projekt gebraucht werd.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
-'shareduploadwiki-desc'     => 'Do unne hot s d Bschraiwung vun $1.',
-'shareduploadwiki-linktext' => 'Datei-Bschraiwungssaid',
+'sharedupload'              => 'Die Datei isch vun $1 un s kann sai, dass se ach vun annere Projekt gebraucht werd.',
 'uploadnewversion-linktext' => 'E naiere Version vun derre Datei hochlare',
 
 # Random page
@@ -473,7 +473,6 @@ Guck $2 fer e Lischt vun de letschte Leschunge.',
 'protectexpiry'               => 'Bis:',
 'protect_expiry_invalid'      => 'Zaidraum isch nid gildich.',
 'protect_expiry_old'          => 'Zaidraum licht in de Vergangehääd.',
-'protect-unchain'             => 'Verschiebschutz ännere',
 'protect-text'                => "Du kannscht de Schutzstatus vun de Said '''<nowiki>$1</nowiki>''' aagucke un ännere.",
 'protect-locked-access'       => "Dai Benutzerkonto hot ken Recht zum de Schutzstatus vun ener Said ze ännere.
 Do hot s di aktuelle Aistellunge vun de Said '''$1''':",
@@ -513,6 +512,7 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot ken Aifluss uff 
 
 'sp-contributions-newbies'  => 'Zaich numme Baidräch vun naie Benutzerkonte',
 'sp-contributions-blocklog' => 'Sperrlogbuch',
+'sp-contributions-talk'     => 'Dischbediere',
 'sp-contributions-search'   => 'No Baidräch suche',
 'sp-contributions-username' => 'IP-Adress orrer Benutzername:',
 'sp-contributions-submit'   => 'Suche',
@@ -536,7 +536,7 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot ken Aifluss uff 
 # Block/unblock
 'blockip'                  => 'Benutzer bloggiere',
 'ipbsubmit'                => 'Benutzer bloggiere',
-'ipboptions'               => '2 Stunne:2 hours,1 Dach:1 day,3 Dache:3 days,1 Woch:1 week,2 Woche:2 weeks,1 Monet:1 month,3 Monet:3 months,6 Monet:6 months,1 Johr:1 year,Fer immer:infinite', # display1:time1,display2:time2,...
+'ipboptions'               => '2 Stunne:2 hours,1 Dach:1 day,3 Dache:3 days,1 Woch:1 week,2 Woche:2 weeks,1 Monet:1 month,3 Monet:3 months,6 Monet:6 months,1 Johr:1 year,Fer immer:infinite',
 'ipusubmit'                => 'Die Adreß freigewwe',
 'ipblocklist'              => 'Gsperrte IP-Adresse un Benutzername',
 'blocklink'                => 'sperre',
@@ -576,7 +576,7 @@ In denne Fäll misst mer d Dischbediersaid vun Hand kopiere.",
 'move-watch'       => 'Die Said beowachde',
 'movepagebtn'      => 'Seid verschiewe',
 'pagemovedsub'     => 'Verschiewung hot geklappt',
-'movepage-moved'   => '\'\'\'"$1" isch verschowe worre uff "$2"\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'   => '\'\'\'"$1" isch verschowe worre uff "$2"\'\'\'',
 'articleexists'    => 'E Said mid dem Name gebbt s schun, orrer de Name, wu du gewählt hoscht, isch nid gildich.
 Bitte nemm e annere Name.',
 'talkexists'       => "'''Die Said selwerschd, isch verschowe worre, awwer d Dischbediersaid hot nid kenne verschowe werre, wail s schun enni gebbt mid dem Name.
@@ -624,6 +624,7 @@ Du kannscht awwer de Quelltext aagucke',
 'tooltip-search-go'               => 'Geh zu ere Said mit genää dem Namme, wenn s se gebbt',
 'tooltip-search-fulltext'         => 'Such in de Saire noch dem Text',
 'tooltip-n-mainpage'              => 'Uff d Hääptsaid geh',
+'tooltip-n-mainpage-description'  => 'Hauptseide angucke',
 'tooltip-n-portal'                => 'Iwwer s Projekt, was de duu kannscht, wo de ebbes finnscht',
 'tooltip-n-currentevents'         => 'hinnergundsinformatione finne iwwer naie Eraichnis',
 'tooltip-n-recentchanges'         => 'D Lischt vun de letschte Ännerunge in dem Wiki',
@@ -691,7 +692,7 @@ Annere Metadate sinn standardmäßig versteckelt.
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength', # Do not translate list items
+* focallength',
 
 # External editor support
 'edit-externally'      => 'Die Datei bearwaide mit ener externe Aawendung',

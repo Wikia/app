@@ -23,9 +23,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ('ApiQueryBase.php');
+	require_once ( 'ApiQueryBase.php' );
 }
 
 /**
@@ -35,36 +35,42 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiQuerySearch extends ApiQueryGeneratorBase {
 
-	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName, 'sr');
+	public function __construct( $query, $moduleName ) {
+		parent :: __construct( $query, $moduleName, 'sr' );
 	}
 
 	public function execute() {
 		$this->run();
 	}
 
-	public function executeGenerator($resultPageSet) {
-		$this->run($resultPageSet);
+	public function executeGenerator( $resultPageSet ) {
+		$this->run( $resultPageSet );
 	}
 
-	private function run($resultPageSet = null) {
-
+	private function run( $resultPageSet = null ) {
+		global $wgContLang;
 		$params = $this->extractRequestParams();
 
+		// Extract parameters
 		$limit = $params['limit'];
 		$query = $params['search'];
 		$what = $params['what'];
-		if (strval($query) === '')
-			$this->dieUsage("empty search string is not allowed", 'param-search');
+		$searchInfo = array_flip( $params['info'] );
+		$prop = array_flip( $params['prop'] );
+		
+		if ( strval( $query ) === '' )
+			$this->dieUsage( "empty search string is not allowed", 'param-search' );
 
+		// Create search engine instance and set options
 		$search = SearchEngine::create();
-		$search->setLimitOffset( $limit+1, $params['offset'] );
+		$search->setLimitOffset( $limit + 1, $params['offset'] );
 		$search->setNamespaces( $params['namespace'] );
 		$search->showRedirects = $params['redirects'];
 
-		if ($what == 'text') {
+		// Perform the actual search
+		if ( $what == 'text' ) {
 			$matches = $search->searchText( $query );
-		} elseif( $what == 'title' ) {
+		} elseif ( $what == 'title' ) {
 			$matches = $search->searchTitle( $query );
 		} else {
 			// We default to title searches; this is a terrible legacy
@@ -78,36 +84,61 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 			// for instance the Lucene-based engine we use on Wikipedia.
 			// In this case, fall back to full-text search (which will
 			// include titles in it!)
-			if( is_null( $matches ) ) {
+			if ( is_null( $matches ) ) {
 				$what = 'text';
 				$matches = $search->searchText( $query );
 			}
 		}
-		if (is_null($matches))
-			$this->dieUsage("{$what} search is disabled",
-					"search-{$what}-disabled");
+		if ( is_null( $matches ) )
+			$this->dieUsage( "{$what} search is disabled", "search-{$what}-disabled" );
+		
+		// Add search meta data to result
+		if ( isset( $searchInfo['totalhits'] ) ) {
+			$totalhits = $matches->getTotalHits();
+			if ( $totalhits !== null ) {
+				$this->getResult()->addValue( array( 'query', 'searchinfo' ),
+						'totalhits', $totalhits );
+			}
+		}
+		if ( isset( $searchInfo['suggestion'] ) && $matches->hasSuggestion() ) {
+			$this->getResult()->addValue( array( 'query', 'searchinfo' ),
+						'suggestion', $matches->getSuggestionQuery() );
+		}
 
+		// Add the search results to the result
+		$terms = $wgContLang->convertForSearchResult( $matches->termMatches() );
 		$titles = array ();
 		$count = 0;
-		while( $result = $matches->next() ) {
-			if (++ $count > $limit) {
+		while ( $result = $matches->next() ) {
+			if ( ++ $count > $limit ) {
 				// We've reached the one extra which shows that there are additional items to be had. Stop here...
-				$this->setContinueEnumParameter('offset', $params['offset'] + $params['limit']);
+				$this->setContinueEnumParameter( 'offset', $params['offset'] + $params['limit'] );
 				break;
 			}
 
 			// Silently skip broken and missing titles
-			if ($result->isBrokenTitle() || $result->isMissingRevision())
+			if ( $result->isBrokenTitle() || $result->isMissingRevision() )
 				continue;
 			
 			$title = $result->getTitle();
-			if (is_null($resultPageSet)) {
+			if ( is_null( $resultPageSet ) ) {
 				$vals = array();
-				ApiQueryBase::addTitleInfo($vals, $title);
-				$fit = $this->getResult()->addValue(array('query', $this->getModuleName()), null, $vals);
-				if(!$fit)
-				{
-					$this->setContinueEnumParameter('offset', $params['offset'] + $count - 1);
+				ApiQueryBase::addTitleInfo( $vals, $title );
+				
+				if ( isset( $prop['snippet'] ) )
+					$vals['snippet'] = $result->getTextSnippet( $terms );
+				if ( isset( $prop['size'] ) )
+					$vals['size'] = $result->getByteSize();
+				if ( isset( $prop['wordcount'] ) )
+					$vals['wordcount'] = $result->getWordCount();
+				if ( isset( $prop['timestamp'] ) )
+					$vals['timestamp'] = wfTimestamp( TS_ISO_8601, $result->getTimestamp() );
+				
+				// Add item to results and see whether it fits
+				$fit = $this->getResult()->addValue( array( 'query', $this->getModuleName() ),
+						null, $vals );
+				if ( !$fit ) {
+					$this->setContinueEnumParameter( 'offset', $params['offset'] + $count - 1 );
 					break;
 				}
 			} else {
@@ -115,10 +146,12 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 			}
 		}
 
-		if (is_null($resultPageSet)) {
-			$this->getResult()->setIndexedTagName_internal(array('query', $this->getModuleName()), 'p');
+		if ( is_null( $resultPageSet ) ) {
+			$this->getResult()->setIndexedTagName_internal( array(
+						'query', $this->getModuleName()
+					), 'p' );
 		} else {
-			$resultPageSet->populateFromTitles($titles);
+			$resultPageSet->populateFromTitles( $titles );
 		}
 	}
 
@@ -141,14 +174,32 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 					'text',
 				)
 			),
+			'info' => array(
+				ApiBase :: PARAM_DFLT => 'totalhits|suggestion',
+				ApiBase :: PARAM_TYPE => array (
+					'totalhits',
+					'suggestion',
+				),
+				ApiBase :: PARAM_ISMULTI => true,
+			),
+			'prop' => array(
+				ApiBase :: PARAM_DFLT => 'size|wordcount|timestamp|snippet',
+				ApiBase :: PARAM_TYPE => array (
+					'size',
+					'wordcount',
+					'timestamp',
+					'snippet',
+				),
+				ApiBase :: PARAM_ISMULTI => true,
+			),
 			'redirects' => false,
 			'offset' => 0,
 			'limit' => array (
 				ApiBase :: PARAM_DFLT => 10,
 				ApiBase :: PARAM_TYPE => 'limit',
 				ApiBase :: PARAM_MIN => 1,
-				ApiBase :: PARAM_MAX => ApiBase :: LIMIT_BIG1,
-				ApiBase :: PARAM_MAX2 => ApiBase :: LIMIT_BIG2
+				ApiBase :: PARAM_MAX => ApiBase :: LIMIT_SML1,
+				ApiBase :: PARAM_MAX2 => ApiBase :: LIMIT_SML2
 			)
 		);
 	}
@@ -158,6 +209,8 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 			'search' => 'Search for all page titles (or content) that has this value.',
 			'namespace' => 'The namespace(s) to enumerate.',
 			'what' => 'Search inside the text or titles.',
+			'info' => 'What metadata to return.',
+			'prop' => 'What properties to return.',
 			'redirects' => 'Include redirect pages in the search.',
 			'offset' => 'Use this value to continue paging (return by query)',
 			'limit' => 'How many total pages to return.'
@@ -166,6 +219,14 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 
 	public function getDescription() {
 		return 'Perform a full text search';
+	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'code' => 'param-search', 'info' => 'empty search string is not allowed' ),
+			array( 'code' => 'search-text-disabled', 'info' => 'text search is disabled' ),
+			array( 'code' => 'search-title-disabled', 'info' => 'title search is disabled' ),
+		) );
 	}
 
 	protected function getExamples() {
@@ -177,6 +238,6 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQuerySearch.php 69986 2010-07-27 03:57:39Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQuerySearch.php 69932 2010-07-26 08:03:21Z tstarling $';
 	}
 }

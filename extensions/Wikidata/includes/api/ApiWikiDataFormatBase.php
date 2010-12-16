@@ -24,9 +24,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	// Eclipse helper - will be ignored in production
-	require_once ('ApiFormatBase.php');
+	require_once ( 'ApiFormatBase.php' );
 }
 
 abstract class ApiWikiDataFormatBase extends ApiFormatBase {
@@ -36,15 +36,15 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 	protected $languages;
 	protected $errorMessages;
 	
-	public function __construct($main, $format) {
-		parent :: __construct($main, $format);
+	public function __construct( $main, $format ) {
+		parent :: __construct( $main, $format );
 		$this->dmRecords = array();
 		$this->languages = array();
 		$this->excluded = array();
 		$this->errorMessages = array();
 	}
 	
-	public function addDefinedMeaningRecord(& $dm) {
+	public function addDefinedMeaningRecord( & $dm ) {
 		$this->dmRecords[] = $dm;
 	}
 	
@@ -52,7 +52,7 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 		return $this->dmRecords;
 	}
 	
-	public function addOutputLanguageId($id) {
+	public function addOutputLanguageId( $id ) {
 		$this->languages[] = $id;
 	}
 	
@@ -60,7 +60,7 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 		return $this->languages;
 	}
 	
-	public function addErrorMessage($message) {
+	public function addErrorMessage( $message ) {
 		$this->errorMessages[] = $message;
 	}
 	
@@ -70,104 +70,104 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 	 * from nothing and then include specific things, call this method first.
 	 */
 	public function excludeAll() {
-		$this->setIncludeAltDefinitions(false);
-		$this->setIncludeAnnotations(false);
-		$this->setIncludeClassAttributes(false);
-		$this->setIncludeClassMembership(false);
-		$this->setIncludeCollectionMembership(false);
-		$this->setIncludeDefinitions(false);
-		$this->setIncludeRelations(false);
-		$this->setIncludeSynTrans(false);
-		$this->setIncludeSynTransAnnotations(false);
+		$this->setIncludeAltDefinitions( false );
+		$this->setIncludeAnnotations( false );
+		$this->setIncludeClassAttributes( false );
+		$this->setIncludeClassMembership( false );
+		$this->setIncludeCollectionMembership( false );
+		$this->setIncludeDefinitions( false );
+		$this->setIncludeRelations( false );
+		$this->setIncludeSynTrans( false );
+		$this->setIncludeSynTransAnnotations( false );
 	}
 	
-	public function setIncludeDefinitions($include) {
-		$this->setInclude('definition', $include);
+	public function setIncludeDefinitions( $include ) {
+		$this->setInclude( 'definition', $include );
 	}
 	
 	public function isIncludeDefinitions() {
-		return $this->isInclude('definition');
+		return $this->isInclude( 'definition' );
 	}
 
 	/** Include alternative definitions. */
-	public function setIncludeAltDefinitions($include) {
-		$this->setInclude('alternative-definitions', $include);
+	public function setIncludeAltDefinitions( $include ) {
+		$this->setInclude( 'alternative-definitions', $include );
 	}
 	
 	public function isIncludeAltDefinitions() {
-		return $this->isInclude('alternative-definitions');
+		return $this->isInclude( 'alternative-definitions' );
 	}
 
 	/** Include synonyms and translations. */
-	public function setIncludeSynTrans($include) {
-		$this->setInclude('synonyms-translations', $include);
+	public function setIncludeSynTrans( $include ) {
+		$this->setInclude( 'synonyms-translations', $include );
 	}
 	
 	public function isIncludeSynTrans() {
-		return $this->isInclude('synonyms-translations');
+		return $this->isInclude( 'synonyms-translations' );
 	}
 	
 	/** Include annotations of synonyms and translations such as part of speech. */
-	public function setIncludeSynTransAnnotations($include) {
-		$this->setInclude('option-attribute-values', $include);
+	public function setIncludeSynTransAnnotations( $include ) {
+		$this->setInclude( 'option-attribute-values', $include );
 	}
 	
 	public function isIncludeSynTransAnnotations() {
-		return $this->isInclude('option-attribute-values');
+		return $this->isInclude( 'option-attribute-values' );
 	}
 	
-	public function setIncludeClassAttributes($include) {
-		$this->setInclude('class-attributes', $include);
+	public function setIncludeClassAttributes( $include ) {
+		$this->setInclude( 'class-attributes', $include );
 	}
 	
 	public function isIncludeClassAttributes() {
-		return $this->isInclude('class-attributes');
+		return $this->isInclude( 'class-attributes' );
 	}
 	
 	/** Include annotations of the defined meaning itself, such as part of theme. */
-	public function setIncludeAnnotations($include) {
-		$this->setInclude('defined-meaning-attributes', $include);
+	public function setIncludeAnnotations( $include ) {
+		$this->setInclude( 'defined-meaning-attributes', $include );
 	}
 	
 	public function isIncludeAnnotations() {
-		return $this->isInclude('defined-meaning-attributes');
+		return $this->isInclude( 'defined-meaning-attributes' );
 	}
 	
-	public function setIncludeClassMembership($include) {
-		$this->setInclude('class-membership', $include);
+	public function setIncludeClassMembership( $include ) {
+		$this->setInclude( 'class-membership', $include );
 	}
 	
 	public function isIncludeClassMembership() {
-		return $this->isInclude('class-membership');
+		return $this->isInclude( 'class-membership' );
 	}
 	
-	public function setIncludeCollectionMembership($include) {
-		$this->setInclude('collection-membership', $include);
+	public function setIncludeCollectionMembership( $include ) {
+		$this->setInclude( 'collection-membership', $include );
 	}
 	
 	public function isIncludeCollectionMembership() {
-		return $this->isInclude('collection-membership');
+		return $this->isInclude( 'collection-membership' );
 	}
 	
-	public function setIncludeRelations($include) {
-		$this->setInclude('reciprocal-relations', $include);
+	public function setIncludeRelations( $include ) {
+		$this->setInclude( 'reciprocal-relations', $include );
 	}
 	
 	public function isIncludeRelations() {
-		return $this->isInclude('reciprocal-relations');
+		return $this->isInclude( 'reciprocal-relations' );
 	}
 	
-	private function setInclude($section, $include) {
-		if ($include) {
-			unset($this->excluded[$section]);
+	private function setInclude( $section, $include ) {
+		if ( $include ) {
+			unset( $this->excluded[$section] );
 		}
 		else {
 			$this->excluded[$section] = $section;
 		}
 	}
 	
-	private function isInclude($section) {
-		return !isset($this->excluded[$section]);
+	private function isInclude( $section ) {
+		return !isset( $this->excluded[$section] );
 	}
 
 	public static function getBaseVersion() {

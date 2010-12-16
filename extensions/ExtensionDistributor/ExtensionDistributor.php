@@ -39,10 +39,9 @@ $wgAutoloadClasses['ExtensionDistributorPage'] = $dir . 'ExtensionDistributor_bo
 $wgExtensionMessagesFiles['ExtensionDistributor'] = $dir . 'ExtensionDistributor.i18n.php';
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'Extension Distributor',
 	'author'         => 'Tim Starling',
-	'svn-date'       => '$LastChangedDate: 2009-02-25 03:06:37 +0100 (śro, 25 lut 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 47777 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:ExtensionDistributor',
 	'description'    => 'This is an extension for distributing snapshot archives of extensions',
 	'descriptionmsg' => 'extdist-desc',

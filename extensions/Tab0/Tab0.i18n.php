@@ -46,6 +46,13 @@ $messages['bg'] = array(
 	'tab0-desc' => 'Добавя етикет „0“, който позволява редактирането на първия раздел на страницата',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'tab0-desc' => 'Ouzhpennañ a ra ar pempilh "0" ul liamm evit kemmañ rann gentañ ar bajenn.',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -80,6 +87,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'tab0-desc' => 'Pśidawa rejtark "0", kótaryž wótkazujo na wobźěłański bok prědnego wótrězka boka',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'tab0-desc' => 'Προσθέτει την καρτέλα "0" η οποία συνδέεται με τη σελίδα επεξεργασίας του πρώτου τμήματος της σελίδας',
 );
 
 /** Esperanto (Esperanto)
@@ -129,6 +143,13 @@ $messages['gsw'] = array(
 /** Hebrew (עברית) */
 $messages['he'] = array(
 	'tab0-desc' => 'הוספת לשונית "0" המקשרת לעריכת הפסקה הראשונה בדף',
+);
+
+/** Hiligaynon (Ilonggo)
+ * @author Tagimata
+ */
+$messages['hil'] = array(
+	'tab0-desc' => 'Nagadugang "0" tab, ginpatapik didto sa pahina nga gina-islan sang seksiyon nga una sang pahina',
 );
 
 /** Croatian (Hrvatski)
@@ -208,6 +229,20 @@ $messages['lb'] = array(
 	'tab0-desc' => "Setzt den ''Onglet'' ''0'' derbäi, den et erlaabt déi éischt Sectioun vun enger Säit z'änneren",
 );
 
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'tab0-desc' => "Manampy ny onglet \"0\" manome lalana makany amin'ny pejim-panovàn'ny fizaràna voalohany amin'ilay pejy.",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'tab0-desc' => 'Додава јазиче „0“ во страницата за уредување, поврзувајќи го првиот дел од страницата со страницата за уредување',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -251,11 +286,19 @@ $messages['pl'] = array(
 	'tab0-desc' => 'Dodaje zakładkę „0”, linkującą do edycji pierwszej sekcji na stronie',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'tab0-desc' => 'A gionta ël tab "0", colegand a la pàgina ëd modìfica dle prima session ëd dla pàgina',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'tab0-desc' => 'Adiciona uma pestana "0", que liga à página de edição da primeira secção da página',
+	'tab0-desc' => 'Adiciona um separador "0", que liga à página de edição da primeira secção da página',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -286,6 +329,20 @@ $messages['sk'] = array(
 	'tab0-desc' => 'Pridá záložku „0” vedúcu na úpravu prvej sekcie stránky',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'tab0-desc' => 'Додаје језичак "0", повезујући ка форми за измену прве секције странице',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'tab0-desc' => 'Dodaje jezičak "0", povezujući ka formi za izmenu prve sekcije stranice',
+);
+
 /** Sundanese (Basa Sunda)
  * @author Irwangatot
  */
@@ -307,11 +364,32 @@ $messages['te'] = array(
 	'tab0-desc' => 'పేజీ లోని మొదటి భాగాన్ని మార్చడానికి లింకుతో "0" ట్యాబుని చేరుస్తుంది',
 );
 
+/** Thai (ไทย)
+ * @author Harley Hartwell
+ */
+$messages['th'] = array(
+	'tab0-desc' => 'เพิ่มแท็บ "0" เพื่อลิงก์ไปยังแบบฟอร์มแก้ไขย่อหน้าแรกของหน้า',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
 	'tab0-desc' => 'Nagdaragdag ng panglaylay na "0", na kumakawing sa pahina ng pagbabago ng unang seksyon ng pahina',
+);
+
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'tab0-desc' => 'Sayfanın ilk bölümünü değiştirme sayfasına bağlantı veren "0" sekmesini ekler',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'tab0-desc' => 'Додає вкладку "0" з посиланням на редагування першої секції сторінки',
 );
 
 /** Vèneto (Vèneto)
@@ -326,5 +404,19 @@ $messages['vec'] = array(
  */
 $messages['vi'] = array(
 	'tab0-desc' => 'Thêm tab "0", liên kết đến trang sửa đổi tại đề mục đầu tiên của trang',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'tab0-desc' => '添加“0”选项卡，链接到页面的第一节的编辑页面',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Liangent
+ */
+$messages['zh-hant'] = array(
+	'tab0-desc' => '添加“0”選項卡，鏈接到頁面的第一節的編輯頁面',
 );
 

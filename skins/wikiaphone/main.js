@@ -80,7 +80,7 @@ var MobileSkin = {
 		
 		MobileSkin.b.click(MobileSkin.toggle);
 		
-		$("#fullsite a").click(function(e){
+		$("#fullsite .fullsite").click(function(e){
 			e.preventDefault();
 			document.cookie = 'mobilefullsite=true';
 			location.reload();

@@ -43,7 +43,7 @@ class File_Ogg_Bitstream
     /**
      * @access  private
      */
-    var $_streamList;
+    var $_streamData;
     /**
      * @access  private
      */
@@ -61,7 +61,7 @@ class File_Ogg_Bitstream
      * @var     int
      * @access  private
      */
-    var $_lastGranulePos;    
+    var $_lastGranulePos;
 
     /**
      * Constructor for a generic logical stream.
@@ -72,28 +72,15 @@ class File_Ogg_Bitstream
      * @param   pointer $filePointer    File pointer for the current physical stream.
      * @access  private
      */
-    function File_Ogg_Bitstream($streamSerial, $streamData, $filePointer)
+    function __construct($streamSerial, $streamData, $filePointer)
     {
         $this->_streamSerial    = $streamSerial;
-        $this->_streamList      = $streamData;
+        $this->_streamData      = $streamData;
         $this->_filePointer     = $filePointer;
-        $this->_lastGranulePos  = 0;
-        $this->_firstGranulePos = 0;
-        // This gives an accuracy of approximately 99.7% to the streamsize of ogginfo.
-        foreach ( $streamData as $packet ) {
-            $this->_streamSize += $packet['data_length'];
-            # Reject -1 as a granule pos, that means no segment finished in the packet
-            if ( $packet['abs_granule_pos'] != 'ffffffffffffffff' ) {            	
-				$currentPos = $packet['abs_granule_pos'];            	
-                $this->_lastGranulePos = max($this->_lastGranulePos, $currentPos);
-                //set the _firstGranulePos
-                if( hexdec( $this->_firstGranulePos ) === 0){
-                    //print "on stream: $streamSerial set first gran:". $currentPos.": ". hexdec( $currentPos ) ."\n";
-                    $this->_firstGranulePos = $currentPos;
-                }
-            }
-        }
-        $this->_group = $streamData[0]['group'];
+        $this->_firstGranulePos = $streamData['first_granule_pos'];
+        $this->_lastGranulePos  = $streamData['last_granule_pos'];
+        $this->_streamSize      = $streamData['data_length'];
+        $this->_group           = $streamData['pages'][0]['group'];
     }
 
     /**
@@ -110,7 +97,7 @@ class File_Ogg_Bitstream
     {
         return ($this->_streamSerial);
     }
-    
+
     /**
      * Gives the size (in bits) of this stream.
      *

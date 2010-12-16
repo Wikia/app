@@ -30,9 +30,7 @@ class DataCenterInputBoolean extends DataCenterInput {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets defaults
 		$parameters = array_merge( self::$defaultParameters, $parameters );
 		// Begins input

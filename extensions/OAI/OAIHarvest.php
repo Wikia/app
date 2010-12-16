@@ -504,7 +504,7 @@ class OAIUpdateRecord {
 			throw new OAIError( 'Invalid filename "' . $upload['filename'] . '"' );
 		}
 		
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$data = array(
 			'img_name'        => $upload['filename'],
 			'img_size'        => IntVal( $upload['size'] ),

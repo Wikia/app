@@ -4,7 +4,7 @@ class ContributionHistory extends SpecialPage {
 		SpecialPage::SpecialPage( 'ContributionHistory' );
 	}
 
-	function execute( $language = NULL ) {
+	function execute( $language = null ) {
 		global $wgRequest, $wgOut, $wgTitle, $wgLang;
 
 		if ( !preg_match( '/^[a-z-]+$/', $language ) ) {
@@ -14,7 +14,7 @@ class ContributionHistory extends SpecialPage {
 		
 		// Get request data
 		$offset = $wgRequest->getIntOrNull( 'offset' );
-		$show = 50;
+		$show = 100;
 		
 		wfLoadExtensionMessages( 'ContributionReporting' );
 		wfLoadExtensionMessages( 'ContributionReporting', $language );
@@ -24,7 +24,6 @@ class ContributionHistory extends SpecialPage {
 		$db = efContributionReportingConnection();
 		
 		$output = '<style type="text/css">';
-		$output .= 'td {vertical-align: top; padding: 5px;}';
 		$output .= 'td.left {padding-right: 10px;}';
 		$output .= 'td.right {padding-left: 10px; text-align: right;}';
 		$output .= 'td.alt {background-color: #DDDDDD;}';
@@ -112,6 +111,9 @@ class ContributionHistory extends SpecialPage {
 		);
 		$alt = TRUE;
 		while ( $row = $res->fetchRow() ) {
+            if ( $this->isTiny( $row ) ) {
+                continue; // Skip over micro payments generally < $1
+            }
 			$contributionId = $row['contribution_id'];
 			$name = $this->formatName( $row );
 
@@ -137,12 +139,10 @@ class ContributionHistory extends SpecialPage {
 		$output .= $pagingDiv;
 
 		header( 'Cache-Control: max-age=300,s-maxage=300' );
-		$wgOut->addWikiText( '{{Template:2008/Donate-header/' . $language . '}}' );
-		$wgOut->addWikiText( '<skin>Tomas</skin>' );
+		$wgOut->addWikiText( '{{2009/Donate-header/' . $language . '}}' );
 		$wgOut->addHTML( '<h1>' . $this->msg( 'contrib-hist-header' ) . '</h1>' );
-		$wgOut->addWikiText( '<strong>{{Template:2008/Contribution history introduction/' . $language . '}}</strong>' );
+		$wgOut->addWikiText( '<strong>{{2008/Contribution history introduction/' . $language . '}}</strong>' );
 		$wgOut->addHTML( $output );
-		$wgOut->addWikiText( '{{Template:2008/Donate-footer/' . $language . '}}' );
 	}
 	
 	function msg( $key ) {

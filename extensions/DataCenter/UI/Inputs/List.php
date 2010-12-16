@@ -60,9 +60,7 @@ class DataCenterInputList extends DataCenterInput {
 
 	/* Functions */
 
-	public static function render(
-		array $parameters
-	) {
+	public static function render( array $parameters ) {
 		// Sets defaults
 		$parameters = array_merge( self::$defaultParameters, $parameters );
 		// Begins input
@@ -98,7 +96,7 @@ class DataCenterInputList extends DataCenterInput {
 				);
 			}
 		// Alternatively check if options were given
-		} else if ( $parameters['options'] ) {
+		} elseif ( $parameters['options'] ) {
 			// Loops over each option
 			foreach ( $parameters['options'] as $key => $value ) {
 				// Checks if option key was not given
@@ -126,7 +124,7 @@ class DataCenterInputList extends DataCenterInput {
 				);
 			}
 		// Alternatively check if an enum was given
-		} else if (
+		} elseif (
 			isset(
 				$parameters['enum']['category'],
 				$parameters['enum']['type'],

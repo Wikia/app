@@ -113,9 +113,6 @@ $messages = array(
 'nologinlink'       => 'Lesitala le ulufale',
 'createaccount'     => 'Lesitala le ulufale',
 'gotaccountlink'    => "Fa'aola",
-'youremail'         => "'Imeli:",
-'username'          => "Igoa o le tagata fa'aaoga:",
-'email'             => "'Imeli",
 
 # Edit pages
 'summary'      => "'Oto'otoga:",
@@ -132,6 +129,9 @@ $messages = array(
 # Preferences page
 'mypreferences'     => "Mea 'ou te fiafia i ai",
 'searchresultshead' => "Su'e",
+'youremail'         => "'Imeli:",
+'username'          => "Igoa o le tagata fa'aaoga:",
+'email'             => "'Imeli",
 
 # Groups
 'group-all' => "(mea 'uma)",

@@ -41,7 +41,6 @@ class Patroller extends SpecialPage {
 		}
 
 		# Prune old assignments if needed
-		wfSeedRandom();
 		if( 0 == mt_rand( 0, 499 ) )
 			$this->pruneAssignments();
 
@@ -158,7 +157,7 @@ class Patroller extends SpecialPage {
 	 * @return RecentChange
 	 */
 	private function fetchChange( &$user ) {
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$uid = $user->getId();
 		extract( $dbr->tableNames( 'recentchanges', 'patrollers', 'page' ) );
 		$sql = "SELECT * FROM $page, $recentchanges LEFT JOIN $patrollers ON rc_id = ptr_change
@@ -183,7 +182,7 @@ class Patroller extends SpecialPage {
 	 * @return RecentChange
 	 */
 	private function loadChange( $rcid ) {
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'recentchanges', '*', array( 'rc_id' => $rcid ), 'Patroller::loadChange' );
 		if( $dbr->numRows( $res ) > 0 ) {
 			$row = $dbr->fetchObject( $res );
@@ -201,7 +200,7 @@ class Patroller extends SpecialPage {
 	 * @return bool
 	 */
 	private function assignChange( &$edit ) {
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$val = array( 'ptr_change' => $edit->mAttribs['rc_id'], 'ptr_timestamp' => $dbw->timestamp() );
 		$res = $dbw->insert( 'patrollers', $val, 'Patroller::assignChange', 'IGNORE' );
 		return (bool)$dbw->affectedRows();
@@ -214,7 +213,7 @@ class Patroller extends SpecialPage {
 	 * @param $rcid rc_id value
 	 */
 	private function unassignChange( $rcid ) {
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'patrollers', array( 'ptr_change' => $rcid ), 'Patroller::unassignChange' );
 	}
 
@@ -224,7 +223,7 @@ class Patroller extends SpecialPage {
 	 * keep the table size down as regards old assignments
 	 */
 	private function pruneAssignments() {
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'patrollers', array( 'ptr_timestamp < ' . $dbw->timestamp( time() - 120 ) ), 'Patroller::pruneAssignments' );
 	}
 
@@ -237,7 +236,7 @@ class Patroller extends SpecialPage {
 	private function revert( &$edit, $comment = '' ) {
 		global $wgUser;
 		if( !$wgUser->isBlocked( false ) ) { # Check block against master
-			$dbw =& wfGetDB( DB_MASTER );
+			$dbw = wfGetDB( DB_MASTER );
 			$dbw->begin();
 			$title = $edit->getTitle();
 			# Prepare the comment

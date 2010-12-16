@@ -27,9 +27,8 @@ if ( !$wgUseAjax ) {
  * Register extension setup hook and credits
  */
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'AjaxTest',
-	'svn-date' => '$LastChangedDate: 2008-12-18 09:27:00 +0100 (czw, 18 gru 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44755 $',
 	'author' => 'Daniel Kinzler',
 	'description' => 'AjaxTest extension',
 );

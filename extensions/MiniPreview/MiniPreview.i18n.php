@@ -32,11 +32,12 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'minipreview-desc' => 'العرض المصغر يعرض، بجانب صورة، عروضا مسبقة صغيرة للميديا الأخرى في نفس التصنيفات أو المعروضة في نفس الصفحات',
-	'minipreview-files_in_category' => "'''$1''' {{PLURAL:$1|ملف|ملف}} إجمالي في هذا التصنيف.",
-	'minipreview-files_in_gallery' => "'''$1''' {{PLURAL:$1|ملف|ملف}} إجمالي في هذا المعرض.",
+	'minipreview-files_in_category' => "يحتوي هذا التصنيف {{PLURAL:$1||ملفًا واحدًا|ملفين|'''$1''' ملفات|'''$1''' ملفًا|'''$1''' ملف}}.",
+	'minipreview-files_in_gallery' => "يحتوي هذا المعرض {{PLURAL:$1||ملفًا واحدًا|ملفين|'''$1''' ملفات|'''$1''' ملفًا|'''$1''' ملف}}.",
 	'minipreview-no_more_files_here' => 'لا ملفات أخرى في هذا الاتجاه.',
 	'minipreview-no_category_gallery' => 'لا تصنيفات أو معارض!',
 	'minipreview-ignore_categories' => 'التالي قائمة بأسماء التصنيفات أو بدايات الأسماء. هذه التصنيفات لن يتم عرضها بواسطة العرض المصغر. على سبيل المثال، "* PD-" لن تعرض كل التصنيفات
@@ -64,6 +65,16 @@ $messages['arz'] = array(
 * CC-
 * PD-
 * Self',
+);
+
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'minipreview-files_in_category' => "De Kategorie enthåit insgsãmt '''$1''' {{PLURAL:$1|Datei|Datein}}.",
+	'minipreview-files_in_gallery' => "De Galarie enthåit insgsãmt '''$1''' {{PLURAL:$1|Datei|Datein}}.",
+	'minipreview-no_more_files_here' => 'Kane weidan Datein in dera Richtung',
+	'minipreview-no_category_gallery' => 'Kane Kategorien oda Galarien!',
 );
 
 /** Bikol Central (Bikol Central)
@@ -105,12 +116,42 @@ $messages['bg'] = array(
 	'minipreview-no_category_gallery' => 'Няма категории или галерии!',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'minipreview-desc' => 'Diskwel a ra, e-kichen ur skeudenn, rakweladennoùigoù eus mediaoù all en hevelep rummad pe diskwelet en hevelep pajennoù.',
+	'minipreview-files_in_category' => "'''$1''' {{PLURAL:$1|restr}} zo er rummad-mañ en holl.",
+	'minipreview-files_in_gallery' => "'''$1''' {{PLURAL:$1|restr}} zo er skeudennaoueg-mañ en holl.",
+	'minipreview-no_more_files_here' => "restr ebet ken el lec'hiadur-mañ.",
+	'minipreview-no_category_gallery' => 'Na rummad na skeudennaooueg ebet !',
+	'minipreview-ignore_categories' => 'Setu aze roll an anvioù rummadoù pe rakgerioù anvioù.
+Ne vo ket diskwelet ar rummadoù-se gant MiniPreview.
+Da skouer, ne vo ket diskwelet gant "* PD-" an holl rummadoù a grog gant "PD-", evel "PD-old".
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'minipreview-desc' => 'MiniPreview prikazuje male preglede drugih medijalnih datoteka pored slike iz iste kategorije ili koje su prikazane na istim stranicama',
+	'minipreview-files_in_category' => "Ova kategorija sadrži '''$1''' {{PLURAL:$1|datoteku|datoteke|datoteka}}.",
 	'minipreview-files_in_gallery' => "Ova galerija sadrži '''$1''' {{PLURAL:$1|datoteku|datoteke|datoteka}}.",
 	'minipreview-no_more_files_here' => 'Nema više datoteka u ovom pravcu.',
+	'minipreview-no_category_gallery' => 'Nema kategorija ni galerija!',
+	'minipreview-ignore_categories' => 'Slijedi spisak imena kategorija ili početaka imena.
+Ove kategorije se neće prikazivati na MiniPreview.
+Na primjer, "* PD-" neće prikazivati nijednu kategoriju koja počinje sa "PD-", poput npr. "PD-old".
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
 );
 
 /** German (Deutsch)
@@ -153,9 +194,12 @@ $messages['dsb'] = array(
 /** Greek (Ελληνικά)
  * @author Consta
  * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
 	'minipreview-files_in_category' => '$1 συνολικά {{PLURAL:$1|αρχείο υπάρχει|αρχεία υπάρχουν}} σε αυτήν την κατηγορία.',
+	'minipreview-no_more_files_here' => 'Όχι περισσότερα αρχεία σε αυτή την κατεύθυνση.',
+	'minipreview-no_category_gallery' => 'Καθόλου κατηγορίες ή συλλογές!',
 );
 
 /** Esperanto (Esperanto)
@@ -172,23 +216,46 @@ $messages['eo'] = array(
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'minipreview-desc' => 'MiniPreview muestra, próximo a una imagen, pequeñas previstas de otros medios en la mismas categorías o mostradas en las mismas páginas',
 	'minipreview-files_in_category' => "Esta categoría contiene '''$1''' {{PLURAL:$1|archivo|archivos}}.",
 	'minipreview-files_in_gallery' => "Esta galería contiene '''$1''' {{PLURAL:$1|archivo|archivos}}.",
 	'minipreview-no_more_files_here' => 'No más archivos en esta diracción.',
 	'minipreview-no_category_gallery' => 'Sin categorías ni galerías!',
+	'minipreview-ignore_categories' => 'La siguiente es una lista de nombres de categorías o nombres de comienzos.
+Estas categorías no serán mostradas por MiniPreview.
+Por ejemplo, "* PD-" No mostrará todas las categorías que comiencen con "PD-", tales como "PD-old".
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
  * @author Nike
  * @author Vililikku
+ * @author ZeiP
  */
 $messages['fi'] = array(
+	'minipreview-desc' => 'MiniPreview näyttää kuvan vieressä pieniä esikatseluita muista medioista, jotka ovat samoissa luokissa tai samoilla sivuilla.',
 	'minipreview-files_in_category' => "Tämä luokka sisältää '''$1''' {{PLURAL:$1|tiedoston|tiedostoa}}.",
 	'minipreview-files_in_gallery' => "Tämä galleria sisältää '''$1''' {{PLURAL:$1|tiedoston|tiedostoa}}.",
+	'minipreview-no_more_files_here' => 'Ei enempää tiedostoja tässä suunnassa.',
 	'minipreview-no_category_gallery' => 'Luokkia tai gallerioita ei ole.',
+	'minipreview-ignore_categories' => 'Alla on lista luokkanimistä tai nimien aluista.
+MiniPreview ei näytä näitä luokkia.
+Esimerkiksi ”* PD-” ei näytä luokkia jotka alkavat merkkijonolla ”PD-”, esimerkiksi ”PD-vanhat”.
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author McDutchie
  * @author Sherbrooke
@@ -197,15 +264,15 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'minipreview-desc' => 'Affiche un mini-aperçu, à côté d’une image, d’autres médias appartenant aux mêmes catégories ou affichés dans les mêmes pages.',
 	'minipreview-files_in_category' => 'Il y au total {{PLURAL:$1|un fichier|$1 fichiers}} dans cette catégorie.',
-	'minipreview-files_in_gallery' => "Il y a au total {{PLURAL:$1|un fichier|$1 fichiers}} dans cette galerie d'images.",
+	'minipreview-files_in_gallery' => "Il y a au total '''$1''' fichier{{PLURAL:$1||s}} dans cette galerie d’images.",
 	'minipreview-no_more_files_here' => 'Plus aucun fichier dans cette direction.',
 	'minipreview-no_category_gallery' => 'Pas de catégorie ni de galerie !',
-	'minipreview-ignore_categories' => "Ceci est la liste des noms de catégorie ou de préfixes de nom. Ces catégories ne sont pas affichées par MiniPreview. Par exemple, « * PD- » n'affichera pas toutes les catégories dont le nom commence par « PD- », telle que « PD-old ».
+	'minipreview-ignore_categories' => 'Ceci est la liste des noms de catégorie ou de préfixes de nom. Ces catégories ne sont pas affichées par MiniPreview. Par exemple, « * PD- » n’affichera pas toutes les catégories dont le nom commence par « PD- », telle que « PD-old ».
 * GFDL-
 * GFDL
 * CC-
 * PD-
-* Self",
+* Self',
 );
 
 /** Galician (Galego)
@@ -325,6 +392,25 @@ $messages['ia'] = array(
 * Self',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'minipreview-desc' => 'MiniPreview menampilkan pratayang kecil, di sebelah gambar, media lain yang ditampilkan pada kategori atau halaman yang sama',
+	'minipreview-files_in_category' => "Kategori ini memiliki '''$1''' {{PLURAL:$1|berkas|berkas}}.",
+	'minipreview-files_in_gallery' => "Galeri ini memiliki '''$1''' {{PLURAL:$1|berkas|berkas}}.",
+	'minipreview-no_more_files_here' => 'Tidak ada berkas lain di arah ini.',
+	'minipreview-no_category_gallery' => 'Tidak ada kategori atau galeri!',
+	'minipreview-ignore_categories' => 'Berikut ini adalah daftar kategori atau awalan.
+Kategori ini tidak akan ditampilkan oleh MiniPreview.
+Contohnya, "* PD-" tidak akan menampilkan kategori-kategori yang berawalan dengan "PD-", seperti "PD-old". 
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
+);
+
 /** Italian (Italiano)
  * @author Darth Kule
  */
@@ -348,11 +434,11 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'minipreview-desc' => '画像の隣に同じカテゴリに属すファイルや同じページに挿入されているファイルの小さなプレビューを生成する',
-	'minipreview-files_in_category' => "このカテゴリには合計で'''$1'''ファイルが属しています。",
-	'minipreview-files_in_gallery' => "このギャラリーには全部で'''$1'''ファイル属しています。",
+	'minipreview-files_in_category' => "このカテゴリには'''$1'''{{PLURAL:$1|ファイル}}が属しています。",
+	'minipreview-files_in_gallery' => "このギャラリーには'''$1'''{{PLURAL:$1|ファイル}}属しています。",
 	'minipreview-no_more_files_here' => 'この先にはファイルがありません。',
 	'minipreview-no_category_gallery' => 'カテゴリもギャラリーもありません。',
-	'minipreview-ignore_categories' => '以下は MiniPreview に表示しないカテゴリ名冒頭部の一覧です。ここにある文字列から始まるカテゴリは MiniPreview に表示されません。たとえば "* PD-" とあれば、 "PD-" から始まるカテゴリ（"PD-old"など）をすべて表示しません。
+	'minipreview-ignore_categories' => '以下は MiniPreview に表示しないカテゴリ名冒頭部の一覧です。ここにある文字列から始まるカテゴリは MiniPreview に表示されません。たとえば "* PD-" とあれば、 "PD-" から始まるカテゴリ("PD-old"など)をすべて表示しません。
 * GFDL-
 * GFDL
 * CC-
@@ -362,10 +448,11 @@ $messages['ja'] = array(
 
 /** Javanese (Basa Jawa)
  * @author Meursault2004
+ * @author Pras
  */
 $messages['jv'] = array(
-	'minipreview-files_in_category' => 'Gunggungé ana $1 berkas ing kategori iki.',
-	'minipreview-files_in_gallery' => 'gunggungé ana $1 berkas ing galeri iki.',
+	'minipreview-files_in_category' => "Kategori iki ngandhut '''$1''' {{PLURAL:$1|berkas|berkas}}.",
+	'minipreview-files_in_gallery' => "Galeri iki ngandhut '''$1''' {{PLURAL:$1|berkas|berkas}}.",
 	'minipreview-no_category_gallery' => 'Ora ana kategori utawa galeri!',
 );
 
@@ -403,13 +490,23 @@ un „<code>PD-neu</code>“ un esu wigger.
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
+	'minipreview-desc' => 'MiniPreview weist, niewent engem Bild, kleng Miniature vun anere Medien aus derselwechter Kategorie respektiv vun deselwechte Säiten',
 	'minipreview-files_in_category' => 'Et gëtt am ganzen $1 {{PLURAL:$1|Fichier|Fichieren}} an dëser Kategorie.',
 	'minipreview-files_in_gallery' => 'Et gëtt am ganzen $1 {{PLURAL:$1|Fichier|Fichieren}} an dëser Biller-Galerie.',
 	'minipreview-no_more_files_here' => 'Keng weider Fichieren an dëser Richtung.',
 	'minipreview-no_category_gallery' => 'Keng Kategorien oder Galerien!',
+	'minipreview-ignore_categories' => 'Dëst ass eng Lëscht mat Nimm vu Kategorien oder Ufäng vun Nimm.
+Dëse Kategorie ginnnet duerch MiniPreview ugewisen.
+Zum Beispill, "* PD-" weist net all Kategorien déi mat "PD-" ufänken, esou wéi "PD-old".
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
 );
 
 /** Lithuanian (Lietuvių)
@@ -420,13 +517,33 @@ $messages['lt'] = array(
 	'minipreview-files_in_gallery' => '$1 iš viso failų šioje galerijoje.',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'minipreview-desc' => 'МиниПреглед (MiniPreview) прикажува до една слика мали прегледи на други медии во истите категории или прикажани на истите страници',
+	'minipreview-files_in_category' => "Оваа категорија содржи '''$1''' {{PLURAL:$1|податотека|податотеки}}.",
+	'minipreview-files_in_gallery' => "Оваа галерија содржи '''$1''' {{PLURAL:$1|податотека|податотеки}}.",
+	'minipreview-no_more_files_here' => 'Нема повеќе податотеки во оваа насока.',
+	'minipreview-no_category_gallery' => 'Нема категории или галерии!',
+	'minipreview-ignore_categories' => 'Ова е листа на називи на категории или почетоци на називи.
+Овие категории нема да се прикажат на MiniPreview.
+На пример, „* PD-“ нема да ги прикаже сите категории кои започнуваат со „PD-“, како да речеме „PD-old“.
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
+);
+
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'minipreview-files_in_category' => 'ഈ വിഭാഗത്തില്‍ മൊത്തം $1 ഫയലുകള്‍.',
-	'minipreview-files_in_gallery' => 'ഈ ഗാലറിയില്‍ മൊത്തം $1 ഫയലുകള്‍.',
-	'minipreview-no_category_gallery' => 'വിഭാഗങ്ങളോ ഗാലറികളോ ഇല്ല!',
+	'minipreview-files_in_category' => "ഈ വർഗ്ഗം മൊത്തം {{PLURAL:$1|'''ഒരു''' പ്രമാണം|'''$1''' പ്രമാണങ്ങള്‍}} ഉൾക്കൊള്ളുന്നു.",
+	'minipreview-files_in_gallery' => "ഈ ചിത്രശാലയിൽ മൊത്തം {{PLURAL:$1|'''ഒരു''' പ്രമാണം|'''$1''' പ്രമാണങ്ങള്‍}} ഉൾക്കൊള്ളുന്നു.",
+	'minipreview-no_category_gallery' => 'വർഗ്ഗങ്ങളോ ഗാലറികളോ ഇല്ല!',
 );
 
 /** Marathi (मराठी)
@@ -517,6 +634,7 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'minipreview-desc' => 'MiniPreview wyświetla obok zdjęcia, podgląd–miniaturkę innych mediów w tej samej kategorii lub wyświetlanych na tych samych stronach',
 	'minipreview-files_in_category' => "W kategorii {{PLURAL:$1|jest|są|jest}} '''$1''' {{PLURAL:$1|plik|pliki|plików}}.",
 	'minipreview-files_in_gallery' => "W galerii {{PLURAL:$1|jest|są|jest}} '''$1''' {{PLURAL:$1|plik|pliki|plików}}.",
 	'minipreview-no_more_files_here' => 'Brak plików w tym kierunku.',
@@ -531,10 +649,12 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
-	'minipreview-files_in_category' => 'an total a-i son $1 archivi an sta categorìa-sì.',
-	'minipreview-files_in_gallery' => 'an total a-i son $1 archivi an sta galerìa-sì.',
+	'minipreview-desc' => 'MiniPreview a mosta, vzin a na figura, cite anteprime d\'àutri "media" ant le mideme categorìe o visualisà an sle mideme pàgine',
+	'minipreview-files_in_category' => "Sta categorìa-sì a conten '''$1''' {{PLURAL:$1|archivi|archivi}}.",
+	'minipreview-files_in_gallery' => "Sta galerìa-sì a conten '''$1''' {{PLURAL:$1|archivi|archivi}}.",
 	'minipreview-no_more_files_here' => 'Pa pì gnun archivi an sta diression-sì.',
 	'minipreview-no_category_gallery' => "Nì 'd categorìe, nì 'd galerìe!",
 	'minipreview-ignore_categories' => 'Ambelessì a-i é na lista ëd nòm ëd categorìa ò d\'inissiaj dij nòm. Ste categorìe-sì a saran pa smonùe ant la mini-presentassion. Pr\'esempi, "* PD-" a smon nen gnun-a categorìa dont nòm as anandia për "PD-", coma "PD-old". * GFDL- * GFDL * CC- * PD- * Self',
@@ -550,11 +670,12 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
-	'minipreview-desc' => 'MiniPreview apresenta, junto a uma imagem, pequenas previsões de outros ficheiros multimédia nas mesmas categoria ou apresentadas nas mesmas páginas',
+	'minipreview-desc' => 'MiniPreview apresenta, junto a uma imagem, pequenas antevisões de outros ficheiros multimédia nas mesmas categorias ou existentes nas mesmas páginas',
 	'minipreview-files_in_category' => "'''$1''' {{PLURAL:$1|ficheiro|ficheiros}} no total nesta categoria.",
 	'minipreview-files_in_gallery' => '$1 {{PLURAL:$1|ficheiro|ficheiros}} no total nesta galeria.',
 	'minipreview-no_more_files_here' => 'Não há mais ficheiros nesta direcção.',
@@ -584,6 +705,16 @@ Por exemplo, "* PD-" não mostrará todas as categorias que começam com "PD-", 
 * CC-
 * PD-
 * Self',
+);
+
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'minipreview-files_in_category' => "Această categorie conţine '''$1''' {{PLURAL:$1|fişier|fişiere}}.",
+	'minipreview-files_in_gallery' => "Această galerie conţine '''$1''' {{PLURAL:$1|fişier|fişiere}}.",
+	'minipreview-no_more_files_here' => 'Nici un alt fişier în această direcţie.',
+	'minipreview-no_category_gallery' => 'Nici o categorie sau categorie!',
 );
 
 /** Russian (Русский)
@@ -623,6 +754,22 @@ $messages['sk'] = array(
 * Self',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Обрадовић Горан
+ */
+$messages['sr-ec'] = array(
+	'minipreview-no_more_files_here' => 'Нема више фајлова у овом смеру',
+	'minipreview-no_category_gallery' => 'Нема категорија или галерија',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'minipreview-no_more_files_here' => 'Nema više fajlova u ovom smeru',
+	'minipreview-no_category_gallery' => 'Nema kategorija ili galerija',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  * @author Najami
@@ -642,11 +789,12 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
 	'minipreview-files_in_category' => "ఈ వర్గంలోని మొత్తం '''$1''' {{PLURAL:$1|ఫైలు|ఫైళ్ళు}}.",
-	'minipreview-files_in_gallery' => 'ఈ కొలువులో మొత్తం $1 ఫైళ్ళు.',
+	'minipreview-files_in_gallery' => 'ఈ కొలువులో మొత్తం $1 {{PLURAL:$1|ఫైలు|ఫైళ్ళు}}.',
 	'minipreview-no_more_files_here' => 'ఇటువైపు ఇంకేమీ ఫైళ్ళు లేవు.',
 	'minipreview-no_category_gallery' => 'వర్గాలు లేదా కొలువులు లేవు!',
 );
@@ -672,9 +820,29 @@ Halimbawa na, hindi ipapakita ng "* PD-" ang lahat ng mga kauriang nagsisimula s
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'minipreview-desc' => 'MiniÖnİzleme, bir resmin yanında aynı kategorilerde bulunan ya da aynı sayfalarda görüntülenen diğer ortam dosyalarının küçük ön izlemelerini görüntüler',
+	'minipreview-files_in_category' => "Bu kategori, '''$1''' {{PLURAL:$1|dosya|dosya}} içermektedir.",
+	'minipreview-files_in_gallery' => "Galeri '''$1''' {{PLURAL:$1|dosya|dosya}} içeriyor.",
+	'minipreview-no_more_files_here' => 'Bu yönde başka dosya bulunmamaktadır.',
 	'minipreview-no_category_gallery' => 'Hiçbir kategori veya galeri yok !',
+	'minipreview-ignore_categories' => 'Aşağıda, kategori adlarının ve ad öneklerinin bir listesi yer almaktadır.
+Bu kategorileri MiniÖnİzleme tarafından görüntülenmeyecektir.
+Örneğin, "*KM-", "KM-eski" gibi "KM-" ile başlayan tüm kategorileri görüntülemeyecektir.
+* GÖBL-
+* GÖBL
+* CC
+* KM-
+* Kişisel',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'minipreview-no_category_gallery' => 'Ei ole kategoirijoid vai gallereid!',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -711,5 +879,21 @@ Samo: „* PD-“ no ojenon kladis valik, kels primons me: „PD-“ , äs „PD
 * CC-
 * PD-
 * Self',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'minipreview-files_in_category' => "本分类包含'''$1'''个档案。",
+	'minipreview-files_in_gallery' => "本图片廊包含'''$1'''个档案。",
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'minipreview-files_in_category' => "本分類包含'''$1'''個檔案。",
+	'minipreview-files_in_gallery' => "本圖片廊包含'''$1'''個檔案。",
 );
 

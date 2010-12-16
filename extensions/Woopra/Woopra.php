@@ -18,6 +18,7 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Woopra'] = $dir . 'Woopra.i18n.php';
  
 $wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
         'name' => 'Woopra Live Stats Tracking',
         'author' => array( 'Shane'),
         'version' => '1.0.0',

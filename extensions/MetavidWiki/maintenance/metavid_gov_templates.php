@@ -78,7 +78,7 @@ if($templateName=='Bill'){
 	==Bill [[Bill Key:={{{Bill Key}}}]] in the {{ #if: {{{Session|}}}| [[Congress Session:={{{Session}}}]] |}} of Congress==
 	<span style="float:right">{{navimg|xsize=50|ysize=50|image=Crystal_Clear_mimetype_video_search.png|link=Category:{{{Bill Key}}}}}</span>
 	{{ #if: {{{Title Description|}}}|{{{Title Description}}} |}}
-	{{ #if: {{{Bill Key|}}}| <br>Media in [[:Category:{{{Bill Key}}}]] |}}
+	{{ #if: {{{Bill Key|}}}| <br />Media in [[:Category:{{{Bill Key}}}]] |}}
 	{{ #if: {{{Date Introduced|}}}|* Date Introduced: [[Date Bill Introduced:={{{Date Introduced}}}]] |}}
 	{{ #if: {{{Sponsor|}}}|* Sponsor: [[Bill Sponsor:={{{Sponsor}}}]] |}}';
 	$bill_template .= '
@@ -235,7 +235,7 @@ $template_body .='
 <h6 class="profile">Top Funding Sources</h6>
 </div>
 {{ #if: {{{MAPLight Person ID|}}}|[[Data_Source_URL:=http://www.maplight.org/map/us/legislator/{{{MAPLight Person ID}}}|MAPLight Source]]  
- |}}{{ #if: {{{Total Received|}}}|Total Campaign Contributions for {{PAGENAME}}: {{{Total Received}}} <br>|}}
+ |}}{{ #if: {{{Total Received|}}}|Total Campaign Contributions for {{PAGENAME}}: {{{Total Received}}} <br />|}}
 {{ #if: {{{Contributions Date Range|}}}|Contributions Date Range: {{{Contributions Date Range}}} |}}
 <ul>
 {{ #if: {{{Funding Interest 1|}}}|<li>[[Funding Interest:={{{Funding Interest 1}}};{{{Funding Amount 1}}}]]</li> 

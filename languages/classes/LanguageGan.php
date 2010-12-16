@@ -11,7 +11,6 @@ class GanConverter extends LanguageConverter {
 	function __construct($langobj, $maincode,
 								$variants=array(),
 								$variantfallbacks=array(),
-								$markup=array(),
 								$flags = array(),
 								$manualLevel = array() ) {
 		$this->mDescCodeSep = '：';
@@ -19,7 +18,6 @@ class GanConverter extends LanguageConverter {
 		parent::__construct($langobj, $maincode,
 									$variants,
 									$variantfallbacks,
-									$markup,
 									$flags,
 									$manualLevel);
 		$names = array(
@@ -117,7 +115,7 @@ class LanguageGan extends LanguageZh {
 
 		$this->mConverter = new GanConverter( $this, 'gan',
 								$variants, $variantfallbacks,
-								array(),array(),
+								array(),
 								$ml);
 
 		$wgHooks['ArticleSaveComplete'][] = $this->mConverter;
@@ -137,30 +135,14 @@ class LanguageGan extends LanguageZh {
 	}
 
 	// word segmentation
-	function stripForSearch( $string ) {
-		wfProfileIn( __METHOD__ );
-
-		// eventually this should be a word segmentation
-		// for now just treat each character as a word
-		// @fixme only do this for Han characters...
-		$t = preg_replace(
-				"/([\\xc0-\\xff][\\x80-\\xbf]*)/",
-				" $1", $string);
-
-        //always convert to gan-hans before indexing. it should be
-		//better to use gan-hans for search, since conversion from
-		//Traditional to Simplified is less ambiguous than the
-		//other way around
-
-		$t = $this->mConverter->autoConvert($t, 'gan-hans');
-		$t = parent::stripForSearch( $t );
-		wfProfileOut( __METHOD__ );
-		return $t;
-
+	function normalizeForSearch( $string, $autoVariant = 'gan-hans' ) {
+		// LanguageZh::normalizeForSearch
+		return parent::normalizeForSearch( $string, $autoVariant );
 	}
 
 	function convertForSearchResult( $termsArray ) {
 		$terms = implode( '|', $termsArray );
+		$terms = self::convertDoubleWidth( $terms );
 		$terms = implode( '|', $this->mConverter->autoConvertToAllVariants( $terms ) );
 		$ret = array_unique( explode('|', $terms) );
 		return $ret;

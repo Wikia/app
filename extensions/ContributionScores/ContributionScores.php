@@ -10,6 +10,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name'=>'Contribution Scores',
 	'url'=>'http://www.mediawiki.org/wiki/Extension:Contribution_Scores',
 	'author'=>'Tim Laqua',
@@ -41,11 +42,7 @@ if( version_compare( $wgVersion, '1.13', '>=' ) ) {
 
 $wgHooks['LanguageGetMagic'][] = 'efContributionScores_LanguageGetMagic';
 
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'efContributionScores_Setup';
-} else {
-	$wgExtensionFunctions[] = 'efContributionScores_Setup';
-}
+$wgHooks['ParserFirstCallInit'][] = 'efContributionScores_Setup';
 
 ///Message Cache population for versions that did not support $wgExtensionFunctions
 function efContributionScores_AddMessages() {
@@ -59,10 +56,8 @@ function efContributionScores_AddMessages() {
 	return true;
 }
 
-function efContributionScores_Setup() {
-	global $wgParser;
-
-	$wgParser->setFunctionHook( 'cscore', 'efContributionScores_Render' );
+function efContributionScores_Setup( &$parser ) {
+	$parser->setFunctionHook( 'cscore', 'efContributionScores_Render' );
 	return true;
 }
 

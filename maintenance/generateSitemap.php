@@ -4,6 +4,21 @@ define( 'GS_TALK', -1 );
 /**
  * Creates a sitemap for the site
  *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @ingroup Maintenance
  *
  * @copyright Copyright © 2005, Ævar Arnfjörð Bjarmason
@@ -16,7 +31,9 @@ define( 'GS_TALK', -1 );
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-class GenerateSitemap {
+require_once( dirname(__FILE__) . '/Maintenance.php' );
+
+class GenerateSitemap extends Maintenance {
 	/**
 	 * The maximum amount of urls in a sitemap file
 	 *
@@ -68,29 +85,7 @@ class GenerateSitemap {
 	 *
 	 * @var array
 	 */
-	var $priorities = array(
-		// Custom main namespaces
-		GS_MAIN			=> '0.5',
-		// Custom talk namesspaces
-		GS_TALK			=> '0.1',
-		// MediaWiki standard namespaces
-		NS_MAIN			=> '1.0',
-		NS_TALK			=> '0.1',
-		NS_USER			=> '0.5',
-		NS_USER_TALK		=> '0.1',
-		NS_PROJECT		=> '0.5',
-		NS_PROJECT_TALK		=> '0.1',
-		NS_FILE			=> '0.5',
-		NS_FILE_TALK		=> '0.1',
-		NS_MEDIAWIKI		=> '0.0',
-		NS_MEDIAWIKI_TALK	=> '0.1',
-		NS_TEMPLATE		=> '0.0',
-		NS_TEMPLATE_TALK	=> '0.1',
-		NS_HELP			=> '0.5',
-		NS_HELP_TALK		=> '0.1',
-		NS_CATEGORY		=> '0.5',
-		NS_CATEGORY_TALK	=> '0.1',
-	);
+	var $priorities = array();
 
 	/**
 	 * A one-dimensional array of namespaces in the wiki
@@ -129,36 +124,58 @@ class GenerateSitemap {
 	var $file;
 
 	/**
-	 * A resource pointing to php://stderr
-	 *
-	 * @var resource
+	 * Constructor
 	 */
-	var $stderr;
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = "Creates a sitemap for the site";
+		$this->addOption( 'fspath', 'The file system path to save to, e.g. /tmp/sitemap' .
+									"\n\t\tdefaults to current directory", false, true );
+		$this->addOption( 'server', "The protocol and server name to use in URLs, e.g.\n" .
+									"\t\thttp://en.wikipedia.org. This is sometimes necessary because\n" .
+									"\t\tserver name detection may fail in command line scripts.", false, true );
+		$this->addOption( 'compress', 'Compress the sitemap files, can take value yes|no, default yes', false, true );
+	}
 
 	/**
-	 * Constructor
-	 *
-	 * @param string $fspath The path to prepend to the filenames, used to
-	 *                     save them somewhere else than in the root directory
-	 * @param string $path The path to append to the domain name
-	 * @param bool $compress Whether to compress the sitemap files
+	 * Execute
 	 */
-	function GenerateSitemap( $fspath, $compress ) {
+	public function execute() {
 		global $wgScriptPath;
-
+		$this->setNamespacePriorities();
 		$this->url_limit = 50000;
 		$this->size_limit = pow( 2, 20 ) * 10;
-		$this->fspath = self::init_path( $fspath );
-
-		$this->compress = $compress;
-
-		$this->stderr = fopen( 'php://stderr', 'wt' );
+		$this->fspath = self::init_path( $this->getOption( 'fspath', getcwd() ) );
+		$this->compress = $this->getOption( 'compress', 'yes' ) !== 'no';
 		$this->dbr = wfGetDB( DB_SLAVE );
 		$this->generateNamespaces();
 		$this->timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
-
-
 		$this->findex = fopen( "{$this->fspath}sitemap-index-" . wfWikiID() . ".xml", 'wb' );
+		$this->main();
+	}
+
+	private function setNamespacePriorities() {
+		// Custom main namespaces
+		$this->priorities[GS_MAIN] = '0.5';
+		// Custom talk namesspaces
+		$this->priorities[GS_TALK] = '0.1';
+		// MediaWiki standard namespaces
+		$this->priorities[NS_MAIN] = '1.0';
+		$this->priorities[NS_TALK] = '0.1';
+		$this->priorities[NS_USER] = '0.5';
+		$this->priorities[NS_USER_TALK] = '0.1';
+		$this->priorities[NS_PROJECT] = '0.5';
+		$this->priorities[NS_PROJECT_TALK] = '0.1';
+		$this->priorities[NS_FILE] = '0.5';
+		$this->priorities[NS_FILE_TALK] = '0.1';
+		$this->priorities[NS_MEDIAWIKI] = '0.0';
+		$this->priorities[NS_MEDIAWIKI_TALK] = '0.1';
+		$this->priorities[NS_TEMPLATE] = '0.0';
+		$this->priorities[NS_TEMPLATE_TALK] = '0.1';
+		$this->priorities[NS_HELP] = '0.5';
+		$this->priorities[NS_HELP_TALK] = '0.1';
+		$this->priorities[NS_CATEGORY] = '0.5';
+		$this->priorities[NS_CATEGORY_TALK] = '0.1';
 	}
 
 	/**
@@ -170,7 +187,7 @@ class GenerateSitemap {
 		}
 		# Create directory if needed
 		if( $fspath && !is_dir( $fspath ) ) {
-			mkdir( $fspath, 0755 ) or die("Can not create directory $fspath.\n");
+			wfMkdirParents( $fspath ) or die("Can not create directory $fspath.\n");
 		}
 
 		return realpath( $fspath ). DIRECTORY_SEPARATOR ;
@@ -180,8 +197,6 @@ class GenerateSitemap {
 	 * Generate a one-dimensional array of existing namespaces
 	 */
 	function generateNamespaces() {
-		$fname = 'GenerateSitemap::generateNamespaces';
-
 		// Only generate for specific namespaces if $wgSitemapNamespaces is an array.
 		global $wgSitemapNamespaces;
 		if( is_array( $wgSitemapNamespaces ) ) {
@@ -192,14 +207,14 @@ class GenerateSitemap {
 		$res = $this->dbr->select( 'page',
 			array( 'page_namespace' ),
 			array(),
-			$fname,
+			__METHOD__,
 			array(
 				'GROUP BY' => 'page_namespace',
 				'ORDER BY' => 'page_namespace',
 			)
 		);
 
-		while ( $row = $this->dbr->fetchObject( $res ) )
+		foreach ( $res as $row )
 			$this->namespaces[] = $row->page_namespace;
 	}
 
@@ -236,8 +251,6 @@ class GenerateSitemap {
 	 * @return resource
 	 */
 	function getPageRes( $namespace ) {
-		$fname = 'GenerateSitemap::getPageRes';
-
 		return $this->dbr->select( 'page',
 			array(
 				'page_namespace',
@@ -245,7 +258,7 @@ class GenerateSitemap {
 				'page_touched',
 			),
 			array( 'page_namespace' => $namespace ),
-			$fname
+			__METHOD__
 		);
 	}
 
@@ -267,8 +280,8 @@ class GenerateSitemap {
 			$i = $smcount = 0;
 
 			$fns = $wgContLang->getFormattedNsText( $namespace );
-			$this->debug( "$namespace ($fns)" );
-			while ( $row = $this->dbr->fetchObject( $res ) ) {
+			$this->output( "$namespace ($fns)" );
+			foreach ( $res as $row ) {
 				if ( $i++ === 0 || $i === $this->url_limit + 1 || $length + $this->limit[1] + $this->limit[2] > $this->size_limit ) {
 					if ( $this->file !== false ) {
 						$this->write( $this->file, $this->closeFile() );
@@ -278,7 +291,7 @@ class GenerateSitemap {
 					$this->file = $this->open( $this->fspath . $filename, 'wb' );
 					$this->write( $this->file, $this->openFile() );
 					fwrite( $this->findex, $this->indexEntry( $filename ) );
-					$this->debug( "\t$this->fspath$filename" );
+					$this->output( "\t$this->fspath$filename\n" );
 					$length = $this->limit[0];
 					$i = 1;
 				}
@@ -392,8 +405,6 @@ class GenerateSitemap {
 	 * @return string
 	 */
 	function indexEntry( $filename ) {
-		global $wgServer;
-		$filename = sprintf( "%s/%s", $wgServer, $filename );
 		return
 			"\t<sitemap>\n" .
 			"\t\t<loc>$filename</loc>\n" .
@@ -452,13 +463,6 @@ class GenerateSitemap {
 	}
 
 	/**
-	 * Write a string to stderr followed by a UNIX newline
-	 */
-	function debug( $str ) {
-		fwrite( $this->stderr, "$str\n" );
-	}
-
-	/**
 	 * Populate $this->limit
 	 */
 	function generateLimit( $namespace ) {
@@ -472,30 +476,5 @@ class GenerateSitemap {
 	}
 }
 
-if ( in_array( '--help', $argv ) ) {
-	echo <<<EOT
-Usage: php generateSitemap.php [options]
-	--help			show this message
-
-	--fspath=<path>		The file system path to save to, e.g /tmp/sitemap
-	                    Saves to current directory if not given.
-
-	--server=<server>	The protocol and server name to use in URLs, e.g.
-		http://en.wikipedia.org. This is sometimes necessary because
-		server name detection may fail in command line scripts.
-
-	--compress=[yes|no]	compress the sitemap files, default yes
-
-EOT;
-	die( -1 );
-}
-
-$optionsWithArgs = array( 'fspath', 'server', 'compress' );
-require_once( dirname( __FILE__ ) . '/commandLine.inc' );
-
-if ( isset( $options['server'] ) ) {
-	$wgServer = $options['server'];
-}
-
-$gs = new GenerateSitemap( @$options['fspath'], @$options['compress'] !== 'no' );
-$gs->main();
+$maintClass = "GenerateSitemap";
+require_once( DO_MAINTENANCE );

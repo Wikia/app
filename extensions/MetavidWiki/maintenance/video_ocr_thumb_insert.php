@@ -134,7 +134,7 @@ for ( $i = 0; $i < $duration; $i += $interval ) {
   	//get ocr:
   	shell_exec("convert {$filedir}/{$i}.jpg -crop 457x30+63+358  {$workingdir}/temp.{$stream_id}.ocr.tif && convert {$workingdir}/temp.{$stream_id}.ocr.tif -resize 300% -level 10%,1,20% -monochrome +compress {$workingdir}/temp.{$stream_id}.ocr.tif");
     shell_exec("tesseract {$workingdir}/temp.{$stream_id}.ocr.tif {$workingdir}/ocrtemp{$stream_id} nobatch lettersonly 2>&1");
-    $ocr = shell_exec("tail {$workingdir}/ocrtemp{$stream_id}.txt") ." at " . seconds2ntp($i) ." \n";
+    $ocr = shell_exec("tail {$workingdir}/ocrtemp{$stream_id}.txt") ." at " . seconds2npt($i) ." \n";
     echo 'got ocr:'.  $ocr;
     $ocroutput .= $ocr;	
     

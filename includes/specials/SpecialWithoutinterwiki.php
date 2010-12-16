@@ -55,7 +55,7 @@ class WithoutInterwikiPage extends PageQueryPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $page, $langlinks ) = $dbr->tableNamesN( 'page', 'langlinks' );
-		$prefix = $this->prefix ? "AND page_title LIKE '" . $dbr->escapeLike( $this->prefix ) . "%'" : '';
+		$prefix = $this->prefix ? 'AND page_title' . $dbr->buildLike( $this->prefix , $dbr->anyString() ) : '';
 		return
 		  "SELECT 'Withoutinterwiki'  AS type,
 		          page_namespace AS namespace,
@@ -77,13 +77,10 @@ class WithoutInterwikiPage extends PageQueryPage {
 }
 
 function wfSpecialWithoutinterwiki() {
-	global $wgRequest, $wgContLang, $wgCapitalLinks;
+	global $wgRequest, $wgContLang;
 	list( $limit, $offset ) = wfCheckLimits();
-	if( $wgCapitalLinks ) {
-		$prefix = $wgContLang->ucfirst( $wgRequest->getVal( 'prefix' ) );
-	} else {
-		$prefix = $wgRequest->getVal( 'prefix' );
-	}
+	// Only searching the mainspace anyway
+	$prefix = Title::capitalize( $wgRequest->getVal( 'prefix' ), NS_MAIN );
 	$wip = new WithoutInterwikiPage();
 	$wip->setPrefix( $prefix );
 	$wip->doQuery( $offset, $limit );

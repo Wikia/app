@@ -11,20 +11,62 @@ class SpecialFundraiserStatistics extends SpecialPage {
 	/* Functions */
 
 	public function __construct() {
-		// Initialize special page
 		parent::__construct( 'FundraiserStatistics' );
-		// Internationalization
 		wfLoadExtensionMessages( 'ContributionReporting' );
 	}
 	
 	public function execute( $sub ) {
-		global $wgRequest, $wgOut, $wgUser, $wgLang, $wgScriptPath;
-		global $egFundraiserStatisticsFundraisers;
-		// Begins ouput
+		global $wgRequest, $wgOut, $wgUser, $wgLang, $wgScriptPath, $egFundraiserStatisticsFundraisers;
+		
+		/* Configuration (this isn't totally static data, some of it gets built on the fly) */
+		
+		$charts = array(
+			'totals' => array(
+				'data' => array(),
+				'index' => 1,
+				'query' => 'dailyTotalMax',
+				'precision' => 2,
+				'label' => 'fundraiserstats-total',
+				'max' => 0,
+			),
+			'contributions' => array(
+				'data' => array(),
+				'index' => 2,
+				'query' => 'contributionsMax',
+				'precision' => 0,
+				'label' => 'fundraiserstats-contributions',
+				'max' => 0,
+			),
+			'averages' => array(
+				'data' => array(),
+				'index' => 3,
+				'query' => 'averagesMax',
+				'precision' => 2,
+				'label' => 'fundraiserstats-avg',
+				'max' => 0,
+			),
+			'maximums' => array(
+				'data' => array(),
+				'index' => 4,
+				'query' => 'maximumsMax',
+				'precision' => 2,
+				'label' => 'fundraiserstats-max',
+				'max' => 0,
+			),
+			'ytd' => array(
+				'data' => array(),
+				'index' => 5,
+				'query' => 'yearlyTotalMax',
+				'precision' => 2,
+				'label' => 'fundraiserstats-ytd',
+				'max' => 0,
+			),
+		);
+		
+		/* Setup */
+		
 		$this->setHeaders();
-		// Adds JavaScript
 		$wgOut->addScriptFile( $wgScriptPath . '/extensions/ContributionReporting/FundraiserStatistics.js' );
-		// Adds CSS
 		$wgOut->addLink(
 			array(
 				'rel' => 'stylesheet',
@@ -32,107 +74,84 @@ class SpecialFundraiserStatistics extends SpecialPage {
 				'href' => $wgScriptPath . '/extensions/ContributionReporting/FundraiserStatistics.css',
 			)
 		);
-		// Creates arrays that describe the charts and make places where the generated HTML will be stored
-		$sources = array(
-			'totals' => 1,
-			'contributions' => 2,
-			'averages' => 3,
-			'maximums' => 4,
-		);
-		$charts = array(
-			'totals' => array(),
-			'contributions' => array(),
-			'averages' => array(),
-			'maximums' => array(),
-		);
-		$htmlViews = '';
-		$htmlLegend = '';
-		// Gets todays date in a format similar to the dates from the database for easy comparison
-		$today = strtotime( date( 'M j Y' ) );
-		// Calculates maximum value of all days in all fundraisers
-		$max = array( 0, 0, 0, 0, 0 );
+		
+		/* Display */
+		
+		// Chart maximums
 		foreach ( $egFundraiserStatisticsFundraisers as $fundraiser ) {
-			$fundraiserMax = $this->getContributionsMax( $fundraiser['start'], $fundraiser['end'] );
-			if ( $fundraiserMax > $max[$sources['contributions']] ) {
-				$max[$sources['contributions']] =  $fundraiserMax;
-			}
-			$fundraiserMax = $this->getDailyTotalMax( $fundraiser['start'], $fundraiser['end'] );
-			if ( $fundraiserMax > $max[$sources['totals']] ) {
-				$max[$sources['totals']] =  $fundraiserMax;
-			}
-			$fundraiserMax = $this->getAveragesMax( $fundraiser['start'], $fundraiser['end'] );
-			if ( $fundraiserMax > $max[$sources['averages']] ) {
-				$max[$sources['averages']] =  $fundraiserMax;
-			}
-			$fundraiserMax = $this->getMaximumsMax( $fundraiser['start'], $fundraiser['end'] );
-			if ( $fundraiserMax > $max[$sources['maximums']] ) {
-				$max[$sources['maximums']] =  $fundraiserMax;
+			foreach ( $charts as $name => $chart ) {
+				$chartMax = $this->query( $charts[$name]['query'], $fundraiser['start'], $fundraiser['end'] );
+				if ( $chartMax > $charts[$name]['max'] ) {
+					$charts[$name]['max'] = $chartMax;
+				}
 			}
 		}
-		// Builds the various HTML components
+		// Scale factors
+		foreach ( $charts as $name => $chart ) {			
+			$charts[$name]['factor'] = $factor = 300 / $chart['max'];
+		}
+		// HTML-time!
 		$view = 0;
+		$htmlViews = '';
 		foreach ( $egFundraiserStatisticsFundraisers as $fundraiser ) {
-			$htmlLegend .= Xml::element( 'div',
-				array( 'class' => "fundraiserstats-legend-{$fundraiser['id']}" ),
-				$fundraiser['title']
-			);
-			$days = $this->getDailyTotals( $fundraiser['start'], $fundraiser['end'] );
-			foreach( $sources as $chart => $source ) {
+			$days = $this->query( 'dailyTotals', $fundraiser['start'], $fundraiser['end'] );
+			foreach ( $charts as $name => $chart ) {
 				$column = 0;
-				$factor = 200 / $max[$source];
-				// Build bars for chart
 				foreach( $days as $i => $day ) {
-					$height = $factor * $day[$source];
-					if ( !isset( $charts[$chart][$column] ) ) {
-						$charts[$chart][$column] = '';
+					if ( !isset( $charts[$name]['data'][$column] ) ) {
+						$charts[$name]['data'][$column] = '';
 					}
+					$height = $chart['factor'] * $day[$chart['index']];
 					$attributes = array(
 						'style' => "height:{$height}px",
 						'class' => "fundraiserstats-bar-{$fundraiser['id']}",
 						'onMouseOver' => "replaceView( 'fundraiserstats-view-box-{$view}' )"
 					);
-					$charts[$chart][$column] .= Xml::tags( 'td',
-						array( 'valign' => 'bottom' ),
-						Xml::element( 'div', $attributes, '', false )
+					$charts[$name]['data'][$column] .= Xml::tags(
+						'td', array( 'valign' => 'bottom' ), Xml::element( 'div', $attributes, '', false )
 					);
-					// Build detail view for the day
-					$tdLabelAttributes = array( 'width' => '16%', 'nowrap' => 'nowrap' );
-					$tdValueAttributes = array( 'width' => '16%', 'nowrap' => 'nowrap', 'align' => 'right' );
-					$htmlViews .= Xml::tags( 'div',
+					$htmlView = Xml::openElement( 'tr' );
+					$count = 0;
+					foreach ( $charts as $subchart ) {
+						$htmlView .= Xml::element(
+							'td', array( 'width' => '16%', 'nowrap' => 'nowrap' ), wfMsg( $subchart['label'] )
+						);
+						$htmlView .= Xml::element(
+							'td',
+							array( 'width' => '16%', 'nowrap' => 'nowrap', 'align' => 'right' ),
+							$wgLang->formatNum( number_format( $day[$subchart['index']], $subchart['precision'] ) )
+						);
+						if ( ++$count % 3 == 0 ) {
+							$htmlView .= Xml::closeElement( 'tr' ) . Xml::openElement( 'tr' );
+						}
+					}
+					$htmlView .= Xml::closeElement( 'tr' );
+					$htmlViews .= Xml::tags(
+						'div',
 						array(
 							'id' => 'fundraiserstats-view-box-' . $view,
 							'class' => 'fundraiserstats-view-box',
 							'style' => 'display: ' . ( $view == 0 ? 'block' : 'none' )
 						),
-						Xml::tags( 'table',
-							array(
-								'cellpadding' => 10,
-								'cellspacing' => 0,
-								'border' => 0,
-								'width' => '100%'
-							),
-							Xml::tags( 'tr', null,
-								Xml::tags( 'td',
-									array( 'colspan' => 4 ),
-									Xml::element( 'h3', null,
-										wfMsg( 'fundraiserstats-day', $i + 1, $fundraiser['title'] )
-									)
+						Xml::tags(
+							'table',
+							array( 'cellpadding' => 10, 'cellspacing' => 0, 'border' => 0, 'width' => '100%' ),
+							Xml::tags(
+								'tr',
+								null,
+								Xml::tags(
+									'td',
+									array( 'colspan' => 6 ),
+									Xml::element( 'h3', array( 'style' => 'float:right;color:gray;' ), $day[0] ) .
+									Xml::tags(
+										'h3',
+										array( 'style' => 'float:left;color:black;' ),
+										wfMsgExt( 'fundraiserstats-day', array( 'parseinline' ), $i + 1, $fundraiser['title'] )
+									) .
+									Xml::element( 'div', array( 'style' => 'clear:both;' ), '', false )
 								)
 							) .
-							Xml::tags( 'tr', null,
-								Xml::element( 'td', $tdLabelAttributes, wfMsg( 'fundraiserstats-date' ) ) .
-								Xml::element( 'td', $tdValueAttributes, $day[0] ) .
-								Xml::element( 'td', $tdLabelAttributes, wfMsg( 'fundraiserstats-total' ) ) .
-								Xml::element( 'td', $tdValueAttributes, $wgLang->formatNum( $day[1] ) ) .
-								Xml::element( 'td', $tdLabelAttributes, wfMsg( 'fundraiserstats-max' ) ) .
-								Xml::element( 'td', $tdValueAttributes, $wgLang->formatNum( number_format( $day[4], 2 ) ) )
-							) .
-							Xml::tags( 'tr', null,
-								Xml::element( 'td', $tdLabelAttributes, wfMsg( 'fundraiserstats-contributions' ) ) .
-								Xml::element( 'td', $tdValueAttributes, $wgLang->formatNum( number_format( $day[2], 2 ) ) ) .
-								Xml::element( 'td', $tdLabelAttributes, wfMsg( 'fundraiserstats-avg' ) ) .
-								Xml::element( 'td', $tdValueAttributes, $wgLang->formatNum( number_format( $day[3], 2 ) ) )
-							)
+							$htmlView
 						)
 					);
 					$column++;
@@ -140,11 +159,12 @@ class SpecialFundraiserStatistics extends SpecialPage {
 				}
 			}
 		}
-		// Show bar graphs
+		// Tabs
 		$first = true;
 		$htmlCharts = Xml::openElement( 'div', array( 'class' => 'fundraiserstats-chart-tabs' ) );
 		foreach ( $charts as $chart => $columns ) {
-			$htmlCharts .= Xml::tags( 'div',
+			$htmlCharts .= Xml::tags(
+				'div',
 				array(
 					'id' => "fundraiserstats-chart-{$chart}-tab",
 					'class' => 'fundraiserstats-chart-tab-' . ( $first ? 'current' : 'normal' ),
@@ -155,131 +175,138 @@ class SpecialFundraiserStatistics extends SpecialPage {
 			$first = false;
 		}
 		$htmlCharts .= Xml::closeElement( 'div' );
+		// Charts
 		$first = true;
-		foreach ( $charts as $chart => $columns ) {
-			$htmlCharts .= Xml::tags( 'div',
+		foreach ( $charts as $name => $chart ) {
+			$htmlCharts .= Xml::tags(
+				'div',
 				array(
-					'id' => "fundraiserstats-chart-{$chart}",
+					'id' => "fundraiserstats-chart-{$name}",
 					'class' => 'fundraiserstats-chart',
 					'style' => 'display:' . ( $first ? 'block' : 'none' ) 
 				),
-				Xml::tags( 'table',
-					array(
-						'cellpadding' => 0,
-						'cellspacing' => 0,
-						'border' => 0
-					),
-					Xml::tags( 'tr', null,
-						implode( $columns )
-					)
+				Xml::tags(
+					'table',
+					array( 'cellpadding' => 0, 'cellspacing' => 0, 'border' => 0 ),
+					Xml::tags( 'tr', null, implode( $chart['data'] ) )
 				)
 			);
 			$first = false;
 		}
-		// Show views
-		$htmlOut = Xml::tags( 'table',
-			array(
-				'cellpadding' => 0,
-				'cellspacing' => 0,
-				'border' => 0
-			),
-			Xml::tags( 'tr', null,
-				Xml::tags( 'td', null,
-					$htmlCharts
-				)
-			) .
-			Xml::tags( 'tr', null,
-				Xml::tags( 'td', null, $htmlViews )
+		// Output
+		$wgOut->addHTML(
+			Xml::tags(
+				'table',
+				array(
+					'cellpadding' => 0,
+					'cellspacing' => 0,
+					'border' => 0
+				),
+				Xml::tags( 'tr', null, Xml::tags( 'td', null, $htmlCharts ) ) .
+				Xml::tags( 'tr', null, Xml::tags( 'td', null, $htmlViews ) )
 			)
 		);
-		$wgOut->addHTML( $htmlOut );
 	}
 	
-	/* Query Functions */
+	/* Private Functions */
 	
-	public function getDailyTotals( $start, $end ) {
-		$dbr = efContributionReportingConnection();
-		$res = $dbr->select( 'public_reporting',
-			array(
-				"FROM_UNIXTIME(received, '%Y-%m-%d')",
-				'sum(converted_amount)',
-				'count(*)',
-				'avg(converted_amount)',
-				'max(converted_amount)',
-			),
-			$this->getConditions( $dbr, $start, $end ),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'received',
-				'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')"
-			)
-		);
-		$totals = array();
-		while ( $row = $dbr->fetchRow( $res ) ) {
-			$totals[] = $row;
+	private function query( $type, $start, $end ) {
+		global $wgMemc, $egFundraiserStatisticsMinimum, $egFundraiserStatisticsMaximum;
+		
+		$key = wfMemcKey( 'fundraiserstatistics', $type, $start, $end );
+		$cache = $wgMemc->get( $key );
+		if ( $cache != false && $cache != -1 ) {
+			return $cache;
 		}
-		return $totals;
-	}
-	
-	public function getDailyTotalMax( $start, $end ) {
+		// Use database
 		$dbr = efContributionReportingConnection();
-		return $dbr->selectField( 'public_reporting',
-			array( 'sum(converted_amount) as sum' ),
-			$this->getConditions( $dbr, $start, $end ),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'sum DESC',
-				'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
-			)
-		);
-	}
-	
-	public function getContributionsMax( $start, $end ) {
-		$dbr = efContributionReportingConnection();
-		return $dbr->selectField( 'public_reporting',
-			array( 'count(converted_amount) as sum' ),
-			$this->getConditions( $dbr, $start, $end ),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'sum DESC',
-				'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
-			)
-		);
-	}
-	
-	public function getAveragesMax( $start, $end ) {
-		$dbr = efContributionReportingConnection();
-		return $dbr->selectField( 'public_reporting',
-			array( 'avg(converted_amount) as sum' ),
-			$this->getConditions( $dbr, $start, $end ),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'sum DESC',
-				'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
-			)
-		);
-	}
-	
-	public function getMaximumsMax( $start, $end ) {
-		$dbr = efContributionReportingConnection();
-		return $dbr->selectField( 'public_reporting',
-			array( 'max(converted_amount) as sum' ),
-			$this->getConditions( $dbr, $start, $end ),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'sum DESC',
-				'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
-			)
-		);
-	}
-	
-	protected function getConditions( $dbr, $start, $end ) {
-		global $egFundraiserStatisticsMinimum, $egFundraiserStatisticsMaximum;
-		return array(
+		$conditions = array(
 			'received >= ' . $dbr->addQuotes( wfTimestamp( TS_UNIX, strtotime( $start ) ) ),
 			'received <= ' . $dbr->addQuotes( wfTimestamp( TS_UNIX, strtotime( $end ) + 24 * 60 * 60 ) ),
 			'converted_amount >= ' . $egFundraiserStatisticsMinimum,
 			'converted_amount <= ' . $egFundraiserStatisticsMaximum
 		);
+		switch ( $type ) {
+			case 'dailyTotals':
+				$select = $dbr->select( 'public_reporting',
+					array(
+						"FROM_UNIXTIME(received, '%Y-%m-%d')",
+						'sum(converted_amount)',
+						'count(*)',
+						'avg(converted_amount)',
+						'max(converted_amount)',
+					),
+					$conditions,
+					__METHOD__,
+					array(
+						'ORDER BY' => 'received',
+						'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')"
+					)
+				);
+				$result = array();
+				$ytd = 0;
+				while ( $row = $dbr->fetchRow( $select ) ) {
+					$row[] = $ytd += $row[1]; // YTD
+					$result[] = $row;
+				}
+				break;
+			case 'dailyTotalMax':
+				$result = $dbr->selectField( 'public_reporting',
+					array( 'sum(converted_amount) as sum' ),
+					$conditions,
+					__METHOD__,
+					array(
+						'ORDER BY' => 'sum DESC',
+						'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
+					)
+				);
+				break;
+			case 'yearlyTotalMax':
+				$result = $dbr->selectField( 'public_reporting',
+					array( 'sum(converted_amount) as sum' ),
+					$conditions,
+					__METHOD__
+				);
+				break;
+			case 'contributionsMax':
+				$result = $dbr->selectField( 'public_reporting',
+					array( 'count(converted_amount) as sum' ),
+					$conditions,
+					__METHOD__,
+					array(
+						'ORDER BY' => 'sum DESC',
+						'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
+					)
+				);
+				break;
+			case 'averagesMax':
+				$result = $dbr->selectField( 'public_reporting',
+					array( 'avg(converted_amount) as sum' ),
+					$conditions,
+					__METHOD__,
+					array(
+						'ORDER BY' => 'sum DESC',
+						'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
+					)
+				);
+				break;
+			case 'maximumsMax':
+				$result = $dbr->selectField( 'public_reporting',
+					array( 'max(converted_amount) as sum' ),
+					$conditions,
+					__METHOD__,
+					array(
+						'ORDER BY' => 'sum DESC',
+						'GROUP BY' => "FROM_UNIXTIME(received, '%Y-%m-%d')",
+					)
+				);
+				break;
+		}
+		if ( isset( $result ) ) {
+			// Cache invalidates once per minute
+			$wgMemc->set( $key, $result, 60 );
+			return $result;
+		}
+		return null;
 	}
 }

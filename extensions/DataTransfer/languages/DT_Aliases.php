@@ -13,16 +13,17 @@ $aliases['en'] = array(
 	'ViewXML' => array( 'ViewXML' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
+/** Afrikaans (Afrikaans) */
+$aliases['af'] = array(
+	'ViewXML' => array( 'WysXML' ),
+);
+
+/** Arabic (العربية) */
 $aliases['ar'] = array(
 	'ViewXML' => array( 'عرض_إكس_إم_إل' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
+/** Egyptian Spoken Arabic (مصرى) */
 $aliases['arz'] = array(
 	'ViewXML' => array( 'عرض_إكس_إم_إل' ),
 );
@@ -42,6 +43,11 @@ $aliases['fr'] = array(
 	'ViewXML' => array( 'Voir le XML', 'Voir XML', 'VoirXML' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'ViewXML' => array( 'Vêre lo XML', 'VêreLoXML' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'ViewXML' => array( 'Ver XML' ),
@@ -50,6 +56,11 @@ $aliases['gl'] = array(
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'ViewXML' => array( 'Lueg XML' ),
+);
+
+/** Gujarati (ગુજરાતી) */
+$aliases['gu'] = array(
+	'ViewXML' => array( 'XMLજુઓ' ),
 );
 
 /** Hungarian (Magyar) */
@@ -62,9 +73,29 @@ $aliases['ia'] = array(
 	'ViewXML' => array( 'Visualisar XML' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'ViewXML' => array( 'Lihat XML', 'LihatXML' ),
+);
+
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'ViewXML' => array( 'VediXML' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'ViewXML' => array( 'XML表示' ),
+	'ViewXML' => array( 'XML表示', 'ＸＭＬ表示' ),
+);
+
+/** Khmer (ភាសាខ្មែរ) */
+$aliases['km'] = array(
+	'ViewXML' => array( 'មើលXML' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'ViewXML' => array( 'XML beloore' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -75,6 +106,16 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'ViewXML' => array( 'ВидиXML' ),
+);
+
+/** Marathi (मराठी) */
+$aliases['mr'] = array(
+	'ViewXML' => array( 'XMLपहा' ),
+);
+
+/** Maltese (Malti) */
+$aliases['mt'] = array(
+	'ViewXML' => array( 'UriXML' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -97,9 +138,24 @@ $aliases['oc'] = array(
 	'ViewXML' => array( 'Veire XML', 'VeireXML' ),
 );
 
+/** Portuguese (Português) */
+$aliases['pt'] = array(
+	'ViewXML' => array( 'Ver XML' ),
+);
+
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'ViewXML' => array( 'Vizualizare XML' ),
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'ViewXML' => array( 'XMLपश्यति' ),
+);
+
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'ViewXML' => array( 'ZobraziťXML' ),
 );
 
 /** Albanian (Shqip) */
@@ -120,6 +176,11 @@ $aliases['sw'] = array(
 /** Tagalog (Tagalog) */
 $aliases['tl'] = array(
 	'ViewXML' => array( 'Tingnan ang XML' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ViewXML' => array( 'XMLGör' ),
 );
 
 /** Vèneto (Vèneto) */

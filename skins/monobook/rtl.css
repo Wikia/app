@@ -212,7 +212,6 @@ input#wpSave, input#wpDiff {
 }
 
 #userlogin {
-	float: right;
 	margin: 0 0 1em 3em;
 }
 /* Convenience links to edit block, delete and protect reasons */
@@ -229,20 +228,25 @@ table.filehistory th {
 	text-align: right;
 }
 
+/* Special:Allpages styling */
+td.mw-allpages-nav, p.mw-allpages-nav, td.mw-allpages-alphaindexline {
+	text-align: left;
+}
+
+/* Special:Prefixindex styling */
+td#mw-prefixindex-nav-form  {
+	text-align: left;
+}
+
 /**
  * Lists:
  * The following lines don't have a visible effect on non-Gecko browsers
  * They fix a problem ith Gecko browsers rendering lists to the right of
  * left-floated objects in an RTL layout.
  */
-html > body div#bodyContent ul {
+html > body div#article ul {
 	display: table;
 }
 html > body div#bodyContent ul#filetoc {
 	display: block;
 }
-/* Special:Prefixindex styling */
-td#mw-prefixindex-nav-form  {
-	text-align: left;
-}
-
