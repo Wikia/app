@@ -264,7 +264,6 @@ function updateTimezoneSelection( force_offset ) {
 
 /* Wikia change begin - @author: Macbre */
 /* RT #98523 */
-addOnloadHook(unhidetzbutton);
 addOnloadHook(initprefs);
 /* Wikia change end */
 addOnloadHook( timezoneSetup );
