@@ -9,6 +9,7 @@ class SkinOasis extends SkinTemplate {
 		$this->skinname  = 'oasis';
 		$this->stylename = 'oasis';
 		$this->template  = 'OasisTemplate';
+		$this->themename = 'oasis';
 
 		// register templates
 		global $wgWikiaTemplateDir;
