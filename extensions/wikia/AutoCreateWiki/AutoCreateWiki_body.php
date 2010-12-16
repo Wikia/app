@@ -705,7 +705,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * modify variables
 		 */
-		$this->addCustomSettings( 0, $wgUniversalCreationVariables, "universal" );
+		$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
 
 		/**
 		 * set variables per language
