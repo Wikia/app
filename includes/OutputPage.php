@@ -50,8 +50,10 @@ class OutputPage {
 
 	/**
 	 * Whether to load jQuery core.
+	 *
+	 * Wikia change: jQuery is a part of StaticChute
 	 */
-	protected $mJQueryDone = false;
+	protected $mJQueryDone = true;
 
 	private $mIndexPolicy = 'index';
 	private $mFollowPolicy = 'follow';
