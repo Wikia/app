@@ -196,24 +196,24 @@ function changeText( el, newText ) {
 	}
 }
 
-function toggleToc() {
-	var tocmain = document.getElementById( 'toc' );
-	var toc = document.getElementById('toc').getElementsByTagName('ul')[0];
-	var toggleLink = document.getElementById( 'togglelink' );
-	if ( toc && toggleLink && toc.style.display == 'none' ) {
-		changeText( toggleLink, tocHideText );
+function toggleToc(tocId, togglelinkId) {
+	var toc = document.getElementById(tocId ? tocId : 'toc');
+	var rootItems = getElementsByClassName(toc, 'li', 'toclevel-1');
+	var toggleLink = document.getElementById(togglelinkId ? togglelinkId : 'togglelink');
+	var len = rootItems.length;
+
+	if (toc && toggleLink && rootItems[0].style.display == 'none') {
+		changeText(toggleLink, tocHideText);
 		for (var i=0; i < len; i++ ) {
 			rootItems[i].style.display = 'block';
 		}
 		document.cookie = "hidetoc=0";
-		tocmain.className = 'toc';
 	} else {
-		changeText( toggleLink, tocShowText );
+		changeText(toggleLink, tocShowText);
 		for (var i=0; i < len; i++ ) {
 			rootItems[i].style.display = 'none';
 		}
 		document.cookie = "hidetoc=1";
-		tocmain.className = 'toc tochidden';
 	}
 }
 
