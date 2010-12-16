@@ -7,4 +7,4 @@ ALTER TABLE /*_*/image
 ALTER TABLE /*_*/oldimage
   MODIFY COLUMN oi_minor_mime varbinary(100) NOT NULL default "unknown";
   
-INSERT INTO /*_*/updatelog VALUES ('mime_minor_length');
+INSERT IGNORE INTO /*_*/updatelog VALUES ('mime_minor_length');
