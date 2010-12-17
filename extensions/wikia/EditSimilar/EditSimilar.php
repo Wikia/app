@@ -159,7 +159,7 @@ class EditSimilar {
         	        $article_link = $sk->makeKnownLinkObj ($link_title) ;
 			$real_rand_values [] = $article_link ;
 		}
-
+		var_dump( $real_rand_values );
 		return $real_rand_values;
 	}
 
@@ -343,8 +343,7 @@ function wfEditSimilarSetup () {
 	global $wgHooks;
 	$wgHooks ['ArticleSaveComplete'][] = 'wfEditSimilarCheck' ;
 	$wgHooks ['OutputPageBeforeHTML'][] = 'wfEditSimilarViewMesg' ;
-	$wgHooks['UserToggles'][] = 'wfEditSimilarToggle' ;
-	$wgHooks ['getEditingPreferencesTab'][] = 'wfEditSimilarToggle' ;
+	$wgHooks ['GetPreferences'][] = 'wfAddSimilarToggle';
 }
 
 // check if we had the extension enabled at all and if this is in a content namespace
@@ -362,8 +361,8 @@ function wfEditSimilarCheck ($article) {
 function wfEditSimilarViewMesg (&$out) {
 	global $wgTitle, $wgUser, $wgEditSimilarAlwaysShowThanks ;
 	wfLoadExtensionMessages ('EditSimilar') ;
-	if ( !empty ($_SESSION ['ES_saved']) && (1 == $wgUser->getOption ('edit-similar', 1) ) && $out->isArticle ()) {
-		if (EditSimilar::checkCounter ()) {
+	if ( !empty ($_SESSION ['ES_saved']) && (1 == $wgUser->getOption('edit-similar', 1) ) && $out->isArticle()) {
+		if (EditSimilar::checkCounter()) {
 			$message_text = '' ;
 			$article_title = $wgTitle->getText() ;
 			// here we'll populate the similar articles and links
@@ -399,15 +398,18 @@ function wfEditSimilarViewMesg (&$out) {
 	return true ;
 }
 
-function wfEditSimilarToggle($toggles, $default_array = false) {
-	global $wgUser;
-	if( $wgUser->isLoggedIn() ) {
+// Added by Jakub while 1.16 upgrade
+
+function wfAddSimilarToggle( $user, &$preferences ) {
+
+	if( $user->isLoggedIn() ) {
 		wfLoadExtensionMessages('EditSimilar');
-		if(is_array($default_array)) {
-			$default_array[] = 'edit-similar';
-		} else {
-			$toggles[] = 'edit-similar';
-		}
+		$preferences['edit-similar'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-edit-similar', // a system message
+			'section' => 'editing/advancedediting'
+		);
 	}
-        return true;
+	
+	return true;
 }
