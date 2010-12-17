@@ -2532,6 +2532,26 @@ class User {
 		}
 	}
 
+	/** Wikia Change - begin - bringing this function back (don't see any harm in it and it's used in a few places) **/
+	/**
+	 * Encode this user's options as a string
+	 * @return \string Encoded options
+	 * @private
+	 */
+	function encodeOptions() {
+		$this->load();
+		if ( is_null( $this->mOptions ) ) {
+			$this->mOptions = User::getDefaultOptions();
+		}
+		$a = array();
+		foreach ( $this->mOptions as $oname => $oval ) {
+			array_push( $a, $oname.'='.$oval );
+		}
+		$s = implode( "\n", $a );
+		return $s;
+	}
+	/** Wikia Change - end - bringing this function back (don't see any harm in it and it's used in a few places) **/
+	
 	/**
 	 * Set this user's options from an encoded string
 	 * @param $str \string Encoded options to import
