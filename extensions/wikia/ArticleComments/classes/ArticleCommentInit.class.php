@@ -144,7 +144,7 @@ class ArticleCommentInit {
 	}
 
 	//TODO: not used in oasis - remove
-	static public function ArticleCommentHideTab(&$skin, &$content_actions) {
+	static public function ArticleCommentHideTab($skin, &$content_actions) {
 		global $wgArticleCommentsHideDiscussionTab;
 		wfProfileIn( __METHOD__ );
 
