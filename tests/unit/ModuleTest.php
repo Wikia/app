@@ -3,9 +3,10 @@
 class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
-		global $wgAutoloadClasses, $wgWikiaTemplateDir;
+		global $wgAutoloadClasses, $wgWikiaTemplateDir, $IP;
 
 		$wgAutoloadClasses['TestModule'] = dirname( __FILE__ ) . '/modules/TestModule.class.php';
+		$wgAutoloadClasses['OasisTemplate'] = $IP . '/skins/Oasis.php';
 		$wgWikiaTemplateDir['Test'] = dirname( __FILE__ ) . '/modules';
 	}
 
@@ -71,7 +72,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testSetGetSkinTemplate() {
-		$template = new QuickTemplate();
+		$template = new OasisTemplate();
 
 		Module::setSkinTemplateObj($template);
 
@@ -87,7 +88,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function testMagicForGlobalAndSkinTemplateVariables() {
 
-		$template = new QuickTemplate();
+		$template = new OasisTemplate();
 		$template->set('foo', 'bar');
 
 		global $wgFoo;
