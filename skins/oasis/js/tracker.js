@@ -162,7 +162,7 @@ var initTracker = function() {
 		if (node.is('a')) {
 			// "Add category" button
 			if (node.parent().is('#csAddCategorySwitch')) {
-				$.tracker.byStr(fakeUrl + 'addcategory');
+				$.tracker.byStr('action/addcategory');
 			}
 			// links to categories
 			else {
