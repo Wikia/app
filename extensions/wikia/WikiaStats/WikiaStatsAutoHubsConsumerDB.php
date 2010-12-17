@@ -66,7 +66,8 @@ class WikiaStatsAutoHubsConsumerDB {
 					if ( $sql ) {
 						$this->dbs->query($sql, __METHOD__);
 					}
-					// moli $this->rebuildMemc($tag_id,$lang,"blog");
+					Wikia::log( __METHOD__, 'events', 'Rebuild blogs in memcache for tag: ' . $tag_id . ', lang: ' . $lang );
+					$this->rebuildMemc($tag_id,$lang,"blog");
 				}
 			}
 		}
@@ -97,7 +98,7 @@ class WikiaStatsAutoHubsConsumerDB {
 						$this->dbs->query($sql, __METHOD__);
 					}
 					Wikia::log( __METHOD__, 'events', 'Rebuild article data in memcache for tag: ' . $tag_id . ', lang: ' . $lang );
-					// moli $this->rebuildMemc($tag_id,$lang,"article");
+					$this->rebuildMemc($tag_id,$lang,"article");
 				}
 			}
 		}
@@ -127,7 +128,7 @@ class WikiaStatsAutoHubsConsumerDB {
 					if ( $sql ) {
 						$this->dbs->query($sql, __METHOD__);
 					}
-					// moli $this->rebuildMemc($tag_id,$lang,"article");
+					//$this->rebuildMemc($tag_id,$lang,"article");
 				}
 			}
 		}
@@ -696,34 +697,36 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		wfProfileIn( __METHOD__ );
 
-	    $mcKey = wfSharedMemcKey( "auto_hubs", "blogi_api_info", $wikiurl, $page_id );
+	    $mcKey = wfSharedMemcKey( "auto_hubs", "info_blogs_api", $wikiurl, $page_id );
 
-	    $out = $wgMemc->get($mcKey,null);
-		if( !empty($out) ) {
+	    $res = $wgMemc->get($mcKey,null);
+		if( !empty($res) ) {
 			wfProfileOut( __METHOD__ );
-			return $out;
+			if ( !isset($res['rows']) ) {
+				$res['rows'] = array();
+			}
+			return $res['rows'];
 		}
 
 		$html_out = Http::get( $wikiurl."/api.php?action=blogs&page_id=".( (int) $page_id)."&summarylength=20&format=json" );
 		$wikis = json_decode($html_out, true);
 
-		if ( empty($wikis['blogpage'][$page_id]) ){
-			wfProfileOut( __METHOD__ );
-			return array();
+		$res = array( 'rows' => array() );
+		if ( !empty($wikis['blogpage'][$page_id]) ){
+			$this->shortenText($wikis['blogpage'][$page_id]['description'], 30);
+
+			if (strpos( $wikis['blogpage'][$page_id]['description'], 'wgAfterContentAndJS' ) > 0 ) {
+				$temp = explode('wgAfterContentAndJS', $wikis['blogpage'][$page_id]['description']);
+
+				$wikis['blogpage'][$page_id]['description'] = trim($temp[0]).". ";
+			}
+			$res['rows'] = $wikis['blogpage'][$page_id];
 		}
 
-		$this->shortenText($wikis['blogpage'][$page_id]['description'], 30);
-
-		if (strpos( $wikis['blogpage'][$page_id]['description'], 'wgAfterContentAndJS' ) > 0 ) {
-			$temp = explode('wgAfterContentAndJS', $wikis['blogpage'][$page_id]['description']);
-
-			$wikis['blogpage'][$page_id]['description'] = trim($temp[0]).". ";
-		}
-
-		$wgMemc->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
+		$wgMemc->set($mcKey, $res['rows'], 60*60 );
 
 		wfProfileOut( __METHOD__ );
-		return $wikis['blogpage'][$page_id];
+		return $res['rows'];
 	}
 
 
