@@ -38,9 +38,7 @@ class SkinWikiaphone extends SkinTemplate {
 		SkinTemplate::initPage( $out );
 		$this->skinname  = 'wikiaphone';
 		$this->stylename = 'wikiaphone';
-		$this->themename = 'wikiaphone';
 		$this->template  = 'MonoBookTemplate';
-		$wgUseSiteCss = false;
 	}
 	
 	public static function onSkinTemplateOutputPageBeforeExec( &$obj, &$tpl ){
