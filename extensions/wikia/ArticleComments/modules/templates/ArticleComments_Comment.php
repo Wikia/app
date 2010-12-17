@@ -1,6 +1,4 @@
-<?php //echo "<pre>" . print_r($comment, true). "</pre>"; ?>
-
-<li id="comm-<?=$commentId?>" class="article-comments-li <?=$rowClass?>">
+<li id="comm-<?=$commentId?>" class="article-comments-li <?=$rowClass?>" data-user="<?=$comment['username']?>">
 	<div class="comment-avatar">
 		<a href="<?= htmlspecialchars(AvatarService::getUrl($comment['username'])) ?>">
 			<?= AvatarService::renderAvatar($comment['username'], 50) ?>
