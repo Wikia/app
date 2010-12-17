@@ -482,7 +482,9 @@ wgAfterContentAndJS.push(function() {
 		ev.preventDefault();
 
 		$.getResources([
-			wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories',
+			function(callback) {
+				$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', callback);
+			},
 			$.loadYUI,
 			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion,
 			(window.skin == 'oasis' ? wfGetSassUrl('/extensions/wikia/CategorySelect/oasis.scss') : wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.css?' + wgStyleVersion)

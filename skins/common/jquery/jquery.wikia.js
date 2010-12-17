@@ -734,18 +734,17 @@ $.extend(Timer,{
 });
 
 /**
- * Fetches given list of JS/CSS files and then fires callback (RT #70163)
+ * Fetches given list of JS / CSS / SASS files and then fires callback (RT #70163)
  *
  * @author macbre
  */
 jQuery.getResources = function(resources, callback) {
 	var isJs = /.js(\?(.*))?$/,
-		isAjaxCall = /action=ajax/,
 		isCss = /.css(\?(.*))?$/,
 		isSass = /.scss/,
 		remaining = resources.length;
 
-	var complete = function() {
+	var onComplete = function() {
 		remaining--;
 
 		// all files have been downloaded
@@ -762,17 +761,15 @@ jQuery.getResources = function(resources, callback) {
 
 		// "loader" function: $.loadYUI, $.loadJQueryUI
 		if (typeof resource == 'function') {
-			resource.call(jQuery, complete);
+			resource.call(jQuery, onComplete);
 		}
-		// JS files / MW AJAX calls
-		else if (isJs.test(resource) || isAjaxCall.test(resource)) {
-			$.getScript(resource, complete);
+		// JS files
+		else if (isJs.test(resource)) {
+			$.getScript(resource, onComplete);
 		}
 		// CSS /SASS files
 		else if (isCss.test(resource) || isSass.test(resource)) {
-			$.getCSS(resource, complete);
+			$.getCSS(resource, onComplete);
 		}
 	}
 };
-
-//console.profile(); $(window).bind('load', console.profileEnd);
