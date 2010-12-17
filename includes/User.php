@@ -2395,6 +2395,7 @@ class User {
 				global $wgRequest;
 				$userSkin = $this->getOption( 'skin' );
 				$userSkin = $wgRequest->getVal( 'useskin', $userSkin );
+				wfRunHooks('AlternateGetSkin', array (&$this, &$userSkin));
 			} else {
 				# if we're not allowing users to override, then use the default
 				global $wgDefaultSkin;

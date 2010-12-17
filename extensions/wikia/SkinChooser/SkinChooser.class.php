@@ -343,7 +343,7 @@ class SkinChooser {
 	/**
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
-	public static function getSkin($user) {
+	public static function getSkin(&$user, &$userSkin) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
 		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgOasis2010111, $wgDevelEnvironment;
@@ -507,17 +507,17 @@ class SkinChooser {
 		if ($userSkin == 'answers' && empty($wgEnableAnswers)) {
 			$userSkin = 'monaco';
 		}
-		
+
 		// RT#97655
 		if($userSkin == 'monaco' && !$allowMonacoSelection) {
-			$userSkin = 'oasis';			
+			$userSkin = 'oasis';
 		}
-		
+
 		//Fix RT#133364 and makes crazy mobile users get the correct one
 		if( $userSkin == 'smartphone' ){
 			$userSkin = 'wikiaphone';
 		}
-		
+
 		//WikiaApp skin is ment to be available only on DevBoxes ATM
 		if( $userSkin == 'wikiaapp' && !$wgDevelEnvironment ){
 			$userSkin = 'wikiaphone';
@@ -563,5 +563,4 @@ class SkinChooser {
 	private static function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}
-
 }
