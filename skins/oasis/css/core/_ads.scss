@@ -19,7 +19,9 @@
 	margin-top: -20px;
 	margin-bottom: -20px;
 }
-
+#CORP_TOP_LEADERBOARD.default-height, #HOME_TOP_LEADERBOARD.default-height, #TOP_LEADERBOARD.default-height {
+	height: 90px;
+}
 
 /** Skyscrapers **/
 #LEFT_SKYSCRAPER_2 {
@@ -47,6 +49,15 @@
 	margin-bottom: 10px;
 	z-index: 100;
 }
+#CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
+	height: 250px;
+}
+#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
+	height: 250px;
+}
+
+
+/** Button ads **/
 #HOME_TOP_RIGHT_BUTTON {
 	margin-bottom: 10px;
 }
