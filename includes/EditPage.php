@@ -1915,11 +1915,12 @@ INPUTS
 	 * @return string
 	 */
 	function getPreviewText() {
-		global $wgOut, $wgUser, $wgTitle, $wgParser, $wgLang, $wgContLang, $wgMessageCache, $wgRequest;
+		global $wgOut, $wgUser, $wgTitle, $wgParser, $wgLang, $wgContLang, $wgMessageCache;
 
 		wfProfileIn( __METHOD__ );
 
 		// wikia change begin
+		global $wgRequest;
 		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
 			$oldTextBox1 = $this->textbox1;
 			$this->importFormData( $wgRequest );
