@@ -740,7 +740,9 @@ $.extend(Timer,{
  */
 jQuery.getResources = function(resources, callback) {
 	var isJs = /.js(\?(.*))?$/,
+		isAjaxCall = /action=ajax/,
 		isCss = /.css(\?(.*))?$/,
+		isSass = /.scss/,
 		remaining = resources.length;
 
 	var complete = function() {
@@ -762,12 +764,15 @@ jQuery.getResources = function(resources, callback) {
 		if (typeof resource == 'function') {
 			resource.call(jQuery, complete);
 		}
-		// CSS/JS files
-		else if (isJs.test(resource)) {
+		// JS files / MW AJAX calls
+		else if (isJs.test(resource) || isAjaxCall.test(resource)) {
 			$.getScript(resource, complete);
 		}
-		else if (isCss.test(resource)) {
+		// CSS /SASS files
+		else if (isCss.test(resource) || isSass.test(resource)) {
 			$.getCSS(resource, complete);
 		}
 	}
 };
+
+//console.profile(); $(window).bind('load', console.profileEnd);
