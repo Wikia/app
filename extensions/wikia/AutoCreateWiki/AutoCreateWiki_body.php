@@ -963,7 +963,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$params['wiki-name'] = $wgRequest->getVal( 'wiki-name', false );
 			$params['wiki-domain'] = $wgRequest->getVal( 'wiki-domain', false );
 			$params['wiki-category'] = $wgRequest->getVal( 'wiki-category', false );
-			$params['wiki-language'] = $wgRequest->getVal( 'wiki-language', false );
+			$params['wiki-language'] = $wgRequest->getVal( 'wiki-language', $wgUser->getOption( 'language' ) );
 			$params['wiki-type'] = $wgRequest->getVal( 'wiki-type', false );
 		}
 
