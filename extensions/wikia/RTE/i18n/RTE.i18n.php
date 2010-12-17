@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'enablerichtexteditor' => 'Enable Rich Text Editor',
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
+	'prefs-rte' => 'Rich Text Editor',
 );
 
 /** Message documentation (Message documentation)

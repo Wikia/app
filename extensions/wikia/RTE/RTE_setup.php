@@ -28,8 +28,7 @@ $wgHooks['AlternateEdit'][] = 'RTE::reverse';
 $wgHooks['EditPageBeforeConflictDiff'][] = 'RTE::reverse';
 
 // hooks for user preferences handling
-$wgHooks['getEditingPreferencesTab'][] = 'RTE::userPreferences';
-$wgHooks['UserToggles'][] = 'RTE::userToggle';
+$wgHooks['EditingPreferencesBefore'][] = 'RTE::onEditingPreferencesBefore';
 $wgHooks['UserGetOption'][] = 'RTE::userGetOption';
 
 // __NOWYSIWYG__ magic words handling

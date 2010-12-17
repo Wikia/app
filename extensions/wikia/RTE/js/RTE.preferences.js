@@ -1,23 +1,26 @@
 $(function() {
+	var toggle = $('input[name="wpenablerichtext"]');
+
 	function RTETogglePreferences() {
-		var RTEEnabled = $('#enablerichtext').attr('checked');
+		var RTEEnabled = toggle.attr('checked');
 
 		var fields = ['editwidth', 'showtoolbar', 'previewonfirst', 'previewontop', 'disableeditingtips', 'disablelinksuggest', 'externaleditor', 'externaldiff', 'disablecategoryselect'];
 
 		$(fields).each(function(i, id) {
-			var checkbox = $('#' + id);
+			var checkboxRow = $('input[name="wp' + id + '"]').closest('tr');
 
 			if (RTEEnabled) {
-				checkbox.parent().hide();
+				checkboxRow.hide();
 			}
 			else {
-				checkbox.parent().show();
+				checkboxRow.show();
 			}
 		});
 	}
 
 	$().log('setting up user preferences', 'RTE');
 
-	$('#enablerichtext').click(RTETogglePreferences);
+	toggle.click(RTETogglePreferences);
+
 	RTETogglePreferences();
 });

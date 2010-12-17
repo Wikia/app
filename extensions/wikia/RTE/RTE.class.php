@@ -745,10 +745,20 @@ HTML
 	}
 
 	/**
-	 * Add user toggles
+	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */
-	static public function userToggle(&$toggles) {
-		$toggles[] = 'enablerichtext';
+	static function onEditingPreferencesBefore($user, &$preferences) {
+		// add JS to hide certain switches when wysiwyg is enabled
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js?$wgStyleVersion\"></script>" );
+
+		// add RTE related section under "Editing" tab
+		$preferences['enablerichtext'] = array(
+			'type' => 'toggle',
+			'section' => 'editing/rte',
+			'label-message' => 'enablerichtexteditor',
+		);
+
 		return true;
 	}
 
