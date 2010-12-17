@@ -158,3 +158,17 @@ div.tright {
 .main-page-tag-lcs .tabber {
 	display: block;
 }
+.tright, .tleft {
+	border: solid silver;
+}
+.thumbinner {
+	background-color: #f9f9f9;
+	border: 0.2em solid #ccc;
+	padding: 3px;
+}
+.thumbimage {
+	border: 1px solid #ccc;
+}
+.thumbcaption {
+	font-size: 90%;
+}
