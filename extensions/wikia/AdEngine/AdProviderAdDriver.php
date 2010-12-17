@@ -15,8 +15,21 @@ class AdProviderAdDriver implements iAdProvider {
 
 	public function getAd($slotname, $slot, $params = null) {
 		$out = '';
+		$extraClasses = '';
+		switch ($slotname) {
+			case 'CORP_TOP_LEADERBOARD':
+			case 'HOME_TOP_LEADERBOARD':
+			case 'TOP_LEADERBOARD':
+			case 'CORP_TOP_RIGHT_BOXAD':
+			case 'HOME_TOP_RIGHT_BOXAD':
+			case 'TOP_RIGHT_BOXAD':
+			case 'PREFOOTER_LEFT_BOXAD':
+			case 'PREFOOTER_RIGHT_BOXAD':
+				$extraClasses .= ' default-height';
+				break;
+		}
 		if (strpos($slotname, 'EXIT_STITIAL') === FALSE) {
-			$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">';
+			$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint'.$extraClasses.'">';
 		}
 
 		$dartUrl = AdProviderDART::getInstance()->getUrl($slotname, $slot);

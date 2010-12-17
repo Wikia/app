@@ -287,13 +287,25 @@ AdDriver.postProcessSlot = function(slotname) {
 		case 'CORP_TOP_LEADERBOARD':
 		case 'HOME_TOP_LEADERBOARD':
 		case 'TOP_LEADERBOARD':
+			$('#'+slotname).removeClass('default-height');
 			// if jumbo/expanding leaderboard, change padding-top and padding-bottom
-			if (($('#'+slotname).height() > 30 && $('#'+slotname).height() < 90) // expandable leaderboard, minimized state
+			if (($('#'+slotname).height() >= 0 && $('#'+slotname).height() < 90) // expandable leaderboard, minimized state
 			|| $('#'+slotname).height() > 95) { // jumbo leaderboard or expandable leaderboard, maximized state
 				$('#'+slotname).css('padding-top', 0); 
 			}
+			return true;
+			break;
+		case 'CORP_TOP_RIGHT_BOXAD':
+		case 'HOME_TOP_RIGHT_BOXAD':
+		case 'TOP_RIGHT_BOXAD':
+		case 'PREFOOTER_LEFT_BOXAD':
+		case 'PREFOOTER_RIGHT_BOXAD':
+			$('#'+slotname).removeClass('default-height');
+			return true;
 			break;
 	}
+
+	return false;
 }
 
 AdDriver.canCallLiftium = function(slotname) {
