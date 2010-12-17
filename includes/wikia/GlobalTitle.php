@@ -11,7 +11,7 @@
  *
  */
 
-class GlobalTitle {
+class GlobalTitle extends Title {
 
 	/**
 	 * public, used in static constructor

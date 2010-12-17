@@ -94,11 +94,12 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadPhalanxLink';
 function efLoadPhalanxLink( $id, $nt, &$links ){
 	global $wgUser;
 	if( $wgUser->isAllowed( 'phalanx' ) ) {
-		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
+		$links[] = $wgUser->getSkin()->link(
 			GlobalTitle::newFromText('Phalanx', NS_SPECIAL, 177),
 			'Phalanx',
+			array(),
 			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText() ) )
-			);
+		);
 	}
 	return true;
 }

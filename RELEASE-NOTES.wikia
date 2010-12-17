@@ -5,6 +5,7 @@
 * rt#140425: IE: Facebook JS library causes events to be fired twice (macbre)
 * rt#140917: RTE: cursor issue in source mode (IE8) (macbre)
 * rt#131255: Fix creation of "Go" links to only notice a lang-code when it is actually there (uberfuzzy, sean)
+* rt#132263: Make Phalanx links on Special:Contributions work again (sean)
 
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
