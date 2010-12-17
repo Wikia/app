@@ -21,7 +21,7 @@ function smarty_modifier_validate($string, $type='url')
 		'ip' => FILTER_VALIDATE_IP
 	);
 
-	if (array_key_exists($type, $filters) && filter_var($string, $filters[$type]))
+	if (array_key_exists($type, $filters) && filter_var($string, $filters[$type]) !== FALSE)
 	{
 		return $string;
 	}
