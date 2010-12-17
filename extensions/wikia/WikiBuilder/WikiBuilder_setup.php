@@ -3,20 +3,20 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiBuilder',
 	'description' => 'WikiBuilder for Oasis',
-	'author' => 'Hyun Lim',
+	'author' => array('Hyun Lim', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 $dir = dirname(__FILE__).'/';
 
 // autoloads
-$wgAutoloadClasses['WikiBuilderModule'] = $dir.'WikiBuilderModule.class.php';
-$wgAutoloadClasses['SpecialWikiBuilder'] = $dir.'SpecialWikiBuilder.class.php';
+$wgAutoloadClasses['WikiBuilderModule'] = $dir . 'WikiBuilderModule.class.php';
+$wgAutoloadClasses['SpecialWikiBuilder'] = $dir . 'SpecialWikiBuilder.class.php';
 
 // special pages
 $wgSpecialPages['WikiBuilder'] = 'SpecialWikiBuilder';
 
 // i18n
-$wgExtensionMessagesFiles['WikiBuilder'] = $dir.'WikiBuilder.i18n.php';
+$wgExtensionMessagesFiles['WikiBuilder'] = $dir . 'WikiBuilder.i18n.php';
 
 // TODO: Permissions
 $wgAvailableRights[] = 'wikibuilder';
@@ -25,7 +25,7 @@ $wgGroupPermissions['sysop']['wikibuilder'] = true;
 $wgGroupPermissions['bureaucrat']['wikibuilder'] = true;
 $wgGroupPermissions['staff']['wikibuilder'] = true;
 
-$wgAutoloadClasses['ApiCreateMultiplePages'] = dirname(__FILE__).'/../NewWikiBuilder/ApiCreateMultiplePages.php';
+$wgAutoloadClasses['ApiCreateMultiplePages'] = $dir . '/../NewWikiBuilder/ApiCreateMultiplePages.php';
 $wgAPIModules['createmultiplepages'] = 'ApiCreateMultiplePages';
 
 // Ajax dispatcher
