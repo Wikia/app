@@ -478,18 +478,21 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {
 	$(".catlinks-allhidden").css("display", "block");
-	$('#csAddCategorySwitch').children('a').click(function() {
-		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories');
+	$('#csAddCategorySwitch').children('a').click(function(ev) {
+		ev.preventDefault();
 
-		$.loadYUI(function() {
-			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function() {
-				csTrack('addCategory');
-				showCSpanel();
-			});
+		$.getResources([
+			wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories',
+			$.loadYUI,
+			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion,
+			(window.skin == 'oasis' ? wfGetSassUrl('/extensions/wikia/CategorySelect/oasis.scss') : wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.css?' + wgStyleVersion)
+		],
+		function() {
+			csTrack('addCategory');
+			showCSpanel();
 		});
 
 		$('#catlinks').addClass('csLoading');
-		return false;
 	});
 });
 JS
@@ -542,7 +545,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	$text = "";
 	wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) ) ;
-	
+
 
 	return CategorySelectGenerateHTMLforEditRaw($categories, $text);
 }
