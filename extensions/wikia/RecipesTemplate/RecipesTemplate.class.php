@@ -453,7 +453,7 @@ abstract class RecipesTemplate extends SpecialPage {
 
 		// render recipes form
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
-                $tpl->set_vars(array(
+		$tpl->set_vars(array(
 			'errorMessage' => $this->mErrorMessage,
 			'fields' => $this->mFields,
 			'values' => $wgRequest->getValues(),
@@ -468,7 +468,7 @@ abstract class RecipesTemplate extends SpecialPage {
 			),
 			'preview' => $this->mPreview,
 			'toggles' => $this->mToggles,
-			'type' => $this->mType,
+			'type' => $formType,
 			'skipToggles' => $skipToggles
 		));
 		$html = $tpl->render('renderForm');
@@ -486,7 +486,7 @@ abstract class RecipesTemplate extends SpecialPage {
 		wfProfileIn(__METHOD__);
 
 		// load dependencies (CSS)
-                $wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css?{$wgStyleVersion}");
 
 		// render toggle
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
