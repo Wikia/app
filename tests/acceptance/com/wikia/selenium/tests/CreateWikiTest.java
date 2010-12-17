@@ -89,8 +89,8 @@ public class CreateWikiTest extends BaseTest {
 		
 		clickAndWait("link=Close");
 		
-		session().check("flag_1");
-		session().check("flag_2");
+		session().uncheck("flag_1");
+		session().uncheck("flag_2");
 		session().check("flag_4");
 		session().check("flag_8");
 		clickAndWait("close_saveBtn");

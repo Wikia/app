@@ -17,7 +17,7 @@ public class UploadImageTest extends BaseTest {
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
 		String destinationFileName = uploadFileUrl.substring(uploadFileUrl.lastIndexOf("/") + 1);
 
-		login();
+		loginAsStaff();
 
 		session().open("index.php?title=Special:Upload");
 		session().waitForPageToLoad(TIMEOUT);
