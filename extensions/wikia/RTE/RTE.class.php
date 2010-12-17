@@ -27,8 +27,7 @@ class RTE {
 	 * Perform "reverse" parsing of HTML to wikitext when saving / doing preview from wysiwyg mode
 	 */
 	public static function reverse($form,  $out = null) {
-		global $wgRequest, $wgHooks, $wgRC2UDPEnabled;
-
+		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		if($wgRequest->wasPosted()) {
@@ -44,7 +43,6 @@ class RTE {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return true;
 	}
 
@@ -142,7 +140,7 @@ class RTE {
 		$wgHooks['SkinGetPageClasses'][] = 'RTE::addBodyClass';
 
 		// remove default editor toolbar (RT #78393)
-		$wgHooks['EditPage::showEditForm:toolbar'][] = 'RTE::removeDefaultToolbar';
+		$wgHooks['EditPageBeforeEditToolbar'][] = 'RTE::removeDefaultToolbar';
 
 		// add fake form used by MW suggest
 		$wgOut->addHTML( Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form') );
@@ -291,7 +289,7 @@ class RTE {
 	/**
 	 * Removes default editor toolbar, so we can lazy load icons for source mode toolbar (RT #78393)
 	 */
-	public static function removeDefaultToolbar(&$editPage, &$wgOut, &$toolbar) {
+	public static function removeDefaultToolbar(&$toolbar) {
 		$toolbar = strtr($toolbar, array(
 			"<div id='toolbar' style='clear:both'>" => '',
 			'</div>' => '',
