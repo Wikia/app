@@ -26,7 +26,7 @@ abstract class SpecialBlogPage extends SpecialPage {
 		return $sText;
 	}
 
-	public static function alternateEditHook(&$oEditPage) {
+	public static function alternateEditHook($oEditPage) {
 		global $wgOut;
 		$oTitle = $oEditPage->mTitle;
 		if($oTitle->getNamespace() == NS_BLOG_LISTING) {
