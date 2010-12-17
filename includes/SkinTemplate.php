@@ -490,7 +490,9 @@ class SkinTemplate extends Skin {
 			$tpl->set( 'debug', '' );
 		}
 
-//		$tpl->set( 'reporttime', wfReportTime() );  // Wikia change -- moved this further down in page rendering.
+		if ( !Wikia::isOasis() ){
+			$tpl->set( 'reporttime', wfReportTime() );  // Wikia change -- moved this further down in page rendering for Oasis.
+		}
 		$tpl->set( 'sitenotice', wfGetSiteNotice() );
 		$tpl->set( 'bottomscripts', $this->bottomScripts() );
 
