@@ -1915,7 +1915,7 @@ INPUTS
 	 * @return string
 	 */
 	function getPreviewText() {
-		global $wgOut, $wgUser, $wgTitle, $wgParser, $wgLang, $wgContLang, $wgMessageCache;
+		global $wgOut, $wgUser, $wgTitle, $wgParser, $wgLang, $wgContLang, $wgMessageCache, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 
