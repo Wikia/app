@@ -25,8 +25,13 @@ class SpecialPreferences extends SpecialPage {
 			$this->showResetForm();
 			return;
 		}
-		
+
 		$wgOut->addScriptFile( 'prefs.js' );
+
+		/* Wikia change begin - @author: macbre */
+		/* Enable custom notifications handling */
+		wfRunHooks('SpecialPreferencesOnRender', array(&$this));
+		/* Wikia change end */
 
 		if ( $wgRequest->getCheck( 'success' ) ) {
 			$wgOut->wrapWikiMsg(
@@ -34,7 +39,8 @@ class SpecialPreferences extends SpecialPage {
 				'savedprefs'
 			);
 		}
-		
+
+
 		if ( $wgRequest->getCheck( 'eauth' ) ) {
 			$wgOut->wrapWikiMsg( "<div class='error' style='clear: both;'>\n$1</div>",
 									'eauthentsent', $wgUser->getName() );
