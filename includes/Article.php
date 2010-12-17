@@ -843,7 +843,8 @@ class Article {
 
 				case 3:
 					$text = $this->getContent();
-					if ( $text === false || $this->getID() == 0 /** || wfRunHooks( 'ArticleNonExistentPage', array( $this, $wgOut, &$text, &$return404 ) ) **/ ) {
+					wfRunHooks( 'ArticleNonExistentPage', array( $this, &$text ) );
+					if ( $text === false || $this->getID() == 0 ) {
 						wfDebug( __METHOD__ . ": showing missing article\n" );
 						$this->showMissingArticle();
 						wfProfileOut( __METHOD__ );
