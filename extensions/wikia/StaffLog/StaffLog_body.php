@@ -91,14 +91,6 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 		if (!$this->mQueryDone) {
 			$this->doQuery();
 		}
-		$batch = new LinkBatch;
-
-		$this->mResult->rewind();
-
-		while ( $row = $this->mResult->fetchObject() ) {
-			$batch->addObj( Title::makeTitleSafe( NS_CATEGORY, $row->cat_title ) );
-		}
-		$batch->execute();
 		$this->mResult->rewind();
 		return parent::getBody();
 	}
