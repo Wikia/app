@@ -14,16 +14,6 @@ class OasisModule extends Module {
 		self::$extraBodyClasses[] = $className;
 	}
 
-	// remove default meta tags added by core mediawiki so they don't show up twice
-	// we will add them back in again when we regenerate headlinks
-	private function clearDefaultMeta(&$tags) {
-		foreach($tags as $i => $tag) {
-			if (in_array($tag[0], array('generator', 'robots', 'keywords'))) {
-				unset($tags[$i]);
-			}
-		}
-	}
-
 	// template vars
 	var $anonSiteCss;
 	var $body;
@@ -111,7 +101,6 @@ class OasisModule extends Module {
 		// render CSS <link> tags
 		$this->csslinks = $tmpOut->buildCssLinks();
 
-		$this->clearDefaultMeta($wgOut->mMetatags);
 		$this->headlinks = $wgOut->getHeadLinks();
 
 		$this->pagetitle = htmlspecialchars( $this->pagetitle );
