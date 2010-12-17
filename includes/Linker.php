@@ -533,8 +533,10 @@ class Linker {
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false );
 			/* Wikia change begin - @author: Marooned */
 			/* Images SEO project */
-			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
-			$params['id'] = $wrapperId;
+			if (Wikia::isOasis()) {
+				$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
+				$params['id'] = $wrapperId;
+			}
 			/* Wikia change end */
 			if ( !empty( $fp['link-url'] ) ) {
 				$params['custom-url-link'] = $fp['link-url'];
@@ -642,8 +644,13 @@ class Linker {
 
 		/* Wikia change begin - @author: Marooned */
 		/* Images SEO project */
-		$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
-		$s = "<figure class=\"thumb t{$fp['align']} thumbinner\" style=\"width:{$outerWidth}px;\">";
+		if (Wikia::isOasis()) {
+			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
+			$s = "<figure class=\"thumb t{$fp['align']} thumbinner\" style=\"width:{$outerWidth}px;\">";
+		} else {
+			$wrapperId = '';
+			$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
+		}
 		/* Wikia change end */
 		if( !$exists ) {
 			$s .= $this->makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time==true );
@@ -674,12 +681,16 @@ class Linker {
 		}
 		/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
 		/* Images SEO project */
-		$s .= $zoomicon;
+		if (Wikia::isOasis()) {
+			$s .= $zoomicon;
 
-		if( !empty( $fp[ 'caption' ] ) ) $s .= '<figcaption class="thumbcaption">' . $fp['caption'] . '</figcaption>';
-		if( get_class( $wgUser->getSkin() ) == 'SkinOasis' ) $s .= '<!-- picture-attribution -->';
+			if( !empty( $fp[ 'caption' ] ) ) $s .= '<figcaption class="thumbcaption">' . $fp['caption'] . '</figcaption>';
+			$s .= '<!-- picture-attribution -->';
 
-		$s .= '</figure>';
+			$s .= '</figure>';
+		} else {
+			$s .= '<div class="thumbcaption">'.$zoomicon.$fp['caption']."</div></div></div>";
+		}
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: macbre */

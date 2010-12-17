@@ -145,10 +145,6 @@ class ThumbnailImage extends MediaTransformOutput {
 	 * @public
 	 */
 	function toHtml( $options = array() ) {
-		/* Wikia change start, author: Federico "Lox" Lucignano*/
-		global $wgUser;
-		/* Wikia change end */
-		
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
@@ -179,11 +175,11 @@ class ThumbnailImage extends MediaTransformOutput {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
 			/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
 			/* Images SEO project */
-			$linkAttribs['data-image-name'] = $this->file->getTitle()->getText();
-			
-			if (!empty($options['id'])) $linkAttribs['id'] = $options['id'];
-			
-			if ( get_class( $wgUser->getSkin() ) == 'SkinOasis') $linkAttribs['href'] = $this->file->getFullUrl();
+			if (Wikia::isOasis()) {
+				$linkAttribs['data-image-name'] = $this->file->getTitle()->getText();
+				$linkAttribs['href'] = $this->file->getFullUrl();
+				if (!empty($options['id'])) $linkAttribs['id'] = $options['id'];
+			}
 			/* Wikia change end */
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = array( 'href' => wfReplaceImageServer( $this->file->getURL(), $this->file->getTimestamp() ) );
