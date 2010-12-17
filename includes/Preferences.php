@@ -323,14 +323,14 @@ class Preferences {
 					'help-message' => 'prefs-help-signature', // show general help about signature at the bottom of the section
 					'section' => 'personal/signature'
 				);
-				
+
 		## Email stuff
-		
+
 		global $wgEnableEmail;
 		if ($wgEnableEmail) {
-		
+
 			global $wgEmailConfirmToEdit;
-	
+
 			$defaultPreferences['emailaddress'] =
 					array(
 						'type' => $wgAuth->allowPropChange( 'emailaddress' ) ? 'email' : 'info',
@@ -342,11 +342,11 @@ class Preferences {
 											: 'prefs-help-email',
 						'validation-callback' => array( 'Preferences', 'validateEmail' ),
 					);
-	
+
 			global $wgEnableUserEmail, $wgEmailAuthentication;
-	
+
 			$disableEmailPrefs = false;
-	
+
 			if ( $wgEmailAuthentication ) {
 				if ( $user->getEmail() ) {
 					if( $user->getEmailAuthenticationTimestamp() ) {
@@ -375,7 +375,7 @@ class Preferences {
 					$disableEmailPrefs = true;
 					$emailauthenticated = wfMsgHtml( 'noemailprefs' );
 				}
-	
+
 				$defaultPreferences['emailauthentication'] =
 						array(
 							'type' => 'info',
@@ -384,9 +384,9 @@ class Preferences {
 							'label-message' => 'prefs-emailconfirm-label',
 							'default' => $emailauthenticated,
 						);
-	
+
 			}
-	
+
 			if( $wgEnableUserEmail && $user->isAllowed( 'sendemail' ) ) {
 				$defaultPreferences['disablemail'] =
 						array(
@@ -404,7 +404,7 @@ class Preferences {
 							'disabled' => $disableEmailPrefs,
 						);
 			}
-			
+
 			global $wgEnotifWatchlist;
 			if ( $wgEnotifWatchlist ) {
 				$defaultPreferences['enotifwatchlistpages'] =
@@ -636,6 +636,10 @@ class Preferences {
 
 	static function editingPreferences( $user, &$defaultPreferences ) {
 		global $wgUseExternalEditor, $wgLivePreview;
+
+		/* Wikia change begin - @author: Macbre */
+		wfRunHooks( 'EditingPreferencesBefore', array($user, &$defaultPreferences ) );
+		/* Wikia change end */
 
 		## Editing #####################################
 		$defaultPreferences['cols'] =
@@ -929,7 +933,7 @@ class Preferences {
 					'label-message' => 'contextchars',
 					'section' => 'searchoptions/display',
 					'min' => 0,
-				);		
+				);
 		global $wgEnableMWSuggest;
 		if( $wgEnableMWSuggest ) {
 			$defaultPreferences['disablesuggest'] =
@@ -1196,7 +1200,7 @@ class Preferences {
 				$z = explode( '/', $tz, 2 );
 
 				# timezone_identifiers_list() returns a number of
-				# backwards-compatibility entries. This filters them out of the 
+				# backwards-compatibility entries. This filters them out of the
 				# list presented to the user.
 				if ( count( $z ) != 2 || !array_key_exists( $z[0], $tzRegions ) )
 					continue;
@@ -1205,10 +1209,10 @@ class Preferences {
 				$z[0] = $tzRegions[$z[0]];
 
 				$minDiff = floor( timezone_offset_get( timezone_open( $tz ), $now ) / 60 );
-				
+
 				$display = str_replace( '_', ' ', $z[0] . '/' . $z[1] );
 				$value = "ZoneInfo|$minDiff|$tz";
-				
+
 				$opt[$z[0]][$display] = $value;
 			}
 		}
@@ -1240,7 +1244,7 @@ class Preferences {
 				return 'Offset|'.$minDiff;
 		}
 	}
-	
+
 	static function tryFormSubmit( $formData, $entryPoint = 'internal' ) {
 		global $wgUser, $wgEmailAuthentication, $wgEnableEmail;
 
