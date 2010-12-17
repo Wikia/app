@@ -65,16 +65,19 @@ function wfAutoPageCreateSetupVars( $vars ) {
         return true;
 }
 
-function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
+function wfAutoPageCreateViewPage( $article, &$text  ) {
 	wfProfileIn(__METHOD__);
+
+	global $wgOut;
 
 	$title = $article->mTitle;
 	$ns = $title->getNamespace();
 
+	$retval = false;
+
 	switch( $ns ) {
 		case NS_MEDIAWIKI:
-			$return404 = true;
-
+			$retval = true;
 		case NS_CATEGORY:
 		case NS_HELP:
 			$text = "<div class=\"noarticletext\">\n$text\n</div>";
@@ -90,7 +93,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-content";
 			} elseif( $title->isTalkPage() ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-talk";
-				$out->setRobotPolicy( 'noindex,nofollow' );
+				$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			} else {
 				switch( $ns ) {
 					case NS_USER:
@@ -124,7 +127,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 						break;
 				}
 
-				$out->setRobotPolicy( 'noindex,nofollow' );
+				$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			}
 
 			if (!empty($overlayMsgKey)) {
@@ -138,7 +141,7 @@ wgAfterContentAndJS.push( function() { $( function() {
 	$("#NoArticleTextNoticeClose").click( function() { $(this).parent().slideUp() } );
 } ) } );
 END;
-					$out->addInlineScript( $js );
+					$wgOut->addInlineScript( $js );
 				}
 			}
 			else {
@@ -147,5 +150,5 @@ END;
 	}
 
 	wfProfileOut(__METHOD__);
-	return false;
+	return $retval;
 }
