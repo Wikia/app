@@ -1,5 +1,6 @@
 == Changes since 20101213 ==
-( rt#139282: Image code changes breaks thumbnails in Monobook (Marooned)
+* rt#141008: Mobile skin: Thumbnails and infoboxes have lost their (Marooned)
+* rt#139282: Image code changes breaks thumbnails in Monobook (Marooned)
 * rt#140776: Undefined variable: categories (Marooned)
 * rt#140425: IE: Facebook JS library causes events to be fired twice (macbre)
 * rt#140917: RTE: cursor issue in source mode (IE8) (macbre)
