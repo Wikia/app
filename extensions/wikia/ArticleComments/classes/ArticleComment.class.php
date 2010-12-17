@@ -75,11 +75,10 @@ class ArticleComment {
 			if (empty($title)) {
 				return false;
 			}
-
-			//RT#86385 Why do we get an ID of 0 here sometimes?  Just set it!
-			if ($title->getArticleID() == 0) {
-				$title->mArticleID = $id;
-			}
+		}
+		//RT#86385 Why do we get an ID of 0 here sometimes when we know our id already?  Just set it!
+		if ($title && $title->getArticleID() <= 0) {
+			$title->mArticleID = $id;
 		}
 		return new ArticleComment( $title );
 	}
