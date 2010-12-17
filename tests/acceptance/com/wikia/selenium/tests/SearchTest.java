@@ -37,7 +37,7 @@ public class SearchTest extends BaseTest {
 		session().waitForPageToLoad(TIMEOUT);
 		
 		// check what page you land on
-		assertTrue(session().getLocation().contains("wiki/Main_page"));
+		assertTrue(session().getLocation().contains("wiki/Main_Page"));
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Main Page");
 	}
 }

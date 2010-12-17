@@ -14,10 +14,11 @@ public class WhatIsMyIpTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testAssertThatInfrastructureIPsAreNotPresented() throws Exception {
 		session().open("index.php?title=Special:WhatIsMyIP");
+		session().waitForPageToLoad(TIMEOUT);
 
 		// check what page you land on
 		assertTrue(session().getLocation().contains("index.php?title=Special:WhatIsMyIP"));
-		assertEquals(session().getText("//div[@id='WikiaPageHeader']/h1"), "What is my IP");
+		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "What is my IP");
 		// and invalid IP addresses
 		String[] ips = getTestConfig().getStringArray("ci.extension.wikia.WhatIsMyIP.ip");
 		assertTrue(ips.length > 0);
