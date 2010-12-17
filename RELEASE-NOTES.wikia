@@ -6,6 +6,8 @@
 * rt#140917: RTE: cursor issue in source mode (IE8) (macbre)
 * rt#131255: Fix creation of "Go" links to only notice a lang-code when it is actually there (uberfuzzy, sean)
 * rt#132263: Make Phalanx links on Special:Contributions work again (sean)
+* Set GlobalTitle to extend Title so that Linker->link() will allow them. Side-effects unknown (sean)
+* Removed unused 3rdparty Amazon extension (sean)
 
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
