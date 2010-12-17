@@ -32,12 +32,12 @@ function wfOasisSetup() {
 	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
 
 	// confirmations
-	$wgHooks['PreferencesMainPrefsForm'][] = 'NotificationsModule::addPreferencesConfirmation';
-	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsModule::addPageMovedConfirmation';
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsModule::addPageUndeletedConfirmation';
-	$wgHooks['UserLogoutComplete'][] = 'NotificationsModule::addLogOutConfirmation';
 	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsModule::addFacebookConnectConfirmation';
+	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsModule::addPageMovedConfirmation';
+	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsModule::addPreferencesConfirmation';
+	$wgHooks['UserLogoutComplete'][] = 'NotificationsModule::addLogOutConfirmation';
 
 	// notifications
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsModule::addMessageNotification';

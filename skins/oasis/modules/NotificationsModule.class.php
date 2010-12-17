@@ -144,23 +144,21 @@ class NotificationsModule extends Module {
 	/**
 	 * Handle confirmations from special preferences
 	 */
-	public static function addPreferencesConfirmation(&$prefs, &$status, $message) {
+	public static function addPreferencesConfirmation(&$prefs) {
+		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		if (Wikia::isOasis()) {
-			if ($prefs->mSuccess || 'success' == $status) {
+			if ($wgRequest->getCheck('success')) {
 				self::addConfirmation(wfMsg('savedprefs'));
 			}
-			else if ('error' == $status) {
+			else if ($wgRequest->getCheck('eauth')) {
 				self::addConfirmation($message, self::CONFIRMATION_ERROR);
-			}
-			else if ('' != $status) {
-				self::addConfirmation($message);
 			}
 
 			// clear the state, so that MW core doesn't render any message
-			$prefs->mSuccess = false;
-			$status = '';
+			$wgRequest->setVal('eauth', null);
+			$wgRequest->setVal('success', null);
 		}
 
 		wfProfileOut(__METHOD__);
