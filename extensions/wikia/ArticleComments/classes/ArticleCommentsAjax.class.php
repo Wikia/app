@@ -218,15 +218,9 @@ class ArticleCommentsAjax {
 				// level1 comment
 				$comments = array($response[1]->getID() => array('level1' => $addedComment));
 			} else {
-				// level2 comment
-				$tmp = array_slice(explode('/', $addedComment->getTitle()->getDBkey()), 0, 2);
-				$tmp = implode('/', $tmp);
-
-				$title = Title::newFromText($tmp, NS_TALK);
-				
-				$addedCommentParent = ArticleComment::newFromId($title->getArticleID());
-
-				$comments = array($title->getArticleID() => array('level1' => $addedCommentParent, 'level2' => array($response[1]->getID() => $addedComment)));
+				// level2 comment				
+				$addedCommentParent = ArticleComment::newFromId($parentId);
+				$comments = array($parentId => array('level1' => $addedCommentParent, 'level2' => array($response[1]->getID() => $addedComment)));
 			}
 
 			$countComments = count($comments);
