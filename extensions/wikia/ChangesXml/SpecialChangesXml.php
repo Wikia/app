@@ -1,6 +1,6 @@
 <?php
 /**
- * This extension will keep trak of all changes over N characters in MAIN_NS
+ * This extension will keep track of all changes over N characters in MAIN_NS
  * This data creates changes.xml file
  * @author Andrew Yasinky andrewy at wikia.com
  * enbaling parameter $wgEnableSpecialChangesXmlToFeedUrl is url of where to put data
