@@ -25,7 +25,7 @@ $wgGroupPermissions['sysop']['wikibuilder'] = true;
 $wgGroupPermissions['bureaucrat']['wikibuilder'] = true;
 $wgGroupPermissions['staff']['wikibuilder'] = true;
 
-$wgAutoloadClasses['ApiCreateMultiplePages'] = $dir . '/../NewWikiBuilder/ApiCreateMultiplePages.php';
+$wgAutoloadClasses['ApiCreateMultiplePages'] = $dir . '/ApiCreateMultiplePages.php';
 $wgAPIModules['createmultiplepages'] = 'ApiCreateMultiplePages';
 
 // Ajax dispatcher
