@@ -8,6 +8,7 @@
 * rt#132263: Make Phalanx links on Special:Contributions work again (sean)
 * Set GlobalTitle to extend Title so that Linker->link() will allow them. Side-effects unknown (sean)
 * Removed unused 3rdparty Amazon extension (sean)
+* Removed unused 3rdparty Docstoc extension (sean)
 
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
