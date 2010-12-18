@@ -10,8 +10,9 @@
 * Removed unused 3rdparty Amazon extension (sean)
 * Removed unused 3rdparty Docstoc extension (sean)
 * Removed unused 3rdparty Emoticons extension (sean)
-* Created Google Maps key for devboxes (sean)
+* Created Google Maps key for devbox domain (sean)
 * Removed unused LiquidThreads extension (sean)
+* Removed unused 3rdparty ListTransclusions extension (sean)
 
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
