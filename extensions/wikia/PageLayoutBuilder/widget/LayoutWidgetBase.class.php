@@ -31,7 +31,6 @@ abstract class LayoutWidgetBase {
 		if(empty($wgPLBwidgets[$tag])) {
 			return null;
 		}
-
 		$class = new $wgPLBwidgets[$tag]($attributes, $value, $error);
 		if($class->getName() == $tag) {
 			$class->parser = $parser;
