@@ -105,7 +105,6 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 			'widths' => $this->getAttrVal("size", true),
 		 	'captionalign' => 'left' 
 		); 
-		
 		return XML::element('gallery', $params, $this->getValue(), false );
 	}
 
@@ -113,14 +112,7 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 		if(empty($this->value)) {
 			return "";
 		}
-
-		$pos = strpos($this->value, "|");
-		if($pos === false) {
-			return trim($this->value);
-		}
-
-		$out = explode('|', $this->value, 2);
-		return trim($out[0]);
+		return $this->value;
 	}
 
 	private function getCaption() {
@@ -237,7 +229,6 @@ Photo orientation: FIXED to "leave in original shape"
 				'size' => '185',
 				'align' => 'left',
 				'spacing' => 'large',		
-				'type' => 'frameless'
 		);
 	}
 

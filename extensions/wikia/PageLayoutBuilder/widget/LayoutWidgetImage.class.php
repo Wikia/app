@@ -48,7 +48,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 			$user = User::newFromName($img->getUser());
 			$data['username'] = $user->getName();
 			$data['divwidth'] =  $data['width'];
-			$data['img'] = wfReplaceImageServer( $img->getThumbUrl( $data['width']."px-" . $img->getName()  ) );
+			$data['img'] = wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => $data["width"] ) ) ) ); 
 		}
 		return $this->renderForPreviewAndForm($data).XML::element('input',array(
 								'name' => 'plb_'.$this->getAttrVal('id', true),
@@ -264,7 +264,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 
 		$sizeOut = self::getImageSize($size, $img);
 		$response->addText(json_encode(array("status" => "ok",
-				"url" => wfReplaceImageServer( $img->getThumbUrl( $sizeOut["width"]."px-" . $img->getName()  ) ),
+				"url" => wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => $sizeOut["width"] ) ) ) ),
 				"size" => $sizeOut
 		)));
 		return $response;

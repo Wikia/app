@@ -10,9 +10,9 @@
  * @copyright Copyright (C) 2008 Tomasz Odrobny (Tomek), Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
+
  */
 //error_reporting(E_ALL);
-
 define("package_size", 100);
 $optionsWithArgs = array( 'list' );
 
@@ -23,10 +23,6 @@ if (isset($options['help'])) {
 	die( "indexer for blog listing pages" );
 }
 
-if ( WikiFactory::getVarValueByName("wgImagesIndexed", $wgCityId ) ) {
-	echo "This wiki is already indexed change wgImagesIndexed to false to reindex\n";
-	exit;
-}
 
 $db = wfGetDB(DB_SLAVE, array());
 
@@ -46,18 +42,25 @@ if ((!empty($options['do'])) && $options['do'] == 1 ) {
 	exit;
 }
 
+if(!isset($options['force'])) {
+	if ( WikiFactory::getVarValueByName("wgImagesIndexed", $wgCityId ) ) {
+		echo "This wiki is already indexed change wgImagesIndexed to false to reindex\n";
+		exit;
+	}
+}
 
 if (empty($options['do']) || $options['do'] != 1) {
 	$res = $db->select(
 	            array( 'imagelinks' ),
 	            array( 'il_from,il_to,count(*) as cnt'),
-	            "",
+                    array("il_from in (select il_from from image inner join imagelinks where  img_media_type != 'VIDEO' and il_to = img_name and il_from not in (select page_id from page_wikia_props))"),
 	            __METHOD__,
 	            array(
 	            	"GROUP BY" => "il_from",
-	            	"HAVING" => "cnt = 1"
+	            	"HAVING" => "cnt = 1",
 	            )
 	);
+	
 	
 	echo "Indexing one count pages\n";
 	
@@ -70,7 +73,7 @@ if (empty($options['do']) || $options['do'] != 1) {
 	$res = $db->select(
 	            array( 'imagelinks' ),
 	            array( 'il_from,count(*) as cnt'),
-	            "",
+	            array("il_from in (select il_from from image inner join imagelinks where  img_media_type != 'VIDEO' and il_to = img_name and il_from not in (select page_id from page_wikia_props))"),
 	            __METHOD__,
 	            array(
 	            	"GROUP BY" => "il_from",
@@ -78,31 +81,39 @@ if (empty($options['do']) || $options['do'] != 1) {
 	            //	"LIMIT" => 1
 	            )
 	);
-	$totalNum = $res->numRows();	            
+	$total_num = $res->numRows();	            
 	$out = array();
 	$count = 0;
 	$total_count = 0;
 	$startTime = Time();
-	Wikia::log( __METHOD__, 'imageServingIndexer', 'starting for:'.$wgCityId. " total number:".$totalNum );
+	Wikia::log( __METHOD__, 'imageServingIndexer', 'starting for:'.$wgCityId. " total number:".$total_num );
 	while ($row = $db->fetchRow($res)) {
 		$total_count ++;
 		$count ++;
 		$out[] = $row['il_from'];
 		if ($count == package_size ) {
-			Wikia::log( __METHOD__, 'imageServingIndexer', 'next pack for:'.$wgCityId." ".$total_count."/".$totalNum );
-			$count = 0;
-			$cmd = array(
-				"SERVER_ID={$wgCityId}",
-				"php",
-				"{$IP}/maintenance/wikia/imageServingIndexer.php",
-				"--do",
-				"--list ".implode(",",$out),
-				"--conf {$wgWikiaLocalSettingsPath}"
-			);	
-			$out = array();
-			system( implode( " ", $cmd ), $status );
+			runIndexer( $out, $total_count, $total_num );
+			$out = array(); 
 		}
 	}
+	if(!empty($out)) {
+		runIndexer( $out, $total_count, $total_num );
+	}
 	Wikia::log( __METHOD__, 'imageServingIndexer', 'end for:'.$wgCityId. " total time:".(Time() - $startTime) );
-	WikiFactory::setVarByName("wgImagesIndexed", $wgCityId, true );
+//	WikiFactory::setVarByName("wgImagesIndexed", $wgCityId, true );
+}
+
+function runIndexer( $out, $total_count, $total_num  ) {
+	global $IP, $wgCityId, $wgWikiaLocalSettingsPath;
+	Wikia::log( __METHOD__, 'imageServingIndexer', 'next pack for:'.$wgCityId." ".$total_count."/".$total_num );
+	$count = 0;
+	$cmd = array(
+		"SERVER_ID={$wgCityId}",
+		"php",
+		"{$IP}/maintenance/wikia/imageServingIndexer.php",
+		"--do",
+		"--list ".implode(",",$out),
+		"--conf {$wgWikiaLocalSettingsPath}"
+	);	
+	system( implode( " ", $cmd ), $status );	
 }

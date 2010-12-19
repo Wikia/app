@@ -3,6 +3,7 @@
  * Author: Tomek Odrobny
  * Class to serving list of top 5 images for article use for indexing and keep index up to date
  */
+
 class imageServingHelper{
 	static private $hookOnOff = false; // parser hook are off 
 	
@@ -105,10 +106,6 @@ class imageServingHelper{
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array());
 
-                if ( !$db->tableExists( "page_wikia_props" ) ) {
-                    $db->sourceFile( "$IP/extensions/wikia/ImageServing/sql/table.sql" );
-                }
-
 		if( (count($images) < 1) ) {
 			if ($ignoreEmpty) {
 				return true;	
@@ -127,7 +124,7 @@ class imageServingHelper{
 				'page_id' =>  $articleId,
 				'propname' => "imageOrder")
 		);
-			
+		
 		$db->replace('page_wikia_props','',
 			array(
 				'page_id' =>  $articleId,
@@ -135,6 +132,8 @@ class imageServingHelper{
 				'props' => serialize($images)
 			)
 		);
+		
+		$db->commit();
 		wfProfileOut(__METHOD__);
 		return true;
 	}
