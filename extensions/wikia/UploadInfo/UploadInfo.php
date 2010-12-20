@@ -27,11 +27,11 @@ class UploadInfo {
 	static public function uploadComplete( $uploadForm ) {
 		global $wgRequest, $wgCityId, $wgExternalDatawareDB, $wgWikiaDatacenter;
 
-		if( !($uploadForm->mLocalFile instanceof LocalFile) ) {
+		if( !($uploadForm->getLocalFile() instanceof LocalFile) ) {
 			return true;
 		}
 
-		$title = $uploadForm->mLocalFile->getTitle();
+		$title = $uploadForm->getLocalFile()->getTitle();
 		if( !($title instanceof Title) ) {
 			return true;
 		}
@@ -39,10 +39,10 @@ class UploadInfo {
 		wfProfileIn( __METHOD__ );
 
 		$mTitle = $title->getText();
-		$relPath = $uploadForm->mLocalFile->getRel();
-		$fullPath = $uploadForm->mLocalFile->getFullPath();
+		$relPath = $uploadForm->getLocalFile()->getRel();
+		$fullPath = $uploadForm->getLocalFile()->getFullPath();
 
-		$aHistory = $uploadForm->mLocalFile->getHistory(1);
+		$aHistory = $uploadForm->getLocalFile()->getHistory(1);
 		$oldPath = false;
 		if ( isset($aHistory) && isset($aHistory[0]) ) {
 			$oOldLocalFile = $aHistory[0];
@@ -52,7 +52,7 @@ class UploadInfo {
 		}
 
 		if ( !empty( $oldPath ) ) {
-			$oldPath = sprintf("%s/%s", $uploadForm->mLocalFile->getArchivePath(), $oldPath );
+			$oldPath = sprintf("%s/%s", $uploadForm->getLocalFile()->getArchivePath(), $oldPath );
 		}
 
 		/**
