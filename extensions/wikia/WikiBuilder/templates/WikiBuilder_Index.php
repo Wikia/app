@@ -122,7 +122,6 @@
 <script>
 	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
 	var redirect = window.wgArticlePath.replace(/\$1/, window.wgMainpage.replace(/ /g, '_') );
-	var language = "<?= $wgLanguageCode ?>";
-	var messages = {"<?= $wgLanguageCode . '": ' . json_encode($OWBmessages[$wgLanguageCode]) . "};"?>
+	var messages = <?= json_encode($messages) ?>;
 </script>
 <img class="ajaxwait" src="/skins/common/images/ajax.gif">

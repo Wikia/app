@@ -236,7 +236,7 @@ var WikiBuilder = {
 	msg: function(msg){
 		var ret;
 		try {
-			ret = messages[language][msg];
+			ret = messages[msg];
 		} catch(e) {
 			ret = msg;
 		}
