@@ -733,20 +733,6 @@ HTML
 	/**
 	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */
-	function userPreferences($preferencesForm, &$toggles) {
-		// add JS to hide certain switches when wysiwyg is enabled
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js?$wgStyleVersion\"></script>" );
-
-		// add RTE switch as the first one in "editing" prefs tab
-		array_unshift($toggles, 'enablerichtext');
-
-		return true;
-	}
-
-	/**
-	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
-	 */
 	static function onEditingPreferencesBefore($user, &$preferences) {
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
