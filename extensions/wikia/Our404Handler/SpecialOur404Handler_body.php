@@ -16,13 +16,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class Our404HandlerPage extends UnlistedSpecialPage {
-	const IMAGEROOT = '/images';
-	const FAVICON_ICO = '/images/c/central/images/6/64/Favicon.ico';
-	const FAVICON_URL = 'http://images.wikia.com/central/images/6/64/Favicon.ico';
-	const LOGOWIDE_PNG = 'templates/Wiki_wide.png';
-	const LOGOWIDE_URL = 'http://images.wikia.com/starter/images/e/ed/TitleTemplate.png';
 
-	public $mTitle, $mAction, $mSubpage;
+	public $mTitle;
 
 	/**
 	 * Constructor
@@ -44,70 +39,10 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		wfLoadExtensionMessages( 'Our404Handler' );
 
 		$this->setHeaders();
-
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'Our404Handler' );
-		$this->mAction = $wgRequest->getVal( 'action' );
-		$this->mSubpage = $subpage;
-		$this->mAction = ( $this->mAction )
-			? $wgRequest->getVal( 'action' )
-			: 'thumb';
-
-		if ( isset( $this->mSubpage ) && $this->mSubpage === 'thumb' ) {
-			$sURI = $wgRequest->getVal( 'uri' );
-			return $this->doThumbnail( $sURI );
-		}
-
 		$this->doRender404();
 	}
 
-	/**
-	 * Just return thumbnail (create if needed). code based on /thumb.php
-	 * from MediaWiki. Use cache for storing known values
-	 *
-	 * @access public
-	 */
-	public function doThumbnail( $uri ){
-		global $wgOut, $wgMemc, $wgExternalSharedDB;
-
-		wfProfileIn( __METHOD__ );
-
-		/**
-		 * take last part, it should be nnnpx-title schema
-		 * (622px-Welcome_talk.png)
-		 */
-		$render   = false;
-		$filename = array_pop( explode( '/', $uri ) );
-
-		preg_match( "/(\d+)px\-([^\?]+)/", $filename, $parts );
-		if( isset( $parts[ 1 ] ) && isset( $parts[ 2 ] ) ) {
-
-			/**
-			 * deal with local file
-			 */
-			$thumbWidth = $parts[ 1 ];
-			$thumbName = $parts[ 2 ];
-			$image = wfLocalFile( $thumbName );
-			if( $image ) {
-				try {
-					$thumb = $image->transform( array( "width" => $thumbWidth ), File::RENDER_NOW );
-					$render = true;
-				}
-				catch( Exception $ex ) {
-					$thumb = false;
-				}
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		if( $render ) {
-			/**
-			 * @todo handle errors
-			 */
-			wfStreamFile( $thumb->getPath() );
-		}
-		else {
-			return $this->doRender404( $uri );
-		}
-	}
 
 	/**
 	 * Just render some simple 404 page
