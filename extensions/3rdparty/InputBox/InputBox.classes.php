@@ -192,6 +192,12 @@ class InputBox {
 				'value' => $this->mSearchButtonLabel
 			)
 		);
+		
+		// Hidden fulltext param for IE (bug 17161)
+		if( $type == 'fulltext' ) {
+			$htmlOut .= Xml::hidden( 'fulltext', 'Search' );
+		}
+				
 		$htmlOut .= Xml::closeElement( 'form' );
 		$htmlOut .= Xml::closeElement( 'div' );
 
@@ -293,20 +299,21 @@ class InputBox {
 				'style' => 'background-color:' . $this->mBGColor
 			)
 		);
-		$htmlOut .= Xml::openElement( 'form',
-			array(
-				'name' => 'createbox',
-				'id' => 'createbox',
-				'class' => 'createbox',
-				'action' => $wgScript,
-				'method' => 'get'
-			)
+		$createBoxParams = array(
+			'name' => 'createbox',
+			'class' => 'createbox',
+			'action' => $wgScript,
+			'method' => 'get'
 		);
+		if( isset( $this->mId ) ) {
+			$createBoxParams['id'] = Sanitizer::escapeId( $this->mId );
+		}		
+		$htmlOut .= Xml::openElement( 'form', $createBoxParams );
 		$htmlOut .= Xml::openElement( 'input',
 			array(
 				'type' => 'hidden',
 				'name' => 'action',
-				'value' => 'create',
+				'value' => 'edit',
 			)
 		);
 		$htmlOut .= Xml::openElement( 'input',
@@ -394,15 +401,16 @@ class InputBox {
 				'style' => 'background-color:' . $this->mBGColor
 			)
 		);
-		$htmlOut .= Xml::openElement( 'form',
-			array(
-				'name' => 'commentbox',
-				'id' => 'commentbox',
-				'class' => 'commentbox',
-				'action' => $wgScript,
-				'method' => 'get'
-			)
+		$commentFormParams = array(
+			'name' => 'commentbox',
+			'class' => 'commentbox',
+			'action' => $wgScript,
+			'method' => 'get'
 		);
+		if( isset( $this->mId ) ) {
+			$commentFormParams['id'] = Sanitizer::escapeId( $this->mId );
+		}		
+		$htmlOut .= Xml::openElement( 'form', $commentFormParams );
 		$htmlOut .= Xml::openElement( 'input',
 			array(
 				'type' => 'hidden',
@@ -513,8 +521,29 @@ class InputBox {
 
 		// Validate the width; make sure it's a valid, positive integer
 		$this->mWidth = intval( $this->mWidth <= 0 ? 50 : $this->mWidth );
-
+		
+		// Validate background color
+		if ( !$this->isValidColor( $this->mBGColor ) ) {
+			$this->mBGColor = 'transparent';
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Do a security check on the bgcolor parameter
+	 */
+	public function isValidColor( $color ) {
+		$regex = <<<REGEX
+			/^ (
+				[a-zA-Z]* |       # color names
+				\# [0-9a-f]{3} |  # short hexadecimal
+				\# [0-9a-f]{6} |  # long hexadecimal
+				rgb \s* \( \s* (
+					\d+ \s* , \s* \d+ \s* , \s* \d+ |    # rgb integer
+					[0-9.]+% \s* , \s* [0-9.]+% \s* , \s* [0-9.]+%   # rgb percent
+				) \s* \)
+			) $ /xi
+REGEX;
+		return (bool) preg_match( $regex, $color );
+	}
 }
