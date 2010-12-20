@@ -13,15 +13,17 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-// macbre: use Wikia specific class between SkinTemplate and SkinMonoBook
-require_once("skins/wikia/WikiaMonoBook.php");
-
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
  * @todo document
  * @ingroup Skins
  */
-class SkinMonoBook extends SkinTemplate {
+
+/* Wikia change begin - @author: Macbre */
+/* use Wikia specific class between SkinTemplate and SkinMonoBook */
+class SkinMonoBook extends WikiaSkinMonoBook {
+/* Wikia change end */
+
 	/** Using monobook. */
 	var $skinname = 'monobook', $stylename = 'monobook',
 		$template = 'MonoBookTemplate', $useHeadElement = true;
@@ -54,31 +56,6 @@ class SkinMonoBook extends SkinTemplate {
  */
 class MonoBookTemplate extends QuickTemplate {
 	var $skin;
-
-	function wideSkyscraper() {
-		global $wgDBname;
-		$wideSkyscraperWikis = array('yugioh', 'transformers', 'swg', 'paragon');
-		if (in_array($wgDBname, $wideSkyscraperWikis)) {
-			echo ' style="margin-right: 165px;"';
-		}
-	}
-
-	function isSkyscraper() {
-		global $wgDBname, $wgEnableAdsInContent;
-		$noSkyscraperWikis = array('espokemon');
-		if (in_array($wgDBname, $noSkyscraperWikis) && $wgEnableAdsInContent) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	function noSkyscraper() {
-		if ( $this->isSkyscraper() ) {
-			echo ' style="margin-right: 0px;"';
-		}
-	}
 
 	/**
 	 * Template filter callback for MonoBook skin.
@@ -189,9 +166,18 @@ class MonoBookTemplate extends QuickTemplate {
 				$this->customBox( $boxName, $cont );
 			}
 		}
+
+		/* Wikia change begin - @author: Macbre */
+		$skin->wikiaBox();
+		/* Wikia change end */
 ?>
 </div><!-- end of the left (by default at least) column -->
 <div class="visualClear"></div>
+<?php
+	/* Wikia change begin - @author: Macbre */
+	$this->html('ads-column');
+	/* Wikia change end */
+?>
 <div id="footer"<?php $this->html('userlangattributes') ?>>
 <?php
 if($this->data['poweredbyico']) { ?>
@@ -205,6 +191,9 @@ if($this->data['copyrightico']) { ?>
 		$footerlinks = array(
 			'lastmod', 'viewcount', 'numberofwatchingusers', 'credits', 'copyright',
 			'privacy', 'about', 'disclaimer', 'tagline',
+			/* Wikia change begin - @author: macbre */
+			'contact', 'advertise', 'hosting'
+			/* Wikia change end */
 		);
 		$validFooterLinks = array();
 		foreach( $footerlinks as $aLink ) {

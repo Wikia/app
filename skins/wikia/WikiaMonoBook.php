@@ -6,7 +6,6 @@
  * dependency on PHPTAL.
  *
  * @author Maciej Brencz <macbre@wikia.com>
- * @todo add Wikia specific hooks and xHTML/JS/CSS
  * @addtogroup Skins
  */
 
@@ -14,14 +13,12 @@ if(!defined('MEDIAWIKI')) {
 	die(-1);
 }
 
-require_once dirname(__FILE__) . "/../../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
-
 class WikiaSkinMonoBook extends SkinTemplate {
 
 	protected $ads;
 
 	function initPage(&$out) {
-		global $wgHooks, $wgShowAds, $wgUseAdServer, $wgRequest;
+		global $wgHooks, $wgShowAds, $wgUseAdServer, $wgRequest, $wgOut;
 
 		parent::initPage( $out );
 
@@ -33,6 +30,13 @@ class WikiaSkinMonoBook extends SkinTemplate {
 
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addWikiaVars');
 		$wgHooks['SkinTemplateSetupPageCss'][] = array(&$this, 'addWikiaCss');
+		$wgHooks['SkinGetPageClasses'][] = array(&$this, 'addBodyClasses');
+
+		// use StaticChute (RT #17212)
+		$staticChute = new StaticChute('js');
+		$staticChute->useLocalChuteUrl();
+
+		$wgOut->addScript($staticChute->getChuteHtmlForPackage('monobook_js'));
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {
@@ -51,53 +55,11 @@ class WikiaSkinMonoBook extends SkinTemplate {
 	}
 
 	public function addWikiaVars(&$obj, &$tpl) {
-		global $wgCityId, $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks, $wgUser;
+		global $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks, $wgUser;
 		wfProfileIn(__METHOD__);
 
-		// setup ads
-		AdEngine::getInstance()->setLoadType('inline');
-		if($this->ads === false) {
-			$tpl->set('pageclass', $tpl->textret('pageclass').' without-adsense');
-			$tpl->set('ads_top', '');
-			$tpl->set('ads_topleft', '');
-			$tpl->set('ads_topright', '');
-			$tpl->set('ads_bot','');
-			$tpl->set('ads_columngoogle',  '<!-- not USING ad server! -->'."\n".'<div id="column-google"></div>'."\n</div>\n");
-			$tpl->set('ads_bottomjs', '');
-		} else {
-			$tpl->set('pageclass', $tpl->textret('pageclass').' with-adsense');
-			$tpl->set('ads_top', AdServer::getInstance()->getAd('t'));
-			$tpl->set('ads_topleft', AdServer::getInstance()->getAd('tl'));
-			$tpl->set('ads_topright', AdServer::getInstance()->getAd('tr'));
-			$tpl->set('ads_bot', AdServer::getInstance()->getAd('b'));
-			$tpl->set('ads_columngoogle',  '<!-- USING ad server! -->'."\n".'<div id="column-google" class="noprint">'."\n".
-				AdEngine::getInstance()->getSetupHtml() .
-				'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
-				'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div></div>'."\n".
-				'<table id="spotlight_container"><tr>' .
-				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_LEFT').'</div></td>' .
-				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_MIDDLE').'</div></td>' .
-				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_RIGHT').'</div></td>'.
-				"</tr></table>\n".
-				AdEngine::getInstance()->getDelayedIframeLoadingCode()
-			);
-		}
-
-		$tpl->set('ads_bottomjs',
-			AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
-			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()) .
-			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
-			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW)
-		);
-
-		// use StaticChute (RT #17212)
-		$StaticChute = new StaticChute('js');
-		$StaticChute->useLocalChuteUrl();
-
-		$tpl->set('wikia_headscripts', $StaticChute->getChuteHtmlForPackage('monobook_js'));
-
-		// wikia toolbox
-		$tpl->set('wikia_toolbox', $this->buildWikiaToolbox());
+		// ads
+		$this->setupAds($tpl);
 
 		// setup footer links
 		$tpl->set('copyright',  '');
@@ -122,7 +84,64 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		return true;
 	}
 
-	protected function buildWikiaToolbox() {
+	public function addBodyClasses(&$classes) {
+		$classes .= ($this->ads ? ' with-adsense' : ' without-adsense');
+		return true;
+	}
+
+	/**
+	 * Setup ads handling
+	 */
+	protected function setupAds(&$tpl) {
+		AdEngine::getInstance()->setLoadType('inline');
+
+		if($this->ads === false) {
+			// FIXME: not used anymore?
+			$tpl->set('ads_top', '');
+			$tpl->set('ads_topleft', '');
+			$tpl->set('ads_topright', '');
+			$tpl->set('ads_bot','');
+
+			$adsColumn = '<!-- not USING ad server! -->'."\n".'<div id="column-google"></div>'."\n</div>\n";
+		} else {
+			// FIXME: not used anymore?
+			$tpl->set('ads_top', AdServer::getInstance()->getAd('t'));
+			$tpl->set('ads_topleft', AdServer::getInstance()->getAd('tl'));
+			$tpl->set('ads_topright', AdServer::getInstance()->getAd('tr'));
+			$tpl->set('ads_bot', AdServer::getInstance()->getAd('b'));
+
+			$adsColumn = '<!-- USING ad server! -->'."\n".'<div id="column-google" class="noprint">'."\n".
+				AdEngine::getInstance()->getSetupHtml() .
+				'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
+				'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div></div>'."\n".
+				'<table id="spotlight_container"><tr>' .
+				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_LEFT').'</div></td>' .
+				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_MIDDLE').'</div></td>' .
+				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_RIGHT').'</div></td>'.
+				"</tr></table>\n".
+				AdEngine::getInstance()->getDelayedIframeLoadingCode();
+		}
+
+		// add ads column after content
+		$tpl->set('ads-column', $adsColumn);
+	}
+
+	/**
+	 * Return tracking code
+	 */
+	private function getAnalyticsCode() {
+		global $wgCityId;
+
+		return AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
+			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()) .
+			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
+			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+	}
+
+	/**
+	 * Return Wikia specific toolbox
+	 */
+	function wikiaBox() {
 		global $wgOut;
 		wfProfileIn(__METHOD__);
 
@@ -145,17 +164,20 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			$toolbox = '';
 		}
 
-		$html = "	<div class=\"portlet\" id=\"p-wikicities-nav\">
-		<h5>{$toolboxTitle}</h5>
-		<div class=\"pBody\">{$toolbox}
+		$html = <<<HTML
+	<div class="portlet" id="p-wikicities-nav">
+		<h5>$toolboxTitle</h5>
+		<div class="pBody">$toolbox
 			<ul>
-				<li><a href=\"http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog\">Wikia messages:</a><br />{$wikiaMessages}</li>
+				<li><a href=\"http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog\">Wikia messages:</a><br />$wikiaMessages</li>
 			</ul>
 		</div>
-	</div>";
+	</div>
+HTML;
+
+		echo $html;
 
 		wfProfileOut(__METHOD__);
-		return $html;
 	}
 
 	protected function getWikiaMessages() {
@@ -211,16 +233,45 @@ class WikiaSkinMonoBook extends SkinTemplate {
 
 	// HTML to be added between footer and end of page
 	public function bottomScripts() {
-		global $wgDBserver;
-		$bottomScriptText = '';
+		$analytics = $this->getAnalyticsCode();
 
+		$bottomScriptText = '';
 		wfRunHooks( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
 
-		return "
-		<!-- WikiaBottomScripts -->
-		{$bottomScriptText}
-		<!-- /WikiaBottomScripts -->
-		<div id=\"positioned_elements\"></div>
-		";
+		$html =  <<<HTML
+<!-- WikiaBottomScripts -->
+$bottomScriptText
+<!-- /WikiaBottomScripts -->
+$analytics
+<div id=\"positioned_elements\"></div>
+HTML;
+
+		return $html;
 	}
+
+	function wideSkyscraper() {
+		global $wgDBname;
+		$wideSkyscraperWikis = array('yugioh', 'transformers', 'swg', 'paragon');
+		if (in_array($wgDBname, $wideSkyscraperWikis)) {
+			echo ' style="margin-right: 165px;"';
+		}
+	}
+
+	function isSkyscraper() {
+		global $wgDBname, $wgEnableAdsInContent;
+		$noSkyscraperWikis = array('espokemon');
+		if (in_array($wgDBname, $noSkyscraperWikis) && $wgEnableAdsInContent) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	function noSkyscraper() {
+		if ( $this->isSkyscraper() ) {
+			echo ' style="margin-right: 0px;"';
+		}
+	}
+
 } // end of class
