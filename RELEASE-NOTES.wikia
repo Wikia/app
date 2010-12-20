@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#141335: wiki name used instead of user name on WikiBuilder (Marooned)
 * rt#141008: Mobile skin: Thumbnails and infoboxes have lost their (Marooned)
 * rt#139282: Image code changes breaks thumbnails in Monobook (Marooned)
 * rt#140776: Undefined variable: categories (Marooned)
