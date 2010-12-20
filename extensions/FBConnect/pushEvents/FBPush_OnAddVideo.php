@@ -7,7 +7,7 @@
 
 global $wgExtensionMessagesFiles;
 $pushDir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['FBPush_OnAddVideo'] = $pushDir . "FBPush_OnAddVideo.i18n.php";
+
 
 class FBPush_OnAddVideo extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnAddVideo'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.

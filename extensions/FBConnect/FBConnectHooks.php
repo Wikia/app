@@ -615,7 +615,7 @@ JS;
 	 * Create disconnect button and other things in pref
 	 *
 	 */
-	static function initPreferencesExtensionForm($user, &$wgExtensionPreferences) {
+	static function GetPreferences( $user, &$preferences ){
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgBlankImgUrl;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/prefs.js?{$wgStyleVersion}\"></script>\n");
 		wfLoadExtensionMessages('FBConnect');
@@ -636,29 +636,32 @@ JS;
 				$html .= '<br/>'.wfMsg('fbconnect-disconnect-info');
 			$html .= Xml::closeElement( "div" );
 
-			$wgExtensionPreferences[] = array(
-					'html' => "<br>",
-					'type' => PREF_USER_T,
+			$preferences['fbconnect-prefstext' ] = array(
+					'label' => "",
+					'type' => 'info',
+					'help' => 'BRKK test test test',
 					'section' => 'fbconnect-prefstext' );
 
-			$wgExtensionPreferences[] = array(
-					'name' => 'fbconnect-push-allow-never',
-					'type' => PREF_TOGGLE_T,
+			$preferences['fbconnect-push-allow-never'] = array(
+					'type' => 'toggle',
+					'label-message' => 'fbconnect-push-allow-never',
 					'section' => 'fbconnect-prefstext',
-					'default' => 1);
+					'default' => 1); 
 
-			$wgExtensionPreferences[] = array(
-					'html' => $html,
-					'type' => PREF_USER_T,
-					'section' => 'fbconnect-prefstext' );
+			$preferences['fbconnect-connect'] = array(
+					'help' => $html,
+					'label' => "",
+					'type' => 'info',
+					'section' => 'fbconnect-prefstext2' ); 
 		} else {
 			// User is a MediaWiki user but isn't connected yet.  Display a message and button to connect.
 			$loginButton = '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
 			$html = wfMsg('fbconnect-convert') . '<br/>' . $loginButton;
 			$html .= "<!-- Convert button -->\n";
-			$wgExtensionPreferences[] = array(
-					'html' => $html,
-					'type' => PREF_USER_T,
+			$preferences['fbconnect-prefstext3' ] = array(
+					'help' => $html,
+					'label' => "",
+					'type' => 'info',
 					'section' => 'fbconnect-prefstext' );
 		}
 		return true;

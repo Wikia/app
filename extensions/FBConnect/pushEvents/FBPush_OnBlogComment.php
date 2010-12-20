@@ -7,7 +7,6 @@
 
 global $wgExtensionMessagesFiles;
 $pushDir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['FBPush_OnBlogComment'] = $pushDir . "FBPush_OnBlogComment.i18n.php";
 
 class FBPush_OnBlogComment extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnBlogComment'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.

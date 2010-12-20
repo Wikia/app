@@ -7,7 +7,7 @@
 
 global $wgExtensionMessagesFiles;
 $pushDir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['FBPush_OnLargeEdit'] = $pushDir . "FBPush_OnLargeEdit.i18n.php";
+
 
 class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnLargeEdit'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
