@@ -677,7 +677,7 @@ JS;
 			LoginForm::setLoginToken();
 		}
 		$tmpl->set( "loginToken", LoginForm::getLoginToken() );
-		$tmpl->set( "fbButtton", FBConnect::getFBButton("sendToConnectOnLoginForSpecificForm('ConnectExisting');", "fbPrefsConnect"));
+		$tmpl->set( "fbButtton", FBConnect::getFBButton("sendToConnectOnLoginForSpecificForm();", "fbPrefsConnect"));
 		$html = $tmpl->execute('ajaxLoginMerge');
 		return true;
 	}

@@ -175,6 +175,7 @@ The Wikia Community Team',
 	'fbconnect-fbid-is-already-connected' => 'The Facebook account you are attempting to connect to your Wikia account is already connected to a different Wikia account. If you would like to connect your current Wikia account to that Facebook id, please disconnect the Facebook account from your other username first by visiting the "Facebook Connect" tab of your Preferences page.',
 	'fbconnect-fbid-connected-to' => 'The Wikia username that is currently connected to this Facebook id is <strong>$1</strong>.',
     'fbconnect-connect-next' => 'Next >>' ,
+	'fbconnect-signup-mail' => 'E-mail:' 
 );
 
 /**
