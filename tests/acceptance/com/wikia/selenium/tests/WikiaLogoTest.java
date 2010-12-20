@@ -10,6 +10,7 @@ public class WikiaLogoTest extends BaseTest {
 	@Test(groups={"oasis","envProduction"})
 	public void testEnsureThatWikiaLogoLeadsToSpecialLandingPage() throws Exception {
 		session().open("/");
+		session().waitForPageToLoad(TIMEOUT);
 		session().click("//li[@class='WikiaLogo']/a");
 		session().waitForPageToLoad(TIMEOUT);
 		assertEquals("http://www.wikia.com/Special:LandingPage?uselang=", session().getLocation());

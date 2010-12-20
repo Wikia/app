@@ -238,6 +238,9 @@ public class ArticleCommentTest extends BaseTest {
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
+		assertTrue(session().isVisible("//ul[@id='article-comments-ul']/li[1]" +
+				"//a[@class='article-comm-edit']"));
+		
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
 				"//a[@class='article-comm-edit']");
 

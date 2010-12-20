@@ -2,6 +2,7 @@ package com.wikia.selenium.tests;
 
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
 
 import java.util.Date;
 
@@ -35,6 +36,9 @@ public class BlogArticleTest extends BaseTest {
 		session().waitForPageToLoad( TIMEOUT );
 		session().click("wpSave");
 		session().waitForPageToLoad( TIMEOUT );
+		
+		assertEquals(title, session().getText("//div[@id='WikiaUserPagesHeader']/h1"));
+
 		logout();
 
 		// login as different user and type comment
