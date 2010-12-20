@@ -639,7 +639,6 @@ JS;
 			$preferences['fbconnect-prefstext' ] = array(
 					'label' => "",
 					'type' => 'info',
-					'help' => 'BRKK test test test',
 					'section' => 'fbconnect-prefstext' );
 
 			$preferences['fbconnect-push-allow-never'] = array(
@@ -652,13 +651,13 @@ JS;
 					'help' => $html,
 					'label' => "",
 					'type' => 'info',
-					'section' => 'fbconnect-prefstext2' ); 
+					'section' => 'fbconnect-prefstext' ); 
 		} else {
 			// User is a MediaWiki user but isn't connected yet.  Display a message and button to connect.
 			$loginButton = '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
 			$html = wfMsg('fbconnect-convert') . '<br/>' . $loginButton;
 			$html .= "<!-- Convert button -->\n";
-			$preferences['fbconnect-prefstext3' ] = array(
+			$preferences['fbconnect-disconnect' ] = array(
 					'help' => $html,
 					'label' => "",
 					'type' => 'info',
