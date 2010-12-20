@@ -36,7 +36,7 @@ public class BlackListTest extends BaseTest {
 		assertTrue(websites.length > 0);
 
 		for (String website: websites) {
-		editArticle(articleTitle, website + "<br>" + time);
+			editArticle(articleTitle, website + "<br>" + time);
 			String content = session().getHtmlSource();
 			String pattern = "<a href=\"" + website + "\" class=\"free\" title=\"" + website + "\">" + website + "</a>";
 			assertTrue(content.indexOf(pattern) > 0);
