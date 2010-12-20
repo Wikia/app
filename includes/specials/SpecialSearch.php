@@ -571,7 +571,7 @@ class SpecialSearch {
 
 					// Wikia change /Begin (ADi)
 					$resultData = "<div class='mw-search-result-data'>{$score}{$desc} - {$date}{$related}</div>";
-					wfRunHooks( 'SearchShowHit', array( &$link, &$redirect, &$section, &$extract, &$resultData ) );
+					wfRunHooks( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
 					// Wikia change /End
 
 					wfProfileOut( __METHOD__ );
@@ -598,7 +598,7 @@ class SpecialSearch {
 
 		// Wikia change /Begin (ADi)
 		$resultData = "<div class='mw-search-result-data'>{$score}{$size} - {$date}{$related}</div>";
-		wfRunHooks( 'SearchShowHit', array( &$link, &$redirect, &$section, &$extract, &$resultData ) );
+		wfRunHooks( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
 		// Wikia change /End
 
 		wfProfileOut( __METHOD__ );
