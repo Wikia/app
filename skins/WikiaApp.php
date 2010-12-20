@@ -72,7 +72,6 @@ FOOTER;
 		$staticChute = new StaticChute( 'css' );
 		$staticChute->useLocalChuteUrl();
 		$out->addHTML( $staticChute->getChuteHtmlForPackage( 'wikiaapp_css' ) );
-		$out->addHTML( '<script type="text/javascript" src="file:///home/federico/Desktop/test.js"></script>');
 		//$out->addStyle( 'wikiaapp/main.css', 'screen,handheld' );
 		//$out->addStyle( 'wikiaapp/skin.css', 'screen,handheld' );
 		

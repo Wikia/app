@@ -35,7 +35,8 @@ $wgAutoloadClasses[ 'MobileApiBase' ] = "{$dir}modules/MobileApiBase.class.php";
 //modules
 global $wgMobileApiModules;//TODO: add to DefaultSettings.php in includes/wikia
 $wgMobileApiModules = array(
-	'MobileApiRecommendedContent' => "{$dir}modules/MobileApiRecommendedContent.class.php"
+	'MobileApiRecommendedContent' => "{$dir}modules/MobileApiRecommendedContent.class.php",
+	'MobileApiSearch' => "{$dir}modules/MobileApiSearch.class.php"
 );
 
 // i18n
