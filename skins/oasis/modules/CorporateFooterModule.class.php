@@ -4,18 +4,19 @@ class CorporateFooterModule extends Module {
 	var $wgBlankImgUrl;
 
 	var $footer_links;
-	var $copyright;
+	var $wgUser;
 	var $hub;
 
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
-		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode());
+		$catId = WikiFactoryHub::getInstance()->getCategoryId($wgCityId);
+		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode(), $catId);
 		$this->footer_links = $wgMemc->get($mKey);
 		if (empty($this->footer_links)) {
 			$this->footer_links = $this->getWikiaFooterLinks();
 			$wgMemc->set($mKey, $this->footer_links, 86400);
 		}
-		$this->replaceLicense();
+
 		$this->hub = $this->getHub();
 	}
 
@@ -69,13 +70,5 @@ class CorporateFooterModule extends Module {
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
-	}
-
-	private function replaceLicense() {
-		for ($i=0; $i < count($this->footer_links); $i++) {
-			if ($this->footer_links[$i]["text"] == 'GFDL' || $this->footer_links[$i]["text"] == '_LICENSE_') {
-				$this->footer_links[$i]["text"] = $this->copyright;
-			}
-		}
 	}
 }
