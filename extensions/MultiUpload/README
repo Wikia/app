@@ -19,7 +19,7 @@ in your extensions directory.
 
 Add the line
 
-	require_once("extensions/MultiUpload/SpecialMultipleUpload.php");
+	require_once("extensions/MultiUpload/MultiUpload.php");
 
 to your LocalSettings.php file.
 
