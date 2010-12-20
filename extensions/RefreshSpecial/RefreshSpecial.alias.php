@@ -6,95 +6,99 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'RefreshSpecial' => array( 'RefreshSpecial' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'RefreshSpecial' => array( 'تحديث_خاص' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'RefreshSpecial' => array( 'تحديث_خاص' ),
+$specialPageAliases['arz'] = array(
+	'RefreshSpecial' => array( 'ريفريش_مخصوص' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'RefreshSpecial' => array( 'PosebnoOsvjezavanje' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
-	'RefreshSpecial' => array( 'Toimintosivujen päivitys' ),
+$specialPageAliases['fi'] = array(
+	'RefreshSpecial' => array( 'Toimintosivujen_päivitys' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
+$specialPageAliases['gl'] = array(
 	'RefreshSpecial' => array( 'Actualizar a páxina especial' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'RefreshSpecial' => array( 'Különleges frissítés' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'RefreshSpecial' => array( 'Refrescar special' ),
+$specialPageAliases['ia'] = array(
+	'RefreshSpecial' => array( 'Refrescar_special' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'RefreshSpecial' => array( 'Perbarui halaman istimewa', 'PerbaruiHalamanIstimewa' ),
+$specialPageAliases['id'] = array(
+	'RefreshSpecial' => array( 'Perbarui_halaman_istimewa', 'PerbaruiHalamanIstimewa' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'RefreshSpecial' => array( '特別ページの更新' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'RefreshSpecial' => array( 'Spezialsäiten aktualiséieren' ),
+$specialPageAliases['lb'] = array(
+	'RefreshSpecial' => array( 'Spezialsäiten_aktualiséieren' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'RefreshSpecial' => array( 'ПревчитајСпецијални' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'RefreshSpecial' => array( 'Speciaal_verniejen' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'RefreshSpecial' => array( 'SpeciaalVerversen' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+$specialPageAliases['no'] = array(
 	'RefreshSpecial' => array( 'Oppdater spesialsider' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'RefreshSpecial' => array( 'ŠpeciálneObnovenie' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'RefreshSpecial' => array( 'Natatanging pagsasariwa' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'RefreshSpecial' => array( 'ÖzelYenile' ),
 );
 
+/**
+ * For backwards compatibility with MediaWiki 1.15 and earlier.
+ */
+$aliases =& $specialPageAliases;

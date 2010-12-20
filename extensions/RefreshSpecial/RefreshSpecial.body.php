@@ -127,7 +127,7 @@ class RefreshSpecialForm {
 
 			$wgOut->addHTML( "\t\t\t\t\t" . '<li>
 						<input type="checkbox" name="check_all" id="refreshSpecialCheckAll" onclick="refreshSpecialCheck(this.form);" />
-						<label for="refreshSpecialCheckAll">&nbsp;' . wfMsg( 'refreshspecial-select-all-pages' ) . '
+						<label for="refreshSpecialCheckAll">&#160;' . wfMsg( 'refreshspecial-select-all-pages' ) . '
 							<noscript>' . wfMsg( 'refreshspecial-js-disabled' ) . '</noscript>
 						</label>
 					</li>
@@ -214,7 +214,7 @@ class RefreshSpecialForm {
 			  		if ( $num === false ) {
 						$wgOut->addHTML( wfMsg( 'refreshspecial-db-error' ) . '<br />' );
 					} else {
-			  			$message = wfMsgExt( 'refreshspecial-page-result', array( 'escape', 'parsemag' ), $num ) . '&nbsp;';
+			  			$message = wfMsgExt( 'refreshspecial-page-result', array( 'escape', 'parsemag' ), $num ) . '&#160;';
 						$elapsed = ( $t2[0] - $t1[0] ) + ( $t2[1] - $t1[1] );
 						$total['elapsed'] += $elapsed;
 						$total['rows'] += $num;
