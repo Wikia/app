@@ -28,7 +28,6 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 
 	/**
 	 * Main entry point
-	 * Default action is to make thumb
 	 *
 	 * @access public
 	 *
