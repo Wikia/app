@@ -12,7 +12,6 @@ $wgExtensionFunctions[] = 'FBConnectPushEvent::initExtension';
 
 // PreferencesExtension is needed up until 1.16, then the needed functionality is built in.
 $wgHooks['GetPreferences'][] = 'FBConnectPushEvent::addPreferencesToggles';
-$wgHooks['initPreferencesExtensionForm'][] = 'FBConnectPushEvent::addPreferencesToggles';
 
 $wgAjaxExportList[] = "FBConnectPushEvent::showImage";
 
@@ -78,7 +77,7 @@ class FBConnectPushEvent {
 
 					$preferences[$prefName] = array(
 						'type' => 'toggle',
-						'label-message' => $prefName,
+						'label-message' => 'tog-'.$prefName,
 						'section' => self::$PREFERENCES_TAB_NAME,
 						"default" => "1",
 					);

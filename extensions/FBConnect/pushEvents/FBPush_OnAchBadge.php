@@ -7,7 +7,7 @@
 
 global $wgExtensionMessagesFiles;
 $pushDir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['FBPush_OnAchBadge'] = $pushDir . "FBPush_OnAchBadge.i18n.php";
+
 
 class FBPush_OnAchBadge extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnAchBadge'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.

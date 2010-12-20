@@ -78,6 +78,7 @@ if(!empty($fbEnablePushToFacebook)){
 }
 
 $wgExtensionMessagesFiles['FBConnect'] =	$dir . 'FBConnect.i18n.php';
+$wgExtensionMessagesFiles['FBPushEvents'] = $dir . 'pushEvents/FBPushEvents.i18n.php';
 $wgExtensionMessagesFiles['FBConnectLanguage'] = $dir . 'FBConnectLanguage.i18n.php';
 $wgExtensionAliasesFiles['FBConnect'] =		$dir . 'FBConnect.alias.php';
 

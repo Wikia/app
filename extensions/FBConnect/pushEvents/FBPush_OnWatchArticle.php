@@ -7,7 +7,6 @@
 
 global $wgExtensionMessagesFiles;
 $pushDir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['FBPush_OnWatchArticle'] = $pushDir . "FBPush_OnWatchArticle.i18n.php";
 
 class FBPush_OnWatchArticle extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnWatchArticle'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.

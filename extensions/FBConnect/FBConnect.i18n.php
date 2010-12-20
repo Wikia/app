@@ -119,8 +119,8 @@ $messages['en'] = array(
 
 	'fbconnect-error-creating-user' => "Error creating the user in the local database.",
 	'fbconnect-error-user-creation-hook-aborted' => "A hook (extension) aborted the account creation with the message: $1",
-
-	'fbconnect-prefstext' => 'Facebook Connect',
+//fbconnect-prefstext
+	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'fbconnect-link-to-profile' => 'Facebook profile',
 	'fbconnect-prefsheader' => "By default, some events will push items to your Facebook feed. You can customise these now, or later at any time in your preferences.",
 	'fbconnect-prefs-show' => "Show feed preferences >>",
@@ -132,7 +132,7 @@ $messages['en'] = array(
 	'fbconnect-disconnect-link' => "You can also <a id='fbConnectDisconnect' href='#'> disconnect your Wikia account from Facebook.</a> You will able continue using your Wikia account as normal, with your history (edits, points, achievements ) intact.",
 	'fbconnect-disconnect-done' => "Disconnecting <span id='fbConnectDisconnectDone'>... done! </span>",
 	'fbconnect-disconnect-info' => "We have emailed a new password to use with your account - you can log in with the same username as before. Hooray!",
-	'tog-fbconnect-push-allow-never' => "Never send anything to my news feed (overrides other options)",
+	'fbconnect-push-allow-never' => "Never send anything to my news feed (overrides other options)",
 	'fbconnect-reclamation-title' => 'Disconnecting from Facebook',
 	'fbconnect-reclamation-body' => 'Your account is now disconnected from Facebook! <br/><br/>  We have emailed a new password to use with you account - you can log in with the same username as before. Hooray!
 											<br/><br/> To login go to: $1',
