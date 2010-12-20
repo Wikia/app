@@ -68,18 +68,6 @@ class StaticChute {
 			'common/yui_2.5.2/tabview/assets/tabview.css',
 		);
 
-		// jQuery package (for home skin)
-		// TODO: FIXME: Is this used anywhere?  It's an old version of jQuery and doesn't appear to be used (each skin lists the jQuery it uses).  Safe to remove?
-		$this->config['jquery'] = array(
-			'common/jquery/jquery-1.3.2.js',
-			'common/jquery/jquery.json-1.3.js',
-			'common/jquery/jquery.cookies.2.1.0.js',
-			'common/jquery/jquery.dump.js',
-			'common/jquery/jquery.getcss.js',
-			'common/jquery/jquery.wikia.js',
-		);
-
-
 		$this->generateConfigSkinMonobook();
 		$this->generateConfigSkinMonaco($widgetsAssets);
 		$this->generateConfigSkinOasis();
@@ -99,7 +87,7 @@ class StaticChute {
 			'common/yui_2.5.2/tabview/tabview.js',
 			'common/yui_extra/tools-min.js',
 
-			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery-1.4.4.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
@@ -447,7 +435,7 @@ class StaticChute {
 		);
 
 	}
-	
+
 	private function generateConfigSkinWikiaApp() {
 		// JS for monobook (both anons/logged-in)
 		$this->config['wikiaapp_css'] = array(
