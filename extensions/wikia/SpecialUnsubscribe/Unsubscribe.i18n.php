@@ -35,5 +35,5 @@ $messages['en'] = array(
 	'unsubscribe-working-done' => 'Complete.',
 	
 	#email template
-	'unsubscribe-email-footer' => 'If you want to unsubscribe all accounts, please use {{$1|this}} link'
+	'unsubscribe-email-footer' => 'If you want to unsubscribe all accounts, please go to: $1'
 );
