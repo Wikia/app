@@ -243,7 +243,7 @@ HTML;
 $bottomScriptText
 <!-- /WikiaBottomScripts -->
 $analytics
-<div id=\"positioned_elements\"></div>
+<div id="positioned_elements"></div>
 HTML;
 
 		return $html;
