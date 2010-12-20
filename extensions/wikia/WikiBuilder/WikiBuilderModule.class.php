@@ -1,7 +1,7 @@
 <?php
 class WikiBuilderModule extends Module {
 
-	var $OWBmessages;
+	var $messages;
 	var $userName;
 	var $wgBlankImgUrl;
 	var $wgExtensionsPath;
@@ -18,6 +18,16 @@ class WikiBuilderModule extends Module {
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = true;
 		$wgSuppressAds = true;
+
+		//messages used in JS
+		$this->messages['owb-unable-to-edit-description'] = wfMsgForContent('owb-unable-to-edit-description');
+		$this->messages['owb-status-saving'] = wfMsgForContent('owb-status-saving');
+		$this->messages['owb-readonly-try-again'] = wfMsgForContent('owb-readonly-try-again');
+		$this->messages['owb-status-saving'] = wfMsgForContent('owb-status-saving');
+		$this->messages['owb-status-saving'] = wfMsgForContent('owb-status-saving');
+		$this->messages['owb-new-pages-text'] = wfMsgForContent('owb-new-pages-text');
+		$this->messages['owb-error-saving-articles'] = wfMsgForContent('owb-error-saving-articles');
+		$this->messages['owb-unable-to-edit-description'] = wfMsgForContent('owb-unable-to-edit-description');
 
 		$this->userName = $wgUser->getName();
 

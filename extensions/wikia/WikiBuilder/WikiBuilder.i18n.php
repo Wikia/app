@@ -1,6 +1,4 @@
 <?php
-global $wgSitename;
-
 $messages = array();
 
 $messages['en'] = array(
@@ -58,6 +56,3 @@ Write the first section of your article here. Remember to include links to other
 
 Write the second section of your article here. Don't forget to add a category, to help people find the article.",
 );
-
-global $OWBmessages;
-$OWBmessages = $messages;
