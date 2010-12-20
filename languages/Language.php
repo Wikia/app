@@ -2493,7 +2493,14 @@ class Language {
 		global $IP;
 		return self::getFileName( "$IP/languages/messages/Messages", $code, '.php' );
 	}
-
+	
+	// wikia changes begin
+	static function getAdditionalMessagesFileName( $code ) {
+		global $IP;
+		return self::getFileName( "$IP/languages/messages/wikia/Messages", $code, '.php' );
+	}
+	// wikia changes end
+	
 	static function getClassFileName( $code ) {
 		global $IP;
 		return self::getFileName( "$IP/languages/classes/Language", $code, '.php' );
