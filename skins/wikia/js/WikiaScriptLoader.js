@@ -1,9 +1,9 @@
 // @see http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking/
 var WikiaScriptLoader = function() {
-	// detect Firefox / Opera and use script DOM node injection for them
+	// detect Firefox (ignore Fx4.0 beta - RT #91718) / Opera and use script DOM node injection for them
 	var userAgent = navigator.userAgent.toLowerCase();
 	this.useDOMInjection = (userAgent.indexOf('opera') != -1) ||
-		(userAgent.indexOf('firefox') != -1);
+		(userAgent.indexOf('firefox') != -1 && userAgent.indexOf('/4.0b') == -1);
 
 	// detect IE
 	this.isIE = (userAgent.indexOf('opera') == -1) && (userAgent.indexOf('msie') != -1);
@@ -69,6 +69,7 @@ WikiaScriptLoader.prototype = {
 	},
 
 	// load script content using AJAX request
+	// TODO:remove? - only used in Monaco for navigation menu
 	loadScriptAjax: function(url, onloadCallback) {
 		var self = this;
 		var xhr = this.getXHRObject();
@@ -121,6 +122,7 @@ WikiaScriptLoader.prototype = {
 	},
 
 	// get XHR object
+	// TODO: remove? - only used by loadScriptAjax function
 	getXHRObject: function() {
 		var xhrObj = false;
 
