@@ -1,5 +1,7 @@
 $(window).load(function() {
-	Exitstitial.init();
+	if (wgEnableOutboundScreenExt == true) {
+		Exitstitial.init();
+	}
 });
 
 var Exitstitial = {
