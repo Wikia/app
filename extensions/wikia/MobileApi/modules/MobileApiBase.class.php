@@ -36,4 +36,8 @@ class MobileApiBase {
 	protected function setResponseStatusCode( $code = '200 OK' ){
 		$this->mResponseStatusCode = $code;
 	}
+	
+	protected function getRequest(){
+		return $this->mRequest;
+	}
 }
