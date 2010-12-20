@@ -102,11 +102,11 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$oRes = $dbr->select(
-						"user",
-						array("user_id", "user_name"),
-						array( "user_email" => $email ),
-						__METHOD__
-						);
+			"user",
+			array("user_id", "user_name"),
+			array( "user_email" => $email ),
+			__METHOD__
+		);
 
 		#force blank before filling it
 		$this->mUsers = array();
@@ -182,13 +182,12 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		}
 
 		#reloop over any left, actually print this time
-			$wgOut->addHTML( Xml::openElement('ul') );
-		foreach($this->mUsers as $uid=>$username)
-		{
+		$wgOut->addHTML( Xml::openElement('ul') );
+		foreach($this->mUsers as $uid=>$username) {
 			#not yet
 			$wgOut->addHTML( Xml::element('li', null, $username) );
 		}
-			$wgOut->addHTML( Xml::closeElement('ul') );
+		$wgOut->addHTML( Xml::closeElement('ul') );
 
 		/**
 		 * form
@@ -288,6 +287,39 @@ EOT
 		}
 
 		#true, because it a hook, keep looping other hooks
+		return true;
+	}
+	
+	static public function ComposeCommonBodyMail( $title, &$keys, &$message, $editor ) {
+		
+		$cityId = 177;
+		$name = $editor->getName();
+		
+		if ( $editor->isIP( $name ) ) {
+			# don't do it for anons
+			return true;
+		}
+
+		$oTitle = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $cityId);
+		if ( !is_object( $oTitle ) ) {
+			return true;
+		}
+		
+		if ( !is_array($keys) ) {
+			$keys = array();
+		}
+		
+		$email = $editor->getEmail();
+		$ts = time();
+		# unsubscribe params
+		$params = array(
+			'email' 	=> $email,
+			'timestamp' => $ts,
+			'token'		=> wfGenerateUnsubToken( $email, $ts )
+		);
+		
+		$keys['$UNSUBSCRIBEURL'] = wfMsg( 'unsubscribe-email-footer', $oTitle->getFullURL( $params ) );
+
 		return true;
 	}
 }

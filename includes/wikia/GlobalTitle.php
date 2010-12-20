@@ -169,6 +169,10 @@ class GlobalTitle extends Title {
 		 * replace $1 with article title with namespace
 		 */
 
+		if( is_array( $query ) ) {
+			$query = wfArrayToCGI( $query );
+		}
+		
 		$url = str_replace( '$1', $namespace . $this->mUrlform, $this->mArticlePath );
 		$url = wfAppendQuery( $this->mServer . $url, $query );
 
