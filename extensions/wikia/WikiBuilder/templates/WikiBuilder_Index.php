@@ -1,5 +1,5 @@
 <section id="WikiBuilder">
-	<h1><?= wfMsg('owb-headline') ?></h1>
+	<h1><?= wfMsg('owb-headline', $userName) ?></h1>
 
 	<ol class="steps">
 		<li class="step1 current-step">

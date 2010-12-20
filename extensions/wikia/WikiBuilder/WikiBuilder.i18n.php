@@ -5,7 +5,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'owb-title' => 'WikiBuilder',
-	'owb-headline' => 'Hi, '.$wgSitename,
+	'owb-headline' => 'Hi, $1',
 	'owb-button-skip' => 'Skip',
 	'owb-button-save-intro' => 'Save Intro',
 	'owb-button-save-theme' => 'Save Theme',
