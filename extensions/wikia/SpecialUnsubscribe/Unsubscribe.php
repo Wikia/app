@@ -35,4 +35,3 @@ $wgSpecialPages['Unsubscribe'] = 'UnsubscribePage';
 $wgSpecialPageGroups['Unsubscribe'] = 'users';
 
 $wgHooks['EmailConfirmed'][] = 'UnsubscribePage::isEmailConfirmedHook';
-$wgHooks['ComposeCommonBodyMail'][] = 'UnsubscribePage::ComposeCommonBodyMail';

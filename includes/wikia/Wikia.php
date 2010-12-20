@@ -437,6 +437,7 @@ $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
+$wgHooks['ComposeCommonBodyMail'][] = "Wikia::ComposeCommonBodyMail";	
 //$wgHooks['IsTrustedProxy'][] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 /**
@@ -1361,5 +1362,41 @@ class Wikia {
 
 		wfProfileOut( __METHOD__ );
 		return $isOasis;
+	}
+	
+	/**
+	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
+	 */	
+	static public function ComposeCommonBodyMail( $title, &$keys, &$message, $editor ) {
+		
+		$cityId = 177;
+		$name = $editor->getName();
+		
+		if ( $editor->isIP( $name ) ) {
+			# don't do it for anons
+			return true;
+		}
+
+		$oTitle = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $cityId);
+		if ( !is_object( $oTitle ) ) {
+			return true;
+		}
+		
+		if ( !is_array($keys) ) {
+			$keys = array();
+		}
+		
+		$email = $editor->getEmail();
+		$ts = time();
+		# unsubscribe params
+		$params = array(
+			'email' 	=> $email,
+			'timestamp' => $ts,
+			'token'		=> wfGenerateUnsubToken( $email, $ts )
+		);
+		
+		$keys['$UNSUBSCRIBEURL'] = $oTitle->getFullURL( $params ); 
+
+		return true;
 	}
 }
