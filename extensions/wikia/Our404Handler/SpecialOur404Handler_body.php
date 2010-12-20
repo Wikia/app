@@ -36,8 +36,6 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 	 */
 	public function execute( $subpage ) {
 		global $wgRequest;
-		wfLoadExtensionMessages( 'Our404Handler' );
-
 		$this->setHeaders();
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'Our404Handler' );
 		$this->doRender404();

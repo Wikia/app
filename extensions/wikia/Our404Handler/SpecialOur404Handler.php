@@ -5,8 +5,8 @@
  * @file
  * @ingroup Extensions
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> for Wikia.com
- * @copyright © 2007, Wikia Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @copyright © 2007-2010, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 3.0 or later
  * @version 1.0
  */
 
@@ -20,7 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Our404Handler',
 	'version' => '1.0',
 	'author' => 'Krzysztof Krzyżaniak',
-	'description' => 'Our 404 handler for making thumbs and other magic',
+	'description' => 'Our 404 handler for non-existent pages tricks',
 );
 
 // Set up the new special page
@@ -28,8 +28,3 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Our404Handler'] = $dir . 'SpecialOur404Handler.i18n.php';
 $wgAutoloadClasses['Our404HandlerPage'] = $dir. 'SpecialOur404Handler_body.php';
 $wgSpecialPages['Our404Handler'] = 'Our404HandlerPage';
-
-/**
- * used for displaying thumbs
- */
-require_once( "$IP/includes/StreamFile.php" );
