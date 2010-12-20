@@ -1013,7 +1013,7 @@ class OutputPage {
 	}
 
 	/**
-	 * Add wikitext with a custom Title object and 
+	 * Add wikitext with a custom Title object and
 	 *
 	 * @param $text String: wikitext
 	 * @param $title Title object
@@ -1334,13 +1334,13 @@ class OutputPage {
 	 */
 	public function getXVO() {
 		$cvCookies = $this->getCacheVaryCookies();
-		
+
 		$cookiesOption = array();
 		foreach ( $cvCookies as $cookieName ) {
 			$cookiesOption[] = 'string-contains=' . $cookieName;
 		}
 		$this->addVaryHeader( 'Cookie', $cookiesOption );
-		
+
 		$headers = array();
 		foreach( $this->mVaryHeader as $header => $option ) {
 			$newheader = $header;
@@ -1349,7 +1349,7 @@ class OutputPage {
 			$headers[] = $newheader;
 		}
 		$xvo = 'X-Vary-Options: ' . implode( ',', $headers );
-		
+
 		return $xvo;
 	}
 
@@ -2245,6 +2245,11 @@ class OutputPage {
 		$bodyAttrs['class'] .= ' ' . Sanitizer::escapeClass( 'page-' . $this->getTitle()->getPrefixedText() );
 		$bodyAttrs['class'] .= ' skin-' . Sanitizer::escapeClass( $wgUser->getSkin()->getSkinName() );
 
+		/* Wikia change begin - @author: Macbre */
+		/* allow extensions to change body tag attribute (RT #14017) */
+		wfRunHooks( 'SkinGetPageClasses', array( &$bodyAttrs['class'] ) );
+		/* Wikia change end */
+
 		$ret .= Html::openElement( 'body', $bodyAttrs ) . "\n";
 
 		return $ret;
@@ -2659,7 +2664,7 @@ class OutputPage {
 
 	/**
 	 * Include jQuery core. Use this to avoid loading it multiple times
-	 * before we get a usable script loader. 
+	 * before we get a usable script loader.
 	 *
 	 * @param $modules Array: list of jQuery modules which should be loaded
 	 * @return Array: the list of modules which were not loaded.
