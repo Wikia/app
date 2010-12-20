@@ -2,6 +2,7 @@
 class WikiBuilderModule extends Module {
 
 	var $OWBmessages;
+	var $userName;
 	var $wgBlankImgUrl;
 	var $wgExtensionsPath;
 	var $wgLanguageCode;
@@ -10,13 +11,15 @@ class WikiBuilderModule extends Module {
 	var $wgWikiPaymentAdsFreePrice;
 
 	public function executeIndex() {
-		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds;
+		global $wgOut, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = true;
 		$wgSuppressAds = true;
+
+		$this->userName = $wgUser->getName();
 
 		wfProfileOut( __METHOD__ );
 	}
