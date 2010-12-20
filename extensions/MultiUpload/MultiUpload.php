@@ -1,7 +1,4 @@
 <?php
-if ( ! defined( 'MEDIAWIKI' ) )
-    die();
-
 /**
  * An extension that allows users to upload multiple files at once.
  *
@@ -12,6 +9,10 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @link http://www.mediawiki.org/wiki/Extension:MultiUpload Documentation
  */
 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
+
 // change this parameter to limit the # of files one can upload
 $wgMaxUploadFiles = isset( $wgMaxUploadFiles ) ? intval( $wgMaxUploadFiles ) : 5;
 
@@ -20,18 +21,17 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'MultipleUpload',
 	'author' => 'Travis Derouin',
-	'version' => '1.01',
-	'description' => 'Allows users to upload several files at once.',
-	'descriptionmsg' => 'multipleupload-desc',
+	'version' => '2.0',
+	'descriptionmsg' => 'multiupload-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:MultiUpload',
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
-$wgAutoloadClasses['MultipleUpload'] = $dir . 'SpecialMultipleUpload.body.php';
-$wgAutoloadClasses['MultipleUploadForm'] = $dir . 'SpecialMultipleUpload.body.php';
-$wgExtensionMessagesFiles['MultiUpload'] = $dir . 'SpecialMultipleUpload.i18n.php';
-$wgExtensionAliasesFiles['MultiUpload'] = $dir . 'SpecialMultipleUpload.alias.php';
+$dir = dirname( __FILE__ ) . '/';
+$wgAutoloadClasses['MultipleUpload'] = $dir . 'MultiUpload.body.php';
+$wgAutoloadClasses['MultipleUploadForm'] = $dir . 'MultiUpload.body.php';
+$wgExtensionMessagesFiles['MultiUpload'] = $dir . 'MultiUpload.i18n.php';
+$wgExtensionAliasesFiles['MultiUpload'] = $dir . 'MultiUpload.alias.php';
 $wgSpecialPages['MultipleUpload'] = 'MultipleUpload';
 $wgSpecialPageGroups['MultipleUpload'] = 'media';
 
@@ -42,7 +42,6 @@ $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'wfSpecialMultiUp
 // Add the link to Special:MultipleUpload to all SkinTemplate-based skins for users with the 'upload' user right
 function wfSpecialMultiUploadNav( &$skintemplate, &$nav_urls, &$oldid, &$revid ) {
 	global $wgUser;
-	wfLoadExtensionMessages( 'MultiUpload' );
 	if( $wgUser->isAllowed( 'upload' ) )
 		$nav_urls['multiupload'] = array(
 			'text' => wfMsg( 'multiupload_link' ),
@@ -52,9 +51,8 @@ function wfSpecialMultiUploadNav( &$skintemplate, &$nav_urls, &$oldid, &$revid )
 	return true;
 }
 
-// Add the link to Special:MultipleUpload to the Monobook skin
+// Add the link to Special:MultipleUpload to SkinTemplate based skins
 function wfMultiUploadToolbox( &$monobook ) {
-	wfLoadExtensionMessages( 'MultiUpload' );
 	if ( isset( $monobook->data['nav_urls']['multiupload'] ) )  {
 		if ( $monobook->data['nav_urls']['multiupload']['href'] == '' ) {
 			?><li id="t-ismultiupload"><?php echo $monobook->msg( 'multiupload-toolbox' ); ?></li><?php
