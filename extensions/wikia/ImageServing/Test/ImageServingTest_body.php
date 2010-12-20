@@ -11,7 +11,8 @@ class ImageServingTest extends SpecialPage {
 
 	function execute($article_id = null, $limit = "", $offset = "", $show = true) {
 		global $wgRequest, $wgOut, $wgTitle, $wgUser;
-		
+		echo wfMsg('wikia-language-top-list');
+		exit;
 		if( !$wgUser->isAllowed( 'imageservingtest' ) ) {
 			$wgOut->permissionRequired( 'imageservingtest' );
 			return;
