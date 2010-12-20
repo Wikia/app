@@ -159,7 +159,6 @@ class EditSimilar {
         	        $article_link = $sk->makeKnownLinkObj ($link_title) ;
 			$real_rand_values [] = $article_link ;
 		}
-		var_dump( $real_rand_values );
 		return $real_rand_values;
 	}
 
