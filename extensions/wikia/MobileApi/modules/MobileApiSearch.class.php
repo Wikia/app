@@ -71,47 +71,8 @@ class MobileApiSearch extends MobileApiBase {
 								wfRunHooks( 'SpecialSearchNoResults', array( $term ) );
 							}
 							
-							if( $titleMatches ) {
-								if( $titleMatches->numRows() ) {
-									global $wgContLang;
-									$terms = $wgContLang->convertForSearchResult(
-										$titleMatches->termMatches()
-									);
-									
-									$ret[ 'titleMatchesInfo' ] = $titleMatches->getInfo();
-									$ret[ 'titleMatches' ] = Array();
-									
-									while( $result = $titleMatches->next() ) {
-										$ret[ 'titleMatches' ][] = Array(
-											'link' => $this->showHit( $result),
-											'terms' => $terms
-										);
-									}
-								}
-								
-								$titleMatches->free();
-							}
-					
-							if( $textMatches ) {
-								if( $textMatches->numRows() ) {
-									global $wgContLang;
-									$terms = $wgContLang->convertForSearchResult(
-										$textMatches->termMatches()
-									);
-									
-									$ret[ 'textMatchesInfo' ] = $textMatches->getInfo();
-									$ret[ 'textMatches' ] = Array();
-									
-									while( $result = $textMatches->next() ) {
-										$ret[ 'textMatches' ][] = Array(
-											'link' => $this->showHit( $result),
-											'terms' => $terms
-										);
-									}
-								}
-								
-								$textMatches->free();
-							}
+							$this->processMatches( $titleMatches, 'title', $ret );
+							$this->processMatches( $textMatches, 'text', $ret );
 						} else {
 							$ret = Array( 'error' => 'too many results' );
 						}
@@ -157,5 +118,28 @@ class MobileApiSearch extends MobileApiBase {
 		
 		wfProfileOut( __METHOD__ );
 		return $title->getFullURL();
+	}
+	
+	private function processMatches( $matches, $type, &$output ) {
+		if( $matches ) {
+			if( $matches->numRows() ) {
+				global $wgContLang;
+				$terms = $wgContLang->convertForSearchResult(
+					$matches->termMatches()
+				);
+				
+				$output[ "{$type}MatchesInfo" ] = $matches->getInfo();
+				$ret[ "{$type}Matches" ] = Array();
+				
+				while( $result = $matches->next() ) {
+					$ret[ "{$type}Matches" ][] = Array(
+						'link' => $this->showHit( $result),
+						'terms' => $terms
+					);
+				}
+			}
+			
+			$matches->free();
+		}
 	}
 }
