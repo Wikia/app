@@ -1,6 +1,6 @@
 <?php
 
-class SpecialWikiaSearch extends SpecialSearchOld {
+class SpecialWikiaSearch extends SpecialSearch {
 
 	private $searchLocalWikiOnly = false;
 	private $searchLocalWikiOnlySession = 'WikiaSearch-localOnly';
