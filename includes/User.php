@@ -2389,6 +2389,7 @@ class User {
 		if ( !isset( $this->mSkin ) ) {
 			wfProfileIn( __METHOD__ );
 
+			/*
 			global $wgHiddenPrefs;
 			if( !in_array( 'skin', $wgHiddenPrefs ) ) {
 				# get the user skin
@@ -2402,6 +2403,10 @@ class User {
 			}
 
 			$this->mSkin =& Skin::newFromKey( $userSkin );
+			*/
+			
+			wfRunHooks('AlternateGetSkin', array (&$this));
+			
 			wfProfileOut( __METHOD__ );
 		}
 		if( $t || !$this->mSkin->getTitle() ) {
