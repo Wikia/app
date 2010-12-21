@@ -189,7 +189,8 @@ class SponsorshipDashboardService extends Service {
 					$row->cityUrl,
 					$row->cityId,
 					'c',
-					$hub['id']
+					$hub['id'],
+					( empty( $all ) )
 				)
 			);
 
@@ -197,7 +198,7 @@ class SponsorshipDashboardService extends Service {
 		
 		$returnData = $this->simplePrepareToDisplay( $all, $titles , array( 'newVisits' ) );
 		$this->saveToCache( 'Top10CompetitionStats:Hub'.$hub['id'] , $returnData );
-
+		
 		return $returnData;
 
 	}
@@ -212,7 +213,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	private function getMonthlyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId ){
+	private function getMonthlyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate ){
 
 		// inner cache. Various city id can be asked from many places.
 		$cachedData = $this->getFromCache( 'MonthlyCityPageviewsFromGA:Hub'.$hubId, $cityId );
@@ -241,7 +242,9 @@ class SponsorshipDashboardService extends Service {
 
 		foreach( $results as $obj ) {
 			$date = $obj->getYear().'/'.$obj->getMonth();
-			$all[ $date ][ 'date' ] = $date;
+			if ( $generateDate ){
+				$all[ $date ][ 'date' ] = $date;
+			}
 			$all[ $date ][ $prefix.$cityId ] = $obj->getPageviews();
 		}
 
@@ -363,7 +366,6 @@ class SponsorshipDashboardService extends Service {
 			}
 			$i++;
 		};
-
 
 		if ( empty( $results ) ){
 			return false;
