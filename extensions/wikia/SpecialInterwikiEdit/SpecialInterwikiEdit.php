@@ -301,22 +301,11 @@ function wfSIWEEditInterwiki(){
 
 	# $limit = 10;
 
-	# JavaScript for automated form updates
-	# FIXME - should use YUI
-	include_once("$IP/extensions/wikia/GetUserAgent/GetUserAgent.php");
-	$agent = GetUserAgent();
-
-	if ($agent['is_ie']) {
-		$document = "document.all";
-	} else {
-		$document = "document";
-	}
-
 	$ret .= "
 
 	<script type=\"text/javascript\">
 	function updateForm( data ){
-	        var form = {$document}.getElementById('edit_form');
+	        var form = document.getElementById('edit_form');
 
 	        if (form && data){
 	                data = data.split('|');
@@ -341,7 +330,7 @@ function wfSIWEEditInterwiki(){
 	}
 
 	function updateAction(action){
-	        var form = {$document}.getElementById('edit_form');
+	        var form = document.getElementById('edit_form');
 	        if (form){
 	                if (action == 'delete' ){
 	                	form.action.value='delete_interwiki';
