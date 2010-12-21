@@ -255,7 +255,7 @@ class DPLForum {
 		}
 
 		// build the SQL query
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
 		$sPageTable = $dbr->tableName( 'page' );
 		$sRevTable = $dbr->tableName( 'revision' );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
