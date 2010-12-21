@@ -55,7 +55,7 @@ function ImagePlaceholder_init() {
 
 function ImagePlaceholderTranslateNsImage() {
 	global $wgContLang;
-	$aliases = $wgContLang->namespaceAliases;
+	$aliases = $wgContLang->getNamespaceAliases();
 	$aliases = array_flip( $aliases );
 	if ( !empty( $aliases[ NS_FILE ] ) ) {
         	return $aliases[ NS_FILE ]; # Image:
