@@ -194,7 +194,7 @@
 
 			<fieldset>
 				<legend><?= wfMsg('swm-label-content') ?></legend>
-				<textarea name="mContent" id="mContent" cols="30" rows="10"><?= empty($formData['messageContent']) ? '' : $formData['messageContent'] ?></textarea>
+				<textarea name="mContent" id="mContent" cols="112" rows="10"><?= empty($formData['messageContent']) ? '' : $formData['messageContent'] ?></textarea>
 			</fieldset>
 
 			<div id="PaneButtons">
