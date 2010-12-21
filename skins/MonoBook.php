@@ -76,7 +76,13 @@ class MonoBookTemplate extends QuickTemplate {
 
 		$this->html( 'headelement' );
 ?><div id="globalWrapper">
-<div id="column-content"><div id="content" <?php $this->html("specialpageattributes") ?>>
+<div id="column-content">
+<?php
+/* Wikia change begin - @author: Hyun */
+	method_exists($this->skin, "printTopHtml") && $this->skin->printTopHtml();
+/* Wikia change end */
+?>
+<div id="content" <?php $this->html("specialpageattributes") ?>>
 	<a id="top"></a>
 	<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 
