@@ -26,11 +26,10 @@ class RelatedPagesModule extends Module {
 			$this->skipRendering = true;
 		}
 
-		/* (tmp disabled) check action
+		// check action
 		if( $wgRequest->getVal('action', 'view') != 'view' ) {
 			$this->skipRendering = true;
 		}
-		*/
 
 		// skip, if module was already rendered
 		if( $relatedPages->isRendered() ) {

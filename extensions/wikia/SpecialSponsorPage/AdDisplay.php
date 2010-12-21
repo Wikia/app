@@ -32,7 +32,8 @@ class AdDisplay {
 			return true;
 		}
 
-		if(!$out->isArticle() || $wgRequest->getVal('diff')) return true;
+		$action = $wgRequest->getVal('action', 'view');
+		if(!$out->isArticle() || $wgRequest->getVal('diff') || $action!='view') return true;
 		if(!self::ArticleCanShowAd()) return true;
 		wfLoadExtensionMessages( 'SponsorPage' );
 
