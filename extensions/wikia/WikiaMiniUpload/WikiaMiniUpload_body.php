@@ -310,8 +310,6 @@ class WikiaMiniUpload {
 
 	// generate details page
 	function detailsPage($props) {
-		//$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => '');
-		//$form = new UploadForm(new FauxRequest($data, true));
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
@@ -336,7 +334,7 @@ class WikiaMiniUpload {
 
 		// a guard
 		if( !is_object( $props['file'] ) ) {
-			return $this->loadMain( $this->translateError( UploadForm::EMPTY_FILE ) );
+			return $this->loadMain( $this->translateError( UploadBase::EMPTY_FILE ) );
 		}
 
 		$tmpl->set_vars(array('props' => $props));
