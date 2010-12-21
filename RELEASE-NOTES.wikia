@@ -16,6 +16,7 @@
 * Removed unused 3rdparty ListTransclusions extension (sean)
 * Updated RefreshSpecial to newest version from MediaWiki repository (sean)
 * Removed FixRecoveredUsers extension, it served its purpose (sean)
+* Upgraded OggHandler extension to newest version from MediaWiki repository and deleted 3rdparty version (sean)
 
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
