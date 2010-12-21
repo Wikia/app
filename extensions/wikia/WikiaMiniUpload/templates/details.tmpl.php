@@ -21,13 +21,9 @@ if(isset($props['name'])) {
 			<td>
 			<span id="ImageUploadLicenseSpan" >
 			<?php
-				$licenses = new Licenses();
-				$licensehtml = $licenses->getHtml();
+				$licenses = new Licenses(array('id' => 'ImageUploadLicense', 'name' => 'ImageUploadLicense'));
+				echo $licenses->getInputHTML(null);
 			?>
-				<select name="ImageUploadLicense" id="ImageUploadLicense" onchange="WMU_licenseSelectorCheck()" />
-					<option><?= wfMsg( 'nolicense' ) ?></option>
-					<?= $licensehtml ?>
-				</select>
 			</span>
 			</td>
 		</tr>

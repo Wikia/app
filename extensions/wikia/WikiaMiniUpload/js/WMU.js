@@ -596,14 +596,22 @@ function WMU_loadMain() {
 }
 
 function WMU_loadLicense( license ) {
+	var title = 'File:Sample.jpg';
+    var url = wgScriptPath + '/api' + wgScriptExtension
+    + '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
+    + '&title=' + encodeURIComponent( title )
+    + '&prop=text&pst&format=json';
+
 	var callback = {
 		success: function(o) {
-			$G('ImageUploadLicenseText').innerHTML = o.responseText;
+			var o = eval( '(' + o.responseText + ')' );
+			$G('ImageUploadLicenseText').innerHTML = o['parse']['text']['*'];
+			//$G('ImageUploadLicenseText').innerHTML = o.responseText;
 			WMU_indicator(1, false);
 		}
 	}
 	WMU_indicator(1, false);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadLicense&license='+encodeURIComponent(license), callback);
+	YAHOO.util.Connect.asyncRequest('GET', url, callback);
 	WMU_curSourceId = 0;
 }
 
@@ -792,10 +800,13 @@ function WMU_initialCheck( checkedName ) {
 function WMU_displayDetails(responseText) {
 	WMU_switchScreen('Details');
 	WMU_width = null;
+
 	$G('ImageUploadBack').style.display = 'inline';
 
 	$G('ImageUpload' + WMU_curScreen).innerHTML = responseText;
 
+	$('#ImageUploadLicense').bind('change', WMU_licenseSelectorCheck);
+	
 	if( WMU_skipDetails ){
 		$G('ImageUpload' + WMU_curScreen).style.display = 'none';
 		$G('ImageUploadLayoutLeft').checked = 'checked';
