@@ -357,13 +357,13 @@ class WikiaMiniUpload {
 
 	// generate details page
 	function detailsPage($props) {
-		$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => '');
-		$form = new UploadForm(new FauxRequest($data, true));
+		//$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => '');
+		//$form = new UploadForm(new FauxRequest($data, true));
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
 		if (isset($props['name'])) {
-			list( $partname, $ext ) = $form->splitExtensions( $props['name'] );
+			list( $partname, $ext ) = UploadBase::splitExtensions( $props['name'] );
 
 			if( count( $ext ) ) {
 				$finalExt = $ext[count( $ext ) - 1];
