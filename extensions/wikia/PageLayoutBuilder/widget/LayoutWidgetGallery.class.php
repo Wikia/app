@@ -92,7 +92,7 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 		$tmpParser->setOutputType(OT_HTML);
 		$tmpParserOptions = new ParserOptions();
 		$fakeTitle = new FakeTitle();
-		$html = $tmpParser->parse( $articleText, $fakeTitle, $tmpParserOptions)->getText();		
+		$html = $tmpParser->parse( $articleText, $fakeTitle, $tmpParserOptions)->getText();	 	
 		$html = str_replace( 'id="gallery-0"', 'id="gallery-plb_'.$this->getAttrVal("id", true).'"',  $html );
 		
 		return $html;

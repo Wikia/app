@@ -153,8 +153,8 @@ class PageLayoutBuilderModel {
 		$out = array();
 		while($row = $db->fetchRow($res)) {
 			$out[$row['plb_f_element_id']] = unserialize($row['plb_f_prop']);
+			
 		}
-
 		return $out;
 	}
 //TODO: memc
