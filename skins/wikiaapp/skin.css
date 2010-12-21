@@ -94,30 +94,34 @@ a:visited {
 
 div.floatright, 
 table.floatright,
-div.tright,
-figure.tright{
+div.tright{
 	margin-left: 0.7em;
 }
 
 div.floatleft, 
 table.floatleft,
-div.tleft,
-figure.tleft {
+div.tleft {
 	margin-right: 0.7em;
 }
 
-figure {
+#bodyContent div.thumb {
 	background: -webkit-gradient(linear, left bottom, left top, color-stop(0.10, rgb(255,255,255)), color-stop(0.51, rgb(240,232,240)), color-stop(0.76, rgb(214,211,214)));
 	padding: 0.3em;
 	border-radius: 0.3em;
 	-webkit-border-radius: 0.3em;
 }
 
-figure img.thumbimage{
+#bodyContent div.thumbinner{
+	border: none;
+	background-color: transparent;
+}
+
+#bodyContent div.thumbinner img.thumbimage{
+	border: none;
 	margin-bottom: 0.5em;
 }
 
-#bodyContent .thumbcaption{
+#bodyContent div.thumbinner div.thumbcaption{
 	padding-top: 1em;
 	font-size: 80%;
 	font-style: italic;
