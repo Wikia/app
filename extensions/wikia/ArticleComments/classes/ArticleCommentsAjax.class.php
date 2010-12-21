@@ -222,15 +222,6 @@ class ArticleCommentsAjax {
 				$addedCommentParent = ArticleComment::newFromId($parentId);
 				$comments = array($parentId => array('level1' => $addedCommentParent, 'level2' => array($response[1]->getID() => $addedComment)));
 			}
-
-			$countComments = count($comments);
-			$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
-			if ($showall != 1 || $listing->getCountAllNested() > 200 /*see RT#64641*/) {
-				$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
-			}
-
-			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
-
 			// RT#68254 RT#69919 RT#86385
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
 				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => true));
@@ -244,8 +235,8 @@ class ArticleCommentsAjax {
 				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
 				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
 			}
-
-			$result = array('text' => $commentsHTML, 'pagination' => $pagination, 'counter' => $counter);
+			// Owen removed pagination from results since we ajax one comment at a time now RT#141141
+			$result = array('text' => $commentsHTML, 'counter' => $counter);
 		}
 
 		return $result;

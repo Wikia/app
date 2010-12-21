@@ -195,7 +195,7 @@ var ArticleComments = {
 			if (!json.error) {
 				//remove zero comments div
 				$('#article-comments-zero').remove();
-				
+				//FIXME: this is dangerous to do without checking for existence of element
 				var topE = $('#' + $(json.text).find('li:first').attr('id'));
 				if(!topE.exists()) {
 					$(json.text).find('li:first').prependTo('#article-comments-ul');					
@@ -208,10 +208,6 @@ var ArticleComments = {
 					}				
 				}
 
-				//pagination
-				if (json.pagination != '') {
-					$('#article-comments-pagination').show().html('<div>' + json.pagination + '</div>');
-				}
 				//update counter
 				if ( window.skin == 'oasis' ){
 					$('#article-comments-counter-header').html(json.counter.header);
