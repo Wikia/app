@@ -198,7 +198,7 @@ class WikiaPhotoGalleryUpload {
 		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $imageName)) {
 			self::log(__METHOD__, 'Hook "WikiaMiniUpload:BeforeProcessing" broke processing the file');
 			wfProfileOut(__METHOD__);
-			return UploadForm::VERIFICATION_ERROR;
+			return UploadBase::VERIFICATION_ERROR;
 		}		
 		
 		if(is_array($ret)) {
@@ -262,19 +262,19 @@ class WikiaPhotoGalleryUpload {
 		$ret = false;
 
 		switch($errorCode) {
-			case UploadForm::ILLEGAL_FILENAME:
+			case UploadBase::ILLEGAL_FILENAME:
 				$ret = wfMsg('wikiaPhotoGallery-upload-error-filename-incorrect');
 				break;
 
-			case UploadForm::FILETYPE_MISSING:
+			case UploadBase::FILETYPE_MISSING:
 				$ret = wfMsg('wikiaPhotoGallery-upload-error-filetype-missing');
 				break;
 
-			case UploadForm::FILETYPE_BADTYPE:
+			case UploadBase::FILETYPE_BADTYPE:
 				$ret = wfMsg('wikiaPhotoGallery-upload-error-filetype-incorrect');
 				break;
 
-			case UploadForm::VERIFICATION_ERROR:
+			case UploadBase::VERIFICATION_ERROR:
 				$ret = "File type verification error!" ;
 				break;
 		}
