@@ -31,7 +31,7 @@ public class ContentDisplayTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']//h2//span[@class='editsection']/a"));
 
 		// picture attribution
-		assertTrue(session().isElementPresent("//article//div[@class='thumbinner']//div[@class='picture-attribution']//a[text()='" + fileUploader + "']"));
+		assertTrue(session().isElementPresent("//article//figure[contains(@class,'thumbinner')]//aside[@class='picture-attribution']//a[text()='" + fileUploader + "']"));
 
 		// categories
 		assertTrue(session().isElementPresent("//div[@id='catlinks']//a[text()='Foo']"));

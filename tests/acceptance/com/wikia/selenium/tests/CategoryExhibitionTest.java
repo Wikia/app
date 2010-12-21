@@ -16,27 +16,27 @@ public class CategoryExhibitionTest extends BaseTest {
 	public void testSortTypeAndDisplay() throws Exception {
 
 		// open video page in classic preview
-		session().open("/wiki/Category:Videos?display=page&sort=mostvisited");
+		session().open("wiki/Category:Videos?display=page&sort=mostvisited");
 		session().waitForPageToLoad(TIMEOUT);
 
 		if ( session().isElementPresent("//div[@class='category-gallery-form']") ){
 
 			// open video page ( mostvisited )
-			session().open("/wiki/Category:Videos?display=exhibition&sort=mostvisited");
+			session().open("wiki/Category:Videos?display=exhibition&sort=mostvisited");
 			session().waitForPageToLoad(TIMEOUT);
 
 			Number numberOfMostvisitedPages = session().getXpathCount("//div[@id='mw-images']//div[@class='wikia-paginator']//a");
 //			System.out.println("Counted pages for mostvisited video : " + numberOfMostvisitedPages);
 
 			// open video page ( alphabetical )
-			session().open("/wiki/Category:Videos?display=exhibition&sort=alphabetical");
+			session().open("wiki/Category:Videos?display=exhibition&sort=alphabetical");
 			session().waitForPageToLoad(TIMEOUT);
 
 			Number numberOfAlphabeticalPages = session().getXpathCount("//div[@id='mw-images']//div[@class='wikia-paginator']//a");
 //			System.out.println("Counted pages for alphabetical video : " + numberOfAlphabeticalPages);
 
 			// open video page ( recent edits )
-			session().open("/wiki/Category:Videos?display=exhibition&sort=recentedits");
+			session().open("wiki/Category:Videos?display=exhibition&sort=recentedits");
 			session().waitForPageToLoad(TIMEOUT);
 
 			Number numberOfRecentEditsPages = session().getXpathCount("//div[@id='mw-images']//div[@class='wikia-paginator']//a");
