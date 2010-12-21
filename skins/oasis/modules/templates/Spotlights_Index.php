@@ -8,7 +8,7 @@
 	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?><?= $mode == 'RAIL' ? ($wgEnableSpotlightsV2_Rail ? ' SPOTLIGHT_RAIL' : '') : ($wgEnableSpotlightsV2_Footer ? ' SPOTLIGHT_FOOTER' : '') ?>"<? } } ?>>
 		<?= AdEngine::getInstance()->getLazyLoadableAdGroup($adGroupName, $adslots) ?>
 		<? for ($i=0; $i<$n_adslots; $i++) { ?>
-		<li class="WikiaSpotlight item-<?= $i+1 ?>" id="<?= $adslots[$i]?>">
+		<li class="WikiaSpotlight item-<?= $i+1 ?>" id="<?= ( isset($adslots[$i]) ) ? $adslots[$i] : 'SPOTLIGHT_FOOTER_FORCED_'.$i; ?>">
 			<?
 			if ( empty( $forceContent[$i] ) ) {
 				echo AdEngine::getInstance()->getAd( $adslots[$i] );
