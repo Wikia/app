@@ -31,6 +31,7 @@ class SkinWikiaphone extends SkinTemplate {
 	function __construct() {
 		parent::__construct();
 		$this->mRenderColumnOne = false;
+		$this->useHeadElement = true;
 	}
 	
 	function initPage( OutputPage $out ) {
@@ -53,8 +54,6 @@ class SkinWikiaphone extends SkinTemplate {
 		$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
 		$out->addStyle( 'wikiaphone/skin.css', 'screen,handheld' );
 		$out->addScriptFile( '../common/jquery/jquery-1.4.4.min.js' );
-		$analitycsProvider = new AnalyticsProviderGA_Urchin();
-		$out->addScript( $analitycsProvider->getSetupHtml() );
 		$out->addScriptFile( '../wikiaphone/main.js' );
 	}
 
@@ -110,6 +109,13 @@ class SkinWikiaphone extends SkinTemplate {
 		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 		
 		return $data;
+	}
+	
+	/**
+	 * empty stub for compatibility with MonoBook.php wikiaBox()
+	 */
+	function wikiaBox() {
+		return;
 	}
 
 }
