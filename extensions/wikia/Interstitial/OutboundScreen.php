@@ -40,7 +40,7 @@ $wgOutboundScreenConfig = array(
  * This function makes all of the outbound links in the page re-written to go through Special:Outbound.
  */
 function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
-	global $wgCityId, $wgUser, $wgOutboundScreenConfig;
+	global $wgCityId, $wgUser, $wgOutboundScreenConfig, $wgOut, $wgTitle;
 	static $whiteList;
 
 	// skip logic when in FCK
@@ -50,6 +50,10 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 	}
 
 	if ( strpos( $url, 'http://' ) !== 0 ) {
+		return true;
+	}
+
+	if (!$wgOut->isArticle() && !$wgTitle->isSpecial('Search')) {
 		return true;
 	}
 
