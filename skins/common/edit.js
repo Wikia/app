@@ -204,8 +204,6 @@ function scrollEditBox() {
 addOnloadHook( scrollEditBox );
 addOnloadHook( mwSetupToolbar );
 /* Wikia change - End */
-hookEvent( 'load', scrollEditBox );
-hookEvent( 'load', mwSetupToolbar );
 hookEvent( 'load', function() {
 	currentFocused = document.getElementById( 'wpTextbox1' );
 	// http://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
