@@ -19,7 +19,7 @@ class DPLMain {
 		global $wgUser, $wgLang, $wgContLang, $wgRequest, $wgRawHtml;
 		global $wgTitle, $wgArticle, $wgNonincludableNamespaces;
 
-		// we use "makeKnownLinkObject" to create hyperlinks; 
+		// we use "makeKnownLinkObject" to create hyperlinks;
 		// the code we store in the dplcache may contain <html>....</html> sequences
 		// for both reasons we need to enable rawHtml output
 		// note that this does not affect the article wiki source - a <html> tag in the wiki source
@@ -55,7 +55,7 @@ class DPLMain {
 		}
 
 		// get database access
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
 		$sPageTable = $dbr->tableName( 'page' );
 		$sCategorylinksTable = $dbr->tableName( 'categorylinks' );
 
@@ -87,7 +87,7 @@ class DPLMain {
 			if( !isset( ExtDynamicPageList::$options['notnamespace']['default'] ) ) {
 				ExtDynamicPageList::$options['notnamespace']['default'] = null;
 			}
-		}	
+		}
 
 		// check parameters which can be set via the URL
 		self::getUrlArgs();
@@ -293,7 +293,7 @@ class DPLMain {
 		$aReplaceInTitle[1] = '';
 
 		$_sCatMinMax  = ExtDynamicPageList::$options['categoriesminmax']['default'];
-		$aCatMinMax   = ( $_sCatMinMax == '' ) ? null: explode(',',$_sCatMinMax);	
+		$aCatMinMax   = ( $_sCatMinMax == '' ) ? null: explode(',',$_sCatMinMax);
 
 		$_sIncludeMaxLen = ExtDynamicPageList::$options['includemaxlength']['default'];
 		$iIncludeMaxLen = ( $_sIncludeMaxLen == '' ) ? null: intval( $_sIncludeMaxLen );
@@ -561,7 +561,7 @@ class DPLMain {
 
 				/**
 				 * Order parameters
-				 */	
+				 */
 				case 'ordermethod':
 					$methods = explode( ',', $sArg );
 					$breakaway = false;
@@ -694,7 +694,7 @@ class DPLMain {
 					}
 					break;
 
-				case 'randomseed':	
+				case 'randomseed':
 					// ensure that $iRandomSeed is a number;
 					if( preg_match( ExtDynamicPageList::$options['randomseed']['pattern'], $sArg ) ) {
 						$iRandomSeed = ( $sArg == '' ) ? null: intval( $sArg );
@@ -728,7 +728,7 @@ class DPLMain {
 
 				/**
 				 * Order parameters
-				 */	
+				 */
 				case 'ordercollation':
 					if( $sArg != '' ) {
 						$sOrderCollation = "COLLATE $sArg";
@@ -907,7 +907,7 @@ class DPLMain {
 						$output .= $logger->msgWrongParam( 'debug', $sArg );
 					}
 					break;
-					
+
 				/**
 				 * Unknown parameter
 				 */
@@ -942,7 +942,7 @@ class DPLMain {
 					}
 					$bConflictsWithOpenReferences = true;
 					break;
-				
+
 				case 'notlinksto':
 					$problems = self::getPageNameList(
 						'notlinksto', $sArg, $aNotLinksTo,
@@ -1247,7 +1247,7 @@ class DPLMain {
 				case 'includematch':
 					$aSecLabelsMatch = explode( ',', $sArg );
 					break;
-	
+
 				case 'includenotmatchparsed':
 					$bIncParsed = true;
 				case 'includenotmatch':
@@ -1270,7 +1270,7 @@ class DPLMain {
 						$output .= $logger->msgWrongParam( 'adduser', $sArg );
 					}
 					break;
-					
+
 				case 'addauthor':
 					if( in_array( $sArg, ExtDynamicPageList::$options['addauthor'] ) ) {
 						$bAddAuthor = self::argBoolean( $sArg );
@@ -1356,7 +1356,7 @@ class DPLMain {
 						$output .= $logger->msgWrongParam( 'tablesortcol', $sArg );
 					}
 					break;
-					
+
 				case 'dominantsection':
 					if( preg_match( ExtDynamicPageList::$options['dominantsection']['pattern'], $sArg ) ) {
 						$iDominantSection = ( $sArg == '' ) ? null : intval( $sArg );
@@ -1446,7 +1446,7 @@ class DPLMain {
 							$bReset[2]=true;
 						} elseif ( $arg == 'images' ) {
 							$bReset[3]=true;
-						} elseif ( $arg == 'all' ) {	
+						} elseif ( $arg == 'all' ) {
 							$bReset[0] = true;
 							$bReset[1] = true;
 							$bReset[2] = true;
@@ -1750,7 +1750,7 @@ class DPLMain {
 		$iTotalIncludeCatCount = count( $aIncludeCategories, COUNT_RECURSIVE ) - $iIncludeCatCount;
 		$iExcludeCatCount = count( $aExcludeCategories );
 		$iTotalCatCount = $iTotalIncludeCatCount + $iExcludeCatCount;
-		
+
 		if ( $calledInMode == 'tag' ) {
 			// in tag mode 'eliminate' is the same as 'reset' for tpl,cat,img
 			if ( $bReset[5] ) {
@@ -1791,7 +1791,7 @@ class DPLMain {
 		}
 
 		// ###### CHECKS ON PARAMETERS ######
-		
+
 		// too many categories!
 		if ( ( $iTotalCatCount > ExtDynamicPageList::$maxCategoryCount ) && ( !ExtDynamicPageList::$allowUnlimitedCategories ) ) {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_TOOMANYCATS, ExtDynamicPageList::$maxCategoryCount );
@@ -1801,7 +1801,7 @@ class DPLMain {
 		if ( $iTotalCatCount < ExtDynamicPageList::$minCategoryCount ) {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_TOOFEWCATS, ExtDynamicPageList::$minCategoryCount );
 		}
-	
+
 		// no selection criteria! Warn only if no debug level is set
 		if ( $iTotalCatCount == 0 && $bSelectionCriteriaFound == false ) {
 			if ( $logger->iDebugLevel <= 1 ) {
@@ -1829,11 +1829,11 @@ class DPLMain {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_MORETHAN1TYPEOFDATE );
 		}
 
-		// the dominant section must be one of the sections mentioned in includepage 	
+		// the dominant section must be one of the sections mentioned in includepage
 		if( $iDominantSection > 0 && count( $aSecLabels ) < $iDominantSection ) {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_DOMINANTSECTIONRANGE, count( $aSecLabels ) );
 		}
-	
+
 		// category-style output requested with not compatible order method
 		if ( $sPageListMode == 'category' && !array_intersect( $aOrderMethods, array( 'sortkey', 'title','titlewithoutnamespace' ) ) ) {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_WRONGORDERMETHOD, 'mode=category', 'sortkey | title | titlewithoutnamespace' );
@@ -1930,7 +1930,7 @@ class DPLMain {
 				}
 			}
 			$aListSeparators[1] = '';
-			// the user may have specified the third parameter of 'format' to add meta attributes of articles to the table 
+			// the user may have specified the third parameter of 'format' to add meta attributes of articles to the table
 			if ( !array_key_exists( 2, $aListSeparators ) ) {
 				$aListSeparators[2] = '';
 			}
@@ -1982,7 +1982,7 @@ class DPLMain {
 			$sSqlDistinct = 'DISTINCT';
 		}
 		$sSqlGroupBy = '';
-		if ( $sDistinctResultSet == 'strict' 
+		if ( $sDistinctResultSet == 'strict'
 			&& ( count( $aLinksTo ) + count( $aNotLinksTo ) + count( $aLinksFrom ) +
 			count( $aNotLinksFrom ) + count( $aLinksToExternal ) + count( $aImageUsed ) ) > 0 )
 		{
@@ -2124,7 +2124,7 @@ class DPLMain {
 		// linksto
 		if ( count( $aLinksTo ) > 0 ) {
 			$sSqlPageLinksTable .= $sPageLinksTable . ' as pl, ';
-			$sSqlCond_page_pl .= ' AND '.$sPageTable.'.page_id=pl.pl_from AND '; 
+			$sSqlCond_page_pl .= ' AND '.$sPageTable.'.page_id=pl.pl_from AND ';
 			$sSqlSelPage = ', pl.pl_title as sel_title, pl.pl_namespace as sel_ns';
 			$n = 0;
 			foreach ( $aLinksTo as $linkGroup ) {
@@ -2175,9 +2175,9 @@ class DPLMain {
 					} else {
 						$sSqlCond_page_pl .= ' AND pagelinks.pl_title' . $operator . $dbr->addQuotes( $link->getDBkey() );
 					}
-					$sSqlCond_page_pl .= ')'; 
+					$sSqlCond_page_pl .= ')';
 				}
-				$sSqlCond_page_pl .= ')))'; 
+				$sSqlCond_page_pl .= ')))';
 			}
 		}
 
@@ -2204,13 +2204,13 @@ class DPLMain {
 					$n++;
 				}
 			}
-			$sSqlCond_page_pl .= ') )'; 
+			$sSqlCond_page_pl .= ') )';
 		}
 
 		// linksfrom
 		if ( count( $aLinksFrom ) > 0 ) {
 			if ( $acceptOpenReferences ) {
-				$sSqlCond_page_pl .= ' AND ('; 
+				$sSqlCond_page_pl .= ' AND (';
 				$n = 0;
 				foreach ( $aLinksFrom as $links ) {
 					foreach ( $links as $link ) {
@@ -2254,7 +2254,7 @@ class DPLMain {
 						$n++;
 					}
 				}
-				$sSqlCond_page_pl .= ')'; 
+				$sSqlCond_page_pl .= ')';
 			} else {
 				$sSqlCond_page_pl .= ' AND CONCAT(page_namespace,page_title) not in (select CONCAT(' . $sPageLinksTable . '.pl_namespace,'
 									. $sPageLinksTable . '.pl_title) from ' . $sPageLinksTable . ' where (';
@@ -2275,7 +2275,7 @@ class DPLMain {
 		// linkstoexternal
 		if ( count( $aLinksToExternal ) > 0 ) {
 			$sSqlExternalLinksTable .= $sExternalLinksTable . ' AS el, ';
-			$sSqlCond_page_el .= ' AND ' . $sPageTable . '.page_id=el.el_from AND ('; 
+			$sSqlCond_page_el .= ' AND ' . $sPageTable . '.page_id=el.el_from AND (';
 			$sSqlSelPage = ', el.el_to AS el_to';
 			$n = 0;
 			foreach ( $aLinksToExternal as $linkGroup ) {
@@ -2356,13 +2356,13 @@ class DPLMain {
 		// uses
 		if ( count( $aUses ) > 0 ) {
 			$sSqlPageLinksTable .= ' ' . $sTemplateLinksTable . ' AS tl, ';
-			$sSqlCond_page_pl .= ' AND ' . $sPageTable . '.page_id=tl.tl_from  AND ('; 
+			$sSqlCond_page_pl .= ' AND ' . $sPageTable . '.page_id=tl.tl_from  AND (';
 			$n = 0;
 			foreach ( $aUses as $link ) {
 				if ( $n > 0 ) {
 					$sSqlCond_page_pl .= ' OR ';
 				}
-				$sSqlCond_page_pl .= '(tl.tl_namespace=' . intval( $link->getNamespace() ); 
+				$sSqlCond_page_pl .= '(tl.tl_namespace=' . intval( $link->getNamespace() );
 				if ( $bIgnoreCase ) {
 					$sSqlCond_page_pl .= ' AND LOWER(tl.tl_title)=LOWER(' . $dbr->addQuotes( $link->getDBkey() ) . '))';
 				} else {
@@ -2370,7 +2370,7 @@ class DPLMain {
 				}
 				$n++;
 			}
-			$sSqlCond_page_pl .= ')'; 
+			$sSqlCond_page_pl .= ')';
 		}
 
 		// notuses
@@ -2389,13 +2389,13 @@ class DPLMain {
 				}
 				$n++;
 			}
-			$sSqlCond_page_pl .= ') )'; 
+			$sSqlCond_page_pl .= ') )';
 		}
 
 		// usedby
 		if ( count( $aUsedBy ) > 0 ) {
 			if ( $acceptOpenReferences ) {
-				$sSqlCond_page_tpl .= ' AND ('; 
+				$sSqlCond_page_tpl .= ' AND (';
 				$n = 0;
 				foreach ( $aUsedBy as $link ) {
 					if ( $n > 0 ) {
@@ -2407,7 +2407,7 @@ class DPLMain {
 				$sSqlCond_page_tpl .= ')';
 			} else {
 				$sSqlPageLinksTable .= $sTemplateLinksTable . ' AS tpl, '. $sPageTable . 'AS tplsrc, ';
-				$sSqlCond_page_tpl .= ' AND ' . $sPageTable . '.page_title = tpl.tl_title  AND tplsrc.page_id=tpl.tl_from AND ('; 
+				$sSqlCond_page_tpl .= ' AND ' . $sPageTable . '.page_title = tpl.tl_title  AND tplsrc.page_id=tpl.tl_from AND (';
 				$sSqlSelPage = ', tplsrc.page_title AS tpl_sel_title, tplsrc.page_namespace AS tpl_sel_ns';
 				$n = 0;
 				foreach ( $aUsedBy as $link ) {
@@ -2516,9 +2516,9 @@ class DPLMain {
 			$sSqlRev_user = ', rev_user, rev_user_text, rev_comment';
 		}
 		if ( $bAddCategories ) {
-			$sSqlCats = ", GROUP_CONCAT(DISTINCT cl_gc.cl_to ORDER BY cl_gc.cl_to ASC SEPARATOR ' | ') AS cats"; 
+			$sSqlCats = ", GROUP_CONCAT(DISTINCT cl_gc.cl_to ORDER BY cl_gc.cl_to ASC SEPARATOR ' | ') AS cats";
 			// Gives list of all categories linked from each article, if any.
-			$sSqlClTableForGC = $sCategorylinksTable . ' AS cl_gc'; 
+			$sSqlClTableForGC = $sCategorylinksTable . ' AS cl_gc';
 			// Categorylinks table used by the Group Concat (GC) function above
 			$sSqlCond_page_cl_gc = 'page_id=cl_gc.cl_from';
 			if ( $sSqlGroupBy != '' ) {
@@ -2539,7 +2539,7 @@ class DPLMain {
 			$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . $sPageTable.'.page_namespace as page_namespace,'.
 								$sPageTable . '.page_title as page_title,' . $sPageTable . '.page_id as page_id' . $sSqlSelPage . $sSqlSortkey . $sSqlPage_counter .
 								$sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
-								$sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp . 
+								$sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp .
 								' FROM ' . $sSqlRevisionTable . $sSqlRCTable . $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
 		}
 
@@ -2616,7 +2616,7 @@ class DPLMain {
 					$sSqlWhere .= $sPageTable . '.page_title >' . $dbr->addQuotes( $sTitleGE );
 				}
 			}
-			$sSqlWhere .= ')'; 
+			$sSqlWhere .= ')';
 		}
 
 		// TitleLE ...
@@ -2635,7 +2635,7 @@ class DPLMain {
 					$sSqlWhere .= $sPageTable . '.page_title <' . $dbr->addQuotes( $sTitleLE );
 				}
 			}
-			$sSqlWhere .= ')'; 
+			$sSqlWhere .= ')';
 		}
 
 		// TitleMatch ...
@@ -2661,7 +2661,7 @@ class DPLMain {
 				}
 				$n++;
 			}
-			$sSqlWhere .= ')'; 
+			$sSqlWhere .= ')';
 		}
 
 		// NotTitleMatch ...
@@ -2687,9 +2687,9 @@ class DPLMain {
 				}
 				$n++;
 			}
-			$sSqlWhere .= ')'; 
+			$sSqlWhere .= ')';
 		}
-	
+
 		// rev_minor_edit IS
 		if( isset( $sMinorEdits ) && $sMinorEdits == 'exclude' ) {
 			$sSqlWhere .= ' AND rev_minor_edit=0';
@@ -2867,7 +2867,7 @@ class DPLMain {
 
 		// ###### DUMP SQL QUERY ######
 		if ( $logger->iDebugLevel >= 3 ) {
-			//DEBUG: output SQL query 
+			//DEBUG: output SQL query
 			$output .= "DPL debug -- Query=<br />\n<tt>" . $sSqlSelectFrom . $sSqlWhere . "</tt>\n\n";
 		}
 
@@ -2977,7 +2977,7 @@ class DPLMain {
 			$title = Title::makeTitle( $pageNamespace, $pageTitle );
 
 			// block recursion: avoid to show the page which contains the DPL statement as part of the result
-			if ( $bSkipThisPage && ( $title->getNamespace() == $wgTitle->getNamespace() && 
+			if ( $bSkipThisPage && ( $title->getNamespace() == $wgTitle->getNamespace() &&
 				$title->getText() == $wgTitle->getText() ) ) {
 				// $output.= 'BLOCKED '.$wgTitle->getText().' DUE TO RECURSION'."\n";
 				continue;
@@ -3173,7 +3173,7 @@ class DPLMain {
 		);
 
 		if ( $rowcount == -1 ) {
-			$rowcount = $dpl->getRowCount();				
+			$rowcount = $dpl->getRowCount();
 		}
 		$dplResult = $dpl->getText();
 		$header = '';
@@ -3291,7 +3291,7 @@ class DPLMain {
 
 			// add general dependencies
 
-			// CacheAPI::addDependencies ( $wgArticle->getID(), $conditionTypes, $conditions); 
+			// CacheAPI::addDependencies ( $wgArticle->getID(), $conditionTypes, $conditions);
 */
 		}
 
@@ -3397,7 +3397,7 @@ class DPLMain {
 			}
 		}
 	}
-	
+
 	private static function validParametersList() {
 		$plist = '';
 		foreach ( ExtDynamicPageList::$validParametersForRichnessLevel as $level => $p ) {
@@ -3414,8 +3414,8 @@ class DPLMain {
 	}
 
 	private static function getSubcategories( $cat, $sPageTable, $depth ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$cats = $cat;			
+		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+		$cats = $cat;
 		$res = $dbr->query(
 			"SELECT DISTINCT page_title FROM " . $dbr->tableName( 'page' ) . " INNER JOIN "
 			. $dbr->tableName( 'categorylinks' ) . " AS cl0 ON " . $sPageTable . ".page_id = cl0.cl_from AND cl0.cl_to='"
@@ -3438,7 +3438,7 @@ class DPLMain {
 				substr( $t, 6, 2 ) . '  ' . substr( $t, 8, 2) . ':' .
 				substr( $t, 10, 2 ) . ':' . substr( $t, 12, 2 );
 	}
-	
+
 	private static function durationTime( $t ) {
 		if ( $t < 60 ) {
 			return '00:00:' . str_pad( $t, 2, '0', STR_PAD_LEFT );
@@ -3466,7 +3466,7 @@ class DPLMain {
 			return unlink( $dirname );
 		}
 		$dir = dir( $dirname );
-		while ( false !== $entry = $dir->read() ) { 
+		while ( false !== $entry = $dir->read() ) {
 			if ( $entry == '.' || $entry == '..' ) {
 				continue;
 			}
@@ -3477,19 +3477,19 @@ class DPLMain {
 	}
 
 	private static function mkdirr($pathname) {
-		if (is_dir($pathname) || empty($pathname)) return true; 
-		$pathname = str_replace(array('/', ''), DIRECTORY_SEPARATOR, $pathname); 
-		if (is_file($pathname)) { 
-			trigger_error('mkdirr() File exists', E_USER_WARNING); 
-			return false; 
-		} 
-		$next_pathname = substr($pathname, 0, strrpos($pathname, DIRECTORY_SEPARATOR)); 
-		if (self::mkdirr($next_pathname)) { 
-			if (!file_exists($pathname)) return mkdir($pathname); 
-		} 
-		return  false; 
-	}	
-	
+		if (is_dir($pathname) || empty($pathname)) return true;
+		$pathname = str_replace(array('/', ''), DIRECTORY_SEPARATOR, $pathname);
+		if (is_file($pathname)) {
+			trigger_error('mkdirr() File exists', E_USER_WARNING);
+			return false;
+		}
+		$next_pathname = substr($pathname, 0, strrpos($pathname, DIRECTORY_SEPARATOR));
+		if (self::mkdirr($next_pathname)) {
+			if (!file_exists($pathname)) return mkdir($pathname);
+		}
+		return  false;
+	}
+
 	private static function resolveUrlArg( $input, $arg ) {
 		global $wgRequest;
 		$dplArg = $wgRequest->getVal( $arg, '' );
