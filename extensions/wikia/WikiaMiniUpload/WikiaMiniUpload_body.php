@@ -80,14 +80,6 @@ class WikiaMiniUpload {
 		return $tmpl->execute("main");
 	}
 
-	// called by license displayer in ajax
-	function loadLicense() {
-		global $wgRequest, $IP;
-		$license = $wgRequest->getText('license');
-		require_once($IP . '/includes/specials/SpecialUpload.php');
-		return preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', UploadForm::ajaxGetLicensePreview( $license ) );
-	}
-
 	// recently uploaded images on that wiki
 	function recentlyUploaded() {
 		global $IP, $wmu;
@@ -232,11 +224,13 @@ class WikiaMiniUpload {
                     $flickrResult = $flickrAPI->photos_getInfo($itemId);
                     $url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
                     $data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
-                    $form = new UploadForm(new FauxRequest($data, true));
-                    global $wgCityId;
+					$upload = new UploadFromUrl();
+					$upload->initializeFromRequest(new FauxRequest($data, true));
+					$upload->fetchFile();
+					global $wgCityId;
                     $tempname = $this->tempFileName( $wgUser );
                     $file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
-                    $file->upload($form->mTempPath, '', '');
+                    $file->upload($upload->getTempPath(), '', '');
                     $tempid = $this->tempFileStoreInfo( $tempname );
                     $props = array();
                     $props['file'] = $file;
