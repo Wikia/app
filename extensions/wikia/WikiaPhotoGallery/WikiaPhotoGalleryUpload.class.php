@@ -36,9 +36,8 @@ class WikiaPhotoGalleryUpload {
 
 		// validate name and content of uploaded photo
 		$nameValidation = self::checkImageName( $imageName, $uploadFieldName );
-		$contentValidation = self::checkUploadedContent( $uploadFieldName );
 
-		if ($nameValidation == UploadForm::SUCCESS && $contentValidation == UploadForm::SUCCESS) {
+		if ($nameValidation == UploadBase::SUCCESS) {
 			// get path to uploaded image
 			$imagePath = $wgRequest->getFileTempName( $uploadFieldName );
 
@@ -68,7 +67,7 @@ class WikiaPhotoGalleryUpload {
 				));
 
 				// split uploaded file name into name + extension (foo-bar.png => foo-bar + png)
-				list($fileName, $extensionsName) = UploadForm::splitExtensions($imageName);
+				list($fileName, $extensionsName) = UploadBase::splitExtensions($imageName);
 				$extensionName = !empty($extensionsName) ? end($extensionsName) : '';
 
 				self::log(__METHOD__, 'upload successful');
@@ -115,7 +114,7 @@ class WikiaPhotoGalleryUpload {
 				);
 			}
 		} else {
-			$reason = $nameValidation | $contentValidation;
+			$reason = $nameValidation;
 
 			self::log(__METHOD__, "upload failed - file name is not valid (error #{$reason})");
 
@@ -165,19 +164,20 @@ class WikiaPhotoGalleryUpload {
 		// check if given name is "free"?
 		if (self::imageExists($newName)) {
 			self::log(__METHOD__, "File:{$newName} exists!");
+		} else {
+			// check file name
+			$nt = Title::makeTitleSafe( NS_FILE, $newName );
+			if( is_null( $nt ) ) {
+				self::log(__METHOD__, 'filename provided is illegal!');
+			} else {
+				$res = self::uploadTempFileIntoMW($tempId, $newName);
+	
+				if ($res) {
+					self::log(__METHOD__, "conflicting photo uploaded as File:{$newName}");
+				}
+			}	
 		}
-		// check file name
-		else if (self::checkImageName($newName) != UploadForm::SUCCESS) {
-			self::log(__METHOD__, 'filename provided is illegal!');
-		}
-		else {
-			$res = self::uploadTempFileIntoMW($tempId, $newName);
-
-			if ($res) {
-				self::log(__METHOD__, "conflicting photo uploaded as File:{$newName}");
-			}
-		}
-
+		
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
@@ -187,111 +187,24 @@ class WikiaPhotoGalleryUpload {
 	 */
 	private static function checkImageName( $imageName, $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME ) {
 		global $wgRequest;
-		wfProfileIn(__METHOD__);
 
-		self::log(__METHOD__, "checking image name '{$imageName}'");
-		UploadForm::$uploadFieldName = $uploadFieldName;
-		$form = new UploadForm($wgRequest);
-
-		// validate image name
-		$filtered = wfStripIllegalFilenameChars($imageName);
-		if ($imageName != $filtered) {
-			wfProfileOut(__METHOD__);
-			return UploadForm::ILLEGAL_FILENAME;
-		}
-
-		// illegal filename
-		$imageTitle = Title::makeTitleSafe(NS_IMAGE, $imageName);
-		if (empty($imageTitle)) {
-			wfProfileOut(__METHOD__);
-			return UploadForm::ILLEGAL_FILENAME;
-		}
-
-		// extensions check
-		list($partname, $ext) = $form->splitExtensions($imageName);
-
-		$finalExt = !empty($ext) ? end($ext) : '';
-
-		// for more than one "extension" (like foo.tar.gz)
-		if (count($ext) > 1) {
-			$partname .= '.' . implode('.', $ext);
-		}
-
-		if ($partname == '') {
-			wfProfileOut(__METHOD__);
-			return UploadForm::ILLEGAL_FILENAME;
-		}
-
-		self::log(__METHOD__, "validating '{$partname}' filename and '{$finalExt}' extension");
-
-		global $wgCheckFileExtensions, $wgStrictFileExtensions;
-		global $wgFileExtensions, $wgFileBlacklist;
-		if ($finalExt == '') {
-			wfProfileOut(__METHOD__);
-			return UploadForm::FILETYPE_MISSING;
-		}
-
-		elseif ( $form->checkFileExtensionList( $ext, $wgFileBlacklist ) ||
-				($wgCheckFileExtensions && $wgStrictFileExtensions &&
-					!$form->checkFileExtension( $finalExt, $wgFileExtensions ) ) ) {
-			wfProfileOut(__METHOD__);
-			return UploadForm::FILETYPE_BADTYPE;
-		}
+		$upload = new UploadFromFile();
+		$upload->initializeFromRequest($wgRequest);
+		$upload->getTitle(); // yes - this is correct
+		
+		$ret = $upload->verifyUpload();
 
 		// this hook is used by WikiaTitleBlackList extension
 		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $imageName)) {
 			self::log(__METHOD__, 'Hook "WikiaMiniUpload:BeforeProcessing" broke processing the file');
 			wfProfileOut(__METHOD__);
 			return UploadForm::VERIFICATION_ERROR;
-		}
-
-		self::log(__METHOD__, "'{$imageName}' validated");
-
-		wfProfileOut(__METHOD__);
-		return UploadForm::SUCCESS;
-	}
-
-	/**
-	 * Perform uploaded content check
-	 */
-	private static function checkUploadedContent( $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME ) {
-		global $wgRequest;
-		wfProfileIn(__METHOD__);
-
-		UploadForm::$uploadFieldName = $uploadFieldName;
-		$form = new UploadForm($wgRequest);
-
-		// get name of uploaded image
-		$imageName = stripslashes( $wgRequest->getFileName( $uploadFieldName ) );
-
-		// file is empty - don't perform any further checks
-		if ($imageName == '') {
-			self::log(__METHOD__, 'failed!');
-
-			wfProfileOut(__METHOD__);
-			return UploadForm::ILLEGAL_FILENAME;
-		}
-
-		// get extension from image name
-		list($partname, $ext) = $form->splitExtensions($imageName);
-		$finalExt = !empty($ext) ? end($ext) : '';
-
-		// check uploaded content
-		$form->mFileProps = File::getPropsFromPath($form->mTempPath, $finalExt);
-		$form->checkMacBinary();
-		$result = $form->verify($form->mTempPath, $finalExt);
-
-		if (!$result) {
-			self::log(__METHOD__, 'failed!');
-
-			wfProfileOut(__METHOD__);
-			return UploadForm::VERIFICATION_ERROR;
-		}
-		else {
-			self::log(__METHOD__, 'validated');
-
-			wfProfileOut(__METHOD__);
-			return UploadForm::SUCCESS;
+		}		
+		
+		if(is_array($ret)) {
+			return $ret['status'];
+		} else {
+			return $ret;
 		}
 	}
 
