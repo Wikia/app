@@ -252,82 +252,41 @@ class WikiaMiniUpload {
 	function checkImage() {
 		global $IP, $wgRequest;
 
-		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
 		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
-		$filtered = wfStripIllegalFilenameChars( $mSrcName );
-		$form = new UploadForm( $wgRequest );
 
-		// no filename or zero size
-		if( trim( $mSrcName ) == '' || empty( $mFileSize ) ) {
-			return UploadForm::EMPTY_FILE;
-		}
-
-		//illegal filename
-		$nt = Title::makeTitleSafe( NS_IMAGE, $filtered );
-		if( is_null( $nt ) ) {
-			return UploadForm::ILLEGAL_FILENAME;
-		}
-
-		// extensions check
-		list( $partname, $ext ) = $form->splitExtensions( $filtered );
-
-		if( count( $ext ) ) {
-			$finalExt = $ext[count( $ext ) - 1];
-		} else {
-			$finalExt = '';
-		}
-
-		// for more than one "extension"
-		if( count( $ext ) > 1 ) {
-			for( $i = 0; $i < count( $ext ) - 1; $i++ )
-				$partname .= '.' . $ext[$i];
-		}
-
-		if( strlen( $partname ) < 1 ) {
-			return UploadForm::MIN_LENGTH_PARTNAME;
-		}
-
-		$form->mFileProps = File::getPropsFromPath( $form->mTempPath, $finalExt );
-		$form->checkMacBinary();
-		$veri = $form->verify( $form->mTempPath, $finalExt );
-
-		if( $veri !== true ) { //it's a wiki error...
-			return UploadForm::VERIFICATION_ERROR;
-		}
-
-		global $wgCheckFileExtensions, $wgStrictFileExtensions;
-		global $wgFileExtensions, $wgFileBlacklist;
-		if ($finalExt == '') {
-			return UploadForm::FILETYPE_MISSING;
-		} elseif ( $form->checkFileExtensionList( $ext, $wgFileBlacklist ) ||
-				($wgCheckFileExtensions && $wgStrictFileExtensions &&
-					!$form->checkFileExtension( $finalExt, $wgFileExtensions ) ) ) {
-			return UploadForm::FILETYPE_BADTYPE;
-		}
+		$upload = new UploadFromFile();
+		$upload->initializeFromRequest($wgRequest);
+		$upload->getTitle(); // yes - this is correct
+		
+		$ret = $upload->verifyUpload();
 
 		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $mSrcName)) {
 			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
-			return UploadForm::VERIFICATION_ERROR;
+			return UploadBase::VERIFICATION_ERROR;
 		}
 
-		return UploadForm::SUCCESS;
+		if(is_array($ret)) {
+			return $ret['status'];
+		} else {
+			return $ret;
+		}
 	}
 
 	function translateError ( $error ) {
 		switch( $error ) {
-			case UploadForm::SUCCESS:
+			case UploadBase::SUCCESS:
 				return false;
-			case UploadForm::EMPTY_FILE:
+			case UploadBase::EMPTY_FILE:
 				return wfMsg( 'emptyfile' );
-			case UploadForm::MIN_LENGTH_PARTNAME:
+			case UploadBase::MIN_LENGTH_PARTNAME:
 				return wfMsg( 'minlength1' );
-			case UploadForm::ILLEGAL_FILENAME:
+			case UploadBase::ILLEGAL_FILENAME:
 				return wfMsg( 'illegalfilename' );
-			case UploadForm::FILETYPE_MISSING:
+			case UploadBase::FILETYPE_MISSING:
 				return wfMsg( 'filetype-missing' );
-			case UploadForm::FILETYPE_BADTYPE:
+			case UploadBase::FILETYPE_BADTYPE:
 				return wfMsg( 'filetype-bad-extension' );
-			case UploadForm::VERIFICATION_ERROR:
+			case UploadBase::VERIFICATION_ERROR:
 				return "File type verification error!" ;
 			default:
 				return false;
@@ -338,7 +297,7 @@ class WikiaMiniUpload {
 		global $IP, $wgRequest, $wgUser;
 
 		$check_result = $this->checkImage() ;
-		if (UploadForm::SUCCESS == $check_result) {
+		if (UploadBase::SUCCESS == $check_result) {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
