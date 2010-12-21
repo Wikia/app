@@ -115,5 +115,12 @@ FOOTER;
 		
 		return true;
 	}*/
+	
+	/**
+	 * empty stub for compatibility with MonoBook.php wikiaBox()
+	 */
+	function wikiaBox() {
+		return;
+	}
 
 }
