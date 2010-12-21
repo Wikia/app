@@ -394,7 +394,8 @@ class Parser
 			if ( $convruletitle ) {
 				$this->mOutput->setTitleText( $convruletitle );
 			} else {
-				$titleText = $wgContLang->convertTitle( $title );
+				//fix problem with fake title MWException
+				$titleText = $wgContLang->convertTitle( $this->mTitle );
 				$this->mOutput->setTitleText( $titleText );
 			}
 		}
@@ -3677,6 +3678,12 @@ class Parser
 		}
 		if ( $this->ot['html'] || $isFunctionTag ) {
 			$name = strtolower( $name );
+			
+			# PLB - begin
+			# @author: Tomasz Odrobny
+			$this->mCurrentTagName = $name;
+			# PLB - end
+			
 			$attributes = Sanitizer::decodeTagAttributes( $attrText );
 			if ( isset( $params['attributes'] ) ) {
 				$attributes = $attributes + $params['attributes'];

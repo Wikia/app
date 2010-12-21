@@ -132,7 +132,7 @@ $messages['en'] = array(
 	'fbconnect-disconnect-link' => "You can also <a id='fbConnectDisconnect' href='#'> disconnect your Wikia account from Facebook.</a> You will able continue using your Wikia account as normal, with your history (edits, points, achievements ) intact.",
 	'fbconnect-disconnect-done' => "Disconnecting <span id='fbConnectDisconnectDone'>... done! </span>",
 	'fbconnect-disconnect-info' => "We have emailed a new password to use with your account - you can log in with the same username as before. Hooray!",
-	'fbconnect-push-allow-never' => "Never send anything to my news feed (overrides other options)",
+	'tog-fbconnect-push-allow-never' => "Never send anything to my news feed (overrides other options)",
 	'fbconnect-reclamation-title' => 'Disconnecting from Facebook',
 	'fbconnect-reclamation-body' => 'Your account is now disconnected from Facebook! <br/><br/>  We have emailed a new password to use with you account - you can log in with the same username as before. Hooray!
 											<br/><br/> To login go to: $1',

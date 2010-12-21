@@ -643,7 +643,7 @@ JS;
 
 			$preferences['fbconnect-push-allow-never'] = array(
 					'type' => 'toggle',
-					'label-message' => 'fbconnect-push-allow-never',
+					'label-message' => 'tog-fbconnect-push-allow-never',
 					'section' => 'fbconnect-prefstext',
 					'default' => 1); 
 

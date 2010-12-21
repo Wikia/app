@@ -170,8 +170,10 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			"href" => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL() ),
 			wfMsg('plb-special-form-new')
 		);
+		
 		$msg = wfMsg("plb-list-title", array("$1" => count($out) ) );
-		$wgOut->setPageTitle( $msg . $button);
+		//$wgOut->setPageTitle( $msg . $button);
+		$wgOut->mPagetitle = $msg . $button; //1.16 trick 
 		$wgOut->setHTMLTitle( $msg );
 		$title = Title::newFromText('LayoutBuilder', NS_SPECIAL);
 		foreach( $out as $key => $value ) {

@@ -474,7 +474,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		$dbw = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 
 		$mcKey = wfSharedMemcKey( "auto_hubs", "gt_user_wiki", $user_id  );
-
 		$out = $wgMemc->get($mcKey,null);
 		if( !empty($out) ) {
 			wfProfileOut( __METHOD__ );
@@ -509,6 +508,7 @@ class WikiaStatsAutoHubsConsumerDB {
 					),
 					__METHOD__
 				);
+				$last_city_id =  $oRow->wiki_id;
 				if ( $oRowPage && isset($oRowPage->page_wikia_id) ) {
 					$city_id = $oRowPage->page_wikia_id;
 					break;
@@ -518,8 +518,11 @@ class WikiaStatsAutoHubsConsumerDB {
 		$dbw->freeResult( $oRes );
 
 		if ( empty($city_id) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
+			if(!$last_city_id) {
+				$city_id = $last_city_id;
+			} else {
+				$city_id = 177;	
+			}
 		}
 
 		$oGTitle = GlobalTitle::newFromText( $oUser->getName(), NS_USER, $city_id );

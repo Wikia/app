@@ -23,7 +23,7 @@
 			<ul id="top-wikis-list-1">
 				<?php $lp = 1;?>
 				<?php foreach ($data['topWikis1'] as $value): ?>
-				<li class="clearfix  <?php echo $value['hide'] ? 'hide-blog':''; ?>">
+				<li class="clearfix  <?php echo !empty($value['hide']) ? 'hide-blog':''; ?>">
 					<span class="green-box"><?php echo $lp; ?></span>
 					<div class="top-wiki-data">
 						<h2><a href="<?php echo $value['city_url'] ?>" class="top-wiki-link"><?php echo $value['city_title'] ?></a></h2>

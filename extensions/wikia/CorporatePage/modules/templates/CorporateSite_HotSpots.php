@@ -22,7 +22,7 @@
 							$dspl_type = 'hilite';
 
 			foreach( $data['hotSpots'] as $value ): $first_hot ? $first_hot = false : $dspl_type = ''; ?>
-			<li class="<?php echo $dspl_type ?> <?php echo $value['hide'] ? 'hide-blog':''; ?>">
+			<li class="<?php echo $dspl_type ?> <?php echo !empty($value['hide']) ? 'hide-blog':''; ?>">
 				<div class="page-activity-badge">
 					<div class="page-activity-level-<?php echo $value['level']; ?>">
 						<?php
