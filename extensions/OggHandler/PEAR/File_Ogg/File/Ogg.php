@@ -420,7 +420,6 @@ class File_Ogg
             $stream['last_granule_pos'] = $abs_granule_pos;
         }
 
-        $pageData = null;
         return $page;
     }
 
@@ -513,8 +512,8 @@ class File_Ogg
     function getOverhead() {
         $header_size    = 0;
         $stream_size    = 0;
-        foreach ($this->_streams as $serial => $stream) {
-            foreach ($stream->_streamList as $offset => $stream_data) {
+        foreach ($this->_streams as $stream) {
+            foreach ($stream->_streamList as $stream_data) {
                 $header_size += $stream_data['body_offset'] - $stream_data['head_offset'];
                 $stream_size  = $stream_data['body_finish'];
             }
