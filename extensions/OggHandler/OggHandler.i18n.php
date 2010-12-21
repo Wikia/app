@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension OggPlayer.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -47,6 +48,8 @@ Please <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downlo
 	'ogg-dismiss'          => 'Close',
 	'ogg-download'         => 'Download file',
 	'ogg-desc-link'        => 'About this file',
+	'ogg-oggThumb-version' => 'OggHandler requires oggThumb version $1 or later.',
+	'ogg-oggThumb-failed'  => 'oggThumb failed to create the thumbnail.',
 );
 
 /** Message documentation (Message documentation)
@@ -55,6 +58,7 @@ Please <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downlo
  * @author EugeneZelenko
  * @author Fryed-peach
  * @author Jon Harald Søby
+ * @author Lloffiwr
  * @author Meno25
  * @author Mormegil
  * @author Purodha
@@ -72,7 +76,9 @@ Parameters are:
 * $2 file duration, f.e. 1m34s
 * $3 file sampling rate, f.e. 97kbps',
 	'ogg-play' => '{{Identical|Play}}',
-	'ogg-player-videoElement' => 'Message used in JavaScript.',
+	'ogg-player-videoElement' => 'Message used in JavaScript. 
+
+For definition of "native support" see [http://en.wiktionary.org/wiki/native_support Wiktionary].',
 	'ogg-player-vlc-mozilla' => '{{optional}}',
 	'ogg-player-quicktime-mozilla' => '{{optional}}',
 	'ogg-player-totem' => '{{optional}}',
@@ -119,43 +125,71 @@ $messages['af'] = array(
 	'ogg-desc-link' => 'Aangaande die lêer',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'ogg-desc' => 'Mbajtës për Ogg Vorbis Theora dhe fotografi, me JavaScript lojtar',
+	'ogg-short-audio' => 'Ogg tingull $1 fotografi, $2',
+	'ogg-short-video' => 'video file Ogg $1, $2',
+	'ogg-short-general' => 'Ogg $1 media file, $2',
+	'ogg-long-audio' => '(ZQM file $1 shëndoshë, gjatë $2, $3)',
+	'ogg-long-video' => '(Ogg $1 video file, gjatë $2, $4 × $5 pixels, $3)',
+	'ogg-long-multiplexed' => '(ZQM multiplexed audio / video file, 1 $, gjatë $2, $4 × $5 pixels, $3 e përgjithshme)',
+	'ogg-long-general' => '(Ogg media file, gjatë $2, $3)',
+	'ogg-long-error' => '(Invalid ogg file: $1)',
+	'ogg-play' => 'Luaj',
+	'ogg-pause' => 'Pushim',
+	'ogg-stop' => 'Ndalo',
+	'ogg-play-video' => 'video Play',
+	'ogg-play-sound' => 'Tingull',
+	'ogg-no-player' => 'Na vjen keq, sistemi juaj nuk duket të ketë ndonjë lojtar software mbështetur. Ju lutemi <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">të shkarkoni një lojtar</a> .',
+	'ogg-no-xiphqt' => 'Ju nuk duket të ketë komponent XiphQT për QuickTime. QuickTime nuk mund të luajnë Ogg files pa këtë element. Ju lutem <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">shkarkoni XiphQT</a> ose zgjidhni një tjetër lojtar.',
+	'ogg-player-videoElement' => 'mbështetje Gjuha shfletuesin',
+	'ogg-player-oggPlugin' => 'Browser plugin',
+	'ogg-player-thumbnail' => 'Ende image vetëm',
+	'ogg-player-soundthumb' => 'Nuk ka lojtar',
+	'ogg-player-selected' => '(Zgjedhur)',
+);
+
 /** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
-	'ogg-desc' => 'Manullador ta archibos Ogg Theora and Vorbis, con un reproductor JavaScript',
-	'ogg-short-audio' => 'Archibo de son ogg $1, $2',
-	'ogg-short-video' => 'Archibo de bidio ogg $1, $2',
-	'ogg-short-general' => 'Archibo multimedia ogg $1, $2',
-	'ogg-long-audio' => '(Archibo de son ogg $1, durada $2, $3)',
-	'ogg-long-video' => '(Archibo de bidio ogg $1, durada $2, $4×$5 píxels, $3)',
-	'ogg-long-multiplexed' => '(archibo ogg multiplexato audio/bidio, $1, durada $2, $4×$5 píxels, $3 total)',
-	'ogg-long-general' => '(archibo ogg multimedia durada $2, $3)',
-	'ogg-long-error' => '(Archibo ogg no conforme: $1)',
-	'ogg-play' => 'Reproduzir',
+	'ogg-desc' => 'Maneyador ta fichers Ogg Theora and Vorbis, con un reproductor JavaScript',
+	'ogg-short-audio' => 'Fichero de son ogg $1, $2',
+	'ogg-short-video' => 'Fichero de vidio ogg $1, $2',
+	'ogg-short-general' => 'Fichero multimedia ogg $1, $2',
+	'ogg-long-audio' => '(Fichero de son ogg $1, durada $2, $3)',
+	'ogg-long-video' => '(Fichero de vidio ogg $1, durada $2, $4×$5 píxels, $3)',
+	'ogg-long-multiplexed' => '(fichero ogg multiplexato audio/vidio, $1, durada $2, $4×$5 píxels, $3 total)',
+	'ogg-long-general' => '(fichero ogg multimedia durada $2, $3)',
+	'ogg-long-error' => '(Fichero ogg no conforme: $1)',
+	'ogg-play' => 'Reproducir',
 	'ogg-pause' => 'Pausa',
 	'ogg-stop' => 'Aturar',
-	'ogg-play-video' => 'Reproduzir bidio',
-	'ogg-play-sound' => 'Reproduzir son',
+	'ogg-play-video' => 'Reproducir vidio',
+	'ogg-play-sound' => 'Reproducir son',
 	'ogg-no-player' => 'No puedo trobar garra software reproductor suportato.
-Abría d\'<a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">escargar un reproductor</a>.',
+Habría d\'<a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">escargar un reproductor</a>.',
 	'ogg-no-xiphqt' => 'No puedo trobar o component XiphQT ta QuickTime.
-QuickTime no puede reproduzir archibos ogg sin este component.
+QuickTime no puede reproducir ficheros ogg sin este component.
 Puede <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">escargar XiphQT</a> u trigar un atro reproductor.',
-	'ogg-player-videoElement' => "Soporte natibo d'o nabegador",
-	'ogg-player-oggPlugin' => "Plugin d'o nabegador",
+	'ogg-player-videoElement' => "Soporte nativo d'o navegador",
+	'ogg-player-oggPlugin' => "Plugin d'o navegador",
 	'ogg-player-thumbnail' => 'Nomás imachen fixa',
 	'ogg-player-soundthumb' => 'Garra reproductor',
 	'ogg-player-selected' => '(trigato)',
-	'ogg-use-player' => 'Fer serbir o reprodutor:',
+	'ogg-use-player' => 'Fer servir o reproductor:',
 	'ogg-more' => 'Más…',
 	'ogg-dismiss' => 'Zarrar',
-	'ogg-download' => 'Escargar archibo',
-	'ogg-desc-link' => 'Informazión sobre este archibo',
+	'ogg-download' => 'Escargar fichero',
+	'ogg-desc-link' => 'Información sobre este fichero',
 );
 
 /** Arabic (العربية)
  * @author Alnokta
+ * @author Majid Al-Dharrab
  * @author Meno25
  * @author OsamaK
  */
@@ -169,11 +203,11 @@ $messages['ar'] = array(
 	'ogg-long-multiplexed' => '(ملف Ogg مالتي بليكسد أوديو/فيديو، $1، الطول $2، $4×$5 بكسل، $3 إجمالي)',
 	'ogg-long-general' => '(ملف ميديا Ogg، الطول $2، $3)',
 	'ogg-long-error' => '(ملف Ogg غير صحيح: $1)',
-	'ogg-play' => 'عرض',
-	'ogg-pause' => 'إيقاف مؤقت',
-	'ogg-stop' => 'إيقاف',
-	'ogg-play-video' => 'عرض الفيديو',
-	'ogg-play-sound' => 'عرض الصوت',
+	'ogg-play' => 'شغّل',
+	'ogg-pause' => 'ألبث',
+	'ogg-stop' => 'أوقف',
+	'ogg-play-video' => 'شغّل الفيديو',
+	'ogg-play-sound' => 'شغّل الصوت',
 	'ogg-no-player' => 'معذرة ولكن يبدو أنه لا يوجد لديك برنامج عرض مدعوم. من فضلك ثبت <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">الجافا</a>.',
 	'ogg-no-xiphqt' => 'لا يبدو أنك تملك مكون XiphQT لكويك تايم.
 كويك تايم لا يمكنه عرض ملفات Ogg بدون هذا المكون.
@@ -189,13 +223,13 @@ $messages['ar'] = array(
 	'ogg-player-kmplayer' => 'كيه إم بلاير',
 	'ogg-player-kaffeine' => 'كافيين',
 	'ogg-player-mplayerplug-in' => 'إضافة إم بلاير',
-	'ogg-player-thumbnail' => 'مازال صورة فقط',
-	'ogg-player-soundthumb' => 'لا برنامج',
+	'ogg-player-thumbnail' => 'ما زال صورة فقط',
+	'ogg-player-soundthumb' => 'لا يوجد مشغل',
 	'ogg-player-selected' => '(مختار)',
 	'ogg-use-player' => 'استخدم البرنامج:',
 	'ogg-more' => 'المزيد...',
 	'ogg-dismiss' => 'إغلاق',
-	'ogg-download' => 'نزل الملف',
+	'ogg-download' => 'نزّل الملف',
 	'ogg-desc-link' => 'عن هذا الملف',
 );
 
@@ -203,7 +237,9 @@ $messages['ar'] = array(
  * @author Basharh
  */
 $messages['arc'] = array(
+	'ogg-player-soundthumb' => 'ܠܝܬ ܛܐܠܢܐ',
 	'ogg-more' => 'ܝܬܝܪ…',
+	'ogg-download' => 'ܐܚܬ ܠܦܦܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -293,16 +329,15 @@ $messages['avk'] = array(
 	'ogg-desc-link' => 'Icde bat iyeltak',
 );
 
-/** Samogitian (Žemaitėška)
- * @author Hugo.arg
+/** Bashkir (Башҡорт)
+ * @author Рустам Нурыев
  */
-$messages['bat-smg'] = array(
-	'ogg-play' => 'Gruotė',
-	'ogg-pause' => 'Pauzė',
-	'ogg-stop' => 'Sostabdītė',
-	'ogg-play-video' => 'Gruotė video',
-	'ogg-play-sound' => 'Gruotė garsa',
-	'ogg-download' => 'Atsėsiōstė faila',
+$messages['ba'] = array(
+	'ogg-pause' => 'Туҡтатып тору',
+	'ogg-stop' => 'Туҡтатыу',
+	'ogg-play-video' => 'Видеояҙманы ҡарау',
+	'ogg-play-sound' => 'Көйҙе тыңлау',
+	'ogg-no-player' => 'Ғәфү итегеҙ, ләкин һеҙнең системағыҙ был файлдар төрен аса алмай, зинһар кәрәк булған программаларҙы  <ahref="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">үҙегеҙгә күсереп алыгыҙ</a>.',
 );
 
 /** Southern Balochi (بلوچی مکرانی)
@@ -353,6 +388,13 @@ $messages['bcl'] = array(
 	'ogg-dismiss' => 'Isara',
 );
 
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'ogg-dismiss' => 'Закрыць',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -387,6 +429,8 @@ QuickTime ня можа прайграваць файлы ў фармаце Ogg 
 	'ogg-dismiss' => 'Зачыніць',
 	'ogg-download' => 'Загрузіць файл',
 	'ogg-desc-link' => 'Інфармацыя пра гэты файл',
+	'ogg-oggThumb-version' => 'OggHandler патрабуе oggThumb вэрсіі $1 ці больш позьняй.',
+	'ogg-oggThumb-failed' => 'oggThumb не атрымалася стварыць мініятуру.',
 );
 
 /** Bulgarian (Български)
@@ -420,7 +464,7 @@ $messages['bg'] = array(
 	'ogg-use-player' => 'Ползване на плеър:',
 	'ogg-more' => 'Повече...',
 	'ogg-dismiss' => 'Затваряне',
-	'ogg-download' => 'Изтеглене на файла',
+	'ogg-download' => 'Изтегляне на файла',
 	'ogg-desc-link' => 'Информация за файла',
 );
 
@@ -462,20 +506,27 @@ $messages['bn'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'ogg-desc' => 'Skor evit ar restroù Ogg Theora ha Vorbis, gant ul lenner JavaScript',
 	'ogg-short-audio' => 'Restr son Ogg $1, $2',
-	'ogg-short-video' => 'Fichennaoueg video Ogg $1, $2',
-	'ogg-short-general' => 'Fichennaoueg media Ogg $1, $2',
-	'ogg-long-audio' => '(Fichennaoueg son Ogg $1, padelezh $2, $3)',
-	'ogg-long-video' => '(Fichennaoueg video Ogg $1, padelezh $2, $4×$5 pixels, $3)',
-	'ogg-long-general' => '(Fichennadoueg media Ogg , padelezh $2, $3)',
+	'ogg-short-video' => 'Restr video Ogg $1, $2',
+	'ogg-short-general' => 'Restr media Ogg $1, $2',
+	'ogg-long-audio' => '(Restr son Ogg $1, pad $2, $3)',
+	'ogg-long-video' => '(Restr video Ogg $1, pad $2, $4×$5 piksel, $3)',
+	'ogg-long-multiplexed' => '(Restr Ogg klevet/video liesplezhet $1, pad $2, $4×$5 piksel, $3 hollad)',
+	'ogg-long-general' => '(Restr media Ogg, pad $2, $3)',
 	'ogg-long-error' => '(Restr ogg direizh : $1)',
 	'ogg-play' => 'Lenn',
 	'ogg-pause' => 'Ehan',
 	'ogg-stop' => 'Paouez',
 	'ogg-play-video' => 'Lenn ar video',
 	'ogg-play-sound' => 'Lenn ar son',
+	'ogg-no-player' => 'Evit doare n\'eus gant ho reizhiad hini ebet eus al lennerioù skoret.
+<a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Pellgargit ul lenner skoret</a> mar plij.',
+	'ogg-no-xiphqt' => 'Evit doare e vank deoc\'h ar parzh XiphQT evit QuickTime.
+N\'hall ket QuickTime lenn ar restroù Ogg files hep ar parzh-se.
+<a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Pellgargit XiphQT</a> pe dibabit ul lenner all.',
 	'ogg-player-videoElement' => 'Skor ar merdeer orin',
-	'ogg-player-oggPlugin' => 'Modulenn ouzhpenn ar merdeer',
+	'ogg-player-oggPlugin' => 'Adveziant ar merdeer',
 	'ogg-player-thumbnail' => 'Skeudenn statek hepken',
 	'ogg-player-soundthumb' => 'Lenner ebet',
 	'ogg-player-selected' => '(diuzet)',
@@ -484,6 +535,8 @@ $messages['br'] = array(
 	'ogg-dismiss' => 'Serriñ',
 	'ogg-download' => 'Pellgargañ ar restr',
 	'ogg-desc-link' => 'Diwar-benn ar restr-mañ',
+	'ogg-oggThumb-version' => "Rekis eo stumm $1 oggThumb, pe nevesoc'h, evit implijout OggHandler.",
+	'ogg-oggThumb-failed' => "N'eo ket deuet a-benn oggThumb da grouiñ ar munud.",
 );
 
 /** Bosnian (Bosanski)
@@ -519,6 +572,8 @@ Molimo Vas da <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client
 	'ogg-dismiss' => 'Zatvori',
 	'ogg-download' => 'Učitaj datoteku',
 	'ogg-desc-link' => 'O ovoj datoteci',
+	'ogg-oggThumb-version' => 'OggHandler zahtijeva oggThumb verziju $1 ili kasniju.',
+	'ogg-oggThumb-failed' => 'oggThumb nije uspio napraviti smanjeni pregled.',
 );
 
 /** Catalan (Català)
@@ -555,6 +610,16 @@ $messages['ca'] = array(
 	'ogg-dismiss' => 'Tanca',
 	'ogg-download' => 'Descarrega el fitxer',
 	'ogg-desc-link' => 'Informació del fitxer',
+	'ogg-oggThumb-version' => "L'OggHandler necessita l'oggThumb versió $1 o posterior.",
+	'ogg-oggThumb-failed' => "L'oggThumb no ha pogut crear una miniatura.",
+);
+
+/** Sorani (کوردی)
+ * @author Asoxor
+ */
+$messages['ckb'] = array(
+	'ogg-more' => 'زیاتر',
+	'ogg-dismiss' => 'بەستن',
 );
 
 /** Czech (Česky)
@@ -589,6 +654,45 @@ $messages['cs'] = array(
 	'ogg-dismiss' => 'Zavřít',
 	'ogg-download' => 'Stáhnout soubor',
 	'ogg-desc-link' => 'O tomto souboru',
+	'ogg-oggThumb-version' => 'OggHandler vyžaduje oggThumb verze $1 nebo novější.',
+	'ogg-oggThumb-failed' => 'oggThumb nedokázal vytvořit náhled.',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'ogg-desc' => 'Trinydd ffeiliau Ogg Theora a Vorbis, gyda chwaraewr JavaScript',
+	'ogg-short-audio' => 'Ffeil sain Ogg $1, $2',
+	'ogg-short-video' => 'Ffeil fideo Ogg $1, $2',
+	'ogg-short-general' => 'Ffeil gyfrwng Ogg $1, $2',
+	'ogg-long-audio' => '(Ffeil sain Ogg $1, o hyd $2, $3)',
+	'ogg-long-video' => '(Ffeil fideo Ogg $1, o hyd $2, $4×$5 picsel, $3)',
+	'ogg-long-multiplexed' => '(Ffeil sain/fideo amlbleth Ogg, $1, o hyd $2, $4×$5 picsel, $3 o ben i ben)',
+	'ogg-long-general' => '(Ffeil gyfrwng Ogg, o hyd $2, $3)',
+	'ogg-long-error' => '(Ffeil OGG annilys: $1)',
+	'ogg-play' => 'Chwarae',
+	'ogg-pause' => 'Oedi',
+	'ogg-stop' => 'Aros',
+	'ogg-play-video' => "Chwarae'r fideo",
+	'ogg-play-sound' => 'Gwrando',
+	'ogg-no-player' => 'Mae\'n ddrwg gennym, mae\'n debyg nad oes unrhyw feddalwedd chwaraewr a gefnogir ar eich system. 
+Byddwch gystal à <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">lawrlwytho chwaraewr</a>.',
+	'ogg-no-xiphqt' => 'Ymddengys nad yw\'r gydran XiphQT ar gyfer QuickTime gennych.
+Ni all QuickTime chwarae ffeiliau Ogg heb y gydran hon.
+Os gwelwch yn dda, a wnewch chi <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">lawrlwytho XiphQT</a> neu ddewis chwaraewr arall.',
+	'ogg-player-videoElement' => 'Cynhaliad porwr ar gael yn barod',
+	'ogg-player-oggPlugin' => 'Ategyn porwr',
+	'ogg-player-thumbnail' => 'Llun llonydd yn unig',
+	'ogg-player-soundthumb' => 'Dim chwaraewr',
+	'ogg-player-selected' => '(dethol)',
+	'ogg-use-player' => 'Dewis chwaraewr:',
+	'ogg-more' => 'Mwy...',
+	'ogg-dismiss' => 'Cau',
+	'ogg-download' => 'Islwytho ffeil',
+	'ogg-desc-link' => "Ynglŷn â'r ffeil hon",
+	'ogg-oggThumb-version' => 'Mae ar OggHandler angen fersiwn $1 o oggThumb (neu fersiwn diweddarach).',
+	'ogg-oggThumb-failed' => "Methodd oggThumb â chynhyrchu'r mân-lun.",
 );
 
 /** Danish (Dansk)
@@ -628,6 +732,7 @@ QuickTime kan ikke afspille Ogg-file uden denne komponent.
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Leithian
  * @author Metalhead64
  * @author MichaelFrey
@@ -661,6 +766,8 @@ $messages['de'] = array(
 	'ogg-dismiss' => 'Schließen',
 	'ogg-download' => 'Datei speichern',
 	'ogg-desc-link' => 'Über diese Datei',
+	'ogg-oggThumb-version' => 'OggHandler erfordert oggThumb in der Version $1 oder höher.',
+	'ogg-oggThumb-failed' => 'oggThumb konnte kein Miniaturbild erstellen.',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -706,6 +813,8 @@ kerem kerê<a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_do
 	'ogg-dismiss' => 'bıqefeln',
 	'ogg-download' => 'dosya biyar war',
 	'ogg-desc-link' => 'derheqê dosyayi de',
+	'ogg-oggThumb-version' => 'OggHandler rê oggThumb versiyon $1 ya zi newiyer lazim o.',
+	'ogg-oggThumb-failed' => 'oggThumb nieskene thumbnail biviraze.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -741,6 +850,8 @@ Pšosym <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Cient_downlo
 	'ogg-dismiss' => 'Zacyniś',
 	'ogg-download' => 'Dataju ześěgnuś',
 	'ogg-desc-link' => 'Wó toś tej dataji',
+	'ogg-oggThumb-version' => 'OggHandler trjeba wersiju $1 oggThumb abo nowšu.',
+	'ogg-oggThumb-failed' => 'oggThumb njejo mógł wobrazk napóraś.',
 );
 
 /** Greek (Ελληνικά)
@@ -795,7 +906,7 @@ $messages['eo'] = array(
 	'ogg-long-video' => '(Video ogg-dosiero $1, longeco $2, $4×$5 pikseloj, $3 entute)',
 	'ogg-long-multiplexed' => '(Kunigita aŭdio/video ogg-dosiero, $1, longeco $2, $4×$5 pikseloj, $3 entute)',
 	'ogg-long-general' => '(Ogg-mediodosiero, longeco $2, $3)',
-	'ogg-long-error' => '(Nevalida ogg-dosiero: $1)',
+	'ogg-long-error' => '(Malvalida ogg-dosiero: $1)',
 	'ogg-play' => 'Legi',
 	'ogg-pause' => 'Paŭzi',
 	'ogg-stop' => 'Halti',
@@ -816,6 +927,8 @@ Bonvolu <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downl
 	'ogg-dismiss' => 'Fermi',
 	'ogg-download' => 'Alŝuti dosieron',
 	'ogg-desc-link' => 'Pri ĉi tiu dosiero',
+	'ogg-oggThumb-version' => 'OggHandler bezonas oggThumb version $1 aŭ postan.',
+	'ogg-oggThumb-failed' => 'oggThumb malsukcis krei etan version.',
 );
 
 /** Spanish (Español)
@@ -856,6 +969,8 @@ Por favor <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_dow
 	'ogg-dismiss' => 'Cerrar',
 	'ogg-download' => 'Bajar archivo',
 	'ogg-desc-link' => 'Sobre este archivo',
+	'ogg-oggThumb-version' => 'OggHandler requiere una versión oggThumb $1 o posterior.',
+	'ogg-oggThumb-failed' => 'oggThumb no pudo crear la imagen miniatura.',
 );
 
 /** Estonian (Eesti)
@@ -884,6 +999,7 @@ Palun <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downloa
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Joxemai
  * @author Theklan
  */
 $messages['eu'] = array(
@@ -898,7 +1014,9 @@ $messages['eu'] = array(
 	'ogg-stop' => 'Gelditu',
 	'ogg-play-video' => 'Bideoa hasi',
 	'ogg-play-sound' => 'Soinua hasi',
+	'ogg-player-soundthumb' => 'Erreproduktorerik ez',
 	'ogg-player-selected' => '(aukeratua)',
+	'ogg-use-player' => 'Erabili erreproduktore hau:',
 	'ogg-more' => 'Gehiago...',
 	'ogg-dismiss' => 'Itxi',
 	'ogg-download' => 'Fitxategia jaitsi',
@@ -906,7 +1024,10 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Huji
+ * @author Sahim
+ * @author Wayiran
  */
 $messages['fa'] = array(
 	'ogg-desc' => 'به دست گیرندهٔ پرونده‌های Ogg Theora و Vorbis، با پخش‌کنندهٔ مبتنی بر JavaScript',
@@ -920,21 +1041,23 @@ $messages['fa'] = array(
 	'ogg-long-error' => '(پرونده Ogg غیرمجاز: $1)',
 	'ogg-play' => 'پخش',
 	'ogg-pause' => 'توقف',
-	'ogg-stop' => 'قطع',
+	'ogg-stop' => 'بایست',
 	'ogg-play-video' => 'پخش تصویر',
 	'ogg-play-sound' => 'پخش صوت',
 	'ogg-no-player' => 'متاسفانه دستگاه شما نرم‌افزار پخش‌کنندهٔ مناسب ندارد. لطفاً <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">یک برنامهٔ پخش‌کننده بارگیری کنید</a>.',
 	'ogg-no-xiphqt' => 'به نظر نمی‌سرد که شما جزء XiphQT از برنامهٔ QuickTime را داشته باشید. برنامهٔ QuickTime بدون این جزء توان پخش پرونده‌های Ogg را ندارد. لطفاً <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">XiphQT را بارگیری کنید</a> یا از یک پخش‌کنندهٔ دیگر استفاده کنید.',
 	'ogg-player-videoElement' => 'پشتیبانی ذاتی مرورگر',
-	'ogg-player-oggPlugin' => 'افزونهٔ مرورگر',
+	'ogg-player-oggPlugin' => 'افزایهٔ مرورگر',
 	'ogg-player-thumbnail' => 'فقط تصاویر ثابت',
 	'ogg-player-soundthumb' => 'فاقد پخش‌کننده',
 	'ogg-player-selected' => '(انتخاب شده)',
-	'ogg-use-player' => 'استفاده از پخش‌کننده:',
+	'ogg-use-player' => 'این پخش‌کننده را به کارگیر:',
 	'ogg-more' => 'بیشتر...',
 	'ogg-dismiss' => 'بستن',
 	'ogg-download' => 'بارگیری پرونده',
-	'ogg-desc-link' => 'دربارهٔ این پرونده',
+	'ogg-desc-link' => 'پیرامون این پرونده',
+	'ogg-oggThumb-version' => 'OggHandler به oggThumb نسخهٔ $1 یا بعدتر از آن نیاز دارد.',
+	'ogg-oggThumb-failed' => 'oggThumb موفق به ایجاد بندانگشتی نشد.',
 );
 
 /** Finnish (Suomi)
@@ -970,6 +1093,8 @@ $messages['fi'] = array(
 	'ogg-dismiss' => 'Sulje',
 	'ogg-download' => 'Lataa',
 	'ogg-desc-link' => 'Tiedoston tiedot',
+	'ogg-oggThumb-version' => 'OggHandler vaatii oggThumbin version $1 tai uudemman.',
+	'ogg-oggThumb-failed' => 'oggThumb ei onnistunut luomaan pienoiskuvaa.',
 );
 
 /** Faroese (Føroyskt)
@@ -983,6 +1108,7 @@ $messages['fo'] = array(
  * @author Crochet.david
  * @author Grondin
  * @author Jean-Frédéric
+ * @author Peter17
  * @author Seb35
  * @author Sherbrooke
  * @author Urhixidur
@@ -1015,6 +1141,8 @@ $messages['fr'] = array(
 	'ogg-dismiss' => 'Fermer',
 	'ogg-download' => 'Télécharger le fichier',
 	'ogg-desc-link' => 'À propos de ce fichier',
+	'ogg-oggThumb-version' => 'OggHandler nécessite oggThumb, version $1 ou supérieure.',
+	'ogg-oggThumb-failed' => 'oggThumb n’a pas réussi à créer la miniature.',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -1022,13 +1150,13 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'ogg-desc' => 'Assistance por los fichiérs Ogg Theora et Vorbis, avouéc un liésor JavaScript.',
-	'ogg-short-audio' => 'Fichiér son Ogg $1, $2',
-	'ogg-short-video' => 'Fichiér vidèô Ogg $1, $2',
-	'ogg-short-general' => 'Fichiér multimèdia Ogg $1, $2',
-	'ogg-long-audio' => '(Fichiér son Ogg $1, temps $2, $3)',
-	'ogg-long-video' => '(Fichiér vidèô Ogg $1, temps $2, $4×$5 pixèls, $3)',
-	'ogg-long-multiplexed' => '(Fichiér multiplèxo ôdiô / vidèô Ogg, $1, temps $2, $4×$5 pixèls, $3)',
-	'ogg-long-general' => '(Fichiér multimèdia Ogg, temps $2, $3)',
+	'ogg-short-audio' => 'fichiér son Ogg $1, $2',
+	'ogg-short-video' => 'fichiér vidèô Ogg $1, $2',
+	'ogg-short-general' => 'fichiér multimèdia Ogg $1, $2',
+	'ogg-long-audio' => '(fichiér son Ogg $1, temps $2, $3)',
+	'ogg-long-video' => '(fichiér vidèô Ogg $1, temps $2, $4×$5 pixèls, $3)',
+	'ogg-long-multiplexed' => '(fichiér multiplèxo ôdiô / vidèô Ogg, $1, temps $2, $4×$5 pixèls, en tot $3)',
+	'ogg-long-general' => '(fichiér multimèdia Ogg, temps $2, $3)',
 	'ogg-long-error' => '(Fichiér Ogg envalido : $1)',
 	'ogg-play' => 'Liére',
 	'ogg-pause' => 'Pousa',
@@ -1103,11 +1231,11 @@ $messages['gl'] = array(
 	'ogg-short-audio' => 'Ficheiro de son Ogg $1, $2',
 	'ogg-short-video' => 'Ficheiro de vídeo Ogg $1, $2',
 	'ogg-short-general' => 'Ficheiro multimedia Ogg $1, $2',
-	'ogg-long-audio' => '(Ficheiro de son Ogg $1, duración $2, $3)',
-	'ogg-long-video' => '(Ficheiro de vídeo Ogg $1, duración $2, $4×$5 píxeles, $3)',
-	'ogg-long-multiplexed' => '(Ficheiro de son/vídeo Ogg multiplex, $1, duración $2, $4×$5 píxeles, $3 total)',
-	'ogg-long-general' => '(Ficheiro multimedia Ogg, duración $2, $3)',
-	'ogg-long-error' => '(Ficheiro Ogg non válido: $1)',
+	'ogg-long-audio' => '(ficheiro de son Ogg $1, duración $2, $3)',
+	'ogg-long-video' => '(ficheiro de vídeo Ogg $1, duración $2, $4×$5 píxeles, $3)',
+	'ogg-long-multiplexed' => '(ficheiro de son/vídeo Ogg multiplex, $1, duración $2, $4×$5 píxeles, $3 total)',
+	'ogg-long-general' => '(ficheiro multimedia Ogg, duración $2, $3)',
+	'ogg-long-error' => '(ficheiro Ogg non válido: $1)',
 	'ogg-play' => 'Reproducir',
 	'ogg-pause' => 'Pausar',
 	'ogg-stop' => 'Deter',
@@ -1126,6 +1254,8 @@ $messages['gl'] = array(
 	'ogg-dismiss' => 'Fechar',
 	'ogg-download' => 'Descargar o ficheiro',
 	'ogg-desc-link' => 'Acerca deste ficheiro',
+	'ogg-oggThumb-version' => 'O OggHandler necesita a versión $1 ou unha posterior do oggThumb.',
+	'ogg-oggThumb-failed' => 'Houbo un erro por parte do oggThumb ao crear a miniatura.',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -1172,6 +1302,8 @@ $messages['gsw'] = array(
 	'ogg-dismiss' => 'Zuemache',
 	'ogg-download' => 'Datei spychere',
 	'ogg-desc-link' => 'Iber die Datei',
+	'ogg-oggThumb-version' => 'OggHandler brucht oggThumb in dr Version $1 oder hecher.',
+	'ogg-oggThumb-failed' => 'oggThumb het kei Miniaturbild chenne aalege.',
 );
 
 /** Manx (Gaelg)
@@ -1213,6 +1345,8 @@ $messages['he'] = array(
 	'ogg-dismiss' => 'סגירה',
 	'ogg-download' => 'הורדת הקובץ',
 	'ogg-desc-link' => 'אודות הקובץ',
+	'ogg-oggThumb-version' => 'OggHandler דורש את oggThumb בגרסה $1 ומעלה.',
+	'ogg-oggThumb-failed' => 'oggThumb נכשל ביצירת התמונה הממוזערת.',
 );
 
 /** Hindi (हिन्दी)
@@ -1285,6 +1419,8 @@ $messages['hr'] = array(
 	'ogg-dismiss' => 'Zatvori',
 	'ogg-download' => 'Snimi datoteku',
 	'ogg-desc-link' => 'O ovoj datoteci',
+	'ogg-oggThumb-version' => 'OggHandler zahtijeva oggThumb inačicu $1 ili noviju.',
+	'ogg-oggThumb-failed' => 'oggThumb nije uspio stvoriti sličicu.',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -1318,6 +1454,8 @@ $messages['hsb'] = array(
 	'ogg-dismiss' => 'Začinić',
 	'ogg-download' => 'Dataju sćahnyć',
 	'ogg-desc-link' => 'Wo tutej dataji',
+	'ogg-oggThumb-version' => 'OggHandler trjeba wersiju $1 oggThumb abo nowšu.',
+	'ogg-oggThumb-failed' => 'oggThumb njemóžeše wobrazk wutworić.',
 );
 
 /** Haitian (Kreyòl ayisyen)
@@ -1331,6 +1469,7 @@ $messages['ht'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Glanthor Reviol
  * @author Tgr
  */
 $messages['hu'] = array(
@@ -1360,6 +1499,8 @@ $messages['hu'] = array(
 	'ogg-dismiss' => 'Bezárás',
 	'ogg-download' => 'Fájl letöltése',
 	'ogg-desc-link' => 'Fájlinformációk',
+	'ogg-oggThumb-version' => 'Az OggHandlerhez $1 vagy későbbi verziójú oggThumb szükséges.',
+	'ogg-oggThumb-failed' => 'Az oggThumb nem tudta elkészíteni a bélyegképet.',
 );
 
 /** Interlingua (Interlingua)
@@ -1395,10 +1536,13 @@ Per favor <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_dow
 	'ogg-dismiss' => 'Clauder',
 	'ogg-download' => 'Discargar file',
 	'ogg-desc-link' => 'A proposito de iste file',
+	'ogg-oggThumb-version' => 'OggHandler require oggThumb version $1 o plus recente.',
+	'ogg-oggThumb-failed' => 'oggThumb ha fallite de crear le miniatura.',
 );
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author Farras
  * @author Irwangatot
  * @author IvanLanin
  * @author Rex
@@ -1431,6 +1575,19 @@ Silakan <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downl
 	'ogg-dismiss' => 'Tutup',
 	'ogg-download' => 'Unduh berkas',
 	'ogg-desc-link' => 'Mengenai berkas ini',
+	'ogg-oggThumb-version' => 'OggHandler membutuhkan oggThumb versi $1 atau terbaru.',
+	'ogg-oggThumb-failed' => 'oggThumb gagal membuat miniatur gambar.',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'ogg-play' => 'Dọ',
+	'ogg-pause' => "Zùy'íké",
+	'ogg-stop' => 'Kwùshí',
+	'ogg-more' => 'Ozókwá...',
+	'ogg-dismiss' => 'Mèchié',
 );
 
 /** Ido (Ido)
@@ -1466,6 +1623,7 @@ $messages['is'] = array(
  * @author .anaconda
  * @author BrokenArrow
  * @author Darth Kule
+ * @author HalphaZ
  */
 $messages['it'] = array(
 	'ogg-desc' => 'Gestore per i file Ogg Theora e Vorbis, con programma di riproduzione in JavaScript',
@@ -1494,6 +1652,8 @@ $messages['it'] = array(
 	'ogg-dismiss' => 'Chiudi',
 	'ogg-download' => 'Scarica il file',
 	'ogg-desc-link' => 'Informazioni su questo file',
+	'ogg-oggThumb-version' => 'OggHandler richiede la versione $1 o superiore di oggThumb.',
+	'ogg-oggThumb-failed' => 'oggThumb non è riuscito a creare la miniatura.',
 );
 
 /** Japanese (日本語)
@@ -1529,6 +1689,8 @@ $messages['ja'] = array(
 	'ogg-dismiss' => '閉じる',
 	'ogg-download' => 'ファイルをダウンロード',
 	'ogg-desc-link' => 'ファイルの詳細',
+	'ogg-oggThumb-version' => 'OggHandler は oggThumb バージョン$1またはそれ以降が必要です。',
+	'ogg-oggThumb-failed' => 'oggThumb によるサムネイル作成に失敗しました。',
 );
 
 /** Jutish (Jysk)
@@ -1601,10 +1763,20 @@ Please <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downlo
 
 /** Georgian (ქართული)
  * @author BRUTE
+ * @author ITshnik
  * @author Malafaya
+ * @author გიორგიმელა
  */
 $messages['ka'] = array(
 	'ogg-short-video' => 'Ogg $1 ვიდეო ფაილი, $2',
+	'ogg-short-general' => 'Ogg $1 მედია ფაილი, $2',
+	'ogg-play' => 'თამაში',
+	'ogg-pause' => 'პაუზა',
+	'ogg-stop' => 'შეჩერება',
+	'ogg-play-video' => 'ვიდეოს ჩართვა',
+	'ogg-play-sound' => 'ხმის ტამაში',
+	'ogg-player-videoElement' => 'მშობლიური ბრაუზერის მხარდაჭერა',
+	'ogg-player-oggPlugin' => 'ბრაუზერის მოდული',
 	'ogg-player-soundthumb' => 'No player',
 	'ogg-player-selected' => '(არჩეულია)',
 	'ogg-more' => 'მეტი...',
@@ -1770,6 +1942,8 @@ QuickTime은 이 구성 요소 없이는 Ogg 파일을 재생할 수 없습니�
 	'ogg-dismiss' => '닫기',
 	'ogg-download' => '파일 다운로드',
 	'ogg-desc-link' => '파일 정보',
+	'ogg-oggThumb-version' => 'OggHandler는 oggThumb 버전 $1 이상을 요구합니다.',
+	'ogg-oggThumb-failed' => 'oggThumb가 섬네일을 생성하지 못했습니다.',
 );
 
 /** Kinaray-a (Kinaray-a)
@@ -1779,7 +1953,7 @@ $messages['krj'] = array(
 	'ogg-more' => 'Raku pa...',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1822,7 +1996,7 @@ udder sök Der en annder Affspellprojramm uß.',
 	'ogg-player-selected' => '(Ußjesoht)',
 	'ogg-use-player' => 'Affspellprojramm:',
 	'ogg-more' => 'Enshtelle&nbsp;…',
-	'ogg-dismiss' => 'Zomaache!',
+	'ogg-dismiss' => 'Zohmaache',
 	'ogg-download' => 'Datei erunger lade',
 	'ogg-desc-link' => 'Övver di Datei',
 );
@@ -1867,6 +2041,8 @@ QuickTime kann Ogg-Fichiere net ouni dës Komponent spillen.
 	'ogg-dismiss' => 'Zoumaachen',
 	'ogg-download' => 'Fichier eroflueden',
 	'ogg-desc-link' => 'Iwwer dëse Fichier',
+	'ogg-oggThumb-version' => 'OggHandler brauch oggThumb Versioun $1 oder méi eng nei.',
+	'ogg-oggThumb-failed' => 'oggThumb konnt kee Miniaturbild maachen.',
 );
 
 /** Lingua Franca Nova (Lingua Franca Nova)
@@ -1907,6 +2083,8 @@ $messages['li'] = array(
 	'ogg-dismiss' => 'Sloet',
 	'ogg-download' => 'Bestandj downloade',
 	'ogg-desc-link' => 'Euver dit bestandj',
+	'ogg-oggThumb-version' => 'OggHandler vereis oggThumb versie $1 of hoeger.',
+	'ogg-oggThumb-failed' => 'oggThumb kós geine thumbnail make.',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1943,10 +2121,15 @@ $messages['lt'] = array(
 );
 
 /** Latvian (Latviešu)
+ * @author Papuass
  * @author Xil
  */
 $messages['lv'] = array(
+	'ogg-pause' => 'Pauze',
+	'ogg-player-selected' => '(izvēlēts)',
 	'ogg-dismiss' => 'Aizvērt',
+	'ogg-download' => 'Lejupielādēt failu',
+	'ogg-desc-link' => 'Par šo failu',
 );
 
 /** Macedonian (Македонски)
@@ -1954,26 +2137,26 @@ $messages['lv'] = array(
  * @author Brest
  */
 $messages['mk'] = array(
-	'ogg-desc' => 'Ракувач со Ogg Theora и Vorbis податотеки, со помош на JavaScript преслушувач/прегледувач',
+	'ogg-desc' => 'Ракувач со Ogg Theora и Vorbis податотеки, со JavaScript изведувач',
 	'ogg-short-audio' => 'Ogg $1 звучна податотека, $2',
 	'ogg-short-video' => 'Ogg $1 видео податотека, $2',
-	'ogg-short-general' => 'Ogg $1 медија податотека, $2',
-	'ogg-long-audio' => '(Ogg $1 звучна податотека, должина $2, $3)',
-	'ogg-long-video' => '(Ogg $1 видео податотека, должина $2, $4×$5 пиксели, $3)',
-	'ogg-long-multiplexed' => '(Ogg мултиплексирана аудио/видео податотека, $1, должина $2, $4×$5 пиксели, $3 вкупно)',
-	'ogg-long-general' => '(Ogg медија податотека, должина $2, $3)',
+	'ogg-short-general' => 'Мултимедијална податотека Ogg $1, $2',
+	'ogg-long-audio' => '(Ogg $1 аудиоснимка, времетраење: $2, $3)',
+	'ogg-long-video' => '(Ogg $1 видеоснимка, времетраење: $2, $4×$5 пиксели, $3)',
+	'ogg-long-multiplexed' => '(мултиплексирана Ogg аудио/видеоснимка, $1, времетраење: $2, $4×$5 пиксели, вкупно $3)',
+	'ogg-long-general' => '(Ogg-снимка, времетраење: $2, $3)',
 	'ogg-long-error' => '(Оштетена ogg податотека: $1)',
-	'ogg-play' => 'Почни',
+	'ogg-play' => 'Пушти',
 	'ogg-pause' => 'Паузирај',
-	'ogg-stop' => 'Стопирај',
+	'ogg-stop' => 'Запри',
 	'ogg-play-video' => 'Пушти видеоснимка',
 	'ogg-play-sound' => 'Слушни аудио снимка',
-	'ogg-no-player' => 'Изгледа дека вашиот систем нема инсталирано било каков софтвер за преслушување/прегледување на аудио или видео записи.
-Можете <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">да симнете некој софтвер за оваа намена од тука</a>.',
-	'ogg-no-xiphqt' => 'Изгледа ја немате инсталирано XiphQT компонентата за QuickTime.
+	'ogg-no-player' => 'Изгледа дека вашиот систем нема инсталирано никаква програмска опрема за преслушување/прегледување на аудио или видео снимки.
+ a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Тука преземете изведувач за таа намена</a>.',
+	'ogg-no-xiphqt' => 'Изгледа го немате инсталирано делот XiphQT за QuickTime.
 QuickTime не може да преслушува/прегледува Ogg податотеки без оваа компонента.
-Можете да го <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">симнете XiphQT</a> или да изберете некој друг софтвер за преслушување/прегледување.',
-	'ogg-player-videoElement' => 'Подржано од прелистувачот',
+Можете да го <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">преземете XiphQT</a> или да изберете некоја друга програмска опрема за преслушување/прегледување.',
+	'ogg-player-videoElement' => 'Поддржано од прелистувачот',
 	'ogg-player-oggPlugin' => 'Вградено во прелистувачот',
 	'ogg-player-cortado' => 'Cortado (Java)',
 	'ogg-player-vlc-mozilla' => 'VLC',
@@ -1985,13 +2168,15 @@ QuickTime не може да преслушува/прегледува Ogg по�
 	'ogg-player-kaffeine' => 'Kaffeine',
 	'ogg-player-mplayerplug-in' => 'mplayerplug-in',
 	'ogg-player-thumbnail' => 'Само неподвижни слики',
-	'ogg-player-soundthumb' => 'Нема инсталирано преслушувач',
+	'ogg-player-soundthumb' => 'Нема изведувач',
 	'ogg-player-selected' => '(избрано)',
 	'ogg-use-player' => 'Користи:',
 	'ogg-more' => 'Повеќе...',
 	'ogg-dismiss' => 'Затвори',
-	'ogg-download' => 'Симни податотека',
+	'ogg-download' => 'Преземи податотека',
 	'ogg-desc-link' => 'Информации за оваа податотека',
+	'ogg-oggThumb-version' => 'OggHandler бара oggThumb верзија $1 или понова.',
+	'ogg-oggThumb-failed' => 'oggThumb не успеа да ја создаде минијатурата.',
 );
 
 /** Malayalam (മലയാളം)
@@ -2003,32 +2188,34 @@ $messages['ml'] = array(
 	'ogg-short-audio' => 'ഓഗ് $1 ശബ്ദപ്രമാണം, $2',
 	'ogg-short-video' => 'ഓഗ് $1 വീഡിയോ പ്രമാണം, $2',
 	'ogg-short-general' => 'ഓഗ് $1 മീഡിയ പ്രമാണം, $2',
-	'ogg-long-audio' => '(ഓഗ് $1 ശബ്ദ പ്രമാണം, ദൈര്‍ഘ്യം $2, $3)',
-	'ogg-long-video' => '(ഓഗ് $1 വീഡിയോ പ്രമാണം, ദൈര്‍ഘ്യം $2, $4×$5 pixels, $3)',
+	'ogg-long-audio' => '(ഓഗ് $1 ശബ്ദ പ്രമാണം, ദൈർഘ്യം $2, $3)',
+	'ogg-long-video' => '(ഓഗ് $1 വീഡിയോ പ്രമാണം, ദൈർഘ്യം $2, $4×$5 pixels, $3)',
 	'ogg-long-multiplexed' => '(ഓഗ് മൾട്ടിപ്ലക്സ്‌‌ഡ് ശബ്ദ/ചലച്ചിത്ര പ്രമാണം, $1, ദൈർഘ്യം $2, $4×$5 ബിന്ദു, ആകെക്കൂടി $3)',
-	'ogg-long-general' => '(ഓഗ് മീഡിയ പ്രമാണം, ദൈര്‍ഘ്യം $2, $3)',
+	'ogg-long-general' => '(ഓഗ് മീഡിയ പ്രമാണം, ദൈർഘ്യം $2, $3)',
 	'ogg-long-error' => '(അസാധുവായ ഓഗ് പ്രമാണം: $1)',
-	'ogg-play' => 'പ്രവര്‍ത്തിപ്പിക്കുക',
-	'ogg-pause' => 'താല്‍ക്കാലികമായി നിര്‍ത്തുക',
-	'ogg-stop' => 'നിര്‍ത്തുക',
-	'ogg-play-video' => 'വീഡിയോ പ്രവര്‍ത്തിപ്പിക്കുക',
-	'ogg-play-sound' => 'ശബ്ദം പ്രവര്‍ത്തിപ്പിക്കുക',
-	'ogg-no-player' => 'ക്ഷമിക്കണം. താങ്കളുടെ കമ്പ്യൂട്ടറില്‍ ഓഗ് പ്രമാണം പ്രവര്‍ത്തിപ്പിക്കാനാവശ്യമായ സോഫ്റ്റ്‌ഫെയര്‍ ഇല്ല. ദയവു ചെയ്ത് ഒരു പ്ലെയര്‍ <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">ഡൗണ്‍ലോഡ് ചെയ്യുക</a>.',
+	'ogg-play' => 'പ്രവർത്തിപ്പിക്കുക',
+	'ogg-pause' => 'താൽക്കാലികമായി നിർത്തുക',
+	'ogg-stop' => 'നിർത്തുക',
+	'ogg-play-video' => 'വീഡിയോ പ്രവർത്തിപ്പിക്കുക',
+	'ogg-play-sound' => 'ശബ്ദം പ്രവർത്തിപ്പിക്കുക',
+	'ogg-no-player' => 'ക്ഷമിക്കണം. താങ്കളുടെ കമ്പ്യൂട്ടറിൽ ഓഗ് പ്രമാണം പ്രവർത്തിപ്പിക്കാനാവശ്യമായ സോഫ്റ്റ്‌ഫെയർ ഇല്ല. ദയവു ചെയ്ത് ഒരു പ്ലെയർ <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">ഡൗൺലോഡ് ചെയ്യുക</a>.',
 	'ogg-no-xiphqt' => 'ക്വിക്ക്റ്റൈമിനുള്ള XiphQT ഘടകം താങ്കളുടെ പക്കലുണ്ടെന്നു കാണുന്നില്ല.
 ഓഗ് പ്രമാണങ്ങൾ ഈ ഘടകമില്ലാതെ പ്രവർത്തിപ്പിക്കാൻ ക്വിക്ക്റ്റൈമിനു കഴിയില്ല.
 ദയവായി <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">XiphQT ഡൗൺലോഡ് ചെയ്യുക</a> അല്ലെങ്കിൽ മറ്റൊരു പ്ലേയർ തിരഞ്ഞെടുക്കുക.',
-	'ogg-player-videoElement' => 'ബ്രൗസറിൽ സ്വതവേയുള്ള പിന്തുണ',
+	'ogg-player-videoElement' => 'ബ്രൗസറിൽ സ്വതേയുള്ള പിന്തുണ',
 	'ogg-player-oggPlugin' => 'ബ്രൗസർ പ്ലഗിൻ',
 	'ogg-player-quicktime-mozilla' => 'ക്വിക്ക്റ്റൈം',
 	'ogg-player-quicktime-activex' => 'ക്വിക്ക്റ്റൈം (ആക്റ്റീവ്‌‌എക്സ്)',
 	'ogg-player-thumbnail' => 'നിശ്ചല ചിത്രം മാത്രം',
-	'ogg-player-soundthumb' => 'പ്ലെയര്‍ ഇല്ല',
+	'ogg-player-soundthumb' => 'പ്ലെയർ ഇല്ല',
 	'ogg-player-selected' => '(തിരഞ്ഞെടുത്തവ)',
-	'ogg-use-player' => 'ഈ പ്ലെയര്‍ ഉപയോഗിക്കുക',
-	'ogg-more' => 'കൂടുതല്‍...',
+	'ogg-use-player' => 'ഈ പ്ലെയർ ഉപയോഗിക്കുക',
+	'ogg-more' => 'കൂടുതൽ...',
 	'ogg-dismiss' => 'അടയ്ക്കുക',
-	'ogg-download' => 'പ്രമാണം ഡൗണ്‍ലോഡ് ചെയ്യുക',
+	'ogg-download' => 'പ്രമാണം ഡൗൺലോഡ് ചെയ്യുക',
 	'ogg-desc-link' => 'ഈ പ്രമാണത്തെക്കുറിച്ച്',
+	'ogg-oggThumb-version' => 'ഓഗ്-തമ്പ് പതിപ്പ് $1 അല്ലെങ്കിൽ പുതിയത് ഓഗ്-ഹാൻഡ്ലറിനാവശ്യമാണ്.',
+	'ogg-oggThumb-failed' => 'ലഘുചിത്രം സൃഷ്ടിക്കുന്നതിൽ ഓഗ്-തമ്പ് പരാജയപ്പെട്ടു.',
 );
 
 /** Marathi (मराठी)
@@ -2094,6 +2281,15 @@ $messages['ms'] = array(
 	'ogg-dismiss' => 'Tutup',
 	'ogg-download' => 'Muat turun fail',
 	'ogg-desc-link' => 'Perihal fail ini',
+	'ogg-oggThumb-version' => 'OggHandler memerlukan oggThumb versi $1 ke atas.',
+	'ogg-oggThumb-failed' => 'oggThumb gagal mencipta imej ringkas.',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'ogg-dismiss' => 'Agħlaq',
 );
 
 /** Erzya (Эрзянь)
@@ -2105,6 +2301,8 @@ $messages['myv'] = array(
 	'ogg-stop' => 'Лоткавтык',
 	'ogg-play-video' => 'Нолдык видеонть',
 	'ogg-play-sound' => 'Нолдык вайгеленть',
+	'ogg-player-selected' => '(кочказь)',
+	'ogg-dismiss' => 'Пекстамс',
 	'ogg-desc-link' => 'Те файладонть',
 );
 
@@ -2182,6 +2380,8 @@ Instelleer <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_do
 	'ogg-dismiss' => 'Sluten',
 	'ogg-download' => 'Bestaand binnenhaolen',
 	'ogg-desc-link' => 'Over dit bestaand',
+	'ogg-oggThumb-version' => 'Veur OggHandler he-j oggThumb-versie $1 of hoger neudig.',
+	'ogg-oggThumb-failed' => 'oggThumb kon gien ofbeeldingsoverzichte anmaken.',
 );
 
 /** Dutch (Nederlands)
@@ -2218,6 +2418,8 @@ Download <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_down
 	'ogg-dismiss' => 'Sluiten',
 	'ogg-download' => 'Bestand downloaden',
 	'ogg-desc-link' => 'Over dit bestand',
+	'ogg-oggThumb-version' => 'OggHandler vereist oggThumb versie $1 of hoger.',
+	'ogg-oggThumb-failed' => 'oggThumb kon geen miniatuur aanmaken.',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -2256,6 +2458,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  * @author Laaknor
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'ogg-desc' => 'Gjør at Ogg Theora- og Ogg Vorbis-filer kan kjøres med hjelp av JavaScript-avspiller.',
@@ -2284,6 +2487,8 @@ $messages['no'] = array(
 	'ogg-dismiss' => 'Lukk',
 	'ogg-download' => 'Last ned fil',
 	'ogg-desc-link' => 'Om denne filen',
+	'ogg-oggThumb-version' => 'OggHandler krever oggThumb versjon $1 eller senere.',
+	'ogg-oggThumb-failed' => 'oggThumb klarte ikke å opprette miniatyrbildet.',
 );
 
 /** Occitan (Occitan)
@@ -2337,7 +2542,11 @@ $messages['pa'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'ogg-short-general' => 'Ogg-$1-Mediafeil, $2',
 	'ogg-more' => 'Mehr…',
+	'ogg-dismiss' => 'Zumache',
+	'ogg-download' => 'Feil runnerlaade',
+	'ogg-desc-link' => 'Iwwer sell Feil',
 );
 
 /** Polish (Polski)
@@ -2372,9 +2581,12 @@ $messages['pl'] = array(
 	'ogg-dismiss' => 'Zamknij',
 	'ogg-download' => 'Pobierz plik',
 	'ogg-desc-link' => 'Właściwości pliku',
+	'ogg-oggThumb-version' => 'OggHandler wymaga oggThumb w wersji $1 lub późniejszej.',
+	'ogg-oggThumb-failed' => 'oggThumb nie udało się utworzyć miniaturki.',
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Bèrto 'd Sèra
  * @author Dragonòt
  */
@@ -2405,6 +2617,8 @@ $messages['pms'] = array(
 	'ogg-dismiss' => 'sëré',
 	'ogg-download' => "Dëscarié l'archivi",
 	'ogg-desc-link' => "Rësgoard a st'archivi",
+	'ogg-oggThumb-version' => "OggHandler a ciama la version $1 d'oggThumb o pi agiornà.",
+	'ogg-oggThumb-failed' => "oggThumb a l'ha falì a creé la figurin-a.",
 );
 
 /** Pashto (پښتو)
@@ -2418,7 +2632,7 @@ $messages['ps'] = array(
 	'ogg-stop' => 'درول',
 	'ogg-play-video' => 'ويډيو غږول',
 	'ogg-play-sound' => 'غږ غږول',
-	'ogg-player-videoElement' => '<ويډيو> توکی',
+	'ogg-player-videoElement' => 'د کورني کتنمل ملاتړ',
 	'ogg-player-thumbnail' => 'يوازې ولاړ انځور',
 	'ogg-player-soundthumb' => 'هېڅ کوم غږونکی نه',
 	'ogg-player-selected' => '(ټاکل شوی)',
@@ -2454,8 +2668,8 @@ $messages['pt'] = array(
 	'ogg-no-xiphqt' => "Aparentemente não tem o componente XiphQT do QuickTime.
 O QuickTime não pode reproduzir ficheiros Ogg sem este componente.
 Por favor, faça o <a href=\"http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download\">''download'' do XiphQT</a> ou escolha outro leitor.",
-	'ogg-player-videoElement' => 'Suporte nativo do navegador',
-	'ogg-player-oggPlugin' => "''Plugin'' do navegador",
+	'ogg-player-videoElement' => 'Suporte nativo do browser',
+	'ogg-player-oggPlugin' => "''Plugin'' do browser",
 	'ogg-player-thumbnail' => 'Apenas imagem estática',
 	'ogg-player-soundthumb' => 'Sem player',
 	'ogg-player-selected' => '(selecionado)',
@@ -2464,10 +2678,13 @@ Por favor, faça o <a href=\"http://www.mediawiki.org/wiki/Extension:OggHandler/
 	'ogg-dismiss' => 'Fechar',
 	'ogg-download' => 'Fazer download do ficheiro',
 	'ogg-desc-link' => 'Sobre este ficheiro',
+	'ogg-oggThumb-version' => 'O oggHandler requer o oggThumb versão $1 ou posterior.',
+	'ogg-oggThumb-failed' => 'O oggThumb não conseguiu criar a miniatura.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'ogg-desc' => 'Manipulador para arquivos Ogg Theora e Vorbis, com reprodutor JavaScript',
@@ -2496,6 +2713,8 @@ $messages['pt-br'] = array(
 	'ogg-dismiss' => 'Fechar',
 	'ogg-download' => 'Descarregar arquivo',
 	'ogg-desc-link' => 'Sobre este arquivo',
+	'ogg-oggThumb-version' => 'O oggHandler requer o oggThumb versão $1 ou posterior.',
+	'ogg-oggThumb-failed' => 'O oggThumb não conseguiu criar a miniatura.',
 );
 
 /** Quechua (Runa Simi)
@@ -2517,19 +2736,21 @@ $messages['qu'] = array(
 );
 
 /** Romanian (Română)
+ * @author Cin
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'ogg-short-audio' => 'Fişier de sunet ogg $1, $2',
-	'ogg-short-video' => 'Fişier video ogg $1, $2',
-	'ogg-short-general' => 'Fişier media ogg $1, $2',
-	'ogg-long-audio' => '(Fişier de sunet ogg $1, lungime $2, $3)',
-	'ogg-long-video' => '(Fişier video ogg $1, lungime $2, $4×$5 pixeli, $3)',
-	'ogg-long-multiplexed' => '(Fişier multiplexat audio/video ogg, $1, lungime $2, $4×$5 pixeli, $3)',
-	'ogg-long-general' => '(Fişier media ogg, lungime $2, $3)',
-	'ogg-long-error' => '(Fişier ogg incorect: $1)',
+	'ogg-short-audio' => 'Fișier de sunet ogg $1, $2',
+	'ogg-short-video' => 'Fișier video ogg $1, $2',
+	'ogg-short-general' => 'Fișier media ogg $1, $2',
+	'ogg-long-audio' => '(Fișier de sunet ogg $1, lungime $2, $3)',
+	'ogg-long-video' => '(Fișier video ogg $1, lungime $2, $4×$5 pixeli, $3)',
+	'ogg-long-multiplexed' => '(Fișier multiplexat audio/video ogg, $1, lungime $2, $4×$5 pixeli, $3)',
+	'ogg-long-general' => '(Fișier media ogg, lungime $2, $3)',
+	'ogg-long-error' => '(Fișier ogg incorect: $1)',
 	'ogg-play' => 'Redă',
 	'ogg-pause' => 'Pauză',
 	'ogg-stop' => 'Stop',
@@ -2538,15 +2759,15 @@ $messages['ro'] = array(
 	'ogg-no-player' => 'Îmi pare rău, sistemul tău nu pare să aibă vreun program de redare suportat.
 Te rog <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">descarcă un program de redare</a>.',
 	'ogg-player-videoElement' => 'Navigator cu suport nativ',
-	'ogg-player-oggPlugin' => 'Insert navigator',
-	'ogg-player-thumbnail' => 'Încă imaginea doar',
+	'ogg-player-oggPlugin' => 'Plugin-ul navigatorului',
+	'ogg-player-thumbnail' => 'Doar imagine statică',
 	'ogg-player-soundthumb' => 'Niciun program de redare',
 	'ogg-player-selected' => '(selectat)',
-	'ogg-use-player' => 'Foloseşte programul de redare:',
+	'ogg-use-player' => 'Folosește programul de redare:',
 	'ogg-more' => 'Mai mult…',
 	'ogg-dismiss' => 'Închide',
-	'ogg-download' => 'Descarcă fişier',
-	'ogg-desc-link' => 'Despre acest fişier',
+	'ogg-download' => 'Descărcare fișier',
+	'ogg-desc-link' => 'Despre acest fișier',
 );
 
 /** Tarandíne (Tarandíne)
@@ -2582,11 +2803,14 @@ Pe piacere <a href=\"http://www.mediawiki.org/wiki/Extension:OggHandler/Client_d
 	'ogg-dismiss' => 'Chiude',
 	'ogg-download' => 'Scareche stu file',
 	'ogg-desc-link' => "'Mbormaziune sus a stu file",
+	'ogg-oggThumb-version' => "OggHandler richiede 'a versione $1 de oggThumb o una cchiù nove.",
+	'ogg-oggThumb-failed' => 'oggThumb ha fallite sus a crejazione de le miniature.',
 );
 
 /** Russian (Русский)
  * @author Ahonc
  * @author Kv75
+ * @author MaxSem
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -2594,10 +2818,10 @@ $messages['ru'] = array(
 	'ogg-short-audio' => 'Звуковой файл Ogg $1, $2',
 	'ogg-short-video' => 'Видео-файл Ogg $1, $2',
 	'ogg-short-general' => 'Медиа-файл Ogg $1, $2',
-	'ogg-long-audio' => '(звуковой файл Ogg $1, длина $2, $3)',
-	'ogg-long-video' => '(видео-файл Ogg $1, длина $2, $4×$5 пикселов, $3)',
-	'ogg-long-multiplexed' => '(мультиплексный аудио/видео-файл Ogg, $1, длина $2, $4×$5 пикселов, $3 всего)',
-	'ogg-long-general' => '(медиа-файл Ogg, длина $2, $3)',
+	'ogg-long-audio' => '(звуковой файл Ogg $1, длительность $2, $3)',
+	'ogg-long-video' => '(видео-файл Ogg $1, длительность $2, $4×$5 пикселов, $3)',
+	'ogg-long-multiplexed' => '(мультиплексный аудио/видео-файл Ogg, $1, длительность $2, $4×$5 пикселов, $3 всего)',
+	'ogg-long-general' => '(медиа-файл Ogg, длительность $2, $3)',
 	'ogg-long-error' => '(неправильный ogg-файл: $1)',
 	'ogg-play' => 'Воспроизвести',
 	'ogg-pause' => 'Пауза',
@@ -2616,10 +2840,47 @@ $messages['ru'] = array(
 	'ogg-dismiss' => 'Скрыть',
 	'ogg-download' => 'Загрузить файл',
 	'ogg-desc-link' => 'Информация об этом файле',
+	'ogg-oggThumb-version' => 'OggHandler требует oggThumb версии $1 или более поздней.',
+	'ogg-oggThumb-failed' => 'oggThumb не удалось создать миниатюру.',
+);
+
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'ogg-desc' => 'Обслуга файлів Ogg Theora і Vorbis з JavaScript-овым перегравачом',
+	'ogg-short-audio' => 'Звуковый файл Ogg $1, $2',
+	'ogg-short-video' => 'Відео-файл Ogg $1, $2',
+	'ogg-short-general' => 'Файл Ogg $1, $2',
+	'ogg-long-audio' => '(звуковый файл Ogg $1, довжка $2, $3)',
+	'ogg-long-video' => '(відео-файл Ogg $1, довжка $2, $4×$5 пікселів, $3)',
+	'ogg-long-multiplexed' => '(мултіплексный аудіо/відео-файл ogg, $1, довжка $2, $4×$5 пікселів, $3 вшыткого)',
+	'ogg-long-general' => '(медіа-файл Ogg, довжка $2, $3)',
+	'ogg-long-error' => '(Неправилный ogg-файл: $1)',
+	'ogg-play' => 'Заграти',
+	'ogg-pause' => 'Пауза',
+	'ogg-stop' => 'Заставити',
+	'ogg-play-video' => 'Переграти відео',
+	'ogg-play-sound' => 'Переграти звук',
+	'ogg-no-player' => 'Ваша сістема асі не має жаден підпорованый перегравач. <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">скачайте перегравач</a>.',
+	'ogg-no-xiphqt' => 'Не маєте росшырїна XiphQT про QuickTime. QuickTime не може перегравати файлы без того росшырїня. <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Скачайте XiphQT</a> або звольте іншый перегравач.',
+	'ogg-player-videoElement' => 'Вставляна підпора в переглядачу',
+	'ogg-player-oggPlugin' => 'Модул до переглядача',
+	'ogg-player-thumbnail' => 'Лем снимок нагляду',
+	'ogg-player-soundthumb' => 'Жадный перегравач',
+	'ogg-player-selected' => '(выбране)',
+	'ogg-use-player' => 'Выберте перегравач:',
+	'ogg-more' => 'Веце…',
+	'ogg-dismiss' => 'Заперти',
+	'ogg-download' => 'Скачати файл',
+	'ogg-desc-link' => 'О файлі',
+	'ogg-oggThumb-version' => 'OggHandler потребує oggThumb верзії $1 або новшый.',
+	'ogg-oggThumb-failed' => 'oggThumb не быв годен створити нагляд.',
 );
 
 /** Yakut (Саха тыла)
  * @author HalanTul
+ * @author Kyraha
  */
 $messages['sah'] = array(
 	'ogg-desc' => 'Обработчик файлов Ogg Theora и Vorbis с использованием JavaScript-проигрывателя',
@@ -2648,9 +2909,24 @@ $messages['sah'] = array(
 	'ogg-dismiss' => 'Кистээ/сап',
 	'ogg-download' => 'Билэни хачайдаа',
 	'ogg-desc-link' => 'Бу билэ туһунан',
+	'ogg-oggThumb-version' => 'OggHandler oggThumb $1 эбэтэр ордук версиятын наадыйар',
+	'ogg-oggThumb-failed' => 'oggThumb миниатюраны кыайан оҥорбото.',
+);
+
+/** Samogitian (Žemaitėška)
+ * @author Hugo.arg
+ */
+$messages['sgs'] = array(
+	'ogg-play' => 'Gruotė',
+	'ogg-pause' => 'Pauzė',
+	'ogg-stop' => 'Sostabdītė',
+	'ogg-play-video' => 'Gruotė video',
+	'ogg-play-sound' => 'Gruotė garsa',
+	'ogg-download' => 'Atsėsiōstė faila',
 );
 
 /** Sinhala (සිංහල)
+ * @author Budhajeewa
  * @author නන්දිමිතුරු
  */
 $messages['si'] = array(
@@ -2683,10 +2959,13 @@ $messages['si'] = array(
 	'ogg-dismiss' => 'වසන්න',
 	'ogg-download' => 'ගොනුව බා ගන්න',
 	'ogg-desc-link' => 'මෙම ගොනුව පිළිබඳ',
+	'ogg-oggThumb-version' => 'OggHandler සඳහා oggThumb $1 සංස්කරණය හෝ අලුත් එකක් අවැසිය.',
+	'ogg-oggThumb-failed' => 'තම්බ්නේලය තැනුමට oggThumb අසමත්විය.',
 );
 
 /** Slovak (Slovenčina)
  * @author Helix84
+ * @author Jkjk
  */
 $messages['sk'] = array(
 	'ogg-desc' => 'Obsluha súborov Ogg Theora a Vorbis s JavaScriptovým prehrávačom',
@@ -2715,6 +2994,45 @@ $messages['sk'] = array(
 	'ogg-dismiss' => 'Zatvoriť',
 	'ogg-download' => 'Stiahnuť súbor',
 	'ogg-desc-link' => 'O tomto súbore',
+	'ogg-oggThumb-version' => 'OggHandler vyžaduje verziu oggThumbu $1 alebo novšiu.',
+	'ogg-oggThumb-failed' => 'oggThumbu sa neporarilo vytvoriť obraz.',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'ogg-desc' => 'Upravljavec datotek Ogg Theora in Vorbis, s predvajalnikom JavaScript',
+	'ogg-short-audio' => 'Zvočna datoteka Ogg $1, $2',
+	'ogg-short-video' => 'Videodatoteka Ogg $1, $2',
+	'ogg-short-general' => 'Predstavnostna datoteka Ogg $1, $2',
+	'ogg-long-audio' => '(zvočna datoteka ogg $1, dolžine $2, $3)',
+	'ogg-long-video' => '(videodatoteka ogg $1, dolžine $2, $4 × $5 pik, $3)',
+	'ogg-long-multiplexed' => '(multipleksna zvočna/videodatoteka ogg, $1, dolžina $2, $4 × $5 pik, $3 skupno)',
+	'ogg-long-general' => '(predstavnostna datoteka ogg, dolžina $2, $3)',
+	'ogg-long-error' => '(Neveljavna datoteka ogg: $1)',
+	'ogg-play' => 'Predvajaj',
+	'ogg-pause' => 'Pavza',
+	'ogg-stop' => 'Ustavi',
+	'ogg-play-video' => 'Predvajaj video',
+	'ogg-play-sound' => 'Predvajaj zvok',
+	'ogg-no-player' => 'Oprostite, kaže da vaš sistem nima nameščenega programja nobenega podprtega predvajalnika.
+Prosimo, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">prenesite predvajalnik</a>.',
+	'ogg-no-xiphqt' => 'Kot kaže, nimate komponente XiphQT za QuickTime.
+QuickTime ne more oredvajati datotek Ogg brez te komponente.
+Prosimo, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">prenesite XiphQT</a> ali izberite drug predvajalnik.',
+	'ogg-player-videoElement' => 'Vgrajena podpora brskalnika',
+	'ogg-player-oggPlugin' => 'Vtičnik brskalnika',
+	'ogg-player-thumbnail' => 'Samo stoječa slika',
+	'ogg-player-soundthumb' => 'Brez predvajalnika',
+	'ogg-player-selected' => '(izbrano)',
+	'ogg-use-player' => 'Uporabi predvajalnik:',
+	'ogg-more' => 'Več ...',
+	'ogg-dismiss' => 'Zapri',
+	'ogg-download' => 'Prenesi datoteko',
+	'ogg-desc-link' => 'O datoteki',
+	'ogg-oggThumb-version' => 'OggHandler potrebuje oggThumb različice $1 ali novejše.',
+	'ogg-oggThumb-failed' => 'oggThumb ni uspel ustvariti predogledne sličice.',
 );
 
 /** Albanian (Shqip)
@@ -2861,6 +3179,7 @@ $messages['su'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Ainali
  * @author Jon Harald Søby
  * @author Lejonel
  * @author Rotsee
@@ -2893,6 +3212,24 @@ $messages['sv'] = array(
 	'ogg-dismiss' => 'Stäng',
 	'ogg-download' => 'Ladda ner filen',
 	'ogg-desc-link' => 'Om filen',
+	'ogg-oggThumb-version' => 'OggHandler kräver oggThumb version $1 eller senare.',
+	'ogg-oggThumb-failed' => 'oggThumb misslyckades med att skapa miniatyrbilden.',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'ogg-dismiss' => 'Funga',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'ogg-stop' => 'நிறுத்து',
+	'ogg-more' => 'மேலும்...',
+	'ogg-dismiss' => 'மூடுக',
+	'ogg-download' => 'கோப்பை பதிவிறக்கம் செய்',
+	'ogg-desc-link' => 'இந்த கோப்பைப் பற்றி',
 );
 
 /** Telugu (తెలుగు)
@@ -3038,6 +3375,8 @@ QuickTime bu komponent bolmasa Ogg faýllaryny oýnadyp bilmeýär.
 	'ogg-dismiss' => 'Ýap',
 	'ogg-download' => 'Faýl düşür',
 	'ogg-desc-link' => 'Bu faýl hakda',
+	'ogg-oggThumb-version' => 'OggHandler oggThumb programmasynyň $1 wersiýasyny ýa-da has täzesini talap edýär.',
+	'ogg-oggThumb-failed' => 'oggThumb miniatýura döredip bilmedi.',
 );
 
 /** Tagalog (Tagalog)
@@ -3082,6 +3421,15 @@ Hindi makapagpapatugtog ang QuickTime ng mga talaksang Ogg kapag wala ang ganito
 	'ogg-dismiss' => 'Isara',
 	'ogg-download' => 'Ikarga ang talaksan',
 	'ogg-desc-link' => 'Tungkol sa talaksang ito',
+	'ogg-oggThumb-version' => 'Nangangailangan ang OggHandler ng bersyong $1 o mas luma.',
+	'ogg-oggThumb-failed' => 'Nabigo ang oggThumb na lumikha ng munting larawan.',
+);
+
+/** Tok Pisin (Tok Pisin)
+ * @author Iketsi
+ */
+$messages['tpi'] = array(
+	'ogg-more' => 'Moa...',
 );
 
 /** Turkish (Türkçe)
@@ -3121,6 +3469,8 @@ Lütfen <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downl
 	'ogg-dismiss' => 'Kapat',
 	'ogg-download' => 'Dosya indir',
 	'ogg-desc-link' => 'Bu dosya hakkında',
+	'ogg-oggThumb-version' => 'OggHandler, oggThumb sürüm $1 veya üstü gerektirir.',
+	'ogg-oggThumb-failed' => 'oggThumb küçük resim oluşturmayı başaramadı.',
 );
 
 /** Tsonga (Xitsonga)
@@ -3131,9 +3481,34 @@ $messages['ts'] = array(
 	'ogg-dismiss' => 'Pfala',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'ogg-play' => 'Җырлату',
+	'ogg-pause' => 'Туктатып тору',
+	'ogg-stop' => 'Туктату',
+	'ogg-play-video' => 'Видеоязманы карау',
+	'ogg-play-sound' => 'Көйне тыңлау',
+	'ogg-no-player' => 'Гафу итегез, ләкин сезнең системагыз бу файллар төрен ача алмый, зинһар кирәк булган программаларны  <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">үзегезгә йөкләп алыгыз</a>.',
+	'ogg-player-videoElement' => 'Браузер ярдәмендә тыңлау',
+	'ogg-player-oggPlugin' => 'Ogg модуль',
+	'ogg-player-thumbnail' => 'Тыйнак рәсемнәрне генә куллану',
+	'ogg-player-soundthumb' => 'Уйнаутучы юк',
+	'ogg-player-selected' => '(сайланган)',
+	'ogg-use-player' => 'Бирелгән уйнаткычны куллану:',
+	'ogg-more' => 'Тулырак...',
+	'ogg-dismiss' => 'Ябу',
+	'ogg-download' => 'Файлны алу',
+	'ogg-desc-link' => 'Файл турында мәгълүмат',
+	'ogg-oggThumb-version' => 'OggHandler $1 юрамасыннан да югарырак oggThumb тәэминатын сорый.',
+	'ogg-oggThumb-failed' => 'oggThumb нигезендә миниатюраны ясап булмады.',
+);
+
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Arturyatsko
  * @author NickK
  * @author Prima klasy4na
  */
@@ -3166,6 +3541,8 @@ QuickTime не може відтворювати ogg-файли без цьог�
 	'ogg-dismiss' => 'Закрити',
 	'ogg-download' => 'Завантажити файл',
 	'ogg-desc-link' => 'Інформація про цей файл',
+	'ogg-oggThumb-version' => 'OggHandler вимагає oggThumb версії $1 або більш пізньої.',
+	'ogg-oggThumb-failed' => 'oggThumb не вдалося створити мініатюру.',
 );
 
 /** Vèneto (Vèneto)
@@ -3198,6 +3575,8 @@ $messages['vec'] = array(
 	'ogg-dismiss' => 'Sara',
 	'ogg-download' => 'Descarga el file',
 	'ogg-desc-link' => 'Informazion su sto file',
+	'ogg-oggThumb-version' => 'Par OggHandler ghe vole oggThumb version $1 o sucessiva.',
+	'ogg-oggThumb-failed' => "oggThumb no'l xe stà bon de crear la miniatura.",
 );
 
 /** Veps (Vepsan kel')
@@ -3248,8 +3627,10 @@ $messages['vi'] = array(
 	'ogg-use-player' => 'Chọn chương trình chơi:',
 	'ogg-more' => 'Thêm nữa…',
 	'ogg-dismiss' => 'Đóng',
-	'ogg-download' => 'Tải tập tin xuống',
+	'ogg-download' => 'Tải về tập tin',
 	'ogg-desc-link' => 'Chi tiết của tập tin này',
+	'ogg-oggThumb-version' => 'OggHandler cần oggThumb, phiên bản $1 trở lên.',
+	'ogg-oggThumb-failed' => 'oggThumb bị thất bại trong việc tạo hình thu nhỏ.',
 );
 
 /** Volapük (Volapük)
@@ -3257,6 +3638,7 @@ $messages['vi'] = array(
  * @author Smeira
  */
 $messages['vo'] = array(
+	'ogg-stop' => 'Stöpön',
 	'ogg-player-videoElement' => 'Stüt bevüresodanaföm gebidon',
 	'ogg-more' => 'Pluikos...',
 	'ogg-dismiss' => 'Färmükön',
@@ -3269,7 +3651,28 @@ $messages['wa'] = array(
 	'ogg-dismiss' => 'Clôre',
 );
 
-/** Yue (粵語) */
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'ogg-play' => 'שפּיל',
+);
+
+/** Yoruba (Yorùbá)
+ * @author Demmy
+ */
+$messages['yo'] = array(
+	'ogg-short-audio' => 'Fáìlì amóhùn Ogg $1, $2',
+	'ogg-play' => 'Ìmúṣeré',
+	'ogg-pause' => 'Ìjáwọ́',
+	'ogg-stop' => 'Ìdádúró',
+	'ogg-player-selected' => '(ṣíṣàyàn)',
+	'ogg-dismiss' => 'Padé',
+	'ogg-download' => 'Ìrùsílẹ̀ fáìlì',
+	'ogg-desc-link' => 'Nípa fáìlì yìí',
+);
+
+/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'ogg-desc' => 'Ogg Theora 同 Vorbis 檔案嘅處理器，加埋 JavaScript 播放器',
 	'ogg-short-audio' => 'Ogg $1 聲檔，$2',
@@ -3329,10 +3732,13 @@ $messages['zh-hans'] = array(
 	'ogg-dismiss' => '关闭',
 	'ogg-download' => '下载文件',
 	'ogg-desc-link' => '关于这个文件',
+	'ogg-oggThumb-version' => 'OggHandler需要oggThumb $1或者之后的版本',
+	'ogg-oggThumb-failed' => 'oggThumb未能创建缩略图。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gaoxuewei
+ * @author Horacewai2
  * @author Mark85296341
  */
 $messages['zh-hant'] = array(
@@ -3362,5 +3768,7 @@ $messages['zh-hant'] = array(
 	'ogg-dismiss' => '關閉',
 	'ogg-download' => '下載檔案',
 	'ogg-desc-link' => '關於這個檔案',
+	'ogg-oggThumb-version' => 'OggHandler需要oggThumb $1或者之後的版本',
+	'ogg-oggThumb-failed' => 'oggThumb未能創建縮略圖。',
 );
 
