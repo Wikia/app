@@ -329,7 +329,15 @@ class ImageMap {
 		# Output the result
 		# We use saveXML() not saveHTML() because then we get XHTML-compliant output.
 		# The disadvantage is that we have to strip out the DTD
-		$output = preg_replace( '/<\?xml[^?]*\?>/', '', $domDoc->saveXML() );
+		/* Wikia change begin - @author: Marooned */
+		/* output HTML5 to properly display elements */
+		global $wgHtml5;
+		if ($wgHtml5) {
+			$output = $domDoc->saveHTML();
+		} else {
+			$output = preg_replace( '/<\?xml[^?]*\?>/', '', $domDoc->saveXML() );
+		}
+		/* Wikia change end */
 
 		# Register links
 		foreach ( $links as $title ) {
