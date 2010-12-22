@@ -1,5 +1,5 @@
 <?php
-/**test
+/**
  * @author Christian Williams
  * This extension provides parser tags to properly render the main column layout for mainpages. One column requires two div elements, so two div elements have been added to all.
 */
