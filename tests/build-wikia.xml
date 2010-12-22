@@ -125,7 +125,8 @@
 
     <target name="start-server" >
         <java jar="lib/selenium-server.jar" fork="true" spawn="true">
-            <arg value="-avoidProxy -ensureCleanSession" />
+            <arg value="-avoidProxy" />
+            <arg value="-ensureCleanSession" />
         </java>
     </target>
 
