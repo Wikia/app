@@ -8,7 +8,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 function wfMakeGlobalVariablesScript($vars) {
 	wfProfileIn(__METHOD__);
 
-	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker;
+	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker;
 	global $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
 	global $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl, $wgDontRewriteSassUrl;
 
@@ -22,7 +22,6 @@ function wfMakeGlobalVariablesScript($vars) {
 	    $vars['wgParentCatId'] = 0;
 	}
 
-	$vars['wgCurse'] = $wgCurse;
 	$vars['wgCityId'] = $wgCityId;
 	$vars['wgID'] = isset($wgCityId) ? (int) $wgCityId : -1; // this one or one above should be deleted
 	$vars['wgEnableAjaxLogin'] = (is_array($wgEnableAjaxLogin)) ? in_array($vars['skin'], $wgEnableAjaxLogin) : false;
@@ -54,10 +53,12 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgExtensionsPath'] = $wgExtensionsPath;
 	$vars['wgSitename'] = $wgSitename;
 
+	// Monaco specific?
 	$vars['wgMenuMore'] = strtolower(wfMsg('moredotdotdot'));
 	if($wgUser->isAllowed('editinterface')) {
 		$vars['wgMenuEdit'] = wfMsg('monaco-edit-this-menu');
 	}
+
 	$vars['wgAfterContentAndJS'] = array();
 
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
