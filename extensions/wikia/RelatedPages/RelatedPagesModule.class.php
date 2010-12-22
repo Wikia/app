@@ -40,10 +40,15 @@ class RelatedPagesModule extends Module {
 			wfLoadExtensionMessages( 'RelatedPages' );
 
 			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
-			$this->pages = $wgMemc->get($mKey); // TEST!
+			$this->pages = $wgMemc->get($mKey);
 			if (empty($this->pages)) {
 				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
-				$wgMemc->set($mKey, $this->pages, 3 * 3600);
+				if(count($this->pages) > 0) {
+					$wgMemc->set($mKey, $this->pages, 3 * 3600);
+				}
+				else {
+					$this->skipRendering = true;
+				}
 			}
 
 			// RT #84264
