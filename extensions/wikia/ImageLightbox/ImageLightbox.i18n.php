@@ -16,8 +16,8 @@ $1
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-label' => 'Email this image to a friend',
 	'lightbox-share-email-ok-caption' => 'Confirmation',
-	'lightbox-share-email-ok-content' => 'E-mails have been sent.',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|Emails have}} been sent.',
 	'lightbox-share-email-error-caption' => 'Error',
-	'lightbox-share-email-error-content' => "Error sending e-mails.\nDetails: $1",
+	'lightbox-share-email-error-content' => "Error sending {{PLURAL:$1|email|emails}}.\nDetails: $2",
 	'lightbox-share-email-error-noaddress' => 'No addresses have been specified'
 );

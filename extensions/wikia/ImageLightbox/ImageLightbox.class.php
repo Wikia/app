@@ -155,10 +155,13 @@ class ImageLightbox {
 
 		$addresses = $wgRequest->getVal('addresses');
 		if (!empty($addresses)) {
+			$addresses = explode(',', $addresses);
+			$countMails = count($addresses);
+
 			$res = array(
 				'result' => 1,
 				'info-caption' => wfMsg('lightbox-share-email-ok-caption'),
-				'info-content' => wfMsg('lightbox-share-email-ok-content')
+				'info-content' => wfMsgExt('lightbox-share-email-ok-content', array('parsemag'), $countMails)
 			);
 
 			//generate shared link
@@ -174,7 +177,6 @@ class ImageLightbox {
 
 			//send mails
 			$sender = new MailAddress($wgNoReplyAddress, 'Wikia');	//TODO: use some standard variable for 'Wikia'?
-			$addresses = explode(',', $addresses);
 			foreach ($addresses as $address) {
 				$to = new MailAddress($address);
 
@@ -192,7 +194,7 @@ class ImageLightbox {
 					$res = array(
 						'result' => 0,
 						'info-caption' => wfMsg('lightbox-share-email-error-caption'),
-						'info-content' => wfMsg('lightbox-share-email-error-content', $result->toString())
+						'info-content' => wfMsgExt('lightbox-share-email-error-content', array('parsemag'), $countMails, $result->toString())
 					);
 				}
 			}
@@ -200,7 +202,7 @@ class ImageLightbox {
 			$res = array(
 				'result' => 0,
 				'info-caption' => wfMsg('lightbox-share-email-error-caption'),
-				'info-content' => wfMsg('lightbox-share-email-error-content', wfMsg('lightbox-share-email-error-noaddress'))
+				'info-content' => wfMsgExt('lightbox-share-email-error-content', array('parsemag'), $countMails, wfMsg('lightbox-share-email-error-noaddress'))
 			);
 		}
 

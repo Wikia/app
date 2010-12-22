@@ -14,6 +14,9 @@ if ($showShareTools) {
 #lightbox-share-buttons a {
 	margin-right: 10px;
 }
+#lightbox-share-buttons img {
+	vertical-align: middle;
+}
 .lightbox-share-area {
 	border-top: 1px solid #D9D9D9;
 	border-width: 1px 0 0 0;
