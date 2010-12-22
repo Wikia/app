@@ -25,10 +25,10 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 
 	<div class="<?= Wikia::isOasis() ? 'tabs modal-tabs' : 'wikia-tabs' ?>" id="AjaxLoginButtons">
 		<ul>
-			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo $loginaction ?>" ><?php print wfMsg("login") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li>
+			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href='<? echo htmlspecialchars($loginaction); ?>' ><?php print wfMsg("login") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li>
 			<?php
 				if($wgUser->isAllowed('createaccount')){
-					?><li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href="<? echo $signupaction ?>"><?php print wfMsg("nologinlink") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li><?php
+					?><li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href='<? echo htmlspecialchars($signupaction); ?>'><?php print wfMsg("nologinlink") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li><?php
 				}
 			?>
 		</ul>

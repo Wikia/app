@@ -16,7 +16,7 @@
 
 <div id="AjaxLoginSlider" class="clearfix">
 	<div class="ajax-login-slider-panel" id="AjaxLoginSliderNormal" >
-        	<form action="<? echo $loginaction ?>" method="post" name="userajaxloginform" id="userajaxloginform">
+        	<form action='<? echo htmlspecialchars($loginaction); ?>' method="post" name="userajaxloginform" id="userajaxloginform">
 	            <label for="wpName2Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label>
 	            <table>
 	            <tr style="width:350px" >
