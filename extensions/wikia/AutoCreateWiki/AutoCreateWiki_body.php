@@ -620,8 +620,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$tables,
 				$this->mMYSQLbin,
 				$dbwTarget->getLBInfo( 'host' ),
-				$dbwTarget->getLBInfo( 'user' ),
-				$dbwTarget->getLBInfo( 'password' ),
+				$wgDBadminuser,
+				$wgDBadminpassword,
 				$this->mWikiData[ "dbname"]
 			);
 			$this->log($cmd);
