@@ -303,7 +303,7 @@ class AjaxLoginForm extends LoginForm {
 		$returnto = $wgRequest->getVal( 'returnto', '');
 
 		if( !($returnto == '') ){
-			$returnto = "&returnto=".$returnto;
+			$returnto = "&returnto=". wfUrlencode( $returnto );
 		}
 
 		$returntoquery = $wgRequest->getVal( 'returntoquery', '');
