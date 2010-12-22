@@ -40,7 +40,7 @@ class RelatedPagesModule extends Module {
 			wfLoadExtensionMessages( 'RelatedPages' );
 
 			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
-			$this->pages = $wgMemc->get($mKey);
+			$this->pages = $wgMemc->get($mKey); // TEST!
 			if (empty($this->pages)) {
 				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
 				$wgMemc->set($mKey, $this->pages, 3 * 3600);
