@@ -45,7 +45,7 @@ function buildTab($tab, $parser){
 	$tabName = array_shift( $arr );
 	$tabBody = $parser->recursiveTagParse( implode("=",$arr) );
 
-	$tab = '<div class="tabbertab" title='.htmlspecialchars($tabName).'>'
+	$tab = '<div class="tabbertab" title="'.htmlspecialchars($tabName).'">'
 		. '<p>'.$tabBody.'</p>'
 		. '</div>';
 
