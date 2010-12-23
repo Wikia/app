@@ -209,6 +209,8 @@ class ArticleCommentsAjax {
 			global $wgMemc;
 			
 			$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getArticleId(), 'v1' ), null);
+			// make sure our comment list is refreshed from the master RT#141861
+			$listing->getCommentPages(true, false);
 			
 			$addedComment = ArticleComment::newFromArticle($response[1]);
 			
