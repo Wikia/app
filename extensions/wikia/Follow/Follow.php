@@ -36,7 +36,8 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 $wgHooks['beforeBlogListingForm'][] = 'FollowHelper::categoryIndexer';
 
 $wgHooks['UserToggles'][] = 'FollowHelper::addExtraToggles';
-$wgHooks['beforeRenderPrefsWatchlist'][] = 'FollowHelper::renderFollowPrefs';
+
+$wgHooks['WatchlistPreferencesBefore'][] = 'FollowHelper::renderFollowPrefs';
 
 $wgHooks['UserRename::Local'][] = "FollowUserRenameLocal";
 

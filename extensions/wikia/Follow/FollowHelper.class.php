@@ -352,68 +352,143 @@ class FollowHelper {
 	 */
 
 
-	static public function renderFollowPrefs($self, $out) {
-		global $wgUser, $wgEnableWikiaFollowedPages, $wgEnotifWatchlist, $wgEnotifMinorEdits,$disableEmailPrefs,$wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
+	static public function renderFollowPrefs($user, &$defaultPreferences) {
+		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgOut;
 		wfProfileIn(__METHOD__);
-		wfLoadExtensionMessages( 'Follow' );
-		$watchlistToggles = array();
-
-		$self->mUsedToggles['hidefollowedpages'] = true;
-		$self->mUsedToggles['enotiffollowedpages']  = true;
-		$self->mUsedToggles['enotiffollowedminoredits']  = true;
-
-		$wgUser->setOption( 'enotiffollowedpages', $wgUser->getOption( 'enotifwatchlistpages' ) );
-		$wgUser->setOption( 'enotiffollowedminoredits', $wgUser->getOption( 'enotifminoredits' ) );
-
-		$out->addHTML(
-			Xml::fieldset( wfMsg( 'prefs-watchlist' ) ) .
-			$self->getToggles( $watchlistToggles )
+		
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
+		
+		$watchTypes = array(
+			'edit' => 'watchdefault'
 		);
-		if( $wgUser->isAllowed( 'createpage' ) || $wgUser->isAllowed( 'createtalk' ) ) {
-			$out->addHTML( $self->getToggle( 'watchcreations' ) );
+		// Kinda hacky
+		if( $user->isAllowed( 'createpage' ) || $user->isAllowed( 'createtalk' ) ) {
+			$watchTypes['read'] = 'watchcreations';
+		}
+	
+		foreach( $watchTypes as $action => $pref ) {
+			if( $user->isAllowed( $action ) ) {
+				$defaultPreferences[$pref] = array(
+					'type' => 'toggle',
+					'section' => 'watchlist/basic',
+					'label-message' => "tog-$pref",
+				);
+			}
 		}
 
-		if( $wgUser->isAllowed( 'edit' ) )
-			$out->addHTML( $self->getToggle( 'watchdefault' ) );
+		$defaultPreferences['enotiffollowedpages'] = array(
+			'type' => 'toggle',
+			'section' => 'watchlist/basic',
+			'label-message' => "tog-enotiffollowedpages",
+		);
+		
+		$defaultPreferences['enotiffollowedminoredits'] = array(
+			'type' => 'toggle',
+			'section' => 'watchlist/basic',
+			'label-message' => "tog-enotiffollowedminoredits",
+		);
+		
+		$defaultPreferences['hidefollowedpages'] = array(
+			'type' => 'toggle',
+			'section' => 'watchlist/basic',
+			'label-message' => "tog-hidefollowedpages",
+		);
+		
+					
+		$watchTypes = array();
 
-		$out->addHTML( ($wgEnotifWatchlist) ? $self->getToggle( 'enotiffollowedpages', false, $disableEmailPrefs ) : '');
-		$out->addHTML( ($wgEnotifWatchlist && $wgEnotifMinorEdits) ? $self->getToggle( 'enotiffollowedminoredits', false, $disableEmailPrefs ) : '');
-		$out->addHTML( $self->getToggle( 'hidefollowedpages', false  ) );
+		$watchTypes['move'] = 'watchmoves'; 
+		$watchTypes['delete'] = 'watchdeletion';
+		
+		foreach( $watchTypes as $action => $pref ) {
+			if( $user->isAllowed( $action ) ) {
+				$defaultPreferences[$pref] = array(
+					'type' => 'toggle',
+					'section' => 'watchlist/advancedwatchlist',
+					'label-message' => "tog-$pref",
+				);
+			}
+		}
+		
 
-		$out->addHTML( "<br><h2>".wfMsg('wikiafollowedpages-prefs-advanced')."</h2>" );
-		foreach( array(  'move' => 'watchmoves', 'delete' => 'watchdeletion' ) as $action => $toggle ) {
-			if( $wgUser->isAllowed( $action ) )
-				$out->addHTML( $self->getToggle( $toggle ) );
+		//wikiafollowedpages-prefs-watchlist
+		
+		## Watchlist #####################################
+		$defaultPreferences['watchlistdays'] =
+				array(
+					'type' => 'float',
+					'min' => 0,
+					'max' => 7,
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+					'help' => wfMsgHtml( 'prefs-watchlist-days-max' ),
+					'label-message' => 'prefs-watchlist-days',
+				);
+		$defaultPreferences['wllimit'] =
+				array(
+					'type' => 'int',
+					'min' => 0,
+					'max' => 1000,
+					'label-message' => 'prefs-watchlist-edits',
+					'help' => wfMsgHtml( 'prefs-watchlist-edits-max' ),
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+				);
+		$defaultPreferences['extendwatchlist'] =
+				array(
+					'type' => 'toggle',
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+					'label-message' => 'tog-extendwatchlist',
+				);
+		$defaultPreferences['watchlisthideminor'] =
+				array(
+					'type' => 'toggle',
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+					'label-message' => 'tog-watchlisthideminor',
+				);
+		$defaultPreferences['watchlisthidebots'] =
+				array(
+					'type' => 'toggle',
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+					'label-message' => 'tog-watchlisthidebots',
+				);
+		$defaultPreferences['watchlisthideown'] =
+				array(
+					'type' => 'toggle',
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+					'label-message' => 'tog-watchlisthideown',
+				);
+		$defaultPreferences['watchlisthideanons'] =
+				array(
+					'type' => 'toggle',
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+					'label-message' => 'tog-watchlisthideanons',
+				);
+		$defaultPreferences['watchlisthideliu'] =
+				array(
+					'type' => 'toggle',
+					'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+					'label-message' => 'tog-watchlisthideliu',
+				);
+		if ( $wgEnableAPI ) {
+			# Some random gibberish as a proposed default
+			$hash = sha1( mt_rand() . microtime( true ) );
+			$defaultPreferences['watchlisttoken'] =
+					array(
+						'type' => 'text',
+						'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+						'label-message' => 'prefs-watchlist-token',
+						'help' => wfMsgHtml( 'prefs-help-watchlist-token', $hash )
+					);
 		}
 
-		$watchlistToggles = array( 'watchlisthideminor', 'watchlisthidebots', 'watchlisthideown',
-			'watchlisthideanons', 'watchlisthideliu' );
-
-		// RT#48350: Spec:Prefs - Move two watchlist/followed pages options from "misc" to "followed pages"
-		global $wgUseRCPatrol;
-		if( $wgUseRCPatrol ) {
-			$watchlistToggles[] = 'watchlisthidepatrolled';
+		if ( $wgUseRCPatrol ) {
+			$defaultPreferences['watchlisthidepatrolled'] =
+					array(
+						'type' => 'toggle',
+						'section' => 'watchlist/wikiafollowedpages-prefs-watchlist',
+						'label-message' => 'tog-watchlisthidepatrolled',
+					);
 		}
 
-		// RT#47528: Watch subpages automatically
-		global $wgEnableWikiaWatchSubPages;
-		if( $wgEnableWikiaWatchSubPages ){
-			$watchlistToggles[] = 'watchlistsubpages'; 
-		}
-
-		$out->addHTML(
-			"<br><h2>".wfMsg('wikiafollowedpages-prefs-watchlist')."</h2>".
-			Xml::inputLabel( wfMsg( 'prefs-watchlist-days' ), 'wpWatchlistDays', 'wpWatchlistDays', 3, $self->mWatchlistDays ) . ' ' .
-			wfMsgHTML( 'prefs-watchlist-days-max' ) .
-			'<br />' .
-			Xml::inputLabel( wfMsg( 'prefs-watchlist-edits' ), 'wpWatchlistEdits', 'wpWatchlistEdits', 3, $self->mWatchlistEdits ) . ' ' .
-			wfMsgHTML( 'prefs-watchlist-edits-max' ) .
-			'<br /><br />' .
-			$self->getToggle( 'extendwatchlist' ).
-			$self->getToggles( $watchlistToggles )
-			 );
-
-		$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
 		wfProfileOut(__METHOD__);
 		return false;
 	}
