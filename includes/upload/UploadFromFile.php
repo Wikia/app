@@ -9,17 +9,15 @@
  */
 class UploadFromFile extends UploadBase {
 
-	const FILE_FIELD_NAME = 'wpUploadFile';
-	const DEST_FIELD_NAME = 'wpDestFile';
 
-	function initializeFromRequest( &$request, $fileField = UploadFromFile::FILE_FIELD_NAME, $destField = UploadFromFile::DEST_FIELD_NAME ) {
-		$desiredDestName = $request->getText( $destField );
+	function initializeFromRequest( &$request ) {
+		$desiredDestName = $request->getText( 'wpDestFile' );
 		if( !$desiredDestName )
-			$desiredDestName = $request->getFileName( $fileField );
+			$desiredDestName = $request->getFileName( 'wpUploadFile' );
 		return $this->initializePathInfo(
 			$desiredDestName,
-			$request->getFileTempName( $fileField ),
-			$request->getFileSize( $fileField )
+			$request->getFileTempName( 'wpUploadFile' ),
+			$request->getFileSize( 'wpUploadFile' )
 		);
 	}
 	/**
