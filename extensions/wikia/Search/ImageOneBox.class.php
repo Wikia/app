@@ -50,11 +50,10 @@ class ImageOneBox {
 		return true;
 	}
 
-	public function showImageOneBox ( &$out, $result, $terms, $num ) {
+	public static function showImageOneBox ( &$out, $result, $terms, $num ) {
 		// load dependencies (CSS and JS)
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/Search/ImageOneBox.css?{$wgStyleVersion}");
-
 		if ($num == 3) {
 			$out .= ImageOneBox::getInstance()->render();
 		}
