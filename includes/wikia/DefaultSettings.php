@@ -240,7 +240,6 @@ $wgAPIModules[ "wdelete"           ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "featuredcontent"   ] = "ApiFeaturedContent";
 $wgAPIModules[ "partnerwikiconfig" ] = "ApiPartnerWikiConfig";
 $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
-$wgAPIModules[ "imagethumb"        ] = "ApiImageThumb";
 $wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
