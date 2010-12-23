@@ -2,6 +2,7 @@
 
 /**
  * Maintenance script to provide an easy way to clear the cached <email> images
+ * -> copy this script into the maintenance directory and run it there
  *
  * @package MediaWiki
  * @subpackage Maintenance

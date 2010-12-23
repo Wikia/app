@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2005-2006 Tino Reichardt
+ * Copyright (C) 2005-2007 Tino Reichardt
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License Version 2, as
@@ -25,22 +25,24 @@
 if (!defined('MEDIAWIKI')) die();
 
 $wgEmailImage['size']=4;       /* 1..5 */
-$wgEmailImage['ugly']='*#$*ï¿½ï¿½%!'; /* some character or string */
+$wgEmailImage['ugly']='*#$*§§%!'; /* some character or string */
 
 /* image creation */
 $wgExtensionFunctions[] = "wfEmailSpecialpage";
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => 'Email-Image',
-	'author' => 'Tino Reichardt',
-	'url' => 'http://www.mcmilk.de/wiki/Category:Wiki-EmailTag'
+	'name'    => 'Email-Image',
+	'author'  => 'Tino Reichardt',
+	'version' => '0.3',
+	'url'     => 'http://www.mcmilk.de/wiki/Category:Wiki-EmailTag'
 );
 
 /* email tag */
 $wgExtensionFunctions[] = 'wfEmailTag';
 $wgExtensionCredits['parserhook'][] = array(
-	'name' => 'EmailTag',
-	'author' => 'Tino Reichardt',
-	'url' => 'http://www.mcmilk.de/wiki/Category:Wiki-EmailTag'
+	'name'    => 'EmailTag',
+	'author'  => 'Tino Reichardt',
+	'version' => '0.3',
+	'url'     => 'http://www.mcmilk.de/wiki/Category:Wiki-EmailTag'
 );
 
 function wfEmailTag() {
@@ -50,6 +52,9 @@ function wfEmailTag() {
 
 function wfEmailTagDoit($string="") {
   global $wgScript, $wgEmailImage;
+
+  $sp = Title::newFromText("Special:Email");
+  $url = $sp->getLocalURL();
 
   /* we need latin1 characters */
   $string = utf8_decode($string);
@@ -62,10 +67,9 @@ function wfEmailTagDoit($string="") {
   $string = str_rot13($string);
   $string = rawurlencode($string);
 
-  $text  = "<img src=\"$wgScript";
-  $text .= "?title=Special:Email&amp;img=";
+  $text  = "<img src=\"$url?img=";
   $text .= $string;
-  $text .= "\" alt=\"some mail\" />";
+  $text .= '" alt="some mail" />';
 
   return $text;
 }
@@ -84,7 +88,7 @@ function wfEmailSpecialpage() {
     function execute() {
       global $wgOut, $wgRequest, $wgEmailImage;
       $size=4;
-
+      
       $text = $wgRequest->getText('img');
 
       /* decode this rubbish */
