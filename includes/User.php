@@ -2091,13 +2091,15 @@ class User {
 				}
 			}
 
-			# Wikia hook - allow extensions to modify value returned by User::getOption()
-			# make local copy of option value, so hook won't modify value read from DB and store in object
+			/* Wikia change begin - @author: Macbre */
+			/* allow extensions to modify value returned by User::getOption() */
+			/* make local copy of option value, so hook won't modify value read from DB and store in object */
 			$value = $this->mOptions[$oname];
 
 			wfRunHooks( 'UserGetOption', array( $this->mOptions, $oname, &$value ) );
 
-			return $this->mOptions[$oname];
+			return $value;
+			/* Wikia change end */
 		} else {
 			return $defaultOverride;
 		}
@@ -2404,9 +2406,9 @@ class User {
 
 			$this->mSkin =& Skin::newFromKey( $userSkin );
 			*/
-			
+
 			wfRunHooks('AlternateGetSkin', array (&$this));
-			
+
 			wfProfileOut( __METHOD__ );
 		}
 		if( $t || !$this->mSkin->getTitle() ) {
@@ -2555,7 +2557,7 @@ class User {
 		return $s;
 	}
 	/** Wikia Change - end - bringing this function back (don't see any harm in it and it's used in a few places) **/
-	
+
 	/**
 	 * Set this user's options from an encoded string
 	 * @param $str \string Encoded options to import
