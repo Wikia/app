@@ -96,7 +96,7 @@ public class FBConnectTest extends BaseTest {
 		session().waitForPageToLoad(TIMEOUT);
 		waitForElement("//li/a[text() = \"Facebook Connect\"]");
 		session().click("//li/a[text() = \"Facebook Connect\"]"); // select the correct tab
-		assertTrue(session().isElementPresent("//fieldset[@class='prefsection']/*/a/span[@class='fb_button_text']"));
+		assertTrue(session().isElementPresent("//fieldset[@class='prefsection']//a/span[@class='fb_button_text']"));
 	}
 
 	private void testButtonOnLoginAndConnect() throws Exception {

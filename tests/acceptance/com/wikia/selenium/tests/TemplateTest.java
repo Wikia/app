@@ -39,7 +39,12 @@ public class TemplateTest extends BaseTest {
 	@Test(groups="oasis")
 	public void testEnsureImportantElementsOfExistentTemplateTalkPageExist() throws Exception {
 		login();
-		session().open("index.php?title=Template_talk:Infobox");
+		try {
+			session().open("index.php?title=Template_talk:Infobox");
+		} catch (SeleniumException se) {
+			editArticle("Template_talk:Infobox", "talk template");
+			session().open("index.php?title=Template_talk:Infobox");
+		}
 		assertTrue(session().getLocation().contains("index.php?title=Template_talk:Infobox"));
 		
 		// page title's prefix

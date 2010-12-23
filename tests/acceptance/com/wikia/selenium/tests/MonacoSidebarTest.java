@@ -61,7 +61,7 @@ public class MonacoSidebarTest extends BaseTest {
 				"//dl[@class=\"widget WidgetCommunity\"]"));
 
 		// check presence of items in widget - at least one
-		assertTrue(session().isElementPresent("//dl[@class='widget WidgetCommunity']//div[@class='community_body']/ul[count(li[@class='activity-type-edit'])>0]"));
+		assertTrue(session().isElementPresent("//dl[@class='widget WidgetCommunity']//div[@class='community_body']/ul[count(li[contains(@class,'activity-type-edit')])>0]"));
 
 	}
 

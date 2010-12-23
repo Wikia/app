@@ -18,6 +18,6 @@ public class SearchResultsTest extends BaseTest {
 		
 		// check what page you land on
 		assertTrue(session().getLocation().contains("wiki/Main_page"));
-		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Main Page");
+		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Main page");
 	}
 }

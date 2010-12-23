@@ -26,7 +26,7 @@ public class SearchTest extends BaseTest {
 		}
 
 		session().waitForPageToLoad(TIMEOUT);
-		assertTrue(session().isTextPresent("No search results for that term."));
+		assertTrue(session().isTextPresent("There were no results matching the query."));
 	}
 	
 	@Test(groups={"oasis", "CI"})

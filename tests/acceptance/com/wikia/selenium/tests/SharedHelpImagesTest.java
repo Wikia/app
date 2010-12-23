@@ -38,7 +38,6 @@ public class SharedHelpImagesTest extends BaseTest {
 		// does the shared help article have any images at all?
 		assertTrue( session().isElementPresent("//div[@class='sharedHelp']//a[@class=\"image\"]") );
 
-		// TODO: maybe do a regex check here instead of a hardcoded string
-		assertEquals( session().getAttribute( "//div[@class='sharedHelp']//a[@class=\"image\"]@href" ), "http://help.wikia.com/wiki/File:Youtube1.png" );
+		assertTrue( session().getAttribute( "//div[@class='sharedHelp']//a[@class=\"image\"]@href" ).contains("Youtube1.png") );
 	}
 }

@@ -12,7 +12,7 @@ public class SpecialVersionTest extends BaseTest {
 		session().open("index.php?title=Special:Version");
 
 		assertTrue(session().getLocation().contains("index.php?title=Special:Version"));
-		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Version");
+		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Special:Version");
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h2"), "Special page");
 
 		assertTrue(session().isElementPresent("//table[@id='sv-software']/tbody/tr[2]/td[2]"));
