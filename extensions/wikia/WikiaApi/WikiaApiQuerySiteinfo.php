@@ -16,13 +16,15 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 	private $variablesList = array('wgDefaultSkin','wgDefaultTheme','wgAdminSkin','wgArticlePath','wgScriptPath','wgScript','wgServer','wgLanguageCode','wgCityId','wgContentNamespaces','wgWikiaGlobalUserGroups');
 
 	public function __construct($query, $moduleName) {
+		global $wgHooks;
+		$wgHooks['UseExternalQuerySiteInfo'][] = 'WikiaApiQuerySiteinfo::useExternalQuerySiteInfo';
 		parent :: __construct($query, $moduleName, 'si');
-		$this->showError = true;
 	}
 
 	public function execute() {
 		global $wgCityId;
 		$params = $this->extractRequestParams();
+	
 		$this->cityId = $wgCityId;
 		foreach ($params['prop'] as $p) {
 			switch ($p) {
@@ -114,8 +116,13 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 
 	protected function getExamples() {
 		return array_merge(
-				parent::getExamples(),
-				array('api.php?action=query&meta=siteinfo&siprop=general|namespaces|statistics|variables|category|wikidesc')
+			parent::getExamples(),
+			array('api.php?action=query&meta=siteinfo&siprop=general|namespaces|statistics|variables|category|wikidesc')
 		);
+	}
+	
+	static public function useExternalQuerySiteInfo ( $obj ) {
+		$obj->noErrors = true;
+		return true;
 	}
 }
