@@ -2,8 +2,10 @@ $(function(){
     $('.ajax-unwatch').click(Follow.uwatch);
     $('.ajax-show-more').click(Follow.showMore);
     $('.ajax-show-more').show();
-    $('#enotiffollowedminoredits,#enotiffollowedpages,#enotifminoredits,#enotifwatchlistpages').click(Follow.syncUserPrefs);
 
+    $('#mw-input-enotiffollowedminoredits,#mw-input-enotiffollowedpages,#mw-input-enotifminoredits,#mw-input-enotifwatchlistpages').click(Follow.syncUserPrefsEvent);
+    Follow.syncUserPrefs($('#mw-input-enotifminoredits'));
+    Follow.syncUserPrefs($('#mw-input-enotifwatchlistpages'));
     $('.watched-list li').hover( Follow.hover,Follow.unhover );
     $('.title-link').click(Follow.tracklick);
 
@@ -90,13 +92,16 @@ Follow.showMore = function(e) {
     return false;
 }
 
-Follow.syncUserPrefs = function(e) {
+Follow.syncUserPrefsEvent = function(e) {
+	Follow.syncUserPrefs($(e.target));
+}
+
+Follow.syncUserPrefs = function(target) {
     var syncArray  = new Array();
-    syncArray[ 'enotifminoredits' ] = 'enotiffollowedminoredits';
-    syncArray[ 'enotifwatchlistpages' ] = 'enotiffollowedpages';
-    syncArray[ 'enotiffollowedminoredits' ] = 'enotifminoredits';
-    syncArray[ 'enotiffollowedpages' ] =  'enotifwatchlistpages';
-    var target = $(e.target);
+    syncArray[ 'mw-input-enotifminoredits' ] = 'mw-input-enotiffollowedminoredits';
+    syncArray[ 'mw-input-enotifwatchlistpages' ] = 'mw-input-enotiffollowedpages';
+    syncArray[ 'mw-input-enotiffollowedminoredits' ] = 'mw-input-enotifminoredits';
+    syncArray[ 'mw-input-enotiffollowedpages' ] =  'mw-input-enotifwatchlistpages';
     var dst = $( '#' + syncArray[target.attr('id')] );
     dst.attr('checked', target.attr('checked'));
 }

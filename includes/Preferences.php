@@ -809,7 +809,12 @@ class Preferences {
 		}
 	}
 
-	static function watchlistPreferences( $user, &$defaultPreferences ) {
+	static function watchlistPreferences( $user, &$defaultPreferences ) {		
+
+		if(!wfRunHooks( 'WatchlistPreferencesBefore', array($user, &$defaultPreferences ) )) {
+			return true;
+		}
+		
 		global $wgUseRCPatrol, $wgEnableAPI;
 		## Watchlist #####################################
 		$defaultPreferences['watchlistdays'] =

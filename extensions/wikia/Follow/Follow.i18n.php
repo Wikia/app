@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'follow-desc' => 'Improvements for the watchlist functionality',
+	'prefs-basic' => 'Basic options',
 	'wikiafollowedpages-special-heading-category' => "Categories ($1)",
 	'wikiafollowedpages-special-heading-article' => "Articles ($1)",
 	'wikiafollowedpages-special-heading-blogs' => "Blogs and posts ($1)",
@@ -36,8 +37,8 @@ Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'tog-enotiffollowedpages' => 'E-mail me when a page I am following is changed',
 	'tog-enotiffollowedminoredits' => 'E-mail me for minor edits to pages I am following',
 
-	'wikiafollowedpages-prefs-advanced' => 'Advanced options',
-	'wikiafollowedpages-prefs-watchlist' => 'Watchlist only',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Advanced options',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Watchlist only',
 
 	'tog-hidefollowedpages' => 'Make my followed pages lists private',
 	'follow-categoryadd-summary' => "Page added to category", //TODO check this
