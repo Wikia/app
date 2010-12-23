@@ -226,7 +226,7 @@ class SpecialSearch {
 			$wgOut->addHTML( $this->formHeader($term, 0, 0));
 			if( $this->searchAdvanced ) {
 				$wgOut->addHTML( $this->powerSearchBox( $term ) );
-			} 
+			}
 			$wgOut->addHTML( '</form>' );
 			// Empty query -- straight view of search form
 			wfProfileOut( __METHOD__ );
@@ -238,7 +238,7 @@ class SpecialSearch {
 		$textMatchesNum = $textMatches ? $textMatches->numRows() : 0;
 		// Total initial query matches (possible false positives)
 		$num = $titleMatchesNum + $textMatchesNum;
-		
+
 		// Get total actual results (after second filtering, if any)
 		$numTitleMatches = $titleMatches && !is_null( $titleMatches->getTotalHits() ) ?
 			$titleMatches->getTotalHits() : $titleMatchesNum;
@@ -251,13 +251,13 @@ class SpecialSearch {
 			$totalRes += $titleMatches->getTotalHits();
 		if($textMatches && !is_null( $textMatches->getTotalHits() ))
 			$totalRes += $textMatches->getTotalHits();
-			
+
 		// show number of results and current offset
 		$wgOut->addHTML( $this->formHeader($term, $num, $totalRes));
 		if( $this->searchAdvanced ) {
 			$wgOut->addHTML( $this->powerSearchBox( $term ) );
 		}
-		
+
 		$wgOut->addHtml( Xml::closeElement( 'form' ) );
 		$wgOut->addHtml( "<div class='searchresults'>" );
 
@@ -274,7 +274,7 @@ class SpecialSearch {
 			wfRunHooks( 'SpecialSearchResults', array( $term, &$titleMatches, &$textMatches ) );
 		} else {
 			wfRunHooks( 'SpecialSearchNoResults', array( $term ) );
-		} 
+		}
 
 		if( $titleMatches ) {
 			if( $numTitleMatches > 0 ) {
@@ -320,7 +320,7 @@ class SpecialSearch {
 
 	protected function showCreateLink( $t ) {
 		global $wgOut;
-		
+
 		// show direct page/create link if applicable
 		$messageName = null;
 		if( !is_null($t) ) {
@@ -329,7 +329,7 @@ class SpecialSearch {
 			} elseif( $t->userCan( 'create' ) ) {
 				$messageName = 'searchmenu-new';
 			}
-		} 
+		}
 		if( $messageName ) {
 			$wgOut->addWikiMsg( $messageName, wfEscapeWikiText( $t->getPrefixedText() ) );
 		} else {
@@ -349,12 +349,12 @@ class SpecialSearch {
 			$this->active = 'advanced';
 		else {
 			$profiles = $this->getSearchProfiles();
-			
+
 			foreach( $profiles as $key => $data ) {
 				if ( $this->namespaces == $data['namespaces'] && $key != 'advanced')
 					$this->active = $key;
 			}
-			
+
 		}
 		# Should advanced UI be used?
 		$this->searchAdvanced = ($this->active === 'advanced');
@@ -419,8 +419,13 @@ class SpecialSearch {
 		}
 		$off = $this->offset + 1;
 		$out .= "<ul class='mw-search-results'>\n";
+		$num = 0;
 		while( $result = $matches->next() ) {
+			// Wikia change /Begin (ADi)
+			wfRunHooks( 'SpecialSearchShowHit', array( &$out, $result, $terms, $num ) );
+			// Wikia change /End (ADi)
 			$out .= $this->showHit( $result, $terms );
+			$num++;
 		}
 		$out .= "</ul>\n";
 
@@ -451,9 +456,9 @@ class SpecialSearch {
 
 		if( $titleSnippet == '' )
 			$titleSnippet = null;
-		
+
 		$link_t = clone $t;
-		
+
 		wfRunHooks( 'ShowSearchHitTitle',
 					array( &$link_t, &$titleSnippet, $result, $terms, $this ) );
 
@@ -758,7 +763,7 @@ class SpecialSearch {
 		}
 		$rows = array_values( $rows );
 		$numRows = count( $rows );
-		
+
 		// Lays out namespaces in multiple floating two-column tables so they'll
 		// be arranged nicely while still accommodating different screen widths
 		$namespaceTables = '';
@@ -830,11 +835,11 @@ class SpecialSearch {
 				"document.getElementById('$id').focus();" .
 			"});" );
 	}
-	
+
 	protected function getSearchProfiles() {
 		// Builds list of Search Types (profiles)
 		$nsAllSet = array_keys( SearchEngine::searchableNamespaces() );
-		
+
 		$profiles = array(
 			'default' => array(
 				'message' => 'searchprofile-articles',
@@ -869,21 +874,21 @@ class SpecialSearch {
 				'parameters' => array( 'advanced' => 1 ),
 			)
 		);
-		
+
 		wfRunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
 
 		foreach( $profiles as $key => &$data ) {
 			sort($data['namespaces']);
 		}
-		
+
 		return $profiles;
 	}
 
 	protected function formHeader( $term, $resultsShown, $totalNum ) {
 		global $wgContLang, $wgLang;
-		
+
 		$out = Xml::openElement('div', array( 'class' =>  'mw-search-formheader' ) );
-		
+
 		$bareterm = $term;
 		if( $this->startsWithImage( $term ) ) {
 			// Deletes prefixes
@@ -892,7 +897,7 @@ class SpecialSearch {
 
 
 		$profiles = $this->getSearchProfiles();
-		
+
 		// Outputs XML for Search Types
 		$out .= Xml::openElement( 'div', array( 'class' => 'search-types' ) );
 		$out .= Xml::openElement( 'ul' );
@@ -909,7 +914,7 @@ class SpecialSearch {
 					$profile['namespaces'],
 					wfMsg( $profile['message'] ),
 					wfMsg( $profile['tooltip'], $tooltipParam ),
-					isset( $profile['parameters'] ) ? $profile['parameters'] : array() 
+					isset( $profile['parameters'] ) ? $profile['parameters'] : array()
 				)
 			);
 		}
@@ -937,7 +942,7 @@ class SpecialSearch {
 		}
 		$out .= Xml::element( 'div', array( 'style' => 'clear:both' ), '', false );
 		$out .= Xml::closeElement('div');
-		
+
 		// Adds hidden namespace fields
 		if ( !$this->searchAdvanced ) {
 			foreach( $this->namespaces as $ns ) {
@@ -962,7 +967,7 @@ class SpecialSearch {
 		) ) . "\n";
 		$out .= Html::hidden( 'fulltext', 'Search' ) . "\n";
 		$out .= Xml::submitButton( wfMsg( 'searchbutton' ) ) . "\n";
-		return $out . $this->didYouMeanHtml;		
+		return $out . $this->didYouMeanHtml;
 	}
 
 	/** Make a search link with some target namespaces */
@@ -986,7 +991,7 @@ class SpecialSearch {
 			'a',
 			array(
 				'href' => $st->getLocalURL( $stParams ),
-				'title' => $tooltip, 
+				'title' => $tooltip,
 				'onmousedown' => 'mwSearchHeaderClick(this);',
 				'onkeydown' => 'mwSearchHeaderClick(this);'),
 			$label
