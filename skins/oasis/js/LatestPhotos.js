@@ -56,7 +56,6 @@ var UploadPhotos = {
 					clearTimeout(UploadPhotos.dftimer);
 				}
 				UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
-				console.log('foo');
 			});
 			$.tracker.byStr('action/uploadphoto/dialog');
 		});
