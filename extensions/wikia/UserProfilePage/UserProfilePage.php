@@ -25,6 +25,14 @@ $wgExtensionFunctions[] = 'wfUserProfilePageInit';
 
 $wgUserProfilePagesNamespaces = array();
 
+
+/**
+ * message file
+ */
+$wgExtensionMessagesFiles['UserProfilePage'] = dirname(__FILE__) . '/UserProfilePage.i18n.php';
+//$wgExtensionMessagesFiles['MyHome'] = dirname($dir) . '/MyHome/MyHome.i18n.php';
+
+
 function wfUserProfilePageInit() {
 	global $wgHooks, $wgExtensionMessagesFiles, $wgAutoloadClasses, $wgAjaxExportList, $wgUserProfilePagesNamespaces;
 
@@ -39,15 +47,6 @@ function wfUserProfilePageInit() {
 	$wgHooks[ 'ArticleSaveComplete' ][] = 'UserProfilePageHelper::onArticleSaveComplete';
 	$wgHooks[ 'ArticleDeleteComplete' ][] = 'UserProfilePageHelper::onArticleDeleteComplete';
 	$wgHooks[ 'SpecialMovepageAfterMove' ][] = 'UserProfilePageHelper::onSpecialMovepageAfterMove';
-
-	/**
-	 * messages file
-	 */
-	$wgExtensionMessagesFiles['UserProfilePage'] = $dir . 'UserProfilePage.i18n.php';
-	$wgExtensionMessagesFiles['MyHome'] = dirname($dir) . '/MyHome/MyHome.i18n.php';
-
-	// we have to load extension messages here in order to Special:CreateFromTemplate work properly
-	wfLoadExtensionMessages('UserProfilePage');
 
 	/**
 	 * classes
