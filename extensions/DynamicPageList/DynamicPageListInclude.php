@@ -100,10 +100,10 @@
 
 class DPLInclude {
 
-	##############################################################
+	# #############################################################
 	# To do transclusion from an extension, we need to interact with the parser
 	# at a low level.  This is the general transclusion functionality
-	##############################################################
+	# #############################################################
 
 	// Register what we're working on in the parser, so we don't fall into a trap.
 	public static function open( $parser, $part1 ) {
@@ -132,11 +132,9 @@ class DPLInclude {
 	 * return values so that edit sections will resolve correctly.
 	 */
 	private static function parse( $parser, $title, $text, $part1, $skiphead = 0,
-		$recursionCheck = true, $maxLength = -1, $link = '',
+		$recursionCheck = true, $maxLength = - 1, $link = '',
 		$trim = false, $skipPattern = array()
 	) {
-		global $wgVersion;
-
 		// if someone tries something like<section begin=blah>lst only</section>
 		// text, may as well do the right thing.
 		$text = str_replace( '</section>', '', $text );
@@ -147,10 +145,8 @@ class DPLInclude {
 		}
 
 		if ( self::open( $parser, $part1 ) ) {
-			// Handle recursion here, so we can break cycles.  Although we can't do
-			// feature detection here, r18473 was only a few weeks before the
-			// release, so this is close enough.
-			if( version_compare( $wgVersion, '1.9' ) < 0 || $recursionCheck == false ) {
+			// Handle recursion here, so we can break cycles.
+			if ( $recursionCheck == false ) {
 				$text = $parser->preprocess( $text, $parser->mTitle, $parser->mOptions );
 				self::close( $parser, $part1 );
 			}
@@ -164,14 +160,14 @@ class DPLInclude {
 				return $text;
 			}
 		} else {
-			return '[[' . $title->getPrefixedText() . ']]' . 
+			return '[[' . $title->getPrefixedText() . ']]' .
 			'<!-- WARNING: LST loop detected -->';
 		}
 	}
 
-	##############################################################
+	# #############################################################
 	# And now, the labeled section transclusion
-	##############################################################
+	# #############################################################
 
 	// The section markers aren't paired, so we only need to remove them.
 	# this function doesn't seem to be in use.  remove?
@@ -298,7 +294,7 @@ class DPLInclude {
 
 		$brackets = 0;
 		$cbrackets = 0;
-		$n0 = -1;
+		$n0 = - 1;
 		$nb = 0;
 		for ( $i = 0; $i < $limit; $i++ ) {
 			$c = $text[$i];
@@ -349,7 +345,7 @@ class DPLInclude {
 
 			if ( $noMatches > 0 ) {
 				// calculate tag count (ignoring nesting)
-				foreach ( $matches[1] as $mmInx => $mm ) {
+				foreach ( $matches[1] as $mm ) {
 					if ( $mm[0] == '/' ) {
 						$tags[substr( $mm, 1 )] --;
 					} else {
@@ -357,7 +353,7 @@ class DPLInclude {
 					}
 				}
 				// append missing closing tags - should the tags be ordered by precedence ?
-				foreach( $tags as $tagName => $level ) {
+				foreach ( $tags as $tagName => $level ) {
 					while ( $level > 0 ) {
 						// avoid empty ref tag
 						if ( $tagName == 'ref' && substr( $cut, strlen( $cut ) - 5 ) == '<ref>' ) {
@@ -382,7 +378,7 @@ class DPLInclude {
 	}
 
 	public static function includeHeading( $parser, $page = '', $sec = '',
-		$to = '', &$sectionHeading, $recursionCheck = true, $maxLength = -1,
+		$to = '', &$sectionHeading, $recursionCheck = true, $maxLength = - 1,
 		$link = 'default', $trim = false, $skipPattern = array() )
 	{
 	  $output = array();
@@ -400,8 +396,8 @@ class DPLInclude {
 
 	// section inclusion - include all matching sections (return array)
 	public static function extractHeadingFromText( $parser, $page, $title,
-		$text, $sec = '', $to = '', &$sectionHeading, $recursionCheck = true, 
-		$maxLength = -1, $cLink = 'default', $trim = false, $skipPattern = array()
+		$text, $sec = '', $to = '', &$sectionHeading, $recursionCheck = true,
+		$maxLength = - 1, $cLink = 'default', $trim = false, $skipPattern = array()
 	) {
 		$continueSearch = true;
 		$n = 0;
@@ -412,11 +408,11 @@ class DPLInclude {
 			$nr = substr( $sec, 1 );
 		}
 		if ( preg_match( '/^%0$/', $sec ) ) {
-			$nr = -2; // transclude text before the first section
+			$nr = - 2; // transclude text before the first section
 		}
 
 		// if the section name starts with a # or with a @ we use it as regexp, otherwise as plain string
-		$isPlain=true;
+		$isPlain = true;
 		if ( $sec != '' && ( $sec[0] == '#' || $sec[0] == '@' ) ) {
 			$sec = substr( $sec, 1 );
 			$isPlain = false;
@@ -438,11 +434,11 @@ class DPLInclude {
 				}
 				if ( preg_match( "/$pat/im", $text, $m, PREG_OFFSET_CAPTURE ) ) {
 					$mata = array();
-					$no_parenthesis=preg_match_all( '/\(/', $pat, $mata );
+					$no_parenthesis = preg_match_all( '/\(/', $pat, $mata );
 					$begin_off = $m[$no_parenthesis][1];
 					$head_len = strlen( $m[1][0] );
 					$headLine = trim( $m[0][0], "\n =\t" );
-				} elseif ( $nr == -2 ) {
+				} elseif ( $nr == - 2 ) {
 					$m[1][1] = strlen( $text ) + 1; // take whole article if no heading found
 				} else {
 					// match failed
@@ -452,7 +448,7 @@ class DPLInclude {
 			// create a link symbol (arrow, img, ...) in case we have to cut the text block to maxLength
 			$link = $cLink;
 			if ( $link == 'default' ) {
-				$link = ' [[' . $page . '#' . $headLine . '|..&rarr;]]';
+				$link = ' [[' . $page . '#' . $headLine . '|..→]]';
 			} elseif ( strstr( $link, 'img=' ) != false ) {
 				$link = str_replace(
 					'img=',
@@ -464,9 +460,9 @@ class DPLInclude {
 			} else {
 				$link = str_replace( '%SECTION%', $page . '#' . $headLine, $link );
 			}
-			if ( $nr == -2 ) {
+			if ( $nr == - 2 ) {
 				// output text before first section and done
-				$piece = substr( $text, 0, $m[1][1]-1 ); 
+				$piece = substr( $text, 0, $m[1][1] - 1 );
 				$output[0] = self::parse( $parser, $title, $piece,
 					"#lsth:${page}|${sec}", 0, $recursionCheck, $maxLength,
 					$link, $trim, $skipPattern
@@ -485,7 +481,7 @@ class DPLInclude {
 					$pat = '^(={1,6})\s*' . str_replace( '/', '\/', $to ) . '\s*\1\s*$';
 				}
 				if ( preg_match( "/$pat/im", $text, $mm, PREG_OFFSET_CAPTURE, $begin_off ) ) {
-					$end_off = $mm[0][1]-1;
+					$end_off = $mm[0][1] - 1;
 				}
 			}
 			if ( !isset( $end_off ) ) {
@@ -495,9 +491,9 @@ class DPLInclude {
 					$pat = '^(={1,' . $head_len . '})(?!=)\s*.*?\1\s*$';
 				}
 				if ( preg_match( "/$pat/im", $text, $mm, PREG_OFFSET_CAPTURE, $begin_off ) ) {
-					$end_off = $mm[0][1]-1;
+					$end_off = $mm[0][1] - 1;
 				} elseif ( $sec == '' ) {
-					$end_off = -1;
+					$end_off = - 1;
 				}
 			}
 
@@ -505,7 +501,7 @@ class DPLInclude {
 			wfDebug( "LSTH: head offset = $nhead" );
 
 			if ( isset( $end_off ) ) {
-				if ( $end_off == -1 ) {
+				if ( $end_off == - 1 ) {
 					return $output;
 				}
 				$piece = substr( $text, $begin_off, $end_off - $begin_off );
@@ -527,8 +523,8 @@ class DPLInclude {
 
 			if ( isset( $m[0][0] ) ) {
 				$sectionHeading[$n] = $headLine;
-				//$sectionHeading[$n] = preg_replace( "/^=+\s*/", '', $m[0][0] );
-				//$sectionHeading[$n] = preg_replace( "/\s*=+\s*$/", '', $sectionHeading[$n] );
+				// $sectionHeading[$n] = preg_replace( "/^=+\s*/", '', $m[0][0] );
+				// $sectionHeading[$n] = preg_replace( "/\s*=+\s*$/", '', $sectionHeading[$n] );
 			} else {
 				// $sectionHeading[$n] = '';
 				$sectionHeading[0] = $headLine;
@@ -542,7 +538,7 @@ class DPLInclude {
 				);
 				break;
 			}
-			if ( $nr == -1 ) {
+			if ( $nr == - 1 ) {
 				if ( !isset( $end_off ) ) {
 					// output last section and done
 					$output[0] = self::parse( $parser, $title, $piece,
@@ -580,7 +576,7 @@ class DPLInclude {
 		$text = preg_replace( '/<!--.*?-->/s', '', $parser->fetchTemplate( $title ) );
 		$altNamespace = '';  // alternate namespace for phantom templates
 
-		if ( $template1 != '' && $template1[0]=='#') {
+		if ( $template1 != '' && $template1[0] == '#' ) {
 			// --------------------------------------------- looking for a parser function call
 			$template1 = substr( $template1, 1 );
 			$template2 = substr( $template2, 1 );
@@ -592,7 +588,7 @@ class DPLInclude {
 				$text
 			);
 			$tCalls = preg_split( '/°³²/', ' ' . $text2 );
-			foreach( $tCalls as $i => $tCall ) {
+			foreach ( $tCalls as $i => $tCall ) {
 				if ( ( $n = strpos( $tCall, ':' ) ) !== false ) {
 					$tCalls[$i][$n] = ' ';
 				}
@@ -609,7 +605,7 @@ class DPLInclude {
 				$text
 			);
 			$tCalls = preg_split( '/°³²/', ' ' . $text2 );
-			foreach( $tCalls as $i => $tCall ) {
+			foreach ( $tCalls as $i => $tCall ) {
 				$tCalls[$i] = preg_replace(
 					'/\<\s*\/' . $template1 . '\s*\>.*/is', '}}', $tCall
 				);
@@ -664,16 +660,16 @@ class DPLInclude {
 				// if parameters are required directly: return empty columns
 				if ( count( $extractParm ) > 1 ) {
 					$output[0] = $dpl->formatTemplateArg(
-						'', $dplNr, 0, true, -1, $article
+						'', $dplNr, 0, true, - 1, $article
 					);
 					for ( $i = 1; $i < count( $extractParm ); $i++ ) {
 						$output[0] .= "\n|" . $dpl->formatTemplateArg(
-							'', $dplNr, $i, true, -1, $article
+							'', $dplNr, $i, true, - 1, $article
 						);
 					}
 				} else {
 					$output[0] = $dpl->formatTemplateArg(
-						'', $dplNr, 0, true, -1, $article
+						'', $dplNr, 0, true, - 1, $article
 					);
 				}
 			} else {
@@ -689,11 +685,11 @@ class DPLInclude {
 		}
 
 		$output[0] = '';
-		$n = -2;
+		$n = - 2;
 		// loop for all template invocations
 		$firstCall = true;
 		foreach ( $tCalls as $iii => $tCall ) {
-			if ( $n == -2 ) {
+			if ( $n == - 2 ) {
 				$n++;
 				continue;
 			}
@@ -714,7 +710,7 @@ class DPLInclude {
 					}
 					if ( $cbrackets == 0 ) {
 						// if we must match a condition: test against it
-						if ( ( $mustMatch == '' || preg_match( $mustMatch, substr( $templateCall, 0, $i - 1 ) ) ) && 
+						if ( ( $mustMatch == '' || preg_match( $mustMatch, substr( $templateCall, 0, $i - 1 ) ) ) &&
 							( $mustNotMatch == '' || !preg_match( $mustNotMatch, substr( $templateCall, 0, $i - 1 ) ) )
 						) {
 							$argChain = substr( $templateCall, 0, $i - 1 ) .
@@ -772,7 +768,7 @@ class DPLInclude {
 							$output[++$n] = '';
 							$second = false;
 							foreach ( $extractParm as $exParmKey => $exParm ) {
-								$maxlen = -1;
+								$maxlen = - 1;
 								if ( ( $limpos = strpos( $exParm, '[' ) ) > 0 && $exParm[strlen( $exParm ) - 1] == ']' ) {
 									$maxlen = intval(
 										substr(
@@ -823,7 +819,7 @@ class DPLInclude {
 									// numeric parameter
 									$np = 0;
 									foreach ( $parms as $parm ) {
-										if( strstr( $parm, '=' ) === false ) {
+										if ( strstr( $parm, '=' ) === false ) {
 											++$np;
 										}
 										if ( $np != $exParm ) {

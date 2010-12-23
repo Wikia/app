@@ -402,14 +402,14 @@
  */
 
 // changed back to global functions due to trouble with older MW installations, g.s.
-function ExtDynamicPageList__languageGetMagic( &$magicWords, $langCode ) { 
-	return ExtDynamicPageList::languageGetMagic( $magicWords, $langCode ); 
+function ExtDynamicPageList__languageGetMagic( &$magicWords, $langCode ) {
+	return ExtDynamicPageList::languageGetMagic( $magicWords, $langCode );
 }
-function ExtDynamicPageList__endReset( &$parser, $text ) { 
-	return ExtDynamicPageList::endReset( $parser, $text ); 
+function ExtDynamicPageList__endReset( &$parser, $text ) {
+	return ExtDynamicPageList::endReset( $parser, $text );
 }
-function ExtDynamicPageList__endEliminate( &$parser, $text ) { 
-	return ExtDynamicPageList::endEliminate( $parser, $text ); 
+function ExtDynamicPageList__endEliminate( &$parser, $text ) {
+	return ExtDynamicPageList::endEliminate( $parser, $text );
 }
 
 class ExtDynamicPageList {
@@ -447,7 +447,7 @@ class ExtDynamicPageList {
 	 * A 'default' key indicates the default value for the parameter.
 	 * A 'pattern' key indicates a pattern for regular expressions (that the value must match).
 	 * For some options (e.g. 'namespace'), possible values are not yet defined but will be if necessary (for debugging) 
-	 */	
+	 */
 	public static $options = array(
 		'addauthor'			=> array( 'default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on' ),
 		'addcategories'		=> array( 'default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on' ),
@@ -613,7 +613,7 @@ class ExtDynamicPageList {
 		/** 
 		 * Inline text is some wiki text used to separate list items with 'mode=inline'.
 		 */
-		'inlinetext'		   => array( 'default' => '&nbsp;-&nbsp;' ),
+		'inlinetext'		   => array( 'default' => '&#160;-&#160;' ),
 		/**
 		 * Max # characters of included page to display.
 		 * Empty value (default) means no limit.
@@ -730,13 +730,13 @@ class ExtDynamicPageList {
 		 * 'true' default
 		 * 'false'  images are shown, categories are assigned to the current document
 		 */
-		'escapelinks'		  => array( 'default' => 'true','false', 'no', 'yes', '0', '1', 'off', 'on' ),
+		'escapelinks'		  => array( 'default' => 'true', 'false', 'no', 'yes', '0', '1', 'off', 'on' ),
 		/**
 		 * by default the oage containingthe query will not be part of the result set.
 		 * This can be changed via 'skipthispage=no'. This should be used with care as it may lead to
 		 * problems which are hard to track down, esp. in combination with contents transclusion.
 		 */
-		'skipthispage'		 => array( 'default' => 'true','false', 'no', 'yes', '0', '1', 'off', 'on' ),
+		'skipthispage'		 => array( 'default' => 'true', 'false', 'no', 'yes', '0', '1', 'off', 'on' ),
 		/**
 		 * namespace= Ns1 | Ns2 | ...
 		 * [Special value] NsX='' (empty string without quotes) means Main namespace
@@ -774,7 +774,7 @@ class ExtDynamicPageList {
 		*/
 		'title<'			   => null,
 		'title>'			   => null,
-		'scroll'			   => array( 'default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on' ), 
+		'scroll'			   => array( 'default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on' ),
 		'titlematch'		   => null,
 		'titleregexp'		  => null,
 		'userdateformat'	   => null,  // depends on behaveAs... mode
@@ -829,7 +829,7 @@ class ExtDynamicPageList {
 		 * if the result set is empty; setting 'noresultsheader' to something like ' ' will suppress
 		 * the warning about empty result set.
 		 */
-		'suppresserrors'	   => array( 'default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on' ), 
+		'suppresserrors'	   => array( 'default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on' ),
 		'noresultsheader'	  => array( 'default' => '' ),
 		'noresultsfooter'	  => array( 'default' => '' ),
 		/**
@@ -891,7 +891,7 @@ class ExtDynamicPageList {
 		 * number of rows for output, default is 1
 		 * note: a "row" is a group of lines for which the heading tags defined in listseparators/format will be repeated
 		 */
-		'rows'				 => array('default' => '', 'pattern' => '/^\d+$/' ),
+		'rows'				 => array( 'default' => '', 'pattern' => '/^\d+$/' ),
 		/**
 		 * number of elements in a rows for output, default is "all"
 		 * note: a "row" is a group of lines for which the heading tags defined in listeseparators will be repeated
@@ -1129,8 +1129,8 @@ class ExtDynamicPageList {
 
 	private static function commonSetup() {
 		if ( !isset( self::$createdLinks ) ) {
-			self::$createdLinks = array( 
-				'resetLinks'=> false, 'resetTemplates' => false, 
+			self::$createdLinks = array(
+				'resetLinks' => false, 'resetTemplates' => false,
 				'resetCategories' => false, 'resetImages' => false, 'resetdone' => false , 'elimdone' => false );
 		}
 
@@ -1140,8 +1140,8 @@ class ExtDynamicPageList {
 		if ( !$title->exists() && $wgUser->isAllowed( 'edit' ) ) {
 			$article = new Article( $title );
 			$article->doEdit(
-				"<noinclude>This page was automatically created. It serves as an anchor page for ".
-				"all '''[[Special:WhatLinksHere/Template:Extension_DPL|invocations]]''' ".
+				"<noinclude>This page was automatically created. It serves as an anchor page for " .
+				"all '''[[Special:WhatLinksHere/Template:Extension_DPL|invocations]]''' " .
 				"of [http://mediawiki.org/wiki/Extension:DynamicPageList Extension:DynamicPageList (DPL)].</noinclude>",
 				$title, EDIT_NEW | EDIT_FORCE_BOT
 			);
@@ -1154,7 +1154,7 @@ class ExtDynamicPageList {
 		require_once( 'DynamicPageList.i18n.php' );
 		global $wgMessageCache;
 
-		foreach( DPL_i18n::getMessages() as $sLang => $aMsgs ) {
+		foreach ( DPL_i18n::getMessages() as $sLang => $aMsgs ) {
 			$wgMessageCache->addMessages( $aMsgs, $sLang );
 		}
 
@@ -1206,19 +1206,19 @@ class ExtDynamicPageList {
 		return true;
 	}
 
-	//------------------------------------------------------------------------------------- ENTRY parser TAG intersection
+	// ------------------------------------------------------------------------------------- ENTRY parser TAG intersection
 	public static function intersectionTag( $input, $params, $parser ) {
 		self::behaveLikeIntersection( true );
 		return self::executeTag( $input, $params, $parser );
 	}
 
-	//------------------------------------------------------------------------------------- ENTRY parser TAG dpl
+	// ------------------------------------------------------------------------------------- ENTRY parser TAG dpl
 	public static function dplTag( $input, $params, $parser ) {
 		self::behaveLikeIntersection( false );
 		return self::executeTag( $input, $params, $parser );
 	}
 
-	//------------------------------------------------------------------------------------- ENTRY parser TAG
+	// ------------------------------------------------------------------------------------- ENTRY parser TAG
 	// The callback function wrapper for converting the input text to HTML output
 	private static function executeTag( $input, $params, &$parser ) {
 		// late loading of php modules, only if needed
@@ -1254,7 +1254,7 @@ class ExtDynamicPageList {
 		return $parsedDPL;
 	}
 
-	//------------------------------------------------------------------------------------- ENTRY parser FUNCTION #dpl
+	// ------------------------------------------------------------------------------------- ENTRY parser FUNCTION #dpl
 	public static function dplParserFunction( &$parser ) {
 		// late loading of php modules, only if needed
 		self::loadModules();
@@ -1275,7 +1275,7 @@ class ExtDynamicPageList {
 		$arg_list = func_get_args();
 		for ( $i = 1; $i < $numargs; $i++ ) {
 			$p1 = $arg_list[$i];
-			$input .= str_replace( "\n", '', $p1 ) ."\n";
+			$input .= str_replace( "\n", '', $p1 ) . "\n";
 		}
 		// for debugging you may want to uncomment the following statement
 		// return str_replace('§','<','§pre>§nowiki>'.$input.'§/nowiki>§/pre>');
@@ -1300,12 +1300,13 @@ class ExtDynamicPageList {
 	}
 
 	public static function dplNumParserFunction( &$parser, $text = '' ) {
+		$num = str_replace( '&#160;', ' ', $text );
 		$num = str_replace( '&nbsp;', ' ', $text );
 		$num = preg_replace( '/([0-9])([.])([0-9][0-9]?[^0-9,])/', '\1,\3', $num );
 		$num = preg_replace( '/([0-9.]+),([0-9][0-9][0-9])\s*Mrd/', '\1\2 000000 ', $num );
 		$num = preg_replace( '/([0-9.]+),([0-9][0-9])\s*Mrd/', '\1\2 0000000 ', $num );
 		$num = preg_replace( '/([0-9.]+),([0-9])\s*Mrd/', '\1\2 00000000 ', $num );
-		$num = preg_replace( '/\s*Mrd/','000000000 ', $num );
+		$num = preg_replace( '/\s*Mrd/', '000000000 ', $num );
 		$num = preg_replace( '/([0-9.]+),([0-9][0-9][0-9])\s*Mio/', '\1\2 000 ', $num );
 		$num = preg_replace( '/([0-9.]+),([0-9][0-9])\s*Mio/', '\1\2 0000 ', $num );
 		$num = preg_replace( '/([0-9.]+),([0-9])\s*Mio/', '\1\2 00000 ', $num );
@@ -1317,19 +1318,17 @@ class ExtDynamicPageList {
 	}
 
 	public static function dplChapterParserFunction( &$parser, $text = '',
-		$heading = ' ', $maxLength = -1, $page = '?page?', $link = 'default',
+		$heading = ' ', $maxLength = - 1, $page = '?page?', $link = 'default',
 		$trim = false
 	) {
-		$arg_list = func_get_args();
 		$output = DPLInclude::extractHeadingFromText(
 			$parser, $page, '?title?', $text, $heading, '', $sectionHeading,
 			true, $maxLength, $link, $trim
 		);
 		return $output[0];
-	} 
+	}
 
 	public static function dplMatrixParserFunction( &$parser, $name, $yes, $no, $flip, $matrix ) {
-		$arg_list = func_get_args();
 		$lines = explode( "\n", $matrix );
 		$m = array();
 		$sources = array();
@@ -1342,18 +1341,18 @@ class ExtDynamicPageList {
 			$flip = true;
 		}
 		if ( $name == '' ) {
-			$name='&nbsp;';
+			$name = '&#160;';
 		}
 		if ( $yes == '' ) {
 			$yes = ' x ';
 		}
 		if ( $no == '' ) {
-			$no = '&nbsp;';
+			$no = '&#160;';
 		}
 		if ( $no[0] == '-' ) {
 			$no = " $no ";
 		}
-		foreach ( $lines as $line) {
+		foreach ( $lines as $line ) {
 			if ( strlen( $line ) <= 0 ) {
 				continue;
 			}
@@ -1368,7 +1367,7 @@ class ExtDynamicPageList {
 					$m[$from[0]] = array();
 				}
 			} elseif ( trim( $line ) != '' ) {
-				$to = preg_split(' *\~\~ *', trim( $line ), 2 );
+				$to = preg_split( ' *\~\~ *', trim( $line ), 2 );
 				if ( count( $to ) < 2 || $to[1] == '' ) {
 					$targets[$to[0]] = $to[0];
 				} else {
@@ -1386,7 +1385,7 @@ class ExtDynamicPageList {
 				$header .= "![[$from|" . $fromName . "]]\n";
 			}
 			foreach ( $targets as $to => $toName ) {
-				$targets[$to] = "[[$to|$toName]]";			
+				$targets[$to] = "[[$to|$toName]]";
 				foreach ( $sources as $from => $fromName ) {
 					if ( array_key_exists( $to, $m[$from] ) ) {
 						$targets[$to] .= "\n|$yes";
@@ -1402,7 +1401,7 @@ class ExtDynamicPageList {
 				$header .= "![[$to|" . $toName . "]]\n";
 			}
 			foreach ( $sources as $from => $fromName ) {
-				$sources[$from] = "[[$from|$fromName]]";			
+				$sources[$from] = "[[$from|$fromName]]";
 				foreach ( $targets as $to => $toName ) {
 					if ( array_key_exists( $to, $m[$from] ) ) {
 						$sources[$from] .= "\n|$yes";
@@ -1412,12 +1411,12 @@ class ExtDynamicPageList {
 				}
 				$sources[$from] .= "\n|--\n";
 			}
-			return "{|class=dplmatrix\n|$name" . "\n" . $header . "|--\n!" . join( "\n!", $sources ). "\n|}";
+			return "{|class=dplmatrix\n|$name" . "\n" . $header . "|--\n!" . join( "\n!", $sources ) . "\n|}";
 		}
-	} 
+	}
 
 	private static function dumpParsedRefs( $parser, $label ) {
-		//if (!preg_match("/Query Q/",$parser->mTitle->getText())) return '';
+		// if (!preg_match("/Query Q/",$parser->mTitle->getText())) return '';
 		echo '<pre>parser mLinks: ';
 		ob_start();
 		var_dump( $parser->mOutput->mLinks );
@@ -1449,7 +1448,7 @@ class ExtDynamicPageList {
 	public static function endReset( &$parser, $text ) {
 		if ( !self::$createdLinks['resetdone'] ) {
 			self::$createdLinks['resetdone'] = true;
-			foreach ( $parser->mOutput->mCategories as $key => $val) {
+			foreach ( $parser->mOutput->mCategories as $key => $val ) {
 				if ( array_key_exists( $key, self::$fixedCategories ) ) {
 					self::$fixedCategories[$key] = $val;
 				}
@@ -1468,7 +1467,7 @@ class ExtDynamicPageList {
 				$parser->mOutput->mImages = array();
 			}
 			// $text .= self::dumpParsedRefs($parser,"after final reset");
-			self::$fixedCategories=array();
+			self::$fixedCategories = array();
 		}
 		return true;
 	}
@@ -1479,7 +1478,7 @@ class ExtDynamicPageList {
 			// self::dumpParsedRefs($parser,"before final eliminate");
 			if ( array_key_exists( 0, self::$createdLinks ) ) {
 				foreach ( $parser->mOutput->getLinks() as $nsp => $link ) {
-					if ( !array_key_exists($nsp,self::$createdLinks[0] ) ) {
+					if ( !array_key_exists( $nsp, self::$createdLinks[0] ) ) {
 						continue;
 					}
 					// echo ("<pre> elim: created Links [$nsp] = ". count(ExtDynamicPageList::$createdLinks[0][$nsp])."</pre>\n");
@@ -1492,7 +1491,7 @@ class ExtDynamicPageList {
 				}
 			}
 			if ( isset( self::$createdLinks ) && array_key_exists( 1, self::$createdLinks ) ) {
-				foreach ( $parser->mOutput->mTemplates as $nsp => $tpl) {
+				foreach ( $parser->mOutput->mTemplates as $nsp => $tpl ) {
 					if ( !array_key_exists( $nsp, self::$createdLinks[1] ) ) {
 						continue;
 					}
@@ -1514,7 +1513,7 @@ class ExtDynamicPageList {
 			// $text .= self::dumpParsedRefs($parser,"after final eliminate".$parser->mTitle->getText());
 		}
 
-		//self::$createdLinks=array( 
+		// self::$createdLinks=array( 
 		//		'resetLinks'=> false, 'resetTemplates' => false, 
 		//		'resetCategories' => false, 'resetImages' => false, 'resetdone' => false );
 		return true;
@@ -1534,7 +1533,7 @@ class MyBug {
 			return;
 		}
 		$bugFile = fopen( $fileName, 'a' );
-		fwrite( $bugFile, "$class -------------------------------------------------------------------------------------------- $label\n");
+		fwrite( $bugFile, "$class -------------------------------------------------------------------------------------------- $label\n" );
 		if ( $msg != '' ) {
 			fwrite( $bugFile, $msg . "\n" );
 		}
