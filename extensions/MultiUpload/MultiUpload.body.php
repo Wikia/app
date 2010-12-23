@@ -44,10 +44,6 @@ class MultipleUpload extends SpecialUpload {
 	protected function loadRequest( $request ) {
 		global $wgUser, $wgMaxUploadFiles;
 
-		// let's make the parent happy
-		wfSuppressWarnings();
-		$_FILES['wpUploadFile'] = $_FILES['wpUploadFile0'];
-		wfRestoreWarnings();
 		// Guess the desired name from the filename if not provided
 		$this->mDesiredDestNames = array();
 		$this->mUploads			 = array();
