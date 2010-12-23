@@ -457,32 +457,141 @@ class TopListHelper {
 	}
 
 	static public function uploadImage() {
-		global $wgRequest;
+		global $wgRequest, $wgUser, $wgFileExtensions, $wgLang;
 
 		if ( $wgRequest->wasPosted() ) {
 			wfLoadExtensionMessages( 'TopLists' );
-			wfLoadExtensionMessages( 'WikiaPhotoGallery' );
-			$ret = WikiaPhotoGalleryUpload::uploadImage();
+			
+			$ret = array();
+			$upload = new UploadFromFile();
+			
+	                $upload->initializeFromRequest( $wgRequest );
+	                $upload->getTitle();//this call is needed, it's not an error, see UploadBase class
+			
+			$details = $upload->verifyUpload();
+			
+			if ( $details[ 'status' ] != UploadBase::OK ) {
+				$ret[ 'error' ] = true;
+				
+				switch( $details[ 'status' ] ) {
 
-			if ( !empty( $ret[ 'conflict' ] ) ) {
-				$ret['message'] = wfMsg( 'toplists-error-image-already-exists' );
-			} elseif ( !empty ( $ret[ 'success' ] ) && !empty( $ret[ 'name' ] ) ) {
-				$source = new imageServing(
-					null,
-					120,
-					array(
-						"w" => 3,
-						"h" => 2
-					)
-				);
+					/** Statuses that only require name changing **/
+					case UploadBase::MIN_LENGTH_PARTNAME:
+						$ret[ 'message' ] = wfMsgHtml( 'minlength1' );
+						break;
+					case UploadBase::ILLEGAL_FILENAME:
+						$ret[ 'message' ] = wfMsgExt(
+							'illegalfilename',
+							'parseinline',
+							$details['filtered']
+						);
+						break;
+					case UploadBase::OVERWRITE_EXISTING_FILE:
+						$ret[ 'message' ] =  wfMsgExt(
+							$details['overwrite'],
+							'parseinline'
+						);
+						break;
+					case UploadBase::FILETYPE_MISSING:
+						$ret[ 'message' ] = wfMsgExt(
+							'filetype-missing',
+							'parseinline'
+						);
+						break;
+					case UploadBase::EMPTY_FILE:
+						$ret[ 'message' ] = wfMsgHtml( 'emptyfile' );
+						break;
+					case UploadBase::FILETYPE_BADTYPE:
+						$finalExt = $details['finalExt'];
+						
+						$ret[ 'message' ] = wfMsgExt(
+							'filetype-banned-type',
+							array( 'parseinline' ),
+							htmlspecialchars( $finalExt ),
+							implode(
+								wfMsgExt(
+									'comma-separator',
+									array( 'escapenoentities' )
+								),
+								$wgFileExtensions
+							),
+							$wgLang->formatNum( count( $wgFileExtensions ) )
+						);
+						break;
+					case UploadBase::VERIFICATION_ERROR:
+						unset( $details['status'] );
+						$code = array_shift( $details['details'] );
+						$ret[ 'message' ] = wfMsgExt(
+							$code,
+							'parseinline',
+							$details['details']
+						);
+						break;
+					case UploadBase::HOOK_ABORTED:
+						if ( is_array( $details['error'] ) ) { # allow hooks to return error details in an array
+							$args = $details['error'];
+							$error = array_shift( $args );
+						} else {
+							$error = $details['error'];
+							$args = null;
+						}
 
-				$thumbs = $source->getThumbnails( array( $ret[ 'name' ] ) );
+						$ret[ 'message' ] = wfMsgExt( $error, 'parseinline', $args );
+						break;
+					default:
+						throw new MWException( __METHOD__ . ": Unknown value `{$details['status']}`" );
+				}
+			} else {
+				$warnings = $upload->checkWarnings();
+				
+				if ( $warnings ) {
+					if (
+						!empty( $warnings[ 'exists' ] ) ||
+						!empty( $warnings[ 'duplicate' ] ) ||
+						!empty( $warnings[ 'duplicate-archive' ] )
+					) {
+						$ret[ 'conflict' ] = true;
+						$ret[ 'message' ] = wfMsg( 'toplists-error-image-already-exists' );
+					} else {
+						$ret[ 'error' ] = true;
+						$ret[ 'message' ] = '';
+						
+						foreach( $warnings as $warning => $args ) {
+							if ( $args === true ) {
+								$args = array();
+							} elseif ( !is_array( $args ) ) {
+								$args = array( $args );
+							}
 
-				$pictureName = $ret[ 'name' ];
+							$ret[ 'message' ] .= wfMsgExt( $warning, 'parseinline', $args ) . "/n";
+						}
+					}
+				} else {
+					$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
+					
+					if ( !$status->isGood() ) {
+						$ret[ 'error' ] = true;
+						$ret[ 'message' ] = wfMsg( 'toplists-upload-error-unknown' );
+					} else {
+						$ret[ 'success' ] = true;
+						
+						$source = new imageServing(
+							null,
+							120,
+							array(
+								"w" => 3,
+								"h" => 2
+							)
+						);
 
-				if( !empty( $thumbs[ $ret[ 'name' ] ] ) ) {
-					$ret[ 'name' ] = $thumbs[ $pictureName ][ 'name' ];
-					$ret[ 'url' ] = $thumbs[ $pictureName ][ 'url' ];
+						$thumbs = $source->getThumbnails( array( $upload->getLocalFile() ) );
+						$pictureName = $upload->getTitle()->getText();
+
+						if( !empty( $thumbs[ $pictureName ] ) ) {
+							$ret[ 'name' ] = $thumbs[ $pictureName ][ 'name' ];
+							$ret[ 'url' ] = $thumbs[ $pictureName ][ 'url' ];
+						}
+					}
 				}
 			}
 

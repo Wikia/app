@@ -54,7 +54,7 @@
 
 		<? if ( !empty( $errors[ 'related_article_name' ] ) ) :?>
 			<? foreach( $errors[ 'related_article_name' ] as $errorMessage ) :?>
-				<p class="error"><?= htmlspecialchars( $errorMessage ) ;?></p>
+				<p class="error"><?= $errorMessage ;?></p>
 			<? endforeach ;?>
 		<? endif ;?>
 	</div>
@@ -95,7 +95,7 @@
 
 				<? if ( !empty( $errors[ "item_{$position}" ] ) ) :?>
 					<? foreach( $errors[ "item_{$position}" ] as $errorMessage ) :?>
-						<p class="error"><?= htmlspecialchars( $errorMessage ) ;?></p>
+						<p class="error"><?= $errorMessage ;?></p>
 					<? endforeach ;?>
 				<? endif ;?>
 			</li>
