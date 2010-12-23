@@ -27,7 +27,6 @@ class UploadFromUrl extends UploadBase {
 	 * @return bool
 	 */
 	public static function isEnabled() {
-		return true;
 		global $wgAllowCopyUploads;
 		return $wgAllowCopyUploads && parent::isEnabled();
 	}
