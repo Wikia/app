@@ -47,7 +47,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'DynamicPageList',
 	'author'         => '[http://de.wikipedia.org/wiki/Benutzer:Algorithmix Gero Scholz]',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:DynamicPageList_(third-party)',
-	'description'    => 'A highly flexible report generator for MediaWikis - manual and examples: see [http://semeb.com/dpldemo]',
 	'descriptionmsg' => 'dpl-desc',
   	'version'        => $DPLVersion
   );
@@ -59,4 +58,4 @@ ExtDynamicPageList::$DPLVersion = $DPLVersion;
 
 // be extremely restrictive by default: do not allow anything that goes beyond Extension:Intersection
 // can be extended by a different call to this function in LocalSettings.php after the require_once()
-ExtDynamicPageList::setFunctionalRichness(0);
+ExtDynamicPageList::setFunctionalRichness( 0 );

@@ -13,10 +13,10 @@ class DPLLogger {
 	 * Parameters from user input must be escaped for HTML *before* passing to this function
 	 */
 	function msg( $msgid ) {
-		if( $this->iDebugLevel >= ExtDynamicPageList::$debugMinLevels[$msgid] ) {
+		if ( $this->iDebugLevel >= ExtDynamicPageList::$debugMinLevels[$msgid] ) {
 			$args = func_get_args();
 			array_shift( $args );
-			$val='';
+			$val = '';
 			if ( array_key_exists( 0, $args ) ) {
 				$val = $args[0];
 			}
@@ -62,7 +62,7 @@ class DPLLogger {
 	 * @return HTML error message
 	 */
 	function msgWrongParam( $paramvar, $val ) {
-		global $wgContLang;
+
 		$msgid = DPL_i18n::WARN_WRONGPARAM;
 		switch( $paramvar ) {
 			case 'namespace':
@@ -75,7 +75,6 @@ class DPLLogger {
 				$msgid = DPL_i18n::FATAL_WRONGLINKSTO;
 				break;
 			case 'titlemaxlength':
-				$msgid = DPL_i18n::WARN_WRONGPARAM_INT;
 			case 'includemaxlength':
 				$msgid = DPL_i18n::WARN_WRONGPARAM_INT;
 				break;

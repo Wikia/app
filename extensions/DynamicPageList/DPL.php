@@ -42,7 +42,7 @@ class DPL {
 		$this->mEscapeLinks = $bescapelinks;
 		$this->mAddExternalLink = $baddexternallink;
 		$this->mIncPage = $includepage;
-		if( $includepage ) {
+		if ( $includepage ) {
 			$this->mIncSecLabels         = $includeseclabels;
 			$this->mIncSecLabelsMatch    = $includeseclabelsmatch;
 			$this->mIncSecLabelsNotMatch = $includeseclabelsnotmatch;
@@ -75,12 +75,12 @@ class DPL {
 		$this->mParserOptions = $parser->mOptions;
 		$this->mParserTitle = $parser->mTitle;
 
-		if( !empty( $headings ) ) {
+		if ( !empty( $headings ) ) {
 			if ( $iColumns != 1 || $iRows != 1 ) {
 				$hspace = 2; // the extra space for headings
 				// repeat outer tags for each of the specified columns / rows in the output
 				// we assume that a heading roughly takes the space of two articles
-				$count = count( $articles ) + $hspace * count( $headings ); 
+				$count = count( $articles ) + $hspace * count( $headings );
 				if ( $iColumns != 1 ) {
 					$iGroup = $iColumns;
 				} else {
@@ -102,7 +102,7 @@ class DPL {
 				$greml = $nsize; // remaining lines in current group
 				$g = 0;
 				$offset = 0;
-				foreach( $headings as $heading => $headingCount ) {
+				foreach ( $headings as $headingCount ) {
 					$headingLink = $articles[$nstart - $offset]->mParentHLink;
 					$this->mOutput .= $hlistmode->sItemStart;
 					$this->mOutput .= $hlistmode->sHeadingStart . $headingLink . $hlistmode->sHeadingEnd;
@@ -116,14 +116,14 @@ class DPL {
 					do {
 						$greml -= $portion;
 						// $this->mOutput .= "nsize=$nsize, portion=$portion, greml=$greml";
-						if ( $greml > 0) {
+						if ( $greml > 0 ) {
 							$this->mOutput .= $this->formatList(
 								$nstart - $offset, $portion, $iTitleMaxLen,
 								$defaultTemplateSuffix, $bIncludeTrim,
 								$iTableSortCol, $updateRules, $deleteRules
 							);
 							$nstart += $portion;
-							$portion=0;
+							$portion = 0;
 							break;
 						} else {
 							$this->mOutput .= $this->formatList(
@@ -133,7 +133,7 @@ class DPL {
 								$deleteRules
 							);
 							$nstart += ( $portion + $greml );
-							$portion = ( -$greml );
+							$portion = ( - $greml );
 							if ( $iColumns != 1 ) {
 								$this->mOutput .= "\n|valign=top|\n";
 							} else {
@@ -159,7 +159,7 @@ class DPL {
 				$this->mHListMode = $hlistmode;
 				$this->mOutput .= $hlistmode->sListStart;
 				$headingStart = 0;
-				foreach( $headings as $heading => $headingCount ) {
+				foreach ( $headings as $headingCount ) {
 					$headingLink = $articles[$headingStart]->mParentHLink;
 					$this->mOutput .= $hlistmode->sItemStart;
 					$this->mOutput .= $hlistmode->sHeadingStart . $headingLink . $hlistmode->sHeadingEnd;
@@ -196,7 +196,7 @@ class DPL {
 					$nstart, $nsize, $iTitleMaxLen, $defaultTemplateSuffix,
 					$bIncludeTrim, $iTableSortCol, $updateRules, $deleteRules
 				);
-				if ( $iColumns!= 1 ) {
+				if ( $iColumns != 1 ) {
 					$this->mOutput .= "\n|valign=top|\n";
 				} else {
 					$this->mOutput .= "\n|-\n|\n";
@@ -239,8 +239,7 @@ class DPL {
 	}
 	
 	function formatCount( $numart ) {
-		global $wgLang;
-		if( $this->mHeadingType == 'category' ) {
+		if ( $this->mHeadingType == 'category' ) {
 			$message = 'categoryarticlecount';
 		} else {
 			$message = 'dpl_articlecount';
@@ -266,7 +265,7 @@ class DPL {
 			if ( $this->mReplaceInTitle[0] != '' ) {
 				$title = preg_replace( $this->mReplaceInTitle[0], $this->mReplaceInTitle[1], $title );
 			}
-			if( isset( $titleMaxLength ) && ( strlen( $title ) > $titleMaxLength ) ) {
+			if ( isset( $titleMaxLength ) && ( strlen( $title ) > $titleMaxLength ) ) {
 				$title = substr( $title, 0, $titleMaxLength ) . '...';
 			}
 			$sTag = str_replace( '%TITLE%', $title, $sTag );
@@ -277,7 +276,7 @@ class DPL {
 			$sTag = str_replace( '%COUNT%', $article->mCounter, $sTag );
 	    }
 		if ( $article->mCounter != '' ) {
-			$sTag = str_replace( '%COUNTFS%', floor( log( $article->mCounter ) * 0.7), $sTag );
+			$sTag = str_replace( '%COUNTFS%', floor( log( $article->mCounter ) * 0.7 ), $sTag );
 	    }
 		if ( $article->mCounter != '' ) {
 			$sTag = str_replace( '%COUNTFS2%', floor( sqrt( log( $article->mCounter ) ) ), $sTag );
@@ -286,7 +285,7 @@ class DPL {
 			$sTag = str_replace( '%SIZE%', $article->mSize, $sTag );
 	    }
 		if ( $article->mSize != '' ) {
-			$sTag = str_replace( '%SIZEFS%', floor( sqrt( log( $article->mSize ) ) * 2.5 - 5), $sTag );
+			$sTag = str_replace( '%SIZEFS%', floor( sqrt( log( $article->mSize ) ) * 2.5 - 5 ), $sTag );
 	    }
 		if ( $article->mDate != '' )  {
 		    // note: we must avoid literals in the code which could create confusion when transferred via http
@@ -319,7 +318,7 @@ class DPL {
 				);
 	    	}
     	}
-		if ( $article->mImageSelTitle != '')	{
+		if ( $article->mImageSelTitle != '' )	{
 			$sTag = str_replace( '%IMAGESEL%', str_replace( '_', ' ', $article->mImageSelTitle ), $sTag );
 	    }
 		if ( strpos( $sTag, "%CAT" ) >= 0 ) {
@@ -344,7 +343,7 @@ class DPL {
 
 		$mode = $this->mListMode;
 		// categorypage-style list output mode
-		if( $mode->name == 'category' ) {
+		if ( $mode->name == 'category' ) {
 			return $this->formatCategoryList( $iStart, $iCount );
 		}
 
@@ -364,7 +363,7 @@ class DPL {
 				$img = wfFindFile( $article->mTitle->getText() );
 				if ( $img && $img->exists() ) {
 					$imageUrl = $img->getURL();
-					$imageUrl= preg_replace( '~^.*images/(.*)~', '\1', $imageUrl );
+					$imageUrl = preg_replace( '~^.*images/(.*)~', '\1', $imageUrl );
 				} else {
 					$iTitle = Title::makeTitleSafe( 6, $article->mTitle->getDBKey() );
 					$imageUrl = preg_replace(
@@ -384,7 +383,7 @@ class DPL {
 			// Page transclusion: get contents and apply selection criteria based on that contents
 			if ( $this->mIncPage ) {
 				$matchFailed = false;
-				if( empty( $this->mIncSecLabels ) || $this->mIncSecLabels[0] == '*' ) { // include whole article
+				if ( empty( $this->mIncSecLabels ) || $this->mIncSecLabels[0] == '*' ) { // include whole article
 					$title = $article->mTitle->getPrefixedText();
 					if ( $mode->name == 'userformat' ) {
 						$incwiki = '';
@@ -394,12 +393,12 @@ class DPL {
 					$text = $this->mParser->fetchTemplate( Title::newFromText( $title ) );
 					if ( ( count( $this->mIncSecLabelsMatch ) <= 0 || $this->mIncSecLabelsMatch[0] == '' ||
 						 !preg_match( $this->mIncSecLabelsMatch[0], $text ) == false ) &&
-						( count( $this->mIncSecLabelsNotMatch ) <= 0 || $this->mIncSecLabelsNotMatch[0] == '' || 
+						( count( $this->mIncSecLabelsNotMatch ) <= 0 || $this->mIncSecLabelsNotMatch[0] == '' ||
 						  preg_match( $this->mIncSecLabelsNotMatch[0], $text ) == false )
 					) {
-						if( $this->mIncMaxLen > 0 && ( strlen( $text ) > $this->mIncMaxLen ) ) {
+						if ( $this->mIncMaxLen > 0 && ( strlen( $text ) > $this->mIncMaxLen ) ) {
 							$text = DPLInclude::limitTranscludedText(
-								$text, $this->mIncMaxLen, ' [[' . $title . '|..&rarr;]]'
+								$text, $this->mIncMaxLen, ' [[' . $title . '|..→]]'
 							);
 						}
 						$this->filteredCount = $this->filteredCount + 1;
@@ -442,7 +441,6 @@ class DPL {
 					// ONE section can be marked as "dominant"; if this section contains multiple entries
 					// we will create a separate output row for each value of the dominant section
 					// the values of all other columns will be repeated
-					$secArray = array();
 
 					foreach ( $this->mIncSecLabels as $s => $sSecLabel ) {
 						$sSecLabel = trim( $sSecLabel );
@@ -454,13 +452,13 @@ class DPL {
 							$sSecLabel = '#' . $sSecLabel;
 						}
 
-						$maxlen = -1;
-						if( $sSecLabel == '-' ) {
+						$maxlen = - 1;
+						if ( $sSecLabel == '-' ) {
 							// '-' is used as a dummy parameter which will produce no output
 							// if maxlen was 0 we suppress all output; note that for matching we used the full text 
 							$secPieces = array( '' );
 							$this->formatSingleItems( $secPieces, $s, $article );
-						} elseif( $sSecLabel[0] != '{' ) {
+						} elseif ( $sSecLabel[0] != '{' ) {
 							$limpos = strpos( $sSecLabel, '[' );
 							$cutLink = 'default';
 							$skipPattern = array();
@@ -473,7 +471,7 @@ class DPL {
 								if ( array_key_exists( '1', $cutInfo ) ) {
 									$cutLink = $cutInfo[1];
 								}
-								foreach( $fmtSec as $skipKey => $skipPat ) {
+								foreach ( $fmtSec as $skipKey => $skipPat ) {
 									if ( $skipKey == count( $fmtSec ) - 1 ) {
 										continue;
 									}
@@ -481,7 +479,7 @@ class DPL {
 								}
 							}
 							if ( $maxlen < 0 ) {
-								$maxlen = -1;  // without valid limit include whole section
+								$maxlen = - 1;  // without valid limit include whole section
 							}
 						}
 
@@ -499,9 +497,9 @@ class DPL {
 
 						// if chapters are selected by number, text or regexp we get the heading from DPLInclude::includeHeading
 						$sectionHeading[0] = '';
-						if( $sSecLabel == '-' ) {
+						if ( $sSecLabel == '-' ) {
 							$secPiece[$s] = $secPieces[0];
-						} elseif( $sSecLabel[0] == '#' || $sSecLabel[0] == '@' ) {
+						} elseif ( $sSecLabel[0] == '#' || $sSecLabel[0] == '@' ) {
 							$sectionHeading[0] = substr( $sSecLabel, 1 );
 							// Uses DPLInclude::includeHeading() from LabeledSectionTransclusion extension to include headings from the page
 							$secPieces = DPLInclude::includeHeading(
@@ -513,7 +511,7 @@ class DPL {
 							if ( $mustMatch != '' || $mustNotMatch != '' ) {
 								$secPiecesTmp = $secPieces;
 								$offset = 0;
-								foreach( $secPiecesTmp as $nr => $onePiece ) {
+								foreach ( $secPiecesTmp as $nr => $onePiece ) {
 									if ( ( $mustMatch != '' && preg_match( $mustMatch, $onePiece ) == false ) ||
 										( $mustNotMatch != '' && preg_match( $mustNotMatch, $onePiece ) != false )
 									) {
@@ -538,12 +536,12 @@ class DPL {
 							}
 							$secPiece[$s] = $secPieces[0];
 							for ( $sp = 1; $sp < count( $secPieces ); $sp++ ) {
-								if ( isset( $mode->aMultiSecSeparators[$s] ) ) { 
+								if ( isset( $mode->aMultiSecSeparators[$s] ) ) {
 									$secPiece[$s] .= str_replace(
 										'%SECTION%', $sectionHeading[$sp],
 										$this->substTagParm(
 											$mode->aMultiSecSeparators[$s],
-											$pagename, $article, $imageUrl, 
+											$pagename, $article, $imageUrl,
 											$this->filteredCount, $iTitleMaxLen
 										)
 									);
@@ -558,7 +556,7 @@ class DPL {
 								break;
 							}
 
-						} elseif( $sSecLabel[0] == '{' ) {
+						} elseif ( $sSecLabel[0] == '{' ) {
 							// Uses DPLInclude::includeTemplate() from LabeledSectionTransclusion extension to include templates from the page
 							// primary syntax {template}suffix
  							$template1 = trim( substr( $sSecLabel, 1, strpos( $sSecLabel, '}' ) - 1 ) );
@@ -574,7 +572,7 @@ class DPL {
 								$mustMatch, $mustNotMatch, $this->mIncParsed,
 								$iTitleMaxLen, implode( ', ', $article->mCategoryLinks )
 							);
- 							$secPiece[$s] = implode( isset( $mode->aMultiSecSeparators[$s] )? 
+ 							$secPiece[$s] = implode( isset( $mode->aMultiSecSeparators[$s] ) ?
  								$this->substTagParm( $mode->aMultiSecSeparators[$s], $pagename, $article, $imageUrl, $this->filteredCount, $iTitleMaxLen ) : '', $secPieces
 							);
  							if ( $mode->iDominantSection >= 0 && $s == $mode->iDominantSection && count( $secPieces ) > 1 ) {
@@ -591,7 +589,7 @@ class DPL {
 								$sSecLabel, '', false, $bIncludeTrim,
 								$skipPattern
 							);
- 							$secPiece[$s] = implode( isset( $mode->aMultiSecSeparators[$s] )? 
+ 							$secPiece[$s] = implode( isset( $mode->aMultiSecSeparators[$s] ) ?
  								$this->substTagParm( $mode->aMultiSecSeparators[$s], $pagename, $article, $imageUrl, $this->filteredCount, $iTitleMaxLen ) : '',
 								$secPieces
 							);
@@ -622,7 +620,7 @@ class DPL {
 								'%SECTION%',
 								$sectionHeading[0],
 								$this->substTagParm(
-									$mode->sSectionTags[$s*2], $pagename, $article, $imageUrl, $this->filteredCount, $iTitleMaxLen));
+									$mode->sSectionTags[$s * 2], $pagename, $article, $imageUrl, $this->filteredCount, $iTitleMaxLen ) );
 						} else {
 							$septag[$s * 2] = '';
 						}
@@ -637,7 +635,7 @@ class DPL {
 								)
 							);
 						} else {
-							$septag[$s * 2 + 1]='';
+							$septag[$s * 2 + 1] = '';
 						}
 
 					}
@@ -661,17 +659,17 @@ class DPL {
 							}
 						}
 					} else {
-						foreach ( $secPiece as $s => $piece) {
+						foreach ( $secPiece as $s => $piece ) {
 							$incwiki .= $this->formatItem( $piece, $septag[$s * 2], $septag[$s * 2 + 1] );
 						}
 					}
 				}
 			} else {
 				$this->filteredCount = $this->filteredCount + 1;
-			}			
+			}
 
-			if( $i > $iStart ) {
-				$rBody .= $mode->sInline; //If mode is not 'inline', sInline attribute is empty, so does nothing
+			if ( $i > $iStart ) {
+				$rBody .= $mode->sInline; // If mode is not 'inline', sInline attribute is empty, so does nothing
 			}
 
 			// symbolic substitution of %PAGE% by the current article's name
@@ -682,9 +680,9 @@ class DPL {
 				);
 			} else {
 				$rBody .= $mode->sItemStart;
-				if( $article->mDate != '' ) {
+				if ( $article->mDate != '' ) {
 					if ( $article->myDate != '' ) {
-						if( $article->mRevision != '' ) {
+						if ( $article->mRevision != '' ) {
 							$rBody .= ' <html>' . $sk->makeKnownLinkObj(
 								$article->mTitle, htmlspecialchars( $article->myDate ),
 								'oldid=' . $article->mRevision ) . '</html> ';
@@ -692,7 +690,7 @@ class DPL {
 							$rBody	.= $article->myDate . ' ';
 						}
 					} else {
-						if( $article->mRevision != '' ) {
+						if ( $article->mRevision != '' ) {
 							$rBody .= ' <html>' . $sk->makeKnownLinkObj(
 								$article->mTitle, htmlspecialchars( $wgLang->timeanddate( $article->mDate, true ) ),
 								'oldid=' . $article->mRevision
@@ -704,14 +702,14 @@ class DPL {
 				}
 				// output the link to the article
 				$rBody .= $article->mLink;
-				if( $article->mSize != '' && $mode->name != 'userformat' ) {
+				if ( $article->mSize != '' && $mode->name != 'userformat' ) {
 					if ( strlen( $article->mSize ) > 3 ) {
 						$rBody .= ' [' . substr( $article->mSize, 0, strlen( $article->mSize ) - 3 ) . ' kB]';
 					} else {
 						$rBody .= ' [' . $article->mSize . ' B]';
 					}
 				}
-				if( $article->mCounter != '' && $mode->name != 'userformat' ) {
+				if ( $article->mCounter != '' && $mode->name != 'userformat' ) {
 					// Adapted from SpecialPopularPages::formatResult()
 					$nv = $this->msgExt(
 						'nviews',
@@ -720,21 +718,21 @@ class DPL {
 					);
 					$rBody .=  ' ' . $wgContLang->getDirMark() . '(' . $nv . ')';
 				}
-				if( $article->mUserLink != '' ) {
+				if ( $article->mUserLink != '' ) {
 					$rBody .= ' . . [[User:' . $article->mUser . '|' . $article->mUser . ']]';
-					if( $article->mComment != '' ) {
+					if ( $article->mComment != '' ) {
 						$rBody .= ' { ' . $article->mComment . ' }';
 					}
 				}
-				if( $article->mContributor != '' ) {
+				if ( $article->mContributor != '' ) {
 					$rBody .= ' . . [[User:' . $article->mContributor . '|' . $article->mContributor . " $article->mContrib]]";
 				}
 
-				if( !empty( $article->mCategoryLinks ) ) {
+				if ( !empty( $article->mCategoryLinks ) ) {
 					$rBody .= ' . . <SMALL>' . wfMsg( 'categories' ) . ': ' . implode( ' | ', $article->mCategoryLinks ) . '</SMALL>';
 				}
-				if( $this->mAddExternalLink && $article->mExternalLink != '') {
-					$rBody .= ' &rarr; ' . $article->mExternalLink;
+				if ( $this->mAddExternalLink && $article->mExternalLink != '' ) {
+					$rBody .= ' → ' . $article->mExternalLink;
 				}
 			}
 
@@ -747,7 +745,7 @@ class DPL {
 				DPLInclude::close(
 					$this->mParser, $this->mParserTitle->getPrefixedText()
 				);
-			}			
+			}
 
 			if ( $mode->name == 'userformat' ) {
 				$rBody .= $this->substTagParm(
@@ -762,7 +760,7 @@ class DPL {
 		if ( $iTableSortCol != 0 ) {
 			$sortcol = abs( $iTableSortCol ) + 1;
 			$rows = explode( "\n|-", $rBody );
-			foreach( $rows as $row ) {
+			foreach ( $rows as $row ) {
 				if ( ( $word = explode( "\n|", $row, $sortcol ) ) !== false && count( $word ) >= $sortcol ) {
 					$rowsKey[] = $word[$sortcol - 1];
 				} else {
@@ -776,7 +774,7 @@ class DPL {
 			}
 			$rows = array_combine( array_values( $rowsKey ), $rows );
 			ksort( $rows );
-			$rBody = "\n|-" . join( "\n|-", $rows ) . "\n|-";	
+			$rBody = "\n|-" . join( "\n|-", $rows ) . "\n|-";
 		}
 
 		// increase start value of ordered lists at multi-column output
@@ -835,7 +833,7 @@ class DPL {
 		$table = '';
 		$fieldFormat = '';
 
-		$nr = -1;
+		$nr = - 1;
 		foreach ( $rules as $rule ) {
 			if ( preg_match( '/^\s*#/', $rule ) > 0 ) {
 				continue;  // # is comment symbol
@@ -979,7 +977,7 @@ class DPL {
 				$tpv = $this->getTemplateParmValues( $text, $template );
 				$legendText = '';
 				if ( $legendPage != '' ) {
-					$legendTitle = '';				
+					$legendTitle = '';
 					global $wgParser, $wgUser;
 					$parser = clone $wgParser;
 					DPLInclude::text( $parser, $legendPage, $legendTitle, $legendText );
@@ -1015,7 +1013,7 @@ class DPL {
 						}
 						$myInstruction = '';
 						$myType = '';
-						foreach( $instructions as $instruct ) {
+						foreach ( $instructions as $instruct ) {
 							if ( array_key_exists( 'field', $instruct ) && $instruct['field'] == $parm ) {
 								if ( array_key_exists( 'doc', $instruct ) ) {
 									$myInstruction = $instruct['doc'];
@@ -1047,7 +1045,7 @@ class DPL {
 								);
 							}
 						}
-						$myValue = ''; 
+						$myValue = '';
 						if ( array_key_exists( $parm, $tpv[$call] ) ) {
 							$myValue = $tpv[$call][$parm];
 						}
@@ -1059,12 +1057,12 @@ class DPL {
 					}
 					$form .= "</table>\n<br /><br />";
 				}
-				foreach($hidden as $hide) {
-					$form.=	"<input type=hidden ".$hide." />";
+				foreach ( $hidden as $hide ) {
+					$form .=	"<input type=hidden " . $hide . " />";
 				}
-				$form.=	"<input type=hidden name=\"token\" value=\"".$wgUser->editToken()."\" />";
-				foreach($preview as $prev) {
-					$form.=	"<input type=submit ".$prev." /> ";
+				$form .=	"<input type=hidden name=\"token\" value=\"" . $wgUser->editToken() . "\" />";
+				foreach ( $preview as $prev ) {
+					$form .=	"<input type=submit " . $prev . " /> ";
 				}
 				$form .= "</form></html>\n";
 				return $form;
@@ -1075,7 +1073,7 @@ class DPL {
 					foreach ( $parameter as $nr => $parm ) {
 						// set parameters to values specified in the dpl source or get them from the http request
 						if ( $exec == 'set' ) {
-							$myvalue=$value[$nr];
+							$myvalue = $value[$nr];
 						} else {
 							if ( $call >= $matchCount ) {
 								break;
@@ -1107,7 +1105,7 @@ class DPL {
 			$articleX = new Article( $titleX );
 			$form = '<html><form id="editform" name="editform" method="post" action="' . $wgScriptPath . '/index.php?title=' . urlencode( $title ) . '&action=submit" '
 			. 'enctype="multipart/form-data">' . "\n"
-			. '<input type="hidden" value="" name="wpSection" />'."\n"
+			. '<input type="hidden" value="" name="wpSection" />' . "\n"
 			. '<input type="hidden" value="' . wfTimestampNow() . '" name="wpStarttime" />' . "\n"
 			. '<input type="hidden" value="' . $articleX->getTimestamp() . '" name="wpEdittime" />' . "\n"
 			. '<input type="hidden" value="" name="wpScrolltop" id="wpScrolltop" />' . "\n"
@@ -1194,13 +1192,13 @@ class DPL {
 		}
 		$textLen = strlen( $text );
 		$tval = array(); // the result array of template values
-		$call = -1;      // index for tval
+		$call = - 1;      // index for tval
 
-		foreach( $matches as $matchA ) {
-			foreach( $matchA as $matchB ) {
+		foreach ( $matches as $matchA ) {
+			foreach ( $matchA as $matchB ) {
 				$match = $matchB[0];
 				$start = $matchB[1];
-				$tval[++$call]=array();
+				$tval[++$call] = array();
 				$nr = 0; // number of parameter if no name given
 				$parmValue = '';
 				$parmName = '';
@@ -1225,7 +1223,7 @@ class DPL {
 						( $cbrackets == 1 && $c == '}' )
 					) {
 						// parameter (name or value) found
-						if ( $parmName == '') {
+						if ( $parmName == '' ) {
 							$tval[$call][++$nr] = trim( $parm );
 						} else {
 							$tval[$call][$parmName] = trim( $parmValue );
@@ -1264,7 +1262,7 @@ class DPL {
 			return $text;
 		}
 
-		$matches=array();
+		$matches = array();
 		$noMatches = preg_match_all(
 			'/\{\{\s*' . preg_quote( $template, '/' ) . '\s*[|}]/i',
 			$text,
@@ -1274,15 +1272,15 @@ class DPL {
 		if ( $noMatches <= 0 ) {
 			return $text;
 		}
-		$rText = '';
-		$beginSubst = -1;
-		$endSubst = -1;
+
+		$beginSubst = - 1;
+		$endSubst = - 1;
 		$posInsertAt = 0;
 		$apNrLast = 1000; // last (optional) predecessor
 
-		foreach( $matches as $matchA ) {
+		foreach ( $matches as $matchA ) {
 			$matchCount = count( $matchA );
-			foreach( $matchA as $occurence => $matchB ) {
+			foreach ( $matchA as $occurence => $matchB ) {
 				if ( $occurence < $call ) {
 					continue;
 				}
@@ -1317,7 +1315,7 @@ class DPL {
 							if ( count( $token ) == 2 ) {
 								// we need a pair of name / value
 								$parmName = trim( $token[0] );
-								if ( $parmName == $parameter) {
+								if ( $parmName == $parameter ) {
 									// we found the parameter, now replace the current value
 									$parmValue = trim( $token[1] );
 									if ( $parmValue == $value ) {
@@ -1355,7 +1353,7 @@ class DPL {
 								} else {
 									$beginSubst = $i;
 								}
-								$substitution= "|$parameter = $value";
+								$substitution = "|$parameter = $value";
 								if ( $text[$beginSubst - 1] == "\n" ) {
 									--$beginSubst;
 									$substitution = "\n" . $substitution;
@@ -1420,7 +1418,7 @@ class DPL {
 			}
 
 			// we execute only if "exec" is given, otherwise we merely show what would be done		
-			if ( $cmd[0] == 'exec') {
+			if ( $cmd[0] == 'exec' ) {
 				$exec = true;
 			}
 		}
@@ -1442,7 +1440,7 @@ class DPL {
 				$articleX->doDelete( $reason );
 			}
 		} else {
-			$message .= "set 'exec yes' to delete &nbsp; &nbsp; <big>'''$title'''</big>\n";
+			$message .= "set 'exec yes' to delete &#160; &#160; <big>'''$title'''</big>\n";
 		}
 		$message .= '<pre><nowiki>'
 			. "\n" . $text . '</nowiki></pre>'; // <pre><nowiki>\n"; // .$text."\n</nowiki></pre>\n";
@@ -1471,7 +1469,7 @@ class DPL {
 	// format one single item of an entry in the output list (i.e. one occurence of one item from the include parameter)
 	function formatSingleItems( &$pieces, $s, $article ) {
 		$firstCall = true;
-		foreach ( $pieces as $key => $val) {
+		foreach ( $pieces as $key => $val ) {
 			if ( array_key_exists( $s, $this->mTableRow ) ) {
 				if ( $s == 0 || $firstCall ) {
 					$pieces[$key] = str_replace( '%%', $val, $this->mTableRow[$s] );
@@ -1512,14 +1510,14 @@ class DPL {
 		// if the result starts with a '-' we add a leading space; thus we avoid a misinterpretation of |- as
 		// a start of a new row (wiki table syntax)
 		if ( array_key_exists( "$s.$argNr", $this->mTableRow ) ) {
-			$n = -1;
+			$n = - 1;
 			if ( $s >= 1 && $argNr == 0 && !$firstCall ) {
 				$n = strpos( $this->mTableRow["$s.$argNr"], '|' );
 				if ( $n === false ||
-					!( strpos( substr( $this->mTableRow["$s.$argNr"], 0, $n ), '{' ) === false ) || 
+					!( strpos( substr( $this->mTableRow["$s.$argNr"], 0, $n ), '{' ) === false ) ||
 					!( strpos( substr( $this->mTableRow["$s.$argNr"], 0, $n ), '[' ) === false )
 				) {
-					$n= -1;
+					$n = - 1;
 				}
 			}
 			$result = str_replace( '%%', $arg, substr( $this->mTableRow["$s.$argNr"], $n + 1 ) );
@@ -1565,7 +1563,7 @@ class DPL {
 
 	// slightly different from CategoryViewer::formatList() (no need to instantiate a CategoryViewer object)
 	function formatCategoryList( $iStart, $iCount ) {
-		for( $i = $iStart; $i < $iStart + $iCount; $i++ ) {
+		for ( $i = $iStart; $i < $iStart + $iCount; $i++ ) {
 			$aArticles[] = $this->mArticles[$i]->mLink;
 			$aArticles_start_char[] = $this->mArticles[$i]->mStartChar;
 			$this->filteredCount = $this->filteredCount + 1;
@@ -1590,7 +1588,7 @@ class DPL {
 	 */
 	static function imageWithPath( $imgName ) {
 		$title = Title::newFromText( 'Image:' . $imgName );
-		if( !is_null( $title ) ) {
+		if ( !is_null( $title ) ) {
 			$iTitle = Title::makeTitleSafe( 6, $title->getDBKey() );
 			$imageUrl = preg_replace(
 				'~^.*images/(.*)~',
@@ -1614,7 +1612,7 @@ class DPL {
 		array_shift( $args );
 		array_shift( $args );
 
-		if( !is_array( $options ) ) {
+		if ( !is_array( $options ) ) {
 			$options = array( $options );
 		}
 
@@ -1622,11 +1620,11 @@ class DPL {
 
 		$string = wfMsgReplaceArgs( $string, $args );
 
-		if( in_array( 'parse', $options ) ) {
+		if ( in_array( 'parse', $options ) ) {
 			$this->mParserOptions->setInterfaceMessage( true );
 			$string = $this->mParser->recursiveTagParse( $string );
 			$this->mParserOptions->setInterfaceMessage( false );
-			//$string = $parserOutput->getText();
+			// $string = $parserOutput->getText();
 		} elseif ( in_array( 'parsemag', $options ) ) {
 			$parser = new Parser();
 			$parserOptions = new ParserOptions();

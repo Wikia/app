@@ -21,7 +21,7 @@ class DPL_i18n {
 
 	const FATAL_WRONGLINKSTO				= 2;	// $0: linksto' (left as $0 just in case the parameter is renamed in the future)
 													// $1: the wrong parameter given by user
-												
+
 	const FATAL_TOOMANYCATS					= 3;	// $0: max number of categories that can be included
 
 	const FATAL_TOOFEWCATS					= 4;	// $0: min number of categories that have to be included

@@ -3,10 +3,10 @@
 // Simple Article/Page class with properties used in the DPL
 class DPLArticle {
 	var $mTitle = ''; 		// title
-	var $mNamespace = -1;	// namespace (number)
+	var $mNamespace = - 1;	// namespace (number)
 	var $mID = 0;			// page_id
 	var $mSelTitle = '';    // selected title of initial page
-	var $mSelNamespace = -1;// selected namespace (number) of initial page
+	var $mSelNamespace = - 1;// selected namespace (number) of initial page
 	var $mImageSelTitle = ''; // selected title of image
 	var $mLink = ''; 		// html link to page
 	var $mExternalLink = '';// external link on the page
