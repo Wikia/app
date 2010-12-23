@@ -26,8 +26,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
 
-$wgHooks['UserToggles'][] = 'wfLinkSuggestToggle' ;
-$wgHooks['getEditingPreferencesTab'][] = 'wfLinkSuggestToggle' ;
+$wgHooks['GetPreferences'][] = 'wfLinkSuggestGetPreferences' ;
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfLinkSuggestSetupVars';
 
 
@@ -38,13 +37,12 @@ function wfLinkSuggestSetupVars( $vars ) {
 	return true;
 }
 
-function wfLinkSuggestToggle($toggles, $default_array = false) {
-	wfLoadExtensionMessages('LinkSuggest');
-	if(is_array($default_array)) {
-		$default_array[] = 'disablelinksuggest';
-	} else {
-		$toggles[] = 'disablelinksuggest';
-	}
+function wfLinkSuggestGetPreferences($user, &$preferences) {
+	$preferences['disablelinksuggest'] = array(
+		'type' => 'toggle',
+		'section' => 'editing/advancedediting',
+		'label-message' => 'tog-disablelinksuggest',
+	);
 	return true;
 }
 
