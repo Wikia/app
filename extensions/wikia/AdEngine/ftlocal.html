@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<SCRIPT LANGUAGE="JavaScript">
+var qs = new Querystring()
+function Querystring()
+{
+	var querystring=location.search.substring(1,location.search.length);
+	querystring = decodeURIComponent(querystring);
+	var args = querystring.split('&');
+	for (var i=0;i<args.length;i++)
+	{
+		var pair = args[i].split('=');
+		if (pair.length > 1){
+			for (var i2=2;i2<pair.length;i2++)
+			{
+				pair[1] += "=" + pair[i2];
+			}
+		}
+		temp = unescape(pair[0]).split('+');
+		temp0 = temp.join(' ');
+		temp = unescape(pair[1]).split('+');
+		temp1 = temp.join(' ');
+		this[temp0]=temp1;
+	}
+	this.get=Querystring_get;
+}
+function Querystring_get(strKey,strDefault)
+{
+	var value=this[strKey];
+	if (value==null){value=strDefault;}
+	return value;
+}
+
+var parentpage = eval("parent.parent");
+
+function loadftscript(){
+
+	var ftscript02 = document.createElement("script");
+	ftscript02.setAttribute("src",qs.get("ifsrc",""));
+	ftscript02.id = "ftscript";
+	
+	document.body.appendChild(ftscript02);
+		
+}
+
+function loadpage(){
+	if (document.all){
+		if (parentpage.document.readyState == 'complete'){
+			loadftscript();
+		} else {
+			setTimeout("loadpage()",150);
+		}
+	} else {
+		loadftscript();
+	}
+}
+
+
+</SCRIPT>
+
+
+</head>
+<body onload="loadpage()">
+
+</body>
+</html>
