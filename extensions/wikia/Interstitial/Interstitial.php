@@ -26,7 +26,7 @@ function interstitialsJsGlobalVariables(&$vars){
 	
 	global $wgCookieDomain, $wgCookiePath;
 	global $wgAdsInterstitialsEnabled, $wgAdsInterstitialsPagesBeforeFirstAd, $wgAdsInterstitialsPagesBetweenAds, $wgEnableOutboundScreenExt;
-	global $wgSitename;
+	global $wgSitename, $wgTitle;
 	
 	wfLoadExtensionMessages(INTERSTITIALS_SP);
 	
@@ -39,7 +39,7 @@ function interstitialsJsGlobalVariables(&$vars){
 	$vars['wgAdsInterstitialsEnabled'] = $wgAdsInterstitialsEnabled;
 	$vars['wgAdsInterstitialsPagesBeforeFirstAd'] = (empty($wgAdsInterstitialsPagesBeforeFirstAd)?INTERSTITIAL_DEFAULT_PAGES_BEFORE_FIRST_AD:$wgAdsInterstitialsPagesBeforeFirstAd);
 	$vars['wgAdsInterstitialsPagesBetweenAds'] = (empty($wgAdsInterstitialsPagesBetweenAds)?INTERSTITIAL_DEFAULT_PAGES_BETWEEN_ADS:$wgAdsInterstitialsPagesBetweenAds);
-	$vars['wgEnableOutboundScreenExt'] = $wgEnableOutboundScreenExt;
+	$vars['ExitstitialOutboundScreen'] = SpecialPage::getTitleFor('Outbound')->getLocalURL('f='.urlencode($wgTitle->getPrefixedDBkey()));
 	
 	global $wgScriptPath;
 	$special = SpecialPage::getTitleFor( INTERSTITIALS_SP );

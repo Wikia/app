@@ -95,24 +95,14 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 			}
 		}
 
-
 		if(!$isWhitelisted) {
-			// make the actual link
-			$special = SpecialPage::getTitleFor( 'Outbound' );
-			global $wgTitle;
-			if( $special instanceof Title && $wgTitle instanceof Title ) {
-				// RT #19167
-				$href = $special->getLocalURL('f='.urlencode($wgTitle->getPrefixedDBkey()).'&u=' . urlencode($url));
-				$link = Xml::tags('a', array(
-					'class' => 'external',
-					'rel' => 'nofollow',
-					//'title' => $url,
-					'ref' => $href,
-					'href' => $url,
-				), $text);
+			$link = Xml::tags('a', array(
+				'class' => 'external exitstitial',
+				'rel' => 'nofollow',
+				'href' => $url,
+			), $text);
 
-				return false;
-			}
+			return false;
 		}
 	}
 

@@ -1,5 +1,6 @@
 $(window).load(function() {
-	if (wgEnableOutboundScreenExt == true) {
+	/*ExitstitialOutboundScreen set in Interstitial.php*/
+	if (ExitstitialOutboundScreen) {
 		Exitstitial.init();
 	}
 });
@@ -16,11 +17,11 @@ var Exitstitial = {
 	},
 
 	attachEventListeners: function() {
-		var externalLinks = $('.WikiaArticle a.external');
+		var externalLinks = $('.WikiaArticle a.external.exitstitial');
 
 		$(externalLinks).click(function () {
 			Exitstitial.settings.destinationURL = $(this).attr("href");
-			Exitstitial.settings.adUrl = $(this).attr("ref");
+			Exitstitial.settings.adUrl = ExitstitialOutboundScreen + "&u=" + Exitstitial.settings.destinationURL;
 
 			Exitstitial.showInfobox();
 			return false;
